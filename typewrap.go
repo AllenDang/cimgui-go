@@ -2,6 +2,7 @@ package cimgui
 
 // #include <memory.h>
 // #include <stdlib.h>
+// #include "cimgui_wrapper.h"
 import "C"
 import "unsafe"
 
@@ -12,15 +13,15 @@ func castBool(value bool) (cast int) {
 	return
 }
 
-func wrapBool(goValue *bool) (wrapped *int, finisher func()) {
+func wrapBool(goValue *bool) (wrapped *C.bool, finisher func()) {
 	if goValue != nil {
-		var cValue int
+		var cValue C.bool
 		if *goValue {
-			cValue = 1
+			cValue = C.bool(true)
 		}
 		wrapped = &cValue
 		finisher = func() {
-			*goValue = cValue != 0
+			*goValue = cValue != C.bool(true)
 		}
 	} else {
 		finisher = func() {}

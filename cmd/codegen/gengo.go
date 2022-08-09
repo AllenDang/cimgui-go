@@ -76,6 +76,13 @@ func boolW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
+func boolPtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*bool"
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapBool(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
 type returnWrapper func(f FuncDef) (returnType string, returnStmt string)
 
 func boolReturnW(f FuncDef) (returnType string, returnStmt string) {
@@ -100,6 +107,7 @@ import "C"
 		"float":       floatW,
 		"float*":      floatPtrW,
 		"bool":        boolW,
+		"bool*":       boolPtrW,
 	}
 
 	returnWrapperMap := map[string]returnWrapper{
