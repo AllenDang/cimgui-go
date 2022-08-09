@@ -50,11 +50,9 @@ extern "C" {
 		if f.FuncName == "ImSpan_destroy" ||
 			f.FuncName == "ImBitArray_destroy" ||
 			f.FuncName == "ImSpanAllocator_destroy" ||
+			strings.Contains(f.FuncName, "Allocator") ||
 			strings.Contains(f.FuncName, "__") {
 			shouldSkip = true
-		}
-
-		if shouldSkip {
 			continue
 		}
 
@@ -75,15 +73,23 @@ extern "C" {
 		}
 
 		if len(f.FuncName) == 0 || strings.Contains(f.Location, "internal") {
-			shouldSkip = true
-		}
-
-		if shouldSkip {
 			continue
 		}
 
 		funcName := strings.Replace(f.FuncName, "ig", "", 1)
-		funcName = strings.Replace(funcName, "Im", "", 1)
+		funcName = strings.Replace(funcName, "ImGui", "", -1)
+		funcName = strings.Replace(funcName, "Im", "", -1)
+
+		// Check lower case for function
+		if unicode.IsLower(rune(funcName[0])) {
+			continue
+		}
+
+		// Check lower case member function
+		funcParts := strings.Split(funcName, "_")
+		if len(funcParts) == 2 && unicode.IsLower(rune(funcParts[1][0])) {
+			continue
+		}
 
 		actualCallArgs := []string{}
 
@@ -93,27 +99,25 @@ extern "C" {
 
 		actualCallArgsStr := fmt.Sprintf("(%s)", strings.Join(actualCallArgs, ","))
 
-		if unicode.IsUpper(rune(funcName[0])) {
-			if !f.Constructor && !f.Destructor {
-				headerSb.WriteString(fmt.Sprintf("extern %s %s%s;\n", f.Ret, funcName, f.Args))
+		if !f.Constructor && !f.Destructor {
+			headerSb.WriteString(fmt.Sprintf("extern %s %s%s;\n", f.Ret, funcName, f.Args))
 
-				if f.Ret == "void" {
-					cppSb.WriteString(fmt.Sprintf("%s %s%s { %s%s; }\n", f.Ret, funcName, f.Args, f.FuncName, actualCallArgsStr))
-				} else {
-					cppSb.WriteString(fmt.Sprintf("%s %s%s { return %s%s; }\n", f.Ret, funcName, f.Args, f.FuncName, actualCallArgsStr))
-				}
+			if f.Ret == "void" {
+				cppSb.WriteString(fmt.Sprintf("%s %s%s { %s%s; }\n", f.Ret, funcName, f.Args, f.FuncName, actualCallArgsStr))
+			} else {
+				cppSb.WriteString(fmt.Sprintf("%s %s%s { return %s%s; }\n", f.Ret, funcName, f.Args, f.FuncName, actualCallArgsStr))
 			}
+		}
 
-			if f.Constructor {
-				ret := strings.Split(f.FuncName, "_")[0]
-				headerSb.WriteString(fmt.Sprintf("extern %s* %s%s;\n", ret, funcName, f.Args))
-				cppSb.WriteString(fmt.Sprintf("%s* %s%s { return %s%s; }\n", ret, funcName, f.Args, f.FuncName, actualCallArgsStr))
-			}
+		if f.Constructor {
+			ret := strings.Split(f.FuncName, "_")[0]
+			headerSb.WriteString(fmt.Sprintf("extern %s* %s%s;\n", ret, funcName, f.Args))
+			cppSb.WriteString(fmt.Sprintf("%s* %s%s { return %s%s; }\n", ret, funcName, f.Args, f.FuncName, actualCallArgsStr))
+		}
 
-			if f.Destructor {
-				headerSb.WriteString(fmt.Sprintf("extern void %s%s;\n", funcName, f.Args))
-				cppSb.WriteString(fmt.Sprintf("void %s%s { %s%s; }\n", funcName, f.Args, f.FuncName, actualCallArgsStr))
-			}
+		if f.Destructor {
+			headerSb.WriteString(fmt.Sprintf("extern void %s%s;\n", funcName, f.Args))
+			cppSb.WriteString(fmt.Sprintf("void %s%s { %s%s; }\n", funcName, f.Args, f.FuncName, actualCallArgsStr))
 		}
 	}
 
