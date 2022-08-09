@@ -1,0 +1,26 @@
+name: Compile cimgui for windows
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@main
+    - name: configure
+      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On
+      working-directory: ./cimgui
+    - name: make
+      run: make
+      working-directory: ./cimgui/build
+    - name: copy to lib
+      run: |
+        mkdir ./lib/windows/x64
+        copy /Y ./cimgui/build/cimgui.a ./lib/windows/x64/
+
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Update windows lib from ci
