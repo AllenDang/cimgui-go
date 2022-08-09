@@ -16,3 +16,10 @@ jobs:
     - name: make
       run: make
       working-directory: ./cimgui/build
+    - name: copy to lib
+      run: |
+        mkdir -p ./lib/linux/x64
+        cp -f ./cimgui/build/cimgui.a ./lib/linux/x64/
+        git add .
+        git commit -m "Update linux lib from CI"
+        git push
