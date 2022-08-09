@@ -1,4 +1,4 @@
-name: Compile cimgui for linux
+name: Compile cimgui for linux/windows
 
 on:
   workflow_dispatch:
@@ -42,10 +42,44 @@ jobs:
       working-directory: .\cimgui
 
     - name: copy to lib
-      run: |
-        mkdir ${{runner.workspace}}\cimgui-go\lib\windows\x64
-        Copy-Item "${{runner.workspace}}\cimgui-go\cimgui\build\Release\cimgui.lib" -Destination "${{runner.workspace}}\cimgui-go\lib\windows\x64\cimgui.a" -Force
+      run: Copy-Item "${{runner.workspace}}\cimgui-go\cimgui\build\Release\cimgui.lib" -Destination "${{runner.workspace}}\cimgui-go\lib\windows\x64\cimgui.a" -Force
 
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Update windows lib from ci
+
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@main
+
+    - name: configure for x64
+      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=x86_64
+      working-directory: ./cimgui
+
+    - name: make for x64
+      run: make
+      working-directory: ./cimgui/build
+
+    - name: copy x64 to lib
+      run: |
+        mkdir -p ./lib/macos/x64
+        cp -f ./cimgui/build/cimgui.a ./lib/macos/x64/
+
+    - name: configure for arm64
+      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=arm64
+      working-directory: ./cimgui
+
+    - name: make for arm64
+      run: make
+      working-directory: ./cimgui/build
+
+    - name: copy arm64 to lib
+      run: |
+        mkdir -p ./lib/macos/arm64
+        cp -f ./cimgui/build/cimgui.a ./lib/macos/arm64/
+
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Update macos lib from ci
