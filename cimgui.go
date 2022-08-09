@@ -5,9 +5,9 @@ package cimgui
 // #cgo amd64,windows LDFLAGS: -L${SRCDIR}/lib/windows/x64 -lcimgui
 // #cgo amd64,darwin LDFLAGS: ${SRCDIR}/lib/macos/x64/cimgui.a
 // #cgo arm64,darwin LDFLAGS: ${SRCDIR}/lib/macos/arm64/cimgui.a
-// #include "cimgui_wrapper.h"
+// #include "cimgui/cimgui.h"
 import "C"
 
 func GetVersion() string {
-	return C.GoString(C.GetVersion())
+	return C.GoString(C.igGetVersion())
 }
