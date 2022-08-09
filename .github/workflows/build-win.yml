@@ -22,7 +22,7 @@ jobs:
     - name: copy to lib
       run: |
         mkdir .\lib\windows\x64
-        copy /Y .\cimgui\build\Release\cimgui.lib .\lib\windows\x64\cimgui.a
+        copy /Y ${{runner.workspace}}\cimgui\build\Release\cimgui.lib ${{runner.workspace}}\lib\windows\x64\cimgui.a
 
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
