@@ -13,6 +13,7 @@ jobs:
 
     - uses: ashutoshvarma/action-cmake-build@master
       with:
+        source-dir: ${{runner.workspace}}/cimgui
         build-dir: ${{runner.workspace}}/cimgui/build
         build-type: Release
         configure-options: -DIMGUI_STATIC=On
