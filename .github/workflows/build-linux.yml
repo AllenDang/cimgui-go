@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: Compile cimgui for linux
 
 on:
   workflow_dispatch:
