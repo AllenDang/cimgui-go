@@ -7,7 +7,3 @@ package cimgui
 // #cgo arm64,darwin LDFLAGS: ${SRCDIR}/lib/macos/arm64/cimgui.a
 // #include "cimgui_wrapper.h"
 import "C"
-
-func GetVersion() string {
-	return C.GoString(C.GetVersion())
-}

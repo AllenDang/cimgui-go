@@ -91,6 +91,12 @@ func boolReturnW(f FuncDef) (returnType string, returnStmt string) {
 	return
 }
 
+func constCharReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "string"
+	returnStmt = "return C.GoString(%s)"
+	return
+}
+
 func generateGoWrapper(validFuncs []FuncDef, enumNames []string) {
 	var sb strings.Builder
 
@@ -111,7 +117,8 @@ import "C"
 	}
 
 	returnWrapperMap := map[string]returnWrapper{
-		"bool": boolReturnW,
+		"bool":        boolReturnW,
+		"const char*": constCharReturnW,
 	}
 
 	type argOutput struct {
@@ -168,6 +175,10 @@ import "C"
 			if !shouldGenerate {
 				break
 			}
+		}
+
+		if len(f.ArgsT) == 0 {
+			shouldGenerate = true
 		}
 
 		if !shouldGenerate {
