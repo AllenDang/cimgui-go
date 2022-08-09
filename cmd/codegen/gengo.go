@@ -97,8 +97,21 @@ func constCharReturnW(f FuncDef) (returnType string, returnStmt string) {
 	return
 }
 
+func floatReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "float32"
+	returnStmt = "return float32(%s)"
+	return
+}
+
+func intReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "int"
+	returnStmt = "return int(%s)"
+	return
+}
+
 func generateGoWrapper(validFuncs []FuncDef, enumNames []string) {
 	var sb strings.Builder
+	convertedFuncCount := 0
 
 	sb.WriteString(`package cimgui
 
@@ -117,8 +130,11 @@ import "C"
 	}
 
 	returnWrapperMap := map[string]returnWrapper{
-		"bool":        boolReturnW,
-		"const char*": constCharReturnW,
+		"bool":           boolReturnW,
+		"const char*":    constCharReturnW,
+		"const ImWchar*": constCharReturnW,
+		"float":          floatReturnW,
+		"int":            intReturnW,
 	}
 
 	type argOutput struct {
@@ -182,7 +198,6 @@ import "C"
 		}
 
 		if !shouldGenerate {
-			fmt.Println("Err unknown arg type: ", f.FuncName)
 			continue
 		}
 
@@ -206,6 +221,8 @@ import "C"
 
 			sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
 			sb.WriteString("}\n\n")
+
+			convertedFuncCount += 1
 		} else {
 			if rf, ok := returnWrapperMap[f.Ret]; ok {
 				returnType, returnStmt := rf(f)
@@ -216,11 +233,13 @@ import "C"
 
 				sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 				sb.WriteString("}\n\n")
-			} else {
-				fmt.Println("Err unkown return type: ", f.FuncName)
+
+				convertedFuncCount += 1
 			}
 		}
 	}
+
+	fmt.Printf("Convert progress: %d/%d\n", convertedFuncCount, len(validFuncs))
 
 	goFile, err := os.Create("funcs.go")
 	if err != nil {
