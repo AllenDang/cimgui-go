@@ -11,12 +11,13 @@ jobs:
     steps:
     - uses: actions/checkout@main
 
-    - uses: ashutoshvarma/action-cmake-build@master
-      with:
-        source-dir: ${{runner.workspace}}/cimgui
-        build-dir: ${{runner.workspace}}/cimgui/build
-        build-type: Release
-        configure-options: -DIMGUI_STATIC=On
+    - name: configure
+      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On
+      working-directory: .\cimgui
+
+    - name: make
+      run: cmake --build .\build --config Release --parallel 4
+      working-directory: .\cimgui
 
     - name: copy to lib
       run: |
