@@ -22,8 +22,7 @@ jobs:
     - name: copy to lib
       run: |
         mkdir .\lib\windows\x64
-        copy /Y ${{runner.workspace}}\cimgui\build\Release\cimgui.lib ${{runner.workspace}}\lib\windows\x64\cimgui.a
-      shell: cmd
+        Copy-Item "${{runner.workspace}}\cimgui\build\Release\cimgui.lib" -Destination "${{runner.workspace}}\lib\windows\x64\cimgui.a" -Force
 
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
