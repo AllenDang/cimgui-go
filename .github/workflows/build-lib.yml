@@ -71,6 +71,10 @@ jobs:
         mkdir -p ./lib/macos/x64
         cp -f ./cimgui/build/cimgui.a ./lib/macos/x64/
 
+    - name: clean up
+      run: cmake --build ./build --target clean
+      working-directory: ./cimgui
+
     - name: configure for arm64
       run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=arm64
       working-directory: ./cimgui
