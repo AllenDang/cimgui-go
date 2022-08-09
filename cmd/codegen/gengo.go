@@ -83,6 +83,76 @@ func boolPtrW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
+func arrayW(size int, arrayType, goArrayType string, arg ArgDef) (argType string, def string, varName string) {
+	argType = fmt.Sprintf("*[%d]%s", size, goArrayType)
+	def = fmt.Sprintf("%[1]sArg := (*C.%[2]s)(&%[1]s[0])", arg.Name, arrayType)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
+func int2W(arg ArgDef) (argType string, def string, varName string) {
+	return arrayW(2, "int", "int32", arg)
+}
+
+func int3W(arg ArgDef) (argType string, def string, varName string) {
+	return arrayW(3, "int", "int32", arg)
+}
+
+func int4W(arg ArgDef) (argType string, def string, varName string) {
+	return arrayW(4, "int", "int32", arg)
+}
+
+func float2W(arg ArgDef) (argType string, def string, varName string) {
+	return arrayW(2, "float", "float32", arg)
+}
+
+func float3W(arg ArgDef) (argType string, def string, varName string) {
+	return arrayW(3, "float", "float32", arg)
+}
+
+func float4W(arg ArgDef) (argType string, def string, varName string) {
+	return arrayW(4, "float", "float32", arg)
+}
+
+func intW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "int32"
+	varName = fmt.Sprintf("C.int(%s)", arg.Name)
+	return
+}
+
+func intPtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*int32"
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapInt32(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
+func vec2W(arg ArgDef) (argType string, def string, varName string) {
+	argType = "ImVec2"
+	varName = fmt.Sprintf("%s.ToC()", arg.Name)
+	return
+}
+
+func vec2PtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*ImVec2"
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapImVec2(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
+func vec4PtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*ImVec4"
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapImVec4(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
+func vec4W(arg ArgDef) (argType string, def string, varName string) {
+	argType = "ImVec4"
+	varName = fmt.Sprintf("%s.ToC()", arg.Name)
+	return
+}
+
 type returnWrapper func(f FuncDef) (returnType string, returnStmt string)
 
 func boolReturnW(f FuncDef) (returnType string, returnStmt string) {
@@ -121,12 +191,24 @@ import "C"
 `)
 
 	argWrapperMap := map[string]typeWrapper{
-		"const char*": constCharW,
-		"size_t":      sizeTW,
-		"float":       floatW,
-		"float*":      floatPtrW,
-		"bool":        boolW,
-		"bool*":       boolPtrW,
+		"const char*":  constCharW,
+		"size_t":       sizeTW,
+		"float":        floatW,
+		"float*":       floatPtrW,
+		"int":          intW,
+		"int*":         intPtrW,
+		"bool":         boolW,
+		"bool*":        boolPtrW,
+		"int[2]":       int2W,
+		"int[3]":       int3W,
+		"int[4]":       int4W,
+		"float[2]":     float2W,
+		"float[3]":     float3W,
+		"float[4]":     float4W,
+		"const ImVec2": vec2W,
+		"ImVec2*":      vec2PtrW,
+		"const ImVec4": vec4W,
+		"ImVec4*":      vec4PtrW,
 	}
 
 	returnWrapperMap := map[string]returnWrapper{
