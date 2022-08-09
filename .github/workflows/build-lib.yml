@@ -1,4 +1,4 @@
-name: Compile cimgui for linux/windows
+name: Compile cimgui for linux/windows/macos
 
 on:
   workflow_dispatch:
