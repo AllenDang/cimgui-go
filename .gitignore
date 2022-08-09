@@ -53,3 +53,5 @@ dkms.conf
 cimgui/build
 cimgui/.DS_Store
 .DS_Store
+
+cmd/codegen/codegen
