@@ -20,6 +20,7 @@ jobs:
       run: |
         mkdir -p ./lib/linux/x64
         cp -f ./cimgui/build/cimgui.a ./lib/linux/x64/
-        git add .
-        git commit -m "Update linux lib from CI"
-        git push
+
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Update linux lib from ci
