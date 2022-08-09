@@ -13,13 +13,16 @@ jobs:
     - name: configure
       run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On
       working-directory: ./cimgui
+      shell: cmd
     - name: make
       run: make
       working-directory: ./cimgui/build
+      shell: cmd
     - name: copy to lib
       run: |
         mkdir ./lib/windows/x64
         copy /Y ./cimgui/build/cimgui.a ./lib/windows/x64/
+      shell: cmd
 
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
