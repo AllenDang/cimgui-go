@@ -155,6 +155,12 @@ func int4W(arg ArgDef) (argType string, def string, varName string) {
 	return arrayW(4, "int", "int32", arg)
 }
 
+func u32W(arg ArgDef) (argType string, def string, varName string) {
+	argType = "uint32"
+	varName = fmt.Sprintf("C.uint(%s)", arg.Name)
+	return
+}
+
 func float2W(arg ArgDef) (argType string, def string, varName string) {
 	return arrayW(2, "float", "float32", arg)
 }
@@ -183,6 +189,12 @@ func intPtrW(arg ArgDef) (argType string, def string, varName string) {
 func imGuiIDW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "ImGuiID"
 	varName = fmt.Sprintf("C.ImGuiID(%s)", arg.Name)
+	return
+}
+
+func imTextureIDW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "ImTextureID"
+	varName = fmt.Sprintf("C.ImTextureID(%s)", arg.Name)
 	return
 }
 
@@ -241,10 +253,12 @@ import "C"
 		"int[2]":      int2W,
 		"int[3]":      int3W,
 		"int[4]":      int4W,
+		"ImU32":       u32W,
 		"float[2]":    float2W,
 		"float[3]":    float3W,
 		"float[4]":    float4W,
 		"ImGuiID":     imGuiIDW,
+		"ImTextureID": imTextureIDW,
 	}
 
 	returnWrapperMap := map[string]returnWrapper{
@@ -316,14 +330,18 @@ import "C"
 				shouldGenerate = true
 			}
 
-			if strings.HasSuffix(a.Type, "*") && funk.ContainsString(structNames, strings.TrimRight(a.Type, "*")) {
-				aType := strings.TrimRight(a.Type, "*")
-				args = append(args, fmt.Sprintf("%s *%s", a.Name, aType))
-				argWrappers = append(argWrappers, argOutput{
-					VarName: fmt.Sprintf("(*C.%s)(%s)", aType, a.Name),
-				})
+			if strings.HasSuffix(a.Type, "*") {
+				pureType := strings.TrimLeft(a.Type, "const ")
+				pureType = strings.TrimRight(pureType, "*")
 
-				shouldGenerate = true
+				if funk.ContainsString(structNames, pureType) {
+					args = append(args, fmt.Sprintf("%s *%s", a.Name, pureType))
+					argWrappers = append(argWrappers, argOutput{
+						VarName: fmt.Sprintf("(*C.%s)(%s)", pureType, a.Name),
+					})
+
+					shouldGenerate = true
+				}
 			}
 
 			if !shouldGenerate {
@@ -374,20 +392,41 @@ import "C"
 				sb.WriteString("}\n\n")
 
 				convertedFuncCount += 1
-			} else if strings.HasSuffix(f.Ret, "*") && funk.Contains(structNames, strings.TrimRight(f.Ret, "*")) {
+			} else if strings.HasSuffix(f.Ret, "*") && (funk.Contains(structNames, strings.TrimRight(f.Ret, "*")) || funk.Contains(structNames, strings.TrimRight(strings.TrimLeft(f.Ret, "const "), "*"))) {
 				// return Im struct ptr
-				returnType := "*" + strings.TrimRight(f.Ret, "*")
+				pureReturnType := strings.TrimLeft(f.Ret, "const ")
+				pureReturnType = strings.TrimRight(pureReturnType, "*")
 
-				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", f.FuncName, strings.Join(args, ","), returnType))
+				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", f.FuncName, strings.Join(args, ","), "*"+pureReturnType))
 
 				argInvokeStmt := argStmtFunc()
 
-				sb.WriteString(fmt.Sprintf("return (*%s)(%s)", strings.TrimRight(f.Ret, "*"), fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+				sb.WriteString(fmt.Sprintf("return (*%s)(%s)", pureReturnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+				sb.WriteString("}\n\n")
+
+				convertedFuncCount += 1
+			} else if f.Constructor {
+				returnType := strings.Split(f.FuncName, "_")[0]
+
+				if funk.ContainsString(structNames, "Im"+returnType) {
+					returnType = "Im" + returnType
+				} else if funk.ContainsString(structNames, "ImGui"+returnType) {
+					returnType = "ImGui" + returnType
+				} else {
+					continue
+				}
+
+				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", f.FuncName, strings.Join(args, ","), "*"+returnType))
+
+				argInvokeStmt := argStmtFunc()
+
+				sb.WriteString(fmt.Sprintf("return (*%s)(C.%s(%s))", returnType, f.FuncName, argInvokeStmt))
+
 				sb.WriteString("}\n\n")
 
 				convertedFuncCount += 1
 			} else {
-				fmt.Printf("%s%s\n", f.FuncName, f.Args)
+				fmt.Printf("%s%s -> %s\n", f.FuncName, f.Args, f.Ret)
 			}
 		}
 	}
