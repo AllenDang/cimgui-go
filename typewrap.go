@@ -55,34 +55,6 @@ func wrapFloat(goValue *float32) (wrapped *C.float, finisher func()) {
 	return
 }
 
-func wrapImVec2(goValue *ImVec2) (wrapped *C.ImVec2, finisher func()) {
-	if goValue != nil {
-		cValue := goValue.ToC()
-		finisher = func() {
-			(*goValue).X = float32(cValue.x)
-			(*goValue).Y = float32(cValue.y)
-		}
-	} else {
-		finisher = func() {}
-	}
-	return
-}
-
-func wrapImVec4(goValue *ImVec4) (wrapped *C.ImVec4, finisher func()) {
-	if goValue != nil {
-		cValue := goValue.ToC()
-		finisher = func() {
-			(*goValue).X = float32(cValue.x)
-			(*goValue).Y = float32(cValue.y)
-			(*goValue).Z = float32(cValue.z)
-			(*goValue).W = float32(cValue.w)
-		}
-	} else {
-		finisher = func() {}
-	}
-	return
-}
-
 func wrapString(value string) (wrapped *C.char, finisher func()) {
 	wrapped = C.CString(value)
 	finisher = func() { C.free(unsafe.Pointer(wrapped)) } // nolint: gas

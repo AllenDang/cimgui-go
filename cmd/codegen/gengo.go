@@ -4,6 +4,28 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/thoas/go-funk"
+)
+
+type TypeMap struct {
+	GoType     string
+	CgoWrapper string
+}
+
+func tm(goType string, cgoWrapper string) *TypeMap {
+	return &TypeMap{
+		GoType:     goType,
+		CgoWrapper: cgoWrapper,
+	}
+}
+
+var (
+	structMemberTypeMap = map[string]*TypeMap{
+		"unsigned int": tm("uint32", "C.uint(%s)"),
+		"float":        tm("float32", "C.float(%s)"),
+		"int":          tm("int32", "C.int(%s)"),
+	}
 )
 
 // Generate enums and return enum type names
@@ -37,6 +59,37 @@ func generateGoEnums(enums []EnumDef) []string {
 	_, _ = enumFile.WriteString(sb.String())
 
 	return enumNames
+}
+
+func generateGoStructs(structs []StructDef) []string {
+	var sb strings.Builder
+
+	sb.WriteString(`package cimgui
+
+ // #include "cimgui_wrapper.h"
+ import "C"
+
+`)
+
+	// Save all struct name into a map
+	var structNames []string
+
+	for _, s := range structs {
+		if strings.HasPrefix(s.Name, "Im") {
+			sb.WriteString(fmt.Sprintf("type %[1]s C.%[1]s\n", s.Name))
+			structNames = append(structNames, s.Name)
+		}
+	}
+
+	structFile, err := os.Create("structs.go")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer structFile.Close()
+
+	_, _ = structFile.WriteString(sb.String())
+
+	return structNames
 }
 
 type typeWrapper func(arg ArgDef) (argType string, def string, varName string)
@@ -127,32 +180,6 @@ func intPtrW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
-func vec2W(arg ArgDef) (argType string, def string, varName string) {
-	argType = "ImVec2"
-	varName = fmt.Sprintf("%s.ToC()", arg.Name)
-	return
-}
-
-func vec2PtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*ImVec2"
-	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapImVec2(%[1]s)\ndefer %[1]sFin()", arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
-}
-
-func vec4PtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*ImVec4"
-	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapImVec4(%[1]s)\ndefer %[1]sFin()", arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
-}
-
-func vec4W(arg ArgDef) (argType string, def string, varName string) {
-	argType = "ImVec4"
-	varName = fmt.Sprintf("%s.ToC()", arg.Name)
-	return
-}
-
 type returnWrapper func(f FuncDef) (returnType string, returnStmt string)
 
 func boolReturnW(f FuncDef) (returnType string, returnStmt string) {
@@ -179,7 +206,13 @@ func intReturnW(f FuncDef) (returnType string, returnStmt string) {
 	return
 }
 
-func generateGoWrapper(validFuncs []FuncDef, enumNames []string) {
+func constWCharReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "ImWchar"
+	returnStmt = "return ImWchar(%s)"
+	return
+}
+
+func generateGoWrapper(validFuncs []FuncDef, enumNames []string, structNames []string) {
 	var sb strings.Builder
 	convertedFuncCount := 0
 
@@ -191,30 +224,26 @@ import "C"
 `)
 
 	argWrapperMap := map[string]typeWrapper{
-		"const char*":  constCharW,
-		"size_t":       sizeTW,
-		"float":        floatW,
-		"float*":       floatPtrW,
-		"int":          intW,
-		"int*":         intPtrW,
-		"bool":         boolW,
-		"bool*":        boolPtrW,
-		"int[2]":       int2W,
-		"int[3]":       int3W,
-		"int[4]":       int4W,
-		"float[2]":     float2W,
-		"float[3]":     float3W,
-		"float[4]":     float4W,
-		"const ImVec2": vec2W,
-		"ImVec2*":      vec2PtrW,
-		"const ImVec4": vec4W,
-		"ImVec4*":      vec4PtrW,
+		"const char*": constCharW,
+		"size_t":      sizeTW,
+		"float":       floatW,
+		"float*":      floatPtrW,
+		"int":         intW,
+		"int*":        intPtrW,
+		"bool":        boolW,
+		"bool*":       boolPtrW,
+		"int[2]":      int2W,
+		"int[3]":      int3W,
+		"int[4]":      int4W,
+		"float[2]":    float2W,
+		"float[3]":    float3W,
+		"float[4]":    float4W,
 	}
 
 	returnWrapperMap := map[string]returnWrapper{
 		"bool":           boolReturnW,
 		"const char*":    constCharReturnW,
-		"const ImWchar*": constCharReturnW,
+		"const ImWchar*": constWCharReturnW,
 		"float":          floatReturnW,
 		"int":            intReturnW,
 	}
@@ -270,6 +299,25 @@ import "C"
 				shouldGenerate = true
 			}
 
+			if funk.ContainsString(structNames, a.Type) {
+				args = append(args, fmt.Sprintf("%s %s", a.Name, a.Type))
+				argWrappers = append(argWrappers, argOutput{
+					VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
+				})
+
+				shouldGenerate = true
+			}
+
+			if strings.HasSuffix(a.Type, "*") && funk.ContainsString(structNames, strings.TrimRight(a.Type, "*")) {
+				aType := strings.TrimRight(a.Type, "*")
+				args = append(args, fmt.Sprintf("%s *%s", a.Name, aType))
+				argWrappers = append(argWrappers, argOutput{
+					VarName: fmt.Sprintf("(*C.%s)(%s)", aType, a.Name),
+				})
+
+				shouldGenerate = true
+			}
+
 			if !shouldGenerate {
 				break
 			}
@@ -280,10 +328,11 @@ import "C"
 		}
 
 		if !shouldGenerate {
+			fmt.Printf("%s%s\n", f.FuncName, f.Args)
 			continue
 		}
 
-		// Generate function return void
+		// Generate function args
 		argStmtFunc := func() string {
 			var invokeStmt []string
 			for _, aw := range argWrappers {
@@ -317,6 +366,8 @@ import "C"
 				sb.WriteString("}\n\n")
 
 				convertedFuncCount += 1
+			} else {
+				fmt.Printf("%s%s\n", f.FuncName, f.Args)
 			}
 		}
 	}

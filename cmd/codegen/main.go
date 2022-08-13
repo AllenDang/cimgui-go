@@ -35,6 +35,22 @@ type EnumsSection struct {
 	Enums json.RawMessage `json:"enums"`
 }
 
+type StructMemberDef struct {
+	Name         string `json:"name"`
+	TemplateType string `json:"template_type"`
+	Type         string `json:"type"`
+	Size         int    `json:"size"`
+}
+
+type StructDef struct {
+	Name    string            `json:"name"`
+	Members []StructMemberDef `json:"members"`
+}
+
+type StructSection struct {
+	Structs json.RawMessage `json:"structs"`
+}
+
 func main() {
 	defJsonPath := flag.String("d", "", "definitions json file path")
 	enumsJsonpath := flag.String("e", "", "enums json file path")
@@ -88,6 +104,10 @@ func main() {
 
 	var enumJson map[string]json.RawMessage
 	err = json.Unmarshal(enumSectionJson.Enums, &enumJson)
+	if err != nil {
+		panic(err.Error())
+	}
+
 	for k, v := range enumJson {
 		var enumValues []EnumValueDef
 		err := json.Unmarshal(v, &enumValues)
@@ -101,8 +121,35 @@ func main() {
 		})
 	}
 
+	var structSectionJson StructSection
+	err = json.Unmarshal(enumJsonBytes, &structSectionJson)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	var structs []StructDef
+
+	var structJson map[string]json.RawMessage
+	err = json.Unmarshal(structSectionJson.Structs, &structJson)
+	if err != nil {
+		panic(err.Error())
+	}
+	for k, v := range structJson {
+		var memberDefs []StructMemberDef
+		err := json.Unmarshal(v, &memberDefs)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		structs = append(structs, StructDef{
+			Name:    k,
+			Members: memberDefs,
+		})
+	}
+
 	validFuncs := generateCppWrapper(funcs)
 
 	enumNames := generateGoEnums(enums)
-	generateGoWrapper(validFuncs, enumNames)
+	structNames := generateGoStructs(structs)
+	generateGoWrapper(validFuncs, enumNames, structNames)
 }
