@@ -173,6 +173,12 @@ func float4W(arg ArgDef) (argType string, def string, varName string) {
 	return arrayW(4, "float", "float32", arg)
 }
 
+func imWcharW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "ImWchar"
+	varName = fmt.Sprintf("C.ImWchar(%s)", arg.Name)
+	return
+}
+
 func intW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "int32"
 	varName = fmt.Sprintf("C.int(%s)", arg.Name)
@@ -224,9 +230,9 @@ func intReturnW(f FuncDef) (returnType string, returnStmt string) {
 	return
 }
 
-func constWCharReturnW(f FuncDef) (returnType string, returnStmt string) {
-	returnType = "ImWchar"
-	returnStmt = "return ImWchar(%s)"
+func constWCharPtrReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "*ImWchar"
+	returnStmt = "return (*ImWchar)(%s)"
 	return
 }
 
@@ -257,6 +263,7 @@ import "C"
 		"float[2]":    float2W,
 		"float[3]":    float3W,
 		"float[4]":    float4W,
+		"ImWchar":     imWcharW,
 		"ImGuiID":     imGuiIDW,
 		"ImTextureID": imTextureIDW,
 	}
@@ -264,7 +271,7 @@ import "C"
 	returnWrapperMap := map[string]returnWrapper{
 		"bool":           boolReturnW,
 		"const char*":    constCharReturnW,
-		"const ImWchar*": constWCharReturnW,
+		"const ImWchar*": constWCharPtrReturnW,
 		"float":          floatReturnW,
 		"int":            intReturnW,
 	}
