@@ -180,6 +180,12 @@ func intPtrW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
+func imGuiIDW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "ImGuiID"
+	varName = fmt.Sprintf("C.ImGuiID(%s)", arg.Name)
+	return
+}
+
 type returnWrapper func(f FuncDef) (returnType string, returnStmt string)
 
 func boolReturnW(f FuncDef) (returnType string, returnStmt string) {
@@ -238,6 +244,7 @@ import "C"
 		"float[2]":    float2W,
 		"float[3]":    float3W,
 		"float[4]":    float4W,
+		"ImGuiID":     imGuiIDW,
 	}
 
 	returnWrapperMap := map[string]returnWrapper{
@@ -299,10 +306,11 @@ import "C"
 				shouldGenerate = true
 			}
 
-			if funk.ContainsString(structNames, a.Type) {
-				args = append(args, fmt.Sprintf("%s %s", a.Name, a.Type))
+			if funk.ContainsString(structNames, a.Type) || funk.Contains(structNames, strings.TrimLeft(a.Type, "const ")) {
+				aType := strings.TrimLeft(a.Type, "const ")
+				args = append(args, fmt.Sprintf("%s %s", a.Name, aType))
 				argWrappers = append(argWrappers, argOutput{
-					VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
+					VarName: fmt.Sprintf("C.%s(%s)", aType, a.Name),
 				})
 
 				shouldGenerate = true
@@ -363,6 +371,18 @@ import "C"
 				argInvokeStmt := argStmtFunc()
 
 				sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+				sb.WriteString("}\n\n")
+
+				convertedFuncCount += 1
+			} else if strings.HasSuffix(f.Ret, "*") && funk.Contains(structNames, strings.TrimRight(f.Ret, "*")) {
+				// return Im struct ptr
+				returnType := "*" + strings.TrimRight(f.Ret, "*")
+
+				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", f.FuncName, strings.Join(args, ","), returnType))
+
+				argInvokeStmt := argStmtFunc()
+
+				sb.WriteString(fmt.Sprintf("return (*%s)(%s)", strings.TrimRight(f.Ret, "*"), fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 				sb.WriteString("}\n\n")
 
 				convertedFuncCount += 1
