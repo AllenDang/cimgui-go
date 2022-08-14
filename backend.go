@@ -2,9 +2,10 @@ package cimgui
 
 // #include "backend_wrapper.h"
 import "C"
+import "github.com/go-gl/glfw/v3.3/glfw"
 
-func ImGuiImplGlfwInitForOpenGL(window *C.GLFWwindow, installCallbacks bool) bool {
-	return C.ImGui_ImplGlfw_InitForOpenGL(window, C.bool(installCallbacks)) == C.bool(true)
+func ImGuiImplGlfwInitForOpenGL(window *glfw.Window, installCallbacks bool) bool {
+	return C.ImGui_ImplGlfw_InitForOpenGL((*C.GLFWwindow)(window.Handle()), C.bool(installCallbacks)) == C.bool(true)
 }
 
 func ImGuiImplGlfwNewFrame() {
