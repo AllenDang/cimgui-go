@@ -108,6 +108,12 @@ func sizeTW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
+func sizeTPtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*uint64"
+	varName = fmt.Sprintf("(*C.ulong)(%s)", arg.Name)
+	return
+}
+
 func floatW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "float32"
 	varName = fmt.Sprintf("C.float(%s)", arg.Name)
@@ -179,6 +185,12 @@ func imWcharW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
+func imWcharPtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*ImWchar"
+	varName = fmt.Sprintf("(*C.ImWchar)(%s)", arg.Name)
+	return
+}
+
 func intW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "int32"
 	varName = fmt.Sprintf("C.int(%s)", arg.Name)
@@ -189,6 +201,24 @@ func intPtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*int32"
 	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapInt32(%[1]s)\ndefer %[1]sFin()", arg.Name)
 	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
+func uintW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "uint32"
+	varName = fmt.Sprintf("C.uint(%s)", arg.Name)
+	return
+}
+
+func doubleW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "float64"
+	varName = fmt.Sprintf("C.double(%s)", arg.Name)
+	return
+}
+
+func doublePtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*float64"
+	varName = fmt.Sprintf("(*C.double)(%s)", arg.Name)
 	return
 }
 
@@ -204,6 +234,25 @@ func imTextureIDW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
+func imDrawIdxW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "ImDrawIdx"
+	varName = fmt.Sprintf("C.ImDrawIdx(%s)", arg.Name)
+	return
+}
+
+func voidPtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "unsafe.Pointer"
+	varName = arg.Name
+	return
+}
+
+func inputeTextCallbackW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "ImGuiInputTextCallback"
+	//TODO: implement me
+	return
+}
+
+// Wrapper for return value
 type returnWrapper func(f FuncDef) (returnType string, returnStmt string)
 
 func boolReturnW(f FuncDef) (returnType string, returnStmt string) {
@@ -244,28 +293,39 @@ func generateGoWrapper(validFuncs []FuncDef, enumNames []string, structNames []s
 
 // #include "cimgui_wrapper.h"
 import "C"
+import "unsafe"
 
 `)
 
 	argWrapperMap := map[string]typeWrapper{
-		"const char*": constCharW,
-		"size_t":      sizeTW,
-		"float":       floatW,
-		"float*":      floatPtrW,
-		"int":         intW,
-		"int*":        intPtrW,
-		"bool":        boolW,
-		"bool*":       boolPtrW,
-		"int[2]":      int2W,
-		"int[3]":      int3W,
-		"int[4]":      int4W,
-		"ImU32":       u32W,
-		"float[2]":    float2W,
-		"float[3]":    float3W,
-		"float[4]":    float4W,
-		"ImWchar":     imWcharW,
-		"ImGuiID":     imGuiIDW,
-		"ImTextureID": imTextureIDW,
+		"char*":          constCharW,
+		"const char*":    constCharW,
+		"size_t":         sizeTW,
+		"size_t*":        sizeTPtrW,
+		"float":          floatW,
+		"float*":         floatPtrW,
+		"const float*":   floatPtrW,
+		"int":            intW,
+		"int*":           intPtrW,
+		"unsigned int":   uintW,
+		"double":         doubleW,
+		"double*":        doublePtrW,
+		"bool":           boolW,
+		"bool*":          boolPtrW,
+		"int[2]":         int2W,
+		"int[3]":         int3W,
+		"int[4]":         int4W,
+		"ImU32":          u32W,
+		"float[2]":       float2W,
+		"float[3]":       float3W,
+		"float[4]":       float4W,
+		"ImWchar":        imWcharW,
+		"const ImWchar*": imWcharPtrW,
+		"ImGuiID":        imGuiIDW,
+		"ImTextureID":    imTextureIDW,
+		"ImDrawIdx":      imDrawIdxW,
+		"void*":          voidPtrW,
+		"const void*":    voidPtrW,
 	}
 
 	returnWrapperMap := map[string]returnWrapper{
@@ -352,6 +412,7 @@ import "C"
 			}
 
 			if !shouldGenerate {
+				fmt.Println("Unknown arg type: ", a.Type)
 				break
 			}
 		}
@@ -361,7 +422,7 @@ import "C"
 		}
 
 		if !shouldGenerate {
-			fmt.Printf("%s%s\n", f.FuncName, f.Args)
+			// fmt.Printf("%s%s\n", f.FuncName, f.Args)
 			continue
 		}
 
@@ -433,7 +494,7 @@ import "C"
 
 				convertedFuncCount += 1
 			} else {
-				fmt.Printf("%s%s -> %s\n", f.FuncName, f.Args, f.Ret)
+				// fmt.Printf("%s%s -> %s\n", f.FuncName, f.Args, f.Ret)
 			}
 		}
 	}
