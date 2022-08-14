@@ -460,6 +460,17 @@ import "unsafe"
 				sb.WriteString("}\n\n")
 
 				convertedFuncCount += 1
+			} else if funk.ContainsString(enumNames, f.Ret) {
+				returnType := f.Ret
+
+				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", f.FuncName, strings.Join(args, ","), returnType))
+
+				argInvokeStmt := argStmtFunc()
+
+				sb.WriteString(fmt.Sprintf("return %s(%s)", f.Ret, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+				sb.WriteString("}\n\n")
+
+				convertedFuncCount += 1
 			} else if strings.HasSuffix(f.Ret, "*") && (funk.Contains(structNames, strings.TrimRight(f.Ret, "*")) || funk.Contains(structNames, strings.TrimRight(strings.TrimLeft(f.Ret, "const "), "*"))) {
 				// return Im struct ptr
 				pureReturnType := strings.TrimLeft(f.Ret, "const ")
