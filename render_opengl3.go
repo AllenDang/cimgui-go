@@ -193,10 +193,10 @@ func (renderer *OpenGL3) Render(displaySize [2]float32, framebufferSize [2]float
 				gl.BindTexture(gl.TEXTURE_2D, uint32(cmd.TextureID()))
 				gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, renderer.textureMinFilter) // minification filter
 				gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, renderer.textureMagFilter) // magnification filter
-				clipRect := cmd.ClipRect
+				clipRect := cmd.C().ClipRect
 				gl.Scissor(int32(clipRect.x), int32(fbHeight)-int32(clipRect.w), int32(clipRect.z-clipRect.x), int32(clipRect.w-clipRect.y))
-				gl.DrawElementsBaseVertexWithOffset(gl.TRIANGLES, int32(cmd.ElemCount), uint32(drawType),
-					uintptr(uint(cmd.IdxOffset)*uint(indexSize)), int32(cmd.VtxOffset))
+				gl.DrawElementsBaseVertexWithOffset(gl.TRIANGLES, int32(cmd.C().ElemCount), uint32(drawType),
+					uintptr(uint(cmd.C().IdxOffset)*uint(indexSize)), int32(cmd.C().VtxOffset))
 			}
 			// indexBufferOffset += uintptr(cmd.ElementCount() * indexSize)
 		}

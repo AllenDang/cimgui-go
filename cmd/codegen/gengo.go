@@ -62,12 +62,22 @@ func generateGoEnums(enums []EnumDef) []string {
 }
 
 func generateGoStructs(structs []StructDef) []string {
+	valueTypeStructs := []string{
+		"ImVec1",
+		"ImVec2ih",
+		"ImVec2",
+		"ImVec4",
+		"ImRect",
+		"ImColor",
+	}
+
 	var sb strings.Builder
 
 	sb.WriteString(`package cimgui
 
- // #include "cimgui_wrapper.h"
- import "C"
+// #include "cimgui_wrapper.h"
+import "C"
+import "unsafe"
 
 `)
 
@@ -75,10 +85,28 @@ func generateGoStructs(structs []StructDef) []string {
 	var structNames []string
 
 	for _, s := range structs {
-		if strings.HasPrefix(s.Name, "Im") {
-			sb.WriteString(fmt.Sprintf("type %[1]s C.%[1]s\n", s.Name))
-			structNames = append(structNames, s.Name)
+		if !strings.HasPrefix(s.Name, "Im") {
+			continue
 		}
+
+		// Skip all value type struct
+		if funk.ContainsString(valueTypeStructs, s.Name) {
+			continue
+		}
+
+		sb.WriteString(fmt.Sprintf(`type %[1]s uintptr
+
+func (data %[1]s) handle() *C.%[1]s {
+  return (*C.%[1]s)(unsafe.Pointer(data))
+}
+
+func (data %[1]s) C() C.%[1]s {
+  return *(data.handle())
+}
+
+`, s.Name))
+
+		structNames = append(structNames, s.Name)
 	}
 
 	structFile, err := os.Create("structs.go")
@@ -246,6 +274,44 @@ func voidPtrW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
+func valueStructW(sName, sType string) (argType string, def string, varName string) {
+	argType = sType
+	varName = fmt.Sprintf("%s.ToC()", sName)
+	return
+}
+
+func imVec2W(arg ArgDef) (argType string, def string, varName string) {
+	return valueStructW(arg.Name, "ImVec2")
+}
+
+func imVec2PtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*ImVec2"
+	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := %[1]s.wrap()
+defer %[1]sFin()`, arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
+func imVec4W(arg ArgDef) (argType string, def string, varName string) {
+	return valueStructW(arg.Name, "ImVec4")
+}
+
+func imVec4PtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*ImVec4"
+	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := %[1]s.wrap()
+defer %[1]sFin()`, arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
+func imColorPtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*ImColor"
+	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := %[1]s.wrap()
+defer %[1]sFin()`, arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
 func inputeTextCallbackW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "ImGuiInputTextCallback"
 	//TODO: implement me
@@ -285,7 +351,7 @@ func constWCharPtrReturnW(f FuncDef) (returnType string, returnStmt string) {
 	return
 }
 
-func generateGoWrapper(validFuncs []FuncDef, enumNames []string, structNames []string) {
+func generateGoFuncs(validFuncs []FuncDef, enumNames []string, structNames []string) {
 	var sb strings.Builder
 	convertedFuncCount := 0
 
@@ -326,6 +392,12 @@ import "unsafe"
 		"ImDrawIdx":      imDrawIdxW,
 		"void*":          voidPtrW,
 		"const void*":    voidPtrW,
+		"const ImVec2":   imVec2W,
+		"const ImVec2*":  imVec2PtrW,
+		"ImVec2*":        imVec2PtrW,
+		"const ImVec4":   imVec4W,
+		"ImVec4*":        imVec4PtrW,
+		"ImColor*":       imColorPtrW,
 	}
 
 	returnWrapperMap := map[string]returnWrapper{
@@ -387,24 +459,14 @@ import "unsafe"
 				shouldGenerate = true
 			}
 
-			if funk.ContainsString(structNames, a.Type) || funk.Contains(structNames, strings.TrimLeft(a.Type, "const ")) {
-				aType := strings.TrimLeft(a.Type, "const ")
-				args = append(args, fmt.Sprintf("%s %s", a.Name, aType))
-				argWrappers = append(argWrappers, argOutput{
-					VarName: fmt.Sprintf("C.%s(%s)", aType, a.Name),
-				})
-
-				shouldGenerate = true
-			}
-
 			if strings.HasSuffix(a.Type, "*") {
 				pureType := strings.TrimLeft(a.Type, "const ")
 				pureType = strings.TrimRight(pureType, "*")
 
 				if funk.ContainsString(structNames, pureType) {
-					args = append(args, fmt.Sprintf("%s *%s", a.Name, pureType))
+					args = append(args, fmt.Sprintf("%s %s", a.Name, pureType))
 					argWrappers = append(argWrappers, argOutput{
-						VarName: fmt.Sprintf("(*C.%s)(%s)", pureType, a.Name),
+						VarName: fmt.Sprintf("%s.handle()", a.Name),
 					})
 
 					shouldGenerate = true
@@ -476,11 +538,11 @@ import "unsafe"
 				pureReturnType := strings.TrimLeft(f.Ret, "const ")
 				pureReturnType = strings.TrimRight(pureReturnType, "*")
 
-				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", f.FuncName, strings.Join(args, ","), "*"+pureReturnType))
+				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", f.FuncName, strings.Join(args, ","), pureReturnType))
 
 				argInvokeStmt := argStmtFunc()
 
-				sb.WriteString(fmt.Sprintf("return (*%s)(%s)", pureReturnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+				sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(%s))", pureReturnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 				sb.WriteString("}\n\n")
 
 				convertedFuncCount += 1
@@ -495,11 +557,11 @@ import "unsafe"
 					continue
 				}
 
-				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", f.FuncName, strings.Join(args, ","), "*"+returnType))
+				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", f.FuncName, strings.Join(args, ","), returnType))
 
 				argInvokeStmt := argStmtFunc()
 
-				sb.WriteString(fmt.Sprintf("return (*%s)(C.%s(%s))", returnType, f.FuncName, argInvokeStmt))
+				sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", returnType, f.FuncName, argInvokeStmt))
 
 				sb.WriteString("}\n\n")
 

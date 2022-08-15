@@ -151,5 +151,5 @@ func main() {
 
 	enumNames := generateGoEnums(enums)
 	structNames := generateGoStructs(structs)
-	generateGoWrapper(validFuncs, enumNames, structNames)
+	generateGoFuncs(validFuncs, enumNames, structNames)
 }
