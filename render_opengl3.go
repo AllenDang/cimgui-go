@@ -6,7 +6,7 @@ import (
 	"image"
 	"unsafe"
 
-	"github.com/go-gl/gl/v3.3-core/gl"
+	"github.com/go-gl/gl/v3.2-core/gl"
 )
 
 // RGBA32Image represents a imgui backed 32-bit RGBA (8 bits per channel) value image.
@@ -177,7 +177,6 @@ func (renderer *OpenGL3) Render(displaySize [2]float32, framebufferSize [2]float
 	// Draw
 	for _, list := range drawData.CommandLists() {
 		// var indexBufferOffset uintptr
-
 		vertexBuffer, vertexBufferSize := list.GetVertexBuffer()
 		gl.BindBuffer(gl.ARRAY_BUFFER, renderer.vboHandle)
 		gl.BufferData(gl.ARRAY_BUFFER, vertexBufferSize, vertexBuffer, gl.STREAM_DRAW)
@@ -310,7 +309,7 @@ func (renderer *OpenGL3) SetFontTexture(image *RGBA32Image) {
 	// Delete old font texture
 	if renderer.fontTexture != 0 {
 		gl.DeleteTextures(1, &renderer.fontTexture)
-		io.GetFonts().SetTextureID(ImTextureID(uintptr(0)))
+		io.GetFonts().SetTextureID(ImTextureID(0))
 		renderer.fontTexture = 0
 	}
 
@@ -364,7 +363,7 @@ func (renderer *OpenGL3) invalidateDeviceObjects() {
 
 	if renderer.fontTexture != 0 {
 		gl.DeleteTextures(1, &renderer.fontTexture)
-		GetIO().GetFonts().SetTextureID(ImTextureID(uintptr(0)))
+		GetIO().GetFonts().SetTextureID(ImTextureID(0))
 		renderer.fontTexture = 0
 	}
 }
@@ -416,7 +415,7 @@ func (renderer *OpenGL3) LoadImage(image *image.RGBA) (ImTextureID, error) {
 
 func (renderer *OpenGL3) ReleaseImage(textureId ImTextureID) {
 	gl.BindTexture(gl.TEXTURE_2D, 0)
-	handle := uint32(uintptr(textureId))
+	handle := uint32(textureId)
 	gl.DeleteTextures(1, &handle)
 }
 
@@ -435,5 +434,5 @@ func (renderer *OpenGL3) createImageTexture(img *image.RGBA) (ImTextureID, error
 	// Restore state
 	gl.BindTexture(gl.TEXTURE_2D, uint32(lastTexture))
 
-	return ImTextureID(uintptr(handle)), nil
+	return ImTextureID(handle), nil
 }

@@ -69,6 +69,13 @@ func (io ImGuiIO) GetFonts() ImFontAtlas {
 	return (ImFontAtlas)(unsafe.Pointer(io.C().Fonts))
 }
 
+func (io ImGuiIO) SetIniFilename(name string) {
+	nameArg, nameFin := wrapString(name)
+	defer nameFin()
+
+	C.ImGuiIO_SetIniFilename(io.handle(), nameArg)
+}
+
 func (d ImDrawData) ScaleClipRects(width, height float32) {
 	DrawData_ScaleClipRects(d, ImVec2{X: width, Y: height})
 }
@@ -90,7 +97,7 @@ func (d ImDrawData) getDrawListAt(idx int) ImDrawList {
 
 func (d ImDrawList) GetVertexBuffer() (unsafe.Pointer, int) {
 	buffer := d.C().VtxBuffer.Data
-	bufferSize := C.sizeof_ImDrawIdx * d.C().VtxBuffer.Size
+	bufferSize := C.sizeof_ImDrawVert * d.C().VtxBuffer.Size
 	return unsafe.Pointer(buffer), int(bufferSize)
 }
 

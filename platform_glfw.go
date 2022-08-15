@@ -117,6 +117,7 @@ func NewGLFW(io ImGuiIO, title string, width, height int, flags GLFWWindowFlags)
 	platform.mouseCursors[ImGuiMouseCursor_ResizeEW] = glfw.CreateStandardCursor(glfw.HResizeCursor)
 	platform.mouseCursors[ImGuiMouseCursor_ResizeNS] = glfw.CreateStandardCursor(glfw.VResizeCursor)
 
+	// TODO: implement clipboard support
 	// io.SetClipboard(NewGLFWClipboard(window))
 
 	if flags&GLFWWindowFlagsMaximized == 0 {
