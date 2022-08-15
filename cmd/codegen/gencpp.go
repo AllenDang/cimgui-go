@@ -5,6 +5,8 @@ import (
 	"os"
 	"strings"
 	"unicode"
+
+	"github.com/thoas/go-funk"
 )
 
 // Generate cpp wrapper and return valid functions
@@ -154,4 +156,55 @@ extern "C" {
 	}
 
 	return validFuncs
+}
+
+func generateCppStructsAccessor(structs []StructDef) {
+	skipFuncNames := []string{
+		"ImGuiIO_SetAppAcceptingEvents",
+		"ImGuiDockNode_SetLocalFlags",
+		"ImFontAtlas_SetTexID",
+	}
+	var sb strings.Builder
+
+	sb.WriteString(`#pragma once
+
+#include "cimgui_wrapper.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+`)
+
+	for _, s := range structs {
+		for _, m := range s.Members {
+			if strings.Contains(m.Name, "[") || strings.Contains(m.Type, "(") || strings.Contains(m.Type, "union") {
+				continue
+			}
+
+			setterFuncName := fmt.Sprintf("%[1]s_Set%[2]s", s.Name, m.Name)
+			if funk.ContainsString(skipFuncNames, setterFuncName) {
+				continue
+			}
+
+			sb.WriteString(fmt.Sprintf("void %[1]s_Set%[2]s(%[1]s *%[3]s, %[4]s v) { %[3]s->%[2]s = v; }\n", s.Name, m.Name, s.Name+"Ptr", m.Type))
+		}
+	}
+
+	sb.WriteString(`
+#ifdef __cplusplus
+}
+#endif
+`)
+
+	cppFile, err := os.Create("cimgui_structs_accessor.h")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer cppFile.Close()
+
+	_, err = cppFile.WriteString(sb.String())
+	if err != nil {
+		panic(err.Error())
+	}
 }

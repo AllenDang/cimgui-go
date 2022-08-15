@@ -1,13 +1,13 @@
 package cimgui
 
 // #include "cimgui_wrapper.h"
+// #include "cimgui_structs_accessor.h"
 // #include "util.h"
 import "C"
 import "unsafe"
 
 func (io ImGuiIO) SetBackendFlags(flags ImGuiBackendFlags) {
-	ioC := io.C()
-	ioC.BackendFlags = C.ImGuiBackendFlags(flags)
+	C.ImGuiIO_SetBackendFlags(io.handle(), C.ImGuiBackendFlags(flags))
 }
 
 func (io ImGuiIO) GetBackendFlags() ImGuiBackendFlags {
@@ -18,30 +18,23 @@ func (io ImGuiIO) SetBackendPlatformName(name string) {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
-	ioC := io.C()
-	ioC.BackendPlatformName = nameArg
+	C.ImGuiIO_SetBackendPlatformName(io.handle(), nameArg)
 }
 
 func (io ImGuiIO) SetDisplaySize(width, height float32) {
-	ioC := io.C()
-	ioC.DisplaySize.x = C.float(width)
-	ioC.DisplaySize.y = C.float(height)
+	C.ImGuiIO_SetDisplaySize(io.handle(), ImVec2{X: width, Y: height}.ToC())
 }
 
 func (io ImGuiIO) SetDeltaTime(delta float32) {
-	ioC := io.C()
-	ioC.DeltaTime = C.float(delta)
+	C.ImGuiIO_SetDeltaTime(io.handle(), C.float(delta))
 }
 
 func (io ImGuiIO) SetMousePos(x, y float32) {
-	ioC := io.C()
-	ioC.MousePos.x = C.float(x)
-	ioC.MousePos.y = C.float(y)
+	C.ImGuiIO_SetMousePos(io.handle(), ImVec2{X: x, Y: y}.ToC())
 }
 
 func (io ImGuiIO) SetMouseButtonDown(i int, down bool) {
-	ioC := io.C()
-	ioC.MouseDown[i] = C.bool(down)
+	//TODO: implement this
 }
 
 func (io ImGuiIO) GetConfigFlags() ImGuiConfigFlags {

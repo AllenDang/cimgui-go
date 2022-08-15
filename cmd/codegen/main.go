@@ -151,5 +151,6 @@ func main() {
 
 	enumNames := generateGoEnums(enums)
 	structNames := generateGoStructs(structs)
+	generateCppStructsAccessor(structs)
 	generateGoFuncs(validFuncs, enumNames, structNames)
 }
