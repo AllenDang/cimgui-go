@@ -20,11 +20,11 @@ func TestSetIOCofigFlags(t *testing.T) {
 		t.Error("get io failed")
 	}
 
-	io.SetBackendFlags(ImGuiConfigFlags_DockingEnable)
+	io.SetBackendFlags(ImGuiBackendFlags_RendererHasVtxOffset)
 
 	flags := io.GetBackendFlags()
-	if flags != ImGuiConfigFlags_DockingEnable {
+	if flags != ImGuiBackendFlags_RendererHasVtxOffset {
 		t.Error("set io backend flags failed")
-		t.Errorf("expect: %v got %v", ImGuiConfigFlags_DockingEnable, flags)
+		t.Errorf("expect: %v got %v", ImGuiBackendFlags_RendererHasVtxOffset, flags)
 	}
 }
