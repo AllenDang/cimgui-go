@@ -6,7 +6,7 @@ import (
 
 func TestGetVersion(t *testing.T) {
 	v := GetVersion()
-	if v != "1.89 WIP" {
+	if v != "1.88" {
 		t.Error("imgui version should be 1.88")
 	}
 }

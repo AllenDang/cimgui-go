@@ -127,3 +127,16 @@ func (d ImDrawCmd) TextureID() uintptr {
 func (f ImFontAtlas) SetTextureID(id ImTextureID) {
 	FontAtlas_SetTexID(f, id)
 }
+
+func (f ImFontAtlas) GetTextureDataRGBA32() *RGBA32Image {
+	var pixels *C.uchar
+	var width int32
+	var height int32
+	var bytesPerPixel int32
+	FontAtlas_GetTexDataAsRGBA32(f, pixels, &width, &height, &bytesPerPixel)
+	return &RGBA32Image{
+		Width:  int(width),
+		Height: int(height),
+		Pixels: unsafe.Pointer(pixels),
+	}
+}

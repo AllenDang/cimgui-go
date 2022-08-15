@@ -130,6 +130,12 @@ defer %[1]sFin()`, arg.Name)
 	return
 }
 
+func uCharPtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*C.uchar"
+	varName = fmt.Sprintf("&%s", arg.Name)
+	return
+}
+
 func sizeTW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "uint64"
 	varName = fmt.Sprintf("C.ulong(%s)", arg.Name)
@@ -364,40 +370,41 @@ import "unsafe"
 `)
 
 	argWrapperMap := map[string]typeWrapper{
-		"char*":          constCharW,
-		"const char*":    constCharW,
-		"size_t":         sizeTW,
-		"size_t*":        sizeTPtrW,
-		"float":          floatW,
-		"float*":         floatPtrW,
-		"const float*":   floatPtrW,
-		"int":            intW,
-		"int*":           intPtrW,
-		"unsigned int":   uintW,
-		"double":         doubleW,
-		"double*":        doublePtrW,
-		"bool":           boolW,
-		"bool*":          boolPtrW,
-		"int[2]":         int2W,
-		"int[3]":         int3W,
-		"int[4]":         int4W,
-		"ImU32":          u32W,
-		"float[2]":       float2W,
-		"float[3]":       float3W,
-		"float[4]":       float4W,
-		"ImWchar":        imWcharW,
-		"const ImWchar*": imWcharPtrW,
-		"ImGuiID":        imGuiIDW,
-		"ImTextureID":    imTextureIDW,
-		"ImDrawIdx":      imDrawIdxW,
-		"void*":          voidPtrW,
-		"const void*":    voidPtrW,
-		"const ImVec2":   imVec2W,
-		"const ImVec2*":  imVec2PtrW,
-		"ImVec2*":        imVec2PtrW,
-		"const ImVec4":   imVec4W,
-		"ImVec4*":        imVec4PtrW,
-		"ImColor*":       imColorPtrW,
+		"char*":           constCharW,
+		"const char*":     constCharW,
+		"unsigned char**": uCharPtrW,
+		"size_t":          sizeTW,
+		"size_t*":         sizeTPtrW,
+		"float":           floatW,
+		"float*":          floatPtrW,
+		"const float*":    floatPtrW,
+		"int":             intW,
+		"int*":            intPtrW,
+		"unsigned int":    uintW,
+		"double":          doubleW,
+		"double*":         doublePtrW,
+		"bool":            boolW,
+		"bool*":           boolPtrW,
+		"int[2]":          int2W,
+		"int[3]":          int3W,
+		"int[4]":          int4W,
+		"ImU32":           u32W,
+		"float[2]":        float2W,
+		"float[3]":        float3W,
+		"float[4]":        float4W,
+		"ImWchar":         imWcharW,
+		"const ImWchar*":  imWcharPtrW,
+		"ImGuiID":         imGuiIDW,
+		"ImTextureID":     imTextureIDW,
+		"ImDrawIdx":       imDrawIdxW,
+		"void*":           voidPtrW,
+		"const void*":     voidPtrW,
+		"const ImVec2":    imVec2W,
+		"const ImVec2*":   imVec2PtrW,
+		"ImVec2*":         imVec2PtrW,
+		"const ImVec4":    imVec4W,
+		"ImVec4*":         imVec4PtrW,
+		"ImColor*":        imColorPtrW,
 	}
 
 	returnWrapperMap := map[string]returnWrapper{
