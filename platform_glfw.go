@@ -576,8 +576,7 @@ var glfwButtonIDByIndex = map[int]glfw.MouseButton{
 }
 
 func (platform *GLFW) onFocus(window *glfw.Window, focused bool) {
-	//TODO: implement there
-	// platform.imguiIO.AddFocusEvent(focused)
+	platform.imguiIO.AddFocusEvent(focused)
 }
 
 func (platform *GLFW) onClose(window *glfw.Window) {

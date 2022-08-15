@@ -34,7 +34,7 @@ func (io ImGuiIO) SetMousePos(x, y float32) {
 }
 
 func (io ImGuiIO) SetMouseButtonDown(i int, down bool) {
-	//TODO: implement this
+	C.ImGuiIO_SetMouseButtonDown(io.handle(), C.int(i), C.bool(down))
 }
 
 func (io ImGuiIO) GetConfigFlags() ImGuiConfigFlags {
@@ -47,12 +47,14 @@ func (io ImGuiIO) GetMouseDrawCursor() bool {
 
 func (io ImGuiIO) AddMouseWheelDelta(horizontal, vertical float32) {
 	ioC := io.C()
-	ioC.MouseWheel += C.float(vertical)
-	ioC.MouseWheelH += C.float(horizontal)
+	v := ioC.MouseWheel + C.float(vertical)
+	h := ioC.MouseWheelH + C.float(horizontal)
+	C.ImGuiIO_SetMouseWheel(io.handle(), v)
+	C.ImGuiIO_SetMouseWheelH(io.handle(), h)
 }
 
 func (io ImGuiIO) AddFocusEvent(focused bool) {
-	//TODO: implement this
+	IO_AddFocusEvent(io, focused)
 }
 
 func (io ImGuiIO) AddKeyEvent(key ImGuiKey, down bool) {
@@ -68,8 +70,7 @@ func (io ImGuiIO) GetFonts() ImFontAtlas {
 }
 
 func (d ImDrawData) ScaleClipRects(width, height float32) {
-	// TODO: implement this
-	// DrawData_ScaleClipRects(d, ImVec2{X: width, Y: height}.ToC())
+	DrawData_ScaleClipRects(d, ImVec2{X: width, Y: height})
 }
 
 // Commands returns the list of draw commands.

@@ -17,6 +17,8 @@ extern ImDrawCmd *DrawList_GetDrawCmdAt(ImDrawList *self, int idx);
 
 extern void DrawCmd_CallUserCallback(ImDrawList *list, ImDrawCmd *cmd);
 
+extern void ImGuiIO_SetMouseButtonDown(ImGuiIO *self, int btnIndex, bool isDown);
+
 #ifdef __cplusplus
 }
 #endif

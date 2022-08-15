@@ -27,3 +27,5 @@ ImDrawCmd *DrawList_GetDrawCmdAt(ImDrawList *self, int idx) {
 }
 
 void DrawCmd_CallUserCallback(ImDrawList *list, ImDrawCmd *cmd) { cmd->UserCallback(list, cmd); }
+
+void ImGuiIO_SetMouseButtonDown(ImGuiIO *self, int btnIndex, bool isDown) { self->MouseDown[btnIndex] = isDown; }
