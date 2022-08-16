@@ -2,7 +2,6 @@ package cimgui
 
 // #include "cimgui_wrapper.h"
 // #include "cimgui_structs_accessor.h"
-// #include "clipboard.h"
 // #include "util.h"
 import "C"
 import "unsafe"
@@ -13,6 +12,14 @@ func (io ImGuiIO) SetBackendFlags(flags ImGuiBackendFlags) {
 
 func (io ImGuiIO) GetBackendFlags() ImGuiBackendFlags {
 	return ImGuiBackendFlags(io.C().BackendFlags)
+}
+
+func (io ImGuiIO) SetConfigFlags(flags ImGuiConfigFlags) {
+	C.ImGuiIO_SetConfigFlags(io.handle(), C.ImGuiConfigFlags(flags))
+}
+
+func (io ImGuiIO) GetConfigFlags() ImGuiConfigFlags {
+	return ImGuiConfigFlags(io.C().ConfigFlags)
 }
 
 func (io ImGuiIO) SetBackendPlatformName(name string) {
@@ -36,10 +43,6 @@ func (io ImGuiIO) SetMousePos(x, y float32) {
 
 func (io ImGuiIO) SetMouseButtonDown(i int, down bool) {
 	C.ImGuiIO_SetMouseButtonDown(io.handle(), C.int(i), C.bool(down))
-}
-
-func (io ImGuiIO) GetConfigFlags() ImGuiConfigFlags {
-	return ImGuiConfigFlags(io.C().ConfigFlags)
 }
 
 func (io ImGuiIO) GetMouseDrawCursor() bool {
@@ -75,24 +78,6 @@ func (io ImGuiIO) SetIniFilename(name string) {
 	defer nameFin()
 
 	C.ImGuiIO_SetIniFilename(io.handle(), nameArg)
-}
-
-// SetClipboard registers a clipboard for text copy/paste actions.
-// If no clipboard is set, then a fallback implementation may be used, if available for the OS.
-// To disable clipboard handling overall, pass nil as the Clipboard.
-//
-// Since ImGui queries the clipboard text via a return value, the wrapper has to hold the
-// current clipboard text as a copy in memory. This memory will be freed at the next clipboard operation.
-func (io ImGuiIO) SetClipboard(board Clipboard) {
-	dropLastClipboardText()
-
-	if board != nil {
-		clipboards[io.handle()] = board
-		C.ImGuiIO_RegisterClipboardFunctions(io.handle())
-	} else {
-		C.ImGuiIO_ClearClipboardFunctions(io.handle())
-		delete(clipboards, io.handle())
-	}
 }
 
 func (d ImDrawData) ScaleClipRects(width, height float32) {
@@ -147,23 +132,10 @@ func (d ImDrawCmd) CallUserCallback(list ImDrawList) {
 	C.DrawCmd_CallUserCallback(list.handle(), d.handle())
 }
 
-func (d ImDrawCmd) TextureID() uintptr {
-	return uintptr(d.C().TextureId)
+func (d ImDrawCmd) TextureID() ImTextureID {
+	return ImTextureID(d.C().TextureId)
 }
 
 func (f ImFontAtlas) SetTextureID(id ImTextureID) {
 	FontAtlas_SetTexID(f, id)
-}
-
-func (f ImFontAtlas) GetTextureDataRGBA32() *RGBA32Image {
-	var pixels *C.uchar
-	var width int32
-	var height int32
-	var bytesPerPixel int32
-	FontAtlas_GetTexDataAsRGBA32(f, pixels, &width, &height, &bytesPerPixel)
-	return &RGBA32Image{
-		Width:  int(width),
-		Height: int(height),
-		Pixels: unsafe.Pointer(pixels),
-	}
 }

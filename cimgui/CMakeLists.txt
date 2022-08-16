@@ -25,6 +25,15 @@ set(IMGUI_STATIC "no" CACHE STRING "Build as a static library")
 set(IMGUI_FREETYPE "no" CACHE STRING "Build with freetype library")
 set(IMGUI_LIBRARIES )
 
+#glfw
+find_package(glfw3 3.3 REQUIRED)
+list(APPEND IMGUI_SOURCES imgui/backends/imgui_impl_glfw.cpp)
+list(APPEND IMGUI_LIBRARIES glfw)
+
+#opengl3
+list(APPEND IMGUI_SOURCES imgui/backends/imgui_impl_opengl3.cpp)
+list(APPEND IMGUI_LIBRARIES GL)
+
 if(IMGUI_FREETYPE)
 	FIND_PACKAGE(freetype REQUIRED PATHS ${FREETYPE_PATH})
 	list(APPEND IMGUI_LIBRARIES freetype)

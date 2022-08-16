@@ -1,4 +1,4 @@
-// dear imgui, v1.88
+// dear imgui, v1.89 WIP
 // (tables and columns code)
 
 /*
@@ -1105,18 +1105,10 @@ void ImGui::TableUpdateLayout(ImGuiTable* table)
     table->IsUsingHeaders = false;
 
     // [Part 11] Context menu
-    if (table->IsContextPopupOpen && table->InstanceCurrent == table->InstanceInteracted)
+    if (TableBeginContextMenuPopup(table))
     {
-        const ImGuiID context_menu_id = ImHashStr("##ContextMenu", 0, table->ID);
-        if (BeginPopupEx(context_menu_id, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoSavedSettings))
-        {
-            TableDrawContextMenu(table);
-            EndPopup();
-        }
-        else
-        {
-            table->IsContextPopupOpen = false;
-        }
+        TableDrawContextMenu(table);
+        EndPopup();
     }
 
     // [Part 13] Sanitize and build sort specs before we have a change to use them for display.
@@ -1725,6 +1717,8 @@ void ImGui::TableBeginRow(ImGuiTable* table)
     table->RowTextBaseline = 0.0f;
     table->RowIndentOffsetX = window->DC.Indent.x - table->HostIndentX; // Lock indent
     window->DC.PrevLineTextBaseOffset = 0.0f;
+    window->DC.CurrLineSize = ImVec2(0.0f, 0.0f);
+    window->DC.IsSameLine = false;
     window->DC.CursorMaxPos.y = next_y1;
 
     // Making the header BG color non-transparent will allow us to overlay it multiple times when handling smooth dragging.
@@ -3035,6 +3029,17 @@ void ImGui::TableOpenContextMenu(int column_n)
     }
 }
 
+bool ImGui::TableBeginContextMenuPopup(ImGuiTable* table)
+{
+    if (!table->IsContextPopupOpen || table->InstanceCurrent != table->InstanceInteracted)
+        return false;
+    const ImGuiID context_menu_id = ImHashStr("##ContextMenu", 0, table->ID);
+    if (BeginPopupEx(context_menu_id, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoSavedSettings))
+        return true;
+    table->IsContextPopupOpen = false;
+    return false;
+}
+
 // Output context menu into current window (generally a popup)
 // FIXME-TABLE: Ideally this should be writable by the user. Full programmatic access to that data?
 void ImGui::TableDrawContextMenu(ImGuiTable* table)
@@ -3954,6 +3959,7 @@ void ImGui::NextColumn()
     {
         // New row/line: column 0 honor IndentX.
         window->DC.ColumnsOffset.x = ImMax(column_padding - window->WindowPadding.x, 0.0f);
+        window->DC.IsSameLine = false;
         columns->LineMinY = columns->LineMaxY;
     }
     window->DC.CursorPos.x = IM_FLOOR(window->Pos.x + window->DC.Indent.x + window->DC.ColumnsOffset.x);

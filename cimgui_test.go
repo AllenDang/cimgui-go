@@ -4,13 +4,6 @@ import (
 	"testing"
 )
 
-func TestGetVersion(t *testing.T) {
-	v := GetVersion()
-	if v != "1.88" {
-		t.Error("imgui version should be 1.88")
-	}
-}
-
 func TestSetIOCofigFlags(t *testing.T) {
 	CreateContext(0)
 	defer DestroyContext(0)
