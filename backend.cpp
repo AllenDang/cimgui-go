@@ -5,7 +5,7 @@
 #include "backend.h"
 #include "cimgui/cimgui.h"
 #include "cimgui/cimgui_impl.h"
-#include <GLFW/glfw3.h> // Will drag system OpenGL headers
+#include "thirdparty/glfw/include/GLFW/glfw3.h" // Will drag system OpenGL headers
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to
 // maximize ease of testing and compatibility with old VS compilers. To link
@@ -13,20 +13,17 @@
 // legacy_stdio_definitions.lib, which we do using this pragma. Your own project
 // should not be affected, as you are likely to link with a newer binary of GLFW
 // that is adequate for your version of Visual Studio.
-#if defined(_MSC_VER) && (_MSC_VER >= 1900) &&                                 \
-    !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
+#if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
 
-static void glfw_error_callback(int error, const char *description) {
-  fprintf(stderr, "Glfw Error %d: %s\n", error, description);
-}
+static void glfw_error_callback(int error, const char *description) { fprintf(stderr, "Glfw Error %d: %s\n", error, description); }
 
-int Launch_GLFW_OpenGL3() {
+GLFWwindow *igCreateGlfwWindow(const char *title, int width, int height) {
   // Setup window
   glfwSetErrorCallback(glfw_error_callback);
   if (!glfwInit())
-    return 1;
+    return NULL;
 
     // Decide GL+GLSL versions
 #if defined(IMGUI_IMPL_OPENGL_ES2)
@@ -52,18 +49,16 @@ int Launch_GLFW_OpenGL3() {
 #endif
 
   // Create window with graphics context
-  GLFWwindow *window = glfwCreateWindow(
-      1280, 720, "Dear ImGui GLFW+OpenGL3 example", NULL, NULL);
+  GLFWwindow *window = glfwCreateWindow(width, height, title, NULL, NULL);
   if (window == NULL)
-    return 1;
+    return NULL;
   glfwMakeContextCurrent(window);
   glfwSwapInterval(1); // Enable vsync
 
   // Setup Dear ImGui context
   igCreateContext(0);
   ImGuiIO *io = igGetIO();
-  io->ConfigFlags |=
-      ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+  io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
   // io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad
   // Controls
   io->ConfigFlags |= ImGuiConfigFlags_DockingEnable;   // Enable Docking
@@ -89,6 +84,12 @@ int Launch_GLFW_OpenGL3() {
   // Setup Platform/Renderer backends
   ImGui_ImplGlfw_InitForOpenGL(window, true);
   ImGui_ImplOpenGL3_Init(glsl_version);
+
+  return window;
+}
+
+void igRunLoop(GLFWwindow *window, VoidCallback loop) {
+  ImGuiIO *io = igGetIO();
 
   // Load Fonts
   // - If no fonts are loaded, dear imgui will use the default font. You can
@@ -141,19 +142,17 @@ int Launch_GLFW_OpenGL3() {
     ImGui_ImplGlfw_NewFrame();
     igNewFrame();
 
-    // 1. Show the big demo window (Most of the sample code is in
-    // igShowDemoWindow()! You can browse its code to learn more about Dear
-    // ImGui!).
-    if (show_demo_window)
-      igShowDemoWindow(&show_demo_window);
+    // Do ui stuff here
+    if (loop != NULL) {
+      loop();
+    }
 
     // Rendering
     igRender();
     int display_w, display_h;
     glfwGetFramebufferSize(window, &display_w, &display_h);
     glViewport(0, 0, display_w, display_h);
-    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w,
-                 clear_color.z * clear_color.w, clear_color.w);
+    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
     glClear(GL_COLOR_BUFFER_BIT);
     ImGui_ImplOpenGL3_RenderDrawData(igGetDrawData());
 
@@ -180,5 +179,5 @@ int Launch_GLFW_OpenGL3() {
   glfwDestroyWindow(window);
   glfwTerminate();
 
-  return 0;
+  return;
 }
