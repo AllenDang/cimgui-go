@@ -17,7 +17,18 @@
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
 
+#define TARGET_FPS 30
+#define MAX_EXTRA_FRAME_COUNT 30
+int extra_frame_count = MAX_EXTRA_FRAME_COUNT;
+
+void glfw_render(GLFWwindow *window, VoidCallback renderLoop);
+
 static void glfw_error_callback(int error, const char *description) { fprintf(stderr, "Glfw Error %d: %s\n", error, description); }
+
+void glfw_window_refresh_callback(GLFWwindow *window) {
+  VoidCallback loopFunc = (VoidCallback)(glfwGetWindowUserPointer(window));
+  glfw_render(window, loopFunc);
+}
 
 GLFWwindow *igCreateGlfwWindow(const char *title, int width, int height) {
   // Setup window
@@ -85,7 +96,57 @@ GLFWwindow *igCreateGlfwWindow(const char *title, int width, int height) {
   ImGui_ImplGlfw_InitForOpenGL(window, true);
   ImGui_ImplOpenGL3_Init(glsl_version);
 
+  // Install extra callback
+  glfwSetWindowRefreshCallback(window, glfw_window_refresh_callback);
+
   return window;
+}
+
+void igRefresh() { glfwPostEmptyEvent(); }
+
+void glfw_render(GLFWwindow *window, VoidCallback renderLoop) {
+  // Start the Dear ImGui frame
+  ImGui_ImplOpenGL3_NewFrame();
+  ImGui_ImplGlfw_NewFrame();
+  igNewFrame();
+
+  glfwSetWindowUserPointer(window, (void *)renderLoop);
+
+  // Do ui stuff here
+  if (renderLoop != NULL) {
+    renderLoop();
+  }
+
+  ImVec4 clear_color;
+  clear_color.x = 0.45f;
+  clear_color.y = 0.55f;
+  clear_color.w = 0.60f;
+  clear_color.z = 1.00f;
+
+  // Rendering
+  igRender();
+  int display_w, display_h;
+  glfwGetFramebufferSize(window, &display_w, &display_h);
+  glViewport(0, 0, display_w, display_h);
+  glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+  glClear(GL_COLOR_BUFFER_BIT);
+  ImGui_ImplOpenGL3_RenderDrawData(igGetDrawData());
+
+  ImGuiIO *io = igGetIO();
+
+  // Update and Render additional Platform Windows
+  // (Platform functions may change the current OpenGL context, so we
+  // save/restore it to make it easier to paste this code elsewhere.
+  //  For this specific demo app we could also call
+  //  glfwMakeContextCurrent(window) directly)
+  if (io->ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+    GLFWwindow *backup_current_context = glfwGetCurrentContext();
+    igUpdatePlatformWindows();
+    igRenderPlatformWindowsDefault(NULL, NULL);
+    glfwMakeContextCurrent(backup_current_context);
+  }
+
+  glfwSwapBuffers(window);
 }
 
 void igRunLoop(GLFWwindow *window, VoidCallback loop) {
@@ -114,61 +175,25 @@ void igRunLoop(GLFWwindow *window, VoidCallback loop) {
   // io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f,
   // NULL, io.Fonts->GetGlyphRangesJapanese()); IM_ASSERT(font != NULL);
 
-  // Our state
-  bool show_demo_window = true;
-  bool show_another_window = false;
-  ImVec4 clear_color;
-  clear_color.x = 0.45f;
-  clear_color.y = 0.55f;
-  clear_color.w = 0.60f;
-  clear_color.z = 1.00f;
-
   // Main loop
+  double lasttime = glfwGetTime();
   while (!glfwWindowShouldClose(window)) {
-    // Poll and handle events (inputs, window resize, etc.)
-    // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to
-    // tell if dear imgui wants to use your inputs.
-    // - When io.WantCaptureMouse is true, do not dispatch mouse input data to
-    // your main application, or clear/overwrite your copy of the mouse data.
-    // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input
-    // data to your main application, or clear/overwrite your copy of the
-    // keyboard data. Generally you may always pass all inputs to dear imgui,
-    // and hide them from your application based on those two flags.
-    glfwWaitEventsTimeout(0.7);
+    glfw_render(window, loop);
+
+    while (glfwGetTime() < lasttime + 1.0 / TARGET_FPS) {
+      // do nothing here
+    }
+    lasttime += 1.0 / TARGET_FPS;
+
+    if (extra_frame_count > 0) {
+      extra_frame_count--;
+      printf("%d\n", extra_frame_count);
+    } else {
+      glfwWaitEventsTimeout(0.7);
+      extra_frame_count = MAX_EXTRA_FRAME_COUNT;
+    }
+
     glfwPollEvents();
-
-    // Start the Dear ImGui frame
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    igNewFrame();
-
-    // Do ui stuff here
-    if (loop != NULL) {
-      loop();
-    }
-
-    // Rendering
-    igRender();
-    int display_w, display_h;
-    glfwGetFramebufferSize(window, &display_w, &display_h);
-    glViewport(0, 0, display_w, display_h);
-    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-    glClear(GL_COLOR_BUFFER_BIT);
-    ImGui_ImplOpenGL3_RenderDrawData(igGetDrawData());
-
-    // Update and Render additional Platform Windows
-    // (Platform functions may change the current OpenGL context, so we
-    // save/restore it to make it easier to paste this code elsewhere.
-    //  For this specific demo app we could also call
-    //  glfwMakeContextCurrent(window) directly)
-    if (io->ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
-      GLFWwindow *backup_current_context = glfwGetCurrentContext();
-      igUpdatePlatformWindows();
-      igRenderPlatformWindowsDefault(NULL, NULL);
-      glfwMakeContextCurrent(backup_current_context);
-    }
-
-    glfwSwapBuffers(window);
   }
 
   // Cleanup

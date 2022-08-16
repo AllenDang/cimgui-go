@@ -13,6 +13,7 @@ typedef void (*VoidCallback)();
 
 extern GLFWwindow *igCreateGlfwWindow(const char *title, int width, int height);
 extern void igRunLoop(GLFWwindow *window, VoidCallback loop);
+extern void igRefresh();
 
 #ifdef __cplusplus
 }

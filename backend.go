@@ -39,5 +39,10 @@ func CreateGlfwWindow(title string, width, height int) GLFWwindow {
 	titleArg, titleFin := wrapString(title)
 	defer titleFin()
 
-	return GLFWwindow(unsafe.Pointer(C.igCreateGlfwWindow(titleArg, C.int(width), C.int(height))))
+	window := GLFWwindow(unsafe.Pointer(C.igCreateGlfwWindow(titleArg, C.int(width), C.int(height))))
+	if window == 0 {
+		panic("Failed to create GLFW window")
+	}
+
+	return window
 }
