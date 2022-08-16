@@ -11,6 +11,7 @@ struct GLFWmonitor;
 
 typedef void (*VoidCallback)();
 
+extern void igSetTargetFPS(unsigned int fps);
 extern GLFWwindow *igCreateGlfwWindow(const char *title, int width, int height);
 extern void igRunLoop(GLFWwindow *window, VoidCallback loop);
 extern void igRefresh();

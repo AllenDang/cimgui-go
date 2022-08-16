@@ -17,11 +17,13 @@
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
 
-#define TARGET_FPS 30
 #define MAX_EXTRA_FRAME_COUNT 30
+unsigned int glfw_target_fps = 30;
 int extra_frame_count = MAX_EXTRA_FRAME_COUNT;
 
 void glfw_render(GLFWwindow *window, VoidCallback renderLoop);
+
+void igSetTargetFPS(unsigned int fps) { glfw_target_fps = fps; }
 
 static void glfw_error_callback(int error, const char *description) { fprintf(stderr, "Glfw Error %d: %s\n", error, description); }
 
@@ -180,14 +182,13 @@ void igRunLoop(GLFWwindow *window, VoidCallback loop) {
   while (!glfwWindowShouldClose(window)) {
     glfw_render(window, loop);
 
-    while (glfwGetTime() < lasttime + 1.0 / TARGET_FPS) {
+    while (glfwGetTime() < lasttime + 1.0 / glfw_target_fps) {
       // do nothing here
     }
-    lasttime += 1.0 / TARGET_FPS;
+    lasttime += 1.0 / glfw_target_fps;
 
     if (extra_frame_count > 0) {
       extra_frame_count--;
-      printf("%d\n", extra_frame_count);
     } else {
       glfwWaitEventsTimeout(0.7);
       extra_frame_count = MAX_EXTRA_FRAME_COUNT;

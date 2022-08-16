@@ -46,3 +46,7 @@ func CreateGlfwWindow(title string, width, height int) GLFWwindow {
 
 	return window
 }
+
+func SetTargetFPS(fps uint) {
+	C.igSetTargetFPS(C.uint(fps))
+}
