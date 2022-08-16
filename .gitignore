@@ -56,3 +56,4 @@ cimgui/.DS_Store
 
 cmd/codegen/codegen
 examples/example
+.ccls-cache
