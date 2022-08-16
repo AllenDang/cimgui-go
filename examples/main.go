@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	showDemoWindow bool = true
+	showDemoWindow bool
 )
 
 func init() {

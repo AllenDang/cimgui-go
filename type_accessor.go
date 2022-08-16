@@ -2,6 +2,7 @@ package cimgui
 
 // #include "cimgui_wrapper.h"
 // #include "cimgui_structs_accessor.h"
+// #include "clipboard.h"
 // #include "util.h"
 import "C"
 import "unsafe"
@@ -74,6 +75,24 @@ func (io ImGuiIO) SetIniFilename(name string) {
 	defer nameFin()
 
 	C.ImGuiIO_SetIniFilename(io.handle(), nameArg)
+}
+
+// SetClipboard registers a clipboard for text copy/paste actions.
+// If no clipboard is set, then a fallback implementation may be used, if available for the OS.
+// To disable clipboard handling overall, pass nil as the Clipboard.
+//
+// Since ImGui queries the clipboard text via a return value, the wrapper has to hold the
+// current clipboard text as a copy in memory. This memory will be freed at the next clipboard operation.
+func (io ImGuiIO) SetClipboard(board Clipboard) {
+	dropLastClipboardText()
+
+	if board != nil {
+		clipboards[io.handle()] = board
+		C.ImGuiIO_RegisterClipboardFunctions(io.handle())
+	} else {
+		C.ImGuiIO_ClearClipboardFunctions(io.handle())
+		delete(clipboards, io.handle())
+	}
 }
 
 func (d ImDrawData) ScaleClipRects(width, height float32) {
