@@ -370,7 +370,7 @@ type returnWrapper func(f FuncDef) (returnType string, returnStmt string)
 
 func boolReturnW(f FuncDef) (returnType string, returnStmt string) {
 	returnType = "bool"
-	returnStmt = "return %s != C.bool(true)\n"
+	returnStmt = "return %s == C.bool(true)\n"
 	return
 }
 
