@@ -5,20 +5,8 @@ package cimgui
 import "C"
 import "unsafe"
 
-func (io ImGuiIO) GetBackendFlags() ImGuiBackendFlags {
-	return ImGuiBackendFlags(io.C().BackendFlags)
-}
-
-func (io ImGuiIO) GetConfigFlags() ImGuiConfigFlags {
-	return ImGuiConfigFlags(io.C().ConfigFlags)
-}
-
 func (io ImGuiIO) SetMouseButtonDown(i int, down bool) {
 	C.ImGuiIO_SetMouseButtonDown(io.handle(), C.int(i), C.bool(down))
-}
-
-func (io ImGuiIO) GetMouseDrawCursor() bool {
-	return bool(io.C().MouseDrawCursor)
 }
 
 func (io ImGuiIO) AddMouseWheelDelta(horizontal, vertical float32) {
@@ -27,10 +15,6 @@ func (io ImGuiIO) AddMouseWheelDelta(horizontal, vertical float32) {
 	h := ioC.MouseWheelH + C.float(horizontal)
 	io.SetMouseWheel(float32(v))
 	io.SetMouseWheelH(float32(h))
-}
-
-func (io ImGuiIO) GetFonts() ImFontAtlas {
-	return (ImFontAtlas)(unsafe.Pointer(io.C().Fonts))
 }
 
 // Commands returns the list of draw commands.

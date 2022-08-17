@@ -19,6 +19,7 @@ type FuncDef struct {
 	Constructor  bool     `json:"constructor"`
 	Destructor   bool     `json:"destructor"`
 	StructSetter bool     `json:"struct_setter"`
+	StructGetter bool     `json:"struct_getter"`
 	Ret          string   `json:"ret"`
 }
 

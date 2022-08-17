@@ -4,484 +4,18 @@ package cimgui
 import "C"
 import "unsafe"
 
-type ImGuiTableSortSpecs uintptr
+type ImFontBuilderIO uintptr
 
-func (data ImGuiTableSortSpecs) handle() *C.ImGuiTableSortSpecs {
-	return (*C.ImGuiTableSortSpecs)(unsafe.Pointer(data))
+func (data ImFontBuilderIO) handle() *C.ImFontBuilderIO {
+	return (*C.ImFontBuilderIO)(unsafe.Pointer(data))
 }
 
-func (data ImGuiTableSortSpecs) C() C.ImGuiTableSortSpecs {
+func (data ImFontBuilderIO) C() C.ImFontBuilderIO {
 	return *(data.handle())
 }
 
-type ImDrawListSharedData uintptr
-
-func (data ImDrawListSharedData) handle() *C.ImDrawListSharedData {
-	return (*C.ImDrawListSharedData)(unsafe.Pointer(data))
-}
-
-func (data ImDrawListSharedData) C() C.ImDrawListSharedData {
-	return *(data.handle())
-}
-
-type ImGuiColorMod uintptr
-
-func (data ImGuiColorMod) handle() *C.ImGuiColorMod {
-	return (*C.ImGuiColorMod)(unsafe.Pointer(data))
-}
-
-func (data ImGuiColorMod) C() C.ImGuiColorMod {
-	return *(data.handle())
-}
-
-type ImGuiNavItemData uintptr
-
-func (data ImGuiNavItemData) handle() *C.ImGuiNavItemData {
-	return (*C.ImGuiNavItemData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiNavItemData) C() C.ImGuiNavItemData {
-	return *(data.handle())
-}
-
-type ImGuiNextWindowData uintptr
-
-func (data ImGuiNextWindowData) handle() *C.ImGuiNextWindowData {
-	return (*C.ImGuiNextWindowData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiNextWindowData) C() C.ImGuiNextWindowData {
-	return *(data.handle())
-}
-
-type ImGuiTabItem uintptr
-
-func (data ImGuiTabItem) handle() *C.ImGuiTabItem {
-	return (*C.ImGuiTabItem)(unsafe.Pointer(data))
-}
-
-func (data ImGuiTabItem) C() C.ImGuiTabItem {
-	return *(data.handle())
-}
-
-type ImGuiStoragePair uintptr
-
-func (data ImGuiStoragePair) handle() *C.ImGuiStoragePair {
-	return (*C.ImGuiStoragePair)(unsafe.Pointer(data))
-}
-
-func (data ImGuiStoragePair) C() C.ImGuiStoragePair {
-	return *(data.handle())
-}
-
-type ImGuiTableTempData uintptr
-
-func (data ImGuiTableTempData) handle() *C.ImGuiTableTempData {
-	return (*C.ImGuiTableTempData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiTableTempData) C() C.ImGuiTableTempData {
-	return *(data.handle())
-}
-
-type ImGuiViewportP uintptr
-
-func (data ImGuiViewportP) handle() *C.ImGuiViewportP {
-	return (*C.ImGuiViewportP)(unsafe.Pointer(data))
-}
-
-func (data ImGuiViewportP) C() C.ImGuiViewportP {
-	return *(data.handle())
-}
-
-type ImDrawChannel uintptr
-
-func (data ImDrawChannel) handle() *C.ImDrawChannel {
-	return (*C.ImDrawChannel)(unsafe.Pointer(data))
-}
-
-func (data ImDrawChannel) C() C.ImDrawChannel {
-	return *(data.handle())
-}
-
-type ImFont uintptr
-
-func (data ImFont) handle() *C.ImFont {
-	return (*C.ImFont)(unsafe.Pointer(data))
-}
-
-func (data ImFont) C() C.ImFont {
-	return *(data.handle())
-}
-
-type ImFontAtlasCustomRect uintptr
-
-func (data ImFontAtlasCustomRect) handle() *C.ImFontAtlasCustomRect {
-	return (*C.ImFontAtlasCustomRect)(unsafe.Pointer(data))
-}
-
-func (data ImFontAtlasCustomRect) C() C.ImFontAtlasCustomRect {
-	return *(data.handle())
-}
-
-type ImGuiComboPreviewData uintptr
-
-func (data ImGuiComboPreviewData) handle() *C.ImGuiComboPreviewData {
-	return (*C.ImGuiComboPreviewData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiComboPreviewData) C() C.ImGuiComboPreviewData {
-	return *(data.handle())
-}
-
-type ImGuiDataTypeTempStorage uintptr
-
-func (data ImGuiDataTypeTempStorage) handle() *C.ImGuiDataTypeTempStorage {
-	return (*C.ImGuiDataTypeTempStorage)(unsafe.Pointer(data))
-}
-
-func (data ImGuiDataTypeTempStorage) C() C.ImGuiDataTypeTempStorage {
-	return *(data.handle())
-}
-
-type ImGuiWindowTempData uintptr
-
-func (data ImGuiWindowTempData) handle() *C.ImGuiWindowTempData {
-	return (*C.ImGuiWindowTempData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiWindowTempData) C() C.ImGuiWindowTempData {
-	return *(data.handle())
-}
-
-type ImGuiTableColumn uintptr
-
-func (data ImGuiTableColumn) handle() *C.ImGuiTableColumn {
-	return (*C.ImGuiTableColumn)(unsafe.Pointer(data))
-}
-
-func (data ImGuiTableColumn) C() C.ImGuiTableColumn {
-	return *(data.handle())
-}
-
-type ImGuiTextRange uintptr
-
-func (data ImGuiTextRange) handle() *C.ImGuiTextRange {
-	return (*C.ImGuiTextRange)(unsafe.Pointer(data))
-}
-
-func (data ImGuiTextRange) C() C.ImGuiTextRange {
-	return *(data.handle())
-}
-
-type ImDrawCmd uintptr
-
-func (data ImDrawCmd) handle() *C.ImDrawCmd {
-	return (*C.ImDrawCmd)(unsafe.Pointer(data))
-}
-
-func (data ImDrawCmd) C() C.ImDrawCmd {
-	return *(data.handle())
-}
-
-type ImDrawDataBuilder uintptr
-
-func (data ImDrawDataBuilder) handle() *C.ImDrawDataBuilder {
-	return (*C.ImDrawDataBuilder)(unsafe.Pointer(data))
-}
-
-func (data ImDrawDataBuilder) C() C.ImDrawDataBuilder {
-	return *(data.handle())
-}
-
-type ImDrawListSplitter uintptr
-
-func (data ImDrawListSplitter) handle() *C.ImDrawListSplitter {
-	return (*C.ImDrawListSplitter)(unsafe.Pointer(data))
-}
-
-func (data ImDrawListSplitter) C() C.ImDrawListSplitter {
-	return *(data.handle())
-}
-
-type ImGuiMetricsConfig uintptr
-
-func (data ImGuiMetricsConfig) handle() *C.ImGuiMetricsConfig {
-	return (*C.ImGuiMetricsConfig)(unsafe.Pointer(data))
-}
-
-func (data ImGuiMetricsConfig) C() C.ImGuiMetricsConfig {
-	return *(data.handle())
-}
-
-type ImGuiOnceUponAFrame uintptr
-
-func (data ImGuiOnceUponAFrame) handle() *C.ImGuiOnceUponAFrame {
-	return (*C.ImGuiOnceUponAFrame)(unsafe.Pointer(data))
-}
-
-func (data ImGuiOnceUponAFrame) C() C.ImGuiOnceUponAFrame {
-	return *(data.handle())
-}
-
-type ImGuiWindow uintptr
-
-func (data ImGuiWindow) handle() *C.ImGuiWindow {
-	return (*C.ImGuiWindow)(unsafe.Pointer(data))
-}
-
-func (data ImGuiWindow) C() C.ImGuiWindow {
-	return *(data.handle())
-}
-
-type ImGuiInputEventMouseWheel uintptr
-
-func (data ImGuiInputEventMouseWheel) handle() *C.ImGuiInputEventMouseWheel {
-	return (*C.ImGuiInputEventMouseWheel)(unsafe.Pointer(data))
-}
-
-func (data ImGuiInputEventMouseWheel) C() C.ImGuiInputEventMouseWheel {
-	return *(data.handle())
-}
-
-type ImGuiPlatformImeData uintptr
-
-func (data ImGuiPlatformImeData) handle() *C.ImGuiPlatformImeData {
-	return (*C.ImGuiPlatformImeData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiPlatformImeData) C() C.ImGuiPlatformImeData {
-	return *(data.handle())
-}
-
-type ImGuiSettingsHandler uintptr
-
-func (data ImGuiSettingsHandler) handle() *C.ImGuiSettingsHandler {
-	return (*C.ImGuiSettingsHandler)(unsafe.Pointer(data))
-}
-
-func (data ImGuiSettingsHandler) C() C.ImGuiSettingsHandler {
-	return *(data.handle())
-}
-
-type ImGuiStackTool uintptr
-
-func (data ImGuiStackTool) handle() *C.ImGuiStackTool {
-	return (*C.ImGuiStackTool)(unsafe.Pointer(data))
-}
-
-func (data ImGuiStackTool) C() C.ImGuiStackTool {
-	return *(data.handle())
-}
-
-type ImGuiTableColumnSortSpecs uintptr
-
-func (data ImGuiTableColumnSortSpecs) handle() *C.ImGuiTableColumnSortSpecs {
-	return (*C.ImGuiTableColumnSortSpecs)(unsafe.Pointer(data))
-}
-
-func (data ImGuiTableColumnSortSpecs) C() C.ImGuiTableColumnSortSpecs {
-	return *(data.handle())
-}
-
-type ImGuiInputEventMouseButton uintptr
-
-func (data ImGuiInputEventMouseButton) handle() *C.ImGuiInputEventMouseButton {
-	return (*C.ImGuiInputEventMouseButton)(unsafe.Pointer(data))
-}
-
-func (data ImGuiInputEventMouseButton) C() C.ImGuiInputEventMouseButton {
-	return *(data.handle())
-}
-
-type ImGuiTabBar uintptr
-
-func (data ImGuiTabBar) handle() *C.ImGuiTabBar {
-	return (*C.ImGuiTabBar)(unsafe.Pointer(data))
-}
-
-func (data ImGuiTabBar) C() C.ImGuiTabBar {
-	return *(data.handle())
-}
-
-type ImGuiTableInstanceData uintptr
-
-func (data ImGuiTableInstanceData) handle() *C.ImGuiTableInstanceData {
-	return (*C.ImGuiTableInstanceData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiTableInstanceData) C() C.ImGuiTableInstanceData {
-	return *(data.handle())
-}
-
-type ImGuiTableSettings uintptr
-
-func (data ImGuiTableSettings) handle() *C.ImGuiTableSettings {
-	return (*C.ImGuiTableSettings)(unsafe.Pointer(data))
-}
-
-func (data ImGuiTableSettings) C() C.ImGuiTableSettings {
-	return *(data.handle())
-}
-
-type ImDrawVert uintptr
-
-func (data ImDrawVert) handle() *C.ImDrawVert {
-	return (*C.ImDrawVert)(unsafe.Pointer(data))
-}
-
-func (data ImDrawVert) C() C.ImDrawVert {
-	return *(data.handle())
-}
-
-type ImGuiGroupData uintptr
-
-func (data ImGuiGroupData) handle() *C.ImGuiGroupData {
-	return (*C.ImGuiGroupData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiGroupData) C() C.ImGuiGroupData {
-	return *(data.handle())
-}
-
-type ImGuiOldColumnData uintptr
-
-func (data ImGuiOldColumnData) handle() *C.ImGuiOldColumnData {
-	return (*C.ImGuiOldColumnData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiOldColumnData) C() C.ImGuiOldColumnData {
-	return *(data.handle())
-}
-
-type ImGuiStyleMod uintptr
-
-func (data ImGuiStyleMod) handle() *C.ImGuiStyleMod {
-	return (*C.ImGuiStyleMod)(unsafe.Pointer(data))
-}
-
-func (data ImGuiStyleMod) C() C.ImGuiStyleMod {
-	return *(data.handle())
-}
-
-type ImGuiViewport uintptr
-
-func (data ImGuiViewport) handle() *C.ImGuiViewport {
-	return (*C.ImGuiViewport)(unsafe.Pointer(data))
-}
-
-func (data ImGuiViewport) C() C.ImGuiViewport {
-	return *(data.handle())
-}
-
-type ImFontGlyphRangesBuilder uintptr
-
-func (data ImFontGlyphRangesBuilder) handle() *C.ImFontGlyphRangesBuilder {
-	return (*C.ImFontGlyphRangesBuilder)(unsafe.Pointer(data))
-}
-
-func (data ImFontGlyphRangesBuilder) C() C.ImFontGlyphRangesBuilder {
-	return *(data.handle())
-}
-
-type ImGuiDockContext uintptr
-
-func (data ImGuiDockContext) handle() *C.ImGuiDockContext {
-	return (*C.ImGuiDockContext)(unsafe.Pointer(data))
-}
-
-func (data ImGuiDockContext) C() C.ImGuiDockContext {
-	return *(data.handle())
-}
-
-type ImGuiWindowClass uintptr
-
-func (data ImGuiWindowClass) handle() *C.ImGuiWindowClass {
-	return (*C.ImGuiWindowClass)(unsafe.Pointer(data))
-}
-
-func (data ImGuiWindowClass) C() C.ImGuiWindowClass {
-	return *(data.handle())
-}
-
-type ImFontAtlas uintptr
-
-func (data ImFontAtlas) handle() *C.ImFontAtlas {
-	return (*C.ImFontAtlas)(unsafe.Pointer(data))
-}
-
-func (data ImFontAtlas) C() C.ImFontAtlas {
-	return *(data.handle())
-}
-
-type ImGuiShrinkWidthItem uintptr
-
-func (data ImGuiShrinkWidthItem) handle() *C.ImGuiShrinkWidthItem {
-	return (*C.ImGuiShrinkWidthItem)(unsafe.Pointer(data))
-}
-
-func (data ImGuiShrinkWidthItem) C() C.ImGuiShrinkWidthItem {
-	return *(data.handle())
-}
-
-type ImGuiStyle uintptr
-
-func (data ImGuiStyle) handle() *C.ImGuiStyle {
-	return (*C.ImGuiStyle)(unsafe.Pointer(data))
-}
-
-func (data ImGuiStyle) C() C.ImGuiStyle {
-	return *(data.handle())
-}
-
-type ImGuiWindowDockStyle uintptr
-
-func (data ImGuiWindowDockStyle) handle() *C.ImGuiWindowDockStyle {
-	return (*C.ImGuiWindowDockStyle)(unsafe.Pointer(data))
-}
-
-func (data ImGuiWindowDockStyle) C() C.ImGuiWindowDockStyle {
-	return *(data.handle())
-}
-
-type ImGuiTableCellData uintptr
-
-func (data ImGuiTableCellData) handle() *C.ImGuiTableCellData {
-	return (*C.ImGuiTableCellData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiTableCellData) C() C.ImGuiTableCellData {
-	return *(data.handle())
-}
-
-type ImGuiContext uintptr
-
-func (data ImGuiContext) handle() *C.ImGuiContext {
-	return (*C.ImGuiContext)(unsafe.Pointer(data))
-}
-
-func (data ImGuiContext) C() C.ImGuiContext {
-	return *(data.handle())
-}
-
-type ImGuiInputEventText uintptr
-
-func (data ImGuiInputEventText) handle() *C.ImGuiInputEventText {
-	return (*C.ImGuiInputEventText)(unsafe.Pointer(data))
-}
-
-func (data ImGuiInputEventText) C() C.ImGuiInputEventText {
-	return *(data.handle())
-}
-
-type ImGuiListClipper uintptr
-
-func (data ImGuiListClipper) handle() *C.ImGuiListClipper {
-	return (*C.ImGuiListClipper)(unsafe.Pointer(data))
-}
-
-func (data ImGuiListClipper) C() C.ImGuiListClipper {
-	return *(data.handle())
+func newImFontBuilderIOFromC(cvalue C.ImFontBuilderIO) ImFontBuilderIO {
+	return ImFontBuilderIO(unsafe.Pointer(&cvalue))
 }
 
 type ImGuiOldColumns uintptr
@@ -494,284 +28,36 @@ func (data ImGuiOldColumns) C() C.ImGuiOldColumns {
 	return *(data.handle())
 }
 
-type ImGuiStackLevelInfo uintptr
-
-func (data ImGuiStackLevelInfo) handle() *C.ImGuiStackLevelInfo {
-	return (*C.ImGuiStackLevelInfo)(unsafe.Pointer(data))
+func newImGuiOldColumnsFromC(cvalue C.ImGuiOldColumns) ImGuiOldColumns {
+	return ImGuiOldColumns(unsafe.Pointer(&cvalue))
 }
 
-func (data ImGuiStackLevelInfo) C() C.ImGuiStackLevelInfo {
+type ImGuiTableCellData uintptr
+
+func (data ImGuiTableCellData) handle() *C.ImGuiTableCellData {
+	return (*C.ImGuiTableCellData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiTableCellData) C() C.ImGuiTableCellData {
 	return *(data.handle())
 }
 
-type ImGuiTable uintptr
-
-func (data ImGuiTable) handle() *C.ImGuiTable {
-	return (*C.ImGuiTable)(unsafe.Pointer(data))
+func newImGuiTableCellDataFromC(cvalue C.ImGuiTableCellData) ImGuiTableCellData {
+	return ImGuiTableCellData(unsafe.Pointer(&cvalue))
 }
 
-func (data ImGuiTable) C() C.ImGuiTable {
+type ImGuiTableInstanceData uintptr
+
+func (data ImGuiTableInstanceData) handle() *C.ImGuiTableInstanceData {
+	return (*C.ImGuiTableInstanceData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiTableInstanceData) C() C.ImGuiTableInstanceData {
 	return *(data.handle())
 }
 
-type ImGuiDataTypeInfo uintptr
-
-func (data ImGuiDataTypeInfo) handle() *C.ImGuiDataTypeInfo {
-	return (*C.ImGuiDataTypeInfo)(unsafe.Pointer(data))
-}
-
-func (data ImGuiDataTypeInfo) C() C.ImGuiDataTypeInfo {
-	return *(data.handle())
-}
-
-type ImGuiInputEventAppFocused uintptr
-
-func (data ImGuiInputEventAppFocused) handle() *C.ImGuiInputEventAppFocused {
-	return (*C.ImGuiInputEventAppFocused)(unsafe.Pointer(data))
-}
-
-func (data ImGuiInputEventAppFocused) C() C.ImGuiInputEventAppFocused {
-	return *(data.handle())
-}
-
-type ImGuiInputEventMousePos uintptr
-
-func (data ImGuiInputEventMousePos) handle() *C.ImGuiInputEventMousePos {
-	return (*C.ImGuiInputEventMousePos)(unsafe.Pointer(data))
-}
-
-func (data ImGuiInputEventMousePos) C() C.ImGuiInputEventMousePos {
-	return *(data.handle())
-}
-
-type ImGuiSizeCallbackData uintptr
-
-func (data ImGuiSizeCallbackData) handle() *C.ImGuiSizeCallbackData {
-	return (*C.ImGuiSizeCallbackData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiSizeCallbackData) C() C.ImGuiSizeCallbackData {
-	return *(data.handle())
-}
-
-type ImGuiStackSizes uintptr
-
-func (data ImGuiStackSizes) handle() *C.ImGuiStackSizes {
-	return (*C.ImGuiStackSizes)(unsafe.Pointer(data))
-}
-
-func (data ImGuiStackSizes) C() C.ImGuiStackSizes {
-	return *(data.handle())
-}
-
-type ImGuiMenuColumns uintptr
-
-func (data ImGuiMenuColumns) handle() *C.ImGuiMenuColumns {
-	return (*C.ImGuiMenuColumns)(unsafe.Pointer(data))
-}
-
-func (data ImGuiMenuColumns) C() C.ImGuiMenuColumns {
-	return *(data.handle())
-}
-
-type ImGuiNextItemData uintptr
-
-func (data ImGuiNextItemData) handle() *C.ImGuiNextItemData {
-	return (*C.ImGuiNextItemData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiNextItemData) C() C.ImGuiNextItemData {
-	return *(data.handle())
-}
-
-type ImGuiPlatformMonitor uintptr
-
-func (data ImGuiPlatformMonitor) handle() *C.ImGuiPlatformMonitor {
-	return (*C.ImGuiPlatformMonitor)(unsafe.Pointer(data))
-}
-
-func (data ImGuiPlatformMonitor) C() C.ImGuiPlatformMonitor {
-	return *(data.handle())
-}
-
-type ImDrawCmdHeader uintptr
-
-func (data ImDrawCmdHeader) handle() *C.ImDrawCmdHeader {
-	return (*C.ImDrawCmdHeader)(unsafe.Pointer(data))
-}
-
-func (data ImDrawCmdHeader) C() C.ImDrawCmdHeader {
-	return *(data.handle())
-}
-
-type ImFontBuilderIO uintptr
-
-func (data ImFontBuilderIO) handle() *C.ImFontBuilderIO {
-	return (*C.ImFontBuilderIO)(unsafe.Pointer(data))
-}
-
-func (data ImFontBuilderIO) C() C.ImFontBuilderIO {
-	return *(data.handle())
-}
-
-type ImFontConfig uintptr
-
-func (data ImFontConfig) handle() *C.ImFontConfig {
-	return (*C.ImFontConfig)(unsafe.Pointer(data))
-}
-
-func (data ImFontConfig) C() C.ImFontConfig {
-	return *(data.handle())
-}
-
-type ImFontGlyph uintptr
-
-func (data ImFontGlyph) handle() *C.ImFontGlyph {
-	return (*C.ImFontGlyph)(unsafe.Pointer(data))
-}
-
-func (data ImFontGlyph) C() C.ImFontGlyph {
-	return *(data.handle())
-}
-
-type ImGuiContextHook uintptr
-
-func (data ImGuiContextHook) handle() *C.ImGuiContextHook {
-	return (*C.ImGuiContextHook)(unsafe.Pointer(data))
-}
-
-func (data ImGuiContextHook) C() C.ImGuiContextHook {
-	return *(data.handle())
-}
-
-type ImGuiTextFilter uintptr
-
-func (data ImGuiTextFilter) handle() *C.ImGuiTextFilter {
-	return (*C.ImGuiTextFilter)(unsafe.Pointer(data))
-}
-
-func (data ImGuiTextFilter) C() C.ImGuiTextFilter {
-	return *(data.handle())
-}
-
-type ImGuiListClipperRange uintptr
-
-func (data ImGuiListClipperRange) handle() *C.ImGuiListClipperRange {
-	return (*C.ImGuiListClipperRange)(unsafe.Pointer(data))
-}
-
-func (data ImGuiListClipperRange) C() C.ImGuiListClipperRange {
-	return *(data.handle())
-}
-
-type ImGuiPopupData uintptr
-
-func (data ImGuiPopupData) handle() *C.ImGuiPopupData {
-	return (*C.ImGuiPopupData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiPopupData) C() C.ImGuiPopupData {
-	return *(data.handle())
-}
-
-type ImDrawData uintptr
-
-func (data ImDrawData) handle() *C.ImDrawData {
-	return (*C.ImDrawData)(unsafe.Pointer(data))
-}
-
-func (data ImDrawData) C() C.ImDrawData {
-	return *(data.handle())
-}
-
-type ImDrawList uintptr
-
-func (data ImDrawList) handle() *C.ImDrawList {
-	return (*C.ImDrawList)(unsafe.Pointer(data))
-}
-
-func (data ImDrawList) C() C.ImDrawList {
-	return *(data.handle())
-}
-
-type ImGuiIO uintptr
-
-func (data ImGuiIO) handle() *C.ImGuiIO {
-	return (*C.ImGuiIO)(unsafe.Pointer(data))
-}
-
-func (data ImGuiIO) C() C.ImGuiIO {
-	return *(data.handle())
-}
-
-type ImGuiInputEventKey uintptr
-
-func (data ImGuiInputEventKey) handle() *C.ImGuiInputEventKey {
-	return (*C.ImGuiInputEventKey)(unsafe.Pointer(data))
-}
-
-func (data ImGuiInputEventKey) C() C.ImGuiInputEventKey {
-	return *(data.handle())
-}
-
-type ImGuiListClipperData uintptr
-
-func (data ImGuiListClipperData) handle() *C.ImGuiListClipperData {
-	return (*C.ImGuiListClipperData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiListClipperData) C() C.ImGuiListClipperData {
-	return *(data.handle())
-}
-
-type ImBitVector uintptr
-
-func (data ImBitVector) handle() *C.ImBitVector {
-	return (*C.ImBitVector)(unsafe.Pointer(data))
-}
-
-func (data ImBitVector) C() C.ImBitVector {
-	return *(data.handle())
-}
-
-type ImGuiInputEventMouseViewport uintptr
-
-func (data ImGuiInputEventMouseViewport) handle() *C.ImGuiInputEventMouseViewport {
-	return (*C.ImGuiInputEventMouseViewport)(unsafe.Pointer(data))
-}
-
-func (data ImGuiInputEventMouseViewport) C() C.ImGuiInputEventMouseViewport {
-	return *(data.handle())
-}
-
-type ImGuiStorage uintptr
-
-func (data ImGuiStorage) handle() *C.ImGuiStorage {
-	return (*C.ImGuiStorage)(unsafe.Pointer(data))
-}
-
-func (data ImGuiStorage) C() C.ImGuiStorage {
-	return *(data.handle())
-}
-
-type ImGuiInputTextState uintptr
-
-func (data ImGuiInputTextState) handle() *C.ImGuiInputTextState {
-	return (*C.ImGuiInputTextState)(unsafe.Pointer(data))
-}
-
-func (data ImGuiInputTextState) C() C.ImGuiInputTextState {
-	return *(data.handle())
-}
-
-type ImGuiPtrOrIndex uintptr
-
-func (data ImGuiPtrOrIndex) handle() *C.ImGuiPtrOrIndex {
-	return (*C.ImGuiPtrOrIndex)(unsafe.Pointer(data))
-}
-
-func (data ImGuiPtrOrIndex) C() C.ImGuiPtrOrIndex {
-	return *(data.handle())
+func newImGuiTableInstanceDataFromC(cvalue C.ImGuiTableInstanceData) ImGuiTableInstanceData {
+	return ImGuiTableInstanceData(unsafe.Pointer(&cvalue))
 }
 
 type ImGuiTextBuffer uintptr
@@ -784,6 +70,52 @@ func (data ImGuiTextBuffer) C() C.ImGuiTextBuffer {
 	return *(data.handle())
 }
 
+func newImGuiTextBufferFromC(cvalue C.ImGuiTextBuffer) ImGuiTextBuffer {
+	return ImGuiTextBuffer(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiViewport uintptr
+
+func (data ImGuiViewport) handle() *C.ImGuiViewport {
+	return (*C.ImGuiViewport)(unsafe.Pointer(data))
+}
+
+func (data ImGuiViewport) C() C.ImGuiViewport {
+	return *(data.handle())
+}
+
+func newImGuiViewportFromC(cvalue C.ImGuiViewport) ImGuiViewport {
+	return ImGuiViewport(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiColorMod uintptr
+
+func (data ImGuiColorMod) handle() *C.ImGuiColorMod {
+	return (*C.ImGuiColorMod)(unsafe.Pointer(data))
+}
+
+func (data ImGuiColorMod) C() C.ImGuiColorMod {
+	return *(data.handle())
+}
+
+func newImGuiColorModFromC(cvalue C.ImGuiColorMod) ImGuiColorMod {
+	return ImGuiColorMod(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiDockContext uintptr
+
+func (data ImGuiDockContext) handle() *C.ImGuiDockContext {
+	return (*C.ImGuiDockContext)(unsafe.Pointer(data))
+}
+
+func (data ImGuiDockContext) C() C.ImGuiDockContext {
+	return *(data.handle())
+}
+
+func newImGuiDockContextFromC(cvalue C.ImGuiDockContext) ImGuiDockContext {
+	return ImGuiDockContext(unsafe.Pointer(&cvalue))
+}
+
 type ImGuiInputEvent uintptr
 
 func (data ImGuiInputEvent) handle() *C.ImGuiInputEvent {
@@ -794,44 +126,540 @@ func (data ImGuiInputEvent) C() C.ImGuiInputEvent {
 	return *(data.handle())
 }
 
-type ImGuiLastItemData uintptr
-
-func (data ImGuiLastItemData) handle() *C.ImGuiLastItemData {
-	return (*C.ImGuiLastItemData)(unsafe.Pointer(data))
+func newImGuiInputEventFromC(cvalue C.ImGuiInputEvent) ImGuiInputEvent {
+	return ImGuiInputEvent(unsafe.Pointer(&cvalue))
 }
 
-func (data ImGuiLastItemData) C() C.ImGuiLastItemData {
+type ImGuiInputEventMouseButton uintptr
+
+func (data ImGuiInputEventMouseButton) handle() *C.ImGuiInputEventMouseButton {
+	return (*C.ImGuiInputEventMouseButton)(unsafe.Pointer(data))
+}
+
+func (data ImGuiInputEventMouseButton) C() C.ImGuiInputEventMouseButton {
 	return *(data.handle())
 }
 
-type ImGuiPayload uintptr
-
-func (data ImGuiPayload) handle() *C.ImGuiPayload {
-	return (*C.ImGuiPayload)(unsafe.Pointer(data))
+func newImGuiInputEventMouseButtonFromC(cvalue C.ImGuiInputEventMouseButton) ImGuiInputEventMouseButton {
+	return ImGuiInputEventMouseButton(unsafe.Pointer(&cvalue))
 }
 
-func (data ImGuiPayload) C() C.ImGuiPayload {
+type ImFontGlyphRangesBuilder uintptr
+
+func (data ImFontGlyphRangesBuilder) handle() *C.ImFontGlyphRangesBuilder {
+	return (*C.ImFontGlyphRangesBuilder)(unsafe.Pointer(data))
+}
+
+func (data ImFontGlyphRangesBuilder) C() C.ImFontGlyphRangesBuilder {
 	return *(data.handle())
 }
 
-type ImGuiPlatformIO uintptr
-
-func (data ImGuiPlatformIO) handle() *C.ImGuiPlatformIO {
-	return (*C.ImGuiPlatformIO)(unsafe.Pointer(data))
+func newImFontGlyphRangesBuilderFromC(cvalue C.ImFontGlyphRangesBuilder) ImFontGlyphRangesBuilder {
+	return ImFontGlyphRangesBuilder(unsafe.Pointer(&cvalue))
 }
 
-func (data ImGuiPlatformIO) C() C.ImGuiPlatformIO {
+type ImGuiInputTextState uintptr
+
+func (data ImGuiInputTextState) handle() *C.ImGuiInputTextState {
+	return (*C.ImGuiInputTextState)(unsafe.Pointer(data))
+}
+
+func (data ImGuiInputTextState) C() C.ImGuiInputTextState {
 	return *(data.handle())
 }
 
-type ImGuiTableColumnSettings uintptr
-
-func (data ImGuiTableColumnSettings) handle() *C.ImGuiTableColumnSettings {
-	return (*C.ImGuiTableColumnSettings)(unsafe.Pointer(data))
+func newImGuiInputTextStateFromC(cvalue C.ImGuiInputTextState) ImGuiInputTextState {
+	return ImGuiInputTextState(unsafe.Pointer(&cvalue))
 }
 
-func (data ImGuiTableColumnSettings) C() C.ImGuiTableColumnSettings {
+type ImGuiStackLevelInfo uintptr
+
+func (data ImGuiStackLevelInfo) handle() *C.ImGuiStackLevelInfo {
+	return (*C.ImGuiStackLevelInfo)(unsafe.Pointer(data))
+}
+
+func (data ImGuiStackLevelInfo) C() C.ImGuiStackLevelInfo {
 	return *(data.handle())
+}
+
+func newImGuiStackLevelInfoFromC(cvalue C.ImGuiStackLevelInfo) ImGuiStackLevelInfo {
+	return ImGuiStackLevelInfo(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiTableColumnSortSpecs uintptr
+
+func (data ImGuiTableColumnSortSpecs) handle() *C.ImGuiTableColumnSortSpecs {
+	return (*C.ImGuiTableColumnSortSpecs)(unsafe.Pointer(data))
+}
+
+func (data ImGuiTableColumnSortSpecs) C() C.ImGuiTableColumnSortSpecs {
+	return *(data.handle())
+}
+
+func newImGuiTableColumnSortSpecsFromC(cvalue C.ImGuiTableColumnSortSpecs) ImGuiTableColumnSortSpecs {
+	return ImGuiTableColumnSortSpecs(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiTableSortSpecs uintptr
+
+func (data ImGuiTableSortSpecs) handle() *C.ImGuiTableSortSpecs {
+	return (*C.ImGuiTableSortSpecs)(unsafe.Pointer(data))
+}
+
+func (data ImGuiTableSortSpecs) C() C.ImGuiTableSortSpecs {
+	return *(data.handle())
+}
+
+func newImGuiTableSortSpecsFromC(cvalue C.ImGuiTableSortSpecs) ImGuiTableSortSpecs {
+	return ImGuiTableSortSpecs(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiTabItem uintptr
+
+func (data ImGuiTabItem) handle() *C.ImGuiTabItem {
+	return (*C.ImGuiTabItem)(unsafe.Pointer(data))
+}
+
+func (data ImGuiTabItem) C() C.ImGuiTabItem {
+	return *(data.handle())
+}
+
+func newImGuiTabItemFromC(cvalue C.ImGuiTabItem) ImGuiTabItem {
+	return ImGuiTabItem(unsafe.Pointer(&cvalue))
+}
+
+type ImDrawCmd uintptr
+
+func (data ImDrawCmd) handle() *C.ImDrawCmd {
+	return (*C.ImDrawCmd)(unsafe.Pointer(data))
+}
+
+func (data ImDrawCmd) C() C.ImDrawCmd {
+	return *(data.handle())
+}
+
+func newImDrawCmdFromC(cvalue C.ImDrawCmd) ImDrawCmd {
+	return ImDrawCmd(unsafe.Pointer(&cvalue))
+}
+
+type ImDrawDataBuilder uintptr
+
+func (data ImDrawDataBuilder) handle() *C.ImDrawDataBuilder {
+	return (*C.ImDrawDataBuilder)(unsafe.Pointer(data))
+}
+
+func (data ImDrawDataBuilder) C() C.ImDrawDataBuilder {
+	return *(data.handle())
+}
+
+func newImDrawDataBuilderFromC(cvalue C.ImDrawDataBuilder) ImDrawDataBuilder {
+	return ImDrawDataBuilder(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiComboPreviewData uintptr
+
+func (data ImGuiComboPreviewData) handle() *C.ImGuiComboPreviewData {
+	return (*C.ImGuiComboPreviewData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiComboPreviewData) C() C.ImGuiComboPreviewData {
+	return *(data.handle())
+}
+
+func newImGuiComboPreviewDataFromC(cvalue C.ImGuiComboPreviewData) ImGuiComboPreviewData {
+	return ImGuiComboPreviewData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiInputEventAppFocused uintptr
+
+func (data ImGuiInputEventAppFocused) handle() *C.ImGuiInputEventAppFocused {
+	return (*C.ImGuiInputEventAppFocused)(unsafe.Pointer(data))
+}
+
+func (data ImGuiInputEventAppFocused) C() C.ImGuiInputEventAppFocused {
+	return *(data.handle())
+}
+
+func newImGuiInputEventAppFocusedFromC(cvalue C.ImGuiInputEventAppFocused) ImGuiInputEventAppFocused {
+	return ImGuiInputEventAppFocused(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiInputEventMousePos uintptr
+
+func (data ImGuiInputEventMousePos) handle() *C.ImGuiInputEventMousePos {
+	return (*C.ImGuiInputEventMousePos)(unsafe.Pointer(data))
+}
+
+func (data ImGuiInputEventMousePos) C() C.ImGuiInputEventMousePos {
+	return *(data.handle())
+}
+
+func newImGuiInputEventMousePosFromC(cvalue C.ImGuiInputEventMousePos) ImGuiInputEventMousePos {
+	return ImGuiInputEventMousePos(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiInputEventText uintptr
+
+func (data ImGuiInputEventText) handle() *C.ImGuiInputEventText {
+	return (*C.ImGuiInputEventText)(unsafe.Pointer(data))
+}
+
+func (data ImGuiInputEventText) C() C.ImGuiInputEventText {
+	return *(data.handle())
+}
+
+func newImGuiInputEventTextFromC(cvalue C.ImGuiInputEventText) ImGuiInputEventText {
+	return ImGuiInputEventText(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiStorage uintptr
+
+func (data ImGuiStorage) handle() *C.ImGuiStorage {
+	return (*C.ImGuiStorage)(unsafe.Pointer(data))
+}
+
+func (data ImGuiStorage) C() C.ImGuiStorage {
+	return *(data.handle())
+}
+
+func newImGuiStorageFromC(cvalue C.ImGuiStorage) ImGuiStorage {
+	return ImGuiStorage(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiStyle uintptr
+
+func (data ImGuiStyle) handle() *C.ImGuiStyle {
+	return (*C.ImGuiStyle)(unsafe.Pointer(data))
+}
+
+func (data ImGuiStyle) C() C.ImGuiStyle {
+	return *(data.handle())
+}
+
+func newImGuiStyleFromC(cvalue C.ImGuiStyle) ImGuiStyle {
+	return ImGuiStyle(unsafe.Pointer(&cvalue))
+}
+
+type ImDrawChannel uintptr
+
+func (data ImDrawChannel) handle() *C.ImDrawChannel {
+	return (*C.ImDrawChannel)(unsafe.Pointer(data))
+}
+
+func (data ImDrawChannel) C() C.ImDrawChannel {
+	return *(data.handle())
+}
+
+func newImDrawChannelFromC(cvalue C.ImDrawChannel) ImDrawChannel {
+	return ImDrawChannel(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiContext uintptr
+
+func (data ImGuiContext) handle() *C.ImGuiContext {
+	return (*C.ImGuiContext)(unsafe.Pointer(data))
+}
+
+func (data ImGuiContext) C() C.ImGuiContext {
+	return *(data.handle())
+}
+
+func newImGuiContextFromC(cvalue C.ImGuiContext) ImGuiContext {
+	return ImGuiContext(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiInputEventMouseViewport uintptr
+
+func (data ImGuiInputEventMouseViewport) handle() *C.ImGuiInputEventMouseViewport {
+	return (*C.ImGuiInputEventMouseViewport)(unsafe.Pointer(data))
+}
+
+func (data ImGuiInputEventMouseViewport) C() C.ImGuiInputEventMouseViewport {
+	return *(data.handle())
+}
+
+func newImGuiInputEventMouseViewportFromC(cvalue C.ImGuiInputEventMouseViewport) ImGuiInputEventMouseViewport {
+	return ImGuiInputEventMouseViewport(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiInputEventMouseWheel uintptr
+
+func (data ImGuiInputEventMouseWheel) handle() *C.ImGuiInputEventMouseWheel {
+	return (*C.ImGuiInputEventMouseWheel)(unsafe.Pointer(data))
+}
+
+func (data ImGuiInputEventMouseWheel) C() C.ImGuiInputEventMouseWheel {
+	return *(data.handle())
+}
+
+func newImGuiInputEventMouseWheelFromC(cvalue C.ImGuiInputEventMouseWheel) ImGuiInputEventMouseWheel {
+	return ImGuiInputEventMouseWheel(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiPlatformImeData uintptr
+
+func (data ImGuiPlatformImeData) handle() *C.ImGuiPlatformImeData {
+	return (*C.ImGuiPlatformImeData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiPlatformImeData) C() C.ImGuiPlatformImeData {
+	return *(data.handle())
+}
+
+func newImGuiPlatformImeDataFromC(cvalue C.ImGuiPlatformImeData) ImGuiPlatformImeData {
+	return ImGuiPlatformImeData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiSizeCallbackData uintptr
+
+func (data ImGuiSizeCallbackData) handle() *C.ImGuiSizeCallbackData {
+	return (*C.ImGuiSizeCallbackData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiSizeCallbackData) C() C.ImGuiSizeCallbackData {
+	return *(data.handle())
+}
+
+func newImGuiSizeCallbackDataFromC(cvalue C.ImGuiSizeCallbackData) ImGuiSizeCallbackData {
+	return ImGuiSizeCallbackData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiStyleMod uintptr
+
+func (data ImGuiStyleMod) handle() *C.ImGuiStyleMod {
+	return (*C.ImGuiStyleMod)(unsafe.Pointer(data))
+}
+
+func (data ImGuiStyleMod) C() C.ImGuiStyleMod {
+	return *(data.handle())
+}
+
+func newImGuiStyleModFromC(cvalue C.ImGuiStyleMod) ImGuiStyleMod {
+	return ImGuiStyleMod(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiTableTempData uintptr
+
+func (data ImGuiTableTempData) handle() *C.ImGuiTableTempData {
+	return (*C.ImGuiTableTempData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiTableTempData) C() C.ImGuiTableTempData {
+	return *(data.handle())
+}
+
+func newImGuiTableTempDataFromC(cvalue C.ImGuiTableTempData) ImGuiTableTempData {
+	return ImGuiTableTempData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiTextFilter uintptr
+
+func (data ImGuiTextFilter) handle() *C.ImGuiTextFilter {
+	return (*C.ImGuiTextFilter)(unsafe.Pointer(data))
+}
+
+func (data ImGuiTextFilter) C() C.ImGuiTextFilter {
+	return *(data.handle())
+}
+
+func newImGuiTextFilterFromC(cvalue C.ImGuiTextFilter) ImGuiTextFilter {
+	return ImGuiTextFilter(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiWindowStackData uintptr
+
+func (data ImGuiWindowStackData) handle() *C.ImGuiWindowStackData {
+	return (*C.ImGuiWindowStackData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiWindowStackData) C() C.ImGuiWindowStackData {
+	return *(data.handle())
+}
+
+func newImGuiWindowStackDataFromC(cvalue C.ImGuiWindowStackData) ImGuiWindowStackData {
+	return ImGuiWindowStackData(unsafe.Pointer(&cvalue))
+}
+
+type ImDrawList uintptr
+
+func (data ImDrawList) handle() *C.ImDrawList {
+	return (*C.ImDrawList)(unsafe.Pointer(data))
+}
+
+func (data ImDrawList) C() C.ImDrawList {
+	return *(data.handle())
+}
+
+func newImDrawListFromC(cvalue C.ImDrawList) ImDrawList {
+	return ImDrawList(unsafe.Pointer(&cvalue))
+}
+
+type ImDrawListSplitter uintptr
+
+func (data ImDrawListSplitter) handle() *C.ImDrawListSplitter {
+	return (*C.ImDrawListSplitter)(unsafe.Pointer(data))
+}
+
+func (data ImDrawListSplitter) C() C.ImDrawListSplitter {
+	return *(data.handle())
+}
+
+func newImDrawListSplitterFromC(cvalue C.ImDrawListSplitter) ImDrawListSplitter {
+	return ImDrawListSplitter(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiNavItemData uintptr
+
+func (data ImGuiNavItemData) handle() *C.ImGuiNavItemData {
+	return (*C.ImGuiNavItemData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiNavItemData) C() C.ImGuiNavItemData {
+	return *(data.handle())
+}
+
+func newImGuiNavItemDataFromC(cvalue C.ImGuiNavItemData) ImGuiNavItemData {
+	return ImGuiNavItemData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiWindowDockStyle uintptr
+
+func (data ImGuiWindowDockStyle) handle() *C.ImGuiWindowDockStyle {
+	return (*C.ImGuiWindowDockStyle)(unsafe.Pointer(data))
+}
+
+func (data ImGuiWindowDockStyle) C() C.ImGuiWindowDockStyle {
+	return *(data.handle())
+}
+
+func newImGuiWindowDockStyleFromC(cvalue C.ImGuiWindowDockStyle) ImGuiWindowDockStyle {
+	return ImGuiWindowDockStyle(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiInputEventKey uintptr
+
+func (data ImGuiInputEventKey) handle() *C.ImGuiInputEventKey {
+	return (*C.ImGuiInputEventKey)(unsafe.Pointer(data))
+}
+
+func (data ImGuiInputEventKey) C() C.ImGuiInputEventKey {
+	return *(data.handle())
+}
+
+func newImGuiInputEventKeyFromC(cvalue C.ImGuiInputEventKey) ImGuiInputEventKey {
+	return ImGuiInputEventKey(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiTabBar uintptr
+
+func (data ImGuiTabBar) handle() *C.ImGuiTabBar {
+	return (*C.ImGuiTabBar)(unsafe.Pointer(data))
+}
+
+func (data ImGuiTabBar) C() C.ImGuiTabBar {
+	return *(data.handle())
+}
+
+func newImGuiTabBarFromC(cvalue C.ImGuiTabBar) ImGuiTabBar {
+	return ImGuiTabBar(unsafe.Pointer(&cvalue))
+}
+
+type ImDrawListSharedData uintptr
+
+func (data ImDrawListSharedData) handle() *C.ImDrawListSharedData {
+	return (*C.ImDrawListSharedData)(unsafe.Pointer(data))
+}
+
+func (data ImDrawListSharedData) C() C.ImDrawListSharedData {
+	return *(data.handle())
+}
+
+func newImDrawListSharedDataFromC(cvalue C.ImDrawListSharedData) ImDrawListSharedData {
+	return ImDrawListSharedData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiGroupData uintptr
+
+func (data ImGuiGroupData) handle() *C.ImGuiGroupData {
+	return (*C.ImGuiGroupData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiGroupData) C() C.ImGuiGroupData {
+	return *(data.handle())
+}
+
+func newImGuiGroupDataFromC(cvalue C.ImGuiGroupData) ImGuiGroupData {
+	return ImGuiGroupData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiViewportP uintptr
+
+func (data ImGuiViewportP) handle() *C.ImGuiViewportP {
+	return (*C.ImGuiViewportP)(unsafe.Pointer(data))
+}
+
+func (data ImGuiViewportP) C() C.ImGuiViewportP {
+	return *(data.handle())
+}
+
+func newImGuiViewportPFromC(cvalue C.ImGuiViewportP) ImGuiViewportP {
+	return ImGuiViewportP(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiWindowTempData uintptr
+
+func (data ImGuiWindowTempData) handle() *C.ImGuiWindowTempData {
+	return (*C.ImGuiWindowTempData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiWindowTempData) C() C.ImGuiWindowTempData {
+	return *(data.handle())
+}
+
+func newImGuiWindowTempDataFromC(cvalue C.ImGuiWindowTempData) ImGuiWindowTempData {
+	return ImGuiWindowTempData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiTable uintptr
+
+func (data ImGuiTable) handle() *C.ImGuiTable {
+	return (*C.ImGuiTable)(unsafe.Pointer(data))
+}
+
+func (data ImGuiTable) C() C.ImGuiTable {
+	return *(data.handle())
+}
+
+func newImGuiTableFromC(cvalue C.ImGuiTable) ImGuiTable {
+	return ImGuiTable(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiWindowClass uintptr
+
+func (data ImGuiWindowClass) handle() *C.ImGuiWindowClass {
+	return (*C.ImGuiWindowClass)(unsafe.Pointer(data))
+}
+
+func (data ImGuiWindowClass) C() C.ImGuiWindowClass {
+	return *(data.handle())
+}
+
+func newImGuiWindowClassFromC(cvalue C.ImGuiWindowClass) ImGuiWindowClass {
+	return ImGuiWindowClass(unsafe.Pointer(&cvalue))
+}
+
+type ImBitVector uintptr
+
+func (data ImBitVector) handle() *C.ImBitVector {
+	return (*C.ImBitVector)(unsafe.Pointer(data))
+}
+
+func (data ImBitVector) C() C.ImBitVector {
+	return *(data.handle())
+}
+
+func newImBitVectorFromC(cvalue C.ImBitVector) ImBitVector {
+	return ImBitVector(unsafe.Pointer(&cvalue))
 }
 
 type ImGuiDockNode uintptr
@@ -844,24 +672,78 @@ func (data ImGuiDockNode) C() C.ImGuiDockNode {
 	return *(data.handle())
 }
 
-type ImGuiInputTextCallbackData uintptr
-
-func (data ImGuiInputTextCallbackData) handle() *C.ImGuiInputTextCallbackData {
-	return (*C.ImGuiInputTextCallbackData)(unsafe.Pointer(data))
+func newImGuiDockNodeFromC(cvalue C.ImGuiDockNode) ImGuiDockNode {
+	return ImGuiDockNode(unsafe.Pointer(&cvalue))
 }
 
-func (data ImGuiInputTextCallbackData) C() C.ImGuiInputTextCallbackData {
+type ImGuiOldColumnData uintptr
+
+func (data ImGuiOldColumnData) handle() *C.ImGuiOldColumnData {
+	return (*C.ImGuiOldColumnData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiOldColumnData) C() C.ImGuiOldColumnData {
 	return *(data.handle())
 }
 
-type ImGuiKeyData uintptr
-
-func (data ImGuiKeyData) handle() *C.ImGuiKeyData {
-	return (*C.ImGuiKeyData)(unsafe.Pointer(data))
+func newImGuiOldColumnDataFromC(cvalue C.ImGuiOldColumnData) ImGuiOldColumnData {
+	return ImGuiOldColumnData(unsafe.Pointer(&cvalue))
 }
 
-func (data ImGuiKeyData) C() C.ImGuiKeyData {
+type ImGuiPopupData uintptr
+
+func (data ImGuiPopupData) handle() *C.ImGuiPopupData {
+	return (*C.ImGuiPopupData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiPopupData) C() C.ImGuiPopupData {
 	return *(data.handle())
+}
+
+func newImGuiPopupDataFromC(cvalue C.ImGuiPopupData) ImGuiPopupData {
+	return ImGuiPopupData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiPtrOrIndex uintptr
+
+func (data ImGuiPtrOrIndex) handle() *C.ImGuiPtrOrIndex {
+	return (*C.ImGuiPtrOrIndex)(unsafe.Pointer(data))
+}
+
+func (data ImGuiPtrOrIndex) C() C.ImGuiPtrOrIndex {
+	return *(data.handle())
+}
+
+func newImGuiPtrOrIndexFromC(cvalue C.ImGuiPtrOrIndex) ImGuiPtrOrIndex {
+	return ImGuiPtrOrIndex(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiShrinkWidthItem uintptr
+
+func (data ImGuiShrinkWidthItem) handle() *C.ImGuiShrinkWidthItem {
+	return (*C.ImGuiShrinkWidthItem)(unsafe.Pointer(data))
+}
+
+func (data ImGuiShrinkWidthItem) C() C.ImGuiShrinkWidthItem {
+	return *(data.handle())
+}
+
+func newImGuiShrinkWidthItemFromC(cvalue C.ImGuiShrinkWidthItem) ImGuiShrinkWidthItem {
+	return ImGuiShrinkWidthItem(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiWindow uintptr
+
+func (data ImGuiWindow) handle() *C.ImGuiWindow {
+	return (*C.ImGuiWindow)(unsafe.Pointer(data))
+}
+
+func (data ImGuiWindow) C() C.ImGuiWindow {
+	return *(data.handle())
+}
+
+func newImGuiWindowFromC(cvalue C.ImGuiWindow) ImGuiWindow {
+	return ImGuiWindow(unsafe.Pointer(&cvalue))
 }
 
 type ImGuiWindowSettings uintptr
@@ -874,12 +756,482 @@ func (data ImGuiWindowSettings) C() C.ImGuiWindowSettings {
 	return *(data.handle())
 }
 
-type ImGuiWindowStackData uintptr
-
-func (data ImGuiWindowStackData) handle() *C.ImGuiWindowStackData {
-	return (*C.ImGuiWindowStackData)(unsafe.Pointer(data))
+func newImGuiWindowSettingsFromC(cvalue C.ImGuiWindowSettings) ImGuiWindowSettings {
+	return ImGuiWindowSettings(unsafe.Pointer(&cvalue))
 }
 
-func (data ImGuiWindowStackData) C() C.ImGuiWindowStackData {
+type ImGuiListClipper uintptr
+
+func (data ImGuiListClipper) handle() *C.ImGuiListClipper {
+	return (*C.ImGuiListClipper)(unsafe.Pointer(data))
+}
+
+func (data ImGuiListClipper) C() C.ImGuiListClipper {
 	return *(data.handle())
+}
+
+func newImGuiListClipperFromC(cvalue C.ImGuiListClipper) ImGuiListClipper {
+	return ImGuiListClipper(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiListClipperRange uintptr
+
+func (data ImGuiListClipperRange) handle() *C.ImGuiListClipperRange {
+	return (*C.ImGuiListClipperRange)(unsafe.Pointer(data))
+}
+
+func (data ImGuiListClipperRange) C() C.ImGuiListClipperRange {
+	return *(data.handle())
+}
+
+func newImGuiListClipperRangeFromC(cvalue C.ImGuiListClipperRange) ImGuiListClipperRange {
+	return ImGuiListClipperRange(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiMenuColumns uintptr
+
+func (data ImGuiMenuColumns) handle() *C.ImGuiMenuColumns {
+	return (*C.ImGuiMenuColumns)(unsafe.Pointer(data))
+}
+
+func (data ImGuiMenuColumns) C() C.ImGuiMenuColumns {
+	return *(data.handle())
+}
+
+func newImGuiMenuColumnsFromC(cvalue C.ImGuiMenuColumns) ImGuiMenuColumns {
+	return ImGuiMenuColumns(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiMetricsConfig uintptr
+
+func (data ImGuiMetricsConfig) handle() *C.ImGuiMetricsConfig {
+	return (*C.ImGuiMetricsConfig)(unsafe.Pointer(data))
+}
+
+func (data ImGuiMetricsConfig) C() C.ImGuiMetricsConfig {
+	return *(data.handle())
+}
+
+func newImGuiMetricsConfigFromC(cvalue C.ImGuiMetricsConfig) ImGuiMetricsConfig {
+	return ImGuiMetricsConfig(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiStackTool uintptr
+
+func (data ImGuiStackTool) handle() *C.ImGuiStackTool {
+	return (*C.ImGuiStackTool)(unsafe.Pointer(data))
+}
+
+func (data ImGuiStackTool) C() C.ImGuiStackTool {
+	return *(data.handle())
+}
+
+func newImGuiStackToolFromC(cvalue C.ImGuiStackTool) ImGuiStackTool {
+	return ImGuiStackTool(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiTextRange uintptr
+
+func (data ImGuiTextRange) handle() *C.ImGuiTextRange {
+	return (*C.ImGuiTextRange)(unsafe.Pointer(data))
+}
+
+func (data ImGuiTextRange) C() C.ImGuiTextRange {
+	return *(data.handle())
+}
+
+func newImGuiTextRangeFromC(cvalue C.ImGuiTextRange) ImGuiTextRange {
+	return ImGuiTextRange(unsafe.Pointer(&cvalue))
+}
+
+type ImDrawCmdHeader uintptr
+
+func (data ImDrawCmdHeader) handle() *C.ImDrawCmdHeader {
+	return (*C.ImDrawCmdHeader)(unsafe.Pointer(data))
+}
+
+func (data ImDrawCmdHeader) C() C.ImDrawCmdHeader {
+	return *(data.handle())
+}
+
+func newImDrawCmdHeaderFromC(cvalue C.ImDrawCmdHeader) ImDrawCmdHeader {
+	return ImDrawCmdHeader(unsafe.Pointer(&cvalue))
+}
+
+type ImFontConfig uintptr
+
+func (data ImFontConfig) handle() *C.ImFontConfig {
+	return (*C.ImFontConfig)(unsafe.Pointer(data))
+}
+
+func (data ImFontConfig) C() C.ImFontConfig {
+	return *(data.handle())
+}
+
+func newImFontConfigFromC(cvalue C.ImFontConfig) ImFontConfig {
+	return ImFontConfig(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiDataTypeInfo uintptr
+
+func (data ImGuiDataTypeInfo) handle() *C.ImGuiDataTypeInfo {
+	return (*C.ImGuiDataTypeInfo)(unsafe.Pointer(data))
+}
+
+func (data ImGuiDataTypeInfo) C() C.ImGuiDataTypeInfo {
+	return *(data.handle())
+}
+
+func newImGuiDataTypeInfoFromC(cvalue C.ImGuiDataTypeInfo) ImGuiDataTypeInfo {
+	return ImGuiDataTypeInfo(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiPlatformIO uintptr
+
+func (data ImGuiPlatformIO) handle() *C.ImGuiPlatformIO {
+	return (*C.ImGuiPlatformIO)(unsafe.Pointer(data))
+}
+
+func (data ImGuiPlatformIO) C() C.ImGuiPlatformIO {
+	return *(data.handle())
+}
+
+func newImGuiPlatformIOFromC(cvalue C.ImGuiPlatformIO) ImGuiPlatformIO {
+	return ImGuiPlatformIO(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiTableColumn uintptr
+
+func (data ImGuiTableColumn) handle() *C.ImGuiTableColumn {
+	return (*C.ImGuiTableColumn)(unsafe.Pointer(data))
+}
+
+func (data ImGuiTableColumn) C() C.ImGuiTableColumn {
+	return *(data.handle())
+}
+
+func newImGuiTableColumnFromC(cvalue C.ImGuiTableColumn) ImGuiTableColumn {
+	return ImGuiTableColumn(unsafe.Pointer(&cvalue))
+}
+
+type ImDrawVert uintptr
+
+func (data ImDrawVert) handle() *C.ImDrawVert {
+	return (*C.ImDrawVert)(unsafe.Pointer(data))
+}
+
+func (data ImDrawVert) C() C.ImDrawVert {
+	return *(data.handle())
+}
+
+func newImDrawVertFromC(cvalue C.ImDrawVert) ImDrawVert {
+	return ImDrawVert(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiIO uintptr
+
+func (data ImGuiIO) handle() *C.ImGuiIO {
+	return (*C.ImGuiIO)(unsafe.Pointer(data))
+}
+
+func (data ImGuiIO) C() C.ImGuiIO {
+	return *(data.handle())
+}
+
+func newImGuiIOFromC(cvalue C.ImGuiIO) ImGuiIO {
+	return ImGuiIO(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiPayload uintptr
+
+func (data ImGuiPayload) handle() *C.ImGuiPayload {
+	return (*C.ImGuiPayload)(unsafe.Pointer(data))
+}
+
+func (data ImGuiPayload) C() C.ImGuiPayload {
+	return *(data.handle())
+}
+
+func newImGuiPayloadFromC(cvalue C.ImGuiPayload) ImGuiPayload {
+	return ImGuiPayload(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiPlatformMonitor uintptr
+
+func (data ImGuiPlatformMonitor) handle() *C.ImGuiPlatformMonitor {
+	return (*C.ImGuiPlatformMonitor)(unsafe.Pointer(data))
+}
+
+func (data ImGuiPlatformMonitor) C() C.ImGuiPlatformMonitor {
+	return *(data.handle())
+}
+
+func newImGuiPlatformMonitorFromC(cvalue C.ImGuiPlatformMonitor) ImGuiPlatformMonitor {
+	return ImGuiPlatformMonitor(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiDataTypeTempStorage uintptr
+
+func (data ImGuiDataTypeTempStorage) handle() *C.ImGuiDataTypeTempStorage {
+	return (*C.ImGuiDataTypeTempStorage)(unsafe.Pointer(data))
+}
+
+func (data ImGuiDataTypeTempStorage) C() C.ImGuiDataTypeTempStorage {
+	return *(data.handle())
+}
+
+func newImGuiDataTypeTempStorageFromC(cvalue C.ImGuiDataTypeTempStorage) ImGuiDataTypeTempStorage {
+	return ImGuiDataTypeTempStorage(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiInputTextCallbackData uintptr
+
+func (data ImGuiInputTextCallbackData) handle() *C.ImGuiInputTextCallbackData {
+	return (*C.ImGuiInputTextCallbackData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiInputTextCallbackData) C() C.ImGuiInputTextCallbackData {
+	return *(data.handle())
+}
+
+func newImGuiInputTextCallbackDataFromC(cvalue C.ImGuiInputTextCallbackData) ImGuiInputTextCallbackData {
+	return ImGuiInputTextCallbackData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiLastItemData uintptr
+
+func (data ImGuiLastItemData) handle() *C.ImGuiLastItemData {
+	return (*C.ImGuiLastItemData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiLastItemData) C() C.ImGuiLastItemData {
+	return *(data.handle())
+}
+
+func newImGuiLastItemDataFromC(cvalue C.ImGuiLastItemData) ImGuiLastItemData {
+	return ImGuiLastItemData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiStackSizes uintptr
+
+func (data ImGuiStackSizes) handle() *C.ImGuiStackSizes {
+	return (*C.ImGuiStackSizes)(unsafe.Pointer(data))
+}
+
+func (data ImGuiStackSizes) C() C.ImGuiStackSizes {
+	return *(data.handle())
+}
+
+func newImGuiStackSizesFromC(cvalue C.ImGuiStackSizes) ImGuiStackSizes {
+	return ImGuiStackSizes(unsafe.Pointer(&cvalue))
+}
+
+type ImFont uintptr
+
+func (data ImFont) handle() *C.ImFont {
+	return (*C.ImFont)(unsafe.Pointer(data))
+}
+
+func (data ImFont) C() C.ImFont {
+	return *(data.handle())
+}
+
+func newImFontFromC(cvalue C.ImFont) ImFont {
+	return ImFont(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiContextHook uintptr
+
+func (data ImGuiContextHook) handle() *C.ImGuiContextHook {
+	return (*C.ImGuiContextHook)(unsafe.Pointer(data))
+}
+
+func (data ImGuiContextHook) C() C.ImGuiContextHook {
+	return *(data.handle())
+}
+
+func newImGuiContextHookFromC(cvalue C.ImGuiContextHook) ImGuiContextHook {
+	return ImGuiContextHook(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiNextItemData uintptr
+
+func (data ImGuiNextItemData) handle() *C.ImGuiNextItemData {
+	return (*C.ImGuiNextItemData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiNextItemData) C() C.ImGuiNextItemData {
+	return *(data.handle())
+}
+
+func newImGuiNextItemDataFromC(cvalue C.ImGuiNextItemData) ImGuiNextItemData {
+	return ImGuiNextItemData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiNextWindowData uintptr
+
+func (data ImGuiNextWindowData) handle() *C.ImGuiNextWindowData {
+	return (*C.ImGuiNextWindowData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiNextWindowData) C() C.ImGuiNextWindowData {
+	return *(data.handle())
+}
+
+func newImGuiNextWindowDataFromC(cvalue C.ImGuiNextWindowData) ImGuiNextWindowData {
+	return ImGuiNextWindowData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiSettingsHandler uintptr
+
+func (data ImGuiSettingsHandler) handle() *C.ImGuiSettingsHandler {
+	return (*C.ImGuiSettingsHandler)(unsafe.Pointer(data))
+}
+
+func (data ImGuiSettingsHandler) C() C.ImGuiSettingsHandler {
+	return *(data.handle())
+}
+
+func newImGuiSettingsHandlerFromC(cvalue C.ImGuiSettingsHandler) ImGuiSettingsHandler {
+	return ImGuiSettingsHandler(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiTableColumnSettings uintptr
+
+func (data ImGuiTableColumnSettings) handle() *C.ImGuiTableColumnSettings {
+	return (*C.ImGuiTableColumnSettings)(unsafe.Pointer(data))
+}
+
+func (data ImGuiTableColumnSettings) C() C.ImGuiTableColumnSettings {
+	return *(data.handle())
+}
+
+func newImGuiTableColumnSettingsFromC(cvalue C.ImGuiTableColumnSettings) ImGuiTableColumnSettings {
+	return ImGuiTableColumnSettings(unsafe.Pointer(&cvalue))
+}
+
+type ImDrawData uintptr
+
+func (data ImDrawData) handle() *C.ImDrawData {
+	return (*C.ImDrawData)(unsafe.Pointer(data))
+}
+
+func (data ImDrawData) C() C.ImDrawData {
+	return *(data.handle())
+}
+
+func newImDrawDataFromC(cvalue C.ImDrawData) ImDrawData {
+	return ImDrawData(unsafe.Pointer(&cvalue))
+}
+
+type ImFontAtlas uintptr
+
+func (data ImFontAtlas) handle() *C.ImFontAtlas {
+	return (*C.ImFontAtlas)(unsafe.Pointer(data))
+}
+
+func (data ImFontAtlas) C() C.ImFontAtlas {
+	return *(data.handle())
+}
+
+func newImFontAtlasFromC(cvalue C.ImFontAtlas) ImFontAtlas {
+	return ImFontAtlas(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiTableSettings uintptr
+
+func (data ImGuiTableSettings) handle() *C.ImGuiTableSettings {
+	return (*C.ImGuiTableSettings)(unsafe.Pointer(data))
+}
+
+func (data ImGuiTableSettings) C() C.ImGuiTableSettings {
+	return *(data.handle())
+}
+
+func newImGuiTableSettingsFromC(cvalue C.ImGuiTableSettings) ImGuiTableSettings {
+	return ImGuiTableSettings(unsafe.Pointer(&cvalue))
+}
+
+type ImFontAtlasCustomRect uintptr
+
+func (data ImFontAtlasCustomRect) handle() *C.ImFontAtlasCustomRect {
+	return (*C.ImFontAtlasCustomRect)(unsafe.Pointer(data))
+}
+
+func (data ImFontAtlasCustomRect) C() C.ImFontAtlasCustomRect {
+	return *(data.handle())
+}
+
+func newImFontAtlasCustomRectFromC(cvalue C.ImFontAtlasCustomRect) ImFontAtlasCustomRect {
+	return ImFontAtlasCustomRect(unsafe.Pointer(&cvalue))
+}
+
+type ImFontGlyph uintptr
+
+func (data ImFontGlyph) handle() *C.ImFontGlyph {
+	return (*C.ImFontGlyph)(unsafe.Pointer(data))
+}
+
+func (data ImFontGlyph) C() C.ImFontGlyph {
+	return *(data.handle())
+}
+
+func newImFontGlyphFromC(cvalue C.ImFontGlyph) ImFontGlyph {
+	return ImFontGlyph(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiKeyData uintptr
+
+func (data ImGuiKeyData) handle() *C.ImGuiKeyData {
+	return (*C.ImGuiKeyData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiKeyData) C() C.ImGuiKeyData {
+	return *(data.handle())
+}
+
+func newImGuiKeyDataFromC(cvalue C.ImGuiKeyData) ImGuiKeyData {
+	return ImGuiKeyData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiListClipperData uintptr
+
+func (data ImGuiListClipperData) handle() *C.ImGuiListClipperData {
+	return (*C.ImGuiListClipperData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiListClipperData) C() C.ImGuiListClipperData {
+	return *(data.handle())
+}
+
+func newImGuiListClipperDataFromC(cvalue C.ImGuiListClipperData) ImGuiListClipperData {
+	return ImGuiListClipperData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiOnceUponAFrame uintptr
+
+func (data ImGuiOnceUponAFrame) handle() *C.ImGuiOnceUponAFrame {
+	return (*C.ImGuiOnceUponAFrame)(unsafe.Pointer(data))
+}
+
+func (data ImGuiOnceUponAFrame) C() C.ImGuiOnceUponAFrame {
+	return *(data.handle())
+}
+
+func newImGuiOnceUponAFrameFromC(cvalue C.ImGuiOnceUponAFrame) ImGuiOnceUponAFrame {
+	return ImGuiOnceUponAFrame(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiStoragePair uintptr
+
+func (data ImGuiStoragePair) handle() *C.ImGuiStoragePair {
+	return (*C.ImGuiStoragePair)(unsafe.Pointer(data))
+}
+
+func (data ImGuiStoragePair) C() C.ImGuiStoragePair {
+	return *(data.handle())
+}
+
+func newImGuiStoragePairFromC(cvalue C.ImGuiStoragePair) ImGuiStoragePair {
+	return ImGuiStoragePair(unsafe.Pointer(&cvalue))
 }

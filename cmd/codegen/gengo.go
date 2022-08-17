@@ -104,6 +104,10 @@ func (data %[1]s) C() C.%[1]s {
   return *(data.handle())
 }
 
+func new%[1]sFromC(cvalue C.%[1]s) %[1]s {
+  return %[1]s(unsafe.Pointer(&cvalue))
+}
+
 `, s.Name))
 
 		structNames = append(structNames, s.Name)
@@ -402,7 +406,31 @@ func constWCharPtrReturnW(f FuncDef) (returnType string, returnStmt string) {
 
 func imVec4PtrReturnW(f FuncDef) (returnType string, returnStmt string) {
 	returnType = "ImVec4"
-	returnStmt = "return NewImVec4FromC(%s)"
+	returnStmt = "return newImVec4FromCPtr(%s)"
+	return
+}
+
+func imVec4ReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "ImVec4"
+	returnStmt = "return newImVec4FromC(%s)"
+	return
+}
+
+func imVec2ReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "ImVec2"
+	returnStmt = "return newImVec2FromC(%s)"
+	return
+}
+
+func imRectReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "ImRect"
+	returnStmt = "return newImRectFromC(%s)"
+	return
+}
+
+func imTableColumnIdxReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "ImGuiTableColumnIdx"
+	returnStmt = "return ImGuiTableColumnIdx(%s)"
 	return
 }
 
@@ -491,16 +519,20 @@ import "unsafe"
 	}
 
 	returnWrapperMap := map[string]returnWrapper{
-		"bool":           boolReturnW,
-		"const char*":    constCharReturnW,
-		"const ImWchar*": constWCharPtrReturnW,
-		"float":          floatReturnW,
-		"double":         doubleReturnW,
-		"int":            intReturnW,
-		"const ImVec4*":  imVec4PtrReturnW,
-		"ImU32":          u32ReturnW,
-		"ImGuiID":        idReturnW,
-		"ImTextureID":    textureIdReturnW,
+		"bool":                boolReturnW,
+		"const char*":         constCharReturnW,
+		"const ImWchar*":      constWCharPtrReturnW,
+		"float":               floatReturnW,
+		"double":              doubleReturnW,
+		"int":                 intReturnW,
+		"ImVec4":              imVec4ReturnW,
+		"const ImVec4*":       imVec4PtrReturnW,
+		"ImU32":               u32ReturnW,
+		"ImGuiID":             idReturnW,
+		"ImTextureID":         textureIdReturnW,
+		"ImVec2":              imVec2ReturnW,
+		"ImRect":              imRectReturnW,
+		"ImGuiTableColumnIdx": imTableColumnIdxReturnW,
 	}
 
 	type argOutput struct {
@@ -533,6 +565,14 @@ import "unsafe"
 			}
 
 			if i == 0 && f.StructSetter {
+				shouldGenerate = true
+			}
+
+			if f.StructGetter && funk.ContainsString(structNames, a.Type) {
+				args = append(args, fmt.Sprintf("%s %s", a.Name, a.Type))
+				argWrappers = append(argWrappers, argOutput{
+					VarName: fmt.Sprintf("%s.handle()", a.Name),
+				})
 				shouldGenerate = true
 			}
 
@@ -573,7 +613,7 @@ import "unsafe"
 			}
 
 			if !shouldGenerate {
-				fmt.Println("Unknown arg type: ", a.Type)
+				fmt.Println("Unknown arg: ", a.Type)
 				break
 			}
 		}
@@ -693,6 +733,15 @@ import "unsafe"
 				sb.WriteString("}\n\n")
 
 				convertedFuncCount += 1
+			} else if f.StructGetter && funk.ContainsString(structNames, f.Ret) {
+				sb.WriteString(funcSignatureFunc(f.FuncName, args, f.Ret))
+
+				argInvokeStmt := argStmtFunc()
+
+				sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", f.Ret, f.FuncName, argInvokeStmt))
+				sb.WriteString("}\n\n")
+
+				convertedFuncCount += 1
 			} else if f.Constructor {
 				returnType := strings.Split(f.FuncName, "_")[0]
 
@@ -716,7 +765,7 @@ import "unsafe"
 
 				convertedFuncCount += 1
 			} else {
-				fmt.Printf("%s%s -> %s\n", f.FuncName, f.Args, f.Ret)
+				fmt.Println("Unknown ret: ", f.Ret)
 			}
 		}
 	}

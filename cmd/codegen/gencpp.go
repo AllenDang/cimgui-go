@@ -165,6 +165,14 @@ func generateCppStructsAccessor(structs []StructDef) []FuncDef {
 		"ImGuiIO_SetAppAcceptingEvents",
 		"ImGuiDockNode_SetLocalFlags",
 		"ImFontAtlas_SetTexID",
+		"ImVec2_Getx",
+		"ImVec2_Gety",
+		"ImVec4_Getx",
+		"ImVec4_Gety",
+		"ImVec4_Getw",
+		"ImVec4_Getz",
+		"ImRect_GetMin",
+		"ImRect_GetMax",
 	}
 	var sb strings.Builder
 
@@ -189,6 +197,7 @@ extern "C" {
 				continue
 			}
 
+			// Generate setter function
 			structAccessorFuncs = append(structAccessorFuncs, FuncDef{
 				Args: fmt.Sprintf("(%[1]s *%[2]s, %[3]s v)", s.Name, s.Name+"Ptr", m.Type),
 				ArgsT: []ArgDef{
@@ -209,7 +218,30 @@ extern "C" {
 				Ret:          "void",
 			})
 
+			getterFuncName := fmt.Sprintf("%[1]s_Get%[2]s", s.Name, m.Name)
+			if funk.ContainsString(skipFuncNames, getterFuncName) {
+				continue
+			}
+
+			structAccessorFuncs = append(structAccessorFuncs, FuncDef{
+				Args: fmt.Sprintf("(%[1]s *%[2]s)", s.Name, "self"),
+				ArgsT: []ArgDef{
+					{
+						Name: "self",
+						Type: s.Name,
+					},
+				},
+				FuncName:     getterFuncName,
+				Location:     "",
+				Constructor:  false,
+				Destructor:   false,
+				StructSetter: false,
+				StructGetter: true,
+				Ret:          m.Type,
+			})
+
 			sb.WriteString(fmt.Sprintf("void %[1]s_Set%[2]s(%[1]s *%[3]s, %[4]s v) { %[3]s->%[2]s = v; }\n", s.Name, m.Name, s.Name+"Ptr", m.Type))
+			sb.WriteString(fmt.Sprintf("%[4]s %[1]s_Get%[2]s(%[1]s *%[3]s) { return %[3]s->%[2]s; }\n", s.Name, m.Name, "self", m.Type))
 		}
 	}
 

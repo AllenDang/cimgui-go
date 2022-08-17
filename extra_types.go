@@ -19,6 +19,10 @@ func NewImVec2(x, y float32) ImVec2 {
 	return ImVec2{X: x, Y: y}
 }
 
+func newImVec2FromC(vec2 C.ImVec2) ImVec2 {
+	return NewImVec2(float32(vec2.x), float32(vec2.y))
+}
+
 func (i ImVec2) ToC() C.ImVec2 {
 	return C.ImVec2{x: C.float(i.X), y: C.float(i.Y)}
 }
@@ -55,7 +59,11 @@ func NewImVec4(r, g, b, a float32) ImVec4 {
 	}
 }
 
-func NewImVec4FromC(vec4 *C.ImVec4) ImVec4 {
+func newImVec4FromCPtr(vec4 *C.ImVec4) ImVec4 {
+	return NewImVec4(float32(vec4.x), float32(vec4.y), float32(vec4.w), float32(vec4.z))
+}
+
+func newImVec4FromC(vec4 C.ImVec4) ImVec4 {
 	return NewImVec4(float32(vec4.x), float32(vec4.y), float32(vec4.w), float32(vec4.z))
 }
 
@@ -122,6 +130,13 @@ func (i *ImColor) wrap() (out *C.ImColor, finisher func()) {
 type ImRect struct {
 	Min ImVec2
 	Max ImVec2
+}
+
+func newImRectFromC(rect C.ImRect) ImRect {
+	return ImRect{
+		Min: newImVec2FromC(rect.Min),
+		Max: newImVec2FromC(rect.Max),
+	}
 }
 
 func (r *ImRect) ToC() C.ImRect {
