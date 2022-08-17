@@ -11,6 +11,7 @@ gencode: ./cmd/codegen/build/codegen
 	cp -f ./cmd/codegen/build/cimgui_wrapper.cpp ./
 	cp -f ./cmd/codegen/build/cimgui_wrapper.h ./
 	cp -f ./cmd/codegen/build/cimgui_structs_accessor.h ./
+	cp -f ./cmd/codegen/build/cimgui_structs_accessor.cpp ./
 	cp -f ./cmd/codegen/build/enums.go ./
 	cp -f ./cmd/codegen/build/funcs.go ./
 	cp -f ./cmd/codegen/build/structs.go ./

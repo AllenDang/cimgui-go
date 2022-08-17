@@ -48,7 +48,6 @@ extern "C" {
 		for _, a := range f.ArgsT {
 			if strings.Contains(a.Type, "const T*") ||
 				strings.Contains(a.Type, "const T") ||
-				a.Name == "..." ||
 				a.Type == "va_list" ||
 				(a.Name == "self" && a.Type == "ImVector*") {
 				shouldSkip = true
@@ -78,6 +77,17 @@ extern "C" {
 		if len(funcParts) == 2 && unicode.IsLower(rune(funcParts[1][0])) {
 			continue
 		}
+
+		// Remove all ... arg
+		f.Args = strings.Replace(f.Args, ",...", "", 1)
+		var argsT []ArgDef
+		for _, a := range f.ArgsT {
+			if a.Name != "..." {
+				argsT = append(argsT, a)
+			}
+		}
+
+		f.ArgsT = argsT
 
 		actualCallArgs := []string{}
 
@@ -174,15 +184,22 @@ func generateCppStructsAccessor(structs []StructDef) []FuncDef {
 		"ImRect_GetMin",
 		"ImRect_GetMax",
 	}
-	var sb strings.Builder
+	var sbHeader strings.Builder
+	var sbCpp strings.Builder
 
-	sb.WriteString(`#pragma once
+	sbHeader.WriteString(`#pragma once
 
 #include "cimgui_wrapper.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+`)
+
+	sbCpp.WriteString(`
+#include "cimgui_wrapper.h"
+#include "cimgui_structs_accessor.h"
 
 `)
 
@@ -240,12 +257,15 @@ extern "C" {
 				Ret:          m.Type,
 			})
 
-			sb.WriteString(fmt.Sprintf("void %[1]s_Set%[2]s(%[1]s *%[3]s, %[4]s v) { %[3]s->%[2]s = v; }\n", s.Name, m.Name, s.Name+"Ptr", m.Type))
-			sb.WriteString(fmt.Sprintf("%[4]s %[1]s_Get%[2]s(%[1]s *%[3]s) { return %[3]s->%[2]s; }\n", s.Name, m.Name, "self", m.Type))
+			sbHeader.WriteString(fmt.Sprintf("extern void %[1]s_Set%[2]s(%[1]s *%[3]s, %[4]s v);\n", s.Name, m.Name, s.Name+"Ptr", m.Type))
+			sbHeader.WriteString(fmt.Sprintf("extern %[4]s %[1]s_Get%[2]s(%[1]s *%[3]s);\n", s.Name, m.Name, "self", m.Type))
+
+			sbCpp.WriteString(fmt.Sprintf("void %[1]s_Set%[2]s(%[1]s *%[3]s, %[4]s v) { %[3]s->%[2]s = v; }\n", s.Name, m.Name, s.Name+"Ptr", m.Type))
+			sbCpp.WriteString(fmt.Sprintf("%[4]s %[1]s_Get%[2]s(%[1]s *%[3]s) { return %[3]s->%[2]s; }\n", s.Name, m.Name, "self", m.Type))
 		}
 	}
 
-	sb.WriteString(`
+	sbHeader.WriteString(`
 #ifdef __cplusplus
 }
 #endif
@@ -257,9 +277,20 @@ extern "C" {
 	}
 	defer cppFile.Close()
 
-	_, err = cppFile.WriteString(sb.String())
+	_, err = cppFile.WriteString(sbHeader.String())
 	if err != nil {
 		panic(err.Error())
+	}
+
+	cppFile, err = os.Create("cimgui_structs_accessor.cpp")
+	if err != nil {
+		panic(err)
+	}
+	defer cppFile.Close()
+
+	_, err = cppFile.WriteString(sbCpp.String())
+	if err != nil {
+		panic(err)
 	}
 
 	return structAccessorFuncs

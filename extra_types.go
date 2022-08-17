@@ -142,6 +142,3 @@ func newImRectFromC(rect C.ImRect) ImRect {
 func (r *ImRect) toC() C.ImRect {
 	return C.ImRect{Min: r.Min.toC(), Max: r.Max.toC()}
 }
-
-type ImGuiInputTextCallback func(*ImGuiInputTextCallbackData) int
-type ImGuiSizeCallback func(*ImGuiSizeCallbackData)
