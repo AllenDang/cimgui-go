@@ -548,6 +548,8 @@ import "unsafe"
 				if len(newArgs) > 0 {
 					newArgs = args[1:]
 				}
+
+				typeName = strings.TrimPrefix(args[0], "self ")
 				return fmt.Sprintf("func (self %s) %s(%s) %s {\n", typeName, newFuncName, strings.Join(newArgs, ","), returnType)
 			}
 

@@ -65,8 +65,8 @@ extern "C" {
 		}
 
 		funcName := strings.Replace(f.FuncName, "ig", "", 1)
-		/* funcName = strings.Replace(funcName, "ImGui", "", -1)
-		funcName = strings.Replace(funcName, "Im", "", -1) */
+		funcName = strings.Replace(funcName, "ImGui", "", -1)
+		funcName = strings.Replace(funcName, "Im", "", -1)
 
 		// Check lower case for function
 		if unicode.IsLower(rune(funcName[0])) {
