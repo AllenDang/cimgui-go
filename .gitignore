@@ -57,3 +57,4 @@ cimgui/.DS_Store
 cmd/codegen/codegen
 examples/example
 .ccls-cache
+thirdparty/glfw/build
