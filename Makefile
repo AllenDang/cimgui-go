@@ -10,8 +10,8 @@ gencode: ./cmd/codegen/build/codegen
 	cd ./cmd/codegen/build; ./codegen -d ../../../cimgui/generator/output/definitions.json -e ../../../cimgui/generator/output/structs_and_enums.json
 	cp -f ./cmd/codegen/build/cimgui_wrapper.cpp ./
 	cp -f ./cmd/codegen/build/cimgui_wrapper.h ./
-	cp -f ./cmd/codegen/biuld/cimgui_structs_accessor.h ./
-	cp -f ./cmd/codegen/build/emuns.go ./
+	cp -f ./cmd/codegen/build/cimgui_structs_accessor.h ./
+	cp -f ./cmd/codegen/build/enums.go ./
 	cp -f ./cmd/codegen/build/funcs.go ./
 	cp -f ./cmd/codegen/build/structs.go ./
 

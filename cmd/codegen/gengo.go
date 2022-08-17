@@ -36,7 +36,7 @@ func generateGoEnums(enums []EnumDef) []string {
 
 	var enumNames []string
 	for _, e := range enums {
-		eName := strings.TrimRight(e.Name, "_")
+		eName := strings.TrimSuffix(e.Name, "_")
 
 		enumNames = append(enumNames, eName)
 
@@ -172,6 +172,13 @@ func boolW(arg ArgDef) (argType string, def string, varName string) {
 func boolPtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*bool"
 	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapBool(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
+func shortW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "int"
+	def = fmt.Sprintf("%[1]sArg := C.short(%[1]s)", arg.Name)
 	varName = fmt.Sprintf("%sArg", arg.Name)
 	return
 }
@@ -363,6 +370,7 @@ func generateGoFuncs(validFuncs []FuncDef, enumNames []string, structNames []str
 
 	sb.WriteString(`package cimgui
 
+// #include "cimgui_structs_accessor.h"
 // #include "cimgui_wrapper.h"
 import "C"
 import "unsafe"
@@ -378,6 +386,7 @@ import "unsafe"
 		"float":           floatW,
 		"float*":          floatPtrW,
 		"const float*":    floatPtrW,
+		"short":           shortW,
 		"int":             intW,
 		"int*":            intPtrW,
 		"unsigned int":    uintW,
@@ -401,8 +410,10 @@ import "unsafe"
 		"const void*":     voidPtrW,
 		"const ImVec2":    imVec2W,
 		"const ImVec2*":   imVec2PtrW,
+		"ImVec2":          imVec2W,
 		"ImVec2*":         imVec2PtrW,
 		"const ImVec4":    imVec4W,
+		"ImVec4":          imVec4W,
 		"ImVec4*":         imVec4PtrW,
 		"ImColor*":        imColorPtrW,
 	}
@@ -437,11 +448,15 @@ import "unsafe"
 
 		shouldGenerate := false
 
-		for _, a := range f.ArgsT {
+		for i, a := range f.ArgsT {
 			shouldGenerate = false
 
 			if a.Name == "type" {
 				a.Name = "typeArg"
+			}
+
+			if i == 0 && f.StructSetter {
+				shouldGenerate = true
 			}
 
 			if v, ok := argWrapperMap[a.Type]; ok {
@@ -467,8 +482,8 @@ import "unsafe"
 			}
 
 			if strings.HasSuffix(a.Type, "*") {
-				pureType := strings.TrimLeft(a.Type, "const ")
-				pureType = strings.TrimRight(pureType, "*")
+				pureType := strings.TrimPrefix(a.Type, "const ")
+				pureType = strings.TrimSuffix(pureType, "*")
 
 				if funk.ContainsString(structNames, pureType) {
 					args = append(args, fmt.Sprintf("%s %s", a.Name, pureType))
@@ -508,20 +523,67 @@ import "unsafe"
 			return strings.Join(invokeStmt, ",")
 		}
 
+		skipStructs := []string{
+			"ImVec1",
+			"ImVec2",
+			"ImVec2ih",
+			"ImVec4",
+			"ImColor",
+			"ImRect",
+			"StbUndoRecord",
+			"StbUndoState",
+			"StbTexteditRow",
+		}
+
+		funcSignatureFunc := func(funcName string, args []string, returnType string) string {
+			funcParts := strings.Split(funcName, "_")
+			typeName := funcParts[0]
+
+			if strings.Contains(funcName, "_") &&
+				len(funcParts) > 1 &&
+				len(args) > 0 && strings.Contains(args[0], "self ") &&
+				!funk.ContainsString(skipStructs, typeName) {
+				newFuncName := strings.TrimPrefix(funcName, typeName+"_")
+				newArgs := args
+				if len(newArgs) > 0 {
+					newArgs = args[1:]
+				}
+				return fmt.Sprintf("func (self %s) %s(%s) %s {\n", typeName, newFuncName, strings.Join(newArgs, ","), returnType)
+			}
+
+			return fmt.Sprintf("func %s(%s) %s {\n", funcName, strings.Join(args, ","), returnType)
+		}
+
 		if f.Ret == "void" {
-			sb.WriteString(fmt.Sprintf("func %s(%s) {\n", f.FuncName, strings.Join(args, ",")))
+			if f.StructSetter {
+				funcParts := strings.Split(f.FuncName, "_")
+				funcName := strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
+				if len(funcName) == 0 || !strings.HasPrefix(funcName, "Set") || funk.ContainsString(skipStructs, funcParts[0]) {
+					continue
+				}
 
-			argInvokeStmt := argStmtFunc()
+				sb.WriteString(fmt.Sprintf("func (self %[1]s) %[2]s(%[3]s) {\n", funcParts[0], funcName, strings.Join(args, ",")))
 
-			sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
-			sb.WriteString("}\n\n")
+				argInvokeStmt := argStmtFunc()
+
+				sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
+				sb.WriteString("}\n\n")
+			} else {
+				sb.WriteString(funcSignatureFunc(f.FuncName, args, ""))
+
+				argInvokeStmt := argStmtFunc()
+
+				sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
+				sb.WriteString("}\n\n")
+			}
 
 			convertedFuncCount += 1
 		} else {
+
 			if rf, ok := returnWrapperMap[f.Ret]; ok {
 				returnType, returnStmt := rf(f)
 
-				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", f.FuncName, strings.Join(args, ","), returnType))
+				sb.WriteString(funcSignatureFunc(f.FuncName, args, returnType))
 
 				argInvokeStmt := argStmtFunc()
 
@@ -532,7 +594,7 @@ import "unsafe"
 			} else if funk.ContainsString(enumNames, f.Ret) {
 				returnType := f.Ret
 
-				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", f.FuncName, strings.Join(args, ","), returnType))
+				sb.WriteString(funcSignatureFunc(f.FuncName, args, returnType))
 
 				argInvokeStmt := argStmtFunc()
 
@@ -540,12 +602,12 @@ import "unsafe"
 				sb.WriteString("}\n\n")
 
 				convertedFuncCount += 1
-			} else if strings.HasSuffix(f.Ret, "*") && (funk.Contains(structNames, strings.TrimRight(f.Ret, "*")) || funk.Contains(structNames, strings.TrimRight(strings.TrimLeft(f.Ret, "const "), "*"))) {
+			} else if strings.HasSuffix(f.Ret, "*") && (funk.Contains(structNames, strings.TrimSuffix(f.Ret, "*")) || funk.Contains(structNames, strings.TrimSuffix(strings.TrimPrefix(f.Ret, "const "), "*"))) {
 				// return Im struct ptr
-				pureReturnType := strings.TrimLeft(f.Ret, "const ")
-				pureReturnType = strings.TrimRight(pureReturnType, "*")
+				pureReturnType := strings.TrimPrefix(f.Ret, "const ")
+				pureReturnType = strings.TrimSuffix(pureReturnType, "*")
 
-				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", f.FuncName, strings.Join(args, ","), pureReturnType))
+				sb.WriteString(funcSignatureFunc(f.FuncName, args, pureReturnType))
 
 				argInvokeStmt := argStmtFunc()
 

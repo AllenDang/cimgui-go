@@ -12,13 +12,14 @@ type ArgDef struct {
 }
 
 type FuncDef struct {
-	Args        string   `json:"args"`
-	ArgsT       []ArgDef `json:"argsT"`
-	FuncName    string   `json:"cimguiname"`
-	Location    string   `json:"location"`
-	Constructor bool     `json:"constructor"`
-	Destructor  bool     `json:"destructor"`
-	Ret         string   `json:"ret"`
+	Args         string   `json:"args"`
+	ArgsT        []ArgDef `json:"argsT"`
+	FuncName     string   `json:"cimguiname"`
+	Location     string   `json:"location"`
+	Constructor  bool     `json:"constructor"`
+	Destructor   bool     `json:"destructor"`
+	StructSetter bool     `json:"struct_setter"`
+	Ret          string   `json:"ret"`
 }
 
 type EnumValueDef struct {
@@ -151,6 +152,9 @@ func main() {
 
 	enumNames := generateGoEnums(enums)
 	structNames := generateGoStructs(structs)
-	generateCppStructsAccessor(structs)
+
+	structAccessorFuncs := generateCppStructsAccessor(structs)
+	validFuncs = append(validFuncs, structAccessorFuncs...)
+
 	generateGoFuncs(validFuncs, enumNames, structNames)
 }

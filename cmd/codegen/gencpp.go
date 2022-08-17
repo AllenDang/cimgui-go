@@ -65,8 +65,8 @@ extern "C" {
 		}
 
 		funcName := strings.Replace(f.FuncName, "ig", "", 1)
-		funcName = strings.Replace(funcName, "ImGui", "", -1)
-		funcName = strings.Replace(funcName, "Im", "", -1)
+		/* funcName = strings.Replace(funcName, "ImGui", "", -1)
+		funcName = strings.Replace(funcName, "Im", "", -1) */
 
 		// Check lower case for function
 		if unicode.IsLower(rune(funcName[0])) {
@@ -158,7 +158,9 @@ extern "C" {
 	return validFuncs
 }
 
-func generateCppStructsAccessor(structs []StructDef) {
+func generateCppStructsAccessor(structs []StructDef) []FuncDef {
+	var structAccessorFuncs []FuncDef
+
 	skipFuncNames := []string{
 		"ImGuiIO_SetAppAcceptingEvents",
 		"ImGuiDockNode_SetLocalFlags",
@@ -187,6 +189,26 @@ extern "C" {
 				continue
 			}
 
+			structAccessorFuncs = append(structAccessorFuncs, FuncDef{
+				Args: fmt.Sprintf("(%[1]s *%[2]s, %[3]s v)", s.Name, s.Name+"Ptr", m.Type),
+				ArgsT: []ArgDef{
+					{
+						Name: s.Name + "Ptr",
+						Type: s.Name,
+					},
+					{
+						Name: "v",
+						Type: m.Type,
+					},
+				},
+				FuncName:     setterFuncName,
+				Location:     "",
+				Constructor:  false,
+				Destructor:   false,
+				StructSetter: true,
+				Ret:          "void",
+			})
+
 			sb.WriteString(fmt.Sprintf("void %[1]s_Set%[2]s(%[1]s *%[3]s, %[4]s v) { %[3]s->%[2]s = v; }\n", s.Name, m.Name, s.Name+"Ptr", m.Type))
 		}
 	}
@@ -207,4 +229,6 @@ extern "C" {
 	if err != nil {
 		panic(err.Error())
 	}
+
+	return structAccessorFuncs
 }

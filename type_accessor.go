@@ -6,39 +6,12 @@ package cimgui
 import "C"
 import "unsafe"
 
-func (io ImGuiIO) SetBackendFlags(flags ImGuiBackendFlags) {
-	C.ImGuiIO_SetBackendFlags(io.handle(), C.ImGuiBackendFlags(flags))
-}
-
 func (io ImGuiIO) GetBackendFlags() ImGuiBackendFlags {
 	return ImGuiBackendFlags(io.C().BackendFlags)
 }
 
-func (io ImGuiIO) SetConfigFlags(flags ImGuiConfigFlags) {
-	C.ImGuiIO_SetConfigFlags(io.handle(), C.ImGuiConfigFlags(flags))
-}
-
 func (io ImGuiIO) GetConfigFlags() ImGuiConfigFlags {
 	return ImGuiConfigFlags(io.C().ConfigFlags)
-}
-
-func (io ImGuiIO) SetBackendPlatformName(name string) {
-	nameArg, nameFin := wrapString(name)
-	defer nameFin()
-
-	C.ImGuiIO_SetBackendPlatformName(io.handle(), nameArg)
-}
-
-func (io ImGuiIO) SetDisplaySize(width, height float32) {
-	C.ImGuiIO_SetDisplaySize(io.handle(), ImVec2{X: width, Y: height}.ToC())
-}
-
-func (io ImGuiIO) SetDeltaTime(delta float32) {
-	C.ImGuiIO_SetDeltaTime(io.handle(), C.float(delta))
-}
-
-func (io ImGuiIO) SetMousePos(x, y float32) {
-	C.ImGuiIO_SetMousePos(io.handle(), ImVec2{X: x, Y: y}.ToC())
 }
 
 func (io ImGuiIO) SetMouseButtonDown(i int, down bool) {
@@ -57,31 +30,8 @@ func (io ImGuiIO) AddMouseWheelDelta(horizontal, vertical float32) {
 	C.ImGuiIO_SetMouseWheelH(io.handle(), h)
 }
 
-func (io ImGuiIO) AddFocusEvent(focused bool) {
-	IO_AddFocusEvent(io, focused)
-}
-
-func (io ImGuiIO) AddKeyEvent(key ImGuiKey, down bool) {
-	IO_AddKeyEvent(io, key, down)
-}
-
-func (io ImGuiIO) AddInputCharacters(cs string) {
-	IO_AddInputCharactersUTF8(io, cs)
-}
-
 func (io ImGuiIO) GetFonts() ImFontAtlas {
 	return (ImFontAtlas)(unsafe.Pointer(io.C().Fonts))
-}
-
-func (io ImGuiIO) SetIniFilename(name string) {
-	nameArg, nameFin := wrapString(name)
-	defer nameFin()
-
-	C.ImGuiIO_SetIniFilename(io.handle(), nameArg)
-}
-
-func (d ImDrawData) ScaleClipRects(width, height float32) {
-	DrawData_ScaleClipRects(d, ImVec2{X: width, Y: height})
 }
 
 // Commands returns the list of draw commands.
@@ -134,8 +84,4 @@ func (d ImDrawCmd) CallUserCallback(list ImDrawList) {
 
 func (d ImDrawCmd) TextureID() ImTextureID {
 	return ImTextureID(d.C().TextureId)
-}
-
-func (f ImFontAtlas) SetTextureID(id ImTextureID) {
-	FontAtlas_SetTexID(f, id)
 }

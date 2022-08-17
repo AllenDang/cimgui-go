@@ -13,6 +13,10 @@ type ImVec2 struct {
 	Y float32
 }
 
+func NewImVec2(x, y float32) ImVec2 {
+	return ImVec2{X: x, Y: y}
+}
+
 func (i ImVec2) ToC() C.ImVec2 {
 	return C.ImVec2{x: C.float(i.X), y: C.float(i.Y)}
 }
@@ -38,6 +42,15 @@ type ImVec4 struct {
 	Y float32
 	W float32
 	Z float32
+}
+
+func NewImVec4(r, g, b, a float32) ImVec4 {
+	return ImVec4{
+		X: r,
+		Y: g,
+		W: b,
+		Z: a,
+	}
 }
 
 func (i ImVec4) ToC() C.ImVec4 {
@@ -66,6 +79,17 @@ func (vec *ImVec4) wrap() (out *C.ImVec4, finisher func()) {
 
 type ImColor struct {
 	Value ImVec4
+}
+
+func NewImColor(x, y, w, z float32) ImColor {
+	return ImColor{
+		Value: ImVec4{
+			X: x,
+			Y: y,
+			W: w,
+			Z: z,
+		},
+	}
 }
 
 func (i ImColor) ToC() C.ImColor {
