@@ -664,7 +664,9 @@ import "unsafe"
 					continue
 				}
 
-				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", f.FuncName, strings.Join(args, ","), returnType))
+				newFuncName := "New" + strings.Split(f.FuncName, "_")[0]
+
+				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", newFuncName, strings.Join(args, ","), returnType))
 
 				argInvokeStmt := argStmtFunc()
 
