@@ -130,6 +130,10 @@ defer %[1]sFin()`, arg.Name)
 	return
 }
 
+func ucharW(arg ArgDef) (argType string, def string, varName string) {
+	return simpleValueW(arg.Name, "uint", "uchar")
+}
+
 func uCharPtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*C.uchar"
 	varName = fmt.Sprintf("&%s", arg.Name)
@@ -378,6 +382,12 @@ func floatReturnW(f FuncDef) (returnType string, returnStmt string) {
 	return
 }
 
+func doubleReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "float64"
+	returnStmt = "return float64(%s)"
+	return
+}
+
 func intReturnW(f FuncDef) (returnType string, returnStmt string) {
 	returnType = "int"
 	returnStmt = "return int(%s)"
@@ -387,6 +397,30 @@ func intReturnW(f FuncDef) (returnType string, returnStmt string) {
 func constWCharPtrReturnW(f FuncDef) (returnType string, returnStmt string) {
 	returnType = "*ImWchar"
 	returnStmt = "return (*ImWchar)(%s)"
+	return
+}
+
+func imVec4PtrReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "ImVec4"
+	returnStmt = "return NewImVec4FromC(%s)"
+	return
+}
+
+func u32ReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "uint32"
+	returnStmt = "return uint32(%s)"
+	return
+}
+
+func idReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "ImGuiID"
+	returnStmt = "return ImGuiID(%s)"
+	return
+}
+
+func textureIdReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "ImTextureID"
+	returnStmt = "return ImTextureID(%s)"
 	return
 }
 
@@ -406,6 +440,7 @@ import "unsafe"
 	argWrapperMap := map[string]typeWrapper{
 		"char*":                    constCharW,
 		"const char*":              constCharW,
+		"unsigned char":            ucharW,
 		"unsigned char**":          uCharPtrW,
 		"size_t":                   sizeTW,
 		"size_t*":                  sizeTPtrW,
@@ -448,6 +483,7 @@ import "unsafe"
 		"ImVec2":                   imVec2W,
 		"ImVec2*":                  imVec2PtrW,
 		"const ImVec4":             imVec4W,
+		"const ImVec4*":            imVec4PtrW,
 		"ImVec4":                   imVec4W,
 		"ImVec4*":                  imVec4PtrW,
 		"ImColor*":                 imColorPtrW,
@@ -459,7 +495,12 @@ import "unsafe"
 		"const char*":    constCharReturnW,
 		"const ImWchar*": constWCharPtrReturnW,
 		"float":          floatReturnW,
+		"double":         doubleReturnW,
 		"int":            intReturnW,
+		"const ImVec4*":  imVec4PtrReturnW,
+		"ImU32":          u32ReturnW,
+		"ImGuiID":        idReturnW,
+		"ImTextureID":    textureIdReturnW,
 	}
 
 	type argOutput struct {
@@ -617,7 +658,6 @@ import "unsafe"
 
 			convertedFuncCount += 1
 		} else {
-
 			if rf, ok := returnWrapperMap[f.Ret]; ok {
 				returnType, returnStmt := rf(f)
 
@@ -676,7 +716,7 @@ import "unsafe"
 
 				convertedFuncCount += 1
 			} else {
-				// fmt.Printf("%s%s -> %s\n", f.FuncName, f.Args, f.Ret)
+				fmt.Printf("%s%s -> %s\n", f.FuncName, f.Args, f.Ret)
 			}
 		}
 	}

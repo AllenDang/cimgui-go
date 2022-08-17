@@ -55,6 +55,10 @@ func NewImVec4(r, g, b, a float32) ImVec4 {
 	}
 }
 
+func NewImVec4FromC(vec4 *C.ImVec4) ImVec4 {
+	return NewImVec4(float32(vec4.x), float32(vec4.y), float32(vec4.w), float32(vec4.z))
+}
+
 func (i ImVec4) ToC() C.ImVec4 {
 	return C.ImVec4{x: C.float(i.X), y: C.float(i.Y), w: C.float(i.W), z: C.float(i.Z)}
 }
