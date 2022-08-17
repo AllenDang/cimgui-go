@@ -137,9 +137,7 @@ func uCharPtrW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func sizeTW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "uint64"
-	varName = fmt.Sprintf("C.ulong(%s)", arg.Name)
-	return
+	return simpleValueW(arg.Name, "uint64", "ulong")
 }
 
 func sizeTPtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -163,10 +161,7 @@ defer %[1]sFin()`, arg.Name)
 }
 
 func boolW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "bool"
-	def = fmt.Sprintf("%[1]sArg := C.bool(%[1]s)", arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
+	return simpleValueW(arg.Name, "bool", "bool")
 }
 
 func boolPtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -176,11 +171,26 @@ func boolPtrW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
-func shortW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "int"
-	def = fmt.Sprintf("%[1]sArg := C.short(%[1]s)", arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
+func simpleValueW(argName, goType, cType string) (argType string, def string, varName string) {
+	argType = goType
+	varName = fmt.Sprintf("C.%s(%s)", cType, argName)
 	return
+}
+
+func shortW(arg ArgDef) (argType string, def string, varName string) {
+	return simpleValueW(arg.Name, "int", "short")
+}
+
+func ushortW(arg ArgDef) (argType string, def string, varName string) {
+	return simpleValueW(arg.Name, "uint", "ushort")
+}
+
+func u8W(arg ArgDef) (argType string, def string, varName string) {
+	return simpleValueW(arg.Name, "uint", "ImU8")
+}
+
+func u16W(arg ArgDef) (argType string, def string, varName string) {
+	return simpleValueW(arg.Name, "uint", "ImU16")
 }
 
 func arrayW(size int, arrayType, goArrayType string, arg ArgDef) (argType string, def string, varName string) {
@@ -203,9 +213,23 @@ func int4W(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func u32W(arg ArgDef) (argType string, def string, varName string) {
-	argType = "uint32"
-	varName = fmt.Sprintf("C.uint(%s)", arg.Name)
-	return
+	return simpleValueW(arg.Name, "uint32", "ImU32")
+}
+
+func u64W(arg ArgDef) (argType string, def string, varName string) {
+	return simpleValueW(arg.Name, "uint64", "ImU64")
+}
+
+func s8W(arg ArgDef) (argType string, def string, varName string) {
+	return simpleValueW(arg.Name, "int", "ImS8")
+}
+
+func s16W(arg ArgDef) (argType string, def string, varName string) {
+	return simpleValueW(arg.Name, "int", "ImS16")
+}
+
+func s32W(arg ArgDef) (argType string, def string, varName string) {
+	return simpleValueW(arg.Name, "int", "ImS32")
 }
 
 func float2W(arg ArgDef) (argType string, def string, varName string) {
@@ -246,15 +270,11 @@ func intPtrW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func uintW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "uint32"
-	varName = fmt.Sprintf("C.uint(%s)", arg.Name)
-	return
+	return simpleValueW(arg.Name, "uint32", "uint")
 }
 
 func doubleW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "float64"
-	varName = fmt.Sprintf("C.double(%s)", arg.Name)
-	return
+	return simpleValueW(arg.Name, "float64", "double")
 }
 
 func doublePtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -264,21 +284,23 @@ func doublePtrW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imGuiIDW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "ImGuiID"
-	varName = fmt.Sprintf("C.ImGuiID(%s)", arg.Name)
-	return
+	return simpleValueW(arg.Name, "ImGuiID", "ImGuiID")
 }
 
 func imTextureIDW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "ImTextureID"
-	varName = fmt.Sprintf("C.ImTextureID(%s)", arg.Name)
-	return
+	return simpleValueW(arg.Name, "ImTextureID", "ImTextureID")
 }
 
 func imDrawIdxW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "ImDrawIdx"
-	varName = fmt.Sprintf("C.ImDrawIdx(%s)", arg.Name)
-	return
+	return simpleValueW(arg.Name, "ImDrawIdx", "ImDrawIdx")
+}
+
+func imTableColumnIdxW(arg ArgDef) (argType string, def string, varName string) {
+	return simpleValueW(arg.Name, "ImGuiTableColumnIdx", "ImGuiTableColumnIdx")
+}
+
+func imTableDrawChannelIdxW(arg ArgDef) (argType string, def string, varName string) {
+	return simpleValueW(arg.Name, "ImGuiTableDrawChannelIdx", "ImGuiTableDrawChannelIdx")
 }
 
 func voidPtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -307,6 +329,10 @@ defer %[1]sFin()`, arg.Name)
 
 func imVec4W(arg ArgDef) (argType string, def string, varName string) {
 	return valueStructW(arg.Name, "ImVec4")
+}
+
+func imRectW(arg ArgDef) (argType string, def string, varName string) {
+	return valueStructW(arg.Name, "ImRect")
 }
 
 func imVec4PtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -378,44 +404,54 @@ import "unsafe"
 `)
 
 	argWrapperMap := map[string]typeWrapper{
-		"char*":           constCharW,
-		"const char*":     constCharW,
-		"unsigned char**": uCharPtrW,
-		"size_t":          sizeTW,
-		"size_t*":         sizeTPtrW,
-		"float":           floatW,
-		"float*":          floatPtrW,
-		"const float*":    floatPtrW,
-		"short":           shortW,
-		"int":             intW,
-		"int*":            intPtrW,
-		"unsigned int":    uintW,
-		"double":          doubleW,
-		"double*":         doublePtrW,
-		"bool":            boolW,
-		"bool*":           boolPtrW,
-		"int[2]":          int2W,
-		"int[3]":          int3W,
-		"int[4]":          int4W,
-		"ImU32":           u32W,
-		"float[2]":        float2W,
-		"float[3]":        float3W,
-		"float[4]":        float4W,
-		"ImWchar":         imWcharW,
-		"const ImWchar*":  imWcharPtrW,
-		"ImGuiID":         imGuiIDW,
-		"ImTextureID":     imTextureIDW,
-		"ImDrawIdx":       imDrawIdxW,
-		"void*":           voidPtrW,
-		"const void*":     voidPtrW,
-		"const ImVec2":    imVec2W,
-		"const ImVec2*":   imVec2PtrW,
-		"ImVec2":          imVec2W,
-		"ImVec2*":         imVec2PtrW,
-		"const ImVec4":    imVec4W,
-		"ImVec4":          imVec4W,
-		"ImVec4*":         imVec4PtrW,
-		"ImColor*":        imColorPtrW,
+		"char*":                    constCharW,
+		"const char*":              constCharW,
+		"unsigned char**":          uCharPtrW,
+		"size_t":                   sizeTW,
+		"size_t*":                  sizeTPtrW,
+		"float":                    floatW,
+		"float*":                   floatPtrW,
+		"const float*":             floatPtrW,
+		"short":                    shortW,
+		"unsigned short":           ushortW,
+		"ImU8":                     u8W,
+		"ImU16":                    u16W,
+		"ImU64":                    u64W,
+		"ImS8":                     s8W,
+		"ImS16":                    s16W,
+		"ImS32":                    s32W,
+		"int":                      intW,
+		"int*":                     intPtrW,
+		"unsigned int":             uintW,
+		"double":                   doubleW,
+		"double*":                  doublePtrW,
+		"bool":                     boolW,
+		"bool*":                    boolPtrW,
+		"int[2]":                   int2W,
+		"int[3]":                   int3W,
+		"int[4]":                   int4W,
+		"ImU32":                    u32W,
+		"float[2]":                 float2W,
+		"float[3]":                 float3W,
+		"float[4]":                 float4W,
+		"ImWchar":                  imWcharW,
+		"const ImWchar*":           imWcharPtrW,
+		"ImGuiID":                  imGuiIDW,
+		"ImTextureID":              imTextureIDW,
+		"ImDrawIdx":                imDrawIdxW,
+		"ImGuiTableColumnIdx":      imTableColumnIdxW,
+		"ImGuiTableDrawChannelIdx": imTableDrawChannelIdxW,
+		"void*":                    voidPtrW,
+		"const void*":              voidPtrW,
+		"const ImVec2":             imVec2W,
+		"const ImVec2*":            imVec2PtrW,
+		"ImVec2":                   imVec2W,
+		"ImVec2*":                  imVec2PtrW,
+		"const ImVec4":             imVec4W,
+		"ImVec4":                   imVec4W,
+		"ImVec4*":                  imVec4PtrW,
+		"ImColor*":                 imColorPtrW,
+		"ImRect":                   imRectW,
 	}
 
 	returnWrapperMap := map[string]returnWrapper{

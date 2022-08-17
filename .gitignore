@@ -58,3 +58,4 @@ cmd/codegen/codegen
 examples/example
 .ccls-cache
 thirdparty/glfw/build
+/cmd/codegen/build/

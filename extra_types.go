@@ -7,6 +7,8 @@ type ImWchar C.uint
 type ImGuiID C.ImGuiID
 type ImTextureID uintptr
 type ImDrawIdx C.ImDrawIdx
+type ImGuiTableColumnIdx C.ImGuiTableColumnIdx
+type ImGuiTableDrawChannelIdx C.ImGuiTableDrawChannelIdx
 
 type ImVec2 struct {
 	X float32
@@ -111,6 +113,15 @@ func (i *ImColor) wrap() (out *C.ImColor, finisher func()) {
 		finisher = func() {}
 	}
 	return
+}
+
+type ImRect struct {
+	Min ImVec2
+	Max ImVec2
+}
+
+func (r *ImRect) ToC() C.ImRect {
+	return C.ImRect{Min: r.Min.ToC(), Max: r.Max.ToC()}
 }
 
 type ImGuiInputTextCallback func(*ImGuiInputTextCallbackData) int
