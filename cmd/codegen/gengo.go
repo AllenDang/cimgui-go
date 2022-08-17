@@ -100,7 +100,7 @@ func (data %[1]s) handle() *C.%[1]s {
   return (*C.%[1]s)(unsafe.Pointer(data))
 }
 
-func (data %[1]s) C() C.%[1]s {
+func (data %[1]s) c() C.%[1]s {
   return *(data.handle())
 }
 
@@ -319,7 +319,7 @@ func voidPtrW(arg ArgDef) (argType string, def string, varName string) {
 
 func valueStructW(sName, sType string) (argType string, def string, varName string) {
 	argType = sType
-	varName = fmt.Sprintf("%s.ToC()", sName)
+	varName = fmt.Sprintf("%s.toC()", sName)
 	return
 }
 

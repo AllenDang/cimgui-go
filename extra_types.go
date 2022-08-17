@@ -23,7 +23,7 @@ func newImVec2FromC(vec2 C.ImVec2) ImVec2 {
 	return NewImVec2(float32(vec2.x), float32(vec2.y))
 }
 
-func (i ImVec2) ToC() C.ImVec2 {
+func (i ImVec2) toC() C.ImVec2 {
 	return C.ImVec2{x: C.float(i.X), y: C.float(i.Y)}
 }
 
@@ -67,7 +67,7 @@ func newImVec4FromC(vec4 C.ImVec4) ImVec4 {
 	return NewImVec4(float32(vec4.x), float32(vec4.y), float32(vec4.w), float32(vec4.z))
 }
 
-func (i ImVec4) ToC() C.ImVec4 {
+func (i ImVec4) toC() C.ImVec4 {
 	return C.ImVec4{x: C.float(i.X), y: C.float(i.Y), w: C.float(i.W), z: C.float(i.Z)}
 }
 
@@ -106,14 +106,14 @@ func NewImColor(x, y, w, z float32) ImColor {
 	}
 }
 
-func (i ImColor) ToC() C.ImColor {
-	return C.ImColor{Value: i.Value.ToC()}
+func (i ImColor) toC() C.ImColor {
+	return C.ImColor{Value: i.Value.toC()}
 }
 
 func (i *ImColor) wrap() (out *C.ImColor, finisher func()) {
 	if i != nil {
 		out = &C.ImColor{
-			Value: i.Value.ToC(),
+			Value: i.Value.toC(),
 		}
 		finisher = func() {
 			i.Value.X = float32(out.Value.x)
@@ -139,8 +139,8 @@ func newImRectFromC(rect C.ImRect) ImRect {
 	}
 }
 
-func (r *ImRect) ToC() C.ImRect {
-	return C.ImRect{Min: r.Min.ToC(), Max: r.Max.ToC()}
+func (r *ImRect) toC() C.ImRect {
+	return C.ImRect{Min: r.Min.toC(), Max: r.Max.toC()}
 }
 
 type ImGuiInputTextCallback func(*ImGuiInputTextCallbackData) int
