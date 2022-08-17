@@ -13,11 +13,12 @@
 // legacy_stdio_definitions.lib, which we do using this pragma. Your own project
 // should not be affected, as you are likely to link with a newer binary of GLFW
 // that is adequate for your version of Visual Studio.
-#if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
+#if defined(_MSC_VER) && (_MSC_VER >= 1900) &&                                 \
+    !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
 
-#define MAX_EXTRA_FRAME_COUNT 30
+#define MAX_EXTRA_FRAME_COUNT 15
 unsigned int glfw_target_fps = 30;
 int extra_frame_count = MAX_EXTRA_FRAME_COUNT;
 
@@ -25,7 +26,9 @@ void glfw_render(GLFWwindow *window, VoidCallback renderLoop);
 
 void igSetTargetFPS(unsigned int fps) { glfw_target_fps = fps; }
 
-static void glfw_error_callback(int error, const char *description) { fprintf(stderr, "Glfw Error %d: %s\n", error, description); }
+static void glfw_error_callback(int error, const char *description) {
+  fprintf(stderr, "Glfw Error %d: %s\n", error, description);
+}
 
 void glfw_window_refresh_callback(GLFWwindow *window) {
   VoidCallback loopFunc = (VoidCallback)(glfwGetWindowUserPointer(window));
@@ -71,7 +74,8 @@ GLFWwindow *igCreateGlfwWindow(const char *title, int width, int height) {
   // Setup Dear ImGui context
   igCreateContext(0);
   ImGuiIO *io = igGetIO();
-  io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+  io->ConfigFlags |=
+      ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
   // io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad
   // Controls
   io->ConfigFlags |= ImGuiConfigFlags_DockingEnable;   // Enable Docking
@@ -130,7 +134,8 @@ void glfw_render(GLFWwindow *window, VoidCallback renderLoop) {
   int display_w, display_h;
   glfwGetFramebufferSize(window, &display_w, &display_h);
   glViewport(0, 0, display_w, display_h);
-  glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+  glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w,
+               clear_color.z * clear_color.w, clear_color.w);
   glClear(GL_COLOR_BUFFER_BIT);
   ImGui_ImplOpenGL3_RenderDrawData(igGetDrawData());
 
@@ -190,7 +195,7 @@ void igRunLoop(GLFWwindow *window, VoidCallback loop) {
     if (extra_frame_count > 0) {
       extra_frame_count--;
     } else {
-      glfwWaitEventsTimeout(0.7);
+      glfwWaitEvents();
       extra_frame_count = MAX_EXTRA_FRAME_COUNT;
     }
 
