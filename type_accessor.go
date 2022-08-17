@@ -1,7 +1,6 @@
 package cimgui
 
 // #include "cimgui_wrapper.h"
-// #include "cimgui_structs_accessor.h"
 // #include "util.h"
 import "C"
 import "unsafe"
@@ -26,8 +25,8 @@ func (io ImGuiIO) AddMouseWheelDelta(horizontal, vertical float32) {
 	ioC := io.C()
 	v := ioC.MouseWheel + C.float(vertical)
 	h := ioC.MouseWheelH + C.float(horizontal)
-	C.ImGuiIO_SetMouseWheel(io.handle(), v)
-	C.ImGuiIO_SetMouseWheelH(io.handle(), h)
+	io.SetMouseWheel(float32(v))
+	io.SetMouseWheelH(float32(h))
 }
 
 func (io ImGuiIO) GetFonts() ImFontAtlas {
