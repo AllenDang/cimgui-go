@@ -21,7 +21,7 @@ func wrapBool(goValue *bool) (wrapped *C.bool, finisher func()) {
 		}
 		wrapped = &cValue
 		finisher = func() {
-			*goValue = cValue != C.bool(true)
+			*goValue = cValue == C.bool(true)
 		}
 	} else {
 		finisher = func() {}

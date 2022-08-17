@@ -202,8 +202,8 @@ func u16W(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func arrayW(size int, arrayType, goArrayType string, arg ArgDef) (argType string, def string, varName string) {
-	argType = fmt.Sprintf("*[%d]%s", size, goArrayType)
-	def = fmt.Sprintf("%[1]sArg := (*C.%[2]s)(&%[1]s[0])", arg.Name, arrayType)
+	argType = fmt.Sprintf("*[%d]*%s", size, goArrayType)
+	def = fmt.Sprintf("%[1]sArg := (*C.%[2]s)(%[1]s[0])", arg.Name, arrayType)
 	varName = fmt.Sprintf("%sArg", arg.Name)
 	return
 }
