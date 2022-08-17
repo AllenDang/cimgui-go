@@ -14,6 +14,9 @@ gencode: ./cmd/codegen/build/codegen
 	cp -f ./cmd/codegen/build/enums.go ./
 	cp -f ./cmd/codegen/build/funcs.go ./
 	cp -f ./cmd/codegen/build/structs.go ./
+	gofmt -w enums.go
+	gofmt -w structs.go
+	gofmt -w funcs.go
 
 
 .PHONY: gen_cimgui
