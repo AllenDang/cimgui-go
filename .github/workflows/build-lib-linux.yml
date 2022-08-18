@@ -10,6 +10,18 @@ jobs:
     steps:
     - uses: actions/checkout@main
 
+    - name: configure glfw
+      run: cmake -S . -Bbuild
+      working-directory: ./thirdparty/glfw
+
+    - name: make glfw
+      run: make
+      working-directory: ./thirdparty/glfw/build
+
+    - name: copy glfw to lib
+      run: |
+        cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/linux/x64
+
     - name: configure cimgui
       run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On
       working-directory: ./cimgui
@@ -22,18 +34,6 @@ jobs:
       run: |
         mkdir -p ./lib/linux/x64
         cp -f ./cimgui/build/cimgui.a ./lib/linux/x64/
-
-    - name: configure glfw
-      run: cmake -S . -Bbuild
-      working-directory: ./thirdparty/glfw
-
-    - name: make glfw
-      run: make
-      working-directory: ./thirdparty/glfw/build
-
-    - name: copy glfw to lib
-      run: |
-        cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/linux/x64
 
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
