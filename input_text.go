@@ -4,53 +4,105 @@ package cimgui
 // #include <stdlib.h>
 // #include "cimgui_wrapper.h"
 // #include "cimgui_structs_accessor.h"
-// extern void generalInputTextCallback(ImGuiInputTextCallbackData* data);
+// extern int generalInputTextCallback(ImGuiInputTextCallbackData* data);
 import "C"
 import (
 	"runtime/cgo"
 	"unsafe"
 )
 
-//export generalInputTextCallback
-func generalInputTextCallback(cb *C.ImGuiInputTextCallbackData) {
-	data := ImGuiInputTextCallbackData(unsafe.Pointer(cb))
-	if data.GetEventFlag() == ImGuiInputTextFlags_CallbackResize {
-		bufHandle := (*cgo.Handle)(data.c().UserData)
+type ImGuiInputTextCallback func(data ImGuiInputTextCallbackData) int
 
-		buf := bufHandle.Value().(*stringBuffer)
-		buf.resizeTo(data.GetBufSize())
-		C.ImGuiInputTextCallbackData_SetBuf(cb, (*C.char)(buf.ptr))
-		data.SetBufSize(int32(buf.size))
+type inputTextInternalState struct {
+	buf      *stringBuffer
+	callback ImGuiInputTextCallback
+}
+
+func (state *inputTextInternalState) release() {
+	state.buf.free()
+}
+
+//export generalInputTextCallback
+func generalInputTextCallback(cbData *C.ImGuiInputTextCallbackData) C.int {
+	data := ImGuiInputTextCallbackData(unsafe.Pointer(cbData))
+
+	bufHandle := (*cgo.Handle)(data.c().UserData)
+	statePtr := bufHandle.Value().(*inputTextInternalState)
+
+	if data.GetEventFlag() == ImGuiInputTextFlags_CallbackResize {
+		statePtr.buf.resizeTo(data.GetBufSize())
+		C.ImGuiInputTextCallbackData_SetBuf(cbData, (*C.char)(statePtr.buf.ptr))
+		data.SetBufSize(int32(statePtr.buf.size))
 		data.SetBufTextLen(int32(data.GetBufTextLen()))
 		data.SetBufDirty(true)
 	}
+
+	if statePtr.callback != nil {
+		return C.int(statePtr.callback(data))
+	}
+
+	return 0
 }
 
-func InputTextWithHint(label, hint string, buf *string, flags ImGuiInputTextFlags) {
+func InputTextWithHint(label, hint string, buf *string, flags ImGuiInputTextFlags, callback ImGuiInputTextCallback) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
 	hintArg, hintFin := wrapString(hint)
 	defer hintFin()
 
-	sBuf := newStringBuffer(*buf)
+	state := &inputTextInternalState{
+		buf:      newStringBuffer(*buf),
+		callback: callback,
+	}
+
 	defer func() {
-		*buf = sBuf.toGo()
-		sBuf.free()
+		*buf = state.buf.toGo()
+		state.release()
 	}()
 
-	sBufHandle := cgo.NewHandle(sBuf)
-	defer sBufHandle.Delete()
+	stateHandle := cgo.NewHandle(state)
+	defer stateHandle.Delete()
 
 	flags |= ImGuiInputTextFlags_CallbackResize
 
-	C.InputTextWithHint(
+	return C.InputTextWithHint(
 		labelArg,
 		hintArg,
-		(*C.char)(sBuf.ptr),
-		C.ulong(len(*buf)),
+		(*C.char)(state.buf.ptr),
+		C.ulong(len(*buf)+1),
 		C.ImGuiInputTextFlags(flags),
 		C.ImGuiInputTextCallback(C.generalInputTextCallback),
-		unsafe.Pointer(&sBufHandle),
-	)
+		unsafe.Pointer(&stateHandle),
+	) == C.bool(true)
+}
+
+func InputTextMultiline(label string, buf *string, size ImVec2, flags ImGuiInputTextFlags, callback ImGuiInputTextCallback) bool {
+	labelArg, labelFin := wrapString(label)
+	defer labelFin()
+
+	state := &inputTextInternalState{
+		buf:      newStringBuffer(*buf),
+		callback: callback,
+	}
+
+	defer func() {
+		*buf = state.buf.toGo()
+		state.release()
+	}()
+
+	stateHandle := cgo.NewHandle(state)
+	defer stateHandle.Delete()
+
+	flags |= ImGuiInputTextFlags_CallbackResize
+
+	return C.InputTextMultiline(
+		labelArg,
+		(*C.char)(state.buf.ptr),
+		C.ulong(len(*buf)),
+		size.toC(),
+		C.ImGuiInputTextFlags(flags),
+		C.ImGuiInputTextCallback(C.generalInputTextCallback),
+		unsafe.Pointer(&stateHandle),
+	) == C.bool(true)
 }

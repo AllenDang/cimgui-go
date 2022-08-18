@@ -434,9 +434,33 @@ func imTableColumnIdxReturnW(f FuncDef) (returnType string, returnStmt string) {
 	return
 }
 
+func imTableDrawChannelIdxReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "ImGuiTableDrawChannelIdx"
+	returnStmt = "return ImGuiTableDrawChannelIdx(%s)"
+	return
+}
+
+func voidPtrReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "unsafe.Pointer"
+	returnStmt = "return unsafe.Pointer(%s)"
+	return
+}
+
 func u32ReturnW(f FuncDef) (returnType string, returnStmt string) {
 	returnType = "uint32"
 	returnStmt = "return uint32(%s)"
+	return
+}
+
+func uintReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "uint32"
+	returnStmt = "return uint32(%s)"
+	return
+}
+
+func uint64ReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "uint64"
+	returnStmt = "return uint64(%s)"
 	return
 }
 
@@ -519,20 +543,31 @@ import "unsafe"
 	}
 
 	returnWrapperMap := map[string]returnWrapper{
-		"bool":                boolReturnW,
-		"const char*":         constCharReturnW,
-		"const ImWchar*":      constWCharPtrReturnW,
-		"float":               floatReturnW,
-		"double":              doubleReturnW,
-		"int":                 intReturnW,
-		"ImVec4":              imVec4ReturnW,
-		"const ImVec4*":       imVec4PtrReturnW,
-		"ImU32":               u32ReturnW,
-		"ImGuiID":             idReturnW,
-		"ImTextureID":         textureIdReturnW,
-		"ImVec2":              imVec2ReturnW,
-		"ImRect":              imRectReturnW,
-		"ImGuiTableColumnIdx": imTableColumnIdxReturnW,
+		"bool":                     boolReturnW,
+		"const char*":              constCharReturnW,
+		"const ImWchar*":           constWCharPtrReturnW,
+		"float":                    floatReturnW,
+		"double":                   doubleReturnW,
+		"int":                      intReturnW,
+		"unsigned int":             uintReturnW,
+		"short":                    intReturnW,
+		"ImS8":                     intReturnW,
+		"ImS16":                    intReturnW,
+		"ImS32":                    intReturnW,
+		"ImU8":                     uintReturnW,
+		"ImU16":                    uintReturnW,
+		"ImU32":                    u32ReturnW,
+		"ImU64":                    uint64ReturnW,
+		"ImVec4":                   imVec4ReturnW,
+		"const ImVec4*":            imVec4PtrReturnW,
+		"ImGuiID":                  idReturnW,
+		"ImTextureID":              textureIdReturnW,
+		"ImVec2":                   imVec2ReturnW,
+		"ImRect":                   imRectReturnW,
+		"ImGuiTableColumnIdx":      imTableColumnIdxReturnW,
+		"ImGuiTableDrawChannelIdx": imTableDrawChannelIdxReturnW,
+		"void*":                    voidPtrReturnW,
+		"size_t":                   doubleReturnW,
 	}
 
 	type argOutput struct {
