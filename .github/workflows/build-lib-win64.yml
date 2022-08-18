@@ -7,11 +7,15 @@ jobs:
   build-windows-x64:
     runs-on: windows-latest
 
-    steps:
-    - name: Install MinGW
-      uses: egor-tensin/setup-mingw@v2
+    defaults:
+      run:
+        shell: msys2 {0}
 
+    steps:
     - uses: actions/checkout@main
+
+    - name: Install MinGW
+      uses: msys2/setup-msys2@v2
 
     - name: configure glfw
       run: cmake -S . -Bbuild
