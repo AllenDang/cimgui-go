@@ -50,3 +50,7 @@ func CreateGlfwWindow(title string, width, height int) GLFWwindow {
 func SetTargetFPS(fps uint) {
 	C.igSetTargetFPS(C.uint(fps))
 }
+
+func Refresh() {
+	C.igRefresh()
+}
