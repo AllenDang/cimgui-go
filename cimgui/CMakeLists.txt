@@ -28,17 +28,17 @@ set(IMGUI_LIBRARIES )
 #glfw
 set(GLFW3_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/glfw)
 set(GLFW3_INCLUDE_DIR ${GLFW3_PREFIX}/include)
-if (WIN32)
-  set(GLFW3_LIBRARY ${GLFW3_PREFIX}/build/src/Release/glfw3.lib)
-else (WIN32)
-  set(GLFW3_LIBRARY ${GLFW3_PREFIX}/build/src/libglfw3.a)
-endif (WIN32)
 list(APPEND IMGUI_SOURCES imgui/backends/imgui_impl_glfw.cpp)
 list(APPEND IMGUI_LIBRARIES glfw)
 
 #opengl3
 list(APPEND IMGUI_SOURCES imgui/backends/imgui_impl_opengl3.cpp)
-list(APPEND IMGUI_LIBRARIES GL)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/cimgui/imgui/examples/libs/gl3w)
+if(WIN32)
+  list(APPEND IMGUI_LIBRARIES opengl32)
+else(WIN32)#Unix
+  list(APPEND IMGUI_LIBRARIES GL)
+endif(WIN32)
 
 if(IMGUI_FREETYPE)
 	FIND_PACKAGE(freetype REQUIRED PATHS ${FREETYPE_PATH})
@@ -49,17 +49,17 @@ endif(IMGUI_FREETYPE)
 
 #add library and link
 if (IMGUI_STATIC)
-    add_library(cimgui STATIC ${IMGUI_SOURCES})
+  add_library(cimgui STATIC ${IMGUI_SOURCES})
 else (IMGUI_STATIC)
-    add_library(cimgui SHARED ${IMGUI_SOURCES})
+  add_library(cimgui SHARED ${IMGUI_SOURCES})
 endif (IMGUI_STATIC)
 
 target_compile_definitions(cimgui PUBLIC IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1)
 if (WIN32)
-    target_compile_definitions(cimgui PUBLIC IMGUI_IMPL_API=extern\t\"C\"\t__declspec\(dllexport\))
-    list(APPEND IMGUI_LIBRARIES imm32)
+  target_compile_definitions(cimgui PUBLIC IMGUI_IMPL_API=extern\t\"C\"\t__declspec\(dllexport\))
+  list(APPEND IMGUI_LIBRARIES imm32)
 else (WIN32)
-    target_compile_definitions(cimgui PUBLIC IMGUI_IMPL_API=extern\t\"C\"\t)
+  target_compile_definitions(cimgui PUBLIC IMGUI_IMPL_API=extern\t\"C\"\t)
 endif (WIN32)
 
 target_include_directories(cimgui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

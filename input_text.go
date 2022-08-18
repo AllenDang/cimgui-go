@@ -2,6 +2,7 @@ package cimgui
 
 // #include <memory.h>
 // #include <stdlib.h>
+// #include "extra_type.h"
 // #include "cimgui_wrapper.h"
 // #include "cimgui_structs_accessor.h"
 // extern int generalInputTextCallback(ImGuiInputTextCallbackData* data);
@@ -70,7 +71,7 @@ func InputTextWithHint(label, hint string, buf *string, flags ImGuiInputTextFlag
 		labelArg,
 		hintArg,
 		(*C.char)(state.buf.ptr),
-		C.uint64_t(len(*buf)+1),
+		C.xlong(len(*buf)+1),
 		C.ImGuiInputTextFlags(flags),
 		C.ImGuiInputTextCallback(C.generalInputTextCallback),
 		unsafe.Pointer(&stateHandle),
@@ -99,7 +100,7 @@ func InputTextMultiline(label string, buf *string, size ImVec2, flags ImGuiInput
 	return C.InputTextMultiline(
 		labelArg,
 		(*C.char)(state.buf.ptr),
-		C.uint64_t(len(*buf)+1),
+		C.xlong(len(*buf)+1),
 		size.toC(),
 		C.ImGuiInputTextFlags(flags),
 		C.ImGuiInputTextCallback(C.generalInputTextCallback),

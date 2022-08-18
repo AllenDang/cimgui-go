@@ -145,12 +145,12 @@ func uCharPtrW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func sizeTW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "uint64", "uint64_t")
+	return simpleValueW(arg.Name, "uint64", "xlong")
 }
 
 func sizeTPtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*uint64"
-	varName = fmt.Sprintf("(*C.uint64_t)(%s)", arg.Name)
+	varName = fmt.Sprintf("(*C.xlong)(%s)", arg.Name)
 	return
 }
 
@@ -492,6 +492,7 @@ func generateGoFuncs(validFuncs []FuncDef, enumNames []string, structNames []str
 
 	sb.WriteString(`package cimgui
 
+// #include "extra_type.h"
 // #include "cimgui_structs_accessor.h"
 // #include "cimgui_wrapper.h"
 import "C"

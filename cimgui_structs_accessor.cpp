@@ -2,218 +2,58 @@
 #include "cimgui_wrapper.h"
 #include "cimgui_structs_accessor.h"
 
-void ImGuiTextFilter_SetFilters(ImGuiTextFilter *ImGuiTextFilterPtr, ImVector_ImGuiTextRange v) { ImGuiTextFilterPtr->Filters = v; }
-ImVector_ImGuiTextRange ImGuiTextFilter_GetFilters(ImGuiTextFilter *self) { return self->Filters; }
-void ImGuiTextFilter_SetCountGrep(ImGuiTextFilter *ImGuiTextFilterPtr, int v) { ImGuiTextFilterPtr->CountGrep = v; }
-int ImGuiTextFilter_GetCountGrep(ImGuiTextFilter *self) { return self->CountGrep; }
-void ImDrawList_SetCmdBuffer(ImDrawList *ImDrawListPtr, ImVector_ImDrawCmd v) { ImDrawListPtr->CmdBuffer = v; }
-ImVector_ImDrawCmd ImDrawList_GetCmdBuffer(ImDrawList *self) { return self->CmdBuffer; }
-void ImDrawList_SetIdxBuffer(ImDrawList *ImDrawListPtr, ImVector_ImDrawIdx v) { ImDrawListPtr->IdxBuffer = v; }
-ImVector_ImDrawIdx ImDrawList_GetIdxBuffer(ImDrawList *self) { return self->IdxBuffer; }
-void ImDrawList_SetVtxBuffer(ImDrawList *ImDrawListPtr, ImVector_ImDrawVert v) { ImDrawListPtr->VtxBuffer = v; }
-ImVector_ImDrawVert ImDrawList_GetVtxBuffer(ImDrawList *self) { return self->VtxBuffer; }
-void ImDrawList_SetFlags(ImDrawList *ImDrawListPtr, ImDrawListFlags v) { ImDrawListPtr->Flags = v; }
-ImDrawListFlags ImDrawList_GetFlags(ImDrawList *self) { return self->Flags; }
-void ImDrawList_Set_VtxCurrentIdx(ImDrawList *ImDrawListPtr, unsigned int v) { ImDrawListPtr->_VtxCurrentIdx = v; }
-unsigned int ImDrawList_Get_VtxCurrentIdx(ImDrawList *self) { return self->_VtxCurrentIdx; }
-void ImDrawList_Set_Data(ImDrawList *ImDrawListPtr, const ImDrawListSharedData* v) { ImDrawListPtr->_Data = v; }
-const ImDrawListSharedData* ImDrawList_Get_Data(ImDrawList *self) { return self->_Data; }
-void ImDrawList_Set_OwnerName(ImDrawList *ImDrawListPtr, const char* v) { ImDrawListPtr->_OwnerName = v; }
-const char* ImDrawList_Get_OwnerName(ImDrawList *self) { return self->_OwnerName; }
-void ImDrawList_Set_VtxWritePtr(ImDrawList *ImDrawListPtr, ImDrawVert* v) { ImDrawListPtr->_VtxWritePtr = v; }
-ImDrawVert* ImDrawList_Get_VtxWritePtr(ImDrawList *self) { return self->_VtxWritePtr; }
-void ImDrawList_Set_IdxWritePtr(ImDrawList *ImDrawListPtr, ImDrawIdx* v) { ImDrawListPtr->_IdxWritePtr = v; }
-ImDrawIdx* ImDrawList_Get_IdxWritePtr(ImDrawList *self) { return self->_IdxWritePtr; }
-void ImDrawList_Set_ClipRectStack(ImDrawList *ImDrawListPtr, ImVector_ImVec4 v) { ImDrawListPtr->_ClipRectStack = v; }
-ImVector_ImVec4 ImDrawList_Get_ClipRectStack(ImDrawList *self) { return self->_ClipRectStack; }
-void ImDrawList_Set_TextureIdStack(ImDrawList *ImDrawListPtr, ImVector_ImTextureID v) { ImDrawListPtr->_TextureIdStack = v; }
-ImVector_ImTextureID ImDrawList_Get_TextureIdStack(ImDrawList *self) { return self->_TextureIdStack; }
-void ImDrawList_Set_Path(ImDrawList *ImDrawListPtr, ImVector_ImVec2 v) { ImDrawListPtr->_Path = v; }
-ImVector_ImVec2 ImDrawList_Get_Path(ImDrawList *self) { return self->_Path; }
-void ImDrawList_Set_CmdHeader(ImDrawList *ImDrawListPtr, ImDrawCmdHeader v) { ImDrawListPtr->_CmdHeader = v; }
-ImDrawCmdHeader ImDrawList_Get_CmdHeader(ImDrawList *self) { return self->_CmdHeader; }
-void ImDrawList_Set_Splitter(ImDrawList *ImDrawListPtr, ImDrawListSplitter v) { ImDrawListPtr->_Splitter = v; }
-ImDrawListSplitter ImDrawList_Get_Splitter(ImDrawList *self) { return self->_Splitter; }
-void ImDrawList_Set_FringeScale(ImDrawList *ImDrawListPtr, float v) { ImDrawListPtr->_FringeScale = v; }
-float ImDrawList_Get_FringeScale(ImDrawList *self) { return self->_FringeScale; }
-void ImFontGlyph_SetColored(ImFontGlyph *ImFontGlyphPtr, unsigned int v) { ImFontGlyphPtr->Colored = v; }
-unsigned int ImFontGlyph_GetColored(ImFontGlyph *self) { return self->Colored; }
-void ImFontGlyph_SetVisible(ImFontGlyph *ImFontGlyphPtr, unsigned int v) { ImFontGlyphPtr->Visible = v; }
-unsigned int ImFontGlyph_GetVisible(ImFontGlyph *self) { return self->Visible; }
-void ImFontGlyph_SetCodepoint(ImFontGlyph *ImFontGlyphPtr, unsigned int v) { ImFontGlyphPtr->Codepoint = v; }
-unsigned int ImFontGlyph_GetCodepoint(ImFontGlyph *self) { return self->Codepoint; }
-void ImFontGlyph_SetAdvanceX(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->AdvanceX = v; }
-float ImFontGlyph_GetAdvanceX(ImFontGlyph *self) { return self->AdvanceX; }
-void ImFontGlyph_SetX0(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->X0 = v; }
-float ImFontGlyph_GetX0(ImFontGlyph *self) { return self->X0; }
-void ImFontGlyph_SetY0(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->Y0 = v; }
-float ImFontGlyph_GetY0(ImFontGlyph *self) { return self->Y0; }
-void ImFontGlyph_SetX1(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->X1 = v; }
-float ImFontGlyph_GetX1(ImFontGlyph *self) { return self->X1; }
-void ImFontGlyph_SetY1(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->Y1 = v; }
-float ImFontGlyph_GetY1(ImFontGlyph *self) { return self->Y1; }
-void ImFontGlyph_SetU0(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->U0 = v; }
-float ImFontGlyph_GetU0(ImFontGlyph *self) { return self->U0; }
-void ImFontGlyph_SetV0(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->V0 = v; }
-float ImFontGlyph_GetV0(ImFontGlyph *self) { return self->V0; }
-void ImFontGlyph_SetU1(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->U1 = v; }
-float ImFontGlyph_GetU1(ImFontGlyph *self) { return self->U1; }
-void ImFontGlyph_SetV1(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->V1 = v; }
-float ImFontGlyph_GetV1(ImFontGlyph *self) { return self->V1; }
-void ImFontGlyphRangesBuilder_SetUsedChars(ImFontGlyphRangesBuilder *ImFontGlyphRangesBuilderPtr, ImVector_ImU32 v) { ImFontGlyphRangesBuilderPtr->UsedChars = v; }
-ImVector_ImU32 ImFontGlyphRangesBuilder_GetUsedChars(ImFontGlyphRangesBuilder *self) { return self->UsedChars; }
-void ImGuiDockContext_SetNodes(ImGuiDockContext *ImGuiDockContextPtr, ImGuiStorage v) { ImGuiDockContextPtr->Nodes = v; }
-ImGuiStorage ImGuiDockContext_GetNodes(ImGuiDockContext *self) { return self->Nodes; }
-void ImGuiDockContext_SetRequests(ImGuiDockContext *ImGuiDockContextPtr, ImVector_ImGuiDockRequest v) { ImGuiDockContextPtr->Requests = v; }
-ImVector_ImGuiDockRequest ImGuiDockContext_GetRequests(ImGuiDockContext *self) { return self->Requests; }
-void ImGuiDockContext_SetNodesSettings(ImGuiDockContext *ImGuiDockContextPtr, ImVector_ImGuiDockNodeSettings v) { ImGuiDockContextPtr->NodesSettings = v; }
-ImVector_ImGuiDockNodeSettings ImGuiDockContext_GetNodesSettings(ImGuiDockContext *self) { return self->NodesSettings; }
-void ImGuiDockContext_SetWantFullRebuild(ImGuiDockContext *ImGuiDockContextPtr, bool v) { ImGuiDockContextPtr->WantFullRebuild = v; }
-bool ImGuiDockContext_GetWantFullRebuild(ImGuiDockContext *self) { return self->WantFullRebuild; }
-void ImGuiPlatformIO_SetMonitors(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImVector_ImGuiPlatformMonitor v) { ImGuiPlatformIOPtr->Monitors = v; }
-ImVector_ImGuiPlatformMonitor ImGuiPlatformIO_GetMonitors(ImGuiPlatformIO *self) { return self->Monitors; }
-void ImGuiPlatformIO_SetViewports(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImVector_ImGuiViewportPtr v) { ImGuiPlatformIOPtr->Viewports = v; }
-ImVector_ImGuiViewportPtr ImGuiPlatformIO_GetViewports(ImGuiPlatformIO *self) { return self->Viewports; }
-void ImGuiStyleMod_SetVarIdx(ImGuiStyleMod *ImGuiStyleModPtr, ImGuiStyleVar v) { ImGuiStyleModPtr->VarIdx = v; }
-ImGuiStyleVar ImGuiStyleMod_GetVarIdx(ImGuiStyleMod *self) { return self->VarIdx; }
-void ImFontConfig_SetFontData(ImFontConfig *ImFontConfigPtr, void* v) { ImFontConfigPtr->FontData = v; }
-void* ImFontConfig_GetFontData(ImFontConfig *self) { return self->FontData; }
-void ImFontConfig_SetFontDataSize(ImFontConfig *ImFontConfigPtr, int v) { ImFontConfigPtr->FontDataSize = v; }
-int ImFontConfig_GetFontDataSize(ImFontConfig *self) { return self->FontDataSize; }
-void ImFontConfig_SetFontDataOwnedByAtlas(ImFontConfig *ImFontConfigPtr, bool v) { ImFontConfigPtr->FontDataOwnedByAtlas = v; }
-bool ImFontConfig_GetFontDataOwnedByAtlas(ImFontConfig *self) { return self->FontDataOwnedByAtlas; }
-void ImFontConfig_SetFontNo(ImFontConfig *ImFontConfigPtr, int v) { ImFontConfigPtr->FontNo = v; }
-int ImFontConfig_GetFontNo(ImFontConfig *self) { return self->FontNo; }
-void ImFontConfig_SetSizePixels(ImFontConfig *ImFontConfigPtr, float v) { ImFontConfigPtr->SizePixels = v; }
-float ImFontConfig_GetSizePixels(ImFontConfig *self) { return self->SizePixels; }
-void ImFontConfig_SetOversampleH(ImFontConfig *ImFontConfigPtr, int v) { ImFontConfigPtr->OversampleH = v; }
-int ImFontConfig_GetOversampleH(ImFontConfig *self) { return self->OversampleH; }
-void ImFontConfig_SetOversampleV(ImFontConfig *ImFontConfigPtr, int v) { ImFontConfigPtr->OversampleV = v; }
-int ImFontConfig_GetOversampleV(ImFontConfig *self) { return self->OversampleV; }
-void ImFontConfig_SetPixelSnapH(ImFontConfig *ImFontConfigPtr, bool v) { ImFontConfigPtr->PixelSnapH = v; }
-bool ImFontConfig_GetPixelSnapH(ImFontConfig *self) { return self->PixelSnapH; }
-void ImFontConfig_SetGlyphExtraSpacing(ImFontConfig *ImFontConfigPtr, ImVec2 v) { ImFontConfigPtr->GlyphExtraSpacing = v; }
-ImVec2 ImFontConfig_GetGlyphExtraSpacing(ImFontConfig *self) { return self->GlyphExtraSpacing; }
-void ImFontConfig_SetGlyphOffset(ImFontConfig *ImFontConfigPtr, ImVec2 v) { ImFontConfigPtr->GlyphOffset = v; }
-ImVec2 ImFontConfig_GetGlyphOffset(ImFontConfig *self) { return self->GlyphOffset; }
-void ImFontConfig_SetGlyphRanges(ImFontConfig *ImFontConfigPtr, const ImWchar* v) { ImFontConfigPtr->GlyphRanges = v; }
-const ImWchar* ImFontConfig_GetGlyphRanges(ImFontConfig *self) { return self->GlyphRanges; }
-void ImFontConfig_SetGlyphMinAdvanceX(ImFontConfig *ImFontConfigPtr, float v) { ImFontConfigPtr->GlyphMinAdvanceX = v; }
-float ImFontConfig_GetGlyphMinAdvanceX(ImFontConfig *self) { return self->GlyphMinAdvanceX; }
-void ImFontConfig_SetGlyphMaxAdvanceX(ImFontConfig *ImFontConfigPtr, float v) { ImFontConfigPtr->GlyphMaxAdvanceX = v; }
-float ImFontConfig_GetGlyphMaxAdvanceX(ImFontConfig *self) { return self->GlyphMaxAdvanceX; }
-void ImFontConfig_SetMergeMode(ImFontConfig *ImFontConfigPtr, bool v) { ImFontConfigPtr->MergeMode = v; }
-bool ImFontConfig_GetMergeMode(ImFontConfig *self) { return self->MergeMode; }
-void ImFontConfig_SetFontBuilderFlags(ImFontConfig *ImFontConfigPtr, unsigned int v) { ImFontConfigPtr->FontBuilderFlags = v; }
-unsigned int ImFontConfig_GetFontBuilderFlags(ImFontConfig *self) { return self->FontBuilderFlags; }
-void ImFontConfig_SetRasterizerMultiply(ImFontConfig *ImFontConfigPtr, float v) { ImFontConfigPtr->RasterizerMultiply = v; }
-float ImFontConfig_GetRasterizerMultiply(ImFontConfig *self) { return self->RasterizerMultiply; }
-void ImFontConfig_SetEllipsisChar(ImFontConfig *ImFontConfigPtr, ImWchar v) { ImFontConfigPtr->EllipsisChar = v; }
-ImWchar ImFontConfig_GetEllipsisChar(ImFontConfig *self) { return self->EllipsisChar; }
-void ImFontConfig_SetDstFont(ImFontConfig *ImFontConfigPtr, ImFont* v) { ImFontConfigPtr->DstFont = v; }
-ImFont* ImFontConfig_GetDstFont(ImFontConfig *self) { return self->DstFont; }
-void ImGuiInputEvent_SetType(ImGuiInputEvent *ImGuiInputEventPtr, ImGuiInputEventType v) { ImGuiInputEventPtr->Type = v; }
-ImGuiInputEventType ImGuiInputEvent_GetType(ImGuiInputEvent *self) { return self->Type; }
-void ImGuiInputEvent_SetSource(ImGuiInputEvent *ImGuiInputEventPtr, ImGuiInputSource v) { ImGuiInputEventPtr->Source = v; }
-ImGuiInputSource ImGuiInputEvent_GetSource(ImGuiInputEvent *self) { return self->Source; }
-void ImGuiInputEvent_SetAddedByTestEngine(ImGuiInputEvent *ImGuiInputEventPtr, bool v) { ImGuiInputEventPtr->AddedByTestEngine = v; }
-bool ImGuiInputEvent_GetAddedByTestEngine(ImGuiInputEvent *self) { return self->AddedByTestEngine; }
-void ImGuiInputEventMouseViewport_SetHoveredViewportID(ImGuiInputEventMouseViewport *ImGuiInputEventMouseViewportPtr, ImGuiID v) { ImGuiInputEventMouseViewportPtr->HoveredViewportID = v; }
-ImGuiID ImGuiInputEventMouseViewport_GetHoveredViewportID(ImGuiInputEventMouseViewport *self) { return self->HoveredViewportID; }
-void ImGuiPayload_SetData(ImGuiPayload *ImGuiPayloadPtr, void* v) { ImGuiPayloadPtr->Data = v; }
-void* ImGuiPayload_GetData(ImGuiPayload *self) { return self->Data; }
-void ImGuiPayload_SetDataSize(ImGuiPayload *ImGuiPayloadPtr, int v) { ImGuiPayloadPtr->DataSize = v; }
-int ImGuiPayload_GetDataSize(ImGuiPayload *self) { return self->DataSize; }
-void ImGuiPayload_SetSourceId(ImGuiPayload *ImGuiPayloadPtr, ImGuiID v) { ImGuiPayloadPtr->SourceId = v; }
-ImGuiID ImGuiPayload_GetSourceId(ImGuiPayload *self) { return self->SourceId; }
-void ImGuiPayload_SetSourceParentId(ImGuiPayload *ImGuiPayloadPtr, ImGuiID v) { ImGuiPayloadPtr->SourceParentId = v; }
-ImGuiID ImGuiPayload_GetSourceParentId(ImGuiPayload *self) { return self->SourceParentId; }
-void ImGuiPayload_SetDataFrameCount(ImGuiPayload *ImGuiPayloadPtr, int v) { ImGuiPayloadPtr->DataFrameCount = v; }
-int ImGuiPayload_GetDataFrameCount(ImGuiPayload *self) { return self->DataFrameCount; }
-void ImGuiPayload_SetPreview(ImGuiPayload *ImGuiPayloadPtr, bool v) { ImGuiPayloadPtr->Preview = v; }
-bool ImGuiPayload_GetPreview(ImGuiPayload *self) { return self->Preview; }
-void ImGuiPayload_SetDelivery(ImGuiPayload *ImGuiPayloadPtr, bool v) { ImGuiPayloadPtr->Delivery = v; }
-bool ImGuiPayload_GetDelivery(ImGuiPayload *self) { return self->Delivery; }
-void ImGuiTableInstanceData_SetLastOuterHeight(ImGuiTableInstanceData *ImGuiTableInstanceDataPtr, float v) { ImGuiTableInstanceDataPtr->LastOuterHeight = v; }
-float ImGuiTableInstanceData_GetLastOuterHeight(ImGuiTableInstanceData *self) { return self->LastOuterHeight; }
-void ImGuiTableInstanceData_SetLastFirstRowHeight(ImGuiTableInstanceData *ImGuiTableInstanceDataPtr, float v) { ImGuiTableInstanceDataPtr->LastFirstRowHeight = v; }
-float ImGuiTableInstanceData_GetLastFirstRowHeight(ImGuiTableInstanceData *self) { return self->LastFirstRowHeight; }
-void ImGuiTableSortSpecs_SetSpecs(ImGuiTableSortSpecs *ImGuiTableSortSpecsPtr, const ImGuiTableColumnSortSpecs* v) { ImGuiTableSortSpecsPtr->Specs = v; }
-const ImGuiTableColumnSortSpecs* ImGuiTableSortSpecs_GetSpecs(ImGuiTableSortSpecs *self) { return self->Specs; }
-void ImGuiTableSortSpecs_SetSpecsCount(ImGuiTableSortSpecs *ImGuiTableSortSpecsPtr, int v) { ImGuiTableSortSpecsPtr->SpecsCount = v; }
-int ImGuiTableSortSpecs_GetSpecsCount(ImGuiTableSortSpecs *self) { return self->SpecsCount; }
-void ImGuiTableSortSpecs_SetSpecsDirty(ImGuiTableSortSpecs *ImGuiTableSortSpecsPtr, bool v) { ImGuiTableSortSpecsPtr->SpecsDirty = v; }
-bool ImGuiTableSortSpecs_GetSpecsDirty(ImGuiTableSortSpecs *self) { return self->SpecsDirty; }
-void ImColor_SetValue(ImColor *ImColorPtr, ImVec4 v) { ImColorPtr->Value = v; }
-ImVec4 ImColor_GetValue(ImColor *self) { return self->Value; }
-void ImGuiInputEventAppFocused_SetFocused(ImGuiInputEventAppFocused *ImGuiInputEventAppFocusedPtr, bool v) { ImGuiInputEventAppFocusedPtr->Focused = v; }
-bool ImGuiInputEventAppFocused_GetFocused(ImGuiInputEventAppFocused *self) { return self->Focused; }
-void ImGuiTabBar_SetTabs(ImGuiTabBar *ImGuiTabBarPtr, ImVector_ImGuiTabItem v) { ImGuiTabBarPtr->Tabs = v; }
-ImVector_ImGuiTabItem ImGuiTabBar_GetTabs(ImGuiTabBar *self) { return self->Tabs; }
-void ImGuiTabBar_SetFlags(ImGuiTabBar *ImGuiTabBarPtr, ImGuiTabBarFlags v) { ImGuiTabBarPtr->Flags = v; }
-ImGuiTabBarFlags ImGuiTabBar_GetFlags(ImGuiTabBar *self) { return self->Flags; }
-void ImGuiTabBar_SetID(ImGuiTabBar *ImGuiTabBarPtr, ImGuiID v) { ImGuiTabBarPtr->ID = v; }
-ImGuiID ImGuiTabBar_GetID(ImGuiTabBar *self) { return self->ID; }
-void ImGuiTabBar_SetSelectedTabId(ImGuiTabBar *ImGuiTabBarPtr, ImGuiID v) { ImGuiTabBarPtr->SelectedTabId = v; }
-ImGuiID ImGuiTabBar_GetSelectedTabId(ImGuiTabBar *self) { return self->SelectedTabId; }
-void ImGuiTabBar_SetNextSelectedTabId(ImGuiTabBar *ImGuiTabBarPtr, ImGuiID v) { ImGuiTabBarPtr->NextSelectedTabId = v; }
-ImGuiID ImGuiTabBar_GetNextSelectedTabId(ImGuiTabBar *self) { return self->NextSelectedTabId; }
-void ImGuiTabBar_SetVisibleTabId(ImGuiTabBar *ImGuiTabBarPtr, ImGuiID v) { ImGuiTabBarPtr->VisibleTabId = v; }
-ImGuiID ImGuiTabBar_GetVisibleTabId(ImGuiTabBar *self) { return self->VisibleTabId; }
-void ImGuiTabBar_SetCurrFrameVisible(ImGuiTabBar *ImGuiTabBarPtr, int v) { ImGuiTabBarPtr->CurrFrameVisible = v; }
-int ImGuiTabBar_GetCurrFrameVisible(ImGuiTabBar *self) { return self->CurrFrameVisible; }
-void ImGuiTabBar_SetPrevFrameVisible(ImGuiTabBar *ImGuiTabBarPtr, int v) { ImGuiTabBarPtr->PrevFrameVisible = v; }
-int ImGuiTabBar_GetPrevFrameVisible(ImGuiTabBar *self) { return self->PrevFrameVisible; }
-void ImGuiTabBar_SetBarRect(ImGuiTabBar *ImGuiTabBarPtr, ImRect v) { ImGuiTabBarPtr->BarRect = v; }
-ImRect ImGuiTabBar_GetBarRect(ImGuiTabBar *self) { return self->BarRect; }
-void ImGuiTabBar_SetCurrTabsContentsHeight(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->CurrTabsContentsHeight = v; }
-float ImGuiTabBar_GetCurrTabsContentsHeight(ImGuiTabBar *self) { return self->CurrTabsContentsHeight; }
-void ImGuiTabBar_SetPrevTabsContentsHeight(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->PrevTabsContentsHeight = v; }
-float ImGuiTabBar_GetPrevTabsContentsHeight(ImGuiTabBar *self) { return self->PrevTabsContentsHeight; }
-void ImGuiTabBar_SetWidthAllTabs(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->WidthAllTabs = v; }
-float ImGuiTabBar_GetWidthAllTabs(ImGuiTabBar *self) { return self->WidthAllTabs; }
-void ImGuiTabBar_SetWidthAllTabsIdeal(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->WidthAllTabsIdeal = v; }
-float ImGuiTabBar_GetWidthAllTabsIdeal(ImGuiTabBar *self) { return self->WidthAllTabsIdeal; }
-void ImGuiTabBar_SetScrollingAnim(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->ScrollingAnim = v; }
-float ImGuiTabBar_GetScrollingAnim(ImGuiTabBar *self) { return self->ScrollingAnim; }
-void ImGuiTabBar_SetScrollingTarget(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->ScrollingTarget = v; }
-float ImGuiTabBar_GetScrollingTarget(ImGuiTabBar *self) { return self->ScrollingTarget; }
-void ImGuiTabBar_SetScrollingTargetDistToVisibility(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->ScrollingTargetDistToVisibility = v; }
-float ImGuiTabBar_GetScrollingTargetDistToVisibility(ImGuiTabBar *self) { return self->ScrollingTargetDistToVisibility; }
-void ImGuiTabBar_SetScrollingSpeed(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->ScrollingSpeed = v; }
-float ImGuiTabBar_GetScrollingSpeed(ImGuiTabBar *self) { return self->ScrollingSpeed; }
-void ImGuiTabBar_SetScrollingRectMinX(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->ScrollingRectMinX = v; }
-float ImGuiTabBar_GetScrollingRectMinX(ImGuiTabBar *self) { return self->ScrollingRectMinX; }
-void ImGuiTabBar_SetScrollingRectMaxX(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->ScrollingRectMaxX = v; }
-float ImGuiTabBar_GetScrollingRectMaxX(ImGuiTabBar *self) { return self->ScrollingRectMaxX; }
-void ImGuiTabBar_SetReorderRequestTabId(ImGuiTabBar *ImGuiTabBarPtr, ImGuiID v) { ImGuiTabBarPtr->ReorderRequestTabId = v; }
-ImGuiID ImGuiTabBar_GetReorderRequestTabId(ImGuiTabBar *self) { return self->ReorderRequestTabId; }
-void ImGuiTabBar_SetReorderRequestOffset(ImGuiTabBar *ImGuiTabBarPtr, ImS16 v) { ImGuiTabBarPtr->ReorderRequestOffset = v; }
-ImS16 ImGuiTabBar_GetReorderRequestOffset(ImGuiTabBar *self) { return self->ReorderRequestOffset; }
-void ImGuiTabBar_SetBeginCount(ImGuiTabBar *ImGuiTabBarPtr, ImS8 v) { ImGuiTabBarPtr->BeginCount = v; }
-ImS8 ImGuiTabBar_GetBeginCount(ImGuiTabBar *self) { return self->BeginCount; }
-void ImGuiTabBar_SetWantLayout(ImGuiTabBar *ImGuiTabBarPtr, bool v) { ImGuiTabBarPtr->WantLayout = v; }
-bool ImGuiTabBar_GetWantLayout(ImGuiTabBar *self) { return self->WantLayout; }
-void ImGuiTabBar_SetVisibleTabWasSubmitted(ImGuiTabBar *ImGuiTabBarPtr, bool v) { ImGuiTabBarPtr->VisibleTabWasSubmitted = v; }
-bool ImGuiTabBar_GetVisibleTabWasSubmitted(ImGuiTabBar *self) { return self->VisibleTabWasSubmitted; }
-void ImGuiTabBar_SetTabsAddedNew(ImGuiTabBar *ImGuiTabBarPtr, bool v) { ImGuiTabBarPtr->TabsAddedNew = v; }
-bool ImGuiTabBar_GetTabsAddedNew(ImGuiTabBar *self) { return self->TabsAddedNew; }
-void ImGuiTabBar_SetTabsActiveCount(ImGuiTabBar *ImGuiTabBarPtr, ImS16 v) { ImGuiTabBarPtr->TabsActiveCount = v; }
-ImS16 ImGuiTabBar_GetTabsActiveCount(ImGuiTabBar *self) { return self->TabsActiveCount; }
-void ImGuiTabBar_SetLastTabItemIdx(ImGuiTabBar *ImGuiTabBarPtr, ImS16 v) { ImGuiTabBarPtr->LastTabItemIdx = v; }
-ImS16 ImGuiTabBar_GetLastTabItemIdx(ImGuiTabBar *self) { return self->LastTabItemIdx; }
-void ImGuiTabBar_SetItemSpacingY(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->ItemSpacingY = v; }
-float ImGuiTabBar_GetItemSpacingY(ImGuiTabBar *self) { return self->ItemSpacingY; }
-void ImGuiTabBar_SetFramePadding(ImGuiTabBar *ImGuiTabBarPtr, ImVec2 v) { ImGuiTabBarPtr->FramePadding = v; }
-ImVec2 ImGuiTabBar_GetFramePadding(ImGuiTabBar *self) { return self->FramePadding; }
-void ImGuiTabBar_SetBackupCursorPos(ImGuiTabBar *ImGuiTabBarPtr, ImVec2 v) { ImGuiTabBarPtr->BackupCursorPos = v; }
-ImVec2 ImGuiTabBar_GetBackupCursorPos(ImGuiTabBar *self) { return self->BackupCursorPos; }
-void ImGuiTabBar_SetTabsNames(ImGuiTabBar *ImGuiTabBarPtr, ImGuiTextBuffer v) { ImGuiTabBarPtr->TabsNames = v; }
-ImGuiTextBuffer ImGuiTabBar_GetTabsNames(ImGuiTabBar *self) { return self->TabsNames; }
-void ImVec2ih_Setx(ImVec2ih *ImVec2ihPtr, short v) { ImVec2ihPtr->x = v; }
-short ImVec2ih_Getx(ImVec2ih *self) { return self->x; }
-void ImVec2ih_Sety(ImVec2ih *ImVec2ihPtr, short v) { ImVec2ihPtr->y = v; }
-short ImVec2ih_Gety(ImVec2ih *self) { return self->y; }
+void ImFontAtlasCustomRect_SetWidth(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned short v) { ImFontAtlasCustomRectPtr->Width = v; }
+unsigned short ImFontAtlasCustomRect_GetWidth(ImFontAtlasCustomRect *self) { return self->Width; }
+void ImFontAtlasCustomRect_SetHeight(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned short v) { ImFontAtlasCustomRectPtr->Height = v; }
+unsigned short ImFontAtlasCustomRect_GetHeight(ImFontAtlasCustomRect *self) { return self->Height; }
+void ImFontAtlasCustomRect_SetX(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned short v) { ImFontAtlasCustomRectPtr->X = v; }
+unsigned short ImFontAtlasCustomRect_GetX(ImFontAtlasCustomRect *self) { return self->X; }
+void ImFontAtlasCustomRect_SetY(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned short v) { ImFontAtlasCustomRectPtr->Y = v; }
+unsigned short ImFontAtlasCustomRect_GetY(ImFontAtlasCustomRect *self) { return self->Y; }
+void ImFontAtlasCustomRect_SetGlyphID(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned int v) { ImFontAtlasCustomRectPtr->GlyphID = v; }
+unsigned int ImFontAtlasCustomRect_GetGlyphID(ImFontAtlasCustomRect *self) { return self->GlyphID; }
+void ImFontAtlasCustomRect_SetGlyphAdvanceX(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, float v) { ImFontAtlasCustomRectPtr->GlyphAdvanceX = v; }
+float ImFontAtlasCustomRect_GetGlyphAdvanceX(ImFontAtlasCustomRect *self) { return self->GlyphAdvanceX; }
+void ImFontAtlasCustomRect_SetGlyphOffset(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, ImVec2 v) { ImFontAtlasCustomRectPtr->GlyphOffset = v; }
+ImVec2 ImFontAtlasCustomRect_GetGlyphOffset(ImFontAtlasCustomRect *self) { return self->GlyphOffset; }
+void ImFontAtlasCustomRect_SetFont(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, ImFont* v) { ImFontAtlasCustomRectPtr->Font = v; }
+ImFont* ImFontAtlasCustomRect_GetFont(ImFontAtlasCustomRect *self) { return self->Font; }
+void ImGuiComboPreviewData_SetPreviewRect(ImGuiComboPreviewData *ImGuiComboPreviewDataPtr, ImRect v) { ImGuiComboPreviewDataPtr->PreviewRect = v; }
+ImRect ImGuiComboPreviewData_GetPreviewRect(ImGuiComboPreviewData *self) { return self->PreviewRect; }
+void ImGuiComboPreviewData_SetBackupCursorPos(ImGuiComboPreviewData *ImGuiComboPreviewDataPtr, ImVec2 v) { ImGuiComboPreviewDataPtr->BackupCursorPos = v; }
+ImVec2 ImGuiComboPreviewData_GetBackupCursorPos(ImGuiComboPreviewData *self) { return self->BackupCursorPos; }
+void ImGuiComboPreviewData_SetBackupCursorMaxPos(ImGuiComboPreviewData *ImGuiComboPreviewDataPtr, ImVec2 v) { ImGuiComboPreviewDataPtr->BackupCursorMaxPos = v; }
+ImVec2 ImGuiComboPreviewData_GetBackupCursorMaxPos(ImGuiComboPreviewData *self) { return self->BackupCursorMaxPos; }
+void ImGuiComboPreviewData_SetBackupCursorPosPrevLine(ImGuiComboPreviewData *ImGuiComboPreviewDataPtr, ImVec2 v) { ImGuiComboPreviewDataPtr->BackupCursorPosPrevLine = v; }
+ImVec2 ImGuiComboPreviewData_GetBackupCursorPosPrevLine(ImGuiComboPreviewData *self) { return self->BackupCursorPosPrevLine; }
+void ImGuiComboPreviewData_SetBackupPrevLineTextBaseOffset(ImGuiComboPreviewData *ImGuiComboPreviewDataPtr, float v) { ImGuiComboPreviewDataPtr->BackupPrevLineTextBaseOffset = v; }
+float ImGuiComboPreviewData_GetBackupPrevLineTextBaseOffset(ImGuiComboPreviewData *self) { return self->BackupPrevLineTextBaseOffset; }
+void ImGuiComboPreviewData_SetBackupLayout(ImGuiComboPreviewData *ImGuiComboPreviewDataPtr, ImGuiLayoutType v) { ImGuiComboPreviewDataPtr->BackupLayout = v; }
+ImGuiLayoutType ImGuiComboPreviewData_GetBackupLayout(ImGuiComboPreviewData *self) { return self->BackupLayout; }
+void ImGuiTableTempData_SetTableIndex(ImGuiTableTempData *ImGuiTableTempDataPtr, int v) { ImGuiTableTempDataPtr->TableIndex = v; }
+int ImGuiTableTempData_GetTableIndex(ImGuiTableTempData *self) { return self->TableIndex; }
+void ImGuiTableTempData_SetLastTimeActive(ImGuiTableTempData *ImGuiTableTempDataPtr, float v) { ImGuiTableTempDataPtr->LastTimeActive = v; }
+float ImGuiTableTempData_GetLastTimeActive(ImGuiTableTempData *self) { return self->LastTimeActive; }
+void ImGuiTableTempData_SetUserOuterSize(ImGuiTableTempData *ImGuiTableTempDataPtr, ImVec2 v) { ImGuiTableTempDataPtr->UserOuterSize = v; }
+ImVec2 ImGuiTableTempData_GetUserOuterSize(ImGuiTableTempData *self) { return self->UserOuterSize; }
+void ImGuiTableTempData_SetDrawSplitter(ImGuiTableTempData *ImGuiTableTempDataPtr, ImDrawListSplitter v) { ImGuiTableTempDataPtr->DrawSplitter = v; }
+ImDrawListSplitter ImGuiTableTempData_GetDrawSplitter(ImGuiTableTempData *self) { return self->DrawSplitter; }
+void ImGuiTableTempData_SetHostBackupWorkRect(ImGuiTableTempData *ImGuiTableTempDataPtr, ImRect v) { ImGuiTableTempDataPtr->HostBackupWorkRect = v; }
+ImRect ImGuiTableTempData_GetHostBackupWorkRect(ImGuiTableTempData *self) { return self->HostBackupWorkRect; }
+void ImGuiTableTempData_SetHostBackupParentWorkRect(ImGuiTableTempData *ImGuiTableTempDataPtr, ImRect v) { ImGuiTableTempDataPtr->HostBackupParentWorkRect = v; }
+ImRect ImGuiTableTempData_GetHostBackupParentWorkRect(ImGuiTableTempData *self) { return self->HostBackupParentWorkRect; }
+void ImGuiTableTempData_SetHostBackupPrevLineSize(ImGuiTableTempData *ImGuiTableTempDataPtr, ImVec2 v) { ImGuiTableTempDataPtr->HostBackupPrevLineSize = v; }
+ImVec2 ImGuiTableTempData_GetHostBackupPrevLineSize(ImGuiTableTempData *self) { return self->HostBackupPrevLineSize; }
+void ImGuiTableTempData_SetHostBackupCurrLineSize(ImGuiTableTempData *ImGuiTableTempDataPtr, ImVec2 v) { ImGuiTableTempDataPtr->HostBackupCurrLineSize = v; }
+ImVec2 ImGuiTableTempData_GetHostBackupCurrLineSize(ImGuiTableTempData *self) { return self->HostBackupCurrLineSize; }
+void ImGuiTableTempData_SetHostBackupCursorMaxPos(ImGuiTableTempData *ImGuiTableTempDataPtr, ImVec2 v) { ImGuiTableTempDataPtr->HostBackupCursorMaxPos = v; }
+ImVec2 ImGuiTableTempData_GetHostBackupCursorMaxPos(ImGuiTableTempData *self) { return self->HostBackupCursorMaxPos; }
+void ImGuiTableTempData_SetHostBackupColumnsOffset(ImGuiTableTempData *ImGuiTableTempDataPtr, ImVec1 v) { ImGuiTableTempDataPtr->HostBackupColumnsOffset = v; }
+ImVec1 ImGuiTableTempData_GetHostBackupColumnsOffset(ImGuiTableTempData *self) { return self->HostBackupColumnsOffset; }
+void ImGuiTableTempData_SetHostBackupItemWidth(ImGuiTableTempData *ImGuiTableTempDataPtr, float v) { ImGuiTableTempDataPtr->HostBackupItemWidth = v; }
+float ImGuiTableTempData_GetHostBackupItemWidth(ImGuiTableTempData *self) { return self->HostBackupItemWidth; }
+void ImGuiTableTempData_SetHostBackupItemWidthStackSize(ImGuiTableTempData *ImGuiTableTempDataPtr, int v) { ImGuiTableTempDataPtr->HostBackupItemWidthStackSize = v; }
+int ImGuiTableTempData_GetHostBackupItemWidthStackSize(ImGuiTableTempData *self) { return self->HostBackupItemWidthStackSize; }
 void ImGuiViewportP_Set_ImGuiViewport(ImGuiViewportP *ImGuiViewportPPtr, ImGuiViewport v) { ImGuiViewportPPtr->_ImGuiViewport = v; }
 ImGuiViewport ImGuiViewportP_Get_ImGuiViewport(ImGuiViewportP *self) { return self->_ImGuiViewport; }
 void ImGuiViewportP_SetIdx(ImGuiViewportP *ImGuiViewportPPtr, int v) { ImGuiViewportPPtr->Idx = v; }
@@ -254,24 +94,18 @@ void ImGuiViewportP_SetBuildWorkOffsetMin(ImGuiViewportP *ImGuiViewportPPtr, ImV
 ImVec2 ImGuiViewportP_GetBuildWorkOffsetMin(ImGuiViewportP *self) { return self->BuildWorkOffsetMin; }
 void ImGuiViewportP_SetBuildWorkOffsetMax(ImGuiViewportP *ImGuiViewportPPtr, ImVec2 v) { ImGuiViewportPPtr->BuildWorkOffsetMax = v; }
 ImVec2 ImGuiViewportP_GetBuildWorkOffsetMax(ImGuiViewportP *self) { return self->BuildWorkOffsetMax; }
-void ImDrawData_SetValid(ImDrawData *ImDrawDataPtr, bool v) { ImDrawDataPtr->Valid = v; }
-bool ImDrawData_GetValid(ImDrawData *self) { return self->Valid; }
-void ImDrawData_SetCmdListsCount(ImDrawData *ImDrawDataPtr, int v) { ImDrawDataPtr->CmdListsCount = v; }
-int ImDrawData_GetCmdListsCount(ImDrawData *self) { return self->CmdListsCount; }
-void ImDrawData_SetTotalIdxCount(ImDrawData *ImDrawDataPtr, int v) { ImDrawDataPtr->TotalIdxCount = v; }
-int ImDrawData_GetTotalIdxCount(ImDrawData *self) { return self->TotalIdxCount; }
-void ImDrawData_SetTotalVtxCount(ImDrawData *ImDrawDataPtr, int v) { ImDrawDataPtr->TotalVtxCount = v; }
-int ImDrawData_GetTotalVtxCount(ImDrawData *self) { return self->TotalVtxCount; }
-void ImDrawData_SetCmdLists(ImDrawData *ImDrawDataPtr, ImDrawList** v) { ImDrawDataPtr->CmdLists = v; }
-ImDrawList** ImDrawData_GetCmdLists(ImDrawData *self) { return self->CmdLists; }
-void ImDrawData_SetDisplayPos(ImDrawData *ImDrawDataPtr, ImVec2 v) { ImDrawDataPtr->DisplayPos = v; }
-ImVec2 ImDrawData_GetDisplayPos(ImDrawData *self) { return self->DisplayPos; }
-void ImDrawData_SetDisplaySize(ImDrawData *ImDrawDataPtr, ImVec2 v) { ImDrawDataPtr->DisplaySize = v; }
-ImVec2 ImDrawData_GetDisplaySize(ImDrawData *self) { return self->DisplaySize; }
-void ImDrawData_SetFramebufferScale(ImDrawData *ImDrawDataPtr, ImVec2 v) { ImDrawDataPtr->FramebufferScale = v; }
-ImVec2 ImDrawData_GetFramebufferScale(ImDrawData *self) { return self->FramebufferScale; }
-void ImDrawData_SetOwnerViewport(ImDrawData *ImDrawDataPtr, ImGuiViewport* v) { ImDrawDataPtr->OwnerViewport = v; }
-ImGuiViewport* ImDrawData_GetOwnerViewport(ImDrawData *self) { return self->OwnerViewport; }
+void StbTexteditRow_Setx0(StbTexteditRow *StbTexteditRowPtr, float v) { StbTexteditRowPtr->x0 = v; }
+float StbTexteditRow_Getx0(StbTexteditRow *self) { return self->x0; }
+void StbTexteditRow_Setx1(StbTexteditRow *StbTexteditRowPtr, float v) { StbTexteditRowPtr->x1 = v; }
+float StbTexteditRow_Getx1(StbTexteditRow *self) { return self->x1; }
+void StbTexteditRow_Setbaseline_y_delta(StbTexteditRow *StbTexteditRowPtr, float v) { StbTexteditRowPtr->baseline_y_delta = v; }
+float StbTexteditRow_Getbaseline_y_delta(StbTexteditRow *self) { return self->baseline_y_delta; }
+void StbTexteditRow_Setymin(StbTexteditRow *StbTexteditRowPtr, float v) { StbTexteditRowPtr->ymin = v; }
+float StbTexteditRow_Getymin(StbTexteditRow *self) { return self->ymin; }
+void StbTexteditRow_Setymax(StbTexteditRow *StbTexteditRowPtr, float v) { StbTexteditRowPtr->ymax = v; }
+float StbTexteditRow_Getymax(StbTexteditRow *self) { return self->ymax; }
+void StbTexteditRow_Setnum_chars(StbTexteditRow *StbTexteditRowPtr, int v) { StbTexteditRowPtr->num_chars = v; }
+int StbTexteditRow_Getnum_chars(StbTexteditRow *self) { return self->num_chars; }
 void ImFontAtlas_SetFlags(ImFontAtlas *ImFontAtlasPtr, ImFontAtlasFlags v) { ImFontAtlasPtr->Flags = v; }
 ImFontAtlasFlags ImFontAtlas_GetFlags(ImFontAtlas *self) { return self->Flags; }
 void ImFontAtlas_SetTexDesiredWidth(ImFontAtlas *ImFontAtlasPtr, int v) { ImFontAtlasPtr->TexDesiredWidth = v; }
@@ -314,130 +148,6 @@ void ImGuiInputEventMouseWheel_SetWheelX(ImGuiInputEventMouseWheel *ImGuiInputEv
 float ImGuiInputEventMouseWheel_GetWheelX(ImGuiInputEventMouseWheel *self) { return self->WheelX; }
 void ImGuiInputEventMouseWheel_SetWheelY(ImGuiInputEventMouseWheel *ImGuiInputEventMouseWheelPtr, float v) { ImGuiInputEventMouseWheelPtr->WheelY = v; }
 float ImGuiInputEventMouseWheel_GetWheelY(ImGuiInputEventMouseWheel *self) { return self->WheelY; }
-void ImGuiLastItemData_SetID(ImGuiLastItemData *ImGuiLastItemDataPtr, ImGuiID v) { ImGuiLastItemDataPtr->ID = v; }
-ImGuiID ImGuiLastItemData_GetID(ImGuiLastItemData *self) { return self->ID; }
-void ImGuiLastItemData_SetInFlags(ImGuiLastItemData *ImGuiLastItemDataPtr, ImGuiItemFlags v) { ImGuiLastItemDataPtr->InFlags = v; }
-ImGuiItemFlags ImGuiLastItemData_GetInFlags(ImGuiLastItemData *self) { return self->InFlags; }
-void ImGuiLastItemData_SetStatusFlags(ImGuiLastItemData *ImGuiLastItemDataPtr, ImGuiItemStatusFlags v) { ImGuiLastItemDataPtr->StatusFlags = v; }
-ImGuiItemStatusFlags ImGuiLastItemData_GetStatusFlags(ImGuiLastItemData *self) { return self->StatusFlags; }
-void ImGuiLastItemData_SetRect(ImGuiLastItemData *ImGuiLastItemDataPtr, ImRect v) { ImGuiLastItemDataPtr->Rect = v; }
-ImRect ImGuiLastItemData_GetRect(ImGuiLastItemData *self) { return self->Rect; }
-void ImGuiLastItemData_SetNavRect(ImGuiLastItemData *ImGuiLastItemDataPtr, ImRect v) { ImGuiLastItemDataPtr->NavRect = v; }
-ImRect ImGuiLastItemData_GetNavRect(ImGuiLastItemData *self) { return self->NavRect; }
-void ImGuiLastItemData_SetDisplayRect(ImGuiLastItemData *ImGuiLastItemDataPtr, ImRect v) { ImGuiLastItemDataPtr->DisplayRect = v; }
-ImRect ImGuiLastItemData_GetDisplayRect(ImGuiLastItemData *self) { return self->DisplayRect; }
-void ImGuiTableColumn_SetFlags(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableColumnFlags v) { ImGuiTableColumnPtr->Flags = v; }
-ImGuiTableColumnFlags ImGuiTableColumn_GetFlags(ImGuiTableColumn *self) { return self->Flags; }
-void ImGuiTableColumn_SetWidthGiven(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->WidthGiven = v; }
-float ImGuiTableColumn_GetWidthGiven(ImGuiTableColumn *self) { return self->WidthGiven; }
-void ImGuiTableColumn_SetMinX(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->MinX = v; }
-float ImGuiTableColumn_GetMinX(ImGuiTableColumn *self) { return self->MinX; }
-void ImGuiTableColumn_SetMaxX(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->MaxX = v; }
-float ImGuiTableColumn_GetMaxX(ImGuiTableColumn *self) { return self->MaxX; }
-void ImGuiTableColumn_SetWidthRequest(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->WidthRequest = v; }
-float ImGuiTableColumn_GetWidthRequest(ImGuiTableColumn *self) { return self->WidthRequest; }
-void ImGuiTableColumn_SetWidthAuto(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->WidthAuto = v; }
-float ImGuiTableColumn_GetWidthAuto(ImGuiTableColumn *self) { return self->WidthAuto; }
-void ImGuiTableColumn_SetStretchWeight(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->StretchWeight = v; }
-float ImGuiTableColumn_GetStretchWeight(ImGuiTableColumn *self) { return self->StretchWeight; }
-void ImGuiTableColumn_SetInitStretchWeightOrWidth(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->InitStretchWeightOrWidth = v; }
-float ImGuiTableColumn_GetInitStretchWeightOrWidth(ImGuiTableColumn *self) { return self->InitStretchWeightOrWidth; }
-void ImGuiTableColumn_SetClipRect(ImGuiTableColumn *ImGuiTableColumnPtr, ImRect v) { ImGuiTableColumnPtr->ClipRect = v; }
-ImRect ImGuiTableColumn_GetClipRect(ImGuiTableColumn *self) { return self->ClipRect; }
-void ImGuiTableColumn_SetUserID(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiID v) { ImGuiTableColumnPtr->UserID = v; }
-ImGuiID ImGuiTableColumn_GetUserID(ImGuiTableColumn *self) { return self->UserID; }
-void ImGuiTableColumn_SetWorkMinX(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->WorkMinX = v; }
-float ImGuiTableColumn_GetWorkMinX(ImGuiTableColumn *self) { return self->WorkMinX; }
-void ImGuiTableColumn_SetWorkMaxX(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->WorkMaxX = v; }
-float ImGuiTableColumn_GetWorkMaxX(ImGuiTableColumn *self) { return self->WorkMaxX; }
-void ImGuiTableColumn_SetItemWidth(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->ItemWidth = v; }
-float ImGuiTableColumn_GetItemWidth(ImGuiTableColumn *self) { return self->ItemWidth; }
-void ImGuiTableColumn_SetContentMaxXFrozen(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->ContentMaxXFrozen = v; }
-float ImGuiTableColumn_GetContentMaxXFrozen(ImGuiTableColumn *self) { return self->ContentMaxXFrozen; }
-void ImGuiTableColumn_SetContentMaxXUnfrozen(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->ContentMaxXUnfrozen = v; }
-float ImGuiTableColumn_GetContentMaxXUnfrozen(ImGuiTableColumn *self) { return self->ContentMaxXUnfrozen; }
-void ImGuiTableColumn_SetContentMaxXHeadersUsed(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->ContentMaxXHeadersUsed = v; }
-float ImGuiTableColumn_GetContentMaxXHeadersUsed(ImGuiTableColumn *self) { return self->ContentMaxXHeadersUsed; }
-void ImGuiTableColumn_SetContentMaxXHeadersIdeal(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->ContentMaxXHeadersIdeal = v; }
-float ImGuiTableColumn_GetContentMaxXHeadersIdeal(ImGuiTableColumn *self) { return self->ContentMaxXHeadersIdeal; }
-void ImGuiTableColumn_SetNameOffset(ImGuiTableColumn *ImGuiTableColumnPtr, ImS16 v) { ImGuiTableColumnPtr->NameOffset = v; }
-ImS16 ImGuiTableColumn_GetNameOffset(ImGuiTableColumn *self) { return self->NameOffset; }
-void ImGuiTableColumn_SetDisplayOrder(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnPtr->DisplayOrder = v; }
-ImGuiTableColumnIdx ImGuiTableColumn_GetDisplayOrder(ImGuiTableColumn *self) { return self->DisplayOrder; }
-void ImGuiTableColumn_SetIndexWithinEnabledSet(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnPtr->IndexWithinEnabledSet = v; }
-ImGuiTableColumnIdx ImGuiTableColumn_GetIndexWithinEnabledSet(ImGuiTableColumn *self) { return self->IndexWithinEnabledSet; }
-void ImGuiTableColumn_SetPrevEnabledColumn(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnPtr->PrevEnabledColumn = v; }
-ImGuiTableColumnIdx ImGuiTableColumn_GetPrevEnabledColumn(ImGuiTableColumn *self) { return self->PrevEnabledColumn; }
-void ImGuiTableColumn_SetNextEnabledColumn(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnPtr->NextEnabledColumn = v; }
-ImGuiTableColumnIdx ImGuiTableColumn_GetNextEnabledColumn(ImGuiTableColumn *self) { return self->NextEnabledColumn; }
-void ImGuiTableColumn_SetSortOrder(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnPtr->SortOrder = v; }
-ImGuiTableColumnIdx ImGuiTableColumn_GetSortOrder(ImGuiTableColumn *self) { return self->SortOrder; }
-void ImGuiTableColumn_SetDrawChannelCurrent(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableDrawChannelIdx v) { ImGuiTableColumnPtr->DrawChannelCurrent = v; }
-ImGuiTableDrawChannelIdx ImGuiTableColumn_GetDrawChannelCurrent(ImGuiTableColumn *self) { return self->DrawChannelCurrent; }
-void ImGuiTableColumn_SetDrawChannelFrozen(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableDrawChannelIdx v) { ImGuiTableColumnPtr->DrawChannelFrozen = v; }
-ImGuiTableDrawChannelIdx ImGuiTableColumn_GetDrawChannelFrozen(ImGuiTableColumn *self) { return self->DrawChannelFrozen; }
-void ImGuiTableColumn_SetDrawChannelUnfrozen(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableDrawChannelIdx v) { ImGuiTableColumnPtr->DrawChannelUnfrozen = v; }
-ImGuiTableDrawChannelIdx ImGuiTableColumn_GetDrawChannelUnfrozen(ImGuiTableColumn *self) { return self->DrawChannelUnfrozen; }
-void ImGuiTableColumn_SetIsEnabled(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsEnabled = v; }
-bool ImGuiTableColumn_GetIsEnabled(ImGuiTableColumn *self) { return self->IsEnabled; }
-void ImGuiTableColumn_SetIsUserEnabled(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsUserEnabled = v; }
-bool ImGuiTableColumn_GetIsUserEnabled(ImGuiTableColumn *self) { return self->IsUserEnabled; }
-void ImGuiTableColumn_SetIsUserEnabledNextFrame(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsUserEnabledNextFrame = v; }
-bool ImGuiTableColumn_GetIsUserEnabledNextFrame(ImGuiTableColumn *self) { return self->IsUserEnabledNextFrame; }
-void ImGuiTableColumn_SetIsVisibleX(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsVisibleX = v; }
-bool ImGuiTableColumn_GetIsVisibleX(ImGuiTableColumn *self) { return self->IsVisibleX; }
-void ImGuiTableColumn_SetIsVisibleY(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsVisibleY = v; }
-bool ImGuiTableColumn_GetIsVisibleY(ImGuiTableColumn *self) { return self->IsVisibleY; }
-void ImGuiTableColumn_SetIsRequestOutput(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsRequestOutput = v; }
-bool ImGuiTableColumn_GetIsRequestOutput(ImGuiTableColumn *self) { return self->IsRequestOutput; }
-void ImGuiTableColumn_SetIsSkipItems(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsSkipItems = v; }
-bool ImGuiTableColumn_GetIsSkipItems(ImGuiTableColumn *self) { return self->IsSkipItems; }
-void ImGuiTableColumn_SetIsPreserveWidthAuto(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsPreserveWidthAuto = v; }
-bool ImGuiTableColumn_GetIsPreserveWidthAuto(ImGuiTableColumn *self) { return self->IsPreserveWidthAuto; }
-void ImGuiTableColumn_SetNavLayerCurrent(ImGuiTableColumn *ImGuiTableColumnPtr, ImS8 v) { ImGuiTableColumnPtr->NavLayerCurrent = v; }
-ImS8 ImGuiTableColumn_GetNavLayerCurrent(ImGuiTableColumn *self) { return self->NavLayerCurrent; }
-void ImGuiTableColumn_SetAutoFitQueue(ImGuiTableColumn *ImGuiTableColumnPtr, ImU8 v) { ImGuiTableColumnPtr->AutoFitQueue = v; }
-ImU8 ImGuiTableColumn_GetAutoFitQueue(ImGuiTableColumn *self) { return self->AutoFitQueue; }
-void ImGuiTableColumn_SetCannotSkipItemsQueue(ImGuiTableColumn *ImGuiTableColumnPtr, ImU8 v) { ImGuiTableColumnPtr->CannotSkipItemsQueue = v; }
-ImU8 ImGuiTableColumn_GetCannotSkipItemsQueue(ImGuiTableColumn *self) { return self->CannotSkipItemsQueue; }
-void ImGuiTableColumn_SetSortDirection(ImGuiTableColumn *ImGuiTableColumnPtr, ImU8 v) { ImGuiTableColumnPtr->SortDirection = v; }
-ImU8 ImGuiTableColumn_GetSortDirection(ImGuiTableColumn *self) { return self->SortDirection; }
-void ImGuiTableColumn_SetSortDirectionsAvailCount(ImGuiTableColumn *ImGuiTableColumnPtr, ImU8 v) { ImGuiTableColumnPtr->SortDirectionsAvailCount = v; }
-ImU8 ImGuiTableColumn_GetSortDirectionsAvailCount(ImGuiTableColumn *self) { return self->SortDirectionsAvailCount; }
-void ImGuiTableColumn_SetSortDirectionsAvailMask(ImGuiTableColumn *ImGuiTableColumnPtr, ImU8 v) { ImGuiTableColumnPtr->SortDirectionsAvailMask = v; }
-ImU8 ImGuiTableColumn_GetSortDirectionsAvailMask(ImGuiTableColumn *self) { return self->SortDirectionsAvailMask; }
-void ImGuiTableColumn_SetSortDirectionsAvailList(ImGuiTableColumn *ImGuiTableColumnPtr, ImU8 v) { ImGuiTableColumnPtr->SortDirectionsAvailList = v; }
-ImU8 ImGuiTableColumn_GetSortDirectionsAvailList(ImGuiTableColumn *self) { return self->SortDirectionsAvailList; }
-void ImGuiTextRange_Setb(ImGuiTextRange *ImGuiTextRangePtr, const char* v) { ImGuiTextRangePtr->b = v; }
-const char* ImGuiTextRange_Getb(ImGuiTextRange *self) { return self->b; }
-void ImGuiTextRange_Sete(ImGuiTextRange *ImGuiTextRangePtr, const char* v) { ImGuiTextRangePtr->e = v; }
-const char* ImGuiTextRange_Gete(ImGuiTextRange *self) { return self->e; }
-void ImGuiComboPreviewData_SetPreviewRect(ImGuiComboPreviewData *ImGuiComboPreviewDataPtr, ImRect v) { ImGuiComboPreviewDataPtr->PreviewRect = v; }
-ImRect ImGuiComboPreviewData_GetPreviewRect(ImGuiComboPreviewData *self) { return self->PreviewRect; }
-void ImGuiComboPreviewData_SetBackupCursorPos(ImGuiComboPreviewData *ImGuiComboPreviewDataPtr, ImVec2 v) { ImGuiComboPreviewDataPtr->BackupCursorPos = v; }
-ImVec2 ImGuiComboPreviewData_GetBackupCursorPos(ImGuiComboPreviewData *self) { return self->BackupCursorPos; }
-void ImGuiComboPreviewData_SetBackupCursorMaxPos(ImGuiComboPreviewData *ImGuiComboPreviewDataPtr, ImVec2 v) { ImGuiComboPreviewDataPtr->BackupCursorMaxPos = v; }
-ImVec2 ImGuiComboPreviewData_GetBackupCursorMaxPos(ImGuiComboPreviewData *self) { return self->BackupCursorMaxPos; }
-void ImGuiComboPreviewData_SetBackupCursorPosPrevLine(ImGuiComboPreviewData *ImGuiComboPreviewDataPtr, ImVec2 v) { ImGuiComboPreviewDataPtr->BackupCursorPosPrevLine = v; }
-ImVec2 ImGuiComboPreviewData_GetBackupCursorPosPrevLine(ImGuiComboPreviewData *self) { return self->BackupCursorPosPrevLine; }
-void ImGuiComboPreviewData_SetBackupPrevLineTextBaseOffset(ImGuiComboPreviewData *ImGuiComboPreviewDataPtr, float v) { ImGuiComboPreviewDataPtr->BackupPrevLineTextBaseOffset = v; }
-float ImGuiComboPreviewData_GetBackupPrevLineTextBaseOffset(ImGuiComboPreviewData *self) { return self->BackupPrevLineTextBaseOffset; }
-void ImGuiComboPreviewData_SetBackupLayout(ImGuiComboPreviewData *ImGuiComboPreviewDataPtr, ImGuiLayoutType v) { ImGuiComboPreviewDataPtr->BackupLayout = v; }
-ImGuiLayoutType ImGuiComboPreviewData_GetBackupLayout(ImGuiComboPreviewData *self) { return self->BackupLayout; }
-void ImGuiInputEventText_SetChar(ImGuiInputEventText *ImGuiInputEventTextPtr, unsigned int v) { ImGuiInputEventTextPtr->Char = v; }
-unsigned int ImGuiInputEventText_GetChar(ImGuiInputEventText *self) { return self->Char; }
-void ImGuiListClipper_SetDisplayStart(ImGuiListClipper *ImGuiListClipperPtr, int v) { ImGuiListClipperPtr->DisplayStart = v; }
-int ImGuiListClipper_GetDisplayStart(ImGuiListClipper *self) { return self->DisplayStart; }
-void ImGuiListClipper_SetDisplayEnd(ImGuiListClipper *ImGuiListClipperPtr, int v) { ImGuiListClipperPtr->DisplayEnd = v; }
-int ImGuiListClipper_GetDisplayEnd(ImGuiListClipper *self) { return self->DisplayEnd; }
-void ImGuiListClipper_SetItemsCount(ImGuiListClipper *ImGuiListClipperPtr, int v) { ImGuiListClipperPtr->ItemsCount = v; }
-int ImGuiListClipper_GetItemsCount(ImGuiListClipper *self) { return self->ItemsCount; }
-void ImGuiListClipper_SetItemsHeight(ImGuiListClipper *ImGuiListClipperPtr, float v) { ImGuiListClipperPtr->ItemsHeight = v; }
-float ImGuiListClipper_GetItemsHeight(ImGuiListClipper *self) { return self->ItemsHeight; }
-void ImGuiListClipper_SetStartPosY(ImGuiListClipper *ImGuiListClipperPtr, float v) { ImGuiListClipperPtr->StartPosY = v; }
-float ImGuiListClipper_GetStartPosY(ImGuiListClipper *self) { return self->StartPosY; }
-void ImGuiListClipper_SetTempData(ImGuiListClipper *ImGuiListClipperPtr, void* v) { ImGuiListClipperPtr->TempData = v; }
-void* ImGuiListClipper_GetTempData(ImGuiListClipper *self) { return self->TempData; }
 void ImGuiMetricsConfig_SetShowDebugLog(ImGuiMetricsConfig *ImGuiMetricsConfigPtr, bool v) { ImGuiMetricsConfigPtr->ShowDebugLog = v; }
 bool ImGuiMetricsConfig_GetShowDebugLog(ImGuiMetricsConfig *self) { return self->ShowDebugLog; }
 void ImGuiMetricsConfig_SetShowStackTool(ImGuiMetricsConfig *ImGuiMetricsConfigPtr, bool v) { ImGuiMetricsConfigPtr->ShowStackTool = v; }
@@ -458,248 +168,36 @@ void ImGuiMetricsConfig_SetShowWindowsRectsType(ImGuiMetricsConfig *ImGuiMetrics
 int ImGuiMetricsConfig_GetShowWindowsRectsType(ImGuiMetricsConfig *self) { return self->ShowWindowsRectsType; }
 void ImGuiMetricsConfig_SetShowTablesRectsType(ImGuiMetricsConfig *ImGuiMetricsConfigPtr, int v) { ImGuiMetricsConfigPtr->ShowTablesRectsType = v; }
 int ImGuiMetricsConfig_GetShowTablesRectsType(ImGuiMetricsConfig *self) { return self->ShowTablesRectsType; }
-void ImGuiNextWindowData_SetFlags(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiNextWindowDataFlags v) { ImGuiNextWindowDataPtr->Flags = v; }
-ImGuiNextWindowDataFlags ImGuiNextWindowData_GetFlags(ImGuiNextWindowData *self) { return self->Flags; }
-void ImGuiNextWindowData_SetPosCond(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiCond v) { ImGuiNextWindowDataPtr->PosCond = v; }
-ImGuiCond ImGuiNextWindowData_GetPosCond(ImGuiNextWindowData *self) { return self->PosCond; }
-void ImGuiNextWindowData_SetSizeCond(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiCond v) { ImGuiNextWindowDataPtr->SizeCond = v; }
-ImGuiCond ImGuiNextWindowData_GetSizeCond(ImGuiNextWindowData *self) { return self->SizeCond; }
-void ImGuiNextWindowData_SetCollapsedCond(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiCond v) { ImGuiNextWindowDataPtr->CollapsedCond = v; }
-ImGuiCond ImGuiNextWindowData_GetCollapsedCond(ImGuiNextWindowData *self) { return self->CollapsedCond; }
-void ImGuiNextWindowData_SetDockCond(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiCond v) { ImGuiNextWindowDataPtr->DockCond = v; }
-ImGuiCond ImGuiNextWindowData_GetDockCond(ImGuiNextWindowData *self) { return self->DockCond; }
-void ImGuiNextWindowData_SetPosVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImVec2 v) { ImGuiNextWindowDataPtr->PosVal = v; }
-ImVec2 ImGuiNextWindowData_GetPosVal(ImGuiNextWindowData *self) { return self->PosVal; }
-void ImGuiNextWindowData_SetPosPivotVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImVec2 v) { ImGuiNextWindowDataPtr->PosPivotVal = v; }
-ImVec2 ImGuiNextWindowData_GetPosPivotVal(ImGuiNextWindowData *self) { return self->PosPivotVal; }
-void ImGuiNextWindowData_SetSizeVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImVec2 v) { ImGuiNextWindowDataPtr->SizeVal = v; }
-ImVec2 ImGuiNextWindowData_GetSizeVal(ImGuiNextWindowData *self) { return self->SizeVal; }
-void ImGuiNextWindowData_SetContentSizeVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImVec2 v) { ImGuiNextWindowDataPtr->ContentSizeVal = v; }
-ImVec2 ImGuiNextWindowData_GetContentSizeVal(ImGuiNextWindowData *self) { return self->ContentSizeVal; }
-void ImGuiNextWindowData_SetScrollVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImVec2 v) { ImGuiNextWindowDataPtr->ScrollVal = v; }
-ImVec2 ImGuiNextWindowData_GetScrollVal(ImGuiNextWindowData *self) { return self->ScrollVal; }
-void ImGuiNextWindowData_SetPosUndock(ImGuiNextWindowData *ImGuiNextWindowDataPtr, bool v) { ImGuiNextWindowDataPtr->PosUndock = v; }
-bool ImGuiNextWindowData_GetPosUndock(ImGuiNextWindowData *self) { return self->PosUndock; }
-void ImGuiNextWindowData_SetCollapsedVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, bool v) { ImGuiNextWindowDataPtr->CollapsedVal = v; }
-bool ImGuiNextWindowData_GetCollapsedVal(ImGuiNextWindowData *self) { return self->CollapsedVal; }
-void ImGuiNextWindowData_SetSizeConstraintRect(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImRect v) { ImGuiNextWindowDataPtr->SizeConstraintRect = v; }
-ImRect ImGuiNextWindowData_GetSizeConstraintRect(ImGuiNextWindowData *self) { return self->SizeConstraintRect; }
-void ImGuiNextWindowData_SetSizeCallback(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiSizeCallback v) { ImGuiNextWindowDataPtr->SizeCallback = v; }
-ImGuiSizeCallback ImGuiNextWindowData_GetSizeCallback(ImGuiNextWindowData *self) { return self->SizeCallback; }
-void ImGuiNextWindowData_SetSizeCallbackUserData(ImGuiNextWindowData *ImGuiNextWindowDataPtr, void* v) { ImGuiNextWindowDataPtr->SizeCallbackUserData = v; }
-void* ImGuiNextWindowData_GetSizeCallbackUserData(ImGuiNextWindowData *self) { return self->SizeCallbackUserData; }
-void ImGuiNextWindowData_SetBgAlphaVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, float v) { ImGuiNextWindowDataPtr->BgAlphaVal = v; }
-float ImGuiNextWindowData_GetBgAlphaVal(ImGuiNextWindowData *self) { return self->BgAlphaVal; }
-void ImGuiNextWindowData_SetViewportId(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiID v) { ImGuiNextWindowDataPtr->ViewportId = v; }
-ImGuiID ImGuiNextWindowData_GetViewportId(ImGuiNextWindowData *self) { return self->ViewportId; }
-void ImGuiNextWindowData_SetDockId(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiID v) { ImGuiNextWindowDataPtr->DockId = v; }
-ImGuiID ImGuiNextWindowData_GetDockId(ImGuiNextWindowData *self) { return self->DockId; }
-void ImGuiNextWindowData_SetWindowClass(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiWindowClass v) { ImGuiNextWindowDataPtr->WindowClass = v; }
-ImGuiWindowClass ImGuiNextWindowData_GetWindowClass(ImGuiNextWindowData *self) { return self->WindowClass; }
-void ImGuiNextWindowData_SetMenuBarOffsetMinVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImVec2 v) { ImGuiNextWindowDataPtr->MenuBarOffsetMinVal = v; }
-ImVec2 ImGuiNextWindowData_GetMenuBarOffsetMinVal(ImGuiNextWindowData *self) { return self->MenuBarOffsetMinVal; }
-void ImVec1_Setx(ImVec1 *ImVec1Ptr, float v) { ImVec1Ptr->x = v; }
-float ImVec1_Getx(ImVec1 *self) { return self->x; }
-void ImDrawListSharedData_SetTexUvWhitePixel(ImDrawListSharedData *ImDrawListSharedDataPtr, ImVec2 v) { ImDrawListSharedDataPtr->TexUvWhitePixel = v; }
-ImVec2 ImDrawListSharedData_GetTexUvWhitePixel(ImDrawListSharedData *self) { return self->TexUvWhitePixel; }
-void ImDrawListSharedData_SetFont(ImDrawListSharedData *ImDrawListSharedDataPtr, ImFont* v) { ImDrawListSharedDataPtr->Font = v; }
-ImFont* ImDrawListSharedData_GetFont(ImDrawListSharedData *self) { return self->Font; }
-void ImDrawListSharedData_SetFontSize(ImDrawListSharedData *ImDrawListSharedDataPtr, float v) { ImDrawListSharedDataPtr->FontSize = v; }
-float ImDrawListSharedData_GetFontSize(ImDrawListSharedData *self) { return self->FontSize; }
-void ImDrawListSharedData_SetCurveTessellationTol(ImDrawListSharedData *ImDrawListSharedDataPtr, float v) { ImDrawListSharedDataPtr->CurveTessellationTol = v; }
-float ImDrawListSharedData_GetCurveTessellationTol(ImDrawListSharedData *self) { return self->CurveTessellationTol; }
-void ImDrawListSharedData_SetCircleSegmentMaxError(ImDrawListSharedData *ImDrawListSharedDataPtr, float v) { ImDrawListSharedDataPtr->CircleSegmentMaxError = v; }
-float ImDrawListSharedData_GetCircleSegmentMaxError(ImDrawListSharedData *self) { return self->CircleSegmentMaxError; }
-void ImDrawListSharedData_SetClipRectFullscreen(ImDrawListSharedData *ImDrawListSharedDataPtr, ImVec4 v) { ImDrawListSharedDataPtr->ClipRectFullscreen = v; }
-ImVec4 ImDrawListSharedData_GetClipRectFullscreen(ImDrawListSharedData *self) { return self->ClipRectFullscreen; }
-void ImDrawListSharedData_SetInitialFlags(ImDrawListSharedData *ImDrawListSharedDataPtr, ImDrawListFlags v) { ImDrawListSharedDataPtr->InitialFlags = v; }
-ImDrawListFlags ImDrawListSharedData_GetInitialFlags(ImDrawListSharedData *self) { return self->InitialFlags; }
-void ImDrawListSharedData_SetArcFastRadiusCutoff(ImDrawListSharedData *ImDrawListSharedDataPtr, float v) { ImDrawListSharedDataPtr->ArcFastRadiusCutoff = v; }
-float ImDrawListSharedData_GetArcFastRadiusCutoff(ImDrawListSharedData *self) { return self->ArcFastRadiusCutoff; }
-void ImDrawListSharedData_SetTexUvLines(ImDrawListSharedData *ImDrawListSharedDataPtr, const ImVec4* v) { ImDrawListSharedDataPtr->TexUvLines = v; }
-const ImVec4* ImDrawListSharedData_GetTexUvLines(ImDrawListSharedData *self) { return self->TexUvLines; }
-void ImGuiInputEventMouseButton_SetButton(ImGuiInputEventMouseButton *ImGuiInputEventMouseButtonPtr, int v) { ImGuiInputEventMouseButtonPtr->Button = v; }
-int ImGuiInputEventMouseButton_GetButton(ImGuiInputEventMouseButton *self) { return self->Button; }
-void ImGuiInputEventMouseButton_SetDown(ImGuiInputEventMouseButton *ImGuiInputEventMouseButtonPtr, bool v) { ImGuiInputEventMouseButtonPtr->Down = v; }
-bool ImGuiInputEventMouseButton_GetDown(ImGuiInputEventMouseButton *self) { return self->Down; }
-void ImGuiTabItem_SetID(ImGuiTabItem *ImGuiTabItemPtr, ImGuiID v) { ImGuiTabItemPtr->ID = v; }
-ImGuiID ImGuiTabItem_GetID(ImGuiTabItem *self) { return self->ID; }
-void ImGuiTabItem_SetFlags(ImGuiTabItem *ImGuiTabItemPtr, ImGuiTabItemFlags v) { ImGuiTabItemPtr->Flags = v; }
-ImGuiTabItemFlags ImGuiTabItem_GetFlags(ImGuiTabItem *self) { return self->Flags; }
-void ImGuiTabItem_SetWindow(ImGuiTabItem *ImGuiTabItemPtr, ImGuiWindow* v) { ImGuiTabItemPtr->Window = v; }
-ImGuiWindow* ImGuiTabItem_GetWindow(ImGuiTabItem *self) { return self->Window; }
-void ImGuiTabItem_SetLastFrameVisible(ImGuiTabItem *ImGuiTabItemPtr, int v) { ImGuiTabItemPtr->LastFrameVisible = v; }
-int ImGuiTabItem_GetLastFrameVisible(ImGuiTabItem *self) { return self->LastFrameVisible; }
-void ImGuiTabItem_SetLastFrameSelected(ImGuiTabItem *ImGuiTabItemPtr, int v) { ImGuiTabItemPtr->LastFrameSelected = v; }
-int ImGuiTabItem_GetLastFrameSelected(ImGuiTabItem *self) { return self->LastFrameSelected; }
-void ImGuiTabItem_SetOffset(ImGuiTabItem *ImGuiTabItemPtr, float v) { ImGuiTabItemPtr->Offset = v; }
-float ImGuiTabItem_GetOffset(ImGuiTabItem *self) { return self->Offset; }
-void ImGuiTabItem_SetWidth(ImGuiTabItem *ImGuiTabItemPtr, float v) { ImGuiTabItemPtr->Width = v; }
-float ImGuiTabItem_GetWidth(ImGuiTabItem *self) { return self->Width; }
-void ImGuiTabItem_SetContentWidth(ImGuiTabItem *ImGuiTabItemPtr, float v) { ImGuiTabItemPtr->ContentWidth = v; }
-float ImGuiTabItem_GetContentWidth(ImGuiTabItem *self) { return self->ContentWidth; }
-void ImGuiTabItem_SetRequestedWidth(ImGuiTabItem *ImGuiTabItemPtr, float v) { ImGuiTabItemPtr->RequestedWidth = v; }
-float ImGuiTabItem_GetRequestedWidth(ImGuiTabItem *self) { return self->RequestedWidth; }
-void ImGuiTabItem_SetNameOffset(ImGuiTabItem *ImGuiTabItemPtr, ImS32 v) { ImGuiTabItemPtr->NameOffset = v; }
-ImS32 ImGuiTabItem_GetNameOffset(ImGuiTabItem *self) { return self->NameOffset; }
-void ImGuiTabItem_SetBeginOrder(ImGuiTabItem *ImGuiTabItemPtr, ImS16 v) { ImGuiTabItemPtr->BeginOrder = v; }
-ImS16 ImGuiTabItem_GetBeginOrder(ImGuiTabItem *self) { return self->BeginOrder; }
-void ImGuiTabItem_SetIndexDuringLayout(ImGuiTabItem *ImGuiTabItemPtr, ImS16 v) { ImGuiTabItemPtr->IndexDuringLayout = v; }
-ImS16 ImGuiTabItem_GetIndexDuringLayout(ImGuiTabItem *self) { return self->IndexDuringLayout; }
-void ImGuiTabItem_SetWantClose(ImGuiTabItem *ImGuiTabItemPtr, bool v) { ImGuiTabItemPtr->WantClose = v; }
-bool ImGuiTabItem_GetWantClose(ImGuiTabItem *self) { return self->WantClose; }
-void ImDrawVert_Setpos(ImDrawVert *ImDrawVertPtr, ImVec2 v) { ImDrawVertPtr->pos = v; }
-ImVec2 ImDrawVert_Getpos(ImDrawVert *self) { return self->pos; }
-void ImDrawVert_Setuv(ImDrawVert *ImDrawVertPtr, ImVec2 v) { ImDrawVertPtr->uv = v; }
-ImVec2 ImDrawVert_Getuv(ImDrawVert *self) { return self->uv; }
-void ImDrawVert_Setcol(ImDrawVert *ImDrawVertPtr, ImU32 v) { ImDrawVertPtr->col = v; }
-ImU32 ImDrawVert_Getcol(ImDrawVert *self) { return self->col; }
-void ImFont_SetIndexAdvanceX(ImFont *ImFontPtr, ImVector_float v) { ImFontPtr->IndexAdvanceX = v; }
-ImVector_float ImFont_GetIndexAdvanceX(ImFont *self) { return self->IndexAdvanceX; }
-void ImFont_SetFallbackAdvanceX(ImFont *ImFontPtr, float v) { ImFontPtr->FallbackAdvanceX = v; }
-float ImFont_GetFallbackAdvanceX(ImFont *self) { return self->FallbackAdvanceX; }
-void ImFont_SetFontSize(ImFont *ImFontPtr, float v) { ImFontPtr->FontSize = v; }
-float ImFont_GetFontSize(ImFont *self) { return self->FontSize; }
-void ImFont_SetIndexLookup(ImFont *ImFontPtr, ImVector_ImWchar v) { ImFontPtr->IndexLookup = v; }
-ImVector_ImWchar ImFont_GetIndexLookup(ImFont *self) { return self->IndexLookup; }
-void ImFont_SetGlyphs(ImFont *ImFontPtr, ImVector_ImFontGlyph v) { ImFontPtr->Glyphs = v; }
-ImVector_ImFontGlyph ImFont_GetGlyphs(ImFont *self) { return self->Glyphs; }
-void ImFont_SetFallbackGlyph(ImFont *ImFontPtr, const ImFontGlyph* v) { ImFontPtr->FallbackGlyph = v; }
-const ImFontGlyph* ImFont_GetFallbackGlyph(ImFont *self) { return self->FallbackGlyph; }
-void ImFont_SetContainerAtlas(ImFont *ImFontPtr, ImFontAtlas* v) { ImFontPtr->ContainerAtlas = v; }
-ImFontAtlas* ImFont_GetContainerAtlas(ImFont *self) { return self->ContainerAtlas; }
-void ImFont_SetConfigData(ImFont *ImFontPtr, const ImFontConfig* v) { ImFontPtr->ConfigData = v; }
-const ImFontConfig* ImFont_GetConfigData(ImFont *self) { return self->ConfigData; }
-void ImFont_SetConfigDataCount(ImFont *ImFontPtr, short v) { ImFontPtr->ConfigDataCount = v; }
-short ImFont_GetConfigDataCount(ImFont *self) { return self->ConfigDataCount; }
-void ImFont_SetFallbackChar(ImFont *ImFontPtr, ImWchar v) { ImFontPtr->FallbackChar = v; }
-ImWchar ImFont_GetFallbackChar(ImFont *self) { return self->FallbackChar; }
-void ImFont_SetEllipsisChar(ImFont *ImFontPtr, ImWchar v) { ImFontPtr->EllipsisChar = v; }
-ImWchar ImFont_GetEllipsisChar(ImFont *self) { return self->EllipsisChar; }
-void ImFont_SetDotChar(ImFont *ImFontPtr, ImWchar v) { ImFontPtr->DotChar = v; }
-ImWchar ImFont_GetDotChar(ImFont *self) { return self->DotChar; }
-void ImFont_SetDirtyLookupTables(ImFont *ImFontPtr, bool v) { ImFontPtr->DirtyLookupTables = v; }
-bool ImFont_GetDirtyLookupTables(ImFont *self) { return self->DirtyLookupTables; }
-void ImFont_SetScale(ImFont *ImFontPtr, float v) { ImFontPtr->Scale = v; }
-float ImFont_GetScale(ImFont *self) { return self->Scale; }
-void ImFont_SetAscent(ImFont *ImFontPtr, float v) { ImFontPtr->Ascent = v; }
-float ImFont_GetAscent(ImFont *self) { return self->Ascent; }
-void ImFont_SetDescent(ImFont *ImFontPtr, float v) { ImFontPtr->Descent = v; }
-float ImFont_GetDescent(ImFont *self) { return self->Descent; }
-void ImFont_SetMetricsTotalSurface(ImFont *ImFontPtr, int v) { ImFontPtr->MetricsTotalSurface = v; }
-int ImFont_GetMetricsTotalSurface(ImFont *self) { return self->MetricsTotalSurface; }
-void ImGuiDockNode_SetID(ImGuiDockNode *ImGuiDockNodePtr, ImGuiID v) { ImGuiDockNodePtr->ID = v; }
-ImGuiID ImGuiDockNode_GetID(ImGuiDockNode *self) { return self->ID; }
-void ImGuiDockNode_SetSharedFlags(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNodeFlags v) { ImGuiDockNodePtr->SharedFlags = v; }
-ImGuiDockNodeFlags ImGuiDockNode_GetSharedFlags(ImGuiDockNode *self) { return self->SharedFlags; }
-void ImGuiDockNode_SetLocalFlagsInWindows(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNodeFlags v) { ImGuiDockNodePtr->LocalFlagsInWindows = v; }
-ImGuiDockNodeFlags ImGuiDockNode_GetLocalFlagsInWindows(ImGuiDockNode *self) { return self->LocalFlagsInWindows; }
-void ImGuiDockNode_SetMergedFlags(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNodeFlags v) { ImGuiDockNodePtr->MergedFlags = v; }
-ImGuiDockNodeFlags ImGuiDockNode_GetMergedFlags(ImGuiDockNode *self) { return self->MergedFlags; }
-void ImGuiDockNode_SetState(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNodeState v) { ImGuiDockNodePtr->State = v; }
-ImGuiDockNodeState ImGuiDockNode_GetState(ImGuiDockNode *self) { return self->State; }
-void ImGuiDockNode_SetParentNode(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNode* v) { ImGuiDockNodePtr->ParentNode = v; }
-ImGuiDockNode* ImGuiDockNode_GetParentNode(ImGuiDockNode *self) { return self->ParentNode; }
-void ImGuiDockNode_SetWindows(ImGuiDockNode *ImGuiDockNodePtr, ImVector_ImGuiWindowPtr v) { ImGuiDockNodePtr->Windows = v; }
-ImVector_ImGuiWindowPtr ImGuiDockNode_GetWindows(ImGuiDockNode *self) { return self->Windows; }
-void ImGuiDockNode_SetTabBar(ImGuiDockNode *ImGuiDockNodePtr, ImGuiTabBar* v) { ImGuiDockNodePtr->TabBar = v; }
-ImGuiTabBar* ImGuiDockNode_GetTabBar(ImGuiDockNode *self) { return self->TabBar; }
-void ImGuiDockNode_SetPos(ImGuiDockNode *ImGuiDockNodePtr, ImVec2 v) { ImGuiDockNodePtr->Pos = v; }
-ImVec2 ImGuiDockNode_GetPos(ImGuiDockNode *self) { return self->Pos; }
-void ImGuiDockNode_SetSize(ImGuiDockNode *ImGuiDockNodePtr, ImVec2 v) { ImGuiDockNodePtr->Size = v; }
-ImVec2 ImGuiDockNode_GetSize(ImGuiDockNode *self) { return self->Size; }
-void ImGuiDockNode_SetSizeRef(ImGuiDockNode *ImGuiDockNodePtr, ImVec2 v) { ImGuiDockNodePtr->SizeRef = v; }
-ImVec2 ImGuiDockNode_GetSizeRef(ImGuiDockNode *self) { return self->SizeRef; }
-void ImGuiDockNode_SetSplitAxis(ImGuiDockNode *ImGuiDockNodePtr, ImGuiAxis v) { ImGuiDockNodePtr->SplitAxis = v; }
-ImGuiAxis ImGuiDockNode_GetSplitAxis(ImGuiDockNode *self) { return self->SplitAxis; }
-void ImGuiDockNode_SetWindowClass(ImGuiDockNode *ImGuiDockNodePtr, ImGuiWindowClass v) { ImGuiDockNodePtr->WindowClass = v; }
-ImGuiWindowClass ImGuiDockNode_GetWindowClass(ImGuiDockNode *self) { return self->WindowClass; }
-void ImGuiDockNode_SetLastBgColor(ImGuiDockNode *ImGuiDockNodePtr, ImU32 v) { ImGuiDockNodePtr->LastBgColor = v; }
-ImU32 ImGuiDockNode_GetLastBgColor(ImGuiDockNode *self) { return self->LastBgColor; }
-void ImGuiDockNode_SetHostWindow(ImGuiDockNode *ImGuiDockNodePtr, ImGuiWindow* v) { ImGuiDockNodePtr->HostWindow = v; }
-ImGuiWindow* ImGuiDockNode_GetHostWindow(ImGuiDockNode *self) { return self->HostWindow; }
-void ImGuiDockNode_SetVisibleWindow(ImGuiDockNode *ImGuiDockNodePtr, ImGuiWindow* v) { ImGuiDockNodePtr->VisibleWindow = v; }
-ImGuiWindow* ImGuiDockNode_GetVisibleWindow(ImGuiDockNode *self) { return self->VisibleWindow; }
-void ImGuiDockNode_SetCentralNode(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNode* v) { ImGuiDockNodePtr->CentralNode = v; }
-ImGuiDockNode* ImGuiDockNode_GetCentralNode(ImGuiDockNode *self) { return self->CentralNode; }
-void ImGuiDockNode_SetOnlyNodeWithWindows(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNode* v) { ImGuiDockNodePtr->OnlyNodeWithWindows = v; }
-ImGuiDockNode* ImGuiDockNode_GetOnlyNodeWithWindows(ImGuiDockNode *self) { return self->OnlyNodeWithWindows; }
-void ImGuiDockNode_SetCountNodeWithWindows(ImGuiDockNode *ImGuiDockNodePtr, int v) { ImGuiDockNodePtr->CountNodeWithWindows = v; }
-int ImGuiDockNode_GetCountNodeWithWindows(ImGuiDockNode *self) { return self->CountNodeWithWindows; }
-void ImGuiDockNode_SetLastFrameAlive(ImGuiDockNode *ImGuiDockNodePtr, int v) { ImGuiDockNodePtr->LastFrameAlive = v; }
-int ImGuiDockNode_GetLastFrameAlive(ImGuiDockNode *self) { return self->LastFrameAlive; }
-void ImGuiDockNode_SetLastFrameActive(ImGuiDockNode *ImGuiDockNodePtr, int v) { ImGuiDockNodePtr->LastFrameActive = v; }
-int ImGuiDockNode_GetLastFrameActive(ImGuiDockNode *self) { return self->LastFrameActive; }
-void ImGuiDockNode_SetLastFrameFocused(ImGuiDockNode *ImGuiDockNodePtr, int v) { ImGuiDockNodePtr->LastFrameFocused = v; }
-int ImGuiDockNode_GetLastFrameFocused(ImGuiDockNode *self) { return self->LastFrameFocused; }
-void ImGuiDockNode_SetLastFocusedNodeId(ImGuiDockNode *ImGuiDockNodePtr, ImGuiID v) { ImGuiDockNodePtr->LastFocusedNodeId = v; }
-ImGuiID ImGuiDockNode_GetLastFocusedNodeId(ImGuiDockNode *self) { return self->LastFocusedNodeId; }
-void ImGuiDockNode_SetSelectedTabId(ImGuiDockNode *ImGuiDockNodePtr, ImGuiID v) { ImGuiDockNodePtr->SelectedTabId = v; }
-ImGuiID ImGuiDockNode_GetSelectedTabId(ImGuiDockNode *self) { return self->SelectedTabId; }
-void ImGuiDockNode_SetWantCloseTabId(ImGuiDockNode *ImGuiDockNodePtr, ImGuiID v) { ImGuiDockNodePtr->WantCloseTabId = v; }
-ImGuiID ImGuiDockNode_GetWantCloseTabId(ImGuiDockNode *self) { return self->WantCloseTabId; }
-void ImGuiDockNode_SetAuthorityForPos(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDataAuthority v) { ImGuiDockNodePtr->AuthorityForPos = v; }
-ImGuiDataAuthority ImGuiDockNode_GetAuthorityForPos(ImGuiDockNode *self) { return self->AuthorityForPos; }
-void ImGuiDockNode_SetAuthorityForSize(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDataAuthority v) { ImGuiDockNodePtr->AuthorityForSize = v; }
-ImGuiDataAuthority ImGuiDockNode_GetAuthorityForSize(ImGuiDockNode *self) { return self->AuthorityForSize; }
-void ImGuiDockNode_SetAuthorityForViewport(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDataAuthority v) { ImGuiDockNodePtr->AuthorityForViewport = v; }
-ImGuiDataAuthority ImGuiDockNode_GetAuthorityForViewport(ImGuiDockNode *self) { return self->AuthorityForViewport; }
-void ImGuiDockNode_SetIsVisible(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->IsVisible = v; }
-bool ImGuiDockNode_GetIsVisible(ImGuiDockNode *self) { return self->IsVisible; }
-void ImGuiDockNode_SetIsFocused(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->IsFocused = v; }
-bool ImGuiDockNode_GetIsFocused(ImGuiDockNode *self) { return self->IsFocused; }
-void ImGuiDockNode_SetIsBgDrawnThisFrame(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->IsBgDrawnThisFrame = v; }
-bool ImGuiDockNode_GetIsBgDrawnThisFrame(ImGuiDockNode *self) { return self->IsBgDrawnThisFrame; }
-void ImGuiDockNode_SetHasCloseButton(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->HasCloseButton = v; }
-bool ImGuiDockNode_GetHasCloseButton(ImGuiDockNode *self) { return self->HasCloseButton; }
-void ImGuiDockNode_SetHasWindowMenuButton(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->HasWindowMenuButton = v; }
-bool ImGuiDockNode_GetHasWindowMenuButton(ImGuiDockNode *self) { return self->HasWindowMenuButton; }
-void ImGuiDockNode_SetHasCentralNodeChild(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->HasCentralNodeChild = v; }
-bool ImGuiDockNode_GetHasCentralNodeChild(ImGuiDockNode *self) { return self->HasCentralNodeChild; }
-void ImGuiDockNode_SetWantCloseAll(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->WantCloseAll = v; }
-bool ImGuiDockNode_GetWantCloseAll(ImGuiDockNode *self) { return self->WantCloseAll; }
-void ImGuiDockNode_SetWantLockSizeOnce(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->WantLockSizeOnce = v; }
-bool ImGuiDockNode_GetWantLockSizeOnce(ImGuiDockNode *self) { return self->WantLockSizeOnce; }
-void ImGuiDockNode_SetWantMouseMove(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->WantMouseMove = v; }
-bool ImGuiDockNode_GetWantMouseMove(ImGuiDockNode *self) { return self->WantMouseMove; }
-void ImGuiDockNode_SetWantHiddenTabBarUpdate(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->WantHiddenTabBarUpdate = v; }
-bool ImGuiDockNode_GetWantHiddenTabBarUpdate(ImGuiDockNode *self) { return self->WantHiddenTabBarUpdate; }
-void ImGuiDockNode_SetWantHiddenTabBarToggle(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->WantHiddenTabBarToggle = v; }
-bool ImGuiDockNode_GetWantHiddenTabBarToggle(ImGuiDockNode *self) { return self->WantHiddenTabBarToggle; }
-void ImGuiInputTextCallbackData_SetEventFlag(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, ImGuiInputTextFlags v) { ImGuiInputTextCallbackDataPtr->EventFlag = v; }
-ImGuiInputTextFlags ImGuiInputTextCallbackData_GetEventFlag(ImGuiInputTextCallbackData *self) { return self->EventFlag; }
-void ImGuiInputTextCallbackData_SetFlags(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, ImGuiInputTextFlags v) { ImGuiInputTextCallbackDataPtr->Flags = v; }
-ImGuiInputTextFlags ImGuiInputTextCallbackData_GetFlags(ImGuiInputTextCallbackData *self) { return self->Flags; }
-void ImGuiInputTextCallbackData_SetUserData(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, void* v) { ImGuiInputTextCallbackDataPtr->UserData = v; }
-void* ImGuiInputTextCallbackData_GetUserData(ImGuiInputTextCallbackData *self) { return self->UserData; }
-void ImGuiInputTextCallbackData_SetEventChar(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, ImWchar v) { ImGuiInputTextCallbackDataPtr->EventChar = v; }
-ImWchar ImGuiInputTextCallbackData_GetEventChar(ImGuiInputTextCallbackData *self) { return self->EventChar; }
-void ImGuiInputTextCallbackData_SetEventKey(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, ImGuiKey v) { ImGuiInputTextCallbackDataPtr->EventKey = v; }
-ImGuiKey ImGuiInputTextCallbackData_GetEventKey(ImGuiInputTextCallbackData *self) { return self->EventKey; }
-void ImGuiInputTextCallbackData_SetBuf(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, char* v) { ImGuiInputTextCallbackDataPtr->Buf = v; }
-char* ImGuiInputTextCallbackData_GetBuf(ImGuiInputTextCallbackData *self) { return self->Buf; }
-void ImGuiInputTextCallbackData_SetBufTextLen(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, int v) { ImGuiInputTextCallbackDataPtr->BufTextLen = v; }
-int ImGuiInputTextCallbackData_GetBufTextLen(ImGuiInputTextCallbackData *self) { return self->BufTextLen; }
-void ImGuiInputTextCallbackData_SetBufSize(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, int v) { ImGuiInputTextCallbackDataPtr->BufSize = v; }
-int ImGuiInputTextCallbackData_GetBufSize(ImGuiInputTextCallbackData *self) { return self->BufSize; }
-void ImGuiInputTextCallbackData_SetBufDirty(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, bool v) { ImGuiInputTextCallbackDataPtr->BufDirty = v; }
-bool ImGuiInputTextCallbackData_GetBufDirty(ImGuiInputTextCallbackData *self) { return self->BufDirty; }
-void ImGuiInputTextCallbackData_SetCursorPos(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, int v) { ImGuiInputTextCallbackDataPtr->CursorPos = v; }
-int ImGuiInputTextCallbackData_GetCursorPos(ImGuiInputTextCallbackData *self) { return self->CursorPos; }
-void ImGuiInputTextCallbackData_SetSelectionStart(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, int v) { ImGuiInputTextCallbackDataPtr->SelectionStart = v; }
-int ImGuiInputTextCallbackData_GetSelectionStart(ImGuiInputTextCallbackData *self) { return self->SelectionStart; }
-void ImGuiInputTextCallbackData_SetSelectionEnd(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, int v) { ImGuiInputTextCallbackDataPtr->SelectionEnd = v; }
-int ImGuiInputTextCallbackData_GetSelectionEnd(ImGuiInputTextCallbackData *self) { return self->SelectionEnd; }
-void ImGuiNextItemData_SetFlags(ImGuiNextItemData *ImGuiNextItemDataPtr, ImGuiNextItemDataFlags v) { ImGuiNextItemDataPtr->Flags = v; }
-ImGuiNextItemDataFlags ImGuiNextItemData_GetFlags(ImGuiNextItemData *self) { return self->Flags; }
-void ImGuiNextItemData_SetWidth(ImGuiNextItemData *ImGuiNextItemDataPtr, float v) { ImGuiNextItemDataPtr->Width = v; }
-float ImGuiNextItemData_GetWidth(ImGuiNextItemData *self) { return self->Width; }
-void ImGuiNextItemData_SetFocusScopeId(ImGuiNextItemData *ImGuiNextItemDataPtr, ImGuiID v) { ImGuiNextItemDataPtr->FocusScopeId = v; }
-ImGuiID ImGuiNextItemData_GetFocusScopeId(ImGuiNextItemData *self) { return self->FocusScopeId; }
-void ImGuiNextItemData_SetOpenCond(ImGuiNextItemData *ImGuiNextItemDataPtr, ImGuiCond v) { ImGuiNextItemDataPtr->OpenCond = v; }
-ImGuiCond ImGuiNextItemData_GetOpenCond(ImGuiNextItemData *self) { return self->OpenCond; }
-void ImGuiNextItemData_SetOpenVal(ImGuiNextItemData *ImGuiNextItemDataPtr, bool v) { ImGuiNextItemDataPtr->OpenVal = v; }
-bool ImGuiNextItemData_GetOpenVal(ImGuiNextItemData *self) { return self->OpenVal; }
+void ImGuiNavItemData_SetWindow(ImGuiNavItemData *ImGuiNavItemDataPtr, ImGuiWindow* v) { ImGuiNavItemDataPtr->Window = v; }
+ImGuiWindow* ImGuiNavItemData_GetWindow(ImGuiNavItemData *self) { return self->Window; }
+void ImGuiNavItemData_SetID(ImGuiNavItemData *ImGuiNavItemDataPtr, ImGuiID v) { ImGuiNavItemDataPtr->ID = v; }
+ImGuiID ImGuiNavItemData_GetID(ImGuiNavItemData *self) { return self->ID; }
+void ImGuiNavItemData_SetFocusScopeId(ImGuiNavItemData *ImGuiNavItemDataPtr, ImGuiID v) { ImGuiNavItemDataPtr->FocusScopeId = v; }
+ImGuiID ImGuiNavItemData_GetFocusScopeId(ImGuiNavItemData *self) { return self->FocusScopeId; }
+void ImGuiNavItemData_SetRectRel(ImGuiNavItemData *ImGuiNavItemDataPtr, ImRect v) { ImGuiNavItemDataPtr->RectRel = v; }
+ImRect ImGuiNavItemData_GetRectRel(ImGuiNavItemData *self) { return self->RectRel; }
+void ImGuiNavItemData_SetInFlags(ImGuiNavItemData *ImGuiNavItemDataPtr, ImGuiItemFlags v) { ImGuiNavItemDataPtr->InFlags = v; }
+ImGuiItemFlags ImGuiNavItemData_GetInFlags(ImGuiNavItemData *self) { return self->InFlags; }
+void ImGuiNavItemData_SetDistBox(ImGuiNavItemData *ImGuiNavItemDataPtr, float v) { ImGuiNavItemDataPtr->DistBox = v; }
+float ImGuiNavItemData_GetDistBox(ImGuiNavItemData *self) { return self->DistBox; }
+void ImGuiNavItemData_SetDistCenter(ImGuiNavItemData *ImGuiNavItemDataPtr, float v) { ImGuiNavItemDataPtr->DistCenter = v; }
+float ImGuiNavItemData_GetDistCenter(ImGuiNavItemData *self) { return self->DistCenter; }
+void ImGuiNavItemData_SetDistAxial(ImGuiNavItemData *ImGuiNavItemDataPtr, float v) { ImGuiNavItemDataPtr->DistAxial = v; }
+float ImGuiNavItemData_GetDistAxial(ImGuiNavItemData *self) { return self->DistAxial; }
+void ImGuiOldColumnData_SetOffsetNorm(ImGuiOldColumnData *ImGuiOldColumnDataPtr, float v) { ImGuiOldColumnDataPtr->OffsetNorm = v; }
+float ImGuiOldColumnData_GetOffsetNorm(ImGuiOldColumnData *self) { return self->OffsetNorm; }
+void ImGuiOldColumnData_SetOffsetNormBeforeResize(ImGuiOldColumnData *ImGuiOldColumnDataPtr, float v) { ImGuiOldColumnDataPtr->OffsetNormBeforeResize = v; }
+float ImGuiOldColumnData_GetOffsetNormBeforeResize(ImGuiOldColumnData *self) { return self->OffsetNormBeforeResize; }
+void ImGuiOldColumnData_SetFlags(ImGuiOldColumnData *ImGuiOldColumnDataPtr, ImGuiOldColumnFlags v) { ImGuiOldColumnDataPtr->Flags = v; }
+ImGuiOldColumnFlags ImGuiOldColumnData_GetFlags(ImGuiOldColumnData *self) { return self->Flags; }
+void ImGuiOldColumnData_SetClipRect(ImGuiOldColumnData *ImGuiOldColumnDataPtr, ImRect v) { ImGuiOldColumnDataPtr->ClipRect = v; }
+ImRect ImGuiOldColumnData_GetClipRect(ImGuiOldColumnData *self) { return self->ClipRect; }
+void ImGuiShrinkWidthItem_SetIndex(ImGuiShrinkWidthItem *ImGuiShrinkWidthItemPtr, int v) { ImGuiShrinkWidthItemPtr->Index = v; }
+int ImGuiShrinkWidthItem_GetIndex(ImGuiShrinkWidthItem *self) { return self->Index; }
+void ImGuiShrinkWidthItem_SetWidth(ImGuiShrinkWidthItem *ImGuiShrinkWidthItemPtr, float v) { ImGuiShrinkWidthItemPtr->Width = v; }
+float ImGuiShrinkWidthItem_GetWidth(ImGuiShrinkWidthItem *self) { return self->Width; }
+void ImGuiShrinkWidthItem_SetInitialWidth(ImGuiShrinkWidthItem *ImGuiShrinkWidthItemPtr, float v) { ImGuiShrinkWidthItemPtr->InitialWidth = v; }
+float ImGuiShrinkWidthItem_GetInitialWidth(ImGuiShrinkWidthItem *self) { return self->InitialWidth; }
 void ImGuiTable_SetID(ImGuiTable *ImGuiTablePtr, ImGuiID v) { ImGuiTablePtr->ID = v; }
 ImGuiID ImGuiTable_GetID(ImGuiTable *self) { return self->ID; }
 void ImGuiTable_SetFlags(ImGuiTable *ImGuiTablePtr, ImGuiTableFlags v) { ImGuiTablePtr->Flags = v; }
@@ -906,32 +404,520 @@ void ImGuiTable_SetMemoryCompacted(ImGuiTable *ImGuiTablePtr, bool v) { ImGuiTab
 bool ImGuiTable_GetMemoryCompacted(ImGuiTable *self) { return self->MemoryCompacted; }
 void ImGuiTable_SetHostSkipItems(ImGuiTable *ImGuiTablePtr, bool v) { ImGuiTablePtr->HostSkipItems = v; }
 bool ImGuiTable_GetHostSkipItems(ImGuiTable *self) { return self->HostSkipItems; }
+void ImGuiColorMod_SetCol(ImGuiColorMod *ImGuiColorModPtr, ImGuiCol v) { ImGuiColorModPtr->Col = v; }
+ImGuiCol ImGuiColorMod_GetCol(ImGuiColorMod *self) { return self->Col; }
+void ImGuiColorMod_SetBackupValue(ImGuiColorMod *ImGuiColorModPtr, ImVec4 v) { ImGuiColorModPtr->BackupValue = v; }
+ImVec4 ImGuiColorMod_GetBackupValue(ImGuiColorMod *self) { return self->BackupValue; }
+void ImGuiDockNode_SetID(ImGuiDockNode *ImGuiDockNodePtr, ImGuiID v) { ImGuiDockNodePtr->ID = v; }
+ImGuiID ImGuiDockNode_GetID(ImGuiDockNode *self) { return self->ID; }
+void ImGuiDockNode_SetSharedFlags(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNodeFlags v) { ImGuiDockNodePtr->SharedFlags = v; }
+ImGuiDockNodeFlags ImGuiDockNode_GetSharedFlags(ImGuiDockNode *self) { return self->SharedFlags; }
+void ImGuiDockNode_SetLocalFlagsInWindows(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNodeFlags v) { ImGuiDockNodePtr->LocalFlagsInWindows = v; }
+ImGuiDockNodeFlags ImGuiDockNode_GetLocalFlagsInWindows(ImGuiDockNode *self) { return self->LocalFlagsInWindows; }
+void ImGuiDockNode_SetMergedFlags(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNodeFlags v) { ImGuiDockNodePtr->MergedFlags = v; }
+ImGuiDockNodeFlags ImGuiDockNode_GetMergedFlags(ImGuiDockNode *self) { return self->MergedFlags; }
+void ImGuiDockNode_SetState(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNodeState v) { ImGuiDockNodePtr->State = v; }
+ImGuiDockNodeState ImGuiDockNode_GetState(ImGuiDockNode *self) { return self->State; }
+void ImGuiDockNode_SetParentNode(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNode* v) { ImGuiDockNodePtr->ParentNode = v; }
+ImGuiDockNode* ImGuiDockNode_GetParentNode(ImGuiDockNode *self) { return self->ParentNode; }
+void ImGuiDockNode_SetWindows(ImGuiDockNode *ImGuiDockNodePtr, ImVector_ImGuiWindowPtr v) { ImGuiDockNodePtr->Windows = v; }
+ImVector_ImGuiWindowPtr ImGuiDockNode_GetWindows(ImGuiDockNode *self) { return self->Windows; }
+void ImGuiDockNode_SetTabBar(ImGuiDockNode *ImGuiDockNodePtr, ImGuiTabBar* v) { ImGuiDockNodePtr->TabBar = v; }
+ImGuiTabBar* ImGuiDockNode_GetTabBar(ImGuiDockNode *self) { return self->TabBar; }
+void ImGuiDockNode_SetPos(ImGuiDockNode *ImGuiDockNodePtr, ImVec2 v) { ImGuiDockNodePtr->Pos = v; }
+ImVec2 ImGuiDockNode_GetPos(ImGuiDockNode *self) { return self->Pos; }
+void ImGuiDockNode_SetSize(ImGuiDockNode *ImGuiDockNodePtr, ImVec2 v) { ImGuiDockNodePtr->Size = v; }
+ImVec2 ImGuiDockNode_GetSize(ImGuiDockNode *self) { return self->Size; }
+void ImGuiDockNode_SetSizeRef(ImGuiDockNode *ImGuiDockNodePtr, ImVec2 v) { ImGuiDockNodePtr->SizeRef = v; }
+ImVec2 ImGuiDockNode_GetSizeRef(ImGuiDockNode *self) { return self->SizeRef; }
+void ImGuiDockNode_SetSplitAxis(ImGuiDockNode *ImGuiDockNodePtr, ImGuiAxis v) { ImGuiDockNodePtr->SplitAxis = v; }
+ImGuiAxis ImGuiDockNode_GetSplitAxis(ImGuiDockNode *self) { return self->SplitAxis; }
+void ImGuiDockNode_SetWindowClass(ImGuiDockNode *ImGuiDockNodePtr, ImGuiWindowClass v) { ImGuiDockNodePtr->WindowClass = v; }
+ImGuiWindowClass ImGuiDockNode_GetWindowClass(ImGuiDockNode *self) { return self->WindowClass; }
+void ImGuiDockNode_SetLastBgColor(ImGuiDockNode *ImGuiDockNodePtr, ImU32 v) { ImGuiDockNodePtr->LastBgColor = v; }
+ImU32 ImGuiDockNode_GetLastBgColor(ImGuiDockNode *self) { return self->LastBgColor; }
+void ImGuiDockNode_SetHostWindow(ImGuiDockNode *ImGuiDockNodePtr, ImGuiWindow* v) { ImGuiDockNodePtr->HostWindow = v; }
+ImGuiWindow* ImGuiDockNode_GetHostWindow(ImGuiDockNode *self) { return self->HostWindow; }
+void ImGuiDockNode_SetVisibleWindow(ImGuiDockNode *ImGuiDockNodePtr, ImGuiWindow* v) { ImGuiDockNodePtr->VisibleWindow = v; }
+ImGuiWindow* ImGuiDockNode_GetVisibleWindow(ImGuiDockNode *self) { return self->VisibleWindow; }
+void ImGuiDockNode_SetCentralNode(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNode* v) { ImGuiDockNodePtr->CentralNode = v; }
+ImGuiDockNode* ImGuiDockNode_GetCentralNode(ImGuiDockNode *self) { return self->CentralNode; }
+void ImGuiDockNode_SetOnlyNodeWithWindows(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNode* v) { ImGuiDockNodePtr->OnlyNodeWithWindows = v; }
+ImGuiDockNode* ImGuiDockNode_GetOnlyNodeWithWindows(ImGuiDockNode *self) { return self->OnlyNodeWithWindows; }
+void ImGuiDockNode_SetCountNodeWithWindows(ImGuiDockNode *ImGuiDockNodePtr, int v) { ImGuiDockNodePtr->CountNodeWithWindows = v; }
+int ImGuiDockNode_GetCountNodeWithWindows(ImGuiDockNode *self) { return self->CountNodeWithWindows; }
+void ImGuiDockNode_SetLastFrameAlive(ImGuiDockNode *ImGuiDockNodePtr, int v) { ImGuiDockNodePtr->LastFrameAlive = v; }
+int ImGuiDockNode_GetLastFrameAlive(ImGuiDockNode *self) { return self->LastFrameAlive; }
+void ImGuiDockNode_SetLastFrameActive(ImGuiDockNode *ImGuiDockNodePtr, int v) { ImGuiDockNodePtr->LastFrameActive = v; }
+int ImGuiDockNode_GetLastFrameActive(ImGuiDockNode *self) { return self->LastFrameActive; }
+void ImGuiDockNode_SetLastFrameFocused(ImGuiDockNode *ImGuiDockNodePtr, int v) { ImGuiDockNodePtr->LastFrameFocused = v; }
+int ImGuiDockNode_GetLastFrameFocused(ImGuiDockNode *self) { return self->LastFrameFocused; }
+void ImGuiDockNode_SetLastFocusedNodeId(ImGuiDockNode *ImGuiDockNodePtr, ImGuiID v) { ImGuiDockNodePtr->LastFocusedNodeId = v; }
+ImGuiID ImGuiDockNode_GetLastFocusedNodeId(ImGuiDockNode *self) { return self->LastFocusedNodeId; }
+void ImGuiDockNode_SetSelectedTabId(ImGuiDockNode *ImGuiDockNodePtr, ImGuiID v) { ImGuiDockNodePtr->SelectedTabId = v; }
+ImGuiID ImGuiDockNode_GetSelectedTabId(ImGuiDockNode *self) { return self->SelectedTabId; }
+void ImGuiDockNode_SetWantCloseTabId(ImGuiDockNode *ImGuiDockNodePtr, ImGuiID v) { ImGuiDockNodePtr->WantCloseTabId = v; }
+ImGuiID ImGuiDockNode_GetWantCloseTabId(ImGuiDockNode *self) { return self->WantCloseTabId; }
+void ImGuiDockNode_SetAuthorityForPos(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDataAuthority v) { ImGuiDockNodePtr->AuthorityForPos = v; }
+ImGuiDataAuthority ImGuiDockNode_GetAuthorityForPos(ImGuiDockNode *self) { return self->AuthorityForPos; }
+void ImGuiDockNode_SetAuthorityForSize(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDataAuthority v) { ImGuiDockNodePtr->AuthorityForSize = v; }
+ImGuiDataAuthority ImGuiDockNode_GetAuthorityForSize(ImGuiDockNode *self) { return self->AuthorityForSize; }
+void ImGuiDockNode_SetAuthorityForViewport(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDataAuthority v) { ImGuiDockNodePtr->AuthorityForViewport = v; }
+ImGuiDataAuthority ImGuiDockNode_GetAuthorityForViewport(ImGuiDockNode *self) { return self->AuthorityForViewport; }
+void ImGuiDockNode_SetIsVisible(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->IsVisible = v; }
+bool ImGuiDockNode_GetIsVisible(ImGuiDockNode *self) { return self->IsVisible; }
+void ImGuiDockNode_SetIsFocused(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->IsFocused = v; }
+bool ImGuiDockNode_GetIsFocused(ImGuiDockNode *self) { return self->IsFocused; }
+void ImGuiDockNode_SetIsBgDrawnThisFrame(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->IsBgDrawnThisFrame = v; }
+bool ImGuiDockNode_GetIsBgDrawnThisFrame(ImGuiDockNode *self) { return self->IsBgDrawnThisFrame; }
+void ImGuiDockNode_SetHasCloseButton(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->HasCloseButton = v; }
+bool ImGuiDockNode_GetHasCloseButton(ImGuiDockNode *self) { return self->HasCloseButton; }
+void ImGuiDockNode_SetHasWindowMenuButton(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->HasWindowMenuButton = v; }
+bool ImGuiDockNode_GetHasWindowMenuButton(ImGuiDockNode *self) { return self->HasWindowMenuButton; }
+void ImGuiDockNode_SetHasCentralNodeChild(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->HasCentralNodeChild = v; }
+bool ImGuiDockNode_GetHasCentralNodeChild(ImGuiDockNode *self) { return self->HasCentralNodeChild; }
+void ImGuiDockNode_SetWantCloseAll(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->WantCloseAll = v; }
+bool ImGuiDockNode_GetWantCloseAll(ImGuiDockNode *self) { return self->WantCloseAll; }
+void ImGuiDockNode_SetWantLockSizeOnce(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->WantLockSizeOnce = v; }
+bool ImGuiDockNode_GetWantLockSizeOnce(ImGuiDockNode *self) { return self->WantLockSizeOnce; }
+void ImGuiDockNode_SetWantMouseMove(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->WantMouseMove = v; }
+bool ImGuiDockNode_GetWantMouseMove(ImGuiDockNode *self) { return self->WantMouseMove; }
+void ImGuiDockNode_SetWantHiddenTabBarUpdate(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->WantHiddenTabBarUpdate = v; }
+bool ImGuiDockNode_GetWantHiddenTabBarUpdate(ImGuiDockNode *self) { return self->WantHiddenTabBarUpdate; }
+void ImGuiDockNode_SetWantHiddenTabBarToggle(ImGuiDockNode *ImGuiDockNodePtr, bool v) { ImGuiDockNodePtr->WantHiddenTabBarToggle = v; }
+bool ImGuiDockNode_GetWantHiddenTabBarToggle(ImGuiDockNode *self) { return self->WantHiddenTabBarToggle; }
+void ImGuiKeyData_SetDown(ImGuiKeyData *ImGuiKeyDataPtr, bool v) { ImGuiKeyDataPtr->Down = v; }
+bool ImGuiKeyData_GetDown(ImGuiKeyData *self) { return self->Down; }
+void ImGuiKeyData_SetDownDuration(ImGuiKeyData *ImGuiKeyDataPtr, float v) { ImGuiKeyDataPtr->DownDuration = v; }
+float ImGuiKeyData_GetDownDuration(ImGuiKeyData *self) { return self->DownDuration; }
+void ImGuiKeyData_SetDownDurationPrev(ImGuiKeyData *ImGuiKeyDataPtr, float v) { ImGuiKeyDataPtr->DownDurationPrev = v; }
+float ImGuiKeyData_GetDownDurationPrev(ImGuiKeyData *self) { return self->DownDurationPrev; }
+void ImGuiKeyData_SetAnalogValue(ImGuiKeyData *ImGuiKeyDataPtr, float v) { ImGuiKeyDataPtr->AnalogValue = v; }
+float ImGuiKeyData_GetAnalogValue(ImGuiKeyData *self) { return self->AnalogValue; }
+void ImGuiListClipperRange_SetMin(ImGuiListClipperRange *ImGuiListClipperRangePtr, int v) { ImGuiListClipperRangePtr->Min = v; }
+int ImGuiListClipperRange_GetMin(ImGuiListClipperRange *self) { return self->Min; }
+void ImGuiListClipperRange_SetMax(ImGuiListClipperRange *ImGuiListClipperRangePtr, int v) { ImGuiListClipperRangePtr->Max = v; }
+int ImGuiListClipperRange_GetMax(ImGuiListClipperRange *self) { return self->Max; }
+void ImGuiListClipperRange_SetPosToIndexConvert(ImGuiListClipperRange *ImGuiListClipperRangePtr, bool v) { ImGuiListClipperRangePtr->PosToIndexConvert = v; }
+bool ImGuiListClipperRange_GetPosToIndexConvert(ImGuiListClipperRange *self) { return self->PosToIndexConvert; }
+void ImGuiListClipperRange_SetPosToIndexOffsetMin(ImGuiListClipperRange *ImGuiListClipperRangePtr, ImS8 v) { ImGuiListClipperRangePtr->PosToIndexOffsetMin = v; }
+ImS8 ImGuiListClipperRange_GetPosToIndexOffsetMin(ImGuiListClipperRange *self) { return self->PosToIndexOffsetMin; }
+void ImGuiListClipperRange_SetPosToIndexOffsetMax(ImGuiListClipperRange *ImGuiListClipperRangePtr, ImS8 v) { ImGuiListClipperRangePtr->PosToIndexOffsetMax = v; }
+ImS8 ImGuiListClipperRange_GetPosToIndexOffsetMax(ImGuiListClipperRange *self) { return self->PosToIndexOffsetMax; }
+void ImGuiPtrOrIndex_SetPtr(ImGuiPtrOrIndex *ImGuiPtrOrIndexPtr, void* v) { ImGuiPtrOrIndexPtr->Ptr = v; }
+void* ImGuiPtrOrIndex_GetPtr(ImGuiPtrOrIndex *self) { return self->Ptr; }
+void ImGuiPtrOrIndex_SetIndex(ImGuiPtrOrIndex *ImGuiPtrOrIndexPtr, int v) { ImGuiPtrOrIndexPtr->Index = v; }
+int ImGuiPtrOrIndex_GetIndex(ImGuiPtrOrIndex *self) { return self->Index; }
+void ImGuiWindowTempData_SetCursorPos(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->CursorPos = v; }
+ImVec2 ImGuiWindowTempData_GetCursorPos(ImGuiWindowTempData *self) { return self->CursorPos; }
+void ImGuiWindowTempData_SetCursorPosPrevLine(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->CursorPosPrevLine = v; }
+ImVec2 ImGuiWindowTempData_GetCursorPosPrevLine(ImGuiWindowTempData *self) { return self->CursorPosPrevLine; }
+void ImGuiWindowTempData_SetCursorStartPos(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->CursorStartPos = v; }
+ImVec2 ImGuiWindowTempData_GetCursorStartPos(ImGuiWindowTempData *self) { return self->CursorStartPos; }
+void ImGuiWindowTempData_SetCursorMaxPos(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->CursorMaxPos = v; }
+ImVec2 ImGuiWindowTempData_GetCursorMaxPos(ImGuiWindowTempData *self) { return self->CursorMaxPos; }
+void ImGuiWindowTempData_SetIdealMaxPos(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->IdealMaxPos = v; }
+ImVec2 ImGuiWindowTempData_GetIdealMaxPos(ImGuiWindowTempData *self) { return self->IdealMaxPos; }
+void ImGuiWindowTempData_SetCurrLineSize(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->CurrLineSize = v; }
+ImVec2 ImGuiWindowTempData_GetCurrLineSize(ImGuiWindowTempData *self) { return self->CurrLineSize; }
+void ImGuiWindowTempData_SetPrevLineSize(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->PrevLineSize = v; }
+ImVec2 ImGuiWindowTempData_GetPrevLineSize(ImGuiWindowTempData *self) { return self->PrevLineSize; }
+void ImGuiWindowTempData_SetCurrLineTextBaseOffset(ImGuiWindowTempData *ImGuiWindowTempDataPtr, float v) { ImGuiWindowTempDataPtr->CurrLineTextBaseOffset = v; }
+float ImGuiWindowTempData_GetCurrLineTextBaseOffset(ImGuiWindowTempData *self) { return self->CurrLineTextBaseOffset; }
+void ImGuiWindowTempData_SetPrevLineTextBaseOffset(ImGuiWindowTempData *ImGuiWindowTempDataPtr, float v) { ImGuiWindowTempDataPtr->PrevLineTextBaseOffset = v; }
+float ImGuiWindowTempData_GetPrevLineTextBaseOffset(ImGuiWindowTempData *self) { return self->PrevLineTextBaseOffset; }
+void ImGuiWindowTempData_SetIsSameLine(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v) { ImGuiWindowTempDataPtr->IsSameLine = v; }
+bool ImGuiWindowTempData_GetIsSameLine(ImGuiWindowTempData *self) { return self->IsSameLine; }
+void ImGuiWindowTempData_SetIndent(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec1 v) { ImGuiWindowTempDataPtr->Indent = v; }
+ImVec1 ImGuiWindowTempData_GetIndent(ImGuiWindowTempData *self) { return self->Indent; }
+void ImGuiWindowTempData_SetColumnsOffset(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec1 v) { ImGuiWindowTempDataPtr->ColumnsOffset = v; }
+ImVec1 ImGuiWindowTempData_GetColumnsOffset(ImGuiWindowTempData *self) { return self->ColumnsOffset; }
+void ImGuiWindowTempData_SetGroupOffset(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec1 v) { ImGuiWindowTempDataPtr->GroupOffset = v; }
+ImVec1 ImGuiWindowTempData_GetGroupOffset(ImGuiWindowTempData *self) { return self->GroupOffset; }
+void ImGuiWindowTempData_SetCursorStartPosLossyness(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->CursorStartPosLossyness = v; }
+ImVec2 ImGuiWindowTempData_GetCursorStartPosLossyness(ImGuiWindowTempData *self) { return self->CursorStartPosLossyness; }
+void ImGuiWindowTempData_SetNavLayerCurrent(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImGuiNavLayer v) { ImGuiWindowTempDataPtr->NavLayerCurrent = v; }
+ImGuiNavLayer ImGuiWindowTempData_GetNavLayerCurrent(ImGuiWindowTempData *self) { return self->NavLayerCurrent; }
+void ImGuiWindowTempData_SetNavLayersActiveMask(ImGuiWindowTempData *ImGuiWindowTempDataPtr, short v) { ImGuiWindowTempDataPtr->NavLayersActiveMask = v; }
+short ImGuiWindowTempData_GetNavLayersActiveMask(ImGuiWindowTempData *self) { return self->NavLayersActiveMask; }
+void ImGuiWindowTempData_SetNavLayersActiveMaskNext(ImGuiWindowTempData *ImGuiWindowTempDataPtr, short v) { ImGuiWindowTempDataPtr->NavLayersActiveMaskNext = v; }
+short ImGuiWindowTempData_GetNavLayersActiveMaskNext(ImGuiWindowTempData *self) { return self->NavLayersActiveMaskNext; }
+void ImGuiWindowTempData_SetNavFocusScopeIdCurrent(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImGuiID v) { ImGuiWindowTempDataPtr->NavFocusScopeIdCurrent = v; }
+ImGuiID ImGuiWindowTempData_GetNavFocusScopeIdCurrent(ImGuiWindowTempData *self) { return self->NavFocusScopeIdCurrent; }
+void ImGuiWindowTempData_SetNavHideHighlightOneFrame(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v) { ImGuiWindowTempDataPtr->NavHideHighlightOneFrame = v; }
+bool ImGuiWindowTempData_GetNavHideHighlightOneFrame(ImGuiWindowTempData *self) { return self->NavHideHighlightOneFrame; }
+void ImGuiWindowTempData_SetNavHasScroll(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v) { ImGuiWindowTempDataPtr->NavHasScroll = v; }
+bool ImGuiWindowTempData_GetNavHasScroll(ImGuiWindowTempData *self) { return self->NavHasScroll; }
+void ImGuiWindowTempData_SetMenuBarAppending(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v) { ImGuiWindowTempDataPtr->MenuBarAppending = v; }
+bool ImGuiWindowTempData_GetMenuBarAppending(ImGuiWindowTempData *self) { return self->MenuBarAppending; }
+void ImGuiWindowTempData_SetMenuBarOffset(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->MenuBarOffset = v; }
+ImVec2 ImGuiWindowTempData_GetMenuBarOffset(ImGuiWindowTempData *self) { return self->MenuBarOffset; }
+void ImGuiWindowTempData_SetMenuColumns(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImGuiMenuColumns v) { ImGuiWindowTempDataPtr->MenuColumns = v; }
+ImGuiMenuColumns ImGuiWindowTempData_GetMenuColumns(ImGuiWindowTempData *self) { return self->MenuColumns; }
+void ImGuiWindowTempData_SetTreeDepth(ImGuiWindowTempData *ImGuiWindowTempDataPtr, int v) { ImGuiWindowTempDataPtr->TreeDepth = v; }
+int ImGuiWindowTempData_GetTreeDepth(ImGuiWindowTempData *self) { return self->TreeDepth; }
+void ImGuiWindowTempData_SetTreeJumpToParentOnPopMask(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImU32 v) { ImGuiWindowTempDataPtr->TreeJumpToParentOnPopMask = v; }
+ImU32 ImGuiWindowTempData_GetTreeJumpToParentOnPopMask(ImGuiWindowTempData *self) { return self->TreeJumpToParentOnPopMask; }
+void ImGuiWindowTempData_SetChildWindows(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVector_ImGuiWindowPtr v) { ImGuiWindowTempDataPtr->ChildWindows = v; }
+ImVector_ImGuiWindowPtr ImGuiWindowTempData_GetChildWindows(ImGuiWindowTempData *self) { return self->ChildWindows; }
+void ImGuiWindowTempData_SetStateStorage(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImGuiStorage* v) { ImGuiWindowTempDataPtr->StateStorage = v; }
+ImGuiStorage* ImGuiWindowTempData_GetStateStorage(ImGuiWindowTempData *self) { return self->StateStorage; }
+void ImGuiWindowTempData_SetCurrentColumns(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImGuiOldColumns* v) { ImGuiWindowTempDataPtr->CurrentColumns = v; }
+ImGuiOldColumns* ImGuiWindowTempData_GetCurrentColumns(ImGuiWindowTempData *self) { return self->CurrentColumns; }
+void ImGuiWindowTempData_SetCurrentTableIdx(ImGuiWindowTempData *ImGuiWindowTempDataPtr, int v) { ImGuiWindowTempDataPtr->CurrentTableIdx = v; }
+int ImGuiWindowTempData_GetCurrentTableIdx(ImGuiWindowTempData *self) { return self->CurrentTableIdx; }
+void ImGuiWindowTempData_SetLayoutType(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImGuiLayoutType v) { ImGuiWindowTempDataPtr->LayoutType = v; }
+ImGuiLayoutType ImGuiWindowTempData_GetLayoutType(ImGuiWindowTempData *self) { return self->LayoutType; }
+void ImGuiWindowTempData_SetParentLayoutType(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImGuiLayoutType v) { ImGuiWindowTempDataPtr->ParentLayoutType = v; }
+ImGuiLayoutType ImGuiWindowTempData_GetParentLayoutType(ImGuiWindowTempData *self) { return self->ParentLayoutType; }
+void ImGuiWindowTempData_SetItemWidth(ImGuiWindowTempData *ImGuiWindowTempDataPtr, float v) { ImGuiWindowTempDataPtr->ItemWidth = v; }
+float ImGuiWindowTempData_GetItemWidth(ImGuiWindowTempData *self) { return self->ItemWidth; }
+void ImGuiWindowTempData_SetTextWrapPos(ImGuiWindowTempData *ImGuiWindowTempDataPtr, float v) { ImGuiWindowTempDataPtr->TextWrapPos = v; }
+float ImGuiWindowTempData_GetTextWrapPos(ImGuiWindowTempData *self) { return self->TextWrapPos; }
+void ImGuiWindowTempData_SetItemWidthStack(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVector_float v) { ImGuiWindowTempDataPtr->ItemWidthStack = v; }
+ImVector_float ImGuiWindowTempData_GetItemWidthStack(ImGuiWindowTempData *self) { return self->ItemWidthStack; }
+void ImGuiWindowTempData_SetTextWrapPosStack(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVector_float v) { ImGuiWindowTempDataPtr->TextWrapPosStack = v; }
+ImVector_float ImGuiWindowTempData_GetTextWrapPosStack(ImGuiWindowTempData *self) { return self->TextWrapPosStack; }
+void ImVec1_Setx(ImVec1 *ImVec1Ptr, float v) { ImVec1Ptr->x = v; }
+float ImVec1_Getx(ImVec1 *self) { return self->x; }
+void ImFont_SetIndexAdvanceX(ImFont *ImFontPtr, ImVector_float v) { ImFontPtr->IndexAdvanceX = v; }
+ImVector_float ImFont_GetIndexAdvanceX(ImFont *self) { return self->IndexAdvanceX; }
+void ImFont_SetFallbackAdvanceX(ImFont *ImFontPtr, float v) { ImFontPtr->FallbackAdvanceX = v; }
+float ImFont_GetFallbackAdvanceX(ImFont *self) { return self->FallbackAdvanceX; }
+void ImFont_SetFontSize(ImFont *ImFontPtr, float v) { ImFontPtr->FontSize = v; }
+float ImFont_GetFontSize(ImFont *self) { return self->FontSize; }
+void ImFont_SetIndexLookup(ImFont *ImFontPtr, ImVector_ImWchar v) { ImFontPtr->IndexLookup = v; }
+ImVector_ImWchar ImFont_GetIndexLookup(ImFont *self) { return self->IndexLookup; }
+void ImFont_SetGlyphs(ImFont *ImFontPtr, ImVector_ImFontGlyph v) { ImFontPtr->Glyphs = v; }
+ImVector_ImFontGlyph ImFont_GetGlyphs(ImFont *self) { return self->Glyphs; }
+void ImFont_SetFallbackGlyph(ImFont *ImFontPtr, const ImFontGlyph* v) { ImFontPtr->FallbackGlyph = v; }
+const ImFontGlyph* ImFont_GetFallbackGlyph(ImFont *self) { return self->FallbackGlyph; }
+void ImFont_SetContainerAtlas(ImFont *ImFontPtr, ImFontAtlas* v) { ImFontPtr->ContainerAtlas = v; }
+ImFontAtlas* ImFont_GetContainerAtlas(ImFont *self) { return self->ContainerAtlas; }
+void ImFont_SetConfigData(ImFont *ImFontPtr, const ImFontConfig* v) { ImFontPtr->ConfigData = v; }
+const ImFontConfig* ImFont_GetConfigData(ImFont *self) { return self->ConfigData; }
+void ImFont_SetConfigDataCount(ImFont *ImFontPtr, short v) { ImFontPtr->ConfigDataCount = v; }
+short ImFont_GetConfigDataCount(ImFont *self) { return self->ConfigDataCount; }
+void ImFont_SetFallbackChar(ImFont *ImFontPtr, ImWchar v) { ImFontPtr->FallbackChar = v; }
+ImWchar ImFont_GetFallbackChar(ImFont *self) { return self->FallbackChar; }
+void ImFont_SetEllipsisChar(ImFont *ImFontPtr, ImWchar v) { ImFontPtr->EllipsisChar = v; }
+ImWchar ImFont_GetEllipsisChar(ImFont *self) { return self->EllipsisChar; }
+void ImFont_SetDotChar(ImFont *ImFontPtr, ImWchar v) { ImFontPtr->DotChar = v; }
+ImWchar ImFont_GetDotChar(ImFont *self) { return self->DotChar; }
+void ImFont_SetDirtyLookupTables(ImFont *ImFontPtr, bool v) { ImFontPtr->DirtyLookupTables = v; }
+bool ImFont_GetDirtyLookupTables(ImFont *self) { return self->DirtyLookupTables; }
+void ImFont_SetScale(ImFont *ImFontPtr, float v) { ImFontPtr->Scale = v; }
+float ImFont_GetScale(ImFont *self) { return self->Scale; }
+void ImFont_SetAscent(ImFont *ImFontPtr, float v) { ImFontPtr->Ascent = v; }
+float ImFont_GetAscent(ImFont *self) { return self->Ascent; }
+void ImFont_SetDescent(ImFont *ImFontPtr, float v) { ImFontPtr->Descent = v; }
+float ImFont_GetDescent(ImFont *self) { return self->Descent; }
+void ImFont_SetMetricsTotalSurface(ImFont *ImFontPtr, int v) { ImFontPtr->MetricsTotalSurface = v; }
+int ImFont_GetMetricsTotalSurface(ImFont *self) { return self->MetricsTotalSurface; }
+void ImDrawData_SetValid(ImDrawData *ImDrawDataPtr, bool v) { ImDrawDataPtr->Valid = v; }
+bool ImDrawData_GetValid(ImDrawData *self) { return self->Valid; }
+void ImDrawData_SetCmdListsCount(ImDrawData *ImDrawDataPtr, int v) { ImDrawDataPtr->CmdListsCount = v; }
+int ImDrawData_GetCmdListsCount(ImDrawData *self) { return self->CmdListsCount; }
+void ImDrawData_SetTotalIdxCount(ImDrawData *ImDrawDataPtr, int v) { ImDrawDataPtr->TotalIdxCount = v; }
+int ImDrawData_GetTotalIdxCount(ImDrawData *self) { return self->TotalIdxCount; }
+void ImDrawData_SetTotalVtxCount(ImDrawData *ImDrawDataPtr, int v) { ImDrawDataPtr->TotalVtxCount = v; }
+int ImDrawData_GetTotalVtxCount(ImDrawData *self) { return self->TotalVtxCount; }
+void ImDrawData_SetCmdLists(ImDrawData *ImDrawDataPtr, ImDrawList** v) { ImDrawDataPtr->CmdLists = v; }
+ImDrawList** ImDrawData_GetCmdLists(ImDrawData *self) { return self->CmdLists; }
+void ImDrawData_SetDisplayPos(ImDrawData *ImDrawDataPtr, ImVec2 v) { ImDrawDataPtr->DisplayPos = v; }
+ImVec2 ImDrawData_GetDisplayPos(ImDrawData *self) { return self->DisplayPos; }
+void ImDrawData_SetDisplaySize(ImDrawData *ImDrawDataPtr, ImVec2 v) { ImDrawDataPtr->DisplaySize = v; }
+ImVec2 ImDrawData_GetDisplaySize(ImDrawData *self) { return self->DisplaySize; }
+void ImDrawData_SetFramebufferScale(ImDrawData *ImDrawDataPtr, ImVec2 v) { ImDrawDataPtr->FramebufferScale = v; }
+ImVec2 ImDrawData_GetFramebufferScale(ImDrawData *self) { return self->FramebufferScale; }
+void ImDrawData_SetOwnerViewport(ImDrawData *ImDrawDataPtr, ImGuiViewport* v) { ImDrawDataPtr->OwnerViewport = v; }
+ImGuiViewport* ImDrawData_GetOwnerViewport(ImDrawData *self) { return self->OwnerViewport; }
+void ImGuiDataTypeInfo_SetSize(ImGuiDataTypeInfo *ImGuiDataTypeInfoPtr, size_t v) { ImGuiDataTypeInfoPtr->Size = v; }
+size_t ImGuiDataTypeInfo_GetSize(ImGuiDataTypeInfo *self) { return self->Size; }
+void ImGuiDataTypeInfo_SetName(ImGuiDataTypeInfo *ImGuiDataTypeInfoPtr, const char* v) { ImGuiDataTypeInfoPtr->Name = v; }
+const char* ImGuiDataTypeInfo_GetName(ImGuiDataTypeInfo *self) { return self->Name; }
+void ImGuiDataTypeInfo_SetPrintFmt(ImGuiDataTypeInfo *ImGuiDataTypeInfoPtr, const char* v) { ImGuiDataTypeInfoPtr->PrintFmt = v; }
+const char* ImGuiDataTypeInfo_GetPrintFmt(ImGuiDataTypeInfo *self) { return self->PrintFmt; }
+void ImGuiDataTypeInfo_SetScanFmt(ImGuiDataTypeInfo *ImGuiDataTypeInfoPtr, const char* v) { ImGuiDataTypeInfoPtr->ScanFmt = v; }
+const char* ImGuiDataTypeInfo_GetScanFmt(ImGuiDataTypeInfo *self) { return self->ScanFmt; }
+void ImGuiInputEventMouseButton_SetButton(ImGuiInputEventMouseButton *ImGuiInputEventMouseButtonPtr, int v) { ImGuiInputEventMouseButtonPtr->Button = v; }
+int ImGuiInputEventMouseButton_GetButton(ImGuiInputEventMouseButton *self) { return self->Button; }
+void ImGuiInputEventMouseButton_SetDown(ImGuiInputEventMouseButton *ImGuiInputEventMouseButtonPtr, bool v) { ImGuiInputEventMouseButtonPtr->Down = v; }
+bool ImGuiInputEventMouseButton_GetDown(ImGuiInputEventMouseButton *self) { return self->Down; }
+void ImGuiInputEventMousePos_SetPosX(ImGuiInputEventMousePos *ImGuiInputEventMousePosPtr, float v) { ImGuiInputEventMousePosPtr->PosX = v; }
+float ImGuiInputEventMousePos_GetPosX(ImGuiInputEventMousePos *self) { return self->PosX; }
+void ImGuiInputEventMousePos_SetPosY(ImGuiInputEventMousePos *ImGuiInputEventMousePosPtr, float v) { ImGuiInputEventMousePosPtr->PosY = v; }
+float ImGuiInputEventMousePos_GetPosY(ImGuiInputEventMousePos *self) { return self->PosY; }
+void ImGuiOldColumns_SetID(ImGuiOldColumns *ImGuiOldColumnsPtr, ImGuiID v) { ImGuiOldColumnsPtr->ID = v; }
+ImGuiID ImGuiOldColumns_GetID(ImGuiOldColumns *self) { return self->ID; }
+void ImGuiOldColumns_SetFlags(ImGuiOldColumns *ImGuiOldColumnsPtr, ImGuiOldColumnFlags v) { ImGuiOldColumnsPtr->Flags = v; }
+ImGuiOldColumnFlags ImGuiOldColumns_GetFlags(ImGuiOldColumns *self) { return self->Flags; }
+void ImGuiOldColumns_SetIsFirstFrame(ImGuiOldColumns *ImGuiOldColumnsPtr, bool v) { ImGuiOldColumnsPtr->IsFirstFrame = v; }
+bool ImGuiOldColumns_GetIsFirstFrame(ImGuiOldColumns *self) { return self->IsFirstFrame; }
+void ImGuiOldColumns_SetIsBeingResized(ImGuiOldColumns *ImGuiOldColumnsPtr, bool v) { ImGuiOldColumnsPtr->IsBeingResized = v; }
+bool ImGuiOldColumns_GetIsBeingResized(ImGuiOldColumns *self) { return self->IsBeingResized; }
+void ImGuiOldColumns_SetCurrent(ImGuiOldColumns *ImGuiOldColumnsPtr, int v) { ImGuiOldColumnsPtr->Current = v; }
+int ImGuiOldColumns_GetCurrent(ImGuiOldColumns *self) { return self->Current; }
+void ImGuiOldColumns_SetCount(ImGuiOldColumns *ImGuiOldColumnsPtr, int v) { ImGuiOldColumnsPtr->Count = v; }
+int ImGuiOldColumns_GetCount(ImGuiOldColumns *self) { return self->Count; }
+void ImGuiOldColumns_SetOffMinX(ImGuiOldColumns *ImGuiOldColumnsPtr, float v) { ImGuiOldColumnsPtr->OffMinX = v; }
+float ImGuiOldColumns_GetOffMinX(ImGuiOldColumns *self) { return self->OffMinX; }
+void ImGuiOldColumns_SetOffMaxX(ImGuiOldColumns *ImGuiOldColumnsPtr, float v) { ImGuiOldColumnsPtr->OffMaxX = v; }
+float ImGuiOldColumns_GetOffMaxX(ImGuiOldColumns *self) { return self->OffMaxX; }
+void ImGuiOldColumns_SetLineMinY(ImGuiOldColumns *ImGuiOldColumnsPtr, float v) { ImGuiOldColumnsPtr->LineMinY = v; }
+float ImGuiOldColumns_GetLineMinY(ImGuiOldColumns *self) { return self->LineMinY; }
+void ImGuiOldColumns_SetLineMaxY(ImGuiOldColumns *ImGuiOldColumnsPtr, float v) { ImGuiOldColumnsPtr->LineMaxY = v; }
+float ImGuiOldColumns_GetLineMaxY(ImGuiOldColumns *self) { return self->LineMaxY; }
+void ImGuiOldColumns_SetHostCursorPosY(ImGuiOldColumns *ImGuiOldColumnsPtr, float v) { ImGuiOldColumnsPtr->HostCursorPosY = v; }
+float ImGuiOldColumns_GetHostCursorPosY(ImGuiOldColumns *self) { return self->HostCursorPosY; }
+void ImGuiOldColumns_SetHostCursorMaxPosX(ImGuiOldColumns *ImGuiOldColumnsPtr, float v) { ImGuiOldColumnsPtr->HostCursorMaxPosX = v; }
+float ImGuiOldColumns_GetHostCursorMaxPosX(ImGuiOldColumns *self) { return self->HostCursorMaxPosX; }
+void ImGuiOldColumns_SetHostInitialClipRect(ImGuiOldColumns *ImGuiOldColumnsPtr, ImRect v) { ImGuiOldColumnsPtr->HostInitialClipRect = v; }
+ImRect ImGuiOldColumns_GetHostInitialClipRect(ImGuiOldColumns *self) { return self->HostInitialClipRect; }
+void ImGuiOldColumns_SetHostBackupClipRect(ImGuiOldColumns *ImGuiOldColumnsPtr, ImRect v) { ImGuiOldColumnsPtr->HostBackupClipRect = v; }
+ImRect ImGuiOldColumns_GetHostBackupClipRect(ImGuiOldColumns *self) { return self->HostBackupClipRect; }
+void ImGuiOldColumns_SetHostBackupParentWorkRect(ImGuiOldColumns *ImGuiOldColumnsPtr, ImRect v) { ImGuiOldColumnsPtr->HostBackupParentWorkRect = v; }
+ImRect ImGuiOldColumns_GetHostBackupParentWorkRect(ImGuiOldColumns *self) { return self->HostBackupParentWorkRect; }
+void ImGuiOldColumns_SetColumns(ImGuiOldColumns *ImGuiOldColumnsPtr, ImVector_ImGuiOldColumnData v) { ImGuiOldColumnsPtr->Columns = v; }
+ImVector_ImGuiOldColumnData ImGuiOldColumns_GetColumns(ImGuiOldColumns *self) { return self->Columns; }
+void ImGuiOldColumns_SetSplitter(ImGuiOldColumns *ImGuiOldColumnsPtr, ImDrawListSplitter v) { ImGuiOldColumnsPtr->Splitter = v; }
+ImDrawListSplitter ImGuiOldColumns_GetSplitter(ImGuiOldColumns *self) { return self->Splitter; }
+void ImGuiTableColumnSortSpecs_SetColumnUserID(ImGuiTableColumnSortSpecs *ImGuiTableColumnSortSpecsPtr, ImGuiID v) { ImGuiTableColumnSortSpecsPtr->ColumnUserID = v; }
+ImGuiID ImGuiTableColumnSortSpecs_GetColumnUserID(ImGuiTableColumnSortSpecs *self) { return self->ColumnUserID; }
+void ImGuiTableColumnSortSpecs_SetColumnIndex(ImGuiTableColumnSortSpecs *ImGuiTableColumnSortSpecsPtr, ImS16 v) { ImGuiTableColumnSortSpecsPtr->ColumnIndex = v; }
+ImS16 ImGuiTableColumnSortSpecs_GetColumnIndex(ImGuiTableColumnSortSpecs *self) { return self->ColumnIndex; }
+void ImGuiTableColumnSortSpecs_SetSortOrder(ImGuiTableColumnSortSpecs *ImGuiTableColumnSortSpecsPtr, ImS16 v) { ImGuiTableColumnSortSpecsPtr->SortOrder = v; }
+ImS16 ImGuiTableColumnSortSpecs_GetSortOrder(ImGuiTableColumnSortSpecs *self) { return self->SortOrder; }
+void ImGuiTableColumnSortSpecs_SetSortDirection(ImGuiTableColumnSortSpecs *ImGuiTableColumnSortSpecsPtr, ImGuiSortDirection v) { ImGuiTableColumnSortSpecsPtr->SortDirection = v; }
+ImGuiSortDirection ImGuiTableColumnSortSpecs_GetSortDirection(ImGuiTableColumnSortSpecs *self) { return self->SortDirection; }
+void ImGuiTableSettings_SetID(ImGuiTableSettings *ImGuiTableSettingsPtr, ImGuiID v) { ImGuiTableSettingsPtr->ID = v; }
+ImGuiID ImGuiTableSettings_GetID(ImGuiTableSettings *self) { return self->ID; }
+void ImGuiTableSettings_SetSaveFlags(ImGuiTableSettings *ImGuiTableSettingsPtr, ImGuiTableFlags v) { ImGuiTableSettingsPtr->SaveFlags = v; }
+ImGuiTableFlags ImGuiTableSettings_GetSaveFlags(ImGuiTableSettings *self) { return self->SaveFlags; }
+void ImGuiTableSettings_SetRefScale(ImGuiTableSettings *ImGuiTableSettingsPtr, float v) { ImGuiTableSettingsPtr->RefScale = v; }
+float ImGuiTableSettings_GetRefScale(ImGuiTableSettings *self) { return self->RefScale; }
+void ImGuiTableSettings_SetColumnsCount(ImGuiTableSettings *ImGuiTableSettingsPtr, ImGuiTableColumnIdx v) { ImGuiTableSettingsPtr->ColumnsCount = v; }
+ImGuiTableColumnIdx ImGuiTableSettings_GetColumnsCount(ImGuiTableSettings *self) { return self->ColumnsCount; }
+void ImGuiTableSettings_SetColumnsCountMax(ImGuiTableSettings *ImGuiTableSettingsPtr, ImGuiTableColumnIdx v) { ImGuiTableSettingsPtr->ColumnsCountMax = v; }
+ImGuiTableColumnIdx ImGuiTableSettings_GetColumnsCountMax(ImGuiTableSettings *self) { return self->ColumnsCountMax; }
+void ImGuiTableSettings_SetWantApply(ImGuiTableSettings *ImGuiTableSettingsPtr, bool v) { ImGuiTableSettingsPtr->WantApply = v; }
+bool ImGuiTableSettings_GetWantApply(ImGuiTableSettings *self) { return self->WantApply; }
 void ImDrawChannel_Set_CmdBuffer(ImDrawChannel *ImDrawChannelPtr, ImVector_ImDrawCmd v) { ImDrawChannelPtr->_CmdBuffer = v; }
 ImVector_ImDrawCmd ImDrawChannel_Get_CmdBuffer(ImDrawChannel *self) { return self->_CmdBuffer; }
 void ImDrawChannel_Set_IdxBuffer(ImDrawChannel *ImDrawChannelPtr, ImVector_ImDrawIdx v) { ImDrawChannelPtr->_IdxBuffer = v; }
 ImVector_ImDrawIdx ImDrawChannel_Get_IdxBuffer(ImDrawChannel *self) { return self->_IdxBuffer; }
-void ImGuiGroupData_SetWindowID(ImGuiGroupData *ImGuiGroupDataPtr, ImGuiID v) { ImGuiGroupDataPtr->WindowID = v; }
-ImGuiID ImGuiGroupData_GetWindowID(ImGuiGroupData *self) { return self->WindowID; }
-void ImGuiGroupData_SetBackupCursorPos(ImGuiGroupData *ImGuiGroupDataPtr, ImVec2 v) { ImGuiGroupDataPtr->BackupCursorPos = v; }
-ImVec2 ImGuiGroupData_GetBackupCursorPos(ImGuiGroupData *self) { return self->BackupCursorPos; }
-void ImGuiGroupData_SetBackupCursorMaxPos(ImGuiGroupData *ImGuiGroupDataPtr, ImVec2 v) { ImGuiGroupDataPtr->BackupCursorMaxPos = v; }
-ImVec2 ImGuiGroupData_GetBackupCursorMaxPos(ImGuiGroupData *self) { return self->BackupCursorMaxPos; }
-void ImGuiGroupData_SetBackupIndent(ImGuiGroupData *ImGuiGroupDataPtr, ImVec1 v) { ImGuiGroupDataPtr->BackupIndent = v; }
-ImVec1 ImGuiGroupData_GetBackupIndent(ImGuiGroupData *self) { return self->BackupIndent; }
-void ImGuiGroupData_SetBackupGroupOffset(ImGuiGroupData *ImGuiGroupDataPtr, ImVec1 v) { ImGuiGroupDataPtr->BackupGroupOffset = v; }
-ImVec1 ImGuiGroupData_GetBackupGroupOffset(ImGuiGroupData *self) { return self->BackupGroupOffset; }
-void ImGuiGroupData_SetBackupCurrLineSize(ImGuiGroupData *ImGuiGroupDataPtr, ImVec2 v) { ImGuiGroupDataPtr->BackupCurrLineSize = v; }
-ImVec2 ImGuiGroupData_GetBackupCurrLineSize(ImGuiGroupData *self) { return self->BackupCurrLineSize; }
-void ImGuiGroupData_SetBackupCurrLineTextBaseOffset(ImGuiGroupData *ImGuiGroupDataPtr, float v) { ImGuiGroupDataPtr->BackupCurrLineTextBaseOffset = v; }
-float ImGuiGroupData_GetBackupCurrLineTextBaseOffset(ImGuiGroupData *self) { return self->BackupCurrLineTextBaseOffset; }
-void ImGuiGroupData_SetBackupActiveIdIsAlive(ImGuiGroupData *ImGuiGroupDataPtr, ImGuiID v) { ImGuiGroupDataPtr->BackupActiveIdIsAlive = v; }
-ImGuiID ImGuiGroupData_GetBackupActiveIdIsAlive(ImGuiGroupData *self) { return self->BackupActiveIdIsAlive; }
-void ImGuiGroupData_SetBackupActiveIdPreviousFrameIsAlive(ImGuiGroupData *ImGuiGroupDataPtr, bool v) { ImGuiGroupDataPtr->BackupActiveIdPreviousFrameIsAlive = v; }
-bool ImGuiGroupData_GetBackupActiveIdPreviousFrameIsAlive(ImGuiGroupData *self) { return self->BackupActiveIdPreviousFrameIsAlive; }
-void ImGuiGroupData_SetBackupHoveredIdIsAlive(ImGuiGroupData *ImGuiGroupDataPtr, bool v) { ImGuiGroupDataPtr->BackupHoveredIdIsAlive = v; }
-bool ImGuiGroupData_GetBackupHoveredIdIsAlive(ImGuiGroupData *self) { return self->BackupHoveredIdIsAlive; }
-void ImGuiGroupData_SetEmitItem(ImGuiGroupData *ImGuiGroupDataPtr, bool v) { ImGuiGroupDataPtr->EmitItem = v; }
-bool ImGuiGroupData_GetEmitItem(ImGuiGroupData *self) { return self->EmitItem; }
+void ImGuiTextFilter_SetFilters(ImGuiTextFilter *ImGuiTextFilterPtr, ImVector_ImGuiTextRange v) { ImGuiTextFilterPtr->Filters = v; }
+ImVector_ImGuiTextRange ImGuiTextFilter_GetFilters(ImGuiTextFilter *self) { return self->Filters; }
+void ImGuiTextFilter_SetCountGrep(ImGuiTextFilter *ImGuiTextFilterPtr, int v) { ImGuiTextFilterPtr->CountGrep = v; }
+int ImGuiTextFilter_GetCountGrep(ImGuiTextFilter *self) { return self->CountGrep; }
+void ImGuiTableSortSpecs_SetSpecs(ImGuiTableSortSpecs *ImGuiTableSortSpecsPtr, const ImGuiTableColumnSortSpecs* v) { ImGuiTableSortSpecsPtr->Specs = v; }
+const ImGuiTableColumnSortSpecs* ImGuiTableSortSpecs_GetSpecs(ImGuiTableSortSpecs *self) { return self->Specs; }
+void ImGuiTableSortSpecs_SetSpecsCount(ImGuiTableSortSpecs *ImGuiTableSortSpecsPtr, int v) { ImGuiTableSortSpecsPtr->SpecsCount = v; }
+int ImGuiTableSortSpecs_GetSpecsCount(ImGuiTableSortSpecs *self) { return self->SpecsCount; }
+void ImGuiTableSortSpecs_SetSpecsDirty(ImGuiTableSortSpecs *ImGuiTableSortSpecsPtr, bool v) { ImGuiTableSortSpecsPtr->SpecsDirty = v; }
+bool ImGuiTableSortSpecs_GetSpecsDirty(ImGuiTableSortSpecs *self) { return self->SpecsDirty; }
+void ImGuiTabBar_SetTabs(ImGuiTabBar *ImGuiTabBarPtr, ImVector_ImGuiTabItem v) { ImGuiTabBarPtr->Tabs = v; }
+ImVector_ImGuiTabItem ImGuiTabBar_GetTabs(ImGuiTabBar *self) { return self->Tabs; }
+void ImGuiTabBar_SetFlags(ImGuiTabBar *ImGuiTabBarPtr, ImGuiTabBarFlags v) { ImGuiTabBarPtr->Flags = v; }
+ImGuiTabBarFlags ImGuiTabBar_GetFlags(ImGuiTabBar *self) { return self->Flags; }
+void ImGuiTabBar_SetID(ImGuiTabBar *ImGuiTabBarPtr, ImGuiID v) { ImGuiTabBarPtr->ID = v; }
+ImGuiID ImGuiTabBar_GetID(ImGuiTabBar *self) { return self->ID; }
+void ImGuiTabBar_SetSelectedTabId(ImGuiTabBar *ImGuiTabBarPtr, ImGuiID v) { ImGuiTabBarPtr->SelectedTabId = v; }
+ImGuiID ImGuiTabBar_GetSelectedTabId(ImGuiTabBar *self) { return self->SelectedTabId; }
+void ImGuiTabBar_SetNextSelectedTabId(ImGuiTabBar *ImGuiTabBarPtr, ImGuiID v) { ImGuiTabBarPtr->NextSelectedTabId = v; }
+ImGuiID ImGuiTabBar_GetNextSelectedTabId(ImGuiTabBar *self) { return self->NextSelectedTabId; }
+void ImGuiTabBar_SetVisibleTabId(ImGuiTabBar *ImGuiTabBarPtr, ImGuiID v) { ImGuiTabBarPtr->VisibleTabId = v; }
+ImGuiID ImGuiTabBar_GetVisibleTabId(ImGuiTabBar *self) { return self->VisibleTabId; }
+void ImGuiTabBar_SetCurrFrameVisible(ImGuiTabBar *ImGuiTabBarPtr, int v) { ImGuiTabBarPtr->CurrFrameVisible = v; }
+int ImGuiTabBar_GetCurrFrameVisible(ImGuiTabBar *self) { return self->CurrFrameVisible; }
+void ImGuiTabBar_SetPrevFrameVisible(ImGuiTabBar *ImGuiTabBarPtr, int v) { ImGuiTabBarPtr->PrevFrameVisible = v; }
+int ImGuiTabBar_GetPrevFrameVisible(ImGuiTabBar *self) { return self->PrevFrameVisible; }
+void ImGuiTabBar_SetBarRect(ImGuiTabBar *ImGuiTabBarPtr, ImRect v) { ImGuiTabBarPtr->BarRect = v; }
+ImRect ImGuiTabBar_GetBarRect(ImGuiTabBar *self) { return self->BarRect; }
+void ImGuiTabBar_SetCurrTabsContentsHeight(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->CurrTabsContentsHeight = v; }
+float ImGuiTabBar_GetCurrTabsContentsHeight(ImGuiTabBar *self) { return self->CurrTabsContentsHeight; }
+void ImGuiTabBar_SetPrevTabsContentsHeight(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->PrevTabsContentsHeight = v; }
+float ImGuiTabBar_GetPrevTabsContentsHeight(ImGuiTabBar *self) { return self->PrevTabsContentsHeight; }
+void ImGuiTabBar_SetWidthAllTabs(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->WidthAllTabs = v; }
+float ImGuiTabBar_GetWidthAllTabs(ImGuiTabBar *self) { return self->WidthAllTabs; }
+void ImGuiTabBar_SetWidthAllTabsIdeal(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->WidthAllTabsIdeal = v; }
+float ImGuiTabBar_GetWidthAllTabsIdeal(ImGuiTabBar *self) { return self->WidthAllTabsIdeal; }
+void ImGuiTabBar_SetScrollingAnim(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->ScrollingAnim = v; }
+float ImGuiTabBar_GetScrollingAnim(ImGuiTabBar *self) { return self->ScrollingAnim; }
+void ImGuiTabBar_SetScrollingTarget(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->ScrollingTarget = v; }
+float ImGuiTabBar_GetScrollingTarget(ImGuiTabBar *self) { return self->ScrollingTarget; }
+void ImGuiTabBar_SetScrollingTargetDistToVisibility(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->ScrollingTargetDistToVisibility = v; }
+float ImGuiTabBar_GetScrollingTargetDistToVisibility(ImGuiTabBar *self) { return self->ScrollingTargetDistToVisibility; }
+void ImGuiTabBar_SetScrollingSpeed(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->ScrollingSpeed = v; }
+float ImGuiTabBar_GetScrollingSpeed(ImGuiTabBar *self) { return self->ScrollingSpeed; }
+void ImGuiTabBar_SetScrollingRectMinX(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->ScrollingRectMinX = v; }
+float ImGuiTabBar_GetScrollingRectMinX(ImGuiTabBar *self) { return self->ScrollingRectMinX; }
+void ImGuiTabBar_SetScrollingRectMaxX(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->ScrollingRectMaxX = v; }
+float ImGuiTabBar_GetScrollingRectMaxX(ImGuiTabBar *self) { return self->ScrollingRectMaxX; }
+void ImGuiTabBar_SetReorderRequestTabId(ImGuiTabBar *ImGuiTabBarPtr, ImGuiID v) { ImGuiTabBarPtr->ReorderRequestTabId = v; }
+ImGuiID ImGuiTabBar_GetReorderRequestTabId(ImGuiTabBar *self) { return self->ReorderRequestTabId; }
+void ImGuiTabBar_SetReorderRequestOffset(ImGuiTabBar *ImGuiTabBarPtr, ImS16 v) { ImGuiTabBarPtr->ReorderRequestOffset = v; }
+ImS16 ImGuiTabBar_GetReorderRequestOffset(ImGuiTabBar *self) { return self->ReorderRequestOffset; }
+void ImGuiTabBar_SetBeginCount(ImGuiTabBar *ImGuiTabBarPtr, ImS8 v) { ImGuiTabBarPtr->BeginCount = v; }
+ImS8 ImGuiTabBar_GetBeginCount(ImGuiTabBar *self) { return self->BeginCount; }
+void ImGuiTabBar_SetWantLayout(ImGuiTabBar *ImGuiTabBarPtr, bool v) { ImGuiTabBarPtr->WantLayout = v; }
+bool ImGuiTabBar_GetWantLayout(ImGuiTabBar *self) { return self->WantLayout; }
+void ImGuiTabBar_SetVisibleTabWasSubmitted(ImGuiTabBar *ImGuiTabBarPtr, bool v) { ImGuiTabBarPtr->VisibleTabWasSubmitted = v; }
+bool ImGuiTabBar_GetVisibleTabWasSubmitted(ImGuiTabBar *self) { return self->VisibleTabWasSubmitted; }
+void ImGuiTabBar_SetTabsAddedNew(ImGuiTabBar *ImGuiTabBarPtr, bool v) { ImGuiTabBarPtr->TabsAddedNew = v; }
+bool ImGuiTabBar_GetTabsAddedNew(ImGuiTabBar *self) { return self->TabsAddedNew; }
+void ImGuiTabBar_SetTabsActiveCount(ImGuiTabBar *ImGuiTabBarPtr, ImS16 v) { ImGuiTabBarPtr->TabsActiveCount = v; }
+ImS16 ImGuiTabBar_GetTabsActiveCount(ImGuiTabBar *self) { return self->TabsActiveCount; }
+void ImGuiTabBar_SetLastTabItemIdx(ImGuiTabBar *ImGuiTabBarPtr, ImS16 v) { ImGuiTabBarPtr->LastTabItemIdx = v; }
+ImS16 ImGuiTabBar_GetLastTabItemIdx(ImGuiTabBar *self) { return self->LastTabItemIdx; }
+void ImGuiTabBar_SetItemSpacingY(ImGuiTabBar *ImGuiTabBarPtr, float v) { ImGuiTabBarPtr->ItemSpacingY = v; }
+float ImGuiTabBar_GetItemSpacingY(ImGuiTabBar *self) { return self->ItemSpacingY; }
+void ImGuiTabBar_SetFramePadding(ImGuiTabBar *ImGuiTabBarPtr, ImVec2 v) { ImGuiTabBarPtr->FramePadding = v; }
+ImVec2 ImGuiTabBar_GetFramePadding(ImGuiTabBar *self) { return self->FramePadding; }
+void ImGuiTabBar_SetBackupCursorPos(ImGuiTabBar *ImGuiTabBarPtr, ImVec2 v) { ImGuiTabBarPtr->BackupCursorPos = v; }
+ImVec2 ImGuiTabBar_GetBackupCursorPos(ImGuiTabBar *self) { return self->BackupCursorPos; }
+void ImGuiTabBar_SetTabsNames(ImGuiTabBar *ImGuiTabBarPtr, ImGuiTextBuffer v) { ImGuiTabBarPtr->TabsNames = v; }
+ImGuiTextBuffer ImGuiTabBar_GetTabsNames(ImGuiTabBar *self) { return self->TabsNames; }
+void ImGuiViewport_SetID(ImGuiViewport *ImGuiViewportPtr, ImGuiID v) { ImGuiViewportPtr->ID = v; }
+ImGuiID ImGuiViewport_GetID(ImGuiViewport *self) { return self->ID; }
+void ImGuiViewport_SetFlags(ImGuiViewport *ImGuiViewportPtr, ImGuiViewportFlags v) { ImGuiViewportPtr->Flags = v; }
+ImGuiViewportFlags ImGuiViewport_GetFlags(ImGuiViewport *self) { return self->Flags; }
+void ImGuiViewport_SetPos(ImGuiViewport *ImGuiViewportPtr, ImVec2 v) { ImGuiViewportPtr->Pos = v; }
+ImVec2 ImGuiViewport_GetPos(ImGuiViewport *self) { return self->Pos; }
+void ImGuiViewport_SetSize(ImGuiViewport *ImGuiViewportPtr, ImVec2 v) { ImGuiViewportPtr->Size = v; }
+ImVec2 ImGuiViewport_GetSize(ImGuiViewport *self) { return self->Size; }
+void ImGuiViewport_SetWorkPos(ImGuiViewport *ImGuiViewportPtr, ImVec2 v) { ImGuiViewportPtr->WorkPos = v; }
+ImVec2 ImGuiViewport_GetWorkPos(ImGuiViewport *self) { return self->WorkPos; }
+void ImGuiViewport_SetWorkSize(ImGuiViewport *ImGuiViewportPtr, ImVec2 v) { ImGuiViewportPtr->WorkSize = v; }
+ImVec2 ImGuiViewport_GetWorkSize(ImGuiViewport *self) { return self->WorkSize; }
+void ImGuiViewport_SetDpiScale(ImGuiViewport *ImGuiViewportPtr, float v) { ImGuiViewportPtr->DpiScale = v; }
+float ImGuiViewport_GetDpiScale(ImGuiViewport *self) { return self->DpiScale; }
+void ImGuiViewport_SetParentViewportId(ImGuiViewport *ImGuiViewportPtr, ImGuiID v) { ImGuiViewportPtr->ParentViewportId = v; }
+ImGuiID ImGuiViewport_GetParentViewportId(ImGuiViewport *self) { return self->ParentViewportId; }
+void ImGuiViewport_SetDrawData(ImGuiViewport *ImGuiViewportPtr, ImDrawData* v) { ImGuiViewportPtr->DrawData = v; }
+ImDrawData* ImGuiViewport_GetDrawData(ImGuiViewport *self) { return self->DrawData; }
+void ImGuiViewport_SetRendererUserData(ImGuiViewport *ImGuiViewportPtr, void* v) { ImGuiViewportPtr->RendererUserData = v; }
+void* ImGuiViewport_GetRendererUserData(ImGuiViewport *self) { return self->RendererUserData; }
+void ImGuiViewport_SetPlatformUserData(ImGuiViewport *ImGuiViewportPtr, void* v) { ImGuiViewportPtr->PlatformUserData = v; }
+void* ImGuiViewport_GetPlatformUserData(ImGuiViewport *self) { return self->PlatformUserData; }
+void ImGuiViewport_SetPlatformHandle(ImGuiViewport *ImGuiViewportPtr, void* v) { ImGuiViewportPtr->PlatformHandle = v; }
+void* ImGuiViewport_GetPlatformHandle(ImGuiViewport *self) { return self->PlatformHandle; }
+void ImGuiViewport_SetPlatformHandleRaw(ImGuiViewport *ImGuiViewportPtr, void* v) { ImGuiViewportPtr->PlatformHandleRaw = v; }
+void* ImGuiViewport_GetPlatformHandleRaw(ImGuiViewport *self) { return self->PlatformHandleRaw; }
+void ImGuiViewport_SetPlatformRequestMove(ImGuiViewport *ImGuiViewportPtr, bool v) { ImGuiViewportPtr->PlatformRequestMove = v; }
+bool ImGuiViewport_GetPlatformRequestMove(ImGuiViewport *self) { return self->PlatformRequestMove; }
+void ImGuiViewport_SetPlatformRequestResize(ImGuiViewport *ImGuiViewportPtr, bool v) { ImGuiViewportPtr->PlatformRequestResize = v; }
+bool ImGuiViewport_GetPlatformRequestResize(ImGuiViewport *self) { return self->PlatformRequestResize; }
+void ImGuiViewport_SetPlatformRequestClose(ImGuiViewport *ImGuiViewportPtr, bool v) { ImGuiViewportPtr->PlatformRequestClose = v; }
+bool ImGuiViewport_GetPlatformRequestClose(ImGuiViewport *self) { return self->PlatformRequestClose; }
+void ImGuiStackTool_SetLastActiveFrame(ImGuiStackTool *ImGuiStackToolPtr, int v) { ImGuiStackToolPtr->LastActiveFrame = v; }
+int ImGuiStackTool_GetLastActiveFrame(ImGuiStackTool *self) { return self->LastActiveFrame; }
+void ImGuiStackTool_SetStackLevel(ImGuiStackTool *ImGuiStackToolPtr, int v) { ImGuiStackToolPtr->StackLevel = v; }
+int ImGuiStackTool_GetStackLevel(ImGuiStackTool *self) { return self->StackLevel; }
+void ImGuiStackTool_SetQueryId(ImGuiStackTool *ImGuiStackToolPtr, ImGuiID v) { ImGuiStackToolPtr->QueryId = v; }
+ImGuiID ImGuiStackTool_GetQueryId(ImGuiStackTool *self) { return self->QueryId; }
+void ImGuiStackTool_SetResults(ImGuiStackTool *ImGuiStackToolPtr, ImVector_ImGuiStackLevelInfo v) { ImGuiStackToolPtr->Results = v; }
+ImVector_ImGuiStackLevelInfo ImGuiStackTool_GetResults(ImGuiStackTool *self) { return self->Results; }
+void ImGuiStackTool_SetCopyToClipboardOnCtrlC(ImGuiStackTool *ImGuiStackToolPtr, bool v) { ImGuiStackToolPtr->CopyToClipboardOnCtrlC = v; }
+bool ImGuiStackTool_GetCopyToClipboardOnCtrlC(ImGuiStackTool *self) { return self->CopyToClipboardOnCtrlC; }
+void ImGuiStackTool_SetCopyToClipboardLastTime(ImGuiStackTool *ImGuiStackToolPtr, float v) { ImGuiStackToolPtr->CopyToClipboardLastTime = v; }
+float ImGuiStackTool_GetCopyToClipboardLastTime(ImGuiStackTool *self) { return self->CopyToClipboardLastTime; }
+void ImGuiStyle_SetAlpha(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->Alpha = v; }
+float ImGuiStyle_GetAlpha(ImGuiStyle *self) { return self->Alpha; }
+void ImGuiStyle_SetDisabledAlpha(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->DisabledAlpha = v; }
+float ImGuiStyle_GetDisabledAlpha(ImGuiStyle *self) { return self->DisabledAlpha; }
+void ImGuiStyle_SetWindowPadding(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->WindowPadding = v; }
+ImVec2 ImGuiStyle_GetWindowPadding(ImGuiStyle *self) { return self->WindowPadding; }
+void ImGuiStyle_SetWindowRounding(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->WindowRounding = v; }
+float ImGuiStyle_GetWindowRounding(ImGuiStyle *self) { return self->WindowRounding; }
+void ImGuiStyle_SetWindowBorderSize(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->WindowBorderSize = v; }
+float ImGuiStyle_GetWindowBorderSize(ImGuiStyle *self) { return self->WindowBorderSize; }
+void ImGuiStyle_SetWindowMinSize(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->WindowMinSize = v; }
+ImVec2 ImGuiStyle_GetWindowMinSize(ImGuiStyle *self) { return self->WindowMinSize; }
+void ImGuiStyle_SetWindowTitleAlign(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->WindowTitleAlign = v; }
+ImVec2 ImGuiStyle_GetWindowTitleAlign(ImGuiStyle *self) { return self->WindowTitleAlign; }
+void ImGuiStyle_SetWindowMenuButtonPosition(ImGuiStyle *ImGuiStylePtr, ImGuiDir v) { ImGuiStylePtr->WindowMenuButtonPosition = v; }
+ImGuiDir ImGuiStyle_GetWindowMenuButtonPosition(ImGuiStyle *self) { return self->WindowMenuButtonPosition; }
+void ImGuiStyle_SetChildRounding(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->ChildRounding = v; }
+float ImGuiStyle_GetChildRounding(ImGuiStyle *self) { return self->ChildRounding; }
+void ImGuiStyle_SetChildBorderSize(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->ChildBorderSize = v; }
+float ImGuiStyle_GetChildBorderSize(ImGuiStyle *self) { return self->ChildBorderSize; }
+void ImGuiStyle_SetPopupRounding(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->PopupRounding = v; }
+float ImGuiStyle_GetPopupRounding(ImGuiStyle *self) { return self->PopupRounding; }
+void ImGuiStyle_SetPopupBorderSize(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->PopupBorderSize = v; }
+float ImGuiStyle_GetPopupBorderSize(ImGuiStyle *self) { return self->PopupBorderSize; }
+void ImGuiStyle_SetFramePadding(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->FramePadding = v; }
+ImVec2 ImGuiStyle_GetFramePadding(ImGuiStyle *self) { return self->FramePadding; }
+void ImGuiStyle_SetFrameRounding(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->FrameRounding = v; }
+float ImGuiStyle_GetFrameRounding(ImGuiStyle *self) { return self->FrameRounding; }
+void ImGuiStyle_SetFrameBorderSize(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->FrameBorderSize = v; }
+float ImGuiStyle_GetFrameBorderSize(ImGuiStyle *self) { return self->FrameBorderSize; }
+void ImGuiStyle_SetItemSpacing(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->ItemSpacing = v; }
+ImVec2 ImGuiStyle_GetItemSpacing(ImGuiStyle *self) { return self->ItemSpacing; }
+void ImGuiStyle_SetItemInnerSpacing(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->ItemInnerSpacing = v; }
+ImVec2 ImGuiStyle_GetItemInnerSpacing(ImGuiStyle *self) { return self->ItemInnerSpacing; }
+void ImGuiStyle_SetCellPadding(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->CellPadding = v; }
+ImVec2 ImGuiStyle_GetCellPadding(ImGuiStyle *self) { return self->CellPadding; }
+void ImGuiStyle_SetTouchExtraPadding(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->TouchExtraPadding = v; }
+ImVec2 ImGuiStyle_GetTouchExtraPadding(ImGuiStyle *self) { return self->TouchExtraPadding; }
+void ImGuiStyle_SetIndentSpacing(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->IndentSpacing = v; }
+float ImGuiStyle_GetIndentSpacing(ImGuiStyle *self) { return self->IndentSpacing; }
+void ImGuiStyle_SetColumnsMinSpacing(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->ColumnsMinSpacing = v; }
+float ImGuiStyle_GetColumnsMinSpacing(ImGuiStyle *self) { return self->ColumnsMinSpacing; }
+void ImGuiStyle_SetScrollbarSize(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->ScrollbarSize = v; }
+float ImGuiStyle_GetScrollbarSize(ImGuiStyle *self) { return self->ScrollbarSize; }
+void ImGuiStyle_SetScrollbarRounding(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->ScrollbarRounding = v; }
+float ImGuiStyle_GetScrollbarRounding(ImGuiStyle *self) { return self->ScrollbarRounding; }
+void ImGuiStyle_SetGrabMinSize(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->GrabMinSize = v; }
+float ImGuiStyle_GetGrabMinSize(ImGuiStyle *self) { return self->GrabMinSize; }
+void ImGuiStyle_SetGrabRounding(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->GrabRounding = v; }
+float ImGuiStyle_GetGrabRounding(ImGuiStyle *self) { return self->GrabRounding; }
+void ImGuiStyle_SetLogSliderDeadzone(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->LogSliderDeadzone = v; }
+float ImGuiStyle_GetLogSliderDeadzone(ImGuiStyle *self) { return self->LogSliderDeadzone; }
+void ImGuiStyle_SetTabRounding(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->TabRounding = v; }
+float ImGuiStyle_GetTabRounding(ImGuiStyle *self) { return self->TabRounding; }
+void ImGuiStyle_SetTabBorderSize(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->TabBorderSize = v; }
+float ImGuiStyle_GetTabBorderSize(ImGuiStyle *self) { return self->TabBorderSize; }
+void ImGuiStyle_SetTabMinWidthForCloseButton(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->TabMinWidthForCloseButton = v; }
+float ImGuiStyle_GetTabMinWidthForCloseButton(ImGuiStyle *self) { return self->TabMinWidthForCloseButton; }
+void ImGuiStyle_SetColorButtonPosition(ImGuiStyle *ImGuiStylePtr, ImGuiDir v) { ImGuiStylePtr->ColorButtonPosition = v; }
+ImGuiDir ImGuiStyle_GetColorButtonPosition(ImGuiStyle *self) { return self->ColorButtonPosition; }
+void ImGuiStyle_SetButtonTextAlign(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->ButtonTextAlign = v; }
+ImVec2 ImGuiStyle_GetButtonTextAlign(ImGuiStyle *self) { return self->ButtonTextAlign; }
+void ImGuiStyle_SetSelectableTextAlign(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->SelectableTextAlign = v; }
+ImVec2 ImGuiStyle_GetSelectableTextAlign(ImGuiStyle *self) { return self->SelectableTextAlign; }
+void ImGuiStyle_SetDisplayWindowPadding(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->DisplayWindowPadding = v; }
+ImVec2 ImGuiStyle_GetDisplayWindowPadding(ImGuiStyle *self) { return self->DisplayWindowPadding; }
+void ImGuiStyle_SetDisplaySafeAreaPadding(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->DisplaySafeAreaPadding = v; }
+ImVec2 ImGuiStyle_GetDisplaySafeAreaPadding(ImGuiStyle *self) { return self->DisplaySafeAreaPadding; }
+void ImGuiStyle_SetMouseCursorScale(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->MouseCursorScale = v; }
+float ImGuiStyle_GetMouseCursorScale(ImGuiStyle *self) { return self->MouseCursorScale; }
+void ImGuiStyle_SetAntiAliasedLines(ImGuiStyle *ImGuiStylePtr, bool v) { ImGuiStylePtr->AntiAliasedLines = v; }
+bool ImGuiStyle_GetAntiAliasedLines(ImGuiStyle *self) { return self->AntiAliasedLines; }
+void ImGuiStyle_SetAntiAliasedLinesUseTex(ImGuiStyle *ImGuiStylePtr, bool v) { ImGuiStylePtr->AntiAliasedLinesUseTex = v; }
+bool ImGuiStyle_GetAntiAliasedLinesUseTex(ImGuiStyle *self) { return self->AntiAliasedLinesUseTex; }
+void ImGuiStyle_SetAntiAliasedFill(ImGuiStyle *ImGuiStylePtr, bool v) { ImGuiStylePtr->AntiAliasedFill = v; }
+bool ImGuiStyle_GetAntiAliasedFill(ImGuiStyle *self) { return self->AntiAliasedFill; }
+void ImGuiStyle_SetCurveTessellationTol(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->CurveTessellationTol = v; }
+float ImGuiStyle_GetCurveTessellationTol(ImGuiStyle *self) { return self->CurveTessellationTol; }
+void ImGuiStyle_SetCircleTessellationMaxError(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->CircleTessellationMaxError = v; }
+float ImGuiStyle_GetCircleTessellationMaxError(ImGuiStyle *self) { return self->CircleTessellationMaxError; }
+void ImGuiWindowStackData_SetWindow(ImGuiWindowStackData *ImGuiWindowStackDataPtr, ImGuiWindow* v) { ImGuiWindowStackDataPtr->Window = v; }
+ImGuiWindow* ImGuiWindowStackData_GetWindow(ImGuiWindowStackData *self) { return self->Window; }
+void ImGuiWindowStackData_SetParentLastItemDataBackup(ImGuiWindowStackData *ImGuiWindowStackDataPtr, ImGuiLastItemData v) { ImGuiWindowStackDataPtr->ParentLastItemDataBackup = v; }
+ImGuiLastItemData ImGuiWindowStackData_GetParentLastItemDataBackup(ImGuiWindowStackData *self) { return self->ParentLastItemDataBackup; }
+void ImGuiWindowStackData_SetStackSizesOnBegin(ImGuiWindowStackData *ImGuiWindowStackDataPtr, ImGuiStackSizes v) { ImGuiWindowStackDataPtr->StackSizesOnBegin = v; }
+ImGuiStackSizes ImGuiWindowStackData_GetStackSizesOnBegin(ImGuiWindowStackData *self) { return self->StackSizesOnBegin; }
+void StbUndoRecord_Setwhere(StbUndoRecord *StbUndoRecordPtr, int v) { StbUndoRecordPtr->where = v; }
+int StbUndoRecord_Getwhere(StbUndoRecord *self) { return self->where; }
+void StbUndoRecord_Setinsert_length(StbUndoRecord *StbUndoRecordPtr, int v) { StbUndoRecordPtr->insert_length = v; }
+int StbUndoRecord_Getinsert_length(StbUndoRecord *self) { return self->insert_length; }
+void StbUndoRecord_Setdelete_length(StbUndoRecord *StbUndoRecordPtr, int v) { StbUndoRecordPtr->delete_length = v; }
+int StbUndoRecord_Getdelete_length(StbUndoRecord *self) { return self->delete_length; }
+void StbUndoRecord_Setchar_storage(StbUndoRecord *StbUndoRecordPtr, int v) { StbUndoRecordPtr->char_storage = v; }
+int StbUndoRecord_Getchar_storage(StbUndoRecord *self) { return self->char_storage; }
+void ImGuiStoragePair_Setkey(ImGuiStoragePair *ImGuiStoragePairPtr, ImGuiID v) { ImGuiStoragePairPtr->key = v; }
+ImGuiID ImGuiStoragePair_Getkey(ImGuiStoragePair *self) { return self->key; }
 void ImGuiIO_SetConfigFlags(ImGuiIO *ImGuiIOPtr, ImGuiConfigFlags v) { ImGuiIOPtr->ConfigFlags = v; }
 ImGuiConfigFlags ImGuiIO_GetConfigFlags(ImGuiIO *self) { return self->ConfigFlags; }
 void ImGuiIO_SetBackendFlags(ImGuiIO *ImGuiIOPtr, ImGuiBackendFlags v) { ImGuiIOPtr->BackendFlags = v; }
@@ -1078,6 +1064,628 @@ void ImGuiIO_SetInputQueueSurrogate(ImGuiIO *ImGuiIOPtr, ImWchar16 v) { ImGuiIOP
 ImWchar16 ImGuiIO_GetInputQueueSurrogate(ImGuiIO *self) { return self->InputQueueSurrogate; }
 void ImGuiIO_SetInputQueueCharacters(ImGuiIO *ImGuiIOPtr, ImVector_ImWchar v) { ImGuiIOPtr->InputQueueCharacters = v; }
 ImVector_ImWchar ImGuiIO_GetInputQueueCharacters(ImGuiIO *self) { return self->InputQueueCharacters; }
+void ImGuiTableCellData_SetBgColor(ImGuiTableCellData *ImGuiTableCellDataPtr, ImU32 v) { ImGuiTableCellDataPtr->BgColor = v; }
+ImU32 ImGuiTableCellData_GetBgColor(ImGuiTableCellData *self) { return self->BgColor; }
+void ImGuiTableCellData_SetColumn(ImGuiTableCellData *ImGuiTableCellDataPtr, ImGuiTableColumnIdx v) { ImGuiTableCellDataPtr->Column = v; }
+ImGuiTableColumnIdx ImGuiTableCellData_GetColumn(ImGuiTableCellData *self) { return self->Column; }
+void ImFontGlyph_SetColored(ImFontGlyph *ImFontGlyphPtr, unsigned int v) { ImFontGlyphPtr->Colored = v; }
+unsigned int ImFontGlyph_GetColored(ImFontGlyph *self) { return self->Colored; }
+void ImFontGlyph_SetVisible(ImFontGlyph *ImFontGlyphPtr, unsigned int v) { ImFontGlyphPtr->Visible = v; }
+unsigned int ImFontGlyph_GetVisible(ImFontGlyph *self) { return self->Visible; }
+void ImFontGlyph_SetCodepoint(ImFontGlyph *ImFontGlyphPtr, unsigned int v) { ImFontGlyphPtr->Codepoint = v; }
+unsigned int ImFontGlyph_GetCodepoint(ImFontGlyph *self) { return self->Codepoint; }
+void ImFontGlyph_SetAdvanceX(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->AdvanceX = v; }
+float ImFontGlyph_GetAdvanceX(ImFontGlyph *self) { return self->AdvanceX; }
+void ImFontGlyph_SetX0(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->X0 = v; }
+float ImFontGlyph_GetX0(ImFontGlyph *self) { return self->X0; }
+void ImFontGlyph_SetY0(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->Y0 = v; }
+float ImFontGlyph_GetY0(ImFontGlyph *self) { return self->Y0; }
+void ImFontGlyph_SetX1(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->X1 = v; }
+float ImFontGlyph_GetX1(ImFontGlyph *self) { return self->X1; }
+void ImFontGlyph_SetY1(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->Y1 = v; }
+float ImFontGlyph_GetY1(ImFontGlyph *self) { return self->Y1; }
+void ImFontGlyph_SetU0(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->U0 = v; }
+float ImFontGlyph_GetU0(ImFontGlyph *self) { return self->U0; }
+void ImFontGlyph_SetV0(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->V0 = v; }
+float ImFontGlyph_GetV0(ImFontGlyph *self) { return self->V0; }
+void ImFontGlyph_SetU1(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->U1 = v; }
+float ImFontGlyph_GetU1(ImFontGlyph *self) { return self->U1; }
+void ImFontGlyph_SetV1(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->V1 = v; }
+float ImFontGlyph_GetV1(ImFontGlyph *self) { return self->V1; }
+void ImGuiOnceUponAFrame_SetRefFrame(ImGuiOnceUponAFrame *ImGuiOnceUponAFramePtr, int v) { ImGuiOnceUponAFramePtr->RefFrame = v; }
+int ImGuiOnceUponAFrame_GetRefFrame(ImGuiOnceUponAFrame *self) { return self->RefFrame; }
+void ImGuiPlatformIO_SetMonitors(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImVector_ImGuiPlatformMonitor v) { ImGuiPlatformIOPtr->Monitors = v; }
+ImVector_ImGuiPlatformMonitor ImGuiPlatformIO_GetMonitors(ImGuiPlatformIO *self) { return self->Monitors; }
+void ImGuiPlatformIO_SetViewports(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImVector_ImGuiViewportPtr v) { ImGuiPlatformIOPtr->Viewports = v; }
+ImVector_ImGuiViewportPtr ImGuiPlatformIO_GetViewports(ImGuiPlatformIO *self) { return self->Viewports; }
+void ImGuiPopupData_SetPopupId(ImGuiPopupData *ImGuiPopupDataPtr, ImGuiID v) { ImGuiPopupDataPtr->PopupId = v; }
+ImGuiID ImGuiPopupData_GetPopupId(ImGuiPopupData *self) { return self->PopupId; }
+void ImGuiPopupData_SetWindow(ImGuiPopupData *ImGuiPopupDataPtr, ImGuiWindow* v) { ImGuiPopupDataPtr->Window = v; }
+ImGuiWindow* ImGuiPopupData_GetWindow(ImGuiPopupData *self) { return self->Window; }
+void ImGuiPopupData_SetSourceWindow(ImGuiPopupData *ImGuiPopupDataPtr, ImGuiWindow* v) { ImGuiPopupDataPtr->SourceWindow = v; }
+ImGuiWindow* ImGuiPopupData_GetSourceWindow(ImGuiPopupData *self) { return self->SourceWindow; }
+void ImGuiPopupData_SetParentNavLayer(ImGuiPopupData *ImGuiPopupDataPtr, int v) { ImGuiPopupDataPtr->ParentNavLayer = v; }
+int ImGuiPopupData_GetParentNavLayer(ImGuiPopupData *self) { return self->ParentNavLayer; }
+void ImGuiPopupData_SetOpenFrameCount(ImGuiPopupData *ImGuiPopupDataPtr, int v) { ImGuiPopupDataPtr->OpenFrameCount = v; }
+int ImGuiPopupData_GetOpenFrameCount(ImGuiPopupData *self) { return self->OpenFrameCount; }
+void ImGuiPopupData_SetOpenParentId(ImGuiPopupData *ImGuiPopupDataPtr, ImGuiID v) { ImGuiPopupDataPtr->OpenParentId = v; }
+ImGuiID ImGuiPopupData_GetOpenParentId(ImGuiPopupData *self) { return self->OpenParentId; }
+void ImGuiPopupData_SetOpenPopupPos(ImGuiPopupData *ImGuiPopupDataPtr, ImVec2 v) { ImGuiPopupDataPtr->OpenPopupPos = v; }
+ImVec2 ImGuiPopupData_GetOpenPopupPos(ImGuiPopupData *self) { return self->OpenPopupPos; }
+void ImGuiPopupData_SetOpenMousePos(ImGuiPopupData *ImGuiPopupDataPtr, ImVec2 v) { ImGuiPopupDataPtr->OpenMousePos = v; }
+ImVec2 ImGuiPopupData_GetOpenMousePos(ImGuiPopupData *self) { return self->OpenMousePos; }
+void ImDrawListSharedData_SetTexUvWhitePixel(ImDrawListSharedData *ImDrawListSharedDataPtr, ImVec2 v) { ImDrawListSharedDataPtr->TexUvWhitePixel = v; }
+ImVec2 ImDrawListSharedData_GetTexUvWhitePixel(ImDrawListSharedData *self) { return self->TexUvWhitePixel; }
+void ImDrawListSharedData_SetFont(ImDrawListSharedData *ImDrawListSharedDataPtr, ImFont* v) { ImDrawListSharedDataPtr->Font = v; }
+ImFont* ImDrawListSharedData_GetFont(ImDrawListSharedData *self) { return self->Font; }
+void ImDrawListSharedData_SetFontSize(ImDrawListSharedData *ImDrawListSharedDataPtr, float v) { ImDrawListSharedDataPtr->FontSize = v; }
+float ImDrawListSharedData_GetFontSize(ImDrawListSharedData *self) { return self->FontSize; }
+void ImDrawListSharedData_SetCurveTessellationTol(ImDrawListSharedData *ImDrawListSharedDataPtr, float v) { ImDrawListSharedDataPtr->CurveTessellationTol = v; }
+float ImDrawListSharedData_GetCurveTessellationTol(ImDrawListSharedData *self) { return self->CurveTessellationTol; }
+void ImDrawListSharedData_SetCircleSegmentMaxError(ImDrawListSharedData *ImDrawListSharedDataPtr, float v) { ImDrawListSharedDataPtr->CircleSegmentMaxError = v; }
+float ImDrawListSharedData_GetCircleSegmentMaxError(ImDrawListSharedData *self) { return self->CircleSegmentMaxError; }
+void ImDrawListSharedData_SetClipRectFullscreen(ImDrawListSharedData *ImDrawListSharedDataPtr, ImVec4 v) { ImDrawListSharedDataPtr->ClipRectFullscreen = v; }
+ImVec4 ImDrawListSharedData_GetClipRectFullscreen(ImDrawListSharedData *self) { return self->ClipRectFullscreen; }
+void ImDrawListSharedData_SetInitialFlags(ImDrawListSharedData *ImDrawListSharedDataPtr, ImDrawListFlags v) { ImDrawListSharedDataPtr->InitialFlags = v; }
+ImDrawListFlags ImDrawListSharedData_GetInitialFlags(ImDrawListSharedData *self) { return self->InitialFlags; }
+void ImDrawListSharedData_SetArcFastRadiusCutoff(ImDrawListSharedData *ImDrawListSharedDataPtr, float v) { ImDrawListSharedDataPtr->ArcFastRadiusCutoff = v; }
+float ImDrawListSharedData_GetArcFastRadiusCutoff(ImDrawListSharedData *self) { return self->ArcFastRadiusCutoff; }
+void ImDrawListSharedData_SetTexUvLines(ImDrawListSharedData *ImDrawListSharedDataPtr, const ImVec4* v) { ImDrawListSharedDataPtr->TexUvLines = v; }
+const ImVec4* ImDrawListSharedData_GetTexUvLines(ImDrawListSharedData *self) { return self->TexUvLines; }
+void ImDrawCmdHeader_SetClipRect(ImDrawCmdHeader *ImDrawCmdHeaderPtr, ImVec4 v) { ImDrawCmdHeaderPtr->ClipRect = v; }
+ImVec4 ImDrawCmdHeader_GetClipRect(ImDrawCmdHeader *self) { return self->ClipRect; }
+void ImDrawCmdHeader_SetTextureId(ImDrawCmdHeader *ImDrawCmdHeaderPtr, ImTextureID v) { ImDrawCmdHeaderPtr->TextureId = v; }
+ImTextureID ImDrawCmdHeader_GetTextureId(ImDrawCmdHeader *self) { return self->TextureId; }
+void ImDrawCmdHeader_SetVtxOffset(ImDrawCmdHeader *ImDrawCmdHeaderPtr, unsigned int v) { ImDrawCmdHeaderPtr->VtxOffset = v; }
+unsigned int ImDrawCmdHeader_GetVtxOffset(ImDrawCmdHeader *self) { return self->VtxOffset; }
+void ImDrawListSplitter_Set_Current(ImDrawListSplitter *ImDrawListSplitterPtr, int v) { ImDrawListSplitterPtr->_Current = v; }
+int ImDrawListSplitter_Get_Current(ImDrawListSplitter *self) { return self->_Current; }
+void ImDrawListSplitter_Set_Count(ImDrawListSplitter *ImDrawListSplitterPtr, int v) { ImDrawListSplitterPtr->_Count = v; }
+int ImDrawListSplitter_Get_Count(ImDrawListSplitter *self) { return self->_Count; }
+void ImDrawListSplitter_Set_Channels(ImDrawListSplitter *ImDrawListSplitterPtr, ImVector_ImDrawChannel v) { ImDrawListSplitterPtr->_Channels = v; }
+ImVector_ImDrawChannel ImDrawListSplitter_Get_Channels(ImDrawListSplitter *self) { return self->_Channels; }
+void ImGuiPlatformImeData_SetWantVisible(ImGuiPlatformImeData *ImGuiPlatformImeDataPtr, bool v) { ImGuiPlatformImeDataPtr->WantVisible = v; }
+bool ImGuiPlatformImeData_GetWantVisible(ImGuiPlatformImeData *self) { return self->WantVisible; }
+void ImGuiPlatformImeData_SetInputPos(ImGuiPlatformImeData *ImGuiPlatformImeDataPtr, ImVec2 v) { ImGuiPlatformImeDataPtr->InputPos = v; }
+ImVec2 ImGuiPlatformImeData_GetInputPos(ImGuiPlatformImeData *self) { return self->InputPos; }
+void ImGuiPlatformImeData_SetInputLineHeight(ImGuiPlatformImeData *ImGuiPlatformImeDataPtr, float v) { ImGuiPlatformImeDataPtr->InputLineHeight = v; }
+float ImGuiPlatformImeData_GetInputLineHeight(ImGuiPlatformImeData *self) { return self->InputLineHeight; }
+void ImGuiSizeCallbackData_SetUserData(ImGuiSizeCallbackData *ImGuiSizeCallbackDataPtr, void* v) { ImGuiSizeCallbackDataPtr->UserData = v; }
+void* ImGuiSizeCallbackData_GetUserData(ImGuiSizeCallbackData *self) { return self->UserData; }
+void ImGuiSizeCallbackData_SetPos(ImGuiSizeCallbackData *ImGuiSizeCallbackDataPtr, ImVec2 v) { ImGuiSizeCallbackDataPtr->Pos = v; }
+ImVec2 ImGuiSizeCallbackData_GetPos(ImGuiSizeCallbackData *self) { return self->Pos; }
+void ImGuiSizeCallbackData_SetCurrentSize(ImGuiSizeCallbackData *ImGuiSizeCallbackDataPtr, ImVec2 v) { ImGuiSizeCallbackDataPtr->CurrentSize = v; }
+ImVec2 ImGuiSizeCallbackData_GetCurrentSize(ImGuiSizeCallbackData *self) { return self->CurrentSize; }
+void ImGuiSizeCallbackData_SetDesiredSize(ImGuiSizeCallbackData *ImGuiSizeCallbackDataPtr, ImVec2 v) { ImGuiSizeCallbackDataPtr->DesiredSize = v; }
+ImVec2 ImGuiSizeCallbackData_GetDesiredSize(ImGuiSizeCallbackData *self) { return self->DesiredSize; }
+void ImGuiTableColumn_SetFlags(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableColumnFlags v) { ImGuiTableColumnPtr->Flags = v; }
+ImGuiTableColumnFlags ImGuiTableColumn_GetFlags(ImGuiTableColumn *self) { return self->Flags; }
+void ImGuiTableColumn_SetWidthGiven(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->WidthGiven = v; }
+float ImGuiTableColumn_GetWidthGiven(ImGuiTableColumn *self) { return self->WidthGiven; }
+void ImGuiTableColumn_SetMinX(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->MinX = v; }
+float ImGuiTableColumn_GetMinX(ImGuiTableColumn *self) { return self->MinX; }
+void ImGuiTableColumn_SetMaxX(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->MaxX = v; }
+float ImGuiTableColumn_GetMaxX(ImGuiTableColumn *self) { return self->MaxX; }
+void ImGuiTableColumn_SetWidthRequest(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->WidthRequest = v; }
+float ImGuiTableColumn_GetWidthRequest(ImGuiTableColumn *self) { return self->WidthRequest; }
+void ImGuiTableColumn_SetWidthAuto(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->WidthAuto = v; }
+float ImGuiTableColumn_GetWidthAuto(ImGuiTableColumn *self) { return self->WidthAuto; }
+void ImGuiTableColumn_SetStretchWeight(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->StretchWeight = v; }
+float ImGuiTableColumn_GetStretchWeight(ImGuiTableColumn *self) { return self->StretchWeight; }
+void ImGuiTableColumn_SetInitStretchWeightOrWidth(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->InitStretchWeightOrWidth = v; }
+float ImGuiTableColumn_GetInitStretchWeightOrWidth(ImGuiTableColumn *self) { return self->InitStretchWeightOrWidth; }
+void ImGuiTableColumn_SetClipRect(ImGuiTableColumn *ImGuiTableColumnPtr, ImRect v) { ImGuiTableColumnPtr->ClipRect = v; }
+ImRect ImGuiTableColumn_GetClipRect(ImGuiTableColumn *self) { return self->ClipRect; }
+void ImGuiTableColumn_SetUserID(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiID v) { ImGuiTableColumnPtr->UserID = v; }
+ImGuiID ImGuiTableColumn_GetUserID(ImGuiTableColumn *self) { return self->UserID; }
+void ImGuiTableColumn_SetWorkMinX(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->WorkMinX = v; }
+float ImGuiTableColumn_GetWorkMinX(ImGuiTableColumn *self) { return self->WorkMinX; }
+void ImGuiTableColumn_SetWorkMaxX(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->WorkMaxX = v; }
+float ImGuiTableColumn_GetWorkMaxX(ImGuiTableColumn *self) { return self->WorkMaxX; }
+void ImGuiTableColumn_SetItemWidth(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->ItemWidth = v; }
+float ImGuiTableColumn_GetItemWidth(ImGuiTableColumn *self) { return self->ItemWidth; }
+void ImGuiTableColumn_SetContentMaxXFrozen(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->ContentMaxXFrozen = v; }
+float ImGuiTableColumn_GetContentMaxXFrozen(ImGuiTableColumn *self) { return self->ContentMaxXFrozen; }
+void ImGuiTableColumn_SetContentMaxXUnfrozen(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->ContentMaxXUnfrozen = v; }
+float ImGuiTableColumn_GetContentMaxXUnfrozen(ImGuiTableColumn *self) { return self->ContentMaxXUnfrozen; }
+void ImGuiTableColumn_SetContentMaxXHeadersUsed(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->ContentMaxXHeadersUsed = v; }
+float ImGuiTableColumn_GetContentMaxXHeadersUsed(ImGuiTableColumn *self) { return self->ContentMaxXHeadersUsed; }
+void ImGuiTableColumn_SetContentMaxXHeadersIdeal(ImGuiTableColumn *ImGuiTableColumnPtr, float v) { ImGuiTableColumnPtr->ContentMaxXHeadersIdeal = v; }
+float ImGuiTableColumn_GetContentMaxXHeadersIdeal(ImGuiTableColumn *self) { return self->ContentMaxXHeadersIdeal; }
+void ImGuiTableColumn_SetNameOffset(ImGuiTableColumn *ImGuiTableColumnPtr, ImS16 v) { ImGuiTableColumnPtr->NameOffset = v; }
+ImS16 ImGuiTableColumn_GetNameOffset(ImGuiTableColumn *self) { return self->NameOffset; }
+void ImGuiTableColumn_SetDisplayOrder(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnPtr->DisplayOrder = v; }
+ImGuiTableColumnIdx ImGuiTableColumn_GetDisplayOrder(ImGuiTableColumn *self) { return self->DisplayOrder; }
+void ImGuiTableColumn_SetIndexWithinEnabledSet(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnPtr->IndexWithinEnabledSet = v; }
+ImGuiTableColumnIdx ImGuiTableColumn_GetIndexWithinEnabledSet(ImGuiTableColumn *self) { return self->IndexWithinEnabledSet; }
+void ImGuiTableColumn_SetPrevEnabledColumn(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnPtr->PrevEnabledColumn = v; }
+ImGuiTableColumnIdx ImGuiTableColumn_GetPrevEnabledColumn(ImGuiTableColumn *self) { return self->PrevEnabledColumn; }
+void ImGuiTableColumn_SetNextEnabledColumn(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnPtr->NextEnabledColumn = v; }
+ImGuiTableColumnIdx ImGuiTableColumn_GetNextEnabledColumn(ImGuiTableColumn *self) { return self->NextEnabledColumn; }
+void ImGuiTableColumn_SetSortOrder(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnPtr->SortOrder = v; }
+ImGuiTableColumnIdx ImGuiTableColumn_GetSortOrder(ImGuiTableColumn *self) { return self->SortOrder; }
+void ImGuiTableColumn_SetDrawChannelCurrent(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableDrawChannelIdx v) { ImGuiTableColumnPtr->DrawChannelCurrent = v; }
+ImGuiTableDrawChannelIdx ImGuiTableColumn_GetDrawChannelCurrent(ImGuiTableColumn *self) { return self->DrawChannelCurrent; }
+void ImGuiTableColumn_SetDrawChannelFrozen(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableDrawChannelIdx v) { ImGuiTableColumnPtr->DrawChannelFrozen = v; }
+ImGuiTableDrawChannelIdx ImGuiTableColumn_GetDrawChannelFrozen(ImGuiTableColumn *self) { return self->DrawChannelFrozen; }
+void ImGuiTableColumn_SetDrawChannelUnfrozen(ImGuiTableColumn *ImGuiTableColumnPtr, ImGuiTableDrawChannelIdx v) { ImGuiTableColumnPtr->DrawChannelUnfrozen = v; }
+ImGuiTableDrawChannelIdx ImGuiTableColumn_GetDrawChannelUnfrozen(ImGuiTableColumn *self) { return self->DrawChannelUnfrozen; }
+void ImGuiTableColumn_SetIsEnabled(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsEnabled = v; }
+bool ImGuiTableColumn_GetIsEnabled(ImGuiTableColumn *self) { return self->IsEnabled; }
+void ImGuiTableColumn_SetIsUserEnabled(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsUserEnabled = v; }
+bool ImGuiTableColumn_GetIsUserEnabled(ImGuiTableColumn *self) { return self->IsUserEnabled; }
+void ImGuiTableColumn_SetIsUserEnabledNextFrame(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsUserEnabledNextFrame = v; }
+bool ImGuiTableColumn_GetIsUserEnabledNextFrame(ImGuiTableColumn *self) { return self->IsUserEnabledNextFrame; }
+void ImGuiTableColumn_SetIsVisibleX(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsVisibleX = v; }
+bool ImGuiTableColumn_GetIsVisibleX(ImGuiTableColumn *self) { return self->IsVisibleX; }
+void ImGuiTableColumn_SetIsVisibleY(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsVisibleY = v; }
+bool ImGuiTableColumn_GetIsVisibleY(ImGuiTableColumn *self) { return self->IsVisibleY; }
+void ImGuiTableColumn_SetIsRequestOutput(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsRequestOutput = v; }
+bool ImGuiTableColumn_GetIsRequestOutput(ImGuiTableColumn *self) { return self->IsRequestOutput; }
+void ImGuiTableColumn_SetIsSkipItems(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsSkipItems = v; }
+bool ImGuiTableColumn_GetIsSkipItems(ImGuiTableColumn *self) { return self->IsSkipItems; }
+void ImGuiTableColumn_SetIsPreserveWidthAuto(ImGuiTableColumn *ImGuiTableColumnPtr, bool v) { ImGuiTableColumnPtr->IsPreserveWidthAuto = v; }
+bool ImGuiTableColumn_GetIsPreserveWidthAuto(ImGuiTableColumn *self) { return self->IsPreserveWidthAuto; }
+void ImGuiTableColumn_SetNavLayerCurrent(ImGuiTableColumn *ImGuiTableColumnPtr, ImS8 v) { ImGuiTableColumnPtr->NavLayerCurrent = v; }
+ImS8 ImGuiTableColumn_GetNavLayerCurrent(ImGuiTableColumn *self) { return self->NavLayerCurrent; }
+void ImGuiTableColumn_SetAutoFitQueue(ImGuiTableColumn *ImGuiTableColumnPtr, ImU8 v) { ImGuiTableColumnPtr->AutoFitQueue = v; }
+ImU8 ImGuiTableColumn_GetAutoFitQueue(ImGuiTableColumn *self) { return self->AutoFitQueue; }
+void ImGuiTableColumn_SetCannotSkipItemsQueue(ImGuiTableColumn *ImGuiTableColumnPtr, ImU8 v) { ImGuiTableColumnPtr->CannotSkipItemsQueue = v; }
+ImU8 ImGuiTableColumn_GetCannotSkipItemsQueue(ImGuiTableColumn *self) { return self->CannotSkipItemsQueue; }
+void ImGuiTableColumn_SetSortDirection(ImGuiTableColumn *ImGuiTableColumnPtr, ImU8 v) { ImGuiTableColumnPtr->SortDirection = v; }
+ImU8 ImGuiTableColumn_GetSortDirection(ImGuiTableColumn *self) { return self->SortDirection; }
+void ImGuiTableColumn_SetSortDirectionsAvailCount(ImGuiTableColumn *ImGuiTableColumnPtr, ImU8 v) { ImGuiTableColumnPtr->SortDirectionsAvailCount = v; }
+ImU8 ImGuiTableColumn_GetSortDirectionsAvailCount(ImGuiTableColumn *self) { return self->SortDirectionsAvailCount; }
+void ImGuiTableColumn_SetSortDirectionsAvailMask(ImGuiTableColumn *ImGuiTableColumnPtr, ImU8 v) { ImGuiTableColumnPtr->SortDirectionsAvailMask = v; }
+ImU8 ImGuiTableColumn_GetSortDirectionsAvailMask(ImGuiTableColumn *self) { return self->SortDirectionsAvailMask; }
+void ImGuiTableColumn_SetSortDirectionsAvailList(ImGuiTableColumn *ImGuiTableColumnPtr, ImU8 v) { ImGuiTableColumnPtr->SortDirectionsAvailList = v; }
+ImU8 ImGuiTableColumn_GetSortDirectionsAvailList(ImGuiTableColumn *self) { return self->SortDirectionsAvailList; }
+void ImColor_SetValue(ImColor *ImColorPtr, ImVec4 v) { ImColorPtr->Value = v; }
+ImVec4 ImColor_GetValue(ImColor *self) { return self->Value; }
+void ImGuiNextWindowData_SetFlags(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiNextWindowDataFlags v) { ImGuiNextWindowDataPtr->Flags = v; }
+ImGuiNextWindowDataFlags ImGuiNextWindowData_GetFlags(ImGuiNextWindowData *self) { return self->Flags; }
+void ImGuiNextWindowData_SetPosCond(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiCond v) { ImGuiNextWindowDataPtr->PosCond = v; }
+ImGuiCond ImGuiNextWindowData_GetPosCond(ImGuiNextWindowData *self) { return self->PosCond; }
+void ImGuiNextWindowData_SetSizeCond(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiCond v) { ImGuiNextWindowDataPtr->SizeCond = v; }
+ImGuiCond ImGuiNextWindowData_GetSizeCond(ImGuiNextWindowData *self) { return self->SizeCond; }
+void ImGuiNextWindowData_SetCollapsedCond(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiCond v) { ImGuiNextWindowDataPtr->CollapsedCond = v; }
+ImGuiCond ImGuiNextWindowData_GetCollapsedCond(ImGuiNextWindowData *self) { return self->CollapsedCond; }
+void ImGuiNextWindowData_SetDockCond(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiCond v) { ImGuiNextWindowDataPtr->DockCond = v; }
+ImGuiCond ImGuiNextWindowData_GetDockCond(ImGuiNextWindowData *self) { return self->DockCond; }
+void ImGuiNextWindowData_SetPosVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImVec2 v) { ImGuiNextWindowDataPtr->PosVal = v; }
+ImVec2 ImGuiNextWindowData_GetPosVal(ImGuiNextWindowData *self) { return self->PosVal; }
+void ImGuiNextWindowData_SetPosPivotVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImVec2 v) { ImGuiNextWindowDataPtr->PosPivotVal = v; }
+ImVec2 ImGuiNextWindowData_GetPosPivotVal(ImGuiNextWindowData *self) { return self->PosPivotVal; }
+void ImGuiNextWindowData_SetSizeVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImVec2 v) { ImGuiNextWindowDataPtr->SizeVal = v; }
+ImVec2 ImGuiNextWindowData_GetSizeVal(ImGuiNextWindowData *self) { return self->SizeVal; }
+void ImGuiNextWindowData_SetContentSizeVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImVec2 v) { ImGuiNextWindowDataPtr->ContentSizeVal = v; }
+ImVec2 ImGuiNextWindowData_GetContentSizeVal(ImGuiNextWindowData *self) { return self->ContentSizeVal; }
+void ImGuiNextWindowData_SetScrollVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImVec2 v) { ImGuiNextWindowDataPtr->ScrollVal = v; }
+ImVec2 ImGuiNextWindowData_GetScrollVal(ImGuiNextWindowData *self) { return self->ScrollVal; }
+void ImGuiNextWindowData_SetPosUndock(ImGuiNextWindowData *ImGuiNextWindowDataPtr, bool v) { ImGuiNextWindowDataPtr->PosUndock = v; }
+bool ImGuiNextWindowData_GetPosUndock(ImGuiNextWindowData *self) { return self->PosUndock; }
+void ImGuiNextWindowData_SetCollapsedVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, bool v) { ImGuiNextWindowDataPtr->CollapsedVal = v; }
+bool ImGuiNextWindowData_GetCollapsedVal(ImGuiNextWindowData *self) { return self->CollapsedVal; }
+void ImGuiNextWindowData_SetSizeConstraintRect(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImRect v) { ImGuiNextWindowDataPtr->SizeConstraintRect = v; }
+ImRect ImGuiNextWindowData_GetSizeConstraintRect(ImGuiNextWindowData *self) { return self->SizeConstraintRect; }
+void ImGuiNextWindowData_SetSizeCallback(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiSizeCallback v) { ImGuiNextWindowDataPtr->SizeCallback = v; }
+ImGuiSizeCallback ImGuiNextWindowData_GetSizeCallback(ImGuiNextWindowData *self) { return self->SizeCallback; }
+void ImGuiNextWindowData_SetSizeCallbackUserData(ImGuiNextWindowData *ImGuiNextWindowDataPtr, void* v) { ImGuiNextWindowDataPtr->SizeCallbackUserData = v; }
+void* ImGuiNextWindowData_GetSizeCallbackUserData(ImGuiNextWindowData *self) { return self->SizeCallbackUserData; }
+void ImGuiNextWindowData_SetBgAlphaVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, float v) { ImGuiNextWindowDataPtr->BgAlphaVal = v; }
+float ImGuiNextWindowData_GetBgAlphaVal(ImGuiNextWindowData *self) { return self->BgAlphaVal; }
+void ImGuiNextWindowData_SetViewportId(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiID v) { ImGuiNextWindowDataPtr->ViewportId = v; }
+ImGuiID ImGuiNextWindowData_GetViewportId(ImGuiNextWindowData *self) { return self->ViewportId; }
+void ImGuiNextWindowData_SetDockId(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiID v) { ImGuiNextWindowDataPtr->DockId = v; }
+ImGuiID ImGuiNextWindowData_GetDockId(ImGuiNextWindowData *self) { return self->DockId; }
+void ImGuiNextWindowData_SetWindowClass(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImGuiWindowClass v) { ImGuiNextWindowDataPtr->WindowClass = v; }
+ImGuiWindowClass ImGuiNextWindowData_GetWindowClass(ImGuiNextWindowData *self) { return self->WindowClass; }
+void ImGuiNextWindowData_SetMenuBarOffsetMinVal(ImGuiNextWindowData *ImGuiNextWindowDataPtr, ImVec2 v) { ImGuiNextWindowDataPtr->MenuBarOffsetMinVal = v; }
+ImVec2 ImGuiNextWindowData_GetMenuBarOffsetMinVal(ImGuiNextWindowData *self) { return self->MenuBarOffsetMinVal; }
+void ImGuiStyleMod_SetVarIdx(ImGuiStyleMod *ImGuiStyleModPtr, ImGuiStyleVar v) { ImGuiStyleModPtr->VarIdx = v; }
+ImGuiStyleVar ImGuiStyleMod_GetVarIdx(ImGuiStyleMod *self) { return self->VarIdx; }
+void ImGuiTextRange_Setb(ImGuiTextRange *ImGuiTextRangePtr, const char* v) { ImGuiTextRangePtr->b = v; }
+const char* ImGuiTextRange_Getb(ImGuiTextRange *self) { return self->b; }
+void ImGuiTextRange_Sete(ImGuiTextRange *ImGuiTextRangePtr, const char* v) { ImGuiTextRangePtr->e = v; }
+const char* ImGuiTextRange_Gete(ImGuiTextRange *self) { return self->e; }
+void ImGuiWindow_SetName(ImGuiWindow *ImGuiWindowPtr, char* v) { ImGuiWindowPtr->Name = v; }
+char* ImGuiWindow_GetName(ImGuiWindow *self) { return self->Name; }
+void ImGuiWindow_SetID(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->ID = v; }
+ImGuiID ImGuiWindow_GetID(ImGuiWindow *self) { return self->ID; }
+void ImGuiWindow_SetFlags(ImGuiWindow *ImGuiWindowPtr, ImGuiWindowFlags v) { ImGuiWindowPtr->Flags = v; }
+ImGuiWindowFlags ImGuiWindow_GetFlags(ImGuiWindow *self) { return self->Flags; }
+void ImGuiWindow_SetFlagsPreviousFrame(ImGuiWindow *ImGuiWindowPtr, ImGuiWindowFlags v) { ImGuiWindowPtr->FlagsPreviousFrame = v; }
+ImGuiWindowFlags ImGuiWindow_GetFlagsPreviousFrame(ImGuiWindow *self) { return self->FlagsPreviousFrame; }
+void ImGuiWindow_SetWindowClass(ImGuiWindow *ImGuiWindowPtr, ImGuiWindowClass v) { ImGuiWindowPtr->WindowClass = v; }
+ImGuiWindowClass ImGuiWindow_GetWindowClass(ImGuiWindow *self) { return self->WindowClass; }
+void ImGuiWindow_SetViewport(ImGuiWindow *ImGuiWindowPtr, ImGuiViewportP* v) { ImGuiWindowPtr->Viewport = v; }
+ImGuiViewportP* ImGuiWindow_GetViewport(ImGuiWindow *self) { return self->Viewport; }
+void ImGuiWindow_SetViewportId(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->ViewportId = v; }
+ImGuiID ImGuiWindow_GetViewportId(ImGuiWindow *self) { return self->ViewportId; }
+void ImGuiWindow_SetViewportPos(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ViewportPos = v; }
+ImVec2 ImGuiWindow_GetViewportPos(ImGuiWindow *self) { return self->ViewportPos; }
+void ImGuiWindow_SetViewportAllowPlatformMonitorExtend(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->ViewportAllowPlatformMonitorExtend = v; }
+int ImGuiWindow_GetViewportAllowPlatformMonitorExtend(ImGuiWindow *self) { return self->ViewportAllowPlatformMonitorExtend; }
+void ImGuiWindow_SetPos(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->Pos = v; }
+ImVec2 ImGuiWindow_GetPos(ImGuiWindow *self) { return self->Pos; }
+void ImGuiWindow_SetSize(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->Size = v; }
+ImVec2 ImGuiWindow_GetSize(ImGuiWindow *self) { return self->Size; }
+void ImGuiWindow_SetSizeFull(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->SizeFull = v; }
+ImVec2 ImGuiWindow_GetSizeFull(ImGuiWindow *self) { return self->SizeFull; }
+void ImGuiWindow_SetContentSize(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ContentSize = v; }
+ImVec2 ImGuiWindow_GetContentSize(ImGuiWindow *self) { return self->ContentSize; }
+void ImGuiWindow_SetContentSizeIdeal(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ContentSizeIdeal = v; }
+ImVec2 ImGuiWindow_GetContentSizeIdeal(ImGuiWindow *self) { return self->ContentSizeIdeal; }
+void ImGuiWindow_SetContentSizeExplicit(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ContentSizeExplicit = v; }
+ImVec2 ImGuiWindow_GetContentSizeExplicit(ImGuiWindow *self) { return self->ContentSizeExplicit; }
+void ImGuiWindow_SetWindowPadding(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->WindowPadding = v; }
+ImVec2 ImGuiWindow_GetWindowPadding(ImGuiWindow *self) { return self->WindowPadding; }
+void ImGuiWindow_SetWindowRounding(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->WindowRounding = v; }
+float ImGuiWindow_GetWindowRounding(ImGuiWindow *self) { return self->WindowRounding; }
+void ImGuiWindow_SetWindowBorderSize(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->WindowBorderSize = v; }
+float ImGuiWindow_GetWindowBorderSize(ImGuiWindow *self) { return self->WindowBorderSize; }
+void ImGuiWindow_SetNameBufLen(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->NameBufLen = v; }
+int ImGuiWindow_GetNameBufLen(ImGuiWindow *self) { return self->NameBufLen; }
+void ImGuiWindow_SetMoveId(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->MoveId = v; }
+ImGuiID ImGuiWindow_GetMoveId(ImGuiWindow *self) { return self->MoveId; }
+void ImGuiWindow_SetTabId(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->TabId = v; }
+ImGuiID ImGuiWindow_GetTabId(ImGuiWindow *self) { return self->TabId; }
+void ImGuiWindow_SetChildId(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->ChildId = v; }
+ImGuiID ImGuiWindow_GetChildId(ImGuiWindow *self) { return self->ChildId; }
+void ImGuiWindow_SetScroll(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->Scroll = v; }
+ImVec2 ImGuiWindow_GetScroll(ImGuiWindow *self) { return self->Scroll; }
+void ImGuiWindow_SetScrollMax(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ScrollMax = v; }
+ImVec2 ImGuiWindow_GetScrollMax(ImGuiWindow *self) { return self->ScrollMax; }
+void ImGuiWindow_SetScrollTarget(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ScrollTarget = v; }
+ImVec2 ImGuiWindow_GetScrollTarget(ImGuiWindow *self) { return self->ScrollTarget; }
+void ImGuiWindow_SetScrollTargetCenterRatio(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ScrollTargetCenterRatio = v; }
+ImVec2 ImGuiWindow_GetScrollTargetCenterRatio(ImGuiWindow *self) { return self->ScrollTargetCenterRatio; }
+void ImGuiWindow_SetScrollTargetEdgeSnapDist(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ScrollTargetEdgeSnapDist = v; }
+ImVec2 ImGuiWindow_GetScrollTargetEdgeSnapDist(ImGuiWindow *self) { return self->ScrollTargetEdgeSnapDist; }
+void ImGuiWindow_SetScrollbarSizes(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ScrollbarSizes = v; }
+ImVec2 ImGuiWindow_GetScrollbarSizes(ImGuiWindow *self) { return self->ScrollbarSizes; }
+void ImGuiWindow_SetScrollbarX(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->ScrollbarX = v; }
+bool ImGuiWindow_GetScrollbarX(ImGuiWindow *self) { return self->ScrollbarX; }
+void ImGuiWindow_SetScrollbarY(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->ScrollbarY = v; }
+bool ImGuiWindow_GetScrollbarY(ImGuiWindow *self) { return self->ScrollbarY; }
+void ImGuiWindow_SetViewportOwned(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->ViewportOwned = v; }
+bool ImGuiWindow_GetViewportOwned(ImGuiWindow *self) { return self->ViewportOwned; }
+void ImGuiWindow_SetActive(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->Active = v; }
+bool ImGuiWindow_GetActive(ImGuiWindow *self) { return self->Active; }
+void ImGuiWindow_SetWasActive(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->WasActive = v; }
+bool ImGuiWindow_GetWasActive(ImGuiWindow *self) { return self->WasActive; }
+void ImGuiWindow_SetWriteAccessed(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->WriteAccessed = v; }
+bool ImGuiWindow_GetWriteAccessed(ImGuiWindow *self) { return self->WriteAccessed; }
+void ImGuiWindow_SetCollapsed(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->Collapsed = v; }
+bool ImGuiWindow_GetCollapsed(ImGuiWindow *self) { return self->Collapsed; }
+void ImGuiWindow_SetWantCollapseToggle(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->WantCollapseToggle = v; }
+bool ImGuiWindow_GetWantCollapseToggle(ImGuiWindow *self) { return self->WantCollapseToggle; }
+void ImGuiWindow_SetSkipItems(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->SkipItems = v; }
+bool ImGuiWindow_GetSkipItems(ImGuiWindow *self) { return self->SkipItems; }
+void ImGuiWindow_SetAppearing(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->Appearing = v; }
+bool ImGuiWindow_GetAppearing(ImGuiWindow *self) { return self->Appearing; }
+void ImGuiWindow_SetHidden(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->Hidden = v; }
+bool ImGuiWindow_GetHidden(ImGuiWindow *self) { return self->Hidden; }
+void ImGuiWindow_SetIsFallbackWindow(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->IsFallbackWindow = v; }
+bool ImGuiWindow_GetIsFallbackWindow(ImGuiWindow *self) { return self->IsFallbackWindow; }
+void ImGuiWindow_SetIsExplicitChild(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->IsExplicitChild = v; }
+bool ImGuiWindow_GetIsExplicitChild(ImGuiWindow *self) { return self->IsExplicitChild; }
+void ImGuiWindow_SetHasCloseButton(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->HasCloseButton = v; }
+bool ImGuiWindow_GetHasCloseButton(ImGuiWindow *self) { return self->HasCloseButton; }
+void ImGuiWindow_SetResizeBorderHeld(ImGuiWindow *ImGuiWindowPtr, signed char v) { ImGuiWindowPtr->ResizeBorderHeld = v; }
+signed char ImGuiWindow_GetResizeBorderHeld(ImGuiWindow *self) { return self->ResizeBorderHeld; }
+void ImGuiWindow_SetBeginCount(ImGuiWindow *ImGuiWindowPtr, short v) { ImGuiWindowPtr->BeginCount = v; }
+short ImGuiWindow_GetBeginCount(ImGuiWindow *self) { return self->BeginCount; }
+void ImGuiWindow_SetBeginOrderWithinParent(ImGuiWindow *ImGuiWindowPtr, short v) { ImGuiWindowPtr->BeginOrderWithinParent = v; }
+short ImGuiWindow_GetBeginOrderWithinParent(ImGuiWindow *self) { return self->BeginOrderWithinParent; }
+void ImGuiWindow_SetBeginOrderWithinContext(ImGuiWindow *ImGuiWindowPtr, short v) { ImGuiWindowPtr->BeginOrderWithinContext = v; }
+short ImGuiWindow_GetBeginOrderWithinContext(ImGuiWindow *self) { return self->BeginOrderWithinContext; }
+void ImGuiWindow_SetFocusOrder(ImGuiWindow *ImGuiWindowPtr, short v) { ImGuiWindowPtr->FocusOrder = v; }
+short ImGuiWindow_GetFocusOrder(ImGuiWindow *self) { return self->FocusOrder; }
+void ImGuiWindow_SetPopupId(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->PopupId = v; }
+ImGuiID ImGuiWindow_GetPopupId(ImGuiWindow *self) { return self->PopupId; }
+void ImGuiWindow_SetAutoFitFramesX(ImGuiWindow *ImGuiWindowPtr, ImS8 v) { ImGuiWindowPtr->AutoFitFramesX = v; }
+ImS8 ImGuiWindow_GetAutoFitFramesX(ImGuiWindow *self) { return self->AutoFitFramesX; }
+void ImGuiWindow_SetAutoFitFramesY(ImGuiWindow *ImGuiWindowPtr, ImS8 v) { ImGuiWindowPtr->AutoFitFramesY = v; }
+ImS8 ImGuiWindow_GetAutoFitFramesY(ImGuiWindow *self) { return self->AutoFitFramesY; }
+void ImGuiWindow_SetAutoFitChildAxises(ImGuiWindow *ImGuiWindowPtr, ImS8 v) { ImGuiWindowPtr->AutoFitChildAxises = v; }
+ImS8 ImGuiWindow_GetAutoFitChildAxises(ImGuiWindow *self) { return self->AutoFitChildAxises; }
+void ImGuiWindow_SetAutoFitOnlyGrows(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->AutoFitOnlyGrows = v; }
+bool ImGuiWindow_GetAutoFitOnlyGrows(ImGuiWindow *self) { return self->AutoFitOnlyGrows; }
+void ImGuiWindow_SetAutoPosLastDirection(ImGuiWindow *ImGuiWindowPtr, ImGuiDir v) { ImGuiWindowPtr->AutoPosLastDirection = v; }
+ImGuiDir ImGuiWindow_GetAutoPosLastDirection(ImGuiWindow *self) { return self->AutoPosLastDirection; }
+void ImGuiWindow_SetHiddenFramesCanSkipItems(ImGuiWindow *ImGuiWindowPtr, ImS8 v) { ImGuiWindowPtr->HiddenFramesCanSkipItems = v; }
+ImS8 ImGuiWindow_GetHiddenFramesCanSkipItems(ImGuiWindow *self) { return self->HiddenFramesCanSkipItems; }
+void ImGuiWindow_SetHiddenFramesCannotSkipItems(ImGuiWindow *ImGuiWindowPtr, ImS8 v) { ImGuiWindowPtr->HiddenFramesCannotSkipItems = v; }
+ImS8 ImGuiWindow_GetHiddenFramesCannotSkipItems(ImGuiWindow *self) { return self->HiddenFramesCannotSkipItems; }
+void ImGuiWindow_SetHiddenFramesForRenderOnly(ImGuiWindow *ImGuiWindowPtr, ImS8 v) { ImGuiWindowPtr->HiddenFramesForRenderOnly = v; }
+ImS8 ImGuiWindow_GetHiddenFramesForRenderOnly(ImGuiWindow *self) { return self->HiddenFramesForRenderOnly; }
+void ImGuiWindow_SetDisableInputsFrames(ImGuiWindow *ImGuiWindowPtr, ImS8 v) { ImGuiWindowPtr->DisableInputsFrames = v; }
+ImS8 ImGuiWindow_GetDisableInputsFrames(ImGuiWindow *self) { return self->DisableInputsFrames; }
+void ImGuiWindow_SetSetWindowPosAllowFlags(ImGuiWindow *ImGuiWindowPtr, ImGuiCond v) { ImGuiWindowPtr->SetWindowPosAllowFlags = v; }
+ImGuiCond ImGuiWindow_GetSetWindowPosAllowFlags(ImGuiWindow *self) { return self->SetWindowPosAllowFlags; }
+void ImGuiWindow_SetSetWindowSizeAllowFlags(ImGuiWindow *ImGuiWindowPtr, ImGuiCond v) { ImGuiWindowPtr->SetWindowSizeAllowFlags = v; }
+ImGuiCond ImGuiWindow_GetSetWindowSizeAllowFlags(ImGuiWindow *self) { return self->SetWindowSizeAllowFlags; }
+void ImGuiWindow_SetSetWindowCollapsedAllowFlags(ImGuiWindow *ImGuiWindowPtr, ImGuiCond v) { ImGuiWindowPtr->SetWindowCollapsedAllowFlags = v; }
+ImGuiCond ImGuiWindow_GetSetWindowCollapsedAllowFlags(ImGuiWindow *self) { return self->SetWindowCollapsedAllowFlags; }
+void ImGuiWindow_SetSetWindowDockAllowFlags(ImGuiWindow *ImGuiWindowPtr, ImGuiCond v) { ImGuiWindowPtr->SetWindowDockAllowFlags = v; }
+ImGuiCond ImGuiWindow_GetSetWindowDockAllowFlags(ImGuiWindow *self) { return self->SetWindowDockAllowFlags; }
+void ImGuiWindow_SetSetWindowPosVal(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->SetWindowPosVal = v; }
+ImVec2 ImGuiWindow_GetSetWindowPosVal(ImGuiWindow *self) { return self->SetWindowPosVal; }
+void ImGuiWindow_SetSetWindowPosPivot(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->SetWindowPosPivot = v; }
+ImVec2 ImGuiWindow_GetSetWindowPosPivot(ImGuiWindow *self) { return self->SetWindowPosPivot; }
+void ImGuiWindow_SetIDStack(ImGuiWindow *ImGuiWindowPtr, ImVector_ImGuiID v) { ImGuiWindowPtr->IDStack = v; }
+ImVector_ImGuiID ImGuiWindow_GetIDStack(ImGuiWindow *self) { return self->IDStack; }
+void ImGuiWindow_SetDC(ImGuiWindow *ImGuiWindowPtr, ImGuiWindowTempData v) { ImGuiWindowPtr->DC = v; }
+ImGuiWindowTempData ImGuiWindow_GetDC(ImGuiWindow *self) { return self->DC; }
+void ImGuiWindow_SetOuterRectClipped(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->OuterRectClipped = v; }
+ImRect ImGuiWindow_GetOuterRectClipped(ImGuiWindow *self) { return self->OuterRectClipped; }
+void ImGuiWindow_SetInnerRect(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->InnerRect = v; }
+ImRect ImGuiWindow_GetInnerRect(ImGuiWindow *self) { return self->InnerRect; }
+void ImGuiWindow_SetInnerClipRect(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->InnerClipRect = v; }
+ImRect ImGuiWindow_GetInnerClipRect(ImGuiWindow *self) { return self->InnerClipRect; }
+void ImGuiWindow_SetWorkRect(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->WorkRect = v; }
+ImRect ImGuiWindow_GetWorkRect(ImGuiWindow *self) { return self->WorkRect; }
+void ImGuiWindow_SetParentWorkRect(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->ParentWorkRect = v; }
+ImRect ImGuiWindow_GetParentWorkRect(ImGuiWindow *self) { return self->ParentWorkRect; }
+void ImGuiWindow_SetClipRect(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->ClipRect = v; }
+ImRect ImGuiWindow_GetClipRect(ImGuiWindow *self) { return self->ClipRect; }
+void ImGuiWindow_SetContentRegionRect(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->ContentRegionRect = v; }
+ImRect ImGuiWindow_GetContentRegionRect(ImGuiWindow *self) { return self->ContentRegionRect; }
+void ImGuiWindow_SetHitTestHoleSize(ImGuiWindow *ImGuiWindowPtr, ImVec2ih v) { ImGuiWindowPtr->HitTestHoleSize = v; }
+ImVec2ih ImGuiWindow_GetHitTestHoleSize(ImGuiWindow *self) { return self->HitTestHoleSize; }
+void ImGuiWindow_SetHitTestHoleOffset(ImGuiWindow *ImGuiWindowPtr, ImVec2ih v) { ImGuiWindowPtr->HitTestHoleOffset = v; }
+ImVec2ih ImGuiWindow_GetHitTestHoleOffset(ImGuiWindow *self) { return self->HitTestHoleOffset; }
+void ImGuiWindow_SetLastFrameActive(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->LastFrameActive = v; }
+int ImGuiWindow_GetLastFrameActive(ImGuiWindow *self) { return self->LastFrameActive; }
+void ImGuiWindow_SetLastFrameJustFocused(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->LastFrameJustFocused = v; }
+int ImGuiWindow_GetLastFrameJustFocused(ImGuiWindow *self) { return self->LastFrameJustFocused; }
+void ImGuiWindow_SetLastTimeActive(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->LastTimeActive = v; }
+float ImGuiWindow_GetLastTimeActive(ImGuiWindow *self) { return self->LastTimeActive; }
+void ImGuiWindow_SetItemWidthDefault(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->ItemWidthDefault = v; }
+float ImGuiWindow_GetItemWidthDefault(ImGuiWindow *self) { return self->ItemWidthDefault; }
+void ImGuiWindow_SetStateStorage(ImGuiWindow *ImGuiWindowPtr, ImGuiStorage v) { ImGuiWindowPtr->StateStorage = v; }
+ImGuiStorage ImGuiWindow_GetStateStorage(ImGuiWindow *self) { return self->StateStorage; }
+void ImGuiWindow_SetColumnsStorage(ImGuiWindow *ImGuiWindowPtr, ImVector_ImGuiOldColumns v) { ImGuiWindowPtr->ColumnsStorage = v; }
+ImVector_ImGuiOldColumns ImGuiWindow_GetColumnsStorage(ImGuiWindow *self) { return self->ColumnsStorage; }
+void ImGuiWindow_SetFontWindowScale(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->FontWindowScale = v; }
+float ImGuiWindow_GetFontWindowScale(ImGuiWindow *self) { return self->FontWindowScale; }
+void ImGuiWindow_SetFontDpiScale(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->FontDpiScale = v; }
+float ImGuiWindow_GetFontDpiScale(ImGuiWindow *self) { return self->FontDpiScale; }
+void ImGuiWindow_SetSettingsOffset(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->SettingsOffset = v; }
+int ImGuiWindow_GetSettingsOffset(ImGuiWindow *self) { return self->SettingsOffset; }
+void ImGuiWindow_SetDrawList(ImGuiWindow *ImGuiWindowPtr, ImDrawList* v) { ImGuiWindowPtr->DrawList = v; }
+ImDrawList* ImGuiWindow_GetDrawList(ImGuiWindow *self) { return self->DrawList; }
+void ImGuiWindow_SetDrawListInst(ImGuiWindow *ImGuiWindowPtr, ImDrawList v) { ImGuiWindowPtr->DrawListInst = v; }
+ImDrawList ImGuiWindow_GetDrawListInst(ImGuiWindow *self) { return self->DrawListInst; }
+void ImGuiWindow_SetParentWindow(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->ParentWindow = v; }
+ImGuiWindow* ImGuiWindow_GetParentWindow(ImGuiWindow *self) { return self->ParentWindow; }
+void ImGuiWindow_SetParentWindowInBeginStack(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->ParentWindowInBeginStack = v; }
+ImGuiWindow* ImGuiWindow_GetParentWindowInBeginStack(ImGuiWindow *self) { return self->ParentWindowInBeginStack; }
+void ImGuiWindow_SetRootWindow(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->RootWindow = v; }
+ImGuiWindow* ImGuiWindow_GetRootWindow(ImGuiWindow *self) { return self->RootWindow; }
+void ImGuiWindow_SetRootWindowPopupTree(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->RootWindowPopupTree = v; }
+ImGuiWindow* ImGuiWindow_GetRootWindowPopupTree(ImGuiWindow *self) { return self->RootWindowPopupTree; }
+void ImGuiWindow_SetRootWindowDockTree(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->RootWindowDockTree = v; }
+ImGuiWindow* ImGuiWindow_GetRootWindowDockTree(ImGuiWindow *self) { return self->RootWindowDockTree; }
+void ImGuiWindow_SetRootWindowForTitleBarHighlight(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->RootWindowForTitleBarHighlight = v; }
+ImGuiWindow* ImGuiWindow_GetRootWindowForTitleBarHighlight(ImGuiWindow *self) { return self->RootWindowForTitleBarHighlight; }
+void ImGuiWindow_SetRootWindowForNav(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->RootWindowForNav = v; }
+ImGuiWindow* ImGuiWindow_GetRootWindowForNav(ImGuiWindow *self) { return self->RootWindowForNav; }
+void ImGuiWindow_SetNavLastChildNavWindow(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->NavLastChildNavWindow = v; }
+ImGuiWindow* ImGuiWindow_GetNavLastChildNavWindow(ImGuiWindow *self) { return self->NavLastChildNavWindow; }
+void ImGuiWindow_SetMemoryDrawListIdxCapacity(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->MemoryDrawListIdxCapacity = v; }
+int ImGuiWindow_GetMemoryDrawListIdxCapacity(ImGuiWindow *self) { return self->MemoryDrawListIdxCapacity; }
+void ImGuiWindow_SetMemoryDrawListVtxCapacity(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->MemoryDrawListVtxCapacity = v; }
+int ImGuiWindow_GetMemoryDrawListVtxCapacity(ImGuiWindow *self) { return self->MemoryDrawListVtxCapacity; }
+void ImGuiWindow_SetMemoryCompacted(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->MemoryCompacted = v; }
+bool ImGuiWindow_GetMemoryCompacted(ImGuiWindow *self) { return self->MemoryCompacted; }
+void ImGuiWindow_SetDockIsActive(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->DockIsActive = v; }
+bool ImGuiWindow_GetDockIsActive(ImGuiWindow *self) { return self->DockIsActive; }
+void ImGuiWindow_SetDockNodeIsVisible(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->DockNodeIsVisible = v; }
+bool ImGuiWindow_GetDockNodeIsVisible(ImGuiWindow *self) { return self->DockNodeIsVisible; }
+void ImGuiWindow_SetDockTabIsVisible(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->DockTabIsVisible = v; }
+bool ImGuiWindow_GetDockTabIsVisible(ImGuiWindow *self) { return self->DockTabIsVisible; }
+void ImGuiWindow_SetDockTabWantClose(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->DockTabWantClose = v; }
+bool ImGuiWindow_GetDockTabWantClose(ImGuiWindow *self) { return self->DockTabWantClose; }
+void ImGuiWindow_SetDockOrder(ImGuiWindow *ImGuiWindowPtr, short v) { ImGuiWindowPtr->DockOrder = v; }
+short ImGuiWindow_GetDockOrder(ImGuiWindow *self) { return self->DockOrder; }
+void ImGuiWindow_SetDockStyle(ImGuiWindow *ImGuiWindowPtr, ImGuiWindowDockStyle v) { ImGuiWindowPtr->DockStyle = v; }
+ImGuiWindowDockStyle ImGuiWindow_GetDockStyle(ImGuiWindow *self) { return self->DockStyle; }
+void ImGuiWindow_SetDockNode(ImGuiWindow *ImGuiWindowPtr, ImGuiDockNode* v) { ImGuiWindowPtr->DockNode = v; }
+ImGuiDockNode* ImGuiWindow_GetDockNode(ImGuiWindow *self) { return self->DockNode; }
+void ImGuiWindow_SetDockNodeAsHost(ImGuiWindow *ImGuiWindowPtr, ImGuiDockNode* v) { ImGuiWindowPtr->DockNodeAsHost = v; }
+ImGuiDockNode* ImGuiWindow_GetDockNodeAsHost(ImGuiWindow *self) { return self->DockNodeAsHost; }
+void ImGuiWindow_SetDockId(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->DockId = v; }
+ImGuiID ImGuiWindow_GetDockId(ImGuiWindow *self) { return self->DockId; }
+void ImGuiWindow_SetDockTabItemStatusFlags(ImGuiWindow *ImGuiWindowPtr, ImGuiItemStatusFlags v) { ImGuiWindowPtr->DockTabItemStatusFlags = v; }
+ImGuiItemStatusFlags ImGuiWindow_GetDockTabItemStatusFlags(ImGuiWindow *self) { return self->DockTabItemStatusFlags; }
+void ImGuiWindow_SetDockTabItemRect(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->DockTabItemRect = v; }
+ImRect ImGuiWindow_GetDockTabItemRect(ImGuiWindow *self) { return self->DockTabItemRect; }
+void StbUndoState_Setundo_point(StbUndoState *StbUndoStatePtr, short v) { StbUndoStatePtr->undo_point = v; }
+short StbUndoState_Getundo_point(StbUndoState *self) { return self->undo_point; }
+void StbUndoState_Setredo_point(StbUndoState *StbUndoStatePtr, short v) { StbUndoStatePtr->redo_point = v; }
+short StbUndoState_Getredo_point(StbUndoState *self) { return self->redo_point; }
+void StbUndoState_Setundo_char_point(StbUndoState *StbUndoStatePtr, int v) { StbUndoStatePtr->undo_char_point = v; }
+int StbUndoState_Getundo_char_point(StbUndoState *self) { return self->undo_char_point; }
+void StbUndoState_Setredo_char_point(StbUndoState *StbUndoStatePtr, int v) { StbUndoStatePtr->redo_char_point = v; }
+int StbUndoState_Getredo_char_point(StbUndoState *self) { return self->redo_char_point; }
+void ImGuiLastItemData_SetID(ImGuiLastItemData *ImGuiLastItemDataPtr, ImGuiID v) { ImGuiLastItemDataPtr->ID = v; }
+ImGuiID ImGuiLastItemData_GetID(ImGuiLastItemData *self) { return self->ID; }
+void ImGuiLastItemData_SetInFlags(ImGuiLastItemData *ImGuiLastItemDataPtr, ImGuiItemFlags v) { ImGuiLastItemDataPtr->InFlags = v; }
+ImGuiItemFlags ImGuiLastItemData_GetInFlags(ImGuiLastItemData *self) { return self->InFlags; }
+void ImGuiLastItemData_SetStatusFlags(ImGuiLastItemData *ImGuiLastItemDataPtr, ImGuiItemStatusFlags v) { ImGuiLastItemDataPtr->StatusFlags = v; }
+ImGuiItemStatusFlags ImGuiLastItemData_GetStatusFlags(ImGuiLastItemData *self) { return self->StatusFlags; }
+void ImGuiLastItemData_SetRect(ImGuiLastItemData *ImGuiLastItemDataPtr, ImRect v) { ImGuiLastItemDataPtr->Rect = v; }
+ImRect ImGuiLastItemData_GetRect(ImGuiLastItemData *self) { return self->Rect; }
+void ImGuiLastItemData_SetNavRect(ImGuiLastItemData *ImGuiLastItemDataPtr, ImRect v) { ImGuiLastItemDataPtr->NavRect = v; }
+ImRect ImGuiLastItemData_GetNavRect(ImGuiLastItemData *self) { return self->NavRect; }
+void ImGuiLastItemData_SetDisplayRect(ImGuiLastItemData *ImGuiLastItemDataPtr, ImRect v) { ImGuiLastItemDataPtr->DisplayRect = v; }
+ImRect ImGuiLastItemData_GetDisplayRect(ImGuiLastItemData *self) { return self->DisplayRect; }
+void ImGuiTextBuffer_SetBuf(ImGuiTextBuffer *ImGuiTextBufferPtr, ImVector_char v) { ImGuiTextBufferPtr->Buf = v; }
+ImVector_char ImGuiTextBuffer_GetBuf(ImGuiTextBuffer *self) { return self->Buf; }
+void ImGuiInputEventText_SetChar(ImGuiInputEventText *ImGuiInputEventTextPtr, unsigned int v) { ImGuiInputEventTextPtr->Char = v; }
+unsigned int ImGuiInputEventText_GetChar(ImGuiInputEventText *self) { return self->Char; }
+void ImDrawList_SetCmdBuffer(ImDrawList *ImDrawListPtr, ImVector_ImDrawCmd v) { ImDrawListPtr->CmdBuffer = v; }
+ImVector_ImDrawCmd ImDrawList_GetCmdBuffer(ImDrawList *self) { return self->CmdBuffer; }
+void ImDrawList_SetIdxBuffer(ImDrawList *ImDrawListPtr, ImVector_ImDrawIdx v) { ImDrawListPtr->IdxBuffer = v; }
+ImVector_ImDrawIdx ImDrawList_GetIdxBuffer(ImDrawList *self) { return self->IdxBuffer; }
+void ImDrawList_SetVtxBuffer(ImDrawList *ImDrawListPtr, ImVector_ImDrawVert v) { ImDrawListPtr->VtxBuffer = v; }
+ImVector_ImDrawVert ImDrawList_GetVtxBuffer(ImDrawList *self) { return self->VtxBuffer; }
+void ImDrawList_SetFlags(ImDrawList *ImDrawListPtr, ImDrawListFlags v) { ImDrawListPtr->Flags = v; }
+ImDrawListFlags ImDrawList_GetFlags(ImDrawList *self) { return self->Flags; }
+void ImDrawList_Set_VtxCurrentIdx(ImDrawList *ImDrawListPtr, unsigned int v) { ImDrawListPtr->_VtxCurrentIdx = v; }
+unsigned int ImDrawList_Get_VtxCurrentIdx(ImDrawList *self) { return self->_VtxCurrentIdx; }
+void ImDrawList_Set_Data(ImDrawList *ImDrawListPtr, const ImDrawListSharedData* v) { ImDrawListPtr->_Data = v; }
+const ImDrawListSharedData* ImDrawList_Get_Data(ImDrawList *self) { return self->_Data; }
+void ImDrawList_Set_OwnerName(ImDrawList *ImDrawListPtr, const char* v) { ImDrawListPtr->_OwnerName = v; }
+const char* ImDrawList_Get_OwnerName(ImDrawList *self) { return self->_OwnerName; }
+void ImDrawList_Set_VtxWritePtr(ImDrawList *ImDrawListPtr, ImDrawVert* v) { ImDrawListPtr->_VtxWritePtr = v; }
+ImDrawVert* ImDrawList_Get_VtxWritePtr(ImDrawList *self) { return self->_VtxWritePtr; }
+void ImDrawList_Set_IdxWritePtr(ImDrawList *ImDrawListPtr, ImDrawIdx* v) { ImDrawListPtr->_IdxWritePtr = v; }
+ImDrawIdx* ImDrawList_Get_IdxWritePtr(ImDrawList *self) { return self->_IdxWritePtr; }
+void ImDrawList_Set_ClipRectStack(ImDrawList *ImDrawListPtr, ImVector_ImVec4 v) { ImDrawListPtr->_ClipRectStack = v; }
+ImVector_ImVec4 ImDrawList_Get_ClipRectStack(ImDrawList *self) { return self->_ClipRectStack; }
+void ImDrawList_Set_TextureIdStack(ImDrawList *ImDrawListPtr, ImVector_ImTextureID v) { ImDrawListPtr->_TextureIdStack = v; }
+ImVector_ImTextureID ImDrawList_Get_TextureIdStack(ImDrawList *self) { return self->_TextureIdStack; }
+void ImDrawList_Set_Path(ImDrawList *ImDrawListPtr, ImVector_ImVec2 v) { ImDrawListPtr->_Path = v; }
+ImVector_ImVec2 ImDrawList_Get_Path(ImDrawList *self) { return self->_Path; }
+void ImDrawList_Set_CmdHeader(ImDrawList *ImDrawListPtr, ImDrawCmdHeader v) { ImDrawListPtr->_CmdHeader = v; }
+ImDrawCmdHeader ImDrawList_Get_CmdHeader(ImDrawList *self) { return self->_CmdHeader; }
+void ImDrawList_Set_Splitter(ImDrawList *ImDrawListPtr, ImDrawListSplitter v) { ImDrawListPtr->_Splitter = v; }
+ImDrawListSplitter ImDrawList_Get_Splitter(ImDrawList *self) { return self->_Splitter; }
+void ImDrawList_Set_FringeScale(ImDrawList *ImDrawListPtr, float v) { ImDrawListPtr->_FringeScale = v; }
+float ImDrawList_Get_FringeScale(ImDrawList *self) { return self->_FringeScale; }
+void ImGuiNextItemData_SetFlags(ImGuiNextItemData *ImGuiNextItemDataPtr, ImGuiNextItemDataFlags v) { ImGuiNextItemDataPtr->Flags = v; }
+ImGuiNextItemDataFlags ImGuiNextItemData_GetFlags(ImGuiNextItemData *self) { return self->Flags; }
+void ImGuiNextItemData_SetWidth(ImGuiNextItemData *ImGuiNextItemDataPtr, float v) { ImGuiNextItemDataPtr->Width = v; }
+float ImGuiNextItemData_GetWidth(ImGuiNextItemData *self) { return self->Width; }
+void ImGuiNextItemData_SetFocusScopeId(ImGuiNextItemData *ImGuiNextItemDataPtr, ImGuiID v) { ImGuiNextItemDataPtr->FocusScopeId = v; }
+ImGuiID ImGuiNextItemData_GetFocusScopeId(ImGuiNextItemData *self) { return self->FocusScopeId; }
+void ImGuiNextItemData_SetOpenCond(ImGuiNextItemData *ImGuiNextItemDataPtr, ImGuiCond v) { ImGuiNextItemDataPtr->OpenCond = v; }
+ImGuiCond ImGuiNextItemData_GetOpenCond(ImGuiNextItemData *self) { return self->OpenCond; }
+void ImGuiNextItemData_SetOpenVal(ImGuiNextItemData *ImGuiNextItemDataPtr, bool v) { ImGuiNextItemDataPtr->OpenVal = v; }
+bool ImGuiNextItemData_GetOpenVal(ImGuiNextItemData *self) { return self->OpenVal; }
+void ImGuiWindowSettings_SetID(ImGuiWindowSettings *ImGuiWindowSettingsPtr, ImGuiID v) { ImGuiWindowSettingsPtr->ID = v; }
+ImGuiID ImGuiWindowSettings_GetID(ImGuiWindowSettings *self) { return self->ID; }
+void ImGuiWindowSettings_SetPos(ImGuiWindowSettings *ImGuiWindowSettingsPtr, ImVec2ih v) { ImGuiWindowSettingsPtr->Pos = v; }
+ImVec2ih ImGuiWindowSettings_GetPos(ImGuiWindowSettings *self) { return self->Pos; }
+void ImGuiWindowSettings_SetSize(ImGuiWindowSettings *ImGuiWindowSettingsPtr, ImVec2ih v) { ImGuiWindowSettingsPtr->Size = v; }
+ImVec2ih ImGuiWindowSettings_GetSize(ImGuiWindowSettings *self) { return self->Size; }
+void ImGuiWindowSettings_SetViewportPos(ImGuiWindowSettings *ImGuiWindowSettingsPtr, ImVec2ih v) { ImGuiWindowSettingsPtr->ViewportPos = v; }
+ImVec2ih ImGuiWindowSettings_GetViewportPos(ImGuiWindowSettings *self) { return self->ViewportPos; }
+void ImGuiWindowSettings_SetViewportId(ImGuiWindowSettings *ImGuiWindowSettingsPtr, ImGuiID v) { ImGuiWindowSettingsPtr->ViewportId = v; }
+ImGuiID ImGuiWindowSettings_GetViewportId(ImGuiWindowSettings *self) { return self->ViewportId; }
+void ImGuiWindowSettings_SetDockId(ImGuiWindowSettings *ImGuiWindowSettingsPtr, ImGuiID v) { ImGuiWindowSettingsPtr->DockId = v; }
+ImGuiID ImGuiWindowSettings_GetDockId(ImGuiWindowSettings *self) { return self->DockId; }
+void ImGuiWindowSettings_SetClassId(ImGuiWindowSettings *ImGuiWindowSettingsPtr, ImGuiID v) { ImGuiWindowSettingsPtr->ClassId = v; }
+ImGuiID ImGuiWindowSettings_GetClassId(ImGuiWindowSettings *self) { return self->ClassId; }
+void ImGuiWindowSettings_SetDockOrder(ImGuiWindowSettings *ImGuiWindowSettingsPtr, short v) { ImGuiWindowSettingsPtr->DockOrder = v; }
+short ImGuiWindowSettings_GetDockOrder(ImGuiWindowSettings *self) { return self->DockOrder; }
+void ImGuiWindowSettings_SetCollapsed(ImGuiWindowSettings *ImGuiWindowSettingsPtr, bool v) { ImGuiWindowSettingsPtr->Collapsed = v; }
+bool ImGuiWindowSettings_GetCollapsed(ImGuiWindowSettings *self) { return self->Collapsed; }
+void ImGuiWindowSettings_SetWantApply(ImGuiWindowSettings *ImGuiWindowSettingsPtr, bool v) { ImGuiWindowSettingsPtr->WantApply = v; }
+bool ImGuiWindowSettings_GetWantApply(ImGuiWindowSettings *self) { return self->WantApply; }
+void ImDrawCmd_SetClipRect(ImDrawCmd *ImDrawCmdPtr, ImVec4 v) { ImDrawCmdPtr->ClipRect = v; }
+ImVec4 ImDrawCmd_GetClipRect(ImDrawCmd *self) { return self->ClipRect; }
+void ImDrawCmd_SetTextureId(ImDrawCmd *ImDrawCmdPtr, ImTextureID v) { ImDrawCmdPtr->TextureId = v; }
+ImTextureID ImDrawCmd_GetTextureId(ImDrawCmd *self) { return self->TextureId; }
+void ImDrawCmd_SetVtxOffset(ImDrawCmd *ImDrawCmdPtr, unsigned int v) { ImDrawCmdPtr->VtxOffset = v; }
+unsigned int ImDrawCmd_GetVtxOffset(ImDrawCmd *self) { return self->VtxOffset; }
+void ImDrawCmd_SetIdxOffset(ImDrawCmd *ImDrawCmdPtr, unsigned int v) { ImDrawCmdPtr->IdxOffset = v; }
+unsigned int ImDrawCmd_GetIdxOffset(ImDrawCmd *self) { return self->IdxOffset; }
+void ImDrawCmd_SetElemCount(ImDrawCmd *ImDrawCmdPtr, unsigned int v) { ImDrawCmdPtr->ElemCount = v; }
+unsigned int ImDrawCmd_GetElemCount(ImDrawCmd *self) { return self->ElemCount; }
+void ImDrawCmd_SetUserCallback(ImDrawCmd *ImDrawCmdPtr, ImDrawCallback v) { ImDrawCmdPtr->UserCallback = v; }
+ImDrawCallback ImDrawCmd_GetUserCallback(ImDrawCmd *self) { return self->UserCallback; }
+void ImDrawCmd_SetUserCallbackData(ImDrawCmd *ImDrawCmdPtr, void* v) { ImDrawCmdPtr->UserCallbackData = v; }
+void* ImDrawCmd_GetUserCallbackData(ImDrawCmd *self) { return self->UserCallbackData; }
+void ImGuiContextHook_SetHookId(ImGuiContextHook *ImGuiContextHookPtr, ImGuiID v) { ImGuiContextHookPtr->HookId = v; }
+ImGuiID ImGuiContextHook_GetHookId(ImGuiContextHook *self) { return self->HookId; }
+void ImGuiContextHook_SetType(ImGuiContextHook *ImGuiContextHookPtr, ImGuiContextHookType v) { ImGuiContextHookPtr->Type = v; }
+ImGuiContextHookType ImGuiContextHook_GetType(ImGuiContextHook *self) { return self->Type; }
+void ImGuiContextHook_SetOwner(ImGuiContextHook *ImGuiContextHookPtr, ImGuiID v) { ImGuiContextHookPtr->Owner = v; }
+ImGuiID ImGuiContextHook_GetOwner(ImGuiContextHook *self) { return self->Owner; }
+void ImGuiContextHook_SetCallback(ImGuiContextHook *ImGuiContextHookPtr, ImGuiContextHookCallback v) { ImGuiContextHookPtr->Callback = v; }
+ImGuiContextHookCallback ImGuiContextHook_GetCallback(ImGuiContextHook *self) { return self->Callback; }
+void ImGuiContextHook_SetUserData(ImGuiContextHook *ImGuiContextHookPtr, void* v) { ImGuiContextHookPtr->UserData = v; }
+void* ImGuiContextHook_GetUserData(ImGuiContextHook *self) { return self->UserData; }
+void ImGuiInputEventAppFocused_SetFocused(ImGuiInputEventAppFocused *ImGuiInputEventAppFocusedPtr, bool v) { ImGuiInputEventAppFocusedPtr->Focused = v; }
+bool ImGuiInputEventAppFocused_GetFocused(ImGuiInputEventAppFocused *self) { return self->Focused; }
+void ImGuiListClipper_SetDisplayStart(ImGuiListClipper *ImGuiListClipperPtr, int v) { ImGuiListClipperPtr->DisplayStart = v; }
+int ImGuiListClipper_GetDisplayStart(ImGuiListClipper *self) { return self->DisplayStart; }
+void ImGuiListClipper_SetDisplayEnd(ImGuiListClipper *ImGuiListClipperPtr, int v) { ImGuiListClipperPtr->DisplayEnd = v; }
+int ImGuiListClipper_GetDisplayEnd(ImGuiListClipper *self) { return self->DisplayEnd; }
+void ImGuiListClipper_SetItemsCount(ImGuiListClipper *ImGuiListClipperPtr, int v) { ImGuiListClipperPtr->ItemsCount = v; }
+int ImGuiListClipper_GetItemsCount(ImGuiListClipper *self) { return self->ItemsCount; }
+void ImGuiListClipper_SetItemsHeight(ImGuiListClipper *ImGuiListClipperPtr, float v) { ImGuiListClipperPtr->ItemsHeight = v; }
+float ImGuiListClipper_GetItemsHeight(ImGuiListClipper *self) { return self->ItemsHeight; }
+void ImGuiListClipper_SetStartPosY(ImGuiListClipper *ImGuiListClipperPtr, float v) { ImGuiListClipperPtr->StartPosY = v; }
+float ImGuiListClipper_GetStartPosY(ImGuiListClipper *self) { return self->StartPosY; }
+void ImGuiListClipper_SetTempData(ImGuiListClipper *ImGuiListClipperPtr, void* v) { ImGuiListClipperPtr->TempData = v; }
+void* ImGuiListClipper_GetTempData(ImGuiListClipper *self) { return self->TempData; }
+void ImGuiPlatformMonitor_SetMainPos(ImGuiPlatformMonitor *ImGuiPlatformMonitorPtr, ImVec2 v) { ImGuiPlatformMonitorPtr->MainPos = v; }
+ImVec2 ImGuiPlatformMonitor_GetMainPos(ImGuiPlatformMonitor *self) { return self->MainPos; }
+void ImGuiPlatformMonitor_SetMainSize(ImGuiPlatformMonitor *ImGuiPlatformMonitorPtr, ImVec2 v) { ImGuiPlatformMonitorPtr->MainSize = v; }
+ImVec2 ImGuiPlatformMonitor_GetMainSize(ImGuiPlatformMonitor *self) { return self->MainSize; }
+void ImGuiPlatformMonitor_SetWorkPos(ImGuiPlatformMonitor *ImGuiPlatformMonitorPtr, ImVec2 v) { ImGuiPlatformMonitorPtr->WorkPos = v; }
+ImVec2 ImGuiPlatformMonitor_GetWorkPos(ImGuiPlatformMonitor *self) { return self->WorkPos; }
+void ImGuiPlatformMonitor_SetWorkSize(ImGuiPlatformMonitor *ImGuiPlatformMonitorPtr, ImVec2 v) { ImGuiPlatformMonitorPtr->WorkSize = v; }
+ImVec2 ImGuiPlatformMonitor_GetWorkSize(ImGuiPlatformMonitor *self) { return self->WorkSize; }
+void ImGuiPlatformMonitor_SetDpiScale(ImGuiPlatformMonitor *ImGuiPlatformMonitorPtr, float v) { ImGuiPlatformMonitorPtr->DpiScale = v; }
+float ImGuiPlatformMonitor_GetDpiScale(ImGuiPlatformMonitor *self) { return self->DpiScale; }
+void ImGuiSettingsHandler_SetTypeName(ImGuiSettingsHandler *ImGuiSettingsHandlerPtr, const char* v) { ImGuiSettingsHandlerPtr->TypeName = v; }
+const char* ImGuiSettingsHandler_GetTypeName(ImGuiSettingsHandler *self) { return self->TypeName; }
+void ImGuiSettingsHandler_SetTypeHash(ImGuiSettingsHandler *ImGuiSettingsHandlerPtr, ImGuiID v) { ImGuiSettingsHandlerPtr->TypeHash = v; }
+ImGuiID ImGuiSettingsHandler_GetTypeHash(ImGuiSettingsHandler *self) { return self->TypeHash; }
+void ImGuiSettingsHandler_SetUserData(ImGuiSettingsHandler *ImGuiSettingsHandlerPtr, void* v) { ImGuiSettingsHandlerPtr->UserData = v; }
+void* ImGuiSettingsHandler_GetUserData(ImGuiSettingsHandler *self) { return self->UserData; }
+void ImGuiStackLevelInfo_SetID(ImGuiStackLevelInfo *ImGuiStackLevelInfoPtr, ImGuiID v) { ImGuiStackLevelInfoPtr->ID = v; }
+ImGuiID ImGuiStackLevelInfo_GetID(ImGuiStackLevelInfo *self) { return self->ID; }
+void ImGuiStackLevelInfo_SetQueryFrameCount(ImGuiStackLevelInfo *ImGuiStackLevelInfoPtr, ImS8 v) { ImGuiStackLevelInfoPtr->QueryFrameCount = v; }
+ImS8 ImGuiStackLevelInfo_GetQueryFrameCount(ImGuiStackLevelInfo *self) { return self->QueryFrameCount; }
+void ImGuiStackLevelInfo_SetQuerySuccess(ImGuiStackLevelInfo *ImGuiStackLevelInfoPtr, bool v) { ImGuiStackLevelInfoPtr->QuerySuccess = v; }
+bool ImGuiStackLevelInfo_GetQuerySuccess(ImGuiStackLevelInfo *self) { return self->QuerySuccess; }
+void ImGuiStackLevelInfo_SetDataType(ImGuiStackLevelInfo *ImGuiStackLevelInfoPtr, ImGuiDataType v) { ImGuiStackLevelInfoPtr->DataType = v; }
+ImGuiDataType ImGuiStackLevelInfo_GetDataType(ImGuiStackLevelInfo *self) { return self->DataType; }
+void ImBitVector_SetStorage(ImBitVector *ImBitVectorPtr, ImVector_ImU32 v) { ImBitVectorPtr->Storage = v; }
+ImVector_ImU32 ImBitVector_GetStorage(ImBitVector *self) { return self->Storage; }
+void STB_TexteditState_Setcursor(STB_TexteditState *STB_TexteditStatePtr, int v) { STB_TexteditStatePtr->cursor = v; }
+int STB_TexteditState_Getcursor(STB_TexteditState *self) { return self->cursor; }
+void STB_TexteditState_Setselect_start(STB_TexteditState *STB_TexteditStatePtr, int v) { STB_TexteditStatePtr->select_start = v; }
+int STB_TexteditState_Getselect_start(STB_TexteditState *self) { return self->select_start; }
+void STB_TexteditState_Setselect_end(STB_TexteditState *STB_TexteditStatePtr, int v) { STB_TexteditStatePtr->select_end = v; }
+int STB_TexteditState_Getselect_end(STB_TexteditState *self) { return self->select_end; }
+void STB_TexteditState_Setinsert_mode(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->insert_mode = v; }
+unsigned char STB_TexteditState_Getinsert_mode(STB_TexteditState *self) { return self->insert_mode; }
+void STB_TexteditState_Setrow_count_per_page(STB_TexteditState *STB_TexteditStatePtr, int v) { STB_TexteditStatePtr->row_count_per_page = v; }
+int STB_TexteditState_Getrow_count_per_page(STB_TexteditState *self) { return self->row_count_per_page; }
+void STB_TexteditState_Setcursor_at_end_of_line(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->cursor_at_end_of_line = v; }
+unsigned char STB_TexteditState_Getcursor_at_end_of_line(STB_TexteditState *self) { return self->cursor_at_end_of_line; }
+void STB_TexteditState_Setinitialized(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->initialized = v; }
+unsigned char STB_TexteditState_Getinitialized(STB_TexteditState *self) { return self->initialized; }
+void STB_TexteditState_Sethas_preferred_x(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->has_preferred_x = v; }
+unsigned char STB_TexteditState_Gethas_preferred_x(STB_TexteditState *self) { return self->has_preferred_x; }
+void STB_TexteditState_Setsingle_line(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->single_line = v; }
+unsigned char STB_TexteditState_Getsingle_line(STB_TexteditState *self) { return self->single_line; }
+void STB_TexteditState_Setpadding1(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->padding1 = v; }
+unsigned char STB_TexteditState_Getpadding1(STB_TexteditState *self) { return self->padding1; }
+void STB_TexteditState_Setpadding2(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->padding2 = v; }
+unsigned char STB_TexteditState_Getpadding2(STB_TexteditState *self) { return self->padding2; }
+void STB_TexteditState_Setpadding3(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->padding3 = v; }
+unsigned char STB_TexteditState_Getpadding3(STB_TexteditState *self) { return self->padding3; }
+void STB_TexteditState_Setpreferred_x(STB_TexteditState *STB_TexteditStatePtr, float v) { STB_TexteditStatePtr->preferred_x = v; }
+float STB_TexteditState_Getpreferred_x(STB_TexteditState *self) { return self->preferred_x; }
+void STB_TexteditState_Setundostate(STB_TexteditState *STB_TexteditStatePtr, StbUndoState v) { STB_TexteditStatePtr->undostate = v; }
+StbUndoState STB_TexteditState_Getundostate(STB_TexteditState *self) { return self->undostate; }
+void ImGuiStorage_SetData(ImGuiStorage *ImGuiStoragePtr, ImVector_ImGuiStoragePair v) { ImGuiStoragePtr->Data = v; }
+ImVector_ImGuiStoragePair ImGuiStorage_GetData(ImGuiStorage *self) { return self->Data; }
+void ImGuiInputEvent_SetType(ImGuiInputEvent *ImGuiInputEventPtr, ImGuiInputEventType v) { ImGuiInputEventPtr->Type = v; }
+ImGuiInputEventType ImGuiInputEvent_GetType(ImGuiInputEvent *self) { return self->Type; }
+void ImGuiInputEvent_SetSource(ImGuiInputEvent *ImGuiInputEventPtr, ImGuiInputSource v) { ImGuiInputEventPtr->Source = v; }
+ImGuiInputSource ImGuiInputEvent_GetSource(ImGuiInputEvent *self) { return self->Source; }
+void ImGuiInputEvent_SetAddedByTestEngine(ImGuiInputEvent *ImGuiInputEventPtr, bool v) { ImGuiInputEventPtr->AddedByTestEngine = v; }
+bool ImGuiInputEvent_GetAddedByTestEngine(ImGuiInputEvent *self) { return self->AddedByTestEngine; }
 void ImGuiMenuColumns_SetTotalWidth(ImGuiMenuColumns *ImGuiMenuColumnsPtr, ImU32 v) { ImGuiMenuColumnsPtr->TotalWidth = v; }
 ImU32 ImGuiMenuColumns_GetTotalWidth(ImGuiMenuColumns *self) { return self->TotalWidth; }
 void ImGuiMenuColumns_SetNextTotalWidth(ImGuiMenuColumns *ImGuiMenuColumnsPtr, ImU32 v) { ImGuiMenuColumnsPtr->NextTotalWidth = v; }
@@ -1092,440 +1700,42 @@ void ImGuiMenuColumns_SetOffsetShortcut(ImGuiMenuColumns *ImGuiMenuColumnsPtr, I
 ImU16 ImGuiMenuColumns_GetOffsetShortcut(ImGuiMenuColumns *self) { return self->OffsetShortcut; }
 void ImGuiMenuColumns_SetOffsetMark(ImGuiMenuColumns *ImGuiMenuColumnsPtr, ImU16 v) { ImGuiMenuColumnsPtr->OffsetMark = v; }
 ImU16 ImGuiMenuColumns_GetOffsetMark(ImGuiMenuColumns *self) { return self->OffsetMark; }
-void ImGuiSizeCallbackData_SetUserData(ImGuiSizeCallbackData *ImGuiSizeCallbackDataPtr, void* v) { ImGuiSizeCallbackDataPtr->UserData = v; }
-void* ImGuiSizeCallbackData_GetUserData(ImGuiSizeCallbackData *self) { return self->UserData; }
-void ImGuiSizeCallbackData_SetPos(ImGuiSizeCallbackData *ImGuiSizeCallbackDataPtr, ImVec2 v) { ImGuiSizeCallbackDataPtr->Pos = v; }
-ImVec2 ImGuiSizeCallbackData_GetPos(ImGuiSizeCallbackData *self) { return self->Pos; }
-void ImGuiSizeCallbackData_SetCurrentSize(ImGuiSizeCallbackData *ImGuiSizeCallbackDataPtr, ImVec2 v) { ImGuiSizeCallbackDataPtr->CurrentSize = v; }
-ImVec2 ImGuiSizeCallbackData_GetCurrentSize(ImGuiSizeCallbackData *self) { return self->CurrentSize; }
-void ImGuiSizeCallbackData_SetDesiredSize(ImGuiSizeCallbackData *ImGuiSizeCallbackDataPtr, ImVec2 v) { ImGuiSizeCallbackDataPtr->DesiredSize = v; }
-ImVec2 ImGuiSizeCallbackData_GetDesiredSize(ImGuiSizeCallbackData *self) { return self->DesiredSize; }
-void ImGuiStoragePair_Setkey(ImGuiStoragePair *ImGuiStoragePairPtr, ImGuiID v) { ImGuiStoragePairPtr->key = v; }
-ImGuiID ImGuiStoragePair_Getkey(ImGuiStoragePair *self) { return self->key; }
-void ImGuiPlatformMonitor_SetMainPos(ImGuiPlatformMonitor *ImGuiPlatformMonitorPtr, ImVec2 v) { ImGuiPlatformMonitorPtr->MainPos = v; }
-ImVec2 ImGuiPlatformMonitor_GetMainPos(ImGuiPlatformMonitor *self) { return self->MainPos; }
-void ImGuiPlatformMonitor_SetMainSize(ImGuiPlatformMonitor *ImGuiPlatformMonitorPtr, ImVec2 v) { ImGuiPlatformMonitorPtr->MainSize = v; }
-ImVec2 ImGuiPlatformMonitor_GetMainSize(ImGuiPlatformMonitor *self) { return self->MainSize; }
-void ImGuiPlatformMonitor_SetWorkPos(ImGuiPlatformMonitor *ImGuiPlatformMonitorPtr, ImVec2 v) { ImGuiPlatformMonitorPtr->WorkPos = v; }
-ImVec2 ImGuiPlatformMonitor_GetWorkPos(ImGuiPlatformMonitor *self) { return self->WorkPos; }
-void ImGuiPlatformMonitor_SetWorkSize(ImGuiPlatformMonitor *ImGuiPlatformMonitorPtr, ImVec2 v) { ImGuiPlatformMonitorPtr->WorkSize = v; }
-ImVec2 ImGuiPlatformMonitor_GetWorkSize(ImGuiPlatformMonitor *self) { return self->WorkSize; }
-void ImGuiPlatformMonitor_SetDpiScale(ImGuiPlatformMonitor *ImGuiPlatformMonitorPtr, float v) { ImGuiPlatformMonitorPtr->DpiScale = v; }
-float ImGuiPlatformMonitor_GetDpiScale(ImGuiPlatformMonitor *self) { return self->DpiScale; }
-void ImGuiPtrOrIndex_SetPtr(ImGuiPtrOrIndex *ImGuiPtrOrIndexPtr, void* v) { ImGuiPtrOrIndexPtr->Ptr = v; }
-void* ImGuiPtrOrIndex_GetPtr(ImGuiPtrOrIndex *self) { return self->Ptr; }
-void ImGuiPtrOrIndex_SetIndex(ImGuiPtrOrIndex *ImGuiPtrOrIndexPtr, int v) { ImGuiPtrOrIndexPtr->Index = v; }
-int ImGuiPtrOrIndex_GetIndex(ImGuiPtrOrIndex *self) { return self->Index; }
-void StbTexteditRow_Setx0(StbTexteditRow *StbTexteditRowPtr, float v) { StbTexteditRowPtr->x0 = v; }
-float StbTexteditRow_Getx0(StbTexteditRow *self) { return self->x0; }
-void StbTexteditRow_Setx1(StbTexteditRow *StbTexteditRowPtr, float v) { StbTexteditRowPtr->x1 = v; }
-float StbTexteditRow_Getx1(StbTexteditRow *self) { return self->x1; }
-void StbTexteditRow_Setbaseline_y_delta(StbTexteditRow *StbTexteditRowPtr, float v) { StbTexteditRowPtr->baseline_y_delta = v; }
-float StbTexteditRow_Getbaseline_y_delta(StbTexteditRow *self) { return self->baseline_y_delta; }
-void StbTexteditRow_Setymin(StbTexteditRow *StbTexteditRowPtr, float v) { StbTexteditRowPtr->ymin = v; }
-float StbTexteditRow_Getymin(StbTexteditRow *self) { return self->ymin; }
-void StbTexteditRow_Setymax(StbTexteditRow *StbTexteditRowPtr, float v) { StbTexteditRowPtr->ymax = v; }
-float StbTexteditRow_Getymax(StbTexteditRow *self) { return self->ymax; }
-void StbTexteditRow_Setnum_chars(StbTexteditRow *StbTexteditRowPtr, int v) { StbTexteditRowPtr->num_chars = v; }
-int StbTexteditRow_Getnum_chars(StbTexteditRow *self) { return self->num_chars; }
-void ImGuiStackSizes_SetSizeOfIDStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfIDStack = v; }
-short ImGuiStackSizes_GetSizeOfIDStack(ImGuiStackSizes *self) { return self->SizeOfIDStack; }
-void ImGuiStackSizes_SetSizeOfColorStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfColorStack = v; }
-short ImGuiStackSizes_GetSizeOfColorStack(ImGuiStackSizes *self) { return self->SizeOfColorStack; }
-void ImGuiStackSizes_SetSizeOfStyleVarStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfStyleVarStack = v; }
-short ImGuiStackSizes_GetSizeOfStyleVarStack(ImGuiStackSizes *self) { return self->SizeOfStyleVarStack; }
-void ImGuiStackSizes_SetSizeOfFontStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfFontStack = v; }
-short ImGuiStackSizes_GetSizeOfFontStack(ImGuiStackSizes *self) { return self->SizeOfFontStack; }
-void ImGuiStackSizes_SetSizeOfFocusScopeStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfFocusScopeStack = v; }
-short ImGuiStackSizes_GetSizeOfFocusScopeStack(ImGuiStackSizes *self) { return self->SizeOfFocusScopeStack; }
-void ImGuiStackSizes_SetSizeOfGroupStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfGroupStack = v; }
-short ImGuiStackSizes_GetSizeOfGroupStack(ImGuiStackSizes *self) { return self->SizeOfGroupStack; }
-void ImGuiStackSizes_SetSizeOfItemFlagsStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfItemFlagsStack = v; }
-short ImGuiStackSizes_GetSizeOfItemFlagsStack(ImGuiStackSizes *self) { return self->SizeOfItemFlagsStack; }
-void ImGuiStackSizes_SetSizeOfBeginPopupStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfBeginPopupStack = v; }
-short ImGuiStackSizes_GetSizeOfBeginPopupStack(ImGuiStackSizes *self) { return self->SizeOfBeginPopupStack; }
-void ImGuiStackSizes_SetSizeOfDisabledStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfDisabledStack = v; }
-short ImGuiStackSizes_GetSizeOfDisabledStack(ImGuiStackSizes *self) { return self->SizeOfDisabledStack; }
-void ImGuiStorage_SetData(ImGuiStorage *ImGuiStoragePtr, ImVector_ImGuiStoragePair v) { ImGuiStoragePtr->Data = v; }
-ImVector_ImGuiStoragePair ImGuiStorage_GetData(ImGuiStorage *self) { return self->Data; }
-void ImGuiInputEventKey_SetKey(ImGuiInputEventKey *ImGuiInputEventKeyPtr, ImGuiKey v) { ImGuiInputEventKeyPtr->Key = v; }
-ImGuiKey ImGuiInputEventKey_GetKey(ImGuiInputEventKey *self) { return self->Key; }
-void ImGuiInputEventKey_SetDown(ImGuiInputEventKey *ImGuiInputEventKeyPtr, bool v) { ImGuiInputEventKeyPtr->Down = v; }
-bool ImGuiInputEventKey_GetDown(ImGuiInputEventKey *self) { return self->Down; }
-void ImGuiInputEventKey_SetAnalogValue(ImGuiInputEventKey *ImGuiInputEventKeyPtr, float v) { ImGuiInputEventKeyPtr->AnalogValue = v; }
-float ImGuiInputEventKey_GetAnalogValue(ImGuiInputEventKey *self) { return self->AnalogValue; }
-void ImGuiKeyData_SetDown(ImGuiKeyData *ImGuiKeyDataPtr, bool v) { ImGuiKeyDataPtr->Down = v; }
-bool ImGuiKeyData_GetDown(ImGuiKeyData *self) { return self->Down; }
-void ImGuiKeyData_SetDownDuration(ImGuiKeyData *ImGuiKeyDataPtr, float v) { ImGuiKeyDataPtr->DownDuration = v; }
-float ImGuiKeyData_GetDownDuration(ImGuiKeyData *self) { return self->DownDuration; }
-void ImGuiKeyData_SetDownDurationPrev(ImGuiKeyData *ImGuiKeyDataPtr, float v) { ImGuiKeyDataPtr->DownDurationPrev = v; }
-float ImGuiKeyData_GetDownDurationPrev(ImGuiKeyData *self) { return self->DownDurationPrev; }
-void ImGuiKeyData_SetAnalogValue(ImGuiKeyData *ImGuiKeyDataPtr, float v) { ImGuiKeyDataPtr->AnalogValue = v; }
-float ImGuiKeyData_GetAnalogValue(ImGuiKeyData *self) { return self->AnalogValue; }
-void ImGuiNavItemData_SetWindow(ImGuiNavItemData *ImGuiNavItemDataPtr, ImGuiWindow* v) { ImGuiNavItemDataPtr->Window = v; }
-ImGuiWindow* ImGuiNavItemData_GetWindow(ImGuiNavItemData *self) { return self->Window; }
-void ImGuiNavItemData_SetID(ImGuiNavItemData *ImGuiNavItemDataPtr, ImGuiID v) { ImGuiNavItemDataPtr->ID = v; }
-ImGuiID ImGuiNavItemData_GetID(ImGuiNavItemData *self) { return self->ID; }
-void ImGuiNavItemData_SetFocusScopeId(ImGuiNavItemData *ImGuiNavItemDataPtr, ImGuiID v) { ImGuiNavItemDataPtr->FocusScopeId = v; }
-ImGuiID ImGuiNavItemData_GetFocusScopeId(ImGuiNavItemData *self) { return self->FocusScopeId; }
-void ImGuiNavItemData_SetRectRel(ImGuiNavItemData *ImGuiNavItemDataPtr, ImRect v) { ImGuiNavItemDataPtr->RectRel = v; }
-ImRect ImGuiNavItemData_GetRectRel(ImGuiNavItemData *self) { return self->RectRel; }
-void ImGuiNavItemData_SetInFlags(ImGuiNavItemData *ImGuiNavItemDataPtr, ImGuiItemFlags v) { ImGuiNavItemDataPtr->InFlags = v; }
-ImGuiItemFlags ImGuiNavItemData_GetInFlags(ImGuiNavItemData *self) { return self->InFlags; }
-void ImGuiNavItemData_SetDistBox(ImGuiNavItemData *ImGuiNavItemDataPtr, float v) { ImGuiNavItemDataPtr->DistBox = v; }
-float ImGuiNavItemData_GetDistBox(ImGuiNavItemData *self) { return self->DistBox; }
-void ImGuiNavItemData_SetDistCenter(ImGuiNavItemData *ImGuiNavItemDataPtr, float v) { ImGuiNavItemDataPtr->DistCenter = v; }
-float ImGuiNavItemData_GetDistCenter(ImGuiNavItemData *self) { return self->DistCenter; }
-void ImGuiNavItemData_SetDistAxial(ImGuiNavItemData *ImGuiNavItemDataPtr, float v) { ImGuiNavItemDataPtr->DistAxial = v; }
-float ImGuiNavItemData_GetDistAxial(ImGuiNavItemData *self) { return self->DistAxial; }
-void ImGuiPlatformImeData_SetWantVisible(ImGuiPlatformImeData *ImGuiPlatformImeDataPtr, bool v) { ImGuiPlatformImeDataPtr->WantVisible = v; }
-bool ImGuiPlatformImeData_GetWantVisible(ImGuiPlatformImeData *self) { return self->WantVisible; }
-void ImGuiPlatformImeData_SetInputPos(ImGuiPlatformImeData *ImGuiPlatformImeDataPtr, ImVec2 v) { ImGuiPlatformImeDataPtr->InputPos = v; }
-ImVec2 ImGuiPlatformImeData_GetInputPos(ImGuiPlatformImeData *self) { return self->InputPos; }
-void ImGuiPlatformImeData_SetInputLineHeight(ImGuiPlatformImeData *ImGuiPlatformImeDataPtr, float v) { ImGuiPlatformImeDataPtr->InputLineHeight = v; }
-float ImGuiPlatformImeData_GetInputLineHeight(ImGuiPlatformImeData *self) { return self->InputLineHeight; }
-void ImGuiSettingsHandler_SetTypeName(ImGuiSettingsHandler *ImGuiSettingsHandlerPtr, const char* v) { ImGuiSettingsHandlerPtr->TypeName = v; }
-const char* ImGuiSettingsHandler_GetTypeName(ImGuiSettingsHandler *self) { return self->TypeName; }
-void ImGuiSettingsHandler_SetTypeHash(ImGuiSettingsHandler *ImGuiSettingsHandlerPtr, ImGuiID v) { ImGuiSettingsHandlerPtr->TypeHash = v; }
-ImGuiID ImGuiSettingsHandler_GetTypeHash(ImGuiSettingsHandler *self) { return self->TypeHash; }
-void ImGuiSettingsHandler_SetUserData(ImGuiSettingsHandler *ImGuiSettingsHandlerPtr, void* v) { ImGuiSettingsHandlerPtr->UserData = v; }
-void* ImGuiSettingsHandler_GetUserData(ImGuiSettingsHandler *self) { return self->UserData; }
-void ImGuiStyle_SetAlpha(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->Alpha = v; }
-float ImGuiStyle_GetAlpha(ImGuiStyle *self) { return self->Alpha; }
-void ImGuiStyle_SetDisabledAlpha(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->DisabledAlpha = v; }
-float ImGuiStyle_GetDisabledAlpha(ImGuiStyle *self) { return self->DisabledAlpha; }
-void ImGuiStyle_SetWindowPadding(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->WindowPadding = v; }
-ImVec2 ImGuiStyle_GetWindowPadding(ImGuiStyle *self) { return self->WindowPadding; }
-void ImGuiStyle_SetWindowRounding(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->WindowRounding = v; }
-float ImGuiStyle_GetWindowRounding(ImGuiStyle *self) { return self->WindowRounding; }
-void ImGuiStyle_SetWindowBorderSize(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->WindowBorderSize = v; }
-float ImGuiStyle_GetWindowBorderSize(ImGuiStyle *self) { return self->WindowBorderSize; }
-void ImGuiStyle_SetWindowMinSize(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->WindowMinSize = v; }
-ImVec2 ImGuiStyle_GetWindowMinSize(ImGuiStyle *self) { return self->WindowMinSize; }
-void ImGuiStyle_SetWindowTitleAlign(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->WindowTitleAlign = v; }
-ImVec2 ImGuiStyle_GetWindowTitleAlign(ImGuiStyle *self) { return self->WindowTitleAlign; }
-void ImGuiStyle_SetWindowMenuButtonPosition(ImGuiStyle *ImGuiStylePtr, ImGuiDir v) { ImGuiStylePtr->WindowMenuButtonPosition = v; }
-ImGuiDir ImGuiStyle_GetWindowMenuButtonPosition(ImGuiStyle *self) { return self->WindowMenuButtonPosition; }
-void ImGuiStyle_SetChildRounding(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->ChildRounding = v; }
-float ImGuiStyle_GetChildRounding(ImGuiStyle *self) { return self->ChildRounding; }
-void ImGuiStyle_SetChildBorderSize(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->ChildBorderSize = v; }
-float ImGuiStyle_GetChildBorderSize(ImGuiStyle *self) { return self->ChildBorderSize; }
-void ImGuiStyle_SetPopupRounding(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->PopupRounding = v; }
-float ImGuiStyle_GetPopupRounding(ImGuiStyle *self) { return self->PopupRounding; }
-void ImGuiStyle_SetPopupBorderSize(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->PopupBorderSize = v; }
-float ImGuiStyle_GetPopupBorderSize(ImGuiStyle *self) { return self->PopupBorderSize; }
-void ImGuiStyle_SetFramePadding(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->FramePadding = v; }
-ImVec2 ImGuiStyle_GetFramePadding(ImGuiStyle *self) { return self->FramePadding; }
-void ImGuiStyle_SetFrameRounding(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->FrameRounding = v; }
-float ImGuiStyle_GetFrameRounding(ImGuiStyle *self) { return self->FrameRounding; }
-void ImGuiStyle_SetFrameBorderSize(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->FrameBorderSize = v; }
-float ImGuiStyle_GetFrameBorderSize(ImGuiStyle *self) { return self->FrameBorderSize; }
-void ImGuiStyle_SetItemSpacing(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->ItemSpacing = v; }
-ImVec2 ImGuiStyle_GetItemSpacing(ImGuiStyle *self) { return self->ItemSpacing; }
-void ImGuiStyle_SetItemInnerSpacing(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->ItemInnerSpacing = v; }
-ImVec2 ImGuiStyle_GetItemInnerSpacing(ImGuiStyle *self) { return self->ItemInnerSpacing; }
-void ImGuiStyle_SetCellPadding(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->CellPadding = v; }
-ImVec2 ImGuiStyle_GetCellPadding(ImGuiStyle *self) { return self->CellPadding; }
-void ImGuiStyle_SetTouchExtraPadding(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->TouchExtraPadding = v; }
-ImVec2 ImGuiStyle_GetTouchExtraPadding(ImGuiStyle *self) { return self->TouchExtraPadding; }
-void ImGuiStyle_SetIndentSpacing(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->IndentSpacing = v; }
-float ImGuiStyle_GetIndentSpacing(ImGuiStyle *self) { return self->IndentSpacing; }
-void ImGuiStyle_SetColumnsMinSpacing(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->ColumnsMinSpacing = v; }
-float ImGuiStyle_GetColumnsMinSpacing(ImGuiStyle *self) { return self->ColumnsMinSpacing; }
-void ImGuiStyle_SetScrollbarSize(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->ScrollbarSize = v; }
-float ImGuiStyle_GetScrollbarSize(ImGuiStyle *self) { return self->ScrollbarSize; }
-void ImGuiStyle_SetScrollbarRounding(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->ScrollbarRounding = v; }
-float ImGuiStyle_GetScrollbarRounding(ImGuiStyle *self) { return self->ScrollbarRounding; }
-void ImGuiStyle_SetGrabMinSize(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->GrabMinSize = v; }
-float ImGuiStyle_GetGrabMinSize(ImGuiStyle *self) { return self->GrabMinSize; }
-void ImGuiStyle_SetGrabRounding(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->GrabRounding = v; }
-float ImGuiStyle_GetGrabRounding(ImGuiStyle *self) { return self->GrabRounding; }
-void ImGuiStyle_SetLogSliderDeadzone(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->LogSliderDeadzone = v; }
-float ImGuiStyle_GetLogSliderDeadzone(ImGuiStyle *self) { return self->LogSliderDeadzone; }
-void ImGuiStyle_SetTabRounding(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->TabRounding = v; }
-float ImGuiStyle_GetTabRounding(ImGuiStyle *self) { return self->TabRounding; }
-void ImGuiStyle_SetTabBorderSize(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->TabBorderSize = v; }
-float ImGuiStyle_GetTabBorderSize(ImGuiStyle *self) { return self->TabBorderSize; }
-void ImGuiStyle_SetTabMinWidthForCloseButton(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->TabMinWidthForCloseButton = v; }
-float ImGuiStyle_GetTabMinWidthForCloseButton(ImGuiStyle *self) { return self->TabMinWidthForCloseButton; }
-void ImGuiStyle_SetColorButtonPosition(ImGuiStyle *ImGuiStylePtr, ImGuiDir v) { ImGuiStylePtr->ColorButtonPosition = v; }
-ImGuiDir ImGuiStyle_GetColorButtonPosition(ImGuiStyle *self) { return self->ColorButtonPosition; }
-void ImGuiStyle_SetButtonTextAlign(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->ButtonTextAlign = v; }
-ImVec2 ImGuiStyle_GetButtonTextAlign(ImGuiStyle *self) { return self->ButtonTextAlign; }
-void ImGuiStyle_SetSelectableTextAlign(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->SelectableTextAlign = v; }
-ImVec2 ImGuiStyle_GetSelectableTextAlign(ImGuiStyle *self) { return self->SelectableTextAlign; }
-void ImGuiStyle_SetDisplayWindowPadding(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->DisplayWindowPadding = v; }
-ImVec2 ImGuiStyle_GetDisplayWindowPadding(ImGuiStyle *self) { return self->DisplayWindowPadding; }
-void ImGuiStyle_SetDisplaySafeAreaPadding(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->DisplaySafeAreaPadding = v; }
-ImVec2 ImGuiStyle_GetDisplaySafeAreaPadding(ImGuiStyle *self) { return self->DisplaySafeAreaPadding; }
-void ImGuiStyle_SetMouseCursorScale(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->MouseCursorScale = v; }
-float ImGuiStyle_GetMouseCursorScale(ImGuiStyle *self) { return self->MouseCursorScale; }
-void ImGuiStyle_SetAntiAliasedLines(ImGuiStyle *ImGuiStylePtr, bool v) { ImGuiStylePtr->AntiAliasedLines = v; }
-bool ImGuiStyle_GetAntiAliasedLines(ImGuiStyle *self) { return self->AntiAliasedLines; }
-void ImGuiStyle_SetAntiAliasedLinesUseTex(ImGuiStyle *ImGuiStylePtr, bool v) { ImGuiStylePtr->AntiAliasedLinesUseTex = v; }
-bool ImGuiStyle_GetAntiAliasedLinesUseTex(ImGuiStyle *self) { return self->AntiAliasedLinesUseTex; }
-void ImGuiStyle_SetAntiAliasedFill(ImGuiStyle *ImGuiStylePtr, bool v) { ImGuiStylePtr->AntiAliasedFill = v; }
-bool ImGuiStyle_GetAntiAliasedFill(ImGuiStyle *self) { return self->AntiAliasedFill; }
-void ImGuiStyle_SetCurveTessellationTol(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->CurveTessellationTol = v; }
-float ImGuiStyle_GetCurveTessellationTol(ImGuiStyle *self) { return self->CurveTessellationTol; }
-void ImGuiStyle_SetCircleTessellationMaxError(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->CircleTessellationMaxError = v; }
-float ImGuiStyle_GetCircleTessellationMaxError(ImGuiStyle *self) { return self->CircleTessellationMaxError; }
-void ImGuiTableSettings_SetID(ImGuiTableSettings *ImGuiTableSettingsPtr, ImGuiID v) { ImGuiTableSettingsPtr->ID = v; }
-ImGuiID ImGuiTableSettings_GetID(ImGuiTableSettings *self) { return self->ID; }
-void ImGuiTableSettings_SetSaveFlags(ImGuiTableSettings *ImGuiTableSettingsPtr, ImGuiTableFlags v) { ImGuiTableSettingsPtr->SaveFlags = v; }
-ImGuiTableFlags ImGuiTableSettings_GetSaveFlags(ImGuiTableSettings *self) { return self->SaveFlags; }
-void ImGuiTableSettings_SetRefScale(ImGuiTableSettings *ImGuiTableSettingsPtr, float v) { ImGuiTableSettingsPtr->RefScale = v; }
-float ImGuiTableSettings_GetRefScale(ImGuiTableSettings *self) { return self->RefScale; }
-void ImGuiTableSettings_SetColumnsCount(ImGuiTableSettings *ImGuiTableSettingsPtr, ImGuiTableColumnIdx v) { ImGuiTableSettingsPtr->ColumnsCount = v; }
-ImGuiTableColumnIdx ImGuiTableSettings_GetColumnsCount(ImGuiTableSettings *self) { return self->ColumnsCount; }
-void ImGuiTableSettings_SetColumnsCountMax(ImGuiTableSettings *ImGuiTableSettingsPtr, ImGuiTableColumnIdx v) { ImGuiTableSettingsPtr->ColumnsCountMax = v; }
-ImGuiTableColumnIdx ImGuiTableSettings_GetColumnsCountMax(ImGuiTableSettings *self) { return self->ColumnsCountMax; }
-void ImGuiTableSettings_SetWantApply(ImGuiTableSettings *ImGuiTableSettingsPtr, bool v) { ImGuiTableSettingsPtr->WantApply = v; }
-bool ImGuiTableSettings_GetWantApply(ImGuiTableSettings *self) { return self->WantApply; }
-void ImDrawCmdHeader_SetClipRect(ImDrawCmdHeader *ImDrawCmdHeaderPtr, ImVec4 v) { ImDrawCmdHeaderPtr->ClipRect = v; }
-ImVec4 ImDrawCmdHeader_GetClipRect(ImDrawCmdHeader *self) { return self->ClipRect; }
-void ImDrawCmdHeader_SetTextureId(ImDrawCmdHeader *ImDrawCmdHeaderPtr, ImTextureID v) { ImDrawCmdHeaderPtr->TextureId = v; }
-ImTextureID ImDrawCmdHeader_GetTextureId(ImDrawCmdHeader *self) { return self->TextureId; }
-void ImDrawCmdHeader_SetVtxOffset(ImDrawCmdHeader *ImDrawCmdHeaderPtr, unsigned int v) { ImDrawCmdHeaderPtr->VtxOffset = v; }
-unsigned int ImDrawCmdHeader_GetVtxOffset(ImDrawCmdHeader *self) { return self->VtxOffset; }
-void StbUndoRecord_Setwhere(StbUndoRecord *StbUndoRecordPtr, int v) { StbUndoRecordPtr->where = v; }
-int StbUndoRecord_Getwhere(StbUndoRecord *self) { return self->where; }
-void StbUndoRecord_Setinsert_length(StbUndoRecord *StbUndoRecordPtr, int v) { StbUndoRecordPtr->insert_length = v; }
-int StbUndoRecord_Getinsert_length(StbUndoRecord *self) { return self->insert_length; }
-void StbUndoRecord_Setdelete_length(StbUndoRecord *StbUndoRecordPtr, int v) { StbUndoRecordPtr->delete_length = v; }
-int StbUndoRecord_Getdelete_length(StbUndoRecord *self) { return self->delete_length; }
-void StbUndoRecord_Setchar_storage(StbUndoRecord *StbUndoRecordPtr, int v) { StbUndoRecordPtr->char_storage = v; }
-int StbUndoRecord_Getchar_storage(StbUndoRecord *self) { return self->char_storage; }
-void ImGuiWindowClass_SetClassId(ImGuiWindowClass *ImGuiWindowClassPtr, ImGuiID v) { ImGuiWindowClassPtr->ClassId = v; }
-ImGuiID ImGuiWindowClass_GetClassId(ImGuiWindowClass *self) { return self->ClassId; }
-void ImGuiWindowClass_SetParentViewportId(ImGuiWindowClass *ImGuiWindowClassPtr, ImGuiID v) { ImGuiWindowClassPtr->ParentViewportId = v; }
-ImGuiID ImGuiWindowClass_GetParentViewportId(ImGuiWindowClass *self) { return self->ParentViewportId; }
-void ImGuiWindowClass_SetViewportFlagsOverrideSet(ImGuiWindowClass *ImGuiWindowClassPtr, ImGuiViewportFlags v) { ImGuiWindowClassPtr->ViewportFlagsOverrideSet = v; }
-ImGuiViewportFlags ImGuiWindowClass_GetViewportFlagsOverrideSet(ImGuiWindowClass *self) { return self->ViewportFlagsOverrideSet; }
-void ImGuiWindowClass_SetViewportFlagsOverrideClear(ImGuiWindowClass *ImGuiWindowClassPtr, ImGuiViewportFlags v) { ImGuiWindowClassPtr->ViewportFlagsOverrideClear = v; }
-ImGuiViewportFlags ImGuiWindowClass_GetViewportFlagsOverrideClear(ImGuiWindowClass *self) { return self->ViewportFlagsOverrideClear; }
-void ImGuiWindowClass_SetTabItemFlagsOverrideSet(ImGuiWindowClass *ImGuiWindowClassPtr, ImGuiTabItemFlags v) { ImGuiWindowClassPtr->TabItemFlagsOverrideSet = v; }
-ImGuiTabItemFlags ImGuiWindowClass_GetTabItemFlagsOverrideSet(ImGuiWindowClass *self) { return self->TabItemFlagsOverrideSet; }
-void ImGuiWindowClass_SetDockNodeFlagsOverrideSet(ImGuiWindowClass *ImGuiWindowClassPtr, ImGuiDockNodeFlags v) { ImGuiWindowClassPtr->DockNodeFlagsOverrideSet = v; }
-ImGuiDockNodeFlags ImGuiWindowClass_GetDockNodeFlagsOverrideSet(ImGuiWindowClass *self) { return self->DockNodeFlagsOverrideSet; }
-void ImGuiWindowClass_SetDockingAlwaysTabBar(ImGuiWindowClass *ImGuiWindowClassPtr, bool v) { ImGuiWindowClassPtr->DockingAlwaysTabBar = v; }
-bool ImGuiWindowClass_GetDockingAlwaysTabBar(ImGuiWindowClass *self) { return self->DockingAlwaysTabBar; }
-void ImGuiWindowClass_SetDockingAllowUnclassed(ImGuiWindowClass *ImGuiWindowClassPtr, bool v) { ImGuiWindowClassPtr->DockingAllowUnclassed = v; }
-bool ImGuiWindowClass_GetDockingAllowUnclassed(ImGuiWindowClass *self) { return self->DockingAllowUnclassed; }
-void ImDrawListSplitter_Set_Current(ImDrawListSplitter *ImDrawListSplitterPtr, int v) { ImDrawListSplitterPtr->_Current = v; }
-int ImDrawListSplitter_Get_Current(ImDrawListSplitter *self) { return self->_Current; }
-void ImDrawListSplitter_Set_Count(ImDrawListSplitter *ImDrawListSplitterPtr, int v) { ImDrawListSplitterPtr->_Count = v; }
-int ImDrawListSplitter_Get_Count(ImDrawListSplitter *self) { return self->_Count; }
-void ImDrawListSplitter_Set_Channels(ImDrawListSplitter *ImDrawListSplitterPtr, ImVector_ImDrawChannel v) { ImDrawListSplitterPtr->_Channels = v; }
-ImVector_ImDrawChannel ImDrawListSplitter_Get_Channels(ImDrawListSplitter *self) { return self->_Channels; }
-void ImGuiDataTypeInfo_SetSize(ImGuiDataTypeInfo *ImGuiDataTypeInfoPtr, size_t v) { ImGuiDataTypeInfoPtr->Size = v; }
-size_t ImGuiDataTypeInfo_GetSize(ImGuiDataTypeInfo *self) { return self->Size; }
-void ImGuiDataTypeInfo_SetName(ImGuiDataTypeInfo *ImGuiDataTypeInfoPtr, const char* v) { ImGuiDataTypeInfoPtr->Name = v; }
-const char* ImGuiDataTypeInfo_GetName(ImGuiDataTypeInfo *self) { return self->Name; }
-void ImGuiDataTypeInfo_SetPrintFmt(ImGuiDataTypeInfo *ImGuiDataTypeInfoPtr, const char* v) { ImGuiDataTypeInfoPtr->PrintFmt = v; }
-const char* ImGuiDataTypeInfo_GetPrintFmt(ImGuiDataTypeInfo *self) { return self->PrintFmt; }
-void ImGuiDataTypeInfo_SetScanFmt(ImGuiDataTypeInfo *ImGuiDataTypeInfoPtr, const char* v) { ImGuiDataTypeInfoPtr->ScanFmt = v; }
-const char* ImGuiDataTypeInfo_GetScanFmt(ImGuiDataTypeInfo *self) { return self->ScanFmt; }
-void ImGuiInputTextState_SetID(ImGuiInputTextState *ImGuiInputTextStatePtr, ImGuiID v) { ImGuiInputTextStatePtr->ID = v; }
-ImGuiID ImGuiInputTextState_GetID(ImGuiInputTextState *self) { return self->ID; }
-void ImGuiInputTextState_SetCurLenW(ImGuiInputTextState *ImGuiInputTextStatePtr, int v) { ImGuiInputTextStatePtr->CurLenW = v; }
-int ImGuiInputTextState_GetCurLenW(ImGuiInputTextState *self) { return self->CurLenW; }
-void ImGuiInputTextState_SetCurLenA(ImGuiInputTextState *ImGuiInputTextStatePtr, int v) { ImGuiInputTextStatePtr->CurLenA = v; }
-int ImGuiInputTextState_GetCurLenA(ImGuiInputTextState *self) { return self->CurLenA; }
-void ImGuiInputTextState_SetTextW(ImGuiInputTextState *ImGuiInputTextStatePtr, ImVector_ImWchar v) { ImGuiInputTextStatePtr->TextW = v; }
-ImVector_ImWchar ImGuiInputTextState_GetTextW(ImGuiInputTextState *self) { return self->TextW; }
-void ImGuiInputTextState_SetTextA(ImGuiInputTextState *ImGuiInputTextStatePtr, ImVector_char v) { ImGuiInputTextStatePtr->TextA = v; }
-ImVector_char ImGuiInputTextState_GetTextA(ImGuiInputTextState *self) { return self->TextA; }
-void ImGuiInputTextState_SetInitialTextA(ImGuiInputTextState *ImGuiInputTextStatePtr, ImVector_char v) { ImGuiInputTextStatePtr->InitialTextA = v; }
-ImVector_char ImGuiInputTextState_GetInitialTextA(ImGuiInputTextState *self) { return self->InitialTextA; }
-void ImGuiInputTextState_SetTextAIsValid(ImGuiInputTextState *ImGuiInputTextStatePtr, bool v) { ImGuiInputTextStatePtr->TextAIsValid = v; }
-bool ImGuiInputTextState_GetTextAIsValid(ImGuiInputTextState *self) { return self->TextAIsValid; }
-void ImGuiInputTextState_SetBufCapacityA(ImGuiInputTextState *ImGuiInputTextStatePtr, int v) { ImGuiInputTextStatePtr->BufCapacityA = v; }
-int ImGuiInputTextState_GetBufCapacityA(ImGuiInputTextState *self) { return self->BufCapacityA; }
-void ImGuiInputTextState_SetScrollX(ImGuiInputTextState *ImGuiInputTextStatePtr, float v) { ImGuiInputTextStatePtr->ScrollX = v; }
-float ImGuiInputTextState_GetScrollX(ImGuiInputTextState *self) { return self->ScrollX; }
-void ImGuiInputTextState_SetStb(ImGuiInputTextState *ImGuiInputTextStatePtr, STB_TexteditState v) { ImGuiInputTextStatePtr->Stb = v; }
-STB_TexteditState ImGuiInputTextState_GetStb(ImGuiInputTextState *self) { return self->Stb; }
-void ImGuiInputTextState_SetCursorAnim(ImGuiInputTextState *ImGuiInputTextStatePtr, float v) { ImGuiInputTextStatePtr->CursorAnim = v; }
-float ImGuiInputTextState_GetCursorAnim(ImGuiInputTextState *self) { return self->CursorAnim; }
-void ImGuiInputTextState_SetCursorFollow(ImGuiInputTextState *ImGuiInputTextStatePtr, bool v) { ImGuiInputTextStatePtr->CursorFollow = v; }
-bool ImGuiInputTextState_GetCursorFollow(ImGuiInputTextState *self) { return self->CursorFollow; }
-void ImGuiInputTextState_SetSelectedAllMouseLock(ImGuiInputTextState *ImGuiInputTextStatePtr, bool v) { ImGuiInputTextStatePtr->SelectedAllMouseLock = v; }
-bool ImGuiInputTextState_GetSelectedAllMouseLock(ImGuiInputTextState *self) { return self->SelectedAllMouseLock; }
-void ImGuiInputTextState_SetEdited(ImGuiInputTextState *ImGuiInputTextStatePtr, bool v) { ImGuiInputTextStatePtr->Edited = v; }
-bool ImGuiInputTextState_GetEdited(ImGuiInputTextState *self) { return self->Edited; }
-void ImGuiInputTextState_SetFlags(ImGuiInputTextState *ImGuiInputTextStatePtr, ImGuiInputTextFlags v) { ImGuiInputTextStatePtr->Flags = v; }
-ImGuiInputTextFlags ImGuiInputTextState_GetFlags(ImGuiInputTextState *self) { return self->Flags; }
-void ImGuiOldColumns_SetID(ImGuiOldColumns *ImGuiOldColumnsPtr, ImGuiID v) { ImGuiOldColumnsPtr->ID = v; }
-ImGuiID ImGuiOldColumns_GetID(ImGuiOldColumns *self) { return self->ID; }
-void ImGuiOldColumns_SetFlags(ImGuiOldColumns *ImGuiOldColumnsPtr, ImGuiOldColumnFlags v) { ImGuiOldColumnsPtr->Flags = v; }
-ImGuiOldColumnFlags ImGuiOldColumns_GetFlags(ImGuiOldColumns *self) { return self->Flags; }
-void ImGuiOldColumns_SetIsFirstFrame(ImGuiOldColumns *ImGuiOldColumnsPtr, bool v) { ImGuiOldColumnsPtr->IsFirstFrame = v; }
-bool ImGuiOldColumns_GetIsFirstFrame(ImGuiOldColumns *self) { return self->IsFirstFrame; }
-void ImGuiOldColumns_SetIsBeingResized(ImGuiOldColumns *ImGuiOldColumnsPtr, bool v) { ImGuiOldColumnsPtr->IsBeingResized = v; }
-bool ImGuiOldColumns_GetIsBeingResized(ImGuiOldColumns *self) { return self->IsBeingResized; }
-void ImGuiOldColumns_SetCurrent(ImGuiOldColumns *ImGuiOldColumnsPtr, int v) { ImGuiOldColumnsPtr->Current = v; }
-int ImGuiOldColumns_GetCurrent(ImGuiOldColumns *self) { return self->Current; }
-void ImGuiOldColumns_SetCount(ImGuiOldColumns *ImGuiOldColumnsPtr, int v) { ImGuiOldColumnsPtr->Count = v; }
-int ImGuiOldColumns_GetCount(ImGuiOldColumns *self) { return self->Count; }
-void ImGuiOldColumns_SetOffMinX(ImGuiOldColumns *ImGuiOldColumnsPtr, float v) { ImGuiOldColumnsPtr->OffMinX = v; }
-float ImGuiOldColumns_GetOffMinX(ImGuiOldColumns *self) { return self->OffMinX; }
-void ImGuiOldColumns_SetOffMaxX(ImGuiOldColumns *ImGuiOldColumnsPtr, float v) { ImGuiOldColumnsPtr->OffMaxX = v; }
-float ImGuiOldColumns_GetOffMaxX(ImGuiOldColumns *self) { return self->OffMaxX; }
-void ImGuiOldColumns_SetLineMinY(ImGuiOldColumns *ImGuiOldColumnsPtr, float v) { ImGuiOldColumnsPtr->LineMinY = v; }
-float ImGuiOldColumns_GetLineMinY(ImGuiOldColumns *self) { return self->LineMinY; }
-void ImGuiOldColumns_SetLineMaxY(ImGuiOldColumns *ImGuiOldColumnsPtr, float v) { ImGuiOldColumnsPtr->LineMaxY = v; }
-float ImGuiOldColumns_GetLineMaxY(ImGuiOldColumns *self) { return self->LineMaxY; }
-void ImGuiOldColumns_SetHostCursorPosY(ImGuiOldColumns *ImGuiOldColumnsPtr, float v) { ImGuiOldColumnsPtr->HostCursorPosY = v; }
-float ImGuiOldColumns_GetHostCursorPosY(ImGuiOldColumns *self) { return self->HostCursorPosY; }
-void ImGuiOldColumns_SetHostCursorMaxPosX(ImGuiOldColumns *ImGuiOldColumnsPtr, float v) { ImGuiOldColumnsPtr->HostCursorMaxPosX = v; }
-float ImGuiOldColumns_GetHostCursorMaxPosX(ImGuiOldColumns *self) { return self->HostCursorMaxPosX; }
-void ImGuiOldColumns_SetHostInitialClipRect(ImGuiOldColumns *ImGuiOldColumnsPtr, ImRect v) { ImGuiOldColumnsPtr->HostInitialClipRect = v; }
-ImRect ImGuiOldColumns_GetHostInitialClipRect(ImGuiOldColumns *self) { return self->HostInitialClipRect; }
-void ImGuiOldColumns_SetHostBackupClipRect(ImGuiOldColumns *ImGuiOldColumnsPtr, ImRect v) { ImGuiOldColumnsPtr->HostBackupClipRect = v; }
-ImRect ImGuiOldColumns_GetHostBackupClipRect(ImGuiOldColumns *self) { return self->HostBackupClipRect; }
-void ImGuiOldColumns_SetHostBackupParentWorkRect(ImGuiOldColumns *ImGuiOldColumnsPtr, ImRect v) { ImGuiOldColumnsPtr->HostBackupParentWorkRect = v; }
-ImRect ImGuiOldColumns_GetHostBackupParentWorkRect(ImGuiOldColumns *self) { return self->HostBackupParentWorkRect; }
-void ImGuiOldColumns_SetColumns(ImGuiOldColumns *ImGuiOldColumnsPtr, ImVector_ImGuiOldColumnData v) { ImGuiOldColumnsPtr->Columns = v; }
-ImVector_ImGuiOldColumnData ImGuiOldColumns_GetColumns(ImGuiOldColumns *self) { return self->Columns; }
-void ImGuiOldColumns_SetSplitter(ImGuiOldColumns *ImGuiOldColumnsPtr, ImDrawListSplitter v) { ImGuiOldColumnsPtr->Splitter = v; }
-ImDrawListSplitter ImGuiOldColumns_GetSplitter(ImGuiOldColumns *self) { return self->Splitter; }
-void ImGuiStackTool_SetLastActiveFrame(ImGuiStackTool *ImGuiStackToolPtr, int v) { ImGuiStackToolPtr->LastActiveFrame = v; }
-int ImGuiStackTool_GetLastActiveFrame(ImGuiStackTool *self) { return self->LastActiveFrame; }
-void ImGuiStackTool_SetStackLevel(ImGuiStackTool *ImGuiStackToolPtr, int v) { ImGuiStackToolPtr->StackLevel = v; }
-int ImGuiStackTool_GetStackLevel(ImGuiStackTool *self) { return self->StackLevel; }
-void ImGuiStackTool_SetQueryId(ImGuiStackTool *ImGuiStackToolPtr, ImGuiID v) { ImGuiStackToolPtr->QueryId = v; }
-ImGuiID ImGuiStackTool_GetQueryId(ImGuiStackTool *self) { return self->QueryId; }
-void ImGuiStackTool_SetResults(ImGuiStackTool *ImGuiStackToolPtr, ImVector_ImGuiStackLevelInfo v) { ImGuiStackToolPtr->Results = v; }
-ImVector_ImGuiStackLevelInfo ImGuiStackTool_GetResults(ImGuiStackTool *self) { return self->Results; }
-void ImGuiStackTool_SetCopyToClipboardOnCtrlC(ImGuiStackTool *ImGuiStackToolPtr, bool v) { ImGuiStackToolPtr->CopyToClipboardOnCtrlC = v; }
-bool ImGuiStackTool_GetCopyToClipboardOnCtrlC(ImGuiStackTool *self) { return self->CopyToClipboardOnCtrlC; }
-void ImGuiStackTool_SetCopyToClipboardLastTime(ImGuiStackTool *ImGuiStackToolPtr, float v) { ImGuiStackToolPtr->CopyToClipboardLastTime = v; }
-float ImGuiStackTool_GetCopyToClipboardLastTime(ImGuiStackTool *self) { return self->CopyToClipboardLastTime; }
-void ImGuiViewport_SetID(ImGuiViewport *ImGuiViewportPtr, ImGuiID v) { ImGuiViewportPtr->ID = v; }
-ImGuiID ImGuiViewport_GetID(ImGuiViewport *self) { return self->ID; }
-void ImGuiViewport_SetFlags(ImGuiViewport *ImGuiViewportPtr, ImGuiViewportFlags v) { ImGuiViewportPtr->Flags = v; }
-ImGuiViewportFlags ImGuiViewport_GetFlags(ImGuiViewport *self) { return self->Flags; }
-void ImGuiViewport_SetPos(ImGuiViewport *ImGuiViewportPtr, ImVec2 v) { ImGuiViewportPtr->Pos = v; }
-ImVec2 ImGuiViewport_GetPos(ImGuiViewport *self) { return self->Pos; }
-void ImGuiViewport_SetSize(ImGuiViewport *ImGuiViewportPtr, ImVec2 v) { ImGuiViewportPtr->Size = v; }
-ImVec2 ImGuiViewport_GetSize(ImGuiViewport *self) { return self->Size; }
-void ImGuiViewport_SetWorkPos(ImGuiViewport *ImGuiViewportPtr, ImVec2 v) { ImGuiViewportPtr->WorkPos = v; }
-ImVec2 ImGuiViewport_GetWorkPos(ImGuiViewport *self) { return self->WorkPos; }
-void ImGuiViewport_SetWorkSize(ImGuiViewport *ImGuiViewportPtr, ImVec2 v) { ImGuiViewportPtr->WorkSize = v; }
-ImVec2 ImGuiViewport_GetWorkSize(ImGuiViewport *self) { return self->WorkSize; }
-void ImGuiViewport_SetDpiScale(ImGuiViewport *ImGuiViewportPtr, float v) { ImGuiViewportPtr->DpiScale = v; }
-float ImGuiViewport_GetDpiScale(ImGuiViewport *self) { return self->DpiScale; }
-void ImGuiViewport_SetParentViewportId(ImGuiViewport *ImGuiViewportPtr, ImGuiID v) { ImGuiViewportPtr->ParentViewportId = v; }
-ImGuiID ImGuiViewport_GetParentViewportId(ImGuiViewport *self) { return self->ParentViewportId; }
-void ImGuiViewport_SetDrawData(ImGuiViewport *ImGuiViewportPtr, ImDrawData* v) { ImGuiViewportPtr->DrawData = v; }
-ImDrawData* ImGuiViewport_GetDrawData(ImGuiViewport *self) { return self->DrawData; }
-void ImGuiViewport_SetRendererUserData(ImGuiViewport *ImGuiViewportPtr, void* v) { ImGuiViewportPtr->RendererUserData = v; }
-void* ImGuiViewport_GetRendererUserData(ImGuiViewport *self) { return self->RendererUserData; }
-void ImGuiViewport_SetPlatformUserData(ImGuiViewport *ImGuiViewportPtr, void* v) { ImGuiViewportPtr->PlatformUserData = v; }
-void* ImGuiViewport_GetPlatformUserData(ImGuiViewport *self) { return self->PlatformUserData; }
-void ImGuiViewport_SetPlatformHandle(ImGuiViewport *ImGuiViewportPtr, void* v) { ImGuiViewportPtr->PlatformHandle = v; }
-void* ImGuiViewport_GetPlatformHandle(ImGuiViewport *self) { return self->PlatformHandle; }
-void ImGuiViewport_SetPlatformHandleRaw(ImGuiViewport *ImGuiViewportPtr, void* v) { ImGuiViewportPtr->PlatformHandleRaw = v; }
-void* ImGuiViewport_GetPlatformHandleRaw(ImGuiViewport *self) { return self->PlatformHandleRaw; }
-void ImGuiViewport_SetPlatformRequestMove(ImGuiViewport *ImGuiViewportPtr, bool v) { ImGuiViewportPtr->PlatformRequestMove = v; }
-bool ImGuiViewport_GetPlatformRequestMove(ImGuiViewport *self) { return self->PlatformRequestMove; }
-void ImGuiViewport_SetPlatformRequestResize(ImGuiViewport *ImGuiViewportPtr, bool v) { ImGuiViewportPtr->PlatformRequestResize = v; }
-bool ImGuiViewport_GetPlatformRequestResize(ImGuiViewport *self) { return self->PlatformRequestResize; }
-void ImGuiViewport_SetPlatformRequestClose(ImGuiViewport *ImGuiViewportPtr, bool v) { ImGuiViewportPtr->PlatformRequestClose = v; }
-bool ImGuiViewport_GetPlatformRequestClose(ImGuiViewport *self) { return self->PlatformRequestClose; }
-void ImBitVector_SetStorage(ImBitVector *ImBitVectorPtr, ImVector_ImU32 v) { ImBitVectorPtr->Storage = v; }
-ImVector_ImU32 ImBitVector_GetStorage(ImBitVector *self) { return self->Storage; }
-void ImGuiStackLevelInfo_SetID(ImGuiStackLevelInfo *ImGuiStackLevelInfoPtr, ImGuiID v) { ImGuiStackLevelInfoPtr->ID = v; }
-ImGuiID ImGuiStackLevelInfo_GetID(ImGuiStackLevelInfo *self) { return self->ID; }
-void ImGuiStackLevelInfo_SetQueryFrameCount(ImGuiStackLevelInfo *ImGuiStackLevelInfoPtr, ImS8 v) { ImGuiStackLevelInfoPtr->QueryFrameCount = v; }
-ImS8 ImGuiStackLevelInfo_GetQueryFrameCount(ImGuiStackLevelInfo *self) { return self->QueryFrameCount; }
-void ImGuiStackLevelInfo_SetQuerySuccess(ImGuiStackLevelInfo *ImGuiStackLevelInfoPtr, bool v) { ImGuiStackLevelInfoPtr->QuerySuccess = v; }
-bool ImGuiStackLevelInfo_GetQuerySuccess(ImGuiStackLevelInfo *self) { return self->QuerySuccess; }
-void ImGuiStackLevelInfo_SetDataType(ImGuiStackLevelInfo *ImGuiStackLevelInfoPtr, ImGuiDataType v) { ImGuiStackLevelInfoPtr->DataType = v; }
-ImGuiDataType ImGuiStackLevelInfo_GetDataType(ImGuiStackLevelInfo *self) { return self->DataType; }
-void ImGuiTableTempData_SetTableIndex(ImGuiTableTempData *ImGuiTableTempDataPtr, int v) { ImGuiTableTempDataPtr->TableIndex = v; }
-int ImGuiTableTempData_GetTableIndex(ImGuiTableTempData *self) { return self->TableIndex; }
-void ImGuiTableTempData_SetLastTimeActive(ImGuiTableTempData *ImGuiTableTempDataPtr, float v) { ImGuiTableTempDataPtr->LastTimeActive = v; }
-float ImGuiTableTempData_GetLastTimeActive(ImGuiTableTempData *self) { return self->LastTimeActive; }
-void ImGuiTableTempData_SetUserOuterSize(ImGuiTableTempData *ImGuiTableTempDataPtr, ImVec2 v) { ImGuiTableTempDataPtr->UserOuterSize = v; }
-ImVec2 ImGuiTableTempData_GetUserOuterSize(ImGuiTableTempData *self) { return self->UserOuterSize; }
-void ImGuiTableTempData_SetDrawSplitter(ImGuiTableTempData *ImGuiTableTempDataPtr, ImDrawListSplitter v) { ImGuiTableTempDataPtr->DrawSplitter = v; }
-ImDrawListSplitter ImGuiTableTempData_GetDrawSplitter(ImGuiTableTempData *self) { return self->DrawSplitter; }
-void ImGuiTableTempData_SetHostBackupWorkRect(ImGuiTableTempData *ImGuiTableTempDataPtr, ImRect v) { ImGuiTableTempDataPtr->HostBackupWorkRect = v; }
-ImRect ImGuiTableTempData_GetHostBackupWorkRect(ImGuiTableTempData *self) { return self->HostBackupWorkRect; }
-void ImGuiTableTempData_SetHostBackupParentWorkRect(ImGuiTableTempData *ImGuiTableTempDataPtr, ImRect v) { ImGuiTableTempDataPtr->HostBackupParentWorkRect = v; }
-ImRect ImGuiTableTempData_GetHostBackupParentWorkRect(ImGuiTableTempData *self) { return self->HostBackupParentWorkRect; }
-void ImGuiTableTempData_SetHostBackupPrevLineSize(ImGuiTableTempData *ImGuiTableTempDataPtr, ImVec2 v) { ImGuiTableTempDataPtr->HostBackupPrevLineSize = v; }
-ImVec2 ImGuiTableTempData_GetHostBackupPrevLineSize(ImGuiTableTempData *self) { return self->HostBackupPrevLineSize; }
-void ImGuiTableTempData_SetHostBackupCurrLineSize(ImGuiTableTempData *ImGuiTableTempDataPtr, ImVec2 v) { ImGuiTableTempDataPtr->HostBackupCurrLineSize = v; }
-ImVec2 ImGuiTableTempData_GetHostBackupCurrLineSize(ImGuiTableTempData *self) { return self->HostBackupCurrLineSize; }
-void ImGuiTableTempData_SetHostBackupCursorMaxPos(ImGuiTableTempData *ImGuiTableTempDataPtr, ImVec2 v) { ImGuiTableTempDataPtr->HostBackupCursorMaxPos = v; }
-ImVec2 ImGuiTableTempData_GetHostBackupCursorMaxPos(ImGuiTableTempData *self) { return self->HostBackupCursorMaxPos; }
-void ImGuiTableTempData_SetHostBackupColumnsOffset(ImGuiTableTempData *ImGuiTableTempDataPtr, ImVec1 v) { ImGuiTableTempDataPtr->HostBackupColumnsOffset = v; }
-ImVec1 ImGuiTableTempData_GetHostBackupColumnsOffset(ImGuiTableTempData *self) { return self->HostBackupColumnsOffset; }
-void ImGuiTableTempData_SetHostBackupItemWidth(ImGuiTableTempData *ImGuiTableTempDataPtr, float v) { ImGuiTableTempDataPtr->HostBackupItemWidth = v; }
-float ImGuiTableTempData_GetHostBackupItemWidth(ImGuiTableTempData *self) { return self->HostBackupItemWidth; }
-void ImGuiTableTempData_SetHostBackupItemWidthStackSize(ImGuiTableTempData *ImGuiTableTempDataPtr, int v) { ImGuiTableTempDataPtr->HostBackupItemWidthStackSize = v; }
-int ImGuiTableTempData_GetHostBackupItemWidthStackSize(ImGuiTableTempData *self) { return self->HostBackupItemWidthStackSize; }
-void ImGuiListClipperData_SetListClipper(ImGuiListClipperData *ImGuiListClipperDataPtr, ImGuiListClipper* v) { ImGuiListClipperDataPtr->ListClipper = v; }
-ImGuiListClipper* ImGuiListClipperData_GetListClipper(ImGuiListClipperData *self) { return self->ListClipper; }
-void ImGuiListClipperData_SetLossynessOffset(ImGuiListClipperData *ImGuiListClipperDataPtr, float v) { ImGuiListClipperDataPtr->LossynessOffset = v; }
-float ImGuiListClipperData_GetLossynessOffset(ImGuiListClipperData *self) { return self->LossynessOffset; }
-void ImGuiListClipperData_SetStepNo(ImGuiListClipperData *ImGuiListClipperDataPtr, int v) { ImGuiListClipperDataPtr->StepNo = v; }
-int ImGuiListClipperData_GetStepNo(ImGuiListClipperData *self) { return self->StepNo; }
-void ImGuiListClipperData_SetItemsFrozen(ImGuiListClipperData *ImGuiListClipperDataPtr, int v) { ImGuiListClipperDataPtr->ItemsFrozen = v; }
-int ImGuiListClipperData_GetItemsFrozen(ImGuiListClipperData *self) { return self->ItemsFrozen; }
-void ImGuiListClipperData_SetRanges(ImGuiListClipperData *ImGuiListClipperDataPtr, ImVector_ImGuiListClipperRange v) { ImGuiListClipperDataPtr->Ranges = v; }
-ImVector_ImGuiListClipperRange ImGuiListClipperData_GetRanges(ImGuiListClipperData *self) { return self->Ranges; }
-void ImGuiOnceUponAFrame_SetRefFrame(ImGuiOnceUponAFrame *ImGuiOnceUponAFramePtr, int v) { ImGuiOnceUponAFramePtr->RefFrame = v; }
-int ImGuiOnceUponAFrame_GetRefFrame(ImGuiOnceUponAFrame *self) { return self->RefFrame; }
-void ImGuiShrinkWidthItem_SetIndex(ImGuiShrinkWidthItem *ImGuiShrinkWidthItemPtr, int v) { ImGuiShrinkWidthItemPtr->Index = v; }
-int ImGuiShrinkWidthItem_GetIndex(ImGuiShrinkWidthItem *self) { return self->Index; }
-void ImGuiShrinkWidthItem_SetWidth(ImGuiShrinkWidthItem *ImGuiShrinkWidthItemPtr, float v) { ImGuiShrinkWidthItemPtr->Width = v; }
-float ImGuiShrinkWidthItem_GetWidth(ImGuiShrinkWidthItem *self) { return self->Width; }
-void ImGuiShrinkWidthItem_SetInitialWidth(ImGuiShrinkWidthItem *ImGuiShrinkWidthItemPtr, float v) { ImGuiShrinkWidthItemPtr->InitialWidth = v; }
-float ImGuiShrinkWidthItem_GetInitialWidth(ImGuiShrinkWidthItem *self) { return self->InitialWidth; }
-void ImGuiTableColumnSortSpecs_SetColumnUserID(ImGuiTableColumnSortSpecs *ImGuiTableColumnSortSpecsPtr, ImGuiID v) { ImGuiTableColumnSortSpecsPtr->ColumnUserID = v; }
-ImGuiID ImGuiTableColumnSortSpecs_GetColumnUserID(ImGuiTableColumnSortSpecs *self) { return self->ColumnUserID; }
-void ImGuiTableColumnSortSpecs_SetColumnIndex(ImGuiTableColumnSortSpecs *ImGuiTableColumnSortSpecsPtr, ImS16 v) { ImGuiTableColumnSortSpecsPtr->ColumnIndex = v; }
-ImS16 ImGuiTableColumnSortSpecs_GetColumnIndex(ImGuiTableColumnSortSpecs *self) { return self->ColumnIndex; }
-void ImGuiTableColumnSortSpecs_SetSortOrder(ImGuiTableColumnSortSpecs *ImGuiTableColumnSortSpecsPtr, ImS16 v) { ImGuiTableColumnSortSpecsPtr->SortOrder = v; }
-ImS16 ImGuiTableColumnSortSpecs_GetSortOrder(ImGuiTableColumnSortSpecs *self) { return self->SortOrder; }
-void ImGuiTableColumnSortSpecs_SetSortDirection(ImGuiTableColumnSortSpecs *ImGuiTableColumnSortSpecsPtr, ImGuiSortDirection v) { ImGuiTableColumnSortSpecsPtr->SortDirection = v; }
-ImGuiSortDirection ImGuiTableColumnSortSpecs_GetSortDirection(ImGuiTableColumnSortSpecs *self) { return self->SortDirection; }
-void StbUndoState_Setundo_point(StbUndoState *StbUndoStatePtr, short v) { StbUndoStatePtr->undo_point = v; }
-short StbUndoState_Getundo_point(StbUndoState *self) { return self->undo_point; }
-void StbUndoState_Setredo_point(StbUndoState *StbUndoStatePtr, short v) { StbUndoStatePtr->redo_point = v; }
-short StbUndoState_Getredo_point(StbUndoState *self) { return self->redo_point; }
-void StbUndoState_Setundo_char_point(StbUndoState *StbUndoStatePtr, int v) { StbUndoStatePtr->undo_char_point = v; }
-int StbUndoState_Getundo_char_point(StbUndoState *self) { return self->undo_char_point; }
-void StbUndoState_Setredo_char_point(StbUndoState *StbUndoStatePtr, int v) { StbUndoStatePtr->redo_char_point = v; }
-int StbUndoState_Getredo_char_point(StbUndoState *self) { return self->redo_char_point; }
-void ImGuiTextBuffer_SetBuf(ImGuiTextBuffer *ImGuiTextBufferPtr, ImVector_char v) { ImGuiTextBufferPtr->Buf = v; }
-ImVector_char ImGuiTextBuffer_GetBuf(ImGuiTextBuffer *self) { return self->Buf; }
-void ImGuiWindowStackData_SetWindow(ImGuiWindowStackData *ImGuiWindowStackDataPtr, ImGuiWindow* v) { ImGuiWindowStackDataPtr->Window = v; }
-ImGuiWindow* ImGuiWindowStackData_GetWindow(ImGuiWindowStackData *self) { return self->Window; }
-void ImGuiWindowStackData_SetParentLastItemDataBackup(ImGuiWindowStackData *ImGuiWindowStackDataPtr, ImGuiLastItemData v) { ImGuiWindowStackDataPtr->ParentLastItemDataBackup = v; }
-ImGuiLastItemData ImGuiWindowStackData_GetParentLastItemDataBackup(ImGuiWindowStackData *self) { return self->ParentLastItemDataBackup; }
-void ImGuiWindowStackData_SetStackSizesOnBegin(ImGuiWindowStackData *ImGuiWindowStackDataPtr, ImGuiStackSizes v) { ImGuiWindowStackDataPtr->StackSizesOnBegin = v; }
-ImGuiStackSizes ImGuiWindowStackData_GetStackSizesOnBegin(ImGuiWindowStackData *self) { return self->StackSizesOnBegin; }
-void ImFontAtlasCustomRect_SetWidth(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned short v) { ImFontAtlasCustomRectPtr->Width = v; }
-unsigned short ImFontAtlasCustomRect_GetWidth(ImFontAtlasCustomRect *self) { return self->Width; }
-void ImFontAtlasCustomRect_SetHeight(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned short v) { ImFontAtlasCustomRectPtr->Height = v; }
-unsigned short ImFontAtlasCustomRect_GetHeight(ImFontAtlasCustomRect *self) { return self->Height; }
-void ImFontAtlasCustomRect_SetX(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned short v) { ImFontAtlasCustomRectPtr->X = v; }
-unsigned short ImFontAtlasCustomRect_GetX(ImFontAtlasCustomRect *self) { return self->X; }
-void ImFontAtlasCustomRect_SetY(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned short v) { ImFontAtlasCustomRectPtr->Y = v; }
-unsigned short ImFontAtlasCustomRect_GetY(ImFontAtlasCustomRect *self) { return self->Y; }
-void ImFontAtlasCustomRect_SetGlyphID(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned int v) { ImFontAtlasCustomRectPtr->GlyphID = v; }
-unsigned int ImFontAtlasCustomRect_GetGlyphID(ImFontAtlasCustomRect *self) { return self->GlyphID; }
-void ImFontAtlasCustomRect_SetGlyphAdvanceX(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, float v) { ImFontAtlasCustomRectPtr->GlyphAdvanceX = v; }
-float ImFontAtlasCustomRect_GetGlyphAdvanceX(ImFontAtlasCustomRect *self) { return self->GlyphAdvanceX; }
-void ImFontAtlasCustomRect_SetGlyphOffset(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, ImVec2 v) { ImFontAtlasCustomRectPtr->GlyphOffset = v; }
-ImVec2 ImFontAtlasCustomRect_GetGlyphOffset(ImFontAtlasCustomRect *self) { return self->GlyphOffset; }
-void ImFontAtlasCustomRect_SetFont(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, ImFont* v) { ImFontAtlasCustomRectPtr->Font = v; }
-ImFont* ImFontAtlasCustomRect_GetFont(ImFontAtlasCustomRect *self) { return self->Font; }
+void ImGuiPayload_SetData(ImGuiPayload *ImGuiPayloadPtr, void* v) { ImGuiPayloadPtr->Data = v; }
+void* ImGuiPayload_GetData(ImGuiPayload *self) { return self->Data; }
+void ImGuiPayload_SetDataSize(ImGuiPayload *ImGuiPayloadPtr, int v) { ImGuiPayloadPtr->DataSize = v; }
+int ImGuiPayload_GetDataSize(ImGuiPayload *self) { return self->DataSize; }
+void ImGuiPayload_SetSourceId(ImGuiPayload *ImGuiPayloadPtr, ImGuiID v) { ImGuiPayloadPtr->SourceId = v; }
+ImGuiID ImGuiPayload_GetSourceId(ImGuiPayload *self) { return self->SourceId; }
+void ImGuiPayload_SetSourceParentId(ImGuiPayload *ImGuiPayloadPtr, ImGuiID v) { ImGuiPayloadPtr->SourceParentId = v; }
+ImGuiID ImGuiPayload_GetSourceParentId(ImGuiPayload *self) { return self->SourceParentId; }
+void ImGuiPayload_SetDataFrameCount(ImGuiPayload *ImGuiPayloadPtr, int v) { ImGuiPayloadPtr->DataFrameCount = v; }
+int ImGuiPayload_GetDataFrameCount(ImGuiPayload *self) { return self->DataFrameCount; }
+void ImGuiPayload_SetPreview(ImGuiPayload *ImGuiPayloadPtr, bool v) { ImGuiPayloadPtr->Preview = v; }
+bool ImGuiPayload_GetPreview(ImGuiPayload *self) { return self->Preview; }
+void ImGuiPayload_SetDelivery(ImGuiPayload *ImGuiPayloadPtr, bool v) { ImGuiPayloadPtr->Delivery = v; }
+bool ImGuiPayload_GetDelivery(ImGuiPayload *self) { return self->Delivery; }
+void ImGuiTableColumnSettings_SetWidthOrWeight(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, float v) { ImGuiTableColumnSettingsPtr->WidthOrWeight = v; }
+float ImGuiTableColumnSettings_GetWidthOrWeight(ImGuiTableColumnSettings *self) { return self->WidthOrWeight; }
+void ImGuiTableColumnSettings_SetUserID(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, ImGuiID v) { ImGuiTableColumnSettingsPtr->UserID = v; }
+ImGuiID ImGuiTableColumnSettings_GetUserID(ImGuiTableColumnSettings *self) { return self->UserID; }
+void ImGuiTableColumnSettings_SetIndex(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnSettingsPtr->Index = v; }
+ImGuiTableColumnIdx ImGuiTableColumnSettings_GetIndex(ImGuiTableColumnSettings *self) { return self->Index; }
+void ImGuiTableColumnSettings_SetDisplayOrder(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnSettingsPtr->DisplayOrder = v; }
+ImGuiTableColumnIdx ImGuiTableColumnSettings_GetDisplayOrder(ImGuiTableColumnSettings *self) { return self->DisplayOrder; }
+void ImGuiTableColumnSettings_SetSortOrder(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnSettingsPtr->SortOrder = v; }
+ImGuiTableColumnIdx ImGuiTableColumnSettings_GetSortOrder(ImGuiTableColumnSettings *self) { return self->SortOrder; }
+void ImGuiTableColumnSettings_SetSortDirection(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, ImU8 v) { ImGuiTableColumnSettingsPtr->SortDirection = v; }
+ImU8 ImGuiTableColumnSettings_GetSortDirection(ImGuiTableColumnSettings *self) { return self->SortDirection; }
+void ImGuiTableColumnSettings_SetIsEnabled(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, ImU8 v) { ImGuiTableColumnSettingsPtr->IsEnabled = v; }
+ImU8 ImGuiTableColumnSettings_GetIsEnabled(ImGuiTableColumnSettings *self) { return self->IsEnabled; }
+void ImGuiTableColumnSettings_SetIsStretch(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, ImU8 v) { ImGuiTableColumnSettingsPtr->IsStretch = v; }
+ImU8 ImGuiTableColumnSettings_GetIsStretch(ImGuiTableColumnSettings *self) { return self->IsStretch; }
+void ImDrawVert_Setpos(ImDrawVert *ImDrawVertPtr, ImVec2 v) { ImDrawVertPtr->pos = v; }
+ImVec2 ImDrawVert_Getpos(ImDrawVert *self) { return self->pos; }
+void ImDrawVert_Setuv(ImDrawVert *ImDrawVertPtr, ImVec2 v) { ImDrawVertPtr->uv = v; }
+ImVec2 ImDrawVert_Getuv(ImDrawVert *self) { return self->uv; }
+void ImDrawVert_Setcol(ImDrawVert *ImDrawVertPtr, ImU32 v) { ImDrawVertPtr->col = v; }
+ImU32 ImDrawVert_Getcol(ImDrawVert *self) { return self->col; }
 void ImGuiContext_SetInitialized(ImGuiContext *ImGuiContextPtr, bool v) { ImGuiContextPtr->Initialized = v; }
 bool ImGuiContext_GetInitialized(ImGuiContext *self) { return self->Initialized; }
 void ImGuiContext_SetFontAtlasOwnedByContext(ImGuiContext *ImGuiContextPtr, bool v) { ImGuiContextPtr->FontAtlasOwnedByContext = v; }
@@ -1990,421 +2200,211 @@ void ImGuiContext_SetWantTextInputNextFrame(ImGuiContext *ImGuiContextPtr, int v
 int ImGuiContext_GetWantTextInputNextFrame(ImGuiContext *self) { return self->WantTextInputNextFrame; }
 void ImGuiContext_SetTempBuffer(ImGuiContext *ImGuiContextPtr, ImVector_char v) { ImGuiContextPtr->TempBuffer = v; }
 ImVector_char ImGuiContext_GetTempBuffer(ImGuiContext *self) { return self->TempBuffer; }
-void ImGuiPopupData_SetPopupId(ImGuiPopupData *ImGuiPopupDataPtr, ImGuiID v) { ImGuiPopupDataPtr->PopupId = v; }
-ImGuiID ImGuiPopupData_GetPopupId(ImGuiPopupData *self) { return self->PopupId; }
-void ImGuiPopupData_SetWindow(ImGuiPopupData *ImGuiPopupDataPtr, ImGuiWindow* v) { ImGuiPopupDataPtr->Window = v; }
-ImGuiWindow* ImGuiPopupData_GetWindow(ImGuiPopupData *self) { return self->Window; }
-void ImGuiPopupData_SetSourceWindow(ImGuiPopupData *ImGuiPopupDataPtr, ImGuiWindow* v) { ImGuiPopupDataPtr->SourceWindow = v; }
-ImGuiWindow* ImGuiPopupData_GetSourceWindow(ImGuiPopupData *self) { return self->SourceWindow; }
-void ImGuiPopupData_SetParentNavLayer(ImGuiPopupData *ImGuiPopupDataPtr, int v) { ImGuiPopupDataPtr->ParentNavLayer = v; }
-int ImGuiPopupData_GetParentNavLayer(ImGuiPopupData *self) { return self->ParentNavLayer; }
-void ImGuiPopupData_SetOpenFrameCount(ImGuiPopupData *ImGuiPopupDataPtr, int v) { ImGuiPopupDataPtr->OpenFrameCount = v; }
-int ImGuiPopupData_GetOpenFrameCount(ImGuiPopupData *self) { return self->OpenFrameCount; }
-void ImGuiPopupData_SetOpenParentId(ImGuiPopupData *ImGuiPopupDataPtr, ImGuiID v) { ImGuiPopupDataPtr->OpenParentId = v; }
-ImGuiID ImGuiPopupData_GetOpenParentId(ImGuiPopupData *self) { return self->OpenParentId; }
-void ImGuiPopupData_SetOpenPopupPos(ImGuiPopupData *ImGuiPopupDataPtr, ImVec2 v) { ImGuiPopupDataPtr->OpenPopupPos = v; }
-ImVec2 ImGuiPopupData_GetOpenPopupPos(ImGuiPopupData *self) { return self->OpenPopupPos; }
-void ImGuiPopupData_SetOpenMousePos(ImGuiPopupData *ImGuiPopupDataPtr, ImVec2 v) { ImGuiPopupDataPtr->OpenMousePos = v; }
-ImVec2 ImGuiPopupData_GetOpenMousePos(ImGuiPopupData *self) { return self->OpenMousePos; }
-void ImGuiTableCellData_SetBgColor(ImGuiTableCellData *ImGuiTableCellDataPtr, ImU32 v) { ImGuiTableCellDataPtr->BgColor = v; }
-ImU32 ImGuiTableCellData_GetBgColor(ImGuiTableCellData *self) { return self->BgColor; }
-void ImGuiTableCellData_SetColumn(ImGuiTableCellData *ImGuiTableCellDataPtr, ImGuiTableColumnIdx v) { ImGuiTableCellDataPtr->Column = v; }
-ImGuiTableColumnIdx ImGuiTableCellData_GetColumn(ImGuiTableCellData *self) { return self->Column; }
-void ImGuiTableColumnSettings_SetWidthOrWeight(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, float v) { ImGuiTableColumnSettingsPtr->WidthOrWeight = v; }
-float ImGuiTableColumnSettings_GetWidthOrWeight(ImGuiTableColumnSettings *self) { return self->WidthOrWeight; }
-void ImGuiTableColumnSettings_SetUserID(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, ImGuiID v) { ImGuiTableColumnSettingsPtr->UserID = v; }
-ImGuiID ImGuiTableColumnSettings_GetUserID(ImGuiTableColumnSettings *self) { return self->UserID; }
-void ImGuiTableColumnSettings_SetIndex(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnSettingsPtr->Index = v; }
-ImGuiTableColumnIdx ImGuiTableColumnSettings_GetIndex(ImGuiTableColumnSettings *self) { return self->Index; }
-void ImGuiTableColumnSettings_SetDisplayOrder(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnSettingsPtr->DisplayOrder = v; }
-ImGuiTableColumnIdx ImGuiTableColumnSettings_GetDisplayOrder(ImGuiTableColumnSettings *self) { return self->DisplayOrder; }
-void ImGuiTableColumnSettings_SetSortOrder(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, ImGuiTableColumnIdx v) { ImGuiTableColumnSettingsPtr->SortOrder = v; }
-ImGuiTableColumnIdx ImGuiTableColumnSettings_GetSortOrder(ImGuiTableColumnSettings *self) { return self->SortOrder; }
-void ImGuiTableColumnSettings_SetSortDirection(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, ImU8 v) { ImGuiTableColumnSettingsPtr->SortDirection = v; }
-ImU8 ImGuiTableColumnSettings_GetSortDirection(ImGuiTableColumnSettings *self) { return self->SortDirection; }
-void ImGuiTableColumnSettings_SetIsEnabled(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, ImU8 v) { ImGuiTableColumnSettingsPtr->IsEnabled = v; }
-ImU8 ImGuiTableColumnSettings_GetIsEnabled(ImGuiTableColumnSettings *self) { return self->IsEnabled; }
-void ImGuiTableColumnSettings_SetIsStretch(ImGuiTableColumnSettings *ImGuiTableColumnSettingsPtr, ImU8 v) { ImGuiTableColumnSettingsPtr->IsStretch = v; }
-ImU8 ImGuiTableColumnSettings_GetIsStretch(ImGuiTableColumnSettings *self) { return self->IsStretch; }
-void STB_TexteditState_Setcursor(STB_TexteditState *STB_TexteditStatePtr, int v) { STB_TexteditStatePtr->cursor = v; }
-int STB_TexteditState_Getcursor(STB_TexteditState *self) { return self->cursor; }
-void STB_TexteditState_Setselect_start(STB_TexteditState *STB_TexteditStatePtr, int v) { STB_TexteditStatePtr->select_start = v; }
-int STB_TexteditState_Getselect_start(STB_TexteditState *self) { return self->select_start; }
-void STB_TexteditState_Setselect_end(STB_TexteditState *STB_TexteditStatePtr, int v) { STB_TexteditStatePtr->select_end = v; }
-int STB_TexteditState_Getselect_end(STB_TexteditState *self) { return self->select_end; }
-void STB_TexteditState_Setinsert_mode(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->insert_mode = v; }
-unsigned char STB_TexteditState_Getinsert_mode(STB_TexteditState *self) { return self->insert_mode; }
-void STB_TexteditState_Setrow_count_per_page(STB_TexteditState *STB_TexteditStatePtr, int v) { STB_TexteditStatePtr->row_count_per_page = v; }
-int STB_TexteditState_Getrow_count_per_page(STB_TexteditState *self) { return self->row_count_per_page; }
-void STB_TexteditState_Setcursor_at_end_of_line(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->cursor_at_end_of_line = v; }
-unsigned char STB_TexteditState_Getcursor_at_end_of_line(STB_TexteditState *self) { return self->cursor_at_end_of_line; }
-void STB_TexteditState_Setinitialized(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->initialized = v; }
-unsigned char STB_TexteditState_Getinitialized(STB_TexteditState *self) { return self->initialized; }
-void STB_TexteditState_Sethas_preferred_x(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->has_preferred_x = v; }
-unsigned char STB_TexteditState_Gethas_preferred_x(STB_TexteditState *self) { return self->has_preferred_x; }
-void STB_TexteditState_Setsingle_line(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->single_line = v; }
-unsigned char STB_TexteditState_Getsingle_line(STB_TexteditState *self) { return self->single_line; }
-void STB_TexteditState_Setpadding1(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->padding1 = v; }
-unsigned char STB_TexteditState_Getpadding1(STB_TexteditState *self) { return self->padding1; }
-void STB_TexteditState_Setpadding2(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->padding2 = v; }
-unsigned char STB_TexteditState_Getpadding2(STB_TexteditState *self) { return self->padding2; }
-void STB_TexteditState_Setpadding3(STB_TexteditState *STB_TexteditStatePtr, unsigned char v) { STB_TexteditStatePtr->padding3 = v; }
-unsigned char STB_TexteditState_Getpadding3(STB_TexteditState *self) { return self->padding3; }
-void STB_TexteditState_Setpreferred_x(STB_TexteditState *STB_TexteditStatePtr, float v) { STB_TexteditStatePtr->preferred_x = v; }
-float STB_TexteditState_Getpreferred_x(STB_TexteditState *self) { return self->preferred_x; }
-void STB_TexteditState_Setundostate(STB_TexteditState *STB_TexteditStatePtr, StbUndoState v) { STB_TexteditStatePtr->undostate = v; }
-StbUndoState STB_TexteditState_Getundostate(STB_TexteditState *self) { return self->undostate; }
-void ImGuiWindow_SetName(ImGuiWindow *ImGuiWindowPtr, char* v) { ImGuiWindowPtr->Name = v; }
-char* ImGuiWindow_GetName(ImGuiWindow *self) { return self->Name; }
-void ImGuiWindow_SetID(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->ID = v; }
-ImGuiID ImGuiWindow_GetID(ImGuiWindow *self) { return self->ID; }
-void ImGuiWindow_SetFlags(ImGuiWindow *ImGuiWindowPtr, ImGuiWindowFlags v) { ImGuiWindowPtr->Flags = v; }
-ImGuiWindowFlags ImGuiWindow_GetFlags(ImGuiWindow *self) { return self->Flags; }
-void ImGuiWindow_SetFlagsPreviousFrame(ImGuiWindow *ImGuiWindowPtr, ImGuiWindowFlags v) { ImGuiWindowPtr->FlagsPreviousFrame = v; }
-ImGuiWindowFlags ImGuiWindow_GetFlagsPreviousFrame(ImGuiWindow *self) { return self->FlagsPreviousFrame; }
-void ImGuiWindow_SetWindowClass(ImGuiWindow *ImGuiWindowPtr, ImGuiWindowClass v) { ImGuiWindowPtr->WindowClass = v; }
-ImGuiWindowClass ImGuiWindow_GetWindowClass(ImGuiWindow *self) { return self->WindowClass; }
-void ImGuiWindow_SetViewport(ImGuiWindow *ImGuiWindowPtr, ImGuiViewportP* v) { ImGuiWindowPtr->Viewport = v; }
-ImGuiViewportP* ImGuiWindow_GetViewport(ImGuiWindow *self) { return self->Viewport; }
-void ImGuiWindow_SetViewportId(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->ViewportId = v; }
-ImGuiID ImGuiWindow_GetViewportId(ImGuiWindow *self) { return self->ViewportId; }
-void ImGuiWindow_SetViewportPos(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ViewportPos = v; }
-ImVec2 ImGuiWindow_GetViewportPos(ImGuiWindow *self) { return self->ViewportPos; }
-void ImGuiWindow_SetViewportAllowPlatformMonitorExtend(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->ViewportAllowPlatformMonitorExtend = v; }
-int ImGuiWindow_GetViewportAllowPlatformMonitorExtend(ImGuiWindow *self) { return self->ViewportAllowPlatformMonitorExtend; }
-void ImGuiWindow_SetPos(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->Pos = v; }
-ImVec2 ImGuiWindow_GetPos(ImGuiWindow *self) { return self->Pos; }
-void ImGuiWindow_SetSize(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->Size = v; }
-ImVec2 ImGuiWindow_GetSize(ImGuiWindow *self) { return self->Size; }
-void ImGuiWindow_SetSizeFull(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->SizeFull = v; }
-ImVec2 ImGuiWindow_GetSizeFull(ImGuiWindow *self) { return self->SizeFull; }
-void ImGuiWindow_SetContentSize(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ContentSize = v; }
-ImVec2 ImGuiWindow_GetContentSize(ImGuiWindow *self) { return self->ContentSize; }
-void ImGuiWindow_SetContentSizeIdeal(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ContentSizeIdeal = v; }
-ImVec2 ImGuiWindow_GetContentSizeIdeal(ImGuiWindow *self) { return self->ContentSizeIdeal; }
-void ImGuiWindow_SetContentSizeExplicit(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ContentSizeExplicit = v; }
-ImVec2 ImGuiWindow_GetContentSizeExplicit(ImGuiWindow *self) { return self->ContentSizeExplicit; }
-void ImGuiWindow_SetWindowPadding(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->WindowPadding = v; }
-ImVec2 ImGuiWindow_GetWindowPadding(ImGuiWindow *self) { return self->WindowPadding; }
-void ImGuiWindow_SetWindowRounding(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->WindowRounding = v; }
-float ImGuiWindow_GetWindowRounding(ImGuiWindow *self) { return self->WindowRounding; }
-void ImGuiWindow_SetWindowBorderSize(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->WindowBorderSize = v; }
-float ImGuiWindow_GetWindowBorderSize(ImGuiWindow *self) { return self->WindowBorderSize; }
-void ImGuiWindow_SetNameBufLen(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->NameBufLen = v; }
-int ImGuiWindow_GetNameBufLen(ImGuiWindow *self) { return self->NameBufLen; }
-void ImGuiWindow_SetMoveId(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->MoveId = v; }
-ImGuiID ImGuiWindow_GetMoveId(ImGuiWindow *self) { return self->MoveId; }
-void ImGuiWindow_SetTabId(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->TabId = v; }
-ImGuiID ImGuiWindow_GetTabId(ImGuiWindow *self) { return self->TabId; }
-void ImGuiWindow_SetChildId(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->ChildId = v; }
-ImGuiID ImGuiWindow_GetChildId(ImGuiWindow *self) { return self->ChildId; }
-void ImGuiWindow_SetScroll(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->Scroll = v; }
-ImVec2 ImGuiWindow_GetScroll(ImGuiWindow *self) { return self->Scroll; }
-void ImGuiWindow_SetScrollMax(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ScrollMax = v; }
-ImVec2 ImGuiWindow_GetScrollMax(ImGuiWindow *self) { return self->ScrollMax; }
-void ImGuiWindow_SetScrollTarget(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ScrollTarget = v; }
-ImVec2 ImGuiWindow_GetScrollTarget(ImGuiWindow *self) { return self->ScrollTarget; }
-void ImGuiWindow_SetScrollTargetCenterRatio(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ScrollTargetCenterRatio = v; }
-ImVec2 ImGuiWindow_GetScrollTargetCenterRatio(ImGuiWindow *self) { return self->ScrollTargetCenterRatio; }
-void ImGuiWindow_SetScrollTargetEdgeSnapDist(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ScrollTargetEdgeSnapDist = v; }
-ImVec2 ImGuiWindow_GetScrollTargetEdgeSnapDist(ImGuiWindow *self) { return self->ScrollTargetEdgeSnapDist; }
-void ImGuiWindow_SetScrollbarSizes(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->ScrollbarSizes = v; }
-ImVec2 ImGuiWindow_GetScrollbarSizes(ImGuiWindow *self) { return self->ScrollbarSizes; }
-void ImGuiWindow_SetScrollbarX(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->ScrollbarX = v; }
-bool ImGuiWindow_GetScrollbarX(ImGuiWindow *self) { return self->ScrollbarX; }
-void ImGuiWindow_SetScrollbarY(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->ScrollbarY = v; }
-bool ImGuiWindow_GetScrollbarY(ImGuiWindow *self) { return self->ScrollbarY; }
-void ImGuiWindow_SetViewportOwned(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->ViewportOwned = v; }
-bool ImGuiWindow_GetViewportOwned(ImGuiWindow *self) { return self->ViewportOwned; }
-void ImGuiWindow_SetActive(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->Active = v; }
-bool ImGuiWindow_GetActive(ImGuiWindow *self) { return self->Active; }
-void ImGuiWindow_SetWasActive(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->WasActive = v; }
-bool ImGuiWindow_GetWasActive(ImGuiWindow *self) { return self->WasActive; }
-void ImGuiWindow_SetWriteAccessed(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->WriteAccessed = v; }
-bool ImGuiWindow_GetWriteAccessed(ImGuiWindow *self) { return self->WriteAccessed; }
-void ImGuiWindow_SetCollapsed(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->Collapsed = v; }
-bool ImGuiWindow_GetCollapsed(ImGuiWindow *self) { return self->Collapsed; }
-void ImGuiWindow_SetWantCollapseToggle(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->WantCollapseToggle = v; }
-bool ImGuiWindow_GetWantCollapseToggle(ImGuiWindow *self) { return self->WantCollapseToggle; }
-void ImGuiWindow_SetSkipItems(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->SkipItems = v; }
-bool ImGuiWindow_GetSkipItems(ImGuiWindow *self) { return self->SkipItems; }
-void ImGuiWindow_SetAppearing(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->Appearing = v; }
-bool ImGuiWindow_GetAppearing(ImGuiWindow *self) { return self->Appearing; }
-void ImGuiWindow_SetHidden(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->Hidden = v; }
-bool ImGuiWindow_GetHidden(ImGuiWindow *self) { return self->Hidden; }
-void ImGuiWindow_SetIsFallbackWindow(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->IsFallbackWindow = v; }
-bool ImGuiWindow_GetIsFallbackWindow(ImGuiWindow *self) { return self->IsFallbackWindow; }
-void ImGuiWindow_SetIsExplicitChild(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->IsExplicitChild = v; }
-bool ImGuiWindow_GetIsExplicitChild(ImGuiWindow *self) { return self->IsExplicitChild; }
-void ImGuiWindow_SetHasCloseButton(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->HasCloseButton = v; }
-bool ImGuiWindow_GetHasCloseButton(ImGuiWindow *self) { return self->HasCloseButton; }
-void ImGuiWindow_SetResizeBorderHeld(ImGuiWindow *ImGuiWindowPtr, signed char v) { ImGuiWindowPtr->ResizeBorderHeld = v; }
-signed char ImGuiWindow_GetResizeBorderHeld(ImGuiWindow *self) { return self->ResizeBorderHeld; }
-void ImGuiWindow_SetBeginCount(ImGuiWindow *ImGuiWindowPtr, short v) { ImGuiWindowPtr->BeginCount = v; }
-short ImGuiWindow_GetBeginCount(ImGuiWindow *self) { return self->BeginCount; }
-void ImGuiWindow_SetBeginOrderWithinParent(ImGuiWindow *ImGuiWindowPtr, short v) { ImGuiWindowPtr->BeginOrderWithinParent = v; }
-short ImGuiWindow_GetBeginOrderWithinParent(ImGuiWindow *self) { return self->BeginOrderWithinParent; }
-void ImGuiWindow_SetBeginOrderWithinContext(ImGuiWindow *ImGuiWindowPtr, short v) { ImGuiWindowPtr->BeginOrderWithinContext = v; }
-short ImGuiWindow_GetBeginOrderWithinContext(ImGuiWindow *self) { return self->BeginOrderWithinContext; }
-void ImGuiWindow_SetFocusOrder(ImGuiWindow *ImGuiWindowPtr, short v) { ImGuiWindowPtr->FocusOrder = v; }
-short ImGuiWindow_GetFocusOrder(ImGuiWindow *self) { return self->FocusOrder; }
-void ImGuiWindow_SetPopupId(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->PopupId = v; }
-ImGuiID ImGuiWindow_GetPopupId(ImGuiWindow *self) { return self->PopupId; }
-void ImGuiWindow_SetAutoFitFramesX(ImGuiWindow *ImGuiWindowPtr, ImS8 v) { ImGuiWindowPtr->AutoFitFramesX = v; }
-ImS8 ImGuiWindow_GetAutoFitFramesX(ImGuiWindow *self) { return self->AutoFitFramesX; }
-void ImGuiWindow_SetAutoFitFramesY(ImGuiWindow *ImGuiWindowPtr, ImS8 v) { ImGuiWindowPtr->AutoFitFramesY = v; }
-ImS8 ImGuiWindow_GetAutoFitFramesY(ImGuiWindow *self) { return self->AutoFitFramesY; }
-void ImGuiWindow_SetAutoFitChildAxises(ImGuiWindow *ImGuiWindowPtr, ImS8 v) { ImGuiWindowPtr->AutoFitChildAxises = v; }
-ImS8 ImGuiWindow_GetAutoFitChildAxises(ImGuiWindow *self) { return self->AutoFitChildAxises; }
-void ImGuiWindow_SetAutoFitOnlyGrows(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->AutoFitOnlyGrows = v; }
-bool ImGuiWindow_GetAutoFitOnlyGrows(ImGuiWindow *self) { return self->AutoFitOnlyGrows; }
-void ImGuiWindow_SetAutoPosLastDirection(ImGuiWindow *ImGuiWindowPtr, ImGuiDir v) { ImGuiWindowPtr->AutoPosLastDirection = v; }
-ImGuiDir ImGuiWindow_GetAutoPosLastDirection(ImGuiWindow *self) { return self->AutoPosLastDirection; }
-void ImGuiWindow_SetHiddenFramesCanSkipItems(ImGuiWindow *ImGuiWindowPtr, ImS8 v) { ImGuiWindowPtr->HiddenFramesCanSkipItems = v; }
-ImS8 ImGuiWindow_GetHiddenFramesCanSkipItems(ImGuiWindow *self) { return self->HiddenFramesCanSkipItems; }
-void ImGuiWindow_SetHiddenFramesCannotSkipItems(ImGuiWindow *ImGuiWindowPtr, ImS8 v) { ImGuiWindowPtr->HiddenFramesCannotSkipItems = v; }
-ImS8 ImGuiWindow_GetHiddenFramesCannotSkipItems(ImGuiWindow *self) { return self->HiddenFramesCannotSkipItems; }
-void ImGuiWindow_SetHiddenFramesForRenderOnly(ImGuiWindow *ImGuiWindowPtr, ImS8 v) { ImGuiWindowPtr->HiddenFramesForRenderOnly = v; }
-ImS8 ImGuiWindow_GetHiddenFramesForRenderOnly(ImGuiWindow *self) { return self->HiddenFramesForRenderOnly; }
-void ImGuiWindow_SetDisableInputsFrames(ImGuiWindow *ImGuiWindowPtr, ImS8 v) { ImGuiWindowPtr->DisableInputsFrames = v; }
-ImS8 ImGuiWindow_GetDisableInputsFrames(ImGuiWindow *self) { return self->DisableInputsFrames; }
-void ImGuiWindow_SetSetWindowPosAllowFlags(ImGuiWindow *ImGuiWindowPtr, ImGuiCond v) { ImGuiWindowPtr->SetWindowPosAllowFlags = v; }
-ImGuiCond ImGuiWindow_GetSetWindowPosAllowFlags(ImGuiWindow *self) { return self->SetWindowPosAllowFlags; }
-void ImGuiWindow_SetSetWindowSizeAllowFlags(ImGuiWindow *ImGuiWindowPtr, ImGuiCond v) { ImGuiWindowPtr->SetWindowSizeAllowFlags = v; }
-ImGuiCond ImGuiWindow_GetSetWindowSizeAllowFlags(ImGuiWindow *self) { return self->SetWindowSizeAllowFlags; }
-void ImGuiWindow_SetSetWindowCollapsedAllowFlags(ImGuiWindow *ImGuiWindowPtr, ImGuiCond v) { ImGuiWindowPtr->SetWindowCollapsedAllowFlags = v; }
-ImGuiCond ImGuiWindow_GetSetWindowCollapsedAllowFlags(ImGuiWindow *self) { return self->SetWindowCollapsedAllowFlags; }
-void ImGuiWindow_SetSetWindowDockAllowFlags(ImGuiWindow *ImGuiWindowPtr, ImGuiCond v) { ImGuiWindowPtr->SetWindowDockAllowFlags = v; }
-ImGuiCond ImGuiWindow_GetSetWindowDockAllowFlags(ImGuiWindow *self) { return self->SetWindowDockAllowFlags; }
-void ImGuiWindow_SetSetWindowPosVal(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->SetWindowPosVal = v; }
-ImVec2 ImGuiWindow_GetSetWindowPosVal(ImGuiWindow *self) { return self->SetWindowPosVal; }
-void ImGuiWindow_SetSetWindowPosPivot(ImGuiWindow *ImGuiWindowPtr, ImVec2 v) { ImGuiWindowPtr->SetWindowPosPivot = v; }
-ImVec2 ImGuiWindow_GetSetWindowPosPivot(ImGuiWindow *self) { return self->SetWindowPosPivot; }
-void ImGuiWindow_SetIDStack(ImGuiWindow *ImGuiWindowPtr, ImVector_ImGuiID v) { ImGuiWindowPtr->IDStack = v; }
-ImVector_ImGuiID ImGuiWindow_GetIDStack(ImGuiWindow *self) { return self->IDStack; }
-void ImGuiWindow_SetDC(ImGuiWindow *ImGuiWindowPtr, ImGuiWindowTempData v) { ImGuiWindowPtr->DC = v; }
-ImGuiWindowTempData ImGuiWindow_GetDC(ImGuiWindow *self) { return self->DC; }
-void ImGuiWindow_SetOuterRectClipped(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->OuterRectClipped = v; }
-ImRect ImGuiWindow_GetOuterRectClipped(ImGuiWindow *self) { return self->OuterRectClipped; }
-void ImGuiWindow_SetInnerRect(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->InnerRect = v; }
-ImRect ImGuiWindow_GetInnerRect(ImGuiWindow *self) { return self->InnerRect; }
-void ImGuiWindow_SetInnerClipRect(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->InnerClipRect = v; }
-ImRect ImGuiWindow_GetInnerClipRect(ImGuiWindow *self) { return self->InnerClipRect; }
-void ImGuiWindow_SetWorkRect(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->WorkRect = v; }
-ImRect ImGuiWindow_GetWorkRect(ImGuiWindow *self) { return self->WorkRect; }
-void ImGuiWindow_SetParentWorkRect(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->ParentWorkRect = v; }
-ImRect ImGuiWindow_GetParentWorkRect(ImGuiWindow *self) { return self->ParentWorkRect; }
-void ImGuiWindow_SetClipRect(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->ClipRect = v; }
-ImRect ImGuiWindow_GetClipRect(ImGuiWindow *self) { return self->ClipRect; }
-void ImGuiWindow_SetContentRegionRect(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->ContentRegionRect = v; }
-ImRect ImGuiWindow_GetContentRegionRect(ImGuiWindow *self) { return self->ContentRegionRect; }
-void ImGuiWindow_SetHitTestHoleSize(ImGuiWindow *ImGuiWindowPtr, ImVec2ih v) { ImGuiWindowPtr->HitTestHoleSize = v; }
-ImVec2ih ImGuiWindow_GetHitTestHoleSize(ImGuiWindow *self) { return self->HitTestHoleSize; }
-void ImGuiWindow_SetHitTestHoleOffset(ImGuiWindow *ImGuiWindowPtr, ImVec2ih v) { ImGuiWindowPtr->HitTestHoleOffset = v; }
-ImVec2ih ImGuiWindow_GetHitTestHoleOffset(ImGuiWindow *self) { return self->HitTestHoleOffset; }
-void ImGuiWindow_SetLastFrameActive(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->LastFrameActive = v; }
-int ImGuiWindow_GetLastFrameActive(ImGuiWindow *self) { return self->LastFrameActive; }
-void ImGuiWindow_SetLastFrameJustFocused(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->LastFrameJustFocused = v; }
-int ImGuiWindow_GetLastFrameJustFocused(ImGuiWindow *self) { return self->LastFrameJustFocused; }
-void ImGuiWindow_SetLastTimeActive(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->LastTimeActive = v; }
-float ImGuiWindow_GetLastTimeActive(ImGuiWindow *self) { return self->LastTimeActive; }
-void ImGuiWindow_SetItemWidthDefault(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->ItemWidthDefault = v; }
-float ImGuiWindow_GetItemWidthDefault(ImGuiWindow *self) { return self->ItemWidthDefault; }
-void ImGuiWindow_SetStateStorage(ImGuiWindow *ImGuiWindowPtr, ImGuiStorage v) { ImGuiWindowPtr->StateStorage = v; }
-ImGuiStorage ImGuiWindow_GetStateStorage(ImGuiWindow *self) { return self->StateStorage; }
-void ImGuiWindow_SetColumnsStorage(ImGuiWindow *ImGuiWindowPtr, ImVector_ImGuiOldColumns v) { ImGuiWindowPtr->ColumnsStorage = v; }
-ImVector_ImGuiOldColumns ImGuiWindow_GetColumnsStorage(ImGuiWindow *self) { return self->ColumnsStorage; }
-void ImGuiWindow_SetFontWindowScale(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->FontWindowScale = v; }
-float ImGuiWindow_GetFontWindowScale(ImGuiWindow *self) { return self->FontWindowScale; }
-void ImGuiWindow_SetFontDpiScale(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->FontDpiScale = v; }
-float ImGuiWindow_GetFontDpiScale(ImGuiWindow *self) { return self->FontDpiScale; }
-void ImGuiWindow_SetSettingsOffset(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->SettingsOffset = v; }
-int ImGuiWindow_GetSettingsOffset(ImGuiWindow *self) { return self->SettingsOffset; }
-void ImGuiWindow_SetDrawList(ImGuiWindow *ImGuiWindowPtr, ImDrawList* v) { ImGuiWindowPtr->DrawList = v; }
-ImDrawList* ImGuiWindow_GetDrawList(ImGuiWindow *self) { return self->DrawList; }
-void ImGuiWindow_SetDrawListInst(ImGuiWindow *ImGuiWindowPtr, ImDrawList v) { ImGuiWindowPtr->DrawListInst = v; }
-ImDrawList ImGuiWindow_GetDrawListInst(ImGuiWindow *self) { return self->DrawListInst; }
-void ImGuiWindow_SetParentWindow(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->ParentWindow = v; }
-ImGuiWindow* ImGuiWindow_GetParentWindow(ImGuiWindow *self) { return self->ParentWindow; }
-void ImGuiWindow_SetParentWindowInBeginStack(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->ParentWindowInBeginStack = v; }
-ImGuiWindow* ImGuiWindow_GetParentWindowInBeginStack(ImGuiWindow *self) { return self->ParentWindowInBeginStack; }
-void ImGuiWindow_SetRootWindow(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->RootWindow = v; }
-ImGuiWindow* ImGuiWindow_GetRootWindow(ImGuiWindow *self) { return self->RootWindow; }
-void ImGuiWindow_SetRootWindowPopupTree(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->RootWindowPopupTree = v; }
-ImGuiWindow* ImGuiWindow_GetRootWindowPopupTree(ImGuiWindow *self) { return self->RootWindowPopupTree; }
-void ImGuiWindow_SetRootWindowDockTree(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->RootWindowDockTree = v; }
-ImGuiWindow* ImGuiWindow_GetRootWindowDockTree(ImGuiWindow *self) { return self->RootWindowDockTree; }
-void ImGuiWindow_SetRootWindowForTitleBarHighlight(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->RootWindowForTitleBarHighlight = v; }
-ImGuiWindow* ImGuiWindow_GetRootWindowForTitleBarHighlight(ImGuiWindow *self) { return self->RootWindowForTitleBarHighlight; }
-void ImGuiWindow_SetRootWindowForNav(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->RootWindowForNav = v; }
-ImGuiWindow* ImGuiWindow_GetRootWindowForNav(ImGuiWindow *self) { return self->RootWindowForNav; }
-void ImGuiWindow_SetNavLastChildNavWindow(ImGuiWindow *ImGuiWindowPtr, ImGuiWindow* v) { ImGuiWindowPtr->NavLastChildNavWindow = v; }
-ImGuiWindow* ImGuiWindow_GetNavLastChildNavWindow(ImGuiWindow *self) { return self->NavLastChildNavWindow; }
-void ImGuiWindow_SetMemoryDrawListIdxCapacity(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->MemoryDrawListIdxCapacity = v; }
-int ImGuiWindow_GetMemoryDrawListIdxCapacity(ImGuiWindow *self) { return self->MemoryDrawListIdxCapacity; }
-void ImGuiWindow_SetMemoryDrawListVtxCapacity(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->MemoryDrawListVtxCapacity = v; }
-int ImGuiWindow_GetMemoryDrawListVtxCapacity(ImGuiWindow *self) { return self->MemoryDrawListVtxCapacity; }
-void ImGuiWindow_SetMemoryCompacted(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->MemoryCompacted = v; }
-bool ImGuiWindow_GetMemoryCompacted(ImGuiWindow *self) { return self->MemoryCompacted; }
-void ImGuiWindow_SetDockIsActive(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->DockIsActive = v; }
-bool ImGuiWindow_GetDockIsActive(ImGuiWindow *self) { return self->DockIsActive; }
-void ImGuiWindow_SetDockNodeIsVisible(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->DockNodeIsVisible = v; }
-bool ImGuiWindow_GetDockNodeIsVisible(ImGuiWindow *self) { return self->DockNodeIsVisible; }
-void ImGuiWindow_SetDockTabIsVisible(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->DockTabIsVisible = v; }
-bool ImGuiWindow_GetDockTabIsVisible(ImGuiWindow *self) { return self->DockTabIsVisible; }
-void ImGuiWindow_SetDockTabWantClose(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->DockTabWantClose = v; }
-bool ImGuiWindow_GetDockTabWantClose(ImGuiWindow *self) { return self->DockTabWantClose; }
-void ImGuiWindow_SetDockOrder(ImGuiWindow *ImGuiWindowPtr, short v) { ImGuiWindowPtr->DockOrder = v; }
-short ImGuiWindow_GetDockOrder(ImGuiWindow *self) { return self->DockOrder; }
-void ImGuiWindow_SetDockStyle(ImGuiWindow *ImGuiWindowPtr, ImGuiWindowDockStyle v) { ImGuiWindowPtr->DockStyle = v; }
-ImGuiWindowDockStyle ImGuiWindow_GetDockStyle(ImGuiWindow *self) { return self->DockStyle; }
-void ImGuiWindow_SetDockNode(ImGuiWindow *ImGuiWindowPtr, ImGuiDockNode* v) { ImGuiWindowPtr->DockNode = v; }
-ImGuiDockNode* ImGuiWindow_GetDockNode(ImGuiWindow *self) { return self->DockNode; }
-void ImGuiWindow_SetDockNodeAsHost(ImGuiWindow *ImGuiWindowPtr, ImGuiDockNode* v) { ImGuiWindowPtr->DockNodeAsHost = v; }
-ImGuiDockNode* ImGuiWindow_GetDockNodeAsHost(ImGuiWindow *self) { return self->DockNodeAsHost; }
-void ImGuiWindow_SetDockId(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->DockId = v; }
-ImGuiID ImGuiWindow_GetDockId(ImGuiWindow *self) { return self->DockId; }
-void ImGuiWindow_SetDockTabItemStatusFlags(ImGuiWindow *ImGuiWindowPtr, ImGuiItemStatusFlags v) { ImGuiWindowPtr->DockTabItemStatusFlags = v; }
-ImGuiItemStatusFlags ImGuiWindow_GetDockTabItemStatusFlags(ImGuiWindow *self) { return self->DockTabItemStatusFlags; }
-void ImGuiWindow_SetDockTabItemRect(ImGuiWindow *ImGuiWindowPtr, ImRect v) { ImGuiWindowPtr->DockTabItemRect = v; }
-ImRect ImGuiWindow_GetDockTabItemRect(ImGuiWindow *self) { return self->DockTabItemRect; }
-void ImGuiWindowSettings_SetID(ImGuiWindowSettings *ImGuiWindowSettingsPtr, ImGuiID v) { ImGuiWindowSettingsPtr->ID = v; }
-ImGuiID ImGuiWindowSettings_GetID(ImGuiWindowSettings *self) { return self->ID; }
-void ImGuiWindowSettings_SetPos(ImGuiWindowSettings *ImGuiWindowSettingsPtr, ImVec2ih v) { ImGuiWindowSettingsPtr->Pos = v; }
-ImVec2ih ImGuiWindowSettings_GetPos(ImGuiWindowSettings *self) { return self->Pos; }
-void ImGuiWindowSettings_SetSize(ImGuiWindowSettings *ImGuiWindowSettingsPtr, ImVec2ih v) { ImGuiWindowSettingsPtr->Size = v; }
-ImVec2ih ImGuiWindowSettings_GetSize(ImGuiWindowSettings *self) { return self->Size; }
-void ImGuiWindowSettings_SetViewportPos(ImGuiWindowSettings *ImGuiWindowSettingsPtr, ImVec2ih v) { ImGuiWindowSettingsPtr->ViewportPos = v; }
-ImVec2ih ImGuiWindowSettings_GetViewportPos(ImGuiWindowSettings *self) { return self->ViewportPos; }
-void ImGuiWindowSettings_SetViewportId(ImGuiWindowSettings *ImGuiWindowSettingsPtr, ImGuiID v) { ImGuiWindowSettingsPtr->ViewportId = v; }
-ImGuiID ImGuiWindowSettings_GetViewportId(ImGuiWindowSettings *self) { return self->ViewportId; }
-void ImGuiWindowSettings_SetDockId(ImGuiWindowSettings *ImGuiWindowSettingsPtr, ImGuiID v) { ImGuiWindowSettingsPtr->DockId = v; }
-ImGuiID ImGuiWindowSettings_GetDockId(ImGuiWindowSettings *self) { return self->DockId; }
-void ImGuiWindowSettings_SetClassId(ImGuiWindowSettings *ImGuiWindowSettingsPtr, ImGuiID v) { ImGuiWindowSettingsPtr->ClassId = v; }
-ImGuiID ImGuiWindowSettings_GetClassId(ImGuiWindowSettings *self) { return self->ClassId; }
-void ImGuiWindowSettings_SetDockOrder(ImGuiWindowSettings *ImGuiWindowSettingsPtr, short v) { ImGuiWindowSettingsPtr->DockOrder = v; }
-short ImGuiWindowSettings_GetDockOrder(ImGuiWindowSettings *self) { return self->DockOrder; }
-void ImGuiWindowSettings_SetCollapsed(ImGuiWindowSettings *ImGuiWindowSettingsPtr, bool v) { ImGuiWindowSettingsPtr->Collapsed = v; }
-bool ImGuiWindowSettings_GetCollapsed(ImGuiWindowSettings *self) { return self->Collapsed; }
-void ImGuiWindowSettings_SetWantApply(ImGuiWindowSettings *ImGuiWindowSettingsPtr, bool v) { ImGuiWindowSettingsPtr->WantApply = v; }
-bool ImGuiWindowSettings_GetWantApply(ImGuiWindowSettings *self) { return self->WantApply; }
-void ImDrawCmd_SetClipRect(ImDrawCmd *ImDrawCmdPtr, ImVec4 v) { ImDrawCmdPtr->ClipRect = v; }
-ImVec4 ImDrawCmd_GetClipRect(ImDrawCmd *self) { return self->ClipRect; }
-void ImDrawCmd_SetTextureId(ImDrawCmd *ImDrawCmdPtr, ImTextureID v) { ImDrawCmdPtr->TextureId = v; }
-ImTextureID ImDrawCmd_GetTextureId(ImDrawCmd *self) { return self->TextureId; }
-void ImDrawCmd_SetVtxOffset(ImDrawCmd *ImDrawCmdPtr, unsigned int v) { ImDrawCmdPtr->VtxOffset = v; }
-unsigned int ImDrawCmd_GetVtxOffset(ImDrawCmd *self) { return self->VtxOffset; }
-void ImDrawCmd_SetIdxOffset(ImDrawCmd *ImDrawCmdPtr, unsigned int v) { ImDrawCmdPtr->IdxOffset = v; }
-unsigned int ImDrawCmd_GetIdxOffset(ImDrawCmd *self) { return self->IdxOffset; }
-void ImDrawCmd_SetElemCount(ImDrawCmd *ImDrawCmdPtr, unsigned int v) { ImDrawCmdPtr->ElemCount = v; }
-unsigned int ImDrawCmd_GetElemCount(ImDrawCmd *self) { return self->ElemCount; }
-void ImDrawCmd_SetUserCallback(ImDrawCmd *ImDrawCmdPtr, ImDrawCallback v) { ImDrawCmdPtr->UserCallback = v; }
-ImDrawCallback ImDrawCmd_GetUserCallback(ImDrawCmd *self) { return self->UserCallback; }
-void ImDrawCmd_SetUserCallbackData(ImDrawCmd *ImDrawCmdPtr, void* v) { ImDrawCmdPtr->UserCallbackData = v; }
-void* ImDrawCmd_GetUserCallbackData(ImDrawCmd *self) { return self->UserCallbackData; }
-void ImGuiColorMod_SetCol(ImGuiColorMod *ImGuiColorModPtr, ImGuiCol v) { ImGuiColorModPtr->Col = v; }
-ImGuiCol ImGuiColorMod_GetCol(ImGuiColorMod *self) { return self->Col; }
-void ImGuiColorMod_SetBackupValue(ImGuiColorMod *ImGuiColorModPtr, ImVec4 v) { ImGuiColorModPtr->BackupValue = v; }
-ImVec4 ImGuiColorMod_GetBackupValue(ImGuiColorMod *self) { return self->BackupValue; }
-void ImGuiContextHook_SetHookId(ImGuiContextHook *ImGuiContextHookPtr, ImGuiID v) { ImGuiContextHookPtr->HookId = v; }
-ImGuiID ImGuiContextHook_GetHookId(ImGuiContextHook *self) { return self->HookId; }
-void ImGuiContextHook_SetType(ImGuiContextHook *ImGuiContextHookPtr, ImGuiContextHookType v) { ImGuiContextHookPtr->Type = v; }
-ImGuiContextHookType ImGuiContextHook_GetType(ImGuiContextHook *self) { return self->Type; }
-void ImGuiContextHook_SetOwner(ImGuiContextHook *ImGuiContextHookPtr, ImGuiID v) { ImGuiContextHookPtr->Owner = v; }
-ImGuiID ImGuiContextHook_GetOwner(ImGuiContextHook *self) { return self->Owner; }
-void ImGuiContextHook_SetCallback(ImGuiContextHook *ImGuiContextHookPtr, ImGuiContextHookCallback v) { ImGuiContextHookPtr->Callback = v; }
-ImGuiContextHookCallback ImGuiContextHook_GetCallback(ImGuiContextHook *self) { return self->Callback; }
-void ImGuiContextHook_SetUserData(ImGuiContextHook *ImGuiContextHookPtr, void* v) { ImGuiContextHookPtr->UserData = v; }
-void* ImGuiContextHook_GetUserData(ImGuiContextHook *self) { return self->UserData; }
-void ImGuiInputEventMousePos_SetPosX(ImGuiInputEventMousePos *ImGuiInputEventMousePosPtr, float v) { ImGuiInputEventMousePosPtr->PosX = v; }
-float ImGuiInputEventMousePos_GetPosX(ImGuiInputEventMousePos *self) { return self->PosX; }
-void ImGuiInputEventMousePos_SetPosY(ImGuiInputEventMousePos *ImGuiInputEventMousePosPtr, float v) { ImGuiInputEventMousePosPtr->PosY = v; }
-float ImGuiInputEventMousePos_GetPosY(ImGuiInputEventMousePos *self) { return self->PosY; }
-void ImGuiListClipperRange_SetMin(ImGuiListClipperRange *ImGuiListClipperRangePtr, int v) { ImGuiListClipperRangePtr->Min = v; }
-int ImGuiListClipperRange_GetMin(ImGuiListClipperRange *self) { return self->Min; }
-void ImGuiListClipperRange_SetMax(ImGuiListClipperRange *ImGuiListClipperRangePtr, int v) { ImGuiListClipperRangePtr->Max = v; }
-int ImGuiListClipperRange_GetMax(ImGuiListClipperRange *self) { return self->Max; }
-void ImGuiListClipperRange_SetPosToIndexConvert(ImGuiListClipperRange *ImGuiListClipperRangePtr, bool v) { ImGuiListClipperRangePtr->PosToIndexConvert = v; }
-bool ImGuiListClipperRange_GetPosToIndexConvert(ImGuiListClipperRange *self) { return self->PosToIndexConvert; }
-void ImGuiListClipperRange_SetPosToIndexOffsetMin(ImGuiListClipperRange *ImGuiListClipperRangePtr, ImS8 v) { ImGuiListClipperRangePtr->PosToIndexOffsetMin = v; }
-ImS8 ImGuiListClipperRange_GetPosToIndexOffsetMin(ImGuiListClipperRange *self) { return self->PosToIndexOffsetMin; }
-void ImGuiListClipperRange_SetPosToIndexOffsetMax(ImGuiListClipperRange *ImGuiListClipperRangePtr, ImS8 v) { ImGuiListClipperRangePtr->PosToIndexOffsetMax = v; }
-ImS8 ImGuiListClipperRange_GetPosToIndexOffsetMax(ImGuiListClipperRange *self) { return self->PosToIndexOffsetMax; }
-void ImGuiOldColumnData_SetOffsetNorm(ImGuiOldColumnData *ImGuiOldColumnDataPtr, float v) { ImGuiOldColumnDataPtr->OffsetNorm = v; }
-float ImGuiOldColumnData_GetOffsetNorm(ImGuiOldColumnData *self) { return self->OffsetNorm; }
-void ImGuiOldColumnData_SetOffsetNormBeforeResize(ImGuiOldColumnData *ImGuiOldColumnDataPtr, float v) { ImGuiOldColumnDataPtr->OffsetNormBeforeResize = v; }
-float ImGuiOldColumnData_GetOffsetNormBeforeResize(ImGuiOldColumnData *self) { return self->OffsetNormBeforeResize; }
-void ImGuiOldColumnData_SetFlags(ImGuiOldColumnData *ImGuiOldColumnDataPtr, ImGuiOldColumnFlags v) { ImGuiOldColumnDataPtr->Flags = v; }
-ImGuiOldColumnFlags ImGuiOldColumnData_GetFlags(ImGuiOldColumnData *self) { return self->Flags; }
-void ImGuiOldColumnData_SetClipRect(ImGuiOldColumnData *ImGuiOldColumnDataPtr, ImRect v) { ImGuiOldColumnDataPtr->ClipRect = v; }
-ImRect ImGuiOldColumnData_GetClipRect(ImGuiOldColumnData *self) { return self->ClipRect; }
-void ImGuiWindowTempData_SetCursorPos(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->CursorPos = v; }
-ImVec2 ImGuiWindowTempData_GetCursorPos(ImGuiWindowTempData *self) { return self->CursorPos; }
-void ImGuiWindowTempData_SetCursorPosPrevLine(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->CursorPosPrevLine = v; }
-ImVec2 ImGuiWindowTempData_GetCursorPosPrevLine(ImGuiWindowTempData *self) { return self->CursorPosPrevLine; }
-void ImGuiWindowTempData_SetCursorStartPos(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->CursorStartPos = v; }
-ImVec2 ImGuiWindowTempData_GetCursorStartPos(ImGuiWindowTempData *self) { return self->CursorStartPos; }
-void ImGuiWindowTempData_SetCursorMaxPos(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->CursorMaxPos = v; }
-ImVec2 ImGuiWindowTempData_GetCursorMaxPos(ImGuiWindowTempData *self) { return self->CursorMaxPos; }
-void ImGuiWindowTempData_SetIdealMaxPos(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->IdealMaxPos = v; }
-ImVec2 ImGuiWindowTempData_GetIdealMaxPos(ImGuiWindowTempData *self) { return self->IdealMaxPos; }
-void ImGuiWindowTempData_SetCurrLineSize(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->CurrLineSize = v; }
-ImVec2 ImGuiWindowTempData_GetCurrLineSize(ImGuiWindowTempData *self) { return self->CurrLineSize; }
-void ImGuiWindowTempData_SetPrevLineSize(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->PrevLineSize = v; }
-ImVec2 ImGuiWindowTempData_GetPrevLineSize(ImGuiWindowTempData *self) { return self->PrevLineSize; }
-void ImGuiWindowTempData_SetCurrLineTextBaseOffset(ImGuiWindowTempData *ImGuiWindowTempDataPtr, float v) { ImGuiWindowTempDataPtr->CurrLineTextBaseOffset = v; }
-float ImGuiWindowTempData_GetCurrLineTextBaseOffset(ImGuiWindowTempData *self) { return self->CurrLineTextBaseOffset; }
-void ImGuiWindowTempData_SetPrevLineTextBaseOffset(ImGuiWindowTempData *ImGuiWindowTempDataPtr, float v) { ImGuiWindowTempDataPtr->PrevLineTextBaseOffset = v; }
-float ImGuiWindowTempData_GetPrevLineTextBaseOffset(ImGuiWindowTempData *self) { return self->PrevLineTextBaseOffset; }
-void ImGuiWindowTempData_SetIsSameLine(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v) { ImGuiWindowTempDataPtr->IsSameLine = v; }
-bool ImGuiWindowTempData_GetIsSameLine(ImGuiWindowTempData *self) { return self->IsSameLine; }
-void ImGuiWindowTempData_SetIndent(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec1 v) { ImGuiWindowTempDataPtr->Indent = v; }
-ImVec1 ImGuiWindowTempData_GetIndent(ImGuiWindowTempData *self) { return self->Indent; }
-void ImGuiWindowTempData_SetColumnsOffset(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec1 v) { ImGuiWindowTempDataPtr->ColumnsOffset = v; }
-ImVec1 ImGuiWindowTempData_GetColumnsOffset(ImGuiWindowTempData *self) { return self->ColumnsOffset; }
-void ImGuiWindowTempData_SetGroupOffset(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec1 v) { ImGuiWindowTempDataPtr->GroupOffset = v; }
-ImVec1 ImGuiWindowTempData_GetGroupOffset(ImGuiWindowTempData *self) { return self->GroupOffset; }
-void ImGuiWindowTempData_SetCursorStartPosLossyness(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->CursorStartPosLossyness = v; }
-ImVec2 ImGuiWindowTempData_GetCursorStartPosLossyness(ImGuiWindowTempData *self) { return self->CursorStartPosLossyness; }
-void ImGuiWindowTempData_SetNavLayerCurrent(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImGuiNavLayer v) { ImGuiWindowTempDataPtr->NavLayerCurrent = v; }
-ImGuiNavLayer ImGuiWindowTempData_GetNavLayerCurrent(ImGuiWindowTempData *self) { return self->NavLayerCurrent; }
-void ImGuiWindowTempData_SetNavLayersActiveMask(ImGuiWindowTempData *ImGuiWindowTempDataPtr, short v) { ImGuiWindowTempDataPtr->NavLayersActiveMask = v; }
-short ImGuiWindowTempData_GetNavLayersActiveMask(ImGuiWindowTempData *self) { return self->NavLayersActiveMask; }
-void ImGuiWindowTempData_SetNavLayersActiveMaskNext(ImGuiWindowTempData *ImGuiWindowTempDataPtr, short v) { ImGuiWindowTempDataPtr->NavLayersActiveMaskNext = v; }
-short ImGuiWindowTempData_GetNavLayersActiveMaskNext(ImGuiWindowTempData *self) { return self->NavLayersActiveMaskNext; }
-void ImGuiWindowTempData_SetNavFocusScopeIdCurrent(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImGuiID v) { ImGuiWindowTempDataPtr->NavFocusScopeIdCurrent = v; }
-ImGuiID ImGuiWindowTempData_GetNavFocusScopeIdCurrent(ImGuiWindowTempData *self) { return self->NavFocusScopeIdCurrent; }
-void ImGuiWindowTempData_SetNavHideHighlightOneFrame(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v) { ImGuiWindowTempDataPtr->NavHideHighlightOneFrame = v; }
-bool ImGuiWindowTempData_GetNavHideHighlightOneFrame(ImGuiWindowTempData *self) { return self->NavHideHighlightOneFrame; }
-void ImGuiWindowTempData_SetNavHasScroll(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v) { ImGuiWindowTempDataPtr->NavHasScroll = v; }
-bool ImGuiWindowTempData_GetNavHasScroll(ImGuiWindowTempData *self) { return self->NavHasScroll; }
-void ImGuiWindowTempData_SetMenuBarAppending(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v) { ImGuiWindowTempDataPtr->MenuBarAppending = v; }
-bool ImGuiWindowTempData_GetMenuBarAppending(ImGuiWindowTempData *self) { return self->MenuBarAppending; }
-void ImGuiWindowTempData_SetMenuBarOffset(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->MenuBarOffset = v; }
-ImVec2 ImGuiWindowTempData_GetMenuBarOffset(ImGuiWindowTempData *self) { return self->MenuBarOffset; }
-void ImGuiWindowTempData_SetMenuColumns(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImGuiMenuColumns v) { ImGuiWindowTempDataPtr->MenuColumns = v; }
-ImGuiMenuColumns ImGuiWindowTempData_GetMenuColumns(ImGuiWindowTempData *self) { return self->MenuColumns; }
-void ImGuiWindowTempData_SetTreeDepth(ImGuiWindowTempData *ImGuiWindowTempDataPtr, int v) { ImGuiWindowTempDataPtr->TreeDepth = v; }
-int ImGuiWindowTempData_GetTreeDepth(ImGuiWindowTempData *self) { return self->TreeDepth; }
-void ImGuiWindowTempData_SetTreeJumpToParentOnPopMask(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImU32 v) { ImGuiWindowTempDataPtr->TreeJumpToParentOnPopMask = v; }
-ImU32 ImGuiWindowTempData_GetTreeJumpToParentOnPopMask(ImGuiWindowTempData *self) { return self->TreeJumpToParentOnPopMask; }
-void ImGuiWindowTempData_SetChildWindows(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVector_ImGuiWindowPtr v) { ImGuiWindowTempDataPtr->ChildWindows = v; }
-ImVector_ImGuiWindowPtr ImGuiWindowTempData_GetChildWindows(ImGuiWindowTempData *self) { return self->ChildWindows; }
-void ImGuiWindowTempData_SetStateStorage(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImGuiStorage* v) { ImGuiWindowTempDataPtr->StateStorage = v; }
-ImGuiStorage* ImGuiWindowTempData_GetStateStorage(ImGuiWindowTempData *self) { return self->StateStorage; }
-void ImGuiWindowTempData_SetCurrentColumns(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImGuiOldColumns* v) { ImGuiWindowTempDataPtr->CurrentColumns = v; }
-ImGuiOldColumns* ImGuiWindowTempData_GetCurrentColumns(ImGuiWindowTempData *self) { return self->CurrentColumns; }
-void ImGuiWindowTempData_SetCurrentTableIdx(ImGuiWindowTempData *ImGuiWindowTempDataPtr, int v) { ImGuiWindowTempDataPtr->CurrentTableIdx = v; }
-int ImGuiWindowTempData_GetCurrentTableIdx(ImGuiWindowTempData *self) { return self->CurrentTableIdx; }
-void ImGuiWindowTempData_SetLayoutType(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImGuiLayoutType v) { ImGuiWindowTempDataPtr->LayoutType = v; }
-ImGuiLayoutType ImGuiWindowTempData_GetLayoutType(ImGuiWindowTempData *self) { return self->LayoutType; }
-void ImGuiWindowTempData_SetParentLayoutType(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImGuiLayoutType v) { ImGuiWindowTempDataPtr->ParentLayoutType = v; }
-ImGuiLayoutType ImGuiWindowTempData_GetParentLayoutType(ImGuiWindowTempData *self) { return self->ParentLayoutType; }
-void ImGuiWindowTempData_SetItemWidth(ImGuiWindowTempData *ImGuiWindowTempDataPtr, float v) { ImGuiWindowTempDataPtr->ItemWidth = v; }
-float ImGuiWindowTempData_GetItemWidth(ImGuiWindowTempData *self) { return self->ItemWidth; }
-void ImGuiWindowTempData_SetTextWrapPos(ImGuiWindowTempData *ImGuiWindowTempDataPtr, float v) { ImGuiWindowTempDataPtr->TextWrapPos = v; }
-float ImGuiWindowTempData_GetTextWrapPos(ImGuiWindowTempData *self) { return self->TextWrapPos; }
-void ImGuiWindowTempData_SetItemWidthStack(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVector_float v) { ImGuiWindowTempDataPtr->ItemWidthStack = v; }
-ImVector_float ImGuiWindowTempData_GetItemWidthStack(ImGuiWindowTempData *self) { return self->ItemWidthStack; }
-void ImGuiWindowTempData_SetTextWrapPosStack(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVector_float v) { ImGuiWindowTempDataPtr->TextWrapPosStack = v; }
-ImVector_float ImGuiWindowTempData_GetTextWrapPosStack(ImGuiWindowTempData *self) { return self->TextWrapPosStack; }
+void ImGuiDockContext_SetNodes(ImGuiDockContext *ImGuiDockContextPtr, ImGuiStorage v) { ImGuiDockContextPtr->Nodes = v; }
+ImGuiStorage ImGuiDockContext_GetNodes(ImGuiDockContext *self) { return self->Nodes; }
+void ImGuiDockContext_SetRequests(ImGuiDockContext *ImGuiDockContextPtr, ImVector_ImGuiDockRequest v) { ImGuiDockContextPtr->Requests = v; }
+ImVector_ImGuiDockRequest ImGuiDockContext_GetRequests(ImGuiDockContext *self) { return self->Requests; }
+void ImGuiDockContext_SetNodesSettings(ImGuiDockContext *ImGuiDockContextPtr, ImVector_ImGuiDockNodeSettings v) { ImGuiDockContextPtr->NodesSettings = v; }
+ImVector_ImGuiDockNodeSettings ImGuiDockContext_GetNodesSettings(ImGuiDockContext *self) { return self->NodesSettings; }
+void ImGuiDockContext_SetWantFullRebuild(ImGuiDockContext *ImGuiDockContextPtr, bool v) { ImGuiDockContextPtr->WantFullRebuild = v; }
+bool ImGuiDockContext_GetWantFullRebuild(ImGuiDockContext *self) { return self->WantFullRebuild; }
+void ImGuiGroupData_SetWindowID(ImGuiGroupData *ImGuiGroupDataPtr, ImGuiID v) { ImGuiGroupDataPtr->WindowID = v; }
+ImGuiID ImGuiGroupData_GetWindowID(ImGuiGroupData *self) { return self->WindowID; }
+void ImGuiGroupData_SetBackupCursorPos(ImGuiGroupData *ImGuiGroupDataPtr, ImVec2 v) { ImGuiGroupDataPtr->BackupCursorPos = v; }
+ImVec2 ImGuiGroupData_GetBackupCursorPos(ImGuiGroupData *self) { return self->BackupCursorPos; }
+void ImGuiGroupData_SetBackupCursorMaxPos(ImGuiGroupData *ImGuiGroupDataPtr, ImVec2 v) { ImGuiGroupDataPtr->BackupCursorMaxPos = v; }
+ImVec2 ImGuiGroupData_GetBackupCursorMaxPos(ImGuiGroupData *self) { return self->BackupCursorMaxPos; }
+void ImGuiGroupData_SetBackupIndent(ImGuiGroupData *ImGuiGroupDataPtr, ImVec1 v) { ImGuiGroupDataPtr->BackupIndent = v; }
+ImVec1 ImGuiGroupData_GetBackupIndent(ImGuiGroupData *self) { return self->BackupIndent; }
+void ImGuiGroupData_SetBackupGroupOffset(ImGuiGroupData *ImGuiGroupDataPtr, ImVec1 v) { ImGuiGroupDataPtr->BackupGroupOffset = v; }
+ImVec1 ImGuiGroupData_GetBackupGroupOffset(ImGuiGroupData *self) { return self->BackupGroupOffset; }
+void ImGuiGroupData_SetBackupCurrLineSize(ImGuiGroupData *ImGuiGroupDataPtr, ImVec2 v) { ImGuiGroupDataPtr->BackupCurrLineSize = v; }
+ImVec2 ImGuiGroupData_GetBackupCurrLineSize(ImGuiGroupData *self) { return self->BackupCurrLineSize; }
+void ImGuiGroupData_SetBackupCurrLineTextBaseOffset(ImGuiGroupData *ImGuiGroupDataPtr, float v) { ImGuiGroupDataPtr->BackupCurrLineTextBaseOffset = v; }
+float ImGuiGroupData_GetBackupCurrLineTextBaseOffset(ImGuiGroupData *self) { return self->BackupCurrLineTextBaseOffset; }
+void ImGuiGroupData_SetBackupActiveIdIsAlive(ImGuiGroupData *ImGuiGroupDataPtr, ImGuiID v) { ImGuiGroupDataPtr->BackupActiveIdIsAlive = v; }
+ImGuiID ImGuiGroupData_GetBackupActiveIdIsAlive(ImGuiGroupData *self) { return self->BackupActiveIdIsAlive; }
+void ImGuiGroupData_SetBackupActiveIdPreviousFrameIsAlive(ImGuiGroupData *ImGuiGroupDataPtr, bool v) { ImGuiGroupDataPtr->BackupActiveIdPreviousFrameIsAlive = v; }
+bool ImGuiGroupData_GetBackupActiveIdPreviousFrameIsAlive(ImGuiGroupData *self) { return self->BackupActiveIdPreviousFrameIsAlive; }
+void ImGuiGroupData_SetBackupHoveredIdIsAlive(ImGuiGroupData *ImGuiGroupDataPtr, bool v) { ImGuiGroupDataPtr->BackupHoveredIdIsAlive = v; }
+bool ImGuiGroupData_GetBackupHoveredIdIsAlive(ImGuiGroupData *self) { return self->BackupHoveredIdIsAlive; }
+void ImGuiGroupData_SetEmitItem(ImGuiGroupData *ImGuiGroupDataPtr, bool v) { ImGuiGroupDataPtr->EmitItem = v; }
+bool ImGuiGroupData_GetEmitItem(ImGuiGroupData *self) { return self->EmitItem; }
+void ImGuiInputEventKey_SetKey(ImGuiInputEventKey *ImGuiInputEventKeyPtr, ImGuiKey v) { ImGuiInputEventKeyPtr->Key = v; }
+ImGuiKey ImGuiInputEventKey_GetKey(ImGuiInputEventKey *self) { return self->Key; }
+void ImGuiInputEventKey_SetDown(ImGuiInputEventKey *ImGuiInputEventKeyPtr, bool v) { ImGuiInputEventKeyPtr->Down = v; }
+bool ImGuiInputEventKey_GetDown(ImGuiInputEventKey *self) { return self->Down; }
+void ImGuiInputEventKey_SetAnalogValue(ImGuiInputEventKey *ImGuiInputEventKeyPtr, float v) { ImGuiInputEventKeyPtr->AnalogValue = v; }
+float ImGuiInputEventKey_GetAnalogValue(ImGuiInputEventKey *self) { return self->AnalogValue; }
+void ImGuiListClipperData_SetListClipper(ImGuiListClipperData *ImGuiListClipperDataPtr, ImGuiListClipper* v) { ImGuiListClipperDataPtr->ListClipper = v; }
+ImGuiListClipper* ImGuiListClipperData_GetListClipper(ImGuiListClipperData *self) { return self->ListClipper; }
+void ImGuiListClipperData_SetLossynessOffset(ImGuiListClipperData *ImGuiListClipperDataPtr, float v) { ImGuiListClipperDataPtr->LossynessOffset = v; }
+float ImGuiListClipperData_GetLossynessOffset(ImGuiListClipperData *self) { return self->LossynessOffset; }
+void ImGuiListClipperData_SetStepNo(ImGuiListClipperData *ImGuiListClipperDataPtr, int v) { ImGuiListClipperDataPtr->StepNo = v; }
+int ImGuiListClipperData_GetStepNo(ImGuiListClipperData *self) { return self->StepNo; }
+void ImGuiListClipperData_SetItemsFrozen(ImGuiListClipperData *ImGuiListClipperDataPtr, int v) { ImGuiListClipperDataPtr->ItemsFrozen = v; }
+int ImGuiListClipperData_GetItemsFrozen(ImGuiListClipperData *self) { return self->ItemsFrozen; }
+void ImGuiListClipperData_SetRanges(ImGuiListClipperData *ImGuiListClipperDataPtr, ImVector_ImGuiListClipperRange v) { ImGuiListClipperDataPtr->Ranges = v; }
+ImVector_ImGuiListClipperRange ImGuiListClipperData_GetRanges(ImGuiListClipperData *self) { return self->Ranges; }
+void ImGuiTableInstanceData_SetLastOuterHeight(ImGuiTableInstanceData *ImGuiTableInstanceDataPtr, float v) { ImGuiTableInstanceDataPtr->LastOuterHeight = v; }
+float ImGuiTableInstanceData_GetLastOuterHeight(ImGuiTableInstanceData *self) { return self->LastOuterHeight; }
+void ImGuiTableInstanceData_SetLastFirstRowHeight(ImGuiTableInstanceData *ImGuiTableInstanceDataPtr, float v) { ImGuiTableInstanceDataPtr->LastFirstRowHeight = v; }
+float ImGuiTableInstanceData_GetLastFirstRowHeight(ImGuiTableInstanceData *self) { return self->LastFirstRowHeight; }
+void ImFontGlyphRangesBuilder_SetUsedChars(ImFontGlyphRangesBuilder *ImFontGlyphRangesBuilderPtr, ImVector_ImU32 v) { ImFontGlyphRangesBuilderPtr->UsedChars = v; }
+ImVector_ImU32 ImFontGlyphRangesBuilder_GetUsedChars(ImFontGlyphRangesBuilder *self) { return self->UsedChars; }
+void ImGuiInputEventMouseViewport_SetHoveredViewportID(ImGuiInputEventMouseViewport *ImGuiInputEventMouseViewportPtr, ImGuiID v) { ImGuiInputEventMouseViewportPtr->HoveredViewportID = v; }
+ImGuiID ImGuiInputEventMouseViewport_GetHoveredViewportID(ImGuiInputEventMouseViewport *self) { return self->HoveredViewportID; }
+void ImGuiInputTextCallbackData_SetEventFlag(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, ImGuiInputTextFlags v) { ImGuiInputTextCallbackDataPtr->EventFlag = v; }
+ImGuiInputTextFlags ImGuiInputTextCallbackData_GetEventFlag(ImGuiInputTextCallbackData *self) { return self->EventFlag; }
+void ImGuiInputTextCallbackData_SetFlags(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, ImGuiInputTextFlags v) { ImGuiInputTextCallbackDataPtr->Flags = v; }
+ImGuiInputTextFlags ImGuiInputTextCallbackData_GetFlags(ImGuiInputTextCallbackData *self) { return self->Flags; }
+void ImGuiInputTextCallbackData_SetUserData(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, void* v) { ImGuiInputTextCallbackDataPtr->UserData = v; }
+void* ImGuiInputTextCallbackData_GetUserData(ImGuiInputTextCallbackData *self) { return self->UserData; }
+void ImGuiInputTextCallbackData_SetEventChar(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, ImWchar v) { ImGuiInputTextCallbackDataPtr->EventChar = v; }
+ImWchar ImGuiInputTextCallbackData_GetEventChar(ImGuiInputTextCallbackData *self) { return self->EventChar; }
+void ImGuiInputTextCallbackData_SetEventKey(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, ImGuiKey v) { ImGuiInputTextCallbackDataPtr->EventKey = v; }
+ImGuiKey ImGuiInputTextCallbackData_GetEventKey(ImGuiInputTextCallbackData *self) { return self->EventKey; }
+void ImGuiInputTextCallbackData_SetBuf(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, char* v) { ImGuiInputTextCallbackDataPtr->Buf = v; }
+char* ImGuiInputTextCallbackData_GetBuf(ImGuiInputTextCallbackData *self) { return self->Buf; }
+void ImGuiInputTextCallbackData_SetBufTextLen(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, int v) { ImGuiInputTextCallbackDataPtr->BufTextLen = v; }
+int ImGuiInputTextCallbackData_GetBufTextLen(ImGuiInputTextCallbackData *self) { return self->BufTextLen; }
+void ImGuiInputTextCallbackData_SetBufSize(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, int v) { ImGuiInputTextCallbackDataPtr->BufSize = v; }
+int ImGuiInputTextCallbackData_GetBufSize(ImGuiInputTextCallbackData *self) { return self->BufSize; }
+void ImGuiInputTextCallbackData_SetBufDirty(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, bool v) { ImGuiInputTextCallbackDataPtr->BufDirty = v; }
+bool ImGuiInputTextCallbackData_GetBufDirty(ImGuiInputTextCallbackData *self) { return self->BufDirty; }
+void ImGuiInputTextCallbackData_SetCursorPos(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, int v) { ImGuiInputTextCallbackDataPtr->CursorPos = v; }
+int ImGuiInputTextCallbackData_GetCursorPos(ImGuiInputTextCallbackData *self) { return self->CursorPos; }
+void ImGuiInputTextCallbackData_SetSelectionStart(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, int v) { ImGuiInputTextCallbackDataPtr->SelectionStart = v; }
+int ImGuiInputTextCallbackData_GetSelectionStart(ImGuiInputTextCallbackData *self) { return self->SelectionStart; }
+void ImGuiInputTextCallbackData_SetSelectionEnd(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, int v) { ImGuiInputTextCallbackDataPtr->SelectionEnd = v; }
+int ImGuiInputTextCallbackData_GetSelectionEnd(ImGuiInputTextCallbackData *self) { return self->SelectionEnd; }
+void ImGuiInputTextState_SetID(ImGuiInputTextState *ImGuiInputTextStatePtr, ImGuiID v) { ImGuiInputTextStatePtr->ID = v; }
+ImGuiID ImGuiInputTextState_GetID(ImGuiInputTextState *self) { return self->ID; }
+void ImGuiInputTextState_SetCurLenW(ImGuiInputTextState *ImGuiInputTextStatePtr, int v) { ImGuiInputTextStatePtr->CurLenW = v; }
+int ImGuiInputTextState_GetCurLenW(ImGuiInputTextState *self) { return self->CurLenW; }
+void ImGuiInputTextState_SetCurLenA(ImGuiInputTextState *ImGuiInputTextStatePtr, int v) { ImGuiInputTextStatePtr->CurLenA = v; }
+int ImGuiInputTextState_GetCurLenA(ImGuiInputTextState *self) { return self->CurLenA; }
+void ImGuiInputTextState_SetTextW(ImGuiInputTextState *ImGuiInputTextStatePtr, ImVector_ImWchar v) { ImGuiInputTextStatePtr->TextW = v; }
+ImVector_ImWchar ImGuiInputTextState_GetTextW(ImGuiInputTextState *self) { return self->TextW; }
+void ImGuiInputTextState_SetTextA(ImGuiInputTextState *ImGuiInputTextStatePtr, ImVector_char v) { ImGuiInputTextStatePtr->TextA = v; }
+ImVector_char ImGuiInputTextState_GetTextA(ImGuiInputTextState *self) { return self->TextA; }
+void ImGuiInputTextState_SetInitialTextA(ImGuiInputTextState *ImGuiInputTextStatePtr, ImVector_char v) { ImGuiInputTextStatePtr->InitialTextA = v; }
+ImVector_char ImGuiInputTextState_GetInitialTextA(ImGuiInputTextState *self) { return self->InitialTextA; }
+void ImGuiInputTextState_SetTextAIsValid(ImGuiInputTextState *ImGuiInputTextStatePtr, bool v) { ImGuiInputTextStatePtr->TextAIsValid = v; }
+bool ImGuiInputTextState_GetTextAIsValid(ImGuiInputTextState *self) { return self->TextAIsValid; }
+void ImGuiInputTextState_SetBufCapacityA(ImGuiInputTextState *ImGuiInputTextStatePtr, int v) { ImGuiInputTextStatePtr->BufCapacityA = v; }
+int ImGuiInputTextState_GetBufCapacityA(ImGuiInputTextState *self) { return self->BufCapacityA; }
+void ImGuiInputTextState_SetScrollX(ImGuiInputTextState *ImGuiInputTextStatePtr, float v) { ImGuiInputTextStatePtr->ScrollX = v; }
+float ImGuiInputTextState_GetScrollX(ImGuiInputTextState *self) { return self->ScrollX; }
+void ImGuiInputTextState_SetStb(ImGuiInputTextState *ImGuiInputTextStatePtr, STB_TexteditState v) { ImGuiInputTextStatePtr->Stb = v; }
+STB_TexteditState ImGuiInputTextState_GetStb(ImGuiInputTextState *self) { return self->Stb; }
+void ImGuiInputTextState_SetCursorAnim(ImGuiInputTextState *ImGuiInputTextStatePtr, float v) { ImGuiInputTextStatePtr->CursorAnim = v; }
+float ImGuiInputTextState_GetCursorAnim(ImGuiInputTextState *self) { return self->CursorAnim; }
+void ImGuiInputTextState_SetCursorFollow(ImGuiInputTextState *ImGuiInputTextStatePtr, bool v) { ImGuiInputTextStatePtr->CursorFollow = v; }
+bool ImGuiInputTextState_GetCursorFollow(ImGuiInputTextState *self) { return self->CursorFollow; }
+void ImGuiInputTextState_SetSelectedAllMouseLock(ImGuiInputTextState *ImGuiInputTextStatePtr, bool v) { ImGuiInputTextStatePtr->SelectedAllMouseLock = v; }
+bool ImGuiInputTextState_GetSelectedAllMouseLock(ImGuiInputTextState *self) { return self->SelectedAllMouseLock; }
+void ImGuiInputTextState_SetEdited(ImGuiInputTextState *ImGuiInputTextStatePtr, bool v) { ImGuiInputTextStatePtr->Edited = v; }
+bool ImGuiInputTextState_GetEdited(ImGuiInputTextState *self) { return self->Edited; }
+void ImGuiInputTextState_SetFlags(ImGuiInputTextState *ImGuiInputTextStatePtr, ImGuiInputTextFlags v) { ImGuiInputTextStatePtr->Flags = v; }
+ImGuiInputTextFlags ImGuiInputTextState_GetFlags(ImGuiInputTextState *self) { return self->Flags; }
+void ImGuiStackSizes_SetSizeOfIDStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfIDStack = v; }
+short ImGuiStackSizes_GetSizeOfIDStack(ImGuiStackSizes *self) { return self->SizeOfIDStack; }
+void ImGuiStackSizes_SetSizeOfColorStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfColorStack = v; }
+short ImGuiStackSizes_GetSizeOfColorStack(ImGuiStackSizes *self) { return self->SizeOfColorStack; }
+void ImGuiStackSizes_SetSizeOfStyleVarStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfStyleVarStack = v; }
+short ImGuiStackSizes_GetSizeOfStyleVarStack(ImGuiStackSizes *self) { return self->SizeOfStyleVarStack; }
+void ImGuiStackSizes_SetSizeOfFontStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfFontStack = v; }
+short ImGuiStackSizes_GetSizeOfFontStack(ImGuiStackSizes *self) { return self->SizeOfFontStack; }
+void ImGuiStackSizes_SetSizeOfFocusScopeStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfFocusScopeStack = v; }
+short ImGuiStackSizes_GetSizeOfFocusScopeStack(ImGuiStackSizes *self) { return self->SizeOfFocusScopeStack; }
+void ImGuiStackSizes_SetSizeOfGroupStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfGroupStack = v; }
+short ImGuiStackSizes_GetSizeOfGroupStack(ImGuiStackSizes *self) { return self->SizeOfGroupStack; }
+void ImGuiStackSizes_SetSizeOfItemFlagsStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfItemFlagsStack = v; }
+short ImGuiStackSizes_GetSizeOfItemFlagsStack(ImGuiStackSizes *self) { return self->SizeOfItemFlagsStack; }
+void ImGuiStackSizes_SetSizeOfBeginPopupStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfBeginPopupStack = v; }
+short ImGuiStackSizes_GetSizeOfBeginPopupStack(ImGuiStackSizes *self) { return self->SizeOfBeginPopupStack; }
+void ImGuiStackSizes_SetSizeOfDisabledStack(ImGuiStackSizes *ImGuiStackSizesPtr, short v) { ImGuiStackSizesPtr->SizeOfDisabledStack = v; }
+short ImGuiStackSizes_GetSizeOfDisabledStack(ImGuiStackSizes *self) { return self->SizeOfDisabledStack; }
+void ImGuiTabItem_SetID(ImGuiTabItem *ImGuiTabItemPtr, ImGuiID v) { ImGuiTabItemPtr->ID = v; }
+ImGuiID ImGuiTabItem_GetID(ImGuiTabItem *self) { return self->ID; }
+void ImGuiTabItem_SetFlags(ImGuiTabItem *ImGuiTabItemPtr, ImGuiTabItemFlags v) { ImGuiTabItemPtr->Flags = v; }
+ImGuiTabItemFlags ImGuiTabItem_GetFlags(ImGuiTabItem *self) { return self->Flags; }
+void ImGuiTabItem_SetWindow(ImGuiTabItem *ImGuiTabItemPtr, ImGuiWindow* v) { ImGuiTabItemPtr->Window = v; }
+ImGuiWindow* ImGuiTabItem_GetWindow(ImGuiTabItem *self) { return self->Window; }
+void ImGuiTabItem_SetLastFrameVisible(ImGuiTabItem *ImGuiTabItemPtr, int v) { ImGuiTabItemPtr->LastFrameVisible = v; }
+int ImGuiTabItem_GetLastFrameVisible(ImGuiTabItem *self) { return self->LastFrameVisible; }
+void ImGuiTabItem_SetLastFrameSelected(ImGuiTabItem *ImGuiTabItemPtr, int v) { ImGuiTabItemPtr->LastFrameSelected = v; }
+int ImGuiTabItem_GetLastFrameSelected(ImGuiTabItem *self) { return self->LastFrameSelected; }
+void ImGuiTabItem_SetOffset(ImGuiTabItem *ImGuiTabItemPtr, float v) { ImGuiTabItemPtr->Offset = v; }
+float ImGuiTabItem_GetOffset(ImGuiTabItem *self) { return self->Offset; }
+void ImGuiTabItem_SetWidth(ImGuiTabItem *ImGuiTabItemPtr, float v) { ImGuiTabItemPtr->Width = v; }
+float ImGuiTabItem_GetWidth(ImGuiTabItem *self) { return self->Width; }
+void ImGuiTabItem_SetContentWidth(ImGuiTabItem *ImGuiTabItemPtr, float v) { ImGuiTabItemPtr->ContentWidth = v; }
+float ImGuiTabItem_GetContentWidth(ImGuiTabItem *self) { return self->ContentWidth; }
+void ImGuiTabItem_SetRequestedWidth(ImGuiTabItem *ImGuiTabItemPtr, float v) { ImGuiTabItemPtr->RequestedWidth = v; }
+float ImGuiTabItem_GetRequestedWidth(ImGuiTabItem *self) { return self->RequestedWidth; }
+void ImGuiTabItem_SetNameOffset(ImGuiTabItem *ImGuiTabItemPtr, ImS32 v) { ImGuiTabItemPtr->NameOffset = v; }
+ImS32 ImGuiTabItem_GetNameOffset(ImGuiTabItem *self) { return self->NameOffset; }
+void ImGuiTabItem_SetBeginOrder(ImGuiTabItem *ImGuiTabItemPtr, ImS16 v) { ImGuiTabItemPtr->BeginOrder = v; }
+ImS16 ImGuiTabItem_GetBeginOrder(ImGuiTabItem *self) { return self->BeginOrder; }
+void ImGuiTabItem_SetIndexDuringLayout(ImGuiTabItem *ImGuiTabItemPtr, ImS16 v) { ImGuiTabItemPtr->IndexDuringLayout = v; }
+ImS16 ImGuiTabItem_GetIndexDuringLayout(ImGuiTabItem *self) { return self->IndexDuringLayout; }
+void ImGuiTabItem_SetWantClose(ImGuiTabItem *ImGuiTabItemPtr, bool v) { ImGuiTabItemPtr->WantClose = v; }
+bool ImGuiTabItem_GetWantClose(ImGuiTabItem *self) { return self->WantClose; }
+void ImGuiWindowClass_SetClassId(ImGuiWindowClass *ImGuiWindowClassPtr, ImGuiID v) { ImGuiWindowClassPtr->ClassId = v; }
+ImGuiID ImGuiWindowClass_GetClassId(ImGuiWindowClass *self) { return self->ClassId; }
+void ImGuiWindowClass_SetParentViewportId(ImGuiWindowClass *ImGuiWindowClassPtr, ImGuiID v) { ImGuiWindowClassPtr->ParentViewportId = v; }
+ImGuiID ImGuiWindowClass_GetParentViewportId(ImGuiWindowClass *self) { return self->ParentViewportId; }
+void ImGuiWindowClass_SetViewportFlagsOverrideSet(ImGuiWindowClass *ImGuiWindowClassPtr, ImGuiViewportFlags v) { ImGuiWindowClassPtr->ViewportFlagsOverrideSet = v; }
+ImGuiViewportFlags ImGuiWindowClass_GetViewportFlagsOverrideSet(ImGuiWindowClass *self) { return self->ViewportFlagsOverrideSet; }
+void ImGuiWindowClass_SetViewportFlagsOverrideClear(ImGuiWindowClass *ImGuiWindowClassPtr, ImGuiViewportFlags v) { ImGuiWindowClassPtr->ViewportFlagsOverrideClear = v; }
+ImGuiViewportFlags ImGuiWindowClass_GetViewportFlagsOverrideClear(ImGuiWindowClass *self) { return self->ViewportFlagsOverrideClear; }
+void ImGuiWindowClass_SetTabItemFlagsOverrideSet(ImGuiWindowClass *ImGuiWindowClassPtr, ImGuiTabItemFlags v) { ImGuiWindowClassPtr->TabItemFlagsOverrideSet = v; }
+ImGuiTabItemFlags ImGuiWindowClass_GetTabItemFlagsOverrideSet(ImGuiWindowClass *self) { return self->TabItemFlagsOverrideSet; }
+void ImGuiWindowClass_SetDockNodeFlagsOverrideSet(ImGuiWindowClass *ImGuiWindowClassPtr, ImGuiDockNodeFlags v) { ImGuiWindowClassPtr->DockNodeFlagsOverrideSet = v; }
+ImGuiDockNodeFlags ImGuiWindowClass_GetDockNodeFlagsOverrideSet(ImGuiWindowClass *self) { return self->DockNodeFlagsOverrideSet; }
+void ImGuiWindowClass_SetDockingAlwaysTabBar(ImGuiWindowClass *ImGuiWindowClassPtr, bool v) { ImGuiWindowClassPtr->DockingAlwaysTabBar = v; }
+bool ImGuiWindowClass_GetDockingAlwaysTabBar(ImGuiWindowClass *self) { return self->DockingAlwaysTabBar; }
+void ImGuiWindowClass_SetDockingAllowUnclassed(ImGuiWindowClass *ImGuiWindowClassPtr, bool v) { ImGuiWindowClassPtr->DockingAllowUnclassed = v; }
+bool ImGuiWindowClass_GetDockingAllowUnclassed(ImGuiWindowClass *self) { return self->DockingAllowUnclassed; }
+void ImVec2ih_Setx(ImVec2ih *ImVec2ihPtr, short v) { ImVec2ihPtr->x = v; }
+short ImVec2ih_Getx(ImVec2ih *self) { return self->x; }
+void ImVec2ih_Sety(ImVec2ih *ImVec2ihPtr, short v) { ImVec2ihPtr->y = v; }
+short ImVec2ih_Gety(ImVec2ih *self) { return self->y; }
+void ImFontConfig_SetFontData(ImFontConfig *ImFontConfigPtr, void* v) { ImFontConfigPtr->FontData = v; }
+void* ImFontConfig_GetFontData(ImFontConfig *self) { return self->FontData; }
+void ImFontConfig_SetFontDataSize(ImFontConfig *ImFontConfigPtr, int v) { ImFontConfigPtr->FontDataSize = v; }
+int ImFontConfig_GetFontDataSize(ImFontConfig *self) { return self->FontDataSize; }
+void ImFontConfig_SetFontDataOwnedByAtlas(ImFontConfig *ImFontConfigPtr, bool v) { ImFontConfigPtr->FontDataOwnedByAtlas = v; }
+bool ImFontConfig_GetFontDataOwnedByAtlas(ImFontConfig *self) { return self->FontDataOwnedByAtlas; }
+void ImFontConfig_SetFontNo(ImFontConfig *ImFontConfigPtr, int v) { ImFontConfigPtr->FontNo = v; }
+int ImFontConfig_GetFontNo(ImFontConfig *self) { return self->FontNo; }
+void ImFontConfig_SetSizePixels(ImFontConfig *ImFontConfigPtr, float v) { ImFontConfigPtr->SizePixels = v; }
+float ImFontConfig_GetSizePixels(ImFontConfig *self) { return self->SizePixels; }
+void ImFontConfig_SetOversampleH(ImFontConfig *ImFontConfigPtr, int v) { ImFontConfigPtr->OversampleH = v; }
+int ImFontConfig_GetOversampleH(ImFontConfig *self) { return self->OversampleH; }
+void ImFontConfig_SetOversampleV(ImFontConfig *ImFontConfigPtr, int v) { ImFontConfigPtr->OversampleV = v; }
+int ImFontConfig_GetOversampleV(ImFontConfig *self) { return self->OversampleV; }
+void ImFontConfig_SetPixelSnapH(ImFontConfig *ImFontConfigPtr, bool v) { ImFontConfigPtr->PixelSnapH = v; }
+bool ImFontConfig_GetPixelSnapH(ImFontConfig *self) { return self->PixelSnapH; }
+void ImFontConfig_SetGlyphExtraSpacing(ImFontConfig *ImFontConfigPtr, ImVec2 v) { ImFontConfigPtr->GlyphExtraSpacing = v; }
+ImVec2 ImFontConfig_GetGlyphExtraSpacing(ImFontConfig *self) { return self->GlyphExtraSpacing; }
+void ImFontConfig_SetGlyphOffset(ImFontConfig *ImFontConfigPtr, ImVec2 v) { ImFontConfigPtr->GlyphOffset = v; }
+ImVec2 ImFontConfig_GetGlyphOffset(ImFontConfig *self) { return self->GlyphOffset; }
+void ImFontConfig_SetGlyphRanges(ImFontConfig *ImFontConfigPtr, const ImWchar* v) { ImFontConfigPtr->GlyphRanges = v; }
+const ImWchar* ImFontConfig_GetGlyphRanges(ImFontConfig *self) { return self->GlyphRanges; }
+void ImFontConfig_SetGlyphMinAdvanceX(ImFontConfig *ImFontConfigPtr, float v) { ImFontConfigPtr->GlyphMinAdvanceX = v; }
+float ImFontConfig_GetGlyphMinAdvanceX(ImFontConfig *self) { return self->GlyphMinAdvanceX; }
+void ImFontConfig_SetGlyphMaxAdvanceX(ImFontConfig *ImFontConfigPtr, float v) { ImFontConfigPtr->GlyphMaxAdvanceX = v; }
+float ImFontConfig_GetGlyphMaxAdvanceX(ImFontConfig *self) { return self->GlyphMaxAdvanceX; }
+void ImFontConfig_SetMergeMode(ImFontConfig *ImFontConfigPtr, bool v) { ImFontConfigPtr->MergeMode = v; }
+bool ImFontConfig_GetMergeMode(ImFontConfig *self) { return self->MergeMode; }
+void ImFontConfig_SetFontBuilderFlags(ImFontConfig *ImFontConfigPtr, unsigned int v) { ImFontConfigPtr->FontBuilderFlags = v; }
+unsigned int ImFontConfig_GetFontBuilderFlags(ImFontConfig *self) { return self->FontBuilderFlags; }
+void ImFontConfig_SetRasterizerMultiply(ImFontConfig *ImFontConfigPtr, float v) { ImFontConfigPtr->RasterizerMultiply = v; }
+float ImFontConfig_GetRasterizerMultiply(ImFontConfig *self) { return self->RasterizerMultiply; }
+void ImFontConfig_SetEllipsisChar(ImFontConfig *ImFontConfigPtr, ImWchar v) { ImFontConfigPtr->EllipsisChar = v; }
+ImWchar ImFontConfig_GetEllipsisChar(ImFontConfig *self) { return self->EllipsisChar; }
+void ImFontConfig_SetDstFont(ImFontConfig *ImFontConfigPtr, ImFont* v) { ImFontConfigPtr->DstFont = v; }
+ImFont* ImFontConfig_GetDstFont(ImFontConfig *self) { return self->DstFont; }
