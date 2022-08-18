@@ -47,7 +47,7 @@ if(IMGUI_FREETYPE)
 	add_definitions("-DCIMGUI_FREETYPE=1")
 endif(IMGUI_FREETYPE)
 
-#add library and link
+# add library and link
 if (IMGUI_STATIC)
   add_library(cimgui STATIC ${IMGUI_SOURCES})
 else (IMGUI_STATIC)
@@ -57,11 +57,10 @@ endif (IMGUI_STATIC)
 target_compile_definitions(cimgui PUBLIC IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1)
 if (WIN32)
   set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")
-  target_compile_definitions(cimgui PUBLIC IMGUI_IMPL_API=extern\t\"C\"\t__declspec\(dllexport\))
   list(APPEND IMGUI_LIBRARIES imm32)
-else (WIN32)
-  target_compile_definitions(cimgui PUBLIC IMGUI_IMPL_API=extern\t\"C\"\t)
 endif (WIN32)
+
+target_compile_definitions(cimgui PUBLIC IMGUI_IMPL_API=extern\t\"C\"\t)
 
 target_include_directories(cimgui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(cimgui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
