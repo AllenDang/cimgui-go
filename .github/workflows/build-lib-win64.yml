@@ -20,7 +20,7 @@ jobs:
 
     - name: copy glfw to lib
       run: |
-        Copy-Item "{{runner.workspace}}\cimgui-go\thirdparty\glfw\build\src\libglfw3.lib" -Destination "${{runner.workspace}}\cimgui-go\lib\windows\x64\libglfw3.a" -Force
+        Copy-Item "{{runner.workspace}}\cimgui-go\thirdparty\glfw\build\src\Release\glfw3.lib" -Destination "${{runner.workspace}}\cimgui-go\lib\windows\x64\libglfw3.a" -Force
 
     - name: configure cimgui
       run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On
