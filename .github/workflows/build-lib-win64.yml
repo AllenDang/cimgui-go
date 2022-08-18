@@ -19,6 +19,7 @@ jobs:
       with:
         update: true
         install: >-
+          make
           cmake
 
     - name: configure glfw

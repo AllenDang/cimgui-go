@@ -56,7 +56,6 @@ endif (IMGUI_STATIC)
 
 target_compile_definitions(cimgui PUBLIC IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1)
 if (WIN32)
-  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")
   list(APPEND IMGUI_LIBRARIES imm32)
 endif (WIN32)
 
