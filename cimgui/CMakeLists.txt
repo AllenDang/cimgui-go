@@ -26,12 +26,14 @@ set(IMGUI_FREETYPE "no" CACHE STRING "Build with freetype library")
 set(IMGUI_LIBRARIES )
 
 #glfw
+set(GLFW3_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/glfw)
+set(GLFW3_INCLUDE_DIR ${GLFW3_PREFIX}/include)
 if (WIN32)
-  set(glfw3_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/glfw/build/src/Release)
+  set(GLFW3_LIBRARY ${GLFW3_PREFIX}/build/src/Release/glfw3.lib)
 else (WIN32)
-  set(glfw3_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/glfw/build/src)
+  set(GLFW3_LIBRARY ${GLFW3_PREFIX}/build/src/libglfw3.a)
 endif (WIN32)
-list(APPEND IMGUCURCES imgui/backends/imgui_impl_glfw.cpp)
+list(APPEND IMGUI_SOURCES imgui/backends/imgui_impl_glfw.cpp)
 list(APPEND IMGUI_LIBRARIES glfw)
 
 #opengl3
@@ -62,6 +64,7 @@ endif (WIN32)
 
 target_include_directories(cimgui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(cimgui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
+target_include_directories(cimgui PUBLIC ${GLFW3_INCLUDE_DIR})
 set_target_properties(cimgui PROPERTIES PREFIX "")
 target_link_libraries(cimgui ${IMGUI_LIBRARIES})
 
