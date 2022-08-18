@@ -26,8 +26,8 @@ set(IMGUI_FREETYPE "no" CACHE STRING "Build with freetype library")
 set(IMGUI_LIBRARIES )
 
 #glfw
-find_package(glfw3 3.3 REQUIRED)
-list(APPEND IMGUI_SOURCES imgui/backends/imgui_impl_glfw.cpp)
+set(glfw3_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/glfw/build/src)
+list(APPEND IMGUCURCES imgui/backends/imgui_impl_glfw.cpp)
 list(APPEND IMGUI_LIBRARIES glfw)
 
 #opengl3
