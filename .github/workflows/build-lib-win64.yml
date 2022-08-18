@@ -26,27 +26,26 @@ jobs:
           ninja:p
 
     - name: configure glfw
-      run: cmake -S . -Bbuild
+      run: cmake -G Ninja -S . -B build -DCMAKE_BUILD_TYPE=Release
       working-directory: ./thirdparty/glfw
 
     - name: make glfw
-      run: cmake --build build --config Release --parallel 4
+      run: cmake --build build
       working-directory: ./thirdparty/glfw
 
     - name: copy glfw to lib
-      run: |
-        Copy-Item "${{runner.workspace}}\cimgui-go\thirdparty\glfw\build\src\Release\glfw3.lib" -Destination "${{runner.workspace}}\cimgui-go\lib\windows\x64\libglfw3.a" -Force
+      run: cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/windows/x64
 
     - name: configure cimgui
-      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On
+      run: cmake -G Ninja -B build -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On
       working-directory: .\cimgui
 
     - name: make cimgui
-      run: cmake --build build --config Release --parallel 4
+      run: cmake --build build
       working-directory: .\cimgui
 
     - name: copy cimgui to lib
-      run: Copy-Item "${{runner.workspace}}\cimgui-go\cimgui\build\Release\cimgui.lib" -Destination "${{runner.workspace}}\cimgui-go\lib\windows\x64\cimgui.a" -Force
+      run: cp -f ./cimgui/build/cimgui.a ./lib/windows/x64/
 
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
