@@ -21,7 +21,10 @@ jobs:
     - name: copy glfw to lib
       run: |
         cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/macos/x64
-        rm -f ./thirdparty/glfw/build
+
+    - name: clean glfw
+      run: cmake --build ./build --target clean
+      working-directory: ./thirdparty/glfw
 
     - name: configure glfw for arm64
       run: cmake -S . -Bbuild -DCMAKE_OSX_ARCHITECTURES=arm64
