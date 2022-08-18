@@ -10,6 +10,9 @@ jobs:
     steps:
     - uses: actions/checkout@main
 
+    - name: add libs for glfw
+      run: sudo apt-get install -y libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel
+
     - name: configure glfw
       run: cmake -S . -Bbuild
       working-directory: ./thirdparty/glfw
