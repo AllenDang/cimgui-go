@@ -16,6 +16,10 @@ jobs:
 
     - name: Install MinGW
       uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: >-
+          cmake
 
     - name: configure glfw
       run: cmake -S . -Bbuild
