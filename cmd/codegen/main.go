@@ -14,7 +14,7 @@ type ArgDef struct {
 type FuncDef struct {
 	Args         string   `json:"args"`
 	ArgsT        []ArgDef `json:"argsT"`
-	FuncName     string   `json:"cimguiname"`
+	FuncName     string   `json:"ov_cimguiname"`
 	Location     string   `json:"location"`
 	Constructor  bool     `json:"constructor"`
 	Destructor   bool     `json:"destructor"`
@@ -91,9 +91,7 @@ func main() {
 		var funcDefs []FuncDef
 		_ = json.Unmarshal(v, &funcDefs)
 
-		if len(funcDefs) == 1 {
-			funcs = append(funcs, funcDefs[0])
-		}
+		funcs = append(funcs, funcDefs...)
 	}
 
 	var enumSectionJson EnumsSection

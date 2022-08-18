@@ -36,5 +36,6 @@ func loop() {
 
 func main() {
 	window := cimgui.CreateGlfwWindow("Hello from cimgui-go", 1200, 900)
+
 	window.Run(loop)
 }
