@@ -8,6 +8,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - name: Install MinGW
+      uses: egor-tensin/setup-mingw@v2
+
     - uses: actions/checkout@main
 
     - name: configure glfw
