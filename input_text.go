@@ -99,7 +99,7 @@ func InputTextMultiline(label string, buf *string, size ImVec2, flags ImGuiInput
 	return C.InputTextMultiline(
 		labelArg,
 		(*C.char)(state.buf.ptr),
-		C.ulong(len(*buf)),
+		C.ulong(len(*buf)+1),
 		size.toC(),
 		C.ImGuiInputTextFlags(flags),
 		C.ImGuiInputTextCallback(C.generalInputTextCallback),
