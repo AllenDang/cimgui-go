@@ -145,12 +145,12 @@ func uCharPtrW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func sizeTW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "uint64", "ulong")
+	return simpleValueW(arg.Name, "uint64", "uint64_t")
 }
 
 func sizeTPtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*uint64"
-	varName = fmt.Sprintf("(*C.ulong)(%s)", arg.Name)
+	varName = fmt.Sprintf("(*C.uint64_t)(%s)", arg.Name)
 	return
 }
 
