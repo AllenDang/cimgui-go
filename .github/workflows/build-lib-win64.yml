@@ -1,0 +1,38 @@
+name: Compile cimgui for windows
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-windows-x64:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@main
+
+    - name: configure glfw
+      run: cmake -S . -Bbuild
+      working-directory: ./thirdparty/glfw
+
+    - name: make glfw
+      run: make
+      working-directory: ./thirdparty/glfw/build
+
+    - name: copy glfw to lib
+      run: |
+        Copy-Item "{{runner.workspace}}\cimgui-go\thirdparty\glfw\build\src\libglfw3.lib" -Destination "${{runner.workspace}}\cimgui-go\lib\windows\x64\libglfw3.a" -Force
+
+    - name: configure cimgui
+      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On
+      working-directory: .\cimgui
+
+    - name: make cimgui
+      run: cmake --build .\build --config Release --parallel 4
+      working-directory: .\cimgui
+
+    - name: copy cimgui to lib
+      run: Copy-Item "${{runner.workspace}}\cimgui-go\cimgui\build\Release\cimgui.lib" -Destination "${{runner.workspace}}\cimgui-go\lib\windows\x64\cimgui.a" -Force
+
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Update windows lib from ci
