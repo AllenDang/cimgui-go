@@ -30,7 +30,7 @@ jobs:
       working-directory: ./thirdparty/glfw
 
     - name: make glfw
-      run: cmake --build .\build --config Release --parallel 4
+      run: cmake --build build --config Release --parallel 4
       working-directory: ./thirdparty/glfw
 
     - name: copy glfw to lib
@@ -42,7 +42,7 @@ jobs:
       working-directory: .\cimgui
 
     - name: make cimgui
-      run: cmake --build .\build --config Release --parallel 4
+      run: cmake --build build --config Release --parallel 4
       working-directory: .\cimgui
 
     - name: copy cimgui to lib
