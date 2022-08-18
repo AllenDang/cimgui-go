@@ -20,7 +20,10 @@ jobs:
         update: true
         install: >-
           make
-          cmake
+        pacboy: >-
+          toolchain:p
+          cmake:p
+          ninja:p
 
     - name: configure glfw
       run: cmake -S . -Bbuild
