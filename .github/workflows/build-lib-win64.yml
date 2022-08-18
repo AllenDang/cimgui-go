@@ -15,8 +15,8 @@ jobs:
       working-directory: ./thirdparty/glfw
 
     - name: make glfw
-      run: make
-      working-directory: ./thirdparty/glfw/build
+      run: cmake --build .\build --config Release --parallel 4
+      working-directory: ./thirdparty/glfw
 
     - name: copy glfw to lib
       run: |
