@@ -81,6 +81,10 @@ extern "C" {
 			continue
 		}
 
+		// Transform some function names
+		funcName = strings.Replace(funcName, "GetCursor", "GetDrawCursor", 1)
+		funcName = strings.Replace(funcName, "SetCursor", "SetDrawCursor", 1)
+
 		// Remove all ... arg
 		f.Args = strings.Replace(f.Args, ",...", "", 1)
 		var argsT []ArgDef
