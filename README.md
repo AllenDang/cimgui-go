@@ -2,7 +2,7 @@
 
 This project aims to generate go wrapper for Dear ImGui.
 
-It comes with a default backend with GLFW 3.3 and OpenG L3.2.
+It comes with a default backend with GLFW 3.3 and OpenGL 3.2.
 
 Current solution is:
 1. Use cimgui's lua generator to generate function and struct definition as json.
