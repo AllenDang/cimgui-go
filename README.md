@@ -8,8 +8,5 @@ Current solution is:
 3. Use github workflow to compile cimgui and glfw to static lib and place them in /lib folder for further link. I'm not familiar with C compile and link tool, idealy we could compile using cgo from source code, but I have no luck to do it. If you are familiar with it, please give it a try.
 
 Progress:
-1. This project works on macOS arm64 now. Check out `examples`, cd in and `go run .`.
+1. This project works on macOS(arm64/x86) and windows(x64) now, idealy linux should works but I don't have a linux machine to test it. Check out `examples`, cd in and `go run .`.
 
-Help needed:
-1. Figure out how to compile cimgui and glfw from source using cgo.
-2. Or, help to create related github workflow to compile them for linux and windows.

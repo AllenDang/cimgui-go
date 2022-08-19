@@ -15,12 +15,24 @@ import (
 	"unsafe"
 )
 
-type GLFWwindow uintptr
+type GLFWWindowFlags int
+
+const (
+	GLFWWindowFlagsNone         GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsNone)
+	GLFWWindowFlagsNotResizable GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsNotResizable)
+	GLFWWindowFlagsMaximized    GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsMaximized)
+	GLFWWindowFlagsFloating     GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsFloating)
+	GLFWWindowFlagsFrameless    GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsFrameless)
+	GLFWWindowFlagsTransparent  GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsTransparent)
+)
+
 type voidCallbackFunc func()
 
 var (
 	loopFunc voidCallbackFunc
 )
+
+type GLFWwindow uintptr
 
 func (w GLFWwindow) handle() *C.GLFWwindow {
 	return (*C.GLFWwindow)(unsafe.Pointer(w))
@@ -38,11 +50,11 @@ func glfwWindowLoopCallback() {
 	}
 }
 
-func CreateGlfwWindow(title string, width, height int) GLFWwindow {
+func CreateGlfwWindow(title string, width, height int, flags GLFWWindowFlags) GLFWwindow {
 	titleArg, titleFin := wrapString(title)
 	defer titleFin()
 
-	window := GLFWwindow(unsafe.Pointer(C.igCreateGlfwWindow(titleArg, C.int(width), C.int(height))))
+	window := GLFWwindow(unsafe.Pointer(C.igCreateGLFWWindow(titleArg, C.int(width), C.int(height), C.GLFWWindowFlags(flags))))
 	if window == 0 {
 		panic("Failed to create GLFW window")
 	}

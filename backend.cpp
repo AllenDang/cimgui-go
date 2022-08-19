@@ -13,8 +13,7 @@
 // legacy_stdio_definitions.lib, which we do using this pragma. Your own project
 // should not be affected, as you are likely to link with a newer binary of GLFW
 // that is adequate for your version of Visual Studio.
-#if defined(_MSC_VER) && (_MSC_VER >= 1900) &&                                 \
-    !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
+#if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
 
@@ -26,16 +25,14 @@ void glfw_render(GLFWwindow *window, VoidCallback renderLoop);
 
 void igSetTargetFPS(unsigned int fps) { glfw_target_fps = fps; }
 
-static void glfw_error_callback(int error, const char *description) {
-  fprintf(stderr, "Glfw Error %d: %s\n", error, description);
-}
+static void glfw_error_callback(int error, const char *description) { fprintf(stderr, "Glfw Error %d: %s\n", error, description); }
 
 void glfw_window_refresh_callback(GLFWwindow *window) {
   VoidCallback loopFunc = (VoidCallback)(glfwGetWindowUserPointer(window));
   glfw_render(window, loopFunc);
 }
 
-GLFWwindow *igCreateGlfwWindow(const char *title, int width, int height) {
+GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height, GLFWWindowFlags flags) {
   // Setup window
   glfwSetErrorCallback(glfw_error_callback);
   if (!glfwInit())
@@ -64,6 +61,26 @@ GLFWwindow *igCreateGlfwWindow(const char *title, int width, int height) {
   // only glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // 3.0+ only
 #endif
 
+  if ((flags & GLFWWindowFlagsNotResizable) != 0) {
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+  }
+
+  if ((flags & GLFWWindowFlagsMaximized) != 0) {
+    glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+  }
+
+  if ((flags & GLFWWindowFlagsFloating) != 0) {
+    glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
+  }
+
+  if ((flags & GLFWWindowFlagsFrameless) != 0) {
+    glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
+  }
+
+  if ((flags & GLFWWindowFlagsTransparent) != 0) {
+    glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+  }
+
   // Create window with graphics context
   GLFWwindow *window = glfwCreateWindow(width, height, title, NULL, NULL);
   if (window == NULL)
@@ -74,8 +91,7 @@ GLFWwindow *igCreateGlfwWindow(const char *title, int width, int height) {
   // Setup Dear ImGui context
   igCreateContext(0);
   ImGuiIO *io = igGetIO();
-  io->ConfigFlags |=
-      ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+  io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
   // io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad
   // Controls
   io->ConfigFlags |= ImGuiConfigFlags_DockingEnable;   // Enable Docking
@@ -134,8 +150,7 @@ void glfw_render(GLFWwindow *window, VoidCallback renderLoop) {
   int display_w, display_h;
   glfwGetFramebufferSize(window, &display_w, &display_h);
   glViewport(0, 0, display_w, display_h);
-  glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w,
-               clear_color.z * clear_color.w, clear_color.w);
+  glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
   glClear(GL_COLOR_BUFFER_BIT);
   ImGui_ImplOpenGL3_RenderDrawData(igGetDrawData());
 
