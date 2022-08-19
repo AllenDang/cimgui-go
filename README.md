@@ -6,7 +6,7 @@ It comes with a default backend with GLFW 3.3 and OpenGL3.2.
 
 Current solution is:
 1. Use cimgui's lua generator to generate function and struct definition as json.
-2. Generate proper go code from the definition.
+2. Generate proper go code from the definition (via manual crafted go program `/cmd/codegen`).
 3. Use the backend implementation from imgui (currently glfw and opengl3).
 4. Use github workflow to compile cimgui and glfw to static lib and place them in /lib folder for further link. 
 
