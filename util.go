@@ -2,6 +2,7 @@ package cimgui
 
 // #include "util.h"
 import "C"
+import "unsafe"
 
 // VertexBufferLayout returns the byte sizes necessary to select fields in a vertex buffer of a DrawList.
 func VertexBufferLayout() (entrySize int, posOffset int, uvOffset int, colOffset int) {
@@ -23,4 +24,18 @@ func IndexBufferLayout() (entrySize int) {
 	C.GetIndexBufferLayout(&entrySizeArg)
 	entrySize = int(entrySizeArg)
 	return
+}
+
+type GlyphRange uintptr
+
+func NewGlyphRange() GlyphRange {
+	return GlyphRange(unsafe.Pointer(C.NewGlyphRange()))
+}
+
+func (gr GlyphRange) handle() *C.ImVector_ImWchar {
+	return (*C.ImVector_ImWchar)(unsafe.Pointer(gr))
+}
+
+func (gr GlyphRange) Destroy() {
+	C.DestroyGlyphRange(gr.handle())
 }

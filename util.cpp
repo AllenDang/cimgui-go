@@ -1,4 +1,5 @@
 #include "util.h"
+#include "cimgui/cimgui.h"
 #include "cimgui_wrapper.h"
 
 #define IM_OFFSETOF(_TYPE, _MEMBER) offsetof(_TYPE, _MEMBER) // Offset of _MEMBER within _TYPE. Standardized as offsetof() in C++11
@@ -29,3 +30,7 @@ ImDrawCmd *DrawList_GetDrawCmdAt(ImDrawList *self, int idx) {
 void DrawCmd_CallUserCallback(ImDrawList *list, ImDrawCmd *cmd) { cmd->UserCallback(list, cmd); }
 
 void ImGuiIO_SetMouseButtonDown(ImGuiIO *self, int btnIndex, bool isDown) { self->MouseDown[btnIndex] = isDown; }
+
+ImVector_ImWchar *NewGlyphRange() { return ImVector_ImWchar_create(); }
+
+void DestroyGlyphRange(ImVector_ImWchar *range) { ImVector_ImWchar_destroy(range); }

@@ -19,6 +19,9 @@ extern void DrawCmd_CallUserCallback(ImDrawList *list, ImDrawCmd *cmd);
 
 extern void ImGuiIO_SetMouseButtonDown(ImGuiIO *self, int btnIndex, bool isDown);
 
+extern ImVector_ImWchar *NewGlyphRange();
+extern void DestroyGlyphRange(ImVector_ImWchar *range);
+
 #ifdef __cplusplus
 }
 #endif

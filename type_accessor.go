@@ -63,3 +63,7 @@ func (d ImDrawCmd) HasUserCallback() bool {
 func (d ImDrawCmd) CallUserCallback(list ImDrawList) {
 	C.DrawCmd_CallUserCallback(list.handle(), d.handle())
 }
+
+func (fa ImFontGlyphRangesBuilder) BuildRanges(ranges GlyphRange) {
+	C.ImFontGlyphRangesBuilder_BuildRanges(fa.handle(), ranges.handle())
+}

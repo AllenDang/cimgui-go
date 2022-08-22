@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/AllenDang/cimgui-go"
 )
@@ -25,14 +24,6 @@ var (
 func callback(data cimgui.ImGuiInputTextCallbackData) int {
 	fmt.Println("got call back")
 	return 0
-}
-
-func beforeRender() {
-	fmt.Println("before render", time.Now().Unix())
-}
-
-func afterRender() {
-	fmt.Println("after render", time.Now().Unix())
 }
 
 func loop() {
@@ -72,5 +63,5 @@ func loop() {
 func main() {
 	window := cimgui.CreateGlfwWindow("Hello from cimgui-go", 1200, 900, 0)
 
-	window.Run(loop, beforeRender, afterRender)
+	window.Run(loop, nil, nil)
 }

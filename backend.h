@@ -1,5 +1,7 @@
 #pragma once
 
+#include "cimgui_wrapper.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -25,6 +27,7 @@ extern void igSetTargetFPS(unsigned int fps);
 extern GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height, GLFWWindowFlags flags);
 extern void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender);
 extern void igRefresh();
+extern ImTextureID igCreateTexture(unsigned char *pixels, int width, int height);
 
 #ifdef __cplusplus
 }
