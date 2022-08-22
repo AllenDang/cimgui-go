@@ -171,7 +171,7 @@ void glfw_render(GLFWwindow *window, VoidCallback renderLoop) {
   glfwSwapBuffers(window);
 }
 
-void igRunLoop(GLFWwindow *window, VoidCallback loop) {
+void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender) {
   ImGuiIO *io = igGetIO();
 
   // Load Fonts
@@ -200,6 +200,10 @@ void igRunLoop(GLFWwindow *window, VoidCallback loop) {
   // Main loop
   double lasttime = glfwGetTime();
   while (!glfwWindowShouldClose(window)) {
+    if (beforeRender != NULL) {
+      beforeRender();
+    }
+
     glfw_render(window, loop);
 
     while (glfwGetTime() < lasttime + 1.0 / glfw_target_fps) {
@@ -215,6 +219,10 @@ void igRunLoop(GLFWwindow *window, VoidCallback loop) {
     }
 
     glfwPollEvents();
+
+    if (afterRender != NULL) {
+      afterRender();
+    }
   }
 
   // Cleanup

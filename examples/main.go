@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/AllenDang/cimgui-go"
 )
@@ -26,6 +27,14 @@ func callback(data cimgui.ImGuiInputTextCallbackData) int {
 	return 0
 }
 
+func beforeRender() {
+	fmt.Println("before render", time.Now().Unix())
+}
+
+func afterRender() {
+	fmt.Println("after render", time.Now().Unix())
+}
+
 func loop() {
 	if showDemoWindow {
 		cimgui.ShowDemoWindow(&showDemoWindow)
@@ -34,7 +43,6 @@ func loop() {
 	cimgui.SetNextWindowSize(cimgui.NewImVec2(300, 300), cimgui.ImGuiCond_Once)
 	cimgui.Begin("Window 1", nil, 0)
 	cimgui.Checkbox("Show demo window", &showDemoWindow)
-
 	if cimgui.BeginCombo("Combo", "Combo preview", cimgui.ImGuiComboFlags_HeightLarge) {
 		cimgui.Selectable_BoolPtr("Item 1", &selected, 0, cimgui.NewImVec2(100, 20))
 		cimgui.Selectable_Bool("Item 2", false, 0, cimgui.NewImVec2(100, 20))
@@ -64,5 +72,5 @@ func loop() {
 func main() {
 	window := cimgui.CreateGlfwWindow("Hello from cimgui-go", 1200, 900, 0)
 
-	window.Run(loop)
+	window.Run(loop, beforeRender, afterRender)
 }

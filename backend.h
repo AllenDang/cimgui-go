@@ -23,7 +23,7 @@ typedef void (*VoidCallback)();
 
 extern void igSetTargetFPS(unsigned int fps);
 extern GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height, GLFWWindowFlags flags);
-extern void igRunLoop(GLFWwindow *window, VoidCallback loop);
+extern void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender);
 extern void igRefresh();
 
 #ifdef __cplusplus

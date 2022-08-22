@@ -8,6 +8,8 @@ package cimgui
 // #cgo !gles2,darwin LDFLAGS: -framework OpenGL
 // #cgo gles2,darwin LDFLAGS: -lGLESv2
 // extern void glfwWindowLoopCallback();
+// extern void glfwBeforeRender();
+// extern void glfwAfterRender();
 // #include <stdint.h>
 // #include "backend.h"
 import "C"
@@ -29,7 +31,9 @@ const (
 type voidCallbackFunc func()
 
 var (
-	loopFunc voidCallbackFunc
+	loopFunc     voidCallbackFunc
+	beforeRender voidCallbackFunc
+	afterRender  voidCallbackFunc
 )
 
 type GLFWwindow uintptr
@@ -38,15 +42,31 @@ func (w GLFWwindow) handle() *C.GLFWwindow {
 	return (*C.GLFWwindow)(unsafe.Pointer(w))
 }
 
-func (w GLFWwindow) Run(loop func()) {
+func (w GLFWwindow) Run(loop func(), beforeRenderFunc func(), afterRenderFunc func()) {
 	loopFunc = loop
-	C.igRunLoop(w.handle(), C.VoidCallback(C.glfwWindowLoopCallback))
+	beforeRender = beforeRenderFunc
+	afterRender = afterRenderFunc
+	C.igRunLoop(w.handle(), C.VoidCallback(C.glfwWindowLoopCallback), C.VoidCallback(C.glfwBeforeRender), C.VoidCallback(C.glfwAfterRender))
 }
 
 //export glfwWindowLoopCallback
 func glfwWindowLoopCallback() {
 	if loopFunc != nil {
 		loopFunc()
+	}
+}
+
+//export glfwBeforeRender
+func glfwBeforeRender() {
+	if beforeRender != nil {
+		beforeRender()
+	}
+}
+
+//export glfwAfterRender
+func glfwAfterRender() {
+	if afterRender != nil {
+		afterRender()
 	}
 }
 
