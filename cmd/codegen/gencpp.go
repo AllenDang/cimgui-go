@@ -35,9 +35,8 @@ extern "C" {
 		shouldSkip := false
 
 		// Check func names
-		if f.FuncName == "ImSpan_destroy" ||
-			f.FuncName == "ImBitArray_destroy" ||
-			f.FuncName == "ImSpanAllocator_destroy" ||
+		if strings.HasPrefix(f.FuncName, "ImSpan") ||
+			strings.HasPrefix(f.FuncName, "ImBitArray") ||
 			strings.Contains(f.FuncName, "Storage") ||
 			strings.Contains(f.FuncName, "TextRange") ||
 			strings.Contains(f.FuncName, "ImVector") ||
@@ -58,20 +57,20 @@ extern "C" {
 			}
 		}
 
-		if shouldSkip {
-			continue
-		}
-
 		if len(f.FuncName) == 0 || strings.Contains(f.Location, "internal") {
-			continue
+			shouldSkip = true
 		}
 
-		funcName := strings.TrimPrefix(f.FuncName, "ig")
-		funcName = strings.TrimPrefix(funcName, "ImGui")
+		funcName := strings.TrimPrefix(f.FuncName, "ImGui")
 		funcName = strings.TrimPrefix(funcName, "Im")
+		funcName = strings.TrimPrefix(funcName, "ig")
 
 		// Check lower case for function
 		if unicode.IsLower(rune(funcName[0])) {
+			shouldSkip = true
+		}
+
+		if shouldSkip {
 			continue
 		}
 
