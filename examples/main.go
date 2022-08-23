@@ -19,6 +19,7 @@ var (
 	a              float32
 	color4         [4]*float32 = [4]*float32{&r, &g, &b, &a}
 	selected       bool
+	window         cimgui.GLFWwindow
 )
 
 func callback(data cimgui.ImGuiInputTextCallbackData) int {
@@ -33,6 +34,10 @@ func loop() {
 
 	cimgui.SetNextWindowSize(cimgui.NewImVec2(300, 300), cimgui.ImGuiCond_Once)
 	cimgui.Begin("Window 1", nil, 0)
+	if cimgui.Button("Click Me", cimgui.NewImVec2(80, 20)) {
+		w, h := window.DisplaySize()
+		fmt.Println(w, h)
+	}
 	cimgui.TextUnformatted("Unformated text")
 	cimgui.Checkbox("Show demo window", &showDemoWindow)
 	if cimgui.BeginCombo("Combo", "Combo preview", cimgui.ImGuiComboFlags_HeightLarge) {
@@ -62,7 +67,7 @@ func loop() {
 }
 
 func main() {
-	window := cimgui.CreateGlfwWindow("Hello from cimgui-go", 1200, 900, 0)
+	window = cimgui.CreateGlfwWindow("Hello from cimgui-go", 1200, 900, 0)
 
 	window.Run(loop, nil, nil)
 }

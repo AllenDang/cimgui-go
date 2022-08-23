@@ -252,3 +252,5 @@ ImTextureID igCreateTexture(unsigned char *pixels, int width, int height) {
 
   return ImTextureID((intptr_t(texId)));
 }
+
+void igGLFWWindow_GetDisplaySize(GLFWwindow *window, int *width, int *height) { glfwGetWindowSize(window, width, height); }

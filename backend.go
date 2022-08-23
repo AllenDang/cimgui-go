@@ -49,6 +49,18 @@ func (w GLFWwindow) Run(loop func(), beforeRenderFunc func(), afterRenderFunc fu
 	C.igRunLoop(w.handle(), C.VoidCallback(C.glfwWindowLoopCallback), C.VoidCallback(C.glfwBeforeRender), C.VoidCallback(C.glfwAfterRender))
 }
 
+func (w GLFWwindow) DisplaySize() (width int32, height int32) {
+	widthArg, widthFin := wrapInt32(&width)
+	defer widthFin()
+
+	heightArg, heightFin := wrapInt32(&height)
+	defer heightFin()
+
+	C.igGLFWWindow_GetDisplaySize(w.handle(), widthArg, heightArg)
+
+	return
+}
+
 //export glfwWindowLoopCallback
 func glfwWindowLoopCallback() {
 	if loopFunc != nil {

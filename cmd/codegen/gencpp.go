@@ -78,7 +78,7 @@ extern "C" {
 		// Check lower case member function
 		funcParts := strings.Split(funcName, "_")
 		if len(funcParts) == 2 && unicode.IsLower(rune(funcParts[1][0])) {
-			continue
+			funcName = funcParts[0] + "_" + string(unicode.ToUpper(rune(funcParts[1][0]))) + funcParts[1][1:]
 		}
 
 		// Transform some function names
