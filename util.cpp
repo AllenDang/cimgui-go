@@ -34,3 +34,7 @@ void ImGuiIO_SetMouseButtonDown(ImGuiIO *self, int btnIndex, bool isDown) { self
 ImVector_ImWchar *NewGlyphRange() { return ImVector_ImWchar_create(); }
 
 void DestroyGlyphRange(ImVector_ImWchar *range) { ImVector_ImWchar_destroy(range); }
+
+ImWchar *GlyphRange_GetData(ImVector_ImWchar *range) { return range->Data; }
+
+int ImFontAtlas_GetFontCount(ImFontAtlas *self) { return self->Fonts.Size; }

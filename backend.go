@@ -90,6 +90,6 @@ func Refresh() {
 	C.igRefresh()
 }
 
-func CreateTexture(pixels *C.uchar, width, height int) ImTextureID {
-	return ImTextureID(C.igCreateTexture(pixels, C.int(width), C.int(height)))
+func CreateTexture(pixels unsafe.Pointer, width, height int) ImTextureID {
+	return ImTextureID(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
 }

@@ -33,6 +33,7 @@ func loop() {
 
 	cimgui.SetNextWindowSize(cimgui.NewImVec2(300, 300), cimgui.ImGuiCond_Once)
 	cimgui.Begin("Window 1", nil, 0)
+	cimgui.TextUnformatted("Unformated text")
 	cimgui.Checkbox("Show demo window", &showDemoWindow)
 	if cimgui.BeginCombo("Combo", "Combo preview", cimgui.ImGuiComboFlags_HeightLarge) {
 		cimgui.Selectable_BoolPtr("Item 1", &selected, 0, cimgui.NewImVec2(100, 20))

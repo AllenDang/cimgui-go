@@ -39,3 +39,27 @@ func (gr GlyphRange) handle() *C.ImVector_ImWchar {
 func (gr GlyphRange) Destroy() {
 	C.DestroyGlyphRange(gr.handle())
 }
+
+func (gr GlyphRange) Data() *ImWchar {
+	return (*ImWchar)(C.GlyphRange_GetData(gr.handle()))
+}
+
+func (fa ImFontAtlas) GetFontCount() int {
+	return int(C.ImFontAtlas_GetFontCount(fa.handle()))
+}
+
+func (self ImFontAtlas) GetTextureDataAsRGBA32() (pixels unsafe.Pointer, width int32, height int32, outBytesPerPixel int32) {
+	var p *C.uchar
+	var w C.int
+	var h C.int
+	var bp C.int
+
+	C.ImFontAtlas_GetTexDataAsRGBA32(self.handle(), &p, &w, &h, &bp)
+
+	pixels = unsafe.Pointer(p)
+	width = int32(w)
+	height = int32(h)
+	outBytesPerPixel = int32(bp)
+
+	return
+}

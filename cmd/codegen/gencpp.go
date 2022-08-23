@@ -87,20 +87,26 @@ extern "C" {
 
 		// Remove all ... arg
 		f.Args = strings.Replace(f.Args, ",...", "", 1)
+		// Remoe text_end arg
+		f.Args = strings.Replace(f.Args, ",const char* text_end", "", 1)
+
 		var argsT []ArgDef
+		var actualCallArgs []string
+
 		for _, a := range f.ArgsT {
-			if a.Name != "..." {
+			switch {
+			case a.Name == "...":
+				continue
+			case a.Name == "text_end":
+				actualCallArgs = append(actualCallArgs, "0")
+				continue
+			default:
 				argsT = append(argsT, a)
+				actualCallArgs = append(actualCallArgs, a.Name)
 			}
 		}
 
 		f.ArgsT = argsT
-
-		actualCallArgs := []string{}
-
-		for _, a := range f.ArgsT {
-			actualCallArgs = append(actualCallArgs, a.Name)
-		}
 
 		actualCallArgsStr := fmt.Sprintf("(%s)", strings.Join(actualCallArgs, ","))
 
