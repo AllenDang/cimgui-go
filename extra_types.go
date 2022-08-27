@@ -46,16 +46,16 @@ func (vec *ImVec2) wrap() (out *C.ImVec2, finisher func()) {
 type ImVec4 struct {
 	X float32
 	Y float32
-	W float32
 	Z float32
+	W float32
 }
 
 func NewImVec4(r, g, b, a float32) ImVec4 {
 	return ImVec4{
 		X: r,
 		Y: g,
-		W: b,
-		Z: a,
+		Z: b,
+		W: a,
 	}
 }
 
