@@ -340,6 +340,16 @@ import "unsafe"
 			funcParts := strings.Split(funcName, "_")
 			typeName := funcParts[0]
 
+			// Generate default param value hint
+			var commentSb strings.Builder
+			if len(f.Defaults) > 0 {
+				commentSb.WriteString(fmt.Sprintf("// %s parameter default value hint:\n", funcName))
+
+				for n, v := range f.Defaults {
+					commentSb.WriteString(fmt.Sprintf("// %s: %s\n", n, v))
+				}
+			}
+
 			if strings.Contains(funcName, "_") &&
 				len(funcParts) > 1 &&
 				len(args) > 0 && strings.Contains(args[0], "self ") &&
@@ -351,10 +361,10 @@ import "unsafe"
 				}
 
 				typeName = strings.TrimPrefix(args[0], "self ")
-				return fmt.Sprintf("func (self %s) %s(%s) %s {\n", typeName, newFuncName, strings.Join(newArgs, ","), returnType)
+				return fmt.Sprintf("%sfunc (self %s) %s(%s) %s {\n", commentSb.String(), typeName, newFuncName, strings.Join(newArgs, ","), returnType)
 			}
 
-			return fmt.Sprintf("func %s(%s) %s {\n", funcName, strings.Join(args, ","), returnType)
+			return fmt.Sprintf("%sfunc %s(%s) %s {\n", commentSb.String(), funcName, strings.Join(args, ","), returnType)
 		}
 
 		if f.Ret == "void" {
