@@ -58,3 +58,5 @@ examples/example
 .ccls-cache
 thirdparty/glfw/build
 /cmd/codegen/build/
+
+.clang-format

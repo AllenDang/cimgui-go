@@ -31,7 +31,8 @@ extern "C" {
 
 `)
 
-	for _, f := range funcDefs {
+	for i := 0; i < len(funcDefs); i++ {
+		f := funcDefs[i]
 		shouldSkip := false
 
 		// Check func names
@@ -114,6 +115,7 @@ extern "C" {
 				Args:        f.Args,
 				ArgsT:       f.ArgsT,
 				FuncName:    funcName,
+				Defaults:    f.Defaults,
 				Location:    f.Location,
 				Constructor: f.Constructor,
 				Destructor:  f.Destructor,
