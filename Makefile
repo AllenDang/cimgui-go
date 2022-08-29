@@ -7,17 +7,17 @@ clean_gencode:
 
 .PHONY: gencode
 gencode: ./cmd/codegen/build/codegen
-	cd ./cmd/codegen/build; ./codegen -d ../../../cimgui/generator/output/definitions.json -e ../../../cimgui/generator/output/structs_and_enums.json
+	cd ./cmd/codegen/build; ./codegen -p cimgui -d ../../../cimgui/generator/output/definitions.json -e ../../../cimgui/generator/output/structs_and_enums.json
 	cp -f ./cmd/codegen/build/cimgui_wrapper.cpp ./
 	cp -f ./cmd/codegen/build/cimgui_wrapper.h ./
 	cp -f ./cmd/codegen/build/cimgui_structs_accessor.h ./
 	cp -f ./cmd/codegen/build/cimgui_structs_accessor.cpp ./
-	cp -f ./cmd/codegen/build/enums.go ./
-	cp -f ./cmd/codegen/build/funcs.go ./
-	cp -f ./cmd/codegen/build/structs.go ./
-	gofmt -w enums.go
-	gofmt -w structs.go
-	gofmt -w funcs.go
+	cp -f ./cmd/codegen/build/cimgui_enums.go ./
+	cp -f ./cmd/codegen/build/cimgui_funcs.go ./
+	cp -f ./cmd/codegen/build/cimgui_structs.go ./
+	gofmt -w cimgui_enums.go
+	gofmt -w cimgui_structs.go
+	gofmt -w cimgui_funcs.go
 
 
 .PHONY: gen_cimgui

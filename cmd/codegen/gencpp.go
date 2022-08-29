@@ -10,7 +10,7 @@ import (
 )
 
 // Generate cpp wrapper and return valid functions
-func generateCppWrapper(funcDefs []FuncDef) []FuncDef {
+func generateCppWrapper(prefix string, funcDefs []FuncDef) []FuncDef {
 	var validFuncs []FuncDef
 
 	// Generate header
@@ -26,10 +26,10 @@ extern "C" {
 `)
 
 	var cppSb strings.Builder
-	cppSb.WriteString(`#include "cimgui_wrapper.h"
+	cppSb.WriteString(fmt.Sprintf(`#include "%s_wrapper.h"
 #include "cimgui/cimgui.h"
 
-`)
+`, prefix))
 
 	for i := 0; i < len(funcDefs); i++ {
 		f := funcDefs[i]
@@ -157,7 +157,7 @@ extern "C" {
 #endif
 `)
 
-	headerFile, err := os.Create("cimgui_wrapper.h")
+	headerFile, err := os.Create(fmt.Sprintf("%s_wrapper.h", prefix))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -168,7 +168,7 @@ extern "C" {
 		panic(err.Error())
 	}
 
-	cppFile, err := os.Create("cimgui_wrapper.cpp")
+	cppFile, err := os.Create(fmt.Sprintf("%s_wrapper.cpp", prefix))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -182,7 +182,7 @@ extern "C" {
 	return validFuncs
 }
 
-func generateCppStructsAccessor(structs []StructDef) []FuncDef {
+func generateCppStructsAccessor(prefix string, structs []StructDef) []FuncDef {
 	var structAccessorFuncs []FuncDef
 
 	skipFuncNames := []string{
@@ -201,21 +201,21 @@ func generateCppStructsAccessor(structs []StructDef) []FuncDef {
 	var sbHeader strings.Builder
 	var sbCpp strings.Builder
 
-	sbHeader.WriteString(`#pragma once
+	sbHeader.WriteString(fmt.Sprintf(`#pragma once
 
-#include "cimgui_wrapper.h"
+#include "%s_wrapper.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-`)
+`, prefix))
 
-	sbCpp.WriteString(`
-#include "cimgui_wrapper.h"
-#include "cimgui_structs_accessor.h"
+	sbCpp.WriteString(fmt.Sprintf(`
+#include "%[1]s_wrapper.h"
+#include "%[1]s_structs_accessor.h"
 
-`)
+`, prefix))
 
 	for _, s := range structs {
 		for _, m := range s.Members {
@@ -285,7 +285,7 @@ extern "C" {
 #endif
 `)
 
-	cppFile, err := os.Create("cimgui_structs_accessor.h")
+	cppFile, err := os.Create(fmt.Sprintf("%s_structs_accessor.h", prefix))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -296,7 +296,7 @@ extern "C" {
 		panic(err.Error())
 	}
 
-	cppFile, err = os.Create("cimgui_structs_accessor.cpp")
+	cppFile, err = os.Create(fmt.Sprintf("%s_structs_accessor.cpp", prefix))
 	if err != nil {
 		panic(err)
 	}

@@ -57,6 +57,7 @@ type StructSection struct {
 func main() {
 	defJsonPath := flag.String("d", "", "definitions json file path")
 	enumsJsonpath := flag.String("e", "", "enums json file path")
+	prefix := flag.String("p", "", "prefix for the generated file")
 
 	flag.Parse()
 
@@ -148,13 +149,13 @@ func main() {
 		})
 	}
 
-	validFuncs := generateCppWrapper(funcs)
+	validFuncs := generateCppWrapper(*prefix, funcs)
 
-	enumNames := generateGoEnums(enums)
-	structNames := generateGoStructs(structs)
+	enumNames := generateGoEnums(*prefix, enums)
+	structNames := generateGoStructs(*prefix, structs)
 
-	structAccessorFuncs := generateCppStructsAccessor(structs)
+	structAccessorFuncs := generateCppStructsAccessor(*prefix, structs)
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
-	generateGoFuncs(validFuncs, enumNames, structNames)
+	generateGoFuncs(*prefix, validFuncs, enumNames, structNames)
 }

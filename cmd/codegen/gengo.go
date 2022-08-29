@@ -29,7 +29,7 @@ var (
 )
 
 // Generate enums and return enum type names
-func generateGoEnums(enums []EnumDef) []string {
+func generateGoEnums(prefix string, enums []EnumDef) []string {
 	var sb strings.Builder
 
 	sb.WriteString("package cimgui\n\n")
@@ -50,7 +50,7 @@ func generateGoEnums(enums []EnumDef) []string {
 		sb.WriteString(")\n\n")
 	}
 
-	enumFile, err := os.Create("enums.go")
+	enumFile, err := os.Create(fmt.Sprintf("%s_enums.go", prefix))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -61,7 +61,7 @@ func generateGoEnums(enums []EnumDef) []string {
 	return enumNames
 }
 
-func generateGoStructs(structs []StructDef) []string {
+func generateGoStructs(prefix string, structs []StructDef) []string {
 	valueTypeStructs := []string{
 		"ImVec1",
 		"ImVec2ih",
@@ -73,13 +73,13 @@ func generateGoStructs(structs []StructDef) []string {
 
 	var sb strings.Builder
 
-	sb.WriteString(`package cimgui
+	sb.WriteString(fmt.Sprintf(`package cimgui
 
-// #include "cimgui_wrapper.h"
+// #include "%s_wrapper.h"
 import "C"
 import "unsafe"
 
-`)
+`, prefix))
 
 	// Save all struct name into a map
 	var structNames []string
@@ -113,7 +113,7 @@ func new%[1]sFromC(cvalue C.%[1]s) %[1]s {
 		structNames = append(structNames, s.Name)
 	}
 
-	structFile, err := os.Create("structs.go")
+	structFile, err := os.Create(fmt.Sprintf("%s_structs.go", prefix))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -124,19 +124,19 @@ func new%[1]sFromC(cvalue C.%[1]s) %[1]s {
 	return structNames
 }
 
-func generateGoFuncs(validFuncs []FuncDef, enumNames []string, structNames []string) {
+func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, structNames []string) {
 	var sb strings.Builder
 	convertedFuncCount := 0
 
-	sb.WriteString(`package cimgui
+	sb.WriteString(fmt.Sprintf(`package cimgui
 
 // #include "extra_type.h"
-// #include "cimgui_structs_accessor.h"
-// #include "cimgui_wrapper.h"
+// #include "%[1]s_structs_accessor.h"
+// #include "%[1]s_wrapper.h"
 import "C"
 import "unsafe"
 
-`)
+`, prefix))
 
 	argWrapperMap := map[string]typeWrapper{
 		"char*":                    constCharW,
@@ -466,7 +466,7 @@ import "unsafe"
 
 	fmt.Printf("Convert progress: %d/%d\n", convertedFuncCount, len(validFuncs))
 
-	goFile, err := os.Create("funcs.go")
+	goFile, err := os.Create(fmt.Sprintf("%s_funcs.go", prefix))
 	if err != nil {
 		panic(err.Error())
 	}
