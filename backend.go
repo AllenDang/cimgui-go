@@ -105,3 +105,7 @@ func Refresh() {
 func CreateTexture(pixels unsafe.Pointer, width, height int) ImTextureID {
 	return ImTextureID(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
 }
+
+func DeleteTexture(id ImTextureID) {
+	C.igDeleteTexture(C.ImTextureID(id))
+}

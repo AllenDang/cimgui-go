@@ -25,7 +25,9 @@ void glfw_render(GLFWwindow *window, VoidCallback renderLoop);
 
 void igSetTargetFPS(unsigned int fps) { glfw_target_fps = fps; }
 
-static void glfw_error_callback(int error, const char *description) { fprintf(stderr, "Glfw Error %d: %s\n", error, description); }
+static void glfw_error_callback(int error, const char *description) {
+  fprintf(stderr, "Glfw Error %d: %s\n", error, description);
+}
 
 void glfw_window_refresh_callback(GLFWwindow *window) {
   VoidCallback loopFunc = (VoidCallback)(glfwGetWindowUserPointer(window));
@@ -150,7 +152,8 @@ void glfw_render(GLFWwindow *window, VoidCallback renderLoop) {
   int display_w, display_h;
   glfwGetFramebufferSize(window, &display_w, &display_h);
   glViewport(0, 0, display_w, display_h);
-  glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+  glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w,
+               clear_color.w);
   glClear(GL_COLOR_BUFFER_BIT);
   ImGui_ImplOpenGL3_RenderDrawData(igGetDrawData());
 
@@ -253,4 +256,11 @@ ImTextureID igCreateTexture(unsigned char *pixels, int width, int height) {
   return ImTextureID((intptr_t(texId)));
 }
 
-void igGLFWWindow_GetDisplaySize(GLFWwindow *window, int *width, int *height) { glfwGetWindowSize(window, width, height); }
+void igDeleteTexture(ImTextureID id) {
+  glBindTexture(GL_TEXTURE_2D, 0);
+  glDeleteTextures(1, (GLuint *)id);
+}
+
+void igGLFWWindow_GetDisplaySize(GLFWwindow *window, int *width, int *height) {
+  glfwGetWindowSize(window, width, height);
+}
