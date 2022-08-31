@@ -14,6 +14,7 @@ package cimgui
 // #include "backend.h"
 import "C"
 import (
+	"image"
 	"unsafe"
 )
 
@@ -106,8 +107,8 @@ func CreateTexture(pixels unsafe.Pointer, width, height int) ImTextureID {
 	return ImTextureID(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
 }
 
-func CreateTextureUint(pixels []uint8, width, height int) ImTextureID {
-	return ImTextureID(C.igCreateTexture((*C.uchar)(Ptr(pixels)), C.int(width), C.int(height)))
+func CreateTextureRgba(img *image.RGBA, width, height int) ImTextureID {
+	return ImTextureID(C.igCreateTexture((*C.uchar)(Ptr(img.Pix)), C.int(width), C.int(height)))
 }
 
 func DeleteTexture(id ImTextureID) {
