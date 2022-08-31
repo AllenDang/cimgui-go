@@ -108,7 +108,7 @@ func CreateTexture(pixels unsafe.Pointer, width, height int) ImTextureID {
 }
 
 func CreateTextureRgba(img *image.RGBA, width, height int) ImTextureID {
-	return ImTextureID(C.igCreateTexture((*C.uchar)(Ptr(img.Pix)), C.int(width), C.int(height)))
+	return ImTextureID(C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height)))
 }
 
 func DeleteTexture(id ImTextureID) {
