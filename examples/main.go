@@ -20,6 +20,7 @@ var (
 	color4         [4]*float32 = [4]*float32{&r, &g, &b, &a}
 	selected       bool
 	window         cimgui.GLFWwindow
+	texture        *cimgui.Texture
 )
 
 func callback(data cimgui.ImGuiInputTextCallbackData) int {
@@ -64,10 +65,27 @@ func loop() {
 	cimgui.DragInt2("Drag int2", values, 1, 0, 100, "%d", 0)
 	cimgui.ColorEdit4("Color Edit3", color4, 0)
 	cimgui.End()
+
+	basePos := cimgui.GetMainViewport().GetPos()
+	cimgui.SetNextWindowPos(cimgui.NewImVec2(basePos.X+60, 600), cimgui.ImGuiCond_Appearing, cimgui.NewImVec2(0, 0))
+	cimgui.Begin("Image", nil, 0)
+	cimgui.Text(fmt.Sprintf("pointer = %v", texture.ID()))
+	cimgui.Image(texture.ID(), cimgui.NewImVec2(float32(texture.Width), float32(texture.Height)), cimgui.NewImVec2(0, 0), cimgui.NewImVec2(1, 1), cimgui.NewImVec4(1, 1, 1, 1), cimgui.NewImVec4(0, 0, 0, 0))
+	cimgui.End()
 }
 
 func main() {
+	img, err := cimgui.LoadImage("./test.jpeg")
+	if err != nil {
+		panic("Failed to load gopher.png")
+	}
+
 	window = cimgui.CreateGlfwWindow("Hello from cimgui-go", 1200, 900, 0)
+
+	texture, err = cimgui.NewTextureFromRgba(img)
+	if err != nil {
+		panic("Failed to create texture")
+	}
 
 	window.Run(loop, nil, nil)
 }
