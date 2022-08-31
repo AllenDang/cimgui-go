@@ -10,26 +10,26 @@ import (
 )
 
 // Generate cpp wrapper and return valid functions
-func generateCppWrapper(prefix string, funcDefs []FuncDef) []FuncDef {
+func generateCppWrapper(prefix, includePath string, funcDefs []FuncDef) []FuncDef {
 	var validFuncs []FuncDef
 
 	// Generate header
 	var headerSb strings.Builder
-	headerSb.WriteString(`#pragma once
+	headerSb.WriteString(fmt.Sprintf(`#pragma once
 
-#include "cimgui/cimgui.h"
+#include "%s"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-`)
+`, includePath))
 
 	var cppSb strings.Builder
 	cppSb.WriteString(fmt.Sprintf(`#include "%s_wrapper.h"
-#include "cimgui/cimgui.h"
+#include "%s"
 
-`, prefix))
+`, prefix, includePath))
 
 	for i := 0; i < len(funcDefs); i++ {
 		f := funcDefs[i]
@@ -182,7 +182,7 @@ extern "C" {
 	return validFuncs
 }
 
-func generateCppStructsAccessor(prefix string, structs []StructDef) []FuncDef {
+func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []StructDef) []FuncDef {
 	var structAccessorFuncs []FuncDef
 
 	skipFuncNames := []string{
@@ -197,7 +197,14 @@ func generateCppStructsAccessor(prefix string, structs []StructDef) []FuncDef {
 		"ImVec4_Getz",
 		"ImRect_GetMin",
 		"ImRect_GetMax",
+		"ImPlotColormapData_GetKeys",
 	}
+
+	// Add all valid function's name to skipFuncNames
+	for _, f := range validFuncs {
+		skipFuncNames = append(skipFuncNames, f.FuncName)
+	}
+
 	var sbHeader strings.Builder
 	var sbCpp strings.Builder
 

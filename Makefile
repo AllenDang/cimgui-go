@@ -7,7 +7,7 @@ clean_gencode:
 
 .PHONY: gencode
 gencode: ./cmd/codegen/build/codegen
-	cd ./cmd/codegen/build; ./codegen -p cimgui -d ../../../cimgui/generator/output/definitions.json -e ../../../cimgui/generator/output/structs_and_enums.json
+	cd ./cmd/codegen/build; ./codegen -p cimgui -i cimgui/cimgui.h -d ../../../cimgui/generator/output/definitions.json -e ../../../cimgui/generator/output/structs_and_enums.json
 	cp -f ./cmd/codegen/build/cimgui_wrapper.cpp ./
 	cp -f ./cmd/codegen/build/cimgui_wrapper.h ./
 	cp -f ./cmd/codegen/build/cimgui_structs_accessor.h ./

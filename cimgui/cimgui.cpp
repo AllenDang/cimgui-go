@@ -4344,9 +4344,9 @@ CIMGUI_API void igDockContextQueueUndockNode(ImGuiContext* ctx,ImGuiDockNode* no
 {
     return ImGui::DockContextQueueUndockNode(ctx,node);
 }
-CIMGUI_API bool igDockContextCalcDropPosForDocking(ImGuiWindow* target,ImGuiDockNode* target_node,ImGuiWindow* payload,ImGuiDir split_dir,bool split_outer,ImVec2* out_pos)
+CIMGUI_API bool igDockContextCalcDropPosForDocking(ImGuiWindow* target,ImGuiDockNode* target_node,ImGuiWindow* payload_window,ImGuiDockNode* payload_node,ImGuiDir split_dir,bool split_outer,ImVec2* out_pos)
 {
-    return ImGui::DockContextCalcDropPosForDocking(target,target_node,payload,split_dir,split_outer,out_pos);
+    return ImGui::DockContextCalcDropPosForDocking(target,target_node,payload_window,payload_node,split_dir,split_outer,out_pos);
 }
 CIMGUI_API ImGuiDockNode* igDockContextFindNodeByID(ImGuiContext* ctx,ImGuiID id)
 {

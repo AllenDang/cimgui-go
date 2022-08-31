@@ -58,6 +58,7 @@ func main() {
 	defJsonPath := flag.String("d", "", "definitions json file path")
 	enumsJsonpath := flag.String("e", "", "enums json file path")
 	prefix := flag.String("p", "", "prefix for the generated file")
+	include := flag.String("i", "", "include header file")
 
 	flag.Parse()
 
@@ -149,12 +150,12 @@ func main() {
 		})
 	}
 
-	validFuncs := generateCppWrapper(*prefix, funcs)
+	validFuncs := generateCppWrapper(*prefix, *include, funcs)
 
 	enumNames := generateGoEnums(*prefix, enums)
 	structNames := generateGoStructs(*prefix, structs)
 
-	structAccessorFuncs := generateCppStructsAccessor(*prefix, structs)
+	structAccessorFuncs := generateCppStructsAccessor(*prefix, validFuncs, structs)
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
 	generateGoFuncs(*prefix, validFuncs, enumNames, structNames)

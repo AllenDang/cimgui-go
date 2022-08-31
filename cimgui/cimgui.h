@@ -1825,6 +1825,7 @@ struct ImGuiInputEvent
         ImGuiInputEventText Text;
         ImGuiInputEventAppFocused AppFocused;
     };
+    bool IgnoredAsSame;
     bool AddedByTestEngine;
 };
 typedef enum {
@@ -2107,10 +2108,11 @@ typedef enum {
     ImGuiDebugLogFlags_EventFocus = 1 << 1,
     ImGuiDebugLogFlags_EventPopup = 1 << 2,
     ImGuiDebugLogFlags_EventNav = 1 << 3,
-    ImGuiDebugLogFlags_EventIO = 1 << 4,
-    ImGuiDebugLogFlags_EventDocking = 1 << 5,
-    ImGuiDebugLogFlags_EventViewport = 1 << 6,
-    ImGuiDebugLogFlags_EventMask_ = ImGuiDebugLogFlags_EventActiveId | ImGuiDebugLogFlags_EventFocus | ImGuiDebugLogFlags_EventPopup | ImGuiDebugLogFlags_EventNav | ImGuiDebugLogFlags_EventIO | ImGuiDebugLogFlags_EventDocking | ImGuiDebugLogFlags_EventViewport,
+    ImGuiDebugLogFlags_EventClipper = 1 << 4,
+    ImGuiDebugLogFlags_EventIO = 1 << 5,
+    ImGuiDebugLogFlags_EventDocking = 1 << 6,
+    ImGuiDebugLogFlags_EventViewport = 1 << 7,
+    ImGuiDebugLogFlags_EventMask_ = ImGuiDebugLogFlags_EventActiveId | ImGuiDebugLogFlags_EventFocus | ImGuiDebugLogFlags_EventPopup | ImGuiDebugLogFlags_EventNav | ImGuiDebugLogFlags_EventClipper | ImGuiDebugLogFlags_EventIO | ImGuiDebugLogFlags_EventDocking | ImGuiDebugLogFlags_EventViewport,
     ImGuiDebugLogFlags_OutputToTTY = 1 << 10,
 }ImGuiDebugLogFlags_;
 struct ImGuiMetricsConfig
@@ -2237,7 +2239,6 @@ struct ImGuiContext
     ImGuiWindow* CurrentWindow;
     ImGuiWindow* HoveredWindow;
     ImGuiWindow* HoveredWindowUnderMovingWindow;
-    ImGuiDockNode* HoveredDockNode;
     ImGuiWindow* MovingWindow;
     ImGuiWindow* WheelingWindow;
     ImVec2 WheelingWindowRefMousePos;
@@ -2429,6 +2430,7 @@ struct ImGuiContext
     ImGuiID DebugItemPickerBreakId;
     ImGuiMetricsConfig DebugMetricsConfig;
     ImGuiStackTool DebugStackTool;
+    ImGuiDockNode* DebugHoveredDockNode;
     float FramerateSecPerFrame[60];
     int FramerateSecPerFrameIdx;
     int FramerateSecPerFrameCount;
@@ -4005,7 +4007,7 @@ CIMGUI_API ImGuiID igDockContextGenNodeID(ImGuiContext* ctx);
 CIMGUI_API void igDockContextQueueDock(ImGuiContext* ctx,ImGuiWindow* target,ImGuiDockNode* target_node,ImGuiWindow* payload,ImGuiDir split_dir,float split_ratio,bool split_outer);
 CIMGUI_API void igDockContextQueueUndockWindow(ImGuiContext* ctx,ImGuiWindow* window);
 CIMGUI_API void igDockContextQueueUndockNode(ImGuiContext* ctx,ImGuiDockNode* node);
-CIMGUI_API bool igDockContextCalcDropPosForDocking(ImGuiWindow* target,ImGuiDockNode* target_node,ImGuiWindow* payload,ImGuiDir split_dir,bool split_outer,ImVec2* out_pos);
+CIMGUI_API bool igDockContextCalcDropPosForDocking(ImGuiWindow* target,ImGuiDockNode* target_node,ImGuiWindow* payload_window,ImGuiDockNode* payload_node,ImGuiDir split_dir,bool split_outer,ImVec2* out_pos);
 CIMGUI_API ImGuiDockNode* igDockContextFindNodeByID(ImGuiContext* ctx,ImGuiID id);
 CIMGUI_API bool igDockNodeBeginAmendTabBar(ImGuiDockNode* node);
 CIMGUI_API void igDockNodeEndAmendTabBar(void);
