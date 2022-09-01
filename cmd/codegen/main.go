@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"fmt"
 	"os"
 	"strings"
 
@@ -234,7 +233,6 @@ func main() {
 	// generate reference only enum and struct names
 	if len(refEnumJsonBytes) > 0 {
 		es, ss := getEnumAndStructNames(refEnumJsonBytes)
-		fmt.Println(es)
 		enumNames = append(enumNames, es...)
 		structNames = append(structNames, ss...)
 	}
