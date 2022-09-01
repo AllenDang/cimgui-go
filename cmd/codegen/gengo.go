@@ -133,7 +133,7 @@ import "unsafe"
 		"size_t*":                  sizeTPtrW,
 		"float":                    floatW,
 		"float*":                   floatPtrW,
-		"const float*":             floatPtrW,
+		"const float*":             floatArrayW,
 		"short":                    shortW,
 		"unsigned short":           ushortW,
 		"ImU8":                     u8W,
