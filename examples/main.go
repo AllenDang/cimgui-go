@@ -34,7 +34,6 @@ func showWidgetsDemo() {
 		cimgui.ShowDemoWindow(&showDemoWindow)
 	}
 
-	// demo of widgets
 	cimgui.SetNextWindowSize(cimgui.NewImVec2(300, 300), cimgui.ImGuiCond_Once)
 	cimgui.Begin("Window 1", nil, 0)
 	if cimgui.Button("Click Me", cimgui.NewImVec2(80, 20)) {
@@ -82,8 +81,9 @@ func showPictureLoadingDemo() {
 func showImPlotDemo() {
 	basePos := cimgui.GetMainViewport().GetPos()
 	cimgui.SetNextWindowPos(cimgui.NewImVec2(basePos.X+400, basePos.Y+60), cimgui.ImGuiCond_Appearing, cimgui.NewImVec2(0, 0))
+	cimgui.SetNextWindowSize(cimgui.NewImVec2(500, 300), cimgui.ImGuiCond_Appearing)
 	cimgui.Begin("Plot window", nil, 0)
-	if cimgui.Plot_BeginPlot("Plot", cimgui.NewImVec2(500, 0), 0) {
+	if cimgui.Plot_BeginPlot("Plot", cimgui.NewImVec2(-1, -1), 0) {
 		cimgui.Plot_PlotBars_S64PtrInt("Bar", barValues, int32(len(barValues)), 0.67, 0, 0, 0, 8)
 		cimgui.Plot_PlotLine_S64PtrInt("Line", barValues, int32(len(barValues)), 1, 0, 0, 0, 8)
 		cimgui.Plot_EndPlot()
