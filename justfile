@@ -29,3 +29,9 @@ gencode_cimgui:
 
 gencode_cimplot:
 	just _gencode cimplot cimplot/cimplot.h ../../../cimplot/generator/output/definitions.json ../../../cimplot/generator/output/structs_and_enums.json -r ../../../cimgui/generator/output/structs_and_enums.json
+
+compile_cimgui_macos:
+	rm -rf ./cimgui/build
+	cd ./cimgui; cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=arm64
+	cd ./cimgui/build; make
+	cp -f ./cimgui/build/cimgui.a ./lib/macos/arm64/
