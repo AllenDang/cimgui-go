@@ -46,7 +46,7 @@ defer %[1]sFin()`, arg.Name)
 	return
 }
 
-func floatArryW(arg ArgDef) (argType string, def string, varName string) {
+func floatArrayW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "[]float32"
 	varName = fmt.Sprintf("(*C.float)(&(%s[0]))", arg.Name)
 	return
