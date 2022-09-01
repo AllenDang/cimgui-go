@@ -62,15 +62,6 @@ func generateGoEnums(prefix string, enums []EnumDef) []string {
 }
 
 func generateGoStructs(prefix string, structs []StructDef) []string {
-	valueTypeStructs := []string{
-		"ImVec1",
-		"ImVec2ih",
-		"ImVec2",
-		"ImVec4",
-		"ImRect",
-		"ImColor",
-	}
-
 	var sb strings.Builder
 
 	sb.WriteString(fmt.Sprintf(`package cimgui
@@ -85,12 +76,7 @@ import "unsafe"
 	var structNames []string
 
 	for _, s := range structs {
-		if !strings.HasPrefix(s.Name, "Im") {
-			continue
-		}
-
-		// Skip all value type struct
-		if funk.ContainsString(valueTypeStructs, s.Name) {
+		if shouldSkipStruct(s.Name) {
 			continue
 		}
 
@@ -130,7 +116,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 	sb.WriteString(fmt.Sprintf(`package cimgui
 
-// #include "extra_type.h"
+// #include "extra_types.h"
 // #include "%[1]s_structs_accessor.h"
 // #include "%[1]s_wrapper.h"
 import "C"
@@ -153,9 +139,11 @@ import "unsafe"
 		"ImU8":                     u8W,
 		"ImU16":                    u16W,
 		"ImU64":                    u64W,
+		"const ImU64*":             uint64ArrayW,
 		"ImS8":                     s8W,
 		"ImS16":                    s16W,
 		"ImS32":                    s32W,
+		"const ImS64*":             int64ArrayW,
 		"int":                      intW,
 		"int*":                     intPtrW,
 		"unsigned int":             uintW,
@@ -437,7 +425,9 @@ import "unsafe"
 
 				convertedFuncCount += 1
 			} else if f.Constructor {
-				returnType := strings.Split(f.FuncName, "_")[0]
+				parts := strings.Split(f.FuncName, "_")
+
+				returnType := parts[0]
 
 				if funk.ContainsString(structNames, "Im"+returnType) {
 					returnType = "Im" + returnType
@@ -447,7 +437,12 @@ import "unsafe"
 					continue
 				}
 
-				newFuncName := "New" + strings.Split(f.FuncName, "_")[0]
+				suffix := ""
+				if len(parts) > 2 {
+					suffix = strings.Join(parts[2:], "")
+				}
+
+				newFuncName := "New" + returnType + suffix
 
 				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", newFuncName, strings.Join(args, ","), returnType))
 

@@ -3,12 +3,17 @@ package main
 import (
 	"encoding/json"
 	"flag"
+	"fmt"
 	"os"
+	"strings"
+
+	"github.com/thoas/go-funk"
 )
 
 type ArgDef struct {
-	Name string `json:"name"`
-	Type string `json:"type"`
+	Name       string `json:"name"`
+	Type       string `json:"type"`
+	CustomType string `json:"custom_type"`
 }
 
 type FuncDef struct {
@@ -54,36 +59,9 @@ type StructSection struct {
 	Structs json.RawMessage `json:"structs"`
 }
 
-func main() {
-	defJsonPath := flag.String("d", "", "definitions json file path")
-	enumsJsonpath := flag.String("e", "", "enums json file path")
-	prefix := flag.String("p", "", "prefix for the generated file")
-	include := flag.String("i", "", "include header file")
-
-	flag.Parse()
-
-	stat, err := os.Stat(*defJsonPath)
-	if err != nil || stat.IsDir() {
-		panic("Invalid definitions json file path")
-	}
-
-	stat, err = os.Stat(*enumsJsonpath)
-	if err != nil || stat.IsDir() {
-		panic("Invalid enum json file path")
-	}
-
-	defJsonBytes, err := os.ReadFile(*defJsonPath)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	enumJsonBytes, err := os.ReadFile(*enumsJsonpath)
-	if err != nil {
-		panic(err.Error())
-	}
-
+func getFunDefs(defJsonBytes []byte) []FuncDef {
 	var defJson map[string]json.RawMessage
-	err = json.Unmarshal(defJsonBytes, &defJson)
+	err := json.Unmarshal(defJsonBytes, &defJson)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -97,8 +75,12 @@ func main() {
 		funcs = append(funcs, funcDefs...)
 	}
 
+	return funcs
+}
+
+func getEnumDefs(enumJsonBytes []byte) []EnumDef {
 	var enumSectionJson EnumsSection
-	err = json.Unmarshal(enumJsonBytes, &enumSectionJson)
+	err := json.Unmarshal(enumJsonBytes, &enumSectionJson)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -124,8 +106,12 @@ func main() {
 		})
 	}
 
+	return enums
+}
+
+func getStructDefs(enumJsonBytes []byte) []StructDef {
 	var structSectionJson StructSection
-	err = json.Unmarshal(enumJsonBytes, &structSectionJson)
+	err := json.Unmarshal(enumJsonBytes, &structSectionJson)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -150,13 +136,108 @@ func main() {
 		})
 	}
 
+	return structs
+}
+
+func shouldSkipStruct(name string) bool {
+	valueTypeStructs := []string{
+		"ImVec1",
+		"ImVec2ih",
+		"ImVec2",
+		"ImVec4",
+		"ImRect",
+		"ImColor",
+	}
+
+	if !strings.HasPrefix(name, "Im") {
+		return true
+	}
+
+	// Skip all value type struct
+	if funk.ContainsString(valueTypeStructs, name) {
+		return true
+	}
+
+	return false
+}
+
+func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []string, structNames []string) {
+	enums := getEnumDefs(enumJsonBytes)
+	structs := getStructDefs(enumJsonBytes)
+
+	for _, e := range enums {
+		enumNames = append(enumNames, strings.TrimSuffix(e.Name, "_"))
+	}
+
+	for _, s := range structs {
+		if !shouldSkipStruct(s.Name) {
+			structNames = append(structNames, s.Name)
+		}
+	}
+
+	return
+}
+
+func main() {
+	defJsonPath := flag.String("d", "", "definitions json file path")
+	enumsJsonpath := flag.String("e", "", "structs and enums json file path")
+	refEnumsJsonPath := flag.String("r", "", "reference structs and enums json file path")
+	prefix := flag.String("p", "", "prefix for the generated file")
+	include := flag.String("i", "", "include header file")
+
+	flag.Parse()
+
+	stat, err := os.Stat(*defJsonPath)
+	if err != nil || stat.IsDir() {
+		panic("Invalid definitions json file path")
+	}
+
+	stat, err = os.Stat(*enumsJsonpath)
+	if err != nil || stat.IsDir() {
+		panic("Invalid enum json file path")
+	}
+
+	defJsonBytes, err := os.ReadFile(*defJsonPath)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	enumJsonBytes, err := os.ReadFile(*enumsJsonpath)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	var refEnumJsonBytes []byte
+	if refEnumsJsonPath != nil {
+		refEnumJsonBytes, err = os.ReadFile(*refEnumsJsonPath)
+		if err != nil {
+			panic(err.Error())
+		}
+	}
+
+	// get definitions from json file
+	funcs := getFunDefs(defJsonBytes)
+
+	enums := getEnumDefs(enumJsonBytes)
+
+	structs := getStructDefs(enumJsonBytes)
+
 	validFuncs := generateCppWrapper(*prefix, *include, funcs)
 
+	// generate code
 	enumNames := generateGoEnums(*prefix, enums)
 	structNames := generateGoStructs(*prefix, structs)
 
 	structAccessorFuncs := generateCppStructsAccessor(*prefix, validFuncs, structs)
 	validFuncs = append(validFuncs, structAccessorFuncs...)
+
+	// generate reference only enum and struct names
+	if len(refEnumJsonBytes) > 0 {
+		es, ss := getEnumAndStructNames(refEnumJsonBytes)
+		fmt.Println(es)
+		enumNames = append(enumNames, es...)
+		structNames = append(structNames, ss...)
+	}
 
 	generateGoFuncs(*prefix, validFuncs, enumNames, structNames)
 }

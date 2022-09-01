@@ -21,6 +21,7 @@ var (
 	selected       bool
 	window         cimgui.GLFWwindow
 	texture        *cimgui.Texture
+	barValues      []int64
 )
 
 func callback(data cimgui.ImGuiInputTextCallbackData) int {
@@ -28,11 +29,12 @@ func callback(data cimgui.ImGuiInputTextCallbackData) int {
 	return 0
 }
 
-func loop() {
+func showWidgetsDemo() {
 	if showDemoWindow {
 		cimgui.ShowDemoWindow(&showDemoWindow)
 	}
 
+	// demo of widgets
 	cimgui.SetNextWindowSize(cimgui.NewImVec2(300, 300), cimgui.ImGuiCond_Once)
 	cimgui.Begin("Window 1", nil, 0)
 	if cimgui.Button("Click Me", cimgui.NewImVec2(80, 20)) {
@@ -65,7 +67,10 @@ func loop() {
 	cimgui.DragInt2("Drag int2", values, 1, 0, 100, "%d", 0)
 	cimgui.ColorEdit4("Color Edit3", color4, 0)
 	cimgui.End()
+}
 
+func showPictureLoadingDemo() {
+	// demo of showing a picture
 	basePos := cimgui.GetMainViewport().GetPos()
 	cimgui.SetNextWindowPos(cimgui.NewImVec2(basePos.X+60, 600), cimgui.ImGuiCond_Appearing, cimgui.NewImVec2(0, 0))
 	cimgui.Begin("Image", nil, 0)
@@ -74,11 +79,44 @@ func loop() {
 	cimgui.End()
 }
 
+func showImPlotDemo() {
+	basePos := cimgui.GetMainViewport().GetPos()
+	cimgui.SetNextWindowPos(cimgui.NewImVec2(basePos.X+400, basePos.Y+60), cimgui.ImGuiCond_Appearing, cimgui.NewImVec2(0, 0))
+	cimgui.Begin("Plot window", nil, 0)
+	if cimgui.Plot_BeginPlot("Plot", cimgui.NewImVec2(500, 0), 0) {
+		cimgui.Plot_PlotBars_S64PtrInt("Bar", barValues, int32(len(barValues)), 0.67, 0, 0, 0, 8)
+		cimgui.Plot_PlotLine_S64PtrInt("Line", barValues, int32(len(barValues)), 1, 0, 0, 0, 8)
+		cimgui.Plot_EndPlot()
+	}
+	cimgui.End()
+}
+
+func afterCreateContext() {
+	cimgui.Plot_CreateContext()
+}
+
+func loop() {
+	showWidgetsDemo()
+	showPictureLoadingDemo()
+	showImPlotDemo()
+}
+
+func beforeDestoryContext() {
+	cimgui.Plot_DestroyContext(0)
+}
+
 func main() {
 	img, err := cimgui.LoadImage("./test.jpeg")
 	if err != nil {
 		panic("Failed to load gopher.png")
 	}
+
+	for i := 0; i < 10; i++ {
+		barValues = append(barValues, int64(i+1))
+	}
+
+	cimgui.SetAfterCreateContextHook(afterCreateContext)
+	cimgui.SetBeforeDestroyContextHook(beforeDestoryContext)
 
 	window = cimgui.CreateGlfwWindow("Hello from cimgui-go", 1200, 900, 0)
 
@@ -87,5 +125,5 @@ func main() {
 		panic("Failed to create texture")
 	}
 
-	window.Run(loop, nil, nil)
+	window.Run(loop)
 }

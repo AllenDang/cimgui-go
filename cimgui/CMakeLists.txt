@@ -18,6 +18,10 @@ file(GLOB IMGUI_SOURCES
     imgui/imgui_draw.cpp
     imgui/imgui_demo.cpp
     imgui/imgui_widgets.cpp
+    ../cimplot/implot/implot.cpp
+    ../cimplot/implot/implot_items.cpp
+    ../cimplot/implot/implot_demo.cpp
+    ../cimplot/cimplot.cpp
 	${TABLES_SOURCE}
 )
 

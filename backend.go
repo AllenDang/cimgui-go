@@ -10,6 +10,8 @@ package cimgui
 // extern void glfwWindowLoopCallback();
 // extern void glfwBeforeRender();
 // extern void glfwAfterRender();
+// extern void glfwAfterCreateContext();
+// extern void glfwBeforeDestoryContext();
 // #include <stdint.h>
 // #include "backend.h"
 import "C"
@@ -32,9 +34,11 @@ const (
 type voidCallbackFunc func()
 
 var (
-	loopFunc     voidCallbackFunc
-	beforeRender voidCallbackFunc
-	afterRender  voidCallbackFunc
+	afterCreateContext   voidCallbackFunc
+	loopFunc             voidCallbackFunc
+	beforeRender         voidCallbackFunc
+	afterRender          voidCallbackFunc
+	beforeDestoryContext voidCallbackFunc
 )
 
 type GLFWwindow uintptr
@@ -43,11 +47,25 @@ func (w GLFWwindow) handle() *C.GLFWwindow {
 	return (*C.GLFWwindow)(unsafe.Pointer(w))
 }
 
-func (w GLFWwindow) Run(loop func(), beforeRenderFunc func(), afterRenderFunc func()) {
+func SetAfterCreateContextHook(hook func()) {
+	afterCreateContext = hook
+}
+
+func SetBeforeDestroyContextHook(hook func()) {
+	beforeDestoryContext = hook
+}
+
+func SetBeforeRenderHook(hook func()) {
+	beforeRender = hook
+}
+
+func SetAfterRenderHook(hook func()) {
+	afterRender = hook
+}
+
+func (w GLFWwindow) Run(loop func()) {
 	loopFunc = loop
-	beforeRender = beforeRenderFunc
-	afterRender = afterRenderFunc
-	C.igRunLoop(w.handle(), C.VoidCallback(C.glfwWindowLoopCallback), C.VoidCallback(C.glfwBeforeRender), C.VoidCallback(C.glfwAfterRender))
+	C.igRunLoop(w.handle(), C.VoidCallback(C.glfwWindowLoopCallback), C.VoidCallback(C.glfwBeforeRender), C.VoidCallback(C.glfwAfterRender), C.VoidCallback(C.glfwBeforeDestoryContext))
 }
 
 func (w GLFWwindow) DisplaySize() (width int32, height int32) {
@@ -83,11 +101,25 @@ func glfwAfterRender() {
 	}
 }
 
+//export glfwAfterCreateContext
+func glfwAfterCreateContext() {
+	if afterCreateContext != nil {
+		afterCreateContext()
+	}
+}
+
+//export glfwBeforeDestoryContext
+func glfwBeforeDestoryContext() {
+	if beforeDestoryContext != nil {
+		beforeDestoryContext()
+	}
+}
+
 func CreateGlfwWindow(title string, width, height int, flags GLFWWindowFlags) GLFWwindow {
 	titleArg, titleFin := wrapString(title)
 	defer titleFin()
 
-	window := GLFWwindow(unsafe.Pointer(C.igCreateGLFWWindow(titleArg, C.int(width), C.int(height), C.GLFWWindowFlags(flags))))
+	window := GLFWwindow(unsafe.Pointer(C.igCreateGLFWWindow(titleArg, C.int(width), C.int(height), C.GLFWWindowFlags(flags), C.VoidCallback(C.glfwAfterCreateContext))))
 	if window == 0 {
 		panic("Failed to create GLFW window")
 	}

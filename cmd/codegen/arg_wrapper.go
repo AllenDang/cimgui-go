@@ -75,6 +75,20 @@ func u8W(arg ArgDef) (argType string, def string, varName string) {
 	return simpleValueW(arg.Name, "uint", "ImU8")
 }
 
+func u8PtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*uint"
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapUint8(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
+func u16PtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*uint"
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapUint16(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
 func u16W(arg ArgDef) (argType string, def string, varName string) {
 	return simpleValueW(arg.Name, "uint", "ImU16")
 }
@@ -158,6 +172,20 @@ func intW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
+func int8PtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*byte"
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapInt8(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
+func int16PtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*int"
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapInt16(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
 func intPtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*int32"
 	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapInt32(%[1]s)\ndefer %[1]sFin()", arg.Name)
@@ -165,8 +193,27 @@ func intPtrW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
+func int64ArrayW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "[]int64"
+	varName = fmt.Sprintf("(*C.longlong)(&(%s[0]))", arg.Name)
+	return
+}
+
 func uintW(arg ArgDef) (argType string, def string, varName string) {
 	return simpleValueW(arg.Name, "uint32", "uint")
+}
+
+func uintPtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*uint32"
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapUint32(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
+func uint64ArrayW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "[]uint64"
+	varName = fmt.Sprintf("(*C.ulonglong)(&(%s[0]))", arg.Name)
+	return
 }
 
 func doubleW(arg ArgDef) (argType string, def string, varName string) {

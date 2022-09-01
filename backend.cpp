@@ -34,7 +34,8 @@ void glfw_window_refresh_callback(GLFWwindow *window) {
   glfw_render(window, loopFunc);
 }
 
-GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height, GLFWWindowFlags flags) {
+GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height, GLFWWindowFlags flags,
+                               VoidCallback afterCreateContext) {
   // Setup window
   glfwSetErrorCallback(glfw_error_callback);
   if (!glfwInit())
@@ -92,6 +93,11 @@ GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height, GLFWWin
 
   // Setup Dear ImGui context
   igCreateContext(0);
+
+  if (afterCreateContext != NULL) {
+    afterCreateContext();
+  }
+
   ImGuiIO *io = igGetIO();
   io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
   // io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad
@@ -174,7 +180,8 @@ void glfw_render(GLFWwindow *window, VoidCallback renderLoop) {
   glfwSwapBuffers(window);
 }
 
-void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender) {
+void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
+               VoidCallback beforeDestroyContext) {
   ImGuiIO *io = igGetIO();
 
   // Load Fonts
@@ -231,6 +238,11 @@ void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender,
   // Cleanup
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
+
+  if (beforeDestroyContext != NULL) {
+    beforeDestroyContext();
+  }
+
   igDestroyContext(0);
 
   glfwDestroyWindow(window);

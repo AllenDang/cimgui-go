@@ -47,6 +47,14 @@ extern "C" {
 			continue
 		}
 
+		// Process custom_type for arg
+		for i, a := range f.ArgsT {
+			if len(a.CustomType) > 0 {
+				f.Args = strings.Replace(f.Args, a.Type, a.CustomType, -1)
+				f.ArgsT[i].Type = a.CustomType
+			}
+		}
+
 		// Check args
 		for _, a := range f.ArgsT {
 			if strings.Contains(a.Type, "const T*") ||

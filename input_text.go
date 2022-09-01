@@ -2,7 +2,7 @@ package cimgui
 
 // #include <memory.h>
 // #include <stdlib.h>
-// #include "extra_type.h"
+// #include "extra_types.h"
 // #include "cimgui_wrapper.h"
 // #include "cimgui_structs_accessor.h"
 // extern int generalInputTextCallback(ImGuiInputTextCallbackData* data);

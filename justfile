@@ -2,8 +2,8 @@ _build_cmd_codegen:
 	rm -rf ./cmd/codegen/build
 	go build -o ./cmd/codegen/build/codegen ./cmd/codegen
 
-_gencode prefix include_path d_file e_file: _build_cmd_codegen
-	cd ./cmd/codegen/build; ./codegen -p {{prefix}} -i {{include_path}} -d {{d_file}} -e {{e_file}}
+_gencode prefix include_path d_file e_file *r_file: _build_cmd_codegen
+	cd ./cmd/codegen/build; ./codegen -p {{prefix}} -i {{include_path}} -d {{d_file}} -e {{e_file}} {{r_file}}
 	gofmt -w ./cmd/codegen/build/{{prefix}}_enums.go
 	gofmt -w ./cmd/codegen/build/{{prefix}}_structs.go
 	gofmt -w ./cmd/codegen/build/{{prefix}}_funcs.go
@@ -28,4 +28,4 @@ gencode_cimgui:
 	just _gencode cimgui cimgui/cimgui.h ../../../cimgui/generator/output/definitions.json ../../../cimgui/generator/output/structs_and_enums.json
 
 gencode_cimplot:
-	just _gencode cimplot cimplot/cimplot.h ../../../cimplot/generator/output/definitions.json ../../../cimplot/generator/output/structs_and_enums.json
+	just _gencode cimplot cimplot/cimplot.h ../../../cimplot/generator/output/definitions.json ../../../cimplot/generator/output/structs_and_enums.json -r ../../../cimgui/generator/output/structs_and_enums.json
