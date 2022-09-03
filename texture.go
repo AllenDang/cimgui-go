@@ -1,3 +1,6 @@
+//go:build cimgui_glfw
+// +build cimgui_glfw
+
 package cimgui
 
 import (
