@@ -1,7 +1,6 @@
 package cimgui
 
 import (
-	"errors"
 	"fmt"
 	"image"
 	"image/draw"
@@ -18,11 +17,11 @@ type Texture struct {
 	Height int
 }
 
-func NewTextureFromRgba(rgba *image.RGBA) (*Texture, error) {
+func NewTextureFromRgba(rgba *image.RGBA) *Texture {
 	texID := CreateTextureRgba(rgba, rgba.Bounds().Dx(), rgba.Bounds().Dy())
 
 	if texID == 0 {
-		return nil, errors.New("Failed to create new texture")
+		return nil
 	}
 
 	texture := Texture{
@@ -34,7 +33,7 @@ func NewTextureFromRgba(rgba *image.RGBA) (*Texture, error) {
 	// Set finalizer
 	runtime.SetFinalizer(&texture, (*Texture).release)
 
-	return &texture, nil
+	return &texture
 }
 
 func (t *Texture) release() {

@@ -120,10 +120,7 @@ func main() {
 
 	window = cimgui.CreateGlfwWindow("Hello from cimgui-go", 1200, 900, 0)
 
-	texture, err = cimgui.NewTextureFromRgba(img)
-	if err != nil {
-		panic("Failed to create texture")
-	}
+	texture = cimgui.NewTextureFromRgba(img)
 
 	window.Run(loop)
 }
