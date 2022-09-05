@@ -181,6 +181,7 @@ import "unsafe"
 
 	returnWrapperMap := map[string]returnWrapper{
 		"bool":                     boolReturnW,
+		"char*":                    constCharReturnW,
 		"const char*":              constCharReturnW,
 		"const ImWchar*":           constWCharPtrReturnW,
 		"float":                    floatReturnW,
