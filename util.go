@@ -52,6 +52,22 @@ func (fa ImFontAtlas) GetFontCount() int {
 	return int(C.ImFontAtlas_GetFontCount(fa.handle()))
 }
 
+func (self ImFontAtlas) GetTextureDataAsAlpha8() (pixels unsafe.Pointer, width int32, height int32, outBytesPerPixel int32) {
+	var p *C.uchar
+	var w C.int
+	var h C.int
+	var bp C.int
+
+	C.ImFontAtlas_GetTexDataAsAlpha8(self.handle(), &p, &w, &h, &bp)
+
+	pixels = unsafe.Pointer(p)
+	width = int32(w)
+	height = int32(h)
+	outBytesPerPixel = int32(bp)
+
+	return
+}
+
 func (self ImFontAtlas) GetTextureDataAsRGBA32() (pixels unsafe.Pointer, width int32, height int32, outBytesPerPixel int32) {
 	var p *C.uchar
 	var w C.int
