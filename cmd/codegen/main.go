@@ -207,7 +207,7 @@ func main() {
 	}
 
 	var refEnumJsonBytes []byte
-	if refEnumsJsonPath != nil {
+	if len(*refEnumsJsonPath) > 0 {
 		refEnumJsonBytes, err = os.ReadFile(*refEnumsJsonPath)
 		if err != nil {
 			panic(err.Error())
