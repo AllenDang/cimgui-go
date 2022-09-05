@@ -1,5 +1,5 @@
-//go:build cimgui_glfw
-// +build cimgui_glfw
+//go:build !exclude_cimgui_glfw
+// +build !exclude_cimgui_glfw
 
 package cimgui
 
