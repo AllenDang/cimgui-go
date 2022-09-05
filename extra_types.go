@@ -60,15 +60,15 @@ func NewImVec4(r, g, b, a float32) ImVec4 {
 }
 
 func newImVec4FromCPtr(vec4 *C.ImVec4) ImVec4 {
-	return NewImVec4(float32(vec4.x), float32(vec4.y), float32(vec4.w), float32(vec4.z))
+	return NewImVec4(float32(vec4.x), float32(vec4.y), float32(vec4.z), float32(vec4.w))
 }
 
 func newImVec4FromC(vec4 C.ImVec4) ImVec4 {
-	return NewImVec4(float32(vec4.x), float32(vec4.y), float32(vec4.w), float32(vec4.z))
+	return NewImVec4(float32(vec4.x), float32(vec4.y), float32(vec4.z), float32(vec4.w))
 }
 
 func (i ImVec4) toC() C.ImVec4 {
-	return C.ImVec4{x: C.float(i.X), y: C.float(i.Y), w: C.float(i.W), z: C.float(i.Z)}
+	return C.ImVec4{x: C.float(i.X), y: C.float(i.Y), z: C.float(i.Z), w: C.float(i.W)}
 }
 
 func (vec *ImVec4) wrap() (out *C.ImVec4, finisher func()) {
@@ -76,14 +76,14 @@ func (vec *ImVec4) wrap() (out *C.ImVec4, finisher func()) {
 		out = &C.ImVec4{
 			x: C.float(vec.X),
 			y: C.float(vec.Y),
-			w: C.float(vec.W),
 			z: C.float(vec.Z),
+			w: C.float(vec.W),
 		}
 		finisher = func() {
 			vec.X = float32(out.x) // nolint: gotype
 			vec.Y = float32(out.y) // nolint: gotype
-			vec.W = float32(out.w)
 			vec.Z = float32(out.z)
+			vec.W = float32(out.w)
 		}
 	} else {
 		finisher = func() {}
@@ -95,13 +95,13 @@ type ImColor struct {
 	Value ImVec4
 }
 
-func NewImColor(x, y, w, z float32) ImColor {
+func NewImColor(x, y, z, w float32) ImColor {
 	return ImColor{
 		Value: ImVec4{
 			X: x,
 			Y: y,
-			W: w,
 			Z: z,
+			W: w,
 		},
 	}
 }
@@ -118,8 +118,8 @@ func (i *ImColor) wrap() (out *C.ImColor, finisher func()) {
 		finisher = func() {
 			i.Value.X = float32(out.Value.x)
 			i.Value.Y = float32(out.Value.y)
-			i.Value.W = float32(out.Value.w)
 			i.Value.Z = float32(out.Value.z)
+			i.Value.W = float32(out.Value.w)
 		}
 	} else {
 		finisher = func() {}
