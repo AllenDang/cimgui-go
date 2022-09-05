@@ -1,3 +1,6 @@
+//go:build cimgui_glfw
+// +build cimgui_glfw
+
 package cimgui
 
 // #cgo amd64,linux LDFLAGS: ${SRCDIR}/lib/linux/x64/libglfw3.a -ldl -lGL -lX11
@@ -7,6 +10,7 @@ package cimgui
 // #cgo arm64,darwin LDFLAGS: ${SRCDIR}/lib/macos/arm64/libglfw3.a
 // #cgo !gles2,darwin LDFLAGS: -framework OpenGL
 // #cgo gles2,darwin LDFLAGS: -lGLESv2
+// #cgo CPPFLAGS: -DCIMGUI_GO_USE_GLFW
 // extern void glfwWindowLoopCallback();
 // extern void glfwBeforeRender();
 // extern void glfwAfterRender();
