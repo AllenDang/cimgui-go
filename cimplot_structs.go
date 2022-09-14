@@ -4,46 +4,60 @@ package cimgui
 import "C"
 import "unsafe"
 
-type ImPlotNextItemData uintptr
+type ImPlotAxis uintptr
 
-func (data ImPlotNextItemData) handle() *C.ImPlotNextItemData {
-	return (*C.ImPlotNextItemData)(unsafe.Pointer(data))
+func (data ImPlotAxis) handle() *C.ImPlotAxis {
+	return (*C.ImPlotAxis)(unsafe.Pointer(data))
 }
 
-func (data ImPlotNextItemData) c() C.ImPlotNextItemData {
+func (data ImPlotAxis) c() C.ImPlotAxis {
 	return *(data.handle())
 }
 
-func newImPlotNextItemDataFromC(cvalue C.ImPlotNextItemData) ImPlotNextItemData {
-	return ImPlotNextItemData(unsafe.Pointer(&cvalue))
+func newImPlotAxisFromC(cvalue C.ImPlotAxis) ImPlotAxis {
+	return ImPlotAxis(unsafe.Pointer(&cvalue))
 }
 
-type ImPlotRange uintptr
+type ImPlotInputMap uintptr
 
-func (data ImPlotRange) handle() *C.ImPlotRange {
-	return (*C.ImPlotRange)(unsafe.Pointer(data))
+func (data ImPlotInputMap) handle() *C.ImPlotInputMap {
+	return (*C.ImPlotInputMap)(unsafe.Pointer(data))
 }
 
-func (data ImPlotRange) c() C.ImPlotRange {
+func (data ImPlotInputMap) c() C.ImPlotInputMap {
 	return *(data.handle())
 }
 
-func newImPlotRangeFromC(cvalue C.ImPlotRange) ImPlotRange {
-	return ImPlotRange(unsafe.Pointer(&cvalue))
+func newImPlotInputMapFromC(cvalue C.ImPlotInputMap) ImPlotInputMap {
+	return ImPlotInputMap(unsafe.Pointer(&cvalue))
 }
 
-type ImPlotStyle uintptr
+type ImPlotItemGroup uintptr
 
-func (data ImPlotStyle) handle() *C.ImPlotStyle {
-	return (*C.ImPlotStyle)(unsafe.Pointer(data))
+func (data ImPlotItemGroup) handle() *C.ImPlotItemGroup {
+	return (*C.ImPlotItemGroup)(unsafe.Pointer(data))
 }
 
-func (data ImPlotStyle) c() C.ImPlotStyle {
+func (data ImPlotItemGroup) c() C.ImPlotItemGroup {
 	return *(data.handle())
 }
 
-func newImPlotStyleFromC(cvalue C.ImPlotStyle) ImPlotStyle {
-	return ImPlotStyle(unsafe.Pointer(&cvalue))
+func newImPlotItemGroupFromC(cvalue C.ImPlotItemGroup) ImPlotItemGroup {
+	return ImPlotItemGroup(unsafe.Pointer(&cvalue))
+}
+
+type ImPlotLegend uintptr
+
+func (data ImPlotLegend) handle() *C.ImPlotLegend {
+	return (*C.ImPlotLegend)(unsafe.Pointer(data))
+}
+
+func (data ImPlotLegend) c() C.ImPlotLegend {
+	return *(data.handle())
+}
+
+func newImPlotLegendFromC(cvalue C.ImPlotLegend) ImPlotLegend {
+	return ImPlotLegend(unsafe.Pointer(&cvalue))
 }
 
 type ImPlotTag uintptr
@@ -60,32 +74,32 @@ func newImPlotTagFromC(cvalue C.ImPlotTag) ImPlotTag {
 	return ImPlotTag(unsafe.Pointer(&cvalue))
 }
 
-type ImPlotTick uintptr
+type ImPlotTicker uintptr
 
-func (data ImPlotTick) handle() *C.ImPlotTick {
-	return (*C.ImPlotTick)(unsafe.Pointer(data))
+func (data ImPlotTicker) handle() *C.ImPlotTicker {
+	return (*C.ImPlotTicker)(unsafe.Pointer(data))
 }
 
-func (data ImPlotTick) c() C.ImPlotTick {
+func (data ImPlotTicker) c() C.ImPlotTicker {
 	return *(data.handle())
 }
 
-func newImPlotTickFromC(cvalue C.ImPlotTick) ImPlotTick {
-	return ImPlotTick(unsafe.Pointer(&cvalue))
+func newImPlotTickerFromC(cvalue C.ImPlotTicker) ImPlotTicker {
+	return ImPlotTicker(unsafe.Pointer(&cvalue))
 }
 
-type ImPlotColormapData uintptr
+type ImPlotAnnotation uintptr
 
-func (data ImPlotColormapData) handle() *C.ImPlotColormapData {
-	return (*C.ImPlotColormapData)(unsafe.Pointer(data))
+func (data ImPlotAnnotation) handle() *C.ImPlotAnnotation {
+	return (*C.ImPlotAnnotation)(unsafe.Pointer(data))
 }
 
-func (data ImPlotColormapData) c() C.ImPlotColormapData {
+func (data ImPlotAnnotation) c() C.ImPlotAnnotation {
 	return *(data.handle())
 }
 
-func newImPlotColormapDataFromC(cvalue C.ImPlotColormapData) ImPlotColormapData {
-	return ImPlotColormapData(unsafe.Pointer(&cvalue))
+func newImPlotAnnotationFromC(cvalue C.ImPlotAnnotation) ImPlotAnnotation {
+	return ImPlotAnnotation(unsafe.Pointer(&cvalue))
 }
 
 type ImPlotDateTimeSpec uintptr
@@ -116,74 +130,18 @@ func newImPlotItemFromC(cvalue C.ImPlotItem) ImPlotItem {
 	return ImPlotItem(unsafe.Pointer(&cvalue))
 }
 
-type ImPlotLegend uintptr
+type ImPlotNextItemData uintptr
 
-func (data ImPlotLegend) handle() *C.ImPlotLegend {
-	return (*C.ImPlotLegend)(unsafe.Pointer(data))
+func (data ImPlotNextItemData) handle() *C.ImPlotNextItemData {
+	return (*C.ImPlotNextItemData)(unsafe.Pointer(data))
 }
 
-func (data ImPlotLegend) c() C.ImPlotLegend {
+func (data ImPlotNextItemData) c() C.ImPlotNextItemData {
 	return *(data.handle())
 }
 
-func newImPlotLegendFromC(cvalue C.ImPlotLegend) ImPlotLegend {
-	return ImPlotLegend(unsafe.Pointer(&cvalue))
-}
-
-type ImPlotRect uintptr
-
-func (data ImPlotRect) handle() *C.ImPlotRect {
-	return (*C.ImPlotRect)(unsafe.Pointer(data))
-}
-
-func (data ImPlotRect) c() C.ImPlotRect {
-	return *(data.handle())
-}
-
-func newImPlotRectFromC(cvalue C.ImPlotRect) ImPlotRect {
-	return ImPlotRect(unsafe.Pointer(&cvalue))
-}
-
-type ImPlotAlignmentData uintptr
-
-func (data ImPlotAlignmentData) handle() *C.ImPlotAlignmentData {
-	return (*C.ImPlotAlignmentData)(unsafe.Pointer(data))
-}
-
-func (data ImPlotAlignmentData) c() C.ImPlotAlignmentData {
-	return *(data.handle())
-}
-
-func newImPlotAlignmentDataFromC(cvalue C.ImPlotAlignmentData) ImPlotAlignmentData {
-	return ImPlotAlignmentData(unsafe.Pointer(&cvalue))
-}
-
-type ImPlotAnnotation uintptr
-
-func (data ImPlotAnnotation) handle() *C.ImPlotAnnotation {
-	return (*C.ImPlotAnnotation)(unsafe.Pointer(data))
-}
-
-func (data ImPlotAnnotation) c() C.ImPlotAnnotation {
-	return *(data.handle())
-}
-
-func newImPlotAnnotationFromC(cvalue C.ImPlotAnnotation) ImPlotAnnotation {
-	return ImPlotAnnotation(unsafe.Pointer(&cvalue))
-}
-
-type ImPlotPlot uintptr
-
-func (data ImPlotPlot) handle() *C.ImPlotPlot {
-	return (*C.ImPlotPlot)(unsafe.Pointer(data))
-}
-
-func (data ImPlotPlot) c() C.ImPlotPlot {
-	return *(data.handle())
-}
-
-func newImPlotPlotFromC(cvalue C.ImPlotPlot) ImPlotPlot {
-	return ImPlotPlot(unsafe.Pointer(&cvalue))
+func newImPlotNextItemDataFromC(cvalue C.ImPlotNextItemData) ImPlotNextItemData {
+	return ImPlotNextItemData(unsafe.Pointer(&cvalue))
 }
 
 type ImPlotPoint uintptr
@@ -200,18 +158,18 @@ func newImPlotPointFromC(cvalue C.ImPlotPoint) ImPlotPoint {
 	return ImPlotPoint(unsafe.Pointer(&cvalue))
 }
 
-type ImPlotPointError uintptr
+type ImPlotSubplot uintptr
 
-func (data ImPlotPointError) handle() *C.ImPlotPointError {
-	return (*C.ImPlotPointError)(unsafe.Pointer(data))
+func (data ImPlotSubplot) handle() *C.ImPlotSubplot {
+	return (*C.ImPlotSubplot)(unsafe.Pointer(data))
 }
 
-func (data ImPlotPointError) c() C.ImPlotPointError {
+func (data ImPlotSubplot) c() C.ImPlotSubplot {
 	return *(data.handle())
 }
 
-func newImPlotPointErrorFromC(cvalue C.ImPlotPointError) ImPlotPointError {
-	return ImPlotPointError(unsafe.Pointer(&cvalue))
+func newImPlotSubplotFromC(cvalue C.ImPlotSubplot) ImPlotSubplot {
+	return ImPlotSubplot(unsafe.Pointer(&cvalue))
 }
 
 type ImPlotTagCollection uintptr
@@ -228,18 +186,18 @@ func newImPlotTagCollectionFromC(cvalue C.ImPlotTagCollection) ImPlotTagCollecti
 	return ImPlotTagCollection(unsafe.Pointer(&cvalue))
 }
 
-type ImPlotTicker uintptr
+type ImPlotAlignmentData uintptr
 
-func (data ImPlotTicker) handle() *C.ImPlotTicker {
-	return (*C.ImPlotTicker)(unsafe.Pointer(data))
+func (data ImPlotAlignmentData) handle() *C.ImPlotAlignmentData {
+	return (*C.ImPlotAlignmentData)(unsafe.Pointer(data))
 }
 
-func (data ImPlotTicker) c() C.ImPlotTicker {
+func (data ImPlotAlignmentData) c() C.ImPlotAlignmentData {
 	return *(data.handle())
 }
 
-func newImPlotTickerFromC(cvalue C.ImPlotTicker) ImPlotTicker {
-	return ImPlotTicker(unsafe.Pointer(&cvalue))
+func newImPlotAlignmentDataFromC(cvalue C.ImPlotAlignmentData) ImPlotAlignmentData {
+	return ImPlotAlignmentData(unsafe.Pointer(&cvalue))
 }
 
 type ImPlotAnnotationCollection uintptr
@@ -256,20 +214,6 @@ func newImPlotAnnotationCollectionFromC(cvalue C.ImPlotAnnotationCollection) ImP
 	return ImPlotAnnotationCollection(unsafe.Pointer(&cvalue))
 }
 
-type ImPlotItemGroup uintptr
-
-func (data ImPlotItemGroup) handle() *C.ImPlotItemGroup {
-	return (*C.ImPlotItemGroup)(unsafe.Pointer(data))
-}
-
-func (data ImPlotItemGroup) c() C.ImPlotItemGroup {
-	return *(data.handle())
-}
-
-func newImPlotItemGroupFromC(cvalue C.ImPlotItemGroup) ImPlotItemGroup {
-	return ImPlotItemGroup(unsafe.Pointer(&cvalue))
-}
-
 type ImPlotNextPlotData uintptr
 
 func (data ImPlotNextPlotData) handle() *C.ImPlotNextPlotData {
@@ -284,18 +228,60 @@ func newImPlotNextPlotDataFromC(cvalue C.ImPlotNextPlotData) ImPlotNextPlotData 
 	return ImPlotNextPlotData(unsafe.Pointer(&cvalue))
 }
 
-type ImPlotSubplot uintptr
+type ImPlotPlot uintptr
 
-func (data ImPlotSubplot) handle() *C.ImPlotSubplot {
-	return (*C.ImPlotSubplot)(unsafe.Pointer(data))
+func (data ImPlotPlot) handle() *C.ImPlotPlot {
+	return (*C.ImPlotPlot)(unsafe.Pointer(data))
 }
 
-func (data ImPlotSubplot) c() C.ImPlotSubplot {
+func (data ImPlotPlot) c() C.ImPlotPlot {
 	return *(data.handle())
 }
 
-func newImPlotSubplotFromC(cvalue C.ImPlotSubplot) ImPlotSubplot {
-	return ImPlotSubplot(unsafe.Pointer(&cvalue))
+func newImPlotPlotFromC(cvalue C.ImPlotPlot) ImPlotPlot {
+	return ImPlotPlot(unsafe.Pointer(&cvalue))
+}
+
+type ImPlotRange uintptr
+
+func (data ImPlotRange) handle() *C.ImPlotRange {
+	return (*C.ImPlotRange)(unsafe.Pointer(data))
+}
+
+func (data ImPlotRange) c() C.ImPlotRange {
+	return *(data.handle())
+}
+
+func newImPlotRangeFromC(cvalue C.ImPlotRange) ImPlotRange {
+	return ImPlotRange(unsafe.Pointer(&cvalue))
+}
+
+type ImPlotRect uintptr
+
+func (data ImPlotRect) handle() *C.ImPlotRect {
+	return (*C.ImPlotRect)(unsafe.Pointer(data))
+}
+
+func (data ImPlotRect) c() C.ImPlotRect {
+	return *(data.handle())
+}
+
+func newImPlotRectFromC(cvalue C.ImPlotRect) ImPlotRect {
+	return ImPlotRect(unsafe.Pointer(&cvalue))
+}
+
+type ImPlotTick uintptr
+
+func (data ImPlotTick) handle() *C.ImPlotTick {
+	return (*C.ImPlotTick)(unsafe.Pointer(data))
+}
+
+func (data ImPlotTick) c() C.ImPlotTick {
+	return *(data.handle())
+}
+
+func newImPlotTickFromC(cvalue C.ImPlotTick) ImPlotTick {
+	return ImPlotTick(unsafe.Pointer(&cvalue))
 }
 
 type ImPlotTime uintptr
@@ -312,18 +298,18 @@ func newImPlotTimeFromC(cvalue C.ImPlotTime) ImPlotTime {
 	return ImPlotTime(unsafe.Pointer(&cvalue))
 }
 
-type ImPlotAxis uintptr
+type ImPlotColormapData uintptr
 
-func (data ImPlotAxis) handle() *C.ImPlotAxis {
-	return (*C.ImPlotAxis)(unsafe.Pointer(data))
+func (data ImPlotColormapData) handle() *C.ImPlotColormapData {
+	return (*C.ImPlotColormapData)(unsafe.Pointer(data))
 }
 
-func (data ImPlotAxis) c() C.ImPlotAxis {
+func (data ImPlotColormapData) c() C.ImPlotColormapData {
 	return *(data.handle())
 }
 
-func newImPlotAxisFromC(cvalue C.ImPlotAxis) ImPlotAxis {
-	return ImPlotAxis(unsafe.Pointer(&cvalue))
+func newImPlotColormapDataFromC(cvalue C.ImPlotColormapData) ImPlotColormapData {
+	return ImPlotColormapData(unsafe.Pointer(&cvalue))
 }
 
 type ImPlotContext uintptr
@@ -340,16 +326,30 @@ func newImPlotContextFromC(cvalue C.ImPlotContext) ImPlotContext {
 	return ImPlotContext(unsafe.Pointer(&cvalue))
 }
 
-type ImPlotInputMap uintptr
+type ImPlotPointError uintptr
 
-func (data ImPlotInputMap) handle() *C.ImPlotInputMap {
-	return (*C.ImPlotInputMap)(unsafe.Pointer(data))
+func (data ImPlotPointError) handle() *C.ImPlotPointError {
+	return (*C.ImPlotPointError)(unsafe.Pointer(data))
 }
 
-func (data ImPlotInputMap) c() C.ImPlotInputMap {
+func (data ImPlotPointError) c() C.ImPlotPointError {
 	return *(data.handle())
 }
 
-func newImPlotInputMapFromC(cvalue C.ImPlotInputMap) ImPlotInputMap {
-	return ImPlotInputMap(unsafe.Pointer(&cvalue))
+func newImPlotPointErrorFromC(cvalue C.ImPlotPointError) ImPlotPointError {
+	return ImPlotPointError(unsafe.Pointer(&cvalue))
+}
+
+type ImPlotStyle uintptr
+
+func (data ImPlotStyle) handle() *C.ImPlotStyle {
+	return (*C.ImPlotStyle)(unsafe.Pointer(data))
+}
+
+func (data ImPlotStyle) c() C.ImPlotStyle {
+	return *(data.handle())
+}
+
+func newImPlotStyleFromC(cvalue C.ImPlotStyle) ImPlotStyle {
+	return ImPlotStyle(unsafe.Pointer(&cvalue))
 }
