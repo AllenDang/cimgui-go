@@ -116,7 +116,7 @@ end
 M.strsplit = strsplit
 local function split_comment(line)
     local comment = line:match("(%s*//.*)") --or ""
-    line = line:gsub("%s*//.*","")
+    line = line:gsub("%s*//[^\n]*","")
     line = line:gsub("%s*$","")
     return line,comment
 end
@@ -611,6 +611,7 @@ local function clean_functypedef(line)
 	return result
 end
 local function parseFunction(self,stname,itt,namespace,locat)
+
 	local lineorig,comment = split_comment(itt.item)
 	line = clean_spaces(lineorig)
 	--move *
@@ -1130,6 +1131,9 @@ function M.Parser()
 		return par.skipped[def.ov_cimguiname] or par.skipped[def.cimguiname]
 	end
 	function par:take_lines(cmd_line,names,compiler)
+		if self.COMMENTS_GENERATION then
+			cmd_line = cmd_line .. (compiler=="cl" and " /C " or " -C ")
+		end
 		local pipe,err = io.popen(cmd_line,"r")
 		if not pipe then
 			error("could not execute COMPILER "..err)
@@ -1231,21 +1235,49 @@ function M.Parser()
 		self.linenumdict = {}
 		local cdefs2 = {}
 		for i,cdef in ipairs(cdefs) do
-			if self.linenumdict[cdef[1]] then
+			local cdef1 = clean_comments(cdef[1])
+			if self.linenumdict[cdef1] then
 				--print("linenumdict already defined for", cdef[1],type(self.linenumdict[cdef[1]]))
-				if type(self.linenumdict[cdef[1]])=="string" then
-					self.linenumdict[cdef[1]] = {self.linenumdict[cdef[1]], cdef[2]}
+				if type(self.linenumdict[cdef1])=="string" then
+					self.linenumdict[cdef1] = {self.linenumdict[cdef1], cdef[2]}
 				else -- must be table already
-					table.insert(self.linenumdict[cdef[1]],cdef[2])
+					table.insert(self.linenumdict[cdef1],cdef[2])
 				end
 			else
 				--print("nuevo linenumdict es",cdef[1],cdef[2])
-				self.linenumdict[cdef[1]]=cdef[2]
+				self.linenumdict[cdef1]=cdef[2]
 			end
 			table.insert(cdefs2,cdef[1])
 		end
 		local txt = table.concat(cdefs2,"\n")
-		
+		--clean bad positioned comments inside functionD_re
+		if self.COMMENTS_GENERATION then
+		print"cleaning comments inside functionD_re--------------"
+		---[[
+		local nn = 0
+		local txtclean = {}
+		local reg = "(\n[%w%s]-[%w]+%s*%b())(%s*//[^\n]*)([\n%s%w]*%b{}%s-;*)"
+		--reg = "^([^;{}]-%b()[\n%s%w]*%b{}%s-;*)"
+		local ini = 1
+		local i,e,a,b,c = txt:find(reg,ini)
+		while i do
+			print(i,e,#txt)
+			table.insert(txtclean,txt:sub(ini,i-1))
+			table.insert(txtclean,a)
+			print("a:",a)
+			print("b:",b)
+			print("c:",c)
+			c = c:gsub("(%s*//[^\n]*)","")
+			table.insert(txtclean,c)
+			nn = nn + 1
+			ini = e + 1
+			i,e,a,b,c = txt:find(reg,ini)
+		end
+		table.insert(txtclean,txt:sub(ini))
+		print("end cleaning ------------------------------",nn)
+		txt = table.concat(txtclean)
+		end
+		--]]
 		self.itemsarr = par:parseItemsR2(txt)
 		itemsarr = self.itemsarr
 	end
@@ -1303,11 +1335,11 @@ function M.Parser()
 		--table.insert(outtab,stru:match("(.-)%b{}"))
 		table.insert(outtab,"\nstruct "..stname.."\n")
 		table.insert(outtab,"{")
-		table.insert(commtab,nil)--"")
-		table.insert(commtab,nil)--"")
+		table.insert(commtab,"")
+		table.insert(commtab,"")
 		if derived then
 			table.insert(outtab,"\n    "..derived.." _"..derived..";")
-			table.insert(commtab,nil)--"")
+			table.insert(commtab,"")
 		end
 		--local itlist,itemsin = parseItems(iner, false,locat)
 		local itlist = itst.childs
@@ -1343,14 +1375,14 @@ function M.Parser()
 					it2 = it2:gsub("%s*=.+;",";")
 				end
 				table.insert(outtab,it2)
-				table.insert(commtab,it.comments )--or "")
+				table.insert(commtab,it.comments or "")
 				end
 			elseif it.re_name == "struct_re" then
 				--check if has declaration
 				local decl = it.item:match"%b{}%s*([^%s}{]+)%s*;"
 				if decl then
 					table.insert(outtab,"\n    "..it.name.." "..decl..";")
-					table.insert(commtab,it.comments )--or "")
+					table.insert(commtab,it.comments or "")
 				end
 				local cleanst,structname,strtab,comstab,predec = self:clean_structR1(it,doheader)
 				if doheader then
@@ -1548,6 +1580,7 @@ function M.Parser()
 	end
 	-----------
 	function par:parse_struct_line(line,outtab,comment)
+		comment = comment ~= "" and comment or nil
 		local functype_re = "^%s*[%w%s%*]+%(%*[%w_]+%)%([^%(%)]*%)"
 		local functype_reex = "^(%s*[%w%s%*]+%(%*)([%w_]+)(%)%([^%(%)]*%))"
 		line = clean_spaces(line)

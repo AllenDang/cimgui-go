@@ -8,6 +8,7 @@ local script_args = {...}
 local COMPILER = script_args[1]
 local INTERNAL_GENERATION = script_args[2]:match("internal") and true or false
 local FREETYPE_GENERATION = script_args[2]:match("freetype") and true or false
+local COMMENTS_GENERATION = script_args[2]:match("comments") and true or false
 local IMGUI_PATH = os.getenv"IMGUI_PATH" or "../imgui"
 local CFLAGS = ""
 local CPRE,CTEST
@@ -63,6 +64,7 @@ assert(HAVE_COMPILER,"gcc, clang or cl needed to run script")
 print("HAVE_COMPILER",HAVE_COMPILER)
 print("INTERNAL_GENERATION",INTERNAL_GENERATION)
 print("FREETYPE_GENERATION",FREETYPE_GENERATION)
+print("COMMENTS_GENERATION",COMMENTS_GENERATION)
 print("CPRE",CPRE)
 --------------------------------------------------------------------------
 --this table has the functions to be skipped in generation
@@ -143,16 +145,18 @@ local func_implementation = cpp2ffi.func_implementation
 -------------------functions for getting and setting defines
 local function get_defines(t)
     local compiler_cmd = COMPILER == "cl"
-                         and COMPILER..[[ /TP /nologo /c /Fo"NUL" /I "]]..IMGUI_PATH..[[" print_defines.cpp]]..CFLAGS
+                         and COMPILER..[[ /TP /nologo /c /Fo"NUL" /DIMGUI_DISABLE_OBSOLETE_FUNCTIONS ]]..CFLAGS..[[ /I"]]..IMGUI_PATH..[[" print_defines.cpp]]
                          or COMPILER..[[ -E -dM -DIMGUI_DISABLE_OBSOLETE_FUNCTIONS -DIMGUI_API="" -DIMGUI_IMPL_API="" ]]..IMGUI_PATH..[[/imgui.h]]..CFLAGS
     print(compiler_cmd)
     local pipe,err = io.popen(compiler_cmd,"r")
     local defines = {}
+    local compiler_output = {"There were fails in compilation."}
     while true do
         local line = pipe:read"*l"
         if not line then break end
         local key,value = line:match([[^#define%s+(%S+)%s*(.*)]])
         if not key then --or not value then 
+			table.insert(compiler_output, line)
             --print(line)
         else
             defines[key]=value or ""
@@ -161,7 +165,7 @@ local function get_defines(t)
     pipe:close()
     --require"anima.utils"
     --prtable(defines)
-    --FLT_MAX
+	assert(next(defines), table.concat(compiler_output, "\n"))
     local ret = {}
     for i,v in ipairs(t) do
         local aa = defines[v]
@@ -348,7 +352,7 @@ local function parseImGuiHeader(header,names)
 	parser.manuals = cimgui_manuals
 	parser.UDTs = {"ImVec2","ImVec4","ImColor","ImRect"}
 	--parser.gen_template_typedef = gen_template_typedef --use auto
-	
+	parser.COMMENTS_GENERATION = COMMENTS_GENERATION
 	local defines = parser:take_lines(CPRE..header,names,COMPILER)
 	
 	return parser
