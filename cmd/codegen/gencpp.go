@@ -166,12 +166,40 @@ extern "C" {
 			invocatoinStmt := fmt.Sprintf("(%s)", strings.Join(invocatoinArgs, ","))
 
 			for k, v := range f.Defaults {
-				if strings.Contains(v, "ImVec2") {
+				if v == "ImVec2(0,0)" || v == "ImVec2(0.0f,0.0f)" {
 					v = "(ImVec2){.x=0, .y=0}"
 				}
 
-				if strings.Contains(v, "ImVec4") {
+				if v == "ImVec2(1,1)" {
+					v = "(ImVec2){.x=1, .y=1}"
+				}
+
+				if v == "ImVec2(1,0)" {
+					v = "(ImVec2){.x=1, .y=0}"
+				}
+
+				if v == "ImVec2(0,1)" {
+					v = "(ImVec2){.x=0, .y=1}"
+				}
+
+				if v == "ImVec2(-1,0)" {
+					v = "(ImVec2){.x=-1, .y=0}"
+				}
+
+				if v == "ImVec2(-FLT_MIN,0)" {
+					v = "(ImVec2){.x=-1*igGET_FLT_MIN(), .y=0}"
+				}
+
+				if v == "ImVec4(0,0,0,0)" {
 					v = "(ImVec4){.x=0, .y=0, .z=0, .w=0}"
+				}
+
+				if v == "ImVec4(1,1,1,1)" {
+					v = "(ImVec4){.x=1, .y=1, .z=1, .w=1}"
+				}
+
+				if v == "ImVec4(0,0,0,-1)" {
+					v = "(ImVec4){.x=0, .y=0, .z=0, .w=-1}"
 				}
 
 				if v == "ImPlotPoint(0,0)" {
