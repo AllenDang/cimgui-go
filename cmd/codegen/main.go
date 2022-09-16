@@ -16,16 +16,19 @@ type ArgDef struct {
 }
 
 type FuncDef struct {
-	FuncName     string            `json:"ov_cimguiname"`
-	Args         string            `json:"args"`
-	ArgsT        []ArgDef          `json:"argsT"`
-	Defaults     map[string]string `json:"defaults"`
-	Location     string            `json:"location"`
-	Constructor  bool              `json:"constructor"`
-	Destructor   bool              `json:"destructor"`
-	StructSetter bool              `json:"struct_setter"`
-	StructGetter bool              `json:"struct_getter"`
-	Ret          string            `json:"ret"`
+	FuncName         string            `json:"ov_cimguiname"`
+	OriginalFuncName string            `json:"original_func_name"`
+	Args             string            `json:"args"`
+	ArgsT            []ArgDef          `json:"argsT"`
+	Defaults         map[string]string `json:"defaults"`
+	Location         string            `json:"location"`
+	Constructor      bool              `json:"constructor"`
+	Destructor       bool              `json:"destructor"`
+	StructSetter     bool              `json:"struct_setter"`
+	StructGetter     bool              `json:"struct_getter"`
+	InvocationStmt   string            `json:"invocation_stmt"`
+	Ret              string            `json:"ret"`
+	StName           string            `json:"stname"`
 }
 
 type EnumValueDef struct {

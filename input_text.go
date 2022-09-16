@@ -67,7 +67,7 @@ func InputTextWithHint(label, hint string, buf *string, flags ImGuiInputTextFlag
 
 	flags |= ImGuiInputTextFlags_CallbackResize
 
-	return C.InputTextWithHint(
+	return C.InputTextWithHintV(
 		labelArg,
 		hintArg,
 		(*C.char)(state.buf.ptr),
@@ -97,7 +97,7 @@ func InputTextMultiline(label string, buf *string, size ImVec2, flags ImGuiInput
 
 	flags |= ImGuiInputTextFlags_CallbackResize
 
-	return C.InputTextMultiline(
+	return C.InputTextMultilineV(
 		labelArg,
 		(*C.char)(state.buf.ptr),
 		C.xlong(len(*buf)+1),

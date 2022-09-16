@@ -31,21 +31,21 @@ func callback(data cimgui.ImGuiInputTextCallbackData) int {
 
 func showWidgetsDemo() {
 	if showDemoWindow {
-		cimgui.ShowDemoWindow(&showDemoWindow)
+		cimgui.ShowDemoWindowV(&showDemoWindow)
 	}
 
-	cimgui.SetNextWindowSize(cimgui.NewImVec2(300, 300), cimgui.ImGuiCond_Once)
-	cimgui.Begin("Window 1", nil, 0)
-	if cimgui.Button("Click Me", cimgui.NewImVec2(80, 20)) {
+	cimgui.SetNextWindowSizeV(cimgui.NewImVec2(300, 300), cimgui.ImGuiCond_Once)
+	cimgui.Begin("Window 1")
+	if cimgui.ButtonV("Click Me", cimgui.NewImVec2(80, 20)) {
 		w, h := window.DisplaySize()
 		fmt.Println(w, h)
 	}
 	cimgui.TextUnformatted("Unformated text")
 	cimgui.Checkbox("Show demo window", &showDemoWindow)
-	if cimgui.BeginCombo("Combo", "Combo preview", cimgui.ImGuiComboFlags_HeightLarge) {
-		cimgui.Selectable_BoolPtr("Item 1", &selected, 0, cimgui.NewImVec2(100, 20))
-		cimgui.Selectable_Bool("Item 2", false, 0, cimgui.NewImVec2(100, 20))
-		cimgui.Selectable_Bool("Item 3", false, 0, cimgui.NewImVec2(100, 20))
+	if cimgui.BeginCombo("Combo", "Combo preview") {
+		cimgui.Selectable_BoolPtr("Item 1", &selected)
+		cimgui.Selectable_Bool("Item 2")
+		cimgui.Selectable_Bool("Item 3")
 		cimgui.EndCombo()
 	}
 
@@ -53,7 +53,7 @@ func showWidgetsDemo() {
 		selected = true
 	}
 
-	cimgui.SameLine(0, 0)
+	cimgui.SameLine()
 
 	if cimgui.RadioButton_Bool("Radio button2", !selected) {
 		selected = false
@@ -61,31 +61,31 @@ func showWidgetsDemo() {
 
 	cimgui.InputTextWithHint("Name", "write your name here", &content, 0, callback)
 	cimgui.Text(content)
-	cimgui.SliderInt("Slider int", &value3, 0, 100, "%d", 0)
-	cimgui.DragInt("Drag int", &value1, 1, 0, 100, "%d", 0)
-	cimgui.DragInt2("Drag int2", values, 1, 0, 100, "%d", 0)
-	cimgui.ColorEdit4("Color Edit3", color4, 0)
+	cimgui.SliderInt("Slider int", &value3, 0, 100)
+	cimgui.DragInt("Drag int", &value1)
+	cimgui.DragInt2("Drag int2", values)
+	cimgui.ColorEdit4("Color Edit3", color4)
 	cimgui.End()
 }
 
 func showPictureLoadingDemo() {
 	// demo of showing a picture
 	basePos := cimgui.GetMainViewport().GetPos()
-	cimgui.SetNextWindowPos(cimgui.NewImVec2(basePos.X+60, 600), cimgui.ImGuiCond_Appearing, cimgui.NewImVec2(0, 0))
-	cimgui.Begin("Image", nil, 0)
+	cimgui.SetNextWindowPosV(cimgui.NewImVec2(basePos.X+60, 600), cimgui.ImGuiCond_Once, cimgui.NewImVec2(0, 0))
+	cimgui.Begin("Image")
 	cimgui.Text(fmt.Sprintf("pointer = %v", texture.ID()))
-	cimgui.Image(texture.ID(), cimgui.NewImVec2(float32(texture.Width), float32(texture.Height)), cimgui.NewImVec2(0, 0), cimgui.NewImVec2(1, 1), cimgui.NewImVec4(1, 1, 1, 1), cimgui.NewImVec4(0, 0, 0, 0))
+	cimgui.ImageV(texture.ID(), cimgui.NewImVec2(float32(texture.Width), float32(texture.Height)), cimgui.NewImVec2(0, 0), cimgui.NewImVec2(1, 1), cimgui.NewImVec4(1, 1, 1, 1), cimgui.NewImVec4(0, 0, 0, 0))
 	cimgui.End()
 }
 
 func showImPlotDemo() {
 	basePos := cimgui.GetMainViewport().GetPos()
-	cimgui.SetNextWindowPos(cimgui.NewImVec2(basePos.X+400, basePos.Y+60), cimgui.ImGuiCond_Appearing, cimgui.NewImVec2(0, 0))
-	cimgui.SetNextWindowSize(cimgui.NewImVec2(500, 300), cimgui.ImGuiCond_Appearing)
-	cimgui.Begin("Plot window", nil, 0)
-	if cimgui.Plot_BeginPlot("Plot", cimgui.NewImVec2(-1, -1), 0) {
-		cimgui.Plot_PlotBars_S64PtrInt("Bar", barValues, int32(len(barValues)), 0.67, 0, 0, 0, 8)
-		cimgui.Plot_PlotLine_S64PtrInt("Line", barValues, int32(len(barValues)), 1, 0, 0, 0, 8)
+	cimgui.SetNextWindowPosV(cimgui.NewImVec2(basePos.X+400, basePos.Y+60), cimgui.ImGuiCond_Once, cimgui.NewImVec2(0, 0))
+	cimgui.SetNextWindowSizeV(cimgui.NewImVec2(500, 300), cimgui.ImGuiCond_Once)
+	cimgui.Begin("Plot window")
+	if cimgui.Plot_BeginPlotV("Plot", cimgui.NewImVec2(-1, -1), 0) {
+		cimgui.Plot_PlotBars_S64PtrInt("Bar", barValues, int32(len(barValues)))
+		cimgui.Plot_PlotLine_S64PtrInt("Line", barValues, int32(len(barValues)))
 		cimgui.Plot_EndPlot()
 	}
 	cimgui.End()
@@ -102,7 +102,7 @@ func loop() {
 }
 
 func beforeDestoryContext() {
-	cimgui.Plot_DestroyContext(0)
+	cimgui.Plot_DestroyContext()
 }
 
 func main() {

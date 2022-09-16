@@ -224,7 +224,17 @@ import "unsafe"
 		return false
 	}
 
+	// Skip functions
+	skipFuntions := []string{
+		"InputTextWithHint",
+		"InputTextMultiline",
+	}
+
 	for _, f := range validFuncs {
+		if funk.ContainsString(skipFuntions, f.FuncName) {
+			continue
+		}
+
 		var args []string
 		var argWrappers []argOutput
 

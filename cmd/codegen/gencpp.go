@@ -70,7 +70,9 @@ extern "C" {
 			shouldSkip = true
 		}
 
-		funcName := strings.TrimPrefix(f.FuncName, "ImGui")
+		funcName := f.FuncName
+
+		funcName = strings.TrimPrefix(funcName, "ImGui")
 		funcName = strings.TrimPrefix(funcName, "Im")
 		funcName = strings.TrimPrefix(funcName, "ig")
 
@@ -116,44 +118,156 @@ extern "C" {
 
 		f.ArgsT = argsT
 
+		// Generate shotter function which omits the default args
+		// Skip functions as function pointer arg
+		shouldSkip = false
+		for _, a := range f.ArgsT {
+			if strings.Contains(a.Type, "(") {
+				shouldSkip = true
+			}
+		}
+
+		if len(f.Defaults) > 0 && !shouldSkip && !f.Constructor {
+			var newArgsT []ArgDef
+			var invocatoinArgs []string
+
+			for _, a := range f.ArgsT {
+				invocatoinArgs = append(invocatoinArgs, a.Name)
+
+				shouldIgnore := false
+				for k := range f.Defaults {
+					if a.Name == k {
+						shouldIgnore = true
+						break
+					}
+				}
+
+				if !shouldIgnore {
+					newArgsT = append(newArgsT, a)
+				}
+			}
+
+			var newArgs []string
+			for _, a := range newArgsT {
+				t := a.Type
+				n := a.Name
+
+				// Process array type
+				if strings.Contains(t, "[") {
+					parts := strings.Split(t, "[")
+					t = parts[0]
+					n = n + "[" + strings.Join(parts[1:], "")
+				}
+
+				newArgs = append(newArgs, fmt.Sprintf("%s %s", t, n))
+			}
+
+			// Generate invocation stmt
+			invocatoinStmt := fmt.Sprintf("(%s)", strings.Join(invocatoinArgs, ","))
+
+			for k, v := range f.Defaults {
+				if strings.Contains(v, "ImVec2") {
+					v = "(ImVec2){.x=0, .y=0}"
+				}
+
+				if strings.Contains(v, "ImVec4") {
+					v = "(ImVec4){.x=0, .y=0, .z=0, .w=0}"
+				}
+
+				if v == "ImPlotPoint(0,0)" {
+					v = "(ImPlotPoint){.x=0, .y=0}"
+				}
+
+				if v == "ImPlotPoint(1,1)" {
+					v = "(ImPlotPoint){.x=1, .y=1}"
+				}
+
+				if v == "FLT_MAX" {
+					v = "igGET_FLT_MAX()"
+				}
+
+				if v == "((void*)0)" {
+					v = "NULL"
+				}
+
+				if strings.Contains(invocatoinStmt, ","+k) {
+					invocatoinStmt = strings.Replace(invocatoinStmt, ","+k, ","+v, 1)
+				} else {
+					invocatoinStmt = strings.Replace(invocatoinStmt, k, v, 1)
+				}
+			}
+
+			// Generate new function
+			funcDefs = append(funcDefs, FuncDef{
+				FuncName:         funcName,
+				OriginalFuncName: funcName + "V",
+				Args:             fmt.Sprintf("(%s)", strings.Join(newArgs, ",")),
+				ArgsT:            newArgsT,
+				InvocationStmt:   invocatoinStmt,
+				Defaults:         nil,
+				Location:         f.Location,
+				Constructor:      f.Constructor,
+				Destructor:       f.Destructor,
+				StructSetter:     false,
+				StructGetter:     false,
+				Ret:              f.Ret,
+				StName:           f.StName,
+			})
+
+			// Add V as suffix to current function name
+			funcName += "V"
+		}
+
 		actualCallArgsStr := fmt.Sprintf("(%s)", strings.Join(actualCallArgs, ","))
+
+		if len(f.InvocationStmt) > 0 {
+			actualCallArgsStr = f.InvocationStmt
+		}
 
 		appendValidFunc := func() {
 			validFuncs = append(validFuncs, FuncDef{
-				Args:        f.Args,
-				ArgsT:       f.ArgsT,
-				FuncName:    funcName,
-				Defaults:    f.Defaults,
-				Location:    f.Location,
-				Constructor: f.Constructor,
-				Destructor:  f.Destructor,
-				Ret:         f.Ret,
+				Args:             f.Args,
+				ArgsT:            f.ArgsT,
+				FuncName:         funcName,
+				OriginalFuncName: f.OriginalFuncName,
+				Defaults:         f.Defaults,
+				Location:         f.Location,
+				Constructor:      f.Constructor,
+				Destructor:       f.Destructor,
+				InvocationStmt:   f.InvocationStmt,
+				Ret:              f.Ret,
+				StName:           f.StName,
 			})
+		}
+
+		invokeFunctionName := f.FuncName
+		if len(f.OriginalFuncName) > 0 {
+			invokeFunctionName = f.OriginalFuncName
 		}
 
 		if !f.Constructor && !f.Destructor {
 			headerSb.WriteString(fmt.Sprintf("extern %s %s%s;\n", f.Ret, funcName, f.Args))
 
 			if f.Ret == "void" {
-				cppSb.WriteString(fmt.Sprintf("%s %s%s { %s%s; }\n", f.Ret, funcName, f.Args, f.FuncName, actualCallArgsStr))
+				cppSb.WriteString(fmt.Sprintf("%s %s%s { %s%s; }\n", f.Ret, funcName, f.Args, invokeFunctionName, actualCallArgsStr))
 			} else {
-				cppSb.WriteString(fmt.Sprintf("%s %s%s { return %s%s; }\n", f.Ret, funcName, f.Args, f.FuncName, actualCallArgsStr))
+				cppSb.WriteString(fmt.Sprintf("%s %s%s { return %s%s; }\n", f.Ret, funcName, f.Args, invokeFunctionName, actualCallArgsStr))
 			}
 
 			appendValidFunc()
 		}
 
 		if f.Constructor {
-			ret := strings.Split(f.FuncName, "_")[0]
+			ret := f.StName
 			headerSb.WriteString(fmt.Sprintf("extern %s* %s%s;\n", ret, funcName, f.Args))
-			cppSb.WriteString(fmt.Sprintf("%s* %s%s { return %s%s; }\n", ret, funcName, f.Args, f.FuncName, actualCallArgsStr))
+			cppSb.WriteString(fmt.Sprintf("%s* %s%s { return %s%s; }\n", ret, funcName, f.Args, invokeFunctionName, actualCallArgsStr))
 
 			appendValidFunc()
 		}
 
 		if f.Destructor {
 			headerSb.WriteString(fmt.Sprintf("extern void %s%s;\n", funcName, f.Args))
-			cppSb.WriteString(fmt.Sprintf("void %s%s { %s%s; }\n", funcName, f.Args, f.FuncName, actualCallArgsStr))
+			cppSb.WriteString(fmt.Sprintf("void %s%s { %s%s; }\n", funcName, f.Args, invokeFunctionName, actualCallArgsStr))
 
 			appendValidFunc()
 		}
