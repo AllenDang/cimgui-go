@@ -347,6 +347,8 @@ func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []S
 		"ImVec4_Getz",
 		"ImRect_GetMin",
 		"ImRect_GetMax",
+		"ImPlotPoint_Setx",
+		"ImPlotPoint_Sety",
 		"ImPlotColormapData_GetKeys",
 	}
 

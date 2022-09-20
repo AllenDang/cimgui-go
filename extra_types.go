@@ -1,6 +1,7 @@
 package cimgui
 
 // #include "cimgui_wrapper.h"
+// #include "cimplot_wrapper.h"
 import "C"
 
 type ImWchar C.uint
@@ -141,4 +142,39 @@ func newImRectFromC(rect C.ImRect) ImRect {
 
 func (r *ImRect) toC() C.ImRect {
 	return C.ImRect{Min: r.Min.toC(), Max: r.Max.toC()}
+}
+
+type ImPlotPoint struct {
+	X float64
+	Y float64
+}
+
+func NewImPlotPoint(x, y float64) ImPlotPoint {
+	return ImPlotPoint{X: x, Y: y}
+}
+
+func newImPlotPointFromC(p C.ImPlotPoint) ImPlotPoint {
+	return NewImPlotPoint(float64(p.x), float64(p.y))
+}
+
+func (p ImPlotPoint) toC() C.ImPlotPoint {
+	return C.ImPlotPoint{x: C.double(p.X), y: C.double(p.Y)}
+}
+
+func (p *ImPlotPoint) wrap() (out *C.ImPlotPoint, finisher func()) {
+	if p != nil {
+		out = &C.ImPlotPoint{
+			x: C.double(p.X),
+			y: C.double(p.Y),
+		}
+
+		finisher = func() {
+			p.X = float64(out.x)
+			p.Y = float64(out.y)
+		}
+	} else {
+		finisher = func() {}
+	}
+
+	return
 }

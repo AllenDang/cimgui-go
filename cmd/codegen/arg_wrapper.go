@@ -276,6 +276,18 @@ defer %[1]sFin()`, arg.Name)
 	return
 }
 
+func imPlotPointW(arg ArgDef) (argType string, def string, varName string) {
+	return valueStructW(arg.Name, "ImPlotPoint")
+}
+
+func imPlotPointPtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "*ImPlotPoint"
+	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := %[1]s.wrap()
+defer %[1]sFin()`, arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
 func imVec4W(arg ArgDef) (argType string, def string, varName string) {
 	return valueStructW(arg.Name, "ImVec4")
 }

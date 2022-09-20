@@ -149,6 +149,7 @@ func shouldSkipStruct(name string) bool {
 		"ImVec4",
 		"ImRect",
 		"ImColor",
+		"ImPlotPoint",
 	}
 
 	if !strings.HasPrefix(name, "Im") {

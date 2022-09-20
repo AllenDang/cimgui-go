@@ -177,6 +177,8 @@ import "unsafe"
 		"ImVec4*":                  imVec4PtrW,
 		"ImColor*":                 imColorPtrW,
 		"ImRect":                   imRectW,
+		"ImPlotPoint":              imPlotPointW,
+		"ImPlotPoint*":             imPlotPointPtrW,
 	}
 
 	returnWrapperMap := map[string]returnWrapper{
