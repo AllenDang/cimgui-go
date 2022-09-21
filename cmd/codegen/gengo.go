@@ -228,6 +228,7 @@ import "unsafe"
 
 	// Skip functions
 	skipFuntions := []string{
+		"InputText",
 		"InputTextWithHint",
 		"InputTextMultiline",
 	}
