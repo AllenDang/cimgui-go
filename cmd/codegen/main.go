@@ -7,6 +7,8 @@ import (
 	"strings"
 
 	"github.com/thoas/go-funk"
+	"golang.org/x/exp/maps"
+	"golang.org/x/exp/slices"
 )
 
 type ArgDef struct {
@@ -70,7 +72,10 @@ func getFunDefs(defJsonBytes []byte) []FuncDef {
 
 	var funcs []FuncDef
 
-	for _, v := range defJson {
+	keys := maps.Keys(defJson)
+	slices.Sort(keys)
+	for _, k := range keys {
+		v := defJson[k]
 		var funcDefs []FuncDef
 		_ = json.Unmarshal(v, &funcDefs)
 
@@ -95,7 +100,10 @@ func getEnumDefs(enumJsonBytes []byte) []EnumDef {
 		panic(err.Error())
 	}
 
-	for k, v := range enumJson {
+	keys := maps.Keys(enumJson)
+	slices.Sort(keys)
+	for _, k := range keys {
+		v := enumJson[k]
 		var enumValues []EnumValueDef
 		err := json.Unmarshal(v, &enumValues)
 		if err != nil {
@@ -125,7 +133,10 @@ func getStructDefs(enumJsonBytes []byte) []StructDef {
 	if err != nil {
 		panic(err.Error())
 	}
-	for k, v := range structJson {
+	keys := maps.Keys(structJson)
+	slices.Sort(keys)
+	for _, k := range keys {
+		v := structJson[k]
 		var memberDefs []StructMemberDef
 		err := json.Unmarshal(v, &memberDefs)
 		if err != nil {
