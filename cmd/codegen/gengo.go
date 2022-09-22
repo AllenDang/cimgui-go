@@ -231,6 +231,10 @@ import "unsafe"
 		"InputText",
 		"InputTextWithHint",
 		"InputTextMultiline",
+		"FontAtlas_GetTexDataAsAlpha8",
+		"FontAtlas_GetTexDataAsAlpha8V",
+		"FontAtlas_GetTexDataAsRGBA32",
+		"FontAtlas_GetTexDataAsRGBA32V",
 	}
 
 	for _, f := range validFuncs {
