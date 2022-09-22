@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+var idiomatic bool
+
 type TypeMap struct {
 	GoType     string
 	CgoWrapper string
@@ -47,6 +49,10 @@ func generateGoEnums(prefix string, enums []EnumDef) []string {
 	var enumNames []string
 	for _, e := range enums {
 		eName := strings.TrimSuffix(e.Name, "_")
+		if idiomatic {
+			eName = strings.TrimPrefix(eName, "ImGui")
+			eName = strings.TrimPrefix(eName, "Im")
+		}
 
 		enumNames = append(enumNames, eName)
 
@@ -54,7 +60,13 @@ func generateGoEnums(prefix string, enums []EnumDef) []string {
 		sb.WriteString("const (\n")
 
 		for _, v := range e.Values {
-			sb.WriteString(fmt.Sprintf("\t%s = %d\n", v.Name, v.Value))
+			name := v.Name
+			if idiomatic {
+				name = strings.TrimPrefix(name, "ImGui")
+				name = strings.TrimPrefix(name, "Im")
+				name = strings.ReplaceAll(name, "_", "")
+			}
+			sb.WriteString(fmt.Sprintf("\t%s = %d\n", name, v.Value))
 		}
 
 		sb.WriteString(")\n\n")
@@ -90,21 +102,26 @@ import "unsafe"
 			continue
 		}
 
+		name := s.Name
+		if idiomatic {
+			name = strings.TrimPrefix(name, "ImGui")
+			name = strings.TrimPrefix(name, "Im")
+		}
 		sb.WriteString(fmt.Sprintf(`type %[1]s uintptr
 
-func (data %[1]s) handle() *C.%[1]s {
-  return (*C.%[1]s)(unsafe.Pointer(data))
+func (data %[1]s) handle() *C.%[2]s {
+  return (*C.%[2]s)(unsafe.Pointer(data))
 }
 
-func (data %[1]s) c() C.%[1]s {
+func (data %[1]s) c() C.%[2]s {
   return *(data.handle())
 }
 
-func new%[1]sFromC(cvalue C.%[1]s) %[1]s {
+func new%[1]sFromC(cvalue C.%[2]s) %[1]s {
   return %[1]s(unsafe.Pointer(&cvalue))
 }
 
-`, s.Name))
+`, name, s.Name))
 
 		structNames = append(structNames, s.Name)
 	}

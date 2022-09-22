@@ -198,6 +198,7 @@ func main() {
 	refEnumsJsonPath := flag.String("r", "", "reference structs and enums json file path")
 	prefix := flag.String("p", "", "prefix for the generated file")
 	include := flag.String("i", "", "include header file")
+	flag.BoolVar(&idiomatic, "g", false, "generate idiomatic go code")
 
 	flag.Parse()
 

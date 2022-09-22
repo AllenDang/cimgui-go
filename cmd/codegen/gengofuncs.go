@@ -234,9 +234,13 @@ import "unsafe"
 		} else if f.Constructor {
 			returnType := strings.Split(f.FuncName, "_")[0]
 			if funk.ContainsString(structNames, "Im"+returnType) {
-				returnType = "Im" + returnType
+				if !idiomatic {
+					returnType = "Im" + returnType
+				}
 			} else if funk.ContainsString(structNames, "ImGui"+returnType) {
-				returnType = "ImGui" + returnType
+				if !idiomatic {
+					returnType = "ImGui" + returnType
+				}
 			} else {
 				continue
 			}
@@ -359,9 +363,13 @@ func argStmt(argWrappers []argOutput) (string, string) {
 func funcSignature(f FuncDef, args []string, returnType string) (string, bool) {
 	funcName := f.FuncName
 	// Transform some function names
-	if !strings.Contains(funcName, "_") {
-		funcName = strings.Replace(funcName, "GetCursor", "GetDrawCursor", 1)
-		funcName = strings.Replace(funcName, "SetCursor", "SetDrawCursor", 1)
+	if idiomatic {
+		funcName = strings.TrimPrefix(funcName, "Get")
+	} else {
+		if !strings.Contains(funcName, "_") {
+			funcName = strings.Replace(funcName, "GetCursor", "GetDrawCursor", 1)
+			funcName = strings.Replace(funcName, "SetCursor", "SetDrawCursor", 1)
+		}
 	}
 
 	funcParts := strings.Split(funcName, "_")
@@ -371,6 +379,10 @@ func funcSignature(f FuncDef, args []string, returnType string) (string, bool) {
 		funcName2 := strings.TrimPrefix(funcName, typeName+"_")
 		if len(funcName2) == 0 || !strings.HasPrefix(funcName2, "Set") || funk.ContainsString(skipStructs, typeName) {
 			return "", false
+		}
+		if idiomatic {
+			typeName = strings.TrimPrefix(typeName, "ImGui")
+			typeName = strings.TrimPrefix(typeName, "Im")
 		}
 		return fmt.Sprintf("func (self %[1]s) %[2]s(%[3]s) {\n", typeName, funcName2, strings.Join(args, ",")), true
 	}
@@ -382,7 +394,6 @@ func funcSignature(f FuncDef, args []string, returnType string) (string, bool) {
 		}
 
 		newFuncName := "New" + returnType + suffix
-
 		return fmt.Sprintf("func %s(%s) %s {\n", newFuncName, strings.Join(args, ","), returnType), true
 	}
 
@@ -390,7 +401,6 @@ func funcSignature(f FuncDef, args []string, returnType string) (string, bool) {
 	var commentSb strings.Builder
 	if len(f.Defaults) > 0 {
 		commentSb.WriteString(fmt.Sprintf("// %s parameter default value hint:\n", funcName))
-
 		for _, n := range args {
 			n := strings.Split(n, " ")[0]
 			v, ok := f.Defaults[n]
@@ -406,12 +416,21 @@ func funcSignature(f FuncDef, args []string, returnType string) (string, bool) {
 		len(args) > 0 && strings.Contains(args[0], "self ") &&
 		!funk.ContainsString(skipStructs, typeName) {
 		newFuncName := strings.TrimPrefix(funcName, typeName+"_")
+
+		if idiomatic {
+			newFuncName = strings.TrimPrefix(newFuncName, "Get")
+		}
+
 		newArgs := args
 		if len(newArgs) > 0 {
 			newArgs = args[1:]
 		}
 
 		typeName = strings.TrimPrefix(args[0], "self ")
+		if idiomatic {
+			typeName = strings.TrimPrefix(typeName, "ImGui")
+			typeName = strings.TrimPrefix(typeName, "Im")
+		}
 
 		return fmt.Sprintf("%sfunc (self %s) %s(%s) %s {\n", commentSb.String(), typeName, newFuncName, strings.Join(newArgs, ","), returnType), true
 	}
