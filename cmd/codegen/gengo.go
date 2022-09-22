@@ -496,7 +496,11 @@ func funcSignature(f FuncDef, args []string, returnType string) (string, bool) {
 	if len(f.Defaults) > 0 {
 		commentSb.WriteString(fmt.Sprintf("// %s parameter default value hint:\n", f.FuncName))
 
-		for n, v := range f.Defaults {
+		for _, n := range args {
+			v, ok := f.Defaults[strings.Split(n, " ")[0]]
+			if !ok {
+				continue
+			}
 			commentSb.WriteString(fmt.Sprintf("// %s: %s\n", n, v))
 		}
 	}
