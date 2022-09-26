@@ -204,10 +204,6 @@ import "unsafe"
 			// return Im struct ptr
 			pureReturnType := strings.TrimPrefix(f.Ret, "const ")
 			pureReturnType = strings.TrimSuffix(pureReturnType, "*")
-			if idiomatic {
-				pureReturnType = strings.TrimPrefix(pureReturnType, "ImGui")
-				pureReturnType = strings.TrimPrefix(pureReturnType, "Im")
-			}
 			argDefs, argInvokeStmt := argStmt(argWrappers)
 			signature, ok := funcSignature(f, args, pureReturnType)
 			if !ok {
@@ -238,13 +234,9 @@ import "unsafe"
 		} else if f.Constructor {
 			returnType := strings.Split(f.FuncName, "_")[0]
 			if funk.ContainsString(structNames, "Im"+returnType) {
-				if !idiomatic {
-					returnType = "Im" + returnType
-				}
+				returnType = "Im" + returnType
 			} else if funk.ContainsString(structNames, "ImGui"+returnType) {
-				if !idiomatic {
-					returnType = "ImGui" + returnType
-				}
+				returnType = "ImGui" + returnType
 			} else {
 				continue
 			}
@@ -298,14 +290,8 @@ func processArgs(f FuncDef, structNames []string, enumNames []string) ([]string,
 			shouldGenerate = true
 		}
 
-		goType := a.Type
-		if idiomatic {
-			goType = strings.TrimPrefix(goType, "ImGui")
-			goType = strings.TrimPrefix(goType, "Im")
-		}
-
 		if f.StructGetter && funk.ContainsString(structNames, a.Type) {
-			args = append(args, fmt.Sprintf("%s %s", a.Name, goType))
+			args = append(args, fmt.Sprintf("%s %s", a.Name, a.Type))
 			argWrappers = append(argWrappers, argOutput{
 				VarName: fmt.Sprintf("%s.handle()", a.Name),
 			})
@@ -319,17 +305,13 @@ func processArgs(f FuncDef, structNames []string, enumNames []string) ([]string,
 				ArgDef:  argDef,
 				VarName: varName,
 			})
-			if idiomatic {
-				argType = strings.TrimPrefix(argType, "ImGui")
-				argType = strings.TrimPrefix(argType, "Im")
-			}
 			args = append(args, fmt.Sprintf("%s %s", a.Name, argType))
 
 			shouldGenerate = true
 		}
 
 		if slices.Contains(enumNames, a.Type) {
-			args = append(args, fmt.Sprintf("%s %s", a.Name, goType))
+			args = append(args, fmt.Sprintf("%s %s", a.Name, a.Type))
 			argWrappers = append(argWrappers, argOutput{
 				VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
 			})
@@ -342,11 +324,6 @@ func processArgs(f FuncDef, structNames []string, enumNames []string) ([]string,
 			pureType = strings.TrimSuffix(pureType, "*")
 
 			if funk.ContainsString(structNames, pureType) {
-				if idiomatic {
-					pureType = strings.TrimPrefix(pureType, "ImGui")
-					pureType = strings.TrimPrefix(pureType, "Im")
-				}
-
 				args = append(args, fmt.Sprintf("%s %s", a.Name, pureType))
 				argWrappers = append(argWrappers, argOutput{
 					VarName: fmt.Sprintf("%s.handle()", a.Name),
@@ -381,25 +358,9 @@ func argStmt(argWrappers []argOutput) (string, string) {
 func funcSignature(f FuncDef, args []string, returnType string) (string, bool) {
 	funcName := f.FuncName
 	// Transform some function names
-	if idiomatic {
-		funcName = strings.TrimPrefix(funcName, "Get")
-		// collisions between struct and function name
-		replace := map[string]string{
-			"DrawData":           "CurrentDrawData",
-			"DrawListSharedData": "CurrentDrawListSharedData",
-			"Font":               "CurrentFont",
-			"IO":                 "CurrentIO",
-			"PlatformIO":         "CurrentPlatformIO",
-			"Style":              "CurrentStyle",
-		}
-		if r, ok := replace[funcName]; ok {
-			funcName = r
-		}
-	} else {
-		if !strings.Contains(funcName, "_") {
-			funcName = strings.Replace(funcName, "GetCursor", "GetDrawCursor", 1)
-			funcName = strings.Replace(funcName, "SetCursor", "SetDrawCursor", 1)
-		}
+	if !strings.Contains(funcName, "_") {
+		funcName = strings.Replace(funcName, "GetCursor", "GetDrawCursor", 1)
+		funcName = strings.Replace(funcName, "SetCursor", "SetDrawCursor", 1)
 	}
 
 	funcParts := strings.Split(funcName, "_")
@@ -409,10 +370,6 @@ func funcSignature(f FuncDef, args []string, returnType string) (string, bool) {
 		funcName2 := strings.TrimPrefix(funcName, typeName+"_")
 		if len(funcName2) == 0 || !strings.HasPrefix(funcName2, "Set") || funk.ContainsString(skipStructs, typeName) {
 			return "", false
-		}
-		if idiomatic {
-			typeName = strings.TrimPrefix(typeName, "ImGui")
-			typeName = strings.TrimPrefix(typeName, "Im")
 		}
 		return fmt.Sprintf("func (self %[1]s) %[2]s(%[3]s) {\n", typeName, funcName2, strings.Join(args, ",")), true
 	}
@@ -447,20 +404,12 @@ func funcSignature(f FuncDef, args []string, returnType string) (string, bool) {
 		!funk.ContainsString(skipStructs, typeName) {
 		newFuncName := strings.TrimPrefix(funcName, typeName+"_")
 
-		if idiomatic {
-			newFuncName = strings.TrimPrefix(newFuncName, "Get")
-		}
-
 		newArgs := args
 		if len(newArgs) > 0 {
 			newArgs = args[1:]
 		}
 
 		typeName = strings.TrimPrefix(args[0], "self ")
-		if idiomatic {
-			typeName = strings.TrimPrefix(typeName, "ImGui")
-			typeName = strings.TrimPrefix(typeName, "Im")
-		}
 
 		return fmt.Sprintf("%sfunc (self %s) %s(%s) %s {\n", commentSb.String(), typeName, newFuncName, strings.Join(newArgs, ","), returnType), true
 	}
