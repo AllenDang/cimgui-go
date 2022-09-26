@@ -13,11 +13,11 @@ func TestSetIOCofigFlags(t *testing.T) {
 		t.Error("get io failed")
 	}
 
-	io.SetBackendFlags(ImGuiBackendFlags_RendererHasVtxOffset)
+	io.SetBackendFlags(BackendFlags_RendererHasVtxOffset)
 
 	flags := io.GetBackendFlags()
-	if flags != ImGuiBackendFlags_RendererHasVtxOffset {
+	if flags != BackendFlags_RendererHasVtxOffset {
 		t.Error("set io backend flags failed")
-		t.Errorf("expect: %v got %v", ImGuiBackendFlags_RendererHasVtxOffset, flags)
+		t.Errorf("expect: %v got %v", BackendFlags_RendererHasVtxOffset, flags)
 	}
 }
