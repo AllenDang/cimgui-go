@@ -4,7 +4,7 @@ This project aims to generate go wrapper for Dear ImGui.
 
 It comes with a default backend with GLFW 3.3 and OpenGL 3.2.
 
-It works on macOS(arm64/x86) and windows(x64) now, idealy linux should works but I don't have a linux machine to test it. Check out `examples`, cd in and `go run .`.
+It works on macOS(arm64/x86), windows(x64), Arch Linux/KDE and Fedora Workstation 36, idealy other linux GUI should works but I don't have a linux machine to test it. Check out `examples`, cd in and `go run .`.
 
 ## Current solution is:
 1. Use cimgui's lua generator to generate function and struct definition as json.
