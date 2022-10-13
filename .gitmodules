@@ -1,3 +1,6 @@
 [submodule "cimgui/imgui"]
 	path = cimgui/imgui
 	url = https://github.com/ocornut/imgui
+[submodule "cimplot/implot"]
+	path = cimplot/implot
+	url = https://github.com/epezent/implot
