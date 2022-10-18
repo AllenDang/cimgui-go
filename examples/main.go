@@ -118,6 +118,8 @@ func main() {
 	cimgui.SetAfterCreateContextHook(afterCreateContext)
 	cimgui.SetBeforeDestroyContextHook(beforeDestoryContext)
 
+	cimgui.SetBgColor(cimgui.NewImVec4(0.45, 0.55, 0.6, 1.0))
+
 	window = cimgui.CreateGlfwWindow("Hello from cimgui-go", 1200, 900, 0)
 
 	texture = cimgui.NewTextureFromRgba(img)

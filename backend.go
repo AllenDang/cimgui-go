@@ -67,6 +67,10 @@ func SetAfterRenderHook(hook func()) {
 	afterRender = hook
 }
 
+func SetBgColor(color ImVec4) {
+	C.igSetBgColor(color.toC())
+}
+
 func (w GLFWwindow) Run(loop func()) {
 	loopFunc = loop
 	C.igRunLoop(w.handle(), C.VoidCallback(C.glfwWindowLoopCallback), C.VoidCallback(C.glfwBeforeRender), C.VoidCallback(C.glfwAfterRender), C.VoidCallback(C.glfwBeforeDestoryContext))

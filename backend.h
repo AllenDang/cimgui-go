@@ -23,6 +23,7 @@ struct GLFWmonitor;
 
 typedef void (*VoidCallback)();
 
+extern void igSetBgColor(ImVec4 color);
 extern void igSetTargetFPS(unsigned int fps);
 extern GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height, GLFWWindowFlags flags,
                                       VoidCallback afterCreateContext);
