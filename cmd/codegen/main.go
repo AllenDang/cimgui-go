@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"os"
+	"sort"
 	"strings"
 
 	"github.com/thoas/go-funk"
@@ -77,6 +78,11 @@ func getFunDefs(defJsonBytes []byte) []FuncDef {
 		funcs = append(funcs, funcDefs...)
 	}
 
+	// sort lexicographically for determenistic generation
+	sort.Slice(funcs, func(i, j int) bool {
+		return funcs[i].FuncName < funcs[j].FuncName
+	})
+
 	return funcs
 }
 
@@ -108,6 +114,11 @@ func getEnumDefs(enumJsonBytes []byte) []EnumDef {
 		})
 	}
 
+	// sort lexicographically for determenistic generation
+	sort.Slice(enums, func(i, j int) bool {
+		return enums[i].Name < enums[j].Name
+	})
+
 	return enums
 }
 
@@ -137,6 +148,11 @@ func getStructDefs(enumJsonBytes []byte) []StructDef {
 			Members: memberDefs,
 		})
 	}
+
+	// sort lexicographically for determenistic generation
+	sort.Slice(structs, func(i, j int) bool {
+		return structs[i].Name < structs[j].Name
+	})
 
 	return structs
 }
