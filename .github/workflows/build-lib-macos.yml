@@ -9,6 +9,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@main
+      with:
+        fetch-depth: 0
+        submodules: 'true'
 
     - name: configure glfw for x64
       run: cmake -S . -Bbuild -DCMAKE_OSX_ARCHITECTURES=x86_64

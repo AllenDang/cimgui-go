@@ -13,6 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@main
+      with:
+        fetch-depth: 0
+        submodules: 'true'
 
     - name: Install MinGW
       uses: msys2/setup-msys2@v2
