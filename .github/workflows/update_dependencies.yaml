@@ -1,4 +1,4 @@
-name: "update dependencies (Dear ImGui)"
+name: "Update Dependencies"
 
 on:
   workflow_dispatch:
