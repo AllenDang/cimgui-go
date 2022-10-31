@@ -35,10 +35,12 @@ jobs:
         run: git submodule update --remote
       - name: Regenerate bindings
         run: |
-          cd cimgui/generator; ./generator.sh
+          cd cimgui/generator
+          sh generator.sh
           just gencode_cimgui
           cd ../../
-          cd cimplot/generator; ./generator.sh
+          cd cimplot/generator
+          sh generator.sh
           just gencode_cimplot
           cd ../../
       - uses: stefanzweifel/git-auto-commit-action@v4
