@@ -22,7 +22,11 @@
 unsigned int glfw_target_fps = 30;
 int extra_frame_count = MAX_EXTRA_FRAME_COUNT;
 
+ImVec4 clear_color = *Vec4_ImVec4_Float(0.45, 0.55, 0.6, 1.0);
+
 void glfw_render(GLFWwindow *window, VoidCallback renderLoop);
+
+void igSetBgColor(ImVec4 color) { clear_color = color; }
 
 void igSetTargetFPS(unsigned int fps) { glfw_target_fps = fps; }
 
@@ -147,12 +151,6 @@ void glfw_render(GLFWwindow *window, VoidCallback renderLoop) {
   if (renderLoop != NULL) {
     renderLoop();
   }
-
-  ImVec4 clear_color;
-  clear_color.x = 0.45f;
-  clear_color.y = 0.55f;
-  clear_color.w = 0.60f;
-  clear_color.z = 1.00f;
 
   // Rendering
   igRender();

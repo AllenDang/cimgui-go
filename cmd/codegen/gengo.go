@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"sort"
 	"strings"
 
 	"github.com/thoas/go-funk"
@@ -351,8 +352,21 @@ import "unsafe"
 			if len(f.Defaults) > 0 {
 				commentSb.WriteString(fmt.Sprintf("// %s parameter default value hint:\n", funcName))
 
+				// sort lexicographically for determenistic generation
+				type defaultParam struct {
+					name  string
+					value string
+				}
+				defaults := make([]defaultParam, 0, len(f.Defaults))
 				for n, v := range f.Defaults {
-					commentSb.WriteString(fmt.Sprintf("// %s: %s\n", n, v))
+					defaults = append(defaults, defaultParam{name: n, value: v})
+				}
+				sort.Slice(defaults, func(i, j int) bool {
+					return defaults[i].name < defaults[j].name
+				})
+
+				for _, p := range defaults {
+					commentSb.WriteString(fmt.Sprintf("// %s: %s\n", p.name, p.value))
 				}
 			}
 
