@@ -33,7 +33,7 @@ jobs:
       - name: Regenerate bindings
         run: |
           cd cimgui/generator; ./generator.sh
-          just gencode_cimgui.
+          just gencode_cimgui
           cd ../../
           cd cimplot/generator; ./generator.sh
           just gencode_cimplot
