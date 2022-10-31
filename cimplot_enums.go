@@ -1,5 +1,6 @@
 package cimgui
 
+// original name: ImAxis_
 type ImAxis int
 
 const (
@@ -12,6 +13,7 @@ const (
 	ImAxis_COUNT = 6
 )
 
+// original name: ImPlotAxisFlags_
 type ImPlotAxisFlags int
 
 const (
@@ -35,6 +37,7 @@ const (
 	ImPlotAxisFlags_AuxDefault    = 66
 )
 
+// original name: ImPlotBarGroupsFlags_
 type ImPlotBarGroupsFlags int
 
 const (
@@ -43,6 +46,7 @@ const (
 	ImPlotBarGroupsFlags_Stacked    = 2048
 )
 
+// original name: ImPlotBarsFlags_
 type ImPlotBarsFlags int
 
 const (
@@ -50,6 +54,7 @@ const (
 	ImPlotBarsFlags_Horizontal = 1024
 )
 
+// original name: ImPlotBin_
 type ImPlotBin int
 
 const (
@@ -59,6 +64,7 @@ const (
 	ImPlotBin_Scott   = -4
 )
 
+// original name: ImPlotCol_
 type ImPlotCol int
 
 const (
@@ -86,6 +92,7 @@ const (
 	ImPlotCol_COUNT         = 21
 )
 
+// original name: ImPlotColormapScaleFlags_
 type ImPlotColormapScaleFlags int
 
 const (
@@ -95,6 +102,7 @@ const (
 	ImPlotColormapScaleFlags_Invert   = 4
 )
 
+// original name: ImPlotColormap_
 type ImPlotColormap int
 
 const (
@@ -116,6 +124,7 @@ const (
 	ImPlotColormap_Greys    = 15
 )
 
+// original name: ImPlotCond_
 type ImPlotCond int
 
 const (
@@ -124,6 +133,7 @@ const (
 	ImPlotCond_Once   = 2
 )
 
+// original name: ImPlotDateFmt_
 type ImPlotDateFmt int
 
 const (
@@ -135,12 +145,14 @@ const (
 	ImPlotDateFmt_Yr      = 5
 )
 
+// original name: ImPlotDigitalFlags_
 type ImPlotDigitalFlags int
 
 const (
 	ImPlotDigitalFlags_None = 0
 )
 
+// original name: ImPlotDragToolFlags_
 type ImPlotDragToolFlags int
 
 const (
@@ -151,12 +163,14 @@ const (
 	ImPlotDragToolFlags_Delayed   = 8
 )
 
+// original name: ImPlotDummyFlags_
 type ImPlotDummyFlags int
 
 const (
 	ImPlotDummyFlags_None = 0
 )
 
+// original name: ImPlotErrorBarsFlags_
 type ImPlotErrorBarsFlags int
 
 const (
@@ -164,6 +178,7 @@ const (
 	ImPlotErrorBarsFlags_Horizontal = 1024
 )
 
+// original name: ImPlotFlags_
 type ImPlotFlags int
 
 const (
@@ -181,6 +196,7 @@ const (
 	ImPlotFlags_CanvasOnly  = 55
 )
 
+// original name: ImPlotHeatmapFlags_
 type ImPlotHeatmapFlags int
 
 const (
@@ -188,6 +204,7 @@ const (
 	ImPlotHeatmapFlags_ColMajor = 1024
 )
 
+// original name: ImPlotHistogramFlags_
 type ImPlotHistogramFlags int
 
 const (
@@ -199,12 +216,14 @@ const (
 	ImPlotHistogramFlags_ColMajor   = 16384
 )
 
+// original name: ImPlotImageFlags_
 type ImPlotImageFlags int
 
 const (
 	ImPlotImageFlags_None = 0
 )
 
+// original name: ImPlotInfLinesFlags_
 type ImPlotInfLinesFlags int
 
 const (
@@ -212,6 +231,7 @@ const (
 	ImPlotInfLinesFlags_Horizontal = 1024
 )
 
+// original name: ImPlotItemFlags_
 type ImPlotItemFlags int
 
 const (
@@ -220,6 +240,7 @@ const (
 	ImPlotItemFlags_NoFit    = 2
 )
 
+// original name: ImPlotLegendFlags_
 type ImPlotLegendFlags int
 
 const (
@@ -232,6 +253,7 @@ const (
 	ImPlotLegendFlags_Horizontal      = 32
 )
 
+// original name: ImPlotLineFlags_
 type ImPlotLineFlags int
 
 const (
@@ -242,6 +264,7 @@ const (
 	ImPlotLineFlags_NoClip   = 8192
 )
 
+// original name: ImPlotLocation_
 type ImPlotLocation int
 
 const (
@@ -256,6 +279,7 @@ const (
 	ImPlotLocation_SouthEast = 10
 )
 
+// original name: ImPlotMarker_
 type ImPlotMarker int
 
 const (
@@ -273,6 +297,7 @@ const (
 	ImPlotMarker_COUNT    = 10
 )
 
+// original name: ImPlotMouseTextFlags_
 type ImPlotMouseTextFlags int
 
 const (
@@ -282,6 +307,7 @@ const (
 	ImPlotMouseTextFlags_ShowAlways = 4
 )
 
+// original name: ImPlotPieChartFlags_
 type ImPlotPieChartFlags int
 
 const (
@@ -289,6 +315,7 @@ const (
 	ImPlotPieChartFlags_Normalize = 1024
 )
 
+// original name: ImPlotScale_
 type ImPlotScale int
 
 const (
@@ -298,6 +325,7 @@ const (
 	ImPlotScale_SymLog = 3
 )
 
+// original name: ImPlotScatterFlags_
 type ImPlotScatterFlags int
 
 const (
@@ -305,12 +333,14 @@ const (
 	ImPlotScatterFlags_NoClip = 1024
 )
 
+// original name: ImPlotShadedFlags_
 type ImPlotShadedFlags int
 
 const (
 	ImPlotShadedFlags_None = 0
 )
 
+// original name: ImPlotStairsFlags_
 type ImPlotStairsFlags int
 
 const (
@@ -318,6 +348,7 @@ const (
 	ImPlotStairsFlags_PreStep = 1024
 )
 
+// original name: ImPlotStemsFlags_
 type ImPlotStemsFlags int
 
 const (
@@ -325,6 +356,7 @@ const (
 	ImPlotStemsFlags_Horizontal = 1024
 )
 
+// original name: ImPlotStyleVar_
 type ImPlotStyleVar int
 
 const (
@@ -358,6 +390,7 @@ const (
 	ImPlotStyleVar_COUNT              = 27
 )
 
+// original name: ImPlotSubplotFlags_
 type ImPlotSubplotFlags int
 
 const (
@@ -375,6 +408,7 @@ const (
 	ImPlotSubplotFlags_ColMajor   = 1024
 )
 
+// original name: ImPlotTextFlags_
 type ImPlotTextFlags int
 
 const (
@@ -382,6 +416,7 @@ const (
 	ImPlotTextFlags_Vertical = 1024
 )
 
+// original name: ImPlotTimeFmt_
 type ImPlotTimeFmt int
 
 const (
@@ -396,6 +431,7 @@ const (
 	ImPlotTimeFmt_Hr       = 8
 )
 
+// original name: ImPlotTimeUnit_
 type ImPlotTimeUnit int
 
 const (

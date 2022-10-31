@@ -29,6 +29,18 @@ var (
 	}
 )
 
+func trimImGuiPrefix(id string) string {
+	// don't trim prefixes for implot
+	if strings.HasPrefix(id, "ImPlot") || strings.HasPrefix(id, "ImAxis") {
+		return id
+	}
+
+	id = strings.TrimPrefix(id, "ImGui")
+	id = strings.TrimPrefix(id, "Im")
+	id = strings.TrimPrefix(id, "ig")
+	return id
+}
+
 // Generate enums and return enum type names
 func generateGoEnums(prefix string, enums []EnumDef) []string {
 	var sb strings.Builder
@@ -37,15 +49,19 @@ func generateGoEnums(prefix string, enums []EnumDef) []string {
 
 	var enumNames []string
 	for _, e := range enums {
+		originalName := e.Name
 		eName := strings.TrimSuffix(e.Name, "_")
+		eName = trimImGuiPrefix(eName)
 
 		enumNames = append(enumNames, eName)
 
+		sb.WriteString(fmt.Sprintf("// original name: %s\n", originalName))
 		sb.WriteString(fmt.Sprintf("type %s int\n", eName))
 		sb.WriteString("const (\n")
 
 		for _, v := range e.Values {
-			sb.WriteString(fmt.Sprintf("\t%s = %d\n", v.Name, v.Value))
+			vName := trimImGuiPrefix(v.Name)
+			sb.WriteString(fmt.Sprintf("\t%s = %d\n", vName, v.Value))
 		}
 
 		sb.WriteString(")\n\n")
@@ -265,10 +281,15 @@ import "unsafe"
 					VarName: fmt.Sprintf("%s.handle()", a.Name),
 				})
 				shouldGenerate = true
+				continue
 			}
 
 			if v, ok := argWrapperMap[a.Type]; ok {
 				argType, argDef, varName := v(a)
+				if isEnum(trimImGuiPrefix(argType)) {
+					argType = trimImGuiPrefix(argType)
+				}
+
 				argWrappers = append(argWrappers, argOutput{
 					ArgType: argType,
 					ArgDef:  argDef,
@@ -278,15 +299,17 @@ import "unsafe"
 				args = append(args, fmt.Sprintf("%s %s", a.Name, argType))
 
 				shouldGenerate = true
+				continue
 			}
 
-			if isEnum(a.Type) {
-				args = append(args, fmt.Sprintf("%s %s", a.Name, a.Type))
+			if isEnum(trimImGuiPrefix(a.Type)) {
+				args = append(args, fmt.Sprintf("%s %s", a.Name, trimImGuiPrefix(a.Type)))
 				argWrappers = append(argWrappers, argOutput{
 					VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
 				})
 
 				shouldGenerate = true
+				continue
 			}
 
 			if strings.HasSuffix(a.Type, "*") {
@@ -300,6 +323,7 @@ import "unsafe"
 					})
 
 					shouldGenerate = true
+					continue
 				}
 			}
 
@@ -314,8 +338,10 @@ import "unsafe"
 		}
 
 		if !shouldGenerate {
-			// fmt.Printf("%s%s\n", f.FuncName, f.Args)
+			fmt.Printf("not generated: %s%s\n", f.FuncName, f.Args)
 			continue
+		} else {
+			fmt.Printf("generated: %s%s\n", f.FuncName, f.Args)
 		}
 
 		// Generate function args
@@ -423,14 +449,14 @@ import "unsafe"
 				sb.WriteString("}\n\n")
 
 				convertedFuncCount += 1
-			} else if funk.ContainsString(enumNames, f.Ret) {
-				returnType := f.Ret
+			} else if funk.ContainsString(enumNames, trimImGuiPrefix(f.Ret)) {
+				returnType := trimImGuiPrefix(f.Ret)
 
 				sb.WriteString(funcSignatureFunc(f.FuncName, args, returnType))
 
 				argInvokeStmt := argStmtFunc()
 
-				sb.WriteString(fmt.Sprintf("return %s(%s)", f.Ret, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+				sb.WriteString(fmt.Sprintf("return %s(%s)", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 				sb.WriteString("}\n\n")
 
 				convertedFuncCount += 1
