@@ -54,7 +54,7 @@ void DrawList_ChannelsSplit(ImDrawList* self,int count) { ImDrawList_ChannelsSpl
 ImDrawList* DrawList_CloneOutput(ImDrawList* self) { return ImDrawList_CloneOutput(self); }
 void DrawList_GetClipRectMax(ImVec2 *pOut,ImDrawList* self) { ImDrawList_GetClipRectMax(pOut,self); }
 void DrawList_GetClipRectMin(ImVec2 *pOut,ImDrawList* self) { ImDrawList_GetClipRectMin(pOut,self); }
-ImDrawList* DrawList_ImDrawList(const ImDrawListSharedData* shared_data) { return ImDrawList_ImDrawList(shared_data); }
+ImDrawList* DrawList_ImDrawList(ImDrawListSharedData* shared_data) { return ImDrawList_ImDrawList(shared_data); }
 void DrawList_PathArcToV(ImDrawList* self,const ImVec2 center,float radius,float a_min,float a_max,int num_segments) { ImDrawList_PathArcTo(self,center,radius,a_min,a_max,num_segments); }
 void DrawList_PathArcToFast(ImDrawList* self,const ImVec2 center,float radius,int a_min_of_12,int a_max_of_12) { ImDrawList_PathArcToFast(self,center,radius,a_min_of_12,a_max_of_12); }
 void DrawList_PathBezierCubicCurveToV(ImDrawList* self,const ImVec2 p2,const ImVec2 p3,const ImVec2 p4,int num_segments) { ImDrawList_PathBezierCubicCurveTo(self,p2,p3,p4,num_segments); }
@@ -101,6 +101,7 @@ const ImWchar* FontAtlas_GetGlyphRangesChineseFull(ImFontAtlas* self) { return I
 const ImWchar* FontAtlas_GetGlyphRangesChineseSimplifiedCommon(ImFontAtlas* self) { return ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon(self); }
 const ImWchar* FontAtlas_GetGlyphRangesCyrillic(ImFontAtlas* self) { return ImFontAtlas_GetGlyphRangesCyrillic(self); }
 const ImWchar* FontAtlas_GetGlyphRangesDefault(ImFontAtlas* self) { return ImFontAtlas_GetGlyphRangesDefault(self); }
+const ImWchar* FontAtlas_GetGlyphRangesGreek(ImFontAtlas* self) { return ImFontAtlas_GetGlyphRangesGreek(self); }
 const ImWchar* FontAtlas_GetGlyphRangesJapanese(ImFontAtlas* self) { return ImFontAtlas_GetGlyphRangesJapanese(self); }
 const ImWchar* FontAtlas_GetGlyphRangesKorean(ImFontAtlas* self) { return ImFontAtlas_GetGlyphRangesKorean(self); }
 const ImWchar* FontAtlas_GetGlyphRangesThai(ImFontAtlas* self) { return ImFontAtlas_GetGlyphRangesThai(self); }
@@ -144,7 +145,6 @@ void Font_Destroy(ImFont* self) { ImFont_destroy(self); }
 void ComboPreviewData_Destroy(ImGuiComboPreviewData* self) { ImGuiComboPreviewData_destroy(self); }
 void ContextHook_Destroy(ImGuiContextHook* self) { ImGuiContextHook_destroy(self); }
 void Context_Destroy(ImGuiContext* self) { ImGuiContext_destroy(self); }
-void DockContext_Destroy(ImGuiDockContext* self) { ImGuiDockContext_destroy(self); }
 void IO_AddFocusEvent(ImGuiIO* self,bool focused) { ImGuiIO_AddFocusEvent(self,focused); }
 void IO_AddInputCharacter(ImGuiIO* self,unsigned int c) { ImGuiIO_AddInputCharacter(self,c); }
 void IO_AddInputCharacterUTF16(ImGuiIO* self,ImWchar16 c) { ImGuiIO_AddInputCharacterUTF16(self,c); }
@@ -153,7 +153,6 @@ void IO_AddKeyAnalogEvent(ImGuiIO* self,ImGuiKey key,bool down,float v) { ImGuiI
 void IO_AddKeyEvent(ImGuiIO* self,ImGuiKey key,bool down) { ImGuiIO_AddKeyEvent(self,key,down); }
 void IO_AddMouseButtonEvent(ImGuiIO* self,int button,bool down) { ImGuiIO_AddMouseButtonEvent(self,button,down); }
 void IO_AddMousePosEvent(ImGuiIO* self,float x,float y) { ImGuiIO_AddMousePosEvent(self,x,y); }
-void IO_AddMouseViewportEvent(ImGuiIO* self,ImGuiID id) { ImGuiIO_AddMouseViewportEvent(self,id); }
 void IO_AddMouseWheelEvent(ImGuiIO* self,float wh_x,float wh_y) { ImGuiIO_AddMouseWheelEvent(self,wh_x,wh_y); }
 void IO_ClearInputCharacters(ImGuiIO* self) { ImGuiIO_ClearInputCharacters(self); }
 void IO_ClearInputKeys(ImGuiIO* self) { ImGuiIO_ClearInputKeys(self); }
@@ -193,12 +192,8 @@ bool Payload_IsDataType(ImGuiPayload* self,const char* type) { return ImGuiPaylo
 bool Payload_IsDelivery(ImGuiPayload* self) { return ImGuiPayload_IsDelivery(self); }
 bool Payload_IsPreview(ImGuiPayload* self) { return ImGuiPayload_IsPreview(self); }
 void Payload_Destroy(ImGuiPayload* self) { ImGuiPayload_destroy(self); }
-ImGuiPlatformIO* PlatformIO_ImGuiPlatformIO() { return ImGuiPlatformIO_ImGuiPlatformIO(); }
-void PlatformIO_Destroy(ImGuiPlatformIO* self) { ImGuiPlatformIO_destroy(self); }
 ImGuiPlatformImeData* PlatformImeData_ImGuiPlatformImeData() { return ImGuiPlatformImeData_ImGuiPlatformImeData(); }
 void PlatformImeData_Destroy(ImGuiPlatformImeData* self) { ImGuiPlatformImeData_destroy(self); }
-ImGuiPlatformMonitor* PlatformMonitor_ImGuiPlatformMonitor() { return ImGuiPlatformMonitor_ImGuiPlatformMonitor(); }
-void PlatformMonitor_Destroy(ImGuiPlatformMonitor* self) { ImGuiPlatformMonitor_destroy(self); }
 void PopupData_Destroy(ImGuiPopupData* self) { ImGuiPopupData_destroy(self); }
 void PtrOrIndex_Destroy(ImGuiPtrOrIndex* self) { ImGuiPtrOrIndex_destroy(self); }
 void SettingsHandler_Destroy(ImGuiSettingsHandler* self) { ImGuiSettingsHandler_destroy(self); }
@@ -242,8 +237,6 @@ void Viewport_GetCenter(ImVec2 *pOut,ImGuiViewport* self) { ImGuiViewport_GetCen
 void Viewport_GetWorkCenter(ImVec2 *pOut,ImGuiViewport* self) { ImGuiViewport_GetWorkCenter(pOut,self); }
 ImGuiViewport* Viewport_ImGuiViewport() { return ImGuiViewport_ImGuiViewport(); }
 void Viewport_Destroy(ImGuiViewport* self) { ImGuiViewport_destroy(self); }
-ImGuiWindowClass* WindowClass_ImGuiWindowClass() { return ImGuiWindowClass_ImGuiWindowClass(); }
-void WindowClass_Destroy(ImGuiWindowClass* self) { ImGuiWindowClass_destroy(self); }
 void WindowSettings_Destroy(ImGuiWindowSettings* self) { ImGuiWindowSettings_destroy(self); }
 void Rect_Destroy(ImRect* self) { ImRect_destroy(self); }
 void Vec1_Destroy(ImVec1* self) { ImVec1_destroy(self); }
@@ -307,9 +300,6 @@ ImGuiContext* CreateContextV(ImFontAtlas* shared_font_atlas) { return igCreateCo
 bool DebugCheckVersionAndDataLayout(const char* version_str,size_t sz_io,size_t sz_style,size_t sz_vec2,size_t sz_vec4,size_t sz_drawvert,size_t sz_drawidx) { return igDebugCheckVersionAndDataLayout(version_str,sz_io,sz_style,sz_vec2,sz_vec4,sz_drawvert,sz_drawidx); }
 void DebugTextEncoding(const char* text) { igDebugTextEncoding(text); }
 void DestroyContextV(ImGuiContext* ctx) { igDestroyContext(ctx); }
-void DestroyPlatformWindows() { igDestroyPlatformWindows(); }
-ImGuiID DockSpaceV(ImGuiID id,const ImVec2 size,ImGuiDockNodeFlags flags,const ImGuiWindowClass* window_class) { return igDockSpace(id,size,flags,window_class); }
-ImGuiID DockSpaceOverViewportV(const ImGuiViewport* viewport,ImGuiDockNodeFlags flags,const ImGuiWindowClass* window_class) { return igDockSpaceOverViewport(viewport,flags,window_class); }
 bool DragFloatV(const char* label,float* v,float v_speed,float v_min,float v_max,const char* format,ImGuiSliderFlags flags) { return igDragFloat(label,v,v_speed,v_min,v_max,format,flags); }
 bool DragFloat2V(const char* label,float v[2],float v_speed,float v_min,float v_max,const char* format,ImGuiSliderFlags flags) { return igDragFloat2(label,v,v_speed,v_min,v_max,format,flags); }
 bool DragFloat3V(const char* label,float v[3],float v_speed,float v_min,float v_max,const char* format,ImGuiSliderFlags flags) { return igDragFloat3(label,v,v_speed,v_min,v_max,format,flags); }
@@ -341,10 +331,7 @@ void EndTabBar() { igEndTabBar(); }
 void EndTabItem() { igEndTabItem(); }
 void EndTable() { igEndTable(); }
 void EndTooltip() { igEndTooltip(); }
-ImGuiViewport* FindViewportByID(ImGuiID id) { return igFindViewportByID(id); }
-ImGuiViewport* FindViewportByPlatformHandle(void* platform_handle) { return igFindViewportByPlatformHandle(platform_handle); }
 ImDrawList* GetBackgroundDrawList_Nil() { return igGetBackgroundDrawList_Nil(); }
-ImDrawList* GetBackgroundDrawList_ViewportPtr(ImGuiViewport* viewport) { return igGetBackgroundDrawList_ViewportPtr(viewport); }
 const char* GetClipboardText() { return igGetClipboardText(); }
 ImU32 GetColorU32_ColV(ImGuiCol idx,float alpha_mul) { return igGetColorU32_Col(idx,alpha_mul); }
 ImU32 GetColorU32_U32(ImU32 col) { return igGetColorU32_U32(col); }
@@ -368,7 +355,6 @@ ImFont* GetFont() { return igGetFont(); }
 float GetFontSize() { return igGetFontSize(); }
 void GetFontTexUvWhitePixel(ImVec2 *pOut) { igGetFontTexUvWhitePixel(pOut); }
 ImDrawList* GetForegroundDrawList_Nil() { return igGetForegroundDrawList_Nil(); }
-ImDrawList* GetForegroundDrawList_ViewportPtr(ImGuiViewport* viewport) { return igGetForegroundDrawList_ViewportPtr(viewport); }
 int GetFrameCount() { return igGetFrameCount(); }
 float GetFrameHeight() { return igGetFrameHeight(); }
 float GetFrameHeightWithSpacing() { return igGetFrameHeightWithSpacing(); }
@@ -379,7 +365,7 @@ ImGuiIO* GetIO() { return igGetIO(); }
 void GetItemRectMax(ImVec2 *pOut) { igGetItemRectMax(pOut); }
 void GetItemRectMin(ImVec2 *pOut) { igGetItemRectMin(pOut); }
 void GetItemRectSize(ImVec2 *pOut) { igGetItemRectSize(pOut); }
-int GetKeyIndex(ImGuiKey key) { return igGetKeyIndex(key); }
+ImGuiKey GetKeyIndex(ImGuiKey key) { return igGetKeyIndex(key); }
 const char* GetKeyName(ImGuiKey key) { return igGetKeyName(key); }
 int GetKeyPressedAmount(ImGuiKey key,float repeat_delay,float rate) { return igGetKeyPressedAmount(key,repeat_delay,rate); }
 ImGuiViewport* GetMainViewport() { return igGetMainViewport(); }
@@ -388,7 +374,6 @@ ImGuiMouseCursor GetMouseCursor() { return igGetMouseCursor(); }
 void GetMouseDragDeltaV(ImVec2 *pOut,ImGuiMouseButton button,float lock_threshold) { igGetMouseDragDelta(pOut,button,lock_threshold); }
 void GetMousePos(ImVec2 *pOut) { igGetMousePos(pOut); }
 void GetMousePosOnOpeningCurrentPopup(ImVec2 *pOut) { igGetMousePosOnOpeningCurrentPopup(pOut); }
-ImGuiPlatformIO* GetPlatformIO() { return igGetPlatformIO(); }
 float GetScrollMaxX() { return igGetScrollMaxX(); }
 float GetScrollMaxY() { return igGetScrollMaxY(); }
 float GetScrollX() { return igGetScrollX(); }
@@ -403,13 +388,10 @@ float GetTreeNodeToLabelSpacing() { return igGetTreeNodeToLabelSpacing(); }
 const char* GetVersion() { return igGetVersion(); }
 void GetWindowContentRegionMax(ImVec2 *pOut) { igGetWindowContentRegionMax(pOut); }
 void GetWindowContentRegionMin(ImVec2 *pOut) { igGetWindowContentRegionMin(pOut); }
-ImGuiID GetWindowDockID() { return igGetWindowDockID(); }
-float GetWindowDpiScale() { return igGetWindowDpiScale(); }
 ImDrawList* GetWindowDrawList() { return igGetWindowDrawList(); }
 float GetWindowHeight() { return igGetWindowHeight(); }
 void GetWindowPos(ImVec2 *pOut) { igGetWindowPos(pOut); }
 void GetWindowSize(ImVec2 *pOut) { igGetWindowSize(pOut); }
-ImGuiViewport* GetWindowViewport() { return igGetWindowViewport(); }
 float GetWindowWidth() { return igGetWindowWidth(); }
 void ImageV(ImTextureID user_texture_id,const ImVec2 size,const ImVec2 uv0,const ImVec2 uv1,const ImVec4 tint_col,const ImVec4 border_col) { igImage(user_texture_id,size,uv0,uv1,tint_col,border_col); }
 bool ImageButtonV(const char* str_id,ImTextureID user_texture_id,const ImVec2 size,const ImVec2 uv0,const ImVec2 uv1,const ImVec4 bg_col,const ImVec4 tint_col) { return igImageButton(str_id,user_texture_id,size,uv0,uv1,bg_col,tint_col); }
@@ -458,7 +440,6 @@ bool IsRectVisible_Nil(const ImVec2 size) { return igIsRectVisible_Nil(size); }
 bool IsRectVisible_Vec2(const ImVec2 rect_min,const ImVec2 rect_max) { return igIsRectVisible_Vec2(rect_min,rect_max); }
 bool IsWindowAppearing() { return igIsWindowAppearing(); }
 bool IsWindowCollapsed() { return igIsWindowCollapsed(); }
-bool IsWindowDocked() { return igIsWindowDocked(); }
 bool IsWindowFocusedV(ImGuiFocusedFlags flags) { return igIsWindowFocused(flags); }
 bool IsWindowHoveredV(ImGuiHoveredFlags flags) { return igIsWindowHovered(flags); }
 void LabelText(const char* label,const char* fmt) { igLabelText(label,fmt); }
@@ -513,7 +494,6 @@ void PushTextWrapPosV(float wrap_local_pos_x) { igPushTextWrapPos(wrap_local_pos
 bool RadioButton_Bool(const char* label,bool active) { return igRadioButton_Bool(label,active); }
 bool RadioButton_IntPtr(const char* label,int* v,int v_button) { return igRadioButton_IntPtr(label,v,v_button); }
 void Render() { igRender(); }
-void RenderPlatformWindowsDefaultV(void* platform_render_arg,void* renderer_render_arg) { igRenderPlatformWindowsDefault(platform_render_arg,renderer_render_arg); }
 void ResetMouseDragDeltaV(ImGuiMouseButton button) { igResetMouseDragDelta(button); }
 void SameLineV(float offset_from_start_x,float spacing) { igSameLine(offset_from_start_x,spacing); }
 void SaveIniSettingsToDisk(const char* ini_filename) { igSaveIniSettingsToDisk(ini_filename); }
@@ -540,15 +520,12 @@ void SetNextFrameWantCaptureMouse(bool want_capture_mouse) { igSetNextFrameWantC
 void SetNextItemOpenV(bool is_open,ImGuiCond cond) { igSetNextItemOpen(is_open,cond); }
 void SetNextItemWidth(float item_width) { igSetNextItemWidth(item_width); }
 void SetNextWindowBgAlpha(float alpha) { igSetNextWindowBgAlpha(alpha); }
-void SetNextWindowClass(const ImGuiWindowClass* window_class) { igSetNextWindowClass(window_class); }
 void SetNextWindowCollapsedV(bool collapsed,ImGuiCond cond) { igSetNextWindowCollapsed(collapsed,cond); }
 void SetNextWindowContentSize(const ImVec2 size) { igSetNextWindowContentSize(size); }
-void SetNextWindowDockIDV(ImGuiID dock_id,ImGuiCond cond) { igSetNextWindowDockID(dock_id,cond); }
 void SetNextWindowFocus() { igSetNextWindowFocus(); }
 void SetNextWindowPosV(const ImVec2 pos,ImGuiCond cond,const ImVec2 pivot) { igSetNextWindowPos(pos,cond,pivot); }
 void SetNextWindowSizeV(const ImVec2 size,ImGuiCond cond) { igSetNextWindowSize(size,cond); }
 void SetNextWindowSizeConstraintsV(const ImVec2 size_min,const ImVec2 size_max,ImGuiSizeCallback custom_callback,void* custom_callback_data) { igSetNextWindowSizeConstraints(size_min,size_max,custom_callback,custom_callback_data); }
-void SetNextWindowViewport(ImGuiID viewport_id) { igSetNextWindowViewport(viewport_id); }
 void SetScrollFromPosX_FloatV(float local_x,float center_x_ratio) { igSetScrollFromPosX_Float(local_x,center_x_ratio); }
 void SetScrollFromPosY_FloatV(float local_y,float center_y_ratio) { igSetScrollFromPosY_Float(local_y,center_y_ratio); }
 void SetScrollHereXV(float center_x_ratio) { igSetScrollHereX(center_x_ratio); }
@@ -619,10 +596,9 @@ bool TreeNode_Ptr(const void* ptr_id,const char* fmt) { return igTreeNode_Ptr(pt
 bool TreeNode_Str(const char* label) { return igTreeNode_Str(label); }
 bool TreeNode_StrStr(const char* str_id,const char* fmt) { return igTreeNode_StrStr(str_id,fmt); }
 void TreePop() { igTreePop(); }
-void TreePush_PtrV(const void* ptr_id) { igTreePush_Ptr(ptr_id); }
+void TreePush_Ptr(const void* ptr_id) { igTreePush_Ptr(ptr_id); }
 void TreePush_Str(const char* str_id) { igTreePush_Str(str_id); }
 void UnindentV(float indent_w) { igUnindent(indent_w); }
-void UpdatePlatformWindows() { igUpdatePlatformWindows(); }
 bool VSliderFloatV(const char* label,const ImVec2 size,float* v,float v_min,float v_max,const char* format,ImGuiSliderFlags flags) { return igVSliderFloat(label,size,v,v_min,v_max,format,flags); }
 bool VSliderIntV(const char* label,const ImVec2 size,int* v,int v_min,int v_max,const char* format,ImGuiSliderFlags flags) { return igVSliderInt(label,size,v,v_min,v_max,format,flags); }
 bool VSliderScalarV(const char* label,const ImVec2 size,ImGuiDataType data_type,void* p_data,const void* p_min,const void* p_max,const char* format,ImGuiSliderFlags flags) { return igVSliderScalar(label,size,data_type,p_data,p_min,p_max,format,flags); }
@@ -703,8 +679,6 @@ bool Combo_Str(const char* label,int* current_item,const char* items_separated_b
 bool Combo_Str_arr(const char* label,int* current_item,const char* const items[],int items_count) { return Combo_Str_arrV(label,current_item,items,items_count,-1); }
 ImGuiContext* CreateContext() { return CreateContextV(NULL); }
 void DestroyContext() { DestroyContextV(NULL); }
-ImGuiID DockSpace(ImGuiID id) { return DockSpaceV(id,(ImVec2){.x=0, .y=0},0,NULL); }
-ImGuiID DockSpaceOverViewport() { return DockSpaceOverViewportV(NULL,0,NULL); }
 bool DragFloat(const char* label,float* v) { return DragFloatV(label,v,1.0f,0.0f,0.0f,"%.3f",0); }
 bool DragFloat2(const char* label,float v[2]) { return DragFloat2V(label,v,1.0f,0.0f,0.0f,"%.3f",0); }
 bool DragFloat3(const char* label,float v[3]) { return DragFloat3V(label,v,1.0f,0.0f,0.0f,"%.3f",0); }
@@ -763,7 +737,6 @@ void PopStyleColor() { PopStyleColorV(1); }
 void PopStyleVar() { PopStyleVarV(1); }
 void ProgressBar(float fraction) { ProgressBarV(fraction,(ImVec2){.x=-1*igGET_FLT_MIN(), .y=0},NULL); }
 void PushTextWrapPos() { PushTextWrapPosV(0.0f); }
-void RenderPlatformWindowsDefault() { RenderPlatformWindowsDefaultV(NULL,NULL); }
 void ResetMouseDragDelta() { ResetMouseDragDeltaV(0); }
 void SameLine() { SameLineV(0.0f,-1.0f); }
 const char* SaveIniSettingsToMemory() { return SaveIniSettingsToMemoryV(NULL); }
@@ -773,7 +746,6 @@ bool SetDragDropPayload(const char* type,const void* data,size_t sz) { return Se
 void SetKeyboardFocusHere() { SetKeyboardFocusHereV(0); }
 void SetNextItemOpen(bool is_open) { SetNextItemOpenV(is_open,0); }
 void SetNextWindowCollapsed(bool collapsed) { SetNextWindowCollapsedV(collapsed,0); }
-void SetNextWindowDockID(ImGuiID dock_id) { SetNextWindowDockIDV(dock_id,0); }
 void SetNextWindowPos(const ImVec2 pos) { SetNextWindowPosV(pos,0,(ImVec2){.x=0, .y=0}); }
 void SetNextWindowSize(const ImVec2 size) { SetNextWindowSizeV(size,0); }
 void SetNextWindowSizeConstraints(const ImVec2 size_min,const ImVec2 size_max) { SetNextWindowSizeConstraintsV(size_min,size_max,NULL,NULL); }
@@ -815,7 +787,6 @@ void TableSetBgColor(ImGuiTableBgTarget target,ImU32 color) { TableSetBgColorV(t
 void TableSetupColumn(const char* label) { TableSetupColumnV(label,0,0.0f,0); }
 void TextUnformatted(const char* text) { TextUnformattedV(text); }
 bool TreeNodeEx_Str(const char* label) { return TreeNodeEx_StrV(label,0); }
-void TreePush_Ptr() { TreePush_PtrV(NULL); }
 void Unindent() { UnindentV(0.0f); }
 bool VSliderFloat(const char* label,const ImVec2 size,float* v,float v_min,float v_max) { return VSliderFloatV(label,size,v,v_min,v_max,"%.3f",0); }
 bool VSliderInt(const char* label,const ImVec2 size,int* v,int v_min,int v_max) { return VSliderIntV(label,size,v,v_min,v_max,"%d",0); }

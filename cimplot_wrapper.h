@@ -8,6 +8,7 @@ extern "C" {
 
 extern void PlotAlignmentData_Destroy(ImPlotAlignmentData* self);
 extern void PlotAnnotationCollection_Destroy(ImPlotAnnotationCollection* self);
+extern void PlotAnnotation_Destroy(ImPlotAnnotation* self);
 extern void PlotAxis_Destroy(ImPlotAxis* self);
 extern void PlotColormapData_Destroy(ImPlotColormapData* self);
 extern void PlotDateTimeSpec_Destroy(ImPlotDateTimeSpec* self);
@@ -71,7 +72,7 @@ extern void Plot_DestroyContextV(ImPlotContext* ctx);
 extern bool Plot_DragLineXV(int id,double* x,const ImVec4 col,float thickness,ImPlotDragToolFlags flags);
 extern bool Plot_DragLineYV(int id,double* y,const ImVec4 col,float thickness,ImPlotDragToolFlags flags);
 extern bool Plot_DragPointV(int id,double* x,double* y,const ImVec4 col,float size,ImPlotDragToolFlags flags);
-extern bool Plot_DragRectV(int id,double* x_min,double* y_min,double* x_max,double* y_max,const ImVec4 col,ImPlotDragToolFlags flags);
+extern bool Plot_DragRectV(int id,double* x1,double* y1,double* x2,double* y2,const ImVec4 col,ImPlotDragToolFlags flags);
 extern void Plot_EndAlignedPlots();
 extern void Plot_EndDragDropSource();
 extern void Plot_EndDragDropTarget();
@@ -414,7 +415,7 @@ extern void Plot_DestroyContext();
 extern bool Plot_DragLineX(int id,double* x,const ImVec4 col);
 extern bool Plot_DragLineY(int id,double* y,const ImVec4 col);
 extern bool Plot_DragPoint(int id,double* x,double* y,const ImVec4 col);
-extern bool Plot_DragRect(int id,double* x_min,double* y_min,double* x_max,double* y_max,const ImVec4 col);
+extern bool Plot_DragRect(int id,double* x1,double* y1,double* x2,double* y2,const ImVec4 col);
 extern void Plot_GetColormapColor(ImVec4* pOut,int idx);
 extern int Plot_GetColormapSize();
 extern ImPlotRect Plot_GetPlotLimits();
