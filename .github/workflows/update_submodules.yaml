@@ -14,7 +14,7 @@ jobs:
         run:
           git clone 'https://mpr.makedeb.org/just'
           cd just
-          makedeb -si
+          makedeb -sl
       - name: Set up LibGL, Mesa & X11 libraries
         run: |
           sudo apt-get --allow-releaseinfo-change update
