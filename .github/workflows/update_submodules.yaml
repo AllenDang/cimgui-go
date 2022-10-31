@@ -16,8 +16,9 @@ jobs:
           echo "deb [signed-by=/usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg] https://proget.makedeb.org prebuilt-mpr $(lsb_release -cs)" | sudo tee /etc/apt/sources.list.d/prebuilt-mpr.list
           sudo apt update
           sudo apt install just
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      # uncomment and put anywhere to start SSH session
+      #- name: SSH Debug
+      #  uses: mxschmitt/action-tmate@v3
       - name: install luajit
         run: |
           sudo apt-get install -y luajit
