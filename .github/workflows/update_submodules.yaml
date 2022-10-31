@@ -1,0 +1,39 @@
+name: "update dependencies (Dear ImGui)"
+
+on:
+  workflow_dispatch:
+  # automatically update every monday
+  schedule: 
+    - cron: '0 0 * * 0'
+
+jobs:
+  Update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: install JUST
+        run:
+          git clone 'https://mpr.makedeb.org/just'
+          cd just
+          makedeb -si
+      - name: Set up LibGL, Mesa & X11 libraries
+        run: |
+          sudo apt-get --allow-releaseinfo-change update
+          sudo apt-get install -y libgtk-3-dev libasound2-dev libxxf86vm-dev
+      - name: Checkout out source code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+          submodules: 'true'
+      - name: Update submodules
+        run: git submodule update --remote
+      - name: Regenerate bindings
+        run:
+          cd cimgui/generator; ./generator.sh
+          just gencode_cimgui.
+          cd ../../
+          cd cimplot/generator; ./generator.sh
+          just gencode_cimplot
+          cd ../../
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update dependencies; regenerat code
