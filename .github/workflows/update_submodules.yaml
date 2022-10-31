@@ -16,6 +16,9 @@ jobs:
           echo "deb [signed-by=/usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg] https://proget.makedeb.org prebuilt-mpr $(lsb_release -cs)" | sudo tee /etc/apt/sources.list.d/prebuilt-mpr.list
           sudo apt update
           sudo apt install just
+      - name: install luajit
+        run: |
+          sudo apt-get install -y luajit
       - name: Set up LibGL, Mesa & X11 libraries
         run: |
           sudo apt-get --allow-releaseinfo-change update
@@ -28,7 +31,7 @@ jobs:
       - name: Update submodules
         run: git submodule update --remote
       - name: Regenerate bindings
-        run:
+        run: |
           cd cimgui/generator; ./generator.sh
           just gencode_cimgui.
           cd ../../
