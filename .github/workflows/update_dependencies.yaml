@@ -35,12 +35,10 @@ jobs:
         run: git submodule update --remote
       - name: Regenerate bindings
         run: |
-          cd cimgui/generator
-          luajit ./generator.lua gcc "comments internal" glfw opengl3 -DIMGUI_DISABLE_OBSOLETE_FUNCTIONS -DIMGUI_USE_WCHAR32
+          cd cimgui/generator; ./generator.sh
           just gencode_cimgui
           cd ../../
-          cd cimplot/generator
-          luajit ./generator.lua gcc "comments internal" glfw opengl3 -DIMGUI_DISABLE_OBSOLETE_FUNCTIONS -DIMGUI_USE_WCHAR32
+          cd cimplot/generator; ./generator.sh
           just gencode_cimplot
           cd ../../
       - uses: stefanzweifel/git-auto-commit-action@v4
