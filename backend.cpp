@@ -133,7 +133,7 @@ GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height, GLFWWin
 
   // Install extra callback
   glfwSetWindowRefreshCallback(window, glfw_window_refresh_callback);
-
+  glfwMakeContextCurrent(NULL);
   return window;
 }
 
@@ -181,6 +181,7 @@ void glfw_render(GLFWwindow *window, VoidCallback renderLoop) {
 
 void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
                VoidCallback beforeDestroyContext) {
+  glfwMakeContextCurrent(window);
   ImGuiIO *io = igGetIO();
 
   // Load Fonts
