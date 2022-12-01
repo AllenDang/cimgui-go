@@ -326,6 +326,34 @@ func newImGuiDataTypeTempStorageFromC(cvalue C.ImGuiDataTypeTempStorage) ImGuiDa
 	return ImGuiDataTypeTempStorage(unsafe.Pointer(&cvalue))
 }
 
+type ImGuiDockContext uintptr
+
+func (data ImGuiDockContext) handle() *C.ImGuiDockContext {
+	return (*C.ImGuiDockContext)(unsafe.Pointer(data))
+}
+
+func (data ImGuiDockContext) c() C.ImGuiDockContext {
+	return *(data.handle())
+}
+
+func newImGuiDockContextFromC(cvalue C.ImGuiDockContext) ImGuiDockContext {
+	return ImGuiDockContext(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiDockNode uintptr
+
+func (data ImGuiDockNode) handle() *C.ImGuiDockNode {
+	return (*C.ImGuiDockNode)(unsafe.Pointer(data))
+}
+
+func (data ImGuiDockNode) c() C.ImGuiDockNode {
+	return *(data.handle())
+}
+
+func newImGuiDockNodeFromC(cvalue C.ImGuiDockNode) ImGuiDockNode {
+	return ImGuiDockNode(unsafe.Pointer(&cvalue))
+}
+
 type ImGuiGroupData uintptr
 
 func (data ImGuiGroupData) handle() *C.ImGuiGroupData {
@@ -424,6 +452,20 @@ func newImGuiInputEventMousePosFromC(cvalue C.ImGuiInputEventMousePos) ImGuiInpu
 	return ImGuiInputEventMousePos(unsafe.Pointer(&cvalue))
 }
 
+type ImGuiInputEventMouseViewport uintptr
+
+func (data ImGuiInputEventMouseViewport) handle() *C.ImGuiInputEventMouseViewport {
+	return (*C.ImGuiInputEventMouseViewport)(unsafe.Pointer(data))
+}
+
+func (data ImGuiInputEventMouseViewport) c() C.ImGuiInputEventMouseViewport {
+	return *(data.handle())
+}
+
+func newImGuiInputEventMouseViewportFromC(cvalue C.ImGuiInputEventMouseViewport) ImGuiInputEventMouseViewport {
+	return ImGuiInputEventMouseViewport(unsafe.Pointer(&cvalue))
+}
+
 type ImGuiInputEventMouseWheel uintptr
 
 func (data ImGuiInputEventMouseWheel) handle() *C.ImGuiInputEventMouseWheel {
@@ -494,6 +536,48 @@ func newImGuiKeyDataFromC(cvalue C.ImGuiKeyData) ImGuiKeyData {
 	return ImGuiKeyData(unsafe.Pointer(&cvalue))
 }
 
+type ImGuiKeyOwnerData uintptr
+
+func (data ImGuiKeyOwnerData) handle() *C.ImGuiKeyOwnerData {
+	return (*C.ImGuiKeyOwnerData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiKeyOwnerData) c() C.ImGuiKeyOwnerData {
+	return *(data.handle())
+}
+
+func newImGuiKeyOwnerDataFromC(cvalue C.ImGuiKeyOwnerData) ImGuiKeyOwnerData {
+	return ImGuiKeyOwnerData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiKeyRoutingData uintptr
+
+func (data ImGuiKeyRoutingData) handle() *C.ImGuiKeyRoutingData {
+	return (*C.ImGuiKeyRoutingData)(unsafe.Pointer(data))
+}
+
+func (data ImGuiKeyRoutingData) c() C.ImGuiKeyRoutingData {
+	return *(data.handle())
+}
+
+func newImGuiKeyRoutingDataFromC(cvalue C.ImGuiKeyRoutingData) ImGuiKeyRoutingData {
+	return ImGuiKeyRoutingData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiKeyRoutingTable uintptr
+
+func (data ImGuiKeyRoutingTable) handle() *C.ImGuiKeyRoutingTable {
+	return (*C.ImGuiKeyRoutingTable)(unsafe.Pointer(data))
+}
+
+func (data ImGuiKeyRoutingTable) c() C.ImGuiKeyRoutingTable {
+	return *(data.handle())
+}
+
+func newImGuiKeyRoutingTableFromC(cvalue C.ImGuiKeyRoutingTable) ImGuiKeyRoutingTable {
+	return ImGuiKeyRoutingTable(unsafe.Pointer(&cvalue))
+}
+
 type ImGuiLastItemData uintptr
 
 func (data ImGuiLastItemData) handle() *C.ImGuiLastItemData {
@@ -548,6 +632,20 @@ func (data ImGuiListClipperRange) c() C.ImGuiListClipperRange {
 
 func newImGuiListClipperRangeFromC(cvalue C.ImGuiListClipperRange) ImGuiListClipperRange {
 	return ImGuiListClipperRange(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiLocEntry uintptr
+
+func (data ImGuiLocEntry) handle() *C.ImGuiLocEntry {
+	return (*C.ImGuiLocEntry)(unsafe.Pointer(data))
+}
+
+func (data ImGuiLocEntry) c() C.ImGuiLocEntry {
+	return *(data.handle())
+}
+
+func newImGuiLocEntryFromC(cvalue C.ImGuiLocEntry) ImGuiLocEntry {
+	return ImGuiLocEntry(unsafe.Pointer(&cvalue))
 }
 
 type ImGuiMenuColumns uintptr
@@ -676,6 +774,20 @@ func newImGuiPayloadFromC(cvalue C.ImGuiPayload) ImGuiPayload {
 	return ImGuiPayload(unsafe.Pointer(&cvalue))
 }
 
+type ImGuiPlatformIO uintptr
+
+func (data ImGuiPlatformIO) handle() *C.ImGuiPlatformIO {
+	return (*C.ImGuiPlatformIO)(unsafe.Pointer(data))
+}
+
+func (data ImGuiPlatformIO) c() C.ImGuiPlatformIO {
+	return *(data.handle())
+}
+
+func newImGuiPlatformIOFromC(cvalue C.ImGuiPlatformIO) ImGuiPlatformIO {
+	return ImGuiPlatformIO(unsafe.Pointer(&cvalue))
+}
+
 type ImGuiPlatformImeData uintptr
 
 func (data ImGuiPlatformImeData) handle() *C.ImGuiPlatformImeData {
@@ -688,6 +800,20 @@ func (data ImGuiPlatformImeData) c() C.ImGuiPlatformImeData {
 
 func newImGuiPlatformImeDataFromC(cvalue C.ImGuiPlatformImeData) ImGuiPlatformImeData {
 	return ImGuiPlatformImeData(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiPlatformMonitor uintptr
+
+func (data ImGuiPlatformMonitor) handle() *C.ImGuiPlatformMonitor {
+	return (*C.ImGuiPlatformMonitor)(unsafe.Pointer(data))
+}
+
+func (data ImGuiPlatformMonitor) c() C.ImGuiPlatformMonitor {
+	return *(data.handle())
+}
+
+func newImGuiPlatformMonitorFromC(cvalue C.ImGuiPlatformMonitor) ImGuiPlatformMonitor {
+	return ImGuiPlatformMonitor(unsafe.Pointer(&cvalue))
 }
 
 type ImGuiPopupData uintptr
@@ -1108,6 +1234,34 @@ func (data ImGuiWindow) c() C.ImGuiWindow {
 
 func newImGuiWindowFromC(cvalue C.ImGuiWindow) ImGuiWindow {
 	return ImGuiWindow(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiWindowClass uintptr
+
+func (data ImGuiWindowClass) handle() *C.ImGuiWindowClass {
+	return (*C.ImGuiWindowClass)(unsafe.Pointer(data))
+}
+
+func (data ImGuiWindowClass) c() C.ImGuiWindowClass {
+	return *(data.handle())
+}
+
+func newImGuiWindowClassFromC(cvalue C.ImGuiWindowClass) ImGuiWindowClass {
+	return ImGuiWindowClass(unsafe.Pointer(&cvalue))
+}
+
+type ImGuiWindowDockStyle uintptr
+
+func (data ImGuiWindowDockStyle) handle() *C.ImGuiWindowDockStyle {
+	return (*C.ImGuiWindowDockStyle)(unsafe.Pointer(data))
+}
+
+func (data ImGuiWindowDockStyle) c() C.ImGuiWindowDockStyle {
+	return *(data.handle())
+}
+
+func newImGuiWindowDockStyleFromC(cvalue C.ImGuiWindowDockStyle) ImGuiWindowDockStyle {
+	return ImGuiWindowDockStyle(unsafe.Pointer(&cvalue))
 }
 
 type ImGuiWindowSettings uintptr

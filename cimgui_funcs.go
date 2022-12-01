@@ -672,6 +672,10 @@ func (self ImGuiContext) Destroy() {
 	C.Context_Destroy(self.handle())
 }
 
+func (self ImGuiDockContext) Destroy() {
+	C.DockContext_Destroy(self.handle())
+}
+
 func (self ImGuiIO) AddFocusEvent(focused bool) {
 	C.IO_AddFocusEvent(self.handle(), C.bool(focused))
 }
@@ -701,6 +705,10 @@ func (self ImGuiIO) AddMouseButtonEvent(button int32, down bool) {
 
 func (self ImGuiIO) AddMousePosEvent(x float32, y float32) {
 	C.IO_AddMousePosEvent(self.handle(), C.float(x), C.float(y))
+}
+
+func (self ImGuiIO) AddMouseViewportEvent(id ImGuiID) {
+	C.IO_AddMouseViewportEvent(self.handle(), C.ImGuiID(id))
 }
 
 func (self ImGuiIO) AddMouseWheelEvent(wh_x float32, wh_y float32) {
@@ -772,6 +780,18 @@ func (self ImGuiInputTextCallbackData) Destroy() {
 
 func (self ImGuiInputTextState) Destroy() {
 	C.InputTextState_Destroy(self.handle())
+}
+
+func (self ImGuiKeyOwnerData) Destroy() {
+	C.KeyOwnerData_Destroy(self.handle())
+}
+
+func (self ImGuiKeyRoutingData) Destroy() {
+	C.KeyRoutingData_Destroy(self.handle())
+}
+
+func (self ImGuiKeyRoutingTable) Destroy() {
+	C.KeyRoutingTable_Destroy(self.handle())
 }
 
 func (self ImGuiLastItemData) Destroy() {
@@ -871,12 +891,28 @@ func (self ImGuiPayload) Destroy() {
 	C.Payload_Destroy(self.handle())
 }
 
+func NewImGuiPlatformIO() ImGuiPlatformIO {
+	return (ImGuiPlatformIO)(unsafe.Pointer(C.PlatformIO_ImGuiPlatformIO()))
+}
+
+func (self ImGuiPlatformIO) Destroy() {
+	C.PlatformIO_Destroy(self.handle())
+}
+
 func NewImGuiPlatformImeData() ImGuiPlatformImeData {
 	return (ImGuiPlatformImeData)(unsafe.Pointer(C.PlatformImeData_ImGuiPlatformImeData()))
 }
 
 func (self ImGuiPlatformImeData) Destroy() {
 	C.PlatformImeData_Destroy(self.handle())
+}
+
+func NewImGuiPlatformMonitor() ImGuiPlatformMonitor {
+	return (ImGuiPlatformMonitor)(unsafe.Pointer(C.PlatformMonitor_ImGuiPlatformMonitor()))
+}
+
+func (self ImGuiPlatformMonitor) Destroy() {
+	C.PlatformMonitor_Destroy(self.handle())
 }
 
 func (self ImGuiPopupData) Destroy() {
@@ -1080,6 +1116,14 @@ func NewImGuiViewport() ImGuiViewport {
 
 func (self ImGuiViewport) Destroy() {
 	C.Viewport_Destroy(self.handle())
+}
+
+func NewImGuiWindowClass() ImGuiWindowClass {
+	return (ImGuiWindowClass)(unsafe.Pointer(C.WindowClass_ImGuiWindowClass()))
+}
+
+func (self ImGuiWindowClass) Destroy() {
+	C.WindowClass_Destroy(self.handle())
 }
 
 func (self ImGuiWindowSettings) Destroy() {
@@ -1564,6 +1608,26 @@ func DestroyContextV(ctx ImGuiContext) {
 	C.DestroyContextV(ctx.handle())
 }
 
+func DestroyPlatformWindows() {
+	C.DestroyPlatformWindows()
+}
+
+// DockSpaceV parameter default value hint:
+// flags: 0
+// size: ImVec2(0,0)
+// window_class: NULL
+func DockSpaceV(id ImGuiID, size ImVec2, flags ImGuiDockNodeFlags, window_class ImGuiWindowClass) ImGuiID {
+	return ImGuiID(C.DockSpaceV(C.ImGuiID(id), size.toC(), C.ImGuiDockNodeFlags(flags), window_class.handle()))
+}
+
+// DockSpaceOverViewportV parameter default value hint:
+// flags: 0
+// viewport: NULL
+// window_class: NULL
+func DockSpaceOverViewportV(viewport ImGuiViewport, flags ImGuiDockNodeFlags, window_class ImGuiWindowClass) ImGuiID {
+	return ImGuiID(C.DockSpaceOverViewportV(viewport.handle(), C.ImGuiDockNodeFlags(flags), window_class.handle()))
+}
+
 // DragFloatV parameter default value hint:
 // flags: 0
 // format: "%.3f"
@@ -1918,8 +1982,20 @@ func EndTooltip() {
 	C.EndTooltip()
 }
 
+func FindViewportByID(id ImGuiID) ImGuiViewport {
+	return (ImGuiViewport)(unsafe.Pointer(C.FindViewportByID(C.ImGuiID(id))))
+}
+
+func FindViewportByPlatformHandle(platform_handle unsafe.Pointer) ImGuiViewport {
+	return (ImGuiViewport)(unsafe.Pointer(C.FindViewportByPlatformHandle(platform_handle)))
+}
+
 func GetBackgroundDrawList_Nil() ImDrawList {
 	return (ImDrawList)(unsafe.Pointer(C.GetBackgroundDrawList_Nil()))
+}
+
+func GetBackgroundDrawList_ViewportPtr(viewport ImGuiViewport) ImDrawList {
+	return (ImDrawList)(unsafe.Pointer(C.GetBackgroundDrawList_ViewportPtr(viewport.handle())))
 }
 
 func GetClipboardText() string {
@@ -2038,6 +2114,10 @@ func GetForegroundDrawList_Nil() ImDrawList {
 	return (ImDrawList)(unsafe.Pointer(C.GetForegroundDrawList_Nil()))
 }
 
+func GetForegroundDrawList_ViewportPtr(viewport ImGuiViewport) ImDrawList {
+	return (ImDrawList)(unsafe.Pointer(C.GetForegroundDrawList_ViewportPtr(viewport.handle())))
+}
+
 func GetFrameCount() int {
 	return int(C.GetFrameCount())
 }
@@ -2144,6 +2224,10 @@ func GetMousePosOnOpeningCurrentPopup(pOut *ImVec2) {
 	C.GetMousePosOnOpeningCurrentPopup(pOutArg)
 }
 
+func GetPlatformIO() ImGuiPlatformIO {
+	return (ImGuiPlatformIO)(unsafe.Pointer(C.GetPlatformIO()))
+}
+
 func GetScrollMaxX() float32 {
 	return float32(C.GetScrollMaxX())
 }
@@ -2206,6 +2290,14 @@ func GetWindowContentRegionMin(pOut *ImVec2) {
 	C.GetWindowContentRegionMin(pOutArg)
 }
 
+func GetWindowDockID() ImGuiID {
+	return ImGuiID(C.GetWindowDockID())
+}
+
+func GetWindowDpiScale() float32 {
+	return float32(C.GetWindowDpiScale())
+}
+
 func GetWindowDrawList() ImDrawList {
 	return (ImDrawList)(unsafe.Pointer(C.GetWindowDrawList()))
 }
@@ -2226,6 +2318,10 @@ func GetWindowSize(pOut *ImVec2) {
 	defer pOutFin()
 
 	C.GetWindowSize(pOutArg)
+}
+
+func GetWindowViewport() ImGuiViewport {
+	return (ImGuiViewport)(unsafe.Pointer(C.GetWindowViewport()))
 }
 
 func GetWindowWidth() float32 {
@@ -2531,32 +2627,32 @@ func IsItemVisible() bool {
 	return C.IsItemVisible() == C.bool(true)
 }
 
-func IsKeyDown(key ImGuiKey) bool {
-	return C.IsKeyDown(C.ImGuiKey(key)) == C.bool(true)
+func IsKeyDown_Nil(key ImGuiKey) bool {
+	return C.IsKeyDown_Nil(C.ImGuiKey(key)) == C.bool(true)
 }
 
-// IsKeyPressedV parameter default value hint:
+// IsKeyPressed_BoolV parameter default value hint:
 // repeat: true
-func IsKeyPressedV(key ImGuiKey, repeat bool) bool {
-	return C.IsKeyPressedV(C.ImGuiKey(key), C.bool(repeat)) == C.bool(true)
+func IsKeyPressed_BoolV(key ImGuiKey, repeat bool) bool {
+	return C.IsKeyPressed_BoolV(C.ImGuiKey(key), C.bool(repeat)) == C.bool(true)
 }
 
-func IsKeyReleased(key ImGuiKey) bool {
-	return C.IsKeyReleased(C.ImGuiKey(key)) == C.bool(true)
+func IsKeyReleased_Nil(key ImGuiKey) bool {
+	return C.IsKeyReleased_Nil(C.ImGuiKey(key)) == C.bool(true)
 }
 
-// IsMouseClickedV parameter default value hint:
+// IsMouseClicked_BoolV parameter default value hint:
 // repeat: false
-func IsMouseClickedV(button ImGuiMouseButton, repeat bool) bool {
-	return C.IsMouseClickedV(C.ImGuiMouseButton(button), C.bool(repeat)) == C.bool(true)
+func IsMouseClicked_BoolV(button ImGuiMouseButton, repeat bool) bool {
+	return C.IsMouseClicked_BoolV(C.ImGuiMouseButton(button), C.bool(repeat)) == C.bool(true)
 }
 
 func IsMouseDoubleClicked(button ImGuiMouseButton) bool {
 	return C.IsMouseDoubleClicked(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
-func IsMouseDown(button ImGuiMouseButton) bool {
-	return C.IsMouseDown(C.ImGuiMouseButton(button)) == C.bool(true)
+func IsMouseDown_Nil(button ImGuiMouseButton) bool {
+	return C.IsMouseDown_Nil(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
 // IsMouseDraggingV parameter default value hint:
@@ -2580,8 +2676,8 @@ func IsMousePosValidV(mouse_pos *ImVec2) bool {
 	return C.IsMousePosValidV(mouse_posArg) == C.bool(true)
 }
 
-func IsMouseReleased(button ImGuiMouseButton) bool {
-	return C.IsMouseReleased(C.ImGuiMouseButton(button)) == C.bool(true)
+func IsMouseReleased_Nil(button ImGuiMouseButton) bool {
+	return C.IsMouseReleased_Nil(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
 // IsPopupOpen_StrV parameter default value hint:
@@ -2607,6 +2703,10 @@ func IsWindowAppearing() bool {
 
 func IsWindowCollapsed() bool {
 	return C.IsWindowCollapsed() == C.bool(true)
+}
+
+func IsWindowDocked() bool {
+	return C.IsWindowDocked() == C.bool(true)
 }
 
 // IsWindowFocusedV parameter default value hint:
@@ -2930,6 +3030,13 @@ func Render() {
 	C.Render()
 }
 
+// RenderPlatformWindowsDefaultV parameter default value hint:
+// platform_render_arg: NULL
+// renderer_render_arg: NULL
+func RenderPlatformWindowsDefaultV(platform_render_arg unsafe.Pointer, renderer_render_arg unsafe.Pointer) {
+	C.RenderPlatformWindowsDefaultV(platform_render_arg, renderer_render_arg)
+}
+
 // ResetMouseDragDeltaV parameter default value hint:
 // button: 0
 func ResetMouseDragDeltaV(button ImGuiMouseButton) {
@@ -3072,6 +3179,10 @@ func SetNextWindowBgAlpha(alpha float32) {
 	C.SetNextWindowBgAlpha(C.float(alpha))
 }
 
+func SetNextWindowClass(window_class ImGuiWindowClass) {
+	C.SetNextWindowClass(window_class.handle())
+}
+
 // SetNextWindowCollapsedV parameter default value hint:
 // cond: 0
 func SetNextWindowCollapsedV(collapsed bool, cond ImGuiCond) {
@@ -3080,6 +3191,12 @@ func SetNextWindowCollapsedV(collapsed bool, cond ImGuiCond) {
 
 func SetNextWindowContentSize(size ImVec2) {
 	C.SetNextWindowContentSize(size.toC())
+}
+
+// SetNextWindowDockIDV parameter default value hint:
+// cond: 0
+func SetNextWindowDockIDV(dock_id ImGuiID, cond ImGuiCond) {
+	C.SetNextWindowDockIDV(C.ImGuiID(dock_id), C.ImGuiCond(cond))
 }
 
 func SetNextWindowFocus() {
@@ -3093,10 +3210,18 @@ func SetNextWindowPosV(pos ImVec2, cond ImGuiCond, pivot ImVec2) {
 	C.SetNextWindowPosV(pos.toC(), C.ImGuiCond(cond), pivot.toC())
 }
 
+func SetNextWindowScroll(scroll ImVec2) {
+	C.SetNextWindowScroll(scroll.toC())
+}
+
 // SetNextWindowSizeV parameter default value hint:
 // cond: 0
 func SetNextWindowSizeV(size ImVec2, cond ImGuiCond) {
 	C.SetNextWindowSizeV(size.toC(), C.ImGuiCond(cond))
+}
+
+func SetNextWindowViewport(viewport_id ImGuiID) {
+	C.SetNextWindowViewport(C.ImGuiID(viewport_id))
 }
 
 // SetScrollFromPosX_FloatV parameter default value hint:
@@ -3713,6 +3838,10 @@ func UnindentV(indent_w float32) {
 	C.UnindentV(C.float(indent_w))
 }
 
+func UpdatePlatformWindows() {
+	C.UpdatePlatformWindows()
+}
+
 // VSliderFloatV parameter default value hint:
 // flags: 0
 // format: "%.3f"
@@ -4228,6 +4357,14 @@ func DestroyContext() {
 	C.DestroyContext()
 }
 
+func DockSpace(id ImGuiID) ImGuiID {
+	return ImGuiID(C.DockSpace(C.ImGuiID(id)))
+}
+
+func DockSpaceOverViewport() ImGuiID {
+	return ImGuiID(C.DockSpaceOverViewport())
+}
+
 func DragFloat(label string, v *float32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
@@ -4571,12 +4708,12 @@ func IsItemHovered() bool {
 	return C.IsItemHovered() == C.bool(true)
 }
 
-func IsKeyPressed(key ImGuiKey) bool {
-	return C.IsKeyPressed(C.ImGuiKey(key)) == C.bool(true)
+func IsKeyPressed_Bool(key ImGuiKey) bool {
+	return C.IsKeyPressed_Bool(C.ImGuiKey(key)) == C.bool(true)
 }
 
-func IsMouseClicked(button ImGuiMouseButton) bool {
-	return C.IsMouseClicked(C.ImGuiMouseButton(button)) == C.bool(true)
+func IsMouseClicked_Bool(button ImGuiMouseButton) bool {
+	return C.IsMouseClicked_Bool(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
 func IsMouseDragging(button ImGuiMouseButton) bool {
@@ -4690,6 +4827,10 @@ func PushTextWrapPos() {
 	C.PushTextWrapPos()
 }
 
+func RenderPlatformWindowsDefault() {
+	C.RenderPlatformWindowsDefault()
+}
+
 func ResetMouseDragDelta() {
 	C.ResetMouseDragDelta()
 }
@@ -4736,6 +4877,10 @@ func SetNextItemOpen(is_open bool) {
 
 func SetNextWindowCollapsed(collapsed bool) {
 	C.SetNextWindowCollapsed(C.bool(collapsed))
+}
+
+func SetNextWindowDockID(dock_id ImGuiID) {
+	C.SetNextWindowDockID(C.ImGuiID(dock_id))
 }
 
 func SetNextWindowPos(pos ImVec2) {
@@ -5189,6 +5334,14 @@ func (self ImDrawData) SetFramebufferScale(v ImVec2) {
 
 func (self ImDrawData) GetFramebufferScale() ImVec2 {
 	return newImVec2FromC(C.ImDrawData_GetFramebufferScale(self.handle()))
+}
+
+func (self ImDrawData) SetOwnerViewport(v ImGuiViewport) {
+	C.ImDrawData_SetOwnerViewport(self.handle(), v.handle())
+}
+
+func (self ImDrawData) GetOwnerViewport() ImGuiViewport {
+	return (ImGuiViewport)(unsafe.Pointer(C.ImDrawData_GetOwnerViewport(self.handle())))
 }
 
 func (self ImDrawList) SetFlags(v ImDrawListFlags) {
@@ -5945,8 +6098,28 @@ func (self ImGuiContext) GetIO() ImGuiIO {
 	return newImGuiIOFromC(C.ImGuiContext_GetIO(self.handle()))
 }
 
+func (self ImGuiContext) GetPlatformIO() ImGuiPlatformIO {
+	return newImGuiPlatformIOFromC(C.ImGuiContext_GetPlatformIO(self.handle()))
+}
+
 func (self ImGuiContext) GetStyle() ImGuiStyle {
 	return newImGuiStyleFromC(C.ImGuiContext_GetStyle(self.handle()))
+}
+
+func (self ImGuiContext) SetConfigFlagsCurrFrame(v ImGuiConfigFlags) {
+	C.ImGuiContext_SetConfigFlagsCurrFrame(self.handle(), C.ImGuiConfigFlags(v))
+}
+
+func (self ImGuiContext) GetConfigFlagsCurrFrame() ImGuiConfigFlags {
+	return ImGuiConfigFlags(C.ImGuiContext_GetConfigFlagsCurrFrame(self.handle()))
+}
+
+func (self ImGuiContext) SetConfigFlagsLastFrame(v ImGuiConfigFlags) {
+	C.ImGuiContext_SetConfigFlagsLastFrame(self.handle(), C.ImGuiConfigFlags(v))
+}
+
+func (self ImGuiContext) GetConfigFlagsLastFrame() ImGuiConfigFlags {
+	return ImGuiConfigFlags(C.ImGuiContext_GetConfigFlagsLastFrame(self.handle()))
 }
 
 func (self ImGuiContext) SetFont(v ImFont) {
@@ -5999,6 +6172,14 @@ func (self ImGuiContext) SetFrameCountEnded(v int32) {
 
 func (self ImGuiContext) GetFrameCountEnded() int {
 	return int(C.ImGuiContext_GetFrameCountEnded(self.handle()))
+}
+
+func (self ImGuiContext) SetFrameCountPlatformEnded(v int32) {
+	C.ImGuiContext_SetFrameCountPlatformEnded(self.handle(), C.int(v))
+}
+
+func (self ImGuiContext) GetFrameCountPlatformEnded() int {
+	return int(C.ImGuiContext_GetFrameCountPlatformEnded(self.handle()))
 }
 
 func (self ImGuiContext) SetFrameCountRendered(v int32) {
@@ -6163,22 +6344,6 @@ func (self ImGuiContext) SetHoveredIdAllowOverlap(v bool) {
 
 func (self ImGuiContext) GetHoveredIdAllowOverlap() bool {
 	return C.ImGuiContext_GetHoveredIdAllowOverlap(self.handle()) == C.bool(true)
-}
-
-func (self ImGuiContext) SetHoveredIdUsingMouseWheel(v bool) {
-	C.ImGuiContext_SetHoveredIdUsingMouseWheel(self.handle(), C.bool(v))
-}
-
-func (self ImGuiContext) GetHoveredIdUsingMouseWheel() bool {
-	return C.ImGuiContext_GetHoveredIdUsingMouseWheel(self.handle()) == C.bool(true)
-}
-
-func (self ImGuiContext) SetHoveredIdPreviousFrameUsingMouseWheel(v bool) {
-	C.ImGuiContext_SetHoveredIdPreviousFrameUsingMouseWheel(self.handle(), C.bool(v))
-}
-
-func (self ImGuiContext) GetHoveredIdPreviousFrameUsingMouseWheel() bool {
-	return C.ImGuiContext_GetHoveredIdPreviousFrameUsingMouseWheel(self.handle()) == C.bool(true)
 }
 
 func (self ImGuiContext) SetHoveredIdDisabled(v bool) {
@@ -6357,12 +6522,24 @@ func (self ImGuiContext) GetLastActiveIdTimer() float32 {
 	return float32(C.ImGuiContext_GetLastActiveIdTimer(self.handle()))
 }
 
+func (self ImGuiContext) GetKeysRoutingTable() ImGuiKeyRoutingTable {
+	return newImGuiKeyRoutingTableFromC(C.ImGuiContext_GetKeysRoutingTable(self.handle()))
+}
+
 func (self ImGuiContext) SetActiveIdUsingNavDirMask(v uint32) {
 	C.ImGuiContext_SetActiveIdUsingNavDirMask(self.handle(), C.ImU32(v))
 }
 
 func (self ImGuiContext) GetActiveIdUsingNavDirMask() uint32 {
 	return uint32(C.ImGuiContext_GetActiveIdUsingNavDirMask(self.handle()))
+}
+
+func (self ImGuiContext) SetActiveIdUsingAllKeyboardKeys(v bool) {
+	C.ImGuiContext_SetActiveIdUsingAllKeyboardKeys(self.handle(), C.bool(v))
+}
+
+func (self ImGuiContext) GetActiveIdUsingAllKeyboardKeys() bool {
+	return C.ImGuiContext_GetActiveIdUsingAllKeyboardKeys(self.handle()) == C.bool(true)
 }
 
 func (self ImGuiContext) SetActiveIdUsingNavInputMask(v uint32) {
@@ -6373,12 +6550,28 @@ func (self ImGuiContext) GetActiveIdUsingNavInputMask() uint32 {
 	return uint32(C.ImGuiContext_GetActiveIdUsingNavInputMask(self.handle()))
 }
 
+func (self ImGuiContext) SetCurrentFocusScopeId(v ImGuiID) {
+	C.ImGuiContext_SetCurrentFocusScopeId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiContext) GetCurrentFocusScopeId() ImGuiID {
+	return ImGuiID(C.ImGuiContext_GetCurrentFocusScopeId(self.handle()))
+}
+
 func (self ImGuiContext) SetCurrentItemFlags(v ImGuiItemFlags) {
 	C.ImGuiContext_SetCurrentItemFlags(self.handle(), C.ImGuiItemFlags(v))
 }
 
 func (self ImGuiContext) GetCurrentItemFlags() ImGuiItemFlags {
 	return ImGuiItemFlags(C.ImGuiContext_GetCurrentItemFlags(self.handle()))
+}
+
+func (self ImGuiContext) SetDebugLocateId(v ImGuiID) {
+	C.ImGuiContext_SetDebugLocateId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiContext) GetDebugLocateId() ImGuiID {
+	return ImGuiID(C.ImGuiContext_GetDebugLocateId(self.handle()))
 }
 
 func (self ImGuiContext) GetNextItemData() ImGuiNextItemData {
@@ -6399,6 +6592,58 @@ func (self ImGuiContext) SetBeginMenuCount(v int32) {
 
 func (self ImGuiContext) GetBeginMenuCount() int {
 	return int(C.ImGuiContext_GetBeginMenuCount(self.handle()))
+}
+
+func (self ImGuiContext) SetCurrentDpiScale(v float32) {
+	C.ImGuiContext_SetCurrentDpiScale(self.handle(), C.float(v))
+}
+
+func (self ImGuiContext) GetCurrentDpiScale() float32 {
+	return float32(C.ImGuiContext_GetCurrentDpiScale(self.handle()))
+}
+
+func (self ImGuiContext) SetCurrentViewport(v ImGuiViewportP) {
+	C.ImGuiContext_SetCurrentViewport(self.handle(), v.handle())
+}
+
+func (self ImGuiContext) GetCurrentViewport() ImGuiViewportP {
+	return (ImGuiViewportP)(unsafe.Pointer(C.ImGuiContext_GetCurrentViewport(self.handle())))
+}
+
+func (self ImGuiContext) SetMouseViewport(v ImGuiViewportP) {
+	C.ImGuiContext_SetMouseViewport(self.handle(), v.handle())
+}
+
+func (self ImGuiContext) GetMouseViewport() ImGuiViewportP {
+	return (ImGuiViewportP)(unsafe.Pointer(C.ImGuiContext_GetMouseViewport(self.handle())))
+}
+
+func (self ImGuiContext) SetMouseLastHoveredViewport(v ImGuiViewportP) {
+	C.ImGuiContext_SetMouseLastHoveredViewport(self.handle(), v.handle())
+}
+
+func (self ImGuiContext) GetMouseLastHoveredViewport() ImGuiViewportP {
+	return (ImGuiViewportP)(unsafe.Pointer(C.ImGuiContext_GetMouseLastHoveredViewport(self.handle())))
+}
+
+func (self ImGuiContext) SetPlatformLastFocusedViewportId(v ImGuiID) {
+	C.ImGuiContext_SetPlatformLastFocusedViewportId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiContext) GetPlatformLastFocusedViewportId() ImGuiID {
+	return ImGuiID(C.ImGuiContext_GetPlatformLastFocusedViewportId(self.handle()))
+}
+
+func (self ImGuiContext) GetFallbackMonitor() ImGuiPlatformMonitor {
+	return newImGuiPlatformMonitorFromC(C.ImGuiContext_GetFallbackMonitor(self.handle()))
+}
+
+func (self ImGuiContext) SetViewportFrontMostStampCount(v int32) {
+	C.ImGuiContext_SetViewportFrontMostStampCount(self.handle(), C.int(v))
+}
+
+func (self ImGuiContext) GetViewportFrontMostStampCount() int {
+	return int(C.ImGuiContext_GetViewportFrontMostStampCount(self.handle()))
 }
 
 func (self ImGuiContext) SetNavWindow(v ImGuiWindow) {
@@ -7121,6 +7366,18 @@ func (self ImGuiContext) GetPlatformImeDataPrev() ImGuiPlatformImeData {
 	return newImGuiPlatformImeDataFromC(C.ImGuiContext_GetPlatformImeDataPrev(self.handle()))
 }
 
+func (self ImGuiContext) SetPlatformImeViewport(v ImGuiID) {
+	C.ImGuiContext_SetPlatformImeViewport(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiContext) GetPlatformImeViewport() ImGuiID {
+	return ImGuiID(C.ImGuiContext_GetPlatformImeViewport(self.handle()))
+}
+
+func (self ImGuiContext) GetDockContext() ImGuiDockContext {
+	return newImGuiDockContextFromC(C.ImGuiContext_GetDockContext(self.handle()))
+}
+
 func (self ImGuiContext) SetSettingsLoaded(v bool) {
 	C.ImGuiContext_SetSettingsLoaded(self.handle(), C.bool(v))
 }
@@ -7247,6 +7504,14 @@ func (self ImGuiContext) GetDebugLogIndex() ImGuiTextIndex {
 	return newImGuiTextIndexFromC(C.ImGuiContext_GetDebugLogIndex(self.handle()))
 }
 
+func (self ImGuiContext) SetDebugLocateFrames(v uint) {
+	C.ImGuiContext_SetDebugLocateFrames(self.handle(), C.ImU8(v))
+}
+
+func (self ImGuiContext) GetDebugLocateFrames() uint32 {
+	return uint32(C.ImGuiContext_GetDebugLocateFrames(self.handle()))
+}
+
 func (self ImGuiContext) SetDebugItemPickerActive(v bool) {
 	C.ImGuiContext_SetDebugItemPickerActive(self.handle(), C.bool(v))
 }
@@ -7277,6 +7542,14 @@ func (self ImGuiContext) GetDebugMetricsConfig() ImGuiMetricsConfig {
 
 func (self ImGuiContext) GetDebugStackTool() ImGuiStackTool {
 	return newImGuiStackToolFromC(C.ImGuiContext_GetDebugStackTool(self.handle()))
+}
+
+func (self ImGuiContext) SetDebugHoveredDockNode(v ImGuiDockNode) {
+	C.ImGuiContext_SetDebugHoveredDockNode(self.handle(), v.handle())
+}
+
+func (self ImGuiContext) GetDebugHoveredDockNode() ImGuiDockNode {
+	return (ImGuiDockNode)(unsafe.Pointer(C.ImGuiContext_GetDebugHoveredDockNode(self.handle())))
 }
 
 func (self ImGuiContext) SetFramerateSecPerFrameIdx(v int32) {
@@ -7398,6 +7671,318 @@ func (self ImGuiDataTypeInfo) SetScanFmt(v string) {
 
 func (self ImGuiDataTypeInfo) GetScanFmt() string {
 	return C.GoString(C.ImGuiDataTypeInfo_GetScanFmt(self.handle()))
+}
+
+func (self ImGuiDockContext) GetNodes() ImGuiStorage {
+	return newImGuiStorageFromC(C.ImGuiDockContext_GetNodes(self.handle()))
+}
+
+func (self ImGuiDockContext) SetWantFullRebuild(v bool) {
+	C.ImGuiDockContext_SetWantFullRebuild(self.handle(), C.bool(v))
+}
+
+func (self ImGuiDockContext) GetWantFullRebuild() bool {
+	return C.ImGuiDockContext_GetWantFullRebuild(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiDockNode) SetID(v ImGuiID) {
+	C.ImGuiDockNode_SetID(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiDockNode) GetID() ImGuiID {
+	return ImGuiID(C.ImGuiDockNode_GetID(self.handle()))
+}
+
+func (self ImGuiDockNode) SetSharedFlags(v ImGuiDockNodeFlags) {
+	C.ImGuiDockNode_SetSharedFlags(self.handle(), C.ImGuiDockNodeFlags(v))
+}
+
+func (self ImGuiDockNode) GetSharedFlags() ImGuiDockNodeFlags {
+	return ImGuiDockNodeFlags(C.ImGuiDockNode_GetSharedFlags(self.handle()))
+}
+
+func (self ImGuiDockNode) SetLocalFlagsInWindows(v ImGuiDockNodeFlags) {
+	C.ImGuiDockNode_SetLocalFlagsInWindows(self.handle(), C.ImGuiDockNodeFlags(v))
+}
+
+func (self ImGuiDockNode) GetLocalFlagsInWindows() ImGuiDockNodeFlags {
+	return ImGuiDockNodeFlags(C.ImGuiDockNode_GetLocalFlagsInWindows(self.handle()))
+}
+
+func (self ImGuiDockNode) SetMergedFlags(v ImGuiDockNodeFlags) {
+	C.ImGuiDockNode_SetMergedFlags(self.handle(), C.ImGuiDockNodeFlags(v))
+}
+
+func (self ImGuiDockNode) GetMergedFlags() ImGuiDockNodeFlags {
+	return ImGuiDockNodeFlags(C.ImGuiDockNode_GetMergedFlags(self.handle()))
+}
+
+func (self ImGuiDockNode) SetState(v ImGuiDockNodeState) {
+	C.ImGuiDockNode_SetState(self.handle(), C.ImGuiDockNodeState(v))
+}
+
+func (self ImGuiDockNode) GetState() ImGuiDockNodeState {
+	return ImGuiDockNodeState(C.ImGuiDockNode_GetState(self.handle()))
+}
+
+func (self ImGuiDockNode) SetParentNode(v ImGuiDockNode) {
+	C.ImGuiDockNode_SetParentNode(self.handle(), v.handle())
+}
+
+func (self ImGuiDockNode) GetParentNode() ImGuiDockNode {
+	return (ImGuiDockNode)(unsafe.Pointer(C.ImGuiDockNode_GetParentNode(self.handle())))
+}
+
+func (self ImGuiDockNode) SetTabBar(v ImGuiTabBar) {
+	C.ImGuiDockNode_SetTabBar(self.handle(), v.handle())
+}
+
+func (self ImGuiDockNode) GetTabBar() ImGuiTabBar {
+	return (ImGuiTabBar)(unsafe.Pointer(C.ImGuiDockNode_GetTabBar(self.handle())))
+}
+
+func (self ImGuiDockNode) SetPos(v ImVec2) {
+	C.ImGuiDockNode_SetPos(self.handle(), v.toC())
+}
+
+func (self ImGuiDockNode) GetPos() ImVec2 {
+	return newImVec2FromC(C.ImGuiDockNode_GetPos(self.handle()))
+}
+
+func (self ImGuiDockNode) SetSize(v ImVec2) {
+	C.ImGuiDockNode_SetSize(self.handle(), v.toC())
+}
+
+func (self ImGuiDockNode) GetSize() ImVec2 {
+	return newImVec2FromC(C.ImGuiDockNode_GetSize(self.handle()))
+}
+
+func (self ImGuiDockNode) SetSizeRef(v ImVec2) {
+	C.ImGuiDockNode_SetSizeRef(self.handle(), v.toC())
+}
+
+func (self ImGuiDockNode) GetSizeRef() ImVec2 {
+	return newImVec2FromC(C.ImGuiDockNode_GetSizeRef(self.handle()))
+}
+
+func (self ImGuiDockNode) SetSplitAxis(v ImGuiAxis) {
+	C.ImGuiDockNode_SetSplitAxis(self.handle(), C.ImGuiAxis(v))
+}
+
+func (self ImGuiDockNode) GetSplitAxis() ImGuiAxis {
+	return ImGuiAxis(C.ImGuiDockNode_GetSplitAxis(self.handle()))
+}
+
+func (self ImGuiDockNode) GetWindowClass() ImGuiWindowClass {
+	return newImGuiWindowClassFromC(C.ImGuiDockNode_GetWindowClass(self.handle()))
+}
+
+func (self ImGuiDockNode) SetLastBgColor(v uint32) {
+	C.ImGuiDockNode_SetLastBgColor(self.handle(), C.ImU32(v))
+}
+
+func (self ImGuiDockNode) GetLastBgColor() uint32 {
+	return uint32(C.ImGuiDockNode_GetLastBgColor(self.handle()))
+}
+
+func (self ImGuiDockNode) SetHostWindow(v ImGuiWindow) {
+	C.ImGuiDockNode_SetHostWindow(self.handle(), v.handle())
+}
+
+func (self ImGuiDockNode) GetHostWindow() ImGuiWindow {
+	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiDockNode_GetHostWindow(self.handle())))
+}
+
+func (self ImGuiDockNode) SetVisibleWindow(v ImGuiWindow) {
+	C.ImGuiDockNode_SetVisibleWindow(self.handle(), v.handle())
+}
+
+func (self ImGuiDockNode) GetVisibleWindow() ImGuiWindow {
+	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiDockNode_GetVisibleWindow(self.handle())))
+}
+
+func (self ImGuiDockNode) SetCentralNode(v ImGuiDockNode) {
+	C.ImGuiDockNode_SetCentralNode(self.handle(), v.handle())
+}
+
+func (self ImGuiDockNode) GetCentralNode() ImGuiDockNode {
+	return (ImGuiDockNode)(unsafe.Pointer(C.ImGuiDockNode_GetCentralNode(self.handle())))
+}
+
+func (self ImGuiDockNode) SetOnlyNodeWithWindows(v ImGuiDockNode) {
+	C.ImGuiDockNode_SetOnlyNodeWithWindows(self.handle(), v.handle())
+}
+
+func (self ImGuiDockNode) GetOnlyNodeWithWindows() ImGuiDockNode {
+	return (ImGuiDockNode)(unsafe.Pointer(C.ImGuiDockNode_GetOnlyNodeWithWindows(self.handle())))
+}
+
+func (self ImGuiDockNode) SetCountNodeWithWindows(v int32) {
+	C.ImGuiDockNode_SetCountNodeWithWindows(self.handle(), C.int(v))
+}
+
+func (self ImGuiDockNode) GetCountNodeWithWindows() int {
+	return int(C.ImGuiDockNode_GetCountNodeWithWindows(self.handle()))
+}
+
+func (self ImGuiDockNode) SetLastFrameAlive(v int32) {
+	C.ImGuiDockNode_SetLastFrameAlive(self.handle(), C.int(v))
+}
+
+func (self ImGuiDockNode) GetLastFrameAlive() int {
+	return int(C.ImGuiDockNode_GetLastFrameAlive(self.handle()))
+}
+
+func (self ImGuiDockNode) SetLastFrameActive(v int32) {
+	C.ImGuiDockNode_SetLastFrameActive(self.handle(), C.int(v))
+}
+
+func (self ImGuiDockNode) GetLastFrameActive() int {
+	return int(C.ImGuiDockNode_GetLastFrameActive(self.handle()))
+}
+
+func (self ImGuiDockNode) SetLastFrameFocused(v int32) {
+	C.ImGuiDockNode_SetLastFrameFocused(self.handle(), C.int(v))
+}
+
+func (self ImGuiDockNode) GetLastFrameFocused() int {
+	return int(C.ImGuiDockNode_GetLastFrameFocused(self.handle()))
+}
+
+func (self ImGuiDockNode) SetLastFocusedNodeId(v ImGuiID) {
+	C.ImGuiDockNode_SetLastFocusedNodeId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiDockNode) GetLastFocusedNodeId() ImGuiID {
+	return ImGuiID(C.ImGuiDockNode_GetLastFocusedNodeId(self.handle()))
+}
+
+func (self ImGuiDockNode) SetSelectedTabId(v ImGuiID) {
+	C.ImGuiDockNode_SetSelectedTabId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiDockNode) GetSelectedTabId() ImGuiID {
+	return ImGuiID(C.ImGuiDockNode_GetSelectedTabId(self.handle()))
+}
+
+func (self ImGuiDockNode) SetWantCloseTabId(v ImGuiID) {
+	C.ImGuiDockNode_SetWantCloseTabId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiDockNode) GetWantCloseTabId() ImGuiID {
+	return ImGuiID(C.ImGuiDockNode_GetWantCloseTabId(self.handle()))
+}
+
+func (self ImGuiDockNode) SetAuthorityForPos(v ImGuiDataAuthority) {
+	C.ImGuiDockNode_SetAuthorityForPos(self.handle(), C.ImGuiDataAuthority(v))
+}
+
+func (self ImGuiDockNode) GetAuthorityForPos() ImGuiDataAuthority {
+	return ImGuiDataAuthority(C.ImGuiDockNode_GetAuthorityForPos(self.handle()))
+}
+
+func (self ImGuiDockNode) SetAuthorityForSize(v ImGuiDataAuthority) {
+	C.ImGuiDockNode_SetAuthorityForSize(self.handle(), C.ImGuiDataAuthority(v))
+}
+
+func (self ImGuiDockNode) GetAuthorityForSize() ImGuiDataAuthority {
+	return ImGuiDataAuthority(C.ImGuiDockNode_GetAuthorityForSize(self.handle()))
+}
+
+func (self ImGuiDockNode) SetAuthorityForViewport(v ImGuiDataAuthority) {
+	C.ImGuiDockNode_SetAuthorityForViewport(self.handle(), C.ImGuiDataAuthority(v))
+}
+
+func (self ImGuiDockNode) GetAuthorityForViewport() ImGuiDataAuthority {
+	return ImGuiDataAuthority(C.ImGuiDockNode_GetAuthorityForViewport(self.handle()))
+}
+
+func (self ImGuiDockNode) SetIsVisible(v bool) {
+	C.ImGuiDockNode_SetIsVisible(self.handle(), C.bool(v))
+}
+
+func (self ImGuiDockNode) GetIsVisible() bool {
+	return C.ImGuiDockNode_GetIsVisible(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiDockNode) SetIsFocused(v bool) {
+	C.ImGuiDockNode_SetIsFocused(self.handle(), C.bool(v))
+}
+
+func (self ImGuiDockNode) GetIsFocused() bool {
+	return C.ImGuiDockNode_GetIsFocused(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiDockNode) SetIsBgDrawnThisFrame(v bool) {
+	C.ImGuiDockNode_SetIsBgDrawnThisFrame(self.handle(), C.bool(v))
+}
+
+func (self ImGuiDockNode) GetIsBgDrawnThisFrame() bool {
+	return C.ImGuiDockNode_GetIsBgDrawnThisFrame(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiDockNode) SetHasCloseButton(v bool) {
+	C.ImGuiDockNode_SetHasCloseButton(self.handle(), C.bool(v))
+}
+
+func (self ImGuiDockNode) GetHasCloseButton() bool {
+	return C.ImGuiDockNode_GetHasCloseButton(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiDockNode) SetHasWindowMenuButton(v bool) {
+	C.ImGuiDockNode_SetHasWindowMenuButton(self.handle(), C.bool(v))
+}
+
+func (self ImGuiDockNode) GetHasWindowMenuButton() bool {
+	return C.ImGuiDockNode_GetHasWindowMenuButton(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiDockNode) SetHasCentralNodeChild(v bool) {
+	C.ImGuiDockNode_SetHasCentralNodeChild(self.handle(), C.bool(v))
+}
+
+func (self ImGuiDockNode) GetHasCentralNodeChild() bool {
+	return C.ImGuiDockNode_GetHasCentralNodeChild(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiDockNode) SetWantCloseAll(v bool) {
+	C.ImGuiDockNode_SetWantCloseAll(self.handle(), C.bool(v))
+}
+
+func (self ImGuiDockNode) GetWantCloseAll() bool {
+	return C.ImGuiDockNode_GetWantCloseAll(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiDockNode) SetWantLockSizeOnce(v bool) {
+	C.ImGuiDockNode_SetWantLockSizeOnce(self.handle(), C.bool(v))
+}
+
+func (self ImGuiDockNode) GetWantLockSizeOnce() bool {
+	return C.ImGuiDockNode_GetWantLockSizeOnce(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiDockNode) SetWantMouseMove(v bool) {
+	C.ImGuiDockNode_SetWantMouseMove(self.handle(), C.bool(v))
+}
+
+func (self ImGuiDockNode) GetWantMouseMove() bool {
+	return C.ImGuiDockNode_GetWantMouseMove(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiDockNode) SetWantHiddenTabBarUpdate(v bool) {
+	C.ImGuiDockNode_SetWantHiddenTabBarUpdate(self.handle(), C.bool(v))
+}
+
+func (self ImGuiDockNode) GetWantHiddenTabBarUpdate() bool {
+	return C.ImGuiDockNode_GetWantHiddenTabBarUpdate(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiDockNode) SetWantHiddenTabBarToggle(v bool) {
+	C.ImGuiDockNode_SetWantHiddenTabBarToggle(self.handle(), C.bool(v))
+}
+
+func (self ImGuiDockNode) GetWantHiddenTabBarToggle() bool {
+	return C.ImGuiDockNode_GetWantHiddenTabBarToggle(self.handle()) == C.bool(true)
 }
 
 func (self ImGuiGroupData) SetWindowID(v ImGuiID) {
@@ -7636,6 +8221,70 @@ func (self ImGuiIO) SetDisplayFramebufferScale(v ImVec2) {
 
 func (self ImGuiIO) GetDisplayFramebufferScale() ImVec2 {
 	return newImVec2FromC(C.ImGuiIO_GetDisplayFramebufferScale(self.handle()))
+}
+
+func (self ImGuiIO) SetConfigDockingNoSplit(v bool) {
+	C.ImGuiIO_SetConfigDockingNoSplit(self.handle(), C.bool(v))
+}
+
+func (self ImGuiIO) GetConfigDockingNoSplit() bool {
+	return C.ImGuiIO_GetConfigDockingNoSplit(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiIO) SetConfigDockingWithShift(v bool) {
+	C.ImGuiIO_SetConfigDockingWithShift(self.handle(), C.bool(v))
+}
+
+func (self ImGuiIO) GetConfigDockingWithShift() bool {
+	return C.ImGuiIO_GetConfigDockingWithShift(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiIO) SetConfigDockingAlwaysTabBar(v bool) {
+	C.ImGuiIO_SetConfigDockingAlwaysTabBar(self.handle(), C.bool(v))
+}
+
+func (self ImGuiIO) GetConfigDockingAlwaysTabBar() bool {
+	return C.ImGuiIO_GetConfigDockingAlwaysTabBar(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiIO) SetConfigDockingTransparentPayload(v bool) {
+	C.ImGuiIO_SetConfigDockingTransparentPayload(self.handle(), C.bool(v))
+}
+
+func (self ImGuiIO) GetConfigDockingTransparentPayload() bool {
+	return C.ImGuiIO_GetConfigDockingTransparentPayload(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiIO) SetConfigViewportsNoAutoMerge(v bool) {
+	C.ImGuiIO_SetConfigViewportsNoAutoMerge(self.handle(), C.bool(v))
+}
+
+func (self ImGuiIO) GetConfigViewportsNoAutoMerge() bool {
+	return C.ImGuiIO_GetConfigViewportsNoAutoMerge(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiIO) SetConfigViewportsNoTaskBarIcon(v bool) {
+	C.ImGuiIO_SetConfigViewportsNoTaskBarIcon(self.handle(), C.bool(v))
+}
+
+func (self ImGuiIO) GetConfigViewportsNoTaskBarIcon() bool {
+	return C.ImGuiIO_GetConfigViewportsNoTaskBarIcon(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiIO) SetConfigViewportsNoDecoration(v bool) {
+	C.ImGuiIO_SetConfigViewportsNoDecoration(self.handle(), C.bool(v))
+}
+
+func (self ImGuiIO) GetConfigViewportsNoDecoration() bool {
+	return C.ImGuiIO_GetConfigViewportsNoDecoration(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiIO) SetConfigViewportsNoDefaultParent(v bool) {
+	C.ImGuiIO_SetConfigViewportsNoDefaultParent(self.handle(), C.bool(v))
+}
+
+func (self ImGuiIO) GetConfigViewportsNoDefaultParent() bool {
+	return C.ImGuiIO_GetConfigViewportsNoDefaultParent(self.handle()) == C.bool(true)
 }
 
 func (self ImGuiIO) SetMouseDrawCursor(v bool) {
@@ -7908,6 +8557,14 @@ func (self ImGuiIO) GetMouseWheelH() float32 {
 	return float32(C.ImGuiIO_GetMouseWheelH(self.handle()))
 }
 
+func (self ImGuiIO) SetMouseHoveredViewport(v ImGuiID) {
+	C.ImGuiIO_SetMouseHoveredViewport(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiIO) GetMouseHoveredViewport() ImGuiID {
+	return ImGuiID(C.ImGuiIO_GetMouseHoveredViewport(self.handle()))
+}
+
 func (self ImGuiIO) SetKeyCtrl(v bool) {
 	C.ImGuiIO_SetKeyCtrl(self.handle(), C.bool(v))
 }
@@ -8074,6 +8731,14 @@ func (self ImGuiInputEventMousePos) SetPosY(v float32) {
 
 func (self ImGuiInputEventMousePos) GetPosY() float32 {
 	return float32(C.ImGuiInputEventMousePos_GetPosY(self.handle()))
+}
+
+func (self ImGuiInputEventMouseViewport) SetHoveredViewportID(v ImGuiID) {
+	C.ImGuiInputEventMouseViewport_SetHoveredViewportID(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiInputEventMouseViewport) GetHoveredViewportID() ImGuiID {
+	return ImGuiID(C.ImGuiInputEventMouseViewport_GetHoveredViewportID(self.handle()))
 }
 
 func (self ImGuiInputEventMouseWheel) SetWheelX(v float32) {
@@ -8315,6 +8980,70 @@ func (self ImGuiKeyData) GetAnalogValue() float32 {
 	return float32(C.ImGuiKeyData_GetAnalogValue(self.handle()))
 }
 
+func (self ImGuiKeyOwnerData) SetOwnerCurr(v ImGuiID) {
+	C.ImGuiKeyOwnerData_SetOwnerCurr(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiKeyOwnerData) GetOwnerCurr() ImGuiID {
+	return ImGuiID(C.ImGuiKeyOwnerData_GetOwnerCurr(self.handle()))
+}
+
+func (self ImGuiKeyOwnerData) SetOwnerNext(v ImGuiID) {
+	C.ImGuiKeyOwnerData_SetOwnerNext(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiKeyOwnerData) GetOwnerNext() ImGuiID {
+	return ImGuiID(C.ImGuiKeyOwnerData_GetOwnerNext(self.handle()))
+}
+
+func (self ImGuiKeyOwnerData) SetLockThisFrame(v bool) {
+	C.ImGuiKeyOwnerData_SetLockThisFrame(self.handle(), C.bool(v))
+}
+
+func (self ImGuiKeyOwnerData) GetLockThisFrame() bool {
+	return C.ImGuiKeyOwnerData_GetLockThisFrame(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiKeyOwnerData) SetLockUntilRelease(v bool) {
+	C.ImGuiKeyOwnerData_SetLockUntilRelease(self.handle(), C.bool(v))
+}
+
+func (self ImGuiKeyOwnerData) GetLockUntilRelease() bool {
+	return C.ImGuiKeyOwnerData_GetLockUntilRelease(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiKeyRoutingData) SetMods(v uint) {
+	C.ImGuiKeyRoutingData_SetMods(self.handle(), C.ImU16(v))
+}
+
+func (self ImGuiKeyRoutingData) GetMods() uint32 {
+	return uint32(C.ImGuiKeyRoutingData_GetMods(self.handle()))
+}
+
+func (self ImGuiKeyRoutingData) SetRoutingNextScore(v uint) {
+	C.ImGuiKeyRoutingData_SetRoutingNextScore(self.handle(), C.ImU8(v))
+}
+
+func (self ImGuiKeyRoutingData) GetRoutingNextScore() uint32 {
+	return uint32(C.ImGuiKeyRoutingData_GetRoutingNextScore(self.handle()))
+}
+
+func (self ImGuiKeyRoutingData) SetRoutingCurr(v ImGuiID) {
+	C.ImGuiKeyRoutingData_SetRoutingCurr(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiKeyRoutingData) GetRoutingCurr() ImGuiID {
+	return ImGuiID(C.ImGuiKeyRoutingData_GetRoutingCurr(self.handle()))
+}
+
+func (self ImGuiKeyRoutingData) SetRoutingNext(v ImGuiID) {
+	C.ImGuiKeyRoutingData_SetRoutingNext(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiKeyRoutingData) GetRoutingNext() ImGuiID {
+	return ImGuiID(C.ImGuiKeyRoutingData_GetRoutingNext(self.handle()))
+}
+
 func (self ImGuiLastItemData) SetID(v ImGuiID) {
 	C.ImGuiLastItemData_SetID(self.handle(), C.ImGuiID(v))
 }
@@ -8483,6 +9212,25 @@ func (self ImGuiListClipperRange) GetPosToIndexOffsetMax() int {
 	return int(C.ImGuiListClipperRange_GetPosToIndexOffsetMax(self.handle()))
 }
 
+func (self ImGuiLocEntry) SetKey(v ImGuiLocKey) {
+	C.ImGuiLocEntry_SetKey(self.handle(), C.ImGuiLocKey(v))
+}
+
+func (self ImGuiLocEntry) GetKey() ImGuiLocKey {
+	return ImGuiLocKey(C.ImGuiLocEntry_GetKey(self.handle()))
+}
+
+func (self ImGuiLocEntry) SetText(v string) {
+	vArg, vFin := wrapString(v)
+	defer vFin()
+
+	C.ImGuiLocEntry_SetText(self.handle(), vArg)
+}
+
+func (self ImGuiLocEntry) GetText() string {
+	return C.GoString(C.ImGuiLocEntry_GetText(self.handle()))
+}
+
 func (self ImGuiMenuColumns) SetTotalWidth(v uint32) {
 	C.ImGuiMenuColumns_SetTotalWidth(self.handle(), C.ImU32(v))
 }
@@ -8593,6 +9341,14 @@ func (self ImGuiMetricsConfig) SetShowDrawCmdBoundingBoxes(v bool) {
 
 func (self ImGuiMetricsConfig) GetShowDrawCmdBoundingBoxes() bool {
 	return C.ImGuiMetricsConfig_GetShowDrawCmdBoundingBoxes(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiMetricsConfig) SetShowDockingNodes(v bool) {
+	C.ImGuiMetricsConfig_SetShowDockingNodes(self.handle(), C.bool(v))
+}
+
+func (self ImGuiMetricsConfig) GetShowDockingNodes() bool {
+	return C.ImGuiMetricsConfig_GetShowDockingNodes(self.handle()) == C.bool(true)
 }
 
 func (self ImGuiMetricsConfig) SetShowWindowsRectsType(v int32) {
@@ -8747,6 +9503,14 @@ func (self ImGuiNextWindowData) GetCollapsedCond() ImGuiCond {
 	return ImGuiCond(C.ImGuiNextWindowData_GetCollapsedCond(self.handle()))
 }
 
+func (self ImGuiNextWindowData) SetDockCond(v ImGuiCond) {
+	C.ImGuiNextWindowData_SetDockCond(self.handle(), C.ImGuiCond(v))
+}
+
+func (self ImGuiNextWindowData) GetDockCond() ImGuiCond {
+	return ImGuiCond(C.ImGuiNextWindowData_GetDockCond(self.handle()))
+}
+
 func (self ImGuiNextWindowData) SetPosVal(v ImVec2) {
 	C.ImGuiNextWindowData_SetPosVal(self.handle(), v.toC())
 }
@@ -8787,6 +9551,14 @@ func (self ImGuiNextWindowData) GetScrollVal() ImVec2 {
 	return newImVec2FromC(C.ImGuiNextWindowData_GetScrollVal(self.handle()))
 }
 
+func (self ImGuiNextWindowData) SetPosUndock(v bool) {
+	C.ImGuiNextWindowData_SetPosUndock(self.handle(), C.bool(v))
+}
+
+func (self ImGuiNextWindowData) GetPosUndock() bool {
+	return C.ImGuiNextWindowData_GetPosUndock(self.handle()) == C.bool(true)
+}
+
 func (self ImGuiNextWindowData) SetCollapsedVal(v bool) {
 	C.ImGuiNextWindowData_SetCollapsedVal(self.handle(), C.bool(v))
 }
@@ -8817,6 +9589,26 @@ func (self ImGuiNextWindowData) SetBgAlphaVal(v float32) {
 
 func (self ImGuiNextWindowData) GetBgAlphaVal() float32 {
 	return float32(C.ImGuiNextWindowData_GetBgAlphaVal(self.handle()))
+}
+
+func (self ImGuiNextWindowData) SetViewportId(v ImGuiID) {
+	C.ImGuiNextWindowData_SetViewportId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiNextWindowData) GetViewportId() ImGuiID {
+	return ImGuiID(C.ImGuiNextWindowData_GetViewportId(self.handle()))
+}
+
+func (self ImGuiNextWindowData) SetDockId(v ImGuiID) {
+	C.ImGuiNextWindowData_SetDockId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiNextWindowData) GetDockId() ImGuiID {
+	return ImGuiID(C.ImGuiNextWindowData_GetDockId(self.handle()))
+}
+
+func (self ImGuiNextWindowData) GetWindowClass() ImGuiWindowClass {
+	return newImGuiWindowClassFromC(C.ImGuiNextWindowData_GetWindowClass(self.handle()))
 }
 
 func (self ImGuiNextWindowData) SetMenuBarOffsetMinVal(v ImVec2) {
@@ -9069,6 +9861,46 @@ func (self ImGuiPlatformImeData) SetInputLineHeight(v float32) {
 
 func (self ImGuiPlatformImeData) GetInputLineHeight() float32 {
 	return float32(C.ImGuiPlatformImeData_GetInputLineHeight(self.handle()))
+}
+
+func (self ImGuiPlatformMonitor) SetMainPos(v ImVec2) {
+	C.ImGuiPlatformMonitor_SetMainPos(self.handle(), v.toC())
+}
+
+func (self ImGuiPlatformMonitor) GetMainPos() ImVec2 {
+	return newImVec2FromC(C.ImGuiPlatformMonitor_GetMainPos(self.handle()))
+}
+
+func (self ImGuiPlatformMonitor) SetMainSize(v ImVec2) {
+	C.ImGuiPlatformMonitor_SetMainSize(self.handle(), v.toC())
+}
+
+func (self ImGuiPlatformMonitor) GetMainSize() ImVec2 {
+	return newImVec2FromC(C.ImGuiPlatformMonitor_GetMainSize(self.handle()))
+}
+
+func (self ImGuiPlatformMonitor) SetWorkPos(v ImVec2) {
+	C.ImGuiPlatformMonitor_SetWorkPos(self.handle(), v.toC())
+}
+
+func (self ImGuiPlatformMonitor) GetWorkPos() ImVec2 {
+	return newImVec2FromC(C.ImGuiPlatformMonitor_GetWorkPos(self.handle()))
+}
+
+func (self ImGuiPlatformMonitor) SetWorkSize(v ImVec2) {
+	C.ImGuiPlatformMonitor_SetWorkSize(self.handle(), v.toC())
+}
+
+func (self ImGuiPlatformMonitor) GetWorkSize() ImVec2 {
+	return newImVec2FromC(C.ImGuiPlatformMonitor_GetWorkSize(self.handle()))
+}
+
+func (self ImGuiPlatformMonitor) SetDpiScale(v float32) {
+	C.ImGuiPlatformMonitor_SetDpiScale(self.handle(), C.float(v))
+}
+
+func (self ImGuiPlatformMonitor) GetDpiScale() float32 {
+	return float32(C.ImGuiPlatformMonitor_GetDpiScale(self.handle()))
 }
 
 func (self ImGuiPopupData) SetPopupId(v ImGuiID) {
@@ -9964,6 +10796,14 @@ func (self ImGuiTabItem) SetFlags(v ImGuiTabItemFlags) {
 
 func (self ImGuiTabItem) GetFlags() ImGuiTabItemFlags {
 	return ImGuiTabItemFlags(C.ImGuiTabItem_GetFlags(self.handle()))
+}
+
+func (self ImGuiTabItem) SetWindow(v ImGuiWindow) {
+	C.ImGuiTabItem_SetWindow(self.handle(), v.handle())
+}
+
+func (self ImGuiTabItem) GetWindow() ImGuiWindow {
+	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiTabItem_GetWindow(self.handle())))
 }
 
 func (self ImGuiTabItem) SetLastFrameVisible(v int32) {
@@ -11464,6 +12304,14 @@ func (self ImGuiTextRange) Gete() string {
 	return C.GoString(C.ImGuiTextRange_Gete(self.handle()))
 }
 
+func (self ImGuiViewport) SetID(v ImGuiID) {
+	C.ImGuiViewport_SetID(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiViewport) GetID() ImGuiID {
+	return ImGuiID(C.ImGuiViewport_GetID(self.handle()))
+}
+
 func (self ImGuiViewport) SetFlags(v ImGuiViewportFlags) {
 	C.ImGuiViewport_SetFlags(self.handle(), C.ImGuiViewportFlags(v))
 }
@@ -11504,6 +12352,54 @@ func (self ImGuiViewport) GetWorkSize() ImVec2 {
 	return newImVec2FromC(C.ImGuiViewport_GetWorkSize(self.handle()))
 }
 
+func (self ImGuiViewport) SetDpiScale(v float32) {
+	C.ImGuiViewport_SetDpiScale(self.handle(), C.float(v))
+}
+
+func (self ImGuiViewport) GetDpiScale() float32 {
+	return float32(C.ImGuiViewport_GetDpiScale(self.handle()))
+}
+
+func (self ImGuiViewport) SetParentViewportId(v ImGuiID) {
+	C.ImGuiViewport_SetParentViewportId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiViewport) GetParentViewportId() ImGuiID {
+	return ImGuiID(C.ImGuiViewport_GetParentViewportId(self.handle()))
+}
+
+func (self ImGuiViewport) SetDrawData(v ImDrawData) {
+	C.ImGuiViewport_SetDrawData(self.handle(), v.handle())
+}
+
+func (self ImGuiViewport) GetDrawData() ImDrawData {
+	return (ImDrawData)(unsafe.Pointer(C.ImGuiViewport_GetDrawData(self.handle())))
+}
+
+func (self ImGuiViewport) SetRendererUserData(v unsafe.Pointer) {
+	C.ImGuiViewport_SetRendererUserData(self.handle(), v)
+}
+
+func (self ImGuiViewport) GetRendererUserData() unsafe.Pointer {
+	return unsafe.Pointer(C.ImGuiViewport_GetRendererUserData(self.handle()))
+}
+
+func (self ImGuiViewport) SetPlatformUserData(v unsafe.Pointer) {
+	C.ImGuiViewport_SetPlatformUserData(self.handle(), v)
+}
+
+func (self ImGuiViewport) GetPlatformUserData() unsafe.Pointer {
+	return unsafe.Pointer(C.ImGuiViewport_GetPlatformUserData(self.handle()))
+}
+
+func (self ImGuiViewport) SetPlatformHandle(v unsafe.Pointer) {
+	C.ImGuiViewport_SetPlatformHandle(self.handle(), v)
+}
+
+func (self ImGuiViewport) GetPlatformHandle() unsafe.Pointer {
+	return unsafe.Pointer(C.ImGuiViewport_GetPlatformHandle(self.handle()))
+}
+
 func (self ImGuiViewport) SetPlatformHandleRaw(v unsafe.Pointer) {
 	C.ImGuiViewport_SetPlatformHandleRaw(self.handle(), v)
 }
@@ -11512,8 +12408,112 @@ func (self ImGuiViewport) GetPlatformHandleRaw() unsafe.Pointer {
 	return unsafe.Pointer(C.ImGuiViewport_GetPlatformHandleRaw(self.handle()))
 }
 
+func (self ImGuiViewport) SetPlatformWindowCreated(v bool) {
+	C.ImGuiViewport_SetPlatformWindowCreated(self.handle(), C.bool(v))
+}
+
+func (self ImGuiViewport) GetPlatformWindowCreated() bool {
+	return C.ImGuiViewport_GetPlatformWindowCreated(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiViewport) SetPlatformRequestMove(v bool) {
+	C.ImGuiViewport_SetPlatformRequestMove(self.handle(), C.bool(v))
+}
+
+func (self ImGuiViewport) GetPlatformRequestMove() bool {
+	return C.ImGuiViewport_GetPlatformRequestMove(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiViewport) SetPlatformRequestResize(v bool) {
+	C.ImGuiViewport_SetPlatformRequestResize(self.handle(), C.bool(v))
+}
+
+func (self ImGuiViewport) GetPlatformRequestResize() bool {
+	return C.ImGuiViewport_GetPlatformRequestResize(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiViewport) SetPlatformRequestClose(v bool) {
+	C.ImGuiViewport_SetPlatformRequestClose(self.handle(), C.bool(v))
+}
+
+func (self ImGuiViewport) GetPlatformRequestClose() bool {
+	return C.ImGuiViewport_GetPlatformRequestClose(self.handle()) == C.bool(true)
+}
+
 func (self ImGuiViewportP) Get_ImGuiViewport() ImGuiViewport {
 	return newImGuiViewportFromC(C.ImGuiViewportP_Get_ImGuiViewport(self.handle()))
+}
+
+func (self ImGuiViewportP) SetIdx(v int32) {
+	C.ImGuiViewportP_SetIdx(self.handle(), C.int(v))
+}
+
+func (self ImGuiViewportP) GetIdx() int {
+	return int(C.ImGuiViewportP_GetIdx(self.handle()))
+}
+
+func (self ImGuiViewportP) SetLastFrameActive(v int32) {
+	C.ImGuiViewportP_SetLastFrameActive(self.handle(), C.int(v))
+}
+
+func (self ImGuiViewportP) GetLastFrameActive() int {
+	return int(C.ImGuiViewportP_GetLastFrameActive(self.handle()))
+}
+
+func (self ImGuiViewportP) SetLastFrontMostStampCount(v int32) {
+	C.ImGuiViewportP_SetLastFrontMostStampCount(self.handle(), C.int(v))
+}
+
+func (self ImGuiViewportP) GetLastFrontMostStampCount() int {
+	return int(C.ImGuiViewportP_GetLastFrontMostStampCount(self.handle()))
+}
+
+func (self ImGuiViewportP) SetLastNameHash(v ImGuiID) {
+	C.ImGuiViewportP_SetLastNameHash(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiViewportP) GetLastNameHash() ImGuiID {
+	return ImGuiID(C.ImGuiViewportP_GetLastNameHash(self.handle()))
+}
+
+func (self ImGuiViewportP) SetLastPos(v ImVec2) {
+	C.ImGuiViewportP_SetLastPos(self.handle(), v.toC())
+}
+
+func (self ImGuiViewportP) GetLastPos() ImVec2 {
+	return newImVec2FromC(C.ImGuiViewportP_GetLastPos(self.handle()))
+}
+
+func (self ImGuiViewportP) SetAlpha(v float32) {
+	C.ImGuiViewportP_SetAlpha(self.handle(), C.float(v))
+}
+
+func (self ImGuiViewportP) GetAlpha() float32 {
+	return float32(C.ImGuiViewportP_GetAlpha(self.handle()))
+}
+
+func (self ImGuiViewportP) SetLastAlpha(v float32) {
+	C.ImGuiViewportP_SetLastAlpha(self.handle(), C.float(v))
+}
+
+func (self ImGuiViewportP) GetLastAlpha() float32 {
+	return float32(C.ImGuiViewportP_GetLastAlpha(self.handle()))
+}
+
+func (self ImGuiViewportP) SetPlatformMonitor(v int) {
+	C.ImGuiViewportP_SetPlatformMonitor(self.handle(), C.short(v))
+}
+
+func (self ImGuiViewportP) GetPlatformMonitor() int {
+	return int(C.ImGuiViewportP_GetPlatformMonitor(self.handle()))
+}
+
+func (self ImGuiViewportP) SetWindow(v ImGuiWindow) {
+	C.ImGuiViewportP_SetWindow(self.handle(), v.handle())
+}
+
+func (self ImGuiViewportP) GetWindow() ImGuiWindow {
+	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiViewportP_GetWindow(self.handle())))
 }
 
 func (self ImGuiViewportP) GetDrawDataP() ImDrawData {
@@ -11522,6 +12522,30 @@ func (self ImGuiViewportP) GetDrawDataP() ImDrawData {
 
 func (self ImGuiViewportP) GetDrawDataBuilder() ImDrawDataBuilder {
 	return newImDrawDataBuilderFromC(C.ImGuiViewportP_GetDrawDataBuilder(self.handle()))
+}
+
+func (self ImGuiViewportP) SetLastPlatformPos(v ImVec2) {
+	C.ImGuiViewportP_SetLastPlatformPos(self.handle(), v.toC())
+}
+
+func (self ImGuiViewportP) GetLastPlatformPos() ImVec2 {
+	return newImVec2FromC(C.ImGuiViewportP_GetLastPlatformPos(self.handle()))
+}
+
+func (self ImGuiViewportP) SetLastPlatformSize(v ImVec2) {
+	C.ImGuiViewportP_SetLastPlatformSize(self.handle(), v.toC())
+}
+
+func (self ImGuiViewportP) GetLastPlatformSize() ImVec2 {
+	return newImVec2FromC(C.ImGuiViewportP_GetLastPlatformSize(self.handle()))
+}
+
+func (self ImGuiViewportP) SetLastRendererSize(v ImVec2) {
+	C.ImGuiViewportP_SetLastRendererSize(self.handle(), v.toC())
+}
+
+func (self ImGuiViewportP) GetLastRendererSize() ImVec2 {
+	return newImVec2FromC(C.ImGuiViewportP_GetLastRendererSize(self.handle()))
 }
 
 func (self ImGuiViewportP) SetWorkOffsetMin(v ImVec2) {
@@ -11583,12 +12607,48 @@ func (self ImGuiWindow) GetFlags() ImGuiWindowFlags {
 	return ImGuiWindowFlags(C.ImGuiWindow_GetFlags(self.handle()))
 }
 
+func (self ImGuiWindow) SetFlagsPreviousFrame(v ImGuiWindowFlags) {
+	C.ImGuiWindow_SetFlagsPreviousFrame(self.handle(), C.ImGuiWindowFlags(v))
+}
+
+func (self ImGuiWindow) GetFlagsPreviousFrame() ImGuiWindowFlags {
+	return ImGuiWindowFlags(C.ImGuiWindow_GetFlagsPreviousFrame(self.handle()))
+}
+
+func (self ImGuiWindow) GetWindowClass() ImGuiWindowClass {
+	return newImGuiWindowClassFromC(C.ImGuiWindow_GetWindowClass(self.handle()))
+}
+
 func (self ImGuiWindow) SetViewport(v ImGuiViewportP) {
 	C.ImGuiWindow_SetViewport(self.handle(), v.handle())
 }
 
 func (self ImGuiWindow) GetViewport() ImGuiViewportP {
 	return (ImGuiViewportP)(unsafe.Pointer(C.ImGuiWindow_GetViewport(self.handle())))
+}
+
+func (self ImGuiWindow) SetViewportId(v ImGuiID) {
+	C.ImGuiWindow_SetViewportId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiWindow) GetViewportId() ImGuiID {
+	return ImGuiID(C.ImGuiWindow_GetViewportId(self.handle()))
+}
+
+func (self ImGuiWindow) SetViewportPos(v ImVec2) {
+	C.ImGuiWindow_SetViewportPos(self.handle(), v.toC())
+}
+
+func (self ImGuiWindow) GetViewportPos() ImVec2 {
+	return newImVec2FromC(C.ImGuiWindow_GetViewportPos(self.handle()))
+}
+
+func (self ImGuiWindow) SetViewportAllowPlatformMonitorExtend(v int32) {
+	C.ImGuiWindow_SetViewportAllowPlatformMonitorExtend(self.handle(), C.int(v))
+}
+
+func (self ImGuiWindow) GetViewportAllowPlatformMonitorExtend() int {
+	return int(C.ImGuiWindow_GetViewportAllowPlatformMonitorExtend(self.handle()))
 }
 
 func (self ImGuiWindow) SetPos(v ImVec2) {
@@ -11679,6 +12739,14 @@ func (self ImGuiWindow) GetMoveId() ImGuiID {
 	return ImGuiID(C.ImGuiWindow_GetMoveId(self.handle()))
 }
 
+func (self ImGuiWindow) SetTabId(v ImGuiID) {
+	C.ImGuiWindow_SetTabId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiWindow) GetTabId() ImGuiID {
+	return ImGuiID(C.ImGuiWindow_GetTabId(self.handle()))
+}
+
 func (self ImGuiWindow) SetChildId(v ImGuiID) {
 	C.ImGuiWindow_SetChildId(self.handle(), C.ImGuiID(v))
 }
@@ -11749,6 +12817,14 @@ func (self ImGuiWindow) SetScrollbarY(v bool) {
 
 func (self ImGuiWindow) GetScrollbarY() bool {
 	return C.ImGuiWindow_GetScrollbarY(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiWindow) SetViewportOwned(v bool) {
+	C.ImGuiWindow_SetViewportOwned(self.handle(), C.bool(v))
+}
+
+func (self ImGuiWindow) GetViewportOwned() bool {
+	return C.ImGuiWindow_GetViewportOwned(self.handle()) == C.bool(true)
 }
 
 func (self ImGuiWindow) SetActive(v bool) {
@@ -11983,6 +13059,14 @@ func (self ImGuiWindow) GetSetWindowCollapsedAllowFlags() ImGuiCond {
 	return ImGuiCond(C.ImGuiWindow_GetSetWindowCollapsedAllowFlags(self.handle()))
 }
 
+func (self ImGuiWindow) SetSetWindowDockAllowFlags(v ImGuiCond) {
+	C.ImGuiWindow_SetSetWindowDockAllowFlags(self.handle(), C.ImGuiCond(v))
+}
+
+func (self ImGuiWindow) GetSetWindowDockAllowFlags() ImGuiCond {
+	return ImGuiCond(C.ImGuiWindow_GetSetWindowDockAllowFlags(self.handle()))
+}
+
 func (self ImGuiWindow) SetSetWindowPosVal(v ImVec2) {
 	C.ImGuiWindow_SetSetWindowPosVal(self.handle(), v.toC())
 }
@@ -12067,6 +13151,14 @@ func (self ImGuiWindow) GetLastFrameActive() int {
 	return int(C.ImGuiWindow_GetLastFrameActive(self.handle()))
 }
 
+func (self ImGuiWindow) SetLastFrameJustFocused(v int32) {
+	C.ImGuiWindow_SetLastFrameJustFocused(self.handle(), C.int(v))
+}
+
+func (self ImGuiWindow) GetLastFrameJustFocused() int {
+	return int(C.ImGuiWindow_GetLastFrameJustFocused(self.handle()))
+}
+
 func (self ImGuiWindow) SetLastTimeActive(v float32) {
 	C.ImGuiWindow_SetLastTimeActive(self.handle(), C.float(v))
 }
@@ -12093,6 +13185,14 @@ func (self ImGuiWindow) SetFontWindowScale(v float32) {
 
 func (self ImGuiWindow) GetFontWindowScale() float32 {
 	return float32(C.ImGuiWindow_GetFontWindowScale(self.handle()))
+}
+
+func (self ImGuiWindow) SetFontDpiScale(v float32) {
+	C.ImGuiWindow_SetFontDpiScale(self.handle(), C.float(v))
+}
+
+func (self ImGuiWindow) GetFontDpiScale() float32 {
+	return float32(C.ImGuiWindow_GetFontDpiScale(self.handle()))
 }
 
 func (self ImGuiWindow) SetSettingsOffset(v int32) {
@@ -12147,6 +13247,14 @@ func (self ImGuiWindow) GetRootWindowPopupTree() ImGuiWindow {
 	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiWindow_GetRootWindowPopupTree(self.handle())))
 }
 
+func (self ImGuiWindow) SetRootWindowDockTree(v ImGuiWindow) {
+	C.ImGuiWindow_SetRootWindowDockTree(self.handle(), v.handle())
+}
+
+func (self ImGuiWindow) GetRootWindowDockTree() ImGuiWindow {
+	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiWindow_GetRootWindowDockTree(self.handle())))
+}
+
 func (self ImGuiWindow) SetRootWindowForTitleBarHighlight(v ImGuiWindow) {
 	C.ImGuiWindow_SetRootWindowForTitleBarHighlight(self.handle(), v.handle())
 }
@@ -12169,6 +13277,14 @@ func (self ImGuiWindow) SetNavLastChildNavWindow(v ImGuiWindow) {
 
 func (self ImGuiWindow) GetNavLastChildNavWindow() ImGuiWindow {
 	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiWindow_GetNavLastChildNavWindow(self.handle())))
+}
+
+func (self ImGuiWindow) SetNavRootFocusScopeId(v ImGuiID) {
+	C.ImGuiWindow_SetNavRootFocusScopeId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiWindow) GetNavRootFocusScopeId() ImGuiID {
+	return ImGuiID(C.ImGuiWindow_GetNavRootFocusScopeId(self.handle()))
 }
 
 func (self ImGuiWindow) SetMemoryDrawListIdxCapacity(v int32) {
@@ -12195,12 +13311,192 @@ func (self ImGuiWindow) GetMemoryCompacted() bool {
 	return C.ImGuiWindow_GetMemoryCompacted(self.handle()) == C.bool(true)
 }
 
+func (self ImGuiWindow) SetDockIsActive(v bool) {
+	C.ImGuiWindow_SetDockIsActive(self.handle(), C.bool(v))
+}
+
+func (self ImGuiWindow) GetDockIsActive() bool {
+	return C.ImGuiWindow_GetDockIsActive(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiWindow) SetDockNodeIsVisible(v bool) {
+	C.ImGuiWindow_SetDockNodeIsVisible(self.handle(), C.bool(v))
+}
+
+func (self ImGuiWindow) GetDockNodeIsVisible() bool {
+	return C.ImGuiWindow_GetDockNodeIsVisible(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiWindow) SetDockTabIsVisible(v bool) {
+	C.ImGuiWindow_SetDockTabIsVisible(self.handle(), C.bool(v))
+}
+
+func (self ImGuiWindow) GetDockTabIsVisible() bool {
+	return C.ImGuiWindow_GetDockTabIsVisible(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiWindow) SetDockTabWantClose(v bool) {
+	C.ImGuiWindow_SetDockTabWantClose(self.handle(), C.bool(v))
+}
+
+func (self ImGuiWindow) GetDockTabWantClose() bool {
+	return C.ImGuiWindow_GetDockTabWantClose(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiWindow) SetDockOrder(v int) {
+	C.ImGuiWindow_SetDockOrder(self.handle(), C.short(v))
+}
+
+func (self ImGuiWindow) GetDockOrder() int {
+	return int(C.ImGuiWindow_GetDockOrder(self.handle()))
+}
+
+func (self ImGuiWindow) GetDockStyle() ImGuiWindowDockStyle {
+	return newImGuiWindowDockStyleFromC(C.ImGuiWindow_GetDockStyle(self.handle()))
+}
+
+func (self ImGuiWindow) SetDockNode(v ImGuiDockNode) {
+	C.ImGuiWindow_SetDockNode(self.handle(), v.handle())
+}
+
+func (self ImGuiWindow) GetDockNode() ImGuiDockNode {
+	return (ImGuiDockNode)(unsafe.Pointer(C.ImGuiWindow_GetDockNode(self.handle())))
+}
+
+func (self ImGuiWindow) SetDockNodeAsHost(v ImGuiDockNode) {
+	C.ImGuiWindow_SetDockNodeAsHost(self.handle(), v.handle())
+}
+
+func (self ImGuiWindow) GetDockNodeAsHost() ImGuiDockNode {
+	return (ImGuiDockNode)(unsafe.Pointer(C.ImGuiWindow_GetDockNodeAsHost(self.handle())))
+}
+
+func (self ImGuiWindow) SetDockId(v ImGuiID) {
+	C.ImGuiWindow_SetDockId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiWindow) GetDockId() ImGuiID {
+	return ImGuiID(C.ImGuiWindow_GetDockId(self.handle()))
+}
+
+func (self ImGuiWindow) SetDockTabItemStatusFlags(v ImGuiItemStatusFlags) {
+	C.ImGuiWindow_SetDockTabItemStatusFlags(self.handle(), C.ImGuiItemStatusFlags(v))
+}
+
+func (self ImGuiWindow) GetDockTabItemStatusFlags() ImGuiItemStatusFlags {
+	return ImGuiItemStatusFlags(C.ImGuiWindow_GetDockTabItemStatusFlags(self.handle()))
+}
+
+func (self ImGuiWindow) SetDockTabItemRect(v ImRect) {
+	C.ImGuiWindow_SetDockTabItemRect(self.handle(), v.toC())
+}
+
+func (self ImGuiWindow) GetDockTabItemRect() ImRect {
+	return newImRectFromC(C.ImGuiWindow_GetDockTabItemRect(self.handle()))
+}
+
+func (self ImGuiWindowClass) SetClassId(v ImGuiID) {
+	C.ImGuiWindowClass_SetClassId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiWindowClass) GetClassId() ImGuiID {
+	return ImGuiID(C.ImGuiWindowClass_GetClassId(self.handle()))
+}
+
+func (self ImGuiWindowClass) SetParentViewportId(v ImGuiID) {
+	C.ImGuiWindowClass_SetParentViewportId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiWindowClass) GetParentViewportId() ImGuiID {
+	return ImGuiID(C.ImGuiWindowClass_GetParentViewportId(self.handle()))
+}
+
+func (self ImGuiWindowClass) SetViewportFlagsOverrideSet(v ImGuiViewportFlags) {
+	C.ImGuiWindowClass_SetViewportFlagsOverrideSet(self.handle(), C.ImGuiViewportFlags(v))
+}
+
+func (self ImGuiWindowClass) GetViewportFlagsOverrideSet() ImGuiViewportFlags {
+	return ImGuiViewportFlags(C.ImGuiWindowClass_GetViewportFlagsOverrideSet(self.handle()))
+}
+
+func (self ImGuiWindowClass) SetViewportFlagsOverrideClear(v ImGuiViewportFlags) {
+	C.ImGuiWindowClass_SetViewportFlagsOverrideClear(self.handle(), C.ImGuiViewportFlags(v))
+}
+
+func (self ImGuiWindowClass) GetViewportFlagsOverrideClear() ImGuiViewportFlags {
+	return ImGuiViewportFlags(C.ImGuiWindowClass_GetViewportFlagsOverrideClear(self.handle()))
+}
+
+func (self ImGuiWindowClass) SetTabItemFlagsOverrideSet(v ImGuiTabItemFlags) {
+	C.ImGuiWindowClass_SetTabItemFlagsOverrideSet(self.handle(), C.ImGuiTabItemFlags(v))
+}
+
+func (self ImGuiWindowClass) GetTabItemFlagsOverrideSet() ImGuiTabItemFlags {
+	return ImGuiTabItemFlags(C.ImGuiWindowClass_GetTabItemFlagsOverrideSet(self.handle()))
+}
+
+func (self ImGuiWindowClass) SetDockNodeFlagsOverrideSet(v ImGuiDockNodeFlags) {
+	C.ImGuiWindowClass_SetDockNodeFlagsOverrideSet(self.handle(), C.ImGuiDockNodeFlags(v))
+}
+
+func (self ImGuiWindowClass) GetDockNodeFlagsOverrideSet() ImGuiDockNodeFlags {
+	return ImGuiDockNodeFlags(C.ImGuiWindowClass_GetDockNodeFlagsOverrideSet(self.handle()))
+}
+
+func (self ImGuiWindowClass) SetDockingAlwaysTabBar(v bool) {
+	C.ImGuiWindowClass_SetDockingAlwaysTabBar(self.handle(), C.bool(v))
+}
+
+func (self ImGuiWindowClass) GetDockingAlwaysTabBar() bool {
+	return C.ImGuiWindowClass_GetDockingAlwaysTabBar(self.handle()) == C.bool(true)
+}
+
+func (self ImGuiWindowClass) SetDockingAllowUnclassed(v bool) {
+	C.ImGuiWindowClass_SetDockingAllowUnclassed(self.handle(), C.bool(v))
+}
+
+func (self ImGuiWindowClass) GetDockingAllowUnclassed() bool {
+	return C.ImGuiWindowClass_GetDockingAllowUnclassed(self.handle()) == C.bool(true)
+}
+
 func (self ImGuiWindowSettings) SetID(v ImGuiID) {
 	C.ImGuiWindowSettings_SetID(self.handle(), C.ImGuiID(v))
 }
 
 func (self ImGuiWindowSettings) GetID() ImGuiID {
 	return ImGuiID(C.ImGuiWindowSettings_GetID(self.handle()))
+}
+
+func (self ImGuiWindowSettings) SetViewportId(v ImGuiID) {
+	C.ImGuiWindowSettings_SetViewportId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiWindowSettings) GetViewportId() ImGuiID {
+	return ImGuiID(C.ImGuiWindowSettings_GetViewportId(self.handle()))
+}
+
+func (self ImGuiWindowSettings) SetDockId(v ImGuiID) {
+	C.ImGuiWindowSettings_SetDockId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiWindowSettings) GetDockId() ImGuiID {
+	return ImGuiID(C.ImGuiWindowSettings_GetDockId(self.handle()))
+}
+
+func (self ImGuiWindowSettings) SetClassId(v ImGuiID) {
+	C.ImGuiWindowSettings_SetClassId(self.handle(), C.ImGuiID(v))
+}
+
+func (self ImGuiWindowSettings) GetClassId() ImGuiID {
+	return ImGuiID(C.ImGuiWindowSettings_GetClassId(self.handle()))
+}
+
+func (self ImGuiWindowSettings) SetDockOrder(v int) {
+	C.ImGuiWindowSettings_SetDockOrder(self.handle(), C.short(v))
+}
+
+func (self ImGuiWindowSettings) GetDockOrder() int {
+	return int(C.ImGuiWindowSettings_GetDockOrder(self.handle()))
 }
 
 func (self ImGuiWindowSettings) SetCollapsed(v bool) {
@@ -12353,14 +13649,6 @@ func (self ImGuiWindowTempData) SetNavLayersActiveMaskNext(v int) {
 
 func (self ImGuiWindowTempData) GetNavLayersActiveMaskNext() int {
 	return int(C.ImGuiWindowTempData_GetNavLayersActiveMaskNext(self.handle()))
-}
-
-func (self ImGuiWindowTempData) SetNavFocusScopeIdCurrent(v ImGuiID) {
-	C.ImGuiWindowTempData_SetNavFocusScopeIdCurrent(self.handle(), C.ImGuiID(v))
-}
-
-func (self ImGuiWindowTempData) GetNavFocusScopeIdCurrent() ImGuiID {
-	return ImGuiID(C.ImGuiWindowTempData_GetNavFocusScopeIdCurrent(self.handle()))
 }
 
 func (self ImGuiWindowTempData) SetNavHideHighlightOneFrame(v bool) {

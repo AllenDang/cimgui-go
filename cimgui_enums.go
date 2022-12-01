@@ -58,11 +58,14 @@ const (
 type ImGuiBackendFlags int
 
 const (
-	ImGuiBackendFlags_None                 = 0
-	ImGuiBackendFlags_HasGamepad           = 1
-	ImGuiBackendFlags_HasMouseCursors      = 2
-	ImGuiBackendFlags_HasSetMousePos       = 4
-	ImGuiBackendFlags_RendererHasVtxOffset = 8
+	ImGuiBackendFlags_None                    = 0
+	ImGuiBackendFlags_HasGamepad              = 1
+	ImGuiBackendFlags_HasMouseCursors         = 2
+	ImGuiBackendFlags_HasSetMousePos          = 4
+	ImGuiBackendFlags_RendererHasVtxOffset    = 8
+	ImGuiBackendFlags_PlatformHasViewports    = 1024
+	ImGuiBackendFlags_HasMouseHoveredViewport = 2048
+	ImGuiBackendFlags_RendererHasViewports    = 4096
 )
 
 type ImGuiButtonFlagsPrivate int
@@ -83,6 +86,8 @@ const (
 	ImGuiButtonFlags_NoHoldingActiveId             = 131072
 	ImGuiButtonFlags_NoNavFocus                    = 262144
 	ImGuiButtonFlags_NoHoveredOnFocus              = 524288
+	ImGuiButtonFlags_NoSetKeyOwner                 = 1048576
+	ImGuiButtonFlags_NoTestKeyOwner                = 2097152
 	ImGuiButtonFlags_PressedOnMask_                = 1008
 	ImGuiButtonFlags_PressedOnDefault_             = 32
 )
@@ -139,22 +144,24 @@ const (
 	ImGuiCol_TabActive             = 35
 	ImGuiCol_TabUnfocused          = 36
 	ImGuiCol_TabUnfocusedActive    = 37
-	ImGuiCol_PlotLines             = 38
-	ImGuiCol_PlotLinesHovered      = 39
-	ImGuiCol_PlotHistogram         = 40
-	ImGuiCol_PlotHistogramHovered  = 41
-	ImGuiCol_TableHeaderBg         = 42
-	ImGuiCol_TableBorderStrong     = 43
-	ImGuiCol_TableBorderLight      = 44
-	ImGuiCol_TableRowBg            = 45
-	ImGuiCol_TableRowBgAlt         = 46
-	ImGuiCol_TextSelectedBg        = 47
-	ImGuiCol_DragDropTarget        = 48
-	ImGuiCol_NavHighlight          = 49
-	ImGuiCol_NavWindowingHighlight = 50
-	ImGuiCol_NavWindowingDimBg     = 51
-	ImGuiCol_ModalWindowDimBg      = 52
-	ImGuiCol_COUNT                 = 53
+	ImGuiCol_DockingPreview        = 38
+	ImGuiCol_DockingEmptyBg        = 39
+	ImGuiCol_PlotLines             = 40
+	ImGuiCol_PlotLinesHovered      = 41
+	ImGuiCol_PlotHistogram         = 42
+	ImGuiCol_PlotHistogramHovered  = 43
+	ImGuiCol_TableHeaderBg         = 44
+	ImGuiCol_TableBorderStrong     = 45
+	ImGuiCol_TableBorderLight      = 46
+	ImGuiCol_TableRowBg            = 47
+	ImGuiCol_TableRowBgAlt         = 48
+	ImGuiCol_TextSelectedBg        = 49
+	ImGuiCol_DragDropTarget        = 50
+	ImGuiCol_NavHighlight          = 51
+	ImGuiCol_NavWindowingHighlight = 52
+	ImGuiCol_NavWindowingDimBg     = 53
+	ImGuiCol_ModalWindowDimBg      = 54
+	ImGuiCol_COUNT                 = 55
 )
 
 type ImGuiColorEditFlags int
@@ -224,15 +231,19 @@ const (
 type ImGuiConfigFlags int
 
 const (
-	ImGuiConfigFlags_None                 = 0
-	ImGuiConfigFlags_NavEnableKeyboard    = 1
-	ImGuiConfigFlags_NavEnableGamepad     = 2
-	ImGuiConfigFlags_NavEnableSetMousePos = 4
-	ImGuiConfigFlags_NavNoCaptureKeyboard = 8
-	ImGuiConfigFlags_NoMouse              = 16
-	ImGuiConfigFlags_NoMouseCursorChange  = 32
-	ImGuiConfigFlags_IsSRGB               = 1048576
-	ImGuiConfigFlags_IsTouchScreen        = 2097152
+	ImGuiConfigFlags_None                    = 0
+	ImGuiConfigFlags_NavEnableKeyboard       = 1
+	ImGuiConfigFlags_NavEnableGamepad        = 2
+	ImGuiConfigFlags_NavEnableSetMousePos    = 4
+	ImGuiConfigFlags_NavNoCaptureKeyboard    = 8
+	ImGuiConfigFlags_NoMouse                 = 16
+	ImGuiConfigFlags_NoMouseCursorChange     = 32
+	ImGuiConfigFlags_DockingEnable           = 64
+	ImGuiConfigFlags_ViewportsEnable         = 1024
+	ImGuiConfigFlags_DpiEnableScaleViewports = 16384
+	ImGuiConfigFlags_DpiEnableScaleFonts     = 32768
+	ImGuiConfigFlags_IsSRGB                  = 1048576
+	ImGuiConfigFlags_IsTouchScreen           = 2097152
 )
 
 type ImGuiContextHookType int
@@ -246,6 +257,14 @@ const (
 	ImGuiContextHookType_RenderPost      = 5
 	ImGuiContextHookType_Shutdown        = 6
 	ImGuiContextHookType_PendingRemoval_ = 7
+)
+
+type ImGuiDataAuthority int
+
+const (
+	ImGuiDataAuthority_Auto     = 0
+	ImGuiDataAuthority_DockNode = 1
+	ImGuiDataAuthority_Window   = 2
 )
 
 type ImGuiDataTypePrivate int
@@ -282,7 +301,9 @@ const (
 	ImGuiDebugLogFlags_EventNav      = 8
 	ImGuiDebugLogFlags_EventClipper  = 16
 	ImGuiDebugLogFlags_EventIO       = 32
-	ImGuiDebugLogFlags_EventMask_    = 63
+	ImGuiDebugLogFlags_EventDocking  = 64
+	ImGuiDebugLogFlags_EventViewport = 128
+	ImGuiDebugLogFlags_EventMask_    = 255
 	ImGuiDebugLogFlags_OutputToTTY   = 1024
 )
 
@@ -295,6 +316,51 @@ const (
 	ImGuiDir_Up    = 2
 	ImGuiDir_Down  = 3
 	ImGuiDir_COUNT = 4
+)
+
+type ImGuiDockNodeFlagsPrivate int
+
+const (
+	ImGuiDockNodeFlags_DockSpace               = 1024
+	ImGuiDockNodeFlags_CentralNode             = 2048
+	ImGuiDockNodeFlags_NoTabBar                = 4096
+	ImGuiDockNodeFlags_HiddenTabBar            = 8192
+	ImGuiDockNodeFlags_NoWindowMenuButton      = 16384
+	ImGuiDockNodeFlags_NoCloseButton           = 32768
+	ImGuiDockNodeFlags_NoDocking               = 65536
+	ImGuiDockNodeFlags_NoDockingSplitMe        = 131072
+	ImGuiDockNodeFlags_NoDockingSplitOther     = 262144
+	ImGuiDockNodeFlags_NoDockingOverMe         = 524288
+	ImGuiDockNodeFlags_NoDockingOverOther      = 1048576
+	ImGuiDockNodeFlags_NoDockingOverEmpty      = 2097152
+	ImGuiDockNodeFlags_NoResizeX               = 4194304
+	ImGuiDockNodeFlags_NoResizeY               = 8388608
+	ImGuiDockNodeFlags_SharedFlagsInheritMask_ = -1
+	ImGuiDockNodeFlags_NoResizeFlagsMask_      = 12582944
+	ImGuiDockNodeFlags_LocalFlagsMask_         = 12713072
+	ImGuiDockNodeFlags_LocalFlagsTransferMask_ = 12712048
+	ImGuiDockNodeFlags_SavedFlagsMask_         = 12712992
+)
+
+type ImGuiDockNodeFlags int
+
+const (
+	ImGuiDockNodeFlags_None                   = 0
+	ImGuiDockNodeFlags_KeepAliveOnly          = 1
+	ImGuiDockNodeFlags_NoDockingInCentralNode = 4
+	ImGuiDockNodeFlags_PassthruCentralNode    = 8
+	ImGuiDockNodeFlags_NoSplit                = 16
+	ImGuiDockNodeFlags_NoResize               = 32
+	ImGuiDockNodeFlags_AutoHideTabBar         = 64
+)
+
+type ImGuiDockNodeState int
+
+const (
+	ImGuiDockNodeState_Unknown                                   = 0
+	ImGuiDockNodeState_HostWindowHiddenBecauseSingleWindow       = 1
+	ImGuiDockNodeState_HostWindowHiddenBecauseWindowsAreResizing = 2
+	ImGuiDockNodeState_HostWindowVisible                         = 3
 )
 
 type ImGuiDragDropFlags int
@@ -321,6 +387,7 @@ const (
 	ImGuiFocusedFlags_RootWindow          = 2
 	ImGuiFocusedFlags_AnyWindow           = 4
 	ImGuiFocusedFlags_NoPopupHierarchy    = 8
+	ImGuiFocusedFlags_DockHierarchy       = 16
 	ImGuiFocusedFlags_RootAndChildWindows = 3
 )
 
@@ -332,6 +399,7 @@ const (
 	ImGuiHoveredFlags_RootWindow                   = 2
 	ImGuiHoveredFlags_AnyWindow                    = 4
 	ImGuiHoveredFlags_NoPopupHierarchy             = 8
+	ImGuiHoveredFlags_DockHierarchy                = 16
 	ImGuiHoveredFlags_AllowWhenBlockedByPopup      = 32
 	ImGuiHoveredFlags_AllowWhenBlockedByActiveItem = 128
 	ImGuiHoveredFlags_AllowWhenOverlapped          = 256
@@ -347,25 +415,44 @@ const (
 type ImGuiInputEventType int
 
 const (
-	ImGuiInputEventType_None        = 0
-	ImGuiInputEventType_MousePos    = 1
-	ImGuiInputEventType_MouseWheel  = 2
-	ImGuiInputEventType_MouseButton = 3
-	ImGuiInputEventType_Key         = 4
-	ImGuiInputEventType_Text        = 5
-	ImGuiInputEventType_Focus       = 6
-	ImGuiInputEventType_COUNT       = 7
+	ImGuiInputEventType_None          = 0
+	ImGuiInputEventType_MousePos      = 1
+	ImGuiInputEventType_MouseWheel    = 2
+	ImGuiInputEventType_MouseButton   = 3
+	ImGuiInputEventType_MouseViewport = 4
+	ImGuiInputEventType_Key           = 5
+	ImGuiInputEventType_Text          = 6
+	ImGuiInputEventType_Focus         = 7
+	ImGuiInputEventType_COUNT         = 8
 )
 
 type ImGuiInputFlags int
 
 const (
-	ImGuiInputFlags_None               = 0
-	ImGuiInputFlags_Repeat             = 1
-	ImGuiInputFlags_RepeatRateDefault  = 2
-	ImGuiInputFlags_RepeatRateNavMove  = 4
-	ImGuiInputFlags_RepeatRateNavTweak = 8
-	ImGuiInputFlags_RepeatRateMask_    = 14
+	ImGuiInputFlags_None                       = 0
+	ImGuiInputFlags_Repeat                     = 1
+	ImGuiInputFlags_RepeatRateDefault          = 2
+	ImGuiInputFlags_RepeatRateNavMove          = 4
+	ImGuiInputFlags_RepeatRateNavTweak         = 8
+	ImGuiInputFlags_RepeatRateMask_            = 14
+	ImGuiInputFlags_CondHovered                = 16
+	ImGuiInputFlags_CondActive                 = 32
+	ImGuiInputFlags_CondDefault_               = 48
+	ImGuiInputFlags_CondMask_                  = 48
+	ImGuiInputFlags_LockThisFrame              = 64
+	ImGuiInputFlags_LockUntilRelease           = 128
+	ImGuiInputFlags_RouteFocused               = 256
+	ImGuiInputFlags_RouteGlobalLow             = 512
+	ImGuiInputFlags_RouteGlobal                = 1024
+	ImGuiInputFlags_RouteGlobalHigh            = 2048
+	ImGuiInputFlags_RouteMask_                 = 3840
+	ImGuiInputFlags_RouteAlways                = 4096
+	ImGuiInputFlags_RouteUnlessBgFocused       = 8192
+	ImGuiInputFlags_RouteExtraMask_            = 12288
+	ImGuiInputFlags_SupportedByIsKeyPressed    = 15
+	ImGuiInputFlags_SupportedByShortcut        = 16143
+	ImGuiInputFlags_SupportedBySetKeyOwner     = 192
+	ImGuiInputFlags_SupportedBySetItemKeyOwner = 240
 )
 
 type ImGuiInputSource int
@@ -613,6 +700,19 @@ const (
 	ImGuiLayoutType_Vertical   = 1
 )
 
+type ImGuiLocKey int
+
+const (
+	ImGuiLocKey_TableSizeOne         = 0
+	ImGuiLocKey_TableSizeAllFit      = 1
+	ImGuiLocKey_TableSizeAllDefault  = 2
+	ImGuiLocKey_TableResetOrder      = 3
+	ImGuiLocKey_WindowingMainMenuBar = 4
+	ImGuiLocKey_WindowingPopup       = 5
+	ImGuiLocKey_WindowingUntitled    = 6
+	ImGuiLocKey_COUNT                = 7
+)
+
 type ImGuiLogType int
 
 const (
@@ -727,6 +827,9 @@ const (
 	ImGuiNextWindowDataFlags_HasFocus          = 32
 	ImGuiNextWindowDataFlags_HasBgAlpha        = 64
 	ImGuiNextWindowDataFlags_HasScroll         = 128
+	ImGuiNextWindowDataFlags_HasViewport       = 256
+	ImGuiNextWindowDataFlags_HasDock           = 512
+	ImGuiNextWindowDataFlags_HasWindowClass    = 1024
 )
 
 type ImGuiOldColumnFlags int
@@ -797,6 +900,7 @@ const (
 	ImGuiSelectableFlags_DrawHoveredWhenHeld  = 33554432
 	ImGuiSelectableFlags_SetNavIdOnHover      = 67108864
 	ImGuiSelectableFlags_NoPadWithHalfSpacing = 134217728
+	ImGuiSelectableFlags_NoSetKeyOwner        = 268435456
 )
 
 type ImGuiSelectableFlags int
@@ -906,6 +1010,8 @@ const (
 	ImGuiTabItemFlags_SectionMask_  = 192
 	ImGuiTabItemFlags_NoCloseButton = 1048576
 	ImGuiTabItemFlags_Button        = 2097152
+	ImGuiTabItemFlags_Unsorted      = 4194304
+	ImGuiTabItemFlags_Preview       = 8388608
 )
 
 type ImGuiTabItemFlags int
@@ -1055,10 +1161,32 @@ const (
 type ImGuiViewportFlags int
 
 const (
-	ImGuiViewportFlags_None              = 0
-	ImGuiViewportFlags_IsPlatformWindow  = 1
-	ImGuiViewportFlags_IsPlatformMonitor = 2
-	ImGuiViewportFlags_OwnedByApp        = 4
+	ImGuiViewportFlags_None                = 0
+	ImGuiViewportFlags_IsPlatformWindow    = 1
+	ImGuiViewportFlags_IsPlatformMonitor   = 2
+	ImGuiViewportFlags_OwnedByApp          = 4
+	ImGuiViewportFlags_NoDecoration        = 8
+	ImGuiViewportFlags_NoTaskBarIcon       = 16
+	ImGuiViewportFlags_NoFocusOnAppearing  = 32
+	ImGuiViewportFlags_NoFocusOnClick      = 64
+	ImGuiViewportFlags_NoInputs            = 128
+	ImGuiViewportFlags_NoRendererClear     = 256
+	ImGuiViewportFlags_TopMost             = 512
+	ImGuiViewportFlags_Minimized           = 1024
+	ImGuiViewportFlags_NoAutoMerge         = 2048
+	ImGuiViewportFlags_CanHostOtherWindows = 4096
+)
+
+type ImGuiWindowDockStyleCol int
+
+const (
+	ImGuiWindowDockStyleCol_Text               = 0
+	ImGuiWindowDockStyleCol_Tab                = 1
+	ImGuiWindowDockStyleCol_TabHovered         = 2
+	ImGuiWindowDockStyleCol_TabActive          = 3
+	ImGuiWindowDockStyleCol_TabUnfocused       = 4
+	ImGuiWindowDockStyleCol_TabUnfocusedActive = 5
+	ImGuiWindowDockStyleCol_COUNT              = 6
 )
 
 type ImGuiWindowFlags int
@@ -1085,6 +1213,7 @@ const (
 	ImGuiWindowFlags_NoNavInputs               = 262144
 	ImGuiWindowFlags_NoNavFocus                = 524288
 	ImGuiWindowFlags_UnsavedDocument           = 1048576
+	ImGuiWindowFlags_NoDocking                 = 2097152
 	ImGuiWindowFlags_NoNav                     = 786432
 	ImGuiWindowFlags_NoDecoration              = 43
 	ImGuiWindowFlags_NoInputs                  = 786944
@@ -1094,4 +1223,5 @@ const (
 	ImGuiWindowFlags_Popup                     = 67108864
 	ImGuiWindowFlags_Modal                     = 134217728
 	ImGuiWindowFlags_ChildMenu                 = 268435456
+	ImGuiWindowFlags_DockNodeHost              = 536870912
 )

@@ -252,9 +252,9 @@ func Plot_BeginPlotV(title_id string, size ImVec2, flags ImPlotFlags) bool {
 }
 
 // Plot_BeginSubplotsV parameter default value hint:
-// col_ratios: ((void*)0)
+// col_ratios: NULL
 // flags: 0
-// row_ratios: ((void*)0)
+// row_ratios: NULL
 func Plot_BeginSubplotsV(title_id string, rows int32, cols int32, size ImVec2, flags ImPlotSubplotFlags, row_ratios *float32, col_ratios *float32) bool {
 	title_idArg, title_idFin := wrapString(title_id)
 	defer title_idFin()
@@ -269,7 +269,7 @@ func Plot_BeginSubplotsV(title_id string, rows int32, cols int32, size ImVec2, f
 }
 
 // Plot_BustColorCacheV parameter default value hint:
-// plot_title_id: ((void*)0)
+// plot_title_id: NULL
 func Plot_BustColorCacheV(plot_title_id string) {
 	plot_title_idArg, plot_title_idFin := wrapString(plot_title_id)
 	defer plot_title_idFin()
@@ -313,7 +313,7 @@ func Plot_ColormapScaleV(label string, scale_min float64, scale_max float64, siz
 // Plot_ColormapSliderV parameter default value hint:
 // cmap: -1
 // format: ""
-// out: ((void*)0)
+// out: NULL
 func Plot_ColormapSliderV(label string, t *float32, out *ImVec4, format string, cmap ImPlotColormap) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
@@ -335,7 +335,7 @@ func Plot_CreateContext() ImPlotContext {
 }
 
 // Plot_DestroyContextV parameter default value hint:
-// ctx: ((void*)0)
+// ctx: NULL
 func Plot_DestroyContextV(ctx ImPlotContext) {
 	C.Plot_DestroyContextV(ctx.handle())
 }
@@ -515,13 +515,13 @@ func Plot_ItemIcon_Vec4(col ImVec4) {
 }
 
 // Plot_MapInputDefaultV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func Plot_MapInputDefaultV(dst ImPlotInputMap) {
 	C.Plot_MapInputDefaultV(dst.handle())
 }
 
 // Plot_MapInputReverseV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func Plot_MapInputReverseV(dst ImPlotInputMap) {
 	C.Plot_MapInputReverseV(dst.handle())
 }
@@ -1352,7 +1352,7 @@ func Plot_SetupAxesLimitsV(x_min float64, x_max float64, y_min float64, y_max fl
 
 // Plot_SetupAxisV parameter default value hint:
 // flags: 0
-// label: ((void*)0)
+// label: NULL
 func Plot_SetupAxisV(axis ImAxis, label string, flags ImPlotAxisFlags) {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
@@ -1413,7 +1413,7 @@ func Plot_ShowColormapSelector(label string) bool {
 }
 
 // Plot_ShowDemoWindowV parameter default value hint:
-// p_open: ((void*)0)
+// p_open: NULL
 func Plot_ShowDemoWindowV(p_open *bool) {
 	p_openArg, p_openFin := wrapBool(p_open)
 	defer p_openFin()
@@ -1429,7 +1429,7 @@ func Plot_ShowInputMapSelector(label string) bool {
 }
 
 // Plot_ShowMetricsWindowV parameter default value hint:
-// p_popen: ((void*)0)
+// p_popen: NULL
 func Plot_ShowMetricsWindowV(p_popen *bool) {
 	p_popenArg, p_popenFin := wrapBool(p_popen)
 	defer p_popenFin()
@@ -1438,7 +1438,7 @@ func Plot_ShowMetricsWindowV(p_popen *bool) {
 }
 
 // Plot_ShowStyleEditorV parameter default value hint:
-// ref: ((void*)0)
+// ref: NULL
 func Plot_ShowStyleEditorV(ref ImPlotStyle) {
 	C.Plot_ShowStyleEditorV(ref.handle())
 }
@@ -1455,25 +1455,25 @@ func Plot_ShowUserGuide() {
 }
 
 // Plot_StyleColorsAutoV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func Plot_StyleColorsAutoV(dst ImPlotStyle) {
 	C.Plot_StyleColorsAutoV(dst.handle())
 }
 
 // Plot_StyleColorsClassicV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func Plot_StyleColorsClassicV(dst ImPlotStyle) {
 	C.Plot_StyleColorsClassicV(dst.handle())
 }
 
 // Plot_StyleColorsDarkV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func Plot_StyleColorsDarkV(dst ImPlotStyle) {
 	C.Plot_StyleColorsDarkV(dst.handle())
 }
 
 // Plot_StyleColorsLightV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func Plot_StyleColorsLightV(dst ImPlotStyle) {
 	C.Plot_StyleColorsLightV(dst.handle())
 }
