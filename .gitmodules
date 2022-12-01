@@ -1,0 +1,6 @@
+[submodule "cimgui"]
+	path = cimgui
+	url = https://github.com/cimgui/cimgui.git
+[submodule "cimplot"]
+	path = cimplot
+	url = https://github.com/cimgui/cimplot.git

@@ -3,6 +3,7 @@
 
 void PlotAlignmentData_Destroy(ImPlotAlignmentData* self) { ImPlotAlignmentData_destroy(self); }
 void PlotAnnotationCollection_Destroy(ImPlotAnnotationCollection* self) { ImPlotAnnotationCollection_destroy(self); }
+void PlotAnnotation_Destroy(ImPlotAnnotation* self) { ImPlotAnnotation_destroy(self); }
 void PlotAxis_Destroy(ImPlotAxis* self) { ImPlotAxis_destroy(self); }
 void PlotColormapData_Destroy(ImPlotColormapData* self) { ImPlotColormapData_destroy(self); }
 void PlotDateTimeSpec_Destroy(ImPlotDateTimeSpec* self) { ImPlotDateTimeSpec_destroy(self); }
@@ -66,7 +67,7 @@ void Plot_DestroyContextV(ImPlotContext* ctx) { ImPlot_DestroyContext(ctx); }
 bool Plot_DragLineXV(int id,double* x,const ImVec4 col,float thickness,ImPlotDragToolFlags flags) { return ImPlot_DragLineX(id,x,col,thickness,flags); }
 bool Plot_DragLineYV(int id,double* y,const ImVec4 col,float thickness,ImPlotDragToolFlags flags) { return ImPlot_DragLineY(id,y,col,thickness,flags); }
 bool Plot_DragPointV(int id,double* x,double* y,const ImVec4 col,float size,ImPlotDragToolFlags flags) { return ImPlot_DragPoint(id,x,y,col,size,flags); }
-bool Plot_DragRectV(int id,double* x_min,double* y_min,double* x_max,double* y_max,const ImVec4 col,ImPlotDragToolFlags flags) { return ImPlot_DragRect(id,x_min,y_min,x_max,y_max,col,flags); }
+bool Plot_DragRectV(int id,double* x1,double* y1,double* x2,double* y2,const ImVec4 col,ImPlotDragToolFlags flags) { return ImPlot_DragRect(id,x1,y1,x2,y2,col,flags); }
 void Plot_EndAlignedPlots() { ImPlot_EndAlignedPlots(); }
 void Plot_EndDragDropSource() { ImPlot_EndDragDropSource(); }
 void Plot_EndDragDropTarget() { ImPlot_EndDragDropTarget(); }
@@ -409,7 +410,7 @@ void Plot_DestroyContext() { Plot_DestroyContextV(NULL); }
 bool Plot_DragLineX(int id,double* x,const ImVec4 col) { return Plot_DragLineXV(id,x,col,1,0); }
 bool Plot_DragLineY(int id,double* y,const ImVec4 col) { return Plot_DragLineYV(id,y,col,1,0); }
 bool Plot_DragPoint(int id,double* x,double* y,const ImVec4 col) { return Plot_DragPointV(id,x,y,col,4,0); }
-bool Plot_DragRect(int id,double* x_min,double* y_min,double* x_max,double* y_max,const ImVec4 col) { return Plot_DragRectV(id,x_min,y_min,x_max,y_max,col,0); }
+bool Plot_DragRect(int id,double* x1,double* y1,double* x2,double* y2,const ImVec4 col) { return Plot_DragRectV(id,x1,y1,x2,y2,col,0); }
 void Plot_GetColormapColor(ImVec4* pOut,int idx) { Plot_GetColormapColorV(pOut,idx,-1); }
 int Plot_GetColormapSize() { return Plot_GetColormapSizeV(-1); }
 ImPlotRect Plot_GetPlotLimits() { return Plot_GetPlotLimitsV(-1,-1); }

@@ -86,6 +86,8 @@ const (
 	ImGuiButtonFlags_NoHoldingActiveId             = 131072
 	ImGuiButtonFlags_NoNavFocus                    = 262144
 	ImGuiButtonFlags_NoHoveredOnFocus              = 524288
+	ImGuiButtonFlags_NoSetKeyOwner                 = 1048576
+	ImGuiButtonFlags_NoTestKeyOwner                = 2097152
 	ImGuiButtonFlags_PressedOnMask_                = 1008
 	ImGuiButtonFlags_PressedOnDefault_             = 32
 )
@@ -405,6 +407,9 @@ const (
 	ImGuiHoveredFlags_NoNavOverride                = 1024
 	ImGuiHoveredFlags_RectOnly                     = 416
 	ImGuiHoveredFlags_RootAndChildWindows          = 3
+	ImGuiHoveredFlags_DelayNormal                  = 2048
+	ImGuiHoveredFlags_DelayShort                   = 4096
+	ImGuiHoveredFlags_NoSharedDelay                = 8192
 )
 
 type ImGuiInputEventType int
@@ -424,12 +429,30 @@ const (
 type ImGuiInputFlags int
 
 const (
-	ImGuiInputFlags_None               = 0
-	ImGuiInputFlags_Repeat             = 1
-	ImGuiInputFlags_RepeatRateDefault  = 2
-	ImGuiInputFlags_RepeatRateNavMove  = 4
-	ImGuiInputFlags_RepeatRateNavTweak = 8
-	ImGuiInputFlags_RepeatRateMask_    = 14
+	ImGuiInputFlags_None                       = 0
+	ImGuiInputFlags_Repeat                     = 1
+	ImGuiInputFlags_RepeatRateDefault          = 2
+	ImGuiInputFlags_RepeatRateNavMove          = 4
+	ImGuiInputFlags_RepeatRateNavTweak         = 8
+	ImGuiInputFlags_RepeatRateMask_            = 14
+	ImGuiInputFlags_CondHovered                = 16
+	ImGuiInputFlags_CondActive                 = 32
+	ImGuiInputFlags_CondDefault_               = 48
+	ImGuiInputFlags_CondMask_                  = 48
+	ImGuiInputFlags_LockThisFrame              = 64
+	ImGuiInputFlags_LockUntilRelease           = 128
+	ImGuiInputFlags_RouteFocused               = 256
+	ImGuiInputFlags_RouteGlobalLow             = 512
+	ImGuiInputFlags_RouteGlobal                = 1024
+	ImGuiInputFlags_RouteGlobalHigh            = 2048
+	ImGuiInputFlags_RouteMask_                 = 3840
+	ImGuiInputFlags_RouteAlways                = 4096
+	ImGuiInputFlags_RouteUnlessBgFocused       = 8192
+	ImGuiInputFlags_RouteExtraMask_            = 12288
+	ImGuiInputFlags_SupportedByIsKeyPressed    = 15
+	ImGuiInputFlags_SupportedByShortcut        = 16143
+	ImGuiInputFlags_SupportedBySetKeyOwner     = 192
+	ImGuiInputFlags_SupportedBySetItemKeyOwner = 240
 )
 
 type ImGuiInputSource int
@@ -476,6 +499,7 @@ const (
 	ImGuiInputTextFlags_CharsScientific     = 131072
 	ImGuiInputTextFlags_CallbackResize      = 262144
 	ImGuiInputTextFlags_CallbackEdit        = 524288
+	ImGuiInputTextFlags_EscapeClearsAll     = 1048576
 )
 
 type ImGuiItemFlags int
@@ -490,7 +514,8 @@ const (
 	ImGuiItemFlags_SelectableDontClosePopup = 32
 	ImGuiItemFlags_MixedValue               = 64
 	ImGuiItemFlags_ReadOnly                 = 128
-	ImGuiItemFlags_Inputable                = 256
+	ImGuiItemFlags_NoWindowHoverableCheck   = 256
+	ImGuiItemFlags_Inputable                = 1024
 )
 
 type ImGuiItemStatusFlags int
@@ -506,179 +531,166 @@ const (
 	ImGuiItemStatusFlags_Deactivated      = 64
 	ImGuiItemStatusFlags_HoveredWindow    = 128
 	ImGuiItemStatusFlags_FocusedByTabbing = 256
-)
-
-type ImGuiKeyPrivate int
-
-const (
-	ImGuiKey_LegacyNativeKey_BEGIN = 0
-	ImGuiKey_LegacyNativeKey_END   = 512
-	ImGuiKey_Keyboard_BEGIN        = 512
-	ImGuiKey_Keyboard_END          = 617
-	ImGuiKey_Gamepad_BEGIN         = 617
-	ImGuiKey_Gamepad_END           = 641
-	ImGuiKey_Aliases_BEGIN         = 645
-	ImGuiKey_Aliases_END           = 652
-	ImGuiKey_NavKeyboardTweakSlow  = 641
-	ImGuiKey_NavKeyboardTweakFast  = 642
-	ImGuiKey_NavGamepadTweakSlow   = 627
-	ImGuiKey_NavGamepadTweakFast   = 628
-	ImGuiKey_NavGamepadActivate    = 622
-	ImGuiKey_NavGamepadCancel      = 620
-	ImGuiKey_NavGamepadMenu        = 619
-	ImGuiKey_NavGamepadInput       = 621
+	ImGuiItemStatusFlags_Visible          = 512
 )
 
 type ImGuiKey int
 
 const (
-	ImGuiKey_None               = 0
-	ImGuiKey_Tab                = 512
-	ImGuiKey_LeftArrow          = 513
-	ImGuiKey_RightArrow         = 514
-	ImGuiKey_UpArrow            = 515
-	ImGuiKey_DownArrow          = 516
-	ImGuiKey_PageUp             = 517
-	ImGuiKey_PageDown           = 518
-	ImGuiKey_Home               = 519
-	ImGuiKey_End                = 520
-	ImGuiKey_Insert             = 521
-	ImGuiKey_Delete             = 522
-	ImGuiKey_Backspace          = 523
-	ImGuiKey_Space              = 524
-	ImGuiKey_Enter              = 525
-	ImGuiKey_Escape             = 526
-	ImGuiKey_LeftCtrl           = 527
-	ImGuiKey_LeftShift          = 528
-	ImGuiKey_LeftAlt            = 529
-	ImGuiKey_LeftSuper          = 530
-	ImGuiKey_RightCtrl          = 531
-	ImGuiKey_RightShift         = 532
-	ImGuiKey_RightAlt           = 533
-	ImGuiKey_RightSuper         = 534
-	ImGuiKey_Menu               = 535
-	ImGuiKey_0                  = 536
-	ImGuiKey_1                  = 537
-	ImGuiKey_2                  = 538
-	ImGuiKey_3                  = 539
-	ImGuiKey_4                  = 540
-	ImGuiKey_5                  = 541
-	ImGuiKey_6                  = 542
-	ImGuiKey_7                  = 543
-	ImGuiKey_8                  = 544
-	ImGuiKey_9                  = 545
-	ImGuiKey_A                  = 546
-	ImGuiKey_B                  = 547
-	ImGuiKey_C                  = 548
-	ImGuiKey_D                  = 549
-	ImGuiKey_E                  = 550
-	ImGuiKey_F                  = 551
-	ImGuiKey_G                  = 552
-	ImGuiKey_H                  = 553
-	ImGuiKey_I                  = 554
-	ImGuiKey_J                  = 555
-	ImGuiKey_K                  = 556
-	ImGuiKey_L                  = 557
-	ImGuiKey_M                  = 558
-	ImGuiKey_N                  = 559
-	ImGuiKey_O                  = 560
-	ImGuiKey_P                  = 561
-	ImGuiKey_Q                  = 562
-	ImGuiKey_R                  = 563
-	ImGuiKey_S                  = 564
-	ImGuiKey_T                  = 565
-	ImGuiKey_U                  = 566
-	ImGuiKey_V                  = 567
-	ImGuiKey_W                  = 568
-	ImGuiKey_X                  = 569
-	ImGuiKey_Y                  = 570
-	ImGuiKey_Z                  = 571
-	ImGuiKey_F1                 = 572
-	ImGuiKey_F2                 = 573
-	ImGuiKey_F3                 = 574
-	ImGuiKey_F4                 = 575
-	ImGuiKey_F5                 = 576
-	ImGuiKey_F6                 = 577
-	ImGuiKey_F7                 = 578
-	ImGuiKey_F8                 = 579
-	ImGuiKey_F9                 = 580
-	ImGuiKey_F10                = 581
-	ImGuiKey_F11                = 582
-	ImGuiKey_F12                = 583
-	ImGuiKey_Apostrophe         = 584
-	ImGuiKey_Comma              = 585
-	ImGuiKey_Minus              = 586
-	ImGuiKey_Period             = 587
-	ImGuiKey_Slash              = 588
-	ImGuiKey_Semicolon          = 589
-	ImGuiKey_Equal              = 590
-	ImGuiKey_LeftBracket        = 591
-	ImGuiKey_Backslash          = 592
-	ImGuiKey_RightBracket       = 593
-	ImGuiKey_GraveAccent        = 594
-	ImGuiKey_CapsLock           = 595
-	ImGuiKey_ScrollLock         = 596
-	ImGuiKey_NumLock            = 597
-	ImGuiKey_PrintScreen        = 598
-	ImGuiKey_Pause              = 599
-	ImGuiKey_Keypad0            = 600
-	ImGuiKey_Keypad1            = 601
-	ImGuiKey_Keypad2            = 602
-	ImGuiKey_Keypad3            = 603
-	ImGuiKey_Keypad4            = 604
-	ImGuiKey_Keypad5            = 605
-	ImGuiKey_Keypad6            = 606
-	ImGuiKey_Keypad7            = 607
-	ImGuiKey_Keypad8            = 608
-	ImGuiKey_Keypad9            = 609
-	ImGuiKey_KeypadDecimal      = 610
-	ImGuiKey_KeypadDivide       = 611
-	ImGuiKey_KeypadMultiply     = 612
-	ImGuiKey_KeypadSubtract     = 613
-	ImGuiKey_KeypadAdd          = 614
-	ImGuiKey_KeypadEnter        = 615
-	ImGuiKey_KeypadEqual        = 616
-	ImGuiKey_GamepadStart       = 617
-	ImGuiKey_GamepadBack        = 618
-	ImGuiKey_GamepadFaceLeft    = 619
-	ImGuiKey_GamepadFaceRight   = 620
-	ImGuiKey_GamepadFaceUp      = 621
-	ImGuiKey_GamepadFaceDown    = 622
-	ImGuiKey_GamepadDpadLeft    = 623
-	ImGuiKey_GamepadDpadRight   = 624
-	ImGuiKey_GamepadDpadUp      = 625
-	ImGuiKey_GamepadDpadDown    = 626
-	ImGuiKey_GamepadL1          = 627
-	ImGuiKey_GamepadR1          = 628
-	ImGuiKey_GamepadL2          = 629
-	ImGuiKey_GamepadR2          = 630
-	ImGuiKey_GamepadL3          = 631
-	ImGuiKey_GamepadR3          = 632
-	ImGuiKey_GamepadLStickLeft  = 633
-	ImGuiKey_GamepadLStickRight = 634
-	ImGuiKey_GamepadLStickUp    = 635
-	ImGuiKey_GamepadLStickDown  = 636
-	ImGuiKey_GamepadRStickLeft  = 637
-	ImGuiKey_GamepadRStickRight = 638
-	ImGuiKey_GamepadRStickUp    = 639
-	ImGuiKey_GamepadRStickDown  = 640
-	ImGuiKey_ModCtrl            = 641
-	ImGuiKey_ModShift           = 642
-	ImGuiKey_ModAlt             = 643
-	ImGuiKey_ModSuper           = 644
-	ImGuiKey_MouseLeft          = 645
-	ImGuiKey_MouseRight         = 646
-	ImGuiKey_MouseMiddle        = 647
-	ImGuiKey_MouseX1            = 648
-	ImGuiKey_MouseX2            = 649
-	ImGuiKey_MouseWheelX        = 650
-	ImGuiKey_MouseWheelY        = 651
-	ImGuiKey_COUNT              = 652
-	ImGuiKey_NamedKey_BEGIN     = 512
-	ImGuiKey_NamedKey_END       = 652
-	ImGuiKey_NamedKey_COUNT     = 140
-	ImGuiKey_KeysData_SIZE      = 652
-	ImGuiKey_KeysData_OFFSET    = 0
+	ImGuiKey_None                = 0
+	ImGuiKey_Tab                 = 512
+	ImGuiKey_LeftArrow           = 513
+	ImGuiKey_RightArrow          = 514
+	ImGuiKey_UpArrow             = 515
+	ImGuiKey_DownArrow           = 516
+	ImGuiKey_PageUp              = 517
+	ImGuiKey_PageDown            = 518
+	ImGuiKey_Home                = 519
+	ImGuiKey_End                 = 520
+	ImGuiKey_Insert              = 521
+	ImGuiKey_Delete              = 522
+	ImGuiKey_Backspace           = 523
+	ImGuiKey_Space               = 524
+	ImGuiKey_Enter               = 525
+	ImGuiKey_Escape              = 526
+	ImGuiKey_LeftCtrl            = 527
+	ImGuiKey_LeftShift           = 528
+	ImGuiKey_LeftAlt             = 529
+	ImGuiKey_LeftSuper           = 530
+	ImGuiKey_RightCtrl           = 531
+	ImGuiKey_RightShift          = 532
+	ImGuiKey_RightAlt            = 533
+	ImGuiKey_RightSuper          = 534
+	ImGuiKey_Menu                = 535
+	ImGuiKey_0                   = 536
+	ImGuiKey_1                   = 537
+	ImGuiKey_2                   = 538
+	ImGuiKey_3                   = 539
+	ImGuiKey_4                   = 540
+	ImGuiKey_5                   = 541
+	ImGuiKey_6                   = 542
+	ImGuiKey_7                   = 543
+	ImGuiKey_8                   = 544
+	ImGuiKey_9                   = 545
+	ImGuiKey_A                   = 546
+	ImGuiKey_B                   = 547
+	ImGuiKey_C                   = 548
+	ImGuiKey_D                   = 549
+	ImGuiKey_E                   = 550
+	ImGuiKey_F                   = 551
+	ImGuiKey_G                   = 552
+	ImGuiKey_H                   = 553
+	ImGuiKey_I                   = 554
+	ImGuiKey_J                   = 555
+	ImGuiKey_K                   = 556
+	ImGuiKey_L                   = 557
+	ImGuiKey_M                   = 558
+	ImGuiKey_N                   = 559
+	ImGuiKey_O                   = 560
+	ImGuiKey_P                   = 561
+	ImGuiKey_Q                   = 562
+	ImGuiKey_R                   = 563
+	ImGuiKey_S                   = 564
+	ImGuiKey_T                   = 565
+	ImGuiKey_U                   = 566
+	ImGuiKey_V                   = 567
+	ImGuiKey_W                   = 568
+	ImGuiKey_X                   = 569
+	ImGuiKey_Y                   = 570
+	ImGuiKey_Z                   = 571
+	ImGuiKey_F1                  = 572
+	ImGuiKey_F2                  = 573
+	ImGuiKey_F3                  = 574
+	ImGuiKey_F4                  = 575
+	ImGuiKey_F5                  = 576
+	ImGuiKey_F6                  = 577
+	ImGuiKey_F7                  = 578
+	ImGuiKey_F8                  = 579
+	ImGuiKey_F9                  = 580
+	ImGuiKey_F10                 = 581
+	ImGuiKey_F11                 = 582
+	ImGuiKey_F12                 = 583
+	ImGuiKey_Apostrophe          = 584
+	ImGuiKey_Comma               = 585
+	ImGuiKey_Minus               = 586
+	ImGuiKey_Period              = 587
+	ImGuiKey_Slash               = 588
+	ImGuiKey_Semicolon           = 589
+	ImGuiKey_Equal               = 590
+	ImGuiKey_LeftBracket         = 591
+	ImGuiKey_Backslash           = 592
+	ImGuiKey_RightBracket        = 593
+	ImGuiKey_GraveAccent         = 594
+	ImGuiKey_CapsLock            = 595
+	ImGuiKey_ScrollLock          = 596
+	ImGuiKey_NumLock             = 597
+	ImGuiKey_PrintScreen         = 598
+	ImGuiKey_Pause               = 599
+	ImGuiKey_Keypad0             = 600
+	ImGuiKey_Keypad1             = 601
+	ImGuiKey_Keypad2             = 602
+	ImGuiKey_Keypad3             = 603
+	ImGuiKey_Keypad4             = 604
+	ImGuiKey_Keypad5             = 605
+	ImGuiKey_Keypad6             = 606
+	ImGuiKey_Keypad7             = 607
+	ImGuiKey_Keypad8             = 608
+	ImGuiKey_Keypad9             = 609
+	ImGuiKey_KeypadDecimal       = 610
+	ImGuiKey_KeypadDivide        = 611
+	ImGuiKey_KeypadMultiply      = 612
+	ImGuiKey_KeypadSubtract      = 613
+	ImGuiKey_KeypadAdd           = 614
+	ImGuiKey_KeypadEnter         = 615
+	ImGuiKey_KeypadEqual         = 616
+	ImGuiKey_GamepadStart        = 617
+	ImGuiKey_GamepadBack         = 618
+	ImGuiKey_GamepadFaceLeft     = 619
+	ImGuiKey_GamepadFaceRight    = 620
+	ImGuiKey_GamepadFaceUp       = 621
+	ImGuiKey_GamepadFaceDown     = 622
+	ImGuiKey_GamepadDpadLeft     = 623
+	ImGuiKey_GamepadDpadRight    = 624
+	ImGuiKey_GamepadDpadUp       = 625
+	ImGuiKey_GamepadDpadDown     = 626
+	ImGuiKey_GamepadL1           = 627
+	ImGuiKey_GamepadR1           = 628
+	ImGuiKey_GamepadL2           = 629
+	ImGuiKey_GamepadR2           = 630
+	ImGuiKey_GamepadL3           = 631
+	ImGuiKey_GamepadR3           = 632
+	ImGuiKey_GamepadLStickLeft   = 633
+	ImGuiKey_GamepadLStickRight  = 634
+	ImGuiKey_GamepadLStickUp     = 635
+	ImGuiKey_GamepadLStickDown   = 636
+	ImGuiKey_GamepadRStickLeft   = 637
+	ImGuiKey_GamepadRStickRight  = 638
+	ImGuiKey_GamepadRStickUp     = 639
+	ImGuiKey_GamepadRStickDown   = 640
+	ImGuiKey_MouseLeft           = 641
+	ImGuiKey_MouseRight          = 642
+	ImGuiKey_MouseMiddle         = 643
+	ImGuiKey_MouseX1             = 644
+	ImGuiKey_MouseX2             = 645
+	ImGuiKey_MouseWheelX         = 646
+	ImGuiKey_MouseWheelY         = 647
+	ImGuiKey_ReservedForModCtrl  = 648
+	ImGuiKey_ReservedForModShift = 649
+	ImGuiKey_ReservedForModAlt   = 650
+	ImGuiKey_ReservedForModSuper = 651
+	ImGuiKey_COUNT               = 652
+	ImGuiMod_None                = 0
+	ImGuiMod_Ctrl                = 4096
+	ImGuiMod_Shift               = 8192
+	ImGuiMod_Alt                 = 16384
+	ImGuiMod_Super               = 32768
+	ImGuiMod_Mask_               = 61440
+	ImGuiMod_Shortcut            = 4096
+	ImGuiKey_NamedKey_BEGIN      = 512
+	ImGuiKey_NamedKey_END        = 652
+	ImGuiKey_NamedKey_COUNT      = 140
+	ImGuiKey_KeysData_SIZE       = 652
+	ImGuiKey_KeysData_OFFSET     = 0
 )
 
 type ImGuiLayoutType int
@@ -686,6 +698,19 @@ type ImGuiLayoutType int
 const (
 	ImGuiLayoutType_Horizontal = 0
 	ImGuiLayoutType_Vertical   = 1
+)
+
+type ImGuiLocKey int
+
+const (
+	ImGuiLocKey_TableSizeOne         = 0
+	ImGuiLocKey_TableSizeAllFit      = 1
+	ImGuiLocKey_TableSizeAllDefault  = 2
+	ImGuiLocKey_TableResetOrder      = 3
+	ImGuiLocKey_WindowingMainMenuBar = 4
+	ImGuiLocKey_WindowingPopup       = 5
+	ImGuiLocKey_WindowingUntitled    = 6
+	ImGuiLocKey_COUNT                = 7
 )
 
 type ImGuiLogType int
@@ -696,17 +721,6 @@ const (
 	ImGuiLogType_File      = 2
 	ImGuiLogType_Buffer    = 3
 	ImGuiLogType_Clipboard = 4
-)
-
-type ImGuiModFlags int
-
-const (
-	ImGuiModFlags_None  = 0
-	ImGuiModFlags_Ctrl  = 1
-	ImGuiModFlags_Shift = 2
-	ImGuiModFlags_Alt   = 4
-	ImGuiModFlags_Super = 8
-	ImGuiModFlags_All   = 15
 )
 
 type ImGuiMouseButton int
@@ -886,6 +900,7 @@ const (
 	ImGuiSelectableFlags_DrawHoveredWhenHeld  = 33554432
 	ImGuiSelectableFlags_SetNavIdOnHover      = 67108864
 	ImGuiSelectableFlags_NoPadWithHalfSpacing = 134217728
+	ImGuiSelectableFlags_NoSetKeyOwner        = 268435456
 )
 
 type ImGuiSelectableFlags int

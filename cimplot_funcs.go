@@ -14,6 +14,10 @@ func (self ImPlotAnnotationCollection) Destroy() {
 	C.PlotAnnotationCollection_Destroy(self.handle())
 }
 
+func (self ImPlotAnnotation) Destroy() {
+	C.PlotAnnotation_Destroy(self.handle())
+}
+
 func (self ImPlotAxis) Destroy() {
 	C.PlotAxis_Destroy(self.handle())
 }
@@ -248,9 +252,9 @@ func Plot_BeginPlotV(title_id string, size ImVec2, flags ImPlotFlags) bool {
 }
 
 // Plot_BeginSubplotsV parameter default value hint:
-// col_ratios: ((void*)0)
+// col_ratios: NULL
 // flags: 0
-// row_ratios: ((void*)0)
+// row_ratios: NULL
 func Plot_BeginSubplotsV(title_id string, rows int32, cols int32, size ImVec2, flags ImPlotSubplotFlags, row_ratios *float32, col_ratios *float32) bool {
 	title_idArg, title_idFin := wrapString(title_id)
 	defer title_idFin()
@@ -265,7 +269,7 @@ func Plot_BeginSubplotsV(title_id string, rows int32, cols int32, size ImVec2, f
 }
 
 // Plot_BustColorCacheV parameter default value hint:
-// plot_title_id: ((void*)0)
+// plot_title_id: NULL
 func Plot_BustColorCacheV(plot_title_id string) {
 	plot_title_idArg, plot_title_idFin := wrapString(plot_title_id)
 	defer plot_title_idFin()
@@ -309,7 +313,7 @@ func Plot_ColormapScaleV(label string, scale_min float64, scale_max float64, siz
 // Plot_ColormapSliderV parameter default value hint:
 // cmap: -1
 // format: ""
-// out: ((void*)0)
+// out: NULL
 func Plot_ColormapSliderV(label string, t *float32, out *ImVec4, format string, cmap ImPlotColormap) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
@@ -331,7 +335,7 @@ func Plot_CreateContext() ImPlotContext {
 }
 
 // Plot_DestroyContextV parameter default value hint:
-// ctx: ((void*)0)
+// ctx: NULL
 func Plot_DestroyContextV(ctx ImPlotContext) {
 	C.Plot_DestroyContextV(ctx.handle())
 }
@@ -359,8 +363,8 @@ func Plot_DragPointV(id int32, x *float64, y *float64, col ImVec4, size float32,
 
 // Plot_DragRectV parameter default value hint:
 // flags: 0
-func Plot_DragRectV(id int32, x_min *float64, y_min *float64, x_max *float64, y_max *float64, col ImVec4, flags ImPlotDragToolFlags) bool {
-	return C.Plot_DragRectV(C.int(id), (*C.double)(x_min), (*C.double)(y_min), (*C.double)(x_max), (*C.double)(y_max), col.toC(), C.ImPlotDragToolFlags(flags)) == C.bool(true)
+func Plot_DragRectV(id int32, x1 *float64, y1 *float64, x2 *float64, y2 *float64, col ImVec4, flags ImPlotDragToolFlags) bool {
+	return C.Plot_DragRectV(C.int(id), (*C.double)(x1), (*C.double)(y1), (*C.double)(x2), (*C.double)(y2), col.toC(), C.ImPlotDragToolFlags(flags)) == C.bool(true)
 }
 
 func Plot_EndAlignedPlots() {
@@ -511,13 +515,13 @@ func Plot_ItemIcon_Vec4(col ImVec4) {
 }
 
 // Plot_MapInputDefaultV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func Plot_MapInputDefaultV(dst ImPlotInputMap) {
 	C.Plot_MapInputDefaultV(dst.handle())
 }
 
 // Plot_MapInputReverseV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func Plot_MapInputReverseV(dst ImPlotInputMap) {
 	C.Plot_MapInputReverseV(dst.handle())
 }
@@ -1348,7 +1352,7 @@ func Plot_SetupAxesLimitsV(x_min float64, x_max float64, y_min float64, y_max fl
 
 // Plot_SetupAxisV parameter default value hint:
 // flags: 0
-// label: ((void*)0)
+// label: NULL
 func Plot_SetupAxisV(axis ImAxis, label string, flags ImPlotAxisFlags) {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
@@ -1409,7 +1413,7 @@ func Plot_ShowColormapSelector(label string) bool {
 }
 
 // Plot_ShowDemoWindowV parameter default value hint:
-// p_open: ((void*)0)
+// p_open: NULL
 func Plot_ShowDemoWindowV(p_open *bool) {
 	p_openArg, p_openFin := wrapBool(p_open)
 	defer p_openFin()
@@ -1425,7 +1429,7 @@ func Plot_ShowInputMapSelector(label string) bool {
 }
 
 // Plot_ShowMetricsWindowV parameter default value hint:
-// p_popen: ((void*)0)
+// p_popen: NULL
 func Plot_ShowMetricsWindowV(p_popen *bool) {
 	p_popenArg, p_popenFin := wrapBool(p_popen)
 	defer p_popenFin()
@@ -1434,7 +1438,7 @@ func Plot_ShowMetricsWindowV(p_popen *bool) {
 }
 
 // Plot_ShowStyleEditorV parameter default value hint:
-// ref: ((void*)0)
+// ref: NULL
 func Plot_ShowStyleEditorV(ref ImPlotStyle) {
 	C.Plot_ShowStyleEditorV(ref.handle())
 }
@@ -1451,25 +1455,25 @@ func Plot_ShowUserGuide() {
 }
 
 // Plot_StyleColorsAutoV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func Plot_StyleColorsAutoV(dst ImPlotStyle) {
 	C.Plot_StyleColorsAutoV(dst.handle())
 }
 
 // Plot_StyleColorsClassicV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func Plot_StyleColorsClassicV(dst ImPlotStyle) {
 	C.Plot_StyleColorsClassicV(dst.handle())
 }
 
 // Plot_StyleColorsDarkV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func Plot_StyleColorsDarkV(dst ImPlotStyle) {
 	C.Plot_StyleColorsDarkV(dst.handle())
 }
 
 // Plot_StyleColorsLightV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func Plot_StyleColorsLightV(dst ImPlotStyle) {
 	C.Plot_StyleColorsLightV(dst.handle())
 }
@@ -1601,8 +1605,8 @@ func Plot_DragPoint(id int32, x *float64, y *float64, col ImVec4) bool {
 	return C.Plot_DragPoint(C.int(id), (*C.double)(x), (*C.double)(y), col.toC()) == C.bool(true)
 }
 
-func Plot_DragRect(id int32, x_min *float64, y_min *float64, x_max *float64, y_max *float64, col ImVec4) bool {
-	return C.Plot_DragRect(C.int(id), (*C.double)(x_min), (*C.double)(y_min), (*C.double)(x_max), (*C.double)(y_max), col.toC()) == C.bool(true)
+func Plot_DragRect(id int32, x1 *float64, y1 *float64, x2 *float64, y2 *float64, col ImVec4) bool {
+	return C.Plot_DragRect(C.int(id), (*C.double)(x1), (*C.double)(y1), (*C.double)(x2), (*C.double)(y2), col.toC()) == C.bool(true)
 }
 
 func Plot_GetColormapColor(pOut *ImVec4, idx int32) {
@@ -2739,6 +2743,14 @@ func (self ImPlotContext) GetMousePosStringBuilder() ImGuiTextBuffer {
 	return newImGuiTextBufferFromC(C.ImPlotContext_GetMousePosStringBuilder(self.handle()))
 }
 
+func (self ImPlotContext) SetSortItems(v ImPlotItemGroup) {
+	C.ImPlotContext_SetSortItems(self.handle(), v.handle())
+}
+
+func (self ImPlotContext) GetSortItems() ImPlotItemGroup {
+	return (ImPlotItemGroup)(unsafe.Pointer(C.ImPlotContext_GetSortItems(self.handle())))
+}
+
 func (self ImPlotContext) SetCurrentAlignmentH(v ImPlotAlignmentData) {
 	C.ImPlotContext_SetCurrentAlignmentH(self.handle(), v.handle())
 }
@@ -2795,12 +2807,12 @@ func (self ImPlotInputMap) GetPan() ImGuiMouseButton {
 	return ImGuiMouseButton(C.ImPlotInputMap_GetPan(self.handle()))
 }
 
-func (self ImPlotInputMap) SetPanMod(v ImGuiModFlags) {
-	C.ImPlotInputMap_SetPanMod(self.handle(), C.ImGuiModFlags(v))
+func (self ImPlotInputMap) SetPanMod(v int32) {
+	C.ImPlotInputMap_SetPanMod(self.handle(), C.int(v))
 }
 
-func (self ImPlotInputMap) GetPanMod() ImGuiModFlags {
-	return ImGuiModFlags(C.ImPlotInputMap_GetPanMod(self.handle()))
+func (self ImPlotInputMap) GetPanMod() int {
+	return int(C.ImPlotInputMap_GetPanMod(self.handle()))
 }
 
 func (self ImPlotInputMap) SetFit(v ImGuiMouseButton) {
@@ -2827,28 +2839,28 @@ func (self ImPlotInputMap) GetSelectCancel() ImGuiMouseButton {
 	return ImGuiMouseButton(C.ImPlotInputMap_GetSelectCancel(self.handle()))
 }
 
-func (self ImPlotInputMap) SetSelectMod(v ImGuiModFlags) {
-	C.ImPlotInputMap_SetSelectMod(self.handle(), C.ImGuiModFlags(v))
+func (self ImPlotInputMap) SetSelectMod(v int32) {
+	C.ImPlotInputMap_SetSelectMod(self.handle(), C.int(v))
 }
 
-func (self ImPlotInputMap) GetSelectMod() ImGuiModFlags {
-	return ImGuiModFlags(C.ImPlotInputMap_GetSelectMod(self.handle()))
+func (self ImPlotInputMap) GetSelectMod() int {
+	return int(C.ImPlotInputMap_GetSelectMod(self.handle()))
 }
 
-func (self ImPlotInputMap) SetSelectHorzMod(v ImGuiModFlags) {
-	C.ImPlotInputMap_SetSelectHorzMod(self.handle(), C.ImGuiModFlags(v))
+func (self ImPlotInputMap) SetSelectHorzMod(v int32) {
+	C.ImPlotInputMap_SetSelectHorzMod(self.handle(), C.int(v))
 }
 
-func (self ImPlotInputMap) GetSelectHorzMod() ImGuiModFlags {
-	return ImGuiModFlags(C.ImPlotInputMap_GetSelectHorzMod(self.handle()))
+func (self ImPlotInputMap) GetSelectHorzMod() int {
+	return int(C.ImPlotInputMap_GetSelectHorzMod(self.handle()))
 }
 
-func (self ImPlotInputMap) SetSelectVertMod(v ImGuiModFlags) {
-	C.ImPlotInputMap_SetSelectVertMod(self.handle(), C.ImGuiModFlags(v))
+func (self ImPlotInputMap) SetSelectVertMod(v int32) {
+	C.ImPlotInputMap_SetSelectVertMod(self.handle(), C.int(v))
 }
 
-func (self ImPlotInputMap) GetSelectVertMod() ImGuiModFlags {
-	return ImGuiModFlags(C.ImPlotInputMap_GetSelectVertMod(self.handle()))
+func (self ImPlotInputMap) GetSelectVertMod() int {
+	return int(C.ImPlotInputMap_GetSelectVertMod(self.handle()))
 }
 
 func (self ImPlotInputMap) SetMenu(v ImGuiMouseButton) {
@@ -2859,20 +2871,20 @@ func (self ImPlotInputMap) GetMenu() ImGuiMouseButton {
 	return ImGuiMouseButton(C.ImPlotInputMap_GetMenu(self.handle()))
 }
 
-func (self ImPlotInputMap) SetOverrideMod(v ImGuiModFlags) {
-	C.ImPlotInputMap_SetOverrideMod(self.handle(), C.ImGuiModFlags(v))
+func (self ImPlotInputMap) SetOverrideMod(v int32) {
+	C.ImPlotInputMap_SetOverrideMod(self.handle(), C.int(v))
 }
 
-func (self ImPlotInputMap) GetOverrideMod() ImGuiModFlags {
-	return ImGuiModFlags(C.ImPlotInputMap_GetOverrideMod(self.handle()))
+func (self ImPlotInputMap) GetOverrideMod() int {
+	return int(C.ImPlotInputMap_GetOverrideMod(self.handle()))
 }
 
-func (self ImPlotInputMap) SetZoomMod(v ImGuiModFlags) {
-	C.ImPlotInputMap_SetZoomMod(self.handle(), C.ImGuiModFlags(v))
+func (self ImPlotInputMap) SetZoomMod(v int32) {
+	C.ImPlotInputMap_SetZoomMod(self.handle(), C.int(v))
 }
 
-func (self ImPlotInputMap) GetZoomMod() ImGuiModFlags {
-	return ImGuiModFlags(C.ImPlotInputMap_GetZoomMod(self.handle()))
+func (self ImPlotInputMap) GetZoomMod() int {
+	return int(C.ImPlotInputMap_GetZoomMod(self.handle()))
 }
 
 func (self ImPlotInputMap) SetZoomRate(v float32) {
