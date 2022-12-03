@@ -54,7 +54,7 @@ void DrawList_ChannelsSplit(ImDrawList* self,int count) { ImDrawList_ChannelsSpl
 ImDrawList* DrawList_CloneOutput(ImDrawList* self) { return ImDrawList_CloneOutput(self); }
 void DrawList_GetClipRectMax(ImVec2 *pOut,ImDrawList* self) { ImDrawList_GetClipRectMax(pOut,self); }
 void DrawList_GetClipRectMin(ImVec2 *pOut,ImDrawList* self) { ImDrawList_GetClipRectMin(pOut,self); }
-ImDrawList* DrawList_ImDrawList(ImDrawListSharedData* shared_data) { return ImDrawList_ImDrawList(shared_data); }
+ImDrawList* DrawList_ImDrawList(const ImDrawListSharedData* shared_data) { return ImDrawList_ImDrawList(shared_data); }
 void DrawList_PathArcToV(ImDrawList* self,const ImVec2 center,float radius,float a_min,float a_max,int num_segments) { ImDrawList_PathArcTo(self,center,radius,a_min,a_max,num_segments); }
 void DrawList_PathArcToFast(ImDrawList* self,const ImVec2 center,float radius,int a_min_of_12,int a_max_of_12) { ImDrawList_PathArcToFast(self,center,radius,a_min_of_12,a_max_of_12); }
 void DrawList_PathBezierCubicCurveToV(ImDrawList* self,const ImVec2 p2,const ImVec2 p3,const ImVec2 p4,int num_segments) { ImDrawList_PathBezierCubicCurveTo(self,p2,p3,p4,num_segments); }
@@ -101,7 +101,6 @@ const ImWchar* FontAtlas_GetGlyphRangesChineseFull(ImFontAtlas* self) { return I
 const ImWchar* FontAtlas_GetGlyphRangesChineseSimplifiedCommon(ImFontAtlas* self) { return ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon(self); }
 const ImWchar* FontAtlas_GetGlyphRangesCyrillic(ImFontAtlas* self) { return ImFontAtlas_GetGlyphRangesCyrillic(self); }
 const ImWchar* FontAtlas_GetGlyphRangesDefault(ImFontAtlas* self) { return ImFontAtlas_GetGlyphRangesDefault(self); }
-const ImWchar* FontAtlas_GetGlyphRangesGreek(ImFontAtlas* self) { return ImFontAtlas_GetGlyphRangesGreek(self); }
 const ImWchar* FontAtlas_GetGlyphRangesJapanese(ImFontAtlas* self) { return ImFontAtlas_GetGlyphRangesJapanese(self); }
 const ImWchar* FontAtlas_GetGlyphRangesKorean(ImFontAtlas* self) { return ImFontAtlas_GetGlyphRangesKorean(self); }
 const ImWchar* FontAtlas_GetGlyphRangesThai(ImFontAtlas* self) { return ImFontAtlas_GetGlyphRangesThai(self); }
@@ -171,9 +170,6 @@ void InputTextCallbackData_InsertCharsV(ImGuiInputTextCallbackData* self,int pos
 void InputTextCallbackData_SelectAll(ImGuiInputTextCallbackData* self) { ImGuiInputTextCallbackData_SelectAll(self); }
 void InputTextCallbackData_Destroy(ImGuiInputTextCallbackData* self) { ImGuiInputTextCallbackData_destroy(self); }
 void InputTextState_Destroy(ImGuiInputTextState* self) { ImGuiInputTextState_destroy(self); }
-void KeyOwnerData_Destroy(ImGuiKeyOwnerData* self) { ImGuiKeyOwnerData_destroy(self); }
-void KeyRoutingData_Destroy(ImGuiKeyRoutingData* self) { ImGuiKeyRoutingData_destroy(self); }
-void KeyRoutingTable_Destroy(ImGuiKeyRoutingTable* self) { ImGuiKeyRoutingTable_destroy(self); }
 void LastItemData_Destroy(ImGuiLastItemData* self) { ImGuiLastItemData_destroy(self); }
 void ListClipperData_Destroy(ImGuiListClipperData* self) { ImGuiListClipperData_destroy(self); }
 void ListClipper_BeginV(ImGuiListClipper* self,int items_count,float items_height) { ImGuiListClipper_Begin(self,items_count,items_height); }
@@ -383,7 +379,7 @@ ImGuiIO* GetIO() { return igGetIO(); }
 void GetItemRectMax(ImVec2 *pOut) { igGetItemRectMax(pOut); }
 void GetItemRectMin(ImVec2 *pOut) { igGetItemRectMin(pOut); }
 void GetItemRectSize(ImVec2 *pOut) { igGetItemRectSize(pOut); }
-ImGuiKey GetKeyIndex(ImGuiKey key) { return igGetKeyIndex(key); }
+int GetKeyIndex(ImGuiKey key) { return igGetKeyIndex(key); }
 const char* GetKeyName(ImGuiKey key) { return igGetKeyName(key); }
 int GetKeyPressedAmount(ImGuiKey key,float repeat_delay,float rate) { return igGetKeyPressedAmount(key,repeat_delay,rate); }
 ImGuiViewport* GetMainViewport() { return igGetMainViewport(); }
@@ -447,16 +443,16 @@ bool IsItemFocused() { return igIsItemFocused(); }
 bool IsItemHoveredV(ImGuiHoveredFlags flags) { return igIsItemHovered(flags); }
 bool IsItemToggledOpen() { return igIsItemToggledOpen(); }
 bool IsItemVisible() { return igIsItemVisible(); }
-bool IsKeyDown_Nil(ImGuiKey key) { return igIsKeyDown_Nil(key); }
-bool IsKeyPressed_BoolV(ImGuiKey key,bool repeat) { return igIsKeyPressed_Bool(key,repeat); }
-bool IsKeyReleased_Nil(ImGuiKey key) { return igIsKeyReleased_Nil(key); }
-bool IsMouseClicked_BoolV(ImGuiMouseButton button,bool repeat) { return igIsMouseClicked_Bool(button,repeat); }
+bool IsKeyDown(ImGuiKey key) { return igIsKeyDown(key); }
+bool IsKeyPressedV(ImGuiKey key,bool repeat) { return igIsKeyPressed(key,repeat); }
+bool IsKeyReleased(ImGuiKey key) { return igIsKeyReleased(key); }
+bool IsMouseClickedV(ImGuiMouseButton button,bool repeat) { return igIsMouseClicked(button,repeat); }
 bool IsMouseDoubleClicked(ImGuiMouseButton button) { return igIsMouseDoubleClicked(button); }
-bool IsMouseDown_Nil(ImGuiMouseButton button) { return igIsMouseDown_Nil(button); }
+bool IsMouseDown(ImGuiMouseButton button) { return igIsMouseDown(button); }
 bool IsMouseDraggingV(ImGuiMouseButton button,float lock_threshold) { return igIsMouseDragging(button,lock_threshold); }
 bool IsMouseHoveringRectV(const ImVec2 r_min,const ImVec2 r_max,bool clip) { return igIsMouseHoveringRect(r_min,r_max,clip); }
 bool IsMousePosValidV(const ImVec2* mouse_pos) { return igIsMousePosValid(mouse_pos); }
-bool IsMouseReleased_Nil(ImGuiMouseButton button) { return igIsMouseReleased_Nil(button); }
+bool IsMouseReleased(ImGuiMouseButton button) { return igIsMouseReleased(button); }
 bool IsPopupOpen_StrV(const char* str_id,ImGuiPopupFlags flags) { return igIsPopupOpen_Str(str_id,flags); }
 bool IsRectVisible_Nil(const ImVec2 size) { return igIsRectVisible_Nil(size); }
 bool IsRectVisible_Vec2(const ImVec2 rect_min,const ImVec2 rect_max) { return igIsRectVisible_Vec2(rect_min,rect_max); }
@@ -550,7 +546,6 @@ void SetNextWindowContentSize(const ImVec2 size) { igSetNextWindowContentSize(si
 void SetNextWindowDockIDV(ImGuiID dock_id,ImGuiCond cond) { igSetNextWindowDockID(dock_id,cond); }
 void SetNextWindowFocus() { igSetNextWindowFocus(); }
 void SetNextWindowPosV(const ImVec2 pos,ImGuiCond cond,const ImVec2 pivot) { igSetNextWindowPos(pos,cond,pivot); }
-void SetNextWindowScroll(const ImVec2 scroll) { igSetNextWindowScroll(scroll); }
 void SetNextWindowSizeV(const ImVec2 size,ImGuiCond cond) { igSetNextWindowSize(size,cond); }
 void SetNextWindowSizeConstraintsV(const ImVec2 size_min,const ImVec2 size_max,ImGuiSizeCallback custom_callback,void* custom_callback_data) { igSetNextWindowSizeConstraints(size_min,size_max,custom_callback,custom_callback_data); }
 void SetNextWindowViewport(ImGuiID viewport_id) { igSetNextWindowViewport(viewport_id); }
@@ -624,7 +619,7 @@ bool TreeNode_Ptr(const void* ptr_id,const char* fmt) { return igTreeNode_Ptr(pt
 bool TreeNode_Str(const char* label) { return igTreeNode_Str(label); }
 bool TreeNode_StrStr(const char* str_id,const char* fmt) { return igTreeNode_StrStr(str_id,fmt); }
 void TreePop() { igTreePop(); }
-void TreePush_Ptr(const void* ptr_id) { igTreePush_Ptr(ptr_id); }
+void TreePush_PtrV(const void* ptr_id) { igTreePush_Ptr(ptr_id); }
 void TreePush_Str(const char* str_id) { igTreePush_Str(str_id); }
 void UnindentV(float indent_w) { igUnindent(indent_w); }
 void UpdatePlatformWindows() { igUpdatePlatformWindows(); }
@@ -744,8 +739,8 @@ bool InputTextWithHint(const char* label,const char* hint,char* buf,size_t buf_s
 bool InvisibleButton(const char* str_id,const ImVec2 size) { return InvisibleButtonV(str_id,size,0); }
 bool IsItemClicked() { return IsItemClickedV(0); }
 bool IsItemHovered() { return IsItemHoveredV(0); }
-bool IsKeyPressed_Bool(ImGuiKey key) { return IsKeyPressed_BoolV(key,true); }
-bool IsMouseClicked_Bool(ImGuiMouseButton button) { return IsMouseClicked_BoolV(button,false); }
+bool IsKeyPressed(ImGuiKey key) { return IsKeyPressedV(key,true); }
+bool IsMouseClicked(ImGuiMouseButton button) { return IsMouseClickedV(button,false); }
 bool IsMouseDragging(ImGuiMouseButton button) { return IsMouseDraggingV(button,-1.0f); }
 bool IsMouseHoveringRect(const ImVec2 r_min,const ImVec2 r_max) { return IsMouseHoveringRectV(r_min,r_max,true); }
 bool IsMousePosValid() { return IsMousePosValidV(NULL); }
@@ -820,6 +815,7 @@ void TableSetBgColor(ImGuiTableBgTarget target,ImU32 color) { TableSetBgColorV(t
 void TableSetupColumn(const char* label) { TableSetupColumnV(label,0,0.0f,0); }
 void TextUnformatted(const char* text) { TextUnformattedV(text); }
 bool TreeNodeEx_Str(const char* label) { return TreeNodeEx_StrV(label,0); }
+void TreePush_Ptr() { TreePush_PtrV(NULL); }
 void Unindent() { UnindentV(0.0f); }
 bool VSliderFloat(const char* label,const ImVec2 size,float* v,float v_min,float v_max) { return VSliderFloatV(label,size,v,v_min,v_max,"%.3f",0); }
 bool VSliderInt(const char* label,const ImVec2 size,int* v,int v_min,int v_max) { return VSliderIntV(label,size,v,v_min,v_max,"%d",0); }

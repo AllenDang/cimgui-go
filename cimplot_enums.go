@@ -22,19 +22,17 @@ const (
 	ImPlotAxisFlags_NoTickLabels  = 8
 	ImPlotAxisFlags_NoInitialFit  = 16
 	ImPlotAxisFlags_NoMenus       = 32
-	ImPlotAxisFlags_NoSideSwitch  = 64
-	ImPlotAxisFlags_NoHighlight   = 128
-	ImPlotAxisFlags_Opposite      = 256
-	ImPlotAxisFlags_Foreground    = 512
-	ImPlotAxisFlags_Invert        = 1024
-	ImPlotAxisFlags_AutoFit       = 2048
-	ImPlotAxisFlags_RangeFit      = 4096
-	ImPlotAxisFlags_PanStretch    = 8192
-	ImPlotAxisFlags_LockMin       = 16384
-	ImPlotAxisFlags_LockMax       = 32768
-	ImPlotAxisFlags_Lock          = 49152
+	ImPlotAxisFlags_Opposite      = 64
+	ImPlotAxisFlags_Foreground    = 128
+	ImPlotAxisFlags_Invert        = 256
+	ImPlotAxisFlags_AutoFit       = 512
+	ImPlotAxisFlags_RangeFit      = 1024
+	ImPlotAxisFlags_PanStretch    = 2048
+	ImPlotAxisFlags_LockMin       = 4096
+	ImPlotAxisFlags_LockMax       = 8192
+	ImPlotAxisFlags_Lock          = 12288
 	ImPlotAxisFlags_NoDecorations = 15
-	ImPlotAxisFlags_AuxDefault    = 258
+	ImPlotAxisFlags_AuxDefault    = 66
 )
 
 type ImPlotBarGroupsFlags int
@@ -232,7 +230,6 @@ const (
 	ImPlotLegendFlags_NoMenus         = 8
 	ImPlotLegendFlags_Outside         = 16
 	ImPlotLegendFlags_Horizontal      = 32
-	ImPlotLegendFlags_Sort            = 64
 )
 
 type ImPlotLineFlags int
@@ -243,7 +240,6 @@ const (
 	ImPlotLineFlags_Loop     = 2048
 	ImPlotLineFlags_SkipNaN  = 4096
 	ImPlotLineFlags_NoClip   = 8192
-	ImPlotLineFlags_Shaded   = 16384
 )
 
 type ImPlotLocation int
@@ -320,7 +316,6 @@ type ImPlotStairsFlags int
 const (
 	ImPlotStairsFlags_None    = 0
 	ImPlotStairsFlags_PreStep = 1024
-	ImPlotStairsFlags_Shaded  = 2048
 )
 
 type ImPlotStemsFlags int
@@ -395,11 +390,10 @@ const (
 	ImPlotTimeFmt_SUs      = 2
 	ImPlotTimeFmt_SMs      = 3
 	ImPlotTimeFmt_S        = 4
-	ImPlotTimeFmt_MinSMs   = 5
-	ImPlotTimeFmt_HrMinSMs = 6
-	ImPlotTimeFmt_HrMinS   = 7
-	ImPlotTimeFmt_HrMin    = 8
-	ImPlotTimeFmt_Hr       = 9
+	ImPlotTimeFmt_HrMinSMs = 5
+	ImPlotTimeFmt_HrMinS   = 6
+	ImPlotTimeFmt_HrMin    = 7
+	ImPlotTimeFmt_Hr       = 8
 )
 
 type ImPlotTimeUnit int
