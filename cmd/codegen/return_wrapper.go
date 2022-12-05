@@ -39,6 +39,12 @@ func constWCharPtrReturnW(f FuncDef) (returnType string, returnStmt string) {
 	return
 }
 
+func imWcharReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "ImWchar"
+	returnStmt = "return (ImWchar)(%s)"
+	return
+}
+
 func imVec4PtrReturnW(f FuncDef) (returnType string, returnStmt string) {
 	returnType = "ImVec4"
 	returnStmt = "return newImVec4FromCPtr(%s)"

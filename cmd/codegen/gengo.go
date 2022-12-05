@@ -21,13 +21,11 @@ func tm(goType string, cgoWrapper string) *TypeMap {
 	}
 }
 
-var (
-	structMemberTypeMap = map[string]*TypeMap{
-		"unsigned int": tm("uint32", "C.uint(%s)"),
-		"float":        tm("float32", "C.float(%s)"),
-		"int":          tm("int32", "C.int(%s)"),
-	}
-)
+var structMemberTypeMap = map[string]*TypeMap{
+	"unsigned int": tm("uint32", "C.uint(%s)"),
+	"float":        tm("float32", "C.float(%s)"),
+	"int":          tm("int32", "C.int(%s)"),
+}
 
 // Generate enums and return enum type names
 func generateGoEnums(prefix string, enums []EnumDef) []string {
@@ -187,6 +185,7 @@ import "unsafe"
 		"char*":                    constCharReturnW,
 		"const char*":              constCharReturnW,
 		"const ImWchar*":           constWCharPtrReturnW,
+		"ImWchar":                  imWcharReturnW,
 		"float":                    floatReturnW,
 		"double":                   doubleReturnW,
 		"int":                      intReturnW,
