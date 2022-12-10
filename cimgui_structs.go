@@ -536,48 +536,6 @@ func newImGuiKeyDataFromC(cvalue C.ImGuiKeyData) ImGuiKeyData {
 	return ImGuiKeyData(unsafe.Pointer(&cvalue))
 }
 
-type ImGuiKeyOwnerData uintptr
-
-func (data ImGuiKeyOwnerData) handle() *C.ImGuiKeyOwnerData {
-	return (*C.ImGuiKeyOwnerData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiKeyOwnerData) c() C.ImGuiKeyOwnerData {
-	return *(data.handle())
-}
-
-func newImGuiKeyOwnerDataFromC(cvalue C.ImGuiKeyOwnerData) ImGuiKeyOwnerData {
-	return ImGuiKeyOwnerData(unsafe.Pointer(&cvalue))
-}
-
-type ImGuiKeyRoutingData uintptr
-
-func (data ImGuiKeyRoutingData) handle() *C.ImGuiKeyRoutingData {
-	return (*C.ImGuiKeyRoutingData)(unsafe.Pointer(data))
-}
-
-func (data ImGuiKeyRoutingData) c() C.ImGuiKeyRoutingData {
-	return *(data.handle())
-}
-
-func newImGuiKeyRoutingDataFromC(cvalue C.ImGuiKeyRoutingData) ImGuiKeyRoutingData {
-	return ImGuiKeyRoutingData(unsafe.Pointer(&cvalue))
-}
-
-type ImGuiKeyRoutingTable uintptr
-
-func (data ImGuiKeyRoutingTable) handle() *C.ImGuiKeyRoutingTable {
-	return (*C.ImGuiKeyRoutingTable)(unsafe.Pointer(data))
-}
-
-func (data ImGuiKeyRoutingTable) c() C.ImGuiKeyRoutingTable {
-	return *(data.handle())
-}
-
-func newImGuiKeyRoutingTableFromC(cvalue C.ImGuiKeyRoutingTable) ImGuiKeyRoutingTable {
-	return ImGuiKeyRoutingTable(unsafe.Pointer(&cvalue))
-}
-
 type ImGuiLastItemData uintptr
 
 func (data ImGuiLastItemData) handle() *C.ImGuiLastItemData {
@@ -632,20 +590,6 @@ func (data ImGuiListClipperRange) c() C.ImGuiListClipperRange {
 
 func newImGuiListClipperRangeFromC(cvalue C.ImGuiListClipperRange) ImGuiListClipperRange {
 	return ImGuiListClipperRange(unsafe.Pointer(&cvalue))
-}
-
-type ImGuiLocEntry uintptr
-
-func (data ImGuiLocEntry) handle() *C.ImGuiLocEntry {
-	return (*C.ImGuiLocEntry)(unsafe.Pointer(data))
-}
-
-func (data ImGuiLocEntry) c() C.ImGuiLocEntry {
-	return *(data.handle())
-}
-
-func newImGuiLocEntryFromC(cvalue C.ImGuiLocEntry) ImGuiLocEntry {
-	return ImGuiLocEntry(unsafe.Pointer(&cvalue))
 }
 
 type ImGuiMenuColumns uintptr
@@ -1164,20 +1108,6 @@ func (data ImGuiTextFilter) c() C.ImGuiTextFilter {
 
 func newImGuiTextFilterFromC(cvalue C.ImGuiTextFilter) ImGuiTextFilter {
 	return ImGuiTextFilter(unsafe.Pointer(&cvalue))
-}
-
-type ImGuiTextIndex uintptr
-
-func (data ImGuiTextIndex) handle() *C.ImGuiTextIndex {
-	return (*C.ImGuiTextIndex)(unsafe.Pointer(data))
-}
-
-func (data ImGuiTextIndex) c() C.ImGuiTextIndex {
-	return *(data.handle())
-}
-
-func newImGuiTextIndexFromC(cvalue C.ImGuiTextIndex) ImGuiTextIndex {
-	return ImGuiTextIndex(unsafe.Pointer(&cvalue))
 }
 
 type ImGuiTextRange uintptr
