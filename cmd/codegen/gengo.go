@@ -21,13 +21,11 @@ func tm(goType string, cgoWrapper string) *TypeMap {
 	}
 }
 
-var (
-	structMemberTypeMap = map[string]*TypeMap{
-		"unsigned int": tm("uint32", "C.uint(%s)"),
-		"float":        tm("float32", "C.float(%s)"),
-		"int":          tm("int32", "C.int(%s)"),
-	}
-)
+var structMemberTypeMap = map[string]*TypeMap{
+	"unsigned int": tm("uint32", "C.uint(%s)"),
+	"float":        tm("float32", "C.float(%s)"),
+	"int":          tm("int32", "C.int(%s)"),
+}
 
 // Generate enums and return enum type names
 func generateGoEnums(prefix string, enums []EnumDef) []string {
@@ -304,7 +302,7 @@ import "unsafe"
 			}
 
 			if !shouldGenerate {
-				fmt.Println("Unknown arg: ", a.Type)
+				fmt.Printf("Unknown argument type \"%s\" in function %s\n", a.Type, f.FuncName)
 				break
 			}
 		}
@@ -486,7 +484,7 @@ import "unsafe"
 
 				convertedFuncCount += 1
 			} else {
-				fmt.Println("Unknown ret: ", f.Ret)
+				fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)
 			}
 		}
 	}
