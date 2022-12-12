@@ -22,5 +22,5 @@ jobs:
         with:
           fetch-depth: 0
           submodules: 'recursive'
-      - name: Run GO test
+      - name: Run Go test
         run: go test -race -v ./...
