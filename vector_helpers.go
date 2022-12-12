@@ -78,5 +78,5 @@ func (v ImVec4) Canon() ImVec4 {
 func (v ImVec4) In(s ImVec4) bool {
 	v = v.Canon()
 	s = s.Canon()
-	return v.X >= s.X && v.Y >= s.Y && v.Z <= s.Z && v.W <= s.W
+	return v.X <= s.X && v.Y <= s.Y && v.Z >= s.Z && v.W >= s.W
 }
