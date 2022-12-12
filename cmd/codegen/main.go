@@ -185,9 +185,9 @@ func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []string, structName
 	structs := getStructDefs(enumJsonBytes)
 
 	for _, e := range enums {
-		eName := strings.TrimSuffix(e.Name, "_")
-		eName = trimImGuiPrefix(eName)
-		enumNames = append(enumNames, eName)
+		goEnumName := strings.TrimSuffix(e.Name, "_")
+		goEnumName = trimImGuiPrefix(goEnumName)
+		enumNames = append(enumNames, goEnumName)
 	}
 
 	for _, s := range structs {

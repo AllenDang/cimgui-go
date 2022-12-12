@@ -284,8 +284,8 @@ import "unsafe"
 
 			if v, ok := argWrapperMap[a.Type]; ok {
 				argType, argDef, varName := v(a)
-				if isEnum(trimImGuiPrefix(argType)) {
-					argType = trimImGuiPrefix(argType)
+				if goEnumName := trimImGuiPrefix(argType); isEnum(goEnumName) {
+					argType = goEnumName
 				}
 
 				argWrappers = append(argWrappers, argOutput{
@@ -300,8 +300,8 @@ import "unsafe"
 				continue
 			}
 
-			if isEnum(trimImGuiPrefix(a.Type)) {
-				args = append(args, fmt.Sprintf("%s %s", a.Name, trimImGuiPrefix(a.Type)))
+			if goEnumName := trimImGuiPrefix(a.Type); isEnum(goEnumName) {
+				args = append(args, fmt.Sprintf("%s %s", a.Name, goEnumName))
 				argWrappers = append(argWrappers, argOutput{
 					VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
 				})
