@@ -7,12 +7,12 @@ on:
 
 jobs:
   RunGoTests:
-    # I use MacOS, becuse it doesn't need additional libs (in contrast to linux).
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
-      # uncomment and put anywhere to start SSH session
-      #- name: SSH Debug
-      #  uses: mxschmitt/action-tmate@v3
+      - name: Set up LibGL, Mesa & X11 libraries
+        run: |
+          sudo apt-get --allow-releaseinfo-change update
+          sudo apt-get install -y libgtk-3-dev libasound2-dev libxxf86vm-dev
       - name: Set up Go environment
         uses: actions/setup-go@v3
         with:
