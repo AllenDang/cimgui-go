@@ -61,6 +61,25 @@ func wrapString(value string) (wrapped *C.char, finisher func()) {
 	return
 }
 
+func wrapStringList(value []string) (wrapped **C.char, finisher func()) {
+	wrappedList := make([]*C.char, len(value))
+	for i, v := range value {
+		wrappedList[i] = C.CString(v)
+	}
+
+	cPtr := unsafe.Pointer(&wrappedList[0])
+
+	wrapped = (**C.char)(cPtr)
+
+	finisher = func() {
+		C.free(cPtr)
+		for _, v := range wrappedList {
+			C.free(unsafe.Pointer(v))
+		}
+	} // nolint: gas
+	return
+}
+
 // unrealisticLargePointer is used to cast an arbitrary native pointer to a slice.
 // Its value is chosen to fit into a 32bit architecture, and still be large
 // enough to cover "any" data blob. Note that this value is in bytes.
