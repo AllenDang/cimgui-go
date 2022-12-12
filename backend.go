@@ -77,10 +77,10 @@ func (w GLFWwindow) Run(loop func()) {
 }
 
 func (w GLFWwindow) DisplaySize() (width int32, height int32) {
-	widthArg, widthFin := wrapInt32(&width)
+	widthArg, widthFin := wrapCType[C.int, int32](&width)
 	defer widthFin()
 
-	heightArg, heightFin := wrapInt32(&height)
+	heightArg, heightFin := wrapCType[C.int, int32](&height)
 	defer heightFin()
 
 	C.igGLFWWindow_GetDisplaySize(w.handle(), widthArg, heightArg)

@@ -40,7 +40,7 @@ func floatW(arg ArgDef) (argType string, def string, varName string) {
 
 func floatPtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*float32"
-	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := wrapFloat(%[1]s)
+	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := wrapCType[C.float, float32](%[1]s)
 defer %[1]sFin()`, arg.Name)
 	varName = fmt.Sprintf("%sArg", arg.Name)
 	return
@@ -83,14 +83,14 @@ func u8W(arg ArgDef) (argType string, def string, varName string) {
 
 func u8PtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*uint"
-	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapUint8(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapCType[C.uint, byte](%[1]s)\ndefer %[1]sFin()", arg.Name)
 	varName = fmt.Sprintf("%sArg", arg.Name)
 	return
 }
 
 func u16PtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*uint"
-	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapUint16(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapCType[c.uint, uint16](%[1]s)\ndefer %[1]sFin()", arg.Name)
 	varName = fmt.Sprintf("%sArg", arg.Name)
 	return
 }
@@ -180,21 +180,21 @@ func intW(arg ArgDef) (argType string, def string, varName string) {
 
 func int8PtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*byte"
-	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapInt8(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapCType[C.int, int8](%[1]s)\ndefer %[1]sFin()", arg.Name)
 	varName = fmt.Sprintf("%sArg", arg.Name)
 	return
 }
 
 func int16PtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*int"
-	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapInt16(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapCType[C.int, int16](%[1]s)\ndefer %[1]sFin()", arg.Name)
 	varName = fmt.Sprintf("%sArg", arg.Name)
 	return
 }
 
 func intPtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*int32"
-	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapInt32(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapCType[C.int, int32](%[1]s)\ndefer %[1]sFin()", arg.Name)
 	varName = fmt.Sprintf("%sArg", arg.Name)
 	return
 }
@@ -211,7 +211,7 @@ func uintW(arg ArgDef) (argType string, def string, varName string) {
 
 func uintPtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*uint32"
-	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapUint32(%[1]s)\ndefer %[1]sFin()", arg.Name)
+	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapCType[C.uint, uint32](%[1]s)\ndefer %[1]sFin()", arg.Name)
 	varName = fmt.Sprintf("%sArg", arg.Name)
 	return
 }
@@ -314,6 +314,6 @@ defer %[1]sFin()`, arg.Name)
 
 func inputeTextCallbackW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "ImGuiInputTextCallback"
-	//TODO: implement me
+	// TODO: implement me
 	return
 }
