@@ -31,7 +31,7 @@ var structMemberTypeMap = map[string]*TypeMap{
 func generateGoEnums(prefix string, enums []EnumDef) []string {
 	var sb strings.Builder
 
-	sb.WriteString(packageHeader)
+	sb.WriteString(goPackageHeader)
 
 	var enumNames []string
 	for _, e := range enums {
@@ -63,7 +63,7 @@ func generateGoEnums(prefix string, enums []EnumDef) []string {
 func generateGoStructs(prefix string, structs []StructDef) []string {
 	var sb strings.Builder
 
-	sb.WriteString(packageHeader)
+	sb.WriteString(goPackageHeader)
 	sb.WriteString(fmt.Sprintf(
 		`// #include "%s_wrapper.h"
 import "C"
@@ -113,7 +113,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 	var sb strings.Builder
 	convertedFuncCount := 0
 
-	sb.WriteString(packageHeader)
+	sb.WriteString(goPackageHeader)
 
 	sb.WriteString(fmt.Sprintf(
 		`// #include "extra_types.h"
