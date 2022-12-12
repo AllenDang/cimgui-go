@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"image"
 
 	"github.com/AllenDang/cimgui-go"
 )
@@ -20,6 +21,7 @@ var (
 	color4         [4]*float32 = [4]*float32{&r, &g, &b, &a}
 	selected       bool
 	window         cimgui.GLFWwindow
+	img            *image.RGBA
 	texture        *cimgui.Texture
 	barValues      []int64
 )
@@ -40,7 +42,7 @@ func showWidgetsDemo() {
 		w, h := window.DisplaySize()
 		fmt.Println(w, h)
 	}
-	cimgui.TextUnformatted("Unformated text")
+	cimgui.TextUnformatted("Unformatted text")
 	cimgui.Checkbox("Show demo window", &showDemoWindow)
 	if cimgui.BeginCombo("Combo", "Combo preview") {
 		cimgui.Selectable_BoolPtr("Item 1", &selected)
@@ -92,6 +94,7 @@ func showImPlotDemo() {
 }
 
 func afterCreateContext() {
+	texture = cimgui.NewTextureFromRgba(img)
 	cimgui.Plot_CreateContext()
 }
 
@@ -101,14 +104,15 @@ func loop() {
 	showImPlotDemo()
 }
 
-func beforeDestoryContext() {
+func beforeDestroyContext() {
 	cimgui.Plot_DestroyContext()
 }
 
 func main() {
-	img, err := cimgui.LoadImage("./test.jpeg")
+	var err error
+	img, err = cimgui.LoadImage("./test.jpeg")
 	if err != nil {
-		panic("Failed to load gopher.png")
+		panic("Failed to load test.jpeg")
 	}
 
 	for i := 0; i < 10; i++ {
@@ -116,13 +120,11 @@ func main() {
 	}
 
 	cimgui.SetAfterCreateContextHook(afterCreateContext)
-	cimgui.SetBeforeDestroyContextHook(beforeDestoryContext)
+	cimgui.SetBeforeDestroyContextHook(beforeDestroyContext)
 
 	cimgui.SetBgColor(cimgui.NewImVec4(0.45, 0.55, 0.6, 1.0))
 
 	window = cimgui.CreateGlfwWindow("Hello from cimgui-go", 1200, 900, 0)
-
-	texture = cimgui.NewTextureFromRgba(img)
 
 	window.Run(loop)
 }

@@ -4,9 +4,9 @@ import (
 	"testing"
 )
 
-func TestSetIOCofigFlags(t *testing.T) {
-	CreateContext(0)
-	defer DestroyContext(0)
+func TestSetIOConfigFlags(t *testing.T) {
+	CreateContext()
+	defer DestroyContext()
 
 	io := GetIO()
 	if io == 0 {
