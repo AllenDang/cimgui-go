@@ -55,11 +55,11 @@ func (v ImVec4) Add(p ImVec2) ImVec4 {
 
 // Sub returns the vec4 v translated by -p.
 func (v ImVec4) Sub(p ImVec2) ImVec4 {
-	return v.Add(p.Mult(-1))
+	return v.Add(p.Mul(-1))
 }
 
 // Eq reports whether v and r are equal.
-func (v ImVec4) Eq(r ImVec4) ImVec4 {
+func (v ImVec4) Eq(r ImVec4) bool {
 	return v.X == r.X && v.Y == r.Y && v.Z == r.Z && v.W == r.W
 }
 
@@ -75,7 +75,7 @@ func (v ImVec4) Canon() ImVec4 {
 	return v
 }
 
-func (v ImVec4) In(s ImVec4) imVec4 {
+func (v ImVec4) In(s ImVec4) bool {
 	v = v.Canon()
 	s = s.Canon()
 	return v.X >= s.X && v.Y >= s.Y && v.Z <= s.Z && v.W <= s.W
