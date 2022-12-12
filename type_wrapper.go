@@ -29,29 +29,18 @@ func wrapBool(goValue *bool) (wrapped *C.bool, finisher func()) {
 	return
 }
 
-func wrapInt32(goValue *int32) (wrapped *C.int, finisher func()) {
+// wrapCType is a generic method to convert GOTYPE (int32/float32 e.t.c.) into CTYPE (c_int/c_float e.t.c.)
+func wrapCType[CTYPE any, GOTYPE any](goValue *GOTYPE) (wrapped *CTYPE, finisher func()) {
 	if goValue != nil {
-		cValue := C.int(*goValue)
+		cValue := CTYPE(any(*goValue))
 		wrapped = &cValue
 		finisher = func() {
-			*goValue = int32(cValue)
+			*goValue = GOTYPE(any(cValue))
 		}
 	} else {
 		finisher = func() {}
 	}
-	return
-}
 
-func wrapFloat(goValue *float32) (wrapped *C.float, finisher func()) {
-	if goValue != nil {
-		cValue := C.float(*goValue)
-		wrapped = &cValue
-		finisher = func() {
-			*goValue = float32(cValue)
-		}
-	} else {
-		finisher = func() {}
-	}
 	return
 }
 
