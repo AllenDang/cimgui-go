@@ -1,4 +1,3 @@
-// CI test
 package cimgui
 
 // #include "extra_types.h"
