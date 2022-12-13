@@ -30,7 +30,7 @@ func generalInputTextCallback(cbData *C.ImGuiInputTextCallbackData) C.int {
 	bufHandle := (*cgo.Handle)(data.c().UserData)
 	statePtr := bufHandle.Value().(*inputTextInternalState)
 
-	if data.GetEventFlag() == ImGuiInputTextFlags_CallbackResize {
+	if data.GetEventFlag() == InputTextFlags_CallbackResize {
 		statePtr.buf.resizeTo(data.GetBufSize())
 		C.ImGuiInputTextCallbackData_SetBuf(cbData, (*C.char)(statePtr.buf.ptr))
 		data.SetBufSize(int32(statePtr.buf.size))
@@ -45,7 +45,7 @@ func generalInputTextCallback(cbData *C.ImGuiInputTextCallbackData) C.int {
 	return 0
 }
 
-func InputTextWithHint(label, hint string, buf *string, flags ImGuiInputTextFlags, callback ImGuiInputTextCallback) bool {
+func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, callback ImGuiInputTextCallback) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -65,7 +65,7 @@ func InputTextWithHint(label, hint string, buf *string, flags ImGuiInputTextFlag
 	stateHandle := cgo.NewHandle(state)
 	defer stateHandle.Delete()
 
-	flags |= ImGuiInputTextFlags_CallbackResize
+	flags |= InputTextFlags_CallbackResize
 
 	return C.InputTextWithHintV(
 		labelArg,
@@ -78,7 +78,7 @@ func InputTextWithHint(label, hint string, buf *string, flags ImGuiInputTextFlag
 	) == C.bool(true)
 }
 
-func InputTextMultiline(label string, buf *string, size ImVec2, flags ImGuiInputTextFlags, callback ImGuiInputTextCallback) bool {
+func InputTextMultiline(label string, buf *string, size ImVec2, flags InputTextFlags, callback ImGuiInputTextCallback) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -95,7 +95,7 @@ func InputTextMultiline(label string, buf *string, size ImVec2, flags ImGuiInput
 	stateHandle := cgo.NewHandle(state)
 	defer stateHandle.Delete()
 
-	flags |= ImGuiInputTextFlags_CallbackResize
+	flags |= InputTextFlags_CallbackResize
 
 	return C.InputTextMultilineV(
 		labelArg,

@@ -70,11 +70,7 @@ extern "C" {
 			shouldSkip = true
 		}
 
-		funcName := f.FuncName
-
-		funcName = strings.TrimPrefix(funcName, "ImGui")
-		funcName = strings.TrimPrefix(funcName, "Im")
-		funcName = strings.TrimPrefix(funcName, "ig")
+		funcName := trimImGuiPrefix(f.FuncName)
 
 		// Check lower case for function
 		if unicode.IsLower(rune(funcName[0])) {
