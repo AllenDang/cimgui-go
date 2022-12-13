@@ -14,434 +14,434 @@ const (
 )
 
 // original name: ImPlotAxisFlags_
-type ImPlotAxisFlags int
+type PlotAxisFlags int
 
 const (
-	ImPlotAxisFlags_None          = 0
-	ImPlotAxisFlags_NoLabel       = 1
-	ImPlotAxisFlags_NoGridLines   = 2
-	ImPlotAxisFlags_NoTickMarks   = 4
-	ImPlotAxisFlags_NoTickLabels  = 8
-	ImPlotAxisFlags_NoInitialFit  = 16
-	ImPlotAxisFlags_NoMenus       = 32
-	ImPlotAxisFlags_Opposite      = 64
-	ImPlotAxisFlags_Foreground    = 128
-	ImPlotAxisFlags_Invert        = 256
-	ImPlotAxisFlags_AutoFit       = 512
-	ImPlotAxisFlags_RangeFit      = 1024
-	ImPlotAxisFlags_PanStretch    = 2048
-	ImPlotAxisFlags_LockMin       = 4096
-	ImPlotAxisFlags_LockMax       = 8192
-	ImPlotAxisFlags_Lock          = 12288
-	ImPlotAxisFlags_NoDecorations = 15
-	ImPlotAxisFlags_AuxDefault    = 66
+	PlotAxisFlags_None          = 0
+	PlotAxisFlags_NoLabel       = 1
+	PlotAxisFlags_NoGridLines   = 2
+	PlotAxisFlags_NoTickMarks   = 4
+	PlotAxisFlags_NoTickLabels  = 8
+	PlotAxisFlags_NoInitialFit  = 16
+	PlotAxisFlags_NoMenus       = 32
+	PlotAxisFlags_Opposite      = 64
+	PlotAxisFlags_Foreground    = 128
+	PlotAxisFlags_Invert        = 256
+	PlotAxisFlags_AutoFit       = 512
+	PlotAxisFlags_RangeFit      = 1024
+	PlotAxisFlags_PanStretch    = 2048
+	PlotAxisFlags_LockMin       = 4096
+	PlotAxisFlags_LockMax       = 8192
+	PlotAxisFlags_Lock          = 12288
+	PlotAxisFlags_NoDecorations = 15
+	PlotAxisFlags_AuxDefault    = 66
 )
 
 // original name: ImPlotBarGroupsFlags_
-type ImPlotBarGroupsFlags int
+type PlotBarGroupsFlags int
 
 const (
-	ImPlotBarGroupsFlags_None       = 0
-	ImPlotBarGroupsFlags_Horizontal = 1024
-	ImPlotBarGroupsFlags_Stacked    = 2048
+	PlotBarGroupsFlags_None       = 0
+	PlotBarGroupsFlags_Horizontal = 1024
+	PlotBarGroupsFlags_Stacked    = 2048
 )
 
 // original name: ImPlotBarsFlags_
-type ImPlotBarsFlags int
+type PlotBarsFlags int
 
 const (
-	ImPlotBarsFlags_None       = 0
-	ImPlotBarsFlags_Horizontal = 1024
+	PlotBarsFlags_None       = 0
+	PlotBarsFlags_Horizontal = 1024
 )
 
 // original name: ImPlotBin_
-type ImPlotBin int
+type PlotBin int
 
 const (
-	ImPlotBin_Sqrt    = -1
-	ImPlotBin_Sturges = -2
-	ImPlotBin_Rice    = -3
-	ImPlotBin_Scott   = -4
+	PlotBin_Sqrt    = -1
+	PlotBin_Sturges = -2
+	PlotBin_Rice    = -3
+	PlotBin_Scott   = -4
 )
 
 // original name: ImPlotCol_
-type ImPlotCol int
+type PlotCol int
 
 const (
-	ImPlotCol_Line          = 0
-	ImPlotCol_Fill          = 1
-	ImPlotCol_MarkerOutline = 2
-	ImPlotCol_MarkerFill    = 3
-	ImPlotCol_ErrorBar      = 4
-	ImPlotCol_FrameBg       = 5
-	ImPlotCol_PlotBg        = 6
-	ImPlotCol_PlotBorder    = 7
-	ImPlotCol_LegendBg      = 8
-	ImPlotCol_LegendBorder  = 9
-	ImPlotCol_LegendText    = 10
-	ImPlotCol_TitleText     = 11
-	ImPlotCol_InlayText     = 12
-	ImPlotCol_AxisText      = 13
-	ImPlotCol_AxisGrid      = 14
-	ImPlotCol_AxisTick      = 15
-	ImPlotCol_AxisBg        = 16
-	ImPlotCol_AxisBgHovered = 17
-	ImPlotCol_AxisBgActive  = 18
-	ImPlotCol_Selection     = 19
-	ImPlotCol_Crosshairs    = 20
-	ImPlotCol_COUNT         = 21
+	PlotCol_Line          = 0
+	PlotCol_Fill          = 1
+	PlotCol_MarkerOutline = 2
+	PlotCol_MarkerFill    = 3
+	PlotCol_ErrorBar      = 4
+	PlotCol_FrameBg       = 5
+	PlotCol_PlotBg        = 6
+	PlotCol_PlotBorder    = 7
+	PlotCol_LegendBg      = 8
+	PlotCol_LegendBorder  = 9
+	PlotCol_LegendText    = 10
+	PlotCol_TitleText     = 11
+	PlotCol_InlayText     = 12
+	PlotCol_AxisText      = 13
+	PlotCol_AxisGrid      = 14
+	PlotCol_AxisTick      = 15
+	PlotCol_AxisBg        = 16
+	PlotCol_AxisBgHovered = 17
+	PlotCol_AxisBgActive  = 18
+	PlotCol_Selection     = 19
+	PlotCol_Crosshairs    = 20
+	PlotCol_COUNT         = 21
 )
 
 // original name: ImPlotColormapScaleFlags_
-type ImPlotColormapScaleFlags int
+type PlotColormapScaleFlags int
 
 const (
-	ImPlotColormapScaleFlags_None     = 0
-	ImPlotColormapScaleFlags_NoLabel  = 1
-	ImPlotColormapScaleFlags_Opposite = 2
-	ImPlotColormapScaleFlags_Invert   = 4
+	PlotColormapScaleFlags_None     = 0
+	PlotColormapScaleFlags_NoLabel  = 1
+	PlotColormapScaleFlags_Opposite = 2
+	PlotColormapScaleFlags_Invert   = 4
 )
 
 // original name: ImPlotColormap_
-type ImPlotColormap int
+type PlotColormap int
 
 const (
-	ImPlotColormap_Deep     = 0
-	ImPlotColormap_Dark     = 1
-	ImPlotColormap_Pastel   = 2
-	ImPlotColormap_Paired   = 3
-	ImPlotColormap_Viridis  = 4
-	ImPlotColormap_Plasma   = 5
-	ImPlotColormap_Hot      = 6
-	ImPlotColormap_Cool     = 7
-	ImPlotColormap_Pink     = 8
-	ImPlotColormap_Jet      = 9
-	ImPlotColormap_Twilight = 10
-	ImPlotColormap_RdBu     = 11
-	ImPlotColormap_BrBG     = 12
-	ImPlotColormap_PiYG     = 13
-	ImPlotColormap_Spectral = 14
-	ImPlotColormap_Greys    = 15
+	PlotColormap_Deep     = 0
+	PlotColormap_Dark     = 1
+	PlotColormap_Pastel   = 2
+	PlotColormap_Paired   = 3
+	PlotColormap_Viridis  = 4
+	PlotColormap_Plasma   = 5
+	PlotColormap_Hot      = 6
+	PlotColormap_Cool     = 7
+	PlotColormap_Pink     = 8
+	PlotColormap_Jet      = 9
+	PlotColormap_Twilight = 10
+	PlotColormap_RdBu     = 11
+	PlotColormap_BrBG     = 12
+	PlotColormap_PiYG     = 13
+	PlotColormap_Spectral = 14
+	PlotColormap_Greys    = 15
 )
 
 // original name: ImPlotCond_
-type ImPlotCond int
+type PlotCond int
 
 const (
-	ImPlotCond_None   = 0
-	ImPlotCond_Always = 1
-	ImPlotCond_Once   = 2
+	PlotCond_None   = 0
+	PlotCond_Always = 1
+	PlotCond_Once   = 2
 )
 
 // original name: ImPlotDateFmt_
-type ImPlotDateFmt int
+type PlotDateFmt int
 
 const (
-	ImPlotDateFmt_None    = 0
-	ImPlotDateFmt_DayMo   = 1
-	ImPlotDateFmt_DayMoYr = 2
-	ImPlotDateFmt_MoYr    = 3
-	ImPlotDateFmt_Mo      = 4
-	ImPlotDateFmt_Yr      = 5
+	PlotDateFmt_None    = 0
+	PlotDateFmt_DayMo   = 1
+	PlotDateFmt_DayMoYr = 2
+	PlotDateFmt_MoYr    = 3
+	PlotDateFmt_Mo      = 4
+	PlotDateFmt_Yr      = 5
 )
 
 // original name: ImPlotDigitalFlags_
-type ImPlotDigitalFlags int
+type PlotDigitalFlags int
 
 const (
-	ImPlotDigitalFlags_None = 0
+	PlotDigitalFlags_None = 0
 )
 
 // original name: ImPlotDragToolFlags_
-type ImPlotDragToolFlags int
+type PlotDragToolFlags int
 
 const (
-	ImPlotDragToolFlags_None      = 0
-	ImPlotDragToolFlags_NoCursors = 1
-	ImPlotDragToolFlags_NoFit     = 2
-	ImPlotDragToolFlags_NoInputs  = 4
-	ImPlotDragToolFlags_Delayed   = 8
+	PlotDragToolFlags_None      = 0
+	PlotDragToolFlags_NoCursors = 1
+	PlotDragToolFlags_NoFit     = 2
+	PlotDragToolFlags_NoInputs  = 4
+	PlotDragToolFlags_Delayed   = 8
 )
 
 // original name: ImPlotDummyFlags_
-type ImPlotDummyFlags int
+type PlotDummyFlags int
 
 const (
-	ImPlotDummyFlags_None = 0
+	PlotDummyFlags_None = 0
 )
 
 // original name: ImPlotErrorBarsFlags_
-type ImPlotErrorBarsFlags int
+type PlotErrorBarsFlags int
 
 const (
-	ImPlotErrorBarsFlags_None       = 0
-	ImPlotErrorBarsFlags_Horizontal = 1024
+	PlotErrorBarsFlags_None       = 0
+	PlotErrorBarsFlags_Horizontal = 1024
 )
 
 // original name: ImPlotFlags_
-type ImPlotFlags int
+type PlotFlags int
 
 const (
-	ImPlotFlags_None        = 0
-	ImPlotFlags_NoTitle     = 1
-	ImPlotFlags_NoLegend    = 2
-	ImPlotFlags_NoMouseText = 4
-	ImPlotFlags_NoInputs    = 8
-	ImPlotFlags_NoMenus     = 16
-	ImPlotFlags_NoBoxSelect = 32
-	ImPlotFlags_NoChild     = 64
-	ImPlotFlags_NoFrame     = 128
-	ImPlotFlags_Equal       = 256
-	ImPlotFlags_Crosshairs  = 512
-	ImPlotFlags_CanvasOnly  = 55
+	PlotFlags_None        = 0
+	PlotFlags_NoTitle     = 1
+	PlotFlags_NoLegend    = 2
+	PlotFlags_NoMouseText = 4
+	PlotFlags_NoInputs    = 8
+	PlotFlags_NoMenus     = 16
+	PlotFlags_NoBoxSelect = 32
+	PlotFlags_NoChild     = 64
+	PlotFlags_NoFrame     = 128
+	PlotFlags_Equal       = 256
+	PlotFlags_Crosshairs  = 512
+	PlotFlags_CanvasOnly  = 55
 )
 
 // original name: ImPlotHeatmapFlags_
-type ImPlotHeatmapFlags int
+type PlotHeatmapFlags int
 
 const (
-	ImPlotHeatmapFlags_None     = 0
-	ImPlotHeatmapFlags_ColMajor = 1024
+	PlotHeatmapFlags_None     = 0
+	PlotHeatmapFlags_ColMajor = 1024
 )
 
 // original name: ImPlotHistogramFlags_
-type ImPlotHistogramFlags int
+type PlotHistogramFlags int
 
 const (
-	ImPlotHistogramFlags_None       = 0
-	ImPlotHistogramFlags_Horizontal = 1024
-	ImPlotHistogramFlags_Cumulative = 2048
-	ImPlotHistogramFlags_Density    = 4096
-	ImPlotHistogramFlags_NoOutliers = 8192
-	ImPlotHistogramFlags_ColMajor   = 16384
+	PlotHistogramFlags_None       = 0
+	PlotHistogramFlags_Horizontal = 1024
+	PlotHistogramFlags_Cumulative = 2048
+	PlotHistogramFlags_Density    = 4096
+	PlotHistogramFlags_NoOutliers = 8192
+	PlotHistogramFlags_ColMajor   = 16384
 )
 
 // original name: ImPlotImageFlags_
-type ImPlotImageFlags int
+type PlotImageFlags int
 
 const (
-	ImPlotImageFlags_None = 0
+	PlotImageFlags_None = 0
 )
 
 // original name: ImPlotInfLinesFlags_
-type ImPlotInfLinesFlags int
+type PlotInfLinesFlags int
 
 const (
-	ImPlotInfLinesFlags_None       = 0
-	ImPlotInfLinesFlags_Horizontal = 1024
+	PlotInfLinesFlags_None       = 0
+	PlotInfLinesFlags_Horizontal = 1024
 )
 
 // original name: ImPlotItemFlags_
-type ImPlotItemFlags int
+type PlotItemFlags int
 
 const (
-	ImPlotItemFlags_None     = 0
-	ImPlotItemFlags_NoLegend = 1
-	ImPlotItemFlags_NoFit    = 2
+	PlotItemFlags_None     = 0
+	PlotItemFlags_NoLegend = 1
+	PlotItemFlags_NoFit    = 2
 )
 
 // original name: ImPlotLegendFlags_
-type ImPlotLegendFlags int
+type PlotLegendFlags int
 
 const (
-	ImPlotLegendFlags_None            = 0
-	ImPlotLegendFlags_NoButtons       = 1
-	ImPlotLegendFlags_NoHighlightItem = 2
-	ImPlotLegendFlags_NoHighlightAxis = 4
-	ImPlotLegendFlags_NoMenus         = 8
-	ImPlotLegendFlags_Outside         = 16
-	ImPlotLegendFlags_Horizontal      = 32
+	PlotLegendFlags_None            = 0
+	PlotLegendFlags_NoButtons       = 1
+	PlotLegendFlags_NoHighlightItem = 2
+	PlotLegendFlags_NoHighlightAxis = 4
+	PlotLegendFlags_NoMenus         = 8
+	PlotLegendFlags_Outside         = 16
+	PlotLegendFlags_Horizontal      = 32
 )
 
 // original name: ImPlotLineFlags_
-type ImPlotLineFlags int
+type PlotLineFlags int
 
 const (
-	ImPlotLineFlags_None     = 0
-	ImPlotLineFlags_Segments = 1024
-	ImPlotLineFlags_Loop     = 2048
-	ImPlotLineFlags_SkipNaN  = 4096
-	ImPlotLineFlags_NoClip   = 8192
+	PlotLineFlags_None     = 0
+	PlotLineFlags_Segments = 1024
+	PlotLineFlags_Loop     = 2048
+	PlotLineFlags_SkipNaN  = 4096
+	PlotLineFlags_NoClip   = 8192
 )
 
 // original name: ImPlotLocation_
-type ImPlotLocation int
+type PlotLocation int
 
 const (
-	ImPlotLocation_Center    = 0
-	ImPlotLocation_North     = 1
-	ImPlotLocation_South     = 2
-	ImPlotLocation_West      = 4
-	ImPlotLocation_East      = 8
-	ImPlotLocation_NorthWest = 5
-	ImPlotLocation_NorthEast = 9
-	ImPlotLocation_SouthWest = 6
-	ImPlotLocation_SouthEast = 10
+	PlotLocation_Center    = 0
+	PlotLocation_North     = 1
+	PlotLocation_South     = 2
+	PlotLocation_West      = 4
+	PlotLocation_East      = 8
+	PlotLocation_NorthWest = 5
+	PlotLocation_NorthEast = 9
+	PlotLocation_SouthWest = 6
+	PlotLocation_SouthEast = 10
 )
 
 // original name: ImPlotMarker_
-type ImPlotMarker int
+type PlotMarker int
 
 const (
-	ImPlotMarker_None     = -1
-	ImPlotMarker_Circle   = 0
-	ImPlotMarker_Square   = 1
-	ImPlotMarker_Diamond  = 2
-	ImPlotMarker_Up       = 3
-	ImPlotMarker_Down     = 4
-	ImPlotMarker_Left     = 5
-	ImPlotMarker_Right    = 6
-	ImPlotMarker_Cross    = 7
-	ImPlotMarker_Plus     = 8
-	ImPlotMarker_Asterisk = 9
-	ImPlotMarker_COUNT    = 10
+	PlotMarker_None     = -1
+	PlotMarker_Circle   = 0
+	PlotMarker_Square   = 1
+	PlotMarker_Diamond  = 2
+	PlotMarker_Up       = 3
+	PlotMarker_Down     = 4
+	PlotMarker_Left     = 5
+	PlotMarker_Right    = 6
+	PlotMarker_Cross    = 7
+	PlotMarker_Plus     = 8
+	PlotMarker_Asterisk = 9
+	PlotMarker_COUNT    = 10
 )
 
 // original name: ImPlotMouseTextFlags_
-type ImPlotMouseTextFlags int
+type PlotMouseTextFlags int
 
 const (
-	ImPlotMouseTextFlags_None       = 0
-	ImPlotMouseTextFlags_NoAuxAxes  = 1
-	ImPlotMouseTextFlags_NoFormat   = 2
-	ImPlotMouseTextFlags_ShowAlways = 4
+	PlotMouseTextFlags_None       = 0
+	PlotMouseTextFlags_NoAuxAxes  = 1
+	PlotMouseTextFlags_NoFormat   = 2
+	PlotMouseTextFlags_ShowAlways = 4
 )
 
 // original name: ImPlotPieChartFlags_
-type ImPlotPieChartFlags int
+type PlotPieChartFlags int
 
 const (
-	ImPlotPieChartFlags_None      = 0
-	ImPlotPieChartFlags_Normalize = 1024
+	PlotPieChartFlags_None      = 0
+	PlotPieChartFlags_Normalize = 1024
 )
 
 // original name: ImPlotScale_
-type ImPlotScale int
+type PlotScale int
 
 const (
-	ImPlotScale_Linear = 0
-	ImPlotScale_Time   = 1
-	ImPlotScale_Log10  = 2
-	ImPlotScale_SymLog = 3
+	PlotScale_Linear = 0
+	PlotScale_Time   = 1
+	PlotScale_Log10  = 2
+	PlotScale_SymLog = 3
 )
 
 // original name: ImPlotScatterFlags_
-type ImPlotScatterFlags int
+type PlotScatterFlags int
 
 const (
-	ImPlotScatterFlags_None   = 0
-	ImPlotScatterFlags_NoClip = 1024
+	PlotScatterFlags_None   = 0
+	PlotScatterFlags_NoClip = 1024
 )
 
 // original name: ImPlotShadedFlags_
-type ImPlotShadedFlags int
+type PlotShadedFlags int
 
 const (
-	ImPlotShadedFlags_None = 0
+	PlotShadedFlags_None = 0
 )
 
 // original name: ImPlotStairsFlags_
-type ImPlotStairsFlags int
+type PlotStairsFlags int
 
 const (
-	ImPlotStairsFlags_None    = 0
-	ImPlotStairsFlags_PreStep = 1024
+	PlotStairsFlags_None    = 0
+	PlotStairsFlags_PreStep = 1024
 )
 
 // original name: ImPlotStemsFlags_
-type ImPlotStemsFlags int
+type PlotStemsFlags int
 
 const (
-	ImPlotStemsFlags_None       = 0
-	ImPlotStemsFlags_Horizontal = 1024
+	PlotStemsFlags_None       = 0
+	PlotStemsFlags_Horizontal = 1024
 )
 
 // original name: ImPlotStyleVar_
-type ImPlotStyleVar int
+type PlotStyleVar int
 
 const (
-	ImPlotStyleVar_LineWeight         = 0
-	ImPlotStyleVar_Marker             = 1
-	ImPlotStyleVar_MarkerSize         = 2
-	ImPlotStyleVar_MarkerWeight       = 3
-	ImPlotStyleVar_FillAlpha          = 4
-	ImPlotStyleVar_ErrorBarSize       = 5
-	ImPlotStyleVar_ErrorBarWeight     = 6
-	ImPlotStyleVar_DigitalBitHeight   = 7
-	ImPlotStyleVar_DigitalBitGap      = 8
-	ImPlotStyleVar_PlotBorderSize     = 9
-	ImPlotStyleVar_MinorAlpha         = 10
-	ImPlotStyleVar_MajorTickLen       = 11
-	ImPlotStyleVar_MinorTickLen       = 12
-	ImPlotStyleVar_MajorTickSize      = 13
-	ImPlotStyleVar_MinorTickSize      = 14
-	ImPlotStyleVar_MajorGridSize      = 15
-	ImPlotStyleVar_MinorGridSize      = 16
-	ImPlotStyleVar_PlotPadding        = 17
-	ImPlotStyleVar_LabelPadding       = 18
-	ImPlotStyleVar_LegendPadding      = 19
-	ImPlotStyleVar_LegendInnerPadding = 20
-	ImPlotStyleVar_LegendSpacing      = 21
-	ImPlotStyleVar_MousePosPadding    = 22
-	ImPlotStyleVar_AnnotationPadding  = 23
-	ImPlotStyleVar_FitPadding         = 24
-	ImPlotStyleVar_PlotDefaultSize    = 25
-	ImPlotStyleVar_PlotMinSize        = 26
-	ImPlotStyleVar_COUNT              = 27
+	PlotStyleVar_LineWeight         = 0
+	PlotStyleVar_Marker             = 1
+	PlotStyleVar_MarkerSize         = 2
+	PlotStyleVar_MarkerWeight       = 3
+	PlotStyleVar_FillAlpha          = 4
+	PlotStyleVar_ErrorBarSize       = 5
+	PlotStyleVar_ErrorBarWeight     = 6
+	PlotStyleVar_DigitalBitHeight   = 7
+	PlotStyleVar_DigitalBitGap      = 8
+	PlotStyleVar_PlotBorderSize     = 9
+	PlotStyleVar_MinorAlpha         = 10
+	PlotStyleVar_MajorTickLen       = 11
+	PlotStyleVar_MinorTickLen       = 12
+	PlotStyleVar_MajorTickSize      = 13
+	PlotStyleVar_MinorTickSize      = 14
+	PlotStyleVar_MajorGridSize      = 15
+	PlotStyleVar_MinorGridSize      = 16
+	PlotStyleVar_PlotPadding        = 17
+	PlotStyleVar_LabelPadding       = 18
+	PlotStyleVar_LegendPadding      = 19
+	PlotStyleVar_LegendInnerPadding = 20
+	PlotStyleVar_LegendSpacing      = 21
+	PlotStyleVar_MousePosPadding    = 22
+	PlotStyleVar_AnnotationPadding  = 23
+	PlotStyleVar_FitPadding         = 24
+	PlotStyleVar_PlotDefaultSize    = 25
+	PlotStyleVar_PlotMinSize        = 26
+	PlotStyleVar_COUNT              = 27
 )
 
 // original name: ImPlotSubplotFlags_
-type ImPlotSubplotFlags int
+type PlotSubplotFlags int
 
 const (
-	ImPlotSubplotFlags_None       = 0
-	ImPlotSubplotFlags_NoTitle    = 1
-	ImPlotSubplotFlags_NoLegend   = 2
-	ImPlotSubplotFlags_NoMenus    = 4
-	ImPlotSubplotFlags_NoResize   = 8
-	ImPlotSubplotFlags_NoAlign    = 16
-	ImPlotSubplotFlags_ShareItems = 32
-	ImPlotSubplotFlags_LinkRows   = 64
-	ImPlotSubplotFlags_LinkCols   = 128
-	ImPlotSubplotFlags_LinkAllX   = 256
-	ImPlotSubplotFlags_LinkAllY   = 512
-	ImPlotSubplotFlags_ColMajor   = 1024
+	PlotSubplotFlags_None       = 0
+	PlotSubplotFlags_NoTitle    = 1
+	PlotSubplotFlags_NoLegend   = 2
+	PlotSubplotFlags_NoMenus    = 4
+	PlotSubplotFlags_NoResize   = 8
+	PlotSubplotFlags_NoAlign    = 16
+	PlotSubplotFlags_ShareItems = 32
+	PlotSubplotFlags_LinkRows   = 64
+	PlotSubplotFlags_LinkCols   = 128
+	PlotSubplotFlags_LinkAllX   = 256
+	PlotSubplotFlags_LinkAllY   = 512
+	PlotSubplotFlags_ColMajor   = 1024
 )
 
 // original name: ImPlotTextFlags_
-type ImPlotTextFlags int
+type PlotTextFlags int
 
 const (
-	ImPlotTextFlags_None     = 0
-	ImPlotTextFlags_Vertical = 1024
+	PlotTextFlags_None     = 0
+	PlotTextFlags_Vertical = 1024
 )
 
 // original name: ImPlotTimeFmt_
-type ImPlotTimeFmt int
+type PlotTimeFmt int
 
 const (
-	ImPlotTimeFmt_None     = 0
-	ImPlotTimeFmt_Us       = 1
-	ImPlotTimeFmt_SUs      = 2
-	ImPlotTimeFmt_SMs      = 3
-	ImPlotTimeFmt_S        = 4
-	ImPlotTimeFmt_HrMinSMs = 5
-	ImPlotTimeFmt_HrMinS   = 6
-	ImPlotTimeFmt_HrMin    = 7
-	ImPlotTimeFmt_Hr       = 8
+	PlotTimeFmt_None     = 0
+	PlotTimeFmt_Us       = 1
+	PlotTimeFmt_SUs      = 2
+	PlotTimeFmt_SMs      = 3
+	PlotTimeFmt_S        = 4
+	PlotTimeFmt_HrMinSMs = 5
+	PlotTimeFmt_HrMinS   = 6
+	PlotTimeFmt_HrMin    = 7
+	PlotTimeFmt_Hr       = 8
 )
 
 // original name: ImPlotTimeUnit_
-type ImPlotTimeUnit int
+type PlotTimeUnit int
 
 const (
-	ImPlotTimeUnit_Us    = 0
-	ImPlotTimeUnit_Ms    = 1
-	ImPlotTimeUnit_S     = 2
-	ImPlotTimeUnit_Min   = 3
-	ImPlotTimeUnit_Hr    = 4
-	ImPlotTimeUnit_Day   = 5
-	ImPlotTimeUnit_Mo    = 6
-	ImPlotTimeUnit_Yr    = 7
-	ImPlotTimeUnit_COUNT = 8
+	PlotTimeUnit_Us    = 0
+	PlotTimeUnit_Ms    = 1
+	PlotTimeUnit_S     = 2
+	PlotTimeUnit_Min   = 3
+	PlotTimeUnit_Hr    = 4
+	PlotTimeUnit_Day   = 5
+	PlotTimeUnit_Mo    = 6
+	PlotTimeUnit_Yr    = 7
+	PlotTimeUnit_COUNT = 8
 )

@@ -28,8 +28,8 @@ var structMemberTypeMap = map[string]*TypeMap{
 }
 
 func trimImGuiPrefix(id string) string {
-	// don't trim prefixes for implot
-	if strings.HasPrefix(id, "ImPlot") || strings.HasPrefix(id, "ImAxis") {
+	// don't trim prefixes for implot's ImAxis - it conflicts with ImGuIAxis (from imgui_internal.h)
+	if strings.HasPrefix(id, "ImAxis") {
 		return id
 	}
 
@@ -447,8 +447,8 @@ import "unsafe"
 				sb.WriteString("}\n\n")
 
 				convertedFuncCount += 1
-			} else if funk.ContainsString(enumNames, trimImGuiPrefix(f.Ret)) {
-				returnType := trimImGuiPrefix(f.Ret)
+			} else if goEnumName := trimImGuiPrefix(f.Ret); funk.ContainsString(enumNames, goEnumName) {
+				returnType := goEnumName
 
 				sb.WriteString(funcSignatureFunc(f.FuncName, args, returnType))
 
