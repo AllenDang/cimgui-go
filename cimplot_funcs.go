@@ -255,10 +255,10 @@ func Plot_BeginSubplotsV(title_id string, rows int32, cols int32, size ImVec2, f
 	title_idArg, title_idFin := wrapString(title_id)
 	defer title_idFin()
 
-	row_ratiosArg, row_ratiosFin := wrapCType[C.float, float32](row_ratios)
+	row_ratiosArg, row_ratiosFin := wrapPtrCType[C.float, float32](row_ratios)
 	defer row_ratiosFin()
 
-	col_ratiosArg, col_ratiosFin := wrapCType[C.float, float32](col_ratios)
+	col_ratiosArg, col_ratiosFin := wrapPtrCType[C.float, float32](col_ratios)
 	defer col_ratiosFin()
 
 	return C.Plot_BeginSubplotsV(title_idArg, C.int(rows), C.int(cols), size.toC(), C.ImPlotSubplotFlags(flags), row_ratiosArg, col_ratiosArg) == C.bool(true)
@@ -314,7 +314,7 @@ func Plot_ColormapSliderV(label string, t *float32, out *ImVec4, format string, 
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	tArg, tFin := wrapCType[C.float, float32](t)
+	tArg, tFin := wrapPtrCType[C.float, float32](t)
 	defer tFin()
 
 	outArg, outFin := out.wrap()
@@ -1579,7 +1579,7 @@ func Plot_ColormapSlider(label string, t *float32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	tArg, tFin := wrapCType[C.float, float32](t)
+	tArg, tFin := wrapPtrCType[C.float, float32](t)
 	defer tFin()
 
 	return C.Plot_ColormapSlider(labelArg, tArg) == C.bool(true)
