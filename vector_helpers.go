@@ -52,26 +52,3 @@ func (v ImVec4) Add(p ImVec2) ImVec4 {
 func (v ImVec4) Sub(p ImVec2) ImVec4 {
 	return v.Add(p.Mul(-1))
 }
-
-// Eq reports whether v and r are equal.
-func (v ImVec4) Eq(r ImVec4) bool {
-	return v.X == r.X && v.Y == r.Y && v.Z == r.Z && v.W == r.W
-}
-
-func (v ImVec4) Canon() ImVec4 {
-	if v.X > v.Z {
-		v.X, v.Z = v.Z, v.X
-	}
-
-	if v.Y > v.W {
-		v.Y, v.W = v.W, v.Y
-	}
-
-	return v
-}
-
-func (v ImVec4) In(s ImVec4) bool {
-	v = v.Canon()
-	s = s.Canon()
-	return v.X <= s.X && v.Y <= s.Y && v.Z >= s.Z && v.W >= s.W
-}
