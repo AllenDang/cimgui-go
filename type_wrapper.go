@@ -29,22 +29,17 @@ func wrapBool(goValue *bool) (wrapped *C.bool, finisher func()) {
 	return
 }
 
-// CNumber is a generic type for C types that can be used as a number GoNumber
-type CNumber interface {
-	C.char | C.short | C.int | C.long |
-		C.uchar | C.ushort | C.uint | C.ulong |
-		C.float | C.double
-}
-
-// GoNumber is a generic type for Go types that can be used as a number CNumber
-type GoNumber interface {
+// Number is a generic type for Go/C types that can be used as a number.
+// It could be anything that you can convert to that type (e.g. C.int is a Number,
+// because it can be directly converted to int)
+type Number interface {
 	~int8 | ~int16 | ~int32 | ~int64 |
 		~uint8 | ~uint16 | ~uint32 | ~uint64 |
 		~float32 | ~float64
 }
 
 // wrapPtrCType is a generic method to convert GOTYPE (int32/float32 e.t.c.) into CTYPE (c_int/c_float e.t.c.)
-func wrapPtrCType[CTYPE CNumber, GOTYPE GoNumber](goValue *GOTYPE) (wrapped *CTYPE, finisher func()) {
+func wrapPtrCType[CTYPE Number, GOTYPE Number](goValue *GOTYPE) (wrapped *CTYPE, finisher func()) {
 	if goValue != nil {
 		cValue := CTYPE(*goValue)
 		wrapped = &cValue
