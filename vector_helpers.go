@@ -36,11 +36,6 @@ func (v ImVec2) Div(k float32) ImVec2 {
 	}
 }
 
-// Eq reports whether p and q are equal.
-func (v ImVec2) Eq(q ImVec2) bool {
-	return v.X == q.X && v.Y == q.Y
-}
-
 // Vec4
 
 // Add returns the rectangle r translated by p.

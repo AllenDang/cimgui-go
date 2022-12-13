@@ -77,42 +77,6 @@ func TestImVec2_Div(t *testing.T) {
 	}
 }
 
-func TestImVec2_Eq(t *testing.T) {
-	type fields struct {
-		X float32
-		Y float32
-	}
-
-	type args struct {
-		q ImVec2
-	}
-
-	tests := []struct {
-		name   string
-		fields fields
-		args   args
-		want   bool
-	}{
-		{"simpliest", fields{0, 0}, args{ImVec2{0, 0}}, true},
-		{"numbers; equal", fields{1, 2}, args{ImVec2{1, 2}}, true},
-		{"floats; equal", fields{1.5, 2.5}, args{ImVec2{1.5, 2.5}}, true},
-		{"numbers; not equal", fields{1, 2}, args{ImVec2{1, 3}}, false},
-		{"floats; not equal", fields{1.5, 2.5}, args{ImVec2{1.5, 3.5}}, false},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			v := ImVec2{
-				X: tt.fields.X,
-				Y: tt.fields.Y,
-			}
-			if got := v.Eq(tt.args.q); got != tt.want {
-				t.Errorf("Eq() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
 func TestImVec2_Mul(t *testing.T) {
 	type fields struct {
 		X float32
