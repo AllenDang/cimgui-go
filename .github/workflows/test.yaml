@@ -29,7 +29,9 @@ jobs:
           just gencode_cimplot
       - name: Check if code was up-to-data
         run: |
-          # this is intended to exit with a non-zero exit code if there are any changes
+          echo -e "if you see this failing, it means that your have made changes in generator's code
+          and the wrapper needs to be re-generated OR you've edited some of the generated
+          files directly. To fix it, run \`just gencode_cimgui\` and/or \`just gencode_cimplot\`"
           git diff --exit-code
 
   RunGoTests:
