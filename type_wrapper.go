@@ -39,7 +39,7 @@ type Number interface {
 }
 
 // wrapPtrCType is a generic method to convert GOTYPE (int32/float32 e.t.c.) into CTYPE (c_int/c_float e.t.c.)
-func wrapPtrCType[CTYPE Number, GOTYPE Number](goValue *GOTYPE) (wrapped *CTYPE, finisher func()) {
+func wrapNumberPtr[CTYPE Number, GOTYPE Number](goValue *GOTYPE) (wrapped *CTYPE, finisher func()) {
 	if goValue != nil {
 		cValue := CTYPE(*goValue)
 		wrapped = &cValue

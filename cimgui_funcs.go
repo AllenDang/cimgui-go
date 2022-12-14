@@ -1385,7 +1385,7 @@ func CheckboxFlags_IntPtr(label string, flags *int32, flags_value int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	flagsArg, flagsFin := wrapPtrCType[C.int, int32](flags)
+	flagsArg, flagsFin := wrapNumberPtr[C.int, int32](flags)
 	defer flagsFin()
 
 	return C.CheckboxFlags_IntPtr(labelArg, flagsArg, C.int(flags_value)) == C.bool(true)
@@ -1431,26 +1431,26 @@ func ColorConvertFloat4ToU32(in ImVec4) uint32 {
 }
 
 func ColorConvertHSVtoRGB(h float32, s float32, v float32, out_r *float32, out_g *float32, out_b *float32) {
-	out_rArg, out_rFin := wrapPtrCType[C.float, float32](out_r)
+	out_rArg, out_rFin := wrapNumberPtr[C.float, float32](out_r)
 	defer out_rFin()
 
-	out_gArg, out_gFin := wrapPtrCType[C.float, float32](out_g)
+	out_gArg, out_gFin := wrapNumberPtr[C.float, float32](out_g)
 	defer out_gFin()
 
-	out_bArg, out_bFin := wrapPtrCType[C.float, float32](out_b)
+	out_bArg, out_bFin := wrapNumberPtr[C.float, float32](out_b)
 	defer out_bFin()
 
 	C.ColorConvertHSVtoRGB(C.float(h), C.float(s), C.float(v), out_rArg, out_gArg, out_bArg)
 }
 
 func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s *float32, out_v *float32) {
-	out_hArg, out_hFin := wrapPtrCType[C.float, float32](out_h)
+	out_hArg, out_hFin := wrapNumberPtr[C.float, float32](out_h)
 	defer out_hFin()
 
-	out_sArg, out_sFin := wrapPtrCType[C.float, float32](out_s)
+	out_sArg, out_sFin := wrapNumberPtr[C.float, float32](out_s)
 	defer out_sFin()
 
-	out_vArg, out_vFin := wrapPtrCType[C.float, float32](out_v)
+	out_vArg, out_vFin := wrapNumberPtr[C.float, float32](out_v)
 	defer out_vFin()
 
 	C.ColorConvertRGBtoHSV(C.float(r), C.float(g), C.float(b), out_hArg, out_sArg, out_vArg)
@@ -1557,7 +1557,7 @@ func Combo_StrV(label string, current_item *int32, items_separated_by_zeros stri
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	current_itemArg, current_itemFin := wrapPtrCType[C.int, int32](current_item)
+	current_itemArg, current_itemFin := wrapNumberPtr[C.int, int32](current_item)
 	defer current_itemFin()
 
 	items_separated_by_zerosArg, items_separated_by_zerosFin := wrapString(items_separated_by_zeros)
@@ -1622,7 +1622,7 @@ func DragFloatV(label string, v *float32, v_speed float32, v_min float32, v_max 
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.float, float32](v)
+	vArg, vFin := wrapNumberPtr[C.float, float32](v)
 	defer vFin()
 
 	formatArg, formatFin := wrapString(format)
@@ -1720,10 +1720,10 @@ func DragFloatRange2V(label string, v_current_min *float32, v_current_max *float
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	v_current_minArg, v_current_minFin := wrapPtrCType[C.float, float32](v_current_min)
+	v_current_minArg, v_current_minFin := wrapNumberPtr[C.float, float32](v_current_min)
 	defer v_current_minFin()
 
-	v_current_maxArg, v_current_maxFin := wrapPtrCType[C.float, float32](v_current_max)
+	v_current_maxArg, v_current_maxFin := wrapNumberPtr[C.float, float32](v_current_max)
 	defer v_current_maxFin()
 
 	formatArg, formatFin := wrapString(format)
@@ -1745,7 +1745,7 @@ func DragIntV(label string, v *int32, v_speed float32, v_min int32, v_max int32,
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.int, int32](v)
+	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
 	formatArg, formatFin := wrapString(format)
@@ -1843,10 +1843,10 @@ func DragIntRange2V(label string, v_current_min *int32, v_current_max *int32, v_
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	v_current_minArg, v_current_minFin := wrapPtrCType[C.int, int32](v_current_min)
+	v_current_minArg, v_current_minFin := wrapNumberPtr[C.int, int32](v_current_min)
 	defer v_current_minFin()
 
-	v_current_maxArg, v_current_maxFin := wrapPtrCType[C.int, int32](v_current_max)
+	v_current_maxArg, v_current_maxFin := wrapNumberPtr[C.int, int32](v_current_max)
 	defer v_current_maxFin()
 
 	formatArg, formatFin := wrapString(format)
@@ -2363,7 +2363,7 @@ func InputFloatV(label string, v *float32, step float32, step_fast float32, form
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.float, float32](v)
+	vArg, vFin := wrapNumberPtr[C.float, float32](v)
 	defer vFin()
 
 	formatArg, formatFin := wrapString(format)
@@ -2449,7 +2449,7 @@ func InputIntV(label string, v *int32, step int32, step_fast int32, flags ImGuiI
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.int, int32](v)
+	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
 	return C.InputIntV(labelArg, vArg, C.int(step), C.int(step_fast), C.ImGuiInputTextFlags(flags)) == C.bool(true)
@@ -3004,7 +3004,7 @@ func RadioButton_IntPtr(label string, v *int32, v_button int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.int, int32](v)
+	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
 	return C.RadioButton_IntPtr(labelArg, vArg, C.int(v_button)) == C.bool(true)
@@ -3388,7 +3388,7 @@ func SliderAngleV(label string, v_rad *float32, v_degrees_min float32, v_degrees
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	v_radArg, v_radFin := wrapPtrCType[C.float, float32](v_rad)
+	v_radArg, v_radFin := wrapNumberPtr[C.float, float32](v_rad)
 	defer v_radFin()
 
 	formatArg, formatFin := wrapString(format)
@@ -3404,7 +3404,7 @@ func SliderFloatV(label string, v *float32, v_min float32, v_max float32, format
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.float, float32](v)
+	vArg, vFin := wrapNumberPtr[C.float, float32](v)
 	defer vFin()
 
 	formatArg, formatFin := wrapString(format)
@@ -3489,7 +3489,7 @@ func SliderIntV(label string, v *int32, v_min int32, v_max int32, format string,
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.int, int32](v)
+	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
 	formatArg, formatFin := wrapString(format)
@@ -3831,7 +3831,7 @@ func VSliderFloatV(label string, size ImVec2, v *float32, v_min float32, v_max f
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.float, float32](v)
+	vArg, vFin := wrapNumberPtr[C.float, float32](v)
 	defer vFin()
 
 	formatArg, formatFin := wrapString(format)
@@ -3847,7 +3847,7 @@ func VSliderIntV(label string, size ImVec2, v *int32, v_min int32, v_max int32, 
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.int, int32](v)
+	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
 	formatArg, formatFin := wrapString(format)
@@ -4322,7 +4322,7 @@ func Combo_Str(label string, current_item *int32, items_separated_by_zeros strin
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	current_itemArg, current_itemFin := wrapPtrCType[C.int, int32](current_item)
+	current_itemArg, current_itemFin := wrapNumberPtr[C.int, int32](current_item)
 	defer current_itemFin()
 
 	items_separated_by_zerosArg, items_separated_by_zerosFin := wrapString(items_separated_by_zeros)
@@ -4351,7 +4351,7 @@ func DragFloat(label string, v *float32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.float, float32](v)
+	vArg, vFin := wrapNumberPtr[C.float, float32](v)
 	defer vFin()
 
 	return C.DragFloat(labelArg, vArg) == C.bool(true)
@@ -4412,10 +4412,10 @@ func DragFloatRange2(label string, v_current_min *float32, v_current_max *float3
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	v_current_minArg, v_current_minFin := wrapPtrCType[C.float, float32](v_current_min)
+	v_current_minArg, v_current_minFin := wrapNumberPtr[C.float, float32](v_current_min)
 	defer v_current_minFin()
 
-	v_current_maxArg, v_current_maxFin := wrapPtrCType[C.float, float32](v_current_max)
+	v_current_maxArg, v_current_maxFin := wrapNumberPtr[C.float, float32](v_current_max)
 	defer v_current_maxFin()
 
 	return C.DragFloatRange2(labelArg, v_current_minArg, v_current_maxArg) == C.bool(true)
@@ -4425,7 +4425,7 @@ func DragInt(label string, v *int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.int, int32](v)
+	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
 	return C.DragInt(labelArg, vArg) == C.bool(true)
@@ -4486,10 +4486,10 @@ func DragIntRange2(label string, v_current_min *int32, v_current_max *int32) boo
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	v_current_minArg, v_current_minFin := wrapPtrCType[C.int, int32](v_current_min)
+	v_current_minArg, v_current_minFin := wrapNumberPtr[C.int, int32](v_current_min)
 	defer v_current_minFin()
 
-	v_current_maxArg, v_current_maxFin := wrapPtrCType[C.int, int32](v_current_max)
+	v_current_maxArg, v_current_maxFin := wrapNumberPtr[C.int, int32](v_current_max)
 	defer v_current_maxFin()
 
 	return C.DragIntRange2(labelArg, v_current_minArg, v_current_maxArg) == C.bool(true)
@@ -4543,7 +4543,7 @@ func InputFloat(label string, v *float32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.float, float32](v)
+	vArg, vFin := wrapNumberPtr[C.float, float32](v)
 	defer vFin()
 
 	return C.InputFloat(labelArg, vArg) == C.bool(true)
@@ -4604,7 +4604,7 @@ func InputInt(label string, v *int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.int, int32](v)
+	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
 	return C.InputInt(labelArg, vArg) == C.bool(true)
@@ -4954,7 +4954,7 @@ func SliderAngle(label string, v_rad *float32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	v_radArg, v_radFin := wrapPtrCType[C.float, float32](v_rad)
+	v_radArg, v_radFin := wrapNumberPtr[C.float, float32](v_rad)
 	defer v_radFin()
 
 	return C.SliderAngle(labelArg, v_radArg) == C.bool(true)
@@ -4964,7 +4964,7 @@ func SliderFloat(label string, v *float32, v_min float32, v_max float32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.float, float32](v)
+	vArg, vFin := wrapNumberPtr[C.float, float32](v)
 	defer vFin()
 
 	return C.SliderFloat(labelArg, vArg, C.float(v_min), C.float(v_max)) == C.bool(true)
@@ -5025,7 +5025,7 @@ func SliderInt(label string, v *int32, v_min int32, v_max int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.int, int32](v)
+	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
 	return C.SliderInt(labelArg, vArg, C.int(v_min), C.int(v_max)) == C.bool(true)
@@ -5164,7 +5164,7 @@ func VSliderFloat(label string, size ImVec2, v *float32, v_min float32, v_max fl
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.float, float32](v)
+	vArg, vFin := wrapNumberPtr[C.float, float32](v)
 	defer vFin()
 
 	return C.VSliderFloat(labelArg, size.toC(), vArg, C.float(v_min), C.float(v_max)) == C.bool(true)
@@ -5174,7 +5174,7 @@ func VSliderInt(label string, size ImVec2, v *int32, v_min int32, v_max int32) b
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	vArg, vFin := wrapPtrCType[C.int, int32](v)
+	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
 	return C.VSliderInt(labelArg, size.toC(), vArg, C.int(v_min), C.int(v_max)) == C.bool(true)
