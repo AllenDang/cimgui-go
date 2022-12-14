@@ -30,6 +30,7 @@ type FuncDef struct {
 	InvocationStmt   string            `json:"invocation_stmt"`
 	Ret              string            `json:"ret"`
 	StName           string            `json:"stname"`
+	NonUDT           int               `json:"nonUDT"`
 }
 
 type EnumValueDef struct {
