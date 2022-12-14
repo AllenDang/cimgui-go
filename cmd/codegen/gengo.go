@@ -219,6 +219,7 @@ import "unsafe"
 		"ImTextureID":              textureIdReturnW,
 		"ImVec2":                   imVec2ReturnW,
 		"ImColor":                  imColorReturnW,
+		"ImPlotPoint":              imPlotPointReturnW,
 		"ImRect":                   imRectReturnW,
 		"ImGuiTableColumnIdx":      imTableColumnIdxReturnW,
 		"ImGuiTableDrawChannelIdx": imTableDrawChannelIdxReturnW,

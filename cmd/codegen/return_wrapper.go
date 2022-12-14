@@ -63,6 +63,12 @@ func imColorReturnW(f FuncDef) (returnType string, returnStmt string) {
 	return
 }
 
+func imPlotPointReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "ImPlotPoint"
+	returnStmt = "return newImPlotPointFromC(%s)"
+	return
+}
+
 func imRectReturnW(f FuncDef) (returnType string, returnStmt string) {
 	returnType = "ImRect"
 	returnStmt = "return newImRectFromC(%s)"
