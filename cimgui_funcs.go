@@ -6,6 +6,17 @@ package cimgui
 import "C"
 import "unsafe"
 
+// Color_HSVV parameter default value hint:
+// a: 1.0f
+func Color_HSVV(h float32, s float32, v float32, a float32) ImColor {
+	pOut := ImColor{}
+	pOutArg, pOutFin := pOut.wrap()
+	defer pOutFin()
+
+	C.Color_HSVV(pOutArg, C.float(h), C.float(s), C.float(v), C.float(a))
+	return pOut
+}
+
 // Color_SetHSVV parameter default value hint:
 // a: 1.0f
 func (self *ImColor) SetHSVV(h float32, s float32, v float32, a float32) {
@@ -3935,6 +3946,15 @@ func Value_Uint(prefix string, v uint32) {
 	defer prefixFin()
 
 	C.Value_Uint(prefixArg, C.uint(v))
+}
+
+func Color_HSV(h float32, s float32, v float32) ImColor {
+	pOut := ImColor{}
+	pOutArg, pOutFin := pOut.wrap()
+	defer pOutFin()
+
+	C.Color_HSV(pOutArg, C.float(h), C.float(s), C.float(v))
+	return pOut
 }
 
 func (self *ImColor) SetHSV(h float32, s float32, v float32) {

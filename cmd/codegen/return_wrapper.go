@@ -57,6 +57,12 @@ func imVec2ReturnW(f FuncDef) (returnType string, returnStmt string) {
 	return
 }
 
+func imColorReturnW(f FuncDef) (returnType string, returnStmt string) {
+	returnType = "ImColor"
+	returnStmt = "return newImColorFromC(%s)"
+	return
+}
+
 func imRectReturnW(f FuncDef) (returnType string, returnStmt string) {
 	returnType = "ImRect"
 	returnStmt = "return newImRectFromC(%s)"
