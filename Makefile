@@ -2,13 +2,14 @@ NAME=cimgui-go Code Generator
 
 .PHONY: all setup cimgui cimplot generate
 
+## all: generates both bindings.
 all: generate
 
-## setup: pulls down dependencies; builds codegen programm
+## setup: pulls down dependencies.
 setup:
-	go build -o ./cmd/codegen/build/codegen ./cmd/codegen
+	go get -v -d ./...
 
-
+## _gencode: is an internal rule. It generates binding basing on env variables set in imgui and implot rules
 _generate: setup
 	echo "Generating for $(prefix)"
 	cd ./cmd/codegen/build; ./codegen -p $(prefix) -i $(include_path) -d $(d_file) -e $(e_file) $(r_file)
@@ -23,6 +24,7 @@ _generate: setup
 	cp -f ./cmd/codegen/build/$(prefix)_funcs.go ./
 	cp -f ./cmd/codegen/build/$(prefix)_structs.go ./
 
+## cimgui: generate cimgui binding
 cimgui: prefix := cimgui
 cimgui: include_path := cimgui/cimgui.h
 cimgui: d_file :=  ../../../cimgui/generator/output/definitions.json 
@@ -30,6 +32,7 @@ cimgui: e_file := ../../../cimgui/generator/output/structs_and_enums.json
 cimgui: r_file :=
 cimgui: _generate _clean
 
+## cimplot: generate implot binding
 cimplot: prefix := cimplot
 cimplot: include_path := cimplot/cimplot.h
 cimplot: d_file := ../../../cimplot/generator/output/definitions.json
@@ -43,6 +46,7 @@ compile_cimgui_macos:
 	cd ./cimgui/build; make
 	cp -f ./cimgui/build/cimgui.a ./lib/macos/arm64/
 
+## generate: generates both bindings (equal to `all`)
 generate: setup cimgui cimplot
 
 _clean:
