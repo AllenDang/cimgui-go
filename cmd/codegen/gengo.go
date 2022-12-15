@@ -195,6 +195,7 @@ import "unsafe"
 		"ImColor*":                 imColorPtrW,
 		"ImRect":                   imRectW,
 		"ImPlotPoint":              imPlotPointW,
+		"const ImPlotPoint":              imPlotPointW,
 		"ImPlotPoint*":             imPlotPointPtrW,
 	}
 

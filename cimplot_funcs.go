@@ -89,6 +89,15 @@ func (self ImPlotRange) Destroy() {
 	C.PlotRange_Destroy(self.handle())
 }
 
+func (self ImPlotRect) Clamp_PlotPoInt(p ImPlotPoint) ImPlotPoint {
+	pOut := ImPlotPoint{}
+	pOutArg, pOutFin := pOut.wrap()
+	defer pOutFin()
+
+	C.PlotRect_Clamp_PlotPoInt(pOutArg, self.handle(), p.toC())
+	return pOut
+}
+
 func (self ImPlotRect) Clamp_double(x float64, y float64) ImPlotPoint {
 	pOut := ImPlotPoint{}
 	pOutArg, pOutFin := pOut.wrap()
@@ -96,6 +105,10 @@ func (self ImPlotRect) Clamp_double(x float64, y float64) ImPlotPoint {
 
 	C.PlotRect_Clamp_double(pOutArg, self.handle(), C.double(x), C.double(y))
 	return pOut
+}
+
+func (self ImPlotRect) Contains_PlotPoInt(p ImPlotPoint) bool {
+	return C.PlotRect_Contains_PlotPoInt(self.handle(), p.toC()) == C.bool(true)
 }
 
 func (self ImPlotRect) Contains_double(x float64, y float64) bool {
@@ -786,6 +799,69 @@ func Plot_PlotErrorBars_U64PtrU64PtrU64PtrU64PtrV(label_id string, xs []uint64, 
 	C.Plot_PlotErrorBars_U64PtrU64PtrU64PtrU64PtrV(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), (*C.ulonglong)(&(neg[0])), (*C.ulonglong)(&(pos[0])), C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
 }
 
+// Plot_PlotHeatmap_FloatPtrV parameter default value hint:
+// bounds_max: ImPlotPoint(1,1)
+// bounds_min: ImPlotPoint(0,0)
+// flags: 0
+// label_fmt: "%.1f"
+// scale_max: 0
+// scale_min: 0
+func Plot_PlotHeatmap_FloatPtrV(label_id string, values []float32, rows int32, cols int32, scale_min float64, scale_max float64, label_fmt string, bounds_min ImPlotPoint, bounds_max ImPlotPoint, flags PlotHeatmapFlags) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotHeatmap_FloatPtrV(label_idArg, (*C.float)(&(values[0])), C.int(rows), C.int(cols), C.double(scale_min), C.double(scale_max), label_fmtArg, bounds_min.toC(), bounds_max.toC(), C.ImPlotHeatmapFlags(flags))
+}
+
+// Plot_PlotHeatmap_S64PtrV parameter default value hint:
+// bounds_max: ImPlotPoint(1,1)
+// bounds_min: ImPlotPoint(0,0)
+// flags: 0
+// label_fmt: "%.1f"
+// scale_max: 0
+// scale_min: 0
+func Plot_PlotHeatmap_S64PtrV(label_id string, values []int64, rows int32, cols int32, scale_min float64, scale_max float64, label_fmt string, bounds_min ImPlotPoint, bounds_max ImPlotPoint, flags PlotHeatmapFlags) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotHeatmap_S64PtrV(label_idArg, (*C.longlong)(&(values[0])), C.int(rows), C.int(cols), C.double(scale_min), C.double(scale_max), label_fmtArg, bounds_min.toC(), bounds_max.toC(), C.ImPlotHeatmapFlags(flags))
+}
+
+// Plot_PlotHeatmap_U64PtrV parameter default value hint:
+// bounds_max: ImPlotPoint(1,1)
+// bounds_min: ImPlotPoint(0,0)
+// flags: 0
+// label_fmt: "%.1f"
+// scale_max: 0
+// scale_min: 0
+func Plot_PlotHeatmap_U64PtrV(label_id string, values []uint64, rows int32, cols int32, scale_min float64, scale_max float64, label_fmt string, bounds_min ImPlotPoint, bounds_max ImPlotPoint, flags PlotHeatmapFlags) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotHeatmap_U64PtrV(label_idArg, (*C.ulonglong)(&(values[0])), C.int(rows), C.int(cols), C.double(scale_min), C.double(scale_max), label_fmtArg, bounds_min.toC(), bounds_max.toC(), C.ImPlotHeatmapFlags(flags))
+}
+
+// Plot_PlotImageV parameter default value hint:
+// flags: 0
+// tint_col: ImVec4(1,1,1,1)
+// uv0: ImVec2(0,0)
+// uv1: ImVec2(1,1)
+func Plot_PlotImageV(label_id string, user_texture_id ImTextureID, bounds_min ImPlotPoint, bounds_max ImPlotPoint, uv0 ImVec2, uv1 ImVec2, tint_col ImVec4, flags PlotImageFlags) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	C.Plot_PlotImageV(label_idArg, C.ImTextureID(user_texture_id), bounds_min.toC(), bounds_max.toC(), uv0.toC(), uv1.toC(), tint_col.toC(), C.ImPlotImageFlags(flags))
+}
+
 // Plot_PlotInfLines_FloatPtrV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -1274,6 +1350,18 @@ func Plot_PlotTextV(text string, x float64, y float64, pix_offset ImVec2, flags 
 	defer textFin()
 
 	C.Plot_PlotTextV(textArg, C.double(x), C.double(y), pix_offset.toC(), C.ImPlotTextFlags(flags))
+}
+
+// Plot_PlotToPixels_PlotPoIntV parameter default value hint:
+// x_axis: -1
+// y_axis: -1
+func Plot_PlotToPixels_PlotPoIntV(plt ImPlotPoint, x_axis ImAxis, y_axis ImAxis) ImVec2 {
+	pOut := ImVec2{}
+	pOutArg, pOutFin := pOut.wrap()
+	defer pOutFin()
+
+	C.Plot_PlotToPixels_PlotPoIntV(pOutArg, plt.toC(), C.ImAxis(x_axis), C.ImAxis(y_axis))
+	return pOut
 }
 
 // Plot_PlotToPixels_doubleV parameter default value hint:
@@ -1966,6 +2054,13 @@ func Plot_PlotHistogram_U64Ptr(label_id string, values []uint64, count int32) fl
 	return float64(C.Plot_PlotHistogram_U64Ptr(label_idArg, (*C.ulonglong)(&(values[0])), C.int(count)))
 }
 
+func Plot_PlotImage(label_id string, user_texture_id ImTextureID, bounds_min ImPlotPoint, bounds_max ImPlotPoint) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	C.Plot_PlotImage(label_idArg, C.ImTextureID(user_texture_id), bounds_min.toC(), bounds_max.toC())
+}
+
 func Plot_PlotInfLines_FloatPtr(label_id string, values []float32, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -2244,6 +2339,15 @@ func Plot_PlotText(text string, x float64, y float64) {
 	defer textFin()
 
 	C.Plot_PlotText(textArg, C.double(x), C.double(y))
+}
+
+func Plot_PlotToPixels_PlotPoInt(plt ImPlotPoint) ImVec2 {
+	pOut := ImVec2{}
+	pOutArg, pOutFin := pOut.wrap()
+	defer pOutFin()
+
+	C.Plot_PlotToPixels_PlotPoInt(pOutArg, plt.toC())
+	return pOut
 }
 
 func Plot_PlotToPixels_double(x float64, y float64) ImVec2 {
