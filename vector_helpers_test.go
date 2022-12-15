@@ -23,7 +23,7 @@ func TestImVec2_Add(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.p.Add(tt.q); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Add() = %v, want %v", got, tt.want)
+				t.Errorf("%#v.Add(%#v) = %v, want %v", tt.p, tt.q, got, tt.want)
 			}
 		})
 	}
@@ -45,14 +45,13 @@ func TestImVec2_Div(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.p.Div(tt.k); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Div() = %v, want %v", got, tt.want)
+				t.Errorf("%#v.Div(%#v) = %v, want %v", tt.p, tt.k, got, tt.want)
 			}
 		})
 	}
 }
 
 func TestImVec2_Mul(t *testing.T) {
-
 	tests := []struct {
 		name string
 		p    ImVec2
@@ -68,7 +67,7 @@ func TestImVec2_Mul(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.p.Mul(tt.k); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Mul() = %v, want %v", got, tt.want)
+				t.Errorf("%#v.Mul(%#v) = %v, want %v", tt.p, tt.k, got, tt.want)
 			}
 		})
 	}
@@ -91,7 +90,7 @@ func TestImVec2_Sub(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.p.Sub(tt.q); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Sub() = %v, want %v", got, tt.want)
+				t.Errorf("%#v.Sub(%#v) = %v, want %v", tt.p, tt.q, got, tt.want)
 			}
 		})
 	}
@@ -115,7 +114,7 @@ func TestImVec4_Add(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.p.Add(tt.q); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Add() = %v, want %v", got, tt.want)
+				t.Errorf("%#v.Add(%#v) = %v, want %v", tt.p, tt.q, got, tt.want)
 			}
 		})
 	}
@@ -138,7 +137,7 @@ func TestImVec4_Sub(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.p.Sub(tt.q); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Sub() = %v, want %v", got, tt.want)
+				t.Errorf("%#v.Sub(%#v) = %v, want %v", tt.p, tt.q, got, tt.want)
 			}
 		})
 	}
