@@ -7,7 +7,7 @@ export PATH := ./bin:$(PATH)
 export GO111MODULE := on
 export GOPROXY = https://proxy.golang.org,direct
 
-.PHONY: all, setup, cimgui, cimplot, generate
+.PHONY: all setup cimgui cimplot generate
 
 all: generate
 
