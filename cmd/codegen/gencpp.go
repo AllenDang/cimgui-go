@@ -70,11 +70,7 @@ extern "C" {
 			shouldSkip = true
 		}
 
-		funcName := f.FuncName
-
-		funcName = strings.TrimPrefix(funcName, "ImGui")
-		funcName = strings.TrimPrefix(funcName, "Im")
-		funcName = strings.TrimPrefix(funcName, "ig")
+		funcName := trimImGuiPrefix(f.FuncName)
 
 		// Check lower case for function
 		if unicode.IsLower(rune(funcName[0])) {
@@ -240,6 +236,7 @@ extern "C" {
 				StructGetter:     false,
 				Ret:              f.Ret,
 				StName:           f.StName,
+				NonUDT:           f.NonUDT,
 			})
 
 			// Add V as suffix to current function name
@@ -265,6 +262,7 @@ extern "C" {
 				InvocationStmt:   f.InvocationStmt,
 				Ret:              f.Ret,
 				StName:           f.StName,
+				NonUDT:           f.NonUDT,
 			})
 		}
 
