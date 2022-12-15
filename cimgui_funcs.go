@@ -2056,38 +2056,38 @@ func GetCurrentContext() ImGuiContext {
 	return (ImGuiContext)(unsafe.Pointer(C.GetCurrentContext()))
 }
 
-func GetDrawCursorPos() ImVec2 {
+func GetCursorPos() ImVec2 {
 	pOut := ImVec2{}
 	pOutArg, pOutFin := pOut.wrap()
 	defer pOutFin()
 
-	C.GetDrawCursorPos(pOutArg)
+	C.GetCursorPos(pOutArg)
 	return pOut
 }
 
-func GetDrawCursorPosX() float32 {
-	return float32(C.GetDrawCursorPosX())
+func GetCursorPosX() float32 {
+	return float32(C.GetCursorPosX())
 }
 
-func GetDrawCursorPosY() float32 {
-	return float32(C.GetDrawCursorPosY())
+func GetCursorPosY() float32 {
+	return float32(C.GetCursorPosY())
 }
 
-func GetDrawCursorScreenPos() ImVec2 {
+func GetCursorScreenPos() ImVec2 {
 	pOut := ImVec2{}
 	pOutArg, pOutFin := pOut.wrap()
 	defer pOutFin()
 
-	C.GetDrawCursorScreenPos(pOutArg)
+	C.GetCursorScreenPos(pOutArg)
 	return pOut
 }
 
-func GetDrawCursorStartPos() ImVec2 {
+func GetCursorStartPos() ImVec2 {
 	pOut := ImVec2{}
 	pOutArg, pOutFin := pOut.wrap()
 	defer pOutFin()
 
-	C.GetDrawCursorStartPos(pOutArg)
+	C.GetCursorStartPos(pOutArg)
 	return pOut
 }
 
@@ -3144,20 +3144,20 @@ func SetCurrentContext(ctx ImGuiContext) {
 	C.SetCurrentContext(ctx.handle())
 }
 
-func SetDrawCursorPos(local_pos ImVec2) {
-	C.SetDrawCursorPos(local_pos.toC())
+func SetCursorPos(local_pos ImVec2) {
+	C.SetCursorPos(local_pos.toC())
 }
 
-func SetDrawCursorPosX(local_x float32) {
-	C.SetDrawCursorPosX(C.float(local_x))
+func SetCursorPosX(local_x float32) {
+	C.SetCursorPosX(C.float(local_x))
 }
 
-func SetDrawCursorPosY(local_y float32) {
-	C.SetDrawCursorPosY(C.float(local_y))
+func SetCursorPosY(local_y float32) {
+	C.SetCursorPosY(C.float(local_y))
 }
 
-func SetDrawCursorScreenPos(pos ImVec2) {
-	C.SetDrawCursorScreenPos(pos.toC())
+func SetCursorScreenPos(pos ImVec2) {
+	C.SetCursorScreenPos(pos.toC())
 }
 
 // SetDragDropPayloadV parameter default value hint:

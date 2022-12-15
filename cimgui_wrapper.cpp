@@ -356,11 +356,11 @@ int GetColumnsCount() { return igGetColumnsCount(); }
 void GetContentRegionAvail(ImVec2 *pOut) { igGetContentRegionAvail(pOut); }
 void GetContentRegionMax(ImVec2 *pOut) { igGetContentRegionMax(pOut); }
 ImGuiContext* GetCurrentContext() { return igGetCurrentContext(); }
-void GetDrawCursorPos(ImVec2 *pOut) { igGetCursorPos(pOut); }
-float GetDrawCursorPosX() { return igGetCursorPosX(); }
-float GetDrawCursorPosY() { return igGetCursorPosY(); }
-void GetDrawCursorScreenPos(ImVec2 *pOut) { igGetCursorScreenPos(pOut); }
-void GetDrawCursorStartPos(ImVec2 *pOut) { igGetCursorStartPos(pOut); }
+void GetCursorPos(ImVec2 *pOut) { igGetCursorPos(pOut); }
+float GetCursorPosX() { return igGetCursorPosX(); }
+float GetCursorPosY() { return igGetCursorPosY(); }
+void GetCursorScreenPos(ImVec2 *pOut) { igGetCursorScreenPos(pOut); }
+void GetCursorStartPos(ImVec2 *pOut) { igGetCursorStartPos(pOut); }
 const ImGuiPayload* GetDragDropPayload() { return igGetDragDropPayload(); }
 ImDrawData* GetDrawData() { return igGetDrawData(); }
 ImDrawListSharedData* GetDrawListSharedData() { return igGetDrawListSharedData(); }
@@ -526,10 +526,10 @@ void SetColorEditOptions(ImGuiColorEditFlags flags) { igSetColorEditOptions(flag
 void SetColumnOffset(int column_index,float offset_x) { igSetColumnOffset(column_index,offset_x); }
 void SetColumnWidth(int column_index,float width) { igSetColumnWidth(column_index,width); }
 void SetCurrentContext(ImGuiContext* ctx) { igSetCurrentContext(ctx); }
-void SetDrawCursorPos(const ImVec2 local_pos) { igSetCursorPos(local_pos); }
-void SetDrawCursorPosX(float local_x) { igSetCursorPosX(local_x); }
-void SetDrawCursorPosY(float local_y) { igSetCursorPosY(local_y); }
-void SetDrawCursorScreenPos(const ImVec2 pos) { igSetCursorScreenPos(pos); }
+void SetCursorPos(const ImVec2 local_pos) { igSetCursorPos(local_pos); }
+void SetCursorPosX(float local_x) { igSetCursorPosX(local_x); }
+void SetCursorPosY(float local_y) { igSetCursorPosY(local_y); }
+void SetCursorScreenPos(const ImVec2 pos) { igSetCursorScreenPos(pos); }
 bool SetDragDropPayloadV(const char* type,const void* data,size_t sz,ImGuiCond cond) { return igSetDragDropPayload(type,data,sz,cond); }
 void SetItemAllowOverlap() { igSetItemAllowOverlap(); }
 void SetItemDefaultFocus() { igSetItemDefaultFocus(); }
