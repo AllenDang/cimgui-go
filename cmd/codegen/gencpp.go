@@ -87,10 +87,6 @@ extern "C" {
 			funcName = funcParts[0] + "_" + string(unicode.ToUpper(rune(funcParts[1][0]))) + funcParts[1][1:]
 		}
 
-		// Transform some function names
-		funcName = strings.Replace(funcName, "GetCursor", "GetDrawCursor", 1)
-		funcName = strings.Replace(funcName, "SetCursor", "SetDrawCursor", 1)
-
 		// Remove all ... arg
 		f.Args = strings.Replace(f.Args, ",...", "", 1)
 		// Remoe text_end arg
