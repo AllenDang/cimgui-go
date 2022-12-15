@@ -1,10 +1,11 @@
 NAME=cimgui-go Code Generator
 
-.PHONY: all setup cimgui cimplot generate
+.PHONY: all
 
 ## all: generates both bindings.
 all: generate
 
+.PHONY: setup
 ## setup: pulls down dependencies.
 setup:
 	go get -v -d ./...
@@ -18,6 +19,7 @@ _generate: setup
 	gofmt -w $(prefix)_funcs.go
 
 ## cimgui: generate cimgui binding
+.PHONY: cimgui
 cimgui: prefix := cimgui
 cimgui: include_path := cimgui/cimgui.h
 cimgui: d_file :=  cimgui/generator/output/definitions.json 
@@ -26,6 +28,7 @@ cimgui: r_file :=
 cimgui: _generate
 
 ## cimplot: generate implot binding
+.PHONY: cimplot
 cimplot: prefix := cimplot
 cimplot: include_path := cimplot/cimplot.h
 cimplot: d_file := cimplot/generator/output/definitions.json
@@ -40,4 +43,5 @@ compile_cimgui_macos:
 	cp -f ./cimgui/build/cimgui.a ./lib/macos/arm64/
 
 ## generate: generates both bindings (equal to `all`)
+.PHONY: generate
 generate: setup cimgui cimplot
