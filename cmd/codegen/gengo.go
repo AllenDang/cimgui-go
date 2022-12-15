@@ -218,6 +218,8 @@ import "unsafe"
 		"ImGuiID":                  idReturnW,
 		"ImTextureID":              textureIdReturnW,
 		"ImVec2":                   imVec2ReturnW,
+		"ImColor":                  imColorReturnW,
+		"ImPlotPoint":              imPlotPointReturnW,
 		"ImRect":                   imRectReturnW,
 		"ImGuiTableColumnIdx":      imTableColumnIdxReturnW,
 		"ImGuiTableDrawChannelIdx": imTableDrawChannelIdxReturnW,
@@ -411,7 +413,47 @@ import "unsafe"
 			return fmt.Sprintf("%sfunc %s(%s) %s {\n", commentSb.String(), funcName, strings.Join(args, ","), returnType)
 		}
 
-		if f.Ret == "void" {
+		switch {
+		case f.NonUDT == 1:
+			/*
+				template:
+				func FuncName(arg2 type2) typeOfArg1 {
+					pOut := typeOfArg1{}
+					pOutArg, pOutFin := pOut.wrapped()
+					defer pOutFin()
+					C.FuncName(pOutArg, arg2)
+					return pOut
+				}
+			*/
+
+			// find out the return type
+			outArg := f.ArgsT[0]
+			outArgT := strings.TrimSuffix(outArg.Type, "*")
+			returnWrapper, found := returnWrapperMap[outArgT]
+			if !found {
+				fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)
+				continue
+			}
+
+			returnType, _ := returnWrapper(f)
+
+			sb.WriteString(funcSignatureFunc(f.FuncName, args[1:], returnType))
+
+			// temporary out arg definition
+			sb.WriteString(fmt.Sprintf("%s := %s{}\n", outArg.Name, outArgT))
+
+			argInvokeStmt := argStmtFunc()
+
+			// C function call
+			sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
+
+			// return statement
+			sb.WriteString(fmt.Sprintf("return %s", outArg.Name))
+
+			sb.WriteString("}\n\n")
+
+			convertedFuncCount += 1
+		case f.Ret == "void":
 			if f.StructSetter {
 				funcParts := strings.Split(f.FuncName, "_")
 				funcName := strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
@@ -435,7 +477,7 @@ import "unsafe"
 			}
 
 			convertedFuncCount += 1
-		} else {
+		default:
 			if rf, ok := returnWrapperMap[f.Ret]; ok {
 				returnType, returnStmt := rf(f)
 

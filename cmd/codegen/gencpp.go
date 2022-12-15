@@ -236,6 +236,7 @@ extern "C" {
 				StructGetter:     false,
 				Ret:              f.Ret,
 				StName:           f.StName,
+				NonUDT:           f.NonUDT,
 			})
 
 			// Add V as suffix to current function name
@@ -261,6 +262,7 @@ extern "C" {
 				InvocationStmt:   f.InvocationStmt,
 				Ret:              f.Ret,
 				StName:           f.StName,
+				NonUDT:           f.NonUDT,
 			})
 		}
 

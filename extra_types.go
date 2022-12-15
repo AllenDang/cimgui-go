@@ -4,12 +4,14 @@ package cimgui
 // #include "cimplot_wrapper.h"
 import "C"
 
-type ImWchar C.uint
-type ImGuiID C.ImGuiID
-type ImTextureID uintptr
-type ImDrawIdx C.ImDrawIdx
-type ImGuiTableColumnIdx C.ImGuiTableColumnIdx
-type ImGuiTableDrawChannelIdx C.ImGuiTableDrawChannelIdx
+type (
+	ImWchar                  C.uint
+	ImGuiID                  C.ImGuiID
+	ImTextureID              uintptr
+	ImDrawIdx                C.ImDrawIdx
+	ImGuiTableColumnIdx      C.ImGuiTableColumnIdx
+	ImGuiTableDrawChannelIdx C.ImGuiTableDrawChannelIdx
+)
 
 type ImVec2 struct {
 	X float32
@@ -105,6 +107,10 @@ func NewImColor(x, y, z, w float32) ImColor {
 			W: w,
 		},
 	}
+}
+
+func newImColorFromC(col C.ImColor) ImColor {
+	return NewImColor(float32(col.Value.x), float32(col.Value.y), float32(col.Value.z), float32(col.Value.w))
 }
 
 func (i ImColor) toC() C.ImColor {
