@@ -1,6 +1,4 @@
 NAME=cimgui-go Code Generator
-GOCMD=LC_ALL=C go
-TIMEOUT=5
 
 # go tools
 export PATH := ./bin:$(PATH)
@@ -13,7 +11,7 @@ all: generate
 
 ## setup: pulls down dependencies; builds codegen programm
 setup:
-	$(GOCMD) build -o ./cmd/codegen/build/codegen ./cmd/codegen
+	go build -o ./cmd/codegen/build/codegen ./cmd/codegen
 
 
 _generate: setup
