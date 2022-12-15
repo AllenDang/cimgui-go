@@ -27,6 +27,18 @@ var structMemberTypeMap = map[string]*TypeMap{
 	"int":          tm("int32", "C.int(%s)"),
 }
 
+func trimImGuiPrefix(id string) string {
+	// don't trim prefixes for implot's ImAxis - it conflicts with ImGuIAxis (from imgui_internal.h)
+	if strings.HasPrefix(id, "ImAxis") {
+		return id
+	}
+
+	id = strings.TrimPrefix(id, "ImGui")
+	id = strings.TrimPrefix(id, "Im")
+	id = strings.TrimPrefix(id, "ig")
+	return id
+}
+
 // Generate enums and return enum type names
 func generateGoEnums(prefix string, enums []EnumDef) []string {
 	var sb strings.Builder
@@ -35,15 +47,19 @@ func generateGoEnums(prefix string, enums []EnumDef) []string {
 
 	var enumNames []string
 	for _, e := range enums {
+		originalName := e.Name
 		eName := strings.TrimSuffix(e.Name, "_")
+		eName = trimImGuiPrefix(eName)
 
 		enumNames = append(enumNames, eName)
 
+		sb.WriteString(fmt.Sprintf("// original name: %s\n", originalName))
 		sb.WriteString(fmt.Sprintf("type %s int\n", eName))
 		sb.WriteString("const (\n")
 
 		for _, v := range e.Values {
-			sb.WriteString(fmt.Sprintf("\t%s = %d\n", v.Name, v.Value))
+			vName := trimImGuiPrefix(v.Name)
+			sb.WriteString(fmt.Sprintf("\t%s = %d\n", vName, v.Value))
 		}
 
 		sb.WriteString(")\n\n")
@@ -202,6 +218,8 @@ import "unsafe"
 		"ImGuiID":                  idReturnW,
 		"ImTextureID":              textureIdReturnW,
 		"ImVec2":                   imVec2ReturnW,
+		"ImColor":                  imColorReturnW,
+		"ImPlotPoint":              imPlotPointReturnW,
 		"ImRect":                   imRectReturnW,
 		"ImGuiTableColumnIdx":      imTableColumnIdxReturnW,
 		"ImGuiTableDrawChannelIdx": imTableDrawChannelIdxReturnW,
@@ -263,10 +281,15 @@ import "unsafe"
 					VarName: fmt.Sprintf("%s.handle()", a.Name),
 				})
 				shouldGenerate = true
+				continue
 			}
 
 			if v, ok := argWrapperMap[a.Type]; ok {
 				argType, argDef, varName := v(a)
+				if goEnumName := trimImGuiPrefix(argType); isEnum(goEnumName) {
+					argType = goEnumName
+				}
+
 				argWrappers = append(argWrappers, argOutput{
 					ArgType: argType,
 					ArgDef:  argDef,
@@ -276,15 +299,17 @@ import "unsafe"
 				args = append(args, fmt.Sprintf("%s %s", a.Name, argType))
 
 				shouldGenerate = true
+				continue
 			}
 
-			if isEnum(a.Type) {
-				args = append(args, fmt.Sprintf("%s %s", a.Name, a.Type))
+			if goEnumName := trimImGuiPrefix(a.Type); isEnum(goEnumName) {
+				args = append(args, fmt.Sprintf("%s %s", a.Name, goEnumName))
 				argWrappers = append(argWrappers, argOutput{
 					VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
 				})
 
 				shouldGenerate = true
+				continue
 			}
 
 			if strings.HasSuffix(a.Type, "*") {
@@ -298,6 +323,7 @@ import "unsafe"
 					})
 
 					shouldGenerate = true
+					continue
 				}
 			}
 
@@ -312,8 +338,10 @@ import "unsafe"
 		}
 
 		if !shouldGenerate {
-			// fmt.Printf("%s%s\n", f.FuncName, f.Args)
+			fmt.Printf("not generated: %s%s\n", f.FuncName, f.Args)
 			continue
+		} else {
+			fmt.Printf("generated: %s%s\n", f.FuncName, f.Args)
 		}
 
 		// Generate function args
@@ -385,7 +413,47 @@ import "unsafe"
 			return fmt.Sprintf("%sfunc %s(%s) %s {\n", commentSb.String(), funcName, strings.Join(args, ","), returnType)
 		}
 
-		if f.Ret == "void" {
+		switch {
+		case f.NonUDT == 1:
+			/*
+				template:
+				func FuncName(arg2 type2) typeOfArg1 {
+					pOut := typeOfArg1{}
+					pOutArg, pOutFin := pOut.wrapped()
+					defer pOutFin()
+					C.FuncName(pOutArg, arg2)
+					return pOut
+				}
+			*/
+
+			// find out the return type
+			outArg := f.ArgsT[0]
+			outArgT := strings.TrimSuffix(outArg.Type, "*")
+			returnWrapper, found := returnWrapperMap[outArgT]
+			if !found {
+				fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)
+				continue
+			}
+
+			returnType, _ := returnWrapper(f)
+
+			sb.WriteString(funcSignatureFunc(f.FuncName, args[1:], returnType))
+
+			// temporary out arg definition
+			sb.WriteString(fmt.Sprintf("%s := %s{}\n", outArg.Name, outArgT))
+
+			argInvokeStmt := argStmtFunc()
+
+			// C function call
+			sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
+
+			// return statement
+			sb.WriteString(fmt.Sprintf("return %s", outArg.Name))
+
+			sb.WriteString("}\n\n")
+
+			convertedFuncCount += 1
+		case f.Ret == "void":
 			if f.StructSetter {
 				funcParts := strings.Split(f.FuncName, "_")
 				funcName := strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
@@ -409,7 +477,7 @@ import "unsafe"
 			}
 
 			convertedFuncCount += 1
-		} else {
+		default:
 			if rf, ok := returnWrapperMap[f.Ret]; ok {
 				returnType, returnStmt := rf(f)
 
@@ -421,14 +489,14 @@ import "unsafe"
 				sb.WriteString("}\n\n")
 
 				convertedFuncCount += 1
-			} else if funk.ContainsString(enumNames, f.Ret) {
-				returnType := f.Ret
+			} else if goEnumName := trimImGuiPrefix(f.Ret); funk.ContainsString(enumNames, goEnumName) {
+				returnType := goEnumName
 
 				sb.WriteString(funcSignatureFunc(f.FuncName, args, returnType))
 
 				argInvokeStmt := argStmtFunc()
 
-				sb.WriteString(fmt.Sprintf("return %s(%s)", f.Ret, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+				sb.WriteString(fmt.Sprintf("return %s(%s)", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 				sb.WriteString("}\n\n")
 
 				convertedFuncCount += 1

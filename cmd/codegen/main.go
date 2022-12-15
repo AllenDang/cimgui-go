@@ -30,6 +30,7 @@ type FuncDef struct {
 	InvocationStmt   string            `json:"invocation_stmt"`
 	Ret              string            `json:"ret"`
 	StName           string            `json:"stname"`
+	NonUDT           int               `json:"nonUDT"`
 }
 
 type EnumValueDef struct {
@@ -185,7 +186,9 @@ func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []string, structName
 	structs := getStructDefs(enumJsonBytes)
 
 	for _, e := range enums {
-		enumNames = append(enumNames, strings.TrimSuffix(e.Name, "_"))
+		goEnumName := strings.TrimSuffix(e.Name, "_")
+		goEnumName = trimImGuiPrefix(goEnumName)
+		enumNames = append(enumNames, goEnumName)
 	}
 
 	for _, s := range structs {

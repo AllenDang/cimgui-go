@@ -36,7 +36,7 @@ func showWidgetsDemo() {
 		cimgui.ShowDemoWindowV(&showDemoWindow)
 	}
 
-	cimgui.SetNextWindowSizeV(cimgui.NewImVec2(300, 300), cimgui.ImGuiCond_Once)
+	cimgui.SetNextWindowSizeV(cimgui.NewImVec2(300, 300), cimgui.Cond_Once)
 	cimgui.Begin("Window 1")
 	if cimgui.ButtonV("Click Me", cimgui.NewImVec2(80, 20)) {
 		w, h := window.DisplaySize()
@@ -73,7 +73,7 @@ func showWidgetsDemo() {
 func showPictureLoadingDemo() {
 	// demo of showing a picture
 	basePos := cimgui.GetMainViewport().GetPos()
-	cimgui.SetNextWindowPosV(cimgui.NewImVec2(basePos.X+60, 600), cimgui.ImGuiCond_Once, cimgui.NewImVec2(0, 0))
+	cimgui.SetNextWindowPosV(cimgui.NewImVec2(basePos.X+60, 600), cimgui.Cond_Once, cimgui.NewImVec2(0, 0))
 	cimgui.Begin("Image")
 	cimgui.Text(fmt.Sprintf("pointer = %v", texture.ID()))
 	cimgui.ImageV(texture.ID(), cimgui.NewImVec2(float32(texture.Width), float32(texture.Height)), cimgui.NewImVec2(0, 0), cimgui.NewImVec2(1, 1), cimgui.NewImVec4(1, 1, 1, 1), cimgui.NewImVec4(0, 0, 0, 0))
@@ -82,8 +82,8 @@ func showPictureLoadingDemo() {
 
 func showImPlotDemo() {
 	basePos := cimgui.GetMainViewport().GetPos()
-	cimgui.SetNextWindowPosV(cimgui.NewImVec2(basePos.X+400, basePos.Y+60), cimgui.ImGuiCond_Once, cimgui.NewImVec2(0, 0))
-	cimgui.SetNextWindowSizeV(cimgui.NewImVec2(500, 300), cimgui.ImGuiCond_Once)
+	cimgui.SetNextWindowPosV(cimgui.NewImVec2(basePos.X+400, basePos.Y+60), cimgui.Cond_Once, cimgui.NewImVec2(0, 0))
+	cimgui.SetNextWindowSizeV(cimgui.NewImVec2(500, 300), cimgui.Cond_Once)
 	cimgui.Begin("Plot window")
 	if cimgui.Plot_BeginPlotV("Plot", cimgui.NewImVec2(-1, -1), 0) {
 		cimgui.Plot_PlotBars_S64PtrInt("Bar", barValues, int32(len(barValues)))
