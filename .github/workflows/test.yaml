@@ -17,7 +17,7 @@ jobs:
         with:
           fetch-depth: 0
           submodules: 'recursive'
-      - name: Re-generate code with just
+      - name: Re-generate code with Make
         run: |
           make generate
       - name: Check if code was up-to-date
