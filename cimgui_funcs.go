@@ -597,6 +597,24 @@ func (self ImFont) BuildLookupTable() {
 	C.Font_BuildLookupTable(self.handle())
 }
 
+// Font_CalcTextSizeAV parameter default value hint:
+// remaining: NULL
+// text_end: NULL
+func (self ImFont) CalcTextSizeAV(size float32, max_width float32, wrap_width float32, text_begin string, remaining []string) ImVec2 {
+	pOut := ImVec2{}
+	pOutArg, pOutFin := pOut.wrap()
+	defer pOutFin()
+
+	text_beginArg, text_beginFin := wrapString(text_begin)
+	defer text_beginFin()
+
+	remainingArg, remainingFin := wrapStringList(remaining)
+	defer remainingFin()
+
+	C.Font_CalcTextSizeAV(pOutArg, self.handle(), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, remainingArg)
+	return pOut
+}
+
 func (self ImFont) CalcWordWrapPositionA(scale float32, text string, wrap_width float32) string {
 	textArg, textFin := wrapString(text)
 	defer textFin()
@@ -1578,6 +1596,21 @@ func Combo_StrV(label string, current_item *int32, items_separated_by_zeros stri
 	defer items_separated_by_zerosFin()
 
 	return C.Combo_StrV(labelArg, current_itemArg, items_separated_by_zerosArg, C.int(popup_max_height_in_items)) == C.bool(true)
+}
+
+// Combo_Str_arrV parameter default value hint:
+// popup_max_height_in_items: -1
+func Combo_Str_arrV(label string, current_item *int32, items []string, items_count int32, popup_max_height_in_items int32) bool {
+	labelArg, labelFin := wrapString(label)
+	defer labelFin()
+
+	current_itemArg, current_itemFin := wrapNumberPtr[C.int, int32](current_item)
+	defer current_itemFin()
+
+	itemsArg, itemsFin := wrapStringList(items)
+	defer itemsFin()
+
+	return C.Combo_Str_arrV(labelArg, current_itemArg, itemsArg, C.int(items_count), C.int(popup_max_height_in_items)) == C.bool(true)
 }
 
 // CreateContextV parameter default value hint:
@@ -2759,6 +2792,21 @@ func LabelText(label string, fmt string) {
 	defer fmtFin()
 
 	C.LabelText(labelArg, fmtArg)
+}
+
+// ListBox_Str_arrV parameter default value hint:
+// height_in_items: -1
+func ListBox_Str_arrV(label string, current_item *int32, items []string, items_count int32, height_in_items int32) bool {
+	labelArg, labelFin := wrapString(label)
+	defer labelFin()
+
+	current_itemArg, current_itemFin := wrapNumberPtr[C.int, int32](current_item)
+	defer current_itemFin()
+
+	itemsArg, itemsFin := wrapStringList(items)
+	defer itemsFin()
+
+	return C.ListBox_Str_arrV(labelArg, current_itemArg, itemsArg, C.int(items_count), C.int(height_in_items)) == C.bool(true)
 }
 
 func LoadIniSettingsFromDisk(ini_filename string) {
@@ -4383,6 +4431,19 @@ func Combo_Str(label string, current_item *int32, items_separated_by_zeros strin
 	return C.Combo_Str(labelArg, current_itemArg, items_separated_by_zerosArg) == C.bool(true)
 }
 
+func Combo_Str_arr(label string, current_item *int32, items []string, items_count int32) bool {
+	labelArg, labelFin := wrapString(label)
+	defer labelFin()
+
+	current_itemArg, current_itemFin := wrapNumberPtr[C.int, int32](current_item)
+	defer current_itemFin()
+
+	itemsArg, itemsFin := wrapStringList(items)
+	defer itemsFin()
+
+	return C.Combo_Str_arr(labelArg, current_itemArg, itemsArg, C.int(items_count)) == C.bool(true)
+}
+
 func CreateContext() ImGuiContext {
 	return (ImGuiContext)(unsafe.Pointer(C.CreateContext()))
 }
@@ -4777,6 +4838,19 @@ func IsWindowFocused() bool {
 
 func IsWindowHovered() bool {
 	return C.IsWindowHovered() == C.bool(true)
+}
+
+func ListBox_Str_arr(label string, current_item *int32, items []string, items_count int32) bool {
+	labelArg, labelFin := wrapString(label)
+	defer labelFin()
+
+	current_itemArg, current_itemFin := wrapNumberPtr[C.int, int32](current_item)
+	defer current_itemFin()
+
+	itemsArg, itemsFin := wrapStringList(items)
+	defer itemsFin()
+
+	return C.ListBox_Str_arr(labelArg, current_itemArg, itemsArg, C.int(items_count)) == C.bool(true)
 }
 
 func LoadIniSettingsFromMemory(ini_data string) {

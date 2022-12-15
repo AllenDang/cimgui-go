@@ -573,6 +573,39 @@ func Plot_PixelsToPlot_Vec2V(pix ImVec2, x_axis ImAxis, y_axis ImAxis) ImPlotPoi
 	return pOut
 }
 
+// Plot_PlotBarGroups_FloatPtrV parameter default value hint:
+// flags: 0
+// group_size: 0.67
+// shift: 0
+func Plot_PlotBarGroups_FloatPtrV(label_ids []string, values []float32, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	C.Plot_PlotBarGroups_FloatPtrV(label_idsArg, (*C.float)(&(values[0])), C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
+}
+
+// Plot_PlotBarGroups_S64PtrV parameter default value hint:
+// flags: 0
+// group_size: 0.67
+// shift: 0
+func Plot_PlotBarGroups_S64PtrV(label_ids []string, values []int64, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	C.Plot_PlotBarGroups_S64PtrV(label_idsArg, (*C.longlong)(&(values[0])), C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
+}
+
+// Plot_PlotBarGroups_U64PtrV parameter default value hint:
+// flags: 0
+// group_size: 0.67
+// shift: 0
+func Plot_PlotBarGroups_U64PtrV(label_ids []string, values []uint64, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	C.Plot_PlotBarGroups_U64PtrV(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
+}
+
 // Plot_PlotBars_FloatPtrFloatPtrV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -856,6 +889,48 @@ func Plot_PlotLine_U64PtrU64PtrV(label_id string, xs []uint64, ys []uint64, coun
 	defer label_idFin()
 
 	C.Plot_PlotLine_U64PtrU64PtrV(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotPieChart_FloatPtrV parameter default value hint:
+// angle0: 90
+// flags: 0
+// label_fmt: "%.1f"
+func Plot_PlotPieChart_FloatPtrV(label_ids []string, values []float32, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotPieChart_FloatPtrV(label_idsArg, (*C.float)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+}
+
+// Plot_PlotPieChart_S64PtrV parameter default value hint:
+// angle0: 90
+// flags: 0
+// label_fmt: "%.1f"
+func Plot_PlotPieChart_S64PtrV(label_ids []string, values []int64, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotPieChart_S64PtrV(label_idsArg, (*C.longlong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+}
+
+// Plot_PlotPieChart_U64PtrV parameter default value hint:
+// angle0: 90
+// flags: 0
+// label_fmt: "%.1f"
+func Plot_PlotPieChart_U64PtrV(label_ids []string, values []uint64, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotPieChart_U64PtrV(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 }
 
 // Plot_PlotScatter_FloatPtrFloatPtrV parameter default value hint:
@@ -1409,6 +1484,16 @@ func Plot_SetupAxisScale_PlotScale(axis ImAxis, scale PlotScale) {
 	C.Plot_SetupAxisScale_PlotScale(C.ImAxis(axis), C.ImPlotScale(scale))
 }
 
+// Plot_SetupAxisTicks_doubleV parameter default value hint:
+// keep_default: false
+// labels: ((void*)0)
+func Plot_SetupAxisTicks_doubleV(axis ImAxis, v_min float64, v_max float64, n_ticks int32, labels []string, keep_default bool) {
+	labelsArg, labelsFin := wrapStringList(labels)
+	defer labelsFin()
+
+	C.Plot_SetupAxisTicks_doubleV(C.ImAxis(axis), C.double(v_min), C.double(v_max), C.int(n_ticks), labelsArg, C.bool(keep_default))
+}
+
 func Plot_SetupAxisZoomConstraints(axis ImAxis, z_min float64, z_max float64) {
 	C.Plot_SetupAxisZoomConstraints(C.ImAxis(axis), C.double(z_min), C.double(z_max))
 }
@@ -1685,6 +1770,27 @@ func Plot_PixelsToPlot_Vec2(pix ImVec2) ImPlotPoint {
 	return pOut
 }
 
+func Plot_PlotBarGroups_FloatPtr(label_ids []string, values []float32, item_count int32, group_count int32) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	C.Plot_PlotBarGroups_FloatPtr(label_idsArg, (*C.float)(&(values[0])), C.int(item_count), C.int(group_count))
+}
+
+func Plot_PlotBarGroups_S64Ptr(label_ids []string, values []int64, item_count int32, group_count int32) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	C.Plot_PlotBarGroups_S64Ptr(label_idsArg, (*C.longlong)(&(values[0])), C.int(item_count), C.int(group_count))
+}
+
+func Plot_PlotBarGroups_U64Ptr(label_ids []string, values []uint64, item_count int32, group_count int32) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	C.Plot_PlotBarGroups_U64Ptr(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(item_count), C.int(group_count))
+}
+
 func Plot_PlotBars_FloatPtrFloatPtr(label_id string, xs []float32, ys []float32, count int32, bar_size float64) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -1921,6 +2027,27 @@ func Plot_PlotLine_U64PtrU64Ptr(label_id string, xs []uint64, ys []uint64, count
 	defer label_idFin()
 
 	C.Plot_PlotLine_U64PtrU64Ptr(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count))
+}
+
+func Plot_PlotPieChart_FloatPtr(label_ids []string, values []float32, count int32, x float64, y float64, radius float64) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	C.Plot_PlotPieChart_FloatPtr(label_idsArg, (*C.float)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
+}
+
+func Plot_PlotPieChart_S64Ptr(label_ids []string, values []int64, count int32, x float64, y float64, radius float64) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	C.Plot_PlotPieChart_S64Ptr(label_idsArg, (*C.longlong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
+}
+
+func Plot_PlotPieChart_U64Ptr(label_ids []string, values []uint64, count int32, x float64, y float64, radius float64) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	C.Plot_PlotPieChart_U64Ptr(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
 }
 
 func Plot_PlotScatter_FloatPtrFloatPtr(label_id string, xs []float32, ys []float32, count int32) {

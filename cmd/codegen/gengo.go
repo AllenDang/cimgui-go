@@ -142,6 +142,8 @@ import "unsafe"
 	argWrapperMap := map[string]typeWrapper{
 		"char*":                    constCharW,
 		"const char*":              constCharW,
+		"const char**": 			charPtrPtrW,
+		"const char* const[]": 			charPtrPtrW,
 		"unsigned char":            ucharW,
 		"unsigned char**":          uCharPtrW,
 		"size_t":                   sizeTW,

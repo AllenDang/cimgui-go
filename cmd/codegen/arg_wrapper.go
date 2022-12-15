@@ -12,6 +12,14 @@ defer %[1]sFin()`, arg.Name)
 	return
 }
 
+func charPtrPtrW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "[]string"
+	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := wrapStringList(%[1]s)
+defer %[1]sFin()`, arg.Name)
+	varName = fmt.Sprintf("%sArg", arg.Name)
+	return
+}
+
 func ucharW(arg ArgDef) (argType string, def string, varName string) {
 	return simpleValueW(arg.Name, "uint", "uchar")
 }
