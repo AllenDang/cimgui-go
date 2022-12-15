@@ -435,7 +435,7 @@ import "unsafe"
 				continue
 			}
 
-			returnType, _ := returnWrapper(f)
+			returnType, _ := returnWrapper()
 
 			sb.WriteString(funcSignatureFunc(f.FuncName, args[1:], returnType))
 
@@ -479,7 +479,7 @@ import "unsafe"
 			convertedFuncCount += 1
 		default:
 			if rf, ok := returnWrapperMap[f.Ret]; ok {
-				returnType, returnStmt := rf(f)
+				returnType, returnStmt := rf()
 
 				sb.WriteString(funcSignatureFunc(f.FuncName, args, returnType))
 
