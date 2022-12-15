@@ -13,7 +13,7 @@ all: generate
 
 ## setup: pulls down dependencies; builds codegen programm
 setup:
-	go build -o ./cmd/codegen/build/codegen ./cmd/codegen
+	$(GOCMD) build -o ./cmd/codegen/build/codegen ./cmd/codegen
 
 
 _generate: setup
