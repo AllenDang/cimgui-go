@@ -60,3 +60,9 @@ thirdparty/glfw/build
 /cmd/codegen/build/
 
 .clang-format
+
+## editors
+# GoLand/CLion
+.idea
+# Vim cache files
+*.swp
