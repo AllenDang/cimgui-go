@@ -522,6 +522,36 @@ func (self ImFontAtlas) GetGlyphRangesVietnamese() *ImWchar {
 	return (*ImWchar)(C.FontAtlas_GetGlyphRangesVietnamese(self.handle()))
 }
 
+func (self ImFontAtlas) GetMouseCursorTexData(cursor MouseCursor, out_offset *ImVec2, out_size *ImVec2, out_uv_border [2]*ImVec2, out_uv_fill [2]*ImVec2) bool {
+	out_offsetArg, out_offsetFin := out_offset.wrap()
+	defer out_offsetFin()
+
+	out_sizeArg, out_sizeFin := out_size.wrap()
+	defer out_sizeFin()
+
+	out_uv_borderArg := make([]C.ImVec2, len(out_uv_border))
+	for i, out_uv_borderV := range out_uv_border {
+		out_uv_borderArg[i] = C.ImVec2(*out_uv_borderV)
+	}
+	defer func() {
+		for i, out_uv_borderV := range out_uv_borderArg {
+			*out_uv_border[i] = ImVec2(out_uv_borderV)
+		}
+	}()
+
+	out_uv_fillArg := make([]C.ImVec2, len(out_uv_fill))
+	for i, out_uv_fillV := range out_uv_fill {
+		out_uv_fillArg[i] = C.ImVec2(*out_uv_fillV)
+	}
+	defer func() {
+		for i, out_uv_fillV := range out_uv_fillArg {
+			*out_uv_fill[i] = ImVec2(out_uv_fillV)
+		}
+	}()
+
+	return C.FontAtlas_GetMouseCursorTexData(self.handle(), C.ImGuiMouseCursor(cursor), out_offsetArg, out_sizeArg, (*C.ImVec2)(&out_uv_borderArg[0]), (*C.ImVec2)(&out_uv_fillArg[0])) == C.bool(true)
+}
+
 func NewImFontAtlas() ImFontAtlas {
 	return (ImFontAtlas)(unsafe.Pointer(C.FontAtlas_ImFontAtlas()))
 }

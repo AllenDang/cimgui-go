@@ -235,6 +235,11 @@ func imVec2PtrW(arg ArgDef) (argType string, def string, varName string) {
 	return wrapImGuiTypePtr(arg.Name, "*ImVec2")
 }
 
+// ImVec2[2] -> [2]ImVec2
+func imVec22W(arg ArgDef) (argType string, def string, varName string) {
+	return arrayW(2, "ImVec2", "ImVec2", arg)
+}
+
 func imVec4W(arg ArgDef) (argType string, def string, varName string) {
 	return valueStructW(arg.Name, "ImVec4")
 }

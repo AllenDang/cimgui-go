@@ -142,8 +142,8 @@ import "unsafe"
 	argWrapperMap := map[string]typeWrapper{
 		"char*":                    constCharW,
 		"const char*":              constCharW,
-		"const char**": 			charPtrPtrW,
-		"const char* const[]": 			charPtrPtrW,
+		"const char**":             charPtrPtrW,
+		"const char* const[]":      charPtrPtrW,
 		"unsigned char":            ucharW,
 		"unsigned char**":          uCharPtrW,
 		"size_t":                   sizeTW,
@@ -188,6 +188,7 @@ import "unsafe"
 		"const ImVec2*":            imVec2PtrW,
 		"ImVec2":                   imVec2W,
 		"ImVec2*":                  imVec2PtrW,
+		"ImVec2[2]":                imVec22W,
 		"const ImVec4":             imVec4W,
 		"const ImVec4*":            imVec4PtrW,
 		"ImVec4":                   imVec4W,
@@ -195,7 +196,7 @@ import "unsafe"
 		"ImColor*":                 imColorPtrW,
 		"ImRect":                   imRectW,
 		"ImPlotPoint":              imPlotPointW,
-		"const ImPlotPoint":              imPlotPointW,
+		"const ImPlotPoint":        imPlotPointW,
 		"ImPlotPoint*":             imPlotPointPtrW,
 	}
 
