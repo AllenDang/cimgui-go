@@ -2427,10 +2427,13 @@ func InputDoubleV(label string, v *float64, step float64, step_fast float64, for
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
+	vArg, vFin := wrapNumberPtr[C.double, float64](v)
+	defer vFin()
+
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.InputDoubleV(labelArg, (*C.double)(v), C.double(step), C.double(step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.InputDoubleV(labelArg, vArg, C.double(step), C.double(step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // InputFloatV parameter default value hint:
@@ -4651,7 +4654,10 @@ func InputDouble(label string, v *float64) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.InputDouble(labelArg, (*C.double)(v)) == C.bool(true)
+	vArg, vFin := wrapNumberPtr[C.double, float64](v)
+	defer vFin()
+
+	return C.InputDouble(labelArg, vArg) == C.bool(true)
 }
 
 func InputFloat(label string, v *float32) bool {

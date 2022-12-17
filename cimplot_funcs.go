@@ -361,27 +361,51 @@ func Plot_DestroyContextV(ctx ImPlotContext) {
 // flags: 0
 // thickness: 1
 func Plot_DragLineXV(id int32, x *float64, col ImVec4, thickness float32, flags PlotDragToolFlags) bool {
-	return C.Plot_DragLineXV(C.int(id), (*C.double)(x), col.toC(), C.float(thickness), C.ImPlotDragToolFlags(flags)) == C.bool(true)
+	xArg, xFin := wrapNumberPtr[C.double, float64](x)
+	defer xFin()
+
+	return C.Plot_DragLineXV(C.int(id), xArg, col.toC(), C.float(thickness), C.ImPlotDragToolFlags(flags)) == C.bool(true)
 }
 
 // Plot_DragLineYV parameter default value hint:
 // flags: 0
 // thickness: 1
 func Plot_DragLineYV(id int32, y *float64, col ImVec4, thickness float32, flags PlotDragToolFlags) bool {
-	return C.Plot_DragLineYV(C.int(id), (*C.double)(y), col.toC(), C.float(thickness), C.ImPlotDragToolFlags(flags)) == C.bool(true)
+	yArg, yFin := wrapNumberPtr[C.double, float64](y)
+	defer yFin()
+
+	return C.Plot_DragLineYV(C.int(id), yArg, col.toC(), C.float(thickness), C.ImPlotDragToolFlags(flags)) == C.bool(true)
 }
 
 // Plot_DragPointV parameter default value hint:
 // flags: 0
 // size: 4
 func Plot_DragPointV(id int32, x *float64, y *float64, col ImVec4, size float32, flags PlotDragToolFlags) bool {
-	return C.Plot_DragPointV(C.int(id), (*C.double)(x), (*C.double)(y), col.toC(), C.float(size), C.ImPlotDragToolFlags(flags)) == C.bool(true)
+	xArg, xFin := wrapNumberPtr[C.double, float64](x)
+	defer xFin()
+
+	yArg, yFin := wrapNumberPtr[C.double, float64](y)
+	defer yFin()
+
+	return C.Plot_DragPointV(C.int(id), xArg, yArg, col.toC(), C.float(size), C.ImPlotDragToolFlags(flags)) == C.bool(true)
 }
 
 // Plot_DragRectV parameter default value hint:
 // flags: 0
 func Plot_DragRectV(id int32, x_min *float64, y_min *float64, x_max *float64, y_max *float64, col ImVec4, flags PlotDragToolFlags) bool {
-	return C.Plot_DragRectV(C.int(id), (*C.double)(x_min), (*C.double)(y_min), (*C.double)(x_max), (*C.double)(y_max), col.toC(), C.ImPlotDragToolFlags(flags)) == C.bool(true)
+	x_minArg, x_minFin := wrapNumberPtr[C.double, float64](x_min)
+	defer x_minFin()
+
+	y_minArg, y_minFin := wrapNumberPtr[C.double, float64](y_min)
+	defer y_minFin()
+
+	x_maxArg, x_maxFin := wrapNumberPtr[C.double, float64](x_max)
+	defer x_maxFin()
+
+	y_maxArg, y_maxFin := wrapNumberPtr[C.double, float64](y_max)
+	defer y_maxFin()
+
+	return C.Plot_DragRectV(C.int(id), x_minArg, y_minArg, x_maxArg, y_maxArg, col.toC(), C.ImPlotDragToolFlags(flags)) == C.bool(true)
 }
 
 func Plot_EndAlignedPlots() {
@@ -1479,7 +1503,13 @@ func Plot_SetNextAxisLimitsV(axis ImAxis, v_min float64, v_max float64, cond Plo
 }
 
 func Plot_SetNextAxisLinks(axis ImAxis, link_min *float64, link_max *float64) {
-	C.Plot_SetNextAxisLinks(C.ImAxis(axis), (*C.double)(link_min), (*C.double)(link_max))
+	link_minArg, link_minFin := wrapNumberPtr[C.double, float64](link_min)
+	defer link_minFin()
+
+	link_maxArg, link_maxFin := wrapNumberPtr[C.double, float64](link_max)
+	defer link_maxFin()
+
+	C.Plot_SetNextAxisLinks(C.ImAxis(axis), link_minArg, link_maxArg)
 }
 
 func Plot_SetNextAxisToFit(axis ImAxis) {
@@ -1565,7 +1595,13 @@ func Plot_SetupAxisLimitsConstraints(axis ImAxis, v_min float64, v_max float64) 
 }
 
 func Plot_SetupAxisLinks(axis ImAxis, link_min *float64, link_max *float64) {
-	C.Plot_SetupAxisLinks(C.ImAxis(axis), (*C.double)(link_min), (*C.double)(link_max))
+	link_minArg, link_minFin := wrapNumberPtr[C.double, float64](link_min)
+	defer link_minFin()
+
+	link_maxArg, link_maxFin := wrapNumberPtr[C.double, float64](link_max)
+	defer link_maxFin()
+
+	C.Plot_SetupAxisLinks(C.ImAxis(axis), link_minArg, link_maxArg)
 }
 
 func Plot_SetupAxisScale_PlotScale(axis ImAxis, scale PlotScale) {
@@ -1791,19 +1827,43 @@ func Plot_DestroyContext() {
 }
 
 func Plot_DragLineX(id int32, x *float64, col ImVec4) bool {
-	return C.Plot_DragLineX(C.int(id), (*C.double)(x), col.toC()) == C.bool(true)
+	xArg, xFin := wrapNumberPtr[C.double, float64](x)
+	defer xFin()
+
+	return C.Plot_DragLineX(C.int(id), xArg, col.toC()) == C.bool(true)
 }
 
 func Plot_DragLineY(id int32, y *float64, col ImVec4) bool {
-	return C.Plot_DragLineY(C.int(id), (*C.double)(y), col.toC()) == C.bool(true)
+	yArg, yFin := wrapNumberPtr[C.double, float64](y)
+	defer yFin()
+
+	return C.Plot_DragLineY(C.int(id), yArg, col.toC()) == C.bool(true)
 }
 
 func Plot_DragPoint(id int32, x *float64, y *float64, col ImVec4) bool {
-	return C.Plot_DragPoint(C.int(id), (*C.double)(x), (*C.double)(y), col.toC()) == C.bool(true)
+	xArg, xFin := wrapNumberPtr[C.double, float64](x)
+	defer xFin()
+
+	yArg, yFin := wrapNumberPtr[C.double, float64](y)
+	defer yFin()
+
+	return C.Plot_DragPoint(C.int(id), xArg, yArg, col.toC()) == C.bool(true)
 }
 
 func Plot_DragRect(id int32, x_min *float64, y_min *float64, x_max *float64, y_max *float64, col ImVec4) bool {
-	return C.Plot_DragRect(C.int(id), (*C.double)(x_min), (*C.double)(y_min), (*C.double)(x_max), (*C.double)(y_max), col.toC()) == C.bool(true)
+	x_minArg, x_minFin := wrapNumberPtr[C.double, float64](x_min)
+	defer x_minFin()
+
+	y_minArg, y_minFin := wrapNumberPtr[C.double, float64](y_min)
+	defer y_minFin()
+
+	x_maxArg, x_maxFin := wrapNumberPtr[C.double, float64](x_max)
+	defer x_maxFin()
+
+	y_maxArg, y_maxFin := wrapNumberPtr[C.double, float64](y_max)
+	defer y_maxFin()
+
+	return C.Plot_DragRect(C.int(id), x_minArg, y_minArg, x_maxArg, y_maxArg, col.toC()) == C.bool(true)
 }
 
 func Plot_GetColormapColor(idx int32) ImVec4 {
@@ -2655,11 +2715,17 @@ func (self ImPlotAxis) GetFormatterData() unsafe.Pointer {
 }
 
 func (self ImPlotAxis) SetLinkedMin(v *float64) {
-	C.ImPlotAxis_SetLinkedMin(self.handle(), (*C.double)(v))
+	vArg, vFin := wrapNumberPtr[C.double, float64](v)
+	defer vFin()
+
+	C.ImPlotAxis_SetLinkedMin(self.handle(), vArg)
 }
 
 func (self ImPlotAxis) SetLinkedMax(v *float64) {
-	C.ImPlotAxis_SetLinkedMax(self.handle(), (*C.double)(v))
+	vArg, vFin := wrapNumberPtr[C.double, float64](v)
+	defer vFin()
+
+	C.ImPlotAxis_SetLinkedMax(self.handle(), vArg)
 }
 
 func (self ImPlotAxis) SetPickerLevel(v int32) {
