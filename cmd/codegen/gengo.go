@@ -195,6 +195,7 @@ import "unsafe"
 		"ImVec4*":                  imVec4PtrW,
 		"ImColor*":                 imColorPtrW,
 		"ImRect":                   imRectW,
+		"ImRect*":                  imRectPtrW,
 		"ImPlotPoint":              imPlotPointW,
 		"const ImPlotPoint":        imPlotPointW,
 		"ImPlotPoint*":             imPlotPointPtrW,

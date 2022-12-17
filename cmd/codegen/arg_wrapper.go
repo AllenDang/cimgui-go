@@ -237,7 +237,9 @@ func imVec2PtrW(arg ArgDef) (argType string, def string, varName string) {
 
 // ImVec2[2] -> [2]ImVec2
 func imVec22W(arg ArgDef) (argType string, def string, varName string) {
-	return arrayW(2, "ImVec2", "ImVec2", arg)
+	argType = "[2]*ImVec2"
+	varName = fmt.Sprintf("(*C.ImVec2)(unsafe.Pointer(&%s[0]))", arg.Name)
+	return
 }
 
 func imVec4W(arg ArgDef) (argType string, def string, varName string) {
@@ -250,6 +252,10 @@ func imVec4PtrW(arg ArgDef) (argType string, def string, varName string) {
 
 func imRectW(arg ArgDef) (argType string, def string, varName string) {
 	return valueStructW(arg.Name, "ImRect")
+}
+
+func imRectPtrW(arg ArgDef) (argType string, def string, varName string) {
+	return wrapImGuiTypePtr(arg.Name, "ImRect")
 }
 
 func imColorPtrW(arg ArgDef) (argType string, def string, varName string) {

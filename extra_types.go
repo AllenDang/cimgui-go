@@ -150,6 +150,21 @@ func (r *ImRect) toC() C.ImRect {
 	return C.ImRect{Min: r.Min.toC(), Max: r.Max.toC()}
 }
 
+func (p *ImRect) wrap() (out *C.ImRect, finisher func()) {
+	if p != nil {
+		pC := p.toC()
+		out = &pC
+
+		finisher = func() {
+			*p = newImRectFromC(*out)
+		}
+	} else {
+		finisher = func() {}
+	}
+
+	return
+}
+
 type ImPlotPoint struct {
 	X float64
 	Y float64

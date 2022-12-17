@@ -529,27 +529,7 @@ func (self ImFontAtlas) GetMouseCursorTexData(cursor MouseCursor, out_offset *Im
 	out_sizeArg, out_sizeFin := out_size.wrap()
 	defer out_sizeFin()
 
-	out_uv_borderArg := make([]C.ImVec2, len(out_uv_border))
-	for i, out_uv_borderV := range out_uv_border {
-		out_uv_borderArg[i] = C.ImVec2(*out_uv_borderV)
-	}
-	defer func() {
-		for i, out_uv_borderV := range out_uv_borderArg {
-			*out_uv_border[i] = ImVec2(out_uv_borderV)
-		}
-	}()
-
-	out_uv_fillArg := make([]C.ImVec2, len(out_uv_fill))
-	for i, out_uv_fillV := range out_uv_fill {
-		out_uv_fillArg[i] = C.ImVec2(*out_uv_fillV)
-	}
-	defer func() {
-		for i, out_uv_fillV := range out_uv_fillArg {
-			*out_uv_fill[i] = ImVec2(out_uv_fillV)
-		}
-	}()
-
-	return C.FontAtlas_GetMouseCursorTexData(self.handle(), C.ImGuiMouseCursor(cursor), out_offsetArg, out_sizeArg, (*C.ImVec2)(&out_uv_borderArg[0]), (*C.ImVec2)(&out_uv_fillArg[0])) == C.bool(true)
+	return C.FontAtlas_GetMouseCursorTexData(self.handle(), C.ImGuiMouseCursor(cursor), out_offsetArg, out_sizeArg, (*C.ImVec2)(unsafe.Pointer(&out_uv_border[0])), (*C.ImVec2)(unsafe.Pointer(&out_uv_fill[0]))) == C.bool(true)
 }
 
 func NewImFontAtlas() ImFontAtlas {
@@ -1170,6 +1150,13 @@ func (self ImGuiWindowClass) Destroy() {
 
 func (self ImGuiWindowSettings) Destroy() {
 	C.WindowSettings_Destroy(self.handle())
+}
+
+func (self ImRect) Destroy() {
+	selfArg, selfFin := self.wrap()
+	defer selfFin()
+
+	C.Rect_Destroy(selfArg)
 }
 
 func (self *ImVec2) Destroy() {
