@@ -47,11 +47,7 @@ func floatW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func floatPtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*float32"
-	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := wrapNumberPtr[C.float, float32](%[1]s)
-defer %[1]sFin()`, arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
+	return wrapNumberPtr(arg.Name, "float32", "C.float")
 }
 
 func floatArrayW(arg ArgDef) (argType string, def string, varName string) {
@@ -71,12 +67,6 @@ func boolPtrW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
-func simpleValueW(argName, goType, cType string) (argType string, def string, varName string) {
-	argType = goType
-	varName = fmt.Sprintf("C.%s(%s)", cType, argName)
-	return
-}
-
 func shortW(arg ArgDef) (argType string, def string, varName string) {
 	return simpleValueW(arg.Name, "int", "short")
 }
@@ -90,17 +80,11 @@ func u8W(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func u8PtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*uint"
-	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapNumberPtr[C.uint, byte](%[1]s)\ndefer %[1]sFin()", arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
+	return wrapNumberPtr(arg.Name, "byte", "C.uint")
 }
 
 func u16PtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*uint"
-	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapNumberPtr[c.uint, uint16](%[1]s)\ndefer %[1]sFin()", arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
+	return wrapNumberPtr(arg.Name, "uint16", "C.uint")
 }
 
 func u16W(arg ArgDef) (argType string, def string, varName string) {
@@ -187,24 +171,15 @@ func intW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func int8PtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*byte"
-	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapNumberPtr[C.int, int8](%[1]s)\ndefer %[1]sFin()", arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
+	return wrapNumberPtr(arg.Name, "int8", "C.int")
 }
 
 func int16PtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*int"
-	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapNumberPtr[C.int, int16](%[1]s)\ndefer %[1]sFin()", arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
+	return wrapNumberPtr(arg.Name, "int16", "C.int")
 }
 
 func intPtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*int32"
-	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapNumberPtr[C.int, int32](%[1]s)\ndefer %[1]sFin()", arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
+	return wrapNumberPtr(arg.Name, "int32", "C.int")
 }
 
 func int64ArrayW(arg ArgDef) (argType string, def string, varName string) {
@@ -218,10 +193,7 @@ func uintW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func uintPtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*uint32"
-	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapNumberPtr[C.uint, uint32](%[1]s)\ndefer %[1]sFin()", arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
+	return wrapNumberPtr(arg.Name, "uint32", "C.uint")
 }
 
 func uint64ArrayW(arg ArgDef) (argType string, def string, varName string) {
@@ -235,9 +207,7 @@ func doubleW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func doublePtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*float64"
-	varName = fmt.Sprintf("(*C.double)(%s)", arg.Name)
-	return
+	return wrapNumberPtr(arg.Name, "float64", "C.double")
 }
 
 func imGuiIDW(arg ArgDef) (argType string, def string, varName string) {
@@ -277,11 +247,7 @@ func imVec2W(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imVec2PtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*ImVec2"
-	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := %[1]s.wrap()
-defer %[1]sFin()`, arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
+	return wrapImGuiTypePtr(arg.Name, "*ImVec2")
 }
 
 func imPlotPointW(arg ArgDef) (argType string, def string, varName string) {
@@ -289,11 +255,7 @@ func imPlotPointW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imPlotPointPtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*ImPlotPoint"
-	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := %[1]s.wrap()
-defer %[1]sFin()`, arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
+	return wrapImGuiTypePtr(arg.Name, "*ImPlotPoint")
 }
 
 func imVec4W(arg ArgDef) (argType string, def string, varName string) {
@@ -305,23 +267,37 @@ func imRectW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imVec4PtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*ImVec4"
-	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := %[1]s.wrap()
-defer %[1]sFin()`, arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
+	return wrapImGuiTypePtr(arg.Name, "*ImVec4")
 }
 
 func imColorPtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*ImColor"
-	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := %[1]s.wrap()
-defer %[1]sFin()`, arg.Name)
-	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
+	return wrapImGuiTypePtr(arg.Name, "*ImColor")
 }
 
 func inputeTextCallbackW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "ImGuiInputTextCallback"
 	// TODO: implement me
+	return
+}
+
+func simpleValueW(argName, goType, cType string) (argType string, def string, varName string) {
+	argType = goType
+	varName = fmt.Sprintf("C.%s(%s)", cType, argName)
+	return
+}
+
+func wrapImGuiTypePtr(argName, goType string) (argType, def, varName string) {
+	argType = goType
+	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := %[1]s.wrap()
+defer %[1]sFin()`, argName)
+	varName = fmt.Sprintf("%sArg", argName)
+	return
+}
+
+func wrapNumberPtr(argName, goType, cType string) (argType, def, varName string) {
+	argType = fmt.Sprintf("*%s", goType)
+	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := wrapNumberPtr[%[2]s, %[3]s](%[1]s)
+defer %[1]sFin()`, argName, cType, goType)
+	varName = fmt.Sprintf("%sArg", argName)
 	return
 }
