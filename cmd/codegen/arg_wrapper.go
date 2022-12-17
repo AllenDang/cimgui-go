@@ -91,23 +91,6 @@ func u16W(arg ArgDef) (argType string, def string, varName string) {
 	return simpleValueW(arg.Name, "uint", "ImU16")
 }
 
-func arrayW(size int, arrayType, goArrayType string, arg ArgDef) (argType string, def string, varName string) {
-	argType = fmt.Sprintf("[%d]*%s", size, goArrayType)
-	def = fmt.Sprintf(`%[1]sArg := make([]C.%[2]s, len(%[1]s))
-for i, %[1]sV := range %[1]s {
-  %[1]sArg[i] = C.%[2]s(*%[1]sV)
-}
-defer func() {
-  for i, %[1]sV := range %[1]sArg {
-    *%[1]s[i] = %[3]s(%[1]sV)
-  }
-}()
-
-`, arg.Name, arrayType, goArrayType)
-	varName = fmt.Sprintf("(*C.%s)(&%sArg[0])", arrayType, arg.Name)
-	return
-}
-
 func int2W(arg ArgDef) (argType string, def string, varName string) {
 	return arrayW(2, "int", "int32", arg)
 }
@@ -236,10 +219,12 @@ func voidPtrW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
-func valueStructW(sName, sType string) (argType string, def string, varName string) {
-	argType = sType
-	varName = fmt.Sprintf("%s.toC()", sName)
-	return
+func imPlotPointW(arg ArgDef) (argType string, def string, varName string) {
+	return valueStructW(arg.Name, "ImPlotPoint")
+}
+
+func imPlotPointPtrW(arg ArgDef) (argType string, def string, varName string) {
+	return wrapImGuiTypePtr(arg.Name, "*ImPlotPoint")
 }
 
 func imVec2W(arg ArgDef) (argType string, def string, varName string) {
@@ -250,24 +235,16 @@ func imVec2PtrW(arg ArgDef) (argType string, def string, varName string) {
 	return wrapImGuiTypePtr(arg.Name, "*ImVec2")
 }
 
-func imPlotPointW(arg ArgDef) (argType string, def string, varName string) {
-	return valueStructW(arg.Name, "ImPlotPoint")
-}
-
-func imPlotPointPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrapImGuiTypePtr(arg.Name, "*ImPlotPoint")
-}
-
 func imVec4W(arg ArgDef) (argType string, def string, varName string) {
 	return valueStructW(arg.Name, "ImVec4")
 }
 
-func imRectW(arg ArgDef) (argType string, def string, varName string) {
-	return valueStructW(arg.Name, "ImRect")
-}
-
 func imVec4PtrW(arg ArgDef) (argType string, def string, varName string) {
 	return wrapImGuiTypePtr(arg.Name, "*ImVec4")
+}
+
+func imRectW(arg ArgDef) (argType string, def string, varName string) {
+	return valueStructW(arg.Name, "ImRect")
 }
 
 func imColorPtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -279,6 +256,8 @@ func inputeTextCallbackW(arg ArgDef) (argType string, def string, varName string
 	// TODO: implement me
 	return
 }
+
+// generic wrappers:
 
 func simpleValueW(argName, goType, cType string) (argType string, def string, varName string) {
 	argType = goType
@@ -299,5 +278,28 @@ func wrapNumberPtr(argName, goType, cType string) (argType, def, varName string)
 	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := wrapNumberPtr[%[2]s, %[3]s](%[1]s)
 defer %[1]sFin()`, argName, cType, goType)
 	varName = fmt.Sprintf("%sArg", argName)
+	return
+}
+
+func arrayW(size int, cArrayType, goArrayType string, arg ArgDef) (argType string, def string, varName string) {
+	argType = fmt.Sprintf("[%d]*%s", size, goArrayType)
+	def = fmt.Sprintf(`%[1]sArg := make([]C.%[2]s, len(%[1]s))
+for i, %[1]sV := range %[1]s {
+  %[1]sArg[i] = C.%[2]s(*%[1]sV)
+}
+defer func() {
+  for i, %[1]sV := range %[1]sArg {
+    *%[1]s[i] = %[3]s(%[1]sV)
+  }
+}()
+
+`, arg.Name, cArrayType, goArrayType)
+	varName = fmt.Sprintf("(*C.%s)(&%sArg[0])", cArrayType, arg.Name)
+	return
+}
+
+func valueStructW(sName, sType string) (argType string, def string, varName string) {
+	argType = sType
+	varName = fmt.Sprintf("%s.toC()", sName)
 	return
 }
