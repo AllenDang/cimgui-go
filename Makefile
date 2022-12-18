@@ -5,11 +5,6 @@ NAME=cimgui-go Code Generator
 ## all: generates both bindings.
 all: generate
 
-.PHONY: setup
-## setup: pulls down dependencies.
-setup:
-	go get -v -d ./...
-
 # Parameters:
 # $1: prefix
 # $2: include path (of header file)
@@ -26,12 +21,12 @@ endef
 
 ## cimgui: generate cimgui binding
 .PHONY: cimgui
-cimgui: setup
+cimgui:
 	$(call generate,cimgui,cimgui/cimgui.h,cimgui/generator/output/definitions.json,cimgui/generator/output/structs_and_enums.json)
 
 ## cimplot: generate implot binding
 .PHONY: cimplot
-cimplot: setup
+cimplot:
 	$(call generate,cimplot,cimplot/cimplot.h,cimplot/generator/output/definitions.json,cimplot/generator/output/structs_and_enums.json,-r cimgui/generator/output/structs_and_enums.json)
 
 compile_cimgui_macos:
@@ -42,4 +37,4 @@ compile_cimgui_macos:
 
 ## generate: generates both bindings (equal to `all`)
 .PHONY: generate
-generate: setup cimgui cimplot
+generate: cimgui cimplot
