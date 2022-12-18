@@ -10,31 +10,29 @@ all: generate
 setup:
 	go get -v -d ./...
 
-## _gencode: is an internal rule. It generates binding basing on env variables set in imgui and implot rules
-_generate: setup
-	@echo "Generating for $(prefix)"
-	go run github.com/AllenDang/cimgui-go/cmd/codegen -p $(prefix) -i $(include_path) -d $(d_file) -e $(e_file) $(r_file)
-	gofmt -w $(prefix)_enums.go
-	gofmt -w $(prefix)_structs.go
-	gofmt -w $(prefix)_funcs.go
+# Parameters:
+# $1: prefix
+# $2: include path (of header file)
+# $3: definitions.json filepath
+# $4: structs_and_enums.json filepath
+# $5: additional agruments to codegen call (e.g. -r option)
+define generate
+	@echo "Generating for $(1)"
+	go run github.com/AllenDang/cimgui-go/cmd/codegen -p $(1) -i $(2) -d $(3) -e $(4) $(5)
+	gofmt -w $(1)_enums.go
+	gofmt -w $(1)_structs.go
+	gofmt -w $(1)_funcs.go
+endef
 
 ## cimgui: generate cimgui binding
 .PHONY: cimgui
-cimgui: prefix := cimgui
-cimgui: include_path := cimgui/cimgui.h
-cimgui: d_file :=  cimgui/generator/output/definitions.json 
-cimgui: e_file := cimgui/generator/output/structs_and_enums.json
-cimgui: r_file :=
-cimgui: _generate
+cimgui: setup
+	$(call generate,cimgui,cimgui/cimgui.h,cimgui/generator/output/definitions.json,cimgui/generator/output/structs_and_enums.json)
 
 ## cimplot: generate implot binding
 .PHONY: cimplot
-cimplot: prefix := cimplot
-cimplot: include_path := cimplot/cimplot.h
-cimplot: d_file := cimplot/generator/output/definitions.json
-cimplot: e_file := cimplot/generator/output/structs_and_enums.json
-cimplot: r_file := -r cimgui/generator/output/structs_and_enums.json
-cimplot: _generate
+cimplot: setup
+	$(call generate,cimplot,cimplot/cimplot.h,cimplot/generator/output/definitions.json,cimplot/generator/output/structs_and_enums.json,-r cimgui/generator/output/structs_and_enums.json)
 
 compile_cimgui_macos:
 	rm -rf ./cimgui/build
