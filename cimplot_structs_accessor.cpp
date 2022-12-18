@@ -206,8 +206,6 @@ void ImPlotContext_SetOpenContextThisFrame(ImPlotContext *ImPlotContextPtr, bool
 bool ImPlotContext_GetOpenContextThisFrame(ImPlotContext *self) { return self->OpenContextThisFrame; }
 void ImPlotContext_SetMousePosStringBuilder(ImPlotContext *ImPlotContextPtr, ImGuiTextBuffer v) { ImPlotContextPtr->MousePosStringBuilder = v; }
 ImGuiTextBuffer ImPlotContext_GetMousePosStringBuilder(ImPlotContext *self) { return self->MousePosStringBuilder; }
-void ImPlotContext_SetSortItems(ImPlotContext *ImPlotContextPtr, ImPlotItemGroup* v) { ImPlotContextPtr->SortItems = v; }
-ImPlotItemGroup* ImPlotContext_GetSortItems(ImPlotContext *self) { return self->SortItems; }
 void ImPlotContext_SetAlignmentData(ImPlotContext *ImPlotContextPtr, ImPool_ImPlotAlignmentData v) { ImPlotContextPtr->AlignmentData = v; }
 ImPool_ImPlotAlignmentData ImPlotContext_GetAlignmentData(ImPlotContext *self) { return self->AlignmentData; }
 void ImPlotContext_SetCurrentAlignmentH(ImPlotContext *ImPlotContextPtr, ImPlotAlignmentData* v) { ImPlotContextPtr->CurrentAlignmentH = v; }
@@ -224,26 +222,26 @@ void ImPlotDateTimeSpec_SetUse24HourClock(ImPlotDateTimeSpec *ImPlotDateTimeSpec
 bool ImPlotDateTimeSpec_GetUse24HourClock(ImPlotDateTimeSpec *self) { return self->Use24HourClock; }
 void ImPlotInputMap_SetPan(ImPlotInputMap *ImPlotInputMapPtr, ImGuiMouseButton v) { ImPlotInputMapPtr->Pan = v; }
 ImGuiMouseButton ImPlotInputMap_GetPan(ImPlotInputMap *self) { return self->Pan; }
-void ImPlotInputMap_SetPanMod(ImPlotInputMap *ImPlotInputMapPtr, int v) { ImPlotInputMapPtr->PanMod = v; }
-int ImPlotInputMap_GetPanMod(ImPlotInputMap *self) { return self->PanMod; }
+void ImPlotInputMap_SetPanMod(ImPlotInputMap *ImPlotInputMapPtr, ImGuiModFlags v) { ImPlotInputMapPtr->PanMod = v; }
+ImGuiModFlags ImPlotInputMap_GetPanMod(ImPlotInputMap *self) { return self->PanMod; }
 void ImPlotInputMap_SetFit(ImPlotInputMap *ImPlotInputMapPtr, ImGuiMouseButton v) { ImPlotInputMapPtr->Fit = v; }
 ImGuiMouseButton ImPlotInputMap_GetFit(ImPlotInputMap *self) { return self->Fit; }
 void ImPlotInputMap_SetSelect(ImPlotInputMap *ImPlotInputMapPtr, ImGuiMouseButton v) { ImPlotInputMapPtr->Select = v; }
 ImGuiMouseButton ImPlotInputMap_GetSelect(ImPlotInputMap *self) { return self->Select; }
 void ImPlotInputMap_SetSelectCancel(ImPlotInputMap *ImPlotInputMapPtr, ImGuiMouseButton v) { ImPlotInputMapPtr->SelectCancel = v; }
 ImGuiMouseButton ImPlotInputMap_GetSelectCancel(ImPlotInputMap *self) { return self->SelectCancel; }
-void ImPlotInputMap_SetSelectMod(ImPlotInputMap *ImPlotInputMapPtr, int v) { ImPlotInputMapPtr->SelectMod = v; }
-int ImPlotInputMap_GetSelectMod(ImPlotInputMap *self) { return self->SelectMod; }
-void ImPlotInputMap_SetSelectHorzMod(ImPlotInputMap *ImPlotInputMapPtr, int v) { ImPlotInputMapPtr->SelectHorzMod = v; }
-int ImPlotInputMap_GetSelectHorzMod(ImPlotInputMap *self) { return self->SelectHorzMod; }
-void ImPlotInputMap_SetSelectVertMod(ImPlotInputMap *ImPlotInputMapPtr, int v) { ImPlotInputMapPtr->SelectVertMod = v; }
-int ImPlotInputMap_GetSelectVertMod(ImPlotInputMap *self) { return self->SelectVertMod; }
+void ImPlotInputMap_SetSelectMod(ImPlotInputMap *ImPlotInputMapPtr, ImGuiModFlags v) { ImPlotInputMapPtr->SelectMod = v; }
+ImGuiModFlags ImPlotInputMap_GetSelectMod(ImPlotInputMap *self) { return self->SelectMod; }
+void ImPlotInputMap_SetSelectHorzMod(ImPlotInputMap *ImPlotInputMapPtr, ImGuiModFlags v) { ImPlotInputMapPtr->SelectHorzMod = v; }
+ImGuiModFlags ImPlotInputMap_GetSelectHorzMod(ImPlotInputMap *self) { return self->SelectHorzMod; }
+void ImPlotInputMap_SetSelectVertMod(ImPlotInputMap *ImPlotInputMapPtr, ImGuiModFlags v) { ImPlotInputMapPtr->SelectVertMod = v; }
+ImGuiModFlags ImPlotInputMap_GetSelectVertMod(ImPlotInputMap *self) { return self->SelectVertMod; }
 void ImPlotInputMap_SetMenu(ImPlotInputMap *ImPlotInputMapPtr, ImGuiMouseButton v) { ImPlotInputMapPtr->Menu = v; }
 ImGuiMouseButton ImPlotInputMap_GetMenu(ImPlotInputMap *self) { return self->Menu; }
-void ImPlotInputMap_SetOverrideMod(ImPlotInputMap *ImPlotInputMapPtr, int v) { ImPlotInputMapPtr->OverrideMod = v; }
-int ImPlotInputMap_GetOverrideMod(ImPlotInputMap *self) { return self->OverrideMod; }
-void ImPlotInputMap_SetZoomMod(ImPlotInputMap *ImPlotInputMapPtr, int v) { ImPlotInputMapPtr->ZoomMod = v; }
-int ImPlotInputMap_GetZoomMod(ImPlotInputMap *self) { return self->ZoomMod; }
+void ImPlotInputMap_SetOverrideMod(ImPlotInputMap *ImPlotInputMapPtr, ImGuiModFlags v) { ImPlotInputMapPtr->OverrideMod = v; }
+ImGuiModFlags ImPlotInputMap_GetOverrideMod(ImPlotInputMap *self) { return self->OverrideMod; }
+void ImPlotInputMap_SetZoomMod(ImPlotInputMap *ImPlotInputMapPtr, ImGuiModFlags v) { ImPlotInputMapPtr->ZoomMod = v; }
+ImGuiModFlags ImPlotInputMap_GetZoomMod(ImPlotInputMap *self) { return self->ZoomMod; }
 void ImPlotInputMap_SetZoomRate(ImPlotInputMap *ImPlotInputMapPtr, float v) { ImPlotInputMapPtr->ZoomRate = v; }
 float ImPlotInputMap_GetZoomRate(ImPlotInputMap *self) { return self->ZoomRate; }
 void ImPlotItem_SetID(ImPlotItem *ImPlotItemPtr, ImGuiID v) { ImPlotItemPtr->ID = v; }

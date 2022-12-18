@@ -70,11 +70,7 @@ extern "C" {
 			shouldSkip = true
 		}
 
-		funcName := f.FuncName
-
-		funcName = strings.TrimPrefix(funcName, "ImGui")
-		funcName = strings.TrimPrefix(funcName, "Im")
-		funcName = strings.TrimPrefix(funcName, "ig")
+		funcName := trimImGuiPrefix(f.FuncName)
 
 		// Check lower case for function
 		if unicode.IsLower(rune(funcName[0])) {
@@ -90,10 +86,6 @@ extern "C" {
 		if len(funcParts) == 2 && unicode.IsLower(rune(funcParts[1][0])) {
 			funcName = funcParts[0] + "_" + string(unicode.ToUpper(rune(funcParts[1][0]))) + funcParts[1][1:]
 		}
-
-		// Transform some function names
-		funcName = strings.Replace(funcName, "GetCursor", "GetDrawCursor", 1)
-		funcName = strings.Replace(funcName, "SetCursor", "SetDrawCursor", 1)
 
 		// Remove all ... arg
 		f.Args = strings.Replace(f.Args, ",...", "", 1)
@@ -240,6 +232,7 @@ extern "C" {
 				StructGetter:     false,
 				Ret:              f.Ret,
 				StName:           f.StName,
+				NonUDT:           f.NonUDT,
 			})
 
 			// Add V as suffix to current function name
@@ -265,6 +258,7 @@ extern "C" {
 				InvocationStmt:   f.InvocationStmt,
 				Ret:              f.Ret,
 				StName:           f.StName,
+				NonUDT:           f.NonUDT,
 			})
 		}
 

@@ -9,9 +9,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@main
-      with:
-        fetch-depth: 0
-        submodules: 'true'
 
     - name: add libs for glfw
       run: sudo apt install xorg-dev

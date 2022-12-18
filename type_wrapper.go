@@ -29,29 +29,27 @@ func wrapBool(goValue *bool) (wrapped *C.bool, finisher func()) {
 	return
 }
 
-func wrapInt32(goValue *int32) (wrapped *C.int, finisher func()) {
-	if goValue != nil {
-		cValue := C.int(*goValue)
-		wrapped = &cValue
-		finisher = func() {
-			*goValue = int32(cValue)
-		}
-	} else {
-		finisher = func() {}
-	}
-	return
+// Number is a generic type for Go/C types that can be used as a number.
+// It could be anything that you can convert to that type (e.g. C.int is a Number,
+// because it can be directly converted to int)
+type Number interface {
+	~int8 | ~int16 | ~int32 | ~int64 |
+		~uint8 | ~uint16 | ~uint32 | ~uint64 |
+		~float32 | ~float64
 }
 
-func wrapFloat(goValue *float32) (wrapped *C.float, finisher func()) {
+// wrapPtrCType is a generic method to convert GOTYPE (int32/float32 e.t.c.) into CTYPE (c_int/c_float e.t.c.)
+func wrapNumberPtr[CTYPE Number, GOTYPE Number](goValue *GOTYPE) (wrapped *CTYPE, finisher func()) {
 	if goValue != nil {
-		cValue := C.float(*goValue)
+		cValue := CTYPE(*goValue)
 		wrapped = &cValue
 		finisher = func() {
-			*goValue = float32(cValue)
+			*goValue = GOTYPE(cValue)
 		}
 	} else {
 		finisher = func() {}
 	}
+
 	return
 }
 

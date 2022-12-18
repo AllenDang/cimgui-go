@@ -1,9 +1,0 @@
-[submodule "cimgui"]
-	path = cimgui
-	url = https://github.com/cimgui/cimgui.git
-[submodule "cimplot"]
-	path = cimplot
-	url = https://github.com/cimgui/cimplot.git
-[submodule "thirdparty/glfw"]
-	path = thirdparty/glfw
-	url = https://github.com/glfw/glfw
