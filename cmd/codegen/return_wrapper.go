@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 // Wrapper for return value
 type returnWrapper func() (returnType string, returnStmt string)
 
@@ -42,37 +44,55 @@ func constWCharPtrReturnW() (returnType string, returnStmt string) {
 func imVec4PtrReturnW() (returnType string, returnStmt string) {
 	// TODO: verify if it wraps correctly
 	returnType = "*ImVec4"
-	returnStmt = "return (&ImVec4{}).fromC(*%s)"
+	returnStmt += `out := &ImVec4{}
+out.fromC(*%s)
+return out
+`
 	return
 }
 
 func imVec4ReturnW() (returnType string, returnStmt string) {
 	returnType = "ImVec4"
-	returnStmt = "return *(&ImVec4{}).fromC(%s)"
+	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
+	returnStmt += `out.fromC(%s)
+return *out
+`
 	return
 }
 
 func imVec2ReturnW() (returnType string, returnStmt string) {
 	returnType = "ImVec2"
-	returnStmt = "return *(&ImVec2{}).fromC(%s)"
+	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
+	returnStmt += `out.fromC(%s)
+return *out
+`
 	return
 }
 
 func imColorReturnW() (returnType string, returnStmt string) {
 	returnType = "ImColor"
-	returnStmt = "return *(&ImColor{}).fromC(%s)"
+	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
+	returnStmt += `out.fromC(%s)
+return *out
+`
 	return
 }
 
 func imPlotPointReturnW() (returnType string, returnStmt string) {
 	returnType = "ImPlotPoint"
-	returnStmt = "return *(&ImPlotPoint{}).fromC(%s)"
+	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
+	returnStmt += `out.fromC(%s)
+return *out
+`
 	return
 }
 
 func imRectReturnW() (returnType string, returnStmt string) {
 	returnType = "ImRect"
-	returnStmt = "return *(&ImRect{}).fromC(%s)"
+	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
+	returnStmt += `out.fromC(%s)
+return *out
+`
 	return
 }
 

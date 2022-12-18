@@ -9273,7 +9273,9 @@ func (self ImPlotAnnotation) SetPos(v ImVec2) {
 }
 
 func (self ImPlotAnnotation) GetPos() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotAnnotation_GetPos(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotAnnotation_GetPos(self.handle()))
+	return *out
 }
 
 func (self ImPlotAnnotation) SetOffset(v ImVec2) {
@@ -9281,7 +9283,9 @@ func (self ImPlotAnnotation) SetOffset(v ImVec2) {
 }
 
 func (self ImPlotAnnotation) GetOffset() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotAnnotation_GetOffset(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotAnnotation_GetOffset(self.handle()))
+	return *out
 }
 
 func (self ImPlotAnnotation) SetColorBg(v uint32) {
@@ -9503,7 +9507,9 @@ func (self ImPlotAxis) SetHoverRect(v ImRect) {
 }
 
 func (self ImPlotAxis) GetHoverRect() ImRect {
-	return *(&ImRect{}).fromC(C.ImPlotAxis_GetHoverRect(self.handle()))
+	out := &ImRect{}
+	out.fromC(C.ImPlotAxis_GetHoverRect(self.handle()))
+	return *out
 }
 
 func (self ImPlotAxis) SetLabelOffset(v int32) {
@@ -9931,7 +9937,9 @@ func (self ImPlotItem) SetLegendHoverRect(v ImRect) {
 }
 
 func (self ImPlotItem) GetLegendHoverRect() ImRect {
-	return *(&ImRect{}).fromC(C.ImPlotItem_GetLegendHoverRect(self.handle()))
+	out := &ImRect{}
+	out.fromC(C.ImPlotItem_GetLegendHoverRect(self.handle()))
+	return *out
 }
 
 func (self ImPlotItem) SetNameOffset(v int32) {
@@ -10027,7 +10035,9 @@ func (self ImPlotLegend) SetRect(v ImRect) {
 }
 
 func (self ImPlotLegend) GetRect() ImRect {
-	return *(&ImRect{}).fromC(C.ImPlotLegend_GetRect(self.handle()))
+	out := &ImRect{}
+	out.fromC(C.ImPlotLegend_GetRect(self.handle()))
+	return *out
 }
 
 func (self ImPlotLegend) SetHovered(v bool) {
@@ -10251,7 +10261,9 @@ func (self ImPlotPlot) SetFrameRect(v ImRect) {
 }
 
 func (self ImPlotPlot) GetFrameRect() ImRect {
-	return *(&ImRect{}).fromC(C.ImPlotPlot_GetFrameRect(self.handle()))
+	out := &ImRect{}
+	out.fromC(C.ImPlotPlot_GetFrameRect(self.handle()))
+	return *out
 }
 
 func (self ImPlotPlot) SetCanvasRect(v ImRect) {
@@ -10259,7 +10271,9 @@ func (self ImPlotPlot) SetCanvasRect(v ImRect) {
 }
 
 func (self ImPlotPlot) GetCanvasRect() ImRect {
-	return *(&ImRect{}).fromC(C.ImPlotPlot_GetCanvasRect(self.handle()))
+	out := &ImRect{}
+	out.fromC(C.ImPlotPlot_GetCanvasRect(self.handle()))
+	return *out
 }
 
 func (self ImPlotPlot) SetPlotRect(v ImRect) {
@@ -10267,7 +10281,9 @@ func (self ImPlotPlot) SetPlotRect(v ImRect) {
 }
 
 func (self ImPlotPlot) GetPlotRect() ImRect {
-	return *(&ImRect{}).fromC(C.ImPlotPlot_GetPlotRect(self.handle()))
+	out := &ImRect{}
+	out.fromC(C.ImPlotPlot_GetPlotRect(self.handle()))
+	return *out
 }
 
 func (self ImPlotPlot) SetAxesRect(v ImRect) {
@@ -10275,7 +10291,9 @@ func (self ImPlotPlot) SetAxesRect(v ImRect) {
 }
 
 func (self ImPlotPlot) GetAxesRect() ImRect {
-	return *(&ImRect{}).fromC(C.ImPlotPlot_GetAxesRect(self.handle()))
+	out := &ImRect{}
+	out.fromC(C.ImPlotPlot_GetAxesRect(self.handle()))
+	return *out
 }
 
 func (self ImPlotPlot) SetSelectRect(v ImRect) {
@@ -10283,7 +10301,9 @@ func (self ImPlotPlot) SetSelectRect(v ImRect) {
 }
 
 func (self ImPlotPlot) GetSelectRect() ImRect {
-	return *(&ImRect{}).fromC(C.ImPlotPlot_GetSelectRect(self.handle()))
+	out := &ImRect{}
+	out.fromC(C.ImPlotPlot_GetSelectRect(self.handle()))
+	return *out
 }
 
 func (self ImPlotPlot) SetSelectStart(v ImVec2) {
@@ -10291,7 +10311,9 @@ func (self ImPlotPlot) SetSelectStart(v ImVec2) {
 }
 
 func (self ImPlotPlot) GetSelectStart() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotPlot_GetSelectStart(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotPlot_GetSelectStart(self.handle()))
+	return *out
 }
 
 func (self ImPlotPlot) SetTitleOffset(v int32) {
@@ -10523,7 +10545,9 @@ func (self ImPlotStyle) SetMajorTickLen(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetMajorTickLen() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetMajorTickLen(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetMajorTickLen(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetMinorTickLen(v ImVec2) {
@@ -10531,7 +10555,9 @@ func (self ImPlotStyle) SetMinorTickLen(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetMinorTickLen() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetMinorTickLen(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetMinorTickLen(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetMajorTickSize(v ImVec2) {
@@ -10539,7 +10565,9 @@ func (self ImPlotStyle) SetMajorTickSize(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetMajorTickSize() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetMajorTickSize(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetMajorTickSize(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetMinorTickSize(v ImVec2) {
@@ -10547,7 +10575,9 @@ func (self ImPlotStyle) SetMinorTickSize(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetMinorTickSize() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetMinorTickSize(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetMinorTickSize(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetMajorGridSize(v ImVec2) {
@@ -10555,7 +10585,9 @@ func (self ImPlotStyle) SetMajorGridSize(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetMajorGridSize() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetMajorGridSize(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetMajorGridSize(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetMinorGridSize(v ImVec2) {
@@ -10563,7 +10595,9 @@ func (self ImPlotStyle) SetMinorGridSize(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetMinorGridSize() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetMinorGridSize(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetMinorGridSize(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetPlotPadding(v ImVec2) {
@@ -10571,7 +10605,9 @@ func (self ImPlotStyle) SetPlotPadding(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetPlotPadding() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetPlotPadding(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetPlotPadding(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetLabelPadding(v ImVec2) {
@@ -10579,7 +10615,9 @@ func (self ImPlotStyle) SetLabelPadding(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetLabelPadding() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetLabelPadding(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetLabelPadding(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetLegendPadding(v ImVec2) {
@@ -10587,7 +10625,9 @@ func (self ImPlotStyle) SetLegendPadding(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetLegendPadding() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetLegendPadding(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetLegendPadding(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetLegendInnerPadding(v ImVec2) {
@@ -10595,7 +10635,9 @@ func (self ImPlotStyle) SetLegendInnerPadding(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetLegendInnerPadding() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetLegendInnerPadding(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetLegendInnerPadding(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetLegendSpacing(v ImVec2) {
@@ -10603,7 +10645,9 @@ func (self ImPlotStyle) SetLegendSpacing(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetLegendSpacing() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetLegendSpacing(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetLegendSpacing(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetMousePosPadding(v ImVec2) {
@@ -10611,7 +10655,9 @@ func (self ImPlotStyle) SetMousePosPadding(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetMousePosPadding() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetMousePosPadding(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetMousePosPadding(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetAnnotationPadding(v ImVec2) {
@@ -10619,7 +10665,9 @@ func (self ImPlotStyle) SetAnnotationPadding(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetAnnotationPadding() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetAnnotationPadding(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetAnnotationPadding(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetFitPadding(v ImVec2) {
@@ -10627,7 +10675,9 @@ func (self ImPlotStyle) SetFitPadding(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetFitPadding() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetFitPadding(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetFitPadding(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetPlotDefaultSize(v ImVec2) {
@@ -10635,7 +10685,9 @@ func (self ImPlotStyle) SetPlotDefaultSize(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetPlotDefaultSize() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetPlotDefaultSize(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetPlotDefaultSize(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetPlotMinSize(v ImVec2) {
@@ -10643,7 +10695,9 @@ func (self ImPlotStyle) SetPlotMinSize(v ImVec2) {
 }
 
 func (self ImPlotStyle) GetPlotMinSize() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotStyle_GetPlotMinSize(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotStyle_GetPlotMinSize(self.handle()))
+	return *out
 }
 
 func (self ImPlotStyle) SetColormap(v PlotColormap) {
@@ -10735,7 +10789,9 @@ func (self ImPlotSubplot) SetFrameRect(v ImRect) {
 }
 
 func (self ImPlotSubplot) GetFrameRect() ImRect {
-	return *(&ImRect{}).fromC(C.ImPlotSubplot_GetFrameRect(self.handle()))
+	out := &ImRect{}
+	out.fromC(C.ImPlotSubplot_GetFrameRect(self.handle()))
+	return *out
 }
 
 func (self ImPlotSubplot) SetGridRect(v ImRect) {
@@ -10743,7 +10799,9 @@ func (self ImPlotSubplot) SetGridRect(v ImRect) {
 }
 
 func (self ImPlotSubplot) GetGridRect() ImRect {
-	return *(&ImRect{}).fromC(C.ImPlotSubplot_GetGridRect(self.handle()))
+	out := &ImRect{}
+	out.fromC(C.ImPlotSubplot_GetGridRect(self.handle()))
+	return *out
 }
 
 func (self ImPlotSubplot) SetCellSize(v ImVec2) {
@@ -10751,7 +10809,9 @@ func (self ImPlotSubplot) SetCellSize(v ImVec2) {
 }
 
 func (self ImPlotSubplot) GetCellSize() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotSubplot_GetCellSize(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotSubplot_GetCellSize(self.handle()))
+	return *out
 }
 
 func (self ImPlotSubplot) SetFrameHovered(v bool) {
@@ -10843,7 +10903,9 @@ func (self ImPlotTick) SetLabelSize(v ImVec2) {
 }
 
 func (self ImPlotTick) GetLabelSize() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotTick_GetLabelSize(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotTick_GetLabelSize(self.handle()))
+	return *out
 }
 
 func (self ImPlotTick) SetTextOffset(v int32) {
@@ -10895,7 +10957,9 @@ func (self ImPlotTicker) SetMaxSize(v ImVec2) {
 }
 
 func (self ImPlotTicker) GetMaxSize() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotTicker_GetMaxSize(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotTicker_GetMaxSize(self.handle()))
+	return *out
 }
 
 func (self ImPlotTicker) SetLateSize(v ImVec2) {
@@ -10903,7 +10967,9 @@ func (self ImPlotTicker) SetLateSize(v ImVec2) {
 }
 
 func (self ImPlotTicker) GetLateSize() ImVec2 {
-	return *(&ImVec2{}).fromC(C.ImPlotTicker_GetLateSize(self.handle()))
+	out := &ImVec2{}
+	out.fromC(C.ImPlotTicker_GetLateSize(self.handle()))
+	return *out
 }
 
 func (self ImPlotTicker) SetLevels(v int32) {
