@@ -75,6 +75,14 @@ func ushortW(arg ArgDef) (argType string, def string, varName string) {
 	return simpleW(arg.Name, "uint", "C.ushort")
 }
 
+func uintW(arg ArgDef) (argType string, def string, varName string) {
+	return simpleW(arg.Name, "uint32", "C.uint")
+}
+
+func uintPtrW(arg ArgDef) (argType string, def string, varName string) {
+	return simplePtrW(arg.Name, "uint32", "C.uint")
+}
+
 func u8W(arg ArgDef) (argType string, def string, varName string) {
 	return simpleW(arg.Name, "uint", "C.ImU8")
 }
@@ -83,12 +91,24 @@ func u8PtrW(arg ArgDef) (argType string, def string, varName string) {
 	return simplePtrW(arg.Name, "byte", "C.ImU8")
 }
 
+func u16W(arg ArgDef) (argType string, def string, varName string) {
+	return simpleW(arg.Name, "uint", "C.ImU16")
+}
+
 func u16PtrW(arg ArgDef) (argType string, def string, varName string) {
 	return simplePtrW(arg.Name, "uint16", "C.uint")
 }
 
-func u16W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "uint", "C.ImU16")
+func u32W(arg ArgDef) (argType string, def string, varName string) {
+	return simpleW(arg.Name, "uint32", "C.ImU32")
+}
+
+func u32PtrW(arg ArgDef) (argType string, def string, varName string) {
+	return simplePtrW(arg.Name, "uint16", "C.ImU32")
+}
+
+func u64W(arg ArgDef) (argType string, def string, varName string) {
+	return simpleW(arg.Name, "uint64", "C.ImU64")
 }
 
 func int2W(arg ArgDef) (argType string, def string, varName string) {
@@ -101,14 +121,6 @@ func int3W(arg ArgDef) (argType string, def string, varName string) {
 
 func int4W(arg ArgDef) (argType string, def string, varName string) {
 	return simplePtrArrayW(4, "C.int", "int32", arg)
-}
-
-func u32W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "uint32", "C.ImU32")
-}
-
-func u64W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "uint64", "C.ImU64")
 }
 
 func s8W(arg ArgDef) (argType string, def string, varName string) {
@@ -169,14 +181,6 @@ func int64ArrayW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "[]int64"
 	varName = fmt.Sprintf("(*C.longlong)(&(%s[0]))", arg.Name)
 	return
-}
-
-func uintW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "uint32", "C.uint")
-}
-
-func uintPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrW(arg.Name, "uint32", "C.uint")
 }
 
 func uint64ArrayW(arg ArgDef) (argType string, def string, varName string) {
