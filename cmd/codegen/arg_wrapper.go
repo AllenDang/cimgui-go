@@ -21,7 +21,7 @@ defer %[1]sFin()`, arg.Name)
 }
 
 func ucharW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "uint", "uchar")
+	return simpleValueW(arg.Name, "uint", "C.uchar")
 }
 
 func uCharPtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -31,7 +31,7 @@ func uCharPtrW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func sizeTW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "uint64", "xlong")
+	return simpleValueW(arg.Name, "uint64", "C.xlong")
 }
 
 func sizeTPtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -57,7 +57,7 @@ func floatArrayW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func boolW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "bool", "bool")
+	return simpleValueW(arg.Name, "bool", "C.bool")
 }
 
 func boolPtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -68,15 +68,15 @@ func boolPtrW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func shortW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "int", "short")
+	return simpleValueW(arg.Name, "int", "C.short")
 }
 
 func ushortW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "uint", "ushort")
+	return simpleValueW(arg.Name, "uint", "C.ushort")
 }
 
 func u8W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "uint", "ImU8")
+	return simpleValueW(arg.Name, "uint", "C.ImU8")
 }
 
 func u8PtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -88,51 +88,51 @@ func u16PtrW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func u16W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "uint", "ImU16")
+	return simpleValueW(arg.Name, "uint", "C.ImU16")
 }
 
 func int2W(arg ArgDef) (argType string, def string, varName string) {
-	return arrayW(2, "int", "int32", arg)
+	return arrayW(2, "C.int", "int32", arg)
 }
 
 func int3W(arg ArgDef) (argType string, def string, varName string) {
-	return arrayW(3, "int", "int32", arg)
+	return arrayW(3, "C.int", "int32", arg)
 }
 
 func int4W(arg ArgDef) (argType string, def string, varName string) {
-	return arrayW(4, "int", "int32", arg)
+	return arrayW(4, "C.int", "int32", arg)
 }
 
 func u32W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "uint32", "ImU32")
+	return simpleValueW(arg.Name, "uint32", "C.ImU32")
 }
 
 func u64W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "uint64", "ImU64")
+	return simpleValueW(arg.Name, "uint64", "C.ImU64")
 }
 
 func s8W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "int", "ImS8")
+	return simpleValueW(arg.Name, "int", "C.ImS8")
 }
 
 func s16W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "int", "ImS16")
+	return simpleValueW(arg.Name, "int", "C.ImS16")
 }
 
 func s32W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "int", "ImS32")
+	return simpleValueW(arg.Name, "int", "C.ImS32")
 }
 
 func float2W(arg ArgDef) (argType string, def string, varName string) {
-	return arrayW(2, "float", "float32", arg)
+	return arrayW(2, "C.float", "float32", arg)
 }
 
 func float3W(arg ArgDef) (argType string, def string, varName string) {
-	return arrayW(3, "float", "float32", arg)
+	return arrayW(3, "C.float", "float32", arg)
 }
 
 func float4W(arg ArgDef) (argType string, def string, varName string) {
-	return arrayW(4, "float", "float32", arg)
+	return arrayW(4, "C.float", "float32", arg)
 }
 
 func imWcharW(arg ArgDef) (argType string, def string, varName string) {
@@ -172,7 +172,7 @@ func int64ArrayW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func uintW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "uint32", "uint")
+	return simpleValueW(arg.Name, "uint32", "C.uint")
 }
 
 func uintPtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -186,7 +186,7 @@ func uint64ArrayW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func doubleW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "float64", "double")
+	return simpleValueW(arg.Name, "float64", "C.double")
 }
 
 func doublePtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -194,23 +194,23 @@ func doublePtrW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imGuiIDW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "ImGuiID", "ImGuiID")
+	return simpleValueW(arg.Name, "ImGuiID", "C.ImGuiID")
 }
 
 func imTextureIDW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "ImTextureID", "ImTextureID")
+	return simpleValueW(arg.Name, "ImTextureID", "C.ImTextureID")
 }
 
 func imDrawIdxW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "ImDrawIdx", "ImDrawIdx")
+	return simpleValueW(arg.Name, "ImDrawIdx", "C.ImDrawIdx")
 }
 
 func imTableColumnIdxW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "ImGuiTableColumnIdx", "ImGuiTableColumnIdx")
+	return simpleValueW(arg.Name, "ImGuiTableColumnIdx", "C.ImGuiTableColumnIdx")
 }
 
 func imTableDrawChannelIdxW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleValueW(arg.Name, "ImGuiTableDrawChannelIdx", "ImGuiTableDrawChannelIdx")
+	return simpleValueW(arg.Name, "ImGuiTableDrawChannelIdx", "C.ImGuiTableDrawChannelIdx")
 }
 
 func voidPtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -272,7 +272,7 @@ func inputeTextCallbackW(arg ArgDef) (argType string, def string, varName string
 
 func simpleValueW(argName, goType, cType string) (argType string, def string, varName string) {
 	argType = goType
-	varName = fmt.Sprintf("C.%s(%s)", cType, argName)
+	varName = fmt.Sprintf("%s(%s)", cType, argName)
 	return
 }
 
@@ -294,9 +294,9 @@ defer %[1]sFin()`, argName, cType, goType)
 
 func arrayW(size int, cArrayType, goArrayType string, arg ArgDef) (argType string, def string, varName string) {
 	argType = fmt.Sprintf("[%d]*%s", size, goArrayType)
-	def = fmt.Sprintf(`%[1]sArg := make([]C.%[2]s, len(%[1]s))
+	def = fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(%[1]s))
 for i, %[1]sV := range %[1]s {
-  %[1]sArg[i] = C.%[2]s(*%[1]sV)
+  %[1]sArg[i] = %[2]s(*%[1]sV)
 }
 defer func() {
   for i, %[1]sV := range %[1]sArg {
@@ -305,7 +305,7 @@ defer func() {
 }()
 
 `, arg.Name, cArrayType, goArrayType)
-	varName = fmt.Sprintf("(*C.%s)(&%sArg[0])", cArrayType, arg.Name)
+	varName = fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name)
 	return
 }
 
