@@ -40,38 +40,39 @@ func constWCharPtrReturnW() (returnType string, returnStmt string) {
 }
 
 func imVec4PtrReturnW() (returnType string, returnStmt string) {
-	returnType = "ImVec4"
-	returnStmt = "return newImVec4FromCPtr(%s)"
+	// TODO: verify if it wraps correctly
+	returnType = "*ImVec4"
+	returnStmt = "return (&ImVec4{}).fromC(*%s)"
 	return
 }
 
 func imVec4ReturnW() (returnType string, returnStmt string) {
 	returnType = "ImVec4"
-	returnStmt = "return newImVec4FromC(%s)"
+	returnStmt = "return *(&ImVec4{}).fromC(%s)"
 	return
 }
 
 func imVec2ReturnW() (returnType string, returnStmt string) {
 	returnType = "ImVec2"
-	returnStmt = "return newImVec2FromC(%s)"
+	returnStmt = "return *(&ImVec2{}).fromC(%s)"
 	return
 }
 
 func imColorReturnW() (returnType string, returnStmt string) {
 	returnType = "ImColor"
-	returnStmt = "return newImColorFromC(%s)"
+	returnStmt = "return *(&ImColor{}).fromC(%s)"
 	return
 }
 
 func imPlotPointReturnW() (returnType string, returnStmt string) {
 	returnType = "ImPlotPoint"
-	returnStmt = "return newImPlotPointFromC(%s)"
+	returnStmt = "return *(&ImPlotPoint{}).fromC(%s)"
 	return
 }
 
 func imRectReturnW() (returnType string, returnStmt string) {
 	returnType = "ImRect"
-	returnStmt = "return newImRectFromC(%s)"
+	returnStmt = "return *(&ImRect{}).fromC(%s)"
 	return
 }
 

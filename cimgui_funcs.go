@@ -9,25 +9,25 @@ import "unsafe"
 // Color_HSVV parameter default value hint:
 // a: 1.0f
 func Color_HSVV(h float32, s float32, v float32, a float32) ImColor {
-	pOut := ImColor{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImColor{}
+	pOutArg, pOutFin := wrap[C.ImColor, *ImColor](pOut)
 	defer pOutFin()
 
 	C.Color_HSVV(pOutArg, C.float(h), C.float(s), C.float(v), C.float(a))
-	return pOut
+	return *pOut
 }
 
 // Color_SetHSVV parameter default value hint:
 // a: 1.0f
 func (self *ImColor) SetHSVV(h float32, s float32, v float32, a float32) {
-	selfArg, selfFin := self.wrap()
+	selfArg, selfFin := wrap[C.ImColor, *ImColor](self)
 	defer selfFin()
 
 	C.Color_SetHSVV(selfArg, C.float(h), C.float(s), C.float(v), C.float(a))
 }
 
 func (self *ImColor) Destroy() {
-	selfArg, selfFin := self.wrap()
+	selfArg, selfFin := wrap[C.ImColor, *ImColor](self)
 	defer selfFin()
 
 	C.Color_Destroy(selfArg)
@@ -123,7 +123,7 @@ func (self ImDrawList) AddCircleFilledV(center ImVec2, radius float32, col uint3
 }
 
 func (self ImDrawList) AddConvexPolyFilled(points *ImVec2, num_points int32, col uint32) {
-	pointsArg, pointsFin := points.wrap()
+	pointsArg, pointsFin := wrap[C.ImVec2, *ImVec2](points)
 	defer pointsFin()
 
 	C.DrawList_AddConvexPolyFilled(self.handle(), pointsArg, C.int(num_points), C.ImU32(col))
@@ -174,7 +174,7 @@ func (self ImDrawList) AddNgonFilled(center ImVec2, radius float32, col uint32, 
 }
 
 func (self ImDrawList) AddPolyline(points *ImVec2, num_points int32, col uint32, flags DrawFlags, thickness float32) {
-	pointsArg, pointsFin := points.wrap()
+	pointsArg, pointsFin := wrap[C.ImVec2, *ImVec2](points)
 	defer pointsFin()
 
 	C.DrawList_AddPolyline(self.handle(), pointsArg, C.int(num_points), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
@@ -217,7 +217,7 @@ func (self ImDrawList) AddText_FontPtrV(font ImFont, font_size float32, pos ImVe
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
-	cpu_fine_clip_rectArg, cpu_fine_clip_rectFin := cpu_fine_clip_rect.wrap()
+	cpu_fine_clip_rectArg, cpu_fine_clip_rectFin := wrap[C.ImVec4, *ImVec4](cpu_fine_clip_rect)
 	defer cpu_fine_clip_rectFin()
 
 	C.DrawList_AddText_FontPtrV(self.handle(), font.handle(), C.float(font_size), pos.toC(), C.ImU32(col), text_beginArg, C.float(wrap_width), cpu_fine_clip_rectArg)
@@ -259,21 +259,21 @@ func (self ImDrawList) CloneOutput() ImDrawList {
 }
 
 func (self ImDrawList) GetClipRectMax() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.DrawList_GetClipRectMax(pOutArg, self.handle())
-	return pOut
+	return *pOut
 }
 
 func (self ImDrawList) GetClipRectMin() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.DrawList_GetClipRectMin(pOutArg, self.handle())
-	return pOut
+	return *pOut
 }
 
 func NewImDrawList(shared_data ImDrawListSharedData) ImDrawList {
@@ -461,10 +461,10 @@ func (self ImFontAtlas) Build() bool {
 }
 
 func (self ImFontAtlas) CalcCustomRectUV(rect ImFontAtlasCustomRect, out_uv_min *ImVec2, out_uv_max *ImVec2) {
-	out_uv_minArg, out_uv_minFin := out_uv_min.wrap()
+	out_uv_minArg, out_uv_minFin := wrap[C.ImVec2, *ImVec2](out_uv_min)
 	defer out_uv_minFin()
 
-	out_uv_maxArg, out_uv_maxFin := out_uv_max.wrap()
+	out_uv_maxArg, out_uv_maxFin := wrap[C.ImVec2, *ImVec2](out_uv_max)
 	defer out_uv_maxFin()
 
 	C.FontAtlas_CalcCustomRectUV(self.handle(), rect.handle(), out_uv_minArg, out_uv_maxArg)
@@ -523,10 +523,10 @@ func (self ImFontAtlas) GetGlyphRangesVietnamese() *ImWchar {
 }
 
 func (self ImFontAtlas) GetMouseCursorTexData(cursor MouseCursor, out_offset *ImVec2, out_size *ImVec2, out_uv_border [2]*ImVec2, out_uv_fill [2]*ImVec2) bool {
-	out_offsetArg, out_offsetFin := out_offset.wrap()
+	out_offsetArg, out_offsetFin := wrap[C.ImVec2, *ImVec2](out_offset)
 	defer out_offsetFin()
 
-	out_sizeArg, out_sizeFin := out_size.wrap()
+	out_sizeArg, out_sizeFin := wrap[C.ImVec2, *ImVec2](out_size)
 	defer out_sizeFin()
 
 	return C.FontAtlas_GetMouseCursorTexData(self.handle(), C.ImGuiMouseCursor(cursor), out_offsetArg, out_sizeArg, (*C.ImVec2)(unsafe.Pointer(&out_uv_border[0])), (*C.ImVec2)(unsafe.Pointer(&out_uv_fill[0]))) == C.bool(true)
@@ -611,8 +611,8 @@ func (self ImFont) BuildLookupTable() {
 // remaining: NULL
 // text_end: NULL
 func (self ImFont) CalcTextSizeAV(size float32, max_width float32, wrap_width float32, text_begin string, remaining []string) ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	text_beginArg, text_beginFin := wrapString(text_begin)
@@ -622,7 +622,7 @@ func (self ImFont) CalcTextSizeAV(size float32, max_width float32, wrap_width fl
 	defer remainingFin()
 
 	C.Font_CalcTextSizeAV(pOutArg, self.handle(), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, remainingArg)
-	return pOut
+	return *pOut
 }
 
 func (self ImFont) CalcWordWrapPositionA(scale float32, text string, wrap_width float32) string {
@@ -1115,21 +1115,21 @@ func (self ImGuiTextFilter) Destroy() {
 }
 
 func (self ImGuiViewport) GetCenter() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.Viewport_GetCenter(pOutArg, self.handle())
-	return pOut
+	return *pOut
 }
 
 func (self ImGuiViewport) GetWorkCenter() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.Viewport_GetWorkCenter(pOutArg, self.handle())
-	return pOut
+	return *pOut
 }
 
 func NewImGuiViewport() ImGuiViewport {
@@ -1152,22 +1152,22 @@ func (self ImGuiWindowSettings) Destroy() {
 	C.WindowSettings_Destroy(self.handle())
 }
 
-func (self ImRect) Destroy() {
-	selfArg, selfFin := self.wrap()
+func (self *ImRect) Destroy() {
+	selfArg, selfFin := wrap[C.ImRect, *ImRect](self)
 	defer selfFin()
 
 	C.Rect_Destroy(selfArg)
 }
 
 func (self *ImVec2) Destroy() {
-	selfArg, selfFin := self.wrap()
+	selfArg, selfFin := wrap[C.ImVec2, *ImVec2](self)
 	defer selfFin()
 
 	C.Vec2_Destroy(selfArg)
 }
 
 func (self *ImVec4) Destroy() {
-	selfArg, selfFin := self.wrap()
+	selfArg, selfFin := wrap[C.ImVec4, *ImVec4](self)
 	defer selfFin()
 
 	C.Vec4_Destroy(selfArg)
@@ -1407,15 +1407,15 @@ func CalcItemWidth() float32 {
 // text_end: NULL
 // wrap_width: -1.0f
 func CalcTextSizeV(text string, hide_text_after_double_hash bool, wrap_width float32) ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
 	C.CalcTextSizeV(pOutArg, textArg, C.bool(hide_text_after_double_hash), C.float(wrap_width))
-	return pOut
+	return *pOut
 }
 
 func Checkbox(label string, v *bool) bool {
@@ -1504,12 +1504,12 @@ func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s
 }
 
 func ColorConvertU32ToFloat4(in uint32) ImVec4 {
-	pOut := ImVec4{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
 	defer pOutFin()
 
 	C.ColorConvertU32ToFloat4(pOutArg, C.ImU32(in))
-	return pOut
+	return *pOut
 }
 
 // ColorEdit3V parameter default value hint:
@@ -2085,21 +2085,21 @@ func GetColumnsCount() int {
 }
 
 func GetContentRegionAvail() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetContentRegionAvail(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetContentRegionMax() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetContentRegionMax(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetCurrentContext() ImGuiContext {
@@ -2107,12 +2107,12 @@ func GetCurrentContext() ImGuiContext {
 }
 
 func GetCursorPos() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetCursorPos(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetCursorPosX() float32 {
@@ -2124,21 +2124,21 @@ func GetCursorPosY() float32 {
 }
 
 func GetCursorScreenPos() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetCursorScreenPos(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetCursorStartPos() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetCursorStartPos(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetDragDropPayload() ImGuiPayload {
@@ -2162,12 +2162,12 @@ func GetFontSize() float32 {
 }
 
 func GetFontTexUvWhitePixel() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetFontTexUvWhitePixel(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetForegroundDrawList_Nil() ImDrawList {
@@ -2216,30 +2216,30 @@ func GetIO() ImGuiIO {
 }
 
 func GetItemRectMax() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetItemRectMax(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetItemRectMin() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetItemRectMin(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetItemRectSize() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetItemRectSize(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetKeyIndex(key Key) int {
@@ -2270,30 +2270,30 @@ func GetMouseCursor() MouseCursor {
 // button: 0
 // lock_threshold: -1.0f
 func GetMouseDragDeltaV(button MouseButton, lock_threshold float32) ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetMouseDragDeltaV(pOutArg, C.ImGuiMouseButton(button), C.float(lock_threshold))
-	return pOut
+	return *pOut
 }
 
 func GetMousePos() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetMousePos(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetMousePosOnOpeningCurrentPopup() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetMousePosOnOpeningCurrentPopup(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetPlatformIO() ImGuiPlatformIO {
@@ -2324,8 +2324,8 @@ func GetStyleColorName(idx Col) string {
 	return C.GoString(C.GetStyleColorName(C.ImGuiCol(idx)))
 }
 
-func GetStyleColorVec4(idx Col) ImVec4 {
-	return newImVec4FromCPtr(C.GetStyleColorVec4(C.ImGuiCol(idx)))
+func GetStyleColorVec4(idx Col) *ImVec4 {
+	return (&ImVec4{}).fromC(*C.GetStyleColorVec4(C.ImGuiCol(idx)))
 }
 
 func GetTextLineHeight() float32 {
@@ -2349,21 +2349,21 @@ func GetVersion() string {
 }
 
 func GetWindowContentRegionMax() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetWindowContentRegionMax(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetWindowContentRegionMin() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetWindowContentRegionMin(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetWindowDockID() ImGuiID {
@@ -2383,21 +2383,21 @@ func GetWindowHeight() float32 {
 }
 
 func GetWindowPos() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetWindowPos(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetWindowSize() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetWindowSize(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func GetWindowViewport() ImGuiViewport {
@@ -2753,7 +2753,7 @@ func IsMouseHoveringRectV(r_min ImVec2, r_max ImVec2, clip bool) bool {
 // IsMousePosValidV parameter default value hint:
 // mouse_pos: NULL
 func IsMousePosValidV(mouse_pos *ImVec2) bool {
-	mouse_posArg, mouse_posFin := mouse_pos.wrap()
+	mouse_posArg, mouse_posFin := wrap[C.ImVec2, *ImVec2](mouse_pos)
 	defer mouse_posFin()
 
 	return C.IsMousePosValidV(mouse_posArg) == C.bool(true)
@@ -4017,16 +4017,16 @@ func Value_Uint(prefix string, v uint32) {
 }
 
 func Color_HSV(h float32, s float32, v float32) ImColor {
-	pOut := ImColor{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImColor{}
+	pOutArg, pOutFin := wrap[C.ImColor, *ImColor](pOut)
 	defer pOutFin()
 
 	C.Color_HSV(pOutArg, C.float(h), C.float(s), C.float(v))
-	return pOut
+	return *pOut
 }
 
 func (self *ImColor) SetHSV(h float32, s float32, v float32) {
-	selfArg, selfFin := self.wrap()
+	selfArg, selfFin := wrap[C.ImColor, *ImColor](self)
 	defer selfFin()
 
 	C.Color_SetHSV(selfArg, C.float(h), C.float(s), C.float(v))
@@ -4164,15 +4164,15 @@ func (self ImFont) AddRemapChar(dst ImWchar, src ImWchar) {
 }
 
 func (self ImFont) CalcTextSizeA(size float32, max_width float32, wrap_width float32, text_begin string) ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
 	C.Font_CalcTextSizeA(pOutArg, self.handle(), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg)
-	return pOut
+	return *pOut
 }
 
 func (self ImFont) RenderText(draw_list ImDrawList, size float32, pos ImVec2, col uint32, clip_rect ImVec4, text_begin string) {
@@ -4331,15 +4331,15 @@ func Button(label string) bool {
 }
 
 func CalcTextSize(text string) ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
 	C.CalcTextSize(pOutArg, textArg)
-	return pOut
+	return *pOut
 }
 
 func CollapsingHeader_BoolPtr(label string, p_visible *bool) bool {
@@ -4655,12 +4655,12 @@ func GetColumnWidth() float32 {
 }
 
 func GetMouseDragDelta() ImVec2 {
-	pOut := ImVec2{}
-	pOutArg, pOutFin := pOut.wrap()
+	pOut := &ImVec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
 	defer pOutFin()
 
 	C.GetMouseDragDelta(pOutArg)
-	return pOut
+	return *pOut
 }
 
 func Indent() {
@@ -5350,7 +5350,7 @@ func (self ImDrawCmd) SetClipRect(v ImVec4) {
 }
 
 func (self ImDrawCmd) GetClipRect() ImVec4 {
-	return newImVec4FromC(C.ImDrawCmd_GetClipRect(self.handle()))
+	return *(&ImVec4{}).fromC(C.ImDrawCmd_GetClipRect(self.handle()))
 }
 
 func (self ImDrawCmd) SetTextureId(v ImTextureID) {
@@ -5398,7 +5398,7 @@ func (self ImDrawCmdHeader) SetClipRect(v ImVec4) {
 }
 
 func (self ImDrawCmdHeader) GetClipRect() ImVec4 {
-	return newImVec4FromC(C.ImDrawCmdHeader_GetClipRect(self.handle()))
+	return *(&ImVec4{}).fromC(C.ImDrawCmdHeader_GetClipRect(self.handle()))
 }
 
 func (self ImDrawCmdHeader) SetTextureId(v ImTextureID) {
@@ -5454,7 +5454,7 @@ func (self ImDrawData) SetDisplayPos(v ImVec2) {
 }
 
 func (self ImDrawData) GetDisplayPos() ImVec2 {
-	return newImVec2FromC(C.ImDrawData_GetDisplayPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImDrawData_GetDisplayPos(self.handle()))
 }
 
 func (self ImDrawData) SetDisplaySize(v ImVec2) {
@@ -5462,7 +5462,7 @@ func (self ImDrawData) SetDisplaySize(v ImVec2) {
 }
 
 func (self ImDrawData) GetDisplaySize() ImVec2 {
-	return newImVec2FromC(C.ImDrawData_GetDisplaySize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImDrawData_GetDisplaySize(self.handle()))
 }
 
 func (self ImDrawData) SetFramebufferScale(v ImVec2) {
@@ -5470,7 +5470,7 @@ func (self ImDrawData) SetFramebufferScale(v ImVec2) {
 }
 
 func (self ImDrawData) GetFramebufferScale() ImVec2 {
-	return newImVec2FromC(C.ImDrawData_GetFramebufferScale(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImDrawData_GetFramebufferScale(self.handle()))
 }
 
 func (self ImDrawData) SetOwnerViewport(v ImGuiViewport) {
@@ -5545,7 +5545,7 @@ func (self ImDrawListSharedData) SetTexUvWhitePixel(v ImVec2) {
 }
 
 func (self ImDrawListSharedData) GetTexUvWhitePixel() ImVec2 {
-	return newImVec2FromC(C.ImDrawListSharedData_GetTexUvWhitePixel(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImDrawListSharedData_GetTexUvWhitePixel(self.handle()))
 }
 
 func (self ImDrawListSharedData) SetFont(v ImFont) {
@@ -5585,7 +5585,7 @@ func (self ImDrawListSharedData) SetClipRectFullscreen(v ImVec4) {
 }
 
 func (self ImDrawListSharedData) GetClipRectFullscreen() ImVec4 {
-	return newImVec4FromC(C.ImDrawListSharedData_GetClipRectFullscreen(self.handle()))
+	return *(&ImVec4{}).fromC(C.ImDrawListSharedData_GetClipRectFullscreen(self.handle()))
 }
 
 func (self ImDrawListSharedData) SetInitialFlags(v DrawListFlags) {
@@ -5605,14 +5605,14 @@ func (self ImDrawListSharedData) GetArcFastRadiusCutoff() float32 {
 }
 
 func (self ImDrawListSharedData) SetTexUvLines(v *ImVec4) {
-	vArg, vFin := v.wrap()
+	vArg, vFin := wrap[C.ImVec4, *ImVec4](v)
 	defer vFin()
 
 	C.ImDrawListSharedData_SetTexUvLines(self.handle(), vArg)
 }
 
-func (self ImDrawListSharedData) GetTexUvLines() ImVec4 {
-	return newImVec4FromCPtr(C.ImDrawListSharedData_GetTexUvLines(self.handle()))
+func (self ImDrawListSharedData) GetTexUvLines() *ImVec4 {
+	return (&ImVec4{}).fromC(*C.ImDrawListSharedData_GetTexUvLines(self.handle()))
 }
 
 func (self ImDrawListSplitter) Set_Current(v int32) {
@@ -5636,7 +5636,7 @@ func (self ImDrawVert) Setpos(v ImVec2) {
 }
 
 func (self ImDrawVert) Getpos() ImVec2 {
-	return newImVec2FromC(C.ImDrawVert_Getpos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImDrawVert_Getpos(self.handle()))
 }
 
 func (self ImDrawVert) Setuv(v ImVec2) {
@@ -5644,7 +5644,7 @@ func (self ImDrawVert) Setuv(v ImVec2) {
 }
 
 func (self ImDrawVert) Getuv() ImVec2 {
-	return newImVec2FromC(C.ImDrawVert_Getuv(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImDrawVert_Getuv(self.handle()))
 }
 
 func (self ImDrawVert) Setcol(v uint32) {
@@ -5824,7 +5824,7 @@ func (self ImFontAtlas) SetTexUvScale(v ImVec2) {
 }
 
 func (self ImFontAtlas) GetTexUvScale() ImVec2 {
-	return newImVec2FromC(C.ImFontAtlas_GetTexUvScale(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImFontAtlas_GetTexUvScale(self.handle()))
 }
 
 func (self ImFontAtlas) SetTexUvWhitePixel(v ImVec2) {
@@ -5832,7 +5832,7 @@ func (self ImFontAtlas) SetTexUvWhitePixel(v ImVec2) {
 }
 
 func (self ImFontAtlas) GetTexUvWhitePixel() ImVec2 {
-	return newImVec2FromC(C.ImFontAtlas_GetTexUvWhitePixel(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImFontAtlas_GetTexUvWhitePixel(self.handle()))
 }
 
 func (self ImFontAtlas) SetFontBuilderIO(v ImFontBuilderIO) {
@@ -5904,7 +5904,7 @@ func (self ImFontAtlasCustomRect) SetGlyphOffset(v ImVec2) {
 }
 
 func (self ImFontAtlasCustomRect) GetGlyphOffset() ImVec2 {
-	return newImVec2FromC(C.ImFontAtlasCustomRect_GetGlyphOffset(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImFontAtlasCustomRect_GetGlyphOffset(self.handle()))
 }
 
 func (self ImFontAtlasCustomRect) SetFont(v ImFont) {
@@ -5984,7 +5984,7 @@ func (self ImFontConfig) SetGlyphExtraSpacing(v ImVec2) {
 }
 
 func (self ImFontConfig) GetGlyphExtraSpacing() ImVec2 {
-	return newImVec2FromC(C.ImFontConfig_GetGlyphExtraSpacing(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImFontConfig_GetGlyphExtraSpacing(self.handle()))
 }
 
 func (self ImFontConfig) SetGlyphOffset(v ImVec2) {
@@ -5992,7 +5992,7 @@ func (self ImFontConfig) SetGlyphOffset(v ImVec2) {
 }
 
 func (self ImFontConfig) GetGlyphOffset() ImVec2 {
-	return newImVec2FromC(C.ImFontConfig_GetGlyphOffset(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImFontConfig_GetGlyphOffset(self.handle()))
 }
 
 func (self ImFontConfig) SetGlyphRanges(v *ImWchar) {
@@ -6164,7 +6164,7 @@ func (self ImGuiColorMod) SetBackupValue(v ImVec4) {
 }
 
 func (self ImGuiColorMod) GetBackupValue() ImVec4 {
-	return newImVec4FromC(C.ImGuiColorMod_GetBackupValue(self.handle()))
+	return *(&ImVec4{}).fromC(C.ImGuiColorMod_GetBackupValue(self.handle()))
 }
 
 func (self ImGuiComboPreviewData) SetPreviewRect(v ImRect) {
@@ -6172,7 +6172,7 @@ func (self ImGuiComboPreviewData) SetPreviewRect(v ImRect) {
 }
 
 func (self ImGuiComboPreviewData) GetPreviewRect() ImRect {
-	return newImRectFromC(C.ImGuiComboPreviewData_GetPreviewRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiComboPreviewData_GetPreviewRect(self.handle()))
 }
 
 func (self ImGuiComboPreviewData) SetBackupCursorPos(v ImVec2) {
@@ -6180,7 +6180,7 @@ func (self ImGuiComboPreviewData) SetBackupCursorPos(v ImVec2) {
 }
 
 func (self ImGuiComboPreviewData) GetBackupCursorPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiComboPreviewData_GetBackupCursorPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiComboPreviewData_GetBackupCursorPos(self.handle()))
 }
 
 func (self ImGuiComboPreviewData) SetBackupCursorMaxPos(v ImVec2) {
@@ -6188,7 +6188,7 @@ func (self ImGuiComboPreviewData) SetBackupCursorMaxPos(v ImVec2) {
 }
 
 func (self ImGuiComboPreviewData) GetBackupCursorMaxPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiComboPreviewData_GetBackupCursorMaxPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiComboPreviewData_GetBackupCursorMaxPos(self.handle()))
 }
 
 func (self ImGuiComboPreviewData) SetBackupCursorPosPrevLine(v ImVec2) {
@@ -6196,7 +6196,7 @@ func (self ImGuiComboPreviewData) SetBackupCursorPosPrevLine(v ImVec2) {
 }
 
 func (self ImGuiComboPreviewData) GetBackupCursorPosPrevLine() ImVec2 {
-	return newImVec2FromC(C.ImGuiComboPreviewData_GetBackupCursorPosPrevLine(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiComboPreviewData_GetBackupCursorPosPrevLine(self.handle()))
 }
 
 func (self ImGuiComboPreviewData) SetBackupPrevLineTextBaseOffset(v float32) {
@@ -6392,7 +6392,7 @@ func (self ImGuiContext) SetWindowsHoverPadding(v ImVec2) {
 }
 
 func (self ImGuiContext) GetWindowsHoverPadding() ImVec2 {
-	return newImVec2FromC(C.ImGuiContext_GetWindowsHoverPadding(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiContext_GetWindowsHoverPadding(self.handle()))
 }
 
 func (self ImGuiContext) SetCurrentWindow(v ImGuiWindow) {
@@ -6440,7 +6440,7 @@ func (self ImGuiContext) SetWheelingWindowRefMousePos(v ImVec2) {
 }
 
 func (self ImGuiContext) GetWheelingWindowRefMousePos() ImVec2 {
-	return newImVec2FromC(C.ImGuiContext_GetWheelingWindowRefMousePos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiContext_GetWheelingWindowRefMousePos(self.handle()))
 }
 
 func (self ImGuiContext) SetWheelingWindowTimer(v float32) {
@@ -6600,7 +6600,7 @@ func (self ImGuiContext) SetActiveIdClickOffset(v ImVec2) {
 }
 
 func (self ImGuiContext) GetActiveIdClickOffset() ImVec2 {
-	return newImVec2FromC(C.ImGuiContext_GetActiveIdClickOffset(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiContext_GetActiveIdClickOffset(self.handle()))
 }
 
 func (self ImGuiContext) SetActiveIdWindow(v ImGuiWindow) {
@@ -6960,7 +6960,7 @@ func (self ImGuiContext) SetNavInitResultRectRel(v ImRect) {
 }
 
 func (self ImGuiContext) GetNavInitResultRectRel() ImRect {
-	return newImRectFromC(C.ImGuiContext_GetNavInitResultRectRel(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiContext_GetNavInitResultRectRel(self.handle()))
 }
 
 func (self ImGuiContext) SetNavMoveSubmitted(v bool) {
@@ -7040,7 +7040,7 @@ func (self ImGuiContext) SetNavScoringRect(v ImRect) {
 }
 
 func (self ImGuiContext) GetNavScoringRect() ImRect {
-	return newImRectFromC(C.ImGuiContext_GetNavScoringRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiContext_GetNavScoringRect(self.handle()))
 }
 
 func (self ImGuiContext) SetNavScoringNoClipRect(v ImRect) {
@@ -7048,7 +7048,7 @@ func (self ImGuiContext) SetNavScoringNoClipRect(v ImRect) {
 }
 
 func (self ImGuiContext) GetNavScoringNoClipRect() ImRect {
-	return newImRectFromC(C.ImGuiContext_GetNavScoringNoClipRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiContext_GetNavScoringNoClipRect(self.handle()))
 }
 
 func (self ImGuiContext) SetNavScoringDebugCount(v int32) {
@@ -7144,7 +7144,7 @@ func (self ImGuiContext) SetNavWindowingAccumDeltaPos(v ImVec2) {
 }
 
 func (self ImGuiContext) GetNavWindowingAccumDeltaPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiContext_GetNavWindowingAccumDeltaPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiContext_GetNavWindowingAccumDeltaPos(self.handle()))
 }
 
 func (self ImGuiContext) SetNavWindowingAccumDeltaSize(v ImVec2) {
@@ -7152,7 +7152,7 @@ func (self ImGuiContext) SetNavWindowingAccumDeltaSize(v ImVec2) {
 }
 
 func (self ImGuiContext) GetNavWindowingAccumDeltaSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiContext_GetNavWindowingAccumDeltaSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiContext_GetNavWindowingAccumDeltaSize(self.handle()))
 }
 
 func (self ImGuiContext) SetDimBgRatio(v float32) {
@@ -7228,7 +7228,7 @@ func (self ImGuiContext) SetDragDropTargetRect(v ImRect) {
 }
 
 func (self ImGuiContext) GetDragDropTargetRect() ImRect {
-	return newImRectFromC(C.ImGuiContext_GetDragDropTargetRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiContext_GetDragDropTargetRect(self.handle()))
 }
 
 func (self ImGuiContext) SetDragDropTargetId(v ImGuiID) {
@@ -7324,7 +7324,7 @@ func (self ImGuiContext) SetMouseLastValidPos(v ImVec2) {
 }
 
 func (self ImGuiContext) GetMouseLastValidPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiContext_GetMouseLastValidPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiContext_GetMouseLastValidPos(self.handle()))
 }
 
 func (self ImGuiContext) GetInputTextState() ImGuiInputTextState {
@@ -7380,7 +7380,7 @@ func (self ImGuiContext) SetColorPickerRef(v ImVec4) {
 }
 
 func (self ImGuiContext) GetColorPickerRef() ImVec4 {
-	return newImVec4FromC(C.ImGuiContext_GetColorPickerRef(self.handle()))
+	return *(&ImVec4{}).fromC(C.ImGuiContext_GetColorPickerRef(self.handle()))
 }
 
 func (self ImGuiContext) GetComboPreviewData() ImGuiComboPreviewData {
@@ -7851,7 +7851,7 @@ func (self ImGuiDockNode) SetPos(v ImVec2) {
 }
 
 func (self ImGuiDockNode) GetPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiDockNode_GetPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiDockNode_GetPos(self.handle()))
 }
 
 func (self ImGuiDockNode) SetSize(v ImVec2) {
@@ -7859,7 +7859,7 @@ func (self ImGuiDockNode) SetSize(v ImVec2) {
 }
 
 func (self ImGuiDockNode) GetSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiDockNode_GetSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiDockNode_GetSize(self.handle()))
 }
 
 func (self ImGuiDockNode) SetSizeRef(v ImVec2) {
@@ -7867,7 +7867,7 @@ func (self ImGuiDockNode) SetSizeRef(v ImVec2) {
 }
 
 func (self ImGuiDockNode) GetSizeRef() ImVec2 {
-	return newImVec2FromC(C.ImGuiDockNode_GetSizeRef(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiDockNode_GetSizeRef(self.handle()))
 }
 
 func (self ImGuiDockNode) SetSplitAxis(v Axis) {
@@ -8103,7 +8103,7 @@ func (self ImGuiGroupData) SetBackupCursorPos(v ImVec2) {
 }
 
 func (self ImGuiGroupData) GetBackupCursorPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiGroupData_GetBackupCursorPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiGroupData_GetBackupCursorPos(self.handle()))
 }
 
 func (self ImGuiGroupData) SetBackupCursorMaxPos(v ImVec2) {
@@ -8111,7 +8111,7 @@ func (self ImGuiGroupData) SetBackupCursorMaxPos(v ImVec2) {
 }
 
 func (self ImGuiGroupData) GetBackupCursorMaxPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiGroupData_GetBackupCursorMaxPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiGroupData_GetBackupCursorMaxPos(self.handle()))
 }
 
 func (self ImGuiGroupData) SetBackupCurrLineSize(v ImVec2) {
@@ -8119,7 +8119,7 @@ func (self ImGuiGroupData) SetBackupCurrLineSize(v ImVec2) {
 }
 
 func (self ImGuiGroupData) GetBackupCurrLineSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiGroupData_GetBackupCurrLineSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiGroupData_GetBackupCurrLineSize(self.handle()))
 }
 
 func (self ImGuiGroupData) SetBackupCurrLineTextBaseOffset(v float32) {
@@ -8183,7 +8183,7 @@ func (self ImGuiIO) SetDisplaySize(v ImVec2) {
 }
 
 func (self ImGuiIO) GetDisplaySize() ImVec2 {
-	return newImVec2FromC(C.ImGuiIO_GetDisplaySize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiIO_GetDisplaySize(self.handle()))
 }
 
 func (self ImGuiIO) SetDeltaTime(v float32) {
@@ -8309,7 +8309,7 @@ func (self ImGuiIO) SetDisplayFramebufferScale(v ImVec2) {
 }
 
 func (self ImGuiIO) GetDisplayFramebufferScale() ImVec2 {
-	return newImVec2FromC(C.ImGuiIO_GetDisplayFramebufferScale(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiIO_GetDisplayFramebufferScale(self.handle()))
 }
 
 func (self ImGuiIO) SetConfigDockingNoSplit(v bool) {
@@ -8619,7 +8619,7 @@ func (self ImGuiIO) SetMouseDelta(v ImVec2) {
 }
 
 func (self ImGuiIO) GetMouseDelta() ImVec2 {
-	return newImVec2FromC(C.ImGuiIO_GetMouseDelta(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiIO_GetMouseDelta(self.handle()))
 }
 
 func (self ImGuiIO) SetMousePos(v ImVec2) {
@@ -8627,7 +8627,7 @@ func (self ImGuiIO) SetMousePos(v ImVec2) {
 }
 
 func (self ImGuiIO) GetMousePos() ImVec2 {
-	return newImVec2FromC(C.ImGuiIO_GetMousePos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiIO_GetMousePos(self.handle()))
 }
 
 func (self ImGuiIO) SetMouseWheel(v float32) {
@@ -8707,7 +8707,7 @@ func (self ImGuiIO) SetMousePosPrev(v ImVec2) {
 }
 
 func (self ImGuiIO) GetMousePosPrev() ImVec2 {
-	return newImVec2FromC(C.ImGuiIO_GetMousePosPrev(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiIO_GetMousePosPrev(self.handle()))
 }
 
 func (self ImGuiIO) SetPenPressure(v float32) {
@@ -9114,7 +9114,7 @@ func (self ImGuiLastItemData) SetRect(v ImRect) {
 }
 
 func (self ImGuiLastItemData) GetRect() ImRect {
-	return newImRectFromC(C.ImGuiLastItemData_GetRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiLastItemData_GetRect(self.handle()))
 }
 
 func (self ImGuiLastItemData) SetNavRect(v ImRect) {
@@ -9122,7 +9122,7 @@ func (self ImGuiLastItemData) SetNavRect(v ImRect) {
 }
 
 func (self ImGuiLastItemData) GetNavRect() ImRect {
-	return newImRectFromC(C.ImGuiLastItemData_GetNavRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiLastItemData_GetNavRect(self.handle()))
 }
 
 func (self ImGuiLastItemData) SetDisplayRect(v ImRect) {
@@ -9130,7 +9130,7 @@ func (self ImGuiLastItemData) SetDisplayRect(v ImRect) {
 }
 
 func (self ImGuiLastItemData) GetDisplayRect() ImRect {
-	return newImRectFromC(C.ImGuiLastItemData_GetDisplayRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiLastItemData_GetDisplayRect(self.handle()))
 }
 
 func (self ImGuiListClipper) SetDisplayStart(v int32) {
@@ -9418,7 +9418,7 @@ func (self ImGuiNavItemData) SetRectRel(v ImRect) {
 }
 
 func (self ImGuiNavItemData) GetRectRel() ImRect {
-	return newImRectFromC(C.ImGuiNavItemData_GetRectRel(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiNavItemData_GetRectRel(self.handle()))
 }
 
 func (self ImGuiNavItemData) SetInFlags(v ItemFlags) {
@@ -9538,7 +9538,7 @@ func (self ImGuiNextWindowData) SetPosVal(v ImVec2) {
 }
 
 func (self ImGuiNextWindowData) GetPosVal() ImVec2 {
-	return newImVec2FromC(C.ImGuiNextWindowData_GetPosVal(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiNextWindowData_GetPosVal(self.handle()))
 }
 
 func (self ImGuiNextWindowData) SetPosPivotVal(v ImVec2) {
@@ -9546,7 +9546,7 @@ func (self ImGuiNextWindowData) SetPosPivotVal(v ImVec2) {
 }
 
 func (self ImGuiNextWindowData) GetPosPivotVal() ImVec2 {
-	return newImVec2FromC(C.ImGuiNextWindowData_GetPosPivotVal(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiNextWindowData_GetPosPivotVal(self.handle()))
 }
 
 func (self ImGuiNextWindowData) SetSizeVal(v ImVec2) {
@@ -9554,7 +9554,7 @@ func (self ImGuiNextWindowData) SetSizeVal(v ImVec2) {
 }
 
 func (self ImGuiNextWindowData) GetSizeVal() ImVec2 {
-	return newImVec2FromC(C.ImGuiNextWindowData_GetSizeVal(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiNextWindowData_GetSizeVal(self.handle()))
 }
 
 func (self ImGuiNextWindowData) SetContentSizeVal(v ImVec2) {
@@ -9562,7 +9562,7 @@ func (self ImGuiNextWindowData) SetContentSizeVal(v ImVec2) {
 }
 
 func (self ImGuiNextWindowData) GetContentSizeVal() ImVec2 {
-	return newImVec2FromC(C.ImGuiNextWindowData_GetContentSizeVal(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiNextWindowData_GetContentSizeVal(self.handle()))
 }
 
 func (self ImGuiNextWindowData) SetScrollVal(v ImVec2) {
@@ -9570,7 +9570,7 @@ func (self ImGuiNextWindowData) SetScrollVal(v ImVec2) {
 }
 
 func (self ImGuiNextWindowData) GetScrollVal() ImVec2 {
-	return newImVec2FromC(C.ImGuiNextWindowData_GetScrollVal(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiNextWindowData_GetScrollVal(self.handle()))
 }
 
 func (self ImGuiNextWindowData) SetPosUndock(v bool) {
@@ -9594,7 +9594,7 @@ func (self ImGuiNextWindowData) SetSizeConstraintRect(v ImRect) {
 }
 
 func (self ImGuiNextWindowData) GetSizeConstraintRect() ImRect {
-	return newImRectFromC(C.ImGuiNextWindowData_GetSizeConstraintRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiNextWindowData_GetSizeConstraintRect(self.handle()))
 }
 
 func (self ImGuiNextWindowData) SetSizeCallbackUserData(v unsafe.Pointer) {
@@ -9638,7 +9638,7 @@ func (self ImGuiNextWindowData) SetMenuBarOffsetMinVal(v ImVec2) {
 }
 
 func (self ImGuiNextWindowData) GetMenuBarOffsetMinVal() ImVec2 {
-	return newImVec2FromC(C.ImGuiNextWindowData_GetMenuBarOffsetMinVal(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiNextWindowData_GetMenuBarOffsetMinVal(self.handle()))
 }
 
 func (self ImGuiOldColumnData) SetOffsetNorm(v float32) {
@@ -9670,7 +9670,7 @@ func (self ImGuiOldColumnData) SetClipRect(v ImRect) {
 }
 
 func (self ImGuiOldColumnData) GetClipRect() ImRect {
-	return newImRectFromC(C.ImGuiOldColumnData_GetClipRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiOldColumnData_GetClipRect(self.handle()))
 }
 
 func (self ImGuiOldColumns) SetID(v ImGuiID) {
@@ -9774,7 +9774,7 @@ func (self ImGuiOldColumns) SetHostInitialClipRect(v ImRect) {
 }
 
 func (self ImGuiOldColumns) GetHostInitialClipRect() ImRect {
-	return newImRectFromC(C.ImGuiOldColumns_GetHostInitialClipRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiOldColumns_GetHostInitialClipRect(self.handle()))
 }
 
 func (self ImGuiOldColumns) SetHostBackupClipRect(v ImRect) {
@@ -9782,7 +9782,7 @@ func (self ImGuiOldColumns) SetHostBackupClipRect(v ImRect) {
 }
 
 func (self ImGuiOldColumns) GetHostBackupClipRect() ImRect {
-	return newImRectFromC(C.ImGuiOldColumns_GetHostBackupClipRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiOldColumns_GetHostBackupClipRect(self.handle()))
 }
 
 func (self ImGuiOldColumns) SetHostBackupParentWorkRect(v ImRect) {
@@ -9790,7 +9790,7 @@ func (self ImGuiOldColumns) SetHostBackupParentWorkRect(v ImRect) {
 }
 
 func (self ImGuiOldColumns) GetHostBackupParentWorkRect() ImRect {
-	return newImRectFromC(C.ImGuiOldColumns_GetHostBackupParentWorkRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiOldColumns_GetHostBackupParentWorkRect(self.handle()))
 }
 
 func (self ImGuiOldColumns) GetSplitter() ImDrawListSplitter {
@@ -9874,7 +9874,7 @@ func (self ImGuiPlatformImeData) SetInputPos(v ImVec2) {
 }
 
 func (self ImGuiPlatformImeData) GetInputPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiPlatformImeData_GetInputPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiPlatformImeData_GetInputPos(self.handle()))
 }
 
 func (self ImGuiPlatformImeData) SetInputLineHeight(v float32) {
@@ -9890,7 +9890,7 @@ func (self ImGuiPlatformMonitor) SetMainPos(v ImVec2) {
 }
 
 func (self ImGuiPlatformMonitor) GetMainPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiPlatformMonitor_GetMainPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiPlatformMonitor_GetMainPos(self.handle()))
 }
 
 func (self ImGuiPlatformMonitor) SetMainSize(v ImVec2) {
@@ -9898,7 +9898,7 @@ func (self ImGuiPlatformMonitor) SetMainSize(v ImVec2) {
 }
 
 func (self ImGuiPlatformMonitor) GetMainSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiPlatformMonitor_GetMainSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiPlatformMonitor_GetMainSize(self.handle()))
 }
 
 func (self ImGuiPlatformMonitor) SetWorkPos(v ImVec2) {
@@ -9906,7 +9906,7 @@ func (self ImGuiPlatformMonitor) SetWorkPos(v ImVec2) {
 }
 
 func (self ImGuiPlatformMonitor) GetWorkPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiPlatformMonitor_GetWorkPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiPlatformMonitor_GetWorkPos(self.handle()))
 }
 
 func (self ImGuiPlatformMonitor) SetWorkSize(v ImVec2) {
@@ -9914,7 +9914,7 @@ func (self ImGuiPlatformMonitor) SetWorkSize(v ImVec2) {
 }
 
 func (self ImGuiPlatformMonitor) GetWorkSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiPlatformMonitor_GetWorkSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiPlatformMonitor_GetWorkSize(self.handle()))
 }
 
 func (self ImGuiPlatformMonitor) SetDpiScale(v float32) {
@@ -9978,7 +9978,7 @@ func (self ImGuiPopupData) SetOpenPopupPos(v ImVec2) {
 }
 
 func (self ImGuiPopupData) GetOpenPopupPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiPopupData_GetOpenPopupPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiPopupData_GetOpenPopupPos(self.handle()))
 }
 
 func (self ImGuiPopupData) SetOpenMousePos(v ImVec2) {
@@ -9986,7 +9986,7 @@ func (self ImGuiPopupData) SetOpenMousePos(v ImVec2) {
 }
 
 func (self ImGuiPopupData) GetOpenMousePos() ImVec2 {
-	return newImVec2FromC(C.ImGuiPopupData_GetOpenMousePos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiPopupData_GetOpenMousePos(self.handle()))
 }
 
 func (self ImGuiPtrOrIndex) SetPtr(v unsafe.Pointer) {
@@ -10069,7 +10069,7 @@ func (self ImGuiSizeCallbackData) SetPos(v ImVec2) {
 }
 
 func (self ImGuiSizeCallbackData) GetPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiSizeCallbackData_GetPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiSizeCallbackData_GetPos(self.handle()))
 }
 
 func (self ImGuiSizeCallbackData) SetCurrentSize(v ImVec2) {
@@ -10077,7 +10077,7 @@ func (self ImGuiSizeCallbackData) SetCurrentSize(v ImVec2) {
 }
 
 func (self ImGuiSizeCallbackData) GetCurrentSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiSizeCallbackData_GetCurrentSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiSizeCallbackData_GetCurrentSize(self.handle()))
 }
 
 func (self ImGuiSizeCallbackData) SetDesiredSize(v ImVec2) {
@@ -10085,7 +10085,7 @@ func (self ImGuiSizeCallbackData) SetDesiredSize(v ImVec2) {
 }
 
 func (self ImGuiSizeCallbackData) GetDesiredSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiSizeCallbackData_GetDesiredSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiSizeCallbackData_GetDesiredSize(self.handle()))
 }
 
 func (self ImGuiStackLevelInfo) SetID(v ImGuiID) {
@@ -10261,7 +10261,7 @@ func (self ImGuiStyle) SetWindowPadding(v ImVec2) {
 }
 
 func (self ImGuiStyle) GetWindowPadding() ImVec2 {
-	return newImVec2FromC(C.ImGuiStyle_GetWindowPadding(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiStyle_GetWindowPadding(self.handle()))
 }
 
 func (self ImGuiStyle) SetWindowRounding(v float32) {
@@ -10285,7 +10285,7 @@ func (self ImGuiStyle) SetWindowMinSize(v ImVec2) {
 }
 
 func (self ImGuiStyle) GetWindowMinSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiStyle_GetWindowMinSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiStyle_GetWindowMinSize(self.handle()))
 }
 
 func (self ImGuiStyle) SetWindowTitleAlign(v ImVec2) {
@@ -10293,7 +10293,7 @@ func (self ImGuiStyle) SetWindowTitleAlign(v ImVec2) {
 }
 
 func (self ImGuiStyle) GetWindowTitleAlign() ImVec2 {
-	return newImVec2FromC(C.ImGuiStyle_GetWindowTitleAlign(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiStyle_GetWindowTitleAlign(self.handle()))
 }
 
 func (self ImGuiStyle) SetWindowMenuButtonPosition(v Dir) {
@@ -10341,7 +10341,7 @@ func (self ImGuiStyle) SetFramePadding(v ImVec2) {
 }
 
 func (self ImGuiStyle) GetFramePadding() ImVec2 {
-	return newImVec2FromC(C.ImGuiStyle_GetFramePadding(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiStyle_GetFramePadding(self.handle()))
 }
 
 func (self ImGuiStyle) SetFrameRounding(v float32) {
@@ -10365,7 +10365,7 @@ func (self ImGuiStyle) SetItemSpacing(v ImVec2) {
 }
 
 func (self ImGuiStyle) GetItemSpacing() ImVec2 {
-	return newImVec2FromC(C.ImGuiStyle_GetItemSpacing(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiStyle_GetItemSpacing(self.handle()))
 }
 
 func (self ImGuiStyle) SetItemInnerSpacing(v ImVec2) {
@@ -10373,7 +10373,7 @@ func (self ImGuiStyle) SetItemInnerSpacing(v ImVec2) {
 }
 
 func (self ImGuiStyle) GetItemInnerSpacing() ImVec2 {
-	return newImVec2FromC(C.ImGuiStyle_GetItemInnerSpacing(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiStyle_GetItemInnerSpacing(self.handle()))
 }
 
 func (self ImGuiStyle) SetCellPadding(v ImVec2) {
@@ -10381,7 +10381,7 @@ func (self ImGuiStyle) SetCellPadding(v ImVec2) {
 }
 
 func (self ImGuiStyle) GetCellPadding() ImVec2 {
-	return newImVec2FromC(C.ImGuiStyle_GetCellPadding(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiStyle_GetCellPadding(self.handle()))
 }
 
 func (self ImGuiStyle) SetTouchExtraPadding(v ImVec2) {
@@ -10389,7 +10389,7 @@ func (self ImGuiStyle) SetTouchExtraPadding(v ImVec2) {
 }
 
 func (self ImGuiStyle) GetTouchExtraPadding() ImVec2 {
-	return newImVec2FromC(C.ImGuiStyle_GetTouchExtraPadding(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiStyle_GetTouchExtraPadding(self.handle()))
 }
 
 func (self ImGuiStyle) SetIndentSpacing(v float32) {
@@ -10485,7 +10485,7 @@ func (self ImGuiStyle) SetButtonTextAlign(v ImVec2) {
 }
 
 func (self ImGuiStyle) GetButtonTextAlign() ImVec2 {
-	return newImVec2FromC(C.ImGuiStyle_GetButtonTextAlign(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiStyle_GetButtonTextAlign(self.handle()))
 }
 
 func (self ImGuiStyle) SetSelectableTextAlign(v ImVec2) {
@@ -10493,7 +10493,7 @@ func (self ImGuiStyle) SetSelectableTextAlign(v ImVec2) {
 }
 
 func (self ImGuiStyle) GetSelectableTextAlign() ImVec2 {
-	return newImVec2FromC(C.ImGuiStyle_GetSelectableTextAlign(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiStyle_GetSelectableTextAlign(self.handle()))
 }
 
 func (self ImGuiStyle) SetDisplayWindowPadding(v ImVec2) {
@@ -10501,7 +10501,7 @@ func (self ImGuiStyle) SetDisplayWindowPadding(v ImVec2) {
 }
 
 func (self ImGuiStyle) GetDisplayWindowPadding() ImVec2 {
-	return newImVec2FromC(C.ImGuiStyle_GetDisplayWindowPadding(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiStyle_GetDisplayWindowPadding(self.handle()))
 }
 
 func (self ImGuiStyle) SetDisplaySafeAreaPadding(v ImVec2) {
@@ -10509,7 +10509,7 @@ func (self ImGuiStyle) SetDisplaySafeAreaPadding(v ImVec2) {
 }
 
 func (self ImGuiStyle) GetDisplaySafeAreaPadding() ImVec2 {
-	return newImVec2FromC(C.ImGuiStyle_GetDisplaySafeAreaPadding(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiStyle_GetDisplaySafeAreaPadding(self.handle()))
 }
 
 func (self ImGuiStyle) SetMouseCursorScale(v float32) {
@@ -10629,7 +10629,7 @@ func (self ImGuiTabBar) SetBarRect(v ImRect) {
 }
 
 func (self ImGuiTabBar) GetBarRect() ImRect {
-	return newImRectFromC(C.ImGuiTabBar_GetBarRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiTabBar_GetBarRect(self.handle()))
 }
 
 func (self ImGuiTabBar) SetCurrTabsContentsHeight(v float32) {
@@ -10789,7 +10789,7 @@ func (self ImGuiTabBar) SetFramePadding(v ImVec2) {
 }
 
 func (self ImGuiTabBar) GetFramePadding() ImVec2 {
-	return newImVec2FromC(C.ImGuiTabBar_GetFramePadding(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiTabBar_GetFramePadding(self.handle()))
 }
 
 func (self ImGuiTabBar) SetBackupCursorPos(v ImVec2) {
@@ -10797,7 +10797,7 @@ func (self ImGuiTabBar) SetBackupCursorPos(v ImVec2) {
 }
 
 func (self ImGuiTabBar) GetBackupCursorPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiTabBar_GetBackupCursorPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiTabBar_GetBackupCursorPos(self.handle()))
 }
 
 func (self ImGuiTabBar) GetTabsNames() ImGuiTextBuffer {
@@ -11249,7 +11249,7 @@ func (self ImGuiTable) SetOuterRect(v ImRect) {
 }
 
 func (self ImGuiTable) GetOuterRect() ImRect {
-	return newImRectFromC(C.ImGuiTable_GetOuterRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiTable_GetOuterRect(self.handle()))
 }
 
 func (self ImGuiTable) SetInnerRect(v ImRect) {
@@ -11257,7 +11257,7 @@ func (self ImGuiTable) SetInnerRect(v ImRect) {
 }
 
 func (self ImGuiTable) GetInnerRect() ImRect {
-	return newImRectFromC(C.ImGuiTable_GetInnerRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiTable_GetInnerRect(self.handle()))
 }
 
 func (self ImGuiTable) SetWorkRect(v ImRect) {
@@ -11265,7 +11265,7 @@ func (self ImGuiTable) SetWorkRect(v ImRect) {
 }
 
 func (self ImGuiTable) GetWorkRect() ImRect {
-	return newImRectFromC(C.ImGuiTable_GetWorkRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiTable_GetWorkRect(self.handle()))
 }
 
 func (self ImGuiTable) SetInnerClipRect(v ImRect) {
@@ -11273,7 +11273,7 @@ func (self ImGuiTable) SetInnerClipRect(v ImRect) {
 }
 
 func (self ImGuiTable) GetInnerClipRect() ImRect {
-	return newImRectFromC(C.ImGuiTable_GetInnerClipRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiTable_GetInnerClipRect(self.handle()))
 }
 
 func (self ImGuiTable) SetBgClipRect(v ImRect) {
@@ -11281,7 +11281,7 @@ func (self ImGuiTable) SetBgClipRect(v ImRect) {
 }
 
 func (self ImGuiTable) GetBgClipRect() ImRect {
-	return newImRectFromC(C.ImGuiTable_GetBgClipRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiTable_GetBgClipRect(self.handle()))
 }
 
 func (self ImGuiTable) SetBg0ClipRectForDrawCmd(v ImRect) {
@@ -11289,7 +11289,7 @@ func (self ImGuiTable) SetBg0ClipRectForDrawCmd(v ImRect) {
 }
 
 func (self ImGuiTable) GetBg0ClipRectForDrawCmd() ImRect {
-	return newImRectFromC(C.ImGuiTable_GetBg0ClipRectForDrawCmd(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiTable_GetBg0ClipRectForDrawCmd(self.handle()))
 }
 
 func (self ImGuiTable) SetBg2ClipRectForDrawCmd(v ImRect) {
@@ -11297,7 +11297,7 @@ func (self ImGuiTable) SetBg2ClipRectForDrawCmd(v ImRect) {
 }
 
 func (self ImGuiTable) GetBg2ClipRectForDrawCmd() ImRect {
-	return newImRectFromC(C.ImGuiTable_GetBg2ClipRectForDrawCmd(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiTable_GetBg2ClipRectForDrawCmd(self.handle()))
 }
 
 func (self ImGuiTable) SetHostClipRect(v ImRect) {
@@ -11305,7 +11305,7 @@ func (self ImGuiTable) SetHostClipRect(v ImRect) {
 }
 
 func (self ImGuiTable) GetHostClipRect() ImRect {
-	return newImRectFromC(C.ImGuiTable_GetHostClipRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiTable_GetHostClipRect(self.handle()))
 }
 
 func (self ImGuiTable) SetHostBackupInnerClipRect(v ImRect) {
@@ -11313,7 +11313,7 @@ func (self ImGuiTable) SetHostBackupInnerClipRect(v ImRect) {
 }
 
 func (self ImGuiTable) GetHostBackupInnerClipRect() ImRect {
-	return newImRectFromC(C.ImGuiTable_GetHostBackupInnerClipRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiTable_GetHostBackupInnerClipRect(self.handle()))
 }
 
 func (self ImGuiTable) SetOuterWindow(v ImGuiWindow) {
@@ -11761,7 +11761,7 @@ func (self ImGuiTableColumn) SetClipRect(v ImRect) {
 }
 
 func (self ImGuiTableColumn) GetClipRect() ImRect {
-	return newImRectFromC(C.ImGuiTableColumn_GetClipRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiTableColumn_GetClipRect(self.handle()))
 }
 
 func (self ImGuiTableColumn) SetUserID(v ImGuiID) {
@@ -12225,7 +12225,7 @@ func (self ImGuiTableTempData) SetUserOuterSize(v ImVec2) {
 }
 
 func (self ImGuiTableTempData) GetUserOuterSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiTableTempData_GetUserOuterSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiTableTempData_GetUserOuterSize(self.handle()))
 }
 
 func (self ImGuiTableTempData) GetDrawSplitter() ImDrawListSplitter {
@@ -12237,7 +12237,7 @@ func (self ImGuiTableTempData) SetHostBackupWorkRect(v ImRect) {
 }
 
 func (self ImGuiTableTempData) GetHostBackupWorkRect() ImRect {
-	return newImRectFromC(C.ImGuiTableTempData_GetHostBackupWorkRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiTableTempData_GetHostBackupWorkRect(self.handle()))
 }
 
 func (self ImGuiTableTempData) SetHostBackupParentWorkRect(v ImRect) {
@@ -12245,7 +12245,7 @@ func (self ImGuiTableTempData) SetHostBackupParentWorkRect(v ImRect) {
 }
 
 func (self ImGuiTableTempData) GetHostBackupParentWorkRect() ImRect {
-	return newImRectFromC(C.ImGuiTableTempData_GetHostBackupParentWorkRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiTableTempData_GetHostBackupParentWorkRect(self.handle()))
 }
 
 func (self ImGuiTableTempData) SetHostBackupPrevLineSize(v ImVec2) {
@@ -12253,7 +12253,7 @@ func (self ImGuiTableTempData) SetHostBackupPrevLineSize(v ImVec2) {
 }
 
 func (self ImGuiTableTempData) GetHostBackupPrevLineSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiTableTempData_GetHostBackupPrevLineSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiTableTempData_GetHostBackupPrevLineSize(self.handle()))
 }
 
 func (self ImGuiTableTempData) SetHostBackupCurrLineSize(v ImVec2) {
@@ -12261,7 +12261,7 @@ func (self ImGuiTableTempData) SetHostBackupCurrLineSize(v ImVec2) {
 }
 
 func (self ImGuiTableTempData) GetHostBackupCurrLineSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiTableTempData_GetHostBackupCurrLineSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiTableTempData_GetHostBackupCurrLineSize(self.handle()))
 }
 
 func (self ImGuiTableTempData) SetHostBackupCursorMaxPos(v ImVec2) {
@@ -12269,7 +12269,7 @@ func (self ImGuiTableTempData) SetHostBackupCursorMaxPos(v ImVec2) {
 }
 
 func (self ImGuiTableTempData) GetHostBackupCursorMaxPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiTableTempData_GetHostBackupCursorMaxPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiTableTempData_GetHostBackupCursorMaxPos(self.handle()))
 }
 
 func (self ImGuiTableTempData) SetHostBackupItemWidth(v float32) {
@@ -12339,7 +12339,7 @@ func (self ImGuiViewport) SetPos(v ImVec2) {
 }
 
 func (self ImGuiViewport) GetPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiViewport_GetPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiViewport_GetPos(self.handle()))
 }
 
 func (self ImGuiViewport) SetSize(v ImVec2) {
@@ -12347,7 +12347,7 @@ func (self ImGuiViewport) SetSize(v ImVec2) {
 }
 
 func (self ImGuiViewport) GetSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiViewport_GetSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiViewport_GetSize(self.handle()))
 }
 
 func (self ImGuiViewport) SetWorkPos(v ImVec2) {
@@ -12355,7 +12355,7 @@ func (self ImGuiViewport) SetWorkPos(v ImVec2) {
 }
 
 func (self ImGuiViewport) GetWorkPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiViewport_GetWorkPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiViewport_GetWorkPos(self.handle()))
 }
 
 func (self ImGuiViewport) SetWorkSize(v ImVec2) {
@@ -12363,7 +12363,7 @@ func (self ImGuiViewport) SetWorkSize(v ImVec2) {
 }
 
 func (self ImGuiViewport) GetWorkSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiViewport_GetWorkSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiViewport_GetWorkSize(self.handle()))
 }
 
 func (self ImGuiViewport) SetDpiScale(v float32) {
@@ -12487,7 +12487,7 @@ func (self ImGuiViewportP) SetLastPos(v ImVec2) {
 }
 
 func (self ImGuiViewportP) GetLastPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiViewportP_GetLastPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiViewportP_GetLastPos(self.handle()))
 }
 
 func (self ImGuiViewportP) SetAlpha(v float32) {
@@ -12543,7 +12543,7 @@ func (self ImGuiViewportP) SetLastPlatformPos(v ImVec2) {
 }
 
 func (self ImGuiViewportP) GetLastPlatformPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiViewportP_GetLastPlatformPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiViewportP_GetLastPlatformPos(self.handle()))
 }
 
 func (self ImGuiViewportP) SetLastPlatformSize(v ImVec2) {
@@ -12551,7 +12551,7 @@ func (self ImGuiViewportP) SetLastPlatformSize(v ImVec2) {
 }
 
 func (self ImGuiViewportP) GetLastPlatformSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiViewportP_GetLastPlatformSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiViewportP_GetLastPlatformSize(self.handle()))
 }
 
 func (self ImGuiViewportP) SetLastRendererSize(v ImVec2) {
@@ -12559,7 +12559,7 @@ func (self ImGuiViewportP) SetLastRendererSize(v ImVec2) {
 }
 
 func (self ImGuiViewportP) GetLastRendererSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiViewportP_GetLastRendererSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiViewportP_GetLastRendererSize(self.handle()))
 }
 
 func (self ImGuiViewportP) SetWorkOffsetMin(v ImVec2) {
@@ -12567,7 +12567,7 @@ func (self ImGuiViewportP) SetWorkOffsetMin(v ImVec2) {
 }
 
 func (self ImGuiViewportP) GetWorkOffsetMin() ImVec2 {
-	return newImVec2FromC(C.ImGuiViewportP_GetWorkOffsetMin(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiViewportP_GetWorkOffsetMin(self.handle()))
 }
 
 func (self ImGuiViewportP) SetWorkOffsetMax(v ImVec2) {
@@ -12575,7 +12575,7 @@ func (self ImGuiViewportP) SetWorkOffsetMax(v ImVec2) {
 }
 
 func (self ImGuiViewportP) GetWorkOffsetMax() ImVec2 {
-	return newImVec2FromC(C.ImGuiViewportP_GetWorkOffsetMax(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiViewportP_GetWorkOffsetMax(self.handle()))
 }
 
 func (self ImGuiViewportP) SetBuildWorkOffsetMin(v ImVec2) {
@@ -12583,7 +12583,7 @@ func (self ImGuiViewportP) SetBuildWorkOffsetMin(v ImVec2) {
 }
 
 func (self ImGuiViewportP) GetBuildWorkOffsetMin() ImVec2 {
-	return newImVec2FromC(C.ImGuiViewportP_GetBuildWorkOffsetMin(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiViewportP_GetBuildWorkOffsetMin(self.handle()))
 }
 
 func (self ImGuiViewportP) SetBuildWorkOffsetMax(v ImVec2) {
@@ -12591,7 +12591,7 @@ func (self ImGuiViewportP) SetBuildWorkOffsetMax(v ImVec2) {
 }
 
 func (self ImGuiViewportP) GetBuildWorkOffsetMax() ImVec2 {
-	return newImVec2FromC(C.ImGuiViewportP_GetBuildWorkOffsetMax(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiViewportP_GetBuildWorkOffsetMax(self.handle()))
 }
 
 func (self ImGuiWindow) SetName(v string) {
@@ -12654,7 +12654,7 @@ func (self ImGuiWindow) SetViewportPos(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetViewportPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetViewportPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetViewportPos(self.handle()))
 }
 
 func (self ImGuiWindow) SetViewportAllowPlatformMonitorExtend(v int32) {
@@ -12670,7 +12670,7 @@ func (self ImGuiWindow) SetPos(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetPos(self.handle()))
 }
 
 func (self ImGuiWindow) SetSize(v ImVec2) {
@@ -12678,7 +12678,7 @@ func (self ImGuiWindow) SetSize(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetSize(self.handle()))
 }
 
 func (self ImGuiWindow) SetSizeFull(v ImVec2) {
@@ -12686,7 +12686,7 @@ func (self ImGuiWindow) SetSizeFull(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetSizeFull() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetSizeFull(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetSizeFull(self.handle()))
 }
 
 func (self ImGuiWindow) SetContentSize(v ImVec2) {
@@ -12694,7 +12694,7 @@ func (self ImGuiWindow) SetContentSize(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetContentSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetContentSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetContentSize(self.handle()))
 }
 
 func (self ImGuiWindow) SetContentSizeIdeal(v ImVec2) {
@@ -12702,7 +12702,7 @@ func (self ImGuiWindow) SetContentSizeIdeal(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetContentSizeIdeal() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetContentSizeIdeal(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetContentSizeIdeal(self.handle()))
 }
 
 func (self ImGuiWindow) SetContentSizeExplicit(v ImVec2) {
@@ -12710,7 +12710,7 @@ func (self ImGuiWindow) SetContentSizeExplicit(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetContentSizeExplicit() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetContentSizeExplicit(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetContentSizeExplicit(self.handle()))
 }
 
 func (self ImGuiWindow) SetWindowPadding(v ImVec2) {
@@ -12718,7 +12718,7 @@ func (self ImGuiWindow) SetWindowPadding(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetWindowPadding() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetWindowPadding(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetWindowPadding(self.handle()))
 }
 
 func (self ImGuiWindow) SetWindowRounding(v float32) {
@@ -12774,7 +12774,7 @@ func (self ImGuiWindow) SetScroll(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetScroll() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetScroll(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetScroll(self.handle()))
 }
 
 func (self ImGuiWindow) SetScrollMax(v ImVec2) {
@@ -12782,7 +12782,7 @@ func (self ImGuiWindow) SetScrollMax(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetScrollMax() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetScrollMax(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetScrollMax(self.handle()))
 }
 
 func (self ImGuiWindow) SetScrollTarget(v ImVec2) {
@@ -12790,7 +12790,7 @@ func (self ImGuiWindow) SetScrollTarget(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetScrollTarget() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetScrollTarget(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetScrollTarget(self.handle()))
 }
 
 func (self ImGuiWindow) SetScrollTargetCenterRatio(v ImVec2) {
@@ -12798,7 +12798,7 @@ func (self ImGuiWindow) SetScrollTargetCenterRatio(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetScrollTargetCenterRatio() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetScrollTargetCenterRatio(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetScrollTargetCenterRatio(self.handle()))
 }
 
 func (self ImGuiWindow) SetScrollTargetEdgeSnapDist(v ImVec2) {
@@ -12806,7 +12806,7 @@ func (self ImGuiWindow) SetScrollTargetEdgeSnapDist(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetScrollTargetEdgeSnapDist() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetScrollTargetEdgeSnapDist(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetScrollTargetEdgeSnapDist(self.handle()))
 }
 
 func (self ImGuiWindow) SetScrollbarSizes(v ImVec2) {
@@ -12814,7 +12814,7 @@ func (self ImGuiWindow) SetScrollbarSizes(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetScrollbarSizes() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetScrollbarSizes(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetScrollbarSizes(self.handle()))
 }
 
 func (self ImGuiWindow) SetScrollbarX(v bool) {
@@ -13078,7 +13078,7 @@ func (self ImGuiWindow) SetSetWindowPosVal(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetSetWindowPosVal() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetSetWindowPosVal(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetSetWindowPosVal(self.handle()))
 }
 
 func (self ImGuiWindow) SetSetWindowPosPivot(v ImVec2) {
@@ -13086,7 +13086,7 @@ func (self ImGuiWindow) SetSetWindowPosPivot(v ImVec2) {
 }
 
 func (self ImGuiWindow) GetSetWindowPosPivot() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindow_GetSetWindowPosPivot(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindow_GetSetWindowPosPivot(self.handle()))
 }
 
 func (self ImGuiWindow) GetDC() ImGuiWindowTempData {
@@ -13098,7 +13098,7 @@ func (self ImGuiWindow) SetOuterRectClipped(v ImRect) {
 }
 
 func (self ImGuiWindow) GetOuterRectClipped() ImRect {
-	return newImRectFromC(C.ImGuiWindow_GetOuterRectClipped(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiWindow_GetOuterRectClipped(self.handle()))
 }
 
 func (self ImGuiWindow) SetInnerRect(v ImRect) {
@@ -13106,7 +13106,7 @@ func (self ImGuiWindow) SetInnerRect(v ImRect) {
 }
 
 func (self ImGuiWindow) GetInnerRect() ImRect {
-	return newImRectFromC(C.ImGuiWindow_GetInnerRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiWindow_GetInnerRect(self.handle()))
 }
 
 func (self ImGuiWindow) SetInnerClipRect(v ImRect) {
@@ -13114,7 +13114,7 @@ func (self ImGuiWindow) SetInnerClipRect(v ImRect) {
 }
 
 func (self ImGuiWindow) GetInnerClipRect() ImRect {
-	return newImRectFromC(C.ImGuiWindow_GetInnerClipRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiWindow_GetInnerClipRect(self.handle()))
 }
 
 func (self ImGuiWindow) SetWorkRect(v ImRect) {
@@ -13122,7 +13122,7 @@ func (self ImGuiWindow) SetWorkRect(v ImRect) {
 }
 
 func (self ImGuiWindow) GetWorkRect() ImRect {
-	return newImRectFromC(C.ImGuiWindow_GetWorkRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiWindow_GetWorkRect(self.handle()))
 }
 
 func (self ImGuiWindow) SetParentWorkRect(v ImRect) {
@@ -13130,7 +13130,7 @@ func (self ImGuiWindow) SetParentWorkRect(v ImRect) {
 }
 
 func (self ImGuiWindow) GetParentWorkRect() ImRect {
-	return newImRectFromC(C.ImGuiWindow_GetParentWorkRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiWindow_GetParentWorkRect(self.handle()))
 }
 
 func (self ImGuiWindow) SetClipRect(v ImRect) {
@@ -13138,7 +13138,7 @@ func (self ImGuiWindow) SetClipRect(v ImRect) {
 }
 
 func (self ImGuiWindow) GetClipRect() ImRect {
-	return newImRectFromC(C.ImGuiWindow_GetClipRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiWindow_GetClipRect(self.handle()))
 }
 
 func (self ImGuiWindow) SetContentRegionRect(v ImRect) {
@@ -13146,7 +13146,7 @@ func (self ImGuiWindow) SetContentRegionRect(v ImRect) {
 }
 
 func (self ImGuiWindow) GetContentRegionRect() ImRect {
-	return newImRectFromC(C.ImGuiWindow_GetContentRegionRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiWindow_GetContentRegionRect(self.handle()))
 }
 
 func (self ImGuiWindow) SetLastFrameActive(v int32) {
@@ -13390,7 +13390,7 @@ func (self ImGuiWindow) SetDockTabItemRect(v ImRect) {
 }
 
 func (self ImGuiWindow) GetDockTabItemRect() ImRect {
-	return newImRectFromC(C.ImGuiWindow_GetDockTabItemRect(self.handle()))
+	return *(&ImRect{}).fromC(C.ImGuiWindow_GetDockTabItemRect(self.handle()))
 }
 
 func (self ImGuiWindowClass) SetClassId(v ImGuiID) {
@@ -13534,7 +13534,7 @@ func (self ImGuiWindowTempData) SetCursorPos(v ImVec2) {
 }
 
 func (self ImGuiWindowTempData) GetCursorPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindowTempData_GetCursorPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindowTempData_GetCursorPos(self.handle()))
 }
 
 func (self ImGuiWindowTempData) SetCursorPosPrevLine(v ImVec2) {
@@ -13542,7 +13542,7 @@ func (self ImGuiWindowTempData) SetCursorPosPrevLine(v ImVec2) {
 }
 
 func (self ImGuiWindowTempData) GetCursorPosPrevLine() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindowTempData_GetCursorPosPrevLine(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindowTempData_GetCursorPosPrevLine(self.handle()))
 }
 
 func (self ImGuiWindowTempData) SetCursorStartPos(v ImVec2) {
@@ -13550,7 +13550,7 @@ func (self ImGuiWindowTempData) SetCursorStartPos(v ImVec2) {
 }
 
 func (self ImGuiWindowTempData) GetCursorStartPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindowTempData_GetCursorStartPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindowTempData_GetCursorStartPos(self.handle()))
 }
 
 func (self ImGuiWindowTempData) SetCursorMaxPos(v ImVec2) {
@@ -13558,7 +13558,7 @@ func (self ImGuiWindowTempData) SetCursorMaxPos(v ImVec2) {
 }
 
 func (self ImGuiWindowTempData) GetCursorMaxPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindowTempData_GetCursorMaxPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindowTempData_GetCursorMaxPos(self.handle()))
 }
 
 func (self ImGuiWindowTempData) SetIdealMaxPos(v ImVec2) {
@@ -13566,7 +13566,7 @@ func (self ImGuiWindowTempData) SetIdealMaxPos(v ImVec2) {
 }
 
 func (self ImGuiWindowTempData) GetIdealMaxPos() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindowTempData_GetIdealMaxPos(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindowTempData_GetIdealMaxPos(self.handle()))
 }
 
 func (self ImGuiWindowTempData) SetCurrLineSize(v ImVec2) {
@@ -13574,7 +13574,7 @@ func (self ImGuiWindowTempData) SetCurrLineSize(v ImVec2) {
 }
 
 func (self ImGuiWindowTempData) GetCurrLineSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindowTempData_GetCurrLineSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindowTempData_GetCurrLineSize(self.handle()))
 }
 
 func (self ImGuiWindowTempData) SetPrevLineSize(v ImVec2) {
@@ -13582,7 +13582,7 @@ func (self ImGuiWindowTempData) SetPrevLineSize(v ImVec2) {
 }
 
 func (self ImGuiWindowTempData) GetPrevLineSize() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindowTempData_GetPrevLineSize(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindowTempData_GetPrevLineSize(self.handle()))
 }
 
 func (self ImGuiWindowTempData) SetCurrLineTextBaseOffset(v float32) {
@@ -13614,7 +13614,7 @@ func (self ImGuiWindowTempData) SetCursorStartPosLossyness(v ImVec2) {
 }
 
 func (self ImGuiWindowTempData) GetCursorStartPosLossyness() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindowTempData_GetCursorStartPosLossyness(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindowTempData_GetCursorStartPosLossyness(self.handle()))
 }
 
 func (self ImGuiWindowTempData) SetNavLayerCurrent(v NavLayer) {
@@ -13678,7 +13678,7 @@ func (self ImGuiWindowTempData) SetMenuBarOffset(v ImVec2) {
 }
 
 func (self ImGuiWindowTempData) GetMenuBarOffset() ImVec2 {
-	return newImVec2FromC(C.ImGuiWindowTempData_GetMenuBarOffset(self.handle()))
+	return *(&ImVec2{}).fromC(C.ImGuiWindowTempData_GetMenuBarOffset(self.handle()))
 }
 
 func (self ImGuiWindowTempData) GetMenuColumns() ImGuiMenuColumns {

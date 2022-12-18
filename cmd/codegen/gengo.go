@@ -423,11 +423,11 @@ import "unsafe"
 			/*
 				template:
 				func FuncName(arg2 type2) typeOfArg1 {
-					pOut := typeOfArg1{}
+					pOut := &typeOfArg1{}
 					pOutArg, pOutFin := pOut.wrapped()
 					defer pOutFin()
 					C.FuncName(pOutArg, arg2)
-					return pOut
+					return *pOut
 				}
 			*/
 
@@ -445,7 +445,7 @@ import "unsafe"
 			sb.WriteString(funcSignatureFunc(f.FuncName, args[1:], returnType))
 
 			// temporary out arg definition
-			sb.WriteString(fmt.Sprintf("%s := %s{}\n", outArg.Name, outArgT))
+			sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, outArgT))
 
 			argInvokeStmt := argStmtFunc()
 
@@ -453,7 +453,7 @@ import "unsafe"
 			sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
 
 			// return statement
-			sb.WriteString(fmt.Sprintf("return %s", outArg.Name))
+			sb.WriteString(fmt.Sprintf("return *%s", outArg.Name))
 
 			sb.WriteString("}\n\n")
 

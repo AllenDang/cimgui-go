@@ -224,7 +224,7 @@ func imPlotPointW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imPlotPointPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrapImGuiTypePtr(arg.Name, "*ImPlotPoint")
+	return wrapImGuiTypePtr(arg.Name, "*ImPlotPoint", "C.ImPlotPoint")
 }
 
 func imVec2W(arg ArgDef) (argType string, def string, varName string) {
@@ -232,7 +232,7 @@ func imVec2W(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imVec2PtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrapImGuiTypePtr(arg.Name, "*ImVec2")
+	return wrapImGuiTypePtr(arg.Name, "*ImVec2", "C.ImVec2")
 }
 
 // ImVec2[2] -> [2]ImVec2
@@ -247,7 +247,7 @@ func imVec4W(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imVec4PtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrapImGuiTypePtr(arg.Name, "*ImVec4")
+	return wrapImGuiTypePtr(arg.Name, "*ImVec4", "C.ImVec4")
 }
 
 func imRectW(arg ArgDef) (argType string, def string, varName string) {
@@ -255,11 +255,11 @@ func imRectW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imRectPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrapImGuiTypePtr(arg.Name, "ImRect")
+	return wrapImGuiTypePtr(arg.Name, "*ImRect", "C.ImRect")
 }
 
 func imColorPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrapImGuiTypePtr(arg.Name, "*ImColor")
+	return wrapImGuiTypePtr(arg.Name, "*ImColor", "C.ImColor")
 }
 
 func inputeTextCallbackW(arg ArgDef) (argType string, def string, varName string) {
@@ -276,10 +276,10 @@ func simpleValueW(argName, goType, cType string) (argType string, def string, va
 	return
 }
 
-func wrapImGuiTypePtr(argName, goType string) (argType, def, varName string) {
+func wrapImGuiTypePtr(argName, goType, cType string) (argType, def, varName string) {
 	argType = goType
-	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := %[1]s.wrap()
-defer %[1]sFin()`, argName)
+	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := wrap[%[3]s, %[2]s](%[1]s)
+defer %[1]sFin()`, argName, goType, cType)
 	varName = fmt.Sprintf("%sArg", argName)
 	return
 }
