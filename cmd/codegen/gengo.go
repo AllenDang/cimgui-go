@@ -43,7 +43,7 @@ func trimImGuiPrefix(id string) string {
 func generateGoEnums(prefix string, enums []EnumDef) []string {
 	var sb strings.Builder
 
-	sb.WriteString("package cimgui\n\n")
+	sb.WriteString(goPackageHeader)
 
 	var enumNames []string
 	for _, e := range enums {
@@ -79,9 +79,9 @@ func generateGoEnums(prefix string, enums []EnumDef) []string {
 func generateGoStructs(prefix string, structs []StructDef) []string {
 	var sb strings.Builder
 
-	sb.WriteString(fmt.Sprintf(`package cimgui
-
-// #include "%s_wrapper.h"
+	sb.WriteString(goPackageHeader)
+	sb.WriteString(fmt.Sprintf(
+		`// #include "%s_wrapper.h"
 import "C"
 import "unsafe"
 
@@ -129,9 +129,10 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 	var sb strings.Builder
 	convertedFuncCount := 0
 
-	sb.WriteString(fmt.Sprintf(`package cimgui
+	sb.WriteString(goPackageHeader)
 
-// #include "extra_types.h"
+	sb.WriteString(fmt.Sprintf(
+		`// #include "extra_types.h"
 // #include "%[1]s_structs_accessor.h"
 // #include "%[1]s_wrapper.h"
 import "C"

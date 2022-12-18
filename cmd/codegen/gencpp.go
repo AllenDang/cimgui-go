@@ -15,6 +15,7 @@ func generateCppWrapper(prefix, includePath string, funcDefs []FuncDef) []FuncDe
 
 	// Generate header
 	var headerSb strings.Builder
+	headerSb.WriteString(cppFileHeader)
 	headerSb.WriteString(fmt.Sprintf(`#pragma once
 
 #include "%s"
@@ -26,6 +27,7 @@ extern "C" {
 `, includePath))
 
 	var cppSb strings.Builder
+	cppSb.WriteString(cppFileHeader)
 	cppSb.WriteString(fmt.Sprintf(`#include "%s_wrapper.h"
 #include "%s"
 
@@ -351,8 +353,10 @@ func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []S
 		skipFuncNames = append(skipFuncNames, f.FuncName)
 	}
 
-	var sbHeader strings.Builder
-	var sbCpp strings.Builder
+	var sbHeader, sbCpp strings.Builder
+
+	sbHeader.WriteString(cppFileHeader)
+	sbCpp.WriteString(cppFileHeader)
 
 	sbHeader.WriteString(fmt.Sprintf(`#pragma once
 
