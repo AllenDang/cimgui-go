@@ -164,6 +164,7 @@ import "unsafe"
 		"int":                      intW,
 		"int*":                     intPtrW,
 		"unsigned int":             uintW,
+		"unsigned int*":            uintPtrW,
 		"double":                   doubleW,
 		"double*":                  doublePtrW,
 		"bool":                     boolW,

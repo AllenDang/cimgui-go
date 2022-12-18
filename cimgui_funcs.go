@@ -1438,6 +1438,16 @@ func CheckboxFlags_IntPtr(label string, flags *int32, flags_value int32) bool {
 	return C.CheckboxFlags_IntPtr(labelArg, flagsArg, C.int(flags_value)) == C.bool(true)
 }
 
+func CheckboxFlags_UintPtr(label string, flags *uint32, flags_value uint32) bool {
+	labelArg, labelFin := wrapString(label)
+	defer labelFin()
+
+	flagsArg, flagsFin := wrapNumberPtr[C.uint, uint32](flags)
+	defer flagsFin()
+
+	return C.CheckboxFlags_UintPtr(labelArg, flagsArg, C.uint(flags_value)) == C.bool(true)
+}
+
 func CloseCurrentPopup() {
 	C.CloseCurrentPopup()
 }
@@ -5801,6 +5811,13 @@ func (self ImFontAtlas) SetTexPixelsUseColors(v bool) {
 
 func (self ImFontAtlas) GetTexPixelsUseColors() bool {
 	return C.ImFontAtlas_GetTexPixelsUseColors(self.handle()) == C.bool(true)
+}
+
+func (self ImFontAtlas) SetTexPixelsRGBA32(v *uint32) {
+	vArg, vFin := wrapNumberPtr[C.uint, uint32](v)
+	defer vFin()
+
+	C.ImFontAtlas_SetTexPixelsRGBA32(self.handle(), vArg)
 }
 
 func (self ImFontAtlas) SetTexWidth(v int32) {
