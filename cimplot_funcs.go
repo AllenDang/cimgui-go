@@ -643,6 +643,20 @@ func Plot_PlotBarGroups_U64PtrV(label_ids []string, values []uint64, item_count 
 	C.Plot_PlotBarGroups_U64PtrV(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
 }
 
+// Plot_PlotBarGroups_U8PtrV parameter default value hint:
+// flags: 0
+// group_size: 0.67
+// shift: 0
+func Plot_PlotBarGroups_U8PtrV(label_ids []string, values *byte, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotBarGroups_U8PtrV(label_idsArg, valuesArg, C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
+}
+
 // Plot_PlotBars_FloatPtrFloatPtrV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -715,6 +729,39 @@ func Plot_PlotBars_U64PtrU64PtrV(label_id string, xs []uint64, ys []uint64, coun
 	C.Plot_PlotBars_U64PtrU64PtrV(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count), C.double(bar_size), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
 }
 
+// Plot_PlotBars_U8PtrIntV parameter default value hint:
+// bar_size: 0.67
+// flags: 0
+// offset: 0
+// shift: 0
+// stride: sizeof(ImU8)
+func Plot_PlotBars_U8PtrIntV(label_id string, values *byte, count int32, bar_size float64, shift float64, flags PlotBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotBars_U8PtrIntV(label_idArg, valuesArg, C.int(count), C.double(bar_size), C.double(shift), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotBars_U8PtrU8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU8)
+func Plot_PlotBars_U8PtrU8PtrV(label_id string, xs *byte, ys *byte, count int32, bar_size float64, flags PlotBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	C.Plot_PlotBars_U8PtrU8PtrV(label_idArg, xsArg, ysArg, C.int(count), C.double(bar_size), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
 // Plot_PlotDigital_FloatPtrV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -746,6 +793,23 @@ func Plot_PlotDigital_U64PtrV(label_id string, xs []uint64, ys []uint64, count i
 	defer label_idFin()
 
 	C.Plot_PlotDigital_U64PtrV(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count), C.ImPlotDigitalFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotDigital_U8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU8)
+func Plot_PlotDigital_U8PtrV(label_id string, xs *byte, ys *byte, count int32, flags PlotDigitalFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	C.Plot_PlotDigital_U8PtrV(label_idArg, xsArg, ysArg, C.int(count), C.ImPlotDigitalFlags(flags), C.int(offset), C.int(stride))
 }
 
 // Plot_PlotDummyV parameter default value hint:
@@ -823,6 +887,49 @@ func Plot_PlotErrorBars_U64PtrU64PtrU64PtrU64PtrV(label_id string, xs []uint64, 
 	C.Plot_PlotErrorBars_U64PtrU64PtrU64PtrU64PtrV(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), (*C.ulonglong)(&(neg[0])), (*C.ulonglong)(&(pos[0])), C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
 }
 
+// Plot_PlotErrorBars_U8PtrU8PtrU8PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU8)
+func Plot_PlotErrorBars_U8PtrU8PtrU8PtrIntV(label_id string, xs *byte, ys *byte, err *byte, count int32, flags PlotErrorBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	errArg, errFin := wrapNumberPtr[C.ImU8, byte](err)
+	defer errFin()
+
+	C.Plot_PlotErrorBars_U8PtrU8PtrU8PtrIntV(label_idArg, xsArg, ysArg, errArg, C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotErrorBars_U8PtrU8PtrU8PtrU8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU8)
+func Plot_PlotErrorBars_U8PtrU8PtrU8PtrU8PtrV(label_id string, xs *byte, ys *byte, neg *byte, pos *byte, count int32, flags PlotErrorBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	negArg, negFin := wrapNumberPtr[C.ImU8, byte](neg)
+	defer negFin()
+
+	posArg, posFin := wrapNumberPtr[C.ImU8, byte](pos)
+	defer posFin()
+
+	C.Plot_PlotErrorBars_U8PtrU8PtrU8PtrU8PtrV(label_idArg, xsArg, ysArg, negArg, posArg, C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
 // Plot_PlotHeatmap_FloatPtrV parameter default value hint:
 // bounds_max: ImPlotPoint(1,1)
 // bounds_min: ImPlotPoint(0,0)
@@ -874,6 +981,26 @@ func Plot_PlotHeatmap_U64PtrV(label_id string, values []uint64, rows int32, cols
 	C.Plot_PlotHeatmap_U64PtrV(label_idArg, (*C.ulonglong)(&(values[0])), C.int(rows), C.int(cols), C.double(scale_min), C.double(scale_max), label_fmtArg, bounds_min.toC(), bounds_max.toC(), C.ImPlotHeatmapFlags(flags))
 }
 
+// Plot_PlotHeatmap_U8PtrV parameter default value hint:
+// bounds_max: ImPlotPoint(1,1)
+// bounds_min: ImPlotPoint(0,0)
+// flags: 0
+// label_fmt: "%.1f"
+// scale_max: 0
+// scale_min: 0
+func Plot_PlotHeatmap_U8PtrV(label_id string, values *byte, rows int32, cols int32, scale_min float64, scale_max float64, label_fmt string, bounds_min ImPlotPoint, bounds_max ImPlotPoint, flags PlotHeatmapFlags) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotHeatmap_U8PtrV(label_idArg, valuesArg, C.int(rows), C.int(cols), C.double(scale_min), C.double(scale_max), label_fmtArg, bounds_min.toC(), bounds_max.toC(), C.ImPlotHeatmapFlags(flags))
+}
+
 // Plot_PlotImageV parameter default value hint:
 // flags: 0
 // tint_col: ImVec4(1,1,1,1)
@@ -917,6 +1044,20 @@ func Plot_PlotInfLines_U64PtrV(label_id string, values []uint64, count int32, fl
 	defer label_idFin()
 
 	C.Plot_PlotInfLines_U64PtrV(label_idArg, (*C.ulonglong)(&(values[0])), C.int(count), C.ImPlotInfLinesFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotInfLines_U8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU8)
+func Plot_PlotInfLines_U8PtrV(label_id string, values *byte, count int32, flags PlotInfLinesFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotInfLines_U8PtrV(label_idArg, valuesArg, C.int(count), C.ImPlotInfLinesFlags(flags), C.int(offset), C.int(stride))
 }
 
 // Plot_PlotLine_FloatPtrFloatPtrV parameter default value hint:
@@ -991,6 +1132,39 @@ func Plot_PlotLine_U64PtrU64PtrV(label_id string, xs []uint64, ys []uint64, coun
 	C.Plot_PlotLine_U64PtrU64PtrV(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
 }
 
+// Plot_PlotLine_U8PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU8)
+// xscale: 1
+// xstart: 0
+func Plot_PlotLine_U8PtrIntV(label_id string, values *byte, count int32, xscale float64, xstart float64, flags PlotLineFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotLine_U8PtrIntV(label_idArg, valuesArg, C.int(count), C.double(xscale), C.double(xstart), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotLine_U8PtrU8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU8)
+func Plot_PlotLine_U8PtrU8PtrV(label_id string, xs *byte, ys *byte, count int32, flags PlotLineFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	C.Plot_PlotLine_U8PtrU8PtrV(label_idArg, xsArg, ysArg, C.int(count), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
+}
+
 // Plot_PlotPieChart_FloatPtrV parameter default value hint:
 // angle0: 90
 // flags: 0
@@ -1031,6 +1205,23 @@ func Plot_PlotPieChart_U64PtrV(label_ids []string, values []uint64, count int32,
 	defer label_fmtFin()
 
 	C.Plot_PlotPieChart_U64PtrV(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+}
+
+// Plot_PlotPieChart_U8PtrV parameter default value hint:
+// angle0: 90
+// flags: 0
+// label_fmt: "%.1f"
+func Plot_PlotPieChart_U8PtrV(label_ids []string, values *byte, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotPieChart_U8PtrV(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 }
 
 // Plot_PlotScatter_FloatPtrFloatPtrV parameter default value hint:
@@ -1103,6 +1294,39 @@ func Plot_PlotScatter_U64PtrU64PtrV(label_id string, xs []uint64, ys []uint64, c
 	defer label_idFin()
 
 	C.Plot_PlotScatter_U64PtrU64PtrV(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotScatter_U8PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU8)
+// xscale: 1
+// xstart: 0
+func Plot_PlotScatter_U8PtrIntV(label_id string, values *byte, count int32, xscale float64, xstart float64, flags PlotScatterFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotScatter_U8PtrIntV(label_idArg, valuesArg, C.int(count), C.double(xscale), C.double(xstart), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotScatter_U8PtrU8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU8)
+func Plot_PlotScatter_U8PtrU8PtrV(label_id string, xs *byte, ys *byte, count int32, flags PlotScatterFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	C.Plot_PlotScatter_U8PtrU8PtrV(label_idArg, xsArg, ysArg, C.int(count), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
 }
 
 // Plot_PlotShaded_FloatPtrFloatPtrFloatPtrV parameter default value hint:
@@ -1216,6 +1440,61 @@ func Plot_PlotShaded_U64PtrU64PtrU64PtrV(label_id string, xs []uint64, ys1 []uin
 	C.Plot_PlotShaded_U64PtrU64PtrU64PtrV(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys1[0])), (*C.ulonglong)(&(ys2[0])), C.int(count), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
 }
 
+// Plot_PlotShaded_U8PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU8)
+// xscale: 1
+// xstart: 0
+// yref: 0
+func Plot_PlotShaded_U8PtrIntV(label_id string, values *byte, count int32, yref float64, xscale float64, xstart float64, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotShaded_U8PtrIntV(label_idArg, valuesArg, C.int(count), C.double(yref), C.double(xscale), C.double(xstart), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotShaded_U8PtrU8PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU8)
+// yref: 0
+func Plot_PlotShaded_U8PtrU8PtrIntV(label_id string, xs *byte, ys *byte, count int32, yref float64, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	C.Plot_PlotShaded_U8PtrU8PtrIntV(label_idArg, xsArg, ysArg, C.int(count), C.double(yref), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotShaded_U8PtrU8PtrU8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU8)
+func Plot_PlotShaded_U8PtrU8PtrU8PtrV(label_id string, xs *byte, ys1 *byte, ys2 *byte, count int32, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ys1Arg, ys1Fin := wrapNumberPtr[C.ImU8, byte](ys1)
+	defer ys1Fin()
+
+	ys2Arg, ys2Fin := wrapNumberPtr[C.ImU8, byte](ys2)
+	defer ys2Fin()
+
+	C.Plot_PlotShaded_U8PtrU8PtrU8PtrV(label_idArg, xsArg, ys1Arg, ys2Arg, C.int(count), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
 // Plot_PlotStairs_FloatPtrFloatPtrV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -1286,6 +1565,39 @@ func Plot_PlotStairs_U64PtrU64PtrV(label_id string, xs []uint64, ys []uint64, co
 	defer label_idFin()
 
 	C.Plot_PlotStairs_U64PtrU64PtrV(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStairs_U8PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU8)
+// xscale: 1
+// xstart: 0
+func Plot_PlotStairs_U8PtrIntV(label_id string, values *byte, count int32, xscale float64, xstart float64, flags PlotStairsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotStairs_U8PtrIntV(label_idArg, valuesArg, C.int(count), C.double(xscale), C.double(xstart), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStairs_U8PtrU8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU8)
+func Plot_PlotStairs_U8PtrU8PtrV(label_id string, xs *byte, ys *byte, count int32, flags PlotStairsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	C.Plot_PlotStairs_U8PtrU8PtrV(label_idArg, xsArg, ysArg, C.int(count), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
 }
 
 // Plot_PlotStems_FloatPtrFloatPtrV parameter default value hint:
@@ -1364,6 +1676,41 @@ func Plot_PlotStems_U64PtrU64PtrV(label_id string, xs []uint64, ys []uint64, cou
 	defer label_idFin()
 
 	C.Plot_PlotStems_U64PtrU64PtrV(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count), C.double(ref), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStems_U8PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// ref: 0
+// scale: 1
+// start: 0
+// stride: sizeof(ImU8)
+func Plot_PlotStems_U8PtrIntV(label_id string, values *byte, count int32, ref float64, scale float64, start float64, flags PlotStemsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotStems_U8PtrIntV(label_idArg, valuesArg, C.int(count), C.double(ref), C.double(scale), C.double(start), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStems_U8PtrU8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// ref: 0
+// stride: sizeof(ImU8)
+func Plot_PlotStems_U8PtrU8PtrV(label_id string, xs *byte, ys *byte, count int32, ref float64, flags PlotStemsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	C.Plot_PlotStems_U8PtrU8PtrV(label_idArg, xsArg, ysArg, C.int(count), C.double(ref), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
 }
 
 // Plot_PlotTextV parameter default value hint:
@@ -1939,6 +2286,16 @@ func Plot_PlotBarGroups_U64Ptr(label_ids []string, values []uint64, item_count i
 	C.Plot_PlotBarGroups_U64Ptr(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(item_count), C.int(group_count))
 }
 
+func Plot_PlotBarGroups_U8Ptr(label_ids []string, values *byte, item_count int32, group_count int32) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotBarGroups_U8Ptr(label_idsArg, valuesArg, C.int(item_count), C.int(group_count))
+}
+
 func Plot_PlotBars_FloatPtrFloatPtr(label_id string, xs []float32, ys []float32, count int32, bar_size float64) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -1981,6 +2338,29 @@ func Plot_PlotBars_U64PtrU64Ptr(label_id string, xs []uint64, ys []uint64, count
 	C.Plot_PlotBars_U64PtrU64Ptr(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count), C.double(bar_size))
 }
 
+func Plot_PlotBars_U8PtrInt(label_id string, values *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotBars_U8PtrInt(label_idArg, valuesArg, C.int(count))
+}
+
+func Plot_PlotBars_U8PtrU8Ptr(label_id string, xs *byte, ys *byte, count int32, bar_size float64) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	C.Plot_PlotBars_U8PtrU8Ptr(label_idArg, xsArg, ysArg, C.int(count), C.double(bar_size))
+}
+
 func Plot_PlotDigital_FloatPtr(label_id string, xs []float32, ys []float32, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -2000,6 +2380,19 @@ func Plot_PlotDigital_U64Ptr(label_id string, xs []uint64, ys []uint64, count in
 	defer label_idFin()
 
 	C.Plot_PlotDigital_U64Ptr(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count))
+}
+
+func Plot_PlotDigital_U8Ptr(label_id string, xs *byte, ys *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	C.Plot_PlotDigital_U8Ptr(label_idArg, xsArg, ysArg, C.int(count))
 }
 
 func Plot_PlotDummy(label_id string) {
@@ -2051,6 +2444,41 @@ func Plot_PlotErrorBars_U64PtrU64PtrU64PtrU64Ptr(label_id string, xs []uint64, y
 	C.Plot_PlotErrorBars_U64PtrU64PtrU64PtrU64Ptr(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), (*C.ulonglong)(&(neg[0])), (*C.ulonglong)(&(pos[0])), C.int(count))
 }
 
+func Plot_PlotErrorBars_U8PtrU8PtrU8PtrInt(label_id string, xs *byte, ys *byte, err *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	errArg, errFin := wrapNumberPtr[C.ImU8, byte](err)
+	defer errFin()
+
+	C.Plot_PlotErrorBars_U8PtrU8PtrU8PtrInt(label_idArg, xsArg, ysArg, errArg, C.int(count))
+}
+
+func Plot_PlotErrorBars_U8PtrU8PtrU8PtrU8Ptr(label_id string, xs *byte, ys *byte, neg *byte, pos *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	negArg, negFin := wrapNumberPtr[C.ImU8, byte](neg)
+	defer negFin()
+
+	posArg, posFin := wrapNumberPtr[C.ImU8, byte](pos)
+	defer posFin()
+
+	C.Plot_PlotErrorBars_U8PtrU8PtrU8PtrU8Ptr(label_idArg, xsArg, ysArg, negArg, posArg, C.int(count))
+}
+
 func Plot_PlotHeatmap_FloatPtr(label_id string, values []float32, rows int32, cols int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -2070,6 +2498,16 @@ func Plot_PlotHeatmap_U64Ptr(label_id string, values []uint64, rows int32, cols 
 	defer label_idFin()
 
 	C.Plot_PlotHeatmap_U64Ptr(label_idArg, (*C.ulonglong)(&(values[0])), C.int(rows), C.int(cols))
+}
+
+func Plot_PlotHeatmap_U8Ptr(label_id string, values *byte, rows int32, cols int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotHeatmap_U8Ptr(label_idArg, valuesArg, C.int(rows), C.int(cols))
 }
 
 func Plot_PlotHistogram2D_FloatPtr(label_id string, xs []float32, ys []float32, count int32) float64 {
@@ -2093,6 +2531,19 @@ func Plot_PlotHistogram2D_U64Ptr(label_id string, xs []uint64, ys []uint64, coun
 	return float64(C.Plot_PlotHistogram2D_U64Ptr(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count)))
 }
 
+func Plot_PlotHistogram2D_U8Ptr(label_id string, xs *byte, ys *byte, count int32) float64 {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	return float64(C.Plot_PlotHistogram2D_U8Ptr(label_idArg, xsArg, ysArg, C.int(count)))
+}
+
 func Plot_PlotHistogram_FloatPtr(label_id string, values []float32, count int32) float64 {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -2112,6 +2563,16 @@ func Plot_PlotHistogram_U64Ptr(label_id string, values []uint64, count int32) fl
 	defer label_idFin()
 
 	return float64(C.Plot_PlotHistogram_U64Ptr(label_idArg, (*C.ulonglong)(&(values[0])), C.int(count)))
+}
+
+func Plot_PlotHistogram_U8Ptr(label_id string, values *byte, count int32) float64 {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	return float64(C.Plot_PlotHistogram_U8Ptr(label_idArg, valuesArg, C.int(count)))
 }
 
 func Plot_PlotImage(label_id string, user_texture_id ImTextureID, bounds_min ImPlotPoint, bounds_max ImPlotPoint) {
@@ -2140,6 +2601,16 @@ func Plot_PlotInfLines_U64Ptr(label_id string, values []uint64, count int32) {
 	defer label_idFin()
 
 	C.Plot_PlotInfLines_U64Ptr(label_idArg, (*C.ulonglong)(&(values[0])), C.int(count))
+}
+
+func Plot_PlotInfLines_U8Ptr(label_id string, values *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotInfLines_U8Ptr(label_idArg, valuesArg, C.int(count))
 }
 
 func Plot_PlotLine_FloatPtrFloatPtr(label_id string, xs []float32, ys []float32, count int32) {
@@ -2184,6 +2655,29 @@ func Plot_PlotLine_U64PtrU64Ptr(label_id string, xs []uint64, ys []uint64, count
 	C.Plot_PlotLine_U64PtrU64Ptr(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count))
 }
 
+func Plot_PlotLine_U8PtrInt(label_id string, values *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotLine_U8PtrInt(label_idArg, valuesArg, C.int(count))
+}
+
+func Plot_PlotLine_U8PtrU8Ptr(label_id string, xs *byte, ys *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	C.Plot_PlotLine_U8PtrU8Ptr(label_idArg, xsArg, ysArg, C.int(count))
+}
+
 func Plot_PlotPieChart_FloatPtr(label_ids []string, values []float32, count int32, x float64, y float64, radius float64) {
 	label_idsArg, label_idsFin := wrapStringList(label_ids)
 	defer label_idsFin()
@@ -2203,6 +2697,16 @@ func Plot_PlotPieChart_U64Ptr(label_ids []string, values []uint64, count int32, 
 	defer label_idsFin()
 
 	C.Plot_PlotPieChart_U64Ptr(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
+}
+
+func Plot_PlotPieChart_U8Ptr(label_ids []string, values *byte, count int32, x float64, y float64, radius float64) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotPieChart_U8Ptr(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius))
 }
 
 func Plot_PlotScatter_FloatPtrFloatPtr(label_id string, xs []float32, ys []float32, count int32) {
@@ -2245,6 +2749,29 @@ func Plot_PlotScatter_U64PtrU64Ptr(label_id string, xs []uint64, ys []uint64, co
 	defer label_idFin()
 
 	C.Plot_PlotScatter_U64PtrU64Ptr(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count))
+}
+
+func Plot_PlotScatter_U8PtrInt(label_id string, values *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotScatter_U8PtrInt(label_idArg, valuesArg, C.int(count))
+}
+
+func Plot_PlotScatter_U8PtrU8Ptr(label_id string, xs *byte, ys *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	C.Plot_PlotScatter_U8PtrU8Ptr(label_idArg, xsArg, ysArg, C.int(count))
 }
 
 func Plot_PlotShaded_FloatPtrFloatPtrFloatPtr(label_id string, xs []float32, ys1 []float32, ys2 []float32, count int32) {
@@ -2310,6 +2837,45 @@ func Plot_PlotShaded_U64PtrU64PtrU64Ptr(label_id string, xs []uint64, ys1 []uint
 	C.Plot_PlotShaded_U64PtrU64PtrU64Ptr(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys1[0])), (*C.ulonglong)(&(ys2[0])), C.int(count))
 }
 
+func Plot_PlotShaded_U8PtrInt(label_id string, values *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotShaded_U8PtrInt(label_idArg, valuesArg, C.int(count))
+}
+
+func Plot_PlotShaded_U8PtrU8PtrInt(label_id string, xs *byte, ys *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	C.Plot_PlotShaded_U8PtrU8PtrInt(label_idArg, xsArg, ysArg, C.int(count))
+}
+
+func Plot_PlotShaded_U8PtrU8PtrU8Ptr(label_id string, xs *byte, ys1 *byte, ys2 *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ys1Arg, ys1Fin := wrapNumberPtr[C.ImU8, byte](ys1)
+	defer ys1Fin()
+
+	ys2Arg, ys2Fin := wrapNumberPtr[C.ImU8, byte](ys2)
+	defer ys2Fin()
+
+	C.Plot_PlotShaded_U8PtrU8PtrU8Ptr(label_idArg, xsArg, ys1Arg, ys2Arg, C.int(count))
+}
+
 func Plot_PlotStairs_FloatPtrFloatPtr(label_id string, xs []float32, ys []float32, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -2352,6 +2918,29 @@ func Plot_PlotStairs_U64PtrU64Ptr(label_id string, xs []uint64, ys []uint64, cou
 	C.Plot_PlotStairs_U64PtrU64Ptr(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count))
 }
 
+func Plot_PlotStairs_U8PtrInt(label_id string, values *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotStairs_U8PtrInt(label_idArg, valuesArg, C.int(count))
+}
+
+func Plot_PlotStairs_U8PtrU8Ptr(label_id string, xs *byte, ys *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	C.Plot_PlotStairs_U8PtrU8Ptr(label_idArg, xsArg, ysArg, C.int(count))
+}
+
 func Plot_PlotStems_FloatPtrFloatPtr(label_id string, xs []float32, ys []float32, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -2392,6 +2981,29 @@ func Plot_PlotStems_U64PtrU64Ptr(label_id string, xs []uint64, ys []uint64, coun
 	defer label_idFin()
 
 	C.Plot_PlotStems_U64PtrU64Ptr(label_idArg, (*C.ulonglong)(&(xs[0])), (*C.ulonglong)(&(ys[0])), C.int(count))
+}
+
+func Plot_PlotStems_U8PtrInt(label_id string, values *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg, valuesFin := wrapNumberPtr[C.ImU8, byte](values)
+	defer valuesFin()
+
+	C.Plot_PlotStems_U8PtrInt(label_idArg, valuesArg, C.int(count))
+}
+
+func Plot_PlotStems_U8PtrU8Ptr(label_id string, xs *byte, ys *byte, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg, xsFin := wrapNumberPtr[C.ImU8, byte](xs)
+	defer xsFin()
+
+	ysArg, ysFin := wrapNumberPtr[C.ImU8, byte](ys)
+	defer ysFin()
+
+	C.Plot_PlotStems_U8PtrU8Ptr(label_idArg, xsArg, ysArg, C.int(count))
 }
 
 func Plot_PlotText(text string, x float64, y float64) {

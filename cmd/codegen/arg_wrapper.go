@@ -80,7 +80,7 @@ func u8W(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func u8PtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrapNumberPtr(arg.Name, "byte", "C.uint")
+	return wrapNumberPtr(arg.Name, "byte", "C.ImU8")
 }
 
 func u16PtrW(arg ArgDef) (argType string, def string, varName string) {
