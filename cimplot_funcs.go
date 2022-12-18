@@ -640,6 +640,48 @@ func Plot_PlotBarGroups_FloatPtrV(label_ids []string, values []float32, item_cou
 	C.Plot_PlotBarGroups_FloatPtrV(label_idsArg, (*C.float)(&(values[0])), C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
 }
 
+// Plot_PlotBarGroups_S16PtrV parameter default value hint:
+// flags: 0
+// group_size: 0.67
+// shift: 0
+func Plot_PlotBarGroups_S16PtrV(label_ids []string, values []*int, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBarGroups_S16PtrV(label_idsArg, (*C.ImS16)(&valuesArg[0]), C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
+}
+
+// Plot_PlotBarGroups_S32PtrV parameter default value hint:
+// flags: 0
+// group_size: 0.67
+// shift: 0
+func Plot_PlotBarGroups_S32PtrV(label_ids []string, values []*int32, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBarGroups_S32PtrV(label_idsArg, (*C.ImS32)(&valuesArg[0]), C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
+}
+
 // Plot_PlotBarGroups_S64PtrV parameter default value hint:
 // flags: 0
 // group_size: 0.67
@@ -649,6 +691,48 @@ func Plot_PlotBarGroups_S64PtrV(label_ids []string, values []int64, item_count i
 	defer label_idsFin()
 
 	C.Plot_PlotBarGroups_S64PtrV(label_idsArg, (*C.longlong)(&(values[0])), C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
+}
+
+// Plot_PlotBarGroups_S8PtrV parameter default value hint:
+// flags: 0
+// group_size: 0.67
+// shift: 0
+func Plot_PlotBarGroups_S8PtrV(label_ids []string, values []*int8, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBarGroups_S8PtrV(label_idsArg, (*C.ImS8)(&valuesArg[0]), C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
+}
+
+// Plot_PlotBarGroups_U16PtrV parameter default value hint:
+// flags: 0
+// group_size: 0.67
+// shift: 0
+func Plot_PlotBarGroups_U16PtrV(label_ids []string, values []*uint16, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBarGroups_U16PtrV(label_idsArg, (*C.ImU16)(&valuesArg[0]), C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
 }
 
 // Plot_PlotBarGroups_U32PtrV parameter default value hint:
@@ -728,6 +812,114 @@ func Plot_PlotBars_FloatPtrIntV(label_id string, values []float32, count int32, 
 	C.Plot_PlotBars_FloatPtrIntV(label_idArg, (*C.float)(&(values[0])), C.int(count), C.double(bar_size), C.double(shift), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
 }
 
+// Plot_PlotBars_S16PtrIntV parameter default value hint:
+// bar_size: 0.67
+// flags: 0
+// offset: 0
+// shift: 0
+// stride: sizeof(ImS16)
+func Plot_PlotBars_S16PtrIntV(label_id string, values []*int, count int32, bar_size float64, shift float64, flags PlotBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBars_S16PtrIntV(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count), C.double(bar_size), C.double(shift), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotBars_S16PtrS16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS16)
+func Plot_PlotBars_S16PtrS16PtrV(label_id string, xs []*int, ys []*int, count int32, bar_size float64, flags PlotBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	C.Plot_PlotBars_S16PtrS16PtrV(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count), C.double(bar_size), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotBars_S32PtrIntV parameter default value hint:
+// bar_size: 0.67
+// flags: 0
+// offset: 0
+// shift: 0
+// stride: sizeof(ImS32)
+func Plot_PlotBars_S32PtrIntV(label_id string, values []*int32, count int32, bar_size float64, shift float64, flags PlotBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBars_S32PtrIntV(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count), C.double(bar_size), C.double(shift), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotBars_S32PtrS32PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS32)
+func Plot_PlotBars_S32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, count int32, bar_size float64, flags PlotBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	C.Plot_PlotBars_S32PtrS32PtrV(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count), C.double(bar_size), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
 // Plot_PlotBars_S64PtrIntV parameter default value hint:
 // bar_size: 0.67
 // flags: 0
@@ -750,6 +942,114 @@ func Plot_PlotBars_S64PtrS64PtrV(label_id string, xs []int64, ys []int64, count 
 	defer label_idFin()
 
 	C.Plot_PlotBars_S64PtrS64PtrV(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), C.int(count), C.double(bar_size), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotBars_S8PtrIntV parameter default value hint:
+// bar_size: 0.67
+// flags: 0
+// offset: 0
+// shift: 0
+// stride: sizeof(ImS8)
+func Plot_PlotBars_S8PtrIntV(label_id string, values []*int8, count int32, bar_size float64, shift float64, flags PlotBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBars_S8PtrIntV(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count), C.double(bar_size), C.double(shift), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotBars_S8PtrS8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS8)
+func Plot_PlotBars_S8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count int32, bar_size float64, flags PlotBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	C.Plot_PlotBars_S8PtrS8PtrV(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count), C.double(bar_size), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotBars_U16PtrIntV parameter default value hint:
+// bar_size: 0.67
+// flags: 0
+// offset: 0
+// shift: 0
+// stride: sizeof(ImU16)
+func Plot_PlotBars_U16PtrIntV(label_id string, values []*uint16, count int32, bar_size float64, shift float64, flags PlotBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBars_U16PtrIntV(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count), C.double(bar_size), C.double(shift), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotBars_U16PtrU16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU16)
+func Plot_PlotBars_U16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, count int32, bar_size float64, flags PlotBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	C.Plot_PlotBars_U16PtrU16PtrV(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count), C.double(bar_size), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
 }
 
 // Plot_PlotBars_U32PtrIntV parameter default value hint:
@@ -895,6 +1195,68 @@ func Plot_PlotDigital_FloatPtrV(label_id string, xs []float32, ys []float32, cou
 	C.Plot_PlotDigital_FloatPtrV(label_idArg, (*C.float)(&(xs[0])), (*C.float)(&(ys[0])), C.int(count), C.ImPlotDigitalFlags(flags), C.int(offset), C.int(stride))
 }
 
+// Plot_PlotDigital_S16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS16)
+func Plot_PlotDigital_S16PtrV(label_id string, xs []*int, ys []*int, count int32, flags PlotDigitalFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	C.Plot_PlotDigital_S16PtrV(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count), C.ImPlotDigitalFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotDigital_S32PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS32)
+func Plot_PlotDigital_S32PtrV(label_id string, xs []*int32, ys []*int32, count int32, flags PlotDigitalFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	C.Plot_PlotDigital_S32PtrV(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count), C.ImPlotDigitalFlags(flags), C.int(offset), C.int(stride))
+}
+
 // Plot_PlotDigital_S64PtrV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -904,6 +1266,68 @@ func Plot_PlotDigital_S64PtrV(label_id string, xs []int64, ys []int64, count int
 	defer label_idFin()
 
 	C.Plot_PlotDigital_S64PtrV(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), C.int(count), C.ImPlotDigitalFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotDigital_S8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS8)
+func Plot_PlotDigital_S8PtrV(label_id string, xs []*int8, ys []*int8, count int32, flags PlotDigitalFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	C.Plot_PlotDigital_S8PtrV(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count), C.ImPlotDigitalFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotDigital_U16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU16)
+func Plot_PlotDigital_U16PtrV(label_id string, xs []*uint16, ys []*uint16, count int32, flags PlotDigitalFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	C.Plot_PlotDigital_U16PtrV(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count), C.ImPlotDigitalFlags(flags), C.int(offset), C.int(stride))
 }
 
 // Plot_PlotDigital_U32PtrV parameter default value hint:
@@ -1010,6 +1434,190 @@ func Plot_PlotErrorBars_FloatPtrFloatPtrFloatPtrIntV(label_id string, xs []float
 	C.Plot_PlotErrorBars_FloatPtrFloatPtrFloatPtrIntV(label_idArg, (*C.float)(&(xs[0])), (*C.float)(&(ys[0])), (*C.float)(&(err[0])), C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
 }
 
+// Plot_PlotErrorBars_S16PtrS16PtrS16PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS16)
+func Plot_PlotErrorBars_S16PtrS16PtrS16PtrIntV(label_id string, xs []*int, ys []*int, err []*int, count int32, flags PlotErrorBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	errArg := make([]C.ImS16, len(err))
+	for i, errV := range err {
+		errArg[i] = C.ImS16(*errV)
+	}
+	defer func() {
+		for i, errV := range errArg {
+			*err[i] = int(errV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_S16PtrS16PtrS16PtrIntV(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), (*C.ImS16)(&errArg[0]), C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotErrorBars_S16PtrS16PtrS16PtrS16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS16)
+func Plot_PlotErrorBars_S16PtrS16PtrS16PtrS16PtrV(label_id string, xs []*int, ys []*int, neg []*int, pos []*int, count int32, flags PlotErrorBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	negArg := make([]C.ImS16, len(neg))
+	for i, negV := range neg {
+		negArg[i] = C.ImS16(*negV)
+	}
+	defer func() {
+		for i, negV := range negArg {
+			*neg[i] = int(negV)
+		}
+	}()
+
+	posArg := make([]C.ImS16, len(pos))
+	for i, posV := range pos {
+		posArg[i] = C.ImS16(*posV)
+	}
+	defer func() {
+		for i, posV := range posArg {
+			*pos[i] = int(posV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_S16PtrS16PtrS16PtrS16PtrV(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), (*C.ImS16)(&negArg[0]), (*C.ImS16)(&posArg[0]), C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotErrorBars_S32PtrS32PtrS32PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS32)
+func Plot_PlotErrorBars_S32PtrS32PtrS32PtrIntV(label_id string, xs []*int32, ys []*int32, err []*int32, count int32, flags PlotErrorBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	errArg := make([]C.ImS32, len(err))
+	for i, errV := range err {
+		errArg[i] = C.ImS32(*errV)
+	}
+	defer func() {
+		for i, errV := range errArg {
+			*err[i] = int32(errV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_S32PtrS32PtrS32PtrIntV(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), (*C.ImS32)(&errArg[0]), C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotErrorBars_S32PtrS32PtrS32PtrS32PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS32)
+func Plot_PlotErrorBars_S32PtrS32PtrS32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, neg []*int32, pos []*int32, count int32, flags PlotErrorBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	negArg := make([]C.ImS32, len(neg))
+	for i, negV := range neg {
+		negArg[i] = C.ImS32(*negV)
+	}
+	defer func() {
+		for i, negV := range negArg {
+			*neg[i] = int32(negV)
+		}
+	}()
+
+	posArg := make([]C.ImS32, len(pos))
+	for i, posV := range pos {
+		posArg[i] = C.ImS32(*posV)
+	}
+	defer func() {
+		for i, posV := range posArg {
+			*pos[i] = int32(posV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_S32PtrS32PtrS32PtrS32PtrV(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), (*C.ImS32)(&negArg[0]), (*C.ImS32)(&posArg[0]), C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
 // Plot_PlotErrorBars_S64PtrS64PtrS64PtrIntV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -1030,6 +1638,190 @@ func Plot_PlotErrorBars_S64PtrS64PtrS64PtrS64PtrV(label_id string, xs []int64, y
 	defer label_idFin()
 
 	C.Plot_PlotErrorBars_S64PtrS64PtrS64PtrS64PtrV(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), (*C.longlong)(&(neg[0])), (*C.longlong)(&(pos[0])), C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotErrorBars_S8PtrS8PtrS8PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS8)
+func Plot_PlotErrorBars_S8PtrS8PtrS8PtrIntV(label_id string, xs []*int8, ys []*int8, err []*int8, count int32, flags PlotErrorBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	errArg := make([]C.ImS8, len(err))
+	for i, errV := range err {
+		errArg[i] = C.ImS8(*errV)
+	}
+	defer func() {
+		for i, errV := range errArg {
+			*err[i] = int8(errV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_S8PtrS8PtrS8PtrIntV(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), (*C.ImS8)(&errArg[0]), C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotErrorBars_S8PtrS8PtrS8PtrS8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS8)
+func Plot_PlotErrorBars_S8PtrS8PtrS8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, neg []*int8, pos []*int8, count int32, flags PlotErrorBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	negArg := make([]C.ImS8, len(neg))
+	for i, negV := range neg {
+		negArg[i] = C.ImS8(*negV)
+	}
+	defer func() {
+		for i, negV := range negArg {
+			*neg[i] = int8(negV)
+		}
+	}()
+
+	posArg := make([]C.ImS8, len(pos))
+	for i, posV := range pos {
+		posArg[i] = C.ImS8(*posV)
+	}
+	defer func() {
+		for i, posV := range posArg {
+			*pos[i] = int8(posV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_S8PtrS8PtrS8PtrS8PtrV(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), (*C.ImS8)(&negArg[0]), (*C.ImS8)(&posArg[0]), C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotErrorBars_U16PtrU16PtrU16PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU16)
+func Plot_PlotErrorBars_U16PtrU16PtrU16PtrIntV(label_id string, xs []*uint16, ys []*uint16, err []*uint16, count int32, flags PlotErrorBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	errArg := make([]C.ImU16, len(err))
+	for i, errV := range err {
+		errArg[i] = C.ImU16(*errV)
+	}
+	defer func() {
+		for i, errV := range errArg {
+			*err[i] = uint16(errV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_U16PtrU16PtrU16PtrIntV(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), (*C.ImU16)(&errArg[0]), C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotErrorBars_U16PtrU16PtrU16PtrU16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU16)
+func Plot_PlotErrorBars_U16PtrU16PtrU16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, neg []*uint16, pos []*uint16, count int32, flags PlotErrorBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	negArg := make([]C.ImU16, len(neg))
+	for i, negV := range neg {
+		negArg[i] = C.ImU16(*negV)
+	}
+	defer func() {
+		for i, negV := range negArg {
+			*neg[i] = uint16(negV)
+		}
+	}()
+
+	posArg := make([]C.ImU16, len(pos))
+	for i, posV := range pos {
+		posArg[i] = C.ImU16(*posV)
+	}
+	defer func() {
+		for i, posV := range posArg {
+			*pos[i] = uint16(posV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_U16PtrU16PtrU16PtrU16PtrV(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), (*C.ImU16)(&negArg[0]), (*C.ImU16)(&posArg[0]), C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
 }
 
 // Plot_PlotErrorBars_U32PtrU32PtrU32PtrIntV parameter default value hint:
@@ -1255,6 +2047,60 @@ func Plot_PlotHeatmap_FloatPtrV(label_id string, values []float32, rows int32, c
 	C.Plot_PlotHeatmap_FloatPtrV(label_idArg, (*C.float)(&(values[0])), C.int(rows), C.int(cols), C.double(scale_min), C.double(scale_max), label_fmtArg, bounds_min.toC(), bounds_max.toC(), C.ImPlotHeatmapFlags(flags))
 }
 
+// Plot_PlotHeatmap_S16PtrV parameter default value hint:
+// bounds_max: ImPlotPoint(1,1)
+// bounds_min: ImPlotPoint(0,0)
+// flags: 0
+// label_fmt: "%.1f"
+// scale_max: 0
+// scale_min: 0
+func Plot_PlotHeatmap_S16PtrV(label_id string, values []*int, rows int32, cols int32, scale_min float64, scale_max float64, label_fmt string, bounds_min ImPlotPoint, bounds_max ImPlotPoint, flags PlotHeatmapFlags) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotHeatmap_S16PtrV(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(rows), C.int(cols), C.double(scale_min), C.double(scale_max), label_fmtArg, bounds_min.toC(), bounds_max.toC(), C.ImPlotHeatmapFlags(flags))
+}
+
+// Plot_PlotHeatmap_S32PtrV parameter default value hint:
+// bounds_max: ImPlotPoint(1,1)
+// bounds_min: ImPlotPoint(0,0)
+// flags: 0
+// label_fmt: "%.1f"
+// scale_max: 0
+// scale_min: 0
+func Plot_PlotHeatmap_S32PtrV(label_id string, values []*int32, rows int32, cols int32, scale_min float64, scale_max float64, label_fmt string, bounds_min ImPlotPoint, bounds_max ImPlotPoint, flags PlotHeatmapFlags) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotHeatmap_S32PtrV(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(rows), C.int(cols), C.double(scale_min), C.double(scale_max), label_fmtArg, bounds_min.toC(), bounds_max.toC(), C.ImPlotHeatmapFlags(flags))
+}
+
 // Plot_PlotHeatmap_S64PtrV parameter default value hint:
 // bounds_max: ImPlotPoint(1,1)
 // bounds_min: ImPlotPoint(0,0)
@@ -1270,6 +2116,60 @@ func Plot_PlotHeatmap_S64PtrV(label_id string, values []int64, rows int32, cols 
 	defer label_fmtFin()
 
 	C.Plot_PlotHeatmap_S64PtrV(label_idArg, (*C.longlong)(&(values[0])), C.int(rows), C.int(cols), C.double(scale_min), C.double(scale_max), label_fmtArg, bounds_min.toC(), bounds_max.toC(), C.ImPlotHeatmapFlags(flags))
+}
+
+// Plot_PlotHeatmap_S8PtrV parameter default value hint:
+// bounds_max: ImPlotPoint(1,1)
+// bounds_min: ImPlotPoint(0,0)
+// flags: 0
+// label_fmt: "%.1f"
+// scale_max: 0
+// scale_min: 0
+func Plot_PlotHeatmap_S8PtrV(label_id string, values []*int8, rows int32, cols int32, scale_min float64, scale_max float64, label_fmt string, bounds_min ImPlotPoint, bounds_max ImPlotPoint, flags PlotHeatmapFlags) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotHeatmap_S8PtrV(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(rows), C.int(cols), C.double(scale_min), C.double(scale_max), label_fmtArg, bounds_min.toC(), bounds_max.toC(), C.ImPlotHeatmapFlags(flags))
+}
+
+// Plot_PlotHeatmap_U16PtrV parameter default value hint:
+// bounds_max: ImPlotPoint(1,1)
+// bounds_min: ImPlotPoint(0,0)
+// flags: 0
+// label_fmt: "%.1f"
+// scale_max: 0
+// scale_min: 0
+func Plot_PlotHeatmap_U16PtrV(label_id string, values []*uint16, rows int32, cols int32, scale_min float64, scale_max float64, label_fmt string, bounds_min ImPlotPoint, bounds_max ImPlotPoint, flags PlotHeatmapFlags) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotHeatmap_U16PtrV(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(rows), C.int(cols), C.double(scale_min), C.double(scale_max), label_fmtArg, bounds_min.toC(), bounds_max.toC(), C.ImPlotHeatmapFlags(flags))
 }
 
 // Plot_PlotHeatmap_U32PtrV parameter default value hint:
@@ -1366,6 +2266,48 @@ func Plot_PlotInfLines_FloatPtrV(label_id string, values []float32, count int32,
 	C.Plot_PlotInfLines_FloatPtrV(label_idArg, (*C.float)(&(values[0])), C.int(count), C.ImPlotInfLinesFlags(flags), C.int(offset), C.int(stride))
 }
 
+// Plot_PlotInfLines_S16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS16)
+func Plot_PlotInfLines_S16PtrV(label_id string, values []*int, count int32, flags PlotInfLinesFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotInfLines_S16PtrV(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count), C.ImPlotInfLinesFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotInfLines_S32PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS32)
+func Plot_PlotInfLines_S32PtrV(label_id string, values []*int32, count int32, flags PlotInfLinesFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotInfLines_S32PtrV(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count), C.ImPlotInfLinesFlags(flags), C.int(offset), C.int(stride))
+}
+
 // Plot_PlotInfLines_S64PtrV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -1375,6 +2317,48 @@ func Plot_PlotInfLines_S64PtrV(label_id string, values []int64, count int32, fla
 	defer label_idFin()
 
 	C.Plot_PlotInfLines_S64PtrV(label_idArg, (*C.longlong)(&(values[0])), C.int(count), C.ImPlotInfLinesFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotInfLines_S8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS8)
+func Plot_PlotInfLines_S8PtrV(label_id string, values []*int8, count int32, flags PlotInfLinesFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotInfLines_S8PtrV(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count), C.ImPlotInfLinesFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotInfLines_U16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU16)
+func Plot_PlotInfLines_U16PtrV(label_id string, values []*uint16, count int32, flags PlotInfLinesFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotInfLines_U16PtrV(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count), C.ImPlotInfLinesFlags(flags), C.int(offset), C.int(stride))
 }
 
 // Plot_PlotInfLines_U32PtrV parameter default value hint:
@@ -1454,6 +2438,114 @@ func Plot_PlotLine_FloatPtrIntV(label_id string, values []float32, count int32, 
 	C.Plot_PlotLine_FloatPtrIntV(label_idArg, (*C.float)(&(values[0])), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
 }
 
+// Plot_PlotLine_S16PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS16)
+// xscale: 1
+// xstart: 0
+func Plot_PlotLine_S16PtrIntV(label_id string, values []*int, count int32, xscale float64, xstart float64, flags PlotLineFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotLine_S16PtrIntV(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotLine_S16PtrS16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS16)
+func Plot_PlotLine_S16PtrS16PtrV(label_id string, xs []*int, ys []*int, count int32, flags PlotLineFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	C.Plot_PlotLine_S16PtrS16PtrV(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotLine_S32PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS32)
+// xscale: 1
+// xstart: 0
+func Plot_PlotLine_S32PtrIntV(label_id string, values []*int32, count int32, xscale float64, xstart float64, flags PlotLineFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotLine_S32PtrIntV(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotLine_S32PtrS32PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS32)
+func Plot_PlotLine_S32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, count int32, flags PlotLineFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	C.Plot_PlotLine_S32PtrS32PtrV(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
+}
+
 // Plot_PlotLine_S64PtrIntV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -1476,6 +2568,114 @@ func Plot_PlotLine_S64PtrS64PtrV(label_id string, xs []int64, ys []int64, count 
 	defer label_idFin()
 
 	C.Plot_PlotLine_S64PtrS64PtrV(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), C.int(count), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotLine_S8PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS8)
+// xscale: 1
+// xstart: 0
+func Plot_PlotLine_S8PtrIntV(label_id string, values []*int8, count int32, xscale float64, xstart float64, flags PlotLineFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotLine_S8PtrIntV(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotLine_S8PtrS8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS8)
+func Plot_PlotLine_S8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count int32, flags PlotLineFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	C.Plot_PlotLine_S8PtrS8PtrV(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotLine_U16PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU16)
+// xscale: 1
+// xstart: 0
+func Plot_PlotLine_U16PtrIntV(label_id string, values []*uint16, count int32, xscale float64, xstart float64, flags PlotLineFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotLine_U16PtrIntV(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotLine_U16PtrU16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU16)
+func Plot_PlotLine_U16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, count int32, flags PlotLineFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	C.Plot_PlotLine_U16PtrU16PtrV(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
 }
 
 // Plot_PlotLine_U32PtrIntV parameter default value hint:
@@ -1624,6 +2824,54 @@ func Plot_PlotPieChart_FloatPtrV(label_ids []string, values []float32, count int
 	C.Plot_PlotPieChart_FloatPtrV(label_idsArg, (*C.float)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 }
 
+// Plot_PlotPieChart_S16PtrV parameter default value hint:
+// angle0: 90
+// flags: 0
+// label_fmt: "%.1f"
+func Plot_PlotPieChart_S16PtrV(label_ids []string, values []*int, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotPieChart_S16PtrV(label_idsArg, (*C.ImS16)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+}
+
+// Plot_PlotPieChart_S32PtrV parameter default value hint:
+// angle0: 90
+// flags: 0
+// label_fmt: "%.1f"
+func Plot_PlotPieChart_S32PtrV(label_ids []string, values []*int32, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotPieChart_S32PtrV(label_idsArg, (*C.ImS32)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+}
+
 // Plot_PlotPieChart_S64PtrV parameter default value hint:
 // angle0: 90
 // flags: 0
@@ -1636,6 +2884,54 @@ func Plot_PlotPieChart_S64PtrV(label_ids []string, values []int64, count int32, 
 	defer label_fmtFin()
 
 	C.Plot_PlotPieChart_S64PtrV(label_idsArg, (*C.longlong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+}
+
+// Plot_PlotPieChart_S8PtrV parameter default value hint:
+// angle0: 90
+// flags: 0
+// label_fmt: "%.1f"
+func Plot_PlotPieChart_S8PtrV(label_ids []string, values []*int8, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotPieChart_S8PtrV(label_idsArg, (*C.ImS8)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+}
+
+// Plot_PlotPieChart_U16PtrV parameter default value hint:
+// angle0: 90
+// flags: 0
+// label_fmt: "%.1f"
+func Plot_PlotPieChart_U16PtrV(label_ids []string, values []*uint16, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+	defer label_fmtFin()
+
+	C.Plot_PlotPieChart_U16PtrV(label_idsArg, (*C.ImU16)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 }
 
 // Plot_PlotPieChart_U32PtrV parameter default value hint:
@@ -1724,6 +3020,114 @@ func Plot_PlotScatter_FloatPtrIntV(label_id string, values []float32, count int3
 	C.Plot_PlotScatter_FloatPtrIntV(label_idArg, (*C.float)(&(values[0])), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
 }
 
+// Plot_PlotScatter_S16PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS16)
+// xscale: 1
+// xstart: 0
+func Plot_PlotScatter_S16PtrIntV(label_id string, values []*int, count int32, xscale float64, xstart float64, flags PlotScatterFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotScatter_S16PtrIntV(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotScatter_S16PtrS16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS16)
+func Plot_PlotScatter_S16PtrS16PtrV(label_id string, xs []*int, ys []*int, count int32, flags PlotScatterFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	C.Plot_PlotScatter_S16PtrS16PtrV(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotScatter_S32PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS32)
+// xscale: 1
+// xstart: 0
+func Plot_PlotScatter_S32PtrIntV(label_id string, values []*int32, count int32, xscale float64, xstart float64, flags PlotScatterFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotScatter_S32PtrIntV(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotScatter_S32PtrS32PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS32)
+func Plot_PlotScatter_S32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, count int32, flags PlotScatterFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	C.Plot_PlotScatter_S32PtrS32PtrV(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
+}
+
 // Plot_PlotScatter_S64PtrIntV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -1746,6 +3150,114 @@ func Plot_PlotScatter_S64PtrS64PtrV(label_id string, xs []int64, ys []int64, cou
 	defer label_idFin()
 
 	C.Plot_PlotScatter_S64PtrS64PtrV(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), C.int(count), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotScatter_S8PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS8)
+// xscale: 1
+// xstart: 0
+func Plot_PlotScatter_S8PtrIntV(label_id string, values []*int8, count int32, xscale float64, xstart float64, flags PlotScatterFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotScatter_S8PtrIntV(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotScatter_S8PtrS8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS8)
+func Plot_PlotScatter_S8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count int32, flags PlotScatterFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	C.Plot_PlotScatter_S8PtrS8PtrV(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotScatter_U16PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU16)
+// xscale: 1
+// xstart: 0
+func Plot_PlotScatter_U16PtrIntV(label_id string, values []*uint16, count int32, xscale float64, xstart float64, flags PlotScatterFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotScatter_U16PtrIntV(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotScatter_U16PtrU16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU16)
+func Plot_PlotScatter_U16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, count int32, flags PlotScatterFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	C.Plot_PlotScatter_U16PtrU16PtrV(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
 }
 
 // Plot_PlotScatter_U32PtrIntV parameter default value hint:
@@ -1917,6 +3429,200 @@ func Plot_PlotShaded_FloatPtrIntV(label_id string, values []float32, count int32
 	C.Plot_PlotShaded_FloatPtrIntV(label_idArg, (*C.float)(&(values[0])), C.int(count), C.double(yref), C.double(xscale), C.double(xstart), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
 }
 
+// Plot_PlotShaded_S16PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS16)
+// xscale: 1
+// xstart: 0
+// yref: 0
+func Plot_PlotShaded_S16PtrIntV(label_id string, values []*int, count int32, yref float64, xscale float64, xstart float64, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotShaded_S16PtrIntV(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count), C.double(yref), C.double(xscale), C.double(xstart), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotShaded_S16PtrS16PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS16)
+// yref: 0
+func Plot_PlotShaded_S16PtrS16PtrIntV(label_id string, xs []*int, ys []*int, count int32, yref float64, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	C.Plot_PlotShaded_S16PtrS16PtrIntV(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count), C.double(yref), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotShaded_S16PtrS16PtrS16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS16)
+func Plot_PlotShaded_S16PtrS16PtrS16PtrV(label_id string, xs []*int, ys1 []*int, ys2 []*int, count int32, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ys1Arg := make([]C.ImS16, len(ys1))
+	for i, ys1V := range ys1 {
+		ys1Arg[i] = C.ImS16(*ys1V)
+	}
+	defer func() {
+		for i, ys1V := range ys1Arg {
+			*ys1[i] = int(ys1V)
+		}
+	}()
+
+	ys2Arg := make([]C.ImS16, len(ys2))
+	for i, ys2V := range ys2 {
+		ys2Arg[i] = C.ImS16(*ys2V)
+	}
+	defer func() {
+		for i, ys2V := range ys2Arg {
+			*ys2[i] = int(ys2V)
+		}
+	}()
+
+	C.Plot_PlotShaded_S16PtrS16PtrS16PtrV(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ys1Arg[0]), (*C.ImS16)(&ys2Arg[0]), C.int(count), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotShaded_S32PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS32)
+// xscale: 1
+// xstart: 0
+// yref: 0
+func Plot_PlotShaded_S32PtrIntV(label_id string, values []*int32, count int32, yref float64, xscale float64, xstart float64, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotShaded_S32PtrIntV(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count), C.double(yref), C.double(xscale), C.double(xstart), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotShaded_S32PtrS32PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS32)
+// yref: 0
+func Plot_PlotShaded_S32PtrS32PtrIntV(label_id string, xs []*int32, ys []*int32, count int32, yref float64, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	C.Plot_PlotShaded_S32PtrS32PtrIntV(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count), C.double(yref), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotShaded_S32PtrS32PtrS32PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS32)
+func Plot_PlotShaded_S32PtrS32PtrS32PtrV(label_id string, xs []*int32, ys1 []*int32, ys2 []*int32, count int32, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ys1Arg := make([]C.ImS32, len(ys1))
+	for i, ys1V := range ys1 {
+		ys1Arg[i] = C.ImS32(*ys1V)
+	}
+	defer func() {
+		for i, ys1V := range ys1Arg {
+			*ys1[i] = int32(ys1V)
+		}
+	}()
+
+	ys2Arg := make([]C.ImS32, len(ys2))
+	for i, ys2V := range ys2 {
+		ys2Arg[i] = C.ImS32(*ys2V)
+	}
+	defer func() {
+		for i, ys2V := range ys2Arg {
+			*ys2[i] = int32(ys2V)
+		}
+	}()
+
+	C.Plot_PlotShaded_S32PtrS32PtrS32PtrV(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ys1Arg[0]), (*C.ImS32)(&ys2Arg[0]), C.int(count), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
 // Plot_PlotShaded_S64PtrIntV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -1952,6 +3658,200 @@ func Plot_PlotShaded_S64PtrS64PtrS64PtrV(label_id string, xs []int64, ys1 []int6
 	defer label_idFin()
 
 	C.Plot_PlotShaded_S64PtrS64PtrS64PtrV(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys1[0])), (*C.longlong)(&(ys2[0])), C.int(count), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotShaded_S8PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS8)
+// xscale: 1
+// xstart: 0
+// yref: 0
+func Plot_PlotShaded_S8PtrIntV(label_id string, values []*int8, count int32, yref float64, xscale float64, xstart float64, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotShaded_S8PtrIntV(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count), C.double(yref), C.double(xscale), C.double(xstart), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotShaded_S8PtrS8PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS8)
+// yref: 0
+func Plot_PlotShaded_S8PtrS8PtrIntV(label_id string, xs []*int8, ys []*int8, count int32, yref float64, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	C.Plot_PlotShaded_S8PtrS8PtrIntV(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count), C.double(yref), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotShaded_S8PtrS8PtrS8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS8)
+func Plot_PlotShaded_S8PtrS8PtrS8PtrV(label_id string, xs []*int8, ys1 []*int8, ys2 []*int8, count int32, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ys1Arg := make([]C.ImS8, len(ys1))
+	for i, ys1V := range ys1 {
+		ys1Arg[i] = C.ImS8(*ys1V)
+	}
+	defer func() {
+		for i, ys1V := range ys1Arg {
+			*ys1[i] = int8(ys1V)
+		}
+	}()
+
+	ys2Arg := make([]C.ImS8, len(ys2))
+	for i, ys2V := range ys2 {
+		ys2Arg[i] = C.ImS8(*ys2V)
+	}
+	defer func() {
+		for i, ys2V := range ys2Arg {
+			*ys2[i] = int8(ys2V)
+		}
+	}()
+
+	C.Plot_PlotShaded_S8PtrS8PtrS8PtrV(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ys1Arg[0]), (*C.ImS8)(&ys2Arg[0]), C.int(count), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotShaded_U16PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU16)
+// xscale: 1
+// xstart: 0
+// yref: 0
+func Plot_PlotShaded_U16PtrIntV(label_id string, values []*uint16, count int32, yref float64, xscale float64, xstart float64, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotShaded_U16PtrIntV(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count), C.double(yref), C.double(xscale), C.double(xstart), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotShaded_U16PtrU16PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU16)
+// yref: 0
+func Plot_PlotShaded_U16PtrU16PtrIntV(label_id string, xs []*uint16, ys []*uint16, count int32, yref float64, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	C.Plot_PlotShaded_U16PtrU16PtrIntV(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count), C.double(yref), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotShaded_U16PtrU16PtrU16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU16)
+func Plot_PlotShaded_U16PtrU16PtrU16PtrV(label_id string, xs []*uint16, ys1 []*uint16, ys2 []*uint16, count int32, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ys1Arg := make([]C.ImU16, len(ys1))
+	for i, ys1V := range ys1 {
+		ys1Arg[i] = C.ImU16(*ys1V)
+	}
+	defer func() {
+		for i, ys1V := range ys1Arg {
+			*ys1[i] = uint16(ys1V)
+		}
+	}()
+
+	ys2Arg := make([]C.ImU16, len(ys2))
+	for i, ys2V := range ys2 {
+		ys2Arg[i] = C.ImU16(*ys2V)
+	}
+	defer func() {
+		for i, ys2V := range ys2Arg {
+			*ys2[i] = uint16(ys2V)
+		}
+	}()
+
+	C.Plot_PlotShaded_U16PtrU16PtrU16PtrV(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ys1Arg[0]), (*C.ImU16)(&ys2Arg[0]), C.int(count), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
 }
 
 // Plot_PlotShaded_U32PtrIntV parameter default value hint:
@@ -2209,6 +4109,114 @@ func Plot_PlotStairs_FloatPtrIntV(label_id string, values []float32, count int32
 	C.Plot_PlotStairs_FloatPtrIntV(label_idArg, (*C.float)(&(values[0])), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
 }
 
+// Plot_PlotStairs_S16PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS16)
+// xscale: 1
+// xstart: 0
+func Plot_PlotStairs_S16PtrIntV(label_id string, values []*int, count int32, xscale float64, xstart float64, flags PlotStairsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStairs_S16PtrIntV(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStairs_S16PtrS16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS16)
+func Plot_PlotStairs_S16PtrS16PtrV(label_id string, xs []*int, ys []*int, count int32, flags PlotStairsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	C.Plot_PlotStairs_S16PtrS16PtrV(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStairs_S32PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS32)
+// xscale: 1
+// xstart: 0
+func Plot_PlotStairs_S32PtrIntV(label_id string, values []*int32, count int32, xscale float64, xstart float64, flags PlotStairsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStairs_S32PtrIntV(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStairs_S32PtrS32PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS32)
+func Plot_PlotStairs_S32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, count int32, flags PlotStairsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	C.Plot_PlotStairs_S32PtrS32PtrV(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
+}
+
 // Plot_PlotStairs_S64PtrIntV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -2231,6 +4239,114 @@ func Plot_PlotStairs_S64PtrS64PtrV(label_id string, xs []int64, ys []int64, coun
 	defer label_idFin()
 
 	C.Plot_PlotStairs_S64PtrS64PtrV(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), C.int(count), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStairs_S8PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS8)
+// xscale: 1
+// xstart: 0
+func Plot_PlotStairs_S8PtrIntV(label_id string, values []*int8, count int32, xscale float64, xstart float64, flags PlotStairsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStairs_S8PtrIntV(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStairs_S8PtrS8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImS8)
+func Plot_PlotStairs_S8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count int32, flags PlotStairsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	C.Plot_PlotStairs_S8PtrS8PtrV(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStairs_U16PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU16)
+// xscale: 1
+// xstart: 0
+func Plot_PlotStairs_U16PtrIntV(label_id string, values []*uint16, count int32, xscale float64, xstart float64, flags PlotStairsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStairs_U16PtrIntV(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStairs_U16PtrU16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(ImU16)
+func Plot_PlotStairs_U16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, count int32, flags PlotStairsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	C.Plot_PlotStairs_U16PtrU16PtrV(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
 }
 
 // Plot_PlotStairs_U32PtrIntV parameter default value hint:
@@ -2391,6 +4507,118 @@ func Plot_PlotStems_FloatPtrIntV(label_id string, values []float32, count int32,
 	C.Plot_PlotStems_FloatPtrIntV(label_idArg, (*C.float)(&(values[0])), C.int(count), C.double(ref), C.double(scale), C.double(start), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
 }
 
+// Plot_PlotStems_S16PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// ref: 0
+// scale: 1
+// start: 0
+// stride: sizeof(ImS16)
+func Plot_PlotStems_S16PtrIntV(label_id string, values []*int, count int32, ref float64, scale float64, start float64, flags PlotStemsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStems_S16PtrIntV(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count), C.double(ref), C.double(scale), C.double(start), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStems_S16PtrS16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// ref: 0
+// stride: sizeof(ImS16)
+func Plot_PlotStems_S16PtrS16PtrV(label_id string, xs []*int, ys []*int, count int32, ref float64, flags PlotStemsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	C.Plot_PlotStems_S16PtrS16PtrV(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count), C.double(ref), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStems_S32PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// ref: 0
+// scale: 1
+// start: 0
+// stride: sizeof(ImS32)
+func Plot_PlotStems_S32PtrIntV(label_id string, values []*int32, count int32, ref float64, scale float64, start float64, flags PlotStemsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStems_S32PtrIntV(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count), C.double(ref), C.double(scale), C.double(start), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStems_S32PtrS32PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// ref: 0
+// stride: sizeof(ImS32)
+func Plot_PlotStems_S32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, count int32, ref float64, flags PlotStemsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	C.Plot_PlotStems_S32PtrS32PtrV(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count), C.double(ref), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
+}
+
 // Plot_PlotStems_S64PtrIntV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -2415,6 +4643,118 @@ func Plot_PlotStems_S64PtrS64PtrV(label_id string, xs []int64, ys []int64, count
 	defer label_idFin()
 
 	C.Plot_PlotStems_S64PtrS64PtrV(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), C.int(count), C.double(ref), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStems_S8PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// ref: 0
+// scale: 1
+// start: 0
+// stride: sizeof(ImS8)
+func Plot_PlotStems_S8PtrIntV(label_id string, values []*int8, count int32, ref float64, scale float64, start float64, flags PlotStemsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStems_S8PtrIntV(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count), C.double(ref), C.double(scale), C.double(start), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStems_S8PtrS8PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// ref: 0
+// stride: sizeof(ImS8)
+func Plot_PlotStems_S8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count int32, ref float64, flags PlotStemsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	C.Plot_PlotStems_S8PtrS8PtrV(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count), C.double(ref), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStems_U16PtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// ref: 0
+// scale: 1
+// start: 0
+// stride: sizeof(ImU16)
+func Plot_PlotStems_U16PtrIntV(label_id string, values []*uint16, count int32, ref float64, scale float64, start float64, flags PlotStemsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStems_U16PtrIntV(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count), C.double(ref), C.double(scale), C.double(start), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
+}
+
+// Plot_PlotStems_U16PtrU16PtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// ref: 0
+// stride: sizeof(ImU16)
+func Plot_PlotStems_U16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, count int32, ref float64, flags PlotStemsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	C.Plot_PlotStems_U16PtrU16PtrV(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count), C.double(ref), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
 }
 
 // Plot_PlotStems_U32PtrIntV parameter default value hint:
@@ -3131,11 +5471,79 @@ func Plot_PlotBarGroups_FloatPtr(label_ids []string, values []float32, item_coun
 	C.Plot_PlotBarGroups_FloatPtr(label_idsArg, (*C.float)(&(values[0])), C.int(item_count), C.int(group_count))
 }
 
+func Plot_PlotBarGroups_S16Ptr(label_ids []string, values []*int, item_count int32, group_count int32) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBarGroups_S16Ptr(label_idsArg, (*C.ImS16)(&valuesArg[0]), C.int(item_count), C.int(group_count))
+}
+
+func Plot_PlotBarGroups_S32Ptr(label_ids []string, values []*int32, item_count int32, group_count int32) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBarGroups_S32Ptr(label_idsArg, (*C.ImS32)(&valuesArg[0]), C.int(item_count), C.int(group_count))
+}
+
 func Plot_PlotBarGroups_S64Ptr(label_ids []string, values []int64, item_count int32, group_count int32) {
 	label_idsArg, label_idsFin := wrapStringList(label_ids)
 	defer label_idsFin()
 
 	C.Plot_PlotBarGroups_S64Ptr(label_idsArg, (*C.longlong)(&(values[0])), C.int(item_count), C.int(group_count))
+}
+
+func Plot_PlotBarGroups_S8Ptr(label_ids []string, values []*int8, item_count int32, group_count int32) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBarGroups_S8Ptr(label_idsArg, (*C.ImS8)(&valuesArg[0]), C.int(item_count), C.int(group_count))
+}
+
+func Plot_PlotBarGroups_U16Ptr(label_ids []string, values []*uint16, item_count int32, group_count int32) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBarGroups_U16Ptr(label_idsArg, (*C.ImU16)(&valuesArg[0]), C.int(item_count), C.int(group_count))
 }
 
 func Plot_PlotBarGroups_U32Ptr(label_ids []string, values []*uint32, item_count int32, group_count int32) {
@@ -3193,6 +5601,94 @@ func Plot_PlotBars_FloatPtrInt(label_id string, values []float32, count int32) {
 	C.Plot_PlotBars_FloatPtrInt(label_idArg, (*C.float)(&(values[0])), C.int(count))
 }
 
+func Plot_PlotBars_S16PtrInt(label_id string, values []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBars_S16PtrInt(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotBars_S16PtrS16Ptr(label_id string, xs []*int, ys []*int, count int32, bar_size float64) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	C.Plot_PlotBars_S16PtrS16Ptr(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count), C.double(bar_size))
+}
+
+func Plot_PlotBars_S32PtrInt(label_id string, values []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBars_S32PtrInt(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotBars_S32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, count int32, bar_size float64) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	C.Plot_PlotBars_S32PtrS32Ptr(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count), C.double(bar_size))
+}
+
 func Plot_PlotBars_S64PtrInt(label_id string, values []int64, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -3205,6 +5701,94 @@ func Plot_PlotBars_S64PtrS64Ptr(label_id string, xs []int64, ys []int64, count i
 	defer label_idFin()
 
 	C.Plot_PlotBars_S64PtrS64Ptr(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), C.int(count), C.double(bar_size))
+}
+
+func Plot_PlotBars_S8PtrInt(label_id string, values []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBars_S8PtrInt(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotBars_S8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count int32, bar_size float64) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	C.Plot_PlotBars_S8PtrS8Ptr(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count), C.double(bar_size))
+}
+
+func Plot_PlotBars_U16PtrInt(label_id string, values []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotBars_U16PtrInt(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotBars_U16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, count int32, bar_size float64) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	C.Plot_PlotBars_U16PtrU16Ptr(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count), C.double(bar_size))
 }
 
 func Plot_PlotBars_U32PtrInt(label_id string, values []*uint32, count int32) {
@@ -3316,11 +5900,119 @@ func Plot_PlotDigital_FloatPtr(label_id string, xs []float32, ys []float32, coun
 	C.Plot_PlotDigital_FloatPtr(label_idArg, (*C.float)(&(xs[0])), (*C.float)(&(ys[0])), C.int(count))
 }
 
+func Plot_PlotDigital_S16Ptr(label_id string, xs []*int, ys []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	C.Plot_PlotDigital_S16Ptr(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count))
+}
+
+func Plot_PlotDigital_S32Ptr(label_id string, xs []*int32, ys []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	C.Plot_PlotDigital_S32Ptr(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count))
+}
+
 func Plot_PlotDigital_S64Ptr(label_id string, xs []int64, ys []int64, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
 
 	C.Plot_PlotDigital_S64Ptr(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), C.int(count))
+}
+
+func Plot_PlotDigital_S8Ptr(label_id string, xs []*int8, ys []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	C.Plot_PlotDigital_S8Ptr(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count))
+}
+
+func Plot_PlotDigital_U16Ptr(label_id string, xs []*uint16, ys []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	C.Plot_PlotDigital_U16Ptr(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count))
 }
 
 func Plot_PlotDigital_U32Ptr(label_id string, xs []*uint32, ys []*uint32, count int32) {
@@ -3405,6 +6097,174 @@ func Plot_PlotErrorBars_FloatPtrFloatPtrFloatPtrInt(label_id string, xs []float3
 	C.Plot_PlotErrorBars_FloatPtrFloatPtrFloatPtrInt(label_idArg, (*C.float)(&(xs[0])), (*C.float)(&(ys[0])), (*C.float)(&(err[0])), C.int(count))
 }
 
+func Plot_PlotErrorBars_S16PtrS16PtrS16PtrInt(label_id string, xs []*int, ys []*int, err []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	errArg := make([]C.ImS16, len(err))
+	for i, errV := range err {
+		errArg[i] = C.ImS16(*errV)
+	}
+	defer func() {
+		for i, errV := range errArg {
+			*err[i] = int(errV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_S16PtrS16PtrS16PtrInt(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), (*C.ImS16)(&errArg[0]), C.int(count))
+}
+
+func Plot_PlotErrorBars_S16PtrS16PtrS16PtrS16Ptr(label_id string, xs []*int, ys []*int, neg []*int, pos []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	negArg := make([]C.ImS16, len(neg))
+	for i, negV := range neg {
+		negArg[i] = C.ImS16(*negV)
+	}
+	defer func() {
+		for i, negV := range negArg {
+			*neg[i] = int(negV)
+		}
+	}()
+
+	posArg := make([]C.ImS16, len(pos))
+	for i, posV := range pos {
+		posArg[i] = C.ImS16(*posV)
+	}
+	defer func() {
+		for i, posV := range posArg {
+			*pos[i] = int(posV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_S16PtrS16PtrS16PtrS16Ptr(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), (*C.ImS16)(&negArg[0]), (*C.ImS16)(&posArg[0]), C.int(count))
+}
+
+func Plot_PlotErrorBars_S32PtrS32PtrS32PtrInt(label_id string, xs []*int32, ys []*int32, err []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	errArg := make([]C.ImS32, len(err))
+	for i, errV := range err {
+		errArg[i] = C.ImS32(*errV)
+	}
+	defer func() {
+		for i, errV := range errArg {
+			*err[i] = int32(errV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_S32PtrS32PtrS32PtrInt(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), (*C.ImS32)(&errArg[0]), C.int(count))
+}
+
+func Plot_PlotErrorBars_S32PtrS32PtrS32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, neg []*int32, pos []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	negArg := make([]C.ImS32, len(neg))
+	for i, negV := range neg {
+		negArg[i] = C.ImS32(*negV)
+	}
+	defer func() {
+		for i, negV := range negArg {
+			*neg[i] = int32(negV)
+		}
+	}()
+
+	posArg := make([]C.ImS32, len(pos))
+	for i, posV := range pos {
+		posArg[i] = C.ImS32(*posV)
+	}
+	defer func() {
+		for i, posV := range posArg {
+			*pos[i] = int32(posV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_S32PtrS32PtrS32PtrS32Ptr(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), (*C.ImS32)(&negArg[0]), (*C.ImS32)(&posArg[0]), C.int(count))
+}
+
 func Plot_PlotErrorBars_S64PtrS64PtrS64PtrInt(label_id string, xs []int64, ys []int64, err []int64, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -3417,6 +6277,174 @@ func Plot_PlotErrorBars_S64PtrS64PtrS64PtrS64Ptr(label_id string, xs []int64, ys
 	defer label_idFin()
 
 	C.Plot_PlotErrorBars_S64PtrS64PtrS64PtrS64Ptr(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), (*C.longlong)(&(neg[0])), (*C.longlong)(&(pos[0])), C.int(count))
+}
+
+func Plot_PlotErrorBars_S8PtrS8PtrS8PtrInt(label_id string, xs []*int8, ys []*int8, err []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	errArg := make([]C.ImS8, len(err))
+	for i, errV := range err {
+		errArg[i] = C.ImS8(*errV)
+	}
+	defer func() {
+		for i, errV := range errArg {
+			*err[i] = int8(errV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_S8PtrS8PtrS8PtrInt(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), (*C.ImS8)(&errArg[0]), C.int(count))
+}
+
+func Plot_PlotErrorBars_S8PtrS8PtrS8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, neg []*int8, pos []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	negArg := make([]C.ImS8, len(neg))
+	for i, negV := range neg {
+		negArg[i] = C.ImS8(*negV)
+	}
+	defer func() {
+		for i, negV := range negArg {
+			*neg[i] = int8(negV)
+		}
+	}()
+
+	posArg := make([]C.ImS8, len(pos))
+	for i, posV := range pos {
+		posArg[i] = C.ImS8(*posV)
+	}
+	defer func() {
+		for i, posV := range posArg {
+			*pos[i] = int8(posV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_S8PtrS8PtrS8PtrS8Ptr(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), (*C.ImS8)(&negArg[0]), (*C.ImS8)(&posArg[0]), C.int(count))
+}
+
+func Plot_PlotErrorBars_U16PtrU16PtrU16PtrInt(label_id string, xs []*uint16, ys []*uint16, err []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	errArg := make([]C.ImU16, len(err))
+	for i, errV := range err {
+		errArg[i] = C.ImU16(*errV)
+	}
+	defer func() {
+		for i, errV := range errArg {
+			*err[i] = uint16(errV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_U16PtrU16PtrU16PtrInt(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), (*C.ImU16)(&errArg[0]), C.int(count))
+}
+
+func Plot_PlotErrorBars_U16PtrU16PtrU16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, neg []*uint16, pos []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	negArg := make([]C.ImU16, len(neg))
+	for i, negV := range neg {
+		negArg[i] = C.ImU16(*negV)
+	}
+	defer func() {
+		for i, negV := range negArg {
+			*neg[i] = uint16(negV)
+		}
+	}()
+
+	posArg := make([]C.ImU16, len(pos))
+	for i, posV := range pos {
+		posArg[i] = C.ImU16(*posV)
+	}
+	defer func() {
+		for i, posV := range posArg {
+			*pos[i] = uint16(posV)
+		}
+	}()
+
+	C.Plot_PlotErrorBars_U16PtrU16PtrU16PtrU16Ptr(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), (*C.ImU16)(&negArg[0]), (*C.ImU16)(&posArg[0]), C.int(count))
 }
 
 func Plot_PlotErrorBars_U32PtrU32PtrU32PtrInt(label_id string, xs []*uint32, ys []*uint32, err []*uint32, count int32) {
@@ -3608,11 +6636,79 @@ func Plot_PlotHeatmap_FloatPtr(label_id string, values []float32, rows int32, co
 	C.Plot_PlotHeatmap_FloatPtr(label_idArg, (*C.float)(&(values[0])), C.int(rows), C.int(cols))
 }
 
+func Plot_PlotHeatmap_S16Ptr(label_id string, values []*int, rows int32, cols int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotHeatmap_S16Ptr(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(rows), C.int(cols))
+}
+
+func Plot_PlotHeatmap_S32Ptr(label_id string, values []*int32, rows int32, cols int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotHeatmap_S32Ptr(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(rows), C.int(cols))
+}
+
 func Plot_PlotHeatmap_S64Ptr(label_id string, values []int64, rows int32, cols int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
 
 	C.Plot_PlotHeatmap_S64Ptr(label_idArg, (*C.longlong)(&(values[0])), C.int(rows), C.int(cols))
+}
+
+func Plot_PlotHeatmap_S8Ptr(label_id string, values []*int8, rows int32, cols int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotHeatmap_S8Ptr(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(rows), C.int(cols))
+}
+
+func Plot_PlotHeatmap_U16Ptr(label_id string, values []*uint16, rows int32, cols int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotHeatmap_U16Ptr(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(rows), C.int(cols))
 }
 
 func Plot_PlotHeatmap_U32Ptr(label_id string, values []*uint32, rows int32, cols int32) {
@@ -3663,11 +6759,119 @@ func Plot_PlotHistogram2D_FloatPtr(label_id string, xs []float32, ys []float32, 
 	return float64(C.Plot_PlotHistogram2D_FloatPtr(label_idArg, (*C.float)(&(xs[0])), (*C.float)(&(ys[0])), C.int(count)))
 }
 
+func Plot_PlotHistogram2D_S16Ptr(label_id string, xs []*int, ys []*int, count int32) float64 {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	return float64(C.Plot_PlotHistogram2D_S16Ptr(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count)))
+}
+
+func Plot_PlotHistogram2D_S32Ptr(label_id string, xs []*int32, ys []*int32, count int32) float64 {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	return float64(C.Plot_PlotHistogram2D_S32Ptr(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count)))
+}
+
 func Plot_PlotHistogram2D_S64Ptr(label_id string, xs []int64, ys []int64, count int32) float64 {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
 
 	return float64(C.Plot_PlotHistogram2D_S64Ptr(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), C.int(count)))
+}
+
+func Plot_PlotHistogram2D_S8Ptr(label_id string, xs []*int8, ys []*int8, count int32) float64 {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	return float64(C.Plot_PlotHistogram2D_S8Ptr(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count)))
+}
+
+func Plot_PlotHistogram2D_U16Ptr(label_id string, xs []*uint16, ys []*uint16, count int32) float64 {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	return float64(C.Plot_PlotHistogram2D_U16Ptr(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count)))
 }
 
 func Plot_PlotHistogram2D_U32Ptr(label_id string, xs []*uint32, ys []*uint32, count int32) float64 {
@@ -3738,11 +6942,79 @@ func Plot_PlotHistogram_FloatPtr(label_id string, values []float32, count int32)
 	return float64(C.Plot_PlotHistogram_FloatPtr(label_idArg, (*C.float)(&(values[0])), C.int(count)))
 }
 
+func Plot_PlotHistogram_S16Ptr(label_id string, values []*int, count int32) float64 {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	return float64(C.Plot_PlotHistogram_S16Ptr(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count)))
+}
+
+func Plot_PlotHistogram_S32Ptr(label_id string, values []*int32, count int32) float64 {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	return float64(C.Plot_PlotHistogram_S32Ptr(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count)))
+}
+
 func Plot_PlotHistogram_S64Ptr(label_id string, values []int64, count int32) float64 {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
 
 	return float64(C.Plot_PlotHistogram_S64Ptr(label_idArg, (*C.longlong)(&(values[0])), C.int(count)))
+}
+
+func Plot_PlotHistogram_S8Ptr(label_id string, values []*int8, count int32) float64 {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	return float64(C.Plot_PlotHistogram_S8Ptr(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count)))
+}
+
+func Plot_PlotHistogram_U16Ptr(label_id string, values []*uint16, count int32) float64 {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	return float64(C.Plot_PlotHistogram_U16Ptr(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count)))
 }
 
 func Plot_PlotHistogram_U32Ptr(label_id string, values []*uint32, count int32) float64 {
@@ -3800,11 +7072,79 @@ func Plot_PlotInfLines_FloatPtr(label_id string, values []float32, count int32) 
 	C.Plot_PlotInfLines_FloatPtr(label_idArg, (*C.float)(&(values[0])), C.int(count))
 }
 
+func Plot_PlotInfLines_S16Ptr(label_id string, values []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotInfLines_S16Ptr(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotInfLines_S32Ptr(label_id string, values []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotInfLines_S32Ptr(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count))
+}
+
 func Plot_PlotInfLines_S64Ptr(label_id string, values []int64, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
 
 	C.Plot_PlotInfLines_S64Ptr(label_idArg, (*C.longlong)(&(values[0])), C.int(count))
+}
+
+func Plot_PlotInfLines_S8Ptr(label_id string, values []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotInfLines_S8Ptr(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotInfLines_U16Ptr(label_id string, values []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotInfLines_U16Ptr(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count))
 }
 
 func Plot_PlotInfLines_U32Ptr(label_id string, values []*uint32, count int32) {
@@ -3862,6 +7202,94 @@ func Plot_PlotLine_FloatPtrInt(label_id string, values []float32, count int32) {
 	C.Plot_PlotLine_FloatPtrInt(label_idArg, (*C.float)(&(values[0])), C.int(count))
 }
 
+func Plot_PlotLine_S16PtrInt(label_id string, values []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotLine_S16PtrInt(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotLine_S16PtrS16Ptr(label_id string, xs []*int, ys []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	C.Plot_PlotLine_S16PtrS16Ptr(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count))
+}
+
+func Plot_PlotLine_S32PtrInt(label_id string, values []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotLine_S32PtrInt(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotLine_S32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	C.Plot_PlotLine_S32PtrS32Ptr(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count))
+}
+
 func Plot_PlotLine_S64PtrInt(label_id string, values []int64, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -3874,6 +7302,94 @@ func Plot_PlotLine_S64PtrS64Ptr(label_id string, xs []int64, ys []int64, count i
 	defer label_idFin()
 
 	C.Plot_PlotLine_S64PtrS64Ptr(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), C.int(count))
+}
+
+func Plot_PlotLine_S8PtrInt(label_id string, values []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotLine_S8PtrInt(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotLine_S8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	C.Plot_PlotLine_S8PtrS8Ptr(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count))
+}
+
+func Plot_PlotLine_U16PtrInt(label_id string, values []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotLine_U16PtrInt(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotLine_U16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	C.Plot_PlotLine_U16PtrU16Ptr(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count))
 }
 
 func Plot_PlotLine_U32PtrInt(label_id string, values []*uint32, count int32) {
@@ -3985,11 +7501,79 @@ func Plot_PlotPieChart_FloatPtr(label_ids []string, values []float32, count int3
 	C.Plot_PlotPieChart_FloatPtr(label_idsArg, (*C.float)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
 }
 
+func Plot_PlotPieChart_S16Ptr(label_ids []string, values []*int, count int32, x float64, y float64, radius float64) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotPieChart_S16Ptr(label_idsArg, (*C.ImS16)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
+}
+
+func Plot_PlotPieChart_S32Ptr(label_ids []string, values []*int32, count int32, x float64, y float64, radius float64) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotPieChart_S32Ptr(label_idsArg, (*C.ImS32)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
+}
+
 func Plot_PlotPieChart_S64Ptr(label_ids []string, values []int64, count int32, x float64, y float64, radius float64) {
 	label_idsArg, label_idsFin := wrapStringList(label_ids)
 	defer label_idsFin()
 
 	C.Plot_PlotPieChart_S64Ptr(label_idsArg, (*C.longlong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
+}
+
+func Plot_PlotPieChart_S8Ptr(label_ids []string, values []*int8, count int32, x float64, y float64, radius float64) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotPieChart_S8Ptr(label_idsArg, (*C.ImS8)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
+}
+
+func Plot_PlotPieChart_U16Ptr(label_ids []string, values []*uint16, count int32, x float64, y float64, radius float64) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	defer label_idsFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotPieChart_U16Ptr(label_idsArg, (*C.ImU16)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
 }
 
 func Plot_PlotPieChart_U32Ptr(label_ids []string, values []*uint32, count int32, x float64, y float64, radius float64) {
@@ -4047,6 +7631,94 @@ func Plot_PlotScatter_FloatPtrInt(label_id string, values []float32, count int32
 	C.Plot_PlotScatter_FloatPtrInt(label_idArg, (*C.float)(&(values[0])), C.int(count))
 }
 
+func Plot_PlotScatter_S16PtrInt(label_id string, values []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotScatter_S16PtrInt(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotScatter_S16PtrS16Ptr(label_id string, xs []*int, ys []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	C.Plot_PlotScatter_S16PtrS16Ptr(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count))
+}
+
+func Plot_PlotScatter_S32PtrInt(label_id string, values []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotScatter_S32PtrInt(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotScatter_S32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	C.Plot_PlotScatter_S32PtrS32Ptr(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count))
+}
+
 func Plot_PlotScatter_S64PtrInt(label_id string, values []int64, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -4059,6 +7731,94 @@ func Plot_PlotScatter_S64PtrS64Ptr(label_id string, xs []int64, ys []int64, coun
 	defer label_idFin()
 
 	C.Plot_PlotScatter_S64PtrS64Ptr(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), C.int(count))
+}
+
+func Plot_PlotScatter_S8PtrInt(label_id string, values []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotScatter_S8PtrInt(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotScatter_S8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	C.Plot_PlotScatter_S8PtrS8Ptr(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count))
+}
+
+func Plot_PlotScatter_U16PtrInt(label_id string, values []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotScatter_U16PtrInt(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotScatter_U16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	C.Plot_PlotScatter_U16PtrU16Ptr(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count))
 }
 
 func Plot_PlotScatter_U32PtrInt(label_id string, values []*uint32, count int32) {
@@ -4184,6 +7944,168 @@ func Plot_PlotShaded_FloatPtrInt(label_id string, values []float32, count int32)
 	C.Plot_PlotShaded_FloatPtrInt(label_idArg, (*C.float)(&(values[0])), C.int(count))
 }
 
+func Plot_PlotShaded_S16PtrInt(label_id string, values []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotShaded_S16PtrInt(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotShaded_S16PtrS16PtrInt(label_id string, xs []*int, ys []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	C.Plot_PlotShaded_S16PtrS16PtrInt(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count))
+}
+
+func Plot_PlotShaded_S16PtrS16PtrS16Ptr(label_id string, xs []*int, ys1 []*int, ys2 []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ys1Arg := make([]C.ImS16, len(ys1))
+	for i, ys1V := range ys1 {
+		ys1Arg[i] = C.ImS16(*ys1V)
+	}
+	defer func() {
+		for i, ys1V := range ys1Arg {
+			*ys1[i] = int(ys1V)
+		}
+	}()
+
+	ys2Arg := make([]C.ImS16, len(ys2))
+	for i, ys2V := range ys2 {
+		ys2Arg[i] = C.ImS16(*ys2V)
+	}
+	defer func() {
+		for i, ys2V := range ys2Arg {
+			*ys2[i] = int(ys2V)
+		}
+	}()
+
+	C.Plot_PlotShaded_S16PtrS16PtrS16Ptr(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ys1Arg[0]), (*C.ImS16)(&ys2Arg[0]), C.int(count))
+}
+
+func Plot_PlotShaded_S32PtrInt(label_id string, values []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotShaded_S32PtrInt(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotShaded_S32PtrS32PtrInt(label_id string, xs []*int32, ys []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	C.Plot_PlotShaded_S32PtrS32PtrInt(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count))
+}
+
+func Plot_PlotShaded_S32PtrS32PtrS32Ptr(label_id string, xs []*int32, ys1 []*int32, ys2 []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ys1Arg := make([]C.ImS32, len(ys1))
+	for i, ys1V := range ys1 {
+		ys1Arg[i] = C.ImS32(*ys1V)
+	}
+	defer func() {
+		for i, ys1V := range ys1Arg {
+			*ys1[i] = int32(ys1V)
+		}
+	}()
+
+	ys2Arg := make([]C.ImS32, len(ys2))
+	for i, ys2V := range ys2 {
+		ys2Arg[i] = C.ImS32(*ys2V)
+	}
+	defer func() {
+		for i, ys2V := range ys2Arg {
+			*ys2[i] = int32(ys2V)
+		}
+	}()
+
+	C.Plot_PlotShaded_S32PtrS32PtrS32Ptr(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ys1Arg[0]), (*C.ImS32)(&ys2Arg[0]), C.int(count))
+}
+
 func Plot_PlotShaded_S64PtrInt(label_id string, values []int64, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -4203,6 +8125,168 @@ func Plot_PlotShaded_S64PtrS64PtrS64Ptr(label_id string, xs []int64, ys1 []int64
 	defer label_idFin()
 
 	C.Plot_PlotShaded_S64PtrS64PtrS64Ptr(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys1[0])), (*C.longlong)(&(ys2[0])), C.int(count))
+}
+
+func Plot_PlotShaded_S8PtrInt(label_id string, values []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotShaded_S8PtrInt(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotShaded_S8PtrS8PtrInt(label_id string, xs []*int8, ys []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	C.Plot_PlotShaded_S8PtrS8PtrInt(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count))
+}
+
+func Plot_PlotShaded_S8PtrS8PtrS8Ptr(label_id string, xs []*int8, ys1 []*int8, ys2 []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ys1Arg := make([]C.ImS8, len(ys1))
+	for i, ys1V := range ys1 {
+		ys1Arg[i] = C.ImS8(*ys1V)
+	}
+	defer func() {
+		for i, ys1V := range ys1Arg {
+			*ys1[i] = int8(ys1V)
+		}
+	}()
+
+	ys2Arg := make([]C.ImS8, len(ys2))
+	for i, ys2V := range ys2 {
+		ys2Arg[i] = C.ImS8(*ys2V)
+	}
+	defer func() {
+		for i, ys2V := range ys2Arg {
+			*ys2[i] = int8(ys2V)
+		}
+	}()
+
+	C.Plot_PlotShaded_S8PtrS8PtrS8Ptr(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ys1Arg[0]), (*C.ImS8)(&ys2Arg[0]), C.int(count))
+}
+
+func Plot_PlotShaded_U16PtrInt(label_id string, values []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotShaded_U16PtrInt(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotShaded_U16PtrU16PtrInt(label_id string, xs []*uint16, ys []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	C.Plot_PlotShaded_U16PtrU16PtrInt(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count))
+}
+
+func Plot_PlotShaded_U16PtrU16PtrU16Ptr(label_id string, xs []*uint16, ys1 []*uint16, ys2 []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ys1Arg := make([]C.ImU16, len(ys1))
+	for i, ys1V := range ys1 {
+		ys1Arg[i] = C.ImU16(*ys1V)
+	}
+	defer func() {
+		for i, ys1V := range ys1Arg {
+			*ys1[i] = uint16(ys1V)
+		}
+	}()
+
+	ys2Arg := make([]C.ImU16, len(ys2))
+	for i, ys2V := range ys2 {
+		ys2Arg[i] = C.ImU16(*ys2V)
+	}
+	defer func() {
+		for i, ys2V := range ys2Arg {
+			*ys2[i] = uint16(ys2V)
+		}
+	}()
+
+	C.Plot_PlotShaded_U16PtrU16PtrU16Ptr(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ys1Arg[0]), (*C.ImU16)(&ys2Arg[0]), C.int(count))
 }
 
 func Plot_PlotShaded_U32PtrInt(label_id string, values []*uint32, count int32) {
@@ -4402,6 +8486,94 @@ func Plot_PlotStairs_FloatPtrInt(label_id string, values []float32, count int32)
 	C.Plot_PlotStairs_FloatPtrInt(label_idArg, (*C.float)(&(values[0])), C.int(count))
 }
 
+func Plot_PlotStairs_S16PtrInt(label_id string, values []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStairs_S16PtrInt(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotStairs_S16PtrS16Ptr(label_id string, xs []*int, ys []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	C.Plot_PlotStairs_S16PtrS16Ptr(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count))
+}
+
+func Plot_PlotStairs_S32PtrInt(label_id string, values []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStairs_S32PtrInt(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotStairs_S32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	C.Plot_PlotStairs_S32PtrS32Ptr(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count))
+}
+
 func Plot_PlotStairs_S64PtrInt(label_id string, values []int64, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -4414,6 +8586,94 @@ func Plot_PlotStairs_S64PtrS64Ptr(label_id string, xs []int64, ys []int64, count
 	defer label_idFin()
 
 	C.Plot_PlotStairs_S64PtrS64Ptr(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), C.int(count))
+}
+
+func Plot_PlotStairs_S8PtrInt(label_id string, values []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStairs_S8PtrInt(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotStairs_S8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	C.Plot_PlotStairs_S8PtrS8Ptr(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count))
+}
+
+func Plot_PlotStairs_U16PtrInt(label_id string, values []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStairs_U16PtrInt(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotStairs_U16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	C.Plot_PlotStairs_U16PtrU16Ptr(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count))
 }
 
 func Plot_PlotStairs_U32PtrInt(label_id string, values []*uint32, count int32) {
@@ -4532,6 +8792,94 @@ func Plot_PlotStems_FloatPtrInt(label_id string, values []float32, count int32) 
 	C.Plot_PlotStems_FloatPtrInt(label_idArg, (*C.float)(&(values[0])), C.int(count))
 }
 
+func Plot_PlotStems_S16PtrInt(label_id string, values []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStems_S16PtrInt(label_idArg, (*C.ImS16)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotStems_S16PtrS16Ptr(label_id string, xs []*int, ys []*int, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int(ysV)
+		}
+	}()
+
+	C.Plot_PlotStems_S16PtrS16Ptr(label_idArg, (*C.ImS16)(&xsArg[0]), (*C.ImS16)(&ysArg[0]), C.int(count))
+}
+
+func Plot_PlotStems_S32PtrInt(label_id string, values []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS32, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS32(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int32(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStems_S32PtrInt(label_idArg, (*C.ImS32)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotStems_S32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS32, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS32(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int32(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS32, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS32(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int32(ysV)
+		}
+	}()
+
+	C.Plot_PlotStems_S32PtrS32Ptr(label_idArg, (*C.ImS32)(&xsArg[0]), (*C.ImS32)(&ysArg[0]), C.int(count))
+}
+
 func Plot_PlotStems_S64PtrInt(label_id string, values []int64, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
@@ -4544,6 +8892,94 @@ func Plot_PlotStems_S64PtrS64Ptr(label_id string, xs []int64, ys []int64, count 
 	defer label_idFin()
 
 	C.Plot_PlotStems_S64PtrS64Ptr(label_idArg, (*C.longlong)(&(xs[0])), (*C.longlong)(&(ys[0])), C.int(count))
+}
+
+func Plot_PlotStems_S8PtrInt(label_id string, values []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImS8, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImS8(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = int8(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStems_S8PtrInt(label_idArg, (*C.ImS8)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotStems_S8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImS8, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImS8(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = int8(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImS8, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImS8(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = int8(ysV)
+		}
+	}()
+
+	C.Plot_PlotStems_S8PtrS8Ptr(label_idArg, (*C.ImS8)(&xsArg[0]), (*C.ImS8)(&ysArg[0]), C.int(count))
+}
+
+func Plot_PlotStems_U16PtrInt(label_id string, values []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	valuesArg := make([]C.ImU16, len(values))
+	for i, valuesV := range values {
+		valuesArg[i] = C.ImU16(*valuesV)
+	}
+	defer func() {
+		for i, valuesV := range valuesArg {
+			*values[i] = uint16(valuesV)
+		}
+	}()
+
+	C.Plot_PlotStems_U16PtrInt(label_idArg, (*C.ImU16)(&valuesArg[0]), C.int(count))
+}
+
+func Plot_PlotStems_U16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+	defer label_idFin()
+
+	xsArg := make([]C.ImU16, len(xs))
+	for i, xsV := range xs {
+		xsArg[i] = C.ImU16(*xsV)
+	}
+	defer func() {
+		for i, xsV := range xsArg {
+			*xs[i] = uint16(xsV)
+		}
+	}()
+
+	ysArg := make([]C.ImU16, len(ys))
+	for i, ysV := range ys {
+		ysArg[i] = C.ImU16(*ysV)
+	}
+	defer func() {
+		for i, ysV := range ysArg {
+			*ys[i] = uint16(ysV)
+		}
+	}()
+
+	C.Plot_PlotStems_U16PtrU16Ptr(label_idArg, (*C.ImU16)(&xsArg[0]), (*C.ImU16)(&ysArg[0]), C.int(count))
 }
 
 func Plot_PlotStems_U32PtrInt(label_id string, values []*uint32, count int32) {

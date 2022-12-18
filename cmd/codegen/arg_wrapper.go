@@ -104,6 +104,10 @@ func u16PtrW(arg ArgDef) (argType string, def string, varName string) {
 	return simplePtrW(arg.Name, "uint16", "C.uint")
 }
 
+func u16SliceW(arg ArgDef) (argType string, def string, varName string) {
+	return simplePtrSliceW("C.ImU16", "uint16", arg)
+}
+
 func u32W(arg ArgDef) (argType string, def string, varName string) {
 	return simpleW(arg.Name, "uint32", "C.ImU32")
 }
@@ -136,12 +140,24 @@ func s8W(arg ArgDef) (argType string, def string, varName string) {
 	return simpleW(arg.Name, "int", "C.ImS8")
 }
 
+func s8SliceW(arg ArgDef) (argType string, def string, varName string) {
+	return simplePtrSliceW("C.ImS8", "int8", arg)
+}
+
 func s16W(arg ArgDef) (argType string, def string, varName string) {
 	return simpleW(arg.Name, "int", "C.ImS16")
 }
 
+func s16SliceW(arg ArgDef) (argType string, def string, varName string) {
+	return simplePtrSliceW("C.ImS16", "int", arg)
+}
+
 func s32W(arg ArgDef) (argType string, def string, varName string) {
 	return simpleW(arg.Name, "int", "C.ImS32")
+}
+
+func s32SliceW(arg ArgDef) (argType string, def string, varName string) {
+	return simplePtrSliceW("C.ImS32", "int32", arg)
 }
 
 func float2W(arg ArgDef) (argType string, def string, varName string) {
