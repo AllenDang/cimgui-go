@@ -154,7 +154,7 @@ import "unsafe"
 		"short":                    shortW,
 		"unsigned short":           ushortW,
 		"ImU8":                     u8W,
-		"const ImU8*":              u8PtrW,
+		"const ImU8*":              u8SliceW,
 		"ImU16":                    u16W,
 		"ImU32":                    u32W,
 		"const ImU32*":             u32SliceW,

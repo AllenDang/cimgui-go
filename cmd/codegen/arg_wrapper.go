@@ -92,6 +92,10 @@ func u8PtrW(arg ArgDef) (argType string, def string, varName string) {
 	return simplePtrW(arg.Name, "byte", "C.ImU8")
 }
 
+func u8SliceW(arg ArgDef) (argType string, def string, varName string) {
+	return simplePtrSliceW("C.ImU8", "byte", arg)
+}
+
 func u16W(arg ArgDef) (argType string, def string, varName string) {
 	return simpleW(arg.Name, "uint", "C.ImU16")
 }
