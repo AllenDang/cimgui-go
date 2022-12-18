@@ -129,11 +129,25 @@ func (p ImPlotPoint) toC() C.ImPlotPoint {
 	return C.ImPlotPoint{x: C.double(p.X), y: C.double(p.Y)}
 }
 
+// wrappableType represents a GO type that can be converted into a C value
+// and back - into a GO value.
+// CTYPE represents the equivalent C type of self.
+// self is the type wrappableType applies to - TODO - figure out if it can be ommited :-)
+// intentional values:
+// - CTYPE is e.g. C.ImVec2, C.ImColor e.t.c.
+// - self is a pointer type (e.g. *ImVec2, ImColor)
 type wrappableType[CTYPE any, self any] interface {
+	// toC converts self into CTYPE
 	toC() CTYPE
+	// fromC converts takes CTYPE, converts it into self,
+	// applies to receiver and returns it.
 	fromC(CTYPE) self
 }
 
+// wrap takes a variable of one of the types defined in this file
+// and returns a pointer to its C equivalend as well as a "finisher" func.
+// This finisher func should be called after doing any operations
+// on C pointer in order to apply the changes back to the original GO variable.
 func wrap[CTYPE any, self any](in wrappableType[CTYPE, self]) (cPtr *CTYPE, finisher func()) {
 	if in != nil {
 		c := in.toC()
