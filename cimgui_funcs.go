@@ -529,7 +529,33 @@ func (self ImFontAtlas) GetMouseCursorTexData(cursor MouseCursor, out_offset *Im
 	out_sizeArg, out_sizeFin := wrap[C.ImVec2, *ImVec2](out_size)
 	defer out_sizeFin()
 
-	return C.FontAtlas_GetMouseCursorTexData(self.handle(), C.ImGuiMouseCursor(cursor), out_offsetArg, out_sizeArg, (*C.ImVec2)(unsafe.Pointer(&out_uv_border[0])), (*C.ImVec2)(unsafe.Pointer(&out_uv_fill[0]))) == C.bool(true)
+	out_uv_borderArg := make([]C.ImVec2, len(out_uv_border))
+	out_uv_borderFin := make([]func(), len(out_uv_border))
+	for i, out_uv_borderV := range out_uv_border {
+		var tmp *C.ImVec2
+		tmp, out_uv_borderFin[i] = wrap[C.ImVec2, *ImVec2](out_uv_borderV)
+		out_uv_borderArg[i] = *tmp
+	}
+	defer func() {
+		for _, out_uv_borderV := range out_uv_borderFin {
+			out_uv_borderV()
+		}
+	}()
+
+	out_uv_fillArg := make([]C.ImVec2, len(out_uv_fill))
+	out_uv_fillFin := make([]func(), len(out_uv_fill))
+	for i, out_uv_fillV := range out_uv_fill {
+		var tmp *C.ImVec2
+		tmp, out_uv_fillFin[i] = wrap[C.ImVec2, *ImVec2](out_uv_fillV)
+		out_uv_fillArg[i] = *tmp
+	}
+	defer func() {
+		for _, out_uv_fillV := range out_uv_fillFin {
+			out_uv_fillV()
+		}
+	}()
+
+	return C.FontAtlas_GetMouseCursorTexData(self.handle(), C.ImGuiMouseCursor(cursor), out_offsetArg, out_sizeArg, (*C.ImVec2)(&out_uv_borderArg[0]), (*C.ImVec2)(&out_uv_fillArg[0])) == C.bool(true)
 }
 
 func NewImFontAtlas() ImFontAtlas {

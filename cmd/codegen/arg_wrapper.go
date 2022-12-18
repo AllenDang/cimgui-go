@@ -237,9 +237,7 @@ func imVec2PtrW(arg ArgDef) (argType string, def string, varName string) {
 
 // ImVec2[2] -> [2]ImVec2
 func imVec22W(arg ArgDef) (argType string, def string, varName string) {
-	argType = "[2]*ImVec2"
-	varName = fmt.Sprintf("(*C.ImVec2)(unsafe.Pointer(&%s[0]))", arg.Name)
-	return
+	return wrappablePtrArrayW(2, "C.ImVec2", "ImVec2", arg)
 }
 
 func imVec4W(arg ArgDef) (argType string, def string, varName string) {
@@ -280,13 +278,13 @@ func simpleW(argName, goType, cType string) (argType string, def string, varName
 // C.int* -> *int32
 func simplePtrW(argName, goType, cType string) (argType, def, varName string) {
 	argType = fmt.Sprintf("*%s", goType)
-	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := simplePtrW[%[2]s, %[3]s](%[1]s)
+	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := wrapNumberPtr[%[2]s, %[3]s](%[1]s)
 defer %[1]sFin()`, argName, cType, goType)
 	varName = fmt.Sprintf("%sArg", argName)
 	return
 }
 
-// C.int* or C.int[] -> []int32
+// C.int*, C.int[] as well as C.int[2] -> [2]*int32
 func simplePtrArrayW(size int, cArrayType, goArrayType string, arg ArgDef) (argType string, def string, varName string) {
 	argType = fmt.Sprintf("[%d]*%s", size, goArrayType)
 	def = fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(%[1]s))
@@ -317,5 +315,25 @@ func wrappablePtrW(argName, goType, cType string) (argType, def, varName string)
 	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := wrap[%[3]s, %[2]s](%[1]s)
 defer %[1]sFin()`, argName, goType, cType)
 	varName = fmt.Sprintf("%sArg", argName)
+	return
+}
+
+func wrappablePtrArrayW(size int, cArrayType, goArrayType string, arg ArgDef) (argType string, def string, varName string) {
+	argType = fmt.Sprintf("[%d]*%s", size, goArrayType)
+	def = fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(%[1]s))
+%[1]sFin := make([]func(), len(%[1]s))
+for i, %[1]sV := range %[1]s {
+	var tmp *%[2]s
+  	tmp, %[1]sFin[i] = wrap[%[2]s, *%[3]s](%[1]sV)
+  	%[1]sArg[i] = *tmp
+}
+defer func() {
+  for _, %[1]sV := range %[1]sFin {
+    %[1]sV()
+  }
+}()
+
+`, arg.Name, cArrayType, goArrayType)
+	varName = fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name)
 	return
 }
