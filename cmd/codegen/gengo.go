@@ -202,6 +202,7 @@ import "unsafe"
 		"char*":                    constCharReturnW,
 		"const char*":              constCharReturnW,
 		"const ImWchar*":           constWCharPtrReturnW,
+		"ImWchar":                  imWcharReturnW,
 		"float":                    floatReturnW,
 		"double":                   doubleReturnW,
 		"int":                      intReturnW,

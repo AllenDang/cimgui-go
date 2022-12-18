@@ -5613,12 +5613,24 @@ func (self ImFont) SetFallbackChar(v ImWchar) {
 	C.ImFont_SetFallbackChar(self.handle(), C.ImWchar(v))
 }
 
+func (self ImFont) GetFallbackChar() ImWchar {
+	return (ImWchar)(C.ImFont_GetFallbackChar(self.handle()))
+}
+
 func (self ImFont) SetEllipsisChar(v ImWchar) {
 	C.ImFont_SetEllipsisChar(self.handle(), C.ImWchar(v))
 }
 
+func (self ImFont) GetEllipsisChar() ImWchar {
+	return (ImWchar)(C.ImFont_GetEllipsisChar(self.handle()))
+}
+
 func (self ImFont) SetDotChar(v ImWchar) {
 	C.ImFont_SetDotChar(self.handle(), C.ImWchar(v))
+}
+
+func (self ImFont) GetDotChar() ImWchar {
+	return (ImWchar)(C.ImFont_GetDotChar(self.handle()))
 }
 
 func (self ImFont) SetDirtyLookupTables(v bool) {
@@ -5951,6 +5963,10 @@ func (self ImFontConfig) GetRasterizerMultiply() float32 {
 
 func (self ImFontConfig) SetEllipsisChar(v ImWchar) {
 	C.ImFontConfig_SetEllipsisChar(self.handle(), C.ImWchar(v))
+}
+
+func (self ImFontConfig) GetEllipsisChar() ImWchar {
+	return (ImWchar)(C.ImFontConfig_GetEllipsisChar(self.handle()))
 }
 
 func (self ImFontConfig) SetDstFont(v ImFont) {
@@ -8802,6 +8818,10 @@ func (self ImGuiInputTextCallbackData) GetUserData() unsafe.Pointer {
 
 func (self ImGuiInputTextCallbackData) SetEventChar(v ImWchar) {
 	C.ImGuiInputTextCallbackData_SetEventChar(self.handle(), C.ImWchar(v))
+}
+
+func (self ImGuiInputTextCallbackData) GetEventChar() ImWchar {
+	return (ImWchar)(C.ImGuiInputTextCallbackData_GetEventChar(self.handle()))
 }
 
 func (self ImGuiInputTextCallbackData) SetEventKey(v Key) {
