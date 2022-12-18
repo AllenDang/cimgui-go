@@ -157,7 +157,7 @@ import "unsafe"
 		"const ImU8*":              u8PtrW,
 		"ImU16":                    u16W,
 		"ImU32":                    u32W,
-		"const ImU32*":             u32PtrW,
+		"const ImU32*":             u32SliceW,
 		"ImU64":                    u64W,
 		"const ImU64*":             uint64ArrayW,
 		"ImS8":                     s8W,
