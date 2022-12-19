@@ -236,7 +236,6 @@ import "unsafe"
 
 			if !shouldGenerate {
 				fmt.Printf("Unknown argument type \"%s\" in function %s\n", a.Type, f.FuncName)
-				break
 			}
 		}
 
