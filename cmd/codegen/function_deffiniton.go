@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"sort"
 )
 
@@ -48,11 +49,11 @@ type ArgDef struct {
 
 // getFunDefs takes a json file bytes as an argument and returns
 // a list of cimgui functions read.
-func getFunDefs(defJsonBytes []byte) []FuncDef {
+func getFunDefs(defJsonBytes []byte) ([]FuncDef, error) {
 	var defJson map[string]json.RawMessage
 	err := json.Unmarshal(defJsonBytes, &defJson)
 	if err != nil {
-		panic(err.Error())
+		return nil, fmt.Errorf("cannot unmarshal json: %w", err)
 	}
 
 	var funcs []FuncDef
@@ -69,5 +70,5 @@ func getFunDefs(defJsonBytes []byte) []FuncDef {
 		return funcs[i].FuncName < funcs[j].FuncName
 	})
 
-	return funcs
+	return funcs, nil
 }

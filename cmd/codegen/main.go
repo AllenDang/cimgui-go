@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"log"
 	"os"
 	"strings"
 )
@@ -12,9 +14,16 @@ const (
 	cppFileHeader   = generatorInfo
 )
 
-func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []string, structNames []string) {
-	enums := getEnumDefs(enumJsonBytes)
-	structs := getStructDefs(enumJsonBytes)
+func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []string, structNames []string, err error) {
+	enums, err := getEnumDefs(enumJsonBytes)
+	if err != nil {
+		return nil, nil, fmt.Errorf("cannot get enum definitions: %w", err)
+	}
+
+	structs, err := getStructDefs(enumJsonBytes)
+	if err != nil {
+		return nil, nil, fmt.Errorf("cannot get struct definitions: %w", err)
+	}
 
 	for _, e := range enums {
 		goEnumName := strings.TrimSuffix(e.Name, "_")
@@ -42,38 +51,47 @@ func main() {
 
 	stat, err := os.Stat(*defJsonPath)
 	if err != nil || stat.IsDir() {
-		panic("Invalid definitions json file path")
+		log.Panic("Invalid definitions json file path")
 	}
 
 	stat, err = os.Stat(*enumsJsonpath)
 	if err != nil || stat.IsDir() {
-		panic("Invalid enum json file path")
+		log.Panic("Invalid enum json file path")
 	}
 
 	defJsonBytes, err := os.ReadFile(*defJsonPath)
 	if err != nil {
-		panic(err.Error())
+		log.Panic(err)
 	}
 
 	enumJsonBytes, err := os.ReadFile(*enumsJsonpath)
 	if err != nil {
-		panic(err.Error())
+		log.Panic(err)
 	}
 
 	var refEnumJsonBytes []byte
 	if len(*refEnumsJsonPath) > 0 {
 		refEnumJsonBytes, err = os.ReadFile(*refEnumsJsonPath)
 		if err != nil {
-			panic(err.Error())
+			log.Panic(err)
 		}
 	}
 
 	// get definitions from json file
-	funcs := getFunDefs(defJsonBytes)
+	funcs, err := getFunDefs(defJsonBytes)
+	if err != nil {
+		log.Panic(err.Error())
+	}
 
-	enums := getEnumDefs(enumJsonBytes)
+	enums, err := getEnumDefs(enumJsonBytes)
+	if err != nil {
+		log.Panic(err.Error())
+	}
 
-	structs := getStructDefs(enumJsonBytes)
+	structs, err := getStructDefs(enumJsonBytes)
+	if err != nil {
+		log.Panic(err.Error())
+	}
 
 	validFuncs := generateCppWrapper(*prefix, *include, funcs)
 
@@ -86,7 +104,11 @@ func main() {
 
 	// generate reference only enum and struct names
 	if len(refEnumJsonBytes) > 0 {
-		es, ss := getEnumAndStructNames(refEnumJsonBytes)
+		es, ss, err := getEnumAndStructNames(refEnumJsonBytes)
+		if err != nil {
+			log.Panic(err)
+		}
+
 		enumNames = append(enumNames, es...)
 		structNames = append(structNames, ss...)
 	}

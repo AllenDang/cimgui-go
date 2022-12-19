@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"sort"
 	"strings"
 
@@ -28,12 +29,12 @@ type StructMemberDef struct {
 }
 
 // getStructDefs takes a json file bytes (struct_and_enums.json) and returns a slice of StructDef.
-func getStructDefs(enumJsonBytes []byte) []StructDef {
+func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 	// extract only structs section from json
 	var structSectionJson StructSection
 	err := json.Unmarshal(enumJsonBytes, &structSectionJson)
 	if err != nil {
-		panic(err.Error())
+		return nil, fmt.Errorf("cannot extract structs section from json: %w", err)
 	}
 
 	var (
@@ -43,7 +44,7 @@ func getStructDefs(enumJsonBytes []byte) []StructDef {
 
 	err = json.Unmarshal(structSectionJson.Structs, &structJson)
 	if err != nil {
-		panic(err.Error())
+		return nil, fmt.Errorf("cannot unmarshal structs section: %w", err)
 	}
 
 	for k, v := range structJson {
@@ -51,7 +52,7 @@ func getStructDefs(enumJsonBytes []byte) []StructDef {
 
 		err := json.Unmarshal(v, &memberDefs)
 		if err != nil {
-			panic(err.Error())
+			return nil, fmt.Errorf("cannot unmarshal struct %s: %w", k, err)
 		}
 
 		structs = append(structs, StructDef{
@@ -65,7 +66,7 @@ func getStructDefs(enumJsonBytes []byte) []StructDef {
 		return structs[i].Name < structs[j].Name
 	})
 
-	return structs
+	return structs, nil
 }
 
 func shouldSkipStruct(name string) bool {

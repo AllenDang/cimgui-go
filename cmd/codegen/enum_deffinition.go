@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"sort"
 )
 
@@ -23,11 +24,11 @@ type EnumValueDef struct {
 }
 
 // getEnumDefs takes a json file bytes (struct_and_enums.json) and returns a slice of EnumDef.
-func getEnumDefs(enumJsonBytes []byte) []EnumDef {
+func getEnumDefs(enumJsonBytes []byte) ([]EnumDef, error) {
 	var enumSectionJson EnumsSection
 	err := json.Unmarshal(enumJsonBytes, &enumSectionJson)
 	if err != nil {
-		panic(err.Error())
+		return nil, fmt.Errorf("cannot extract enums section from json: %w", err)
 	}
 
 	var enums []EnumDef
@@ -35,14 +36,14 @@ func getEnumDefs(enumJsonBytes []byte) []EnumDef {
 	var enumJson map[string]json.RawMessage
 	err = json.Unmarshal(enumSectionJson.Enums, &enumJson)
 	if err != nil {
-		panic(err.Error())
+		return nil, fmt.Errorf("cannot unmarshal enums section: %w", err)
 	}
 
 	for k, v := range enumJson {
 		var enumValues []EnumValueDef
 		err := json.Unmarshal(v, &enumValues)
 		if err != nil {
-			panic(err.Error())
+			return nil, fmt.Errorf("cannot unmarshal enum %s: %w", k, err)
 		}
 
 		enums = append(enums, EnumDef{
@@ -56,5 +57,5 @@ func getEnumDefs(enumJsonBytes []byte) []EnumDef {
 		return enums[i].Name < enums[j].Name
 	})
 
-	return enums
+	return enums, nil
 }
