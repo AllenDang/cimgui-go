@@ -3,10 +3,10 @@ package main
 import "C"
 import "fmt"
 
-type typeWrapper func(arg ArgDef) (argType string, def string, varName string)
+type argumentWrapper func(arg ArgDef) (argType string, def string, varName string)
 
-func argWrapper(argType string) (wrapper typeWrapper, err error) {
-	argWrapperMap := map[string]typeWrapper{
+func argWrapper(argType string) (wrapper argumentWrapper, err error) {
+	argWrapperMap := map[string]argumentWrapper{
 		"char*":                    constCharW,
 		"const char*":              constCharW,
 		"const char**":             charPtrPtrW,
