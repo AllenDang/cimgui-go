@@ -93,13 +93,20 @@ func main() {
 		log.Panic(err.Error())
 	}
 
-	validFuncs := generateCppWrapper(*prefix, *include, funcs)
+	validFuncs, err := generateCppWrapper(*prefix, *include, funcs)
+	if err != nil {
+		log.Panic(err)
+	}
 
 	// generate code
 	enumNames := generateGoEnums(*prefix, enums)
 	structNames := generateGoStructs(*prefix, structs)
 
-	structAccessorFuncs := generateCppStructsAccessor(*prefix, validFuncs, structs)
+	structAccessorFuncs, err := generateCppStructsAccessor(*prefix, validFuncs, structs)
+	if err != nil {
+		log.Panic(err)
+	}
+
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
 	// generate reference only enum and struct names
