@@ -1,13 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
 	"os"
-	"sort"
 	"strings"
-
-	"github.com/thoas/go-funk"
 )
 
 const (
@@ -15,130 +11,6 @@ const (
 	goPackageHeader = generatorInfo + "package cimgui\n\n"
 	cppFileHeader   = generatorInfo
 )
-
-type EnumValueDef struct {
-	Name  string `json:"name"`
-	Value int    `json:"calc_value"`
-}
-
-type EnumDef struct {
-	Name   string
-	Values []EnumValueDef
-}
-
-type EnumsSection struct {
-	Enums json.RawMessage `json:"enums"`
-}
-
-type StructMemberDef struct {
-	Name         string `json:"name"`
-	TemplateType string `json:"template_type"`
-	Type         string `json:"type"`
-	Size         int    `json:"size"`
-}
-
-type StructDef struct {
-	Name    string            `json:"name"`
-	Members []StructMemberDef `json:"members"`
-}
-
-type StructSection struct {
-	Structs json.RawMessage `json:"structs"`
-}
-
-func getEnumDefs(enumJsonBytes []byte) []EnumDef {
-	var enumSectionJson EnumsSection
-	err := json.Unmarshal(enumJsonBytes, &enumSectionJson)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	var enums []EnumDef
-
-	var enumJson map[string]json.RawMessage
-	err = json.Unmarshal(enumSectionJson.Enums, &enumJson)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	for k, v := range enumJson {
-		var enumValues []EnumValueDef
-		err := json.Unmarshal(v, &enumValues)
-		if err != nil {
-			panic(err.Error())
-		}
-
-		enums = append(enums, EnumDef{
-			Name:   k,
-			Values: enumValues,
-		})
-	}
-
-	// sort lexicographically for determenistic generation
-	sort.Slice(enums, func(i, j int) bool {
-		return enums[i].Name < enums[j].Name
-	})
-
-	return enums
-}
-
-func getStructDefs(enumJsonBytes []byte) []StructDef {
-	var structSectionJson StructSection
-	err := json.Unmarshal(enumJsonBytes, &structSectionJson)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	var structs []StructDef
-
-	var structJson map[string]json.RawMessage
-	err = json.Unmarshal(structSectionJson.Structs, &structJson)
-	if err != nil {
-		panic(err.Error())
-	}
-	for k, v := range structJson {
-		var memberDefs []StructMemberDef
-		err := json.Unmarshal(v, &memberDefs)
-		if err != nil {
-			panic(err.Error())
-		}
-
-		structs = append(structs, StructDef{
-			Name:    k,
-			Members: memberDefs,
-		})
-	}
-
-	// sort lexicographically for determenistic generation
-	sort.Slice(structs, func(i, j int) bool {
-		return structs[i].Name < structs[j].Name
-	})
-
-	return structs
-}
-
-func shouldSkipStruct(name string) bool {
-	valueTypeStructs := []string{
-		"ImVec1",
-		"ImVec2ih",
-		"ImVec2",
-		"ImVec4",
-		"ImRect",
-		"ImColor",
-		"ImPlotPoint",
-	}
-
-	if !strings.HasPrefix(name, "Im") {
-		return true
-	}
-
-	// Skip all value type struct
-	if funk.ContainsString(valueTypeStructs, name) {
-		return true
-	}
-
-	return false
-}
 
 func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []string, structNames []string) {
 	enums := getEnumDefs(enumJsonBytes)
