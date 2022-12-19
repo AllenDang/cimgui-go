@@ -143,6 +143,8 @@ import "unsafe"
 	argWrapperMap := map[string]typeWrapper{
 		"char*":                    constCharW,
 		"const char*":              constCharW,
+		"const char**":             charPtrPtrW,
+		"const char* const[]":      charPtrPtrW,
 		"unsigned char":            ucharW,
 		"unsigned char**":          uCharPtrW,
 		"size_t":                   sizeTW,
@@ -153,16 +155,24 @@ import "unsafe"
 		"short":                    shortW,
 		"unsigned short":           ushortW,
 		"ImU8":                     u8W,
+		"const ImU8*":              u8SliceW,
 		"ImU16":                    u16W,
+		"const ImU16*":             u16SliceW,
+		"ImU32":                    u32W,
+		"const ImU32*":             u32SliceW,
 		"ImU64":                    u64W,
 		"const ImU64*":             uint64ArrayW,
 		"ImS8":                     s8W,
+		"const ImS8*":              s8SliceW,
 		"ImS16":                    s16W,
+		"const ImS16*":             s16SliceW,
 		"ImS32":                    s32W,
+		"const ImS32*":             s32SliceW,
 		"const ImS64*":             int64ArrayW,
 		"int":                      intW,
 		"int*":                     intPtrW,
 		"unsigned int":             uintW,
+		"unsigned int*":            uintPtrW,
 		"double":                   doubleW,
 		"double*":                  doublePtrW,
 		"bool":                     boolW,
@@ -170,7 +180,6 @@ import "unsafe"
 		"int[2]":                   int2W,
 		"int[3]":                   int3W,
 		"int[4]":                   int4W,
-		"ImU32":                    u32W,
 		"float[2]":                 float2W,
 		"float[3]":                 float3W,
 		"float[4]":                 float4W,
@@ -187,13 +196,16 @@ import "unsafe"
 		"const ImVec2*":            imVec2PtrW,
 		"ImVec2":                   imVec2W,
 		"ImVec2*":                  imVec2PtrW,
+		"ImVec2[2]":                imVec22W,
 		"const ImVec4":             imVec4W,
 		"const ImVec4*":            imVec4PtrW,
 		"ImVec4":                   imVec4W,
 		"ImVec4*":                  imVec4PtrW,
 		"ImColor*":                 imColorPtrW,
 		"ImRect":                   imRectW,
+		"ImRect*":                  imRectPtrW,
 		"ImPlotPoint":              imPlotPointW,
+		"const ImPlotPoint":        imPlotPointW,
 		"ImPlotPoint*":             imPlotPointPtrW,
 	}
 
@@ -420,11 +432,11 @@ import "unsafe"
 			/*
 				template:
 				func FuncName(arg2 type2) typeOfArg1 {
-					pOut := typeOfArg1{}
+					pOut := &typeOfArg1{}
 					pOutArg, pOutFin := pOut.wrapped()
 					defer pOutFin()
 					C.FuncName(pOutArg, arg2)
-					return pOut
+					return *pOut
 				}
 			*/
 
@@ -442,7 +454,7 @@ import "unsafe"
 			sb.WriteString(funcSignatureFunc(f.FuncName, args[1:], returnType))
 
 			// temporary out arg definition
-			sb.WriteString(fmt.Sprintf("%s := %s{}\n", outArg.Name, outArgT))
+			sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, outArgT))
 
 			argInvokeStmt := argStmtFunc()
 
@@ -450,7 +462,7 @@ import "unsafe"
 			sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
 
 			// return statement
-			sb.WriteString(fmt.Sprintf("return %s", outArg.Name))
+			sb.WriteString(fmt.Sprintf("return *%s", outArg.Name))
 
 			sb.WriteString("}\n\n")
 
