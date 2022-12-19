@@ -140,75 +140,6 @@ import "unsafe"
 
 `, prefix))
 
-	argWrapperMap := map[string]typeWrapper{
-		"char*":                    constCharW,
-		"const char*":              constCharW,
-		"const char**":             charPtrPtrW,
-		"const char* const[]":      charPtrPtrW,
-		"unsigned char":            ucharW,
-		"unsigned char**":          uCharPtrW,
-		"size_t":                   sizeTW,
-		"size_t*":                  sizeTPtrW,
-		"float":                    floatW,
-		"float*":                   floatPtrW,
-		"const float*":             floatArrayW,
-		"short":                    shortW,
-		"unsigned short":           ushortW,
-		"ImU8":                     u8W,
-		"const ImU8*":              u8SliceW,
-		"ImU16":                    u16W,
-		"const ImU16*":             u16SliceW,
-		"ImU32":                    u32W,
-		"const ImU32*":             u32SliceW,
-		"ImU64":                    u64W,
-		"const ImU64*":             uint64ArrayW,
-		"ImS8":                     s8W,
-		"const ImS8*":              s8SliceW,
-		"ImS16":                    s16W,
-		"const ImS16*":             s16SliceW,
-		"ImS32":                    s32W,
-		"const ImS32*":             s32SliceW,
-		"const ImS64*":             int64ArrayW,
-		"int":                      intW,
-		"int*":                     intPtrW,
-		"unsigned int":             uintW,
-		"unsigned int*":            uintPtrW,
-		"double":                   doubleW,
-		"double*":                  doublePtrW,
-		"bool":                     boolW,
-		"bool*":                    boolPtrW,
-		"int[2]":                   int2W,
-		"int[3]":                   int3W,
-		"int[4]":                   int4W,
-		"float[2]":                 float2W,
-		"float[3]":                 float3W,
-		"float[4]":                 float4W,
-		"ImWchar":                  imWcharW,
-		"const ImWchar*":           imWcharPtrW,
-		"ImGuiID":                  imGuiIDW,
-		"ImTextureID":              imTextureIDW,
-		"ImDrawIdx":                imDrawIdxW,
-		"ImGuiTableColumnIdx":      imTableColumnIdxW,
-		"ImGuiTableDrawChannelIdx": imTableDrawChannelIdxW,
-		"void*":                    voidPtrW,
-		"const void*":              voidPtrW,
-		"const ImVec2":             imVec2W,
-		"const ImVec2*":            imVec2PtrW,
-		"ImVec2":                   imVec2W,
-		"ImVec2*":                  imVec2PtrW,
-		"ImVec2[2]":                imVec22W,
-		"const ImVec4":             imVec4W,
-		"const ImVec4*":            imVec4PtrW,
-		"ImVec4":                   imVec4W,
-		"ImVec4*":                  imVec4PtrW,
-		"ImColor*":                 imColorPtrW,
-		"ImRect":                   imRectW,
-		"ImRect*":                  imRectPtrW,
-		"ImPlotPoint":              imPlotPointW,
-		"const ImPlotPoint":        imPlotPointW,
-		"ImPlotPoint*":             imPlotPointPtrW,
-	}
-
 	returnWrapperMap := map[string]returnWrapper{
 		"bool":                     boolReturnW,
 		"char*":                    constCharReturnW,
@@ -298,7 +229,7 @@ import "unsafe"
 				continue
 			}
 
-			if v, ok := argWrapperMap[a.Type]; ok {
+			if v, err := argWrapper(a.Type); err != nil {
 				argType, argDef, varName := v(a)
 				if goEnumName := trimImGuiPrefix(argType); isEnum(goEnumName) {
 					argType = goEnumName
