@@ -172,12 +172,6 @@ import "unsafe"
 		"size_t":                   doubleReturnW,
 	}
 
-	type argOutput struct {
-		ArgType string
-		ArgDef  string
-		VarName string
-	}
-
 	isEnum := func(argType string) bool {
 		for _, en := range enumNames {
 			if argType == en {
@@ -229,7 +223,7 @@ import "unsafe"
 				continue
 			}
 
-			if v, err := argWrapper(a.Type); err != nil {
+			if v, err := argWrapper(a.Type); err == nil {
 				argType, argDef, varName := v(a)
 				if goEnumName := trimImGuiPrefix(argType); isEnum(goEnumName) {
 					argType = goEnumName
@@ -287,19 +281,6 @@ import "unsafe"
 			continue
 		} else {
 			fmt.Printf("generated: %s%s\n", f.FuncName, f.Args)
-		}
-
-		// Generate function args
-		argStmtFunc := func() string {
-			var invokeStmt []string
-			for _, aw := range argWrappers {
-				invokeStmt = append(invokeStmt, aw.VarName)
-				if len(aw.ArgDef) > 0 {
-					sb.WriteString(fmt.Sprintf("%s\n\n", aw.ArgDef))
-				}
-			}
-
-			return strings.Join(invokeStmt, ",")
 		}
 
 		skipStructs := []string{
@@ -387,7 +368,7 @@ import "unsafe"
 			// temporary out arg definition
 			sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, outArgT))
 
-			argInvokeStmt := argStmtFunc()
+			argInvokeStmt := argStmtFunc(argWrappers, &sb)
 
 			// C function call
 			sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
@@ -408,14 +389,14 @@ import "unsafe"
 
 				sb.WriteString(fmt.Sprintf("func (self %[1]s) %[2]s(%[3]s) {\n", funcParts[0], funcName, strings.Join(args, ",")))
 
-				argInvokeStmt := argStmtFunc()
+				argInvokeStmt := argStmtFunc(argWrappers, &sb)
 
 				sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
 				sb.WriteString("}\n\n")
 			} else {
 				sb.WriteString(funcSignatureFunc(f.FuncName, args, ""))
 
-				argInvokeStmt := argStmtFunc()
+				argInvokeStmt := argStmtFunc(argWrappers, &sb)
 
 				sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
 				sb.WriteString("}\n\n")
@@ -428,7 +409,7 @@ import "unsafe"
 
 				sb.WriteString(funcSignatureFunc(f.FuncName, args, returnType))
 
-				argInvokeStmt := argStmtFunc()
+				argInvokeStmt := argStmtFunc(argWrappers, &sb)
 
 				sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 				sb.WriteString("}\n\n")
@@ -439,7 +420,7 @@ import "unsafe"
 
 				sb.WriteString(funcSignatureFunc(f.FuncName, args, returnType))
 
-				argInvokeStmt := argStmtFunc()
+				argInvokeStmt := argStmtFunc(argWrappers, &sb)
 
 				sb.WriteString(fmt.Sprintf("return %s(%s)", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 				sb.WriteString("}\n\n")
@@ -452,7 +433,7 @@ import "unsafe"
 
 				sb.WriteString(funcSignatureFunc(f.FuncName, args, pureReturnType))
 
-				argInvokeStmt := argStmtFunc()
+				argInvokeStmt := argStmtFunc(argWrappers, &sb)
 
 				sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(%s))", pureReturnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 				sb.WriteString("}\n\n")
@@ -461,7 +442,7 @@ import "unsafe"
 			} else if f.StructGetter && funk.ContainsString(structNames, f.Ret) {
 				sb.WriteString(funcSignatureFunc(f.FuncName, args, f.Ret))
 
-				argInvokeStmt := argStmtFunc()
+				argInvokeStmt := argStmtFunc(argWrappers, &sb)
 
 				sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", f.Ret, f.FuncName, argInvokeStmt))
 				sb.WriteString("}\n\n")
@@ -489,7 +470,7 @@ import "unsafe"
 
 				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", newFuncName, strings.Join(args, ","), returnType))
 
-				argInvokeStmt := argStmtFunc()
+				argInvokeStmt := argStmtFunc(argWrappers, &sb)
 
 				sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", returnType, f.FuncName, argInvokeStmt))
 
@@ -511,4 +492,23 @@ import "unsafe"
 	defer goFile.Close()
 
 	_, _ = goFile.WriteString(sb.String())
+}
+
+type argOutput struct {
+	ArgType string
+	ArgDef  string
+	VarName string
+}
+
+// Generate function args
+func argStmtFunc(argWrappers []argOutput, sb *strings.Builder) string {
+	var invokeStmt []string
+	for _, aw := range argWrappers {
+		invokeStmt = append(invokeStmt, aw.VarName)
+		if len(aw.ArgDef) > 0 {
+			sb.WriteString(fmt.Sprintf("%s\n\n", aw.ArgDef))
+		}
+	}
+
+	return strings.Join(invokeStmt, ",")
 }
