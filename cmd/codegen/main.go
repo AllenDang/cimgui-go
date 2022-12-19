@@ -16,29 +16,6 @@ const (
 	cppFileHeader   = generatorInfo
 )
 
-type ArgDef struct {
-	Name       string `json:"name"`
-	Type       string `json:"type"`
-	CustomType string `json:"custom_type"`
-}
-
-type FuncDef struct {
-	FuncName         string            `json:"ov_cimguiname"`
-	OriginalFuncName string            `json:"original_func_name"`
-	Args             string            `json:"args"`
-	ArgsT            []ArgDef          `json:"argsT"`
-	Defaults         map[string]string `json:"defaults"`
-	Location         string            `json:"location"`
-	Constructor      bool              `json:"constructor"`
-	Destructor       bool              `json:"destructor"`
-	StructSetter     bool              `json:"struct_setter"`
-	StructGetter     bool              `json:"struct_getter"`
-	InvocationStmt   string            `json:"invocation_stmt"`
-	Ret              string            `json:"ret"`
-	StName           string            `json:"stname"`
-	NonUDT           int               `json:"nonUDT"`
-}
-
 type EnumValueDef struct {
 	Name  string `json:"name"`
 	Value int    `json:"calc_value"`
@@ -67,30 +44,6 @@ type StructDef struct {
 
 type StructSection struct {
 	Structs json.RawMessage `json:"structs"`
-}
-
-func getFunDefs(defJsonBytes []byte) []FuncDef {
-	var defJson map[string]json.RawMessage
-	err := json.Unmarshal(defJsonBytes, &defJson)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	var funcs []FuncDef
-
-	for _, v := range defJson {
-		var funcDefs []FuncDef
-		_ = json.Unmarshal(v, &funcDefs)
-
-		funcs = append(funcs, funcDefs...)
-	}
-
-	// sort lexicographically for determenistic generation
-	sort.Slice(funcs, func(i, j int) bool {
-		return funcs[i].FuncName < funcs[j].FuncName
-	})
-
-	return funcs
 }
 
 func getEnumDefs(enumJsonBytes []byte) []EnumDef {
