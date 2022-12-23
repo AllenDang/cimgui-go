@@ -13,23 +13,23 @@ type (
 	ImGuiTableDrawChannelIdx C.ImGuiTableDrawChannelIdx
 )
 
-var _ wrappableType[C.ImVec2, *ImVec2] = &ImVec2{}
+var _ wrappableType[C.ImVec2, *Vec2] = &Vec2{}
 
-type ImVec2 struct {
+type Vec2 struct {
 	X float32
 	Y float32
 }
 
-func NewImVec2(x, y float32) ImVec2 {
-	return ImVec2{X: x, Y: y}
+func NewVec2(x, y float32) Vec2 {
+	return Vec2{X: x, Y: y}
 }
 
-func (i *ImVec2) fromC(vec2 C.ImVec2) *ImVec2 {
-	*i = NewImVec2(float32(vec2.x), float32(vec2.y))
+func (i *Vec2) fromC(vec2 C.ImVec2) *Vec2 {
+	*i = NewVec2(float32(vec2.x), float32(vec2.y))
 	return i
 }
 
-func (i ImVec2) toC() C.ImVec2 {
+func (i Vec2) toC() C.ImVec2 {
 	return C.ImVec2{x: C.float(i.X), y: C.float(i.Y)}
 }
 
@@ -89,16 +89,16 @@ func (i ImColor) toC() C.ImColor {
 var _ wrappableType[C.ImRect, *ImRect] = &ImRect{}
 
 type ImRect struct {
-	Min ImVec2
-	Max ImVec2
+	Min Vec2
+	Max Vec2
 }
 
 func (i *ImRect) fromC(rect C.ImRect) *ImRect {
-	out := &ImVec2{}
+	out := &Vec2{}
 	out.fromC(rect.Min)
 	i.Min = *out
 
-	out = &ImVec2{}
+	out = &Vec2{}
 	out.fromC(rect.Max)
 	i.Max = *out
 
@@ -135,7 +135,7 @@ func (p ImPlotPoint) toC() C.ImPlotPoint {
 // self is the type wrappableType applies to - TODO - figure out if it can be ommited :-)
 // intentional values:
 // - CTYPE is e.g. C.ImVec2, C.ImColor e.t.c.
-// - self is a pointer type (e.g. *ImVec2, ImColor)
+// - self is a pointer type (e.g. *Vec2, ImColor)
 type wrappableType[CTYPE any, self any] interface {
 	// toC converts self into CTYPE
 	toC() CTYPE

@@ -257,16 +257,16 @@ func imPlotPointPtrW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imVec2W(arg ArgDef) (argType string, def string, varName string) {
-	return wrappableW(arg.Name, "ImVec2")
+	return wrappableW(arg.Name, "Vec2")
 }
 
 func imVec2PtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrW(arg.Name, "*ImVec2", "C.ImVec2")
+	return wrappablePtrW(arg.Name, "*Vec2", "C.ImVec2")
 }
 
 // ImVec2[2] -> [2]ImVec2
 func imVec22W(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrArrayW(2, "C.ImVec2", "ImVec2", arg)
+	return wrappablePtrArrayW(2, "C.ImVec2", "Vec2", arg)
 }
 
 func imVec4W(arg ArgDef) (argType string, def string, varName string) {

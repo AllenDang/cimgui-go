@@ -443,6 +443,7 @@ import "unsafe"
 			// find out the return type
 			outArg := f.ArgsT[0]
 			outArgT := strings.TrimSuffix(outArg.Type, "*")
+			outArgT = trimImGuiPrefix(outArgT)
 			returnWrapper, found := returnWrapperMap[outArgT]
 			if !found {
 				fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)

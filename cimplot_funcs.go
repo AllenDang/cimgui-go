@@ -92,24 +92,6 @@ func (self ImPlotRange) Destroy() {
 	C.PlotRange_Destroy(self.handle())
 }
 
-func (self ImPlotRect) Clamp_PlotPoInt(p ImPlotPoint) ImPlotPoint {
-	pOut := &ImPlotPoint{}
-	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
-	defer pOutFin()
-
-	C.PlotRect_Clamp_PlotPoInt(pOutArg, self.handle(), p.toC())
-	return *pOut
-}
-
-func (self ImPlotRect) Clamp_double(x float64, y float64) ImPlotPoint {
-	pOut := &ImPlotPoint{}
-	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
-	defer pOutFin()
-
-	C.PlotRect_Clamp_double(pOutArg, self.handle(), C.double(x), C.double(y))
-	return *pOut
-}
-
 func (self ImPlotRect) Contains_PlotPoInt(p ImPlotPoint) bool {
 	return C.PlotRect_Contains_PlotPoInt(self.handle(), p.toC()) == C.bool(true)
 }
@@ -124,33 +106,6 @@ func NewImPlotRectNil() ImPlotRect {
 
 func NewImPlotRectdouble(x_min float64, x_max float64, y_min float64, y_max float64) ImPlotRect {
 	return (ImPlotRect)(unsafe.Pointer(C.PlotRect_ImPlotRect_double(C.double(x_min), C.double(x_max), C.double(y_min), C.double(y_max))))
-}
-
-func (self ImPlotRect) Max() ImPlotPoint {
-	pOut := &ImPlotPoint{}
-	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
-	defer pOutFin()
-
-	C.PlotRect_Max(pOutArg, self.handle())
-	return *pOut
-}
-
-func (self ImPlotRect) Min() ImPlotPoint {
-	pOut := &ImPlotPoint{}
-	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
-	defer pOutFin()
-
-	C.PlotRect_Min(pOutArg, self.handle())
-	return *pOut
-}
-
-func (self ImPlotRect) Size() ImPlotPoint {
-	pOut := &ImPlotPoint{}
-	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
-	defer pOutFin()
-
-	C.PlotRect_Size(pOutArg, self.handle())
-	return *pOut
 }
 
 func (self ImPlotRect) Destroy() {
@@ -218,11 +173,11 @@ func Plot_AddColormap_Vec4PtrV(name string, cols *ImVec4, size int32, qual bool)
 
 // Plot_Annotation_BoolV parameter default value hint:
 // round: false
-func Plot_Annotation_BoolV(x float64, y float64, col ImVec4, pix_offset ImVec2, clamp bool, round bool) {
+func Plot_Annotation_BoolV(x float64, y float64, col ImVec4, pix_offset Vec2, clamp bool, round bool) {
 	C.Plot_Annotation_BoolV(C.double(x), C.double(y), col.toC(), pix_offset.toC(), C.bool(clamp), C.bool(round))
 }
 
-func Plot_Annotation_Str(x float64, y float64, col ImVec4, pix_offset ImVec2, clamp bool, fmt string) {
+func Plot_Annotation_Str(x float64, y float64, col ImVec4, pix_offset Vec2, clamp bool, fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
@@ -283,7 +238,7 @@ func Plot_BeginLegendPopupV(label_id string, mouse_button MouseButton) bool {
 // Plot_BeginPlotV parameter default value hint:
 // flags: 0
 // size: ImVec2(-1,0)
-func Plot_BeginPlotV(title_id string, size ImVec2, flags PlotFlags) bool {
+func Plot_BeginPlotV(title_id string, size Vec2, flags PlotFlags) bool {
 	title_idArg, title_idFin := wrapString(title_id)
 	defer title_idFin()
 
@@ -294,7 +249,7 @@ func Plot_BeginPlotV(title_id string, size ImVec2, flags PlotFlags) bool {
 // col_ratios: ((void*)0)
 // flags: 0
 // row_ratios: ((void*)0)
-func Plot_BeginSubplotsV(title_id string, rows int32, cols int32, size ImVec2, flags PlotSubplotFlags, row_ratios *float32, col_ratios *float32) bool {
+func Plot_BeginSubplotsV(title_id string, rows int32, cols int32, size Vec2, flags PlotSubplotFlags, row_ratios *float32, col_ratios *float32) bool {
 	title_idArg, title_idFin := wrapString(title_id)
 	defer title_idFin()
 
@@ -323,7 +278,7 @@ func Plot_CancelPlotSelection() {
 // Plot_ColormapButtonV parameter default value hint:
 // cmap: -1
 // size: ImVec2(0,0)
-func Plot_ColormapButtonV(label string, size ImVec2, cmap PlotColormap) bool {
+func Plot_ColormapButtonV(label string, size Vec2, cmap PlotColormap) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -339,7 +294,7 @@ func Plot_ColormapIcon(cmap PlotColormap) {
 // flags: 0
 // format: "%g"
 // size: ImVec2(0,0)
-func Plot_ColormapScaleV(label string, scale_min float64, scale_max float64, size ImVec2, format string, flags PlotColormapScaleFlags, cmap PlotColormap) {
+func Plot_ColormapScaleV(label string, scale_min float64, scale_max float64, size Vec2, format string, flags PlotColormapScaleFlags, cmap PlotColormap) {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -454,17 +409,6 @@ func Plot_EndSubplots() {
 	C.Plot_EndSubplots()
 }
 
-// Plot_GetColormapColorV parameter default value hint:
-// cmap: -1
-func Plot_GetColormapColorV(idx int32, cmap PlotColormap) ImVec4 {
-	pOut := &ImVec4{}
-	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
-	defer pOutFin()
-
-	C.Plot_GetColormapColorV(pOutArg, C.int(idx), C.ImPlotColormap(cmap))
-	return *pOut
-}
-
 func Plot_GetColormapCount() int {
 	return int(C.Plot_GetColormapCount())
 }
@@ -494,51 +438,12 @@ func Plot_GetInputMap() ImPlotInputMap {
 	return (ImPlotInputMap)(unsafe.Pointer(C.Plot_GetInputMap()))
 }
 
-func Plot_GetLastItemColor() ImVec4 {
-	pOut := &ImVec4{}
-	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
-	defer pOutFin()
-
-	C.Plot_GetLastItemColor(pOutArg)
-	return *pOut
-}
-
 func Plot_GetMarkerName(idx PlotMarker) string {
 	return C.GoString(C.Plot_GetMarkerName(C.ImPlotMarker(idx)))
 }
 
 func Plot_GetPlotDrawList() ImDrawList {
 	return (ImDrawList)(unsafe.Pointer(C.Plot_GetPlotDrawList()))
-}
-
-// Plot_GetPlotMousePosV parameter default value hint:
-// x_axis: -1
-// y_axis: -1
-func Plot_GetPlotMousePosV(x_axis ImAxis, y_axis ImAxis) ImPlotPoint {
-	pOut := &ImPlotPoint{}
-	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
-	defer pOutFin()
-
-	C.Plot_GetPlotMousePosV(pOutArg, C.ImAxis(x_axis), C.ImAxis(y_axis))
-	return *pOut
-}
-
-func Plot_GetPlotPos() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
-	defer pOutFin()
-
-	C.Plot_GetPlotPos(pOutArg)
-	return *pOut
-}
-
-func Plot_GetPlotSize() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
-	defer pOutFin()
-
-	C.Plot_GetPlotSize(pOutArg)
-	return *pOut
 }
 
 func Plot_GetStyle() ImPlotStyle {
@@ -597,39 +502,6 @@ func Plot_MapInputDefaultV(dst ImPlotInputMap) {
 // dst: ((void*)0)
 func Plot_MapInputReverseV(dst ImPlotInputMap) {
 	C.Plot_MapInputReverseV(dst.handle())
-}
-
-func Plot_NextColormapColor() ImVec4 {
-	pOut := &ImVec4{}
-	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
-	defer pOutFin()
-
-	C.Plot_NextColormapColor(pOutArg)
-	return *pOut
-}
-
-// Plot_PixelsToPlot_FloatV parameter default value hint:
-// x_axis: -1
-// y_axis: -1
-func Plot_PixelsToPlot_FloatV(x float32, y float32, x_axis ImAxis, y_axis ImAxis) ImPlotPoint {
-	pOut := &ImPlotPoint{}
-	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
-	defer pOutFin()
-
-	C.Plot_PixelsToPlot_FloatV(pOutArg, C.float(x), C.float(y), C.ImAxis(x_axis), C.ImAxis(y_axis))
-	return *pOut
-}
-
-// Plot_PixelsToPlot_Vec2V parameter default value hint:
-// x_axis: -1
-// y_axis: -1
-func Plot_PixelsToPlot_Vec2V(pix ImVec2, x_axis ImAxis, y_axis ImAxis) ImPlotPoint {
-	pOut := &ImPlotPoint{}
-	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
-	defer pOutFin()
-
-	C.Plot_PixelsToPlot_Vec2V(pOutArg, pix.toC(), C.ImAxis(x_axis), C.ImAxis(y_axis))
-	return *pOut
 }
 
 // Plot_PlotBarGroups_FloatPtrV parameter default value hint:
@@ -2251,7 +2123,7 @@ func Plot_PlotHeatmap_U8PtrV(label_id string, values []*byte, rows int32, cols i
 // tint_col: ImVec4(1,1,1,1)
 // uv0: ImVec2(0,0)
 // uv1: ImVec2(1,1)
-func Plot_PlotImageV(label_id string, user_texture_id ImTextureID, bounds_min ImPlotPoint, bounds_max ImPlotPoint, uv0 ImVec2, uv1 ImVec2, tint_col ImVec4, flags PlotImageFlags) {
+func Plot_PlotImageV(label_id string, user_texture_id ImTextureID, bounds_min ImPlotPoint, bounds_max ImPlotPoint, uv0 Vec2, uv1 Vec2, tint_col ImVec4, flags PlotImageFlags) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
 
@@ -4901,35 +4773,11 @@ func Plot_PlotStems_U8PtrU8PtrV(label_id string, xs []*byte, ys []*byte, count i
 // Plot_PlotTextV parameter default value hint:
 // flags: 0
 // pix_offset: ImVec2(0,0)
-func Plot_PlotTextV(text string, x float64, y float64, pix_offset ImVec2, flags PlotTextFlags) {
+func Plot_PlotTextV(text string, x float64, y float64, pix_offset Vec2, flags PlotTextFlags) {
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
 	C.Plot_PlotTextV(textArg, C.double(x), C.double(y), pix_offset.toC(), C.ImPlotTextFlags(flags))
-}
-
-// Plot_PlotToPixels_PlotPoIntV parameter default value hint:
-// x_axis: -1
-// y_axis: -1
-func Plot_PlotToPixels_PlotPoIntV(plt ImPlotPoint, x_axis ImAxis, y_axis ImAxis) ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
-	defer pOutFin()
-
-	C.Plot_PlotToPixels_PlotPoIntV(pOutArg, plt.toC(), C.ImAxis(x_axis), C.ImAxis(y_axis))
-	return *pOut
-}
-
-// Plot_PlotToPixels_doubleV parameter default value hint:
-// x_axis: -1
-// y_axis: -1
-func Plot_PlotToPixels_doubleV(x float64, y float64, x_axis ImAxis, y_axis ImAxis) ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
-	defer pOutFin()
-
-	C.Plot_PlotToPixels_doubleV(pOutArg, C.double(x), C.double(y), C.ImAxis(x_axis), C.ImAxis(y_axis))
-	return *pOut
 }
 
 // Plot_PopColormapV parameter default value hint:
@@ -4987,19 +4835,8 @@ func Plot_PushStyleVar_Int(idx PlotStyleVar, val int32) {
 	C.Plot_PushStyleVar_Int(C.ImPlotStyleVar(idx), C.int(val))
 }
 
-func Plot_PushStyleVar_Vec2(idx PlotStyleVar, val ImVec2) {
+func Plot_PushStyleVar_Vec2(idx PlotStyleVar, val Vec2) {
 	C.Plot_PushStyleVar_Vec2(C.ImPlotStyleVar(idx), val.toC())
-}
-
-// Plot_SampleColormapV parameter default value hint:
-// cmap: -1
-func Plot_SampleColormapV(t float32, cmap PlotColormap) ImVec4 {
-	pOut := &ImVec4{}
-	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
-	defer pOutFin()
-
-	C.Plot_SampleColormapV(pOutArg, C.float(t), C.ImPlotColormap(cmap))
-	return *pOut
 }
 
 func Plot_SetAxes(x_axis ImAxis, y_axis ImAxis) {
@@ -5296,7 +5133,7 @@ func Plot_AddColormap_Vec4Ptr(name string, cols *ImVec4, size int32) PlotColorma
 	return PlotColormap(C.Plot_AddColormap_Vec4Ptr(nameArg, colsArg, C.int(size)))
 }
 
-func Plot_Annotation_Bool(x float64, y float64, col ImVec4, pix_offset ImVec2, clamp bool) {
+func Plot_Annotation_Bool(x float64, y float64, col ImVec4, pix_offset Vec2, clamp bool) {
 	C.Plot_Annotation_Bool(C.double(x), C.double(y), col.toC(), pix_offset.toC(), C.bool(clamp))
 }
 
@@ -5336,7 +5173,7 @@ func Plot_BeginPlot(title_id string) bool {
 	return C.Plot_BeginPlot(title_idArg) == C.bool(true)
 }
 
-func Plot_BeginSubplots(title_id string, rows int32, cols int32, size ImVec2) bool {
+func Plot_BeginSubplots(title_id string, rows int32, cols int32, size Vec2) bool {
 	title_idArg, title_idFin := wrapString(title_id)
 	defer title_idFin()
 
@@ -5415,26 +5252,8 @@ func Plot_DragRect(id int32, x_min *float64, y_min *float64, x_max *float64, y_m
 	return C.Plot_DragRect(C.int(id), x_minArg, y_minArg, x_maxArg, y_maxArg, col.toC()) == C.bool(true)
 }
 
-func Plot_GetColormapColor(idx int32) ImVec4 {
-	pOut := &ImVec4{}
-	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
-	defer pOutFin()
-
-	C.Plot_GetColormapColor(pOutArg, C.int(idx))
-	return *pOut
-}
-
 func Plot_GetColormapSize() int {
 	return int(C.Plot_GetColormapSize())
-}
-
-func Plot_GetPlotMousePos() ImPlotPoint {
-	pOut := &ImPlotPoint{}
-	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
-	defer pOutFin()
-
-	C.Plot_GetPlotMousePos(pOutArg)
-	return *pOut
 }
 
 func Plot_HideNextItem() {
@@ -5447,24 +5266,6 @@ func Plot_MapInputDefault() {
 
 func Plot_MapInputReverse() {
 	C.Plot_MapInputReverse()
-}
-
-func Plot_PixelsToPlot_Float(x float32, y float32) ImPlotPoint {
-	pOut := &ImPlotPoint{}
-	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
-	defer pOutFin()
-
-	C.Plot_PixelsToPlot_Float(pOutArg, C.float(x), C.float(y))
-	return *pOut
-}
-
-func Plot_PixelsToPlot_Vec2(pix ImVec2) ImPlotPoint {
-	pOut := &ImPlotPoint{}
-	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
-	defer pOutFin()
-
-	C.Plot_PixelsToPlot_Vec2(pOutArg, pix.toC())
-	return *pOut
 }
 
 func Plot_PlotBarGroups_FloatPtr(label_ids []string, values []float32, item_count int32, group_count int32) {
@@ -9094,24 +8895,6 @@ func Plot_PlotText(text string, x float64, y float64) {
 	C.Plot_PlotText(textArg, C.double(x), C.double(y))
 }
 
-func Plot_PlotToPixels_PlotPoInt(plt ImPlotPoint) ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
-	defer pOutFin()
-
-	C.Plot_PlotToPixels_PlotPoInt(pOutArg, plt.toC())
-	return *pOut
-}
-
-func Plot_PlotToPixels_double(x float64, y float64) ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
-	defer pOutFin()
-
-	C.Plot_PlotToPixels_double(pOutArg, C.double(x), C.double(y))
-	return *pOut
-}
-
 func Plot_PopColormap() {
 	C.Plot_PopColormap()
 }
@@ -9126,15 +8909,6 @@ func Plot_PopStyleVar() {
 
 func Plot_PushPlotClipRect() {
 	C.Plot_PushPlotClipRect()
-}
-
-func Plot_SampleColormap(t float32) ImVec4 {
-	pOut := &ImVec4{}
-	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
-	defer pOutFin()
-
-	C.Plot_SampleColormap(pOutArg, C.float(t))
-	return *pOut
 }
 
 func Plot_SetNextAxesLimits(x_min float64, x_max float64, y_min float64, y_max float64) {
@@ -9271,22 +9045,22 @@ func (self ImPlotAlignmentData) GetPadBMax() float32 {
 	return float32(C.ImPlotAlignmentData_GetPadBMax(self.handle()))
 }
 
-func (self ImPlotAnnotation) SetPos(v ImVec2) {
+func (self ImPlotAnnotation) SetPos(v Vec2) {
 	C.ImPlotAnnotation_SetPos(self.handle(), v.toC())
 }
 
-func (self ImPlotAnnotation) GetPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotAnnotation) GetPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotAnnotation_GetPos(self.handle()))
 	return *out
 }
 
-func (self ImPlotAnnotation) SetOffset(v ImVec2) {
+func (self ImPlotAnnotation) SetOffset(v Vec2) {
 	C.ImPlotAnnotation_SetOffset(self.handle(), v.toC())
 }
 
-func (self ImPlotAnnotation) GetOffset() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotAnnotation) GetOffset() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotAnnotation_GetOffset(self.handle()))
 	return *out
 }
@@ -10309,12 +10083,12 @@ func (self ImPlotPlot) GetSelectRect() ImRect {
 	return *out
 }
 
-func (self ImPlotPlot) SetSelectStart(v ImVec2) {
+func (self ImPlotPlot) SetSelectStart(v Vec2) {
 	C.ImPlotPlot_SetSelectStart(self.handle(), v.toC())
 }
 
-func (self ImPlotPlot) GetSelectStart() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotPlot) GetSelectStart() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotPlot_GetSelectStart(self.handle()))
 	return *out
 }
@@ -10543,162 +10317,162 @@ func (self ImPlotStyle) GetMinorAlpha() float32 {
 	return float32(C.ImPlotStyle_GetMinorAlpha(self.handle()))
 }
 
-func (self ImPlotStyle) SetMajorTickLen(v ImVec2) {
+func (self ImPlotStyle) SetMajorTickLen(v Vec2) {
 	C.ImPlotStyle_SetMajorTickLen(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetMajorTickLen() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetMajorTickLen() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetMajorTickLen(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetMinorTickLen(v ImVec2) {
+func (self ImPlotStyle) SetMinorTickLen(v Vec2) {
 	C.ImPlotStyle_SetMinorTickLen(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetMinorTickLen() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetMinorTickLen() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetMinorTickLen(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetMajorTickSize(v ImVec2) {
+func (self ImPlotStyle) SetMajorTickSize(v Vec2) {
 	C.ImPlotStyle_SetMajorTickSize(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetMajorTickSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetMajorTickSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetMajorTickSize(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetMinorTickSize(v ImVec2) {
+func (self ImPlotStyle) SetMinorTickSize(v Vec2) {
 	C.ImPlotStyle_SetMinorTickSize(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetMinorTickSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetMinorTickSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetMinorTickSize(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetMajorGridSize(v ImVec2) {
+func (self ImPlotStyle) SetMajorGridSize(v Vec2) {
 	C.ImPlotStyle_SetMajorGridSize(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetMajorGridSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetMajorGridSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetMajorGridSize(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetMinorGridSize(v ImVec2) {
+func (self ImPlotStyle) SetMinorGridSize(v Vec2) {
 	C.ImPlotStyle_SetMinorGridSize(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetMinorGridSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetMinorGridSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetMinorGridSize(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetPlotPadding(v ImVec2) {
+func (self ImPlotStyle) SetPlotPadding(v Vec2) {
 	C.ImPlotStyle_SetPlotPadding(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetPlotPadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetPlotPadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetPlotPadding(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetLabelPadding(v ImVec2) {
+func (self ImPlotStyle) SetLabelPadding(v Vec2) {
 	C.ImPlotStyle_SetLabelPadding(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetLabelPadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetLabelPadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetLabelPadding(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetLegendPadding(v ImVec2) {
+func (self ImPlotStyle) SetLegendPadding(v Vec2) {
 	C.ImPlotStyle_SetLegendPadding(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetLegendPadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetLegendPadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetLegendPadding(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetLegendInnerPadding(v ImVec2) {
+func (self ImPlotStyle) SetLegendInnerPadding(v Vec2) {
 	C.ImPlotStyle_SetLegendInnerPadding(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetLegendInnerPadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetLegendInnerPadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetLegendInnerPadding(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetLegendSpacing(v ImVec2) {
+func (self ImPlotStyle) SetLegendSpacing(v Vec2) {
 	C.ImPlotStyle_SetLegendSpacing(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetLegendSpacing() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetLegendSpacing() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetLegendSpacing(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetMousePosPadding(v ImVec2) {
+func (self ImPlotStyle) SetMousePosPadding(v Vec2) {
 	C.ImPlotStyle_SetMousePosPadding(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetMousePosPadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetMousePosPadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetMousePosPadding(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetAnnotationPadding(v ImVec2) {
+func (self ImPlotStyle) SetAnnotationPadding(v Vec2) {
 	C.ImPlotStyle_SetAnnotationPadding(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetAnnotationPadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetAnnotationPadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetAnnotationPadding(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetFitPadding(v ImVec2) {
+func (self ImPlotStyle) SetFitPadding(v Vec2) {
 	C.ImPlotStyle_SetFitPadding(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetFitPadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetFitPadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetFitPadding(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetPlotDefaultSize(v ImVec2) {
+func (self ImPlotStyle) SetPlotDefaultSize(v Vec2) {
 	C.ImPlotStyle_SetPlotDefaultSize(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetPlotDefaultSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetPlotDefaultSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetPlotDefaultSize(self.handle()))
 	return *out
 }
 
-func (self ImPlotStyle) SetPlotMinSize(v ImVec2) {
+func (self ImPlotStyle) SetPlotMinSize(v Vec2) {
 	C.ImPlotStyle_SetPlotMinSize(self.handle(), v.toC())
 }
 
-func (self ImPlotStyle) GetPlotMinSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotStyle) GetPlotMinSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotStyle_GetPlotMinSize(self.handle()))
 	return *out
 }
@@ -10807,12 +10581,12 @@ func (self ImPlotSubplot) GetGridRect() ImRect {
 	return *out
 }
 
-func (self ImPlotSubplot) SetCellSize(v ImVec2) {
+func (self ImPlotSubplot) SetCellSize(v Vec2) {
 	C.ImPlotSubplot_SetCellSize(self.handle(), v.toC())
 }
 
-func (self ImPlotSubplot) GetCellSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotSubplot) GetCellSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotSubplot_GetCellSize(self.handle()))
 	return *out
 }
@@ -10901,12 +10675,12 @@ func (self ImPlotTick) GetPixelPos() float32 {
 	return float32(C.ImPlotTick_GetPixelPos(self.handle()))
 }
 
-func (self ImPlotTick) SetLabelSize(v ImVec2) {
+func (self ImPlotTick) SetLabelSize(v Vec2) {
 	C.ImPlotTick_SetLabelSize(self.handle(), v.toC())
 }
 
-func (self ImPlotTick) GetLabelSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotTick) GetLabelSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotTick_GetLabelSize(self.handle()))
 	return *out
 }
@@ -10955,22 +10729,22 @@ func (self ImPlotTicker) GetTextBuffer() ImGuiTextBuffer {
 	return newImGuiTextBufferFromC(C.ImPlotTicker_GetTextBuffer(self.handle()))
 }
 
-func (self ImPlotTicker) SetMaxSize(v ImVec2) {
+func (self ImPlotTicker) SetMaxSize(v Vec2) {
 	C.ImPlotTicker_SetMaxSize(self.handle(), v.toC())
 }
 
-func (self ImPlotTicker) GetMaxSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotTicker) GetMaxSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotTicker_GetMaxSize(self.handle()))
 	return *out
 }
 
-func (self ImPlotTicker) SetLateSize(v ImVec2) {
+func (self ImPlotTicker) SetLateSize(v Vec2) {
 	C.ImPlotTicker_SetLateSize(self.handle(), v.toC())
 }
 
-func (self ImPlotTicker) GetLateSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImPlotTicker) GetLateSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImPlotTicker_GetLateSize(self.handle()))
 	return *out
 }

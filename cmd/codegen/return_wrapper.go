@@ -67,7 +67,7 @@ return *out
 }
 
 func imVec2ReturnW() (returnType string, returnStmt string) {
-	returnType = "ImVec2"
+	returnType = "Vec2"
 	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
 	returnStmt += `out.fromC(%s)
 return *out
