@@ -92,6 +92,24 @@ func (self ImPlotRange) Destroy() {
 	C.PlotRange_Destroy(self.handle())
 }
 
+func (self ImPlotRect) Clamp_PlotPoInt(p ImPlotPoint) ImPlotPoint {
+	pOut := &ImPlotPoint{}
+	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
+	defer pOutFin()
+
+	C.PlotRect_Clamp_PlotPoInt(pOutArg, self.handle(), p.toC())
+	return *pOut
+}
+
+func (self ImPlotRect) Clamp_double(x float64, y float64) ImPlotPoint {
+	pOut := &ImPlotPoint{}
+	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
+	defer pOutFin()
+
+	C.PlotRect_Clamp_double(pOutArg, self.handle(), C.double(x), C.double(y))
+	return *pOut
+}
+
 func (self ImPlotRect) Contains_PlotPoInt(p ImPlotPoint) bool {
 	return C.PlotRect_Contains_PlotPoInt(self.handle(), p.toC()) == C.bool(true)
 }
@@ -106,6 +124,33 @@ func NewImPlotRectNil() ImPlotRect {
 
 func NewImPlotRectdouble(x_min float64, x_max float64, y_min float64, y_max float64) ImPlotRect {
 	return (ImPlotRect)(unsafe.Pointer(C.PlotRect_ImPlotRect_double(C.double(x_min), C.double(x_max), C.double(y_min), C.double(y_max))))
+}
+
+func (self ImPlotRect) Max() ImPlotPoint {
+	pOut := &ImPlotPoint{}
+	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
+	defer pOutFin()
+
+	C.PlotRect_Max(pOutArg, self.handle())
+	return *pOut
+}
+
+func (self ImPlotRect) Min() ImPlotPoint {
+	pOut := &ImPlotPoint{}
+	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
+	defer pOutFin()
+
+	C.PlotRect_Min(pOutArg, self.handle())
+	return *pOut
+}
+
+func (self ImPlotRect) Size() ImPlotPoint {
+	pOut := &ImPlotPoint{}
+	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
+	defer pOutFin()
+
+	C.PlotRect_Size(pOutArg, self.handle())
+	return *pOut
 }
 
 func (self ImPlotRect) Destroy() {
@@ -409,6 +454,17 @@ func Plot_EndSubplots() {
 	C.Plot_EndSubplots()
 }
 
+// Plot_GetColormapColorV parameter default value hint:
+// cmap: -1
+func Plot_GetColormapColorV(idx int32, cmap PlotColormap) ImVec4 {
+	pOut := &ImVec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+	defer pOutFin()
+
+	C.Plot_GetColormapColorV(pOutArg, C.int(idx), C.ImPlotColormap(cmap))
+	return *pOut
+}
+
 func Plot_GetColormapCount() int {
 	return int(C.Plot_GetColormapCount())
 }
@@ -438,12 +494,51 @@ func Plot_GetInputMap() ImPlotInputMap {
 	return (ImPlotInputMap)(unsafe.Pointer(C.Plot_GetInputMap()))
 }
 
+func Plot_GetLastItemColor() ImVec4 {
+	pOut := &ImVec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+	defer pOutFin()
+
+	C.Plot_GetLastItemColor(pOutArg)
+	return *pOut
+}
+
 func Plot_GetMarkerName(idx PlotMarker) string {
 	return C.GoString(C.Plot_GetMarkerName(C.ImPlotMarker(idx)))
 }
 
 func Plot_GetPlotDrawList() ImDrawList {
 	return (ImDrawList)(unsafe.Pointer(C.Plot_GetPlotDrawList()))
+}
+
+// Plot_GetPlotMousePosV parameter default value hint:
+// x_axis: -1
+// y_axis: -1
+func Plot_GetPlotMousePosV(x_axis ImAxis, y_axis ImAxis) ImPlotPoint {
+	pOut := &ImPlotPoint{}
+	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
+	defer pOutFin()
+
+	C.Plot_GetPlotMousePosV(pOutArg, C.ImAxis(x_axis), C.ImAxis(y_axis))
+	return *pOut
+}
+
+func Plot_GetPlotPos() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.Plot_GetPlotPos(pOutArg)
+	return *pOut
+}
+
+func Plot_GetPlotSize() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.Plot_GetPlotSize(pOutArg)
+	return *pOut
 }
 
 func Plot_GetStyle() ImPlotStyle {
@@ -502,6 +597,39 @@ func Plot_MapInputDefaultV(dst ImPlotInputMap) {
 // dst: ((void*)0)
 func Plot_MapInputReverseV(dst ImPlotInputMap) {
 	C.Plot_MapInputReverseV(dst.handle())
+}
+
+func Plot_NextColormapColor() ImVec4 {
+	pOut := &ImVec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+	defer pOutFin()
+
+	C.Plot_NextColormapColor(pOutArg)
+	return *pOut
+}
+
+// Plot_PixelsToPlot_FloatV parameter default value hint:
+// x_axis: -1
+// y_axis: -1
+func Plot_PixelsToPlot_FloatV(x float32, y float32, x_axis ImAxis, y_axis ImAxis) ImPlotPoint {
+	pOut := &ImPlotPoint{}
+	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
+	defer pOutFin()
+
+	C.Plot_PixelsToPlot_FloatV(pOutArg, C.float(x), C.float(y), C.ImAxis(x_axis), C.ImAxis(y_axis))
+	return *pOut
+}
+
+// Plot_PixelsToPlot_Vec2V parameter default value hint:
+// x_axis: -1
+// y_axis: -1
+func Plot_PixelsToPlot_Vec2V(pix Vec2, x_axis ImAxis, y_axis ImAxis) ImPlotPoint {
+	pOut := &ImPlotPoint{}
+	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
+	defer pOutFin()
+
+	C.Plot_PixelsToPlot_Vec2V(pOutArg, pix.toC(), C.ImAxis(x_axis), C.ImAxis(y_axis))
+	return *pOut
 }
 
 // Plot_PlotBarGroups_FloatPtrV parameter default value hint:
@@ -4780,6 +4908,30 @@ func Plot_PlotTextV(text string, x float64, y float64, pix_offset Vec2, flags Pl
 	C.Plot_PlotTextV(textArg, C.double(x), C.double(y), pix_offset.toC(), C.ImPlotTextFlags(flags))
 }
 
+// Plot_PlotToPixels_PlotPoIntV parameter default value hint:
+// x_axis: -1
+// y_axis: -1
+func Plot_PlotToPixels_PlotPoIntV(plt ImPlotPoint, x_axis ImAxis, y_axis ImAxis) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.Plot_PlotToPixels_PlotPoIntV(pOutArg, plt.toC(), C.ImAxis(x_axis), C.ImAxis(y_axis))
+	return *pOut
+}
+
+// Plot_PlotToPixels_doubleV parameter default value hint:
+// x_axis: -1
+// y_axis: -1
+func Plot_PlotToPixels_doubleV(x float64, y float64, x_axis ImAxis, y_axis ImAxis) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.Plot_PlotToPixels_doubleV(pOutArg, C.double(x), C.double(y), C.ImAxis(x_axis), C.ImAxis(y_axis))
+	return *pOut
+}
+
 // Plot_PopColormapV parameter default value hint:
 // count: 1
 func Plot_PopColormapV(count int32) {
@@ -4837,6 +4989,17 @@ func Plot_PushStyleVar_Int(idx PlotStyleVar, val int32) {
 
 func Plot_PushStyleVar_Vec2(idx PlotStyleVar, val Vec2) {
 	C.Plot_PushStyleVar_Vec2(C.ImPlotStyleVar(idx), val.toC())
+}
+
+// Plot_SampleColormapV parameter default value hint:
+// cmap: -1
+func Plot_SampleColormapV(t float32, cmap PlotColormap) ImVec4 {
+	pOut := &ImVec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+	defer pOutFin()
+
+	C.Plot_SampleColormapV(pOutArg, C.float(t), C.ImPlotColormap(cmap))
+	return *pOut
 }
 
 func Plot_SetAxes(x_axis ImAxis, y_axis ImAxis) {
@@ -5252,8 +5415,26 @@ func Plot_DragRect(id int32, x_min *float64, y_min *float64, x_max *float64, y_m
 	return C.Plot_DragRect(C.int(id), x_minArg, y_minArg, x_maxArg, y_maxArg, col.toC()) == C.bool(true)
 }
 
+func Plot_GetColormapColor(idx int32) ImVec4 {
+	pOut := &ImVec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+	defer pOutFin()
+
+	C.Plot_GetColormapColor(pOutArg, C.int(idx))
+	return *pOut
+}
+
 func Plot_GetColormapSize() int {
 	return int(C.Plot_GetColormapSize())
+}
+
+func Plot_GetPlotMousePos() ImPlotPoint {
+	pOut := &ImPlotPoint{}
+	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
+	defer pOutFin()
+
+	C.Plot_GetPlotMousePos(pOutArg)
+	return *pOut
 }
 
 func Plot_HideNextItem() {
@@ -5266,6 +5447,24 @@ func Plot_MapInputDefault() {
 
 func Plot_MapInputReverse() {
 	C.Plot_MapInputReverse()
+}
+
+func Plot_PixelsToPlot_Float(x float32, y float32) ImPlotPoint {
+	pOut := &ImPlotPoint{}
+	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
+	defer pOutFin()
+
+	C.Plot_PixelsToPlot_Float(pOutArg, C.float(x), C.float(y))
+	return *pOut
+}
+
+func Plot_PixelsToPlot_Vec2(pix Vec2) ImPlotPoint {
+	pOut := &ImPlotPoint{}
+	pOutArg, pOutFin := wrap[C.ImPlotPoint, *ImPlotPoint](pOut)
+	defer pOutFin()
+
+	C.Plot_PixelsToPlot_Vec2(pOutArg, pix.toC())
+	return *pOut
 }
 
 func Plot_PlotBarGroups_FloatPtr(label_ids []string, values []float32, item_count int32, group_count int32) {
@@ -8895,6 +9094,24 @@ func Plot_PlotText(text string, x float64, y float64) {
 	C.Plot_PlotText(textArg, C.double(x), C.double(y))
 }
 
+func Plot_PlotToPixels_PlotPoInt(plt ImPlotPoint) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.Plot_PlotToPixels_PlotPoInt(pOutArg, plt.toC())
+	return *pOut
+}
+
+func Plot_PlotToPixels_double(x float64, y float64) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.Plot_PlotToPixels_double(pOutArg, C.double(x), C.double(y))
+	return *pOut
+}
+
 func Plot_PopColormap() {
 	C.Plot_PopColormap()
 }
@@ -8909,6 +9126,15 @@ func Plot_PopStyleVar() {
 
 func Plot_PushPlotClipRect() {
 	C.Plot_PushPlotClipRect()
+}
+
+func Plot_SampleColormap(t float32) ImVec4 {
+	pOut := &ImVec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+	defer pOutFin()
+
+	C.Plot_SampleColormap(pOutArg, C.float(t))
+	return *pOut
 }
 
 func Plot_SetNextAxesLimits(x_min float64, x_max float64, y_min float64, y_max float64) {

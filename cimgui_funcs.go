@@ -9,6 +9,17 @@ package cimgui
 import "C"
 import "unsafe"
 
+// Color_HSVV parameter default value hint:
+// a: 1.0f
+func Color_HSVV(h float32, s float32, v float32, a float32) Color {
+	pOut := &Color{}
+	pOutArg, pOutFin := wrap[C.ImColor, *Color](pOut)
+	defer pOutFin()
+
+	C.Color_HSVV(pOutArg, C.float(h), C.float(s), C.float(v), C.float(a))
+	return *pOut
+}
+
 // Color_SetHSVV parameter default value hint:
 // a: 1.0f
 func (self *Color) SetHSVV(h float32, s float32, v float32, a float32) {
@@ -248,6 +259,24 @@ func (self ImDrawList) ChannelsSplit(count int32) {
 
 func (self ImDrawList) CloneOutput() ImDrawList {
 	return (ImDrawList)(unsafe.Pointer(C.DrawList_CloneOutput(self.handle())))
+}
+
+func (self ImDrawList) GetClipRectMax() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.DrawList_GetClipRectMax(pOutArg, self.handle())
+	return *pOut
+}
+
+func (self ImDrawList) GetClipRectMin() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.DrawList_GetClipRectMin(pOutArg, self.handle())
+	return *pOut
 }
 
 func NewImDrawList(shared_data ImDrawListSharedData) ImDrawList {
@@ -605,6 +634,24 @@ func (self ImFont) AddRemapCharV(dst ImWchar, src ImWchar, overwrite_dst bool) {
 
 func (self ImFont) BuildLookupTable() {
 	C.Font_BuildLookupTable(self.handle())
+}
+
+// Font_CalcTextSizeAV parameter default value hint:
+// remaining: NULL
+// text_end: NULL
+func (self ImFont) CalcTextSizeAV(size float32, max_width float32, wrap_width float32, text_begin string, remaining []string) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	text_beginArg, text_beginFin := wrapString(text_begin)
+	defer text_beginFin()
+
+	remainingArg, remainingFin := wrapStringList(remaining)
+	defer remainingFin()
+
+	C.Font_CalcTextSizeAV(pOutArg, self.handle(), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, remainingArg)
+	return *pOut
 }
 
 func (self ImFont) CalcWordWrapPositionA(scale float32, text string, wrap_width float32) string {
@@ -1096,6 +1143,24 @@ func (self ImGuiTextFilter) Destroy() {
 	C.TextFilter_Destroy(self.handle())
 }
 
+func (self ImGuiViewport) GetCenter() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.Viewport_GetCenter(pOutArg, self.handle())
+	return *pOut
+}
+
+func (self ImGuiViewport) GetWorkCenter() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.Viewport_GetWorkCenter(pOutArg, self.handle())
+	return *pOut
+}
+
 func NewImGuiViewport() ImGuiViewport {
 	return (ImGuiViewport)(unsafe.Pointer(C.Viewport_ImGuiViewport()))
 }
@@ -1366,6 +1431,22 @@ func CalcItemWidth() float32 {
 	return float32(C.CalcItemWidth())
 }
 
+// CalcTextSizeV parameter default value hint:
+// hide_text_after_double_hash: false
+// text_end: NULL
+// wrap_width: -1.0f
+func CalcTextSizeV(text string, hide_text_after_double_hash bool, wrap_width float32) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	textArg, textFin := wrapString(text)
+	defer textFin()
+
+	C.CalcTextSizeV(pOutArg, textArg, C.bool(hide_text_after_double_hash), C.float(wrap_width))
+	return *pOut
+}
+
 func Checkbox(label string, v *bool) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
@@ -1459,6 +1540,15 @@ func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s
 	defer out_vFin()
 
 	C.ColorConvertRGBtoHSV(C.float(r), C.float(g), C.float(b), out_hArg, out_sArg, out_vArg)
+}
+
+func ColorConvertU32ToFloat4(in uint32) ImVec4 {
+	pOut := &ImVec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+	defer pOutFin()
+
+	C.ColorConvertU32ToFloat4(pOutArg, C.ImU32(in))
+	return *pOut
 }
 
 // ColorEdit3V parameter default value hint:
@@ -2033,8 +2123,35 @@ func GetColumnsCount() int {
 	return int(C.GetColumnsCount())
 }
 
+func GetContentRegionAvail() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetContentRegionAvail(pOutArg)
+	return *pOut
+}
+
+func GetContentRegionMax() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetContentRegionMax(pOutArg)
+	return *pOut
+}
+
 func GetCurrentContext() ImGuiContext {
 	return (ImGuiContext)(unsafe.Pointer(C.GetCurrentContext()))
+}
+
+func GetCursorPos() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetCursorPos(pOutArg)
+	return *pOut
 }
 
 func GetCursorPosX() float32 {
@@ -2043,6 +2160,24 @@ func GetCursorPosX() float32 {
 
 func GetCursorPosY() float32 {
 	return float32(C.GetCursorPosY())
+}
+
+func GetCursorScreenPos() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetCursorScreenPos(pOutArg)
+	return *pOut
+}
+
+func GetCursorStartPos() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetCursorStartPos(pOutArg)
+	return *pOut
 }
 
 func GetDragDropPayload() ImGuiPayload {
@@ -2063,6 +2198,15 @@ func GetFont() ImFont {
 
 func GetFontSize() float32 {
 	return float32(C.GetFontSize())
+}
+
+func GetFontTexUvWhitePixel() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetFontTexUvWhitePixel(pOutArg)
+	return *pOut
 }
 
 func GetForegroundDrawList_Nil() ImDrawList {
@@ -2110,6 +2254,33 @@ func GetIO() ImGuiIO {
 	return (ImGuiIO)(unsafe.Pointer(C.GetIO()))
 }
 
+func GetItemRectMax() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetItemRectMax(pOutArg)
+	return *pOut
+}
+
+func GetItemRectMin() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetItemRectMin(pOutArg)
+	return *pOut
+}
+
+func GetItemRectSize() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetItemRectSize(pOutArg)
+	return *pOut
+}
+
 func GetKeyIndex(key Key) int {
 	return int(C.GetKeyIndex(C.ImGuiKey(key)))
 }
@@ -2132,6 +2303,36 @@ func GetMouseClickedCount(button MouseButton) int {
 
 func GetMouseCursor() MouseCursor {
 	return MouseCursor(C.GetMouseCursor())
+}
+
+// GetMouseDragDeltaV parameter default value hint:
+// button: 0
+// lock_threshold: -1.0f
+func GetMouseDragDeltaV(button MouseButton, lock_threshold float32) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetMouseDragDeltaV(pOutArg, C.ImGuiMouseButton(button), C.float(lock_threshold))
+	return *pOut
+}
+
+func GetMousePos() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetMousePos(pOutArg)
+	return *pOut
+}
+
+func GetMousePosOnOpeningCurrentPopup() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetMousePosOnOpeningCurrentPopup(pOutArg)
+	return *pOut
 }
 
 func GetPlatformIO() ImGuiPlatformIO {
@@ -2188,6 +2389,24 @@ func GetVersion() string {
 	return C.GoString(C.GetVersion())
 }
 
+func GetWindowContentRegionMax() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetWindowContentRegionMax(pOutArg)
+	return *pOut
+}
+
+func GetWindowContentRegionMin() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetWindowContentRegionMin(pOutArg)
+	return *pOut
+}
+
 func GetWindowDockID() ImGuiID {
 	return ImGuiID(C.GetWindowDockID())
 }
@@ -2202,6 +2421,24 @@ func GetWindowDrawList() ImDrawList {
 
 func GetWindowHeight() float32 {
 	return float32(C.GetWindowHeight())
+}
+
+func GetWindowPos() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetWindowPos(pOutArg)
+	return *pOut
+}
+
+func GetWindowSize() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetWindowSize(pOutArg)
+	return *pOut
 }
 
 func GetWindowViewport() ImGuiViewport {
@@ -3820,6 +4057,15 @@ func Value_Uint(prefix string, v uint32) {
 	C.Value_Uint(prefixArg, C.uint(v))
 }
 
+func Color_HSV(h float32, s float32, v float32) Color {
+	pOut := &Color{}
+	pOutArg, pOutFin := wrap[C.ImColor, *Color](pOut)
+	defer pOutFin()
+
+	C.Color_HSV(pOutArg, C.float(h), C.float(s), C.float(v))
+	return *pOut
+}
+
 func (self *Color) SetHSV(h float32, s float32, v float32) {
 	selfArg, selfFin := wrap[C.ImColor, *Color](self)
 	defer selfFin()
@@ -3956,6 +4202,18 @@ func (self ImFontGlyphRangesBuilder) AddText(text string) {
 
 func (self ImFont) AddRemapChar(dst ImWchar, src ImWchar) {
 	C.Font_AddRemapChar(self.handle(), C.ImWchar(dst), C.ImWchar(src))
+}
+
+func (self ImFont) CalcTextSizeA(size float32, max_width float32, wrap_width float32, text_begin string) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	text_beginArg, text_beginFin := wrapString(text_begin)
+	defer text_beginFin()
+
+	C.Font_CalcTextSizeA(pOutArg, self.handle(), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg)
+	return *pOut
 }
 
 func (self ImFont) RenderText(draw_list ImDrawList, size float32, pos Vec2, col uint32, clip_rect ImVec4, text_begin string) {
@@ -4111,6 +4369,18 @@ func Button(label string) bool {
 	defer labelFin()
 
 	return C.Button(labelArg) == C.bool(true)
+}
+
+func CalcTextSize(text string) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	textArg, textFin := wrapString(text)
+	defer textFin()
+
+	C.CalcTextSize(pOutArg, textArg)
+	return *pOut
 }
 
 func CollapsingHeader_BoolPtr(label string, p_visible *bool) bool {
@@ -4423,6 +4693,15 @@ func GetColumnOffset() float32 {
 
 func GetColumnWidth() float32 {
 	return float32(C.GetColumnWidth())
+}
+
+func GetMouseDragDelta() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	defer pOutFin()
+
+	C.GetMouseDragDelta(pOutArg)
+	return *pOut
 }
 
 func Indent() {

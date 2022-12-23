@@ -443,7 +443,6 @@ import "unsafe"
 			// find out the return type
 			outArg := f.ArgsT[0]
 			outArgT := strings.TrimSuffix(outArg.Type, "*")
-			outArgT = trimImGuiPrefix(outArgT)
 			returnWrapper, found := returnWrapperMap[outArgT]
 			if !found {
 				fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)
@@ -455,7 +454,7 @@ import "unsafe"
 			sb.WriteString(funcSignatureFunc(f.FuncName, args[1:], returnType))
 
 			// temporary out arg definition
-			sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, outArgT))
+			sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, returnType))
 
 			argInvokeStmt := argStmtFunc()
 
