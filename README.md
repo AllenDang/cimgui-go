@@ -21,15 +21,15 @@ Currently most of the functions are generated, except memory related stuff (eg. 
 If you find any function is missing, report an issue.
 
 ## Generate binding
-Install [just](https://just.systems/)
+Install [GNU make](https://www.gnu.org/software/make/manual/make.html)
 
 ### Update imgui
 1. Drop source code of imgui to `cimgui/imgui`.
 2. Run `cd cimgui/generator; ./generator.sh`.
-3. Run `just gencode_cimgui`.
+3. Run `make cimgui`.
 
 ### Update implot
 1. Drop source code of implot to `cimplot/implot`.
 2. Run `cd cimplot/generator; ./generator.sh`.
-3. Run `just gencode_cimplot`.
+3. Run `make cimplot`.
 
