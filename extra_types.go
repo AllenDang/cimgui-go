@@ -60,14 +60,14 @@ func (i ImVec4) toC() C.ImVec4 {
 	return C.ImVec4{x: C.float(i.X), y: C.float(i.Y), z: C.float(i.Z), w: C.float(i.W)}
 }
 
-var _ wrappableType[C.ImColor, *ImColor] = &ImColor{}
+var _ wrappableType[C.ImColor, *Color] = &Color{}
 
-type ImColor struct {
+type Color struct {
 	Value ImVec4
 }
 
-func NewImColor(x, y, z, w float32) ImColor {
-	return ImColor{
+func NewColor(x, y, z, w float32) Color {
+	return Color{
 		Value: ImVec4{
 			X: x,
 			Y: y,
@@ -77,12 +77,12 @@ func NewImColor(x, y, z, w float32) ImColor {
 	}
 }
 
-func (i *ImColor) fromC(col C.ImColor) *ImColor {
-	*i = NewImColor(float32(col.Value.x), float32(col.Value.y), float32(col.Value.z), float32(col.Value.w))
+func (i *Color) fromC(col C.ImColor) *Color {
+	*i = NewColor(float32(col.Value.x), float32(col.Value.y), float32(col.Value.z), float32(col.Value.w))
 	return i
 }
 
-func (i ImColor) toC() C.ImColor {
+func (i Color) toC() C.ImColor {
 	return C.ImColor{Value: i.Value.toC()}
 }
 
@@ -135,7 +135,7 @@ func (p ImPlotPoint) toC() C.ImPlotPoint {
 // self is the type wrappableType applies to - TODO - figure out if it can be ommited :-)
 // intentional values:
 // - CTYPE is e.g. C.ImVec2, C.ImColor e.t.c.
-// - self is a pointer type (e.g. *Vec2, ImColor)
+// - self is a pointer type (e.g. *Vec2, Color)
 type wrappableType[CTYPE any, self any] interface {
 	// toC converts self into CTYPE
 	toC() CTYPE

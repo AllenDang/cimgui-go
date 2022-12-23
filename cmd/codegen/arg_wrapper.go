@@ -286,7 +286,7 @@ func imRectPtrW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imColorPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrW(arg.Name, "*ImColor", "C.ImColor")
+	return wrappablePtrW(arg.Name, "*Color", "C.ImColor")
 }
 
 func inputeTextCallbackW(arg ArgDef) (argType string, def string, varName string) {

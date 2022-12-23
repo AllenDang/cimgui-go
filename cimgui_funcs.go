@@ -11,15 +11,15 @@ import "unsafe"
 
 // Color_SetHSVV parameter default value hint:
 // a: 1.0f
-func (self *ImColor) SetHSVV(h float32, s float32, v float32, a float32) {
-	selfArg, selfFin := wrap[C.ImColor, *ImColor](self)
+func (self *Color) SetHSVV(h float32, s float32, v float32, a float32) {
+	selfArg, selfFin := wrap[C.ImColor, *Color](self)
 	defer selfFin()
 
 	C.Color_SetHSVV(selfArg, C.float(h), C.float(s), C.float(v), C.float(a))
 }
 
-func (self *ImColor) Destroy() {
-	selfArg, selfFin := wrap[C.ImColor, *ImColor](self)
+func (self *Color) Destroy() {
+	selfArg, selfFin := wrap[C.ImColor, *Color](self)
 	defer selfFin()
 
 	C.Color_Destroy(selfArg)
@@ -3820,8 +3820,8 @@ func Value_Uint(prefix string, v uint32) {
 	C.Value_Uint(prefixArg, C.uint(v))
 }
 
-func (self *ImColor) SetHSV(h float32, s float32, v float32) {
-	selfArg, selfFin := wrap[C.ImColor, *ImColor](self)
+func (self *Color) SetHSV(h float32, s float32, v float32) {
+	selfArg, selfFin := wrap[C.ImColor, *Color](self)
 	defer selfFin()
 
 	C.Color_SetHSV(selfArg, C.float(h), C.float(s), C.float(v))

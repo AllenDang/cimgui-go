@@ -76,7 +76,7 @@ return *out
 }
 
 func imColorReturnW() (returnType string, returnStmt string) {
-	returnType = "ImColor"
+	returnType = "Color"
 	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
 	returnStmt += `out.fromC(%s)
 return *out
