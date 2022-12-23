@@ -270,11 +270,11 @@ func imVec22W(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imVec4W(arg ArgDef) (argType string, def string, varName string) {
-	return wrappableW(arg.Name, "ImVec4")
+	return wrappableW(arg.Name, "Vec4")
 }
 
 func imVec4PtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrW(arg.Name, "*ImVec4", "C.ImVec4")
+	return wrappablePtrW(arg.Name, "*Vec4", "C.ImVec4")
 }
 
 func imRectW(arg ArgDef) (argType string, def string, varName string) {

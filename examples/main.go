@@ -76,7 +76,7 @@ func showPictureLoadingDemo() {
 	cimgui.SetNextWindowPosV(cimgui.NewVec2(basePos.X+60, 600), cimgui.Cond_Once, cimgui.NewVec2(0, 0))
 	cimgui.Begin("Image")
 	cimgui.Text(fmt.Sprintf("pointer = %v", texture.ID()))
-	cimgui.ImageV(texture.ID(), cimgui.NewVec2(float32(texture.Width), float32(texture.Height)), cimgui.NewVec2(0, 0), cimgui.NewVec2(1, 1), cimgui.NewImVec4(1, 1, 1, 1), cimgui.NewImVec4(0, 0, 0, 0))
+	cimgui.ImageV(texture.ID(), cimgui.NewVec2(float32(texture.Width), float32(texture.Height)), cimgui.NewVec2(0, 0), cimgui.NewVec2(1, 1), cimgui.NewVec4(1, 1, 1, 1), cimgui.NewVec4(0, 0, 0, 0))
 	cimgui.End()
 }
 
@@ -122,7 +122,7 @@ func main() {
 	cimgui.SetAfterCreateContextHook(afterCreateContext)
 	cimgui.SetBeforeDestroyContextHook(beforeDestroyContext)
 
-	cimgui.SetBgColor(cimgui.NewImVec4(0.45, 0.55, 0.6, 1.0))
+	cimgui.SetBgColor(cimgui.NewVec4(0.45, 0.55, 0.6, 1.0))
 
 	window = cimgui.CreateGlfwWindow("Hello from cimgui-go", 1200, 900, 0)
 

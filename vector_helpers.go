@@ -39,8 +39,8 @@ func (v Vec2) Div(k float32) Vec2 {
 // Vec4
 
 // Add returns the rectangle r translated by p.
-func (v ImVec4) Add(p Vec2) ImVec4 {
-	return ImVec4{
+func (v Vec4) Add(p Vec2) Vec4 {
+	return Vec4{
 		X: v.X + p.X,
 		Y: v.Y + p.Y,
 		Z: v.Z + p.X,
@@ -49,6 +49,6 @@ func (v ImVec4) Add(p Vec2) ImVec4 {
 }
 
 // Sub returns the vec4 v translated by -p.
-func (v ImVec4) Sub(p Vec2) ImVec4 {
+func (v Vec4) Sub(p Vec2) Vec4 {
 	return v.Add(p.Mul(-1))
 }

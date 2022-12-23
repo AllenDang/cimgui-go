@@ -19,6 +19,7 @@ package cimgui
 // #include <stdint.h>
 // #include "backend.h"
 import "C"
+
 import (
 	"image"
 	"unsafe"
@@ -67,7 +68,7 @@ func SetAfterRenderHook(hook func()) {
 	afterRender = hook
 }
 
-func SetBgColor(color ImVec4) {
+func SetBgColor(color Vec4) {
 	C.igSetBgColor(color.toC())
 }
 

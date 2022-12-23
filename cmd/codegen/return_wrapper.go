@@ -49,8 +49,8 @@ func imWcharReturnW() (returnType string, returnStmt string) {
 
 func imVec4PtrReturnW() (returnType string, returnStmt string) {
 	// TODO: verify if it wraps correctly
-	returnType = "*ImVec4"
-	returnStmt += `out := &ImVec4{}
+	returnType = "*Vec4"
+	returnStmt += `out := &Vec4{}
 out.fromC(*%s)
 return out
 `
@@ -58,7 +58,7 @@ return out
 }
 
 func imVec4ReturnW() (returnType string, returnStmt string) {
-	returnType = "ImVec4"
+	returnType = "Vec4"
 	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
 	returnStmt += `out.fromC(%s)
 return *out

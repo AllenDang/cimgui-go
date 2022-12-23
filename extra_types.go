@@ -33,17 +33,17 @@ func (i Vec2) toC() C.ImVec2 {
 	return C.ImVec2{x: C.float(i.X), y: C.float(i.Y)}
 }
 
-var _ wrappableType[C.ImVec4, *ImVec4] = &ImVec4{}
+var _ wrappableType[C.ImVec4, *Vec4] = &Vec4{}
 
-type ImVec4 struct {
+type Vec4 struct {
 	X float32
 	Y float32
 	Z float32
 	W float32
 }
 
-func NewImVec4(r, g, b, a float32) ImVec4 {
-	return ImVec4{
+func NewVec4(r, g, b, a float32) Vec4 {
+	return Vec4{
 		X: r,
 		Y: g,
 		Z: b,
@@ -51,24 +51,24 @@ func NewImVec4(r, g, b, a float32) ImVec4 {
 	}
 }
 
-func (i *ImVec4) fromC(vec4 C.ImVec4) *ImVec4 {
-	*i = NewImVec4(float32(vec4.x), float32(vec4.y), float32(vec4.z), float32(vec4.w))
+func (i *Vec4) fromC(vec4 C.ImVec4) *Vec4 {
+	*i = NewVec4(float32(vec4.x), float32(vec4.y), float32(vec4.z), float32(vec4.w))
 	return i
 }
 
-func (i ImVec4) toC() C.ImVec4 {
+func (i Vec4) toC() C.ImVec4 {
 	return C.ImVec4{x: C.float(i.X), y: C.float(i.Y), z: C.float(i.Z), w: C.float(i.W)}
 }
 
 var _ wrappableType[C.ImColor, *Color] = &Color{}
 
 type Color struct {
-	Value ImVec4
+	Value Vec4
 }
 
 func NewColor(x, y, z, w float32) Color {
 	return Color{
-		Value: ImVec4{
+		Value: Vec4{
 			X: x,
 			Y: y,
 			Z: z,

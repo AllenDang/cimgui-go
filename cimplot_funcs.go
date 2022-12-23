@@ -206,11 +206,11 @@ func Plot_AddColormap_U32PtrV(name string, cols []*uint32, size int32, qual bool
 
 // Plot_AddColormap_Vec4PtrV parameter default value hint:
 // qual: true
-func Plot_AddColormap_Vec4PtrV(name string, cols *ImVec4, size int32, qual bool) PlotColormap {
+func Plot_AddColormap_Vec4PtrV(name string, cols *Vec4, size int32, qual bool) PlotColormap {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
-	colsArg, colsFin := wrap[C.ImVec4, *ImVec4](cols)
+	colsArg, colsFin := wrap[C.ImVec4, *Vec4](cols)
 	defer colsFin()
 
 	return PlotColormap(C.Plot_AddColormap_Vec4PtrV(nameArg, colsArg, C.int(size), C.bool(qual)))
@@ -218,11 +218,11 @@ func Plot_AddColormap_Vec4PtrV(name string, cols *ImVec4, size int32, qual bool)
 
 // Plot_Annotation_BoolV parameter default value hint:
 // round: false
-func Plot_Annotation_BoolV(x float64, y float64, col ImVec4, pix_offset Vec2, clamp bool, round bool) {
+func Plot_Annotation_BoolV(x float64, y float64, col Vec4, pix_offset Vec2, clamp bool, round bool) {
 	C.Plot_Annotation_BoolV(C.double(x), C.double(y), col.toC(), pix_offset.toC(), C.bool(clamp), C.bool(round))
 }
 
-func Plot_Annotation_Str(x float64, y float64, col ImVec4, pix_offset Vec2, clamp bool, fmt string) {
+func Plot_Annotation_Str(x float64, y float64, col Vec4, pix_offset Vec2, clamp bool, fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
@@ -353,14 +353,14 @@ func Plot_ColormapScaleV(label string, scale_min float64, scale_max float64, siz
 // cmap: -1
 // format: ""
 // out: ((void*)0)
-func Plot_ColormapSliderV(label string, t *float32, out *ImVec4, format string, cmap PlotColormap) bool {
+func Plot_ColormapSliderV(label string, t *float32, out *Vec4, format string, cmap PlotColormap) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
 	tArg, tFin := wrapNumberPtr[C.float, float32](t)
 	defer tFin()
 
-	outArg, outFin := wrap[C.ImVec4, *ImVec4](out)
+	outArg, outFin := wrap[C.ImVec4, *Vec4](out)
 	defer outFin()
 
 	formatArg, formatFin := wrapString(format)
@@ -382,7 +382,7 @@ func Plot_DestroyContextV(ctx ImPlotContext) {
 // Plot_DragLineXV parameter default value hint:
 // flags: 0
 // thickness: 1
-func Plot_DragLineXV(id int32, x *float64, col ImVec4, thickness float32, flags PlotDragToolFlags) bool {
+func Plot_DragLineXV(id int32, x *float64, col Vec4, thickness float32, flags PlotDragToolFlags) bool {
 	xArg, xFin := wrapNumberPtr[C.double, float64](x)
 	defer xFin()
 
@@ -392,7 +392,7 @@ func Plot_DragLineXV(id int32, x *float64, col ImVec4, thickness float32, flags 
 // Plot_DragLineYV parameter default value hint:
 // flags: 0
 // thickness: 1
-func Plot_DragLineYV(id int32, y *float64, col ImVec4, thickness float32, flags PlotDragToolFlags) bool {
+func Plot_DragLineYV(id int32, y *float64, col Vec4, thickness float32, flags PlotDragToolFlags) bool {
 	yArg, yFin := wrapNumberPtr[C.double, float64](y)
 	defer yFin()
 
@@ -402,7 +402,7 @@ func Plot_DragLineYV(id int32, y *float64, col ImVec4, thickness float32, flags 
 // Plot_DragPointV parameter default value hint:
 // flags: 0
 // size: 4
-func Plot_DragPointV(id int32, x *float64, y *float64, col ImVec4, size float32, flags PlotDragToolFlags) bool {
+func Plot_DragPointV(id int32, x *float64, y *float64, col Vec4, size float32, flags PlotDragToolFlags) bool {
 	xArg, xFin := wrapNumberPtr[C.double, float64](x)
 	defer xFin()
 
@@ -414,7 +414,7 @@ func Plot_DragPointV(id int32, x *float64, y *float64, col ImVec4, size float32,
 
 // Plot_DragRectV parameter default value hint:
 // flags: 0
-func Plot_DragRectV(id int32, x_min *float64, y_min *float64, x_max *float64, y_max *float64, col ImVec4, flags PlotDragToolFlags) bool {
+func Plot_DragRectV(id int32, x_min *float64, y_min *float64, x_max *float64, y_max *float64, col Vec4, flags PlotDragToolFlags) bool {
 	x_minArg, x_minFin := wrapNumberPtr[C.double, float64](x_min)
 	defer x_minFin()
 
@@ -456,9 +456,9 @@ func Plot_EndSubplots() {
 
 // Plot_GetColormapColorV parameter default value hint:
 // cmap: -1
-func Plot_GetColormapColorV(idx int32, cmap PlotColormap) ImVec4 {
-	pOut := &ImVec4{}
-	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+func Plot_GetColormapColorV(idx int32, cmap PlotColormap) Vec4 {
+	pOut := &Vec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *Vec4](pOut)
 	defer pOutFin()
 
 	C.Plot_GetColormapColorV(pOutArg, C.int(idx), C.ImPlotColormap(cmap))
@@ -494,9 +494,9 @@ func Plot_GetInputMap() ImPlotInputMap {
 	return (ImPlotInputMap)(unsafe.Pointer(C.Plot_GetInputMap()))
 }
 
-func Plot_GetLastItemColor() ImVec4 {
-	pOut := &ImVec4{}
-	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+func Plot_GetLastItemColor() Vec4 {
+	pOut := &Vec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *Vec4](pOut)
 	defer pOutFin()
 
 	C.Plot_GetLastItemColor(pOutArg)
@@ -583,7 +583,7 @@ func Plot_ItemIcon_U32(col uint32) {
 	C.Plot_ItemIcon_U32(C.ImU32(col))
 }
 
-func Plot_ItemIcon_Vec4(col ImVec4) {
+func Plot_ItemIcon_Vec4(col Vec4) {
 	C.Plot_ItemIcon_Vec4(col.toC())
 }
 
@@ -599,9 +599,9 @@ func Plot_MapInputReverseV(dst ImPlotInputMap) {
 	C.Plot_MapInputReverseV(dst.handle())
 }
 
-func Plot_NextColormapColor() ImVec4 {
-	pOut := &ImVec4{}
-	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+func Plot_NextColormapColor() Vec4 {
+	pOut := &Vec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *Vec4](pOut)
 	defer pOutFin()
 
 	C.Plot_NextColormapColor(pOutArg)
@@ -2251,7 +2251,7 @@ func Plot_PlotHeatmap_U8PtrV(label_id string, values []*byte, rows int32, cols i
 // tint_col: ImVec4(1,1,1,1)
 // uv0: ImVec2(0,0)
 // uv1: ImVec2(1,1)
-func Plot_PlotImageV(label_id string, user_texture_id ImTextureID, bounds_min ImPlotPoint, bounds_max ImPlotPoint, uv0 Vec2, uv1 Vec2, tint_col ImVec4, flags PlotImageFlags) {
+func Plot_PlotImageV(label_id string, user_texture_id ImTextureID, bounds_min ImPlotPoint, bounds_max ImPlotPoint, uv0 Vec2, uv1 Vec2, tint_col Vec4, flags PlotImageFlags) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
 
@@ -4975,7 +4975,7 @@ func Plot_PushStyleColor_U32(idx PlotCol, col uint32) {
 	C.Plot_PushStyleColor_U32(C.ImPlotCol(idx), C.ImU32(col))
 }
 
-func Plot_PushStyleColor_Vec4(idx PlotCol, col ImVec4) {
+func Plot_PushStyleColor_Vec4(idx PlotCol, col Vec4) {
 	C.Plot_PushStyleColor_Vec4(C.ImPlotCol(idx), col.toC())
 }
 
@@ -4993,9 +4993,9 @@ func Plot_PushStyleVar_Vec2(idx PlotStyleVar, val Vec2) {
 
 // Plot_SampleColormapV parameter default value hint:
 // cmap: -1
-func Plot_SampleColormapV(t float32, cmap PlotColormap) ImVec4 {
-	pOut := &ImVec4{}
-	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+func Plot_SampleColormapV(t float32, cmap PlotColormap) Vec4 {
+	pOut := &Vec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *Vec4](pOut)
 	defer pOutFin()
 
 	C.Plot_SampleColormapV(pOutArg, C.float(t), C.ImPlotColormap(cmap))
@@ -5052,21 +5052,21 @@ func Plot_SetNextAxisToFit(axis ImAxis) {
 // col: ImVec4(0,0,0,-1)
 // size: -1
 // weight: -1
-func Plot_SetNextErrorBarStyleV(col ImVec4, size float32, weight float32) {
+func Plot_SetNextErrorBarStyleV(col Vec4, size float32, weight float32) {
 	C.Plot_SetNextErrorBarStyleV(col.toC(), C.float(size), C.float(weight))
 }
 
 // Plot_SetNextFillStyleV parameter default value hint:
 // alpha_mod: -1
 // col: ImVec4(0,0,0,-1)
-func Plot_SetNextFillStyleV(col ImVec4, alpha_mod float32) {
+func Plot_SetNextFillStyleV(col Vec4, alpha_mod float32) {
 	C.Plot_SetNextFillStyleV(col.toC(), C.float(alpha_mod))
 }
 
 // Plot_SetNextLineStyleV parameter default value hint:
 // col: ImVec4(0,0,0,-1)
 // weight: -1
-func Plot_SetNextLineStyleV(col ImVec4, weight float32) {
+func Plot_SetNextLineStyleV(col Vec4, weight float32) {
 	C.Plot_SetNextLineStyleV(col.toC(), C.float(weight))
 }
 
@@ -5076,7 +5076,7 @@ func Plot_SetNextLineStyleV(col ImVec4, weight float32) {
 // outline: ImVec4(0,0,0,-1)
 // size: -1
 // weight: -1
-func Plot_SetNextMarkerStyleV(marker PlotMarker, size float32, fill ImVec4, weight float32, outline ImVec4) {
+func Plot_SetNextMarkerStyleV(marker PlotMarker, size float32, fill Vec4, weight float32, outline Vec4) {
 	C.Plot_SetNextMarkerStyleV(C.ImPlotMarker(marker), C.float(size), fill.toC(), C.float(weight), outline.toC())
 }
 
@@ -5245,11 +5245,11 @@ func Plot_StyleColorsLightV(dst ImPlotStyle) {
 
 // Plot_TagX_BoolV parameter default value hint:
 // round: false
-func Plot_TagX_BoolV(x float64, col ImVec4, round bool) {
+func Plot_TagX_BoolV(x float64, col Vec4, round bool) {
 	C.Plot_TagX_BoolV(C.double(x), col.toC(), C.bool(round))
 }
 
-func Plot_TagX_Str(x float64, col ImVec4, fmt string) {
+func Plot_TagX_Str(x float64, col Vec4, fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
@@ -5258,11 +5258,11 @@ func Plot_TagX_Str(x float64, col ImVec4, fmt string) {
 
 // Plot_TagY_BoolV parameter default value hint:
 // round: false
-func Plot_TagY_BoolV(y float64, col ImVec4, round bool) {
+func Plot_TagY_BoolV(y float64, col Vec4, round bool) {
 	C.Plot_TagY_BoolV(C.double(y), col.toC(), C.bool(round))
 }
 
-func Plot_TagY_Str(y float64, col ImVec4, fmt string) {
+func Plot_TagY_Str(y float64, col Vec4, fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
@@ -5286,17 +5286,17 @@ func Plot_AddColormap_U32Ptr(name string, cols []*uint32, size int32) PlotColorm
 	return PlotColormap(C.Plot_AddColormap_U32Ptr(nameArg, (*C.ImU32)(&colsArg[0]), C.int(size)))
 }
 
-func Plot_AddColormap_Vec4Ptr(name string, cols *ImVec4, size int32) PlotColormap {
+func Plot_AddColormap_Vec4Ptr(name string, cols *Vec4, size int32) PlotColormap {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
-	colsArg, colsFin := wrap[C.ImVec4, *ImVec4](cols)
+	colsArg, colsFin := wrap[C.ImVec4, *Vec4](cols)
 	defer colsFin()
 
 	return PlotColormap(C.Plot_AddColormap_Vec4Ptr(nameArg, colsArg, C.int(size)))
 }
 
-func Plot_Annotation_Bool(x float64, y float64, col ImVec4, pix_offset Vec2, clamp bool) {
+func Plot_Annotation_Bool(x float64, y float64, col Vec4, pix_offset Vec2, clamp bool) {
 	C.Plot_Annotation_Bool(C.double(x), C.double(y), col.toC(), pix_offset.toC(), C.bool(clamp))
 }
 
@@ -5375,21 +5375,21 @@ func Plot_DestroyContext() {
 	C.Plot_DestroyContext()
 }
 
-func Plot_DragLineX(id int32, x *float64, col ImVec4) bool {
+func Plot_DragLineX(id int32, x *float64, col Vec4) bool {
 	xArg, xFin := wrapNumberPtr[C.double, float64](x)
 	defer xFin()
 
 	return C.Plot_DragLineX(C.int(id), xArg, col.toC()) == C.bool(true)
 }
 
-func Plot_DragLineY(id int32, y *float64, col ImVec4) bool {
+func Plot_DragLineY(id int32, y *float64, col Vec4) bool {
 	yArg, yFin := wrapNumberPtr[C.double, float64](y)
 	defer yFin()
 
 	return C.Plot_DragLineY(C.int(id), yArg, col.toC()) == C.bool(true)
 }
 
-func Plot_DragPoint(id int32, x *float64, y *float64, col ImVec4) bool {
+func Plot_DragPoint(id int32, x *float64, y *float64, col Vec4) bool {
 	xArg, xFin := wrapNumberPtr[C.double, float64](x)
 	defer xFin()
 
@@ -5399,7 +5399,7 @@ func Plot_DragPoint(id int32, x *float64, y *float64, col ImVec4) bool {
 	return C.Plot_DragPoint(C.int(id), xArg, yArg, col.toC()) == C.bool(true)
 }
 
-func Plot_DragRect(id int32, x_min *float64, y_min *float64, x_max *float64, y_max *float64, col ImVec4) bool {
+func Plot_DragRect(id int32, x_min *float64, y_min *float64, x_max *float64, y_max *float64, col Vec4) bool {
 	x_minArg, x_minFin := wrapNumberPtr[C.double, float64](x_min)
 	defer x_minFin()
 
@@ -5415,9 +5415,9 @@ func Plot_DragRect(id int32, x_min *float64, y_min *float64, x_max *float64, y_m
 	return C.Plot_DragRect(C.int(id), x_minArg, y_minArg, x_maxArg, y_maxArg, col.toC()) == C.bool(true)
 }
 
-func Plot_GetColormapColor(idx int32) ImVec4 {
-	pOut := &ImVec4{}
-	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+func Plot_GetColormapColor(idx int32) Vec4 {
+	pOut := &Vec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *Vec4](pOut)
 	defer pOutFin()
 
 	C.Plot_GetColormapColor(pOutArg, C.int(idx))
@@ -9128,9 +9128,9 @@ func Plot_PushPlotClipRect() {
 	C.Plot_PushPlotClipRect()
 }
 
-func Plot_SampleColormap(t float32) ImVec4 {
-	pOut := &ImVec4{}
-	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+func Plot_SampleColormap(t float32) Vec4 {
+	pOut := &Vec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *Vec4](pOut)
 	defer pOutFin()
 
 	C.Plot_SampleColormap(pOutArg, C.float(t))
@@ -9223,11 +9223,11 @@ func Plot_StyleColorsLight() {
 	C.Plot_StyleColorsLight()
 }
 
-func Plot_TagX_Bool(x float64, col ImVec4) {
+func Plot_TagX_Bool(x float64, col Vec4) {
 	C.Plot_TagX_Bool(C.double(x), col.toC())
 }
 
-func Plot_TagY_Bool(y float64, col ImVec4) {
+func Plot_TagY_Bool(y float64, col Vec4) {
 	C.Plot_TagY_Bool(C.double(y), col.toC())
 }
 

@@ -216,11 +216,11 @@ func (self ImDrawList) AddRectFilledMultiColor(p_min Vec2, p_max Vec2, col_upr_l
 // cpu_fine_clip_rect: NULL
 // text_end: NULL
 // wrap_width: 0.0f
-func (self ImDrawList) AddText_FontPtrV(font ImFont, font_size float32, pos Vec2, col uint32, text_begin string, wrap_width float32, cpu_fine_clip_rect *ImVec4) {
+func (self ImDrawList) AddText_FontPtrV(font ImFont, font_size float32, pos Vec2, col uint32, text_begin string, wrap_width float32, cpu_fine_clip_rect *Vec4) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
-	cpu_fine_clip_rectArg, cpu_fine_clip_rectFin := wrap[C.ImVec4, *ImVec4](cpu_fine_clip_rect)
+	cpu_fine_clip_rectArg, cpu_fine_clip_rectFin := wrap[C.ImVec4, *Vec4](cpu_fine_clip_rect)
 	defer cpu_fine_clip_rectFin()
 
 	C.DrawList_AddText_FontPtrV(self.handle(), font.handle(), C.float(font_size), pos.toC(), C.ImU32(col), text_beginArg, C.float(wrap_width), cpu_fine_clip_rectArg)
@@ -704,7 +704,7 @@ func (self ImFont) RenderChar(draw_list ImDrawList, size float32, pos Vec2, col 
 // Font_RenderTextV parameter default value hint:
 // cpu_fine_clip: false
 // wrap_width: 0.0f
-func (self ImFont) RenderTextV(draw_list ImDrawList, size float32, pos Vec2, col uint32, clip_rect ImVec4, text_begin string, wrap_width float32, cpu_fine_clip bool) {
+func (self ImFont) RenderTextV(draw_list ImDrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string, wrap_width float32, cpu_fine_clip bool) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
@@ -1195,8 +1195,8 @@ func (self *Vec2) Destroy() {
 	C.Vec2_Destroy(selfArg)
 }
 
-func (self *ImVec4) Destroy() {
-	selfArg, selfFin := wrap[C.ImVec4, *ImVec4](self)
+func (self *Vec4) Destroy() {
+	selfArg, selfFin := wrap[C.ImVec4, *Vec4](self)
 	defer selfFin()
 
 	C.Vec4_Destroy(selfArg)
@@ -1505,14 +1505,14 @@ func CollapsingHeader_TreeNodeFlagsV(label string, flags TreeNodeFlags) bool {
 // ColorButtonV parameter default value hint:
 // flags: 0
 // size: ImVec2(0,0)
-func ColorButtonV(desc_id string, col ImVec4, flags ColorEditFlags, size Vec2) bool {
+func ColorButtonV(desc_id string, col Vec4, flags ColorEditFlags, size Vec2) bool {
 	desc_idArg, desc_idFin := wrapString(desc_id)
 	defer desc_idFin()
 
 	return C.ColorButtonV(desc_idArg, col.toC(), C.ImGuiColorEditFlags(flags), size.toC()) == C.bool(true)
 }
 
-func ColorConvertFloat4ToU32(in ImVec4) uint32 {
+func ColorConvertFloat4ToU32(in Vec4) uint32 {
 	return uint32(C.ColorConvertFloat4ToU32(in.toC()))
 }
 
@@ -1542,9 +1542,9 @@ func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s
 	C.ColorConvertRGBtoHSV(C.float(r), C.float(g), C.float(b), out_hArg, out_sArg, out_vArg)
 }
 
-func ColorConvertU32ToFloat4(in uint32) ImVec4 {
-	pOut := &ImVec4{}
-	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+func ColorConvertU32ToFloat4(in uint32) Vec4 {
+	pOut := &Vec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *Vec4](pOut)
 	defer pOutFin()
 
 	C.ColorConvertU32ToFloat4(pOutArg, C.ImU32(in))
@@ -2099,7 +2099,7 @@ func GetColorU32_U32(col uint32) uint32 {
 	return uint32(C.GetColorU32_U32(C.ImU32(col)))
 }
 
-func GetColorU32_Vec4(col ImVec4) uint32 {
+func GetColorU32_Vec4(col Vec4) uint32 {
 	return uint32(C.GetColorU32_Vec4(col.toC()))
 }
 
@@ -2363,8 +2363,8 @@ func GetStyleColorName(idx Col) string {
 	return C.GoString(C.GetStyleColorName(C.ImGuiCol(idx)))
 }
 
-func GetStyleColorVec4(idx Col) *ImVec4 {
-	out := &ImVec4{}
+func GetStyleColorVec4(idx Col) *Vec4 {
+	out := &Vec4{}
 	out.fromC(*C.GetStyleColorVec4(C.ImGuiCol(idx)))
 	return out
 }
@@ -2454,7 +2454,7 @@ func GetWindowWidth() float32 {
 // tint_col: ImVec4(1,1,1,1)
 // uv0: ImVec2(0,0)
 // uv1: ImVec2(1,1)
-func ImageV(user_texture_id ImTextureID, size Vec2, uv0 Vec2, uv1 Vec2, tint_col ImVec4, border_col ImVec4) {
+func ImageV(user_texture_id ImTextureID, size Vec2, uv0 Vec2, uv1 Vec2, tint_col Vec4, border_col Vec4) {
 	C.ImageV(C.ImTextureID(user_texture_id), size.toC(), uv0.toC(), uv1.toC(), tint_col.toC(), border_col.toC())
 }
 
@@ -2463,7 +2463,7 @@ func ImageV(user_texture_id ImTextureID, size Vec2, uv0 Vec2, uv1 Vec2, tint_col
 // tint_col: ImVec4(1,1,1,1)
 // uv0: ImVec2(0,0)
 // uv1: ImVec2(1,1)
-func ImageButtonV(str_id string, user_texture_id ImTextureID, size Vec2, uv0 Vec2, uv1 Vec2, bg_col ImVec4, tint_col ImVec4) bool {
+func ImageButtonV(str_id string, user_texture_id ImTextureID, size Vec2, uv0 Vec2, uv1 Vec2, bg_col Vec4, tint_col Vec4) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
@@ -3130,7 +3130,7 @@ func PushStyleColor_U32(idx Col, col uint32) {
 	C.PushStyleColor_U32(C.ImGuiCol(idx), C.ImU32(col))
 }
 
-func PushStyleColor_Vec4(idx Col, col ImVec4) {
+func PushStyleColor_Vec4(idx Col, col Vec4) {
 	C.PushStyleColor_Vec4(C.ImGuiCol(idx), col.toC())
 }
 
@@ -3872,7 +3872,7 @@ func Text(fmt string) {
 	C.Text(fmtArg)
 }
 
-func TextColored(col ImVec4, fmt string) {
+func TextColored(col Vec4, fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
@@ -4216,7 +4216,7 @@ func (self ImFont) CalcTextSizeA(size float32, max_width float32, wrap_width flo
 	return *pOut
 }
 
-func (self ImFont) RenderText(draw_list ImDrawList, size float32, pos Vec2, col uint32, clip_rect ImVec4, text_begin string) {
+func (self ImFont) RenderText(draw_list ImDrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
@@ -4400,7 +4400,7 @@ func CollapsingHeader_TreeNodeFlags(label string) bool {
 	return C.CollapsingHeader_TreeNodeFlags(labelArg) == C.bool(true)
 }
 
-func ColorButton(desc_id string, col ImVec4) bool {
+func ColorButton(desc_id string, col Vec4) bool {
 	desc_idArg, desc_idFin := wrapString(desc_id)
 	defer desc_idFin()
 
@@ -5386,12 +5386,12 @@ func Value_Float(prefix string, v float32) {
 	C.Value_Float(prefixArg, C.float(v))
 }
 
-func (self ImDrawCmd) SetClipRect(v ImVec4) {
+func (self ImDrawCmd) SetClipRect(v Vec4) {
 	C.ImDrawCmd_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImDrawCmd) GetClipRect() ImVec4 {
-	out := &ImVec4{}
+func (self ImDrawCmd) GetClipRect() Vec4 {
+	out := &Vec4{}
 	out.fromC(C.ImDrawCmd_GetClipRect(self.handle()))
 	return *out
 }
@@ -5436,12 +5436,12 @@ func (self ImDrawCmd) GetUserCallbackData() unsafe.Pointer {
 	return unsafe.Pointer(C.ImDrawCmd_GetUserCallbackData(self.handle()))
 }
 
-func (self ImDrawCmdHeader) SetClipRect(v ImVec4) {
+func (self ImDrawCmdHeader) SetClipRect(v Vec4) {
 	C.ImDrawCmdHeader_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImDrawCmdHeader) GetClipRect() ImVec4 {
-	out := &ImVec4{}
+func (self ImDrawCmdHeader) GetClipRect() Vec4 {
+	out := &Vec4{}
 	out.fromC(C.ImDrawCmdHeader_GetClipRect(self.handle()))
 	return *out
 }
@@ -5633,12 +5633,12 @@ func (self ImDrawListSharedData) GetCircleSegmentMaxError() float32 {
 	return float32(C.ImDrawListSharedData_GetCircleSegmentMaxError(self.handle()))
 }
 
-func (self ImDrawListSharedData) SetClipRectFullscreen(v ImVec4) {
+func (self ImDrawListSharedData) SetClipRectFullscreen(v Vec4) {
 	C.ImDrawListSharedData_SetClipRectFullscreen(self.handle(), v.toC())
 }
 
-func (self ImDrawListSharedData) GetClipRectFullscreen() ImVec4 {
-	out := &ImVec4{}
+func (self ImDrawListSharedData) GetClipRectFullscreen() Vec4 {
+	out := &Vec4{}
 	out.fromC(C.ImDrawListSharedData_GetClipRectFullscreen(self.handle()))
 	return *out
 }
@@ -5659,15 +5659,15 @@ func (self ImDrawListSharedData) GetArcFastRadiusCutoff() float32 {
 	return float32(C.ImDrawListSharedData_GetArcFastRadiusCutoff(self.handle()))
 }
 
-func (self ImDrawListSharedData) SetTexUvLines(v *ImVec4) {
-	vArg, vFin := wrap[C.ImVec4, *ImVec4](v)
+func (self ImDrawListSharedData) SetTexUvLines(v *Vec4) {
+	vArg, vFin := wrap[C.ImVec4, *Vec4](v)
 	defer vFin()
 
 	C.ImDrawListSharedData_SetTexUvLines(self.handle(), vArg)
 }
 
-func (self ImDrawListSharedData) GetTexUvLines() *ImVec4 {
-	out := &ImVec4{}
+func (self ImDrawListSharedData) GetTexUvLines() *Vec4 {
+	out := &Vec4{}
 	out.fromC(*C.ImDrawListSharedData_GetTexUvLines(self.handle()))
 	return out
 }
@@ -6253,12 +6253,12 @@ func (self ImGuiColorMod) GetCol() Col {
 	return Col(C.ImGuiColorMod_GetCol(self.handle()))
 }
 
-func (self ImGuiColorMod) SetBackupValue(v ImVec4) {
+func (self ImGuiColorMod) SetBackupValue(v Vec4) {
 	C.ImGuiColorMod_SetBackupValue(self.handle(), v.toC())
 }
 
-func (self ImGuiColorMod) GetBackupValue() ImVec4 {
-	out := &ImVec4{}
+func (self ImGuiColorMod) GetBackupValue() Vec4 {
+	out := &Vec4{}
 	out.fromC(C.ImGuiColorMod_GetBackupValue(self.handle()))
 	return *out
 }
@@ -7499,12 +7499,12 @@ func (self ImGuiContext) GetColorEditLastColor() uint32 {
 	return uint32(C.ImGuiContext_GetColorEditLastColor(self.handle()))
 }
 
-func (self ImGuiContext) SetColorPickerRef(v ImVec4) {
+func (self ImGuiContext) SetColorPickerRef(v Vec4) {
 	C.ImGuiContext_SetColorPickerRef(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetColorPickerRef() ImVec4 {
-	out := &ImVec4{}
+func (self ImGuiContext) GetColorPickerRef() Vec4 {
+	out := &Vec4{}
 	out.fromC(C.ImGuiContext_GetColorPickerRef(self.handle()))
 	return *out
 }
