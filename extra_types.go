@@ -86,14 +86,14 @@ func (i Color) toC() C.ImColor {
 	return C.ImColor{Value: i.Value.toC()}
 }
 
-var _ wrappableType[C.ImRect, *ImRect] = &ImRect{}
+var _ wrappableType[C.ImRect, *Rect] = &Rect{}
 
-type ImRect struct {
+type Rect struct {
 	Min Vec2
 	Max Vec2
 }
 
-func (i *ImRect) fromC(rect C.ImRect) *ImRect {
+func (i *Rect) fromC(rect C.ImRect) *Rect {
 	out := &Vec2{}
 	out.fromC(rect.Min)
 	i.Min = *out
@@ -105,7 +105,7 @@ func (i *ImRect) fromC(rect C.ImRect) *ImRect {
 	return i
 }
 
-func (r *ImRect) toC() C.ImRect {
+func (r *Rect) toC() C.ImRect {
 	return C.ImRect{Min: r.Min.toC(), Max: r.Max.toC()}
 }
 

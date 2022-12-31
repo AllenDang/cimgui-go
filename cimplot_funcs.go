@@ -9505,12 +9505,12 @@ func (self ImPlotAxis) GetDatum2() float32 {
 	return float32(C.ImPlotAxis_GetDatum2(self.handle()))
 }
 
-func (self ImPlotAxis) SetHoverRect(v ImRect) {
+func (self ImPlotAxis) SetHoverRect(v Rect) {
 	C.ImPlotAxis_SetHoverRect(self.handle(), v.toC())
 }
 
-func (self ImPlotAxis) GetHoverRect() ImRect {
-	out := &ImRect{}
+func (self ImPlotAxis) GetHoverRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImPlotAxis_GetHoverRect(self.handle()))
 	return *out
 }
@@ -9935,12 +9935,12 @@ func (self ImPlotItem) GetColor() uint32 {
 	return uint32(C.ImPlotItem_GetColor(self.handle()))
 }
 
-func (self ImPlotItem) SetLegendHoverRect(v ImRect) {
+func (self ImPlotItem) SetLegendHoverRect(v Rect) {
 	C.ImPlotItem_SetLegendHoverRect(self.handle(), v.toC())
 }
 
-func (self ImPlotItem) GetLegendHoverRect() ImRect {
-	out := &ImRect{}
+func (self ImPlotItem) GetLegendHoverRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImPlotItem_GetLegendHoverRect(self.handle()))
 	return *out
 }
@@ -10033,12 +10033,12 @@ func (self ImPlotLegend) GetLabels() ImGuiTextBuffer {
 	return newImGuiTextBufferFromC(C.ImPlotLegend_GetLabels(self.handle()))
 }
 
-func (self ImPlotLegend) SetRect(v ImRect) {
+func (self ImPlotLegend) SetRect(v Rect) {
 	C.ImPlotLegend_SetRect(self.handle(), v.toC())
 }
 
-func (self ImPlotLegend) GetRect() ImRect {
-	out := &ImRect{}
+func (self ImPlotLegend) GetRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImPlotLegend_GetRect(self.handle()))
 	return *out
 }
@@ -10259,52 +10259,52 @@ func (self ImPlotPlot) GetCurrentY() ImAxis {
 	return ImAxis(C.ImPlotPlot_GetCurrentY(self.handle()))
 }
 
-func (self ImPlotPlot) SetFrameRect(v ImRect) {
+func (self ImPlotPlot) SetFrameRect(v Rect) {
 	C.ImPlotPlot_SetFrameRect(self.handle(), v.toC())
 }
 
-func (self ImPlotPlot) GetFrameRect() ImRect {
-	out := &ImRect{}
+func (self ImPlotPlot) GetFrameRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImPlotPlot_GetFrameRect(self.handle()))
 	return *out
 }
 
-func (self ImPlotPlot) SetCanvasRect(v ImRect) {
+func (self ImPlotPlot) SetCanvasRect(v Rect) {
 	C.ImPlotPlot_SetCanvasRect(self.handle(), v.toC())
 }
 
-func (self ImPlotPlot) GetCanvasRect() ImRect {
-	out := &ImRect{}
+func (self ImPlotPlot) GetCanvasRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImPlotPlot_GetCanvasRect(self.handle()))
 	return *out
 }
 
-func (self ImPlotPlot) SetPlotRect(v ImRect) {
+func (self ImPlotPlot) SetPlotRect(v Rect) {
 	C.ImPlotPlot_SetPlotRect(self.handle(), v.toC())
 }
 
-func (self ImPlotPlot) GetPlotRect() ImRect {
-	out := &ImRect{}
+func (self ImPlotPlot) GetPlotRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImPlotPlot_GetPlotRect(self.handle()))
 	return *out
 }
 
-func (self ImPlotPlot) SetAxesRect(v ImRect) {
+func (self ImPlotPlot) SetAxesRect(v Rect) {
 	C.ImPlotPlot_SetAxesRect(self.handle(), v.toC())
 }
 
-func (self ImPlotPlot) GetAxesRect() ImRect {
-	out := &ImRect{}
+func (self ImPlotPlot) GetAxesRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImPlotPlot_GetAxesRect(self.handle()))
 	return *out
 }
 
-func (self ImPlotPlot) SetSelectRect(v ImRect) {
+func (self ImPlotPlot) SetSelectRect(v Rect) {
 	C.ImPlotPlot_SetSelectRect(self.handle(), v.toC())
 }
 
-func (self ImPlotPlot) GetSelectRect() ImRect {
-	out := &ImRect{}
+func (self ImPlotPlot) GetSelectRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImPlotPlot_GetSelectRect(self.handle()))
 	return *out
 }
@@ -10787,22 +10787,22 @@ func (self ImPlotSubplot) GetCurrentIdx() int {
 	return int(C.ImPlotSubplot_GetCurrentIdx(self.handle()))
 }
 
-func (self ImPlotSubplot) SetFrameRect(v ImRect) {
+func (self ImPlotSubplot) SetFrameRect(v Rect) {
 	C.ImPlotSubplot_SetFrameRect(self.handle(), v.toC())
 }
 
-func (self ImPlotSubplot) GetFrameRect() ImRect {
-	out := &ImRect{}
+func (self ImPlotSubplot) GetFrameRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImPlotSubplot_GetFrameRect(self.handle()))
 	return *out
 }
 
-func (self ImPlotSubplot) SetGridRect(v ImRect) {
+func (self ImPlotSubplot) SetGridRect(v Rect) {
 	C.ImPlotSubplot_SetGridRect(self.handle(), v.toC())
 }
 
-func (self ImPlotSubplot) GetGridRect() ImRect {
-	out := &ImRect{}
+func (self ImPlotSubplot) GetGridRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImPlotSubplot_GetGridRect(self.handle()))
 	return *out
 }

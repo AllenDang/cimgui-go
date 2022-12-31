@@ -1181,8 +1181,8 @@ func (self ImGuiWindowSettings) Destroy() {
 	C.WindowSettings_Destroy(self.handle())
 }
 
-func (self *ImRect) Destroy() {
-	selfArg, selfFin := wrap[C.ImRect, *ImRect](self)
+func (self *Rect) Destroy() {
+	selfArg, selfFin := wrap[C.ImRect, *Rect](self)
 	defer selfFin()
 
 	C.Rect_Destroy(selfArg)
@@ -6263,12 +6263,12 @@ func (self ImGuiColorMod) GetBackupValue() Vec4 {
 	return *out
 }
 
-func (self ImGuiComboPreviewData) SetPreviewRect(v ImRect) {
+func (self ImGuiComboPreviewData) SetPreviewRect(v Rect) {
 	C.ImGuiComboPreviewData_SetPreviewRect(self.handle(), v.toC())
 }
 
-func (self ImGuiComboPreviewData) GetPreviewRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiComboPreviewData) GetPreviewRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiComboPreviewData_GetPreviewRect(self.handle()))
 	return *out
 }
@@ -7065,12 +7065,12 @@ func (self ImGuiContext) GetNavInitResultId() ImGuiID {
 	return ImGuiID(C.ImGuiContext_GetNavInitResultId(self.handle()))
 }
 
-func (self ImGuiContext) SetNavInitResultRectRel(v ImRect) {
+func (self ImGuiContext) SetNavInitResultRectRel(v Rect) {
 	C.ImGuiContext_SetNavInitResultRectRel(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetNavInitResultRectRel() ImRect {
-	out := &ImRect{}
+func (self ImGuiContext) GetNavInitResultRectRel() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiContext_GetNavInitResultRectRel(self.handle()))
 	return *out
 }
@@ -7147,22 +7147,22 @@ func (self ImGuiContext) GetNavMoveClipDir() Dir {
 	return Dir(C.ImGuiContext_GetNavMoveClipDir(self.handle()))
 }
 
-func (self ImGuiContext) SetNavScoringRect(v ImRect) {
+func (self ImGuiContext) SetNavScoringRect(v Rect) {
 	C.ImGuiContext_SetNavScoringRect(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetNavScoringRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiContext) GetNavScoringRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiContext_GetNavScoringRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiContext) SetNavScoringNoClipRect(v ImRect) {
+func (self ImGuiContext) SetNavScoringNoClipRect(v Rect) {
 	C.ImGuiContext_SetNavScoringNoClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetNavScoringNoClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiContext) GetNavScoringNoClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiContext_GetNavScoringNoClipRect(self.handle()))
 	return *out
 }
@@ -7343,12 +7343,12 @@ func (self ImGuiContext) GetDragDropPayload() ImGuiPayload {
 	return newImGuiPayloadFromC(C.ImGuiContext_GetDragDropPayload(self.handle()))
 }
 
-func (self ImGuiContext) SetDragDropTargetRect(v ImRect) {
+func (self ImGuiContext) SetDragDropTargetRect(v Rect) {
 	C.ImGuiContext_SetDragDropTargetRect(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetDragDropTargetRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiContext) GetDragDropTargetRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiContext_GetDragDropTargetRect(self.handle()))
 	return *out
 }
@@ -9261,32 +9261,32 @@ func (self ImGuiLastItemData) GetStatusFlags() ItemStatusFlags {
 	return ItemStatusFlags(C.ImGuiLastItemData_GetStatusFlags(self.handle()))
 }
 
-func (self ImGuiLastItemData) SetRect(v ImRect) {
+func (self ImGuiLastItemData) SetRect(v Rect) {
 	C.ImGuiLastItemData_SetRect(self.handle(), v.toC())
 }
 
-func (self ImGuiLastItemData) GetRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiLastItemData) GetRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiLastItemData_GetRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiLastItemData) SetNavRect(v ImRect) {
+func (self ImGuiLastItemData) SetNavRect(v Rect) {
 	C.ImGuiLastItemData_SetNavRect(self.handle(), v.toC())
 }
 
-func (self ImGuiLastItemData) GetNavRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiLastItemData) GetNavRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiLastItemData_GetNavRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiLastItemData) SetDisplayRect(v ImRect) {
+func (self ImGuiLastItemData) SetDisplayRect(v Rect) {
 	C.ImGuiLastItemData_SetDisplayRect(self.handle(), v.toC())
 }
 
-func (self ImGuiLastItemData) GetDisplayRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiLastItemData) GetDisplayRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiLastItemData_GetDisplayRect(self.handle()))
 	return *out
 }
@@ -9571,12 +9571,12 @@ func (self ImGuiNavItemData) GetFocusScopeId() ImGuiID {
 	return ImGuiID(C.ImGuiNavItemData_GetFocusScopeId(self.handle()))
 }
 
-func (self ImGuiNavItemData) SetRectRel(v ImRect) {
+func (self ImGuiNavItemData) SetRectRel(v Rect) {
 	C.ImGuiNavItemData_SetRectRel(self.handle(), v.toC())
 }
 
-func (self ImGuiNavItemData) GetRectRel() ImRect {
-	out := &ImRect{}
+func (self ImGuiNavItemData) GetRectRel() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiNavItemData_GetRectRel(self.handle()))
 	return *out
 }
@@ -9759,12 +9759,12 @@ func (self ImGuiNextWindowData) GetCollapsedVal() bool {
 	return C.ImGuiNextWindowData_GetCollapsedVal(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiNextWindowData) SetSizeConstraintRect(v ImRect) {
+func (self ImGuiNextWindowData) SetSizeConstraintRect(v Rect) {
 	C.ImGuiNextWindowData_SetSizeConstraintRect(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetSizeConstraintRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiNextWindowData) GetSizeConstraintRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiNextWindowData_GetSizeConstraintRect(self.handle()))
 	return *out
 }
@@ -9839,12 +9839,12 @@ func (self ImGuiOldColumnData) GetFlags() OldColumnFlags {
 	return OldColumnFlags(C.ImGuiOldColumnData_GetFlags(self.handle()))
 }
 
-func (self ImGuiOldColumnData) SetClipRect(v ImRect) {
+func (self ImGuiOldColumnData) SetClipRect(v Rect) {
 	C.ImGuiOldColumnData_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiOldColumnData) GetClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiOldColumnData) GetClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiOldColumnData_GetClipRect(self.handle()))
 	return *out
 }
@@ -9945,32 +9945,32 @@ func (self ImGuiOldColumns) GetHostCursorMaxPosX() float32 {
 	return float32(C.ImGuiOldColumns_GetHostCursorMaxPosX(self.handle()))
 }
 
-func (self ImGuiOldColumns) SetHostInitialClipRect(v ImRect) {
+func (self ImGuiOldColumns) SetHostInitialClipRect(v Rect) {
 	C.ImGuiOldColumns_SetHostInitialClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiOldColumns) GetHostInitialClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiOldColumns) GetHostInitialClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiOldColumns_GetHostInitialClipRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiOldColumns) SetHostBackupClipRect(v ImRect) {
+func (self ImGuiOldColumns) SetHostBackupClipRect(v Rect) {
 	C.ImGuiOldColumns_SetHostBackupClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiOldColumns) GetHostBackupClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiOldColumns) GetHostBackupClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiOldColumns_GetHostBackupClipRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiOldColumns) SetHostBackupParentWorkRect(v ImRect) {
+func (self ImGuiOldColumns) SetHostBackupParentWorkRect(v Rect) {
 	C.ImGuiOldColumns_SetHostBackupParentWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiOldColumns) GetHostBackupParentWorkRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiOldColumns) GetHostBackupParentWorkRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiOldColumns_GetHostBackupParentWorkRect(self.handle()))
 	return *out
 }
@@ -10850,12 +10850,12 @@ func (self ImGuiTabBar) GetPrevFrameVisible() int {
 	return int(C.ImGuiTabBar_GetPrevFrameVisible(self.handle()))
 }
 
-func (self ImGuiTabBar) SetBarRect(v ImRect) {
+func (self ImGuiTabBar) SetBarRect(v Rect) {
 	C.ImGuiTabBar_SetBarRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTabBar) GetBarRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTabBar) GetBarRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTabBar_GetBarRect(self.handle()))
 	return *out
 }
@@ -11476,92 +11476,92 @@ func (self ImGuiTable) GetRefScale() float32 {
 	return float32(C.ImGuiTable_GetRefScale(self.handle()))
 }
 
-func (self ImGuiTable) SetOuterRect(v ImRect) {
+func (self ImGuiTable) SetOuterRect(v Rect) {
 	C.ImGuiTable_SetOuterRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetOuterRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetOuterRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetOuterRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetInnerRect(v ImRect) {
+func (self ImGuiTable) SetInnerRect(v Rect) {
 	C.ImGuiTable_SetInnerRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetInnerRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetInnerRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetInnerRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetWorkRect(v ImRect) {
+func (self ImGuiTable) SetWorkRect(v Rect) {
 	C.ImGuiTable_SetWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetWorkRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetWorkRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetWorkRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetInnerClipRect(v ImRect) {
+func (self ImGuiTable) SetInnerClipRect(v Rect) {
 	C.ImGuiTable_SetInnerClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetInnerClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetInnerClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetInnerClipRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetBgClipRect(v ImRect) {
+func (self ImGuiTable) SetBgClipRect(v Rect) {
 	C.ImGuiTable_SetBgClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetBgClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetBgClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetBgClipRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetBg0ClipRectForDrawCmd(v ImRect) {
+func (self ImGuiTable) SetBg0ClipRectForDrawCmd(v Rect) {
 	C.ImGuiTable_SetBg0ClipRectForDrawCmd(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetBg0ClipRectForDrawCmd() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetBg0ClipRectForDrawCmd() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetBg0ClipRectForDrawCmd(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetBg2ClipRectForDrawCmd(v ImRect) {
+func (self ImGuiTable) SetBg2ClipRectForDrawCmd(v Rect) {
 	C.ImGuiTable_SetBg2ClipRectForDrawCmd(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetBg2ClipRectForDrawCmd() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetBg2ClipRectForDrawCmd() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetBg2ClipRectForDrawCmd(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetHostClipRect(v ImRect) {
+func (self ImGuiTable) SetHostClipRect(v Rect) {
 	C.ImGuiTable_SetHostClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetHostClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetHostClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetHostClipRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetHostBackupInnerClipRect(v ImRect) {
+func (self ImGuiTable) SetHostBackupInnerClipRect(v Rect) {
 	C.ImGuiTable_SetHostBackupInnerClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetHostBackupInnerClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetHostBackupInnerClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetHostBackupInnerClipRect(self.handle()))
 	return *out
 }
@@ -12006,12 +12006,12 @@ func (self ImGuiTableColumn) GetInitStretchWeightOrWidth() float32 {
 	return float32(C.ImGuiTableColumn_GetInitStretchWeightOrWidth(self.handle()))
 }
 
-func (self ImGuiTableColumn) SetClipRect(v ImRect) {
+func (self ImGuiTableColumn) SetClipRect(v Rect) {
 	C.ImGuiTableColumn_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTableColumn) GetClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTableColumn) GetClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTableColumn_GetClipRect(self.handle()))
 	return *out
 }
@@ -12486,22 +12486,22 @@ func (self ImGuiTableTempData) GetDrawSplitter() ImDrawListSplitter {
 	return newImDrawListSplitterFromC(C.ImGuiTableTempData_GetDrawSplitter(self.handle()))
 }
 
-func (self ImGuiTableTempData) SetHostBackupWorkRect(v ImRect) {
+func (self ImGuiTableTempData) SetHostBackupWorkRect(v Rect) {
 	C.ImGuiTableTempData_SetHostBackupWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTableTempData) GetHostBackupWorkRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTableTempData) GetHostBackupWorkRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTableTempData_GetHostBackupWorkRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTableTempData) SetHostBackupParentWorkRect(v ImRect) {
+func (self ImGuiTableTempData) SetHostBackupParentWorkRect(v Rect) {
 	C.ImGuiTableTempData_SetHostBackupParentWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTableTempData) GetHostBackupParentWorkRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTableTempData) GetHostBackupParentWorkRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTableTempData_GetHostBackupParentWorkRect(self.handle()))
 	return *out
 }
@@ -13413,72 +13413,72 @@ func (self ImGuiWindow) GetDC() ImGuiWindowTempData {
 	return newImGuiWindowTempDataFromC(C.ImGuiWindow_GetDC(self.handle()))
 }
 
-func (self ImGuiWindow) SetOuterRectClipped(v ImRect) {
+func (self ImGuiWindow) SetOuterRectClipped(v Rect) {
 	C.ImGuiWindow_SetOuterRectClipped(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetOuterRectClipped() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetOuterRectClipped() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetOuterRectClipped(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetInnerRect(v ImRect) {
+func (self ImGuiWindow) SetInnerRect(v Rect) {
 	C.ImGuiWindow_SetInnerRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetInnerRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetInnerRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetInnerRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetInnerClipRect(v ImRect) {
+func (self ImGuiWindow) SetInnerClipRect(v Rect) {
 	C.ImGuiWindow_SetInnerClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetInnerClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetInnerClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetInnerClipRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetWorkRect(v ImRect) {
+func (self ImGuiWindow) SetWorkRect(v Rect) {
 	C.ImGuiWindow_SetWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetWorkRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetWorkRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetWorkRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetParentWorkRect(v ImRect) {
+func (self ImGuiWindow) SetParentWorkRect(v Rect) {
 	C.ImGuiWindow_SetParentWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetParentWorkRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetParentWorkRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetParentWorkRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetClipRect(v ImRect) {
+func (self ImGuiWindow) SetClipRect(v Rect) {
 	C.ImGuiWindow_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetClipRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetContentRegionRect(v ImRect) {
+func (self ImGuiWindow) SetContentRegionRect(v Rect) {
 	C.ImGuiWindow_SetContentRegionRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetContentRegionRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetContentRegionRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetContentRegionRect(self.handle()))
 	return *out
 }
@@ -13719,12 +13719,12 @@ func (self ImGuiWindow) GetDockTabItemStatusFlags() ItemStatusFlags {
 	return ItemStatusFlags(C.ImGuiWindow_GetDockTabItemStatusFlags(self.handle()))
 }
 
-func (self ImGuiWindow) SetDockTabItemRect(v ImRect) {
+func (self ImGuiWindow) SetDockTabItemRect(v Rect) {
 	C.ImGuiWindow_SetDockTabItemRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetDockTabItemRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetDockTabItemRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetDockTabItemRect(self.handle()))
 	return *out
 }

@@ -94,7 +94,7 @@ return *out
 }
 
 func imRectReturnW() (returnType string, returnStmt string) {
-	returnType = "ImRect"
+	returnType = "Rect"
 	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
 	returnStmt += `out.fromC(%s)
 return *out
