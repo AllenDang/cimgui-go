@@ -19,8 +19,8 @@ const (
 	DrawFlags_RoundCornersLeft        = 80
 	DrawFlags_RoundCornersRight       = 160
 	DrawFlags_RoundCornersAll         = 240
-	DrawFlags_RoundCornersDefault_    = 240
-	DrawFlags_RoundCornersMask_       = 496
+	DrawFlags_RoundCornersDefault     = 240
+	DrawFlags_RoundCornersMask        = 496
 )
 
 // original name: ImDrawListFlags_
@@ -96,20 +96,20 @@ const (
 	ButtonFlags_NoHoldingActiveId             = 131072
 	ButtonFlags_NoNavFocus                    = 262144
 	ButtonFlags_NoHoveredOnFocus              = 524288
-	ButtonFlags_PressedOnMask_                = 1008
-	ButtonFlags_PressedOnDefault_             = 32
+	ButtonFlags_PressedOnMask                 = 1008
+	ButtonFlags_PressedOnDefault              = 32
 )
 
 // original name: ImGuiButtonFlags_
 type ButtonFlags int
 
 const (
-	ButtonFlags_None                = 0
-	ButtonFlags_MouseButtonLeft     = 1
-	ButtonFlags_MouseButtonRight    = 2
-	ButtonFlags_MouseButtonMiddle   = 4
-	ButtonFlags_MouseButtonMask_    = 7
-	ButtonFlags_MouseButtonDefault_ = 1
+	ButtonFlags_None               = 0
+	ButtonFlags_MouseButtonLeft    = 1
+	ButtonFlags_MouseButtonRight   = 2
+	ButtonFlags_MouseButtonMiddle  = 4
+	ButtonFlags_MouseButtonMask    = 7
+	ButtonFlags_MouseButtonDefault = 1
 )
 
 // original name: ImGuiCol_
@@ -202,11 +202,11 @@ const (
 	ColorEditFlags_PickerHueWheel   = 67108864
 	ColorEditFlags_InputRGB         = 134217728
 	ColorEditFlags_InputHSV         = 268435456
-	ColorEditFlags_DefaultOptions_  = 177209344
-	ColorEditFlags_DisplayMask_     = 7340032
-	ColorEditFlags_DataTypeMask_    = 25165824
-	ColorEditFlags_PickerMask_      = 100663296
-	ColorEditFlags_InputMask_       = 402653184
+	ColorEditFlags_DefaultOptions   = 177209344
+	ColorEditFlags_DisplayMask      = 7340032
+	ColorEditFlags_DataTypeMask     = 25165824
+	ColorEditFlags_PickerMask       = 100663296
+	ColorEditFlags_InputMask        = 402653184
 )
 
 // original name: ImGuiComboFlagsPrivate_
@@ -228,7 +228,7 @@ const (
 	ComboFlags_HeightLargest  = 16
 	ComboFlags_NoArrowButton  = 32
 	ComboFlags_NoPreview      = 64
-	ComboFlags_HeightMask_    = 30
+	ComboFlags_HeightMask     = 30
 )
 
 // original name: ImGuiCond_
@@ -265,14 +265,14 @@ const (
 type ContextHookType int
 
 const (
-	ContextHookType_NewFramePre     = 0
-	ContextHookType_NewFramePost    = 1
-	ContextHookType_EndFramePre     = 2
-	ContextHookType_EndFramePost    = 3
-	ContextHookType_RenderPre       = 4
-	ContextHookType_RenderPost      = 5
-	ContextHookType_Shutdown        = 6
-	ContextHookType_PendingRemoval_ = 7
+	ContextHookType_NewFramePre    = 0
+	ContextHookType_NewFramePost   = 1
+	ContextHookType_EndFramePre    = 2
+	ContextHookType_EndFramePost   = 3
+	ContextHookType_RenderPre      = 4
+	ContextHookType_RenderPost     = 5
+	ContextHookType_Shutdown       = 6
+	ContextHookType_PendingRemoval = 7
 )
 
 // original name: ImGuiDataAuthority_
@@ -323,7 +323,7 @@ const (
 	DebugLogFlags_EventIO       = 32
 	DebugLogFlags_EventDocking  = 64
 	DebugLogFlags_EventViewport = 128
-	DebugLogFlags_EventMask_    = 255
+	DebugLogFlags_EventMask     = 255
 	DebugLogFlags_OutputToTTY   = 1024
 )
 
@@ -343,25 +343,25 @@ const (
 type DockNodeFlagsPrivate int
 
 const (
-	DockNodeFlags_DockSpace               = 1024
-	DockNodeFlags_CentralNode             = 2048
-	DockNodeFlags_NoTabBar                = 4096
-	DockNodeFlags_HiddenTabBar            = 8192
-	DockNodeFlags_NoWindowMenuButton      = 16384
-	DockNodeFlags_NoCloseButton           = 32768
-	DockNodeFlags_NoDocking               = 65536
-	DockNodeFlags_NoDockingSplitMe        = 131072
-	DockNodeFlags_NoDockingSplitOther     = 262144
-	DockNodeFlags_NoDockingOverMe         = 524288
-	DockNodeFlags_NoDockingOverOther      = 1048576
-	DockNodeFlags_NoDockingOverEmpty      = 2097152
-	DockNodeFlags_NoResizeX               = 4194304
-	DockNodeFlags_NoResizeY               = 8388608
-	DockNodeFlags_SharedFlagsInheritMask_ = -1
-	DockNodeFlags_NoResizeFlagsMask_      = 12582944
-	DockNodeFlags_LocalFlagsMask_         = 12713072
-	DockNodeFlags_LocalFlagsTransferMask_ = 12712048
-	DockNodeFlags_SavedFlagsMask_         = 12712992
+	DockNodeFlags_DockSpace              = 1024
+	DockNodeFlags_CentralNode            = 2048
+	DockNodeFlags_NoTabBar               = 4096
+	DockNodeFlags_HiddenTabBar           = 8192
+	DockNodeFlags_NoWindowMenuButton     = 16384
+	DockNodeFlags_NoCloseButton          = 32768
+	DockNodeFlags_NoDocking              = 65536
+	DockNodeFlags_NoDockingSplitMe       = 131072
+	DockNodeFlags_NoDockingSplitOther    = 262144
+	DockNodeFlags_NoDockingOverMe        = 524288
+	DockNodeFlags_NoDockingOverOther     = 1048576
+	DockNodeFlags_NoDockingOverEmpty     = 2097152
+	DockNodeFlags_NoResizeX              = 4194304
+	DockNodeFlags_NoResizeY              = 8388608
+	DockNodeFlags_SharedFlagsInheritMask = -1
+	DockNodeFlags_NoResizeFlagsMask      = 12582944
+	DockNodeFlags_LocalFlagsMask         = 12713072
+	DockNodeFlags_LocalFlagsTransferMask = 12712048
+	DockNodeFlags_SavedFlagsMask         = 12712992
 )
 
 // original name: ImGuiDockNodeFlags_
@@ -460,7 +460,7 @@ const (
 	InputFlags_RepeatRateDefault  = 2
 	InputFlags_RepeatRateNavMove  = 4
 	InputFlags_RepeatRateNavTweak = 8
-	InputFlags_RepeatRateMask_    = 14
+	InputFlags_RepeatRateMask     = 14
 )
 
 // original name: ImGuiInputSource
@@ -895,8 +895,8 @@ const (
 	PopupFlags_MouseButtonLeft         = 0
 	PopupFlags_MouseButtonRight        = 1
 	PopupFlags_MouseButtonMiddle       = 2
-	PopupFlags_MouseButtonMask_        = 31
-	PopupFlags_MouseButtonDefault_     = 1
+	PopupFlags_MouseButtonMask         = 31
+	PopupFlags_MouseButtonDefault      = 1
 	PopupFlags_NoOpenOverExistingPopup = 32
 	PopupFlags_NoOpenOverItems         = 64
 	PopupFlags_AnyPopupId              = 128
@@ -925,8 +925,8 @@ const (
 	ScrollFlags_AlwaysCenterX      = 16
 	ScrollFlags_AlwaysCenterY      = 32
 	ScrollFlags_NoScrollParent     = 64
-	ScrollFlags_MaskX_             = 21
-	ScrollFlags_MaskY_             = 42
+	ScrollFlags_MaskX              = 21
+	ScrollFlags_MaskY              = 42
 )
 
 // original name: ImGuiSelectableFlagsPrivate_
@@ -982,7 +982,7 @@ const (
 	SliderFlags_Logarithmic     = 32
 	SliderFlags_NoRoundToFormat = 64
 	SliderFlags_NoInput         = 128
-	SliderFlags_InvalidMask_    = 1879048207
+	SliderFlags_InvalidMask     = 1879048207
 )
 
 // original name: ImGuiSortDirection_
@@ -1048,15 +1048,15 @@ const (
 	TabBarFlags_NoTooltip                    = 32
 	TabBarFlags_FittingPolicyResizeDown      = 64
 	TabBarFlags_FittingPolicyScroll          = 128
-	TabBarFlags_FittingPolicyMask_           = 192
-	TabBarFlags_FittingPolicyDefault_        = 64
+	TabBarFlags_FittingPolicyMask            = 192
+	TabBarFlags_FittingPolicyDefault         = 64
 )
 
 // original name: ImGuiTabItemFlagsPrivate_
 type TabItemFlagsPrivate int
 
 const (
-	TabItemFlags_SectionMask_  = 192
+	TabItemFlags_SectionMask   = 192
 	TabItemFlags_NoCloseButton = 1048576
 	TabItemFlags_Button        = 2097152
 	TabItemFlags_Unsorted      = 4194304
@@ -1115,10 +1115,10 @@ const (
 	TableColumnFlags_IsVisible            = 33554432
 	TableColumnFlags_IsSorted             = 67108864
 	TableColumnFlags_IsHovered            = 134217728
-	TableColumnFlags_WidthMask_           = 24
-	TableColumnFlags_IndentMask_          = 196608
-	TableColumnFlags_StatusMask_          = 251658240
-	TableColumnFlags_NoDirectResize_      = 1073741824
+	TableColumnFlags_WidthMask            = 24
+	TableColumnFlags_IndentMask           = 196608
+	TableColumnFlags_StatusMask           = 251658240
+	TableColumnFlags_NoDirectResize       = 1073741824
 )
 
 // original name: ImGuiTableFlags_
@@ -1160,7 +1160,7 @@ const (
 	TableFlags_ScrollY                    = 33554432
 	TableFlags_SortMulti                  = 67108864
 	TableFlags_SortTristate               = 134217728
-	TableFlags_SizingMask_                = 57344
+	TableFlags_SizingMask                 = 57344
 )
 
 // original name: ImGuiTableRowFlags_
