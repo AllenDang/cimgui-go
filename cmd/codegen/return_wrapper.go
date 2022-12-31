@@ -85,7 +85,7 @@ return *out
 }
 
 func imPlotPointReturnW() (returnType string, returnStmt string) {
-	returnType = "ImPlotPoint"
+	returnType = "PlotPoint"
 	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
 	returnStmt += `out.fromC(%s)
 return *out

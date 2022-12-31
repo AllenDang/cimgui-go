@@ -249,11 +249,11 @@ func voidPtrW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imPlotPointW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappableW(arg.Name, "ImPlotPoint")
+	return wrappableW(arg.Name, "PlotPoint")
 }
 
 func imPlotPointPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrW(arg.Name, "*ImPlotPoint", "C.ImPlotPoint")
+	return wrappablePtrW(arg.Name, "*PlotPoint", "C.ImPlotPoint")
 }
 
 func imVec2W(arg ArgDef) (argType string, def string, varName string) {

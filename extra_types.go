@@ -109,23 +109,23 @@ func (r *Rect) toC() C.ImRect {
 	return C.ImRect{Min: r.Min.toC(), Max: r.Max.toC()}
 }
 
-var _ wrappableType[C.ImPlotPoint, *ImPlotPoint] = &ImPlotPoint{}
+var _ wrappableType[C.ImPlotPoint, *PlotPoint] = &PlotPoint{}
 
-type ImPlotPoint struct {
+type PlotPoint struct {
 	X float64
 	Y float64
 }
 
-func NewImPlotPoint(x, y float64) ImPlotPoint {
-	return ImPlotPoint{X: x, Y: y}
+func NewPlotPoint(x, y float64) PlotPoint {
+	return PlotPoint{X: x, Y: y}
 }
 
-func (i *ImPlotPoint) fromC(p C.ImPlotPoint) *ImPlotPoint {
-	*i = NewImPlotPoint(float64(p.x), float64(p.y))
+func (i *PlotPoint) fromC(p C.ImPlotPoint) *PlotPoint {
+	*i = NewPlotPoint(float64(p.x), float64(p.y))
 	return i
 }
 
-func (p ImPlotPoint) toC() C.ImPlotPoint {
+func (p PlotPoint) toC() C.ImPlotPoint {
 	return C.ImPlotPoint{x: C.double(p.X), y: C.double(p.Y)}
 }
 
