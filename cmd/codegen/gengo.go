@@ -59,6 +59,7 @@ func generateGoEnums(prefix string, enums []EnumDef) []string {
 
 		for _, v := range e.Values {
 			vName := trimImGuiPrefix(v.Name)
+			vName = strings.TrimSuffix(vName, "_")
 			sb.WriteString(fmt.Sprintf("\t%s = %d\n", vName, v.Value))
 		}
 
