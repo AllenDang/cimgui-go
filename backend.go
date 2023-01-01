@@ -144,14 +144,14 @@ func Refresh() {
 	C.igRefresh()
 }
 
-func CreateTexture(pixels unsafe.Pointer, width, height int) ImTextureID {
-	return ImTextureID(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
+func CreateTexture(pixels unsafe.Pointer, width, height int) TextureID {
+	return TextureID(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
 }
 
-func CreateTextureRgba(img *image.RGBA, width, height int) ImTextureID {
-	return ImTextureID(C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height)))
+func CreateTextureRgba(img *image.RGBA, width, height int) TextureID {
+	return TextureID(C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height)))
 }
 
-func DeleteTexture(id ImTextureID) {
+func DeleteTexture(id TextureID) {
 	C.igDeleteTexture(C.ImTextureID(id))
 }

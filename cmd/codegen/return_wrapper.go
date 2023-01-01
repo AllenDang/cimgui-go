@@ -36,14 +36,14 @@ func intReturnW() (returnType string, returnStmt string) {
 }
 
 func constWCharPtrReturnW() (returnType string, returnStmt string) {
-	returnType = "*ImWchar"
-	returnStmt = "return (*ImWchar)(%s)"
+	returnType = "*Wchar"
+	returnStmt = "return (*Wchar)(%s)"
 	return
 }
 
 func imWcharReturnW() (returnType string, returnStmt string) {
-	returnType = "ImWchar"
-	returnStmt = "return (ImWchar)(%s)"
+	returnType = "Wchar"
+	returnStmt = "return (Wchar)(%s)"
 	return
 }
 
@@ -103,14 +103,14 @@ return *out
 }
 
 func imTableColumnIdxReturnW() (returnType string, returnStmt string) {
-	returnType = "ImGuiTableColumnIdx"
-	returnStmt = "return ImGuiTableColumnIdx(%s)"
+	returnType = "TableColumnIdx"
+	returnStmt = "return TableColumnIdx(%s)"
 	return
 }
 
 func imTableDrawChannelIdxReturnW() (returnType string, returnStmt string) {
-	returnType = "ImGuiTableDrawChannelIdx"
-	returnStmt = "return ImGuiTableDrawChannelIdx(%s)"
+	returnType = "TableDrawChannelIdx"
+	returnStmt = "return TableDrawChannelIdx(%s)"
 	return
 }
 
@@ -145,7 +145,7 @@ func idReturnW() (returnType string, returnStmt string) {
 }
 
 func textureIdReturnW() (returnType string, returnStmt string) {
-	returnType = "ImTextureID"
-	returnStmt = "return ImTextureID(%s)"
+	returnType = "TextureID"
+	returnStmt = "return TextureID(%s)"
 	return
 }

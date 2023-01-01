@@ -5,12 +5,12 @@ package cimgui
 import "C"
 
 type (
-	ImWchar                  C.uint
-	ImGuiID                  C.ImGuiID
-	ImTextureID              uintptr
-	ImDrawIdx                C.ImDrawIdx
-	ImGuiTableColumnIdx      C.ImGuiTableColumnIdx
-	ImGuiTableDrawChannelIdx C.ImGuiTableDrawChannelIdx
+	Wchar               C.uint
+	ImGuiID             C.ImGuiID
+	TextureID           uintptr
+	DrawIdx             C.ImDrawIdx
+	TableColumnIdx      C.ImGuiTableColumnIdx
+	TableDrawChannelIdx C.ImGuiTableDrawChannelIdx
 )
 
 var _ wrappableType[C.ImVec2, *Vec2] = &Vec2{}

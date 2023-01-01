@@ -173,13 +173,13 @@ func float4W(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imWcharW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "ImWchar"
+	argType = "Wchar"
 	varName = fmt.Sprintf("C.ImWchar(%s)", arg.Name)
 	return
 }
 
 func imWcharPtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*ImWchar"
+	argType = "*Wchar"
 	varName = fmt.Sprintf("(*C.ImWchar)(%s)", arg.Name)
 	return
 }
@@ -227,19 +227,19 @@ func imGuiIDW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imTextureIDW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "ImTextureID", "C.ImTextureID")
+	return simpleW(arg.Name, "TextureID", "C.ImTextureID")
 }
 
 func imDrawIdxW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "ImDrawIdx", "C.ImDrawIdx")
+	return simpleW(arg.Name, "DrawIdx", "C.ImDrawIdx")
 }
 
 func imTableColumnIdxW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "ImGuiTableColumnIdx", "C.ImGuiTableColumnIdx")
+	return simpleW(arg.Name, "TableColumnIdx", "C.ImGuiTableColumnIdx")
 }
 
 func imTableDrawChannelIdxW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "ImGuiTableDrawChannelIdx", "C.ImGuiTableDrawChannelIdx")
+	return simpleW(arg.Name, "TableDrawChannelIdx", "C.ImGuiTableDrawChannelIdx")
 }
 
 func voidPtrW(arg ArgDef) (argType string, def string, varName string) {

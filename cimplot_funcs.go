@@ -2251,7 +2251,7 @@ func Plot_PlotHeatmap_U8PtrV(label_id string, values []*byte, rows int32, cols i
 // tint_col: ImVec4(1,1,1,1)
 // uv0: ImVec2(0,0)
 // uv1: ImVec2(1,1)
-func Plot_PlotImageV(label_id string, user_texture_id ImTextureID, bounds_min PlotPoint, bounds_max PlotPoint, uv0 Vec2, uv1 Vec2, tint_col Vec4, flags PlotImageFlags) {
+func Plot_PlotImageV(label_id string, user_texture_id TextureID, bounds_min PlotPoint, bounds_max PlotPoint, uv0 Vec2, uv1 Vec2, tint_col Vec4, flags PlotImageFlags) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
 
@@ -7061,7 +7061,7 @@ func Plot_PlotHistogram_U8Ptr(label_id string, values []*byte, count int32) floa
 	return float64(C.Plot_PlotHistogram_U8Ptr(label_idArg, (*C.ImU8)(&valuesArg[0]), C.int(count)))
 }
 
-func Plot_PlotImage(label_id string, user_texture_id ImTextureID, bounds_min PlotPoint, bounds_max PlotPoint) {
+func Plot_PlotImage(label_id string, user_texture_id TextureID, bounds_min PlotPoint, bounds_max PlotPoint) {
 	label_idArg, label_idFin := wrapString(label_id)
 	defer label_idFin()
 
