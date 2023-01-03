@@ -5,19 +5,19 @@ import (
 	"testing"
 )
 
-func TestImVec2_Add(t *testing.T) {
+func TestVec2_Add(t *testing.T) {
 	tests := []struct {
 		name string
-		p    ImVec2
-		q    ImVec2
-		want ImVec2
+		p    Vec2
+		q    Vec2
+		want Vec2
 	}{
-		{"Add nothing", ImVec2{0, 0}, ImVec2{0, 0}, ImVec2{0, 0}},
-		{"Add 1, 5", ImVec2{0, 0}, ImVec2{1, 5}, ImVec2{1, 5}},
-		{"(20, 4) + (8, 8)", ImVec2{20, 4}, ImVec2{8, 8}, ImVec2{28, 12}},
-		{"positive + negative", ImVec2{20, 4}, ImVec2{-8, -8}, ImVec2{12, -4}},
-		{"negative + negative", ImVec2{-20, -4}, ImVec2{-8, -8}, ImVec2{-28, -12}},
-		{"float + float", ImVec2{20.5, 4.5}, ImVec2{8.5, 8.5}, ImVec2{29, 13}},
+		{"Add nothing", Vec2{0, 0}, Vec2{0, 0}, Vec2{0, 0}},
+		{"Add 1, 5", Vec2{0, 0}, Vec2{1, 5}, Vec2{1, 5}},
+		{"(20, 4) + (8, 8)", Vec2{20, 4}, Vec2{8, 8}, Vec2{28, 12}},
+		{"positive + negative", Vec2{20, 4}, Vec2{-8, -8}, Vec2{12, -4}},
+		{"negative + negative", Vec2{-20, -4}, Vec2{-8, -8}, Vec2{-28, -12}},
+		{"float + float", Vec2{20.5, 4.5}, Vec2{8.5, 8.5}, Vec2{29, 13}},
 	}
 
 	for _, tt := range tests {
@@ -29,17 +29,17 @@ func TestImVec2_Add(t *testing.T) {
 	}
 }
 
-func TestImVec2_Div(t *testing.T) {
+func TestVec2_Div(t *testing.T) {
 	tests := []struct {
 		name string
-		p    ImVec2
+		p    Vec2
 		k    float32
-		want ImVec2
+		want Vec2
 	}{
-		{"Simplest", ImVec2{0, 0}, 1, ImVec2{0, 0}},
-		{"Divide by 2", ImVec2{2, 2}, 2, ImVec2{1, 1}},
-		{"divide by -2", ImVec2{2, 2}, -2, ImVec2{-1, -1}},
-		{"divide by float", ImVec2{2.5, 2.5}, 2, ImVec2{1.25, 1.25}},
+		{"Simplest", Vec2{0, 0}, 1, Vec2{0, 0}},
+		{"Divide by 2", Vec2{2, 2}, 2, Vec2{1, 1}},
+		{"divide by -2", Vec2{2, 2}, -2, Vec2{-1, -1}},
+		{"divide by float", Vec2{2.5, 2.5}, 2, Vec2{1.25, 1.25}},
 	}
 
 	for _, tt := range tests {
@@ -51,18 +51,18 @@ func TestImVec2_Div(t *testing.T) {
 	}
 }
 
-func TestImVec2_Mul(t *testing.T) {
+func TestVec2_Mul(t *testing.T) {
 	tests := []struct {
 		name string
-		p    ImVec2
+		p    Vec2
 		k    float32
-		want ImVec2
+		want Vec2
 	}{
-		{"multiply by 1", ImVec2{1, 1}, 1, ImVec2{1, 1}},
-		{"multiply by -1", ImVec2{1, 1}, -1, ImVec2{-1, -1}},
-		{"multiply by 2", ImVec2{1, 1}, 2, ImVec2{2, 2}},
-		{"multiply by float", ImVec2{1.5, 1.5}, 2, ImVec2{3, 3}},
-		{"multiply by 0", ImVec2{1, 1}, 0, ImVec2{0, 0}},
+		{"multiply by 1", Vec2{1, 1}, 1, Vec2{1, 1}},
+		{"multiply by -1", Vec2{1, 1}, -1, Vec2{-1, -1}},
+		{"multiply by 2", Vec2{1, 1}, 2, Vec2{2, 2}},
+		{"multiply by float", Vec2{1.5, 1.5}, 2, Vec2{3, 3}},
+		{"multiply by 0", Vec2{1, 1}, 0, Vec2{0, 0}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -73,18 +73,18 @@ func TestImVec2_Mul(t *testing.T) {
 	}
 }
 
-func TestImVec2_Sub(t *testing.T) {
+func TestVec2_Sub(t *testing.T) {
 	tests := []struct {
 		name string
-		p, q ImVec2
-		want ImVec2
+		p, q Vec2
+		want Vec2
 	}{
-		{"Simplest", ImVec2{0, 0}, ImVec2{0, 0}, ImVec2{0, 0}},
-		{"positive - positive", ImVec2{20, 4}, ImVec2{8, 8}, ImVec2{12, -4}},
-		{"positive - negative", ImVec2{20, 4}, ImVec2{-8, -8}, ImVec2{28, 12}},
-		{"negative - positive", ImVec2{-20, -4}, ImVec2{8, 8}, ImVec2{-28, -12}},
-		{"negative - negative", ImVec2{-20, -4}, ImVec2{-8, -8}, ImVec2{-12, 4}},
-		{"float - float", ImVec2{20.5, 4.5}, ImVec2{8.5, 8.5}, ImVec2{12, -4}},
+		{"Simplest", Vec2{0, 0}, Vec2{0, 0}, Vec2{0, 0}},
+		{"positive - positive", Vec2{20, 4}, Vec2{8, 8}, Vec2{12, -4}},
+		{"positive - negative", Vec2{20, 4}, Vec2{-8, -8}, Vec2{28, 12}},
+		{"negative - positive", Vec2{-20, -4}, Vec2{8, 8}, Vec2{-28, -12}},
+		{"negative - negative", Vec2{-20, -4}, Vec2{-8, -8}, Vec2{-12, 4}},
+		{"float - float", Vec2{20.5, 4.5}, Vec2{8.5, 8.5}, Vec2{12, -4}},
 	}
 
 	for _, tt := range tests {
@@ -96,19 +96,19 @@ func TestImVec2_Sub(t *testing.T) {
 	}
 }
 
-func TestImVec4_Add(t *testing.T) {
+func TestVec4_Add(t *testing.T) {
 	tests := []struct {
 		name string
-		p    ImVec4
-		q    ImVec2
-		want ImVec4
+		p    Vec4
+		q    Vec2
+		want Vec4
 	}{
-		{"Simplest", ImVec4{0, 0, 0, 0}, ImVec2{0, 0}, ImVec4{0, 0, 0, 0}},
-		{"positive + positive", ImVec4{20, 4, 0, 0}, ImVec2{8, 8}, ImVec4{28, 12, 8, 8}},
-		{"positive + negative", ImVec4{20, 4, 0, 0}, ImVec2{-8, -8}, ImVec4{12, -4, -8, -8}},
-		{"negative + positive", ImVec4{-20, -4, 0, 0}, ImVec2{8, 8}, ImVec4{-12, 4, 8, 8}},
-		{"negative + negative", ImVec4{-20, -4, 0, 0}, ImVec2{-8, -8}, ImVec4{-28, -12, -8, -8}},
-		{"float + float", ImVec4{20.5, 4.5, 0, 0}, ImVec2{8.5, 8.5}, ImVec4{29, 13, 8.5, 8.5}},
+		{"Simplest", Vec4{0, 0, 0, 0}, Vec2{0, 0}, Vec4{0, 0, 0, 0}},
+		{"positive + positive", Vec4{20, 4, 0, 0}, Vec2{8, 8}, Vec4{28, 12, 8, 8}},
+		{"positive + negative", Vec4{20, 4, 0, 0}, Vec2{-8, -8}, Vec4{12, -4, -8, -8}},
+		{"negative + positive", Vec4{-20, -4, 0, 0}, Vec2{8, 8}, Vec4{-12, 4, 8, 8}},
+		{"negative + negative", Vec4{-20, -4, 0, 0}, Vec2{-8, -8}, Vec4{-28, -12, -8, -8}},
+		{"float + float", Vec4{20.5, 4.5, 0, 0}, Vec2{8.5, 8.5}, Vec4{29, 13, 8.5, 8.5}},
 	}
 
 	for _, tt := range tests {
@@ -120,18 +120,18 @@ func TestImVec4_Add(t *testing.T) {
 	}
 }
 
-func TestImVec4_Sub(t *testing.T) {
+func TestVec4_Sub(t *testing.T) {
 	tests := []struct {
 		name string
-		p    ImVec4
-		q    ImVec2
-		want ImVec4
+		p    Vec4
+		q    Vec2
+		want Vec4
 	}{
-		{"Simplest", ImVec4{0, 0, 0, 0}, ImVec2{0, 0}, ImVec4{0, 0, 0, 0}},
-		{"numbers; no change", ImVec4{20, 4, 50, 6}, ImVec2{0, 0}, ImVec4{20, 4, 50, 6}},
-		{"numbers; change", ImVec4{20, 4, 50, 6}, ImVec2{10, 2}, ImVec4{10, 2, 40, 4}},
-		{"floats; no change", ImVec4{20.5, 4.5, 50.5, 6.5}, ImVec2{0, 0}, ImVec4{20.5, 4.5, 50.5, 6.5}},
-		{"floats; change", ImVec4{20.5, 4.5, 50.5, 6.5}, ImVec2{10.5, 2.5}, ImVec4{10, 2, 40, 4}},
+		{"Simplest", Vec4{0, 0, 0, 0}, Vec2{0, 0}, Vec4{0, 0, 0, 0}},
+		{"numbers; no change", Vec4{20, 4, 50, 6}, Vec2{0, 0}, Vec4{20, 4, 50, 6}},
+		{"numbers; change", Vec4{20, 4, 50, 6}, Vec2{10, 2}, Vec4{10, 2, 40, 4}},
+		{"floats; no change", Vec4{20.5, 4.5, 50.5, 6.5}, Vec2{0, 0}, Vec4{20.5, 4.5, 50.5, 6.5}},
+		{"floats; change", Vec4{20.5, 4.5, 50.5, 6.5}, Vec2{10.5, 2.5}, Vec4{10, 2, 40, 4}},
 	}
 
 	for _, tt := range tests {

@@ -15,7 +15,7 @@ import (
 )
 
 type Texture struct {
-	id     ImTextureID
+	id     TextureID
 	Width  int
 	Height int
 }
@@ -43,7 +43,7 @@ func (t *Texture) release() {
 	DeleteTexture(t.id)
 }
 
-func (t *Texture) ID() ImTextureID {
+func (t *Texture) ID() TextureID {
 	return t.id
 }
 

@@ -11,9 +11,9 @@ import "unsafe"
 
 // Color_HSVV parameter default value hint:
 // a: 1.0f
-func Color_HSVV(h float32, s float32, v float32, a float32) ImColor {
-	pOut := &ImColor{}
-	pOutArg, pOutFin := wrap[C.ImColor, *ImColor](pOut)
+func Color_HSVV(h float32, s float32, v float32, a float32) Color {
+	pOut := &Color{}
+	pOutArg, pOutFin := wrap[C.ImColor, *Color](pOut)
 	defer pOutFin()
 
 	C.Color_HSVV(pOutArg, C.float(h), C.float(s), C.float(v), C.float(a))
@@ -22,22 +22,22 @@ func Color_HSVV(h float32, s float32, v float32, a float32) ImColor {
 
 // Color_SetHSVV parameter default value hint:
 // a: 1.0f
-func (self *ImColor) SetHSVV(h float32, s float32, v float32, a float32) {
-	selfArg, selfFin := wrap[C.ImColor, *ImColor](self)
+func (self *Color) SetHSVV(h float32, s float32, v float32, a float32) {
+	selfArg, selfFin := wrap[C.ImColor, *Color](self)
 	defer selfFin()
 
 	C.Color_SetHSVV(selfArg, C.float(h), C.float(s), C.float(v), C.float(a))
 }
 
-func (self *ImColor) Destroy() {
-	selfArg, selfFin := wrap[C.ImColor, *ImColor](self)
+func (self *Color) Destroy() {
+	selfArg, selfFin := wrap[C.ImColor, *Color](self)
 	defer selfFin()
 
 	C.Color_Destroy(selfArg)
 }
 
-func (self ImDrawCmd) GetTexID() ImTextureID {
-	return ImTextureID(C.DrawCmd_GetTexID(self.handle()))
+func (self ImDrawCmd) GetTexID() TextureID {
+	return TextureID(C.DrawCmd_GetTexID(self.handle()))
 }
 
 func NewImDrawCmd() ImDrawCmd {
@@ -60,7 +60,7 @@ func NewImDrawData() ImDrawData {
 	return (ImDrawData)(unsafe.Pointer(C.DrawData_ImDrawData()))
 }
 
-func (self ImDrawData) ScaleClipRects(fb_scale ImVec2) {
+func (self ImDrawData) ScaleClipRects(fb_scale Vec2) {
 	C.DrawData_ScaleClipRects(self.handle(), fb_scale.toC())
 }
 
@@ -102,31 +102,31 @@ func (self ImDrawListSplitter) Destroy() {
 
 // DrawList_AddBezierCubicV parameter default value hint:
 // num_segments: 0
-func (self ImDrawList) AddBezierCubicV(p1 ImVec2, p2 ImVec2, p3 ImVec2, p4 ImVec2, col uint32, thickness float32, num_segments int32) {
+func (self ImDrawList) AddBezierCubicV(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32, thickness float32, num_segments int32) {
 	C.DrawList_AddBezierCubicV(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col), C.float(thickness), C.int(num_segments))
 }
 
 // DrawList_AddBezierQuadraticV parameter default value hint:
 // num_segments: 0
-func (self ImDrawList) AddBezierQuadraticV(p1 ImVec2, p2 ImVec2, p3 ImVec2, col uint32, thickness float32, num_segments int32) {
+func (self ImDrawList) AddBezierQuadraticV(p1 Vec2, p2 Vec2, p3 Vec2, col uint32, thickness float32, num_segments int32) {
 	C.DrawList_AddBezierQuadraticV(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col), C.float(thickness), C.int(num_segments))
 }
 
 // DrawList_AddCircleV parameter default value hint:
 // num_segments: 0
 // thickness: 1.0f
-func (self ImDrawList) AddCircleV(center ImVec2, radius float32, col uint32, num_segments int32, thickness float32) {
+func (self ImDrawList) AddCircleV(center Vec2, radius float32, col uint32, num_segments int32, thickness float32) {
 	C.DrawList_AddCircleV(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments), C.float(thickness))
 }
 
 // DrawList_AddCircleFilledV parameter default value hint:
 // num_segments: 0
-func (self ImDrawList) AddCircleFilledV(center ImVec2, radius float32, col uint32, num_segments int32) {
+func (self ImDrawList) AddCircleFilledV(center Vec2, radius float32, col uint32, num_segments int32) {
 	C.DrawList_AddCircleFilledV(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments))
 }
 
-func (self ImDrawList) AddConvexPolyFilled(points *ImVec2, num_points int32, col uint32) {
-	pointsArg, pointsFin := wrap[C.ImVec2, *ImVec2](points)
+func (self ImDrawList) AddConvexPolyFilled(points *Vec2, num_points int32, col uint32) {
+	pointsArg, pointsFin := wrap[C.ImVec2, *Vec2](points)
 	defer pointsFin()
 
 	C.DrawList_AddConvexPolyFilled(self.handle(), pointsArg, C.int(num_points), C.ImU32(col))
@@ -140,7 +140,7 @@ func (self ImDrawList) AddDrawCmd() {
 // col: 4294967295
 // uv_max: ImVec2(1,1)
 // uv_min: ImVec2(0,0)
-func (self ImDrawList) AddImageV(user_texture_id ImTextureID, p_min ImVec2, p_max ImVec2, uv_min ImVec2, uv_max ImVec2, col uint32) {
+func (self ImDrawList) AddImageV(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32) {
 	C.DrawList_AddImageV(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col))
 }
 
@@ -150,34 +150,34 @@ func (self ImDrawList) AddImageV(user_texture_id ImTextureID, p_min ImVec2, p_ma
 // uv2: ImVec2(1,0)
 // uv3: ImVec2(1,1)
 // uv4: ImVec2(0,1)
-func (self ImDrawList) AddImageQuadV(user_texture_id ImTextureID, p1 ImVec2, p2 ImVec2, p3 ImVec2, p4 ImVec2, uv1 ImVec2, uv2 ImVec2, uv3 ImVec2, uv4 ImVec2, col uint32) {
+func (self ImDrawList) AddImageQuadV(user_texture_id TextureID, p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, uv1 Vec2, uv2 Vec2, uv3 Vec2, uv4 Vec2, col uint32) {
 	C.DrawList_AddImageQuadV(self.handle(), C.ImTextureID(user_texture_id), p1.toC(), p2.toC(), p3.toC(), p4.toC(), uv1.toC(), uv2.toC(), uv3.toC(), uv4.toC(), C.ImU32(col))
 }
 
 // DrawList_AddImageRoundedV parameter default value hint:
 // flags: 0
-func (self ImDrawList) AddImageRoundedV(user_texture_id ImTextureID, p_min ImVec2, p_max ImVec2, uv_min ImVec2, uv_max ImVec2, col uint32, rounding float32, flags DrawFlags) {
+func (self ImDrawList) AddImageRoundedV(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32, rounding float32, flags DrawFlags) {
 	C.DrawList_AddImageRoundedV(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
 }
 
 // DrawList_AddLineV parameter default value hint:
 // thickness: 1.0f
-func (self ImDrawList) AddLineV(p1 ImVec2, p2 ImVec2, col uint32, thickness float32) {
+func (self ImDrawList) AddLineV(p1 Vec2, p2 Vec2, col uint32, thickness float32) {
 	C.DrawList_AddLineV(self.handle(), p1.toC(), p2.toC(), C.ImU32(col), C.float(thickness))
 }
 
 // DrawList_AddNgonV parameter default value hint:
 // thickness: 1.0f
-func (self ImDrawList) AddNgonV(center ImVec2, radius float32, col uint32, num_segments int32, thickness float32) {
+func (self ImDrawList) AddNgonV(center Vec2, radius float32, col uint32, num_segments int32, thickness float32) {
 	C.DrawList_AddNgonV(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments), C.float(thickness))
 }
 
-func (self ImDrawList) AddNgonFilled(center ImVec2, radius float32, col uint32, num_segments int32) {
+func (self ImDrawList) AddNgonFilled(center Vec2, radius float32, col uint32, num_segments int32) {
 	C.DrawList_AddNgonFilled(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments))
 }
 
-func (self ImDrawList) AddPolyline(points *ImVec2, num_points int32, col uint32, flags DrawFlags, thickness float32) {
-	pointsArg, pointsFin := wrap[C.ImVec2, *ImVec2](points)
+func (self ImDrawList) AddPolyline(points *Vec2, num_points int32, col uint32, flags DrawFlags, thickness float32) {
+	pointsArg, pointsFin := wrap[C.ImVec2, *Vec2](points)
 	defer pointsFin()
 
 	C.DrawList_AddPolyline(self.handle(), pointsArg, C.int(num_points), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
@@ -185,11 +185,11 @@ func (self ImDrawList) AddPolyline(points *ImVec2, num_points int32, col uint32,
 
 // DrawList_AddQuadV parameter default value hint:
 // thickness: 1.0f
-func (self ImDrawList) AddQuadV(p1 ImVec2, p2 ImVec2, p3 ImVec2, p4 ImVec2, col uint32, thickness float32) {
+func (self ImDrawList) AddQuadV(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32, thickness float32) {
 	C.DrawList_AddQuadV(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col), C.float(thickness))
 }
 
-func (self ImDrawList) AddQuadFilled(p1 ImVec2, p2 ImVec2, p3 ImVec2, p4 ImVec2, col uint32) {
+func (self ImDrawList) AddQuadFilled(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32) {
 	C.DrawList_AddQuadFilled(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col))
 }
 
@@ -197,18 +197,18 @@ func (self ImDrawList) AddQuadFilled(p1 ImVec2, p2 ImVec2, p3 ImVec2, p4 ImVec2,
 // flags: 0
 // rounding: 0.0f
 // thickness: 1.0f
-func (self ImDrawList) AddRectV(p_min ImVec2, p_max ImVec2, col uint32, rounding float32, flags DrawFlags, thickness float32) {
+func (self ImDrawList) AddRectV(p_min Vec2, p_max Vec2, col uint32, rounding float32, flags DrawFlags, thickness float32) {
 	C.DrawList_AddRectV(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags), C.float(thickness))
 }
 
 // DrawList_AddRectFilledV parameter default value hint:
 // flags: 0
 // rounding: 0.0f
-func (self ImDrawList) AddRectFilledV(p_min ImVec2, p_max ImVec2, col uint32, rounding float32, flags DrawFlags) {
+func (self ImDrawList) AddRectFilledV(p_min Vec2, p_max Vec2, col uint32, rounding float32, flags DrawFlags) {
 	C.DrawList_AddRectFilledV(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
 }
 
-func (self ImDrawList) AddRectFilledMultiColor(p_min ImVec2, p_max ImVec2, col_upr_left uint32, col_upr_right uint32, col_bot_right uint32, col_bot_left uint32) {
+func (self ImDrawList) AddRectFilledMultiColor(p_min Vec2, p_max Vec2, col_upr_left uint32, col_upr_right uint32, col_bot_right uint32, col_bot_left uint32) {
 	C.DrawList_AddRectFilledMultiColor(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col_upr_left), C.ImU32(col_upr_right), C.ImU32(col_bot_right), C.ImU32(col_bot_left))
 }
 
@@ -216,11 +216,11 @@ func (self ImDrawList) AddRectFilledMultiColor(p_min ImVec2, p_max ImVec2, col_u
 // cpu_fine_clip_rect: NULL
 // text_end: NULL
 // wrap_width: 0.0f
-func (self ImDrawList) AddText_FontPtrV(font ImFont, font_size float32, pos ImVec2, col uint32, text_begin string, wrap_width float32, cpu_fine_clip_rect *ImVec4) {
+func (self ImDrawList) AddText_FontPtrV(font ImFont, font_size float32, pos Vec2, col uint32, text_begin string, wrap_width float32, cpu_fine_clip_rect *Vec4) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
-	cpu_fine_clip_rectArg, cpu_fine_clip_rectFin := wrap[C.ImVec4, *ImVec4](cpu_fine_clip_rect)
+	cpu_fine_clip_rectArg, cpu_fine_clip_rectFin := wrap[C.ImVec4, *Vec4](cpu_fine_clip_rect)
 	defer cpu_fine_clip_rectFin()
 
 	C.DrawList_AddText_FontPtrV(self.handle(), font.handle(), C.float(font_size), pos.toC(), C.ImU32(col), text_beginArg, C.float(wrap_width), cpu_fine_clip_rectArg)
@@ -228,7 +228,7 @@ func (self ImDrawList) AddText_FontPtrV(font ImFont, font_size float32, pos ImVe
 
 // DrawList_AddText_Vec2V parameter default value hint:
 // text_end: NULL
-func (self ImDrawList) AddText_Vec2V(pos ImVec2, col uint32, text_begin string) {
+func (self ImDrawList) AddText_Vec2V(pos Vec2, col uint32, text_begin string) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
@@ -237,11 +237,11 @@ func (self ImDrawList) AddText_Vec2V(pos ImVec2, col uint32, text_begin string) 
 
 // DrawList_AddTriangleV parameter default value hint:
 // thickness: 1.0f
-func (self ImDrawList) AddTriangleV(p1 ImVec2, p2 ImVec2, p3 ImVec2, col uint32, thickness float32) {
+func (self ImDrawList) AddTriangleV(p1 Vec2, p2 Vec2, p3 Vec2, col uint32, thickness float32) {
 	C.DrawList_AddTriangleV(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col), C.float(thickness))
 }
 
-func (self ImDrawList) AddTriangleFilled(p1 ImVec2, p2 ImVec2, p3 ImVec2, col uint32) {
+func (self ImDrawList) AddTriangleFilled(p1 Vec2, p2 Vec2, p3 Vec2, col uint32) {
 	C.DrawList_AddTriangleFilled(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col))
 }
 
@@ -261,18 +261,18 @@ func (self ImDrawList) CloneOutput() ImDrawList {
 	return (ImDrawList)(unsafe.Pointer(C.DrawList_CloneOutput(self.handle())))
 }
 
-func (self ImDrawList) GetClipRectMax() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func (self ImDrawList) GetClipRectMax() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.DrawList_GetClipRectMax(pOutArg, self.handle())
 	return *pOut
 }
 
-func (self ImDrawList) GetClipRectMin() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func (self ImDrawList) GetClipRectMin() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.DrawList_GetClipRectMin(pOutArg, self.handle())
@@ -285,23 +285,23 @@ func NewImDrawList(shared_data ImDrawListSharedData) ImDrawList {
 
 // DrawList_PathArcToV parameter default value hint:
 // num_segments: 0
-func (self ImDrawList) PathArcToV(center ImVec2, radius float32, a_min float32, a_max float32, num_segments int32) {
+func (self ImDrawList) PathArcToV(center Vec2, radius float32, a_min float32, a_max float32, num_segments int32) {
 	C.DrawList_PathArcToV(self.handle(), center.toC(), C.float(radius), C.float(a_min), C.float(a_max), C.int(num_segments))
 }
 
-func (self ImDrawList) PathArcToFast(center ImVec2, radius float32, a_min_of_12 int32, a_max_of_12 int32) {
+func (self ImDrawList) PathArcToFast(center Vec2, radius float32, a_min_of_12 int32, a_max_of_12 int32) {
 	C.DrawList_PathArcToFast(self.handle(), center.toC(), C.float(radius), C.int(a_min_of_12), C.int(a_max_of_12))
 }
 
 // DrawList_PathBezierCubicCurveToV parameter default value hint:
 // num_segments: 0
-func (self ImDrawList) PathBezierCubicCurveToV(p2 ImVec2, p3 ImVec2, p4 ImVec2, num_segments int32) {
+func (self ImDrawList) PathBezierCubicCurveToV(p2 Vec2, p3 Vec2, p4 Vec2, num_segments int32) {
 	C.DrawList_PathBezierCubicCurveToV(self.handle(), p2.toC(), p3.toC(), p4.toC(), C.int(num_segments))
 }
 
 // DrawList_PathBezierQuadraticCurveToV parameter default value hint:
 // num_segments: 0
-func (self ImDrawList) PathBezierQuadraticCurveToV(p2 ImVec2, p3 ImVec2, num_segments int32) {
+func (self ImDrawList) PathBezierQuadraticCurveToV(p2 Vec2, p3 Vec2, num_segments int32) {
 	C.DrawList_PathBezierQuadraticCurveToV(self.handle(), p2.toC(), p3.toC(), C.int(num_segments))
 }
 
@@ -313,18 +313,18 @@ func (self ImDrawList) PathFillConvex(col uint32) {
 	C.DrawList_PathFillConvex(self.handle(), C.ImU32(col))
 }
 
-func (self ImDrawList) PathLineTo(pos ImVec2) {
+func (self ImDrawList) PathLineTo(pos Vec2) {
 	C.DrawList_PathLineTo(self.handle(), pos.toC())
 }
 
-func (self ImDrawList) PathLineToMergeDuplicate(pos ImVec2) {
+func (self ImDrawList) PathLineToMergeDuplicate(pos Vec2) {
 	C.DrawList_PathLineToMergeDuplicate(self.handle(), pos.toC())
 }
 
 // DrawList_PathRectV parameter default value hint:
 // flags: 0
 // rounding: 0.0f
-func (self ImDrawList) PathRectV(rect_min ImVec2, rect_max ImVec2, rounding float32, flags DrawFlags) {
+func (self ImDrawList) PathRectV(rect_min Vec2, rect_max Vec2, rounding float32, flags DrawFlags) {
 	C.DrawList_PathRectV(self.handle(), rect_min.toC(), rect_max.toC(), C.float(rounding), C.ImDrawFlags(flags))
 }
 
@@ -343,15 +343,15 @@ func (self ImDrawList) PopTextureID() {
 	C.DrawList_PopTextureID(self.handle())
 }
 
-func (self ImDrawList) PrimQuadUV(a ImVec2, b ImVec2, c ImVec2, d ImVec2, uv_a ImVec2, uv_b ImVec2, uv_c ImVec2, uv_d ImVec2, col uint32) {
+func (self ImDrawList) PrimQuadUV(a Vec2, b Vec2, c Vec2, d Vec2, uv_a Vec2, uv_b Vec2, uv_c Vec2, uv_d Vec2, col uint32) {
 	C.DrawList_PrimQuadUV(self.handle(), a.toC(), b.toC(), c.toC(), d.toC(), uv_a.toC(), uv_b.toC(), uv_c.toC(), uv_d.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) PrimRect(a ImVec2, b ImVec2, col uint32) {
+func (self ImDrawList) PrimRect(a Vec2, b Vec2, col uint32) {
 	C.DrawList_PrimRect(self.handle(), a.toC(), b.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) PrimRectUV(a ImVec2, b ImVec2, uv_a ImVec2, uv_b ImVec2, col uint32) {
+func (self ImDrawList) PrimRectUV(a Vec2, b Vec2, uv_a Vec2, uv_b Vec2, col uint32) {
 	C.DrawList_PrimRectUV(self.handle(), a.toC(), b.toC(), uv_a.toC(), uv_b.toC(), C.ImU32(col))
 }
 
@@ -363,21 +363,21 @@ func (self ImDrawList) PrimUnreserve(idx_count int32, vtx_count int32) {
 	C.DrawList_PrimUnreserve(self.handle(), C.int(idx_count), C.int(vtx_count))
 }
 
-func (self ImDrawList) PrimVtx(pos ImVec2, uv ImVec2, col uint32) {
+func (self ImDrawList) PrimVtx(pos Vec2, uv Vec2, col uint32) {
 	C.DrawList_PrimVtx(self.handle(), pos.toC(), uv.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) PrimWriteIdx(idx ImDrawIdx) {
+func (self ImDrawList) PrimWriteIdx(idx DrawIdx) {
 	C.DrawList_PrimWriteIdx(self.handle(), C.ImDrawIdx(idx))
 }
 
-func (self ImDrawList) PrimWriteVtx(pos ImVec2, uv ImVec2, col uint32) {
+func (self ImDrawList) PrimWriteVtx(pos Vec2, uv Vec2, col uint32) {
 	C.DrawList_PrimWriteVtx(self.handle(), pos.toC(), uv.toC(), C.ImU32(col))
 }
 
 // DrawList_PushClipRectV parameter default value hint:
 // intersect_with_current_clip_rect: false
-func (self ImDrawList) PushClipRectV(clip_rect_min ImVec2, clip_rect_max ImVec2, intersect_with_current_clip_rect bool) {
+func (self ImDrawList) PushClipRectV(clip_rect_min Vec2, clip_rect_max Vec2, intersect_with_current_clip_rect bool) {
 	C.DrawList_PushClipRectV(self.handle(), clip_rect_min.toC(), clip_rect_max.toC(), C.bool(intersect_with_current_clip_rect))
 }
 
@@ -385,7 +385,7 @@ func (self ImDrawList) PushClipRectFullScreen() {
 	C.DrawList_PushClipRectFullScreen(self.handle())
 }
 
-func (self ImDrawList) PushTextureID(texture_id ImTextureID) {
+func (self ImDrawList) PushTextureID(texture_id TextureID) {
 	C.DrawList_PushTextureID(self.handle(), C.ImTextureID(texture_id))
 }
 
@@ -407,7 +407,7 @@ func (self ImFontAtlasCustomRect) Destroy() {
 
 // FontAtlas_AddCustomRectFontGlyphV parameter default value hint:
 // offset: ImVec2(0,0)
-func (self ImFontAtlas) AddCustomRectFontGlyphV(font ImFont, id ImWchar, width int32, height int32, advance_x float32, offset ImVec2) int {
+func (self ImFontAtlas) AddCustomRectFontGlyphV(font ImFont, id Wchar, width int32, height int32, advance_x float32, offset Vec2) int {
 	return int(C.FontAtlas_AddCustomRectFontGlyphV(self.handle(), font.handle(), C.ImWchar(id), C.int(width), C.int(height), C.float(advance_x), offset.toC()))
 }
 
@@ -428,7 +428,7 @@ func (self ImFontAtlas) AddFontDefaultV(font_cfg ImFontConfig) ImFont {
 // FontAtlas_AddFontFromFileTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self ImFontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, font_cfg ImFontConfig, glyph_ranges *ImWchar) ImFont {
+func (self ImFontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, font_cfg ImFontConfig, glyph_ranges *Wchar) ImFont {
 	filenameArg, filenameFin := wrapString(filename)
 	defer filenameFin()
 
@@ -438,7 +438,7 @@ func (self ImFontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32
 // FontAtlas_AddFontFromMemoryCompressedBase85TTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self ImFontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data_base85 string, size_pixels float32, font_cfg ImFontConfig, glyph_ranges *ImWchar) ImFont {
+func (self ImFontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data_base85 string, size_pixels float32, font_cfg ImFontConfig, glyph_ranges *Wchar) ImFont {
 	compressed_font_data_base85Arg, compressed_font_data_base85Fin := wrapString(compressed_font_data_base85)
 	defer compressed_font_data_base85Fin()
 
@@ -448,14 +448,14 @@ func (self ImFontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_da
 // FontAtlas_AddFontFromMemoryCompressedTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self ImFontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsafe.Pointer, compressed_font_size int32, size_pixels float32, font_cfg ImFontConfig, glyph_ranges *ImWchar) ImFont {
+func (self ImFontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsafe.Pointer, compressed_font_size int32, size_pixels float32, font_cfg ImFontConfig, glyph_ranges *Wchar) ImFont {
 	return (ImFont)(unsafe.Pointer(C.FontAtlas_AddFontFromMemoryCompressedTTFV(self.handle(), compressed_font_data, C.int(compressed_font_size), C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
 
 // FontAtlas_AddFontFromMemoryTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self ImFontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_size int32, size_pixels float32, font_cfg ImFontConfig, glyph_ranges *ImWchar) ImFont {
+func (self ImFontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_size int32, size_pixels float32, font_cfg ImFontConfig, glyph_ranges *Wchar) ImFont {
 	return (ImFont)(unsafe.Pointer(C.FontAtlas_AddFontFromMemoryTTFV(self.handle(), font_data, C.int(font_size), C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
 
@@ -463,11 +463,11 @@ func (self ImFontAtlas) Build() bool {
 	return C.FontAtlas_Build(self.handle()) == C.bool(true)
 }
 
-func (self ImFontAtlas) CalcCustomRectUV(rect ImFontAtlasCustomRect, out_uv_min *ImVec2, out_uv_max *ImVec2) {
-	out_uv_minArg, out_uv_minFin := wrap[C.ImVec2, *ImVec2](out_uv_min)
+func (self ImFontAtlas) CalcCustomRectUV(rect ImFontAtlasCustomRect, out_uv_min *Vec2, out_uv_max *Vec2) {
+	out_uv_minArg, out_uv_minFin := wrap[C.ImVec2, *Vec2](out_uv_min)
 	defer out_uv_minFin()
 
-	out_uv_maxArg, out_uv_maxFin := wrap[C.ImVec2, *ImVec2](out_uv_max)
+	out_uv_maxArg, out_uv_maxFin := wrap[C.ImVec2, *Vec2](out_uv_max)
 	defer out_uv_maxFin()
 
 	C.FontAtlas_CalcCustomRectUV(self.handle(), rect.handle(), out_uv_minArg, out_uv_maxArg)
@@ -493,50 +493,50 @@ func (self ImFontAtlas) GetCustomRectByIndex(index int32) ImFontAtlasCustomRect 
 	return (ImFontAtlasCustomRect)(unsafe.Pointer(C.FontAtlas_GetCustomRectByIndex(self.handle(), C.int(index))))
 }
 
-func (self ImFontAtlas) GetGlyphRangesChineseFull() *ImWchar {
-	return (*ImWchar)(C.FontAtlas_GetGlyphRangesChineseFull(self.handle()))
+func (self ImFontAtlas) GetGlyphRangesChineseFull() *Wchar {
+	return (*Wchar)(C.FontAtlas_GetGlyphRangesChineseFull(self.handle()))
 }
 
-func (self ImFontAtlas) GetGlyphRangesChineseSimplifiedCommon() *ImWchar {
-	return (*ImWchar)(C.FontAtlas_GetGlyphRangesChineseSimplifiedCommon(self.handle()))
+func (self ImFontAtlas) GetGlyphRangesChineseSimplifiedCommon() *Wchar {
+	return (*Wchar)(C.FontAtlas_GetGlyphRangesChineseSimplifiedCommon(self.handle()))
 }
 
-func (self ImFontAtlas) GetGlyphRangesCyrillic() *ImWchar {
-	return (*ImWchar)(C.FontAtlas_GetGlyphRangesCyrillic(self.handle()))
+func (self ImFontAtlas) GetGlyphRangesCyrillic() *Wchar {
+	return (*Wchar)(C.FontAtlas_GetGlyphRangesCyrillic(self.handle()))
 }
 
-func (self ImFontAtlas) GetGlyphRangesDefault() *ImWchar {
-	return (*ImWchar)(C.FontAtlas_GetGlyphRangesDefault(self.handle()))
+func (self ImFontAtlas) GetGlyphRangesDefault() *Wchar {
+	return (*Wchar)(C.FontAtlas_GetGlyphRangesDefault(self.handle()))
 }
 
-func (self ImFontAtlas) GetGlyphRangesJapanese() *ImWchar {
-	return (*ImWchar)(C.FontAtlas_GetGlyphRangesJapanese(self.handle()))
+func (self ImFontAtlas) GetGlyphRangesJapanese() *Wchar {
+	return (*Wchar)(C.FontAtlas_GetGlyphRangesJapanese(self.handle()))
 }
 
-func (self ImFontAtlas) GetGlyphRangesKorean() *ImWchar {
-	return (*ImWchar)(C.FontAtlas_GetGlyphRangesKorean(self.handle()))
+func (self ImFontAtlas) GetGlyphRangesKorean() *Wchar {
+	return (*Wchar)(C.FontAtlas_GetGlyphRangesKorean(self.handle()))
 }
 
-func (self ImFontAtlas) GetGlyphRangesThai() *ImWchar {
-	return (*ImWchar)(C.FontAtlas_GetGlyphRangesThai(self.handle()))
+func (self ImFontAtlas) GetGlyphRangesThai() *Wchar {
+	return (*Wchar)(C.FontAtlas_GetGlyphRangesThai(self.handle()))
 }
 
-func (self ImFontAtlas) GetGlyphRangesVietnamese() *ImWchar {
-	return (*ImWchar)(C.FontAtlas_GetGlyphRangesVietnamese(self.handle()))
+func (self ImFontAtlas) GetGlyphRangesVietnamese() *Wchar {
+	return (*Wchar)(C.FontAtlas_GetGlyphRangesVietnamese(self.handle()))
 }
 
-func (self ImFontAtlas) GetMouseCursorTexData(cursor MouseCursor, out_offset *ImVec2, out_size *ImVec2, out_uv_border [2]*ImVec2, out_uv_fill [2]*ImVec2) bool {
-	out_offsetArg, out_offsetFin := wrap[C.ImVec2, *ImVec2](out_offset)
+func (self ImFontAtlas) GetMouseCursorTexData(cursor MouseCursor, out_offset *Vec2, out_size *Vec2, out_uv_border [2]*Vec2, out_uv_fill [2]*Vec2) bool {
+	out_offsetArg, out_offsetFin := wrap[C.ImVec2, *Vec2](out_offset)
 	defer out_offsetFin()
 
-	out_sizeArg, out_sizeFin := wrap[C.ImVec2, *ImVec2](out_size)
+	out_sizeArg, out_sizeFin := wrap[C.ImVec2, *Vec2](out_size)
 	defer out_sizeFin()
 
 	out_uv_borderArg := make([]C.ImVec2, len(out_uv_border))
 	out_uv_borderFin := make([]func(), len(out_uv_border))
 	for i, out_uv_borderV := range out_uv_border {
 		var tmp *C.ImVec2
-		tmp, out_uv_borderFin[i] = wrap[C.ImVec2, *ImVec2](out_uv_borderV)
+		tmp, out_uv_borderFin[i] = wrap[C.ImVec2, *Vec2](out_uv_borderV)
 		out_uv_borderArg[i] = *tmp
 	}
 	defer func() {
@@ -549,7 +549,7 @@ func (self ImFontAtlas) GetMouseCursorTexData(cursor MouseCursor, out_offset *Im
 	out_uv_fillFin := make([]func(), len(out_uv_fill))
 	for i, out_uv_fillV := range out_uv_fill {
 		var tmp *C.ImVec2
-		tmp, out_uv_fillFin[i] = wrap[C.ImVec2, *ImVec2](out_uv_fillV)
+		tmp, out_uv_fillFin[i] = wrap[C.ImVec2, *Vec2](out_uv_fillV)
 		out_uv_fillArg[i] = *tmp
 	}
 	defer func() {
@@ -569,7 +569,7 @@ func (self ImFontAtlas) IsBuilt() bool {
 	return C.FontAtlas_IsBuilt(self.handle()) == C.bool(true)
 }
 
-func (self ImFontAtlas) SetTexID(id ImTextureID) {
+func (self ImFontAtlas) SetTexID(id TextureID) {
 	C.FontAtlas_SetTexID(self.handle(), C.ImTextureID(id))
 }
 
@@ -585,11 +585,11 @@ func (self ImFontConfig) Destroy() {
 	C.FontConfig_Destroy(self.handle())
 }
 
-func (self ImFontGlyphRangesBuilder) AddChar(c ImWchar) {
+func (self ImFontGlyphRangesBuilder) AddChar(c Wchar) {
 	C.FontGlyphRangesBuilder_AddChar(self.handle(), C.ImWchar(c))
 }
 
-func (self ImFontGlyphRangesBuilder) AddRanges(ranges *ImWchar) {
+func (self ImFontGlyphRangesBuilder) AddRanges(ranges *Wchar) {
 	C.FontGlyphRangesBuilder_AddRanges(self.handle(), (*C.ImWchar)(ranges))
 }
 
@@ -622,13 +622,13 @@ func (self ImFontGlyphRangesBuilder) Destroy() {
 	C.FontGlyphRangesBuilder_Destroy(self.handle())
 }
 
-func (self ImFont) AddGlyph(src_cfg ImFontConfig, c ImWchar, x0 float32, y0 float32, x1 float32, y1 float32, u0 float32, v0 float32, u1 float32, v1 float32, advance_x float32) {
+func (self ImFont) AddGlyph(src_cfg ImFontConfig, c Wchar, x0 float32, y0 float32, x1 float32, y1 float32, u0 float32, v0 float32, u1 float32, v1 float32, advance_x float32) {
 	C.Font_AddGlyph(self.handle(), src_cfg.handle(), C.ImWchar(c), C.float(x0), C.float(y0), C.float(x1), C.float(y1), C.float(u0), C.float(v0), C.float(u1), C.float(v1), C.float(advance_x))
 }
 
 // Font_AddRemapCharV parameter default value hint:
 // overwrite_dst: true
-func (self ImFont) AddRemapCharV(dst ImWchar, src ImWchar, overwrite_dst bool) {
+func (self ImFont) AddRemapCharV(dst Wchar, src Wchar, overwrite_dst bool) {
 	C.Font_AddRemapCharV(self.handle(), C.ImWchar(dst), C.ImWchar(src), C.bool(overwrite_dst))
 }
 
@@ -639,9 +639,9 @@ func (self ImFont) BuildLookupTable() {
 // Font_CalcTextSizeAV parameter default value hint:
 // remaining: NULL
 // text_end: NULL
-func (self ImFont) CalcTextSizeAV(size float32, max_width float32, wrap_width float32, text_begin string, remaining []string) ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func (self ImFont) CalcTextSizeAV(size float32, max_width float32, wrap_width float32, text_begin string, remaining []string) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	text_beginArg, text_beginFin := wrapString(text_begin)
@@ -665,15 +665,15 @@ func (self ImFont) ClearOutputData() {
 	C.Font_ClearOutputData(self.handle())
 }
 
-func (self ImFont) FindGlyph(c ImWchar) ImFontGlyph {
+func (self ImFont) FindGlyph(c Wchar) ImFontGlyph {
 	return (ImFontGlyph)(unsafe.Pointer(C.Font_FindGlyph(self.handle(), C.ImWchar(c))))
 }
 
-func (self ImFont) FindGlyphNoFallback(c ImWchar) ImFontGlyph {
+func (self ImFont) FindGlyphNoFallback(c Wchar) ImFontGlyph {
 	return (ImFontGlyph)(unsafe.Pointer(C.Font_FindGlyphNoFallback(self.handle(), C.ImWchar(c))))
 }
 
-func (self ImFont) GetCharAdvance(c ImWchar) float32 {
+func (self ImFont) GetCharAdvance(c Wchar) float32 {
 	return float32(C.Font_GetCharAdvance(self.handle(), C.ImWchar(c)))
 }
 
@@ -697,21 +697,21 @@ func (self ImFont) IsLoaded() bool {
 	return C.Font_IsLoaded(self.handle()) == C.bool(true)
 }
 
-func (self ImFont) RenderChar(draw_list ImDrawList, size float32, pos ImVec2, col uint32, c ImWchar) {
+func (self ImFont) RenderChar(draw_list ImDrawList, size float32, pos Vec2, col uint32, c Wchar) {
 	C.Font_RenderChar(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), C.ImWchar(c))
 }
 
 // Font_RenderTextV parameter default value hint:
 // cpu_fine_clip: false
 // wrap_width: 0.0f
-func (self ImFont) RenderTextV(draw_list ImDrawList, size float32, pos ImVec2, col uint32, clip_rect ImVec4, text_begin string, wrap_width float32, cpu_fine_clip bool) {
+func (self ImFont) RenderTextV(draw_list ImDrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string, wrap_width float32, cpu_fine_clip bool) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
 	C.Font_RenderTextV(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), clip_rect.toC(), text_beginArg, C.float(wrap_width), C.bool(cpu_fine_clip))
 }
 
-func (self ImFont) SetGlyphVisible(c ImWchar, visible bool) {
+func (self ImFont) SetGlyphVisible(c Wchar, visible bool) {
 	C.Font_SetGlyphVisible(self.handle(), C.ImWchar(c), C.bool(visible))
 }
 
@@ -1143,18 +1143,18 @@ func (self ImGuiTextFilter) Destroy() {
 	C.TextFilter_Destroy(self.handle())
 }
 
-func (self ImGuiViewport) GetCenter() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func (self ImGuiViewport) GetCenter() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.Viewport_GetCenter(pOutArg, self.handle())
 	return *pOut
 }
 
-func (self ImGuiViewport) GetWorkCenter() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func (self ImGuiViewport) GetWorkCenter() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.Viewport_GetWorkCenter(pOutArg, self.handle())
@@ -1181,22 +1181,22 @@ func (self ImGuiWindowSettings) Destroy() {
 	C.WindowSettings_Destroy(self.handle())
 }
 
-func (self *ImRect) Destroy() {
-	selfArg, selfFin := wrap[C.ImRect, *ImRect](self)
+func (self *Rect) Destroy() {
+	selfArg, selfFin := wrap[C.ImRect, *Rect](self)
 	defer selfFin()
 
 	C.Rect_Destroy(selfArg)
 }
 
-func (self *ImVec2) Destroy() {
-	selfArg, selfFin := wrap[C.ImVec2, *ImVec2](self)
+func (self *Vec2) Destroy() {
+	selfArg, selfFin := wrap[C.ImVec2, *Vec2](self)
 	defer selfFin()
 
 	C.Vec2_Destroy(selfArg)
 }
 
-func (self *ImVec4) Destroy() {
-	selfArg, selfFin := wrap[C.ImVec4, *ImVec4](self)
+func (self *Vec4) Destroy() {
+	selfArg, selfFin := wrap[C.ImVec4, *Vec4](self)
 	defer selfFin()
 
 	C.Vec4_Destroy(selfArg)
@@ -1237,7 +1237,7 @@ func BeginV(name string, p_open *bool, flags WindowFlags) bool {
 
 // BeginChildFrameV parameter default value hint:
 // flags: 0
-func BeginChildFrameV(id ImGuiID, size ImVec2, flags WindowFlags) bool {
+func BeginChildFrameV(id ImGuiID, size Vec2, flags WindowFlags) bool {
 	return C.BeginChildFrameV(C.ImGuiID(id), size.toC(), C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
 
@@ -1245,7 +1245,7 @@ func BeginChildFrameV(id ImGuiID, size ImVec2, flags WindowFlags) bool {
 // border: false
 // flags: 0
 // size: ImVec2(0,0)
-func BeginChild_IDV(id ImGuiID, size ImVec2, border bool, flags WindowFlags) bool {
+func BeginChild_IDV(id ImGuiID, size Vec2, border bool, flags WindowFlags) bool {
 	return C.BeginChild_IDV(C.ImGuiID(id), size.toC(), C.bool(border), C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
 
@@ -1253,7 +1253,7 @@ func BeginChild_IDV(id ImGuiID, size ImVec2, border bool, flags WindowFlags) boo
 // border: false
 // flags: 0
 // size: ImVec2(0,0)
-func BeginChild_StrV(str_id string, size ImVec2, border bool, flags WindowFlags) bool {
+func BeginChild_StrV(str_id string, size Vec2, border bool, flags WindowFlags) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
@@ -1294,7 +1294,7 @@ func BeginGroup() {
 
 // BeginListBoxV parameter default value hint:
 // size: ImVec2(0,0)
-func BeginListBoxV(label string, size ImVec2) bool {
+func BeginListBoxV(label string, size Vec2) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -1396,7 +1396,7 @@ func BeginTabItemV(label string, p_open *bool, flags TabItemFlags) bool {
 // flags: 0
 // inner_width: 0.0f
 // outer_size: ImVec2(0.0f,0.0f)
-func BeginTableV(str_id string, column int32, flags TableFlags, outer_size ImVec2, inner_width float32) bool {
+func BeginTableV(str_id string, column int32, flags TableFlags, outer_size Vec2, inner_width float32) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
@@ -1420,7 +1420,7 @@ func BulletText(fmt string) {
 
 // ButtonV parameter default value hint:
 // size: ImVec2(0,0)
-func ButtonV(label string, size ImVec2) bool {
+func ButtonV(label string, size Vec2) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -1435,9 +1435,9 @@ func CalcItemWidth() float32 {
 // hide_text_after_double_hash: false
 // text_end: NULL
 // wrap_width: -1.0f
-func CalcTextSizeV(text string, hide_text_after_double_hash bool, wrap_width float32) ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func CalcTextSizeV(text string, hide_text_after_double_hash bool, wrap_width float32) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	textArg, textFin := wrapString(text)
@@ -1505,14 +1505,14 @@ func CollapsingHeader_TreeNodeFlagsV(label string, flags TreeNodeFlags) bool {
 // ColorButtonV parameter default value hint:
 // flags: 0
 // size: ImVec2(0,0)
-func ColorButtonV(desc_id string, col ImVec4, flags ColorEditFlags, size ImVec2) bool {
+func ColorButtonV(desc_id string, col Vec4, flags ColorEditFlags, size Vec2) bool {
 	desc_idArg, desc_idFin := wrapString(desc_id)
 	defer desc_idFin()
 
 	return C.ColorButtonV(desc_idArg, col.toC(), C.ImGuiColorEditFlags(flags), size.toC()) == C.bool(true)
 }
 
-func ColorConvertFloat4ToU32(in ImVec4) uint32 {
+func ColorConvertFloat4ToU32(in Vec4) uint32 {
 	return uint32(C.ColorConvertFloat4ToU32(in.toC()))
 }
 
@@ -1542,9 +1542,9 @@ func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s
 	C.ColorConvertRGBtoHSV(C.float(r), C.float(g), C.float(b), out_hArg, out_sArg, out_vArg)
 }
 
-func ColorConvertU32ToFloat4(in uint32) ImVec4 {
-	pOut := &ImVec4{}
-	pOutArg, pOutFin := wrap[C.ImVec4, *ImVec4](pOut)
+func ColorConvertU32ToFloat4(in uint32) Vec4 {
+	pOut := &Vec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *Vec4](pOut)
 	defer pOutFin()
 
 	C.ColorConvertU32ToFloat4(pOutArg, C.ImU32(in))
@@ -1703,7 +1703,7 @@ func DestroyPlatformWindows() {
 // flags: 0
 // size: ImVec2(0,0)
 // window_class: NULL
-func DockSpaceV(id ImGuiID, size ImVec2, flags DockNodeFlags, window_class ImGuiWindowClass) ImGuiID {
+func DockSpaceV(id ImGuiID, size Vec2, flags DockNodeFlags, window_class ImGuiWindowClass) ImGuiID {
 	return ImGuiID(C.DockSpaceV(C.ImGuiID(id), size.toC(), C.ImGuiDockNodeFlags(flags), window_class.handle()))
 }
 
@@ -1993,7 +1993,7 @@ func DragScalarNV(label string, data_type DataType, p_data unsafe.Pointer, compo
 	return C.DragScalarNV(labelArg, C.ImGuiDataType(data_type), p_data, C.int(components), C.float(v_speed), p_min, p_max, formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
-func Dummy(size ImVec2) {
+func Dummy(size Vec2) {
 	C.Dummy(size.toC())
 }
 
@@ -2099,7 +2099,7 @@ func GetColorU32_U32(col uint32) uint32 {
 	return uint32(C.GetColorU32_U32(C.ImU32(col)))
 }
 
-func GetColorU32_Vec4(col ImVec4) uint32 {
+func GetColorU32_Vec4(col Vec4) uint32 {
 	return uint32(C.GetColorU32_Vec4(col.toC()))
 }
 
@@ -2123,18 +2123,18 @@ func GetColumnsCount() int {
 	return int(C.GetColumnsCount())
 }
 
-func GetContentRegionAvail() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetContentRegionAvail() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetContentRegionAvail(pOutArg)
 	return *pOut
 }
 
-func GetContentRegionMax() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetContentRegionMax() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetContentRegionMax(pOutArg)
@@ -2145,9 +2145,9 @@ func GetCurrentContext() ImGuiContext {
 	return (ImGuiContext)(unsafe.Pointer(C.GetCurrentContext()))
 }
 
-func GetCursorPos() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetCursorPos() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetCursorPos(pOutArg)
@@ -2162,18 +2162,18 @@ func GetCursorPosY() float32 {
 	return float32(C.GetCursorPosY())
 }
 
-func GetCursorScreenPos() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetCursorScreenPos() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetCursorScreenPos(pOutArg)
 	return *pOut
 }
 
-func GetCursorStartPos() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetCursorStartPos() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetCursorStartPos(pOutArg)
@@ -2200,9 +2200,9 @@ func GetFontSize() float32 {
 	return float32(C.GetFontSize())
 }
 
-func GetFontTexUvWhitePixel() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetFontTexUvWhitePixel() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetFontTexUvWhitePixel(pOutArg)
@@ -2254,27 +2254,27 @@ func GetIO() ImGuiIO {
 	return (ImGuiIO)(unsafe.Pointer(C.GetIO()))
 }
 
-func GetItemRectMax() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetItemRectMax() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetItemRectMax(pOutArg)
 	return *pOut
 }
 
-func GetItemRectMin() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetItemRectMin() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetItemRectMin(pOutArg)
 	return *pOut
 }
 
-func GetItemRectSize() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetItemRectSize() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetItemRectSize(pOutArg)
@@ -2308,27 +2308,27 @@ func GetMouseCursor() MouseCursor {
 // GetMouseDragDeltaV parameter default value hint:
 // button: 0
 // lock_threshold: -1.0f
-func GetMouseDragDeltaV(button MouseButton, lock_threshold float32) ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetMouseDragDeltaV(button MouseButton, lock_threshold float32) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetMouseDragDeltaV(pOutArg, C.ImGuiMouseButton(button), C.float(lock_threshold))
 	return *pOut
 }
 
-func GetMousePos() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetMousePos() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetMousePos(pOutArg)
 	return *pOut
 }
 
-func GetMousePosOnOpeningCurrentPopup() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetMousePosOnOpeningCurrentPopup() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetMousePosOnOpeningCurrentPopup(pOutArg)
@@ -2363,8 +2363,8 @@ func GetStyleColorName(idx Col) string {
 	return C.GoString(C.GetStyleColorName(C.ImGuiCol(idx)))
 }
 
-func GetStyleColorVec4(idx Col) *ImVec4 {
-	out := &ImVec4{}
+func GetStyleColorVec4(idx Col) *Vec4 {
+	out := &Vec4{}
 	out.fromC(*C.GetStyleColorVec4(C.ImGuiCol(idx)))
 	return out
 }
@@ -2389,18 +2389,18 @@ func GetVersion() string {
 	return C.GoString(C.GetVersion())
 }
 
-func GetWindowContentRegionMax() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetWindowContentRegionMax() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetWindowContentRegionMax(pOutArg)
 	return *pOut
 }
 
-func GetWindowContentRegionMin() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetWindowContentRegionMin() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetWindowContentRegionMin(pOutArg)
@@ -2423,18 +2423,18 @@ func GetWindowHeight() float32 {
 	return float32(C.GetWindowHeight())
 }
 
-func GetWindowPos() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetWindowPos() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetWindowPos(pOutArg)
 	return *pOut
 }
 
-func GetWindowSize() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetWindowSize() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetWindowSize(pOutArg)
@@ -2454,7 +2454,7 @@ func GetWindowWidth() float32 {
 // tint_col: ImVec4(1,1,1,1)
 // uv0: ImVec2(0,0)
 // uv1: ImVec2(1,1)
-func ImageV(user_texture_id ImTextureID, size ImVec2, uv0 ImVec2, uv1 ImVec2, tint_col ImVec4, border_col ImVec4) {
+func ImageV(user_texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, tint_col Vec4, border_col Vec4) {
 	C.ImageV(C.ImTextureID(user_texture_id), size.toC(), uv0.toC(), uv1.toC(), tint_col.toC(), border_col.toC())
 }
 
@@ -2463,7 +2463,7 @@ func ImageV(user_texture_id ImTextureID, size ImVec2, uv0 ImVec2, uv1 ImVec2, ti
 // tint_col: ImVec4(1,1,1,1)
 // uv0: ImVec2(0,0)
 // uv1: ImVec2(1,1)
-func ImageButtonV(str_id string, user_texture_id ImTextureID, size ImVec2, uv0 ImVec2, uv1 ImVec2, bg_col ImVec4, tint_col ImVec4) bool {
+func ImageButtonV(str_id string, user_texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, bg_col Vec4, tint_col Vec4) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
@@ -2684,7 +2684,7 @@ func InputScalarNV(label string, data_type DataType, p_data unsafe.Pointer, comp
 
 // InvisibleButtonV parameter default value hint:
 // flags: 0
-func InvisibleButtonV(str_id string, size ImVec2, flags ButtonFlags) bool {
+func InvisibleButtonV(str_id string, size Vec2, flags ButtonFlags) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
@@ -2787,14 +2787,14 @@ func IsMouseDraggingV(button MouseButton, lock_threshold float32) bool {
 
 // IsMouseHoveringRectV parameter default value hint:
 // clip: true
-func IsMouseHoveringRectV(r_min ImVec2, r_max ImVec2, clip bool) bool {
+func IsMouseHoveringRectV(r_min Vec2, r_max Vec2, clip bool) bool {
 	return C.IsMouseHoveringRectV(r_min.toC(), r_max.toC(), C.bool(clip)) == C.bool(true)
 }
 
 // IsMousePosValidV parameter default value hint:
 // mouse_pos: NULL
-func IsMousePosValidV(mouse_pos *ImVec2) bool {
-	mouse_posArg, mouse_posFin := wrap[C.ImVec2, *ImVec2](mouse_pos)
+func IsMousePosValidV(mouse_pos *Vec2) bool {
+	mouse_posArg, mouse_posFin := wrap[C.ImVec2, *Vec2](mouse_pos)
 	defer mouse_posFin()
 
 	return C.IsMousePosValidV(mouse_posArg) == C.bool(true)
@@ -2813,11 +2813,11 @@ func IsPopupOpen_StrV(str_id string, flags PopupFlags) bool {
 	return C.IsPopupOpen_StrV(str_idArg, C.ImGuiPopupFlags(flags)) == C.bool(true)
 }
 
-func IsRectVisible_Nil(size ImVec2) bool {
+func IsRectVisible_Nil(size Vec2) bool {
 	return C.IsRectVisible_Nil(size.toC()) == C.bool(true)
 }
 
-func IsRectVisible_Vec2(rect_min ImVec2, rect_max ImVec2) bool {
+func IsRectVisible_Vec2(rect_min Vec2, rect_max Vec2) bool {
 	return C.IsRectVisible_Vec2(rect_min.toC(), rect_max.toC()) == C.bool(true)
 }
 
@@ -3004,7 +3004,7 @@ func OpenPopup_StrV(str_id string, popup_flags PopupFlags) {
 // scale_min: FLT_MAX
 // stride: sizeof(float)
 // values_offset: 0
-func PlotHistogram_FloatPtrV(label string, values []float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size ImVec2, stride int32) {
+func PlotHistogram_FloatPtrV(label string, values []float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2, stride int32) {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -3021,7 +3021,7 @@ func PlotHistogram_FloatPtrV(label string, values []float32, values_count int32,
 // scale_min: FLT_MAX
 // stride: sizeof(float)
 // values_offset: 0
-func PlotLines_FloatPtrV(label string, values []float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size ImVec2, stride int32) {
+func PlotLines_FloatPtrV(label string, values []float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2, stride int32) {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -3074,7 +3074,7 @@ func PopTextWrapPos() {
 // ProgressBarV parameter default value hint:
 // overlay: NULL
 // size_arg: ImVec2(-FLT_MIN,0)
-func ProgressBarV(fraction float32, size_arg ImVec2, overlay string) {
+func ProgressBarV(fraction float32, size_arg Vec2, overlay string) {
 	overlayArg, overlayFin := wrapString(overlay)
 	defer overlayFin()
 
@@ -3089,7 +3089,7 @@ func PushButtonRepeat(repeat bool) {
 	C.PushButtonRepeat(C.bool(repeat))
 }
 
-func PushClipRect(clip_rect_min ImVec2, clip_rect_max ImVec2, intersect_with_current_clip_rect bool) {
+func PushClipRect(clip_rect_min Vec2, clip_rect_max Vec2, intersect_with_current_clip_rect bool) {
 	C.PushClipRect(clip_rect_min.toC(), clip_rect_max.toC(), C.bool(intersect_with_current_clip_rect))
 }
 
@@ -3130,7 +3130,7 @@ func PushStyleColor_U32(idx Col, col uint32) {
 	C.PushStyleColor_U32(C.ImGuiCol(idx), C.ImU32(col))
 }
 
-func PushStyleColor_Vec4(idx Col, col ImVec4) {
+func PushStyleColor_Vec4(idx Col, col Vec4) {
 	C.PushStyleColor_Vec4(C.ImGuiCol(idx), col.toC())
 }
 
@@ -3138,7 +3138,7 @@ func PushStyleVar_Float(idx StyleVar, val float32) {
 	C.PushStyleVar_Float(C.ImGuiStyleVar(idx), C.float(val))
 }
 
-func PushStyleVar_Vec2(idx StyleVar, val ImVec2) {
+func PushStyleVar_Vec2(idx StyleVar, val Vec2) {
 	C.PushStyleVar_Vec2(C.ImGuiStyleVar(idx), val.toC())
 }
 
@@ -3206,7 +3206,7 @@ func SaveIniSettingsToMemoryV(out_ini_size *uint64) string {
 // flags: 0
 // selected: false
 // size: ImVec2(0,0)
-func Selectable_BoolV(label string, selected bool, flags SelectableFlags, size ImVec2) bool {
+func Selectable_BoolV(label string, selected bool, flags SelectableFlags, size Vec2) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -3216,7 +3216,7 @@ func Selectable_BoolV(label string, selected bool, flags SelectableFlags, size I
 // Selectable_BoolPtrV parameter default value hint:
 // flags: 0
 // size: ImVec2(0,0)
-func Selectable_BoolPtrV(label string, p_selected *bool, flags SelectableFlags, size ImVec2) bool {
+func Selectable_BoolPtrV(label string, p_selected *bool, flags SelectableFlags, size Vec2) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -3253,7 +3253,7 @@ func SetCurrentContext(ctx ImGuiContext) {
 	C.SetCurrentContext(ctx.handle())
 }
 
-func SetCursorPos(local_pos ImVec2) {
+func SetCursorPos(local_pos Vec2) {
 	C.SetCursorPos(local_pos.toC())
 }
 
@@ -3265,7 +3265,7 @@ func SetCursorPosY(local_y float32) {
 	C.SetCursorPosY(C.float(local_y))
 }
 
-func SetCursorScreenPos(pos ImVec2) {
+func SetCursorScreenPos(pos Vec2) {
 	C.SetCursorScreenPos(pos.toC())
 }
 
@@ -3328,7 +3328,7 @@ func SetNextWindowCollapsedV(collapsed bool, cond Cond) {
 	C.SetNextWindowCollapsedV(C.bool(collapsed), C.ImGuiCond(cond))
 }
 
-func SetNextWindowContentSize(size ImVec2) {
+func SetNextWindowContentSize(size Vec2) {
 	C.SetNextWindowContentSize(size.toC())
 }
 
@@ -3345,13 +3345,13 @@ func SetNextWindowFocus() {
 // SetNextWindowPosV parameter default value hint:
 // cond: 0
 // pivot: ImVec2(0,0)
-func SetNextWindowPosV(pos ImVec2, cond Cond, pivot ImVec2) {
+func SetNextWindowPosV(pos Vec2, cond Cond, pivot Vec2) {
 	C.SetNextWindowPosV(pos.toC(), C.ImGuiCond(cond), pivot.toC())
 }
 
 // SetNextWindowSizeV parameter default value hint:
 // cond: 0
-func SetNextWindowSizeV(size ImVec2, cond Cond) {
+func SetNextWindowSizeV(size Vec2, cond Cond) {
 	C.SetNextWindowSizeV(size.toC(), C.ImGuiCond(cond))
 }
 
@@ -3437,7 +3437,7 @@ func SetWindowFontScale(scale float32) {
 
 // SetWindowPos_StrV parameter default value hint:
 // cond: 0
-func SetWindowPos_StrV(name string, pos ImVec2, cond Cond) {
+func SetWindowPos_StrV(name string, pos Vec2, cond Cond) {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
@@ -3446,13 +3446,13 @@ func SetWindowPos_StrV(name string, pos ImVec2, cond Cond) {
 
 // SetWindowPos_Vec2V parameter default value hint:
 // cond: 0
-func SetWindowPos_Vec2V(pos ImVec2, cond Cond) {
+func SetWindowPos_Vec2V(pos Vec2, cond Cond) {
 	C.SetWindowPos_Vec2V(pos.toC(), C.ImGuiCond(cond))
 }
 
 // SetWindowSize_StrV parameter default value hint:
 // cond: 0
-func SetWindowSize_StrV(name string, size ImVec2, cond Cond) {
+func SetWindowSize_StrV(name string, size Vec2, cond Cond) {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
@@ -3461,7 +3461,7 @@ func SetWindowSize_StrV(name string, size ImVec2, cond Cond) {
 
 // SetWindowSize_Vec2V parameter default value hint:
 // cond: 0
-func SetWindowSize_Vec2V(size ImVec2, cond Cond) {
+func SetWindowSize_Vec2V(size Vec2, cond Cond) {
 	C.SetWindowSize_Vec2V(size.toC(), C.ImGuiCond(cond))
 }
 
@@ -3872,7 +3872,7 @@ func Text(fmt string) {
 	C.Text(fmtArg)
 }
 
-func TextColored(col ImVec4, fmt string) {
+func TextColored(col Vec4, fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
@@ -3982,7 +3982,7 @@ func UpdatePlatformWindows() {
 // VSliderFloatV parameter default value hint:
 // flags: 0
 // format: "%.3f"
-func VSliderFloatV(label string, size ImVec2, v *float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
+func VSliderFloatV(label string, size Vec2, v *float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -3998,7 +3998,7 @@ func VSliderFloatV(label string, size ImVec2, v *float32, v_min float32, v_max f
 // VSliderIntV parameter default value hint:
 // flags: 0
 // format: "%d"
-func VSliderIntV(label string, size ImVec2, v *int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
+func VSliderIntV(label string, size Vec2, v *int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -4014,7 +4014,7 @@ func VSliderIntV(label string, size ImVec2, v *int32, v_min int32, v_max int32, 
 // VSliderScalarV parameter default value hint:
 // flags: 0
 // format: NULL
-func VSliderScalarV(label string, size ImVec2, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
+func VSliderScalarV(label string, size Vec2, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -4057,101 +4057,101 @@ func Value_Uint(prefix string, v uint32) {
 	C.Value_Uint(prefixArg, C.uint(v))
 }
 
-func Color_HSV(h float32, s float32, v float32) ImColor {
-	pOut := &ImColor{}
-	pOutArg, pOutFin := wrap[C.ImColor, *ImColor](pOut)
+func Color_HSV(h float32, s float32, v float32) Color {
+	pOut := &Color{}
+	pOutArg, pOutFin := wrap[C.ImColor, *Color](pOut)
 	defer pOutFin()
 
 	C.Color_HSV(pOutArg, C.float(h), C.float(s), C.float(v))
 	return *pOut
 }
 
-func (self *ImColor) SetHSV(h float32, s float32, v float32) {
-	selfArg, selfFin := wrap[C.ImColor, *ImColor](self)
+func (self *Color) SetHSV(h float32, s float32, v float32) {
+	selfArg, selfFin := wrap[C.ImColor, *Color](self)
 	defer selfFin()
 
 	C.Color_SetHSV(selfArg, C.float(h), C.float(s), C.float(v))
 }
 
-func (self ImDrawList) AddBezierCubic(p1 ImVec2, p2 ImVec2, p3 ImVec2, p4 ImVec2, col uint32, thickness float32) {
+func (self ImDrawList) AddBezierCubic(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32, thickness float32) {
 	C.DrawList_AddBezierCubic(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col), C.float(thickness))
 }
 
-func (self ImDrawList) AddBezierQuadratic(p1 ImVec2, p2 ImVec2, p3 ImVec2, col uint32, thickness float32) {
+func (self ImDrawList) AddBezierQuadratic(p1 Vec2, p2 Vec2, p3 Vec2, col uint32, thickness float32) {
 	C.DrawList_AddBezierQuadratic(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col), C.float(thickness))
 }
 
-func (self ImDrawList) AddCircle(center ImVec2, radius float32, col uint32) {
+func (self ImDrawList) AddCircle(center Vec2, radius float32, col uint32) {
 	C.DrawList_AddCircle(self.handle(), center.toC(), C.float(radius), C.ImU32(col))
 }
 
-func (self ImDrawList) AddCircleFilled(center ImVec2, radius float32, col uint32) {
+func (self ImDrawList) AddCircleFilled(center Vec2, radius float32, col uint32) {
 	C.DrawList_AddCircleFilled(self.handle(), center.toC(), C.float(radius), C.ImU32(col))
 }
 
-func (self ImDrawList) AddImage(user_texture_id ImTextureID, p_min ImVec2, p_max ImVec2) {
+func (self ImDrawList) AddImage(user_texture_id TextureID, p_min Vec2, p_max Vec2) {
 	C.DrawList_AddImage(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC())
 }
 
-func (self ImDrawList) AddImageQuad(user_texture_id ImTextureID, p1 ImVec2, p2 ImVec2, p3 ImVec2, p4 ImVec2) {
+func (self ImDrawList) AddImageQuad(user_texture_id TextureID, p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2) {
 	C.DrawList_AddImageQuad(self.handle(), C.ImTextureID(user_texture_id), p1.toC(), p2.toC(), p3.toC(), p4.toC())
 }
 
-func (self ImDrawList) AddImageRounded(user_texture_id ImTextureID, p_min ImVec2, p_max ImVec2, uv_min ImVec2, uv_max ImVec2, col uint32, rounding float32) {
+func (self ImDrawList) AddImageRounded(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32, rounding float32) {
 	C.DrawList_AddImageRounded(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col), C.float(rounding))
 }
 
-func (self ImDrawList) AddLine(p1 ImVec2, p2 ImVec2, col uint32) {
+func (self ImDrawList) AddLine(p1 Vec2, p2 Vec2, col uint32) {
 	C.DrawList_AddLine(self.handle(), p1.toC(), p2.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) AddNgon(center ImVec2, radius float32, col uint32, num_segments int32) {
+func (self ImDrawList) AddNgon(center Vec2, radius float32, col uint32, num_segments int32) {
 	C.DrawList_AddNgon(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments))
 }
 
-func (self ImDrawList) AddQuad(p1 ImVec2, p2 ImVec2, p3 ImVec2, p4 ImVec2, col uint32) {
+func (self ImDrawList) AddQuad(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32) {
 	C.DrawList_AddQuad(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) AddRect(p_min ImVec2, p_max ImVec2, col uint32) {
+func (self ImDrawList) AddRect(p_min Vec2, p_max Vec2, col uint32) {
 	C.DrawList_AddRect(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) AddRectFilled(p_min ImVec2, p_max ImVec2, col uint32) {
+func (self ImDrawList) AddRectFilled(p_min Vec2, p_max Vec2, col uint32) {
 	C.DrawList_AddRectFilled(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) AddText_FontPtr(font ImFont, font_size float32, pos ImVec2, col uint32, text_begin string) {
+func (self ImDrawList) AddText_FontPtr(font ImFont, font_size float32, pos Vec2, col uint32, text_begin string) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
 	C.DrawList_AddText_FontPtr(self.handle(), font.handle(), C.float(font_size), pos.toC(), C.ImU32(col), text_beginArg)
 }
 
-func (self ImDrawList) AddText_Vec2(pos ImVec2, col uint32, text_begin string) {
+func (self ImDrawList) AddText_Vec2(pos Vec2, col uint32, text_begin string) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
 	C.DrawList_AddText_Vec2(self.handle(), pos.toC(), C.ImU32(col), text_beginArg)
 }
 
-func (self ImDrawList) AddTriangle(p1 ImVec2, p2 ImVec2, p3 ImVec2, col uint32) {
+func (self ImDrawList) AddTriangle(p1 Vec2, p2 Vec2, p3 Vec2, col uint32) {
 	C.DrawList_AddTriangle(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) PathArcTo(center ImVec2, radius float32, a_min float32, a_max float32) {
+func (self ImDrawList) PathArcTo(center Vec2, radius float32, a_min float32, a_max float32) {
 	C.DrawList_PathArcTo(self.handle(), center.toC(), C.float(radius), C.float(a_min), C.float(a_max))
 }
 
-func (self ImDrawList) PathBezierCubicCurveTo(p2 ImVec2, p3 ImVec2, p4 ImVec2) {
+func (self ImDrawList) PathBezierCubicCurveTo(p2 Vec2, p3 Vec2, p4 Vec2) {
 	C.DrawList_PathBezierCubicCurveTo(self.handle(), p2.toC(), p3.toC(), p4.toC())
 }
 
-func (self ImDrawList) PathBezierQuadraticCurveTo(p2 ImVec2, p3 ImVec2) {
+func (self ImDrawList) PathBezierQuadraticCurveTo(p2 Vec2, p3 Vec2) {
 	C.DrawList_PathBezierQuadraticCurveTo(self.handle(), p2.toC(), p3.toC())
 }
 
-func (self ImDrawList) PathRect(rect_min ImVec2, rect_max ImVec2) {
+func (self ImDrawList) PathRect(rect_min Vec2, rect_max Vec2) {
 	C.DrawList_PathRect(self.handle(), rect_min.toC(), rect_max.toC())
 }
 
@@ -4159,11 +4159,11 @@ func (self ImDrawList) PathStroke(col uint32) {
 	C.DrawList_PathStroke(self.handle(), C.ImU32(col))
 }
 
-func (self ImDrawList) PushClipRect(clip_rect_min ImVec2, clip_rect_max ImVec2) {
+func (self ImDrawList) PushClipRect(clip_rect_min Vec2, clip_rect_max Vec2) {
 	C.DrawList_PushClipRect(self.handle(), clip_rect_min.toC(), clip_rect_max.toC())
 }
 
-func (self ImFontAtlas) AddCustomRectFontGlyph(font ImFont, id ImWchar, width int32, height int32, advance_x float32) int {
+func (self ImFontAtlas) AddCustomRectFontGlyph(font ImFont, id Wchar, width int32, height int32, advance_x float32) int {
 	return int(C.FontAtlas_AddCustomRectFontGlyph(self.handle(), font.handle(), C.ImWchar(id), C.int(width), C.int(height), C.float(advance_x)))
 }
 
@@ -4200,13 +4200,13 @@ func (self ImFontGlyphRangesBuilder) AddText(text string) {
 	C.FontGlyphRangesBuilder_AddText(self.handle(), textArg)
 }
 
-func (self ImFont) AddRemapChar(dst ImWchar, src ImWchar) {
+func (self ImFont) AddRemapChar(dst Wchar, src Wchar) {
 	C.Font_AddRemapChar(self.handle(), C.ImWchar(dst), C.ImWchar(src))
 }
 
-func (self ImFont) CalcTextSizeA(size float32, max_width float32, wrap_width float32, text_begin string) ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func (self ImFont) CalcTextSizeA(size float32, max_width float32, wrap_width float32, text_begin string) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	text_beginArg, text_beginFin := wrapString(text_begin)
@@ -4216,7 +4216,7 @@ func (self ImFont) CalcTextSizeA(size float32, max_width float32, wrap_width flo
 	return *pOut
 }
 
-func (self ImFont) RenderText(draw_list ImDrawList, size float32, pos ImVec2, col uint32, clip_rect ImVec4, text_begin string) {
+func (self ImFont) RenderText(draw_list ImDrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
@@ -4270,7 +4270,7 @@ func Begin(name string) bool {
 	return C.Begin(nameArg) == C.bool(true)
 }
 
-func BeginChildFrame(id ImGuiID, size ImVec2) bool {
+func BeginChildFrame(id ImGuiID, size Vec2) bool {
 	return C.BeginChildFrame(C.ImGuiID(id), size.toC()) == C.bool(true)
 }
 
@@ -4371,9 +4371,9 @@ func Button(label string) bool {
 	return C.Button(labelArg) == C.bool(true)
 }
 
-func CalcTextSize(text string) ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func CalcTextSize(text string) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	textArg, textFin := wrapString(text)
@@ -4400,7 +4400,7 @@ func CollapsingHeader_TreeNodeFlags(label string) bool {
 	return C.CollapsingHeader_TreeNodeFlags(labelArg) == C.bool(true)
 }
 
-func ColorButton(desc_id string, col ImVec4) bool {
+func ColorButton(desc_id string, col Vec4) bool {
 	desc_idArg, desc_idFin := wrapString(desc_id)
 	defer desc_idFin()
 
@@ -4695,9 +4695,9 @@ func GetColumnWidth() float32 {
 	return float32(C.GetColumnWidth())
 }
 
-func GetMouseDragDelta() ImVec2 {
-	pOut := &ImVec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *ImVec2](pOut)
+func GetMouseDragDelta() Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
 	C.GetMouseDragDelta(pOutArg)
@@ -4854,7 +4854,7 @@ func InputScalarN(label string, data_type DataType, p_data unsafe.Pointer, compo
 	return C.InputScalarN(labelArg, C.ImGuiDataType(data_type), p_data, C.int(components)) == C.bool(true)
 }
 
-func InvisibleButton(str_id string, size ImVec2) bool {
+func InvisibleButton(str_id string, size Vec2) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
@@ -4881,7 +4881,7 @@ func IsMouseDragging(button MouseButton) bool {
 	return C.IsMouseDragging(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
-func IsMouseHoveringRect(r_min ImVec2, r_max ImVec2) bool {
+func IsMouseHoveringRect(r_min Vec2, r_max Vec2) bool {
 	return C.IsMouseHoveringRect(r_min.toC(), r_max.toC()) == C.bool(true)
 }
 
@@ -5057,15 +5057,15 @@ func SetNextWindowDockID(dock_id ImGuiID) {
 	C.SetNextWindowDockID(C.ImGuiID(dock_id))
 }
 
-func SetNextWindowPos(pos ImVec2) {
+func SetNextWindowPos(pos Vec2) {
 	C.SetNextWindowPos(pos.toC())
 }
 
-func SetNextWindowSize(size ImVec2) {
+func SetNextWindowSize(size Vec2) {
 	C.SetNextWindowSize(size.toC())
 }
 
-func SetNextWindowSizeConstraints(size_min ImVec2, size_max ImVec2) {
+func SetNextWindowSizeConstraints(size_min Vec2, size_max Vec2) {
 	C.SetNextWindowSizeConstraints(size_min.toC(), size_max.toC())
 }
 
@@ -5096,25 +5096,25 @@ func SetWindowCollapsed_Str(name string, collapsed bool) {
 	C.SetWindowCollapsed_Str(nameArg, C.bool(collapsed))
 }
 
-func SetWindowPos_Str(name string, pos ImVec2) {
+func SetWindowPos_Str(name string, pos Vec2) {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
 	C.SetWindowPos_Str(nameArg, pos.toC())
 }
 
-func SetWindowPos_Vec2(pos ImVec2) {
+func SetWindowPos_Vec2(pos Vec2) {
 	C.SetWindowPos_Vec2(pos.toC())
 }
 
-func SetWindowSize_Str(name string, size ImVec2) {
+func SetWindowSize_Str(name string, size Vec2) {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
 	C.SetWindowSize_Str(nameArg, size.toC())
 }
 
-func SetWindowSize_Vec2(size ImVec2) {
+func SetWindowSize_Vec2(size Vec2) {
 	C.SetWindowSize_Vec2(size.toC())
 }
 
@@ -5352,7 +5352,7 @@ func Unindent() {
 	C.Unindent()
 }
 
-func VSliderFloat(label string, size ImVec2, v *float32, v_min float32, v_max float32) bool {
+func VSliderFloat(label string, size Vec2, v *float32, v_min float32, v_max float32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -5362,7 +5362,7 @@ func VSliderFloat(label string, size ImVec2, v *float32, v_min float32, v_max fl
 	return C.VSliderFloat(labelArg, size.toC(), vArg, C.float(v_min), C.float(v_max)) == C.bool(true)
 }
 
-func VSliderInt(label string, size ImVec2, v *int32, v_min int32, v_max int32) bool {
+func VSliderInt(label string, size Vec2, v *int32, v_min int32, v_max int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -5372,7 +5372,7 @@ func VSliderInt(label string, size ImVec2, v *int32, v_min int32, v_max int32) b
 	return C.VSliderInt(labelArg, size.toC(), vArg, C.int(v_min), C.int(v_max)) == C.bool(true)
 }
 
-func VSliderScalar(label string, size ImVec2, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
+func VSliderScalar(label string, size Vec2, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -5386,22 +5386,22 @@ func Value_Float(prefix string, v float32) {
 	C.Value_Float(prefixArg, C.float(v))
 }
 
-func (self ImDrawCmd) SetClipRect(v ImVec4) {
+func (self ImDrawCmd) SetClipRect(v Vec4) {
 	C.ImDrawCmd_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImDrawCmd) GetClipRect() ImVec4 {
-	out := &ImVec4{}
+func (self ImDrawCmd) GetClipRect() Vec4 {
+	out := &Vec4{}
 	out.fromC(C.ImDrawCmd_GetClipRect(self.handle()))
 	return *out
 }
 
-func (self ImDrawCmd) SetTextureId(v ImTextureID) {
+func (self ImDrawCmd) SetTextureId(v TextureID) {
 	C.ImDrawCmd_SetTextureId(self.handle(), C.ImTextureID(v))
 }
 
-func (self ImDrawCmd) GetTextureId() ImTextureID {
-	return ImTextureID(C.ImDrawCmd_GetTextureId(self.handle()))
+func (self ImDrawCmd) GetTextureId() TextureID {
+	return TextureID(C.ImDrawCmd_GetTextureId(self.handle()))
 }
 
 func (self ImDrawCmd) SetVtxOffset(v uint32) {
@@ -5436,22 +5436,22 @@ func (self ImDrawCmd) GetUserCallbackData() unsafe.Pointer {
 	return unsafe.Pointer(C.ImDrawCmd_GetUserCallbackData(self.handle()))
 }
 
-func (self ImDrawCmdHeader) SetClipRect(v ImVec4) {
+func (self ImDrawCmdHeader) SetClipRect(v Vec4) {
 	C.ImDrawCmdHeader_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImDrawCmdHeader) GetClipRect() ImVec4 {
-	out := &ImVec4{}
+func (self ImDrawCmdHeader) GetClipRect() Vec4 {
+	out := &Vec4{}
 	out.fromC(C.ImDrawCmdHeader_GetClipRect(self.handle()))
 	return *out
 }
 
-func (self ImDrawCmdHeader) SetTextureId(v ImTextureID) {
+func (self ImDrawCmdHeader) SetTextureId(v TextureID) {
 	C.ImDrawCmdHeader_SetTextureId(self.handle(), C.ImTextureID(v))
 }
 
-func (self ImDrawCmdHeader) GetTextureId() ImTextureID {
-	return ImTextureID(C.ImDrawCmdHeader_GetTextureId(self.handle()))
+func (self ImDrawCmdHeader) GetTextureId() TextureID {
+	return TextureID(C.ImDrawCmdHeader_GetTextureId(self.handle()))
 }
 
 func (self ImDrawCmdHeader) SetVtxOffset(v uint32) {
@@ -5494,32 +5494,32 @@ func (self ImDrawData) GetTotalVtxCount() int {
 	return int(C.ImDrawData_GetTotalVtxCount(self.handle()))
 }
 
-func (self ImDrawData) SetDisplayPos(v ImVec2) {
+func (self ImDrawData) SetDisplayPos(v Vec2) {
 	C.ImDrawData_SetDisplayPos(self.handle(), v.toC())
 }
 
-func (self ImDrawData) GetDisplayPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImDrawData) GetDisplayPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImDrawData_GetDisplayPos(self.handle()))
 	return *out
 }
 
-func (self ImDrawData) SetDisplaySize(v ImVec2) {
+func (self ImDrawData) SetDisplaySize(v Vec2) {
 	C.ImDrawData_SetDisplaySize(self.handle(), v.toC())
 }
 
-func (self ImDrawData) GetDisplaySize() ImVec2 {
-	out := &ImVec2{}
+func (self ImDrawData) GetDisplaySize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImDrawData_GetDisplaySize(self.handle()))
 	return *out
 }
 
-func (self ImDrawData) SetFramebufferScale(v ImVec2) {
+func (self ImDrawData) SetFramebufferScale(v Vec2) {
 	C.ImDrawData_SetFramebufferScale(self.handle(), v.toC())
 }
 
-func (self ImDrawData) GetFramebufferScale() ImVec2 {
-	out := &ImVec2{}
+func (self ImDrawData) GetFramebufferScale() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImDrawData_GetFramebufferScale(self.handle()))
 	return *out
 }
@@ -5591,12 +5591,12 @@ func (self ImDrawList) Get_FringeScale() float32 {
 	return float32(C.ImDrawList_Get_FringeScale(self.handle()))
 }
 
-func (self ImDrawListSharedData) SetTexUvWhitePixel(v ImVec2) {
+func (self ImDrawListSharedData) SetTexUvWhitePixel(v Vec2) {
 	C.ImDrawListSharedData_SetTexUvWhitePixel(self.handle(), v.toC())
 }
 
-func (self ImDrawListSharedData) GetTexUvWhitePixel() ImVec2 {
-	out := &ImVec2{}
+func (self ImDrawListSharedData) GetTexUvWhitePixel() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImDrawListSharedData_GetTexUvWhitePixel(self.handle()))
 	return *out
 }
@@ -5633,12 +5633,12 @@ func (self ImDrawListSharedData) GetCircleSegmentMaxError() float32 {
 	return float32(C.ImDrawListSharedData_GetCircleSegmentMaxError(self.handle()))
 }
 
-func (self ImDrawListSharedData) SetClipRectFullscreen(v ImVec4) {
+func (self ImDrawListSharedData) SetClipRectFullscreen(v Vec4) {
 	C.ImDrawListSharedData_SetClipRectFullscreen(self.handle(), v.toC())
 }
 
-func (self ImDrawListSharedData) GetClipRectFullscreen() ImVec4 {
-	out := &ImVec4{}
+func (self ImDrawListSharedData) GetClipRectFullscreen() Vec4 {
+	out := &Vec4{}
 	out.fromC(C.ImDrawListSharedData_GetClipRectFullscreen(self.handle()))
 	return *out
 }
@@ -5659,15 +5659,15 @@ func (self ImDrawListSharedData) GetArcFastRadiusCutoff() float32 {
 	return float32(C.ImDrawListSharedData_GetArcFastRadiusCutoff(self.handle()))
 }
 
-func (self ImDrawListSharedData) SetTexUvLines(v *ImVec4) {
-	vArg, vFin := wrap[C.ImVec4, *ImVec4](v)
+func (self ImDrawListSharedData) SetTexUvLines(v *Vec4) {
+	vArg, vFin := wrap[C.ImVec4, *Vec4](v)
 	defer vFin()
 
 	C.ImDrawListSharedData_SetTexUvLines(self.handle(), vArg)
 }
 
-func (self ImDrawListSharedData) GetTexUvLines() *ImVec4 {
-	out := &ImVec4{}
+func (self ImDrawListSharedData) GetTexUvLines() *Vec4 {
+	out := &Vec4{}
 	out.fromC(*C.ImDrawListSharedData_GetTexUvLines(self.handle()))
 	return out
 }
@@ -5688,22 +5688,22 @@ func (self ImDrawListSplitter) Get_Count() int {
 	return int(C.ImDrawListSplitter_Get_Count(self.handle()))
 }
 
-func (self ImDrawVert) Setpos(v ImVec2) {
+func (self ImDrawVert) Setpos(v Vec2) {
 	C.ImDrawVert_Setpos(self.handle(), v.toC())
 }
 
-func (self ImDrawVert) Getpos() ImVec2 {
-	out := &ImVec2{}
+func (self ImDrawVert) Getpos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImDrawVert_Getpos(self.handle()))
 	return *out
 }
 
-func (self ImDrawVert) Setuv(v ImVec2) {
+func (self ImDrawVert) Setuv(v Vec2) {
 	C.ImDrawVert_Setuv(self.handle(), v.toC())
 }
 
-func (self ImDrawVert) Getuv() ImVec2 {
-	out := &ImVec2{}
+func (self ImDrawVert) Getuv() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImDrawVert_Getuv(self.handle()))
 	return *out
 }
@@ -5764,28 +5764,28 @@ func (self ImFont) GetConfigDataCount() int {
 	return int(C.ImFont_GetConfigDataCount(self.handle()))
 }
 
-func (self ImFont) SetFallbackChar(v ImWchar) {
+func (self ImFont) SetFallbackChar(v Wchar) {
 	C.ImFont_SetFallbackChar(self.handle(), C.ImWchar(v))
 }
 
-func (self ImFont) GetFallbackChar() ImWchar {
-	return (ImWchar)(C.ImFont_GetFallbackChar(self.handle()))
+func (self ImFont) GetFallbackChar() Wchar {
+	return (Wchar)(C.ImFont_GetFallbackChar(self.handle()))
 }
 
-func (self ImFont) SetEllipsisChar(v ImWchar) {
+func (self ImFont) SetEllipsisChar(v Wchar) {
 	C.ImFont_SetEllipsisChar(self.handle(), C.ImWchar(v))
 }
 
-func (self ImFont) GetEllipsisChar() ImWchar {
-	return (ImWchar)(C.ImFont_GetEllipsisChar(self.handle()))
+func (self ImFont) GetEllipsisChar() Wchar {
+	return (Wchar)(C.ImFont_GetEllipsisChar(self.handle()))
 }
 
-func (self ImFont) SetDotChar(v ImWchar) {
+func (self ImFont) SetDotChar(v Wchar) {
 	C.ImFont_SetDotChar(self.handle(), C.ImWchar(v))
 }
 
-func (self ImFont) GetDotChar() ImWchar {
-	return (ImWchar)(C.ImFont_GetDotChar(self.handle()))
+func (self ImFont) GetDotChar() Wchar {
+	return (Wchar)(C.ImFont_GetDotChar(self.handle()))
 }
 
 func (self ImFont) SetDirtyLookupTables(v bool) {
@@ -5899,22 +5899,22 @@ func (self ImFontAtlas) GetTexHeight() int {
 	return int(C.ImFontAtlas_GetTexHeight(self.handle()))
 }
 
-func (self ImFontAtlas) SetTexUvScale(v ImVec2) {
+func (self ImFontAtlas) SetTexUvScale(v Vec2) {
 	C.ImFontAtlas_SetTexUvScale(self.handle(), v.toC())
 }
 
-func (self ImFontAtlas) GetTexUvScale() ImVec2 {
-	out := &ImVec2{}
+func (self ImFontAtlas) GetTexUvScale() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImFontAtlas_GetTexUvScale(self.handle()))
 	return *out
 }
 
-func (self ImFontAtlas) SetTexUvWhitePixel(v ImVec2) {
+func (self ImFontAtlas) SetTexUvWhitePixel(v Vec2) {
 	C.ImFontAtlas_SetTexUvWhitePixel(self.handle(), v.toC())
 }
 
-func (self ImFontAtlas) GetTexUvWhitePixel() ImVec2 {
-	out := &ImVec2{}
+func (self ImFontAtlas) GetTexUvWhitePixel() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImFontAtlas_GetTexUvWhitePixel(self.handle()))
 	return *out
 }
@@ -5983,12 +5983,12 @@ func (self ImFontAtlasCustomRect) GetGlyphAdvanceX() float32 {
 	return float32(C.ImFontAtlasCustomRect_GetGlyphAdvanceX(self.handle()))
 }
 
-func (self ImFontAtlasCustomRect) SetGlyphOffset(v ImVec2) {
+func (self ImFontAtlasCustomRect) SetGlyphOffset(v Vec2) {
 	C.ImFontAtlasCustomRect_SetGlyphOffset(self.handle(), v.toC())
 }
 
-func (self ImFontAtlasCustomRect) GetGlyphOffset() ImVec2 {
-	out := &ImVec2{}
+func (self ImFontAtlasCustomRect) GetGlyphOffset() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImFontAtlasCustomRect_GetGlyphOffset(self.handle()))
 	return *out
 }
@@ -6065,32 +6065,32 @@ func (self ImFontConfig) GetPixelSnapH() bool {
 	return C.ImFontConfig_GetPixelSnapH(self.handle()) == C.bool(true)
 }
 
-func (self ImFontConfig) SetGlyphExtraSpacing(v ImVec2) {
+func (self ImFontConfig) SetGlyphExtraSpacing(v Vec2) {
 	C.ImFontConfig_SetGlyphExtraSpacing(self.handle(), v.toC())
 }
 
-func (self ImFontConfig) GetGlyphExtraSpacing() ImVec2 {
-	out := &ImVec2{}
+func (self ImFontConfig) GetGlyphExtraSpacing() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImFontConfig_GetGlyphExtraSpacing(self.handle()))
 	return *out
 }
 
-func (self ImFontConfig) SetGlyphOffset(v ImVec2) {
+func (self ImFontConfig) SetGlyphOffset(v Vec2) {
 	C.ImFontConfig_SetGlyphOffset(self.handle(), v.toC())
 }
 
-func (self ImFontConfig) GetGlyphOffset() ImVec2 {
-	out := &ImVec2{}
+func (self ImFontConfig) GetGlyphOffset() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImFontConfig_GetGlyphOffset(self.handle()))
 	return *out
 }
 
-func (self ImFontConfig) SetGlyphRanges(v *ImWchar) {
+func (self ImFontConfig) SetGlyphRanges(v *Wchar) {
 	C.ImFontConfig_SetGlyphRanges(self.handle(), (*C.ImWchar)(v))
 }
 
-func (self ImFontConfig) GetGlyphRanges() *ImWchar {
-	return (*ImWchar)(C.ImFontConfig_GetGlyphRanges(self.handle()))
+func (self ImFontConfig) GetGlyphRanges() *Wchar {
+	return (*Wchar)(C.ImFontConfig_GetGlyphRanges(self.handle()))
 }
 
 func (self ImFontConfig) SetGlyphMinAdvanceX(v float32) {
@@ -6133,12 +6133,12 @@ func (self ImFontConfig) GetRasterizerMultiply() float32 {
 	return float32(C.ImFontConfig_GetRasterizerMultiply(self.handle()))
 }
 
-func (self ImFontConfig) SetEllipsisChar(v ImWchar) {
+func (self ImFontConfig) SetEllipsisChar(v Wchar) {
 	C.ImFontConfig_SetEllipsisChar(self.handle(), C.ImWchar(v))
 }
 
-func (self ImFontConfig) GetEllipsisChar() ImWchar {
-	return (ImWchar)(C.ImFontConfig_GetEllipsisChar(self.handle()))
+func (self ImFontConfig) GetEllipsisChar() Wchar {
+	return (Wchar)(C.ImFontConfig_GetEllipsisChar(self.handle()))
 }
 
 func (self ImFontConfig) SetDstFont(v ImFont) {
@@ -6253,52 +6253,52 @@ func (self ImGuiColorMod) GetCol() Col {
 	return Col(C.ImGuiColorMod_GetCol(self.handle()))
 }
 
-func (self ImGuiColorMod) SetBackupValue(v ImVec4) {
+func (self ImGuiColorMod) SetBackupValue(v Vec4) {
 	C.ImGuiColorMod_SetBackupValue(self.handle(), v.toC())
 }
 
-func (self ImGuiColorMod) GetBackupValue() ImVec4 {
-	out := &ImVec4{}
+func (self ImGuiColorMod) GetBackupValue() Vec4 {
+	out := &Vec4{}
 	out.fromC(C.ImGuiColorMod_GetBackupValue(self.handle()))
 	return *out
 }
 
-func (self ImGuiComboPreviewData) SetPreviewRect(v ImRect) {
+func (self ImGuiComboPreviewData) SetPreviewRect(v Rect) {
 	C.ImGuiComboPreviewData_SetPreviewRect(self.handle(), v.toC())
 }
 
-func (self ImGuiComboPreviewData) GetPreviewRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiComboPreviewData) GetPreviewRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiComboPreviewData_GetPreviewRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiComboPreviewData) SetBackupCursorPos(v ImVec2) {
+func (self ImGuiComboPreviewData) SetBackupCursorPos(v Vec2) {
 	C.ImGuiComboPreviewData_SetBackupCursorPos(self.handle(), v.toC())
 }
 
-func (self ImGuiComboPreviewData) GetBackupCursorPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiComboPreviewData) GetBackupCursorPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiComboPreviewData_GetBackupCursorPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiComboPreviewData) SetBackupCursorMaxPos(v ImVec2) {
+func (self ImGuiComboPreviewData) SetBackupCursorMaxPos(v Vec2) {
 	C.ImGuiComboPreviewData_SetBackupCursorMaxPos(self.handle(), v.toC())
 }
 
-func (self ImGuiComboPreviewData) GetBackupCursorMaxPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiComboPreviewData) GetBackupCursorMaxPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiComboPreviewData_GetBackupCursorMaxPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiComboPreviewData) SetBackupCursorPosPrevLine(v ImVec2) {
+func (self ImGuiComboPreviewData) SetBackupCursorPosPrevLine(v Vec2) {
 	C.ImGuiComboPreviewData_SetBackupCursorPosPrevLine(self.handle(), v.toC())
 }
 
-func (self ImGuiComboPreviewData) GetBackupCursorPosPrevLine() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiComboPreviewData) GetBackupCursorPosPrevLine() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiComboPreviewData_GetBackupCursorPosPrevLine(self.handle()))
 	return *out
 }
@@ -6491,12 +6491,12 @@ func (self ImGuiContext) GetWindowsActiveCount() int {
 	return int(C.ImGuiContext_GetWindowsActiveCount(self.handle()))
 }
 
-func (self ImGuiContext) SetWindowsHoverPadding(v ImVec2) {
+func (self ImGuiContext) SetWindowsHoverPadding(v Vec2) {
 	C.ImGuiContext_SetWindowsHoverPadding(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetWindowsHoverPadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiContext) GetWindowsHoverPadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiContext_GetWindowsHoverPadding(self.handle()))
 	return *out
 }
@@ -6541,12 +6541,12 @@ func (self ImGuiContext) GetWheelingWindow() ImGuiWindow {
 	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiContext_GetWheelingWindow(self.handle())))
 }
 
-func (self ImGuiContext) SetWheelingWindowRefMousePos(v ImVec2) {
+func (self ImGuiContext) SetWheelingWindowRefMousePos(v Vec2) {
 	C.ImGuiContext_SetWheelingWindowRefMousePos(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetWheelingWindowRefMousePos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiContext) GetWheelingWindowRefMousePos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiContext_GetWheelingWindowRefMousePos(self.handle()))
 	return *out
 }
@@ -6703,12 +6703,12 @@ func (self ImGuiContext) GetActiveIdHasBeenEditedThisFrame() bool {
 	return C.ImGuiContext_GetActiveIdHasBeenEditedThisFrame(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiContext) SetActiveIdClickOffset(v ImVec2) {
+func (self ImGuiContext) SetActiveIdClickOffset(v Vec2) {
 	C.ImGuiContext_SetActiveIdClickOffset(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetActiveIdClickOffset() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiContext) GetActiveIdClickOffset() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiContext_GetActiveIdClickOffset(self.handle()))
 	return *out
 }
@@ -7065,12 +7065,12 @@ func (self ImGuiContext) GetNavInitResultId() ImGuiID {
 	return ImGuiID(C.ImGuiContext_GetNavInitResultId(self.handle()))
 }
 
-func (self ImGuiContext) SetNavInitResultRectRel(v ImRect) {
+func (self ImGuiContext) SetNavInitResultRectRel(v Rect) {
 	C.ImGuiContext_SetNavInitResultRectRel(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetNavInitResultRectRel() ImRect {
-	out := &ImRect{}
+func (self ImGuiContext) GetNavInitResultRectRel() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiContext_GetNavInitResultRectRel(self.handle()))
 	return *out
 }
@@ -7147,22 +7147,22 @@ func (self ImGuiContext) GetNavMoveClipDir() Dir {
 	return Dir(C.ImGuiContext_GetNavMoveClipDir(self.handle()))
 }
 
-func (self ImGuiContext) SetNavScoringRect(v ImRect) {
+func (self ImGuiContext) SetNavScoringRect(v Rect) {
 	C.ImGuiContext_SetNavScoringRect(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetNavScoringRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiContext) GetNavScoringRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiContext_GetNavScoringRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiContext) SetNavScoringNoClipRect(v ImRect) {
+func (self ImGuiContext) SetNavScoringNoClipRect(v Rect) {
 	C.ImGuiContext_SetNavScoringNoClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetNavScoringNoClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiContext) GetNavScoringNoClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiContext_GetNavScoringNoClipRect(self.handle()))
 	return *out
 }
@@ -7255,22 +7255,22 @@ func (self ImGuiContext) GetNavWindowingToggleLayer() bool {
 	return C.ImGuiContext_GetNavWindowingToggleLayer(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiContext) SetNavWindowingAccumDeltaPos(v ImVec2) {
+func (self ImGuiContext) SetNavWindowingAccumDeltaPos(v Vec2) {
 	C.ImGuiContext_SetNavWindowingAccumDeltaPos(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetNavWindowingAccumDeltaPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiContext) GetNavWindowingAccumDeltaPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiContext_GetNavWindowingAccumDeltaPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiContext) SetNavWindowingAccumDeltaSize(v ImVec2) {
+func (self ImGuiContext) SetNavWindowingAccumDeltaSize(v Vec2) {
 	C.ImGuiContext_SetNavWindowingAccumDeltaSize(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetNavWindowingAccumDeltaSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiContext) GetNavWindowingAccumDeltaSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiContext_GetNavWindowingAccumDeltaSize(self.handle()))
 	return *out
 }
@@ -7343,12 +7343,12 @@ func (self ImGuiContext) GetDragDropPayload() ImGuiPayload {
 	return newImGuiPayloadFromC(C.ImGuiContext_GetDragDropPayload(self.handle()))
 }
 
-func (self ImGuiContext) SetDragDropTargetRect(v ImRect) {
+func (self ImGuiContext) SetDragDropTargetRect(v Rect) {
 	C.ImGuiContext_SetDragDropTargetRect(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetDragDropTargetRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiContext) GetDragDropTargetRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiContext_GetDragDropTargetRect(self.handle()))
 	return *out
 }
@@ -7441,12 +7441,12 @@ func (self ImGuiContext) GetCurrentTabBar() ImGuiTabBar {
 	return (ImGuiTabBar)(unsafe.Pointer(C.ImGuiContext_GetCurrentTabBar(self.handle())))
 }
 
-func (self ImGuiContext) SetMouseLastValidPos(v ImVec2) {
+func (self ImGuiContext) SetMouseLastValidPos(v Vec2) {
 	C.ImGuiContext_SetMouseLastValidPos(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetMouseLastValidPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiContext) GetMouseLastValidPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiContext_GetMouseLastValidPos(self.handle()))
 	return *out
 }
@@ -7499,12 +7499,12 @@ func (self ImGuiContext) GetColorEditLastColor() uint32 {
 	return uint32(C.ImGuiContext_GetColorEditLastColor(self.handle()))
 }
 
-func (self ImGuiContext) SetColorPickerRef(v ImVec4) {
+func (self ImGuiContext) SetColorPickerRef(v Vec4) {
 	C.ImGuiContext_SetColorPickerRef(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetColorPickerRef() ImVec4 {
-	out := &ImVec4{}
+func (self ImGuiContext) GetColorPickerRef() Vec4 {
+	out := &Vec4{}
 	out.fromC(C.ImGuiContext_GetColorPickerRef(self.handle()))
 	return *out
 }
@@ -7972,32 +7972,32 @@ func (self ImGuiDockNode) GetTabBar() ImGuiTabBar {
 	return (ImGuiTabBar)(unsafe.Pointer(C.ImGuiDockNode_GetTabBar(self.handle())))
 }
 
-func (self ImGuiDockNode) SetPos(v ImVec2) {
+func (self ImGuiDockNode) SetPos(v Vec2) {
 	C.ImGuiDockNode_SetPos(self.handle(), v.toC())
 }
 
-func (self ImGuiDockNode) GetPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiDockNode) GetPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiDockNode_GetPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiDockNode) SetSize(v ImVec2) {
+func (self ImGuiDockNode) SetSize(v Vec2) {
 	C.ImGuiDockNode_SetSize(self.handle(), v.toC())
 }
 
-func (self ImGuiDockNode) GetSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiDockNode) GetSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiDockNode_GetSize(self.handle()))
 	return *out
 }
 
-func (self ImGuiDockNode) SetSizeRef(v ImVec2) {
+func (self ImGuiDockNode) SetSizeRef(v Vec2) {
 	C.ImGuiDockNode_SetSizeRef(self.handle(), v.toC())
 }
 
-func (self ImGuiDockNode) GetSizeRef() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiDockNode) GetSizeRef() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiDockNode_GetSizeRef(self.handle()))
 	return *out
 }
@@ -8230,32 +8230,32 @@ func (self ImGuiGroupData) GetWindowID() ImGuiID {
 	return ImGuiID(C.ImGuiGroupData_GetWindowID(self.handle()))
 }
 
-func (self ImGuiGroupData) SetBackupCursorPos(v ImVec2) {
+func (self ImGuiGroupData) SetBackupCursorPos(v Vec2) {
 	C.ImGuiGroupData_SetBackupCursorPos(self.handle(), v.toC())
 }
 
-func (self ImGuiGroupData) GetBackupCursorPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiGroupData) GetBackupCursorPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiGroupData_GetBackupCursorPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiGroupData) SetBackupCursorMaxPos(v ImVec2) {
+func (self ImGuiGroupData) SetBackupCursorMaxPos(v Vec2) {
 	C.ImGuiGroupData_SetBackupCursorMaxPos(self.handle(), v.toC())
 }
 
-func (self ImGuiGroupData) GetBackupCursorMaxPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiGroupData) GetBackupCursorMaxPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiGroupData_GetBackupCursorMaxPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiGroupData) SetBackupCurrLineSize(v ImVec2) {
+func (self ImGuiGroupData) SetBackupCurrLineSize(v Vec2) {
 	C.ImGuiGroupData_SetBackupCurrLineSize(self.handle(), v.toC())
 }
 
-func (self ImGuiGroupData) GetBackupCurrLineSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiGroupData) GetBackupCurrLineSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiGroupData_GetBackupCurrLineSize(self.handle()))
 	return *out
 }
@@ -8316,12 +8316,12 @@ func (self ImGuiIO) GetBackendFlags() BackendFlags {
 	return BackendFlags(C.ImGuiIO_GetBackendFlags(self.handle()))
 }
 
-func (self ImGuiIO) SetDisplaySize(v ImVec2) {
+func (self ImGuiIO) SetDisplaySize(v Vec2) {
 	C.ImGuiIO_SetDisplaySize(self.handle(), v.toC())
 }
 
-func (self ImGuiIO) GetDisplaySize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiIO) GetDisplaySize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiIO_GetDisplaySize(self.handle()))
 	return *out
 }
@@ -8444,12 +8444,12 @@ func (self ImGuiIO) GetFontDefault() ImFont {
 	return (ImFont)(unsafe.Pointer(C.ImGuiIO_GetFontDefault(self.handle())))
 }
 
-func (self ImGuiIO) SetDisplayFramebufferScale(v ImVec2) {
+func (self ImGuiIO) SetDisplayFramebufferScale(v Vec2) {
 	C.ImGuiIO_SetDisplayFramebufferScale(self.handle(), v.toC())
 }
 
-func (self ImGuiIO) GetDisplayFramebufferScale() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiIO) GetDisplayFramebufferScale() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiIO_GetDisplayFramebufferScale(self.handle()))
 	return *out
 }
@@ -8756,22 +8756,22 @@ func (self ImGuiIO) GetMetricsActiveAllocations() int {
 	return int(C.ImGuiIO_GetMetricsActiveAllocations(self.handle()))
 }
 
-func (self ImGuiIO) SetMouseDelta(v ImVec2) {
+func (self ImGuiIO) SetMouseDelta(v Vec2) {
 	C.ImGuiIO_SetMouseDelta(self.handle(), v.toC())
 }
 
-func (self ImGuiIO) GetMouseDelta() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiIO) GetMouseDelta() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiIO_GetMouseDelta(self.handle()))
 	return *out
 }
 
-func (self ImGuiIO) SetMousePos(v ImVec2) {
+func (self ImGuiIO) SetMousePos(v Vec2) {
 	C.ImGuiIO_SetMousePos(self.handle(), v.toC())
 }
 
-func (self ImGuiIO) GetMousePos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiIO) GetMousePos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiIO_GetMousePos(self.handle()))
 	return *out
 }
@@ -8848,12 +8848,12 @@ func (self ImGuiIO) GetWantCaptureMouseUnlessPopupClose() bool {
 	return C.ImGuiIO_GetWantCaptureMouseUnlessPopupClose(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiIO) SetMousePosPrev(v ImVec2) {
+func (self ImGuiIO) SetMousePosPrev(v Vec2) {
 	C.ImGuiIO_SetMousePosPrev(self.handle(), v.toC())
 }
 
-func (self ImGuiIO) GetMousePosPrev() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiIO) GetMousePosPrev() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiIO_GetMousePosPrev(self.handle()))
 	return *out
 }
@@ -9042,12 +9042,12 @@ func (self ImGuiInputTextCallbackData) GetUserData() unsafe.Pointer {
 	return unsafe.Pointer(C.ImGuiInputTextCallbackData_GetUserData(self.handle()))
 }
 
-func (self ImGuiInputTextCallbackData) SetEventChar(v ImWchar) {
+func (self ImGuiInputTextCallbackData) SetEventChar(v Wchar) {
 	C.ImGuiInputTextCallbackData_SetEventChar(self.handle(), C.ImWchar(v))
 }
 
-func (self ImGuiInputTextCallbackData) GetEventChar() ImWchar {
-	return (ImWchar)(C.ImGuiInputTextCallbackData_GetEventChar(self.handle()))
+func (self ImGuiInputTextCallbackData) GetEventChar() Wchar {
+	return (Wchar)(C.ImGuiInputTextCallbackData_GetEventChar(self.handle()))
 }
 
 func (self ImGuiInputTextCallbackData) SetEventKey(v Key) {
@@ -9261,32 +9261,32 @@ func (self ImGuiLastItemData) GetStatusFlags() ItemStatusFlags {
 	return ItemStatusFlags(C.ImGuiLastItemData_GetStatusFlags(self.handle()))
 }
 
-func (self ImGuiLastItemData) SetRect(v ImRect) {
+func (self ImGuiLastItemData) SetRect(v Rect) {
 	C.ImGuiLastItemData_SetRect(self.handle(), v.toC())
 }
 
-func (self ImGuiLastItemData) GetRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiLastItemData) GetRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiLastItemData_GetRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiLastItemData) SetNavRect(v ImRect) {
+func (self ImGuiLastItemData) SetNavRect(v Rect) {
 	C.ImGuiLastItemData_SetNavRect(self.handle(), v.toC())
 }
 
-func (self ImGuiLastItemData) GetNavRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiLastItemData) GetNavRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiLastItemData_GetNavRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiLastItemData) SetDisplayRect(v ImRect) {
+func (self ImGuiLastItemData) SetDisplayRect(v Rect) {
 	C.ImGuiLastItemData_SetDisplayRect(self.handle(), v.toC())
 }
 
-func (self ImGuiLastItemData) GetDisplayRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiLastItemData) GetDisplayRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiLastItemData_GetDisplayRect(self.handle()))
 	return *out
 }
@@ -9571,12 +9571,12 @@ func (self ImGuiNavItemData) GetFocusScopeId() ImGuiID {
 	return ImGuiID(C.ImGuiNavItemData_GetFocusScopeId(self.handle()))
 }
 
-func (self ImGuiNavItemData) SetRectRel(v ImRect) {
+func (self ImGuiNavItemData) SetRectRel(v Rect) {
 	C.ImGuiNavItemData_SetRectRel(self.handle(), v.toC())
 }
 
-func (self ImGuiNavItemData) GetRectRel() ImRect {
-	out := &ImRect{}
+func (self ImGuiNavItemData) GetRectRel() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiNavItemData_GetRectRel(self.handle()))
 	return *out
 }
@@ -9693,52 +9693,52 @@ func (self ImGuiNextWindowData) GetDockCond() Cond {
 	return Cond(C.ImGuiNextWindowData_GetDockCond(self.handle()))
 }
 
-func (self ImGuiNextWindowData) SetPosVal(v ImVec2) {
+func (self ImGuiNextWindowData) SetPosVal(v Vec2) {
 	C.ImGuiNextWindowData_SetPosVal(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetPosVal() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiNextWindowData) GetPosVal() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiNextWindowData_GetPosVal(self.handle()))
 	return *out
 }
 
-func (self ImGuiNextWindowData) SetPosPivotVal(v ImVec2) {
+func (self ImGuiNextWindowData) SetPosPivotVal(v Vec2) {
 	C.ImGuiNextWindowData_SetPosPivotVal(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetPosPivotVal() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiNextWindowData) GetPosPivotVal() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiNextWindowData_GetPosPivotVal(self.handle()))
 	return *out
 }
 
-func (self ImGuiNextWindowData) SetSizeVal(v ImVec2) {
+func (self ImGuiNextWindowData) SetSizeVal(v Vec2) {
 	C.ImGuiNextWindowData_SetSizeVal(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetSizeVal() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiNextWindowData) GetSizeVal() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiNextWindowData_GetSizeVal(self.handle()))
 	return *out
 }
 
-func (self ImGuiNextWindowData) SetContentSizeVal(v ImVec2) {
+func (self ImGuiNextWindowData) SetContentSizeVal(v Vec2) {
 	C.ImGuiNextWindowData_SetContentSizeVal(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetContentSizeVal() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiNextWindowData) GetContentSizeVal() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiNextWindowData_GetContentSizeVal(self.handle()))
 	return *out
 }
 
-func (self ImGuiNextWindowData) SetScrollVal(v ImVec2) {
+func (self ImGuiNextWindowData) SetScrollVal(v Vec2) {
 	C.ImGuiNextWindowData_SetScrollVal(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetScrollVal() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiNextWindowData) GetScrollVal() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiNextWindowData_GetScrollVal(self.handle()))
 	return *out
 }
@@ -9759,12 +9759,12 @@ func (self ImGuiNextWindowData) GetCollapsedVal() bool {
 	return C.ImGuiNextWindowData_GetCollapsedVal(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiNextWindowData) SetSizeConstraintRect(v ImRect) {
+func (self ImGuiNextWindowData) SetSizeConstraintRect(v Rect) {
 	C.ImGuiNextWindowData_SetSizeConstraintRect(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetSizeConstraintRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiNextWindowData) GetSizeConstraintRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiNextWindowData_GetSizeConstraintRect(self.handle()))
 	return *out
 }
@@ -9805,12 +9805,12 @@ func (self ImGuiNextWindowData) GetWindowClass() ImGuiWindowClass {
 	return newImGuiWindowClassFromC(C.ImGuiNextWindowData_GetWindowClass(self.handle()))
 }
 
-func (self ImGuiNextWindowData) SetMenuBarOffsetMinVal(v ImVec2) {
+func (self ImGuiNextWindowData) SetMenuBarOffsetMinVal(v Vec2) {
 	C.ImGuiNextWindowData_SetMenuBarOffsetMinVal(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetMenuBarOffsetMinVal() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiNextWindowData) GetMenuBarOffsetMinVal() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiNextWindowData_GetMenuBarOffsetMinVal(self.handle()))
 	return *out
 }
@@ -9839,12 +9839,12 @@ func (self ImGuiOldColumnData) GetFlags() OldColumnFlags {
 	return OldColumnFlags(C.ImGuiOldColumnData_GetFlags(self.handle()))
 }
 
-func (self ImGuiOldColumnData) SetClipRect(v ImRect) {
+func (self ImGuiOldColumnData) SetClipRect(v Rect) {
 	C.ImGuiOldColumnData_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiOldColumnData) GetClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiOldColumnData) GetClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiOldColumnData_GetClipRect(self.handle()))
 	return *out
 }
@@ -9945,32 +9945,32 @@ func (self ImGuiOldColumns) GetHostCursorMaxPosX() float32 {
 	return float32(C.ImGuiOldColumns_GetHostCursorMaxPosX(self.handle()))
 }
 
-func (self ImGuiOldColumns) SetHostInitialClipRect(v ImRect) {
+func (self ImGuiOldColumns) SetHostInitialClipRect(v Rect) {
 	C.ImGuiOldColumns_SetHostInitialClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiOldColumns) GetHostInitialClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiOldColumns) GetHostInitialClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiOldColumns_GetHostInitialClipRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiOldColumns) SetHostBackupClipRect(v ImRect) {
+func (self ImGuiOldColumns) SetHostBackupClipRect(v Rect) {
 	C.ImGuiOldColumns_SetHostBackupClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiOldColumns) GetHostBackupClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiOldColumns) GetHostBackupClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiOldColumns_GetHostBackupClipRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiOldColumns) SetHostBackupParentWorkRect(v ImRect) {
+func (self ImGuiOldColumns) SetHostBackupParentWorkRect(v Rect) {
 	C.ImGuiOldColumns_SetHostBackupParentWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiOldColumns) GetHostBackupParentWorkRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiOldColumns) GetHostBackupParentWorkRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiOldColumns_GetHostBackupParentWorkRect(self.handle()))
 	return *out
 }
@@ -10051,12 +10051,12 @@ func (self ImGuiPlatformImeData) GetWantVisible() bool {
 	return C.ImGuiPlatformImeData_GetWantVisible(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiPlatformImeData) SetInputPos(v ImVec2) {
+func (self ImGuiPlatformImeData) SetInputPos(v Vec2) {
 	C.ImGuiPlatformImeData_SetInputPos(self.handle(), v.toC())
 }
 
-func (self ImGuiPlatformImeData) GetInputPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiPlatformImeData) GetInputPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiPlatformImeData_GetInputPos(self.handle()))
 	return *out
 }
@@ -10069,42 +10069,42 @@ func (self ImGuiPlatformImeData) GetInputLineHeight() float32 {
 	return float32(C.ImGuiPlatformImeData_GetInputLineHeight(self.handle()))
 }
 
-func (self ImGuiPlatformMonitor) SetMainPos(v ImVec2) {
+func (self ImGuiPlatformMonitor) SetMainPos(v Vec2) {
 	C.ImGuiPlatformMonitor_SetMainPos(self.handle(), v.toC())
 }
 
-func (self ImGuiPlatformMonitor) GetMainPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiPlatformMonitor) GetMainPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiPlatformMonitor_GetMainPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiPlatformMonitor) SetMainSize(v ImVec2) {
+func (self ImGuiPlatformMonitor) SetMainSize(v Vec2) {
 	C.ImGuiPlatformMonitor_SetMainSize(self.handle(), v.toC())
 }
 
-func (self ImGuiPlatformMonitor) GetMainSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiPlatformMonitor) GetMainSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiPlatformMonitor_GetMainSize(self.handle()))
 	return *out
 }
 
-func (self ImGuiPlatformMonitor) SetWorkPos(v ImVec2) {
+func (self ImGuiPlatformMonitor) SetWorkPos(v Vec2) {
 	C.ImGuiPlatformMonitor_SetWorkPos(self.handle(), v.toC())
 }
 
-func (self ImGuiPlatformMonitor) GetWorkPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiPlatformMonitor) GetWorkPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiPlatformMonitor_GetWorkPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiPlatformMonitor) SetWorkSize(v ImVec2) {
+func (self ImGuiPlatformMonitor) SetWorkSize(v Vec2) {
 	C.ImGuiPlatformMonitor_SetWorkSize(self.handle(), v.toC())
 }
 
-func (self ImGuiPlatformMonitor) GetWorkSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiPlatformMonitor) GetWorkSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiPlatformMonitor_GetWorkSize(self.handle()))
 	return *out
 }
@@ -10165,22 +10165,22 @@ func (self ImGuiPopupData) GetOpenParentId() ImGuiID {
 	return ImGuiID(C.ImGuiPopupData_GetOpenParentId(self.handle()))
 }
 
-func (self ImGuiPopupData) SetOpenPopupPos(v ImVec2) {
+func (self ImGuiPopupData) SetOpenPopupPos(v Vec2) {
 	C.ImGuiPopupData_SetOpenPopupPos(self.handle(), v.toC())
 }
 
-func (self ImGuiPopupData) GetOpenPopupPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiPopupData) GetOpenPopupPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiPopupData_GetOpenPopupPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiPopupData) SetOpenMousePos(v ImVec2) {
+func (self ImGuiPopupData) SetOpenMousePos(v Vec2) {
 	C.ImGuiPopupData_SetOpenMousePos(self.handle(), v.toC())
 }
 
-func (self ImGuiPopupData) GetOpenMousePos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiPopupData) GetOpenMousePos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiPopupData_GetOpenMousePos(self.handle()))
 	return *out
 }
@@ -10260,32 +10260,32 @@ func (self ImGuiSizeCallbackData) GetUserData() unsafe.Pointer {
 	return unsafe.Pointer(C.ImGuiSizeCallbackData_GetUserData(self.handle()))
 }
 
-func (self ImGuiSizeCallbackData) SetPos(v ImVec2) {
+func (self ImGuiSizeCallbackData) SetPos(v Vec2) {
 	C.ImGuiSizeCallbackData_SetPos(self.handle(), v.toC())
 }
 
-func (self ImGuiSizeCallbackData) GetPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiSizeCallbackData) GetPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiSizeCallbackData_GetPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiSizeCallbackData) SetCurrentSize(v ImVec2) {
+func (self ImGuiSizeCallbackData) SetCurrentSize(v Vec2) {
 	C.ImGuiSizeCallbackData_SetCurrentSize(self.handle(), v.toC())
 }
 
-func (self ImGuiSizeCallbackData) GetCurrentSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiSizeCallbackData) GetCurrentSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiSizeCallbackData_GetCurrentSize(self.handle()))
 	return *out
 }
 
-func (self ImGuiSizeCallbackData) SetDesiredSize(v ImVec2) {
+func (self ImGuiSizeCallbackData) SetDesiredSize(v Vec2) {
 	C.ImGuiSizeCallbackData_SetDesiredSize(self.handle(), v.toC())
 }
 
-func (self ImGuiSizeCallbackData) GetDesiredSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiSizeCallbackData) GetDesiredSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiSizeCallbackData_GetDesiredSize(self.handle()))
 	return *out
 }
@@ -10458,12 +10458,12 @@ func (self ImGuiStyle) GetDisabledAlpha() float32 {
 	return float32(C.ImGuiStyle_GetDisabledAlpha(self.handle()))
 }
 
-func (self ImGuiStyle) SetWindowPadding(v ImVec2) {
+func (self ImGuiStyle) SetWindowPadding(v Vec2) {
 	C.ImGuiStyle_SetWindowPadding(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetWindowPadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiStyle) GetWindowPadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiStyle_GetWindowPadding(self.handle()))
 	return *out
 }
@@ -10484,22 +10484,22 @@ func (self ImGuiStyle) GetWindowBorderSize() float32 {
 	return float32(C.ImGuiStyle_GetWindowBorderSize(self.handle()))
 }
 
-func (self ImGuiStyle) SetWindowMinSize(v ImVec2) {
+func (self ImGuiStyle) SetWindowMinSize(v Vec2) {
 	C.ImGuiStyle_SetWindowMinSize(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetWindowMinSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiStyle) GetWindowMinSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiStyle_GetWindowMinSize(self.handle()))
 	return *out
 }
 
-func (self ImGuiStyle) SetWindowTitleAlign(v ImVec2) {
+func (self ImGuiStyle) SetWindowTitleAlign(v Vec2) {
 	C.ImGuiStyle_SetWindowTitleAlign(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetWindowTitleAlign() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiStyle) GetWindowTitleAlign() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiStyle_GetWindowTitleAlign(self.handle()))
 	return *out
 }
@@ -10544,12 +10544,12 @@ func (self ImGuiStyle) GetPopupBorderSize() float32 {
 	return float32(C.ImGuiStyle_GetPopupBorderSize(self.handle()))
 }
 
-func (self ImGuiStyle) SetFramePadding(v ImVec2) {
+func (self ImGuiStyle) SetFramePadding(v Vec2) {
 	C.ImGuiStyle_SetFramePadding(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetFramePadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiStyle) GetFramePadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiStyle_GetFramePadding(self.handle()))
 	return *out
 }
@@ -10570,42 +10570,42 @@ func (self ImGuiStyle) GetFrameBorderSize() float32 {
 	return float32(C.ImGuiStyle_GetFrameBorderSize(self.handle()))
 }
 
-func (self ImGuiStyle) SetItemSpacing(v ImVec2) {
+func (self ImGuiStyle) SetItemSpacing(v Vec2) {
 	C.ImGuiStyle_SetItemSpacing(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetItemSpacing() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiStyle) GetItemSpacing() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiStyle_GetItemSpacing(self.handle()))
 	return *out
 }
 
-func (self ImGuiStyle) SetItemInnerSpacing(v ImVec2) {
+func (self ImGuiStyle) SetItemInnerSpacing(v Vec2) {
 	C.ImGuiStyle_SetItemInnerSpacing(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetItemInnerSpacing() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiStyle) GetItemInnerSpacing() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiStyle_GetItemInnerSpacing(self.handle()))
 	return *out
 }
 
-func (self ImGuiStyle) SetCellPadding(v ImVec2) {
+func (self ImGuiStyle) SetCellPadding(v Vec2) {
 	C.ImGuiStyle_SetCellPadding(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetCellPadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiStyle) GetCellPadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiStyle_GetCellPadding(self.handle()))
 	return *out
 }
 
-func (self ImGuiStyle) SetTouchExtraPadding(v ImVec2) {
+func (self ImGuiStyle) SetTouchExtraPadding(v Vec2) {
 	C.ImGuiStyle_SetTouchExtraPadding(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetTouchExtraPadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiStyle) GetTouchExtraPadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiStyle_GetTouchExtraPadding(self.handle()))
 	return *out
 }
@@ -10698,42 +10698,42 @@ func (self ImGuiStyle) GetColorButtonPosition() Dir {
 	return Dir(C.ImGuiStyle_GetColorButtonPosition(self.handle()))
 }
 
-func (self ImGuiStyle) SetButtonTextAlign(v ImVec2) {
+func (self ImGuiStyle) SetButtonTextAlign(v Vec2) {
 	C.ImGuiStyle_SetButtonTextAlign(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetButtonTextAlign() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiStyle) GetButtonTextAlign() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiStyle_GetButtonTextAlign(self.handle()))
 	return *out
 }
 
-func (self ImGuiStyle) SetSelectableTextAlign(v ImVec2) {
+func (self ImGuiStyle) SetSelectableTextAlign(v Vec2) {
 	C.ImGuiStyle_SetSelectableTextAlign(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetSelectableTextAlign() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiStyle) GetSelectableTextAlign() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiStyle_GetSelectableTextAlign(self.handle()))
 	return *out
 }
 
-func (self ImGuiStyle) SetDisplayWindowPadding(v ImVec2) {
+func (self ImGuiStyle) SetDisplayWindowPadding(v Vec2) {
 	C.ImGuiStyle_SetDisplayWindowPadding(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetDisplayWindowPadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiStyle) GetDisplayWindowPadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiStyle_GetDisplayWindowPadding(self.handle()))
 	return *out
 }
 
-func (self ImGuiStyle) SetDisplaySafeAreaPadding(v ImVec2) {
+func (self ImGuiStyle) SetDisplaySafeAreaPadding(v Vec2) {
 	C.ImGuiStyle_SetDisplaySafeAreaPadding(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetDisplaySafeAreaPadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiStyle) GetDisplaySafeAreaPadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiStyle_GetDisplaySafeAreaPadding(self.handle()))
 	return *out
 }
@@ -10850,12 +10850,12 @@ func (self ImGuiTabBar) GetPrevFrameVisible() int {
 	return int(C.ImGuiTabBar_GetPrevFrameVisible(self.handle()))
 }
 
-func (self ImGuiTabBar) SetBarRect(v ImRect) {
+func (self ImGuiTabBar) SetBarRect(v Rect) {
 	C.ImGuiTabBar_SetBarRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTabBar) GetBarRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTabBar) GetBarRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTabBar_GetBarRect(self.handle()))
 	return *out
 }
@@ -11012,22 +11012,22 @@ func (self ImGuiTabBar) GetItemSpacingY() float32 {
 	return float32(C.ImGuiTabBar_GetItemSpacingY(self.handle()))
 }
 
-func (self ImGuiTabBar) SetFramePadding(v ImVec2) {
+func (self ImGuiTabBar) SetFramePadding(v Vec2) {
 	C.ImGuiTabBar_SetFramePadding(self.handle(), v.toC())
 }
 
-func (self ImGuiTabBar) GetFramePadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiTabBar) GetFramePadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiTabBar_GetFramePadding(self.handle()))
 	return *out
 }
 
-func (self ImGuiTabBar) SetBackupCursorPos(v ImVec2) {
+func (self ImGuiTabBar) SetBackupCursorPos(v Vec2) {
 	C.ImGuiTabBar_SetBackupCursorPos(self.handle(), v.toC())
 }
 
-func (self ImGuiTabBar) GetBackupCursorPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiTabBar) GetBackupCursorPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiTabBar_GetBackupCursorPos(self.handle()))
 	return *out
 }
@@ -11476,92 +11476,92 @@ func (self ImGuiTable) GetRefScale() float32 {
 	return float32(C.ImGuiTable_GetRefScale(self.handle()))
 }
 
-func (self ImGuiTable) SetOuterRect(v ImRect) {
+func (self ImGuiTable) SetOuterRect(v Rect) {
 	C.ImGuiTable_SetOuterRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetOuterRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetOuterRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetOuterRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetInnerRect(v ImRect) {
+func (self ImGuiTable) SetInnerRect(v Rect) {
 	C.ImGuiTable_SetInnerRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetInnerRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetInnerRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetInnerRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetWorkRect(v ImRect) {
+func (self ImGuiTable) SetWorkRect(v Rect) {
 	C.ImGuiTable_SetWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetWorkRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetWorkRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetWorkRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetInnerClipRect(v ImRect) {
+func (self ImGuiTable) SetInnerClipRect(v Rect) {
 	C.ImGuiTable_SetInnerClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetInnerClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetInnerClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetInnerClipRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetBgClipRect(v ImRect) {
+func (self ImGuiTable) SetBgClipRect(v Rect) {
 	C.ImGuiTable_SetBgClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetBgClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetBgClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetBgClipRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetBg0ClipRectForDrawCmd(v ImRect) {
+func (self ImGuiTable) SetBg0ClipRectForDrawCmd(v Rect) {
 	C.ImGuiTable_SetBg0ClipRectForDrawCmd(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetBg0ClipRectForDrawCmd() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetBg0ClipRectForDrawCmd() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetBg0ClipRectForDrawCmd(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetBg2ClipRectForDrawCmd(v ImRect) {
+func (self ImGuiTable) SetBg2ClipRectForDrawCmd(v Rect) {
 	C.ImGuiTable_SetBg2ClipRectForDrawCmd(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetBg2ClipRectForDrawCmd() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetBg2ClipRectForDrawCmd() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetBg2ClipRectForDrawCmd(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetHostClipRect(v ImRect) {
+func (self ImGuiTable) SetHostClipRect(v Rect) {
 	C.ImGuiTable_SetHostClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetHostClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetHostClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetHostClipRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTable) SetHostBackupInnerClipRect(v ImRect) {
+func (self ImGuiTable) SetHostBackupInnerClipRect(v Rect) {
 	C.ImGuiTable_SetHostBackupInnerClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetHostBackupInnerClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTable) GetHostBackupInnerClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTable_GetHostBackupInnerClipRect(self.handle()))
 	return *out
 }
@@ -11606,204 +11606,204 @@ func (self ImGuiTable) GetSortSpecs() ImGuiTableSortSpecs {
 	return newImGuiTableSortSpecsFromC(C.ImGuiTable_GetSortSpecs(self.handle()))
 }
 
-func (self ImGuiTable) SetSortSpecsCount(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetSortSpecsCount(v TableColumnIdx) {
 	C.ImGuiTable_SetSortSpecsCount(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetSortSpecsCount() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetSortSpecsCount(self.handle()))
+func (self ImGuiTable) GetSortSpecsCount() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetSortSpecsCount(self.handle()))
 }
 
-func (self ImGuiTable) SetColumnsEnabledCount(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetColumnsEnabledCount(v TableColumnIdx) {
 	C.ImGuiTable_SetColumnsEnabledCount(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetColumnsEnabledCount() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetColumnsEnabledCount(self.handle()))
+func (self ImGuiTable) GetColumnsEnabledCount() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetColumnsEnabledCount(self.handle()))
 }
 
-func (self ImGuiTable) SetColumnsEnabledFixedCount(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetColumnsEnabledFixedCount(v TableColumnIdx) {
 	C.ImGuiTable_SetColumnsEnabledFixedCount(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetColumnsEnabledFixedCount() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetColumnsEnabledFixedCount(self.handle()))
+func (self ImGuiTable) GetColumnsEnabledFixedCount() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetColumnsEnabledFixedCount(self.handle()))
 }
 
-func (self ImGuiTable) SetDeclColumnsCount(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetDeclColumnsCount(v TableColumnIdx) {
 	C.ImGuiTable_SetDeclColumnsCount(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetDeclColumnsCount() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetDeclColumnsCount(self.handle()))
+func (self ImGuiTable) GetDeclColumnsCount() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetDeclColumnsCount(self.handle()))
 }
 
-func (self ImGuiTable) SetHoveredColumnBody(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetHoveredColumnBody(v TableColumnIdx) {
 	C.ImGuiTable_SetHoveredColumnBody(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetHoveredColumnBody() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetHoveredColumnBody(self.handle()))
+func (self ImGuiTable) GetHoveredColumnBody() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetHoveredColumnBody(self.handle()))
 }
 
-func (self ImGuiTable) SetHoveredColumnBorder(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetHoveredColumnBorder(v TableColumnIdx) {
 	C.ImGuiTable_SetHoveredColumnBorder(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetHoveredColumnBorder() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetHoveredColumnBorder(self.handle()))
+func (self ImGuiTable) GetHoveredColumnBorder() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetHoveredColumnBorder(self.handle()))
 }
 
-func (self ImGuiTable) SetAutoFitSingleColumn(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetAutoFitSingleColumn(v TableColumnIdx) {
 	C.ImGuiTable_SetAutoFitSingleColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetAutoFitSingleColumn() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetAutoFitSingleColumn(self.handle()))
+func (self ImGuiTable) GetAutoFitSingleColumn() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetAutoFitSingleColumn(self.handle()))
 }
 
-func (self ImGuiTable) SetResizedColumn(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetResizedColumn(v TableColumnIdx) {
 	C.ImGuiTable_SetResizedColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetResizedColumn() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetResizedColumn(self.handle()))
+func (self ImGuiTable) GetResizedColumn() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetResizedColumn(self.handle()))
 }
 
-func (self ImGuiTable) SetLastResizedColumn(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetLastResizedColumn(v TableColumnIdx) {
 	C.ImGuiTable_SetLastResizedColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetLastResizedColumn() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetLastResizedColumn(self.handle()))
+func (self ImGuiTable) GetLastResizedColumn() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetLastResizedColumn(self.handle()))
 }
 
-func (self ImGuiTable) SetHeldHeaderColumn(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetHeldHeaderColumn(v TableColumnIdx) {
 	C.ImGuiTable_SetHeldHeaderColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetHeldHeaderColumn() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetHeldHeaderColumn(self.handle()))
+func (self ImGuiTable) GetHeldHeaderColumn() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetHeldHeaderColumn(self.handle()))
 }
 
-func (self ImGuiTable) SetReorderColumn(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetReorderColumn(v TableColumnIdx) {
 	C.ImGuiTable_SetReorderColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetReorderColumn() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetReorderColumn(self.handle()))
+func (self ImGuiTable) GetReorderColumn() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetReorderColumn(self.handle()))
 }
 
-func (self ImGuiTable) SetReorderColumnDir(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetReorderColumnDir(v TableColumnIdx) {
 	C.ImGuiTable_SetReorderColumnDir(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetReorderColumnDir() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetReorderColumnDir(self.handle()))
+func (self ImGuiTable) GetReorderColumnDir() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetReorderColumnDir(self.handle()))
 }
 
-func (self ImGuiTable) SetLeftMostEnabledColumn(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetLeftMostEnabledColumn(v TableColumnIdx) {
 	C.ImGuiTable_SetLeftMostEnabledColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetLeftMostEnabledColumn() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetLeftMostEnabledColumn(self.handle()))
+func (self ImGuiTable) GetLeftMostEnabledColumn() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetLeftMostEnabledColumn(self.handle()))
 }
 
-func (self ImGuiTable) SetRightMostEnabledColumn(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetRightMostEnabledColumn(v TableColumnIdx) {
 	C.ImGuiTable_SetRightMostEnabledColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetRightMostEnabledColumn() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetRightMostEnabledColumn(self.handle()))
+func (self ImGuiTable) GetRightMostEnabledColumn() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetRightMostEnabledColumn(self.handle()))
 }
 
-func (self ImGuiTable) SetLeftMostStretchedColumn(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetLeftMostStretchedColumn(v TableColumnIdx) {
 	C.ImGuiTable_SetLeftMostStretchedColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetLeftMostStretchedColumn() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetLeftMostStretchedColumn(self.handle()))
+func (self ImGuiTable) GetLeftMostStretchedColumn() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetLeftMostStretchedColumn(self.handle()))
 }
 
-func (self ImGuiTable) SetRightMostStretchedColumn(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetRightMostStretchedColumn(v TableColumnIdx) {
 	C.ImGuiTable_SetRightMostStretchedColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetRightMostStretchedColumn() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetRightMostStretchedColumn(self.handle()))
+func (self ImGuiTable) GetRightMostStretchedColumn() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetRightMostStretchedColumn(self.handle()))
 }
 
-func (self ImGuiTable) SetContextPopupColumn(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetContextPopupColumn(v TableColumnIdx) {
 	C.ImGuiTable_SetContextPopupColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetContextPopupColumn() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetContextPopupColumn(self.handle()))
+func (self ImGuiTable) GetContextPopupColumn() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetContextPopupColumn(self.handle()))
 }
 
-func (self ImGuiTable) SetFreezeRowsRequest(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetFreezeRowsRequest(v TableColumnIdx) {
 	C.ImGuiTable_SetFreezeRowsRequest(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetFreezeRowsRequest() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetFreezeRowsRequest(self.handle()))
+func (self ImGuiTable) GetFreezeRowsRequest() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetFreezeRowsRequest(self.handle()))
 }
 
-func (self ImGuiTable) SetFreezeRowsCount(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetFreezeRowsCount(v TableColumnIdx) {
 	C.ImGuiTable_SetFreezeRowsCount(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetFreezeRowsCount() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetFreezeRowsCount(self.handle()))
+func (self ImGuiTable) GetFreezeRowsCount() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetFreezeRowsCount(self.handle()))
 }
 
-func (self ImGuiTable) SetFreezeColumnsRequest(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetFreezeColumnsRequest(v TableColumnIdx) {
 	C.ImGuiTable_SetFreezeColumnsRequest(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetFreezeColumnsRequest() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetFreezeColumnsRequest(self.handle()))
+func (self ImGuiTable) GetFreezeColumnsRequest() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetFreezeColumnsRequest(self.handle()))
 }
 
-func (self ImGuiTable) SetFreezeColumnsCount(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetFreezeColumnsCount(v TableColumnIdx) {
 	C.ImGuiTable_SetFreezeColumnsCount(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetFreezeColumnsCount() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetFreezeColumnsCount(self.handle()))
+func (self ImGuiTable) GetFreezeColumnsCount() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetFreezeColumnsCount(self.handle()))
 }
 
-func (self ImGuiTable) SetRowCellDataCurrent(v ImGuiTableColumnIdx) {
+func (self ImGuiTable) SetRowCellDataCurrent(v TableColumnIdx) {
 	C.ImGuiTable_SetRowCellDataCurrent(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetRowCellDataCurrent() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTable_GetRowCellDataCurrent(self.handle()))
+func (self ImGuiTable) GetRowCellDataCurrent() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTable_GetRowCellDataCurrent(self.handle()))
 }
 
-func (self ImGuiTable) SetDummyDrawChannel(v ImGuiTableDrawChannelIdx) {
+func (self ImGuiTable) SetDummyDrawChannel(v TableDrawChannelIdx) {
 	C.ImGuiTable_SetDummyDrawChannel(self.handle(), C.ImGuiTableDrawChannelIdx(v))
 }
 
-func (self ImGuiTable) GetDummyDrawChannel() ImGuiTableDrawChannelIdx {
-	return ImGuiTableDrawChannelIdx(C.ImGuiTable_GetDummyDrawChannel(self.handle()))
+func (self ImGuiTable) GetDummyDrawChannel() TableDrawChannelIdx {
+	return TableDrawChannelIdx(C.ImGuiTable_GetDummyDrawChannel(self.handle()))
 }
 
-func (self ImGuiTable) SetBg2DrawChannelCurrent(v ImGuiTableDrawChannelIdx) {
+func (self ImGuiTable) SetBg2DrawChannelCurrent(v TableDrawChannelIdx) {
 	C.ImGuiTable_SetBg2DrawChannelCurrent(self.handle(), C.ImGuiTableDrawChannelIdx(v))
 }
 
-func (self ImGuiTable) GetBg2DrawChannelCurrent() ImGuiTableDrawChannelIdx {
-	return ImGuiTableDrawChannelIdx(C.ImGuiTable_GetBg2DrawChannelCurrent(self.handle()))
+func (self ImGuiTable) GetBg2DrawChannelCurrent() TableDrawChannelIdx {
+	return TableDrawChannelIdx(C.ImGuiTable_GetBg2DrawChannelCurrent(self.handle()))
 }
 
-func (self ImGuiTable) SetBg2DrawChannelUnfrozen(v ImGuiTableDrawChannelIdx) {
+func (self ImGuiTable) SetBg2DrawChannelUnfrozen(v TableDrawChannelIdx) {
 	C.ImGuiTable_SetBg2DrawChannelUnfrozen(self.handle(), C.ImGuiTableDrawChannelIdx(v))
 }
 
-func (self ImGuiTable) GetBg2DrawChannelUnfrozen() ImGuiTableDrawChannelIdx {
-	return ImGuiTableDrawChannelIdx(C.ImGuiTable_GetBg2DrawChannelUnfrozen(self.handle()))
+func (self ImGuiTable) GetBg2DrawChannelUnfrozen() TableDrawChannelIdx {
+	return TableDrawChannelIdx(C.ImGuiTable_GetBg2DrawChannelUnfrozen(self.handle()))
 }
 
 func (self ImGuiTable) SetIsLayoutLocked(v bool) {
@@ -11934,12 +11934,12 @@ func (self ImGuiTableCellData) GetBgColor() uint32 {
 	return uint32(C.ImGuiTableCellData_GetBgColor(self.handle()))
 }
 
-func (self ImGuiTableCellData) SetColumn(v ImGuiTableColumnIdx) {
+func (self ImGuiTableCellData) SetColumn(v TableColumnIdx) {
 	C.ImGuiTableCellData_SetColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableCellData) GetColumn() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTableCellData_GetColumn(self.handle()))
+func (self ImGuiTableCellData) GetColumn() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTableCellData_GetColumn(self.handle()))
 }
 
 func (self ImGuiTableColumn) SetFlags(v TableColumnFlags) {
@@ -12006,12 +12006,12 @@ func (self ImGuiTableColumn) GetInitStretchWeightOrWidth() float32 {
 	return float32(C.ImGuiTableColumn_GetInitStretchWeightOrWidth(self.handle()))
 }
 
-func (self ImGuiTableColumn) SetClipRect(v ImRect) {
+func (self ImGuiTableColumn) SetClipRect(v Rect) {
 	C.ImGuiTableColumn_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTableColumn) GetClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTableColumn) GetClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTableColumn_GetClipRect(self.handle()))
 	return *out
 }
@@ -12088,68 +12088,68 @@ func (self ImGuiTableColumn) GetNameOffset() int {
 	return int(C.ImGuiTableColumn_GetNameOffset(self.handle()))
 }
 
-func (self ImGuiTableColumn) SetDisplayOrder(v ImGuiTableColumnIdx) {
+func (self ImGuiTableColumn) SetDisplayOrder(v TableColumnIdx) {
 	C.ImGuiTableColumn_SetDisplayOrder(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumn) GetDisplayOrder() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTableColumn_GetDisplayOrder(self.handle()))
+func (self ImGuiTableColumn) GetDisplayOrder() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTableColumn_GetDisplayOrder(self.handle()))
 }
 
-func (self ImGuiTableColumn) SetIndexWithinEnabledSet(v ImGuiTableColumnIdx) {
+func (self ImGuiTableColumn) SetIndexWithinEnabledSet(v TableColumnIdx) {
 	C.ImGuiTableColumn_SetIndexWithinEnabledSet(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumn) GetIndexWithinEnabledSet() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTableColumn_GetIndexWithinEnabledSet(self.handle()))
+func (self ImGuiTableColumn) GetIndexWithinEnabledSet() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTableColumn_GetIndexWithinEnabledSet(self.handle()))
 }
 
-func (self ImGuiTableColumn) SetPrevEnabledColumn(v ImGuiTableColumnIdx) {
+func (self ImGuiTableColumn) SetPrevEnabledColumn(v TableColumnIdx) {
 	C.ImGuiTableColumn_SetPrevEnabledColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumn) GetPrevEnabledColumn() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTableColumn_GetPrevEnabledColumn(self.handle()))
+func (self ImGuiTableColumn) GetPrevEnabledColumn() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTableColumn_GetPrevEnabledColumn(self.handle()))
 }
 
-func (self ImGuiTableColumn) SetNextEnabledColumn(v ImGuiTableColumnIdx) {
+func (self ImGuiTableColumn) SetNextEnabledColumn(v TableColumnIdx) {
 	C.ImGuiTableColumn_SetNextEnabledColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumn) GetNextEnabledColumn() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTableColumn_GetNextEnabledColumn(self.handle()))
+func (self ImGuiTableColumn) GetNextEnabledColumn() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTableColumn_GetNextEnabledColumn(self.handle()))
 }
 
-func (self ImGuiTableColumn) SetSortOrder(v ImGuiTableColumnIdx) {
+func (self ImGuiTableColumn) SetSortOrder(v TableColumnIdx) {
 	C.ImGuiTableColumn_SetSortOrder(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumn) GetSortOrder() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTableColumn_GetSortOrder(self.handle()))
+func (self ImGuiTableColumn) GetSortOrder() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTableColumn_GetSortOrder(self.handle()))
 }
 
-func (self ImGuiTableColumn) SetDrawChannelCurrent(v ImGuiTableDrawChannelIdx) {
+func (self ImGuiTableColumn) SetDrawChannelCurrent(v TableDrawChannelIdx) {
 	C.ImGuiTableColumn_SetDrawChannelCurrent(self.handle(), C.ImGuiTableDrawChannelIdx(v))
 }
 
-func (self ImGuiTableColumn) GetDrawChannelCurrent() ImGuiTableDrawChannelIdx {
-	return ImGuiTableDrawChannelIdx(C.ImGuiTableColumn_GetDrawChannelCurrent(self.handle()))
+func (self ImGuiTableColumn) GetDrawChannelCurrent() TableDrawChannelIdx {
+	return TableDrawChannelIdx(C.ImGuiTableColumn_GetDrawChannelCurrent(self.handle()))
 }
 
-func (self ImGuiTableColumn) SetDrawChannelFrozen(v ImGuiTableDrawChannelIdx) {
+func (self ImGuiTableColumn) SetDrawChannelFrozen(v TableDrawChannelIdx) {
 	C.ImGuiTableColumn_SetDrawChannelFrozen(self.handle(), C.ImGuiTableDrawChannelIdx(v))
 }
 
-func (self ImGuiTableColumn) GetDrawChannelFrozen() ImGuiTableDrawChannelIdx {
-	return ImGuiTableDrawChannelIdx(C.ImGuiTableColumn_GetDrawChannelFrozen(self.handle()))
+func (self ImGuiTableColumn) GetDrawChannelFrozen() TableDrawChannelIdx {
+	return TableDrawChannelIdx(C.ImGuiTableColumn_GetDrawChannelFrozen(self.handle()))
 }
 
-func (self ImGuiTableColumn) SetDrawChannelUnfrozen(v ImGuiTableDrawChannelIdx) {
+func (self ImGuiTableColumn) SetDrawChannelUnfrozen(v TableDrawChannelIdx) {
 	C.ImGuiTableColumn_SetDrawChannelUnfrozen(self.handle(), C.ImGuiTableDrawChannelIdx(v))
 }
 
-func (self ImGuiTableColumn) GetDrawChannelUnfrozen() ImGuiTableDrawChannelIdx {
-	return ImGuiTableDrawChannelIdx(C.ImGuiTableColumn_GetDrawChannelUnfrozen(self.handle()))
+func (self ImGuiTableColumn) GetDrawChannelUnfrozen() TableDrawChannelIdx {
+	return TableDrawChannelIdx(C.ImGuiTableColumn_GetDrawChannelUnfrozen(self.handle()))
 }
 
 func (self ImGuiTableColumn) SetIsEnabled(v bool) {
@@ -12288,28 +12288,28 @@ func (self ImGuiTableColumnSettings) GetUserID() ImGuiID {
 	return ImGuiID(C.ImGuiTableColumnSettings_GetUserID(self.handle()))
 }
 
-func (self ImGuiTableColumnSettings) SetIndex(v ImGuiTableColumnIdx) {
+func (self ImGuiTableColumnSettings) SetIndex(v TableColumnIdx) {
 	C.ImGuiTableColumnSettings_SetIndex(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumnSettings) GetIndex() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTableColumnSettings_GetIndex(self.handle()))
+func (self ImGuiTableColumnSettings) GetIndex() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTableColumnSettings_GetIndex(self.handle()))
 }
 
-func (self ImGuiTableColumnSettings) SetDisplayOrder(v ImGuiTableColumnIdx) {
+func (self ImGuiTableColumnSettings) SetDisplayOrder(v TableColumnIdx) {
 	C.ImGuiTableColumnSettings_SetDisplayOrder(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumnSettings) GetDisplayOrder() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTableColumnSettings_GetDisplayOrder(self.handle()))
+func (self ImGuiTableColumnSettings) GetDisplayOrder() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTableColumnSettings_GetDisplayOrder(self.handle()))
 }
 
-func (self ImGuiTableColumnSettings) SetSortOrder(v ImGuiTableColumnIdx) {
+func (self ImGuiTableColumnSettings) SetSortOrder(v TableColumnIdx) {
 	C.ImGuiTableColumnSettings_SetSortOrder(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumnSettings) GetSortOrder() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTableColumnSettings_GetSortOrder(self.handle()))
+func (self ImGuiTableColumnSettings) GetSortOrder() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTableColumnSettings_GetSortOrder(self.handle()))
 }
 
 func (self ImGuiTableColumnSettings) SetSortDirection(v uint) {
@@ -12408,20 +12408,20 @@ func (self ImGuiTableSettings) GetRefScale() float32 {
 	return float32(C.ImGuiTableSettings_GetRefScale(self.handle()))
 }
 
-func (self ImGuiTableSettings) SetColumnsCount(v ImGuiTableColumnIdx) {
+func (self ImGuiTableSettings) SetColumnsCount(v TableColumnIdx) {
 	C.ImGuiTableSettings_SetColumnsCount(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableSettings) GetColumnsCount() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTableSettings_GetColumnsCount(self.handle()))
+func (self ImGuiTableSettings) GetColumnsCount() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTableSettings_GetColumnsCount(self.handle()))
 }
 
-func (self ImGuiTableSettings) SetColumnsCountMax(v ImGuiTableColumnIdx) {
+func (self ImGuiTableSettings) SetColumnsCountMax(v TableColumnIdx) {
 	C.ImGuiTableSettings_SetColumnsCountMax(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableSettings) GetColumnsCountMax() ImGuiTableColumnIdx {
-	return ImGuiTableColumnIdx(C.ImGuiTableSettings_GetColumnsCountMax(self.handle()))
+func (self ImGuiTableSettings) GetColumnsCountMax() TableColumnIdx {
+	return TableColumnIdx(C.ImGuiTableSettings_GetColumnsCountMax(self.handle()))
 }
 
 func (self ImGuiTableSettings) SetWantApply(v bool) {
@@ -12472,12 +12472,12 @@ func (self ImGuiTableTempData) GetLastTimeActive() float32 {
 	return float32(C.ImGuiTableTempData_GetLastTimeActive(self.handle()))
 }
 
-func (self ImGuiTableTempData) SetUserOuterSize(v ImVec2) {
+func (self ImGuiTableTempData) SetUserOuterSize(v Vec2) {
 	C.ImGuiTableTempData_SetUserOuterSize(self.handle(), v.toC())
 }
 
-func (self ImGuiTableTempData) GetUserOuterSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiTableTempData) GetUserOuterSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiTableTempData_GetUserOuterSize(self.handle()))
 	return *out
 }
@@ -12486,52 +12486,52 @@ func (self ImGuiTableTempData) GetDrawSplitter() ImDrawListSplitter {
 	return newImDrawListSplitterFromC(C.ImGuiTableTempData_GetDrawSplitter(self.handle()))
 }
 
-func (self ImGuiTableTempData) SetHostBackupWorkRect(v ImRect) {
+func (self ImGuiTableTempData) SetHostBackupWorkRect(v Rect) {
 	C.ImGuiTableTempData_SetHostBackupWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTableTempData) GetHostBackupWorkRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTableTempData) GetHostBackupWorkRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTableTempData_GetHostBackupWorkRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTableTempData) SetHostBackupParentWorkRect(v ImRect) {
+func (self ImGuiTableTempData) SetHostBackupParentWorkRect(v Rect) {
 	C.ImGuiTableTempData_SetHostBackupParentWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTableTempData) GetHostBackupParentWorkRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiTableTempData) GetHostBackupParentWorkRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiTableTempData_GetHostBackupParentWorkRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiTableTempData) SetHostBackupPrevLineSize(v ImVec2) {
+func (self ImGuiTableTempData) SetHostBackupPrevLineSize(v Vec2) {
 	C.ImGuiTableTempData_SetHostBackupPrevLineSize(self.handle(), v.toC())
 }
 
-func (self ImGuiTableTempData) GetHostBackupPrevLineSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiTableTempData) GetHostBackupPrevLineSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiTableTempData_GetHostBackupPrevLineSize(self.handle()))
 	return *out
 }
 
-func (self ImGuiTableTempData) SetHostBackupCurrLineSize(v ImVec2) {
+func (self ImGuiTableTempData) SetHostBackupCurrLineSize(v Vec2) {
 	C.ImGuiTableTempData_SetHostBackupCurrLineSize(self.handle(), v.toC())
 }
 
-func (self ImGuiTableTempData) GetHostBackupCurrLineSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiTableTempData) GetHostBackupCurrLineSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiTableTempData_GetHostBackupCurrLineSize(self.handle()))
 	return *out
 }
 
-func (self ImGuiTableTempData) SetHostBackupCursorMaxPos(v ImVec2) {
+func (self ImGuiTableTempData) SetHostBackupCursorMaxPos(v Vec2) {
 	C.ImGuiTableTempData_SetHostBackupCursorMaxPos(self.handle(), v.toC())
 }
 
-func (self ImGuiTableTempData) GetHostBackupCursorMaxPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiTableTempData) GetHostBackupCursorMaxPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiTableTempData_GetHostBackupCursorMaxPos(self.handle()))
 	return *out
 }
@@ -12598,42 +12598,42 @@ func (self ImGuiViewport) GetFlags() ViewportFlags {
 	return ViewportFlags(C.ImGuiViewport_GetFlags(self.handle()))
 }
 
-func (self ImGuiViewport) SetPos(v ImVec2) {
+func (self ImGuiViewport) SetPos(v Vec2) {
 	C.ImGuiViewport_SetPos(self.handle(), v.toC())
 }
 
-func (self ImGuiViewport) GetPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiViewport) GetPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiViewport_GetPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiViewport) SetSize(v ImVec2) {
+func (self ImGuiViewport) SetSize(v Vec2) {
 	C.ImGuiViewport_SetSize(self.handle(), v.toC())
 }
 
-func (self ImGuiViewport) GetSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiViewport) GetSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiViewport_GetSize(self.handle()))
 	return *out
 }
 
-func (self ImGuiViewport) SetWorkPos(v ImVec2) {
+func (self ImGuiViewport) SetWorkPos(v Vec2) {
 	C.ImGuiViewport_SetWorkPos(self.handle(), v.toC())
 }
 
-func (self ImGuiViewport) GetWorkPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiViewport) GetWorkPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiViewport_GetWorkPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiViewport) SetWorkSize(v ImVec2) {
+func (self ImGuiViewport) SetWorkSize(v Vec2) {
 	C.ImGuiViewport_SetWorkSize(self.handle(), v.toC())
 }
 
-func (self ImGuiViewport) GetWorkSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiViewport) GetWorkSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiViewport_GetWorkSize(self.handle()))
 	return *out
 }
@@ -12754,12 +12754,12 @@ func (self ImGuiViewportP) GetLastNameHash() ImGuiID {
 	return ImGuiID(C.ImGuiViewportP_GetLastNameHash(self.handle()))
 }
 
-func (self ImGuiViewportP) SetLastPos(v ImVec2) {
+func (self ImGuiViewportP) SetLastPos(v Vec2) {
 	C.ImGuiViewportP_SetLastPos(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetLastPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiViewportP) GetLastPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiViewportP_GetLastPos(self.handle()))
 	return *out
 }
@@ -12812,72 +12812,72 @@ func (self ImGuiViewportP) GetDrawDataBuilder() ImDrawDataBuilder {
 	return newImDrawDataBuilderFromC(C.ImGuiViewportP_GetDrawDataBuilder(self.handle()))
 }
 
-func (self ImGuiViewportP) SetLastPlatformPos(v ImVec2) {
+func (self ImGuiViewportP) SetLastPlatformPos(v Vec2) {
 	C.ImGuiViewportP_SetLastPlatformPos(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetLastPlatformPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiViewportP) GetLastPlatformPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiViewportP_GetLastPlatformPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiViewportP) SetLastPlatformSize(v ImVec2) {
+func (self ImGuiViewportP) SetLastPlatformSize(v Vec2) {
 	C.ImGuiViewportP_SetLastPlatformSize(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetLastPlatformSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiViewportP) GetLastPlatformSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiViewportP_GetLastPlatformSize(self.handle()))
 	return *out
 }
 
-func (self ImGuiViewportP) SetLastRendererSize(v ImVec2) {
+func (self ImGuiViewportP) SetLastRendererSize(v Vec2) {
 	C.ImGuiViewportP_SetLastRendererSize(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetLastRendererSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiViewportP) GetLastRendererSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiViewportP_GetLastRendererSize(self.handle()))
 	return *out
 }
 
-func (self ImGuiViewportP) SetWorkOffsetMin(v ImVec2) {
+func (self ImGuiViewportP) SetWorkOffsetMin(v Vec2) {
 	C.ImGuiViewportP_SetWorkOffsetMin(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetWorkOffsetMin() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiViewportP) GetWorkOffsetMin() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiViewportP_GetWorkOffsetMin(self.handle()))
 	return *out
 }
 
-func (self ImGuiViewportP) SetWorkOffsetMax(v ImVec2) {
+func (self ImGuiViewportP) SetWorkOffsetMax(v Vec2) {
 	C.ImGuiViewportP_SetWorkOffsetMax(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetWorkOffsetMax() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiViewportP) GetWorkOffsetMax() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiViewportP_GetWorkOffsetMax(self.handle()))
 	return *out
 }
 
-func (self ImGuiViewportP) SetBuildWorkOffsetMin(v ImVec2) {
+func (self ImGuiViewportP) SetBuildWorkOffsetMin(v Vec2) {
 	C.ImGuiViewportP_SetBuildWorkOffsetMin(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetBuildWorkOffsetMin() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiViewportP) GetBuildWorkOffsetMin() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiViewportP_GetBuildWorkOffsetMin(self.handle()))
 	return *out
 }
 
-func (self ImGuiViewportP) SetBuildWorkOffsetMax(v ImVec2) {
+func (self ImGuiViewportP) SetBuildWorkOffsetMax(v Vec2) {
 	C.ImGuiViewportP_SetBuildWorkOffsetMax(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetBuildWorkOffsetMax() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiViewportP) GetBuildWorkOffsetMax() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiViewportP_GetBuildWorkOffsetMax(self.handle()))
 	return *out
 }
@@ -12937,12 +12937,12 @@ func (self ImGuiWindow) GetViewportId() ImGuiID {
 	return ImGuiID(C.ImGuiWindow_GetViewportId(self.handle()))
 }
 
-func (self ImGuiWindow) SetViewportPos(v ImVec2) {
+func (self ImGuiWindow) SetViewportPos(v Vec2) {
 	C.ImGuiWindow_SetViewportPos(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetViewportPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetViewportPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetViewportPos(self.handle()))
 	return *out
 }
@@ -12955,72 +12955,72 @@ func (self ImGuiWindow) GetViewportAllowPlatformMonitorExtend() int {
 	return int(C.ImGuiWindow_GetViewportAllowPlatformMonitorExtend(self.handle()))
 }
 
-func (self ImGuiWindow) SetPos(v ImVec2) {
+func (self ImGuiWindow) SetPos(v Vec2) {
 	C.ImGuiWindow_SetPos(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetSize(v ImVec2) {
+func (self ImGuiWindow) SetSize(v Vec2) {
 	C.ImGuiWindow_SetSize(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetSize(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetSizeFull(v ImVec2) {
+func (self ImGuiWindow) SetSizeFull(v Vec2) {
 	C.ImGuiWindow_SetSizeFull(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetSizeFull() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetSizeFull() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetSizeFull(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetContentSize(v ImVec2) {
+func (self ImGuiWindow) SetContentSize(v Vec2) {
 	C.ImGuiWindow_SetContentSize(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetContentSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetContentSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetContentSize(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetContentSizeIdeal(v ImVec2) {
+func (self ImGuiWindow) SetContentSizeIdeal(v Vec2) {
 	C.ImGuiWindow_SetContentSizeIdeal(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetContentSizeIdeal() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetContentSizeIdeal() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetContentSizeIdeal(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetContentSizeExplicit(v ImVec2) {
+func (self ImGuiWindow) SetContentSizeExplicit(v Vec2) {
 	C.ImGuiWindow_SetContentSizeExplicit(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetContentSizeExplicit() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetContentSizeExplicit() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetContentSizeExplicit(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetWindowPadding(v ImVec2) {
+func (self ImGuiWindow) SetWindowPadding(v Vec2) {
 	C.ImGuiWindow_SetWindowPadding(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetWindowPadding() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetWindowPadding() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetWindowPadding(self.handle()))
 	return *out
 }
@@ -13073,62 +13073,62 @@ func (self ImGuiWindow) GetChildId() ImGuiID {
 	return ImGuiID(C.ImGuiWindow_GetChildId(self.handle()))
 }
 
-func (self ImGuiWindow) SetScroll(v ImVec2) {
+func (self ImGuiWindow) SetScroll(v Vec2) {
 	C.ImGuiWindow_SetScroll(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetScroll() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetScroll() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetScroll(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetScrollMax(v ImVec2) {
+func (self ImGuiWindow) SetScrollMax(v Vec2) {
 	C.ImGuiWindow_SetScrollMax(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetScrollMax() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetScrollMax() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetScrollMax(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetScrollTarget(v ImVec2) {
+func (self ImGuiWindow) SetScrollTarget(v Vec2) {
 	C.ImGuiWindow_SetScrollTarget(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetScrollTarget() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetScrollTarget() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetScrollTarget(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetScrollTargetCenterRatio(v ImVec2) {
+func (self ImGuiWindow) SetScrollTargetCenterRatio(v Vec2) {
 	C.ImGuiWindow_SetScrollTargetCenterRatio(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetScrollTargetCenterRatio() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetScrollTargetCenterRatio() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetScrollTargetCenterRatio(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetScrollTargetEdgeSnapDist(v ImVec2) {
+func (self ImGuiWindow) SetScrollTargetEdgeSnapDist(v Vec2) {
 	C.ImGuiWindow_SetScrollTargetEdgeSnapDist(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetScrollTargetEdgeSnapDist() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetScrollTargetEdgeSnapDist() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetScrollTargetEdgeSnapDist(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetScrollbarSizes(v ImVec2) {
+func (self ImGuiWindow) SetScrollbarSizes(v Vec2) {
 	C.ImGuiWindow_SetScrollbarSizes(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetScrollbarSizes() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetScrollbarSizes() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetScrollbarSizes(self.handle()))
 	return *out
 }
@@ -13389,22 +13389,22 @@ func (self ImGuiWindow) GetSetWindowDockAllowFlags() Cond {
 	return Cond(C.ImGuiWindow_GetSetWindowDockAllowFlags(self.handle()))
 }
 
-func (self ImGuiWindow) SetSetWindowPosVal(v ImVec2) {
+func (self ImGuiWindow) SetSetWindowPosVal(v Vec2) {
 	C.ImGuiWindow_SetSetWindowPosVal(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetSetWindowPosVal() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetSetWindowPosVal() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetSetWindowPosVal(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetSetWindowPosPivot(v ImVec2) {
+func (self ImGuiWindow) SetSetWindowPosPivot(v Vec2) {
 	C.ImGuiWindow_SetSetWindowPosPivot(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetSetWindowPosPivot() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindow) GetSetWindowPosPivot() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindow_GetSetWindowPosPivot(self.handle()))
 	return *out
 }
@@ -13413,72 +13413,72 @@ func (self ImGuiWindow) GetDC() ImGuiWindowTempData {
 	return newImGuiWindowTempDataFromC(C.ImGuiWindow_GetDC(self.handle()))
 }
 
-func (self ImGuiWindow) SetOuterRectClipped(v ImRect) {
+func (self ImGuiWindow) SetOuterRectClipped(v Rect) {
 	C.ImGuiWindow_SetOuterRectClipped(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetOuterRectClipped() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetOuterRectClipped() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetOuterRectClipped(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetInnerRect(v ImRect) {
+func (self ImGuiWindow) SetInnerRect(v Rect) {
 	C.ImGuiWindow_SetInnerRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetInnerRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetInnerRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetInnerRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetInnerClipRect(v ImRect) {
+func (self ImGuiWindow) SetInnerClipRect(v Rect) {
 	C.ImGuiWindow_SetInnerClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetInnerClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetInnerClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetInnerClipRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetWorkRect(v ImRect) {
+func (self ImGuiWindow) SetWorkRect(v Rect) {
 	C.ImGuiWindow_SetWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetWorkRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetWorkRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetWorkRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetParentWorkRect(v ImRect) {
+func (self ImGuiWindow) SetParentWorkRect(v Rect) {
 	C.ImGuiWindow_SetParentWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetParentWorkRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetParentWorkRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetParentWorkRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetClipRect(v ImRect) {
+func (self ImGuiWindow) SetClipRect(v Rect) {
 	C.ImGuiWindow_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetClipRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetClipRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetClipRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) SetContentRegionRect(v ImRect) {
+func (self ImGuiWindow) SetContentRegionRect(v Rect) {
 	C.ImGuiWindow_SetContentRegionRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetContentRegionRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetContentRegionRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetContentRegionRect(self.handle()))
 	return *out
 }
@@ -13719,12 +13719,12 @@ func (self ImGuiWindow) GetDockTabItemStatusFlags() ItemStatusFlags {
 	return ItemStatusFlags(C.ImGuiWindow_GetDockTabItemStatusFlags(self.handle()))
 }
 
-func (self ImGuiWindow) SetDockTabItemRect(v ImRect) {
+func (self ImGuiWindow) SetDockTabItemRect(v Rect) {
 	C.ImGuiWindow_SetDockTabItemRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetDockTabItemRect() ImRect {
-	out := &ImRect{}
+func (self ImGuiWindow) GetDockTabItemRect() Rect {
+	out := &Rect{}
 	out.fromC(C.ImGuiWindow_GetDockTabItemRect(self.handle()))
 	return *out
 }
@@ -13865,72 +13865,72 @@ func (self ImGuiWindowStackData) GetStackSizesOnBegin() ImGuiStackSizes {
 	return newImGuiStackSizesFromC(C.ImGuiWindowStackData_GetStackSizesOnBegin(self.handle()))
 }
 
-func (self ImGuiWindowTempData) SetCursorPos(v ImVec2) {
+func (self ImGuiWindowTempData) SetCursorPos(v Vec2) {
 	C.ImGuiWindowTempData_SetCursorPos(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetCursorPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindowTempData) GetCursorPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindowTempData_GetCursorPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindowTempData) SetCursorPosPrevLine(v ImVec2) {
+func (self ImGuiWindowTempData) SetCursorPosPrevLine(v Vec2) {
 	C.ImGuiWindowTempData_SetCursorPosPrevLine(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetCursorPosPrevLine() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindowTempData) GetCursorPosPrevLine() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindowTempData_GetCursorPosPrevLine(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindowTempData) SetCursorStartPos(v ImVec2) {
+func (self ImGuiWindowTempData) SetCursorStartPos(v Vec2) {
 	C.ImGuiWindowTempData_SetCursorStartPos(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetCursorStartPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindowTempData) GetCursorStartPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindowTempData_GetCursorStartPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindowTempData) SetCursorMaxPos(v ImVec2) {
+func (self ImGuiWindowTempData) SetCursorMaxPos(v Vec2) {
 	C.ImGuiWindowTempData_SetCursorMaxPos(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetCursorMaxPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindowTempData) GetCursorMaxPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindowTempData_GetCursorMaxPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindowTempData) SetIdealMaxPos(v ImVec2) {
+func (self ImGuiWindowTempData) SetIdealMaxPos(v Vec2) {
 	C.ImGuiWindowTempData_SetIdealMaxPos(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetIdealMaxPos() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindowTempData) GetIdealMaxPos() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindowTempData_GetIdealMaxPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindowTempData) SetCurrLineSize(v ImVec2) {
+func (self ImGuiWindowTempData) SetCurrLineSize(v Vec2) {
 	C.ImGuiWindowTempData_SetCurrLineSize(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetCurrLineSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindowTempData) GetCurrLineSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindowTempData_GetCurrLineSize(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindowTempData) SetPrevLineSize(v ImVec2) {
+func (self ImGuiWindowTempData) SetPrevLineSize(v Vec2) {
 	C.ImGuiWindowTempData_SetPrevLineSize(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetPrevLineSize() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindowTempData) GetPrevLineSize() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindowTempData_GetPrevLineSize(self.handle()))
 	return *out
 }
@@ -13959,12 +13959,12 @@ func (self ImGuiWindowTempData) GetIsSameLine() bool {
 	return C.ImGuiWindowTempData_GetIsSameLine(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiWindowTempData) SetCursorStartPosLossyness(v ImVec2) {
+func (self ImGuiWindowTempData) SetCursorStartPosLossyness(v Vec2) {
 	C.ImGuiWindowTempData_SetCursorStartPosLossyness(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetCursorStartPosLossyness() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindowTempData) GetCursorStartPosLossyness() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindowTempData_GetCursorStartPosLossyness(self.handle()))
 	return *out
 }
@@ -14025,12 +14025,12 @@ func (self ImGuiWindowTempData) GetMenuBarAppending() bool {
 	return C.ImGuiWindowTempData_GetMenuBarAppending(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiWindowTempData) SetMenuBarOffset(v ImVec2) {
+func (self ImGuiWindowTempData) SetMenuBarOffset(v Vec2) {
 	C.ImGuiWindowTempData_SetMenuBarOffset(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetMenuBarOffset() ImVec2 {
-	out := &ImVec2{}
+func (self ImGuiWindowTempData) GetMenuBarOffset() Vec2 {
+	out := &Vec2{}
 	out.fromC(C.ImGuiWindowTempData_GetMenuBarOffset(self.handle()))
 	return *out
 }

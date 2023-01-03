@@ -2,6 +2,7 @@ package cimgui
 
 // #include "util.h"
 import "C"
+
 import (
 	"fmt"
 	"reflect"
@@ -44,8 +45,8 @@ func (gr GlyphRange) Destroy() {
 	C.DestroyGlyphRange(gr.handle())
 }
 
-func (gr GlyphRange) Data() *ImWchar {
-	return (*ImWchar)(C.GlyphRange_GetData(gr.handle()))
+func (gr GlyphRange) Data() *Wchar {
+	return (*Wchar)(C.GlyphRange_GetData(gr.handle()))
 }
 
 func (fa ImFontAtlas) GetFontCount() int {
@@ -89,9 +90,9 @@ func (self ImFontAtlas) GetTextureDataAsRGBA32() (pixels unsafe.Pointer, width i
 //
 // For example:
 //
-// 	var data []uint8
-// 	...
-// 	gl.TexImage2D(gl.TEXTURE_2D, ..., gl.UNSIGNED_BYTE, gl.Ptr(&data[0]))
+//	var data []uint8
+//	...
+//	gl.TexImage2D(gl.TEXTURE_2D, ..., gl.UNSIGNED_BYTE, gl.Ptr(&data[0]))
 func Ptr(data interface{}) unsafe.Pointer {
 	if data == nil {
 		return unsafe.Pointer(nil)

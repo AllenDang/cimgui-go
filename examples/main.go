@@ -36,9 +36,9 @@ func showWidgetsDemo() {
 		cimgui.ShowDemoWindowV(&showDemoWindow)
 	}
 
-	cimgui.SetNextWindowSizeV(cimgui.NewImVec2(300, 300), cimgui.Cond_Once)
+	cimgui.SetNextWindowSizeV(cimgui.NewVec2(300, 300), cimgui.Cond_Once)
 	cimgui.Begin("Window 1")
-	if cimgui.ButtonV("Click Me", cimgui.NewImVec2(80, 20)) {
+	if cimgui.ButtonV("Click Me", cimgui.NewVec2(80, 20)) {
 		w, h := window.DisplaySize()
 		fmt.Println(w, h)
 	}
@@ -73,19 +73,19 @@ func showWidgetsDemo() {
 func showPictureLoadingDemo() {
 	// demo of showing a picture
 	basePos := cimgui.GetMainViewport().GetPos()
-	cimgui.SetNextWindowPosV(cimgui.NewImVec2(basePos.X+60, 600), cimgui.Cond_Once, cimgui.NewImVec2(0, 0))
+	cimgui.SetNextWindowPosV(cimgui.NewVec2(basePos.X+60, 600), cimgui.Cond_Once, cimgui.NewVec2(0, 0))
 	cimgui.Begin("Image")
 	cimgui.Text(fmt.Sprintf("pointer = %v", texture.ID()))
-	cimgui.ImageV(texture.ID(), cimgui.NewImVec2(float32(texture.Width), float32(texture.Height)), cimgui.NewImVec2(0, 0), cimgui.NewImVec2(1, 1), cimgui.NewImVec4(1, 1, 1, 1), cimgui.NewImVec4(0, 0, 0, 0))
+	cimgui.ImageV(texture.ID(), cimgui.NewVec2(float32(texture.Width), float32(texture.Height)), cimgui.NewVec2(0, 0), cimgui.NewVec2(1, 1), cimgui.NewVec4(1, 1, 1, 1), cimgui.NewVec4(0, 0, 0, 0))
 	cimgui.End()
 }
 
 func showImPlotDemo() {
 	basePos := cimgui.GetMainViewport().GetPos()
-	cimgui.SetNextWindowPosV(cimgui.NewImVec2(basePos.X+400, basePos.Y+60), cimgui.Cond_Once, cimgui.NewImVec2(0, 0))
-	cimgui.SetNextWindowSizeV(cimgui.NewImVec2(500, 300), cimgui.Cond_Once)
+	cimgui.SetNextWindowPosV(cimgui.NewVec2(basePos.X+400, basePos.Y+60), cimgui.Cond_Once, cimgui.NewVec2(0, 0))
+	cimgui.SetNextWindowSizeV(cimgui.NewVec2(500, 300), cimgui.Cond_Once)
 	cimgui.Begin("Plot window")
-	if cimgui.Plot_BeginPlotV("Plot", cimgui.NewImVec2(-1, -1), 0) {
+	if cimgui.Plot_BeginPlotV("Plot", cimgui.NewVec2(-1, -1), 0) {
 		cimgui.Plot_PlotBars_S64PtrInt("Bar", barValues, int32(len(barValues)))
 		cimgui.Plot_PlotLine_S64PtrInt("Line", barValues, int32(len(barValues)))
 		cimgui.Plot_EndPlot()
@@ -122,7 +122,7 @@ func main() {
 	cimgui.SetAfterCreateContextHook(afterCreateContext)
 	cimgui.SetBeforeDestroyContextHook(beforeDestroyContext)
 
-	cimgui.SetBgColor(cimgui.NewImVec4(0.45, 0.55, 0.6, 1.0))
+	cimgui.SetBgColor(cimgui.NewVec4(0.45, 0.55, 0.6, 1.0))
 
 	window = cimgui.CreateGlfwWindow("Hello from cimgui-go", 1200, 900, 0)
 
