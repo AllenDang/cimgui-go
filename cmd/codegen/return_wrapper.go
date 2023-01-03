@@ -5,6 +5,46 @@ import "fmt"
 // Wrapper for return value
 type returnWrapper func() (returnType string, returnStmt string)
 
+func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
+	returnWrapperMap := map[string]returnWrapper{
+		"bool":                     boolReturnW,
+		"char*":                    constCharReturnW,
+		"const char*":              constCharReturnW,
+		"const ImWchar*":           constWCharPtrReturnW,
+		"ImWchar":                  imWcharReturnW,
+		"float":                    floatReturnW,
+		"double":                   doubleReturnW,
+		"int":                      intReturnW,
+		"unsigned int":             uintReturnW,
+		"short":                    intReturnW,
+		"ImS8":                     intReturnW,
+		"ImS16":                    intReturnW,
+		"ImS32":                    intReturnW,
+		"ImU8":                     uintReturnW,
+		"ImU16":                    uintReturnW,
+		"ImU32":                    u32ReturnW,
+		"ImU64":                    uint64ReturnW,
+		"ImVec4":                   imVec4ReturnW,
+		"const ImVec4*":            imVec4PtrReturnW,
+		"ImGuiID":                  idReturnW,
+		"ImTextureID":              textureIdReturnW,
+		"ImVec2":                   imVec2ReturnW,
+		"ImColor":                  imColorReturnW,
+		"ImPlotPoint":              imPlotPointReturnW,
+		"ImRect":                   imRectReturnW,
+		"ImGuiTableColumnIdx":      imTableColumnIdxReturnW,
+		"ImGuiTableDrawChannelIdx": imTableDrawChannelIdxReturnW,
+		"void*":                    voidPtrReturnW,
+		"size_t":                   doubleReturnW,
+	}
+
+	if v, ok := returnWrapperMap[returnType]; ok {
+		return v, nil
+	}
+
+	return nil, fmt.Errorf("return type %s not found", returnType)
+}
+
 func boolReturnW() (returnType string, returnStmt string) {
 	returnType = "bool"
 	returnStmt = "return %s == C.bool(true)\n"
