@@ -173,13 +173,13 @@ func float4W(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imWcharW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "ImWchar"
+	argType = "Wchar"
 	varName = fmt.Sprintf("C.ImWchar(%s)", arg.Name)
 	return
 }
 
 func imWcharPtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*ImWchar"
+	argType = "*Wchar"
 	varName = fmt.Sprintf("(*C.ImWchar)(%s)", arg.Name)
 	return
 }
@@ -227,19 +227,19 @@ func imGuiIDW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imTextureIDW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "ImTextureID", "C.ImTextureID")
+	return simpleW(arg.Name, "TextureID", "C.ImTextureID")
 }
 
 func imDrawIdxW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "ImDrawIdx", "C.ImDrawIdx")
+	return simpleW(arg.Name, "DrawIdx", "C.ImDrawIdx")
 }
 
 func imTableColumnIdxW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "ImGuiTableColumnIdx", "C.ImGuiTableColumnIdx")
+	return simpleW(arg.Name, "TableColumnIdx", "C.ImGuiTableColumnIdx")
 }
 
 func imTableDrawChannelIdxW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "ImGuiTableDrawChannelIdx", "C.ImGuiTableDrawChannelIdx")
+	return simpleW(arg.Name, "TableDrawChannelIdx", "C.ImGuiTableDrawChannelIdx")
 }
 
 func voidPtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -249,44 +249,44 @@ func voidPtrW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imPlotPointW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappableW(arg.Name, "ImPlotPoint")
+	return wrappableW(arg.Name, "PlotPoint")
 }
 
 func imPlotPointPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrW(arg.Name, "*ImPlotPoint", "C.ImPlotPoint")
+	return wrappablePtrW(arg.Name, "*PlotPoint", "C.ImPlotPoint")
 }
 
 func imVec2W(arg ArgDef) (argType string, def string, varName string) {
-	return wrappableW(arg.Name, "ImVec2")
+	return wrappableW(arg.Name, "Vec2")
 }
 
 func imVec2PtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrW(arg.Name, "*ImVec2", "C.ImVec2")
+	return wrappablePtrW(arg.Name, "*Vec2", "C.ImVec2")
 }
 
 // ImVec2[2] -> [2]ImVec2
 func imVec22W(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrArrayW(2, "C.ImVec2", "ImVec2", arg)
+	return wrappablePtrArrayW(2, "C.ImVec2", "Vec2", arg)
 }
 
 func imVec4W(arg ArgDef) (argType string, def string, varName string) {
-	return wrappableW(arg.Name, "ImVec4")
+	return wrappableW(arg.Name, "Vec4")
 }
 
 func imVec4PtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrW(arg.Name, "*ImVec4", "C.ImVec4")
+	return wrappablePtrW(arg.Name, "*Vec4", "C.ImVec4")
 }
 
 func imRectW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappableW(arg.Name, "ImRect")
+	return wrappableW(arg.Name, "Rect")
 }
 
 func imRectPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrW(arg.Name, "*ImRect", "C.ImRect")
+	return wrappablePtrW(arg.Name, "*Rect", "C.ImRect")
 }
 
 func imColorPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrW(arg.Name, "*ImColor", "C.ImColor")
+	return wrappablePtrW(arg.Name, "*Color", "C.ImColor")
 }
 
 func inputeTextCallbackW(arg ArgDef) (argType string, def string, varName string) {

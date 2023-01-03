@@ -7,6 +7,7 @@ package cimgui
 // #include "cimgui_structs_accessor.h"
 // extern int generalInputTextCallback(ImGuiInputTextCallbackData* data);
 import "C"
+
 import (
 	"runtime/cgo"
 	"unsafe"
@@ -78,7 +79,7 @@ func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, ca
 	) == C.bool(true)
 }
 
-func InputTextMultiline(label string, buf *string, size ImVec2, flags InputTextFlags, callback ImGuiInputTextCallback) bool {
+func InputTextMultiline(label string, buf *string, size Vec2, flags InputTextFlags, callback ImGuiInputTextCallback) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
