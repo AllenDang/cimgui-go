@@ -112,10 +112,6 @@ func (self ImDrawList) AddBezierQuadraticV(p1 Vec2, p2 Vec2, p3 Vec2, col uint32
 	C.DrawList_AddBezierQuadraticV(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col), C.float(thickness), C.int(num_segments))
 }
 
-func (self ImDrawList) AddCallback(callback_data unsafe.Pointer) {
-	C.DrawList_AddCallback(self.handle(), callback_data)
-}
-
 // DrawList_AddCircleV parameter default value hint:
 // num_segments: 0
 // thickness: 1.0f
@@ -1643,18 +1639,6 @@ func ColumnsV(count int32, id string, border bool) {
 	C.ColumnsV(C.int(count), idArg, C.bool(border))
 }
 
-// Combo_FnBoolPtr parameter default value hint:
-// popup_max_height_in_items: -1
-func Combo_FnBoolPtr(label string, current_item *int32, data unsafe.Pointer, items_count int32, popup_max_height_in_items int32) bool {
-	labelArg, labelFin := wrapString(label)
-	defer labelFin()
-
-	current_itemArg, current_itemFin := wrapNumberPtr[C.int, int32](current_item)
-	defer current_itemFin()
-
-	return C.Combo_FnBoolPtr(labelArg, current_itemArg, data, C.int(items_count), C.int(popup_max_height_in_items)) == C.bool(true)
-}
-
 // Combo_StrV parameter default value hint:
 // popup_max_height_in_items: -1
 func Combo_StrV(label string, current_item *int32, items_separated_by_zeros string, popup_max_height_in_items int32) bool {
@@ -2698,52 +2682,6 @@ func InputScalarNV(label string, data_type DataType, p_data unsafe.Pointer, comp
 	return C.InputScalarNV(labelArg, C.ImGuiDataType(data_type), p_data, C.int(components), p_step, p_step_fast, formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
-// InputTextV parameter default value hint:
-// callback: NULL
-// flags: 0
-// user_data: NULL
-func InputTextV(label string, buf string, buf_size uint64, flags InputTextFlags, user_data unsafe.Pointer) bool {
-	labelArg, labelFin := wrapString(label)
-	defer labelFin()
-
-	bufArg, bufFin := wrapString(buf)
-	defer bufFin()
-
-	return C.InputTextV(labelArg, bufArg, C.xlong(buf_size), C.ImGuiInputTextFlags(flags), user_data) == C.bool(true)
-}
-
-// InputTextMultilineV parameter default value hint:
-// callback: NULL
-// flags: 0
-// size: ImVec2(0,0)
-// user_data: NULL
-func InputTextMultilineV(label string, buf string, buf_size uint64, size Vec2, flags InputTextFlags, user_data unsafe.Pointer) bool {
-	labelArg, labelFin := wrapString(label)
-	defer labelFin()
-
-	bufArg, bufFin := wrapString(buf)
-	defer bufFin()
-
-	return C.InputTextMultilineV(labelArg, bufArg, C.xlong(buf_size), size.toC(), C.ImGuiInputTextFlags(flags), user_data) == C.bool(true)
-}
-
-// InputTextWithHintV parameter default value hint:
-// callback: NULL
-// flags: 0
-// user_data: NULL
-func InputTextWithHintV(label string, hint string, buf string, buf_size uint64, flags InputTextFlags, user_data unsafe.Pointer) bool {
-	labelArg, labelFin := wrapString(label)
-	defer labelFin()
-
-	hintArg, hintFin := wrapString(hint)
-	defer hintFin()
-
-	bufArg, bufFin := wrapString(buf)
-	defer bufFin()
-
-	return C.InputTextWithHintV(labelArg, hintArg, bufArg, C.xlong(buf_size), C.ImGuiInputTextFlags(flags), user_data) == C.bool(true)
-}
-
 // InvisibleButtonV parameter default value hint:
 // flags: 0
 func InvisibleButtonV(str_id string, size Vec2, flags ButtonFlags) bool {
@@ -2917,18 +2855,6 @@ func LabelText(label string, fmt string) {
 	C.LabelText(labelArg, fmtArg)
 }
 
-// ListBox_FnBoolPtr parameter default value hint:
-// height_in_items: -1
-func ListBox_FnBoolPtr(label string, current_item *int32, data unsafe.Pointer, items_count int32, height_in_items int32) bool {
-	labelArg, labelFin := wrapString(label)
-	defer labelFin()
-
-	current_itemArg, current_itemFin := wrapNumberPtr[C.int, int32](current_item)
-	defer current_itemFin()
-
-	return C.ListBox_FnBoolPtr(labelArg, current_itemArg, data, C.int(items_count), C.int(height_in_items)) == C.bool(true)
-}
-
 // ListBox_Str_arrV parameter default value hint:
 // height_in_items: -1
 func ListBox_Str_arrV(label string, current_item *int32, items []string, items_count int32, height_in_items int32) bool {
@@ -3088,22 +3014,6 @@ func PlotHistogram_FloatPtrV(label string, values []float32, values_count int32,
 	C.PlotHistogram_FloatPtrV(labelArg, (*C.float)(&(values[0])), C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), graph_size.toC(), C.int(stride))
 }
 
-// PlotHistogram_FnFloatPtr parameter default value hint:
-// graph_size: ImVec2(0,0)
-// overlay_text: NULL
-// scale_max: FLT_MAX
-// scale_min: FLT_MAX
-// values_offset: 0
-func PlotHistogram_FnFloatPtr(label string, data unsafe.Pointer, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2) {
-	labelArg, labelFin := wrapString(label)
-	defer labelFin()
-
-	overlay_textArg, overlay_textFin := wrapString(overlay_text)
-	defer overlay_textFin()
-
-	C.PlotHistogram_FnFloatPtr(labelArg, data, C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), graph_size.toC())
-}
-
 // PlotLines_FloatPtrV parameter default value hint:
 // graph_size: ImVec2(0,0)
 // overlay_text: NULL
@@ -3119,22 +3029,6 @@ func PlotLines_FloatPtrV(label string, values []float32, values_count int32, val
 	defer overlay_textFin()
 
 	C.PlotLines_FloatPtrV(labelArg, (*C.float)(&(values[0])), C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), graph_size.toC(), C.int(stride))
-}
-
-// PlotLines_FnFloatPtr parameter default value hint:
-// graph_size: ImVec2(0,0)
-// overlay_text: NULL
-// scale_max: FLT_MAX
-// scale_min: FLT_MAX
-// values_offset: 0
-func PlotLines_FnFloatPtr(label string, data unsafe.Pointer, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2) {
-	labelArg, labelFin := wrapString(label)
-	defer labelFin()
-
-	overlay_textArg, overlay_textFin := wrapString(overlay_text)
-	defer overlay_textFin()
-
-	C.PlotLines_FnFloatPtr(labelArg, data, C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), graph_size.toC())
 }
 
 func PopAllowKeyboardFocus() {
@@ -3459,13 +3353,6 @@ func SetNextWindowPosV(pos Vec2, cond Cond, pivot Vec2) {
 // cond: 0
 func SetNextWindowSizeV(size Vec2, cond Cond) {
 	C.SetNextWindowSizeV(size.toC(), C.ImGuiCond(cond))
-}
-
-// SetNextWindowSizeConstraintsV parameter default value hint:
-// custom_callback: NULL
-// custom_callback_data: NULL
-func SetNextWindowSizeConstraintsV(size_min Vec2, size_max Vec2, custom_callback_data unsafe.Pointer) {
-	C.SetNextWindowSizeConstraintsV(size_min.toC(), size_max.toC(), custom_callback_data)
 }
 
 func SetNextWindowViewport(viewport_id ImGuiID) {
