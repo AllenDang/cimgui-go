@@ -76,21 +76,21 @@ func intReturnW() (returnType string, returnStmt string) {
 }
 
 func constWCharPtrReturnW() (returnType string, returnStmt string) {
-	returnType = "*ImWchar"
-	returnStmt = "return (*ImWchar)(%s)"
+	returnType = "*Wchar"
+	returnStmt = "return (*Wchar)(%s)"
 	return
 }
 
 func imWcharReturnW() (returnType string, returnStmt string) {
-	returnType = "ImWchar"
-	returnStmt = "return (ImWchar)(%s)"
+	returnType = "Wchar"
+	returnStmt = "return (Wchar)(%s)"
 	return
 }
 
 func imVec4PtrReturnW() (returnType string, returnStmt string) {
 	// TODO: verify if it wraps correctly
-	returnType = "*ImVec4"
-	returnStmt += `out := &ImVec4{}
+	returnType = "*Vec4"
+	returnStmt += `out := &Vec4{}
 out.fromC(*%s)
 return out
 `
@@ -98,7 +98,7 @@ return out
 }
 
 func imVec4ReturnW() (returnType string, returnStmt string) {
-	returnType = "ImVec4"
+	returnType = "Vec4"
 	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
 	returnStmt += `out.fromC(%s)
 return *out
@@ -107,7 +107,7 @@ return *out
 }
 
 func imVec2ReturnW() (returnType string, returnStmt string) {
-	returnType = "ImVec2"
+	returnType = "Vec2"
 	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
 	returnStmt += `out.fromC(%s)
 return *out
@@ -116,7 +116,7 @@ return *out
 }
 
 func imColorReturnW() (returnType string, returnStmt string) {
-	returnType = "ImColor"
+	returnType = "Color"
 	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
 	returnStmt += `out.fromC(%s)
 return *out
@@ -125,7 +125,7 @@ return *out
 }
 
 func imPlotPointReturnW() (returnType string, returnStmt string) {
-	returnType = "ImPlotPoint"
+	returnType = "PlotPoint"
 	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
 	returnStmt += `out.fromC(%s)
 return *out
@@ -134,7 +134,7 @@ return *out
 }
 
 func imRectReturnW() (returnType string, returnStmt string) {
-	returnType = "ImRect"
+	returnType = "Rect"
 	returnStmt = fmt.Sprintf("out := &%s{}\n", returnType)
 	returnStmt += `out.fromC(%s)
 return *out
@@ -143,14 +143,14 @@ return *out
 }
 
 func imTableColumnIdxReturnW() (returnType string, returnStmt string) {
-	returnType = "ImGuiTableColumnIdx"
-	returnStmt = "return ImGuiTableColumnIdx(%s)"
+	returnType = "TableColumnIdx"
+	returnStmt = "return TableColumnIdx(%s)"
 	return
 }
 
 func imTableDrawChannelIdxReturnW() (returnType string, returnStmt string) {
-	returnType = "ImGuiTableDrawChannelIdx"
-	returnStmt = "return ImGuiTableDrawChannelIdx(%s)"
+	returnType = "TableDrawChannelIdx"
+	returnStmt = "return TableDrawChannelIdx(%s)"
 	return
 }
 
@@ -185,7 +185,7 @@ func idReturnW() (returnType string, returnStmt string) {
 }
 
 func textureIdReturnW() (returnType string, returnStmt string) {
-	returnType = "ImTextureID"
-	returnStmt = "return ImTextureID(%s)"
+	returnType = "TextureID"
+	returnStmt = "return TextureID(%s)"
 	return
 }

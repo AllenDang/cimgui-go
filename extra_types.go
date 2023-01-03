@@ -5,45 +5,45 @@ package cimgui
 import "C"
 
 type (
-	ImWchar                  C.uint
-	ImGuiID                  C.ImGuiID
-	ImTextureID              uintptr
-	ImDrawIdx                C.ImDrawIdx
-	ImGuiTableColumnIdx      C.ImGuiTableColumnIdx
-	ImGuiTableDrawChannelIdx C.ImGuiTableDrawChannelIdx
+	Wchar               C.uint
+	ImGuiID             C.ImGuiID
+	TextureID           uintptr
+	DrawIdx             C.ImDrawIdx
+	TableColumnIdx      C.ImGuiTableColumnIdx
+	TableDrawChannelIdx C.ImGuiTableDrawChannelIdx
 )
 
-var _ wrappableType[C.ImVec2, *ImVec2] = &ImVec2{}
+var _ wrappableType[C.ImVec2, *Vec2] = &Vec2{}
 
-type ImVec2 struct {
+type Vec2 struct {
 	X float32
 	Y float32
 }
 
-func NewImVec2(x, y float32) ImVec2 {
-	return ImVec2{X: x, Y: y}
+func NewVec2(x, y float32) Vec2 {
+	return Vec2{X: x, Y: y}
 }
 
-func (i *ImVec2) fromC(vec2 C.ImVec2) *ImVec2 {
-	*i = NewImVec2(float32(vec2.x), float32(vec2.y))
+func (i *Vec2) fromC(vec2 C.ImVec2) *Vec2 {
+	*i = NewVec2(float32(vec2.x), float32(vec2.y))
 	return i
 }
 
-func (i ImVec2) toC() C.ImVec2 {
+func (i Vec2) toC() C.ImVec2 {
 	return C.ImVec2{x: C.float(i.X), y: C.float(i.Y)}
 }
 
-var _ wrappableType[C.ImVec4, *ImVec4] = &ImVec4{}
+var _ wrappableType[C.ImVec4, *Vec4] = &Vec4{}
 
-type ImVec4 struct {
+type Vec4 struct {
 	X float32
 	Y float32
 	Z float32
 	W float32
 }
 
-func NewImVec4(r, g, b, a float32) ImVec4 {
-	return ImVec4{
+func NewVec4(r, g, b, a float32) Vec4 {
+	return Vec4{
 		X: r,
 		Y: g,
 		Z: b,
@@ -51,24 +51,24 @@ func NewImVec4(r, g, b, a float32) ImVec4 {
 	}
 }
 
-func (i *ImVec4) fromC(vec4 C.ImVec4) *ImVec4 {
-	*i = NewImVec4(float32(vec4.x), float32(vec4.y), float32(vec4.z), float32(vec4.w))
+func (i *Vec4) fromC(vec4 C.ImVec4) *Vec4 {
+	*i = NewVec4(float32(vec4.x), float32(vec4.y), float32(vec4.z), float32(vec4.w))
 	return i
 }
 
-func (i ImVec4) toC() C.ImVec4 {
+func (i Vec4) toC() C.ImVec4 {
 	return C.ImVec4{x: C.float(i.X), y: C.float(i.Y), z: C.float(i.Z), w: C.float(i.W)}
 }
 
-var _ wrappableType[C.ImColor, *ImColor] = &ImColor{}
+var _ wrappableType[C.ImColor, *Color] = &Color{}
 
-type ImColor struct {
-	Value ImVec4
+type Color struct {
+	Value Vec4
 }
 
-func NewImColor(x, y, z, w float32) ImColor {
-	return ImColor{
-		Value: ImVec4{
+func NewColor(x, y, z, w float32) Color {
+	return Color{
+		Value: Vec4{
 			X: x,
 			Y: y,
 			Z: z,
@@ -77,55 +77,55 @@ func NewImColor(x, y, z, w float32) ImColor {
 	}
 }
 
-func (i *ImColor) fromC(col C.ImColor) *ImColor {
-	*i = NewImColor(float32(col.Value.x), float32(col.Value.y), float32(col.Value.z), float32(col.Value.w))
+func (i *Color) fromC(col C.ImColor) *Color {
+	*i = NewColor(float32(col.Value.x), float32(col.Value.y), float32(col.Value.z), float32(col.Value.w))
 	return i
 }
 
-func (i ImColor) toC() C.ImColor {
+func (i Color) toC() C.ImColor {
 	return C.ImColor{Value: i.Value.toC()}
 }
 
-var _ wrappableType[C.ImRect, *ImRect] = &ImRect{}
+var _ wrappableType[C.ImRect, *Rect] = &Rect{}
 
-type ImRect struct {
-	Min ImVec2
-	Max ImVec2
+type Rect struct {
+	Min Vec2
+	Max Vec2
 }
 
-func (i *ImRect) fromC(rect C.ImRect) *ImRect {
-	out := &ImVec2{}
+func (i *Rect) fromC(rect C.ImRect) *Rect {
+	out := &Vec2{}
 	out.fromC(rect.Min)
 	i.Min = *out
 
-	out = &ImVec2{}
+	out = &Vec2{}
 	out.fromC(rect.Max)
 	i.Max = *out
 
 	return i
 }
 
-func (r *ImRect) toC() C.ImRect {
+func (r *Rect) toC() C.ImRect {
 	return C.ImRect{Min: r.Min.toC(), Max: r.Max.toC()}
 }
 
-var _ wrappableType[C.ImPlotPoint, *ImPlotPoint] = &ImPlotPoint{}
+var _ wrappableType[C.ImPlotPoint, *PlotPoint] = &PlotPoint{}
 
-type ImPlotPoint struct {
+type PlotPoint struct {
 	X float64
 	Y float64
 }
 
-func NewImPlotPoint(x, y float64) ImPlotPoint {
-	return ImPlotPoint{X: x, Y: y}
+func NewPlotPoint(x, y float64) PlotPoint {
+	return PlotPoint{X: x, Y: y}
 }
 
-func (i *ImPlotPoint) fromC(p C.ImPlotPoint) *ImPlotPoint {
-	*i = NewImPlotPoint(float64(p.x), float64(p.y))
+func (i *PlotPoint) fromC(p C.ImPlotPoint) *PlotPoint {
+	*i = NewPlotPoint(float64(p.x), float64(p.y))
 	return i
 }
 
-func (p ImPlotPoint) toC() C.ImPlotPoint {
+func (p PlotPoint) toC() C.ImPlotPoint {
 	return C.ImPlotPoint{x: C.double(p.X), y: C.double(p.Y)}
 }
 
@@ -135,7 +135,7 @@ func (p ImPlotPoint) toC() C.ImPlotPoint {
 // self is the type wrappableType applies to - TODO - figure out if it can be ommited :-)
 // intentional values:
 // - CTYPE is e.g. C.ImVec2, C.ImColor e.t.c.
-// - self is a pointer type (e.g. *ImVec2, ImColor)
+// - self is a pointer type (e.g. *Vec2, Color)
 type wrappableType[CTYPE any, self any] interface {
 	// toC converts self into CTYPE
 	toC() CTYPE

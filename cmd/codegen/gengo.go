@@ -334,7 +334,7 @@ import "unsafe"
 			sb.WriteString(funcSignatureFunc(f.FuncName, args[1:], returnType))
 
 			// temporary out arg definition
-			sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, outArgT))
+			sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, returnType))
 
 			argInvokeStmt := argStmtFunc(argWrappers, &sb)
 
