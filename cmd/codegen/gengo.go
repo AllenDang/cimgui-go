@@ -9,24 +9,6 @@ import (
 	"github.com/thoas/go-funk"
 )
 
-type TypeMap struct {
-	GoType     string
-	CgoWrapper string
-}
-
-func tm(goType string, cgoWrapper string) *TypeMap {
-	return &TypeMap{
-		GoType:     goType,
-		CgoWrapper: cgoWrapper,
-	}
-}
-
-var structMemberTypeMap = map[string]*TypeMap{
-	"unsigned int": tm("uint32", "C.uint(%s)"),
-	"float":        tm("float32", "C.float(%s)"),
-	"int":          tm("int32", "C.int(%s)"),
-}
-
 func trimImGuiPrefix(id string) string {
 	// don't trim prefixes for implot's ImAxis - it conflicts with ImGuIAxis (from imgui_internal.h)
 	if strings.HasPrefix(id, "ImAxis") {
