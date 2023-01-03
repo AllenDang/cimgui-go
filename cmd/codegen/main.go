@@ -1,13 +1,11 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
+	"fmt"
+	"log"
 	"os"
-	"sort"
 	"strings"
-
-	"github.com/thoas/go-funk"
 )
 
 const (
@@ -16,180 +14,16 @@ const (
 	cppFileHeader   = generatorInfo
 )
 
-type ArgDef struct {
-	Name       string `json:"name"`
-	Type       string `json:"type"`
-	CustomType string `json:"custom_type"`
-}
-
-type FuncDef struct {
-	FuncName         string            `json:"ov_cimguiname"`
-	OriginalFuncName string            `json:"original_func_name"`
-	Args             string            `json:"args"`
-	ArgsT            []ArgDef          `json:"argsT"`
-	Defaults         map[string]string `json:"defaults"`
-	Location         string            `json:"location"`
-	Constructor      bool              `json:"constructor"`
-	Destructor       bool              `json:"destructor"`
-	StructSetter     bool              `json:"struct_setter"`
-	StructGetter     bool              `json:"struct_getter"`
-	InvocationStmt   string            `json:"invocation_stmt"`
-	Ret              string            `json:"ret"`
-	StName           string            `json:"stname"`
-	NonUDT           int               `json:"nonUDT"`
-}
-
-type EnumValueDef struct {
-	Name  string `json:"name"`
-	Value int    `json:"calc_value"`
-}
-
-type EnumDef struct {
-	Name   string
-	Values []EnumValueDef
-}
-
-type EnumsSection struct {
-	Enums json.RawMessage `json:"enums"`
-}
-
-type StructMemberDef struct {
-	Name         string `json:"name"`
-	TemplateType string `json:"template_type"`
-	Type         string `json:"type"`
-	Size         int    `json:"size"`
-}
-
-type StructDef struct {
-	Name    string            `json:"name"`
-	Members []StructMemberDef `json:"members"`
-}
-
-type StructSection struct {
-	Structs json.RawMessage `json:"structs"`
-}
-
-func getFunDefs(defJsonBytes []byte) []FuncDef {
-	var defJson map[string]json.RawMessage
-	err := json.Unmarshal(defJsonBytes, &defJson)
+func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []string, structNames []string, err error) {
+	enums, err := getEnumDefs(enumJsonBytes)
 	if err != nil {
-		panic(err.Error())
+		return nil, nil, fmt.Errorf("cannot get enum definitions: %w", err)
 	}
 
-	var funcs []FuncDef
-
-	for _, v := range defJson {
-		var funcDefs []FuncDef
-		_ = json.Unmarshal(v, &funcDefs)
-
-		funcs = append(funcs, funcDefs...)
-	}
-
-	// sort lexicographically for determenistic generation
-	sort.Slice(funcs, func(i, j int) bool {
-		return funcs[i].FuncName < funcs[j].FuncName
-	})
-
-	return funcs
-}
-
-func getEnumDefs(enumJsonBytes []byte) []EnumDef {
-	var enumSectionJson EnumsSection
-	err := json.Unmarshal(enumJsonBytes, &enumSectionJson)
+	structs, err := getStructDefs(enumJsonBytes)
 	if err != nil {
-		panic(err.Error())
+		return nil, nil, fmt.Errorf("cannot get struct definitions: %w", err)
 	}
-
-	var enums []EnumDef
-
-	var enumJson map[string]json.RawMessage
-	err = json.Unmarshal(enumSectionJson.Enums, &enumJson)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	for k, v := range enumJson {
-		var enumValues []EnumValueDef
-		err := json.Unmarshal(v, &enumValues)
-		if err != nil {
-			panic(err.Error())
-		}
-
-		enums = append(enums, EnumDef{
-			Name:   k,
-			Values: enumValues,
-		})
-	}
-
-	// sort lexicographically for determenistic generation
-	sort.Slice(enums, func(i, j int) bool {
-		return enums[i].Name < enums[j].Name
-	})
-
-	return enums
-}
-
-func getStructDefs(enumJsonBytes []byte) []StructDef {
-	var structSectionJson StructSection
-	err := json.Unmarshal(enumJsonBytes, &structSectionJson)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	var structs []StructDef
-
-	var structJson map[string]json.RawMessage
-	err = json.Unmarshal(structSectionJson.Structs, &structJson)
-	if err != nil {
-		panic(err.Error())
-	}
-	for k, v := range structJson {
-		var memberDefs []StructMemberDef
-		err := json.Unmarshal(v, &memberDefs)
-		if err != nil {
-			panic(err.Error())
-		}
-
-		structs = append(structs, StructDef{
-			Name:    k,
-			Members: memberDefs,
-		})
-	}
-
-	// sort lexicographically for determenistic generation
-	sort.Slice(structs, func(i, j int) bool {
-		return structs[i].Name < structs[j].Name
-	})
-
-	return structs
-}
-
-func shouldSkipStruct(name string) bool {
-	valueTypeStructs := []string{
-		"ImVec1",
-		"ImVec2ih",
-		"ImVec2",
-		"ImVec4",
-		"ImRect",
-		"ImColor",
-		"ImPlotPoint",
-	}
-
-	if !strings.HasPrefix(name, "Im") {
-		return true
-	}
-
-	// Skip all value type struct
-	if funk.ContainsString(valueTypeStructs, name) {
-		return true
-	}
-
-	return false
-}
-
-func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []string, structNames []string) {
-	enums := getEnumDefs(enumJsonBytes)
-	structs := getStructDefs(enumJsonBytes)
 
 	for _, e := range enums {
 		goEnumName := strings.TrimSuffix(e.Name, "_")
@@ -217,51 +51,71 @@ func main() {
 
 	stat, err := os.Stat(*defJsonPath)
 	if err != nil || stat.IsDir() {
-		panic("Invalid definitions json file path")
+		log.Panic("Invalid definitions json file path")
 	}
 
 	stat, err = os.Stat(*enumsJsonpath)
 	if err != nil || stat.IsDir() {
-		panic("Invalid enum json file path")
+		log.Panic("Invalid enum json file path")
 	}
 
 	defJsonBytes, err := os.ReadFile(*defJsonPath)
 	if err != nil {
-		panic(err.Error())
+		log.Panic(err)
 	}
 
 	enumJsonBytes, err := os.ReadFile(*enumsJsonpath)
 	if err != nil {
-		panic(err.Error())
+		log.Panic(err)
 	}
 
 	var refEnumJsonBytes []byte
 	if len(*refEnumsJsonPath) > 0 {
 		refEnumJsonBytes, err = os.ReadFile(*refEnumsJsonPath)
 		if err != nil {
-			panic(err.Error())
+			log.Panic(err)
 		}
 	}
 
 	// get definitions from json file
-	funcs := getFunDefs(defJsonBytes)
+	funcs, err := getFunDefs(defJsonBytes)
+	if err != nil {
+		log.Panic(err.Error())
+	}
 
-	enums := getEnumDefs(enumJsonBytes)
+	enums, err := getEnumDefs(enumJsonBytes)
+	if err != nil {
+		log.Panic(err.Error())
+	}
 
-	structs := getStructDefs(enumJsonBytes)
+	structs, err := getStructDefs(enumJsonBytes)
+	if err != nil {
+		log.Panic(err.Error())
+	}
 
-	validFuncs := generateCppWrapper(*prefix, *include, funcs)
+	validFuncs, err := generateCppWrapper(*prefix, *include, funcs)
+	if err != nil {
+		log.Panic(err)
+	}
 
 	// generate code
 	enumNames := generateGoEnums(*prefix, enums)
 	structNames := generateGoStructs(*prefix, structs)
 
-	structAccessorFuncs := generateCppStructsAccessor(*prefix, validFuncs, structs)
+	structAccessorFuncs, err := generateCppStructsAccessor(*prefix, validFuncs, structs)
+	if err != nil {
+		log.Panic(err)
+	}
+
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
 	// generate reference only enum and struct names
 	if len(refEnumJsonBytes) > 0 {
-		es, ss := getEnumAndStructNames(refEnumJsonBytes)
+		es, ss, err := getEnumAndStructNames(refEnumJsonBytes)
+		if err != nil {
+			log.Panic(err)
+		}
+
 		enumNames = append(enumNames, es...)
 		structNames = append(structNames, ss...)
 	}

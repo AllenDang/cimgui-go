@@ -10,7 +10,7 @@ import (
 )
 
 // Generate cpp wrapper and return valid functions
-func generateCppWrapper(prefix, includePath string, funcDefs []FuncDef) []FuncDef {
+func generateCppWrapper(prefix, includePath string, funcDefs []FuncDef) ([]FuncDef, error) {
 	var validFuncs []FuncDef
 
 	// Generate header
@@ -303,32 +303,36 @@ extern "C" {
 #endif
 `)
 
-	headerFile, err := os.Create(fmt.Sprintf("%s_wrapper.h", prefix))
+	headerPath := fmt.Sprintf("%s_wrapper.h", prefix)
+	headerFile, err := os.Create(headerPath)
 	if err != nil {
-		panic(err.Error())
+		return nil, fmt.Errorf("failed to create header file %v: %v", headerPath, err)
 	}
+
 	defer headerFile.Close()
 
 	_, err = headerFile.WriteString(headerSb.String())
 	if err != nil {
-		panic(err.Error())
+		return nil, fmt.Errorf("failed to write header file %v: %v", headerPath, err)
 	}
 
-	cppFile, err := os.Create(fmt.Sprintf("%s_wrapper.cpp", prefix))
+	cppPath := fmt.Sprintf("%s_wrapper.cpp", prefix)
+	cppFile, err := os.Create(cppPath)
 	if err != nil {
-		panic(err.Error())
+		return nil, fmt.Errorf("failed to create cpp file %v: %v", cppPath, err)
 	}
+
 	defer cppFile.Close()
 
 	_, err = cppFile.WriteString(cppSb.String())
 	if err != nil {
-		panic(err.Error())
+		return nil, fmt.Errorf("failed to write cpp file %v: %v", cppPath, err)
 	}
 
-	return validFuncs
+	return validFuncs, nil
 }
 
-func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []StructDef) []FuncDef {
+func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []StructDef) ([]FuncDef, error) {
 	var structAccessorFuncs []FuncDef
 
 	skipFuncNames := []string{
@@ -442,27 +446,31 @@ extern "C" {
 #endif
 `)
 
-	cppFile, err := os.Create(fmt.Sprintf("%s_structs_accessor.h", prefix))
+	headerPath := fmt.Sprintf("%s_structs_accessor.h", prefix)
+	headerFile, err := os.Create(headerPath)
 	if err != nil {
-		panic(err.Error())
-	}
-	defer cppFile.Close()
-
-	_, err = cppFile.WriteString(sbHeader.String())
-	if err != nil {
-		panic(err.Error())
+		return nil, fmt.Errorf("failed to create cpp file %v: %v", headerPath, err)
 	}
 
-	cppFile, err = os.Create(fmt.Sprintf("%s_structs_accessor.cpp", prefix))
+	defer headerFile.Close()
+
+	_, err = headerFile.WriteString(sbHeader.String())
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("failed to write to file %v: %v", headerPath, err)
 	}
+
+	cppPath := fmt.Sprintf("%s_structs_accessor.cpp", prefix)
+	cppFile, err := os.Create(cppPath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create cpp file %v: %v", cppPath, err)
+	}
+
 	defer cppFile.Close()
 
 	_, err = cppFile.WriteString(sbCpp.String())
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("failed to write to file %v: %v", cppPath, err)
 	}
 
-	return structAccessorFuncs
+	return structAccessorFuncs, nil
 }
