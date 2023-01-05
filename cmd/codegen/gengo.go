@@ -66,6 +66,7 @@ func generateGoEnums(prefix string, enums []EnumDef) []string {
 	if err != nil {
 		panic(err.Error())
 	}
+
 	defer enumFile.Close()
 
 	_, _ = enumFile.WriteString(sb.String())
@@ -115,6 +116,7 @@ func new%[1]sFromC(cvalue C.%[1]s) %[1]s {
 	if err != nil {
 		panic(err.Error())
 	}
+
 	defer structFile.Close()
 
 	_, _ = structFile.WriteString(sb.String())
@@ -128,6 +130,8 @@ type goFuncsGenerator struct {
 
 	sb                 strings.Builder
 	convertedFuncCount int
+
+	shouldGenerate bool
 }
 
 func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, structNames []string) {
@@ -145,13 +149,13 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			continue
 		}
 
-		shouldGenerate, args, argWrappers := generator.generateFunccArgs(f)
+		args, argWrappers := generator.generateFunccArgs(f)
 
 		if len(f.ArgsT) == 0 {
-			shouldGenerate = true
+			generator.shouldGenerate = true
 		}
 
-		if !shouldGenerate {
+		if !generator.shouldGenerate {
 			fmt.Printf("not generated: %s%s\n", f.FuncName, f.Args)
 			continue
 		} else {
@@ -364,6 +368,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 	if err != nil {
 		panic(err.Error())
 	}
+
 	defer goFile.Close()
 
 	_, _ = goFile.WriteString(generator.sb.String())
@@ -392,16 +397,16 @@ func (g *goFuncsGenerator) isEnum(argType string) bool {
 	return false
 }
 
-func (g *goFuncsGenerator) generateFunccArgs(f FuncDef) (shouldGenerate bool, args []string, argWrappers []argOutput) {
+func (g *goFuncsGenerator) generateFunccArgs(f FuncDef) (args []string, argWrappers []argOutput) {
 	for i, a := range f.ArgsT {
-		shouldGenerate = false
+		g.shouldGenerate = false
 
 		if a.Name == "type" {
 			a.Name = "typeArg"
 		}
 
 		if i == 0 && f.StructSetter {
-			shouldGenerate = true
+			g.shouldGenerate = true
 		}
 
 		if f.StructGetter && funk.ContainsString(g.structNames, a.Type) {
@@ -410,7 +415,7 @@ func (g *goFuncsGenerator) generateFunccArgs(f FuncDef) (shouldGenerate bool, ar
 				VarName: fmt.Sprintf("%s.handle()", a.Name),
 			})
 
-			shouldGenerate = true
+			g.shouldGenerate = true
 
 			continue
 		}
@@ -429,7 +434,7 @@ func (g *goFuncsGenerator) generateFunccArgs(f FuncDef) (shouldGenerate bool, ar
 
 			args = append(args, fmt.Sprintf("%s %s", a.Name, argType))
 
-			shouldGenerate = true
+			g.shouldGenerate = true
 			continue
 		}
 
@@ -439,7 +444,7 @@ func (g *goFuncsGenerator) generateFunccArgs(f FuncDef) (shouldGenerate bool, ar
 				VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
 			})
 
-			shouldGenerate = true
+			g.shouldGenerate = true
 			continue
 		}
 
@@ -453,18 +458,18 @@ func (g *goFuncsGenerator) generateFunccArgs(f FuncDef) (shouldGenerate bool, ar
 					VarName: fmt.Sprintf("%s.handle()", a.Name),
 				})
 
-				shouldGenerate = true
+				g.shouldGenerate = true
 				continue
 			}
 		}
 
-		if !shouldGenerate {
+		if !g.shouldGenerate {
 			fmt.Printf("Unknown argument type \"%s\" in function %s\n", a.Type, f.FuncName)
 			break
 		}
 	}
 
-	return shouldGenerate, args, argWrappers
+	return args, argWrappers
 }
 
 type argOutput struct {
