@@ -122,11 +122,19 @@ func new%[1]sFromC(cvalue C.%[1]s) %[1]s {
 	return structNames
 }
 
-func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, structNames []string) {
-	var sb strings.Builder
-	convertedFuncCount := 0
+type goFuncsGenerator struct {
+	prefix string
 
-	writeFuncsFileHeader(prefix, &sb)
+	sb                 strings.Builder
+	convertedFuncCount int
+}
+
+func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, structNames []string) {
+	generator := &goFuncsGenerator{
+		prefix: prefix,
+	}
+
+	generator.writeFuncsFileHeader()
 
 	for _, f := range validFuncs {
 		// check whether the function shouldn't be skipped
@@ -227,22 +235,22 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 			returnType, _ := returnWrapper()
 
-			sb.WriteString(funcSignatureFunc(f.FuncName, args[1:], returnType))
+			generator.sb.WriteString(funcSignatureFunc(f.FuncName, args[1:], returnType))
 
 			// temporary out arg definition
-			sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, returnType))
+			generator.sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, returnType))
 
-			argInvokeStmt := argStmtFunc(argWrappers, &sb)
+			argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
 
 			// C function call
-			sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
+			generator.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
 
 			// return statement
-			sb.WriteString(fmt.Sprintf("return *%s", outArg.Name))
+			generator.sb.WriteString(fmt.Sprintf("return *%s", outArg.Name))
 
-			sb.WriteString("}\n\n")
+			generator.sb.WriteString("}\n\n")
 
-			convertedFuncCount += 1
+			generator.convertedFuncCount += 1
 		case f.Ret == "void":
 			if f.StructSetter {
 				funcParts := strings.Split(f.FuncName, "_")
@@ -251,67 +259,67 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 					continue
 				}
 
-				sb.WriteString(fmt.Sprintf("func (self %[1]s) %[2]s(%[3]s) {\n", funcParts[0], funcName, strings.Join(args, ",")))
+				generator.sb.WriteString(fmt.Sprintf("func (self %[1]s) %[2]s(%[3]s) {\n", funcParts[0], funcName, strings.Join(args, ",")))
 
-				argInvokeStmt := argStmtFunc(argWrappers, &sb)
+				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
 
-				sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
-				sb.WriteString("}\n\n")
+				generator.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
+				generator.sb.WriteString("}\n\n")
 			} else {
-				sb.WriteString(funcSignatureFunc(f.FuncName, args, ""))
+				generator.sb.WriteString(funcSignatureFunc(f.FuncName, args, ""))
 
-				argInvokeStmt := argStmtFunc(argWrappers, &sb)
+				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
 
-				sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
-				sb.WriteString("}\n\n")
+				generator.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
+				generator.sb.WriteString("}\n\n")
 			}
 
-			convertedFuncCount += 1
+			generator.convertedFuncCount += 1
 		default:
 			if rf, err := getReturnTypeWrapperFunc(f.Ret); err == nil {
 				returnType, returnStmt := rf()
 
-				sb.WriteString(funcSignatureFunc(f.FuncName, args, returnType))
+				generator.sb.WriteString(funcSignatureFunc(f.FuncName, args, returnType))
 
-				argInvokeStmt := argStmtFunc(argWrappers, &sb)
+				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
 
-				sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
-				sb.WriteString("}\n\n")
+				generator.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+				generator.sb.WriteString("}\n\n")
 
-				convertedFuncCount += 1
+				generator.convertedFuncCount += 1
 			} else if goEnumName := trimImGuiPrefix(f.Ret); funk.ContainsString(enumNames, goEnumName) {
 				returnType := goEnumName
 
-				sb.WriteString(funcSignatureFunc(f.FuncName, args, returnType))
+				generator.sb.WriteString(funcSignatureFunc(f.FuncName, args, returnType))
 
-				argInvokeStmt := argStmtFunc(argWrappers, &sb)
+				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
 
-				sb.WriteString(fmt.Sprintf("return %s(%s)", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
-				sb.WriteString("}\n\n")
+				generator.sb.WriteString(fmt.Sprintf("return %s(%s)", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+				generator.sb.WriteString("}\n\n")
 
-				convertedFuncCount += 1
+				generator.convertedFuncCount += 1
 			} else if strings.HasSuffix(f.Ret, "*") && (funk.Contains(structNames, strings.TrimSuffix(f.Ret, "*")) || funk.Contains(structNames, strings.TrimSuffix(strings.TrimPrefix(f.Ret, "const "), "*"))) {
 				// return Im struct ptr
 				pureReturnType := strings.TrimPrefix(f.Ret, "const ")
 				pureReturnType = strings.TrimSuffix(pureReturnType, "*")
 
-				sb.WriteString(funcSignatureFunc(f.FuncName, args, pureReturnType))
+				generator.sb.WriteString(funcSignatureFunc(f.FuncName, args, pureReturnType))
 
-				argInvokeStmt := argStmtFunc(argWrappers, &sb)
+				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
 
-				sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(%s))", pureReturnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
-				sb.WriteString("}\n\n")
+				generator.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(%s))", pureReturnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+				generator.sb.WriteString("}\n\n")
 
-				convertedFuncCount += 1
+				generator.convertedFuncCount += 1
 			} else if f.StructGetter && funk.ContainsString(structNames, f.Ret) {
-				sb.WriteString(funcSignatureFunc(f.FuncName, args, f.Ret))
+				generator.sb.WriteString(funcSignatureFunc(f.FuncName, args, f.Ret))
 
-				argInvokeStmt := argStmtFunc(argWrappers, &sb)
+				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
 
-				sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", f.Ret, f.FuncName, argInvokeStmt))
-				sb.WriteString("}\n\n")
+				generator.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", f.Ret, f.FuncName, argInvokeStmt))
+				generator.sb.WriteString("}\n\n")
 
-				convertedFuncCount += 1
+				generator.convertedFuncCount += 1
 			} else if f.Constructor {
 				parts := strings.Split(f.FuncName, "_")
 
@@ -332,22 +340,22 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 				newFuncName := "New" + returnType + suffix
 
-				sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", newFuncName, strings.Join(args, ","), returnType))
+				generator.sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", newFuncName, strings.Join(args, ","), returnType))
 
-				argInvokeStmt := argStmtFunc(argWrappers, &sb)
+				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
 
-				sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", returnType, f.FuncName, argInvokeStmt))
+				generator.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", returnType, f.FuncName, argInvokeStmt))
 
-				sb.WriteString("}\n\n")
+				generator.sb.WriteString("}\n\n")
 
-				convertedFuncCount += 1
+				generator.convertedFuncCount += 1
 			} else {
 				fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)
 			}
 		}
 	}
 
-	fmt.Printf("Convert progress: %d/%d\n", convertedFuncCount, len(validFuncs))
+	fmt.Printf("Convert progress: %d/%d\n", generator.convertedFuncCount, len(validFuncs))
 
 	goFile, err := os.Create(fmt.Sprintf("%s_funcs.go", prefix))
 	if err != nil {
@@ -355,7 +363,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 	}
 	defer goFile.Close()
 
-	_, _ = goFile.WriteString(sb.String())
+	_, _ = goFile.WriteString(generator.sb.String())
 }
 
 type argOutput struct {
@@ -377,17 +385,17 @@ func argStmtFunc(argWrappers []argOutput, sb *strings.Builder) string {
 	return strings.Join(invokeStmt, ",")
 }
 
-func writeFuncsFileHeader(prefix string, sb *strings.Builder) {
-	sb.WriteString(goPackageHeader)
+func (g *goFuncsGenerator) writeFuncsFileHeader() {
+	g.sb.WriteString(goPackageHeader)
 
-	sb.WriteString(fmt.Sprintf(
+	g.sb.WriteString(fmt.Sprintf(
 		`// #include "extra_types.h"
 // #include "%[1]s_structs_accessor.h"
 // #include "%[1]s_wrapper.h"
 import "C"
 import "unsafe"
 
-`, prefix))
+`, g.prefix))
 }
 
 func isEnum(argType string, enumNames []string) bool {
