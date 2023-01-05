@@ -129,85 +129,12 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 	writeFuncsFileHeader(prefix, &sb)
 
 	for _, f := range validFuncs {
+		// check whether the function shouldn't be skipped
 		if funk.ContainsString(skippedFuncs(), f.FuncName) {
 			continue
 		}
 
-		var args []string
-		var argWrappers []argOutput
-
-		shouldGenerate := false
-
-		for i, a := range f.ArgsT {
-			shouldGenerate = false
-
-			if a.Name == "type" {
-				a.Name = "typeArg"
-			}
-
-			if i == 0 && f.StructSetter {
-				shouldGenerate = true
-			}
-
-			if f.StructGetter && funk.ContainsString(structNames, a.Type) {
-				args = append(args, fmt.Sprintf("%s %s", a.Name, a.Type))
-				argWrappers = append(argWrappers, argOutput{
-					VarName: fmt.Sprintf("%s.handle()", a.Name),
-				})
-
-				shouldGenerate = true
-
-				continue
-			}
-
-			if v, err := argWrapper(a.Type); err == nil {
-				argType, argDef, varName := v(a)
-				if goEnumName := trimImGuiPrefix(argType); isEnum(goEnumName, enumNames) {
-					argType = goEnumName
-				}
-
-				argWrappers = append(argWrappers, argOutput{
-					ArgType: argType,
-					ArgDef:  argDef,
-					VarName: varName,
-				})
-
-				args = append(args, fmt.Sprintf("%s %s", a.Name, argType))
-
-				shouldGenerate = true
-				continue
-			}
-
-			if goEnumName := trimImGuiPrefix(a.Type); isEnum(goEnumName, enumNames) {
-				args = append(args, fmt.Sprintf("%s %s", a.Name, goEnumName))
-				argWrappers = append(argWrappers, argOutput{
-					VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
-				})
-
-				shouldGenerate = true
-				continue
-			}
-
-			if strings.HasSuffix(a.Type, "*") {
-				pureType := strings.TrimPrefix(a.Type, "const ")
-				pureType = strings.TrimSuffix(pureType, "*")
-
-				if funk.ContainsString(structNames, pureType) {
-					args = append(args, fmt.Sprintf("%s %s", a.Name, pureType))
-					argWrappers = append(argWrappers, argOutput{
-						VarName: fmt.Sprintf("%s.handle()", a.Name),
-					})
-
-					shouldGenerate = true
-					continue
-				}
-			}
-
-			if !shouldGenerate {
-				fmt.Printf("Unknown argument type \"%s\" in function %s\n", a.Type, f.FuncName)
-				break
-			}
-		}
+		shouldGenerate, args, argWrappers := generateFunccArgs(f, structNames, enumNames)
 
 		if len(f.ArgsT) == 0 {
 			shouldGenerate = true
@@ -471,4 +398,79 @@ func isEnum(argType string, enumNames []string) bool {
 	}
 
 	return false
+}
+
+func generateFunccArgs(f FuncDef, structNames, enumNames []string) (shouldGenerate bool, args []string, argWrappers []argOutput) {
+	for i, a := range f.ArgsT {
+		shouldGenerate = false
+
+		if a.Name == "type" {
+			a.Name = "typeArg"
+		}
+
+		if i == 0 && f.StructSetter {
+			shouldGenerate = true
+		}
+
+		if f.StructGetter && funk.ContainsString(structNames, a.Type) {
+			args = append(args, fmt.Sprintf("%s %s", a.Name, a.Type))
+			argWrappers = append(argWrappers, argOutput{
+				VarName: fmt.Sprintf("%s.handle()", a.Name),
+			})
+
+			shouldGenerate = true
+
+			continue
+		}
+
+		if v, err := argWrapper(a.Type); err == nil {
+			argType, argDef, varName := v(a)
+			if goEnumName := trimImGuiPrefix(argType); isEnum(goEnumName, enumNames) {
+				argType = goEnumName
+			}
+
+			argWrappers = append(argWrappers, argOutput{
+				ArgType: argType,
+				ArgDef:  argDef,
+				VarName: varName,
+			})
+
+			args = append(args, fmt.Sprintf("%s %s", a.Name, argType))
+
+			shouldGenerate = true
+			continue
+		}
+
+		if goEnumName := trimImGuiPrefix(a.Type); isEnum(goEnumName, enumNames) {
+			args = append(args, fmt.Sprintf("%s %s", a.Name, goEnumName))
+			argWrappers = append(argWrappers, argOutput{
+				VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
+			})
+
+			shouldGenerate = true
+			continue
+		}
+
+		if strings.HasSuffix(a.Type, "*") {
+			pureType := strings.TrimPrefix(a.Type, "const ")
+			pureType = strings.TrimSuffix(pureType, "*")
+
+			if funk.ContainsString(structNames, pureType) {
+				args = append(args, fmt.Sprintf("%s %s", a.Name, pureType))
+				argWrappers = append(argWrappers, argOutput{
+					VarName: fmt.Sprintf("%s.handle()", a.Name),
+				})
+
+				shouldGenerate = true
+				continue
+			}
+		}
+
+		if !shouldGenerate {
+			fmt.Printf("Unknown argument type \"%s\" in function %s\n", a.Type, f.FuncName)
+			break
+		}
+	}
+
+	return shouldGenerate, args, argWrappers
 }
