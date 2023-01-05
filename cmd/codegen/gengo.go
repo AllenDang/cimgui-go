@@ -123,7 +123,8 @@ func new%[1]sFromC(cvalue C.%[1]s) %[1]s {
 }
 
 type goFuncsGenerator struct {
-	prefix string
+	prefix                 string
+	structNames, enumNames []string
 
 	sb                 strings.Builder
 	convertedFuncCount int
@@ -131,7 +132,9 @@ type goFuncsGenerator struct {
 
 func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, structNames []string) {
 	generator := &goFuncsGenerator{
-		prefix: prefix,
+		prefix:      prefix,
+		structNames: structNames,
+		enumNames:   enumNames,
 	}
 
 	generator.writeFuncsFileHeader()
@@ -142,7 +145,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			continue
 		}
 
-		shouldGenerate, args, argWrappers := generateFunccArgs(f, structNames, enumNames)
+		shouldGenerate, args, argWrappers := generator.generateFunccArgs(f)
 
 		if len(f.ArgsT) == 0 {
 			shouldGenerate = true
@@ -398,8 +401,8 @@ import "unsafe"
 `, g.prefix))
 }
 
-func isEnum(argType string, enumNames []string) bool {
-	for _, en := range enumNames {
+func (g *goFuncsGenerator) isEnum(argType string) bool {
+	for _, en := range g.enumNames {
 		if argType == en {
 			return true
 		}
@@ -408,7 +411,7 @@ func isEnum(argType string, enumNames []string) bool {
 	return false
 }
 
-func generateFunccArgs(f FuncDef, structNames, enumNames []string) (shouldGenerate bool, args []string, argWrappers []argOutput) {
+func (g *goFuncsGenerator) generateFunccArgs(f FuncDef) (shouldGenerate bool, args []string, argWrappers []argOutput) {
 	for i, a := range f.ArgsT {
 		shouldGenerate = false
 
@@ -420,7 +423,7 @@ func generateFunccArgs(f FuncDef, structNames, enumNames []string) (shouldGenera
 			shouldGenerate = true
 		}
 
-		if f.StructGetter && funk.ContainsString(structNames, a.Type) {
+		if f.StructGetter && funk.ContainsString(g.structNames, a.Type) {
 			args = append(args, fmt.Sprintf("%s %s", a.Name, a.Type))
 			argWrappers = append(argWrappers, argOutput{
 				VarName: fmt.Sprintf("%s.handle()", a.Name),
@@ -433,7 +436,7 @@ func generateFunccArgs(f FuncDef, structNames, enumNames []string) (shouldGenera
 
 		if v, err := argWrapper(a.Type); err == nil {
 			argType, argDef, varName := v(a)
-			if goEnumName := trimImGuiPrefix(argType); isEnum(goEnumName, enumNames) {
+			if goEnumName := trimImGuiPrefix(argType); g.isEnum(goEnumName) {
 				argType = goEnumName
 			}
 
@@ -449,7 +452,7 @@ func generateFunccArgs(f FuncDef, structNames, enumNames []string) (shouldGenera
 			continue
 		}
 
-		if goEnumName := trimImGuiPrefix(a.Type); isEnum(goEnumName, enumNames) {
+		if goEnumName := trimImGuiPrefix(a.Type); g.isEnum(goEnumName) {
 			args = append(args, fmt.Sprintf("%s %s", a.Name, goEnumName))
 			argWrappers = append(argWrappers, argOutput{
 				VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
@@ -463,7 +466,7 @@ func generateFunccArgs(f FuncDef, structNames, enumNames []string) (shouldGenera
 			pureType := strings.TrimPrefix(a.Type, "const ")
 			pureType = strings.TrimSuffix(pureType, "*")
 
-			if funk.ContainsString(structNames, pureType) {
+			if funk.ContainsString(g.structNames, pureType) {
 				args = append(args, fmt.Sprintf("%s %s", a.Name, pureType))
 				argWrappers = append(argWrappers, argOutput{
 					VarName: fmt.Sprintf("%s.handle()", a.Name),
