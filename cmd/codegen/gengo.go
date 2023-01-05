@@ -112,26 +112,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 	var sb strings.Builder
 	convertedFuncCount := 0
 
-	sb.WriteString(goPackageHeader)
-
-	sb.WriteString(fmt.Sprintf(
-		`// #include "extra_types.h"
-// #include "%[1]s_structs_accessor.h"
-// #include "%[1]s_wrapper.h"
-import "C"
-import "unsafe"
-
-`, prefix))
-
-	isEnum := func(argType string) bool {
-		for _, en := range enumNames {
-			if argType == en {
-				return true
-			}
-		}
-
-		return false
-	}
+	writeFuncsFileHeader(prefix, &sb)
 
 	// Skip functions
 	skipFuntions := []string{
@@ -170,13 +151,15 @@ import "unsafe"
 				argWrappers = append(argWrappers, argOutput{
 					VarName: fmt.Sprintf("%s.handle()", a.Name),
 				})
+
 				shouldGenerate = true
+
 				continue
 			}
 
 			if v, err := argWrapper(a.Type); err == nil {
 				argType, argDef, varName := v(a)
-				if goEnumName := trimImGuiPrefix(argType); isEnum(goEnumName) {
+				if goEnumName := trimImGuiPrefix(argType); isEnum(goEnumName, enumNames) {
 					argType = goEnumName
 				}
 
@@ -192,7 +175,7 @@ import "unsafe"
 				continue
 			}
 
-			if goEnumName := trimImGuiPrefix(a.Type); isEnum(goEnumName) {
+			if goEnumName := trimImGuiPrefix(a.Type); isEnum(goEnumName, isEnum) {
 				args = append(args, fmt.Sprintf("%s %s", a.Name, goEnumName))
 				argWrappers = append(argWrappers, argOutput{
 					VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
@@ -462,4 +445,27 @@ func argStmtFunc(argWrappers []argOutput, sb *strings.Builder) string {
 	}
 
 	return strings.Join(invokeStmt, ",")
+}
+
+func writeFuncsFileHeader(prefix string, sb *strings.Builder) {
+	sb.WriteString(goPackageHeader)
+
+	sb.WriteString(fmt.Sprintf(
+		`// #include "extra_types.h"
+// #include "%[1]s_structs_accessor.h"
+// #include "%[1]s_wrapper.h"
+import "C"
+import "unsafe"
+
+`, prefix))
+}
+
+func isEnum(argType string, enumNames []string) bool {
+	for _, en := range enumNames {
+		if argType == en {
+			return true
+		}
+	}
+
+	return false
 }
