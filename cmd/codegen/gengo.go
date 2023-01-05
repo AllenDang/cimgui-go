@@ -9,6 +9,20 @@ import (
 	"github.com/thoas/go-funk"
 )
 
+// Skip functions
+// e.g. they are temporarily hard-coded
+func skippedFuncs() []string {
+	return []string{
+		"InputText",
+		"InputTextWithHint",
+		"InputTextMultiline",
+		"FontAtlas_GetTexDataAsAlpha8",
+		"FontAtlas_GetTexDataAsAlpha8V",
+		"FontAtlas_GetTexDataAsRGBA32",
+		"FontAtlas_GetTexDataAsRGBA32V",
+	}
+}
+
 func trimImGuiPrefix(id string) string {
 	// don't trim prefixes for implot's ImAxis - it conflicts with ImGuIAxis (from imgui_internal.h)
 	if strings.HasPrefix(id, "ImAxis") {
@@ -114,19 +128,8 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 	writeFuncsFileHeader(prefix, &sb)
 
-	// Skip functions
-	skipFuntions := []string{
-		"InputText",
-		"InputTextWithHint",
-		"InputTextMultiline",
-		"FontAtlas_GetTexDataAsAlpha8",
-		"FontAtlas_GetTexDataAsAlpha8V",
-		"FontAtlas_GetTexDataAsRGBA32",
-		"FontAtlas_GetTexDataAsRGBA32V",
-	}
-
 	for _, f := range validFuncs {
-		if funk.ContainsString(skipFuntions, f.FuncName) {
+		if funk.ContainsString(skippedFuncs(), f.FuncName) {
 			continue
 		}
 
@@ -175,7 +178,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 				continue
 			}
 
-			if goEnumName := trimImGuiPrefix(a.Type); isEnum(goEnumName, isEnum) {
+			if goEnumName := trimImGuiPrefix(a.Type); isEnum(goEnumName, enumNames) {
 				args = append(args, fmt.Sprintf("%s %s", a.Name, goEnumName))
 				argWrappers = append(argWrappers, argOutput{
 					VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
