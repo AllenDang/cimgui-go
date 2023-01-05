@@ -369,25 +369,6 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 	_, _ = goFile.WriteString(generator.sb.String())
 }
 
-type argOutput struct {
-	ArgType string
-	ArgDef  string
-	VarName string
-}
-
-// Generate function args
-func argStmtFunc(argWrappers []argOutput, sb *strings.Builder) string {
-	var invokeStmt []string
-	for _, aw := range argWrappers {
-		invokeStmt = append(invokeStmt, aw.VarName)
-		if len(aw.ArgDef) > 0 {
-			sb.WriteString(fmt.Sprintf("%s\n\n", aw.ArgDef))
-		}
-	}
-
-	return strings.Join(invokeStmt, ",")
-}
-
 func (g *goFuncsGenerator) writeFuncsFileHeader() {
 	g.sb.WriteString(goPackageHeader)
 
@@ -484,4 +465,23 @@ func (g *goFuncsGenerator) generateFunccArgs(f FuncDef) (shouldGenerate bool, ar
 	}
 
 	return shouldGenerate, args, argWrappers
+}
+
+type argOutput struct {
+	ArgType string
+	ArgDef  string
+	VarName string
+}
+
+// Generate function args
+func argStmtFunc(argWrappers []argOutput, sb *strings.Builder) string {
+	var invokeStmt []string
+	for _, aw := range argWrappers {
+		invokeStmt = append(invokeStmt, aw.VarName)
+		if len(aw.ArgDef) > 0 {
+			sb.WriteString(fmt.Sprintf("%s\n\n", aw.ArgDef))
+		}
+	}
+
+	return strings.Join(invokeStmt, ",")
 }
