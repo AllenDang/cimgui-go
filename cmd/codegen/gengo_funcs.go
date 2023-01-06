@@ -78,30 +78,11 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 			generator.convertedFuncCount += 1
 		case f.Ret == "void":
-			if f.StructSetter {
-				funcParts := strings.Split(f.FuncName, "_")
-				funcName := strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
-				if len(funcName) == 0 || !strings.HasPrefix(funcName, "Set") || funk.ContainsString(skippedStructs(), funcParts[0]) {
-					continue
-				}
-
-				generator.sb.WriteString(fmt.Sprintf("func (self %[1]s) %[2]s(%[3]s) {\n", funcParts[0], funcName, strings.Join(args, ",")))
-
-				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
-
-				generator.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
-				generator.sb.WriteString("}\n\n")
-			} else {
-				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, "", f))
-
-				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
-
-				generator.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
-				generator.sb.WriteString("}\n\n")
+			if shouldContinue := generator.generateVoidFuncBody(f, args, argWrappers); !shouldContinue {
+				continue
 			}
-
-			generator.convertedFuncCount += 1
 		default:
+			//var returnType, returnStmt string
 			if rf, err := getReturnTypeWrapperFunc(f.Ret); err == nil {
 				returnType, returnStmt := rf()
 
@@ -347,4 +328,32 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(funcName string, args []s
 	}
 
 	return fmt.Sprintf("%sfunc %s(%s) %s {\n", commentSb.String(), funcName, strings.Join(args, ","), returnType)
+}
+
+func (g *goFuncsGenerator) generateVoidFuncBody(f FuncDef, args []string, argWrappers []argOutput) (shouldContinue bool) {
+	if f.StructSetter {
+		funcParts := strings.Split(f.FuncName, "_")
+		funcName := strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
+		if len(funcName) == 0 || !strings.HasPrefix(funcName, "Set") || funk.ContainsString(skippedStructs(), funcParts[0]) {
+			return false
+		}
+
+		g.sb.WriteString(fmt.Sprintf("func (self %[1]s) %[2]s(%[3]s) {\n", funcParts[0], funcName, strings.Join(args, ",")))
+
+		argInvokeStmt := argStmtFunc(argWrappers, &g.sb)
+
+		g.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
+		g.sb.WriteString("}\n\n")
+	} else {
+		g.sb.WriteString(g.generateFuncDeclarationStmt(f.FuncName, args, "", f))
+
+		argInvokeStmt := argStmtFunc(argWrappers, &g.sb)
+
+		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
+		g.sb.WriteString("}\n\n")
+	}
+
+	g.convertedFuncCount += 1
+
+	return true
 }
