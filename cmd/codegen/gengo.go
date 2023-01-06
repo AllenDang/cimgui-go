@@ -19,6 +19,21 @@ func skippedFuncs() []string {
 	}
 }
 
+// structures that's methods should be skipped
+func skippedStructs() []string {
+	return []string{
+		"ImVec1",
+		"ImVec2",
+		"ImVec2ih",
+		"ImVec4",
+		"ImColor",
+		"ImRect",
+		"StbUndoRecord",
+		"StbUndoState",
+		"StbTexteditRow",
+	}
+}
+
 func trimImGuiPrefix(id string) string {
 	// don't trim prefixes for implot's ImAxis - it conflicts with ImGuIAxis (from imgui_internal.h)
 	if strings.HasPrefix(id, "ImAxis") {

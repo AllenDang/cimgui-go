@@ -29,67 +29,12 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			generator.shouldGenerate = true
 		}
 
+		// stop, when the function should not be generated
 		if !generator.shouldGenerate {
 			fmt.Printf("not generated: %s%s\n", f.FuncName, f.Args)
 			continue
 		} else {
 			fmt.Printf("generated: %s%s\n", f.FuncName, f.Args)
-		}
-
-		skipStructs := []string{
-			"ImVec1",
-			"ImVec2",
-			"ImVec2ih",
-			"ImVec4",
-			"ImColor",
-			"ImRect",
-			"StbUndoRecord",
-			"StbUndoState",
-			"StbTexteditRow",
-		}
-
-		funcSignatureFunc := func(funcName string, args []string, returnType string) string {
-			funcParts := strings.Split(funcName, "_")
-			typeName := funcParts[0]
-
-			// Generate default param value hint
-			var commentSb strings.Builder
-			if len(f.Defaults) > 0 {
-				commentSb.WriteString(fmt.Sprintf("// %s parameter default value hint:\n", funcName))
-
-				// sort lexicographically for determenistic generation
-				type defaultParam struct {
-					name  string
-					value string
-				}
-				defaults := make([]defaultParam, 0, len(f.Defaults))
-				for n, v := range f.Defaults {
-					defaults = append(defaults, defaultParam{name: n, value: v})
-				}
-				sort.Slice(defaults, func(i, j int) bool {
-					return defaults[i].name < defaults[j].name
-				})
-
-				for _, p := range defaults {
-					commentSb.WriteString(fmt.Sprintf("// %s: %s\n", p.name, p.value))
-				}
-			}
-
-			if strings.Contains(funcName, "_") &&
-				len(funcParts) > 1 &&
-				len(args) > 0 && strings.Contains(args[0], "self ") &&
-				!funk.ContainsString(skipStructs, typeName) {
-				newFuncName := strings.TrimPrefix(funcName, typeName+"_")
-				newArgs := args
-				if len(newArgs) > 0 {
-					newArgs = args[1:]
-				}
-
-				typeName = strings.TrimPrefix(args[0], "self ")
-				return fmt.Sprintf("%sfunc (self %s) %s(%s) %s {\n", commentSb.String(), typeName, newFuncName, strings.Join(newArgs, ","), returnType)
-			}
-
-			return fmt.Sprintf("%sfunc %s(%s) %s {\n", commentSb.String(), funcName, strings.Join(args, ","), returnType)
 		}
 
 		switch {
@@ -116,7 +61,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 			returnType, _ := returnWrapper()
 
-			generator.sb.WriteString(funcSignatureFunc(f.FuncName, args[1:], returnType))
+			generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args[1:], returnType, f))
 
 			// temporary out arg definition
 			generator.sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, returnType))
@@ -136,7 +81,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			if f.StructSetter {
 				funcParts := strings.Split(f.FuncName, "_")
 				funcName := strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
-				if len(funcName) == 0 || !strings.HasPrefix(funcName, "Set") || funk.ContainsString(skipStructs, funcParts[0]) {
+				if len(funcName) == 0 || !strings.HasPrefix(funcName, "Set") || funk.ContainsString(skippedStructs(), funcParts[0]) {
 					continue
 				}
 
@@ -147,7 +92,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 				generator.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
 				generator.sb.WriteString("}\n\n")
 			} else {
-				generator.sb.WriteString(funcSignatureFunc(f.FuncName, args, ""))
+				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, "", f))
 
 				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
 
@@ -160,7 +105,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			if rf, err := getReturnTypeWrapperFunc(f.Ret); err == nil {
 				returnType, returnStmt := rf()
 
-				generator.sb.WriteString(funcSignatureFunc(f.FuncName, args, returnType))
+				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, returnType, f))
 
 				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
 
@@ -171,7 +116,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			} else if goEnumName := trimImGuiPrefix(f.Ret); funk.ContainsString(enumNames, goEnumName) {
 				returnType := goEnumName
 
-				generator.sb.WriteString(funcSignatureFunc(f.FuncName, args, returnType))
+				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, returnType, f))
 
 				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
 
@@ -184,7 +129,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 				pureReturnType := strings.TrimPrefix(f.Ret, "const ")
 				pureReturnType = strings.TrimSuffix(pureReturnType, "*")
 
-				generator.sb.WriteString(funcSignatureFunc(f.FuncName, args, pureReturnType))
+				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, pureReturnType, f))
 
 				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
 
@@ -193,7 +138,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 				generator.convertedFuncCount += 1
 			} else if f.StructGetter && funk.ContainsString(structNames, f.Ret) {
-				generator.sb.WriteString(funcSignatureFunc(f.FuncName, args, f.Ret))
+				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, f.Ret, f))
 
 				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
 
@@ -355,4 +300,51 @@ func (g *goFuncsGenerator) generateFunccArgs(f FuncDef) (args []string, argWrapp
 	}
 
 	return args, argWrappers
+}
+
+// this method is responsible for createing a function declaration statement.
+// it takes function name, list of arguments and return type and returns go statement.
+// e.g.: func (self *ImGuiType) FuncName(arg1 type1, arg2 type2) returnType {
+func (g *goFuncsGenerator) generateFuncDeclarationStmt(funcName string, args []string, returnType string, f FuncDef) (functionDeclaration string) {
+	funcParts := strings.Split(funcName, "_")
+	typeName := funcParts[0]
+
+	// Generate default param value hint
+	var commentSb strings.Builder
+	if len(f.Defaults) > 0 {
+		commentSb.WriteString(fmt.Sprintf("// %s parameter default value hint:\n", funcName))
+
+		// sort lexicographically for determenistic generation
+		type defaultParam struct {
+			name  string
+			value string
+		}
+		defaults := make([]defaultParam, 0, len(f.Defaults))
+		for n, v := range f.Defaults {
+			defaults = append(defaults, defaultParam{name: n, value: v})
+		}
+		sort.Slice(defaults, func(i, j int) bool {
+			return defaults[i].name < defaults[j].name
+		})
+
+		for _, p := range defaults {
+			commentSb.WriteString(fmt.Sprintf("// %s: %s\n", p.name, p.value))
+		}
+	}
+
+	if strings.Contains(funcName, "_") &&
+		len(funcParts) > 1 &&
+		len(args) > 0 && strings.Contains(args[0], "self ") &&
+		!funk.ContainsString(skippedStructs(), typeName) {
+		newFuncName := strings.TrimPrefix(funcName, typeName+"_")
+		newArgs := args
+		if len(newArgs) > 0 {
+			newArgs = args[1:]
+		}
+
+		typeName = strings.TrimPrefix(args[0], "self ")
+		return fmt.Sprintf("%sfunc (self %s) %s(%s) %s {\n", commentSb.String(), typeName, newFuncName, strings.Join(newArgs, ","), returnType)
+	}
+
+	return fmt.Sprintf("%sfunc %s(%s) %s {\n", commentSb.String(), funcName, strings.Join(args, ","), returnType)
 }
