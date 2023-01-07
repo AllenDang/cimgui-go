@@ -50,140 +50,9 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			fmt.Printf("generated: %s%s\n", f.FuncName, f.Args)
 		}
 
-		switch {
-		case f.NonUDT == 1:
-			/*
-				template:
-				func FuncName(arg2 type2) typeOfArg1 {
-					pOut := &typeOfArg1{}
-					pOutArg, pOutFin := pOut.wrapped()
-					defer pOutFin()
-					C.FuncName(pOutArg, arg2)
-					return *pOut
-				}
-			*/
-
-			// find out the return type
-			outArg := f.ArgsT[0]
-			outArgT := strings.TrimSuffix(outArg.Type, "*")
-			returnWrapper, err := getReturnTypeWrapperFunc(outArgT)
-			if err != nil {
-				fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)
-				continue
-			}
-
-			returnType, _ := returnWrapper()
-
-			generator.sb.WriteString(generator.generateFuncDeclarationStmt("", f.FuncName, args[1:], returnType, f))
-
-			// temporary out arg definition
-			generator.sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, returnType))
-
-			argInvokeStmt := generator.generateFuncBody(argWrappers)
-
-			// C function call
-			generator.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
-
-			// return statement
-			generator.sb.WriteString(fmt.Sprintf("return *%s", outArg.Name))
-		default:
-			var returnType, returnStmt, reciever string
-			funcName := f.FuncName
-
-			// determine kind of function:
-			returnTypeType := returnTypeUnknown
-			rf, err := getReturnTypeWrapperFunc(f.Ret)
-			if err == nil {
-				returnTypeType = returnTypeKnown
-			}
-
-			goEnumName := trimImGuiPrefix(f.Ret)
-			if f.Ret == "void" {
-				if f.StructSetter {
-					returnTypeType = returnTypeStructSetter
-				} else {
-					returnTypeType = returnTypeVoid
-				}
-			} else if funk.ContainsString(enumNames, goEnumName) {
-				returnTypeType = returnTypeEnum
-			} else if strings.HasSuffix(f.Ret, "*") && (funk.Contains(structNames, strings.TrimSuffix(f.Ret, "*")) || funk.Contains(structNames, strings.TrimSuffix(strings.TrimPrefix(f.Ret, "const "), "*"))) {
-				returnTypeType = returnTypeStructPtr
-			} else if f.StructGetter && funk.ContainsString(structNames, f.Ret) {
-				returnTypeType = returnTypeStruct
-			} else if f.Constructor {
-				returnTypeType = returnTypeConstructor
-			}
-
-			// determine function name, return type (and return statement)
-			switch returnTypeType {
-			case returnTypeVoid:
-				// noop
-			case returnTypeStructSetter:
-				funcParts := strings.Split(f.FuncName, "_")
-				funcName = strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
-				if len(funcName) == 0 || !strings.HasPrefix(funcName, "Set") || funk.ContainsString(skippedStructs(), funcParts[0]) {
-					continue
-				}
-
-				reciever = funcParts[0]
-			case returnTypeKnown:
-				returnType, returnStmt = rf()
-			case returnTypeEnum:
-				returnType = goEnumName
-			case returnTypeStructPtr:
-				// return Im struct ptr
-				returnType = strings.TrimPrefix(f.Ret, "const ")
-				returnType = strings.TrimSuffix(returnType, "*")
-			case returnTypeStruct:
-				returnType = f.Ret
-			case returnTypeConstructor:
-				parts := strings.Split(f.FuncName, "_")
-
-				returnType = parts[0]
-
-				if funk.ContainsString(structNames, "Im"+returnType) {
-					returnType = "Im" + returnType
-				} else if funk.ContainsString(structNames, "ImGui"+returnType) {
-					returnType = "ImGui" + returnType
-				} else {
-					continue
-				}
-
-				suffix := ""
-				if len(parts) > 2 {
-					suffix = strings.Join(parts[2:], "")
-				}
-
-				funcName = "New" + returnType + suffix
-			default:
-				fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)
-				continue
-			}
-
-			generator.sb.WriteString(generator.generateFuncDeclarationStmt(reciever, funcName, args, returnType, f))
-			argInvokeStmt := generator.generateFuncBody(argWrappers)
-
-			switch returnTypeType {
-			case returnTypeVoid:
-				generator.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
-			case returnTypeStructSetter:
-				fmt.Println("\n\n\nwrite...")
-				generator.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
-			case returnTypeKnown:
-				generator.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
-			case returnTypeEnum:
-				generator.sb.WriteString(fmt.Sprintf("return %s(%s)", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
-			case returnTypeStructPtr:
-				generator.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(%s))", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
-			case returnTypeStruct:
-				generator.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", f.Ret, f.FuncName, argInvokeStmt))
-			case returnTypeConstructor:
-				generator.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", returnType, f.FuncName, argInvokeStmt))
-			}
+		if noErrors := generator.GenerateFuncttion(f, args, argWrappers); !noErrors {
+			continue
 		}
-
-		generator.sb.WriteString("}\n\n")
-		generator.convertedFuncCount += 1
 	}
 
 	fmt.Printf("Convert progress: %d/%d\n", generator.convertedFuncCount, len(validFuncs))
@@ -377,4 +246,156 @@ func (g *goFuncsGenerator) generateFuncBody(argWrappers []argOutput) string {
 	}
 
 	return strings.Join(invokeStmt, ",")
+}
+
+func (g *goFuncsGenerator) GenerateFuncttion(f FuncDef, args []string, argWrappers []argOutput) (noErrors bool) {
+	switch {
+	case f.NonUDT == 1:
+		noErrors = g.generateNonUDTFunc(f, args, argWrappers)
+	default:
+		noErrors = g.generateFunc(f, args, argWrappers)
+	}
+
+	g.sb.WriteString("}\n\n")
+	g.convertedFuncCount += 1
+
+	return
+}
+
+// generateFunc will smartly generate a function basing on its return type and arguments.
+func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []argOutput) (noErrors bool) {
+	var returnType, returnStmt, reciever string
+	funcName := f.FuncName
+
+	// determine kind of function:
+	returnTypeType := returnTypeUnknown
+	rf, err := getReturnTypeWrapperFunc(f.Ret)
+	if err == nil {
+		returnTypeType = returnTypeKnown
+	}
+
+	goEnumName := trimImGuiPrefix(f.Ret)
+	if f.Ret == "void" {
+		if f.StructSetter {
+			returnTypeType = returnTypeStructSetter
+		} else {
+			returnTypeType = returnTypeVoid
+		}
+	} else if funk.ContainsString(g.enumNames, goEnumName) {
+		returnTypeType = returnTypeEnum
+	} else if strings.HasSuffix(f.Ret, "*") && (funk.Contains(g.structNames, strings.TrimSuffix(f.Ret, "*")) || funk.Contains(g.structNames, strings.TrimSuffix(strings.TrimPrefix(f.Ret, "const "), "*"))) {
+		returnTypeType = returnTypeStructPtr
+	} else if f.StructGetter && funk.ContainsString(g.structNames, f.Ret) {
+		returnTypeType = returnTypeStruct
+	} else if f.Constructor {
+		returnTypeType = returnTypeConstructor
+	}
+
+	// determine function name, return type (and return statement)
+	switch returnTypeType {
+	case returnTypeVoid:
+		// noop
+	case returnTypeStructSetter:
+		funcParts := strings.Split(f.FuncName, "_")
+		funcName = strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
+		if len(funcName) == 0 || !strings.HasPrefix(funcName, "Set") || funk.ContainsString(skippedStructs(), funcParts[0]) {
+			return false
+		}
+
+		reciever = funcParts[0]
+	case returnTypeKnown:
+		returnType, returnStmt = rf()
+	case returnTypeEnum:
+		returnType = goEnumName
+	case returnTypeStructPtr:
+		// return Im struct ptr
+		returnType = strings.TrimPrefix(f.Ret, "const ")
+		returnType = strings.TrimSuffix(returnType, "*")
+	case returnTypeStruct:
+		returnType = f.Ret
+	case returnTypeConstructor:
+		parts := strings.Split(f.FuncName, "_")
+
+		returnType = parts[0]
+
+		if funk.ContainsString(g.structNames, "Im"+returnType) {
+			returnType = "Im" + returnType
+		} else if funk.ContainsString(g.structNames, "ImGui"+returnType) {
+			returnType = "ImGui" + returnType
+		} else {
+			return false
+		}
+
+		suffix := ""
+		if len(parts) > 2 {
+			suffix = strings.Join(parts[2:], "")
+		}
+
+		funcName = "New" + returnType + suffix
+	default:
+		fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)
+		return false
+	}
+
+	g.sb.WriteString(g.generateFuncDeclarationStmt(reciever, funcName, args, returnType, f))
+	argInvokeStmt := g.generateFuncBody(argWrappers)
+
+	switch returnTypeType {
+	case returnTypeVoid:
+		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
+	case returnTypeStructSetter:
+		g.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
+	case returnTypeKnown:
+		g.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+	case returnTypeEnum:
+		g.sb.WriteString(fmt.Sprintf("return %s(%s)", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+	case returnTypeStructPtr:
+		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(%s))", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+	case returnTypeStruct:
+		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", f.Ret, f.FuncName, argInvokeStmt))
+	case returnTypeConstructor:
+		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", returnType, f.FuncName, argInvokeStmt))
+	}
+
+	return true
+}
+
+// generateNonUDTFunc generates a function tagged with NonUDT.
+// it will consider a first argument of this function as a return type.
+/*
+	template:
+	func FuncName(arg2 type2) typeOfArg1 {
+		pOut := &typeOfArg1{}
+		pOutArg, pOutFin := pOut.wrapped()
+		defer pOutFin()
+		C.FuncName(pOutArg, arg2)
+		return *pOut
+	}
+*/
+func (g *goFuncsGenerator) generateNonUDTFunc(f FuncDef, args []string, argWrappers []argOutput) (noErrors bool) {
+	// find out the return type
+	outArg := f.ArgsT[0]
+	outArgT := strings.TrimSuffix(outArg.Type, "*")
+	returnWrapper, err := getReturnTypeWrapperFunc(outArgT)
+	if err != nil {
+		fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)
+		return false
+	}
+
+	returnType, _ := returnWrapper()
+
+	g.sb.WriteString(g.generateFuncDeclarationStmt("", f.FuncName, args[1:], returnType, f))
+
+	// temporary out arg definition
+	g.sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, returnType))
+
+	argInvokeStmt := g.generateFuncBody(argWrappers)
+
+	// C function call
+	g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
+
+	// return statement
+	g.sb.WriteString(fmt.Sprintf("return *%s", outArg.Name))
+
+	return true
 }
