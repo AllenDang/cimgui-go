@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -47,20 +46,10 @@ func trimImGuiPrefix(id string) string {
 }
 
 type argOutput struct {
+	// go-valid argument type (e.g. string, ImVec2, etc.)
 	ArgType string
-	ArgDef  string
+	// argument deffinition (e.g. arg1, arg1Fin := ...\ndefer arg1Fin())
+	ArgDef string
+	// name of argument (e.g. arg1)
 	VarName string
-}
-
-// Generate function args
-func argStmtFunc(argWrappers []argOutput, sb *strings.Builder) string {
-	var invokeStmt []string
-	for _, aw := range argWrappers {
-		invokeStmt = append(invokeStmt, aw.VarName)
-		if len(aw.ArgDef) > 0 {
-			sb.WriteString(fmt.Sprintf("%s\n\n", aw.ArgDef))
-		}
-	}
-
-	return strings.Join(invokeStmt, ",")
 }

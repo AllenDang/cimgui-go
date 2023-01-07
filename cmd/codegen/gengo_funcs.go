@@ -23,7 +23,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			continue
 		}
 
-		args, argWrappers := generator.generateFunccArgs(f)
+		args, argWrappers := generator.generateFuncArgs(f)
 
 		if len(f.ArgsT) == 0 {
 			generator.shouldGenerate = true
@@ -66,7 +66,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			// temporary out arg definition
 			generator.sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, returnType))
 
-			argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
+			argInvokeStmt := generator.argStmtFunc(argWrappers)
 
 			// C function call
 			generator.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
@@ -82,13 +82,12 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 				continue
 			}
 		default:
-			//var returnType, returnStmt string
 			if rf, err := getReturnTypeWrapperFunc(f.Ret); err == nil {
 				returnType, returnStmt := rf()
 
 				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, returnType, f))
 
-				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
+				argInvokeStmt := generator.argStmtFunc(argWrappers)
 
 				generator.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 				generator.sb.WriteString("}\n\n")
@@ -99,7 +98,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, returnType, f))
 
-				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
+				argInvokeStmt := generator.argStmtFunc(argWrappers)
 
 				generator.sb.WriteString(fmt.Sprintf("return %s(%s)", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 				generator.sb.WriteString("}\n\n")
@@ -112,7 +111,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, pureReturnType, f))
 
-				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
+				argInvokeStmt := generator.argStmtFunc(argWrappers)
 
 				generator.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(%s))", pureReturnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 				generator.sb.WriteString("}\n\n")
@@ -121,7 +120,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			} else if f.StructGetter && funk.ContainsString(structNames, f.Ret) {
 				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, f.Ret, f))
 
-				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
+				argInvokeStmt := generator.argStmtFunc(argWrappers)
 
 				generator.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", f.Ret, f.FuncName, argInvokeStmt))
 				generator.sb.WriteString("}\n\n")
@@ -149,7 +148,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 				generator.sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", newFuncName, strings.Join(args, ","), returnType))
 
-				argInvokeStmt := argStmtFunc(argWrappers, &generator.sb)
+				argInvokeStmt := generator.argStmtFunc(argWrappers)
 
 				generator.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", returnType, f.FuncName, argInvokeStmt))
 
@@ -173,7 +172,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 	_, err = goFile.WriteString(generator.sb.String())
 	if err != nil {
-		return fmt.Errorf("failed to write content of GO file: %w", err))
+		return fmt.Errorf("failed to write content of GO file: %w", err)
 	}
 
 	return nil
@@ -213,7 +212,7 @@ func (g *goFuncsGenerator) isEnum(argType string) bool {
 	return false
 }
 
-func (g *goFuncsGenerator) generateFunccArgs(f FuncDef) (args []string, argWrappers []argOutput) {
+func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappers []argOutput) {
 	for i, a := range f.ArgsT {
 		g.shouldGenerate = false
 
@@ -345,14 +344,14 @@ func (g *goFuncsGenerator) generateVoidFuncBody(f FuncDef, args []string, argWra
 
 		g.sb.WriteString(fmt.Sprintf("func (self %[1]s) %[2]s(%[3]s) {\n", funcParts[0], funcName, strings.Join(args, ",")))
 
-		argInvokeStmt := argStmtFunc(argWrappers, &g.sb)
+		argInvokeStmt := g.argStmtFunc(argWrappers)
 
 		g.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
 		g.sb.WriteString("}\n\n")
 	} else {
 		g.sb.WriteString(g.generateFuncDeclarationStmt(f.FuncName, args, "", f))
 
-		argInvokeStmt := argStmtFunc(argWrappers, &g.sb)
+		argInvokeStmt := g.argStmtFunc(argWrappers)
 
 		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
 		g.sb.WriteString("}\n\n")
@@ -361,4 +360,20 @@ func (g *goFuncsGenerator) generateVoidFuncBody(f FuncDef, args []string, argWra
 	g.convertedFuncCount += 1
 
 	return true
+}
+
+// Generate function body
+// and returns function call arguments
+// e.g.:
+// it will write the following into the buffer:
+func (g *goFuncsGenerator) argStmtFunc(argWrappers []argOutput) string {
+	var invokeStmt []string
+	for _, aw := range argWrappers {
+		invokeStmt = append(invokeStmt, aw.VarName)
+		if len(aw.ArgDef) > 0 {
+			g.sb.WriteString(fmt.Sprintf("%s\n\n", aw.ArgDef))
+		}
+	}
+
+	return strings.Join(invokeStmt, ",")
 }
