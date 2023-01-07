@@ -66,7 +66,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			// temporary out arg definition
 			generator.sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, returnType))
 
-			argInvokeStmt := generator.argStmtFunc(argWrappers)
+			argInvokeStmt := generator.generateFuncBody(argWrappers)
 
 			// C function call
 			generator.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
@@ -87,7 +87,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, returnType, f))
 
-				argInvokeStmt := generator.argStmtFunc(argWrappers)
+				argInvokeStmt := generator.generateFuncBody(argWrappers)
 
 				generator.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 				generator.sb.WriteString("}\n\n")
@@ -98,7 +98,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, returnType, f))
 
-				argInvokeStmt := generator.argStmtFunc(argWrappers)
+				argInvokeStmt := generator.generateFuncBody(argWrappers)
 
 				generator.sb.WriteString(fmt.Sprintf("return %s(%s)", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 				generator.sb.WriteString("}\n\n")
@@ -111,7 +111,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, pureReturnType, f))
 
-				argInvokeStmt := generator.argStmtFunc(argWrappers)
+				argInvokeStmt := generator.generateFuncBody(argWrappers)
 
 				generator.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(%s))", pureReturnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 				generator.sb.WriteString("}\n\n")
@@ -120,7 +120,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			} else if f.StructGetter && funk.ContainsString(structNames, f.Ret) {
 				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, f.Ret, f))
 
-				argInvokeStmt := generator.argStmtFunc(argWrappers)
+				argInvokeStmt := generator.generateFuncBody(argWrappers)
 
 				generator.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", f.Ret, f.FuncName, argInvokeStmt))
 				generator.sb.WriteString("}\n\n")
@@ -148,7 +148,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 				generator.sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", newFuncName, strings.Join(args, ","), returnType))
 
-				argInvokeStmt := generator.argStmtFunc(argWrappers)
+				argInvokeStmt := generator.generateFuncBody(argWrappers)
 
 				generator.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", returnType, f.FuncName, argInvokeStmt))
 
@@ -344,14 +344,14 @@ func (g *goFuncsGenerator) generateVoidFuncBody(f FuncDef, args []string, argWra
 
 		g.sb.WriteString(fmt.Sprintf("func (self %[1]s) %[2]s(%[3]s) {\n", funcParts[0], funcName, strings.Join(args, ",")))
 
-		argInvokeStmt := g.argStmtFunc(argWrappers)
+		argInvokeStmt := g.generateFuncBody(argWrappers)
 
 		g.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
 		g.sb.WriteString("}\n\n")
 	} else {
 		g.sb.WriteString(g.generateFuncDeclarationStmt(f.FuncName, args, "", f))
 
-		argInvokeStmt := g.argStmtFunc(argWrappers)
+		argInvokeStmt := g.generateFuncBody(argWrappers)
 
 		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
 		g.sb.WriteString("}\n\n")
@@ -366,7 +366,7 @@ func (g *goFuncsGenerator) generateVoidFuncBody(f FuncDef, args []string, argWra
 // and returns function call arguments
 // e.g.:
 // it will write the following into the buffer:
-func (g *goFuncsGenerator) argStmtFunc(argWrappers []argOutput) string {
+func (g *goFuncsGenerator) generateFuncBody(argWrappers []argOutput) string {
 	var invokeStmt []string
 	for _, aw := range argWrappers {
 		invokeStmt = append(invokeStmt, aw.VarName)
