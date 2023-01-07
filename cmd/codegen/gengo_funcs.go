@@ -13,6 +13,7 @@ type returnTypeType byte
 const (
 	returnTypeUnknown returnTypeType = iota
 	returnTypeVoid
+	returnTypeStructSetter
 	returnTypeKnown
 	returnTypeEnum
 	returnTypeStructPtr
@@ -73,7 +74,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 			returnType, _ := returnWrapper()
 
-			generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args[1:], returnType, f))
+			generator.sb.WriteString(generator.generateFuncDeclarationStmt("", f.FuncName, args[1:], returnType, f))
 
 			// temporary out arg definition
 			generator.sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, returnType))
@@ -89,14 +90,11 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			generator.sb.WriteString("}\n\n")
 
 			generator.convertedFuncCount += 1
-		case f.Ret == "void":
-			if shouldContinue := generator.generateVoidFuncBody(f, args, argWrappers); !shouldContinue {
-				continue
-			}
 		default:
-			var returnType, returnStmt string
+			var returnType, returnStmt, reciever string
 			funcName := f.FuncName
 
+			// determine kind of function:
 			returnTypeType := returnTypeUnknown
 			rf, err := getReturnTypeWrapperFunc(f.Ret)
 			if err == nil {
@@ -104,7 +102,13 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			}
 
 			goEnumName := trimImGuiPrefix(f.Ret)
-			if funk.ContainsString(enumNames, goEnumName) {
+			if f.Ret == "void" {
+				if f.StructSetter {
+					returnTypeType = returnTypeStructSetter
+				} else {
+					returnTypeType = returnTypeVoid
+				}
+			} else if funk.ContainsString(enumNames, goEnumName) {
 				returnTypeType = returnTypeEnum
 			} else if strings.HasSuffix(f.Ret, "*") && (funk.Contains(structNames, strings.TrimSuffix(f.Ret, "*")) || funk.Contains(structNames, strings.TrimSuffix(strings.TrimPrefix(f.Ret, "const "), "*"))) {
 				returnTypeType = returnTypeStructPtr
@@ -116,6 +120,16 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 			// determine function name, return type (and return statement)
 			switch returnTypeType {
+			case returnTypeVoid:
+				// noop
+			case returnTypeStructSetter:
+				funcParts := strings.Split(f.FuncName, "_")
+				funcName = strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
+				if len(funcName) == 0 || !strings.HasPrefix(funcName, "Set") || funk.ContainsString(skippedStructs(), funcParts[0]) {
+					continue
+				}
+
+				reciever = funcParts[0]
 			case returnTypeKnown:
 				returnType, returnStmt = rf()
 			case returnTypeEnum:
@@ -150,10 +164,15 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 				continue
 			}
 
-			generator.sb.WriteString(generator.generateFuncDeclarationStmt(funcName, args, returnType, f))
+			generator.sb.WriteString(generator.generateFuncDeclarationStmt(reciever, funcName, args, returnType, f))
 			argInvokeStmt := generator.generateFuncBody(argWrappers)
 
 			switch returnTypeType {
+			case returnTypeVoid:
+				generator.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
+			case returnTypeStructSetter:
+				fmt.Println("\n\n\nwrite...")
+				generator.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
 			case returnTypeKnown:
 				generator.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 			case returnTypeEnum:
@@ -301,9 +320,13 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 // this method is responsible for createing a function declaration statement.
 // it takes function name, list of arguments and return type and returns go statement.
 // e.g.: func (self *ImGuiType) FuncName(arg1 type1, arg2 type2) returnType {
-func (g *goFuncsGenerator) generateFuncDeclarationStmt(funcName string, args []string, returnType string, f FuncDef) (functionDeclaration string) {
+func (g *goFuncsGenerator) generateFuncDeclarationStmt(reciever string, funcName string, args []string, returnType string, f FuncDef) (functionDeclaration string) {
 	funcParts := strings.Split(funcName, "_")
 	typeName := funcParts[0]
+
+	if len(reciever) > 0 {
+		reciever = fmt.Sprintf("(self *%s)", reciever)
+	}
 
 	// Generate default param value hint
 	var commentSb strings.Builder
@@ -339,38 +362,10 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(funcName string, args []s
 		}
 
 		typeName = strings.TrimPrefix(args[0], "self ")
-		return fmt.Sprintf("%sfunc (self %s) %s(%s) %s {\n", commentSb.String(), typeName, newFuncName, strings.Join(newArgs, ","), returnType)
+		return fmt.Sprintf("%sfunc %s (self %s) %s(%s) %s {\n", commentSb.String(), reciever, typeName, newFuncName, strings.Join(newArgs, ","), returnType)
 	}
 
-	return fmt.Sprintf("%sfunc %s(%s) %s {\n", commentSb.String(), funcName, strings.Join(args, ","), returnType)
-}
-
-func (g *goFuncsGenerator) generateVoidFuncBody(f FuncDef, args []string, argWrappers []argOutput) (shouldContinue bool) {
-	if f.StructSetter {
-		funcParts := strings.Split(f.FuncName, "_")
-		funcName := strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
-		if len(funcName) == 0 || !strings.HasPrefix(funcName, "Set") || funk.ContainsString(skippedStructs(), funcParts[0]) {
-			return false
-		}
-
-		g.sb.WriteString(fmt.Sprintf("func (self %[1]s) %[2]s(%[3]s) {\n", funcParts[0], funcName, strings.Join(args, ",")))
-
-		argInvokeStmt := g.generateFuncBody(argWrappers)
-
-		g.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
-		g.sb.WriteString("}\n\n")
-	} else {
-		g.sb.WriteString(g.generateFuncDeclarationStmt(f.FuncName, args, "", f))
-
-		argInvokeStmt := g.generateFuncBody(argWrappers)
-
-		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
-		g.sb.WriteString("}\n\n")
-	}
-
-	g.convertedFuncCount += 1
-
-	return true
+	return fmt.Sprintf("%sfunc %s %s(%s) %s {\n", commentSb.String(), reciever, funcName, strings.Join(args, ","), returnType)
 }
 
 // Generate function body

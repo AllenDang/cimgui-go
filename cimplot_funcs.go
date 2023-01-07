@@ -9231,7 +9231,7 @@ func Plot_TagY_Bool(y float64, col Vec4) {
 	C.Plot_TagY_Bool(C.double(y), col.toC())
 }
 
-func (self ImPlotAlignmentData) SetVertical(v bool) {
+func (self *ImPlotAlignmentData) SetVertical(v bool) {
 	C.ImPlotAlignmentData_SetVertical(self.handle(), C.bool(v))
 }
 
@@ -9239,7 +9239,7 @@ func (self ImPlotAlignmentData) GetVertical() bool {
 	return C.ImPlotAlignmentData_GetVertical(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotAlignmentData) SetPadA(v float32) {
+func (self *ImPlotAlignmentData) SetPadA(v float32) {
 	C.ImPlotAlignmentData_SetPadA(self.handle(), C.float(v))
 }
 
@@ -9247,7 +9247,7 @@ func (self ImPlotAlignmentData) GetPadA() float32 {
 	return float32(C.ImPlotAlignmentData_GetPadA(self.handle()))
 }
 
-func (self ImPlotAlignmentData) SetPadB(v float32) {
+func (self *ImPlotAlignmentData) SetPadB(v float32) {
 	C.ImPlotAlignmentData_SetPadB(self.handle(), C.float(v))
 }
 
@@ -9255,7 +9255,7 @@ func (self ImPlotAlignmentData) GetPadB() float32 {
 	return float32(C.ImPlotAlignmentData_GetPadB(self.handle()))
 }
 
-func (self ImPlotAlignmentData) SetPadAMax(v float32) {
+func (self *ImPlotAlignmentData) SetPadAMax(v float32) {
 	C.ImPlotAlignmentData_SetPadAMax(self.handle(), C.float(v))
 }
 
@@ -9263,7 +9263,7 @@ func (self ImPlotAlignmentData) GetPadAMax() float32 {
 	return float32(C.ImPlotAlignmentData_GetPadAMax(self.handle()))
 }
 
-func (self ImPlotAlignmentData) SetPadBMax(v float32) {
+func (self *ImPlotAlignmentData) SetPadBMax(v float32) {
 	C.ImPlotAlignmentData_SetPadBMax(self.handle(), C.float(v))
 }
 
@@ -9271,7 +9271,7 @@ func (self ImPlotAlignmentData) GetPadBMax() float32 {
 	return float32(C.ImPlotAlignmentData_GetPadBMax(self.handle()))
 }
 
-func (self ImPlotAnnotation) SetPos(v Vec2) {
+func (self *ImPlotAnnotation) SetPos(v Vec2) {
 	C.ImPlotAnnotation_SetPos(self.handle(), v.toC())
 }
 
@@ -9281,7 +9281,7 @@ func (self ImPlotAnnotation) GetPos() Vec2 {
 	return *out
 }
 
-func (self ImPlotAnnotation) SetOffset(v Vec2) {
+func (self *ImPlotAnnotation) SetOffset(v Vec2) {
 	C.ImPlotAnnotation_SetOffset(self.handle(), v.toC())
 }
 
@@ -9291,7 +9291,7 @@ func (self ImPlotAnnotation) GetOffset() Vec2 {
 	return *out
 }
 
-func (self ImPlotAnnotation) SetColorBg(v uint32) {
+func (self *ImPlotAnnotation) SetColorBg(v uint32) {
 	C.ImPlotAnnotation_SetColorBg(self.handle(), C.ImU32(v))
 }
 
@@ -9299,7 +9299,7 @@ func (self ImPlotAnnotation) GetColorBg() uint32 {
 	return uint32(C.ImPlotAnnotation_GetColorBg(self.handle()))
 }
 
-func (self ImPlotAnnotation) SetColorFg(v uint32) {
+func (self *ImPlotAnnotation) SetColorFg(v uint32) {
 	C.ImPlotAnnotation_SetColorFg(self.handle(), C.ImU32(v))
 }
 
@@ -9307,7 +9307,7 @@ func (self ImPlotAnnotation) GetColorFg() uint32 {
 	return uint32(C.ImPlotAnnotation_GetColorFg(self.handle()))
 }
 
-func (self ImPlotAnnotation) SetTextOffset(v int32) {
+func (self *ImPlotAnnotation) SetTextOffset(v int32) {
 	C.ImPlotAnnotation_SetTextOffset(self.handle(), C.int(v))
 }
 
@@ -9315,7 +9315,7 @@ func (self ImPlotAnnotation) GetTextOffset() int {
 	return int(C.ImPlotAnnotation_GetTextOffset(self.handle()))
 }
 
-func (self ImPlotAnnotation) SetClamp(v bool) {
+func (self *ImPlotAnnotation) SetClamp(v bool) {
 	C.ImPlotAnnotation_SetClamp(self.handle(), C.bool(v))
 }
 
@@ -9327,7 +9327,7 @@ func (self ImPlotAnnotationCollection) GetTextBuffer() ImGuiTextBuffer {
 	return newImGuiTextBufferFromC(C.ImPlotAnnotationCollection_GetTextBuffer(self.handle()))
 }
 
-func (self ImPlotAnnotationCollection) SetSize(v int32) {
+func (self *ImPlotAnnotationCollection) SetSize(v int32) {
 	C.ImPlotAnnotationCollection_SetSize(self.handle(), C.int(v))
 }
 
@@ -9335,7 +9335,7 @@ func (self ImPlotAnnotationCollection) GetSize() int {
 	return int(C.ImPlotAnnotationCollection_GetSize(self.handle()))
 }
 
-func (self ImPlotAxis) SetID(v ImGuiID) {
+func (self *ImPlotAxis) SetID(v ImGuiID) {
 	C.ImPlotAxis_SetID(self.handle(), C.ImGuiID(v))
 }
 
@@ -9343,7 +9343,7 @@ func (self ImPlotAxis) GetID() ImGuiID {
 	return ImGuiID(C.ImPlotAxis_GetID(self.handle()))
 }
 
-func (self ImPlotAxis) SetFlags(v PlotAxisFlags) {
+func (self *ImPlotAxis) SetFlags(v PlotAxisFlags) {
 	C.ImPlotAxis_SetFlags(self.handle(), C.ImPlotAxisFlags(v))
 }
 
@@ -9351,7 +9351,7 @@ func (self ImPlotAxis) GetFlags() PlotAxisFlags {
 	return PlotAxisFlags(C.ImPlotAxis_GetFlags(self.handle()))
 }
 
-func (self ImPlotAxis) SetPreviousFlags(v PlotAxisFlags) {
+func (self *ImPlotAxis) SetPreviousFlags(v PlotAxisFlags) {
 	C.ImPlotAxis_SetPreviousFlags(self.handle(), C.ImPlotAxisFlags(v))
 }
 
@@ -9363,7 +9363,7 @@ func (self ImPlotAxis) GetRange() ImPlotRange {
 	return newImPlotRangeFromC(C.ImPlotAxis_GetRange(self.handle()))
 }
 
-func (self ImPlotAxis) SetRangeCond(v PlotCond) {
+func (self *ImPlotAxis) SetRangeCond(v PlotCond) {
 	C.ImPlotAxis_SetRangeCond(self.handle(), C.ImPlotCond(v))
 }
 
@@ -9371,7 +9371,7 @@ func (self ImPlotAxis) GetRangeCond() PlotCond {
 	return PlotCond(C.ImPlotAxis_GetRangeCond(self.handle()))
 }
 
-func (self ImPlotAxis) SetScale(v PlotScale) {
+func (self *ImPlotAxis) SetScale(v PlotScale) {
 	C.ImPlotAxis_SetScale(self.handle(), C.ImPlotScale(v))
 }
 
@@ -9383,7 +9383,7 @@ func (self ImPlotAxis) GetFitExtents() ImPlotRange {
 	return newImPlotRangeFromC(C.ImPlotAxis_GetFitExtents(self.handle()))
 }
 
-func (self ImPlotAxis) SetOrthoAxis(v ImPlotAxis) {
+func (self *ImPlotAxis) SetOrthoAxis(v ImPlotAxis) {
 	C.ImPlotAxis_SetOrthoAxis(self.handle(), v.handle())
 }
 
@@ -9403,7 +9403,7 @@ func (self ImPlotAxis) GetTicker() ImPlotTicker {
 	return newImPlotTickerFromC(C.ImPlotAxis_GetTicker(self.handle()))
 }
 
-func (self ImPlotAxis) SetFormatterData(v unsafe.Pointer) {
+func (self *ImPlotAxis) SetFormatterData(v unsafe.Pointer) {
 	C.ImPlotAxis_SetFormatterData(self.handle(), v)
 }
 
@@ -9411,21 +9411,21 @@ func (self ImPlotAxis) GetFormatterData() unsafe.Pointer {
 	return unsafe.Pointer(C.ImPlotAxis_GetFormatterData(self.handle()))
 }
 
-func (self ImPlotAxis) SetLinkedMin(v *float64) {
+func (self *ImPlotAxis) SetLinkedMin(v *float64) {
 	vArg, vFin := wrapNumberPtr[C.double, float64](v)
 	defer vFin()
 
 	C.ImPlotAxis_SetLinkedMin(self.handle(), vArg)
 }
 
-func (self ImPlotAxis) SetLinkedMax(v *float64) {
+func (self *ImPlotAxis) SetLinkedMax(v *float64) {
 	vArg, vFin := wrapNumberPtr[C.double, float64](v)
 	defer vFin()
 
 	C.ImPlotAxis_SetLinkedMax(self.handle(), vArg)
 }
 
-func (self ImPlotAxis) SetPickerLevel(v int32) {
+func (self *ImPlotAxis) SetPickerLevel(v int32) {
 	C.ImPlotAxis_SetPickerLevel(self.handle(), C.int(v))
 }
 
@@ -9441,7 +9441,7 @@ func (self ImPlotAxis) GetPickerTimeMax() ImPlotTime {
 	return newImPlotTimeFromC(C.ImPlotAxis_GetPickerTimeMax(self.handle()))
 }
 
-func (self ImPlotAxis) SetTransformData(v unsafe.Pointer) {
+func (self *ImPlotAxis) SetTransformData(v unsafe.Pointer) {
 	C.ImPlotAxis_SetTransformData(self.handle(), v)
 }
 
@@ -9449,7 +9449,7 @@ func (self ImPlotAxis) GetTransformData() unsafe.Pointer {
 	return unsafe.Pointer(C.ImPlotAxis_GetTransformData(self.handle()))
 }
 
-func (self ImPlotAxis) SetPixelMin(v float32) {
+func (self *ImPlotAxis) SetPixelMin(v float32) {
 	C.ImPlotAxis_SetPixelMin(self.handle(), C.float(v))
 }
 
@@ -9457,7 +9457,7 @@ func (self ImPlotAxis) GetPixelMin() float32 {
 	return float32(C.ImPlotAxis_GetPixelMin(self.handle()))
 }
 
-func (self ImPlotAxis) SetPixelMax(v float32) {
+func (self *ImPlotAxis) SetPixelMax(v float32) {
 	C.ImPlotAxis_SetPixelMax(self.handle(), C.float(v))
 }
 
@@ -9465,7 +9465,7 @@ func (self ImPlotAxis) GetPixelMax() float32 {
 	return float32(C.ImPlotAxis_GetPixelMax(self.handle()))
 }
 
-func (self ImPlotAxis) SetScaleMin(v float64) {
+func (self *ImPlotAxis) SetScaleMin(v float64) {
 	C.ImPlotAxis_SetScaleMin(self.handle(), C.double(v))
 }
 
@@ -9473,7 +9473,7 @@ func (self ImPlotAxis) GetScaleMin() float64 {
 	return float64(C.ImPlotAxis_GetScaleMin(self.handle()))
 }
 
-func (self ImPlotAxis) SetScaleMax(v float64) {
+func (self *ImPlotAxis) SetScaleMax(v float64) {
 	C.ImPlotAxis_SetScaleMax(self.handle(), C.double(v))
 }
 
@@ -9481,7 +9481,7 @@ func (self ImPlotAxis) GetScaleMax() float64 {
 	return float64(C.ImPlotAxis_GetScaleMax(self.handle()))
 }
 
-func (self ImPlotAxis) SetScaleToPixel(v float64) {
+func (self *ImPlotAxis) SetScaleToPixel(v float64) {
 	C.ImPlotAxis_SetScaleToPixel(self.handle(), C.double(v))
 }
 
@@ -9489,7 +9489,7 @@ func (self ImPlotAxis) GetScaleToPixel() float64 {
 	return float64(C.ImPlotAxis_GetScaleToPixel(self.handle()))
 }
 
-func (self ImPlotAxis) SetDatum1(v float32) {
+func (self *ImPlotAxis) SetDatum1(v float32) {
 	C.ImPlotAxis_SetDatum1(self.handle(), C.float(v))
 }
 
@@ -9497,7 +9497,7 @@ func (self ImPlotAxis) GetDatum1() float32 {
 	return float32(C.ImPlotAxis_GetDatum1(self.handle()))
 }
 
-func (self ImPlotAxis) SetDatum2(v float32) {
+func (self *ImPlotAxis) SetDatum2(v float32) {
 	C.ImPlotAxis_SetDatum2(self.handle(), C.float(v))
 }
 
@@ -9505,7 +9505,7 @@ func (self ImPlotAxis) GetDatum2() float32 {
 	return float32(C.ImPlotAxis_GetDatum2(self.handle()))
 }
 
-func (self ImPlotAxis) SetHoverRect(v Rect) {
+func (self *ImPlotAxis) SetHoverRect(v Rect) {
 	C.ImPlotAxis_SetHoverRect(self.handle(), v.toC())
 }
 
@@ -9515,7 +9515,7 @@ func (self ImPlotAxis) GetHoverRect() Rect {
 	return *out
 }
 
-func (self ImPlotAxis) SetLabelOffset(v int32) {
+func (self *ImPlotAxis) SetLabelOffset(v int32) {
 	C.ImPlotAxis_SetLabelOffset(self.handle(), C.int(v))
 }
 
@@ -9523,7 +9523,7 @@ func (self ImPlotAxis) GetLabelOffset() int {
 	return int(C.ImPlotAxis_GetLabelOffset(self.handle()))
 }
 
-func (self ImPlotAxis) SetColorMaj(v uint32) {
+func (self *ImPlotAxis) SetColorMaj(v uint32) {
 	C.ImPlotAxis_SetColorMaj(self.handle(), C.ImU32(v))
 }
 
@@ -9531,7 +9531,7 @@ func (self ImPlotAxis) GetColorMaj() uint32 {
 	return uint32(C.ImPlotAxis_GetColorMaj(self.handle()))
 }
 
-func (self ImPlotAxis) SetColorMin(v uint32) {
+func (self *ImPlotAxis) SetColorMin(v uint32) {
 	C.ImPlotAxis_SetColorMin(self.handle(), C.ImU32(v))
 }
 
@@ -9539,7 +9539,7 @@ func (self ImPlotAxis) GetColorMin() uint32 {
 	return uint32(C.ImPlotAxis_GetColorMin(self.handle()))
 }
 
-func (self ImPlotAxis) SetColorTick(v uint32) {
+func (self *ImPlotAxis) SetColorTick(v uint32) {
 	C.ImPlotAxis_SetColorTick(self.handle(), C.ImU32(v))
 }
 
@@ -9547,7 +9547,7 @@ func (self ImPlotAxis) GetColorTick() uint32 {
 	return uint32(C.ImPlotAxis_GetColorTick(self.handle()))
 }
 
-func (self ImPlotAxis) SetColorTxt(v uint32) {
+func (self *ImPlotAxis) SetColorTxt(v uint32) {
 	C.ImPlotAxis_SetColorTxt(self.handle(), C.ImU32(v))
 }
 
@@ -9555,7 +9555,7 @@ func (self ImPlotAxis) GetColorTxt() uint32 {
 	return uint32(C.ImPlotAxis_GetColorTxt(self.handle()))
 }
 
-func (self ImPlotAxis) SetColorBg(v uint32) {
+func (self *ImPlotAxis) SetColorBg(v uint32) {
 	C.ImPlotAxis_SetColorBg(self.handle(), C.ImU32(v))
 }
 
@@ -9563,7 +9563,7 @@ func (self ImPlotAxis) GetColorBg() uint32 {
 	return uint32(C.ImPlotAxis_GetColorBg(self.handle()))
 }
 
-func (self ImPlotAxis) SetColorHov(v uint32) {
+func (self *ImPlotAxis) SetColorHov(v uint32) {
 	C.ImPlotAxis_SetColorHov(self.handle(), C.ImU32(v))
 }
 
@@ -9571,7 +9571,7 @@ func (self ImPlotAxis) GetColorHov() uint32 {
 	return uint32(C.ImPlotAxis_GetColorHov(self.handle()))
 }
 
-func (self ImPlotAxis) SetColorAct(v uint32) {
+func (self *ImPlotAxis) SetColorAct(v uint32) {
 	C.ImPlotAxis_SetColorAct(self.handle(), C.ImU32(v))
 }
 
@@ -9579,7 +9579,7 @@ func (self ImPlotAxis) GetColorAct() uint32 {
 	return uint32(C.ImPlotAxis_GetColorAct(self.handle()))
 }
 
-func (self ImPlotAxis) SetColorHiLi(v uint32) {
+func (self *ImPlotAxis) SetColorHiLi(v uint32) {
 	C.ImPlotAxis_SetColorHiLi(self.handle(), C.ImU32(v))
 }
 
@@ -9587,7 +9587,7 @@ func (self ImPlotAxis) GetColorHiLi() uint32 {
 	return uint32(C.ImPlotAxis_GetColorHiLi(self.handle()))
 }
 
-func (self ImPlotAxis) SetEnabled(v bool) {
+func (self *ImPlotAxis) SetEnabled(v bool) {
 	C.ImPlotAxis_SetEnabled(self.handle(), C.bool(v))
 }
 
@@ -9595,7 +9595,7 @@ func (self ImPlotAxis) GetEnabled() bool {
 	return C.ImPlotAxis_GetEnabled(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotAxis) SetVertical(v bool) {
+func (self *ImPlotAxis) SetVertical(v bool) {
 	C.ImPlotAxis_SetVertical(self.handle(), C.bool(v))
 }
 
@@ -9603,7 +9603,7 @@ func (self ImPlotAxis) GetVertical() bool {
 	return C.ImPlotAxis_GetVertical(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotAxis) SetFitThisFrame(v bool) {
+func (self *ImPlotAxis) SetFitThisFrame(v bool) {
 	C.ImPlotAxis_SetFitThisFrame(self.handle(), C.bool(v))
 }
 
@@ -9611,7 +9611,7 @@ func (self ImPlotAxis) GetFitThisFrame() bool {
 	return C.ImPlotAxis_GetFitThisFrame(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotAxis) SetHasRange(v bool) {
+func (self *ImPlotAxis) SetHasRange(v bool) {
 	C.ImPlotAxis_SetHasRange(self.handle(), C.bool(v))
 }
 
@@ -9619,7 +9619,7 @@ func (self ImPlotAxis) GetHasRange() bool {
 	return C.ImPlotAxis_GetHasRange(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotAxis) SetHasFormatSpec(v bool) {
+func (self *ImPlotAxis) SetHasFormatSpec(v bool) {
 	C.ImPlotAxis_SetHasFormatSpec(self.handle(), C.bool(v))
 }
 
@@ -9627,7 +9627,7 @@ func (self ImPlotAxis) GetHasFormatSpec() bool {
 	return C.ImPlotAxis_GetHasFormatSpec(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotAxis) SetShowDefaultTicks(v bool) {
+func (self *ImPlotAxis) SetShowDefaultTicks(v bool) {
 	C.ImPlotAxis_SetShowDefaultTicks(self.handle(), C.bool(v))
 }
 
@@ -9635,7 +9635,7 @@ func (self ImPlotAxis) GetShowDefaultTicks() bool {
 	return C.ImPlotAxis_GetShowDefaultTicks(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotAxis) SetHovered(v bool) {
+func (self *ImPlotAxis) SetHovered(v bool) {
 	C.ImPlotAxis_SetHovered(self.handle(), C.bool(v))
 }
 
@@ -9643,7 +9643,7 @@ func (self ImPlotAxis) GetHovered() bool {
 	return C.ImPlotAxis_GetHovered(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotAxis) SetHeld(v bool) {
+func (self *ImPlotAxis) SetHeld(v bool) {
 	C.ImPlotAxis_SetHeld(self.handle(), C.bool(v))
 }
 
@@ -9659,7 +9659,7 @@ func (self ImPlotColormapData) GetMap() ImGuiStorage {
 	return newImGuiStorageFromC(C.ImPlotColormapData_GetMap(self.handle()))
 }
 
-func (self ImPlotColormapData) SetCount(v int32) {
+func (self *ImPlotColormapData) SetCount(v int32) {
 	C.ImPlotColormapData_SetCount(self.handle(), C.int(v))
 }
 
@@ -9667,7 +9667,7 @@ func (self ImPlotColormapData) GetCount() int {
 	return int(C.ImPlotColormapData_GetCount(self.handle()))
 }
 
-func (self ImPlotContext) SetCurrentPlot(v ImPlotPlot) {
+func (self *ImPlotContext) SetCurrentPlot(v ImPlotPlot) {
 	C.ImPlotContext_SetCurrentPlot(self.handle(), v.handle())
 }
 
@@ -9675,7 +9675,7 @@ func (self ImPlotContext) GetCurrentPlot() ImPlotPlot {
 	return (ImPlotPlot)(unsafe.Pointer(C.ImPlotContext_GetCurrentPlot(self.handle())))
 }
 
-func (self ImPlotContext) SetCurrentSubplot(v ImPlotSubplot) {
+func (self *ImPlotContext) SetCurrentSubplot(v ImPlotSubplot) {
 	C.ImPlotContext_SetCurrentSubplot(self.handle(), v.handle())
 }
 
@@ -9683,7 +9683,7 @@ func (self ImPlotContext) GetCurrentSubplot() ImPlotSubplot {
 	return (ImPlotSubplot)(unsafe.Pointer(C.ImPlotContext_GetCurrentSubplot(self.handle())))
 }
 
-func (self ImPlotContext) SetCurrentItems(v ImPlotItemGroup) {
+func (self *ImPlotContext) SetCurrentItems(v ImPlotItemGroup) {
 	C.ImPlotContext_SetCurrentItems(self.handle(), v.handle())
 }
 
@@ -9691,7 +9691,7 @@ func (self ImPlotContext) GetCurrentItems() ImPlotItemGroup {
 	return (ImPlotItemGroup)(unsafe.Pointer(C.ImPlotContext_GetCurrentItems(self.handle())))
 }
 
-func (self ImPlotContext) SetCurrentItem(v ImPlotItem) {
+func (self *ImPlotContext) SetCurrentItem(v ImPlotItem) {
 	C.ImPlotContext_SetCurrentItem(self.handle(), v.handle())
 }
 
@@ -9699,7 +9699,7 @@ func (self ImPlotContext) GetCurrentItem() ImPlotItem {
 	return (ImPlotItem)(unsafe.Pointer(C.ImPlotContext_GetCurrentItem(self.handle())))
 }
 
-func (self ImPlotContext) SetPreviousItem(v ImPlotItem) {
+func (self *ImPlotContext) SetPreviousItem(v ImPlotItem) {
 	C.ImPlotContext_SetPreviousItem(self.handle(), v.handle())
 }
 
@@ -9719,7 +9719,7 @@ func (self ImPlotContext) GetTags() ImPlotTagCollection {
 	return newImPlotTagCollectionFromC(C.ImPlotContext_GetTags(self.handle()))
 }
 
-func (self ImPlotContext) SetChildWindowMade(v bool) {
+func (self *ImPlotContext) SetChildWindowMade(v bool) {
 	C.ImPlotContext_SetChildWindowMade(self.handle(), C.bool(v))
 }
 
@@ -9735,7 +9735,7 @@ func (self ImPlotContext) GetColormapData() ImPlotColormapData {
 	return newImPlotColormapDataFromC(C.ImPlotContext_GetColormapData(self.handle()))
 }
 
-func (self ImPlotContext) SetDigitalPlotItemCnt(v int32) {
+func (self *ImPlotContext) SetDigitalPlotItemCnt(v int32) {
 	C.ImPlotContext_SetDigitalPlotItemCnt(self.handle(), C.int(v))
 }
 
@@ -9743,7 +9743,7 @@ func (self ImPlotContext) GetDigitalPlotItemCnt() int {
 	return int(C.ImPlotContext_GetDigitalPlotItemCnt(self.handle()))
 }
 
-func (self ImPlotContext) SetDigitalPlotOffset(v int32) {
+func (self *ImPlotContext) SetDigitalPlotOffset(v int32) {
 	C.ImPlotContext_SetDigitalPlotOffset(self.handle(), C.int(v))
 }
 
@@ -9763,7 +9763,7 @@ func (self ImPlotContext) GetInputMap() ImPlotInputMap {
 	return newImPlotInputMapFromC(C.ImPlotContext_GetInputMap(self.handle()))
 }
 
-func (self ImPlotContext) SetOpenContextThisFrame(v bool) {
+func (self *ImPlotContext) SetOpenContextThisFrame(v bool) {
 	C.ImPlotContext_SetOpenContextThisFrame(self.handle(), C.bool(v))
 }
 
@@ -9775,7 +9775,7 @@ func (self ImPlotContext) GetMousePosStringBuilder() ImGuiTextBuffer {
 	return newImGuiTextBufferFromC(C.ImPlotContext_GetMousePosStringBuilder(self.handle()))
 }
 
-func (self ImPlotContext) SetCurrentAlignmentH(v ImPlotAlignmentData) {
+func (self *ImPlotContext) SetCurrentAlignmentH(v ImPlotAlignmentData) {
 	C.ImPlotContext_SetCurrentAlignmentH(self.handle(), v.handle())
 }
 
@@ -9783,7 +9783,7 @@ func (self ImPlotContext) GetCurrentAlignmentH() ImPlotAlignmentData {
 	return (ImPlotAlignmentData)(unsafe.Pointer(C.ImPlotContext_GetCurrentAlignmentH(self.handle())))
 }
 
-func (self ImPlotContext) SetCurrentAlignmentV(v ImPlotAlignmentData) {
+func (self *ImPlotContext) SetCurrentAlignmentV(v ImPlotAlignmentData) {
 	C.ImPlotContext_SetCurrentAlignmentV(self.handle(), v.handle())
 }
 
@@ -9791,7 +9791,7 @@ func (self ImPlotContext) GetCurrentAlignmentV() ImPlotAlignmentData {
 	return (ImPlotAlignmentData)(unsafe.Pointer(C.ImPlotContext_GetCurrentAlignmentV(self.handle())))
 }
 
-func (self ImPlotDateTimeSpec) SetDate(v PlotDateFmt) {
+func (self *ImPlotDateTimeSpec) SetDate(v PlotDateFmt) {
 	C.ImPlotDateTimeSpec_SetDate(self.handle(), C.ImPlotDateFmt(v))
 }
 
@@ -9799,7 +9799,7 @@ func (self ImPlotDateTimeSpec) GetDate() PlotDateFmt {
 	return PlotDateFmt(C.ImPlotDateTimeSpec_GetDate(self.handle()))
 }
 
-func (self ImPlotDateTimeSpec) SetTime(v PlotTimeFmt) {
+func (self *ImPlotDateTimeSpec) SetTime(v PlotTimeFmt) {
 	C.ImPlotDateTimeSpec_SetTime(self.handle(), C.ImPlotTimeFmt(v))
 }
 
@@ -9807,7 +9807,7 @@ func (self ImPlotDateTimeSpec) GetTime() PlotTimeFmt {
 	return PlotTimeFmt(C.ImPlotDateTimeSpec_GetTime(self.handle()))
 }
 
-func (self ImPlotDateTimeSpec) SetUseISO8601(v bool) {
+func (self *ImPlotDateTimeSpec) SetUseISO8601(v bool) {
 	C.ImPlotDateTimeSpec_SetUseISO8601(self.handle(), C.bool(v))
 }
 
@@ -9815,7 +9815,7 @@ func (self ImPlotDateTimeSpec) GetUseISO8601() bool {
 	return C.ImPlotDateTimeSpec_GetUseISO8601(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotDateTimeSpec) SetUse24HourClock(v bool) {
+func (self *ImPlotDateTimeSpec) SetUse24HourClock(v bool) {
 	C.ImPlotDateTimeSpec_SetUse24HourClock(self.handle(), C.bool(v))
 }
 
@@ -9823,7 +9823,7 @@ func (self ImPlotDateTimeSpec) GetUse24HourClock() bool {
 	return C.ImPlotDateTimeSpec_GetUse24HourClock(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotInputMap) SetPan(v MouseButton) {
+func (self *ImPlotInputMap) SetPan(v MouseButton) {
 	C.ImPlotInputMap_SetPan(self.handle(), C.ImGuiMouseButton(v))
 }
 
@@ -9831,7 +9831,7 @@ func (self ImPlotInputMap) GetPan() MouseButton {
 	return MouseButton(C.ImPlotInputMap_GetPan(self.handle()))
 }
 
-func (self ImPlotInputMap) SetPanMod(v ModFlags) {
+func (self *ImPlotInputMap) SetPanMod(v ModFlags) {
 	C.ImPlotInputMap_SetPanMod(self.handle(), C.ImGuiModFlags(v))
 }
 
@@ -9839,7 +9839,7 @@ func (self ImPlotInputMap) GetPanMod() ModFlags {
 	return ModFlags(C.ImPlotInputMap_GetPanMod(self.handle()))
 }
 
-func (self ImPlotInputMap) SetFit(v MouseButton) {
+func (self *ImPlotInputMap) SetFit(v MouseButton) {
 	C.ImPlotInputMap_SetFit(self.handle(), C.ImGuiMouseButton(v))
 }
 
@@ -9847,7 +9847,7 @@ func (self ImPlotInputMap) GetFit() MouseButton {
 	return MouseButton(C.ImPlotInputMap_GetFit(self.handle()))
 }
 
-func (self ImPlotInputMap) SetSelect(v MouseButton) {
+func (self *ImPlotInputMap) SetSelect(v MouseButton) {
 	C.ImPlotInputMap_SetSelect(self.handle(), C.ImGuiMouseButton(v))
 }
 
@@ -9855,7 +9855,7 @@ func (self ImPlotInputMap) GetSelect() MouseButton {
 	return MouseButton(C.ImPlotInputMap_GetSelect(self.handle()))
 }
 
-func (self ImPlotInputMap) SetSelectCancel(v MouseButton) {
+func (self *ImPlotInputMap) SetSelectCancel(v MouseButton) {
 	C.ImPlotInputMap_SetSelectCancel(self.handle(), C.ImGuiMouseButton(v))
 }
 
@@ -9863,7 +9863,7 @@ func (self ImPlotInputMap) GetSelectCancel() MouseButton {
 	return MouseButton(C.ImPlotInputMap_GetSelectCancel(self.handle()))
 }
 
-func (self ImPlotInputMap) SetSelectMod(v ModFlags) {
+func (self *ImPlotInputMap) SetSelectMod(v ModFlags) {
 	C.ImPlotInputMap_SetSelectMod(self.handle(), C.ImGuiModFlags(v))
 }
 
@@ -9871,7 +9871,7 @@ func (self ImPlotInputMap) GetSelectMod() ModFlags {
 	return ModFlags(C.ImPlotInputMap_GetSelectMod(self.handle()))
 }
 
-func (self ImPlotInputMap) SetSelectHorzMod(v ModFlags) {
+func (self *ImPlotInputMap) SetSelectHorzMod(v ModFlags) {
 	C.ImPlotInputMap_SetSelectHorzMod(self.handle(), C.ImGuiModFlags(v))
 }
 
@@ -9879,7 +9879,7 @@ func (self ImPlotInputMap) GetSelectHorzMod() ModFlags {
 	return ModFlags(C.ImPlotInputMap_GetSelectHorzMod(self.handle()))
 }
 
-func (self ImPlotInputMap) SetSelectVertMod(v ModFlags) {
+func (self *ImPlotInputMap) SetSelectVertMod(v ModFlags) {
 	C.ImPlotInputMap_SetSelectVertMod(self.handle(), C.ImGuiModFlags(v))
 }
 
@@ -9887,7 +9887,7 @@ func (self ImPlotInputMap) GetSelectVertMod() ModFlags {
 	return ModFlags(C.ImPlotInputMap_GetSelectVertMod(self.handle()))
 }
 
-func (self ImPlotInputMap) SetMenu(v MouseButton) {
+func (self *ImPlotInputMap) SetMenu(v MouseButton) {
 	C.ImPlotInputMap_SetMenu(self.handle(), C.ImGuiMouseButton(v))
 }
 
@@ -9895,7 +9895,7 @@ func (self ImPlotInputMap) GetMenu() MouseButton {
 	return MouseButton(C.ImPlotInputMap_GetMenu(self.handle()))
 }
 
-func (self ImPlotInputMap) SetOverrideMod(v ModFlags) {
+func (self *ImPlotInputMap) SetOverrideMod(v ModFlags) {
 	C.ImPlotInputMap_SetOverrideMod(self.handle(), C.ImGuiModFlags(v))
 }
 
@@ -9903,7 +9903,7 @@ func (self ImPlotInputMap) GetOverrideMod() ModFlags {
 	return ModFlags(C.ImPlotInputMap_GetOverrideMod(self.handle()))
 }
 
-func (self ImPlotInputMap) SetZoomMod(v ModFlags) {
+func (self *ImPlotInputMap) SetZoomMod(v ModFlags) {
 	C.ImPlotInputMap_SetZoomMod(self.handle(), C.ImGuiModFlags(v))
 }
 
@@ -9911,7 +9911,7 @@ func (self ImPlotInputMap) GetZoomMod() ModFlags {
 	return ModFlags(C.ImPlotInputMap_GetZoomMod(self.handle()))
 }
 
-func (self ImPlotInputMap) SetZoomRate(v float32) {
+func (self *ImPlotInputMap) SetZoomRate(v float32) {
 	C.ImPlotInputMap_SetZoomRate(self.handle(), C.float(v))
 }
 
@@ -9919,7 +9919,7 @@ func (self ImPlotInputMap) GetZoomRate() float32 {
 	return float32(C.ImPlotInputMap_GetZoomRate(self.handle()))
 }
 
-func (self ImPlotItem) SetID(v ImGuiID) {
+func (self *ImPlotItem) SetID(v ImGuiID) {
 	C.ImPlotItem_SetID(self.handle(), C.ImGuiID(v))
 }
 
@@ -9927,7 +9927,7 @@ func (self ImPlotItem) GetID() ImGuiID {
 	return ImGuiID(C.ImPlotItem_GetID(self.handle()))
 }
 
-func (self ImPlotItem) SetColor(v uint32) {
+func (self *ImPlotItem) SetColor(v uint32) {
 	C.ImPlotItem_SetColor(self.handle(), C.ImU32(v))
 }
 
@@ -9935,7 +9935,7 @@ func (self ImPlotItem) GetColor() uint32 {
 	return uint32(C.ImPlotItem_GetColor(self.handle()))
 }
 
-func (self ImPlotItem) SetLegendHoverRect(v Rect) {
+func (self *ImPlotItem) SetLegendHoverRect(v Rect) {
 	C.ImPlotItem_SetLegendHoverRect(self.handle(), v.toC())
 }
 
@@ -9945,7 +9945,7 @@ func (self ImPlotItem) GetLegendHoverRect() Rect {
 	return *out
 }
 
-func (self ImPlotItem) SetNameOffset(v int32) {
+func (self *ImPlotItem) SetNameOffset(v int32) {
 	C.ImPlotItem_SetNameOffset(self.handle(), C.int(v))
 }
 
@@ -9953,7 +9953,7 @@ func (self ImPlotItem) GetNameOffset() int {
 	return int(C.ImPlotItem_GetNameOffset(self.handle()))
 }
 
-func (self ImPlotItem) SetShow(v bool) {
+func (self *ImPlotItem) SetShow(v bool) {
 	C.ImPlotItem_SetShow(self.handle(), C.bool(v))
 }
 
@@ -9961,7 +9961,7 @@ func (self ImPlotItem) GetShow() bool {
 	return C.ImPlotItem_GetShow(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotItem) SetLegendHovered(v bool) {
+func (self *ImPlotItem) SetLegendHovered(v bool) {
 	C.ImPlotItem_SetLegendHovered(self.handle(), C.bool(v))
 }
 
@@ -9969,7 +9969,7 @@ func (self ImPlotItem) GetLegendHovered() bool {
 	return C.ImPlotItem_GetLegendHovered(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotItem) SetSeenThisFrame(v bool) {
+func (self *ImPlotItem) SetSeenThisFrame(v bool) {
 	C.ImPlotItem_SetSeenThisFrame(self.handle(), C.bool(v))
 }
 
@@ -9977,7 +9977,7 @@ func (self ImPlotItem) GetSeenThisFrame() bool {
 	return C.ImPlotItem_GetSeenThisFrame(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotItemGroup) SetID(v ImGuiID) {
+func (self *ImPlotItemGroup) SetID(v ImGuiID) {
 	C.ImPlotItemGroup_SetID(self.handle(), C.ImGuiID(v))
 }
 
@@ -9989,7 +9989,7 @@ func (self ImPlotItemGroup) GetLegend() ImPlotLegend {
 	return newImPlotLegendFromC(C.ImPlotItemGroup_GetLegend(self.handle()))
 }
 
-func (self ImPlotItemGroup) SetColormapIdx(v int32) {
+func (self *ImPlotItemGroup) SetColormapIdx(v int32) {
 	C.ImPlotItemGroup_SetColormapIdx(self.handle(), C.int(v))
 }
 
@@ -9997,7 +9997,7 @@ func (self ImPlotItemGroup) GetColormapIdx() int {
 	return int(C.ImPlotItemGroup_GetColormapIdx(self.handle()))
 }
 
-func (self ImPlotLegend) SetFlags(v PlotLegendFlags) {
+func (self *ImPlotLegend) SetFlags(v PlotLegendFlags) {
 	C.ImPlotLegend_SetFlags(self.handle(), C.ImPlotLegendFlags(v))
 }
 
@@ -10005,7 +10005,7 @@ func (self ImPlotLegend) GetFlags() PlotLegendFlags {
 	return PlotLegendFlags(C.ImPlotLegend_GetFlags(self.handle()))
 }
 
-func (self ImPlotLegend) SetPreviousFlags(v PlotLegendFlags) {
+func (self *ImPlotLegend) SetPreviousFlags(v PlotLegendFlags) {
 	C.ImPlotLegend_SetPreviousFlags(self.handle(), C.ImPlotLegendFlags(v))
 }
 
@@ -10013,7 +10013,7 @@ func (self ImPlotLegend) GetPreviousFlags() PlotLegendFlags {
 	return PlotLegendFlags(C.ImPlotLegend_GetPreviousFlags(self.handle()))
 }
 
-func (self ImPlotLegend) SetLocation(v PlotLocation) {
+func (self *ImPlotLegend) SetLocation(v PlotLocation) {
 	C.ImPlotLegend_SetLocation(self.handle(), C.ImPlotLocation(v))
 }
 
@@ -10021,7 +10021,7 @@ func (self ImPlotLegend) GetLocation() PlotLocation {
 	return PlotLocation(C.ImPlotLegend_GetLocation(self.handle()))
 }
 
-func (self ImPlotLegend) SetPreviousLocation(v PlotLocation) {
+func (self *ImPlotLegend) SetPreviousLocation(v PlotLocation) {
 	C.ImPlotLegend_SetPreviousLocation(self.handle(), C.ImPlotLocation(v))
 }
 
@@ -10033,7 +10033,7 @@ func (self ImPlotLegend) GetLabels() ImGuiTextBuffer {
 	return newImGuiTextBufferFromC(C.ImPlotLegend_GetLabels(self.handle()))
 }
 
-func (self ImPlotLegend) SetRect(v Rect) {
+func (self *ImPlotLegend) SetRect(v Rect) {
 	C.ImPlotLegend_SetRect(self.handle(), v.toC())
 }
 
@@ -10043,7 +10043,7 @@ func (self ImPlotLegend) GetRect() Rect {
 	return *out
 }
 
-func (self ImPlotLegend) SetHovered(v bool) {
+func (self *ImPlotLegend) SetHovered(v bool) {
 	C.ImPlotLegend_SetHovered(self.handle(), C.bool(v))
 }
 
@@ -10051,7 +10051,7 @@ func (self ImPlotLegend) GetHovered() bool {
 	return C.ImPlotLegend_GetHovered(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotLegend) SetHeld(v bool) {
+func (self *ImPlotLegend) SetHeld(v bool) {
 	C.ImPlotLegend_SetHeld(self.handle(), C.bool(v))
 }
 
@@ -10059,7 +10059,7 @@ func (self ImPlotLegend) GetHeld() bool {
 	return C.ImPlotLegend_GetHeld(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotLegend) SetCanGoInside(v bool) {
+func (self *ImPlotLegend) SetCanGoInside(v bool) {
 	C.ImPlotLegend_SetCanGoInside(self.handle(), C.bool(v))
 }
 
@@ -10067,7 +10067,7 @@ func (self ImPlotLegend) GetCanGoInside() bool {
 	return C.ImPlotLegend_GetCanGoInside(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotNextItemData) SetLineWeight(v float32) {
+func (self *ImPlotNextItemData) SetLineWeight(v float32) {
 	C.ImPlotNextItemData_SetLineWeight(self.handle(), C.float(v))
 }
 
@@ -10075,7 +10075,7 @@ func (self ImPlotNextItemData) GetLineWeight() float32 {
 	return float32(C.ImPlotNextItemData_GetLineWeight(self.handle()))
 }
 
-func (self ImPlotNextItemData) SetMarker(v PlotMarker) {
+func (self *ImPlotNextItemData) SetMarker(v PlotMarker) {
 	C.ImPlotNextItemData_SetMarker(self.handle(), C.ImPlotMarker(v))
 }
 
@@ -10083,7 +10083,7 @@ func (self ImPlotNextItemData) GetMarker() PlotMarker {
 	return PlotMarker(C.ImPlotNextItemData_GetMarker(self.handle()))
 }
 
-func (self ImPlotNextItemData) SetMarkerSize(v float32) {
+func (self *ImPlotNextItemData) SetMarkerSize(v float32) {
 	C.ImPlotNextItemData_SetMarkerSize(self.handle(), C.float(v))
 }
 
@@ -10091,7 +10091,7 @@ func (self ImPlotNextItemData) GetMarkerSize() float32 {
 	return float32(C.ImPlotNextItemData_GetMarkerSize(self.handle()))
 }
 
-func (self ImPlotNextItemData) SetMarkerWeight(v float32) {
+func (self *ImPlotNextItemData) SetMarkerWeight(v float32) {
 	C.ImPlotNextItemData_SetMarkerWeight(self.handle(), C.float(v))
 }
 
@@ -10099,7 +10099,7 @@ func (self ImPlotNextItemData) GetMarkerWeight() float32 {
 	return float32(C.ImPlotNextItemData_GetMarkerWeight(self.handle()))
 }
 
-func (self ImPlotNextItemData) SetFillAlpha(v float32) {
+func (self *ImPlotNextItemData) SetFillAlpha(v float32) {
 	C.ImPlotNextItemData_SetFillAlpha(self.handle(), C.float(v))
 }
 
@@ -10107,7 +10107,7 @@ func (self ImPlotNextItemData) GetFillAlpha() float32 {
 	return float32(C.ImPlotNextItemData_GetFillAlpha(self.handle()))
 }
 
-func (self ImPlotNextItemData) SetErrorBarSize(v float32) {
+func (self *ImPlotNextItemData) SetErrorBarSize(v float32) {
 	C.ImPlotNextItemData_SetErrorBarSize(self.handle(), C.float(v))
 }
 
@@ -10115,7 +10115,7 @@ func (self ImPlotNextItemData) GetErrorBarSize() float32 {
 	return float32(C.ImPlotNextItemData_GetErrorBarSize(self.handle()))
 }
 
-func (self ImPlotNextItemData) SetErrorBarWeight(v float32) {
+func (self *ImPlotNextItemData) SetErrorBarWeight(v float32) {
 	C.ImPlotNextItemData_SetErrorBarWeight(self.handle(), C.float(v))
 }
 
@@ -10123,7 +10123,7 @@ func (self ImPlotNextItemData) GetErrorBarWeight() float32 {
 	return float32(C.ImPlotNextItemData_GetErrorBarWeight(self.handle()))
 }
 
-func (self ImPlotNextItemData) SetDigitalBitHeight(v float32) {
+func (self *ImPlotNextItemData) SetDigitalBitHeight(v float32) {
 	C.ImPlotNextItemData_SetDigitalBitHeight(self.handle(), C.float(v))
 }
 
@@ -10131,7 +10131,7 @@ func (self ImPlotNextItemData) GetDigitalBitHeight() float32 {
 	return float32(C.ImPlotNextItemData_GetDigitalBitHeight(self.handle()))
 }
 
-func (self ImPlotNextItemData) SetDigitalBitGap(v float32) {
+func (self *ImPlotNextItemData) SetDigitalBitGap(v float32) {
 	C.ImPlotNextItemData_SetDigitalBitGap(self.handle(), C.float(v))
 }
 
@@ -10139,7 +10139,7 @@ func (self ImPlotNextItemData) GetDigitalBitGap() float32 {
 	return float32(C.ImPlotNextItemData_GetDigitalBitGap(self.handle()))
 }
 
-func (self ImPlotNextItemData) SetRenderLine(v bool) {
+func (self *ImPlotNextItemData) SetRenderLine(v bool) {
 	C.ImPlotNextItemData_SetRenderLine(self.handle(), C.bool(v))
 }
 
@@ -10147,7 +10147,7 @@ func (self ImPlotNextItemData) GetRenderLine() bool {
 	return C.ImPlotNextItemData_GetRenderLine(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotNextItemData) SetRenderFill(v bool) {
+func (self *ImPlotNextItemData) SetRenderFill(v bool) {
 	C.ImPlotNextItemData_SetRenderFill(self.handle(), C.bool(v))
 }
 
@@ -10155,7 +10155,7 @@ func (self ImPlotNextItemData) GetRenderFill() bool {
 	return C.ImPlotNextItemData_GetRenderFill(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotNextItemData) SetRenderMarkerLine(v bool) {
+func (self *ImPlotNextItemData) SetRenderMarkerLine(v bool) {
 	C.ImPlotNextItemData_SetRenderMarkerLine(self.handle(), C.bool(v))
 }
 
@@ -10163,7 +10163,7 @@ func (self ImPlotNextItemData) GetRenderMarkerLine() bool {
 	return C.ImPlotNextItemData_GetRenderMarkerLine(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotNextItemData) SetRenderMarkerFill(v bool) {
+func (self *ImPlotNextItemData) SetRenderMarkerFill(v bool) {
 	C.ImPlotNextItemData_SetRenderMarkerFill(self.handle(), C.bool(v))
 }
 
@@ -10171,7 +10171,7 @@ func (self ImPlotNextItemData) GetRenderMarkerFill() bool {
 	return C.ImPlotNextItemData_GetRenderMarkerFill(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotNextItemData) SetHasHidden(v bool) {
+func (self *ImPlotNextItemData) SetHasHidden(v bool) {
 	C.ImPlotNextItemData_SetHasHidden(self.handle(), C.bool(v))
 }
 
@@ -10179,7 +10179,7 @@ func (self ImPlotNextItemData) GetHasHidden() bool {
 	return C.ImPlotNextItemData_GetHasHidden(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotNextItemData) SetHidden(v bool) {
+func (self *ImPlotNextItemData) SetHidden(v bool) {
 	C.ImPlotNextItemData_SetHidden(self.handle(), C.bool(v))
 }
 
@@ -10187,7 +10187,7 @@ func (self ImPlotNextItemData) GetHidden() bool {
 	return C.ImPlotNextItemData_GetHidden(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotNextItemData) SetHiddenCond(v PlotCond) {
+func (self *ImPlotNextItemData) SetHiddenCond(v PlotCond) {
 	C.ImPlotNextItemData_SetHiddenCond(self.handle(), C.ImPlotCond(v))
 }
 
@@ -10195,7 +10195,7 @@ func (self ImPlotNextItemData) GetHiddenCond() PlotCond {
 	return PlotCond(C.ImPlotNextItemData_GetHiddenCond(self.handle()))
 }
 
-func (self ImPlotPlot) SetID(v ImGuiID) {
+func (self *ImPlotPlot) SetID(v ImGuiID) {
 	C.ImPlotPlot_SetID(self.handle(), C.ImGuiID(v))
 }
 
@@ -10203,7 +10203,7 @@ func (self ImPlotPlot) GetID() ImGuiID {
 	return ImGuiID(C.ImPlotPlot_GetID(self.handle()))
 }
 
-func (self ImPlotPlot) SetFlags(v PlotFlags) {
+func (self *ImPlotPlot) SetFlags(v PlotFlags) {
 	C.ImPlotPlot_SetFlags(self.handle(), C.ImPlotFlags(v))
 }
 
@@ -10211,7 +10211,7 @@ func (self ImPlotPlot) GetFlags() PlotFlags {
 	return PlotFlags(C.ImPlotPlot_GetFlags(self.handle()))
 }
 
-func (self ImPlotPlot) SetPreviousFlags(v PlotFlags) {
+func (self *ImPlotPlot) SetPreviousFlags(v PlotFlags) {
 	C.ImPlotPlot_SetPreviousFlags(self.handle(), C.ImPlotFlags(v))
 }
 
@@ -10219,7 +10219,7 @@ func (self ImPlotPlot) GetPreviousFlags() PlotFlags {
 	return PlotFlags(C.ImPlotPlot_GetPreviousFlags(self.handle()))
 }
 
-func (self ImPlotPlot) SetMouseTextLocation(v PlotLocation) {
+func (self *ImPlotPlot) SetMouseTextLocation(v PlotLocation) {
 	C.ImPlotPlot_SetMouseTextLocation(self.handle(), C.ImPlotLocation(v))
 }
 
@@ -10227,7 +10227,7 @@ func (self ImPlotPlot) GetMouseTextLocation() PlotLocation {
 	return PlotLocation(C.ImPlotPlot_GetMouseTextLocation(self.handle()))
 }
 
-func (self ImPlotPlot) SetMouseTextFlags(v PlotMouseTextFlags) {
+func (self *ImPlotPlot) SetMouseTextFlags(v PlotMouseTextFlags) {
 	C.ImPlotPlot_SetMouseTextFlags(self.handle(), C.ImPlotMouseTextFlags(v))
 }
 
@@ -10243,7 +10243,7 @@ func (self ImPlotPlot) GetItems() ImPlotItemGroup {
 	return newImPlotItemGroupFromC(C.ImPlotPlot_GetItems(self.handle()))
 }
 
-func (self ImPlotPlot) SetCurrentX(v ImAxis) {
+func (self *ImPlotPlot) SetCurrentX(v ImAxis) {
 	C.ImPlotPlot_SetCurrentX(self.handle(), C.ImAxis(v))
 }
 
@@ -10251,7 +10251,7 @@ func (self ImPlotPlot) GetCurrentX() ImAxis {
 	return ImAxis(C.ImPlotPlot_GetCurrentX(self.handle()))
 }
 
-func (self ImPlotPlot) SetCurrentY(v ImAxis) {
+func (self *ImPlotPlot) SetCurrentY(v ImAxis) {
 	C.ImPlotPlot_SetCurrentY(self.handle(), C.ImAxis(v))
 }
 
@@ -10259,7 +10259,7 @@ func (self ImPlotPlot) GetCurrentY() ImAxis {
 	return ImAxis(C.ImPlotPlot_GetCurrentY(self.handle()))
 }
 
-func (self ImPlotPlot) SetFrameRect(v Rect) {
+func (self *ImPlotPlot) SetFrameRect(v Rect) {
 	C.ImPlotPlot_SetFrameRect(self.handle(), v.toC())
 }
 
@@ -10269,7 +10269,7 @@ func (self ImPlotPlot) GetFrameRect() Rect {
 	return *out
 }
 
-func (self ImPlotPlot) SetCanvasRect(v Rect) {
+func (self *ImPlotPlot) SetCanvasRect(v Rect) {
 	C.ImPlotPlot_SetCanvasRect(self.handle(), v.toC())
 }
 
@@ -10279,7 +10279,7 @@ func (self ImPlotPlot) GetCanvasRect() Rect {
 	return *out
 }
 
-func (self ImPlotPlot) SetPlotRect(v Rect) {
+func (self *ImPlotPlot) SetPlotRect(v Rect) {
 	C.ImPlotPlot_SetPlotRect(self.handle(), v.toC())
 }
 
@@ -10289,7 +10289,7 @@ func (self ImPlotPlot) GetPlotRect() Rect {
 	return *out
 }
 
-func (self ImPlotPlot) SetAxesRect(v Rect) {
+func (self *ImPlotPlot) SetAxesRect(v Rect) {
 	C.ImPlotPlot_SetAxesRect(self.handle(), v.toC())
 }
 
@@ -10299,7 +10299,7 @@ func (self ImPlotPlot) GetAxesRect() Rect {
 	return *out
 }
 
-func (self ImPlotPlot) SetSelectRect(v Rect) {
+func (self *ImPlotPlot) SetSelectRect(v Rect) {
 	C.ImPlotPlot_SetSelectRect(self.handle(), v.toC())
 }
 
@@ -10309,7 +10309,7 @@ func (self ImPlotPlot) GetSelectRect() Rect {
 	return *out
 }
 
-func (self ImPlotPlot) SetSelectStart(v Vec2) {
+func (self *ImPlotPlot) SetSelectStart(v Vec2) {
 	C.ImPlotPlot_SetSelectStart(self.handle(), v.toC())
 }
 
@@ -10319,7 +10319,7 @@ func (self ImPlotPlot) GetSelectStart() Vec2 {
 	return *out
 }
 
-func (self ImPlotPlot) SetTitleOffset(v int32) {
+func (self *ImPlotPlot) SetTitleOffset(v int32) {
 	C.ImPlotPlot_SetTitleOffset(self.handle(), C.int(v))
 }
 
@@ -10327,7 +10327,7 @@ func (self ImPlotPlot) GetTitleOffset() int {
 	return int(C.ImPlotPlot_GetTitleOffset(self.handle()))
 }
 
-func (self ImPlotPlot) SetJustCreated(v bool) {
+func (self *ImPlotPlot) SetJustCreated(v bool) {
 	C.ImPlotPlot_SetJustCreated(self.handle(), C.bool(v))
 }
 
@@ -10335,7 +10335,7 @@ func (self ImPlotPlot) GetJustCreated() bool {
 	return C.ImPlotPlot_GetJustCreated(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotPlot) SetInitialized(v bool) {
+func (self *ImPlotPlot) SetInitialized(v bool) {
 	C.ImPlotPlot_SetInitialized(self.handle(), C.bool(v))
 }
 
@@ -10343,7 +10343,7 @@ func (self ImPlotPlot) GetInitialized() bool {
 	return C.ImPlotPlot_GetInitialized(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotPlot) SetSetupLocked(v bool) {
+func (self *ImPlotPlot) SetSetupLocked(v bool) {
 	C.ImPlotPlot_SetSetupLocked(self.handle(), C.bool(v))
 }
 
@@ -10351,7 +10351,7 @@ func (self ImPlotPlot) GetSetupLocked() bool {
 	return C.ImPlotPlot_GetSetupLocked(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotPlot) SetFitThisFrame(v bool) {
+func (self *ImPlotPlot) SetFitThisFrame(v bool) {
 	C.ImPlotPlot_SetFitThisFrame(self.handle(), C.bool(v))
 }
 
@@ -10359,7 +10359,7 @@ func (self ImPlotPlot) GetFitThisFrame() bool {
 	return C.ImPlotPlot_GetFitThisFrame(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotPlot) SetHovered(v bool) {
+func (self *ImPlotPlot) SetHovered(v bool) {
 	C.ImPlotPlot_SetHovered(self.handle(), C.bool(v))
 }
 
@@ -10367,7 +10367,7 @@ func (self ImPlotPlot) GetHovered() bool {
 	return C.ImPlotPlot_GetHovered(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotPlot) SetHeld(v bool) {
+func (self *ImPlotPlot) SetHeld(v bool) {
 	C.ImPlotPlot_SetHeld(self.handle(), C.bool(v))
 }
 
@@ -10375,7 +10375,7 @@ func (self ImPlotPlot) GetHeld() bool {
 	return C.ImPlotPlot_GetHeld(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotPlot) SetSelecting(v bool) {
+func (self *ImPlotPlot) SetSelecting(v bool) {
 	C.ImPlotPlot_SetSelecting(self.handle(), C.bool(v))
 }
 
@@ -10383,7 +10383,7 @@ func (self ImPlotPlot) GetSelecting() bool {
 	return C.ImPlotPlot_GetSelecting(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotPlot) SetSelected(v bool) {
+func (self *ImPlotPlot) SetSelected(v bool) {
 	C.ImPlotPlot_SetSelected(self.handle(), C.bool(v))
 }
 
@@ -10391,7 +10391,7 @@ func (self ImPlotPlot) GetSelected() bool {
 	return C.ImPlotPlot_GetSelected(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotPlot) SetContextLocked(v bool) {
+func (self *ImPlotPlot) SetContextLocked(v bool) {
 	C.ImPlotPlot_SetContextLocked(self.handle(), C.bool(v))
 }
 
@@ -10399,7 +10399,7 @@ func (self ImPlotPlot) GetContextLocked() bool {
 	return C.ImPlotPlot_GetContextLocked(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotPointError) SetX(v float64) {
+func (self *ImPlotPointError) SetX(v float64) {
 	C.ImPlotPointError_SetX(self.handle(), C.double(v))
 }
 
@@ -10407,7 +10407,7 @@ func (self ImPlotPointError) GetX() float64 {
 	return float64(C.ImPlotPointError_GetX(self.handle()))
 }
 
-func (self ImPlotPointError) SetY(v float64) {
+func (self *ImPlotPointError) SetY(v float64) {
 	C.ImPlotPointError_SetY(self.handle(), C.double(v))
 }
 
@@ -10415,7 +10415,7 @@ func (self ImPlotPointError) GetY() float64 {
 	return float64(C.ImPlotPointError_GetY(self.handle()))
 }
 
-func (self ImPlotPointError) SetNeg(v float64) {
+func (self *ImPlotPointError) SetNeg(v float64) {
 	C.ImPlotPointError_SetNeg(self.handle(), C.double(v))
 }
 
@@ -10423,7 +10423,7 @@ func (self ImPlotPointError) GetNeg() float64 {
 	return float64(C.ImPlotPointError_GetNeg(self.handle()))
 }
 
-func (self ImPlotPointError) SetPos(v float64) {
+func (self *ImPlotPointError) SetPos(v float64) {
 	C.ImPlotPointError_SetPos(self.handle(), C.double(v))
 }
 
@@ -10431,7 +10431,7 @@ func (self ImPlotPointError) GetPos() float64 {
 	return float64(C.ImPlotPointError_GetPos(self.handle()))
 }
 
-func (self ImPlotRange) SetMin(v float64) {
+func (self *ImPlotRange) SetMin(v float64) {
 	C.ImPlotRange_SetMin(self.handle(), C.double(v))
 }
 
@@ -10439,7 +10439,7 @@ func (self ImPlotRange) GetMin() float64 {
 	return float64(C.ImPlotRange_GetMin(self.handle()))
 }
 
-func (self ImPlotRange) SetMax(v float64) {
+func (self *ImPlotRange) SetMax(v float64) {
 	C.ImPlotRange_SetMax(self.handle(), C.double(v))
 }
 
@@ -10455,7 +10455,7 @@ func (self ImPlotRect) GetY() ImPlotRange {
 	return newImPlotRangeFromC(C.ImPlotRect_GetY(self.handle()))
 }
 
-func (self ImPlotStyle) SetLineWeight(v float32) {
+func (self *ImPlotStyle) SetLineWeight(v float32) {
 	C.ImPlotStyle_SetLineWeight(self.handle(), C.float(v))
 }
 
@@ -10463,7 +10463,7 @@ func (self ImPlotStyle) GetLineWeight() float32 {
 	return float32(C.ImPlotStyle_GetLineWeight(self.handle()))
 }
 
-func (self ImPlotStyle) SetMarker(v int32) {
+func (self *ImPlotStyle) SetMarker(v int32) {
 	C.ImPlotStyle_SetMarker(self.handle(), C.int(v))
 }
 
@@ -10471,7 +10471,7 @@ func (self ImPlotStyle) GetMarker() int {
 	return int(C.ImPlotStyle_GetMarker(self.handle()))
 }
 
-func (self ImPlotStyle) SetMarkerSize(v float32) {
+func (self *ImPlotStyle) SetMarkerSize(v float32) {
 	C.ImPlotStyle_SetMarkerSize(self.handle(), C.float(v))
 }
 
@@ -10479,7 +10479,7 @@ func (self ImPlotStyle) GetMarkerSize() float32 {
 	return float32(C.ImPlotStyle_GetMarkerSize(self.handle()))
 }
 
-func (self ImPlotStyle) SetMarkerWeight(v float32) {
+func (self *ImPlotStyle) SetMarkerWeight(v float32) {
 	C.ImPlotStyle_SetMarkerWeight(self.handle(), C.float(v))
 }
 
@@ -10487,7 +10487,7 @@ func (self ImPlotStyle) GetMarkerWeight() float32 {
 	return float32(C.ImPlotStyle_GetMarkerWeight(self.handle()))
 }
 
-func (self ImPlotStyle) SetFillAlpha(v float32) {
+func (self *ImPlotStyle) SetFillAlpha(v float32) {
 	C.ImPlotStyle_SetFillAlpha(self.handle(), C.float(v))
 }
 
@@ -10495,7 +10495,7 @@ func (self ImPlotStyle) GetFillAlpha() float32 {
 	return float32(C.ImPlotStyle_GetFillAlpha(self.handle()))
 }
 
-func (self ImPlotStyle) SetErrorBarSize(v float32) {
+func (self *ImPlotStyle) SetErrorBarSize(v float32) {
 	C.ImPlotStyle_SetErrorBarSize(self.handle(), C.float(v))
 }
 
@@ -10503,7 +10503,7 @@ func (self ImPlotStyle) GetErrorBarSize() float32 {
 	return float32(C.ImPlotStyle_GetErrorBarSize(self.handle()))
 }
 
-func (self ImPlotStyle) SetErrorBarWeight(v float32) {
+func (self *ImPlotStyle) SetErrorBarWeight(v float32) {
 	C.ImPlotStyle_SetErrorBarWeight(self.handle(), C.float(v))
 }
 
@@ -10511,7 +10511,7 @@ func (self ImPlotStyle) GetErrorBarWeight() float32 {
 	return float32(C.ImPlotStyle_GetErrorBarWeight(self.handle()))
 }
 
-func (self ImPlotStyle) SetDigitalBitHeight(v float32) {
+func (self *ImPlotStyle) SetDigitalBitHeight(v float32) {
 	C.ImPlotStyle_SetDigitalBitHeight(self.handle(), C.float(v))
 }
 
@@ -10519,7 +10519,7 @@ func (self ImPlotStyle) GetDigitalBitHeight() float32 {
 	return float32(C.ImPlotStyle_GetDigitalBitHeight(self.handle()))
 }
 
-func (self ImPlotStyle) SetDigitalBitGap(v float32) {
+func (self *ImPlotStyle) SetDigitalBitGap(v float32) {
 	C.ImPlotStyle_SetDigitalBitGap(self.handle(), C.float(v))
 }
 
@@ -10527,7 +10527,7 @@ func (self ImPlotStyle) GetDigitalBitGap() float32 {
 	return float32(C.ImPlotStyle_GetDigitalBitGap(self.handle()))
 }
 
-func (self ImPlotStyle) SetPlotBorderSize(v float32) {
+func (self *ImPlotStyle) SetPlotBorderSize(v float32) {
 	C.ImPlotStyle_SetPlotBorderSize(self.handle(), C.float(v))
 }
 
@@ -10535,7 +10535,7 @@ func (self ImPlotStyle) GetPlotBorderSize() float32 {
 	return float32(C.ImPlotStyle_GetPlotBorderSize(self.handle()))
 }
 
-func (self ImPlotStyle) SetMinorAlpha(v float32) {
+func (self *ImPlotStyle) SetMinorAlpha(v float32) {
 	C.ImPlotStyle_SetMinorAlpha(self.handle(), C.float(v))
 }
 
@@ -10543,7 +10543,7 @@ func (self ImPlotStyle) GetMinorAlpha() float32 {
 	return float32(C.ImPlotStyle_GetMinorAlpha(self.handle()))
 }
 
-func (self ImPlotStyle) SetMajorTickLen(v Vec2) {
+func (self *ImPlotStyle) SetMajorTickLen(v Vec2) {
 	C.ImPlotStyle_SetMajorTickLen(self.handle(), v.toC())
 }
 
@@ -10553,7 +10553,7 @@ func (self ImPlotStyle) GetMajorTickLen() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetMinorTickLen(v Vec2) {
+func (self *ImPlotStyle) SetMinorTickLen(v Vec2) {
 	C.ImPlotStyle_SetMinorTickLen(self.handle(), v.toC())
 }
 
@@ -10563,7 +10563,7 @@ func (self ImPlotStyle) GetMinorTickLen() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetMajorTickSize(v Vec2) {
+func (self *ImPlotStyle) SetMajorTickSize(v Vec2) {
 	C.ImPlotStyle_SetMajorTickSize(self.handle(), v.toC())
 }
 
@@ -10573,7 +10573,7 @@ func (self ImPlotStyle) GetMajorTickSize() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetMinorTickSize(v Vec2) {
+func (self *ImPlotStyle) SetMinorTickSize(v Vec2) {
 	C.ImPlotStyle_SetMinorTickSize(self.handle(), v.toC())
 }
 
@@ -10583,7 +10583,7 @@ func (self ImPlotStyle) GetMinorTickSize() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetMajorGridSize(v Vec2) {
+func (self *ImPlotStyle) SetMajorGridSize(v Vec2) {
 	C.ImPlotStyle_SetMajorGridSize(self.handle(), v.toC())
 }
 
@@ -10593,7 +10593,7 @@ func (self ImPlotStyle) GetMajorGridSize() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetMinorGridSize(v Vec2) {
+func (self *ImPlotStyle) SetMinorGridSize(v Vec2) {
 	C.ImPlotStyle_SetMinorGridSize(self.handle(), v.toC())
 }
 
@@ -10603,7 +10603,7 @@ func (self ImPlotStyle) GetMinorGridSize() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetPlotPadding(v Vec2) {
+func (self *ImPlotStyle) SetPlotPadding(v Vec2) {
 	C.ImPlotStyle_SetPlotPadding(self.handle(), v.toC())
 }
 
@@ -10613,7 +10613,7 @@ func (self ImPlotStyle) GetPlotPadding() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetLabelPadding(v Vec2) {
+func (self *ImPlotStyle) SetLabelPadding(v Vec2) {
 	C.ImPlotStyle_SetLabelPadding(self.handle(), v.toC())
 }
 
@@ -10623,7 +10623,7 @@ func (self ImPlotStyle) GetLabelPadding() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetLegendPadding(v Vec2) {
+func (self *ImPlotStyle) SetLegendPadding(v Vec2) {
 	C.ImPlotStyle_SetLegendPadding(self.handle(), v.toC())
 }
 
@@ -10633,7 +10633,7 @@ func (self ImPlotStyle) GetLegendPadding() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetLegendInnerPadding(v Vec2) {
+func (self *ImPlotStyle) SetLegendInnerPadding(v Vec2) {
 	C.ImPlotStyle_SetLegendInnerPadding(self.handle(), v.toC())
 }
 
@@ -10643,7 +10643,7 @@ func (self ImPlotStyle) GetLegendInnerPadding() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetLegendSpacing(v Vec2) {
+func (self *ImPlotStyle) SetLegendSpacing(v Vec2) {
 	C.ImPlotStyle_SetLegendSpacing(self.handle(), v.toC())
 }
 
@@ -10653,7 +10653,7 @@ func (self ImPlotStyle) GetLegendSpacing() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetMousePosPadding(v Vec2) {
+func (self *ImPlotStyle) SetMousePosPadding(v Vec2) {
 	C.ImPlotStyle_SetMousePosPadding(self.handle(), v.toC())
 }
 
@@ -10663,7 +10663,7 @@ func (self ImPlotStyle) GetMousePosPadding() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetAnnotationPadding(v Vec2) {
+func (self *ImPlotStyle) SetAnnotationPadding(v Vec2) {
 	C.ImPlotStyle_SetAnnotationPadding(self.handle(), v.toC())
 }
 
@@ -10673,7 +10673,7 @@ func (self ImPlotStyle) GetAnnotationPadding() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetFitPadding(v Vec2) {
+func (self *ImPlotStyle) SetFitPadding(v Vec2) {
 	C.ImPlotStyle_SetFitPadding(self.handle(), v.toC())
 }
 
@@ -10683,7 +10683,7 @@ func (self ImPlotStyle) GetFitPadding() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetPlotDefaultSize(v Vec2) {
+func (self *ImPlotStyle) SetPlotDefaultSize(v Vec2) {
 	C.ImPlotStyle_SetPlotDefaultSize(self.handle(), v.toC())
 }
 
@@ -10693,7 +10693,7 @@ func (self ImPlotStyle) GetPlotDefaultSize() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetPlotMinSize(v Vec2) {
+func (self *ImPlotStyle) SetPlotMinSize(v Vec2) {
 	C.ImPlotStyle_SetPlotMinSize(self.handle(), v.toC())
 }
 
@@ -10703,7 +10703,7 @@ func (self ImPlotStyle) GetPlotMinSize() Vec2 {
 	return *out
 }
 
-func (self ImPlotStyle) SetColormap(v PlotColormap) {
+func (self *ImPlotStyle) SetColormap(v PlotColormap) {
 	C.ImPlotStyle_SetColormap(self.handle(), C.ImPlotColormap(v))
 }
 
@@ -10711,7 +10711,7 @@ func (self ImPlotStyle) GetColormap() PlotColormap {
 	return PlotColormap(C.ImPlotStyle_GetColormap(self.handle()))
 }
 
-func (self ImPlotStyle) SetUseLocalTime(v bool) {
+func (self *ImPlotStyle) SetUseLocalTime(v bool) {
 	C.ImPlotStyle_SetUseLocalTime(self.handle(), C.bool(v))
 }
 
@@ -10719,7 +10719,7 @@ func (self ImPlotStyle) GetUseLocalTime() bool {
 	return C.ImPlotStyle_GetUseLocalTime(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotStyle) SetUseISO8601(v bool) {
+func (self *ImPlotStyle) SetUseISO8601(v bool) {
 	C.ImPlotStyle_SetUseISO8601(self.handle(), C.bool(v))
 }
 
@@ -10727,7 +10727,7 @@ func (self ImPlotStyle) GetUseISO8601() bool {
 	return C.ImPlotStyle_GetUseISO8601(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotStyle) SetUse24HourClock(v bool) {
+func (self *ImPlotStyle) SetUse24HourClock(v bool) {
 	C.ImPlotStyle_SetUse24HourClock(self.handle(), C.bool(v))
 }
 
@@ -10735,7 +10735,7 @@ func (self ImPlotStyle) GetUse24HourClock() bool {
 	return C.ImPlotStyle_GetUse24HourClock(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotSubplot) SetID(v ImGuiID) {
+func (self *ImPlotSubplot) SetID(v ImGuiID) {
 	C.ImPlotSubplot_SetID(self.handle(), C.ImGuiID(v))
 }
 
@@ -10743,7 +10743,7 @@ func (self ImPlotSubplot) GetID() ImGuiID {
 	return ImGuiID(C.ImPlotSubplot_GetID(self.handle()))
 }
 
-func (self ImPlotSubplot) SetFlags(v PlotSubplotFlags) {
+func (self *ImPlotSubplot) SetFlags(v PlotSubplotFlags) {
 	C.ImPlotSubplot_SetFlags(self.handle(), C.ImPlotSubplotFlags(v))
 }
 
@@ -10751,7 +10751,7 @@ func (self ImPlotSubplot) GetFlags() PlotSubplotFlags {
 	return PlotSubplotFlags(C.ImPlotSubplot_GetFlags(self.handle()))
 }
 
-func (self ImPlotSubplot) SetPreviousFlags(v PlotSubplotFlags) {
+func (self *ImPlotSubplot) SetPreviousFlags(v PlotSubplotFlags) {
 	C.ImPlotSubplot_SetPreviousFlags(self.handle(), C.ImPlotSubplotFlags(v))
 }
 
@@ -10763,7 +10763,7 @@ func (self ImPlotSubplot) GetItems() ImPlotItemGroup {
 	return newImPlotItemGroupFromC(C.ImPlotSubplot_GetItems(self.handle()))
 }
 
-func (self ImPlotSubplot) SetRows(v int32) {
+func (self *ImPlotSubplot) SetRows(v int32) {
 	C.ImPlotSubplot_SetRows(self.handle(), C.int(v))
 }
 
@@ -10771,7 +10771,7 @@ func (self ImPlotSubplot) GetRows() int {
 	return int(C.ImPlotSubplot_GetRows(self.handle()))
 }
 
-func (self ImPlotSubplot) SetCols(v int32) {
+func (self *ImPlotSubplot) SetCols(v int32) {
 	C.ImPlotSubplot_SetCols(self.handle(), C.int(v))
 }
 
@@ -10779,7 +10779,7 @@ func (self ImPlotSubplot) GetCols() int {
 	return int(C.ImPlotSubplot_GetCols(self.handle()))
 }
 
-func (self ImPlotSubplot) SetCurrentIdx(v int32) {
+func (self *ImPlotSubplot) SetCurrentIdx(v int32) {
 	C.ImPlotSubplot_SetCurrentIdx(self.handle(), C.int(v))
 }
 
@@ -10787,7 +10787,7 @@ func (self ImPlotSubplot) GetCurrentIdx() int {
 	return int(C.ImPlotSubplot_GetCurrentIdx(self.handle()))
 }
 
-func (self ImPlotSubplot) SetFrameRect(v Rect) {
+func (self *ImPlotSubplot) SetFrameRect(v Rect) {
 	C.ImPlotSubplot_SetFrameRect(self.handle(), v.toC())
 }
 
@@ -10797,7 +10797,7 @@ func (self ImPlotSubplot) GetFrameRect() Rect {
 	return *out
 }
 
-func (self ImPlotSubplot) SetGridRect(v Rect) {
+func (self *ImPlotSubplot) SetGridRect(v Rect) {
 	C.ImPlotSubplot_SetGridRect(self.handle(), v.toC())
 }
 
@@ -10807,7 +10807,7 @@ func (self ImPlotSubplot) GetGridRect() Rect {
 	return *out
 }
 
-func (self ImPlotSubplot) SetCellSize(v Vec2) {
+func (self *ImPlotSubplot) SetCellSize(v Vec2) {
 	C.ImPlotSubplot_SetCellSize(self.handle(), v.toC())
 }
 
@@ -10817,7 +10817,7 @@ func (self ImPlotSubplot) GetCellSize() Vec2 {
 	return *out
 }
 
-func (self ImPlotSubplot) SetFrameHovered(v bool) {
+func (self *ImPlotSubplot) SetFrameHovered(v bool) {
 	C.ImPlotSubplot_SetFrameHovered(self.handle(), C.bool(v))
 }
 
@@ -10825,7 +10825,7 @@ func (self ImPlotSubplot) GetFrameHovered() bool {
 	return C.ImPlotSubplot_GetFrameHovered(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotSubplot) SetHasTitle(v bool) {
+func (self *ImPlotSubplot) SetHasTitle(v bool) {
 	C.ImPlotSubplot_SetHasTitle(self.handle(), C.bool(v))
 }
 
@@ -10833,7 +10833,7 @@ func (self ImPlotSubplot) GetHasTitle() bool {
 	return C.ImPlotSubplot_GetHasTitle(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotTag) SetAxis(v ImAxis) {
+func (self *ImPlotTag) SetAxis(v ImAxis) {
 	C.ImPlotTag_SetAxis(self.handle(), C.ImAxis(v))
 }
 
@@ -10841,7 +10841,7 @@ func (self ImPlotTag) GetAxis() ImAxis {
 	return ImAxis(C.ImPlotTag_GetAxis(self.handle()))
 }
 
-func (self ImPlotTag) SetValue(v float64) {
+func (self *ImPlotTag) SetValue(v float64) {
 	C.ImPlotTag_SetValue(self.handle(), C.double(v))
 }
 
@@ -10849,7 +10849,7 @@ func (self ImPlotTag) GetValue() float64 {
 	return float64(C.ImPlotTag_GetValue(self.handle()))
 }
 
-func (self ImPlotTag) SetColorBg(v uint32) {
+func (self *ImPlotTag) SetColorBg(v uint32) {
 	C.ImPlotTag_SetColorBg(self.handle(), C.ImU32(v))
 }
 
@@ -10857,7 +10857,7 @@ func (self ImPlotTag) GetColorBg() uint32 {
 	return uint32(C.ImPlotTag_GetColorBg(self.handle()))
 }
 
-func (self ImPlotTag) SetColorFg(v uint32) {
+func (self *ImPlotTag) SetColorFg(v uint32) {
 	C.ImPlotTag_SetColorFg(self.handle(), C.ImU32(v))
 }
 
@@ -10865,7 +10865,7 @@ func (self ImPlotTag) GetColorFg() uint32 {
 	return uint32(C.ImPlotTag_GetColorFg(self.handle()))
 }
 
-func (self ImPlotTag) SetTextOffset(v int32) {
+func (self *ImPlotTag) SetTextOffset(v int32) {
 	C.ImPlotTag_SetTextOffset(self.handle(), C.int(v))
 }
 
@@ -10877,7 +10877,7 @@ func (self ImPlotTagCollection) GetTextBuffer() ImGuiTextBuffer {
 	return newImGuiTextBufferFromC(C.ImPlotTagCollection_GetTextBuffer(self.handle()))
 }
 
-func (self ImPlotTagCollection) SetSize(v int32) {
+func (self *ImPlotTagCollection) SetSize(v int32) {
 	C.ImPlotTagCollection_SetSize(self.handle(), C.int(v))
 }
 
@@ -10885,7 +10885,7 @@ func (self ImPlotTagCollection) GetSize() int {
 	return int(C.ImPlotTagCollection_GetSize(self.handle()))
 }
 
-func (self ImPlotTick) SetPlotPos(v float64) {
+func (self *ImPlotTick) SetPlotPos(v float64) {
 	C.ImPlotTick_SetPlotPos(self.handle(), C.double(v))
 }
 
@@ -10893,7 +10893,7 @@ func (self ImPlotTick) GetPlotPos() float64 {
 	return float64(C.ImPlotTick_GetPlotPos(self.handle()))
 }
 
-func (self ImPlotTick) SetPixelPos(v float32) {
+func (self *ImPlotTick) SetPixelPos(v float32) {
 	C.ImPlotTick_SetPixelPos(self.handle(), C.float(v))
 }
 
@@ -10901,7 +10901,7 @@ func (self ImPlotTick) GetPixelPos() float32 {
 	return float32(C.ImPlotTick_GetPixelPos(self.handle()))
 }
 
-func (self ImPlotTick) SetLabelSize(v Vec2) {
+func (self *ImPlotTick) SetLabelSize(v Vec2) {
 	C.ImPlotTick_SetLabelSize(self.handle(), v.toC())
 }
 
@@ -10911,7 +10911,7 @@ func (self ImPlotTick) GetLabelSize() Vec2 {
 	return *out
 }
 
-func (self ImPlotTick) SetTextOffset(v int32) {
+func (self *ImPlotTick) SetTextOffset(v int32) {
 	C.ImPlotTick_SetTextOffset(self.handle(), C.int(v))
 }
 
@@ -10919,7 +10919,7 @@ func (self ImPlotTick) GetTextOffset() int {
 	return int(C.ImPlotTick_GetTextOffset(self.handle()))
 }
 
-func (self ImPlotTick) SetMajor(v bool) {
+func (self *ImPlotTick) SetMajor(v bool) {
 	C.ImPlotTick_SetMajor(self.handle(), C.bool(v))
 }
 
@@ -10927,7 +10927,7 @@ func (self ImPlotTick) GetMajor() bool {
 	return C.ImPlotTick_GetMajor(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotTick) SetShowLabel(v bool) {
+func (self *ImPlotTick) SetShowLabel(v bool) {
 	C.ImPlotTick_SetShowLabel(self.handle(), C.bool(v))
 }
 
@@ -10935,7 +10935,7 @@ func (self ImPlotTick) GetShowLabel() bool {
 	return C.ImPlotTick_GetShowLabel(self.handle()) == C.bool(true)
 }
 
-func (self ImPlotTick) SetLevel(v int32) {
+func (self *ImPlotTick) SetLevel(v int32) {
 	C.ImPlotTick_SetLevel(self.handle(), C.int(v))
 }
 
@@ -10943,7 +10943,7 @@ func (self ImPlotTick) GetLevel() int {
 	return int(C.ImPlotTick_GetLevel(self.handle()))
 }
 
-func (self ImPlotTick) SetIdx(v int32) {
+func (self *ImPlotTick) SetIdx(v int32) {
 	C.ImPlotTick_SetIdx(self.handle(), C.int(v))
 }
 
@@ -10955,7 +10955,7 @@ func (self ImPlotTicker) GetTextBuffer() ImGuiTextBuffer {
 	return newImGuiTextBufferFromC(C.ImPlotTicker_GetTextBuffer(self.handle()))
 }
 
-func (self ImPlotTicker) SetMaxSize(v Vec2) {
+func (self *ImPlotTicker) SetMaxSize(v Vec2) {
 	C.ImPlotTicker_SetMaxSize(self.handle(), v.toC())
 }
 
@@ -10965,7 +10965,7 @@ func (self ImPlotTicker) GetMaxSize() Vec2 {
 	return *out
 }
 
-func (self ImPlotTicker) SetLateSize(v Vec2) {
+func (self *ImPlotTicker) SetLateSize(v Vec2) {
 	C.ImPlotTicker_SetLateSize(self.handle(), v.toC())
 }
 
@@ -10975,7 +10975,7 @@ func (self ImPlotTicker) GetLateSize() Vec2 {
 	return *out
 }
 
-func (self ImPlotTicker) SetLevels(v int32) {
+func (self *ImPlotTicker) SetLevels(v int32) {
 	C.ImPlotTicker_SetLevels(self.handle(), C.int(v))
 }
 
@@ -10983,7 +10983,7 @@ func (self ImPlotTicker) GetLevels() int {
 	return int(C.ImPlotTicker_GetLevels(self.handle()))
 }
 
-func (self ImPlotTime) SetUs(v int32) {
+func (self *ImPlotTime) SetUs(v int32) {
 	C.ImPlotTime_SetUs(self.handle(), C.int(v))
 }
 
