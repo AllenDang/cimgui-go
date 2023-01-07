@@ -82,54 +82,22 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 				continue
 			}
 		default:
+			var returnType, returnStmt, funcName string
+			funcName = f.FuncName
 			if rf, err := getReturnTypeWrapperFunc(f.Ret); err == nil {
-				returnType, returnStmt := rf()
-
-				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, returnType, f))
-
-				argInvokeStmt := generator.generateFuncBody(argWrappers)
-
-				generator.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
-				generator.sb.WriteString("}\n\n")
-
-				generator.convertedFuncCount += 1
+				returnType, returnStmt = rf()
 			} else if goEnumName := trimImGuiPrefix(f.Ret); funk.ContainsString(enumNames, goEnumName) {
-				returnType := goEnumName
-
-				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, returnType, f))
-
-				argInvokeStmt := generator.generateFuncBody(argWrappers)
-
-				generator.sb.WriteString(fmt.Sprintf("return %s(%s)", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
-				generator.sb.WriteString("}\n\n")
-
-				generator.convertedFuncCount += 1
+				returnType = goEnumName
 			} else if strings.HasSuffix(f.Ret, "*") && (funk.Contains(structNames, strings.TrimSuffix(f.Ret, "*")) || funk.Contains(structNames, strings.TrimSuffix(strings.TrimPrefix(f.Ret, "const "), "*"))) {
 				// return Im struct ptr
-				pureReturnType := strings.TrimPrefix(f.Ret, "const ")
-				pureReturnType = strings.TrimSuffix(pureReturnType, "*")
-
-				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, pureReturnType, f))
-
-				argInvokeStmt := generator.generateFuncBody(argWrappers)
-
-				generator.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(%s))", pureReturnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
-				generator.sb.WriteString("}\n\n")
-
-				generator.convertedFuncCount += 1
+				returnType = strings.TrimPrefix(f.Ret, "const ")
+				returnType = strings.TrimSuffix(returnType, "*")
 			} else if f.StructGetter && funk.ContainsString(structNames, f.Ret) {
-				generator.sb.WriteString(generator.generateFuncDeclarationStmt(f.FuncName, args, f.Ret, f))
-
-				argInvokeStmt := generator.generateFuncBody(argWrappers)
-
-				generator.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", f.Ret, f.FuncName, argInvokeStmt))
-				generator.sb.WriteString("}\n\n")
-
-				generator.convertedFuncCount += 1
+				returnType = f.Ret
 			} else if f.Constructor {
 				parts := strings.Split(f.FuncName, "_")
 
-				returnType := parts[0]
+				returnType = parts[0]
 
 				if funk.ContainsString(structNames, "Im"+returnType) {
 					returnType = "Im" + returnType
@@ -144,20 +112,30 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 					suffix = strings.Join(parts[2:], "")
 				}
 
-				newFuncName := "New" + returnType + suffix
-
-				generator.sb.WriteString(fmt.Sprintf("func %s(%s) %s {\n", newFuncName, strings.Join(args, ","), returnType))
-
-				argInvokeStmt := generator.generateFuncBody(argWrappers)
-
-				generator.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", returnType, f.FuncName, argInvokeStmt))
-
-				generator.sb.WriteString("}\n\n")
-
-				generator.convertedFuncCount += 1
+				funcName = "New" + returnType + suffix
 			} else {
 				fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)
+				continue
 			}
+
+			generator.sb.WriteString(generator.generateFuncDeclarationStmt(funcName, args, returnType, f))
+			argInvokeStmt := generator.generateFuncBody(argWrappers)
+
+			if _, err := getReturnTypeWrapperFunc(f.Ret); err == nil {
+				generator.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+			} else if goEnumName := trimImGuiPrefix(f.Ret); funk.ContainsString(enumNames, goEnumName) {
+				generator.sb.WriteString(fmt.Sprintf("return %s(%s)", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+			} else if strings.HasSuffix(f.Ret, "*") && (funk.Contains(structNames, strings.TrimSuffix(f.Ret, "*")) || funk.Contains(structNames, strings.TrimSuffix(strings.TrimPrefix(f.Ret, "const "), "*"))) {
+				generator.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(%s))", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+			} else if f.StructGetter && funk.ContainsString(structNames, f.Ret) {
+				generator.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", f.Ret, f.FuncName, argInvokeStmt))
+			} else if f.Constructor {
+				generator.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", returnType, f.FuncName, argInvokeStmt))
+			}
+
+			generator.sb.WriteString("}\n\n")
+
+			generator.convertedFuncCount += 1
 		}
 	}
 

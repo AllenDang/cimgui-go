@@ -1119,6 +1119,8 @@ func (self ImGuiTextFilter) DrawV(label string, width float32) bool {
 	return C.TextFilter_DrawV(self.handle(), labelArg, C.float(width)) == C.bool(true)
 }
 
+// NewImGuiTextFilter parameter default value hint:
+// default_filter: ""
 func NewImGuiTextFilter(default_filter string) ImGuiTextFilter {
 	default_filterArg, default_filterFin := wrapString(default_filter)
 	defer default_filterFin()
