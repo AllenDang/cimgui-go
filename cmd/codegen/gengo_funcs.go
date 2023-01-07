@@ -116,8 +116,10 @@ func (g *goFuncsGenerator) GenerateFuncttion(f FuncDef, args []string, argWrappe
 		noErrors = g.generateFunc(f, args, argWrappers)
 	}
 
-	g.sb.WriteString("}\n\n")
-	g.convertedFuncCount += 1
+	if noErrors {
+		g.sb.WriteString("}\n\n")
+		g.convertedFuncCount += 1
+	}
 
 	return
 }
