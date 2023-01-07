@@ -86,10 +86,6 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 			// return statement
 			generator.sb.WriteString(fmt.Sprintf("return *%s", outArg.Name))
-
-			generator.sb.WriteString("}\n\n")
-
-			generator.convertedFuncCount += 1
 		default:
 			var returnType, returnStmt, reciever string
 			funcName := f.FuncName
@@ -184,11 +180,10 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			case returnTypeConstructor:
 				generator.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", returnType, f.FuncName, argInvokeStmt))
 			}
-
-			generator.sb.WriteString("}\n\n")
-
-			generator.convertedFuncCount += 1
 		}
+
+		generator.sb.WriteString("}\n\n")
+		generator.convertedFuncCount += 1
 	}
 
 	fmt.Printf("Convert progress: %d/%d\n", generator.convertedFuncCount, len(validFuncs))
