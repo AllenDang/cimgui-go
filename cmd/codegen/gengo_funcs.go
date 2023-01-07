@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, structNames []string) {
+func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, structNames []string) error {
 	generator := &goFuncsGenerator{
 		prefix:      prefix,
 		structNames: structNames,
@@ -171,7 +171,12 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 	defer goFile.Close()
 
-	_, _ = goFile.WriteString(generator.sb.String())
+	_, err = goFile.WriteString(generator.sb.String())
+	if err != nil {
+		return fmt.Errorf("failed to write content of GO file: %w", err))
+	}
+
+	return nil
 }
 
 // goFuncsGenerator is an internal state of GO funcs' generator
