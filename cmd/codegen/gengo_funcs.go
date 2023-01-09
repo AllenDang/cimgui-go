@@ -145,9 +145,9 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 		}
 	} else if funk.ContainsString(g.enumNames, goEnumName) {
 		returnTypeType = returnTypeEnum
-	} else if strings.HasSuffix(f.Ret, "*") && (funk.Contains(g.structNames, strings.TrimSuffix(f.Ret, "*")) || funk.Contains(g.structNames, strings.TrimSuffix(strings.TrimPrefix(f.Ret, "const "), "*"))) {
+	} else if strings.HasSuffix(f.Ret, "*") && (funk.Contains(g.structNames, trimImGuiPrefix(strings.TrimSuffix(f.Ret, "*"))) || funk.Contains(g.structNames, trimImGuiPrefix(strings.TrimSuffix(strings.TrimPrefix(f.Ret, "const "), "*")))) {
 		returnTypeType = returnTypeStructPtr
-	} else if f.StructGetter && funk.ContainsString(g.structNames, f.Ret) {
+	} else if f.StructGetter && funk.ContainsString(g.structNames, trimImGuiPrefix(f.Ret)) {
 		returnTypeType = returnTypeStruct
 	} else if f.Constructor {
 		returnTypeType = returnTypeConstructor
