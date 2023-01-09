@@ -25,23 +25,25 @@ import "unsafe"
 			continue
 		}
 
-		sb.WriteString(fmt.Sprintf(`type %[1]s uintptr
+		goName := trimImGuiPrefix(s.Name)
 
-func (data %[1]s) handle() *C.%[1]s {
+		sb.WriteString(fmt.Sprintf(`type %[2]s uintptr
+
+func (data %[2]s) handle() *C.%[1]s {
   return (*C.%[1]s)(unsafe.Pointer(data))
 }
 
-func (data %[1]s) c() C.%[1]s {
+func (data %[2]s) c() C.%[1]s {
   return *(data.handle())
 }
 
-func new%[1]sFromC(cvalue C.%[1]s) %[1]s {
-  return %[1]s(unsafe.Pointer(&cvalue))
+func new%[2]sFromC(cvalue C.%[1]s) %[2]s {
+  return %[2]s(unsafe.Pointer(&cvalue))
 }
 
-`, s.Name))
+`, s.Name, goName))
 
-		structNames = append(structNames, s.Name)
+		structNames = append(structNames, goName)
 	}
 
 	structFile, err := os.Create(fmt.Sprintf("%s_structs.go", prefix))
