@@ -1,7 +1,7 @@
 //go:build !exclude_cimgui_glfw
 // +build !exclude_cimgui_glfw
 
-package cimgui
+package imgui
 
 import (
 	"fmt"
