@@ -165,6 +165,11 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 		}
 
 		receiver = funcParts[0]
+
+		// smartly check, if the receiver's type is ImGui struct and if it should have Im/ImGui prefix removed
+		if r := trimImGuiPrefix(receiver); funk.ContainsString(g.structNames, r) {
+			receiver = r
+		}
 	case returnTypeKnown:
 		returnType, returnStmt = rf()
 	case returnTypeEnum:
