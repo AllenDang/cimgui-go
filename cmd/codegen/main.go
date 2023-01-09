@@ -120,5 +120,7 @@ func main() {
 		structNames = append(structNames, ss...)
 	}
 
-	generateGoFuncs(*prefix, validFuncs, enumNames, structNames)
+	if err := generateGoFuncs(*prefix, validFuncs, enumNames, structNames); err != nil {
+		log.Panic(err)
+	}
 }
