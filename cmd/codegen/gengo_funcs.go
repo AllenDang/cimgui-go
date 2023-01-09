@@ -173,18 +173,15 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 		// return Im struct ptr
 		returnType = strings.TrimPrefix(f.Ret, "const ")
 		returnType = strings.TrimSuffix(returnType, "*")
+		returnType = trimImGuiPrefix(returnType)
 	case returnTypeStruct:
-		returnType = f.Ret
+		returnType = trimImGuiPrefix(f.Ret)
 	case returnTypeConstructor:
 		parts := strings.Split(f.FuncName, "_")
 
 		returnType = parts[0]
 
-		if funk.ContainsString(g.structNames, "Im"+returnType) {
-			returnType = "Im" + returnType
-		} else if funk.ContainsString(g.structNames, "ImGui"+returnType) {
-			returnType = "ImGui" + returnType
-		} else {
+		if !funk.ContainsString(g.structNames, returnType) {
 			return false
 		}
 
@@ -321,8 +318,8 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 			g.shouldGenerate = true
 		}
 
-		if f.StructGetter && funk.ContainsString(g.structNames, a.Type) {
-			args = append(args, fmt.Sprintf("%s %s", a.Name, a.Type))
+		if r := trimImGuiPrefix(a.Type); f.StructGetter && funk.ContainsString(g.structNames, r) {
+			args = append(args, fmt.Sprintf("%s %s", a.Name, r))
 			argWrappers = append(argWrappers, argOutput{
 				VarName: fmt.Sprintf("%s.handle()", a.Name),
 			})
