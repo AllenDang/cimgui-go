@@ -13,7 +13,7 @@ import (
 	"unsafe"
 )
 
-type ImGuiInputTextCallback func(data ImGuiInputTextCallbackData) int
+type ImGuiInputTextCallback func(data InputTextCallbackData) int
 
 type inputTextInternalState struct {
 	buf      *stringBuffer
