@@ -313,14 +313,7 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 }
 
 func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappers []argOutput) {
-	//if f.FuncName == "Plot_SetImGuiContext" {
-	//	print()
-	//}
 	for i, a := range f.ArgsT {
-		//if r := trimImGuiPrefix(a.Type); funk.Contains(g.structNames, a.Type) {
-		//	a.Type = r
-		//}
-
 		g.shouldGenerate = false
 
 		a.Name = validateName(a.Name)

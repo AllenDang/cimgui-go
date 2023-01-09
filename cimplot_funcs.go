@@ -507,6 +507,10 @@ func Plot_GetMarkerName(idx PlotMarker) string {
 	return C.GoString(C.Plot_GetMarkerName(C.ImPlotMarker(idx)))
 }
 
+func Plot_GetPlotDrawList() DrawList {
+	return (DrawList)(unsafe.Pointer(C.Plot_GetPlotDrawList()))
+}
+
 // Plot_GetPlotMousePosV parameter default value hint:
 // x_axis: -1
 // y_axis: -1
@@ -5010,6 +5014,10 @@ func Plot_SetCurrentContext(ctx PlotContext) {
 	C.Plot_SetCurrentContext(ctx.handle())
 }
 
+func Plot_SetImGuiContext(ctx Context) {
+	C.Plot_SetImGuiContext(ctx.handle())
+}
+
 // Plot_SetNextAxesLimitsV parameter default value hint:
 // cond: ImPlotCond_Once
 func Plot_SetNextAxesLimitsV(x_min float64, x_max float64, y_min float64, y_max float64, cond PlotCond) {
@@ -9315,6 +9323,10 @@ func (self PlotAnnotation) GetClamp() bool {
 	return C.ImPlotAnnotation_GetClamp(self.handle()) == C.bool(true)
 }
 
+func (self PlotAnnotationCollection) GetTextBuffer() TextBuffer {
+	return newTextBufferFromC(C.ImPlotAnnotationCollection_GetTextBuffer(self.handle()))
+}
+
 func (self PlotAnnotationCollection) SetSize(v int32) {
 	C.ImPlotAnnotationCollection_SetSize(self.handle(), C.int(v))
 }
@@ -9639,6 +9651,14 @@ func (self PlotAxis) GetHeld() bool {
 	return C.ImPlotAxis_GetHeld(self.handle()) == C.bool(true)
 }
 
+func (self PlotColormapData) GetText() TextBuffer {
+	return newTextBufferFromC(C.ImPlotColormapData_GetText(self.handle()))
+}
+
+func (self PlotColormapData) GetMap() Storage {
+	return newStorageFromC(C.ImPlotColormapData_GetMap(self.handle()))
+}
+
 func (self PlotColormapData) SetCount(v int32) {
 	C.ImPlotColormapData_SetCount(self.handle(), C.int(v))
 }
@@ -9749,6 +9769,10 @@ func (self PlotContext) SetOpenContextThisFrame(v bool) {
 
 func (self PlotContext) GetOpenContextThisFrame() bool {
 	return C.ImPlotContext_GetOpenContextThisFrame(self.handle()) == C.bool(true)
+}
+
+func (self PlotContext) GetMousePosStringBuilder() TextBuffer {
+	return newTextBufferFromC(C.ImPlotContext_GetMousePosStringBuilder(self.handle()))
 }
 
 func (self PlotContext) SetCurrentAlignmentH(v PlotAlignmentData) {
@@ -10005,6 +10029,10 @@ func (self PlotLegend) GetPreviousLocation() PlotLocation {
 	return PlotLocation(C.ImPlotLegend_GetPreviousLocation(self.handle()))
 }
 
+func (self PlotLegend) GetLabels() TextBuffer {
+	return newTextBufferFromC(C.ImPlotLegend_GetLabels(self.handle()))
+}
+
 func (self PlotLegend) SetRect(v Rect) {
 	C.ImPlotLegend_SetRect(self.handle(), v.toC())
 }
@@ -10205,6 +10233,10 @@ func (self PlotPlot) SetMouseTextFlags(v PlotMouseTextFlags) {
 
 func (self PlotPlot) GetMouseTextFlags() PlotMouseTextFlags {
 	return PlotMouseTextFlags(C.ImPlotPlot_GetMouseTextFlags(self.handle()))
+}
+
+func (self PlotPlot) GetTextBuffer() TextBuffer {
+	return newTextBufferFromC(C.ImPlotPlot_GetTextBuffer(self.handle()))
 }
 
 func (self PlotPlot) GetItems() PlotItemGroup {
@@ -10841,6 +10873,10 @@ func (self PlotTag) GetTextOffset() int {
 	return int(C.ImPlotTag_GetTextOffset(self.handle()))
 }
 
+func (self PlotTagCollection) GetTextBuffer() TextBuffer {
+	return newTextBufferFromC(C.ImPlotTagCollection_GetTextBuffer(self.handle()))
+}
+
 func (self PlotTagCollection) SetSize(v int32) {
 	C.ImPlotTagCollection_SetSize(self.handle(), C.int(v))
 }
@@ -10913,6 +10949,10 @@ func (self PlotTick) SetIdx(v int32) {
 
 func (self PlotTick) GetIdx() int {
 	return int(C.ImPlotTick_GetIdx(self.handle()))
+}
+
+func (self PlotTicker) GetTextBuffer() TextBuffer {
+	return newTextBufferFromC(C.ImPlotTicker_GetTextBuffer(self.handle()))
 }
 
 func (self PlotTicker) SetMaxSize(v Vec2) {

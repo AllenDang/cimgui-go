@@ -33,7 +33,7 @@ func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []string, structName
 
 	for _, s := range structs {
 		if !shouldSkipStruct(s.Name) {
-			structNames = append(structNames, s.Name)
+			structNames = append(structNames, trimImGuiPrefix(s.Name))
 		}
 	}
 
