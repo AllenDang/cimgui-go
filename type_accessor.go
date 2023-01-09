@@ -20,7 +20,7 @@ func (io IO) AddMouseWheelDelta(horizontal, vertical float32) {
 // Typically 1 command = 1 GPU draw call, unless the command is a callback.
 func (d DrawData) CommandLists() []DrawList {
 	count := d.GetCmdListsCount()
-	lists := make([]ImDrawList, count)
+	lists := make([]DrawList, count)
 	for i := 0; i < count; i++ {
 		lists[i] = d.getDrawListAt(i)
 	}
@@ -28,7 +28,7 @@ func (d DrawData) CommandLists() []DrawList {
 }
 
 func (d DrawData) getDrawListAt(idx int) DrawList {
-	return (ImDrawList)(unsafe.Pointer(C.DrawData_GetDrawListAt(d.handle(), C.int(idx))))
+	return (DrawList)(unsafe.Pointer(C.DrawData_GetDrawListAt(d.handle(), C.int(idx))))
 }
 
 func (d DrawList) GetVertexBuffer() (unsafe.Pointer, int) {
@@ -44,12 +44,12 @@ func (d DrawList) GetIndexBuffer() (unsafe.Pointer, int) {
 }
 
 func (d DrawList) getDrawCmdAt(idx int) DrawCmd {
-	return (ImDrawCmd)(unsafe.Pointer(C.DrawList_GetDrawCmdAt(d.handle(), C.int(idx))))
+	return (DrawCmd)(unsafe.Pointer(C.DrawList_GetDrawCmdAt(d.handle(), C.int(idx))))
 }
 
 func (d DrawList) Commands() []DrawCmd {
 	count := int(d.c().CmdBuffer.Size)
-	cmds := make([]ImDrawCmd, count)
+	cmds := make([]DrawCmd, count)
 	for i := 0; i < count; i++ {
 		cmds[i] = d.getDrawCmdAt(i)
 	}

@@ -26,7 +26,7 @@ var (
 	barValues      []int64
 )
 
-func callback(data cimgui.ImGuiInputTextCallbackData) int {
+func callback(data cimgui.InputTextCallbackData) int {
 	fmt.Println("got call back")
 	return 0
 }
