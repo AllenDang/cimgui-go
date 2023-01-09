@@ -49,11 +49,11 @@ func (gr GlyphRange) Data() *Wchar {
 	return (*Wchar)(C.GlyphRange_GetData(gr.handle()))
 }
 
-func (fa ImFontAtlas) GetFontCount() int {
+func (fa FontAtlas) GetFontCount() int {
 	return int(C.ImFontAtlas_GetFontCount(fa.handle()))
 }
 
-func (self ImFontAtlas) GetTextureDataAsAlpha8() (pixels unsafe.Pointer, width int32, height int32, outBytesPerPixel int32) {
+func (self FontAtlas) GetTextureDataAsAlpha8() (pixels unsafe.Pointer, width int32, height int32, outBytesPerPixel int32) {
 	var p *C.uchar
 	var w C.int
 	var h C.int
@@ -69,7 +69,7 @@ func (self ImFontAtlas) GetTextureDataAsAlpha8() (pixels unsafe.Pointer, width i
 	return
 }
 
-func (self ImFontAtlas) GetTextureDataAsRGBA32() (pixels unsafe.Pointer, width int32, height int32, outBytesPerPixel int32) {
+func (self FontAtlas) GetTextureDataAsRGBA32() (pixels unsafe.Pointer, width int32, height int32, outBytesPerPixel int32) {
 	var p *C.uchar
 	var w C.int
 	var h C.int

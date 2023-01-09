@@ -1,5 +1,6 @@
 package main
 
+import "C"
 import (
 	"fmt"
 	"github.com/thoas/go-funk"
@@ -216,7 +217,7 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 	case returnTypeStructPtr:
 		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(%s))", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
 	case returnTypeStruct:
-		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", f.Ret, f.FuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", returnType, f.FuncName, argInvokeStmt))
 	case returnTypeConstructor:
 		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", returnType, f.FuncName, argInvokeStmt))
 	}
@@ -312,12 +313,17 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 }
 
 func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappers []argOutput) {
+	//if f.FuncName == "Plot_SetImGuiContext" {
+	//	print()
+	//}
 	for i, a := range f.ArgsT {
+		//if r := trimImGuiPrefix(a.Type); funk.Contains(g.structNames, a.Type) {
+		//	a.Type = r
+		//}
+
 		g.shouldGenerate = false
 
-		if a.Name == "type" {
-			a.Name = "typeArg"
-		}
+		a.Name = validateName(a.Name)
 
 		if i == 0 && f.StructSetter {
 			g.shouldGenerate = true
@@ -365,6 +371,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 		if strings.HasSuffix(a.Type, "*") {
 			pureType := strings.TrimPrefix(a.Type, "const ")
 			pureType = strings.TrimSuffix(pureType, "*")
+			pureType = trimImGuiPrefix(pureType)
 
 			if funk.ContainsString(g.structNames, pureType) {
 				args = append(args, fmt.Sprintf("%s %s", a.Name, pureType))
@@ -384,6 +391,19 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 	}
 
 	return args, argWrappers
+}
+
+func validateName(name string) string {
+	deniedNames := map[string]bool{
+		"type":  true,
+		"range": true,
+	}
+
+	if _, ok := deniedNames[name]; ok {
+		return fmt.Sprintf("%sArg", name)
+	}
+
+	return name
 }
 
 // Generate function body
