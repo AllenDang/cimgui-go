@@ -267,11 +267,6 @@ func (g *goFuncsGenerator) generateNonUDTFunc(f FuncDef, args []string, argWrapp
 // e.g.: func (self *ImGuiType) FuncName(arg1 type1, arg2 type2) returnType {
 func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName string, args []string, returnType string, f FuncDef) (functionDeclaration string) {
 	funcParts := strings.Split(funcName, "_")
-	typeName := funcParts[0]
-
-	if len(receiver) > 0 {
-		receiver = fmt.Sprintf("(self *%s)", receiver)
-	}
 
 	// Generate default param value hint
 	var commentSb strings.Builder
@@ -296,21 +291,22 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 		}
 	}
 
-	if strings.Contains(funcName, "_") &&
-		len(funcParts) > 1 &&
-		len(args) > 0 && strings.Contains(args[0], "self ") &&
-		!funk.ContainsString(skippedStructs(), typeName) {
-		newFuncName := strings.TrimPrefix(funcName, typeName+"_")
-		newArgs := args
-		if len(newArgs) > 0 {
-			newArgs = args[1:]
-		}
+	if len(funcParts) > 1 &&
+		len(args) > 0 &&
+		strings.Contains(args[0], "self ") &&
+		!funk.ContainsString(skippedStructs(), args[0]) {
+		receiver = args[0]
+		receiver = strings.TrimPrefix(receiver, "self ")
 
-		typeName = strings.TrimPrefix(args[0], "self ")
-		return fmt.Sprintf("%sfunc %s (self %s) %s(%s) %s {\n", commentSb.String(), receiver, typeName, newFuncName, strings.Join(newArgs, ","), returnType)
+		funcName = strings.TrimPrefix(funcName, funcParts[0]+"_")
+		args = args[1:]
 	}
 
-	return fmt.Sprintf("%sfunc %s %s(%s) %s {\n", commentSb.String(), receiver, funcName, strings.Join(args, ","), returnType)
+	if len(receiver) > 0 {
+		receiver = fmt.Sprintf("(self %s)", receiver)
+	}
+
+	return fmt.Sprintf("%sfunc %s %s(%s) %s {\n", commentSb.String(), receiver, funcName, strings.Join(args, ", "), returnType)
 }
 
 func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappers []argOutput) {
