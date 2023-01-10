@@ -5,8 +5,6 @@ import (
 	"os"
 	"sort"
 	"strings"
-
-	"github.com/thoas/go-funk"
 )
 
 // returnTypeType represents an arbitrary type of return value of the function.
@@ -36,15 +34,23 @@ const (
 func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, structNames []string) error {
 	generator := &goFuncsGenerator{
 		prefix:      prefix,
-		structNames: structNames,
-		enumNames:   enumNames,
+		structNames: make(map[string]bool),
+		enumNames:   make(map[string]bool),
+	}
+
+	for _, v := range structNames {
+		generator.structNames[v] = true
+	}
+
+	for _, v := range enumNames {
+		generator.enumNames[v] = true
 	}
 
 	generator.writeFuncsFileHeader()
 
 	for _, f := range validFuncs {
 		// check whether the function shouldn't be skipped
-		if funk.ContainsString(skippedFuncs, f.FuncName) {
+		if skippedFuncs[f.FuncName] {
 			continue
 		}
 
@@ -87,7 +93,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 // goFuncsGenerator is an internal state of GO funcs' generator
 type goFuncsGenerator struct {
 	prefix                 string
-	structNames, enumNames []string
+	structNames, enumNames map[string]bool
 
 	sb                 strings.Builder
 	convertedFuncCount int
@@ -144,11 +150,11 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 		} else {
 			returnTypeType = returnTypeVoid
 		}
-	} else if funk.ContainsString(g.enumNames, goEnumName) {
+	} else if g.enumNames[goEnumName] {
 		returnTypeType = returnTypeEnum
-	} else if strings.HasSuffix(f.Ret, "*") && (funk.Contains(g.structNames, strings.TrimSuffix(f.Ret, "*")) || funk.Contains(g.structNames, strings.TrimSuffix(strings.TrimPrefix(f.Ret, "const "), "*"))) {
+	} else if strings.HasSuffix(f.Ret, "*") && (g.structNames[strings.TrimSuffix(f.Ret, "*")] || g.structNames[strings.TrimSuffix(strings.TrimPrefix(f.Ret, "const "), "*")]) {
 		returnTypeType = returnTypeStructPtr
-	} else if f.StructGetter && funk.ContainsString(g.structNames, f.Ret) {
+	} else if f.StructGetter && g.structNames[f.Ret] {
 		returnTypeType = returnTypeStruct
 	} else if f.Constructor {
 		returnTypeType = returnTypeConstructor
@@ -161,7 +167,7 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 	case returnTypeStructSetter:
 		funcParts := strings.Split(f.FuncName, "_")
 		funcName = strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
-		if len(funcName) == 0 || !strings.HasPrefix(funcName, "Set") || funk.ContainsString(skippedStructs, funcParts[0]) {
+		if len(funcName) == 0 || !strings.HasPrefix(funcName, "Set") || skippedStructs[funcParts[0]] {
 			return false
 		}
 
@@ -181,7 +187,7 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 
 		returnType = parts[0]
 
-		if !funk.ContainsString(g.structNames, returnType) {
+		if !g.structNames[returnType] {
 			return false
 		}
 
@@ -305,7 +311,7 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 
 		typeName = strings.TrimPrefix(args[0], "self ")
 		return fmt.Sprintf("%sfunc %s (self %s) %s(%s) %s {\n",
-			strings.Replace(commentSb.String(), "%s", renameGoIdentifier(typeName)+"."+renameGoIdentifier(newFuncName), 1),
+			strings.Replace(commentSb.String(), "%s", renameGoIdentifier(newFuncName), 1),
 			renameGoIdentifier(receiver),
 			renameGoIdentifier(typeName),
 			renameGoIdentifier(newFuncName),
@@ -333,7 +339,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 			g.shouldGenerate = true
 		}
 
-		if f.StructGetter && funk.ContainsString(g.structNames, a.Type) {
+		if f.StructGetter && g.structNames[a.Type] {
 			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(a.Type)))
 			argWrappers = append(argWrappers, argOutput{
 				VarName: fmt.Sprintf("%s.handle()", a.Name),
@@ -376,7 +382,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 			pureType := strings.TrimPrefix(a.Type, "const ")
 			pureType = strings.TrimSuffix(pureType, "*")
 
-			if funk.ContainsString(g.structNames, pureType) {
+			if g.structNames[pureType] {
 				args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType)))
 				argWrappers = append(argWrappers, argOutput{
 					VarName: fmt.Sprintf("%s.handle()", a.Name),
@@ -414,7 +420,7 @@ func (g *goFuncsGenerator) generateFuncBody(argWrappers []argOutput) string {
 
 // isEnum returns true when given string is a valid enum type.
 func (g *goFuncsGenerator) isEnum(argType string) bool {
-	for _, en := range g.enumNames {
+	for en := range g.enumNames {
 		if argType == en {
 			return true
 		}

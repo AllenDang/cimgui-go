@@ -13,11 +13,11 @@ import (
 	"unsafe"
 )
 
-type ImGuiInputTextCallback func(data InputTextCallbackData) int
+type InputTextCallback func(data InputTextCallbackData) int
 
 type inputTextInternalState struct {
 	buf      *stringBuffer
-	callback ImGuiInputTextCallback
+	callback InputTextCallback
 }
 
 func (state *inputTextInternalState) release() {
@@ -46,7 +46,7 @@ func generalInputTextCallback(cbData *C.ImGuiInputTextCallbackData) C.int {
 	return 0
 }
 
-func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, callback ImGuiInputTextCallback) bool {
+func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, callback InputTextCallback) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -79,7 +79,7 @@ func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, ca
 	) == C.bool(true)
 }
 
-func InputTextMultiline(label string, buf *string, size Vec2, flags InputTextFlags, callback ImGuiInputTextCallback) bool {
+func InputTextMultiline(label string, buf *string, size Vec2, flags InputTextFlags, callback InputTextCallback) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
