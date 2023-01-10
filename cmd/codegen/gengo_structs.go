@@ -27,19 +27,19 @@ import "unsafe"
 
 		sb.WriteString(fmt.Sprintf(`type %[1]s uintptr
 
-func (data %[1]s) handle() *C.%[1]s {
-  return (*C.%[1]s)(unsafe.Pointer(data))
+func (data %[1]s) handle() *C.%[2]s {
+  return (*C.%[2]s)(unsafe.Pointer(data))
 }
 
-func (data %[1]s) c() C.%[1]s {
+func (data %[1]s) c() C.%[2]s {
   return *(data.handle())
 }
 
-func new%[1]sFromC(cvalue C.%[1]s) %[1]s {
+func new%[1]sFromC(cvalue C.%[2]s) %[1]s {
   return %[1]s(unsafe.Pointer(&cvalue))
 }
 
-`, s.Name))
+`, renameGoIdentifier(s.Name), s.Name))
 
 		structNames = append(structNames, s.Name)
 	}

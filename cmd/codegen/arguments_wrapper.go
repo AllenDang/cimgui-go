@@ -300,7 +300,7 @@ func doublePtrW(arg ArgDef) (argType string, def string, varName string) {
 }
 
 func imGuiIDW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "ImGuiID", "C.ImGuiID")
+	return simpleW(arg.Name, "ID", "C.ImGuiID")
 }
 
 func imTextureIDW(arg ArgDef) (argType string, def string, varName string) {

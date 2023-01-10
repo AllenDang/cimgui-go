@@ -5,65 +5,65 @@ package cimgui
 import "C"
 import "unsafe"
 
-func (io ImGuiIO) SetMouseButtonDown(i int, down bool) {
-	C.ImGuiIO_SetMouseButtonDown(io.handle(), C.int(i), C.bool(down))
+func (io IO) SetMouseButtonDown(i int, down bool) {
+	C.wrap_ImGuiIO_SetMouseButtonDown(io.handle(), C.int(i), C.bool(down))
 }
 
-func (io ImGuiIO) AddMouseWheelDelta(horizontal, vertical float32) {
-	v := io.GetMouseWheel() + vertical
-	h := io.GetMouseWheelH() + horizontal
+func (io IO) AddMouseWheelDelta(horizontal, vertical float32) {
+	v := io.MouseWheel() + vertical
+	h := io.MouseWheelH() + horizontal
 	io.SetMouseWheel(v)
 	io.SetMouseWheelH(h)
 }
 
 // Commands returns the list of draw commands.
 // Typically 1 command = 1 GPU draw call, unless the command is a callback.
-func (d ImDrawData) CommandLists() []ImDrawList {
-	count := d.GetCmdListsCount()
-	lists := make([]ImDrawList, count)
+func (d DrawData) CommandLists() []DrawList {
+	count := d.CmdListsCount()
+	lists := make([]DrawList, count)
 	for i := 0; i < count; i++ {
 		lists[i] = d.getDrawListAt(i)
 	}
 	return lists
 }
 
-func (d ImDrawData) getDrawListAt(idx int) ImDrawList {
-	return (ImDrawList)(unsafe.Pointer(C.DrawData_GetDrawListAt(d.handle(), C.int(idx))))
+func (d DrawData) getDrawListAt(idx int) DrawList {
+	return (DrawList)(unsafe.Pointer(C.wrap_DrawData_GetDrawListAt(d.handle(), C.int(idx))))
 }
 
-func (d ImDrawList) GetVertexBuffer() (unsafe.Pointer, int) {
+func (d DrawList) GetVertexBuffer() (unsafe.Pointer, int) {
 	buffer := d.c().VtxBuffer.Data
 	bufferSize := C.sizeof_ImDrawVert * d.c().VtxBuffer.Size
 	return unsafe.Pointer(buffer), int(bufferSize)
 }
 
-func (d ImDrawList) GetIndexBuffer() (unsafe.Pointer, int) {
+func (d DrawList) GetIndexBuffer() (unsafe.Pointer, int) {
 	buffer := d.c().IdxBuffer.Data
 	bufferSize := C.sizeof_ImDrawIdx * d.c().IdxBuffer.Size
 	return unsafe.Pointer(buffer), int(bufferSize)
 }
 
-func (d ImDrawList) getDrawCmdAt(idx int) ImDrawCmd {
-	return (ImDrawCmd)(unsafe.Pointer(C.DrawList_GetDrawCmdAt(d.handle(), C.int(idx))))
+func (d DrawList) getDrawCmdAt(idx int) DrawCmd {
+	return (DrawCmd)(unsafe.Pointer(C.wrap_DrawList_GetDrawCmdAt(d.handle(), C.int(idx))))
 }
 
-func (d ImDrawList) Commands() []ImDrawCmd {
+func (d DrawList) Commands() []DrawCmd {
 	count := int(d.c().CmdBuffer.Size)
-	cmds := make([]ImDrawCmd, count)
+	cmds := make([]DrawCmd, count)
 	for i := 0; i < count; i++ {
 		cmds[i] = d.getDrawCmdAt(i)
 	}
 	return cmds
 }
 
-func (d ImDrawCmd) HasUserCallback() bool {
+func (d DrawCmd) HasUserCallback() bool {
 	return d.c().UserCallback != nil
 }
 
-func (d ImDrawCmd) CallUserCallback(list ImDrawList) {
-	C.DrawCmd_CallUserCallback(list.handle(), d.handle())
+func (d DrawCmd) CallUserCallback(list DrawList) {
+	C.wrap_DrawCmd_CallUserCallback(list.handle(), d.handle())
 }
 
-func (fa ImFontGlyphRangesBuilder) BuildRanges(ranges GlyphRange) {
-	C.ImFontGlyphRangesBuilder_BuildRanges(fa.handle(), ranges.handle())
+func (fa FontGlyphRangesBuilder) BuildRanges(ranges GlyphRange) {
+	C.wrap_ImFontGlyphRangesBuilder_BuildRanges(fa.handle(), ranges.handle())
 }

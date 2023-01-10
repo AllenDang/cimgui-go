@@ -13,7 +13,7 @@ import (
 	"unsafe"
 )
 
-type ImGuiInputTextCallback func(data ImGuiInputTextCallbackData) int
+type ImGuiInputTextCallback func(data InputTextCallbackData) int
 
 type inputTextInternalState struct {
 	buf      *stringBuffer
@@ -26,16 +26,16 @@ func (state *inputTextInternalState) release() {
 
 //export generalInputTextCallback
 func generalInputTextCallback(cbData *C.ImGuiInputTextCallbackData) C.int {
-	data := ImGuiInputTextCallbackData(unsafe.Pointer(cbData))
+	data := InputTextCallbackData(unsafe.Pointer(cbData))
 
 	bufHandle := (*cgo.Handle)(data.c().UserData)
 	statePtr := bufHandle.Value().(*inputTextInternalState)
 
-	if data.GetEventFlag() == InputTextFlags_CallbackResize {
-		statePtr.buf.resizeTo(data.GetBufSize())
-		C.ImGuiInputTextCallbackData_SetBuf(cbData, (*C.char)(statePtr.buf.ptr))
+	if data.EventFlag() == InputTextFlagsCallbackResize {
+		statePtr.buf.resizeTo(data.BufSize())
+		C.wrap_ImGuiInputTextCallbackData_SetBuf(cbData, (*C.char)(statePtr.buf.ptr))
 		data.SetBufSize(int32(statePtr.buf.size))
-		data.SetBufTextLen(int32(data.GetBufTextLen()))
+		data.SetBufTextLen(int32(data.BufTextLen()))
 		data.SetBufDirty(true)
 	}
 
@@ -66,9 +66,9 @@ func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, ca
 	stateHandle := cgo.NewHandle(state)
 	defer stateHandle.Delete()
 
-	flags |= InputTextFlags_CallbackResize
+	flags |= InputTextFlagsCallbackResize
 
-	return C.InputTextWithHintV(
+	return C.wrap_igInputTextWithHintV(
 		labelArg,
 		hintArg,
 		(*C.char)(state.buf.ptr),
@@ -96,9 +96,9 @@ func InputTextMultiline(label string, buf *string, size Vec2, flags InputTextFla
 	stateHandle := cgo.NewHandle(state)
 	defer stateHandle.Delete()
 
-	flags |= InputTextFlags_CallbackResize
+	flags |= InputTextFlagsCallbackResize
 
-	return C.InputTextMultilineV(
+	return C.wrap_igInputTextMultilineV(
 		labelArg,
 		(*C.char)(state.buf.ptr),
 		C.xlong(len(*buf)+1),
