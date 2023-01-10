@@ -295,8 +295,7 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 
 	if strings.Contains(funcName, "_") &&
 		len(funcParts) > 1 &&
-		len(args) > 0 && strings.Contains(args[0], "self ") &&
-		!funk.ContainsString(skippedStructs, typeName) {
+		len(args) > 0 && strings.Contains(args[0], "self ") {
 
 		newFuncName := strings.TrimPrefix(funcName, typeName+"_")
 		newArgs := args
