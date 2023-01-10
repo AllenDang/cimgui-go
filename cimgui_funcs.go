@@ -20,16 +20,16 @@ func ColorHSVV(h float32, s float32, v float32, a float32) Color {
 	return *pOut
 }
 
-// ColorSetHSVV parameter default value hint:
+// *Color.SetHSVV parameter default value hint:
 // a: 1.0f
-func ColorSetHSVV(self *Color, h float32, s float32, v float32, a float32) {
+func (self *Color) SetHSVV(h float32, s float32, v float32, a float32) {
 	selfArg, selfFin := wrap[C.ImColor, *Color](self)
 	defer selfFin()
 
 	C.wrap_ImColor_SetHSVV(selfArg, C.float(h), C.float(s), C.float(v), C.float(a))
 }
 
-func ColorDestroy(self *Color) {
+func (self *Color) Destroy() {
 	selfArg, selfFin := wrap[C.ImColor, *Color](self)
 	defer selfFin()
 
@@ -1183,21 +1183,21 @@ func (self WindowSettings) Destroy() {
 	C.wrap_ImGuiWindowSettings_Destroy(self.handle())
 }
 
-func RectDestroy(self *Rect) {
+func (self *Rect) Destroy() {
 	selfArg, selfFin := wrap[C.ImRect, *Rect](self)
 	defer selfFin()
 
 	C.wrap_ImRect_Destroy(selfArg)
 }
 
-func Vec2Destroy(self *Vec2) {
+func (self *Vec2) Destroy() {
 	selfArg, selfFin := wrap[C.ImVec2, *Vec2](self)
 	defer selfFin()
 
 	C.wrap_ImVec2_Destroy(selfArg)
 }
 
-func Vec4Destroy(self *Vec4) {
+func (self *Vec4) Destroy() {
 	selfArg, selfFin := wrap[C.ImVec4, *Vec4](self)
 	defer selfFin()
 
@@ -4068,7 +4068,7 @@ func ColorHSV(h float32, s float32, v float32) Color {
 	return *pOut
 }
 
-func ColorSetHSV(self *Color, h float32, s float32, v float32) {
+func (self *Color) SetHSV(h float32, s float32, v float32) {
 	selfArg, selfFin := wrap[C.ImColor, *Color](self)
 	defer selfFin()
 
