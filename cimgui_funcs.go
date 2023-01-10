@@ -20,7 +20,7 @@ func ColorHSVV(h float32, s float32, v float32, a float32) Color {
 	return *pOut
 }
 
-// *Color.SetHSVV parameter default value hint:
+// SetHSVV parameter default value hint:
 // a: 1.0f
 func (self *Color) SetHSVV(h float32, s float32, v float32, a float32) {
 	selfArg, selfFin := wrap[C.ImColor, *Color](self)
@@ -100,26 +100,26 @@ func (self DrawListSplitter) Destroy() {
 	C.wrap_ImDrawListSplitter_Destroy(self.handle())
 }
 
-// DrawList.AddBezierCubicV parameter default value hint:
+// AddBezierCubicV parameter default value hint:
 // num_segments: 0
 func (self DrawList) AddBezierCubicV(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32, thickness float32, num_segments int32) {
 	C.wrap_ImDrawList_AddBezierCubicV(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col), C.float(thickness), C.int(num_segments))
 }
 
-// DrawList.AddBezierQuadraticV parameter default value hint:
+// AddBezierQuadraticV parameter default value hint:
 // num_segments: 0
 func (self DrawList) AddBezierQuadraticV(p1 Vec2, p2 Vec2, p3 Vec2, col uint32, thickness float32, num_segments int32) {
 	C.wrap_ImDrawList_AddBezierQuadraticV(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col), C.float(thickness), C.int(num_segments))
 }
 
-// DrawList.AddCircleV parameter default value hint:
+// AddCircleV parameter default value hint:
 // num_segments: 0
 // thickness: 1.0f
 func (self DrawList) AddCircleV(center Vec2, radius float32, col uint32, num_segments int32, thickness float32) {
 	C.wrap_ImDrawList_AddCircleV(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments), C.float(thickness))
 }
 
-// DrawList.AddCircleFilledV parameter default value hint:
+// AddCircleFilledV parameter default value hint:
 // num_segments: 0
 func (self DrawList) AddCircleFilledV(center Vec2, radius float32, col uint32, num_segments int32) {
 	C.wrap_ImDrawList_AddCircleFilledV(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments))
@@ -136,7 +136,7 @@ func (self DrawList) AddDrawCmd() {
 	C.wrap_ImDrawList_AddDrawCmd(self.handle())
 }
 
-// DrawList.AddImageV parameter default value hint:
+// AddImageV parameter default value hint:
 // col: 4294967295
 // uv_max: ImVec2(1,1)
 // uv_min: ImVec2(0,0)
@@ -144,7 +144,7 @@ func (self DrawList) AddImageV(user_texture_id TextureID, p_min Vec2, p_max Vec2
 	C.wrap_ImDrawList_AddImageV(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col))
 }
 
-// DrawList.AddImageQuadV parameter default value hint:
+// AddImageQuadV parameter default value hint:
 // col: 4294967295
 // uv1: ImVec2(0,0)
 // uv2: ImVec2(1,0)
@@ -154,19 +154,19 @@ func (self DrawList) AddImageQuadV(user_texture_id TextureID, p1 Vec2, p2 Vec2, 
 	C.wrap_ImDrawList_AddImageQuadV(self.handle(), C.ImTextureID(user_texture_id), p1.toC(), p2.toC(), p3.toC(), p4.toC(), uv1.toC(), uv2.toC(), uv3.toC(), uv4.toC(), C.ImU32(col))
 }
 
-// DrawList.AddImageRoundedV parameter default value hint:
+// AddImageRoundedV parameter default value hint:
 // flags: 0
 func (self DrawList) AddImageRoundedV(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32, rounding float32, flags DrawFlags) {
 	C.wrap_ImDrawList_AddImageRoundedV(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
 }
 
-// DrawList.AddLineV parameter default value hint:
+// AddLineV parameter default value hint:
 // thickness: 1.0f
 func (self DrawList) AddLineV(p1 Vec2, p2 Vec2, col uint32, thickness float32) {
 	C.wrap_ImDrawList_AddLineV(self.handle(), p1.toC(), p2.toC(), C.ImU32(col), C.float(thickness))
 }
 
-// DrawList.AddNgonV parameter default value hint:
+// AddNgonV parameter default value hint:
 // thickness: 1.0f
 func (self DrawList) AddNgonV(center Vec2, radius float32, col uint32, num_segments int32, thickness float32) {
 	C.wrap_ImDrawList_AddNgonV(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments), C.float(thickness))
@@ -183,7 +183,7 @@ func (self DrawList) AddPolyline(points *Vec2, num_points int32, col uint32, fla
 	C.wrap_ImDrawList_AddPolyline(self.handle(), pointsArg, C.int(num_points), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
 }
 
-// DrawList.AddQuadV parameter default value hint:
+// AddQuadV parameter default value hint:
 // thickness: 1.0f
 func (self DrawList) AddQuadV(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32, thickness float32) {
 	C.wrap_ImDrawList_AddQuadV(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col), C.float(thickness))
@@ -193,7 +193,7 @@ func (self DrawList) AddQuadFilled(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint3
 	C.wrap_ImDrawList_AddQuadFilled(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col))
 }
 
-// DrawList.AddRectV parameter default value hint:
+// AddRectV parameter default value hint:
 // flags: 0
 // rounding: 0.0f
 // thickness: 1.0f
@@ -201,7 +201,7 @@ func (self DrawList) AddRectV(p_min Vec2, p_max Vec2, col uint32, rounding float
 	C.wrap_ImDrawList_AddRectV(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags), C.float(thickness))
 }
 
-// DrawList.AddRectFilledV parameter default value hint:
+// AddRectFilledV parameter default value hint:
 // flags: 0
 // rounding: 0.0f
 func (self DrawList) AddRectFilledV(p_min Vec2, p_max Vec2, col uint32, rounding float32, flags DrawFlags) {
@@ -212,7 +212,7 @@ func (self DrawList) AddRectFilledMultiColor(p_min Vec2, p_max Vec2, col_upr_lef
 	C.wrap_ImDrawList_AddRectFilledMultiColor(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col_upr_left), C.ImU32(col_upr_right), C.ImU32(col_bot_right), C.ImU32(col_bot_left))
 }
 
-// DrawList.AddTextFontPtrV parameter default value hint:
+// AddTextFontPtrV parameter default value hint:
 // cpu_fine_clip_rect: NULL
 // text_end: NULL
 // wrap_width: 0.0f
@@ -226,7 +226,7 @@ func (self DrawList) AddTextFontPtrV(font Font, font_size float32, pos Vec2, col
 	C.wrap_ImDrawList_AddText_FontPtrV(self.handle(), font.handle(), C.float(font_size), pos.toC(), C.ImU32(col), text_beginArg, C.float(wrap_width), cpu_fine_clip_rectArg)
 }
 
-// DrawList.AddTextVec2V parameter default value hint:
+// AddTextVec2V parameter default value hint:
 // text_end: NULL
 func (self DrawList) AddTextVec2V(pos Vec2, col uint32, text_begin string) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
@@ -235,7 +235,7 @@ func (self DrawList) AddTextVec2V(pos Vec2, col uint32, text_begin string) {
 	C.wrap_ImDrawList_AddText_Vec2V(self.handle(), pos.toC(), C.ImU32(col), text_beginArg)
 }
 
-// DrawList.AddTriangleV parameter default value hint:
+// AddTriangleV parameter default value hint:
 // thickness: 1.0f
 func (self DrawList) AddTriangleV(p1 Vec2, p2 Vec2, p3 Vec2, col uint32, thickness float32) {
 	C.wrap_ImDrawList_AddTriangleV(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col), C.float(thickness))
@@ -283,7 +283,7 @@ func NewDrawList(shared_data DrawListSharedData) DrawList {
 	return (DrawList)(unsafe.Pointer(C.wrap_ImDrawList_ImDrawList(shared_data.handle())))
 }
 
-// DrawList.PathArcToV parameter default value hint:
+// PathArcToV parameter default value hint:
 // num_segments: 0
 func (self DrawList) PathArcToV(center Vec2, radius float32, a_min float32, a_max float32, num_segments int32) {
 	C.wrap_ImDrawList_PathArcToV(self.handle(), center.toC(), C.float(radius), C.float(a_min), C.float(a_max), C.int(num_segments))
@@ -293,13 +293,13 @@ func (self DrawList) PathArcToFast(center Vec2, radius float32, a_min_of_12 int3
 	C.wrap_ImDrawList_PathArcToFast(self.handle(), center.toC(), C.float(radius), C.int(a_min_of_12), C.int(a_max_of_12))
 }
 
-// DrawList.PathBezierCubicCurveToV parameter default value hint:
+// PathBezierCubicCurveToV parameter default value hint:
 // num_segments: 0
 func (self DrawList) PathBezierCubicCurveToV(p2 Vec2, p3 Vec2, p4 Vec2, num_segments int32) {
 	C.wrap_ImDrawList_PathBezierCubicCurveToV(self.handle(), p2.toC(), p3.toC(), p4.toC(), C.int(num_segments))
 }
 
-// DrawList.PathBezierQuadraticCurveToV parameter default value hint:
+// PathBezierQuadraticCurveToV parameter default value hint:
 // num_segments: 0
 func (self DrawList) PathBezierQuadraticCurveToV(p2 Vec2, p3 Vec2, num_segments int32) {
 	C.wrap_ImDrawList_PathBezierQuadraticCurveToV(self.handle(), p2.toC(), p3.toC(), C.int(num_segments))
@@ -321,14 +321,14 @@ func (self DrawList) PathLineToMergeDuplicate(pos Vec2) {
 	C.wrap_ImDrawList_PathLineToMergeDuplicate(self.handle(), pos.toC())
 }
 
-// DrawList.PathRectV parameter default value hint:
+// PathRectV parameter default value hint:
 // flags: 0
 // rounding: 0.0f
 func (self DrawList) PathRectV(rect_min Vec2, rect_max Vec2, rounding float32, flags DrawFlags) {
 	C.wrap_ImDrawList_PathRectV(self.handle(), rect_min.toC(), rect_max.toC(), C.float(rounding), C.ImDrawFlags(flags))
 }
 
-// DrawList.PathStrokeV parameter default value hint:
+// PathStrokeV parameter default value hint:
 // flags: 0
 // thickness: 1.0f
 func (self DrawList) PathStrokeV(col uint32, flags DrawFlags, thickness float32) {
@@ -375,7 +375,7 @@ func (self DrawList) PrimWriteVtx(pos Vec2, uv Vec2, col uint32) {
 	C.wrap_ImDrawList_PrimWriteVtx(self.handle(), pos.toC(), uv.toC(), C.ImU32(col))
 }
 
-// DrawList.PushClipRectV parameter default value hint:
+// PushClipRectV parameter default value hint:
 // intersect_with_current_clip_rect: false
 func (self DrawList) PushClipRectV(clip_rect_min Vec2, clip_rect_max Vec2, intersect_with_current_clip_rect bool) {
 	C.wrap_ImDrawList_PushClipRectV(self.handle(), clip_rect_min.toC(), clip_rect_max.toC(), C.bool(intersect_with_current_clip_rect))
@@ -405,7 +405,7 @@ func (self FontAtlasCustomRect) Destroy() {
 	C.wrap_ImFontAtlasCustomRect_Destroy(self.handle())
 }
 
-// FontAtlas.AddCustomRectFontGlyphV parameter default value hint:
+// AddCustomRectFontGlyphV parameter default value hint:
 // offset: ImVec2(0,0)
 func (self FontAtlas) AddCustomRectFontGlyphV(font Font, id Wchar, width int32, height int32, advance_x float32, offset Vec2) int {
 	return int(C.wrap_ImFontAtlas_AddCustomRectFontGlyphV(self.handle(), font.handle(), C.ImWchar(id), C.int(width), C.int(height), C.float(advance_x), offset.toC()))
@@ -419,13 +419,13 @@ func (self FontAtlas) AddFont(font_cfg FontConfig) Font {
 	return (Font)(unsafe.Pointer(C.wrap_ImFontAtlas_AddFont(self.handle(), font_cfg.handle())))
 }
 
-// FontAtlas.AddFontDefaultV parameter default value hint:
+// AddFontDefaultV parameter default value hint:
 // font_cfg: NULL
 func (self FontAtlas) AddFontDefaultV(font_cfg FontConfig) Font {
 	return (Font)(unsafe.Pointer(C.wrap_ImFontAtlas_AddFontDefaultV(self.handle(), font_cfg.handle())))
 }
 
-// FontAtlas.AddFontFromFileTTFV parameter default value hint:
+// AddFontFromFileTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
 func (self FontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
@@ -435,7 +435,7 @@ func (self FontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, 
 	return (Font)(unsafe.Pointer(C.wrap_ImFontAtlas_AddFontFromFileTTFV(self.handle(), filenameArg, C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
 
-// FontAtlas.AddFontFromMemoryCompressedBase85TTFV parameter default value hint:
+// AddFontFromMemoryCompressedBase85TTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
 func (self FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data_base85 string, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
@@ -445,14 +445,14 @@ func (self FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data
 	return (Font)(unsafe.Pointer(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedBase85TTFV(self.handle(), compressed_font_data_base85Arg, C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
 
-// FontAtlas.AddFontFromMemoryCompressedTTFV parameter default value hint:
+// AddFontFromMemoryCompressedTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
 func (self FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsafe.Pointer, compressed_font_size int32, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
 	return (Font)(unsafe.Pointer(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedTTFV(self.handle(), compressed_font_data, C.int(compressed_font_size), C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
 
-// FontAtlas.AddFontFromMemoryTTFV parameter default value hint:
+// AddFontFromMemoryTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
 func (self FontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_size int32, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
@@ -593,7 +593,7 @@ func (self FontGlyphRangesBuilder) AddRanges(ranges *Wchar) {
 	C.wrap_ImFontGlyphRangesBuilder_AddRanges(self.handle(), (*C.ImWchar)(ranges))
 }
 
-// FontGlyphRangesBuilder.AddTextV parameter default value hint:
+// AddTextV parameter default value hint:
 // text_end: NULL
 func (self FontGlyphRangesBuilder) AddTextV(text string) {
 	textArg, textFin := wrapString(text)
@@ -626,7 +626,7 @@ func (self Font) AddGlyph(src_cfg FontConfig, c Wchar, x0 float32, y0 float32, x
 	C.wrap_ImFont_AddGlyph(self.handle(), src_cfg.handle(), C.ImWchar(c), C.float(x0), C.float(y0), C.float(x1), C.float(y1), C.float(u0), C.float(v0), C.float(u1), C.float(v1), C.float(advance_x))
 }
 
-// Font.AddRemapCharV parameter default value hint:
+// AddRemapCharV parameter default value hint:
 // overwrite_dst: true
 func (self Font) AddRemapCharV(dst Wchar, src Wchar, overwrite_dst bool) {
 	C.wrap_ImFont_AddRemapCharV(self.handle(), C.ImWchar(dst), C.ImWchar(src), C.bool(overwrite_dst))
@@ -636,7 +636,7 @@ func (self Font) BuildLookupTable() {
 	C.wrap_ImFont_BuildLookupTable(self.handle())
 }
 
-// Font.CalcTextSizeAV parameter default value hint:
+// CalcTextSizeAV parameter default value hint:
 // remaining: NULL
 // text_end: NULL
 func (self Font) CalcTextSizeAV(size float32, max_width float32, wrap_width float32, text_begin string, remaining []string) Vec2 {
@@ -701,7 +701,7 @@ func (self Font) RenderChar(draw_list DrawList, size float32, pos Vec2, col uint
 	C.wrap_ImFont_RenderChar(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), C.ImWchar(c))
 }
 
-// Font.RenderTextV parameter default value hint:
+// RenderTextV parameter default value hint:
 // cpu_fine_clip: false
 // wrap_width: 0.0f
 func (self Font) RenderTextV(draw_list DrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string, wrap_width float32, cpu_fine_clip bool) {
@@ -790,7 +790,7 @@ func (self IO) SetAppAcceptingEvents(accepting_events bool) {
 	C.wrap_ImGuiIO_SetAppAcceptingEvents(self.handle(), C.bool(accepting_events))
 }
 
-// IO.SetKeyEventNativeDataV parameter default value hint:
+// SetKeyEventNativeDataV parameter default value hint:
 // native_legacy_index: -1
 func (self IO) SetKeyEventNativeDataV(key Key, native_keycode int32, native_scancode int32, native_legacy_index int32) {
 	C.wrap_ImGuiIO_SetKeyEventNativeDataV(self.handle(), C.ImGuiKey(key), C.int(native_keycode), C.int(native_scancode), C.int(native_legacy_index))
@@ -820,7 +820,7 @@ func NewInputTextCallbackData() InputTextCallbackData {
 	return (InputTextCallbackData)(unsafe.Pointer(C.wrap_ImGuiInputTextCallbackData_ImGuiInputTextCallbackData()))
 }
 
-// InputTextCallbackData.InsertCharsV parameter default value hint:
+// InsertCharsV parameter default value hint:
 // text_end: NULL
 func (self InputTextCallbackData) InsertCharsV(pos int32, text string) {
 	textArg, textFin := wrapString(text)
@@ -849,7 +849,7 @@ func (self ListClipperData) Destroy() {
 	C.wrap_ImGuiListClipperData_Destroy(self.handle())
 }
 
-// ListClipper.BeginV parameter default value hint:
+// BeginV parameter default value hint:
 // items_height: -1.0f
 func (self ListClipper) BeginV(items_count int32, items_height float32) {
 	C.wrap_ImGuiListClipper_BeginV(self.handle(), C.int(items_count), C.float(items_height))
@@ -1050,7 +1050,7 @@ func NewTextBuffer() TextBuffer {
 	return (TextBuffer)(unsafe.Pointer(C.wrap_ImGuiTextBuffer_ImGuiTextBuffer()))
 }
 
-// TextBuffer.AppendV parameter default value hint:
+// AppendV parameter default value hint:
 // str_end: NULL
 func (self TextBuffer) AppendV(str string, str_end string) {
 	strArg, strFin := wrapString(str)
@@ -1109,7 +1109,7 @@ func (self TextFilter) Clear() {
 	C.wrap_ImGuiTextFilter_Clear(self.handle())
 }
 
-// TextFilter.DrawV parameter default value hint:
+// DrawV parameter default value hint:
 // label: "Filter(inc,-exc)"
 // width: 0.0f
 func (self TextFilter) DrawV(label string, width float32) bool {
@@ -1132,7 +1132,7 @@ func (self TextFilter) IsActive() bool {
 	return C.wrap_ImGuiTextFilter_IsActive(self.handle()) == C.bool(true)
 }
 
-// TextFilter.PassFilterV parameter default value hint:
+// PassFilterV parameter default value hint:
 // text_end: NULL
 func (self TextFilter) PassFilterV(text string) bool {
 	textArg, textFin := wrapString(text)

@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"sort"
 	"strings"
-
-	"github.com/thoas/go-funk"
 )
 
 // StructSection appears in json file on top of structs definition section.
@@ -70,14 +68,14 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 }
 
 func shouldSkipStruct(name string) bool {
-	valueTypeStructs := []string{
-		"ImVec1",
-		"ImVec2ih",
-		"ImVec2",
-		"ImVec4",
-		"ImRect",
-		"ImColor",
-		"ImPlotPoint",
+	valueTypeStructs := map[string]bool{
+		"ImVec1":      true,
+		"ImVec2ih":    true,
+		"ImVec2":      true,
+		"ImVec4":      true,
+		"ImRect":      true,
+		"ImColor":     true,
+		"ImPlotPoint": true,
 	}
 
 	if !strings.HasPrefix(name, "Im") {
@@ -85,7 +83,7 @@ func shouldSkipStruct(name string) bool {
 	}
 
 	// Skip all value type struct
-	if funk.ContainsString(valueTypeStructs, name) {
+	if valueTypeStructs[name] {
 		return true
 	}
 

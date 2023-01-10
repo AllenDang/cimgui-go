@@ -6,27 +6,27 @@ import (
 
 // Skip functions
 // e.g. they are temporarily hard-coded
-var skippedFuncs = []string{
-	"igInputText",
-	"igInputTextWithHint",
-	"igInputTextMultiline",
-	"ImFontAtlas_GetTexDataAsAlpha8",
-	"ImFontAtlas_GetTexDataAsAlpha8V",
-	"ImFontAtlas_GetTexDataAsRGBA32",
-	"ImFontAtlas_GetTexDataAsRGBA32V",
+var skippedFuncs = map[string]bool{
+	"igInputText":                     true,
+	"igInputTextWithHint":             true,
+	"igInputTextMultiline":            true,
+	"ImFontAtlas_GetTexDataAsAlpha8":  true,
+	"ImFontAtlas_GetTexDataAsAlpha8V": true,
+	"ImFontAtlas_GetTexDataAsRGBA32":  true,
+	"ImFontAtlas_GetTexDataAsRGBA32V": true,
 }
 
 // structures that's methods should be skipped
-var skippedStructs = []string{
-	"ImVec1",
-	"ImVec2",
-	"ImVec2ih",
-	"ImVec4",
-	"ImColor",
-	"ImRect",
-	"StbUndoRecord",
-	"StbUndoState",
-	"StbTexteditRow",
+var skippedStructs = map[string]bool{
+	"ImVec1":         true,
+	"ImVec2":         true,
+	"ImVec2ih":       true,
+	"ImVec4":         true,
+	"ImColor":        true,
+	"ImRect":         true,
+	"StbUndoRecord":  true,
+	"StbUndoState":   true,
+	"StbTexteditRow": true,
 }
 
 var replace = map[string]string{
@@ -42,7 +42,7 @@ var replace = map[string]string{
 	//"ImSetDrawCursor":         "SetCursor",
 }
 
-func removeImGuiIm(n string) string {
+func trimImGuiPrefix(n string) string {
 	if strings.HasPrefix(n, "ImGui") {
 		n = strings.TrimPrefix(n, "ImGui")
 	} else if strings.HasPrefix(n, "Im") && len(n) > 2 && strings.ToUpper(string(n[2])) == string(n[2]) {
@@ -57,11 +57,11 @@ func renameGoIdentifier(n string) string {
 	if r, ok := replace[n]; ok {
 		n = r
 	}
-	n = removeImGuiIm(n)
+	n = trimImGuiPrefix(n)
 	if strings.HasPrefix(n, "New") {
-		n = "New" + removeImGuiIm(n[3:])
+		n = "New" + trimImGuiPrefix(n[3:])
 	} else if strings.HasPrefix(n, "new") {
-		n = "new" + removeImGuiIm(n[3:])
+		n = "new" + trimImGuiPrefix(n[3:])
 	}
 	n = strings.TrimPrefix(n, "Get")
 	if n != "_" {

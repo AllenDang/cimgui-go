@@ -5,8 +5,6 @@ import (
 	"os"
 	"strings"
 	"unicode"
-
-	"github.com/thoas/go-funk"
 )
 
 // Returns if should export func
@@ -346,26 +344,26 @@ extern "C" {
 func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []StructDef) ([]FuncDef, error) {
 	var structAccessorFuncs []FuncDef
 
-	skipFuncNames := []string{
-		"ImGuiIO_SetAppAcceptingEvents",
-		"ImGuiDockNode_SetLocalFlags",
-		"ImFontAtlas_SetTexID",
-		"ImVec2_Getx",
-		"ImVec2_Gety",
-		"ImVec4_Getx",
-		"ImVec4_Gety",
-		"ImVec4_Getw",
-		"ImVec4_Getz",
-		"ImRect_GetMin",
-		"ImRect_GetMax",
-		"ImPlotPoint_Setx",
-		"ImPlotPoint_Sety",
-		"ImPlotColormapData_GetKeys",
+	skipFuncNames := map[string]bool{
+		"ImGuiIO_SetAppAcceptingEvents": true,
+		"ImGuiDockNode_SetLocalFlags":   true,
+		"ImFontAtlas_SetTexID":          true,
+		"ImVec2_Getx":                   true,
+		"ImVec2_Gety":                   true,
+		"ImVec4_Getx":                   true,
+		"ImVec4_Gety":                   true,
+		"ImVec4_Getw":                   true,
+		"ImVec4_Getz":                   true,
+		"ImRect_GetMin":                 true,
+		"ImRect_GetMax":                 true,
+		"ImPlotPoint_Setx":              true,
+		"ImPlotPoint_Sety":              true,
+		"ImPlotColormapData_GetKeys":    true,
 	}
 
 	// Add all valid function's name to skipFuncNames
 	for _, f := range validFuncs {
-		skipFuncNames = append(skipFuncNames, f.FuncName)
+		skipFuncNames[f.FuncName] = true
 	}
 
 	var sbHeader, sbCpp strings.Builder
@@ -396,7 +394,7 @@ extern "C" {
 			}
 
 			setterFuncName := fmt.Sprintf("%[1]s_Set%[2]s", s.Name, m.Name)
-			if funk.ContainsString(skipFuncNames, setterFuncName) {
+			if skipFuncNames[setterFuncName] {
 				continue
 			}
 
@@ -422,7 +420,7 @@ extern "C" {
 			})
 
 			getterFuncName := fmt.Sprintf("%[1]s_Get%[2]s", s.Name, m.Name)
-			if funk.ContainsString(skipFuncNames, getterFuncName) {
+			if skipFuncNames[getterFuncName] {
 				continue
 			}
 
