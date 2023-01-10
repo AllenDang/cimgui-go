@@ -1,4 +1,4 @@
-package cimgui
+package imgui
 
 import (
 	"testing"
@@ -8,16 +8,16 @@ func TestSetIOConfigFlags(t *testing.T) {
 	CreateContext()
 	defer DestroyContext()
 
-	io := GetIO()
+	io := CurrentIO()
 	if io == 0 {
 		t.Error("get io failed")
 	}
 
-	io.SetBackendFlags(BackendFlags_RendererHasVtxOffset)
+	io.SetBackendFlags(BackendFlagsRendererHasVtxOffset)
 
-	flags := io.GetBackendFlags()
-	if flags != BackendFlags_RendererHasVtxOffset {
+	flags := io.BackendFlags()
+	if flags != BackendFlagsRendererHasVtxOffset {
 		t.Error("set io backend flags failed")
-		t.Errorf("expect: %v got %v", BackendFlags_RendererHasVtxOffset, flags)
+		t.Errorf("expect: %v got %v", BackendFlagsRendererHasVtxOffset, flags)
 	}
 }

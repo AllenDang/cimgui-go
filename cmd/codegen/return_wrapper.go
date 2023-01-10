@@ -179,8 +179,8 @@ func uint64ReturnW() (returnType string, returnStmt string) {
 }
 
 func idReturnW() (returnType string, returnStmt string) {
-	returnType = "ImGuiID"
-	returnStmt = "return ImGuiID(%s)"
+	returnType = "ID"
+	returnStmt = "return ID(%s)"
 	return
 }
 

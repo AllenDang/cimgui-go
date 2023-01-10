@@ -9,6 +9,17 @@ import (
 	"github.com/thoas/go-funk"
 )
 
+// Returns if should export func
+func shouldExportFunc(funcName string) bool {
+	if unicode.IsUpper(rune(funcName[0])) {
+		return true
+	}
+	if strings.HasPrefix(funcName, "ig") {
+		return len(funcName) > 2 && unicode.IsUpper(rune(funcName[2]))
+	}
+	return false
+}
+
 // Generate cpp wrapper and return valid functions
 func generateCppWrapper(prefix, includePath string, funcDefs []FuncDef) ([]FuncDef, error) {
 	var validFuncs []FuncDef
@@ -72,10 +83,10 @@ extern "C" {
 			shouldSkip = true
 		}
 
-		funcName := trimImGuiPrefix(f.FuncName)
+		funcName := f.FuncName
 
 		// Check lower case for function
-		if unicode.IsLower(rune(funcName[0])) {
+		if !shouldExportFunc(funcName) {
 			shouldSkip = true
 		}
 
@@ -123,10 +134,10 @@ extern "C" {
 
 		if len(f.Defaults) > 0 && !shouldSkip && !f.Constructor {
 			var newArgsT []ArgDef
-			var invocatoinArgs []string
+			var invocationArgs []string
 
 			for _, a := range f.ArgsT {
-				invocatoinArgs = append(invocatoinArgs, a.Name)
+				invocationArgs = append(invocationArgs, a.Name)
 
 				shouldIgnore := false
 				for k := range f.Defaults {
@@ -157,7 +168,7 @@ extern "C" {
 			}
 
 			// Generate invocation stmt
-			invocatoinStmt := fmt.Sprintf("(%s)", strings.Join(invocatoinArgs, ","))
+			invocationStmt := fmt.Sprintf("(%s)", strings.Join(invocationArgs, ","))
 
 			for k, v := range f.Defaults {
 				if v == "ImVec2(0,0)" || v == "ImVec2(0.0f,0.0f)" {
@@ -212,10 +223,10 @@ extern "C" {
 					v = "NULL"
 				}
 
-				if strings.Contains(invocatoinStmt, ","+k) {
-					invocatoinStmt = strings.Replace(invocatoinStmt, ","+k, ","+v, 1)
+				if strings.Contains(invocationStmt, ","+k) {
+					invocationStmt = strings.Replace(invocationStmt, ","+k, ","+v, 1)
 				} else {
-					invocatoinStmt = strings.Replace(invocatoinStmt, k, v, 1)
+					invocationStmt = strings.Replace(invocationStmt, k, v, 1)
 				}
 			}
 
@@ -225,7 +236,7 @@ extern "C" {
 				OriginalFuncName: funcName + "V",
 				Args:             fmt.Sprintf("(%s)", strings.Join(newArgs, ",")),
 				ArgsT:            newArgsT,
-				InvocationStmt:   invocatoinStmt,
+				InvocationStmt:   invocationStmt,
 				Defaults:         nil,
 				Location:         f.Location,
 				Constructor:      f.Constructor,
@@ -266,16 +277,16 @@ extern "C" {
 
 		invokeFunctionName := f.FuncName
 		if len(f.OriginalFuncName) > 0 {
-			invokeFunctionName = f.OriginalFuncName
+			invokeFunctionName = "wrap_" + f.OriginalFuncName
 		}
 
 		if !f.Constructor && !f.Destructor {
-			headerSb.WriteString(fmt.Sprintf("extern %s %s%s;\n", f.Ret, funcName, f.Args))
+			headerSb.WriteString(fmt.Sprintf("extern %s %s%s;\n", f.Ret, "wrap_"+funcName, f.Args))
 
 			if f.Ret == "void" {
-				cppSb.WriteString(fmt.Sprintf("%s %s%s { %s%s; }\n", f.Ret, funcName, f.Args, invokeFunctionName, actualCallArgsStr))
+				cppSb.WriteString(fmt.Sprintf("%s %s%s { %s%s; }\n", f.Ret, "wrap_"+funcName, f.Args, invokeFunctionName, actualCallArgsStr))
 			} else {
-				cppSb.WriteString(fmt.Sprintf("%s %s%s { return %s%s; }\n", f.Ret, funcName, f.Args, invokeFunctionName, actualCallArgsStr))
+				cppSb.WriteString(fmt.Sprintf("%s %s%s { return %s%s; }\n", f.Ret, "wrap_"+funcName, f.Args, invokeFunctionName, actualCallArgsStr))
 			}
 
 			appendValidFunc()
@@ -283,15 +294,15 @@ extern "C" {
 
 		if f.Constructor {
 			ret := f.StName
-			headerSb.WriteString(fmt.Sprintf("extern %s* %s%s;\n", ret, funcName, f.Args))
-			cppSb.WriteString(fmt.Sprintf("%s* %s%s { return %s%s; }\n", ret, funcName, f.Args, invokeFunctionName, actualCallArgsStr))
+			headerSb.WriteString(fmt.Sprintf("extern %s* %s%s;\n", ret, "wrap_"+funcName, f.Args))
+			cppSb.WriteString(fmt.Sprintf("%s* %s%s { return %s%s; }\n", ret, "wrap_"+funcName, f.Args, invokeFunctionName, actualCallArgsStr))
 
 			appendValidFunc()
 		}
 
 		if f.Destructor {
-			headerSb.WriteString(fmt.Sprintf("extern void %s%s;\n", funcName, f.Args))
-			cppSb.WriteString(fmt.Sprintf("void %s%s { %s%s; }\n", funcName, f.Args, invokeFunctionName, actualCallArgsStr))
+			headerSb.WriteString(fmt.Sprintf("extern void %s%s;\n", "wrap_"+funcName, f.Args))
+			cppSb.WriteString(fmt.Sprintf("void %s%s { %s%s; }\n", "wrap_"+funcName, f.Args, invokeFunctionName, actualCallArgsStr))
 
 			appendValidFunc()
 		}
@@ -432,11 +443,11 @@ extern "C" {
 				Ret:          m.Type,
 			})
 
-			sbHeader.WriteString(fmt.Sprintf("extern void %[1]s_Set%[2]s(%[1]s *%[3]s, %[4]s v);\n", s.Name, m.Name, s.Name+"Ptr", m.Type))
-			sbHeader.WriteString(fmt.Sprintf("extern %[4]s %[1]s_Get%[2]s(%[1]s *%[3]s);\n", s.Name, m.Name, "self", m.Type))
+			sbHeader.WriteString(fmt.Sprintf("extern void wrap_%[1]s_Set%[2]s(%[1]s *%[3]s, %[4]s v);\n", s.Name, m.Name, s.Name+"Ptr", m.Type))
+			sbHeader.WriteString(fmt.Sprintf("extern %[4]s wrap_%[1]s_Get%[2]s(%[1]s *%[3]s);\n", s.Name, m.Name, "self", m.Type))
 
-			sbCpp.WriteString(fmt.Sprintf("void %[1]s_Set%[2]s(%[1]s *%[3]s, %[4]s v) { %[3]s->%[2]s = v; }\n", s.Name, m.Name, s.Name+"Ptr", m.Type))
-			sbCpp.WriteString(fmt.Sprintf("%[4]s %[1]s_Get%[2]s(%[1]s *%[3]s) { return %[3]s->%[2]s; }\n", s.Name, m.Name, "self", m.Type))
+			sbCpp.WriteString(fmt.Sprintf("void wrap_%[1]s_Set%[2]s(%[1]s *%[3]s, %[4]s v) { %[3]s->%[2]s = v; }\n", s.Name, m.Name, s.Name+"Ptr", m.Type))
+			sbCpp.WriteString(fmt.Sprintf("%[4]s wrap_%[1]s_Get%[2]s(%[1]s *%[3]s) { return %[3]s->%[2]s; }\n", s.Name, m.Name, "self", m.Type))
 		}
 	}
 

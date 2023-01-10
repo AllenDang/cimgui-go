@@ -22,7 +22,7 @@
 unsigned int glfw_target_fps = 30;
 int extra_frame_count = MAX_EXTRA_FRAME_COUNT;
 
-ImVec4 clear_color = *Vec4_ImVec4_Float(0.45, 0.55, 0.6, 1.0);
+ImVec4 clear_color = *ImVec4_ImVec4_Float(0.45, 0.55, 0.6, 1.0);
 
 void glfw_render(GLFWwindow *window, VoidCallback renderLoop);
 

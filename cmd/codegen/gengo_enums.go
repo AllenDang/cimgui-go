@@ -16,18 +16,16 @@ func generateGoEnums(prefix string, enums []EnumDef) []string {
 	for _, e := range enums {
 		originalName := e.Name
 		eName := strings.TrimSuffix(e.Name, "_")
-		eName = trimImGuiPrefix(eName)
 
 		enumNames = append(enumNames, eName)
 
 		sb.WriteString(fmt.Sprintf("// original name: %s\n", originalName))
-		sb.WriteString(fmt.Sprintf("type %s int\n", eName))
+		sb.WriteString(fmt.Sprintf("type %s int\n", renameGoIdentifier(eName)))
 		sb.WriteString("const (\n")
 
 		for _, v := range e.Values {
-			vName := trimImGuiPrefix(v.Name)
-			vName = strings.TrimSuffix(vName, "_")
-			sb.WriteString(fmt.Sprintf("\t%s = %d\n", vName, v.Value))
+			vName := strings.TrimSuffix(v.Name, "_")
+			sb.WriteString(fmt.Sprintf("\t%s = %d\n", renameGoIdentifier(vName), v.Value))
 		}
 
 		sb.WriteString(")\n\n")

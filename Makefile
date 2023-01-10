@@ -35,24 +35,6 @@ compile_cimgui_macos:
 	cd ./cimgui/build; make
 	cp -f ./cimgui/build/cimgui.a ./lib/macos/arm64/
 
-## generate idiomatic bindings
-.PHONY: idiomatic
-idiomatic:
-	@echo "Generating idiomatic bindings"
-	rm -rf ./idiomatic
-	mkdir ./idiomatic
-	mkdir ./idiomatic/cimgui
-	mkdir ./idiomatic/cimplot
-	mkdir ./idiomatic/thirdparty
-	mkdir ./idiomatic/thirdparty/glfw
-
-	cp ./*.go ./*.cpp ./*.h ./idiomatic
-	cp ./cimgui/*.h ./cimgui/*.cpp ./idiomatic/cimgui
-	cp ./cimplot/*.h ./cimplot/*.cpp ./idiomatic/cimplot
-	cp -r ./thirdparty/glfw/* ./idiomatic/thirdparty/glfw
-
-	go run github.com/AllenDang/cimgui-go/cmd/rename ./idiomatic/*.go
-
 ## generate: generates both bindings (equal to `all`)
 .PHONY: generate
 generate: cimgui cimplot

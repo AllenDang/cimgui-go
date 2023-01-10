@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/thoas/go-funk"
 	"os"
 	"sort"
 	"strings"
+
+	"github.com/thoas/go-funk"
 )
 
 // returnTypeType represents an arbitrary type of return value of the function.
@@ -43,7 +44,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 	for _, f := range validFuncs {
 		// check whether the function shouldn't be skipped
-		if funk.ContainsString(skippedFuncs(), f.FuncName) {
+		if funk.ContainsString(skippedFuncs, f.FuncName) {
 			continue
 		}
 
@@ -61,7 +62,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 			fmt.Printf("generated: %s%s\n", f.FuncName, f.Args)
 		}
 
-		if noErrors := generator.GenerateFuncttion(f, args, argWrappers); !noErrors {
+		if noErrors := generator.GenerateFunction(f, args, argWrappers); !noErrors {
 			continue
 		}
 	}
@@ -108,7 +109,7 @@ import "unsafe"
 `, g.prefix))
 }
 
-func (g *goFuncsGenerator) GenerateFuncttion(f FuncDef, args []string, argWrappers []argOutput) (noErrors bool) {
+func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrappers []argOutput) (noErrors bool) {
 	switch {
 	case f.NonUDT == 1:
 		noErrors = g.generateNonUDTFunc(f, args, argWrappers)
@@ -136,7 +137,7 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 		returnTypeType = returnTypeKnown
 	}
 
-	goEnumName := trimImGuiPrefix(f.Ret)
+	goEnumName := f.Ret
 	if f.Ret == "void" {
 		if f.StructSetter {
 			returnTypeType = returnTypeStructSetter
@@ -160,7 +161,7 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 	case returnTypeStructSetter:
 		funcParts := strings.Split(f.FuncName, "_")
 		funcName = strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
-		if len(funcName) == 0 || !strings.HasPrefix(funcName, "Set") || funk.ContainsString(skippedStructs(), funcParts[0]) {
+		if len(funcName) == 0 || !strings.HasPrefix(funcName, "Set") || funk.ContainsString(skippedStructs, funcParts[0]) {
 			return false
 		}
 
@@ -180,11 +181,7 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 
 		returnType = parts[0]
 
-		if funk.ContainsString(g.structNames, "Im"+returnType) {
-			returnType = "Im" + returnType
-		} else if funk.ContainsString(g.structNames, "ImGui"+returnType) {
-			returnType = "ImGui" + returnType
-		} else {
+		if !funk.ContainsString(g.structNames, returnType) {
 			return false
 		}
 
@@ -204,19 +201,19 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 
 	switch returnTypeType {
 	case returnTypeVoid:
-		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("C.wrap_%s(%s)\n", f.FuncName, argInvokeStmt))
 	case returnTypeStructSetter:
-		g.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("C.wrap_%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
 	case returnTypeKnown:
-		g.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+		g.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.wrap_%s(%s)", f.FuncName, argInvokeStmt)))
 	case returnTypeEnum:
-		g.sb.WriteString(fmt.Sprintf("return %s(%s)", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+		g.sb.WriteString(fmt.Sprintf("return %s(C.wrap_%s(%s))", renameGoIdentifier(returnType), f.FuncName, argInvokeStmt))
 	case returnTypeStructPtr:
-		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(%s))", returnType, fmt.Sprintf("C.%s(%s)", f.FuncName, argInvokeStmt)))
+		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.wrap_%s(%s)))", renameGoIdentifier(returnType), f.FuncName, argInvokeStmt))
 	case returnTypeStruct:
-		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", f.Ret, f.FuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.wrap_%s(%s))", renameGoIdentifier(f.Ret), f.FuncName, argInvokeStmt))
 	case returnTypeConstructor:
-		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", returnType, f.FuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.wrap_%s(%s)))", renameGoIdentifier(returnType), f.FuncName, argInvokeStmt))
 	}
 
 	return true
@@ -254,7 +251,7 @@ func (g *goFuncsGenerator) generateNonUDTFunc(f FuncDef, args []string, argWrapp
 	argInvokeStmt := g.generateFuncBody(argWrappers)
 
 	// C function call
-	g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.FuncName, argInvokeStmt))
+	g.sb.WriteString(fmt.Sprintf("C.wrap_%s(%s)\n", f.FuncName, argInvokeStmt))
 
 	// return statement
 	g.sb.WriteString(fmt.Sprintf("return *%s", outArg.Name))
@@ -270,13 +267,13 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 	typeName := funcParts[0]
 
 	if len(receiver) > 0 {
-		receiver = fmt.Sprintf("(self *%s)", receiver)
+		receiver = fmt.Sprintf("(self *%s)", renameGoIdentifier(receiver))
 	}
 
 	// Generate default param value hint
 	var commentSb strings.Builder
 	if len(f.Defaults) > 0 {
-		commentSb.WriteString(fmt.Sprintf("// %s parameter default value hint:\n", funcName))
+		commentSb.WriteString("// %s parameter default value hint:\n")
 
 		// sort lexicographically for determenistic generation
 		type defaultParam struct {
@@ -299,7 +296,8 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 	if strings.Contains(funcName, "_") &&
 		len(funcParts) > 1 &&
 		len(args) > 0 && strings.Contains(args[0], "self ") &&
-		!funk.ContainsString(skippedStructs(), typeName) {
+		!funk.ContainsString(skippedStructs, typeName) {
+
 		newFuncName := strings.TrimPrefix(funcName, typeName+"_")
 		newArgs := args
 		if len(newArgs) > 0 {
@@ -307,10 +305,21 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 		}
 
 		typeName = strings.TrimPrefix(args[0], "self ")
-		return fmt.Sprintf("%sfunc %s (self %s) %s(%s) %s {\n", commentSb.String(), receiver, typeName, newFuncName, strings.Join(newArgs, ","), returnType)
+		return fmt.Sprintf("%sfunc %s (self %s) %s(%s) %s {\n",
+			strings.Replace(commentSb.String(), "%s", renameGoIdentifier(typeName)+"."+renameGoIdentifier(newFuncName), 1),
+			renameGoIdentifier(receiver),
+			renameGoIdentifier(typeName),
+			renameGoIdentifier(newFuncName),
+			strings.Join(newArgs, ","),
+			renameGoIdentifier(returnType))
 	}
 
-	return fmt.Sprintf("%sfunc %s %s(%s) %s {\n", commentSb.String(), receiver, funcName, strings.Join(args, ","), returnType)
+	return fmt.Sprintf("%sfunc %s %s(%s) %s {\n",
+		strings.Replace(commentSb.String(), "%s", renameGoIdentifier(funcName), 1),
+		renameGoIdentifier(receiver),
+		renameGoIdentifier(funcName),
+		strings.Join(args, ","),
+		renameGoIdentifier(returnType))
 }
 
 func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappers []argOutput) {
@@ -326,7 +335,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 		}
 
 		if f.StructGetter && funk.ContainsString(g.structNames, a.Type) {
-			args = append(args, fmt.Sprintf("%s %s", a.Name, a.Type))
+			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(a.Type)))
 			argWrappers = append(argWrappers, argOutput{
 				VarName: fmt.Sprintf("%s.handle()", a.Name),
 			})
@@ -338,7 +347,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 
 		if v, err := argWrapper(a.Type); err == nil {
 			argType, argDef, varName := v(a)
-			if goEnumName := trimImGuiPrefix(argType); g.isEnum(goEnumName) {
+			if goEnumName := argType; g.isEnum(goEnumName) {
 				argType = goEnumName
 			}
 
@@ -348,14 +357,14 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 				VarName: varName,
 			})
 
-			args = append(args, fmt.Sprintf("%s %s", a.Name, argType))
+			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(argType)))
 
 			g.shouldGenerate = true
 			continue
 		}
 
-		if goEnumName := trimImGuiPrefix(a.Type); g.isEnum(goEnumName) {
-			args = append(args, fmt.Sprintf("%s %s", a.Name, goEnumName))
+		if goEnumName := a.Type; g.isEnum(goEnumName) {
+			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(goEnumName)))
 			argWrappers = append(argWrappers, argOutput{
 				VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
 			})
@@ -369,7 +378,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 			pureType = strings.TrimSuffix(pureType, "*")
 
 			if funk.ContainsString(g.structNames, pureType) {
-				args = append(args, fmt.Sprintf("%s %s", a.Name, pureType))
+				args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType)))
 				argWrappers = append(argWrappers, argOutput{
 					VarName: fmt.Sprintf("%s.handle()", a.Name),
 				})
