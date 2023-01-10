@@ -1,8 +1,9 @@
-package cimgui
+package imgui
 
 // #include "cimgui_wrapper.h"
 // #include "cimplot_wrapper.h"
 import "C"
+import "image/color"
 
 type (
 	Wchar               C.uint
@@ -77,6 +78,25 @@ func NewColor(x, y, z, w float32) Color {
 	}
 }
 
+func NewColorFromPacked(v uint32) Color {
+	return NewColor(
+		float32(0xff&(v>>0))/255,
+		float32(0xff&(v>>8))/255,
+		float32(0xff&(v>>16))/255,
+		float32(0xff&(v>>24))/255,
+	)
+}
+
+func NewColorFromColor(c color.Color) Color {
+	nc := color.NRGBAModel.Convert(c).(color.NRGBA)
+	return NewColor(
+		float32(nc.R)/0xffff,
+		float32(nc.G)/0xffff,
+		float32(nc.B)/0xffff,
+		float32(nc.A)/0xffff,
+	)
+}
+
 func (i *Color) fromC(col C.ImColor) *Color {
 	*i = NewColor(float32(col.Value.x), float32(col.Value.y), float32(col.Value.z), float32(col.Value.w))
 	return i
@@ -84,6 +104,33 @@ func (i *Color) fromC(col C.ImColor) *Color {
 
 func (i Color) toC() C.ImColor {
 	return C.ImColor{Value: i.Value.toC()}
+}
+
+func colorComponent(v float32) uint8 {
+	r := int(v*255 + 0.5)
+	if r < 0 {
+		return 0
+	}
+	if r > 255 {
+		return 255
+	}
+	return uint8(r)
+}
+
+func (i Color) Pack() uint32 {
+	return uint32(colorComponent(i.Value.X))<<0 |
+		uint32(colorComponent(i.Value.Y))<<8 |
+		uint32(colorComponent(i.Value.Z))<<16 |
+		uint32(colorComponent(i.Value.W))<<24
+}
+
+func (i Color) Color() color.Color {
+	return color.NRGBA{
+		R: colorComponent(i.Value.X),
+		G: colorComponent(i.Value.Y),
+		B: colorComponent(i.Value.Z),
+		A: colorComponent(i.Value.W),
+	}
 }
 
 var _ wrappableType[C.ImRect, *Rect] = &Rect{}
