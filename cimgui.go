@@ -1,4 +1,4 @@
-package cimgui
+package imgui
 
 // #cgo CPPFLAGS: -DCIMGUI_DEFINE_ENUMS_AND_STRUCTS
 // #cgo amd64,linux LDFLAGS: ${SRCDIR}/lib/linux/x64/cimgui.a

@@ -1,4 +1,4 @@
-package cimgui
+package imgui
 
 // #include <memory.h>
 // #include <stdlib.h>
