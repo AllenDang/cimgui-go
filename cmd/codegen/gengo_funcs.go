@@ -5,8 +5,6 @@ import (
 	"os"
 	"sort"
 	"strings"
-
-	"github.com/thoas/go-funk"
 )
 
 // returnTypeType represents an arbitrary type of return value of the function.

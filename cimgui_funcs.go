@@ -9,523 +9,523 @@ package imgui
 import "C"
 import "unsafe"
 
-// Color_HSVV parameter default value hint:
+// ColorHSVV parameter default value hint:
 // a: 1.0f
-func Color_HSVV(h float32, s float32, v float32, a float32) Color {
+func ColorHSVV(h float32, s float32, v float32, a float32) Color {
 	pOut := &Color{}
 	pOutArg, pOutFin := wrap[C.ImColor, *Color](pOut)
 	defer pOutFin()
 
-	C.Color_HSVV(pOutArg, C.float(h), C.float(s), C.float(v), C.float(a))
+	C.ImColor_HSV(pOutArg, C.float(h), C.float(s), C.float(v), C.float(a))
 	return *pOut
 }
 
-// Color_SetHSVV parameter default value hint:
+// SetHSVV parameter default value hint:
 // a: 1.0f
 func (self *Color) SetHSVV(h float32, s float32, v float32, a float32) {
 	selfArg, selfFin := wrap[C.ImColor, *Color](self)
 	defer selfFin()
 
-	C.Color_SetHSVV(selfArg, C.float(h), C.float(s), C.float(v), C.float(a))
+	C.ImColor_SetHSV(selfArg, C.float(h), C.float(s), C.float(v), C.float(a))
 }
 
 func (self *Color) Destroy() {
 	selfArg, selfFin := wrap[C.ImColor, *Color](self)
 	defer selfFin()
 
-	C.Color_Destroy(selfArg)
+	C.ImColor_destroy(selfArg)
 }
 
-func (self ImDrawCmd) GetTexID() TextureID {
-	return TextureID(C.DrawCmd_GetTexID(self.handle()))
+func (self DrawCmd) TexID() TextureID {
+	return TextureID(C.ImDrawCmd_GetTexID(self.handle()))
 }
 
-func NewImDrawCmd() ImDrawCmd {
-	return (ImDrawCmd)(unsafe.Pointer(C.DrawCmd_ImDrawCmd()))
+func NewDrawCmd() DrawCmd {
+	return (DrawCmd)(unsafe.Pointer(C.ImDrawCmd_ImDrawCmd()))
 }
 
-func (self ImDrawCmd) Destroy() {
-	C.DrawCmd_Destroy(self.handle())
+func (self DrawCmd) Destroy() {
+	C.ImDrawCmd_destroy(self.handle())
 }
 
-func (self ImDrawData) Clear() {
-	C.DrawData_Clear(self.handle())
+func (self DrawData) Clear() {
+	C.ImDrawData_Clear(self.handle())
 }
 
-func (self ImDrawData) DeIndexAllBuffers() {
-	C.DrawData_DeIndexAllBuffers(self.handle())
+func (self DrawData) DeIndexAllBuffers() {
+	C.ImDrawData_DeIndexAllBuffers(self.handle())
 }
 
-func NewImDrawData() ImDrawData {
-	return (ImDrawData)(unsafe.Pointer(C.DrawData_ImDrawData()))
+func NewDrawData() DrawData {
+	return (DrawData)(unsafe.Pointer(C.ImDrawData_ImDrawData()))
 }
 
-func (self ImDrawData) ScaleClipRects(fb_scale Vec2) {
-	C.DrawData_ScaleClipRects(self.handle(), fb_scale.toC())
+func (self DrawData) ScaleClipRects(fb_scale Vec2) {
+	C.ImDrawData_ScaleClipRects(self.handle(), fb_scale.toC())
 }
 
-func (self ImDrawData) Destroy() {
-	C.DrawData_Destroy(self.handle())
+func (self DrawData) Destroy() {
+	C.ImDrawData_destroy(self.handle())
 }
 
-func (self ImDrawListSharedData) Destroy() {
-	C.DrawListSharedData_Destroy(self.handle())
+func (self DrawListSharedData) Destroy() {
+	C.ImDrawListSharedData_destroy(self.handle())
 }
 
-func (self ImDrawListSplitter) Clear() {
-	C.DrawListSplitter_Clear(self.handle())
+func (self DrawListSplitter) Clear() {
+	C.ImDrawListSplitter_Clear(self.handle())
 }
 
-func (self ImDrawListSplitter) ClearFreeMemory() {
-	C.DrawListSplitter_ClearFreeMemory(self.handle())
+func (self DrawListSplitter) ClearFreeMemory() {
+	C.ImDrawListSplitter_ClearFreeMemory(self.handle())
 }
 
-func NewImDrawListSplitter() ImDrawListSplitter {
-	return (ImDrawListSplitter)(unsafe.Pointer(C.DrawListSplitter_ImDrawListSplitter()))
+func NewDrawListSplitter() DrawListSplitter {
+	return (DrawListSplitter)(unsafe.Pointer(C.ImDrawListSplitter_ImDrawListSplitter()))
 }
 
-func (self ImDrawListSplitter) Merge(draw_list ImDrawList) {
-	C.DrawListSplitter_Merge(self.handle(), draw_list.handle())
+func (self DrawListSplitter) Merge(draw_list DrawList) {
+	C.ImDrawListSplitter_Merge(self.handle(), draw_list.handle())
 }
 
-func (self ImDrawListSplitter) SetCurrentChannel(draw_list ImDrawList, channel_idx int32) {
-	C.DrawListSplitter_SetCurrentChannel(self.handle(), draw_list.handle(), C.int(channel_idx))
+func (self DrawListSplitter) SetCurrentChannel(draw_list DrawList, channel_idx int32) {
+	C.ImDrawListSplitter_SetCurrentChannel(self.handle(), draw_list.handle(), C.int(channel_idx))
 }
 
-func (self ImDrawListSplitter) Split(draw_list ImDrawList, count int32) {
-	C.DrawListSplitter_Split(self.handle(), draw_list.handle(), C.int(count))
+func (self DrawListSplitter) Split(draw_list DrawList, count int32) {
+	C.ImDrawListSplitter_Split(self.handle(), draw_list.handle(), C.int(count))
 }
 
-func (self ImDrawListSplitter) Destroy() {
-	C.DrawListSplitter_Destroy(self.handle())
+func (self DrawListSplitter) Destroy() {
+	C.ImDrawListSplitter_destroy(self.handle())
 }
 
-// DrawList_AddBezierCubicV parameter default value hint:
+// AddBezierCubicV parameter default value hint:
 // num_segments: 0
-func (self ImDrawList) AddBezierCubicV(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32, thickness float32, num_segments int32) {
-	C.DrawList_AddBezierCubicV(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col), C.float(thickness), C.int(num_segments))
+func (self DrawList) AddBezierCubicV(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32, thickness float32, num_segments int32) {
+	C.ImDrawList_AddBezierCubic(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col), C.float(thickness), C.int(num_segments))
 }
 
-// DrawList_AddBezierQuadraticV parameter default value hint:
+// AddBezierQuadraticV parameter default value hint:
 // num_segments: 0
-func (self ImDrawList) AddBezierQuadraticV(p1 Vec2, p2 Vec2, p3 Vec2, col uint32, thickness float32, num_segments int32) {
-	C.DrawList_AddBezierQuadraticV(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col), C.float(thickness), C.int(num_segments))
+func (self DrawList) AddBezierQuadraticV(p1 Vec2, p2 Vec2, p3 Vec2, col uint32, thickness float32, num_segments int32) {
+	C.ImDrawList_AddBezierQuadratic(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col), C.float(thickness), C.int(num_segments))
 }
 
-// DrawList_AddCircleV parameter default value hint:
+// AddCircleV parameter default value hint:
 // num_segments: 0
 // thickness: 1.0f
-func (self ImDrawList) AddCircleV(center Vec2, radius float32, col uint32, num_segments int32, thickness float32) {
-	C.DrawList_AddCircleV(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments), C.float(thickness))
+func (self DrawList) AddCircleV(center Vec2, radius float32, col uint32, num_segments int32, thickness float32) {
+	C.ImDrawList_AddCircle(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments), C.float(thickness))
 }
 
-// DrawList_AddCircleFilledV parameter default value hint:
+// AddCircleFilledV parameter default value hint:
 // num_segments: 0
-func (self ImDrawList) AddCircleFilledV(center Vec2, radius float32, col uint32, num_segments int32) {
-	C.DrawList_AddCircleFilledV(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments))
+func (self DrawList) AddCircleFilledV(center Vec2, radius float32, col uint32, num_segments int32) {
+	C.ImDrawList_AddCircleFilled(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments))
 }
 
-func (self ImDrawList) AddConvexPolyFilled(points *Vec2, num_points int32, col uint32) {
+func (self DrawList) AddConvexPolyFilled(points *Vec2, num_points int32, col uint32) {
 	pointsArg, pointsFin := wrap[C.ImVec2, *Vec2](points)
 	defer pointsFin()
 
-	C.DrawList_AddConvexPolyFilled(self.handle(), pointsArg, C.int(num_points), C.ImU32(col))
+	C.ImDrawList_AddConvexPolyFilled(self.handle(), pointsArg, C.int(num_points), C.ImU32(col))
 }
 
-func (self ImDrawList) AddDrawCmd() {
-	C.DrawList_AddDrawCmd(self.handle())
+func (self DrawList) AddDrawCmd() {
+	C.ImDrawList_AddDrawCmd(self.handle())
 }
 
-// DrawList_AddImageV parameter default value hint:
+// AddImageV parameter default value hint:
 // col: 4294967295
 // uv_max: ImVec2(1,1)
 // uv_min: ImVec2(0,0)
-func (self ImDrawList) AddImageV(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32) {
-	C.DrawList_AddImageV(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col))
+func (self DrawList) AddImageV(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32) {
+	C.ImDrawList_AddImage(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col))
 }
 
-// DrawList_AddImageQuadV parameter default value hint:
+// AddImageQuadV parameter default value hint:
 // col: 4294967295
 // uv1: ImVec2(0,0)
 // uv2: ImVec2(1,0)
 // uv3: ImVec2(1,1)
 // uv4: ImVec2(0,1)
-func (self ImDrawList) AddImageQuadV(user_texture_id TextureID, p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, uv1 Vec2, uv2 Vec2, uv3 Vec2, uv4 Vec2, col uint32) {
-	C.DrawList_AddImageQuadV(self.handle(), C.ImTextureID(user_texture_id), p1.toC(), p2.toC(), p3.toC(), p4.toC(), uv1.toC(), uv2.toC(), uv3.toC(), uv4.toC(), C.ImU32(col))
+func (self DrawList) AddImageQuadV(user_texture_id TextureID, p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, uv1 Vec2, uv2 Vec2, uv3 Vec2, uv4 Vec2, col uint32) {
+	C.ImDrawList_AddImageQuad(self.handle(), C.ImTextureID(user_texture_id), p1.toC(), p2.toC(), p3.toC(), p4.toC(), uv1.toC(), uv2.toC(), uv3.toC(), uv4.toC(), C.ImU32(col))
 }
 
-// DrawList_AddImageRoundedV parameter default value hint:
+// AddImageRoundedV parameter default value hint:
 // flags: 0
-func (self ImDrawList) AddImageRoundedV(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32, rounding float32, flags DrawFlags) {
-	C.DrawList_AddImageRoundedV(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
+func (self DrawList) AddImageRoundedV(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32, rounding float32, flags DrawFlags) {
+	C.ImDrawList_AddImageRounded(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
 }
 
-// DrawList_AddLineV parameter default value hint:
+// AddLineV parameter default value hint:
 // thickness: 1.0f
-func (self ImDrawList) AddLineV(p1 Vec2, p2 Vec2, col uint32, thickness float32) {
-	C.DrawList_AddLineV(self.handle(), p1.toC(), p2.toC(), C.ImU32(col), C.float(thickness))
+func (self DrawList) AddLineV(p1 Vec2, p2 Vec2, col uint32, thickness float32) {
+	C.ImDrawList_AddLine(self.handle(), p1.toC(), p2.toC(), C.ImU32(col), C.float(thickness))
 }
 
-// DrawList_AddNgonV parameter default value hint:
+// AddNgonV parameter default value hint:
 // thickness: 1.0f
-func (self ImDrawList) AddNgonV(center Vec2, radius float32, col uint32, num_segments int32, thickness float32) {
-	C.DrawList_AddNgonV(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments), C.float(thickness))
+func (self DrawList) AddNgonV(center Vec2, radius float32, col uint32, num_segments int32, thickness float32) {
+	C.ImDrawList_AddNgon(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments), C.float(thickness))
 }
 
-func (self ImDrawList) AddNgonFilled(center Vec2, radius float32, col uint32, num_segments int32) {
-	C.DrawList_AddNgonFilled(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments))
+func (self DrawList) AddNgonFilled(center Vec2, radius float32, col uint32, num_segments int32) {
+	C.ImDrawList_AddNgonFilled(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments))
 }
 
-func (self ImDrawList) AddPolyline(points *Vec2, num_points int32, col uint32, flags DrawFlags, thickness float32) {
+func (self DrawList) AddPolyline(points *Vec2, num_points int32, col uint32, flags DrawFlags, thickness float32) {
 	pointsArg, pointsFin := wrap[C.ImVec2, *Vec2](points)
 	defer pointsFin()
 
-	C.DrawList_AddPolyline(self.handle(), pointsArg, C.int(num_points), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
+	C.ImDrawList_AddPolyline(self.handle(), pointsArg, C.int(num_points), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
 }
 
-// DrawList_AddQuadV parameter default value hint:
+// AddQuadV parameter default value hint:
 // thickness: 1.0f
-func (self ImDrawList) AddQuadV(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32, thickness float32) {
-	C.DrawList_AddQuadV(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col), C.float(thickness))
+func (self DrawList) AddQuadV(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32, thickness float32) {
+	C.ImDrawList_AddQuad(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col), C.float(thickness))
 }
 
-func (self ImDrawList) AddQuadFilled(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32) {
-	C.DrawList_AddQuadFilled(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col))
+func (self DrawList) AddQuadFilled(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32) {
+	C.ImDrawList_AddQuadFilled(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col))
 }
 
-// DrawList_AddRectV parameter default value hint:
+// AddRectV parameter default value hint:
 // flags: 0
 // rounding: 0.0f
 // thickness: 1.0f
-func (self ImDrawList) AddRectV(p_min Vec2, p_max Vec2, col uint32, rounding float32, flags DrawFlags, thickness float32) {
-	C.DrawList_AddRectV(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags), C.float(thickness))
+func (self DrawList) AddRectV(p_min Vec2, p_max Vec2, col uint32, rounding float32, flags DrawFlags, thickness float32) {
+	C.ImDrawList_AddRect(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags), C.float(thickness))
 }
 
-// DrawList_AddRectFilledV parameter default value hint:
+// AddRectFilledV parameter default value hint:
 // flags: 0
 // rounding: 0.0f
-func (self ImDrawList) AddRectFilledV(p_min Vec2, p_max Vec2, col uint32, rounding float32, flags DrawFlags) {
-	C.DrawList_AddRectFilledV(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
+func (self DrawList) AddRectFilledV(p_min Vec2, p_max Vec2, col uint32, rounding float32, flags DrawFlags) {
+	C.ImDrawList_AddRectFilled(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
 }
 
-func (self ImDrawList) AddRectFilledMultiColor(p_min Vec2, p_max Vec2, col_upr_left uint32, col_upr_right uint32, col_bot_right uint32, col_bot_left uint32) {
-	C.DrawList_AddRectFilledMultiColor(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col_upr_left), C.ImU32(col_upr_right), C.ImU32(col_bot_right), C.ImU32(col_bot_left))
+func (self DrawList) AddRectFilledMultiColor(p_min Vec2, p_max Vec2, col_upr_left uint32, col_upr_right uint32, col_bot_right uint32, col_bot_left uint32) {
+	C.ImDrawList_AddRectFilledMultiColor(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col_upr_left), C.ImU32(col_upr_right), C.ImU32(col_bot_right), C.ImU32(col_bot_left))
 }
 
-// DrawList_AddText_FontPtrV parameter default value hint:
+// AddTextFontPtrV parameter default value hint:
 // cpu_fine_clip_rect: NULL
 // text_end: NULL
 // wrap_width: 0.0f
-func (self ImDrawList) AddText_FontPtrV(font ImFont, font_size float32, pos Vec2, col uint32, text_begin string, wrap_width float32, cpu_fine_clip_rect *Vec4) {
+func (self DrawList) AddTextFontPtrV(font Font, font_size float32, pos Vec2, col uint32, text_begin string, wrap_width float32, cpu_fine_clip_rect *Vec4) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
 	cpu_fine_clip_rectArg, cpu_fine_clip_rectFin := wrap[C.ImVec4, *Vec4](cpu_fine_clip_rect)
 	defer cpu_fine_clip_rectFin()
 
-	C.DrawList_AddText_FontPtrV(self.handle(), font.handle(), C.float(font_size), pos.toC(), C.ImU32(col), text_beginArg, C.float(wrap_width), cpu_fine_clip_rectArg)
+	C.wrap_ImDrawList_AddText_FontPtrV(self.handle(), font.handle(), C.float(font_size), pos.toC(), C.ImU32(col), text_beginArg, C.float(wrap_width), cpu_fine_clip_rectArg)
 }
 
-// DrawList_AddText_Vec2V parameter default value hint:
+// AddTextVec2V parameter default value hint:
 // text_end: NULL
-func (self ImDrawList) AddText_Vec2V(pos Vec2, col uint32, text_begin string) {
+func (self DrawList) AddTextVec2V(pos Vec2, col uint32, text_begin string) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
-	C.DrawList_AddText_Vec2V(self.handle(), pos.toC(), C.ImU32(col), text_beginArg)
+	C.wrap_ImDrawList_AddText_Vec2V(self.handle(), pos.toC(), C.ImU32(col), text_beginArg)
 }
 
-// DrawList_AddTriangleV parameter default value hint:
+// AddTriangleV parameter default value hint:
 // thickness: 1.0f
-func (self ImDrawList) AddTriangleV(p1 Vec2, p2 Vec2, p3 Vec2, col uint32, thickness float32) {
-	C.DrawList_AddTriangleV(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col), C.float(thickness))
+func (self DrawList) AddTriangleV(p1 Vec2, p2 Vec2, p3 Vec2, col uint32, thickness float32) {
+	C.ImDrawList_AddTriangle(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col), C.float(thickness))
 }
 
-func (self ImDrawList) AddTriangleFilled(p1 Vec2, p2 Vec2, p3 Vec2, col uint32) {
-	C.DrawList_AddTriangleFilled(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col))
+func (self DrawList) AddTriangleFilled(p1 Vec2, p2 Vec2, p3 Vec2, col uint32) {
+	C.ImDrawList_AddTriangleFilled(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) ChannelsMerge() {
-	C.DrawList_ChannelsMerge(self.handle())
+func (self DrawList) ChannelsMerge() {
+	C.ImDrawList_ChannelsMerge(self.handle())
 }
 
-func (self ImDrawList) ChannelsSetCurrent(n int32) {
-	C.DrawList_ChannelsSetCurrent(self.handle(), C.int(n))
+func (self DrawList) ChannelsSetCurrent(n int32) {
+	C.ImDrawList_ChannelsSetCurrent(self.handle(), C.int(n))
 }
 
-func (self ImDrawList) ChannelsSplit(count int32) {
-	C.DrawList_ChannelsSplit(self.handle(), C.int(count))
+func (self DrawList) ChannelsSplit(count int32) {
+	C.ImDrawList_ChannelsSplit(self.handle(), C.int(count))
 }
 
-func (self ImDrawList) CloneOutput() ImDrawList {
-	return (ImDrawList)(unsafe.Pointer(C.DrawList_CloneOutput(self.handle())))
+func (self DrawList) CloneOutput() DrawList {
+	return (DrawList)(unsafe.Pointer(C.ImDrawList_CloneOutput(self.handle())))
 }
 
-func (self ImDrawList) GetClipRectMax() Vec2 {
+func (self DrawList) ClipRectMax() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.DrawList_GetClipRectMax(pOutArg, self.handle())
+	C.ImDrawList_GetClipRectMax(pOutArg, self.handle())
 	return *pOut
 }
 
-func (self ImDrawList) GetClipRectMin() Vec2 {
+func (self DrawList) ClipRectMin() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.DrawList_GetClipRectMin(pOutArg, self.handle())
+	C.ImDrawList_GetClipRectMin(pOutArg, self.handle())
 	return *pOut
 }
 
-func NewImDrawList(shared_data ImDrawListSharedData) ImDrawList {
-	return (ImDrawList)(unsafe.Pointer(C.DrawList_ImDrawList(shared_data.handle())))
+func NewDrawList(shared_data DrawListSharedData) DrawList {
+	return (DrawList)(unsafe.Pointer(C.ImDrawList_ImDrawList(shared_data.handle())))
 }
 
-// DrawList_PathArcToV parameter default value hint:
+// PathArcToV parameter default value hint:
 // num_segments: 0
-func (self ImDrawList) PathArcToV(center Vec2, radius float32, a_min float32, a_max float32, num_segments int32) {
-	C.DrawList_PathArcToV(self.handle(), center.toC(), C.float(radius), C.float(a_min), C.float(a_max), C.int(num_segments))
+func (self DrawList) PathArcToV(center Vec2, radius float32, a_min float32, a_max float32, num_segments int32) {
+	C.ImDrawList_PathArcTo(self.handle(), center.toC(), C.float(radius), C.float(a_min), C.float(a_max), C.int(num_segments))
 }
 
-func (self ImDrawList) PathArcToFast(center Vec2, radius float32, a_min_of_12 int32, a_max_of_12 int32) {
-	C.DrawList_PathArcToFast(self.handle(), center.toC(), C.float(radius), C.int(a_min_of_12), C.int(a_max_of_12))
+func (self DrawList) PathArcToFast(center Vec2, radius float32, a_min_of_12 int32, a_max_of_12 int32) {
+	C.ImDrawList_PathArcToFast(self.handle(), center.toC(), C.float(radius), C.int(a_min_of_12), C.int(a_max_of_12))
 }
 
-// DrawList_PathBezierCubicCurveToV parameter default value hint:
+// PathBezierCubicCurveToV parameter default value hint:
 // num_segments: 0
-func (self ImDrawList) PathBezierCubicCurveToV(p2 Vec2, p3 Vec2, p4 Vec2, num_segments int32) {
-	C.DrawList_PathBezierCubicCurveToV(self.handle(), p2.toC(), p3.toC(), p4.toC(), C.int(num_segments))
+func (self DrawList) PathBezierCubicCurveToV(p2 Vec2, p3 Vec2, p4 Vec2, num_segments int32) {
+	C.ImDrawList_PathBezierCubicCurveTo(self.handle(), p2.toC(), p3.toC(), p4.toC(), C.int(num_segments))
 }
 
-// DrawList_PathBezierQuadraticCurveToV parameter default value hint:
+// PathBezierQuadraticCurveToV parameter default value hint:
 // num_segments: 0
-func (self ImDrawList) PathBezierQuadraticCurveToV(p2 Vec2, p3 Vec2, num_segments int32) {
-	C.DrawList_PathBezierQuadraticCurveToV(self.handle(), p2.toC(), p3.toC(), C.int(num_segments))
+func (self DrawList) PathBezierQuadraticCurveToV(p2 Vec2, p3 Vec2, num_segments int32) {
+	C.ImDrawList_PathBezierQuadraticCurveTo(self.handle(), p2.toC(), p3.toC(), C.int(num_segments))
 }
 
-func (self ImDrawList) PathClear() {
-	C.DrawList_PathClear(self.handle())
+func (self DrawList) PathClear() {
+	C.ImDrawList_PathClear(self.handle())
 }
 
-func (self ImDrawList) PathFillConvex(col uint32) {
-	C.DrawList_PathFillConvex(self.handle(), C.ImU32(col))
+func (self DrawList) PathFillConvex(col uint32) {
+	C.ImDrawList_PathFillConvex(self.handle(), C.ImU32(col))
 }
 
-func (self ImDrawList) PathLineTo(pos Vec2) {
-	C.DrawList_PathLineTo(self.handle(), pos.toC())
+func (self DrawList) PathLineTo(pos Vec2) {
+	C.ImDrawList_PathLineTo(self.handle(), pos.toC())
 }
 
-func (self ImDrawList) PathLineToMergeDuplicate(pos Vec2) {
-	C.DrawList_PathLineToMergeDuplicate(self.handle(), pos.toC())
+func (self DrawList) PathLineToMergeDuplicate(pos Vec2) {
+	C.ImDrawList_PathLineToMergeDuplicate(self.handle(), pos.toC())
 }
 
-// DrawList_PathRectV parameter default value hint:
+// PathRectV parameter default value hint:
 // flags: 0
 // rounding: 0.0f
-func (self ImDrawList) PathRectV(rect_min Vec2, rect_max Vec2, rounding float32, flags DrawFlags) {
-	C.DrawList_PathRectV(self.handle(), rect_min.toC(), rect_max.toC(), C.float(rounding), C.ImDrawFlags(flags))
+func (self DrawList) PathRectV(rect_min Vec2, rect_max Vec2, rounding float32, flags DrawFlags) {
+	C.ImDrawList_PathRect(self.handle(), rect_min.toC(), rect_max.toC(), C.float(rounding), C.ImDrawFlags(flags))
 }
 
-// DrawList_PathStrokeV parameter default value hint:
+// PathStrokeV parameter default value hint:
 // flags: 0
 // thickness: 1.0f
-func (self ImDrawList) PathStrokeV(col uint32, flags DrawFlags, thickness float32) {
-	C.DrawList_PathStrokeV(self.handle(), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
+func (self DrawList) PathStrokeV(col uint32, flags DrawFlags, thickness float32) {
+	C.ImDrawList_PathStroke(self.handle(), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
 }
 
-func (self ImDrawList) PopClipRect() {
-	C.DrawList_PopClipRect(self.handle())
+func (self DrawList) PopClipRect() {
+	C.ImDrawList_PopClipRect(self.handle())
 }
 
-func (self ImDrawList) PopTextureID() {
-	C.DrawList_PopTextureID(self.handle())
+func (self DrawList) PopTextureID() {
+	C.ImDrawList_PopTextureID(self.handle())
 }
 
-func (self ImDrawList) PrimQuadUV(a Vec2, b Vec2, c Vec2, d Vec2, uv_a Vec2, uv_b Vec2, uv_c Vec2, uv_d Vec2, col uint32) {
-	C.DrawList_PrimQuadUV(self.handle(), a.toC(), b.toC(), c.toC(), d.toC(), uv_a.toC(), uv_b.toC(), uv_c.toC(), uv_d.toC(), C.ImU32(col))
+func (self DrawList) PrimQuadUV(a Vec2, b Vec2, c Vec2, d Vec2, uv_a Vec2, uv_b Vec2, uv_c Vec2, uv_d Vec2, col uint32) {
+	C.ImDrawList_PrimQuadUV(self.handle(), a.toC(), b.toC(), c.toC(), d.toC(), uv_a.toC(), uv_b.toC(), uv_c.toC(), uv_d.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) PrimRect(a Vec2, b Vec2, col uint32) {
-	C.DrawList_PrimRect(self.handle(), a.toC(), b.toC(), C.ImU32(col))
+func (self DrawList) PrimRect(a Vec2, b Vec2, col uint32) {
+	C.ImDrawList_PrimRect(self.handle(), a.toC(), b.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) PrimRectUV(a Vec2, b Vec2, uv_a Vec2, uv_b Vec2, col uint32) {
-	C.DrawList_PrimRectUV(self.handle(), a.toC(), b.toC(), uv_a.toC(), uv_b.toC(), C.ImU32(col))
+func (self DrawList) PrimRectUV(a Vec2, b Vec2, uv_a Vec2, uv_b Vec2, col uint32) {
+	C.ImDrawList_PrimRectUV(self.handle(), a.toC(), b.toC(), uv_a.toC(), uv_b.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) PrimReserve(idx_count int32, vtx_count int32) {
-	C.DrawList_PrimReserve(self.handle(), C.int(idx_count), C.int(vtx_count))
+func (self DrawList) PrimReserve(idx_count int32, vtx_count int32) {
+	C.ImDrawList_PrimReserve(self.handle(), C.int(idx_count), C.int(vtx_count))
 }
 
-func (self ImDrawList) PrimUnreserve(idx_count int32, vtx_count int32) {
-	C.DrawList_PrimUnreserve(self.handle(), C.int(idx_count), C.int(vtx_count))
+func (self DrawList) PrimUnreserve(idx_count int32, vtx_count int32) {
+	C.ImDrawList_PrimUnreserve(self.handle(), C.int(idx_count), C.int(vtx_count))
 }
 
-func (self ImDrawList) PrimVtx(pos Vec2, uv Vec2, col uint32) {
-	C.DrawList_PrimVtx(self.handle(), pos.toC(), uv.toC(), C.ImU32(col))
+func (self DrawList) PrimVtx(pos Vec2, uv Vec2, col uint32) {
+	C.ImDrawList_PrimVtx(self.handle(), pos.toC(), uv.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) PrimWriteIdx(idx DrawIdx) {
-	C.DrawList_PrimWriteIdx(self.handle(), C.ImDrawIdx(idx))
+func (self DrawList) PrimWriteIdx(idx DrawIdx) {
+	C.ImDrawList_PrimWriteIdx(self.handle(), C.ImDrawIdx(idx))
 }
 
-func (self ImDrawList) PrimWriteVtx(pos Vec2, uv Vec2, col uint32) {
-	C.DrawList_PrimWriteVtx(self.handle(), pos.toC(), uv.toC(), C.ImU32(col))
+func (self DrawList) PrimWriteVtx(pos Vec2, uv Vec2, col uint32) {
+	C.ImDrawList_PrimWriteVtx(self.handle(), pos.toC(), uv.toC(), C.ImU32(col))
 }
 
-// DrawList_PushClipRectV parameter default value hint:
+// PushClipRectV parameter default value hint:
 // intersect_with_current_clip_rect: false
-func (self ImDrawList) PushClipRectV(clip_rect_min Vec2, clip_rect_max Vec2, intersect_with_current_clip_rect bool) {
-	C.DrawList_PushClipRectV(self.handle(), clip_rect_min.toC(), clip_rect_max.toC(), C.bool(intersect_with_current_clip_rect))
+func (self DrawList) PushClipRectV(clip_rect_min Vec2, clip_rect_max Vec2, intersect_with_current_clip_rect bool) {
+	C.ImDrawList_PushClipRect(self.handle(), clip_rect_min.toC(), clip_rect_max.toC(), C.bool(intersect_with_current_clip_rect))
 }
 
-func (self ImDrawList) PushClipRectFullScreen() {
-	C.DrawList_PushClipRectFullScreen(self.handle())
+func (self DrawList) PushClipRectFullScreen() {
+	C.ImDrawList_PushClipRectFullScreen(self.handle())
 }
 
-func (self ImDrawList) PushTextureID(texture_id TextureID) {
-	C.DrawList_PushTextureID(self.handle(), C.ImTextureID(texture_id))
+func (self DrawList) PushTextureID(texture_id TextureID) {
+	C.ImDrawList_PushTextureID(self.handle(), C.ImTextureID(texture_id))
 }
 
-func (self ImDrawList) Destroy() {
-	C.DrawList_Destroy(self.handle())
+func (self DrawList) Destroy() {
+	C.ImDrawList_destroy(self.handle())
 }
 
-func NewImFontAtlasCustomRect() ImFontAtlasCustomRect {
-	return (ImFontAtlasCustomRect)(unsafe.Pointer(C.FontAtlasCustomRect_ImFontAtlasCustomRect()))
+func NewFontAtlasCustomRect() FontAtlasCustomRect {
+	return (FontAtlasCustomRect)(unsafe.Pointer(C.ImFontAtlasCustomRect_ImFontAtlasCustomRect()))
 }
 
-func (self ImFontAtlasCustomRect) IsPacked() bool {
-	return C.FontAtlasCustomRect_IsPacked(self.handle()) == C.bool(true)
+func (self FontAtlasCustomRect) IsPacked() bool {
+	return C.ImFontAtlasCustomRect_IsPacked(self.handle()) == C.bool(true)
 }
 
-func (self ImFontAtlasCustomRect) Destroy() {
-	C.FontAtlasCustomRect_Destroy(self.handle())
+func (self FontAtlasCustomRect) Destroy() {
+	C.ImFontAtlasCustomRect_destroy(self.handle())
 }
 
-// FontAtlas_AddCustomRectFontGlyphV parameter default value hint:
+// AddCustomRectFontGlyphV parameter default value hint:
 // offset: ImVec2(0,0)
-func (self ImFontAtlas) AddCustomRectFontGlyphV(font ImFont, id Wchar, width int32, height int32, advance_x float32, offset Vec2) int {
-	return int(C.FontAtlas_AddCustomRectFontGlyphV(self.handle(), font.handle(), C.ImWchar(id), C.int(width), C.int(height), C.float(advance_x), offset.toC()))
+func (self FontAtlas) AddCustomRectFontGlyphV(font Font, id Wchar, width int32, height int32, advance_x float32, offset Vec2) int {
+	return int(C.ImFontAtlas_AddCustomRectFontGlyph(self.handle(), font.handle(), C.ImWchar(id), C.int(width), C.int(height), C.float(advance_x), offset.toC()))
 }
 
-func (self ImFontAtlas) AddCustomRectRegular(width int32, height int32) int {
-	return int(C.FontAtlas_AddCustomRectRegular(self.handle(), C.int(width), C.int(height)))
+func (self FontAtlas) AddCustomRectRegular(width int32, height int32) int {
+	return int(C.ImFontAtlas_AddCustomRectRegular(self.handle(), C.int(width), C.int(height)))
 }
 
-func (self ImFontAtlas) AddFont(font_cfg ImFontConfig) ImFont {
-	return (ImFont)(unsafe.Pointer(C.FontAtlas_AddFont(self.handle(), font_cfg.handle())))
+func (self FontAtlas) AddFont(font_cfg FontConfig) Font {
+	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFont(self.handle(), font_cfg.handle())))
 }
 
-// FontAtlas_AddFontDefaultV parameter default value hint:
+// AddFontDefaultV parameter default value hint:
 // font_cfg: NULL
-func (self ImFontAtlas) AddFontDefaultV(font_cfg ImFontConfig) ImFont {
-	return (ImFont)(unsafe.Pointer(C.FontAtlas_AddFontDefaultV(self.handle(), font_cfg.handle())))
+func (self FontAtlas) AddFontDefaultV(font_cfg FontConfig) Font {
+	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontDefault(self.handle(), font_cfg.handle())))
 }
 
-// FontAtlas_AddFontFromFileTTFV parameter default value hint:
+// AddFontFromFileTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self ImFontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, font_cfg ImFontConfig, glyph_ranges *Wchar) ImFont {
+func (self FontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
 	filenameArg, filenameFin := wrapString(filename)
 	defer filenameFin()
 
-	return (ImFont)(unsafe.Pointer(C.FontAtlas_AddFontFromFileTTFV(self.handle(), filenameArg, C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
+	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromFileTTF(self.handle(), filenameArg, C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
 
-// FontAtlas_AddFontFromMemoryCompressedBase85TTFV parameter default value hint:
+// AddFontFromMemoryCompressedBase85TTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self ImFontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data_base85 string, size_pixels float32, font_cfg ImFontConfig, glyph_ranges *Wchar) ImFont {
+func (self FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data_base85 string, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
 	compressed_font_data_base85Arg, compressed_font_data_base85Fin := wrapString(compressed_font_data_base85)
 	defer compressed_font_data_base85Fin()
 
-	return (ImFont)(unsafe.Pointer(C.FontAtlas_AddFontFromMemoryCompressedBase85TTFV(self.handle(), compressed_font_data_base85Arg, C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
+	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(self.handle(), compressed_font_data_base85Arg, C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
 
-// FontAtlas_AddFontFromMemoryCompressedTTFV parameter default value hint:
+// AddFontFromMemoryCompressedTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self ImFontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsafe.Pointer, compressed_font_size int32, size_pixels float32, font_cfg ImFontConfig, glyph_ranges *Wchar) ImFont {
-	return (ImFont)(unsafe.Pointer(C.FontAtlas_AddFontFromMemoryCompressedTTFV(self.handle(), (compressed_font_data), C.int(compressed_font_size), C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
+func (self FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsafe.Pointer, compressed_font_size int32, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
+	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryCompressedTTF(self.handle(), (compressed_font_data), C.int(compressed_font_size), C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
 
-// FontAtlas_AddFontFromMemoryTTFV parameter default value hint:
+// AddFontFromMemoryTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self ImFontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_size int32, size_pixels float32, font_cfg ImFontConfig, glyph_ranges *Wchar) ImFont {
-	return (ImFont)(unsafe.Pointer(C.FontAtlas_AddFontFromMemoryTTFV(self.handle(), (font_data), C.int(font_size), C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
+func (self FontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_size int32, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
+	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryTTF(self.handle(), (font_data), C.int(font_size), C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
 
-func (self ImFontAtlas) Build() bool {
-	return C.FontAtlas_Build(self.handle()) == C.bool(true)
+func (self FontAtlas) Build() bool {
+	return C.ImFontAtlas_Build(self.handle()) == C.bool(true)
 }
 
-func (self ImFontAtlas) CalcCustomRectUV(rect ImFontAtlasCustomRect, out_uv_min *Vec2, out_uv_max *Vec2) {
+func (self FontAtlas) CalcCustomRectUV(rect FontAtlasCustomRect, out_uv_min *Vec2, out_uv_max *Vec2) {
 	out_uv_minArg, out_uv_minFin := wrap[C.ImVec2, *Vec2](out_uv_min)
 	defer out_uv_minFin()
 
 	out_uv_maxArg, out_uv_maxFin := wrap[C.ImVec2, *Vec2](out_uv_max)
 	defer out_uv_maxFin()
 
-	C.FontAtlas_CalcCustomRectUV(self.handle(), rect.handle(), out_uv_minArg, out_uv_maxArg)
+	C.ImFontAtlas_CalcCustomRectUV(self.handle(), rect.handle(), out_uv_minArg, out_uv_maxArg)
 }
 
-func (self ImFontAtlas) Clear() {
-	C.FontAtlas_Clear(self.handle())
+func (self FontAtlas) Clear() {
+	C.ImFontAtlas_Clear(self.handle())
 }
 
-func (self ImFontAtlas) ClearFonts() {
-	C.FontAtlas_ClearFonts(self.handle())
+func (self FontAtlas) ClearFonts() {
+	C.ImFontAtlas_ClearFonts(self.handle())
 }
 
-func (self ImFontAtlas) ClearInputData() {
-	C.FontAtlas_ClearInputData(self.handle())
+func (self FontAtlas) ClearInputData() {
+	C.ImFontAtlas_ClearInputData(self.handle())
 }
 
-func (self ImFontAtlas) ClearTexData() {
-	C.FontAtlas_ClearTexData(self.handle())
+func (self FontAtlas) ClearTexData() {
+	C.ImFontAtlas_ClearTexData(self.handle())
 }
 
-func (self ImFontAtlas) GetCustomRectByIndex(index int32) ImFontAtlasCustomRect {
-	return (ImFontAtlasCustomRect)(unsafe.Pointer(C.FontAtlas_GetCustomRectByIndex(self.handle(), C.int(index))))
+func (self FontAtlas) CustomRectByIndex(index int32) FontAtlasCustomRect {
+	return (FontAtlasCustomRect)(unsafe.Pointer(C.ImFontAtlas_GetCustomRectByIndex(self.handle(), C.int(index))))
 }
 
-func (self ImFontAtlas) GetGlyphRangesChineseFull() *Wchar {
-	return (*Wchar)(C.FontAtlas_GetGlyphRangesChineseFull(self.handle()))
+func (self FontAtlas) GlyphRangesChineseFull() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesChineseFull(self.handle()))
 }
 
-func (self ImFontAtlas) GetGlyphRangesChineseSimplifiedCommon() *Wchar {
-	return (*Wchar)(C.FontAtlas_GetGlyphRangesChineseSimplifiedCommon(self.handle()))
+func (self FontAtlas) GlyphRangesChineseSimplifiedCommon() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon(self.handle()))
 }
 
-func (self ImFontAtlas) GetGlyphRangesCyrillic() *Wchar {
-	return (*Wchar)(C.FontAtlas_GetGlyphRangesCyrillic(self.handle()))
+func (self FontAtlas) GlyphRangesCyrillic() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesCyrillic(self.handle()))
 }
 
-func (self ImFontAtlas) GetGlyphRangesDefault() *Wchar {
-	return (*Wchar)(C.FontAtlas_GetGlyphRangesDefault(self.handle()))
+func (self FontAtlas) GlyphRangesDefault() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesDefault(self.handle()))
 }
 
-func (self ImFontAtlas) GetGlyphRangesJapanese() *Wchar {
-	return (*Wchar)(C.FontAtlas_GetGlyphRangesJapanese(self.handle()))
+func (self FontAtlas) GlyphRangesJapanese() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesJapanese(self.handle()))
 }
 
-func (self ImFontAtlas) GetGlyphRangesKorean() *Wchar {
-	return (*Wchar)(C.FontAtlas_GetGlyphRangesKorean(self.handle()))
+func (self FontAtlas) GlyphRangesKorean() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesKorean(self.handle()))
 }
 
-func (self ImFontAtlas) GetGlyphRangesThai() *Wchar {
-	return (*Wchar)(C.FontAtlas_GetGlyphRangesThai(self.handle()))
+func (self FontAtlas) GlyphRangesThai() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesThai(self.handle()))
 }
 
-func (self ImFontAtlas) GetGlyphRangesVietnamese() *Wchar {
-	return (*Wchar)(C.FontAtlas_GetGlyphRangesVietnamese(self.handle()))
+func (self FontAtlas) GlyphRangesVietnamese() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesVietnamese(self.handle()))
 }
 
-func (self ImFontAtlas) GetMouseCursorTexData(cursor MouseCursor, out_offset *Vec2, out_size *Vec2, out_uv_border [2]*Vec2, out_uv_fill [2]*Vec2) bool {
+func (self FontAtlas) MouseCursorTexData(cursor MouseCursor, out_offset *Vec2, out_size *Vec2, out_uv_border [2]*Vec2, out_uv_fill [2]*Vec2) bool {
 	out_offsetArg, out_offsetFin := wrap[C.ImVec2, *Vec2](out_offset)
 	defer out_offsetFin()
 
@@ -558,88 +558,88 @@ func (self ImFontAtlas) GetMouseCursorTexData(cursor MouseCursor, out_offset *Ve
 		}
 	}()
 
-	return C.FontAtlas_GetMouseCursorTexData(self.handle(), C.ImGuiMouseCursor(cursor), out_offsetArg, out_sizeArg, (*C.ImVec2)(&out_uv_borderArg[0]), (*C.ImVec2)(&out_uv_fillArg[0])) == C.bool(true)
+	return C.ImFontAtlas_GetMouseCursorTexData(self.handle(), C.ImGuiMouseCursor(cursor), out_offsetArg, out_sizeArg, (*C.ImVec2)(&out_uv_borderArg[0]), (*C.ImVec2)(&out_uv_fillArg[0])) == C.bool(true)
 }
 
-func NewImFontAtlas() ImFontAtlas {
-	return (ImFontAtlas)(unsafe.Pointer(C.FontAtlas_ImFontAtlas()))
+func NewFontAtlas() FontAtlas {
+	return (FontAtlas)(unsafe.Pointer(C.ImFontAtlas_ImFontAtlas()))
 }
 
-func (self ImFontAtlas) IsBuilt() bool {
-	return C.FontAtlas_IsBuilt(self.handle()) == C.bool(true)
+func (self FontAtlas) IsBuilt() bool {
+	return C.ImFontAtlas_IsBuilt(self.handle()) == C.bool(true)
 }
 
-func (self ImFontAtlas) SetTexID(id TextureID) {
-	C.FontAtlas_SetTexID(self.handle(), C.ImTextureID(id))
+func (self FontAtlas) SetTexID(id TextureID) {
+	C.ImFontAtlas_SetTexID(self.handle(), C.ImTextureID(id))
 }
 
-func (self ImFontAtlas) Destroy() {
-	C.FontAtlas_Destroy(self.handle())
+func (self FontAtlas) Destroy() {
+	C.ImFontAtlas_destroy(self.handle())
 }
 
-func NewImFontConfig() ImFontConfig {
-	return (ImFontConfig)(unsafe.Pointer(C.FontConfig_ImFontConfig()))
+func NewFontConfig() FontConfig {
+	return (FontConfig)(unsafe.Pointer(C.ImFontConfig_ImFontConfig()))
 }
 
-func (self ImFontConfig) Destroy() {
-	C.FontConfig_Destroy(self.handle())
+func (self FontConfig) Destroy() {
+	C.ImFontConfig_destroy(self.handle())
 }
 
-func (self ImFontGlyphRangesBuilder) AddChar(c Wchar) {
-	C.FontGlyphRangesBuilder_AddChar(self.handle(), C.ImWchar(c))
+func (self FontGlyphRangesBuilder) AddChar(c Wchar) {
+	C.ImFontGlyphRangesBuilder_AddChar(self.handle(), C.ImWchar(c))
 }
 
-func (self ImFontGlyphRangesBuilder) AddRanges(ranges *Wchar) {
-	C.FontGlyphRangesBuilder_AddRanges(self.handle(), (*C.ImWchar)(ranges))
+func (self FontGlyphRangesBuilder) AddRanges(ranges *Wchar) {
+	C.ImFontGlyphRangesBuilder_AddRanges(self.handle(), (*C.ImWchar)(ranges))
 }
 
-// FontGlyphRangesBuilder_AddTextV parameter default value hint:
+// AddTextV parameter default value hint:
 // text_end: NULL
-func (self ImFontGlyphRangesBuilder) AddTextV(text string) {
+func (self FontGlyphRangesBuilder) AddTextV(text string) {
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
-	C.FontGlyphRangesBuilder_AddTextV(self.handle(), textArg)
+	C.wrap_ImFontGlyphRangesBuilder_AddTextV(self.handle(), textArg)
 }
 
-func (self ImFontGlyphRangesBuilder) Clear() {
-	C.FontGlyphRangesBuilder_Clear(self.handle())
+func (self FontGlyphRangesBuilder) Clear() {
+	C.ImFontGlyphRangesBuilder_Clear(self.handle())
 }
 
-func (self ImFontGlyphRangesBuilder) GetBit(n uint64) bool {
-	return C.FontGlyphRangesBuilder_GetBit(self.handle(), C.xlong(n)) == C.bool(true)
+func (self FontGlyphRangesBuilder) Bit(n uint64) bool {
+	return C.ImFontGlyphRangesBuilder_GetBit(self.handle(), C.xlong(n)) == C.bool(true)
 }
 
-func NewImFontGlyphRangesBuilder() ImFontGlyphRangesBuilder {
-	return (ImFontGlyphRangesBuilder)(unsafe.Pointer(C.FontGlyphRangesBuilder_ImFontGlyphRangesBuilder()))
+func NewFontGlyphRangesBuilder() FontGlyphRangesBuilder {
+	return (FontGlyphRangesBuilder)(unsafe.Pointer(C.ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder()))
 }
 
-func (self ImFontGlyphRangesBuilder) SetBit(n uint64) {
-	C.FontGlyphRangesBuilder_SetBit(self.handle(), C.xlong(n))
+func (self FontGlyphRangesBuilder) SetBit(n uint64) {
+	C.ImFontGlyphRangesBuilder_SetBit(self.handle(), C.xlong(n))
 }
 
-func (self ImFontGlyphRangesBuilder) Destroy() {
-	C.FontGlyphRangesBuilder_Destroy(self.handle())
+func (self FontGlyphRangesBuilder) Destroy() {
+	C.ImFontGlyphRangesBuilder_destroy(self.handle())
 }
 
-func (self ImFont) AddGlyph(src_cfg ImFontConfig, c Wchar, x0 float32, y0 float32, x1 float32, y1 float32, u0 float32, v0 float32, u1 float32, v1 float32, advance_x float32) {
-	C.Font_AddGlyph(self.handle(), src_cfg.handle(), C.ImWchar(c), C.float(x0), C.float(y0), C.float(x1), C.float(y1), C.float(u0), C.float(v0), C.float(u1), C.float(v1), C.float(advance_x))
+func (self Font) AddGlyph(src_cfg FontConfig, c Wchar, x0 float32, y0 float32, x1 float32, y1 float32, u0 float32, v0 float32, u1 float32, v1 float32, advance_x float32) {
+	C.ImFont_AddGlyph(self.handle(), src_cfg.handle(), C.ImWchar(c), C.float(x0), C.float(y0), C.float(x1), C.float(y1), C.float(u0), C.float(v0), C.float(u1), C.float(v1), C.float(advance_x))
 }
 
-// Font_AddRemapCharV parameter default value hint:
+// AddRemapCharV parameter default value hint:
 // overwrite_dst: true
-func (self ImFont) AddRemapCharV(dst Wchar, src Wchar, overwrite_dst bool) {
-	C.Font_AddRemapCharV(self.handle(), C.ImWchar(dst), C.ImWchar(src), C.bool(overwrite_dst))
+func (self Font) AddRemapCharV(dst Wchar, src Wchar, overwrite_dst bool) {
+	C.ImFont_AddRemapChar(self.handle(), C.ImWchar(dst), C.ImWchar(src), C.bool(overwrite_dst))
 }
 
-func (self ImFont) BuildLookupTable() {
-	C.Font_BuildLookupTable(self.handle())
+func (self Font) BuildLookupTable() {
+	C.ImFont_BuildLookupTable(self.handle())
 }
 
-// Font_CalcTextSizeAV parameter default value hint:
+// CalcTextSizeAV parameter default value hint:
 // remaining: NULL
 // text_end: NULL
-func (self ImFont) CalcTextSizeAV(size float32, max_width float32, wrap_width float32, text_begin string, remaining []string) Vec2 {
+func (self Font) CalcTextSizeAV(size float32, max_width float32, wrap_width float32, text_begin string, remaining []string) Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
@@ -650,578 +650,578 @@ func (self ImFont) CalcTextSizeAV(size float32, max_width float32, wrap_width fl
 	remainingArg, remainingFin := wrapStringList(remaining)
 	defer remainingFin()
 
-	C.Font_CalcTextSizeAV(pOutArg, self.handle(), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, remainingArg)
+	C.wrap_ImFont_CalcTextSizeAV(pOutArg, self.handle(), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, remainingArg)
 	return *pOut
 }
 
-func (self ImFont) CalcWordWrapPositionA(scale float32, text string, wrap_width float32) string {
+func (self Font) CalcWordWrapPositionA(scale float32, text string, wrap_width float32) string {
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
-	return C.GoString(C.Font_CalcWordWrapPositionA(self.handle(), C.float(scale), textArg, C.float(wrap_width)))
+	return C.GoString(C.wrap_ImFont_CalcWordWrapPositionA(self.handle(), C.float(scale), textArg, C.float(wrap_width)))
 }
 
-func (self ImFont) ClearOutputData() {
-	C.Font_ClearOutputData(self.handle())
+func (self Font) ClearOutputData() {
+	C.ImFont_ClearOutputData(self.handle())
 }
 
-func (self ImFont) FindGlyph(c Wchar) ImFontGlyph {
-	return (ImFontGlyph)(unsafe.Pointer(C.Font_FindGlyph(self.handle(), C.ImWchar(c))))
+func (self Font) FindGlyph(c Wchar) FontGlyph {
+	return (FontGlyph)(unsafe.Pointer(C.ImFont_FindGlyph(self.handle(), C.ImWchar(c))))
 }
 
-func (self ImFont) FindGlyphNoFallback(c Wchar) ImFontGlyph {
-	return (ImFontGlyph)(unsafe.Pointer(C.Font_FindGlyphNoFallback(self.handle(), C.ImWchar(c))))
+func (self Font) FindGlyphNoFallback(c Wchar) FontGlyph {
+	return (FontGlyph)(unsafe.Pointer(C.ImFont_FindGlyphNoFallback(self.handle(), C.ImWchar(c))))
 }
 
-func (self ImFont) GetCharAdvance(c Wchar) float32 {
-	return float32(C.Font_GetCharAdvance(self.handle(), C.ImWchar(c)))
+func (self Font) CharAdvance(c Wchar) float32 {
+	return float32(C.ImFont_GetCharAdvance(self.handle(), C.ImWchar(c)))
 }
 
-func (self ImFont) GetDebugName() string {
-	return C.GoString(C.Font_GetDebugName(self.handle()))
+func (self Font) DebugName() string {
+	return C.GoString(C.ImFont_GetDebugName(self.handle()))
 }
 
-func (self ImFont) GrowIndex(new_size int32) {
-	C.Font_GrowIndex(self.handle(), C.int(new_size))
+func (self Font) GrowIndex(new_size int32) {
+	C.ImFont_GrowIndex(self.handle(), C.int(new_size))
 }
 
-func NewImFont() ImFont {
-	return (ImFont)(unsafe.Pointer(C.Font_ImFont()))
+func NewFont() Font {
+	return (Font)(unsafe.Pointer(C.ImFont_ImFont()))
 }
 
-func (self ImFont) IsGlyphRangeUnused(c_begin uint32, c_last uint32) bool {
-	return C.Font_IsGlyphRangeUnused(self.handle(), C.uint(c_begin), C.uint(c_last)) == C.bool(true)
+func (self Font) IsGlyphRangeUnused(c_begin uint32, c_last uint32) bool {
+	return C.ImFont_IsGlyphRangeUnused(self.handle(), C.uint(c_begin), C.uint(c_last)) == C.bool(true)
 }
 
-func (self ImFont) IsLoaded() bool {
-	return C.Font_IsLoaded(self.handle()) == C.bool(true)
+func (self Font) IsLoaded() bool {
+	return C.ImFont_IsLoaded(self.handle()) == C.bool(true)
 }
 
-func (self ImFont) RenderChar(draw_list ImDrawList, size float32, pos Vec2, col uint32, c Wchar) {
-	C.Font_RenderChar(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), C.ImWchar(c))
+func (self Font) RenderChar(draw_list DrawList, size float32, pos Vec2, col uint32, c Wchar) {
+	C.ImFont_RenderChar(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), C.ImWchar(c))
 }
 
-// Font_RenderTextV parameter default value hint:
+// RenderTextV parameter default value hint:
 // cpu_fine_clip: false
 // wrap_width: 0.0f
-func (self ImFont) RenderTextV(draw_list ImDrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string, wrap_width float32, cpu_fine_clip bool) {
+func (self Font) RenderTextV(draw_list DrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string, wrap_width float32, cpu_fine_clip bool) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
-	C.Font_RenderTextV(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), clip_rect.toC(), text_beginArg, C.float(wrap_width), C.bool(cpu_fine_clip))
+	C.wrap_ImFont_RenderTextV(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), clip_rect.toC(), text_beginArg, C.float(wrap_width), C.bool(cpu_fine_clip))
 }
 
-func (self ImFont) SetGlyphVisible(c Wchar, visible bool) {
-	C.Font_SetGlyphVisible(self.handle(), C.ImWchar(c), C.bool(visible))
+func (self Font) SetGlyphVisible(c Wchar, visible bool) {
+	C.ImFont_SetGlyphVisible(self.handle(), C.ImWchar(c), C.bool(visible))
 }
 
-func (self ImFont) Destroy() {
-	C.Font_Destroy(self.handle())
+func (self Font) Destroy() {
+	C.ImFont_destroy(self.handle())
 }
 
-func (self ImGuiComboPreviewData) Destroy() {
-	C.ComboPreviewData_Destroy(self.handle())
+func (self ComboPreviewData) Destroy() {
+	C.ImGuiComboPreviewData_destroy(self.handle())
 }
 
-func (self ImGuiContextHook) Destroy() {
-	C.ContextHook_Destroy(self.handle())
+func (self ContextHook) Destroy() {
+	C.ImGuiContextHook_destroy(self.handle())
 }
 
-func (self ImGuiContext) Destroy() {
-	C.Context_Destroy(self.handle())
+func (self Context) Destroy() {
+	C.ImGuiContext_destroy(self.handle())
 }
 
-func (self ImGuiDockContext) Destroy() {
-	C.DockContext_Destroy(self.handle())
+func (self DockContext) Destroy() {
+	C.ImGuiDockContext_destroy(self.handle())
 }
 
-func (self ImGuiIO) AddFocusEvent(focused bool) {
-	C.IO_AddFocusEvent(self.handle(), C.bool(focused))
+func (self IO) AddFocusEvent(focused bool) {
+	C.ImGuiIO_AddFocusEvent(self.handle(), C.bool(focused))
 }
 
-func (self ImGuiIO) AddInputCharacter(c uint32) {
-	C.IO_AddInputCharacter(self.handle(), C.uint(c))
+func (self IO) AddInputCharacter(c uint32) {
+	C.ImGuiIO_AddInputCharacter(self.handle(), C.uint(c))
 }
 
-func (self ImGuiIO) AddInputCharactersUTF8(str string) {
+func (self IO) AddInputCharactersUTF8(str string) {
 	strArg, strFin := wrapString(str)
 	defer strFin()
 
-	C.IO_AddInputCharactersUTF8(self.handle(), strArg)
+	C.ImGuiIO_AddInputCharactersUTF8(self.handle(), strArg)
 }
 
-func (self ImGuiIO) AddKeyAnalogEvent(key Key, down bool, v float32) {
-	C.IO_AddKeyAnalogEvent(self.handle(), C.ImGuiKey(key), C.bool(down), C.float(v))
+func (self IO) AddKeyAnalogEvent(key Key, down bool, v float32) {
+	C.ImGuiIO_AddKeyAnalogEvent(self.handle(), C.ImGuiKey(key), C.bool(down), C.float(v))
 }
 
-func (self ImGuiIO) AddKeyEvent(key Key, down bool) {
-	C.IO_AddKeyEvent(self.handle(), C.ImGuiKey(key), C.bool(down))
+func (self IO) AddKeyEvent(key Key, down bool) {
+	C.ImGuiIO_AddKeyEvent(self.handle(), C.ImGuiKey(key), C.bool(down))
 }
 
-func (self ImGuiIO) AddMouseButtonEvent(button int32, down bool) {
-	C.IO_AddMouseButtonEvent(self.handle(), C.int(button), C.bool(down))
+func (self IO) AddMouseButtonEvent(button int32, down bool) {
+	C.ImGuiIO_AddMouseButtonEvent(self.handle(), C.int(button), C.bool(down))
 }
 
-func (self ImGuiIO) AddMousePosEvent(x float32, y float32) {
-	C.IO_AddMousePosEvent(self.handle(), C.float(x), C.float(y))
+func (self IO) AddMousePosEvent(x float32, y float32) {
+	C.ImGuiIO_AddMousePosEvent(self.handle(), C.float(x), C.float(y))
 }
 
-func (self ImGuiIO) AddMouseViewportEvent(id ImGuiID) {
-	C.IO_AddMouseViewportEvent(self.handle(), C.ImGuiID(id))
+func (self IO) AddMouseViewportEvent(id ID) {
+	C.ImGuiIO_AddMouseViewportEvent(self.handle(), C.ImGuiID(id))
 }
 
-func (self ImGuiIO) AddMouseWheelEvent(wh_x float32, wh_y float32) {
-	C.IO_AddMouseWheelEvent(self.handle(), C.float(wh_x), C.float(wh_y))
+func (self IO) AddMouseWheelEvent(wh_x float32, wh_y float32) {
+	C.ImGuiIO_AddMouseWheelEvent(self.handle(), C.float(wh_x), C.float(wh_y))
 }
 
-func (self ImGuiIO) ClearInputCharacters() {
-	C.IO_ClearInputCharacters(self.handle())
+func (self IO) ClearInputCharacters() {
+	C.ImGuiIO_ClearInputCharacters(self.handle())
 }
 
-func (self ImGuiIO) ClearInputKeys() {
-	C.IO_ClearInputKeys(self.handle())
+func (self IO) ClearInputKeys() {
+	C.ImGuiIO_ClearInputKeys(self.handle())
 }
 
-func NewImGuiIO() ImGuiIO {
-	return (ImGuiIO)(unsafe.Pointer(C.IO_ImGuiIO()))
+func NewIO() IO {
+	return (IO)(unsafe.Pointer(C.ImGuiIO_ImGuiIO()))
 }
 
-func (self ImGuiIO) SetAppAcceptingEvents(accepting_events bool) {
-	C.IO_SetAppAcceptingEvents(self.handle(), C.bool(accepting_events))
+func (self IO) SetAppAcceptingEvents(accepting_events bool) {
+	C.ImGuiIO_SetAppAcceptingEvents(self.handle(), C.bool(accepting_events))
 }
 
-// IO_SetKeyEventNativeDataV parameter default value hint:
+// SetKeyEventNativeDataV parameter default value hint:
 // native_legacy_index: -1
-func (self ImGuiIO) SetKeyEventNativeDataV(key Key, native_keycode int32, native_scancode int32, native_legacy_index int32) {
-	C.IO_SetKeyEventNativeDataV(self.handle(), C.ImGuiKey(key), C.int(native_keycode), C.int(native_scancode), C.int(native_legacy_index))
+func (self IO) SetKeyEventNativeDataV(key Key, native_keycode int32, native_scancode int32, native_legacy_index int32) {
+	C.ImGuiIO_SetKeyEventNativeData(self.handle(), C.ImGuiKey(key), C.int(native_keycode), C.int(native_scancode), C.int(native_legacy_index))
 }
 
-func (self ImGuiIO) Destroy() {
-	C.IO_Destroy(self.handle())
+func (self IO) Destroy() {
+	C.ImGuiIO_destroy(self.handle())
 }
 
-func (self ImGuiInputEvent) Destroy() {
-	C.InputEvent_Destroy(self.handle())
+func (self InputEvent) Destroy() {
+	C.ImGuiInputEvent_destroy(self.handle())
 }
 
-func (self ImGuiInputTextCallbackData) ClearSelection() {
-	C.InputTextCallbackData_ClearSelection(self.handle())
+func (self InputTextCallbackData) ClearSelection() {
+	C.ImGuiInputTextCallbackData_ClearSelection(self.handle())
 }
 
-func (self ImGuiInputTextCallbackData) DeleteChars(pos int32, bytes_count int32) {
-	C.InputTextCallbackData_DeleteChars(self.handle(), C.int(pos), C.int(bytes_count))
+func (self InputTextCallbackData) DeleteChars(pos int32, bytes_count int32) {
+	C.ImGuiInputTextCallbackData_DeleteChars(self.handle(), C.int(pos), C.int(bytes_count))
 }
 
-func (self ImGuiInputTextCallbackData) HasSelection() bool {
-	return C.InputTextCallbackData_HasSelection(self.handle()) == C.bool(true)
+func (self InputTextCallbackData) HasSelection() bool {
+	return C.ImGuiInputTextCallbackData_HasSelection(self.handle()) == C.bool(true)
 }
 
-func NewImGuiInputTextCallbackData() ImGuiInputTextCallbackData {
-	return (ImGuiInputTextCallbackData)(unsafe.Pointer(C.InputTextCallbackData_ImGuiInputTextCallbackData()))
+func NewInputTextCallbackData() InputTextCallbackData {
+	return (InputTextCallbackData)(unsafe.Pointer(C.ImGuiInputTextCallbackData_ImGuiInputTextCallbackData()))
 }
 
-// InputTextCallbackData_InsertCharsV parameter default value hint:
+// InsertCharsV parameter default value hint:
 // text_end: NULL
-func (self ImGuiInputTextCallbackData) InsertCharsV(pos int32, text string) {
+func (self InputTextCallbackData) InsertCharsV(pos int32, text string) {
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
-	C.InputTextCallbackData_InsertCharsV(self.handle(), C.int(pos), textArg)
+	C.wrap_ImGuiInputTextCallbackData_InsertCharsV(self.handle(), C.int(pos), textArg)
 }
 
-func (self ImGuiInputTextCallbackData) SelectAll() {
-	C.InputTextCallbackData_SelectAll(self.handle())
+func (self InputTextCallbackData) SelectAll() {
+	C.ImGuiInputTextCallbackData_SelectAll(self.handle())
 }
 
-func (self ImGuiInputTextCallbackData) Destroy() {
-	C.InputTextCallbackData_Destroy(self.handle())
+func (self InputTextCallbackData) Destroy() {
+	C.ImGuiInputTextCallbackData_destroy(self.handle())
 }
 
-func (self ImGuiInputTextState) Destroy() {
-	C.InputTextState_Destroy(self.handle())
+func (self InputTextState) Destroy() {
+	C.ImGuiInputTextState_destroy(self.handle())
 }
 
-func (self ImGuiLastItemData) Destroy() {
-	C.LastItemData_Destroy(self.handle())
+func (self LastItemData) Destroy() {
+	C.ImGuiLastItemData_destroy(self.handle())
 }
 
-func (self ImGuiListClipperData) Destroy() {
-	C.ListClipperData_Destroy(self.handle())
+func (self ListClipperData) Destroy() {
+	C.ImGuiListClipperData_destroy(self.handle())
 }
 
-// ListClipper_BeginV parameter default value hint:
+// BeginV parameter default value hint:
 // items_height: -1.0f
-func (self ImGuiListClipper) BeginV(items_count int32, items_height float32) {
-	C.ListClipper_BeginV(self.handle(), C.int(items_count), C.float(items_height))
+func (self ListClipper) BeginV(items_count int32, items_height float32) {
+	C.ImGuiListClipper_Begin(self.handle(), C.int(items_count), C.float(items_height))
 }
 
-func (self ImGuiListClipper) End() {
-	C.ListClipper_End(self.handle())
+func (self ListClipper) End() {
+	C.ImGuiListClipper_End(self.handle())
 }
 
-func (self ImGuiListClipper) ForceDisplayRangeByIndices(item_min int32, item_max int32) {
-	C.ListClipper_ForceDisplayRangeByIndices(self.handle(), C.int(item_min), C.int(item_max))
+func (self ListClipper) ForceDisplayRangeByIndices(item_min int32, item_max int32) {
+	C.ImGuiListClipper_ForceDisplayRangeByIndices(self.handle(), C.int(item_min), C.int(item_max))
 }
 
-func NewImGuiListClipper() ImGuiListClipper {
-	return (ImGuiListClipper)(unsafe.Pointer(C.ListClipper_ImGuiListClipper()))
+func NewListClipper() ListClipper {
+	return (ListClipper)(unsafe.Pointer(C.ImGuiListClipper_ImGuiListClipper()))
 }
 
-func (self ImGuiListClipper) Step() bool {
-	return C.ListClipper_Step(self.handle()) == C.bool(true)
+func (self ListClipper) Step() bool {
+	return C.ImGuiListClipper_Step(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiListClipper) Destroy() {
-	C.ListClipper_Destroy(self.handle())
+func (self ListClipper) Destroy() {
+	C.ImGuiListClipper_destroy(self.handle())
 }
 
-func (self ImGuiMenuColumns) Destroy() {
-	C.MenuColumns_Destroy(self.handle())
+func (self MenuColumns) Destroy() {
+	C.ImGuiMenuColumns_destroy(self.handle())
 }
 
-func (self ImGuiMetricsConfig) Destroy() {
-	C.MetricsConfig_Destroy(self.handle())
+func (self MetricsConfig) Destroy() {
+	C.ImGuiMetricsConfig_destroy(self.handle())
 }
 
-func (self ImGuiNavItemData) Destroy() {
-	C.NavItemData_Destroy(self.handle())
+func (self NavItemData) Destroy() {
+	C.ImGuiNavItemData_destroy(self.handle())
 }
 
-func (self ImGuiNextItemData) Destroy() {
-	C.NextItemData_Destroy(self.handle())
+func (self NextItemData) Destroy() {
+	C.ImGuiNextItemData_destroy(self.handle())
 }
 
-func (self ImGuiNextWindowData) Destroy() {
-	C.NextWindowData_Destroy(self.handle())
+func (self NextWindowData) Destroy() {
+	C.ImGuiNextWindowData_destroy(self.handle())
 }
 
-func (self ImGuiOldColumnData) Destroy() {
-	C.OldColumnData_Destroy(self.handle())
+func (self OldColumnData) Destroy() {
+	C.ImGuiOldColumnData_destroy(self.handle())
 }
 
-func (self ImGuiOldColumns) Destroy() {
-	C.OldColumns_Destroy(self.handle())
+func (self OldColumns) Destroy() {
+	C.ImGuiOldColumns_destroy(self.handle())
 }
 
-func NewImGuiOnceUponAFrame() ImGuiOnceUponAFrame {
-	return (ImGuiOnceUponAFrame)(unsafe.Pointer(C.OnceUponAFrame_ImGuiOnceUponAFrame()))
+func NewOnceUponAFrame() OnceUponAFrame {
+	return (OnceUponAFrame)(unsafe.Pointer(C.ImGuiOnceUponAFrame_ImGuiOnceUponAFrame()))
 }
 
-func (self ImGuiOnceUponAFrame) Destroy() {
-	C.OnceUponAFrame_Destroy(self.handle())
+func (self OnceUponAFrame) Destroy() {
+	C.ImGuiOnceUponAFrame_destroy(self.handle())
 }
 
-func (self ImGuiPayload) Clear() {
-	C.Payload_Clear(self.handle())
+func (self Payload) Clear() {
+	C.ImGuiPayload_Clear(self.handle())
 }
 
-func NewImGuiPayload() ImGuiPayload {
-	return (ImGuiPayload)(unsafe.Pointer(C.Payload_ImGuiPayload()))
+func NewPayload() Payload {
+	return (Payload)(unsafe.Pointer(C.ImGuiPayload_ImGuiPayload()))
 }
 
-func (self ImGuiPayload) IsDataType(typeArg string) bool {
+func (self Payload) IsDataType(typeArg string) bool {
 	typeArgArg, typeArgFin := wrapString(typeArg)
 	defer typeArgFin()
 
-	return C.Payload_IsDataType(self.handle(), typeArgArg) == C.bool(true)
+	return C.ImGuiPayload_IsDataType(self.handle(), typeArgArg) == C.bool(true)
 }
 
-func (self ImGuiPayload) IsDelivery() bool {
-	return C.Payload_IsDelivery(self.handle()) == C.bool(true)
+func (self Payload) IsDelivery() bool {
+	return C.ImGuiPayload_IsDelivery(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiPayload) IsPreview() bool {
-	return C.Payload_IsPreview(self.handle()) == C.bool(true)
+func (self Payload) IsPreview() bool {
+	return C.ImGuiPayload_IsPreview(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiPayload) Destroy() {
-	C.Payload_Destroy(self.handle())
+func (self Payload) Destroy() {
+	C.ImGuiPayload_destroy(self.handle())
 }
 
-func NewImGuiPlatformIO() ImGuiPlatformIO {
-	return (ImGuiPlatformIO)(unsafe.Pointer(C.PlatformIO_ImGuiPlatformIO()))
+func NewPlatformIO() PlatformIO {
+	return (PlatformIO)(unsafe.Pointer(C.ImGuiPlatformIO_ImGuiPlatformIO()))
 }
 
-func (self ImGuiPlatformIO) Destroy() {
-	C.PlatformIO_Destroy(self.handle())
+func (self PlatformIO) Destroy() {
+	C.ImGuiPlatformIO_destroy(self.handle())
 }
 
-func NewImGuiPlatformImeData() ImGuiPlatformImeData {
-	return (ImGuiPlatformImeData)(unsafe.Pointer(C.PlatformImeData_ImGuiPlatformImeData()))
+func NewPlatformImeData() PlatformImeData {
+	return (PlatformImeData)(unsafe.Pointer(C.ImGuiPlatformImeData_ImGuiPlatformImeData()))
 }
 
-func (self ImGuiPlatformImeData) Destroy() {
-	C.PlatformImeData_Destroy(self.handle())
+func (self PlatformImeData) Destroy() {
+	C.ImGuiPlatformImeData_destroy(self.handle())
 }
 
-func NewImGuiPlatformMonitor() ImGuiPlatformMonitor {
-	return (ImGuiPlatformMonitor)(unsafe.Pointer(C.PlatformMonitor_ImGuiPlatformMonitor()))
+func NewPlatformMonitor() PlatformMonitor {
+	return (PlatformMonitor)(unsafe.Pointer(C.ImGuiPlatformMonitor_ImGuiPlatformMonitor()))
 }
 
-func (self ImGuiPlatformMonitor) Destroy() {
-	C.PlatformMonitor_Destroy(self.handle())
+func (self PlatformMonitor) Destroy() {
+	C.ImGuiPlatformMonitor_destroy(self.handle())
 }
 
-func (self ImGuiPopupData) Destroy() {
-	C.PopupData_Destroy(self.handle())
+func (self PopupData) Destroy() {
+	C.ImGuiPopupData_destroy(self.handle())
 }
 
-func (self ImGuiPtrOrIndex) Destroy() {
-	C.PtrOrIndex_Destroy(self.handle())
+func (self PtrOrIndex) Destroy() {
+	C.ImGuiPtrOrIndex_destroy(self.handle())
 }
 
-func (self ImGuiSettingsHandler) Destroy() {
-	C.SettingsHandler_Destroy(self.handle())
+func (self SettingsHandler) Destroy() {
+	C.ImGuiSettingsHandler_destroy(self.handle())
 }
 
-func (self ImGuiStackLevelInfo) Destroy() {
-	C.StackLevelInfo_Destroy(self.handle())
+func (self StackLevelInfo) Destroy() {
+	C.ImGuiStackLevelInfo_destroy(self.handle())
 }
 
-func (self ImGuiStackSizes) Destroy() {
-	C.StackSizes_Destroy(self.handle())
+func (self StackSizes) Destroy() {
+	C.ImGuiStackSizes_destroy(self.handle())
 }
 
-func (self ImGuiStackTool) Destroy() {
-	C.StackTool_Destroy(self.handle())
+func (self StackTool) Destroy() {
+	C.ImGuiStackTool_destroy(self.handle())
 }
 
-func (self ImGuiStyleMod) Destroy() {
-	C.StyleMod_Destroy(self.handle())
+func (self StyleMod) Destroy() {
+	C.ImGuiStyleMod_destroy(self.handle())
 }
 
-func NewImGuiStyle() ImGuiStyle {
-	return (ImGuiStyle)(unsafe.Pointer(C.Style_ImGuiStyle()))
+func NewStyle() Style {
+	return (Style)(unsafe.Pointer(C.ImGuiStyle_ImGuiStyle()))
 }
 
-func (self ImGuiStyle) ScaleAllSizes(scale_factor float32) {
-	C.Style_ScaleAllSizes(self.handle(), C.float(scale_factor))
+func (self Style) ScaleAllSizes(scale_factor float32) {
+	C.ImGuiStyle_ScaleAllSizes(self.handle(), C.float(scale_factor))
 }
 
-func (self ImGuiStyle) Destroy() {
-	C.Style_Destroy(self.handle())
+func (self Style) Destroy() {
+	C.ImGuiStyle_destroy(self.handle())
 }
 
-func (self ImGuiTabBar) Destroy() {
-	C.TabBar_Destroy(self.handle())
+func (self TabBar) Destroy() {
+	C.ImGuiTabBar_destroy(self.handle())
 }
 
-func (self ImGuiTabItem) Destroy() {
-	C.TabItem_Destroy(self.handle())
+func (self TabItem) Destroy() {
+	C.ImGuiTabItem_destroy(self.handle())
 }
 
-func (self ImGuiTableColumnSettings) Destroy() {
-	C.TableColumnSettings_Destroy(self.handle())
+func (self TableColumnSettings) Destroy() {
+	C.ImGuiTableColumnSettings_destroy(self.handle())
 }
 
-func NewImGuiTableColumnSortSpecs() ImGuiTableColumnSortSpecs {
-	return (ImGuiTableColumnSortSpecs)(unsafe.Pointer(C.TableColumnSortSpecs_ImGuiTableColumnSortSpecs()))
+func NewTableColumnSortSpecs() TableColumnSortSpecs {
+	return (TableColumnSortSpecs)(unsafe.Pointer(C.ImGuiTableColumnSortSpecs_ImGuiTableColumnSortSpecs()))
 }
 
-func (self ImGuiTableColumnSortSpecs) Destroy() {
-	C.TableColumnSortSpecs_Destroy(self.handle())
+func (self TableColumnSortSpecs) Destroy() {
+	C.ImGuiTableColumnSortSpecs_destroy(self.handle())
 }
 
-func (self ImGuiTableColumn) Destroy() {
-	C.TableColumn_Destroy(self.handle())
+func (self TableColumn) Destroy() {
+	C.ImGuiTableColumn_destroy(self.handle())
 }
 
-func (self ImGuiTableInstanceData) Destroy() {
-	C.TableInstanceData_Destroy(self.handle())
+func (self TableInstanceData) Destroy() {
+	C.ImGuiTableInstanceData_destroy(self.handle())
 }
 
-func (self ImGuiTableSettings) Destroy() {
-	C.TableSettings_Destroy(self.handle())
+func (self TableSettings) Destroy() {
+	C.ImGuiTableSettings_destroy(self.handle())
 }
 
-func NewImGuiTableSortSpecs() ImGuiTableSortSpecs {
-	return (ImGuiTableSortSpecs)(unsafe.Pointer(C.TableSortSpecs_ImGuiTableSortSpecs()))
+func NewTableSortSpecs() TableSortSpecs {
+	return (TableSortSpecs)(unsafe.Pointer(C.ImGuiTableSortSpecs_ImGuiTableSortSpecs()))
 }
 
-func (self ImGuiTableSortSpecs) Destroy() {
-	C.TableSortSpecs_Destroy(self.handle())
+func (self TableSortSpecs) Destroy() {
+	C.ImGuiTableSortSpecs_destroy(self.handle())
 }
 
-func (self ImGuiTableTempData) Destroy() {
-	C.TableTempData_Destroy(self.handle())
+func (self TableTempData) Destroy() {
+	C.ImGuiTableTempData_destroy(self.handle())
 }
 
-func NewImGuiTextBuffer() ImGuiTextBuffer {
-	return (ImGuiTextBuffer)(unsafe.Pointer(C.TextBuffer_ImGuiTextBuffer()))
+func NewTextBuffer() TextBuffer {
+	return (TextBuffer)(unsafe.Pointer(C.ImGuiTextBuffer_ImGuiTextBuffer()))
 }
 
-// TextBuffer_AppendV parameter default value hint:
+// AppendV parameter default value hint:
 // str_end: NULL
-func (self ImGuiTextBuffer) AppendV(str string, str_end string) {
+func (self TextBuffer) AppendV(str string, str_end string) {
 	strArg, strFin := wrapString(str)
 	defer strFin()
 
 	str_endArg, str_endFin := wrapString(str_end)
 	defer str_endFin()
 
-	C.TextBuffer_AppendV(self.handle(), strArg, str_endArg)
+	C.ImGuiTextBuffer_append(self.handle(), strArg, str_endArg)
 }
 
-func (self ImGuiTextBuffer) Appendf(fmt string) {
+func (self TextBuffer) Appendf(fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
-	C.TextBuffer_Appendf(self.handle(), fmtArg)
+	C.wrap_ImGuiTextBuffer_Appendf(self.handle(), fmtArg)
 }
 
-func (self ImGuiTextBuffer) Begin() string {
-	return C.GoString(C.TextBuffer_Begin(self.handle()))
+func (self TextBuffer) Begin() string {
+	return C.GoString(C.ImGuiTextBuffer_begin(self.handle()))
 }
 
-func (self ImGuiTextBuffer) c_str() string {
-	return C.GoString(C.TextBuffer_c_str(self.handle()))
+func (self TextBuffer) cstr() string {
+	return C.GoString(C.ImGuiTextBuffer_c_str(self.handle()))
 }
 
-func (self ImGuiTextBuffer) Clear() {
-	C.TextBuffer_Clear(self.handle())
+func (self TextBuffer) Clear() {
+	C.ImGuiTextBuffer_clear(self.handle())
 }
 
-func (self ImGuiTextBuffer) Destroy() {
-	C.TextBuffer_Destroy(self.handle())
+func (self TextBuffer) Destroy() {
+	C.ImGuiTextBuffer_destroy(self.handle())
 }
 
-func (self ImGuiTextBuffer) Empty() bool {
-	return C.TextBuffer_Empty(self.handle()) == C.bool(true)
+func (self TextBuffer) Empty() bool {
+	return C.ImGuiTextBuffer_empty(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiTextBuffer) End() string {
-	return C.GoString(C.TextBuffer_End(self.handle()))
+func (self TextBuffer) End() string {
+	return C.GoString(C.ImGuiTextBuffer_end(self.handle()))
 }
 
-func (self ImGuiTextBuffer) Reserve(capacity int32) {
-	C.TextBuffer_Reserve(self.handle(), C.int(capacity))
+func (self TextBuffer) Reserve(capacity int32) {
+	C.ImGuiTextBuffer_reserve(self.handle(), C.int(capacity))
 }
 
-func (self ImGuiTextBuffer) Size() int {
-	return int(C.TextBuffer_Size(self.handle()))
+func (self TextBuffer) Size() int {
+	return int(C.ImGuiTextBuffer_size(self.handle()))
 }
 
-func (self ImGuiTextFilter) Build() {
-	C.TextFilter_Build(self.handle())
+func (self TextFilter) Build() {
+	C.ImGuiTextFilter_Build(self.handle())
 }
 
-func (self ImGuiTextFilter) Clear() {
-	C.TextFilter_Clear(self.handle())
+func (self TextFilter) Clear() {
+	C.ImGuiTextFilter_Clear(self.handle())
 }
 
-// TextFilter_DrawV parameter default value hint:
+// DrawV parameter default value hint:
 // label: "Filter(inc,-exc)"
 // width: 0.0f
-func (self ImGuiTextFilter) DrawV(label string, width float32) bool {
+func (self TextFilter) DrawV(label string, width float32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.TextFilter_DrawV(self.handle(), labelArg, C.float(width)) == C.bool(true)
+	return C.ImGuiTextFilter_Draw(self.handle(), labelArg, C.float(width)) == C.bool(true)
 }
 
-// NewImGuiTextFilter parameter default value hint:
+// NewTextFilter parameter default value hint:
 // default_filter: ""
-func NewImGuiTextFilter(default_filter string) ImGuiTextFilter {
+func NewTextFilter(default_filter string) TextFilter {
 	default_filterArg, default_filterFin := wrapString(default_filter)
 	defer default_filterFin()
 
-	return (ImGuiTextFilter)(unsafe.Pointer(C.TextFilter_ImGuiTextFilter(default_filterArg)))
+	return (TextFilter)(unsafe.Pointer(C.ImGuiTextFilter_ImGuiTextFilter(default_filterArg)))
 }
 
-func (self ImGuiTextFilter) IsActive() bool {
-	return C.TextFilter_IsActive(self.handle()) == C.bool(true)
+func (self TextFilter) IsActive() bool {
+	return C.ImGuiTextFilter_IsActive(self.handle()) == C.bool(true)
 }
 
-// TextFilter_PassFilterV parameter default value hint:
+// PassFilterV parameter default value hint:
 // text_end: NULL
-func (self ImGuiTextFilter) PassFilterV(text string) bool {
+func (self TextFilter) PassFilterV(text string) bool {
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
-	return C.TextFilter_PassFilterV(self.handle(), textArg) == C.bool(true)
+	return C.wrap_ImGuiTextFilter_PassFilterV(self.handle(), textArg) == C.bool(true)
 }
 
-func (self ImGuiTextFilter) Destroy() {
-	C.TextFilter_Destroy(self.handle())
+func (self TextFilter) Destroy() {
+	C.ImGuiTextFilter_destroy(self.handle())
 }
 
-func (self ImGuiViewport) GetCenter() Vec2 {
+func (self Viewport) Center() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.Viewport_GetCenter(pOutArg, self.handle())
+	C.ImGuiViewport_GetCenter(pOutArg, self.handle())
 	return *pOut
 }
 
-func (self ImGuiViewport) GetWorkCenter() Vec2 {
+func (self Viewport) WorkCenter() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.Viewport_GetWorkCenter(pOutArg, self.handle())
+	C.ImGuiViewport_GetWorkCenter(pOutArg, self.handle())
 	return *pOut
 }
 
-func NewImGuiViewport() ImGuiViewport {
-	return (ImGuiViewport)(unsafe.Pointer(C.Viewport_ImGuiViewport()))
+func NewViewport() Viewport {
+	return (Viewport)(unsafe.Pointer(C.ImGuiViewport_ImGuiViewport()))
 }
 
-func (self ImGuiViewport) Destroy() {
-	C.Viewport_Destroy(self.handle())
+func (self Viewport) Destroy() {
+	C.ImGuiViewport_destroy(self.handle())
 }
 
-func NewImGuiWindowClass() ImGuiWindowClass {
-	return (ImGuiWindowClass)(unsafe.Pointer(C.WindowClass_ImGuiWindowClass()))
+func NewWindowClass() WindowClass {
+	return (WindowClass)(unsafe.Pointer(C.ImGuiWindowClass_ImGuiWindowClass()))
 }
 
-func (self ImGuiWindowClass) Destroy() {
-	C.WindowClass_Destroy(self.handle())
+func (self WindowClass) Destroy() {
+	C.ImGuiWindowClass_destroy(self.handle())
 }
 
-func (self ImGuiWindowSettings) Destroy() {
-	C.WindowSettings_Destroy(self.handle())
+func (self WindowSettings) Destroy() {
+	C.ImGuiWindowSettings_destroy(self.handle())
 }
 
 func (self *Rect) Destroy() {
 	selfArg, selfFin := wrap[C.ImRect, *Rect](self)
 	defer selfFin()
 
-	C.Rect_Destroy(selfArg)
+	C.ImRect_destroy(selfArg)
 }
 
 func (self *Vec2) Destroy() {
 	selfArg, selfFin := wrap[C.ImVec2, *Vec2](self)
 	defer selfFin()
 
-	C.Vec2_Destroy(selfArg)
+	C.ImVec2_destroy(selfArg)
 }
 
 func (self *Vec4) Destroy() {
 	selfArg, selfFin := wrap[C.ImVec4, *Vec4](self)
 	defer selfFin()
 
-	C.Vec4_Destroy(selfArg)
+	C.ImVec4_destroy(selfArg)
 }
 
 // AcceptDragDropPayloadV parameter default value hint:
 // flags: 0
-func AcceptDragDropPayloadV(typeArg string, flags DragDropFlags) ImGuiPayload {
+func AcceptDragDropPayloadV(typeArg string, flags DragDropFlags) Payload {
 	typeArgArg, typeArgFin := wrapString(typeArg)
 	defer typeArgFin()
 
-	return (ImGuiPayload)(unsafe.Pointer(C.AcceptDragDropPayloadV(typeArgArg, C.ImGuiDragDropFlags(flags))))
+	return (Payload)(unsafe.Pointer(C.igAcceptDragDropPayload(typeArgArg, C.ImGuiDragDropFlags(flags))))
 }
 
 func AlignTextToFramePadding() {
-	C.AlignTextToFramePadding()
+	C.igAlignTextToFramePadding()
 }
 
 func ArrowButton(str_id string, dir Dir) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.ArrowButton(str_idArg, C.ImGuiDir(dir)) == C.bool(true)
+	return C.igArrowButton(str_idArg, C.ImGuiDir(dir)) == C.bool(true)
 }
 
 // BeginV parameter default value hint:
@@ -1234,32 +1234,32 @@ func BeginV(name string, p_open *bool, flags WindowFlags) bool {
 	p_openArg, p_openFin := wrapBool(p_open)
 	defer p_openFin()
 
-	return C.BeginV(nameArg, p_openArg, C.ImGuiWindowFlags(flags)) == C.bool(true)
+	return C.igBegin(nameArg, p_openArg, C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
 
 // BeginChildFrameV parameter default value hint:
 // flags: 0
-func BeginChildFrameV(id ImGuiID, size Vec2, flags WindowFlags) bool {
-	return C.BeginChildFrameV(C.ImGuiID(id), size.toC(), C.ImGuiWindowFlags(flags)) == C.bool(true)
+func BeginChildFrameV(id ID, size Vec2, flags WindowFlags) bool {
+	return C.igBeginChildFrame(C.ImGuiID(id), size.toC(), C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
 
-// BeginChild_IDV parameter default value hint:
+// BeginChildIDV parameter default value hint:
 // border: false
 // flags: 0
 // size: ImVec2(0,0)
-func BeginChild_IDV(id ImGuiID, size Vec2, border bool, flags WindowFlags) bool {
-	return C.BeginChild_IDV(C.ImGuiID(id), size.toC(), C.bool(border), C.ImGuiWindowFlags(flags)) == C.bool(true)
+func BeginChildIDV(id ID, size Vec2, border bool, flags WindowFlags) bool {
+	return C.igBeginChild_ID(C.ImGuiID(id), size.toC(), C.bool(border), C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
 
-// BeginChild_StrV parameter default value hint:
+// BeginChildStrV parameter default value hint:
 // border: false
 // flags: 0
 // size: ImVec2(0,0)
-func BeginChild_StrV(str_id string, size Vec2, border bool, flags WindowFlags) bool {
+func BeginChildStrV(str_id string, size Vec2, border bool, flags WindowFlags) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.BeginChild_StrV(str_idArg, size.toC(), C.bool(border), C.ImGuiWindowFlags(flags)) == C.bool(true)
+	return C.igBeginChild_Str(str_idArg, size.toC(), C.bool(border), C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
 
 // BeginComboV parameter default value hint:
@@ -1271,27 +1271,27 @@ func BeginComboV(label string, preview_value string, flags ComboFlags) bool {
 	preview_valueArg, preview_valueFin := wrapString(preview_value)
 	defer preview_valueFin()
 
-	return C.BeginComboV(labelArg, preview_valueArg, C.ImGuiComboFlags(flags)) == C.bool(true)
+	return C.igBeginCombo(labelArg, preview_valueArg, C.ImGuiComboFlags(flags)) == C.bool(true)
 }
 
 // BeginDisabledV parameter default value hint:
 // disabled: true
 func BeginDisabledV(disabled bool) {
-	C.BeginDisabledV(C.bool(disabled))
+	C.igBeginDisabled(C.bool(disabled))
 }
 
 // BeginDragDropSourceV parameter default value hint:
 // flags: 0
 func BeginDragDropSourceV(flags DragDropFlags) bool {
-	return C.BeginDragDropSourceV(C.ImGuiDragDropFlags(flags)) == C.bool(true)
+	return C.igBeginDragDropSource(C.ImGuiDragDropFlags(flags)) == C.bool(true)
 }
 
 func BeginDragDropTarget() bool {
-	return C.BeginDragDropTarget() == C.bool(true)
+	return C.igBeginDragDropTarget() == C.bool(true)
 }
 
 func BeginGroup() {
-	C.BeginGroup()
+	C.igBeginGroup()
 }
 
 // BeginListBoxV parameter default value hint:
@@ -1300,11 +1300,11 @@ func BeginListBoxV(label string, size Vec2) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.BeginListBoxV(labelArg, size.toC()) == C.bool(true)
+	return C.igBeginListBox(labelArg, size.toC()) == C.bool(true)
 }
 
 func BeginMainMenuBar() bool {
-	return C.BeginMainMenuBar() == C.bool(true)
+	return C.igBeginMainMenuBar() == C.bool(true)
 }
 
 // BeginMenuV parameter default value hint:
@@ -1313,11 +1313,11 @@ func BeginMenuV(label string, enabled bool) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.BeginMenuV(labelArg, C.bool(enabled)) == C.bool(true)
+	return C.igBeginMenu(labelArg, C.bool(enabled)) == C.bool(true)
 }
 
 func BeginMenuBar() bool {
-	return C.BeginMenuBar() == C.bool(true)
+	return C.igBeginMenuBar() == C.bool(true)
 }
 
 // BeginPopupV parameter default value hint:
@@ -1326,7 +1326,7 @@ func BeginPopupV(str_id string, flags WindowFlags) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.BeginPopupV(str_idArg, C.ImGuiWindowFlags(flags)) == C.bool(true)
+	return C.igBeginPopup(str_idArg, C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
 
 // BeginPopupContextItemV parameter default value hint:
@@ -1336,7 +1336,7 @@ func BeginPopupContextItemV(str_id string, popup_flags PopupFlags) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.BeginPopupContextItemV(str_idArg, C.ImGuiPopupFlags(popup_flags)) == C.bool(true)
+	return C.igBeginPopupContextItem(str_idArg, C.ImGuiPopupFlags(popup_flags)) == C.bool(true)
 }
 
 // BeginPopupContextVoidV parameter default value hint:
@@ -1346,7 +1346,7 @@ func BeginPopupContextVoidV(str_id string, popup_flags PopupFlags) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.BeginPopupContextVoidV(str_idArg, C.ImGuiPopupFlags(popup_flags)) == C.bool(true)
+	return C.igBeginPopupContextVoid(str_idArg, C.ImGuiPopupFlags(popup_flags)) == C.bool(true)
 }
 
 // BeginPopupContextWindowV parameter default value hint:
@@ -1356,7 +1356,7 @@ func BeginPopupContextWindowV(str_id string, popup_flags PopupFlags) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.BeginPopupContextWindowV(str_idArg, C.ImGuiPopupFlags(popup_flags)) == C.bool(true)
+	return C.igBeginPopupContextWindow(str_idArg, C.ImGuiPopupFlags(popup_flags)) == C.bool(true)
 }
 
 // BeginPopupModalV parameter default value hint:
@@ -1369,7 +1369,7 @@ func BeginPopupModalV(name string, p_open *bool, flags WindowFlags) bool {
 	p_openArg, p_openFin := wrapBool(p_open)
 	defer p_openFin()
 
-	return C.BeginPopupModalV(nameArg, p_openArg, C.ImGuiWindowFlags(flags)) == C.bool(true)
+	return C.igBeginPopupModal(nameArg, p_openArg, C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
 
 // BeginTabBarV parameter default value hint:
@@ -1378,7 +1378,7 @@ func BeginTabBarV(str_id string, flags TabBarFlags) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.BeginTabBarV(str_idArg, C.ImGuiTabBarFlags(flags)) == C.bool(true)
+	return C.igBeginTabBar(str_idArg, C.ImGuiTabBarFlags(flags)) == C.bool(true)
 }
 
 // BeginTabItemV parameter default value hint:
@@ -1391,7 +1391,7 @@ func BeginTabItemV(label string, p_open *bool, flags TabItemFlags) bool {
 	p_openArg, p_openFin := wrapBool(p_open)
 	defer p_openFin()
 
-	return C.BeginTabItemV(labelArg, p_openArg, C.ImGuiTabItemFlags(flags)) == C.bool(true)
+	return C.igBeginTabItem(labelArg, p_openArg, C.ImGuiTabItemFlags(flags)) == C.bool(true)
 }
 
 // BeginTableV parameter default value hint:
@@ -1402,22 +1402,22 @@ func BeginTableV(str_id string, column int32, flags TableFlags, outer_size Vec2,
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.BeginTableV(str_idArg, C.int(column), C.ImGuiTableFlags(flags), outer_size.toC(), C.float(inner_width)) == C.bool(true)
+	return C.igBeginTable(str_idArg, C.int(column), C.ImGuiTableFlags(flags), outer_size.toC(), C.float(inner_width)) == C.bool(true)
 }
 
 func BeginTooltip() {
-	C.BeginTooltip()
+	C.igBeginTooltip()
 }
 
 func Bullet() {
-	C.Bullet()
+	C.igBullet()
 }
 
 func BulletText(fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
-	C.BulletText(fmtArg)
+	C.wrap_igBulletText(fmtArg)
 }
 
 // ButtonV parameter default value hint:
@@ -1426,11 +1426,11 @@ func ButtonV(label string, size Vec2) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.ButtonV(labelArg, size.toC()) == C.bool(true)
+	return C.igButton(labelArg, size.toC()) == C.bool(true)
 }
 
 func CalcItemWidth() float32 {
-	return float32(C.CalcItemWidth())
+	return float32(C.igCalcItemWidth())
 }
 
 // CalcTextSizeV parameter default value hint:
@@ -1445,7 +1445,7 @@ func CalcTextSizeV(text string, hide_text_after_double_hash bool, wrap_width flo
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
-	C.CalcTextSizeV(pOutArg, textArg, C.bool(hide_text_after_double_hash), C.float(wrap_width))
+	C.wrap_igCalcTextSizeV(pOutArg, textArg, C.bool(hide_text_after_double_hash), C.float(wrap_width))
 	return *pOut
 }
 
@@ -1456,52 +1456,52 @@ func Checkbox(label string, v *bool) bool {
 	vArg, vFin := wrapBool(v)
 	defer vFin()
 
-	return C.Checkbox(labelArg, vArg) == C.bool(true)
+	return C.igCheckbox(labelArg, vArg) == C.bool(true)
 }
 
-func CheckboxFlags_IntPtr(label string, flags *int32, flags_value int32) bool {
+func CheckboxFlagsIntPtr(label string, flags *int32, flags_value int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
 	flagsArg, flagsFin := wrapNumberPtr[C.int, int32](flags)
 	defer flagsFin()
 
-	return C.CheckboxFlags_IntPtr(labelArg, flagsArg, C.int(flags_value)) == C.bool(true)
+	return C.igCheckboxFlags_IntPtr(labelArg, flagsArg, C.int(flags_value)) == C.bool(true)
 }
 
-func CheckboxFlags_UintPtr(label string, flags *uint32, flags_value uint32) bool {
+func CheckboxFlagsUintPtr(label string, flags *uint32, flags_value uint32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
 	flagsArg, flagsFin := wrapNumberPtr[C.uint, uint32](flags)
 	defer flagsFin()
 
-	return C.CheckboxFlags_UintPtr(labelArg, flagsArg, C.uint(flags_value)) == C.bool(true)
+	return C.igCheckboxFlags_UintPtr(labelArg, flagsArg, C.uint(flags_value)) == C.bool(true)
 }
 
 func CloseCurrentPopup() {
-	C.CloseCurrentPopup()
+	C.igCloseCurrentPopup()
 }
 
-// CollapsingHeader_BoolPtrV parameter default value hint:
+// CollapsingHeaderBoolPtrV parameter default value hint:
 // flags: 0
-func CollapsingHeader_BoolPtrV(label string, p_visible *bool, flags TreeNodeFlags) bool {
+func CollapsingHeaderBoolPtrV(label string, p_visible *bool, flags TreeNodeFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
 	p_visibleArg, p_visibleFin := wrapBool(p_visible)
 	defer p_visibleFin()
 
-	return C.CollapsingHeader_BoolPtrV(labelArg, p_visibleArg, C.ImGuiTreeNodeFlags(flags)) == C.bool(true)
+	return C.igCollapsingHeader_BoolPtr(labelArg, p_visibleArg, C.ImGuiTreeNodeFlags(flags)) == C.bool(true)
 }
 
-// CollapsingHeader_TreeNodeFlagsV parameter default value hint:
+// CollapsingHeaderTreeNodeFlagsV parameter default value hint:
 // flags: 0
-func CollapsingHeader_TreeNodeFlagsV(label string, flags TreeNodeFlags) bool {
+func CollapsingHeaderTreeNodeFlagsV(label string, flags TreeNodeFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.CollapsingHeader_TreeNodeFlagsV(labelArg, C.ImGuiTreeNodeFlags(flags)) == C.bool(true)
+	return C.igCollapsingHeader_TreeNodeFlags(labelArg, C.ImGuiTreeNodeFlags(flags)) == C.bool(true)
 }
 
 // ColorButtonV parameter default value hint:
@@ -1511,11 +1511,11 @@ func ColorButtonV(desc_id string, col Vec4, flags ColorEditFlags, size Vec2) boo
 	desc_idArg, desc_idFin := wrapString(desc_id)
 	defer desc_idFin()
 
-	return C.ColorButtonV(desc_idArg, col.toC(), C.ImGuiColorEditFlags(flags), size.toC()) == C.bool(true)
+	return C.igColorButton(desc_idArg, col.toC(), C.ImGuiColorEditFlags(flags), size.toC()) == C.bool(true)
 }
 
 func ColorConvertFloat4ToU32(in Vec4) uint32 {
-	return uint32(C.ColorConvertFloat4ToU32(in.toC()))
+	return uint32(C.igColorConvertFloat4ToU32(in.toC()))
 }
 
 func ColorConvertHSVtoRGB(h float32, s float32, v float32, out_r *float32, out_g *float32, out_b *float32) {
@@ -1528,7 +1528,7 @@ func ColorConvertHSVtoRGB(h float32, s float32, v float32, out_r *float32, out_g
 	out_bArg, out_bFin := wrapNumberPtr[C.float, float32](out_b)
 	defer out_bFin()
 
-	C.ColorConvertHSVtoRGB(C.float(h), C.float(s), C.float(v), out_rArg, out_gArg, out_bArg)
+	C.igColorConvertHSVtoRGB(C.float(h), C.float(s), C.float(v), out_rArg, out_gArg, out_bArg)
 }
 
 func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s *float32, out_v *float32) {
@@ -1541,7 +1541,7 @@ func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s
 	out_vArg, out_vFin := wrapNumberPtr[C.float, float32](out_v)
 	defer out_vFin()
 
-	C.ColorConvertRGBtoHSV(C.float(r), C.float(g), C.float(b), out_hArg, out_sArg, out_vArg)
+	C.igColorConvertRGBtoHSV(C.float(r), C.float(g), C.float(b), out_hArg, out_sArg, out_vArg)
 }
 
 func ColorConvertU32ToFloat4(in uint32) Vec4 {
@@ -1549,7 +1549,7 @@ func ColorConvertU32ToFloat4(in uint32) Vec4 {
 	pOutArg, pOutFin := wrap[C.ImVec4, *Vec4](pOut)
 	defer pOutFin()
 
-	C.ColorConvertU32ToFloat4(pOutArg, C.ImU32(in))
+	C.igColorConvertU32ToFloat4(pOutArg, C.ImU32(in))
 	return *pOut
 }
 
@@ -1569,7 +1569,7 @@ func ColorEdit3V(label string, col [3]*float32, flags ColorEditFlags) bool {
 		}
 	}()
 
-	return C.ColorEdit3V(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags)) == C.bool(true)
+	return C.igColorEdit3(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags)) == C.bool(true)
 }
 
 // ColorEdit4V parameter default value hint:
@@ -1588,7 +1588,7 @@ func ColorEdit4V(label string, col [4]*float32, flags ColorEditFlags) bool {
 		}
 	}()
 
-	return C.ColorEdit4V(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags)) == C.bool(true)
+	return C.igColorEdit4(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags)) == C.bool(true)
 }
 
 // ColorPicker3V parameter default value hint:
@@ -1607,7 +1607,7 @@ func ColorPicker3V(label string, col [3]*float32, flags ColorEditFlags) bool {
 		}
 	}()
 
-	return C.ColorPicker3V(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags)) == C.bool(true)
+	return C.igColorPicker3(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags)) == C.bool(true)
 }
 
 // ColorPicker4V parameter default value hint:
@@ -1627,7 +1627,7 @@ func ColorPicker4V(label string, col [4]*float32, flags ColorEditFlags, ref_col 
 		}
 	}()
 
-	return C.ColorPicker4V(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags), (*C.float)(&(ref_col[0]))) == C.bool(true)
+	return C.igColorPicker4(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags), (*C.float)(&(ref_col[0]))) == C.bool(true)
 }
 
 // ColumnsV parameter default value hint:
@@ -1638,12 +1638,12 @@ func ColumnsV(count int32, id string, border bool) {
 	idArg, idFin := wrapString(id)
 	defer idFin()
 
-	C.ColumnsV(C.int(count), idArg, C.bool(border))
+	C.igColumns(C.int(count), idArg, C.bool(border))
 }
 
-// Combo_StrV parameter default value hint:
+// ComboStrV parameter default value hint:
 // popup_max_height_in_items: -1
-func Combo_StrV(label string, current_item *int32, items_separated_by_zeros string, popup_max_height_in_items int32) bool {
+func ComboStrV(label string, current_item *int32, items_separated_by_zeros string, popup_max_height_in_items int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -1653,12 +1653,12 @@ func Combo_StrV(label string, current_item *int32, items_separated_by_zeros stri
 	items_separated_by_zerosArg, items_separated_by_zerosFin := wrapString(items_separated_by_zeros)
 	defer items_separated_by_zerosFin()
 
-	return C.Combo_StrV(labelArg, current_itemArg, items_separated_by_zerosArg, C.int(popup_max_height_in_items)) == C.bool(true)
+	return C.igCombo_Str(labelArg, current_itemArg, items_separated_by_zerosArg, C.int(popup_max_height_in_items)) == C.bool(true)
 }
 
-// Combo_Str_arrV parameter default value hint:
+// ComboStrarrV parameter default value hint:
 // popup_max_height_in_items: -1
-func Combo_Str_arrV(label string, current_item *int32, items []string, items_count int32, popup_max_height_in_items int32) bool {
+func ComboStrarrV(label string, current_item *int32, items []string, items_count int32, popup_max_height_in_items int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -1668,53 +1668,53 @@ func Combo_Str_arrV(label string, current_item *int32, items []string, items_cou
 	itemsArg, itemsFin := wrapStringList(items)
 	defer itemsFin()
 
-	return C.Combo_Str_arrV(labelArg, current_itemArg, itemsArg, C.int(items_count), C.int(popup_max_height_in_items)) == C.bool(true)
+	return C.igCombo_Str_arr(labelArg, current_itemArg, itemsArg, C.int(items_count), C.int(popup_max_height_in_items)) == C.bool(true)
 }
 
 // CreateContextV parameter default value hint:
 // shared_font_atlas: NULL
-func CreateContextV(shared_font_atlas ImFontAtlas) ImGuiContext {
-	return (ImGuiContext)(unsafe.Pointer(C.CreateContextV(shared_font_atlas.handle())))
+func CreateContextV(shared_font_atlas FontAtlas) Context {
+	return (Context)(unsafe.Pointer(C.igCreateContext(shared_font_atlas.handle())))
 }
 
 func DebugCheckVersionAndDataLayout(version_str string, sz_io uint64, sz_style uint64, sz_vec2 uint64, sz_vec4 uint64, sz_drawvert uint64, sz_drawidx uint64) bool {
 	version_strArg, version_strFin := wrapString(version_str)
 	defer version_strFin()
 
-	return C.DebugCheckVersionAndDataLayout(version_strArg, C.xlong(sz_io), C.xlong(sz_style), C.xlong(sz_vec2), C.xlong(sz_vec4), C.xlong(sz_drawvert), C.xlong(sz_drawidx)) == C.bool(true)
+	return C.igDebugCheckVersionAndDataLayout(version_strArg, C.xlong(sz_io), C.xlong(sz_style), C.xlong(sz_vec2), C.xlong(sz_vec4), C.xlong(sz_drawvert), C.xlong(sz_drawidx)) == C.bool(true)
 }
 
 func DebugTextEncoding(text string) {
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
-	C.DebugTextEncoding(textArg)
+	C.igDebugTextEncoding(textArg)
 }
 
 // DestroyContextV parameter default value hint:
 // ctx: NULL
-func DestroyContextV(ctx ImGuiContext) {
-	C.DestroyContextV(ctx.handle())
+func DestroyContextV(ctx Context) {
+	C.igDestroyContext(ctx.handle())
 }
 
 func DestroyPlatformWindows() {
-	C.DestroyPlatformWindows()
+	C.igDestroyPlatformWindows()
 }
 
 // DockSpaceV parameter default value hint:
 // flags: 0
 // size: ImVec2(0,0)
 // window_class: NULL
-func DockSpaceV(id ImGuiID, size Vec2, flags DockNodeFlags, window_class ImGuiWindowClass) ImGuiID {
-	return ImGuiID(C.DockSpaceV(C.ImGuiID(id), size.toC(), C.ImGuiDockNodeFlags(flags), window_class.handle()))
+func DockSpaceV(id ID, size Vec2, flags DockNodeFlags, window_class WindowClass) ID {
+	return ImGuiID(C.igDockSpace(C.ImGuiID(id), size.toC(), C.ImGuiDockNodeFlags(flags), window_class.handle()))
 }
 
 // DockSpaceOverViewportV parameter default value hint:
 // flags: 0
 // viewport: NULL
 // window_class: NULL
-func DockSpaceOverViewportV(viewport ImGuiViewport, flags DockNodeFlags, window_class ImGuiWindowClass) ImGuiID {
-	return ImGuiID(C.DockSpaceOverViewportV(viewport.handle(), C.ImGuiDockNodeFlags(flags), window_class.handle()))
+func DockSpaceOverViewportV(viewport Viewport, flags DockNodeFlags, window_class WindowClass) ID {
+	return ImGuiID(C.igDockSpaceOverViewport(viewport.handle(), C.ImGuiDockNodeFlags(flags), window_class.handle()))
 }
 
 // DragFloatV parameter default value hint:
@@ -1733,7 +1733,7 @@ func DragFloatV(label string, v *float32, v_speed float32, v_min float32, v_max 
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.DragFloatV(labelArg, vArg, C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragFloat(labelArg, vArg, C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // DragFloat2V parameter default value hint:
@@ -1759,7 +1759,7 @@ func DragFloat2V(label string, v [2]*float32, v_speed float32, v_min float32, v_
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.DragFloat2V(labelArg, (*C.float)(&vArg[0]), C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragFloat2(labelArg, (*C.float)(&vArg[0]), C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // DragFloat3V parameter default value hint:
@@ -1785,7 +1785,7 @@ func DragFloat3V(label string, v [3]*float32, v_speed float32, v_min float32, v_
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.DragFloat3V(labelArg, (*C.float)(&vArg[0]), C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragFloat3(labelArg, (*C.float)(&vArg[0]), C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // DragFloat4V parameter default value hint:
@@ -1811,7 +1811,7 @@ func DragFloat4V(label string, v [4]*float32, v_speed float32, v_min float32, v_
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.DragFloat4V(labelArg, (*C.float)(&vArg[0]), C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragFloat4(labelArg, (*C.float)(&vArg[0]), C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // DragFloatRange2V parameter default value hint:
@@ -1837,7 +1837,7 @@ func DragFloatRange2V(label string, v_current_min *float32, v_current_max *float
 	format_maxArg, format_maxFin := wrapString(format_max)
 	defer format_maxFin()
 
-	return C.DragFloatRange2V(labelArg, v_current_minArg, v_current_maxArg, C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, format_maxArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragFloatRange2(labelArg, v_current_minArg, v_current_maxArg, C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, format_maxArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // DragIntV parameter default value hint:
@@ -1856,7 +1856,7 @@ func DragIntV(label string, v *int32, v_speed float32, v_min int32, v_max int32,
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.DragIntV(labelArg, vArg, C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragInt(labelArg, vArg, C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // DragInt2V parameter default value hint:
@@ -1882,7 +1882,7 @@ func DragInt2V(label string, v [2]*int32, v_speed float32, v_min int32, v_max in
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.DragInt2V(labelArg, (*C.int)(&vArg[0]), C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragInt2(labelArg, (*C.int)(&vArg[0]), C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // DragInt3V parameter default value hint:
@@ -1908,7 +1908,7 @@ func DragInt3V(label string, v [3]*int32, v_speed float32, v_min int32, v_max in
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.DragInt3V(labelArg, (*C.int)(&vArg[0]), C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragInt3(labelArg, (*C.int)(&vArg[0]), C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // DragInt4V parameter default value hint:
@@ -1934,7 +1934,7 @@ func DragInt4V(label string, v [4]*int32, v_speed float32, v_min int32, v_max in
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.DragInt4V(labelArg, (*C.int)(&vArg[0]), C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragInt4(labelArg, (*C.int)(&vArg[0]), C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // DragIntRange2V parameter default value hint:
@@ -1960,7 +1960,7 @@ func DragIntRange2V(label string, v_current_min *int32, v_current_max *int32, v_
 	format_maxArg, format_maxFin := wrapString(format_max)
 	defer format_maxFin()
 
-	return C.DragIntRange2V(labelArg, v_current_minArg, v_current_maxArg, C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, format_maxArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragIntRange2(labelArg, v_current_minArg, v_current_maxArg, C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, format_maxArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // DragScalarV parameter default value hint:
@@ -1976,7 +1976,7 @@ func DragScalarV(label string, data_type DataType, p_data unsafe.Pointer, v_spee
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.DragScalarV(labelArg, C.ImGuiDataType(data_type), (p_data), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragScalar(labelArg, C.ImGuiDataType(data_type), (p_data), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // DragScalarNV parameter default value hint:
@@ -1992,463 +1992,463 @@ func DragScalarNV(label string, data_type DataType, p_data unsafe.Pointer, compo
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.DragScalarNV(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 func Dummy(size Vec2) {
-	C.Dummy(size.toC())
+	C.igDummy(size.toC())
 }
 
 func End() {
-	C.End()
+	C.igEnd()
 }
 
 func EndChild() {
-	C.EndChild()
+	C.igEndChild()
 }
 
 func EndChildFrame() {
-	C.EndChildFrame()
+	C.igEndChildFrame()
 }
 
 func EndCombo() {
-	C.EndCombo()
+	C.igEndCombo()
 }
 
 func EndDisabled() {
-	C.EndDisabled()
+	C.igEndDisabled()
 }
 
 func EndDragDropSource() {
-	C.EndDragDropSource()
+	C.igEndDragDropSource()
 }
 
 func EndDragDropTarget() {
-	C.EndDragDropTarget()
+	C.igEndDragDropTarget()
 }
 
 func EndFrame() {
-	C.EndFrame()
+	C.igEndFrame()
 }
 
 func EndGroup() {
-	C.EndGroup()
+	C.igEndGroup()
 }
 
 func EndListBox() {
-	C.EndListBox()
+	C.igEndListBox()
 }
 
 func EndMainMenuBar() {
-	C.EndMainMenuBar()
+	C.igEndMainMenuBar()
 }
 
 func EndMenu() {
-	C.EndMenu()
+	C.igEndMenu()
 }
 
 func EndMenuBar() {
-	C.EndMenuBar()
+	C.igEndMenuBar()
 }
 
 func EndPopup() {
-	C.EndPopup()
+	C.igEndPopup()
 }
 
 func EndTabBar() {
-	C.EndTabBar()
+	C.igEndTabBar()
 }
 
 func EndTabItem() {
-	C.EndTabItem()
+	C.igEndTabItem()
 }
 
 func EndTable() {
-	C.EndTable()
+	C.igEndTable()
 }
 
 func EndTooltip() {
-	C.EndTooltip()
+	C.igEndTooltip()
 }
 
-func FindViewportByID(id ImGuiID) ImGuiViewport {
-	return (ImGuiViewport)(unsafe.Pointer(C.FindViewportByID(C.ImGuiID(id))))
+func FindViewportByID(id ID) Viewport {
+	return (Viewport)(unsafe.Pointer(C.igFindViewportByID(C.ImGuiID(id))))
 }
 
-func FindViewportByPlatformHandle(platform_handle unsafe.Pointer) ImGuiViewport {
-	return (ImGuiViewport)(unsafe.Pointer(C.FindViewportByPlatformHandle((platform_handle))))
+func FindViewportByPlatformHandle(platform_handle unsafe.Pointer) Viewport {
+	return (Viewport)(unsafe.Pointer(C.igFindViewportByPlatformHandle((platform_handle))))
 }
 
-func GetBackgroundDrawList_Nil() ImDrawList {
-	return (ImDrawList)(unsafe.Pointer(C.GetBackgroundDrawList_Nil()))
+func BackgroundDrawListNil() DrawList {
+	return (DrawList)(unsafe.Pointer(C.igGetBackgroundDrawList_Nil()))
 }
 
-func GetBackgroundDrawList_ViewportPtr(viewport ImGuiViewport) ImDrawList {
-	return (ImDrawList)(unsafe.Pointer(C.GetBackgroundDrawList_ViewportPtr(viewport.handle())))
+func BackgroundDrawListViewportPtr(viewport Viewport) DrawList {
+	return (DrawList)(unsafe.Pointer(C.igGetBackgroundDrawList_ViewportPtr(viewport.handle())))
 }
 
-func GetClipboardText() string {
-	return C.GoString(C.GetClipboardText())
+func ClipboardText() string {
+	return C.GoString(C.igGetClipboardText())
 }
 
-// GetColorU32_ColV parameter default value hint:
+// ColorU32ColV parameter default value hint:
 // alpha_mul: 1.0f
-func GetColorU32_ColV(idx Col, alpha_mul float32) uint32 {
-	return uint32(C.GetColorU32_ColV(C.ImGuiCol(idx), C.float(alpha_mul)))
+func ColorU32ColV(idx Col, alpha_mul float32) uint32 {
+	return uint32(C.igGetColorU32_Col(C.ImGuiCol(idx), C.float(alpha_mul)))
 }
 
-func GetColorU32_U32(col uint32) uint32 {
-	return uint32(C.GetColorU32_U32(C.ImU32(col)))
+func ColorU32U32(col uint32) uint32 {
+	return uint32(C.igGetColorU32_U32(C.ImU32(col)))
 }
 
-func GetColorU32_Vec4(col Vec4) uint32 {
-	return uint32(C.GetColorU32_Vec4(col.toC()))
+func ColorU32Vec4(col Vec4) uint32 {
+	return uint32(C.igGetColorU32_Vec4(col.toC()))
 }
 
-func GetColumnIndex() int {
-	return int(C.GetColumnIndex())
+func ColumnIndex() int {
+	return int(C.igGetColumnIndex())
 }
 
-// GetColumnOffsetV parameter default value hint:
+// ColumnOffsetV parameter default value hint:
 // column_index: -1
-func GetColumnOffsetV(column_index int32) float32 {
-	return float32(C.GetColumnOffsetV(C.int(column_index)))
+func ColumnOffsetV(column_index int32) float32 {
+	return float32(C.igGetColumnOffset(C.int(column_index)))
 }
 
-// GetColumnWidthV parameter default value hint:
+// ColumnWidthV parameter default value hint:
 // column_index: -1
-func GetColumnWidthV(column_index int32) float32 {
-	return float32(C.GetColumnWidthV(C.int(column_index)))
+func ColumnWidthV(column_index int32) float32 {
+	return float32(C.igGetColumnWidth(C.int(column_index)))
 }
 
-func GetColumnsCount() int {
-	return int(C.GetColumnsCount())
+func ColumnsCount() int {
+	return int(C.igGetColumnsCount())
 }
 
-func GetContentRegionAvail() Vec2 {
+func ContentRegionAvail() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetContentRegionAvail(pOutArg)
+	C.igGetContentRegionAvail(pOutArg)
 	return *pOut
 }
 
-func GetContentRegionMax() Vec2 {
+func ContentRegionMax() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetContentRegionMax(pOutArg)
+	C.igGetContentRegionMax(pOutArg)
 	return *pOut
 }
 
-func GetCurrentContext() ImGuiContext {
-	return (ImGuiContext)(unsafe.Pointer(C.GetCurrentContext()))
+func CurrentContext() Context {
+	return (Context)(unsafe.Pointer(C.igGetCurrentContext()))
 }
 
-func GetCursorPos() Vec2 {
+func CursorPos() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetCursorPos(pOutArg)
+	C.igGetCursorPos(pOutArg)
 	return *pOut
 }
 
-func GetCursorPosX() float32 {
-	return float32(C.GetCursorPosX())
+func CursorPosX() float32 {
+	return float32(C.igGetCursorPosX())
 }
 
-func GetCursorPosY() float32 {
-	return float32(C.GetCursorPosY())
+func CursorPosY() float32 {
+	return float32(C.igGetCursorPosY())
 }
 
-func GetCursorScreenPos() Vec2 {
+func CursorScreenPos() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetCursorScreenPos(pOutArg)
+	C.igGetCursorScreenPos(pOutArg)
 	return *pOut
 }
 
-func GetCursorStartPos() Vec2 {
+func CursorStartPos() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetCursorStartPos(pOutArg)
+	C.igGetCursorStartPos(pOutArg)
 	return *pOut
 }
 
-func GetDragDropPayload() ImGuiPayload {
-	return (ImGuiPayload)(unsafe.Pointer(C.GetDragDropPayload()))
+func DragDropPayload() Payload {
+	return (Payload)(unsafe.Pointer(C.igGetDragDropPayload()))
 }
 
-func GetDrawData() ImDrawData {
-	return (ImDrawData)(unsafe.Pointer(C.GetDrawData()))
+func CurrentDrawData() DrawData {
+	return (DrawData)(unsafe.Pointer(C.igGetDrawData()))
 }
 
-func GetDrawListSharedData() ImDrawListSharedData {
-	return (ImDrawListSharedData)(unsafe.Pointer(C.GetDrawListSharedData()))
+func CurrentDrawListSharedData() DrawListSharedData {
+	return (DrawListSharedData)(unsafe.Pointer(C.igGetDrawListSharedData()))
 }
 
-func GetFont() ImFont {
-	return (ImFont)(unsafe.Pointer(C.GetFont()))
+func CurrentFont() Font {
+	return (Font)(unsafe.Pointer(C.igGetFont()))
 }
 
-func GetFontSize() float32 {
-	return float32(C.GetFontSize())
+func FontSize() float32 {
+	return float32(C.igGetFontSize())
 }
 
-func GetFontTexUvWhitePixel() Vec2 {
+func FontTexUvWhitePixel() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetFontTexUvWhitePixel(pOutArg)
+	C.igGetFontTexUvWhitePixel(pOutArg)
 	return *pOut
 }
 
-func GetForegroundDrawList_Nil() ImDrawList {
-	return (ImDrawList)(unsafe.Pointer(C.GetForegroundDrawList_Nil()))
+func ForegroundDrawListNil() DrawList {
+	return (DrawList)(unsafe.Pointer(C.igGetForegroundDrawList_Nil()))
 }
 
-func GetForegroundDrawList_ViewportPtr(viewport ImGuiViewport) ImDrawList {
-	return (ImDrawList)(unsafe.Pointer(C.GetForegroundDrawList_ViewportPtr(viewport.handle())))
+func ForegroundDrawListViewportPtr(viewport Viewport) DrawList {
+	return (DrawList)(unsafe.Pointer(C.igGetForegroundDrawList_ViewportPtr(viewport.handle())))
 }
 
-func GetFrameCount() int {
-	return int(C.GetFrameCount())
+func FrameCount() int {
+	return int(C.igGetFrameCount())
 }
 
-func GetFrameHeight() float32 {
-	return float32(C.GetFrameHeight())
+func FrameHeight() float32 {
+	return float32(C.igGetFrameHeight())
 }
 
-func GetFrameHeightWithSpacing() float32 {
-	return float32(C.GetFrameHeightWithSpacing())
+func FrameHeightWithSpacing() float32 {
+	return float32(C.igGetFrameHeightWithSpacing())
 }
 
-func GetID_Ptr(ptr_id unsafe.Pointer) ImGuiID {
-	return ImGuiID(C.GetID_Ptr((ptr_id)))
+func IDPtr(ptr_id unsafe.Pointer) ID {
+	return ImGuiID(C.igGetID_Ptr((ptr_id)))
 }
 
-func GetID_Str(str_id string) ImGuiID {
+func IDStr(str_id string) ID {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return ImGuiID(C.GetID_Str(str_idArg))
+	return ImGuiID(C.igGetID_Str(str_idArg))
 }
 
-func GetID_StrStr(str_id_begin string, str_id_end string) ImGuiID {
+func IDStrStr(str_id_begin string, str_id_end string) ID {
 	str_id_beginArg, str_id_beginFin := wrapString(str_id_begin)
 	defer str_id_beginFin()
 
 	str_id_endArg, str_id_endFin := wrapString(str_id_end)
 	defer str_id_endFin()
 
-	return ImGuiID(C.GetID_StrStr(str_id_beginArg, str_id_endArg))
+	return ImGuiID(C.igGetID_StrStr(str_id_beginArg, str_id_endArg))
 }
 
-func GetIO() ImGuiIO {
-	return (ImGuiIO)(unsafe.Pointer(C.GetIO()))
+func CurrentIO() IO {
+	return (IO)(unsafe.Pointer(C.igGetIO()))
 }
 
-func GetItemRectMax() Vec2 {
+func ItemRectMax() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetItemRectMax(pOutArg)
+	C.igGetItemRectMax(pOutArg)
 	return *pOut
 }
 
-func GetItemRectMin() Vec2 {
+func ItemRectMin() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetItemRectMin(pOutArg)
+	C.igGetItemRectMin(pOutArg)
 	return *pOut
 }
 
-func GetItemRectSize() Vec2 {
+func ItemRectSize() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetItemRectSize(pOutArg)
+	C.igGetItemRectSize(pOutArg)
 	return *pOut
 }
 
-func GetKeyIndex(key Key) int {
-	return int(C.GetKeyIndex(C.ImGuiKey(key)))
+func KeyIndex(key Key) int {
+	return int(C.igGetKeyIndex(C.ImGuiKey(key)))
 }
 
-func GetKeyName(key Key) string {
-	return C.GoString(C.GetKeyName(C.ImGuiKey(key)))
+func KeyName(key Key) string {
+	return C.GoString(C.igGetKeyName(C.ImGuiKey(key)))
 }
 
-func GetKeyPressedAmount(key Key, repeat_delay float32, rate float32) int {
-	return int(C.GetKeyPressedAmount(C.ImGuiKey(key), C.float(repeat_delay), C.float(rate)))
+func KeyPressedAmount(key Key, repeat_delay float32, rate float32) int {
+	return int(C.igGetKeyPressedAmount(C.ImGuiKey(key), C.float(repeat_delay), C.float(rate)))
 }
 
-func GetMainViewport() ImGuiViewport {
-	return (ImGuiViewport)(unsafe.Pointer(C.GetMainViewport()))
+func MainViewport() Viewport {
+	return (Viewport)(unsafe.Pointer(C.igGetMainViewport()))
 }
 
-func GetMouseClickedCount(button MouseButton) int {
-	return int(C.GetMouseClickedCount(C.ImGuiMouseButton(button)))
+func MouseClickedCount(button MouseButton) int {
+	return int(C.igGetMouseClickedCount(C.ImGuiMouseButton(button)))
 }
 
-func GetMouseCursor() MouseCursor {
-	return MouseCursor(C.GetMouseCursor())
+func CurrentMouseCursor() MouseCursor {
+	return MouseCursor(C.igGetMouseCursor())
 }
 
-// GetMouseDragDeltaV parameter default value hint:
+// MouseDragDeltaV parameter default value hint:
 // button: 0
 // lock_threshold: -1.0f
-func GetMouseDragDeltaV(button MouseButton, lock_threshold float32) Vec2 {
+func MouseDragDeltaV(button MouseButton, lock_threshold float32) Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetMouseDragDeltaV(pOutArg, C.ImGuiMouseButton(button), C.float(lock_threshold))
+	C.igGetMouseDragDelta(pOutArg, C.ImGuiMouseButton(button), C.float(lock_threshold))
 	return *pOut
 }
 
-func GetMousePos() Vec2 {
+func MousePos() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetMousePos(pOutArg)
+	C.igGetMousePos(pOutArg)
 	return *pOut
 }
 
-func GetMousePosOnOpeningCurrentPopup() Vec2 {
+func MousePosOnOpeningCurrentPopup() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetMousePosOnOpeningCurrentPopup(pOutArg)
+	C.igGetMousePosOnOpeningCurrentPopup(pOutArg)
 	return *pOut
 }
 
-func GetPlatformIO() ImGuiPlatformIO {
-	return (ImGuiPlatformIO)(unsafe.Pointer(C.GetPlatformIO()))
+func CurrentPlatformIO() PlatformIO {
+	return (PlatformIO)(unsafe.Pointer(C.igGetPlatformIO()))
 }
 
-func GetScrollMaxX() float32 {
-	return float32(C.GetScrollMaxX())
+func ScrollMaxX() float32 {
+	return float32(C.igGetScrollMaxX())
 }
 
-func GetScrollMaxY() float32 {
-	return float32(C.GetScrollMaxY())
+func ScrollMaxY() float32 {
+	return float32(C.igGetScrollMaxY())
 }
 
-func GetScrollX() float32 {
-	return float32(C.GetScrollX())
+func ScrollX() float32 {
+	return float32(C.igGetScrollX())
 }
 
-func GetScrollY() float32 {
-	return float32(C.GetScrollY())
+func ScrollY() float32 {
+	return float32(C.igGetScrollY())
 }
 
-func GetStyle() ImGuiStyle {
-	return (ImGuiStyle)(unsafe.Pointer(C.GetStyle()))
+func CurrentStyle() Style {
+	return (Style)(unsafe.Pointer(C.igGetStyle()))
 }
 
-func GetStyleColorName(idx Col) string {
-	return C.GoString(C.GetStyleColorName(C.ImGuiCol(idx)))
+func StyleColorName(idx Col) string {
+	return C.GoString(C.igGetStyleColorName(C.ImGuiCol(idx)))
 }
 
-func GetStyleColorVec4(idx Col) *Vec4 {
+func StyleColorVec4(idx Col) *Vec4 {
 	out := &Vec4{}
-	out.fromC(*C.GetStyleColorVec4(C.ImGuiCol(idx)))
+	out.fromC(*C.igGetStyleColorVec4(C.ImGuiCol(idx)))
 	return out
 }
 
-func GetTextLineHeight() float32 {
-	return float32(C.GetTextLineHeight())
+func TextLineHeight() float32 {
+	return float32(C.igGetTextLineHeight())
 }
 
-func GetTextLineHeightWithSpacing() float32 {
-	return float32(C.GetTextLineHeightWithSpacing())
+func TextLineHeightWithSpacing() float32 {
+	return float32(C.igGetTextLineHeightWithSpacing())
 }
 
-func GetTime() float64 {
-	return float64(C.GetTime())
+func Time() float64 {
+	return float64(C.igGetTime())
 }
 
-func GetTreeNodeToLabelSpacing() float32 {
-	return float32(C.GetTreeNodeToLabelSpacing())
+func TreeNodeToLabelSpacing() float32 {
+	return float32(C.igGetTreeNodeToLabelSpacing())
 }
 
-func GetVersion() string {
-	return C.GoString(C.GetVersion())
+func Version() string {
+	return C.GoString(C.igGetVersion())
 }
 
-func GetWindowContentRegionMax() Vec2 {
+func WindowContentRegionMax() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetWindowContentRegionMax(pOutArg)
+	C.igGetWindowContentRegionMax(pOutArg)
 	return *pOut
 }
 
-func GetWindowContentRegionMin() Vec2 {
+func WindowContentRegionMin() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetWindowContentRegionMin(pOutArg)
+	C.igGetWindowContentRegionMin(pOutArg)
 	return *pOut
 }
 
-func GetWindowDockID() ImGuiID {
-	return ImGuiID(C.GetWindowDockID())
+func WindowDockID() ID {
+	return ImGuiID(C.igGetWindowDockID())
 }
 
-func GetWindowDpiScale() float32 {
-	return float32(C.GetWindowDpiScale())
+func WindowDpiScale() float32 {
+	return float32(C.igGetWindowDpiScale())
 }
 
-func GetWindowDrawList() ImDrawList {
-	return (ImDrawList)(unsafe.Pointer(C.GetWindowDrawList()))
+func WindowDrawList() DrawList {
+	return (DrawList)(unsafe.Pointer(C.igGetWindowDrawList()))
 }
 
-func GetWindowHeight() float32 {
-	return float32(C.GetWindowHeight())
+func WindowHeight() float32 {
+	return float32(C.igGetWindowHeight())
 }
 
-func GetWindowPos() Vec2 {
+func WindowPos() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetWindowPos(pOutArg)
+	C.igGetWindowPos(pOutArg)
 	return *pOut
 }
 
-func GetWindowSize() Vec2 {
+func WindowSize() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetWindowSize(pOutArg)
+	C.igGetWindowSize(pOutArg)
 	return *pOut
 }
 
-func GetWindowViewport() ImGuiViewport {
-	return (ImGuiViewport)(unsafe.Pointer(C.GetWindowViewport()))
+func WindowViewport() Viewport {
+	return (Viewport)(unsafe.Pointer(C.igGetWindowViewport()))
 }
 
-func GetWindowWidth() float32 {
-	return float32(C.GetWindowWidth())
+func WindowWidth() float32 {
+	return float32(C.igGetWindowWidth())
 }
 
 // ImageV parameter default value hint:
@@ -2457,7 +2457,7 @@ func GetWindowWidth() float32 {
 // uv0: ImVec2(0,0)
 // uv1: ImVec2(1,1)
 func ImageV(user_texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, tint_col Vec4, border_col Vec4) {
-	C.ImageV(C.ImTextureID(user_texture_id), size.toC(), uv0.toC(), uv1.toC(), tint_col.toC(), border_col.toC())
+	C.igImage(C.ImTextureID(user_texture_id), size.toC(), uv0.toC(), uv1.toC(), tint_col.toC(), border_col.toC())
 }
 
 // ImageButtonV parameter default value hint:
@@ -2469,13 +2469,13 @@ func ImageButtonV(str_id string, user_texture_id TextureID, size Vec2, uv0 Vec2,
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.ImageButtonV(str_idArg, C.ImTextureID(user_texture_id), size.toC(), uv0.toC(), uv1.toC(), bg_col.toC(), tint_col.toC()) == C.bool(true)
+	return C.igImageButton(str_idArg, C.ImTextureID(user_texture_id), size.toC(), uv0.toC(), uv1.toC(), bg_col.toC(), tint_col.toC()) == C.bool(true)
 }
 
 // IndentV parameter default value hint:
 // indent_w: 0.0f
 func IndentV(indent_w float32) {
-	C.IndentV(C.float(indent_w))
+	C.igIndent(C.float(indent_w))
 }
 
 // InputDoubleV parameter default value hint:
@@ -2493,7 +2493,7 @@ func InputDoubleV(label string, v *float64, step float64, step_fast float64, for
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.InputDoubleV(labelArg, vArg, C.double(step), C.double(step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputDouble(labelArg, vArg, C.double(step), C.double(step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // InputFloatV parameter default value hint:
@@ -2511,7 +2511,7 @@ func InputFloatV(label string, v *float32, step float32, step_fast float32, form
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.InputFloatV(labelArg, vArg, C.float(step), C.float(step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputFloat(labelArg, vArg, C.float(step), C.float(step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // InputFloat2V parameter default value hint:
@@ -2534,7 +2534,7 @@ func InputFloat2V(label string, v [2]*float32, format string, flags InputTextFla
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.InputFloat2V(labelArg, (*C.float)(&vArg[0]), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputFloat2(labelArg, (*C.float)(&vArg[0]), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // InputFloat3V parameter default value hint:
@@ -2557,7 +2557,7 @@ func InputFloat3V(label string, v [3]*float32, format string, flags InputTextFla
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.InputFloat3V(labelArg, (*C.float)(&vArg[0]), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputFloat3(labelArg, (*C.float)(&vArg[0]), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // InputFloat4V parameter default value hint:
@@ -2580,7 +2580,7 @@ func InputFloat4V(label string, v [4]*float32, format string, flags InputTextFla
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.InputFloat4V(labelArg, (*C.float)(&vArg[0]), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputFloat4(labelArg, (*C.float)(&vArg[0]), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // InputIntV parameter default value hint:
@@ -2594,7 +2594,7 @@ func InputIntV(label string, v *int32, step int32, step_fast int32, flags InputT
 	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
-	return C.InputIntV(labelArg, vArg, C.int(step), C.int(step_fast), C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputInt(labelArg, vArg, C.int(step), C.int(step_fast), C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // InputInt2V parameter default value hint:
@@ -2613,7 +2613,7 @@ func InputInt2V(label string, v [2]*int32, flags InputTextFlags) bool {
 		}
 	}()
 
-	return C.InputInt2V(labelArg, (*C.int)(&vArg[0]), C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputInt2(labelArg, (*C.int)(&vArg[0]), C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // InputInt3V parameter default value hint:
@@ -2632,7 +2632,7 @@ func InputInt3V(label string, v [3]*int32, flags InputTextFlags) bool {
 		}
 	}()
 
-	return C.InputInt3V(labelArg, (*C.int)(&vArg[0]), C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputInt3(labelArg, (*C.int)(&vArg[0]), C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // InputInt4V parameter default value hint:
@@ -2651,7 +2651,7 @@ func InputInt4V(label string, v [4]*int32, flags InputTextFlags) bool {
 		}
 	}()
 
-	return C.InputInt4V(labelArg, (*C.int)(&vArg[0]), C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputInt4(labelArg, (*C.int)(&vArg[0]), C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // InputScalarV parameter default value hint:
@@ -2666,7 +2666,7 @@ func InputScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_ste
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.InputScalarV(labelArg, C.ImGuiDataType(data_type), (p_data), (p_step), (p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputScalar(labelArg, C.ImGuiDataType(data_type), (p_data), (p_step), (p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // InputScalarNV parameter default value hint:
@@ -2681,7 +2681,7 @@ func InputScalarNV(label string, data_type DataType, p_data unsafe.Pointer, comp
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.InputScalarNV(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), (p_step), (p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), (p_step), (p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // InvisibleButtonV parameter default value hint:
@@ -2690,107 +2690,107 @@ func InvisibleButtonV(str_id string, size Vec2, flags ButtonFlags) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.InvisibleButtonV(str_idArg, size.toC(), C.ImGuiButtonFlags(flags)) == C.bool(true)
+	return C.igInvisibleButton(str_idArg, size.toC(), C.ImGuiButtonFlags(flags)) == C.bool(true)
 }
 
 func IsAnyItemActive() bool {
-	return C.IsAnyItemActive() == C.bool(true)
+	return C.igIsAnyItemActive() == C.bool(true)
 }
 
 func IsAnyItemFocused() bool {
-	return C.IsAnyItemFocused() == C.bool(true)
+	return C.igIsAnyItemFocused() == C.bool(true)
 }
 
 func IsAnyItemHovered() bool {
-	return C.IsAnyItemHovered() == C.bool(true)
+	return C.igIsAnyItemHovered() == C.bool(true)
 }
 
 func IsAnyMouseDown() bool {
-	return C.IsAnyMouseDown() == C.bool(true)
+	return C.igIsAnyMouseDown() == C.bool(true)
 }
 
 func IsItemActivated() bool {
-	return C.IsItemActivated() == C.bool(true)
+	return C.igIsItemActivated() == C.bool(true)
 }
 
 func IsItemActive() bool {
-	return C.IsItemActive() == C.bool(true)
+	return C.igIsItemActive() == C.bool(true)
 }
 
 // IsItemClickedV parameter default value hint:
 // mouse_button: 0
 func IsItemClickedV(mouse_button MouseButton) bool {
-	return C.IsItemClickedV(C.ImGuiMouseButton(mouse_button)) == C.bool(true)
+	return C.igIsItemClicked(C.ImGuiMouseButton(mouse_button)) == C.bool(true)
 }
 
 func IsItemDeactivated() bool {
-	return C.IsItemDeactivated() == C.bool(true)
+	return C.igIsItemDeactivated() == C.bool(true)
 }
 
 func IsItemDeactivatedAfterEdit() bool {
-	return C.IsItemDeactivatedAfterEdit() == C.bool(true)
+	return C.igIsItemDeactivatedAfterEdit() == C.bool(true)
 }
 
 func IsItemEdited() bool {
-	return C.IsItemEdited() == C.bool(true)
+	return C.igIsItemEdited() == C.bool(true)
 }
 
 func IsItemFocused() bool {
-	return C.IsItemFocused() == C.bool(true)
+	return C.igIsItemFocused() == C.bool(true)
 }
 
 // IsItemHoveredV parameter default value hint:
 // flags: 0
 func IsItemHoveredV(flags HoveredFlags) bool {
-	return C.IsItemHoveredV(C.ImGuiHoveredFlags(flags)) == C.bool(true)
+	return C.igIsItemHovered(C.ImGuiHoveredFlags(flags)) == C.bool(true)
 }
 
 func IsItemToggledOpen() bool {
-	return C.IsItemToggledOpen() == C.bool(true)
+	return C.igIsItemToggledOpen() == C.bool(true)
 }
 
 func IsItemVisible() bool {
-	return C.IsItemVisible() == C.bool(true)
+	return C.igIsItemVisible() == C.bool(true)
 }
 
 func IsKeyDown(key Key) bool {
-	return C.IsKeyDown(C.ImGuiKey(key)) == C.bool(true)
+	return C.igIsKeyDown(C.ImGuiKey(key)) == C.bool(true)
 }
 
 // IsKeyPressedV parameter default value hint:
 // repeat: true
 func IsKeyPressedV(key Key, repeat bool) bool {
-	return C.IsKeyPressedV(C.ImGuiKey(key), C.bool(repeat)) == C.bool(true)
+	return C.igIsKeyPressed(C.ImGuiKey(key), C.bool(repeat)) == C.bool(true)
 }
 
 func IsKeyReleased(key Key) bool {
-	return C.IsKeyReleased(C.ImGuiKey(key)) == C.bool(true)
+	return C.igIsKeyReleased(C.ImGuiKey(key)) == C.bool(true)
 }
 
 // IsMouseClickedV parameter default value hint:
 // repeat: false
 func IsMouseClickedV(button MouseButton, repeat bool) bool {
-	return C.IsMouseClickedV(C.ImGuiMouseButton(button), C.bool(repeat)) == C.bool(true)
+	return C.igIsMouseClicked(C.ImGuiMouseButton(button), C.bool(repeat)) == C.bool(true)
 }
 
 func IsMouseDoubleClicked(button MouseButton) bool {
-	return C.IsMouseDoubleClicked(C.ImGuiMouseButton(button)) == C.bool(true)
+	return C.igIsMouseDoubleClicked(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
 func IsMouseDown(button MouseButton) bool {
-	return C.IsMouseDown(C.ImGuiMouseButton(button)) == C.bool(true)
+	return C.igIsMouseDown(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
 // IsMouseDraggingV parameter default value hint:
 // lock_threshold: -1.0f
 func IsMouseDraggingV(button MouseButton, lock_threshold float32) bool {
-	return C.IsMouseDraggingV(C.ImGuiMouseButton(button), C.float(lock_threshold)) == C.bool(true)
+	return C.igIsMouseDragging(C.ImGuiMouseButton(button), C.float(lock_threshold)) == C.bool(true)
 }
 
 // IsMouseHoveringRectV parameter default value hint:
 // clip: true
 func IsMouseHoveringRectV(r_min Vec2, r_max Vec2, clip bool) bool {
-	return C.IsMouseHoveringRectV(r_min.toC(), r_max.toC(), C.bool(clip)) == C.bool(true)
+	return C.igIsMouseHoveringRect(r_min.toC(), r_max.toC(), C.bool(clip)) == C.bool(true)
 }
 
 // IsMousePosValidV parameter default value hint:
@@ -2799,52 +2799,52 @@ func IsMousePosValidV(mouse_pos *Vec2) bool {
 	mouse_posArg, mouse_posFin := wrap[C.ImVec2, *Vec2](mouse_pos)
 	defer mouse_posFin()
 
-	return C.IsMousePosValidV(mouse_posArg) == C.bool(true)
+	return C.igIsMousePosValid(mouse_posArg) == C.bool(true)
 }
 
 func IsMouseReleased(button MouseButton) bool {
-	return C.IsMouseReleased(C.ImGuiMouseButton(button)) == C.bool(true)
+	return C.igIsMouseReleased(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
-// IsPopupOpen_StrV parameter default value hint:
+// IsPopupOpenStrV parameter default value hint:
 // flags: 0
-func IsPopupOpen_StrV(str_id string, flags PopupFlags) bool {
+func IsPopupOpenStrV(str_id string, flags PopupFlags) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.IsPopupOpen_StrV(str_idArg, C.ImGuiPopupFlags(flags)) == C.bool(true)
+	return C.igIsPopupOpen_Str(str_idArg, C.ImGuiPopupFlags(flags)) == C.bool(true)
 }
 
-func IsRectVisible_Nil(size Vec2) bool {
-	return C.IsRectVisible_Nil(size.toC()) == C.bool(true)
+func IsRectVisibleNil(size Vec2) bool {
+	return C.igIsRectVisible_Nil(size.toC()) == C.bool(true)
 }
 
-func IsRectVisible_Vec2(rect_min Vec2, rect_max Vec2) bool {
-	return C.IsRectVisible_Vec2(rect_min.toC(), rect_max.toC()) == C.bool(true)
+func IsRectVisibleVec2(rect_min Vec2, rect_max Vec2) bool {
+	return C.igIsRectVisible_Vec2(rect_min.toC(), rect_max.toC()) == C.bool(true)
 }
 
 func IsWindowAppearing() bool {
-	return C.IsWindowAppearing() == C.bool(true)
+	return C.igIsWindowAppearing() == C.bool(true)
 }
 
 func IsWindowCollapsed() bool {
-	return C.IsWindowCollapsed() == C.bool(true)
+	return C.igIsWindowCollapsed() == C.bool(true)
 }
 
 func IsWindowDocked() bool {
-	return C.IsWindowDocked() == C.bool(true)
+	return C.igIsWindowDocked() == C.bool(true)
 }
 
 // IsWindowFocusedV parameter default value hint:
 // flags: 0
 func IsWindowFocusedV(flags FocusedFlags) bool {
-	return C.IsWindowFocusedV(C.ImGuiFocusedFlags(flags)) == C.bool(true)
+	return C.igIsWindowFocused(C.ImGuiFocusedFlags(flags)) == C.bool(true)
 }
 
 // IsWindowHoveredV parameter default value hint:
 // flags: 0
 func IsWindowHoveredV(flags HoveredFlags) bool {
-	return C.IsWindowHoveredV(C.ImGuiHoveredFlags(flags)) == C.bool(true)
+	return C.igIsWindowHovered(C.ImGuiHoveredFlags(flags)) == C.bool(true)
 }
 
 func LabelText(label string, fmt string) {
@@ -2854,12 +2854,12 @@ func LabelText(label string, fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
-	C.LabelText(labelArg, fmtArg)
+	C.wrap_igLabelText(labelArg, fmtArg)
 }
 
-// ListBox_Str_arrV parameter default value hint:
+// ListBoxStrarrV parameter default value hint:
 // height_in_items: -1
-func ListBox_Str_arrV(label string, current_item *int32, items []string, items_count int32, height_in_items int32) bool {
+func ListBoxStrarrV(label string, current_item *int32, items []string, items_count int32, height_in_items int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -2869,14 +2869,14 @@ func ListBox_Str_arrV(label string, current_item *int32, items []string, items_c
 	itemsArg, itemsFin := wrapStringList(items)
 	defer itemsFin()
 
-	return C.ListBox_Str_arrV(labelArg, current_itemArg, itemsArg, C.int(items_count), C.int(height_in_items)) == C.bool(true)
+	return C.igListBox_Str_arr(labelArg, current_itemArg, itemsArg, C.int(items_count), C.int(height_in_items)) == C.bool(true)
 }
 
 func LoadIniSettingsFromDisk(ini_filename string) {
 	ini_filenameArg, ini_filenameFin := wrapString(ini_filename)
 	defer ini_filenameFin()
 
-	C.LoadIniSettingsFromDisk(ini_filenameArg)
+	C.igLoadIniSettingsFromDisk(ini_filenameArg)
 }
 
 // LoadIniSettingsFromMemoryV parameter default value hint:
@@ -2885,28 +2885,28 @@ func LoadIniSettingsFromMemoryV(ini_data string, ini_size uint64) {
 	ini_dataArg, ini_dataFin := wrapString(ini_data)
 	defer ini_dataFin()
 
-	C.LoadIniSettingsFromMemoryV(ini_dataArg, C.xlong(ini_size))
+	C.igLoadIniSettingsFromMemory(ini_dataArg, C.xlong(ini_size))
 }
 
 func LogButtons() {
-	C.LogButtons()
+	C.igLogButtons()
 }
 
 func LogFinish() {
-	C.LogFinish()
+	C.igLogFinish()
 }
 
 func LogText(fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
-	C.LogText(fmtArg)
+	C.wrap_igLogText(fmtArg)
 }
 
 // LogToClipboardV parameter default value hint:
 // auto_open_depth: -1
 func LogToClipboardV(auto_open_depth int32) {
-	C.LogToClipboardV(C.int(auto_open_depth))
+	C.igLogToClipboard(C.int(auto_open_depth))
 }
 
 // LogToFileV parameter default value hint:
@@ -2916,40 +2916,40 @@ func LogToFileV(auto_open_depth int32, filename string) {
 	filenameArg, filenameFin := wrapString(filename)
 	defer filenameFin()
 
-	C.LogToFileV(C.int(auto_open_depth), filenameArg)
+	C.igLogToFile(C.int(auto_open_depth), filenameArg)
 }
 
 // LogToTTYV parameter default value hint:
 // auto_open_depth: -1
 func LogToTTYV(auto_open_depth int32) {
-	C.LogToTTYV(C.int(auto_open_depth))
+	C.igLogToTTY(C.int(auto_open_depth))
 }
 
 func MemAlloc(size uint64) unsafe.Pointer {
-	return unsafe.Pointer(C.MemAlloc(C.xlong(size)))
+	return unsafe.Pointer(C.igMemAlloc(C.xlong(size)))
 }
 
 func MemFree(ptr unsafe.Pointer) {
-	C.MemFree((ptr))
+	C.igMemFree((ptr))
 }
 
-// MenuItem_BoolV parameter default value hint:
+// MenuItemBoolV parameter default value hint:
 // enabled: true
 // selected: false
 // shortcut: NULL
-func MenuItem_BoolV(label string, shortcut string, selected bool, enabled bool) bool {
+func MenuItemBoolV(label string, shortcut string, selected bool, enabled bool) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
 	shortcutArg, shortcutFin := wrapString(shortcut)
 	defer shortcutFin()
 
-	return C.MenuItem_BoolV(labelArg, shortcutArg, C.bool(selected), C.bool(enabled)) == C.bool(true)
+	return C.igMenuItem_Bool(labelArg, shortcutArg, C.bool(selected), C.bool(enabled)) == C.bool(true)
 }
 
-// MenuItem_BoolPtrV parameter default value hint:
+// MenuItemBoolPtrV parameter default value hint:
 // enabled: true
-func MenuItem_BoolPtrV(label string, shortcut string, p_selected *bool, enabled bool) bool {
+func MenuItemBoolPtrV(label string, shortcut string, p_selected *bool, enabled bool) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -2959,19 +2959,19 @@ func MenuItem_BoolPtrV(label string, shortcut string, p_selected *bool, enabled 
 	p_selectedArg, p_selectedFin := wrapBool(p_selected)
 	defer p_selectedFin()
 
-	return C.MenuItem_BoolPtrV(labelArg, shortcutArg, p_selectedArg, C.bool(enabled)) == C.bool(true)
+	return C.igMenuItem_BoolPtr(labelArg, shortcutArg, p_selectedArg, C.bool(enabled)) == C.bool(true)
 }
 
 func NewFrame() {
-	C.NewFrame()
+	C.igNewFrame()
 }
 
 func NewLine() {
-	C.NewLine()
+	C.igNewLine()
 }
 
 func NextColumn() {
-	C.NextColumn()
+	C.igNextColumn()
 }
 
 // OpenPopupOnItemClickV parameter default value hint:
@@ -2981,96 +2981,96 @@ func OpenPopupOnItemClickV(str_id string, popup_flags PopupFlags) {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	C.OpenPopupOnItemClickV(str_idArg, C.ImGuiPopupFlags(popup_flags))
+	C.igOpenPopupOnItemClick(str_idArg, C.ImGuiPopupFlags(popup_flags))
 }
 
-// OpenPopup_IDV parameter default value hint:
+// OpenPopupIDV parameter default value hint:
 // popup_flags: 0
-func OpenPopup_IDV(id ImGuiID, popup_flags PopupFlags) {
-	C.OpenPopup_IDV(C.ImGuiID(id), C.ImGuiPopupFlags(popup_flags))
+func OpenPopupIDV(id ID, popup_flags PopupFlags) {
+	C.igOpenPopup_ID(C.ImGuiID(id), C.ImGuiPopupFlags(popup_flags))
 }
 
-// OpenPopup_StrV parameter default value hint:
+// OpenPopupStrV parameter default value hint:
 // popup_flags: 0
-func OpenPopup_StrV(str_id string, popup_flags PopupFlags) {
+func OpenPopupStrV(str_id string, popup_flags PopupFlags) {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	C.OpenPopup_StrV(str_idArg, C.ImGuiPopupFlags(popup_flags))
+	C.igOpenPopup_Str(str_idArg, C.ImGuiPopupFlags(popup_flags))
 }
 
-// PlotHistogram_FloatPtrV parameter default value hint:
+// PlotHistogramFloatPtrV parameter default value hint:
 // graph_size: ImVec2(0,0)
 // overlay_text: NULL
 // scale_max: FLT_MAX
 // scale_min: FLT_MAX
 // stride: sizeof(float)
 // values_offset: 0
-func PlotHistogram_FloatPtrV(label string, values []float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2, stride int32) {
+func PlotHistogramFloatPtrV(label string, values []float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2, stride int32) {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
 	overlay_textArg, overlay_textFin := wrapString(overlay_text)
 	defer overlay_textFin()
 
-	C.PlotHistogram_FloatPtrV(labelArg, (*C.float)(&(values[0])), C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), graph_size.toC(), C.int(stride))
+	C.igPlotHistogram_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), graph_size.toC(), C.int(stride))
 }
 
-// PlotLines_FloatPtrV parameter default value hint:
+// PlotLinesFloatPtrV parameter default value hint:
 // graph_size: ImVec2(0,0)
 // overlay_text: NULL
 // scale_max: FLT_MAX
 // scale_min: FLT_MAX
 // stride: sizeof(float)
 // values_offset: 0
-func PlotLines_FloatPtrV(label string, values []float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2, stride int32) {
+func PlotLinesFloatPtrV(label string, values []float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2, stride int32) {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
 	overlay_textArg, overlay_textFin := wrapString(overlay_text)
 	defer overlay_textFin()
 
-	C.PlotLines_FloatPtrV(labelArg, (*C.float)(&(values[0])), C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), graph_size.toC(), C.int(stride))
+	C.igPlotLines_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), graph_size.toC(), C.int(stride))
 }
 
 func PopAllowKeyboardFocus() {
-	C.PopAllowKeyboardFocus()
+	C.igPopAllowKeyboardFocus()
 }
 
 func PopButtonRepeat() {
-	C.PopButtonRepeat()
+	C.igPopButtonRepeat()
 }
 
 func PopClipRect() {
-	C.PopClipRect()
+	C.igPopClipRect()
 }
 
 func PopFont() {
-	C.PopFont()
+	C.igPopFont()
 }
 
 func PopID() {
-	C.PopID()
+	C.igPopID()
 }
 
 func PopItemWidth() {
-	C.PopItemWidth()
+	C.igPopItemWidth()
 }
 
 // PopStyleColorV parameter default value hint:
 // count: 1
 func PopStyleColorV(count int32) {
-	C.PopStyleColorV(C.int(count))
+	C.igPopStyleColor(C.int(count))
 }
 
 // PopStyleVarV parameter default value hint:
 // count: 1
 func PopStyleVarV(count int32) {
-	C.PopStyleVarV(C.int(count))
+	C.igPopStyleVar(C.int(count))
 }
 
 func PopTextWrapPos() {
-	C.PopTextWrapPos()
+	C.igPopTextWrapPos()
 }
 
 // ProgressBarV parameter default value hint:
@@ -3080,195 +3080,195 @@ func ProgressBarV(fraction float32, size_arg Vec2, overlay string) {
 	overlayArg, overlayFin := wrapString(overlay)
 	defer overlayFin()
 
-	C.ProgressBarV(C.float(fraction), size_arg.toC(), overlayArg)
+	C.igProgressBar(C.float(fraction), size_arg.toC(), overlayArg)
 }
 
 func PushAllowKeyboardFocus(allow_keyboard_focus bool) {
-	C.PushAllowKeyboardFocus(C.bool(allow_keyboard_focus))
+	C.igPushAllowKeyboardFocus(C.bool(allow_keyboard_focus))
 }
 
 func PushButtonRepeat(repeat bool) {
-	C.PushButtonRepeat(C.bool(repeat))
+	C.igPushButtonRepeat(C.bool(repeat))
 }
 
 func PushClipRect(clip_rect_min Vec2, clip_rect_max Vec2, intersect_with_current_clip_rect bool) {
-	C.PushClipRect(clip_rect_min.toC(), clip_rect_max.toC(), C.bool(intersect_with_current_clip_rect))
+	C.igPushClipRect(clip_rect_min.toC(), clip_rect_max.toC(), C.bool(intersect_with_current_clip_rect))
 }
 
-func PushFont(font ImFont) {
-	C.PushFont(font.handle())
+func PushFont(font Font) {
+	C.igPushFont(font.handle())
 }
 
-func PushID_Int(int_id int32) {
-	C.PushID_Int(C.int(int_id))
+func PushIDInt(int_id int32) {
+	C.igPushID_Int(C.int(int_id))
 }
 
-func PushID_Ptr(ptr_id unsafe.Pointer) {
-	C.PushID_Ptr((ptr_id))
+func PushIDPtr(ptr_id unsafe.Pointer) {
+	C.igPushID_Ptr((ptr_id))
 }
 
-func PushID_Str(str_id string) {
+func PushIDStr(str_id string) {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	C.PushID_Str(str_idArg)
+	C.igPushID_Str(str_idArg)
 }
 
-func PushID_StrStr(str_id_begin string, str_id_end string) {
+func PushIDStrStr(str_id_begin string, str_id_end string) {
 	str_id_beginArg, str_id_beginFin := wrapString(str_id_begin)
 	defer str_id_beginFin()
 
 	str_id_endArg, str_id_endFin := wrapString(str_id_end)
 	defer str_id_endFin()
 
-	C.PushID_StrStr(str_id_beginArg, str_id_endArg)
+	C.igPushID_StrStr(str_id_beginArg, str_id_endArg)
 }
 
 func PushItemWidth(item_width float32) {
-	C.PushItemWidth(C.float(item_width))
+	C.igPushItemWidth(C.float(item_width))
 }
 
-func PushStyleColor_U32(idx Col, col uint32) {
-	C.PushStyleColor_U32(C.ImGuiCol(idx), C.ImU32(col))
+func PushStyleColorU32(idx Col, col uint32) {
+	C.igPushStyleColor_U32(C.ImGuiCol(idx), C.ImU32(col))
 }
 
-func PushStyleColor_Vec4(idx Col, col Vec4) {
-	C.PushStyleColor_Vec4(C.ImGuiCol(idx), col.toC())
+func PushStyleColorVec4(idx Col, col Vec4) {
+	C.igPushStyleColor_Vec4(C.ImGuiCol(idx), col.toC())
 }
 
-func PushStyleVar_Float(idx StyleVar, val float32) {
-	C.PushStyleVar_Float(C.ImGuiStyleVar(idx), C.float(val))
+func PushStyleVarFloat(idx StyleVar, val float32) {
+	C.igPushStyleVar_Float(C.ImGuiStyleVar(idx), C.float(val))
 }
 
-func PushStyleVar_Vec2(idx StyleVar, val Vec2) {
-	C.PushStyleVar_Vec2(C.ImGuiStyleVar(idx), val.toC())
+func PushStyleVarVec2(idx StyleVar, val Vec2) {
+	C.igPushStyleVar_Vec2(C.ImGuiStyleVar(idx), val.toC())
 }
 
 // PushTextWrapPosV parameter default value hint:
 // wrap_local_pos_x: 0.0f
 func PushTextWrapPosV(wrap_local_pos_x float32) {
-	C.PushTextWrapPosV(C.float(wrap_local_pos_x))
+	C.igPushTextWrapPos(C.float(wrap_local_pos_x))
 }
 
-func RadioButton_Bool(label string, active bool) bool {
+func RadioButtonBool(label string, active bool) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.RadioButton_Bool(labelArg, C.bool(active)) == C.bool(true)
+	return C.igRadioButton_Bool(labelArg, C.bool(active)) == C.bool(true)
 }
 
-func RadioButton_IntPtr(label string, v *int32, v_button int32) bool {
+func RadioButtonIntPtr(label string, v *int32, v_button int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
 	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
-	return C.RadioButton_IntPtr(labelArg, vArg, C.int(v_button)) == C.bool(true)
+	return C.igRadioButton_IntPtr(labelArg, vArg, C.int(v_button)) == C.bool(true)
 }
 
 func Render() {
-	C.Render()
+	C.igRender()
 }
 
 // RenderPlatformWindowsDefaultV parameter default value hint:
 // platform_render_arg: NULL
 // renderer_render_arg: NULL
 func RenderPlatformWindowsDefaultV(platform_render_arg unsafe.Pointer, renderer_render_arg unsafe.Pointer) {
-	C.RenderPlatformWindowsDefaultV((platform_render_arg), (renderer_render_arg))
+	C.igRenderPlatformWindowsDefault((platform_render_arg), (renderer_render_arg))
 }
 
 // ResetMouseDragDeltaV parameter default value hint:
 // button: 0
 func ResetMouseDragDeltaV(button MouseButton) {
-	C.ResetMouseDragDeltaV(C.ImGuiMouseButton(button))
+	C.igResetMouseDragDelta(C.ImGuiMouseButton(button))
 }
 
 // SameLineV parameter default value hint:
 // offset_from_start_x: 0.0f
 // spacing: -1.0f
 func SameLineV(offset_from_start_x float32, spacing float32) {
-	C.SameLineV(C.float(offset_from_start_x), C.float(spacing))
+	C.igSameLine(C.float(offset_from_start_x), C.float(spacing))
 }
 
 func SaveIniSettingsToDisk(ini_filename string) {
 	ini_filenameArg, ini_filenameFin := wrapString(ini_filename)
 	defer ini_filenameFin()
 
-	C.SaveIniSettingsToDisk(ini_filenameArg)
+	C.igSaveIniSettingsToDisk(ini_filenameArg)
 }
 
 // SaveIniSettingsToMemoryV parameter default value hint:
 // out_ini_size: NULL
 func SaveIniSettingsToMemoryV(out_ini_size *uint64) string {
-	return C.GoString(C.SaveIniSettingsToMemoryV((*C.xlong)(out_ini_size)))
+	return C.GoString(C.igSaveIniSettingsToMemory((*C.xlong)(out_ini_size)))
 }
 
-// Selectable_BoolV parameter default value hint:
+// SelectableBoolV parameter default value hint:
 // flags: 0
 // selected: false
 // size: ImVec2(0,0)
-func Selectable_BoolV(label string, selected bool, flags SelectableFlags, size Vec2) bool {
+func SelectableBoolV(label string, selected bool, flags SelectableFlags, size Vec2) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.Selectable_BoolV(labelArg, C.bool(selected), C.ImGuiSelectableFlags(flags), size.toC()) == C.bool(true)
+	return C.igSelectable_Bool(labelArg, C.bool(selected), C.ImGuiSelectableFlags(flags), size.toC()) == C.bool(true)
 }
 
-// Selectable_BoolPtrV parameter default value hint:
+// SelectableBoolPtrV parameter default value hint:
 // flags: 0
 // size: ImVec2(0,0)
-func Selectable_BoolPtrV(label string, p_selected *bool, flags SelectableFlags, size Vec2) bool {
+func SelectableBoolPtrV(label string, p_selected *bool, flags SelectableFlags, size Vec2) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
 	p_selectedArg, p_selectedFin := wrapBool(p_selected)
 	defer p_selectedFin()
 
-	return C.Selectable_BoolPtrV(labelArg, p_selectedArg, C.ImGuiSelectableFlags(flags), size.toC()) == C.bool(true)
+	return C.igSelectable_BoolPtr(labelArg, p_selectedArg, C.ImGuiSelectableFlags(flags), size.toC()) == C.bool(true)
 }
 
 func Separator() {
-	C.Separator()
+	C.igSeparator()
 }
 
 func SetClipboardText(text string) {
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
-	C.SetClipboardText(textArg)
+	C.igSetClipboardText(textArg)
 }
 
 func SetColorEditOptions(flags ColorEditFlags) {
-	C.SetColorEditOptions(C.ImGuiColorEditFlags(flags))
+	C.igSetColorEditOptions(C.ImGuiColorEditFlags(flags))
 }
 
 func SetColumnOffset(column_index int32, offset_x float32) {
-	C.SetColumnOffset(C.int(column_index), C.float(offset_x))
+	C.igSetColumnOffset(C.int(column_index), C.float(offset_x))
 }
 
 func SetColumnWidth(column_index int32, width float32) {
-	C.SetColumnWidth(C.int(column_index), C.float(width))
+	C.igSetColumnWidth(C.int(column_index), C.float(width))
 }
 
-func SetCurrentContext(ctx ImGuiContext) {
-	C.SetCurrentContext(ctx.handle())
+func SetCurrentContext(ctx Context) {
+	C.igSetCurrentContext(ctx.handle())
 }
 
 func SetCursorPos(local_pos Vec2) {
-	C.SetCursorPos(local_pos.toC())
+	C.igSetCursorPos(local_pos.toC())
 }
 
 func SetCursorPosX(local_x float32) {
-	C.SetCursorPosX(C.float(local_x))
+	C.igSetCursorPosX(C.float(local_x))
 }
 
 func SetCursorPosY(local_y float32) {
-	C.SetCursorPosY(C.float(local_y))
+	C.igSetCursorPosY(C.float(local_y))
 }
 
 func SetCursorScreenPos(pos Vec2) {
-	C.SetCursorScreenPos(pos.toC())
+	C.igSetCursorScreenPos(pos.toC())
 }
 
 // SetDragDropPayloadV parameter default value hint:
@@ -3277,194 +3277,194 @@ func SetDragDropPayloadV(typeArg string, data unsafe.Pointer, sz uint64, cond Co
 	typeArgArg, typeArgFin := wrapString(typeArg)
 	defer typeArgFin()
 
-	return C.SetDragDropPayloadV(typeArgArg, (data), C.xlong(sz), C.ImGuiCond(cond)) == C.bool(true)
+	return C.igSetDragDropPayload(typeArgArg, (data), C.xlong(sz), C.ImGuiCond(cond)) == C.bool(true)
 }
 
 func SetItemAllowOverlap() {
-	C.SetItemAllowOverlap()
+	C.igSetItemAllowOverlap()
 }
 
 func SetItemDefaultFocus() {
-	C.SetItemDefaultFocus()
+	C.igSetItemDefaultFocus()
 }
 
 // SetKeyboardFocusHereV parameter default value hint:
 // offset: 0
 func SetKeyboardFocusHereV(offset int32) {
-	C.SetKeyboardFocusHereV(C.int(offset))
+	C.igSetKeyboardFocusHere(C.int(offset))
 }
 
 func SetMouseCursor(cursor_type MouseCursor) {
-	C.SetMouseCursor(C.ImGuiMouseCursor(cursor_type))
+	C.igSetMouseCursor(C.ImGuiMouseCursor(cursor_type))
 }
 
 func SetNextFrameWantCaptureKeyboard(want_capture_keyboard bool) {
-	C.SetNextFrameWantCaptureKeyboard(C.bool(want_capture_keyboard))
+	C.igSetNextFrameWantCaptureKeyboard(C.bool(want_capture_keyboard))
 }
 
 func SetNextFrameWantCaptureMouse(want_capture_mouse bool) {
-	C.SetNextFrameWantCaptureMouse(C.bool(want_capture_mouse))
+	C.igSetNextFrameWantCaptureMouse(C.bool(want_capture_mouse))
 }
 
 // SetNextItemOpenV parameter default value hint:
 // cond: 0
 func SetNextItemOpenV(is_open bool, cond Cond) {
-	C.SetNextItemOpenV(C.bool(is_open), C.ImGuiCond(cond))
+	C.igSetNextItemOpen(C.bool(is_open), C.ImGuiCond(cond))
 }
 
 func SetNextItemWidth(item_width float32) {
-	C.SetNextItemWidth(C.float(item_width))
+	C.igSetNextItemWidth(C.float(item_width))
 }
 
 func SetNextWindowBgAlpha(alpha float32) {
-	C.SetNextWindowBgAlpha(C.float(alpha))
+	C.igSetNextWindowBgAlpha(C.float(alpha))
 }
 
-func SetNextWindowClass(window_class ImGuiWindowClass) {
-	C.SetNextWindowClass(window_class.handle())
+func SetNextWindowClass(window_class WindowClass) {
+	C.igSetNextWindowClass(window_class.handle())
 }
 
 // SetNextWindowCollapsedV parameter default value hint:
 // cond: 0
 func SetNextWindowCollapsedV(collapsed bool, cond Cond) {
-	C.SetNextWindowCollapsedV(C.bool(collapsed), C.ImGuiCond(cond))
+	C.igSetNextWindowCollapsed(C.bool(collapsed), C.ImGuiCond(cond))
 }
 
 func SetNextWindowContentSize(size Vec2) {
-	C.SetNextWindowContentSize(size.toC())
+	C.igSetNextWindowContentSize(size.toC())
 }
 
 // SetNextWindowDockIDV parameter default value hint:
 // cond: 0
-func SetNextWindowDockIDV(dock_id ImGuiID, cond Cond) {
-	C.SetNextWindowDockIDV(C.ImGuiID(dock_id), C.ImGuiCond(cond))
+func SetNextWindowDockIDV(dock_id ID, cond Cond) {
+	C.igSetNextWindowDockID(C.ImGuiID(dock_id), C.ImGuiCond(cond))
 }
 
 func SetNextWindowFocus() {
-	C.SetNextWindowFocus()
+	C.igSetNextWindowFocus()
 }
 
 // SetNextWindowPosV parameter default value hint:
 // cond: 0
 // pivot: ImVec2(0,0)
 func SetNextWindowPosV(pos Vec2, cond Cond, pivot Vec2) {
-	C.SetNextWindowPosV(pos.toC(), C.ImGuiCond(cond), pivot.toC())
+	C.igSetNextWindowPos(pos.toC(), C.ImGuiCond(cond), pivot.toC())
 }
 
 // SetNextWindowSizeV parameter default value hint:
 // cond: 0
 func SetNextWindowSizeV(size Vec2, cond Cond) {
-	C.SetNextWindowSizeV(size.toC(), C.ImGuiCond(cond))
+	C.igSetNextWindowSize(size.toC(), C.ImGuiCond(cond))
 }
 
-func SetNextWindowViewport(viewport_id ImGuiID) {
-	C.SetNextWindowViewport(C.ImGuiID(viewport_id))
+func SetNextWindowViewport(viewport_id ID) {
+	C.igSetNextWindowViewport(C.ImGuiID(viewport_id))
 }
 
-// SetScrollFromPosX_FloatV parameter default value hint:
+// SetScrollFromPosXFloatV parameter default value hint:
 // center_x_ratio: 0.5f
-func SetScrollFromPosX_FloatV(local_x float32, center_x_ratio float32) {
-	C.SetScrollFromPosX_FloatV(C.float(local_x), C.float(center_x_ratio))
+func SetScrollFromPosXFloatV(local_x float32, center_x_ratio float32) {
+	C.igSetScrollFromPosX_Float(C.float(local_x), C.float(center_x_ratio))
 }
 
-// SetScrollFromPosY_FloatV parameter default value hint:
+// SetScrollFromPosYFloatV parameter default value hint:
 // center_y_ratio: 0.5f
-func SetScrollFromPosY_FloatV(local_y float32, center_y_ratio float32) {
-	C.SetScrollFromPosY_FloatV(C.float(local_y), C.float(center_y_ratio))
+func SetScrollFromPosYFloatV(local_y float32, center_y_ratio float32) {
+	C.igSetScrollFromPosY_Float(C.float(local_y), C.float(center_y_ratio))
 }
 
 // SetScrollHereXV parameter default value hint:
 // center_x_ratio: 0.5f
 func SetScrollHereXV(center_x_ratio float32) {
-	C.SetScrollHereXV(C.float(center_x_ratio))
+	C.igSetScrollHereX(C.float(center_x_ratio))
 }
 
 // SetScrollHereYV parameter default value hint:
 // center_y_ratio: 0.5f
 func SetScrollHereYV(center_y_ratio float32) {
-	C.SetScrollHereYV(C.float(center_y_ratio))
+	C.igSetScrollHereY(C.float(center_y_ratio))
 }
 
-func SetScrollX_Float(scroll_x float32) {
-	C.SetScrollX_Float(C.float(scroll_x))
+func SetScrollXFloat(scroll_x float32) {
+	C.igSetScrollX_Float(C.float(scroll_x))
 }
 
-func SetScrollY_Float(scroll_y float32) {
-	C.SetScrollY_Float(C.float(scroll_y))
+func SetScrollYFloat(scroll_y float32) {
+	C.igSetScrollY_Float(C.float(scroll_y))
 }
 
 func SetTabItemClosed(tab_or_docked_window_label string) {
 	tab_or_docked_window_labelArg, tab_or_docked_window_labelFin := wrapString(tab_or_docked_window_label)
 	defer tab_or_docked_window_labelFin()
 
-	C.SetTabItemClosed(tab_or_docked_window_labelArg)
+	C.igSetTabItemClosed(tab_or_docked_window_labelArg)
 }
 
 func SetTooltip(fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
-	C.SetTooltip(fmtArg)
+	C.wrap_igSetTooltip(fmtArg)
 }
 
-// SetWindowCollapsed_BoolV parameter default value hint:
+// SetWindowCollapsedBoolV parameter default value hint:
 // cond: 0
-func SetWindowCollapsed_BoolV(collapsed bool, cond Cond) {
-	C.SetWindowCollapsed_BoolV(C.bool(collapsed), C.ImGuiCond(cond))
+func SetWindowCollapsedBoolV(collapsed bool, cond Cond) {
+	C.igSetWindowCollapsed_Bool(C.bool(collapsed), C.ImGuiCond(cond))
 }
 
-// SetWindowCollapsed_StrV parameter default value hint:
+// SetWindowCollapsedStrV parameter default value hint:
 // cond: 0
-func SetWindowCollapsed_StrV(name string, collapsed bool, cond Cond) {
+func SetWindowCollapsedStrV(name string, collapsed bool, cond Cond) {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
-	C.SetWindowCollapsed_StrV(nameArg, C.bool(collapsed), C.ImGuiCond(cond))
+	C.igSetWindowCollapsed_Str(nameArg, C.bool(collapsed), C.ImGuiCond(cond))
 }
 
-func SetWindowFocus_Nil() {
-	C.SetWindowFocus_Nil()
+func SetWindowFocusNil() {
+	C.igSetWindowFocus_Nil()
 }
 
-func SetWindowFocus_Str(name string) {
+func SetWindowFocusStr(name string) {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
-	C.SetWindowFocus_Str(nameArg)
+	C.igSetWindowFocus_Str(nameArg)
 }
 
 func SetWindowFontScale(scale float32) {
-	C.SetWindowFontScale(C.float(scale))
+	C.igSetWindowFontScale(C.float(scale))
 }
 
-// SetWindowPos_StrV parameter default value hint:
+// SetWindowPosStrV parameter default value hint:
 // cond: 0
-func SetWindowPos_StrV(name string, pos Vec2, cond Cond) {
+func SetWindowPosStrV(name string, pos Vec2, cond Cond) {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
-	C.SetWindowPos_StrV(nameArg, pos.toC(), C.ImGuiCond(cond))
+	C.igSetWindowPos_Str(nameArg, pos.toC(), C.ImGuiCond(cond))
 }
 
-// SetWindowPos_Vec2V parameter default value hint:
+// SetWindowPosVec2V parameter default value hint:
 // cond: 0
-func SetWindowPos_Vec2V(pos Vec2, cond Cond) {
-	C.SetWindowPos_Vec2V(pos.toC(), C.ImGuiCond(cond))
+func SetWindowPosVec2V(pos Vec2, cond Cond) {
+	C.igSetWindowPos_Vec2(pos.toC(), C.ImGuiCond(cond))
 }
 
-// SetWindowSize_StrV parameter default value hint:
+// SetWindowSizeStrV parameter default value hint:
 // cond: 0
-func SetWindowSize_StrV(name string, size Vec2, cond Cond) {
+func SetWindowSizeStrV(name string, size Vec2, cond Cond) {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
-	C.SetWindowSize_StrV(nameArg, size.toC(), C.ImGuiCond(cond))
+	C.igSetWindowSize_Str(nameArg, size.toC(), C.ImGuiCond(cond))
 }
 
-// SetWindowSize_Vec2V parameter default value hint:
+// SetWindowSizeVec2V parameter default value hint:
 // cond: 0
-func SetWindowSize_Vec2V(size Vec2, cond Cond) {
-	C.SetWindowSize_Vec2V(size.toC(), C.ImGuiCond(cond))
+func SetWindowSizeVec2V(size Vec2, cond Cond) {
+	C.igSetWindowSize_Vec2(size.toC(), C.ImGuiCond(cond))
 }
 
 // ShowAboutWindowV parameter default value hint:
@@ -3473,7 +3473,7 @@ func ShowAboutWindowV(p_open *bool) {
 	p_openArg, p_openFin := wrapBool(p_open)
 	defer p_openFin()
 
-	C.ShowAboutWindowV(p_openArg)
+	C.igShowAboutWindow(p_openArg)
 }
 
 // ShowDebugLogWindowV parameter default value hint:
@@ -3482,7 +3482,7 @@ func ShowDebugLogWindowV(p_open *bool) {
 	p_openArg, p_openFin := wrapBool(p_open)
 	defer p_openFin()
 
-	C.ShowDebugLogWindowV(p_openArg)
+	C.igShowDebugLogWindow(p_openArg)
 }
 
 // ShowDemoWindowV parameter default value hint:
@@ -3491,14 +3491,14 @@ func ShowDemoWindowV(p_open *bool) {
 	p_openArg, p_openFin := wrapBool(p_open)
 	defer p_openFin()
 
-	C.ShowDemoWindowV(p_openArg)
+	C.igShowDemoWindow(p_openArg)
 }
 
 func ShowFontSelector(label string) {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	C.ShowFontSelector(labelArg)
+	C.igShowFontSelector(labelArg)
 }
 
 // ShowMetricsWindowV parameter default value hint:
@@ -3507,7 +3507,7 @@ func ShowMetricsWindowV(p_open *bool) {
 	p_openArg, p_openFin := wrapBool(p_open)
 	defer p_openFin()
 
-	C.ShowMetricsWindowV(p_openArg)
+	C.igShowMetricsWindow(p_openArg)
 }
 
 // ShowStackToolWindowV parameter default value hint:
@@ -3516,24 +3516,24 @@ func ShowStackToolWindowV(p_open *bool) {
 	p_openArg, p_openFin := wrapBool(p_open)
 	defer p_openFin()
 
-	C.ShowStackToolWindowV(p_openArg)
+	C.igShowStackToolWindow(p_openArg)
 }
 
 // ShowStyleEditorV parameter default value hint:
 // ref: NULL
-func ShowStyleEditorV(ref ImGuiStyle) {
-	C.ShowStyleEditorV(ref.handle())
+func ShowStyleEditorV(ref Style) {
+	C.igShowStyleEditor(ref.handle())
 }
 
 func ShowStyleSelector(label string) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.ShowStyleSelector(labelArg) == C.bool(true)
+	return C.igShowStyleSelector(labelArg) == C.bool(true)
 }
 
 func ShowUserGuide() {
-	C.ShowUserGuide()
+	C.igShowUserGuide()
 }
 
 // SliderAngleV parameter default value hint:
@@ -3551,7 +3551,7 @@ func SliderAngleV(label string, v_rad *float32, v_degrees_min float32, v_degrees
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.SliderAngleV(labelArg, v_radArg, C.float(v_degrees_min), C.float(v_degrees_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderAngle(labelArg, v_radArg, C.float(v_degrees_min), C.float(v_degrees_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // SliderFloatV parameter default value hint:
@@ -3567,7 +3567,7 @@ func SliderFloatV(label string, v *float32, v_min float32, v_max float32, format
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.SliderFloatV(labelArg, vArg, C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderFloat(labelArg, vArg, C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // SliderFloat2V parameter default value hint:
@@ -3590,7 +3590,7 @@ func SliderFloat2V(label string, v [2]*float32, v_min float32, v_max float32, fo
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.SliderFloat2V(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderFloat2(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // SliderFloat3V parameter default value hint:
@@ -3613,7 +3613,7 @@ func SliderFloat3V(label string, v [3]*float32, v_min float32, v_max float32, fo
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.SliderFloat3V(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderFloat3(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // SliderFloat4V parameter default value hint:
@@ -3636,7 +3636,7 @@ func SliderFloat4V(label string, v [4]*float32, v_min float32, v_max float32, fo
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.SliderFloat4V(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderFloat4(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // SliderIntV parameter default value hint:
@@ -3652,7 +3652,7 @@ func SliderIntV(label string, v *int32, v_min int32, v_max int32, format string,
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.SliderIntV(labelArg, vArg, C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderInt(labelArg, vArg, C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // SliderInt2V parameter default value hint:
@@ -3675,7 +3675,7 @@ func SliderInt2V(label string, v [2]*int32, v_min int32, v_max int32, format str
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.SliderInt2V(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderInt2(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // SliderInt3V parameter default value hint:
@@ -3698,7 +3698,7 @@ func SliderInt3V(label string, v [3]*int32, v_min int32, v_max int32, format str
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.SliderInt3V(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderInt3(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // SliderInt4V parameter default value hint:
@@ -3721,7 +3721,7 @@ func SliderInt4V(label string, v [4]*int32, v_min int32, v_max int32, format str
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.SliderInt4V(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderInt4(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // SliderScalarV parameter default value hint:
@@ -3734,7 +3734,7 @@ func SliderScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_mi
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.SliderScalarV(labelArg, C.ImGuiDataType(data_type), (p_data), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderScalar(labelArg, C.ImGuiDataType(data_type), (p_data), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // SliderScalarNV parameter default value hint:
@@ -3747,36 +3747,36 @@ func SliderScalarNV(label string, data_type DataType, p_data unsafe.Pointer, com
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.SliderScalarNV(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 func SmallButton(label string) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.SmallButton(labelArg) == C.bool(true)
+	return C.igSmallButton(labelArg) == C.bool(true)
 }
 
 func Spacing() {
-	C.Spacing()
+	C.igSpacing()
 }
 
 // StyleColorsClassicV parameter default value hint:
 // dst: NULL
-func StyleColorsClassicV(dst ImGuiStyle) {
-	C.StyleColorsClassicV(dst.handle())
+func StyleColorsClassicV(dst Style) {
+	C.igStyleColorsClassic(dst.handle())
 }
 
 // StyleColorsDarkV parameter default value hint:
 // dst: NULL
-func StyleColorsDarkV(dst ImGuiStyle) {
-	C.StyleColorsDarkV(dst.handle())
+func StyleColorsDarkV(dst Style) {
+	C.igStyleColorsDark(dst.handle())
 }
 
 // StyleColorsLightV parameter default value hint:
 // dst: NULL
-func StyleColorsLightV(dst ImGuiStyle) {
-	C.StyleColorsLightV(dst.handle())
+func StyleColorsLightV(dst Style) {
+	C.igStyleColorsLight(dst.handle())
 }
 
 // TabItemButtonV parameter default value hint:
@@ -3785,107 +3785,107 @@ func TabItemButtonV(label string, flags TabItemFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.TabItemButtonV(labelArg, C.ImGuiTabItemFlags(flags)) == C.bool(true)
+	return C.igTabItemButton(labelArg, C.ImGuiTabItemFlags(flags)) == C.bool(true)
 }
 
 func TableGetColumnCount() int {
-	return int(C.TableGetColumnCount())
+	return int(C.igTableGetColumnCount())
 }
 
 // TableGetColumnFlagsV parameter default value hint:
 // column_n: -1
 func TableGetColumnFlagsV(column_n int32) TableColumnFlags {
-	return TableColumnFlags(C.TableGetColumnFlagsV(C.int(column_n)))
+	return TableColumnFlags(C.igTableGetColumnFlags(C.int(column_n)))
 }
 
 func TableGetColumnIndex() int {
-	return int(C.TableGetColumnIndex())
+	return int(C.igTableGetColumnIndex())
 }
 
-// TableGetColumnName_IntV parameter default value hint:
+// TableGetColumnNameIntV parameter default value hint:
 // column_n: -1
-func TableGetColumnName_IntV(column_n int32) string {
-	return C.GoString(C.TableGetColumnName_IntV(C.int(column_n)))
+func TableGetColumnNameIntV(column_n int32) string {
+	return C.GoString(C.igTableGetColumnName_Int(C.int(column_n)))
 }
 
 func TableGetRowIndex() int {
-	return int(C.TableGetRowIndex())
+	return int(C.igTableGetRowIndex())
 }
 
-func TableGetSortSpecs() ImGuiTableSortSpecs {
-	return (ImGuiTableSortSpecs)(unsafe.Pointer(C.TableGetSortSpecs()))
+func TableGetSortSpecs() TableSortSpecs {
+	return (TableSortSpecs)(unsafe.Pointer(C.igTableGetSortSpecs()))
 }
 
 func TableHeader(label string) {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	C.TableHeader(labelArg)
+	C.igTableHeader(labelArg)
 }
 
 func TableHeadersRow() {
-	C.TableHeadersRow()
+	C.igTableHeadersRow()
 }
 
 func TableNextColumn() bool {
-	return C.TableNextColumn() == C.bool(true)
+	return C.igTableNextColumn() == C.bool(true)
 }
 
 // TableNextRowV parameter default value hint:
 // min_row_height: 0.0f
 // row_flags: 0
 func TableNextRowV(row_flags TableRowFlags, min_row_height float32) {
-	C.TableNextRowV(C.ImGuiTableRowFlags(row_flags), C.float(min_row_height))
+	C.igTableNextRow(C.ImGuiTableRowFlags(row_flags), C.float(min_row_height))
 }
 
 // TableSetBgColorV parameter default value hint:
 // column_n: -1
 func TableSetBgColorV(target TableBgTarget, color uint32, column_n int32) {
-	C.TableSetBgColorV(C.ImGuiTableBgTarget(target), C.ImU32(color), C.int(column_n))
+	C.igTableSetBgColor(C.ImGuiTableBgTarget(target), C.ImU32(color), C.int(column_n))
 }
 
 func TableSetColumnEnabled(column_n int32, v bool) {
-	C.TableSetColumnEnabled(C.int(column_n), C.bool(v))
+	C.igTableSetColumnEnabled(C.int(column_n), C.bool(v))
 }
 
 func TableSetColumnIndex(column_n int32) bool {
-	return C.TableSetColumnIndex(C.int(column_n)) == C.bool(true)
+	return C.igTableSetColumnIndex(C.int(column_n)) == C.bool(true)
 }
 
 // TableSetupColumnV parameter default value hint:
 // flags: 0
 // init_width_or_weight: 0.0f
 // user_id: 0
-func TableSetupColumnV(label string, flags TableColumnFlags, init_width_or_weight float32, user_id ImGuiID) {
+func TableSetupColumnV(label string, flags TableColumnFlags, init_width_or_weight float32, user_id ID) {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	C.TableSetupColumnV(labelArg, C.ImGuiTableColumnFlags(flags), C.float(init_width_or_weight), C.ImGuiID(user_id))
+	C.igTableSetupColumn(labelArg, C.ImGuiTableColumnFlags(flags), C.float(init_width_or_weight), C.ImGuiID(user_id))
 }
 
 func TableSetupScrollFreeze(cols int32, rows int32) {
-	C.TableSetupScrollFreeze(C.int(cols), C.int(rows))
+	C.igTableSetupScrollFreeze(C.int(cols), C.int(rows))
 }
 
 func Text(fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
-	C.Text(fmtArg)
+	C.wrap_igText(fmtArg)
 }
 
 func TextColored(col Vec4, fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
-	C.TextColored(col.toC(), fmtArg)
+	C.wrap_igTextColored(col.toC(), fmtArg)
 }
 
 func TextDisabled(fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
-	C.TextDisabled(fmtArg)
+	C.wrap_igTextDisabled(fmtArg)
 }
 
 // TextUnformattedV parameter default value hint:
@@ -3894,91 +3894,91 @@ func TextUnformattedV(text string) {
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
-	C.TextUnformattedV(textArg)
+	C.wrap_igTextUnformattedV(textArg)
 }
 
 func TextWrapped(fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
-	C.TextWrapped(fmtArg)
+	C.wrap_igTextWrapped(fmtArg)
 }
 
-func TreeNodeEx_Ptr(ptr_id unsafe.Pointer, flags TreeNodeFlags, fmt string) bool {
+func TreeNodeExPtr(ptr_id unsafe.Pointer, flags TreeNodeFlags, fmt string) bool {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
-	return C.TreeNodeEx_Ptr((ptr_id), C.ImGuiTreeNodeFlags(flags), fmtArg) == C.bool(true)
+	return C.wrap_igTreeNodeEx_Ptr((ptr_id), C.ImGuiTreeNodeFlags(flags), fmtArg) == C.bool(true)
 }
 
-// TreeNodeEx_StrV parameter default value hint:
+// TreeNodeExStrV parameter default value hint:
 // flags: 0
-func TreeNodeEx_StrV(label string, flags TreeNodeFlags) bool {
+func TreeNodeExStrV(label string, flags TreeNodeFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.TreeNodeEx_StrV(labelArg, C.ImGuiTreeNodeFlags(flags)) == C.bool(true)
+	return C.igTreeNodeEx_Str(labelArg, C.ImGuiTreeNodeFlags(flags)) == C.bool(true)
 }
 
-func TreeNodeEx_StrStr(str_id string, flags TreeNodeFlags, fmt string) bool {
+func TreeNodeExStrStr(str_id string, flags TreeNodeFlags, fmt string) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
-	return C.TreeNodeEx_StrStr(str_idArg, C.ImGuiTreeNodeFlags(flags), fmtArg) == C.bool(true)
+	return C.wrap_igTreeNodeEx_StrStr(str_idArg, C.ImGuiTreeNodeFlags(flags), fmtArg) == C.bool(true)
 }
 
-func TreeNode_Ptr(ptr_id unsafe.Pointer, fmt string) bool {
+func TreeNodePtr(ptr_id unsafe.Pointer, fmt string) bool {
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
-	return C.TreeNode_Ptr((ptr_id), fmtArg) == C.bool(true)
+	return C.wrap_igTreeNode_Ptr((ptr_id), fmtArg) == C.bool(true)
 }
 
-func TreeNode_Str(label string) bool {
+func TreeNodeStr(label string) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.TreeNode_Str(labelArg) == C.bool(true)
+	return C.igTreeNode_Str(labelArg) == C.bool(true)
 }
 
-func TreeNode_StrStr(str_id string, fmt string) bool {
+func TreeNodeStrStr(str_id string, fmt string) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
 	fmtArg, fmtFin := wrapString(fmt)
 	defer fmtFin()
 
-	return C.TreeNode_StrStr(str_idArg, fmtArg) == C.bool(true)
+	return C.wrap_igTreeNode_StrStr(str_idArg, fmtArg) == C.bool(true)
 }
 
 func TreePop() {
-	C.TreePop()
+	C.igTreePop()
 }
 
-// TreePush_PtrV parameter default value hint:
+// TreePushPtrV parameter default value hint:
 // ptr_id: NULL
-func TreePush_PtrV(ptr_id unsafe.Pointer) {
-	C.TreePush_PtrV((ptr_id))
+func TreePushPtrV(ptr_id unsafe.Pointer) {
+	C.igTreePush_Ptr((ptr_id))
 }
 
-func TreePush_Str(str_id string) {
+func TreePushStr(str_id string) {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	C.TreePush_Str(str_idArg)
+	C.igTreePush_Str(str_idArg)
 }
 
 // UnindentV parameter default value hint:
 // indent_w: 0.0f
 func UnindentV(indent_w float32) {
-	C.UnindentV(C.float(indent_w))
+	C.igUnindent(C.float(indent_w))
 }
 
 func UpdatePlatformWindows() {
-	C.UpdatePlatformWindows()
+	C.igUpdatePlatformWindows()
 }
 
 // VSliderFloatV parameter default value hint:
@@ -3994,7 +3994,7 @@ func VSliderFloatV(label string, size Vec2, v *float32, v_min float32, v_max flo
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.VSliderFloatV(labelArg, size.toC(), vArg, C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igVSliderFloat(labelArg, size.toC(), vArg, C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // VSliderIntV parameter default value hint:
@@ -4010,7 +4010,7 @@ func VSliderIntV(label string, size Vec2, v *int32, v_min int32, v_max int32, fo
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.VSliderIntV(labelArg, size.toC(), vArg, C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igVSliderInt(labelArg, size.toC(), vArg, C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // VSliderScalarV parameter default value hint:
@@ -4023,48 +4023,48 @@ func VSliderScalarV(label string, size Vec2, data_type DataType, p_data unsafe.P
 	formatArg, formatFin := wrapString(format)
 	defer formatFin()
 
-	return C.VSliderScalarV(labelArg, size.toC(), C.ImGuiDataType(data_type), (p_data), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igVSliderScalar(labelArg, size.toC(), C.ImGuiDataType(data_type), (p_data), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
-func Value_Bool(prefix string, b bool) {
+func ValueBool(prefix string, b bool) {
 	prefixArg, prefixFin := wrapString(prefix)
 	defer prefixFin()
 
-	C.Value_Bool(prefixArg, C.bool(b))
+	C.igValue_Bool(prefixArg, C.bool(b))
 }
 
-// Value_FloatV parameter default value hint:
+// ValueFloatV parameter default value hint:
 // float_format: NULL
-func Value_FloatV(prefix string, v float32, float_format string) {
+func ValueFloatV(prefix string, v float32, float_format string) {
 	prefixArg, prefixFin := wrapString(prefix)
 	defer prefixFin()
 
 	float_formatArg, float_formatFin := wrapString(float_format)
 	defer float_formatFin()
 
-	C.Value_FloatV(prefixArg, C.float(v), float_formatArg)
+	C.igValue_Float(prefixArg, C.float(v), float_formatArg)
 }
 
-func Value_Int(prefix string, v int32) {
+func ValueInt(prefix string, v int32) {
 	prefixArg, prefixFin := wrapString(prefix)
 	defer prefixFin()
 
-	C.Value_Int(prefixArg, C.int(v))
+	C.igValue_Int(prefixArg, C.int(v))
 }
 
-func Value_Uint(prefix string, v uint32) {
+func ValueUint(prefix string, v uint32) {
 	prefixArg, prefixFin := wrapString(prefix)
 	defer prefixFin()
 
-	C.Value_Uint(prefixArg, C.uint(v))
+	C.igValue_Uint(prefixArg, C.uint(v))
 }
 
-func Color_HSV(h float32, s float32, v float32) Color {
+func ColorHSV(h float32, s float32, v float32) Color {
 	pOut := &Color{}
 	pOutArg, pOutFin := wrap[C.ImColor, *Color](pOut)
 	defer pOutFin()
 
-	C.Color_HSV(pOutArg, C.float(h), C.float(s), C.float(v))
+	C.wrap_ImColor_HSV(pOutArg, C.float(h), C.float(s), C.float(v))
 	return *pOut
 }
 
@@ -4072,141 +4072,141 @@ func (self *Color) SetHSV(h float32, s float32, v float32) {
 	selfArg, selfFin := wrap[C.ImColor, *Color](self)
 	defer selfFin()
 
-	C.Color_SetHSV(selfArg, C.float(h), C.float(s), C.float(v))
+	C.wrap_ImColor_SetHSV(selfArg, C.float(h), C.float(s), C.float(v))
 }
 
-func (self ImDrawList) AddBezierCubic(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32, thickness float32) {
-	C.DrawList_AddBezierCubic(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col), C.float(thickness))
+func (self DrawList) AddBezierCubic(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32, thickness float32) {
+	C.wrap_ImDrawList_AddBezierCubic(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col), C.float(thickness))
 }
 
-func (self ImDrawList) AddBezierQuadratic(p1 Vec2, p2 Vec2, p3 Vec2, col uint32, thickness float32) {
-	C.DrawList_AddBezierQuadratic(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col), C.float(thickness))
+func (self DrawList) AddBezierQuadratic(p1 Vec2, p2 Vec2, p3 Vec2, col uint32, thickness float32) {
+	C.wrap_ImDrawList_AddBezierQuadratic(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col), C.float(thickness))
 }
 
-func (self ImDrawList) AddCircle(center Vec2, radius float32, col uint32) {
-	C.DrawList_AddCircle(self.handle(), center.toC(), C.float(radius), C.ImU32(col))
+func (self DrawList) AddCircle(center Vec2, radius float32, col uint32) {
+	C.wrap_ImDrawList_AddCircle(self.handle(), center.toC(), C.float(radius), C.ImU32(col))
 }
 
-func (self ImDrawList) AddCircleFilled(center Vec2, radius float32, col uint32) {
-	C.DrawList_AddCircleFilled(self.handle(), center.toC(), C.float(radius), C.ImU32(col))
+func (self DrawList) AddCircleFilled(center Vec2, radius float32, col uint32) {
+	C.wrap_ImDrawList_AddCircleFilled(self.handle(), center.toC(), C.float(radius), C.ImU32(col))
 }
 
-func (self ImDrawList) AddImage(user_texture_id TextureID, p_min Vec2, p_max Vec2) {
-	C.DrawList_AddImage(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC())
+func (self DrawList) AddImage(user_texture_id TextureID, p_min Vec2, p_max Vec2) {
+	C.wrap_ImDrawList_AddImage(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC())
 }
 
-func (self ImDrawList) AddImageQuad(user_texture_id TextureID, p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2) {
-	C.DrawList_AddImageQuad(self.handle(), C.ImTextureID(user_texture_id), p1.toC(), p2.toC(), p3.toC(), p4.toC())
+func (self DrawList) AddImageQuad(user_texture_id TextureID, p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2) {
+	C.wrap_ImDrawList_AddImageQuad(self.handle(), C.ImTextureID(user_texture_id), p1.toC(), p2.toC(), p3.toC(), p4.toC())
 }
 
-func (self ImDrawList) AddImageRounded(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32, rounding float32) {
-	C.DrawList_AddImageRounded(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col), C.float(rounding))
+func (self DrawList) AddImageRounded(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32, rounding float32) {
+	C.wrap_ImDrawList_AddImageRounded(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col), C.float(rounding))
 }
 
-func (self ImDrawList) AddLine(p1 Vec2, p2 Vec2, col uint32) {
-	C.DrawList_AddLine(self.handle(), p1.toC(), p2.toC(), C.ImU32(col))
+func (self DrawList) AddLine(p1 Vec2, p2 Vec2, col uint32) {
+	C.wrap_ImDrawList_AddLine(self.handle(), p1.toC(), p2.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) AddNgon(center Vec2, radius float32, col uint32, num_segments int32) {
-	C.DrawList_AddNgon(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments))
+func (self DrawList) AddNgon(center Vec2, radius float32, col uint32, num_segments int32) {
+	C.wrap_ImDrawList_AddNgon(self.handle(), center.toC(), C.float(radius), C.ImU32(col), C.int(num_segments))
 }
 
-func (self ImDrawList) AddQuad(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32) {
-	C.DrawList_AddQuad(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col))
+func (self DrawList) AddQuad(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32) {
+	C.wrap_ImDrawList_AddQuad(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) AddRect(p_min Vec2, p_max Vec2, col uint32) {
-	C.DrawList_AddRect(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col))
+func (self DrawList) AddRect(p_min Vec2, p_max Vec2, col uint32) {
+	C.wrap_ImDrawList_AddRect(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) AddRectFilled(p_min Vec2, p_max Vec2, col uint32) {
-	C.DrawList_AddRectFilled(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col))
+func (self DrawList) AddRectFilled(p_min Vec2, p_max Vec2, col uint32) {
+	C.wrap_ImDrawList_AddRectFilled(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) AddText_FontPtr(font ImFont, font_size float32, pos Vec2, col uint32, text_begin string) {
+func (self DrawList) AddTextFontPtr(font Font, font_size float32, pos Vec2, col uint32, text_begin string) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
-	C.DrawList_AddText_FontPtr(self.handle(), font.handle(), C.float(font_size), pos.toC(), C.ImU32(col), text_beginArg)
+	C.wrap_ImDrawList_AddText_FontPtr(self.handle(), font.handle(), C.float(font_size), pos.toC(), C.ImU32(col), text_beginArg)
 }
 
-func (self ImDrawList) AddText_Vec2(pos Vec2, col uint32, text_begin string) {
+func (self DrawList) AddTextVec2(pos Vec2, col uint32, text_begin string) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
-	C.DrawList_AddText_Vec2(self.handle(), pos.toC(), C.ImU32(col), text_beginArg)
+	C.wrap_ImDrawList_AddText_Vec2(self.handle(), pos.toC(), C.ImU32(col), text_beginArg)
 }
 
-func (self ImDrawList) AddTriangle(p1 Vec2, p2 Vec2, p3 Vec2, col uint32) {
-	C.DrawList_AddTriangle(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col))
+func (self DrawList) AddTriangle(p1 Vec2, p2 Vec2, p3 Vec2, col uint32) {
+	C.wrap_ImDrawList_AddTriangle(self.handle(), p1.toC(), p2.toC(), p3.toC(), C.ImU32(col))
 }
 
-func (self ImDrawList) PathArcTo(center Vec2, radius float32, a_min float32, a_max float32) {
-	C.DrawList_PathArcTo(self.handle(), center.toC(), C.float(radius), C.float(a_min), C.float(a_max))
+func (self DrawList) PathArcTo(center Vec2, radius float32, a_min float32, a_max float32) {
+	C.wrap_ImDrawList_PathArcTo(self.handle(), center.toC(), C.float(radius), C.float(a_min), C.float(a_max))
 }
 
-func (self ImDrawList) PathBezierCubicCurveTo(p2 Vec2, p3 Vec2, p4 Vec2) {
-	C.DrawList_PathBezierCubicCurveTo(self.handle(), p2.toC(), p3.toC(), p4.toC())
+func (self DrawList) PathBezierCubicCurveTo(p2 Vec2, p3 Vec2, p4 Vec2) {
+	C.wrap_ImDrawList_PathBezierCubicCurveTo(self.handle(), p2.toC(), p3.toC(), p4.toC())
 }
 
-func (self ImDrawList) PathBezierQuadraticCurveTo(p2 Vec2, p3 Vec2) {
-	C.DrawList_PathBezierQuadraticCurveTo(self.handle(), p2.toC(), p3.toC())
+func (self DrawList) PathBezierQuadraticCurveTo(p2 Vec2, p3 Vec2) {
+	C.wrap_ImDrawList_PathBezierQuadraticCurveTo(self.handle(), p2.toC(), p3.toC())
 }
 
-func (self ImDrawList) PathRect(rect_min Vec2, rect_max Vec2) {
-	C.DrawList_PathRect(self.handle(), rect_min.toC(), rect_max.toC())
+func (self DrawList) PathRect(rect_min Vec2, rect_max Vec2) {
+	C.wrap_ImDrawList_PathRect(self.handle(), rect_min.toC(), rect_max.toC())
 }
 
-func (self ImDrawList) PathStroke(col uint32) {
-	C.DrawList_PathStroke(self.handle(), C.ImU32(col))
+func (self DrawList) PathStroke(col uint32) {
+	C.wrap_ImDrawList_PathStroke(self.handle(), C.ImU32(col))
 }
 
-func (self ImDrawList) PushClipRect(clip_rect_min Vec2, clip_rect_max Vec2) {
-	C.DrawList_PushClipRect(self.handle(), clip_rect_min.toC(), clip_rect_max.toC())
+func (self DrawList) PushClipRect(clip_rect_min Vec2, clip_rect_max Vec2) {
+	C.wrap_ImDrawList_PushClipRect(self.handle(), clip_rect_min.toC(), clip_rect_max.toC())
 }
 
-func (self ImFontAtlas) AddCustomRectFontGlyph(font ImFont, id Wchar, width int32, height int32, advance_x float32) int {
-	return int(C.FontAtlas_AddCustomRectFontGlyph(self.handle(), font.handle(), C.ImWchar(id), C.int(width), C.int(height), C.float(advance_x)))
+func (self FontAtlas) AddCustomRectFontGlyph(font Font, id Wchar, width int32, height int32, advance_x float32) int {
+	return int(C.wrap_ImFontAtlas_AddCustomRectFontGlyph(self.handle(), font.handle(), C.ImWchar(id), C.int(width), C.int(height), C.float(advance_x)))
 }
 
-func (self ImFontAtlas) AddFontDefault() ImFont {
-	return (ImFont)(unsafe.Pointer(C.FontAtlas_AddFontDefault(self.handle())))
+func (self FontAtlas) AddFontDefault() Font {
+	return (Font)(unsafe.Pointer(C.wrap_ImFontAtlas_AddFontDefault(self.handle())))
 }
 
-func (self ImFontAtlas) AddFontFromFileTTF(filename string, size_pixels float32) ImFont {
+func (self FontAtlas) AddFontFromFileTTF(filename string, size_pixels float32) Font {
 	filenameArg, filenameFin := wrapString(filename)
 	defer filenameFin()
 
-	return (ImFont)(unsafe.Pointer(C.FontAtlas_AddFontFromFileTTF(self.handle(), filenameArg, C.float(size_pixels))))
+	return (Font)(unsafe.Pointer(C.wrap_ImFontAtlas_AddFontFromFileTTF(self.handle(), filenameArg, C.float(size_pixels))))
 }
 
-func (self ImFontAtlas) AddFontFromMemoryCompressedBase85TTF(compressed_font_data_base85 string, size_pixels float32) ImFont {
+func (self FontAtlas) AddFontFromMemoryCompressedBase85TTF(compressed_font_data_base85 string, size_pixels float32) Font {
 	compressed_font_data_base85Arg, compressed_font_data_base85Fin := wrapString(compressed_font_data_base85)
 	defer compressed_font_data_base85Fin()
 
-	return (ImFont)(unsafe.Pointer(C.FontAtlas_AddFontFromMemoryCompressedBase85TTF(self.handle(), compressed_font_data_base85Arg, C.float(size_pixels))))
+	return (Font)(unsafe.Pointer(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(self.handle(), compressed_font_data_base85Arg, C.float(size_pixels))))
 }
 
-func (self ImFontAtlas) AddFontFromMemoryCompressedTTF(compressed_font_data unsafe.Pointer, compressed_font_size int32, size_pixels float32) ImFont {
-	return (ImFont)(unsafe.Pointer(C.FontAtlas_AddFontFromMemoryCompressedTTF(self.handle(), (compressed_font_data), C.int(compressed_font_size), C.float(size_pixels))))
+func (self FontAtlas) AddFontFromMemoryCompressedTTF(compressed_font_data unsafe.Pointer, compressed_font_size int32, size_pixels float32) Font {
+	return (Font)(unsafe.Pointer(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedTTF(self.handle(), (compressed_font_data), C.int(compressed_font_size), C.float(size_pixels))))
 }
 
-func (self ImFontAtlas) AddFontFromMemoryTTF(font_data unsafe.Pointer, font_size int32, size_pixels float32) ImFont {
-	return (ImFont)(unsafe.Pointer(C.FontAtlas_AddFontFromMemoryTTF(self.handle(), (font_data), C.int(font_size), C.float(size_pixels))))
+func (self FontAtlas) AddFontFromMemoryTTF(font_data unsafe.Pointer, font_size int32, size_pixels float32) Font {
+	return (Font)(unsafe.Pointer(C.wrap_ImFontAtlas_AddFontFromMemoryTTF(self.handle(), (font_data), C.int(font_size), C.float(size_pixels))))
 }
 
-func (self ImFontGlyphRangesBuilder) AddText(text string) {
+func (self FontGlyphRangesBuilder) AddText(text string) {
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
-	C.FontGlyphRangesBuilder_AddText(self.handle(), textArg)
+	C.wrap_ImFontGlyphRangesBuilder_AddText(self.handle(), textArg)
 }
 
-func (self ImFont) AddRemapChar(dst Wchar, src Wchar) {
-	C.Font_AddRemapChar(self.handle(), C.ImWchar(dst), C.ImWchar(src))
+func (self Font) AddRemapChar(dst Wchar, src Wchar) {
+	C.wrap_ImFont_AddRemapChar(self.handle(), C.ImWchar(dst), C.ImWchar(src))
 }
 
-func (self ImFont) CalcTextSizeA(size float32, max_width float32, wrap_width float32, text_begin string) Vec2 {
+func (self Font) CalcTextSizeA(size float32, max_width float32, wrap_width float32, text_begin string) Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
@@ -4214,77 +4214,77 @@ func (self ImFont) CalcTextSizeA(size float32, max_width float32, wrap_width flo
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
-	C.Font_CalcTextSizeA(pOutArg, self.handle(), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg)
+	C.wrap_ImFont_CalcTextSizeA(pOutArg, self.handle(), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg)
 	return *pOut
 }
 
-func (self ImFont) RenderText(draw_list ImDrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string) {
+func (self Font) RenderText(draw_list DrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	defer text_beginFin()
 
-	C.Font_RenderText(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), clip_rect.toC(), text_beginArg)
+	C.wrap_ImFont_RenderText(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), clip_rect.toC(), text_beginArg)
 }
 
-func (self ImGuiIO) SetKeyEventNativeData(key Key, native_keycode int32, native_scancode int32) {
-	C.IO_SetKeyEventNativeData(self.handle(), C.ImGuiKey(key), C.int(native_keycode), C.int(native_scancode))
+func (self IO) SetKeyEventNativeData(key Key, native_keycode int32, native_scancode int32) {
+	C.wrap_ImGuiIO_SetKeyEventNativeData(self.handle(), C.ImGuiKey(key), C.int(native_keycode), C.int(native_scancode))
 }
 
-func (self ImGuiInputTextCallbackData) InsertChars(pos int32, text string) {
+func (self InputTextCallbackData) InsertChars(pos int32, text string) {
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
-	C.InputTextCallbackData_InsertChars(self.handle(), C.int(pos), textArg)
+	C.wrap_ImGuiInputTextCallbackData_InsertChars(self.handle(), C.int(pos), textArg)
 }
 
-func (self ImGuiListClipper) Begin(items_count int32) {
-	C.ListClipper_Begin(self.handle(), C.int(items_count))
+func (self ListClipper) Begin(items_count int32) {
+	C.wrap_ImGuiListClipper_Begin(self.handle(), C.int(items_count))
 }
 
-func (self ImGuiTextBuffer) Append(str string) {
+func (self TextBuffer) Append(str string) {
 	strArg, strFin := wrapString(str)
 	defer strFin()
 
-	C.TextBuffer_Append(self.handle(), strArg)
+	C.wrap_ImGuiTextBuffer_Append(self.handle(), strArg)
 }
 
-func (self ImGuiTextFilter) Draw() bool {
-	return C.TextFilter_Draw(self.handle()) == C.bool(true)
+func (self TextFilter) Draw() bool {
+	return C.wrap_ImGuiTextFilter_Draw(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiTextFilter) PassFilter(text string) bool {
+func (self TextFilter) PassFilter(text string) bool {
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
-	return C.TextFilter_PassFilter(self.handle(), textArg) == C.bool(true)
+	return C.wrap_ImGuiTextFilter_PassFilter(self.handle(), textArg) == C.bool(true)
 }
 
-func AcceptDragDropPayload(typeArg string) ImGuiPayload {
+func AcceptDragDropPayload(typeArg string) Payload {
 	typeArgArg, typeArgFin := wrapString(typeArg)
 	defer typeArgFin()
 
-	return (ImGuiPayload)(unsafe.Pointer(C.AcceptDragDropPayload(typeArgArg)))
+	return (Payload)(unsafe.Pointer(C.wrap_igAcceptDragDropPayload(typeArgArg)))
 }
 
 func Begin(name string) bool {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
-	return C.Begin(nameArg) == C.bool(true)
+	return C.wrap_igBegin(nameArg) == C.bool(true)
 }
 
-func BeginChildFrame(id ImGuiID, size Vec2) bool {
-	return C.BeginChildFrame(C.ImGuiID(id), size.toC()) == C.bool(true)
+func BeginChildFrame(id ID, size Vec2) bool {
+	return C.wrap_igBeginChildFrame(C.ImGuiID(id), size.toC()) == C.bool(true)
 }
 
-func BeginChild_ID(id ImGuiID) bool {
-	return C.BeginChild_ID(C.ImGuiID(id)) == C.bool(true)
+func BeginChildID(id ID) bool {
+	return C.wrap_igBeginChild_ID(C.ImGuiID(id)) == C.bool(true)
 }
 
-func BeginChild_Str(str_id string) bool {
+func BeginChildStr(str_id string) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.BeginChild_Str(str_idArg) == C.bool(true)
+	return C.wrap_igBeginChild_Str(str_idArg) == C.bool(true)
 }
 
 func BeginCombo(label string, preview_value string) bool {
@@ -4294,83 +4294,83 @@ func BeginCombo(label string, preview_value string) bool {
 	preview_valueArg, preview_valueFin := wrapString(preview_value)
 	defer preview_valueFin()
 
-	return C.BeginCombo(labelArg, preview_valueArg) == C.bool(true)
+	return C.wrap_igBeginCombo(labelArg, preview_valueArg) == C.bool(true)
 }
 
 func BeginDisabled() {
-	C.BeginDisabled()
+	C.wrap_igBeginDisabled()
 }
 
 func BeginDragDropSource() bool {
-	return C.BeginDragDropSource() == C.bool(true)
+	return C.wrap_igBeginDragDropSource() == C.bool(true)
 }
 
 func BeginListBox(label string) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.BeginListBox(labelArg) == C.bool(true)
+	return C.wrap_igBeginListBox(labelArg) == C.bool(true)
 }
 
 func BeginMenu(label string) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.BeginMenu(labelArg) == C.bool(true)
+	return C.wrap_igBeginMenu(labelArg) == C.bool(true)
 }
 
 func BeginPopup(str_id string) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.BeginPopup(str_idArg) == C.bool(true)
+	return C.wrap_igBeginPopup(str_idArg) == C.bool(true)
 }
 
 func BeginPopupContextItem() bool {
-	return C.BeginPopupContextItem() == C.bool(true)
+	return C.wrap_igBeginPopupContextItem() == C.bool(true)
 }
 
 func BeginPopupContextVoid() bool {
-	return C.BeginPopupContextVoid() == C.bool(true)
+	return C.wrap_igBeginPopupContextVoid() == C.bool(true)
 }
 
 func BeginPopupContextWindow() bool {
-	return C.BeginPopupContextWindow() == C.bool(true)
+	return C.wrap_igBeginPopupContextWindow() == C.bool(true)
 }
 
 func BeginPopupModal(name string) bool {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
-	return C.BeginPopupModal(nameArg) == C.bool(true)
+	return C.wrap_igBeginPopupModal(nameArg) == C.bool(true)
 }
 
 func BeginTabBar(str_id string) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.BeginTabBar(str_idArg) == C.bool(true)
+	return C.wrap_igBeginTabBar(str_idArg) == C.bool(true)
 }
 
 func BeginTabItem(label string) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.BeginTabItem(labelArg) == C.bool(true)
+	return C.wrap_igBeginTabItem(labelArg) == C.bool(true)
 }
 
 func BeginTable(str_id string, column int32) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.BeginTable(str_idArg, C.int(column)) == C.bool(true)
+	return C.wrap_igBeginTable(str_idArg, C.int(column)) == C.bool(true)
 }
 
 func Button(label string) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.Button(labelArg) == C.bool(true)
+	return C.wrap_igButton(labelArg) == C.bool(true)
 }
 
 func CalcTextSize(text string) Vec2 {
@@ -4381,32 +4381,32 @@ func CalcTextSize(text string) Vec2 {
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
-	C.CalcTextSize(pOutArg, textArg)
+	C.wrap_igCalcTextSize(pOutArg, textArg)
 	return *pOut
 }
 
-func CollapsingHeader_BoolPtr(label string, p_visible *bool) bool {
+func CollapsingHeaderBoolPtr(label string, p_visible *bool) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
 	p_visibleArg, p_visibleFin := wrapBool(p_visible)
 	defer p_visibleFin()
 
-	return C.CollapsingHeader_BoolPtr(labelArg, p_visibleArg) == C.bool(true)
+	return C.wrap_igCollapsingHeader_BoolPtr(labelArg, p_visibleArg) == C.bool(true)
 }
 
-func CollapsingHeader_TreeNodeFlags(label string) bool {
+func CollapsingHeaderTreeNodeFlags(label string) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.CollapsingHeader_TreeNodeFlags(labelArg) == C.bool(true)
+	return C.wrap_igCollapsingHeader_TreeNodeFlags(labelArg) == C.bool(true)
 }
 
 func ColorButton(desc_id string, col Vec4) bool {
 	desc_idArg, desc_idFin := wrapString(desc_id)
 	defer desc_idFin()
 
-	return C.ColorButton(desc_idArg, col.toC()) == C.bool(true)
+	return C.wrap_igColorButton(desc_idArg, col.toC()) == C.bool(true)
 }
 
 func ColorEdit3(label string, col [3]*float32) bool {
@@ -4423,7 +4423,7 @@ func ColorEdit3(label string, col [3]*float32) bool {
 		}
 	}()
 
-	return C.ColorEdit3(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
+	return C.wrap_igColorEdit3(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
 }
 
 func ColorEdit4(label string, col [4]*float32) bool {
@@ -4440,7 +4440,7 @@ func ColorEdit4(label string, col [4]*float32) bool {
 		}
 	}()
 
-	return C.ColorEdit4(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
+	return C.wrap_igColorEdit4(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
 }
 
 func ColorPicker3(label string, col [3]*float32) bool {
@@ -4457,7 +4457,7 @@ func ColorPicker3(label string, col [3]*float32) bool {
 		}
 	}()
 
-	return C.ColorPicker3(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
+	return C.wrap_igColorPicker3(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
 }
 
 func ColorPicker4(label string, col [4]*float32) bool {
@@ -4474,14 +4474,14 @@ func ColorPicker4(label string, col [4]*float32) bool {
 		}
 	}()
 
-	return C.ColorPicker4(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
+	return C.wrap_igColorPicker4(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
 }
 
 func Columns() {
-	C.Columns()
+	C.wrap_igColumns()
 }
 
-func Combo_Str(label string, current_item *int32, items_separated_by_zeros string) bool {
+func ComboStr(label string, current_item *int32, items_separated_by_zeros string) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -4491,10 +4491,10 @@ func Combo_Str(label string, current_item *int32, items_separated_by_zeros strin
 	items_separated_by_zerosArg, items_separated_by_zerosFin := wrapString(items_separated_by_zeros)
 	defer items_separated_by_zerosFin()
 
-	return C.Combo_Str(labelArg, current_itemArg, items_separated_by_zerosArg) == C.bool(true)
+	return C.wrap_igCombo_Str(labelArg, current_itemArg, items_separated_by_zerosArg) == C.bool(true)
 }
 
-func Combo_Str_arr(label string, current_item *int32, items []string, items_count int32) bool {
+func ComboStrarr(label string, current_item *int32, items []string, items_count int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -4504,23 +4504,23 @@ func Combo_Str_arr(label string, current_item *int32, items []string, items_coun
 	itemsArg, itemsFin := wrapStringList(items)
 	defer itemsFin()
 
-	return C.Combo_Str_arr(labelArg, current_itemArg, itemsArg, C.int(items_count)) == C.bool(true)
+	return C.wrap_igCombo_Str_arr(labelArg, current_itemArg, itemsArg, C.int(items_count)) == C.bool(true)
 }
 
-func CreateContext() ImGuiContext {
-	return (ImGuiContext)(unsafe.Pointer(C.CreateContext()))
+func CreateContext() Context {
+	return (Context)(unsafe.Pointer(C.wrap_igCreateContext()))
 }
 
 func DestroyContext() {
-	C.DestroyContext()
+	C.wrap_igDestroyContext()
 }
 
-func DockSpace(id ImGuiID) ImGuiID {
-	return ImGuiID(C.DockSpace(C.ImGuiID(id)))
+func DockSpace(id ID) ID {
+	return ImGuiID(C.wrap_igDockSpace(C.ImGuiID(id)))
 }
 
-func DockSpaceOverViewport() ImGuiID {
-	return ImGuiID(C.DockSpaceOverViewport())
+func DockSpaceOverViewport() ID {
+	return ImGuiID(C.wrap_igDockSpaceOverViewport())
 }
 
 func DragFloat(label string, v *float32) bool {
@@ -4530,7 +4530,7 @@ func DragFloat(label string, v *float32) bool {
 	vArg, vFin := wrapNumberPtr[C.float, float32](v)
 	defer vFin()
 
-	return C.DragFloat(labelArg, vArg) == C.bool(true)
+	return C.wrap_igDragFloat(labelArg, vArg) == C.bool(true)
 }
 
 func DragFloat2(label string, v [2]*float32) bool {
@@ -4547,7 +4547,7 @@ func DragFloat2(label string, v [2]*float32) bool {
 		}
 	}()
 
-	return C.DragFloat2(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
+	return C.wrap_igDragFloat2(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
 }
 
 func DragFloat3(label string, v [3]*float32) bool {
@@ -4564,7 +4564,7 @@ func DragFloat3(label string, v [3]*float32) bool {
 		}
 	}()
 
-	return C.DragFloat3(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
+	return C.wrap_igDragFloat3(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
 }
 
 func DragFloat4(label string, v [4]*float32) bool {
@@ -4581,7 +4581,7 @@ func DragFloat4(label string, v [4]*float32) bool {
 		}
 	}()
 
-	return C.DragFloat4(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
+	return C.wrap_igDragFloat4(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
 }
 
 func DragFloatRange2(label string, v_current_min *float32, v_current_max *float32) bool {
@@ -4594,7 +4594,7 @@ func DragFloatRange2(label string, v_current_min *float32, v_current_max *float3
 	v_current_maxArg, v_current_maxFin := wrapNumberPtr[C.float, float32](v_current_max)
 	defer v_current_maxFin()
 
-	return C.DragFloatRange2(labelArg, v_current_minArg, v_current_maxArg) == C.bool(true)
+	return C.wrap_igDragFloatRange2(labelArg, v_current_minArg, v_current_maxArg) == C.bool(true)
 }
 
 func DragInt(label string, v *int32) bool {
@@ -4604,7 +4604,7 @@ func DragInt(label string, v *int32) bool {
 	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
-	return C.DragInt(labelArg, vArg) == C.bool(true)
+	return C.wrap_igDragInt(labelArg, vArg) == C.bool(true)
 }
 
 func DragInt2(label string, v [2]*int32) bool {
@@ -4621,7 +4621,7 @@ func DragInt2(label string, v [2]*int32) bool {
 		}
 	}()
 
-	return C.DragInt2(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
+	return C.wrap_igDragInt2(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
 }
 
 func DragInt3(label string, v [3]*int32) bool {
@@ -4638,7 +4638,7 @@ func DragInt3(label string, v [3]*int32) bool {
 		}
 	}()
 
-	return C.DragInt3(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
+	return C.wrap_igDragInt3(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
 }
 
 func DragInt4(label string, v [4]*int32) bool {
@@ -4655,7 +4655,7 @@ func DragInt4(label string, v [4]*int32) bool {
 		}
 	}()
 
-	return C.DragInt4(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
+	return C.wrap_igDragInt4(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
 }
 
 func DragIntRange2(label string, v_current_min *int32, v_current_max *int32) bool {
@@ -4668,46 +4668,57 @@ func DragIntRange2(label string, v_current_min *int32, v_current_max *int32) boo
 	v_current_maxArg, v_current_maxFin := wrapNumberPtr[C.int, int32](v_current_max)
 	defer v_current_maxFin()
 
-	return C.DragIntRange2(labelArg, v_current_minArg, v_current_maxArg) == C.bool(true)
+	return C.wrap_igDragIntRange2(labelArg, v_current_minArg, v_current_maxArg) == C.bool(true)
 }
 
 func DragScalar(label string, data_type DataType, p_data unsafe.Pointer) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.DragScalar(labelArg, C.ImGuiDataType(data_type), (p_data)) == C.bool(true)
+	return C.wrap_igDragScalar(labelArg, C.ImGuiDataType(data_type), (p_data)) == C.bool(true)
 }
 
 func DragScalarN(label string, data_type DataType, p_data unsafe.Pointer, components int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.DragScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components)) == C.bool(true)
+	return C.wrap_igDragScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components)) == C.bool(true)
 }
 
-func GetColorU32_Col(idx Col) uint32 {
-	return uint32(C.GetColorU32_Col(C.ImGuiCol(idx)))
+func ColorU32Col(idx Col) uint32 {
+	return uint32(C.wrap_igGetColorU32_Col(C.ImGuiCol(idx)))
 }
 
-func GetColumnOffset() float32 {
-	return float32(C.GetColumnOffset())
+func ColumnOffset() float32 {
+	return float32(C.wrap_igGetColumnOffset())
 }
 
-func GetColumnWidth() float32 {
-	return float32(C.GetColumnWidth())
+func ColumnWidth() float32 {
+	return float32(C.wrap_igGetColumnWidth())
 }
 
-func GetMouseDragDelta() Vec2 {
+func MouseDragDelta() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 	defer pOutFin()
 
-	C.GetMouseDragDelta(pOutArg)
+	C.wrap_igGetMouseDragDelta(pOutArg)
 	return *pOut
 }
 
+func Image(user_texture_id TextureID, size Vec2) {
+	C.wrap_igImage(C.ImTextureID(user_texture_id), size.toC())
+}
+
+func ImageButton(str_id string, user_texture_id TextureID, size Vec2) bool {
+	str_idArg, str_idFin := wrapString(str_id)
+	defer str_idFin()
+
+	return C.wrap_igImageButton(str_idArg, C.ImTextureID(user_texture_id), size.toC()) == C.bool(true)
+}
+
 func Indent() {
-	C.Indent()
+	C.wrap_igIndent()
 }
 
 func InputDouble(label string, v *float64) bool {
@@ -4717,7 +4728,7 @@ func InputDouble(label string, v *float64) bool {
 	vArg, vFin := wrapNumberPtr[C.double, float64](v)
 	defer vFin()
 
-	return C.InputDouble(labelArg, vArg) == C.bool(true)
+	return C.wrap_igInputDouble(labelArg, vArg) == C.bool(true)
 }
 
 func InputFloat(label string, v *float32) bool {
@@ -4727,7 +4738,7 @@ func InputFloat(label string, v *float32) bool {
 	vArg, vFin := wrapNumberPtr[C.float, float32](v)
 	defer vFin()
 
-	return C.InputFloat(labelArg, vArg) == C.bool(true)
+	return C.wrap_igInputFloat(labelArg, vArg) == C.bool(true)
 }
 
 func InputFloat2(label string, v [2]*float32) bool {
@@ -4744,7 +4755,7 @@ func InputFloat2(label string, v [2]*float32) bool {
 		}
 	}()
 
-	return C.InputFloat2(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
+	return C.wrap_igInputFloat2(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
 }
 
 func InputFloat3(label string, v [3]*float32) bool {
@@ -4761,7 +4772,7 @@ func InputFloat3(label string, v [3]*float32) bool {
 		}
 	}()
 
-	return C.InputFloat3(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
+	return C.wrap_igInputFloat3(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
 }
 
 func InputFloat4(label string, v [4]*float32) bool {
@@ -4778,7 +4789,7 @@ func InputFloat4(label string, v [4]*float32) bool {
 		}
 	}()
 
-	return C.InputFloat4(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
+	return C.wrap_igInputFloat4(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
 }
 
 func InputInt(label string, v *int32) bool {
@@ -4788,7 +4799,7 @@ func InputInt(label string, v *int32) bool {
 	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
-	return C.InputInt(labelArg, vArg) == C.bool(true)
+	return C.wrap_igInputInt(labelArg, vArg) == C.bool(true)
 }
 
 func InputInt2(label string, v [2]*int32) bool {
@@ -4805,7 +4816,7 @@ func InputInt2(label string, v [2]*int32) bool {
 		}
 	}()
 
-	return C.InputInt2(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
+	return C.wrap_igInputInt2(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
 }
 
 func InputInt3(label string, v [3]*int32) bool {
@@ -4822,7 +4833,7 @@ func InputInt3(label string, v [3]*int32) bool {
 		}
 	}()
 
-	return C.InputInt3(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
+	return C.wrap_igInputInt3(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
 }
 
 func InputInt4(label string, v [4]*int32) bool {
@@ -4839,74 +4850,74 @@ func InputInt4(label string, v [4]*int32) bool {
 		}
 	}()
 
-	return C.InputInt4(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
+	return C.wrap_igInputInt4(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
 }
 
 func InputScalar(label string, data_type DataType, p_data unsafe.Pointer) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.InputScalar(labelArg, C.ImGuiDataType(data_type), (p_data)) == C.bool(true)
+	return C.wrap_igInputScalar(labelArg, C.ImGuiDataType(data_type), (p_data)) == C.bool(true)
 }
 
 func InputScalarN(label string, data_type DataType, p_data unsafe.Pointer, components int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.InputScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components)) == C.bool(true)
+	return C.wrap_igInputScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components)) == C.bool(true)
 }
 
 func InvisibleButton(str_id string, size Vec2) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.InvisibleButton(str_idArg, size.toC()) == C.bool(true)
+	return C.wrap_igInvisibleButton(str_idArg, size.toC()) == C.bool(true)
 }
 
 func IsItemClicked() bool {
-	return C.IsItemClicked() == C.bool(true)
+	return C.wrap_igIsItemClicked() == C.bool(true)
 }
 
 func IsItemHovered() bool {
-	return C.IsItemHovered() == C.bool(true)
+	return C.wrap_igIsItemHovered() == C.bool(true)
 }
 
 func IsKeyPressed(key Key) bool {
-	return C.IsKeyPressed(C.ImGuiKey(key)) == C.bool(true)
+	return C.wrap_igIsKeyPressed(C.ImGuiKey(key)) == C.bool(true)
 }
 
 func IsMouseClicked(button MouseButton) bool {
-	return C.IsMouseClicked(C.ImGuiMouseButton(button)) == C.bool(true)
+	return C.wrap_igIsMouseClicked(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
 func IsMouseDragging(button MouseButton) bool {
-	return C.IsMouseDragging(C.ImGuiMouseButton(button)) == C.bool(true)
+	return C.wrap_igIsMouseDragging(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
 func IsMouseHoveringRect(r_min Vec2, r_max Vec2) bool {
-	return C.IsMouseHoveringRect(r_min.toC(), r_max.toC()) == C.bool(true)
+	return C.wrap_igIsMouseHoveringRect(r_min.toC(), r_max.toC()) == C.bool(true)
 }
 
 func IsMousePosValid() bool {
-	return C.IsMousePosValid() == C.bool(true)
+	return C.wrap_igIsMousePosValid() == C.bool(true)
 }
 
-func IsPopupOpen_Str(str_id string) bool {
+func IsPopupOpenStr(str_id string) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return C.IsPopupOpen_Str(str_idArg) == C.bool(true)
+	return C.wrap_igIsPopupOpen_Str(str_idArg) == C.bool(true)
 }
 
 func IsWindowFocused() bool {
-	return C.IsWindowFocused() == C.bool(true)
+	return C.wrap_igIsWindowFocused() == C.bool(true)
 }
 
 func IsWindowHovered() bool {
-	return C.IsWindowHovered() == C.bool(true)
+	return C.wrap_igIsWindowHovered() == C.bool(true)
 }
 
-func ListBox_Str_arr(label string, current_item *int32, items []string, items_count int32) bool {
+func ListBoxStrarr(label string, current_item *int32, items []string, items_count int32) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -4916,36 +4927,36 @@ func ListBox_Str_arr(label string, current_item *int32, items []string, items_co
 	itemsArg, itemsFin := wrapStringList(items)
 	defer itemsFin()
 
-	return C.ListBox_Str_arr(labelArg, current_itemArg, itemsArg, C.int(items_count)) == C.bool(true)
+	return C.wrap_igListBox_Str_arr(labelArg, current_itemArg, itemsArg, C.int(items_count)) == C.bool(true)
 }
 
 func LoadIniSettingsFromMemory(ini_data string) {
 	ini_dataArg, ini_dataFin := wrapString(ini_data)
 	defer ini_dataFin()
 
-	C.LoadIniSettingsFromMemory(ini_dataArg)
+	C.wrap_igLoadIniSettingsFromMemory(ini_dataArg)
 }
 
 func LogToClipboard() {
-	C.LogToClipboard()
+	C.wrap_igLogToClipboard()
 }
 
 func LogToFile() {
-	C.LogToFile()
+	C.wrap_igLogToFile()
 }
 
 func LogToTTY() {
-	C.LogToTTY()
+	C.wrap_igLogToTTY()
 }
 
-func MenuItem_Bool(label string) bool {
+func MenuItemBool(label string) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.MenuItem_Bool(labelArg) == C.bool(true)
+	return C.wrap_igMenuItem_Bool(labelArg) == C.bool(true)
 }
 
-func MenuItem_BoolPtr(label string, shortcut string, p_selected *bool) bool {
+func MenuItemBoolPtr(label string, shortcut string, p_selected *bool) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
@@ -4955,193 +4966,193 @@ func MenuItem_BoolPtr(label string, shortcut string, p_selected *bool) bool {
 	p_selectedArg, p_selectedFin := wrapBool(p_selected)
 	defer p_selectedFin()
 
-	return C.MenuItem_BoolPtr(labelArg, shortcutArg, p_selectedArg) == C.bool(true)
+	return C.wrap_igMenuItem_BoolPtr(labelArg, shortcutArg, p_selectedArg) == C.bool(true)
 }
 
 func OpenPopupOnItemClick() {
-	C.OpenPopupOnItemClick()
+	C.wrap_igOpenPopupOnItemClick()
 }
 
-func OpenPopup_ID(id ImGuiID) {
-	C.OpenPopup_ID(C.ImGuiID(id))
+func OpenPopupID(id ID) {
+	C.wrap_igOpenPopup_ID(C.ImGuiID(id))
 }
 
-func OpenPopup_Str(str_id string) {
+func OpenPopupStr(str_id string) {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	C.OpenPopup_Str(str_idArg)
+	C.wrap_igOpenPopup_Str(str_idArg)
 }
 
-func PlotHistogram_FloatPtr(label string, values []float32, values_count int32) {
+func PlotHistogramFloatPtr(label string, values []float32, values_count int32) {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	C.PlotHistogram_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count))
+	C.wrap_igPlotHistogram_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count))
 }
 
-func PlotLines_FloatPtr(label string, values []float32, values_count int32) {
+func PlotLinesFloatPtr(label string, values []float32, values_count int32) {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	C.PlotLines_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count))
+	C.wrap_igPlotLines_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count))
 }
 
 func PopStyleColor() {
-	C.PopStyleColor()
+	C.wrap_igPopStyleColor()
 }
 
 func PopStyleVar() {
-	C.PopStyleVar()
+	C.wrap_igPopStyleVar()
 }
 
 func ProgressBar(fraction float32) {
-	C.ProgressBar(C.float(fraction))
+	C.wrap_igProgressBar(C.float(fraction))
 }
 
 func PushTextWrapPos() {
-	C.PushTextWrapPos()
+	C.wrap_igPushTextWrapPos()
 }
 
 func RenderPlatformWindowsDefault() {
-	C.RenderPlatformWindowsDefault()
+	C.wrap_igRenderPlatformWindowsDefault()
 }
 
 func ResetMouseDragDelta() {
-	C.ResetMouseDragDelta()
+	C.wrap_igResetMouseDragDelta()
 }
 
 func SameLine() {
-	C.SameLine()
+	C.wrap_igSameLine()
 }
 
 func SaveIniSettingsToMemory() string {
-	return C.GoString(C.SaveIniSettingsToMemory())
+	return C.GoString(C.wrap_igSaveIniSettingsToMemory())
 }
 
-func Selectable_Bool(label string) bool {
+func SelectableBool(label string) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.Selectable_Bool(labelArg) == C.bool(true)
+	return C.wrap_igSelectable_Bool(labelArg) == C.bool(true)
 }
 
-func Selectable_BoolPtr(label string, p_selected *bool) bool {
+func SelectableBoolPtr(label string, p_selected *bool) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
 	p_selectedArg, p_selectedFin := wrapBool(p_selected)
 	defer p_selectedFin()
 
-	return C.Selectable_BoolPtr(labelArg, p_selectedArg) == C.bool(true)
+	return C.wrap_igSelectable_BoolPtr(labelArg, p_selectedArg) == C.bool(true)
 }
 
 func SetDragDropPayload(typeArg string, data unsafe.Pointer, sz uint64) bool {
 	typeArgArg, typeArgFin := wrapString(typeArg)
 	defer typeArgFin()
 
-	return C.SetDragDropPayload(typeArgArg, (data), C.xlong(sz)) == C.bool(true)
+	return C.wrap_igSetDragDropPayload(typeArgArg, (data), C.xlong(sz)) == C.bool(true)
 }
 
 func SetKeyboardFocusHere() {
-	C.SetKeyboardFocusHere()
+	C.wrap_igSetKeyboardFocusHere()
 }
 
 func SetNextItemOpen(is_open bool) {
-	C.SetNextItemOpen(C.bool(is_open))
+	C.wrap_igSetNextItemOpen(C.bool(is_open))
 }
 
 func SetNextWindowCollapsed(collapsed bool) {
-	C.SetNextWindowCollapsed(C.bool(collapsed))
+	C.wrap_igSetNextWindowCollapsed(C.bool(collapsed))
 }
 
-func SetNextWindowDockID(dock_id ImGuiID) {
-	C.SetNextWindowDockID(C.ImGuiID(dock_id))
+func SetNextWindowDockID(dock_id ID) {
+	C.wrap_igSetNextWindowDockID(C.ImGuiID(dock_id))
 }
 
 func SetNextWindowPos(pos Vec2) {
-	C.SetNextWindowPos(pos.toC())
+	C.wrap_igSetNextWindowPos(pos.toC())
 }
 
 func SetNextWindowSize(size Vec2) {
-	C.SetNextWindowSize(size.toC())
+	C.wrap_igSetNextWindowSize(size.toC())
 }
 
 func SetNextWindowSizeConstraints(size_min Vec2, size_max Vec2) {
-	C.SetNextWindowSizeConstraints(size_min.toC(), size_max.toC())
+	C.wrap_igSetNextWindowSizeConstraints(size_min.toC(), size_max.toC())
 }
 
-func SetScrollFromPosX_Float(local_x float32) {
-	C.SetScrollFromPosX_Float(C.float(local_x))
+func SetScrollFromPosXFloat(local_x float32) {
+	C.wrap_igSetScrollFromPosX_Float(C.float(local_x))
 }
 
-func SetScrollFromPosY_Float(local_y float32) {
-	C.SetScrollFromPosY_Float(C.float(local_y))
+func SetScrollFromPosYFloat(local_y float32) {
+	C.wrap_igSetScrollFromPosY_Float(C.float(local_y))
 }
 
 func SetScrollHereX() {
-	C.SetScrollHereX()
+	C.wrap_igSetScrollHereX()
 }
 
 func SetScrollHereY() {
-	C.SetScrollHereY()
+	C.wrap_igSetScrollHereY()
 }
 
-func SetWindowCollapsed_Bool(collapsed bool) {
-	C.SetWindowCollapsed_Bool(C.bool(collapsed))
+func SetWindowCollapsedBool(collapsed bool) {
+	C.wrap_igSetWindowCollapsed_Bool(C.bool(collapsed))
 }
 
-func SetWindowCollapsed_Str(name string, collapsed bool) {
+func SetWindowCollapsedStr(name string, collapsed bool) {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
-	C.SetWindowCollapsed_Str(nameArg, C.bool(collapsed))
+	C.wrap_igSetWindowCollapsed_Str(nameArg, C.bool(collapsed))
 }
 
-func SetWindowPos_Str(name string, pos Vec2) {
+func SetWindowPosStr(name string, pos Vec2) {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
-	C.SetWindowPos_Str(nameArg, pos.toC())
+	C.wrap_igSetWindowPos_Str(nameArg, pos.toC())
 }
 
-func SetWindowPos_Vec2(pos Vec2) {
-	C.SetWindowPos_Vec2(pos.toC())
+func SetWindowPosVec2(pos Vec2) {
+	C.wrap_igSetWindowPos_Vec2(pos.toC())
 }
 
-func SetWindowSize_Str(name string, size Vec2) {
+func SetWindowSizeStr(name string, size Vec2) {
 	nameArg, nameFin := wrapString(name)
 	defer nameFin()
 
-	C.SetWindowSize_Str(nameArg, size.toC())
+	C.wrap_igSetWindowSize_Str(nameArg, size.toC())
 }
 
-func SetWindowSize_Vec2(size Vec2) {
-	C.SetWindowSize_Vec2(size.toC())
+func SetWindowSizeVec2(size Vec2) {
+	C.wrap_igSetWindowSize_Vec2(size.toC())
 }
 
 func ShowAboutWindow() {
-	C.ShowAboutWindow()
+	C.wrap_igShowAboutWindow()
 }
 
 func ShowDebugLogWindow() {
-	C.ShowDebugLogWindow()
+	C.wrap_igShowDebugLogWindow()
 }
 
 func ShowDemoWindow() {
-	C.ShowDemoWindow()
+	C.wrap_igShowDemoWindow()
 }
 
 func ShowMetricsWindow() {
-	C.ShowMetricsWindow()
+	C.wrap_igShowMetricsWindow()
 }
 
 func ShowStackToolWindow() {
-	C.ShowStackToolWindow()
+	C.wrap_igShowStackToolWindow()
 }
 
 func ShowStyleEditor() {
-	C.ShowStyleEditor()
+	C.wrap_igShowStyleEditor()
 }
 
 func SliderAngle(label string, v_rad *float32) bool {
@@ -5151,7 +5162,7 @@ func SliderAngle(label string, v_rad *float32) bool {
 	v_radArg, v_radFin := wrapNumberPtr[C.float, float32](v_rad)
 	defer v_radFin()
 
-	return C.SliderAngle(labelArg, v_radArg) == C.bool(true)
+	return C.wrap_igSliderAngle(labelArg, v_radArg) == C.bool(true)
 }
 
 func SliderFloat(label string, v *float32, v_min float32, v_max float32) bool {
@@ -5161,7 +5172,7 @@ func SliderFloat(label string, v *float32, v_min float32, v_max float32) bool {
 	vArg, vFin := wrapNumberPtr[C.float, float32](v)
 	defer vFin()
 
-	return C.SliderFloat(labelArg, vArg, C.float(v_min), C.float(v_max)) == C.bool(true)
+	return C.wrap_igSliderFloat(labelArg, vArg, C.float(v_min), C.float(v_max)) == C.bool(true)
 }
 
 func SliderFloat2(label string, v [2]*float32, v_min float32, v_max float32) bool {
@@ -5178,7 +5189,7 @@ func SliderFloat2(label string, v [2]*float32, v_min float32, v_max float32) boo
 		}
 	}()
 
-	return C.SliderFloat2(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max)) == C.bool(true)
+	return C.wrap_igSliderFloat2(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max)) == C.bool(true)
 }
 
 func SliderFloat3(label string, v [3]*float32, v_min float32, v_max float32) bool {
@@ -5195,7 +5206,7 @@ func SliderFloat3(label string, v [3]*float32, v_min float32, v_max float32) boo
 		}
 	}()
 
-	return C.SliderFloat3(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max)) == C.bool(true)
+	return C.wrap_igSliderFloat3(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max)) == C.bool(true)
 }
 
 func SliderFloat4(label string, v [4]*float32, v_min float32, v_max float32) bool {
@@ -5212,7 +5223,7 @@ func SliderFloat4(label string, v [4]*float32, v_min float32, v_max float32) boo
 		}
 	}()
 
-	return C.SliderFloat4(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max)) == C.bool(true)
+	return C.wrap_igSliderFloat4(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max)) == C.bool(true)
 }
 
 func SliderInt(label string, v *int32, v_min int32, v_max int32) bool {
@@ -5222,7 +5233,7 @@ func SliderInt(label string, v *int32, v_min int32, v_max int32) bool {
 	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
-	return C.SliderInt(labelArg, vArg, C.int(v_min), C.int(v_max)) == C.bool(true)
+	return C.wrap_igSliderInt(labelArg, vArg, C.int(v_min), C.int(v_max)) == C.bool(true)
 }
 
 func SliderInt2(label string, v [2]*int32, v_min int32, v_max int32) bool {
@@ -5239,7 +5250,7 @@ func SliderInt2(label string, v [2]*int32, v_min int32, v_max int32) bool {
 		}
 	}()
 
-	return C.SliderInt2(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max)) == C.bool(true)
+	return C.wrap_igSliderInt2(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max)) == C.bool(true)
 }
 
 func SliderInt3(label string, v [3]*int32, v_min int32, v_max int32) bool {
@@ -5256,7 +5267,7 @@ func SliderInt3(label string, v [3]*int32, v_min int32, v_max int32) bool {
 		}
 	}()
 
-	return C.SliderInt3(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max)) == C.bool(true)
+	return C.wrap_igSliderInt3(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max)) == C.bool(true)
 }
 
 func SliderInt4(label string, v [4]*int32, v_min int32, v_max int32) bool {
@@ -5273,85 +5284,85 @@ func SliderInt4(label string, v [4]*int32, v_min int32, v_max int32) bool {
 		}
 	}()
 
-	return C.SliderInt4(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max)) == C.bool(true)
+	return C.wrap_igSliderInt4(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max)) == C.bool(true)
 }
 
 func SliderScalar(label string, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.SliderScalar(labelArg, C.ImGuiDataType(data_type), (p_data), (p_min), (p_max)) == C.bool(true)
+	return C.wrap_igSliderScalar(labelArg, C.ImGuiDataType(data_type), (p_data), (p_min), (p_max)) == C.bool(true)
 }
 
 func SliderScalarN(label string, data_type DataType, p_data unsafe.Pointer, components int32, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.SliderScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), (p_min), (p_max)) == C.bool(true)
+	return C.wrap_igSliderScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), (p_min), (p_max)) == C.bool(true)
 }
 
 func StyleColorsClassic() {
-	C.StyleColorsClassic()
+	C.wrap_igStyleColorsClassic()
 }
 
 func StyleColorsDark() {
-	C.StyleColorsDark()
+	C.wrap_igStyleColorsDark()
 }
 
 func StyleColorsLight() {
-	C.StyleColorsLight()
+	C.wrap_igStyleColorsLight()
 }
 
 func TabItemButton(label string) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.TabItemButton(labelArg) == C.bool(true)
+	return C.wrap_igTabItemButton(labelArg) == C.bool(true)
 }
 
 func TableGetColumnFlags() TableColumnFlags {
-	return TableColumnFlags(C.TableGetColumnFlags())
+	return TableColumnFlags(C.wrap_igTableGetColumnFlags())
 }
 
-func TableGetColumnName_Int() string {
-	return C.GoString(C.TableGetColumnName_Int())
+func TableGetColumnNameInt() string {
+	return C.GoString(C.wrap_igTableGetColumnName_Int())
 }
 
 func TableNextRow() {
-	C.TableNextRow()
+	C.wrap_igTableNextRow()
 }
 
 func TableSetBgColor(target TableBgTarget, color uint32) {
-	C.TableSetBgColor(C.ImGuiTableBgTarget(target), C.ImU32(color))
+	C.wrap_igTableSetBgColor(C.ImGuiTableBgTarget(target), C.ImU32(color))
 }
 
 func TableSetupColumn(label string) {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	C.TableSetupColumn(labelArg)
+	C.wrap_igTableSetupColumn(labelArg)
 }
 
 func TextUnformatted(text string) {
 	textArg, textFin := wrapString(text)
 	defer textFin()
 
-	C.TextUnformatted(textArg)
+	C.wrap_igTextUnformatted(textArg)
 }
 
-func TreeNodeEx_Str(label string) bool {
+func TreeNodeExStr(label string) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.TreeNodeEx_Str(labelArg) == C.bool(true)
+	return C.wrap_igTreeNodeEx_Str(labelArg) == C.bool(true)
 }
 
-func TreePush_Ptr() {
-	C.TreePush_Ptr()
+func TreePushPtr() {
+	C.wrap_igTreePush_Ptr()
 }
 
 func Unindent() {
-	C.Unindent()
+	C.wrap_igUnindent()
 }
 
 func VSliderFloat(label string, size Vec2, v *float32, v_min float32, v_max float32) bool {
@@ -5361,7 +5372,7 @@ func VSliderFloat(label string, size Vec2, v *float32, v_min float32, v_max floa
 	vArg, vFin := wrapNumberPtr[C.float, float32](v)
 	defer vFin()
 
-	return C.VSliderFloat(labelArg, size.toC(), vArg, C.float(v_min), C.float(v_max)) == C.bool(true)
+	return C.wrap_igVSliderFloat(labelArg, size.toC(), vArg, C.float(v_min), C.float(v_max)) == C.bool(true)
 }
 
 func VSliderInt(label string, size Vec2, v *int32, v_min int32, v_max int32) bool {
@@ -5371,8744 +5382,8744 @@ func VSliderInt(label string, size Vec2, v *int32, v_min int32, v_max int32) boo
 	vArg, vFin := wrapNumberPtr[C.int, int32](v)
 	defer vFin()
 
-	return C.VSliderInt(labelArg, size.toC(), vArg, C.int(v_min), C.int(v_max)) == C.bool(true)
+	return C.wrap_igVSliderInt(labelArg, size.toC(), vArg, C.int(v_min), C.int(v_max)) == C.bool(true)
 }
 
 func VSliderScalar(label string, size Vec2, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
 	labelArg, labelFin := wrapString(label)
 	defer labelFin()
 
-	return C.VSliderScalar(labelArg, size.toC(), C.ImGuiDataType(data_type), (p_data), (p_min), (p_max)) == C.bool(true)
+	return C.wrap_igVSliderScalar(labelArg, size.toC(), C.ImGuiDataType(data_type), (p_data), (p_min), (p_max)) == C.bool(true)
 }
 
-func Value_Float(prefix string, v float32) {
+func ValueFloat(prefix string, v float32) {
 	prefixArg, prefixFin := wrapString(prefix)
 	defer prefixFin()
 
-	C.Value_Float(prefixArg, C.float(v))
+	C.wrap_igValue_Float(prefixArg, C.float(v))
 }
 
-func (self *ImDrawCmd) SetClipRect(v Vec4) {
-	C.ImDrawCmd_SetClipRect(self.handle(), v.toC())
+func (self *DrawCmd) SetClipRect(v Vec4) {
+	C.wrap_ImDrawCmd_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImDrawCmd) GetClipRect() Vec4 {
+func (self DrawCmd) ClipRect() Vec4 {
 	out := &Vec4{}
-	out.fromC(C.ImDrawCmd_GetClipRect(self.handle()))
+	out.fromC(C.wrap_ImDrawCmd_GetClipRect(self.handle()))
 	return *out
 }
 
-func (self *ImDrawCmd) SetTextureId(v TextureID) {
-	C.ImDrawCmd_SetTextureId(self.handle(), C.ImTextureID(v))
+func (self *DrawCmd) SetTextureId(v TextureID) {
+	C.wrap_ImDrawCmd_SetTextureId(self.handle(), C.ImTextureID(v))
 }
 
-func (self ImDrawCmd) GetTextureId() TextureID {
-	return TextureID(C.ImDrawCmd_GetTextureId(self.handle()))
+func (self DrawCmd) TextureId() TextureID {
+	return TextureID(C.wrap_ImDrawCmd_GetTextureId(self.handle()))
 }
 
-func (self *ImDrawCmd) SetVtxOffset(v uint32) {
-	C.ImDrawCmd_SetVtxOffset(self.handle(), C.uint(v))
+func (self *DrawCmd) SetVtxOffset(v uint32) {
+	C.wrap_ImDrawCmd_SetVtxOffset(self.handle(), C.uint(v))
 }
 
-func (self ImDrawCmd) GetVtxOffset() uint32 {
-	return uint32(C.ImDrawCmd_GetVtxOffset(self.handle()))
+func (self DrawCmd) VtxOffset() uint32 {
+	return uint32(C.wrap_ImDrawCmd_GetVtxOffset(self.handle()))
 }
 
-func (self *ImDrawCmd) SetIdxOffset(v uint32) {
-	C.ImDrawCmd_SetIdxOffset(self.handle(), C.uint(v))
+func (self *DrawCmd) SetIdxOffset(v uint32) {
+	C.wrap_ImDrawCmd_SetIdxOffset(self.handle(), C.uint(v))
 }
 
-func (self ImDrawCmd) GetIdxOffset() uint32 {
-	return uint32(C.ImDrawCmd_GetIdxOffset(self.handle()))
+func (self DrawCmd) IdxOffset() uint32 {
+	return uint32(C.wrap_ImDrawCmd_GetIdxOffset(self.handle()))
 }
 
-func (self *ImDrawCmd) SetElemCount(v uint32) {
-	C.ImDrawCmd_SetElemCount(self.handle(), C.uint(v))
+func (self *DrawCmd) SetElemCount(v uint32) {
+	C.wrap_ImDrawCmd_SetElemCount(self.handle(), C.uint(v))
 }
 
-func (self ImDrawCmd) GetElemCount() uint32 {
-	return uint32(C.ImDrawCmd_GetElemCount(self.handle()))
+func (self DrawCmd) ElemCount() uint32 {
+	return uint32(C.wrap_ImDrawCmd_GetElemCount(self.handle()))
 }
 
-func (self *ImDrawCmd) SetUserCallbackData(v unsafe.Pointer) {
-	C.ImDrawCmd_SetUserCallbackData(self.handle(), (v))
+func (self *DrawCmd) SetUserCallbackData(v unsafe.Pointer) {
+	C.wrap_ImDrawCmd_SetUserCallbackData(self.handle(), (v))
 }
 
-func (self ImDrawCmd) GetUserCallbackData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImDrawCmd_GetUserCallbackData(self.handle()))
+func (self DrawCmd) UserCallbackData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImDrawCmd_GetUserCallbackData(self.handle()))
 }
 
-func (self *ImDrawCmdHeader) SetClipRect(v Vec4) {
-	C.ImDrawCmdHeader_SetClipRect(self.handle(), v.toC())
+func (self *DrawCmdHeader) SetClipRect(v Vec4) {
+	C.wrap_ImDrawCmdHeader_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImDrawCmdHeader) GetClipRect() Vec4 {
+func (self DrawCmdHeader) ClipRect() Vec4 {
 	out := &Vec4{}
-	out.fromC(C.ImDrawCmdHeader_GetClipRect(self.handle()))
+	out.fromC(C.wrap_ImDrawCmdHeader_GetClipRect(self.handle()))
 	return *out
 }
 
-func (self *ImDrawCmdHeader) SetTextureId(v TextureID) {
-	C.ImDrawCmdHeader_SetTextureId(self.handle(), C.ImTextureID(v))
+func (self *DrawCmdHeader) SetTextureId(v TextureID) {
+	C.wrap_ImDrawCmdHeader_SetTextureId(self.handle(), C.ImTextureID(v))
 }
 
-func (self ImDrawCmdHeader) GetTextureId() TextureID {
-	return TextureID(C.ImDrawCmdHeader_GetTextureId(self.handle()))
+func (self DrawCmdHeader) TextureId() TextureID {
+	return TextureID(C.wrap_ImDrawCmdHeader_GetTextureId(self.handle()))
 }
 
-func (self *ImDrawCmdHeader) SetVtxOffset(v uint32) {
-	C.ImDrawCmdHeader_SetVtxOffset(self.handle(), C.uint(v))
+func (self *DrawCmdHeader) SetVtxOffset(v uint32) {
+	C.wrap_ImDrawCmdHeader_SetVtxOffset(self.handle(), C.uint(v))
 }
 
-func (self ImDrawCmdHeader) GetVtxOffset() uint32 {
-	return uint32(C.ImDrawCmdHeader_GetVtxOffset(self.handle()))
+func (self DrawCmdHeader) VtxOffset() uint32 {
+	return uint32(C.wrap_ImDrawCmdHeader_GetVtxOffset(self.handle()))
 }
 
-func (self *ImDrawData) SetValid(v bool) {
-	C.ImDrawData_SetValid(self.handle(), C.bool(v))
+func (self *DrawData) SetValid(v bool) {
+	C.wrap_ImDrawData_SetValid(self.handle(), C.bool(v))
 }
 
-func (self ImDrawData) GetValid() bool {
-	return C.ImDrawData_GetValid(self.handle()) == C.bool(true)
+func (self DrawData) Valid() bool {
+	return C.wrap_ImDrawData_GetValid(self.handle()) == C.bool(true)
 }
 
-func (self *ImDrawData) SetCmdListsCount(v int32) {
-	C.ImDrawData_SetCmdListsCount(self.handle(), C.int(v))
+func (self *DrawData) SetCmdListsCount(v int32) {
+	C.wrap_ImDrawData_SetCmdListsCount(self.handle(), C.int(v))
 }
 
-func (self ImDrawData) GetCmdListsCount() int {
-	return int(C.ImDrawData_GetCmdListsCount(self.handle()))
+func (self DrawData) CmdListsCount() int {
+	return int(C.wrap_ImDrawData_GetCmdListsCount(self.handle()))
 }
 
-func (self *ImDrawData) SetTotalIdxCount(v int32) {
-	C.ImDrawData_SetTotalIdxCount(self.handle(), C.int(v))
+func (self *DrawData) SetTotalIdxCount(v int32) {
+	C.wrap_ImDrawData_SetTotalIdxCount(self.handle(), C.int(v))
 }
 
-func (self ImDrawData) GetTotalIdxCount() int {
-	return int(C.ImDrawData_GetTotalIdxCount(self.handle()))
+func (self DrawData) TotalIdxCount() int {
+	return int(C.wrap_ImDrawData_GetTotalIdxCount(self.handle()))
 }
 
-func (self *ImDrawData) SetTotalVtxCount(v int32) {
-	C.ImDrawData_SetTotalVtxCount(self.handle(), C.int(v))
+func (self *DrawData) SetTotalVtxCount(v int32) {
+	C.wrap_ImDrawData_SetTotalVtxCount(self.handle(), C.int(v))
 }
 
-func (self ImDrawData) GetTotalVtxCount() int {
-	return int(C.ImDrawData_GetTotalVtxCount(self.handle()))
+func (self DrawData) TotalVtxCount() int {
+	return int(C.wrap_ImDrawData_GetTotalVtxCount(self.handle()))
 }
 
-func (self *ImDrawData) SetDisplayPos(v Vec2) {
-	C.ImDrawData_SetDisplayPos(self.handle(), v.toC())
+func (self *DrawData) SetDisplayPos(v Vec2) {
+	C.wrap_ImDrawData_SetDisplayPos(self.handle(), v.toC())
 }
 
-func (self ImDrawData) GetDisplayPos() Vec2 {
+func (self DrawData) DisplayPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImDrawData_GetDisplayPos(self.handle()))
+	out.fromC(C.wrap_ImDrawData_GetDisplayPos(self.handle()))
 	return *out
 }
 
-func (self *ImDrawData) SetDisplaySize(v Vec2) {
-	C.ImDrawData_SetDisplaySize(self.handle(), v.toC())
+func (self *DrawData) SetDisplaySize(v Vec2) {
+	C.wrap_ImDrawData_SetDisplaySize(self.handle(), v.toC())
 }
 
-func (self ImDrawData) GetDisplaySize() Vec2 {
+func (self DrawData) DisplaySize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImDrawData_GetDisplaySize(self.handle()))
+	out.fromC(C.wrap_ImDrawData_GetDisplaySize(self.handle()))
 	return *out
 }
 
-func (self *ImDrawData) SetFramebufferScale(v Vec2) {
-	C.ImDrawData_SetFramebufferScale(self.handle(), v.toC())
+func (self *DrawData) SetFramebufferScale(v Vec2) {
+	C.wrap_ImDrawData_SetFramebufferScale(self.handle(), v.toC())
 }
 
-func (self ImDrawData) GetFramebufferScale() Vec2 {
+func (self DrawData) FramebufferScale() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImDrawData_GetFramebufferScale(self.handle()))
+	out.fromC(C.wrap_ImDrawData_GetFramebufferScale(self.handle()))
 	return *out
 }
 
-func (self *ImDrawData) SetOwnerViewport(v ImGuiViewport) {
-	C.ImDrawData_SetOwnerViewport(self.handle(), v.handle())
+func (self *DrawData) SetOwnerViewport(v Viewport) {
+	C.wrap_ImDrawData_SetOwnerViewport(self.handle(), v.handle())
 }
 
-func (self ImDrawData) GetOwnerViewport() ImGuiViewport {
-	return (ImGuiViewport)(unsafe.Pointer(C.ImDrawData_GetOwnerViewport(self.handle())))
+func (self DrawData) OwnerViewport() Viewport {
+	return (Viewport)(unsafe.Pointer(C.wrap_ImDrawData_GetOwnerViewport(self.handle())))
 }
 
-func (self *ImDrawList) SetFlags(v DrawListFlags) {
-	C.ImDrawList_SetFlags(self.handle(), C.ImDrawListFlags(v))
+func (self *DrawList) SetFlags(v DrawListFlags) {
+	C.wrap_ImDrawList_SetFlags(self.handle(), C.ImDrawListFlags(v))
 }
 
-func (self ImDrawList) GetFlags() DrawListFlags {
-	return DrawListFlags(C.ImDrawList_GetFlags(self.handle()))
+func (self DrawList) Flags() DrawListFlags {
+	return DrawListFlags(C.wrap_ImDrawList_GetFlags(self.handle()))
 }
 
-func (self *ImDrawList) Set_VtxCurrentIdx(v uint32) {
-	C.ImDrawList_Set_VtxCurrentIdx(self.handle(), C.uint(v))
+func (self *DrawList) SetVtxCurrentIdx(v uint32) {
+	C.wrap_ImDrawList_Set_VtxCurrentIdx(self.handle(), C.uint(v))
 }
 
-func (self ImDrawList) Get_VtxCurrentIdx() uint32 {
-	return uint32(C.ImDrawList_Get_VtxCurrentIdx(self.handle()))
+func (self DrawList) VtxCurrentIdx() uint32 {
+	return uint32(C.wrap_ImDrawList_Get_VtxCurrentIdx(self.handle()))
 }
 
-func (self *ImDrawList) Set_Data(v ImDrawListSharedData) {
-	C.ImDrawList_Set_Data(self.handle(), v.handle())
+func (self *DrawList) SetData(v DrawListSharedData) {
+	C.wrap_ImDrawList_Set_Data(self.handle(), v.handle())
 }
 
-func (self ImDrawList) Get_Data() ImDrawListSharedData {
-	return (ImDrawListSharedData)(unsafe.Pointer(C.ImDrawList_Get_Data(self.handle())))
+func (self DrawList) Data() DrawListSharedData {
+	return (DrawListSharedData)(unsafe.Pointer(C.wrap_ImDrawList_Get_Data(self.handle())))
 }
 
-func (self *ImDrawList) Set_OwnerName(v string) {
+func (self *DrawList) SetOwnerName(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImDrawList_Set_OwnerName(self.handle(), vArg)
+	C.wrap_ImDrawList_Set_OwnerName(self.handle(), vArg)
 }
 
-func (self ImDrawList) Get_OwnerName() string {
-	return C.GoString(C.ImDrawList_Get_OwnerName(self.handle()))
+func (self DrawList) OwnerName() string {
+	return C.GoString(C.wrap_ImDrawList_Get_OwnerName(self.handle()))
 }
 
-func (self *ImDrawList) Set_VtxWritePtr(v ImDrawVert) {
-	C.ImDrawList_Set_VtxWritePtr(self.handle(), v.handle())
+func (self *DrawList) SetVtxWritePtr(v DrawVert) {
+	C.wrap_ImDrawList_Set_VtxWritePtr(self.handle(), v.handle())
 }
 
-func (self ImDrawList) Get_VtxWritePtr() ImDrawVert {
-	return (ImDrawVert)(unsafe.Pointer(C.ImDrawList_Get_VtxWritePtr(self.handle())))
+func (self DrawList) VtxWritePtr() DrawVert {
+	return (DrawVert)(unsafe.Pointer(C.wrap_ImDrawList_Get_VtxWritePtr(self.handle())))
 }
 
-func (self ImDrawList) Get_CmdHeader() ImDrawCmdHeader {
-	return newImDrawCmdHeaderFromC(C.ImDrawList_Get_CmdHeader(self.handle()))
+func (self DrawList) CmdHeader() DrawCmdHeader {
+	return newDrawCmdHeaderFromC(C.wrap_ImDrawList_Get_CmdHeader(self.handle()))
 }
 
-func (self ImDrawList) Get_Splitter() ImDrawListSplitter {
-	return newImDrawListSplitterFromC(C.ImDrawList_Get_Splitter(self.handle()))
+func (self DrawList) Splitter() DrawListSplitter {
+	return newDrawListSplitterFromC(C.wrap_ImDrawList_Get_Splitter(self.handle()))
 }
 
-func (self *ImDrawList) Set_FringeScale(v float32) {
-	C.ImDrawList_Set_FringeScale(self.handle(), C.float(v))
+func (self *DrawList) SetFringeScale(v float32) {
+	C.wrap_ImDrawList_Set_FringeScale(self.handle(), C.float(v))
 }
 
-func (self ImDrawList) Get_FringeScale() float32 {
-	return float32(C.ImDrawList_Get_FringeScale(self.handle()))
+func (self DrawList) FringeScale() float32 {
+	return float32(C.wrap_ImDrawList_Get_FringeScale(self.handle()))
 }
 
-func (self *ImDrawListSharedData) SetTexUvWhitePixel(v Vec2) {
-	C.ImDrawListSharedData_SetTexUvWhitePixel(self.handle(), v.toC())
+func (self *DrawListSharedData) SetTexUvWhitePixel(v Vec2) {
+	C.wrap_ImDrawListSharedData_SetTexUvWhitePixel(self.handle(), v.toC())
 }
 
-func (self ImDrawListSharedData) GetTexUvWhitePixel() Vec2 {
+func (self DrawListSharedData) TexUvWhitePixel() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImDrawListSharedData_GetTexUvWhitePixel(self.handle()))
+	out.fromC(C.wrap_ImDrawListSharedData_GetTexUvWhitePixel(self.handle()))
 	return *out
 }
 
-func (self *ImDrawListSharedData) SetFont(v ImFont) {
-	C.ImDrawListSharedData_SetFont(self.handle(), v.handle())
+func (self *DrawListSharedData) SetFont(v Font) {
+	C.wrap_ImDrawListSharedData_SetFont(self.handle(), v.handle())
 }
 
-func (self ImDrawListSharedData) GetFont() ImFont {
-	return (ImFont)(unsafe.Pointer(C.ImDrawListSharedData_GetFont(self.handle())))
+func (self DrawListSharedData) Font() Font {
+	return (Font)(unsafe.Pointer(C.wrap_ImDrawListSharedData_GetFont(self.handle())))
 }
 
-func (self *ImDrawListSharedData) SetFontSize(v float32) {
-	C.ImDrawListSharedData_SetFontSize(self.handle(), C.float(v))
+func (self *DrawListSharedData) SetFontSize(v float32) {
+	C.wrap_ImDrawListSharedData_SetFontSize(self.handle(), C.float(v))
 }
 
-func (self ImDrawListSharedData) GetFontSize() float32 {
-	return float32(C.ImDrawListSharedData_GetFontSize(self.handle()))
+func (self DrawListSharedData) FontSize() float32 {
+	return float32(C.wrap_ImDrawListSharedData_GetFontSize(self.handle()))
 }
 
-func (self *ImDrawListSharedData) SetCurveTessellationTol(v float32) {
-	C.ImDrawListSharedData_SetCurveTessellationTol(self.handle(), C.float(v))
+func (self *DrawListSharedData) SetCurveTessellationTol(v float32) {
+	C.wrap_ImDrawListSharedData_SetCurveTessellationTol(self.handle(), C.float(v))
 }
 
-func (self ImDrawListSharedData) GetCurveTessellationTol() float32 {
-	return float32(C.ImDrawListSharedData_GetCurveTessellationTol(self.handle()))
+func (self DrawListSharedData) CurveTessellationTol() float32 {
+	return float32(C.wrap_ImDrawListSharedData_GetCurveTessellationTol(self.handle()))
 }
 
-func (self *ImDrawListSharedData) SetCircleSegmentMaxError(v float32) {
-	C.ImDrawListSharedData_SetCircleSegmentMaxError(self.handle(), C.float(v))
+func (self *DrawListSharedData) SetCircleSegmentMaxError(v float32) {
+	C.wrap_ImDrawListSharedData_SetCircleSegmentMaxError(self.handle(), C.float(v))
 }
 
-func (self ImDrawListSharedData) GetCircleSegmentMaxError() float32 {
-	return float32(C.ImDrawListSharedData_GetCircleSegmentMaxError(self.handle()))
+func (self DrawListSharedData) CircleSegmentMaxError() float32 {
+	return float32(C.wrap_ImDrawListSharedData_GetCircleSegmentMaxError(self.handle()))
 }
 
-func (self *ImDrawListSharedData) SetClipRectFullscreen(v Vec4) {
-	C.ImDrawListSharedData_SetClipRectFullscreen(self.handle(), v.toC())
+func (self *DrawListSharedData) SetClipRectFullscreen(v Vec4) {
+	C.wrap_ImDrawListSharedData_SetClipRectFullscreen(self.handle(), v.toC())
 }
 
-func (self ImDrawListSharedData) GetClipRectFullscreen() Vec4 {
+func (self DrawListSharedData) ClipRectFullscreen() Vec4 {
 	out := &Vec4{}
-	out.fromC(C.ImDrawListSharedData_GetClipRectFullscreen(self.handle()))
+	out.fromC(C.wrap_ImDrawListSharedData_GetClipRectFullscreen(self.handle()))
 	return *out
 }
 
-func (self *ImDrawListSharedData) SetInitialFlags(v DrawListFlags) {
-	C.ImDrawListSharedData_SetInitialFlags(self.handle(), C.ImDrawListFlags(v))
+func (self *DrawListSharedData) SetInitialFlags(v DrawListFlags) {
+	C.wrap_ImDrawListSharedData_SetInitialFlags(self.handle(), C.ImDrawListFlags(v))
 }
 
-func (self ImDrawListSharedData) GetInitialFlags() DrawListFlags {
-	return DrawListFlags(C.ImDrawListSharedData_GetInitialFlags(self.handle()))
+func (self DrawListSharedData) InitialFlags() DrawListFlags {
+	return DrawListFlags(C.wrap_ImDrawListSharedData_GetInitialFlags(self.handle()))
 }
 
-func (self *ImDrawListSharedData) SetArcFastRadiusCutoff(v float32) {
-	C.ImDrawListSharedData_SetArcFastRadiusCutoff(self.handle(), C.float(v))
+func (self *DrawListSharedData) SetArcFastRadiusCutoff(v float32) {
+	C.wrap_ImDrawListSharedData_SetArcFastRadiusCutoff(self.handle(), C.float(v))
 }
 
-func (self ImDrawListSharedData) GetArcFastRadiusCutoff() float32 {
-	return float32(C.ImDrawListSharedData_GetArcFastRadiusCutoff(self.handle()))
+func (self DrawListSharedData) ArcFastRadiusCutoff() float32 {
+	return float32(C.wrap_ImDrawListSharedData_GetArcFastRadiusCutoff(self.handle()))
 }
 
-func (self *ImDrawListSharedData) SetTexUvLines(v *Vec4) {
+func (self *DrawListSharedData) SetTexUvLines(v *Vec4) {
 	vArg, vFin := wrap[C.ImVec4, *Vec4](v)
 	defer vFin()
 
-	C.ImDrawListSharedData_SetTexUvLines(self.handle(), vArg)
+	C.wrap_ImDrawListSharedData_SetTexUvLines(self.handle(), vArg)
 }
 
-func (self ImDrawListSharedData) GetTexUvLines() *Vec4 {
+func (self DrawListSharedData) TexUvLines() *Vec4 {
 	out := &Vec4{}
-	out.fromC(*C.ImDrawListSharedData_GetTexUvLines(self.handle()))
+	out.fromC(*C.wrap_ImDrawListSharedData_GetTexUvLines(self.handle()))
 	return out
 }
 
-func (self *ImDrawListSplitter) Set_Current(v int32) {
-	C.ImDrawListSplitter_Set_Current(self.handle(), C.int(v))
+func (self *DrawListSplitter) SetCurrent(v int32) {
+	C.wrap_ImDrawListSplitter_Set_Current(self.handle(), C.int(v))
 }
 
-func (self ImDrawListSplitter) Get_Current() int {
-	return int(C.ImDrawListSplitter_Get_Current(self.handle()))
+func (self DrawListSplitter) Current() int {
+	return int(C.wrap_ImDrawListSplitter_Get_Current(self.handle()))
 }
 
-func (self *ImDrawListSplitter) Set_Count(v int32) {
-	C.ImDrawListSplitter_Set_Count(self.handle(), C.int(v))
+func (self *DrawListSplitter) SetCount(v int32) {
+	C.wrap_ImDrawListSplitter_Set_Count(self.handle(), C.int(v))
 }
 
-func (self ImDrawListSplitter) Get_Count() int {
-	return int(C.ImDrawListSplitter_Get_Count(self.handle()))
+func (self DrawListSplitter) Count() int {
+	return int(C.wrap_ImDrawListSplitter_Get_Count(self.handle()))
 }
 
-func (self *ImDrawVert) Setpos(v Vec2) {
-	C.ImDrawVert_Setpos(self.handle(), v.toC())
+func (self *DrawVert) Setpos(v Vec2) {
+	C.wrap_ImDrawVert_Setpos(self.handle(), v.toC())
 }
 
-func (self ImDrawVert) Getpos() Vec2 {
+func (self DrawVert) pos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImDrawVert_Getpos(self.handle()))
+	out.fromC(C.wrap_ImDrawVert_Getpos(self.handle()))
 	return *out
 }
 
-func (self *ImDrawVert) Setuv(v Vec2) {
-	C.ImDrawVert_Setuv(self.handle(), v.toC())
+func (self *DrawVert) Setuv(v Vec2) {
+	C.wrap_ImDrawVert_Setuv(self.handle(), v.toC())
 }
 
-func (self ImDrawVert) Getuv() Vec2 {
+func (self DrawVert) uv() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImDrawVert_Getuv(self.handle()))
+	out.fromC(C.wrap_ImDrawVert_Getuv(self.handle()))
 	return *out
 }
 
-func (self *ImDrawVert) Setcol(v uint32) {
-	C.ImDrawVert_Setcol(self.handle(), C.ImU32(v))
+func (self *DrawVert) Setcol(v uint32) {
+	C.wrap_ImDrawVert_Setcol(self.handle(), C.ImU32(v))
 }
 
-func (self ImDrawVert) Getcol() uint32 {
-	return uint32(C.ImDrawVert_Getcol(self.handle()))
+func (self DrawVert) col() uint32 {
+	return uint32(C.wrap_ImDrawVert_Getcol(self.handle()))
 }
 
-func (self *ImFont) SetFallbackAdvanceX(v float32) {
-	C.ImFont_SetFallbackAdvanceX(self.handle(), C.float(v))
+func (self *Font) SetFallbackAdvanceX(v float32) {
+	C.wrap_ImFont_SetFallbackAdvanceX(self.handle(), C.float(v))
 }
 
-func (self ImFont) GetFallbackAdvanceX() float32 {
-	return float32(C.ImFont_GetFallbackAdvanceX(self.handle()))
+func (self Font) FallbackAdvanceX() float32 {
+	return float32(C.wrap_ImFont_GetFallbackAdvanceX(self.handle()))
 }
 
-func (self *ImFont) SetFontSize(v float32) {
-	C.ImFont_SetFontSize(self.handle(), C.float(v))
+func (self *Font) SetFontSize(v float32) {
+	C.wrap_ImFont_SetFontSize(self.handle(), C.float(v))
 }
 
-func (self ImFont) GetFontSize() float32 {
-	return float32(C.ImFont_GetFontSize(self.handle()))
+func (self Font) FontSize() float32 {
+	return float32(C.wrap_ImFont_GetFontSize(self.handle()))
 }
 
-func (self *ImFont) SetFallbackGlyph(v ImFontGlyph) {
-	C.ImFont_SetFallbackGlyph(self.handle(), v.handle())
+func (self *Font) SetFallbackGlyph(v FontGlyph) {
+	C.wrap_ImFont_SetFallbackGlyph(self.handle(), v.handle())
 }
 
-func (self ImFont) GetFallbackGlyph() ImFontGlyph {
-	return (ImFontGlyph)(unsafe.Pointer(C.ImFont_GetFallbackGlyph(self.handle())))
+func (self Font) FallbackGlyph() FontGlyph {
+	return (FontGlyph)(unsafe.Pointer(C.wrap_ImFont_GetFallbackGlyph(self.handle())))
 }
 
-func (self *ImFont) SetContainerAtlas(v ImFontAtlas) {
-	C.ImFont_SetContainerAtlas(self.handle(), v.handle())
+func (self *Font) SetContainerAtlas(v FontAtlas) {
+	C.wrap_ImFont_SetContainerAtlas(self.handle(), v.handle())
 }
 
-func (self ImFont) GetContainerAtlas() ImFontAtlas {
-	return (ImFontAtlas)(unsafe.Pointer(C.ImFont_GetContainerAtlas(self.handle())))
+func (self Font) ContainerAtlas() FontAtlas {
+	return (FontAtlas)(unsafe.Pointer(C.wrap_ImFont_GetContainerAtlas(self.handle())))
 }
 
-func (self *ImFont) SetConfigData(v ImFontConfig) {
-	C.ImFont_SetConfigData(self.handle(), v.handle())
+func (self *Font) SetConfigData(v FontConfig) {
+	C.wrap_ImFont_SetConfigData(self.handle(), v.handle())
 }
 
-func (self ImFont) GetConfigData() ImFontConfig {
-	return (ImFontConfig)(unsafe.Pointer(C.ImFont_GetConfigData(self.handle())))
+func (self Font) ConfigData() FontConfig {
+	return (FontConfig)(unsafe.Pointer(C.wrap_ImFont_GetConfigData(self.handle())))
 }
 
-func (self *ImFont) SetConfigDataCount(v int) {
-	C.ImFont_SetConfigDataCount(self.handle(), C.short(v))
+func (self *Font) SetConfigDataCount(v int) {
+	C.wrap_ImFont_SetConfigDataCount(self.handle(), C.short(v))
 }
 
-func (self ImFont) GetConfigDataCount() int {
-	return int(C.ImFont_GetConfigDataCount(self.handle()))
+func (self Font) ConfigDataCount() int {
+	return int(C.wrap_ImFont_GetConfigDataCount(self.handle()))
 }
 
-func (self *ImFont) SetFallbackChar(v Wchar) {
-	C.ImFont_SetFallbackChar(self.handle(), C.ImWchar(v))
+func (self *Font) SetFallbackChar(v Wchar) {
+	C.wrap_ImFont_SetFallbackChar(self.handle(), C.ImWchar(v))
 }
 
-func (self ImFont) GetFallbackChar() Wchar {
-	return Wchar(C.ImFont_GetFallbackChar(self.handle()))
+func (self Font) FallbackChar() Wchar {
+	return Wchar(C.wrap_ImFont_GetFallbackChar(self.handle()))
 }
 
-func (self *ImFont) SetEllipsisChar(v Wchar) {
-	C.ImFont_SetEllipsisChar(self.handle(), C.ImWchar(v))
+func (self *Font) SetEllipsisChar(v Wchar) {
+	C.wrap_ImFont_SetEllipsisChar(self.handle(), C.ImWchar(v))
 }
 
-func (self ImFont) GetEllipsisChar() Wchar {
-	return Wchar(C.ImFont_GetEllipsisChar(self.handle()))
+func (self Font) EllipsisChar() Wchar {
+	return Wchar(C.wrap_ImFont_GetEllipsisChar(self.handle()))
 }
 
-func (self *ImFont) SetDotChar(v Wchar) {
-	C.ImFont_SetDotChar(self.handle(), C.ImWchar(v))
+func (self *Font) SetDotChar(v Wchar) {
+	C.wrap_ImFont_SetDotChar(self.handle(), C.ImWchar(v))
 }
 
-func (self ImFont) GetDotChar() Wchar {
-	return Wchar(C.ImFont_GetDotChar(self.handle()))
+func (self Font) DotChar() Wchar {
+	return Wchar(C.wrap_ImFont_GetDotChar(self.handle()))
 }
 
-func (self *ImFont) SetDirtyLookupTables(v bool) {
-	C.ImFont_SetDirtyLookupTables(self.handle(), C.bool(v))
+func (self *Font) SetDirtyLookupTables(v bool) {
+	C.wrap_ImFont_SetDirtyLookupTables(self.handle(), C.bool(v))
 }
 
-func (self ImFont) GetDirtyLookupTables() bool {
-	return C.ImFont_GetDirtyLookupTables(self.handle()) == C.bool(true)
+func (self Font) DirtyLookupTables() bool {
+	return C.wrap_ImFont_GetDirtyLookupTables(self.handle()) == C.bool(true)
 }
 
-func (self *ImFont) SetScale(v float32) {
-	C.ImFont_SetScale(self.handle(), C.float(v))
+func (self *Font) SetScale(v float32) {
+	C.wrap_ImFont_SetScale(self.handle(), C.float(v))
 }
 
-func (self ImFont) GetScale() float32 {
-	return float32(C.ImFont_GetScale(self.handle()))
+func (self Font) Scale() float32 {
+	return float32(C.wrap_ImFont_GetScale(self.handle()))
 }
 
-func (self *ImFont) SetAscent(v float32) {
-	C.ImFont_SetAscent(self.handle(), C.float(v))
+func (self *Font) SetAscent(v float32) {
+	C.wrap_ImFont_SetAscent(self.handle(), C.float(v))
 }
 
-func (self ImFont) GetAscent() float32 {
-	return float32(C.ImFont_GetAscent(self.handle()))
+func (self Font) Ascent() float32 {
+	return float32(C.wrap_ImFont_GetAscent(self.handle()))
 }
 
-func (self *ImFont) SetDescent(v float32) {
-	C.ImFont_SetDescent(self.handle(), C.float(v))
+func (self *Font) SetDescent(v float32) {
+	C.wrap_ImFont_SetDescent(self.handle(), C.float(v))
 }
 
-func (self ImFont) GetDescent() float32 {
-	return float32(C.ImFont_GetDescent(self.handle()))
+func (self Font) Descent() float32 {
+	return float32(C.wrap_ImFont_GetDescent(self.handle()))
 }
 
-func (self *ImFont) SetMetricsTotalSurface(v int32) {
-	C.ImFont_SetMetricsTotalSurface(self.handle(), C.int(v))
+func (self *Font) SetMetricsTotalSurface(v int32) {
+	C.wrap_ImFont_SetMetricsTotalSurface(self.handle(), C.int(v))
 }
 
-func (self ImFont) GetMetricsTotalSurface() int {
-	return int(C.ImFont_GetMetricsTotalSurface(self.handle()))
+func (self Font) MetricsTotalSurface() int {
+	return int(C.wrap_ImFont_GetMetricsTotalSurface(self.handle()))
 }
 
-func (self *ImFontAtlas) SetFlags(v FontAtlasFlags) {
-	C.ImFontAtlas_SetFlags(self.handle(), C.ImFontAtlasFlags(v))
+func (self *FontAtlas) SetFlags(v FontAtlasFlags) {
+	C.wrap_ImFontAtlas_SetFlags(self.handle(), C.ImFontAtlasFlags(v))
 }
 
-func (self ImFontAtlas) GetFlags() FontAtlasFlags {
-	return FontAtlasFlags(C.ImFontAtlas_GetFlags(self.handle()))
+func (self FontAtlas) Flags() FontAtlasFlags {
+	return FontAtlasFlags(C.wrap_ImFontAtlas_GetFlags(self.handle()))
 }
 
-func (self *ImFontAtlas) SetTexDesiredWidth(v int32) {
-	C.ImFontAtlas_SetTexDesiredWidth(self.handle(), C.int(v))
+func (self *FontAtlas) SetTexDesiredWidth(v int32) {
+	C.wrap_ImFontAtlas_SetTexDesiredWidth(self.handle(), C.int(v))
 }
 
-func (self ImFontAtlas) GetTexDesiredWidth() int {
-	return int(C.ImFontAtlas_GetTexDesiredWidth(self.handle()))
+func (self FontAtlas) TexDesiredWidth() int {
+	return int(C.wrap_ImFontAtlas_GetTexDesiredWidth(self.handle()))
 }
 
-func (self *ImFontAtlas) SetTexGlyphPadding(v int32) {
-	C.ImFontAtlas_SetTexGlyphPadding(self.handle(), C.int(v))
+func (self *FontAtlas) SetTexGlyphPadding(v int32) {
+	C.wrap_ImFontAtlas_SetTexGlyphPadding(self.handle(), C.int(v))
 }
 
-func (self ImFontAtlas) GetTexGlyphPadding() int {
-	return int(C.ImFontAtlas_GetTexGlyphPadding(self.handle()))
+func (self FontAtlas) TexGlyphPadding() int {
+	return int(C.wrap_ImFontAtlas_GetTexGlyphPadding(self.handle()))
 }
 
-func (self *ImFontAtlas) SetLocked(v bool) {
-	C.ImFontAtlas_SetLocked(self.handle(), C.bool(v))
+func (self *FontAtlas) SetLocked(v bool) {
+	C.wrap_ImFontAtlas_SetLocked(self.handle(), C.bool(v))
 }
 
-func (self ImFontAtlas) GetLocked() bool {
-	return C.ImFontAtlas_GetLocked(self.handle()) == C.bool(true)
+func (self FontAtlas) Locked() bool {
+	return C.wrap_ImFontAtlas_GetLocked(self.handle()) == C.bool(true)
 }
 
-func (self *ImFontAtlas) SetTexReady(v bool) {
-	C.ImFontAtlas_SetTexReady(self.handle(), C.bool(v))
+func (self *FontAtlas) SetTexReady(v bool) {
+	C.wrap_ImFontAtlas_SetTexReady(self.handle(), C.bool(v))
 }
 
-func (self ImFontAtlas) GetTexReady() bool {
-	return C.ImFontAtlas_GetTexReady(self.handle()) == C.bool(true)
+func (self FontAtlas) TexReady() bool {
+	return C.wrap_ImFontAtlas_GetTexReady(self.handle()) == C.bool(true)
 }
 
-func (self *ImFontAtlas) SetTexPixelsUseColors(v bool) {
-	C.ImFontAtlas_SetTexPixelsUseColors(self.handle(), C.bool(v))
+func (self *FontAtlas) SetTexPixelsUseColors(v bool) {
+	C.wrap_ImFontAtlas_SetTexPixelsUseColors(self.handle(), C.bool(v))
 }
 
-func (self ImFontAtlas) GetTexPixelsUseColors() bool {
-	return C.ImFontAtlas_GetTexPixelsUseColors(self.handle()) == C.bool(true)
+func (self FontAtlas) TexPixelsUseColors() bool {
+	return C.wrap_ImFontAtlas_GetTexPixelsUseColors(self.handle()) == C.bool(true)
 }
 
-func (self *ImFontAtlas) SetTexPixelsRGBA32(v *uint32) {
+func (self *FontAtlas) SetTexPixelsRGBA32(v *uint32) {
 	vArg, vFin := wrapNumberPtr[C.uint, uint32](v)
 	defer vFin()
 
-	C.ImFontAtlas_SetTexPixelsRGBA32(self.handle(), vArg)
+	C.wrap_ImFontAtlas_SetTexPixelsRGBA32(self.handle(), vArg)
 }
 
-func (self *ImFontAtlas) SetTexWidth(v int32) {
-	C.ImFontAtlas_SetTexWidth(self.handle(), C.int(v))
+func (self *FontAtlas) SetTexWidth(v int32) {
+	C.wrap_ImFontAtlas_SetTexWidth(self.handle(), C.int(v))
 }
 
-func (self ImFontAtlas) GetTexWidth() int {
-	return int(C.ImFontAtlas_GetTexWidth(self.handle()))
+func (self FontAtlas) TexWidth() int {
+	return int(C.wrap_ImFontAtlas_GetTexWidth(self.handle()))
 }
 
-func (self *ImFontAtlas) SetTexHeight(v int32) {
-	C.ImFontAtlas_SetTexHeight(self.handle(), C.int(v))
+func (self *FontAtlas) SetTexHeight(v int32) {
+	C.wrap_ImFontAtlas_SetTexHeight(self.handle(), C.int(v))
 }
 
-func (self ImFontAtlas) GetTexHeight() int {
-	return int(C.ImFontAtlas_GetTexHeight(self.handle()))
+func (self FontAtlas) TexHeight() int {
+	return int(C.wrap_ImFontAtlas_GetTexHeight(self.handle()))
 }
 
-func (self *ImFontAtlas) SetTexUvScale(v Vec2) {
-	C.ImFontAtlas_SetTexUvScale(self.handle(), v.toC())
+func (self *FontAtlas) SetTexUvScale(v Vec2) {
+	C.wrap_ImFontAtlas_SetTexUvScale(self.handle(), v.toC())
 }
 
-func (self ImFontAtlas) GetTexUvScale() Vec2 {
+func (self FontAtlas) TexUvScale() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImFontAtlas_GetTexUvScale(self.handle()))
+	out.fromC(C.wrap_ImFontAtlas_GetTexUvScale(self.handle()))
 	return *out
 }
 
-func (self *ImFontAtlas) SetTexUvWhitePixel(v Vec2) {
-	C.ImFontAtlas_SetTexUvWhitePixel(self.handle(), v.toC())
+func (self *FontAtlas) SetTexUvWhitePixel(v Vec2) {
+	C.wrap_ImFontAtlas_SetTexUvWhitePixel(self.handle(), v.toC())
 }
 
-func (self ImFontAtlas) GetTexUvWhitePixel() Vec2 {
+func (self FontAtlas) TexUvWhitePixel() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImFontAtlas_GetTexUvWhitePixel(self.handle()))
+	out.fromC(C.wrap_ImFontAtlas_GetTexUvWhitePixel(self.handle()))
 	return *out
 }
 
-func (self *ImFontAtlas) SetFontBuilderIO(v ImFontBuilderIO) {
-	C.ImFontAtlas_SetFontBuilderIO(self.handle(), v.handle())
+func (self *FontAtlas) SetFontBuilderIO(v FontBuilderIO) {
+	C.wrap_ImFontAtlas_SetFontBuilderIO(self.handle(), v.handle())
 }
 
-func (self ImFontAtlas) GetFontBuilderIO() ImFontBuilderIO {
-	return (ImFontBuilderIO)(unsafe.Pointer(C.ImFontAtlas_GetFontBuilderIO(self.handle())))
+func (self FontAtlas) FontBuilderIO() FontBuilderIO {
+	return (FontBuilderIO)(unsafe.Pointer(C.wrap_ImFontAtlas_GetFontBuilderIO(self.handle())))
 }
 
-func (self *ImFontAtlas) SetFontBuilderFlags(v uint32) {
-	C.ImFontAtlas_SetFontBuilderFlags(self.handle(), C.uint(v))
+func (self *FontAtlas) SetFontBuilderFlags(v uint32) {
+	C.wrap_ImFontAtlas_SetFontBuilderFlags(self.handle(), C.uint(v))
 }
 
-func (self ImFontAtlas) GetFontBuilderFlags() uint32 {
-	return uint32(C.ImFontAtlas_GetFontBuilderFlags(self.handle()))
+func (self FontAtlas) FontBuilderFlags() uint32 {
+	return uint32(C.wrap_ImFontAtlas_GetFontBuilderFlags(self.handle()))
 }
 
-func (self *ImFontAtlas) SetPackIdMouseCursors(v int32) {
-	C.ImFontAtlas_SetPackIdMouseCursors(self.handle(), C.int(v))
+func (self *FontAtlas) SetPackIdMouseCursors(v int32) {
+	C.wrap_ImFontAtlas_SetPackIdMouseCursors(self.handle(), C.int(v))
 }
 
-func (self ImFontAtlas) GetPackIdMouseCursors() int {
-	return int(C.ImFontAtlas_GetPackIdMouseCursors(self.handle()))
+func (self FontAtlas) PackIdMouseCursors() int {
+	return int(C.wrap_ImFontAtlas_GetPackIdMouseCursors(self.handle()))
 }
 
-func (self *ImFontAtlas) SetPackIdLines(v int32) {
-	C.ImFontAtlas_SetPackIdLines(self.handle(), C.int(v))
+func (self *FontAtlas) SetPackIdLines(v int32) {
+	C.wrap_ImFontAtlas_SetPackIdLines(self.handle(), C.int(v))
 }
 
-func (self ImFontAtlas) GetPackIdLines() int {
-	return int(C.ImFontAtlas_GetPackIdLines(self.handle()))
+func (self FontAtlas) PackIdLines() int {
+	return int(C.wrap_ImFontAtlas_GetPackIdLines(self.handle()))
 }
 
-func (self *ImFontAtlasCustomRect) SetWidth(v uint) {
-	C.ImFontAtlasCustomRect_SetWidth(self.handle(), C.ushort(v))
+func (self *FontAtlasCustomRect) SetWidth(v uint) {
+	C.wrap_ImFontAtlasCustomRect_SetWidth(self.handle(), C.ushort(v))
 }
 
-func (self *ImFontAtlasCustomRect) SetHeight(v uint) {
-	C.ImFontAtlasCustomRect_SetHeight(self.handle(), C.ushort(v))
+func (self *FontAtlasCustomRect) SetHeight(v uint) {
+	C.wrap_ImFontAtlasCustomRect_SetHeight(self.handle(), C.ushort(v))
 }
 
-func (self *ImFontAtlasCustomRect) SetX(v uint) {
-	C.ImFontAtlasCustomRect_SetX(self.handle(), C.ushort(v))
+func (self *FontAtlasCustomRect) SetX(v uint) {
+	C.wrap_ImFontAtlasCustomRect_SetX(self.handle(), C.ushort(v))
 }
 
-func (self *ImFontAtlasCustomRect) SetY(v uint) {
-	C.ImFontAtlasCustomRect_SetY(self.handle(), C.ushort(v))
+func (self *FontAtlasCustomRect) SetY(v uint) {
+	C.wrap_ImFontAtlasCustomRect_SetY(self.handle(), C.ushort(v))
 }
 
-func (self *ImFontAtlasCustomRect) SetGlyphID(v uint32) {
-	C.ImFontAtlasCustomRect_SetGlyphID(self.handle(), C.uint(v))
+func (self *FontAtlasCustomRect) SetGlyphID(v uint32) {
+	C.wrap_ImFontAtlasCustomRect_SetGlyphID(self.handle(), C.uint(v))
 }
 
-func (self ImFontAtlasCustomRect) GetGlyphID() uint32 {
-	return uint32(C.ImFontAtlasCustomRect_GetGlyphID(self.handle()))
+func (self FontAtlasCustomRect) GlyphID() uint32 {
+	return uint32(C.wrap_ImFontAtlasCustomRect_GetGlyphID(self.handle()))
 }
 
-func (self *ImFontAtlasCustomRect) SetGlyphAdvanceX(v float32) {
-	C.ImFontAtlasCustomRect_SetGlyphAdvanceX(self.handle(), C.float(v))
+func (self *FontAtlasCustomRect) SetGlyphAdvanceX(v float32) {
+	C.wrap_ImFontAtlasCustomRect_SetGlyphAdvanceX(self.handle(), C.float(v))
 }
 
-func (self ImFontAtlasCustomRect) GetGlyphAdvanceX() float32 {
-	return float32(C.ImFontAtlasCustomRect_GetGlyphAdvanceX(self.handle()))
+func (self FontAtlasCustomRect) GlyphAdvanceX() float32 {
+	return float32(C.wrap_ImFontAtlasCustomRect_GetGlyphAdvanceX(self.handle()))
 }
 
-func (self *ImFontAtlasCustomRect) SetGlyphOffset(v Vec2) {
-	C.ImFontAtlasCustomRect_SetGlyphOffset(self.handle(), v.toC())
+func (self *FontAtlasCustomRect) SetGlyphOffset(v Vec2) {
+	C.wrap_ImFontAtlasCustomRect_SetGlyphOffset(self.handle(), v.toC())
 }
 
-func (self ImFontAtlasCustomRect) GetGlyphOffset() Vec2 {
+func (self FontAtlasCustomRect) GlyphOffset() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImFontAtlasCustomRect_GetGlyphOffset(self.handle()))
+	out.fromC(C.wrap_ImFontAtlasCustomRect_GetGlyphOffset(self.handle()))
 	return *out
 }
 
-func (self *ImFontAtlasCustomRect) SetFont(v ImFont) {
-	C.ImFontAtlasCustomRect_SetFont(self.handle(), v.handle())
+func (self *FontAtlasCustomRect) SetFont(v Font) {
+	C.wrap_ImFontAtlasCustomRect_SetFont(self.handle(), v.handle())
 }
 
-func (self ImFontAtlasCustomRect) GetFont() ImFont {
-	return (ImFont)(unsafe.Pointer(C.ImFontAtlasCustomRect_GetFont(self.handle())))
+func (self FontAtlasCustomRect) Font() Font {
+	return (Font)(unsafe.Pointer(C.wrap_ImFontAtlasCustomRect_GetFont(self.handle())))
 }
 
-func (self *ImFontConfig) SetFontData(v unsafe.Pointer) {
-	C.ImFontConfig_SetFontData(self.handle(), (v))
+func (self *FontConfig) SetFontData(v unsafe.Pointer) {
+	C.wrap_ImFontConfig_SetFontData(self.handle(), (v))
 }
 
-func (self ImFontConfig) GetFontData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImFontConfig_GetFontData(self.handle()))
+func (self FontConfig) FontData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImFontConfig_GetFontData(self.handle()))
 }
 
-func (self *ImFontConfig) SetFontDataSize(v int32) {
-	C.ImFontConfig_SetFontDataSize(self.handle(), C.int(v))
+func (self *FontConfig) SetFontDataSize(v int32) {
+	C.wrap_ImFontConfig_SetFontDataSize(self.handle(), C.int(v))
 }
 
-func (self ImFontConfig) GetFontDataSize() int {
-	return int(C.ImFontConfig_GetFontDataSize(self.handle()))
+func (self FontConfig) FontDataSize() int {
+	return int(C.wrap_ImFontConfig_GetFontDataSize(self.handle()))
 }
 
-func (self *ImFontConfig) SetFontDataOwnedByAtlas(v bool) {
-	C.ImFontConfig_SetFontDataOwnedByAtlas(self.handle(), C.bool(v))
+func (self *FontConfig) SetFontDataOwnedByAtlas(v bool) {
+	C.wrap_ImFontConfig_SetFontDataOwnedByAtlas(self.handle(), C.bool(v))
 }
 
-func (self ImFontConfig) GetFontDataOwnedByAtlas() bool {
-	return C.ImFontConfig_GetFontDataOwnedByAtlas(self.handle()) == C.bool(true)
+func (self FontConfig) FontDataOwnedByAtlas() bool {
+	return C.wrap_ImFontConfig_GetFontDataOwnedByAtlas(self.handle()) == C.bool(true)
 }
 
-func (self *ImFontConfig) SetFontNo(v int32) {
-	C.ImFontConfig_SetFontNo(self.handle(), C.int(v))
+func (self *FontConfig) SetFontNo(v int32) {
+	C.wrap_ImFontConfig_SetFontNo(self.handle(), C.int(v))
 }
 
-func (self ImFontConfig) GetFontNo() int {
-	return int(C.ImFontConfig_GetFontNo(self.handle()))
+func (self FontConfig) FontNo() int {
+	return int(C.wrap_ImFontConfig_GetFontNo(self.handle()))
 }
 
-func (self *ImFontConfig) SetSizePixels(v float32) {
-	C.ImFontConfig_SetSizePixels(self.handle(), C.float(v))
+func (self *FontConfig) SetSizePixels(v float32) {
+	C.wrap_ImFontConfig_SetSizePixels(self.handle(), C.float(v))
 }
 
-func (self ImFontConfig) GetSizePixels() float32 {
-	return float32(C.ImFontConfig_GetSizePixels(self.handle()))
+func (self FontConfig) SizePixels() float32 {
+	return float32(C.wrap_ImFontConfig_GetSizePixels(self.handle()))
 }
 
-func (self *ImFontConfig) SetOversampleH(v int32) {
-	C.ImFontConfig_SetOversampleH(self.handle(), C.int(v))
+func (self *FontConfig) SetOversampleH(v int32) {
+	C.wrap_ImFontConfig_SetOversampleH(self.handle(), C.int(v))
 }
 
-func (self ImFontConfig) GetOversampleH() int {
-	return int(C.ImFontConfig_GetOversampleH(self.handle()))
+func (self FontConfig) OversampleH() int {
+	return int(C.wrap_ImFontConfig_GetOversampleH(self.handle()))
 }
 
-func (self *ImFontConfig) SetOversampleV(v int32) {
-	C.ImFontConfig_SetOversampleV(self.handle(), C.int(v))
+func (self *FontConfig) SetOversampleV(v int32) {
+	C.wrap_ImFontConfig_SetOversampleV(self.handle(), C.int(v))
 }
 
-func (self ImFontConfig) GetOversampleV() int {
-	return int(C.ImFontConfig_GetOversampleV(self.handle()))
+func (self FontConfig) OversampleV() int {
+	return int(C.wrap_ImFontConfig_GetOversampleV(self.handle()))
 }
 
-func (self *ImFontConfig) SetPixelSnapH(v bool) {
-	C.ImFontConfig_SetPixelSnapH(self.handle(), C.bool(v))
+func (self *FontConfig) SetPixelSnapH(v bool) {
+	C.wrap_ImFontConfig_SetPixelSnapH(self.handle(), C.bool(v))
 }
 
-func (self ImFontConfig) GetPixelSnapH() bool {
-	return C.ImFontConfig_GetPixelSnapH(self.handle()) == C.bool(true)
+func (self FontConfig) PixelSnapH() bool {
+	return C.wrap_ImFontConfig_GetPixelSnapH(self.handle()) == C.bool(true)
 }
 
-func (self *ImFontConfig) SetGlyphExtraSpacing(v Vec2) {
-	C.ImFontConfig_SetGlyphExtraSpacing(self.handle(), v.toC())
+func (self *FontConfig) SetGlyphExtraSpacing(v Vec2) {
+	C.wrap_ImFontConfig_SetGlyphExtraSpacing(self.handle(), v.toC())
 }
 
-func (self ImFontConfig) GetGlyphExtraSpacing() Vec2 {
+func (self FontConfig) GlyphExtraSpacing() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImFontConfig_GetGlyphExtraSpacing(self.handle()))
+	out.fromC(C.wrap_ImFontConfig_GetGlyphExtraSpacing(self.handle()))
 	return *out
 }
 
-func (self *ImFontConfig) SetGlyphOffset(v Vec2) {
-	C.ImFontConfig_SetGlyphOffset(self.handle(), v.toC())
+func (self *FontConfig) SetGlyphOffset(v Vec2) {
+	C.wrap_ImFontConfig_SetGlyphOffset(self.handle(), v.toC())
 }
 
-func (self ImFontConfig) GetGlyphOffset() Vec2 {
+func (self FontConfig) GlyphOffset() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImFontConfig_GetGlyphOffset(self.handle()))
+	out.fromC(C.wrap_ImFontConfig_GetGlyphOffset(self.handle()))
 	return *out
 }
 
-func (self *ImFontConfig) SetGlyphRanges(v *Wchar) {
-	C.ImFontConfig_SetGlyphRanges(self.handle(), (*C.ImWchar)(v))
+func (self *FontConfig) SetGlyphRanges(v *Wchar) {
+	C.wrap_ImFontConfig_SetGlyphRanges(self.handle(), (*C.ImWchar)(v))
 }
 
-func (self ImFontConfig) GetGlyphRanges() *Wchar {
-	return (*Wchar)(C.ImFontConfig_GetGlyphRanges(self.handle()))
+func (self FontConfig) GlyphRanges() *Wchar {
+	return (*Wchar)(C.wrap_ImFontConfig_GetGlyphRanges(self.handle()))
 }
 
-func (self *ImFontConfig) SetGlyphMinAdvanceX(v float32) {
-	C.ImFontConfig_SetGlyphMinAdvanceX(self.handle(), C.float(v))
+func (self *FontConfig) SetGlyphMinAdvanceX(v float32) {
+	C.wrap_ImFontConfig_SetGlyphMinAdvanceX(self.handle(), C.float(v))
 }
 
-func (self ImFontConfig) GetGlyphMinAdvanceX() float32 {
-	return float32(C.ImFontConfig_GetGlyphMinAdvanceX(self.handle()))
+func (self FontConfig) GlyphMinAdvanceX() float32 {
+	return float32(C.wrap_ImFontConfig_GetGlyphMinAdvanceX(self.handle()))
 }
 
-func (self *ImFontConfig) SetGlyphMaxAdvanceX(v float32) {
-	C.ImFontConfig_SetGlyphMaxAdvanceX(self.handle(), C.float(v))
+func (self *FontConfig) SetGlyphMaxAdvanceX(v float32) {
+	C.wrap_ImFontConfig_SetGlyphMaxAdvanceX(self.handle(), C.float(v))
 }
 
-func (self ImFontConfig) GetGlyphMaxAdvanceX() float32 {
-	return float32(C.ImFontConfig_GetGlyphMaxAdvanceX(self.handle()))
+func (self FontConfig) GlyphMaxAdvanceX() float32 {
+	return float32(C.wrap_ImFontConfig_GetGlyphMaxAdvanceX(self.handle()))
 }
 
-func (self *ImFontConfig) SetMergeMode(v bool) {
-	C.ImFontConfig_SetMergeMode(self.handle(), C.bool(v))
+func (self *FontConfig) SetMergeMode(v bool) {
+	C.wrap_ImFontConfig_SetMergeMode(self.handle(), C.bool(v))
 }
 
-func (self ImFontConfig) GetMergeMode() bool {
-	return C.ImFontConfig_GetMergeMode(self.handle()) == C.bool(true)
+func (self FontConfig) MergeMode() bool {
+	return C.wrap_ImFontConfig_GetMergeMode(self.handle()) == C.bool(true)
 }
 
-func (self *ImFontConfig) SetFontBuilderFlags(v uint32) {
-	C.ImFontConfig_SetFontBuilderFlags(self.handle(), C.uint(v))
+func (self *FontConfig) SetFontBuilderFlags(v uint32) {
+	C.wrap_ImFontConfig_SetFontBuilderFlags(self.handle(), C.uint(v))
 }
 
-func (self ImFontConfig) GetFontBuilderFlags() uint32 {
-	return uint32(C.ImFontConfig_GetFontBuilderFlags(self.handle()))
+func (self FontConfig) FontBuilderFlags() uint32 {
+	return uint32(C.wrap_ImFontConfig_GetFontBuilderFlags(self.handle()))
 }
 
-func (self *ImFontConfig) SetRasterizerMultiply(v float32) {
-	C.ImFontConfig_SetRasterizerMultiply(self.handle(), C.float(v))
+func (self *FontConfig) SetRasterizerMultiply(v float32) {
+	C.wrap_ImFontConfig_SetRasterizerMultiply(self.handle(), C.float(v))
 }
 
-func (self ImFontConfig) GetRasterizerMultiply() float32 {
-	return float32(C.ImFontConfig_GetRasterizerMultiply(self.handle()))
+func (self FontConfig) RasterizerMultiply() float32 {
+	return float32(C.wrap_ImFontConfig_GetRasterizerMultiply(self.handle()))
 }
 
-func (self *ImFontConfig) SetEllipsisChar(v Wchar) {
-	C.ImFontConfig_SetEllipsisChar(self.handle(), C.ImWchar(v))
+func (self *FontConfig) SetEllipsisChar(v Wchar) {
+	C.wrap_ImFontConfig_SetEllipsisChar(self.handle(), C.ImWchar(v))
 }
 
-func (self ImFontConfig) GetEllipsisChar() Wchar {
-	return Wchar(C.ImFontConfig_GetEllipsisChar(self.handle()))
+func (self FontConfig) EllipsisChar() Wchar {
+	return Wchar(C.wrap_ImFontConfig_GetEllipsisChar(self.handle()))
 }
 
-func (self *ImFontConfig) SetDstFont(v ImFont) {
-	C.ImFontConfig_SetDstFont(self.handle(), v.handle())
+func (self *FontConfig) SetDstFont(v Font) {
+	C.wrap_ImFontConfig_SetDstFont(self.handle(), v.handle())
 }
 
-func (self ImFontConfig) GetDstFont() ImFont {
-	return (ImFont)(unsafe.Pointer(C.ImFontConfig_GetDstFont(self.handle())))
+func (self FontConfig) DstFont() Font {
+	return (Font)(unsafe.Pointer(C.wrap_ImFontConfig_GetDstFont(self.handle())))
 }
 
-func (self *ImFontGlyph) SetColored(v uint32) {
-	C.ImFontGlyph_SetColored(self.handle(), C.uint(v))
+func (self *FontGlyph) SetColored(v uint32) {
+	C.wrap_ImFontGlyph_SetColored(self.handle(), C.uint(v))
 }
 
-func (self ImFontGlyph) GetColored() uint32 {
-	return uint32(C.ImFontGlyph_GetColored(self.handle()))
+func (self FontGlyph) Colored() uint32 {
+	return uint32(C.wrap_ImFontGlyph_GetColored(self.handle()))
 }
 
-func (self *ImFontGlyph) SetVisible(v uint32) {
-	C.ImFontGlyph_SetVisible(self.handle(), C.uint(v))
+func (self *FontGlyph) SetVisible(v uint32) {
+	C.wrap_ImFontGlyph_SetVisible(self.handle(), C.uint(v))
 }
 
-func (self ImFontGlyph) GetVisible() uint32 {
-	return uint32(C.ImFontGlyph_GetVisible(self.handle()))
+func (self FontGlyph) Visible() uint32 {
+	return uint32(C.wrap_ImFontGlyph_GetVisible(self.handle()))
 }
 
-func (self *ImFontGlyph) SetCodepoint(v uint32) {
-	C.ImFontGlyph_SetCodepoint(self.handle(), C.uint(v))
+func (self *FontGlyph) SetCodepoint(v uint32) {
+	C.wrap_ImFontGlyph_SetCodepoint(self.handle(), C.uint(v))
 }
 
-func (self ImFontGlyph) GetCodepoint() uint32 {
-	return uint32(C.ImFontGlyph_GetCodepoint(self.handle()))
+func (self FontGlyph) Codepoint() uint32 {
+	return uint32(C.wrap_ImFontGlyph_GetCodepoint(self.handle()))
 }
 
-func (self *ImFontGlyph) SetAdvanceX(v float32) {
-	C.ImFontGlyph_SetAdvanceX(self.handle(), C.float(v))
+func (self *FontGlyph) SetAdvanceX(v float32) {
+	C.wrap_ImFontGlyph_SetAdvanceX(self.handle(), C.float(v))
 }
 
-func (self ImFontGlyph) GetAdvanceX() float32 {
-	return float32(C.ImFontGlyph_GetAdvanceX(self.handle()))
+func (self FontGlyph) AdvanceX() float32 {
+	return float32(C.wrap_ImFontGlyph_GetAdvanceX(self.handle()))
 }
 
-func (self *ImFontGlyph) SetX0(v float32) {
-	C.ImFontGlyph_SetX0(self.handle(), C.float(v))
+func (self *FontGlyph) SetX0(v float32) {
+	C.wrap_ImFontGlyph_SetX0(self.handle(), C.float(v))
 }
 
-func (self ImFontGlyph) GetX0() float32 {
-	return float32(C.ImFontGlyph_GetX0(self.handle()))
+func (self FontGlyph) X0() float32 {
+	return float32(C.wrap_ImFontGlyph_GetX0(self.handle()))
 }
 
-func (self *ImFontGlyph) SetY0(v float32) {
-	C.ImFontGlyph_SetY0(self.handle(), C.float(v))
+func (self *FontGlyph) SetY0(v float32) {
+	C.wrap_ImFontGlyph_SetY0(self.handle(), C.float(v))
 }
 
-func (self ImFontGlyph) GetY0() float32 {
-	return float32(C.ImFontGlyph_GetY0(self.handle()))
+func (self FontGlyph) Y0() float32 {
+	return float32(C.wrap_ImFontGlyph_GetY0(self.handle()))
 }
 
-func (self *ImFontGlyph) SetX1(v float32) {
-	C.ImFontGlyph_SetX1(self.handle(), C.float(v))
+func (self *FontGlyph) SetX1(v float32) {
+	C.wrap_ImFontGlyph_SetX1(self.handle(), C.float(v))
 }
 
-func (self ImFontGlyph) GetX1() float32 {
-	return float32(C.ImFontGlyph_GetX1(self.handle()))
+func (self FontGlyph) X1() float32 {
+	return float32(C.wrap_ImFontGlyph_GetX1(self.handle()))
 }
 
-func (self *ImFontGlyph) SetY1(v float32) {
-	C.ImFontGlyph_SetY1(self.handle(), C.float(v))
+func (self *FontGlyph) SetY1(v float32) {
+	C.wrap_ImFontGlyph_SetY1(self.handle(), C.float(v))
 }
 
-func (self ImFontGlyph) GetY1() float32 {
-	return float32(C.ImFontGlyph_GetY1(self.handle()))
+func (self FontGlyph) Y1() float32 {
+	return float32(C.wrap_ImFontGlyph_GetY1(self.handle()))
 }
 
-func (self *ImFontGlyph) SetU0(v float32) {
-	C.ImFontGlyph_SetU0(self.handle(), C.float(v))
+func (self *FontGlyph) SetU0(v float32) {
+	C.wrap_ImFontGlyph_SetU0(self.handle(), C.float(v))
 }
 
-func (self ImFontGlyph) GetU0() float32 {
-	return float32(C.ImFontGlyph_GetU0(self.handle()))
+func (self FontGlyph) U0() float32 {
+	return float32(C.wrap_ImFontGlyph_GetU0(self.handle()))
 }
 
-func (self *ImFontGlyph) SetV0(v float32) {
-	C.ImFontGlyph_SetV0(self.handle(), C.float(v))
+func (self *FontGlyph) SetV0(v float32) {
+	C.wrap_ImFontGlyph_SetV0(self.handle(), C.float(v))
 }
 
-func (self ImFontGlyph) GetV0() float32 {
-	return float32(C.ImFontGlyph_GetV0(self.handle()))
+func (self FontGlyph) V0() float32 {
+	return float32(C.wrap_ImFontGlyph_GetV0(self.handle()))
 }
 
-func (self *ImFontGlyph) SetU1(v float32) {
-	C.ImFontGlyph_SetU1(self.handle(), C.float(v))
+func (self *FontGlyph) SetU1(v float32) {
+	C.wrap_ImFontGlyph_SetU1(self.handle(), C.float(v))
 }
 
-func (self ImFontGlyph) GetU1() float32 {
-	return float32(C.ImFontGlyph_GetU1(self.handle()))
+func (self FontGlyph) U1() float32 {
+	return float32(C.wrap_ImFontGlyph_GetU1(self.handle()))
 }
 
-func (self *ImFontGlyph) SetV1(v float32) {
-	C.ImFontGlyph_SetV1(self.handle(), C.float(v))
+func (self *FontGlyph) SetV1(v float32) {
+	C.wrap_ImFontGlyph_SetV1(self.handle(), C.float(v))
 }
 
-func (self ImFontGlyph) GetV1() float32 {
-	return float32(C.ImFontGlyph_GetV1(self.handle()))
+func (self FontGlyph) V1() float32 {
+	return float32(C.wrap_ImFontGlyph_GetV1(self.handle()))
 }
 
-func (self *ImGuiColorMod) SetCol(v Col) {
-	C.ImGuiColorMod_SetCol(self.handle(), C.ImGuiCol(v))
+func (self *ColorMod) SetCol(v Col) {
+	C.wrap_ImGuiColorMod_SetCol(self.handle(), C.ImGuiCol(v))
 }
 
-func (self ImGuiColorMod) GetCol() Col {
-	return Col(C.ImGuiColorMod_GetCol(self.handle()))
+func (self ColorMod) Col() Col {
+	return Col(C.wrap_ImGuiColorMod_GetCol(self.handle()))
 }
 
-func (self *ImGuiColorMod) SetBackupValue(v Vec4) {
-	C.ImGuiColorMod_SetBackupValue(self.handle(), v.toC())
+func (self *ColorMod) SetBackupValue(v Vec4) {
+	C.wrap_ImGuiColorMod_SetBackupValue(self.handle(), v.toC())
 }
 
-func (self ImGuiColorMod) GetBackupValue() Vec4 {
+func (self ColorMod) BackupValue() Vec4 {
 	out := &Vec4{}
-	out.fromC(C.ImGuiColorMod_GetBackupValue(self.handle()))
+	out.fromC(C.wrap_ImGuiColorMod_GetBackupValue(self.handle()))
 	return *out
 }
 
-func (self *ImGuiComboPreviewData) SetPreviewRect(v Rect) {
-	C.ImGuiComboPreviewData_SetPreviewRect(self.handle(), v.toC())
+func (self *ComboPreviewData) SetPreviewRect(v Rect) {
+	C.wrap_ImGuiComboPreviewData_SetPreviewRect(self.handle(), v.toC())
 }
 
-func (self ImGuiComboPreviewData) GetPreviewRect() Rect {
+func (self ComboPreviewData) PreviewRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiComboPreviewData_GetPreviewRect(self.handle()))
+	out.fromC(C.wrap_ImGuiComboPreviewData_GetPreviewRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiComboPreviewData) SetBackupCursorPos(v Vec2) {
-	C.ImGuiComboPreviewData_SetBackupCursorPos(self.handle(), v.toC())
+func (self *ComboPreviewData) SetBackupCursorPos(v Vec2) {
+	C.wrap_ImGuiComboPreviewData_SetBackupCursorPos(self.handle(), v.toC())
 }
 
-func (self ImGuiComboPreviewData) GetBackupCursorPos() Vec2 {
+func (self ComboPreviewData) BackupCursorPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiComboPreviewData_GetBackupCursorPos(self.handle()))
+	out.fromC(C.wrap_ImGuiComboPreviewData_GetBackupCursorPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiComboPreviewData) SetBackupCursorMaxPos(v Vec2) {
-	C.ImGuiComboPreviewData_SetBackupCursorMaxPos(self.handle(), v.toC())
+func (self *ComboPreviewData) SetBackupCursorMaxPos(v Vec2) {
+	C.wrap_ImGuiComboPreviewData_SetBackupCursorMaxPos(self.handle(), v.toC())
 }
 
-func (self ImGuiComboPreviewData) GetBackupCursorMaxPos() Vec2 {
+func (self ComboPreviewData) BackupCursorMaxPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiComboPreviewData_GetBackupCursorMaxPos(self.handle()))
+	out.fromC(C.wrap_ImGuiComboPreviewData_GetBackupCursorMaxPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiComboPreviewData) SetBackupCursorPosPrevLine(v Vec2) {
-	C.ImGuiComboPreviewData_SetBackupCursorPosPrevLine(self.handle(), v.toC())
+func (self *ComboPreviewData) SetBackupCursorPosPrevLine(v Vec2) {
+	C.wrap_ImGuiComboPreviewData_SetBackupCursorPosPrevLine(self.handle(), v.toC())
 }
 
-func (self ImGuiComboPreviewData) GetBackupCursorPosPrevLine() Vec2 {
+func (self ComboPreviewData) BackupCursorPosPrevLine() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiComboPreviewData_GetBackupCursorPosPrevLine(self.handle()))
+	out.fromC(C.wrap_ImGuiComboPreviewData_GetBackupCursorPosPrevLine(self.handle()))
 	return *out
 }
 
-func (self *ImGuiComboPreviewData) SetBackupPrevLineTextBaseOffset(v float32) {
-	C.ImGuiComboPreviewData_SetBackupPrevLineTextBaseOffset(self.handle(), C.float(v))
+func (self *ComboPreviewData) SetBackupPrevLineTextBaseOffset(v float32) {
+	C.wrap_ImGuiComboPreviewData_SetBackupPrevLineTextBaseOffset(self.handle(), C.float(v))
 }
 
-func (self ImGuiComboPreviewData) GetBackupPrevLineTextBaseOffset() float32 {
-	return float32(C.ImGuiComboPreviewData_GetBackupPrevLineTextBaseOffset(self.handle()))
+func (self ComboPreviewData) BackupPrevLineTextBaseOffset() float32 {
+	return float32(C.wrap_ImGuiComboPreviewData_GetBackupPrevLineTextBaseOffset(self.handle()))
 }
 
-func (self *ImGuiComboPreviewData) SetBackupLayout(v LayoutType) {
-	C.ImGuiComboPreviewData_SetBackupLayout(self.handle(), C.ImGuiLayoutType(v))
+func (self *ComboPreviewData) SetBackupLayout(v LayoutType) {
+	C.wrap_ImGuiComboPreviewData_SetBackupLayout(self.handle(), C.ImGuiLayoutType(v))
 }
 
-func (self ImGuiComboPreviewData) GetBackupLayout() LayoutType {
-	return LayoutType(C.ImGuiComboPreviewData_GetBackupLayout(self.handle()))
+func (self ComboPreviewData) BackupLayout() LayoutType {
+	return LayoutType(C.wrap_ImGuiComboPreviewData_GetBackupLayout(self.handle()))
 }
 
-func (self *ImGuiContext) SetInitialized(v bool) {
-	C.ImGuiContext_SetInitialized(self.handle(), C.bool(v))
+func (self *Context) SetInitialized(v bool) {
+	C.wrap_ImGuiContext_SetInitialized(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetInitialized() bool {
-	return C.ImGuiContext_GetInitialized(self.handle()) == C.bool(true)
+func (self Context) Initialized() bool {
+	return C.wrap_ImGuiContext_GetInitialized(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetFontAtlasOwnedByContext(v bool) {
-	C.ImGuiContext_SetFontAtlasOwnedByContext(self.handle(), C.bool(v))
+func (self *Context) SetFontAtlasOwnedByContext(v bool) {
+	C.wrap_ImGuiContext_SetFontAtlasOwnedByContext(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetFontAtlasOwnedByContext() bool {
-	return C.ImGuiContext_GetFontAtlasOwnedByContext(self.handle()) == C.bool(true)
+func (self Context) FontAtlasOwnedByContext() bool {
+	return C.wrap_ImGuiContext_GetFontAtlasOwnedByContext(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiContext) GetIO() ImGuiIO {
-	return newImGuiIOFromC(C.ImGuiContext_GetIO(self.handle()))
+func (self Context) IO() IO {
+	return newIOFromC(C.wrap_ImGuiContext_GetIO(self.handle()))
 }
 
-func (self ImGuiContext) GetPlatformIO() ImGuiPlatformIO {
-	return newImGuiPlatformIOFromC(C.ImGuiContext_GetPlatformIO(self.handle()))
+func (self Context) PlatformIO() PlatformIO {
+	return newPlatformIOFromC(C.wrap_ImGuiContext_GetPlatformIO(self.handle()))
 }
 
-func (self ImGuiContext) GetStyle() ImGuiStyle {
-	return newImGuiStyleFromC(C.ImGuiContext_GetStyle(self.handle()))
+func (self Context) Style() Style {
+	return newStyleFromC(C.wrap_ImGuiContext_GetStyle(self.handle()))
 }
 
-func (self *ImGuiContext) SetConfigFlagsCurrFrame(v ConfigFlags) {
-	C.ImGuiContext_SetConfigFlagsCurrFrame(self.handle(), C.ImGuiConfigFlags(v))
+func (self *Context) SetConfigFlagsCurrFrame(v ConfigFlags) {
+	C.wrap_ImGuiContext_SetConfigFlagsCurrFrame(self.handle(), C.ImGuiConfigFlags(v))
 }
 
-func (self ImGuiContext) GetConfigFlagsCurrFrame() ConfigFlags {
-	return ConfigFlags(C.ImGuiContext_GetConfigFlagsCurrFrame(self.handle()))
+func (self Context) ConfigFlagsCurrFrame() ConfigFlags {
+	return ConfigFlags(C.wrap_ImGuiContext_GetConfigFlagsCurrFrame(self.handle()))
 }
 
-func (self *ImGuiContext) SetConfigFlagsLastFrame(v ConfigFlags) {
-	C.ImGuiContext_SetConfigFlagsLastFrame(self.handle(), C.ImGuiConfigFlags(v))
+func (self *Context) SetConfigFlagsLastFrame(v ConfigFlags) {
+	C.wrap_ImGuiContext_SetConfigFlagsLastFrame(self.handle(), C.ImGuiConfigFlags(v))
 }
 
-func (self ImGuiContext) GetConfigFlagsLastFrame() ConfigFlags {
-	return ConfigFlags(C.ImGuiContext_GetConfigFlagsLastFrame(self.handle()))
+func (self Context) ConfigFlagsLastFrame() ConfigFlags {
+	return ConfigFlags(C.wrap_ImGuiContext_GetConfigFlagsLastFrame(self.handle()))
 }
 
-func (self *ImGuiContext) SetFont(v ImFont) {
-	C.ImGuiContext_SetFont(self.handle(), v.handle())
+func (self *Context) SetFont(v Font) {
+	C.wrap_ImGuiContext_SetFont(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetFont() ImFont {
-	return (ImFont)(unsafe.Pointer(C.ImGuiContext_GetFont(self.handle())))
+func (self Context) Font() Font {
+	return (Font)(unsafe.Pointer(C.wrap_ImGuiContext_GetFont(self.handle())))
 }
 
-func (self *ImGuiContext) SetFontSize(v float32) {
-	C.ImGuiContext_SetFontSize(self.handle(), C.float(v))
+func (self *Context) SetFontSize(v float32) {
+	C.wrap_ImGuiContext_SetFontSize(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetFontSize() float32 {
-	return float32(C.ImGuiContext_GetFontSize(self.handle()))
+func (self Context) FontSize() float32 {
+	return float32(C.wrap_ImGuiContext_GetFontSize(self.handle()))
 }
 
-func (self *ImGuiContext) SetFontBaseSize(v float32) {
-	C.ImGuiContext_SetFontBaseSize(self.handle(), C.float(v))
+func (self *Context) SetFontBaseSize(v float32) {
+	C.wrap_ImGuiContext_SetFontBaseSize(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetFontBaseSize() float32 {
-	return float32(C.ImGuiContext_GetFontBaseSize(self.handle()))
+func (self Context) FontBaseSize() float32 {
+	return float32(C.wrap_ImGuiContext_GetFontBaseSize(self.handle()))
 }
 
-func (self ImGuiContext) GetDrawListSharedData() ImDrawListSharedData {
-	return newImDrawListSharedDataFromC(C.ImGuiContext_GetDrawListSharedData(self.handle()))
+func (self Context) DrawListSharedData() DrawListSharedData {
+	return newDrawListSharedDataFromC(C.wrap_ImGuiContext_GetDrawListSharedData(self.handle()))
 }
 
-func (self *ImGuiContext) SetTime(v float64) {
-	C.ImGuiContext_SetTime(self.handle(), C.double(v))
+func (self *Context) SetTime(v float64) {
+	C.wrap_ImGuiContext_SetTime(self.handle(), C.double(v))
 }
 
-func (self ImGuiContext) GetTime() float64 {
-	return float64(C.ImGuiContext_GetTime(self.handle()))
+func (self Context) Time() float64 {
+	return float64(C.wrap_ImGuiContext_GetTime(self.handle()))
 }
 
-func (self *ImGuiContext) SetFrameCount(v int32) {
-	C.ImGuiContext_SetFrameCount(self.handle(), C.int(v))
+func (self *Context) SetFrameCount(v int32) {
+	C.wrap_ImGuiContext_SetFrameCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetFrameCount() int {
-	return int(C.ImGuiContext_GetFrameCount(self.handle()))
+func (self Context) FrameCount() int {
+	return int(C.wrap_ImGuiContext_GetFrameCount(self.handle()))
 }
 
-func (self *ImGuiContext) SetFrameCountEnded(v int32) {
-	C.ImGuiContext_SetFrameCountEnded(self.handle(), C.int(v))
+func (self *Context) SetFrameCountEnded(v int32) {
+	C.wrap_ImGuiContext_SetFrameCountEnded(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetFrameCountEnded() int {
-	return int(C.ImGuiContext_GetFrameCountEnded(self.handle()))
+func (self Context) FrameCountEnded() int {
+	return int(C.wrap_ImGuiContext_GetFrameCountEnded(self.handle()))
 }
 
-func (self *ImGuiContext) SetFrameCountPlatformEnded(v int32) {
-	C.ImGuiContext_SetFrameCountPlatformEnded(self.handle(), C.int(v))
+func (self *Context) SetFrameCountPlatformEnded(v int32) {
+	C.wrap_ImGuiContext_SetFrameCountPlatformEnded(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetFrameCountPlatformEnded() int {
-	return int(C.ImGuiContext_GetFrameCountPlatformEnded(self.handle()))
+func (self Context) FrameCountPlatformEnded() int {
+	return int(C.wrap_ImGuiContext_GetFrameCountPlatformEnded(self.handle()))
 }
 
-func (self *ImGuiContext) SetFrameCountRendered(v int32) {
-	C.ImGuiContext_SetFrameCountRendered(self.handle(), C.int(v))
+func (self *Context) SetFrameCountRendered(v int32) {
+	C.wrap_ImGuiContext_SetFrameCountRendered(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetFrameCountRendered() int {
-	return int(C.ImGuiContext_GetFrameCountRendered(self.handle()))
+func (self Context) FrameCountRendered() int {
+	return int(C.wrap_ImGuiContext_GetFrameCountRendered(self.handle()))
 }
 
-func (self *ImGuiContext) SetWithinFrameScope(v bool) {
-	C.ImGuiContext_SetWithinFrameScope(self.handle(), C.bool(v))
+func (self *Context) SetWithinFrameScope(v bool) {
+	C.wrap_ImGuiContext_SetWithinFrameScope(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetWithinFrameScope() bool {
-	return C.ImGuiContext_GetWithinFrameScope(self.handle()) == C.bool(true)
+func (self Context) WithinFrameScope() bool {
+	return C.wrap_ImGuiContext_GetWithinFrameScope(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetWithinFrameScopeWithImplicitWindow(v bool) {
-	C.ImGuiContext_SetWithinFrameScopeWithImplicitWindow(self.handle(), C.bool(v))
+func (self *Context) SetWithinFrameScopeWithImplicitWindow(v bool) {
+	C.wrap_ImGuiContext_SetWithinFrameScopeWithImplicitWindow(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetWithinFrameScopeWithImplicitWindow() bool {
-	return C.ImGuiContext_GetWithinFrameScopeWithImplicitWindow(self.handle()) == C.bool(true)
+func (self Context) WithinFrameScopeWithImplicitWindow() bool {
+	return C.wrap_ImGuiContext_GetWithinFrameScopeWithImplicitWindow(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetWithinEndChild(v bool) {
-	C.ImGuiContext_SetWithinEndChild(self.handle(), C.bool(v))
+func (self *Context) SetWithinEndChild(v bool) {
+	C.wrap_ImGuiContext_SetWithinEndChild(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetWithinEndChild() bool {
-	return C.ImGuiContext_GetWithinEndChild(self.handle()) == C.bool(true)
+func (self Context) WithinEndChild() bool {
+	return C.wrap_ImGuiContext_GetWithinEndChild(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetGcCompactAll(v bool) {
-	C.ImGuiContext_SetGcCompactAll(self.handle(), C.bool(v))
+func (self *Context) SetGcCompactAll(v bool) {
+	C.wrap_ImGuiContext_SetGcCompactAll(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetGcCompactAll() bool {
-	return C.ImGuiContext_GetGcCompactAll(self.handle()) == C.bool(true)
+func (self Context) GcCompactAll() bool {
+	return C.wrap_ImGuiContext_GetGcCompactAll(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetTestEngineHookItems(v bool) {
-	C.ImGuiContext_SetTestEngineHookItems(self.handle(), C.bool(v))
+func (self *Context) SetTestEngineHookItems(v bool) {
+	C.wrap_ImGuiContext_SetTestEngineHookItems(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetTestEngineHookItems() bool {
-	return C.ImGuiContext_GetTestEngineHookItems(self.handle()) == C.bool(true)
+func (self Context) TestEngineHookItems() bool {
+	return C.wrap_ImGuiContext_GetTestEngineHookItems(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetTestEngine(v unsafe.Pointer) {
-	C.ImGuiContext_SetTestEngine(self.handle(), (v))
+func (self *Context) SetTestEngine(v unsafe.Pointer) {
+	C.wrap_ImGuiContext_SetTestEngine(self.handle(), (v))
 }
 
-func (self ImGuiContext) GetTestEngine() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiContext_GetTestEngine(self.handle()))
+func (self Context) TestEngine() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiContext_GetTestEngine(self.handle()))
 }
 
-func (self ImGuiContext) GetWindowsById() ImGuiStorage {
-	return newImGuiStorageFromC(C.ImGuiContext_GetWindowsById(self.handle()))
+func (self Context) WindowsById() Storage {
+	return newStorageFromC(C.wrap_ImGuiContext_GetWindowsById(self.handle()))
 }
 
-func (self *ImGuiContext) SetWindowsActiveCount(v int32) {
-	C.ImGuiContext_SetWindowsActiveCount(self.handle(), C.int(v))
+func (self *Context) SetWindowsActiveCount(v int32) {
+	C.wrap_ImGuiContext_SetWindowsActiveCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetWindowsActiveCount() int {
-	return int(C.ImGuiContext_GetWindowsActiveCount(self.handle()))
+func (self Context) WindowsActiveCount() int {
+	return int(C.wrap_ImGuiContext_GetWindowsActiveCount(self.handle()))
 }
 
-func (self *ImGuiContext) SetWindowsHoverPadding(v Vec2) {
-	C.ImGuiContext_SetWindowsHoverPadding(self.handle(), v.toC())
+func (self *Context) SetWindowsHoverPadding(v Vec2) {
+	C.wrap_ImGuiContext_SetWindowsHoverPadding(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetWindowsHoverPadding() Vec2 {
+func (self Context) WindowsHoverPadding() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiContext_GetWindowsHoverPadding(self.handle()))
+	out.fromC(C.wrap_ImGuiContext_GetWindowsHoverPadding(self.handle()))
 	return *out
 }
 
-func (self *ImGuiContext) SetCurrentWindow(v ImGuiWindow) {
-	C.ImGuiContext_SetCurrentWindow(self.handle(), v.handle())
+func (self *Context) SetCurrentWindow(v Window) {
+	C.wrap_ImGuiContext_SetCurrentWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetCurrentWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiContext_GetCurrentWindow(self.handle())))
+func (self Context) CurrentWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiContext_GetCurrentWindow(self.handle())))
 }
 
-func (self *ImGuiContext) SetHoveredWindow(v ImGuiWindow) {
-	C.ImGuiContext_SetHoveredWindow(self.handle(), v.handle())
+func (self *Context) SetHoveredWindow(v Window) {
+	C.wrap_ImGuiContext_SetHoveredWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetHoveredWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiContext_GetHoveredWindow(self.handle())))
+func (self Context) HoveredWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiContext_GetHoveredWindow(self.handle())))
 }
 
-func (self *ImGuiContext) SetHoveredWindowUnderMovingWindow(v ImGuiWindow) {
-	C.ImGuiContext_SetHoveredWindowUnderMovingWindow(self.handle(), v.handle())
+func (self *Context) SetHoveredWindowUnderMovingWindow(v Window) {
+	C.wrap_ImGuiContext_SetHoveredWindowUnderMovingWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetHoveredWindowUnderMovingWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiContext_GetHoveredWindowUnderMovingWindow(self.handle())))
+func (self Context) HoveredWindowUnderMovingWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiContext_GetHoveredWindowUnderMovingWindow(self.handle())))
 }
 
-func (self *ImGuiContext) SetMovingWindow(v ImGuiWindow) {
-	C.ImGuiContext_SetMovingWindow(self.handle(), v.handle())
+func (self *Context) SetMovingWindow(v Window) {
+	C.wrap_ImGuiContext_SetMovingWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetMovingWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiContext_GetMovingWindow(self.handle())))
+func (self Context) MovingWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiContext_GetMovingWindow(self.handle())))
 }
 
-func (self *ImGuiContext) SetWheelingWindow(v ImGuiWindow) {
-	C.ImGuiContext_SetWheelingWindow(self.handle(), v.handle())
+func (self *Context) SetWheelingWindow(v Window) {
+	C.wrap_ImGuiContext_SetWheelingWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetWheelingWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiContext_GetWheelingWindow(self.handle())))
+func (self Context) WheelingWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiContext_GetWheelingWindow(self.handle())))
 }
 
-func (self *ImGuiContext) SetWheelingWindowRefMousePos(v Vec2) {
-	C.ImGuiContext_SetWheelingWindowRefMousePos(self.handle(), v.toC())
+func (self *Context) SetWheelingWindowRefMousePos(v Vec2) {
+	C.wrap_ImGuiContext_SetWheelingWindowRefMousePos(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetWheelingWindowRefMousePos() Vec2 {
+func (self Context) WheelingWindowRefMousePos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiContext_GetWheelingWindowRefMousePos(self.handle()))
+	out.fromC(C.wrap_ImGuiContext_GetWheelingWindowRefMousePos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiContext) SetWheelingWindowTimer(v float32) {
-	C.ImGuiContext_SetWheelingWindowTimer(self.handle(), C.float(v))
+func (self *Context) SetWheelingWindowTimer(v float32) {
+	C.wrap_ImGuiContext_SetWheelingWindowTimer(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetWheelingWindowTimer() float32 {
-	return float32(C.ImGuiContext_GetWheelingWindowTimer(self.handle()))
+func (self Context) WheelingWindowTimer() float32 {
+	return float32(C.wrap_ImGuiContext_GetWheelingWindowTimer(self.handle()))
 }
 
-func (self *ImGuiContext) SetDebugHookIdInfo(v ImGuiID) {
-	C.ImGuiContext_SetDebugHookIdInfo(self.handle(), C.ImGuiID(v))
+func (self *Context) SetDebugHookIdInfo(v ID) {
+	C.wrap_ImGuiContext_SetDebugHookIdInfo(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetDebugHookIdInfo() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetDebugHookIdInfo(self.handle()))
+func (self Context) DebugHookIdInfo() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetDebugHookIdInfo(self.handle()))
 }
 
-func (self *ImGuiContext) SetHoveredId(v ImGuiID) {
-	C.ImGuiContext_SetHoveredId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetHoveredId(v ID) {
+	C.wrap_ImGuiContext_SetHoveredId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetHoveredId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetHoveredId(self.handle()))
+func (self Context) HoveredId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetHoveredId(self.handle()))
 }
 
-func (self *ImGuiContext) SetHoveredIdPreviousFrame(v ImGuiID) {
-	C.ImGuiContext_SetHoveredIdPreviousFrame(self.handle(), C.ImGuiID(v))
+func (self *Context) SetHoveredIdPreviousFrame(v ID) {
+	C.wrap_ImGuiContext_SetHoveredIdPreviousFrame(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetHoveredIdPreviousFrame() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetHoveredIdPreviousFrame(self.handle()))
+func (self Context) HoveredIdPreviousFrame() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetHoveredIdPreviousFrame(self.handle()))
 }
 
-func (self *ImGuiContext) SetHoveredIdAllowOverlap(v bool) {
-	C.ImGuiContext_SetHoveredIdAllowOverlap(self.handle(), C.bool(v))
+func (self *Context) SetHoveredIdAllowOverlap(v bool) {
+	C.wrap_ImGuiContext_SetHoveredIdAllowOverlap(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetHoveredIdAllowOverlap() bool {
-	return C.ImGuiContext_GetHoveredIdAllowOverlap(self.handle()) == C.bool(true)
+func (self Context) HoveredIdAllowOverlap() bool {
+	return C.wrap_ImGuiContext_GetHoveredIdAllowOverlap(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetHoveredIdUsingMouseWheel(v bool) {
-	C.ImGuiContext_SetHoveredIdUsingMouseWheel(self.handle(), C.bool(v))
+func (self *Context) SetHoveredIdUsingMouseWheel(v bool) {
+	C.wrap_ImGuiContext_SetHoveredIdUsingMouseWheel(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetHoveredIdUsingMouseWheel() bool {
-	return C.ImGuiContext_GetHoveredIdUsingMouseWheel(self.handle()) == C.bool(true)
+func (self Context) HoveredIdUsingMouseWheel() bool {
+	return C.wrap_ImGuiContext_GetHoveredIdUsingMouseWheel(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetHoveredIdPreviousFrameUsingMouseWheel(v bool) {
-	C.ImGuiContext_SetHoveredIdPreviousFrameUsingMouseWheel(self.handle(), C.bool(v))
+func (self *Context) SetHoveredIdPreviousFrameUsingMouseWheel(v bool) {
+	C.wrap_ImGuiContext_SetHoveredIdPreviousFrameUsingMouseWheel(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetHoveredIdPreviousFrameUsingMouseWheel() bool {
-	return C.ImGuiContext_GetHoveredIdPreviousFrameUsingMouseWheel(self.handle()) == C.bool(true)
+func (self Context) HoveredIdPreviousFrameUsingMouseWheel() bool {
+	return C.wrap_ImGuiContext_GetHoveredIdPreviousFrameUsingMouseWheel(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetHoveredIdDisabled(v bool) {
-	C.ImGuiContext_SetHoveredIdDisabled(self.handle(), C.bool(v))
+func (self *Context) SetHoveredIdDisabled(v bool) {
+	C.wrap_ImGuiContext_SetHoveredIdDisabled(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetHoveredIdDisabled() bool {
-	return C.ImGuiContext_GetHoveredIdDisabled(self.handle()) == C.bool(true)
+func (self Context) HoveredIdDisabled() bool {
+	return C.wrap_ImGuiContext_GetHoveredIdDisabled(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetHoveredIdTimer(v float32) {
-	C.ImGuiContext_SetHoveredIdTimer(self.handle(), C.float(v))
+func (self *Context) SetHoveredIdTimer(v float32) {
+	C.wrap_ImGuiContext_SetHoveredIdTimer(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetHoveredIdTimer() float32 {
-	return float32(C.ImGuiContext_GetHoveredIdTimer(self.handle()))
+func (self Context) HoveredIdTimer() float32 {
+	return float32(C.wrap_ImGuiContext_GetHoveredIdTimer(self.handle()))
 }
 
-func (self *ImGuiContext) SetHoveredIdNotActiveTimer(v float32) {
-	C.ImGuiContext_SetHoveredIdNotActiveTimer(self.handle(), C.float(v))
+func (self *Context) SetHoveredIdNotActiveTimer(v float32) {
+	C.wrap_ImGuiContext_SetHoveredIdNotActiveTimer(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetHoveredIdNotActiveTimer() float32 {
-	return float32(C.ImGuiContext_GetHoveredIdNotActiveTimer(self.handle()))
+func (self Context) HoveredIdNotActiveTimer() float32 {
+	return float32(C.wrap_ImGuiContext_GetHoveredIdNotActiveTimer(self.handle()))
 }
 
-func (self *ImGuiContext) SetActiveId(v ImGuiID) {
-	C.ImGuiContext_SetActiveId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetActiveId(v ID) {
+	C.wrap_ImGuiContext_SetActiveId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetActiveId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetActiveId(self.handle()))
+func (self Context) ActiveId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetActiveId(self.handle()))
 }
 
-func (self *ImGuiContext) SetActiveIdIsAlive(v ImGuiID) {
-	C.ImGuiContext_SetActiveIdIsAlive(self.handle(), C.ImGuiID(v))
+func (self *Context) SetActiveIdIsAlive(v ID) {
+	C.wrap_ImGuiContext_SetActiveIdIsAlive(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetActiveIdIsAlive() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetActiveIdIsAlive(self.handle()))
+func (self Context) ActiveIdIsAlive() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetActiveIdIsAlive(self.handle()))
 }
 
-func (self *ImGuiContext) SetActiveIdTimer(v float32) {
-	C.ImGuiContext_SetActiveIdTimer(self.handle(), C.float(v))
+func (self *Context) SetActiveIdTimer(v float32) {
+	C.wrap_ImGuiContext_SetActiveIdTimer(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetActiveIdTimer() float32 {
-	return float32(C.ImGuiContext_GetActiveIdTimer(self.handle()))
+func (self Context) ActiveIdTimer() float32 {
+	return float32(C.wrap_ImGuiContext_GetActiveIdTimer(self.handle()))
 }
 
-func (self *ImGuiContext) SetActiveIdIsJustActivated(v bool) {
-	C.ImGuiContext_SetActiveIdIsJustActivated(self.handle(), C.bool(v))
+func (self *Context) SetActiveIdIsJustActivated(v bool) {
+	C.wrap_ImGuiContext_SetActiveIdIsJustActivated(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetActiveIdIsJustActivated() bool {
-	return C.ImGuiContext_GetActiveIdIsJustActivated(self.handle()) == C.bool(true)
+func (self Context) ActiveIdIsJustActivated() bool {
+	return C.wrap_ImGuiContext_GetActiveIdIsJustActivated(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetActiveIdAllowOverlap(v bool) {
-	C.ImGuiContext_SetActiveIdAllowOverlap(self.handle(), C.bool(v))
+func (self *Context) SetActiveIdAllowOverlap(v bool) {
+	C.wrap_ImGuiContext_SetActiveIdAllowOverlap(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetActiveIdAllowOverlap() bool {
-	return C.ImGuiContext_GetActiveIdAllowOverlap(self.handle()) == C.bool(true)
+func (self Context) ActiveIdAllowOverlap() bool {
+	return C.wrap_ImGuiContext_GetActiveIdAllowOverlap(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetActiveIdNoClearOnFocusLoss(v bool) {
-	C.ImGuiContext_SetActiveIdNoClearOnFocusLoss(self.handle(), C.bool(v))
+func (self *Context) SetActiveIdNoClearOnFocusLoss(v bool) {
+	C.wrap_ImGuiContext_SetActiveIdNoClearOnFocusLoss(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetActiveIdNoClearOnFocusLoss() bool {
-	return C.ImGuiContext_GetActiveIdNoClearOnFocusLoss(self.handle()) == C.bool(true)
+func (self Context) ActiveIdNoClearOnFocusLoss() bool {
+	return C.wrap_ImGuiContext_GetActiveIdNoClearOnFocusLoss(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetActiveIdHasBeenPressedBefore(v bool) {
-	C.ImGuiContext_SetActiveIdHasBeenPressedBefore(self.handle(), C.bool(v))
+func (self *Context) SetActiveIdHasBeenPressedBefore(v bool) {
+	C.wrap_ImGuiContext_SetActiveIdHasBeenPressedBefore(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetActiveIdHasBeenPressedBefore() bool {
-	return C.ImGuiContext_GetActiveIdHasBeenPressedBefore(self.handle()) == C.bool(true)
+func (self Context) ActiveIdHasBeenPressedBefore() bool {
+	return C.wrap_ImGuiContext_GetActiveIdHasBeenPressedBefore(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetActiveIdHasBeenEditedBefore(v bool) {
-	C.ImGuiContext_SetActiveIdHasBeenEditedBefore(self.handle(), C.bool(v))
+func (self *Context) SetActiveIdHasBeenEditedBefore(v bool) {
+	C.wrap_ImGuiContext_SetActiveIdHasBeenEditedBefore(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetActiveIdHasBeenEditedBefore() bool {
-	return C.ImGuiContext_GetActiveIdHasBeenEditedBefore(self.handle()) == C.bool(true)
+func (self Context) ActiveIdHasBeenEditedBefore() bool {
+	return C.wrap_ImGuiContext_GetActiveIdHasBeenEditedBefore(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetActiveIdHasBeenEditedThisFrame(v bool) {
-	C.ImGuiContext_SetActiveIdHasBeenEditedThisFrame(self.handle(), C.bool(v))
+func (self *Context) SetActiveIdHasBeenEditedThisFrame(v bool) {
+	C.wrap_ImGuiContext_SetActiveIdHasBeenEditedThisFrame(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetActiveIdHasBeenEditedThisFrame() bool {
-	return C.ImGuiContext_GetActiveIdHasBeenEditedThisFrame(self.handle()) == C.bool(true)
+func (self Context) ActiveIdHasBeenEditedThisFrame() bool {
+	return C.wrap_ImGuiContext_GetActiveIdHasBeenEditedThisFrame(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetActiveIdClickOffset(v Vec2) {
-	C.ImGuiContext_SetActiveIdClickOffset(self.handle(), v.toC())
+func (self *Context) SetActiveIdClickOffset(v Vec2) {
+	C.wrap_ImGuiContext_SetActiveIdClickOffset(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetActiveIdClickOffset() Vec2 {
+func (self Context) ActiveIdClickOffset() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiContext_GetActiveIdClickOffset(self.handle()))
+	out.fromC(C.wrap_ImGuiContext_GetActiveIdClickOffset(self.handle()))
 	return *out
 }
 
-func (self *ImGuiContext) SetActiveIdWindow(v ImGuiWindow) {
-	C.ImGuiContext_SetActiveIdWindow(self.handle(), v.handle())
+func (self *Context) SetActiveIdWindow(v Window) {
+	C.wrap_ImGuiContext_SetActiveIdWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetActiveIdWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiContext_GetActiveIdWindow(self.handle())))
+func (self Context) ActiveIdWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiContext_GetActiveIdWindow(self.handle())))
 }
 
-func (self *ImGuiContext) SetActiveIdSource(v InputSource) {
-	C.ImGuiContext_SetActiveIdSource(self.handle(), C.ImGuiInputSource(v))
+func (self *Context) SetActiveIdSource(v InputSource) {
+	C.wrap_ImGuiContext_SetActiveIdSource(self.handle(), C.ImGuiInputSource(v))
 }
 
-func (self ImGuiContext) GetActiveIdSource() InputSource {
-	return InputSource(C.ImGuiContext_GetActiveIdSource(self.handle()))
+func (self Context) ActiveIdSource() InputSource {
+	return InputSource(C.wrap_ImGuiContext_GetActiveIdSource(self.handle()))
 }
 
-func (self *ImGuiContext) SetActiveIdMouseButton(v int32) {
-	C.ImGuiContext_SetActiveIdMouseButton(self.handle(), C.int(v))
+func (self *Context) SetActiveIdMouseButton(v int32) {
+	C.wrap_ImGuiContext_SetActiveIdMouseButton(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetActiveIdMouseButton() int {
-	return int(C.ImGuiContext_GetActiveIdMouseButton(self.handle()))
+func (self Context) ActiveIdMouseButton() int {
+	return int(C.wrap_ImGuiContext_GetActiveIdMouseButton(self.handle()))
 }
 
-func (self *ImGuiContext) SetActiveIdPreviousFrame(v ImGuiID) {
-	C.ImGuiContext_SetActiveIdPreviousFrame(self.handle(), C.ImGuiID(v))
+func (self *Context) SetActiveIdPreviousFrame(v ID) {
+	C.wrap_ImGuiContext_SetActiveIdPreviousFrame(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetActiveIdPreviousFrame() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetActiveIdPreviousFrame(self.handle()))
+func (self Context) ActiveIdPreviousFrame() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetActiveIdPreviousFrame(self.handle()))
 }
 
-func (self *ImGuiContext) SetActiveIdPreviousFrameIsAlive(v bool) {
-	C.ImGuiContext_SetActiveIdPreviousFrameIsAlive(self.handle(), C.bool(v))
+func (self *Context) SetActiveIdPreviousFrameIsAlive(v bool) {
+	C.wrap_ImGuiContext_SetActiveIdPreviousFrameIsAlive(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetActiveIdPreviousFrameIsAlive() bool {
-	return C.ImGuiContext_GetActiveIdPreviousFrameIsAlive(self.handle()) == C.bool(true)
+func (self Context) ActiveIdPreviousFrameIsAlive() bool {
+	return C.wrap_ImGuiContext_GetActiveIdPreviousFrameIsAlive(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetActiveIdPreviousFrameHasBeenEditedBefore(v bool) {
-	C.ImGuiContext_SetActiveIdPreviousFrameHasBeenEditedBefore(self.handle(), C.bool(v))
+func (self *Context) SetActiveIdPreviousFrameHasBeenEditedBefore(v bool) {
+	C.wrap_ImGuiContext_SetActiveIdPreviousFrameHasBeenEditedBefore(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetActiveIdPreviousFrameHasBeenEditedBefore() bool {
-	return C.ImGuiContext_GetActiveIdPreviousFrameHasBeenEditedBefore(self.handle()) == C.bool(true)
+func (self Context) ActiveIdPreviousFrameHasBeenEditedBefore() bool {
+	return C.wrap_ImGuiContext_GetActiveIdPreviousFrameHasBeenEditedBefore(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetActiveIdPreviousFrameWindow(v ImGuiWindow) {
-	C.ImGuiContext_SetActiveIdPreviousFrameWindow(self.handle(), v.handle())
+func (self *Context) SetActiveIdPreviousFrameWindow(v Window) {
+	C.wrap_ImGuiContext_SetActiveIdPreviousFrameWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetActiveIdPreviousFrameWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiContext_GetActiveIdPreviousFrameWindow(self.handle())))
+func (self Context) ActiveIdPreviousFrameWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiContext_GetActiveIdPreviousFrameWindow(self.handle())))
 }
 
-func (self *ImGuiContext) SetLastActiveId(v ImGuiID) {
-	C.ImGuiContext_SetLastActiveId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetLastActiveId(v ID) {
+	C.wrap_ImGuiContext_SetLastActiveId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetLastActiveId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetLastActiveId(self.handle()))
+func (self Context) LastActiveId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetLastActiveId(self.handle()))
 }
 
-func (self *ImGuiContext) SetLastActiveIdTimer(v float32) {
-	C.ImGuiContext_SetLastActiveIdTimer(self.handle(), C.float(v))
+func (self *Context) SetLastActiveIdTimer(v float32) {
+	C.wrap_ImGuiContext_SetLastActiveIdTimer(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetLastActiveIdTimer() float32 {
-	return float32(C.ImGuiContext_GetLastActiveIdTimer(self.handle()))
+func (self Context) LastActiveIdTimer() float32 {
+	return float32(C.wrap_ImGuiContext_GetLastActiveIdTimer(self.handle()))
 }
 
-func (self *ImGuiContext) SetActiveIdUsingNavDirMask(v uint32) {
-	C.ImGuiContext_SetActiveIdUsingNavDirMask(self.handle(), C.ImU32(v))
+func (self *Context) SetActiveIdUsingNavDirMask(v uint32) {
+	C.wrap_ImGuiContext_SetActiveIdUsingNavDirMask(self.handle(), C.ImU32(v))
 }
 
-func (self ImGuiContext) GetActiveIdUsingNavDirMask() uint32 {
-	return uint32(C.ImGuiContext_GetActiveIdUsingNavDirMask(self.handle()))
+func (self Context) ActiveIdUsingNavDirMask() uint32 {
+	return uint32(C.wrap_ImGuiContext_GetActiveIdUsingNavDirMask(self.handle()))
 }
 
-func (self *ImGuiContext) SetActiveIdUsingNavInputMask(v uint32) {
-	C.ImGuiContext_SetActiveIdUsingNavInputMask(self.handle(), C.ImU32(v))
+func (self *Context) SetActiveIdUsingNavInputMask(v uint32) {
+	C.wrap_ImGuiContext_SetActiveIdUsingNavInputMask(self.handle(), C.ImU32(v))
 }
 
-func (self ImGuiContext) GetActiveIdUsingNavInputMask() uint32 {
-	return uint32(C.ImGuiContext_GetActiveIdUsingNavInputMask(self.handle()))
+func (self Context) ActiveIdUsingNavInputMask() uint32 {
+	return uint32(C.wrap_ImGuiContext_GetActiveIdUsingNavInputMask(self.handle()))
 }
 
-func (self *ImGuiContext) SetCurrentItemFlags(v ItemFlags) {
-	C.ImGuiContext_SetCurrentItemFlags(self.handle(), C.ImGuiItemFlags(v))
+func (self *Context) SetCurrentItemFlags(v ItemFlags) {
+	C.wrap_ImGuiContext_SetCurrentItemFlags(self.handle(), C.ImGuiItemFlags(v))
 }
 
-func (self ImGuiContext) GetCurrentItemFlags() ItemFlags {
-	return ItemFlags(C.ImGuiContext_GetCurrentItemFlags(self.handle()))
+func (self Context) CurrentItemFlags() ItemFlags {
+	return ItemFlags(C.wrap_ImGuiContext_GetCurrentItemFlags(self.handle()))
 }
 
-func (self ImGuiContext) GetNextItemData() ImGuiNextItemData {
-	return newImGuiNextItemDataFromC(C.ImGuiContext_GetNextItemData(self.handle()))
+func (self Context) NextItemData() NextItemData {
+	return newNextItemDataFromC(C.wrap_ImGuiContext_GetNextItemData(self.handle()))
 }
 
-func (self ImGuiContext) GetLastItemData() ImGuiLastItemData {
-	return newImGuiLastItemDataFromC(C.ImGuiContext_GetLastItemData(self.handle()))
+func (self Context) LastItemData() LastItemData {
+	return newLastItemDataFromC(C.wrap_ImGuiContext_GetLastItemData(self.handle()))
 }
 
-func (self ImGuiContext) GetNextWindowData() ImGuiNextWindowData {
-	return newImGuiNextWindowDataFromC(C.ImGuiContext_GetNextWindowData(self.handle()))
+func (self Context) NextWindowData() NextWindowData {
+	return newNextWindowDataFromC(C.wrap_ImGuiContext_GetNextWindowData(self.handle()))
 }
 
-func (self *ImGuiContext) SetBeginMenuCount(v int32) {
-	C.ImGuiContext_SetBeginMenuCount(self.handle(), C.int(v))
+func (self *Context) SetBeginMenuCount(v int32) {
+	C.wrap_ImGuiContext_SetBeginMenuCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetBeginMenuCount() int {
-	return int(C.ImGuiContext_GetBeginMenuCount(self.handle()))
+func (self Context) BeginMenuCount() int {
+	return int(C.wrap_ImGuiContext_GetBeginMenuCount(self.handle()))
 }
 
-func (self *ImGuiContext) SetCurrentDpiScale(v float32) {
-	C.ImGuiContext_SetCurrentDpiScale(self.handle(), C.float(v))
+func (self *Context) SetCurrentDpiScale(v float32) {
+	C.wrap_ImGuiContext_SetCurrentDpiScale(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetCurrentDpiScale() float32 {
-	return float32(C.ImGuiContext_GetCurrentDpiScale(self.handle()))
+func (self Context) CurrentDpiScale() float32 {
+	return float32(C.wrap_ImGuiContext_GetCurrentDpiScale(self.handle()))
 }
 
-func (self *ImGuiContext) SetCurrentViewport(v ImGuiViewportP) {
-	C.ImGuiContext_SetCurrentViewport(self.handle(), v.handle())
+func (self *Context) SetCurrentViewport(v ViewportP) {
+	C.wrap_ImGuiContext_SetCurrentViewport(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetCurrentViewport() ImGuiViewportP {
-	return (ImGuiViewportP)(unsafe.Pointer(C.ImGuiContext_GetCurrentViewport(self.handle())))
+func (self Context) CurrentViewport() ViewportP {
+	return (ViewportP)(unsafe.Pointer(C.wrap_ImGuiContext_GetCurrentViewport(self.handle())))
 }
 
-func (self *ImGuiContext) SetMouseViewport(v ImGuiViewportP) {
-	C.ImGuiContext_SetMouseViewport(self.handle(), v.handle())
+func (self *Context) SetMouseViewport(v ViewportP) {
+	C.wrap_ImGuiContext_SetMouseViewport(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetMouseViewport() ImGuiViewportP {
-	return (ImGuiViewportP)(unsafe.Pointer(C.ImGuiContext_GetMouseViewport(self.handle())))
+func (self Context) MouseViewport() ViewportP {
+	return (ViewportP)(unsafe.Pointer(C.wrap_ImGuiContext_GetMouseViewport(self.handle())))
 }
 
-func (self *ImGuiContext) SetMouseLastHoveredViewport(v ImGuiViewportP) {
-	C.ImGuiContext_SetMouseLastHoveredViewport(self.handle(), v.handle())
+func (self *Context) SetMouseLastHoveredViewport(v ViewportP) {
+	C.wrap_ImGuiContext_SetMouseLastHoveredViewport(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetMouseLastHoveredViewport() ImGuiViewportP {
-	return (ImGuiViewportP)(unsafe.Pointer(C.ImGuiContext_GetMouseLastHoveredViewport(self.handle())))
+func (self Context) MouseLastHoveredViewport() ViewportP {
+	return (ViewportP)(unsafe.Pointer(C.wrap_ImGuiContext_GetMouseLastHoveredViewport(self.handle())))
 }
 
-func (self *ImGuiContext) SetPlatformLastFocusedViewportId(v ImGuiID) {
-	C.ImGuiContext_SetPlatformLastFocusedViewportId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetPlatformLastFocusedViewportId(v ID) {
+	C.wrap_ImGuiContext_SetPlatformLastFocusedViewportId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetPlatformLastFocusedViewportId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetPlatformLastFocusedViewportId(self.handle()))
+func (self Context) PlatformLastFocusedViewportId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetPlatformLastFocusedViewportId(self.handle()))
 }
 
-func (self ImGuiContext) GetFallbackMonitor() ImGuiPlatformMonitor {
-	return newImGuiPlatformMonitorFromC(C.ImGuiContext_GetFallbackMonitor(self.handle()))
+func (self Context) FallbackMonitor() PlatformMonitor {
+	return newPlatformMonitorFromC(C.wrap_ImGuiContext_GetFallbackMonitor(self.handle()))
 }
 
-func (self *ImGuiContext) SetViewportFrontMostStampCount(v int32) {
-	C.ImGuiContext_SetViewportFrontMostStampCount(self.handle(), C.int(v))
+func (self *Context) SetViewportFrontMostStampCount(v int32) {
+	C.wrap_ImGuiContext_SetViewportFrontMostStampCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetViewportFrontMostStampCount() int {
-	return int(C.ImGuiContext_GetViewportFrontMostStampCount(self.handle()))
+func (self Context) ViewportFrontMostStampCount() int {
+	return int(C.wrap_ImGuiContext_GetViewportFrontMostStampCount(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavWindow(v ImGuiWindow) {
-	C.ImGuiContext_SetNavWindow(self.handle(), v.handle())
+func (self *Context) SetNavWindow(v Window) {
+	C.wrap_ImGuiContext_SetNavWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetNavWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiContext_GetNavWindow(self.handle())))
+func (self Context) NavWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiContext_GetNavWindow(self.handle())))
 }
 
-func (self *ImGuiContext) SetNavId(v ImGuiID) {
-	C.ImGuiContext_SetNavId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetNavId(v ID) {
+	C.wrap_ImGuiContext_SetNavId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetNavId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetNavId(self.handle()))
+func (self Context) NavId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetNavId(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavFocusScopeId(v ImGuiID) {
-	C.ImGuiContext_SetNavFocusScopeId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetNavFocusScopeId(v ID) {
+	C.wrap_ImGuiContext_SetNavFocusScopeId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetNavFocusScopeId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetNavFocusScopeId(self.handle()))
+func (self Context) NavFocusScopeId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetNavFocusScopeId(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavActivateId(v ImGuiID) {
-	C.ImGuiContext_SetNavActivateId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetNavActivateId(v ID) {
+	C.wrap_ImGuiContext_SetNavActivateId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetNavActivateId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetNavActivateId(self.handle()))
+func (self Context) NavActivateId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetNavActivateId(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavActivateDownId(v ImGuiID) {
-	C.ImGuiContext_SetNavActivateDownId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetNavActivateDownId(v ID) {
+	C.wrap_ImGuiContext_SetNavActivateDownId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetNavActivateDownId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetNavActivateDownId(self.handle()))
+func (self Context) NavActivateDownId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetNavActivateDownId(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavActivatePressedId(v ImGuiID) {
-	C.ImGuiContext_SetNavActivatePressedId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetNavActivatePressedId(v ID) {
+	C.wrap_ImGuiContext_SetNavActivatePressedId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetNavActivatePressedId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetNavActivatePressedId(self.handle()))
+func (self Context) NavActivatePressedId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetNavActivatePressedId(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavActivateInputId(v ImGuiID) {
-	C.ImGuiContext_SetNavActivateInputId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetNavActivateInputId(v ID) {
+	C.wrap_ImGuiContext_SetNavActivateInputId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetNavActivateInputId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetNavActivateInputId(self.handle()))
+func (self Context) NavActivateInputId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetNavActivateInputId(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavActivateFlags(v ActivateFlags) {
-	C.ImGuiContext_SetNavActivateFlags(self.handle(), C.ImGuiActivateFlags(v))
+func (self *Context) SetNavActivateFlags(v ActivateFlags) {
+	C.wrap_ImGuiContext_SetNavActivateFlags(self.handle(), C.ImGuiActivateFlags(v))
 }
 
-func (self ImGuiContext) GetNavActivateFlags() ActivateFlags {
-	return ActivateFlags(C.ImGuiContext_GetNavActivateFlags(self.handle()))
+func (self Context) NavActivateFlags() ActivateFlags {
+	return ActivateFlags(C.wrap_ImGuiContext_GetNavActivateFlags(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavJustMovedToId(v ImGuiID) {
-	C.ImGuiContext_SetNavJustMovedToId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetNavJustMovedToId(v ID) {
+	C.wrap_ImGuiContext_SetNavJustMovedToId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetNavJustMovedToId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetNavJustMovedToId(self.handle()))
+func (self Context) NavJustMovedToId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetNavJustMovedToId(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavJustMovedToFocusScopeId(v ImGuiID) {
-	C.ImGuiContext_SetNavJustMovedToFocusScopeId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetNavJustMovedToFocusScopeId(v ID) {
+	C.wrap_ImGuiContext_SetNavJustMovedToFocusScopeId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetNavJustMovedToFocusScopeId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetNavJustMovedToFocusScopeId(self.handle()))
+func (self Context) NavJustMovedToFocusScopeId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetNavJustMovedToFocusScopeId(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavJustMovedToKeyMods(v ModFlags) {
-	C.ImGuiContext_SetNavJustMovedToKeyMods(self.handle(), C.ImGuiModFlags(v))
+func (self *Context) SetNavJustMovedToKeyMods(v ModFlags) {
+	C.wrap_ImGuiContext_SetNavJustMovedToKeyMods(self.handle(), C.ImGuiModFlags(v))
 }
 
-func (self ImGuiContext) GetNavJustMovedToKeyMods() ModFlags {
-	return ModFlags(C.ImGuiContext_GetNavJustMovedToKeyMods(self.handle()))
+func (self Context) NavJustMovedToKeyMods() ModFlags {
+	return ModFlags(C.wrap_ImGuiContext_GetNavJustMovedToKeyMods(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavNextActivateId(v ImGuiID) {
-	C.ImGuiContext_SetNavNextActivateId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetNavNextActivateId(v ID) {
+	C.wrap_ImGuiContext_SetNavNextActivateId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetNavNextActivateId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetNavNextActivateId(self.handle()))
+func (self Context) NavNextActivateId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetNavNextActivateId(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavNextActivateFlags(v ActivateFlags) {
-	C.ImGuiContext_SetNavNextActivateFlags(self.handle(), C.ImGuiActivateFlags(v))
+func (self *Context) SetNavNextActivateFlags(v ActivateFlags) {
+	C.wrap_ImGuiContext_SetNavNextActivateFlags(self.handle(), C.ImGuiActivateFlags(v))
 }
 
-func (self ImGuiContext) GetNavNextActivateFlags() ActivateFlags {
-	return ActivateFlags(C.ImGuiContext_GetNavNextActivateFlags(self.handle()))
+func (self Context) NavNextActivateFlags() ActivateFlags {
+	return ActivateFlags(C.wrap_ImGuiContext_GetNavNextActivateFlags(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavInputSource(v InputSource) {
-	C.ImGuiContext_SetNavInputSource(self.handle(), C.ImGuiInputSource(v))
+func (self *Context) SetNavInputSource(v InputSource) {
+	C.wrap_ImGuiContext_SetNavInputSource(self.handle(), C.ImGuiInputSource(v))
 }
 
-func (self ImGuiContext) GetNavInputSource() InputSource {
-	return InputSource(C.ImGuiContext_GetNavInputSource(self.handle()))
+func (self Context) NavInputSource() InputSource {
+	return InputSource(C.wrap_ImGuiContext_GetNavInputSource(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavLayer(v NavLayer) {
-	C.ImGuiContext_SetNavLayer(self.handle(), C.ImGuiNavLayer(v))
+func (self *Context) SetNavLayer(v NavLayer) {
+	C.wrap_ImGuiContext_SetNavLayer(self.handle(), C.ImGuiNavLayer(v))
 }
 
-func (self ImGuiContext) GetNavLayer() NavLayer {
-	return NavLayer(C.ImGuiContext_GetNavLayer(self.handle()))
+func (self Context) NavLayer() NavLayer {
+	return NavLayer(C.wrap_ImGuiContext_GetNavLayer(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavIdIsAlive(v bool) {
-	C.ImGuiContext_SetNavIdIsAlive(self.handle(), C.bool(v))
+func (self *Context) SetNavIdIsAlive(v bool) {
+	C.wrap_ImGuiContext_SetNavIdIsAlive(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetNavIdIsAlive() bool {
-	return C.ImGuiContext_GetNavIdIsAlive(self.handle()) == C.bool(true)
+func (self Context) NavIdIsAlive() bool {
+	return C.wrap_ImGuiContext_GetNavIdIsAlive(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetNavMousePosDirty(v bool) {
-	C.ImGuiContext_SetNavMousePosDirty(self.handle(), C.bool(v))
+func (self *Context) SetNavMousePosDirty(v bool) {
+	C.wrap_ImGuiContext_SetNavMousePosDirty(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetNavMousePosDirty() bool {
-	return C.ImGuiContext_GetNavMousePosDirty(self.handle()) == C.bool(true)
+func (self Context) NavMousePosDirty() bool {
+	return C.wrap_ImGuiContext_GetNavMousePosDirty(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetNavDisableHighlight(v bool) {
-	C.ImGuiContext_SetNavDisableHighlight(self.handle(), C.bool(v))
+func (self *Context) SetNavDisableHighlight(v bool) {
+	C.wrap_ImGuiContext_SetNavDisableHighlight(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetNavDisableHighlight() bool {
-	return C.ImGuiContext_GetNavDisableHighlight(self.handle()) == C.bool(true)
+func (self Context) NavDisableHighlight() bool {
+	return C.wrap_ImGuiContext_GetNavDisableHighlight(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetNavDisableMouseHover(v bool) {
-	C.ImGuiContext_SetNavDisableMouseHover(self.handle(), C.bool(v))
+func (self *Context) SetNavDisableMouseHover(v bool) {
+	C.wrap_ImGuiContext_SetNavDisableMouseHover(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetNavDisableMouseHover() bool {
-	return C.ImGuiContext_GetNavDisableMouseHover(self.handle()) == C.bool(true)
+func (self Context) NavDisableMouseHover() bool {
+	return C.wrap_ImGuiContext_GetNavDisableMouseHover(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetNavAnyRequest(v bool) {
-	C.ImGuiContext_SetNavAnyRequest(self.handle(), C.bool(v))
+func (self *Context) SetNavAnyRequest(v bool) {
+	C.wrap_ImGuiContext_SetNavAnyRequest(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetNavAnyRequest() bool {
-	return C.ImGuiContext_GetNavAnyRequest(self.handle()) == C.bool(true)
+func (self Context) NavAnyRequest() bool {
+	return C.wrap_ImGuiContext_GetNavAnyRequest(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetNavInitRequest(v bool) {
-	C.ImGuiContext_SetNavInitRequest(self.handle(), C.bool(v))
+func (self *Context) SetNavInitRequest(v bool) {
+	C.wrap_ImGuiContext_SetNavInitRequest(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetNavInitRequest() bool {
-	return C.ImGuiContext_GetNavInitRequest(self.handle()) == C.bool(true)
+func (self Context) NavInitRequest() bool {
+	return C.wrap_ImGuiContext_GetNavInitRequest(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetNavInitRequestFromMove(v bool) {
-	C.ImGuiContext_SetNavInitRequestFromMove(self.handle(), C.bool(v))
+func (self *Context) SetNavInitRequestFromMove(v bool) {
+	C.wrap_ImGuiContext_SetNavInitRequestFromMove(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetNavInitRequestFromMove() bool {
-	return C.ImGuiContext_GetNavInitRequestFromMove(self.handle()) == C.bool(true)
+func (self Context) NavInitRequestFromMove() bool {
+	return C.wrap_ImGuiContext_GetNavInitRequestFromMove(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetNavInitResultId(v ImGuiID) {
-	C.ImGuiContext_SetNavInitResultId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetNavInitResultId(v ID) {
+	C.wrap_ImGuiContext_SetNavInitResultId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetNavInitResultId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetNavInitResultId(self.handle()))
+func (self Context) NavInitResultId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetNavInitResultId(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavInitResultRectRel(v Rect) {
-	C.ImGuiContext_SetNavInitResultRectRel(self.handle(), v.toC())
+func (self *Context) SetNavInitResultRectRel(v Rect) {
+	C.wrap_ImGuiContext_SetNavInitResultRectRel(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetNavInitResultRectRel() Rect {
+func (self Context) NavInitResultRectRel() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiContext_GetNavInitResultRectRel(self.handle()))
+	out.fromC(C.wrap_ImGuiContext_GetNavInitResultRectRel(self.handle()))
 	return *out
 }
 
-func (self *ImGuiContext) SetNavMoveSubmitted(v bool) {
-	C.ImGuiContext_SetNavMoveSubmitted(self.handle(), C.bool(v))
+func (self *Context) SetNavMoveSubmitted(v bool) {
+	C.wrap_ImGuiContext_SetNavMoveSubmitted(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetNavMoveSubmitted() bool {
-	return C.ImGuiContext_GetNavMoveSubmitted(self.handle()) == C.bool(true)
+func (self Context) NavMoveSubmitted() bool {
+	return C.wrap_ImGuiContext_GetNavMoveSubmitted(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetNavMoveScoringItems(v bool) {
-	C.ImGuiContext_SetNavMoveScoringItems(self.handle(), C.bool(v))
+func (self *Context) SetNavMoveScoringItems(v bool) {
+	C.wrap_ImGuiContext_SetNavMoveScoringItems(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetNavMoveScoringItems() bool {
-	return C.ImGuiContext_GetNavMoveScoringItems(self.handle()) == C.bool(true)
+func (self Context) NavMoveScoringItems() bool {
+	return C.wrap_ImGuiContext_GetNavMoveScoringItems(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetNavMoveForwardToNextFrame(v bool) {
-	C.ImGuiContext_SetNavMoveForwardToNextFrame(self.handle(), C.bool(v))
+func (self *Context) SetNavMoveForwardToNextFrame(v bool) {
+	C.wrap_ImGuiContext_SetNavMoveForwardToNextFrame(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetNavMoveForwardToNextFrame() bool {
-	return C.ImGuiContext_GetNavMoveForwardToNextFrame(self.handle()) == C.bool(true)
+func (self Context) NavMoveForwardToNextFrame() bool {
+	return C.wrap_ImGuiContext_GetNavMoveForwardToNextFrame(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetNavMoveFlags(v NavMoveFlags) {
-	C.ImGuiContext_SetNavMoveFlags(self.handle(), C.ImGuiNavMoveFlags(v))
+func (self *Context) SetNavMoveFlags(v NavMoveFlags) {
+	C.wrap_ImGuiContext_SetNavMoveFlags(self.handle(), C.ImGuiNavMoveFlags(v))
 }
 
-func (self ImGuiContext) GetNavMoveFlags() NavMoveFlags {
-	return NavMoveFlags(C.ImGuiContext_GetNavMoveFlags(self.handle()))
+func (self Context) NavMoveFlags() NavMoveFlags {
+	return NavMoveFlags(C.wrap_ImGuiContext_GetNavMoveFlags(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavMoveScrollFlags(v ScrollFlags) {
-	C.ImGuiContext_SetNavMoveScrollFlags(self.handle(), C.ImGuiScrollFlags(v))
+func (self *Context) SetNavMoveScrollFlags(v ScrollFlags) {
+	C.wrap_ImGuiContext_SetNavMoveScrollFlags(self.handle(), C.ImGuiScrollFlags(v))
 }
 
-func (self ImGuiContext) GetNavMoveScrollFlags() ScrollFlags {
-	return ScrollFlags(C.ImGuiContext_GetNavMoveScrollFlags(self.handle()))
+func (self Context) NavMoveScrollFlags() ScrollFlags {
+	return ScrollFlags(C.wrap_ImGuiContext_GetNavMoveScrollFlags(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavMoveKeyMods(v ModFlags) {
-	C.ImGuiContext_SetNavMoveKeyMods(self.handle(), C.ImGuiModFlags(v))
+func (self *Context) SetNavMoveKeyMods(v ModFlags) {
+	C.wrap_ImGuiContext_SetNavMoveKeyMods(self.handle(), C.ImGuiModFlags(v))
 }
 
-func (self ImGuiContext) GetNavMoveKeyMods() ModFlags {
-	return ModFlags(C.ImGuiContext_GetNavMoveKeyMods(self.handle()))
+func (self Context) NavMoveKeyMods() ModFlags {
+	return ModFlags(C.wrap_ImGuiContext_GetNavMoveKeyMods(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavMoveDir(v Dir) {
-	C.ImGuiContext_SetNavMoveDir(self.handle(), C.ImGuiDir(v))
+func (self *Context) SetNavMoveDir(v Dir) {
+	C.wrap_ImGuiContext_SetNavMoveDir(self.handle(), C.ImGuiDir(v))
 }
 
-func (self ImGuiContext) GetNavMoveDir() Dir {
-	return Dir(C.ImGuiContext_GetNavMoveDir(self.handle()))
+func (self Context) NavMoveDir() Dir {
+	return Dir(C.wrap_ImGuiContext_GetNavMoveDir(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavMoveDirForDebug(v Dir) {
-	C.ImGuiContext_SetNavMoveDirForDebug(self.handle(), C.ImGuiDir(v))
+func (self *Context) SetNavMoveDirForDebug(v Dir) {
+	C.wrap_ImGuiContext_SetNavMoveDirForDebug(self.handle(), C.ImGuiDir(v))
 }
 
-func (self ImGuiContext) GetNavMoveDirForDebug() Dir {
-	return Dir(C.ImGuiContext_GetNavMoveDirForDebug(self.handle()))
+func (self Context) NavMoveDirForDebug() Dir {
+	return Dir(C.wrap_ImGuiContext_GetNavMoveDirForDebug(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavMoveClipDir(v Dir) {
-	C.ImGuiContext_SetNavMoveClipDir(self.handle(), C.ImGuiDir(v))
+func (self *Context) SetNavMoveClipDir(v Dir) {
+	C.wrap_ImGuiContext_SetNavMoveClipDir(self.handle(), C.ImGuiDir(v))
 }
 
-func (self ImGuiContext) GetNavMoveClipDir() Dir {
-	return Dir(C.ImGuiContext_GetNavMoveClipDir(self.handle()))
+func (self Context) NavMoveClipDir() Dir {
+	return Dir(C.wrap_ImGuiContext_GetNavMoveClipDir(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavScoringRect(v Rect) {
-	C.ImGuiContext_SetNavScoringRect(self.handle(), v.toC())
+func (self *Context) SetNavScoringRect(v Rect) {
+	C.wrap_ImGuiContext_SetNavScoringRect(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetNavScoringRect() Rect {
+func (self Context) NavScoringRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiContext_GetNavScoringRect(self.handle()))
+	out.fromC(C.wrap_ImGuiContext_GetNavScoringRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiContext) SetNavScoringNoClipRect(v Rect) {
-	C.ImGuiContext_SetNavScoringNoClipRect(self.handle(), v.toC())
+func (self *Context) SetNavScoringNoClipRect(v Rect) {
+	C.wrap_ImGuiContext_SetNavScoringNoClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetNavScoringNoClipRect() Rect {
+func (self Context) NavScoringNoClipRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiContext_GetNavScoringNoClipRect(self.handle()))
+	out.fromC(C.wrap_ImGuiContext_GetNavScoringNoClipRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiContext) SetNavScoringDebugCount(v int32) {
-	C.ImGuiContext_SetNavScoringDebugCount(self.handle(), C.int(v))
+func (self *Context) SetNavScoringDebugCount(v int32) {
+	C.wrap_ImGuiContext_SetNavScoringDebugCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetNavScoringDebugCount() int {
-	return int(C.ImGuiContext_GetNavScoringDebugCount(self.handle()))
+func (self Context) NavScoringDebugCount() int {
+	return int(C.wrap_ImGuiContext_GetNavScoringDebugCount(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavTabbingDir(v int32) {
-	C.ImGuiContext_SetNavTabbingDir(self.handle(), C.int(v))
+func (self *Context) SetNavTabbingDir(v int32) {
+	C.wrap_ImGuiContext_SetNavTabbingDir(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetNavTabbingDir() int {
-	return int(C.ImGuiContext_GetNavTabbingDir(self.handle()))
+func (self Context) NavTabbingDir() int {
+	return int(C.wrap_ImGuiContext_GetNavTabbingDir(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavTabbingCounter(v int32) {
-	C.ImGuiContext_SetNavTabbingCounter(self.handle(), C.int(v))
+func (self *Context) SetNavTabbingCounter(v int32) {
+	C.wrap_ImGuiContext_SetNavTabbingCounter(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetNavTabbingCounter() int {
-	return int(C.ImGuiContext_GetNavTabbingCounter(self.handle()))
+func (self Context) NavTabbingCounter() int {
+	return int(C.wrap_ImGuiContext_GetNavTabbingCounter(self.handle()))
 }
 
-func (self ImGuiContext) GetNavMoveResultLocal() ImGuiNavItemData {
-	return newImGuiNavItemDataFromC(C.ImGuiContext_GetNavMoveResultLocal(self.handle()))
+func (self Context) NavMoveResultLocal() NavItemData {
+	return newNavItemDataFromC(C.wrap_ImGuiContext_GetNavMoveResultLocal(self.handle()))
 }
 
-func (self ImGuiContext) GetNavMoveResultLocalVisible() ImGuiNavItemData {
-	return newImGuiNavItemDataFromC(C.ImGuiContext_GetNavMoveResultLocalVisible(self.handle()))
+func (self Context) NavMoveResultLocalVisible() NavItemData {
+	return newNavItemDataFromC(C.wrap_ImGuiContext_GetNavMoveResultLocalVisible(self.handle()))
 }
 
-func (self ImGuiContext) GetNavMoveResultOther() ImGuiNavItemData {
-	return newImGuiNavItemDataFromC(C.ImGuiContext_GetNavMoveResultOther(self.handle()))
+func (self Context) NavMoveResultOther() NavItemData {
+	return newNavItemDataFromC(C.wrap_ImGuiContext_GetNavMoveResultOther(self.handle()))
 }
 
-func (self ImGuiContext) GetNavTabbingResultFirst() ImGuiNavItemData {
-	return newImGuiNavItemDataFromC(C.ImGuiContext_GetNavTabbingResultFirst(self.handle()))
+func (self Context) NavTabbingResultFirst() NavItemData {
+	return newNavItemDataFromC(C.wrap_ImGuiContext_GetNavTabbingResultFirst(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavWindowingTarget(v ImGuiWindow) {
-	C.ImGuiContext_SetNavWindowingTarget(self.handle(), v.handle())
+func (self *Context) SetNavWindowingTarget(v Window) {
+	C.wrap_ImGuiContext_SetNavWindowingTarget(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetNavWindowingTarget() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiContext_GetNavWindowingTarget(self.handle())))
+func (self Context) NavWindowingTarget() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiContext_GetNavWindowingTarget(self.handle())))
 }
 
-func (self *ImGuiContext) SetNavWindowingTargetAnim(v ImGuiWindow) {
-	C.ImGuiContext_SetNavWindowingTargetAnim(self.handle(), v.handle())
+func (self *Context) SetNavWindowingTargetAnim(v Window) {
+	C.wrap_ImGuiContext_SetNavWindowingTargetAnim(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetNavWindowingTargetAnim() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiContext_GetNavWindowingTargetAnim(self.handle())))
+func (self Context) NavWindowingTargetAnim() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiContext_GetNavWindowingTargetAnim(self.handle())))
 }
 
-func (self *ImGuiContext) SetNavWindowingListWindow(v ImGuiWindow) {
-	C.ImGuiContext_SetNavWindowingListWindow(self.handle(), v.handle())
+func (self *Context) SetNavWindowingListWindow(v Window) {
+	C.wrap_ImGuiContext_SetNavWindowingListWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetNavWindowingListWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiContext_GetNavWindowingListWindow(self.handle())))
+func (self Context) NavWindowingListWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiContext_GetNavWindowingListWindow(self.handle())))
 }
 
-func (self *ImGuiContext) SetNavWindowingTimer(v float32) {
-	C.ImGuiContext_SetNavWindowingTimer(self.handle(), C.float(v))
+func (self *Context) SetNavWindowingTimer(v float32) {
+	C.wrap_ImGuiContext_SetNavWindowingTimer(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetNavWindowingTimer() float32 {
-	return float32(C.ImGuiContext_GetNavWindowingTimer(self.handle()))
+func (self Context) NavWindowingTimer() float32 {
+	return float32(C.wrap_ImGuiContext_GetNavWindowingTimer(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavWindowingHighlightAlpha(v float32) {
-	C.ImGuiContext_SetNavWindowingHighlightAlpha(self.handle(), C.float(v))
+func (self *Context) SetNavWindowingHighlightAlpha(v float32) {
+	C.wrap_ImGuiContext_SetNavWindowingHighlightAlpha(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetNavWindowingHighlightAlpha() float32 {
-	return float32(C.ImGuiContext_GetNavWindowingHighlightAlpha(self.handle()))
+func (self Context) NavWindowingHighlightAlpha() float32 {
+	return float32(C.wrap_ImGuiContext_GetNavWindowingHighlightAlpha(self.handle()))
 }
 
-func (self *ImGuiContext) SetNavWindowingToggleLayer(v bool) {
-	C.ImGuiContext_SetNavWindowingToggleLayer(self.handle(), C.bool(v))
+func (self *Context) SetNavWindowingToggleLayer(v bool) {
+	C.wrap_ImGuiContext_SetNavWindowingToggleLayer(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetNavWindowingToggleLayer() bool {
-	return C.ImGuiContext_GetNavWindowingToggleLayer(self.handle()) == C.bool(true)
+func (self Context) NavWindowingToggleLayer() bool {
+	return C.wrap_ImGuiContext_GetNavWindowingToggleLayer(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetNavWindowingAccumDeltaPos(v Vec2) {
-	C.ImGuiContext_SetNavWindowingAccumDeltaPos(self.handle(), v.toC())
+func (self *Context) SetNavWindowingAccumDeltaPos(v Vec2) {
+	C.wrap_ImGuiContext_SetNavWindowingAccumDeltaPos(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetNavWindowingAccumDeltaPos() Vec2 {
+func (self Context) NavWindowingAccumDeltaPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiContext_GetNavWindowingAccumDeltaPos(self.handle()))
+	out.fromC(C.wrap_ImGuiContext_GetNavWindowingAccumDeltaPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiContext) SetNavWindowingAccumDeltaSize(v Vec2) {
-	C.ImGuiContext_SetNavWindowingAccumDeltaSize(self.handle(), v.toC())
+func (self *Context) SetNavWindowingAccumDeltaSize(v Vec2) {
+	C.wrap_ImGuiContext_SetNavWindowingAccumDeltaSize(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetNavWindowingAccumDeltaSize() Vec2 {
+func (self Context) NavWindowingAccumDeltaSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiContext_GetNavWindowingAccumDeltaSize(self.handle()))
+	out.fromC(C.wrap_ImGuiContext_GetNavWindowingAccumDeltaSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiContext) SetDimBgRatio(v float32) {
-	C.ImGuiContext_SetDimBgRatio(self.handle(), C.float(v))
+func (self *Context) SetDimBgRatio(v float32) {
+	C.wrap_ImGuiContext_SetDimBgRatio(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetDimBgRatio() float32 {
-	return float32(C.ImGuiContext_GetDimBgRatio(self.handle()))
+func (self Context) DimBgRatio() float32 {
+	return float32(C.wrap_ImGuiContext_GetDimBgRatio(self.handle()))
 }
 
-func (self *ImGuiContext) SetMouseCursor(v MouseCursor) {
-	C.ImGuiContext_SetMouseCursor(self.handle(), C.ImGuiMouseCursor(v))
+func (self *Context) SetMouseCursor(v MouseCursor) {
+	C.wrap_ImGuiContext_SetMouseCursor(self.handle(), C.ImGuiMouseCursor(v))
 }
 
-func (self ImGuiContext) GetMouseCursor() MouseCursor {
-	return MouseCursor(C.ImGuiContext_GetMouseCursor(self.handle()))
+func (self Context) MouseCursor() MouseCursor {
+	return MouseCursor(C.wrap_ImGuiContext_GetMouseCursor(self.handle()))
 }
 
-func (self *ImGuiContext) SetDragDropActive(v bool) {
-	C.ImGuiContext_SetDragDropActive(self.handle(), C.bool(v))
+func (self *Context) SetDragDropActive(v bool) {
+	C.wrap_ImGuiContext_SetDragDropActive(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetDragDropActive() bool {
-	return C.ImGuiContext_GetDragDropActive(self.handle()) == C.bool(true)
+func (self Context) DragDropActive() bool {
+	return C.wrap_ImGuiContext_GetDragDropActive(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetDragDropWithinSource(v bool) {
-	C.ImGuiContext_SetDragDropWithinSource(self.handle(), C.bool(v))
+func (self *Context) SetDragDropWithinSource(v bool) {
+	C.wrap_ImGuiContext_SetDragDropWithinSource(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetDragDropWithinSource() bool {
-	return C.ImGuiContext_GetDragDropWithinSource(self.handle()) == C.bool(true)
+func (self Context) DragDropWithinSource() bool {
+	return C.wrap_ImGuiContext_GetDragDropWithinSource(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetDragDropWithinTarget(v bool) {
-	C.ImGuiContext_SetDragDropWithinTarget(self.handle(), C.bool(v))
+func (self *Context) SetDragDropWithinTarget(v bool) {
+	C.wrap_ImGuiContext_SetDragDropWithinTarget(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetDragDropWithinTarget() bool {
-	return C.ImGuiContext_GetDragDropWithinTarget(self.handle()) == C.bool(true)
+func (self Context) DragDropWithinTarget() bool {
+	return C.wrap_ImGuiContext_GetDragDropWithinTarget(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetDragDropSourceFlags(v DragDropFlags) {
-	C.ImGuiContext_SetDragDropSourceFlags(self.handle(), C.ImGuiDragDropFlags(v))
+func (self *Context) SetDragDropSourceFlags(v DragDropFlags) {
+	C.wrap_ImGuiContext_SetDragDropSourceFlags(self.handle(), C.ImGuiDragDropFlags(v))
 }
 
-func (self ImGuiContext) GetDragDropSourceFlags() DragDropFlags {
-	return DragDropFlags(C.ImGuiContext_GetDragDropSourceFlags(self.handle()))
+func (self Context) DragDropSourceFlags() DragDropFlags {
+	return DragDropFlags(C.wrap_ImGuiContext_GetDragDropSourceFlags(self.handle()))
 }
 
-func (self *ImGuiContext) SetDragDropSourceFrameCount(v int32) {
-	C.ImGuiContext_SetDragDropSourceFrameCount(self.handle(), C.int(v))
+func (self *Context) SetDragDropSourceFrameCount(v int32) {
+	C.wrap_ImGuiContext_SetDragDropSourceFrameCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetDragDropSourceFrameCount() int {
-	return int(C.ImGuiContext_GetDragDropSourceFrameCount(self.handle()))
+func (self Context) DragDropSourceFrameCount() int {
+	return int(C.wrap_ImGuiContext_GetDragDropSourceFrameCount(self.handle()))
 }
 
-func (self *ImGuiContext) SetDragDropMouseButton(v int32) {
-	C.ImGuiContext_SetDragDropMouseButton(self.handle(), C.int(v))
+func (self *Context) SetDragDropMouseButton(v int32) {
+	C.wrap_ImGuiContext_SetDragDropMouseButton(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetDragDropMouseButton() int {
-	return int(C.ImGuiContext_GetDragDropMouseButton(self.handle()))
+func (self Context) DragDropMouseButton() int {
+	return int(C.wrap_ImGuiContext_GetDragDropMouseButton(self.handle()))
 }
 
-func (self ImGuiContext) GetDragDropPayload() ImGuiPayload {
-	return newImGuiPayloadFromC(C.ImGuiContext_GetDragDropPayload(self.handle()))
+func (self Context) DragDropPayload() Payload {
+	return newPayloadFromC(C.wrap_ImGuiContext_GetDragDropPayload(self.handle()))
 }
 
-func (self *ImGuiContext) SetDragDropTargetRect(v Rect) {
-	C.ImGuiContext_SetDragDropTargetRect(self.handle(), v.toC())
+func (self *Context) SetDragDropTargetRect(v Rect) {
+	C.wrap_ImGuiContext_SetDragDropTargetRect(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetDragDropTargetRect() Rect {
+func (self Context) DragDropTargetRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiContext_GetDragDropTargetRect(self.handle()))
+	out.fromC(C.wrap_ImGuiContext_GetDragDropTargetRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiContext) SetDragDropTargetId(v ImGuiID) {
-	C.ImGuiContext_SetDragDropTargetId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetDragDropTargetId(v ID) {
+	C.wrap_ImGuiContext_SetDragDropTargetId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetDragDropTargetId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetDragDropTargetId(self.handle()))
+func (self Context) DragDropTargetId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetDragDropTargetId(self.handle()))
 }
 
-func (self *ImGuiContext) SetDragDropAcceptFlags(v DragDropFlags) {
-	C.ImGuiContext_SetDragDropAcceptFlags(self.handle(), C.ImGuiDragDropFlags(v))
+func (self *Context) SetDragDropAcceptFlags(v DragDropFlags) {
+	C.wrap_ImGuiContext_SetDragDropAcceptFlags(self.handle(), C.ImGuiDragDropFlags(v))
 }
 
-func (self ImGuiContext) GetDragDropAcceptFlags() DragDropFlags {
-	return DragDropFlags(C.ImGuiContext_GetDragDropAcceptFlags(self.handle()))
+func (self Context) DragDropAcceptFlags() DragDropFlags {
+	return DragDropFlags(C.wrap_ImGuiContext_GetDragDropAcceptFlags(self.handle()))
 }
 
-func (self *ImGuiContext) SetDragDropAcceptIdCurrRectSurface(v float32) {
-	C.ImGuiContext_SetDragDropAcceptIdCurrRectSurface(self.handle(), C.float(v))
+func (self *Context) SetDragDropAcceptIdCurrRectSurface(v float32) {
+	C.wrap_ImGuiContext_SetDragDropAcceptIdCurrRectSurface(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetDragDropAcceptIdCurrRectSurface() float32 {
-	return float32(C.ImGuiContext_GetDragDropAcceptIdCurrRectSurface(self.handle()))
+func (self Context) DragDropAcceptIdCurrRectSurface() float32 {
+	return float32(C.wrap_ImGuiContext_GetDragDropAcceptIdCurrRectSurface(self.handle()))
 }
 
-func (self *ImGuiContext) SetDragDropAcceptIdCurr(v ImGuiID) {
-	C.ImGuiContext_SetDragDropAcceptIdCurr(self.handle(), C.ImGuiID(v))
+func (self *Context) SetDragDropAcceptIdCurr(v ID) {
+	C.wrap_ImGuiContext_SetDragDropAcceptIdCurr(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetDragDropAcceptIdCurr() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetDragDropAcceptIdCurr(self.handle()))
+func (self Context) DragDropAcceptIdCurr() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetDragDropAcceptIdCurr(self.handle()))
 }
 
-func (self *ImGuiContext) SetDragDropAcceptIdPrev(v ImGuiID) {
-	C.ImGuiContext_SetDragDropAcceptIdPrev(self.handle(), C.ImGuiID(v))
+func (self *Context) SetDragDropAcceptIdPrev(v ID) {
+	C.wrap_ImGuiContext_SetDragDropAcceptIdPrev(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetDragDropAcceptIdPrev() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetDragDropAcceptIdPrev(self.handle()))
+func (self Context) DragDropAcceptIdPrev() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetDragDropAcceptIdPrev(self.handle()))
 }
 
-func (self *ImGuiContext) SetDragDropAcceptFrameCount(v int32) {
-	C.ImGuiContext_SetDragDropAcceptFrameCount(self.handle(), C.int(v))
+func (self *Context) SetDragDropAcceptFrameCount(v int32) {
+	C.wrap_ImGuiContext_SetDragDropAcceptFrameCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetDragDropAcceptFrameCount() int {
-	return int(C.ImGuiContext_GetDragDropAcceptFrameCount(self.handle()))
+func (self Context) DragDropAcceptFrameCount() int {
+	return int(C.wrap_ImGuiContext_GetDragDropAcceptFrameCount(self.handle()))
 }
 
-func (self *ImGuiContext) SetDragDropHoldJustPressedId(v ImGuiID) {
-	C.ImGuiContext_SetDragDropHoldJustPressedId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetDragDropHoldJustPressedId(v ID) {
+	C.wrap_ImGuiContext_SetDragDropHoldJustPressedId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetDragDropHoldJustPressedId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetDragDropHoldJustPressedId(self.handle()))
+func (self Context) DragDropHoldJustPressedId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetDragDropHoldJustPressedId(self.handle()))
 }
 
-func (self *ImGuiContext) SetClipperTempDataStacked(v int32) {
-	C.ImGuiContext_SetClipperTempDataStacked(self.handle(), C.int(v))
+func (self *Context) SetClipperTempDataStacked(v int32) {
+	C.wrap_ImGuiContext_SetClipperTempDataStacked(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetClipperTempDataStacked() int {
-	return int(C.ImGuiContext_GetClipperTempDataStacked(self.handle()))
+func (self Context) ClipperTempDataStacked() int {
+	return int(C.wrap_ImGuiContext_GetClipperTempDataStacked(self.handle()))
 }
 
-func (self *ImGuiContext) SetCurrentTable(v ImGuiTable) {
-	C.ImGuiContext_SetCurrentTable(self.handle(), v.handle())
+func (self *Context) SetCurrentTable(v Table) {
+	C.wrap_ImGuiContext_SetCurrentTable(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetCurrentTable() ImGuiTable {
-	return (ImGuiTable)(unsafe.Pointer(C.ImGuiContext_GetCurrentTable(self.handle())))
+func (self Context) CurrentTable() Table {
+	return (Table)(unsafe.Pointer(C.wrap_ImGuiContext_GetCurrentTable(self.handle())))
 }
 
-func (self *ImGuiContext) SetTablesTempDataStacked(v int32) {
-	C.ImGuiContext_SetTablesTempDataStacked(self.handle(), C.int(v))
+func (self *Context) SetTablesTempDataStacked(v int32) {
+	C.wrap_ImGuiContext_SetTablesTempDataStacked(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetTablesTempDataStacked() int {
-	return int(C.ImGuiContext_GetTablesTempDataStacked(self.handle()))
+func (self Context) TablesTempDataStacked() int {
+	return int(C.wrap_ImGuiContext_GetTablesTempDataStacked(self.handle()))
 }
 
-func (self *ImGuiContext) SetCurrentTabBar(v ImGuiTabBar) {
-	C.ImGuiContext_SetCurrentTabBar(self.handle(), v.handle())
+func (self *Context) SetCurrentTabBar(v TabBar) {
+	C.wrap_ImGuiContext_SetCurrentTabBar(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetCurrentTabBar() ImGuiTabBar {
-	return (ImGuiTabBar)(unsafe.Pointer(C.ImGuiContext_GetCurrentTabBar(self.handle())))
+func (self Context) CurrentTabBar() TabBar {
+	return (TabBar)(unsafe.Pointer(C.wrap_ImGuiContext_GetCurrentTabBar(self.handle())))
 }
 
-func (self *ImGuiContext) SetMouseLastValidPos(v Vec2) {
-	C.ImGuiContext_SetMouseLastValidPos(self.handle(), v.toC())
+func (self *Context) SetMouseLastValidPos(v Vec2) {
+	C.wrap_ImGuiContext_SetMouseLastValidPos(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetMouseLastValidPos() Vec2 {
+func (self Context) MouseLastValidPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiContext_GetMouseLastValidPos(self.handle()))
+	out.fromC(C.wrap_ImGuiContext_GetMouseLastValidPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiContext) GetInputTextState() ImGuiInputTextState {
-	return newImGuiInputTextStateFromC(C.ImGuiContext_GetInputTextState(self.handle()))
+func (self Context) InputTextState() InputTextState {
+	return newInputTextStateFromC(C.wrap_ImGuiContext_GetInputTextState(self.handle()))
 }
 
-func (self ImGuiContext) GetInputTextPasswordFont() ImFont {
-	return newImFontFromC(C.ImGuiContext_GetInputTextPasswordFont(self.handle()))
+func (self Context) InputTextPasswordFont() Font {
+	return newFontFromC(C.wrap_ImGuiContext_GetInputTextPasswordFont(self.handle()))
 }
 
-func (self *ImGuiContext) SetTempInputId(v ImGuiID) {
-	C.ImGuiContext_SetTempInputId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetTempInputId(v ID) {
+	C.wrap_ImGuiContext_SetTempInputId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetTempInputId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetTempInputId(self.handle()))
+func (self Context) TempInputId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetTempInputId(self.handle()))
 }
 
-func (self *ImGuiContext) SetColorEditOptions(v ColorEditFlags) {
-	C.ImGuiContext_SetColorEditOptions(self.handle(), C.ImGuiColorEditFlags(v))
+func (self *Context) SetColorEditOptions(v ColorEditFlags) {
+	C.wrap_ImGuiContext_SetColorEditOptions(self.handle(), C.ImGuiColorEditFlags(v))
 }
 
-func (self ImGuiContext) GetColorEditOptions() ColorEditFlags {
-	return ColorEditFlags(C.ImGuiContext_GetColorEditOptions(self.handle()))
+func (self Context) ColorEditOptions() ColorEditFlags {
+	return ColorEditFlags(C.wrap_ImGuiContext_GetColorEditOptions(self.handle()))
 }
 
-func (self *ImGuiContext) SetColorEditLastHue(v float32) {
-	C.ImGuiContext_SetColorEditLastHue(self.handle(), C.float(v))
+func (self *Context) SetColorEditLastHue(v float32) {
+	C.wrap_ImGuiContext_SetColorEditLastHue(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetColorEditLastHue() float32 {
-	return float32(C.ImGuiContext_GetColorEditLastHue(self.handle()))
+func (self Context) ColorEditLastHue() float32 {
+	return float32(C.wrap_ImGuiContext_GetColorEditLastHue(self.handle()))
 }
 
-func (self *ImGuiContext) SetColorEditLastSat(v float32) {
-	C.ImGuiContext_SetColorEditLastSat(self.handle(), C.float(v))
+func (self *Context) SetColorEditLastSat(v float32) {
+	C.wrap_ImGuiContext_SetColorEditLastSat(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetColorEditLastSat() float32 {
-	return float32(C.ImGuiContext_GetColorEditLastSat(self.handle()))
+func (self Context) ColorEditLastSat() float32 {
+	return float32(C.wrap_ImGuiContext_GetColorEditLastSat(self.handle()))
 }
 
-func (self *ImGuiContext) SetColorEditLastColor(v uint32) {
-	C.ImGuiContext_SetColorEditLastColor(self.handle(), C.ImU32(v))
+func (self *Context) SetColorEditLastColor(v uint32) {
+	C.wrap_ImGuiContext_SetColorEditLastColor(self.handle(), C.ImU32(v))
 }
 
-func (self ImGuiContext) GetColorEditLastColor() uint32 {
-	return uint32(C.ImGuiContext_GetColorEditLastColor(self.handle()))
+func (self Context) ColorEditLastColor() uint32 {
+	return uint32(C.wrap_ImGuiContext_GetColorEditLastColor(self.handle()))
 }
 
-func (self *ImGuiContext) SetColorPickerRef(v Vec4) {
-	C.ImGuiContext_SetColorPickerRef(self.handle(), v.toC())
+func (self *Context) SetColorPickerRef(v Vec4) {
+	C.wrap_ImGuiContext_SetColorPickerRef(self.handle(), v.toC())
 }
 
-func (self ImGuiContext) GetColorPickerRef() Vec4 {
+func (self Context) ColorPickerRef() Vec4 {
 	out := &Vec4{}
-	out.fromC(C.ImGuiContext_GetColorPickerRef(self.handle()))
+	out.fromC(C.wrap_ImGuiContext_GetColorPickerRef(self.handle()))
 	return *out
 }
 
-func (self ImGuiContext) GetComboPreviewData() ImGuiComboPreviewData {
-	return newImGuiComboPreviewDataFromC(C.ImGuiContext_GetComboPreviewData(self.handle()))
+func (self Context) ComboPreviewData() ComboPreviewData {
+	return newComboPreviewDataFromC(C.wrap_ImGuiContext_GetComboPreviewData(self.handle()))
 }
 
-func (self *ImGuiContext) SetSliderGrabClickOffset(v float32) {
-	C.ImGuiContext_SetSliderGrabClickOffset(self.handle(), C.float(v))
+func (self *Context) SetSliderGrabClickOffset(v float32) {
+	C.wrap_ImGuiContext_SetSliderGrabClickOffset(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetSliderGrabClickOffset() float32 {
-	return float32(C.ImGuiContext_GetSliderGrabClickOffset(self.handle()))
+func (self Context) SliderGrabClickOffset() float32 {
+	return float32(C.wrap_ImGuiContext_GetSliderGrabClickOffset(self.handle()))
 }
 
-func (self *ImGuiContext) SetSliderCurrentAccum(v float32) {
-	C.ImGuiContext_SetSliderCurrentAccum(self.handle(), C.float(v))
+func (self *Context) SetSliderCurrentAccum(v float32) {
+	C.wrap_ImGuiContext_SetSliderCurrentAccum(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetSliderCurrentAccum() float32 {
-	return float32(C.ImGuiContext_GetSliderCurrentAccum(self.handle()))
+func (self Context) SliderCurrentAccum() float32 {
+	return float32(C.wrap_ImGuiContext_GetSliderCurrentAccum(self.handle()))
 }
 
-func (self *ImGuiContext) SetSliderCurrentAccumDirty(v bool) {
-	C.ImGuiContext_SetSliderCurrentAccumDirty(self.handle(), C.bool(v))
+func (self *Context) SetSliderCurrentAccumDirty(v bool) {
+	C.wrap_ImGuiContext_SetSliderCurrentAccumDirty(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetSliderCurrentAccumDirty() bool {
-	return C.ImGuiContext_GetSliderCurrentAccumDirty(self.handle()) == C.bool(true)
+func (self Context) SliderCurrentAccumDirty() bool {
+	return C.wrap_ImGuiContext_GetSliderCurrentAccumDirty(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetDragCurrentAccumDirty(v bool) {
-	C.ImGuiContext_SetDragCurrentAccumDirty(self.handle(), C.bool(v))
+func (self *Context) SetDragCurrentAccumDirty(v bool) {
+	C.wrap_ImGuiContext_SetDragCurrentAccumDirty(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetDragCurrentAccumDirty() bool {
-	return C.ImGuiContext_GetDragCurrentAccumDirty(self.handle()) == C.bool(true)
+func (self Context) DragCurrentAccumDirty() bool {
+	return C.wrap_ImGuiContext_GetDragCurrentAccumDirty(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetDragCurrentAccum(v float32) {
-	C.ImGuiContext_SetDragCurrentAccum(self.handle(), C.float(v))
+func (self *Context) SetDragCurrentAccum(v float32) {
+	C.wrap_ImGuiContext_SetDragCurrentAccum(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetDragCurrentAccum() float32 {
-	return float32(C.ImGuiContext_GetDragCurrentAccum(self.handle()))
+func (self Context) DragCurrentAccum() float32 {
+	return float32(C.wrap_ImGuiContext_GetDragCurrentAccum(self.handle()))
 }
 
-func (self *ImGuiContext) SetDragSpeedDefaultRatio(v float32) {
-	C.ImGuiContext_SetDragSpeedDefaultRatio(self.handle(), C.float(v))
+func (self *Context) SetDragSpeedDefaultRatio(v float32) {
+	C.wrap_ImGuiContext_SetDragSpeedDefaultRatio(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetDragSpeedDefaultRatio() float32 {
-	return float32(C.ImGuiContext_GetDragSpeedDefaultRatio(self.handle()))
+func (self Context) DragSpeedDefaultRatio() float32 {
+	return float32(C.wrap_ImGuiContext_GetDragSpeedDefaultRatio(self.handle()))
 }
 
-func (self *ImGuiContext) SetScrollbarClickDeltaToGrabCenter(v float32) {
-	C.ImGuiContext_SetScrollbarClickDeltaToGrabCenter(self.handle(), C.float(v))
+func (self *Context) SetScrollbarClickDeltaToGrabCenter(v float32) {
+	C.wrap_ImGuiContext_SetScrollbarClickDeltaToGrabCenter(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetScrollbarClickDeltaToGrabCenter() float32 {
-	return float32(C.ImGuiContext_GetScrollbarClickDeltaToGrabCenter(self.handle()))
+func (self Context) ScrollbarClickDeltaToGrabCenter() float32 {
+	return float32(C.wrap_ImGuiContext_GetScrollbarClickDeltaToGrabCenter(self.handle()))
 }
 
-func (self *ImGuiContext) SetDisabledAlphaBackup(v float32) {
-	C.ImGuiContext_SetDisabledAlphaBackup(self.handle(), C.float(v))
+func (self *Context) SetDisabledAlphaBackup(v float32) {
+	C.wrap_ImGuiContext_SetDisabledAlphaBackup(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetDisabledAlphaBackup() float32 {
-	return float32(C.ImGuiContext_GetDisabledAlphaBackup(self.handle()))
+func (self Context) DisabledAlphaBackup() float32 {
+	return float32(C.wrap_ImGuiContext_GetDisabledAlphaBackup(self.handle()))
 }
 
-func (self *ImGuiContext) SetDisabledStackSize(v int) {
-	C.ImGuiContext_SetDisabledStackSize(self.handle(), C.short(v))
+func (self *Context) SetDisabledStackSize(v int) {
+	C.wrap_ImGuiContext_SetDisabledStackSize(self.handle(), C.short(v))
 }
 
-func (self ImGuiContext) GetDisabledStackSize() int {
-	return int(C.ImGuiContext_GetDisabledStackSize(self.handle()))
+func (self Context) DisabledStackSize() int {
+	return int(C.wrap_ImGuiContext_GetDisabledStackSize(self.handle()))
 }
 
-func (self *ImGuiContext) SetTooltipOverrideCount(v int) {
-	C.ImGuiContext_SetTooltipOverrideCount(self.handle(), C.short(v))
+func (self *Context) SetTooltipOverrideCount(v int) {
+	C.wrap_ImGuiContext_SetTooltipOverrideCount(self.handle(), C.short(v))
 }
 
-func (self ImGuiContext) GetTooltipOverrideCount() int {
-	return int(C.ImGuiContext_GetTooltipOverrideCount(self.handle()))
+func (self Context) TooltipOverrideCount() int {
+	return int(C.wrap_ImGuiContext_GetTooltipOverrideCount(self.handle()))
 }
 
-func (self *ImGuiContext) SetTooltipSlowDelay(v float32) {
-	C.ImGuiContext_SetTooltipSlowDelay(self.handle(), C.float(v))
+func (self *Context) SetTooltipSlowDelay(v float32) {
+	C.wrap_ImGuiContext_SetTooltipSlowDelay(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetTooltipSlowDelay() float32 {
-	return float32(C.ImGuiContext_GetTooltipSlowDelay(self.handle()))
+func (self Context) TooltipSlowDelay() float32 {
+	return float32(C.wrap_ImGuiContext_GetTooltipSlowDelay(self.handle()))
 }
 
-func (self ImGuiContext) GetPlatformImeData() ImGuiPlatformImeData {
-	return newImGuiPlatformImeDataFromC(C.ImGuiContext_GetPlatformImeData(self.handle()))
+func (self Context) PlatformImeData() PlatformImeData {
+	return newPlatformImeDataFromC(C.wrap_ImGuiContext_GetPlatformImeData(self.handle()))
 }
 
-func (self ImGuiContext) GetPlatformImeDataPrev() ImGuiPlatformImeData {
-	return newImGuiPlatformImeDataFromC(C.ImGuiContext_GetPlatformImeDataPrev(self.handle()))
+func (self Context) PlatformImeDataPrev() PlatformImeData {
+	return newPlatformImeDataFromC(C.wrap_ImGuiContext_GetPlatformImeDataPrev(self.handle()))
 }
 
-func (self *ImGuiContext) SetPlatformImeViewport(v ImGuiID) {
-	C.ImGuiContext_SetPlatformImeViewport(self.handle(), C.ImGuiID(v))
+func (self *Context) SetPlatformImeViewport(v ID) {
+	C.wrap_ImGuiContext_SetPlatformImeViewport(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetPlatformImeViewport() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetPlatformImeViewport(self.handle()))
+func (self Context) PlatformImeViewport() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetPlatformImeViewport(self.handle()))
 }
 
-func (self ImGuiContext) GetDockContext() ImGuiDockContext {
-	return newImGuiDockContextFromC(C.ImGuiContext_GetDockContext(self.handle()))
+func (self Context) DockContext() DockContext {
+	return newDockContextFromC(C.wrap_ImGuiContext_GetDockContext(self.handle()))
 }
 
-func (self *ImGuiContext) SetSettingsLoaded(v bool) {
-	C.ImGuiContext_SetSettingsLoaded(self.handle(), C.bool(v))
+func (self *Context) SetSettingsLoaded(v bool) {
+	C.wrap_ImGuiContext_SetSettingsLoaded(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetSettingsLoaded() bool {
-	return C.ImGuiContext_GetSettingsLoaded(self.handle()) == C.bool(true)
+func (self Context) SettingsLoaded() bool {
+	return C.wrap_ImGuiContext_GetSettingsLoaded(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetSettingsDirtyTimer(v float32) {
-	C.ImGuiContext_SetSettingsDirtyTimer(self.handle(), C.float(v))
+func (self *Context) SetSettingsDirtyTimer(v float32) {
+	C.wrap_ImGuiContext_SetSettingsDirtyTimer(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetSettingsDirtyTimer() float32 {
-	return float32(C.ImGuiContext_GetSettingsDirtyTimer(self.handle()))
+func (self Context) SettingsDirtyTimer() float32 {
+	return float32(C.wrap_ImGuiContext_GetSettingsDirtyTimer(self.handle()))
 }
 
-func (self ImGuiContext) GetSettingsIniData() ImGuiTextBuffer {
-	return newImGuiTextBufferFromC(C.ImGuiContext_GetSettingsIniData(self.handle()))
+func (self Context) SettingsIniData() TextBuffer {
+	return newTextBufferFromC(C.wrap_ImGuiContext_GetSettingsIniData(self.handle()))
 }
 
-func (self *ImGuiContext) SetHookIdNext(v ImGuiID) {
-	C.ImGuiContext_SetHookIdNext(self.handle(), C.ImGuiID(v))
+func (self *Context) SetHookIdNext(v ID) {
+	C.wrap_ImGuiContext_SetHookIdNext(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetHookIdNext() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetHookIdNext(self.handle()))
+func (self Context) HookIdNext() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetHookIdNext(self.handle()))
 }
 
-func (self *ImGuiContext) SetLogEnabled(v bool) {
-	C.ImGuiContext_SetLogEnabled(self.handle(), C.bool(v))
+func (self *Context) SetLogEnabled(v bool) {
+	C.wrap_ImGuiContext_SetLogEnabled(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetLogEnabled() bool {
-	return C.ImGuiContext_GetLogEnabled(self.handle()) == C.bool(true)
+func (self Context) LogEnabled() bool {
+	return C.wrap_ImGuiContext_GetLogEnabled(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetLogType(v LogType) {
-	C.ImGuiContext_SetLogType(self.handle(), C.ImGuiLogType(v))
+func (self *Context) SetLogType(v LogType) {
+	C.wrap_ImGuiContext_SetLogType(self.handle(), C.ImGuiLogType(v))
 }
 
-func (self ImGuiContext) GetLogType() LogType {
-	return LogType(C.ImGuiContext_GetLogType(self.handle()))
+func (self Context) LogType() LogType {
+	return LogType(C.wrap_ImGuiContext_GetLogType(self.handle()))
 }
 
-func (self ImGuiContext) GetLogBuffer() ImGuiTextBuffer {
-	return newImGuiTextBufferFromC(C.ImGuiContext_GetLogBuffer(self.handle()))
+func (self Context) LogBuffer() TextBuffer {
+	return newTextBufferFromC(C.wrap_ImGuiContext_GetLogBuffer(self.handle()))
 }
 
-func (self *ImGuiContext) SetLogNextPrefix(v string) {
+func (self *Context) SetLogNextPrefix(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImGuiContext_SetLogNextPrefix(self.handle(), vArg)
+	C.wrap_ImGuiContext_SetLogNextPrefix(self.handle(), vArg)
 }
 
-func (self ImGuiContext) GetLogNextPrefix() string {
-	return C.GoString(C.ImGuiContext_GetLogNextPrefix(self.handle()))
+func (self Context) LogNextPrefix() string {
+	return C.GoString(C.wrap_ImGuiContext_GetLogNextPrefix(self.handle()))
 }
 
-func (self *ImGuiContext) SetLogNextSuffix(v string) {
+func (self *Context) SetLogNextSuffix(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImGuiContext_SetLogNextSuffix(self.handle(), vArg)
+	C.wrap_ImGuiContext_SetLogNextSuffix(self.handle(), vArg)
 }
 
-func (self ImGuiContext) GetLogNextSuffix() string {
-	return C.GoString(C.ImGuiContext_GetLogNextSuffix(self.handle()))
+func (self Context) LogNextSuffix() string {
+	return C.GoString(C.wrap_ImGuiContext_GetLogNextSuffix(self.handle()))
 }
 
-func (self *ImGuiContext) SetLogLinePosY(v float32) {
-	C.ImGuiContext_SetLogLinePosY(self.handle(), C.float(v))
+func (self *Context) SetLogLinePosY(v float32) {
+	C.wrap_ImGuiContext_SetLogLinePosY(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetLogLinePosY() float32 {
-	return float32(C.ImGuiContext_GetLogLinePosY(self.handle()))
+func (self Context) LogLinePosY() float32 {
+	return float32(C.wrap_ImGuiContext_GetLogLinePosY(self.handle()))
 }
 
-func (self *ImGuiContext) SetLogLineFirstItem(v bool) {
-	C.ImGuiContext_SetLogLineFirstItem(self.handle(), C.bool(v))
+func (self *Context) SetLogLineFirstItem(v bool) {
+	C.wrap_ImGuiContext_SetLogLineFirstItem(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetLogLineFirstItem() bool {
-	return C.ImGuiContext_GetLogLineFirstItem(self.handle()) == C.bool(true)
+func (self Context) LogLineFirstItem() bool {
+	return C.wrap_ImGuiContext_GetLogLineFirstItem(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetLogDepthRef(v int32) {
-	C.ImGuiContext_SetLogDepthRef(self.handle(), C.int(v))
+func (self *Context) SetLogDepthRef(v int32) {
+	C.wrap_ImGuiContext_SetLogDepthRef(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetLogDepthRef() int {
-	return int(C.ImGuiContext_GetLogDepthRef(self.handle()))
+func (self Context) LogDepthRef() int {
+	return int(C.wrap_ImGuiContext_GetLogDepthRef(self.handle()))
 }
 
-func (self *ImGuiContext) SetLogDepthToExpand(v int32) {
-	C.ImGuiContext_SetLogDepthToExpand(self.handle(), C.int(v))
+func (self *Context) SetLogDepthToExpand(v int32) {
+	C.wrap_ImGuiContext_SetLogDepthToExpand(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetLogDepthToExpand() int {
-	return int(C.ImGuiContext_GetLogDepthToExpand(self.handle()))
+func (self Context) LogDepthToExpand() int {
+	return int(C.wrap_ImGuiContext_GetLogDepthToExpand(self.handle()))
 }
 
-func (self *ImGuiContext) SetLogDepthToExpandDefault(v int32) {
-	C.ImGuiContext_SetLogDepthToExpandDefault(self.handle(), C.int(v))
+func (self *Context) SetLogDepthToExpandDefault(v int32) {
+	C.wrap_ImGuiContext_SetLogDepthToExpandDefault(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetLogDepthToExpandDefault() int {
-	return int(C.ImGuiContext_GetLogDepthToExpandDefault(self.handle()))
+func (self Context) LogDepthToExpandDefault() int {
+	return int(C.wrap_ImGuiContext_GetLogDepthToExpandDefault(self.handle()))
 }
 
-func (self *ImGuiContext) SetDebugLogFlags(v DebugLogFlags) {
-	C.ImGuiContext_SetDebugLogFlags(self.handle(), C.ImGuiDebugLogFlags(v))
+func (self *Context) SetDebugLogFlags(v DebugLogFlags) {
+	C.wrap_ImGuiContext_SetDebugLogFlags(self.handle(), C.ImGuiDebugLogFlags(v))
 }
 
-func (self ImGuiContext) GetDebugLogFlags() DebugLogFlags {
-	return DebugLogFlags(C.ImGuiContext_GetDebugLogFlags(self.handle()))
+func (self Context) DebugLogFlags() DebugLogFlags {
+	return DebugLogFlags(C.wrap_ImGuiContext_GetDebugLogFlags(self.handle()))
 }
 
-func (self ImGuiContext) GetDebugLogBuf() ImGuiTextBuffer {
-	return newImGuiTextBufferFromC(C.ImGuiContext_GetDebugLogBuf(self.handle()))
+func (self Context) DebugLogBuf() TextBuffer {
+	return newTextBufferFromC(C.wrap_ImGuiContext_GetDebugLogBuf(self.handle()))
 }
 
-func (self *ImGuiContext) SetDebugItemPickerActive(v bool) {
-	C.ImGuiContext_SetDebugItemPickerActive(self.handle(), C.bool(v))
+func (self *Context) SetDebugItemPickerActive(v bool) {
+	C.wrap_ImGuiContext_SetDebugItemPickerActive(self.handle(), C.bool(v))
 }
 
-func (self ImGuiContext) GetDebugItemPickerActive() bool {
-	return C.ImGuiContext_GetDebugItemPickerActive(self.handle()) == C.bool(true)
+func (self Context) DebugItemPickerActive() bool {
+	return C.wrap_ImGuiContext_GetDebugItemPickerActive(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiContext) SetDebugItemPickerMouseButton(v uint) {
-	C.ImGuiContext_SetDebugItemPickerMouseButton(self.handle(), C.ImU8(v))
+func (self *Context) SetDebugItemPickerMouseButton(v uint) {
+	C.wrap_ImGuiContext_SetDebugItemPickerMouseButton(self.handle(), C.ImU8(v))
 }
 
-func (self ImGuiContext) GetDebugItemPickerMouseButton() uint32 {
-	return uint32(C.ImGuiContext_GetDebugItemPickerMouseButton(self.handle()))
+func (self Context) DebugItemPickerMouseButton() uint32 {
+	return uint32(C.wrap_ImGuiContext_GetDebugItemPickerMouseButton(self.handle()))
 }
 
-func (self *ImGuiContext) SetDebugItemPickerBreakId(v ImGuiID) {
-	C.ImGuiContext_SetDebugItemPickerBreakId(self.handle(), C.ImGuiID(v))
+func (self *Context) SetDebugItemPickerBreakId(v ID) {
+	C.wrap_ImGuiContext_SetDebugItemPickerBreakId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContext) GetDebugItemPickerBreakId() ImGuiID {
-	return ImGuiID(C.ImGuiContext_GetDebugItemPickerBreakId(self.handle()))
+func (self Context) DebugItemPickerBreakId() ID {
+	return ImGuiID(C.wrap_ImGuiContext_GetDebugItemPickerBreakId(self.handle()))
 }
 
-func (self ImGuiContext) GetDebugMetricsConfig() ImGuiMetricsConfig {
-	return newImGuiMetricsConfigFromC(C.ImGuiContext_GetDebugMetricsConfig(self.handle()))
+func (self Context) DebugMetricsConfig() MetricsConfig {
+	return newMetricsConfigFromC(C.wrap_ImGuiContext_GetDebugMetricsConfig(self.handle()))
 }
 
-func (self ImGuiContext) GetDebugStackTool() ImGuiStackTool {
-	return newImGuiStackToolFromC(C.ImGuiContext_GetDebugStackTool(self.handle()))
+func (self Context) DebugStackTool() StackTool {
+	return newStackToolFromC(C.wrap_ImGuiContext_GetDebugStackTool(self.handle()))
 }
 
-func (self *ImGuiContext) SetDebugHoveredDockNode(v ImGuiDockNode) {
-	C.ImGuiContext_SetDebugHoveredDockNode(self.handle(), v.handle())
+func (self *Context) SetDebugHoveredDockNode(v DockNode) {
+	C.wrap_ImGuiContext_SetDebugHoveredDockNode(self.handle(), v.handle())
 }
 
-func (self ImGuiContext) GetDebugHoveredDockNode() ImGuiDockNode {
-	return (ImGuiDockNode)(unsafe.Pointer(C.ImGuiContext_GetDebugHoveredDockNode(self.handle())))
+func (self Context) DebugHoveredDockNode() DockNode {
+	return (DockNode)(unsafe.Pointer(C.wrap_ImGuiContext_GetDebugHoveredDockNode(self.handle())))
 }
 
-func (self *ImGuiContext) SetFramerateSecPerFrameIdx(v int32) {
-	C.ImGuiContext_SetFramerateSecPerFrameIdx(self.handle(), C.int(v))
+func (self *Context) SetFramerateSecPerFrameIdx(v int32) {
+	C.wrap_ImGuiContext_SetFramerateSecPerFrameIdx(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetFramerateSecPerFrameIdx() int {
-	return int(C.ImGuiContext_GetFramerateSecPerFrameIdx(self.handle()))
+func (self Context) FramerateSecPerFrameIdx() int {
+	return int(C.wrap_ImGuiContext_GetFramerateSecPerFrameIdx(self.handle()))
 }
 
-func (self *ImGuiContext) SetFramerateSecPerFrameCount(v int32) {
-	C.ImGuiContext_SetFramerateSecPerFrameCount(self.handle(), C.int(v))
+func (self *Context) SetFramerateSecPerFrameCount(v int32) {
+	C.wrap_ImGuiContext_SetFramerateSecPerFrameCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetFramerateSecPerFrameCount() int {
-	return int(C.ImGuiContext_GetFramerateSecPerFrameCount(self.handle()))
+func (self Context) FramerateSecPerFrameCount() int {
+	return int(C.wrap_ImGuiContext_GetFramerateSecPerFrameCount(self.handle()))
 }
 
-func (self *ImGuiContext) SetFramerateSecPerFrameAccum(v float32) {
-	C.ImGuiContext_SetFramerateSecPerFrameAccum(self.handle(), C.float(v))
+func (self *Context) SetFramerateSecPerFrameAccum(v float32) {
+	C.wrap_ImGuiContext_SetFramerateSecPerFrameAccum(self.handle(), C.float(v))
 }
 
-func (self ImGuiContext) GetFramerateSecPerFrameAccum() float32 {
-	return float32(C.ImGuiContext_GetFramerateSecPerFrameAccum(self.handle()))
+func (self Context) FramerateSecPerFrameAccum() float32 {
+	return float32(C.wrap_ImGuiContext_GetFramerateSecPerFrameAccum(self.handle()))
 }
 
-func (self *ImGuiContext) SetWantCaptureMouseNextFrame(v int32) {
-	C.ImGuiContext_SetWantCaptureMouseNextFrame(self.handle(), C.int(v))
+func (self *Context) SetWantCaptureMouseNextFrame(v int32) {
+	C.wrap_ImGuiContext_SetWantCaptureMouseNextFrame(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetWantCaptureMouseNextFrame() int {
-	return int(C.ImGuiContext_GetWantCaptureMouseNextFrame(self.handle()))
+func (self Context) WantCaptureMouseNextFrame() int {
+	return int(C.wrap_ImGuiContext_GetWantCaptureMouseNextFrame(self.handle()))
 }
 
-func (self *ImGuiContext) SetWantCaptureKeyboardNextFrame(v int32) {
-	C.ImGuiContext_SetWantCaptureKeyboardNextFrame(self.handle(), C.int(v))
+func (self *Context) SetWantCaptureKeyboardNextFrame(v int32) {
+	C.wrap_ImGuiContext_SetWantCaptureKeyboardNextFrame(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetWantCaptureKeyboardNextFrame() int {
-	return int(C.ImGuiContext_GetWantCaptureKeyboardNextFrame(self.handle()))
+func (self Context) WantCaptureKeyboardNextFrame() int {
+	return int(C.wrap_ImGuiContext_GetWantCaptureKeyboardNextFrame(self.handle()))
 }
 
-func (self *ImGuiContext) SetWantTextInputNextFrame(v int32) {
-	C.ImGuiContext_SetWantTextInputNextFrame(self.handle(), C.int(v))
+func (self *Context) SetWantTextInputNextFrame(v int32) {
+	C.wrap_ImGuiContext_SetWantTextInputNextFrame(self.handle(), C.int(v))
 }
 
-func (self ImGuiContext) GetWantTextInputNextFrame() int {
-	return int(C.ImGuiContext_GetWantTextInputNextFrame(self.handle()))
+func (self Context) WantTextInputNextFrame() int {
+	return int(C.wrap_ImGuiContext_GetWantTextInputNextFrame(self.handle()))
 }
 
-func (self *ImGuiContextHook) SetHookId(v ImGuiID) {
-	C.ImGuiContextHook_SetHookId(self.handle(), C.ImGuiID(v))
+func (self *ContextHook) SetHookId(v ID) {
+	C.wrap_ImGuiContextHook_SetHookId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContextHook) GetHookId() ImGuiID {
-	return ImGuiID(C.ImGuiContextHook_GetHookId(self.handle()))
+func (self ContextHook) HookId() ID {
+	return ImGuiID(C.wrap_ImGuiContextHook_GetHookId(self.handle()))
 }
 
-func (self *ImGuiContextHook) SetType(v ContextHookType) {
-	C.ImGuiContextHook_SetType(self.handle(), C.ImGuiContextHookType(v))
+func (self *ContextHook) SetType(v ContextHookType) {
+	C.wrap_ImGuiContextHook_SetType(self.handle(), C.ImGuiContextHookType(v))
 }
 
-func (self ImGuiContextHook) GetType() ContextHookType {
-	return ContextHookType(C.ImGuiContextHook_GetType(self.handle()))
+func (self ContextHook) Type() ContextHookType {
+	return ContextHookType(C.wrap_ImGuiContextHook_GetType(self.handle()))
 }
 
-func (self *ImGuiContextHook) SetOwner(v ImGuiID) {
-	C.ImGuiContextHook_SetOwner(self.handle(), C.ImGuiID(v))
+func (self *ContextHook) SetOwner(v ID) {
+	C.wrap_ImGuiContextHook_SetOwner(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiContextHook) GetOwner() ImGuiID {
-	return ImGuiID(C.ImGuiContextHook_GetOwner(self.handle()))
+func (self ContextHook) Owner() ID {
+	return ImGuiID(C.wrap_ImGuiContextHook_GetOwner(self.handle()))
 }
 
-func (self *ImGuiContextHook) SetUserData(v unsafe.Pointer) {
-	C.ImGuiContextHook_SetUserData(self.handle(), (v))
+func (self *ContextHook) SetUserData(v unsafe.Pointer) {
+	C.wrap_ImGuiContextHook_SetUserData(self.handle(), (v))
 }
 
-func (self ImGuiContextHook) GetUserData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiContextHook_GetUserData(self.handle()))
+func (self ContextHook) UserData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiContextHook_GetUserData(self.handle()))
 }
 
-func (self *ImGuiDataTypeInfo) SetSize(v uint64) {
-	C.ImGuiDataTypeInfo_SetSize(self.handle(), C.xlong(v))
+func (self *DataTypeInfo) SetSize(v uint64) {
+	C.wrap_ImGuiDataTypeInfo_SetSize(self.handle(), C.xlong(v))
 }
 
-func (self ImGuiDataTypeInfo) GetSize() float64 {
-	return float64(C.ImGuiDataTypeInfo_GetSize(self.handle()))
+func (self DataTypeInfo) Size() float64 {
+	return float64(C.wrap_ImGuiDataTypeInfo_GetSize(self.handle()))
 }
 
-func (self *ImGuiDataTypeInfo) SetName(v string) {
+func (self *DataTypeInfo) SetName(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImGuiDataTypeInfo_SetName(self.handle(), vArg)
+	C.wrap_ImGuiDataTypeInfo_SetName(self.handle(), vArg)
 }
 
-func (self ImGuiDataTypeInfo) GetName() string {
-	return C.GoString(C.ImGuiDataTypeInfo_GetName(self.handle()))
+func (self DataTypeInfo) Name() string {
+	return C.GoString(C.wrap_ImGuiDataTypeInfo_GetName(self.handle()))
 }
 
-func (self *ImGuiDataTypeInfo) SetPrintFmt(v string) {
+func (self *DataTypeInfo) SetPrintFmt(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImGuiDataTypeInfo_SetPrintFmt(self.handle(), vArg)
+	C.wrap_ImGuiDataTypeInfo_SetPrintFmt(self.handle(), vArg)
 }
 
-func (self ImGuiDataTypeInfo) GetPrintFmt() string {
-	return C.GoString(C.ImGuiDataTypeInfo_GetPrintFmt(self.handle()))
+func (self DataTypeInfo) PrintFmt() string {
+	return C.GoString(C.wrap_ImGuiDataTypeInfo_GetPrintFmt(self.handle()))
 }
 
-func (self *ImGuiDataTypeInfo) SetScanFmt(v string) {
+func (self *DataTypeInfo) SetScanFmt(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImGuiDataTypeInfo_SetScanFmt(self.handle(), vArg)
+	C.wrap_ImGuiDataTypeInfo_SetScanFmt(self.handle(), vArg)
 }
 
-func (self ImGuiDataTypeInfo) GetScanFmt() string {
-	return C.GoString(C.ImGuiDataTypeInfo_GetScanFmt(self.handle()))
+func (self DataTypeInfo) ScanFmt() string {
+	return C.GoString(C.wrap_ImGuiDataTypeInfo_GetScanFmt(self.handle()))
 }
 
-func (self ImGuiDockContext) GetNodes() ImGuiStorage {
-	return newImGuiStorageFromC(C.ImGuiDockContext_GetNodes(self.handle()))
+func (self DockContext) Nodes() Storage {
+	return newStorageFromC(C.wrap_ImGuiDockContext_GetNodes(self.handle()))
 }
 
-func (self *ImGuiDockContext) SetWantFullRebuild(v bool) {
-	C.ImGuiDockContext_SetWantFullRebuild(self.handle(), C.bool(v))
+func (self *DockContext) SetWantFullRebuild(v bool) {
+	C.wrap_ImGuiDockContext_SetWantFullRebuild(self.handle(), C.bool(v))
 }
 
-func (self ImGuiDockContext) GetWantFullRebuild() bool {
-	return C.ImGuiDockContext_GetWantFullRebuild(self.handle()) == C.bool(true)
+func (self DockContext) WantFullRebuild() bool {
+	return C.wrap_ImGuiDockContext_GetWantFullRebuild(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiDockNode) SetID(v ImGuiID) {
-	C.ImGuiDockNode_SetID(self.handle(), C.ImGuiID(v))
+func (self *DockNode) SetID(v ID) {
+	C.wrap_ImGuiDockNode_SetID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiDockNode) GetID() ImGuiID {
-	return ImGuiID(C.ImGuiDockNode_GetID(self.handle()))
+func (self DockNode) ID() ID {
+	return ImGuiID(C.wrap_ImGuiDockNode_GetID(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetSharedFlags(v DockNodeFlags) {
-	C.ImGuiDockNode_SetSharedFlags(self.handle(), C.ImGuiDockNodeFlags(v))
+func (self *DockNode) SetSharedFlags(v DockNodeFlags) {
+	C.wrap_ImGuiDockNode_SetSharedFlags(self.handle(), C.ImGuiDockNodeFlags(v))
 }
 
-func (self ImGuiDockNode) GetSharedFlags() DockNodeFlags {
-	return DockNodeFlags(C.ImGuiDockNode_GetSharedFlags(self.handle()))
+func (self DockNode) SharedFlags() DockNodeFlags {
+	return DockNodeFlags(C.wrap_ImGuiDockNode_GetSharedFlags(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetLocalFlagsInWindows(v DockNodeFlags) {
-	C.ImGuiDockNode_SetLocalFlagsInWindows(self.handle(), C.ImGuiDockNodeFlags(v))
+func (self *DockNode) SetLocalFlagsInWindows(v DockNodeFlags) {
+	C.wrap_ImGuiDockNode_SetLocalFlagsInWindows(self.handle(), C.ImGuiDockNodeFlags(v))
 }
 
-func (self ImGuiDockNode) GetLocalFlagsInWindows() DockNodeFlags {
-	return DockNodeFlags(C.ImGuiDockNode_GetLocalFlagsInWindows(self.handle()))
+func (self DockNode) LocalFlagsInWindows() DockNodeFlags {
+	return DockNodeFlags(C.wrap_ImGuiDockNode_GetLocalFlagsInWindows(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetMergedFlags(v DockNodeFlags) {
-	C.ImGuiDockNode_SetMergedFlags(self.handle(), C.ImGuiDockNodeFlags(v))
+func (self *DockNode) SetMergedFlags(v DockNodeFlags) {
+	C.wrap_ImGuiDockNode_SetMergedFlags(self.handle(), C.ImGuiDockNodeFlags(v))
 }
 
-func (self ImGuiDockNode) GetMergedFlags() DockNodeFlags {
-	return DockNodeFlags(C.ImGuiDockNode_GetMergedFlags(self.handle()))
+func (self DockNode) MergedFlags() DockNodeFlags {
+	return DockNodeFlags(C.wrap_ImGuiDockNode_GetMergedFlags(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetState(v DockNodeState) {
-	C.ImGuiDockNode_SetState(self.handle(), C.ImGuiDockNodeState(v))
+func (self *DockNode) SetState(v DockNodeState) {
+	C.wrap_ImGuiDockNode_SetState(self.handle(), C.ImGuiDockNodeState(v))
 }
 
-func (self ImGuiDockNode) GetState() DockNodeState {
-	return DockNodeState(C.ImGuiDockNode_GetState(self.handle()))
+func (self DockNode) State() DockNodeState {
+	return DockNodeState(C.wrap_ImGuiDockNode_GetState(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetParentNode(v ImGuiDockNode) {
-	C.ImGuiDockNode_SetParentNode(self.handle(), v.handle())
+func (self *DockNode) SetParentNode(v DockNode) {
+	C.wrap_ImGuiDockNode_SetParentNode(self.handle(), v.handle())
 }
 
-func (self ImGuiDockNode) GetParentNode() ImGuiDockNode {
-	return (ImGuiDockNode)(unsafe.Pointer(C.ImGuiDockNode_GetParentNode(self.handle())))
+func (self DockNode) ParentNode() DockNode {
+	return (DockNode)(unsafe.Pointer(C.wrap_ImGuiDockNode_GetParentNode(self.handle())))
 }
 
-func (self *ImGuiDockNode) SetTabBar(v ImGuiTabBar) {
-	C.ImGuiDockNode_SetTabBar(self.handle(), v.handle())
+func (self *DockNode) SetTabBar(v TabBar) {
+	C.wrap_ImGuiDockNode_SetTabBar(self.handle(), v.handle())
 }
 
-func (self ImGuiDockNode) GetTabBar() ImGuiTabBar {
-	return (ImGuiTabBar)(unsafe.Pointer(C.ImGuiDockNode_GetTabBar(self.handle())))
+func (self DockNode) TabBar() TabBar {
+	return (TabBar)(unsafe.Pointer(C.wrap_ImGuiDockNode_GetTabBar(self.handle())))
 }
 
-func (self *ImGuiDockNode) SetPos(v Vec2) {
-	C.ImGuiDockNode_SetPos(self.handle(), v.toC())
+func (self *DockNode) SetPos(v Vec2) {
+	C.wrap_ImGuiDockNode_SetPos(self.handle(), v.toC())
 }
 
-func (self ImGuiDockNode) GetPos() Vec2 {
+func (self DockNode) Pos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiDockNode_GetPos(self.handle()))
+	out.fromC(C.wrap_ImGuiDockNode_GetPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiDockNode) SetSize(v Vec2) {
-	C.ImGuiDockNode_SetSize(self.handle(), v.toC())
+func (self *DockNode) SetSize(v Vec2) {
+	C.wrap_ImGuiDockNode_SetSize(self.handle(), v.toC())
 }
 
-func (self ImGuiDockNode) GetSize() Vec2 {
+func (self DockNode) Size() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiDockNode_GetSize(self.handle()))
+	out.fromC(C.wrap_ImGuiDockNode_GetSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiDockNode) SetSizeRef(v Vec2) {
-	C.ImGuiDockNode_SetSizeRef(self.handle(), v.toC())
+func (self *DockNode) SetSizeRef(v Vec2) {
+	C.wrap_ImGuiDockNode_SetSizeRef(self.handle(), v.toC())
 }
 
-func (self ImGuiDockNode) GetSizeRef() Vec2 {
+func (self DockNode) SizeRef() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiDockNode_GetSizeRef(self.handle()))
+	out.fromC(C.wrap_ImGuiDockNode_GetSizeRef(self.handle()))
 	return *out
 }
 
-func (self *ImGuiDockNode) SetSplitAxis(v Axis) {
-	C.ImGuiDockNode_SetSplitAxis(self.handle(), C.ImGuiAxis(v))
+func (self *DockNode) SetSplitAxis(v Axis) {
+	C.wrap_ImGuiDockNode_SetSplitAxis(self.handle(), C.ImGuiAxis(v))
 }
 
-func (self ImGuiDockNode) GetSplitAxis() Axis {
-	return Axis(C.ImGuiDockNode_GetSplitAxis(self.handle()))
+func (self DockNode) SplitAxis() Axis {
+	return Axis(C.wrap_ImGuiDockNode_GetSplitAxis(self.handle()))
 }
 
-func (self ImGuiDockNode) GetWindowClass() ImGuiWindowClass {
-	return newImGuiWindowClassFromC(C.ImGuiDockNode_GetWindowClass(self.handle()))
+func (self DockNode) WindowClass() WindowClass {
+	return newWindowClassFromC(C.wrap_ImGuiDockNode_GetWindowClass(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetLastBgColor(v uint32) {
-	C.ImGuiDockNode_SetLastBgColor(self.handle(), C.ImU32(v))
+func (self *DockNode) SetLastBgColor(v uint32) {
+	C.wrap_ImGuiDockNode_SetLastBgColor(self.handle(), C.ImU32(v))
 }
 
-func (self ImGuiDockNode) GetLastBgColor() uint32 {
-	return uint32(C.ImGuiDockNode_GetLastBgColor(self.handle()))
+func (self DockNode) LastBgColor() uint32 {
+	return uint32(C.wrap_ImGuiDockNode_GetLastBgColor(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetHostWindow(v ImGuiWindow) {
-	C.ImGuiDockNode_SetHostWindow(self.handle(), v.handle())
+func (self *DockNode) SetHostWindow(v Window) {
+	C.wrap_ImGuiDockNode_SetHostWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiDockNode) GetHostWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiDockNode_GetHostWindow(self.handle())))
+func (self DockNode) HostWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiDockNode_GetHostWindow(self.handle())))
 }
 
-func (self *ImGuiDockNode) SetVisibleWindow(v ImGuiWindow) {
-	C.ImGuiDockNode_SetVisibleWindow(self.handle(), v.handle())
+func (self *DockNode) SetVisibleWindow(v Window) {
+	C.wrap_ImGuiDockNode_SetVisibleWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiDockNode) GetVisibleWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiDockNode_GetVisibleWindow(self.handle())))
+func (self DockNode) VisibleWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiDockNode_GetVisibleWindow(self.handle())))
 }
 
-func (self *ImGuiDockNode) SetCentralNode(v ImGuiDockNode) {
-	C.ImGuiDockNode_SetCentralNode(self.handle(), v.handle())
+func (self *DockNode) SetCentralNode(v DockNode) {
+	C.wrap_ImGuiDockNode_SetCentralNode(self.handle(), v.handle())
 }
 
-func (self ImGuiDockNode) GetCentralNode() ImGuiDockNode {
-	return (ImGuiDockNode)(unsafe.Pointer(C.ImGuiDockNode_GetCentralNode(self.handle())))
+func (self DockNode) CentralNode() DockNode {
+	return (DockNode)(unsafe.Pointer(C.wrap_ImGuiDockNode_GetCentralNode(self.handle())))
 }
 
-func (self *ImGuiDockNode) SetOnlyNodeWithWindows(v ImGuiDockNode) {
-	C.ImGuiDockNode_SetOnlyNodeWithWindows(self.handle(), v.handle())
+func (self *DockNode) SetOnlyNodeWithWindows(v DockNode) {
+	C.wrap_ImGuiDockNode_SetOnlyNodeWithWindows(self.handle(), v.handle())
 }
 
-func (self ImGuiDockNode) GetOnlyNodeWithWindows() ImGuiDockNode {
-	return (ImGuiDockNode)(unsafe.Pointer(C.ImGuiDockNode_GetOnlyNodeWithWindows(self.handle())))
+func (self DockNode) OnlyNodeWithWindows() DockNode {
+	return (DockNode)(unsafe.Pointer(C.wrap_ImGuiDockNode_GetOnlyNodeWithWindows(self.handle())))
 }
 
-func (self *ImGuiDockNode) SetCountNodeWithWindows(v int32) {
-	C.ImGuiDockNode_SetCountNodeWithWindows(self.handle(), C.int(v))
+func (self *DockNode) SetCountNodeWithWindows(v int32) {
+	C.wrap_ImGuiDockNode_SetCountNodeWithWindows(self.handle(), C.int(v))
 }
 
-func (self ImGuiDockNode) GetCountNodeWithWindows() int {
-	return int(C.ImGuiDockNode_GetCountNodeWithWindows(self.handle()))
+func (self DockNode) CountNodeWithWindows() int {
+	return int(C.wrap_ImGuiDockNode_GetCountNodeWithWindows(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetLastFrameAlive(v int32) {
-	C.ImGuiDockNode_SetLastFrameAlive(self.handle(), C.int(v))
+func (self *DockNode) SetLastFrameAlive(v int32) {
+	C.wrap_ImGuiDockNode_SetLastFrameAlive(self.handle(), C.int(v))
 }
 
-func (self ImGuiDockNode) GetLastFrameAlive() int {
-	return int(C.ImGuiDockNode_GetLastFrameAlive(self.handle()))
+func (self DockNode) LastFrameAlive() int {
+	return int(C.wrap_ImGuiDockNode_GetLastFrameAlive(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetLastFrameActive(v int32) {
-	C.ImGuiDockNode_SetLastFrameActive(self.handle(), C.int(v))
+func (self *DockNode) SetLastFrameActive(v int32) {
+	C.wrap_ImGuiDockNode_SetLastFrameActive(self.handle(), C.int(v))
 }
 
-func (self ImGuiDockNode) GetLastFrameActive() int {
-	return int(C.ImGuiDockNode_GetLastFrameActive(self.handle()))
+func (self DockNode) LastFrameActive() int {
+	return int(C.wrap_ImGuiDockNode_GetLastFrameActive(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetLastFrameFocused(v int32) {
-	C.ImGuiDockNode_SetLastFrameFocused(self.handle(), C.int(v))
+func (self *DockNode) SetLastFrameFocused(v int32) {
+	C.wrap_ImGuiDockNode_SetLastFrameFocused(self.handle(), C.int(v))
 }
 
-func (self ImGuiDockNode) GetLastFrameFocused() int {
-	return int(C.ImGuiDockNode_GetLastFrameFocused(self.handle()))
+func (self DockNode) LastFrameFocused() int {
+	return int(C.wrap_ImGuiDockNode_GetLastFrameFocused(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetLastFocusedNodeId(v ImGuiID) {
-	C.ImGuiDockNode_SetLastFocusedNodeId(self.handle(), C.ImGuiID(v))
+func (self *DockNode) SetLastFocusedNodeId(v ID) {
+	C.wrap_ImGuiDockNode_SetLastFocusedNodeId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiDockNode) GetLastFocusedNodeId() ImGuiID {
-	return ImGuiID(C.ImGuiDockNode_GetLastFocusedNodeId(self.handle()))
+func (self DockNode) LastFocusedNodeId() ID {
+	return ImGuiID(C.wrap_ImGuiDockNode_GetLastFocusedNodeId(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetSelectedTabId(v ImGuiID) {
-	C.ImGuiDockNode_SetSelectedTabId(self.handle(), C.ImGuiID(v))
+func (self *DockNode) SetSelectedTabId(v ID) {
+	C.wrap_ImGuiDockNode_SetSelectedTabId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiDockNode) GetSelectedTabId() ImGuiID {
-	return ImGuiID(C.ImGuiDockNode_GetSelectedTabId(self.handle()))
+func (self DockNode) SelectedTabId() ID {
+	return ImGuiID(C.wrap_ImGuiDockNode_GetSelectedTabId(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetWantCloseTabId(v ImGuiID) {
-	C.ImGuiDockNode_SetWantCloseTabId(self.handle(), C.ImGuiID(v))
+func (self *DockNode) SetWantCloseTabId(v ID) {
+	C.wrap_ImGuiDockNode_SetWantCloseTabId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiDockNode) GetWantCloseTabId() ImGuiID {
-	return ImGuiID(C.ImGuiDockNode_GetWantCloseTabId(self.handle()))
+func (self DockNode) WantCloseTabId() ID {
+	return ImGuiID(C.wrap_ImGuiDockNode_GetWantCloseTabId(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetAuthorityForPos(v DataAuthority) {
-	C.ImGuiDockNode_SetAuthorityForPos(self.handle(), C.ImGuiDataAuthority(v))
+func (self *DockNode) SetAuthorityForPos(v DataAuthority) {
+	C.wrap_ImGuiDockNode_SetAuthorityForPos(self.handle(), C.ImGuiDataAuthority(v))
 }
 
-func (self ImGuiDockNode) GetAuthorityForPos() DataAuthority {
-	return DataAuthority(C.ImGuiDockNode_GetAuthorityForPos(self.handle()))
+func (self DockNode) AuthorityForPos() DataAuthority {
+	return DataAuthority(C.wrap_ImGuiDockNode_GetAuthorityForPos(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetAuthorityForSize(v DataAuthority) {
-	C.ImGuiDockNode_SetAuthorityForSize(self.handle(), C.ImGuiDataAuthority(v))
+func (self *DockNode) SetAuthorityForSize(v DataAuthority) {
+	C.wrap_ImGuiDockNode_SetAuthorityForSize(self.handle(), C.ImGuiDataAuthority(v))
 }
 
-func (self ImGuiDockNode) GetAuthorityForSize() DataAuthority {
-	return DataAuthority(C.ImGuiDockNode_GetAuthorityForSize(self.handle()))
+func (self DockNode) AuthorityForSize() DataAuthority {
+	return DataAuthority(C.wrap_ImGuiDockNode_GetAuthorityForSize(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetAuthorityForViewport(v DataAuthority) {
-	C.ImGuiDockNode_SetAuthorityForViewport(self.handle(), C.ImGuiDataAuthority(v))
+func (self *DockNode) SetAuthorityForViewport(v DataAuthority) {
+	C.wrap_ImGuiDockNode_SetAuthorityForViewport(self.handle(), C.ImGuiDataAuthority(v))
 }
 
-func (self ImGuiDockNode) GetAuthorityForViewport() DataAuthority {
-	return DataAuthority(C.ImGuiDockNode_GetAuthorityForViewport(self.handle()))
+func (self DockNode) AuthorityForViewport() DataAuthority {
+	return DataAuthority(C.wrap_ImGuiDockNode_GetAuthorityForViewport(self.handle()))
 }
 
-func (self *ImGuiDockNode) SetIsVisible(v bool) {
-	C.ImGuiDockNode_SetIsVisible(self.handle(), C.bool(v))
+func (self *DockNode) SetIsVisible(v bool) {
+	C.wrap_ImGuiDockNode_SetIsVisible(self.handle(), C.bool(v))
 }
 
-func (self ImGuiDockNode) GetIsVisible() bool {
-	return C.ImGuiDockNode_GetIsVisible(self.handle()) == C.bool(true)
+func (self DockNode) IsVisible() bool {
+	return C.wrap_ImGuiDockNode_GetIsVisible(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiDockNode) SetIsFocused(v bool) {
-	C.ImGuiDockNode_SetIsFocused(self.handle(), C.bool(v))
+func (self *DockNode) SetIsFocused(v bool) {
+	C.wrap_ImGuiDockNode_SetIsFocused(self.handle(), C.bool(v))
 }
 
-func (self ImGuiDockNode) GetIsFocused() bool {
-	return C.ImGuiDockNode_GetIsFocused(self.handle()) == C.bool(true)
+func (self DockNode) IsFocused() bool {
+	return C.wrap_ImGuiDockNode_GetIsFocused(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiDockNode) SetIsBgDrawnThisFrame(v bool) {
-	C.ImGuiDockNode_SetIsBgDrawnThisFrame(self.handle(), C.bool(v))
+func (self *DockNode) SetIsBgDrawnThisFrame(v bool) {
+	C.wrap_ImGuiDockNode_SetIsBgDrawnThisFrame(self.handle(), C.bool(v))
 }
 
-func (self ImGuiDockNode) GetIsBgDrawnThisFrame() bool {
-	return C.ImGuiDockNode_GetIsBgDrawnThisFrame(self.handle()) == C.bool(true)
+func (self DockNode) IsBgDrawnThisFrame() bool {
+	return C.wrap_ImGuiDockNode_GetIsBgDrawnThisFrame(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiDockNode) SetHasCloseButton(v bool) {
-	C.ImGuiDockNode_SetHasCloseButton(self.handle(), C.bool(v))
+func (self *DockNode) SetHasCloseButton(v bool) {
+	C.wrap_ImGuiDockNode_SetHasCloseButton(self.handle(), C.bool(v))
 }
 
-func (self ImGuiDockNode) GetHasCloseButton() bool {
-	return C.ImGuiDockNode_GetHasCloseButton(self.handle()) == C.bool(true)
+func (self DockNode) HasCloseButton() bool {
+	return C.wrap_ImGuiDockNode_GetHasCloseButton(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiDockNode) SetHasWindowMenuButton(v bool) {
-	C.ImGuiDockNode_SetHasWindowMenuButton(self.handle(), C.bool(v))
+func (self *DockNode) SetHasWindowMenuButton(v bool) {
+	C.wrap_ImGuiDockNode_SetHasWindowMenuButton(self.handle(), C.bool(v))
 }
 
-func (self ImGuiDockNode) GetHasWindowMenuButton() bool {
-	return C.ImGuiDockNode_GetHasWindowMenuButton(self.handle()) == C.bool(true)
+func (self DockNode) HasWindowMenuButton() bool {
+	return C.wrap_ImGuiDockNode_GetHasWindowMenuButton(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiDockNode) SetHasCentralNodeChild(v bool) {
-	C.ImGuiDockNode_SetHasCentralNodeChild(self.handle(), C.bool(v))
+func (self *DockNode) SetHasCentralNodeChild(v bool) {
+	C.wrap_ImGuiDockNode_SetHasCentralNodeChild(self.handle(), C.bool(v))
 }
 
-func (self ImGuiDockNode) GetHasCentralNodeChild() bool {
-	return C.ImGuiDockNode_GetHasCentralNodeChild(self.handle()) == C.bool(true)
+func (self DockNode) HasCentralNodeChild() bool {
+	return C.wrap_ImGuiDockNode_GetHasCentralNodeChild(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiDockNode) SetWantCloseAll(v bool) {
-	C.ImGuiDockNode_SetWantCloseAll(self.handle(), C.bool(v))
+func (self *DockNode) SetWantCloseAll(v bool) {
+	C.wrap_ImGuiDockNode_SetWantCloseAll(self.handle(), C.bool(v))
 }
 
-func (self ImGuiDockNode) GetWantCloseAll() bool {
-	return C.ImGuiDockNode_GetWantCloseAll(self.handle()) == C.bool(true)
+func (self DockNode) WantCloseAll() bool {
+	return C.wrap_ImGuiDockNode_GetWantCloseAll(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiDockNode) SetWantLockSizeOnce(v bool) {
-	C.ImGuiDockNode_SetWantLockSizeOnce(self.handle(), C.bool(v))
+func (self *DockNode) SetWantLockSizeOnce(v bool) {
+	C.wrap_ImGuiDockNode_SetWantLockSizeOnce(self.handle(), C.bool(v))
 }
 
-func (self ImGuiDockNode) GetWantLockSizeOnce() bool {
-	return C.ImGuiDockNode_GetWantLockSizeOnce(self.handle()) == C.bool(true)
+func (self DockNode) WantLockSizeOnce() bool {
+	return C.wrap_ImGuiDockNode_GetWantLockSizeOnce(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiDockNode) SetWantMouseMove(v bool) {
-	C.ImGuiDockNode_SetWantMouseMove(self.handle(), C.bool(v))
+func (self *DockNode) SetWantMouseMove(v bool) {
+	C.wrap_ImGuiDockNode_SetWantMouseMove(self.handle(), C.bool(v))
 }
 
-func (self ImGuiDockNode) GetWantMouseMove() bool {
-	return C.ImGuiDockNode_GetWantMouseMove(self.handle()) == C.bool(true)
+func (self DockNode) WantMouseMove() bool {
+	return C.wrap_ImGuiDockNode_GetWantMouseMove(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiDockNode) SetWantHiddenTabBarUpdate(v bool) {
-	C.ImGuiDockNode_SetWantHiddenTabBarUpdate(self.handle(), C.bool(v))
+func (self *DockNode) SetWantHiddenTabBarUpdate(v bool) {
+	C.wrap_ImGuiDockNode_SetWantHiddenTabBarUpdate(self.handle(), C.bool(v))
 }
 
-func (self ImGuiDockNode) GetWantHiddenTabBarUpdate() bool {
-	return C.ImGuiDockNode_GetWantHiddenTabBarUpdate(self.handle()) == C.bool(true)
+func (self DockNode) WantHiddenTabBarUpdate() bool {
+	return C.wrap_ImGuiDockNode_GetWantHiddenTabBarUpdate(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiDockNode) SetWantHiddenTabBarToggle(v bool) {
-	C.ImGuiDockNode_SetWantHiddenTabBarToggle(self.handle(), C.bool(v))
+func (self *DockNode) SetWantHiddenTabBarToggle(v bool) {
+	C.wrap_ImGuiDockNode_SetWantHiddenTabBarToggle(self.handle(), C.bool(v))
 }
 
-func (self ImGuiDockNode) GetWantHiddenTabBarToggle() bool {
-	return C.ImGuiDockNode_GetWantHiddenTabBarToggle(self.handle()) == C.bool(true)
+func (self DockNode) WantHiddenTabBarToggle() bool {
+	return C.wrap_ImGuiDockNode_GetWantHiddenTabBarToggle(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiGroupData) SetWindowID(v ImGuiID) {
-	C.ImGuiGroupData_SetWindowID(self.handle(), C.ImGuiID(v))
+func (self *GroupData) SetWindowID(v ID) {
+	C.wrap_ImGuiGroupData_SetWindowID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiGroupData) GetWindowID() ImGuiID {
-	return ImGuiID(C.ImGuiGroupData_GetWindowID(self.handle()))
+func (self GroupData) WindowID() ID {
+	return ImGuiID(C.wrap_ImGuiGroupData_GetWindowID(self.handle()))
 }
 
-func (self *ImGuiGroupData) SetBackupCursorPos(v Vec2) {
-	C.ImGuiGroupData_SetBackupCursorPos(self.handle(), v.toC())
+func (self *GroupData) SetBackupCursorPos(v Vec2) {
+	C.wrap_ImGuiGroupData_SetBackupCursorPos(self.handle(), v.toC())
 }
 
-func (self ImGuiGroupData) GetBackupCursorPos() Vec2 {
+func (self GroupData) BackupCursorPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiGroupData_GetBackupCursorPos(self.handle()))
+	out.fromC(C.wrap_ImGuiGroupData_GetBackupCursorPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiGroupData) SetBackupCursorMaxPos(v Vec2) {
-	C.ImGuiGroupData_SetBackupCursorMaxPos(self.handle(), v.toC())
+func (self *GroupData) SetBackupCursorMaxPos(v Vec2) {
+	C.wrap_ImGuiGroupData_SetBackupCursorMaxPos(self.handle(), v.toC())
 }
 
-func (self ImGuiGroupData) GetBackupCursorMaxPos() Vec2 {
+func (self GroupData) BackupCursorMaxPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiGroupData_GetBackupCursorMaxPos(self.handle()))
+	out.fromC(C.wrap_ImGuiGroupData_GetBackupCursorMaxPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiGroupData) SetBackupCurrLineSize(v Vec2) {
-	C.ImGuiGroupData_SetBackupCurrLineSize(self.handle(), v.toC())
+func (self *GroupData) SetBackupCurrLineSize(v Vec2) {
+	C.wrap_ImGuiGroupData_SetBackupCurrLineSize(self.handle(), v.toC())
 }
 
-func (self ImGuiGroupData) GetBackupCurrLineSize() Vec2 {
+func (self GroupData) BackupCurrLineSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiGroupData_GetBackupCurrLineSize(self.handle()))
+	out.fromC(C.wrap_ImGuiGroupData_GetBackupCurrLineSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiGroupData) SetBackupCurrLineTextBaseOffset(v float32) {
-	C.ImGuiGroupData_SetBackupCurrLineTextBaseOffset(self.handle(), C.float(v))
+func (self *GroupData) SetBackupCurrLineTextBaseOffset(v float32) {
+	C.wrap_ImGuiGroupData_SetBackupCurrLineTextBaseOffset(self.handle(), C.float(v))
 }
 
-func (self ImGuiGroupData) GetBackupCurrLineTextBaseOffset() float32 {
-	return float32(C.ImGuiGroupData_GetBackupCurrLineTextBaseOffset(self.handle()))
+func (self GroupData) BackupCurrLineTextBaseOffset() float32 {
+	return float32(C.wrap_ImGuiGroupData_GetBackupCurrLineTextBaseOffset(self.handle()))
 }
 
-func (self *ImGuiGroupData) SetBackupActiveIdIsAlive(v ImGuiID) {
-	C.ImGuiGroupData_SetBackupActiveIdIsAlive(self.handle(), C.ImGuiID(v))
+func (self *GroupData) SetBackupActiveIdIsAlive(v ID) {
+	C.wrap_ImGuiGroupData_SetBackupActiveIdIsAlive(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiGroupData) GetBackupActiveIdIsAlive() ImGuiID {
-	return ImGuiID(C.ImGuiGroupData_GetBackupActiveIdIsAlive(self.handle()))
+func (self GroupData) BackupActiveIdIsAlive() ID {
+	return ImGuiID(C.wrap_ImGuiGroupData_GetBackupActiveIdIsAlive(self.handle()))
 }
 
-func (self *ImGuiGroupData) SetBackupActiveIdPreviousFrameIsAlive(v bool) {
-	C.ImGuiGroupData_SetBackupActiveIdPreviousFrameIsAlive(self.handle(), C.bool(v))
+func (self *GroupData) SetBackupActiveIdPreviousFrameIsAlive(v bool) {
+	C.wrap_ImGuiGroupData_SetBackupActiveIdPreviousFrameIsAlive(self.handle(), C.bool(v))
 }
 
-func (self ImGuiGroupData) GetBackupActiveIdPreviousFrameIsAlive() bool {
-	return C.ImGuiGroupData_GetBackupActiveIdPreviousFrameIsAlive(self.handle()) == C.bool(true)
+func (self GroupData) BackupActiveIdPreviousFrameIsAlive() bool {
+	return C.wrap_ImGuiGroupData_GetBackupActiveIdPreviousFrameIsAlive(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiGroupData) SetBackupHoveredIdIsAlive(v bool) {
-	C.ImGuiGroupData_SetBackupHoveredIdIsAlive(self.handle(), C.bool(v))
+func (self *GroupData) SetBackupHoveredIdIsAlive(v bool) {
+	C.wrap_ImGuiGroupData_SetBackupHoveredIdIsAlive(self.handle(), C.bool(v))
 }
 
-func (self ImGuiGroupData) GetBackupHoveredIdIsAlive() bool {
-	return C.ImGuiGroupData_GetBackupHoveredIdIsAlive(self.handle()) == C.bool(true)
+func (self GroupData) BackupHoveredIdIsAlive() bool {
+	return C.wrap_ImGuiGroupData_GetBackupHoveredIdIsAlive(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiGroupData) SetEmitItem(v bool) {
-	C.ImGuiGroupData_SetEmitItem(self.handle(), C.bool(v))
+func (self *GroupData) SetEmitItem(v bool) {
+	C.wrap_ImGuiGroupData_SetEmitItem(self.handle(), C.bool(v))
 }
 
-func (self ImGuiGroupData) GetEmitItem() bool {
-	return C.ImGuiGroupData_GetEmitItem(self.handle()) == C.bool(true)
+func (self GroupData) EmitItem() bool {
+	return C.wrap_ImGuiGroupData_GetEmitItem(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigFlags(v ConfigFlags) {
-	C.ImGuiIO_SetConfigFlags(self.handle(), C.ImGuiConfigFlags(v))
+func (self *IO) SetConfigFlags(v ConfigFlags) {
+	C.wrap_ImGuiIO_SetConfigFlags(self.handle(), C.ImGuiConfigFlags(v))
 }
 
-func (self ImGuiIO) GetConfigFlags() ConfigFlags {
-	return ConfigFlags(C.ImGuiIO_GetConfigFlags(self.handle()))
+func (self IO) ConfigFlags() ConfigFlags {
+	return ConfigFlags(C.wrap_ImGuiIO_GetConfigFlags(self.handle()))
 }
 
-func (self *ImGuiIO) SetBackendFlags(v BackendFlags) {
-	C.ImGuiIO_SetBackendFlags(self.handle(), C.ImGuiBackendFlags(v))
+func (self *IO) SetBackendFlags(v BackendFlags) {
+	C.wrap_ImGuiIO_SetBackendFlags(self.handle(), C.ImGuiBackendFlags(v))
 }
 
-func (self ImGuiIO) GetBackendFlags() BackendFlags {
-	return BackendFlags(C.ImGuiIO_GetBackendFlags(self.handle()))
+func (self IO) BackendFlags() BackendFlags {
+	return BackendFlags(C.wrap_ImGuiIO_GetBackendFlags(self.handle()))
 }
 
-func (self *ImGuiIO) SetDisplaySize(v Vec2) {
-	C.ImGuiIO_SetDisplaySize(self.handle(), v.toC())
+func (self *IO) SetDisplaySize(v Vec2) {
+	C.wrap_ImGuiIO_SetDisplaySize(self.handle(), v.toC())
 }
 
-func (self ImGuiIO) GetDisplaySize() Vec2 {
+func (self IO) DisplaySize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiIO_GetDisplaySize(self.handle()))
+	out.fromC(C.wrap_ImGuiIO_GetDisplaySize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiIO) SetDeltaTime(v float32) {
-	C.ImGuiIO_SetDeltaTime(self.handle(), C.float(v))
+func (self *IO) SetDeltaTime(v float32) {
+	C.wrap_ImGuiIO_SetDeltaTime(self.handle(), C.float(v))
 }
 
-func (self ImGuiIO) GetDeltaTime() float32 {
-	return float32(C.ImGuiIO_GetDeltaTime(self.handle()))
+func (self IO) DeltaTime() float32 {
+	return float32(C.wrap_ImGuiIO_GetDeltaTime(self.handle()))
 }
 
-func (self *ImGuiIO) SetIniSavingRate(v float32) {
-	C.ImGuiIO_SetIniSavingRate(self.handle(), C.float(v))
+func (self *IO) SetIniSavingRate(v float32) {
+	C.wrap_ImGuiIO_SetIniSavingRate(self.handle(), C.float(v))
 }
 
-func (self ImGuiIO) GetIniSavingRate() float32 {
-	return float32(C.ImGuiIO_GetIniSavingRate(self.handle()))
+func (self IO) IniSavingRate() float32 {
+	return float32(C.wrap_ImGuiIO_GetIniSavingRate(self.handle()))
 }
 
-func (self *ImGuiIO) SetIniFilename(v string) {
+func (self *IO) SetIniFilename(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImGuiIO_SetIniFilename(self.handle(), vArg)
+	C.wrap_ImGuiIO_SetIniFilename(self.handle(), vArg)
 }
 
-func (self ImGuiIO) GetIniFilename() string {
-	return C.GoString(C.ImGuiIO_GetIniFilename(self.handle()))
+func (self IO) IniFilename() string {
+	return C.GoString(C.wrap_ImGuiIO_GetIniFilename(self.handle()))
 }
 
-func (self *ImGuiIO) SetLogFilename(v string) {
+func (self *IO) SetLogFilename(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImGuiIO_SetLogFilename(self.handle(), vArg)
+	C.wrap_ImGuiIO_SetLogFilename(self.handle(), vArg)
 }
 
-func (self ImGuiIO) GetLogFilename() string {
-	return C.GoString(C.ImGuiIO_GetLogFilename(self.handle()))
+func (self IO) LogFilename() string {
+	return C.GoString(C.wrap_ImGuiIO_GetLogFilename(self.handle()))
 }
 
-func (self *ImGuiIO) SetMouseDoubleClickTime(v float32) {
-	C.ImGuiIO_SetMouseDoubleClickTime(self.handle(), C.float(v))
+func (self *IO) SetMouseDoubleClickTime(v float32) {
+	C.wrap_ImGuiIO_SetMouseDoubleClickTime(self.handle(), C.float(v))
 }
 
-func (self ImGuiIO) GetMouseDoubleClickTime() float32 {
-	return float32(C.ImGuiIO_GetMouseDoubleClickTime(self.handle()))
+func (self IO) MouseDoubleClickTime() float32 {
+	return float32(C.wrap_ImGuiIO_GetMouseDoubleClickTime(self.handle()))
 }
 
-func (self *ImGuiIO) SetMouseDoubleClickMaxDist(v float32) {
-	C.ImGuiIO_SetMouseDoubleClickMaxDist(self.handle(), C.float(v))
+func (self *IO) SetMouseDoubleClickMaxDist(v float32) {
+	C.wrap_ImGuiIO_SetMouseDoubleClickMaxDist(self.handle(), C.float(v))
 }
 
-func (self ImGuiIO) GetMouseDoubleClickMaxDist() float32 {
-	return float32(C.ImGuiIO_GetMouseDoubleClickMaxDist(self.handle()))
+func (self IO) MouseDoubleClickMaxDist() float32 {
+	return float32(C.wrap_ImGuiIO_GetMouseDoubleClickMaxDist(self.handle()))
 }
 
-func (self *ImGuiIO) SetMouseDragThreshold(v float32) {
-	C.ImGuiIO_SetMouseDragThreshold(self.handle(), C.float(v))
+func (self *IO) SetMouseDragThreshold(v float32) {
+	C.wrap_ImGuiIO_SetMouseDragThreshold(self.handle(), C.float(v))
 }
 
-func (self ImGuiIO) GetMouseDragThreshold() float32 {
-	return float32(C.ImGuiIO_GetMouseDragThreshold(self.handle()))
+func (self IO) MouseDragThreshold() float32 {
+	return float32(C.wrap_ImGuiIO_GetMouseDragThreshold(self.handle()))
 }
 
-func (self *ImGuiIO) SetKeyRepeatDelay(v float32) {
-	C.ImGuiIO_SetKeyRepeatDelay(self.handle(), C.float(v))
+func (self *IO) SetKeyRepeatDelay(v float32) {
+	C.wrap_ImGuiIO_SetKeyRepeatDelay(self.handle(), C.float(v))
 }
 
-func (self ImGuiIO) GetKeyRepeatDelay() float32 {
-	return float32(C.ImGuiIO_GetKeyRepeatDelay(self.handle()))
+func (self IO) KeyRepeatDelay() float32 {
+	return float32(C.wrap_ImGuiIO_GetKeyRepeatDelay(self.handle()))
 }
 
-func (self *ImGuiIO) SetKeyRepeatRate(v float32) {
-	C.ImGuiIO_SetKeyRepeatRate(self.handle(), C.float(v))
+func (self *IO) SetKeyRepeatRate(v float32) {
+	C.wrap_ImGuiIO_SetKeyRepeatRate(self.handle(), C.float(v))
 }
 
-func (self ImGuiIO) GetKeyRepeatRate() float32 {
-	return float32(C.ImGuiIO_GetKeyRepeatRate(self.handle()))
+func (self IO) KeyRepeatRate() float32 {
+	return float32(C.wrap_ImGuiIO_GetKeyRepeatRate(self.handle()))
 }
 
-func (self *ImGuiIO) SetUserData(v unsafe.Pointer) {
-	C.ImGuiIO_SetUserData(self.handle(), (v))
+func (self *IO) SetUserData(v unsafe.Pointer) {
+	C.wrap_ImGuiIO_SetUserData(self.handle(), (v))
 }
 
-func (self ImGuiIO) GetUserData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiIO_GetUserData(self.handle()))
+func (self IO) UserData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiIO_GetUserData(self.handle()))
 }
 
-func (self *ImGuiIO) SetFonts(v ImFontAtlas) {
-	C.ImGuiIO_SetFonts(self.handle(), v.handle())
+func (self *IO) SetFonts(v FontAtlas) {
+	C.wrap_ImGuiIO_SetFonts(self.handle(), v.handle())
 }
 
-func (self ImGuiIO) GetFonts() ImFontAtlas {
-	return (ImFontAtlas)(unsafe.Pointer(C.ImGuiIO_GetFonts(self.handle())))
+func (self IO) Fonts() FontAtlas {
+	return (FontAtlas)(unsafe.Pointer(C.wrap_ImGuiIO_GetFonts(self.handle())))
 }
 
-func (self *ImGuiIO) SetFontGlobalScale(v float32) {
-	C.ImGuiIO_SetFontGlobalScale(self.handle(), C.float(v))
+func (self *IO) SetFontGlobalScale(v float32) {
+	C.wrap_ImGuiIO_SetFontGlobalScale(self.handle(), C.float(v))
 }
 
-func (self ImGuiIO) GetFontGlobalScale() float32 {
-	return float32(C.ImGuiIO_GetFontGlobalScale(self.handle()))
+func (self IO) FontGlobalScale() float32 {
+	return float32(C.wrap_ImGuiIO_GetFontGlobalScale(self.handle()))
 }
 
-func (self *ImGuiIO) SetFontAllowUserScaling(v bool) {
-	C.ImGuiIO_SetFontAllowUserScaling(self.handle(), C.bool(v))
+func (self *IO) SetFontAllowUserScaling(v bool) {
+	C.wrap_ImGuiIO_SetFontAllowUserScaling(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetFontAllowUserScaling() bool {
-	return C.ImGuiIO_GetFontAllowUserScaling(self.handle()) == C.bool(true)
+func (self IO) FontAllowUserScaling() bool {
+	return C.wrap_ImGuiIO_GetFontAllowUserScaling(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetFontDefault(v ImFont) {
-	C.ImGuiIO_SetFontDefault(self.handle(), v.handle())
+func (self *IO) SetFontDefault(v Font) {
+	C.wrap_ImGuiIO_SetFontDefault(self.handle(), v.handle())
 }
 
-func (self ImGuiIO) GetFontDefault() ImFont {
-	return (ImFont)(unsafe.Pointer(C.ImGuiIO_GetFontDefault(self.handle())))
+func (self IO) FontDefault() Font {
+	return (Font)(unsafe.Pointer(C.wrap_ImGuiIO_GetFontDefault(self.handle())))
 }
 
-func (self *ImGuiIO) SetDisplayFramebufferScale(v Vec2) {
-	C.ImGuiIO_SetDisplayFramebufferScale(self.handle(), v.toC())
+func (self *IO) SetDisplayFramebufferScale(v Vec2) {
+	C.wrap_ImGuiIO_SetDisplayFramebufferScale(self.handle(), v.toC())
 }
 
-func (self ImGuiIO) GetDisplayFramebufferScale() Vec2 {
+func (self IO) DisplayFramebufferScale() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiIO_GetDisplayFramebufferScale(self.handle()))
+	out.fromC(C.wrap_ImGuiIO_GetDisplayFramebufferScale(self.handle()))
 	return *out
 }
 
-func (self *ImGuiIO) SetConfigDockingNoSplit(v bool) {
-	C.ImGuiIO_SetConfigDockingNoSplit(self.handle(), C.bool(v))
+func (self *IO) SetConfigDockingNoSplit(v bool) {
+	C.wrap_ImGuiIO_SetConfigDockingNoSplit(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigDockingNoSplit() bool {
-	return C.ImGuiIO_GetConfigDockingNoSplit(self.handle()) == C.bool(true)
+func (self IO) ConfigDockingNoSplit() bool {
+	return C.wrap_ImGuiIO_GetConfigDockingNoSplit(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigDockingWithShift(v bool) {
-	C.ImGuiIO_SetConfigDockingWithShift(self.handle(), C.bool(v))
+func (self *IO) SetConfigDockingWithShift(v bool) {
+	C.wrap_ImGuiIO_SetConfigDockingWithShift(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigDockingWithShift() bool {
-	return C.ImGuiIO_GetConfigDockingWithShift(self.handle()) == C.bool(true)
+func (self IO) ConfigDockingWithShift() bool {
+	return C.wrap_ImGuiIO_GetConfigDockingWithShift(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigDockingAlwaysTabBar(v bool) {
-	C.ImGuiIO_SetConfigDockingAlwaysTabBar(self.handle(), C.bool(v))
+func (self *IO) SetConfigDockingAlwaysTabBar(v bool) {
+	C.wrap_ImGuiIO_SetConfigDockingAlwaysTabBar(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigDockingAlwaysTabBar() bool {
-	return C.ImGuiIO_GetConfigDockingAlwaysTabBar(self.handle()) == C.bool(true)
+func (self IO) ConfigDockingAlwaysTabBar() bool {
+	return C.wrap_ImGuiIO_GetConfigDockingAlwaysTabBar(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigDockingTransparentPayload(v bool) {
-	C.ImGuiIO_SetConfigDockingTransparentPayload(self.handle(), C.bool(v))
+func (self *IO) SetConfigDockingTransparentPayload(v bool) {
+	C.wrap_ImGuiIO_SetConfigDockingTransparentPayload(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigDockingTransparentPayload() bool {
-	return C.ImGuiIO_GetConfigDockingTransparentPayload(self.handle()) == C.bool(true)
+func (self IO) ConfigDockingTransparentPayload() bool {
+	return C.wrap_ImGuiIO_GetConfigDockingTransparentPayload(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigViewportsNoAutoMerge(v bool) {
-	C.ImGuiIO_SetConfigViewportsNoAutoMerge(self.handle(), C.bool(v))
+func (self *IO) SetConfigViewportsNoAutoMerge(v bool) {
+	C.wrap_ImGuiIO_SetConfigViewportsNoAutoMerge(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigViewportsNoAutoMerge() bool {
-	return C.ImGuiIO_GetConfigViewportsNoAutoMerge(self.handle()) == C.bool(true)
+func (self IO) ConfigViewportsNoAutoMerge() bool {
+	return C.wrap_ImGuiIO_GetConfigViewportsNoAutoMerge(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigViewportsNoTaskBarIcon(v bool) {
-	C.ImGuiIO_SetConfigViewportsNoTaskBarIcon(self.handle(), C.bool(v))
+func (self *IO) SetConfigViewportsNoTaskBarIcon(v bool) {
+	C.wrap_ImGuiIO_SetConfigViewportsNoTaskBarIcon(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigViewportsNoTaskBarIcon() bool {
-	return C.ImGuiIO_GetConfigViewportsNoTaskBarIcon(self.handle()) == C.bool(true)
+func (self IO) ConfigViewportsNoTaskBarIcon() bool {
+	return C.wrap_ImGuiIO_GetConfigViewportsNoTaskBarIcon(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigViewportsNoDecoration(v bool) {
-	C.ImGuiIO_SetConfigViewportsNoDecoration(self.handle(), C.bool(v))
+func (self *IO) SetConfigViewportsNoDecoration(v bool) {
+	C.wrap_ImGuiIO_SetConfigViewportsNoDecoration(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigViewportsNoDecoration() bool {
-	return C.ImGuiIO_GetConfigViewportsNoDecoration(self.handle()) == C.bool(true)
+func (self IO) ConfigViewportsNoDecoration() bool {
+	return C.wrap_ImGuiIO_GetConfigViewportsNoDecoration(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigViewportsNoDefaultParent(v bool) {
-	C.ImGuiIO_SetConfigViewportsNoDefaultParent(self.handle(), C.bool(v))
+func (self *IO) SetConfigViewportsNoDefaultParent(v bool) {
+	C.wrap_ImGuiIO_SetConfigViewportsNoDefaultParent(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigViewportsNoDefaultParent() bool {
-	return C.ImGuiIO_GetConfigViewportsNoDefaultParent(self.handle()) == C.bool(true)
+func (self IO) ConfigViewportsNoDefaultParent() bool {
+	return C.wrap_ImGuiIO_GetConfigViewportsNoDefaultParent(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetMouseDrawCursor(v bool) {
-	C.ImGuiIO_SetMouseDrawCursor(self.handle(), C.bool(v))
+func (self *IO) SetMouseDrawCursor(v bool) {
+	C.wrap_ImGuiIO_SetMouseDrawCursor(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetMouseDrawCursor() bool {
-	return C.ImGuiIO_GetMouseDrawCursor(self.handle()) == C.bool(true)
+func (self IO) MouseDrawCursor() bool {
+	return C.wrap_ImGuiIO_GetMouseDrawCursor(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigMacOSXBehaviors(v bool) {
-	C.ImGuiIO_SetConfigMacOSXBehaviors(self.handle(), C.bool(v))
+func (self *IO) SetConfigMacOSXBehaviors(v bool) {
+	C.wrap_ImGuiIO_SetConfigMacOSXBehaviors(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigMacOSXBehaviors() bool {
-	return C.ImGuiIO_GetConfigMacOSXBehaviors(self.handle()) == C.bool(true)
+func (self IO) ConfigMacOSXBehaviors() bool {
+	return C.wrap_ImGuiIO_GetConfigMacOSXBehaviors(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigInputTrickleEventQueue(v bool) {
-	C.ImGuiIO_SetConfigInputTrickleEventQueue(self.handle(), C.bool(v))
+func (self *IO) SetConfigInputTrickleEventQueue(v bool) {
+	C.wrap_ImGuiIO_SetConfigInputTrickleEventQueue(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigInputTrickleEventQueue() bool {
-	return C.ImGuiIO_GetConfigInputTrickleEventQueue(self.handle()) == C.bool(true)
+func (self IO) ConfigInputTrickleEventQueue() bool {
+	return C.wrap_ImGuiIO_GetConfigInputTrickleEventQueue(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigInputTextCursorBlink(v bool) {
-	C.ImGuiIO_SetConfigInputTextCursorBlink(self.handle(), C.bool(v))
+func (self *IO) SetConfigInputTextCursorBlink(v bool) {
+	C.wrap_ImGuiIO_SetConfigInputTextCursorBlink(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigInputTextCursorBlink() bool {
-	return C.ImGuiIO_GetConfigInputTextCursorBlink(self.handle()) == C.bool(true)
+func (self IO) ConfigInputTextCursorBlink() bool {
+	return C.wrap_ImGuiIO_GetConfigInputTextCursorBlink(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigInputTextEnterKeepActive(v bool) {
-	C.ImGuiIO_SetConfigInputTextEnterKeepActive(self.handle(), C.bool(v))
+func (self *IO) SetConfigInputTextEnterKeepActive(v bool) {
+	C.wrap_ImGuiIO_SetConfigInputTextEnterKeepActive(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigInputTextEnterKeepActive() bool {
-	return C.ImGuiIO_GetConfigInputTextEnterKeepActive(self.handle()) == C.bool(true)
+func (self IO) ConfigInputTextEnterKeepActive() bool {
+	return C.wrap_ImGuiIO_GetConfigInputTextEnterKeepActive(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigDragClickToInputText(v bool) {
-	C.ImGuiIO_SetConfigDragClickToInputText(self.handle(), C.bool(v))
+func (self *IO) SetConfigDragClickToInputText(v bool) {
+	C.wrap_ImGuiIO_SetConfigDragClickToInputText(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigDragClickToInputText() bool {
-	return C.ImGuiIO_GetConfigDragClickToInputText(self.handle()) == C.bool(true)
+func (self IO) ConfigDragClickToInputText() bool {
+	return C.wrap_ImGuiIO_GetConfigDragClickToInputText(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigWindowsResizeFromEdges(v bool) {
-	C.ImGuiIO_SetConfigWindowsResizeFromEdges(self.handle(), C.bool(v))
+func (self *IO) SetConfigWindowsResizeFromEdges(v bool) {
+	C.wrap_ImGuiIO_SetConfigWindowsResizeFromEdges(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigWindowsResizeFromEdges() bool {
-	return C.ImGuiIO_GetConfigWindowsResizeFromEdges(self.handle()) == C.bool(true)
+func (self IO) ConfigWindowsResizeFromEdges() bool {
+	return C.wrap_ImGuiIO_GetConfigWindowsResizeFromEdges(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigWindowsMoveFromTitleBarOnly(v bool) {
-	C.ImGuiIO_SetConfigWindowsMoveFromTitleBarOnly(self.handle(), C.bool(v))
+func (self *IO) SetConfigWindowsMoveFromTitleBarOnly(v bool) {
+	C.wrap_ImGuiIO_SetConfigWindowsMoveFromTitleBarOnly(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetConfigWindowsMoveFromTitleBarOnly() bool {
-	return C.ImGuiIO_GetConfigWindowsMoveFromTitleBarOnly(self.handle()) == C.bool(true)
+func (self IO) ConfigWindowsMoveFromTitleBarOnly() bool {
+	return C.wrap_ImGuiIO_GetConfigWindowsMoveFromTitleBarOnly(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetConfigMemoryCompactTimer(v float32) {
-	C.ImGuiIO_SetConfigMemoryCompactTimer(self.handle(), C.float(v))
+func (self *IO) SetConfigMemoryCompactTimer(v float32) {
+	C.wrap_ImGuiIO_SetConfigMemoryCompactTimer(self.handle(), C.float(v))
 }
 
-func (self ImGuiIO) GetConfigMemoryCompactTimer() float32 {
-	return float32(C.ImGuiIO_GetConfigMemoryCompactTimer(self.handle()))
+func (self IO) ConfigMemoryCompactTimer() float32 {
+	return float32(C.wrap_ImGuiIO_GetConfigMemoryCompactTimer(self.handle()))
 }
 
-func (self *ImGuiIO) SetBackendPlatformName(v string) {
+func (self *IO) SetBackendPlatformName(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImGuiIO_SetBackendPlatformName(self.handle(), vArg)
+	C.wrap_ImGuiIO_SetBackendPlatformName(self.handle(), vArg)
 }
 
-func (self ImGuiIO) GetBackendPlatformName() string {
-	return C.GoString(C.ImGuiIO_GetBackendPlatformName(self.handle()))
+func (self IO) BackendPlatformName() string {
+	return C.GoString(C.wrap_ImGuiIO_GetBackendPlatformName(self.handle()))
 }
 
-func (self *ImGuiIO) SetBackendRendererName(v string) {
+func (self *IO) SetBackendRendererName(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImGuiIO_SetBackendRendererName(self.handle(), vArg)
+	C.wrap_ImGuiIO_SetBackendRendererName(self.handle(), vArg)
 }
 
-func (self ImGuiIO) GetBackendRendererName() string {
-	return C.GoString(C.ImGuiIO_GetBackendRendererName(self.handle()))
+func (self IO) BackendRendererName() string {
+	return C.GoString(C.wrap_ImGuiIO_GetBackendRendererName(self.handle()))
 }
 
-func (self *ImGuiIO) SetBackendPlatformUserData(v unsafe.Pointer) {
-	C.ImGuiIO_SetBackendPlatformUserData(self.handle(), (v))
+func (self *IO) SetBackendPlatformUserData(v unsafe.Pointer) {
+	C.wrap_ImGuiIO_SetBackendPlatformUserData(self.handle(), (v))
 }
 
-func (self ImGuiIO) GetBackendPlatformUserData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiIO_GetBackendPlatformUserData(self.handle()))
+func (self IO) BackendPlatformUserData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiIO_GetBackendPlatformUserData(self.handle()))
 }
 
-func (self *ImGuiIO) SetBackendRendererUserData(v unsafe.Pointer) {
-	C.ImGuiIO_SetBackendRendererUserData(self.handle(), (v))
+func (self *IO) SetBackendRendererUserData(v unsafe.Pointer) {
+	C.wrap_ImGuiIO_SetBackendRendererUserData(self.handle(), (v))
 }
 
-func (self ImGuiIO) GetBackendRendererUserData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiIO_GetBackendRendererUserData(self.handle()))
+func (self IO) BackendRendererUserData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiIO_GetBackendRendererUserData(self.handle()))
 }
 
-func (self *ImGuiIO) SetBackendLanguageUserData(v unsafe.Pointer) {
-	C.ImGuiIO_SetBackendLanguageUserData(self.handle(), (v))
+func (self *IO) SetBackendLanguageUserData(v unsafe.Pointer) {
+	C.wrap_ImGuiIO_SetBackendLanguageUserData(self.handle(), (v))
 }
 
-func (self ImGuiIO) GetBackendLanguageUserData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiIO_GetBackendLanguageUserData(self.handle()))
+func (self IO) BackendLanguageUserData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiIO_GetBackendLanguageUserData(self.handle()))
 }
 
-func (self *ImGuiIO) SetClipboardUserData(v unsafe.Pointer) {
-	C.ImGuiIO_SetClipboardUserData(self.handle(), (v))
+func (self *IO) SetClipboardUserData(v unsafe.Pointer) {
+	C.wrap_ImGuiIO_SetClipboardUserData(self.handle(), (v))
 }
 
-func (self ImGuiIO) GetClipboardUserData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiIO_GetClipboardUserData(self.handle()))
+func (self IO) ClipboardUserData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiIO_GetClipboardUserData(self.handle()))
 }
 
-func (self *ImGuiIO) Set_UnusedPadding(v unsafe.Pointer) {
-	C.ImGuiIO_Set_UnusedPadding(self.handle(), (v))
+func (self *IO) SetUnusedPadding(v unsafe.Pointer) {
+	C.wrap_ImGuiIO_Set_UnusedPadding(self.handle(), (v))
 }
 
-func (self ImGuiIO) Get_UnusedPadding() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiIO_Get_UnusedPadding(self.handle()))
+func (self IO) UnusedPadding() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiIO_Get_UnusedPadding(self.handle()))
 }
 
-func (self *ImGuiIO) SetWantCaptureMouse(v bool) {
-	C.ImGuiIO_SetWantCaptureMouse(self.handle(), C.bool(v))
+func (self *IO) SetWantCaptureMouse(v bool) {
+	C.wrap_ImGuiIO_SetWantCaptureMouse(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetWantCaptureMouse() bool {
-	return C.ImGuiIO_GetWantCaptureMouse(self.handle()) == C.bool(true)
+func (self IO) WantCaptureMouse() bool {
+	return C.wrap_ImGuiIO_GetWantCaptureMouse(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetWantCaptureKeyboard(v bool) {
-	C.ImGuiIO_SetWantCaptureKeyboard(self.handle(), C.bool(v))
+func (self *IO) SetWantCaptureKeyboard(v bool) {
+	C.wrap_ImGuiIO_SetWantCaptureKeyboard(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetWantCaptureKeyboard() bool {
-	return C.ImGuiIO_GetWantCaptureKeyboard(self.handle()) == C.bool(true)
+func (self IO) WantCaptureKeyboard() bool {
+	return C.wrap_ImGuiIO_GetWantCaptureKeyboard(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetWantTextInput(v bool) {
-	C.ImGuiIO_SetWantTextInput(self.handle(), C.bool(v))
+func (self *IO) SetWantTextInput(v bool) {
+	C.wrap_ImGuiIO_SetWantTextInput(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetWantTextInput() bool {
-	return C.ImGuiIO_GetWantTextInput(self.handle()) == C.bool(true)
+func (self IO) WantTextInput() bool {
+	return C.wrap_ImGuiIO_GetWantTextInput(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetWantSetMousePos(v bool) {
-	C.ImGuiIO_SetWantSetMousePos(self.handle(), C.bool(v))
+func (self *IO) SetWantSetMousePos(v bool) {
+	C.wrap_ImGuiIO_SetWantSetMousePos(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetWantSetMousePos() bool {
-	return C.ImGuiIO_GetWantSetMousePos(self.handle()) == C.bool(true)
+func (self IO) WantSetMousePos() bool {
+	return C.wrap_ImGuiIO_GetWantSetMousePos(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetWantSaveIniSettings(v bool) {
-	C.ImGuiIO_SetWantSaveIniSettings(self.handle(), C.bool(v))
+func (self *IO) SetWantSaveIniSettings(v bool) {
+	C.wrap_ImGuiIO_SetWantSaveIniSettings(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetWantSaveIniSettings() bool {
-	return C.ImGuiIO_GetWantSaveIniSettings(self.handle()) == C.bool(true)
+func (self IO) WantSaveIniSettings() bool {
+	return C.wrap_ImGuiIO_GetWantSaveIniSettings(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetNavActive(v bool) {
-	C.ImGuiIO_SetNavActive(self.handle(), C.bool(v))
+func (self *IO) SetNavActive(v bool) {
+	C.wrap_ImGuiIO_SetNavActive(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetNavActive() bool {
-	return C.ImGuiIO_GetNavActive(self.handle()) == C.bool(true)
+func (self IO) NavActive() bool {
+	return C.wrap_ImGuiIO_GetNavActive(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetNavVisible(v bool) {
-	C.ImGuiIO_SetNavVisible(self.handle(), C.bool(v))
+func (self *IO) SetNavVisible(v bool) {
+	C.wrap_ImGuiIO_SetNavVisible(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetNavVisible() bool {
-	return C.ImGuiIO_GetNavVisible(self.handle()) == C.bool(true)
+func (self IO) NavVisible() bool {
+	return C.wrap_ImGuiIO_GetNavVisible(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetFramerate(v float32) {
-	C.ImGuiIO_SetFramerate(self.handle(), C.float(v))
+func (self *IO) SetFramerate(v float32) {
+	C.wrap_ImGuiIO_SetFramerate(self.handle(), C.float(v))
 }
 
-func (self ImGuiIO) GetFramerate() float32 {
-	return float32(C.ImGuiIO_GetFramerate(self.handle()))
+func (self IO) Framerate() float32 {
+	return float32(C.wrap_ImGuiIO_GetFramerate(self.handle()))
 }
 
-func (self *ImGuiIO) SetMetricsRenderVertices(v int32) {
-	C.ImGuiIO_SetMetricsRenderVertices(self.handle(), C.int(v))
+func (self *IO) SetMetricsRenderVertices(v int32) {
+	C.wrap_ImGuiIO_SetMetricsRenderVertices(self.handle(), C.int(v))
 }
 
-func (self ImGuiIO) GetMetricsRenderVertices() int {
-	return int(C.ImGuiIO_GetMetricsRenderVertices(self.handle()))
+func (self IO) MetricsRenderVertices() int {
+	return int(C.wrap_ImGuiIO_GetMetricsRenderVertices(self.handle()))
 }
 
-func (self *ImGuiIO) SetMetricsRenderIndices(v int32) {
-	C.ImGuiIO_SetMetricsRenderIndices(self.handle(), C.int(v))
+func (self *IO) SetMetricsRenderIndices(v int32) {
+	C.wrap_ImGuiIO_SetMetricsRenderIndices(self.handle(), C.int(v))
 }
 
-func (self ImGuiIO) GetMetricsRenderIndices() int {
-	return int(C.ImGuiIO_GetMetricsRenderIndices(self.handle()))
+func (self IO) MetricsRenderIndices() int {
+	return int(C.wrap_ImGuiIO_GetMetricsRenderIndices(self.handle()))
 }
 
-func (self *ImGuiIO) SetMetricsRenderWindows(v int32) {
-	C.ImGuiIO_SetMetricsRenderWindows(self.handle(), C.int(v))
+func (self *IO) SetMetricsRenderWindows(v int32) {
+	C.wrap_ImGuiIO_SetMetricsRenderWindows(self.handle(), C.int(v))
 }
 
-func (self ImGuiIO) GetMetricsRenderWindows() int {
-	return int(C.ImGuiIO_GetMetricsRenderWindows(self.handle()))
+func (self IO) MetricsRenderWindows() int {
+	return int(C.wrap_ImGuiIO_GetMetricsRenderWindows(self.handle()))
 }
 
-func (self *ImGuiIO) SetMetricsActiveWindows(v int32) {
-	C.ImGuiIO_SetMetricsActiveWindows(self.handle(), C.int(v))
+func (self *IO) SetMetricsActiveWindows(v int32) {
+	C.wrap_ImGuiIO_SetMetricsActiveWindows(self.handle(), C.int(v))
 }
 
-func (self ImGuiIO) GetMetricsActiveWindows() int {
-	return int(C.ImGuiIO_GetMetricsActiveWindows(self.handle()))
+func (self IO) MetricsActiveWindows() int {
+	return int(C.wrap_ImGuiIO_GetMetricsActiveWindows(self.handle()))
 }
 
-func (self *ImGuiIO) SetMetricsActiveAllocations(v int32) {
-	C.ImGuiIO_SetMetricsActiveAllocations(self.handle(), C.int(v))
+func (self *IO) SetMetricsActiveAllocations(v int32) {
+	C.wrap_ImGuiIO_SetMetricsActiveAllocations(self.handle(), C.int(v))
 }
 
-func (self ImGuiIO) GetMetricsActiveAllocations() int {
-	return int(C.ImGuiIO_GetMetricsActiveAllocations(self.handle()))
+func (self IO) MetricsActiveAllocations() int {
+	return int(C.wrap_ImGuiIO_GetMetricsActiveAllocations(self.handle()))
 }
 
-func (self *ImGuiIO) SetMouseDelta(v Vec2) {
-	C.ImGuiIO_SetMouseDelta(self.handle(), v.toC())
+func (self *IO) SetMouseDelta(v Vec2) {
+	C.wrap_ImGuiIO_SetMouseDelta(self.handle(), v.toC())
 }
 
-func (self ImGuiIO) GetMouseDelta() Vec2 {
+func (self IO) MouseDelta() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiIO_GetMouseDelta(self.handle()))
+	out.fromC(C.wrap_ImGuiIO_GetMouseDelta(self.handle()))
 	return *out
 }
 
-func (self *ImGuiIO) SetMousePos(v Vec2) {
-	C.ImGuiIO_SetMousePos(self.handle(), v.toC())
+func (self *IO) SetMousePos(v Vec2) {
+	C.wrap_ImGuiIO_SetMousePos(self.handle(), v.toC())
 }
 
-func (self ImGuiIO) GetMousePos() Vec2 {
+func (self IO) MousePos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiIO_GetMousePos(self.handle()))
+	out.fromC(C.wrap_ImGuiIO_GetMousePos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiIO) SetMouseWheel(v float32) {
-	C.ImGuiIO_SetMouseWheel(self.handle(), C.float(v))
+func (self *IO) SetMouseWheel(v float32) {
+	C.wrap_ImGuiIO_SetMouseWheel(self.handle(), C.float(v))
 }
 
-func (self ImGuiIO) GetMouseWheel() float32 {
-	return float32(C.ImGuiIO_GetMouseWheel(self.handle()))
+func (self IO) MouseWheel() float32 {
+	return float32(C.wrap_ImGuiIO_GetMouseWheel(self.handle()))
 }
 
-func (self *ImGuiIO) SetMouseWheelH(v float32) {
-	C.ImGuiIO_SetMouseWheelH(self.handle(), C.float(v))
+func (self *IO) SetMouseWheelH(v float32) {
+	C.wrap_ImGuiIO_SetMouseWheelH(self.handle(), C.float(v))
 }
 
-func (self ImGuiIO) GetMouseWheelH() float32 {
-	return float32(C.ImGuiIO_GetMouseWheelH(self.handle()))
+func (self IO) MouseWheelH() float32 {
+	return float32(C.wrap_ImGuiIO_GetMouseWheelH(self.handle()))
 }
 
-func (self *ImGuiIO) SetMouseHoveredViewport(v ImGuiID) {
-	C.ImGuiIO_SetMouseHoveredViewport(self.handle(), C.ImGuiID(v))
+func (self *IO) SetMouseHoveredViewport(v ID) {
+	C.wrap_ImGuiIO_SetMouseHoveredViewport(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiIO) GetMouseHoveredViewport() ImGuiID {
-	return ImGuiID(C.ImGuiIO_GetMouseHoveredViewport(self.handle()))
+func (self IO) MouseHoveredViewport() ID {
+	return ImGuiID(C.wrap_ImGuiIO_GetMouseHoveredViewport(self.handle()))
 }
 
-func (self *ImGuiIO) SetKeyCtrl(v bool) {
-	C.ImGuiIO_SetKeyCtrl(self.handle(), C.bool(v))
+func (self *IO) SetKeyCtrl(v bool) {
+	C.wrap_ImGuiIO_SetKeyCtrl(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetKeyCtrl() bool {
-	return C.ImGuiIO_GetKeyCtrl(self.handle()) == C.bool(true)
+func (self IO) KeyCtrl() bool {
+	return C.wrap_ImGuiIO_GetKeyCtrl(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetKeyShift(v bool) {
-	C.ImGuiIO_SetKeyShift(self.handle(), C.bool(v))
+func (self *IO) SetKeyShift(v bool) {
+	C.wrap_ImGuiIO_SetKeyShift(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetKeyShift() bool {
-	return C.ImGuiIO_GetKeyShift(self.handle()) == C.bool(true)
+func (self IO) KeyShift() bool {
+	return C.wrap_ImGuiIO_GetKeyShift(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetKeyAlt(v bool) {
-	C.ImGuiIO_SetKeyAlt(self.handle(), C.bool(v))
+func (self *IO) SetKeyAlt(v bool) {
+	C.wrap_ImGuiIO_SetKeyAlt(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetKeyAlt() bool {
-	return C.ImGuiIO_GetKeyAlt(self.handle()) == C.bool(true)
+func (self IO) KeyAlt() bool {
+	return C.wrap_ImGuiIO_GetKeyAlt(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetKeySuper(v bool) {
-	C.ImGuiIO_SetKeySuper(self.handle(), C.bool(v))
+func (self *IO) SetKeySuper(v bool) {
+	C.wrap_ImGuiIO_SetKeySuper(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetKeySuper() bool {
-	return C.ImGuiIO_GetKeySuper(self.handle()) == C.bool(true)
+func (self IO) KeySuper() bool {
+	return C.wrap_ImGuiIO_GetKeySuper(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetKeyMods(v ModFlags) {
-	C.ImGuiIO_SetKeyMods(self.handle(), C.ImGuiModFlags(v))
+func (self *IO) SetKeyMods(v ModFlags) {
+	C.wrap_ImGuiIO_SetKeyMods(self.handle(), C.ImGuiModFlags(v))
 }
 
-func (self ImGuiIO) GetKeyMods() ModFlags {
-	return ModFlags(C.ImGuiIO_GetKeyMods(self.handle()))
+func (self IO) KeyMods() ModFlags {
+	return ModFlags(C.wrap_ImGuiIO_GetKeyMods(self.handle()))
 }
 
-func (self *ImGuiIO) SetWantCaptureMouseUnlessPopupClose(v bool) {
-	C.ImGuiIO_SetWantCaptureMouseUnlessPopupClose(self.handle(), C.bool(v))
+func (self *IO) SetWantCaptureMouseUnlessPopupClose(v bool) {
+	C.wrap_ImGuiIO_SetWantCaptureMouseUnlessPopupClose(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetWantCaptureMouseUnlessPopupClose() bool {
-	return C.ImGuiIO_GetWantCaptureMouseUnlessPopupClose(self.handle()) == C.bool(true)
+func (self IO) WantCaptureMouseUnlessPopupClose() bool {
+	return C.wrap_ImGuiIO_GetWantCaptureMouseUnlessPopupClose(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetMousePosPrev(v Vec2) {
-	C.ImGuiIO_SetMousePosPrev(self.handle(), v.toC())
+func (self *IO) SetMousePosPrev(v Vec2) {
+	C.wrap_ImGuiIO_SetMousePosPrev(self.handle(), v.toC())
 }
 
-func (self ImGuiIO) GetMousePosPrev() Vec2 {
+func (self IO) MousePosPrev() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiIO_GetMousePosPrev(self.handle()))
+	out.fromC(C.wrap_ImGuiIO_GetMousePosPrev(self.handle()))
 	return *out
 }
 
-func (self *ImGuiIO) SetPenPressure(v float32) {
-	C.ImGuiIO_SetPenPressure(self.handle(), C.float(v))
+func (self *IO) SetPenPressure(v float32) {
+	C.wrap_ImGuiIO_SetPenPressure(self.handle(), C.float(v))
 }
 
-func (self ImGuiIO) GetPenPressure() float32 {
-	return float32(C.ImGuiIO_GetPenPressure(self.handle()))
+func (self IO) PenPressure() float32 {
+	return float32(C.wrap_ImGuiIO_GetPenPressure(self.handle()))
 }
 
-func (self *ImGuiIO) SetAppFocusLost(v bool) {
-	C.ImGuiIO_SetAppFocusLost(self.handle(), C.bool(v))
+func (self *IO) SetAppFocusLost(v bool) {
+	C.wrap_ImGuiIO_SetAppFocusLost(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetAppFocusLost() bool {
-	return C.ImGuiIO_GetAppFocusLost(self.handle()) == C.bool(true)
+func (self IO) AppFocusLost() bool {
+	return C.wrap_ImGuiIO_GetAppFocusLost(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiIO) SetBackendUsingLegacyKeyArrays(v int) {
-	C.ImGuiIO_SetBackendUsingLegacyKeyArrays(self.handle(), C.ImS8(v))
+func (self *IO) SetBackendUsingLegacyKeyArrays(v int) {
+	C.wrap_ImGuiIO_SetBackendUsingLegacyKeyArrays(self.handle(), C.ImS8(v))
 }
 
-func (self ImGuiIO) GetBackendUsingLegacyKeyArrays() int {
-	return int(C.ImGuiIO_GetBackendUsingLegacyKeyArrays(self.handle()))
+func (self IO) BackendUsingLegacyKeyArrays() int {
+	return int(C.wrap_ImGuiIO_GetBackendUsingLegacyKeyArrays(self.handle()))
 }
 
-func (self *ImGuiIO) SetBackendUsingLegacyNavInputArray(v bool) {
-	C.ImGuiIO_SetBackendUsingLegacyNavInputArray(self.handle(), C.bool(v))
+func (self *IO) SetBackendUsingLegacyNavInputArray(v bool) {
+	C.wrap_ImGuiIO_SetBackendUsingLegacyNavInputArray(self.handle(), C.bool(v))
 }
 
-func (self ImGuiIO) GetBackendUsingLegacyNavInputArray() bool {
-	return C.ImGuiIO_GetBackendUsingLegacyNavInputArray(self.handle()) == C.bool(true)
+func (self IO) BackendUsingLegacyNavInputArray() bool {
+	return C.wrap_ImGuiIO_GetBackendUsingLegacyNavInputArray(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiInputEvent) SetType(v InputEventType) {
-	C.ImGuiInputEvent_SetType(self.handle(), C.ImGuiInputEventType(v))
+func (self *InputEvent) SetType(v InputEventType) {
+	C.wrap_ImGuiInputEvent_SetType(self.handle(), C.ImGuiInputEventType(v))
 }
 
-func (self ImGuiInputEvent) GetType() InputEventType {
-	return InputEventType(C.ImGuiInputEvent_GetType(self.handle()))
+func (self InputEvent) Type() InputEventType {
+	return InputEventType(C.wrap_ImGuiInputEvent_GetType(self.handle()))
 }
 
-func (self *ImGuiInputEvent) SetSource(v InputSource) {
-	C.ImGuiInputEvent_SetSource(self.handle(), C.ImGuiInputSource(v))
+func (self *InputEvent) SetSource(v InputSource) {
+	C.wrap_ImGuiInputEvent_SetSource(self.handle(), C.ImGuiInputSource(v))
 }
 
-func (self ImGuiInputEvent) GetSource() InputSource {
-	return InputSource(C.ImGuiInputEvent_GetSource(self.handle()))
+func (self InputEvent) Source() InputSource {
+	return InputSource(C.wrap_ImGuiInputEvent_GetSource(self.handle()))
 }
 
-func (self *ImGuiInputEvent) SetIgnoredAsSame(v bool) {
-	C.ImGuiInputEvent_SetIgnoredAsSame(self.handle(), C.bool(v))
+func (self *InputEvent) SetIgnoredAsSame(v bool) {
+	C.wrap_ImGuiInputEvent_SetIgnoredAsSame(self.handle(), C.bool(v))
 }
 
-func (self ImGuiInputEvent) GetIgnoredAsSame() bool {
-	return C.ImGuiInputEvent_GetIgnoredAsSame(self.handle()) == C.bool(true)
+func (self InputEvent) IgnoredAsSame() bool {
+	return C.wrap_ImGuiInputEvent_GetIgnoredAsSame(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiInputEvent) SetAddedByTestEngine(v bool) {
-	C.ImGuiInputEvent_SetAddedByTestEngine(self.handle(), C.bool(v))
+func (self *InputEvent) SetAddedByTestEngine(v bool) {
+	C.wrap_ImGuiInputEvent_SetAddedByTestEngine(self.handle(), C.bool(v))
 }
 
-func (self ImGuiInputEvent) GetAddedByTestEngine() bool {
-	return C.ImGuiInputEvent_GetAddedByTestEngine(self.handle()) == C.bool(true)
+func (self InputEvent) AddedByTestEngine() bool {
+	return C.wrap_ImGuiInputEvent_GetAddedByTestEngine(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiInputEventAppFocused) SetFocused(v bool) {
-	C.ImGuiInputEventAppFocused_SetFocused(self.handle(), C.bool(v))
+func (self *InputEventAppFocused) SetFocused(v bool) {
+	C.wrap_ImGuiInputEventAppFocused_SetFocused(self.handle(), C.bool(v))
 }
 
-func (self ImGuiInputEventAppFocused) GetFocused() bool {
-	return C.ImGuiInputEventAppFocused_GetFocused(self.handle()) == C.bool(true)
+func (self InputEventAppFocused) Focused() bool {
+	return C.wrap_ImGuiInputEventAppFocused_GetFocused(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiInputEventKey) SetKey(v Key) {
-	C.ImGuiInputEventKey_SetKey(self.handle(), C.ImGuiKey(v))
+func (self *InputEventKey) SetKey(v Key) {
+	C.wrap_ImGuiInputEventKey_SetKey(self.handle(), C.ImGuiKey(v))
 }
 
-func (self ImGuiInputEventKey) GetKey() Key {
-	return Key(C.ImGuiInputEventKey_GetKey(self.handle()))
+func (self InputEventKey) Key() Key {
+	return Key(C.wrap_ImGuiInputEventKey_GetKey(self.handle()))
 }
 
-func (self *ImGuiInputEventKey) SetDown(v bool) {
-	C.ImGuiInputEventKey_SetDown(self.handle(), C.bool(v))
+func (self *InputEventKey) SetDown(v bool) {
+	C.wrap_ImGuiInputEventKey_SetDown(self.handle(), C.bool(v))
 }
 
-func (self ImGuiInputEventKey) GetDown() bool {
-	return C.ImGuiInputEventKey_GetDown(self.handle()) == C.bool(true)
+func (self InputEventKey) Down() bool {
+	return C.wrap_ImGuiInputEventKey_GetDown(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiInputEventKey) SetAnalogValue(v float32) {
-	C.ImGuiInputEventKey_SetAnalogValue(self.handle(), C.float(v))
+func (self *InputEventKey) SetAnalogValue(v float32) {
+	C.wrap_ImGuiInputEventKey_SetAnalogValue(self.handle(), C.float(v))
 }
 
-func (self ImGuiInputEventKey) GetAnalogValue() float32 {
-	return float32(C.ImGuiInputEventKey_GetAnalogValue(self.handle()))
+func (self InputEventKey) AnalogValue() float32 {
+	return float32(C.wrap_ImGuiInputEventKey_GetAnalogValue(self.handle()))
 }
 
-func (self *ImGuiInputEventMouseButton) SetButton(v int32) {
-	C.ImGuiInputEventMouseButton_SetButton(self.handle(), C.int(v))
+func (self *InputEventMouseButton) SetButton(v int32) {
+	C.wrap_ImGuiInputEventMouseButton_SetButton(self.handle(), C.int(v))
 }
 
-func (self ImGuiInputEventMouseButton) GetButton() int {
-	return int(C.ImGuiInputEventMouseButton_GetButton(self.handle()))
+func (self InputEventMouseButton) Button() int {
+	return int(C.wrap_ImGuiInputEventMouseButton_GetButton(self.handle()))
 }
 
-func (self *ImGuiInputEventMouseButton) SetDown(v bool) {
-	C.ImGuiInputEventMouseButton_SetDown(self.handle(), C.bool(v))
+func (self *InputEventMouseButton) SetDown(v bool) {
+	C.wrap_ImGuiInputEventMouseButton_SetDown(self.handle(), C.bool(v))
 }
 
-func (self ImGuiInputEventMouseButton) GetDown() bool {
-	return C.ImGuiInputEventMouseButton_GetDown(self.handle()) == C.bool(true)
+func (self InputEventMouseButton) Down() bool {
+	return C.wrap_ImGuiInputEventMouseButton_GetDown(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiInputEventMousePos) SetPosX(v float32) {
-	C.ImGuiInputEventMousePos_SetPosX(self.handle(), C.float(v))
+func (self *InputEventMousePos) SetPosX(v float32) {
+	C.wrap_ImGuiInputEventMousePos_SetPosX(self.handle(), C.float(v))
 }
 
-func (self ImGuiInputEventMousePos) GetPosX() float32 {
-	return float32(C.ImGuiInputEventMousePos_GetPosX(self.handle()))
+func (self InputEventMousePos) PosX() float32 {
+	return float32(C.wrap_ImGuiInputEventMousePos_GetPosX(self.handle()))
 }
 
-func (self *ImGuiInputEventMousePos) SetPosY(v float32) {
-	C.ImGuiInputEventMousePos_SetPosY(self.handle(), C.float(v))
+func (self *InputEventMousePos) SetPosY(v float32) {
+	C.wrap_ImGuiInputEventMousePos_SetPosY(self.handle(), C.float(v))
 }
 
-func (self ImGuiInputEventMousePos) GetPosY() float32 {
-	return float32(C.ImGuiInputEventMousePos_GetPosY(self.handle()))
+func (self InputEventMousePos) PosY() float32 {
+	return float32(C.wrap_ImGuiInputEventMousePos_GetPosY(self.handle()))
 }
 
-func (self *ImGuiInputEventMouseViewport) SetHoveredViewportID(v ImGuiID) {
-	C.ImGuiInputEventMouseViewport_SetHoveredViewportID(self.handle(), C.ImGuiID(v))
+func (self *InputEventMouseViewport) SetHoveredViewportID(v ID) {
+	C.wrap_ImGuiInputEventMouseViewport_SetHoveredViewportID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiInputEventMouseViewport) GetHoveredViewportID() ImGuiID {
-	return ImGuiID(C.ImGuiInputEventMouseViewport_GetHoveredViewportID(self.handle()))
+func (self InputEventMouseViewport) HoveredViewportID() ID {
+	return ImGuiID(C.wrap_ImGuiInputEventMouseViewport_GetHoveredViewportID(self.handle()))
 }
 
-func (self *ImGuiInputEventMouseWheel) SetWheelX(v float32) {
-	C.ImGuiInputEventMouseWheel_SetWheelX(self.handle(), C.float(v))
+func (self *InputEventMouseWheel) SetWheelX(v float32) {
+	C.wrap_ImGuiInputEventMouseWheel_SetWheelX(self.handle(), C.float(v))
 }
 
-func (self ImGuiInputEventMouseWheel) GetWheelX() float32 {
-	return float32(C.ImGuiInputEventMouseWheel_GetWheelX(self.handle()))
+func (self InputEventMouseWheel) WheelX() float32 {
+	return float32(C.wrap_ImGuiInputEventMouseWheel_GetWheelX(self.handle()))
 }
 
-func (self *ImGuiInputEventMouseWheel) SetWheelY(v float32) {
-	C.ImGuiInputEventMouseWheel_SetWheelY(self.handle(), C.float(v))
+func (self *InputEventMouseWheel) SetWheelY(v float32) {
+	C.wrap_ImGuiInputEventMouseWheel_SetWheelY(self.handle(), C.float(v))
 }
 
-func (self ImGuiInputEventMouseWheel) GetWheelY() float32 {
-	return float32(C.ImGuiInputEventMouseWheel_GetWheelY(self.handle()))
+func (self InputEventMouseWheel) WheelY() float32 {
+	return float32(C.wrap_ImGuiInputEventMouseWheel_GetWheelY(self.handle()))
 }
 
-func (self *ImGuiInputEventText) SetChar(v uint32) {
-	C.ImGuiInputEventText_SetChar(self.handle(), C.uint(v))
+func (self *InputEventText) SetChar(v uint32) {
+	C.wrap_ImGuiInputEventText_SetChar(self.handle(), C.uint(v))
 }
 
-func (self ImGuiInputEventText) GetChar() uint32 {
-	return uint32(C.ImGuiInputEventText_GetChar(self.handle()))
+func (self InputEventText) Char() uint32 {
+	return uint32(C.wrap_ImGuiInputEventText_GetChar(self.handle()))
 }
 
-func (self *ImGuiInputTextCallbackData) SetEventFlag(v InputTextFlags) {
-	C.ImGuiInputTextCallbackData_SetEventFlag(self.handle(), C.ImGuiInputTextFlags(v))
+func (self *InputTextCallbackData) SetEventFlag(v InputTextFlags) {
+	C.wrap_ImGuiInputTextCallbackData_SetEventFlag(self.handle(), C.ImGuiInputTextFlags(v))
 }
 
-func (self ImGuiInputTextCallbackData) GetEventFlag() InputTextFlags {
-	return InputTextFlags(C.ImGuiInputTextCallbackData_GetEventFlag(self.handle()))
+func (self InputTextCallbackData) EventFlag() InputTextFlags {
+	return InputTextFlags(C.wrap_ImGuiInputTextCallbackData_GetEventFlag(self.handle()))
 }
 
-func (self *ImGuiInputTextCallbackData) SetFlags(v InputTextFlags) {
-	C.ImGuiInputTextCallbackData_SetFlags(self.handle(), C.ImGuiInputTextFlags(v))
+func (self *InputTextCallbackData) SetFlags(v InputTextFlags) {
+	C.wrap_ImGuiInputTextCallbackData_SetFlags(self.handle(), C.ImGuiInputTextFlags(v))
 }
 
-func (self ImGuiInputTextCallbackData) GetFlags() InputTextFlags {
-	return InputTextFlags(C.ImGuiInputTextCallbackData_GetFlags(self.handle()))
+func (self InputTextCallbackData) Flags() InputTextFlags {
+	return InputTextFlags(C.wrap_ImGuiInputTextCallbackData_GetFlags(self.handle()))
 }
 
-func (self *ImGuiInputTextCallbackData) SetUserData(v unsafe.Pointer) {
-	C.ImGuiInputTextCallbackData_SetUserData(self.handle(), (v))
+func (self *InputTextCallbackData) SetUserData(v unsafe.Pointer) {
+	C.wrap_ImGuiInputTextCallbackData_SetUserData(self.handle(), (v))
 }
 
-func (self ImGuiInputTextCallbackData) GetUserData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiInputTextCallbackData_GetUserData(self.handle()))
+func (self InputTextCallbackData) UserData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiInputTextCallbackData_GetUserData(self.handle()))
 }
 
-func (self *ImGuiInputTextCallbackData) SetEventChar(v Wchar) {
-	C.ImGuiInputTextCallbackData_SetEventChar(self.handle(), C.ImWchar(v))
+func (self *InputTextCallbackData) SetEventChar(v Wchar) {
+	C.wrap_ImGuiInputTextCallbackData_SetEventChar(self.handle(), C.ImWchar(v))
 }
 
-func (self ImGuiInputTextCallbackData) GetEventChar() Wchar {
-	return Wchar(C.ImGuiInputTextCallbackData_GetEventChar(self.handle()))
+func (self InputTextCallbackData) EventChar() Wchar {
+	return Wchar(C.wrap_ImGuiInputTextCallbackData_GetEventChar(self.handle()))
 }
 
-func (self *ImGuiInputTextCallbackData) SetEventKey(v Key) {
-	C.ImGuiInputTextCallbackData_SetEventKey(self.handle(), C.ImGuiKey(v))
+func (self *InputTextCallbackData) SetEventKey(v Key) {
+	C.wrap_ImGuiInputTextCallbackData_SetEventKey(self.handle(), C.ImGuiKey(v))
 }
 
-func (self ImGuiInputTextCallbackData) GetEventKey() Key {
-	return Key(C.ImGuiInputTextCallbackData_GetEventKey(self.handle()))
+func (self InputTextCallbackData) EventKey() Key {
+	return Key(C.wrap_ImGuiInputTextCallbackData_GetEventKey(self.handle()))
 }
 
-func (self *ImGuiInputTextCallbackData) SetBuf(v string) {
+func (self *InputTextCallbackData) SetBuf(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImGuiInputTextCallbackData_SetBuf(self.handle(), vArg)
+	C.wrap_ImGuiInputTextCallbackData_SetBuf(self.handle(), vArg)
 }
 
-func (self ImGuiInputTextCallbackData) GetBuf() string {
-	return C.GoString(C.ImGuiInputTextCallbackData_GetBuf(self.handle()))
+func (self InputTextCallbackData) Buf() string {
+	return C.GoString(C.wrap_ImGuiInputTextCallbackData_GetBuf(self.handle()))
 }
 
-func (self *ImGuiInputTextCallbackData) SetBufTextLen(v int32) {
-	C.ImGuiInputTextCallbackData_SetBufTextLen(self.handle(), C.int(v))
+func (self *InputTextCallbackData) SetBufTextLen(v int32) {
+	C.wrap_ImGuiInputTextCallbackData_SetBufTextLen(self.handle(), C.int(v))
 }
 
-func (self ImGuiInputTextCallbackData) GetBufTextLen() int {
-	return int(C.ImGuiInputTextCallbackData_GetBufTextLen(self.handle()))
+func (self InputTextCallbackData) BufTextLen() int {
+	return int(C.wrap_ImGuiInputTextCallbackData_GetBufTextLen(self.handle()))
 }
 
-func (self *ImGuiInputTextCallbackData) SetBufSize(v int32) {
-	C.ImGuiInputTextCallbackData_SetBufSize(self.handle(), C.int(v))
+func (self *InputTextCallbackData) SetBufSize(v int32) {
+	C.wrap_ImGuiInputTextCallbackData_SetBufSize(self.handle(), C.int(v))
 }
 
-func (self ImGuiInputTextCallbackData) GetBufSize() int {
-	return int(C.ImGuiInputTextCallbackData_GetBufSize(self.handle()))
+func (self InputTextCallbackData) BufSize() int {
+	return int(C.wrap_ImGuiInputTextCallbackData_GetBufSize(self.handle()))
 }
 
-func (self *ImGuiInputTextCallbackData) SetBufDirty(v bool) {
-	C.ImGuiInputTextCallbackData_SetBufDirty(self.handle(), C.bool(v))
+func (self *InputTextCallbackData) SetBufDirty(v bool) {
+	C.wrap_ImGuiInputTextCallbackData_SetBufDirty(self.handle(), C.bool(v))
 }
 
-func (self ImGuiInputTextCallbackData) GetBufDirty() bool {
-	return C.ImGuiInputTextCallbackData_GetBufDirty(self.handle()) == C.bool(true)
+func (self InputTextCallbackData) BufDirty() bool {
+	return C.wrap_ImGuiInputTextCallbackData_GetBufDirty(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiInputTextCallbackData) SetCursorPos(v int32) {
-	C.ImGuiInputTextCallbackData_SetCursorPos(self.handle(), C.int(v))
+func (self *InputTextCallbackData) SetCursorPos(v int32) {
+	C.wrap_ImGuiInputTextCallbackData_SetCursorPos(self.handle(), C.int(v))
 }
 
-func (self ImGuiInputTextCallbackData) GetCursorPos() int {
-	return int(C.ImGuiInputTextCallbackData_GetCursorPos(self.handle()))
+func (self InputTextCallbackData) CursorPos() int {
+	return int(C.wrap_ImGuiInputTextCallbackData_GetCursorPos(self.handle()))
 }
 
-func (self *ImGuiInputTextCallbackData) SetSelectionStart(v int32) {
-	C.ImGuiInputTextCallbackData_SetSelectionStart(self.handle(), C.int(v))
+func (self *InputTextCallbackData) SetSelectionStart(v int32) {
+	C.wrap_ImGuiInputTextCallbackData_SetSelectionStart(self.handle(), C.int(v))
 }
 
-func (self ImGuiInputTextCallbackData) GetSelectionStart() int {
-	return int(C.ImGuiInputTextCallbackData_GetSelectionStart(self.handle()))
+func (self InputTextCallbackData) SelectionStart() int {
+	return int(C.wrap_ImGuiInputTextCallbackData_GetSelectionStart(self.handle()))
 }
 
-func (self *ImGuiInputTextCallbackData) SetSelectionEnd(v int32) {
-	C.ImGuiInputTextCallbackData_SetSelectionEnd(self.handle(), C.int(v))
+func (self *InputTextCallbackData) SetSelectionEnd(v int32) {
+	C.wrap_ImGuiInputTextCallbackData_SetSelectionEnd(self.handle(), C.int(v))
 }
 
-func (self ImGuiInputTextCallbackData) GetSelectionEnd() int {
-	return int(C.ImGuiInputTextCallbackData_GetSelectionEnd(self.handle()))
+func (self InputTextCallbackData) SelectionEnd() int {
+	return int(C.wrap_ImGuiInputTextCallbackData_GetSelectionEnd(self.handle()))
 }
 
-func (self *ImGuiInputTextState) SetID(v ImGuiID) {
-	C.ImGuiInputTextState_SetID(self.handle(), C.ImGuiID(v))
+func (self *InputTextState) SetID(v ID) {
+	C.wrap_ImGuiInputTextState_SetID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiInputTextState) GetID() ImGuiID {
-	return ImGuiID(C.ImGuiInputTextState_GetID(self.handle()))
+func (self InputTextState) ID() ID {
+	return ImGuiID(C.wrap_ImGuiInputTextState_GetID(self.handle()))
 }
 
-func (self *ImGuiInputTextState) SetCurLenW(v int32) {
-	C.ImGuiInputTextState_SetCurLenW(self.handle(), C.int(v))
+func (self *InputTextState) SetCurLenW(v int32) {
+	C.wrap_ImGuiInputTextState_SetCurLenW(self.handle(), C.int(v))
 }
 
-func (self ImGuiInputTextState) GetCurLenW() int {
-	return int(C.ImGuiInputTextState_GetCurLenW(self.handle()))
+func (self InputTextState) CurLenW() int {
+	return int(C.wrap_ImGuiInputTextState_GetCurLenW(self.handle()))
 }
 
-func (self *ImGuiInputTextState) SetCurLenA(v int32) {
-	C.ImGuiInputTextState_SetCurLenA(self.handle(), C.int(v))
+func (self *InputTextState) SetCurLenA(v int32) {
+	C.wrap_ImGuiInputTextState_SetCurLenA(self.handle(), C.int(v))
 }
 
-func (self ImGuiInputTextState) GetCurLenA() int {
-	return int(C.ImGuiInputTextState_GetCurLenA(self.handle()))
+func (self InputTextState) CurLenA() int {
+	return int(C.wrap_ImGuiInputTextState_GetCurLenA(self.handle()))
 }
 
-func (self *ImGuiInputTextState) SetTextAIsValid(v bool) {
-	C.ImGuiInputTextState_SetTextAIsValid(self.handle(), C.bool(v))
+func (self *InputTextState) SetTextAIsValid(v bool) {
+	C.wrap_ImGuiInputTextState_SetTextAIsValid(self.handle(), C.bool(v))
 }
 
-func (self ImGuiInputTextState) GetTextAIsValid() bool {
-	return C.ImGuiInputTextState_GetTextAIsValid(self.handle()) == C.bool(true)
+func (self InputTextState) TextAIsValid() bool {
+	return C.wrap_ImGuiInputTextState_GetTextAIsValid(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiInputTextState) SetBufCapacityA(v int32) {
-	C.ImGuiInputTextState_SetBufCapacityA(self.handle(), C.int(v))
+func (self *InputTextState) SetBufCapacityA(v int32) {
+	C.wrap_ImGuiInputTextState_SetBufCapacityA(self.handle(), C.int(v))
 }
 
-func (self ImGuiInputTextState) GetBufCapacityA() int {
-	return int(C.ImGuiInputTextState_GetBufCapacityA(self.handle()))
+func (self InputTextState) BufCapacityA() int {
+	return int(C.wrap_ImGuiInputTextState_GetBufCapacityA(self.handle()))
 }
 
-func (self *ImGuiInputTextState) SetScrollX(v float32) {
-	C.ImGuiInputTextState_SetScrollX(self.handle(), C.float(v))
+func (self *InputTextState) SetScrollX(v float32) {
+	C.wrap_ImGuiInputTextState_SetScrollX(self.handle(), C.float(v))
 }
 
-func (self ImGuiInputTextState) GetScrollX() float32 {
-	return float32(C.ImGuiInputTextState_GetScrollX(self.handle()))
+func (self InputTextState) ScrollX() float32 {
+	return float32(C.wrap_ImGuiInputTextState_GetScrollX(self.handle()))
 }
 
-func (self *ImGuiInputTextState) SetCursorAnim(v float32) {
-	C.ImGuiInputTextState_SetCursorAnim(self.handle(), C.float(v))
+func (self *InputTextState) SetCursorAnim(v float32) {
+	C.wrap_ImGuiInputTextState_SetCursorAnim(self.handle(), C.float(v))
 }
 
-func (self ImGuiInputTextState) GetCursorAnim() float32 {
-	return float32(C.ImGuiInputTextState_GetCursorAnim(self.handle()))
+func (self InputTextState) CursorAnim() float32 {
+	return float32(C.wrap_ImGuiInputTextState_GetCursorAnim(self.handle()))
 }
 
-func (self *ImGuiInputTextState) SetCursorFollow(v bool) {
-	C.ImGuiInputTextState_SetCursorFollow(self.handle(), C.bool(v))
+func (self *InputTextState) SetCursorFollow(v bool) {
+	C.wrap_ImGuiInputTextState_SetCursorFollow(self.handle(), C.bool(v))
 }
 
-func (self ImGuiInputTextState) GetCursorFollow() bool {
-	return C.ImGuiInputTextState_GetCursorFollow(self.handle()) == C.bool(true)
+func (self InputTextState) CursorFollow() bool {
+	return C.wrap_ImGuiInputTextState_GetCursorFollow(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiInputTextState) SetSelectedAllMouseLock(v bool) {
-	C.ImGuiInputTextState_SetSelectedAllMouseLock(self.handle(), C.bool(v))
+func (self *InputTextState) SetSelectedAllMouseLock(v bool) {
+	C.wrap_ImGuiInputTextState_SetSelectedAllMouseLock(self.handle(), C.bool(v))
 }
 
-func (self ImGuiInputTextState) GetSelectedAllMouseLock() bool {
-	return C.ImGuiInputTextState_GetSelectedAllMouseLock(self.handle()) == C.bool(true)
+func (self InputTextState) SelectedAllMouseLock() bool {
+	return C.wrap_ImGuiInputTextState_GetSelectedAllMouseLock(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiInputTextState) SetEdited(v bool) {
-	C.ImGuiInputTextState_SetEdited(self.handle(), C.bool(v))
+func (self *InputTextState) SetEdited(v bool) {
+	C.wrap_ImGuiInputTextState_SetEdited(self.handle(), C.bool(v))
 }
 
-func (self ImGuiInputTextState) GetEdited() bool {
-	return C.ImGuiInputTextState_GetEdited(self.handle()) == C.bool(true)
+func (self InputTextState) Edited() bool {
+	return C.wrap_ImGuiInputTextState_GetEdited(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiInputTextState) SetFlags(v InputTextFlags) {
-	C.ImGuiInputTextState_SetFlags(self.handle(), C.ImGuiInputTextFlags(v))
+func (self *InputTextState) SetFlags(v InputTextFlags) {
+	C.wrap_ImGuiInputTextState_SetFlags(self.handle(), C.ImGuiInputTextFlags(v))
 }
 
-func (self ImGuiInputTextState) GetFlags() InputTextFlags {
-	return InputTextFlags(C.ImGuiInputTextState_GetFlags(self.handle()))
+func (self InputTextState) Flags() InputTextFlags {
+	return InputTextFlags(C.wrap_ImGuiInputTextState_GetFlags(self.handle()))
 }
 
-func (self *ImGuiKeyData) SetDown(v bool) {
-	C.ImGuiKeyData_SetDown(self.handle(), C.bool(v))
+func (self *KeyData) SetDown(v bool) {
+	C.wrap_ImGuiKeyData_SetDown(self.handle(), C.bool(v))
 }
 
-func (self ImGuiKeyData) GetDown() bool {
-	return C.ImGuiKeyData_GetDown(self.handle()) == C.bool(true)
+func (self KeyData) Down() bool {
+	return C.wrap_ImGuiKeyData_GetDown(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiKeyData) SetDownDuration(v float32) {
-	C.ImGuiKeyData_SetDownDuration(self.handle(), C.float(v))
+func (self *KeyData) SetDownDuration(v float32) {
+	C.wrap_ImGuiKeyData_SetDownDuration(self.handle(), C.float(v))
 }
 
-func (self ImGuiKeyData) GetDownDuration() float32 {
-	return float32(C.ImGuiKeyData_GetDownDuration(self.handle()))
+func (self KeyData) DownDuration() float32 {
+	return float32(C.wrap_ImGuiKeyData_GetDownDuration(self.handle()))
 }
 
-func (self *ImGuiKeyData) SetDownDurationPrev(v float32) {
-	C.ImGuiKeyData_SetDownDurationPrev(self.handle(), C.float(v))
+func (self *KeyData) SetDownDurationPrev(v float32) {
+	C.wrap_ImGuiKeyData_SetDownDurationPrev(self.handle(), C.float(v))
 }
 
-func (self ImGuiKeyData) GetDownDurationPrev() float32 {
-	return float32(C.ImGuiKeyData_GetDownDurationPrev(self.handle()))
+func (self KeyData) DownDurationPrev() float32 {
+	return float32(C.wrap_ImGuiKeyData_GetDownDurationPrev(self.handle()))
 }
 
-func (self *ImGuiKeyData) SetAnalogValue(v float32) {
-	C.ImGuiKeyData_SetAnalogValue(self.handle(), C.float(v))
+func (self *KeyData) SetAnalogValue(v float32) {
+	C.wrap_ImGuiKeyData_SetAnalogValue(self.handle(), C.float(v))
 }
 
-func (self ImGuiKeyData) GetAnalogValue() float32 {
-	return float32(C.ImGuiKeyData_GetAnalogValue(self.handle()))
+func (self KeyData) AnalogValue() float32 {
+	return float32(C.wrap_ImGuiKeyData_GetAnalogValue(self.handle()))
 }
 
-func (self *ImGuiLastItemData) SetID(v ImGuiID) {
-	C.ImGuiLastItemData_SetID(self.handle(), C.ImGuiID(v))
+func (self *LastItemData) SetID(v ID) {
+	C.wrap_ImGuiLastItemData_SetID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiLastItemData) GetID() ImGuiID {
-	return ImGuiID(C.ImGuiLastItemData_GetID(self.handle()))
+func (self LastItemData) ID() ID {
+	return ImGuiID(C.wrap_ImGuiLastItemData_GetID(self.handle()))
 }
 
-func (self *ImGuiLastItemData) SetInFlags(v ItemFlags) {
-	C.ImGuiLastItemData_SetInFlags(self.handle(), C.ImGuiItemFlags(v))
+func (self *LastItemData) SetInFlags(v ItemFlags) {
+	C.wrap_ImGuiLastItemData_SetInFlags(self.handle(), C.ImGuiItemFlags(v))
 }
 
-func (self ImGuiLastItemData) GetInFlags() ItemFlags {
-	return ItemFlags(C.ImGuiLastItemData_GetInFlags(self.handle()))
+func (self LastItemData) InFlags() ItemFlags {
+	return ItemFlags(C.wrap_ImGuiLastItemData_GetInFlags(self.handle()))
 }
 
-func (self *ImGuiLastItemData) SetStatusFlags(v ItemStatusFlags) {
-	C.ImGuiLastItemData_SetStatusFlags(self.handle(), C.ImGuiItemStatusFlags(v))
+func (self *LastItemData) SetStatusFlags(v ItemStatusFlags) {
+	C.wrap_ImGuiLastItemData_SetStatusFlags(self.handle(), C.ImGuiItemStatusFlags(v))
 }
 
-func (self ImGuiLastItemData) GetStatusFlags() ItemStatusFlags {
-	return ItemStatusFlags(C.ImGuiLastItemData_GetStatusFlags(self.handle()))
+func (self LastItemData) StatusFlags() ItemStatusFlags {
+	return ItemStatusFlags(C.wrap_ImGuiLastItemData_GetStatusFlags(self.handle()))
 }
 
-func (self *ImGuiLastItemData) SetRect(v Rect) {
-	C.ImGuiLastItemData_SetRect(self.handle(), v.toC())
+func (self *LastItemData) SetRect(v Rect) {
+	C.wrap_ImGuiLastItemData_SetRect(self.handle(), v.toC())
 }
 
-func (self ImGuiLastItemData) GetRect() Rect {
+func (self LastItemData) Rect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiLastItemData_GetRect(self.handle()))
+	out.fromC(C.wrap_ImGuiLastItemData_GetRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiLastItemData) SetNavRect(v Rect) {
-	C.ImGuiLastItemData_SetNavRect(self.handle(), v.toC())
+func (self *LastItemData) SetNavRect(v Rect) {
+	C.wrap_ImGuiLastItemData_SetNavRect(self.handle(), v.toC())
 }
 
-func (self ImGuiLastItemData) GetNavRect() Rect {
+func (self LastItemData) NavRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiLastItemData_GetNavRect(self.handle()))
+	out.fromC(C.wrap_ImGuiLastItemData_GetNavRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiLastItemData) SetDisplayRect(v Rect) {
-	C.ImGuiLastItemData_SetDisplayRect(self.handle(), v.toC())
+func (self *LastItemData) SetDisplayRect(v Rect) {
+	C.wrap_ImGuiLastItemData_SetDisplayRect(self.handle(), v.toC())
 }
 
-func (self ImGuiLastItemData) GetDisplayRect() Rect {
+func (self LastItemData) DisplayRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiLastItemData_GetDisplayRect(self.handle()))
+	out.fromC(C.wrap_ImGuiLastItemData_GetDisplayRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiListClipper) SetDisplayStart(v int32) {
-	C.ImGuiListClipper_SetDisplayStart(self.handle(), C.int(v))
+func (self *ListClipper) SetDisplayStart(v int32) {
+	C.wrap_ImGuiListClipper_SetDisplayStart(self.handle(), C.int(v))
 }
 
-func (self ImGuiListClipper) GetDisplayStart() int {
-	return int(C.ImGuiListClipper_GetDisplayStart(self.handle()))
+func (self ListClipper) DisplayStart() int {
+	return int(C.wrap_ImGuiListClipper_GetDisplayStart(self.handle()))
 }
 
-func (self *ImGuiListClipper) SetDisplayEnd(v int32) {
-	C.ImGuiListClipper_SetDisplayEnd(self.handle(), C.int(v))
+func (self *ListClipper) SetDisplayEnd(v int32) {
+	C.wrap_ImGuiListClipper_SetDisplayEnd(self.handle(), C.int(v))
 }
 
-func (self ImGuiListClipper) GetDisplayEnd() int {
-	return int(C.ImGuiListClipper_GetDisplayEnd(self.handle()))
+func (self ListClipper) DisplayEnd() int {
+	return int(C.wrap_ImGuiListClipper_GetDisplayEnd(self.handle()))
 }
 
-func (self *ImGuiListClipper) SetItemsCount(v int32) {
-	C.ImGuiListClipper_SetItemsCount(self.handle(), C.int(v))
+func (self *ListClipper) SetItemsCount(v int32) {
+	C.wrap_ImGuiListClipper_SetItemsCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiListClipper) GetItemsCount() int {
-	return int(C.ImGuiListClipper_GetItemsCount(self.handle()))
+func (self ListClipper) ItemsCount() int {
+	return int(C.wrap_ImGuiListClipper_GetItemsCount(self.handle()))
 }
 
-func (self *ImGuiListClipper) SetItemsHeight(v float32) {
-	C.ImGuiListClipper_SetItemsHeight(self.handle(), C.float(v))
+func (self *ListClipper) SetItemsHeight(v float32) {
+	C.wrap_ImGuiListClipper_SetItemsHeight(self.handle(), C.float(v))
 }
 
-func (self ImGuiListClipper) GetItemsHeight() float32 {
-	return float32(C.ImGuiListClipper_GetItemsHeight(self.handle()))
+func (self ListClipper) ItemsHeight() float32 {
+	return float32(C.wrap_ImGuiListClipper_GetItemsHeight(self.handle()))
 }
 
-func (self *ImGuiListClipper) SetStartPosY(v float32) {
-	C.ImGuiListClipper_SetStartPosY(self.handle(), C.float(v))
+func (self *ListClipper) SetStartPosY(v float32) {
+	C.wrap_ImGuiListClipper_SetStartPosY(self.handle(), C.float(v))
 }
 
-func (self ImGuiListClipper) GetStartPosY() float32 {
-	return float32(C.ImGuiListClipper_GetStartPosY(self.handle()))
+func (self ListClipper) StartPosY() float32 {
+	return float32(C.wrap_ImGuiListClipper_GetStartPosY(self.handle()))
 }
 
-func (self *ImGuiListClipper) SetTempData(v unsafe.Pointer) {
-	C.ImGuiListClipper_SetTempData(self.handle(), (v))
+func (self *ListClipper) SetTempData(v unsafe.Pointer) {
+	C.wrap_ImGuiListClipper_SetTempData(self.handle(), (v))
 }
 
-func (self ImGuiListClipper) GetTempData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiListClipper_GetTempData(self.handle()))
+func (self ListClipper) TempData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiListClipper_GetTempData(self.handle()))
 }
 
-func (self *ImGuiListClipperData) SetListClipper(v ImGuiListClipper) {
-	C.ImGuiListClipperData_SetListClipper(self.handle(), v.handle())
+func (self *ListClipperData) SetListClipper(v ListClipper) {
+	C.wrap_ImGuiListClipperData_SetListClipper(self.handle(), v.handle())
 }
 
-func (self ImGuiListClipperData) GetListClipper() ImGuiListClipper {
-	return (ImGuiListClipper)(unsafe.Pointer(C.ImGuiListClipperData_GetListClipper(self.handle())))
+func (self ListClipperData) ListClipper() ListClipper {
+	return (ListClipper)(unsafe.Pointer(C.wrap_ImGuiListClipperData_GetListClipper(self.handle())))
 }
 
-func (self *ImGuiListClipperData) SetLossynessOffset(v float32) {
-	C.ImGuiListClipperData_SetLossynessOffset(self.handle(), C.float(v))
+func (self *ListClipperData) SetLossynessOffset(v float32) {
+	C.wrap_ImGuiListClipperData_SetLossynessOffset(self.handle(), C.float(v))
 }
 
-func (self ImGuiListClipperData) GetLossynessOffset() float32 {
-	return float32(C.ImGuiListClipperData_GetLossynessOffset(self.handle()))
+func (self ListClipperData) LossynessOffset() float32 {
+	return float32(C.wrap_ImGuiListClipperData_GetLossynessOffset(self.handle()))
 }
 
-func (self *ImGuiListClipperData) SetStepNo(v int32) {
-	C.ImGuiListClipperData_SetStepNo(self.handle(), C.int(v))
+func (self *ListClipperData) SetStepNo(v int32) {
+	C.wrap_ImGuiListClipperData_SetStepNo(self.handle(), C.int(v))
 }
 
-func (self ImGuiListClipperData) GetStepNo() int {
-	return int(C.ImGuiListClipperData_GetStepNo(self.handle()))
+func (self ListClipperData) StepNo() int {
+	return int(C.wrap_ImGuiListClipperData_GetStepNo(self.handle()))
 }
 
-func (self *ImGuiListClipperData) SetItemsFrozen(v int32) {
-	C.ImGuiListClipperData_SetItemsFrozen(self.handle(), C.int(v))
+func (self *ListClipperData) SetItemsFrozen(v int32) {
+	C.wrap_ImGuiListClipperData_SetItemsFrozen(self.handle(), C.int(v))
 }
 
-func (self ImGuiListClipperData) GetItemsFrozen() int {
-	return int(C.ImGuiListClipperData_GetItemsFrozen(self.handle()))
+func (self ListClipperData) ItemsFrozen() int {
+	return int(C.wrap_ImGuiListClipperData_GetItemsFrozen(self.handle()))
 }
 
-func (self *ImGuiListClipperRange) SetMin(v int32) {
-	C.ImGuiListClipperRange_SetMin(self.handle(), C.int(v))
+func (self *ListClipperRange) SetMin(v int32) {
+	C.wrap_ImGuiListClipperRange_SetMin(self.handle(), C.int(v))
 }
 
-func (self ImGuiListClipperRange) GetMin() int {
-	return int(C.ImGuiListClipperRange_GetMin(self.handle()))
+func (self ListClipperRange) Min() int {
+	return int(C.wrap_ImGuiListClipperRange_GetMin(self.handle()))
 }
 
-func (self *ImGuiListClipperRange) SetMax(v int32) {
-	C.ImGuiListClipperRange_SetMax(self.handle(), C.int(v))
+func (self *ListClipperRange) SetMax(v int32) {
+	C.wrap_ImGuiListClipperRange_SetMax(self.handle(), C.int(v))
 }
 
-func (self ImGuiListClipperRange) GetMax() int {
-	return int(C.ImGuiListClipperRange_GetMax(self.handle()))
+func (self ListClipperRange) Max() int {
+	return int(C.wrap_ImGuiListClipperRange_GetMax(self.handle()))
 }
 
-func (self *ImGuiListClipperRange) SetPosToIndexConvert(v bool) {
-	C.ImGuiListClipperRange_SetPosToIndexConvert(self.handle(), C.bool(v))
+func (self *ListClipperRange) SetPosToIndexConvert(v bool) {
+	C.wrap_ImGuiListClipperRange_SetPosToIndexConvert(self.handle(), C.bool(v))
 }
 
-func (self ImGuiListClipperRange) GetPosToIndexConvert() bool {
-	return C.ImGuiListClipperRange_GetPosToIndexConvert(self.handle()) == C.bool(true)
+func (self ListClipperRange) PosToIndexConvert() bool {
+	return C.wrap_ImGuiListClipperRange_GetPosToIndexConvert(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiListClipperRange) SetPosToIndexOffsetMin(v int) {
-	C.ImGuiListClipperRange_SetPosToIndexOffsetMin(self.handle(), C.ImS8(v))
+func (self *ListClipperRange) SetPosToIndexOffsetMin(v int) {
+	C.wrap_ImGuiListClipperRange_SetPosToIndexOffsetMin(self.handle(), C.ImS8(v))
 }
 
-func (self ImGuiListClipperRange) GetPosToIndexOffsetMin() int {
-	return int(C.ImGuiListClipperRange_GetPosToIndexOffsetMin(self.handle()))
+func (self ListClipperRange) PosToIndexOffsetMin() int {
+	return int(C.wrap_ImGuiListClipperRange_GetPosToIndexOffsetMin(self.handle()))
 }
 
-func (self *ImGuiListClipperRange) SetPosToIndexOffsetMax(v int) {
-	C.ImGuiListClipperRange_SetPosToIndexOffsetMax(self.handle(), C.ImS8(v))
+func (self *ListClipperRange) SetPosToIndexOffsetMax(v int) {
+	C.wrap_ImGuiListClipperRange_SetPosToIndexOffsetMax(self.handle(), C.ImS8(v))
 }
 
-func (self ImGuiListClipperRange) GetPosToIndexOffsetMax() int {
-	return int(C.ImGuiListClipperRange_GetPosToIndexOffsetMax(self.handle()))
+func (self ListClipperRange) PosToIndexOffsetMax() int {
+	return int(C.wrap_ImGuiListClipperRange_GetPosToIndexOffsetMax(self.handle()))
 }
 
-func (self *ImGuiMenuColumns) SetTotalWidth(v uint32) {
-	C.ImGuiMenuColumns_SetTotalWidth(self.handle(), C.ImU32(v))
+func (self *MenuColumns) SetTotalWidth(v uint32) {
+	C.wrap_ImGuiMenuColumns_SetTotalWidth(self.handle(), C.ImU32(v))
 }
 
-func (self ImGuiMenuColumns) GetTotalWidth() uint32 {
-	return uint32(C.ImGuiMenuColumns_GetTotalWidth(self.handle()))
+func (self MenuColumns) TotalWidth() uint32 {
+	return uint32(C.wrap_ImGuiMenuColumns_GetTotalWidth(self.handle()))
 }
 
-func (self *ImGuiMenuColumns) SetNextTotalWidth(v uint32) {
-	C.ImGuiMenuColumns_SetNextTotalWidth(self.handle(), C.ImU32(v))
+func (self *MenuColumns) SetNextTotalWidth(v uint32) {
+	C.wrap_ImGuiMenuColumns_SetNextTotalWidth(self.handle(), C.ImU32(v))
 }
 
-func (self ImGuiMenuColumns) GetNextTotalWidth() uint32 {
-	return uint32(C.ImGuiMenuColumns_GetNextTotalWidth(self.handle()))
+func (self MenuColumns) NextTotalWidth() uint32 {
+	return uint32(C.wrap_ImGuiMenuColumns_GetNextTotalWidth(self.handle()))
 }
 
-func (self *ImGuiMenuColumns) SetSpacing(v uint) {
-	C.ImGuiMenuColumns_SetSpacing(self.handle(), C.ImU16(v))
+func (self *MenuColumns) SetSpacing(v uint) {
+	C.wrap_ImGuiMenuColumns_SetSpacing(self.handle(), C.ImU16(v))
 }
 
-func (self ImGuiMenuColumns) GetSpacing() uint32 {
-	return uint32(C.ImGuiMenuColumns_GetSpacing(self.handle()))
+func (self MenuColumns) Spacing() uint32 {
+	return uint32(C.wrap_ImGuiMenuColumns_GetSpacing(self.handle()))
 }
 
-func (self *ImGuiMenuColumns) SetOffsetIcon(v uint) {
-	C.ImGuiMenuColumns_SetOffsetIcon(self.handle(), C.ImU16(v))
+func (self *MenuColumns) SetOffsetIcon(v uint) {
+	C.wrap_ImGuiMenuColumns_SetOffsetIcon(self.handle(), C.ImU16(v))
 }
 
-func (self ImGuiMenuColumns) GetOffsetIcon() uint32 {
-	return uint32(C.ImGuiMenuColumns_GetOffsetIcon(self.handle()))
+func (self MenuColumns) OffsetIcon() uint32 {
+	return uint32(C.wrap_ImGuiMenuColumns_GetOffsetIcon(self.handle()))
 }
 
-func (self *ImGuiMenuColumns) SetOffsetLabel(v uint) {
-	C.ImGuiMenuColumns_SetOffsetLabel(self.handle(), C.ImU16(v))
+func (self *MenuColumns) SetOffsetLabel(v uint) {
+	C.wrap_ImGuiMenuColumns_SetOffsetLabel(self.handle(), C.ImU16(v))
 }
 
-func (self ImGuiMenuColumns) GetOffsetLabel() uint32 {
-	return uint32(C.ImGuiMenuColumns_GetOffsetLabel(self.handle()))
+func (self MenuColumns) OffsetLabel() uint32 {
+	return uint32(C.wrap_ImGuiMenuColumns_GetOffsetLabel(self.handle()))
 }
 
-func (self *ImGuiMenuColumns) SetOffsetShortcut(v uint) {
-	C.ImGuiMenuColumns_SetOffsetShortcut(self.handle(), C.ImU16(v))
+func (self *MenuColumns) SetOffsetShortcut(v uint) {
+	C.wrap_ImGuiMenuColumns_SetOffsetShortcut(self.handle(), C.ImU16(v))
 }
 
-func (self ImGuiMenuColumns) GetOffsetShortcut() uint32 {
-	return uint32(C.ImGuiMenuColumns_GetOffsetShortcut(self.handle()))
+func (self MenuColumns) OffsetShortcut() uint32 {
+	return uint32(C.wrap_ImGuiMenuColumns_GetOffsetShortcut(self.handle()))
 }
 
-func (self *ImGuiMenuColumns) SetOffsetMark(v uint) {
-	C.ImGuiMenuColumns_SetOffsetMark(self.handle(), C.ImU16(v))
+func (self *MenuColumns) SetOffsetMark(v uint) {
+	C.wrap_ImGuiMenuColumns_SetOffsetMark(self.handle(), C.ImU16(v))
 }
 
-func (self ImGuiMenuColumns) GetOffsetMark() uint32 {
-	return uint32(C.ImGuiMenuColumns_GetOffsetMark(self.handle()))
+func (self MenuColumns) OffsetMark() uint32 {
+	return uint32(C.wrap_ImGuiMenuColumns_GetOffsetMark(self.handle()))
 }
 
-func (self *ImGuiMetricsConfig) SetShowDebugLog(v bool) {
-	C.ImGuiMetricsConfig_SetShowDebugLog(self.handle(), C.bool(v))
+func (self *MetricsConfig) SetShowDebugLog(v bool) {
+	C.wrap_ImGuiMetricsConfig_SetShowDebugLog(self.handle(), C.bool(v))
 }
 
-func (self ImGuiMetricsConfig) GetShowDebugLog() bool {
-	return C.ImGuiMetricsConfig_GetShowDebugLog(self.handle()) == C.bool(true)
+func (self MetricsConfig) ShowDebugLog() bool {
+	return C.wrap_ImGuiMetricsConfig_GetShowDebugLog(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiMetricsConfig) SetShowStackTool(v bool) {
-	C.ImGuiMetricsConfig_SetShowStackTool(self.handle(), C.bool(v))
+func (self *MetricsConfig) SetShowStackTool(v bool) {
+	C.wrap_ImGuiMetricsConfig_SetShowStackTool(self.handle(), C.bool(v))
 }
 
-func (self ImGuiMetricsConfig) GetShowStackTool() bool {
-	return C.ImGuiMetricsConfig_GetShowStackTool(self.handle()) == C.bool(true)
+func (self MetricsConfig) ShowStackTool() bool {
+	return C.wrap_ImGuiMetricsConfig_GetShowStackTool(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiMetricsConfig) SetShowWindowsRects(v bool) {
-	C.ImGuiMetricsConfig_SetShowWindowsRects(self.handle(), C.bool(v))
+func (self *MetricsConfig) SetShowWindowsRects(v bool) {
+	C.wrap_ImGuiMetricsConfig_SetShowWindowsRects(self.handle(), C.bool(v))
 }
 
-func (self ImGuiMetricsConfig) GetShowWindowsRects() bool {
-	return C.ImGuiMetricsConfig_GetShowWindowsRects(self.handle()) == C.bool(true)
+func (self MetricsConfig) ShowWindowsRects() bool {
+	return C.wrap_ImGuiMetricsConfig_GetShowWindowsRects(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiMetricsConfig) SetShowWindowsBeginOrder(v bool) {
-	C.ImGuiMetricsConfig_SetShowWindowsBeginOrder(self.handle(), C.bool(v))
+func (self *MetricsConfig) SetShowWindowsBeginOrder(v bool) {
+	C.wrap_ImGuiMetricsConfig_SetShowWindowsBeginOrder(self.handle(), C.bool(v))
 }
 
-func (self ImGuiMetricsConfig) GetShowWindowsBeginOrder() bool {
-	return C.ImGuiMetricsConfig_GetShowWindowsBeginOrder(self.handle()) == C.bool(true)
+func (self MetricsConfig) ShowWindowsBeginOrder() bool {
+	return C.wrap_ImGuiMetricsConfig_GetShowWindowsBeginOrder(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiMetricsConfig) SetShowTablesRects(v bool) {
-	C.ImGuiMetricsConfig_SetShowTablesRects(self.handle(), C.bool(v))
+func (self *MetricsConfig) SetShowTablesRects(v bool) {
+	C.wrap_ImGuiMetricsConfig_SetShowTablesRects(self.handle(), C.bool(v))
 }
 
-func (self ImGuiMetricsConfig) GetShowTablesRects() bool {
-	return C.ImGuiMetricsConfig_GetShowTablesRects(self.handle()) == C.bool(true)
+func (self MetricsConfig) ShowTablesRects() bool {
+	return C.wrap_ImGuiMetricsConfig_GetShowTablesRects(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiMetricsConfig) SetShowDrawCmdMesh(v bool) {
-	C.ImGuiMetricsConfig_SetShowDrawCmdMesh(self.handle(), C.bool(v))
+func (self *MetricsConfig) SetShowDrawCmdMesh(v bool) {
+	C.wrap_ImGuiMetricsConfig_SetShowDrawCmdMesh(self.handle(), C.bool(v))
 }
 
-func (self ImGuiMetricsConfig) GetShowDrawCmdMesh() bool {
-	return C.ImGuiMetricsConfig_GetShowDrawCmdMesh(self.handle()) == C.bool(true)
+func (self MetricsConfig) ShowDrawCmdMesh() bool {
+	return C.wrap_ImGuiMetricsConfig_GetShowDrawCmdMesh(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiMetricsConfig) SetShowDrawCmdBoundingBoxes(v bool) {
-	C.ImGuiMetricsConfig_SetShowDrawCmdBoundingBoxes(self.handle(), C.bool(v))
+func (self *MetricsConfig) SetShowDrawCmdBoundingBoxes(v bool) {
+	C.wrap_ImGuiMetricsConfig_SetShowDrawCmdBoundingBoxes(self.handle(), C.bool(v))
 }
 
-func (self ImGuiMetricsConfig) GetShowDrawCmdBoundingBoxes() bool {
-	return C.ImGuiMetricsConfig_GetShowDrawCmdBoundingBoxes(self.handle()) == C.bool(true)
+func (self MetricsConfig) ShowDrawCmdBoundingBoxes() bool {
+	return C.wrap_ImGuiMetricsConfig_GetShowDrawCmdBoundingBoxes(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiMetricsConfig) SetShowDockingNodes(v bool) {
-	C.ImGuiMetricsConfig_SetShowDockingNodes(self.handle(), C.bool(v))
+func (self *MetricsConfig) SetShowDockingNodes(v bool) {
+	C.wrap_ImGuiMetricsConfig_SetShowDockingNodes(self.handle(), C.bool(v))
 }
 
-func (self ImGuiMetricsConfig) GetShowDockingNodes() bool {
-	return C.ImGuiMetricsConfig_GetShowDockingNodes(self.handle()) == C.bool(true)
+func (self MetricsConfig) ShowDockingNodes() bool {
+	return C.wrap_ImGuiMetricsConfig_GetShowDockingNodes(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiMetricsConfig) SetShowWindowsRectsType(v int32) {
-	C.ImGuiMetricsConfig_SetShowWindowsRectsType(self.handle(), C.int(v))
+func (self *MetricsConfig) SetShowWindowsRectsType(v int32) {
+	C.wrap_ImGuiMetricsConfig_SetShowWindowsRectsType(self.handle(), C.int(v))
 }
 
-func (self ImGuiMetricsConfig) GetShowWindowsRectsType() int {
-	return int(C.ImGuiMetricsConfig_GetShowWindowsRectsType(self.handle()))
+func (self MetricsConfig) ShowWindowsRectsType() int {
+	return int(C.wrap_ImGuiMetricsConfig_GetShowWindowsRectsType(self.handle()))
 }
 
-func (self *ImGuiMetricsConfig) SetShowTablesRectsType(v int32) {
-	C.ImGuiMetricsConfig_SetShowTablesRectsType(self.handle(), C.int(v))
+func (self *MetricsConfig) SetShowTablesRectsType(v int32) {
+	C.wrap_ImGuiMetricsConfig_SetShowTablesRectsType(self.handle(), C.int(v))
 }
 
-func (self ImGuiMetricsConfig) GetShowTablesRectsType() int {
-	return int(C.ImGuiMetricsConfig_GetShowTablesRectsType(self.handle()))
+func (self MetricsConfig) ShowTablesRectsType() int {
+	return int(C.wrap_ImGuiMetricsConfig_GetShowTablesRectsType(self.handle()))
 }
 
-func (self *ImGuiNavItemData) SetWindow(v ImGuiWindow) {
-	C.ImGuiNavItemData_SetWindow(self.handle(), v.handle())
+func (self *NavItemData) SetWindow(v Window) {
+	C.wrap_ImGuiNavItemData_SetWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiNavItemData) GetWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiNavItemData_GetWindow(self.handle())))
+func (self NavItemData) Window() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiNavItemData_GetWindow(self.handle())))
 }
 
-func (self *ImGuiNavItemData) SetID(v ImGuiID) {
-	C.ImGuiNavItemData_SetID(self.handle(), C.ImGuiID(v))
+func (self *NavItemData) SetID(v ID) {
+	C.wrap_ImGuiNavItemData_SetID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiNavItemData) GetID() ImGuiID {
-	return ImGuiID(C.ImGuiNavItemData_GetID(self.handle()))
+func (self NavItemData) ID() ID {
+	return ImGuiID(C.wrap_ImGuiNavItemData_GetID(self.handle()))
 }
 
-func (self *ImGuiNavItemData) SetFocusScopeId(v ImGuiID) {
-	C.ImGuiNavItemData_SetFocusScopeId(self.handle(), C.ImGuiID(v))
+func (self *NavItemData) SetFocusScopeId(v ID) {
+	C.wrap_ImGuiNavItemData_SetFocusScopeId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiNavItemData) GetFocusScopeId() ImGuiID {
-	return ImGuiID(C.ImGuiNavItemData_GetFocusScopeId(self.handle()))
+func (self NavItemData) FocusScopeId() ID {
+	return ImGuiID(C.wrap_ImGuiNavItemData_GetFocusScopeId(self.handle()))
 }
 
-func (self *ImGuiNavItemData) SetRectRel(v Rect) {
-	C.ImGuiNavItemData_SetRectRel(self.handle(), v.toC())
+func (self *NavItemData) SetRectRel(v Rect) {
+	C.wrap_ImGuiNavItemData_SetRectRel(self.handle(), v.toC())
 }
 
-func (self ImGuiNavItemData) GetRectRel() Rect {
+func (self NavItemData) RectRel() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiNavItemData_GetRectRel(self.handle()))
+	out.fromC(C.wrap_ImGuiNavItemData_GetRectRel(self.handle()))
 	return *out
 }
 
-func (self *ImGuiNavItemData) SetInFlags(v ItemFlags) {
-	C.ImGuiNavItemData_SetInFlags(self.handle(), C.ImGuiItemFlags(v))
+func (self *NavItemData) SetInFlags(v ItemFlags) {
+	C.wrap_ImGuiNavItemData_SetInFlags(self.handle(), C.ImGuiItemFlags(v))
 }
 
-func (self ImGuiNavItemData) GetInFlags() ItemFlags {
-	return ItemFlags(C.ImGuiNavItemData_GetInFlags(self.handle()))
+func (self NavItemData) InFlags() ItemFlags {
+	return ItemFlags(C.wrap_ImGuiNavItemData_GetInFlags(self.handle()))
 }
 
-func (self *ImGuiNavItemData) SetDistBox(v float32) {
-	C.ImGuiNavItemData_SetDistBox(self.handle(), C.float(v))
+func (self *NavItemData) SetDistBox(v float32) {
+	C.wrap_ImGuiNavItemData_SetDistBox(self.handle(), C.float(v))
 }
 
-func (self ImGuiNavItemData) GetDistBox() float32 {
-	return float32(C.ImGuiNavItemData_GetDistBox(self.handle()))
+func (self NavItemData) DistBox() float32 {
+	return float32(C.wrap_ImGuiNavItemData_GetDistBox(self.handle()))
 }
 
-func (self *ImGuiNavItemData) SetDistCenter(v float32) {
-	C.ImGuiNavItemData_SetDistCenter(self.handle(), C.float(v))
+func (self *NavItemData) SetDistCenter(v float32) {
+	C.wrap_ImGuiNavItemData_SetDistCenter(self.handle(), C.float(v))
 }
 
-func (self ImGuiNavItemData) GetDistCenter() float32 {
-	return float32(C.ImGuiNavItemData_GetDistCenter(self.handle()))
+func (self NavItemData) DistCenter() float32 {
+	return float32(C.wrap_ImGuiNavItemData_GetDistCenter(self.handle()))
 }
 
-func (self *ImGuiNavItemData) SetDistAxial(v float32) {
-	C.ImGuiNavItemData_SetDistAxial(self.handle(), C.float(v))
+func (self *NavItemData) SetDistAxial(v float32) {
+	C.wrap_ImGuiNavItemData_SetDistAxial(self.handle(), C.float(v))
 }
 
-func (self ImGuiNavItemData) GetDistAxial() float32 {
-	return float32(C.ImGuiNavItemData_GetDistAxial(self.handle()))
+func (self NavItemData) DistAxial() float32 {
+	return float32(C.wrap_ImGuiNavItemData_GetDistAxial(self.handle()))
 }
 
-func (self *ImGuiNextItemData) SetFlags(v NextItemDataFlags) {
-	C.ImGuiNextItemData_SetFlags(self.handle(), C.ImGuiNextItemDataFlags(v))
+func (self *NextItemData) SetFlags(v NextItemDataFlags) {
+	C.wrap_ImGuiNextItemData_SetFlags(self.handle(), C.ImGuiNextItemDataFlags(v))
 }
 
-func (self ImGuiNextItemData) GetFlags() NextItemDataFlags {
-	return NextItemDataFlags(C.ImGuiNextItemData_GetFlags(self.handle()))
+func (self NextItemData) Flags() NextItemDataFlags {
+	return NextItemDataFlags(C.wrap_ImGuiNextItemData_GetFlags(self.handle()))
 }
 
-func (self *ImGuiNextItemData) SetWidth(v float32) {
-	C.ImGuiNextItemData_SetWidth(self.handle(), C.float(v))
+func (self *NextItemData) SetWidth(v float32) {
+	C.wrap_ImGuiNextItemData_SetWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiNextItemData) GetWidth() float32 {
-	return float32(C.ImGuiNextItemData_GetWidth(self.handle()))
+func (self NextItemData) Width() float32 {
+	return float32(C.wrap_ImGuiNextItemData_GetWidth(self.handle()))
 }
 
-func (self *ImGuiNextItemData) SetFocusScopeId(v ImGuiID) {
-	C.ImGuiNextItemData_SetFocusScopeId(self.handle(), C.ImGuiID(v))
+func (self *NextItemData) SetFocusScopeId(v ID) {
+	C.wrap_ImGuiNextItemData_SetFocusScopeId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiNextItemData) GetFocusScopeId() ImGuiID {
-	return ImGuiID(C.ImGuiNextItemData_GetFocusScopeId(self.handle()))
+func (self NextItemData) FocusScopeId() ID {
+	return ImGuiID(C.wrap_ImGuiNextItemData_GetFocusScopeId(self.handle()))
 }
 
-func (self *ImGuiNextItemData) SetOpenCond(v Cond) {
-	C.ImGuiNextItemData_SetOpenCond(self.handle(), C.ImGuiCond(v))
+func (self *NextItemData) SetOpenCond(v Cond) {
+	C.wrap_ImGuiNextItemData_SetOpenCond(self.handle(), C.ImGuiCond(v))
 }
 
-func (self ImGuiNextItemData) GetOpenCond() Cond {
-	return Cond(C.ImGuiNextItemData_GetOpenCond(self.handle()))
+func (self NextItemData) OpenCond() Cond {
+	return Cond(C.wrap_ImGuiNextItemData_GetOpenCond(self.handle()))
 }
 
-func (self *ImGuiNextItemData) SetOpenVal(v bool) {
-	C.ImGuiNextItemData_SetOpenVal(self.handle(), C.bool(v))
+func (self *NextItemData) SetOpenVal(v bool) {
+	C.wrap_ImGuiNextItemData_SetOpenVal(self.handle(), C.bool(v))
 }
 
-func (self ImGuiNextItemData) GetOpenVal() bool {
-	return C.ImGuiNextItemData_GetOpenVal(self.handle()) == C.bool(true)
+func (self NextItemData) OpenVal() bool {
+	return C.wrap_ImGuiNextItemData_GetOpenVal(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiNextWindowData) SetFlags(v NextWindowDataFlags) {
-	C.ImGuiNextWindowData_SetFlags(self.handle(), C.ImGuiNextWindowDataFlags(v))
+func (self *NextWindowData) SetFlags(v NextWindowDataFlags) {
+	C.wrap_ImGuiNextWindowData_SetFlags(self.handle(), C.ImGuiNextWindowDataFlags(v))
 }
 
-func (self ImGuiNextWindowData) GetFlags() NextWindowDataFlags {
-	return NextWindowDataFlags(C.ImGuiNextWindowData_GetFlags(self.handle()))
+func (self NextWindowData) Flags() NextWindowDataFlags {
+	return NextWindowDataFlags(C.wrap_ImGuiNextWindowData_GetFlags(self.handle()))
 }
 
-func (self *ImGuiNextWindowData) SetPosCond(v Cond) {
-	C.ImGuiNextWindowData_SetPosCond(self.handle(), C.ImGuiCond(v))
+func (self *NextWindowData) SetPosCond(v Cond) {
+	C.wrap_ImGuiNextWindowData_SetPosCond(self.handle(), C.ImGuiCond(v))
 }
 
-func (self ImGuiNextWindowData) GetPosCond() Cond {
-	return Cond(C.ImGuiNextWindowData_GetPosCond(self.handle()))
+func (self NextWindowData) PosCond() Cond {
+	return Cond(C.wrap_ImGuiNextWindowData_GetPosCond(self.handle()))
 }
 
-func (self *ImGuiNextWindowData) SetSizeCond(v Cond) {
-	C.ImGuiNextWindowData_SetSizeCond(self.handle(), C.ImGuiCond(v))
+func (self *NextWindowData) SetSizeCond(v Cond) {
+	C.wrap_ImGuiNextWindowData_SetSizeCond(self.handle(), C.ImGuiCond(v))
 }
 
-func (self ImGuiNextWindowData) GetSizeCond() Cond {
-	return Cond(C.ImGuiNextWindowData_GetSizeCond(self.handle()))
+func (self NextWindowData) SizeCond() Cond {
+	return Cond(C.wrap_ImGuiNextWindowData_GetSizeCond(self.handle()))
 }
 
-func (self *ImGuiNextWindowData) SetCollapsedCond(v Cond) {
-	C.ImGuiNextWindowData_SetCollapsedCond(self.handle(), C.ImGuiCond(v))
+func (self *NextWindowData) SetCollapsedCond(v Cond) {
+	C.wrap_ImGuiNextWindowData_SetCollapsedCond(self.handle(), C.ImGuiCond(v))
 }
 
-func (self ImGuiNextWindowData) GetCollapsedCond() Cond {
-	return Cond(C.ImGuiNextWindowData_GetCollapsedCond(self.handle()))
+func (self NextWindowData) CollapsedCond() Cond {
+	return Cond(C.wrap_ImGuiNextWindowData_GetCollapsedCond(self.handle()))
 }
 
-func (self *ImGuiNextWindowData) SetDockCond(v Cond) {
-	C.ImGuiNextWindowData_SetDockCond(self.handle(), C.ImGuiCond(v))
+func (self *NextWindowData) SetDockCond(v Cond) {
+	C.wrap_ImGuiNextWindowData_SetDockCond(self.handle(), C.ImGuiCond(v))
 }
 
-func (self ImGuiNextWindowData) GetDockCond() Cond {
-	return Cond(C.ImGuiNextWindowData_GetDockCond(self.handle()))
+func (self NextWindowData) DockCond() Cond {
+	return Cond(C.wrap_ImGuiNextWindowData_GetDockCond(self.handle()))
 }
 
-func (self *ImGuiNextWindowData) SetPosVal(v Vec2) {
-	C.ImGuiNextWindowData_SetPosVal(self.handle(), v.toC())
+func (self *NextWindowData) SetPosVal(v Vec2) {
+	C.wrap_ImGuiNextWindowData_SetPosVal(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetPosVal() Vec2 {
+func (self NextWindowData) PosVal() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiNextWindowData_GetPosVal(self.handle()))
+	out.fromC(C.wrap_ImGuiNextWindowData_GetPosVal(self.handle()))
 	return *out
 }
 
-func (self *ImGuiNextWindowData) SetPosPivotVal(v Vec2) {
-	C.ImGuiNextWindowData_SetPosPivotVal(self.handle(), v.toC())
+func (self *NextWindowData) SetPosPivotVal(v Vec2) {
+	C.wrap_ImGuiNextWindowData_SetPosPivotVal(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetPosPivotVal() Vec2 {
+func (self NextWindowData) PosPivotVal() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiNextWindowData_GetPosPivotVal(self.handle()))
+	out.fromC(C.wrap_ImGuiNextWindowData_GetPosPivotVal(self.handle()))
 	return *out
 }
 
-func (self *ImGuiNextWindowData) SetSizeVal(v Vec2) {
-	C.ImGuiNextWindowData_SetSizeVal(self.handle(), v.toC())
+func (self *NextWindowData) SetSizeVal(v Vec2) {
+	C.wrap_ImGuiNextWindowData_SetSizeVal(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetSizeVal() Vec2 {
+func (self NextWindowData) SizeVal() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiNextWindowData_GetSizeVal(self.handle()))
+	out.fromC(C.wrap_ImGuiNextWindowData_GetSizeVal(self.handle()))
 	return *out
 }
 
-func (self *ImGuiNextWindowData) SetContentSizeVal(v Vec2) {
-	C.ImGuiNextWindowData_SetContentSizeVal(self.handle(), v.toC())
+func (self *NextWindowData) SetContentSizeVal(v Vec2) {
+	C.wrap_ImGuiNextWindowData_SetContentSizeVal(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetContentSizeVal() Vec2 {
+func (self NextWindowData) ContentSizeVal() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiNextWindowData_GetContentSizeVal(self.handle()))
+	out.fromC(C.wrap_ImGuiNextWindowData_GetContentSizeVal(self.handle()))
 	return *out
 }
 
-func (self *ImGuiNextWindowData) SetScrollVal(v Vec2) {
-	C.ImGuiNextWindowData_SetScrollVal(self.handle(), v.toC())
+func (self *NextWindowData) SetScrollVal(v Vec2) {
+	C.wrap_ImGuiNextWindowData_SetScrollVal(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetScrollVal() Vec2 {
+func (self NextWindowData) ScrollVal() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiNextWindowData_GetScrollVal(self.handle()))
+	out.fromC(C.wrap_ImGuiNextWindowData_GetScrollVal(self.handle()))
 	return *out
 }
 
-func (self *ImGuiNextWindowData) SetPosUndock(v bool) {
-	C.ImGuiNextWindowData_SetPosUndock(self.handle(), C.bool(v))
+func (self *NextWindowData) SetPosUndock(v bool) {
+	C.wrap_ImGuiNextWindowData_SetPosUndock(self.handle(), C.bool(v))
 }
 
-func (self ImGuiNextWindowData) GetPosUndock() bool {
-	return C.ImGuiNextWindowData_GetPosUndock(self.handle()) == C.bool(true)
+func (self NextWindowData) PosUndock() bool {
+	return C.wrap_ImGuiNextWindowData_GetPosUndock(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiNextWindowData) SetCollapsedVal(v bool) {
-	C.ImGuiNextWindowData_SetCollapsedVal(self.handle(), C.bool(v))
+func (self *NextWindowData) SetCollapsedVal(v bool) {
+	C.wrap_ImGuiNextWindowData_SetCollapsedVal(self.handle(), C.bool(v))
 }
 
-func (self ImGuiNextWindowData) GetCollapsedVal() bool {
-	return C.ImGuiNextWindowData_GetCollapsedVal(self.handle()) == C.bool(true)
+func (self NextWindowData) CollapsedVal() bool {
+	return C.wrap_ImGuiNextWindowData_GetCollapsedVal(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiNextWindowData) SetSizeConstraintRect(v Rect) {
-	C.ImGuiNextWindowData_SetSizeConstraintRect(self.handle(), v.toC())
+func (self *NextWindowData) SetSizeConstraintRect(v Rect) {
+	C.wrap_ImGuiNextWindowData_SetSizeConstraintRect(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetSizeConstraintRect() Rect {
+func (self NextWindowData) SizeConstraintRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiNextWindowData_GetSizeConstraintRect(self.handle()))
+	out.fromC(C.wrap_ImGuiNextWindowData_GetSizeConstraintRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiNextWindowData) SetSizeCallbackUserData(v unsafe.Pointer) {
-	C.ImGuiNextWindowData_SetSizeCallbackUserData(self.handle(), (v))
+func (self *NextWindowData) SetSizeCallbackUserData(v unsafe.Pointer) {
+	C.wrap_ImGuiNextWindowData_SetSizeCallbackUserData(self.handle(), (v))
 }
 
-func (self ImGuiNextWindowData) GetSizeCallbackUserData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiNextWindowData_GetSizeCallbackUserData(self.handle()))
+func (self NextWindowData) SizeCallbackUserData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiNextWindowData_GetSizeCallbackUserData(self.handle()))
 }
 
-func (self *ImGuiNextWindowData) SetBgAlphaVal(v float32) {
-	C.ImGuiNextWindowData_SetBgAlphaVal(self.handle(), C.float(v))
+func (self *NextWindowData) SetBgAlphaVal(v float32) {
+	C.wrap_ImGuiNextWindowData_SetBgAlphaVal(self.handle(), C.float(v))
 }
 
-func (self ImGuiNextWindowData) GetBgAlphaVal() float32 {
-	return float32(C.ImGuiNextWindowData_GetBgAlphaVal(self.handle()))
+func (self NextWindowData) BgAlphaVal() float32 {
+	return float32(C.wrap_ImGuiNextWindowData_GetBgAlphaVal(self.handle()))
 }
 
-func (self *ImGuiNextWindowData) SetViewportId(v ImGuiID) {
-	C.ImGuiNextWindowData_SetViewportId(self.handle(), C.ImGuiID(v))
+func (self *NextWindowData) SetViewportId(v ID) {
+	C.wrap_ImGuiNextWindowData_SetViewportId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiNextWindowData) GetViewportId() ImGuiID {
-	return ImGuiID(C.ImGuiNextWindowData_GetViewportId(self.handle()))
+func (self NextWindowData) ViewportId() ID {
+	return ImGuiID(C.wrap_ImGuiNextWindowData_GetViewportId(self.handle()))
 }
 
-func (self *ImGuiNextWindowData) SetDockId(v ImGuiID) {
-	C.ImGuiNextWindowData_SetDockId(self.handle(), C.ImGuiID(v))
+func (self *NextWindowData) SetDockId(v ID) {
+	C.wrap_ImGuiNextWindowData_SetDockId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiNextWindowData) GetDockId() ImGuiID {
-	return ImGuiID(C.ImGuiNextWindowData_GetDockId(self.handle()))
+func (self NextWindowData) DockId() ID {
+	return ImGuiID(C.wrap_ImGuiNextWindowData_GetDockId(self.handle()))
 }
 
-func (self ImGuiNextWindowData) GetWindowClass() ImGuiWindowClass {
-	return newImGuiWindowClassFromC(C.ImGuiNextWindowData_GetWindowClass(self.handle()))
+func (self NextWindowData) WindowClass() WindowClass {
+	return newWindowClassFromC(C.wrap_ImGuiNextWindowData_GetWindowClass(self.handle()))
 }
 
-func (self *ImGuiNextWindowData) SetMenuBarOffsetMinVal(v Vec2) {
-	C.ImGuiNextWindowData_SetMenuBarOffsetMinVal(self.handle(), v.toC())
+func (self *NextWindowData) SetMenuBarOffsetMinVal(v Vec2) {
+	C.wrap_ImGuiNextWindowData_SetMenuBarOffsetMinVal(self.handle(), v.toC())
 }
 
-func (self ImGuiNextWindowData) GetMenuBarOffsetMinVal() Vec2 {
+func (self NextWindowData) MenuBarOffsetMinVal() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiNextWindowData_GetMenuBarOffsetMinVal(self.handle()))
+	out.fromC(C.wrap_ImGuiNextWindowData_GetMenuBarOffsetMinVal(self.handle()))
 	return *out
 }
 
-func (self *ImGuiOldColumnData) SetOffsetNorm(v float32) {
-	C.ImGuiOldColumnData_SetOffsetNorm(self.handle(), C.float(v))
+func (self *OldColumnData) SetOffsetNorm(v float32) {
+	C.wrap_ImGuiOldColumnData_SetOffsetNorm(self.handle(), C.float(v))
 }
 
-func (self ImGuiOldColumnData) GetOffsetNorm() float32 {
-	return float32(C.ImGuiOldColumnData_GetOffsetNorm(self.handle()))
+func (self OldColumnData) OffsetNorm() float32 {
+	return float32(C.wrap_ImGuiOldColumnData_GetOffsetNorm(self.handle()))
 }
 
-func (self *ImGuiOldColumnData) SetOffsetNormBeforeResize(v float32) {
-	C.ImGuiOldColumnData_SetOffsetNormBeforeResize(self.handle(), C.float(v))
+func (self *OldColumnData) SetOffsetNormBeforeResize(v float32) {
+	C.wrap_ImGuiOldColumnData_SetOffsetNormBeforeResize(self.handle(), C.float(v))
 }
 
-func (self ImGuiOldColumnData) GetOffsetNormBeforeResize() float32 {
-	return float32(C.ImGuiOldColumnData_GetOffsetNormBeforeResize(self.handle()))
+func (self OldColumnData) OffsetNormBeforeResize() float32 {
+	return float32(C.wrap_ImGuiOldColumnData_GetOffsetNormBeforeResize(self.handle()))
 }
 
-func (self *ImGuiOldColumnData) SetFlags(v OldColumnFlags) {
-	C.ImGuiOldColumnData_SetFlags(self.handle(), C.ImGuiOldColumnFlags(v))
+func (self *OldColumnData) SetFlags(v OldColumnFlags) {
+	C.wrap_ImGuiOldColumnData_SetFlags(self.handle(), C.ImGuiOldColumnFlags(v))
 }
 
-func (self ImGuiOldColumnData) GetFlags() OldColumnFlags {
-	return OldColumnFlags(C.ImGuiOldColumnData_GetFlags(self.handle()))
+func (self OldColumnData) Flags() OldColumnFlags {
+	return OldColumnFlags(C.wrap_ImGuiOldColumnData_GetFlags(self.handle()))
 }
 
-func (self *ImGuiOldColumnData) SetClipRect(v Rect) {
-	C.ImGuiOldColumnData_SetClipRect(self.handle(), v.toC())
+func (self *OldColumnData) SetClipRect(v Rect) {
+	C.wrap_ImGuiOldColumnData_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiOldColumnData) GetClipRect() Rect {
+func (self OldColumnData) ClipRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiOldColumnData_GetClipRect(self.handle()))
+	out.fromC(C.wrap_ImGuiOldColumnData_GetClipRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiOldColumns) SetID(v ImGuiID) {
-	C.ImGuiOldColumns_SetID(self.handle(), C.ImGuiID(v))
+func (self *OldColumns) SetID(v ID) {
+	C.wrap_ImGuiOldColumns_SetID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiOldColumns) GetID() ImGuiID {
-	return ImGuiID(C.ImGuiOldColumns_GetID(self.handle()))
+func (self OldColumns) ID() ID {
+	return ImGuiID(C.wrap_ImGuiOldColumns_GetID(self.handle()))
 }
 
-func (self *ImGuiOldColumns) SetFlags(v OldColumnFlags) {
-	C.ImGuiOldColumns_SetFlags(self.handle(), C.ImGuiOldColumnFlags(v))
+func (self *OldColumns) SetFlags(v OldColumnFlags) {
+	C.wrap_ImGuiOldColumns_SetFlags(self.handle(), C.ImGuiOldColumnFlags(v))
 }
 
-func (self ImGuiOldColumns) GetFlags() OldColumnFlags {
-	return OldColumnFlags(C.ImGuiOldColumns_GetFlags(self.handle()))
+func (self OldColumns) Flags() OldColumnFlags {
+	return OldColumnFlags(C.wrap_ImGuiOldColumns_GetFlags(self.handle()))
 }
 
-func (self *ImGuiOldColumns) SetIsFirstFrame(v bool) {
-	C.ImGuiOldColumns_SetIsFirstFrame(self.handle(), C.bool(v))
+func (self *OldColumns) SetIsFirstFrame(v bool) {
+	C.wrap_ImGuiOldColumns_SetIsFirstFrame(self.handle(), C.bool(v))
 }
 
-func (self ImGuiOldColumns) GetIsFirstFrame() bool {
-	return C.ImGuiOldColumns_GetIsFirstFrame(self.handle()) == C.bool(true)
+func (self OldColumns) IsFirstFrame() bool {
+	return C.wrap_ImGuiOldColumns_GetIsFirstFrame(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiOldColumns) SetIsBeingResized(v bool) {
-	C.ImGuiOldColumns_SetIsBeingResized(self.handle(), C.bool(v))
+func (self *OldColumns) SetIsBeingResized(v bool) {
+	C.wrap_ImGuiOldColumns_SetIsBeingResized(self.handle(), C.bool(v))
 }
 
-func (self ImGuiOldColumns) GetIsBeingResized() bool {
-	return C.ImGuiOldColumns_GetIsBeingResized(self.handle()) == C.bool(true)
+func (self OldColumns) IsBeingResized() bool {
+	return C.wrap_ImGuiOldColumns_GetIsBeingResized(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiOldColumns) SetCurrent(v int32) {
-	C.ImGuiOldColumns_SetCurrent(self.handle(), C.int(v))
+func (self *OldColumns) SetCurrent(v int32) {
+	C.wrap_ImGuiOldColumns_SetCurrent(self.handle(), C.int(v))
 }
 
-func (self ImGuiOldColumns) GetCurrent() int {
-	return int(C.ImGuiOldColumns_GetCurrent(self.handle()))
+func (self OldColumns) Current() int {
+	return int(C.wrap_ImGuiOldColumns_GetCurrent(self.handle()))
 }
 
-func (self *ImGuiOldColumns) SetCount(v int32) {
-	C.ImGuiOldColumns_SetCount(self.handle(), C.int(v))
+func (self *OldColumns) SetCount(v int32) {
+	C.wrap_ImGuiOldColumns_SetCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiOldColumns) GetCount() int {
-	return int(C.ImGuiOldColumns_GetCount(self.handle()))
+func (self OldColumns) Count() int {
+	return int(C.wrap_ImGuiOldColumns_GetCount(self.handle()))
 }
 
-func (self *ImGuiOldColumns) SetOffMinX(v float32) {
-	C.ImGuiOldColumns_SetOffMinX(self.handle(), C.float(v))
+func (self *OldColumns) SetOffMinX(v float32) {
+	C.wrap_ImGuiOldColumns_SetOffMinX(self.handle(), C.float(v))
 }
 
-func (self ImGuiOldColumns) GetOffMinX() float32 {
-	return float32(C.ImGuiOldColumns_GetOffMinX(self.handle()))
+func (self OldColumns) OffMinX() float32 {
+	return float32(C.wrap_ImGuiOldColumns_GetOffMinX(self.handle()))
 }
 
-func (self *ImGuiOldColumns) SetOffMaxX(v float32) {
-	C.ImGuiOldColumns_SetOffMaxX(self.handle(), C.float(v))
+func (self *OldColumns) SetOffMaxX(v float32) {
+	C.wrap_ImGuiOldColumns_SetOffMaxX(self.handle(), C.float(v))
 }
 
-func (self ImGuiOldColumns) GetOffMaxX() float32 {
-	return float32(C.ImGuiOldColumns_GetOffMaxX(self.handle()))
+func (self OldColumns) OffMaxX() float32 {
+	return float32(C.wrap_ImGuiOldColumns_GetOffMaxX(self.handle()))
 }
 
-func (self *ImGuiOldColumns) SetLineMinY(v float32) {
-	C.ImGuiOldColumns_SetLineMinY(self.handle(), C.float(v))
+func (self *OldColumns) SetLineMinY(v float32) {
+	C.wrap_ImGuiOldColumns_SetLineMinY(self.handle(), C.float(v))
 }
 
-func (self ImGuiOldColumns) GetLineMinY() float32 {
-	return float32(C.ImGuiOldColumns_GetLineMinY(self.handle()))
+func (self OldColumns) LineMinY() float32 {
+	return float32(C.wrap_ImGuiOldColumns_GetLineMinY(self.handle()))
 }
 
-func (self *ImGuiOldColumns) SetLineMaxY(v float32) {
-	C.ImGuiOldColumns_SetLineMaxY(self.handle(), C.float(v))
+func (self *OldColumns) SetLineMaxY(v float32) {
+	C.wrap_ImGuiOldColumns_SetLineMaxY(self.handle(), C.float(v))
 }
 
-func (self ImGuiOldColumns) GetLineMaxY() float32 {
-	return float32(C.ImGuiOldColumns_GetLineMaxY(self.handle()))
+func (self OldColumns) LineMaxY() float32 {
+	return float32(C.wrap_ImGuiOldColumns_GetLineMaxY(self.handle()))
 }
 
-func (self *ImGuiOldColumns) SetHostCursorPosY(v float32) {
-	C.ImGuiOldColumns_SetHostCursorPosY(self.handle(), C.float(v))
+func (self *OldColumns) SetHostCursorPosY(v float32) {
+	C.wrap_ImGuiOldColumns_SetHostCursorPosY(self.handle(), C.float(v))
 }
 
-func (self ImGuiOldColumns) GetHostCursorPosY() float32 {
-	return float32(C.ImGuiOldColumns_GetHostCursorPosY(self.handle()))
+func (self OldColumns) HostCursorPosY() float32 {
+	return float32(C.wrap_ImGuiOldColumns_GetHostCursorPosY(self.handle()))
 }
 
-func (self *ImGuiOldColumns) SetHostCursorMaxPosX(v float32) {
-	C.ImGuiOldColumns_SetHostCursorMaxPosX(self.handle(), C.float(v))
+func (self *OldColumns) SetHostCursorMaxPosX(v float32) {
+	C.wrap_ImGuiOldColumns_SetHostCursorMaxPosX(self.handle(), C.float(v))
 }
 
-func (self ImGuiOldColumns) GetHostCursorMaxPosX() float32 {
-	return float32(C.ImGuiOldColumns_GetHostCursorMaxPosX(self.handle()))
+func (self OldColumns) HostCursorMaxPosX() float32 {
+	return float32(C.wrap_ImGuiOldColumns_GetHostCursorMaxPosX(self.handle()))
 }
 
-func (self *ImGuiOldColumns) SetHostInitialClipRect(v Rect) {
-	C.ImGuiOldColumns_SetHostInitialClipRect(self.handle(), v.toC())
+func (self *OldColumns) SetHostInitialClipRect(v Rect) {
+	C.wrap_ImGuiOldColumns_SetHostInitialClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiOldColumns) GetHostInitialClipRect() Rect {
+func (self OldColumns) HostInitialClipRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiOldColumns_GetHostInitialClipRect(self.handle()))
+	out.fromC(C.wrap_ImGuiOldColumns_GetHostInitialClipRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiOldColumns) SetHostBackupClipRect(v Rect) {
-	C.ImGuiOldColumns_SetHostBackupClipRect(self.handle(), v.toC())
+func (self *OldColumns) SetHostBackupClipRect(v Rect) {
+	C.wrap_ImGuiOldColumns_SetHostBackupClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiOldColumns) GetHostBackupClipRect() Rect {
+func (self OldColumns) HostBackupClipRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiOldColumns_GetHostBackupClipRect(self.handle()))
+	out.fromC(C.wrap_ImGuiOldColumns_GetHostBackupClipRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiOldColumns) SetHostBackupParentWorkRect(v Rect) {
-	C.ImGuiOldColumns_SetHostBackupParentWorkRect(self.handle(), v.toC())
+func (self *OldColumns) SetHostBackupParentWorkRect(v Rect) {
+	C.wrap_ImGuiOldColumns_SetHostBackupParentWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiOldColumns) GetHostBackupParentWorkRect() Rect {
+func (self OldColumns) HostBackupParentWorkRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiOldColumns_GetHostBackupParentWorkRect(self.handle()))
+	out.fromC(C.wrap_ImGuiOldColumns_GetHostBackupParentWorkRect(self.handle()))
 	return *out
 }
 
-func (self ImGuiOldColumns) GetSplitter() ImDrawListSplitter {
-	return newImDrawListSplitterFromC(C.ImGuiOldColumns_GetSplitter(self.handle()))
+func (self OldColumns) Splitter() DrawListSplitter {
+	return newDrawListSplitterFromC(C.wrap_ImGuiOldColumns_GetSplitter(self.handle()))
 }
 
-func (self *ImGuiOnceUponAFrame) SetRefFrame(v int32) {
-	C.ImGuiOnceUponAFrame_SetRefFrame(self.handle(), C.int(v))
+func (self *OnceUponAFrame) SetRefFrame(v int32) {
+	C.wrap_ImGuiOnceUponAFrame_SetRefFrame(self.handle(), C.int(v))
 }
 
-func (self ImGuiOnceUponAFrame) GetRefFrame() int {
-	return int(C.ImGuiOnceUponAFrame_GetRefFrame(self.handle()))
+func (self OnceUponAFrame) RefFrame() int {
+	return int(C.wrap_ImGuiOnceUponAFrame_GetRefFrame(self.handle()))
 }
 
-func (self *ImGuiPayload) SetData(v unsafe.Pointer) {
-	C.ImGuiPayload_SetData(self.handle(), (v))
+func (self *Payload) SetData(v unsafe.Pointer) {
+	C.wrap_ImGuiPayload_SetData(self.handle(), (v))
 }
 
-func (self ImGuiPayload) GetData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiPayload_GetData(self.handle()))
+func (self Payload) Data() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiPayload_GetData(self.handle()))
 }
 
-func (self *ImGuiPayload) SetDataSize(v int32) {
-	C.ImGuiPayload_SetDataSize(self.handle(), C.int(v))
+func (self *Payload) SetDataSize(v int32) {
+	C.wrap_ImGuiPayload_SetDataSize(self.handle(), C.int(v))
 }
 
-func (self ImGuiPayload) GetDataSize() int {
-	return int(C.ImGuiPayload_GetDataSize(self.handle()))
+func (self Payload) DataSize() int {
+	return int(C.wrap_ImGuiPayload_GetDataSize(self.handle()))
 }
 
-func (self *ImGuiPayload) SetSourceId(v ImGuiID) {
-	C.ImGuiPayload_SetSourceId(self.handle(), C.ImGuiID(v))
+func (self *Payload) SetSourceId(v ID) {
+	C.wrap_ImGuiPayload_SetSourceId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiPayload) GetSourceId() ImGuiID {
-	return ImGuiID(C.ImGuiPayload_GetSourceId(self.handle()))
+func (self Payload) SourceId() ID {
+	return ImGuiID(C.wrap_ImGuiPayload_GetSourceId(self.handle()))
 }
 
-func (self *ImGuiPayload) SetSourceParentId(v ImGuiID) {
-	C.ImGuiPayload_SetSourceParentId(self.handle(), C.ImGuiID(v))
+func (self *Payload) SetSourceParentId(v ID) {
+	C.wrap_ImGuiPayload_SetSourceParentId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiPayload) GetSourceParentId() ImGuiID {
-	return ImGuiID(C.ImGuiPayload_GetSourceParentId(self.handle()))
+func (self Payload) SourceParentId() ID {
+	return ImGuiID(C.wrap_ImGuiPayload_GetSourceParentId(self.handle()))
 }
 
-func (self *ImGuiPayload) SetDataFrameCount(v int32) {
-	C.ImGuiPayload_SetDataFrameCount(self.handle(), C.int(v))
+func (self *Payload) SetDataFrameCount(v int32) {
+	C.wrap_ImGuiPayload_SetDataFrameCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiPayload) GetDataFrameCount() int {
-	return int(C.ImGuiPayload_GetDataFrameCount(self.handle()))
+func (self Payload) DataFrameCount() int {
+	return int(C.wrap_ImGuiPayload_GetDataFrameCount(self.handle()))
 }
 
-func (self *ImGuiPayload) SetPreview(v bool) {
-	C.ImGuiPayload_SetPreview(self.handle(), C.bool(v))
+func (self *Payload) SetPreview(v bool) {
+	C.wrap_ImGuiPayload_SetPreview(self.handle(), C.bool(v))
 }
 
-func (self ImGuiPayload) GetPreview() bool {
-	return C.ImGuiPayload_GetPreview(self.handle()) == C.bool(true)
+func (self Payload) Preview() bool {
+	return C.wrap_ImGuiPayload_GetPreview(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiPayload) SetDelivery(v bool) {
-	C.ImGuiPayload_SetDelivery(self.handle(), C.bool(v))
+func (self *Payload) SetDelivery(v bool) {
+	C.wrap_ImGuiPayload_SetDelivery(self.handle(), C.bool(v))
 }
 
-func (self ImGuiPayload) GetDelivery() bool {
-	return C.ImGuiPayload_GetDelivery(self.handle()) == C.bool(true)
+func (self Payload) Delivery() bool {
+	return C.wrap_ImGuiPayload_GetDelivery(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiPlatformImeData) SetWantVisible(v bool) {
-	C.ImGuiPlatformImeData_SetWantVisible(self.handle(), C.bool(v))
+func (self *PlatformImeData) SetWantVisible(v bool) {
+	C.wrap_ImGuiPlatformImeData_SetWantVisible(self.handle(), C.bool(v))
 }
 
-func (self ImGuiPlatformImeData) GetWantVisible() bool {
-	return C.ImGuiPlatformImeData_GetWantVisible(self.handle()) == C.bool(true)
+func (self PlatformImeData) WantVisible() bool {
+	return C.wrap_ImGuiPlatformImeData_GetWantVisible(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiPlatformImeData) SetInputPos(v Vec2) {
-	C.ImGuiPlatformImeData_SetInputPos(self.handle(), v.toC())
+func (self *PlatformImeData) SetInputPos(v Vec2) {
+	C.wrap_ImGuiPlatformImeData_SetInputPos(self.handle(), v.toC())
 }
 
-func (self ImGuiPlatformImeData) GetInputPos() Vec2 {
+func (self PlatformImeData) InputPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiPlatformImeData_GetInputPos(self.handle()))
+	out.fromC(C.wrap_ImGuiPlatformImeData_GetInputPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiPlatformImeData) SetInputLineHeight(v float32) {
-	C.ImGuiPlatformImeData_SetInputLineHeight(self.handle(), C.float(v))
+func (self *PlatformImeData) SetInputLineHeight(v float32) {
+	C.wrap_ImGuiPlatformImeData_SetInputLineHeight(self.handle(), C.float(v))
 }
 
-func (self ImGuiPlatformImeData) GetInputLineHeight() float32 {
-	return float32(C.ImGuiPlatformImeData_GetInputLineHeight(self.handle()))
+func (self PlatformImeData) InputLineHeight() float32 {
+	return float32(C.wrap_ImGuiPlatformImeData_GetInputLineHeight(self.handle()))
 }
 
-func (self *ImGuiPlatformMonitor) SetMainPos(v Vec2) {
-	C.ImGuiPlatformMonitor_SetMainPos(self.handle(), v.toC())
+func (self *PlatformMonitor) SetMainPos(v Vec2) {
+	C.wrap_ImGuiPlatformMonitor_SetMainPos(self.handle(), v.toC())
 }
 
-func (self ImGuiPlatformMonitor) GetMainPos() Vec2 {
+func (self PlatformMonitor) MainPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiPlatformMonitor_GetMainPos(self.handle()))
+	out.fromC(C.wrap_ImGuiPlatformMonitor_GetMainPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiPlatformMonitor) SetMainSize(v Vec2) {
-	C.ImGuiPlatformMonitor_SetMainSize(self.handle(), v.toC())
+func (self *PlatformMonitor) SetMainSize(v Vec2) {
+	C.wrap_ImGuiPlatformMonitor_SetMainSize(self.handle(), v.toC())
 }
 
-func (self ImGuiPlatformMonitor) GetMainSize() Vec2 {
+func (self PlatformMonitor) MainSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiPlatformMonitor_GetMainSize(self.handle()))
+	out.fromC(C.wrap_ImGuiPlatformMonitor_GetMainSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiPlatformMonitor) SetWorkPos(v Vec2) {
-	C.ImGuiPlatformMonitor_SetWorkPos(self.handle(), v.toC())
+func (self *PlatformMonitor) SetWorkPos(v Vec2) {
+	C.wrap_ImGuiPlatformMonitor_SetWorkPos(self.handle(), v.toC())
 }
 
-func (self ImGuiPlatformMonitor) GetWorkPos() Vec2 {
+func (self PlatformMonitor) WorkPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiPlatformMonitor_GetWorkPos(self.handle()))
+	out.fromC(C.wrap_ImGuiPlatformMonitor_GetWorkPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiPlatformMonitor) SetWorkSize(v Vec2) {
-	C.ImGuiPlatformMonitor_SetWorkSize(self.handle(), v.toC())
+func (self *PlatformMonitor) SetWorkSize(v Vec2) {
+	C.wrap_ImGuiPlatformMonitor_SetWorkSize(self.handle(), v.toC())
 }
 
-func (self ImGuiPlatformMonitor) GetWorkSize() Vec2 {
+func (self PlatformMonitor) WorkSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiPlatformMonitor_GetWorkSize(self.handle()))
+	out.fromC(C.wrap_ImGuiPlatformMonitor_GetWorkSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiPlatformMonitor) SetDpiScale(v float32) {
-	C.ImGuiPlatformMonitor_SetDpiScale(self.handle(), C.float(v))
+func (self *PlatformMonitor) SetDpiScale(v float32) {
+	C.wrap_ImGuiPlatformMonitor_SetDpiScale(self.handle(), C.float(v))
 }
 
-func (self ImGuiPlatformMonitor) GetDpiScale() float32 {
-	return float32(C.ImGuiPlatformMonitor_GetDpiScale(self.handle()))
+func (self PlatformMonitor) DpiScale() float32 {
+	return float32(C.wrap_ImGuiPlatformMonitor_GetDpiScale(self.handle()))
 }
 
-func (self *ImGuiPopupData) SetPopupId(v ImGuiID) {
-	C.ImGuiPopupData_SetPopupId(self.handle(), C.ImGuiID(v))
+func (self *PopupData) SetPopupId(v ID) {
+	C.wrap_ImGuiPopupData_SetPopupId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiPopupData) GetPopupId() ImGuiID {
-	return ImGuiID(C.ImGuiPopupData_GetPopupId(self.handle()))
+func (self PopupData) PopupId() ID {
+	return ImGuiID(C.wrap_ImGuiPopupData_GetPopupId(self.handle()))
 }
 
-func (self *ImGuiPopupData) SetWindow(v ImGuiWindow) {
-	C.ImGuiPopupData_SetWindow(self.handle(), v.handle())
+func (self *PopupData) SetWindow(v Window) {
+	C.wrap_ImGuiPopupData_SetWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiPopupData) GetWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiPopupData_GetWindow(self.handle())))
+func (self PopupData) Window() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiPopupData_GetWindow(self.handle())))
 }
 
-func (self *ImGuiPopupData) SetSourceWindow(v ImGuiWindow) {
-	C.ImGuiPopupData_SetSourceWindow(self.handle(), v.handle())
+func (self *PopupData) SetSourceWindow(v Window) {
+	C.wrap_ImGuiPopupData_SetSourceWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiPopupData) GetSourceWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiPopupData_GetSourceWindow(self.handle())))
+func (self PopupData) SourceWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiPopupData_GetSourceWindow(self.handle())))
 }
 
-func (self *ImGuiPopupData) SetParentNavLayer(v int32) {
-	C.ImGuiPopupData_SetParentNavLayer(self.handle(), C.int(v))
+func (self *PopupData) SetParentNavLayer(v int32) {
+	C.wrap_ImGuiPopupData_SetParentNavLayer(self.handle(), C.int(v))
 }
 
-func (self ImGuiPopupData) GetParentNavLayer() int {
-	return int(C.ImGuiPopupData_GetParentNavLayer(self.handle()))
+func (self PopupData) ParentNavLayer() int {
+	return int(C.wrap_ImGuiPopupData_GetParentNavLayer(self.handle()))
 }
 
-func (self *ImGuiPopupData) SetOpenFrameCount(v int32) {
-	C.ImGuiPopupData_SetOpenFrameCount(self.handle(), C.int(v))
+func (self *PopupData) SetOpenFrameCount(v int32) {
+	C.wrap_ImGuiPopupData_SetOpenFrameCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiPopupData) GetOpenFrameCount() int {
-	return int(C.ImGuiPopupData_GetOpenFrameCount(self.handle()))
+func (self PopupData) OpenFrameCount() int {
+	return int(C.wrap_ImGuiPopupData_GetOpenFrameCount(self.handle()))
 }
 
-func (self *ImGuiPopupData) SetOpenParentId(v ImGuiID) {
-	C.ImGuiPopupData_SetOpenParentId(self.handle(), C.ImGuiID(v))
+func (self *PopupData) SetOpenParentId(v ID) {
+	C.wrap_ImGuiPopupData_SetOpenParentId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiPopupData) GetOpenParentId() ImGuiID {
-	return ImGuiID(C.ImGuiPopupData_GetOpenParentId(self.handle()))
+func (self PopupData) OpenParentId() ID {
+	return ImGuiID(C.wrap_ImGuiPopupData_GetOpenParentId(self.handle()))
 }
 
-func (self *ImGuiPopupData) SetOpenPopupPos(v Vec2) {
-	C.ImGuiPopupData_SetOpenPopupPos(self.handle(), v.toC())
+func (self *PopupData) SetOpenPopupPos(v Vec2) {
+	C.wrap_ImGuiPopupData_SetOpenPopupPos(self.handle(), v.toC())
 }
 
-func (self ImGuiPopupData) GetOpenPopupPos() Vec2 {
+func (self PopupData) OpenPopupPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiPopupData_GetOpenPopupPos(self.handle()))
+	out.fromC(C.wrap_ImGuiPopupData_GetOpenPopupPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiPopupData) SetOpenMousePos(v Vec2) {
-	C.ImGuiPopupData_SetOpenMousePos(self.handle(), v.toC())
+func (self *PopupData) SetOpenMousePos(v Vec2) {
+	C.wrap_ImGuiPopupData_SetOpenMousePos(self.handle(), v.toC())
 }
 
-func (self ImGuiPopupData) GetOpenMousePos() Vec2 {
+func (self PopupData) OpenMousePos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiPopupData_GetOpenMousePos(self.handle()))
+	out.fromC(C.wrap_ImGuiPopupData_GetOpenMousePos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiPtrOrIndex) SetPtr(v unsafe.Pointer) {
-	C.ImGuiPtrOrIndex_SetPtr(self.handle(), (v))
+func (self *PtrOrIndex) SetPtr(v unsafe.Pointer) {
+	C.wrap_ImGuiPtrOrIndex_SetPtr(self.handle(), (v))
 }
 
-func (self ImGuiPtrOrIndex) GetPtr() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiPtrOrIndex_GetPtr(self.handle()))
+func (self PtrOrIndex) Ptr() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiPtrOrIndex_GetPtr(self.handle()))
 }
 
-func (self *ImGuiPtrOrIndex) SetIndex(v int32) {
-	C.ImGuiPtrOrIndex_SetIndex(self.handle(), C.int(v))
+func (self *PtrOrIndex) SetIndex(v int32) {
+	C.wrap_ImGuiPtrOrIndex_SetIndex(self.handle(), C.int(v))
 }
 
-func (self ImGuiPtrOrIndex) GetIndex() int {
-	return int(C.ImGuiPtrOrIndex_GetIndex(self.handle()))
+func (self PtrOrIndex) Index() int {
+	return int(C.wrap_ImGuiPtrOrIndex_GetIndex(self.handle()))
 }
 
-func (self *ImGuiSettingsHandler) SetTypeName(v string) {
+func (self *SettingsHandler) SetTypeName(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImGuiSettingsHandler_SetTypeName(self.handle(), vArg)
+	C.wrap_ImGuiSettingsHandler_SetTypeName(self.handle(), vArg)
 }
 
-func (self ImGuiSettingsHandler) GetTypeName() string {
-	return C.GoString(C.ImGuiSettingsHandler_GetTypeName(self.handle()))
+func (self SettingsHandler) TypeName() string {
+	return C.GoString(C.wrap_ImGuiSettingsHandler_GetTypeName(self.handle()))
 }
 
-func (self *ImGuiSettingsHandler) SetTypeHash(v ImGuiID) {
-	C.ImGuiSettingsHandler_SetTypeHash(self.handle(), C.ImGuiID(v))
+func (self *SettingsHandler) SetTypeHash(v ID) {
+	C.wrap_ImGuiSettingsHandler_SetTypeHash(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiSettingsHandler) GetTypeHash() ImGuiID {
-	return ImGuiID(C.ImGuiSettingsHandler_GetTypeHash(self.handle()))
+func (self SettingsHandler) TypeHash() ID {
+	return ImGuiID(C.wrap_ImGuiSettingsHandler_GetTypeHash(self.handle()))
 }
 
-func (self *ImGuiSettingsHandler) SetUserData(v unsafe.Pointer) {
-	C.ImGuiSettingsHandler_SetUserData(self.handle(), (v))
+func (self *SettingsHandler) SetUserData(v unsafe.Pointer) {
+	C.wrap_ImGuiSettingsHandler_SetUserData(self.handle(), (v))
 }
 
-func (self ImGuiSettingsHandler) GetUserData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiSettingsHandler_GetUserData(self.handle()))
+func (self SettingsHandler) UserData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiSettingsHandler_GetUserData(self.handle()))
 }
 
-func (self *ImGuiShrinkWidthItem) SetIndex(v int32) {
-	C.ImGuiShrinkWidthItem_SetIndex(self.handle(), C.int(v))
+func (self *ShrinkWidthItem) SetIndex(v int32) {
+	C.wrap_ImGuiShrinkWidthItem_SetIndex(self.handle(), C.int(v))
 }
 
-func (self ImGuiShrinkWidthItem) GetIndex() int {
-	return int(C.ImGuiShrinkWidthItem_GetIndex(self.handle()))
+func (self ShrinkWidthItem) Index() int {
+	return int(C.wrap_ImGuiShrinkWidthItem_GetIndex(self.handle()))
 }
 
-func (self *ImGuiShrinkWidthItem) SetWidth(v float32) {
-	C.ImGuiShrinkWidthItem_SetWidth(self.handle(), C.float(v))
+func (self *ShrinkWidthItem) SetWidth(v float32) {
+	C.wrap_ImGuiShrinkWidthItem_SetWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiShrinkWidthItem) GetWidth() float32 {
-	return float32(C.ImGuiShrinkWidthItem_GetWidth(self.handle()))
+func (self ShrinkWidthItem) Width() float32 {
+	return float32(C.wrap_ImGuiShrinkWidthItem_GetWidth(self.handle()))
 }
 
-func (self *ImGuiShrinkWidthItem) SetInitialWidth(v float32) {
-	C.ImGuiShrinkWidthItem_SetInitialWidth(self.handle(), C.float(v))
+func (self *ShrinkWidthItem) SetInitialWidth(v float32) {
+	C.wrap_ImGuiShrinkWidthItem_SetInitialWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiShrinkWidthItem) GetInitialWidth() float32 {
-	return float32(C.ImGuiShrinkWidthItem_GetInitialWidth(self.handle()))
+func (self ShrinkWidthItem) InitialWidth() float32 {
+	return float32(C.wrap_ImGuiShrinkWidthItem_GetInitialWidth(self.handle()))
 }
 
-func (self *ImGuiSizeCallbackData) SetUserData(v unsafe.Pointer) {
-	C.ImGuiSizeCallbackData_SetUserData(self.handle(), (v))
+func (self *SizeCallbackData) SetUserData(v unsafe.Pointer) {
+	C.wrap_ImGuiSizeCallbackData_SetUserData(self.handle(), (v))
 }
 
-func (self ImGuiSizeCallbackData) GetUserData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiSizeCallbackData_GetUserData(self.handle()))
+func (self SizeCallbackData) UserData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiSizeCallbackData_GetUserData(self.handle()))
 }
 
-func (self *ImGuiSizeCallbackData) SetPos(v Vec2) {
-	C.ImGuiSizeCallbackData_SetPos(self.handle(), v.toC())
+func (self *SizeCallbackData) SetPos(v Vec2) {
+	C.wrap_ImGuiSizeCallbackData_SetPos(self.handle(), v.toC())
 }
 
-func (self ImGuiSizeCallbackData) GetPos() Vec2 {
+func (self SizeCallbackData) Pos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiSizeCallbackData_GetPos(self.handle()))
+	out.fromC(C.wrap_ImGuiSizeCallbackData_GetPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiSizeCallbackData) SetCurrentSize(v Vec2) {
-	C.ImGuiSizeCallbackData_SetCurrentSize(self.handle(), v.toC())
+func (self *SizeCallbackData) SetCurrentSize(v Vec2) {
+	C.wrap_ImGuiSizeCallbackData_SetCurrentSize(self.handle(), v.toC())
 }
 
-func (self ImGuiSizeCallbackData) GetCurrentSize() Vec2 {
+func (self SizeCallbackData) CurrentSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiSizeCallbackData_GetCurrentSize(self.handle()))
+	out.fromC(C.wrap_ImGuiSizeCallbackData_GetCurrentSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiSizeCallbackData) SetDesiredSize(v Vec2) {
-	C.ImGuiSizeCallbackData_SetDesiredSize(self.handle(), v.toC())
+func (self *SizeCallbackData) SetDesiredSize(v Vec2) {
+	C.wrap_ImGuiSizeCallbackData_SetDesiredSize(self.handle(), v.toC())
 }
 
-func (self ImGuiSizeCallbackData) GetDesiredSize() Vec2 {
+func (self SizeCallbackData) DesiredSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiSizeCallbackData_GetDesiredSize(self.handle()))
+	out.fromC(C.wrap_ImGuiSizeCallbackData_GetDesiredSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiStackLevelInfo) SetID(v ImGuiID) {
-	C.ImGuiStackLevelInfo_SetID(self.handle(), C.ImGuiID(v))
+func (self *StackLevelInfo) SetID(v ID) {
+	C.wrap_ImGuiStackLevelInfo_SetID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiStackLevelInfo) GetID() ImGuiID {
-	return ImGuiID(C.ImGuiStackLevelInfo_GetID(self.handle()))
+func (self StackLevelInfo) ID() ID {
+	return ImGuiID(C.wrap_ImGuiStackLevelInfo_GetID(self.handle()))
 }
 
-func (self *ImGuiStackLevelInfo) SetQueryFrameCount(v int) {
-	C.ImGuiStackLevelInfo_SetQueryFrameCount(self.handle(), C.ImS8(v))
+func (self *StackLevelInfo) SetQueryFrameCount(v int) {
+	C.wrap_ImGuiStackLevelInfo_SetQueryFrameCount(self.handle(), C.ImS8(v))
 }
 
-func (self ImGuiStackLevelInfo) GetQueryFrameCount() int {
-	return int(C.ImGuiStackLevelInfo_GetQueryFrameCount(self.handle()))
+func (self StackLevelInfo) QueryFrameCount() int {
+	return int(C.wrap_ImGuiStackLevelInfo_GetQueryFrameCount(self.handle()))
 }
 
-func (self *ImGuiStackLevelInfo) SetQuerySuccess(v bool) {
-	C.ImGuiStackLevelInfo_SetQuerySuccess(self.handle(), C.bool(v))
+func (self *StackLevelInfo) SetQuerySuccess(v bool) {
+	C.wrap_ImGuiStackLevelInfo_SetQuerySuccess(self.handle(), C.bool(v))
 }
 
-func (self ImGuiStackLevelInfo) GetQuerySuccess() bool {
-	return C.ImGuiStackLevelInfo_GetQuerySuccess(self.handle()) == C.bool(true)
+func (self StackLevelInfo) QuerySuccess() bool {
+	return C.wrap_ImGuiStackLevelInfo_GetQuerySuccess(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiStackLevelInfo) SetDataType(v DataType) {
-	C.ImGuiStackLevelInfo_SetDataType(self.handle(), C.ImGuiDataType(v))
+func (self *StackLevelInfo) SetDataType(v DataType) {
+	C.wrap_ImGuiStackLevelInfo_SetDataType(self.handle(), C.ImGuiDataType(v))
 }
 
-func (self ImGuiStackLevelInfo) GetDataType() DataType {
-	return DataType(C.ImGuiStackLevelInfo_GetDataType(self.handle()))
+func (self StackLevelInfo) DataType() DataType {
+	return DataType(C.wrap_ImGuiStackLevelInfo_GetDataType(self.handle()))
 }
 
-func (self *ImGuiStackSizes) SetSizeOfIDStack(v int) {
-	C.ImGuiStackSizes_SetSizeOfIDStack(self.handle(), C.short(v))
+func (self *StackSizes) SetSizeOfIDStack(v int) {
+	C.wrap_ImGuiStackSizes_SetSizeOfIDStack(self.handle(), C.short(v))
 }
 
-func (self ImGuiStackSizes) GetSizeOfIDStack() int {
-	return int(C.ImGuiStackSizes_GetSizeOfIDStack(self.handle()))
+func (self StackSizes) SizeOfIDStack() int {
+	return int(C.wrap_ImGuiStackSizes_GetSizeOfIDStack(self.handle()))
 }
 
-func (self *ImGuiStackSizes) SetSizeOfColorStack(v int) {
-	C.ImGuiStackSizes_SetSizeOfColorStack(self.handle(), C.short(v))
+func (self *StackSizes) SetSizeOfColorStack(v int) {
+	C.wrap_ImGuiStackSizes_SetSizeOfColorStack(self.handle(), C.short(v))
 }
 
-func (self ImGuiStackSizes) GetSizeOfColorStack() int {
-	return int(C.ImGuiStackSizes_GetSizeOfColorStack(self.handle()))
+func (self StackSizes) SizeOfColorStack() int {
+	return int(C.wrap_ImGuiStackSizes_GetSizeOfColorStack(self.handle()))
 }
 
-func (self *ImGuiStackSizes) SetSizeOfStyleVarStack(v int) {
-	C.ImGuiStackSizes_SetSizeOfStyleVarStack(self.handle(), C.short(v))
+func (self *StackSizes) SetSizeOfStyleVarStack(v int) {
+	C.wrap_ImGuiStackSizes_SetSizeOfStyleVarStack(self.handle(), C.short(v))
 }
 
-func (self ImGuiStackSizes) GetSizeOfStyleVarStack() int {
-	return int(C.ImGuiStackSizes_GetSizeOfStyleVarStack(self.handle()))
+func (self StackSizes) SizeOfStyleVarStack() int {
+	return int(C.wrap_ImGuiStackSizes_GetSizeOfStyleVarStack(self.handle()))
 }
 
-func (self *ImGuiStackSizes) SetSizeOfFontStack(v int) {
-	C.ImGuiStackSizes_SetSizeOfFontStack(self.handle(), C.short(v))
+func (self *StackSizes) SetSizeOfFontStack(v int) {
+	C.wrap_ImGuiStackSizes_SetSizeOfFontStack(self.handle(), C.short(v))
 }
 
-func (self ImGuiStackSizes) GetSizeOfFontStack() int {
-	return int(C.ImGuiStackSizes_GetSizeOfFontStack(self.handle()))
+func (self StackSizes) SizeOfFontStack() int {
+	return int(C.wrap_ImGuiStackSizes_GetSizeOfFontStack(self.handle()))
 }
 
-func (self *ImGuiStackSizes) SetSizeOfFocusScopeStack(v int) {
-	C.ImGuiStackSizes_SetSizeOfFocusScopeStack(self.handle(), C.short(v))
+func (self *StackSizes) SetSizeOfFocusScopeStack(v int) {
+	C.wrap_ImGuiStackSizes_SetSizeOfFocusScopeStack(self.handle(), C.short(v))
 }
 
-func (self ImGuiStackSizes) GetSizeOfFocusScopeStack() int {
-	return int(C.ImGuiStackSizes_GetSizeOfFocusScopeStack(self.handle()))
+func (self StackSizes) SizeOfFocusScopeStack() int {
+	return int(C.wrap_ImGuiStackSizes_GetSizeOfFocusScopeStack(self.handle()))
 }
 
-func (self *ImGuiStackSizes) SetSizeOfGroupStack(v int) {
-	C.ImGuiStackSizes_SetSizeOfGroupStack(self.handle(), C.short(v))
+func (self *StackSizes) SetSizeOfGroupStack(v int) {
+	C.wrap_ImGuiStackSizes_SetSizeOfGroupStack(self.handle(), C.short(v))
 }
 
-func (self ImGuiStackSizes) GetSizeOfGroupStack() int {
-	return int(C.ImGuiStackSizes_GetSizeOfGroupStack(self.handle()))
+func (self StackSizes) SizeOfGroupStack() int {
+	return int(C.wrap_ImGuiStackSizes_GetSizeOfGroupStack(self.handle()))
 }
 
-func (self *ImGuiStackSizes) SetSizeOfItemFlagsStack(v int) {
-	C.ImGuiStackSizes_SetSizeOfItemFlagsStack(self.handle(), C.short(v))
+func (self *StackSizes) SetSizeOfItemFlagsStack(v int) {
+	C.wrap_ImGuiStackSizes_SetSizeOfItemFlagsStack(self.handle(), C.short(v))
 }
 
-func (self ImGuiStackSizes) GetSizeOfItemFlagsStack() int {
-	return int(C.ImGuiStackSizes_GetSizeOfItemFlagsStack(self.handle()))
+func (self StackSizes) SizeOfItemFlagsStack() int {
+	return int(C.wrap_ImGuiStackSizes_GetSizeOfItemFlagsStack(self.handle()))
 }
 
-func (self *ImGuiStackSizes) SetSizeOfBeginPopupStack(v int) {
-	C.ImGuiStackSizes_SetSizeOfBeginPopupStack(self.handle(), C.short(v))
+func (self *StackSizes) SetSizeOfBeginPopupStack(v int) {
+	C.wrap_ImGuiStackSizes_SetSizeOfBeginPopupStack(self.handle(), C.short(v))
 }
 
-func (self ImGuiStackSizes) GetSizeOfBeginPopupStack() int {
-	return int(C.ImGuiStackSizes_GetSizeOfBeginPopupStack(self.handle()))
+func (self StackSizes) SizeOfBeginPopupStack() int {
+	return int(C.wrap_ImGuiStackSizes_GetSizeOfBeginPopupStack(self.handle()))
 }
 
-func (self *ImGuiStackSizes) SetSizeOfDisabledStack(v int) {
-	C.ImGuiStackSizes_SetSizeOfDisabledStack(self.handle(), C.short(v))
+func (self *StackSizes) SetSizeOfDisabledStack(v int) {
+	C.wrap_ImGuiStackSizes_SetSizeOfDisabledStack(self.handle(), C.short(v))
 }
 
-func (self ImGuiStackSizes) GetSizeOfDisabledStack() int {
-	return int(C.ImGuiStackSizes_GetSizeOfDisabledStack(self.handle()))
+func (self StackSizes) SizeOfDisabledStack() int {
+	return int(C.wrap_ImGuiStackSizes_GetSizeOfDisabledStack(self.handle()))
 }
 
-func (self *ImGuiStackTool) SetLastActiveFrame(v int32) {
-	C.ImGuiStackTool_SetLastActiveFrame(self.handle(), C.int(v))
+func (self *StackTool) SetLastActiveFrame(v int32) {
+	C.wrap_ImGuiStackTool_SetLastActiveFrame(self.handle(), C.int(v))
 }
 
-func (self ImGuiStackTool) GetLastActiveFrame() int {
-	return int(C.ImGuiStackTool_GetLastActiveFrame(self.handle()))
+func (self StackTool) LastActiveFrame() int {
+	return int(C.wrap_ImGuiStackTool_GetLastActiveFrame(self.handle()))
 }
 
-func (self *ImGuiStackTool) SetStackLevel(v int32) {
-	C.ImGuiStackTool_SetStackLevel(self.handle(), C.int(v))
+func (self *StackTool) SetStackLevel(v int32) {
+	C.wrap_ImGuiStackTool_SetStackLevel(self.handle(), C.int(v))
 }
 
-func (self ImGuiStackTool) GetStackLevel() int {
-	return int(C.ImGuiStackTool_GetStackLevel(self.handle()))
+func (self StackTool) StackLevel() int {
+	return int(C.wrap_ImGuiStackTool_GetStackLevel(self.handle()))
 }
 
-func (self *ImGuiStackTool) SetQueryId(v ImGuiID) {
-	C.ImGuiStackTool_SetQueryId(self.handle(), C.ImGuiID(v))
+func (self *StackTool) SetQueryId(v ID) {
+	C.wrap_ImGuiStackTool_SetQueryId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiStackTool) GetQueryId() ImGuiID {
-	return ImGuiID(C.ImGuiStackTool_GetQueryId(self.handle()))
+func (self StackTool) QueryId() ID {
+	return ImGuiID(C.wrap_ImGuiStackTool_GetQueryId(self.handle()))
 }
 
-func (self *ImGuiStackTool) SetCopyToClipboardOnCtrlC(v bool) {
-	C.ImGuiStackTool_SetCopyToClipboardOnCtrlC(self.handle(), C.bool(v))
+func (self *StackTool) SetCopyToClipboardOnCtrlC(v bool) {
+	C.wrap_ImGuiStackTool_SetCopyToClipboardOnCtrlC(self.handle(), C.bool(v))
 }
 
-func (self ImGuiStackTool) GetCopyToClipboardOnCtrlC() bool {
-	return C.ImGuiStackTool_GetCopyToClipboardOnCtrlC(self.handle()) == C.bool(true)
+func (self StackTool) CopyToClipboardOnCtrlC() bool {
+	return C.wrap_ImGuiStackTool_GetCopyToClipboardOnCtrlC(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiStackTool) SetCopyToClipboardLastTime(v float32) {
-	C.ImGuiStackTool_SetCopyToClipboardLastTime(self.handle(), C.float(v))
+func (self *StackTool) SetCopyToClipboardLastTime(v float32) {
+	C.wrap_ImGuiStackTool_SetCopyToClipboardLastTime(self.handle(), C.float(v))
 }
 
-func (self ImGuiStackTool) GetCopyToClipboardLastTime() float32 {
-	return float32(C.ImGuiStackTool_GetCopyToClipboardLastTime(self.handle()))
+func (self StackTool) CopyToClipboardLastTime() float32 {
+	return float32(C.wrap_ImGuiStackTool_GetCopyToClipboardLastTime(self.handle()))
 }
 
-func (self *ImGuiStoragePair) Setkey(v ImGuiID) {
-	C.ImGuiStoragePair_Setkey(self.handle(), C.ImGuiID(v))
+func (self *StoragePair) Setkey(v ID) {
+	C.wrap_ImGuiStoragePair_Setkey(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiStoragePair) Getkey() ImGuiID {
-	return ImGuiID(C.ImGuiStoragePair_Getkey(self.handle()))
+func (self StoragePair) key() ID {
+	return ImGuiID(C.wrap_ImGuiStoragePair_Getkey(self.handle()))
 }
 
-func (self *ImGuiStyle) SetAlpha(v float32) {
-	C.ImGuiStyle_SetAlpha(self.handle(), C.float(v))
+func (self *Style) SetAlpha(v float32) {
+	C.wrap_ImGuiStyle_SetAlpha(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetAlpha() float32 {
-	return float32(C.ImGuiStyle_GetAlpha(self.handle()))
+func (self Style) Alpha() float32 {
+	return float32(C.wrap_ImGuiStyle_GetAlpha(self.handle()))
 }
 
-func (self *ImGuiStyle) SetDisabledAlpha(v float32) {
-	C.ImGuiStyle_SetDisabledAlpha(self.handle(), C.float(v))
+func (self *Style) SetDisabledAlpha(v float32) {
+	C.wrap_ImGuiStyle_SetDisabledAlpha(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetDisabledAlpha() float32 {
-	return float32(C.ImGuiStyle_GetDisabledAlpha(self.handle()))
+func (self Style) DisabledAlpha() float32 {
+	return float32(C.wrap_ImGuiStyle_GetDisabledAlpha(self.handle()))
 }
 
-func (self *ImGuiStyle) SetWindowPadding(v Vec2) {
-	C.ImGuiStyle_SetWindowPadding(self.handle(), v.toC())
+func (self *Style) SetWindowPadding(v Vec2) {
+	C.wrap_ImGuiStyle_SetWindowPadding(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetWindowPadding() Vec2 {
+func (self Style) WindowPadding() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiStyle_GetWindowPadding(self.handle()))
+	out.fromC(C.wrap_ImGuiStyle_GetWindowPadding(self.handle()))
 	return *out
 }
 
-func (self *ImGuiStyle) SetWindowRounding(v float32) {
-	C.ImGuiStyle_SetWindowRounding(self.handle(), C.float(v))
+func (self *Style) SetWindowRounding(v float32) {
+	C.wrap_ImGuiStyle_SetWindowRounding(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetWindowRounding() float32 {
-	return float32(C.ImGuiStyle_GetWindowRounding(self.handle()))
+func (self Style) WindowRounding() float32 {
+	return float32(C.wrap_ImGuiStyle_GetWindowRounding(self.handle()))
 }
 
-func (self *ImGuiStyle) SetWindowBorderSize(v float32) {
-	C.ImGuiStyle_SetWindowBorderSize(self.handle(), C.float(v))
+func (self *Style) SetWindowBorderSize(v float32) {
+	C.wrap_ImGuiStyle_SetWindowBorderSize(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetWindowBorderSize() float32 {
-	return float32(C.ImGuiStyle_GetWindowBorderSize(self.handle()))
+func (self Style) WindowBorderSize() float32 {
+	return float32(C.wrap_ImGuiStyle_GetWindowBorderSize(self.handle()))
 }
 
-func (self *ImGuiStyle) SetWindowMinSize(v Vec2) {
-	C.ImGuiStyle_SetWindowMinSize(self.handle(), v.toC())
+func (self *Style) SetWindowMinSize(v Vec2) {
+	C.wrap_ImGuiStyle_SetWindowMinSize(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetWindowMinSize() Vec2 {
+func (self Style) WindowMinSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiStyle_GetWindowMinSize(self.handle()))
+	out.fromC(C.wrap_ImGuiStyle_GetWindowMinSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiStyle) SetWindowTitleAlign(v Vec2) {
-	C.ImGuiStyle_SetWindowTitleAlign(self.handle(), v.toC())
+func (self *Style) SetWindowTitleAlign(v Vec2) {
+	C.wrap_ImGuiStyle_SetWindowTitleAlign(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetWindowTitleAlign() Vec2 {
+func (self Style) WindowTitleAlign() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiStyle_GetWindowTitleAlign(self.handle()))
+	out.fromC(C.wrap_ImGuiStyle_GetWindowTitleAlign(self.handle()))
 	return *out
 }
 
-func (self *ImGuiStyle) SetWindowMenuButtonPosition(v Dir) {
-	C.ImGuiStyle_SetWindowMenuButtonPosition(self.handle(), C.ImGuiDir(v))
+func (self *Style) SetWindowMenuButtonPosition(v Dir) {
+	C.wrap_ImGuiStyle_SetWindowMenuButtonPosition(self.handle(), C.ImGuiDir(v))
 }
 
-func (self ImGuiStyle) GetWindowMenuButtonPosition() Dir {
-	return Dir(C.ImGuiStyle_GetWindowMenuButtonPosition(self.handle()))
+func (self Style) WindowMenuButtonPosition() Dir {
+	return Dir(C.wrap_ImGuiStyle_GetWindowMenuButtonPosition(self.handle()))
 }
 
-func (self *ImGuiStyle) SetChildRounding(v float32) {
-	C.ImGuiStyle_SetChildRounding(self.handle(), C.float(v))
+func (self *Style) SetChildRounding(v float32) {
+	C.wrap_ImGuiStyle_SetChildRounding(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetChildRounding() float32 {
-	return float32(C.ImGuiStyle_GetChildRounding(self.handle()))
+func (self Style) ChildRounding() float32 {
+	return float32(C.wrap_ImGuiStyle_GetChildRounding(self.handle()))
 }
 
-func (self *ImGuiStyle) SetChildBorderSize(v float32) {
-	C.ImGuiStyle_SetChildBorderSize(self.handle(), C.float(v))
+func (self *Style) SetChildBorderSize(v float32) {
+	C.wrap_ImGuiStyle_SetChildBorderSize(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetChildBorderSize() float32 {
-	return float32(C.ImGuiStyle_GetChildBorderSize(self.handle()))
+func (self Style) ChildBorderSize() float32 {
+	return float32(C.wrap_ImGuiStyle_GetChildBorderSize(self.handle()))
 }
 
-func (self *ImGuiStyle) SetPopupRounding(v float32) {
-	C.ImGuiStyle_SetPopupRounding(self.handle(), C.float(v))
+func (self *Style) SetPopupRounding(v float32) {
+	C.wrap_ImGuiStyle_SetPopupRounding(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetPopupRounding() float32 {
-	return float32(C.ImGuiStyle_GetPopupRounding(self.handle()))
+func (self Style) PopupRounding() float32 {
+	return float32(C.wrap_ImGuiStyle_GetPopupRounding(self.handle()))
 }
 
-func (self *ImGuiStyle) SetPopupBorderSize(v float32) {
-	C.ImGuiStyle_SetPopupBorderSize(self.handle(), C.float(v))
+func (self *Style) SetPopupBorderSize(v float32) {
+	C.wrap_ImGuiStyle_SetPopupBorderSize(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetPopupBorderSize() float32 {
-	return float32(C.ImGuiStyle_GetPopupBorderSize(self.handle()))
+func (self Style) PopupBorderSize() float32 {
+	return float32(C.wrap_ImGuiStyle_GetPopupBorderSize(self.handle()))
 }
 
-func (self *ImGuiStyle) SetFramePadding(v Vec2) {
-	C.ImGuiStyle_SetFramePadding(self.handle(), v.toC())
+func (self *Style) SetFramePadding(v Vec2) {
+	C.wrap_ImGuiStyle_SetFramePadding(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetFramePadding() Vec2 {
+func (self Style) FramePadding() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiStyle_GetFramePadding(self.handle()))
+	out.fromC(C.wrap_ImGuiStyle_GetFramePadding(self.handle()))
 	return *out
 }
 
-func (self *ImGuiStyle) SetFrameRounding(v float32) {
-	C.ImGuiStyle_SetFrameRounding(self.handle(), C.float(v))
+func (self *Style) SetFrameRounding(v float32) {
+	C.wrap_ImGuiStyle_SetFrameRounding(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetFrameRounding() float32 {
-	return float32(C.ImGuiStyle_GetFrameRounding(self.handle()))
+func (self Style) FrameRounding() float32 {
+	return float32(C.wrap_ImGuiStyle_GetFrameRounding(self.handle()))
 }
 
-func (self *ImGuiStyle) SetFrameBorderSize(v float32) {
-	C.ImGuiStyle_SetFrameBorderSize(self.handle(), C.float(v))
+func (self *Style) SetFrameBorderSize(v float32) {
+	C.wrap_ImGuiStyle_SetFrameBorderSize(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetFrameBorderSize() float32 {
-	return float32(C.ImGuiStyle_GetFrameBorderSize(self.handle()))
+func (self Style) FrameBorderSize() float32 {
+	return float32(C.wrap_ImGuiStyle_GetFrameBorderSize(self.handle()))
 }
 
-func (self *ImGuiStyle) SetItemSpacing(v Vec2) {
-	C.ImGuiStyle_SetItemSpacing(self.handle(), v.toC())
+func (self *Style) SetItemSpacing(v Vec2) {
+	C.wrap_ImGuiStyle_SetItemSpacing(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetItemSpacing() Vec2 {
+func (self Style) ItemSpacing() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiStyle_GetItemSpacing(self.handle()))
+	out.fromC(C.wrap_ImGuiStyle_GetItemSpacing(self.handle()))
 	return *out
 }
 
-func (self *ImGuiStyle) SetItemInnerSpacing(v Vec2) {
-	C.ImGuiStyle_SetItemInnerSpacing(self.handle(), v.toC())
+func (self *Style) SetItemInnerSpacing(v Vec2) {
+	C.wrap_ImGuiStyle_SetItemInnerSpacing(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetItemInnerSpacing() Vec2 {
+func (self Style) ItemInnerSpacing() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiStyle_GetItemInnerSpacing(self.handle()))
+	out.fromC(C.wrap_ImGuiStyle_GetItemInnerSpacing(self.handle()))
 	return *out
 }
 
-func (self *ImGuiStyle) SetCellPadding(v Vec2) {
-	C.ImGuiStyle_SetCellPadding(self.handle(), v.toC())
+func (self *Style) SetCellPadding(v Vec2) {
+	C.wrap_ImGuiStyle_SetCellPadding(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetCellPadding() Vec2 {
+func (self Style) CellPadding() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiStyle_GetCellPadding(self.handle()))
+	out.fromC(C.wrap_ImGuiStyle_GetCellPadding(self.handle()))
 	return *out
 }
 
-func (self *ImGuiStyle) SetTouchExtraPadding(v Vec2) {
-	C.ImGuiStyle_SetTouchExtraPadding(self.handle(), v.toC())
+func (self *Style) SetTouchExtraPadding(v Vec2) {
+	C.wrap_ImGuiStyle_SetTouchExtraPadding(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetTouchExtraPadding() Vec2 {
+func (self Style) TouchExtraPadding() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiStyle_GetTouchExtraPadding(self.handle()))
+	out.fromC(C.wrap_ImGuiStyle_GetTouchExtraPadding(self.handle()))
 	return *out
 }
 
-func (self *ImGuiStyle) SetIndentSpacing(v float32) {
-	C.ImGuiStyle_SetIndentSpacing(self.handle(), C.float(v))
+func (self *Style) SetIndentSpacing(v float32) {
+	C.wrap_ImGuiStyle_SetIndentSpacing(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetIndentSpacing() float32 {
-	return float32(C.ImGuiStyle_GetIndentSpacing(self.handle()))
+func (self Style) IndentSpacing() float32 {
+	return float32(C.wrap_ImGuiStyle_GetIndentSpacing(self.handle()))
 }
 
-func (self *ImGuiStyle) SetColumnsMinSpacing(v float32) {
-	C.ImGuiStyle_SetColumnsMinSpacing(self.handle(), C.float(v))
+func (self *Style) SetColumnsMinSpacing(v float32) {
+	C.wrap_ImGuiStyle_SetColumnsMinSpacing(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetColumnsMinSpacing() float32 {
-	return float32(C.ImGuiStyle_GetColumnsMinSpacing(self.handle()))
+func (self Style) ColumnsMinSpacing() float32 {
+	return float32(C.wrap_ImGuiStyle_GetColumnsMinSpacing(self.handle()))
 }
 
-func (self *ImGuiStyle) SetScrollbarSize(v float32) {
-	C.ImGuiStyle_SetScrollbarSize(self.handle(), C.float(v))
+func (self *Style) SetScrollbarSize(v float32) {
+	C.wrap_ImGuiStyle_SetScrollbarSize(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetScrollbarSize() float32 {
-	return float32(C.ImGuiStyle_GetScrollbarSize(self.handle()))
+func (self Style) ScrollbarSize() float32 {
+	return float32(C.wrap_ImGuiStyle_GetScrollbarSize(self.handle()))
 }
 
-func (self *ImGuiStyle) SetScrollbarRounding(v float32) {
-	C.ImGuiStyle_SetScrollbarRounding(self.handle(), C.float(v))
+func (self *Style) SetScrollbarRounding(v float32) {
+	C.wrap_ImGuiStyle_SetScrollbarRounding(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetScrollbarRounding() float32 {
-	return float32(C.ImGuiStyle_GetScrollbarRounding(self.handle()))
+func (self Style) ScrollbarRounding() float32 {
+	return float32(C.wrap_ImGuiStyle_GetScrollbarRounding(self.handle()))
 }
 
-func (self *ImGuiStyle) SetGrabMinSize(v float32) {
-	C.ImGuiStyle_SetGrabMinSize(self.handle(), C.float(v))
+func (self *Style) SetGrabMinSize(v float32) {
+	C.wrap_ImGuiStyle_SetGrabMinSize(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetGrabMinSize() float32 {
-	return float32(C.ImGuiStyle_GetGrabMinSize(self.handle()))
+func (self Style) GrabMinSize() float32 {
+	return float32(C.wrap_ImGuiStyle_GetGrabMinSize(self.handle()))
 }
 
-func (self *ImGuiStyle) SetGrabRounding(v float32) {
-	C.ImGuiStyle_SetGrabRounding(self.handle(), C.float(v))
+func (self *Style) SetGrabRounding(v float32) {
+	C.wrap_ImGuiStyle_SetGrabRounding(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetGrabRounding() float32 {
-	return float32(C.ImGuiStyle_GetGrabRounding(self.handle()))
+func (self Style) GrabRounding() float32 {
+	return float32(C.wrap_ImGuiStyle_GetGrabRounding(self.handle()))
 }
 
-func (self *ImGuiStyle) SetLogSliderDeadzone(v float32) {
-	C.ImGuiStyle_SetLogSliderDeadzone(self.handle(), C.float(v))
+func (self *Style) SetLogSliderDeadzone(v float32) {
+	C.wrap_ImGuiStyle_SetLogSliderDeadzone(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetLogSliderDeadzone() float32 {
-	return float32(C.ImGuiStyle_GetLogSliderDeadzone(self.handle()))
+func (self Style) LogSliderDeadzone() float32 {
+	return float32(C.wrap_ImGuiStyle_GetLogSliderDeadzone(self.handle()))
 }
 
-func (self *ImGuiStyle) SetTabRounding(v float32) {
-	C.ImGuiStyle_SetTabRounding(self.handle(), C.float(v))
+func (self *Style) SetTabRounding(v float32) {
+	C.wrap_ImGuiStyle_SetTabRounding(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetTabRounding() float32 {
-	return float32(C.ImGuiStyle_GetTabRounding(self.handle()))
+func (self Style) TabRounding() float32 {
+	return float32(C.wrap_ImGuiStyle_GetTabRounding(self.handle()))
 }
 
-func (self *ImGuiStyle) SetTabBorderSize(v float32) {
-	C.ImGuiStyle_SetTabBorderSize(self.handle(), C.float(v))
+func (self *Style) SetTabBorderSize(v float32) {
+	C.wrap_ImGuiStyle_SetTabBorderSize(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetTabBorderSize() float32 {
-	return float32(C.ImGuiStyle_GetTabBorderSize(self.handle()))
+func (self Style) TabBorderSize() float32 {
+	return float32(C.wrap_ImGuiStyle_GetTabBorderSize(self.handle()))
 }
 
-func (self *ImGuiStyle) SetTabMinWidthForCloseButton(v float32) {
-	C.ImGuiStyle_SetTabMinWidthForCloseButton(self.handle(), C.float(v))
+func (self *Style) SetTabMinWidthForCloseButton(v float32) {
+	C.wrap_ImGuiStyle_SetTabMinWidthForCloseButton(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetTabMinWidthForCloseButton() float32 {
-	return float32(C.ImGuiStyle_GetTabMinWidthForCloseButton(self.handle()))
+func (self Style) TabMinWidthForCloseButton() float32 {
+	return float32(C.wrap_ImGuiStyle_GetTabMinWidthForCloseButton(self.handle()))
 }
 
-func (self *ImGuiStyle) SetColorButtonPosition(v Dir) {
-	C.ImGuiStyle_SetColorButtonPosition(self.handle(), C.ImGuiDir(v))
+func (self *Style) SetColorButtonPosition(v Dir) {
+	C.wrap_ImGuiStyle_SetColorButtonPosition(self.handle(), C.ImGuiDir(v))
 }
 
-func (self ImGuiStyle) GetColorButtonPosition() Dir {
-	return Dir(C.ImGuiStyle_GetColorButtonPosition(self.handle()))
+func (self Style) ColorButtonPosition() Dir {
+	return Dir(C.wrap_ImGuiStyle_GetColorButtonPosition(self.handle()))
 }
 
-func (self *ImGuiStyle) SetButtonTextAlign(v Vec2) {
-	C.ImGuiStyle_SetButtonTextAlign(self.handle(), v.toC())
+func (self *Style) SetButtonTextAlign(v Vec2) {
+	C.wrap_ImGuiStyle_SetButtonTextAlign(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetButtonTextAlign() Vec2 {
+func (self Style) ButtonTextAlign() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiStyle_GetButtonTextAlign(self.handle()))
+	out.fromC(C.wrap_ImGuiStyle_GetButtonTextAlign(self.handle()))
 	return *out
 }
 
-func (self *ImGuiStyle) SetSelectableTextAlign(v Vec2) {
-	C.ImGuiStyle_SetSelectableTextAlign(self.handle(), v.toC())
+func (self *Style) SetSelectableTextAlign(v Vec2) {
+	C.wrap_ImGuiStyle_SetSelectableTextAlign(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetSelectableTextAlign() Vec2 {
+func (self Style) SelectableTextAlign() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiStyle_GetSelectableTextAlign(self.handle()))
+	out.fromC(C.wrap_ImGuiStyle_GetSelectableTextAlign(self.handle()))
 	return *out
 }
 
-func (self *ImGuiStyle) SetDisplayWindowPadding(v Vec2) {
-	C.ImGuiStyle_SetDisplayWindowPadding(self.handle(), v.toC())
+func (self *Style) SetDisplayWindowPadding(v Vec2) {
+	C.wrap_ImGuiStyle_SetDisplayWindowPadding(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetDisplayWindowPadding() Vec2 {
+func (self Style) DisplayWindowPadding() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiStyle_GetDisplayWindowPadding(self.handle()))
+	out.fromC(C.wrap_ImGuiStyle_GetDisplayWindowPadding(self.handle()))
 	return *out
 }
 
-func (self *ImGuiStyle) SetDisplaySafeAreaPadding(v Vec2) {
-	C.ImGuiStyle_SetDisplaySafeAreaPadding(self.handle(), v.toC())
+func (self *Style) SetDisplaySafeAreaPadding(v Vec2) {
+	C.wrap_ImGuiStyle_SetDisplaySafeAreaPadding(self.handle(), v.toC())
 }
 
-func (self ImGuiStyle) GetDisplaySafeAreaPadding() Vec2 {
+func (self Style) DisplaySafeAreaPadding() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiStyle_GetDisplaySafeAreaPadding(self.handle()))
+	out.fromC(C.wrap_ImGuiStyle_GetDisplaySafeAreaPadding(self.handle()))
 	return *out
 }
 
-func (self *ImGuiStyle) SetMouseCursorScale(v float32) {
-	C.ImGuiStyle_SetMouseCursorScale(self.handle(), C.float(v))
+func (self *Style) SetMouseCursorScale(v float32) {
+	C.wrap_ImGuiStyle_SetMouseCursorScale(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetMouseCursorScale() float32 {
-	return float32(C.ImGuiStyle_GetMouseCursorScale(self.handle()))
+func (self Style) MouseCursorScale() float32 {
+	return float32(C.wrap_ImGuiStyle_GetMouseCursorScale(self.handle()))
 }
 
-func (self *ImGuiStyle) SetAntiAliasedLines(v bool) {
-	C.ImGuiStyle_SetAntiAliasedLines(self.handle(), C.bool(v))
+func (self *Style) SetAntiAliasedLines(v bool) {
+	C.wrap_ImGuiStyle_SetAntiAliasedLines(self.handle(), C.bool(v))
 }
 
-func (self ImGuiStyle) GetAntiAliasedLines() bool {
-	return C.ImGuiStyle_GetAntiAliasedLines(self.handle()) == C.bool(true)
+func (self Style) AntiAliasedLines() bool {
+	return C.wrap_ImGuiStyle_GetAntiAliasedLines(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiStyle) SetAntiAliasedLinesUseTex(v bool) {
-	C.ImGuiStyle_SetAntiAliasedLinesUseTex(self.handle(), C.bool(v))
+func (self *Style) SetAntiAliasedLinesUseTex(v bool) {
+	C.wrap_ImGuiStyle_SetAntiAliasedLinesUseTex(self.handle(), C.bool(v))
 }
 
-func (self ImGuiStyle) GetAntiAliasedLinesUseTex() bool {
-	return C.ImGuiStyle_GetAntiAliasedLinesUseTex(self.handle()) == C.bool(true)
+func (self Style) AntiAliasedLinesUseTex() bool {
+	return C.wrap_ImGuiStyle_GetAntiAliasedLinesUseTex(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiStyle) SetAntiAliasedFill(v bool) {
-	C.ImGuiStyle_SetAntiAliasedFill(self.handle(), C.bool(v))
+func (self *Style) SetAntiAliasedFill(v bool) {
+	C.wrap_ImGuiStyle_SetAntiAliasedFill(self.handle(), C.bool(v))
 }
 
-func (self ImGuiStyle) GetAntiAliasedFill() bool {
-	return C.ImGuiStyle_GetAntiAliasedFill(self.handle()) == C.bool(true)
+func (self Style) AntiAliasedFill() bool {
+	return C.wrap_ImGuiStyle_GetAntiAliasedFill(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiStyle) SetCurveTessellationTol(v float32) {
-	C.ImGuiStyle_SetCurveTessellationTol(self.handle(), C.float(v))
+func (self *Style) SetCurveTessellationTol(v float32) {
+	C.wrap_ImGuiStyle_SetCurveTessellationTol(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetCurveTessellationTol() float32 {
-	return float32(C.ImGuiStyle_GetCurveTessellationTol(self.handle()))
+func (self Style) CurveTessellationTol() float32 {
+	return float32(C.wrap_ImGuiStyle_GetCurveTessellationTol(self.handle()))
 }
 
-func (self *ImGuiStyle) SetCircleTessellationMaxError(v float32) {
-	C.ImGuiStyle_SetCircleTessellationMaxError(self.handle(), C.float(v))
+func (self *Style) SetCircleTessellationMaxError(v float32) {
+	C.wrap_ImGuiStyle_SetCircleTessellationMaxError(self.handle(), C.float(v))
 }
 
-func (self ImGuiStyle) GetCircleTessellationMaxError() float32 {
-	return float32(C.ImGuiStyle_GetCircleTessellationMaxError(self.handle()))
+func (self Style) CircleTessellationMaxError() float32 {
+	return float32(C.wrap_ImGuiStyle_GetCircleTessellationMaxError(self.handle()))
 }
 
-func (self *ImGuiStyleMod) SetVarIdx(v StyleVar) {
-	C.ImGuiStyleMod_SetVarIdx(self.handle(), C.ImGuiStyleVar(v))
+func (self *StyleMod) SetVarIdx(v StyleVar) {
+	C.wrap_ImGuiStyleMod_SetVarIdx(self.handle(), C.ImGuiStyleVar(v))
 }
 
-func (self ImGuiStyleMod) GetVarIdx() StyleVar {
-	return StyleVar(C.ImGuiStyleMod_GetVarIdx(self.handle()))
+func (self StyleMod) VarIdx() StyleVar {
+	return StyleVar(C.wrap_ImGuiStyleMod_GetVarIdx(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetFlags(v TabBarFlags) {
-	C.ImGuiTabBar_SetFlags(self.handle(), C.ImGuiTabBarFlags(v))
+func (self *TabBar) SetFlags(v TabBarFlags) {
+	C.wrap_ImGuiTabBar_SetFlags(self.handle(), C.ImGuiTabBarFlags(v))
 }
 
-func (self ImGuiTabBar) GetFlags() TabBarFlags {
-	return TabBarFlags(C.ImGuiTabBar_GetFlags(self.handle()))
+func (self TabBar) Flags() TabBarFlags {
+	return TabBarFlags(C.wrap_ImGuiTabBar_GetFlags(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetID(v ImGuiID) {
-	C.ImGuiTabBar_SetID(self.handle(), C.ImGuiID(v))
+func (self *TabBar) SetID(v ID) {
+	C.wrap_ImGuiTabBar_SetID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiTabBar) GetID() ImGuiID {
-	return ImGuiID(C.ImGuiTabBar_GetID(self.handle()))
+func (self TabBar) ID() ID {
+	return ImGuiID(C.wrap_ImGuiTabBar_GetID(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetSelectedTabId(v ImGuiID) {
-	C.ImGuiTabBar_SetSelectedTabId(self.handle(), C.ImGuiID(v))
+func (self *TabBar) SetSelectedTabId(v ID) {
+	C.wrap_ImGuiTabBar_SetSelectedTabId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiTabBar) GetSelectedTabId() ImGuiID {
-	return ImGuiID(C.ImGuiTabBar_GetSelectedTabId(self.handle()))
+func (self TabBar) SelectedTabId() ID {
+	return ImGuiID(C.wrap_ImGuiTabBar_GetSelectedTabId(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetNextSelectedTabId(v ImGuiID) {
-	C.ImGuiTabBar_SetNextSelectedTabId(self.handle(), C.ImGuiID(v))
+func (self *TabBar) SetNextSelectedTabId(v ID) {
+	C.wrap_ImGuiTabBar_SetNextSelectedTabId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiTabBar) GetNextSelectedTabId() ImGuiID {
-	return ImGuiID(C.ImGuiTabBar_GetNextSelectedTabId(self.handle()))
+func (self TabBar) NextSelectedTabId() ID {
+	return ImGuiID(C.wrap_ImGuiTabBar_GetNextSelectedTabId(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetVisibleTabId(v ImGuiID) {
-	C.ImGuiTabBar_SetVisibleTabId(self.handle(), C.ImGuiID(v))
+func (self *TabBar) SetVisibleTabId(v ID) {
+	C.wrap_ImGuiTabBar_SetVisibleTabId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiTabBar) GetVisibleTabId() ImGuiID {
-	return ImGuiID(C.ImGuiTabBar_GetVisibleTabId(self.handle()))
+func (self TabBar) VisibleTabId() ID {
+	return ImGuiID(C.wrap_ImGuiTabBar_GetVisibleTabId(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetCurrFrameVisible(v int32) {
-	C.ImGuiTabBar_SetCurrFrameVisible(self.handle(), C.int(v))
+func (self *TabBar) SetCurrFrameVisible(v int32) {
+	C.wrap_ImGuiTabBar_SetCurrFrameVisible(self.handle(), C.int(v))
 }
 
-func (self ImGuiTabBar) GetCurrFrameVisible() int {
-	return int(C.ImGuiTabBar_GetCurrFrameVisible(self.handle()))
+func (self TabBar) CurrFrameVisible() int {
+	return int(C.wrap_ImGuiTabBar_GetCurrFrameVisible(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetPrevFrameVisible(v int32) {
-	C.ImGuiTabBar_SetPrevFrameVisible(self.handle(), C.int(v))
+func (self *TabBar) SetPrevFrameVisible(v int32) {
+	C.wrap_ImGuiTabBar_SetPrevFrameVisible(self.handle(), C.int(v))
 }
 
-func (self ImGuiTabBar) GetPrevFrameVisible() int {
-	return int(C.ImGuiTabBar_GetPrevFrameVisible(self.handle()))
+func (self TabBar) PrevFrameVisible() int {
+	return int(C.wrap_ImGuiTabBar_GetPrevFrameVisible(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetBarRect(v Rect) {
-	C.ImGuiTabBar_SetBarRect(self.handle(), v.toC())
+func (self *TabBar) SetBarRect(v Rect) {
+	C.wrap_ImGuiTabBar_SetBarRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTabBar) GetBarRect() Rect {
+func (self TabBar) BarRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiTabBar_GetBarRect(self.handle()))
+	out.fromC(C.wrap_ImGuiTabBar_GetBarRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTabBar) SetCurrTabsContentsHeight(v float32) {
-	C.ImGuiTabBar_SetCurrTabsContentsHeight(self.handle(), C.float(v))
+func (self *TabBar) SetCurrTabsContentsHeight(v float32) {
+	C.wrap_ImGuiTabBar_SetCurrTabsContentsHeight(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabBar) GetCurrTabsContentsHeight() float32 {
-	return float32(C.ImGuiTabBar_GetCurrTabsContentsHeight(self.handle()))
+func (self TabBar) CurrTabsContentsHeight() float32 {
+	return float32(C.wrap_ImGuiTabBar_GetCurrTabsContentsHeight(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetPrevTabsContentsHeight(v float32) {
-	C.ImGuiTabBar_SetPrevTabsContentsHeight(self.handle(), C.float(v))
+func (self *TabBar) SetPrevTabsContentsHeight(v float32) {
+	C.wrap_ImGuiTabBar_SetPrevTabsContentsHeight(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabBar) GetPrevTabsContentsHeight() float32 {
-	return float32(C.ImGuiTabBar_GetPrevTabsContentsHeight(self.handle()))
+func (self TabBar) PrevTabsContentsHeight() float32 {
+	return float32(C.wrap_ImGuiTabBar_GetPrevTabsContentsHeight(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetWidthAllTabs(v float32) {
-	C.ImGuiTabBar_SetWidthAllTabs(self.handle(), C.float(v))
+func (self *TabBar) SetWidthAllTabs(v float32) {
+	C.wrap_ImGuiTabBar_SetWidthAllTabs(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabBar) GetWidthAllTabs() float32 {
-	return float32(C.ImGuiTabBar_GetWidthAllTabs(self.handle()))
+func (self TabBar) WidthAllTabs() float32 {
+	return float32(C.wrap_ImGuiTabBar_GetWidthAllTabs(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetWidthAllTabsIdeal(v float32) {
-	C.ImGuiTabBar_SetWidthAllTabsIdeal(self.handle(), C.float(v))
+func (self *TabBar) SetWidthAllTabsIdeal(v float32) {
+	C.wrap_ImGuiTabBar_SetWidthAllTabsIdeal(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabBar) GetWidthAllTabsIdeal() float32 {
-	return float32(C.ImGuiTabBar_GetWidthAllTabsIdeal(self.handle()))
+func (self TabBar) WidthAllTabsIdeal() float32 {
+	return float32(C.wrap_ImGuiTabBar_GetWidthAllTabsIdeal(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetScrollingAnim(v float32) {
-	C.ImGuiTabBar_SetScrollingAnim(self.handle(), C.float(v))
+func (self *TabBar) SetScrollingAnim(v float32) {
+	C.wrap_ImGuiTabBar_SetScrollingAnim(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabBar) GetScrollingAnim() float32 {
-	return float32(C.ImGuiTabBar_GetScrollingAnim(self.handle()))
+func (self TabBar) ScrollingAnim() float32 {
+	return float32(C.wrap_ImGuiTabBar_GetScrollingAnim(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetScrollingTarget(v float32) {
-	C.ImGuiTabBar_SetScrollingTarget(self.handle(), C.float(v))
+func (self *TabBar) SetScrollingTarget(v float32) {
+	C.wrap_ImGuiTabBar_SetScrollingTarget(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabBar) GetScrollingTarget() float32 {
-	return float32(C.ImGuiTabBar_GetScrollingTarget(self.handle()))
+func (self TabBar) ScrollingTarget() float32 {
+	return float32(C.wrap_ImGuiTabBar_GetScrollingTarget(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetScrollingTargetDistToVisibility(v float32) {
-	C.ImGuiTabBar_SetScrollingTargetDistToVisibility(self.handle(), C.float(v))
+func (self *TabBar) SetScrollingTargetDistToVisibility(v float32) {
+	C.wrap_ImGuiTabBar_SetScrollingTargetDistToVisibility(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabBar) GetScrollingTargetDistToVisibility() float32 {
-	return float32(C.ImGuiTabBar_GetScrollingTargetDistToVisibility(self.handle()))
+func (self TabBar) ScrollingTargetDistToVisibility() float32 {
+	return float32(C.wrap_ImGuiTabBar_GetScrollingTargetDistToVisibility(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetScrollingSpeed(v float32) {
-	C.ImGuiTabBar_SetScrollingSpeed(self.handle(), C.float(v))
+func (self *TabBar) SetScrollingSpeed(v float32) {
+	C.wrap_ImGuiTabBar_SetScrollingSpeed(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabBar) GetScrollingSpeed() float32 {
-	return float32(C.ImGuiTabBar_GetScrollingSpeed(self.handle()))
+func (self TabBar) ScrollingSpeed() float32 {
+	return float32(C.wrap_ImGuiTabBar_GetScrollingSpeed(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetScrollingRectMinX(v float32) {
-	C.ImGuiTabBar_SetScrollingRectMinX(self.handle(), C.float(v))
+func (self *TabBar) SetScrollingRectMinX(v float32) {
+	C.wrap_ImGuiTabBar_SetScrollingRectMinX(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabBar) GetScrollingRectMinX() float32 {
-	return float32(C.ImGuiTabBar_GetScrollingRectMinX(self.handle()))
+func (self TabBar) ScrollingRectMinX() float32 {
+	return float32(C.wrap_ImGuiTabBar_GetScrollingRectMinX(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetScrollingRectMaxX(v float32) {
-	C.ImGuiTabBar_SetScrollingRectMaxX(self.handle(), C.float(v))
+func (self *TabBar) SetScrollingRectMaxX(v float32) {
+	C.wrap_ImGuiTabBar_SetScrollingRectMaxX(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabBar) GetScrollingRectMaxX() float32 {
-	return float32(C.ImGuiTabBar_GetScrollingRectMaxX(self.handle()))
+func (self TabBar) ScrollingRectMaxX() float32 {
+	return float32(C.wrap_ImGuiTabBar_GetScrollingRectMaxX(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetReorderRequestTabId(v ImGuiID) {
-	C.ImGuiTabBar_SetReorderRequestTabId(self.handle(), C.ImGuiID(v))
+func (self *TabBar) SetReorderRequestTabId(v ID) {
+	C.wrap_ImGuiTabBar_SetReorderRequestTabId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiTabBar) GetReorderRequestTabId() ImGuiID {
-	return ImGuiID(C.ImGuiTabBar_GetReorderRequestTabId(self.handle()))
+func (self TabBar) ReorderRequestTabId() ID {
+	return ImGuiID(C.wrap_ImGuiTabBar_GetReorderRequestTabId(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetReorderRequestOffset(v int) {
-	C.ImGuiTabBar_SetReorderRequestOffset(self.handle(), C.ImS16(v))
+func (self *TabBar) SetReorderRequestOffset(v int) {
+	C.wrap_ImGuiTabBar_SetReorderRequestOffset(self.handle(), C.ImS16(v))
 }
 
-func (self ImGuiTabBar) GetReorderRequestOffset() int {
-	return int(C.ImGuiTabBar_GetReorderRequestOffset(self.handle()))
+func (self TabBar) ReorderRequestOffset() int {
+	return int(C.wrap_ImGuiTabBar_GetReorderRequestOffset(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetBeginCount(v int) {
-	C.ImGuiTabBar_SetBeginCount(self.handle(), C.ImS8(v))
+func (self *TabBar) SetBeginCount(v int) {
+	C.wrap_ImGuiTabBar_SetBeginCount(self.handle(), C.ImS8(v))
 }
 
-func (self ImGuiTabBar) GetBeginCount() int {
-	return int(C.ImGuiTabBar_GetBeginCount(self.handle()))
+func (self TabBar) BeginCount() int {
+	return int(C.wrap_ImGuiTabBar_GetBeginCount(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetWantLayout(v bool) {
-	C.ImGuiTabBar_SetWantLayout(self.handle(), C.bool(v))
+func (self *TabBar) SetWantLayout(v bool) {
+	C.wrap_ImGuiTabBar_SetWantLayout(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTabBar) GetWantLayout() bool {
-	return C.ImGuiTabBar_GetWantLayout(self.handle()) == C.bool(true)
+func (self TabBar) WantLayout() bool {
+	return C.wrap_ImGuiTabBar_GetWantLayout(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTabBar) SetVisibleTabWasSubmitted(v bool) {
-	C.ImGuiTabBar_SetVisibleTabWasSubmitted(self.handle(), C.bool(v))
+func (self *TabBar) SetVisibleTabWasSubmitted(v bool) {
+	C.wrap_ImGuiTabBar_SetVisibleTabWasSubmitted(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTabBar) GetVisibleTabWasSubmitted() bool {
-	return C.ImGuiTabBar_GetVisibleTabWasSubmitted(self.handle()) == C.bool(true)
+func (self TabBar) VisibleTabWasSubmitted() bool {
+	return C.wrap_ImGuiTabBar_GetVisibleTabWasSubmitted(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTabBar) SetTabsAddedNew(v bool) {
-	C.ImGuiTabBar_SetTabsAddedNew(self.handle(), C.bool(v))
+func (self *TabBar) SetTabsAddedNew(v bool) {
+	C.wrap_ImGuiTabBar_SetTabsAddedNew(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTabBar) GetTabsAddedNew() bool {
-	return C.ImGuiTabBar_GetTabsAddedNew(self.handle()) == C.bool(true)
+func (self TabBar) TabsAddedNew() bool {
+	return C.wrap_ImGuiTabBar_GetTabsAddedNew(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTabBar) SetTabsActiveCount(v int) {
-	C.ImGuiTabBar_SetTabsActiveCount(self.handle(), C.ImS16(v))
+func (self *TabBar) SetTabsActiveCount(v int) {
+	C.wrap_ImGuiTabBar_SetTabsActiveCount(self.handle(), C.ImS16(v))
 }
 
-func (self ImGuiTabBar) GetTabsActiveCount() int {
-	return int(C.ImGuiTabBar_GetTabsActiveCount(self.handle()))
+func (self TabBar) TabsActiveCount() int {
+	return int(C.wrap_ImGuiTabBar_GetTabsActiveCount(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetLastTabItemIdx(v int) {
-	C.ImGuiTabBar_SetLastTabItemIdx(self.handle(), C.ImS16(v))
+func (self *TabBar) SetLastTabItemIdx(v int) {
+	C.wrap_ImGuiTabBar_SetLastTabItemIdx(self.handle(), C.ImS16(v))
 }
 
-func (self ImGuiTabBar) GetLastTabItemIdx() int {
-	return int(C.ImGuiTabBar_GetLastTabItemIdx(self.handle()))
+func (self TabBar) LastTabItemIdx() int {
+	return int(C.wrap_ImGuiTabBar_GetLastTabItemIdx(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetItemSpacingY(v float32) {
-	C.ImGuiTabBar_SetItemSpacingY(self.handle(), C.float(v))
+func (self *TabBar) SetItemSpacingY(v float32) {
+	C.wrap_ImGuiTabBar_SetItemSpacingY(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabBar) GetItemSpacingY() float32 {
-	return float32(C.ImGuiTabBar_GetItemSpacingY(self.handle()))
+func (self TabBar) ItemSpacingY() float32 {
+	return float32(C.wrap_ImGuiTabBar_GetItemSpacingY(self.handle()))
 }
 
-func (self *ImGuiTabBar) SetFramePadding(v Vec2) {
-	C.ImGuiTabBar_SetFramePadding(self.handle(), v.toC())
+func (self *TabBar) SetFramePadding(v Vec2) {
+	C.wrap_ImGuiTabBar_SetFramePadding(self.handle(), v.toC())
 }
 
-func (self ImGuiTabBar) GetFramePadding() Vec2 {
+func (self TabBar) FramePadding() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiTabBar_GetFramePadding(self.handle()))
+	out.fromC(C.wrap_ImGuiTabBar_GetFramePadding(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTabBar) SetBackupCursorPos(v Vec2) {
-	C.ImGuiTabBar_SetBackupCursorPos(self.handle(), v.toC())
+func (self *TabBar) SetBackupCursorPos(v Vec2) {
+	C.wrap_ImGuiTabBar_SetBackupCursorPos(self.handle(), v.toC())
 }
 
-func (self ImGuiTabBar) GetBackupCursorPos() Vec2 {
+func (self TabBar) BackupCursorPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiTabBar_GetBackupCursorPos(self.handle()))
+	out.fromC(C.wrap_ImGuiTabBar_GetBackupCursorPos(self.handle()))
 	return *out
 }
 
-func (self ImGuiTabBar) GetTabsNames() ImGuiTextBuffer {
-	return newImGuiTextBufferFromC(C.ImGuiTabBar_GetTabsNames(self.handle()))
+func (self TabBar) TabsNames() TextBuffer {
+	return newTextBufferFromC(C.wrap_ImGuiTabBar_GetTabsNames(self.handle()))
 }
 
-func (self *ImGuiTabItem) SetID(v ImGuiID) {
-	C.ImGuiTabItem_SetID(self.handle(), C.ImGuiID(v))
+func (self *TabItem) SetID(v ID) {
+	C.wrap_ImGuiTabItem_SetID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiTabItem) GetID() ImGuiID {
-	return ImGuiID(C.ImGuiTabItem_GetID(self.handle()))
+func (self TabItem) ID() ID {
+	return ImGuiID(C.wrap_ImGuiTabItem_GetID(self.handle()))
 }
 
-func (self *ImGuiTabItem) SetFlags(v TabItemFlags) {
-	C.ImGuiTabItem_SetFlags(self.handle(), C.ImGuiTabItemFlags(v))
+func (self *TabItem) SetFlags(v TabItemFlags) {
+	C.wrap_ImGuiTabItem_SetFlags(self.handle(), C.ImGuiTabItemFlags(v))
 }
 
-func (self ImGuiTabItem) GetFlags() TabItemFlags {
-	return TabItemFlags(C.ImGuiTabItem_GetFlags(self.handle()))
+func (self TabItem) Flags() TabItemFlags {
+	return TabItemFlags(C.wrap_ImGuiTabItem_GetFlags(self.handle()))
 }
 
-func (self *ImGuiTabItem) SetWindow(v ImGuiWindow) {
-	C.ImGuiTabItem_SetWindow(self.handle(), v.handle())
+func (self *TabItem) SetWindow(v Window) {
+	C.wrap_ImGuiTabItem_SetWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiTabItem) GetWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiTabItem_GetWindow(self.handle())))
+func (self TabItem) Window() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiTabItem_GetWindow(self.handle())))
 }
 
-func (self *ImGuiTabItem) SetLastFrameVisible(v int32) {
-	C.ImGuiTabItem_SetLastFrameVisible(self.handle(), C.int(v))
+func (self *TabItem) SetLastFrameVisible(v int32) {
+	C.wrap_ImGuiTabItem_SetLastFrameVisible(self.handle(), C.int(v))
 }
 
-func (self ImGuiTabItem) GetLastFrameVisible() int {
-	return int(C.ImGuiTabItem_GetLastFrameVisible(self.handle()))
+func (self TabItem) LastFrameVisible() int {
+	return int(C.wrap_ImGuiTabItem_GetLastFrameVisible(self.handle()))
 }
 
-func (self *ImGuiTabItem) SetLastFrameSelected(v int32) {
-	C.ImGuiTabItem_SetLastFrameSelected(self.handle(), C.int(v))
+func (self *TabItem) SetLastFrameSelected(v int32) {
+	C.wrap_ImGuiTabItem_SetLastFrameSelected(self.handle(), C.int(v))
 }
 
-func (self ImGuiTabItem) GetLastFrameSelected() int {
-	return int(C.ImGuiTabItem_GetLastFrameSelected(self.handle()))
+func (self TabItem) LastFrameSelected() int {
+	return int(C.wrap_ImGuiTabItem_GetLastFrameSelected(self.handle()))
 }
 
-func (self *ImGuiTabItem) SetOffset(v float32) {
-	C.ImGuiTabItem_SetOffset(self.handle(), C.float(v))
+func (self *TabItem) SetOffset(v float32) {
+	C.wrap_ImGuiTabItem_SetOffset(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabItem) GetOffset() float32 {
-	return float32(C.ImGuiTabItem_GetOffset(self.handle()))
+func (self TabItem) Offset() float32 {
+	return float32(C.wrap_ImGuiTabItem_GetOffset(self.handle()))
 }
 
-func (self *ImGuiTabItem) SetWidth(v float32) {
-	C.ImGuiTabItem_SetWidth(self.handle(), C.float(v))
+func (self *TabItem) SetWidth(v float32) {
+	C.wrap_ImGuiTabItem_SetWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabItem) GetWidth() float32 {
-	return float32(C.ImGuiTabItem_GetWidth(self.handle()))
+func (self TabItem) Width() float32 {
+	return float32(C.wrap_ImGuiTabItem_GetWidth(self.handle()))
 }
 
-func (self *ImGuiTabItem) SetContentWidth(v float32) {
-	C.ImGuiTabItem_SetContentWidth(self.handle(), C.float(v))
+func (self *TabItem) SetContentWidth(v float32) {
+	C.wrap_ImGuiTabItem_SetContentWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabItem) GetContentWidth() float32 {
-	return float32(C.ImGuiTabItem_GetContentWidth(self.handle()))
+func (self TabItem) ContentWidth() float32 {
+	return float32(C.wrap_ImGuiTabItem_GetContentWidth(self.handle()))
 }
 
-func (self *ImGuiTabItem) SetRequestedWidth(v float32) {
-	C.ImGuiTabItem_SetRequestedWidth(self.handle(), C.float(v))
+func (self *TabItem) SetRequestedWidth(v float32) {
+	C.wrap_ImGuiTabItem_SetRequestedWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiTabItem) GetRequestedWidth() float32 {
-	return float32(C.ImGuiTabItem_GetRequestedWidth(self.handle()))
+func (self TabItem) RequestedWidth() float32 {
+	return float32(C.wrap_ImGuiTabItem_GetRequestedWidth(self.handle()))
 }
 
-func (self *ImGuiTabItem) SetNameOffset(v int) {
-	C.ImGuiTabItem_SetNameOffset(self.handle(), C.ImS32(v))
+func (self *TabItem) SetNameOffset(v int) {
+	C.wrap_ImGuiTabItem_SetNameOffset(self.handle(), C.ImS32(v))
 }
 
-func (self ImGuiTabItem) GetNameOffset() int {
-	return int(C.ImGuiTabItem_GetNameOffset(self.handle()))
+func (self TabItem) NameOffset() int {
+	return int(C.wrap_ImGuiTabItem_GetNameOffset(self.handle()))
 }
 
-func (self *ImGuiTabItem) SetBeginOrder(v int) {
-	C.ImGuiTabItem_SetBeginOrder(self.handle(), C.ImS16(v))
+func (self *TabItem) SetBeginOrder(v int) {
+	C.wrap_ImGuiTabItem_SetBeginOrder(self.handle(), C.ImS16(v))
 }
 
-func (self ImGuiTabItem) GetBeginOrder() int {
-	return int(C.ImGuiTabItem_GetBeginOrder(self.handle()))
+func (self TabItem) BeginOrder() int {
+	return int(C.wrap_ImGuiTabItem_GetBeginOrder(self.handle()))
 }
 
-func (self *ImGuiTabItem) SetIndexDuringLayout(v int) {
-	C.ImGuiTabItem_SetIndexDuringLayout(self.handle(), C.ImS16(v))
+func (self *TabItem) SetIndexDuringLayout(v int) {
+	C.wrap_ImGuiTabItem_SetIndexDuringLayout(self.handle(), C.ImS16(v))
 }
 
-func (self ImGuiTabItem) GetIndexDuringLayout() int {
-	return int(C.ImGuiTabItem_GetIndexDuringLayout(self.handle()))
+func (self TabItem) IndexDuringLayout() int {
+	return int(C.wrap_ImGuiTabItem_GetIndexDuringLayout(self.handle()))
 }
 
-func (self *ImGuiTabItem) SetWantClose(v bool) {
-	C.ImGuiTabItem_SetWantClose(self.handle(), C.bool(v))
+func (self *TabItem) SetWantClose(v bool) {
+	C.wrap_ImGuiTabItem_SetWantClose(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTabItem) GetWantClose() bool {
-	return C.ImGuiTabItem_GetWantClose(self.handle()) == C.bool(true)
+func (self TabItem) WantClose() bool {
+	return C.wrap_ImGuiTabItem_GetWantClose(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetID(v ImGuiID) {
-	C.ImGuiTable_SetID(self.handle(), C.ImGuiID(v))
+func (self *Table) SetID(v ID) {
+	C.wrap_ImGuiTable_SetID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiTable) GetID() ImGuiID {
-	return ImGuiID(C.ImGuiTable_GetID(self.handle()))
+func (self Table) ID() ID {
+	return ImGuiID(C.wrap_ImGuiTable_GetID(self.handle()))
 }
 
-func (self *ImGuiTable) SetFlags(v TableFlags) {
-	C.ImGuiTable_SetFlags(self.handle(), C.ImGuiTableFlags(v))
+func (self *Table) SetFlags(v TableFlags) {
+	C.wrap_ImGuiTable_SetFlags(self.handle(), C.ImGuiTableFlags(v))
 }
 
-func (self ImGuiTable) GetFlags() TableFlags {
-	return TableFlags(C.ImGuiTable_GetFlags(self.handle()))
+func (self Table) Flags() TableFlags {
+	return TableFlags(C.wrap_ImGuiTable_GetFlags(self.handle()))
 }
 
-func (self *ImGuiTable) SetRawData(v unsafe.Pointer) {
-	C.ImGuiTable_SetRawData(self.handle(), (v))
+func (self *Table) SetRawData(v unsafe.Pointer) {
+	C.wrap_ImGuiTable_SetRawData(self.handle(), (v))
 }
 
-func (self ImGuiTable) GetRawData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiTable_GetRawData(self.handle()))
+func (self Table) RawData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiTable_GetRawData(self.handle()))
 }
 
-func (self *ImGuiTable) SetTempData(v ImGuiTableTempData) {
-	C.ImGuiTable_SetTempData(self.handle(), v.handle())
+func (self *Table) SetTempData(v TableTempData) {
+	C.wrap_ImGuiTable_SetTempData(self.handle(), v.handle())
 }
 
-func (self ImGuiTable) GetTempData() ImGuiTableTempData {
-	return (ImGuiTableTempData)(unsafe.Pointer(C.ImGuiTable_GetTempData(self.handle())))
+func (self Table) TempData() TableTempData {
+	return (TableTempData)(unsafe.Pointer(C.wrap_ImGuiTable_GetTempData(self.handle())))
 }
 
-func (self *ImGuiTable) SetEnabledMaskByDisplayOrder(v uint64) {
-	C.ImGuiTable_SetEnabledMaskByDisplayOrder(self.handle(), C.ImU64(v))
+func (self *Table) SetEnabledMaskByDisplayOrder(v uint64) {
+	C.wrap_ImGuiTable_SetEnabledMaskByDisplayOrder(self.handle(), C.ImU64(v))
 }
 
-func (self ImGuiTable) GetEnabledMaskByDisplayOrder() uint64 {
-	return uint64(C.ImGuiTable_GetEnabledMaskByDisplayOrder(self.handle()))
+func (self Table) EnabledMaskByDisplayOrder() uint64 {
+	return uint64(C.wrap_ImGuiTable_GetEnabledMaskByDisplayOrder(self.handle()))
 }
 
-func (self *ImGuiTable) SetEnabledMaskByIndex(v uint64) {
-	C.ImGuiTable_SetEnabledMaskByIndex(self.handle(), C.ImU64(v))
+func (self *Table) SetEnabledMaskByIndex(v uint64) {
+	C.wrap_ImGuiTable_SetEnabledMaskByIndex(self.handle(), C.ImU64(v))
 }
 
-func (self ImGuiTable) GetEnabledMaskByIndex() uint64 {
-	return uint64(C.ImGuiTable_GetEnabledMaskByIndex(self.handle()))
+func (self Table) EnabledMaskByIndex() uint64 {
+	return uint64(C.wrap_ImGuiTable_GetEnabledMaskByIndex(self.handle()))
 }
 
-func (self *ImGuiTable) SetVisibleMaskByIndex(v uint64) {
-	C.ImGuiTable_SetVisibleMaskByIndex(self.handle(), C.ImU64(v))
+func (self *Table) SetVisibleMaskByIndex(v uint64) {
+	C.wrap_ImGuiTable_SetVisibleMaskByIndex(self.handle(), C.ImU64(v))
 }
 
-func (self ImGuiTable) GetVisibleMaskByIndex() uint64 {
-	return uint64(C.ImGuiTable_GetVisibleMaskByIndex(self.handle()))
+func (self Table) VisibleMaskByIndex() uint64 {
+	return uint64(C.wrap_ImGuiTable_GetVisibleMaskByIndex(self.handle()))
 }
 
-func (self *ImGuiTable) SetRequestOutputMaskByIndex(v uint64) {
-	C.ImGuiTable_SetRequestOutputMaskByIndex(self.handle(), C.ImU64(v))
+func (self *Table) SetRequestOutputMaskByIndex(v uint64) {
+	C.wrap_ImGuiTable_SetRequestOutputMaskByIndex(self.handle(), C.ImU64(v))
 }
 
-func (self ImGuiTable) GetRequestOutputMaskByIndex() uint64 {
-	return uint64(C.ImGuiTable_GetRequestOutputMaskByIndex(self.handle()))
+func (self Table) RequestOutputMaskByIndex() uint64 {
+	return uint64(C.wrap_ImGuiTable_GetRequestOutputMaskByIndex(self.handle()))
 }
 
-func (self *ImGuiTable) SetSettingsLoadedFlags(v TableFlags) {
-	C.ImGuiTable_SetSettingsLoadedFlags(self.handle(), C.ImGuiTableFlags(v))
+func (self *Table) SetSettingsLoadedFlags(v TableFlags) {
+	C.wrap_ImGuiTable_SetSettingsLoadedFlags(self.handle(), C.ImGuiTableFlags(v))
 }
 
-func (self ImGuiTable) GetSettingsLoadedFlags() TableFlags {
-	return TableFlags(C.ImGuiTable_GetSettingsLoadedFlags(self.handle()))
+func (self Table) SettingsLoadedFlags() TableFlags {
+	return TableFlags(C.wrap_ImGuiTable_GetSettingsLoadedFlags(self.handle()))
 }
 
-func (self *ImGuiTable) SetSettingsOffset(v int32) {
-	C.ImGuiTable_SetSettingsOffset(self.handle(), C.int(v))
+func (self *Table) SetSettingsOffset(v int32) {
+	C.wrap_ImGuiTable_SetSettingsOffset(self.handle(), C.int(v))
 }
 
-func (self ImGuiTable) GetSettingsOffset() int {
-	return int(C.ImGuiTable_GetSettingsOffset(self.handle()))
+func (self Table) SettingsOffset() int {
+	return int(C.wrap_ImGuiTable_GetSettingsOffset(self.handle()))
 }
 
-func (self *ImGuiTable) SetLastFrameActive(v int32) {
-	C.ImGuiTable_SetLastFrameActive(self.handle(), C.int(v))
+func (self *Table) SetLastFrameActive(v int32) {
+	C.wrap_ImGuiTable_SetLastFrameActive(self.handle(), C.int(v))
 }
 
-func (self ImGuiTable) GetLastFrameActive() int {
-	return int(C.ImGuiTable_GetLastFrameActive(self.handle()))
+func (self Table) LastFrameActive() int {
+	return int(C.wrap_ImGuiTable_GetLastFrameActive(self.handle()))
 }
 
-func (self *ImGuiTable) SetColumnsCount(v int32) {
-	C.ImGuiTable_SetColumnsCount(self.handle(), C.int(v))
+func (self *Table) SetColumnsCount(v int32) {
+	C.wrap_ImGuiTable_SetColumnsCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiTable) GetColumnsCount() int {
-	return int(C.ImGuiTable_GetColumnsCount(self.handle()))
+func (self Table) ColumnsCount() int {
+	return int(C.wrap_ImGuiTable_GetColumnsCount(self.handle()))
 }
 
-func (self *ImGuiTable) SetCurrentRow(v int32) {
-	C.ImGuiTable_SetCurrentRow(self.handle(), C.int(v))
+func (self *Table) SetCurrentRow(v int32) {
+	C.wrap_ImGuiTable_SetCurrentRow(self.handle(), C.int(v))
 }
 
-func (self ImGuiTable) GetCurrentRow() int {
-	return int(C.ImGuiTable_GetCurrentRow(self.handle()))
+func (self Table) CurrentRow() int {
+	return int(C.wrap_ImGuiTable_GetCurrentRow(self.handle()))
 }
 
-func (self *ImGuiTable) SetCurrentColumn(v int32) {
-	C.ImGuiTable_SetCurrentColumn(self.handle(), C.int(v))
+func (self *Table) SetCurrentColumn(v int32) {
+	C.wrap_ImGuiTable_SetCurrentColumn(self.handle(), C.int(v))
 }
 
-func (self ImGuiTable) GetCurrentColumn() int {
-	return int(C.ImGuiTable_GetCurrentColumn(self.handle()))
+func (self Table) CurrentColumn() int {
+	return int(C.wrap_ImGuiTable_GetCurrentColumn(self.handle()))
 }
 
-func (self *ImGuiTable) SetInstanceCurrent(v int) {
-	C.ImGuiTable_SetInstanceCurrent(self.handle(), C.ImS16(v))
+func (self *Table) SetInstanceCurrent(v int) {
+	C.wrap_ImGuiTable_SetInstanceCurrent(self.handle(), C.ImS16(v))
 }
 
-func (self ImGuiTable) GetInstanceCurrent() int {
-	return int(C.ImGuiTable_GetInstanceCurrent(self.handle()))
+func (self Table) InstanceCurrent() int {
+	return int(C.wrap_ImGuiTable_GetInstanceCurrent(self.handle()))
 }
 
-func (self *ImGuiTable) SetInstanceInteracted(v int) {
-	C.ImGuiTable_SetInstanceInteracted(self.handle(), C.ImS16(v))
+func (self *Table) SetInstanceInteracted(v int) {
+	C.wrap_ImGuiTable_SetInstanceInteracted(self.handle(), C.ImS16(v))
 }
 
-func (self ImGuiTable) GetInstanceInteracted() int {
-	return int(C.ImGuiTable_GetInstanceInteracted(self.handle()))
+func (self Table) InstanceInteracted() int {
+	return int(C.wrap_ImGuiTable_GetInstanceInteracted(self.handle()))
 }
 
-func (self *ImGuiTable) SetRowPosY1(v float32) {
-	C.ImGuiTable_SetRowPosY1(self.handle(), C.float(v))
+func (self *Table) SetRowPosY1(v float32) {
+	C.wrap_ImGuiTable_SetRowPosY1(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetRowPosY1() float32 {
-	return float32(C.ImGuiTable_GetRowPosY1(self.handle()))
+func (self Table) RowPosY1() float32 {
+	return float32(C.wrap_ImGuiTable_GetRowPosY1(self.handle()))
 }
 
-func (self *ImGuiTable) SetRowPosY2(v float32) {
-	C.ImGuiTable_SetRowPosY2(self.handle(), C.float(v))
+func (self *Table) SetRowPosY2(v float32) {
+	C.wrap_ImGuiTable_SetRowPosY2(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetRowPosY2() float32 {
-	return float32(C.ImGuiTable_GetRowPosY2(self.handle()))
+func (self Table) RowPosY2() float32 {
+	return float32(C.wrap_ImGuiTable_GetRowPosY2(self.handle()))
 }
 
-func (self *ImGuiTable) SetRowMinHeight(v float32) {
-	C.ImGuiTable_SetRowMinHeight(self.handle(), C.float(v))
+func (self *Table) SetRowMinHeight(v float32) {
+	C.wrap_ImGuiTable_SetRowMinHeight(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetRowMinHeight() float32 {
-	return float32(C.ImGuiTable_GetRowMinHeight(self.handle()))
+func (self Table) RowMinHeight() float32 {
+	return float32(C.wrap_ImGuiTable_GetRowMinHeight(self.handle()))
 }
 
-func (self *ImGuiTable) SetRowTextBaseline(v float32) {
-	C.ImGuiTable_SetRowTextBaseline(self.handle(), C.float(v))
+func (self *Table) SetRowTextBaseline(v float32) {
+	C.wrap_ImGuiTable_SetRowTextBaseline(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetRowTextBaseline() float32 {
-	return float32(C.ImGuiTable_GetRowTextBaseline(self.handle()))
+func (self Table) RowTextBaseline() float32 {
+	return float32(C.wrap_ImGuiTable_GetRowTextBaseline(self.handle()))
 }
 
-func (self *ImGuiTable) SetRowIndentOffsetX(v float32) {
-	C.ImGuiTable_SetRowIndentOffsetX(self.handle(), C.float(v))
+func (self *Table) SetRowIndentOffsetX(v float32) {
+	C.wrap_ImGuiTable_SetRowIndentOffsetX(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetRowIndentOffsetX() float32 {
-	return float32(C.ImGuiTable_GetRowIndentOffsetX(self.handle()))
+func (self Table) RowIndentOffsetX() float32 {
+	return float32(C.wrap_ImGuiTable_GetRowIndentOffsetX(self.handle()))
 }
 
-func (self *ImGuiTable) SetRowFlags(v TableRowFlags) {
-	C.ImGuiTable_SetRowFlags(self.handle(), C.ImGuiTableRowFlags(v))
+func (self *Table) SetRowFlags(v TableRowFlags) {
+	C.wrap_ImGuiTable_SetRowFlags(self.handle(), C.ImGuiTableRowFlags(v))
 }
 
-func (self ImGuiTable) GetRowFlags() TableRowFlags {
-	return TableRowFlags(C.ImGuiTable_GetRowFlags(self.handle()))
+func (self Table) RowFlags() TableRowFlags {
+	return TableRowFlags(C.wrap_ImGuiTable_GetRowFlags(self.handle()))
 }
 
-func (self *ImGuiTable) SetLastRowFlags(v TableRowFlags) {
-	C.ImGuiTable_SetLastRowFlags(self.handle(), C.ImGuiTableRowFlags(v))
+func (self *Table) SetLastRowFlags(v TableRowFlags) {
+	C.wrap_ImGuiTable_SetLastRowFlags(self.handle(), C.ImGuiTableRowFlags(v))
 }
 
-func (self ImGuiTable) GetLastRowFlags() TableRowFlags {
-	return TableRowFlags(C.ImGuiTable_GetLastRowFlags(self.handle()))
+func (self Table) LastRowFlags() TableRowFlags {
+	return TableRowFlags(C.wrap_ImGuiTable_GetLastRowFlags(self.handle()))
 }
 
-func (self *ImGuiTable) SetRowBgColorCounter(v int32) {
-	C.ImGuiTable_SetRowBgColorCounter(self.handle(), C.int(v))
+func (self *Table) SetRowBgColorCounter(v int32) {
+	C.wrap_ImGuiTable_SetRowBgColorCounter(self.handle(), C.int(v))
 }
 
-func (self ImGuiTable) GetRowBgColorCounter() int {
-	return int(C.ImGuiTable_GetRowBgColorCounter(self.handle()))
+func (self Table) RowBgColorCounter() int {
+	return int(C.wrap_ImGuiTable_GetRowBgColorCounter(self.handle()))
 }
 
-func (self *ImGuiTable) SetBorderColorStrong(v uint32) {
-	C.ImGuiTable_SetBorderColorStrong(self.handle(), C.ImU32(v))
+func (self *Table) SetBorderColorStrong(v uint32) {
+	C.wrap_ImGuiTable_SetBorderColorStrong(self.handle(), C.ImU32(v))
 }
 
-func (self ImGuiTable) GetBorderColorStrong() uint32 {
-	return uint32(C.ImGuiTable_GetBorderColorStrong(self.handle()))
+func (self Table) BorderColorStrong() uint32 {
+	return uint32(C.wrap_ImGuiTable_GetBorderColorStrong(self.handle()))
 }
 
-func (self *ImGuiTable) SetBorderColorLight(v uint32) {
-	C.ImGuiTable_SetBorderColorLight(self.handle(), C.ImU32(v))
+func (self *Table) SetBorderColorLight(v uint32) {
+	C.wrap_ImGuiTable_SetBorderColorLight(self.handle(), C.ImU32(v))
 }
 
-func (self ImGuiTable) GetBorderColorLight() uint32 {
-	return uint32(C.ImGuiTable_GetBorderColorLight(self.handle()))
+func (self Table) BorderColorLight() uint32 {
+	return uint32(C.wrap_ImGuiTable_GetBorderColorLight(self.handle()))
 }
 
-func (self *ImGuiTable) SetBorderX1(v float32) {
-	C.ImGuiTable_SetBorderX1(self.handle(), C.float(v))
+func (self *Table) SetBorderX1(v float32) {
+	C.wrap_ImGuiTable_SetBorderX1(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetBorderX1() float32 {
-	return float32(C.ImGuiTable_GetBorderX1(self.handle()))
+func (self Table) BorderX1() float32 {
+	return float32(C.wrap_ImGuiTable_GetBorderX1(self.handle()))
 }
 
-func (self *ImGuiTable) SetBorderX2(v float32) {
-	C.ImGuiTable_SetBorderX2(self.handle(), C.float(v))
+func (self *Table) SetBorderX2(v float32) {
+	C.wrap_ImGuiTable_SetBorderX2(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetBorderX2() float32 {
-	return float32(C.ImGuiTable_GetBorderX2(self.handle()))
+func (self Table) BorderX2() float32 {
+	return float32(C.wrap_ImGuiTable_GetBorderX2(self.handle()))
 }
 
-func (self *ImGuiTable) SetHostIndentX(v float32) {
-	C.ImGuiTable_SetHostIndentX(self.handle(), C.float(v))
+func (self *Table) SetHostIndentX(v float32) {
+	C.wrap_ImGuiTable_SetHostIndentX(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetHostIndentX() float32 {
-	return float32(C.ImGuiTable_GetHostIndentX(self.handle()))
+func (self Table) HostIndentX() float32 {
+	return float32(C.wrap_ImGuiTable_GetHostIndentX(self.handle()))
 }
 
-func (self *ImGuiTable) SetMinColumnWidth(v float32) {
-	C.ImGuiTable_SetMinColumnWidth(self.handle(), C.float(v))
+func (self *Table) SetMinColumnWidth(v float32) {
+	C.wrap_ImGuiTable_SetMinColumnWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetMinColumnWidth() float32 {
-	return float32(C.ImGuiTable_GetMinColumnWidth(self.handle()))
+func (self Table) MinColumnWidth() float32 {
+	return float32(C.wrap_ImGuiTable_GetMinColumnWidth(self.handle()))
 }
 
-func (self *ImGuiTable) SetOuterPaddingX(v float32) {
-	C.ImGuiTable_SetOuterPaddingX(self.handle(), C.float(v))
+func (self *Table) SetOuterPaddingX(v float32) {
+	C.wrap_ImGuiTable_SetOuterPaddingX(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetOuterPaddingX() float32 {
-	return float32(C.ImGuiTable_GetOuterPaddingX(self.handle()))
+func (self Table) OuterPaddingX() float32 {
+	return float32(C.wrap_ImGuiTable_GetOuterPaddingX(self.handle()))
 }
 
-func (self *ImGuiTable) SetCellPaddingX(v float32) {
-	C.ImGuiTable_SetCellPaddingX(self.handle(), C.float(v))
+func (self *Table) SetCellPaddingX(v float32) {
+	C.wrap_ImGuiTable_SetCellPaddingX(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetCellPaddingX() float32 {
-	return float32(C.ImGuiTable_GetCellPaddingX(self.handle()))
+func (self Table) CellPaddingX() float32 {
+	return float32(C.wrap_ImGuiTable_GetCellPaddingX(self.handle()))
 }
 
-func (self *ImGuiTable) SetCellPaddingY(v float32) {
-	C.ImGuiTable_SetCellPaddingY(self.handle(), C.float(v))
+func (self *Table) SetCellPaddingY(v float32) {
+	C.wrap_ImGuiTable_SetCellPaddingY(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetCellPaddingY() float32 {
-	return float32(C.ImGuiTable_GetCellPaddingY(self.handle()))
+func (self Table) CellPaddingY() float32 {
+	return float32(C.wrap_ImGuiTable_GetCellPaddingY(self.handle()))
 }
 
-func (self *ImGuiTable) SetCellSpacingX1(v float32) {
-	C.ImGuiTable_SetCellSpacingX1(self.handle(), C.float(v))
+func (self *Table) SetCellSpacingX1(v float32) {
+	C.wrap_ImGuiTable_SetCellSpacingX1(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetCellSpacingX1() float32 {
-	return float32(C.ImGuiTable_GetCellSpacingX1(self.handle()))
+func (self Table) CellSpacingX1() float32 {
+	return float32(C.wrap_ImGuiTable_GetCellSpacingX1(self.handle()))
 }
 
-func (self *ImGuiTable) SetCellSpacingX2(v float32) {
-	C.ImGuiTable_SetCellSpacingX2(self.handle(), C.float(v))
+func (self *Table) SetCellSpacingX2(v float32) {
+	C.wrap_ImGuiTable_SetCellSpacingX2(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetCellSpacingX2() float32 {
-	return float32(C.ImGuiTable_GetCellSpacingX2(self.handle()))
+func (self Table) CellSpacingX2() float32 {
+	return float32(C.wrap_ImGuiTable_GetCellSpacingX2(self.handle()))
 }
 
-func (self *ImGuiTable) SetInnerWidth(v float32) {
-	C.ImGuiTable_SetInnerWidth(self.handle(), C.float(v))
+func (self *Table) SetInnerWidth(v float32) {
+	C.wrap_ImGuiTable_SetInnerWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetInnerWidth() float32 {
-	return float32(C.ImGuiTable_GetInnerWidth(self.handle()))
+func (self Table) InnerWidth() float32 {
+	return float32(C.wrap_ImGuiTable_GetInnerWidth(self.handle()))
 }
 
-func (self *ImGuiTable) SetColumnsGivenWidth(v float32) {
-	C.ImGuiTable_SetColumnsGivenWidth(self.handle(), C.float(v))
+func (self *Table) SetColumnsGivenWidth(v float32) {
+	C.wrap_ImGuiTable_SetColumnsGivenWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetColumnsGivenWidth() float32 {
-	return float32(C.ImGuiTable_GetColumnsGivenWidth(self.handle()))
+func (self Table) ColumnsGivenWidth() float32 {
+	return float32(C.wrap_ImGuiTable_GetColumnsGivenWidth(self.handle()))
 }
 
-func (self *ImGuiTable) SetColumnsAutoFitWidth(v float32) {
-	C.ImGuiTable_SetColumnsAutoFitWidth(self.handle(), C.float(v))
+func (self *Table) SetColumnsAutoFitWidth(v float32) {
+	C.wrap_ImGuiTable_SetColumnsAutoFitWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetColumnsAutoFitWidth() float32 {
-	return float32(C.ImGuiTable_GetColumnsAutoFitWidth(self.handle()))
+func (self Table) ColumnsAutoFitWidth() float32 {
+	return float32(C.wrap_ImGuiTable_GetColumnsAutoFitWidth(self.handle()))
 }
 
-func (self *ImGuiTable) SetColumnsStretchSumWeights(v float32) {
-	C.ImGuiTable_SetColumnsStretchSumWeights(self.handle(), C.float(v))
+func (self *Table) SetColumnsStretchSumWeights(v float32) {
+	C.wrap_ImGuiTable_SetColumnsStretchSumWeights(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetColumnsStretchSumWeights() float32 {
-	return float32(C.ImGuiTable_GetColumnsStretchSumWeights(self.handle()))
+func (self Table) ColumnsStretchSumWeights() float32 {
+	return float32(C.wrap_ImGuiTable_GetColumnsStretchSumWeights(self.handle()))
 }
 
-func (self *ImGuiTable) SetResizedColumnNextWidth(v float32) {
-	C.ImGuiTable_SetResizedColumnNextWidth(self.handle(), C.float(v))
+func (self *Table) SetResizedColumnNextWidth(v float32) {
+	C.wrap_ImGuiTable_SetResizedColumnNextWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetResizedColumnNextWidth() float32 {
-	return float32(C.ImGuiTable_GetResizedColumnNextWidth(self.handle()))
+func (self Table) ResizedColumnNextWidth() float32 {
+	return float32(C.wrap_ImGuiTable_GetResizedColumnNextWidth(self.handle()))
 }
 
-func (self *ImGuiTable) SetResizeLockMinContentsX2(v float32) {
-	C.ImGuiTable_SetResizeLockMinContentsX2(self.handle(), C.float(v))
+func (self *Table) SetResizeLockMinContentsX2(v float32) {
+	C.wrap_ImGuiTable_SetResizeLockMinContentsX2(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetResizeLockMinContentsX2() float32 {
-	return float32(C.ImGuiTable_GetResizeLockMinContentsX2(self.handle()))
+func (self Table) ResizeLockMinContentsX2() float32 {
+	return float32(C.wrap_ImGuiTable_GetResizeLockMinContentsX2(self.handle()))
 }
 
-func (self *ImGuiTable) SetRefScale(v float32) {
-	C.ImGuiTable_SetRefScale(self.handle(), C.float(v))
+func (self *Table) SetRefScale(v float32) {
+	C.wrap_ImGuiTable_SetRefScale(self.handle(), C.float(v))
 }
 
-func (self ImGuiTable) GetRefScale() float32 {
-	return float32(C.ImGuiTable_GetRefScale(self.handle()))
+func (self Table) RefScale() float32 {
+	return float32(C.wrap_ImGuiTable_GetRefScale(self.handle()))
 }
 
-func (self *ImGuiTable) SetOuterRect(v Rect) {
-	C.ImGuiTable_SetOuterRect(self.handle(), v.toC())
+func (self *Table) SetOuterRect(v Rect) {
+	C.wrap_ImGuiTable_SetOuterRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetOuterRect() Rect {
+func (self Table) OuterRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiTable_GetOuterRect(self.handle()))
+	out.fromC(C.wrap_ImGuiTable_GetOuterRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTable) SetInnerRect(v Rect) {
-	C.ImGuiTable_SetInnerRect(self.handle(), v.toC())
+func (self *Table) SetInnerRect(v Rect) {
+	C.wrap_ImGuiTable_SetInnerRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetInnerRect() Rect {
+func (self Table) InnerRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiTable_GetInnerRect(self.handle()))
+	out.fromC(C.wrap_ImGuiTable_GetInnerRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTable) SetWorkRect(v Rect) {
-	C.ImGuiTable_SetWorkRect(self.handle(), v.toC())
+func (self *Table) SetWorkRect(v Rect) {
+	C.wrap_ImGuiTable_SetWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetWorkRect() Rect {
+func (self Table) WorkRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiTable_GetWorkRect(self.handle()))
+	out.fromC(C.wrap_ImGuiTable_GetWorkRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTable) SetInnerClipRect(v Rect) {
-	C.ImGuiTable_SetInnerClipRect(self.handle(), v.toC())
+func (self *Table) SetInnerClipRect(v Rect) {
+	C.wrap_ImGuiTable_SetInnerClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetInnerClipRect() Rect {
+func (self Table) InnerClipRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiTable_GetInnerClipRect(self.handle()))
+	out.fromC(C.wrap_ImGuiTable_GetInnerClipRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTable) SetBgClipRect(v Rect) {
-	C.ImGuiTable_SetBgClipRect(self.handle(), v.toC())
+func (self *Table) SetBgClipRect(v Rect) {
+	C.wrap_ImGuiTable_SetBgClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetBgClipRect() Rect {
+func (self Table) BgClipRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiTable_GetBgClipRect(self.handle()))
+	out.fromC(C.wrap_ImGuiTable_GetBgClipRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTable) SetBg0ClipRectForDrawCmd(v Rect) {
-	C.ImGuiTable_SetBg0ClipRectForDrawCmd(self.handle(), v.toC())
+func (self *Table) SetBg0ClipRectForDrawCmd(v Rect) {
+	C.wrap_ImGuiTable_SetBg0ClipRectForDrawCmd(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetBg0ClipRectForDrawCmd() Rect {
+func (self Table) Bg0ClipRectForDrawCmd() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiTable_GetBg0ClipRectForDrawCmd(self.handle()))
+	out.fromC(C.wrap_ImGuiTable_GetBg0ClipRectForDrawCmd(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTable) SetBg2ClipRectForDrawCmd(v Rect) {
-	C.ImGuiTable_SetBg2ClipRectForDrawCmd(self.handle(), v.toC())
+func (self *Table) SetBg2ClipRectForDrawCmd(v Rect) {
+	C.wrap_ImGuiTable_SetBg2ClipRectForDrawCmd(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetBg2ClipRectForDrawCmd() Rect {
+func (self Table) Bg2ClipRectForDrawCmd() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiTable_GetBg2ClipRectForDrawCmd(self.handle()))
+	out.fromC(C.wrap_ImGuiTable_GetBg2ClipRectForDrawCmd(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTable) SetHostClipRect(v Rect) {
-	C.ImGuiTable_SetHostClipRect(self.handle(), v.toC())
+func (self *Table) SetHostClipRect(v Rect) {
+	C.wrap_ImGuiTable_SetHostClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetHostClipRect() Rect {
+func (self Table) HostClipRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiTable_GetHostClipRect(self.handle()))
+	out.fromC(C.wrap_ImGuiTable_GetHostClipRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTable) SetHostBackupInnerClipRect(v Rect) {
-	C.ImGuiTable_SetHostBackupInnerClipRect(self.handle(), v.toC())
+func (self *Table) SetHostBackupInnerClipRect(v Rect) {
+	C.wrap_ImGuiTable_SetHostBackupInnerClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTable) GetHostBackupInnerClipRect() Rect {
+func (self Table) HostBackupInnerClipRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiTable_GetHostBackupInnerClipRect(self.handle()))
+	out.fromC(C.wrap_ImGuiTable_GetHostBackupInnerClipRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTable) SetOuterWindow(v ImGuiWindow) {
-	C.ImGuiTable_SetOuterWindow(self.handle(), v.handle())
+func (self *Table) SetOuterWindow(v Window) {
+	C.wrap_ImGuiTable_SetOuterWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiTable) GetOuterWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiTable_GetOuterWindow(self.handle())))
+func (self Table) OuterWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiTable_GetOuterWindow(self.handle())))
 }
 
-func (self *ImGuiTable) SetInnerWindow(v ImGuiWindow) {
-	C.ImGuiTable_SetInnerWindow(self.handle(), v.handle())
+func (self *Table) SetInnerWindow(v Window) {
+	C.wrap_ImGuiTable_SetInnerWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiTable) GetInnerWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiTable_GetInnerWindow(self.handle())))
+func (self Table) InnerWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiTable_GetInnerWindow(self.handle())))
 }
 
-func (self ImGuiTable) GetColumnsNames() ImGuiTextBuffer {
-	return newImGuiTextBufferFromC(C.ImGuiTable_GetColumnsNames(self.handle()))
+func (self Table) ColumnsNames() TextBuffer {
+	return newTextBufferFromC(C.wrap_ImGuiTable_GetColumnsNames(self.handle()))
 }
 
-func (self *ImGuiTable) SetDrawSplitter(v ImDrawListSplitter) {
-	C.ImGuiTable_SetDrawSplitter(self.handle(), v.handle())
+func (self *Table) SetDrawSplitter(v DrawListSplitter) {
+	C.wrap_ImGuiTable_SetDrawSplitter(self.handle(), v.handle())
 }
 
-func (self ImGuiTable) GetDrawSplitter() ImDrawListSplitter {
-	return (ImDrawListSplitter)(unsafe.Pointer(C.ImGuiTable_GetDrawSplitter(self.handle())))
+func (self Table) DrawSplitter() DrawListSplitter {
+	return (DrawListSplitter)(unsafe.Pointer(C.wrap_ImGuiTable_GetDrawSplitter(self.handle())))
 }
 
-func (self ImGuiTable) GetInstanceDataFirst() ImGuiTableInstanceData {
-	return newImGuiTableInstanceDataFromC(C.ImGuiTable_GetInstanceDataFirst(self.handle()))
+func (self Table) InstanceDataFirst() TableInstanceData {
+	return newTableInstanceDataFromC(C.wrap_ImGuiTable_GetInstanceDataFirst(self.handle()))
 }
 
-func (self ImGuiTable) GetSortSpecsSingle() ImGuiTableColumnSortSpecs {
-	return newImGuiTableColumnSortSpecsFromC(C.ImGuiTable_GetSortSpecsSingle(self.handle()))
+func (self Table) SortSpecsSingle() TableColumnSortSpecs {
+	return newTableColumnSortSpecsFromC(C.wrap_ImGuiTable_GetSortSpecsSingle(self.handle()))
 }
 
-func (self ImGuiTable) GetSortSpecs() ImGuiTableSortSpecs {
-	return newImGuiTableSortSpecsFromC(C.ImGuiTable_GetSortSpecs(self.handle()))
+func (self Table) SortSpecs() TableSortSpecs {
+	return newTableSortSpecsFromC(C.wrap_ImGuiTable_GetSortSpecs(self.handle()))
 }
 
-func (self *ImGuiTable) SetSortSpecsCount(v TableColumnIdx) {
-	C.ImGuiTable_SetSortSpecsCount(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetSortSpecsCount(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetSortSpecsCount(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetSortSpecsCount() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetSortSpecsCount(self.handle()))
+func (self Table) SortSpecsCount() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetSortSpecsCount(self.handle()))
 }
 
-func (self *ImGuiTable) SetColumnsEnabledCount(v TableColumnIdx) {
-	C.ImGuiTable_SetColumnsEnabledCount(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetColumnsEnabledCount(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetColumnsEnabledCount(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetColumnsEnabledCount() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetColumnsEnabledCount(self.handle()))
+func (self Table) ColumnsEnabledCount() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetColumnsEnabledCount(self.handle()))
 }
 
-func (self *ImGuiTable) SetColumnsEnabledFixedCount(v TableColumnIdx) {
-	C.ImGuiTable_SetColumnsEnabledFixedCount(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetColumnsEnabledFixedCount(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetColumnsEnabledFixedCount(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetColumnsEnabledFixedCount() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetColumnsEnabledFixedCount(self.handle()))
+func (self Table) ColumnsEnabledFixedCount() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetColumnsEnabledFixedCount(self.handle()))
 }
 
-func (self *ImGuiTable) SetDeclColumnsCount(v TableColumnIdx) {
-	C.ImGuiTable_SetDeclColumnsCount(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetDeclColumnsCount(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetDeclColumnsCount(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetDeclColumnsCount() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetDeclColumnsCount(self.handle()))
+func (self Table) DeclColumnsCount() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetDeclColumnsCount(self.handle()))
 }
 
-func (self *ImGuiTable) SetHoveredColumnBody(v TableColumnIdx) {
-	C.ImGuiTable_SetHoveredColumnBody(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetHoveredColumnBody(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetHoveredColumnBody(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetHoveredColumnBody() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetHoveredColumnBody(self.handle()))
+func (self Table) HoveredColumnBody() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetHoveredColumnBody(self.handle()))
 }
 
-func (self *ImGuiTable) SetHoveredColumnBorder(v TableColumnIdx) {
-	C.ImGuiTable_SetHoveredColumnBorder(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetHoveredColumnBorder(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetHoveredColumnBorder(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetHoveredColumnBorder() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetHoveredColumnBorder(self.handle()))
+func (self Table) HoveredColumnBorder() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetHoveredColumnBorder(self.handle()))
 }
 
-func (self *ImGuiTable) SetAutoFitSingleColumn(v TableColumnIdx) {
-	C.ImGuiTable_SetAutoFitSingleColumn(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetAutoFitSingleColumn(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetAutoFitSingleColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetAutoFitSingleColumn() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetAutoFitSingleColumn(self.handle()))
+func (self Table) AutoFitSingleColumn() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetAutoFitSingleColumn(self.handle()))
 }
 
-func (self *ImGuiTable) SetResizedColumn(v TableColumnIdx) {
-	C.ImGuiTable_SetResizedColumn(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetResizedColumn(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetResizedColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetResizedColumn() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetResizedColumn(self.handle()))
+func (self Table) ResizedColumn() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetResizedColumn(self.handle()))
 }
 
-func (self *ImGuiTable) SetLastResizedColumn(v TableColumnIdx) {
-	C.ImGuiTable_SetLastResizedColumn(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetLastResizedColumn(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetLastResizedColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetLastResizedColumn() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetLastResizedColumn(self.handle()))
+func (self Table) LastResizedColumn() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetLastResizedColumn(self.handle()))
 }
 
-func (self *ImGuiTable) SetHeldHeaderColumn(v TableColumnIdx) {
-	C.ImGuiTable_SetHeldHeaderColumn(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetHeldHeaderColumn(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetHeldHeaderColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetHeldHeaderColumn() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetHeldHeaderColumn(self.handle()))
+func (self Table) HeldHeaderColumn() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetHeldHeaderColumn(self.handle()))
 }
 
-func (self *ImGuiTable) SetReorderColumn(v TableColumnIdx) {
-	C.ImGuiTable_SetReorderColumn(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetReorderColumn(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetReorderColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetReorderColumn() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetReorderColumn(self.handle()))
+func (self Table) ReorderColumn() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetReorderColumn(self.handle()))
 }
 
-func (self *ImGuiTable) SetReorderColumnDir(v TableColumnIdx) {
-	C.ImGuiTable_SetReorderColumnDir(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetReorderColumnDir(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetReorderColumnDir(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetReorderColumnDir() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetReorderColumnDir(self.handle()))
+func (self Table) ReorderColumnDir() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetReorderColumnDir(self.handle()))
 }
 
-func (self *ImGuiTable) SetLeftMostEnabledColumn(v TableColumnIdx) {
-	C.ImGuiTable_SetLeftMostEnabledColumn(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetLeftMostEnabledColumn(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetLeftMostEnabledColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetLeftMostEnabledColumn() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetLeftMostEnabledColumn(self.handle()))
+func (self Table) LeftMostEnabledColumn() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetLeftMostEnabledColumn(self.handle()))
 }
 
-func (self *ImGuiTable) SetRightMostEnabledColumn(v TableColumnIdx) {
-	C.ImGuiTable_SetRightMostEnabledColumn(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetRightMostEnabledColumn(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetRightMostEnabledColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetRightMostEnabledColumn() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetRightMostEnabledColumn(self.handle()))
+func (self Table) RightMostEnabledColumn() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetRightMostEnabledColumn(self.handle()))
 }
 
-func (self *ImGuiTable) SetLeftMostStretchedColumn(v TableColumnIdx) {
-	C.ImGuiTable_SetLeftMostStretchedColumn(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetLeftMostStretchedColumn(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetLeftMostStretchedColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetLeftMostStretchedColumn() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetLeftMostStretchedColumn(self.handle()))
+func (self Table) LeftMostStretchedColumn() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetLeftMostStretchedColumn(self.handle()))
 }
 
-func (self *ImGuiTable) SetRightMostStretchedColumn(v TableColumnIdx) {
-	C.ImGuiTable_SetRightMostStretchedColumn(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetRightMostStretchedColumn(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetRightMostStretchedColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetRightMostStretchedColumn() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetRightMostStretchedColumn(self.handle()))
+func (self Table) RightMostStretchedColumn() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetRightMostStretchedColumn(self.handle()))
 }
 
-func (self *ImGuiTable) SetContextPopupColumn(v TableColumnIdx) {
-	C.ImGuiTable_SetContextPopupColumn(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetContextPopupColumn(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetContextPopupColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetContextPopupColumn() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetContextPopupColumn(self.handle()))
+func (self Table) ContextPopupColumn() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetContextPopupColumn(self.handle()))
 }
 
-func (self *ImGuiTable) SetFreezeRowsRequest(v TableColumnIdx) {
-	C.ImGuiTable_SetFreezeRowsRequest(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetFreezeRowsRequest(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetFreezeRowsRequest(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetFreezeRowsRequest() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetFreezeRowsRequest(self.handle()))
+func (self Table) FreezeRowsRequest() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetFreezeRowsRequest(self.handle()))
 }
 
-func (self *ImGuiTable) SetFreezeRowsCount(v TableColumnIdx) {
-	C.ImGuiTable_SetFreezeRowsCount(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetFreezeRowsCount(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetFreezeRowsCount(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetFreezeRowsCount() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetFreezeRowsCount(self.handle()))
+func (self Table) FreezeRowsCount() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetFreezeRowsCount(self.handle()))
 }
 
-func (self *ImGuiTable) SetFreezeColumnsRequest(v TableColumnIdx) {
-	C.ImGuiTable_SetFreezeColumnsRequest(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetFreezeColumnsRequest(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetFreezeColumnsRequest(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetFreezeColumnsRequest() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetFreezeColumnsRequest(self.handle()))
+func (self Table) FreezeColumnsRequest() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetFreezeColumnsRequest(self.handle()))
 }
 
-func (self *ImGuiTable) SetFreezeColumnsCount(v TableColumnIdx) {
-	C.ImGuiTable_SetFreezeColumnsCount(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetFreezeColumnsCount(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetFreezeColumnsCount(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetFreezeColumnsCount() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetFreezeColumnsCount(self.handle()))
+func (self Table) FreezeColumnsCount() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetFreezeColumnsCount(self.handle()))
 }
 
-func (self *ImGuiTable) SetRowCellDataCurrent(v TableColumnIdx) {
-	C.ImGuiTable_SetRowCellDataCurrent(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *Table) SetRowCellDataCurrent(v TableColumnIdx) {
+	C.wrap_ImGuiTable_SetRowCellDataCurrent(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTable) GetRowCellDataCurrent() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTable_GetRowCellDataCurrent(self.handle()))
+func (self Table) RowCellDataCurrent() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTable_GetRowCellDataCurrent(self.handle()))
 }
 
-func (self *ImGuiTable) SetDummyDrawChannel(v TableDrawChannelIdx) {
-	C.ImGuiTable_SetDummyDrawChannel(self.handle(), C.ImGuiTableDrawChannelIdx(v))
+func (self *Table) SetDummyDrawChannel(v TableDrawChannelIdx) {
+	C.wrap_ImGuiTable_SetDummyDrawChannel(self.handle(), C.ImGuiTableDrawChannelIdx(v))
 }
 
-func (self ImGuiTable) GetDummyDrawChannel() TableDrawChannelIdx {
-	return TableDrawChannelIdx(C.ImGuiTable_GetDummyDrawChannel(self.handle()))
+func (self Table) DummyDrawChannel() TableDrawChannelIdx {
+	return TableDrawChannelIdx(C.wrap_ImGuiTable_GetDummyDrawChannel(self.handle()))
 }
 
-func (self *ImGuiTable) SetBg2DrawChannelCurrent(v TableDrawChannelIdx) {
-	C.ImGuiTable_SetBg2DrawChannelCurrent(self.handle(), C.ImGuiTableDrawChannelIdx(v))
+func (self *Table) SetBg2DrawChannelCurrent(v TableDrawChannelIdx) {
+	C.wrap_ImGuiTable_SetBg2DrawChannelCurrent(self.handle(), C.ImGuiTableDrawChannelIdx(v))
 }
 
-func (self ImGuiTable) GetBg2DrawChannelCurrent() TableDrawChannelIdx {
-	return TableDrawChannelIdx(C.ImGuiTable_GetBg2DrawChannelCurrent(self.handle()))
+func (self Table) Bg2DrawChannelCurrent() TableDrawChannelIdx {
+	return TableDrawChannelIdx(C.wrap_ImGuiTable_GetBg2DrawChannelCurrent(self.handle()))
 }
 
-func (self *ImGuiTable) SetBg2DrawChannelUnfrozen(v TableDrawChannelIdx) {
-	C.ImGuiTable_SetBg2DrawChannelUnfrozen(self.handle(), C.ImGuiTableDrawChannelIdx(v))
+func (self *Table) SetBg2DrawChannelUnfrozen(v TableDrawChannelIdx) {
+	C.wrap_ImGuiTable_SetBg2DrawChannelUnfrozen(self.handle(), C.ImGuiTableDrawChannelIdx(v))
 }
 
-func (self ImGuiTable) GetBg2DrawChannelUnfrozen() TableDrawChannelIdx {
-	return TableDrawChannelIdx(C.ImGuiTable_GetBg2DrawChannelUnfrozen(self.handle()))
+func (self Table) Bg2DrawChannelUnfrozen() TableDrawChannelIdx {
+	return TableDrawChannelIdx(C.wrap_ImGuiTable_GetBg2DrawChannelUnfrozen(self.handle()))
 }
 
-func (self *ImGuiTable) SetIsLayoutLocked(v bool) {
-	C.ImGuiTable_SetIsLayoutLocked(self.handle(), C.bool(v))
+func (self *Table) SetIsLayoutLocked(v bool) {
+	C.wrap_ImGuiTable_SetIsLayoutLocked(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetIsLayoutLocked() bool {
-	return C.ImGuiTable_GetIsLayoutLocked(self.handle()) == C.bool(true)
+func (self Table) IsLayoutLocked() bool {
+	return C.wrap_ImGuiTable_GetIsLayoutLocked(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetIsInsideRow(v bool) {
-	C.ImGuiTable_SetIsInsideRow(self.handle(), C.bool(v))
+func (self *Table) SetIsInsideRow(v bool) {
+	C.wrap_ImGuiTable_SetIsInsideRow(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetIsInsideRow() bool {
-	return C.ImGuiTable_GetIsInsideRow(self.handle()) == C.bool(true)
+func (self Table) IsInsideRow() bool {
+	return C.wrap_ImGuiTable_GetIsInsideRow(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetIsInitializing(v bool) {
-	C.ImGuiTable_SetIsInitializing(self.handle(), C.bool(v))
+func (self *Table) SetIsInitializing(v bool) {
+	C.wrap_ImGuiTable_SetIsInitializing(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetIsInitializing() bool {
-	return C.ImGuiTable_GetIsInitializing(self.handle()) == C.bool(true)
+func (self Table) IsInitializing() bool {
+	return C.wrap_ImGuiTable_GetIsInitializing(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetIsSortSpecsDirty(v bool) {
-	C.ImGuiTable_SetIsSortSpecsDirty(self.handle(), C.bool(v))
+func (self *Table) SetIsSortSpecsDirty(v bool) {
+	C.wrap_ImGuiTable_SetIsSortSpecsDirty(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetIsSortSpecsDirty() bool {
-	return C.ImGuiTable_GetIsSortSpecsDirty(self.handle()) == C.bool(true)
+func (self Table) IsSortSpecsDirty() bool {
+	return C.wrap_ImGuiTable_GetIsSortSpecsDirty(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetIsUsingHeaders(v bool) {
-	C.ImGuiTable_SetIsUsingHeaders(self.handle(), C.bool(v))
+func (self *Table) SetIsUsingHeaders(v bool) {
+	C.wrap_ImGuiTable_SetIsUsingHeaders(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetIsUsingHeaders() bool {
-	return C.ImGuiTable_GetIsUsingHeaders(self.handle()) == C.bool(true)
+func (self Table) IsUsingHeaders() bool {
+	return C.wrap_ImGuiTable_GetIsUsingHeaders(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetIsContextPopupOpen(v bool) {
-	C.ImGuiTable_SetIsContextPopupOpen(self.handle(), C.bool(v))
+func (self *Table) SetIsContextPopupOpen(v bool) {
+	C.wrap_ImGuiTable_SetIsContextPopupOpen(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetIsContextPopupOpen() bool {
-	return C.ImGuiTable_GetIsContextPopupOpen(self.handle()) == C.bool(true)
+func (self Table) IsContextPopupOpen() bool {
+	return C.wrap_ImGuiTable_GetIsContextPopupOpen(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetIsSettingsRequestLoad(v bool) {
-	C.ImGuiTable_SetIsSettingsRequestLoad(self.handle(), C.bool(v))
+func (self *Table) SetIsSettingsRequestLoad(v bool) {
+	C.wrap_ImGuiTable_SetIsSettingsRequestLoad(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetIsSettingsRequestLoad() bool {
-	return C.ImGuiTable_GetIsSettingsRequestLoad(self.handle()) == C.bool(true)
+func (self Table) IsSettingsRequestLoad() bool {
+	return C.wrap_ImGuiTable_GetIsSettingsRequestLoad(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetIsSettingsDirty(v bool) {
-	C.ImGuiTable_SetIsSettingsDirty(self.handle(), C.bool(v))
+func (self *Table) SetIsSettingsDirty(v bool) {
+	C.wrap_ImGuiTable_SetIsSettingsDirty(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetIsSettingsDirty() bool {
-	return C.ImGuiTable_GetIsSettingsDirty(self.handle()) == C.bool(true)
+func (self Table) IsSettingsDirty() bool {
+	return C.wrap_ImGuiTable_GetIsSettingsDirty(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetIsDefaultDisplayOrder(v bool) {
-	C.ImGuiTable_SetIsDefaultDisplayOrder(self.handle(), C.bool(v))
+func (self *Table) SetIsDefaultDisplayOrder(v bool) {
+	C.wrap_ImGuiTable_SetIsDefaultDisplayOrder(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetIsDefaultDisplayOrder() bool {
-	return C.ImGuiTable_GetIsDefaultDisplayOrder(self.handle()) == C.bool(true)
+func (self Table) IsDefaultDisplayOrder() bool {
+	return C.wrap_ImGuiTable_GetIsDefaultDisplayOrder(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetIsResetAllRequest(v bool) {
-	C.ImGuiTable_SetIsResetAllRequest(self.handle(), C.bool(v))
+func (self *Table) SetIsResetAllRequest(v bool) {
+	C.wrap_ImGuiTable_SetIsResetAllRequest(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetIsResetAllRequest() bool {
-	return C.ImGuiTable_GetIsResetAllRequest(self.handle()) == C.bool(true)
+func (self Table) IsResetAllRequest() bool {
+	return C.wrap_ImGuiTable_GetIsResetAllRequest(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetIsResetDisplayOrderRequest(v bool) {
-	C.ImGuiTable_SetIsResetDisplayOrderRequest(self.handle(), C.bool(v))
+func (self *Table) SetIsResetDisplayOrderRequest(v bool) {
+	C.wrap_ImGuiTable_SetIsResetDisplayOrderRequest(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetIsResetDisplayOrderRequest() bool {
-	return C.ImGuiTable_GetIsResetDisplayOrderRequest(self.handle()) == C.bool(true)
+func (self Table) IsResetDisplayOrderRequest() bool {
+	return C.wrap_ImGuiTable_GetIsResetDisplayOrderRequest(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetIsUnfrozenRows(v bool) {
-	C.ImGuiTable_SetIsUnfrozenRows(self.handle(), C.bool(v))
+func (self *Table) SetIsUnfrozenRows(v bool) {
+	C.wrap_ImGuiTable_SetIsUnfrozenRows(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetIsUnfrozenRows() bool {
-	return C.ImGuiTable_GetIsUnfrozenRows(self.handle()) == C.bool(true)
+func (self Table) IsUnfrozenRows() bool {
+	return C.wrap_ImGuiTable_GetIsUnfrozenRows(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetIsDefaultSizingPolicy(v bool) {
-	C.ImGuiTable_SetIsDefaultSizingPolicy(self.handle(), C.bool(v))
+func (self *Table) SetIsDefaultSizingPolicy(v bool) {
+	C.wrap_ImGuiTable_SetIsDefaultSizingPolicy(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetIsDefaultSizingPolicy() bool {
-	return C.ImGuiTable_GetIsDefaultSizingPolicy(self.handle()) == C.bool(true)
+func (self Table) IsDefaultSizingPolicy() bool {
+	return C.wrap_ImGuiTable_GetIsDefaultSizingPolicy(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetMemoryCompacted(v bool) {
-	C.ImGuiTable_SetMemoryCompacted(self.handle(), C.bool(v))
+func (self *Table) SetMemoryCompacted(v bool) {
+	C.wrap_ImGuiTable_SetMemoryCompacted(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetMemoryCompacted() bool {
-	return C.ImGuiTable_GetMemoryCompacted(self.handle()) == C.bool(true)
+func (self Table) MemoryCompacted() bool {
+	return C.wrap_ImGuiTable_GetMemoryCompacted(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTable) SetHostSkipItems(v bool) {
-	C.ImGuiTable_SetHostSkipItems(self.handle(), C.bool(v))
+func (self *Table) SetHostSkipItems(v bool) {
+	C.wrap_ImGuiTable_SetHostSkipItems(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTable) GetHostSkipItems() bool {
-	return C.ImGuiTable_GetHostSkipItems(self.handle()) == C.bool(true)
+func (self Table) HostSkipItems() bool {
+	return C.wrap_ImGuiTable_GetHostSkipItems(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTableCellData) SetBgColor(v uint32) {
-	C.ImGuiTableCellData_SetBgColor(self.handle(), C.ImU32(v))
+func (self *TableCellData) SetBgColor(v uint32) {
+	C.wrap_ImGuiTableCellData_SetBgColor(self.handle(), C.ImU32(v))
 }
 
-func (self ImGuiTableCellData) GetBgColor() uint32 {
-	return uint32(C.ImGuiTableCellData_GetBgColor(self.handle()))
+func (self TableCellData) BgColor() uint32 {
+	return uint32(C.wrap_ImGuiTableCellData_GetBgColor(self.handle()))
 }
 
-func (self *ImGuiTableCellData) SetColumn(v TableColumnIdx) {
-	C.ImGuiTableCellData_SetColumn(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *TableCellData) SetColumn(v TableColumnIdx) {
+	C.wrap_ImGuiTableCellData_SetColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableCellData) GetColumn() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTableCellData_GetColumn(self.handle()))
+func (self TableCellData) Column() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTableCellData_GetColumn(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetFlags(v TableColumnFlags) {
-	C.ImGuiTableColumn_SetFlags(self.handle(), C.ImGuiTableColumnFlags(v))
+func (self *TableColumn) SetFlags(v TableColumnFlags) {
+	C.wrap_ImGuiTableColumn_SetFlags(self.handle(), C.ImGuiTableColumnFlags(v))
 }
 
-func (self ImGuiTableColumn) GetFlags() TableColumnFlags {
-	return TableColumnFlags(C.ImGuiTableColumn_GetFlags(self.handle()))
+func (self TableColumn) Flags() TableColumnFlags {
+	return TableColumnFlags(C.wrap_ImGuiTableColumn_GetFlags(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetWidthGiven(v float32) {
-	C.ImGuiTableColumn_SetWidthGiven(self.handle(), C.float(v))
+func (self *TableColumn) SetWidthGiven(v float32) {
+	C.wrap_ImGuiTableColumn_SetWidthGiven(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumn) GetWidthGiven() float32 {
-	return float32(C.ImGuiTableColumn_GetWidthGiven(self.handle()))
+func (self TableColumn) WidthGiven() float32 {
+	return float32(C.wrap_ImGuiTableColumn_GetWidthGiven(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetMinX(v float32) {
-	C.ImGuiTableColumn_SetMinX(self.handle(), C.float(v))
+func (self *TableColumn) SetMinX(v float32) {
+	C.wrap_ImGuiTableColumn_SetMinX(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumn) GetMinX() float32 {
-	return float32(C.ImGuiTableColumn_GetMinX(self.handle()))
+func (self TableColumn) MinX() float32 {
+	return float32(C.wrap_ImGuiTableColumn_GetMinX(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetMaxX(v float32) {
-	C.ImGuiTableColumn_SetMaxX(self.handle(), C.float(v))
+func (self *TableColumn) SetMaxX(v float32) {
+	C.wrap_ImGuiTableColumn_SetMaxX(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumn) GetMaxX() float32 {
-	return float32(C.ImGuiTableColumn_GetMaxX(self.handle()))
+func (self TableColumn) MaxX() float32 {
+	return float32(C.wrap_ImGuiTableColumn_GetMaxX(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetWidthRequest(v float32) {
-	C.ImGuiTableColumn_SetWidthRequest(self.handle(), C.float(v))
+func (self *TableColumn) SetWidthRequest(v float32) {
+	C.wrap_ImGuiTableColumn_SetWidthRequest(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumn) GetWidthRequest() float32 {
-	return float32(C.ImGuiTableColumn_GetWidthRequest(self.handle()))
+func (self TableColumn) WidthRequest() float32 {
+	return float32(C.wrap_ImGuiTableColumn_GetWidthRequest(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetWidthAuto(v float32) {
-	C.ImGuiTableColumn_SetWidthAuto(self.handle(), C.float(v))
+func (self *TableColumn) SetWidthAuto(v float32) {
+	C.wrap_ImGuiTableColumn_SetWidthAuto(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumn) GetWidthAuto() float32 {
-	return float32(C.ImGuiTableColumn_GetWidthAuto(self.handle()))
+func (self TableColumn) WidthAuto() float32 {
+	return float32(C.wrap_ImGuiTableColumn_GetWidthAuto(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetStretchWeight(v float32) {
-	C.ImGuiTableColumn_SetStretchWeight(self.handle(), C.float(v))
+func (self *TableColumn) SetStretchWeight(v float32) {
+	C.wrap_ImGuiTableColumn_SetStretchWeight(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumn) GetStretchWeight() float32 {
-	return float32(C.ImGuiTableColumn_GetStretchWeight(self.handle()))
+func (self TableColumn) StretchWeight() float32 {
+	return float32(C.wrap_ImGuiTableColumn_GetStretchWeight(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetInitStretchWeightOrWidth(v float32) {
-	C.ImGuiTableColumn_SetInitStretchWeightOrWidth(self.handle(), C.float(v))
+func (self *TableColumn) SetInitStretchWeightOrWidth(v float32) {
+	C.wrap_ImGuiTableColumn_SetInitStretchWeightOrWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumn) GetInitStretchWeightOrWidth() float32 {
-	return float32(C.ImGuiTableColumn_GetInitStretchWeightOrWidth(self.handle()))
+func (self TableColumn) InitStretchWeightOrWidth() float32 {
+	return float32(C.wrap_ImGuiTableColumn_GetInitStretchWeightOrWidth(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetClipRect(v Rect) {
-	C.ImGuiTableColumn_SetClipRect(self.handle(), v.toC())
+func (self *TableColumn) SetClipRect(v Rect) {
+	C.wrap_ImGuiTableColumn_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTableColumn) GetClipRect() Rect {
+func (self TableColumn) ClipRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiTableColumn_GetClipRect(self.handle()))
+	out.fromC(C.wrap_ImGuiTableColumn_GetClipRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTableColumn) SetUserID(v ImGuiID) {
-	C.ImGuiTableColumn_SetUserID(self.handle(), C.ImGuiID(v))
+func (self *TableColumn) SetUserID(v ID) {
+	C.wrap_ImGuiTableColumn_SetUserID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiTableColumn) GetUserID() ImGuiID {
-	return ImGuiID(C.ImGuiTableColumn_GetUserID(self.handle()))
+func (self TableColumn) UserID() ID {
+	return ImGuiID(C.wrap_ImGuiTableColumn_GetUserID(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetWorkMinX(v float32) {
-	C.ImGuiTableColumn_SetWorkMinX(self.handle(), C.float(v))
+func (self *TableColumn) SetWorkMinX(v float32) {
+	C.wrap_ImGuiTableColumn_SetWorkMinX(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumn) GetWorkMinX() float32 {
-	return float32(C.ImGuiTableColumn_GetWorkMinX(self.handle()))
+func (self TableColumn) WorkMinX() float32 {
+	return float32(C.wrap_ImGuiTableColumn_GetWorkMinX(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetWorkMaxX(v float32) {
-	C.ImGuiTableColumn_SetWorkMaxX(self.handle(), C.float(v))
+func (self *TableColumn) SetWorkMaxX(v float32) {
+	C.wrap_ImGuiTableColumn_SetWorkMaxX(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumn) GetWorkMaxX() float32 {
-	return float32(C.ImGuiTableColumn_GetWorkMaxX(self.handle()))
+func (self TableColumn) WorkMaxX() float32 {
+	return float32(C.wrap_ImGuiTableColumn_GetWorkMaxX(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetItemWidth(v float32) {
-	C.ImGuiTableColumn_SetItemWidth(self.handle(), C.float(v))
+func (self *TableColumn) SetItemWidth(v float32) {
+	C.wrap_ImGuiTableColumn_SetItemWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumn) GetItemWidth() float32 {
-	return float32(C.ImGuiTableColumn_GetItemWidth(self.handle()))
+func (self TableColumn) ItemWidth() float32 {
+	return float32(C.wrap_ImGuiTableColumn_GetItemWidth(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetContentMaxXFrozen(v float32) {
-	C.ImGuiTableColumn_SetContentMaxXFrozen(self.handle(), C.float(v))
+func (self *TableColumn) SetContentMaxXFrozen(v float32) {
+	C.wrap_ImGuiTableColumn_SetContentMaxXFrozen(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumn) GetContentMaxXFrozen() float32 {
-	return float32(C.ImGuiTableColumn_GetContentMaxXFrozen(self.handle()))
+func (self TableColumn) ContentMaxXFrozen() float32 {
+	return float32(C.wrap_ImGuiTableColumn_GetContentMaxXFrozen(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetContentMaxXUnfrozen(v float32) {
-	C.ImGuiTableColumn_SetContentMaxXUnfrozen(self.handle(), C.float(v))
+func (self *TableColumn) SetContentMaxXUnfrozen(v float32) {
+	C.wrap_ImGuiTableColumn_SetContentMaxXUnfrozen(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumn) GetContentMaxXUnfrozen() float32 {
-	return float32(C.ImGuiTableColumn_GetContentMaxXUnfrozen(self.handle()))
+func (self TableColumn) ContentMaxXUnfrozen() float32 {
+	return float32(C.wrap_ImGuiTableColumn_GetContentMaxXUnfrozen(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetContentMaxXHeadersUsed(v float32) {
-	C.ImGuiTableColumn_SetContentMaxXHeadersUsed(self.handle(), C.float(v))
+func (self *TableColumn) SetContentMaxXHeadersUsed(v float32) {
+	C.wrap_ImGuiTableColumn_SetContentMaxXHeadersUsed(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumn) GetContentMaxXHeadersUsed() float32 {
-	return float32(C.ImGuiTableColumn_GetContentMaxXHeadersUsed(self.handle()))
+func (self TableColumn) ContentMaxXHeadersUsed() float32 {
+	return float32(C.wrap_ImGuiTableColumn_GetContentMaxXHeadersUsed(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetContentMaxXHeadersIdeal(v float32) {
-	C.ImGuiTableColumn_SetContentMaxXHeadersIdeal(self.handle(), C.float(v))
+func (self *TableColumn) SetContentMaxXHeadersIdeal(v float32) {
+	C.wrap_ImGuiTableColumn_SetContentMaxXHeadersIdeal(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumn) GetContentMaxXHeadersIdeal() float32 {
-	return float32(C.ImGuiTableColumn_GetContentMaxXHeadersIdeal(self.handle()))
+func (self TableColumn) ContentMaxXHeadersIdeal() float32 {
+	return float32(C.wrap_ImGuiTableColumn_GetContentMaxXHeadersIdeal(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetNameOffset(v int) {
-	C.ImGuiTableColumn_SetNameOffset(self.handle(), C.ImS16(v))
+func (self *TableColumn) SetNameOffset(v int) {
+	C.wrap_ImGuiTableColumn_SetNameOffset(self.handle(), C.ImS16(v))
 }
 
-func (self ImGuiTableColumn) GetNameOffset() int {
-	return int(C.ImGuiTableColumn_GetNameOffset(self.handle()))
+func (self TableColumn) NameOffset() int {
+	return int(C.wrap_ImGuiTableColumn_GetNameOffset(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetDisplayOrder(v TableColumnIdx) {
-	C.ImGuiTableColumn_SetDisplayOrder(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *TableColumn) SetDisplayOrder(v TableColumnIdx) {
+	C.wrap_ImGuiTableColumn_SetDisplayOrder(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumn) GetDisplayOrder() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTableColumn_GetDisplayOrder(self.handle()))
+func (self TableColumn) DisplayOrder() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTableColumn_GetDisplayOrder(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetIndexWithinEnabledSet(v TableColumnIdx) {
-	C.ImGuiTableColumn_SetIndexWithinEnabledSet(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *TableColumn) SetIndexWithinEnabledSet(v TableColumnIdx) {
+	C.wrap_ImGuiTableColumn_SetIndexWithinEnabledSet(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumn) GetIndexWithinEnabledSet() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTableColumn_GetIndexWithinEnabledSet(self.handle()))
+func (self TableColumn) IndexWithinEnabledSet() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTableColumn_GetIndexWithinEnabledSet(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetPrevEnabledColumn(v TableColumnIdx) {
-	C.ImGuiTableColumn_SetPrevEnabledColumn(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *TableColumn) SetPrevEnabledColumn(v TableColumnIdx) {
+	C.wrap_ImGuiTableColumn_SetPrevEnabledColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumn) GetPrevEnabledColumn() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTableColumn_GetPrevEnabledColumn(self.handle()))
+func (self TableColumn) PrevEnabledColumn() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTableColumn_GetPrevEnabledColumn(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetNextEnabledColumn(v TableColumnIdx) {
-	C.ImGuiTableColumn_SetNextEnabledColumn(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *TableColumn) SetNextEnabledColumn(v TableColumnIdx) {
+	C.wrap_ImGuiTableColumn_SetNextEnabledColumn(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumn) GetNextEnabledColumn() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTableColumn_GetNextEnabledColumn(self.handle()))
+func (self TableColumn) NextEnabledColumn() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTableColumn_GetNextEnabledColumn(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetSortOrder(v TableColumnIdx) {
-	C.ImGuiTableColumn_SetSortOrder(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *TableColumn) SetSortOrder(v TableColumnIdx) {
+	C.wrap_ImGuiTableColumn_SetSortOrder(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumn) GetSortOrder() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTableColumn_GetSortOrder(self.handle()))
+func (self TableColumn) SortOrder() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTableColumn_GetSortOrder(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetDrawChannelCurrent(v TableDrawChannelIdx) {
-	C.ImGuiTableColumn_SetDrawChannelCurrent(self.handle(), C.ImGuiTableDrawChannelIdx(v))
+func (self *TableColumn) SetDrawChannelCurrent(v TableDrawChannelIdx) {
+	C.wrap_ImGuiTableColumn_SetDrawChannelCurrent(self.handle(), C.ImGuiTableDrawChannelIdx(v))
 }
 
-func (self ImGuiTableColumn) GetDrawChannelCurrent() TableDrawChannelIdx {
-	return TableDrawChannelIdx(C.ImGuiTableColumn_GetDrawChannelCurrent(self.handle()))
+func (self TableColumn) DrawChannelCurrent() TableDrawChannelIdx {
+	return TableDrawChannelIdx(C.wrap_ImGuiTableColumn_GetDrawChannelCurrent(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetDrawChannelFrozen(v TableDrawChannelIdx) {
-	C.ImGuiTableColumn_SetDrawChannelFrozen(self.handle(), C.ImGuiTableDrawChannelIdx(v))
+func (self *TableColumn) SetDrawChannelFrozen(v TableDrawChannelIdx) {
+	C.wrap_ImGuiTableColumn_SetDrawChannelFrozen(self.handle(), C.ImGuiTableDrawChannelIdx(v))
 }
 
-func (self ImGuiTableColumn) GetDrawChannelFrozen() TableDrawChannelIdx {
-	return TableDrawChannelIdx(C.ImGuiTableColumn_GetDrawChannelFrozen(self.handle()))
+func (self TableColumn) DrawChannelFrozen() TableDrawChannelIdx {
+	return TableDrawChannelIdx(C.wrap_ImGuiTableColumn_GetDrawChannelFrozen(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetDrawChannelUnfrozen(v TableDrawChannelIdx) {
-	C.ImGuiTableColumn_SetDrawChannelUnfrozen(self.handle(), C.ImGuiTableDrawChannelIdx(v))
+func (self *TableColumn) SetDrawChannelUnfrozen(v TableDrawChannelIdx) {
+	C.wrap_ImGuiTableColumn_SetDrawChannelUnfrozen(self.handle(), C.ImGuiTableDrawChannelIdx(v))
 }
 
-func (self ImGuiTableColumn) GetDrawChannelUnfrozen() TableDrawChannelIdx {
-	return TableDrawChannelIdx(C.ImGuiTableColumn_GetDrawChannelUnfrozen(self.handle()))
+func (self TableColumn) DrawChannelUnfrozen() TableDrawChannelIdx {
+	return TableDrawChannelIdx(C.wrap_ImGuiTableColumn_GetDrawChannelUnfrozen(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetIsEnabled(v bool) {
-	C.ImGuiTableColumn_SetIsEnabled(self.handle(), C.bool(v))
+func (self *TableColumn) SetIsEnabled(v bool) {
+	C.wrap_ImGuiTableColumn_SetIsEnabled(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTableColumn) GetIsEnabled() bool {
-	return C.ImGuiTableColumn_GetIsEnabled(self.handle()) == C.bool(true)
+func (self TableColumn) IsEnabled() bool {
+	return C.wrap_ImGuiTableColumn_GetIsEnabled(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTableColumn) SetIsUserEnabled(v bool) {
-	C.ImGuiTableColumn_SetIsUserEnabled(self.handle(), C.bool(v))
+func (self *TableColumn) SetIsUserEnabled(v bool) {
+	C.wrap_ImGuiTableColumn_SetIsUserEnabled(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTableColumn) GetIsUserEnabled() bool {
-	return C.ImGuiTableColumn_GetIsUserEnabled(self.handle()) == C.bool(true)
+func (self TableColumn) IsUserEnabled() bool {
+	return C.wrap_ImGuiTableColumn_GetIsUserEnabled(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTableColumn) SetIsUserEnabledNextFrame(v bool) {
-	C.ImGuiTableColumn_SetIsUserEnabledNextFrame(self.handle(), C.bool(v))
+func (self *TableColumn) SetIsUserEnabledNextFrame(v bool) {
+	C.wrap_ImGuiTableColumn_SetIsUserEnabledNextFrame(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTableColumn) GetIsUserEnabledNextFrame() bool {
-	return C.ImGuiTableColumn_GetIsUserEnabledNextFrame(self.handle()) == C.bool(true)
+func (self TableColumn) IsUserEnabledNextFrame() bool {
+	return C.wrap_ImGuiTableColumn_GetIsUserEnabledNextFrame(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTableColumn) SetIsVisibleX(v bool) {
-	C.ImGuiTableColumn_SetIsVisibleX(self.handle(), C.bool(v))
+func (self *TableColumn) SetIsVisibleX(v bool) {
+	C.wrap_ImGuiTableColumn_SetIsVisibleX(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTableColumn) GetIsVisibleX() bool {
-	return C.ImGuiTableColumn_GetIsVisibleX(self.handle()) == C.bool(true)
+func (self TableColumn) IsVisibleX() bool {
+	return C.wrap_ImGuiTableColumn_GetIsVisibleX(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTableColumn) SetIsVisibleY(v bool) {
-	C.ImGuiTableColumn_SetIsVisibleY(self.handle(), C.bool(v))
+func (self *TableColumn) SetIsVisibleY(v bool) {
+	C.wrap_ImGuiTableColumn_SetIsVisibleY(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTableColumn) GetIsVisibleY() bool {
-	return C.ImGuiTableColumn_GetIsVisibleY(self.handle()) == C.bool(true)
+func (self TableColumn) IsVisibleY() bool {
+	return C.wrap_ImGuiTableColumn_GetIsVisibleY(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTableColumn) SetIsRequestOutput(v bool) {
-	C.ImGuiTableColumn_SetIsRequestOutput(self.handle(), C.bool(v))
+func (self *TableColumn) SetIsRequestOutput(v bool) {
+	C.wrap_ImGuiTableColumn_SetIsRequestOutput(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTableColumn) GetIsRequestOutput() bool {
-	return C.ImGuiTableColumn_GetIsRequestOutput(self.handle()) == C.bool(true)
+func (self TableColumn) IsRequestOutput() bool {
+	return C.wrap_ImGuiTableColumn_GetIsRequestOutput(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTableColumn) SetIsSkipItems(v bool) {
-	C.ImGuiTableColumn_SetIsSkipItems(self.handle(), C.bool(v))
+func (self *TableColumn) SetIsSkipItems(v bool) {
+	C.wrap_ImGuiTableColumn_SetIsSkipItems(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTableColumn) GetIsSkipItems() bool {
-	return C.ImGuiTableColumn_GetIsSkipItems(self.handle()) == C.bool(true)
+func (self TableColumn) IsSkipItems() bool {
+	return C.wrap_ImGuiTableColumn_GetIsSkipItems(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTableColumn) SetIsPreserveWidthAuto(v bool) {
-	C.ImGuiTableColumn_SetIsPreserveWidthAuto(self.handle(), C.bool(v))
+func (self *TableColumn) SetIsPreserveWidthAuto(v bool) {
+	C.wrap_ImGuiTableColumn_SetIsPreserveWidthAuto(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTableColumn) GetIsPreserveWidthAuto() bool {
-	return C.ImGuiTableColumn_GetIsPreserveWidthAuto(self.handle()) == C.bool(true)
+func (self TableColumn) IsPreserveWidthAuto() bool {
+	return C.wrap_ImGuiTableColumn_GetIsPreserveWidthAuto(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTableColumn) SetNavLayerCurrent(v int) {
-	C.ImGuiTableColumn_SetNavLayerCurrent(self.handle(), C.ImS8(v))
+func (self *TableColumn) SetNavLayerCurrent(v int) {
+	C.wrap_ImGuiTableColumn_SetNavLayerCurrent(self.handle(), C.ImS8(v))
 }
 
-func (self ImGuiTableColumn) GetNavLayerCurrent() int {
-	return int(C.ImGuiTableColumn_GetNavLayerCurrent(self.handle()))
+func (self TableColumn) NavLayerCurrent() int {
+	return int(C.wrap_ImGuiTableColumn_GetNavLayerCurrent(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetAutoFitQueue(v uint) {
-	C.ImGuiTableColumn_SetAutoFitQueue(self.handle(), C.ImU8(v))
+func (self *TableColumn) SetAutoFitQueue(v uint) {
+	C.wrap_ImGuiTableColumn_SetAutoFitQueue(self.handle(), C.ImU8(v))
 }
 
-func (self ImGuiTableColumn) GetAutoFitQueue() uint32 {
-	return uint32(C.ImGuiTableColumn_GetAutoFitQueue(self.handle()))
+func (self TableColumn) AutoFitQueue() uint32 {
+	return uint32(C.wrap_ImGuiTableColumn_GetAutoFitQueue(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetCannotSkipItemsQueue(v uint) {
-	C.ImGuiTableColumn_SetCannotSkipItemsQueue(self.handle(), C.ImU8(v))
+func (self *TableColumn) SetCannotSkipItemsQueue(v uint) {
+	C.wrap_ImGuiTableColumn_SetCannotSkipItemsQueue(self.handle(), C.ImU8(v))
 }
 
-func (self ImGuiTableColumn) GetCannotSkipItemsQueue() uint32 {
-	return uint32(C.ImGuiTableColumn_GetCannotSkipItemsQueue(self.handle()))
+func (self TableColumn) CannotSkipItemsQueue() uint32 {
+	return uint32(C.wrap_ImGuiTableColumn_GetCannotSkipItemsQueue(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetSortDirection(v uint) {
-	C.ImGuiTableColumn_SetSortDirection(self.handle(), C.ImU8(v))
+func (self *TableColumn) SetSortDirection(v uint) {
+	C.wrap_ImGuiTableColumn_SetSortDirection(self.handle(), C.ImU8(v))
 }
 
-func (self ImGuiTableColumn) GetSortDirection() uint32 {
-	return uint32(C.ImGuiTableColumn_GetSortDirection(self.handle()))
+func (self TableColumn) SortDirection() uint32 {
+	return uint32(C.wrap_ImGuiTableColumn_GetSortDirection(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetSortDirectionsAvailCount(v uint) {
-	C.ImGuiTableColumn_SetSortDirectionsAvailCount(self.handle(), C.ImU8(v))
+func (self *TableColumn) SetSortDirectionsAvailCount(v uint) {
+	C.wrap_ImGuiTableColumn_SetSortDirectionsAvailCount(self.handle(), C.ImU8(v))
 }
 
-func (self ImGuiTableColumn) GetSortDirectionsAvailCount() uint32 {
-	return uint32(C.ImGuiTableColumn_GetSortDirectionsAvailCount(self.handle()))
+func (self TableColumn) SortDirectionsAvailCount() uint32 {
+	return uint32(C.wrap_ImGuiTableColumn_GetSortDirectionsAvailCount(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetSortDirectionsAvailMask(v uint) {
-	C.ImGuiTableColumn_SetSortDirectionsAvailMask(self.handle(), C.ImU8(v))
+func (self *TableColumn) SetSortDirectionsAvailMask(v uint) {
+	C.wrap_ImGuiTableColumn_SetSortDirectionsAvailMask(self.handle(), C.ImU8(v))
 }
 
-func (self ImGuiTableColumn) GetSortDirectionsAvailMask() uint32 {
-	return uint32(C.ImGuiTableColumn_GetSortDirectionsAvailMask(self.handle()))
+func (self TableColumn) SortDirectionsAvailMask() uint32 {
+	return uint32(C.wrap_ImGuiTableColumn_GetSortDirectionsAvailMask(self.handle()))
 }
 
-func (self *ImGuiTableColumn) SetSortDirectionsAvailList(v uint) {
-	C.ImGuiTableColumn_SetSortDirectionsAvailList(self.handle(), C.ImU8(v))
+func (self *TableColumn) SetSortDirectionsAvailList(v uint) {
+	C.wrap_ImGuiTableColumn_SetSortDirectionsAvailList(self.handle(), C.ImU8(v))
 }
 
-func (self ImGuiTableColumn) GetSortDirectionsAvailList() uint32 {
-	return uint32(C.ImGuiTableColumn_GetSortDirectionsAvailList(self.handle()))
+func (self TableColumn) SortDirectionsAvailList() uint32 {
+	return uint32(C.wrap_ImGuiTableColumn_GetSortDirectionsAvailList(self.handle()))
 }
 
-func (self *ImGuiTableColumnSettings) SetWidthOrWeight(v float32) {
-	C.ImGuiTableColumnSettings_SetWidthOrWeight(self.handle(), C.float(v))
+func (self *TableColumnSettings) SetWidthOrWeight(v float32) {
+	C.wrap_ImGuiTableColumnSettings_SetWidthOrWeight(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableColumnSettings) GetWidthOrWeight() float32 {
-	return float32(C.ImGuiTableColumnSettings_GetWidthOrWeight(self.handle()))
+func (self TableColumnSettings) WidthOrWeight() float32 {
+	return float32(C.wrap_ImGuiTableColumnSettings_GetWidthOrWeight(self.handle()))
 }
 
-func (self *ImGuiTableColumnSettings) SetUserID(v ImGuiID) {
-	C.ImGuiTableColumnSettings_SetUserID(self.handle(), C.ImGuiID(v))
+func (self *TableColumnSettings) SetUserID(v ID) {
+	C.wrap_ImGuiTableColumnSettings_SetUserID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiTableColumnSettings) GetUserID() ImGuiID {
-	return ImGuiID(C.ImGuiTableColumnSettings_GetUserID(self.handle()))
+func (self TableColumnSettings) UserID() ID {
+	return ImGuiID(C.wrap_ImGuiTableColumnSettings_GetUserID(self.handle()))
 }
 
-func (self *ImGuiTableColumnSettings) SetIndex(v TableColumnIdx) {
-	C.ImGuiTableColumnSettings_SetIndex(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *TableColumnSettings) SetIndex(v TableColumnIdx) {
+	C.wrap_ImGuiTableColumnSettings_SetIndex(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumnSettings) GetIndex() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTableColumnSettings_GetIndex(self.handle()))
+func (self TableColumnSettings) Index() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTableColumnSettings_GetIndex(self.handle()))
 }
 
-func (self *ImGuiTableColumnSettings) SetDisplayOrder(v TableColumnIdx) {
-	C.ImGuiTableColumnSettings_SetDisplayOrder(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *TableColumnSettings) SetDisplayOrder(v TableColumnIdx) {
+	C.wrap_ImGuiTableColumnSettings_SetDisplayOrder(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumnSettings) GetDisplayOrder() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTableColumnSettings_GetDisplayOrder(self.handle()))
+func (self TableColumnSettings) DisplayOrder() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTableColumnSettings_GetDisplayOrder(self.handle()))
 }
 
-func (self *ImGuiTableColumnSettings) SetSortOrder(v TableColumnIdx) {
-	C.ImGuiTableColumnSettings_SetSortOrder(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *TableColumnSettings) SetSortOrder(v TableColumnIdx) {
+	C.wrap_ImGuiTableColumnSettings_SetSortOrder(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableColumnSettings) GetSortOrder() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTableColumnSettings_GetSortOrder(self.handle()))
+func (self TableColumnSettings) SortOrder() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTableColumnSettings_GetSortOrder(self.handle()))
 }
 
-func (self *ImGuiTableColumnSettings) SetSortDirection(v uint) {
-	C.ImGuiTableColumnSettings_SetSortDirection(self.handle(), C.ImU8(v))
+func (self *TableColumnSettings) SetSortDirection(v uint) {
+	C.wrap_ImGuiTableColumnSettings_SetSortDirection(self.handle(), C.ImU8(v))
 }
 
-func (self ImGuiTableColumnSettings) GetSortDirection() uint32 {
-	return uint32(C.ImGuiTableColumnSettings_GetSortDirection(self.handle()))
+func (self TableColumnSettings) SortDirection() uint32 {
+	return uint32(C.wrap_ImGuiTableColumnSettings_GetSortDirection(self.handle()))
 }
 
-func (self *ImGuiTableColumnSettings) SetIsEnabled(v uint) {
-	C.ImGuiTableColumnSettings_SetIsEnabled(self.handle(), C.ImU8(v))
+func (self *TableColumnSettings) SetIsEnabled(v uint) {
+	C.wrap_ImGuiTableColumnSettings_SetIsEnabled(self.handle(), C.ImU8(v))
 }
 
-func (self ImGuiTableColumnSettings) GetIsEnabled() uint32 {
-	return uint32(C.ImGuiTableColumnSettings_GetIsEnabled(self.handle()))
+func (self TableColumnSettings) IsEnabled() uint32 {
+	return uint32(C.wrap_ImGuiTableColumnSettings_GetIsEnabled(self.handle()))
 }
 
-func (self *ImGuiTableColumnSettings) SetIsStretch(v uint) {
-	C.ImGuiTableColumnSettings_SetIsStretch(self.handle(), C.ImU8(v))
+func (self *TableColumnSettings) SetIsStretch(v uint) {
+	C.wrap_ImGuiTableColumnSettings_SetIsStretch(self.handle(), C.ImU8(v))
 }
 
-func (self ImGuiTableColumnSettings) GetIsStretch() uint32 {
-	return uint32(C.ImGuiTableColumnSettings_GetIsStretch(self.handle()))
+func (self TableColumnSettings) IsStretch() uint32 {
+	return uint32(C.wrap_ImGuiTableColumnSettings_GetIsStretch(self.handle()))
 }
 
-func (self *ImGuiTableColumnSortSpecs) SetColumnUserID(v ImGuiID) {
-	C.ImGuiTableColumnSortSpecs_SetColumnUserID(self.handle(), C.ImGuiID(v))
+func (self *TableColumnSortSpecs) SetColumnUserID(v ID) {
+	C.wrap_ImGuiTableColumnSortSpecs_SetColumnUserID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiTableColumnSortSpecs) GetColumnUserID() ImGuiID {
-	return ImGuiID(C.ImGuiTableColumnSortSpecs_GetColumnUserID(self.handle()))
+func (self TableColumnSortSpecs) ColumnUserID() ID {
+	return ImGuiID(C.wrap_ImGuiTableColumnSortSpecs_GetColumnUserID(self.handle()))
 }
 
-func (self *ImGuiTableColumnSortSpecs) SetColumnIndex(v int) {
-	C.ImGuiTableColumnSortSpecs_SetColumnIndex(self.handle(), C.ImS16(v))
+func (self *TableColumnSortSpecs) SetColumnIndex(v int) {
+	C.wrap_ImGuiTableColumnSortSpecs_SetColumnIndex(self.handle(), C.ImS16(v))
 }
 
-func (self ImGuiTableColumnSortSpecs) GetColumnIndex() int {
-	return int(C.ImGuiTableColumnSortSpecs_GetColumnIndex(self.handle()))
+func (self TableColumnSortSpecs) ColumnIndex() int {
+	return int(C.wrap_ImGuiTableColumnSortSpecs_GetColumnIndex(self.handle()))
 }
 
-func (self *ImGuiTableColumnSortSpecs) SetSortOrder(v int) {
-	C.ImGuiTableColumnSortSpecs_SetSortOrder(self.handle(), C.ImS16(v))
+func (self *TableColumnSortSpecs) SetSortOrder(v int) {
+	C.wrap_ImGuiTableColumnSortSpecs_SetSortOrder(self.handle(), C.ImS16(v))
 }
 
-func (self ImGuiTableColumnSortSpecs) GetSortOrder() int {
-	return int(C.ImGuiTableColumnSortSpecs_GetSortOrder(self.handle()))
+func (self TableColumnSortSpecs) SortOrder() int {
+	return int(C.wrap_ImGuiTableColumnSortSpecs_GetSortOrder(self.handle()))
 }
 
-func (self *ImGuiTableColumnSortSpecs) SetSortDirection(v SortDirection) {
-	C.ImGuiTableColumnSortSpecs_SetSortDirection(self.handle(), C.ImGuiSortDirection(v))
+func (self *TableColumnSortSpecs) SetSortDirection(v SortDirection) {
+	C.wrap_ImGuiTableColumnSortSpecs_SetSortDirection(self.handle(), C.ImGuiSortDirection(v))
 }
 
-func (self ImGuiTableColumnSortSpecs) GetSortDirection() SortDirection {
-	return SortDirection(C.ImGuiTableColumnSortSpecs_GetSortDirection(self.handle()))
+func (self TableColumnSortSpecs) SortDirection() SortDirection {
+	return SortDirection(C.wrap_ImGuiTableColumnSortSpecs_GetSortDirection(self.handle()))
 }
 
-func (self *ImGuiTableInstanceData) SetLastOuterHeight(v float32) {
-	C.ImGuiTableInstanceData_SetLastOuterHeight(self.handle(), C.float(v))
+func (self *TableInstanceData) SetLastOuterHeight(v float32) {
+	C.wrap_ImGuiTableInstanceData_SetLastOuterHeight(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableInstanceData) GetLastOuterHeight() float32 {
-	return float32(C.ImGuiTableInstanceData_GetLastOuterHeight(self.handle()))
+func (self TableInstanceData) LastOuterHeight() float32 {
+	return float32(C.wrap_ImGuiTableInstanceData_GetLastOuterHeight(self.handle()))
 }
 
-func (self *ImGuiTableInstanceData) SetLastFirstRowHeight(v float32) {
-	C.ImGuiTableInstanceData_SetLastFirstRowHeight(self.handle(), C.float(v))
+func (self *TableInstanceData) SetLastFirstRowHeight(v float32) {
+	C.wrap_ImGuiTableInstanceData_SetLastFirstRowHeight(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableInstanceData) GetLastFirstRowHeight() float32 {
-	return float32(C.ImGuiTableInstanceData_GetLastFirstRowHeight(self.handle()))
+func (self TableInstanceData) LastFirstRowHeight() float32 {
+	return float32(C.wrap_ImGuiTableInstanceData_GetLastFirstRowHeight(self.handle()))
 }
 
-func (self *ImGuiTableSettings) SetID(v ImGuiID) {
-	C.ImGuiTableSettings_SetID(self.handle(), C.ImGuiID(v))
+func (self *TableSettings) SetID(v ID) {
+	C.wrap_ImGuiTableSettings_SetID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiTableSettings) GetID() ImGuiID {
-	return ImGuiID(C.ImGuiTableSettings_GetID(self.handle()))
+func (self TableSettings) ID() ID {
+	return ImGuiID(C.wrap_ImGuiTableSettings_GetID(self.handle()))
 }
 
-func (self *ImGuiTableSettings) SetSaveFlags(v TableFlags) {
-	C.ImGuiTableSettings_SetSaveFlags(self.handle(), C.ImGuiTableFlags(v))
+func (self *TableSettings) SetSaveFlags(v TableFlags) {
+	C.wrap_ImGuiTableSettings_SetSaveFlags(self.handle(), C.ImGuiTableFlags(v))
 }
 
-func (self ImGuiTableSettings) GetSaveFlags() TableFlags {
-	return TableFlags(C.ImGuiTableSettings_GetSaveFlags(self.handle()))
+func (self TableSettings) SaveFlags() TableFlags {
+	return TableFlags(C.wrap_ImGuiTableSettings_GetSaveFlags(self.handle()))
 }
 
-func (self *ImGuiTableSettings) SetRefScale(v float32) {
-	C.ImGuiTableSettings_SetRefScale(self.handle(), C.float(v))
+func (self *TableSettings) SetRefScale(v float32) {
+	C.wrap_ImGuiTableSettings_SetRefScale(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableSettings) GetRefScale() float32 {
-	return float32(C.ImGuiTableSettings_GetRefScale(self.handle()))
+func (self TableSettings) RefScale() float32 {
+	return float32(C.wrap_ImGuiTableSettings_GetRefScale(self.handle()))
 }
 
-func (self *ImGuiTableSettings) SetColumnsCount(v TableColumnIdx) {
-	C.ImGuiTableSettings_SetColumnsCount(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *TableSettings) SetColumnsCount(v TableColumnIdx) {
+	C.wrap_ImGuiTableSettings_SetColumnsCount(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableSettings) GetColumnsCount() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTableSettings_GetColumnsCount(self.handle()))
+func (self TableSettings) ColumnsCount() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTableSettings_GetColumnsCount(self.handle()))
 }
 
-func (self *ImGuiTableSettings) SetColumnsCountMax(v TableColumnIdx) {
-	C.ImGuiTableSettings_SetColumnsCountMax(self.handle(), C.ImGuiTableColumnIdx(v))
+func (self *TableSettings) SetColumnsCountMax(v TableColumnIdx) {
+	C.wrap_ImGuiTableSettings_SetColumnsCountMax(self.handle(), C.ImGuiTableColumnIdx(v))
 }
 
-func (self ImGuiTableSettings) GetColumnsCountMax() TableColumnIdx {
-	return TableColumnIdx(C.ImGuiTableSettings_GetColumnsCountMax(self.handle()))
+func (self TableSettings) ColumnsCountMax() TableColumnIdx {
+	return TableColumnIdx(C.wrap_ImGuiTableSettings_GetColumnsCountMax(self.handle()))
 }
 
-func (self *ImGuiTableSettings) SetWantApply(v bool) {
-	C.ImGuiTableSettings_SetWantApply(self.handle(), C.bool(v))
+func (self *TableSettings) SetWantApply(v bool) {
+	C.wrap_ImGuiTableSettings_SetWantApply(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTableSettings) GetWantApply() bool {
-	return C.ImGuiTableSettings_GetWantApply(self.handle()) == C.bool(true)
+func (self TableSettings) WantApply() bool {
+	return C.wrap_ImGuiTableSettings_GetWantApply(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTableSortSpecs) SetSpecs(v ImGuiTableColumnSortSpecs) {
-	C.ImGuiTableSortSpecs_SetSpecs(self.handle(), v.handle())
+func (self *TableSortSpecs) SetSpecs(v TableColumnSortSpecs) {
+	C.wrap_ImGuiTableSortSpecs_SetSpecs(self.handle(), v.handle())
 }
 
-func (self ImGuiTableSortSpecs) GetSpecs() ImGuiTableColumnSortSpecs {
-	return (ImGuiTableColumnSortSpecs)(unsafe.Pointer(C.ImGuiTableSortSpecs_GetSpecs(self.handle())))
+func (self TableSortSpecs) Specs() TableColumnSortSpecs {
+	return (TableColumnSortSpecs)(unsafe.Pointer(C.wrap_ImGuiTableSortSpecs_GetSpecs(self.handle())))
 }
 
-func (self *ImGuiTableSortSpecs) SetSpecsCount(v int32) {
-	C.ImGuiTableSortSpecs_SetSpecsCount(self.handle(), C.int(v))
+func (self *TableSortSpecs) SetSpecsCount(v int32) {
+	C.wrap_ImGuiTableSortSpecs_SetSpecsCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiTableSortSpecs) GetSpecsCount() int {
-	return int(C.ImGuiTableSortSpecs_GetSpecsCount(self.handle()))
+func (self TableSortSpecs) SpecsCount() int {
+	return int(C.wrap_ImGuiTableSortSpecs_GetSpecsCount(self.handle()))
 }
 
-func (self *ImGuiTableSortSpecs) SetSpecsDirty(v bool) {
-	C.ImGuiTableSortSpecs_SetSpecsDirty(self.handle(), C.bool(v))
+func (self *TableSortSpecs) SetSpecsDirty(v bool) {
+	C.wrap_ImGuiTableSortSpecs_SetSpecsDirty(self.handle(), C.bool(v))
 }
 
-func (self ImGuiTableSortSpecs) GetSpecsDirty() bool {
-	return C.ImGuiTableSortSpecs_GetSpecsDirty(self.handle()) == C.bool(true)
+func (self TableSortSpecs) SpecsDirty() bool {
+	return C.wrap_ImGuiTableSortSpecs_GetSpecsDirty(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiTableTempData) SetTableIndex(v int32) {
-	C.ImGuiTableTempData_SetTableIndex(self.handle(), C.int(v))
+func (self *TableTempData) SetTableIndex(v int32) {
+	C.wrap_ImGuiTableTempData_SetTableIndex(self.handle(), C.int(v))
 }
 
-func (self ImGuiTableTempData) GetTableIndex() int {
-	return int(C.ImGuiTableTempData_GetTableIndex(self.handle()))
+func (self TableTempData) TableIndex() int {
+	return int(C.wrap_ImGuiTableTempData_GetTableIndex(self.handle()))
 }
 
-func (self *ImGuiTableTempData) SetLastTimeActive(v float32) {
-	C.ImGuiTableTempData_SetLastTimeActive(self.handle(), C.float(v))
+func (self *TableTempData) SetLastTimeActive(v float32) {
+	C.wrap_ImGuiTableTempData_SetLastTimeActive(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableTempData) GetLastTimeActive() float32 {
-	return float32(C.ImGuiTableTempData_GetLastTimeActive(self.handle()))
+func (self TableTempData) LastTimeActive() float32 {
+	return float32(C.wrap_ImGuiTableTempData_GetLastTimeActive(self.handle()))
 }
 
-func (self *ImGuiTableTempData) SetUserOuterSize(v Vec2) {
-	C.ImGuiTableTempData_SetUserOuterSize(self.handle(), v.toC())
+func (self *TableTempData) SetUserOuterSize(v Vec2) {
+	C.wrap_ImGuiTableTempData_SetUserOuterSize(self.handle(), v.toC())
 }
 
-func (self ImGuiTableTempData) GetUserOuterSize() Vec2 {
+func (self TableTempData) UserOuterSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiTableTempData_GetUserOuterSize(self.handle()))
+	out.fromC(C.wrap_ImGuiTableTempData_GetUserOuterSize(self.handle()))
 	return *out
 }
 
-func (self ImGuiTableTempData) GetDrawSplitter() ImDrawListSplitter {
-	return newImDrawListSplitterFromC(C.ImGuiTableTempData_GetDrawSplitter(self.handle()))
+func (self TableTempData) DrawSplitter() DrawListSplitter {
+	return newDrawListSplitterFromC(C.wrap_ImGuiTableTempData_GetDrawSplitter(self.handle()))
 }
 
-func (self *ImGuiTableTempData) SetHostBackupWorkRect(v Rect) {
-	C.ImGuiTableTempData_SetHostBackupWorkRect(self.handle(), v.toC())
+func (self *TableTempData) SetHostBackupWorkRect(v Rect) {
+	C.wrap_ImGuiTableTempData_SetHostBackupWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTableTempData) GetHostBackupWorkRect() Rect {
+func (self TableTempData) HostBackupWorkRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiTableTempData_GetHostBackupWorkRect(self.handle()))
+	out.fromC(C.wrap_ImGuiTableTempData_GetHostBackupWorkRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTableTempData) SetHostBackupParentWorkRect(v Rect) {
-	C.ImGuiTableTempData_SetHostBackupParentWorkRect(self.handle(), v.toC())
+func (self *TableTempData) SetHostBackupParentWorkRect(v Rect) {
+	C.wrap_ImGuiTableTempData_SetHostBackupParentWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiTableTempData) GetHostBackupParentWorkRect() Rect {
+func (self TableTempData) HostBackupParentWorkRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiTableTempData_GetHostBackupParentWorkRect(self.handle()))
+	out.fromC(C.wrap_ImGuiTableTempData_GetHostBackupParentWorkRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTableTempData) SetHostBackupPrevLineSize(v Vec2) {
-	C.ImGuiTableTempData_SetHostBackupPrevLineSize(self.handle(), v.toC())
+func (self *TableTempData) SetHostBackupPrevLineSize(v Vec2) {
+	C.wrap_ImGuiTableTempData_SetHostBackupPrevLineSize(self.handle(), v.toC())
 }
 
-func (self ImGuiTableTempData) GetHostBackupPrevLineSize() Vec2 {
+func (self TableTempData) HostBackupPrevLineSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiTableTempData_GetHostBackupPrevLineSize(self.handle()))
+	out.fromC(C.wrap_ImGuiTableTempData_GetHostBackupPrevLineSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTableTempData) SetHostBackupCurrLineSize(v Vec2) {
-	C.ImGuiTableTempData_SetHostBackupCurrLineSize(self.handle(), v.toC())
+func (self *TableTempData) SetHostBackupCurrLineSize(v Vec2) {
+	C.wrap_ImGuiTableTempData_SetHostBackupCurrLineSize(self.handle(), v.toC())
 }
 
-func (self ImGuiTableTempData) GetHostBackupCurrLineSize() Vec2 {
+func (self TableTempData) HostBackupCurrLineSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiTableTempData_GetHostBackupCurrLineSize(self.handle()))
+	out.fromC(C.wrap_ImGuiTableTempData_GetHostBackupCurrLineSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTableTempData) SetHostBackupCursorMaxPos(v Vec2) {
-	C.ImGuiTableTempData_SetHostBackupCursorMaxPos(self.handle(), v.toC())
+func (self *TableTempData) SetHostBackupCursorMaxPos(v Vec2) {
+	C.wrap_ImGuiTableTempData_SetHostBackupCursorMaxPos(self.handle(), v.toC())
 }
 
-func (self ImGuiTableTempData) GetHostBackupCursorMaxPos() Vec2 {
+func (self TableTempData) HostBackupCursorMaxPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiTableTempData_GetHostBackupCursorMaxPos(self.handle()))
+	out.fromC(C.wrap_ImGuiTableTempData_GetHostBackupCursorMaxPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiTableTempData) SetHostBackupItemWidth(v float32) {
-	C.ImGuiTableTempData_SetHostBackupItemWidth(self.handle(), C.float(v))
+func (self *TableTempData) SetHostBackupItemWidth(v float32) {
+	C.wrap_ImGuiTableTempData_SetHostBackupItemWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiTableTempData) GetHostBackupItemWidth() float32 {
-	return float32(C.ImGuiTableTempData_GetHostBackupItemWidth(self.handle()))
+func (self TableTempData) HostBackupItemWidth() float32 {
+	return float32(C.wrap_ImGuiTableTempData_GetHostBackupItemWidth(self.handle()))
 }
 
-func (self *ImGuiTableTempData) SetHostBackupItemWidthStackSize(v int32) {
-	C.ImGuiTableTempData_SetHostBackupItemWidthStackSize(self.handle(), C.int(v))
+func (self *TableTempData) SetHostBackupItemWidthStackSize(v int32) {
+	C.wrap_ImGuiTableTempData_SetHostBackupItemWidthStackSize(self.handle(), C.int(v))
 }
 
-func (self ImGuiTableTempData) GetHostBackupItemWidthStackSize() int {
-	return int(C.ImGuiTableTempData_GetHostBackupItemWidthStackSize(self.handle()))
+func (self TableTempData) HostBackupItemWidthStackSize() int {
+	return int(C.wrap_ImGuiTableTempData_GetHostBackupItemWidthStackSize(self.handle()))
 }
 
-func (self *ImGuiTextFilter) SetCountGrep(v int32) {
-	C.ImGuiTextFilter_SetCountGrep(self.handle(), C.int(v))
+func (self *TextFilter) SetCountGrep(v int32) {
+	C.wrap_ImGuiTextFilter_SetCountGrep(self.handle(), C.int(v))
 }
 
-func (self ImGuiTextFilter) GetCountGrep() int {
-	return int(C.ImGuiTextFilter_GetCountGrep(self.handle()))
+func (self TextFilter) CountGrep() int {
+	return int(C.wrap_ImGuiTextFilter_GetCountGrep(self.handle()))
 }
 
-func (self *ImGuiTextRange) Setb(v string) {
+func (self *TextRange) Setb(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImGuiTextRange_Setb(self.handle(), vArg)
+	C.wrap_ImGuiTextRange_Setb(self.handle(), vArg)
 }
 
-func (self ImGuiTextRange) Getb() string {
-	return C.GoString(C.ImGuiTextRange_Getb(self.handle()))
+func (self TextRange) b() string {
+	return C.GoString(C.wrap_ImGuiTextRange_Getb(self.handle()))
 }
 
-func (self *ImGuiTextRange) Sete(v string) {
+func (self *TextRange) Sete(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImGuiTextRange_Sete(self.handle(), vArg)
+	C.wrap_ImGuiTextRange_Sete(self.handle(), vArg)
 }
 
-func (self ImGuiTextRange) Gete() string {
-	return C.GoString(C.ImGuiTextRange_Gete(self.handle()))
+func (self TextRange) e() string {
+	return C.GoString(C.wrap_ImGuiTextRange_Gete(self.handle()))
 }
 
-func (self *ImGuiViewport) SetID(v ImGuiID) {
-	C.ImGuiViewport_SetID(self.handle(), C.ImGuiID(v))
+func (self *Viewport) SetID(v ID) {
+	C.wrap_ImGuiViewport_SetID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiViewport) GetID() ImGuiID {
-	return ImGuiID(C.ImGuiViewport_GetID(self.handle()))
+func (self Viewport) ID() ID {
+	return ImGuiID(C.wrap_ImGuiViewport_GetID(self.handle()))
 }
 
-func (self *ImGuiViewport) SetFlags(v ViewportFlags) {
-	C.ImGuiViewport_SetFlags(self.handle(), C.ImGuiViewportFlags(v))
+func (self *Viewport) SetFlags(v ViewportFlags) {
+	C.wrap_ImGuiViewport_SetFlags(self.handle(), C.ImGuiViewportFlags(v))
 }
 
-func (self ImGuiViewport) GetFlags() ViewportFlags {
-	return ViewportFlags(C.ImGuiViewport_GetFlags(self.handle()))
+func (self Viewport) Flags() ViewportFlags {
+	return ViewportFlags(C.wrap_ImGuiViewport_GetFlags(self.handle()))
 }
 
-func (self *ImGuiViewport) SetPos(v Vec2) {
-	C.ImGuiViewport_SetPos(self.handle(), v.toC())
+func (self *Viewport) SetPos(v Vec2) {
+	C.wrap_ImGuiViewport_SetPos(self.handle(), v.toC())
 }
 
-func (self ImGuiViewport) GetPos() Vec2 {
+func (self Viewport) Pos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiViewport_GetPos(self.handle()))
+	out.fromC(C.wrap_ImGuiViewport_GetPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiViewport) SetSize(v Vec2) {
-	C.ImGuiViewport_SetSize(self.handle(), v.toC())
+func (self *Viewport) SetSize(v Vec2) {
+	C.wrap_ImGuiViewport_SetSize(self.handle(), v.toC())
 }
 
-func (self ImGuiViewport) GetSize() Vec2 {
+func (self Viewport) Size() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiViewport_GetSize(self.handle()))
+	out.fromC(C.wrap_ImGuiViewport_GetSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiViewport) SetWorkPos(v Vec2) {
-	C.ImGuiViewport_SetWorkPos(self.handle(), v.toC())
+func (self *Viewport) SetWorkPos(v Vec2) {
+	C.wrap_ImGuiViewport_SetWorkPos(self.handle(), v.toC())
 }
 
-func (self ImGuiViewport) GetWorkPos() Vec2 {
+func (self Viewport) WorkPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiViewport_GetWorkPos(self.handle()))
+	out.fromC(C.wrap_ImGuiViewport_GetWorkPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiViewport) SetWorkSize(v Vec2) {
-	C.ImGuiViewport_SetWorkSize(self.handle(), v.toC())
+func (self *Viewport) SetWorkSize(v Vec2) {
+	C.wrap_ImGuiViewport_SetWorkSize(self.handle(), v.toC())
 }
 
-func (self ImGuiViewport) GetWorkSize() Vec2 {
+func (self Viewport) WorkSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiViewport_GetWorkSize(self.handle()))
+	out.fromC(C.wrap_ImGuiViewport_GetWorkSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiViewport) SetDpiScale(v float32) {
-	C.ImGuiViewport_SetDpiScale(self.handle(), C.float(v))
+func (self *Viewport) SetDpiScale(v float32) {
+	C.wrap_ImGuiViewport_SetDpiScale(self.handle(), C.float(v))
 }
 
-func (self ImGuiViewport) GetDpiScale() float32 {
-	return float32(C.ImGuiViewport_GetDpiScale(self.handle()))
+func (self Viewport) DpiScale() float32 {
+	return float32(C.wrap_ImGuiViewport_GetDpiScale(self.handle()))
 }
 
-func (self *ImGuiViewport) SetParentViewportId(v ImGuiID) {
-	C.ImGuiViewport_SetParentViewportId(self.handle(), C.ImGuiID(v))
+func (self *Viewport) SetParentViewportId(v ID) {
+	C.wrap_ImGuiViewport_SetParentViewportId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiViewport) GetParentViewportId() ImGuiID {
-	return ImGuiID(C.ImGuiViewport_GetParentViewportId(self.handle()))
+func (self Viewport) ParentViewportId() ID {
+	return ImGuiID(C.wrap_ImGuiViewport_GetParentViewportId(self.handle()))
 }
 
-func (self *ImGuiViewport) SetDrawData(v ImDrawData) {
-	C.ImGuiViewport_SetDrawData(self.handle(), v.handle())
+func (self *Viewport) SetDrawData(v DrawData) {
+	C.wrap_ImGuiViewport_SetDrawData(self.handle(), v.handle())
 }
 
-func (self ImGuiViewport) GetDrawData() ImDrawData {
-	return (ImDrawData)(unsafe.Pointer(C.ImGuiViewport_GetDrawData(self.handle())))
+func (self Viewport) DrawData() DrawData {
+	return (DrawData)(unsafe.Pointer(C.wrap_ImGuiViewport_GetDrawData(self.handle())))
 }
 
-func (self *ImGuiViewport) SetRendererUserData(v unsafe.Pointer) {
-	C.ImGuiViewport_SetRendererUserData(self.handle(), (v))
+func (self *Viewport) SetRendererUserData(v unsafe.Pointer) {
+	C.wrap_ImGuiViewport_SetRendererUserData(self.handle(), (v))
 }
 
-func (self ImGuiViewport) GetRendererUserData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiViewport_GetRendererUserData(self.handle()))
+func (self Viewport) RendererUserData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiViewport_GetRendererUserData(self.handle()))
 }
 
-func (self *ImGuiViewport) SetPlatformUserData(v unsafe.Pointer) {
-	C.ImGuiViewport_SetPlatformUserData(self.handle(), (v))
+func (self *Viewport) SetPlatformUserData(v unsafe.Pointer) {
+	C.wrap_ImGuiViewport_SetPlatformUserData(self.handle(), (v))
 }
 
-func (self ImGuiViewport) GetPlatformUserData() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiViewport_GetPlatformUserData(self.handle()))
+func (self Viewport) PlatformUserData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiViewport_GetPlatformUserData(self.handle()))
 }
 
-func (self *ImGuiViewport) SetPlatformHandle(v unsafe.Pointer) {
-	C.ImGuiViewport_SetPlatformHandle(self.handle(), (v))
+func (self *Viewport) SetPlatformHandle(v unsafe.Pointer) {
+	C.wrap_ImGuiViewport_SetPlatformHandle(self.handle(), (v))
 }
 
-func (self ImGuiViewport) GetPlatformHandle() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiViewport_GetPlatformHandle(self.handle()))
+func (self Viewport) PlatformHandle() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiViewport_GetPlatformHandle(self.handle()))
 }
 
-func (self *ImGuiViewport) SetPlatformHandleRaw(v unsafe.Pointer) {
-	C.ImGuiViewport_SetPlatformHandleRaw(self.handle(), (v))
+func (self *Viewport) SetPlatformHandleRaw(v unsafe.Pointer) {
+	C.wrap_ImGuiViewport_SetPlatformHandleRaw(self.handle(), (v))
 }
 
-func (self ImGuiViewport) GetPlatformHandleRaw() unsafe.Pointer {
-	return unsafe.Pointer(C.ImGuiViewport_GetPlatformHandleRaw(self.handle()))
+func (self Viewport) PlatformHandleRaw() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiViewport_GetPlatformHandleRaw(self.handle()))
 }
 
-func (self *ImGuiViewport) SetPlatformRequestMove(v bool) {
-	C.ImGuiViewport_SetPlatformRequestMove(self.handle(), C.bool(v))
+func (self *Viewport) SetPlatformRequestMove(v bool) {
+	C.wrap_ImGuiViewport_SetPlatformRequestMove(self.handle(), C.bool(v))
 }
 
-func (self ImGuiViewport) GetPlatformRequestMove() bool {
-	return C.ImGuiViewport_GetPlatformRequestMove(self.handle()) == C.bool(true)
+func (self Viewport) PlatformRequestMove() bool {
+	return C.wrap_ImGuiViewport_GetPlatformRequestMove(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiViewport) SetPlatformRequestResize(v bool) {
-	C.ImGuiViewport_SetPlatformRequestResize(self.handle(), C.bool(v))
+func (self *Viewport) SetPlatformRequestResize(v bool) {
+	C.wrap_ImGuiViewport_SetPlatformRequestResize(self.handle(), C.bool(v))
 }
 
-func (self ImGuiViewport) GetPlatformRequestResize() bool {
-	return C.ImGuiViewport_GetPlatformRequestResize(self.handle()) == C.bool(true)
+func (self Viewport) PlatformRequestResize() bool {
+	return C.wrap_ImGuiViewport_GetPlatformRequestResize(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiViewport) SetPlatformRequestClose(v bool) {
-	C.ImGuiViewport_SetPlatformRequestClose(self.handle(), C.bool(v))
+func (self *Viewport) SetPlatformRequestClose(v bool) {
+	C.wrap_ImGuiViewport_SetPlatformRequestClose(self.handle(), C.bool(v))
 }
 
-func (self ImGuiViewport) GetPlatformRequestClose() bool {
-	return C.ImGuiViewport_GetPlatformRequestClose(self.handle()) == C.bool(true)
+func (self Viewport) PlatformRequestClose() bool {
+	return C.wrap_ImGuiViewport_GetPlatformRequestClose(self.handle()) == C.bool(true)
 }
 
-func (self ImGuiViewportP) Get_ImGuiViewport() ImGuiViewport {
-	return newImGuiViewportFromC(C.ImGuiViewportP_Get_ImGuiViewport(self.handle()))
+func (self ViewportP) ImGuiViewport() Viewport {
+	return newViewportFromC(C.wrap_ImGuiViewportP_Get_ImGuiViewport(self.handle()))
 }
 
-func (self *ImGuiViewportP) SetIdx(v int32) {
-	C.ImGuiViewportP_SetIdx(self.handle(), C.int(v))
+func (self *ViewportP) SetIdx(v int32) {
+	C.wrap_ImGuiViewportP_SetIdx(self.handle(), C.int(v))
 }
 
-func (self ImGuiViewportP) GetIdx() int {
-	return int(C.ImGuiViewportP_GetIdx(self.handle()))
+func (self ViewportP) Idx() int {
+	return int(C.wrap_ImGuiViewportP_GetIdx(self.handle()))
 }
 
-func (self *ImGuiViewportP) SetLastFrameActive(v int32) {
-	C.ImGuiViewportP_SetLastFrameActive(self.handle(), C.int(v))
+func (self *ViewportP) SetLastFrameActive(v int32) {
+	C.wrap_ImGuiViewportP_SetLastFrameActive(self.handle(), C.int(v))
 }
 
-func (self ImGuiViewportP) GetLastFrameActive() int {
-	return int(C.ImGuiViewportP_GetLastFrameActive(self.handle()))
+func (self ViewportP) LastFrameActive() int {
+	return int(C.wrap_ImGuiViewportP_GetLastFrameActive(self.handle()))
 }
 
-func (self *ImGuiViewportP) SetLastFrontMostStampCount(v int32) {
-	C.ImGuiViewportP_SetLastFrontMostStampCount(self.handle(), C.int(v))
+func (self *ViewportP) SetLastFrontMostStampCount(v int32) {
+	C.wrap_ImGuiViewportP_SetLastFrontMostStampCount(self.handle(), C.int(v))
 }
 
-func (self ImGuiViewportP) GetLastFrontMostStampCount() int {
-	return int(C.ImGuiViewportP_GetLastFrontMostStampCount(self.handle()))
+func (self ViewportP) LastFrontMostStampCount() int {
+	return int(C.wrap_ImGuiViewportP_GetLastFrontMostStampCount(self.handle()))
 }
 
-func (self *ImGuiViewportP) SetLastNameHash(v ImGuiID) {
-	C.ImGuiViewportP_SetLastNameHash(self.handle(), C.ImGuiID(v))
+func (self *ViewportP) SetLastNameHash(v ID) {
+	C.wrap_ImGuiViewportP_SetLastNameHash(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiViewportP) GetLastNameHash() ImGuiID {
-	return ImGuiID(C.ImGuiViewportP_GetLastNameHash(self.handle()))
+func (self ViewportP) LastNameHash() ID {
+	return ImGuiID(C.wrap_ImGuiViewportP_GetLastNameHash(self.handle()))
 }
 
-func (self *ImGuiViewportP) SetLastPos(v Vec2) {
-	C.ImGuiViewportP_SetLastPos(self.handle(), v.toC())
+func (self *ViewportP) SetLastPos(v Vec2) {
+	C.wrap_ImGuiViewportP_SetLastPos(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetLastPos() Vec2 {
+func (self ViewportP) LastPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiViewportP_GetLastPos(self.handle()))
+	out.fromC(C.wrap_ImGuiViewportP_GetLastPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiViewportP) SetAlpha(v float32) {
-	C.ImGuiViewportP_SetAlpha(self.handle(), C.float(v))
+func (self *ViewportP) SetAlpha(v float32) {
+	C.wrap_ImGuiViewportP_SetAlpha(self.handle(), C.float(v))
 }
 
-func (self ImGuiViewportP) GetAlpha() float32 {
-	return float32(C.ImGuiViewportP_GetAlpha(self.handle()))
+func (self ViewportP) Alpha() float32 {
+	return float32(C.wrap_ImGuiViewportP_GetAlpha(self.handle()))
 }
 
-func (self *ImGuiViewportP) SetLastAlpha(v float32) {
-	C.ImGuiViewportP_SetLastAlpha(self.handle(), C.float(v))
+func (self *ViewportP) SetLastAlpha(v float32) {
+	C.wrap_ImGuiViewportP_SetLastAlpha(self.handle(), C.float(v))
 }
 
-func (self ImGuiViewportP) GetLastAlpha() float32 {
-	return float32(C.ImGuiViewportP_GetLastAlpha(self.handle()))
+func (self ViewportP) LastAlpha() float32 {
+	return float32(C.wrap_ImGuiViewportP_GetLastAlpha(self.handle()))
 }
 
-func (self *ImGuiViewportP) SetPlatformMonitor(v int) {
-	C.ImGuiViewportP_SetPlatformMonitor(self.handle(), C.short(v))
+func (self *ViewportP) SetPlatformMonitor(v int) {
+	C.wrap_ImGuiViewportP_SetPlatformMonitor(self.handle(), C.short(v))
 }
 
-func (self ImGuiViewportP) GetPlatformMonitor() int {
-	return int(C.ImGuiViewportP_GetPlatformMonitor(self.handle()))
+func (self ViewportP) PlatformMonitor() int {
+	return int(C.wrap_ImGuiViewportP_GetPlatformMonitor(self.handle()))
 }
 
-func (self *ImGuiViewportP) SetPlatformWindowCreated(v bool) {
-	C.ImGuiViewportP_SetPlatformWindowCreated(self.handle(), C.bool(v))
+func (self *ViewportP) SetPlatformWindowCreated(v bool) {
+	C.wrap_ImGuiViewportP_SetPlatformWindowCreated(self.handle(), C.bool(v))
 }
 
-func (self ImGuiViewportP) GetPlatformWindowCreated() bool {
-	return C.ImGuiViewportP_GetPlatformWindowCreated(self.handle()) == C.bool(true)
+func (self ViewportP) PlatformWindowCreated() bool {
+	return C.wrap_ImGuiViewportP_GetPlatformWindowCreated(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiViewportP) SetWindow(v ImGuiWindow) {
-	C.ImGuiViewportP_SetWindow(self.handle(), v.handle())
+func (self *ViewportP) SetWindow(v Window) {
+	C.wrap_ImGuiViewportP_SetWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiViewportP) GetWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiViewportP_GetWindow(self.handle())))
+func (self ViewportP) Window() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiViewportP_GetWindow(self.handle())))
 }
 
-func (self ImGuiViewportP) GetDrawDataP() ImDrawData {
-	return newImDrawDataFromC(C.ImGuiViewportP_GetDrawDataP(self.handle()))
+func (self ViewportP) DrawDataP() DrawData {
+	return newDrawDataFromC(C.wrap_ImGuiViewportP_GetDrawDataP(self.handle()))
 }
 
-func (self ImGuiViewportP) GetDrawDataBuilder() ImDrawDataBuilder {
-	return newImDrawDataBuilderFromC(C.ImGuiViewportP_GetDrawDataBuilder(self.handle()))
+func (self ViewportP) DrawDataBuilder() DrawDataBuilder {
+	return newDrawDataBuilderFromC(C.wrap_ImGuiViewportP_GetDrawDataBuilder(self.handle()))
 }
 
-func (self *ImGuiViewportP) SetLastPlatformPos(v Vec2) {
-	C.ImGuiViewportP_SetLastPlatformPos(self.handle(), v.toC())
+func (self *ViewportP) SetLastPlatformPos(v Vec2) {
+	C.wrap_ImGuiViewportP_SetLastPlatformPos(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetLastPlatformPos() Vec2 {
+func (self ViewportP) LastPlatformPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiViewportP_GetLastPlatformPos(self.handle()))
+	out.fromC(C.wrap_ImGuiViewportP_GetLastPlatformPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiViewportP) SetLastPlatformSize(v Vec2) {
-	C.ImGuiViewportP_SetLastPlatformSize(self.handle(), v.toC())
+func (self *ViewportP) SetLastPlatformSize(v Vec2) {
+	C.wrap_ImGuiViewportP_SetLastPlatformSize(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetLastPlatformSize() Vec2 {
+func (self ViewportP) LastPlatformSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiViewportP_GetLastPlatformSize(self.handle()))
+	out.fromC(C.wrap_ImGuiViewportP_GetLastPlatformSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiViewportP) SetLastRendererSize(v Vec2) {
-	C.ImGuiViewportP_SetLastRendererSize(self.handle(), v.toC())
+func (self *ViewportP) SetLastRendererSize(v Vec2) {
+	C.wrap_ImGuiViewportP_SetLastRendererSize(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetLastRendererSize() Vec2 {
+func (self ViewportP) LastRendererSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiViewportP_GetLastRendererSize(self.handle()))
+	out.fromC(C.wrap_ImGuiViewportP_GetLastRendererSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiViewportP) SetWorkOffsetMin(v Vec2) {
-	C.ImGuiViewportP_SetWorkOffsetMin(self.handle(), v.toC())
+func (self *ViewportP) SetWorkOffsetMin(v Vec2) {
+	C.wrap_ImGuiViewportP_SetWorkOffsetMin(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetWorkOffsetMin() Vec2 {
+func (self ViewportP) WorkOffsetMin() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiViewportP_GetWorkOffsetMin(self.handle()))
+	out.fromC(C.wrap_ImGuiViewportP_GetWorkOffsetMin(self.handle()))
 	return *out
 }
 
-func (self *ImGuiViewportP) SetWorkOffsetMax(v Vec2) {
-	C.ImGuiViewportP_SetWorkOffsetMax(self.handle(), v.toC())
+func (self *ViewportP) SetWorkOffsetMax(v Vec2) {
+	C.wrap_ImGuiViewportP_SetWorkOffsetMax(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetWorkOffsetMax() Vec2 {
+func (self ViewportP) WorkOffsetMax() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiViewportP_GetWorkOffsetMax(self.handle()))
+	out.fromC(C.wrap_ImGuiViewportP_GetWorkOffsetMax(self.handle()))
 	return *out
 }
 
-func (self *ImGuiViewportP) SetBuildWorkOffsetMin(v Vec2) {
-	C.ImGuiViewportP_SetBuildWorkOffsetMin(self.handle(), v.toC())
+func (self *ViewportP) SetBuildWorkOffsetMin(v Vec2) {
+	C.wrap_ImGuiViewportP_SetBuildWorkOffsetMin(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetBuildWorkOffsetMin() Vec2 {
+func (self ViewportP) BuildWorkOffsetMin() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiViewportP_GetBuildWorkOffsetMin(self.handle()))
+	out.fromC(C.wrap_ImGuiViewportP_GetBuildWorkOffsetMin(self.handle()))
 	return *out
 }
 
-func (self *ImGuiViewportP) SetBuildWorkOffsetMax(v Vec2) {
-	C.ImGuiViewportP_SetBuildWorkOffsetMax(self.handle(), v.toC())
+func (self *ViewportP) SetBuildWorkOffsetMax(v Vec2) {
+	C.wrap_ImGuiViewportP_SetBuildWorkOffsetMax(self.handle(), v.toC())
 }
 
-func (self ImGuiViewportP) GetBuildWorkOffsetMax() Vec2 {
+func (self ViewportP) BuildWorkOffsetMax() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiViewportP_GetBuildWorkOffsetMax(self.handle()))
+	out.fromC(C.wrap_ImGuiViewportP_GetBuildWorkOffsetMax(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetName(v string) {
+func (self *Window) SetName(v string) {
 	vArg, vFin := wrapString(v)
 	defer vFin()
 
-	C.ImGuiWindow_SetName(self.handle(), vArg)
+	C.wrap_ImGuiWindow_SetName(self.handle(), vArg)
 }
 
-func (self ImGuiWindow) GetName() string {
-	return C.GoString(C.ImGuiWindow_GetName(self.handle()))
+func (self Window) Name() string {
+	return C.GoString(C.wrap_ImGuiWindow_GetName(self.handle()))
 }
 
-func (self *ImGuiWindow) SetID(v ImGuiID) {
-	C.ImGuiWindow_SetID(self.handle(), C.ImGuiID(v))
+func (self *Window) SetID(v ID) {
+	C.wrap_ImGuiWindow_SetID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiWindow) GetID() ImGuiID {
-	return ImGuiID(C.ImGuiWindow_GetID(self.handle()))
+func (self Window) ID() ID {
+	return ImGuiID(C.wrap_ImGuiWindow_GetID(self.handle()))
 }
 
-func (self *ImGuiWindow) SetFlags(v WindowFlags) {
-	C.ImGuiWindow_SetFlags(self.handle(), C.ImGuiWindowFlags(v))
+func (self *Window) SetFlags(v WindowFlags) {
+	C.wrap_ImGuiWindow_SetFlags(self.handle(), C.ImGuiWindowFlags(v))
 }
 
-func (self ImGuiWindow) GetFlags() WindowFlags {
-	return WindowFlags(C.ImGuiWindow_GetFlags(self.handle()))
+func (self Window) Flags() WindowFlags {
+	return WindowFlags(C.wrap_ImGuiWindow_GetFlags(self.handle()))
 }
 
-func (self *ImGuiWindow) SetFlagsPreviousFrame(v WindowFlags) {
-	C.ImGuiWindow_SetFlagsPreviousFrame(self.handle(), C.ImGuiWindowFlags(v))
+func (self *Window) SetFlagsPreviousFrame(v WindowFlags) {
+	C.wrap_ImGuiWindow_SetFlagsPreviousFrame(self.handle(), C.ImGuiWindowFlags(v))
 }
 
-func (self ImGuiWindow) GetFlagsPreviousFrame() WindowFlags {
-	return WindowFlags(C.ImGuiWindow_GetFlagsPreviousFrame(self.handle()))
+func (self Window) FlagsPreviousFrame() WindowFlags {
+	return WindowFlags(C.wrap_ImGuiWindow_GetFlagsPreviousFrame(self.handle()))
 }
 
-func (self ImGuiWindow) GetWindowClass() ImGuiWindowClass {
-	return newImGuiWindowClassFromC(C.ImGuiWindow_GetWindowClass(self.handle()))
+func (self Window) WindowClass() WindowClass {
+	return newWindowClassFromC(C.wrap_ImGuiWindow_GetWindowClass(self.handle()))
 }
 
-func (self *ImGuiWindow) SetViewport(v ImGuiViewportP) {
-	C.ImGuiWindow_SetViewport(self.handle(), v.handle())
+func (self *Window) SetViewport(v ViewportP) {
+	C.wrap_ImGuiWindow_SetViewport(self.handle(), v.handle())
 }
 
-func (self ImGuiWindow) GetViewport() ImGuiViewportP {
-	return (ImGuiViewportP)(unsafe.Pointer(C.ImGuiWindow_GetViewport(self.handle())))
+func (self Window) Viewport() ViewportP {
+	return (ViewportP)(unsafe.Pointer(C.wrap_ImGuiWindow_GetViewport(self.handle())))
 }
 
-func (self *ImGuiWindow) SetViewportId(v ImGuiID) {
-	C.ImGuiWindow_SetViewportId(self.handle(), C.ImGuiID(v))
+func (self *Window) SetViewportId(v ID) {
+	C.wrap_ImGuiWindow_SetViewportId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiWindow) GetViewportId() ImGuiID {
-	return ImGuiID(C.ImGuiWindow_GetViewportId(self.handle()))
+func (self Window) ViewportId() ID {
+	return ImGuiID(C.wrap_ImGuiWindow_GetViewportId(self.handle()))
 }
 
-func (self *ImGuiWindow) SetViewportPos(v Vec2) {
-	C.ImGuiWindow_SetViewportPos(self.handle(), v.toC())
+func (self *Window) SetViewportPos(v Vec2) {
+	C.wrap_ImGuiWindow_SetViewportPos(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetViewportPos() Vec2 {
+func (self Window) ViewportPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetViewportPos(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetViewportPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetViewportAllowPlatformMonitorExtend(v int32) {
-	C.ImGuiWindow_SetViewportAllowPlatformMonitorExtend(self.handle(), C.int(v))
+func (self *Window) SetViewportAllowPlatformMonitorExtend(v int32) {
+	C.wrap_ImGuiWindow_SetViewportAllowPlatformMonitorExtend(self.handle(), C.int(v))
 }
 
-func (self ImGuiWindow) GetViewportAllowPlatformMonitorExtend() int {
-	return int(C.ImGuiWindow_GetViewportAllowPlatformMonitorExtend(self.handle()))
+func (self Window) ViewportAllowPlatformMonitorExtend() int {
+	return int(C.wrap_ImGuiWindow_GetViewportAllowPlatformMonitorExtend(self.handle()))
 }
 
-func (self *ImGuiWindow) SetPos(v Vec2) {
-	C.ImGuiWindow_SetPos(self.handle(), v.toC())
+func (self *Window) SetPos(v Vec2) {
+	C.wrap_ImGuiWindow_SetPos(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetPos() Vec2 {
+func (self Window) Pos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetPos(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetSize(v Vec2) {
-	C.ImGuiWindow_SetSize(self.handle(), v.toC())
+func (self *Window) SetSize(v Vec2) {
+	C.wrap_ImGuiWindow_SetSize(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetSize() Vec2 {
+func (self Window) Size() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetSize(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetSizeFull(v Vec2) {
-	C.ImGuiWindow_SetSizeFull(self.handle(), v.toC())
+func (self *Window) SetSizeFull(v Vec2) {
+	C.wrap_ImGuiWindow_SetSizeFull(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetSizeFull() Vec2 {
+func (self Window) SizeFull() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetSizeFull(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetSizeFull(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetContentSize(v Vec2) {
-	C.ImGuiWindow_SetContentSize(self.handle(), v.toC())
+func (self *Window) SetContentSize(v Vec2) {
+	C.wrap_ImGuiWindow_SetContentSize(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetContentSize() Vec2 {
+func (self Window) ContentSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetContentSize(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetContentSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetContentSizeIdeal(v Vec2) {
-	C.ImGuiWindow_SetContentSizeIdeal(self.handle(), v.toC())
+func (self *Window) SetContentSizeIdeal(v Vec2) {
+	C.wrap_ImGuiWindow_SetContentSizeIdeal(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetContentSizeIdeal() Vec2 {
+func (self Window) ContentSizeIdeal() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetContentSizeIdeal(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetContentSizeIdeal(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetContentSizeExplicit(v Vec2) {
-	C.ImGuiWindow_SetContentSizeExplicit(self.handle(), v.toC())
+func (self *Window) SetContentSizeExplicit(v Vec2) {
+	C.wrap_ImGuiWindow_SetContentSizeExplicit(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetContentSizeExplicit() Vec2 {
+func (self Window) ContentSizeExplicit() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetContentSizeExplicit(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetContentSizeExplicit(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetWindowPadding(v Vec2) {
-	C.ImGuiWindow_SetWindowPadding(self.handle(), v.toC())
+func (self *Window) SetWindowPadding(v Vec2) {
+	C.wrap_ImGuiWindow_SetWindowPadding(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetWindowPadding() Vec2 {
+func (self Window) WindowPadding() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetWindowPadding(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetWindowPadding(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetWindowRounding(v float32) {
-	C.ImGuiWindow_SetWindowRounding(self.handle(), C.float(v))
+func (self *Window) SetWindowRounding(v float32) {
+	C.wrap_ImGuiWindow_SetWindowRounding(self.handle(), C.float(v))
 }
 
-func (self ImGuiWindow) GetWindowRounding() float32 {
-	return float32(C.ImGuiWindow_GetWindowRounding(self.handle()))
+func (self Window) WindowRounding() float32 {
+	return float32(C.wrap_ImGuiWindow_GetWindowRounding(self.handle()))
 }
 
-func (self *ImGuiWindow) SetWindowBorderSize(v float32) {
-	C.ImGuiWindow_SetWindowBorderSize(self.handle(), C.float(v))
+func (self *Window) SetWindowBorderSize(v float32) {
+	C.wrap_ImGuiWindow_SetWindowBorderSize(self.handle(), C.float(v))
 }
 
-func (self ImGuiWindow) GetWindowBorderSize() float32 {
-	return float32(C.ImGuiWindow_GetWindowBorderSize(self.handle()))
+func (self Window) WindowBorderSize() float32 {
+	return float32(C.wrap_ImGuiWindow_GetWindowBorderSize(self.handle()))
 }
 
-func (self *ImGuiWindow) SetNameBufLen(v int32) {
-	C.ImGuiWindow_SetNameBufLen(self.handle(), C.int(v))
+func (self *Window) SetNameBufLen(v int32) {
+	C.wrap_ImGuiWindow_SetNameBufLen(self.handle(), C.int(v))
 }
 
-func (self ImGuiWindow) GetNameBufLen() int {
-	return int(C.ImGuiWindow_GetNameBufLen(self.handle()))
+func (self Window) NameBufLen() int {
+	return int(C.wrap_ImGuiWindow_GetNameBufLen(self.handle()))
 }
 
-func (self *ImGuiWindow) SetMoveId(v ImGuiID) {
-	C.ImGuiWindow_SetMoveId(self.handle(), C.ImGuiID(v))
+func (self *Window) SetMoveId(v ID) {
+	C.wrap_ImGuiWindow_SetMoveId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiWindow) GetMoveId() ImGuiID {
-	return ImGuiID(C.ImGuiWindow_GetMoveId(self.handle()))
+func (self Window) MoveId() ID {
+	return ImGuiID(C.wrap_ImGuiWindow_GetMoveId(self.handle()))
 }
 
-func (self *ImGuiWindow) SetTabId(v ImGuiID) {
-	C.ImGuiWindow_SetTabId(self.handle(), C.ImGuiID(v))
+func (self *Window) SetTabId(v ID) {
+	C.wrap_ImGuiWindow_SetTabId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiWindow) GetTabId() ImGuiID {
-	return ImGuiID(C.ImGuiWindow_GetTabId(self.handle()))
+func (self Window) TabId() ID {
+	return ImGuiID(C.wrap_ImGuiWindow_GetTabId(self.handle()))
 }
 
-func (self *ImGuiWindow) SetChildId(v ImGuiID) {
-	C.ImGuiWindow_SetChildId(self.handle(), C.ImGuiID(v))
+func (self *Window) SetChildId(v ID) {
+	C.wrap_ImGuiWindow_SetChildId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiWindow) GetChildId() ImGuiID {
-	return ImGuiID(C.ImGuiWindow_GetChildId(self.handle()))
+func (self Window) ChildId() ID {
+	return ImGuiID(C.wrap_ImGuiWindow_GetChildId(self.handle()))
 }
 
-func (self *ImGuiWindow) SetScroll(v Vec2) {
-	C.ImGuiWindow_SetScroll(self.handle(), v.toC())
+func (self *Window) SetScroll(v Vec2) {
+	C.wrap_ImGuiWindow_SetScroll(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetScroll() Vec2 {
+func (self Window) Scroll() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetScroll(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetScroll(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetScrollMax(v Vec2) {
-	C.ImGuiWindow_SetScrollMax(self.handle(), v.toC())
+func (self *Window) SetScrollMax(v Vec2) {
+	C.wrap_ImGuiWindow_SetScrollMax(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetScrollMax() Vec2 {
+func (self Window) ScrollMax() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetScrollMax(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetScrollMax(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetScrollTarget(v Vec2) {
-	C.ImGuiWindow_SetScrollTarget(self.handle(), v.toC())
+func (self *Window) SetScrollTarget(v Vec2) {
+	C.wrap_ImGuiWindow_SetScrollTarget(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetScrollTarget() Vec2 {
+func (self Window) ScrollTarget() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetScrollTarget(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetScrollTarget(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetScrollTargetCenterRatio(v Vec2) {
-	C.ImGuiWindow_SetScrollTargetCenterRatio(self.handle(), v.toC())
+func (self *Window) SetScrollTargetCenterRatio(v Vec2) {
+	C.wrap_ImGuiWindow_SetScrollTargetCenterRatio(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetScrollTargetCenterRatio() Vec2 {
+func (self Window) ScrollTargetCenterRatio() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetScrollTargetCenterRatio(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetScrollTargetCenterRatio(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetScrollTargetEdgeSnapDist(v Vec2) {
-	C.ImGuiWindow_SetScrollTargetEdgeSnapDist(self.handle(), v.toC())
+func (self *Window) SetScrollTargetEdgeSnapDist(v Vec2) {
+	C.wrap_ImGuiWindow_SetScrollTargetEdgeSnapDist(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetScrollTargetEdgeSnapDist() Vec2 {
+func (self Window) ScrollTargetEdgeSnapDist() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetScrollTargetEdgeSnapDist(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetScrollTargetEdgeSnapDist(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetScrollbarSizes(v Vec2) {
-	C.ImGuiWindow_SetScrollbarSizes(self.handle(), v.toC())
+func (self *Window) SetScrollbarSizes(v Vec2) {
+	C.wrap_ImGuiWindow_SetScrollbarSizes(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetScrollbarSizes() Vec2 {
+func (self Window) ScrollbarSizes() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetScrollbarSizes(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetScrollbarSizes(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetScrollbarX(v bool) {
-	C.ImGuiWindow_SetScrollbarX(self.handle(), C.bool(v))
+func (self *Window) SetScrollbarX(v bool) {
+	C.wrap_ImGuiWindow_SetScrollbarX(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetScrollbarX() bool {
-	return C.ImGuiWindow_GetScrollbarX(self.handle()) == C.bool(true)
+func (self Window) ScrollbarX() bool {
+	return C.wrap_ImGuiWindow_GetScrollbarX(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetScrollbarY(v bool) {
-	C.ImGuiWindow_SetScrollbarY(self.handle(), C.bool(v))
+func (self *Window) SetScrollbarY(v bool) {
+	C.wrap_ImGuiWindow_SetScrollbarY(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetScrollbarY() bool {
-	return C.ImGuiWindow_GetScrollbarY(self.handle()) == C.bool(true)
+func (self Window) ScrollbarY() bool {
+	return C.wrap_ImGuiWindow_GetScrollbarY(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetViewportOwned(v bool) {
-	C.ImGuiWindow_SetViewportOwned(self.handle(), C.bool(v))
+func (self *Window) SetViewportOwned(v bool) {
+	C.wrap_ImGuiWindow_SetViewportOwned(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetViewportOwned() bool {
-	return C.ImGuiWindow_GetViewportOwned(self.handle()) == C.bool(true)
+func (self Window) ViewportOwned() bool {
+	return C.wrap_ImGuiWindow_GetViewportOwned(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetActive(v bool) {
-	C.ImGuiWindow_SetActive(self.handle(), C.bool(v))
+func (self *Window) SetActive(v bool) {
+	C.wrap_ImGuiWindow_SetActive(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetActive() bool {
-	return C.ImGuiWindow_GetActive(self.handle()) == C.bool(true)
+func (self Window) Active() bool {
+	return C.wrap_ImGuiWindow_GetActive(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetWasActive(v bool) {
-	C.ImGuiWindow_SetWasActive(self.handle(), C.bool(v))
+func (self *Window) SetWasActive(v bool) {
+	C.wrap_ImGuiWindow_SetWasActive(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetWasActive() bool {
-	return C.ImGuiWindow_GetWasActive(self.handle()) == C.bool(true)
+func (self Window) WasActive() bool {
+	return C.wrap_ImGuiWindow_GetWasActive(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetWriteAccessed(v bool) {
-	C.ImGuiWindow_SetWriteAccessed(self.handle(), C.bool(v))
+func (self *Window) SetWriteAccessed(v bool) {
+	C.wrap_ImGuiWindow_SetWriteAccessed(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetWriteAccessed() bool {
-	return C.ImGuiWindow_GetWriteAccessed(self.handle()) == C.bool(true)
+func (self Window) WriteAccessed() bool {
+	return C.wrap_ImGuiWindow_GetWriteAccessed(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetCollapsed(v bool) {
-	C.ImGuiWindow_SetCollapsed(self.handle(), C.bool(v))
+func (self *Window) SetCollapsed(v bool) {
+	C.wrap_ImGuiWindow_SetCollapsed(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetCollapsed() bool {
-	return C.ImGuiWindow_GetCollapsed(self.handle()) == C.bool(true)
+func (self Window) Collapsed() bool {
+	return C.wrap_ImGuiWindow_GetCollapsed(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetWantCollapseToggle(v bool) {
-	C.ImGuiWindow_SetWantCollapseToggle(self.handle(), C.bool(v))
+func (self *Window) SetWantCollapseToggle(v bool) {
+	C.wrap_ImGuiWindow_SetWantCollapseToggle(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetWantCollapseToggle() bool {
-	return C.ImGuiWindow_GetWantCollapseToggle(self.handle()) == C.bool(true)
+func (self Window) WantCollapseToggle() bool {
+	return C.wrap_ImGuiWindow_GetWantCollapseToggle(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetSkipItems(v bool) {
-	C.ImGuiWindow_SetSkipItems(self.handle(), C.bool(v))
+func (self *Window) SetSkipItems(v bool) {
+	C.wrap_ImGuiWindow_SetSkipItems(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetSkipItems() bool {
-	return C.ImGuiWindow_GetSkipItems(self.handle()) == C.bool(true)
+func (self Window) SkipItems() bool {
+	return C.wrap_ImGuiWindow_GetSkipItems(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetAppearing(v bool) {
-	C.ImGuiWindow_SetAppearing(self.handle(), C.bool(v))
+func (self *Window) SetAppearing(v bool) {
+	C.wrap_ImGuiWindow_SetAppearing(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetAppearing() bool {
-	return C.ImGuiWindow_GetAppearing(self.handle()) == C.bool(true)
+func (self Window) Appearing() bool {
+	return C.wrap_ImGuiWindow_GetAppearing(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetHidden(v bool) {
-	C.ImGuiWindow_SetHidden(self.handle(), C.bool(v))
+func (self *Window) SetHidden(v bool) {
+	C.wrap_ImGuiWindow_SetHidden(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetHidden() bool {
-	return C.ImGuiWindow_GetHidden(self.handle()) == C.bool(true)
+func (self Window) Hidden() bool {
+	return C.wrap_ImGuiWindow_GetHidden(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetIsFallbackWindow(v bool) {
-	C.ImGuiWindow_SetIsFallbackWindow(self.handle(), C.bool(v))
+func (self *Window) SetIsFallbackWindow(v bool) {
+	C.wrap_ImGuiWindow_SetIsFallbackWindow(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetIsFallbackWindow() bool {
-	return C.ImGuiWindow_GetIsFallbackWindow(self.handle()) == C.bool(true)
+func (self Window) IsFallbackWindow() bool {
+	return C.wrap_ImGuiWindow_GetIsFallbackWindow(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetIsExplicitChild(v bool) {
-	C.ImGuiWindow_SetIsExplicitChild(self.handle(), C.bool(v))
+func (self *Window) SetIsExplicitChild(v bool) {
+	C.wrap_ImGuiWindow_SetIsExplicitChild(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetIsExplicitChild() bool {
-	return C.ImGuiWindow_GetIsExplicitChild(self.handle()) == C.bool(true)
+func (self Window) IsExplicitChild() bool {
+	return C.wrap_ImGuiWindow_GetIsExplicitChild(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetHasCloseButton(v bool) {
-	C.ImGuiWindow_SetHasCloseButton(self.handle(), C.bool(v))
+func (self *Window) SetHasCloseButton(v bool) {
+	C.wrap_ImGuiWindow_SetHasCloseButton(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetHasCloseButton() bool {
-	return C.ImGuiWindow_GetHasCloseButton(self.handle()) == C.bool(true)
+func (self Window) HasCloseButton() bool {
+	return C.wrap_ImGuiWindow_GetHasCloseButton(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetBeginCount(v int) {
-	C.ImGuiWindow_SetBeginCount(self.handle(), C.short(v))
+func (self *Window) SetBeginCount(v int) {
+	C.wrap_ImGuiWindow_SetBeginCount(self.handle(), C.short(v))
 }
 
-func (self ImGuiWindow) GetBeginCount() int {
-	return int(C.ImGuiWindow_GetBeginCount(self.handle()))
+func (self Window) BeginCount() int {
+	return int(C.wrap_ImGuiWindow_GetBeginCount(self.handle()))
 }
 
-func (self *ImGuiWindow) SetBeginOrderWithinParent(v int) {
-	C.ImGuiWindow_SetBeginOrderWithinParent(self.handle(), C.short(v))
+func (self *Window) SetBeginOrderWithinParent(v int) {
+	C.wrap_ImGuiWindow_SetBeginOrderWithinParent(self.handle(), C.short(v))
 }
 
-func (self ImGuiWindow) GetBeginOrderWithinParent() int {
-	return int(C.ImGuiWindow_GetBeginOrderWithinParent(self.handle()))
+func (self Window) BeginOrderWithinParent() int {
+	return int(C.wrap_ImGuiWindow_GetBeginOrderWithinParent(self.handle()))
 }
 
-func (self *ImGuiWindow) SetBeginOrderWithinContext(v int) {
-	C.ImGuiWindow_SetBeginOrderWithinContext(self.handle(), C.short(v))
+func (self *Window) SetBeginOrderWithinContext(v int) {
+	C.wrap_ImGuiWindow_SetBeginOrderWithinContext(self.handle(), C.short(v))
 }
 
-func (self ImGuiWindow) GetBeginOrderWithinContext() int {
-	return int(C.ImGuiWindow_GetBeginOrderWithinContext(self.handle()))
+func (self Window) BeginOrderWithinContext() int {
+	return int(C.wrap_ImGuiWindow_GetBeginOrderWithinContext(self.handle()))
 }
 
-func (self *ImGuiWindow) SetFocusOrder(v int) {
-	C.ImGuiWindow_SetFocusOrder(self.handle(), C.short(v))
+func (self *Window) SetFocusOrder(v int) {
+	C.wrap_ImGuiWindow_SetFocusOrder(self.handle(), C.short(v))
 }
 
-func (self ImGuiWindow) GetFocusOrder() int {
-	return int(C.ImGuiWindow_GetFocusOrder(self.handle()))
+func (self Window) FocusOrder() int {
+	return int(C.wrap_ImGuiWindow_GetFocusOrder(self.handle()))
 }
 
-func (self *ImGuiWindow) SetPopupId(v ImGuiID) {
-	C.ImGuiWindow_SetPopupId(self.handle(), C.ImGuiID(v))
+func (self *Window) SetPopupId(v ID) {
+	C.wrap_ImGuiWindow_SetPopupId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiWindow) GetPopupId() ImGuiID {
-	return ImGuiID(C.ImGuiWindow_GetPopupId(self.handle()))
+func (self Window) PopupId() ID {
+	return ImGuiID(C.wrap_ImGuiWindow_GetPopupId(self.handle()))
 }
 
-func (self *ImGuiWindow) SetAutoFitFramesX(v int) {
-	C.ImGuiWindow_SetAutoFitFramesX(self.handle(), C.ImS8(v))
+func (self *Window) SetAutoFitFramesX(v int) {
+	C.wrap_ImGuiWindow_SetAutoFitFramesX(self.handle(), C.ImS8(v))
 }
 
-func (self ImGuiWindow) GetAutoFitFramesX() int {
-	return int(C.ImGuiWindow_GetAutoFitFramesX(self.handle()))
+func (self Window) AutoFitFramesX() int {
+	return int(C.wrap_ImGuiWindow_GetAutoFitFramesX(self.handle()))
 }
 
-func (self *ImGuiWindow) SetAutoFitFramesY(v int) {
-	C.ImGuiWindow_SetAutoFitFramesY(self.handle(), C.ImS8(v))
+func (self *Window) SetAutoFitFramesY(v int) {
+	C.wrap_ImGuiWindow_SetAutoFitFramesY(self.handle(), C.ImS8(v))
 }
 
-func (self ImGuiWindow) GetAutoFitFramesY() int {
-	return int(C.ImGuiWindow_GetAutoFitFramesY(self.handle()))
+func (self Window) AutoFitFramesY() int {
+	return int(C.wrap_ImGuiWindow_GetAutoFitFramesY(self.handle()))
 }
 
-func (self *ImGuiWindow) SetAutoFitChildAxises(v int) {
-	C.ImGuiWindow_SetAutoFitChildAxises(self.handle(), C.ImS8(v))
+func (self *Window) SetAutoFitChildAxises(v int) {
+	C.wrap_ImGuiWindow_SetAutoFitChildAxises(self.handle(), C.ImS8(v))
 }
 
-func (self ImGuiWindow) GetAutoFitChildAxises() int {
-	return int(C.ImGuiWindow_GetAutoFitChildAxises(self.handle()))
+func (self Window) AutoFitChildAxises() int {
+	return int(C.wrap_ImGuiWindow_GetAutoFitChildAxises(self.handle()))
 }
 
-func (self *ImGuiWindow) SetAutoFitOnlyGrows(v bool) {
-	C.ImGuiWindow_SetAutoFitOnlyGrows(self.handle(), C.bool(v))
+func (self *Window) SetAutoFitOnlyGrows(v bool) {
+	C.wrap_ImGuiWindow_SetAutoFitOnlyGrows(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetAutoFitOnlyGrows() bool {
-	return C.ImGuiWindow_GetAutoFitOnlyGrows(self.handle()) == C.bool(true)
+func (self Window) AutoFitOnlyGrows() bool {
+	return C.wrap_ImGuiWindow_GetAutoFitOnlyGrows(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetAutoPosLastDirection(v Dir) {
-	C.ImGuiWindow_SetAutoPosLastDirection(self.handle(), C.ImGuiDir(v))
+func (self *Window) SetAutoPosLastDirection(v Dir) {
+	C.wrap_ImGuiWindow_SetAutoPosLastDirection(self.handle(), C.ImGuiDir(v))
 }
 
-func (self ImGuiWindow) GetAutoPosLastDirection() Dir {
-	return Dir(C.ImGuiWindow_GetAutoPosLastDirection(self.handle()))
+func (self Window) AutoPosLastDirection() Dir {
+	return Dir(C.wrap_ImGuiWindow_GetAutoPosLastDirection(self.handle()))
 }
 
-func (self *ImGuiWindow) SetHiddenFramesCanSkipItems(v int) {
-	C.ImGuiWindow_SetHiddenFramesCanSkipItems(self.handle(), C.ImS8(v))
+func (self *Window) SetHiddenFramesCanSkipItems(v int) {
+	C.wrap_ImGuiWindow_SetHiddenFramesCanSkipItems(self.handle(), C.ImS8(v))
 }
 
-func (self ImGuiWindow) GetHiddenFramesCanSkipItems() int {
-	return int(C.ImGuiWindow_GetHiddenFramesCanSkipItems(self.handle()))
+func (self Window) HiddenFramesCanSkipItems() int {
+	return int(C.wrap_ImGuiWindow_GetHiddenFramesCanSkipItems(self.handle()))
 }
 
-func (self *ImGuiWindow) SetHiddenFramesCannotSkipItems(v int) {
-	C.ImGuiWindow_SetHiddenFramesCannotSkipItems(self.handle(), C.ImS8(v))
+func (self *Window) SetHiddenFramesCannotSkipItems(v int) {
+	C.wrap_ImGuiWindow_SetHiddenFramesCannotSkipItems(self.handle(), C.ImS8(v))
 }
 
-func (self ImGuiWindow) GetHiddenFramesCannotSkipItems() int {
-	return int(C.ImGuiWindow_GetHiddenFramesCannotSkipItems(self.handle()))
+func (self Window) HiddenFramesCannotSkipItems() int {
+	return int(C.wrap_ImGuiWindow_GetHiddenFramesCannotSkipItems(self.handle()))
 }
 
-func (self *ImGuiWindow) SetHiddenFramesForRenderOnly(v int) {
-	C.ImGuiWindow_SetHiddenFramesForRenderOnly(self.handle(), C.ImS8(v))
+func (self *Window) SetHiddenFramesForRenderOnly(v int) {
+	C.wrap_ImGuiWindow_SetHiddenFramesForRenderOnly(self.handle(), C.ImS8(v))
 }
 
-func (self ImGuiWindow) GetHiddenFramesForRenderOnly() int {
-	return int(C.ImGuiWindow_GetHiddenFramesForRenderOnly(self.handle()))
+func (self Window) HiddenFramesForRenderOnly() int {
+	return int(C.wrap_ImGuiWindow_GetHiddenFramesForRenderOnly(self.handle()))
 }
 
-func (self *ImGuiWindow) SetDisableInputsFrames(v int) {
-	C.ImGuiWindow_SetDisableInputsFrames(self.handle(), C.ImS8(v))
+func (self *Window) SetDisableInputsFrames(v int) {
+	C.wrap_ImGuiWindow_SetDisableInputsFrames(self.handle(), C.ImS8(v))
 }
 
-func (self ImGuiWindow) GetDisableInputsFrames() int {
-	return int(C.ImGuiWindow_GetDisableInputsFrames(self.handle()))
+func (self Window) DisableInputsFrames() int {
+	return int(C.wrap_ImGuiWindow_GetDisableInputsFrames(self.handle()))
 }
 
-func (self *ImGuiWindow) SetSetWindowPosAllowFlags(v Cond) {
-	C.ImGuiWindow_SetSetWindowPosAllowFlags(self.handle(), C.ImGuiCond(v))
+func (self *Window) SetSetWindowPosAllowFlags(v Cond) {
+	C.wrap_ImGuiWindow_SetSetWindowPosAllowFlags(self.handle(), C.ImGuiCond(v))
 }
 
-func (self ImGuiWindow) GetSetWindowPosAllowFlags() Cond {
-	return Cond(C.ImGuiWindow_GetSetWindowPosAllowFlags(self.handle()))
+func (self Window) SetWindowPosAllowFlags() Cond {
+	return Cond(C.wrap_ImGuiWindow_GetSetWindowPosAllowFlags(self.handle()))
 }
 
-func (self *ImGuiWindow) SetSetWindowSizeAllowFlags(v Cond) {
-	C.ImGuiWindow_SetSetWindowSizeAllowFlags(self.handle(), C.ImGuiCond(v))
+func (self *Window) SetSetWindowSizeAllowFlags(v Cond) {
+	C.wrap_ImGuiWindow_SetSetWindowSizeAllowFlags(self.handle(), C.ImGuiCond(v))
 }
 
-func (self ImGuiWindow) GetSetWindowSizeAllowFlags() Cond {
-	return Cond(C.ImGuiWindow_GetSetWindowSizeAllowFlags(self.handle()))
+func (self Window) SetWindowSizeAllowFlags() Cond {
+	return Cond(C.wrap_ImGuiWindow_GetSetWindowSizeAllowFlags(self.handle()))
 }
 
-func (self *ImGuiWindow) SetSetWindowCollapsedAllowFlags(v Cond) {
-	C.ImGuiWindow_SetSetWindowCollapsedAllowFlags(self.handle(), C.ImGuiCond(v))
+func (self *Window) SetSetWindowCollapsedAllowFlags(v Cond) {
+	C.wrap_ImGuiWindow_SetSetWindowCollapsedAllowFlags(self.handle(), C.ImGuiCond(v))
 }
 
-func (self ImGuiWindow) GetSetWindowCollapsedAllowFlags() Cond {
-	return Cond(C.ImGuiWindow_GetSetWindowCollapsedAllowFlags(self.handle()))
+func (self Window) SetWindowCollapsedAllowFlags() Cond {
+	return Cond(C.wrap_ImGuiWindow_GetSetWindowCollapsedAllowFlags(self.handle()))
 }
 
-func (self *ImGuiWindow) SetSetWindowDockAllowFlags(v Cond) {
-	C.ImGuiWindow_SetSetWindowDockAllowFlags(self.handle(), C.ImGuiCond(v))
+func (self *Window) SetSetWindowDockAllowFlags(v Cond) {
+	C.wrap_ImGuiWindow_SetSetWindowDockAllowFlags(self.handle(), C.ImGuiCond(v))
 }
 
-func (self ImGuiWindow) GetSetWindowDockAllowFlags() Cond {
-	return Cond(C.ImGuiWindow_GetSetWindowDockAllowFlags(self.handle()))
+func (self Window) SetWindowDockAllowFlags() Cond {
+	return Cond(C.wrap_ImGuiWindow_GetSetWindowDockAllowFlags(self.handle()))
 }
 
-func (self *ImGuiWindow) SetSetWindowPosVal(v Vec2) {
-	C.ImGuiWindow_SetSetWindowPosVal(self.handle(), v.toC())
+func (self *Window) SetSetWindowPosVal(v Vec2) {
+	C.wrap_ImGuiWindow_SetSetWindowPosVal(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetSetWindowPosVal() Vec2 {
+func (self Window) SetWindowPosVal() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetSetWindowPosVal(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetSetWindowPosVal(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetSetWindowPosPivot(v Vec2) {
-	C.ImGuiWindow_SetSetWindowPosPivot(self.handle(), v.toC())
+func (self *Window) SetSetWindowPosPivot(v Vec2) {
+	C.wrap_ImGuiWindow_SetSetWindowPosPivot(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetSetWindowPosPivot() Vec2 {
+func (self Window) SetWindowPosPivot() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindow_GetSetWindowPosPivot(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetSetWindowPosPivot(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindow) GetDC() ImGuiWindowTempData {
-	return newImGuiWindowTempDataFromC(C.ImGuiWindow_GetDC(self.handle()))
+func (self Window) DC() WindowTempData {
+	return newWindowTempDataFromC(C.wrap_ImGuiWindow_GetDC(self.handle()))
 }
 
-func (self *ImGuiWindow) SetOuterRectClipped(v Rect) {
-	C.ImGuiWindow_SetOuterRectClipped(self.handle(), v.toC())
+func (self *Window) SetOuterRectClipped(v Rect) {
+	C.wrap_ImGuiWindow_SetOuterRectClipped(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetOuterRectClipped() Rect {
+func (self Window) OuterRectClipped() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiWindow_GetOuterRectClipped(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetOuterRectClipped(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetInnerRect(v Rect) {
-	C.ImGuiWindow_SetInnerRect(self.handle(), v.toC())
+func (self *Window) SetInnerRect(v Rect) {
+	C.wrap_ImGuiWindow_SetInnerRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetInnerRect() Rect {
+func (self Window) InnerRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiWindow_GetInnerRect(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetInnerRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetInnerClipRect(v Rect) {
-	C.ImGuiWindow_SetInnerClipRect(self.handle(), v.toC())
+func (self *Window) SetInnerClipRect(v Rect) {
+	C.wrap_ImGuiWindow_SetInnerClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetInnerClipRect() Rect {
+func (self Window) InnerClipRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiWindow_GetInnerClipRect(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetInnerClipRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetWorkRect(v Rect) {
-	C.ImGuiWindow_SetWorkRect(self.handle(), v.toC())
+func (self *Window) SetWorkRect(v Rect) {
+	C.wrap_ImGuiWindow_SetWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetWorkRect() Rect {
+func (self Window) WorkRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiWindow_GetWorkRect(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetWorkRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetParentWorkRect(v Rect) {
-	C.ImGuiWindow_SetParentWorkRect(self.handle(), v.toC())
+func (self *Window) SetParentWorkRect(v Rect) {
+	C.wrap_ImGuiWindow_SetParentWorkRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetParentWorkRect() Rect {
+func (self Window) ParentWorkRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiWindow_GetParentWorkRect(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetParentWorkRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetClipRect(v Rect) {
-	C.ImGuiWindow_SetClipRect(self.handle(), v.toC())
+func (self *Window) SetClipRect(v Rect) {
+	C.wrap_ImGuiWindow_SetClipRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetClipRect() Rect {
+func (self Window) ClipRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiWindow_GetClipRect(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetClipRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetContentRegionRect(v Rect) {
-	C.ImGuiWindow_SetContentRegionRect(self.handle(), v.toC())
+func (self *Window) SetContentRegionRect(v Rect) {
+	C.wrap_ImGuiWindow_SetContentRegionRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetContentRegionRect() Rect {
+func (self Window) ContentRegionRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiWindow_GetContentRegionRect(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetContentRegionRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindow) SetLastFrameActive(v int32) {
-	C.ImGuiWindow_SetLastFrameActive(self.handle(), C.int(v))
+func (self *Window) SetLastFrameActive(v int32) {
+	C.wrap_ImGuiWindow_SetLastFrameActive(self.handle(), C.int(v))
 }
 
-func (self ImGuiWindow) GetLastFrameActive() int {
-	return int(C.ImGuiWindow_GetLastFrameActive(self.handle()))
+func (self Window) LastFrameActive() int {
+	return int(C.wrap_ImGuiWindow_GetLastFrameActive(self.handle()))
 }
 
-func (self *ImGuiWindow) SetLastFrameJustFocused(v int32) {
-	C.ImGuiWindow_SetLastFrameJustFocused(self.handle(), C.int(v))
+func (self *Window) SetLastFrameJustFocused(v int32) {
+	C.wrap_ImGuiWindow_SetLastFrameJustFocused(self.handle(), C.int(v))
 }
 
-func (self ImGuiWindow) GetLastFrameJustFocused() int {
-	return int(C.ImGuiWindow_GetLastFrameJustFocused(self.handle()))
+func (self Window) LastFrameJustFocused() int {
+	return int(C.wrap_ImGuiWindow_GetLastFrameJustFocused(self.handle()))
 }
 
-func (self *ImGuiWindow) SetLastTimeActive(v float32) {
-	C.ImGuiWindow_SetLastTimeActive(self.handle(), C.float(v))
+func (self *Window) SetLastTimeActive(v float32) {
+	C.wrap_ImGuiWindow_SetLastTimeActive(self.handle(), C.float(v))
 }
 
-func (self ImGuiWindow) GetLastTimeActive() float32 {
-	return float32(C.ImGuiWindow_GetLastTimeActive(self.handle()))
+func (self Window) LastTimeActive() float32 {
+	return float32(C.wrap_ImGuiWindow_GetLastTimeActive(self.handle()))
 }
 
-func (self *ImGuiWindow) SetItemWidthDefault(v float32) {
-	C.ImGuiWindow_SetItemWidthDefault(self.handle(), C.float(v))
+func (self *Window) SetItemWidthDefault(v float32) {
+	C.wrap_ImGuiWindow_SetItemWidthDefault(self.handle(), C.float(v))
 }
 
-func (self ImGuiWindow) GetItemWidthDefault() float32 {
-	return float32(C.ImGuiWindow_GetItemWidthDefault(self.handle()))
+func (self Window) ItemWidthDefault() float32 {
+	return float32(C.wrap_ImGuiWindow_GetItemWidthDefault(self.handle()))
 }
 
-func (self ImGuiWindow) GetStateStorage() ImGuiStorage {
-	return newImGuiStorageFromC(C.ImGuiWindow_GetStateStorage(self.handle()))
+func (self Window) StateStorage() Storage {
+	return newStorageFromC(C.wrap_ImGuiWindow_GetStateStorage(self.handle()))
 }
 
-func (self *ImGuiWindow) SetFontWindowScale(v float32) {
-	C.ImGuiWindow_SetFontWindowScale(self.handle(), C.float(v))
+func (self *Window) SetFontWindowScale(v float32) {
+	C.wrap_ImGuiWindow_SetFontWindowScale(self.handle(), C.float(v))
 }
 
-func (self ImGuiWindow) GetFontWindowScale() float32 {
-	return float32(C.ImGuiWindow_GetFontWindowScale(self.handle()))
+func (self Window) FontWindowScale() float32 {
+	return float32(C.wrap_ImGuiWindow_GetFontWindowScale(self.handle()))
 }
 
-func (self *ImGuiWindow) SetFontDpiScale(v float32) {
-	C.ImGuiWindow_SetFontDpiScale(self.handle(), C.float(v))
+func (self *Window) SetFontDpiScale(v float32) {
+	C.wrap_ImGuiWindow_SetFontDpiScale(self.handle(), C.float(v))
 }
 
-func (self ImGuiWindow) GetFontDpiScale() float32 {
-	return float32(C.ImGuiWindow_GetFontDpiScale(self.handle()))
+func (self Window) FontDpiScale() float32 {
+	return float32(C.wrap_ImGuiWindow_GetFontDpiScale(self.handle()))
 }
 
-func (self *ImGuiWindow) SetSettingsOffset(v int32) {
-	C.ImGuiWindow_SetSettingsOffset(self.handle(), C.int(v))
+func (self *Window) SetSettingsOffset(v int32) {
+	C.wrap_ImGuiWindow_SetSettingsOffset(self.handle(), C.int(v))
 }
 
-func (self ImGuiWindow) GetSettingsOffset() int {
-	return int(C.ImGuiWindow_GetSettingsOffset(self.handle()))
+func (self Window) SettingsOffset() int {
+	return int(C.wrap_ImGuiWindow_GetSettingsOffset(self.handle()))
 }
 
-func (self *ImGuiWindow) SetDrawList(v ImDrawList) {
-	C.ImGuiWindow_SetDrawList(self.handle(), v.handle())
+func (self *Window) SetDrawList(v DrawList) {
+	C.wrap_ImGuiWindow_SetDrawList(self.handle(), v.handle())
 }
 
-func (self ImGuiWindow) GetDrawList() ImDrawList {
-	return (ImDrawList)(unsafe.Pointer(C.ImGuiWindow_GetDrawList(self.handle())))
+func (self Window) DrawList() DrawList {
+	return (DrawList)(unsafe.Pointer(C.wrap_ImGuiWindow_GetDrawList(self.handle())))
 }
 
-func (self ImGuiWindow) GetDrawListInst() ImDrawList {
-	return newImDrawListFromC(C.ImGuiWindow_GetDrawListInst(self.handle()))
+func (self Window) DrawListInst() DrawList {
+	return newDrawListFromC(C.wrap_ImGuiWindow_GetDrawListInst(self.handle()))
 }
 
-func (self *ImGuiWindow) SetParentWindow(v ImGuiWindow) {
-	C.ImGuiWindow_SetParentWindow(self.handle(), v.handle())
+func (self *Window) SetParentWindow(v Window) {
+	C.wrap_ImGuiWindow_SetParentWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiWindow) GetParentWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiWindow_GetParentWindow(self.handle())))
+func (self Window) ParentWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiWindow_GetParentWindow(self.handle())))
 }
 
-func (self *ImGuiWindow) SetParentWindowInBeginStack(v ImGuiWindow) {
-	C.ImGuiWindow_SetParentWindowInBeginStack(self.handle(), v.handle())
+func (self *Window) SetParentWindowInBeginStack(v Window) {
+	C.wrap_ImGuiWindow_SetParentWindowInBeginStack(self.handle(), v.handle())
 }
 
-func (self ImGuiWindow) GetParentWindowInBeginStack() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiWindow_GetParentWindowInBeginStack(self.handle())))
+func (self Window) ParentWindowInBeginStack() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiWindow_GetParentWindowInBeginStack(self.handle())))
 }
 
-func (self *ImGuiWindow) SetRootWindow(v ImGuiWindow) {
-	C.ImGuiWindow_SetRootWindow(self.handle(), v.handle())
+func (self *Window) SetRootWindow(v Window) {
+	C.wrap_ImGuiWindow_SetRootWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiWindow) GetRootWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiWindow_GetRootWindow(self.handle())))
+func (self Window) RootWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiWindow_GetRootWindow(self.handle())))
 }
 
-func (self *ImGuiWindow) SetRootWindowPopupTree(v ImGuiWindow) {
-	C.ImGuiWindow_SetRootWindowPopupTree(self.handle(), v.handle())
+func (self *Window) SetRootWindowPopupTree(v Window) {
+	C.wrap_ImGuiWindow_SetRootWindowPopupTree(self.handle(), v.handle())
 }
 
-func (self ImGuiWindow) GetRootWindowPopupTree() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiWindow_GetRootWindowPopupTree(self.handle())))
+func (self Window) RootWindowPopupTree() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiWindow_GetRootWindowPopupTree(self.handle())))
 }
 
-func (self *ImGuiWindow) SetRootWindowDockTree(v ImGuiWindow) {
-	C.ImGuiWindow_SetRootWindowDockTree(self.handle(), v.handle())
+func (self *Window) SetRootWindowDockTree(v Window) {
+	C.wrap_ImGuiWindow_SetRootWindowDockTree(self.handle(), v.handle())
 }
 
-func (self ImGuiWindow) GetRootWindowDockTree() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiWindow_GetRootWindowDockTree(self.handle())))
+func (self Window) RootWindowDockTree() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiWindow_GetRootWindowDockTree(self.handle())))
 }
 
-func (self *ImGuiWindow) SetRootWindowForTitleBarHighlight(v ImGuiWindow) {
-	C.ImGuiWindow_SetRootWindowForTitleBarHighlight(self.handle(), v.handle())
+func (self *Window) SetRootWindowForTitleBarHighlight(v Window) {
+	C.wrap_ImGuiWindow_SetRootWindowForTitleBarHighlight(self.handle(), v.handle())
 }
 
-func (self ImGuiWindow) GetRootWindowForTitleBarHighlight() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiWindow_GetRootWindowForTitleBarHighlight(self.handle())))
+func (self Window) RootWindowForTitleBarHighlight() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiWindow_GetRootWindowForTitleBarHighlight(self.handle())))
 }
 
-func (self *ImGuiWindow) SetRootWindowForNav(v ImGuiWindow) {
-	C.ImGuiWindow_SetRootWindowForNav(self.handle(), v.handle())
+func (self *Window) SetRootWindowForNav(v Window) {
+	C.wrap_ImGuiWindow_SetRootWindowForNav(self.handle(), v.handle())
 }
 
-func (self ImGuiWindow) GetRootWindowForNav() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiWindow_GetRootWindowForNav(self.handle())))
+func (self Window) RootWindowForNav() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiWindow_GetRootWindowForNav(self.handle())))
 }
 
-func (self *ImGuiWindow) SetNavLastChildNavWindow(v ImGuiWindow) {
-	C.ImGuiWindow_SetNavLastChildNavWindow(self.handle(), v.handle())
+func (self *Window) SetNavLastChildNavWindow(v Window) {
+	C.wrap_ImGuiWindow_SetNavLastChildNavWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiWindow) GetNavLastChildNavWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiWindow_GetNavLastChildNavWindow(self.handle())))
+func (self Window) NavLastChildNavWindow() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiWindow_GetNavLastChildNavWindow(self.handle())))
 }
 
-func (self *ImGuiWindow) SetMemoryDrawListIdxCapacity(v int32) {
-	C.ImGuiWindow_SetMemoryDrawListIdxCapacity(self.handle(), C.int(v))
+func (self *Window) SetMemoryDrawListIdxCapacity(v int32) {
+	C.wrap_ImGuiWindow_SetMemoryDrawListIdxCapacity(self.handle(), C.int(v))
 }
 
-func (self ImGuiWindow) GetMemoryDrawListIdxCapacity() int {
-	return int(C.ImGuiWindow_GetMemoryDrawListIdxCapacity(self.handle()))
+func (self Window) MemoryDrawListIdxCapacity() int {
+	return int(C.wrap_ImGuiWindow_GetMemoryDrawListIdxCapacity(self.handle()))
 }
 
-func (self *ImGuiWindow) SetMemoryDrawListVtxCapacity(v int32) {
-	C.ImGuiWindow_SetMemoryDrawListVtxCapacity(self.handle(), C.int(v))
+func (self *Window) SetMemoryDrawListVtxCapacity(v int32) {
+	C.wrap_ImGuiWindow_SetMemoryDrawListVtxCapacity(self.handle(), C.int(v))
 }
 
-func (self ImGuiWindow) GetMemoryDrawListVtxCapacity() int {
-	return int(C.ImGuiWindow_GetMemoryDrawListVtxCapacity(self.handle()))
+func (self Window) MemoryDrawListVtxCapacity() int {
+	return int(C.wrap_ImGuiWindow_GetMemoryDrawListVtxCapacity(self.handle()))
 }
 
-func (self *ImGuiWindow) SetMemoryCompacted(v bool) {
-	C.ImGuiWindow_SetMemoryCompacted(self.handle(), C.bool(v))
+func (self *Window) SetMemoryCompacted(v bool) {
+	C.wrap_ImGuiWindow_SetMemoryCompacted(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetMemoryCompacted() bool {
-	return C.ImGuiWindow_GetMemoryCompacted(self.handle()) == C.bool(true)
+func (self Window) MemoryCompacted() bool {
+	return C.wrap_ImGuiWindow_GetMemoryCompacted(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetDockIsActive(v bool) {
-	C.ImGuiWindow_SetDockIsActive(self.handle(), C.bool(v))
+func (self *Window) SetDockIsActive(v bool) {
+	C.wrap_ImGuiWindow_SetDockIsActive(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetDockIsActive() bool {
-	return C.ImGuiWindow_GetDockIsActive(self.handle()) == C.bool(true)
+func (self Window) DockIsActive() bool {
+	return C.wrap_ImGuiWindow_GetDockIsActive(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetDockNodeIsVisible(v bool) {
-	C.ImGuiWindow_SetDockNodeIsVisible(self.handle(), C.bool(v))
+func (self *Window) SetDockNodeIsVisible(v bool) {
+	C.wrap_ImGuiWindow_SetDockNodeIsVisible(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetDockNodeIsVisible() bool {
-	return C.ImGuiWindow_GetDockNodeIsVisible(self.handle()) == C.bool(true)
+func (self Window) DockNodeIsVisible() bool {
+	return C.wrap_ImGuiWindow_GetDockNodeIsVisible(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetDockTabIsVisible(v bool) {
-	C.ImGuiWindow_SetDockTabIsVisible(self.handle(), C.bool(v))
+func (self *Window) SetDockTabIsVisible(v bool) {
+	C.wrap_ImGuiWindow_SetDockTabIsVisible(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetDockTabIsVisible() bool {
-	return C.ImGuiWindow_GetDockTabIsVisible(self.handle()) == C.bool(true)
+func (self Window) DockTabIsVisible() bool {
+	return C.wrap_ImGuiWindow_GetDockTabIsVisible(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetDockTabWantClose(v bool) {
-	C.ImGuiWindow_SetDockTabWantClose(self.handle(), C.bool(v))
+func (self *Window) SetDockTabWantClose(v bool) {
+	C.wrap_ImGuiWindow_SetDockTabWantClose(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindow) GetDockTabWantClose() bool {
-	return C.ImGuiWindow_GetDockTabWantClose(self.handle()) == C.bool(true)
+func (self Window) DockTabWantClose() bool {
+	return C.wrap_ImGuiWindow_GetDockTabWantClose(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindow) SetDockOrder(v int) {
-	C.ImGuiWindow_SetDockOrder(self.handle(), C.short(v))
+func (self *Window) SetDockOrder(v int) {
+	C.wrap_ImGuiWindow_SetDockOrder(self.handle(), C.short(v))
 }
 
-func (self ImGuiWindow) GetDockOrder() int {
-	return int(C.ImGuiWindow_GetDockOrder(self.handle()))
+func (self Window) DockOrder() int {
+	return int(C.wrap_ImGuiWindow_GetDockOrder(self.handle()))
 }
 
-func (self ImGuiWindow) GetDockStyle() ImGuiWindowDockStyle {
-	return newImGuiWindowDockStyleFromC(C.ImGuiWindow_GetDockStyle(self.handle()))
+func (self Window) DockStyle() WindowDockStyle {
+	return newWindowDockStyleFromC(C.wrap_ImGuiWindow_GetDockStyle(self.handle()))
 }
 
-func (self *ImGuiWindow) SetDockNode(v ImGuiDockNode) {
-	C.ImGuiWindow_SetDockNode(self.handle(), v.handle())
+func (self *Window) SetDockNode(v DockNode) {
+	C.wrap_ImGuiWindow_SetDockNode(self.handle(), v.handle())
 }
 
-func (self ImGuiWindow) GetDockNode() ImGuiDockNode {
-	return (ImGuiDockNode)(unsafe.Pointer(C.ImGuiWindow_GetDockNode(self.handle())))
+func (self Window) DockNode() DockNode {
+	return (DockNode)(unsafe.Pointer(C.wrap_ImGuiWindow_GetDockNode(self.handle())))
 }
 
-func (self *ImGuiWindow) SetDockNodeAsHost(v ImGuiDockNode) {
-	C.ImGuiWindow_SetDockNodeAsHost(self.handle(), v.handle())
+func (self *Window) SetDockNodeAsHost(v DockNode) {
+	C.wrap_ImGuiWindow_SetDockNodeAsHost(self.handle(), v.handle())
 }
 
-func (self ImGuiWindow) GetDockNodeAsHost() ImGuiDockNode {
-	return (ImGuiDockNode)(unsafe.Pointer(C.ImGuiWindow_GetDockNodeAsHost(self.handle())))
+func (self Window) DockNodeAsHost() DockNode {
+	return (DockNode)(unsafe.Pointer(C.wrap_ImGuiWindow_GetDockNodeAsHost(self.handle())))
 }
 
-func (self *ImGuiWindow) SetDockId(v ImGuiID) {
-	C.ImGuiWindow_SetDockId(self.handle(), C.ImGuiID(v))
+func (self *Window) SetDockId(v ID) {
+	C.wrap_ImGuiWindow_SetDockId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiWindow) GetDockId() ImGuiID {
-	return ImGuiID(C.ImGuiWindow_GetDockId(self.handle()))
+func (self Window) DockId() ID {
+	return ImGuiID(C.wrap_ImGuiWindow_GetDockId(self.handle()))
 }
 
-func (self *ImGuiWindow) SetDockTabItemStatusFlags(v ItemStatusFlags) {
-	C.ImGuiWindow_SetDockTabItemStatusFlags(self.handle(), C.ImGuiItemStatusFlags(v))
+func (self *Window) SetDockTabItemStatusFlags(v ItemStatusFlags) {
+	C.wrap_ImGuiWindow_SetDockTabItemStatusFlags(self.handle(), C.ImGuiItemStatusFlags(v))
 }
 
-func (self ImGuiWindow) GetDockTabItemStatusFlags() ItemStatusFlags {
-	return ItemStatusFlags(C.ImGuiWindow_GetDockTabItemStatusFlags(self.handle()))
+func (self Window) DockTabItemStatusFlags() ItemStatusFlags {
+	return ItemStatusFlags(C.wrap_ImGuiWindow_GetDockTabItemStatusFlags(self.handle()))
 }
 
-func (self *ImGuiWindow) SetDockTabItemRect(v Rect) {
-	C.ImGuiWindow_SetDockTabItemRect(self.handle(), v.toC())
+func (self *Window) SetDockTabItemRect(v Rect) {
+	C.wrap_ImGuiWindow_SetDockTabItemRect(self.handle(), v.toC())
 }
 
-func (self ImGuiWindow) GetDockTabItemRect() Rect {
+func (self Window) DockTabItemRect() Rect {
 	out := &Rect{}
-	out.fromC(C.ImGuiWindow_GetDockTabItemRect(self.handle()))
+	out.fromC(C.wrap_ImGuiWindow_GetDockTabItemRect(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindowClass) SetClassId(v ImGuiID) {
-	C.ImGuiWindowClass_SetClassId(self.handle(), C.ImGuiID(v))
+func (self *WindowClass) SetClassId(v ID) {
+	C.wrap_ImGuiWindowClass_SetClassId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiWindowClass) GetClassId() ImGuiID {
-	return ImGuiID(C.ImGuiWindowClass_GetClassId(self.handle()))
+func (self WindowClass) ClassId() ID {
+	return ImGuiID(C.wrap_ImGuiWindowClass_GetClassId(self.handle()))
 }
 
-func (self *ImGuiWindowClass) SetParentViewportId(v ImGuiID) {
-	C.ImGuiWindowClass_SetParentViewportId(self.handle(), C.ImGuiID(v))
+func (self *WindowClass) SetParentViewportId(v ID) {
+	C.wrap_ImGuiWindowClass_SetParentViewportId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiWindowClass) GetParentViewportId() ImGuiID {
-	return ImGuiID(C.ImGuiWindowClass_GetParentViewportId(self.handle()))
+func (self WindowClass) ParentViewportId() ID {
+	return ImGuiID(C.wrap_ImGuiWindowClass_GetParentViewportId(self.handle()))
 }
 
-func (self *ImGuiWindowClass) SetViewportFlagsOverrideSet(v ViewportFlags) {
-	C.ImGuiWindowClass_SetViewportFlagsOverrideSet(self.handle(), C.ImGuiViewportFlags(v))
+func (self *WindowClass) SetViewportFlagsOverrideSet(v ViewportFlags) {
+	C.wrap_ImGuiWindowClass_SetViewportFlagsOverrideSet(self.handle(), C.ImGuiViewportFlags(v))
 }
 
-func (self ImGuiWindowClass) GetViewportFlagsOverrideSet() ViewportFlags {
-	return ViewportFlags(C.ImGuiWindowClass_GetViewportFlagsOverrideSet(self.handle()))
+func (self WindowClass) ViewportFlagsOverrideSet() ViewportFlags {
+	return ViewportFlags(C.wrap_ImGuiWindowClass_GetViewportFlagsOverrideSet(self.handle()))
 }
 
-func (self *ImGuiWindowClass) SetViewportFlagsOverrideClear(v ViewportFlags) {
-	C.ImGuiWindowClass_SetViewportFlagsOverrideClear(self.handle(), C.ImGuiViewportFlags(v))
+func (self *WindowClass) SetViewportFlagsOverrideClear(v ViewportFlags) {
+	C.wrap_ImGuiWindowClass_SetViewportFlagsOverrideClear(self.handle(), C.ImGuiViewportFlags(v))
 }
 
-func (self ImGuiWindowClass) GetViewportFlagsOverrideClear() ViewportFlags {
-	return ViewportFlags(C.ImGuiWindowClass_GetViewportFlagsOverrideClear(self.handle()))
+func (self WindowClass) ViewportFlagsOverrideClear() ViewportFlags {
+	return ViewportFlags(C.wrap_ImGuiWindowClass_GetViewportFlagsOverrideClear(self.handle()))
 }
 
-func (self *ImGuiWindowClass) SetTabItemFlagsOverrideSet(v TabItemFlags) {
-	C.ImGuiWindowClass_SetTabItemFlagsOverrideSet(self.handle(), C.ImGuiTabItemFlags(v))
+func (self *WindowClass) SetTabItemFlagsOverrideSet(v TabItemFlags) {
+	C.wrap_ImGuiWindowClass_SetTabItemFlagsOverrideSet(self.handle(), C.ImGuiTabItemFlags(v))
 }
 
-func (self ImGuiWindowClass) GetTabItemFlagsOverrideSet() TabItemFlags {
-	return TabItemFlags(C.ImGuiWindowClass_GetTabItemFlagsOverrideSet(self.handle()))
+func (self WindowClass) TabItemFlagsOverrideSet() TabItemFlags {
+	return TabItemFlags(C.wrap_ImGuiWindowClass_GetTabItemFlagsOverrideSet(self.handle()))
 }
 
-func (self *ImGuiWindowClass) SetDockNodeFlagsOverrideSet(v DockNodeFlags) {
-	C.ImGuiWindowClass_SetDockNodeFlagsOverrideSet(self.handle(), C.ImGuiDockNodeFlags(v))
+func (self *WindowClass) SetDockNodeFlagsOverrideSet(v DockNodeFlags) {
+	C.wrap_ImGuiWindowClass_SetDockNodeFlagsOverrideSet(self.handle(), C.ImGuiDockNodeFlags(v))
 }
 
-func (self ImGuiWindowClass) GetDockNodeFlagsOverrideSet() DockNodeFlags {
-	return DockNodeFlags(C.ImGuiWindowClass_GetDockNodeFlagsOverrideSet(self.handle()))
+func (self WindowClass) DockNodeFlagsOverrideSet() DockNodeFlags {
+	return DockNodeFlags(C.wrap_ImGuiWindowClass_GetDockNodeFlagsOverrideSet(self.handle()))
 }
 
-func (self *ImGuiWindowClass) SetDockingAlwaysTabBar(v bool) {
-	C.ImGuiWindowClass_SetDockingAlwaysTabBar(self.handle(), C.bool(v))
+func (self *WindowClass) SetDockingAlwaysTabBar(v bool) {
+	C.wrap_ImGuiWindowClass_SetDockingAlwaysTabBar(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindowClass) GetDockingAlwaysTabBar() bool {
-	return C.ImGuiWindowClass_GetDockingAlwaysTabBar(self.handle()) == C.bool(true)
+func (self WindowClass) DockingAlwaysTabBar() bool {
+	return C.wrap_ImGuiWindowClass_GetDockingAlwaysTabBar(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindowClass) SetDockingAllowUnclassed(v bool) {
-	C.ImGuiWindowClass_SetDockingAllowUnclassed(self.handle(), C.bool(v))
+func (self *WindowClass) SetDockingAllowUnclassed(v bool) {
+	C.wrap_ImGuiWindowClass_SetDockingAllowUnclassed(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindowClass) GetDockingAllowUnclassed() bool {
-	return C.ImGuiWindowClass_GetDockingAllowUnclassed(self.handle()) == C.bool(true)
+func (self WindowClass) DockingAllowUnclassed() bool {
+	return C.wrap_ImGuiWindowClass_GetDockingAllowUnclassed(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindowSettings) SetID(v ImGuiID) {
-	C.ImGuiWindowSettings_SetID(self.handle(), C.ImGuiID(v))
+func (self *WindowSettings) SetID(v ID) {
+	C.wrap_ImGuiWindowSettings_SetID(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiWindowSettings) GetID() ImGuiID {
-	return ImGuiID(C.ImGuiWindowSettings_GetID(self.handle()))
+func (self WindowSettings) ID() ID {
+	return ImGuiID(C.wrap_ImGuiWindowSettings_GetID(self.handle()))
 }
 
-func (self *ImGuiWindowSettings) SetViewportId(v ImGuiID) {
-	C.ImGuiWindowSettings_SetViewportId(self.handle(), C.ImGuiID(v))
+func (self *WindowSettings) SetViewportId(v ID) {
+	C.wrap_ImGuiWindowSettings_SetViewportId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiWindowSettings) GetViewportId() ImGuiID {
-	return ImGuiID(C.ImGuiWindowSettings_GetViewportId(self.handle()))
+func (self WindowSettings) ViewportId() ID {
+	return ImGuiID(C.wrap_ImGuiWindowSettings_GetViewportId(self.handle()))
 }
 
-func (self *ImGuiWindowSettings) SetDockId(v ImGuiID) {
-	C.ImGuiWindowSettings_SetDockId(self.handle(), C.ImGuiID(v))
+func (self *WindowSettings) SetDockId(v ID) {
+	C.wrap_ImGuiWindowSettings_SetDockId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiWindowSettings) GetDockId() ImGuiID {
-	return ImGuiID(C.ImGuiWindowSettings_GetDockId(self.handle()))
+func (self WindowSettings) DockId() ID {
+	return ImGuiID(C.wrap_ImGuiWindowSettings_GetDockId(self.handle()))
 }
 
-func (self *ImGuiWindowSettings) SetClassId(v ImGuiID) {
-	C.ImGuiWindowSettings_SetClassId(self.handle(), C.ImGuiID(v))
+func (self *WindowSettings) SetClassId(v ID) {
+	C.wrap_ImGuiWindowSettings_SetClassId(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiWindowSettings) GetClassId() ImGuiID {
-	return ImGuiID(C.ImGuiWindowSettings_GetClassId(self.handle()))
+func (self WindowSettings) ClassId() ID {
+	return ImGuiID(C.wrap_ImGuiWindowSettings_GetClassId(self.handle()))
 }
 
-func (self *ImGuiWindowSettings) SetDockOrder(v int) {
-	C.ImGuiWindowSettings_SetDockOrder(self.handle(), C.short(v))
+func (self *WindowSettings) SetDockOrder(v int) {
+	C.wrap_ImGuiWindowSettings_SetDockOrder(self.handle(), C.short(v))
 }
 
-func (self ImGuiWindowSettings) GetDockOrder() int {
-	return int(C.ImGuiWindowSettings_GetDockOrder(self.handle()))
+func (self WindowSettings) DockOrder() int {
+	return int(C.wrap_ImGuiWindowSettings_GetDockOrder(self.handle()))
 }
 
-func (self *ImGuiWindowSettings) SetCollapsed(v bool) {
-	C.ImGuiWindowSettings_SetCollapsed(self.handle(), C.bool(v))
+func (self *WindowSettings) SetCollapsed(v bool) {
+	C.wrap_ImGuiWindowSettings_SetCollapsed(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindowSettings) GetCollapsed() bool {
-	return C.ImGuiWindowSettings_GetCollapsed(self.handle()) == C.bool(true)
+func (self WindowSettings) Collapsed() bool {
+	return C.wrap_ImGuiWindowSettings_GetCollapsed(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindowSettings) SetWantApply(v bool) {
-	C.ImGuiWindowSettings_SetWantApply(self.handle(), C.bool(v))
+func (self *WindowSettings) SetWantApply(v bool) {
+	C.wrap_ImGuiWindowSettings_SetWantApply(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindowSettings) GetWantApply() bool {
-	return C.ImGuiWindowSettings_GetWantApply(self.handle()) == C.bool(true)
+func (self WindowSettings) WantApply() bool {
+	return C.wrap_ImGuiWindowSettings_GetWantApply(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindowStackData) SetWindow(v ImGuiWindow) {
-	C.ImGuiWindowStackData_SetWindow(self.handle(), v.handle())
+func (self *WindowStackData) SetWindow(v Window) {
+	C.wrap_ImGuiWindowStackData_SetWindow(self.handle(), v.handle())
 }
 
-func (self ImGuiWindowStackData) GetWindow() ImGuiWindow {
-	return (ImGuiWindow)(unsafe.Pointer(C.ImGuiWindowStackData_GetWindow(self.handle())))
+func (self WindowStackData) Window() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiWindowStackData_GetWindow(self.handle())))
 }
 
-func (self ImGuiWindowStackData) GetParentLastItemDataBackup() ImGuiLastItemData {
-	return newImGuiLastItemDataFromC(C.ImGuiWindowStackData_GetParentLastItemDataBackup(self.handle()))
+func (self WindowStackData) ParentLastItemDataBackup() LastItemData {
+	return newLastItemDataFromC(C.wrap_ImGuiWindowStackData_GetParentLastItemDataBackup(self.handle()))
 }
 
-func (self ImGuiWindowStackData) GetStackSizesOnBegin() ImGuiStackSizes {
-	return newImGuiStackSizesFromC(C.ImGuiWindowStackData_GetStackSizesOnBegin(self.handle()))
+func (self WindowStackData) StackSizesOnBegin() StackSizes {
+	return newStackSizesFromC(C.wrap_ImGuiWindowStackData_GetStackSizesOnBegin(self.handle()))
 }
 
-func (self *ImGuiWindowTempData) SetCursorPos(v Vec2) {
-	C.ImGuiWindowTempData_SetCursorPos(self.handle(), v.toC())
+func (self *WindowTempData) SetCursorPos(v Vec2) {
+	C.wrap_ImGuiWindowTempData_SetCursorPos(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetCursorPos() Vec2 {
+func (self WindowTempData) CursorPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindowTempData_GetCursorPos(self.handle()))
+	out.fromC(C.wrap_ImGuiWindowTempData_GetCursorPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindowTempData) SetCursorPosPrevLine(v Vec2) {
-	C.ImGuiWindowTempData_SetCursorPosPrevLine(self.handle(), v.toC())
+func (self *WindowTempData) SetCursorPosPrevLine(v Vec2) {
+	C.wrap_ImGuiWindowTempData_SetCursorPosPrevLine(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetCursorPosPrevLine() Vec2 {
+func (self WindowTempData) CursorPosPrevLine() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindowTempData_GetCursorPosPrevLine(self.handle()))
+	out.fromC(C.wrap_ImGuiWindowTempData_GetCursorPosPrevLine(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindowTempData) SetCursorStartPos(v Vec2) {
-	C.ImGuiWindowTempData_SetCursorStartPos(self.handle(), v.toC())
+func (self *WindowTempData) SetCursorStartPos(v Vec2) {
+	C.wrap_ImGuiWindowTempData_SetCursorStartPos(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetCursorStartPos() Vec2 {
+func (self WindowTempData) CursorStartPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindowTempData_GetCursorStartPos(self.handle()))
+	out.fromC(C.wrap_ImGuiWindowTempData_GetCursorStartPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindowTempData) SetCursorMaxPos(v Vec2) {
-	C.ImGuiWindowTempData_SetCursorMaxPos(self.handle(), v.toC())
+func (self *WindowTempData) SetCursorMaxPos(v Vec2) {
+	C.wrap_ImGuiWindowTempData_SetCursorMaxPos(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetCursorMaxPos() Vec2 {
+func (self WindowTempData) CursorMaxPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindowTempData_GetCursorMaxPos(self.handle()))
+	out.fromC(C.wrap_ImGuiWindowTempData_GetCursorMaxPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindowTempData) SetIdealMaxPos(v Vec2) {
-	C.ImGuiWindowTempData_SetIdealMaxPos(self.handle(), v.toC())
+func (self *WindowTempData) SetIdealMaxPos(v Vec2) {
+	C.wrap_ImGuiWindowTempData_SetIdealMaxPos(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetIdealMaxPos() Vec2 {
+func (self WindowTempData) IdealMaxPos() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindowTempData_GetIdealMaxPos(self.handle()))
+	out.fromC(C.wrap_ImGuiWindowTempData_GetIdealMaxPos(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindowTempData) SetCurrLineSize(v Vec2) {
-	C.ImGuiWindowTempData_SetCurrLineSize(self.handle(), v.toC())
+func (self *WindowTempData) SetCurrLineSize(v Vec2) {
+	C.wrap_ImGuiWindowTempData_SetCurrLineSize(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetCurrLineSize() Vec2 {
+func (self WindowTempData) CurrLineSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindowTempData_GetCurrLineSize(self.handle()))
+	out.fromC(C.wrap_ImGuiWindowTempData_GetCurrLineSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindowTempData) SetPrevLineSize(v Vec2) {
-	C.ImGuiWindowTempData_SetPrevLineSize(self.handle(), v.toC())
+func (self *WindowTempData) SetPrevLineSize(v Vec2) {
+	C.wrap_ImGuiWindowTempData_SetPrevLineSize(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetPrevLineSize() Vec2 {
+func (self WindowTempData) PrevLineSize() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindowTempData_GetPrevLineSize(self.handle()))
+	out.fromC(C.wrap_ImGuiWindowTempData_GetPrevLineSize(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindowTempData) SetCurrLineTextBaseOffset(v float32) {
-	C.ImGuiWindowTempData_SetCurrLineTextBaseOffset(self.handle(), C.float(v))
+func (self *WindowTempData) SetCurrLineTextBaseOffset(v float32) {
+	C.wrap_ImGuiWindowTempData_SetCurrLineTextBaseOffset(self.handle(), C.float(v))
 }
 
-func (self ImGuiWindowTempData) GetCurrLineTextBaseOffset() float32 {
-	return float32(C.ImGuiWindowTempData_GetCurrLineTextBaseOffset(self.handle()))
+func (self WindowTempData) CurrLineTextBaseOffset() float32 {
+	return float32(C.wrap_ImGuiWindowTempData_GetCurrLineTextBaseOffset(self.handle()))
 }
 
-func (self *ImGuiWindowTempData) SetPrevLineTextBaseOffset(v float32) {
-	C.ImGuiWindowTempData_SetPrevLineTextBaseOffset(self.handle(), C.float(v))
+func (self *WindowTempData) SetPrevLineTextBaseOffset(v float32) {
+	C.wrap_ImGuiWindowTempData_SetPrevLineTextBaseOffset(self.handle(), C.float(v))
 }
 
-func (self ImGuiWindowTempData) GetPrevLineTextBaseOffset() float32 {
-	return float32(C.ImGuiWindowTempData_GetPrevLineTextBaseOffset(self.handle()))
+func (self WindowTempData) PrevLineTextBaseOffset() float32 {
+	return float32(C.wrap_ImGuiWindowTempData_GetPrevLineTextBaseOffset(self.handle()))
 }
 
-func (self *ImGuiWindowTempData) SetIsSameLine(v bool) {
-	C.ImGuiWindowTempData_SetIsSameLine(self.handle(), C.bool(v))
+func (self *WindowTempData) SetIsSameLine(v bool) {
+	C.wrap_ImGuiWindowTempData_SetIsSameLine(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindowTempData) GetIsSameLine() bool {
-	return C.ImGuiWindowTempData_GetIsSameLine(self.handle()) == C.bool(true)
+func (self WindowTempData) IsSameLine() bool {
+	return C.wrap_ImGuiWindowTempData_GetIsSameLine(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindowTempData) SetCursorStartPosLossyness(v Vec2) {
-	C.ImGuiWindowTempData_SetCursorStartPosLossyness(self.handle(), v.toC())
+func (self *WindowTempData) SetCursorStartPosLossyness(v Vec2) {
+	C.wrap_ImGuiWindowTempData_SetCursorStartPosLossyness(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetCursorStartPosLossyness() Vec2 {
+func (self WindowTempData) CursorStartPosLossyness() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindowTempData_GetCursorStartPosLossyness(self.handle()))
+	out.fromC(C.wrap_ImGuiWindowTempData_GetCursorStartPosLossyness(self.handle()))
 	return *out
 }
 
-func (self *ImGuiWindowTempData) SetNavLayerCurrent(v NavLayer) {
-	C.ImGuiWindowTempData_SetNavLayerCurrent(self.handle(), C.ImGuiNavLayer(v))
+func (self *WindowTempData) SetNavLayerCurrent(v NavLayer) {
+	C.wrap_ImGuiWindowTempData_SetNavLayerCurrent(self.handle(), C.ImGuiNavLayer(v))
 }
 
-func (self ImGuiWindowTempData) GetNavLayerCurrent() NavLayer {
-	return NavLayer(C.ImGuiWindowTempData_GetNavLayerCurrent(self.handle()))
+func (self WindowTempData) NavLayerCurrent() NavLayer {
+	return NavLayer(C.wrap_ImGuiWindowTempData_GetNavLayerCurrent(self.handle()))
 }
 
-func (self *ImGuiWindowTempData) SetNavLayersActiveMask(v int) {
-	C.ImGuiWindowTempData_SetNavLayersActiveMask(self.handle(), C.short(v))
+func (self *WindowTempData) SetNavLayersActiveMask(v int) {
+	C.wrap_ImGuiWindowTempData_SetNavLayersActiveMask(self.handle(), C.short(v))
 }
 
-func (self ImGuiWindowTempData) GetNavLayersActiveMask() int {
-	return int(C.ImGuiWindowTempData_GetNavLayersActiveMask(self.handle()))
+func (self WindowTempData) NavLayersActiveMask() int {
+	return int(C.wrap_ImGuiWindowTempData_GetNavLayersActiveMask(self.handle()))
 }
 
-func (self *ImGuiWindowTempData) SetNavLayersActiveMaskNext(v int) {
-	C.ImGuiWindowTempData_SetNavLayersActiveMaskNext(self.handle(), C.short(v))
+func (self *WindowTempData) SetNavLayersActiveMaskNext(v int) {
+	C.wrap_ImGuiWindowTempData_SetNavLayersActiveMaskNext(self.handle(), C.short(v))
 }
 
-func (self ImGuiWindowTempData) GetNavLayersActiveMaskNext() int {
-	return int(C.ImGuiWindowTempData_GetNavLayersActiveMaskNext(self.handle()))
+func (self WindowTempData) NavLayersActiveMaskNext() int {
+	return int(C.wrap_ImGuiWindowTempData_GetNavLayersActiveMaskNext(self.handle()))
 }
 
-func (self *ImGuiWindowTempData) SetNavFocusScopeIdCurrent(v ImGuiID) {
-	C.ImGuiWindowTempData_SetNavFocusScopeIdCurrent(self.handle(), C.ImGuiID(v))
+func (self *WindowTempData) SetNavFocusScopeIdCurrent(v ID) {
+	C.wrap_ImGuiWindowTempData_SetNavFocusScopeIdCurrent(self.handle(), C.ImGuiID(v))
 }
 
-func (self ImGuiWindowTempData) GetNavFocusScopeIdCurrent() ImGuiID {
-	return ImGuiID(C.ImGuiWindowTempData_GetNavFocusScopeIdCurrent(self.handle()))
+func (self WindowTempData) NavFocusScopeIdCurrent() ID {
+	return ImGuiID(C.wrap_ImGuiWindowTempData_GetNavFocusScopeIdCurrent(self.handle()))
 }
 
-func (self *ImGuiWindowTempData) SetNavHideHighlightOneFrame(v bool) {
-	C.ImGuiWindowTempData_SetNavHideHighlightOneFrame(self.handle(), C.bool(v))
+func (self *WindowTempData) SetNavHideHighlightOneFrame(v bool) {
+	C.wrap_ImGuiWindowTempData_SetNavHideHighlightOneFrame(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindowTempData) GetNavHideHighlightOneFrame() bool {
-	return C.ImGuiWindowTempData_GetNavHideHighlightOneFrame(self.handle()) == C.bool(true)
+func (self WindowTempData) NavHideHighlightOneFrame() bool {
+	return C.wrap_ImGuiWindowTempData_GetNavHideHighlightOneFrame(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindowTempData) SetNavHasScroll(v bool) {
-	C.ImGuiWindowTempData_SetNavHasScroll(self.handle(), C.bool(v))
+func (self *WindowTempData) SetNavHasScroll(v bool) {
+	C.wrap_ImGuiWindowTempData_SetNavHasScroll(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindowTempData) GetNavHasScroll() bool {
-	return C.ImGuiWindowTempData_GetNavHasScroll(self.handle()) == C.bool(true)
+func (self WindowTempData) NavHasScroll() bool {
+	return C.wrap_ImGuiWindowTempData_GetNavHasScroll(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindowTempData) SetMenuBarAppending(v bool) {
-	C.ImGuiWindowTempData_SetMenuBarAppending(self.handle(), C.bool(v))
+func (self *WindowTempData) SetMenuBarAppending(v bool) {
+	C.wrap_ImGuiWindowTempData_SetMenuBarAppending(self.handle(), C.bool(v))
 }
 
-func (self ImGuiWindowTempData) GetMenuBarAppending() bool {
-	return C.ImGuiWindowTempData_GetMenuBarAppending(self.handle()) == C.bool(true)
+func (self WindowTempData) MenuBarAppending() bool {
+	return C.wrap_ImGuiWindowTempData_GetMenuBarAppending(self.handle()) == C.bool(true)
 }
 
-func (self *ImGuiWindowTempData) SetMenuBarOffset(v Vec2) {
-	C.ImGuiWindowTempData_SetMenuBarOffset(self.handle(), v.toC())
+func (self *WindowTempData) SetMenuBarOffset(v Vec2) {
+	C.wrap_ImGuiWindowTempData_SetMenuBarOffset(self.handle(), v.toC())
 }
 
-func (self ImGuiWindowTempData) GetMenuBarOffset() Vec2 {
+func (self WindowTempData) MenuBarOffset() Vec2 {
 	out := &Vec2{}
-	out.fromC(C.ImGuiWindowTempData_GetMenuBarOffset(self.handle()))
+	out.fromC(C.wrap_ImGuiWindowTempData_GetMenuBarOffset(self.handle()))
 	return *out
 }
 
-func (self ImGuiWindowTempData) GetMenuColumns() ImGuiMenuColumns {
-	return newImGuiMenuColumnsFromC(C.ImGuiWindowTempData_GetMenuColumns(self.handle()))
+func (self WindowTempData) MenuColumns() MenuColumns {
+	return newMenuColumnsFromC(C.wrap_ImGuiWindowTempData_GetMenuColumns(self.handle()))
 }
 
-func (self *ImGuiWindowTempData) SetTreeDepth(v int32) {
-	C.ImGuiWindowTempData_SetTreeDepth(self.handle(), C.int(v))
+func (self *WindowTempData) SetTreeDepth(v int32) {
+	C.wrap_ImGuiWindowTempData_SetTreeDepth(self.handle(), C.int(v))
 }
 
-func (self ImGuiWindowTempData) GetTreeDepth() int {
-	return int(C.ImGuiWindowTempData_GetTreeDepth(self.handle()))
+func (self WindowTempData) TreeDepth() int {
+	return int(C.wrap_ImGuiWindowTempData_GetTreeDepth(self.handle()))
 }
 
-func (self *ImGuiWindowTempData) SetTreeJumpToParentOnPopMask(v uint32) {
-	C.ImGuiWindowTempData_SetTreeJumpToParentOnPopMask(self.handle(), C.ImU32(v))
+func (self *WindowTempData) SetTreeJumpToParentOnPopMask(v uint32) {
+	C.wrap_ImGuiWindowTempData_SetTreeJumpToParentOnPopMask(self.handle(), C.ImU32(v))
 }
 
-func (self ImGuiWindowTempData) GetTreeJumpToParentOnPopMask() uint32 {
-	return uint32(C.ImGuiWindowTempData_GetTreeJumpToParentOnPopMask(self.handle()))
+func (self WindowTempData) TreeJumpToParentOnPopMask() uint32 {
+	return uint32(C.wrap_ImGuiWindowTempData_GetTreeJumpToParentOnPopMask(self.handle()))
 }
 
-func (self *ImGuiWindowTempData) SetStateStorage(v ImGuiStorage) {
-	C.ImGuiWindowTempData_SetStateStorage(self.handle(), v.handle())
+func (self *WindowTempData) SetStateStorage(v Storage) {
+	C.wrap_ImGuiWindowTempData_SetStateStorage(self.handle(), v.handle())
 }
 
-func (self ImGuiWindowTempData) GetStateStorage() ImGuiStorage {
-	return (ImGuiStorage)(unsafe.Pointer(C.ImGuiWindowTempData_GetStateStorage(self.handle())))
+func (self WindowTempData) StateStorage() Storage {
+	return (Storage)(unsafe.Pointer(C.wrap_ImGuiWindowTempData_GetStateStorage(self.handle())))
 }
 
-func (self *ImGuiWindowTempData) SetCurrentColumns(v ImGuiOldColumns) {
-	C.ImGuiWindowTempData_SetCurrentColumns(self.handle(), v.handle())
+func (self *WindowTempData) SetCurrentColumns(v OldColumns) {
+	C.wrap_ImGuiWindowTempData_SetCurrentColumns(self.handle(), v.handle())
 }
 
-func (self ImGuiWindowTempData) GetCurrentColumns() ImGuiOldColumns {
-	return (ImGuiOldColumns)(unsafe.Pointer(C.ImGuiWindowTempData_GetCurrentColumns(self.handle())))
+func (self WindowTempData) CurrentColumns() OldColumns {
+	return (OldColumns)(unsafe.Pointer(C.wrap_ImGuiWindowTempData_GetCurrentColumns(self.handle())))
 }
 
-func (self *ImGuiWindowTempData) SetCurrentTableIdx(v int32) {
-	C.ImGuiWindowTempData_SetCurrentTableIdx(self.handle(), C.int(v))
+func (self *WindowTempData) SetCurrentTableIdx(v int32) {
+	C.wrap_ImGuiWindowTempData_SetCurrentTableIdx(self.handle(), C.int(v))
 }
 
-func (self ImGuiWindowTempData) GetCurrentTableIdx() int {
-	return int(C.ImGuiWindowTempData_GetCurrentTableIdx(self.handle()))
+func (self WindowTempData) CurrentTableIdx() int {
+	return int(C.wrap_ImGuiWindowTempData_GetCurrentTableIdx(self.handle()))
 }
 
-func (self *ImGuiWindowTempData) SetLayoutType(v LayoutType) {
-	C.ImGuiWindowTempData_SetLayoutType(self.handle(), C.ImGuiLayoutType(v))
+func (self *WindowTempData) SetLayoutType(v LayoutType) {
+	C.wrap_ImGuiWindowTempData_SetLayoutType(self.handle(), C.ImGuiLayoutType(v))
 }
 
-func (self ImGuiWindowTempData) GetLayoutType() LayoutType {
-	return LayoutType(C.ImGuiWindowTempData_GetLayoutType(self.handle()))
+func (self WindowTempData) LayoutType() LayoutType {
+	return LayoutType(C.wrap_ImGuiWindowTempData_GetLayoutType(self.handle()))
 }
 
-func (self *ImGuiWindowTempData) SetParentLayoutType(v LayoutType) {
-	C.ImGuiWindowTempData_SetParentLayoutType(self.handle(), C.ImGuiLayoutType(v))
+func (self *WindowTempData) SetParentLayoutType(v LayoutType) {
+	C.wrap_ImGuiWindowTempData_SetParentLayoutType(self.handle(), C.ImGuiLayoutType(v))
 }
 
-func (self ImGuiWindowTempData) GetParentLayoutType() LayoutType {
-	return LayoutType(C.ImGuiWindowTempData_GetParentLayoutType(self.handle()))
+func (self WindowTempData) ParentLayoutType() LayoutType {
+	return LayoutType(C.wrap_ImGuiWindowTempData_GetParentLayoutType(self.handle()))
 }
 
-func (self *ImGuiWindowTempData) SetItemWidth(v float32) {
-	C.ImGuiWindowTempData_SetItemWidth(self.handle(), C.float(v))
+func (self *WindowTempData) SetItemWidth(v float32) {
+	C.wrap_ImGuiWindowTempData_SetItemWidth(self.handle(), C.float(v))
 }
 
-func (self ImGuiWindowTempData) GetItemWidth() float32 {
-	return float32(C.ImGuiWindowTempData_GetItemWidth(self.handle()))
+func (self WindowTempData) ItemWidth() float32 {
+	return float32(C.wrap_ImGuiWindowTempData_GetItemWidth(self.handle()))
 }
 
-func (self *ImGuiWindowTempData) SetTextWrapPos(v float32) {
-	C.ImGuiWindowTempData_SetTextWrapPos(self.handle(), C.float(v))
+func (self *WindowTempData) SetTextWrapPos(v float32) {
+	C.wrap_ImGuiWindowTempData_SetTextWrapPos(self.handle(), C.float(v))
 }
 
-func (self ImGuiWindowTempData) GetTextWrapPos() float32 {
-	return float32(C.ImGuiWindowTempData_GetTextWrapPos(self.handle()))
+func (self WindowTempData) TextWrapPos() float32 {
+	return float32(C.wrap_ImGuiWindowTempData_GetTextWrapPos(self.handle()))
 }
