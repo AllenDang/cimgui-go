@@ -54,10 +54,10 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"ImGuiID":                  simpleW("ImGuiID", "C.ImGuiID"),
 		"ImTextureID":              simpleW("TextureID", "C.ImTextureID"),
 		"ImDrawIdx":                simpleW("DrawIdx", "C.ImDrawIdx"),
-		"ImGuiTableColumnIdx":      imTableColumnIdxW,
+		"ImGuiTableColumnIdx":      simpleW("TableColumnIdx", "C.ImGuiTableColumnIdx"),
 		"ImGuiTableDrawChannelIdx": simpleW("TableDrawChannelIdx", "C.ImGuiTableDrawChannelIdx"),
-		"void*":                    voidPtrW,
-		"const void*":              voidPtrW,
+		"void*":                    simpleW("unsafe.Pointer", ""),
+		"const void*":              simpleW("unsafe.Pointer", ""),
 		"const ImVec2":             wrappableW("Vec2"),
 		"const ImVec2*":            wrappablePtrW("*Vec2", "C.ImVec2"),
 		"ImVec2":                   wrappableW("Vec2"),
@@ -143,16 +143,6 @@ func int64ArrayW(arg ArgDef) (argType string, def string, varName string) {
 func uint64ArrayW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "[]uint64"
 	varName = fmt.Sprintf("(*C.ulonglong)(&(%s[0]))", arg.Name)
-	return
-}
-
-func imTableColumnIdxW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW("TableColumnIdx", "C.ImGuiTableColumnIdx")(arg)
-}
-
-func voidPtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "unsafe.Pointer"
-	varName = arg.Name
 	return
 }
 
