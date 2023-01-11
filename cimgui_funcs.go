@@ -1706,7 +1706,7 @@ func DestroyPlatformWindows() {
 // size: ImVec2(0,0)
 // window_class: NULL
 func DockSpaceV(id ID, size Vec2, flags DockNodeFlags, window_class WindowClass) ID {
-	return ImGuiID(C.igDockSpace(C.ImGuiID(id), size.toC(), C.ImGuiDockNodeFlags(flags), window_class.handle()))
+	return ID(C.igDockSpace(C.ImGuiID(id), size.toC(), C.ImGuiDockNodeFlags(flags), window_class.handle()))
 }
 
 // DockSpaceOverViewportV parameter default value hint:
@@ -1714,7 +1714,7 @@ func DockSpaceV(id ID, size Vec2, flags DockNodeFlags, window_class WindowClass)
 // viewport: NULL
 // window_class: NULL
 func DockSpaceOverViewportV(viewport Viewport, flags DockNodeFlags, window_class WindowClass) ID {
-	return ImGuiID(C.igDockSpaceOverViewport(viewport.handle(), C.ImGuiDockNodeFlags(flags), window_class.handle()))
+	return ID(C.igDockSpaceOverViewport(viewport.handle(), C.ImGuiDockNodeFlags(flags), window_class.handle()))
 }
 
 // DragFloatV parameter default value hint:
@@ -2232,14 +2232,14 @@ func FrameHeightWithSpacing() float32 {
 }
 
 func IDPtr(ptr_id unsafe.Pointer) ID {
-	return ImGuiID(C.igGetID_Ptr((ptr_id)))
+	return ID(C.igGetID_Ptr((ptr_id)))
 }
 
 func IDStr(str_id string) ID {
 	str_idArg, str_idFin := wrapString(str_id)
 	defer str_idFin()
 
-	return ImGuiID(C.igGetID_Str(str_idArg))
+	return ID(C.igGetID_Str(str_idArg))
 }
 
 func IDStrStr(str_id_begin string, str_id_end string) ID {
@@ -2249,7 +2249,7 @@ func IDStrStr(str_id_begin string, str_id_end string) ID {
 	str_id_endArg, str_id_endFin := wrapString(str_id_end)
 	defer str_id_endFin()
 
-	return ImGuiID(C.igGetID_StrStr(str_id_beginArg, str_id_endArg))
+	return ID(C.igGetID_StrStr(str_id_beginArg, str_id_endArg))
 }
 
 func CurrentIO() IO {
@@ -2410,7 +2410,7 @@ func WindowContentRegionMin() Vec2 {
 }
 
 func WindowDockID() ID {
-	return ImGuiID(C.igGetWindowDockID())
+	return ID(C.igGetWindowDockID())
 }
 
 func WindowDpiScale() float32 {
@@ -4516,11 +4516,11 @@ func DestroyContext() {
 }
 
 func DockSpace(id ID) ID {
-	return ImGuiID(C.wrap_igDockSpace(C.ImGuiID(id)))
+	return ID(C.wrap_igDockSpace(C.ImGuiID(id)))
 }
 
 func DockSpaceOverViewport() ID {
-	return ImGuiID(C.wrap_igDockSpaceOverViewport())
+	return ID(C.wrap_igDockSpaceOverViewport())
 }
 
 func DragFloat(label string, v *float32) bool {
@@ -6577,7 +6577,7 @@ func (self *Context) SetDebugHookIdInfo(v ID) {
 }
 
 func (self Context) DebugHookIdInfo() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetDebugHookIdInfo(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetDebugHookIdInfo(self.handle()))
 }
 
 func (self *Context) SetHoveredId(v ID) {
@@ -6585,7 +6585,7 @@ func (self *Context) SetHoveredId(v ID) {
 }
 
 func (self Context) HoveredId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetHoveredId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetHoveredId(self.handle()))
 }
 
 func (self *Context) SetHoveredIdPreviousFrame(v ID) {
@@ -6593,7 +6593,7 @@ func (self *Context) SetHoveredIdPreviousFrame(v ID) {
 }
 
 func (self Context) HoveredIdPreviousFrame() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetHoveredIdPreviousFrame(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetHoveredIdPreviousFrame(self.handle()))
 }
 
 func (self *Context) SetHoveredIdAllowOverlap(v bool) {
@@ -6649,7 +6649,7 @@ func (self *Context) SetActiveId(v ID) {
 }
 
 func (self Context) ActiveId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetActiveId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetActiveId(self.handle()))
 }
 
 func (self *Context) SetActiveIdIsAlive(v ID) {
@@ -6657,7 +6657,7 @@ func (self *Context) SetActiveIdIsAlive(v ID) {
 }
 
 func (self Context) ActiveIdIsAlive() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetActiveIdIsAlive(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetActiveIdIsAlive(self.handle()))
 }
 
 func (self *Context) SetActiveIdTimer(v float32) {
@@ -6755,7 +6755,7 @@ func (self *Context) SetActiveIdPreviousFrame(v ID) {
 }
 
 func (self Context) ActiveIdPreviousFrame() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetActiveIdPreviousFrame(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetActiveIdPreviousFrame(self.handle()))
 }
 
 func (self *Context) SetActiveIdPreviousFrameIsAlive(v bool) {
@@ -6787,7 +6787,7 @@ func (self *Context) SetLastActiveId(v ID) {
 }
 
 func (self Context) LastActiveId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetLastActiveId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetLastActiveId(self.handle()))
 }
 
 func (self *Context) SetLastActiveIdTimer(v float32) {
@@ -6879,7 +6879,7 @@ func (self *Context) SetPlatformLastFocusedViewportId(v ID) {
 }
 
 func (self Context) PlatformLastFocusedViewportId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetPlatformLastFocusedViewportId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetPlatformLastFocusedViewportId(self.handle()))
 }
 
 func (self Context) FallbackMonitor() PlatformMonitor {
@@ -6907,7 +6907,7 @@ func (self *Context) SetNavId(v ID) {
 }
 
 func (self Context) NavId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetNavId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetNavId(self.handle()))
 }
 
 func (self *Context) SetNavFocusScopeId(v ID) {
@@ -6915,7 +6915,7 @@ func (self *Context) SetNavFocusScopeId(v ID) {
 }
 
 func (self Context) NavFocusScopeId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetNavFocusScopeId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetNavFocusScopeId(self.handle()))
 }
 
 func (self *Context) SetNavActivateId(v ID) {
@@ -6923,7 +6923,7 @@ func (self *Context) SetNavActivateId(v ID) {
 }
 
 func (self Context) NavActivateId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetNavActivateId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetNavActivateId(self.handle()))
 }
 
 func (self *Context) SetNavActivateDownId(v ID) {
@@ -6931,7 +6931,7 @@ func (self *Context) SetNavActivateDownId(v ID) {
 }
 
 func (self Context) NavActivateDownId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetNavActivateDownId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetNavActivateDownId(self.handle()))
 }
 
 func (self *Context) SetNavActivatePressedId(v ID) {
@@ -6939,7 +6939,7 @@ func (self *Context) SetNavActivatePressedId(v ID) {
 }
 
 func (self Context) NavActivatePressedId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetNavActivatePressedId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetNavActivatePressedId(self.handle()))
 }
 
 func (self *Context) SetNavActivateInputId(v ID) {
@@ -6947,7 +6947,7 @@ func (self *Context) SetNavActivateInputId(v ID) {
 }
 
 func (self Context) NavActivateInputId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetNavActivateInputId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetNavActivateInputId(self.handle()))
 }
 
 func (self *Context) SetNavActivateFlags(v ActivateFlags) {
@@ -6963,7 +6963,7 @@ func (self *Context) SetNavJustMovedToId(v ID) {
 }
 
 func (self Context) NavJustMovedToId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetNavJustMovedToId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetNavJustMovedToId(self.handle()))
 }
 
 func (self *Context) SetNavJustMovedToFocusScopeId(v ID) {
@@ -6971,7 +6971,7 @@ func (self *Context) SetNavJustMovedToFocusScopeId(v ID) {
 }
 
 func (self Context) NavJustMovedToFocusScopeId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetNavJustMovedToFocusScopeId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetNavJustMovedToFocusScopeId(self.handle()))
 }
 
 func (self *Context) SetNavJustMovedToKeyMods(v ModFlags) {
@@ -6987,7 +6987,7 @@ func (self *Context) SetNavNextActivateId(v ID) {
 }
 
 func (self Context) NavNextActivateId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetNavNextActivateId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetNavNextActivateId(self.handle()))
 }
 
 func (self *Context) SetNavNextActivateFlags(v ActivateFlags) {
@@ -7075,7 +7075,7 @@ func (self *Context) SetNavInitResultId(v ID) {
 }
 
 func (self Context) NavInitResultId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetNavInitResultId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetNavInitResultId(self.handle()))
 }
 
 func (self *Context) SetNavInitResultRectRel(v Rect) {
@@ -7371,7 +7371,7 @@ func (self *Context) SetDragDropTargetId(v ID) {
 }
 
 func (self Context) DragDropTargetId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetDragDropTargetId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetDragDropTargetId(self.handle()))
 }
 
 func (self *Context) SetDragDropAcceptFlags(v DragDropFlags) {
@@ -7395,7 +7395,7 @@ func (self *Context) SetDragDropAcceptIdCurr(v ID) {
 }
 
 func (self Context) DragDropAcceptIdCurr() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetDragDropAcceptIdCurr(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetDragDropAcceptIdCurr(self.handle()))
 }
 
 func (self *Context) SetDragDropAcceptIdPrev(v ID) {
@@ -7403,7 +7403,7 @@ func (self *Context) SetDragDropAcceptIdPrev(v ID) {
 }
 
 func (self Context) DragDropAcceptIdPrev() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetDragDropAcceptIdPrev(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetDragDropAcceptIdPrev(self.handle()))
 }
 
 func (self *Context) SetDragDropAcceptFrameCount(v int32) {
@@ -7419,7 +7419,7 @@ func (self *Context) SetDragDropHoldJustPressedId(v ID) {
 }
 
 func (self Context) DragDropHoldJustPressedId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetDragDropHoldJustPressedId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetDragDropHoldJustPressedId(self.handle()))
 }
 
 func (self *Context) SetClipperTempDataStacked(v int32) {
@@ -7477,7 +7477,7 @@ func (self *Context) SetTempInputId(v ID) {
 }
 
 func (self Context) TempInputId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetTempInputId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetTempInputId(self.handle()))
 }
 
 func (self *Context) SetColorEditOptions(v ColorEditFlags) {
@@ -7627,7 +7627,7 @@ func (self *Context) SetPlatformImeViewport(v ID) {
 }
 
 func (self Context) PlatformImeViewport() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetPlatformImeViewport(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetPlatformImeViewport(self.handle()))
 }
 
 func (self Context) DockContext() DockContext {
@@ -7659,7 +7659,7 @@ func (self *Context) SetHookIdNext(v ID) {
 }
 
 func (self Context) HookIdNext() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetHookIdNext(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetHookIdNext(self.handle()))
 }
 
 func (self *Context) SetLogEnabled(v bool) {
@@ -7777,7 +7777,7 @@ func (self *Context) SetDebugItemPickerBreakId(v ID) {
 }
 
 func (self Context) DebugItemPickerBreakId() ID {
-	return ImGuiID(C.wrap_ImGuiContext_GetDebugItemPickerBreakId(self.handle()))
+	return ID(C.wrap_ImGuiContext_GetDebugItemPickerBreakId(self.handle()))
 }
 
 func (self Context) DebugMetricsConfig() MetricsConfig {
@@ -7849,7 +7849,7 @@ func (self *ContextHook) SetHookId(v ID) {
 }
 
 func (self ContextHook) HookId() ID {
-	return ImGuiID(C.wrap_ImGuiContextHook_GetHookId(self.handle()))
+	return ID(C.wrap_ImGuiContextHook_GetHookId(self.handle()))
 }
 
 func (self *ContextHook) SetType(v ContextHookType) {
@@ -7865,7 +7865,7 @@ func (self *ContextHook) SetOwner(v ID) {
 }
 
 func (self ContextHook) Owner() ID {
-	return ImGuiID(C.wrap_ImGuiContextHook_GetOwner(self.handle()))
+	return ID(C.wrap_ImGuiContextHook_GetOwner(self.handle()))
 }
 
 func (self *ContextHook) SetUserData(v unsafe.Pointer) {
@@ -7934,7 +7934,7 @@ func (self *DockNode) SetID(v ID) {
 }
 
 func (self DockNode) ID() ID {
-	return ImGuiID(C.wrap_ImGuiDockNode_GetID(self.handle()))
+	return ID(C.wrap_ImGuiDockNode_GetID(self.handle()))
 }
 
 func (self *DockNode) SetSharedFlags(v DockNodeFlags) {
@@ -8104,7 +8104,7 @@ func (self *DockNode) SetLastFocusedNodeId(v ID) {
 }
 
 func (self DockNode) LastFocusedNodeId() ID {
-	return ImGuiID(C.wrap_ImGuiDockNode_GetLastFocusedNodeId(self.handle()))
+	return ID(C.wrap_ImGuiDockNode_GetLastFocusedNodeId(self.handle()))
 }
 
 func (self *DockNode) SetSelectedTabId(v ID) {
@@ -8112,7 +8112,7 @@ func (self *DockNode) SetSelectedTabId(v ID) {
 }
 
 func (self DockNode) SelectedTabId() ID {
-	return ImGuiID(C.wrap_ImGuiDockNode_GetSelectedTabId(self.handle()))
+	return ID(C.wrap_ImGuiDockNode_GetSelectedTabId(self.handle()))
 }
 
 func (self *DockNode) SetWantCloseTabId(v ID) {
@@ -8120,7 +8120,7 @@ func (self *DockNode) SetWantCloseTabId(v ID) {
 }
 
 func (self DockNode) WantCloseTabId() ID {
-	return ImGuiID(C.wrap_ImGuiDockNode_GetWantCloseTabId(self.handle()))
+	return ID(C.wrap_ImGuiDockNode_GetWantCloseTabId(self.handle()))
 }
 
 func (self *DockNode) SetAuthorityForPos(v DataAuthority) {
@@ -8240,7 +8240,7 @@ func (self *GroupData) SetWindowID(v ID) {
 }
 
 func (self GroupData) WindowID() ID {
-	return ImGuiID(C.wrap_ImGuiGroupData_GetWindowID(self.handle()))
+	return ID(C.wrap_ImGuiGroupData_GetWindowID(self.handle()))
 }
 
 func (self *GroupData) SetBackupCursorPos(v Vec2) {
@@ -8286,7 +8286,7 @@ func (self *GroupData) SetBackupActiveIdIsAlive(v ID) {
 }
 
 func (self GroupData) BackupActiveIdIsAlive() ID {
-	return ImGuiID(C.wrap_ImGuiGroupData_GetBackupActiveIdIsAlive(self.handle()))
+	return ID(C.wrap_ImGuiGroupData_GetBackupActiveIdIsAlive(self.handle()))
 }
 
 func (self *GroupData) SetBackupActiveIdPreviousFrameIsAlive(v bool) {
@@ -8810,7 +8810,7 @@ func (self *IO) SetMouseHoveredViewport(v ID) {
 }
 
 func (self IO) MouseHoveredViewport() ID {
-	return ImGuiID(C.wrap_ImGuiIO_GetMouseHoveredViewport(self.handle()))
+	return ID(C.wrap_ImGuiIO_GetMouseHoveredViewport(self.handle()))
 }
 
 func (self *IO) SetKeyCtrl(v bool) {
@@ -9004,7 +9004,7 @@ func (self *InputEventMouseViewport) SetHoveredViewportID(v ID) {
 }
 
 func (self InputEventMouseViewport) HoveredViewportID() ID {
-	return ImGuiID(C.wrap_ImGuiInputEventMouseViewport_GetHoveredViewportID(self.handle()))
+	return ID(C.wrap_ImGuiInputEventMouseViewport_GetHoveredViewportID(self.handle()))
 }
 
 func (self *InputEventMouseWheel) SetWheelX(v float32) {
@@ -9135,7 +9135,7 @@ func (self *InputTextState) SetID(v ID) {
 }
 
 func (self InputTextState) ID() ID {
-	return ImGuiID(C.wrap_ImGuiInputTextState_GetID(self.handle()))
+	return ID(C.wrap_ImGuiInputTextState_GetID(self.handle()))
 }
 
 func (self *InputTextState) SetCurLenW(v int32) {
@@ -9255,7 +9255,7 @@ func (self *LastItemData) SetID(v ID) {
 }
 
 func (self LastItemData) ID() ID {
-	return ImGuiID(C.wrap_ImGuiLastItemData_GetID(self.handle()))
+	return ID(C.wrap_ImGuiLastItemData_GetID(self.handle()))
 }
 
 func (self *LastItemData) SetInFlags(v ItemFlags) {
@@ -9573,7 +9573,7 @@ func (self *NavItemData) SetID(v ID) {
 }
 
 func (self NavItemData) ID() ID {
-	return ImGuiID(C.wrap_ImGuiNavItemData_GetID(self.handle()))
+	return ID(C.wrap_ImGuiNavItemData_GetID(self.handle()))
 }
 
 func (self *NavItemData) SetFocusScopeId(v ID) {
@@ -9581,7 +9581,7 @@ func (self *NavItemData) SetFocusScopeId(v ID) {
 }
 
 func (self NavItemData) FocusScopeId() ID {
-	return ImGuiID(C.wrap_ImGuiNavItemData_GetFocusScopeId(self.handle()))
+	return ID(C.wrap_ImGuiNavItemData_GetFocusScopeId(self.handle()))
 }
 
 func (self *NavItemData) SetRectRel(v Rect) {
@@ -9647,7 +9647,7 @@ func (self *NextItemData) SetFocusScopeId(v ID) {
 }
 
 func (self NextItemData) FocusScopeId() ID {
-	return ImGuiID(C.wrap_ImGuiNextItemData_GetFocusScopeId(self.handle()))
+	return ID(C.wrap_ImGuiNextItemData_GetFocusScopeId(self.handle()))
 }
 
 func (self *NextItemData) SetOpenCond(v Cond) {
@@ -9803,7 +9803,7 @@ func (self *NextWindowData) SetViewportId(v ID) {
 }
 
 func (self NextWindowData) ViewportId() ID {
-	return ImGuiID(C.wrap_ImGuiNextWindowData_GetViewportId(self.handle()))
+	return ID(C.wrap_ImGuiNextWindowData_GetViewportId(self.handle()))
 }
 
 func (self *NextWindowData) SetDockId(v ID) {
@@ -9811,7 +9811,7 @@ func (self *NextWindowData) SetDockId(v ID) {
 }
 
 func (self NextWindowData) DockId() ID {
-	return ImGuiID(C.wrap_ImGuiNextWindowData_GetDockId(self.handle()))
+	return ID(C.wrap_ImGuiNextWindowData_GetDockId(self.handle()))
 }
 
 func (self NextWindowData) WindowClass() WindowClass {
@@ -9867,7 +9867,7 @@ func (self *OldColumns) SetID(v ID) {
 }
 
 func (self OldColumns) ID() ID {
-	return ImGuiID(C.wrap_ImGuiOldColumns_GetID(self.handle()))
+	return ID(C.wrap_ImGuiOldColumns_GetID(self.handle()))
 }
 
 func (self *OldColumns) SetFlags(v OldColumnFlags) {
@@ -10021,7 +10021,7 @@ func (self *Payload) SetSourceId(v ID) {
 }
 
 func (self Payload) SourceId() ID {
-	return ImGuiID(C.wrap_ImGuiPayload_GetSourceId(self.handle()))
+	return ID(C.wrap_ImGuiPayload_GetSourceId(self.handle()))
 }
 
 func (self *Payload) SetSourceParentId(v ID) {
@@ -10029,7 +10029,7 @@ func (self *Payload) SetSourceParentId(v ID) {
 }
 
 func (self Payload) SourceParentId() ID {
-	return ImGuiID(C.wrap_ImGuiPayload_GetSourceParentId(self.handle()))
+	return ID(C.wrap_ImGuiPayload_GetSourceParentId(self.handle()))
 }
 
 func (self *Payload) SetDataFrameCount(v int32) {
@@ -10135,7 +10135,7 @@ func (self *PopupData) SetPopupId(v ID) {
 }
 
 func (self PopupData) PopupId() ID {
-	return ImGuiID(C.wrap_ImGuiPopupData_GetPopupId(self.handle()))
+	return ID(C.wrap_ImGuiPopupData_GetPopupId(self.handle()))
 }
 
 func (self *PopupData) SetWindow(v Window) {
@@ -10175,7 +10175,7 @@ func (self *PopupData) SetOpenParentId(v ID) {
 }
 
 func (self PopupData) OpenParentId() ID {
-	return ImGuiID(C.wrap_ImGuiPopupData_GetOpenParentId(self.handle()))
+	return ID(C.wrap_ImGuiPopupData_GetOpenParentId(self.handle()))
 }
 
 func (self *PopupData) SetOpenPopupPos(v Vec2) {
@@ -10230,7 +10230,7 @@ func (self *SettingsHandler) SetTypeHash(v ID) {
 }
 
 func (self SettingsHandler) TypeHash() ID {
-	return ImGuiID(C.wrap_ImGuiSettingsHandler_GetTypeHash(self.handle()))
+	return ID(C.wrap_ImGuiSettingsHandler_GetTypeHash(self.handle()))
 }
 
 func (self *SettingsHandler) SetUserData(v unsafe.Pointer) {
@@ -10308,7 +10308,7 @@ func (self *StackLevelInfo) SetID(v ID) {
 }
 
 func (self StackLevelInfo) ID() ID {
-	return ImGuiID(C.wrap_ImGuiStackLevelInfo_GetID(self.handle()))
+	return ID(C.wrap_ImGuiStackLevelInfo_GetID(self.handle()))
 }
 
 func (self *StackLevelInfo) SetQueryFrameCount(v int) {
@@ -10428,7 +10428,7 @@ func (self *StackTool) SetQueryId(v ID) {
 }
 
 func (self StackTool) QueryId() ID {
-	return ImGuiID(C.wrap_ImGuiStackTool_GetQueryId(self.handle()))
+	return ID(C.wrap_ImGuiStackTool_GetQueryId(self.handle()))
 }
 
 func (self *StackTool) SetCopyToClipboardOnCtrlC(v bool) {
@@ -10452,7 +10452,7 @@ func (self *StoragePair) Setkey(v ID) {
 }
 
 func (self StoragePair) key() ID {
-	return ImGuiID(C.wrap_ImGuiStoragePair_Getkey(self.handle()))
+	return ID(C.wrap_ImGuiStoragePair_Getkey(self.handle()))
 }
 
 func (self *Style) SetAlpha(v float32) {
@@ -10820,7 +10820,7 @@ func (self *TabBar) SetID(v ID) {
 }
 
 func (self TabBar) ID() ID {
-	return ImGuiID(C.wrap_ImGuiTabBar_GetID(self.handle()))
+	return ID(C.wrap_ImGuiTabBar_GetID(self.handle()))
 }
 
 func (self *TabBar) SetSelectedTabId(v ID) {
@@ -10828,7 +10828,7 @@ func (self *TabBar) SetSelectedTabId(v ID) {
 }
 
 func (self TabBar) SelectedTabId() ID {
-	return ImGuiID(C.wrap_ImGuiTabBar_GetSelectedTabId(self.handle()))
+	return ID(C.wrap_ImGuiTabBar_GetSelectedTabId(self.handle()))
 }
 
 func (self *TabBar) SetNextSelectedTabId(v ID) {
@@ -10836,7 +10836,7 @@ func (self *TabBar) SetNextSelectedTabId(v ID) {
 }
 
 func (self TabBar) NextSelectedTabId() ID {
-	return ImGuiID(C.wrap_ImGuiTabBar_GetNextSelectedTabId(self.handle()))
+	return ID(C.wrap_ImGuiTabBar_GetNextSelectedTabId(self.handle()))
 }
 
 func (self *TabBar) SetVisibleTabId(v ID) {
@@ -10844,7 +10844,7 @@ func (self *TabBar) SetVisibleTabId(v ID) {
 }
 
 func (self TabBar) VisibleTabId() ID {
-	return ImGuiID(C.wrap_ImGuiTabBar_GetVisibleTabId(self.handle()))
+	return ID(C.wrap_ImGuiTabBar_GetVisibleTabId(self.handle()))
 }
 
 func (self *TabBar) SetCurrFrameVisible(v int32) {
@@ -10958,7 +10958,7 @@ func (self *TabBar) SetReorderRequestTabId(v ID) {
 }
 
 func (self TabBar) ReorderRequestTabId() ID {
-	return ImGuiID(C.wrap_ImGuiTabBar_GetReorderRequestTabId(self.handle()))
+	return ID(C.wrap_ImGuiTabBar_GetReorderRequestTabId(self.handle()))
 }
 
 func (self *TabBar) SetReorderRequestOffset(v int) {
@@ -11054,7 +11054,7 @@ func (self *TabItem) SetID(v ID) {
 }
 
 func (self TabItem) ID() ID {
-	return ImGuiID(C.wrap_ImGuiTabItem_GetID(self.handle()))
+	return ID(C.wrap_ImGuiTabItem_GetID(self.handle()))
 }
 
 func (self *TabItem) SetFlags(v TabItemFlags) {
@@ -11158,7 +11158,7 @@ func (self *Table) SetID(v ID) {
 }
 
 func (self Table) ID() ID {
-	return ImGuiID(C.wrap_ImGuiTable_GetID(self.handle()))
+	return ID(C.wrap_ImGuiTable_GetID(self.handle()))
 }
 
 func (self *Table) SetFlags(v TableFlags) {
@@ -12034,7 +12034,7 @@ func (self *TableColumn) SetUserID(v ID) {
 }
 
 func (self TableColumn) UserID() ID {
-	return ImGuiID(C.wrap_ImGuiTableColumn_GetUserID(self.handle()))
+	return ID(C.wrap_ImGuiTableColumn_GetUserID(self.handle()))
 }
 
 func (self *TableColumn) SetWorkMinX(v float32) {
@@ -12298,7 +12298,7 @@ func (self *TableColumnSettings) SetUserID(v ID) {
 }
 
 func (self TableColumnSettings) UserID() ID {
-	return ImGuiID(C.wrap_ImGuiTableColumnSettings_GetUserID(self.handle()))
+	return ID(C.wrap_ImGuiTableColumnSettings_GetUserID(self.handle()))
 }
 
 func (self *TableColumnSettings) SetIndex(v TableColumnIdx) {
@@ -12354,7 +12354,7 @@ func (self *TableColumnSortSpecs) SetColumnUserID(v ID) {
 }
 
 func (self TableColumnSortSpecs) ColumnUserID() ID {
-	return ImGuiID(C.wrap_ImGuiTableColumnSortSpecs_GetColumnUserID(self.handle()))
+	return ID(C.wrap_ImGuiTableColumnSortSpecs_GetColumnUserID(self.handle()))
 }
 
 func (self *TableColumnSortSpecs) SetColumnIndex(v int) {
@@ -12402,7 +12402,7 @@ func (self *TableSettings) SetID(v ID) {
 }
 
 func (self TableSettings) ID() ID {
-	return ImGuiID(C.wrap_ImGuiTableSettings_GetID(self.handle()))
+	return ID(C.wrap_ImGuiTableSettings_GetID(self.handle()))
 }
 
 func (self *TableSettings) SetSaveFlags(v TableFlags) {
@@ -12600,7 +12600,7 @@ func (self *Viewport) SetID(v ID) {
 }
 
 func (self Viewport) ID() ID {
-	return ImGuiID(C.wrap_ImGuiViewport_GetID(self.handle()))
+	return ID(C.wrap_ImGuiViewport_GetID(self.handle()))
 }
 
 func (self *Viewport) SetFlags(v ViewportFlags) {
@@ -12664,7 +12664,7 @@ func (self *Viewport) SetParentViewportId(v ID) {
 }
 
 func (self Viewport) ParentViewportId() ID {
-	return ImGuiID(C.wrap_ImGuiViewport_GetParentViewportId(self.handle()))
+	return ID(C.wrap_ImGuiViewport_GetParentViewportId(self.handle()))
 }
 
 func (self *Viewport) SetDrawData(v DrawData) {
@@ -12764,7 +12764,7 @@ func (self *ViewportP) SetLastNameHash(v ID) {
 }
 
 func (self ViewportP) LastNameHash() ID {
-	return ImGuiID(C.wrap_ImGuiViewportP_GetLastNameHash(self.handle()))
+	return ID(C.wrap_ImGuiViewportP_GetLastNameHash(self.handle()))
 }
 
 func (self *ViewportP) SetLastPos(v Vec2) {
@@ -12911,7 +12911,7 @@ func (self *Window) SetID(v ID) {
 }
 
 func (self Window) ID() ID {
-	return ImGuiID(C.wrap_ImGuiWindow_GetID(self.handle()))
+	return ID(C.wrap_ImGuiWindow_GetID(self.handle()))
 }
 
 func (self *Window) SetFlags(v WindowFlags) {
@@ -12947,7 +12947,7 @@ func (self *Window) SetViewportId(v ID) {
 }
 
 func (self Window) ViewportId() ID {
-	return ImGuiID(C.wrap_ImGuiWindow_GetViewportId(self.handle()))
+	return ID(C.wrap_ImGuiWindow_GetViewportId(self.handle()))
 }
 
 func (self *Window) SetViewportPos(v Vec2) {
@@ -13067,7 +13067,7 @@ func (self *Window) SetMoveId(v ID) {
 }
 
 func (self Window) MoveId() ID {
-	return ImGuiID(C.wrap_ImGuiWindow_GetMoveId(self.handle()))
+	return ID(C.wrap_ImGuiWindow_GetMoveId(self.handle()))
 }
 
 func (self *Window) SetTabId(v ID) {
@@ -13075,7 +13075,7 @@ func (self *Window) SetTabId(v ID) {
 }
 
 func (self Window) TabId() ID {
-	return ImGuiID(C.wrap_ImGuiWindow_GetTabId(self.handle()))
+	return ID(C.wrap_ImGuiWindow_GetTabId(self.handle()))
 }
 
 func (self *Window) SetChildId(v ID) {
@@ -13083,7 +13083,7 @@ func (self *Window) SetChildId(v ID) {
 }
 
 func (self Window) ChildId() ID {
-	return ImGuiID(C.wrap_ImGuiWindow_GetChildId(self.handle()))
+	return ID(C.wrap_ImGuiWindow_GetChildId(self.handle()))
 }
 
 func (self *Window) SetScroll(v Vec2) {
@@ -13295,7 +13295,7 @@ func (self *Window) SetPopupId(v ID) {
 }
 
 func (self Window) PopupId() ID {
-	return ImGuiID(C.wrap_ImGuiWindow_GetPopupId(self.handle()))
+	return ID(C.wrap_ImGuiWindow_GetPopupId(self.handle()))
 }
 
 func (self *Window) SetAutoFitFramesX(v int) {
@@ -13721,7 +13721,7 @@ func (self *Window) SetDockId(v ID) {
 }
 
 func (self Window) DockId() ID {
-	return ImGuiID(C.wrap_ImGuiWindow_GetDockId(self.handle()))
+	return ID(C.wrap_ImGuiWindow_GetDockId(self.handle()))
 }
 
 func (self *Window) SetDockTabItemStatusFlags(v ItemStatusFlags) {
@@ -13747,7 +13747,7 @@ func (self *WindowClass) SetClassId(v ID) {
 }
 
 func (self WindowClass) ClassId() ID {
-	return ImGuiID(C.wrap_ImGuiWindowClass_GetClassId(self.handle()))
+	return ID(C.wrap_ImGuiWindowClass_GetClassId(self.handle()))
 }
 
 func (self *WindowClass) SetParentViewportId(v ID) {
@@ -13755,7 +13755,7 @@ func (self *WindowClass) SetParentViewportId(v ID) {
 }
 
 func (self WindowClass) ParentViewportId() ID {
-	return ImGuiID(C.wrap_ImGuiWindowClass_GetParentViewportId(self.handle()))
+	return ID(C.wrap_ImGuiWindowClass_GetParentViewportId(self.handle()))
 }
 
 func (self *WindowClass) SetViewportFlagsOverrideSet(v ViewportFlags) {
@@ -13811,7 +13811,7 @@ func (self *WindowSettings) SetID(v ID) {
 }
 
 func (self WindowSettings) ID() ID {
-	return ImGuiID(C.wrap_ImGuiWindowSettings_GetID(self.handle()))
+	return ID(C.wrap_ImGuiWindowSettings_GetID(self.handle()))
 }
 
 func (self *WindowSettings) SetViewportId(v ID) {
@@ -13819,7 +13819,7 @@ func (self *WindowSettings) SetViewportId(v ID) {
 }
 
 func (self WindowSettings) ViewportId() ID {
-	return ImGuiID(C.wrap_ImGuiWindowSettings_GetViewportId(self.handle()))
+	return ID(C.wrap_ImGuiWindowSettings_GetViewportId(self.handle()))
 }
 
 func (self *WindowSettings) SetDockId(v ID) {
@@ -13827,7 +13827,7 @@ func (self *WindowSettings) SetDockId(v ID) {
 }
 
 func (self WindowSettings) DockId() ID {
-	return ImGuiID(C.wrap_ImGuiWindowSettings_GetDockId(self.handle()))
+	return ID(C.wrap_ImGuiWindowSettings_GetDockId(self.handle()))
 }
 
 func (self *WindowSettings) SetClassId(v ID) {
@@ -13835,7 +13835,7 @@ func (self *WindowSettings) SetClassId(v ID) {
 }
 
 func (self WindowSettings) ClassId() ID {
-	return ImGuiID(C.wrap_ImGuiWindowSettings_GetClassId(self.handle()))
+	return ID(C.wrap_ImGuiWindowSettings_GetClassId(self.handle()))
 }
 
 func (self *WindowSettings) SetDockOrder(v int) {
@@ -14011,7 +14011,7 @@ func (self *WindowTempData) SetNavFocusScopeIdCurrent(v ID) {
 }
 
 func (self WindowTempData) NavFocusScopeIdCurrent() ID {
-	return ImGuiID(C.wrap_ImGuiWindowTempData_GetNavFocusScopeIdCurrent(self.handle()))
+	return ID(C.wrap_ImGuiWindowTempData_GetNavFocusScopeIdCurrent(self.handle()))
 }
 
 func (self *WindowTempData) SetNavHideHighlightOneFrame(v bool) {

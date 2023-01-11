@@ -29,7 +29,7 @@ func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 		"ImU64":                    simpleR("uint64"),
 		"ImVec4":                   wrappableR("Vec4"),
 		"const ImVec4*":            imVec4PtrReturnW(),
-		"ImGuiID":                  simpleR("ImGuiID"),
+		"ImGuiID":                  simpleR("ID"),
 		"ImTextureID":              simpleR("TextureID"),
 		"ImVec2":                   wrappableR("Vec2"),
 		"ImColor":                  wrappableR("Color"),
