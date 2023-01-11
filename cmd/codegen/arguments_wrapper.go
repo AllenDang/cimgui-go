@@ -35,7 +35,7 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"ImS32":                    simpleW("int", "C.ImS32"),
 		"const ImS32*":             simplePtrSliceW("C.ImS32", "int32"),
 		"const ImS64*":             int64ArrayW,
-		"int":                      intW,
+		"int":                      simpleW("int32", "C.int"),
 		"int*":                     simplePtrW("int32", "C.int"),
 		"unsigned int":             simpleW("uint32", "C.uint"),
 		"unsigned int*":            simplePtrW("uint32", "C.uint"),
@@ -49,8 +49,8 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"float[2]":                 simplePtrArrayW(2, "C.float", "float32"),
 		"float[3]":                 simplePtrArrayW(3, "C.float", "float32"),
 		"float[4]":                 simplePtrArrayW(4, "C.float", "float32"),
-		"ImWchar":                  imWcharW,
-		"const ImWchar*":           imWcharPtrW,
+		"ImWchar":                  simpleW("Wchar", "C.ImWchar"),
+		"const ImWchar*":           simpleW("*Wchar", "(*C.ImWchar)"),
 		"ImGuiID":                  simpleW("ImGuiID", "C.ImGuiID"),
 		"ImTextureID":              simpleW("TextureID", "C.ImTextureID"),
 		"ImDrawIdx":                simpleW("DrawIdx", "C.ImDrawIdx"),
@@ -131,24 +131,6 @@ func boolPtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*bool"
 	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapBool(%[1]s)\ndefer %[1]sFin()", arg.Name)
 	varName = fmt.Sprintf("%sArg", arg.Name)
-	return
-}
-
-func imWcharW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "Wchar"
-	varName = fmt.Sprintf("C.ImWchar(%s)", arg.Name)
-	return
-}
-
-func imWcharPtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*Wchar"
-	varName = fmt.Sprintf("(*C.ImWchar)(%s)", arg.Name)
-	return
-}
-
-func intW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "int32"
-	varName = fmt.Sprintf("C.int(%s)", arg.Name)
 	return
 }
 
