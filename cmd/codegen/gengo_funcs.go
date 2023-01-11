@@ -5,6 +5,8 @@ import (
 	"os"
 	"sort"
 	"strings"
+
+	"github.com/thoas/go-funk"
 )
 
 // returnTypeType represents an arbitrary type of return value of the function.
@@ -173,7 +175,8 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 
 		receiver = funcParts[0]
 	case returnTypeKnown:
-		returnType, returnStmt = rf()
+		returnType = rf.returnType
+		returnStmt = rf.returnStmt
 	case returnTypeEnum:
 		returnType = goEnumName
 	case returnTypeStructPtr:
@@ -247,7 +250,7 @@ func (g *goFuncsGenerator) generateNonUDTFunc(f FuncDef, args []string, argWrapp
 		return false
 	}
 
-	returnType, _ := returnWrapper()
+	returnType := returnWrapper.returnType
 
 	g.sb.WriteString(g.generateFuncDeclarationStmt("", f.FuncName, args[1:], returnType, f))
 
