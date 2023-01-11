@@ -207,19 +207,19 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 
 	switch returnTypeType {
 	case returnTypeVoid:
-		g.sb.WriteString(fmt.Sprintf("C.wrap_%s(%s)\n", f.FuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStructSetter:
-		g.sb.WriteString(fmt.Sprintf("C.wrap_%s(self.handle(), %s)\n", f.FuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeKnown:
-		g.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.wrap_%s(%s)", f.FuncName, argInvokeStmt)))
+		g.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)))
 	case returnTypeEnum:
-		g.sb.WriteString(fmt.Sprintf("return %s(C.wrap_%s(%s))", renameGoIdentifier(returnType), f.FuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("return %s(C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStructPtr:
-		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.wrap_%s(%s)))", renameGoIdentifier(returnType), f.FuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStruct:
-		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.wrap_%s(%s))", renameGoIdentifier(f.Ret), f.FuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", renameGoIdentifier(f.Ret), f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeConstructor:
-		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.wrap_%s(%s)))", renameGoIdentifier(returnType), f.FuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	}
 
 	return true
@@ -257,7 +257,7 @@ func (g *goFuncsGenerator) generateNonUDTFunc(f FuncDef, args []string, argWrapp
 	argInvokeStmt := g.generateFuncBody(argWrappers)
 
 	// C function call
-	g.sb.WriteString(fmt.Sprintf("C.wrap_%s(%s)\n", f.FuncName, argInvokeStmt))
+	g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.CWrapperFuncName, argInvokeStmt))
 
 	// return statement
 	g.sb.WriteString(fmt.Sprintf("return *%s", outArg.Name))

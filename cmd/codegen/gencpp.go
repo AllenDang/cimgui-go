@@ -98,15 +98,23 @@ extern "C" {
 			funcName = funcParts[0] + "_" + string(unicode.ToUpper(rune(funcParts[1][0]))) + funcParts[1][1:]
 		}
 
+		// TODO: the majority of these wrappers, those without the V version,
+		// could be skipped entirely. For those with V, the different versions
+		// could be generated in Go code.
+		// So, could be skip cimgui_wrapper.ccp/.h entirely?
+
+		cWrapperFuncName := "wrap_" + funcName
+
 		// Remove all ... arg
 		f.Args = strings.Replace(f.Args, ",...", "", 1)
-		// Remoe text_end arg
+		// Remove text_end arg
 		f.Args = strings.Replace(f.Args, ",const char* text_end", "", 1)
 
 		var argsT []ArgDef
 		var actualCallArgs []string
 
 		for _, a := range f.ArgsT {
+			f.AllCallArgs += a.Name + ","
 			switch {
 			case a.Name == "...":
 				continue
@@ -118,6 +126,7 @@ extern "C" {
 				actualCallArgs = append(actualCallArgs, a.Name)
 			}
 		}
+		f.AllCallArgs = "(" + strings.TrimSuffix(f.AllCallArgs, ",") + ")"
 
 		f.ArgsT = argsT
 
@@ -244,14 +253,16 @@ extern "C" {
 				Ret:              f.Ret,
 				StName:           f.StName,
 				NonUDT:           f.NonUDT,
+				CWrapperFuncName: cWrapperFuncName + "V",
+				AllCallArgs:      f.AllCallArgs,
 			})
 
 			// Add V as suffix to current function name
 			funcName += "V"
+			cWrapperFuncName += "V"
 		}
 
 		actualCallArgsStr := fmt.Sprintf("(%s)", strings.Join(actualCallArgs, ","))
-
 		if len(f.InvocationStmt) > 0 {
 			actualCallArgsStr = f.InvocationStmt
 		}
@@ -270,40 +281,41 @@ extern "C" {
 				Ret:              f.Ret,
 				StName:           f.StName,
 				NonUDT:           f.NonUDT,
+				CWrapperFuncName: cWrapperFuncName,
+				AllCallArgs:      f.AllCallArgs,
 			})
 		}
 
 		invokeFunctionName := f.FuncName
-		if len(f.OriginalFuncName) > 0 {
-			invokeFunctionName = "wrap_" + f.OriginalFuncName
+		if f.OriginalFuncName != "" {
+			for _, ff := range validFuncs {
+				if ff.FuncName == f.OriginalFuncName {
+					invokeFunctionName = ff.CWrapperFuncName
+					break
+				}
+			}
 		}
 
-		if !f.Constructor && !f.Destructor {
-			headerSb.WriteString(fmt.Sprintf("extern %s %s%s;\n", f.Ret, "wrap_"+funcName, f.Args))
+		//cppSb.WriteString(fmt.Sprintf("// %#v\n", f))
+
+		if f.AllCallArgs == actualCallArgsStr {
+			cWrapperFuncName = f.FuncName
+		} else if f.Constructor {
+			headerSb.WriteString(fmt.Sprintf("extern %s* %s%s;\n", f.StName, cWrapperFuncName, f.Args))
+			cppSb.WriteString(fmt.Sprintf("%s* %s%s { return %s%s; }\n", f.StName, cWrapperFuncName, f.Args, invokeFunctionName, actualCallArgsStr))
+		} else if f.Destructor {
+			headerSb.WriteString(fmt.Sprintf("extern void %s%s;\n", cWrapperFuncName, f.Args))
+			cppSb.WriteString(fmt.Sprintf("void %s%s { %s%s; }\n", cWrapperFuncName, f.Args, invokeFunctionName, actualCallArgsStr))
+		} else {
+			headerSb.WriteString(fmt.Sprintf("extern %s %s%s;\n", f.Ret, cWrapperFuncName, f.Args))
 
 			if f.Ret == "void" {
-				cppSb.WriteString(fmt.Sprintf("%s %s%s { %s%s; }\n", f.Ret, "wrap_"+funcName, f.Args, invokeFunctionName, actualCallArgsStr))
+				cppSb.WriteString(fmt.Sprintf("%s %s%s { %s%s; }\n", f.Ret, cWrapperFuncName, f.Args, invokeFunctionName, actualCallArgsStr))
 			} else {
-				cppSb.WriteString(fmt.Sprintf("%s %s%s { return %s%s; }\n", f.Ret, "wrap_"+funcName, f.Args, invokeFunctionName, actualCallArgsStr))
+				cppSb.WriteString(fmt.Sprintf("%s %s%s { return %s%s; }\n", f.Ret, cWrapperFuncName, f.Args, invokeFunctionName, actualCallArgsStr))
 			}
-
-			appendValidFunc()
 		}
-
-		if f.Constructor {
-			ret := f.StName
-			headerSb.WriteString(fmt.Sprintf("extern %s* %s%s;\n", ret, "wrap_"+funcName, f.Args))
-			cppSb.WriteString(fmt.Sprintf("%s* %s%s { return %s%s; }\n", ret, "wrap_"+funcName, f.Args, invokeFunctionName, actualCallArgsStr))
-
-			appendValidFunc()
-		}
-
-		if f.Destructor {
-			headerSb.WriteString(fmt.Sprintf("extern void %s%s;\n", "wrap_"+funcName, f.Args))
-			cppSb.WriteString(fmt.Sprintf("void %s%s { %s%s; }\n", "wrap_"+funcName, f.Args, invokeFunctionName, actualCallArgsStr))
-
-			appendValidFunc()
-		}
+		appendValidFunc()
 	}
 
 	headerSb.WriteString(`
@@ -399,7 +411,7 @@ extern "C" {
 			}
 
 			// Generate setter function
-			structAccessorFuncs = append(structAccessorFuncs, FuncDef{
+			setterFuncDef := FuncDef{
 				Args: fmt.Sprintf("(%[1]s *%[2]s, %[3]s v)", s.Name, s.Name+"Ptr", m.Type),
 				ArgsT: []ArgDef{
 					{
@@ -411,20 +423,22 @@ extern "C" {
 						Type: m.Type,
 					},
 				},
-				FuncName:     setterFuncName,
-				Location:     "",
-				Constructor:  false,
-				Destructor:   false,
-				StructSetter: true,
-				Ret:          "void",
-			})
+				FuncName:         setterFuncName,
+				CWrapperFuncName: "wrap_" + setterFuncName,
+				Location:         "",
+				Constructor:      false,
+				Destructor:       false,
+				StructSetter:     true,
+				Ret:              "void",
+			}
+			structAccessorFuncs = append(structAccessorFuncs, setterFuncDef)
 
 			getterFuncName := fmt.Sprintf("%[1]s_Get%[2]s", s.Name, m.Name)
 			if skipFuncNames[getterFuncName] {
 				continue
 			}
 
-			structAccessorFuncs = append(structAccessorFuncs, FuncDef{
+			getterFuncDef := FuncDef{
 				Args: fmt.Sprintf("(%[1]s *%[2]s)", s.Name, "self"),
 				ArgsT: []ArgDef{
 					{
@@ -432,20 +446,24 @@ extern "C" {
 						Type: s.Name,
 					},
 				},
-				FuncName:     getterFuncName,
-				Location:     "",
-				Constructor:  false,
-				Destructor:   false,
-				StructSetter: false,
-				StructGetter: true,
-				Ret:          m.Type,
-			})
+				FuncName:         getterFuncName,
+				CWrapperFuncName: "wrap_" + getterFuncName,
+				Location:         "",
+				Constructor:      false,
+				Destructor:       false,
+				StructSetter:     false,
+				StructGetter:     true,
+				Ret:              m.Type,
+			}
+			structAccessorFuncs = append(structAccessorFuncs, getterFuncDef)
 
-			sbHeader.WriteString(fmt.Sprintf("extern void wrap_%[1]s_Set%[2]s(%[1]s *%[3]s, %[4]s v);\n", s.Name, m.Name, s.Name+"Ptr", m.Type))
-			sbHeader.WriteString(fmt.Sprintf("extern %[4]s wrap_%[1]s_Get%[2]s(%[1]s *%[3]s);\n", s.Name, m.Name, "self", m.Type))
+			sbHeader.WriteString(fmt.Sprintf("extern void %s(%s *%s, %s v);\n", setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type))
+			sbHeader.WriteString(fmt.Sprintf("extern %s %s(%s *self);\n", m.Type, getterFuncDef.CWrapperFuncName, s.Name))
 
-			sbCpp.WriteString(fmt.Sprintf("void wrap_%[1]s_Set%[2]s(%[1]s *%[3]s, %[4]s v) { %[3]s->%[2]s = v; }\n", s.Name, m.Name, s.Name+"Ptr", m.Type))
-			sbCpp.WriteString(fmt.Sprintf("%[4]s wrap_%[1]s_Get%[2]s(%[1]s *%[3]s) { return %[3]s->%[2]s; }\n", s.Name, m.Name, "self", m.Type))
+			sbCpp.WriteString(fmt.Sprintf("void %s(%s *%s, %s v) { %s->%s = v; }\n",
+				setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, s.Name+"Ptr", m.Name))
+			sbCpp.WriteString(fmt.Sprintf("%s %s(%s *self) { return self->%s; }\n",
+				m.Type, getterFuncDef.CWrapperFuncName, s.Name, m.Name))
 		}
 	}
 
