@@ -11,68 +11,68 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"const char*":              constCharW,
 		"const char**":             charPtrPtrW,
 		"const char* const[]":      charPtrPtrW,
-		"unsigned char":            ucharW,
+		"unsigned char":            simpleW("uint", "C.uchar"),
 		"unsigned char**":          uCharPtrW,
-		"size_t":                   sizeTW,
+		"size_t":                   simpleW("uint64", "C.xlong"),
 		"size_t*":                  sizeTPtrW,
 		"float":                    floatW,
 		"float*":                   floatPtrW,
 		"const float*":             floatArrayW,
-		"short":                    shortW,
-		"unsigned short":           ushortW,
-		"ImU8":                     u8W,
-		"const ImU8*":              u8SliceW,
-		"ImU16":                    u16W,
-		"const ImU16*":             u16SliceW,
-		"ImU32":                    u32W,
-		"const ImU32*":             u32SliceW,
-		"ImU64":                    u64W,
+		"short":                    simpleW("int", "C.short"),
+		"unsigned short":           simpleW("uint", "C.ushort"),
+		"ImU8":                     simpleW("uint", "C.ImU8"),
+		"const ImU8*":              simplePtrSliceW("C.ImU8", "byte"),
+		"ImU16":                    simpleW("uint", "C.ImU16"),
+		"const ImU16*":             simplePtrSliceW("C.ImU16", "uint16"),
+		"ImU32":                    simpleW("uint32", "C.ImU32"),
+		"const ImU32*":             simplePtrSliceW("C.ImU32", "uint32"),
+		"ImU64":                    simpleW("uint64", "C.ImU64"),
 		"const ImU64*":             uint64ArrayW,
-		"ImS8":                     s8W,
-		"const ImS8*":              s8SliceW,
-		"ImS16":                    s16W,
-		"const ImS16*":             s16SliceW,
-		"ImS32":                    s32W,
-		"const ImS32*":             s32SliceW,
+		"ImS8":                     simpleW("int", "C.ImS8"),
+		"const ImS8*":              simplePtrSliceW("C.ImS8", "int8"),
+		"ImS16":                    simpleW("int", "C.ImS16"),
+		"const ImS16*":             simplePtrSliceW("C.ImS16", "int"),
+		"ImS32":                    simpleW("int", "C.ImS32"),
+		"const ImS32*":             simplePtrSliceW("C.ImS32", "int32"),
 		"const ImS64*":             int64ArrayW,
-		"int":                      intW,
-		"int*":                     intPtrW,
-		"unsigned int":             uintW,
-		"unsigned int*":            uintPtrW,
-		"double":                   doubleW,
-		"double*":                  doublePtrW,
-		"bool":                     boolW,
+		"int":                      simpleW("int32", "C.int"),
+		"int*":                     simplePtrW("int32", "C.int"),
+		"unsigned int":             simpleW("uint32", "C.uint"),
+		"unsigned int*":            simplePtrW("uint32", "C.uint"),
+		"double":                   simpleW("float64", "C.double"),
+		"double*":                  simplePtrW("float64", "C.double"),
+		"bool":                     simpleW("bool", "C.bool"),
 		"bool*":                    boolPtrW,
-		"int[2]":                   int2W,
-		"int[3]":                   int3W,
-		"int[4]":                   int4W,
-		"float[2]":                 float2W,
-		"float[3]":                 float3W,
-		"float[4]":                 float4W,
-		"ImWchar":                  imWcharW,
-		"const ImWchar*":           imWcharPtrW,
-		"ImGuiID":                  imGuiIDW,
-		"ImTextureID":              imTextureIDW,
-		"ImDrawIdx":                imDrawIdxW,
-		"ImGuiTableColumnIdx":      imTableColumnIdxW,
-		"ImGuiTableDrawChannelIdx": imTableDrawChannelIdxW,
-		"void*":                    voidPtrW,
-		"const void*":              voidPtrW,
-		"const ImVec2":             imVec2W,
-		"const ImVec2*":            imVec2PtrW,
-		"ImVec2":                   imVec2W,
-		"ImVec2*":                  imVec2PtrW,
-		"ImVec2[2]":                imVec22W,
-		"const ImVec4":             imVec4W,
-		"const ImVec4*":            imVec4PtrW,
-		"ImVec4":                   imVec4W,
-		"ImVec4*":                  imVec4PtrW,
-		"ImColor*":                 imColorPtrW,
-		"ImRect":                   imRectW,
-		"ImRect*":                  imRectPtrW,
-		"ImPlotPoint":              imPlotPointW,
-		"const ImPlotPoint":        imPlotPointW,
-		"ImPlotPoint*":             imPlotPointPtrW,
+		"int[2]":                   simplePtrArrayW(2, "C.int", "int32"),
+		"int[3]":                   simplePtrArrayW(3, "C.int", "int32"),
+		"int[4]":                   simplePtrArrayW(4, "C.int", "int32"),
+		"float[2]":                 simplePtrArrayW(2, "C.float", "float32"),
+		"float[3]":                 simplePtrArrayW(3, "C.float", "float32"),
+		"float[4]":                 simplePtrArrayW(4, "C.float", "float32"),
+		"ImWchar":                  simpleW("Wchar", "C.ImWchar"),
+		"const ImWchar*":           simpleW("*Wchar", "(*C.ImWchar)"),
+		"ImGuiID":                  simpleW("ImGuiID", "C.ImGuiID"),
+		"ImTextureID":              simpleW("TextureID", "C.ImTextureID"),
+		"ImDrawIdx":                simpleW("DrawIdx", "C.ImDrawIdx"),
+		"ImGuiTableColumnIdx":      simpleW("TableColumnIdx", "C.ImGuiTableColumnIdx"),
+		"ImGuiTableDrawChannelIdx": simpleW("TableDrawChannelIdx", "C.ImGuiTableDrawChannelIdx"),
+		"void*":                    simpleW("unsafe.Pointer", ""),
+		"const void*":              simpleW("unsafe.Pointer", ""),
+		"const ImVec2":             wrappableW("Vec2"),
+		"const ImVec2*":            wrappablePtrW("*Vec2", "C.ImVec2"),
+		"ImVec2":                   wrappableW("Vec2"),
+		"ImVec2*":                  wrappablePtrW("*Vec2", "C.ImVec2"),
+		"ImVec2[2]":                wrappablePtrArrayW(2, "C.ImVec2", "Vec2"),
+		"const ImVec4":             wrappableW("Vec4"),
+		"const ImVec4*":            wrappablePtrW("*Vec4", "C.ImVec4"),
+		"ImVec4":                   wrappableW("Vec4"),
+		"ImVec4*":                  wrappablePtrW("*Vec4", "C.ImVec4"),
+		"ImColor*":                 wrappablePtrW("*Color", "C.ImColor"),
+		"ImRect":                   wrappableW("Rect"),
+		"ImRect*":                  wrappablePtrW("*Rect", "C.ImRect"),
+		"ImPlotPoint":              wrappableW("PlotPoint"),
+		"const ImPlotPoint":        wrappableW("PlotPoint"),
+		"ImPlotPoint*":             wrappablePtrW("*PlotPoint", "C.ImPlotPoint"),
 	}
 
 	if wrapper, ok := argWrapperMap[argType]; ok {
@@ -98,18 +98,10 @@ defer %[1]sFin()`, arg.Name)
 	return
 }
 
-func ucharW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "uint", "C.uchar")
-}
-
 func uCharPtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*C.uchar"
 	varName = fmt.Sprintf("&%s", arg.Name)
 	return
-}
-
-func sizeTW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "uint64", "C.xlong")
 }
 
 func sizeTPtrW(arg ArgDef) (argType string, def string, varName string) {
@@ -124,8 +116,9 @@ func floatW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
+// leave this for now because of https://github.com/AllenDang/cimgui-go/issues/31
 func floatPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrW(arg.Name, "float32", "C.float")
+	return simplePtrW("float32", "C.float")(arg)
 }
 
 func floatArrayW(arg ArgDef) (argType string, def string, varName string) {
@@ -134,149 +127,11 @@ func floatArrayW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
-func boolW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "bool", "C.bool")
-}
-
 func boolPtrW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "*bool"
 	def = fmt.Sprintf("%[1]sArg, %[1]sFin := wrapBool(%[1]s)\ndefer %[1]sFin()", arg.Name)
 	varName = fmt.Sprintf("%sArg", arg.Name)
 	return
-}
-
-func shortW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "int", "C.short")
-}
-
-func ushortW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "uint", "C.ushort")
-}
-
-func uintW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "uint32", "C.uint")
-}
-
-func uintPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrW(arg.Name, "uint32", "C.uint")
-}
-
-func u8W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "uint", "C.ImU8")
-}
-
-func u8PtrW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrW(arg.Name, "byte", "C.ImU8")
-}
-
-func u8SliceW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrSliceW("C.ImU8", "byte", arg)
-}
-
-func u16W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "uint", "C.ImU16")
-}
-
-func u16PtrW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrW(arg.Name, "uint16", "C.uint")
-}
-
-func u16SliceW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrSliceW("C.ImU16", "uint16", arg)
-}
-
-func u32W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "uint32", "C.ImU32")
-}
-
-func u32PtrW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrW(arg.Name, "uint16", "C.ImU32")
-}
-
-func u32SliceW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrSliceW("C.ImU32", "uint32", arg)
-}
-
-func u64W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "uint64", "C.ImU64")
-}
-
-func int2W(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrArrayW(2, "C.int", "int32", arg)
-}
-
-func int3W(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrArrayW(3, "C.int", "int32", arg)
-}
-
-func int4W(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrArrayW(4, "C.int", "int32", arg)
-}
-
-func s8W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "int", "C.ImS8")
-}
-
-func s8SliceW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrSliceW("C.ImS8", "int8", arg)
-}
-
-func s16W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "int", "C.ImS16")
-}
-
-func s16SliceW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrSliceW("C.ImS16", "int", arg)
-}
-
-func s32W(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "int", "C.ImS32")
-}
-
-func s32SliceW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrSliceW("C.ImS32", "int32", arg)
-}
-
-func float2W(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrArrayW(2, "C.float", "float32", arg)
-}
-
-func float3W(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrArrayW(3, "C.float", "float32", arg)
-}
-
-func float4W(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrArrayW(4, "C.float", "float32", arg)
-}
-
-func imWcharW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "Wchar"
-	varName = fmt.Sprintf("C.ImWchar(%s)", arg.Name)
-	return
-}
-
-func imWcharPtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "*Wchar"
-	varName = fmt.Sprintf("(*C.ImWchar)(%s)", arg.Name)
-	return
-}
-
-func intW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "int32"
-	varName = fmt.Sprintf("C.int(%s)", arg.Name)
-	return
-}
-
-func int8PtrW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrW(arg.Name, "int8", "C.int")
-}
-
-func int16PtrW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrW(arg.Name, "int16", "C.int")
-}
-
-func intPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrW(arg.Name, "int32", "C.int")
 }
 
 func int64ArrayW(arg ArgDef) (argType string, def string, varName string) {
@@ -291,81 +146,6 @@ func uint64ArrayW(arg ArgDef) (argType string, def string, varName string) {
 	return
 }
 
-func doubleW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "float64", "C.double")
-}
-
-func doublePtrW(arg ArgDef) (argType string, def string, varName string) {
-	return simplePtrW(arg.Name, "float64", "C.double")
-}
-
-func imGuiIDW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "ID", "C.ImGuiID")
-}
-
-func imTextureIDW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "TextureID", "C.ImTextureID")
-}
-
-func imDrawIdxW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "DrawIdx", "C.ImDrawIdx")
-}
-
-func imTableColumnIdxW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "TableColumnIdx", "C.ImGuiTableColumnIdx")
-}
-
-func imTableDrawChannelIdxW(arg ArgDef) (argType string, def string, varName string) {
-	return simpleW(arg.Name, "TableDrawChannelIdx", "C.ImGuiTableDrawChannelIdx")
-}
-
-func voidPtrW(arg ArgDef) (argType string, def string, varName string) {
-	argType = "unsafe.Pointer"
-	varName = arg.Name
-	return
-}
-
-func imPlotPointW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappableW(arg.Name, "PlotPoint")
-}
-
-func imPlotPointPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrW(arg.Name, "*PlotPoint", "C.ImPlotPoint")
-}
-
-func imVec2W(arg ArgDef) (argType string, def string, varName string) {
-	return wrappableW(arg.Name, "Vec2")
-}
-
-func imVec2PtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrW(arg.Name, "*Vec2", "C.ImVec2")
-}
-
-// ImVec2[2] -> [2]ImVec2
-func imVec22W(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrArrayW(2, "C.ImVec2", "Vec2", arg)
-}
-
-func imVec4W(arg ArgDef) (argType string, def string, varName string) {
-	return wrappableW(arg.Name, "Vec4")
-}
-
-func imVec4PtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrW(arg.Name, "*Vec4", "C.ImVec4")
-}
-
-func imRectW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappableW(arg.Name, "Rect")
-}
-
-func imRectPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrW(arg.Name, "*Rect", "C.ImRect")
-}
-
-func imColorPtrW(arg ArgDef) (argType string, def string, varName string) {
-	return wrappablePtrW(arg.Name, "*Color", "C.ImColor")
-}
-
 func inputeTextCallbackW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "ImGuiInputTextCallback"
 	// TODO: implement me
@@ -375,25 +155,32 @@ func inputeTextCallbackW(arg ArgDef) (argType string, def string, varName string
 // generic wrappers:
 
 // C.int -> int32
-func simpleW(argName, goType, cType string) (argType string, def string, varName string) {
-	argType = goType
-	varName = fmt.Sprintf("%s(%s)", cType, argName)
-	return
+func simpleW(goType, cType string) argumentWrapper {
+	return func(arg ArgDef) (argType string, def string, varName string) {
+		argType = goType
+		varName = fmt.Sprintf("%s(%s)", cType, arg.Name)
+		return
+	}
 }
 
 // C.int* -> *int32
-func simplePtrW(argName, goType, cType string) (argType, def, varName string) {
-	argType = fmt.Sprintf("*%s", goType)
-	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := wrapNumberPtr[%[2]s, %[3]s](%[1]s)
-defer %[1]sFin()`, argName, cType, goType)
-	varName = fmt.Sprintf("%sArg", argName)
-	return
+//
+//	return simplePtrW(arg.Name, "int16", "C.int")
+func simplePtrW(goType, cType string) argumentWrapper {
+	return func(arg ArgDef) (argType string, def string, varName string) {
+		argType = fmt.Sprintf("*%s", goType)
+		def = fmt.Sprintf(`%[1]sArg, %[1]sFin := wrapNumberPtr[%[2]s, %[3]s](%[1]s)
+defer %[1]sFin()`, arg.Name, cType, goType)
+		varName = fmt.Sprintf("%sArg", arg.Name)
+		return
+	}
 }
 
 // C.int*, C.int[] as well as C.int[2] -> [2]*int32
-func simplePtrArrayW(size int, cArrayType, goArrayType string, arg ArgDef) (argType string, def string, varName string) {
-	argType = fmt.Sprintf("[%d]*%s", size, goArrayType)
-	def = fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(%[1]s))
+func simplePtrArrayW(size int, cArrayType, goArrayType string) argumentWrapper {
+	return func(arg ArgDef) (argType string, def string, varName string) {
+		argType = fmt.Sprintf("[%d]*%s", size, goArrayType)
+		def = fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(%[1]s))
 for i, %[1]sV := range %[1]s {
   %[1]sArg[i] = %[2]s(*%[1]sV)
 }
@@ -404,14 +191,16 @@ defer func() {
 }()
 
 `, arg.Name, cArrayType, goArrayType)
-	varName = fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name)
-	return
+		varName = fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name)
+		return
+	}
 }
 
 // C.int*, C.int[] -> []*int32
-func simplePtrSliceW(cArrayType, goArrayType string, arg ArgDef) (argType string, def string, varName string) {
-	argType = fmt.Sprintf("[]*%s", goArrayType)
-	def = fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(%[1]s))
+func simplePtrSliceW(cArrayType, goArrayType string) argumentWrapper {
+	return func(arg ArgDef) (argType string, def string, varName string) {
+		argType = fmt.Sprintf("[]*%s", goArrayType)
+		def = fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(%[1]s))
 for i, %[1]sV := range %[1]s {
   %[1]sArg[i] = %[2]s(*%[1]sV)
 }
@@ -422,29 +211,35 @@ defer func() {
 }()
 
 `, arg.Name, cArrayType, goArrayType)
-	varName = fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name)
-	return
+		varName = fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name)
+		return
+	}
 }
 
 // C.ImVec2 -> ImVec2
-func wrappableW(sName, sType string) (argType string, def string, varName string) {
-	argType = sType
-	varName = fmt.Sprintf("%s.toC()", sName)
-	return
+func wrappableW(sType string) argumentWrapper {
+	return func(arg ArgDef) (argType string, def string, varName string) {
+		argType = sType
+		varName = fmt.Sprintf("%s.toC()", arg.Name)
+		return
+	}
 }
 
 // C.ImVec2* -> *ImVec2
-func wrappablePtrW(argName, goType, cType string) (argType, def, varName string) {
-	argType = goType
-	def = fmt.Sprintf(`%[1]sArg, %[1]sFin := wrap[%[3]s, %[2]s](%[1]s)
-defer %[1]sFin()`, argName, goType, cType)
-	varName = fmt.Sprintf("%sArg", argName)
-	return
+func wrappablePtrW(goType, cType string) argumentWrapper {
+	return func(arg ArgDef) (argType string, def string, varName string) {
+		argType = goType
+		def = fmt.Sprintf(`%[1]sArg, %[1]sFin := wrap[%[3]s, %[2]s](%[1]s)
+defer %[1]sFin()`, arg.Name, goType, cType)
+		varName = fmt.Sprintf("%sArg", arg.Name)
+		return
+	}
 }
 
-func wrappablePtrArrayW(size int, cArrayType, goArrayType string, arg ArgDef) (argType string, def string, varName string) {
-	argType = fmt.Sprintf("[%d]*%s", size, goArrayType)
-	def = fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(%[1]s))
+func wrappablePtrArrayW(size int, cArrayType, goArrayType string) argumentWrapper {
+	return func(arg ArgDef) (argType string, def string, varName string) {
+		argType = fmt.Sprintf("[%d]*%s", size, goArrayType)
+		def = fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(%[1]s))
 %[1]sFin := make([]func(), len(%[1]s))
 for i, %[1]sV := range %[1]s {
 	var tmp *%[2]s
@@ -458,6 +253,7 @@ defer func() {
 }()
 
 `, arg.Name, cArrayType, goArrayType)
-	varName = fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name)
-	return
+		varName = fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name)
+		return
+	}
 }

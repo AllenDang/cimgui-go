@@ -9310,7 +9310,7 @@ func (self *PlotAxis) SetID(v ID) {
 }
 
 func (self PlotAxis) ID() ID {
-	return ID(C.wrap_ImPlotAxis_GetID(self.handle()))
+	return ImGuiID(C.wrap_ImPlotAxis_GetID(self.handle()))
 }
 
 func (self *PlotAxis) SetFlags(v PlotAxisFlags) {
@@ -9374,7 +9374,7 @@ func (self PlotAxis) Ticker() PlotTicker {
 }
 
 func (self *PlotAxis) SetFormatterData(v unsafe.Pointer) {
-	C.wrap_ImPlotAxis_SetFormatterData(self.handle(), v)
+	C.wrap_ImPlotAxis_SetFormatterData(self.handle(), (v))
 }
 
 func (self PlotAxis) FormatterData() unsafe.Pointer {
@@ -9412,7 +9412,7 @@ func (self PlotAxis) PickerTimeMax() PlotTime {
 }
 
 func (self *PlotAxis) SetTransformData(v unsafe.Pointer) {
-	C.wrap_ImPlotAxis_SetTransformData(self.handle(), v)
+	C.wrap_ImPlotAxis_SetTransformData(self.handle(), (v))
 }
 
 func (self PlotAxis) TransformData() unsafe.Pointer {
@@ -9806,7 +9806,7 @@ func (self *PlotItem) SetID(v ID) {
 }
 
 func (self PlotItem) ID() ID {
-	return ID(C.wrap_ImPlotItem_GetID(self.handle()))
+	return ImGuiID(C.wrap_ImPlotItem_GetID(self.handle()))
 }
 
 func (self *PlotItem) SetColor(v uint32) {
@@ -9864,7 +9864,7 @@ func (self *PlotItemGroup) SetID(v ID) {
 }
 
 func (self PlotItemGroup) ID() ID {
-	return ID(C.wrap_ImPlotItemGroup_GetID(self.handle()))
+	return ImGuiID(C.wrap_ImPlotItemGroup_GetID(self.handle()))
 }
 
 func (self PlotItemGroup) Legend() PlotLegend {
@@ -10082,7 +10082,7 @@ func (self *PlotPlot) SetID(v ID) {
 }
 
 func (self PlotPlot) ID() ID {
-	return ID(C.wrap_ImPlotPlot_GetID(self.handle()))
+	return ImGuiID(C.wrap_ImPlotPlot_GetID(self.handle()))
 }
 
 func (self *PlotPlot) SetFlags(v PlotFlags) {
@@ -10622,7 +10622,7 @@ func (self *PlotSubplot) SetID(v ID) {
 }
 
 func (self PlotSubplot) ID() ID {
-	return ID(C.wrap_ImPlotSubplot_GetID(self.handle()))
+	return ImGuiID(C.wrap_ImPlotSubplot_GetID(self.handle()))
 }
 
 func (self *PlotSubplot) SetFlags(v PlotSubplotFlags) {
