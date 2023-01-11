@@ -9404,7 +9404,7 @@ func (self ImPlotAxis) GetTicker() ImPlotTicker {
 }
 
 func (self *ImPlotAxis) SetFormatterData(v unsafe.Pointer) {
-	C.ImPlotAxis_SetFormatterData(self.handle(), v)
+	C.ImPlotAxis_SetFormatterData(self.handle(), (v))
 }
 
 func (self ImPlotAxis) GetFormatterData() unsafe.Pointer {
@@ -9442,7 +9442,7 @@ func (self ImPlotAxis) GetPickerTimeMax() ImPlotTime {
 }
 
 func (self *ImPlotAxis) SetTransformData(v unsafe.Pointer) {
-	C.ImPlotAxis_SetTransformData(self.handle(), v)
+	C.ImPlotAxis_SetTransformData(self.handle(), (v))
 }
 
 func (self ImPlotAxis) GetTransformData() unsafe.Pointer {
