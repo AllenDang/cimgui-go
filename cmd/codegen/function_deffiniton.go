@@ -38,6 +38,15 @@ type FuncDef struct {
 	// e.g. igCalcItemSize takes pOut ImVec2* argument, but it is used
 	// to store resulting value.
 	NonUDT int `json:"nonUDT"`
+
+	// The names could collide between cimgui and the function generated
+	// here, so we may need to add a prefix.
+	CWrapperFuncName string
+
+	// AllCallArgs is used to determine if a wrapper is needed: if the cimgui
+	// function takes the exact same arguments as the wrapper, the wrapper is
+	// not needed.
+	AllCallArgs string
 }
 
 // ArgDef represents a deffinition of function's argument

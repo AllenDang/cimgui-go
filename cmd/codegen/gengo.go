@@ -6,43 +6,68 @@ import (
 
 // Skip functions
 // e.g. they are temporarily hard-coded
-func skippedFuncs() []string {
-	return []string{
-		"InputText",
-		"InputTextWithHint",
-		"InputTextMultiline",
-		"FontAtlas_GetTexDataAsAlpha8",
-		"FontAtlas_GetTexDataAsAlpha8V",
-		"FontAtlas_GetTexDataAsRGBA32",
-		"FontAtlas_GetTexDataAsRGBA32V",
-	}
+var skippedFuncs = map[string]bool{
+	"igInputText":                     true,
+	"igInputTextWithHint":             true,
+	"igInputTextMultiline":            true,
+	"ImFontAtlas_GetTexDataAsAlpha8":  true,
+	"ImFontAtlas_GetTexDataAsAlpha8V": true,
+	"ImFontAtlas_GetTexDataAsRGBA32":  true,
+	"ImFontAtlas_GetTexDataAsRGBA32V": true,
 }
 
 // structures that's methods should be skipped
-func skippedStructs() []string {
-	return []string{
-		"ImVec1",
-		"ImVec2",
-		"ImVec2ih",
-		"ImVec4",
-		"ImColor",
-		"ImRect",
-		"StbUndoRecord",
-		"StbUndoState",
-		"StbTexteditRow",
-	}
+var skippedStructs = map[string]bool{
+	"ImVec1":         true,
+	"ImVec2":         true,
+	"ImVec2ih":       true,
+	"ImVec4":         true,
+	"ImColor":        true,
+	"ImRect":         true,
+	"StbUndoRecord":  true,
+	"StbUndoState":   true,
+	"StbTexteditRow": true,
 }
 
-func trimImGuiPrefix(id string) string {
-	// don't trim prefixes for implot's ImAxis - it conflicts with ImGuIAxis (from imgui_internal.h)
-	if strings.HasPrefix(id, "ImAxis") {
-		return id
-	}
+var replace = map[string]string{
+	"igGetDrawData":           "CurrentDrawData",
+	"igGetDrawListSharedData": "CurrentDrawListSharedData",
+	"igGetFont":               "CurrentFont",
+	"igGetIO":                 "CurrentIO",
+	"igGetPlatformIO":         "CurrentPlatformIO",
+	"igGetStyle":              "CurrentStyle",
+	"igGetMouseCursor":        "CurrentMouseCursor",
+	"ImAxis":                  "PlotAxisEnum",
+	//"ImGetDrawCursor":         "Cursor",
+	//"ImSetDrawCursor":         "SetCursor",
+}
 
-	id = strings.TrimPrefix(id, "ImGui")
-	id = strings.TrimPrefix(id, "Im")
-	id = strings.TrimPrefix(id, "ig")
-	return id
+func trimImGuiPrefix(n string) string {
+	if strings.HasPrefix(n, "ImGui") {
+		n = strings.TrimPrefix(n, "ImGui")
+	} else if strings.HasPrefix(n, "Im") && len(n) > 2 && strings.ToUpper(string(n[2])) == string(n[2]) {
+		n = strings.TrimPrefix(n, "Im")
+	} else if strings.HasPrefix(n, "ig") && len(n) > 2 && strings.ToUpper(string(n[2])) == string(n[2]) {
+		n = strings.TrimPrefix(n, "ig")
+	}
+	return n
+}
+
+func renameGoIdentifier(n string) string {
+	if r, ok := replace[n]; ok {
+		n = r
+	}
+	n = trimImGuiPrefix(n)
+	if strings.HasPrefix(n, "New") {
+		n = "New" + trimImGuiPrefix(n[3:])
+	} else if strings.HasPrefix(n, "new") {
+		n = "new" + trimImGuiPrefix(n[3:])
+	}
+	n = strings.TrimPrefix(n, "Get")
+	if n != "_" {
+		n = strings.ReplaceAll(n, "_", "")
+	}
+	return n
 }
 
 type argOutput struct {

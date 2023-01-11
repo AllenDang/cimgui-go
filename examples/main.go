@@ -26,7 +26,7 @@ var (
 	barValues      []int64
 )
 
-func callback(data imgui.ImGuiInputTextCallbackData) int {
+func callback(data imgui.InputTextCallbackData) int {
 	fmt.Println("got call back")
 	return 0
 }
@@ -36,7 +36,7 @@ func showWidgetsDemo() {
 		imgui.ShowDemoWindowV(&showDemoWindow)
 	}
 
-	imgui.SetNextWindowSizeV(imgui.NewVec2(300, 300), imgui.Cond_Once)
+	imgui.SetNextWindowSizeV(imgui.NewVec2(300, 300), imgui.CondOnce)
 	imgui.Begin("Window 1")
 	if imgui.ButtonV("Click Me", imgui.NewVec2(80, 20)) {
 		w, h := window.DisplaySize()
@@ -45,19 +45,19 @@ func showWidgetsDemo() {
 	imgui.TextUnformatted("Unformatted text")
 	imgui.Checkbox("Show demo window", &showDemoWindow)
 	if imgui.BeginCombo("Combo", "Combo preview") {
-		imgui.Selectable_BoolPtr("Item 1", &selected)
-		imgui.Selectable_Bool("Item 2")
-		imgui.Selectable_Bool("Item 3")
+		imgui.SelectableBoolPtr("Item 1", &selected)
+		imgui.SelectableBool("Item 2")
+		imgui.SelectableBool("Item 3")
 		imgui.EndCombo()
 	}
 
-	if imgui.RadioButton_Bool("Radio button1", selected) {
+	if imgui.RadioButtonBool("Radio button1", selected) {
 		selected = true
 	}
 
 	imgui.SameLine()
 
-	if imgui.RadioButton_Bool("Radio button2", !selected) {
+	if imgui.RadioButtonBool("Radio button2", !selected) {
 		selected = false
 	}
 
@@ -72,8 +72,8 @@ func showWidgetsDemo() {
 
 func showPictureLoadingDemo() {
 	// demo of showing a picture
-	basePos := imgui.GetMainViewport().GetPos()
-	imgui.SetNextWindowPosV(imgui.NewVec2(basePos.X+60, 600), imgui.Cond_Once, imgui.NewVec2(0, 0))
+	basePos := imgui.MainViewport().Pos()
+	imgui.SetNextWindowPosV(imgui.NewVec2(basePos.X+60, 600), imgui.CondOnce, imgui.NewVec2(0, 0))
 	imgui.Begin("Image")
 	imgui.Text(fmt.Sprintf("pointer = %v", texture.ID()))
 	imgui.ImageV(texture.ID(), imgui.NewVec2(float32(texture.Width), float32(texture.Height)), imgui.NewVec2(0, 0), imgui.NewVec2(1, 1), imgui.NewVec4(1, 1, 1, 1), imgui.NewVec4(0, 0, 0, 0))
@@ -81,21 +81,21 @@ func showPictureLoadingDemo() {
 }
 
 func showImPlotDemo() {
-	basePos := imgui.GetMainViewport().GetPos()
-	imgui.SetNextWindowPosV(imgui.NewVec2(basePos.X+400, basePos.Y+60), imgui.Cond_Once, imgui.NewVec2(0, 0))
-	imgui.SetNextWindowSizeV(imgui.NewVec2(500, 300), imgui.Cond_Once)
+	basePos := imgui.MainViewport().Pos()
+	imgui.SetNextWindowPosV(imgui.NewVec2(basePos.X+400, basePos.Y+60), imgui.CondOnce, imgui.NewVec2(0, 0))
+	imgui.SetNextWindowSizeV(imgui.NewVec2(500, 300), imgui.CondOnce)
 	imgui.Begin("Plot window")
-	if imgui.Plot_BeginPlotV("Plot", imgui.NewVec2(-1, -1), 0) {
-		imgui.Plot_PlotBars_S64PtrInt("Bar", barValues, int32(len(barValues)))
-		imgui.Plot_PlotLine_S64PtrInt("Line", barValues, int32(len(barValues)))
-		imgui.Plot_EndPlot()
+	if imgui.PlotBeginPlotV("Plot", imgui.NewVec2(-1, -1), 0) {
+		imgui.PlotPlotBarsS64PtrInt("Bar", barValues, int32(len(barValues)))
+		imgui.PlotPlotLineS64PtrInt("Line", barValues, int32(len(barValues)))
+		imgui.PlotEndPlot()
 	}
 	imgui.End()
 }
 
 func afterCreateContext() {
 	texture = imgui.NewTextureFromRgba(img)
-	imgui.Plot_CreateContext()
+	imgui.PlotCreateContext()
 }
 
 func loop() {
@@ -105,7 +105,7 @@ func loop() {
 }
 
 func beforeDestroyContext() {
-	imgui.Plot_DestroyContext()
+	imgui.PlotDestroyContext()
 }
 
 func main() {
