@@ -5771,7 +5771,7 @@ func (self *ImFont) SetFallbackChar(v Wchar) {
 }
 
 func (self ImFont) GetFallbackChar() Wchar {
-	return (Wchar)(C.ImFont_GetFallbackChar(self.handle()))
+	return Wchar(C.ImFont_GetFallbackChar(self.handle()))
 }
 
 func (self *ImFont) SetEllipsisChar(v Wchar) {
@@ -5779,7 +5779,7 @@ func (self *ImFont) SetEllipsisChar(v Wchar) {
 }
 
 func (self ImFont) GetEllipsisChar() Wchar {
-	return (Wchar)(C.ImFont_GetEllipsisChar(self.handle()))
+	return Wchar(C.ImFont_GetEllipsisChar(self.handle()))
 }
 
 func (self *ImFont) SetDotChar(v Wchar) {
@@ -5787,7 +5787,7 @@ func (self *ImFont) SetDotChar(v Wchar) {
 }
 
 func (self ImFont) GetDotChar() Wchar {
-	return (Wchar)(C.ImFont_GetDotChar(self.handle()))
+	return Wchar(C.ImFont_GetDotChar(self.handle()))
 }
 
 func (self *ImFont) SetDirtyLookupTables(v bool) {
@@ -6140,7 +6140,7 @@ func (self *ImFontConfig) SetEllipsisChar(v Wchar) {
 }
 
 func (self ImFontConfig) GetEllipsisChar() Wchar {
-	return (Wchar)(C.ImFontConfig_GetEllipsisChar(self.handle()))
+	return Wchar(C.ImFontConfig_GetEllipsisChar(self.handle()))
 }
 
 func (self *ImFontConfig) SetDstFont(v ImFont) {
@@ -9049,7 +9049,7 @@ func (self *ImGuiInputTextCallbackData) SetEventChar(v Wchar) {
 }
 
 func (self ImGuiInputTextCallbackData) GetEventChar() Wchar {
-	return (Wchar)(C.ImGuiInputTextCallbackData_GetEventChar(self.handle()))
+	return Wchar(C.ImGuiInputTextCallbackData_GetEventChar(self.handle()))
 }
 
 func (self *ImGuiInputTextCallbackData) SetEventKey(v Key) {
