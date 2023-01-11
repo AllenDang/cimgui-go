@@ -68,7 +68,7 @@ func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, ca
 
 	flags |= InputTextFlagsCallbackResize
 
-	return C.wrap_igInputTextWithHintV(
+	return C.igInputTextWithHint(
 		labelArg,
 		hintArg,
 		(*C.char)(state.buf.ptr),
@@ -98,7 +98,7 @@ func InputTextMultiline(label string, buf *string, size Vec2, flags InputTextFla
 
 	flags |= InputTextFlagsCallbackResize
 
-	return C.wrap_igInputTextMultilineV(
+	return C.igInputTextMultiline(
 		labelArg,
 		(*C.char)(state.buf.ptr),
 		C.xlong(len(*buf)+1),

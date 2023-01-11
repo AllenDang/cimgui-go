@@ -65,5 +65,5 @@ func (d DrawCmd) CallUserCallback(list DrawList) {
 }
 
 func (fa FontGlyphRangesBuilder) BuildRanges(ranges GlyphRange) {
-	C.wrap_ImFontGlyphRangesBuilder_BuildRanges(fa.handle(), ranges.handle())
+	C.ImFontGlyphRangesBuilder_BuildRanges(fa.handle(), ranges.handle())
 }

@@ -59,7 +59,7 @@ func (self FontAtlas) GetTextureDataAsAlpha8() (pixels unsafe.Pointer, width int
 	var h C.int
 	var bp C.int
 
-	C.wrap_ImFontAtlas_GetTexDataAsAlpha8V(self.handle(), &p, &w, &h, &bp)
+	C.ImFontAtlas_GetTexDataAsAlpha8(self.handle(), &p, &w, &h, &bp)
 
 	pixels = unsafe.Pointer(p)
 	width = int32(w)
@@ -75,7 +75,7 @@ func (self FontAtlas) GetTextureDataAsRGBA32() (pixels unsafe.Pointer, width int
 	var h C.int
 	var bp C.int
 
-	C.wrap_ImFontAtlas_GetTexDataAsRGBA32V(self.handle(), &p, &w, &h, &bp)
+	C.ImFontAtlas_GetTexDataAsRGBA32(self.handle(), &p, &w, &h, &bp)
 
 	pixels = unsafe.Pointer(p)
 	width = int32(w)
