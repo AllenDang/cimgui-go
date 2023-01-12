@@ -179,14 +179,14 @@ defer %[1]sFin()`, arg.Name, cType, goType)
 // C.int*, C.int[] as well as C.int[2] -> [2]*int32
 func simplePtrArrayW(size int, cArrayType, goArrayType string) argumentWrapper {
 	return func(arg ArgDef) (argType string, def string, varName string) {
-		argType = fmt.Sprintf("[%d]*%s", size, goArrayType)
+		argType = fmt.Sprintf("*[%d]%s", size, goArrayType)
 		def = fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(%[1]s))
 for i, %[1]sV := range %[1]s {
-  %[1]sArg[i] = %[2]s(*%[1]sV)
+  %[1]sArg[i] = %[2]s(%[1]sV)
 }
 defer func() {
   for i, %[1]sV := range %[1]sArg {
-    *%[1]s[i] = %[3]s(%[1]sV)
+    (*%[1]s)[i] = %[3]s(%[1]sV)
   }
 }()
 

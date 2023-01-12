@@ -12,13 +12,13 @@ var (
 	value1         int32
 	value2         int32
 	value3         int32
-	values         [2]*int32 = [2]*int32{&value1, &value2}
-	content        string    = "Let me try"
+	values         [2]int32 = [2]int32{value1, value2}
+	content        string   = "Let me try"
 	r              float32
 	g              float32
 	b              float32
 	a              float32
-	color4         [4]*float32 = [4]*float32{&r, &g, &b, &a}
+	color4         [4]float32 = [4]float32{r, g, b, a}
 	selected       bool
 	window         imgui.GLFWwindow
 	img            *image.RGBA
@@ -65,8 +65,8 @@ func showWidgetsDemo() {
 	imgui.Text(content)
 	imgui.SliderInt("Slider int", &value3, 0, 100)
 	imgui.DragInt("Drag int", &value1)
-	imgui.DragInt2("Drag int2", values)
-	imgui.ColorEdit4("Color Edit3", color4)
+	imgui.DragInt2("Drag int2", &values)
+	imgui.ColorEdit4("Color Edit3", &color4)
 	imgui.End()
 }
 
