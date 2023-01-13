@@ -66,6 +66,7 @@ func showWidgetsDemo() {
 	imgui.SliderInt("Slider int", &value3, 0, 100)
 	imgui.DragInt("Drag int", &value1)
 	imgui.DragInt2("Drag int2", &values)
+	value1 = values[0]
 	imgui.ColorEdit4("Color Edit3", &color4)
 	imgui.End()
 }
