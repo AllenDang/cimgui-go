@@ -67,13 +67,13 @@ type Color struct {
 	Value Vec4
 }
 
-func NewColor(x, y, z, w float32) Color {
+func NewColor(r, g, b, a float32) Color {
 	return Color{
 		Value: Vec4{
-			X: x,
-			Y: y,
-			Z: z,
-			W: w,
+			X: r,
+			Y: g,
+			Z: b,
+			W: a,
 		},
 	}
 }
