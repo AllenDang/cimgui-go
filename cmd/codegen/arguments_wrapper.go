@@ -41,6 +41,7 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"unsigned int*":            simplePtrW("uint32", "C.uint"),
 		"double":                   simpleW("float64", "C.double"),
 		"double*":                  simplePtrW("float64", "C.double"),
+		"const double*":            doubleArrayW,
 		"bool":                     simpleW("bool", "C.bool"),
 		"bool*":                    boolPtrW,
 		"int[2]":                   simplePtrArrayW(2, "C.int", "int32"),
@@ -124,6 +125,12 @@ func floatPtrW(arg ArgDef) (argType string, def string, varName string) {
 func floatArrayW(arg ArgDef) (argType string, def string, varName string) {
 	argType = "[]float32"
 	varName = fmt.Sprintf("(*C.float)(&(%s[0]))", arg.Name)
+	return
+}
+
+func doubleArrayW(arg ArgDef) (argType string, def string, varName string) {
+	argType = "[]float64"
+	varName = fmt.Sprintf("(*C.double)(&(%s[0]))", arg.Name)
 	return
 }
 

@@ -77,7 +77,7 @@ extern "C" {
 			}
 		}
 
-		if len(f.FuncName) == 0 || strings.Contains(f.Location, "internal") {
+		if len(f.FuncName) == 0 || strings.Contains(f.Location, "imgui_internal") {
 			shouldSkip = true
 		}
 

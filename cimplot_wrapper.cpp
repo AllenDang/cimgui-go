@@ -4,16 +4,25 @@
 #include "cimplot_wrapper.h"
 #include "cimplot/cimplot.h"
 
+void wrap_ImPlotAnnotationCollection_Append(ImPlotAnnotationCollection* self,const ImVec2 pos,const ImVec2 off,ImU32 bg,ImU32 fg,bool clamp,const char* fmt) { ImPlotAnnotationCollection_Append(self,pos,off,bg,fg,clamp,fmt); }
+void wrap_ImPlotTagCollection_Append(ImPlotTagCollection* self,ImAxis axis,double value,ImU32 bg,ImU32 fg,const char* fmt) { ImPlotTagCollection_Append(self,axis,value,bg,fg,fmt); }
+void wrap_ImPlot_AddTextCenteredV(ImDrawList* DrawList,ImVec2 top_center,ImU32 col,const char* text_begin) { ImPlot_AddTextCentered(DrawList,top_center,col,text_begin,0); }
+void wrap_ImPlot_AddTextVerticalV(ImDrawList* DrawList,ImVec2 pos,ImU32 col,const char* text_begin) { ImPlot_AddTextVertical(DrawList,pos,col,text_begin,0); }
 void wrap_ImPlot_Annotation_Str(double x,double y,const ImVec4 col,const ImVec2 pix_offset,bool clamp,const char* fmt) { ImPlot_Annotation_Str(x,y,col,pix_offset,clamp,fmt); }
 void wrap_ImPlot_TagX_Str(double x,const ImVec4 col,const char* fmt) { ImPlot_TagX_Str(x,col,fmt); }
 void wrap_ImPlot_TagY_Str(double y,const ImVec4 col,const char* fmt) { ImPlot_TagY_Str(y,col,fmt); }
+bool wrap_ImPlotAxis_SetMax(ImPlotAxis* self,double _max) { return ImPlotAxis_SetMax(self,_max,false); }
+bool wrap_ImPlotAxis_SetMin(ImPlotAxis* self,double _min) { return ImPlotAxis_SetMin(self,_min,false); }
 ImPlotColormap wrap_ImPlot_AddColormap_U32Ptr(const char* name,const ImU32* cols,int size) { return ImPlot_AddColormap_U32Ptr(name,cols,size,true); }
 ImPlotColormap wrap_ImPlot_AddColormap_Vec4Ptr(const char* name,const ImVec4* cols,int size) { return ImPlot_AddColormap_Vec4Ptr(name,cols,size,true); }
+void wrap_ImPlot_AddTextCentered(ImDrawList* DrawList,ImVec2 top_center,ImU32 col,const char* text_begin) { wrap_ImPlot_AddTextCenteredV(DrawList,top_center,col,text_begin); }
+void wrap_ImPlot_AddTextVertical(ImDrawList* DrawList,ImVec2 pos,ImU32 col,const char* text_begin) { wrap_ImPlot_AddTextVerticalV(DrawList,pos,col,text_begin); }
 void wrap_ImPlot_Annotation_Bool(double x,double y,const ImVec4 col,const ImVec2 pix_offset,bool clamp) { ImPlot_Annotation_Bool(x,y,col,pix_offset,clamp,false); }
 bool wrap_ImPlot_BeginAlignedPlots(const char* group_id) { return ImPlot_BeginAlignedPlots(group_id,true); }
 bool wrap_ImPlot_BeginDragDropSourceAxis(ImAxis axis) { return ImPlot_BeginDragDropSourceAxis(axis,0); }
 bool wrap_ImPlot_BeginDragDropSourceItem(const char* label_id) { return ImPlot_BeginDragDropSourceItem(label_id,0); }
 bool wrap_ImPlot_BeginDragDropSourcePlot() { return ImPlot_BeginDragDropSourcePlot(0); }
+bool wrap_ImPlot_BeginItem(const char* label_id) { return ImPlot_BeginItem(label_id,0,-1); }
 bool wrap_ImPlot_BeginLegendPopup(const char* label_id) { return ImPlot_BeginLegendPopup(label_id,1); }
 bool wrap_ImPlot_BeginPlot(const char* title_id) { return ImPlot_BeginPlot(title_id,(ImVec2){.x=-1, .y=0},0); }
 bool wrap_ImPlot_BeginSubplots(const char* title_id,int rows,int cols,const ImVec2 size) { return ImPlot_BeginSubplots(title_id,rows,cols,size,0,NULL,NULL); }
@@ -28,10 +37,14 @@ bool wrap_ImPlot_DragPoint(int id,double* x,double* y,const ImVec4 col) { return
 bool wrap_ImPlot_DragRect(int id,double* x_min,double* y_min,double* x_max,double* y_max,const ImVec4 col) { return ImPlot_DragRect(id,x_min,y_min,x_max,y_max,col,0); }
 void wrap_ImPlot_GetColormapColor(ImVec4* pOut,int idx) { ImPlot_GetColormapColor(pOut,idx,-1); }
 int wrap_ImPlot_GetColormapSize() { return ImPlot_GetColormapSize(-1); }
+void wrap_ImPlot_GetLocationPos(ImVec2* pOut,const ImRect outer_rect,const ImVec2 inner_size,ImPlotLocation location) { ImPlot_GetLocationPos(pOut,outer_rect,inner_size,location,(ImVec2){.x=0, .y=0}); }
 ImPlotRect wrap_ImPlot_GetPlotLimits() { return ImPlot_GetPlotLimits(-1,-1); }
 void wrap_ImPlot_GetPlotMousePos(ImPlotPoint* pOut) { ImPlot_GetPlotMousePos(pOut,-1,-1); }
 ImPlotRect wrap_ImPlot_GetPlotSelection() { return ImPlot_GetPlotSelection(-1,-1); }
 void wrap_ImPlot_HideNextItem() { ImPlot_HideNextItem(true,ImPlotCond_Once); }
+bool wrap_ImPlot_ImAlmostEqual(double v1,double v2) { return ImPlot_ImAlmostEqual(v1,v2,2); }
+void wrap_ImPlot_LabelAxisValue(const ImPlotAxis axis,double value,char* buff,int size) { ImPlot_LabelAxisValue(axis,value,buff,size,false); }
+void wrap_ImPlot_MakeTime(ImPlotTime* pOut,int year) { ImPlot_MakeTime(pOut,year,0,1,0,0,0,0); }
 void wrap_ImPlot_MapInputDefault() { ImPlot_MapInputDefault(NULL); }
 void wrap_ImPlot_MapInputReverse() { ImPlot_MapInputReverse(NULL); }
 void wrap_ImPlot_PixelsToPlot_Float(ImPlotPoint* pOut,float x,float y) { ImPlot_PixelsToPlot_Float(pOut,x,y,-1,-1); }
@@ -271,6 +284,7 @@ void wrap_ImPlot_PopColormap() { ImPlot_PopColormap(1); }
 void wrap_ImPlot_PopStyleColor() { ImPlot_PopStyleColor(1); }
 void wrap_ImPlot_PopStyleVar() { ImPlot_PopStyleVar(1); }
 void wrap_ImPlot_PushPlotClipRect() { ImPlot_PushPlotClipRect(0); }
+ImPlotItem* wrap_ImPlot_RegisterOrGetItem(const char* label_id,ImPlotItemFlags flags) { return ImPlot_RegisterOrGetItem(label_id,flags,NULL); }
 void wrap_ImPlot_SampleColormap(ImVec4* pOut,float t) { ImPlot_SampleColormap(pOut,t,-1); }
 void wrap_ImPlot_SetNextAxesLimits(double x_min,double x_max,double y_min,double y_max) { ImPlot_SetNextAxesLimits(x_min,x_max,y_min,y_max,ImPlotCond_Once); }
 void wrap_ImPlot_SetNextAxisLimits(ImAxis axis,double v_min,double v_max) { ImPlot_SetNextAxisLimits(axis,v_min,v_max,ImPlotCond_Once); }
@@ -288,6 +302,9 @@ void wrap_ImPlot_SetupAxisTicks_double(ImAxis axis,double v_min,double v_max,int
 void wrap_ImPlot_SetupAxisTicks_doublePtr(ImAxis axis,const double* values,int n_ticks) { ImPlot_SetupAxisTicks_doublePtr(axis,values,n_ticks,NULL,false); }
 void wrap_ImPlot_SetupLegend(ImPlotLocation location) { ImPlot_SetupLegend(location,0); }
 void wrap_ImPlot_SetupMouseText(ImPlotLocation location) { ImPlot_SetupMouseText(location,0); }
+void wrap_ImPlot_ShowAltLegend(const char* title_id) { ImPlot_ShowAltLegend(title_id,true,(ImVec2){.x=0, .y=0},true); }
+void wrap_ImPlot_ShowAxisContextMenu(ImPlotAxis* axis,ImPlotAxis* equal_axis) { ImPlot_ShowAxisContextMenu(axis,equal_axis,false); }
+bool wrap_ImPlot_ShowDatePicker(const char* id,int* level,ImPlotTime* t) { return ImPlot_ShowDatePicker(id,level,t,NULL,NULL); }
 void wrap_ImPlot_ShowDemoWindow() { ImPlot_ShowDemoWindow(NULL); }
 void wrap_ImPlot_ShowMetricsWindow() { ImPlot_ShowMetricsWindow(NULL); }
 void wrap_ImPlot_ShowStyleEditor() { ImPlot_ShowStyleEditor(NULL); }
