@@ -274,7 +274,7 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 	typeName := funcParts[0]
 
 	if len(receiver) > 0 {
-		receiver = fmt.Sprintf("(self *%s)", renameGoIdentifier(receiver))
+		receiver = fmt.Sprintf("(self %s)", renameGoIdentifier(receiver))
 	}
 
 	// Generate default param value hint
