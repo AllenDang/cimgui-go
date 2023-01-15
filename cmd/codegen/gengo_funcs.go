@@ -343,11 +343,6 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 
 		if v, err := argWrapper(a.Type); err == nil {
 			arg := v(a)
-			// TODO: WTF? what does it do?
-			if goEnumName := arg.ArgType; g.isEnum(goEnumName) {
-				arg.ArgType = goEnumName
-			}
-
 			argWrappers = append(argWrappers, arg)
 
 			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(arg.ArgType)))
