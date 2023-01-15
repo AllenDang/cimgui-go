@@ -539,6 +539,7 @@ func (self FontAtlas) MouseCursorTexData(cursor MouseCursor, out_offset *Vec2, o
 		tmp, out_uv_borderFin[i] = wrap[C.ImVec2, *Vec2](out_uv_borderV)
 		out_uv_borderArg[i] = *tmp
 	}
+
 	defer func() {
 		for _, out_uv_borderV := range out_uv_borderFin {
 			out_uv_borderV()
@@ -552,6 +553,7 @@ func (self FontAtlas) MouseCursorTexData(cursor MouseCursor, out_offset *Vec2, o
 		tmp, out_uv_fillFin[i] = wrap[C.ImVec2, *Vec2](out_uv_fillV)
 		out_uv_fillArg[i] = *tmp
 	}
+
 	defer func() {
 		for _, out_uv_fillV := range out_uv_fillFin {
 			out_uv_fillV()

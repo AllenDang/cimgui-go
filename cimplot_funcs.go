@@ -195,6 +195,7 @@ func PlotAddColormapU32PtrV(name string, cols []*uint32, size int32, qual bool) 
 	for i, colsV := range cols {
 		colsArg[i] = C.ImU32(*colsV)
 	}
+
 	defer func() {
 		for i, colsV := range colsArg {
 			*cols[i] = uint32(colsV)
@@ -625,6 +626,7 @@ func PlotPlotBarGroupsS16PtrV(label_ids []string, values []*int, item_count int3
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -646,6 +648,7 @@ func PlotPlotBarGroupsS32PtrV(label_ids []string, values []*int32, item_count in
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -678,6 +681,7 @@ func PlotPlotBarGroupsS8PtrV(label_ids []string, values []*int8, item_count int3
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -699,6 +703,7 @@ func PlotPlotBarGroupsU16PtrV(label_ids []string, values []*uint16, item_count i
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -720,6 +725,7 @@ func PlotPlotBarGroupsU32PtrV(label_ids []string, values []*uint32, item_count i
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -752,6 +758,7 @@ func PlotPlotBarGroupsU8PtrV(label_ids []string, values []*byte, item_count int3
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -799,6 +806,7 @@ func PlotPlotBarsS16PtrIntV(label_id string, values []*int, count int32, bar_siz
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -820,6 +828,7 @@ func PlotPlotBarsS16PtrS16PtrV(label_id string, xs []*int, ys []*int, count int3
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -830,6 +839,7 @@ func PlotPlotBarsS16PtrS16PtrV(label_id string, xs []*int, ys []*int, count int3
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -853,6 +863,7 @@ func PlotPlotBarsS32PtrIntV(label_id string, values []*int32, count int32, bar_s
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -874,6 +885,7 @@ func PlotPlotBarsS32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, count 
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -884,6 +896,7 @@ func PlotPlotBarsS32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, count 
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -931,6 +944,7 @@ func PlotPlotBarsS8PtrIntV(label_id string, values []*int8, count int32, bar_siz
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -952,6 +966,7 @@ func PlotPlotBarsS8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count int3
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -962,6 +977,7 @@ func PlotPlotBarsS8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count int3
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -985,6 +1001,7 @@ func PlotPlotBarsU16PtrIntV(label_id string, values []*uint16, count int32, bar_
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -1006,6 +1023,7 @@ func PlotPlotBarsU16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, coun
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -1016,6 +1034,7 @@ func PlotPlotBarsU16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, coun
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -1039,6 +1058,7 @@ func PlotPlotBarsU32PtrIntV(label_id string, values []*uint32, count int32, bar_
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -1060,6 +1080,7 @@ func PlotPlotBarsU32PtrU32PtrV(label_id string, xs []*uint32, ys []*uint32, coun
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -1070,6 +1091,7 @@ func PlotPlotBarsU32PtrU32PtrV(label_id string, xs []*uint32, ys []*uint32, coun
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -1117,6 +1139,7 @@ func PlotPlotBarsU8PtrIntV(label_id string, values []*byte, count int32, bar_siz
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -1138,6 +1161,7 @@ func PlotPlotBarsU8PtrU8PtrV(label_id string, xs []*byte, ys []*byte, count int3
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -1148,6 +1172,7 @@ func PlotPlotBarsU8PtrU8PtrV(label_id string, xs []*byte, ys []*byte, count int3
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -1180,6 +1205,7 @@ func PlotPlotDigitalS16PtrV(label_id string, xs []*int, ys []*int, count int32, 
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -1190,6 +1216,7 @@ func PlotPlotDigitalS16PtrV(label_id string, xs []*int, ys []*int, count int32, 
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -1211,6 +1238,7 @@ func PlotPlotDigitalS32PtrV(label_id string, xs []*int32, ys []*int32, count int
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -1221,6 +1249,7 @@ func PlotPlotDigitalS32PtrV(label_id string, xs []*int32, ys []*int32, count int
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -1253,6 +1282,7 @@ func PlotPlotDigitalS8PtrV(label_id string, xs []*int8, ys []*int8, count int32,
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -1263,6 +1293,7 @@ func PlotPlotDigitalS8PtrV(label_id string, xs []*int8, ys []*int8, count int32,
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -1284,6 +1315,7 @@ func PlotPlotDigitalU16PtrV(label_id string, xs []*uint16, ys []*uint16, count i
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -1294,6 +1326,7 @@ func PlotPlotDigitalU16PtrV(label_id string, xs []*uint16, ys []*uint16, count i
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -1315,6 +1348,7 @@ func PlotPlotDigitalU32PtrV(label_id string, xs []*uint32, ys []*uint32, count i
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -1325,6 +1359,7 @@ func PlotPlotDigitalU32PtrV(label_id string, xs []*uint32, ys []*uint32, count i
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -1357,6 +1392,7 @@ func PlotPlotDigitalU8PtrV(label_id string, xs []*byte, ys []*byte, count int32,
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -1367,6 +1403,7 @@ func PlotPlotDigitalU8PtrV(label_id string, xs []*byte, ys []*byte, count int32,
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -1419,6 +1456,7 @@ func PlotPlotErrorBarsS16PtrS16PtrS16PtrIntV(label_id string, xs []*int, ys []*i
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -1429,6 +1467,7 @@ func PlotPlotErrorBarsS16PtrS16PtrS16PtrIntV(label_id string, xs []*int, ys []*i
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -1439,6 +1478,7 @@ func PlotPlotErrorBarsS16PtrS16PtrS16PtrIntV(label_id string, xs []*int, ys []*i
 	for i, errV := range err {
 		errArg[i] = C.ImS16(*errV)
 	}
+
 	defer func() {
 		for i, errV := range errArg {
 			*err[i] = int(errV)
@@ -1460,6 +1500,7 @@ func PlotPlotErrorBarsS16PtrS16PtrS16PtrS16PtrV(label_id string, xs []*int, ys [
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -1470,6 +1511,7 @@ func PlotPlotErrorBarsS16PtrS16PtrS16PtrS16PtrV(label_id string, xs []*int, ys [
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -1480,6 +1522,7 @@ func PlotPlotErrorBarsS16PtrS16PtrS16PtrS16PtrV(label_id string, xs []*int, ys [
 	for i, negV := range neg {
 		negArg[i] = C.ImS16(*negV)
 	}
+
 	defer func() {
 		for i, negV := range negArg {
 			*neg[i] = int(negV)
@@ -1490,6 +1533,7 @@ func PlotPlotErrorBarsS16PtrS16PtrS16PtrS16PtrV(label_id string, xs []*int, ys [
 	for i, posV := range pos {
 		posArg[i] = C.ImS16(*posV)
 	}
+
 	defer func() {
 		for i, posV := range posArg {
 			*pos[i] = int(posV)
@@ -1511,6 +1555,7 @@ func PlotPlotErrorBarsS32PtrS32PtrS32PtrIntV(label_id string, xs []*int32, ys []
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -1521,6 +1566,7 @@ func PlotPlotErrorBarsS32PtrS32PtrS32PtrIntV(label_id string, xs []*int32, ys []
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -1531,6 +1577,7 @@ func PlotPlotErrorBarsS32PtrS32PtrS32PtrIntV(label_id string, xs []*int32, ys []
 	for i, errV := range err {
 		errArg[i] = C.ImS32(*errV)
 	}
+
 	defer func() {
 		for i, errV := range errArg {
 			*err[i] = int32(errV)
@@ -1552,6 +1599,7 @@ func PlotPlotErrorBarsS32PtrS32PtrS32PtrS32PtrV(label_id string, xs []*int32, ys
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -1562,6 +1610,7 @@ func PlotPlotErrorBarsS32PtrS32PtrS32PtrS32PtrV(label_id string, xs []*int32, ys
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -1572,6 +1621,7 @@ func PlotPlotErrorBarsS32PtrS32PtrS32PtrS32PtrV(label_id string, xs []*int32, ys
 	for i, negV := range neg {
 		negArg[i] = C.ImS32(*negV)
 	}
+
 	defer func() {
 		for i, negV := range negArg {
 			*neg[i] = int32(negV)
@@ -1582,6 +1632,7 @@ func PlotPlotErrorBarsS32PtrS32PtrS32PtrS32PtrV(label_id string, xs []*int32, ys
 	for i, posV := range pos {
 		posArg[i] = C.ImS32(*posV)
 	}
+
 	defer func() {
 		for i, posV := range posArg {
 			*pos[i] = int32(posV)
@@ -1625,6 +1676,7 @@ func PlotPlotErrorBarsS8PtrS8PtrS8PtrIntV(label_id string, xs []*int8, ys []*int
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -1635,6 +1687,7 @@ func PlotPlotErrorBarsS8PtrS8PtrS8PtrIntV(label_id string, xs []*int8, ys []*int
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -1645,6 +1698,7 @@ func PlotPlotErrorBarsS8PtrS8PtrS8PtrIntV(label_id string, xs []*int8, ys []*int
 	for i, errV := range err {
 		errArg[i] = C.ImS8(*errV)
 	}
+
 	defer func() {
 		for i, errV := range errArg {
 			*err[i] = int8(errV)
@@ -1666,6 +1720,7 @@ func PlotPlotErrorBarsS8PtrS8PtrS8PtrS8PtrV(label_id string, xs []*int8, ys []*i
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -1676,6 +1731,7 @@ func PlotPlotErrorBarsS8PtrS8PtrS8PtrS8PtrV(label_id string, xs []*int8, ys []*i
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -1686,6 +1742,7 @@ func PlotPlotErrorBarsS8PtrS8PtrS8PtrS8PtrV(label_id string, xs []*int8, ys []*i
 	for i, negV := range neg {
 		negArg[i] = C.ImS8(*negV)
 	}
+
 	defer func() {
 		for i, negV := range negArg {
 			*neg[i] = int8(negV)
@@ -1696,6 +1753,7 @@ func PlotPlotErrorBarsS8PtrS8PtrS8PtrS8PtrV(label_id string, xs []*int8, ys []*i
 	for i, posV := range pos {
 		posArg[i] = C.ImS8(*posV)
 	}
+
 	defer func() {
 		for i, posV := range posArg {
 			*pos[i] = int8(posV)
@@ -1717,6 +1775,7 @@ func PlotPlotErrorBarsU16PtrU16PtrU16PtrIntV(label_id string, xs []*uint16, ys [
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -1727,6 +1786,7 @@ func PlotPlotErrorBarsU16PtrU16PtrU16PtrIntV(label_id string, xs []*uint16, ys [
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -1737,6 +1797,7 @@ func PlotPlotErrorBarsU16PtrU16PtrU16PtrIntV(label_id string, xs []*uint16, ys [
 	for i, errV := range err {
 		errArg[i] = C.ImU16(*errV)
 	}
+
 	defer func() {
 		for i, errV := range errArg {
 			*err[i] = uint16(errV)
@@ -1758,6 +1819,7 @@ func PlotPlotErrorBarsU16PtrU16PtrU16PtrU16PtrV(label_id string, xs []*uint16, y
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -1768,6 +1830,7 @@ func PlotPlotErrorBarsU16PtrU16PtrU16PtrU16PtrV(label_id string, xs []*uint16, y
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -1778,6 +1841,7 @@ func PlotPlotErrorBarsU16PtrU16PtrU16PtrU16PtrV(label_id string, xs []*uint16, y
 	for i, negV := range neg {
 		negArg[i] = C.ImU16(*negV)
 	}
+
 	defer func() {
 		for i, negV := range negArg {
 			*neg[i] = uint16(negV)
@@ -1788,6 +1852,7 @@ func PlotPlotErrorBarsU16PtrU16PtrU16PtrU16PtrV(label_id string, xs []*uint16, y
 	for i, posV := range pos {
 		posArg[i] = C.ImU16(*posV)
 	}
+
 	defer func() {
 		for i, posV := range posArg {
 			*pos[i] = uint16(posV)
@@ -1809,6 +1874,7 @@ func PlotPlotErrorBarsU32PtrU32PtrU32PtrIntV(label_id string, xs []*uint32, ys [
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -1819,6 +1885,7 @@ func PlotPlotErrorBarsU32PtrU32PtrU32PtrIntV(label_id string, xs []*uint32, ys [
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -1829,6 +1896,7 @@ func PlotPlotErrorBarsU32PtrU32PtrU32PtrIntV(label_id string, xs []*uint32, ys [
 	for i, errV := range err {
 		errArg[i] = C.ImU32(*errV)
 	}
+
 	defer func() {
 		for i, errV := range errArg {
 			*err[i] = uint32(errV)
@@ -1850,6 +1918,7 @@ func PlotPlotErrorBarsU32PtrU32PtrU32PtrU32PtrV(label_id string, xs []*uint32, y
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -1860,6 +1929,7 @@ func PlotPlotErrorBarsU32PtrU32PtrU32PtrU32PtrV(label_id string, xs []*uint32, y
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -1870,6 +1940,7 @@ func PlotPlotErrorBarsU32PtrU32PtrU32PtrU32PtrV(label_id string, xs []*uint32, y
 	for i, negV := range neg {
 		negArg[i] = C.ImU32(*negV)
 	}
+
 	defer func() {
 		for i, negV := range negArg {
 			*neg[i] = uint32(negV)
@@ -1880,6 +1951,7 @@ func PlotPlotErrorBarsU32PtrU32PtrU32PtrU32PtrV(label_id string, xs []*uint32, y
 	for i, posV := range pos {
 		posArg[i] = C.ImU32(*posV)
 	}
+
 	defer func() {
 		for i, posV := range posArg {
 			*pos[i] = uint32(posV)
@@ -1923,6 +1995,7 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrIntV(label_id string, xs []*byte, ys []*byt
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -1933,6 +2006,7 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrIntV(label_id string, xs []*byte, ys []*byt
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -1943,6 +2017,7 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrIntV(label_id string, xs []*byte, ys []*byt
 	for i, errV := range err {
 		errArg[i] = C.ImU8(*errV)
 	}
+
 	defer func() {
 		for i, errV := range errArg {
 			*err[i] = byte(errV)
@@ -1964,6 +2039,7 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrU8PtrV(label_id string, xs []*byte, ys []*b
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -1974,6 +2050,7 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrU8PtrV(label_id string, xs []*byte, ys []*b
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -1984,6 +2061,7 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrU8PtrV(label_id string, xs []*byte, ys []*b
 	for i, negV := range neg {
 		negArg[i] = C.ImU8(*negV)
 	}
+
 	defer func() {
 		for i, negV := range negArg {
 			*neg[i] = byte(negV)
@@ -1994,6 +2072,7 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrU8PtrV(label_id string, xs []*byte, ys []*b
 	for i, posV := range pos {
 		posArg[i] = C.ImU8(*posV)
 	}
+
 	defer func() {
 		for i, posV := range posArg {
 			*pos[i] = byte(posV)
@@ -2035,6 +2114,7 @@ func PlotPlotHeatmapS16PtrV(label_id string, values []*int, rows int32, cols int
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -2062,6 +2142,7 @@ func PlotPlotHeatmapS32PtrV(label_id string, values []*int32, rows int32, cols i
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -2106,6 +2187,7 @@ func PlotPlotHeatmapS8PtrV(label_id string, values []*int8, rows int32, cols int
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -2133,6 +2215,7 @@ func PlotPlotHeatmapU16PtrV(label_id string, values []*uint16, rows int32, cols 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -2160,6 +2243,7 @@ func PlotPlotHeatmapU32PtrV(label_id string, values []*uint32, rows int32, cols 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -2204,6 +2288,7 @@ func PlotPlotHeatmapU8PtrV(label_id string, values []*byte, rows int32, cols int
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -2251,6 +2336,7 @@ func PlotPlotInfLinesS16PtrV(label_id string, values []*int, count int32, flags 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -2272,6 +2358,7 @@ func PlotPlotInfLinesS32PtrV(label_id string, values []*int32, count int32, flag
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -2304,6 +2391,7 @@ func PlotPlotInfLinesS8PtrV(label_id string, values []*int8, count int32, flags 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -2325,6 +2413,7 @@ func PlotPlotInfLinesU16PtrV(label_id string, values []*uint16, count int32, fla
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -2346,6 +2435,7 @@ func PlotPlotInfLinesU32PtrV(label_id string, values []*uint32, count int32, fla
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -2378,6 +2468,7 @@ func PlotPlotInfLinesU8PtrV(label_id string, values []*byte, count int32, flags 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -2425,6 +2516,7 @@ func PlotPlotLineS16PtrIntV(label_id string, values []*int, count int32, xscale 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -2446,6 +2538,7 @@ func PlotPlotLineS16PtrS16PtrV(label_id string, xs []*int, ys []*int, count int3
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -2456,6 +2549,7 @@ func PlotPlotLineS16PtrS16PtrV(label_id string, xs []*int, ys []*int, count int3
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -2479,6 +2573,7 @@ func PlotPlotLineS32PtrIntV(label_id string, values []*int32, count int32, xscal
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -2500,6 +2595,7 @@ func PlotPlotLineS32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, count 
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -2510,6 +2606,7 @@ func PlotPlotLineS32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, count 
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -2557,6 +2654,7 @@ func PlotPlotLineS8PtrIntV(label_id string, values []*int8, count int32, xscale 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -2578,6 +2676,7 @@ func PlotPlotLineS8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count int3
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -2588,6 +2687,7 @@ func PlotPlotLineS8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count int3
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -2611,6 +2711,7 @@ func PlotPlotLineU16PtrIntV(label_id string, values []*uint16, count int32, xsca
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -2632,6 +2733,7 @@ func PlotPlotLineU16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, coun
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -2642,6 +2744,7 @@ func PlotPlotLineU16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, coun
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -2665,6 +2768,7 @@ func PlotPlotLineU32PtrIntV(label_id string, values []*uint32, count int32, xsca
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -2686,6 +2790,7 @@ func PlotPlotLineU32PtrU32PtrV(label_id string, xs []*uint32, ys []*uint32, coun
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -2696,6 +2801,7 @@ func PlotPlotLineU32PtrU32PtrV(label_id string, xs []*uint32, ys []*uint32, coun
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -2743,6 +2849,7 @@ func PlotPlotLineU8PtrIntV(label_id string, values []*byte, count int32, xscale 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -2764,6 +2871,7 @@ func PlotPlotLineU8PtrU8PtrV(label_id string, xs []*byte, ys []*byte, count int3
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -2774,6 +2882,7 @@ func PlotPlotLineU8PtrU8PtrV(label_id string, xs []*byte, ys []*byte, count int3
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -2809,6 +2918,7 @@ func PlotPlotPieChartS16PtrV(label_ids []string, values []*int, count int32, x f
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -2833,6 +2943,7 @@ func PlotPlotPieChartS32PtrV(label_ids []string, values []*int32, count int32, x
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -2871,6 +2982,7 @@ func PlotPlotPieChartS8PtrV(label_ids []string, values []*int8, count int32, x f
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -2895,6 +3007,7 @@ func PlotPlotPieChartU16PtrV(label_ids []string, values []*uint16, count int32, 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -2919,6 +3032,7 @@ func PlotPlotPieChartU32PtrV(label_ids []string, values []*uint32, count int32, 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -2957,6 +3071,7 @@ func PlotPlotPieChartU8PtrV(label_ids []string, values []*byte, count int32, x f
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -3007,6 +3122,7 @@ func PlotPlotScatterS16PtrIntV(label_id string, values []*int, count int32, xsca
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -3028,6 +3144,7 @@ func PlotPlotScatterS16PtrS16PtrV(label_id string, xs []*int, ys []*int, count i
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -3038,6 +3155,7 @@ func PlotPlotScatterS16PtrS16PtrV(label_id string, xs []*int, ys []*int, count i
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -3061,6 +3179,7 @@ func PlotPlotScatterS32PtrIntV(label_id string, values []*int32, count int32, xs
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -3082,6 +3201,7 @@ func PlotPlotScatterS32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, cou
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -3092,6 +3212,7 @@ func PlotPlotScatterS32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, cou
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -3139,6 +3260,7 @@ func PlotPlotScatterS8PtrIntV(label_id string, values []*int8, count int32, xsca
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -3160,6 +3282,7 @@ func PlotPlotScatterS8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count i
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -3170,6 +3293,7 @@ func PlotPlotScatterS8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count i
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -3193,6 +3317,7 @@ func PlotPlotScatterU16PtrIntV(label_id string, values []*uint16, count int32, x
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -3214,6 +3339,7 @@ func PlotPlotScatterU16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, c
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -3224,6 +3350,7 @@ func PlotPlotScatterU16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, c
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -3247,6 +3374,7 @@ func PlotPlotScatterU32PtrIntV(label_id string, values []*uint32, count int32, x
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -3268,6 +3396,7 @@ func PlotPlotScatterU32PtrU32PtrV(label_id string, xs []*uint32, ys []*uint32, c
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -3278,6 +3407,7 @@ func PlotPlotScatterU32PtrU32PtrV(label_id string, xs []*uint32, ys []*uint32, c
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -3325,6 +3455,7 @@ func PlotPlotScatterU8PtrIntV(label_id string, values []*byte, count int32, xsca
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -3346,6 +3477,7 @@ func PlotPlotScatterU8PtrU8PtrV(label_id string, xs []*byte, ys []*byte, count i
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -3356,6 +3488,7 @@ func PlotPlotScatterU8PtrU8PtrV(label_id string, xs []*byte, ys []*byte, count i
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -3417,6 +3550,7 @@ func PlotPlotShadedS16PtrIntV(label_id string, values []*int, count int32, yref 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -3439,6 +3573,7 @@ func PlotPlotShadedS16PtrS16PtrIntV(label_id string, xs []*int, ys []*int, count
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -3449,6 +3584,7 @@ func PlotPlotShadedS16PtrS16PtrIntV(label_id string, xs []*int, ys []*int, count
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -3470,6 +3606,7 @@ func PlotPlotShadedS16PtrS16PtrS16PtrV(label_id string, xs []*int, ys1 []*int, y
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -3480,6 +3617,7 @@ func PlotPlotShadedS16PtrS16PtrS16PtrV(label_id string, xs []*int, ys1 []*int, y
 	for i, ys1V := range ys1 {
 		ys1Arg[i] = C.ImS16(*ys1V)
 	}
+
 	defer func() {
 		for i, ys1V := range ys1Arg {
 			*ys1[i] = int(ys1V)
@@ -3490,6 +3628,7 @@ func PlotPlotShadedS16PtrS16PtrS16PtrV(label_id string, xs []*int, ys1 []*int, y
 	for i, ys2V := range ys2 {
 		ys2Arg[i] = C.ImS16(*ys2V)
 	}
+
 	defer func() {
 		for i, ys2V := range ys2Arg {
 			*ys2[i] = int(ys2V)
@@ -3514,6 +3653,7 @@ func PlotPlotShadedS32PtrIntV(label_id string, values []*int32, count int32, yre
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -3536,6 +3676,7 @@ func PlotPlotShadedS32PtrS32PtrIntV(label_id string, xs []*int32, ys []*int32, c
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -3546,6 +3687,7 @@ func PlotPlotShadedS32PtrS32PtrIntV(label_id string, xs []*int32, ys []*int32, c
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -3567,6 +3709,7 @@ func PlotPlotShadedS32PtrS32PtrS32PtrV(label_id string, xs []*int32, ys1 []*int3
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -3577,6 +3720,7 @@ func PlotPlotShadedS32PtrS32PtrS32PtrV(label_id string, xs []*int32, ys1 []*int3
 	for i, ys1V := range ys1 {
 		ys1Arg[i] = C.ImS32(*ys1V)
 	}
+
 	defer func() {
 		for i, ys1V := range ys1Arg {
 			*ys1[i] = int32(ys1V)
@@ -3587,6 +3731,7 @@ func PlotPlotShadedS32PtrS32PtrS32PtrV(label_id string, xs []*int32, ys1 []*int3
 	for i, ys2V := range ys2 {
 		ys2Arg[i] = C.ImS32(*ys2V)
 	}
+
 	defer func() {
 		for i, ys2V := range ys2Arg {
 			*ys2[i] = int32(ys2V)
@@ -3648,6 +3793,7 @@ func PlotPlotShadedS8PtrIntV(label_id string, values []*int8, count int32, yref 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -3670,6 +3816,7 @@ func PlotPlotShadedS8PtrS8PtrIntV(label_id string, xs []*int8, ys []*int8, count
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -3680,6 +3827,7 @@ func PlotPlotShadedS8PtrS8PtrIntV(label_id string, xs []*int8, ys []*int8, count
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -3701,6 +3849,7 @@ func PlotPlotShadedS8PtrS8PtrS8PtrV(label_id string, xs []*int8, ys1 []*int8, ys
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -3711,6 +3860,7 @@ func PlotPlotShadedS8PtrS8PtrS8PtrV(label_id string, xs []*int8, ys1 []*int8, ys
 	for i, ys1V := range ys1 {
 		ys1Arg[i] = C.ImS8(*ys1V)
 	}
+
 	defer func() {
 		for i, ys1V := range ys1Arg {
 			*ys1[i] = int8(ys1V)
@@ -3721,6 +3871,7 @@ func PlotPlotShadedS8PtrS8PtrS8PtrV(label_id string, xs []*int8, ys1 []*int8, ys
 	for i, ys2V := range ys2 {
 		ys2Arg[i] = C.ImS8(*ys2V)
 	}
+
 	defer func() {
 		for i, ys2V := range ys2Arg {
 			*ys2[i] = int8(ys2V)
@@ -3745,6 +3896,7 @@ func PlotPlotShadedU16PtrIntV(label_id string, values []*uint16, count int32, yr
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -3767,6 +3919,7 @@ func PlotPlotShadedU16PtrU16PtrIntV(label_id string, xs []*uint16, ys []*uint16,
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -3777,6 +3930,7 @@ func PlotPlotShadedU16PtrU16PtrIntV(label_id string, xs []*uint16, ys []*uint16,
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -3798,6 +3952,7 @@ func PlotPlotShadedU16PtrU16PtrU16PtrV(label_id string, xs []*uint16, ys1 []*uin
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -3808,6 +3963,7 @@ func PlotPlotShadedU16PtrU16PtrU16PtrV(label_id string, xs []*uint16, ys1 []*uin
 	for i, ys1V := range ys1 {
 		ys1Arg[i] = C.ImU16(*ys1V)
 	}
+
 	defer func() {
 		for i, ys1V := range ys1Arg {
 			*ys1[i] = uint16(ys1V)
@@ -3818,6 +3974,7 @@ func PlotPlotShadedU16PtrU16PtrU16PtrV(label_id string, xs []*uint16, ys1 []*uin
 	for i, ys2V := range ys2 {
 		ys2Arg[i] = C.ImU16(*ys2V)
 	}
+
 	defer func() {
 		for i, ys2V := range ys2Arg {
 			*ys2[i] = uint16(ys2V)
@@ -3842,6 +3999,7 @@ func PlotPlotShadedU32PtrIntV(label_id string, values []*uint32, count int32, yr
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -3864,6 +4022,7 @@ func PlotPlotShadedU32PtrU32PtrIntV(label_id string, xs []*uint32, ys []*uint32,
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -3874,6 +4033,7 @@ func PlotPlotShadedU32PtrU32PtrIntV(label_id string, xs []*uint32, ys []*uint32,
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -3895,6 +4055,7 @@ func PlotPlotShadedU32PtrU32PtrU32PtrV(label_id string, xs []*uint32, ys1 []*uin
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -3905,6 +4066,7 @@ func PlotPlotShadedU32PtrU32PtrU32PtrV(label_id string, xs []*uint32, ys1 []*uin
 	for i, ys1V := range ys1 {
 		ys1Arg[i] = C.ImU32(*ys1V)
 	}
+
 	defer func() {
 		for i, ys1V := range ys1Arg {
 			*ys1[i] = uint32(ys1V)
@@ -3915,6 +4077,7 @@ func PlotPlotShadedU32PtrU32PtrU32PtrV(label_id string, xs []*uint32, ys1 []*uin
 	for i, ys2V := range ys2 {
 		ys2Arg[i] = C.ImU32(*ys2V)
 	}
+
 	defer func() {
 		for i, ys2V := range ys2Arg {
 			*ys2[i] = uint32(ys2V)
@@ -3976,6 +4139,7 @@ func PlotPlotShadedU8PtrIntV(label_id string, values []*byte, count int32, yref 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -3998,6 +4162,7 @@ func PlotPlotShadedU8PtrU8PtrIntV(label_id string, xs []*byte, ys []*byte, count
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -4008,6 +4173,7 @@ func PlotPlotShadedU8PtrU8PtrIntV(label_id string, xs []*byte, ys []*byte, count
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -4029,6 +4195,7 @@ func PlotPlotShadedU8PtrU8PtrU8PtrV(label_id string, xs []*byte, ys1 []*byte, ys
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -4039,6 +4206,7 @@ func PlotPlotShadedU8PtrU8PtrU8PtrV(label_id string, xs []*byte, ys1 []*byte, ys
 	for i, ys1V := range ys1 {
 		ys1Arg[i] = C.ImU8(*ys1V)
 	}
+
 	defer func() {
 		for i, ys1V := range ys1Arg {
 			*ys1[i] = byte(ys1V)
@@ -4049,6 +4217,7 @@ func PlotPlotShadedU8PtrU8PtrU8PtrV(label_id string, xs []*byte, ys1 []*byte, ys
 	for i, ys2V := range ys2 {
 		ys2Arg[i] = C.ImU8(*ys2V)
 	}
+
 	defer func() {
 		for i, ys2V := range ys2Arg {
 			*ys2[i] = byte(ys2V)
@@ -4096,6 +4265,7 @@ func PlotPlotStairsS16PtrIntV(label_id string, values []*int, count int32, xscal
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -4117,6 +4287,7 @@ func PlotPlotStairsS16PtrS16PtrV(label_id string, xs []*int, ys []*int, count in
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -4127,6 +4298,7 @@ func PlotPlotStairsS16PtrS16PtrV(label_id string, xs []*int, ys []*int, count in
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -4150,6 +4322,7 @@ func PlotPlotStairsS32PtrIntV(label_id string, values []*int32, count int32, xsc
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -4171,6 +4344,7 @@ func PlotPlotStairsS32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, coun
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -4181,6 +4355,7 @@ func PlotPlotStairsS32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, coun
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -4228,6 +4403,7 @@ func PlotPlotStairsS8PtrIntV(label_id string, values []*int8, count int32, xscal
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -4249,6 +4425,7 @@ func PlotPlotStairsS8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count in
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -4259,6 +4436,7 @@ func PlotPlotStairsS8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count in
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -4282,6 +4460,7 @@ func PlotPlotStairsU16PtrIntV(label_id string, values []*uint16, count int32, xs
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -4303,6 +4482,7 @@ func PlotPlotStairsU16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, co
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -4313,6 +4493,7 @@ func PlotPlotStairsU16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, co
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -4336,6 +4517,7 @@ func PlotPlotStairsU32PtrIntV(label_id string, values []*uint32, count int32, xs
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -4357,6 +4539,7 @@ func PlotPlotStairsU32PtrU32PtrV(label_id string, xs []*uint32, ys []*uint32, co
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -4367,6 +4550,7 @@ func PlotPlotStairsU32PtrU32PtrV(label_id string, xs []*uint32, ys []*uint32, co
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -4414,6 +4598,7 @@ func PlotPlotStairsU8PtrIntV(label_id string, values []*byte, count int32, xscal
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -4435,6 +4620,7 @@ func PlotPlotStairsU8PtrU8PtrV(label_id string, xs []*byte, ys []*byte, count in
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -4445,6 +4631,7 @@ func PlotPlotStairsU8PtrU8PtrV(label_id string, xs []*byte, ys []*byte, count in
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -4495,6 +4682,7 @@ func PlotPlotStemsS16PtrIntV(label_id string, values []*int, count int32, ref fl
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -4517,6 +4705,7 @@ func PlotPlotStemsS16PtrS16PtrV(label_id string, xs []*int, ys []*int, count int
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -4527,6 +4716,7 @@ func PlotPlotStemsS16PtrS16PtrV(label_id string, xs []*int, ys []*int, count int
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -4551,6 +4741,7 @@ func PlotPlotStemsS32PtrIntV(label_id string, values []*int32, count int32, ref 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -4573,6 +4764,7 @@ func PlotPlotStemsS32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, count
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -4583,6 +4775,7 @@ func PlotPlotStemsS32PtrS32PtrV(label_id string, xs []*int32, ys []*int32, count
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -4633,6 +4826,7 @@ func PlotPlotStemsS8PtrIntV(label_id string, values []*int8, count int32, ref fl
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -4655,6 +4849,7 @@ func PlotPlotStemsS8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count int
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -4665,6 +4860,7 @@ func PlotPlotStemsS8PtrS8PtrV(label_id string, xs []*int8, ys []*int8, count int
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -4689,6 +4885,7 @@ func PlotPlotStemsU16PtrIntV(label_id string, values []*uint16, count int32, ref
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -4711,6 +4908,7 @@ func PlotPlotStemsU16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, cou
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -4721,6 +4919,7 @@ func PlotPlotStemsU16PtrU16PtrV(label_id string, xs []*uint16, ys []*uint16, cou
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -4745,6 +4944,7 @@ func PlotPlotStemsU32PtrIntV(label_id string, values []*uint32, count int32, ref
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -4767,6 +4967,7 @@ func PlotPlotStemsU32PtrU32PtrV(label_id string, xs []*uint32, ys []*uint32, cou
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -4777,6 +4978,7 @@ func PlotPlotStemsU32PtrU32PtrV(label_id string, xs []*uint32, ys []*uint32, cou
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -4827,6 +5029,7 @@ func PlotPlotStemsU8PtrIntV(label_id string, values []*byte, count int32, ref fl
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -4849,6 +5052,7 @@ func PlotPlotStemsU8PtrU8PtrV(label_id string, xs []*byte, ys []*byte, count int
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -4859,6 +5063,7 @@ func PlotPlotStemsU8PtrU8PtrV(label_id string, xs []*byte, ys []*byte, count int
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -5247,6 +5452,7 @@ func PlotAddColormapU32Ptr(name string, cols []*uint32, size int32) PlotColormap
 	for i, colsV := range cols {
 		colsArg[i] = C.ImU32(*colsV)
 	}
+
 	defer func() {
 		for i, colsV := range colsArg {
 			*cols[i] = uint32(colsV)
@@ -5452,6 +5658,7 @@ func PlotPlotBarGroupsS16Ptr(label_ids []string, values []*int, item_count int32
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -5469,6 +5676,7 @@ func PlotPlotBarGroupsS32Ptr(label_ids []string, values []*int32, item_count int
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -5493,6 +5701,7 @@ func PlotPlotBarGroupsS8Ptr(label_ids []string, values []*int8, item_count int32
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -5510,6 +5719,7 @@ func PlotPlotBarGroupsU16Ptr(label_ids []string, values []*uint16, item_count in
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -5527,6 +5737,7 @@ func PlotPlotBarGroupsU32Ptr(label_ids []string, values []*uint32, item_count in
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -5551,6 +5762,7 @@ func PlotPlotBarGroupsU8Ptr(label_ids []string, values []*byte, item_count int32
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -5582,6 +5794,7 @@ func PlotPlotBarsS16PtrInt(label_id string, values []*int, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -5599,6 +5812,7 @@ func PlotPlotBarsS16PtrS16Ptr(label_id string, xs []*int, ys []*int, count int32
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -5609,6 +5823,7 @@ func PlotPlotBarsS16PtrS16Ptr(label_id string, xs []*int, ys []*int, count int32
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -5626,6 +5841,7 @@ func PlotPlotBarsS32PtrInt(label_id string, values []*int32, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -5643,6 +5859,7 @@ func PlotPlotBarsS32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, count i
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -5653,6 +5870,7 @@ func PlotPlotBarsS32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, count i
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -5684,6 +5902,7 @@ func PlotPlotBarsS8PtrInt(label_id string, values []*int8, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -5701,6 +5920,7 @@ func PlotPlotBarsS8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count int32
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -5711,6 +5931,7 @@ func PlotPlotBarsS8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count int32
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -5728,6 +5949,7 @@ func PlotPlotBarsU16PtrInt(label_id string, values []*uint16, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -5745,6 +5967,7 @@ func PlotPlotBarsU16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, count
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -5755,6 +5978,7 @@ func PlotPlotBarsU16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, count
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -5772,6 +5996,7 @@ func PlotPlotBarsU32PtrInt(label_id string, values []*uint32, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -5789,6 +6014,7 @@ func PlotPlotBarsU32PtrU32Ptr(label_id string, xs []*uint32, ys []*uint32, count
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -5799,6 +6025,7 @@ func PlotPlotBarsU32PtrU32Ptr(label_id string, xs []*uint32, ys []*uint32, count
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -5830,6 +6057,7 @@ func PlotPlotBarsU8PtrInt(label_id string, values []*byte, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -5847,6 +6075,7 @@ func PlotPlotBarsU8PtrU8Ptr(label_id string, xs []*byte, ys []*byte, count int32
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -5857,6 +6086,7 @@ func PlotPlotBarsU8PtrU8Ptr(label_id string, xs []*byte, ys []*byte, count int32
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -5881,6 +6111,7 @@ func PlotPlotDigitalS16Ptr(label_id string, xs []*int, ys []*int, count int32) {
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -5891,6 +6122,7 @@ func PlotPlotDigitalS16Ptr(label_id string, xs []*int, ys []*int, count int32) {
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -5908,6 +6140,7 @@ func PlotPlotDigitalS32Ptr(label_id string, xs []*int32, ys []*int32, count int3
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -5918,6 +6151,7 @@ func PlotPlotDigitalS32Ptr(label_id string, xs []*int32, ys []*int32, count int3
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -5942,6 +6176,7 @@ func PlotPlotDigitalS8Ptr(label_id string, xs []*int8, ys []*int8, count int32) 
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -5952,6 +6187,7 @@ func PlotPlotDigitalS8Ptr(label_id string, xs []*int8, ys []*int8, count int32) 
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -5969,6 +6205,7 @@ func PlotPlotDigitalU16Ptr(label_id string, xs []*uint16, ys []*uint16, count in
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -5979,6 +6216,7 @@ func PlotPlotDigitalU16Ptr(label_id string, xs []*uint16, ys []*uint16, count in
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -5996,6 +6234,7 @@ func PlotPlotDigitalU32Ptr(label_id string, xs []*uint32, ys []*uint32, count in
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -6006,6 +6245,7 @@ func PlotPlotDigitalU32Ptr(label_id string, xs []*uint32, ys []*uint32, count in
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -6030,6 +6270,7 @@ func PlotPlotDigitalU8Ptr(label_id string, xs []*byte, ys []*byte, count int32) 
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -6040,6 +6281,7 @@ func PlotPlotDigitalU8Ptr(label_id string, xs []*byte, ys []*byte, count int32) 
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -6078,6 +6320,7 @@ func PlotPlotErrorBarsS16PtrS16PtrS16PtrInt(label_id string, xs []*int, ys []*in
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -6088,6 +6331,7 @@ func PlotPlotErrorBarsS16PtrS16PtrS16PtrInt(label_id string, xs []*int, ys []*in
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -6098,6 +6342,7 @@ func PlotPlotErrorBarsS16PtrS16PtrS16PtrInt(label_id string, xs []*int, ys []*in
 	for i, errV := range err {
 		errArg[i] = C.ImS16(*errV)
 	}
+
 	defer func() {
 		for i, errV := range errArg {
 			*err[i] = int(errV)
@@ -6115,6 +6360,7 @@ func PlotPlotErrorBarsS16PtrS16PtrS16PtrS16Ptr(label_id string, xs []*int, ys []
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -6125,6 +6371,7 @@ func PlotPlotErrorBarsS16PtrS16PtrS16PtrS16Ptr(label_id string, xs []*int, ys []
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -6135,6 +6382,7 @@ func PlotPlotErrorBarsS16PtrS16PtrS16PtrS16Ptr(label_id string, xs []*int, ys []
 	for i, negV := range neg {
 		negArg[i] = C.ImS16(*negV)
 	}
+
 	defer func() {
 		for i, negV := range negArg {
 			*neg[i] = int(negV)
@@ -6145,6 +6393,7 @@ func PlotPlotErrorBarsS16PtrS16PtrS16PtrS16Ptr(label_id string, xs []*int, ys []
 	for i, posV := range pos {
 		posArg[i] = C.ImS16(*posV)
 	}
+
 	defer func() {
 		for i, posV := range posArg {
 			*pos[i] = int(posV)
@@ -6162,6 +6411,7 @@ func PlotPlotErrorBarsS32PtrS32PtrS32PtrInt(label_id string, xs []*int32, ys []*
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -6172,6 +6422,7 @@ func PlotPlotErrorBarsS32PtrS32PtrS32PtrInt(label_id string, xs []*int32, ys []*
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -6182,6 +6433,7 @@ func PlotPlotErrorBarsS32PtrS32PtrS32PtrInt(label_id string, xs []*int32, ys []*
 	for i, errV := range err {
 		errArg[i] = C.ImS32(*errV)
 	}
+
 	defer func() {
 		for i, errV := range errArg {
 			*err[i] = int32(errV)
@@ -6199,6 +6451,7 @@ func PlotPlotErrorBarsS32PtrS32PtrS32PtrS32Ptr(label_id string, xs []*int32, ys 
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -6209,6 +6462,7 @@ func PlotPlotErrorBarsS32PtrS32PtrS32PtrS32Ptr(label_id string, xs []*int32, ys 
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -6219,6 +6473,7 @@ func PlotPlotErrorBarsS32PtrS32PtrS32PtrS32Ptr(label_id string, xs []*int32, ys 
 	for i, negV := range neg {
 		negArg[i] = C.ImS32(*negV)
 	}
+
 	defer func() {
 		for i, negV := range negArg {
 			*neg[i] = int32(negV)
@@ -6229,6 +6484,7 @@ func PlotPlotErrorBarsS32PtrS32PtrS32PtrS32Ptr(label_id string, xs []*int32, ys 
 	for i, posV := range pos {
 		posArg[i] = C.ImS32(*posV)
 	}
+
 	defer func() {
 		for i, posV := range posArg {
 			*pos[i] = int32(posV)
@@ -6260,6 +6516,7 @@ func PlotPlotErrorBarsS8PtrS8PtrS8PtrInt(label_id string, xs []*int8, ys []*int8
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -6270,6 +6527,7 @@ func PlotPlotErrorBarsS8PtrS8PtrS8PtrInt(label_id string, xs []*int8, ys []*int8
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -6280,6 +6538,7 @@ func PlotPlotErrorBarsS8PtrS8PtrS8PtrInt(label_id string, xs []*int8, ys []*int8
 	for i, errV := range err {
 		errArg[i] = C.ImS8(*errV)
 	}
+
 	defer func() {
 		for i, errV := range errArg {
 			*err[i] = int8(errV)
@@ -6297,6 +6556,7 @@ func PlotPlotErrorBarsS8PtrS8PtrS8PtrS8Ptr(label_id string, xs []*int8, ys []*in
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -6307,6 +6567,7 @@ func PlotPlotErrorBarsS8PtrS8PtrS8PtrS8Ptr(label_id string, xs []*int8, ys []*in
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -6317,6 +6578,7 @@ func PlotPlotErrorBarsS8PtrS8PtrS8PtrS8Ptr(label_id string, xs []*int8, ys []*in
 	for i, negV := range neg {
 		negArg[i] = C.ImS8(*negV)
 	}
+
 	defer func() {
 		for i, negV := range negArg {
 			*neg[i] = int8(negV)
@@ -6327,6 +6589,7 @@ func PlotPlotErrorBarsS8PtrS8PtrS8PtrS8Ptr(label_id string, xs []*int8, ys []*in
 	for i, posV := range pos {
 		posArg[i] = C.ImS8(*posV)
 	}
+
 	defer func() {
 		for i, posV := range posArg {
 			*pos[i] = int8(posV)
@@ -6344,6 +6607,7 @@ func PlotPlotErrorBarsU16PtrU16PtrU16PtrInt(label_id string, xs []*uint16, ys []
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -6354,6 +6618,7 @@ func PlotPlotErrorBarsU16PtrU16PtrU16PtrInt(label_id string, xs []*uint16, ys []
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -6364,6 +6629,7 @@ func PlotPlotErrorBarsU16PtrU16PtrU16PtrInt(label_id string, xs []*uint16, ys []
 	for i, errV := range err {
 		errArg[i] = C.ImU16(*errV)
 	}
+
 	defer func() {
 		for i, errV := range errArg {
 			*err[i] = uint16(errV)
@@ -6381,6 +6647,7 @@ func PlotPlotErrorBarsU16PtrU16PtrU16PtrU16Ptr(label_id string, xs []*uint16, ys
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -6391,6 +6658,7 @@ func PlotPlotErrorBarsU16PtrU16PtrU16PtrU16Ptr(label_id string, xs []*uint16, ys
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -6401,6 +6669,7 @@ func PlotPlotErrorBarsU16PtrU16PtrU16PtrU16Ptr(label_id string, xs []*uint16, ys
 	for i, negV := range neg {
 		negArg[i] = C.ImU16(*negV)
 	}
+
 	defer func() {
 		for i, negV := range negArg {
 			*neg[i] = uint16(negV)
@@ -6411,6 +6680,7 @@ func PlotPlotErrorBarsU16PtrU16PtrU16PtrU16Ptr(label_id string, xs []*uint16, ys
 	for i, posV := range pos {
 		posArg[i] = C.ImU16(*posV)
 	}
+
 	defer func() {
 		for i, posV := range posArg {
 			*pos[i] = uint16(posV)
@@ -6428,6 +6698,7 @@ func PlotPlotErrorBarsU32PtrU32PtrU32PtrInt(label_id string, xs []*uint32, ys []
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -6438,6 +6709,7 @@ func PlotPlotErrorBarsU32PtrU32PtrU32PtrInt(label_id string, xs []*uint32, ys []
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -6448,6 +6720,7 @@ func PlotPlotErrorBarsU32PtrU32PtrU32PtrInt(label_id string, xs []*uint32, ys []
 	for i, errV := range err {
 		errArg[i] = C.ImU32(*errV)
 	}
+
 	defer func() {
 		for i, errV := range errArg {
 			*err[i] = uint32(errV)
@@ -6465,6 +6738,7 @@ func PlotPlotErrorBarsU32PtrU32PtrU32PtrU32Ptr(label_id string, xs []*uint32, ys
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -6475,6 +6749,7 @@ func PlotPlotErrorBarsU32PtrU32PtrU32PtrU32Ptr(label_id string, xs []*uint32, ys
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -6485,6 +6760,7 @@ func PlotPlotErrorBarsU32PtrU32PtrU32PtrU32Ptr(label_id string, xs []*uint32, ys
 	for i, negV := range neg {
 		negArg[i] = C.ImU32(*negV)
 	}
+
 	defer func() {
 		for i, negV := range negArg {
 			*neg[i] = uint32(negV)
@@ -6495,6 +6771,7 @@ func PlotPlotErrorBarsU32PtrU32PtrU32PtrU32Ptr(label_id string, xs []*uint32, ys
 	for i, posV := range pos {
 		posArg[i] = C.ImU32(*posV)
 	}
+
 	defer func() {
 		for i, posV := range posArg {
 			*pos[i] = uint32(posV)
@@ -6526,6 +6803,7 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrInt(label_id string, xs []*byte, ys []*byte
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -6536,6 +6814,7 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrInt(label_id string, xs []*byte, ys []*byte
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -6546,6 +6825,7 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrInt(label_id string, xs []*byte, ys []*byte
 	for i, errV := range err {
 		errArg[i] = C.ImU8(*errV)
 	}
+
 	defer func() {
 		for i, errV := range errArg {
 			*err[i] = byte(errV)
@@ -6563,6 +6843,7 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrU8Ptr(label_id string, xs []*byte, ys []*by
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -6573,6 +6854,7 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrU8Ptr(label_id string, xs []*byte, ys []*by
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -6583,6 +6865,7 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrU8Ptr(label_id string, xs []*byte, ys []*by
 	for i, negV := range neg {
 		negArg[i] = C.ImU8(*negV)
 	}
+
 	defer func() {
 		for i, negV := range negArg {
 			*neg[i] = byte(negV)
@@ -6593,6 +6876,7 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrU8Ptr(label_id string, xs []*byte, ys []*by
 	for i, posV := range pos {
 		posArg[i] = C.ImU8(*posV)
 	}
+
 	defer func() {
 		for i, posV := range posArg {
 			*pos[i] = byte(posV)
@@ -6617,6 +6901,7 @@ func PlotPlotHeatmapS16Ptr(label_id string, values []*int, rows int32, cols int3
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -6634,6 +6919,7 @@ func PlotPlotHeatmapS32Ptr(label_id string, values []*int32, rows int32, cols in
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -6658,6 +6944,7 @@ func PlotPlotHeatmapS8Ptr(label_id string, values []*int8, rows int32, cols int3
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -6675,6 +6962,7 @@ func PlotPlotHeatmapU16Ptr(label_id string, values []*uint16, rows int32, cols i
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -6692,6 +6980,7 @@ func PlotPlotHeatmapU32Ptr(label_id string, values []*uint32, rows int32, cols i
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -6716,6 +7005,7 @@ func PlotPlotHeatmapU8Ptr(label_id string, values []*byte, rows int32, cols int3
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -6740,6 +7030,7 @@ func PlotPlotHistogram2DS16Ptr(label_id string, xs []*int, ys []*int, count int3
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -6750,6 +7041,7 @@ func PlotPlotHistogram2DS16Ptr(label_id string, xs []*int, ys []*int, count int3
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -6767,6 +7059,7 @@ func PlotPlotHistogram2DS32Ptr(label_id string, xs []*int32, ys []*int32, count 
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -6777,6 +7070,7 @@ func PlotPlotHistogram2DS32Ptr(label_id string, xs []*int32, ys []*int32, count 
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -6801,6 +7095,7 @@ func PlotPlotHistogram2DS8Ptr(label_id string, xs []*int8, ys []*int8, count int
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -6811,6 +7106,7 @@ func PlotPlotHistogram2DS8Ptr(label_id string, xs []*int8, ys []*int8, count int
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -6828,6 +7124,7 @@ func PlotPlotHistogram2DU16Ptr(label_id string, xs []*uint16, ys []*uint16, coun
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -6838,6 +7135,7 @@ func PlotPlotHistogram2DU16Ptr(label_id string, xs []*uint16, ys []*uint16, coun
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -6855,6 +7153,7 @@ func PlotPlotHistogram2DU32Ptr(label_id string, xs []*uint32, ys []*uint32, coun
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -6865,6 +7164,7 @@ func PlotPlotHistogram2DU32Ptr(label_id string, xs []*uint32, ys []*uint32, coun
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -6889,6 +7189,7 @@ func PlotPlotHistogram2DU8Ptr(label_id string, xs []*byte, ys []*byte, count int
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -6899,6 +7200,7 @@ func PlotPlotHistogram2DU8Ptr(label_id string, xs []*byte, ys []*byte, count int
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -6923,6 +7225,7 @@ func PlotPlotHistogramS16Ptr(label_id string, values []*int, count int32) float6
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -6940,6 +7243,7 @@ func PlotPlotHistogramS32Ptr(label_id string, values []*int32, count int32) floa
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -6964,6 +7268,7 @@ func PlotPlotHistogramS8Ptr(label_id string, values []*int8, count int32) float6
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -6981,6 +7286,7 @@ func PlotPlotHistogramU16Ptr(label_id string, values []*uint16, count int32) flo
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -6998,6 +7304,7 @@ func PlotPlotHistogramU32Ptr(label_id string, values []*uint32, count int32) flo
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -7022,6 +7329,7 @@ func PlotPlotHistogramU8Ptr(label_id string, values []*byte, count int32) float6
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -7053,6 +7361,7 @@ func PlotPlotInfLinesS16Ptr(label_id string, values []*int, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -7070,6 +7379,7 @@ func PlotPlotInfLinesS32Ptr(label_id string, values []*int32, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -7094,6 +7404,7 @@ func PlotPlotInfLinesS8Ptr(label_id string, values []*int8, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -7111,6 +7422,7 @@ func PlotPlotInfLinesU16Ptr(label_id string, values []*uint16, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -7128,6 +7440,7 @@ func PlotPlotInfLinesU32Ptr(label_id string, values []*uint32, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -7152,6 +7465,7 @@ func PlotPlotInfLinesU8Ptr(label_id string, values []*byte, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -7183,6 +7497,7 @@ func PlotPlotLineS16PtrInt(label_id string, values []*int, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -7200,6 +7515,7 @@ func PlotPlotLineS16PtrS16Ptr(label_id string, xs []*int, ys []*int, count int32
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -7210,6 +7526,7 @@ func PlotPlotLineS16PtrS16Ptr(label_id string, xs []*int, ys []*int, count int32
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -7227,6 +7544,7 @@ func PlotPlotLineS32PtrInt(label_id string, values []*int32, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -7244,6 +7562,7 @@ func PlotPlotLineS32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, count i
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -7254,6 +7573,7 @@ func PlotPlotLineS32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, count i
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -7285,6 +7605,7 @@ func PlotPlotLineS8PtrInt(label_id string, values []*int8, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -7302,6 +7623,7 @@ func PlotPlotLineS8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count int32
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -7312,6 +7634,7 @@ func PlotPlotLineS8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count int32
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -7329,6 +7652,7 @@ func PlotPlotLineU16PtrInt(label_id string, values []*uint16, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -7346,6 +7670,7 @@ func PlotPlotLineU16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, count
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -7356,6 +7681,7 @@ func PlotPlotLineU16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, count
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -7373,6 +7699,7 @@ func PlotPlotLineU32PtrInt(label_id string, values []*uint32, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -7390,6 +7717,7 @@ func PlotPlotLineU32PtrU32Ptr(label_id string, xs []*uint32, ys []*uint32, count
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -7400,6 +7728,7 @@ func PlotPlotLineU32PtrU32Ptr(label_id string, xs []*uint32, ys []*uint32, count
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -7431,6 +7760,7 @@ func PlotPlotLineU8PtrInt(label_id string, values []*byte, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -7448,6 +7778,7 @@ func PlotPlotLineU8PtrU8Ptr(label_id string, xs []*byte, ys []*byte, count int32
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -7458,6 +7789,7 @@ func PlotPlotLineU8PtrU8Ptr(label_id string, xs []*byte, ys []*byte, count int32
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -7482,6 +7814,7 @@ func PlotPlotPieChartS16Ptr(label_ids []string, values []*int, count int32, x fl
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -7499,6 +7832,7 @@ func PlotPlotPieChartS32Ptr(label_ids []string, values []*int32, count int32, x 
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -7523,6 +7857,7 @@ func PlotPlotPieChartS8Ptr(label_ids []string, values []*int8, count int32, x fl
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -7540,6 +7875,7 @@ func PlotPlotPieChartU16Ptr(label_ids []string, values []*uint16, count int32, x
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -7557,6 +7893,7 @@ func PlotPlotPieChartU32Ptr(label_ids []string, values []*uint32, count int32, x
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -7581,6 +7918,7 @@ func PlotPlotPieChartU8Ptr(label_ids []string, values []*byte, count int32, x fl
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -7612,6 +7950,7 @@ func PlotPlotScatterS16PtrInt(label_id string, values []*int, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -7629,6 +7968,7 @@ func PlotPlotScatterS16PtrS16Ptr(label_id string, xs []*int, ys []*int, count in
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -7639,6 +7979,7 @@ func PlotPlotScatterS16PtrS16Ptr(label_id string, xs []*int, ys []*int, count in
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -7656,6 +7997,7 @@ func PlotPlotScatterS32PtrInt(label_id string, values []*int32, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -7673,6 +8015,7 @@ func PlotPlotScatterS32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, coun
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -7683,6 +8026,7 @@ func PlotPlotScatterS32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, coun
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -7714,6 +8058,7 @@ func PlotPlotScatterS8PtrInt(label_id string, values []*int8, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -7731,6 +8076,7 @@ func PlotPlotScatterS8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count in
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -7741,6 +8087,7 @@ func PlotPlotScatterS8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count in
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -7758,6 +8105,7 @@ func PlotPlotScatterU16PtrInt(label_id string, values []*uint16, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -7775,6 +8123,7 @@ func PlotPlotScatterU16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, co
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -7785,6 +8134,7 @@ func PlotPlotScatterU16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, co
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -7802,6 +8152,7 @@ func PlotPlotScatterU32PtrInt(label_id string, values []*uint32, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -7819,6 +8170,7 @@ func PlotPlotScatterU32PtrU32Ptr(label_id string, xs []*uint32, ys []*uint32, co
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -7829,6 +8181,7 @@ func PlotPlotScatterU32PtrU32Ptr(label_id string, xs []*uint32, ys []*uint32, co
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -7860,6 +8213,7 @@ func PlotPlotScatterU8PtrInt(label_id string, values []*byte, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -7877,6 +8231,7 @@ func PlotPlotScatterU8PtrU8Ptr(label_id string, xs []*byte, ys []*byte, count in
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -7887,6 +8242,7 @@ func PlotPlotScatterU8PtrU8Ptr(label_id string, xs []*byte, ys []*byte, count in
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -7925,6 +8281,7 @@ func PlotPlotShadedS16PtrInt(label_id string, values []*int, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -7942,6 +8299,7 @@ func PlotPlotShadedS16PtrS16PtrInt(label_id string, xs []*int, ys []*int, count 
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -7952,6 +8310,7 @@ func PlotPlotShadedS16PtrS16PtrInt(label_id string, xs []*int, ys []*int, count 
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -7969,6 +8328,7 @@ func PlotPlotShadedS16PtrS16PtrS16Ptr(label_id string, xs []*int, ys1 []*int, ys
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -7979,6 +8339,7 @@ func PlotPlotShadedS16PtrS16PtrS16Ptr(label_id string, xs []*int, ys1 []*int, ys
 	for i, ys1V := range ys1 {
 		ys1Arg[i] = C.ImS16(*ys1V)
 	}
+
 	defer func() {
 		for i, ys1V := range ys1Arg {
 			*ys1[i] = int(ys1V)
@@ -7989,6 +8350,7 @@ func PlotPlotShadedS16PtrS16PtrS16Ptr(label_id string, xs []*int, ys1 []*int, ys
 	for i, ys2V := range ys2 {
 		ys2Arg[i] = C.ImS16(*ys2V)
 	}
+
 	defer func() {
 		for i, ys2V := range ys2Arg {
 			*ys2[i] = int(ys2V)
@@ -8006,6 +8368,7 @@ func PlotPlotShadedS32PtrInt(label_id string, values []*int32, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -8023,6 +8386,7 @@ func PlotPlotShadedS32PtrS32PtrInt(label_id string, xs []*int32, ys []*int32, co
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -8033,6 +8397,7 @@ func PlotPlotShadedS32PtrS32PtrInt(label_id string, xs []*int32, ys []*int32, co
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -8050,6 +8415,7 @@ func PlotPlotShadedS32PtrS32PtrS32Ptr(label_id string, xs []*int32, ys1 []*int32
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -8060,6 +8426,7 @@ func PlotPlotShadedS32PtrS32PtrS32Ptr(label_id string, xs []*int32, ys1 []*int32
 	for i, ys1V := range ys1 {
 		ys1Arg[i] = C.ImS32(*ys1V)
 	}
+
 	defer func() {
 		for i, ys1V := range ys1Arg {
 			*ys1[i] = int32(ys1V)
@@ -8070,6 +8437,7 @@ func PlotPlotShadedS32PtrS32PtrS32Ptr(label_id string, xs []*int32, ys1 []*int32
 	for i, ys2V := range ys2 {
 		ys2Arg[i] = C.ImS32(*ys2V)
 	}
+
 	defer func() {
 		for i, ys2V := range ys2Arg {
 			*ys2[i] = int32(ys2V)
@@ -8108,6 +8476,7 @@ func PlotPlotShadedS8PtrInt(label_id string, values []*int8, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -8125,6 +8494,7 @@ func PlotPlotShadedS8PtrS8PtrInt(label_id string, xs []*int8, ys []*int8, count 
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -8135,6 +8505,7 @@ func PlotPlotShadedS8PtrS8PtrInt(label_id string, xs []*int8, ys []*int8, count 
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -8152,6 +8523,7 @@ func PlotPlotShadedS8PtrS8PtrS8Ptr(label_id string, xs []*int8, ys1 []*int8, ys2
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -8162,6 +8534,7 @@ func PlotPlotShadedS8PtrS8PtrS8Ptr(label_id string, xs []*int8, ys1 []*int8, ys2
 	for i, ys1V := range ys1 {
 		ys1Arg[i] = C.ImS8(*ys1V)
 	}
+
 	defer func() {
 		for i, ys1V := range ys1Arg {
 			*ys1[i] = int8(ys1V)
@@ -8172,6 +8545,7 @@ func PlotPlotShadedS8PtrS8PtrS8Ptr(label_id string, xs []*int8, ys1 []*int8, ys2
 	for i, ys2V := range ys2 {
 		ys2Arg[i] = C.ImS8(*ys2V)
 	}
+
 	defer func() {
 		for i, ys2V := range ys2Arg {
 			*ys2[i] = int8(ys2V)
@@ -8189,6 +8563,7 @@ func PlotPlotShadedU16PtrInt(label_id string, values []*uint16, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -8206,6 +8581,7 @@ func PlotPlotShadedU16PtrU16PtrInt(label_id string, xs []*uint16, ys []*uint16, 
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -8216,6 +8592,7 @@ func PlotPlotShadedU16PtrU16PtrInt(label_id string, xs []*uint16, ys []*uint16, 
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -8233,6 +8610,7 @@ func PlotPlotShadedU16PtrU16PtrU16Ptr(label_id string, xs []*uint16, ys1 []*uint
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -8243,6 +8621,7 @@ func PlotPlotShadedU16PtrU16PtrU16Ptr(label_id string, xs []*uint16, ys1 []*uint
 	for i, ys1V := range ys1 {
 		ys1Arg[i] = C.ImU16(*ys1V)
 	}
+
 	defer func() {
 		for i, ys1V := range ys1Arg {
 			*ys1[i] = uint16(ys1V)
@@ -8253,6 +8632,7 @@ func PlotPlotShadedU16PtrU16PtrU16Ptr(label_id string, xs []*uint16, ys1 []*uint
 	for i, ys2V := range ys2 {
 		ys2Arg[i] = C.ImU16(*ys2V)
 	}
+
 	defer func() {
 		for i, ys2V := range ys2Arg {
 			*ys2[i] = uint16(ys2V)
@@ -8270,6 +8650,7 @@ func PlotPlotShadedU32PtrInt(label_id string, values []*uint32, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -8287,6 +8668,7 @@ func PlotPlotShadedU32PtrU32PtrInt(label_id string, xs []*uint32, ys []*uint32, 
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -8297,6 +8679,7 @@ func PlotPlotShadedU32PtrU32PtrInt(label_id string, xs []*uint32, ys []*uint32, 
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -8314,6 +8697,7 @@ func PlotPlotShadedU32PtrU32PtrU32Ptr(label_id string, xs []*uint32, ys1 []*uint
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -8324,6 +8708,7 @@ func PlotPlotShadedU32PtrU32PtrU32Ptr(label_id string, xs []*uint32, ys1 []*uint
 	for i, ys1V := range ys1 {
 		ys1Arg[i] = C.ImU32(*ys1V)
 	}
+
 	defer func() {
 		for i, ys1V := range ys1Arg {
 			*ys1[i] = uint32(ys1V)
@@ -8334,6 +8719,7 @@ func PlotPlotShadedU32PtrU32PtrU32Ptr(label_id string, xs []*uint32, ys1 []*uint
 	for i, ys2V := range ys2 {
 		ys2Arg[i] = C.ImU32(*ys2V)
 	}
+
 	defer func() {
 		for i, ys2V := range ys2Arg {
 			*ys2[i] = uint32(ys2V)
@@ -8372,6 +8758,7 @@ func PlotPlotShadedU8PtrInt(label_id string, values []*byte, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -8389,6 +8776,7 @@ func PlotPlotShadedU8PtrU8PtrInt(label_id string, xs []*byte, ys []*byte, count 
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -8399,6 +8787,7 @@ func PlotPlotShadedU8PtrU8PtrInt(label_id string, xs []*byte, ys []*byte, count 
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -8416,6 +8805,7 @@ func PlotPlotShadedU8PtrU8PtrU8Ptr(label_id string, xs []*byte, ys1 []*byte, ys2
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -8426,6 +8816,7 @@ func PlotPlotShadedU8PtrU8PtrU8Ptr(label_id string, xs []*byte, ys1 []*byte, ys2
 	for i, ys1V := range ys1 {
 		ys1Arg[i] = C.ImU8(*ys1V)
 	}
+
 	defer func() {
 		for i, ys1V := range ys1Arg {
 			*ys1[i] = byte(ys1V)
@@ -8436,6 +8827,7 @@ func PlotPlotShadedU8PtrU8PtrU8Ptr(label_id string, xs []*byte, ys1 []*byte, ys2
 	for i, ys2V := range ys2 {
 		ys2Arg[i] = C.ImU8(*ys2V)
 	}
+
 	defer func() {
 		for i, ys2V := range ys2Arg {
 			*ys2[i] = byte(ys2V)
@@ -8467,6 +8859,7 @@ func PlotPlotStairsS16PtrInt(label_id string, values []*int, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -8484,6 +8877,7 @@ func PlotPlotStairsS16PtrS16Ptr(label_id string, xs []*int, ys []*int, count int
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -8494,6 +8888,7 @@ func PlotPlotStairsS16PtrS16Ptr(label_id string, xs []*int, ys []*int, count int
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -8511,6 +8906,7 @@ func PlotPlotStairsS32PtrInt(label_id string, values []*int32, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -8528,6 +8924,7 @@ func PlotPlotStairsS32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, count
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -8538,6 +8935,7 @@ func PlotPlotStairsS32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, count
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -8569,6 +8967,7 @@ func PlotPlotStairsS8PtrInt(label_id string, values []*int8, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -8586,6 +8985,7 @@ func PlotPlotStairsS8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count int
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -8596,6 +8996,7 @@ func PlotPlotStairsS8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count int
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -8613,6 +9014,7 @@ func PlotPlotStairsU16PtrInt(label_id string, values []*uint16, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -8630,6 +9032,7 @@ func PlotPlotStairsU16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, cou
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -8640,6 +9043,7 @@ func PlotPlotStairsU16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, cou
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -8657,6 +9061,7 @@ func PlotPlotStairsU32PtrInt(label_id string, values []*uint32, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -8674,6 +9079,7 @@ func PlotPlotStairsU32PtrU32Ptr(label_id string, xs []*uint32, ys []*uint32, cou
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -8684,6 +9090,7 @@ func PlotPlotStairsU32PtrU32Ptr(label_id string, xs []*uint32, ys []*uint32, cou
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -8715,6 +9122,7 @@ func PlotPlotStairsU8PtrInt(label_id string, values []*byte, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -8732,6 +9140,7 @@ func PlotPlotStairsU8PtrU8Ptr(label_id string, xs []*byte, ys []*byte, count int
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -8742,6 +9151,7 @@ func PlotPlotStairsU8PtrU8Ptr(label_id string, xs []*byte, ys []*byte, count int
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)
@@ -8773,6 +9183,7 @@ func PlotPlotStemsS16PtrInt(label_id string, values []*int, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int(valuesV)
@@ -8790,6 +9201,7 @@ func PlotPlotStemsS16PtrS16Ptr(label_id string, xs []*int, ys []*int, count int3
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int(xsV)
@@ -8800,6 +9212,7 @@ func PlotPlotStemsS16PtrS16Ptr(label_id string, xs []*int, ys []*int, count int3
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int(ysV)
@@ -8817,6 +9230,7 @@ func PlotPlotStemsS32PtrInt(label_id string, values []*int32, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int32(valuesV)
@@ -8834,6 +9248,7 @@ func PlotPlotStemsS32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, count 
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int32(xsV)
@@ -8844,6 +9259,7 @@ func PlotPlotStemsS32PtrS32Ptr(label_id string, xs []*int32, ys []*int32, count 
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int32(ysV)
@@ -8875,6 +9291,7 @@ func PlotPlotStemsS8PtrInt(label_id string, values []*int8, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImS8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = int8(valuesV)
@@ -8892,6 +9309,7 @@ func PlotPlotStemsS8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count int3
 	for i, xsV := range xs {
 		xsArg[i] = C.ImS8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = int8(xsV)
@@ -8902,6 +9320,7 @@ func PlotPlotStemsS8PtrS8Ptr(label_id string, xs []*int8, ys []*int8, count int3
 	for i, ysV := range ys {
 		ysArg[i] = C.ImS8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = int8(ysV)
@@ -8919,6 +9338,7 @@ func PlotPlotStemsU16PtrInt(label_id string, values []*uint16, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU16(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint16(valuesV)
@@ -8936,6 +9356,7 @@ func PlotPlotStemsU16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, coun
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU16(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint16(xsV)
@@ -8946,6 +9367,7 @@ func PlotPlotStemsU16PtrU16Ptr(label_id string, xs []*uint16, ys []*uint16, coun
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU16(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint16(ysV)
@@ -8963,6 +9385,7 @@ func PlotPlotStemsU32PtrInt(label_id string, values []*uint32, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU32(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = uint32(valuesV)
@@ -8980,6 +9403,7 @@ func PlotPlotStemsU32PtrU32Ptr(label_id string, xs []*uint32, ys []*uint32, coun
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU32(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = uint32(xsV)
@@ -8990,6 +9414,7 @@ func PlotPlotStemsU32PtrU32Ptr(label_id string, xs []*uint32, ys []*uint32, coun
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU32(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = uint32(ysV)
@@ -9021,6 +9446,7 @@ func PlotPlotStemsU8PtrInt(label_id string, values []*byte, count int32) {
 	for i, valuesV := range values {
 		valuesArg[i] = C.ImU8(*valuesV)
 	}
+
 	defer func() {
 		for i, valuesV := range valuesArg {
 			*values[i] = byte(valuesV)
@@ -9038,6 +9464,7 @@ func PlotPlotStemsU8PtrU8Ptr(label_id string, xs []*byte, ys []*byte, count int3
 	for i, xsV := range xs {
 		xsArg[i] = C.ImU8(*xsV)
 	}
+
 	defer func() {
 		for i, xsV := range xsArg {
 			*xs[i] = byte(xsV)
@@ -9048,6 +9475,7 @@ func PlotPlotStemsU8PtrU8Ptr(label_id string, xs []*byte, ys []*byte, count int3
 	for i, ysV := range ys {
 		ysArg[i] = C.ImU8(*ysV)
 	}
+
 	defer func() {
 		for i, ysV := range ysArg {
 			*ys[i] = byte(ysV)

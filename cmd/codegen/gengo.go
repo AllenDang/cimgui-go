@@ -74,12 +74,3 @@ func renameGoIdentifier(n string) string {
 	}
 	return n
 }
-
-type argOutput struct {
-	// go-valid argument type (e.g. string, ImVec2, etc.)
-	ArgType string
-	// argument deffinition (e.g. arg1, arg1Fin := ...\ndefer arg1Fin())
-	ArgDef string
-	// name of argument (e.g. arg1)
-	VarName string
-}

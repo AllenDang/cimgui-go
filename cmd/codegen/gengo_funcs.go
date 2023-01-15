@@ -115,7 +115,7 @@ import "unsafe"
 `, g.prefix))
 }
 
-func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrappers []argOutput) (noErrors bool) {
+func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrappers []ArgumentWrapperData) (noErrors bool) {
 	switch {
 	case f.NonUDT == 1:
 		noErrors = g.generateNonUDTFunc(f, args, argWrappers)
@@ -132,7 +132,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 }
 
 // generateFunc will smartly generate a function basing on its return type and arguments.
-func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []argOutput) (noErrors bool) {
+func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []ArgumentWrapperData) (noErrors bool) {
 	var returnType, returnStmt, receiver string
 	funcName := f.FuncName
 
@@ -238,7 +238,7 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 		return *pOut
 	}
 */
-func (g *goFuncsGenerator) generateNonUDTFunc(f FuncDef, args []string, argWrappers []argOutput) (noErrors bool) {
+func (g *goFuncsGenerator) generateNonUDTFunc(f FuncDef, args []string, argWrappers []ArgumentWrapperData) (noErrors bool) {
 	// find out the return type
 	outArg := f.ArgsT[0]
 	outArgT := strings.TrimSuffix(outArg.Type, "*")
@@ -318,7 +318,7 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 		renameGoIdentifier(returnType))
 }
 
-func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappers []argOutput) {
+func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappers []ArgumentWrapperData) {
 	for i, a := range f.ArgsT {
 		g.shouldGenerate = false
 
@@ -332,7 +332,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 
 		if f.StructGetter && g.structNames[a.Type] {
 			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(a.Type)))
-			argWrappers = append(argWrappers, argOutput{
+			argWrappers = append(argWrappers, ArgumentWrapperData{
 				VarName: fmt.Sprintf("%s.handle()", a.Name),
 			})
 
@@ -342,18 +342,15 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 		}
 
 		if v, err := argWrapper(a.Type); err == nil {
-			argType, argDef, varName := v(a)
-			if goEnumName := argType; g.isEnum(goEnumName) {
-				argType = goEnumName
+			arg := v(a)
+			// TODO: WTF? what does it do?
+			if goEnumName := arg.ArgType; g.isEnum(goEnumName) {
+				arg.ArgType = goEnumName
 			}
 
-			argWrappers = append(argWrappers, argOutput{
-				ArgType: argType,
-				ArgDef:  argDef,
-				VarName: varName,
-			})
+			argWrappers = append(argWrappers, arg)
 
-			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(argType)))
+			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(arg.ArgType)))
 
 			g.shouldGenerate = true
 			continue
@@ -361,7 +358,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 
 		if goEnumName := a.Type; g.isEnum(goEnumName) {
 			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(goEnumName)))
-			argWrappers = append(argWrappers, argOutput{
+			argWrappers = append(argWrappers, ArgumentWrapperData{
 				VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
 			})
 
@@ -375,7 +372,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 
 			if g.structNames[pureType] {
 				args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType)))
-				argWrappers = append(argWrappers, argOutput{
+				argWrappers = append(argWrappers, ArgumentWrapperData{
 					VarName: fmt.Sprintf("%s.handle()", a.Name),
 				})
 
@@ -397,12 +394,17 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 // and returns function call arguments
 // e.g.:
 // it will write the following into the buffer:
-func (g *goFuncsGenerator) generateFuncBody(argWrappers []argOutput) string {
+func (g *goFuncsGenerator) generateFuncBody(argWrappers []ArgumentWrapperData) string {
 	var invokeStmt []string
 	for _, aw := range argWrappers {
 		invokeStmt = append(invokeStmt, aw.VarName)
 		if len(aw.ArgDef) > 0 {
-			g.sb.WriteString(fmt.Sprintf("%s\n\n", aw.ArgDef))
+			g.sb.WriteString(fmt.Sprintf("%s\n", aw.ArgDef))
+			if aw.Finalizer != "" {
+				g.sb.WriteString(fmt.Sprintf("defer %s\n", aw.Finalizer))
+			}
+
+			g.sb.WriteString("\n\n")
 		}
 	}
 
