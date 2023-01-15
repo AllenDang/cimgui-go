@@ -273,10 +273,6 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 	funcParts := strings.Split(funcName, "_")
 	typeName := funcParts[0]
 
-	if len(receiver) > 0 {
-		receiver = fmt.Sprintf("(self %s)", renameGoIdentifier(receiver))
-	}
-
 	// Generate default param value hint
 	var commentSb strings.Builder
 	if len(f.Defaults) > 0 {
@@ -300,24 +296,18 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 		}
 	}
 
-	if strings.Contains(funcName, "_") &&
-		len(funcParts) > 1 &&
-		len(args) > 0 && strings.Contains(args[0], "self ") {
+	// convert func(self *receiverType) into a method
+	if len(funcParts) > 1 &&
+		len(args) > 0 &&
+		strings.Contains(args[0], "self ") {
 
-		newFuncName := strings.TrimPrefix(funcName, typeName+"_")
-		newArgs := args
-		if len(newArgs) > 0 {
-			newArgs = args[1:]
-		}
+		funcName = strings.TrimPrefix(funcName, typeName+"_")
+		receiver = strings.TrimPrefix(args[0], "self ")
+		args = args[1:]
+	}
 
-		typeName = strings.TrimPrefix(args[0], "self ")
-		return fmt.Sprintf("%sfunc %s (self %s) %s(%s) %s {\n",
-			strings.Replace(commentSb.String(), "%s", renameGoIdentifier(newFuncName), 1),
-			renameGoIdentifier(receiver),
-			renameGoIdentifier(typeName),
-			renameGoIdentifier(newFuncName),
-			strings.Join(newArgs, ","),
-			renameGoIdentifier(returnType))
+	if len(receiver) > 0 {
+		receiver = fmt.Sprintf("(self %s)", renameGoIdentifier(receiver))
 	}
 
 	return fmt.Sprintf("%sfunc %s %s(%s) %s {\n",
