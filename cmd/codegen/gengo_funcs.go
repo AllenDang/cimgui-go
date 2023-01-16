@@ -119,24 +119,6 @@ import "unsafe"
 }
 
 func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrappers []ArgumentWrapperData) (noErrors bool) {
-	// TODO: remove here :-)
-	//switch {
-	//case f.NonUDT == 1:
-	//	noErrors = g.generateNonUDTFunc(f, args, argWrappers)
-	//default:
-	noErrors = g.generateFunc(f, args, argWrappers)
-	//}
-
-	if noErrors {
-		g.sb.WriteString("}\n\n")
-		g.convertedFuncCount += 1
-	}
-
-	return
-}
-
-// generateFunc will smartly generate a function basing on its return type and arguments.
-func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []ArgumentWrapperData) (noErrors bool) {
 	var returnType, returnStmt, receiver string
 	funcName := f.FuncName
 
@@ -262,6 +244,9 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 	}
 
 	g.sb.WriteString("\n\n")
+
+	g.sb.WriteString("}\n\n")
+	g.convertedFuncCount += 1
 
 	return true
 }
