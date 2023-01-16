@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.2)
 
 project(cimgui)
 
@@ -45,7 +45,8 @@ else(WIN32)#Unix
 endif(WIN32)
 
 if(IMGUI_FREETYPE)
-	FIND_PACKAGE(freetype REQUIRED PATHS ${FREETYPE_PATH})
+	FIND_PACKAGE(Freetype REQUIRED)
+    INCLUDE_DIRECTORIES(${FREETYPE_INCLUDE_DIR_freetype2})
 	list(APPEND IMGUI_LIBRARIES freetype)
 	list(APPEND IMGUI_SOURCES imgui/misc/freetype/imgui_freetype.cpp)
 	add_definitions("-DCIMGUI_FREETYPE=1")
