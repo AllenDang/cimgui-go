@@ -330,9 +330,9 @@ func (self PlotItemGroup) ItemIndex(item PlotItem) int {
 	return int(C.ImPlotItemGroup_GetItemIndex(self.handle(), item.handle()))
 }
 
-// func (self PlotItemGroup) ItemID(id ID) PlotItem {
-// 	return (PlotItem)(unsafe.Pointer(C.ImPlotItemGroup_GetItem_ID(self.handle(), C.ImGuiID(id))))
-// }
+func (self PlotItemGroup) ItemByID(id ID) PlotItem {
+	return (PlotItem)(unsafe.Pointer(C.ImPlotItemGroup_GetItem_ID(self.handle(), C.ImGuiID(id))))
+}
 
 func (self PlotItemGroup) ItemStr(label_id string) PlotItem {
 	label_idArg, label_idFin := wrapString(label_id)
@@ -7094,9 +7094,18 @@ func PlotBeginDragDropSourcePlot() bool {
 	return C.wrap_ImPlot_BeginDragDropSourcePlot() == C.bool(true)
 }
 
+var (
+	label_idArg *C.char
+	label_idFin func()
+)
+
 func PlotBeginItem(label_id string) bool {
-	label_idArg, label_idFin := wrapString(label_id)
-	defer label_idFin()
+	if label_idArg != nil {
+		label_idFin()
+	}
+	
+	label_idArg, label_idFin = wrapString(label_id)
+	// defer label_idFin()
 
 	return C.wrap_ImPlot_BeginItem(label_idArg) == C.bool(true)
 }
@@ -7207,14 +7216,22 @@ func PlotGetColormapSize() int {
 	return int(C.wrap_ImPlot_GetColormapSize())
 }
 
-func PlotGetPlotMousePos() PlotPoint {
-	pOut := &PlotPoint{}
-	pOutArg, pOutFin := wrap[C.ImPlotPoint, *PlotPoint](pOut)
+func PlotGetPlotMousePos() (pOutV PlotPoint) {
+	pOutArg, pOutFin := wrap[C.ImPlotPoint, *PlotPoint](&pOutV)
 	defer pOutFin()
 
 	C.wrap_ImPlot_GetPlotMousePos(pOutArg)
-	return *pOut
+	return
 }
+
+// func PlotGetPlotMousePos() PlotPoint {
+// 	pOut := &PlotPoint{}
+// 	pOutArg, _ := wrap[C.ImPlotPoint, *PlotPoint](pOut)
+// 	// defer pOutFin()
+
+// 	C.wrap_ImPlot_GetPlotMousePos(pOutArg)
+// 	return *pOut.fromC(*pOutArg)
+// }
 
 func PlotHideNextItem() {
 	C.wrap_ImPlot_HideNextItem()
@@ -11042,11 +11059,12 @@ func PlotPlotToPixelsPlotPoInt(plt PlotPoint) Vec2 {
 
 func PlotPlotToPixelsdouble(x float64, y float64) Vec2 {
 	pOut := &Vec2{}
-	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
-	defer pOutFin()
+	pOutArg, _ := wrap[C.ImVec2, *Vec2](pOut)
+	// defer pOutFin()
 
 	C.wrap_ImPlot_PlotToPixels_double(pOutArg, C.double(x), C.double(y))
-	return *pOut
+	
+	return *pOut.fromC(*pOutArg)
 }
 
 func PlotPopColormap() {
