@@ -417,6 +417,22 @@ const (
 	FocusedFlagsRootAndChildWindows = 3
 )
 
+// original name: ImGuiFreeTypeBuilderFlags
+type FreeTypeBuilderFlags int
+
+const (
+	FreeTypeBuilderFlagsNoHinting     = 1
+	FreeTypeBuilderFlagsNoAutoHint    = 2
+	FreeTypeBuilderFlagsForceAutoHint = 4
+	FreeTypeBuilderFlagsLightHinting  = 8
+	FreeTypeBuilderFlagsMonoHinting   = 16
+	FreeTypeBuilderFlagsBold          = 32
+	FreeTypeBuilderFlagsOblique       = 64
+	FreeTypeBuilderFlagsMonochrome    = 128
+	FreeTypeBuilderFlagsLoadColor     = 256
+	FreeTypeBuilderFlagsBitmap        = 512
+)
+
 // original name: ImGuiHoveredFlags_
 type HoveredFlags int
 

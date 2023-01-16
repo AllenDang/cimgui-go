@@ -735,6 +735,10 @@ func (self DockContext) Destroy() {
 	C.ImGuiDockContext_destroy(self.handle())
 }
 
+func FreeTypeGetBuilderForFreeType() FontBuilderIO {
+	return (FontBuilderIO)(unsafe.Pointer(C.ImGuiFreeType_GetBuilderForFreeType()))
+}
+
 func (self IO) AddFocusEvent(focused bool) {
 	C.ImGuiIO_AddFocusEvent(self.handle(), C.bool(focused))
 }
@@ -8361,6 +8365,22 @@ func (self IO) SetIniFilename(v string) {
 
 	C.wrap_ImGuiIO_SetIniFilename(self.handle(), vArg)
 }
+
+
+// var (
+// 	vSetIniFilename *C.char
+// 	vFinSetIniFilename func()
+// )
+
+// func (self IO) SetIniFilename(v string) {
+// 	if vSetIniFilename != nil {
+// 		vFinSetIniFilename()
+// 	}
+
+// 	vSetIniFilename, vFinSetIniFilename = wrapString(v)
+
+// 	C.wrap_ImGuiIO_SetIniFilename(self.handle(), vSetIniFilename)
+// }
 
 func (self IO) IniFilename() string {
 	return C.GoString(C.wrap_ImGuiIO_GetIniFilename(self.handle()))
