@@ -1,5 +1,6 @@
 package main
 
+import "C"
 import (
 	"fmt"
 	"os"
@@ -28,6 +29,8 @@ const (
 	returnTypeStruct
 	// the method is a constructor
 	returnTypeConstructor
+	// function with first arugment as pointer of return value
+	returnTypeNonUDT
 )
 
 // generateGoFuncs generates given list of functions and writes them to file
@@ -116,12 +119,13 @@ import "unsafe"
 }
 
 func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrappers []ArgumentWrapperData) (noErrors bool) {
-	switch {
-	case f.NonUDT == 1:
-		noErrors = g.generateNonUDTFunc(f, args, argWrappers)
-	default:
-		noErrors = g.generateFunc(f, args, argWrappers)
-	}
+	// TODO: remove here :-)
+	//switch {
+	//case f.NonUDT == 1:
+	//	noErrors = g.generateNonUDTFunc(f, args, argWrappers)
+	//default:
+	noErrors = g.generateFunc(f, args, argWrappers)
+	//}
 
 	if noErrors {
 		g.sb.WriteString("}\n\n")
@@ -143,8 +147,12 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 		returnTypeType = returnTypeKnown
 	}
 
+	// attention! order is _probably_ important here so consider that
+	// before changing anything here
 	goEnumName := f.Ret
-	if f.Ret == "void" {
+	if f.NonUDT == 1 {
+		returnTypeType = returnTypeNonUDT
+	} else if f.Ret == "void" {
 		if f.StructSetter {
 			returnTypeType = returnTypeStructSetter
 		} else {
@@ -164,6 +172,17 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 	switch returnTypeType {
 	case returnTypeVoid:
 		// noop
+	case returnTypeNonUDT:
+		outArg := argWrappers[0]
+		returnType = strings.TrimPrefix(outArg.ArgType, "*")
+
+		//returnStmt = fmt.Sprintf("return *%s", args[0])
+		returnStmt = fmt.Sprintf("return *%s", f.ArgsT[0].Name)
+
+		argWrappers[0].ArgDef = fmt.Sprintf(`%s := &%s{}
+%s
+		`, f.ArgsT[0].Name, returnType, outArg.ArgDef)
+		args = args[1:]
 	case returnTypeStructSetter:
 		funcParts := strings.Split(f.FuncName, "_")
 		funcName = strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
@@ -207,18 +226,25 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 	argInvokeStmt, declarations, finishers := g.generateFuncBody(argWrappers)
 	g.sb.WriteString(strings.Join(declarations, "\n"))
 	g.sb.WriteString("\n\n")
-	// TODO: merge with NonUDT
-	if len(finishers) > 0 {
-		f := "defer " + strings.Join(finishers, "\ndefer ")
-		g.sb.WriteString(f)
-	}
-	g.sb.WriteString("\n\n")
 
+	// write non-return function calls (finalizers called normally)
 	switch returnTypeType {
-	case returnTypeVoid:
+	case returnTypeVoid, returnTypeNonUDT:
 		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStructSetter:
 		g.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.CWrapperFuncName, argInvokeStmt))
+	}
+
+	shouldDefer := returnType != ""
+	if shouldDefer {
+		g.writeFinishers(shouldDefer, finishers)
+	}
+
+	g.sb.WriteString("\n")
+
+	switch returnTypeType {
+	case returnTypeNonUDT:
+		g.sb.WriteString(fmt.Sprintf("%s", returnStmt))
 	case returnTypeKnown:
 		g.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)))
 	case returnTypeEnum:
@@ -231,50 +257,11 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	}
 
-	return true
-}
-
-// generateNonUDTFunc generates a function tagged with NonUDT.
-// it will consider a first argument of this function as a return type.
-/*
-	template:
-	func FuncName(arg2 type2) typeOfArg1 {
-		pOut := &typeOfArg1{}
-		pOutArg, pOutFin := pOut.wrapped()
-		defer pOutFin()
-		C.FuncName(pOutArg, arg2)
-		return *pOut
-	}
-*/
-func (g *goFuncsGenerator) generateNonUDTFunc(f FuncDef, args []string, argWrappers []ArgumentWrapperData) (noErrors bool) {
-	// find out the return type
-	outArg := f.ArgsT[0]
-	outArgT := strings.TrimSuffix(outArg.Type, "*")
-	returnWrapper, err := getReturnTypeWrapperFunc(outArgT)
-	if err != nil {
-		fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)
-		return false
+	if !shouldDefer {
+		g.writeFinishers(shouldDefer, finishers)
 	}
 
-	returnType := returnWrapper.returnType
-
-	g.sb.WriteString(g.generateFuncDeclarationStmt("", f.FuncName, args[1:], returnType, f))
-
-	// temporary out arg definition
-	g.sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, returnType))
-
-	argInvokeStmt, declarations, finishers := g.generateFuncBody(argWrappers)
-	g.sb.WriteString(strings.Join(declarations, "\n"))
 	g.sb.WriteString("\n\n")
-
-	// C function call
-	g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.CWrapperFuncName, argInvokeStmt))
-
-	g.sb.WriteString(strings.Join(finishers, "\n"))
-	g.sb.WriteString("\n\n")
-
-	// return statement
-	g.sb.WriteString(fmt.Sprintf("return *%s", outArg.Name))
 
 	return true
 }
@@ -417,6 +404,16 @@ func (g *goFuncsGenerator) generateFuncBody(argWrappers []ArgumentWrapperData) (
 	}
 
 	return strings.Join(invokeStmt, ","), declarations, finishers
+}
+
+func (g *goFuncsGenerator) writeFinishers(shouldDefer bool, finishers []string) {
+	g.sb.WriteString("\n")
+	if shouldDefer {
+		g.sb.WriteString("defer func() {\n")
+		defer g.sb.WriteString("\n}()\n")
+	}
+
+	g.sb.WriteString(strings.Join(finishers, "\n"))
 }
 
 // isEnum returns true when given string is a valid enum type.
