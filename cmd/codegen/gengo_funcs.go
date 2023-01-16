@@ -204,7 +204,15 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 	}
 
 	g.sb.WriteString(g.generateFuncDeclarationStmt(receiver, funcName, args, returnType, f))
-	argInvokeStmt := g.generateFuncBody(argWrappers)
+	argInvokeStmt, declarations, finishers := g.generateFuncBody(argWrappers)
+	g.sb.WriteString(strings.Join(declarations, "\n"))
+	g.sb.WriteString("\n\n")
+	// TODO: merge with NonUDT
+	if len(finishers) > 0 {
+		f := "defer " + strings.Join(finishers, "\ndefer ")
+		g.sb.WriteString(f)
+	}
+	g.sb.WriteString("\n\n")
 
 	switch returnTypeType {
 	case returnTypeVoid:
@@ -255,10 +263,15 @@ func (g *goFuncsGenerator) generateNonUDTFunc(f FuncDef, args []string, argWrapp
 	// temporary out arg definition
 	g.sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, returnType))
 
-	argInvokeStmt := g.generateFuncBody(argWrappers)
+	argInvokeStmt, declarations, finishers := g.generateFuncBody(argWrappers)
+	g.sb.WriteString(strings.Join(declarations, "\n"))
+	g.sb.WriteString("\n\n")
 
 	// C function call
 	g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.CWrapperFuncName, argInvokeStmt))
+
+	g.sb.WriteString(strings.Join(finishers, "\n"))
+	g.sb.WriteString("\n\n")
 
 	// return statement
 	g.sb.WriteString(fmt.Sprintf("return *%s", outArg.Name))
@@ -389,21 +402,21 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 // and returns function call arguments
 // e.g.:
 // it will write the following into the buffer:
-func (g *goFuncsGenerator) generateFuncBody(argWrappers []ArgumentWrapperData) string {
+func (g *goFuncsGenerator) generateFuncBody(argWrappers []ArgumentWrapperData) (invokeStatement string, declarations, finishers []string) {
 	var invokeStmt []string
+	declarations, finishers = make([]string, 0, len(argWrappers)), make([]string, 0, len(argWrappers))
+
 	for _, aw := range argWrappers {
 		invokeStmt = append(invokeStmt, aw.VarName)
 		if len(aw.ArgDef) > 0 {
-			g.sb.WriteString(fmt.Sprintf("%s\n", aw.ArgDef))
+			declarations = append(declarations, aw.ArgDef)
 			if aw.Finalizer != "" {
-				g.sb.WriteString(fmt.Sprintf("defer %s\n", aw.Finalizer))
+				finishers = append(finishers, aw.Finalizer)
 			}
-
-			g.sb.WriteString("\n\n")
 		}
 	}
 
-	return strings.Join(invokeStmt, ",")
+	return strings.Join(invokeStmt, ","), declarations, finishers
 }
 
 // isEnum returns true when given string is a valid enum type.
