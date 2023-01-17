@@ -57,24 +57,20 @@ func renameGoIdentifier(n string) string {
 	if r, ok := replace[n]; ok {
 		n = r
 	}
+
 	n = trimImGuiPrefix(n)
-	if strings.HasPrefix(n, "New") {
+	switch {
+	case strings.HasPrefix(n, "New"):
 		n = "New" + trimImGuiPrefix(n[3:])
-	} else if strings.HasPrefix(n, "new") {
+	case strings.HasPrefix(n, "new"):
 		n = "new" + trimImGuiPrefix(n[3:])
+	case strings.HasPrefix(n, "*"):
+		n = "*" + trimImGuiPrefix(n[1:])
 	}
+
 	n = strings.TrimPrefix(n, "Get")
 	if n != "_" {
 		n = strings.ReplaceAll(n, "_", "")
 	}
 	return n
-}
-
-type argOutput struct {
-	// go-valid argument type (e.g. string, ImVec2, etc.)
-	ArgType string
-	// argument deffinition (e.g. arg1, arg1Fin := ...\ndefer arg1Fin())
-	ArgDef string
-	// name of argument (e.g. arg1)
-	VarName string
 }

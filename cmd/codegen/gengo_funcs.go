@@ -1,5 +1,6 @@
 package main
 
+import "C"
 import (
 	"fmt"
 	"os"
@@ -28,6 +29,8 @@ const (
 	returnTypeStruct
 	// the method is a constructor
 	returnTypeConstructor
+	// function with first arugment as pointer of return value
+	returnTypeNonUDT
 )
 
 // generateGoFuncs generates given list of functions and writes them to file
@@ -115,24 +118,7 @@ import "unsafe"
 `, g.prefix))
 }
 
-func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrappers []argOutput) (noErrors bool) {
-	switch {
-	case f.NonUDT == 1:
-		noErrors = g.generateNonUDTFunc(f, args, argWrappers)
-	default:
-		noErrors = g.generateFunc(f, args, argWrappers)
-	}
-
-	if noErrors {
-		g.sb.WriteString("}\n\n")
-		g.convertedFuncCount += 1
-	}
-
-	return
-}
-
-// generateFunc will smartly generate a function basing on its return type and arguments.
-func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []argOutput) (noErrors bool) {
+func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrappers []ArgumentWrapperData) (noErrors bool) {
 	var returnType, returnStmt, receiver string
 	funcName := f.FuncName
 
@@ -143,8 +129,12 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 		returnTypeType = returnTypeKnown
 	}
 
+	// attention! order is _probably_ important here so consider that
+	// before changing anything here
 	goEnumName := f.Ret
-	if f.Ret == "void" {
+	if f.NonUDT == 1 {
+		returnTypeType = returnTypeNonUDT
+	} else if f.Ret == "void" {
 		if f.StructSetter {
 			returnTypeType = returnTypeStructSetter
 		} else {
@@ -164,6 +154,17 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 	switch returnTypeType {
 	case returnTypeVoid:
 		// noop
+	case returnTypeNonUDT:
+		outArg := argWrappers[0]
+		returnType = strings.TrimPrefix(outArg.ArgType, "*")
+
+		//returnStmt = fmt.Sprintf("return *%s", args[0])
+		returnStmt = fmt.Sprintf("return *%s", f.ArgsT[0].Name)
+
+		argWrappers[0].ArgDef = fmt.Sprintf(`%s := &%s{}
+%s
+		`, f.ArgsT[0].Name, returnType, outArg.ArgDef)
+		args = args[1:]
 	case returnTypeStructSetter:
 		funcParts := strings.Split(f.FuncName, "_")
 		funcName = strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
@@ -204,13 +205,28 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 	}
 
 	g.sb.WriteString(g.generateFuncDeclarationStmt(receiver, funcName, args, returnType, f))
-	argInvokeStmt := g.generateFuncBody(argWrappers)
+	argInvokeStmt, declarations, finishers := g.generateFuncBody(argWrappers)
+	g.sb.WriteString(strings.Join(declarations, "\n"))
+	g.sb.WriteString("\n\n")
 
+	// write non-return function calls (finalizers called normally)
 	switch returnTypeType {
-	case returnTypeVoid:
+	case returnTypeVoid, returnTypeNonUDT:
 		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStructSetter:
 		g.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.CWrapperFuncName, argInvokeStmt))
+	}
+
+	shouldDefer := returnType != ""
+	if shouldDefer {
+		g.writeFinishers(shouldDefer, finishers)
+	}
+
+	g.sb.WriteString("\n")
+
+	switch returnTypeType {
+	case returnTypeNonUDT:
+		g.sb.WriteString(fmt.Sprintf("%s", returnStmt))
 	case returnTypeKnown:
 		g.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)))
 	case returnTypeEnum:
@@ -223,45 +239,14 @@ func (g *goFuncsGenerator) generateFunc(f FuncDef, args []string, argWrappers []
 		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	}
 
-	return true
-}
-
-// generateNonUDTFunc generates a function tagged with NonUDT.
-// it will consider a first argument of this function as a return type.
-/*
-	template:
-	func FuncName(arg2 type2) typeOfArg1 {
-		pOut := &typeOfArg1{}
-		pOutArg, pOutFin := pOut.wrapped()
-		defer pOutFin()
-		C.FuncName(pOutArg, arg2)
-		return *pOut
-	}
-*/
-func (g *goFuncsGenerator) generateNonUDTFunc(f FuncDef, args []string, argWrappers []argOutput) (noErrors bool) {
-	// find out the return type
-	outArg := f.ArgsT[0]
-	outArgT := strings.TrimSuffix(outArg.Type, "*")
-	returnWrapper, err := getReturnTypeWrapperFunc(outArgT)
-	if err != nil {
-		fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)
-		return false
+	if !shouldDefer {
+		g.writeFinishers(shouldDefer, finishers)
 	}
 
-	returnType := returnWrapper.returnType
+	g.sb.WriteString("\n\n")
 
-	g.sb.WriteString(g.generateFuncDeclarationStmt("", f.FuncName, args[1:], returnType, f))
-
-	// temporary out arg definition
-	g.sb.WriteString(fmt.Sprintf("%s := &%s{}\n", outArg.Name, returnType))
-
-	argInvokeStmt := g.generateFuncBody(argWrappers)
-
-	// C function call
-	g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.CWrapperFuncName, argInvokeStmt))
-
-	// return statement
-	g.sb.WriteString(fmt.Sprintf("return *%s", outArg.Name))
+	g.sb.WriteString("}\n\n")
+	g.convertedFuncCount += 1
 
 	return true
 }
@@ -272,10 +257,6 @@ func (g *goFuncsGenerator) generateNonUDTFunc(f FuncDef, args []string, argWrapp
 func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName string, args []string, returnType string, f FuncDef) (functionDeclaration string) {
 	funcParts := strings.Split(funcName, "_")
 	typeName := funcParts[0]
-
-	if len(receiver) > 0 {
-		receiver = fmt.Sprintf("(self *%s)", renameGoIdentifier(receiver))
-	}
 
 	// Generate default param value hint
 	var commentSb strings.Builder
@@ -300,24 +281,18 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 		}
 	}
 
-	if strings.Contains(funcName, "_") &&
-		len(funcParts) > 1 &&
-		len(args) > 0 && strings.Contains(args[0], "self ") {
+	// convert func(self *receiverType) into a method
+	if len(funcParts) > 1 &&
+		len(args) > 0 &&
+		strings.Contains(args[0], "self ") {
 
-		newFuncName := strings.TrimPrefix(funcName, typeName+"_")
-		newArgs := args
-		if len(newArgs) > 0 {
-			newArgs = args[1:]
-		}
+		funcName = strings.TrimPrefix(funcName, typeName+"_")
+		receiver = strings.TrimPrefix(args[0], "self ")
+		args = args[1:]
+	}
 
-		typeName = strings.TrimPrefix(args[0], "self ")
-		return fmt.Sprintf("%sfunc %s (self %s) %s(%s) %s {\n",
-			strings.Replace(commentSb.String(), "%s", renameGoIdentifier(newFuncName), 1),
-			renameGoIdentifier(receiver),
-			renameGoIdentifier(typeName),
-			renameGoIdentifier(newFuncName),
-			strings.Join(newArgs, ","),
-			renameGoIdentifier(returnType))
+	if len(receiver) > 0 {
+		receiver = fmt.Sprintf("(self %s)", renameGoIdentifier(receiver))
 	}
 
 	return fmt.Sprintf("%sfunc %s %s(%s) %s {\n",
@@ -328,7 +303,7 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 		renameGoIdentifier(returnType))
 }
 
-func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappers []argOutput) {
+func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappers []ArgumentWrapperData) {
 	for i, a := range f.ArgsT {
 		g.shouldGenerate = false
 
@@ -342,7 +317,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 
 		if f.StructGetter && g.structNames[a.Type] {
 			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(a.Type)))
-			argWrappers = append(argWrappers, argOutput{
+			argWrappers = append(argWrappers, ArgumentWrapperData{
 				VarName: fmt.Sprintf("%s.handle()", a.Name),
 			})
 
@@ -352,18 +327,10 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 		}
 
 		if v, err := argWrapper(a.Type); err == nil {
-			argType, argDef, varName := v(a)
-			if goEnumName := argType; g.isEnum(goEnumName) {
-				argType = goEnumName
-			}
+			arg := v(a)
+			argWrappers = append(argWrappers, arg)
 
-			argWrappers = append(argWrappers, argOutput{
-				ArgType: argType,
-				ArgDef:  argDef,
-				VarName: varName,
-			})
-
-			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(argType)))
+			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(arg.ArgType)))
 
 			g.shouldGenerate = true
 			continue
@@ -371,7 +338,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 
 		if goEnumName := a.Type; g.isEnum(goEnumName) {
 			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(goEnumName)))
-			argWrappers = append(argWrappers, argOutput{
+			argWrappers = append(argWrappers, ArgumentWrapperData{
 				VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
 			})
 
@@ -385,7 +352,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 
 			if g.structNames[pureType] {
 				args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType)))
-				argWrappers = append(argWrappers, argOutput{
+				argWrappers = append(argWrappers, ArgumentWrapperData{
 					VarName: fmt.Sprintf("%s.handle()", a.Name),
 				})
 
@@ -407,16 +374,31 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 // and returns function call arguments
 // e.g.:
 // it will write the following into the buffer:
-func (g *goFuncsGenerator) generateFuncBody(argWrappers []argOutput) string {
+func (g *goFuncsGenerator) generateFuncBody(argWrappers []ArgumentWrapperData) (invokeStatement string, declarations, finishers []string) {
 	var invokeStmt []string
+	declarations, finishers = make([]string, 0, len(argWrappers)), make([]string, 0, len(argWrappers))
+
 	for _, aw := range argWrappers {
 		invokeStmt = append(invokeStmt, aw.VarName)
 		if len(aw.ArgDef) > 0 {
-			g.sb.WriteString(fmt.Sprintf("%s\n\n", aw.ArgDef))
+			declarations = append(declarations, aw.ArgDef)
+			if aw.Finalizer != "" {
+				finishers = append(finishers, aw.Finalizer)
+			}
 		}
 	}
 
-	return strings.Join(invokeStmt, ",")
+	return strings.Join(invokeStmt, ","), declarations, finishers
+}
+
+func (g *goFuncsGenerator) writeFinishers(shouldDefer bool, finishers []string) {
+	g.sb.WriteString("\n")
+	if shouldDefer {
+		g.sb.WriteString("defer func() {\n")
+		defer g.sb.WriteString("\n}()\n")
+	}
+
+	g.sb.WriteString(strings.Join(finishers, "\n"))
 }
 
 // isEnum returns true when given string is a valid enum type.
