@@ -2451,11 +2451,12 @@ func ColorConvertU32ToFloat4(in uint32) Vec4 {
 
 // ColorEdit3V parameter default value hint:
 // flags: 0
-func ColorEdit3V(label string, col [3]*float32, flags ColorEditFlags) bool {
+func ColorEdit3V(label string, col *[3]float32, flags ColorEditFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
-		colArg[i] = C.float(*colV)
+		colArg[i] = C.float(colV)
 	}
 
 	defer func() {
@@ -2463,7 +2464,7 @@ func ColorEdit3V(label string, col [3]*float32, flags ColorEditFlags) bool {
 
 		func() {
 			for i, colV := range colArg {
-				*col[i] = float32(colV)
+				(*col)[i] = float32(colV)
 			}
 		}()
 
@@ -2475,11 +2476,12 @@ func ColorEdit3V(label string, col [3]*float32, flags ColorEditFlags) bool {
 
 // ColorEdit4V parameter default value hint:
 // flags: 0
-func ColorEdit4V(label string, col [4]*float32, flags ColorEditFlags) bool {
+func ColorEdit4V(label string, col *[4]float32, flags ColorEditFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
-		colArg[i] = C.float(*colV)
+		colArg[i] = C.float(colV)
 	}
 
 	defer func() {
@@ -2487,7 +2489,7 @@ func ColorEdit4V(label string, col [4]*float32, flags ColorEditFlags) bool {
 
 		func() {
 			for i, colV := range colArg {
-				*col[i] = float32(colV)
+				(*col)[i] = float32(colV)
 			}
 		}()
 
@@ -2499,11 +2501,12 @@ func ColorEdit4V(label string, col [4]*float32, flags ColorEditFlags) bool {
 
 // ColorPicker3V parameter default value hint:
 // flags: 0
-func ColorPicker3V(label string, col [3]*float32, flags ColorEditFlags) bool {
+func ColorPicker3V(label string, col *[3]float32, flags ColorEditFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
-		colArg[i] = C.float(*colV)
+		colArg[i] = C.float(colV)
 	}
 
 	defer func() {
@@ -2511,7 +2514,7 @@ func ColorPicker3V(label string, col [3]*float32, flags ColorEditFlags) bool {
 
 		func() {
 			for i, colV := range colArg {
-				*col[i] = float32(colV)
+				(*col)[i] = float32(colV)
 			}
 		}()
 
@@ -2524,11 +2527,12 @@ func ColorPicker3V(label string, col [3]*float32, flags ColorEditFlags) bool {
 // ColorPicker4V parameter default value hint:
 // flags: 0
 // ref_col: NULL
-func ColorPicker4V(label string, col [4]*float32, flags ColorEditFlags, ref_col []float32) bool {
+func ColorPicker4V(label string, col *[4]float32, flags ColorEditFlags, ref_col []float32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
-		colArg[i] = C.float(*colV)
+		colArg[i] = C.float(colV)
 	}
 
 	defer func() {
@@ -2536,7 +2540,7 @@ func ColorPicker4V(label string, col [4]*float32, flags ColorEditFlags, ref_col 
 
 		func() {
 			for i, colV := range colArg {
-				*col[i] = float32(colV)
+				(*col)[i] = float32(colV)
 			}
 		}()
 
@@ -2694,11 +2698,12 @@ func DragFloatV(label string, v *float32, v_speed float32, v_min float32, v_max 
 // v_max: 0.0f
 // v_min: 0.0f
 // v_speed: 1.0f
-func DragFloat2V(label string, v [2]*float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
+func DragFloat2V(label string, v *[2]float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -2707,7 +2712,7 @@ func DragFloat2V(label string, v [2]*float32, v_speed float32, v_min float32, v_
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -2724,11 +2729,12 @@ func DragFloat2V(label string, v [2]*float32, v_speed float32, v_min float32, v_
 // v_max: 0.0f
 // v_min: 0.0f
 // v_speed: 1.0f
-func DragFloat3V(label string, v [3]*float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
+func DragFloat3V(label string, v *[3]float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -2737,7 +2743,7 @@ func DragFloat3V(label string, v [3]*float32, v_speed float32, v_min float32, v_
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -2754,11 +2760,12 @@ func DragFloat3V(label string, v [3]*float32, v_speed float32, v_min float32, v_
 // v_max: 0.0f
 // v_min: 0.0f
 // v_speed: 1.0f
-func DragFloat4V(label string, v [4]*float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
+func DragFloat4V(label string, v *[4]float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -2767,7 +2774,7 @@ func DragFloat4V(label string, v [4]*float32, v_speed float32, v_min float32, v_
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -2831,11 +2838,12 @@ func DragIntV(label string, v *int32, v_speed float32, v_min int32, v_max int32,
 // v_max: 0
 // v_min: 0
 // v_speed: 1.0f
-func DragInt2V(label string, v [2]*int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
+func DragInt2V(label string, v *[2]int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -2844,7 +2852,7 @@ func DragInt2V(label string, v [2]*int32, v_speed float32, v_min int32, v_max in
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -2861,11 +2869,12 @@ func DragInt2V(label string, v [2]*int32, v_speed float32, v_min int32, v_max in
 // v_max: 0
 // v_min: 0
 // v_speed: 1.0f
-func DragInt3V(label string, v [3]*int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
+func DragInt3V(label string, v *[3]int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -2874,7 +2883,7 @@ func DragInt3V(label string, v [3]*int32, v_speed float32, v_min int32, v_max in
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -2891,11 +2900,12 @@ func DragInt3V(label string, v [3]*int32, v_speed float32, v_min int32, v_max in
 // v_max: 0
 // v_min: 0
 // v_speed: 1.0f
-func DragInt4V(label string, v [4]*int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
+func DragInt4V(label string, v *[4]int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -2904,7 +2914,7 @@ func DragInt4V(label string, v [4]*int32, v_speed float32, v_min int32, v_max in
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -3950,11 +3960,12 @@ func InputFloatV(label string, v *float32, step float32, step_fast float32, form
 // InputFloat2V parameter default value hint:
 // flags: 0
 // format: "%.3f"
-func InputFloat2V(label string, v [2]*float32, format string, flags InputTextFlags) bool {
+func InputFloat2V(label string, v *[2]float32, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -3963,7 +3974,7 @@ func InputFloat2V(label string, v [2]*float32, format string, flags InputTextFla
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -3977,11 +3988,12 @@ func InputFloat2V(label string, v [2]*float32, format string, flags InputTextFla
 // InputFloat3V parameter default value hint:
 // flags: 0
 // format: "%.3f"
-func InputFloat3V(label string, v [3]*float32, format string, flags InputTextFlags) bool {
+func InputFloat3V(label string, v *[3]float32, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -3990,7 +4002,7 @@ func InputFloat3V(label string, v [3]*float32, format string, flags InputTextFla
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -4004,11 +4016,12 @@ func InputFloat3V(label string, v [3]*float32, format string, flags InputTextFla
 // InputFloat4V parameter default value hint:
 // flags: 0
 // format: "%.3f"
-func InputFloat4V(label string, v [4]*float32, format string, flags InputTextFlags) bool {
+func InputFloat4V(label string, v *[4]float32, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -4017,7 +4030,7 @@ func InputFloat4V(label string, v [4]*float32, format string, flags InputTextFla
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -4047,11 +4060,12 @@ func InputIntV(label string, v *int32, step int32, step_fast int32, flags InputT
 
 // InputInt2V parameter default value hint:
 // flags: 0
-func InputInt2V(label string, v [2]*int32, flags InputTextFlags) bool {
+func InputInt2V(label string, v *[2]int32, flags InputTextFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 
 	defer func() {
@@ -4059,7 +4073,7 @@ func InputInt2V(label string, v [2]*int32, flags InputTextFlags) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -4071,11 +4085,12 @@ func InputInt2V(label string, v [2]*int32, flags InputTextFlags) bool {
 
 // InputInt3V parameter default value hint:
 // flags: 0
-func InputInt3V(label string, v [3]*int32, flags InputTextFlags) bool {
+func InputInt3V(label string, v *[3]int32, flags InputTextFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 
 	defer func() {
@@ -4083,7 +4098,7 @@ func InputInt3V(label string, v [3]*int32, flags InputTextFlags) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -4095,11 +4110,12 @@ func InputInt3V(label string, v [3]*int32, flags InputTextFlags) bool {
 
 // InputInt4V parameter default value hint:
 // flags: 0
-func InputInt4V(label string, v [4]*int32, flags InputTextFlags) bool {
+func InputInt4V(label string, v *[4]int32, flags InputTextFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 
 	defer func() {
@@ -4107,7 +4123,7 @@ func InputInt4V(label string, v [4]*int32, flags InputTextFlags) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -5473,11 +5489,12 @@ func SliderFloatV(label string, v *float32, v_min float32, v_max float32, format
 // SliderFloat2V parameter default value hint:
 // flags: 0
 // format: "%.3f"
-func SliderFloat2V(label string, v [2]*float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
+func SliderFloat2V(label string, v *[2]float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -5486,7 +5503,7 @@ func SliderFloat2V(label string, v [2]*float32, v_min float32, v_max float32, fo
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -5500,11 +5517,12 @@ func SliderFloat2V(label string, v [2]*float32, v_min float32, v_max float32, fo
 // SliderFloat3V parameter default value hint:
 // flags: 0
 // format: "%.3f"
-func SliderFloat3V(label string, v [3]*float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
+func SliderFloat3V(label string, v *[3]float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -5513,7 +5531,7 @@ func SliderFloat3V(label string, v [3]*float32, v_min float32, v_max float32, fo
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -5527,11 +5545,12 @@ func SliderFloat3V(label string, v [3]*float32, v_min float32, v_max float32, fo
 // SliderFloat4V parameter default value hint:
 // flags: 0
 // format: "%.3f"
-func SliderFloat4V(label string, v [4]*float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
+func SliderFloat4V(label string, v *[4]float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -5540,7 +5559,7 @@ func SliderFloat4V(label string, v [4]*float32, v_min float32, v_max float32, fo
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -5572,11 +5591,12 @@ func SliderIntV(label string, v *int32, v_min int32, v_max int32, format string,
 // SliderInt2V parameter default value hint:
 // flags: 0
 // format: "%d"
-func SliderInt2V(label string, v [2]*int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
+func SliderInt2V(label string, v *[2]int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -5585,7 +5605,7 @@ func SliderInt2V(label string, v [2]*int32, v_min int32, v_max int32, format str
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -5599,11 +5619,12 @@ func SliderInt2V(label string, v [2]*int32, v_min int32, v_max int32, format str
 // SliderInt3V parameter default value hint:
 // flags: 0
 // format: "%d"
-func SliderInt3V(label string, v [3]*int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
+func SliderInt3V(label string, v *[3]int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -5612,7 +5633,7 @@ func SliderInt3V(label string, v [3]*int32, v_min int32, v_max int32, format str
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -5626,11 +5647,12 @@ func SliderInt3V(label string, v [3]*int32, v_min int32, v_max int32, format str
 // SliderInt4V parameter default value hint:
 // flags: 0
 // format: "%d"
-func SliderInt4V(label string, v [4]*int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
+func SliderInt4V(label string, v *[4]int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 	formatArg, formatFin := wrapString(format)
 
@@ -5639,7 +5661,7 @@ func SliderInt4V(label string, v [4]*int32, v_min int32, v_max int32, format str
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -6686,11 +6708,12 @@ func ColorButton(desc_id string, col Vec4) bool {
 
 }
 
-func ColorEdit3(label string, col [3]*float32) bool {
+func ColorEdit3(label string, col *[3]float32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
-		colArg[i] = C.float(*colV)
+		colArg[i] = C.float(colV)
 	}
 
 	defer func() {
@@ -6698,7 +6721,7 @@ func ColorEdit3(label string, col [3]*float32) bool {
 
 		func() {
 			for i, colV := range colArg {
-				*col[i] = float32(colV)
+				(*col)[i] = float32(colV)
 			}
 		}()
 
@@ -6708,11 +6731,12 @@ func ColorEdit3(label string, col [3]*float32) bool {
 
 }
 
-func ColorEdit4(label string, col [4]*float32) bool {
+func ColorEdit4(label string, col *[4]float32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
-		colArg[i] = C.float(*colV)
+		colArg[i] = C.float(colV)
 	}
 
 	defer func() {
@@ -6720,7 +6744,7 @@ func ColorEdit4(label string, col [4]*float32) bool {
 
 		func() {
 			for i, colV := range colArg {
-				*col[i] = float32(colV)
+				(*col)[i] = float32(colV)
 			}
 		}()
 
@@ -6730,11 +6754,12 @@ func ColorEdit4(label string, col [4]*float32) bool {
 
 }
 
-func ColorPicker3(label string, col [3]*float32) bool {
+func ColorPicker3(label string, col *[3]float32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
-		colArg[i] = C.float(*colV)
+		colArg[i] = C.float(colV)
 	}
 
 	defer func() {
@@ -6742,7 +6767,7 @@ func ColorPicker3(label string, col [3]*float32) bool {
 
 		func() {
 			for i, colV := range colArg {
-				*col[i] = float32(colV)
+				(*col)[i] = float32(colV)
 			}
 		}()
 
@@ -6752,11 +6777,12 @@ func ColorPicker3(label string, col [3]*float32) bool {
 
 }
 
-func ColorPicker4(label string, col [4]*float32) bool {
+func ColorPicker4(label string, col *[4]float32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
-		colArg[i] = C.float(*colV)
+		colArg[i] = C.float(colV)
 	}
 
 	defer func() {
@@ -6764,7 +6790,7 @@ func ColorPicker4(label string, col [4]*float32) bool {
 
 		func() {
 			for i, colV := range colArg {
-				*col[i] = float32(colV)
+				(*col)[i] = float32(colV)
 			}
 		}()
 
@@ -6859,11 +6885,12 @@ func DragFloat(label string, v *float32) bool {
 
 }
 
-func DragFloat2(label string, v [2]*float32) bool {
+func DragFloat2(label string, v *[2]float32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 
 	defer func() {
@@ -6871,7 +6898,7 @@ func DragFloat2(label string, v [2]*float32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -6881,11 +6908,12 @@ func DragFloat2(label string, v [2]*float32) bool {
 
 }
 
-func DragFloat3(label string, v [3]*float32) bool {
+func DragFloat3(label string, v *[3]float32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 
 	defer func() {
@@ -6893,7 +6921,7 @@ func DragFloat3(label string, v [3]*float32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -6903,11 +6931,12 @@ func DragFloat3(label string, v [3]*float32) bool {
 
 }
 
-func DragFloat4(label string, v [4]*float32) bool {
+func DragFloat4(label string, v *[4]float32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 
 	defer func() {
@@ -6915,7 +6944,7 @@ func DragFloat4(label string, v [4]*float32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -6953,11 +6982,12 @@ func DragInt(label string, v *int32) bool {
 
 }
 
-func DragInt2(label string, v [2]*int32) bool {
+func DragInt2(label string, v *[2]int32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 
 	defer func() {
@@ -6965,7 +6995,7 @@ func DragInt2(label string, v [2]*int32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -6975,11 +7005,12 @@ func DragInt2(label string, v [2]*int32) bool {
 
 }
 
-func DragInt3(label string, v [3]*int32) bool {
+func DragInt3(label string, v *[3]int32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 
 	defer func() {
@@ -6987,7 +7018,7 @@ func DragInt3(label string, v [3]*int32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -6997,11 +7028,12 @@ func DragInt3(label string, v [3]*int32) bool {
 
 }
 
-func DragInt4(label string, v [4]*int32) bool {
+func DragInt4(label string, v *[4]int32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 
 	defer func() {
@@ -7009,7 +7041,7 @@ func DragInt4(label string, v [4]*int32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -7149,11 +7181,12 @@ func InputFloat(label string, v *float32) bool {
 
 }
 
-func InputFloat2(label string, v [2]*float32) bool {
+func InputFloat2(label string, v *[2]float32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 
 	defer func() {
@@ -7161,7 +7194,7 @@ func InputFloat2(label string, v [2]*float32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -7171,11 +7204,12 @@ func InputFloat2(label string, v [2]*float32) bool {
 
 }
 
-func InputFloat3(label string, v [3]*float32) bool {
+func InputFloat3(label string, v *[3]float32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 
 	defer func() {
@@ -7183,7 +7217,7 @@ func InputFloat3(label string, v [3]*float32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -7193,11 +7227,12 @@ func InputFloat3(label string, v [3]*float32) bool {
 
 }
 
-func InputFloat4(label string, v [4]*float32) bool {
+func InputFloat4(label string, v *[4]float32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 
 	defer func() {
@@ -7205,7 +7240,7 @@ func InputFloat4(label string, v [4]*float32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -7228,11 +7263,12 @@ func InputInt(label string, v *int32) bool {
 
 }
 
-func InputInt2(label string, v [2]*int32) bool {
+func InputInt2(label string, v *[2]int32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 
 	defer func() {
@@ -7240,7 +7276,7 @@ func InputInt2(label string, v [2]*int32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -7250,11 +7286,12 @@ func InputInt2(label string, v [2]*int32) bool {
 
 }
 
-func InputInt3(label string, v [3]*int32) bool {
+func InputInt3(label string, v *[3]int32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 
 	defer func() {
@@ -7262,7 +7299,7 @@ func InputInt3(label string, v [3]*int32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -7272,11 +7309,12 @@ func InputInt3(label string, v [3]*int32) bool {
 
 }
 
-func InputInt4(label string, v [4]*int32) bool {
+func InputInt4(label string, v *[4]int32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 
 	defer func() {
@@ -7284,7 +7322,7 @@ func InputInt4(label string, v [4]*int32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -7795,11 +7833,12 @@ func SliderFloat(label string, v *float32, v_min float32, v_max float32) bool {
 
 }
 
-func SliderFloat2(label string, v [2]*float32, v_min float32, v_max float32) bool {
+func SliderFloat2(label string, v *[2]float32, v_min float32, v_max float32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 
 	defer func() {
@@ -7807,7 +7846,7 @@ func SliderFloat2(label string, v [2]*float32, v_min float32, v_max float32) boo
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -7817,11 +7856,12 @@ func SliderFloat2(label string, v [2]*float32, v_min float32, v_max float32) boo
 
 }
 
-func SliderFloat3(label string, v [3]*float32, v_min float32, v_max float32) bool {
+func SliderFloat3(label string, v *[3]float32, v_min float32, v_max float32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 
 	defer func() {
@@ -7829,7 +7869,7 @@ func SliderFloat3(label string, v [3]*float32, v_min float32, v_max float32) boo
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -7839,11 +7879,12 @@ func SliderFloat3(label string, v [3]*float32, v_min float32, v_max float32) boo
 
 }
 
-func SliderFloat4(label string, v [4]*float32, v_min float32, v_max float32) bool {
+func SliderFloat4(label string, v *[4]float32, v_min float32, v_max float32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
-		vArg[i] = C.float(*vV)
+		vArg[i] = C.float(vV)
 	}
 
 	defer func() {
@@ -7851,7 +7892,7 @@ func SliderFloat4(label string, v [4]*float32, v_min float32, v_max float32) boo
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = float32(vV)
+				(*v)[i] = float32(vV)
 			}
 		}()
 
@@ -7874,11 +7915,12 @@ func SliderInt(label string, v *int32, v_min int32, v_max int32) bool {
 
 }
 
-func SliderInt2(label string, v [2]*int32, v_min int32, v_max int32) bool {
+func SliderInt2(label string, v *[2]int32, v_min int32, v_max int32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 
 	defer func() {
@@ -7886,7 +7928,7 @@ func SliderInt2(label string, v [2]*int32, v_min int32, v_max int32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -7896,11 +7938,12 @@ func SliderInt2(label string, v [2]*int32, v_min int32, v_max int32) bool {
 
 }
 
-func SliderInt3(label string, v [3]*int32, v_min int32, v_max int32) bool {
+func SliderInt3(label string, v *[3]int32, v_min int32, v_max int32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 
 	defer func() {
@@ -7908,7 +7951,7 @@ func SliderInt3(label string, v [3]*int32, v_min int32, v_max int32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 
@@ -7918,11 +7961,12 @@ func SliderInt3(label string, v [3]*int32, v_min int32, v_max int32) bool {
 
 }
 
-func SliderInt4(label string, v [4]*int32, v_min int32, v_max int32) bool {
+func SliderInt4(label string, v *[4]int32, v_min int32, v_max int32) bool {
 	labelArg, labelFin := wrapString(label)
+
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
-		vArg[i] = C.int(*vV)
+		vArg[i] = C.int(vV)
 	}
 
 	defer func() {
@@ -7930,7 +7974,7 @@ func SliderInt4(label string, v [4]*int32, v_min int32, v_max int32) bool {
 
 		func() {
 			for i, vV := range vArg {
-				*v[i] = int32(vV)
+				(*v)[i] = int32(vV)
 			}
 		}()
 

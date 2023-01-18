@@ -209,17 +209,17 @@ func simplePtrW(goType, cType string) argumentWrapper {
 func simplePtrArrayW(size int, cArrayType, goArrayType string) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
 		return ArgumentWrapperData{
-			ArgType: fmt.Sprintf("[%d]*%s", size, goArrayType),
-			VarName: fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name),
-			ArgDef: fmt.Sprintf(
-				`%[1]sArg := make([]%[2]s, len(%[1]s))
+			ArgType: fmt.Sprintf("*[%d]%s", size, goArrayType),
+			ArgDef: fmt.Sprintf(`
+%[1]sArg := make([]%[2]s, len(%[1]s))
 for i, %[1]sV := range %[1]s {
-  %[1]sArg[i] = %[2]s(*%[1]sV)
+  %[1]sArg[i] = %[2]s(%[1]sV)
 }`, arg.Name, cArrayType),
+			VarName: fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name),
 			Finalizer: fmt.Sprintf(`
 func() {
   for i, %[1]sV := range %[1]sArg {
-    *%[1]s[i] = %[3]s(%[1]sV)
+    (*%[1]s)[i] = %[3]s(%[1]sV)
   }
 }()
 
@@ -228,19 +228,19 @@ func() {
 	}
 }
 
-// C.int*, C.int[] -> []*int32
+// C.int*, C.int[] -> *[]int32
 func simplePtrSliceW(cArrayType, goArrayType string) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
 		return ArgumentWrapperData{
-			ArgType: fmt.Sprintf("[]*%s", goArrayType),
-			ArgDef: fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(%[1]s))
-for i, %[1]sV := range %[1]s {
-  %[1]sArg[i] = %[2]s(*%[1]sV)
+			ArgType: fmt.Sprintf("*[]%s", goArrayType),
+			ArgDef: fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(*%[1]s))
+for i, %[1]sV := range *%[1]s {
+  %[1]sArg[i] = %[2]s(%[1]sV)
 }
 `, arg.Name, cArrayType, goArrayType),
 			Finalizer: fmt.Sprintf(`func() {
   for i, %[1]sV := range %[1]sArg {
-    *%[1]s[i] = %[3]s(%[1]sV)
+    (*%[1]s)[i] = %[3]s(%[1]sV)
   }
 }()
 `, arg.Name, cArrayType, goArrayType),
