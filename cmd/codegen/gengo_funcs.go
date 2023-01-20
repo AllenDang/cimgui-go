@@ -158,7 +158,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 		outArg := argWrappers[0]
 		returnType = strings.TrimPrefix(outArg.ArgType, "*")
 
-		//returnStmt = fmt.Sprintf("return *%s", args[0])
+		// returnStmt = fmt.Sprintf("return *%s", args[0])
 		returnStmt = fmt.Sprintf("return *%s", f.ArgsT[0].Name)
 
 		argWrappers[0].ArgDef = fmt.Sprintf(`%s := &%s{}
@@ -209,6 +209,13 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 	g.sb.WriteString(strings.Join(declarations, "\n"))
 	g.sb.WriteString("\n\n")
 
+	shouldDefer := returnType == ""
+	if shouldDefer {
+		g.writeFinishers(shouldDefer, finishers)
+	}
+
+	g.sb.WriteString("\n")
+
 	// write non-return function calls (finalizers called normally)
 	switch returnTypeType {
 	case returnTypeVoid, returnTypeNonUDT:
@@ -217,12 +224,11 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 		g.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.CWrapperFuncName, argInvokeStmt))
 	}
 
-	shouldDefer := returnType != ""
-	if shouldDefer {
+	if !shouldDefer {
 		g.writeFinishers(shouldDefer, finishers)
 	}
 
-	g.sb.WriteString("\n")
+	g.sb.WriteString("\n\n")
 
 	switch returnTypeType {
 	case returnTypeNonUDT:
@@ -238,12 +244,6 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 	case returnTypeConstructor:
 		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	}
-
-	if !shouldDefer {
-		g.writeFinishers(shouldDefer, finishers)
-	}
-
-	g.sb.WriteString("\n\n")
 
 	g.sb.WriteString("}\n\n")
 	g.convertedFuncCount += 1
@@ -392,6 +392,9 @@ func (g *goFuncsGenerator) generateFuncBody(argWrappers []ArgumentWrapperData) (
 }
 
 func (g *goFuncsGenerator) writeFinishers(shouldDefer bool, finishers []string) {
+	if len(finishers) == 0 {
+		return
+	}
 	g.sb.WriteString("\n")
 	if shouldDefer {
 		g.sb.WriteString("defer func() {\n")
