@@ -18,7 +18,6 @@ func ColorHSVV(h float32, s float32, v float32, a float32) Color {
 	C.ImColor_HSV(pOutArg, C.float(h), C.float(s), C.float(v), C.float(a))
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -30,7 +29,6 @@ func (self *Color) SetHSVV(h float32, s float32, v float32, a float32) {
 	C.ImColor_SetHSV(selfArg, C.float(h), C.float(s), C.float(v), C.float(a))
 
 	selfFin()
-
 }
 
 func (self *Color) Destroy() {
@@ -39,7 +37,6 @@ func (self *Color) Destroy() {
 	C.ImColor_destroy(selfArg)
 
 	selfFin()
-
 }
 
 func (self DrawCmd) TexID() TextureID {
@@ -173,7 +170,6 @@ func (self DrawList) AddConvexPolyFilled(points *Vec2, num_points int32, col uin
 	C.ImDrawList_AddConvexPolyFilled(self.handle(), pointsArg, C.int(num_points), C.ImU32(col))
 
 	pointsFin()
-
 }
 
 func (self DrawList) AddDrawCmd() {
@@ -240,7 +236,6 @@ func (self DrawList) AddPolyline(points *Vec2, num_points int32, col uint32, fla
 	C.ImDrawList_AddPolyline(self.handle(), pointsArg, C.int(num_points), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
 
 	pointsFin()
-
 }
 
 // AddQuadV parameter default value hint:
@@ -294,7 +289,6 @@ func (self DrawList) AddTextFontPtrV(font Font, font_size float32, pos Vec2, col
 
 	text_beginFin()
 	cpu_fine_clip_rectFin()
-
 }
 
 // AddTextVec2V parameter default value hint:
@@ -305,7 +299,6 @@ func (self DrawList) AddTextVec2V(pos Vec2, col uint32, text_begin string) {
 	C.wrap_ImDrawList_AddText_Vec2V(self.handle(), pos.toC(), C.ImU32(col), text_beginArg)
 
 	text_beginFin()
-
 }
 
 // AddTriangleV parameter default value hint:
@@ -352,7 +345,6 @@ func (self DrawList) ClipRectMax() Vec2 {
 	C.ImDrawList_GetClipRectMax(pOutArg, self.handle())
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -363,7 +355,6 @@ func (self DrawList) ClipRectMin() Vec2 {
 	C.ImDrawList_GetClipRectMin(pOutArg, self.handle())
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -625,7 +616,6 @@ func (self FontAtlas) CalcCustomRectUV(rect FontAtlasCustomRect, out_uv_min *Vec
 
 	out_uv_minFin()
 	out_uv_maxFin()
-
 }
 
 func (self FontAtlas) Clear() {
@@ -789,7 +779,6 @@ func (self FontGlyphRangesBuilder) AddTextV(text string) {
 	C.wrap_ImFontGlyphRangesBuilder_AddTextV(self.handle(), textArg)
 
 	textFin()
-
 }
 
 func (self FontGlyphRangesBuilder) Clear() {
@@ -855,7 +844,6 @@ func (self Font) CalcTextSizeAV(size float32, max_width float32, wrap_width floa
 	pOutFin()
 	text_beginFin()
 	remainingFin()
-
 	return *pOut
 }
 
@@ -931,7 +919,6 @@ func (self Font) RenderTextV(draw_list DrawList, size float32, pos Vec2, col uin
 	C.wrap_ImFont_RenderTextV(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), clip_rect.toC(), text_beginArg, C.float(wrap_width), C.bool(cpu_fine_clip))
 
 	text_beginFin()
-
 }
 
 func (self Font) SetGlyphVisible(c Wchar, visible bool) {
@@ -988,7 +975,6 @@ func (self IO) AddInputCharactersUTF8(str string) {
 	C.ImGuiIO_AddInputCharactersUTF8(self.handle(), strArg)
 
 	strFin()
-
 }
 
 func (self IO) AddKeyAnalogEvent(key Key, down bool, v float32) {
@@ -1100,7 +1086,6 @@ func (self InputTextCallbackData) InsertCharsV(pos int32, text string) {
 	C.wrap_ImGuiInputTextCallbackData_InsertCharsV(self.handle(), C.int(pos), textArg)
 
 	textFin()
-
 }
 
 func (self InputTextCallbackData) SelectAll() {
@@ -1430,7 +1415,6 @@ func (self TextBuffer) AppendV(str string, str_end string) {
 
 	strFin()
 	str_endFin()
-
 }
 
 func (self TextBuffer) Appendf(fmt string) {
@@ -1439,7 +1423,6 @@ func (self TextBuffer) Appendf(fmt string) {
 	C.wrap_ImGuiTextBuffer_Appendf(self.handle(), fmtArg)
 
 	fmtFin()
-
 }
 
 func (self TextBuffer) Begin() string {
@@ -1552,7 +1535,6 @@ func (self Viewport) Center() Vec2 {
 	C.ImGuiViewport_GetCenter(pOutArg, self.handle())
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -1563,7 +1545,6 @@ func (self Viewport) WorkCenter() Vec2 {
 	C.ImGuiViewport_GetWorkCenter(pOutArg, self.handle())
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -1601,7 +1582,6 @@ func (self *Rect) Destroy() {
 	C.ImRect_destroy(selfArg)
 
 	selfFin()
-
 }
 
 func (self *Vec2) Destroy() {
@@ -1610,7 +1590,6 @@ func (self *Vec2) Destroy() {
 	C.ImVec2_destroy(selfArg)
 
 	selfFin()
-
 }
 
 func (self *Vec4) Destroy() {
@@ -1619,7 +1598,6 @@ func (self *Vec4) Destroy() {
 	C.ImVec4_destroy(selfArg)
 
 	selfFin()
-
 }
 
 // AcceptDragDropPayloadV parameter default value hint:
@@ -1894,7 +1872,6 @@ func BulletText(fmt string) {
 	C.wrap_igBulletText(fmtArg)
 
 	fmtFin()
-
 }
 
 // ButtonV parameter default value hint:
@@ -1928,7 +1905,6 @@ func CalcTextSizeV(text string, hide_text_after_double_hash bool, wrap_width flo
 
 	pOutFin()
 	textFin()
-
 	return *pOut
 }
 
@@ -2028,7 +2004,6 @@ func ColorConvertHSVtoRGB(h float32, s float32, v float32, out_r *float32, out_g
 	out_rFin()
 	out_gFin()
 	out_bFin()
-
 }
 
 func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s *float32, out_v *float32) {
@@ -2041,7 +2016,6 @@ func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s
 	out_hFin()
 	out_sFin()
 	out_vFin()
-
 }
 
 func ColorConvertU32ToFloat4(in uint32) Vec4 {
@@ -2051,7 +2025,6 @@ func ColorConvertU32ToFloat4(in uint32) Vec4 {
 	C.igColorConvertU32ToFloat4(pOutArg, C.ImU32(in))
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -2162,7 +2135,6 @@ func ColumnsV(count int32, id string, border bool) {
 	C.igColumns(C.int(count), idArg, C.bool(border))
 
 	idFin()
-
 }
 
 // ComboStrV parameter default value hint:
@@ -2220,7 +2192,6 @@ func DebugTextEncoding(text string) {
 	C.igDebugTextEncoding(textArg)
 
 	textFin()
-
 }
 
 // DestroyContextV parameter default value hint:
@@ -2748,7 +2719,6 @@ func ContentRegionAvail() Vec2 {
 	C.igGetContentRegionAvail(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -2759,7 +2729,6 @@ func ContentRegionMax() Vec2 {
 	C.igGetContentRegionMax(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -2775,7 +2744,6 @@ func CursorPos() Vec2 {
 	C.igGetCursorPos(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -2796,7 +2764,6 @@ func CursorScreenPos() Vec2 {
 	C.igGetCursorScreenPos(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -2807,7 +2774,6 @@ func CursorStartPos() Vec2 {
 	C.igGetCursorStartPos(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -2843,7 +2809,6 @@ func FontTexUvWhitePixel() Vec2 {
 	C.igGetFontTexUvWhitePixel(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -2911,7 +2876,6 @@ func ItemRectMax() Vec2 {
 	C.igGetItemRectMax(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -2922,7 +2886,6 @@ func ItemRectMin() Vec2 {
 	C.igGetItemRectMin(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -2933,7 +2896,6 @@ func ItemRectSize() Vec2 {
 	C.igGetItemRectSize(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -2977,7 +2939,6 @@ func MouseDragDeltaV(button MouseButton, lock_threshold float32) Vec2 {
 	C.igGetMouseDragDelta(pOutArg, C.ImGuiMouseButton(button), C.float(lock_threshold))
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -2988,7 +2949,6 @@ func MousePos() Vec2 {
 	C.igGetMousePos(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -2999,7 +2959,6 @@ func MousePosOnOpeningCurrentPopup() Vec2 {
 	C.igGetMousePosOnOpeningCurrentPopup(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -3077,7 +3036,6 @@ func WindowContentRegionMax() Vec2 {
 	C.igGetWindowContentRegionMax(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -3088,7 +3046,6 @@ func WindowContentRegionMin() Vec2 {
 	C.igGetWindowContentRegionMin(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -3119,7 +3076,6 @@ func WindowPos() Vec2 {
 	C.igGetWindowPos(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -3130,7 +3086,6 @@ func WindowSize() Vec2 {
 	C.igGetWindowSize(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -3629,7 +3584,6 @@ func LabelText(label string, fmt string) {
 
 	labelFin()
 	fmtFin()
-
 }
 
 // ListBoxStrarrV parameter default value hint:
@@ -3654,7 +3608,6 @@ func LoadIniSettingsFromDisk(ini_filename string) {
 	C.igLoadIniSettingsFromDisk(ini_filenameArg)
 
 	ini_filenameFin()
-
 }
 
 // LoadIniSettingsFromMemoryV parameter default value hint:
@@ -3665,7 +3618,6 @@ func LoadIniSettingsFromMemoryV(ini_data string, ini_size uint64) {
 	C.igLoadIniSettingsFromMemory(ini_dataArg, C.xlong(ini_size))
 
 	ini_dataFin()
-
 }
 
 func LogButtons() {
@@ -3686,7 +3638,6 @@ func LogText(fmt string) {
 	C.wrap_igLogText(fmtArg)
 
 	fmtFin()
-
 }
 
 // LogToClipboardV parameter default value hint:
@@ -3706,7 +3657,6 @@ func LogToFileV(auto_open_depth int32, filename string) {
 	C.igLogToFile(C.int(auto_open_depth), filenameArg)
 
 	filenameFin()
-
 }
 
 // LogToTTYV parameter default value hint:
@@ -3787,7 +3737,6 @@ func OpenPopupOnItemClickV(str_id string, popup_flags PopupFlags) {
 	C.igOpenPopupOnItemClick(str_idArg, C.ImGuiPopupFlags(popup_flags))
 
 	str_idFin()
-
 }
 
 // OpenPopupIDV parameter default value hint:
@@ -3806,7 +3755,6 @@ func OpenPopupStrV(str_id string, popup_flags PopupFlags) {
 	C.igOpenPopup_Str(str_idArg, C.ImGuiPopupFlags(popup_flags))
 
 	str_idFin()
-
 }
 
 // PlotHistogramFloatPtrV parameter default value hint:
@@ -3824,7 +3772,6 @@ func PlotHistogramFloatPtrV(label string, values []float32, values_count int32, 
 
 	labelFin()
 	overlay_textFin()
-
 }
 
 // PlotLinesFloatPtrV parameter default value hint:
@@ -3842,7 +3789,6 @@ func PlotLinesFloatPtrV(label string, values []float32, values_count int32, valu
 
 	labelFin()
 	overlay_textFin()
-
 }
 
 func PopAllowKeyboardFocus() {
@@ -3912,7 +3858,6 @@ func ProgressBarV(fraction float32, size_arg Vec2, overlay string) {
 	C.igProgressBar(C.float(fraction), size_arg.toC(), overlayArg)
 
 	overlayFin()
-
 }
 
 func PushAllowKeyboardFocus(allow_keyboard_focus bool) {
@@ -3957,7 +3902,6 @@ func PushIDStr(str_id string) {
 	C.igPushID_Str(str_idArg)
 
 	str_idFin()
-
 }
 
 func PushIDStrStr(str_id_begin string, str_id_end string) {
@@ -3968,7 +3912,6 @@ func PushIDStrStr(str_id_begin string, str_id_end string) {
 
 	str_id_beginFin()
 	str_id_endFin()
-
 }
 
 func PushItemWidth(item_width float32) {
@@ -4069,7 +4012,6 @@ func SaveIniSettingsToDisk(ini_filename string) {
 	C.igSaveIniSettingsToDisk(ini_filenameArg)
 
 	ini_filenameFin()
-
 }
 
 // SaveIniSettingsToMemoryV parameter default value hint:
@@ -4120,7 +4062,6 @@ func SetClipboardText(text string) {
 	C.igSetClipboardText(textArg)
 
 	textFin()
-
 }
 
 func SetColorEditOptions(flags ColorEditFlags) {
@@ -4348,7 +4289,6 @@ func SetTabItemClosed(tab_or_docked_window_label string) {
 	C.igSetTabItemClosed(tab_or_docked_window_labelArg)
 
 	tab_or_docked_window_labelFin()
-
 }
 
 func SetTooltip(fmt string) {
@@ -4357,7 +4297,6 @@ func SetTooltip(fmt string) {
 	C.wrap_igSetTooltip(fmtArg)
 
 	fmtFin()
-
 }
 
 // SetWindowCollapsedBoolV parameter default value hint:
@@ -4376,7 +4315,6 @@ func SetWindowCollapsedStrV(name string, collapsed bool, cond Cond) {
 	C.igSetWindowCollapsed_Str(nameArg, C.bool(collapsed), C.ImGuiCond(cond))
 
 	nameFin()
-
 }
 
 func SetWindowFocusNil() {
@@ -4391,7 +4329,6 @@ func SetWindowFocusStr(name string) {
 	C.igSetWindowFocus_Str(nameArg)
 
 	nameFin()
-
 }
 
 func SetWindowFontScale(scale float32) {
@@ -4408,7 +4345,6 @@ func SetWindowPosStrV(name string, pos Vec2, cond Cond) {
 	C.igSetWindowPos_Str(nameArg, pos.toC(), C.ImGuiCond(cond))
 
 	nameFin()
-
 }
 
 // SetWindowPosVec2V parameter default value hint:
@@ -4427,7 +4363,6 @@ func SetWindowSizeStrV(name string, size Vec2, cond Cond) {
 	C.igSetWindowSize_Str(nameArg, size.toC(), C.ImGuiCond(cond))
 
 	nameFin()
-
 }
 
 // SetWindowSizeVec2V parameter default value hint:
@@ -4446,7 +4381,6 @@ func ShowAboutWindowV(p_open *bool) {
 	C.igShowAboutWindow(p_openArg)
 
 	p_openFin()
-
 }
 
 // ShowDebugLogWindowV parameter default value hint:
@@ -4457,7 +4391,6 @@ func ShowDebugLogWindowV(p_open *bool) {
 	C.igShowDebugLogWindow(p_openArg)
 
 	p_openFin()
-
 }
 
 // ShowDemoWindowV parameter default value hint:
@@ -4468,7 +4401,6 @@ func ShowDemoWindowV(p_open *bool) {
 	C.igShowDemoWindow(p_openArg)
 
 	p_openFin()
-
 }
 
 func ShowFontSelector(label string) {
@@ -4477,7 +4409,6 @@ func ShowFontSelector(label string) {
 	C.igShowFontSelector(labelArg)
 
 	labelFin()
-
 }
 
 // ShowMetricsWindowV parameter default value hint:
@@ -4488,7 +4419,6 @@ func ShowMetricsWindowV(p_open *bool) {
 	C.igShowMetricsWindow(p_openArg)
 
 	p_openFin()
-
 }
 
 // ShowStackToolWindowV parameter default value hint:
@@ -4499,7 +4429,6 @@ func ShowStackToolWindowV(p_open *bool) {
 	C.igShowStackToolWindow(p_openArg)
 
 	p_openFin()
-
 }
 
 // ShowStyleEditorV parameter default value hint:
@@ -4863,7 +4792,6 @@ func TableHeader(label string) {
 	C.igTableHeader(labelArg)
 
 	labelFin()
-
 }
 
 func TableHeadersRow() {
@@ -4915,7 +4843,6 @@ func TableSetupColumnV(label string, flags TableColumnFlags, init_width_or_weigh
 	C.igTableSetupColumn(labelArg, C.ImGuiTableColumnFlags(flags), C.float(init_width_or_weight), C.ImGuiID(user_id))
 
 	labelFin()
-
 }
 
 func TableSetupScrollFreeze(cols int32, rows int32) {
@@ -4930,7 +4857,6 @@ func Text(fmt string) {
 	C.wrap_igText(fmtArg)
 
 	fmtFin()
-
 }
 
 func TextColored(col Vec4, fmt string) {
@@ -4939,7 +4865,6 @@ func TextColored(col Vec4, fmt string) {
 	C.wrap_igTextColored(col.toC(), fmtArg)
 
 	fmtFin()
-
 }
 
 func TextDisabled(fmt string) {
@@ -4948,7 +4873,6 @@ func TextDisabled(fmt string) {
 	C.wrap_igTextDisabled(fmtArg)
 
 	fmtFin()
-
 }
 
 // TextUnformattedV parameter default value hint:
@@ -4959,7 +4883,6 @@ func TextUnformattedV(text string) {
 	C.wrap_igTextUnformattedV(textArg)
 
 	textFin()
-
 }
 
 func TextWrapped(fmt string) {
@@ -4968,7 +4891,6 @@ func TextWrapped(fmt string) {
 	C.wrap_igTextWrapped(fmtArg)
 
 	fmtFin()
-
 }
 
 func TreeNodeExPtr(ptr_id unsafe.Pointer, flags TreeNodeFlags, fmt string) bool {
@@ -5057,7 +4979,6 @@ func TreePushStr(str_id string) {
 	C.igTreePush_Str(str_idArg)
 
 	str_idFin()
-
 }
 
 // UnindentV parameter default value hint:
@@ -5129,7 +5050,6 @@ func ValueBool(prefix string, b bool) {
 	C.igValue_Bool(prefixArg, C.bool(b))
 
 	prefixFin()
-
 }
 
 // ValueFloatV parameter default value hint:
@@ -5142,7 +5062,6 @@ func ValueFloatV(prefix string, v float32, float_format string) {
 
 	prefixFin()
 	float_formatFin()
-
 }
 
 func ValueInt(prefix string, v int32) {
@@ -5151,7 +5070,6 @@ func ValueInt(prefix string, v int32) {
 	C.igValue_Int(prefixArg, C.int(v))
 
 	prefixFin()
-
 }
 
 func ValueUint(prefix string, v uint32) {
@@ -5160,7 +5078,6 @@ func ValueUint(prefix string, v uint32) {
 	C.igValue_Uint(prefixArg, C.uint(v))
 
 	prefixFin()
-
 }
 
 func ColorHSV(h float32, s float32, v float32) Color {
@@ -5170,7 +5087,6 @@ func ColorHSV(h float32, s float32, v float32) Color {
 	C.wrap_ImColor_HSV(pOutArg, C.float(h), C.float(s), C.float(v))
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -5180,7 +5096,6 @@ func (self *Color) SetHSV(h float32, s float32, v float32) {
 	C.wrap_ImColor_SetHSV(selfArg, C.float(h), C.float(s), C.float(v))
 
 	selfFin()
-
 }
 
 func (self DrawList) AddBezierCubic(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32, thickness float32) {
@@ -5261,7 +5176,6 @@ func (self DrawList) AddTextFontPtr(font Font, font_size float32, pos Vec2, col 
 	C.wrap_ImDrawList_AddText_FontPtr(self.handle(), font.handle(), C.float(font_size), pos.toC(), C.ImU32(col), text_beginArg)
 
 	text_beginFin()
-
 }
 
 func (self DrawList) AddTextVec2(pos Vec2, col uint32, text_begin string) {
@@ -5270,7 +5184,6 @@ func (self DrawList) AddTextVec2(pos Vec2, col uint32, text_begin string) {
 	C.wrap_ImDrawList_AddText_Vec2(self.handle(), pos.toC(), C.ImU32(col), text_beginArg)
 
 	text_beginFin()
-
 }
 
 func (self DrawList) AddTriangle(p1 Vec2, p2 Vec2, p3 Vec2, col uint32) {
@@ -5361,7 +5274,6 @@ func (self FontGlyphRangesBuilder) AddText(text string) {
 	C.wrap_ImFontGlyphRangesBuilder_AddText(self.handle(), textArg)
 
 	textFin()
-
 }
 
 func (self Font) AddRemapChar(dst Wchar, src Wchar) {
@@ -5380,7 +5292,6 @@ func (self Font) CalcTextSizeA(size float32, max_width float32, wrap_width float
 
 	pOutFin()
 	text_beginFin()
-
 	return *pOut
 }
 
@@ -5390,7 +5301,6 @@ func (self Font) RenderText(draw_list DrawList, size float32, pos Vec2, col uint
 	C.wrap_ImFont_RenderText(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), clip_rect.toC(), text_beginArg)
 
 	text_beginFin()
-
 }
 
 func (self IO) SetKeyEventNativeData(key Key, native_keycode int32, native_scancode int32) {
@@ -5405,7 +5315,6 @@ func (self InputTextCallbackData) InsertChars(pos int32, text string) {
 	C.wrap_ImGuiInputTextCallbackData_InsertChars(self.handle(), C.int(pos), textArg)
 
 	textFin()
-
 }
 
 func (self ListClipper) Begin(items_count int32) {
@@ -5420,7 +5329,6 @@ func (self TextBuffer) Append(str string) {
 	C.wrap_ImGuiTextBuffer_Append(self.handle(), strArg)
 
 	strFin()
-
 }
 
 func (self TextFilter) Draw() bool {
@@ -5606,7 +5514,6 @@ func CalcTextSize(text string) Vec2 {
 
 	pOutFin()
 	textFin()
-
 	return *pOut
 }
 
@@ -6011,7 +5918,6 @@ func MouseDragDelta() Vec2 {
 	C.wrap_igGetMouseDragDelta(pOutArg)
 
 	pOutFin()
-
 	return *pOut
 }
 
@@ -6310,7 +6216,6 @@ func LoadIniSettingsFromMemory(ini_data string) {
 	C.wrap_igLoadIniSettingsFromMemory(ini_dataArg)
 
 	ini_dataFin()
-
 }
 
 func LogToClipboard() {
@@ -6373,7 +6278,6 @@ func OpenPopupStr(str_id string) {
 	C.wrap_igOpenPopup_Str(str_idArg)
 
 	str_idFin()
-
 }
 
 func PlotHistogramFloatPtr(label string, values []float32, values_count int32) {
@@ -6382,7 +6286,6 @@ func PlotHistogramFloatPtr(label string, values []float32, values_count int32) {
 	C.wrap_igPlotHistogram_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count))
 
 	labelFin()
-
 }
 
 func PlotLinesFloatPtr(label string, values []float32, values_count int32) {
@@ -6391,7 +6294,6 @@ func PlotLinesFloatPtr(label string, values []float32, values_count int32) {
 	C.wrap_igPlotLines_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count))
 
 	labelFin()
-
 }
 
 func PopStyleColor() {
@@ -6551,7 +6453,6 @@ func SetWindowCollapsedStr(name string, collapsed bool) {
 	C.wrap_igSetWindowCollapsed_Str(nameArg, C.bool(collapsed))
 
 	nameFin()
-
 }
 
 func SetWindowPosStr(name string, pos Vec2) {
@@ -6560,7 +6461,6 @@ func SetWindowPosStr(name string, pos Vec2) {
 	C.wrap_igSetWindowPos_Str(nameArg, pos.toC())
 
 	nameFin()
-
 }
 
 func SetWindowPosVec2(pos Vec2) {
@@ -6575,7 +6475,6 @@ func SetWindowSizeStr(name string, size Vec2) {
 	C.wrap_igSetWindowSize_Str(nameArg, size.toC())
 
 	nameFin()
-
 }
 
 func SetWindowSizeVec2(size Vec2) {
@@ -6864,7 +6763,6 @@ func TableSetupColumn(label string) {
 	C.wrap_igTableSetupColumn(labelArg)
 
 	labelFin()
-
 }
 
 func TextUnformatted(text string) {
@@ -6873,7 +6771,6 @@ func TextUnformatted(text string) {
 	C.wrap_igTextUnformatted(textArg)
 
 	textFin()
-
 }
 
 func TreeNodeExStr(label string) bool {
@@ -6938,7 +6835,6 @@ func ValueFloat(prefix string, v float32) {
 	C.wrap_igValue_Float(prefixArg, C.float(v))
 
 	prefixFin()
-
 }
 
 func (self DrawCmd) SetClipRect(v Vec4) {
@@ -7177,7 +7073,6 @@ func (self DrawList) SetOwnerName(v string) {
 	C.wrap_ImDrawList_Set_OwnerName(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self DrawList) OwnerName() string {
@@ -7315,7 +7210,6 @@ func (self DrawListSharedData) SetTexUvLines(v *Vec4) {
 	C.wrap_ImDrawListSharedData_SetTexUvLines(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self DrawListSharedData) TexUvLines() *Vec4 {
@@ -7610,7 +7504,6 @@ func (self FontAtlas) SetTexPixelsRGBA32(v *uint32) {
 	C.wrap_ImFontAtlas_SetTexPixelsRGBA32(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self FontAtlas) SetTexWidth(v int32) {
@@ -10050,7 +9943,6 @@ func (self Context) SetLogNextPrefix(v string) {
 	C.wrap_ImGuiContext_SetLogNextPrefix(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self Context) LogNextPrefix() string {
@@ -10064,7 +9956,6 @@ func (self Context) SetLogNextSuffix(v string) {
 	C.wrap_ImGuiContext_SetLogNextSuffix(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self Context) LogNextSuffix() string {
@@ -10324,7 +10215,6 @@ func (self DataTypeInfo) SetName(v string) {
 	C.wrap_ImGuiDataTypeInfo_SetName(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self DataTypeInfo) Name() string {
@@ -10338,7 +10228,6 @@ func (self DataTypeInfo) SetPrintFmt(v string) {
 	C.wrap_ImGuiDataTypeInfo_SetPrintFmt(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self DataTypeInfo) PrintFmt() string {
@@ -10352,7 +10241,6 @@ func (self DataTypeInfo) SetScanFmt(v string) {
 	C.wrap_ImGuiDataTypeInfo_SetScanFmt(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self DataTypeInfo) ScanFmt() string {
@@ -10962,7 +10850,6 @@ func (self IO) SetIniFilename(v string) {
 	C.wrap_ImGuiIO_SetIniFilename(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self IO) IniFilename() string {
@@ -10976,7 +10863,6 @@ func (self IO) SetLogFilename(v string) {
 	C.wrap_ImGuiIO_SetLogFilename(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self IO) LogFilename() string {
@@ -11300,7 +11186,6 @@ func (self IO) SetBackendPlatformName(v string) {
 	C.wrap_ImGuiIO_SetBackendPlatformName(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self IO) BackendPlatformName() string {
@@ -11314,7 +11199,6 @@ func (self IO) SetBackendRendererName(v string) {
 	C.wrap_ImGuiIO_SetBackendRendererName(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self IO) BackendRendererName() string {
@@ -11939,7 +11823,6 @@ func (self InputTextCallbackData) SetBuf(v string) {
 	C.wrap_ImGuiInputTextCallbackData_SetBuf(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self InputTextCallbackData) Buf() string {
@@ -13492,7 +13375,6 @@ func (self SettingsHandler) SetTypeName(v string) {
 	C.wrap_ImGuiSettingsHandler_SetTypeName(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self SettingsHandler) TypeName() string {
@@ -16706,7 +16588,6 @@ func (self TextRange) Setb(v string) {
 	C.wrap_ImGuiTextRange_Setb(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self TextRange) b() string {
@@ -16720,7 +16601,6 @@ func (self TextRange) Sete(v string) {
 	C.wrap_ImGuiTextRange_Sete(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self TextRange) e() string {
@@ -17136,7 +17016,6 @@ func (self Window) SetName(v string) {
 	C.wrap_ImGuiWindow_SetName(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self Window) Name() string {

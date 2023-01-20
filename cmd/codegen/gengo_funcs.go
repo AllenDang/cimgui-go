@@ -233,7 +233,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 		g.writeFinishers(shouldDefer, finishers)
 	}
 
-	g.sb.WriteString("\n\n")
+	g.sb.WriteString("\n")
 
 	switch returnTypeType {
 	case returnTypeNonUDT:
