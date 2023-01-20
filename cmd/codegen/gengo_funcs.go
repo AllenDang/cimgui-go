@@ -121,6 +121,7 @@ import "unsafe"
 func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrappers []ArgumentWrapperData) (noErrors bool) {
 	var returnType, returnStmt, receiver string
 	funcName := f.FuncName
+	shouldDefer := false
 
 	// determine kind of function:
 	returnTypeType := returnTypeUnknown
@@ -174,17 +175,22 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 
 		receiver = funcParts[0]
 	case returnTypeKnown:
+		shouldDefer = true
 		returnType = rf.returnType
 		returnStmt = rf.returnStmt
 	case returnTypeEnum:
+		shouldDefer = true
 		returnType = goEnumName
 	case returnTypeStructPtr:
 		// return Im struct ptr
+		shouldDefer = true
 		returnType = strings.TrimPrefix(f.Ret, "const ")
 		returnType = strings.TrimSuffix(returnType, "*")
 	case returnTypeStruct:
+		shouldDefer = true
 		returnType = f.Ret
 	case returnTypeConstructor:
+		shouldDefer = true
 		parts := strings.Split(f.FuncName, "_")
 
 		returnType = parts[0]
@@ -209,7 +215,6 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 	g.sb.WriteString(strings.Join(declarations, "\n"))
 	g.sb.WriteString("\n\n")
 
-	shouldDefer := returnType == ""
 	if shouldDefer {
 		g.writeFinishers(shouldDefer, finishers)
 	}
