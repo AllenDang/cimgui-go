@@ -23,7 +23,7 @@ type Texture struct {
 func NewTextureFromRgba(rgba *image.RGBA) *Texture {
 	texID := CreateTextureRgba(rgba, rgba.Bounds().Dx(), rgba.Bounds().Dy())
 
-	if texID == 0 {
+	if texID == nil {
 		return nil
 	}
 
