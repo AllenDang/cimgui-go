@@ -58,6 +58,8 @@ define update
 	rm -rf $1/.git $1/$3/.git
 	cd $1/generator; \
 		sh generator.sh
+	echo "// placeholder package used to include this code in vendor dir.\npackage doc" >> $1/doc.go
+	cat $1/doc.go >> $1/$3/doc.go
 endef
 
 .PHONY: update
