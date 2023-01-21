@@ -19,15 +19,23 @@ define generate
 	go run mvdan.cc/gofumpt@latest -w $(1)_funcs.go
 endef
 
+define cimgui
+	$(call generate,cimgui,cimgui/cimgui.h,cimgui/generator/output/definitions.json,cimgui/generator/output/structs_and_enums.json)
+endef
+
 ## cimgui: generate cimgui binding
 .PHONY: cimgui
 cimgui:
-	$(call generate,cimgui,cimgui/cimgui.h,cimgui/generator/output/definitions.json,cimgui/generator/output/structs_and_enums.json)
+	$(call cimgui)
+
+define cimplot
+	$(call generate,cimplot,cimplot/cimplot.h,cimplot/generator/output/definitions.json,cimplot/generator/output/structs_and_enums.json,-r cimgui/generator/output/structs_and_enums.json)
+endef
 
 ## cimplot: generate implot binding
 .PHONY: cimplot
 cimplot:
-	$(call generate,cimplot,cimplot/cimplot.h,cimplot/generator/output/definitions.json,cimplot/generator/output/structs_and_enums.json,-r cimgui/generator/output/structs_and_enums.json)
+	$(call cimplot)
 
 compile_cimgui_macos:
 	rm -rf ./cimgui/build
@@ -38,3 +46,24 @@ compile_cimgui_macos:
 ## generate: generates both bindings (equal to `all`)
 .PHONY: generate
 generate: cimgui cimplot
+
+# update updates sub-repos (like cimplot or cimgui)
+# $1 - subrepo directory
+# $2 - repository URL
+# $3 - $1/<c++ repo>/
+define update
+	@echo "updating $1 from $2"
+	rm -rf $1
+	git clone --recurse-submodules $2 $1
+	rm -rf $1/.git $1/$3/.git
+	cd $1/generator
+	./generator.sh
+	cd ../../
+endef
+
+.PHONY: update
+update:
+	$(call update,cimgui,https://github.com/cimgui/cimgui,imgui)
+	$(call cimgui)
+	$(call update,cimplot,https://github.com/cimgui/cimplot,implot)
+	$(call cimplot)
