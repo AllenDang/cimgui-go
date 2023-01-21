@@ -9,9 +9,70 @@ package imgui
 import "C"
 import "unsafe"
 
+func (self PlotAlignmentData) Begin() {
+
+	C.ImPlotAlignmentData_Begin(self.handle())
+
+}
+
+func (self PlotAlignmentData) End() {
+
+	C.ImPlotAlignmentData_End(self.handle())
+
+}
+
+func NewPlotAlignmentData() PlotAlignmentData {
+
+	return (PlotAlignmentData)(unsafe.Pointer(C.ImPlotAlignmentData_ImPlotAlignmentData()))
+}
+
+func (self PlotAlignmentData) Reset() {
+
+	C.ImPlotAlignmentData_Reset(self.handle())
+
+}
+
+func (self PlotAlignmentData) Update(pad_a *float32, pad_b *float32, delta_a *float32, delta_b *float32) {
+	pad_aArg, pad_aFin := wrapNumberPtr[C.float, float32](pad_a)
+	pad_bArg, pad_bFin := wrapNumberPtr[C.float, float32](pad_b)
+	delta_aArg, delta_aFin := wrapNumberPtr[C.float, float32](delta_a)
+	delta_bArg, delta_bFin := wrapNumberPtr[C.float, float32](delta_b)
+
+	C.ImPlotAlignmentData_Update(self.handle(), pad_aArg, pad_bArg, delta_aArg, delta_bArg)
+
+	pad_aFin()
+	pad_bFin()
+	delta_aFin()
+	delta_bFin()
+}
+
 func (self PlotAlignmentData) Destroy() {
 
 	C.ImPlotAlignmentData_destroy(self.handle())
+
+}
+
+func (self PlotAnnotationCollection) Append(pos Vec2, off Vec2, bg uint32, fg uint32, clamp bool, fmt string) {
+	fmtArg, fmtFin := wrapString(fmt)
+
+	C.wrap_ImPlotAnnotationCollection_Append(self.handle(), pos.toC(), off.toC(), C.ImU32(bg), C.ImU32(fg), C.bool(clamp), fmtArg)
+
+	fmtFin()
+}
+
+func (self PlotAnnotationCollection) Text(idx int32) string {
+
+	return C.GoString(C.ImPlotAnnotationCollection_GetText(self.handle(), C.int(idx)))
+}
+
+func NewPlotAnnotationCollection() PlotAnnotationCollection {
+
+	return (PlotAnnotationCollection)(unsafe.Pointer(C.ImPlotAnnotationCollection_ImPlotAnnotationCollection()))
+}
+
+func (self PlotAnnotationCollection) Reset() {
+
+	C.ImPlotAnnotationCollection_Reset(self.handle())
 
 }
 
@@ -21,9 +82,285 @@ func (self PlotAnnotationCollection) Destroy() {
 
 }
 
+func (self PlotAxis) ApplyFit(padding float32) {
+
+	C.ImPlotAxis_ApplyFit(self.handle(), C.float(padding))
+
+}
+
+func (self PlotAxis) CanInitFit() bool {
+
+	return C.ImPlotAxis_CanInitFit(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) Constrain() {
+
+	C.ImPlotAxis_Constrain(self.handle())
+
+}
+
+func (self PlotAxis) ExtendFit(v float64) {
+
+	C.ImPlotAxis_ExtendFit(self.handle(), C.double(v))
+
+}
+
+func (self PlotAxis) ExtendFitWith(alt PlotAxis, v float64, v_alt float64) {
+
+	C.ImPlotAxis_ExtendFitWith(self.handle(), alt.handle(), C.double(v), C.double(v_alt))
+
+}
+
+func (self PlotAxis) Aspect() float64 {
+
+	return float64(C.ImPlotAxis_GetAspect(self.handle()))
+}
+
+func (self PlotAxis) HasGridLines() bool {
+
+	return C.ImPlotAxis_HasGridLines(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) HasLabel() bool {
+
+	return C.ImPlotAxis_HasLabel(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) HasMenus() bool {
+
+	return C.ImPlotAxis_HasMenus(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) HasTickLabels() bool {
+
+	return C.ImPlotAxis_HasTickLabels(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) HasTickMarks() bool {
+
+	return C.ImPlotAxis_HasTickMarks(self.handle()) == C.bool(true)
+}
+
+func NewPlotAxis() PlotAxis {
+
+	return (PlotAxis)(unsafe.Pointer(C.ImPlotAxis_ImPlotAxis()))
+}
+
+func (self PlotAxis) IsAutoFitting() bool {
+
+	return C.ImPlotAxis_IsAutoFitting(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) IsForeground() bool {
+
+	return C.ImPlotAxis_IsForeground(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) IsInputLocked() bool {
+
+	return C.ImPlotAxis_IsInputLocked(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) IsInputLockedMax() bool {
+
+	return C.ImPlotAxis_IsInputLockedMax(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) IsInputLockedMin() bool {
+
+	return C.ImPlotAxis_IsInputLockedMin(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) IsInverted() bool {
+
+	return C.ImPlotAxis_IsInverted(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) IsLocked() bool {
+
+	return C.ImPlotAxis_IsLocked(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) IsLockedMax() bool {
+
+	return C.ImPlotAxis_IsLockedMax(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) IsLockedMin() bool {
+
+	return C.ImPlotAxis_IsLockedMin(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) IsOpposite() bool {
+
+	return C.ImPlotAxis_IsOpposite(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) IsPanLocked(increasing bool) bool {
+
+	return C.ImPlotAxis_IsPanLocked(self.handle(), C.bool(increasing)) == C.bool(true)
+}
+
+func (self PlotAxis) IsRangeLocked() bool {
+
+	return C.ImPlotAxis_IsRangeLocked(self.handle()) == C.bool(true)
+}
+
+func (self PlotAxis) PixelSize() float32 {
+
+	return float32(C.ImPlotAxis_PixelSize(self.handle()))
+}
+
+func (self PlotAxis) PixelsToPlot(pix float32) float64 {
+
+	return float64(C.ImPlotAxis_PixelsToPlot(self.handle(), C.float(pix)))
+}
+
+func (self PlotAxis) PlotToPixels(plt float64) float32 {
+
+	return float32(C.ImPlotAxis_PlotToPixels(self.handle(), C.double(plt)))
+}
+
+func (self PlotAxis) PullLinks() {
+
+	C.ImPlotAxis_PullLinks(self.handle())
+
+}
+
+func (self PlotAxis) PushLinks() {
+
+	C.ImPlotAxis_PushLinks(self.handle())
+
+}
+
+func (self PlotAxis) Reset() {
+
+	C.ImPlotAxis_Reset(self.handle())
+
+}
+
+func (self PlotAxis) SetAspect(unit_per_pix float64) {
+
+	C.ImPlotAxis_SetAspect(self.handle(), C.double(unit_per_pix))
+
+}
+
+// SetMaxV parameter default value hint:
+// force: false
+func (self PlotAxis) SetMaxV(_max float64, force bool) bool {
+
+	return C.ImPlotAxis_SetMax(self.handle(), C.double(_max), C.bool(force)) == C.bool(true)
+}
+
+// SetMinV parameter default value hint:
+// force: false
+func (self PlotAxis) SetMinV(_min float64, force bool) bool {
+
+	return C.ImPlotAxis_SetMin(self.handle(), C.double(_min), C.bool(force)) == C.bool(true)
+}
+
+func (self PlotAxis) SetRangedouble(v1 float64, v2 float64) {
+
+	C.ImPlotAxis_SetRange_double(self.handle(), C.double(v1), C.double(v2))
+
+}
+
+func (self PlotAxis) UpdateTransformCache() {
+
+	C.ImPlotAxis_UpdateTransformCache(self.handle())
+
+}
+
+func (self PlotAxis) WillRender() bool {
+
+	return C.ImPlotAxis_WillRender(self.handle()) == C.bool(true)
+}
+
 func (self PlotAxis) Destroy() {
 
 	C.ImPlotAxis_destroy(self.handle())
+
+}
+
+func (self PlotColormapData) Append(name string, keys *[]uint32, count int32, qual bool) int {
+	nameArg, nameFin := wrapString(name)
+	keysArg := make([]C.ImU32, len(*keys))
+	for i, keysV := range *keys {
+		keysArg[i] = C.ImU32(keysV)
+	}
+
+	defer func() {
+		nameFin()
+		func() {
+			for i, keysV := range keysArg {
+				(*keys)[i] = uint32(keysV)
+			}
+		}()
+
+	}()
+
+	return int(C.ImPlotColormapData_Append(self.handle(), nameArg, (*C.ImU32)(&keysArg[0]), C.int(count), C.bool(qual)))
+}
+
+func (self PlotColormapData) Index(name string) PlotColormap {
+	nameArg, nameFin := wrapString(name)
+
+	defer func() {
+		nameFin()
+	}()
+
+	return PlotColormap(C.ImPlotColormapData_GetIndex(self.handle(), nameArg))
+}
+
+func (self PlotColormapData) KeyColor(cmap PlotColormap, idx int32) uint32 {
+
+	return uint32(C.ImPlotColormapData_GetKeyColor(self.handle(), C.ImPlotColormap(cmap), C.int(idx)))
+}
+
+func (self PlotColormapData) KeyCount(cmap PlotColormap) int {
+
+	return int(C.ImPlotColormapData_GetKeyCount(self.handle(), C.ImPlotColormap(cmap)))
+}
+
+func (self PlotColormapData) Name(cmap PlotColormap) string {
+
+	return C.GoString(C.ImPlotColormapData_GetName(self.handle(), C.ImPlotColormap(cmap)))
+}
+
+func (self PlotColormapData) TableColor(cmap PlotColormap, idx int32) uint32 {
+
+	return uint32(C.ImPlotColormapData_GetTableColor(self.handle(), C.ImPlotColormap(cmap), C.int(idx)))
+}
+
+func (self PlotColormapData) TableSize(cmap PlotColormap) int {
+
+	return int(C.ImPlotColormapData_GetTableSize(self.handle(), C.ImPlotColormap(cmap)))
+}
+
+func NewPlotColormapData() PlotColormapData {
+
+	return (PlotColormapData)(unsafe.Pointer(C.ImPlotColormapData_ImPlotColormapData()))
+}
+
+func (self PlotColormapData) IsQual(cmap PlotColormap) bool {
+
+	return C.ImPlotColormapData_IsQual(self.handle(), C.ImPlotColormap(cmap)) == C.bool(true)
+}
+
+func (self PlotColormapData) LerpTable(cmap PlotColormap, t float32) uint32 {
+
+	return uint32(C.ImPlotColormapData_LerpTable(self.handle(), C.ImPlotColormap(cmap), C.float(t)))
+}
+
+func (self PlotColormapData) RebuildTables() {
+
+	C.ImPlotColormapData_RebuildTables(self.handle())
+
+}
+
+func (self PlotColormapData) SetKeyColor(cmap PlotColormap, idx int32, value uint32) {
+
+	C.ImPlotColormapData_SetKeyColor(self.handle(), C.ImPlotColormap(cmap), C.int(idx), C.ImU32(value))
 
 }
 
@@ -31,6 +368,19 @@ func (self PlotColormapData) Destroy() {
 
 	C.ImPlotColormapData_destroy(self.handle())
 
+}
+
+func NewPlotDateTimeSpecNil() PlotDateTimeSpec {
+
+	return (PlotDateTimeSpec)(unsafe.Pointer(C.ImPlotDateTimeSpec_ImPlotDateTimeSpec_Nil()))
+}
+
+// NewPlotDateTimeSpecPlotDateFmt parameter default value hint:
+// use_24_hr_clk: false
+// use_iso_8601: false
+func NewPlotDateTimeSpecPlotDateFmt(date_fmt PlotDateFmt, time_fmt PlotTimeFmt, use_24_hr_clk bool, use_iso_8601 bool) PlotDateTimeSpec {
+
+	return (PlotDateTimeSpec)(unsafe.Pointer(C.ImPlotDateTimeSpec_ImPlotDateTimeSpec_PlotDateFmt(C.ImPlotDateFmt(date_fmt), C.ImPlotTimeFmt(time_fmt), C.bool(use_24_hr_clk), C.bool(use_iso_8601))))
 }
 
 func (self PlotDateTimeSpec) Destroy() {
@@ -50,9 +400,102 @@ func (self PlotInputMap) Destroy() {
 
 }
 
+func (self PlotItemGroup) ItemByIndex(i int32) PlotItem {
+
+	return (PlotItem)(unsafe.Pointer(C.ImPlotItemGroup_GetItemByIndex(self.handle(), C.int(i))))
+}
+
+func (self PlotItemGroup) ItemCount() int {
+
+	return int(C.ImPlotItemGroup_GetItemCount(self.handle()))
+}
+
+func (self PlotItemGroup) ItemID(label_id string) ID {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	defer func() {
+		label_idFin()
+	}()
+
+	return ID(C.ImPlotItemGroup_GetItemID(self.handle(), label_idArg))
+}
+
+func (self PlotItemGroup) ItemIndex(item PlotItem) int {
+
+	return int(C.ImPlotItemGroup_GetItemIndex(self.handle(), item.handle()))
+}
+
+func (self PlotItemGroup) ItemID(id ID) PlotItem {
+
+	return (PlotItem)(unsafe.Pointer(C.ImPlotItemGroup_GetItem_ID(self.handle(), C.ImGuiID(id))))
+}
+
+func (self PlotItemGroup) ItemStr(label_id string) PlotItem {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	defer func() {
+		label_idFin()
+	}()
+
+	return (PlotItem)(unsafe.Pointer(C.ImPlotItemGroup_GetItem_Str(self.handle(), label_idArg)))
+}
+
+func (self PlotItemGroup) LegendCount() int {
+
+	return int(C.ImPlotItemGroup_GetLegendCount(self.handle()))
+}
+
+func (self PlotItemGroup) LegendItem(i int32) PlotItem {
+
+	return (PlotItem)(unsafe.Pointer(C.ImPlotItemGroup_GetLegendItem(self.handle(), C.int(i))))
+}
+
+func (self PlotItemGroup) LegendLabel(i int32) string {
+
+	return C.GoString(C.ImPlotItemGroup_GetLegendLabel(self.handle(), C.int(i)))
+}
+
+func (self PlotItemGroup) OrAddItem(id ID) PlotItem {
+
+	return (PlotItem)(unsafe.Pointer(C.ImPlotItemGroup_GetOrAddItem(self.handle(), C.ImGuiID(id))))
+}
+
+func NewPlotItemGroup() PlotItemGroup {
+
+	return (PlotItemGroup)(unsafe.Pointer(C.ImPlotItemGroup_ImPlotItemGroup()))
+}
+
+func (self PlotItemGroup) Reset() {
+
+	C.ImPlotItemGroup_Reset(self.handle())
+
+}
+
 func (self PlotItemGroup) Destroy() {
 
 	C.ImPlotItemGroup_destroy(self.handle())
+
+}
+
+func NewPlotItem() PlotItem {
+
+	return (PlotItem)(unsafe.Pointer(C.ImPlotItem_ImPlotItem()))
+}
+
+func (self PlotItem) Destroy() {
+
+	C.ImPlotItem_destroy(self.handle())
+
+}
+
+func NewPlotLegend() PlotLegend {
+
+	return (PlotLegend)(unsafe.Pointer(C.ImPlotLegend_ImPlotLegend()))
+}
+
+func (self PlotLegend) Reset() {
+
+	C.ImPlotLegend_Reset(self.handle())
 
 }
 
@@ -62,9 +505,31 @@ func (self PlotLegend) Destroy() {
 
 }
 
+func NewPlotNextItemData() PlotNextItemData {
+
+	return (PlotNextItemData)(unsafe.Pointer(C.ImPlotNextItemData_ImPlotNextItemData()))
+}
+
+func (self PlotNextItemData) Reset() {
+
+	C.ImPlotNextItemData_Reset(self.handle())
+
+}
+
 func (self PlotNextItemData) Destroy() {
 
 	C.ImPlotNextItemData_destroy(self.handle())
+
+}
+
+func NewPlotNextPlotData() PlotNextPlotData {
+
+	return (PlotNextPlotData)(unsafe.Pointer(C.ImPlotNextPlotData_ImPlotNextPlotData()))
+}
+
+func (self PlotNextPlotData) Reset() {
+
+	C.ImPlotNextPlotData_Reset(self.handle())
 
 }
 
@@ -74,10 +539,77 @@ func (self PlotNextPlotData) Destroy() {
 
 }
 
+func (self PlotPlot) ClearTextBuffer() {
+
+	C.ImPlotPlot_ClearTextBuffer(self.handle())
+
+}
+
+func (self PlotPlot) EnabledAxesX() int {
+
+	return int(C.ImPlotPlot_EnabledAxesX(self.handle()))
+}
+
+func (self PlotPlot) EnabledAxesY() int {
+
+	return int(C.ImPlotPlot_EnabledAxesY(self.handle()))
+}
+
+func (self PlotPlot) Title() string {
+
+	return C.GoString(C.ImPlotPlot_GetTitle(self.handle()))
+}
+
+func (self PlotPlot) HasTitle() bool {
+
+	return C.ImPlotPlot_HasTitle(self.handle()) == C.bool(true)
+}
+
+func NewPlotPlot() PlotPlot {
+
+	return (PlotPlot)(unsafe.Pointer(C.ImPlotPlot_ImPlotPlot()))
+}
+
+func (self PlotPlot) IsInputLocked() bool {
+
+	return C.ImPlotPlot_IsInputLocked(self.handle()) == C.bool(true)
+}
+
+func (self PlotPlot) SetAxisLabel(axis PlotAxis, label string) {
+	labelArg, labelFin := wrapString(label)
+
+	C.ImPlotPlot_SetAxisLabel(self.handle(), axis.handle(), labelArg)
+
+	labelFin()
+}
+
+func (self PlotPlot) SetTitle(title string) {
+	titleArg, titleFin := wrapString(title)
+
+	C.ImPlotPlot_SetTitle(self.handle(), titleArg)
+
+	titleFin()
+}
+
+func (self PlotPlot) XAxisNil(i int32) PlotAxis {
+
+	return (PlotAxis)(unsafe.Pointer(C.ImPlotPlot_XAxis_Nil(self.handle(), C.int(i))))
+}
+
+func (self PlotPlot) YAxisNil(i int32) PlotAxis {
+
+	return (PlotAxis)(unsafe.Pointer(C.ImPlotPlot_YAxis_Nil(self.handle(), C.int(i))))
+}
+
 func (self PlotPlot) Destroy() {
 
 	C.ImPlotPlot_destroy(self.handle())
 
+}
+
+func NewPlotPointError(x float64, y float64, neg float64, pos float64) PlotPointError {
+
+	return (PlotPointError)(unsafe.Pointer(C.ImPlotPointError_ImPlotPointError(C.double(x), C.double(y), C.double(neg), C.double(pos))))
 }
 
 func (self PlotPointError) Destroy() {
@@ -212,9 +744,38 @@ func (self PlotStyle) Destroy() {
 
 }
 
+func NewPlotSubplot() PlotSubplot {
+
+	return (PlotSubplot)(unsafe.Pointer(C.ImPlotSubplot_ImPlotSubplot()))
+}
+
 func (self PlotSubplot) Destroy() {
 
 	C.ImPlotSubplot_destroy(self.handle())
+
+}
+
+func (self PlotTagCollection) Append(axis PlotAxisEnum, value float64, bg uint32, fg uint32, fmt string) {
+	fmtArg, fmtFin := wrapString(fmt)
+
+	C.wrap_ImPlotTagCollection_Append(self.handle(), C.ImAxis(axis), C.double(value), C.ImU32(bg), C.ImU32(fg), fmtArg)
+
+	fmtFin()
+}
+
+func (self PlotTagCollection) Text(idx int32) string {
+
+	return C.GoString(C.ImPlotTagCollection_GetText(self.handle(), C.int(idx)))
+}
+
+func NewPlotTagCollection() PlotTagCollection {
+
+	return (PlotTagCollection)(unsafe.Pointer(C.ImPlotTagCollection_ImPlotTagCollection()))
+}
+
+func (self PlotTagCollection) Reset() {
+
+	C.ImPlotTagCollection_Reset(self.handle())
 
 }
 
@@ -224,21 +785,57 @@ func (self PlotTagCollection) Destroy() {
 
 }
 
+func NewPlotTick(value float64, major bool, level int32, show_label bool) PlotTick {
+
+	return (PlotTick)(unsafe.Pointer(C.ImPlotTick_ImPlotTick(C.double(value), C.bool(major), C.int(level), C.bool(show_label))))
+}
+
 func (self PlotTick) Destroy() {
 
 	C.ImPlotTick_destroy(self.handle())
 
 }
 
-func (self PlotTicker) Destroy() {
+func (self PlotTicker) AddTickdoubleStr(value float64, major bool, level int32, show_label bool, label string) PlotTick {
+	labelArg, labelFin := wrapString(label)
 
-	C.ImPlotTicker_destroy(self.handle())
+	defer func() {
+		labelFin()
+	}()
+
+	return (PlotTick)(unsafe.Pointer(C.ImPlotTicker_AddTick_doubleStr(self.handle(), C.double(value), C.bool(major), C.int(level), C.bool(show_label), labelArg)))
+}
+
+func (self PlotTicker) TextInt(idx int32) string {
+
+	return C.GoString(C.ImPlotTicker_GetText_Int(self.handle(), C.int(idx)))
+}
+
+func NewPlotTicker() PlotTicker {
+
+	return (PlotTicker)(unsafe.Pointer(C.ImPlotTicker_ImPlotTicker()))
+}
+
+func (self PlotTicker) OverrideSizeLate(size Vec2) {
+
+	C.ImPlotTicker_OverrideSizeLate(self.handle(), size.toC())
 
 }
 
-func (self PlotTime) Destroy() {
+func (self PlotTicker) Reset() {
 
-	C.ImPlotTime_destroy(self.handle())
+	C.ImPlotTicker_Reset(self.handle())
+
+}
+
+func (self PlotTicker) TickCount() int {
+
+	return int(C.ImPlotTicker_TickCount(self.handle()))
+}
+
+func (self PlotTicker) Destroy() {
+
+	C.ImPlotTicker_destroy(self.handle())
 
 }
 
@@ -278,6 +875,31 @@ func PlotAddColormapVec4PtrV(name string, cols *Vec4, size int32, qual bool) Plo
 	return PlotColormap(C.ImPlot_AddColormap_Vec4Ptr(nameArg, colsArg, C.int(size), C.bool(qual)))
 }
 
+// PlotAddTextCenteredV parameter default value hint:
+// text_end: ((void*)0)
+func PlotAddTextCenteredV(DrawList DrawList, top_center Vec2, col uint32, text_begin string) {
+	text_beginArg, text_beginFin := wrapString(text_begin)
+
+	C.wrap_ImPlot_AddTextCenteredV(DrawList.handle(), top_center.toC(), C.ImU32(col), text_beginArg)
+
+	text_beginFin()
+}
+
+// PlotAddTextVerticalV parameter default value hint:
+// text_end: ((void*)0)
+func PlotAddTextVerticalV(DrawList DrawList, pos Vec2, col uint32, text_begin string) {
+	text_beginArg, text_beginFin := wrapString(text_begin)
+
+	C.wrap_ImPlot_AddTextVerticalV(DrawList.handle(), pos.toC(), C.ImU32(col), text_beginArg)
+
+	text_beginFin()
+}
+
+func PlotAllAxesInputLocked(axes PlotAxis, count int32) bool {
+
+	return C.ImPlot_AllAxesInputLocked(axes.handle(), C.int(count)) == C.bool(true)
+}
+
 // PlotAnnotationBoolV parameter default value hint:
 // round: false
 func PlotAnnotationBoolV(x float64, y float64, col Vec4, pix_offset Vec2, clamp bool, round bool) {
@@ -292,6 +914,21 @@ func PlotAnnotationStr(x float64, y float64, col Vec4, pix_offset Vec2, clamp bo
 	C.wrap_ImPlot_Annotation_Str(C.double(x), C.double(y), col.toC(), pix_offset.toC(), C.bool(clamp), fmtArg)
 
 	fmtFin()
+}
+
+func PlotAnyAxesHeld(axes PlotAxis, count int32) bool {
+
+	return C.ImPlot_AnyAxesHeld(axes.handle(), C.int(count)) == C.bool(true)
+}
+
+func PlotAnyAxesHovered(axes PlotAxis, count int32) bool {
+
+	return C.ImPlot_AnyAxesHovered(axes.handle(), C.int(count)) == C.bool(true)
+}
+
+func PlotAnyAxesInputLocked(axes PlotAxis, count int32) bool {
+
+	return C.ImPlot_AnyAxesInputLocked(axes.handle(), C.int(count)) == C.bool(true)
 }
 
 // PlotBeginAlignedPlotsV parameter default value hint:
@@ -319,6 +956,19 @@ func PlotBeginDragDropTargetLegend() bool {
 func PlotBeginDragDropTargetPlot() bool {
 
 	return C.ImPlot_BeginDragDropTargetPlot() == C.bool(true)
+}
+
+// PlotBeginItemV parameter default value hint:
+// flags: 0
+// recolor_from: -1
+func PlotBeginItemV(label_id string, flags PlotItemFlags, recolor_from PlotCol) bool {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	defer func() {
+		label_idFin()
+	}()
+
+	return C.ImPlot_BeginItem(label_idArg, C.ImPlotItemFlags(flags), C.ImPlotCol(recolor_from)) == C.bool(true)
 }
 
 // PlotBeginPlotV parameter default value hint:
@@ -362,10 +1012,70 @@ func PlotBustColorCacheV(plot_title_id string) {
 	plot_title_idFin()
 }
 
+func PlotBustItemCache() {
+
+	C.ImPlot_BustItemCache()
+
+}
+
+func PlotBustPlotCache() {
+
+	C.ImPlot_BustPlotCache()
+
+}
+
+func PlotCalcHoverColor(col uint32) uint32 {
+
+	return uint32(C.ImPlot_CalcHoverColor(C.ImU32(col)))
+}
+
+func PlotCalcLegendSize(items PlotItemGroup, pad Vec2, spacing Vec2, vertical bool) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+
+	C.ImPlot_CalcLegendSize(pOutArg, items.handle(), pad.toC(), spacing.toC(), C.bool(vertical))
+
+	pOutFin()
+	return *pOut
+}
+
+func PlotCalcTextColorU32(bg uint32) uint32 {
+
+	return uint32(C.ImPlot_CalcTextColor_U32(C.ImU32(bg)))
+}
+
+func PlotCalcTextColorVec4(bg Vec4) uint32 {
+
+	return uint32(C.ImPlot_CalcTextColor_Vec4(bg.toC()))
+}
+
+func PlotCalcTextSizeVertical(text string) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+
+	textArg, textFin := wrapString(text)
+
+	C.ImPlot_CalcTextSizeVertical(pOutArg, textArg)
+
+	pOutFin()
+	textFin()
+	return *pOut
+}
+
 func PlotCancelPlotSelection() {
 
 	C.ImPlot_CancelPlotSelection()
 
+}
+
+func PlotClampLabelPos(pos Vec2, size Vec2, Min Vec2, Max Vec2) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+
+	C.ImPlot_ClampLabelPos(pOutArg, pos.toC(), size.toC(), Min.toC(), Max.toC())
+
+	pOutFin()
+	return *pOut
 }
 
 // PlotColormapButtonV parameter default value hint:
@@ -512,6 +1222,12 @@ func PlotEndDragDropTarget() {
 
 }
 
+func PlotEndItem() {
+
+	C.ImPlot_EndItem()
+
+}
+
 func PlotEndLegendPopup() {
 
 	C.ImPlot_EndLegendPopup()
@@ -530,6 +1246,69 @@ func PlotEndSubplots() {
 
 }
 
+func PlotFitPoint(p PlotPoint) {
+
+	C.ImPlot_FitPoint(p.toC())
+
+}
+
+func PlotFitPointX(x float64) {
+
+	C.ImPlot_FitPointX(C.double(x))
+
+}
+
+func PlotFitPointY(y float64) {
+
+	C.ImPlot_FitPointY(C.double(y))
+
+}
+
+func PlotFitThisFrame() bool {
+
+	return C.ImPlot_FitThisFrame() == C.bool(true)
+}
+
+func PlotFormatterDefault(value float64, buff string, size int32, data unsafe.Pointer) int {
+	buffArg, buffFin := wrapString(buff)
+
+	defer func() {
+		buffFin()
+	}()
+
+	return int(C.ImPlot_Formatter_Default(C.double(value), buffArg, C.int(size), (data)))
+}
+
+func PlotFormatterLogit(value float64, buff string, size int32, noname1 unsafe.Pointer) int {
+	buffArg, buffFin := wrapString(buff)
+
+	defer func() {
+		buffFin()
+	}()
+
+	return int(C.ImPlot_Formatter_Logit(C.double(value), buffArg, C.int(size), (noname1)))
+}
+
+func PlotFormatterTime(noname1 float64, buff string, size int32, data unsafe.Pointer) int {
+	buffArg, buffFin := wrapString(buff)
+
+	defer func() {
+		buffFin()
+	}()
+
+	return int(C.ImPlot_Formatter_Time(C.double(noname1), buffArg, C.int(size), (data)))
+}
+
+func PlotGetAutoColor(idx PlotCol) Vec4 {
+	pOut := &Vec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *Vec4](pOut)
+
+	C.ImPlot_GetAutoColor(pOutArg, C.ImPlotCol(idx))
+
+	pOutFin()
+	return *pOut
+}
+
 // PlotGetColormapColorV parameter default value hint:
 // cmap: -1
 func PlotGetColormapColorV(idx int32, cmap PlotColormap) Vec4 {
@@ -540,6 +1319,11 @@ func PlotGetColormapColorV(idx int32, cmap PlotColormap) Vec4 {
 
 	pOutFin()
 	return *pOut
+}
+
+func PlotGetColormapColorU32(idx int32, cmap PlotColormap) uint32 {
+
+	return uint32(C.ImPlot_GetColormapColorU32(C.int(idx), C.ImPlotColormap(cmap)))
 }
 
 func PlotGetColormapCount() int {
@@ -574,9 +1358,39 @@ func PlotGetCurrentContext() PlotContext {
 	return (PlotContext)(unsafe.Pointer(C.ImPlot_GetCurrentContext()))
 }
 
+func PlotGetCurrentItem() PlotItem {
+
+	return (PlotItem)(unsafe.Pointer(C.ImPlot_GetCurrentItem()))
+}
+
+func PlotGetCurrentPlot() PlotPlot {
+
+	return (PlotPlot)(unsafe.Pointer(C.ImPlot_GetCurrentPlot()))
+}
+
+func PlotGetDaysInMonth(year int32, month int32) int {
+
+	return int(C.ImPlot_GetDaysInMonth(C.int(year), C.int(month)))
+}
+
 func PlotGetInputMap() PlotInputMap {
 
 	return (PlotInputMap)(unsafe.Pointer(C.ImPlot_GetInputMap()))
+}
+
+func PlotGetItem(label_id string) PlotItem {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	defer func() {
+		label_idFin()
+	}()
+
+	return (PlotItem)(unsafe.Pointer(C.ImPlot_GetItem(label_idArg)))
+}
+
+func PlotGetItemData() PlotNextItemData {
+
+	return (PlotNextItemData)(unsafe.Pointer(C.ImPlot_GetItemData()))
 }
 
 func PlotGetLastItemColor() Vec4 {
@@ -592,6 +1406,16 @@ func PlotGetLastItemColor() Vec4 {
 func PlotGetMarkerName(idx PlotMarker) string {
 
 	return C.GoString(C.ImPlot_GetMarkerName(C.ImPlotMarker(idx)))
+}
+
+func PlotGetPlot(title string) PlotPlot {
+	titleArg, titleFin := wrapString(title)
+
+	defer func() {
+		titleFin()
+	}()
+
+	return (PlotPlot)(unsafe.Pointer(C.ImPlot_GetPlot(titleArg)))
 }
 
 func PlotGetPlotDrawList() DrawList {
@@ -642,6 +1466,21 @@ func PlotGetStyleColorName(idx PlotCol) string {
 	return C.GoString(C.ImPlot_GetStyleColorName(C.ImPlotCol(idx)))
 }
 
+func PlotGetStyleColorU32(idx PlotCol) uint32 {
+
+	return uint32(C.ImPlot_GetStyleColorU32(C.ImPlotCol(idx)))
+}
+
+func PlotGetStyleColorVec4(idx PlotCol) Vec4 {
+	pOut := &Vec4{}
+	pOutArg, pOutFin := wrap[C.ImVec4, *Vec4](pOut)
+
+	C.ImPlot_GetStyleColorVec4(pOutArg, C.ImPlotCol(idx))
+
+	pOutFin()
+	return *pOut
+}
+
 // PlotHideNextItemV parameter default value hint:
 // cond: ImPlotCond_Once
 // hidden: true
@@ -651,9 +1490,920 @@ func PlotHideNextItemV(hidden bool, cond PlotCond) {
 
 }
 
+// PlotImAlmostEqualV parameter default value hint:
+// ulp: 2
+func PlotImAlmostEqualV(v1 float64, v2 float64, ulp int32) bool {
+
+	return C.ImPlot_ImAlmostEqual(C.double(v1), C.double(v2), C.int(ulp)) == C.bool(true)
+}
+
+func PlotImAlphaU32(col uint32, alpha float32) uint32 {
+
+	return uint32(C.ImPlot_ImAlphaU32(C.ImU32(col), C.float(alpha)))
+}
+
+func PlotImAsinhFloat(x float32) float32 {
+
+	return float32(C.ImPlot_ImAsinh_Float(C.float(x)))
+}
+
+func PlotImAsinhdouble(x float64) float64 {
+
+	return float64(C.ImPlot_ImAsinh_double(C.double(x)))
+}
+
+func PlotImConstrainInf(val float64) float64 {
+
+	return float64(C.ImPlot_ImConstrainInf(C.double(val)))
+}
+
+func PlotImConstrainLog(val float64) float64 {
+
+	return float64(C.ImPlot_ImConstrainLog(C.double(val)))
+}
+
+func PlotImConstrainNan(val float64) float64 {
+
+	return float64(C.ImPlot_ImConstrainNan(C.double(val)))
+}
+
+func PlotImConstrainTime(val float64) float64 {
+
+	return float64(C.ImPlot_ImConstrainTime(C.double(val)))
+}
+
+func PlotImLerpU32(colors *[]uint32, size int32, t float32) uint32 {
+	colorsArg := make([]C.ImU32, len(*colors))
+	for i, colorsV := range *colors {
+		colorsArg[i] = C.ImU32(colorsV)
+	}
+
+	defer func() {
+		func() {
+			for i, colorsV := range colorsArg {
+				(*colors)[i] = uint32(colorsV)
+			}
+		}()
+
+	}()
+
+	return uint32(C.ImPlot_ImLerpU32((*C.ImU32)(&colorsArg[0]), C.int(size), C.float(t)))
+}
+
+func PlotImLog10Float(x float32) float32 {
+
+	return float32(C.ImPlot_ImLog10_Float(C.float(x)))
+}
+
+func PlotImLog10double(x float64) float64 {
+
+	return float64(C.ImPlot_ImLog10_double(C.double(x)))
+}
+
+func PlotImMaxArrayFloatPtr(values []float32, count int32) float32 {
+
+	return float32(C.ImPlot_ImMaxArray_FloatPtr((*C.float)(&(values[0])), C.int(count)))
+}
+
+func PlotImMaxArrayS16Ptr(values *[]int, count int32) int {
+	valuesArg := make([]C.ImS16, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS16(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int(valuesV)
+			}
+		}()
+
+	}()
+
+	return int(C.ImPlot_ImMaxArray_S16Ptr((*C.ImS16)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMaxArrayS32Ptr(values *[]int32, count int32) int {
+	valuesArg := make([]C.ImS32, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS32(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int32(valuesV)
+			}
+		}()
+
+	}()
+
+	return int(C.ImPlot_ImMaxArray_S32Ptr((*C.ImS32)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMaxArrayS8Ptr(values *[]int8, count int32) int {
+	valuesArg := make([]C.ImS8, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS8(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int8(valuesV)
+			}
+		}()
+
+	}()
+
+	return int(C.ImPlot_ImMaxArray_S8Ptr((*C.ImS8)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMaxArrayU16Ptr(values *[]uint16, count int32) uint32 {
+	valuesArg := make([]C.ImU16, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU16(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = uint16(valuesV)
+			}
+		}()
+
+	}()
+
+	return uint32(C.ImPlot_ImMaxArray_U16Ptr((*C.ImU16)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMaxArrayU32Ptr(values *[]uint32, count int32) uint32 {
+	valuesArg := make([]C.ImU32, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU32(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = uint32(valuesV)
+			}
+		}()
+
+	}()
+
+	return uint32(C.ImPlot_ImMaxArray_U32Ptr((*C.ImU32)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMaxArrayU64Ptr(values []uint64, count int32) uint64 {
+
+	return uint64(C.ImPlot_ImMaxArray_U64Ptr((*C.ulonglong)(&(values[0])), C.int(count)))
+}
+
+func PlotImMaxArrayU8Ptr(values *[]byte, count int32) uint32 {
+	valuesArg := make([]C.ImU8, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU8(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = byte(valuesV)
+			}
+		}()
+
+	}()
+
+	return uint32(C.ImPlot_ImMaxArray_U8Ptr((*C.ImU8)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMaxArraydoublePtr(values []float64, count int32) float64 {
+
+	return float64(C.ImPlot_ImMaxArray_doublePtr((*C.double)(&(values[0])), C.int(count)))
+}
+
+func PlotImMeanFloatPtr(values []float32, count int32) float64 {
+
+	return float64(C.ImPlot_ImMean_FloatPtr((*C.float)(&(values[0])), C.int(count)))
+}
+
+func PlotImMeanS16Ptr(values *[]int, count int32) float64 {
+	valuesArg := make([]C.ImS16, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS16(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int(valuesV)
+			}
+		}()
+
+	}()
+
+	return float64(C.ImPlot_ImMean_S16Ptr((*C.ImS16)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMeanS32Ptr(values *[]int32, count int32) float64 {
+	valuesArg := make([]C.ImS32, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS32(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int32(valuesV)
+			}
+		}()
+
+	}()
+
+	return float64(C.ImPlot_ImMean_S32Ptr((*C.ImS32)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMeanS64Ptr(values []int64, count int32) float64 {
+
+	return float64(C.ImPlot_ImMean_S64Ptr((*C.longlong)(&(values[0])), C.int(count)))
+}
+
+func PlotImMeanS8Ptr(values *[]int8, count int32) float64 {
+	valuesArg := make([]C.ImS8, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS8(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int8(valuesV)
+			}
+		}()
+
+	}()
+
+	return float64(C.ImPlot_ImMean_S8Ptr((*C.ImS8)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMeanU16Ptr(values *[]uint16, count int32) float64 {
+	valuesArg := make([]C.ImU16, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU16(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = uint16(valuesV)
+			}
+		}()
+
+	}()
+
+	return float64(C.ImPlot_ImMean_U16Ptr((*C.ImU16)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMeanU32Ptr(values *[]uint32, count int32) float64 {
+	valuesArg := make([]C.ImU32, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU32(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = uint32(valuesV)
+			}
+		}()
+
+	}()
+
+	return float64(C.ImPlot_ImMean_U32Ptr((*C.ImU32)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMeanU64Ptr(values []uint64, count int32) float64 {
+
+	return float64(C.ImPlot_ImMean_U64Ptr((*C.ulonglong)(&(values[0])), C.int(count)))
+}
+
+func PlotImMeanU8Ptr(values *[]byte, count int32) float64 {
+	valuesArg := make([]C.ImU8, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU8(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = byte(valuesV)
+			}
+		}()
+
+	}()
+
+	return float64(C.ImPlot_ImMean_U8Ptr((*C.ImU8)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMeandoublePtr(values []float64, count int32) float64 {
+
+	return float64(C.ImPlot_ImMean_doublePtr((*C.double)(&(values[0])), C.int(count)))
+}
+
+func PlotImMinArrayFloatPtr(values []float32, count int32) float32 {
+
+	return float32(C.ImPlot_ImMinArray_FloatPtr((*C.float)(&(values[0])), C.int(count)))
+}
+
+func PlotImMinArrayS16Ptr(values *[]int, count int32) int {
+	valuesArg := make([]C.ImS16, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS16(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int(valuesV)
+			}
+		}()
+
+	}()
+
+	return int(C.ImPlot_ImMinArray_S16Ptr((*C.ImS16)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMinArrayS32Ptr(values *[]int32, count int32) int {
+	valuesArg := make([]C.ImS32, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS32(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int32(valuesV)
+			}
+		}()
+
+	}()
+
+	return int(C.ImPlot_ImMinArray_S32Ptr((*C.ImS32)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMinArrayS8Ptr(values *[]int8, count int32) int {
+	valuesArg := make([]C.ImS8, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS8(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int8(valuesV)
+			}
+		}()
+
+	}()
+
+	return int(C.ImPlot_ImMinArray_S8Ptr((*C.ImS8)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMinArrayU16Ptr(values *[]uint16, count int32) uint32 {
+	valuesArg := make([]C.ImU16, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU16(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = uint16(valuesV)
+			}
+		}()
+
+	}()
+
+	return uint32(C.ImPlot_ImMinArray_U16Ptr((*C.ImU16)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMinArrayU32Ptr(values *[]uint32, count int32) uint32 {
+	valuesArg := make([]C.ImU32, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU32(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = uint32(valuesV)
+			}
+		}()
+
+	}()
+
+	return uint32(C.ImPlot_ImMinArray_U32Ptr((*C.ImU32)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMinArrayU64Ptr(values []uint64, count int32) uint64 {
+
+	return uint64(C.ImPlot_ImMinArray_U64Ptr((*C.ulonglong)(&(values[0])), C.int(count)))
+}
+
+func PlotImMinArrayU8Ptr(values *[]byte, count int32) uint32 {
+	valuesArg := make([]C.ImU8, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU8(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = byte(valuesV)
+			}
+		}()
+
+	}()
+
+	return uint32(C.ImPlot_ImMinArray_U8Ptr((*C.ImU8)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImMinArraydoublePtr(values []float64, count int32) float64 {
+
+	return float64(C.ImPlot_ImMinArray_doublePtr((*C.double)(&(values[0])), C.int(count)))
+}
+
+func PlotImMinMaxArrayFloatPtr(values []float32, count int32, min_out *float32, max_out *float32) {
+	min_outArg, min_outFin := wrapNumberPtr[C.float, float32](min_out)
+	max_outArg, max_outFin := wrapNumberPtr[C.float, float32](max_out)
+
+	C.ImPlot_ImMinMaxArray_FloatPtr((*C.float)(&(values[0])), C.int(count), min_outArg, max_outArg)
+
+	min_outFin()
+	max_outFin()
+}
+
+func PlotImMinMaxArraydoublePtr(values []float64, count int32, min_out *float64, max_out *float64) {
+	min_outArg, min_outFin := wrapNumberPtr[C.double, float64](min_out)
+	max_outArg, max_outFin := wrapNumberPtr[C.double, float64](max_out)
+
+	C.ImPlot_ImMinMaxArray_doublePtr((*C.double)(&(values[0])), C.int(count), min_outArg, max_outArg)
+
+	min_outFin()
+	max_outFin()
+}
+
+func PlotImMixU32(a uint32, b uint32, s uint32) uint32 {
+
+	return uint32(C.ImPlot_ImMixU32(C.ImU32(a), C.ImU32(b), C.ImU32(s)))
+}
+
+func PlotImNan(val float64) bool {
+
+	return C.ImPlot_ImNan(C.double(val)) == C.bool(true)
+}
+
+func PlotImNanOrInf(val float64) bool {
+
+	return C.ImPlot_ImNanOrInf(C.double(val)) == C.bool(true)
+}
+
+func PlotImOverlapsFloat(min_a float32, max_a float32, min_b float32, max_b float32) bool {
+
+	return C.ImPlot_ImOverlaps_Float(C.float(min_a), C.float(max_a), C.float(min_b), C.float(max_b)) == C.bool(true)
+}
+
+func PlotImOverlapsS16(min_a int, max_a int, min_b int, max_b int) bool {
+
+	return C.ImPlot_ImOverlaps_S16(C.ImS16(min_a), C.ImS16(max_a), C.ImS16(min_b), C.ImS16(max_b)) == C.bool(true)
+}
+
+func PlotImOverlapsS32(min_a int, max_a int, min_b int, max_b int) bool {
+
+	return C.ImPlot_ImOverlaps_S32(C.ImS32(min_a), C.ImS32(max_a), C.ImS32(min_b), C.ImS32(max_b)) == C.bool(true)
+}
+
+func PlotImOverlapsS8(min_a int, max_a int, min_b int, max_b int) bool {
+
+	return C.ImPlot_ImOverlaps_S8(C.ImS8(min_a), C.ImS8(max_a), C.ImS8(min_b), C.ImS8(max_b)) == C.bool(true)
+}
+
+func PlotImOverlapsU16(min_a uint, max_a uint, min_b uint, max_b uint) bool {
+
+	return C.ImPlot_ImOverlaps_U16(C.ImU16(min_a), C.ImU16(max_a), C.ImU16(min_b), C.ImU16(max_b)) == C.bool(true)
+}
+
+func PlotImOverlapsU32(min_a uint32, max_a uint32, min_b uint32, max_b uint32) bool {
+
+	return C.ImPlot_ImOverlaps_U32(C.ImU32(min_a), C.ImU32(max_a), C.ImU32(min_b), C.ImU32(max_b)) == C.bool(true)
+}
+
+func PlotImOverlapsU64(min_a uint64, max_a uint64, min_b uint64, max_b uint64) bool {
+
+	return C.ImPlot_ImOverlaps_U64(C.ImU64(min_a), C.ImU64(max_a), C.ImU64(min_b), C.ImU64(max_b)) == C.bool(true)
+}
+
+func PlotImOverlapsU8(min_a uint, max_a uint, min_b uint, max_b uint) bool {
+
+	return C.ImPlot_ImOverlaps_U8(C.ImU8(min_a), C.ImU8(max_a), C.ImU8(min_b), C.ImU8(max_b)) == C.bool(true)
+}
+
+func PlotImOverlapsdouble(min_a float64, max_a float64, min_b float64, max_b float64) bool {
+
+	return C.ImPlot_ImOverlaps_double(C.double(min_a), C.double(max_a), C.double(min_b), C.double(max_b)) == C.bool(true)
+}
+
+func PlotImPosMod(l int32, r int32) int {
+
+	return int(C.ImPlot_ImPosMod(C.int(l), C.int(r)))
+}
+
+func PlotImRemap01Float(x float32, x0 float32, x1 float32) float32 {
+
+	return float32(C.ImPlot_ImRemap01_Float(C.float(x), C.float(x0), C.float(x1)))
+}
+
+func PlotImRemap01S16(x int, x0 int, x1 int) int {
+
+	return int(C.ImPlot_ImRemap01_S16(C.ImS16(x), C.ImS16(x0), C.ImS16(x1)))
+}
+
+func PlotImRemap01S32(x int, x0 int, x1 int) int {
+
+	return int(C.ImPlot_ImRemap01_S32(C.ImS32(x), C.ImS32(x0), C.ImS32(x1)))
+}
+
+func PlotImRemap01S8(x int, x0 int, x1 int) int {
+
+	return int(C.ImPlot_ImRemap01_S8(C.ImS8(x), C.ImS8(x0), C.ImS8(x1)))
+}
+
+func PlotImRemap01U16(x uint, x0 uint, x1 uint) uint32 {
+
+	return uint32(C.ImPlot_ImRemap01_U16(C.ImU16(x), C.ImU16(x0), C.ImU16(x1)))
+}
+
+func PlotImRemap01U32(x uint32, x0 uint32, x1 uint32) uint32 {
+
+	return uint32(C.ImPlot_ImRemap01_U32(C.ImU32(x), C.ImU32(x0), C.ImU32(x1)))
+}
+
+func PlotImRemap01U64(x uint64, x0 uint64, x1 uint64) uint64 {
+
+	return uint64(C.ImPlot_ImRemap01_U64(C.ImU64(x), C.ImU64(x0), C.ImU64(x1)))
+}
+
+func PlotImRemap01U8(x uint, x0 uint, x1 uint) uint32 {
+
+	return uint32(C.ImPlot_ImRemap01_U8(C.ImU8(x), C.ImU8(x0), C.ImU8(x1)))
+}
+
+func PlotImRemap01double(x float64, x0 float64, x1 float64) float64 {
+
+	return float64(C.ImPlot_ImRemap01_double(C.double(x), C.double(x0), C.double(x1)))
+}
+
+func PlotImRemapFloat(x float32, x0 float32, x1 float32, y0 float32, y1 float32) float32 {
+
+	return float32(C.ImPlot_ImRemap_Float(C.float(x), C.float(x0), C.float(x1), C.float(y0), C.float(y1)))
+}
+
+func PlotImRemapS16(x int, x0 int, x1 int, y0 int, y1 int) int {
+
+	return int(C.ImPlot_ImRemap_S16(C.ImS16(x), C.ImS16(x0), C.ImS16(x1), C.ImS16(y0), C.ImS16(y1)))
+}
+
+func PlotImRemapS32(x int, x0 int, x1 int, y0 int, y1 int) int {
+
+	return int(C.ImPlot_ImRemap_S32(C.ImS32(x), C.ImS32(x0), C.ImS32(x1), C.ImS32(y0), C.ImS32(y1)))
+}
+
+func PlotImRemapS8(x int, x0 int, x1 int, y0 int, y1 int) int {
+
+	return int(C.ImPlot_ImRemap_S8(C.ImS8(x), C.ImS8(x0), C.ImS8(x1), C.ImS8(y0), C.ImS8(y1)))
+}
+
+func PlotImRemapU16(x uint, x0 uint, x1 uint, y0 uint, y1 uint) uint32 {
+
+	return uint32(C.ImPlot_ImRemap_U16(C.ImU16(x), C.ImU16(x0), C.ImU16(x1), C.ImU16(y0), C.ImU16(y1)))
+}
+
+func PlotImRemapU32(x uint32, x0 uint32, x1 uint32, y0 uint32, y1 uint32) uint32 {
+
+	return uint32(C.ImPlot_ImRemap_U32(C.ImU32(x), C.ImU32(x0), C.ImU32(x1), C.ImU32(y0), C.ImU32(y1)))
+}
+
+func PlotImRemapU64(x uint64, x0 uint64, x1 uint64, y0 uint64, y1 uint64) uint64 {
+
+	return uint64(C.ImPlot_ImRemap_U64(C.ImU64(x), C.ImU64(x0), C.ImU64(x1), C.ImU64(y0), C.ImU64(y1)))
+}
+
+func PlotImRemapU8(x uint, x0 uint, x1 uint, y0 uint, y1 uint) uint32 {
+
+	return uint32(C.ImPlot_ImRemap_U8(C.ImU8(x), C.ImU8(x0), C.ImU8(x1), C.ImU8(y0), C.ImU8(y1)))
+}
+
+func PlotImRemapdouble(x float64, x0 float64, x1 float64, y0 float64, y1 float64) float64 {
+
+	return float64(C.ImPlot_ImRemap_double(C.double(x), C.double(x0), C.double(x1), C.double(y0), C.double(y1)))
+}
+
+func PlotImSinhFloat(x float32) float32 {
+
+	return float32(C.ImPlot_ImSinh_Float(C.float(x)))
+}
+
+func PlotImSinhdouble(x float64) float64 {
+
+	return float64(C.ImPlot_ImSinh_double(C.double(x)))
+}
+
+func PlotImStdDevFloatPtr(values []float32, count int32) float64 {
+
+	return float64(C.ImPlot_ImStdDev_FloatPtr((*C.float)(&(values[0])), C.int(count)))
+}
+
+func PlotImStdDevS16Ptr(values *[]int, count int32) float64 {
+	valuesArg := make([]C.ImS16, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS16(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int(valuesV)
+			}
+		}()
+
+	}()
+
+	return float64(C.ImPlot_ImStdDev_S16Ptr((*C.ImS16)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImStdDevS32Ptr(values *[]int32, count int32) float64 {
+	valuesArg := make([]C.ImS32, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS32(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int32(valuesV)
+			}
+		}()
+
+	}()
+
+	return float64(C.ImPlot_ImStdDev_S32Ptr((*C.ImS32)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImStdDevS64Ptr(values []int64, count int32) float64 {
+
+	return float64(C.ImPlot_ImStdDev_S64Ptr((*C.longlong)(&(values[0])), C.int(count)))
+}
+
+func PlotImStdDevS8Ptr(values *[]int8, count int32) float64 {
+	valuesArg := make([]C.ImS8, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS8(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int8(valuesV)
+			}
+		}()
+
+	}()
+
+	return float64(C.ImPlot_ImStdDev_S8Ptr((*C.ImS8)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImStdDevU16Ptr(values *[]uint16, count int32) float64 {
+	valuesArg := make([]C.ImU16, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU16(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = uint16(valuesV)
+			}
+		}()
+
+	}()
+
+	return float64(C.ImPlot_ImStdDev_U16Ptr((*C.ImU16)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImStdDevU32Ptr(values *[]uint32, count int32) float64 {
+	valuesArg := make([]C.ImU32, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU32(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = uint32(valuesV)
+			}
+		}()
+
+	}()
+
+	return float64(C.ImPlot_ImStdDev_U32Ptr((*C.ImU32)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImStdDevU64Ptr(values []uint64, count int32) float64 {
+
+	return float64(C.ImPlot_ImStdDev_U64Ptr((*C.ulonglong)(&(values[0])), C.int(count)))
+}
+
+func PlotImStdDevU8Ptr(values *[]byte, count int32) float64 {
+	valuesArg := make([]C.ImU8, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU8(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = byte(valuesV)
+			}
+		}()
+
+	}()
+
+	return float64(C.ImPlot_ImStdDev_U8Ptr((*C.ImU8)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImStdDevdoublePtr(values []float64, count int32) float64 {
+
+	return float64(C.ImPlot_ImStdDev_doublePtr((*C.double)(&(values[0])), C.int(count)))
+}
+
+func PlotImSumFloatPtr(values []float32, count int32) float32 {
+
+	return float32(C.ImPlot_ImSum_FloatPtr((*C.float)(&(values[0])), C.int(count)))
+}
+
+func PlotImSumS16Ptr(values *[]int, count int32) int {
+	valuesArg := make([]C.ImS16, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS16(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int(valuesV)
+			}
+		}()
+
+	}()
+
+	return int(C.ImPlot_ImSum_S16Ptr((*C.ImS16)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImSumS32Ptr(values *[]int32, count int32) int {
+	valuesArg := make([]C.ImS32, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS32(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int32(valuesV)
+			}
+		}()
+
+	}()
+
+	return int(C.ImPlot_ImSum_S32Ptr((*C.ImS32)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImSumS8Ptr(values *[]int8, count int32) int {
+	valuesArg := make([]C.ImS8, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImS8(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = int8(valuesV)
+			}
+		}()
+
+	}()
+
+	return int(C.ImPlot_ImSum_S8Ptr((*C.ImS8)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImSumU16Ptr(values *[]uint16, count int32) uint32 {
+	valuesArg := make([]C.ImU16, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU16(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = uint16(valuesV)
+			}
+		}()
+
+	}()
+
+	return uint32(C.ImPlot_ImSum_U16Ptr((*C.ImU16)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImSumU32Ptr(values *[]uint32, count int32) uint32 {
+	valuesArg := make([]C.ImU32, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU32(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = uint32(valuesV)
+			}
+		}()
+
+	}()
+
+	return uint32(C.ImPlot_ImSum_U32Ptr((*C.ImU32)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImSumU64Ptr(values []uint64, count int32) uint64 {
+
+	return uint64(C.ImPlot_ImSum_U64Ptr((*C.ulonglong)(&(values[0])), C.int(count)))
+}
+
+func PlotImSumU8Ptr(values *[]byte, count int32) uint32 {
+	valuesArg := make([]C.ImU8, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU8(valuesV)
+	}
+
+	defer func() {
+		func() {
+			for i, valuesV := range valuesArg {
+				(*values)[i] = byte(valuesV)
+			}
+		}()
+
+	}()
+
+	return uint32(C.ImPlot_ImSum_U8Ptr((*C.ImU8)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImSumdoublePtr(values []float64, count int32) float64 {
+
+	return float64(C.ImPlot_ImSum_doublePtr((*C.double)(&(values[0])), C.int(count)))
+}
+
+func PlotInitialize(ctx PlotContext) {
+
+	C.ImPlot_Initialize(ctx.handle())
+
+}
+
+func PlotIntersection(a1 Vec2, a2 Vec2, b1 Vec2, b2 Vec2) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+
+	C.ImPlot_Intersection(pOutArg, a1.toC(), a2.toC(), b1.toC(), b2.toC())
+
+	pOutFin()
+	return *pOut
+}
+
 func PlotIsAxisHovered(axis PlotAxisEnum) bool {
 
 	return C.ImPlot_IsAxisHovered(C.ImAxis(axis)) == C.bool(true)
+}
+
+func PlotIsColorAutoPlotCol(idx PlotCol) bool {
+
+	return C.ImPlot_IsColorAuto_PlotCol(C.ImPlotCol(idx)) == C.bool(true)
+}
+
+func PlotIsColorAutoVec4(col Vec4) bool {
+
+	return C.ImPlot_IsColorAuto_Vec4(col.toC()) == C.bool(true)
+}
+
+func PlotIsLeapYear(year int32) bool {
+
+	return C.ImPlot_IsLeapYear(C.int(year)) == C.bool(true)
 }
 
 func PlotIsLegendEntryHovered(label_id string) bool {
@@ -717,6 +2467,26 @@ func PlotNextColormapColor() Vec4 {
 
 	pOutFin()
 	return *pOut
+}
+
+func PlotNextColormapColorU32() uint32 {
+
+	return uint32(C.ImPlot_NextColormapColorU32())
+}
+
+func PlotNiceNum(x float64, round bool) float64 {
+
+	return float64(C.ImPlot_NiceNum(C.double(x), C.bool(round)))
+}
+
+func PlotOrderOfMagnitude(val float64) int {
+
+	return int(C.ImPlot_OrderOfMagnitude(C.double(val)))
+}
+
+func PlotOrderToPrecision(order int32) int {
+
+	return int(C.ImPlot_OrderToPrecision(C.int(order)))
 }
 
 // PlotPixelsToPlotFloatV parameter default value hint:
@@ -911,6 +2681,18 @@ func PlotPlotBarGroupsU8PtrV(label_ids []string, values *[]byte, item_count int3
 		}
 	}()
 
+}
+
+// PlotPlotBarGroupsdoublePtrV parameter default value hint:
+// flags: 0
+// group_size: 0.67
+// shift: 0
+func PlotPlotBarGroupsdoublePtrV(label_ids []string, values []float64, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+
+	C.ImPlot_PlotBarGroups_doublePtr(label_idsArg, (*C.double)(&(values[0])), C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
+
+	label_idsFin()
 }
 
 // PlotPlotBarsFloatPtrFloatPtrV parameter default value hint:
@@ -1333,6 +3115,32 @@ func PlotPlotBarsU8PtrU8PtrV(label_id string, xs *[]byte, ys *[]byte, count int3
 
 }
 
+// PlotPlotBarsdoublePtrIntV parameter default value hint:
+// bar_size: 0.67
+// flags: 0
+// offset: 0
+// shift: 0
+// stride: sizeof(double)
+func PlotPlotBarsdoublePtrIntV(label_id string, values []float64, count int32, bar_size float64, shift float64, flags PlotBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotBars_doublePtrInt(label_idArg, (*C.double)(&(values[0])), C.int(count), C.double(bar_size), C.double(shift), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
+}
+
+// PlotPlotBarsdoublePtrdoublePtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(double)
+func PlotPlotBarsdoublePtrdoublePtrV(label_id string, xs []float64, ys []float64, count int32, bar_size float64, flags PlotBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotBars_doublePtrdoublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count), C.double(bar_size), C.ImPlotBarsFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
+}
+
 // PlotPlotDigitalFloatPtrV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -1565,6 +3373,18 @@ func PlotPlotDigitalU8PtrV(label_id string, xs *[]byte, ys *[]byte, count int32,
 		}
 	}()
 
+}
+
+// PlotPlotDigitaldoublePtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(double)
+func PlotPlotDigitaldoublePtrV(label_id string, xs []float64, ys []float64, count int32, flags PlotDigitalFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotDigital_doublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count), C.ImPlotDigitalFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
 }
 
 // PlotPlotDummyV parameter default value hint:
@@ -2243,6 +4063,30 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrU8PtrV(label_id string, xs *[]byte, ys *[]b
 
 }
 
+// PlotPlotErrorBarsdoublePtrdoublePtrdoublePtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(double)
+func PlotPlotErrorBarsdoublePtrdoublePtrdoublePtrIntV(label_id string, xs []float64, ys []float64, err []float64, count int32, flags PlotErrorBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotErrorBars_doublePtrdoublePtrdoublePtrInt(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), (*C.double)(&(err[0])), C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
+}
+
+// PlotPlotErrorBarsdoublePtrdoublePtrdoublePtrdoublePtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(double)
+func PlotPlotErrorBarsdoublePtrdoublePtrdoublePtrdoublePtrV(label_id string, xs []float64, ys []float64, neg []float64, pos []float64, count int32, flags PlotErrorBarsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotErrorBars_doublePtrdoublePtrdoublePtrdoublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), (*C.double)(&(neg[0])), (*C.double)(&(pos[0])), C.int(count), C.ImPlotErrorBarsFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
+}
+
 // PlotPlotHeatmapFloatPtrV parameter default value hint:
 // bounds_max: ImPlotPoint(1,1)
 // bounds_min: ImPlotPoint(0,0)
@@ -2462,6 +4306,23 @@ func PlotPlotHeatmapU8PtrV(label_id string, values *[]byte, rows int32, cols int
 	label_fmtFin()
 }
 
+// PlotPlotHeatmapdoublePtrV parameter default value hint:
+// bounds_max: ImPlotPoint(1,1)
+// bounds_min: ImPlotPoint(0,0)
+// flags: 0
+// label_fmt: "%.1f"
+// scale_max: 0
+// scale_min: 0
+func PlotPlotHeatmapdoublePtrV(label_id string, values []float64, rows int32, cols int32, scale_min float64, scale_max float64, label_fmt string, bounds_min PlotPoint, bounds_max PlotPoint, flags PlotHeatmapFlags) {
+	label_idArg, label_idFin := wrapString(label_id)
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+
+	C.ImPlot_PlotHeatmap_doublePtr(label_idArg, (*C.double)(&(values[0])), C.int(rows), C.int(cols), C.double(scale_min), C.double(scale_max), label_fmtArg, bounds_min.toC(), bounds_max.toC(), C.ImPlotHeatmapFlags(flags))
+
+	label_idFin()
+	label_fmtFin()
+}
+
 // PlotPlotImageV parameter default value hint:
 // flags: 0
 // tint_col: ImVec4(1,1,1,1)
@@ -2641,6 +4502,18 @@ func PlotPlotInfLinesU8PtrV(label_id string, values *[]byte, count int32, flags 
 		}
 	}()
 
+}
+
+// PlotPlotInfLinesdoublePtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(double)
+func PlotPlotInfLinesdoublePtrV(label_id string, values []float64, count int32, flags PlotInfLinesFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotInfLines_doublePtr(label_idArg, (*C.double)(&(values[0])), C.int(count), C.ImPlotInfLinesFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
 }
 
 // PlotPlotLineFloatPtrFloatPtrV parameter default value hint:
@@ -3063,6 +4936,32 @@ func PlotPlotLineU8PtrU8PtrV(label_id string, xs *[]byte, ys *[]byte, count int3
 
 }
 
+// PlotPlotLinedoublePtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(double)
+// xscale: 1
+// xstart: 0
+func PlotPlotLinedoublePtrIntV(label_id string, values []float64, count int32, xscale float64, xstart float64, flags PlotLineFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotLine_doublePtrInt(label_idArg, (*C.double)(&(values[0])), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
+}
+
+// PlotPlotLinedoublePtrdoublePtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(double)
+func PlotPlotLinedoublePtrdoublePtrV(label_id string, xs []float64, ys []float64, count int32, flags PlotLineFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotLine_doublePtrdoublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count), C.ImPlotLineFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
+}
+
 // PlotPlotPieChartFloatPtrV parameter default value hint:
 // angle0: 90
 // flags: 0
@@ -3252,6 +5151,20 @@ func PlotPlotPieChartU8PtrV(label_ids []string, values *[]byte, count int32, x f
 		}
 	}()
 
+	label_fmtFin()
+}
+
+// PlotPlotPieChartdoublePtrV parameter default value hint:
+// angle0: 90
+// flags: 0
+// label_fmt: "%.1f"
+func PlotPlotPieChartdoublePtrV(label_ids []string, values []float64, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+	label_fmtArg, label_fmtFin := wrapString(label_fmt)
+
+	C.ImPlot_PlotPieChart_doublePtr(label_idsArg, (*C.double)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+
+	label_idsFin()
 	label_fmtFin()
 }
 
@@ -3673,6 +5586,32 @@ func PlotPlotScatterU8PtrU8PtrV(label_id string, xs *[]byte, ys *[]byte, count i
 		}
 	}()
 
+}
+
+// PlotPlotScatterdoublePtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(double)
+// xscale: 1
+// xstart: 0
+func PlotPlotScatterdoublePtrIntV(label_id string, values []float64, count int32, xscale float64, xstart float64, flags PlotScatterFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotScatter_doublePtrInt(label_idArg, (*C.double)(&(values[0])), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
+}
+
+// PlotPlotScatterdoublePtrdoublePtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(double)
+func PlotPlotScatterdoublePtrdoublePtrV(label_id string, xs []float64, ys []float64, count int32, flags PlotScatterFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotScatter_doublePtrdoublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count), C.ImPlotScatterFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
 }
 
 // PlotPlotShadedFloatPtrFloatPtrFloatPtrV parameter default value hint:
@@ -4413,6 +6352,46 @@ func PlotPlotShadedU8PtrU8PtrU8PtrV(label_id string, xs *[]byte, ys1 *[]byte, ys
 
 }
 
+// PlotPlotShadeddoublePtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(double)
+// xscale: 1
+// xstart: 0
+// yref: 0
+func PlotPlotShadeddoublePtrIntV(label_id string, values []float64, count int32, yref float64, xscale float64, xstart float64, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotShaded_doublePtrInt(label_idArg, (*C.double)(&(values[0])), C.int(count), C.double(yref), C.double(xscale), C.double(xstart), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
+}
+
+// PlotPlotShadeddoublePtrdoublePtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(double)
+// yref: 0
+func PlotPlotShadeddoublePtrdoublePtrIntV(label_id string, xs []float64, ys []float64, count int32, yref float64, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotShaded_doublePtrdoublePtrInt(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count), C.double(yref), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
+}
+
+// PlotPlotShadeddoublePtrdoublePtrdoublePtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(double)
+func PlotPlotShadeddoublePtrdoublePtrdoublePtrV(label_id string, xs []float64, ys1 []float64, ys2 []float64, count int32, flags PlotShadedFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotShaded_doublePtrdoublePtrdoublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys1[0])), (*C.double)(&(ys2[0])), C.int(count), C.ImPlotShadedFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
+}
+
 // PlotPlotStairsFloatPtrFloatPtrV parameter default value hint:
 // flags: 0
 // offset: 0
@@ -4831,6 +6810,32 @@ func PlotPlotStairsU8PtrU8PtrV(label_id string, xs *[]byte, ys *[]byte, count in
 		}
 	}()
 
+}
+
+// PlotPlotStairsdoublePtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(double)
+// xscale: 1
+// xstart: 0
+func PlotPlotStairsdoublePtrIntV(label_id string, values []float64, count int32, xscale float64, xstart float64, flags PlotStairsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotStairs_doublePtrInt(label_idArg, (*C.double)(&(values[0])), C.int(count), C.double(xscale), C.double(xstart), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
+}
+
+// PlotPlotStairsdoublePtrdoublePtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// stride: sizeof(double)
+func PlotPlotStairsdoublePtrdoublePtrV(label_id string, xs []float64, ys []float64, count int32, flags PlotStairsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotStairs_doublePtrdoublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count), C.ImPlotStairsFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
 }
 
 // PlotPlotStemsFloatPtrFloatPtrV parameter default value hint:
@@ -5271,6 +7276,34 @@ func PlotPlotStemsU8PtrU8PtrV(label_id string, xs *[]byte, ys *[]byte, count int
 
 }
 
+// PlotPlotStemsdoublePtrIntV parameter default value hint:
+// flags: 0
+// offset: 0
+// ref: 0
+// scale: 1
+// start: 0
+// stride: sizeof(double)
+func PlotPlotStemsdoublePtrIntV(label_id string, values []float64, count int32, ref float64, scale float64, start float64, flags PlotStemsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotStems_doublePtrInt(label_idArg, (*C.double)(&(values[0])), C.int(count), C.double(ref), C.double(scale), C.double(start), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
+}
+
+// PlotPlotStemsdoublePtrdoublePtrV parameter default value hint:
+// flags: 0
+// offset: 0
+// ref: 0
+// stride: sizeof(double)
+func PlotPlotStemsdoublePtrdoublePtrV(label_id string, xs []float64, ys []float64, count int32, ref float64, flags PlotStemsFlags, offset int32, stride int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.ImPlot_PlotStems_doublePtrdoublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count), C.double(ref), C.ImPlotStemsFlags(flags), C.int(offset), C.int(stride))
+
+	label_idFin()
+}
+
 // PlotPlotTextV parameter default value hint:
 // flags: 0
 // pix_offset: ImVec2(0,0)
@@ -5338,6 +7371,11 @@ func PlotPopStyleVarV(count int32) {
 
 }
 
+func PlotPrecision(val float64) int {
+
+	return int(C.ImPlot_Precision(C.double(val)))
+}
+
 func PlotPushColormapPlotColormap(cmap PlotColormap) {
 
 	C.ImPlot_PushColormap_PlotColormap(C.ImPlotColormap(cmap))
@@ -5390,6 +7428,43 @@ func PlotPushStyleVarVec2(idx PlotStyleVar, val Vec2) {
 
 }
 
+// PlotRegisterOrGetItemV parameter default value hint:
+// just_created: ((void*)0)
+func PlotRegisterOrGetItemV(label_id string, flags PlotItemFlags, just_created *bool) PlotItem {
+	label_idArg, label_idFin := wrapString(label_id)
+	just_createdArg, just_createdFin := wrapBool(just_created)
+
+	defer func() {
+		label_idFin()
+		just_createdFin()
+	}()
+
+	return (PlotItem)(unsafe.Pointer(C.ImPlot_RegisterOrGetItem(label_idArg, C.ImPlotItemFlags(flags), just_createdArg)))
+}
+
+func PlotResetCtxForNextAlignedPlots(ctx PlotContext) {
+
+	C.ImPlot_ResetCtxForNextAlignedPlots(ctx.handle())
+
+}
+
+func PlotResetCtxForNextPlot(ctx PlotContext) {
+
+	C.ImPlot_ResetCtxForNextPlot(ctx.handle())
+
+}
+
+func PlotResetCtxForNextSubplot(ctx PlotContext) {
+
+	C.ImPlot_ResetCtxForNextSubplot(ctx.handle())
+
+}
+
+func PlotRoundTo(val float64, prec int32) float64 {
+
+	return float64(C.ImPlot_RoundTo(C.double(val), C.int(prec)))
+}
+
 // PlotSampleColormapV parameter default value hint:
 // cmap: -1
 func PlotSampleColormapV(t float32, cmap PlotColormap) Vec4 {
@@ -5400,6 +7475,11 @@ func PlotSampleColormapV(t float32, cmap PlotColormap) Vec4 {
 
 	pOutFin()
 	return *pOut
+}
+
+func PlotSampleColormapU32(t float32, cmap PlotColormap) uint32 {
+
+	return uint32(C.ImPlot_SampleColormapU32(C.float(t), C.ImPlotColormap(cmap)))
 }
 
 func PlotSetAxes(x_axis PlotAxisEnum, y_axis PlotAxisEnum) {
@@ -5585,6 +7665,17 @@ func PlotSetupAxisTicksdoubleV(axis PlotAxisEnum, v_min float64, v_max float64, 
 	labelsFin()
 }
 
+// PlotSetupAxisTicksdoublePtrV parameter default value hint:
+// keep_default: false
+// labels: ((void*)0)
+func PlotSetupAxisTicksdoublePtrV(axis PlotAxisEnum, values []float64, n_ticks int32, labels []string, keep_default bool) {
+	labelsArg, labelsFin := wrapStringList(labels)
+
+	C.ImPlot_SetupAxisTicks_doublePtr(C.ImAxis(axis), (*C.double)(&(values[0])), C.int(n_ticks), labelsArg, C.bool(keep_default))
+
+	labelsFin()
+}
+
 func PlotSetupAxisZoomConstraints(axis PlotAxisEnum, z_min float64, z_max float64) {
 
 	C.ImPlot_SetupAxisZoomConstraints(C.ImAxis(axis), C.double(z_min), C.double(z_max))
@@ -5605,11 +7696,37 @@ func PlotSetupLegendV(location PlotLocation, flags PlotLegendFlags) {
 
 }
 
+func PlotSetupLock() {
+
+	C.ImPlot_SetupLock()
+
+}
+
 // PlotSetupMouseTextV parameter default value hint:
 // flags: 0
 func PlotSetupMouseTextV(location PlotLocation, flags PlotMouseTextFlags) {
 
 	C.ImPlot_SetupMouseText(C.ImPlotLocation(location), C.ImPlotMouseTextFlags(flags))
+
+}
+
+// PlotShowAltLegendV parameter default value hint:
+// interactable: true
+// size: ImVec2(0,0)
+// vertical: true
+func PlotShowAltLegendV(title_id string, vertical bool, size Vec2, interactable bool) {
+	title_idArg, title_idFin := wrapString(title_id)
+
+	C.ImPlot_ShowAltLegend(title_idArg, C.bool(vertical), size.toC(), C.bool(interactable))
+
+	title_idFin()
+}
+
+// PlotShowAxisContextMenuV parameter default value hint:
+// time_allowed: false
+func PlotShowAxisContextMenuV(axis PlotAxis, equal_axis PlotAxis, time_allowed bool) {
+
+	C.ImPlot_ShowAxisContextMenu(axis.handle(), equal_axis.handle(), C.bool(time_allowed))
 
 }
 
@@ -5621,6 +7738,21 @@ func PlotShowColormapSelector(label string) bool {
 	}()
 
 	return C.ImPlot_ShowColormapSelector(labelArg) == C.bool(true)
+}
+
+// PlotShowDatePickerV parameter default value hint:
+// t1: ((void*)0)
+// t2: ((void*)0)
+func PlotShowDatePickerV(id string, level *int32, t PlotTime, t1 PlotTime, t2 PlotTime) bool {
+	idArg, idFin := wrapString(id)
+	levelArg, levelFin := wrapNumberPtr[C.int, int32](level)
+
+	defer func() {
+		idFin()
+		levelFin()
+	}()
+
+	return C.ImPlot_ShowDatePicker(idArg, levelArg, t.handle(), t1.handle(), t2.handle()) == C.bool(true)
 }
 
 // PlotShowDemoWindowV parameter default value hint:
@@ -5643,6 +7775,11 @@ func PlotShowInputMapSelector(label string) bool {
 	return C.ImPlot_ShowInputMapSelector(labelArg) == C.bool(true)
 }
 
+func PlotShowLegendContextMenu(legend PlotLegend, visible bool) bool {
+
+	return C.ImPlot_ShowLegendContextMenu(legend.handle(), C.bool(visible)) == C.bool(true)
+}
+
 // PlotShowMetricsWindowV parameter default value hint:
 // p_popen: ((void*)0)
 func PlotShowMetricsWindowV(p_popen *bool) {
@@ -5651,6 +7788,12 @@ func PlotShowMetricsWindowV(p_popen *bool) {
 	C.ImPlot_ShowMetricsWindow(p_popenArg)
 
 	p_popenFin()
+}
+
+func PlotShowPlotContextMenu(plot PlotPlot) {
+
+	C.ImPlot_ShowPlotContextMenu(plot.handle())
+
 }
 
 // PlotShowStyleEditorV parameter default value hint:
@@ -5669,6 +7812,22 @@ func PlotShowStyleSelector(label string) bool {
 	}()
 
 	return C.ImPlot_ShowStyleSelector(labelArg) == C.bool(true)
+}
+
+func PlotShowSubplotsContextMenu(subplot PlotSubplot) {
+
+	C.ImPlot_ShowSubplotsContextMenu(subplot.handle())
+
+}
+
+func PlotShowTimePicker(id string, t PlotTime) bool {
+	idArg, idFin := wrapString(id)
+
+	defer func() {
+		idFin()
+	}()
+
+	return C.ImPlot_ShowTimePicker(idArg, t.handle()) == C.bool(true)
 }
 
 func PlotShowUserGuide() {
@@ -5709,6 +7868,12 @@ func PlotStyleColorsLightV(dst PlotStyle) {
 
 }
 
+func PlotSubplotNextCell() {
+
+	C.ImPlot_SubplotNextCell()
+
+}
+
 // PlotTagXBoolV parameter default value hint:
 // round: false
 func PlotTagXBoolV(x float64, col Vec4, round bool) {
@@ -5741,6 +7906,46 @@ func PlotTagYStr(y float64, col Vec4, fmt string) {
 	fmtFin()
 }
 
+func PlotTransformForwardLog10(v float64, noname1 unsafe.Pointer) float64 {
+
+	return float64(C.ImPlot_TransformForward_Log10(C.double(v), (noname1)))
+}
+
+func PlotTransformForwardLogit(v float64, noname1 unsafe.Pointer) float64 {
+
+	return float64(C.ImPlot_TransformForward_Logit(C.double(v), (noname1)))
+}
+
+func PlotTransformForwardSymLog(v float64, noname1 unsafe.Pointer) float64 {
+
+	return float64(C.ImPlot_TransformForward_SymLog(C.double(v), (noname1)))
+}
+
+func PlotTransformInverseLog10(v float64, noname1 unsafe.Pointer) float64 {
+
+	return float64(C.ImPlot_TransformInverse_Log10(C.double(v), (noname1)))
+}
+
+func PlotTransformInverseLogit(v float64, noname1 unsafe.Pointer) float64 {
+
+	return float64(C.ImPlot_TransformInverse_Logit(C.double(v), (noname1)))
+}
+
+func PlotTransformInverseSymLog(v float64, noname1 unsafe.Pointer) float64 {
+
+	return float64(C.ImPlot_TransformInverse_SymLog(C.double(v), (noname1)))
+}
+
+func (self PlotAxis) SetMax(_max float64) bool {
+
+	return C.wrap_ImPlotAxis_SetMax(self.handle(), C.double(_max)) == C.bool(true)
+}
+
+func (self PlotAxis) SetMin(_min float64) bool {
+
+	return C.wrap_ImPlotAxis_SetMin(self.handle(), C.double(_min)) == C.bool(true)
+}
+
 func PlotAddColormapU32Ptr(name string, cols *[]uint32, size int32) PlotColormap {
 	nameArg, nameFin := wrapString(name)
 	colsArg := make([]C.ImU32, len(*cols))
@@ -5771,6 +7976,22 @@ func PlotAddColormapVec4Ptr(name string, cols *Vec4, size int32) PlotColormap {
 	}()
 
 	return PlotColormap(C.wrap_ImPlot_AddColormap_Vec4Ptr(nameArg, colsArg, C.int(size)))
+}
+
+func PlotAddTextCentered(DrawList DrawList, top_center Vec2, col uint32, text_begin string) {
+	text_beginArg, text_beginFin := wrapString(text_begin)
+
+	C.wrap_ImPlot_AddTextCentered(DrawList.handle(), top_center.toC(), C.ImU32(col), text_beginArg)
+
+	text_beginFin()
+}
+
+func PlotAddTextVertical(DrawList DrawList, pos Vec2, col uint32, text_begin string) {
+	text_beginArg, text_beginFin := wrapString(text_begin)
+
+	C.wrap_ImPlot_AddTextVertical(DrawList.handle(), pos.toC(), C.ImU32(col), text_beginArg)
+
+	text_beginFin()
 }
 
 func PlotAnnotationBool(x float64, y float64, col Vec4, pix_offset Vec2, clamp bool) {
@@ -5807,6 +8028,16 @@ func PlotBeginDragDropSourceItem(label_id string) bool {
 func PlotBeginDragDropSourcePlot() bool {
 
 	return C.wrap_ImPlot_BeginDragDropSourcePlot() == C.bool(true)
+}
+
+func PlotBeginItem(label_id string) bool {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	defer func() {
+		label_idFin()
+	}()
+
+	return C.wrap_ImPlot_BeginItem(label_idArg) == C.bool(true)
 }
 
 func PlotBeginLegendPopup(label_id string) bool {
@@ -5958,6 +8189,11 @@ func PlotHideNextItem() {
 
 	C.wrap_ImPlot_HideNextItem()
 
+}
+
+func PlotImAlmostEqual(v1 float64, v2 float64) bool {
+
+	return C.wrap_ImPlot_ImAlmostEqual(C.double(v1), C.double(v2)) == C.bool(true)
 }
 
 func PlotMapInputDefault() {
@@ -6122,6 +8358,14 @@ func PlotPlotBarGroupsU8Ptr(label_ids []string, values *[]byte, item_count int32
 		}
 	}()
 
+}
+
+func PlotPlotBarGroupsdoublePtr(label_ids []string, values []float64, item_count int32, group_count int32) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+
+	C.wrap_ImPlot_PlotBarGroups_doublePtr(label_idsArg, (*C.double)(&(values[0])), C.int(item_count), C.int(group_count))
+
+	label_idsFin()
 }
 
 func PlotPlotBarsFloatPtrFloatPtr(label_id string, xs []float32, ys []float32, count int32, bar_size float64) {
@@ -6454,6 +8698,22 @@ func PlotPlotBarsU8PtrU8Ptr(label_id string, xs *[]byte, ys *[]byte, count int32
 
 }
 
+func PlotPlotBarsdoublePtrInt(label_id string, values []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotBars_doublePtrInt(label_idArg, (*C.double)(&(values[0])), C.int(count))
+
+	label_idFin()
+}
+
+func PlotPlotBarsdoublePtrdoublePtr(label_id string, xs []float64, ys []float64, count int32, bar_size float64) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotBars_doublePtrdoublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count), C.double(bar_size))
+
+	label_idFin()
+}
+
 func PlotPlotDigitalFloatPtr(label_id string, xs []float32, ys []float32, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 
@@ -6650,6 +8910,14 @@ func PlotPlotDigitalU8Ptr(label_id string, xs *[]byte, ys *[]byte, count int32) 
 		}
 	}()
 
+}
+
+func PlotPlotDigitaldoublePtr(label_id string, xs []float64, ys []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotDigital_doublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count))
+
+	label_idFin()
 }
 
 func PlotPlotDummy(label_id string) {
@@ -7254,6 +9522,22 @@ func PlotPlotErrorBarsU8PtrU8PtrU8PtrU8Ptr(label_id string, xs *[]byte, ys *[]by
 
 }
 
+func PlotPlotErrorBarsdoublePtrdoublePtrdoublePtrInt(label_id string, xs []float64, ys []float64, err []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotErrorBars_doublePtrdoublePtrdoublePtrInt(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), (*C.double)(&(err[0])), C.int(count))
+
+	label_idFin()
+}
+
+func PlotPlotErrorBarsdoublePtrdoublePtrdoublePtrdoublePtr(label_id string, xs []float64, ys []float64, neg []float64, pos []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotErrorBars_doublePtrdoublePtrdoublePtrdoublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), (*C.double)(&(neg[0])), (*C.double)(&(pos[0])), C.int(count))
+
+	label_idFin()
+}
+
 func PlotPlotHeatmapFloatPtr(label_id string, values []float32, rows int32, cols int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 
@@ -7384,6 +9668,14 @@ func PlotPlotHeatmapU8Ptr(label_id string, values *[]byte, rows int32, cols int3
 		}
 	}()
 
+}
+
+func PlotPlotHeatmapdoublePtr(label_id string, values []float64, rows int32, cols int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotHeatmap_doublePtr(label_idArg, (*C.double)(&(values[0])), C.int(rows), C.int(cols))
+
+	label_idFin()
 }
 
 func PlotPlotHistogram2DFloatPtr(label_id string, xs []float32, ys []float32, count int32) float64 {
@@ -7602,6 +9894,16 @@ func PlotPlotHistogram2DU8Ptr(label_id string, xs *[]byte, ys *[]byte, count int
 	return float64(C.wrap_ImPlot_PlotHistogram2D_U8Ptr(label_idArg, (*C.ImU8)(&xsArg[0]), (*C.ImU8)(&ysArg[0]), C.int(count)))
 }
 
+func PlotPlotHistogram2DdoublePtr(label_id string, xs []float64, ys []float64, count int32) float64 {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	defer func() {
+		label_idFin()
+	}()
+
+	return float64(C.wrap_ImPlot_PlotHistogram2D_doublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count)))
+}
+
 func PlotPlotHistogramFloatPtr(label_id string, values []float32, count int32) float64 {
 	label_idArg, label_idFin := wrapString(label_id)
 
@@ -7752,6 +10054,16 @@ func PlotPlotHistogramU8Ptr(label_id string, values *[]byte, count int32) float6
 	return float64(C.wrap_ImPlot_PlotHistogram_U8Ptr(label_idArg, (*C.ImU8)(&valuesArg[0]), C.int(count)))
 }
 
+func PlotPlotHistogramdoublePtr(label_id string, values []float64, count int32) float64 {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	defer func() {
+		label_idFin()
+	}()
+
+	return float64(C.wrap_ImPlot_PlotHistogram_doublePtr(label_idArg, (*C.double)(&(values[0])), C.int(count)))
+}
+
 func PlotPlotImage(label_id string, user_texture_id TextureID, bounds_min PlotPoint, bounds_max PlotPoint) {
 	label_idArg, label_idFin := wrapString(label_id)
 
@@ -7890,6 +10202,14 @@ func PlotPlotInfLinesU8Ptr(label_id string, values *[]byte, count int32) {
 		}
 	}()
 
+}
+
+func PlotPlotInfLinesdoublePtr(label_id string, values []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotInfLines_doublePtr(label_idArg, (*C.double)(&(values[0])), C.int(count))
+
+	label_idFin()
 }
 
 func PlotPlotLineFloatPtrFloatPtr(label_id string, xs []float32, ys []float32, count int32) {
@@ -8222,6 +10542,22 @@ func PlotPlotLineU8PtrU8Ptr(label_id string, xs *[]byte, ys *[]byte, count int32
 
 }
 
+func PlotPlotLinedoublePtrInt(label_id string, values []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotLine_doublePtrInt(label_idArg, (*C.double)(&(values[0])), C.int(count))
+
+	label_idFin()
+}
+
+func PlotPlotLinedoublePtrdoublePtr(label_id string, xs []float64, ys []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotLine_doublePtrdoublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count))
+
+	label_idFin()
+}
+
 func PlotPlotPieChartFloatPtr(label_ids []string, values []float32, count int32, x float64, y float64, radius float64) {
 	label_idsArg, label_idsFin := wrapStringList(label_ids)
 
@@ -8352,6 +10688,14 @@ func PlotPlotPieChartU8Ptr(label_ids []string, values *[]byte, count int32, x fl
 		}
 	}()
 
+}
+
+func PlotPlotPieChartdoublePtr(label_ids []string, values []float64, count int32, x float64, y float64, radius float64) {
+	label_idsArg, label_idsFin := wrapStringList(label_ids)
+
+	C.wrap_ImPlot_PlotPieChart_doublePtr(label_idsArg, (*C.double)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
+
+	label_idsFin()
 }
 
 func PlotPlotScatterFloatPtrFloatPtr(label_id string, xs []float32, ys []float32, count int32) {
@@ -8682,6 +11026,22 @@ func PlotPlotScatterU8PtrU8Ptr(label_id string, xs *[]byte, ys *[]byte, count in
 		}
 	}()
 
+}
+
+func PlotPlotScatterdoublePtrInt(label_id string, values []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotScatter_doublePtrInt(label_idArg, (*C.double)(&(values[0])), C.int(count))
+
+	label_idFin()
+}
+
+func PlotPlotScatterdoublePtrdoublePtr(label_id string, xs []float64, ys []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotScatter_doublePtrdoublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count))
+
+	label_idFin()
 }
 
 func PlotPlotShadedFloatPtrFloatPtrFloatPtr(label_id string, xs []float32, ys1 []float32, ys2 []float32, count int32) {
@@ -9278,6 +11638,30 @@ func PlotPlotShadedU8PtrU8PtrU8Ptr(label_id string, xs *[]byte, ys1 *[]byte, ys2
 
 }
 
+func PlotPlotShadeddoublePtrInt(label_id string, values []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotShaded_doublePtrInt(label_idArg, (*C.double)(&(values[0])), C.int(count))
+
+	label_idFin()
+}
+
+func PlotPlotShadeddoublePtrdoublePtrInt(label_id string, xs []float64, ys []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotShaded_doublePtrdoublePtrInt(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count))
+
+	label_idFin()
+}
+
+func PlotPlotShadeddoublePtrdoublePtrdoublePtr(label_id string, xs []float64, ys1 []float64, ys2 []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotShaded_doublePtrdoublePtrdoublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys1[0])), (*C.double)(&(ys2[0])), C.int(count))
+
+	label_idFin()
+}
+
 func PlotPlotStairsFloatPtrFloatPtr(label_id string, xs []float32, ys []float32, count int32) {
 	label_idArg, label_idFin := wrapString(label_id)
 
@@ -9606,6 +11990,22 @@ func PlotPlotStairsU8PtrU8Ptr(label_id string, xs *[]byte, ys *[]byte, count int
 		}
 	}()
 
+}
+
+func PlotPlotStairsdoublePtrInt(label_id string, values []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotStairs_doublePtrInt(label_idArg, (*C.double)(&(values[0])), C.int(count))
+
+	label_idFin()
+}
+
+func PlotPlotStairsdoublePtrdoublePtr(label_id string, xs []float64, ys []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotStairs_doublePtrdoublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count))
+
+	label_idFin()
 }
 
 func PlotPlotStemsFloatPtrFloatPtr(label_id string, xs []float32, ys []float32, count int32) {
@@ -9938,6 +12338,22 @@ func PlotPlotStemsU8PtrU8Ptr(label_id string, xs *[]byte, ys *[]byte, count int3
 
 }
 
+func PlotPlotStemsdoublePtrInt(label_id string, values []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotStems_doublePtrInt(label_idArg, (*C.double)(&(values[0])), C.int(count))
+
+	label_idFin()
+}
+
+func PlotPlotStemsdoublePtrdoublePtr(label_id string, xs []float64, ys []float64, count int32) {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	C.wrap_ImPlot_PlotStems_doublePtrdoublePtr(label_idArg, (*C.double)(&(xs[0])), (*C.double)(&(ys[0])), C.int(count))
+
+	label_idFin()
+}
+
 func PlotPlotText(text string, x float64, y float64) {
 	textArg, textFin := wrapString(text)
 
@@ -9988,6 +12404,16 @@ func PlotPushPlotClipRect() {
 
 	C.wrap_ImPlot_PushPlotClipRect()
 
+}
+
+func PlotRegisterOrGetItem(label_id string, flags PlotItemFlags) PlotItem {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	defer func() {
+		label_idFin()
+	}()
+
+	return (PlotItem)(unsafe.Pointer(C.wrap_ImPlot_RegisterOrGetItem(label_idArg, C.ImPlotItemFlags(flags))))
 }
 
 func PlotSampleColormap(t float32) Vec4 {
@@ -10070,6 +12496,12 @@ func PlotSetupAxisTicksdouble(axis PlotAxisEnum, v_min float64, v_max float64, n
 
 }
 
+func PlotSetupAxisTicksdoublePtr(axis PlotAxisEnum, values []float64, n_ticks int32) {
+
+	C.wrap_ImPlot_SetupAxisTicks_doublePtr(C.ImAxis(axis), (*C.double)(&(values[0])), C.int(n_ticks))
+
+}
+
 func PlotSetupLegend(location PlotLocation) {
 
 	C.wrap_ImPlot_SetupLegend(C.ImPlotLocation(location))
@@ -10080,6 +12512,32 @@ func PlotSetupMouseText(location PlotLocation) {
 
 	C.wrap_ImPlot_SetupMouseText(C.ImPlotLocation(location))
 
+}
+
+func PlotShowAltLegend(title_id string) {
+	title_idArg, title_idFin := wrapString(title_id)
+
+	C.wrap_ImPlot_ShowAltLegend(title_idArg)
+
+	title_idFin()
+}
+
+func PlotShowAxisContextMenu(axis PlotAxis, equal_axis PlotAxis) {
+
+	C.wrap_ImPlot_ShowAxisContextMenu(axis.handle(), equal_axis.handle())
+
+}
+
+func PlotShowDatePicker(id string, level *int32, t PlotTime) bool {
+	idArg, idFin := wrapString(id)
+	levelArg, levelFin := wrapNumberPtr[C.int, int32](level)
+
+	defer func() {
+		idFin()
+		levelFin()
+	}()
+
+	return C.wrap_ImPlot_ShowDatePicker(idArg, levelArg, t.handle()) == C.bool(true)
 }
 
 func PlotShowDemoWindow() {
