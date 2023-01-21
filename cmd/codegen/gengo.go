@@ -39,7 +39,6 @@ var replace = map[string]string{
 	"igGetMouseCursor":        "CurrentMouseCursor",
 	"ImAxis":                  "PlotAxisEnum",
 	"GetItem_ID":              "ItemByID",
-	"GetItemID":               "ItemID",
 	//"ImGetDrawCursor":         "Cursor",
 	//"ImSetDrawCursor":         "SetCursor",
 }
