@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // dear imgui, v1.89.4 WIP
+=======
+// dear imgui, v1.89.2
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 // (demo code)
 
 // Help:
@@ -674,6 +678,7 @@ static void ShowDemoWindowWidgets()
         ImGui::SameLine();
         ImGui::Text("%d", counter);
 
+<<<<<<< HEAD
         {
             // Tooltips
             IMGUI_DEMO_MARKER("Widgets/Basic/Tooltips");
@@ -707,6 +712,9 @@ static void ShowDemoWindowWidgets()
                 "Tooltip are created by using the IsItemHovered() function over any kind of item.");
         }
 
+=======
+        ImGui::Separator();
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
         ImGui::LabelText("label", "Value");
 
         ImGui::SeparatorText("Inputs");
@@ -835,6 +843,40 @@ static void ShowDemoWindowWidgets()
             ImGui::ListBox("listbox", &item_current, items, IM_ARRAYSIZE(items), 4);
             ImGui::SameLine(); HelpMarker(
                 "Using the simplified one-liner ListBox API here.\nRefer to the \"List boxes\" section below for an explanation of how to use the more flexible and general BeginListBox/EndListBox API.");
+        }
+
+        {
+            // Tooltips
+            IMGUI_DEMO_MARKER("Widgets/Basic/Tooltips");
+            ImGui::AlignTextToFramePadding();
+            ImGui::Text("Tooltips:");
+
+            ImGui::SameLine();
+            ImGui::Button("Button");
+            if (ImGui::IsItemHovered())
+                ImGui::SetTooltip("I am a tooltip");
+
+            ImGui::SameLine();
+            ImGui::Button("Fancy");
+            if (ImGui::IsItemHovered())
+            {
+                ImGui::BeginTooltip();
+                ImGui::Text("I am a fancy tooltip");
+                static float arr[] = { 0.6f, 0.1f, 1.0f, 0.5f, 0.92f, 0.1f, 0.2f };
+                ImGui::PlotLines("Curve", arr, IM_ARRAYSIZE(arr));
+                ImGui::Text("Sin(time) = %f", sinf((float)ImGui::GetTime()));
+                ImGui::EndTooltip();
+            }
+
+            ImGui::SameLine();
+            ImGui::Button("Delayed");
+            if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal)) // Delay best used on items that highlight on hover, so this not a great example!
+                ImGui::SetTooltip("I am a tooltip with a delay.");
+
+            ImGui::SameLine();
+            HelpMarker(
+                "Tooltip are created by using the IsItemHovered() function over any kind of item.");
+
         }
 
         ImGui::TreePop();

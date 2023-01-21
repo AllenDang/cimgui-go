@@ -18,6 +18,11 @@
 int main(int, char**)
 {
     // Setup SDL
+<<<<<<< HEAD:cimgui/imgui/examples/example_sdl2_opengl2/main.cpp
+=======
+    // (Some versions of SDL before <2.0.10 appears to have performance/stalling issues on a minority of Windows systems,
+    // depending on whether SDL_INIT_GAMECONTROLLER is enabled or disabled.. updating to the latest version of SDL is recommended!)
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot):cimgui/imgui/examples/example_sdl_opengl2/main.cpp
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
     {
         printf("Error: %s\n", SDL_GetError());

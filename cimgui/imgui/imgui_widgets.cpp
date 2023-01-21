@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // dear imgui, v1.89.4 WIP
+=======
+// dear imgui, v1.89.2
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 // (widgets code)
 
 /*
@@ -4357,6 +4361,10 @@ bool ImGui::InputTextEx(const char* label, const char* hint, char* buf, int buf_
         state->Stb.row_count_per_page = row_count_per_page;
 
         const int k_mask = (io.KeyShift ? STB_TEXTEDIT_K_SHIFT : 0);
+<<<<<<< HEAD
+=======
+        const bool is_osx = io.ConfigMacOSXBehaviors;
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
         const bool is_wordmove_key_down = is_osx ? io.KeyAlt : io.KeyCtrl;                     // OS X style: Text editing cursor movement using Alt instead of Ctrl
         const bool is_startend_key_down = is_osx && io.KeySuper && !io.KeyCtrl && !io.KeyAlt;  // OS X style: Line/Text Start and End using Cmd+Arrows instead of Home/End
 
@@ -4937,7 +4945,11 @@ void ImGui::DebugNodeInputTextState(ImGuiInputTextState* state)
     ImStb::StbUndoState* undo_state = &stb_state->undostate;
     Text("ID: 0x%08X, ActiveID: 0x%08X", state->ID, g.ActiveId);
     DebugLocateItemOnHover(state->ID);
+<<<<<<< HEAD
     Text("CurLenW: %d, CurLenA: %d, Cursor: %d, Selection: %d..%d", state->CurLenW, state->CurLenA, stb_state->cursor, stb_state->select_start, stb_state->select_end);
+=======
+    Text("CurLenW: %d, CurLenA: %d, Cursor: %d, Selection: %d..%d", state->CurLenA, state->CurLenW, stb_state->cursor, stb_state->select_start, stb_state->select_end);
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
     Text("has_preferred_x: %d (%.2f)", stb_state->has_preferred_x, stb_state->preferred_x);
     Text("undo_point: %d, redo_point: %d, undo_char_point: %d, redo_char_point: %d", undo_state->undo_point, undo_state->redo_point, undo_state->undo_char_point, undo_state->redo_char_point);
     if (BeginChild("undopoints", ImVec2(0.0f, GetTextLineHeight() * 15), true)) // Visualize undo state
@@ -7325,7 +7337,11 @@ bool ImGui::MenuItemEx(const char* label, const char* icon, const char* shortcut
         float checkmark_w = IM_FLOOR(g.FontSize * 1.20f);
         float min_w = window->DC.MenuColumns.DeclColumns(icon_w, label_size.x, shortcut_w, checkmark_w); // Feedback for next frame
         float stretch_w = ImMax(0.0f, GetContentRegionAvail().x - min_w);
+<<<<<<< HEAD
         pressed = Selectable("", false, selectable_flags | ImGuiSelectableFlags_SpanAvailWidth, ImVec2(min_w, label_size.y));
+=======
+        pressed = Selectable("", false, selectable_flags | ImGuiSelectableFlags_SpanAvailWidth, ImVec2(min_w, 0.0f));
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
         if (g.LastItemData.StatusFlags & ImGuiItemStatusFlags_Visible)
         {
             RenderText(pos + ImVec2(offsets->OffsetLabel, 0.0f), label);
@@ -7681,7 +7697,11 @@ static void ImGui::TabBarLayout(ImGuiTabBar* tab_bar)
         // Refresh tab width immediately, otherwise changes of style e.g. style.FramePadding.x would noticeably lag in the tab bar.
         // Additionally, when using TabBarAddTab() to manipulate tab bar order we occasionally insert new tabs that don't have a width yet,
         // and we cannot wait for the next BeginTabItem() call. We cannot compute this width within TabBarAddTab() because font size depends on the active window.
+<<<<<<< HEAD
         const char* tab_name = TabBarGetTabName(tab_bar, tab);
+=======
+        const char* tab_name = tab_bar->GetTabName(tab);
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
         const bool has_close_button_or_unsaved_marker = (tab->Flags & ImGuiTabItemFlags_NoCloseButton) == 0 || (tab->Flags & ImGuiTabItemFlags_UnsavedDocument);
         tab->ContentWidth = (tab->RequestedWidth >= 0.0f) ? tab->RequestedWidth : TabItemCalcSize(tab_name, has_close_button_or_unsaved_marker).x;
 

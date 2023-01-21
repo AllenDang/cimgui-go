@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // dear imgui, v1.89.4 WIP
+=======
+// dear imgui, v1.89.2
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 // (internal structures/api)
 
 // You may use this file to debug, understand or extend Dear ImGui features but we don't provide any guarantee of forward compatibility.
@@ -2746,12 +2750,19 @@ struct ImGuiTableCellData
 // Per-instance data that needs preserving across frames (seemingly most others do not need to be preserved aside from debug needs. Does that means they could be moved to ImGuiTableTempData?)
 struct ImGuiTableInstanceData
 {
+<<<<<<< HEAD
     ImGuiID                     TableInstanceID;
+=======
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
     float                       LastOuterHeight;            // Outer height from last frame
     float                       LastFirstRowHeight;         // Height of first row from last frame (FIXME: this is used as "header height" and may be reworked)
     float                       LastFrozenHeight;           // Height of frozen section from last frame
 
+<<<<<<< HEAD
     ImGuiTableInstanceData()    { TableInstanceID = 0; LastOuterHeight = LastFirstRowHeight = LastFrozenHeight = 0.0f; }
+=======
+    ImGuiTableInstanceData()    { LastOuterHeight = LastFirstRowHeight = LastFrozenHeight = 0.0f; }
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 };
 
 // FIXME-TABLE: more transient data could be stored in a stacked ImGuiTableTempData: e.g. SortSpecs, incoming RowData
@@ -3006,12 +3017,15 @@ namespace ImGui
     IMGUI_API void                  RemoveSettingsHandler(const char* type_name);
     IMGUI_API ImGuiSettingsHandler* FindSettingsHandler(const char* type_name);
 
+<<<<<<< HEAD
     // Settings - Windows
     IMGUI_API ImGuiWindowSettings*  CreateNewWindowSettings(const char* name);
     IMGUI_API ImGuiWindowSettings*  FindWindowSettingsByID(ImGuiID id);
     IMGUI_API ImGuiWindowSettings*  FindWindowSettingsByWindow(ImGuiWindow* window);
     IMGUI_API void                  ClearWindowSettings(const char* name);
 
+=======
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
     // Localization
     IMGUI_API void          LocalizeRegisterEntries(const ImGuiLocEntry* entries, int count);
     inline const char*      LocalizeGetMsg(ImGuiLocKey key) { ImGuiContext& g = *GImGui; const char* msg = g.LocalizationTable[key]; return msg ? msg : "*Missing Text*"; }
@@ -3376,9 +3390,14 @@ namespace ImGui
     IMGUI_API void          TextEx(const char* text, const char* text_end = NULL, ImGuiTextFlags flags = 0);
     IMGUI_API bool          ButtonEx(const char* label, const ImVec2& size_arg = ImVec2(0, 0), ImGuiButtonFlags flags = 0);
     IMGUI_API bool          ArrowButtonEx(const char* str_id, ImGuiDir dir, ImVec2 size_arg, ImGuiButtonFlags flags = 0);
+<<<<<<< HEAD
     IMGUI_API bool          ImageButtonEx(ImGuiID id, ImTextureID texture_id, const ImVec2& size, const ImVec2& uv0, const ImVec2& uv1, const ImVec4& bg_col, const ImVec4& tint_col, ImGuiButtonFlags flags = 0);
     IMGUI_API void          SeparatorEx(ImGuiSeparatorFlags flags);
     IMGUI_API void          SeparatorTextEx(ImGuiID id, const char* label, const char* label_end, float extra_width);
+=======
+    IMGUI_API bool          ImageButtonEx(ImGuiID id, ImTextureID texture_id, const ImVec2& size, const ImVec2& uv0, const ImVec2& uv1, const ImVec4& bg_col, const ImVec4& tint_col);
+    IMGUI_API void          SeparatorEx(ImGuiSeparatorFlags flags);
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
     IMGUI_API bool          CheckboxFlags(const char* label, ImS64* flags, ImS64 flags_value);
     IMGUI_API bool          CheckboxFlags(const char* label, ImU64* flags, ImU64 flags_value);
 

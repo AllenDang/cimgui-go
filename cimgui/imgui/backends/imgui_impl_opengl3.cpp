@@ -109,6 +109,7 @@
 // Clang warnings with -Weverything
 #if defined(__clang__)
 #pragma clang diagnostic push
+<<<<<<< HEAD
 #pragma clang diagnostic ignored "-Wold-style-cast"         // warning: use of old-style cast
 #pragma clang diagnostic ignored "-Wsign-conversion"        // warning: implicit conversion changes signedness
 #endif
@@ -117,6 +118,14 @@
 #pragma GCC diagnostic ignored "-Wpragmas"                  // warning: unknown option after '#pragma GCC diagnostic' kind
 #pragma GCC diagnostic ignored "-Wunknown-warning-option"   // warning: unknown warning group 'xxx'
 #pragma GCC diagnostic ignored "-Wcast-function-type"       // warning: cast between incompatible function types
+=======
+#pragma clang diagnostic ignored "-Wold-style-cast"     // warning: use of old-style cast
+#pragma clang diagnostic ignored "-Wsign-conversion"    // warning: implicit conversion changes signedness
+#endif
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-function-type"   // warning: cast between incompatible function types
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 #endif
 
 // GL includes

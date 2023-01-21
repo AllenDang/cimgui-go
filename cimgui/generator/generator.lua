@@ -75,6 +75,9 @@ local cimgui_manuals = {
     --igColorConvertRGBtoHSV = true,
     --igColorConvertHSVtoRGB = true
 }
+local cimgui_skipped = {
+	 --igShowDemoWindow = true
+}
 --------------------------------------------------------------------------
 --this table is a dictionary to force a naming of function overloading (instead of algorythmic generated)
 --first level is cimguiname without postfix, second level is the signature of the function, value is the
@@ -207,52 +210,6 @@ local function DefsByStruct(FP)
     FP.defsBystruct = structs
 end  
 
--- function for repairing funcdefs default values
-local function repair_defaults(defsT,str_and_enu)
-	local function deleteOuterPars(def)
-		local w = def:match("^%b()$")
-		if w then
-			w = w:gsub("^%((.+)%)$","%1")
-			return w
-		else 
-			return def 
-		end
-	end
-	local function CleanImU32(def)
-		def = def:gsub("%(ImU32%)","")
-		--quitar () de numeros
-		def = def:gsub("%((%d+)%)","%1")
-		def = deleteOuterPars(def)
-		local bb=cpp2ffi.strsplit(def,"|")
-		for i=1,#bb do
-			local val = deleteOuterPars(bb[i])
-			if val:match"<<" then
-				local v1,v2 = val:match("(%d+)%s*<<%s*(%d+)")
-				val = v1*2^v2
-				bb[i] = val
-			end
-			assert(type(bb[i])=="number")
-		end
-		local res = 0 
-		for i=1,#bb do res = res + bb[i] end 
-		return res
-	end
-	for k,defT in pairs(defsT) do
-		for i,def in ipairs(defT) do
-			for k,v in pairs(def.defaults) do
-				--do only if not a c string
-				local is_cstring = v:sub(1,1)=='"' and v:sub(-1,-1) =='"'
-				if not is_cstring then
-					def.defaults[k] = def.defaults[k]:gsub("%(%(void%s*%*%)0%)","NULL")
-					if def.defaults[k]:match"%(ImU32%)" then
-						def.defaults[k] = tostring(CleanImU32(def.defaults[k]))
-					end
-				end
-			end
-		end
-	end
-end
-
 
 --generate cimgui.cpp cimgui.h 
 local function cimgui_generation(parser)
@@ -315,12 +272,12 @@ end
 --------------------------------------------------------
 --get imgui.h version and IMGUI_HAS_DOCK--------------------------
 --defines for the cl compiler must be present in the print_defines.cpp file
-gdefines = get_defines{"IMGUI_VERSION","FLT_MAX","FLT_MIN","IMGUI_HAS_DOCK","IMGUI_HAS_IMSTR"}
+gdefines = get_defines{"IMGUI_VERSION","IMGUI_VERSION_NUM","FLT_MAX","FLT_MIN","IMGUI_HAS_DOCK","IMGUI_HAS_IMSTR"}
 
 if gdefines.IMGUI_HAS_DOCK then gdefines.IMGUI_HAS_DOCK = true end
 if gdefines.IMGUI_HAS_IMSTR then gdefines.IMGUI_HAS_IMSTR = true end
 
-cimgui_header = cimgui_header:gsub("XXX",gdefines.IMGUI_VERSION)
+cimgui_header = cimgui_header:gsub("XXX",gdefines.IMGUI_VERSION .. " "..(gdefines.IMGUI_VERSION_NUM or ""))
 if INTERNAL_GENERATION then
 	cimgui_header = cimgui_header..[[//with imgui_internal.h api
 ]]
@@ -350,6 +307,7 @@ local function parseImGuiHeader(header,names)
 	end
 	parser.cname_overloads = cimgui_overloads
 	parser.manuals = cimgui_manuals
+	parser.skipped = cimgui_skipped
 	parser.UDTs = {"ImVec2","ImVec4","ImColor","ImRect"}
 	--parser.gen_template_typedef = gen_template_typedef --use auto
 	parser.COMMENTS_GENERATION = COMMENTS_GENERATION
@@ -398,7 +356,6 @@ save_data("./output/typedefs_dict.lua",serializeTableF(parser1.typedefs_dict))
 ----------save fundefs in definitions.lua for using in bindings
 --DefsByStruct(pFP)
 set_defines(parser1.defsT) 
-repair_defaults(parser1.defsT, structs_and_enums_table)
 save_data("./output/definitions.lua",serializeTableF(parser1.defsT))
 
 --check every function has ov_cimguiname

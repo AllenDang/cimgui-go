@@ -176,7 +176,7 @@
   "ImVec2": "struct ImVec2",
   "ImVec2ih": "struct ImVec2ih",
   "ImVec4": "struct ImVec4",
-  "ImWchar": "ImWchar32",
+  "ImWchar": "ImWchar16",
   "ImWchar16": "unsigned short",
   "ImWchar32": "unsigned int",
   "STB_TexteditState": "struct STB_TexteditState",

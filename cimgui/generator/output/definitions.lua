@@ -11,7 +11,11 @@ defs["ImBitArray_ClearAllBits"][1]["call_args"] = "()"
 defs["ImBitArray_ClearAllBits"][1]["cimguiname"] = "ImBitArray_ClearAllBits"
 defs["ImBitArray_ClearAllBits"][1]["defaults"] = {}
 defs["ImBitArray_ClearAllBits"][1]["funcname"] = "ClearAllBits"
+<<<<<<< HEAD
 defs["ImBitArray_ClearAllBits"][1]["location"] = "imgui_internal:594"
+=======
+defs["ImBitArray_ClearAllBits"][1]["location"] = "imgui_internal:587"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImBitArray_ClearAllBits"][1]["ov_cimguiname"] = "ImBitArray_ClearAllBits"
 defs["ImBitArray_ClearAllBits"][1]["ret"] = "void"
 defs["ImBitArray_ClearAllBits"][1]["signature"] = "()"
@@ -33,7 +37,11 @@ defs["ImBitArray_ClearBit"][1]["call_args"] = "(n)"
 defs["ImBitArray_ClearBit"][1]["cimguiname"] = "ImBitArray_ClearBit"
 defs["ImBitArray_ClearBit"][1]["defaults"] = {}
 defs["ImBitArray_ClearBit"][1]["funcname"] = "ClearBit"
+<<<<<<< HEAD
 defs["ImBitArray_ClearBit"][1]["location"] = "imgui_internal:598"
+=======
+defs["ImBitArray_ClearBit"][1]["location"] = "imgui_internal:591"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImBitArray_ClearBit"][1]["ov_cimguiname"] = "ImBitArray_ClearBit"
 defs["ImBitArray_ClearBit"][1]["ret"] = "void"
 defs["ImBitArray_ClearBit"][1]["signature"] = "(int)"
@@ -50,7 +58,11 @@ defs["ImBitArray_ImBitArray"][1]["cimguiname"] = "ImBitArray_ImBitArray"
 defs["ImBitArray_ImBitArray"][1]["constructor"] = true
 defs["ImBitArray_ImBitArray"][1]["defaults"] = {}
 defs["ImBitArray_ImBitArray"][1]["funcname"] = "ImBitArray"
+<<<<<<< HEAD
 defs["ImBitArray_ImBitArray"][1]["location"] = "imgui_internal:593"
+=======
+defs["ImBitArray_ImBitArray"][1]["location"] = "imgui_internal:586"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImBitArray_ImBitArray"][1]["ov_cimguiname"] = "ImBitArray_ImBitArray"
 defs["ImBitArray_ImBitArray"][1]["signature"] = "()"
 defs["ImBitArray_ImBitArray"][1]["stname"] = "ImBitArray"
@@ -68,7 +80,11 @@ defs["ImBitArray_SetAllBits"][1]["call_args"] = "()"
 defs["ImBitArray_SetAllBits"][1]["cimguiname"] = "ImBitArray_SetAllBits"
 defs["ImBitArray_SetAllBits"][1]["defaults"] = {}
 defs["ImBitArray_SetAllBits"][1]["funcname"] = "SetAllBits"
+<<<<<<< HEAD
 defs["ImBitArray_SetAllBits"][1]["location"] = "imgui_internal:595"
+=======
+defs["ImBitArray_SetAllBits"][1]["location"] = "imgui_internal:588"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImBitArray_SetAllBits"][1]["ov_cimguiname"] = "ImBitArray_SetAllBits"
 defs["ImBitArray_SetAllBits"][1]["ret"] = "void"
 defs["ImBitArray_SetAllBits"][1]["signature"] = "()"
@@ -90,7 +106,11 @@ defs["ImBitArray_SetBit"][1]["call_args"] = "(n)"
 defs["ImBitArray_SetBit"][1]["cimguiname"] = "ImBitArray_SetBit"
 defs["ImBitArray_SetBit"][1]["defaults"] = {}
 defs["ImBitArray_SetBit"][1]["funcname"] = "SetBit"
+<<<<<<< HEAD
 defs["ImBitArray_SetBit"][1]["location"] = "imgui_internal:597"
+=======
+defs["ImBitArray_SetBit"][1]["location"] = "imgui_internal:590"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImBitArray_SetBit"][1]["ov_cimguiname"] = "ImBitArray_SetBit"
 defs["ImBitArray_SetBit"][1]["ret"] = "void"
 defs["ImBitArray_SetBit"][1]["signature"] = "(int)"
@@ -115,7 +135,11 @@ defs["ImBitArray_SetBitRange"][1]["call_args"] = "(n,n2)"
 defs["ImBitArray_SetBitRange"][1]["cimguiname"] = "ImBitArray_SetBitRange"
 defs["ImBitArray_SetBitRange"][1]["defaults"] = {}
 defs["ImBitArray_SetBitRange"][1]["funcname"] = "SetBitRange"
+<<<<<<< HEAD
 defs["ImBitArray_SetBitRange"][1]["location"] = "imgui_internal:599"
+=======
+defs["ImBitArray_SetBitRange"][1]["location"] = "imgui_internal:592"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImBitArray_SetBitRange"][1]["ov_cimguiname"] = "ImBitArray_SetBitRange"
 defs["ImBitArray_SetBitRange"][1]["ret"] = "void"
 defs["ImBitArray_SetBitRange"][1]["signature"] = "(int,int)"
@@ -137,7 +161,11 @@ defs["ImBitArray_TestBit"][1]["call_args"] = "(n)"
 defs["ImBitArray_TestBit"][1]["cimguiname"] = "ImBitArray_TestBit"
 defs["ImBitArray_TestBit"][1]["defaults"] = {}
 defs["ImBitArray_TestBit"][1]["funcname"] = "TestBit"
+<<<<<<< HEAD
 defs["ImBitArray_TestBit"][1]["location"] = "imgui_internal:596"
+=======
+defs["ImBitArray_TestBit"][1]["location"] = "imgui_internal:589"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImBitArray_TestBit"][1]["ov_cimguiname"] = "ImBitArray_TestBit"
 defs["ImBitArray_TestBit"][1]["ret"] = "bool"
 defs["ImBitArray_TestBit"][1]["signature"] = "(int)const"
@@ -173,7 +201,11 @@ defs["ImBitVector_Clear"][1]["call_args"] = "()"
 defs["ImBitVector_Clear"][1]["cimguiname"] = "ImBitVector_Clear"
 defs["ImBitVector_Clear"][1]["defaults"] = {}
 defs["ImBitVector_Clear"][1]["funcname"] = "Clear"
+<<<<<<< HEAD
 defs["ImBitVector_Clear"][1]["location"] = "imgui_internal:609"
+=======
+defs["ImBitVector_Clear"][1]["location"] = "imgui_internal:602"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImBitVector_Clear"][1]["ov_cimguiname"] = "ImBitVector_Clear"
 defs["ImBitVector_Clear"][1]["ret"] = "void"
 defs["ImBitVector_Clear"][1]["signature"] = "()"
@@ -194,7 +226,11 @@ defs["ImBitVector_ClearBit"][1]["call_args"] = "(n)"
 defs["ImBitVector_ClearBit"][1]["cimguiname"] = "ImBitVector_ClearBit"
 defs["ImBitVector_ClearBit"][1]["defaults"] = {}
 defs["ImBitVector_ClearBit"][1]["funcname"] = "ClearBit"
+<<<<<<< HEAD
 defs["ImBitVector_ClearBit"][1]["location"] = "imgui_internal:612"
+=======
+defs["ImBitVector_ClearBit"][1]["location"] = "imgui_internal:605"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImBitVector_ClearBit"][1]["ov_cimguiname"] = "ImBitVector_ClearBit"
 defs["ImBitVector_ClearBit"][1]["ret"] = "void"
 defs["ImBitVector_ClearBit"][1]["signature"] = "(int)"
@@ -215,7 +251,11 @@ defs["ImBitVector_Create"][1]["call_args"] = "(sz)"
 defs["ImBitVector_Create"][1]["cimguiname"] = "ImBitVector_Create"
 defs["ImBitVector_Create"][1]["defaults"] = {}
 defs["ImBitVector_Create"][1]["funcname"] = "Create"
+<<<<<<< HEAD
 defs["ImBitVector_Create"][1]["location"] = "imgui_internal:608"
+=======
+defs["ImBitVector_Create"][1]["location"] = "imgui_internal:601"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImBitVector_Create"][1]["ov_cimguiname"] = "ImBitVector_Create"
 defs["ImBitVector_Create"][1]["ret"] = "void"
 defs["ImBitVector_Create"][1]["signature"] = "(int)"
@@ -236,7 +276,11 @@ defs["ImBitVector_SetBit"][1]["call_args"] = "(n)"
 defs["ImBitVector_SetBit"][1]["cimguiname"] = "ImBitVector_SetBit"
 defs["ImBitVector_SetBit"][1]["defaults"] = {}
 defs["ImBitVector_SetBit"][1]["funcname"] = "SetBit"
+<<<<<<< HEAD
 defs["ImBitVector_SetBit"][1]["location"] = "imgui_internal:611"
+=======
+defs["ImBitVector_SetBit"][1]["location"] = "imgui_internal:604"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImBitVector_SetBit"][1]["ov_cimguiname"] = "ImBitVector_SetBit"
 defs["ImBitVector_SetBit"][1]["ret"] = "void"
 defs["ImBitVector_SetBit"][1]["signature"] = "(int)"
@@ -257,7 +301,11 @@ defs["ImBitVector_TestBit"][1]["call_args"] = "(n)"
 defs["ImBitVector_TestBit"][1]["cimguiname"] = "ImBitVector_TestBit"
 defs["ImBitVector_TestBit"][1]["defaults"] = {}
 defs["ImBitVector_TestBit"][1]["funcname"] = "TestBit"
+<<<<<<< HEAD
 defs["ImBitVector_TestBit"][1]["location"] = "imgui_internal:610"
+=======
+defs["ImBitVector_TestBit"][1]["location"] = "imgui_internal:603"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImBitVector_TestBit"][1]["ov_cimguiname"] = "ImBitVector_TestBit"
 defs["ImBitVector_TestBit"][1]["ret"] = "bool"
 defs["ImBitVector_TestBit"][1]["signature"] = "(int)const"
@@ -278,7 +326,11 @@ defs["ImChunkStream_alloc_chunk"][1]["call_args"] = "(sz)"
 defs["ImChunkStream_alloc_chunk"][1]["cimguiname"] = "ImChunkStream_alloc_chunk"
 defs["ImChunkStream_alloc_chunk"][1]["defaults"] = {}
 defs["ImChunkStream_alloc_chunk"][1]["funcname"] = "alloc_chunk"
+<<<<<<< HEAD
 defs["ImChunkStream_alloc_chunk"][1]["location"] = "imgui_internal:716"
+=======
+defs["ImChunkStream_alloc_chunk"][1]["location"] = "imgui_internal:708"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImChunkStream_alloc_chunk"][1]["ov_cimguiname"] = "ImChunkStream_alloc_chunk"
 defs["ImChunkStream_alloc_chunk"][1]["ret"] = "T*"
 defs["ImChunkStream_alloc_chunk"][1]["signature"] = "(size_t)"
@@ -297,7 +349,11 @@ defs["ImChunkStream_begin"][1]["call_args"] = "()"
 defs["ImChunkStream_begin"][1]["cimguiname"] = "ImChunkStream_begin"
 defs["ImChunkStream_begin"][1]["defaults"] = {}
 defs["ImChunkStream_begin"][1]["funcname"] = "begin"
+<<<<<<< HEAD
 defs["ImChunkStream_begin"][1]["location"] = "imgui_internal:717"
+=======
+defs["ImChunkStream_begin"][1]["location"] = "imgui_internal:709"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImChunkStream_begin"][1]["ov_cimguiname"] = "ImChunkStream_begin"
 defs["ImChunkStream_begin"][1]["ret"] = "T*"
 defs["ImChunkStream_begin"][1]["signature"] = "()"
@@ -319,7 +375,11 @@ defs["ImChunkStream_chunk_size"][1]["call_args"] = "(p)"
 defs["ImChunkStream_chunk_size"][1]["cimguiname"] = "ImChunkStream_chunk_size"
 defs["ImChunkStream_chunk_size"][1]["defaults"] = {}
 defs["ImChunkStream_chunk_size"][1]["funcname"] = "chunk_size"
+<<<<<<< HEAD
 defs["ImChunkStream_chunk_size"][1]["location"] = "imgui_internal:719"
+=======
+defs["ImChunkStream_chunk_size"][1]["location"] = "imgui_internal:711"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImChunkStream_chunk_size"][1]["ov_cimguiname"] = "ImChunkStream_chunk_size"
 defs["ImChunkStream_chunk_size"][1]["ret"] = "int"
 defs["ImChunkStream_chunk_size"][1]["signature"] = "(const T*)"
@@ -338,7 +398,11 @@ defs["ImChunkStream_clear"][1]["call_args"] = "()"
 defs["ImChunkStream_clear"][1]["cimguiname"] = "ImChunkStream_clear"
 defs["ImChunkStream_clear"][1]["defaults"] = {}
 defs["ImChunkStream_clear"][1]["funcname"] = "clear"
+<<<<<<< HEAD
 defs["ImChunkStream_clear"][1]["location"] = "imgui_internal:713"
+=======
+defs["ImChunkStream_clear"][1]["location"] = "imgui_internal:705"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImChunkStream_clear"][1]["ov_cimguiname"] = "ImChunkStream_clear"
 defs["ImChunkStream_clear"][1]["ret"] = "void"
 defs["ImChunkStream_clear"][1]["signature"] = "()"
@@ -357,7 +421,11 @@ defs["ImChunkStream_empty"][1]["call_args"] = "()"
 defs["ImChunkStream_empty"][1]["cimguiname"] = "ImChunkStream_empty"
 defs["ImChunkStream_empty"][1]["defaults"] = {}
 defs["ImChunkStream_empty"][1]["funcname"] = "empty"
+<<<<<<< HEAD
 defs["ImChunkStream_empty"][1]["location"] = "imgui_internal:714"
+=======
+defs["ImChunkStream_empty"][1]["location"] = "imgui_internal:706"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImChunkStream_empty"][1]["ov_cimguiname"] = "ImChunkStream_empty"
 defs["ImChunkStream_empty"][1]["ret"] = "bool"
 defs["ImChunkStream_empty"][1]["signature"] = "()const"
@@ -376,7 +444,11 @@ defs["ImChunkStream_end"][1]["call_args"] = "()"
 defs["ImChunkStream_end"][1]["cimguiname"] = "ImChunkStream_end"
 defs["ImChunkStream_end"][1]["defaults"] = {}
 defs["ImChunkStream_end"][1]["funcname"] = "end"
+<<<<<<< HEAD
 defs["ImChunkStream_end"][1]["location"] = "imgui_internal:720"
+=======
+defs["ImChunkStream_end"][1]["location"] = "imgui_internal:712"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImChunkStream_end"][1]["ov_cimguiname"] = "ImChunkStream_end"
 defs["ImChunkStream_end"][1]["ret"] = "T*"
 defs["ImChunkStream_end"][1]["signature"] = "()"
@@ -398,7 +470,11 @@ defs["ImChunkStream_next_chunk"][1]["call_args"] = "(p)"
 defs["ImChunkStream_next_chunk"][1]["cimguiname"] = "ImChunkStream_next_chunk"
 defs["ImChunkStream_next_chunk"][1]["defaults"] = {}
 defs["ImChunkStream_next_chunk"][1]["funcname"] = "next_chunk"
+<<<<<<< HEAD
 defs["ImChunkStream_next_chunk"][1]["location"] = "imgui_internal:718"
+=======
+defs["ImChunkStream_next_chunk"][1]["location"] = "imgui_internal:710"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImChunkStream_next_chunk"][1]["ov_cimguiname"] = "ImChunkStream_next_chunk"
 defs["ImChunkStream_next_chunk"][1]["ret"] = "T*"
 defs["ImChunkStream_next_chunk"][1]["signature"] = "(T*)"
@@ -420,7 +496,11 @@ defs["ImChunkStream_offset_from_ptr"][1]["call_args"] = "(p)"
 defs["ImChunkStream_offset_from_ptr"][1]["cimguiname"] = "ImChunkStream_offset_from_ptr"
 defs["ImChunkStream_offset_from_ptr"][1]["defaults"] = {}
 defs["ImChunkStream_offset_from_ptr"][1]["funcname"] = "offset_from_ptr"
+<<<<<<< HEAD
 defs["ImChunkStream_offset_from_ptr"][1]["location"] = "imgui_internal:721"
+=======
+defs["ImChunkStream_offset_from_ptr"][1]["location"] = "imgui_internal:713"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImChunkStream_offset_from_ptr"][1]["ov_cimguiname"] = "ImChunkStream_offset_from_ptr"
 defs["ImChunkStream_offset_from_ptr"][1]["ret"] = "int"
 defs["ImChunkStream_offset_from_ptr"][1]["signature"] = "(const T*)"
@@ -442,7 +522,11 @@ defs["ImChunkStream_ptr_from_offset"][1]["call_args"] = "(off)"
 defs["ImChunkStream_ptr_from_offset"][1]["cimguiname"] = "ImChunkStream_ptr_from_offset"
 defs["ImChunkStream_ptr_from_offset"][1]["defaults"] = {}
 defs["ImChunkStream_ptr_from_offset"][1]["funcname"] = "ptr_from_offset"
+<<<<<<< HEAD
 defs["ImChunkStream_ptr_from_offset"][1]["location"] = "imgui_internal:722"
+=======
+defs["ImChunkStream_ptr_from_offset"][1]["location"] = "imgui_internal:714"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImChunkStream_ptr_from_offset"][1]["ov_cimguiname"] = "ImChunkStream_ptr_from_offset"
 defs["ImChunkStream_ptr_from_offset"][1]["ret"] = "T*"
 defs["ImChunkStream_ptr_from_offset"][1]["signature"] = "(int)"
@@ -461,7 +545,11 @@ defs["ImChunkStream_size"][1]["call_args"] = "()"
 defs["ImChunkStream_size"][1]["cimguiname"] = "ImChunkStream_size"
 defs["ImChunkStream_size"][1]["defaults"] = {}
 defs["ImChunkStream_size"][1]["funcname"] = "size"
+<<<<<<< HEAD
 defs["ImChunkStream_size"][1]["location"] = "imgui_internal:715"
+=======
+defs["ImChunkStream_size"][1]["location"] = "imgui_internal:707"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImChunkStream_size"][1]["ov_cimguiname"] = "ImChunkStream_size"
 defs["ImChunkStream_size"][1]["ret"] = "int"
 defs["ImChunkStream_size"][1]["signature"] = "()const"
@@ -484,7 +572,11 @@ defs["ImChunkStream_swap"][1]["call_args"] = "(*rhs)"
 defs["ImChunkStream_swap"][1]["cimguiname"] = "ImChunkStream_swap"
 defs["ImChunkStream_swap"][1]["defaults"] = {}
 defs["ImChunkStream_swap"][1]["funcname"] = "swap"
+<<<<<<< HEAD
 defs["ImChunkStream_swap"][1]["location"] = "imgui_internal:723"
+=======
+defs["ImChunkStream_swap"][1]["location"] = "imgui_internal:715"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImChunkStream_swap"][1]["ov_cimguiname"] = "ImChunkStream_swap"
 defs["ImChunkStream_swap"][1]["ret"] = "void"
 defs["ImChunkStream_swap"][1]["signature"] = "(ImChunkStream_T *)"
@@ -517,7 +609,11 @@ defs["ImColor_HSV"][1]["defaults"] = {}
 defs["ImColor_HSV"][1]["defaults"]["a"] = "1.0f"
 defs["ImColor_HSV"][1]["funcname"] = "HSV"
 defs["ImColor_HSV"][1]["is_static_function"] = true
+<<<<<<< HEAD
 defs["ImColor_HSV"][1]["location"] = "imgui:2476"
+=======
+defs["ImColor_HSV"][1]["location"] = "imgui:2469"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImColor_HSV"][1]["nonUDT"] = 1
 defs["ImColor_HSV"][1]["ov_cimguiname"] = "ImColor_HSV"
 defs["ImColor_HSV"][1]["ret"] = "void"
@@ -534,7 +630,11 @@ defs["ImColor_ImColor"][1]["cimguiname"] = "ImColor_ImColor"
 defs["ImColor_ImColor"][1]["constructor"] = true
 defs["ImColor_ImColor"][1]["defaults"] = {}
 defs["ImColor_ImColor"][1]["funcname"] = "ImColor"
+<<<<<<< HEAD
 defs["ImColor_ImColor"][1]["location"] = "imgui:2466"
+=======
+defs["ImColor_ImColor"][1]["location"] = "imgui:2459"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImColor_ImColor"][1]["ov_cimguiname"] = "ImColor_ImColor_Nil"
 defs["ImColor_ImColor"][1]["signature"] = "()"
 defs["ImColor_ImColor"][1]["stname"] = "ImColor"
@@ -560,7 +660,11 @@ defs["ImColor_ImColor"][2]["constructor"] = true
 defs["ImColor_ImColor"][2]["defaults"] = {}
 defs["ImColor_ImColor"][2]["defaults"]["a"] = "1.0f"
 defs["ImColor_ImColor"][2]["funcname"] = "ImColor"
+<<<<<<< HEAD
 defs["ImColor_ImColor"][2]["location"] = "imgui:2467"
+=======
+defs["ImColor_ImColor"][2]["location"] = "imgui:2460"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImColor_ImColor"][2]["ov_cimguiname"] = "ImColor_ImColor_Float"
 defs["ImColor_ImColor"][2]["signature"] = "(float,float,float,float)"
 defs["ImColor_ImColor"][2]["stname"] = "ImColor"
@@ -576,7 +680,11 @@ defs["ImColor_ImColor"][3]["cimguiname"] = "ImColor_ImColor"
 defs["ImColor_ImColor"][3]["constructor"] = true
 defs["ImColor_ImColor"][3]["defaults"] = {}
 defs["ImColor_ImColor"][3]["funcname"] = "ImColor"
+<<<<<<< HEAD
 defs["ImColor_ImColor"][3]["location"] = "imgui:2468"
+=======
+defs["ImColor_ImColor"][3]["location"] = "imgui:2461"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImColor_ImColor"][3]["ov_cimguiname"] = "ImColor_ImColor_Vec4"
 defs["ImColor_ImColor"][3]["signature"] = "(const ImVec4)"
 defs["ImColor_ImColor"][3]["stname"] = "ImColor"
@@ -602,7 +710,11 @@ defs["ImColor_ImColor"][4]["constructor"] = true
 defs["ImColor_ImColor"][4]["defaults"] = {}
 defs["ImColor_ImColor"][4]["defaults"]["a"] = "255"
 defs["ImColor_ImColor"][4]["funcname"] = "ImColor"
+<<<<<<< HEAD
 defs["ImColor_ImColor"][4]["location"] = "imgui:2469"
+=======
+defs["ImColor_ImColor"][4]["location"] = "imgui:2462"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImColor_ImColor"][4]["ov_cimguiname"] = "ImColor_ImColor_Int"
 defs["ImColor_ImColor"][4]["signature"] = "(int,int,int,int)"
 defs["ImColor_ImColor"][4]["stname"] = "ImColor"
@@ -618,7 +730,11 @@ defs["ImColor_ImColor"][5]["cimguiname"] = "ImColor_ImColor"
 defs["ImColor_ImColor"][5]["constructor"] = true
 defs["ImColor_ImColor"][5]["defaults"] = {}
 defs["ImColor_ImColor"][5]["funcname"] = "ImColor"
+<<<<<<< HEAD
 defs["ImColor_ImColor"][5]["location"] = "imgui:2470"
+=======
+defs["ImColor_ImColor"][5]["location"] = "imgui:2463"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImColor_ImColor"][5]["ov_cimguiname"] = "ImColor_ImColor_U32"
 defs["ImColor_ImColor"][5]["signature"] = "(ImU32)"
 defs["ImColor_ImColor"][5]["stname"] = "ImColor"
@@ -652,7 +768,11 @@ defs["ImColor_SetHSV"][1]["cimguiname"] = "ImColor_SetHSV"
 defs["ImColor_SetHSV"][1]["defaults"] = {}
 defs["ImColor_SetHSV"][1]["defaults"]["a"] = "1.0f"
 defs["ImColor_SetHSV"][1]["funcname"] = "SetHSV"
+<<<<<<< HEAD
 defs["ImColor_SetHSV"][1]["location"] = "imgui:2475"
+=======
+defs["ImColor_SetHSV"][1]["location"] = "imgui:2468"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImColor_SetHSV"][1]["ov_cimguiname"] = "ImColor_SetHSV"
 defs["ImColor_SetHSV"][1]["ret"] = "void"
 defs["ImColor_SetHSV"][1]["signature"] = "(float,float,float,float)"
@@ -686,7 +806,11 @@ defs["ImDrawCmd_GetTexID"][1]["call_args"] = "()"
 defs["ImDrawCmd_GetTexID"][1]["cimguiname"] = "ImDrawCmd_GetTexID"
 defs["ImDrawCmd_GetTexID"][1]["defaults"] = {}
 defs["ImDrawCmd_GetTexID"][1]["funcname"] = "GetTexID"
+<<<<<<< HEAD
 defs["ImDrawCmd_GetTexID"][1]["location"] = "imgui:2524"
+=======
+defs["ImDrawCmd_GetTexID"][1]["location"] = "imgui:2517"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawCmd_GetTexID"][1]["ov_cimguiname"] = "ImDrawCmd_GetTexID"
 defs["ImDrawCmd_GetTexID"][1]["ret"] = "ImTextureID"
 defs["ImDrawCmd_GetTexID"][1]["signature"] = "()const"
@@ -702,7 +826,11 @@ defs["ImDrawCmd_ImDrawCmd"][1]["cimguiname"] = "ImDrawCmd_ImDrawCmd"
 defs["ImDrawCmd_ImDrawCmd"][1]["constructor"] = true
 defs["ImDrawCmd_ImDrawCmd"][1]["defaults"] = {}
 defs["ImDrawCmd_ImDrawCmd"][1]["funcname"] = "ImDrawCmd"
+<<<<<<< HEAD
 defs["ImDrawCmd_ImDrawCmd"][1]["location"] = "imgui:2521"
+=======
+defs["ImDrawCmd_ImDrawCmd"][1]["location"] = "imgui:2514"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawCmd_ImDrawCmd"][1]["ov_cimguiname"] = "ImDrawCmd_ImDrawCmd"
 defs["ImDrawCmd_ImDrawCmd"][1]["signature"] = "()"
 defs["ImDrawCmd_ImDrawCmd"][1]["stname"] = "ImDrawCmd"
@@ -735,7 +863,11 @@ defs["ImDrawDataBuilder_Clear"][1]["call_args"] = "()"
 defs["ImDrawDataBuilder_Clear"][1]["cimguiname"] = "ImDrawDataBuilder_Clear"
 defs["ImDrawDataBuilder_Clear"][1]["defaults"] = {}
 defs["ImDrawDataBuilder_Clear"][1]["funcname"] = "Clear"
+<<<<<<< HEAD
 defs["ImDrawDataBuilder_Clear"][1]["location"] = "imgui_internal:799"
+=======
+defs["ImDrawDataBuilder_Clear"][1]["location"] = "imgui_internal:791"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawDataBuilder_Clear"][1]["ov_cimguiname"] = "ImDrawDataBuilder_Clear"
 defs["ImDrawDataBuilder_Clear"][1]["ret"] = "void"
 defs["ImDrawDataBuilder_Clear"][1]["signature"] = "()"
@@ -753,7 +885,11 @@ defs["ImDrawDataBuilder_ClearFreeMemory"][1]["call_args"] = "()"
 defs["ImDrawDataBuilder_ClearFreeMemory"][1]["cimguiname"] = "ImDrawDataBuilder_ClearFreeMemory"
 defs["ImDrawDataBuilder_ClearFreeMemory"][1]["defaults"] = {}
 defs["ImDrawDataBuilder_ClearFreeMemory"][1]["funcname"] = "ClearFreeMemory"
+<<<<<<< HEAD
 defs["ImDrawDataBuilder_ClearFreeMemory"][1]["location"] = "imgui_internal:800"
+=======
+defs["ImDrawDataBuilder_ClearFreeMemory"][1]["location"] = "imgui_internal:792"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawDataBuilder_ClearFreeMemory"][1]["ov_cimguiname"] = "ImDrawDataBuilder_ClearFreeMemory"
 defs["ImDrawDataBuilder_ClearFreeMemory"][1]["ret"] = "void"
 defs["ImDrawDataBuilder_ClearFreeMemory"][1]["signature"] = "()"
@@ -771,7 +907,11 @@ defs["ImDrawDataBuilder_FlattenIntoSingleLayer"][1]["call_args"] = "()"
 defs["ImDrawDataBuilder_FlattenIntoSingleLayer"][1]["cimguiname"] = "ImDrawDataBuilder_FlattenIntoSingleLayer"
 defs["ImDrawDataBuilder_FlattenIntoSingleLayer"][1]["defaults"] = {}
 defs["ImDrawDataBuilder_FlattenIntoSingleLayer"][1]["funcname"] = "FlattenIntoSingleLayer"
+<<<<<<< HEAD
 defs["ImDrawDataBuilder_FlattenIntoSingleLayer"][1]["location"] = "imgui_internal:802"
+=======
+defs["ImDrawDataBuilder_FlattenIntoSingleLayer"][1]["location"] = "imgui_internal:794"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawDataBuilder_FlattenIntoSingleLayer"][1]["ov_cimguiname"] = "ImDrawDataBuilder_FlattenIntoSingleLayer"
 defs["ImDrawDataBuilder_FlattenIntoSingleLayer"][1]["ret"] = "void"
 defs["ImDrawDataBuilder_FlattenIntoSingleLayer"][1]["signature"] = "()"
@@ -789,7 +929,11 @@ defs["ImDrawDataBuilder_GetDrawListCount"][1]["call_args"] = "()"
 defs["ImDrawDataBuilder_GetDrawListCount"][1]["cimguiname"] = "ImDrawDataBuilder_GetDrawListCount"
 defs["ImDrawDataBuilder_GetDrawListCount"][1]["defaults"] = {}
 defs["ImDrawDataBuilder_GetDrawListCount"][1]["funcname"] = "GetDrawListCount"
+<<<<<<< HEAD
 defs["ImDrawDataBuilder_GetDrawListCount"][1]["location"] = "imgui_internal:801"
+=======
+defs["ImDrawDataBuilder_GetDrawListCount"][1]["location"] = "imgui_internal:793"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawDataBuilder_GetDrawListCount"][1]["ov_cimguiname"] = "ImDrawDataBuilder_GetDrawListCount"
 defs["ImDrawDataBuilder_GetDrawListCount"][1]["ret"] = "int"
 defs["ImDrawDataBuilder_GetDrawListCount"][1]["signature"] = "()const"
@@ -807,7 +951,11 @@ defs["ImDrawData_Clear"][1]["call_args"] = "()"
 defs["ImDrawData_Clear"][1]["cimguiname"] = "ImDrawData_Clear"
 defs["ImDrawData_Clear"][1]["defaults"] = {}
 defs["ImDrawData_Clear"][1]["funcname"] = "Clear"
+<<<<<<< HEAD
 defs["ImDrawData_Clear"][1]["location"] = "imgui:2758"
+=======
+defs["ImDrawData_Clear"][1]["location"] = "imgui:2751"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawData_Clear"][1]["ov_cimguiname"] = "ImDrawData_Clear"
 defs["ImDrawData_Clear"][1]["ret"] = "void"
 defs["ImDrawData_Clear"][1]["signature"] = "()"
@@ -825,7 +973,11 @@ defs["ImDrawData_DeIndexAllBuffers"][1]["call_args"] = "()"
 defs["ImDrawData_DeIndexAllBuffers"][1]["cimguiname"] = "ImDrawData_DeIndexAllBuffers"
 defs["ImDrawData_DeIndexAllBuffers"][1]["defaults"] = {}
 defs["ImDrawData_DeIndexAllBuffers"][1]["funcname"] = "DeIndexAllBuffers"
+<<<<<<< HEAD
 defs["ImDrawData_DeIndexAllBuffers"][1]["location"] = "imgui:2759"
+=======
+defs["ImDrawData_DeIndexAllBuffers"][1]["location"] = "imgui:2752"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawData_DeIndexAllBuffers"][1]["ov_cimguiname"] = "ImDrawData_DeIndexAllBuffers"
 defs["ImDrawData_DeIndexAllBuffers"][1]["ret"] = "void"
 defs["ImDrawData_DeIndexAllBuffers"][1]["signature"] = "()"
@@ -841,7 +993,11 @@ defs["ImDrawData_ImDrawData"][1]["cimguiname"] = "ImDrawData_ImDrawData"
 defs["ImDrawData_ImDrawData"][1]["constructor"] = true
 defs["ImDrawData_ImDrawData"][1]["defaults"] = {}
 defs["ImDrawData_ImDrawData"][1]["funcname"] = "ImDrawData"
+<<<<<<< HEAD
 defs["ImDrawData_ImDrawData"][1]["location"] = "imgui:2757"
+=======
+defs["ImDrawData_ImDrawData"][1]["location"] = "imgui:2750"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawData_ImDrawData"][1]["ov_cimguiname"] = "ImDrawData_ImDrawData"
 defs["ImDrawData_ImDrawData"][1]["signature"] = "()"
 defs["ImDrawData_ImDrawData"][1]["stname"] = "ImDrawData"
@@ -861,7 +1017,11 @@ defs["ImDrawData_ScaleClipRects"][1]["call_args"] = "(fb_scale)"
 defs["ImDrawData_ScaleClipRects"][1]["cimguiname"] = "ImDrawData_ScaleClipRects"
 defs["ImDrawData_ScaleClipRects"][1]["defaults"] = {}
 defs["ImDrawData_ScaleClipRects"][1]["funcname"] = "ScaleClipRects"
+<<<<<<< HEAD
 defs["ImDrawData_ScaleClipRects"][1]["location"] = "imgui:2760"
+=======
+defs["ImDrawData_ScaleClipRects"][1]["location"] = "imgui:2753"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawData_ScaleClipRects"][1]["ov_cimguiname"] = "ImDrawData_ScaleClipRects"
 defs["ImDrawData_ScaleClipRects"][1]["ret"] = "void"
 defs["ImDrawData_ScaleClipRects"][1]["signature"] = "(const ImVec2)"
@@ -893,7 +1053,11 @@ defs["ImDrawListSharedData_ImDrawListSharedData"][1]["cimguiname"] = "ImDrawList
 defs["ImDrawListSharedData_ImDrawListSharedData"][1]["constructor"] = true
 defs["ImDrawListSharedData_ImDrawListSharedData"][1]["defaults"] = {}
 defs["ImDrawListSharedData_ImDrawListSharedData"][1]["funcname"] = "ImDrawListSharedData"
+<<<<<<< HEAD
 defs["ImDrawListSharedData_ImDrawListSharedData"][1]["location"] = "imgui_internal:791"
+=======
+defs["ImDrawListSharedData_ImDrawListSharedData"][1]["location"] = "imgui_internal:783"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawListSharedData_ImDrawListSharedData"][1]["ov_cimguiname"] = "ImDrawListSharedData_ImDrawListSharedData"
 defs["ImDrawListSharedData_ImDrawListSharedData"][1]["signature"] = "()"
 defs["ImDrawListSharedData_ImDrawListSharedData"][1]["stname"] = "ImDrawListSharedData"
@@ -913,7 +1077,11 @@ defs["ImDrawListSharedData_SetCircleTessellationMaxError"][1]["call_args"] = "(m
 defs["ImDrawListSharedData_SetCircleTessellationMaxError"][1]["cimguiname"] = "ImDrawListSharedData_SetCircleTessellationMaxError"
 defs["ImDrawListSharedData_SetCircleTessellationMaxError"][1]["defaults"] = {}
 defs["ImDrawListSharedData_SetCircleTessellationMaxError"][1]["funcname"] = "SetCircleTessellationMaxError"
+<<<<<<< HEAD
 defs["ImDrawListSharedData_SetCircleTessellationMaxError"][1]["location"] = "imgui_internal:792"
+=======
+defs["ImDrawListSharedData_SetCircleTessellationMaxError"][1]["location"] = "imgui_internal:784"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawListSharedData_SetCircleTessellationMaxError"][1]["ov_cimguiname"] = "ImDrawListSharedData_SetCircleTessellationMaxError"
 defs["ImDrawListSharedData_SetCircleTessellationMaxError"][1]["ret"] = "void"
 defs["ImDrawListSharedData_SetCircleTessellationMaxError"][1]["signature"] = "(float)"
@@ -947,7 +1115,11 @@ defs["ImDrawListSplitter_Clear"][1]["call_args"] = "()"
 defs["ImDrawListSplitter_Clear"][1]["cimguiname"] = "ImDrawListSplitter_Clear"
 defs["ImDrawListSplitter_Clear"][1]["defaults"] = {}
 defs["ImDrawListSplitter_Clear"][1]["funcname"] = "Clear"
+<<<<<<< HEAD
 defs["ImDrawListSplitter_Clear"][1]["location"] = "imgui:2569"
+=======
+defs["ImDrawListSplitter_Clear"][1]["location"] = "imgui:2562"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawListSplitter_Clear"][1]["ov_cimguiname"] = "ImDrawListSplitter_Clear"
 defs["ImDrawListSplitter_Clear"][1]["ret"] = "void"
 defs["ImDrawListSplitter_Clear"][1]["signature"] = "()"
@@ -965,7 +1137,11 @@ defs["ImDrawListSplitter_ClearFreeMemory"][1]["call_args"] = "()"
 defs["ImDrawListSplitter_ClearFreeMemory"][1]["cimguiname"] = "ImDrawListSplitter_ClearFreeMemory"
 defs["ImDrawListSplitter_ClearFreeMemory"][1]["defaults"] = {}
 defs["ImDrawListSplitter_ClearFreeMemory"][1]["funcname"] = "ClearFreeMemory"
+<<<<<<< HEAD
 defs["ImDrawListSplitter_ClearFreeMemory"][1]["location"] = "imgui:2570"
+=======
+defs["ImDrawListSplitter_ClearFreeMemory"][1]["location"] = "imgui:2563"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawListSplitter_ClearFreeMemory"][1]["ov_cimguiname"] = "ImDrawListSplitter_ClearFreeMemory"
 defs["ImDrawListSplitter_ClearFreeMemory"][1]["ret"] = "void"
 defs["ImDrawListSplitter_ClearFreeMemory"][1]["signature"] = "()"
@@ -981,7 +1157,11 @@ defs["ImDrawListSplitter_ImDrawListSplitter"][1]["cimguiname"] = "ImDrawListSpli
 defs["ImDrawListSplitter_ImDrawListSplitter"][1]["constructor"] = true
 defs["ImDrawListSplitter_ImDrawListSplitter"][1]["defaults"] = {}
 defs["ImDrawListSplitter_ImDrawListSplitter"][1]["funcname"] = "ImDrawListSplitter"
+<<<<<<< HEAD
 defs["ImDrawListSplitter_ImDrawListSplitter"][1]["location"] = "imgui:2567"
+=======
+defs["ImDrawListSplitter_ImDrawListSplitter"][1]["location"] = "imgui:2560"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawListSplitter_ImDrawListSplitter"][1]["ov_cimguiname"] = "ImDrawListSplitter_ImDrawListSplitter"
 defs["ImDrawListSplitter_ImDrawListSplitter"][1]["signature"] = "()"
 defs["ImDrawListSplitter_ImDrawListSplitter"][1]["stname"] = "ImDrawListSplitter"
@@ -1001,7 +1181,11 @@ defs["ImDrawListSplitter_Merge"][1]["call_args"] = "(draw_list)"
 defs["ImDrawListSplitter_Merge"][1]["cimguiname"] = "ImDrawListSplitter_Merge"
 defs["ImDrawListSplitter_Merge"][1]["defaults"] = {}
 defs["ImDrawListSplitter_Merge"][1]["funcname"] = "Merge"
+<<<<<<< HEAD
 defs["ImDrawListSplitter_Merge"][1]["location"] = "imgui:2572"
+=======
+defs["ImDrawListSplitter_Merge"][1]["location"] = "imgui:2565"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawListSplitter_Merge"][1]["ov_cimguiname"] = "ImDrawListSplitter_Merge"
 defs["ImDrawListSplitter_Merge"][1]["ret"] = "void"
 defs["ImDrawListSplitter_Merge"][1]["signature"] = "(ImDrawList*)"
@@ -1025,7 +1209,11 @@ defs["ImDrawListSplitter_SetCurrentChannel"][1]["call_args"] = "(draw_list,chann
 defs["ImDrawListSplitter_SetCurrentChannel"][1]["cimguiname"] = "ImDrawListSplitter_SetCurrentChannel"
 defs["ImDrawListSplitter_SetCurrentChannel"][1]["defaults"] = {}
 defs["ImDrawListSplitter_SetCurrentChannel"][1]["funcname"] = "SetCurrentChannel"
+<<<<<<< HEAD
 defs["ImDrawListSplitter_SetCurrentChannel"][1]["location"] = "imgui:2573"
+=======
+defs["ImDrawListSplitter_SetCurrentChannel"][1]["location"] = "imgui:2566"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawListSplitter_SetCurrentChannel"][1]["ov_cimguiname"] = "ImDrawListSplitter_SetCurrentChannel"
 defs["ImDrawListSplitter_SetCurrentChannel"][1]["ret"] = "void"
 defs["ImDrawListSplitter_SetCurrentChannel"][1]["signature"] = "(ImDrawList*,int)"
@@ -1049,7 +1237,11 @@ defs["ImDrawListSplitter_Split"][1]["call_args"] = "(draw_list,count)"
 defs["ImDrawListSplitter_Split"][1]["cimguiname"] = "ImDrawListSplitter_Split"
 defs["ImDrawListSplitter_Split"][1]["defaults"] = {}
 defs["ImDrawListSplitter_Split"][1]["funcname"] = "Split"
+<<<<<<< HEAD
 defs["ImDrawListSplitter_Split"][1]["location"] = "imgui:2571"
+=======
+defs["ImDrawListSplitter_Split"][1]["location"] = "imgui:2564"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawListSplitter_Split"][1]["ov_cimguiname"] = "ImDrawListSplitter_Split"
 defs["ImDrawListSplitter_Split"][1]["ret"] = "void"
 defs["ImDrawListSplitter_Split"][1]["signature"] = "(ImDrawList*,int)"
@@ -1066,7 +1258,11 @@ defs["ImDrawListSplitter_destroy"][1]["call_args"] = "(self)"
 defs["ImDrawListSplitter_destroy"][1]["cimguiname"] = "ImDrawListSplitter_destroy"
 defs["ImDrawListSplitter_destroy"][1]["defaults"] = {}
 defs["ImDrawListSplitter_destroy"][1]["destructor"] = true
+<<<<<<< HEAD
 defs["ImDrawListSplitter_destroy"][1]["location"] = "imgui:2568"
+=======
+defs["ImDrawListSplitter_destroy"][1]["location"] = "imgui:2561"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawListSplitter_destroy"][1]["ov_cimguiname"] = "ImDrawListSplitter_destroy"
 defs["ImDrawListSplitter_destroy"][1]["realdestructor"] = true
 defs["ImDrawListSplitter_destroy"][1]["ret"] = "void"
@@ -1107,7 +1303,11 @@ defs["ImDrawList_AddBezierCubic"][1]["cimguiname"] = "ImDrawList_AddBezierCubic"
 defs["ImDrawList_AddBezierCubic"][1]["defaults"] = {}
 defs["ImDrawList_AddBezierCubic"][1]["defaults"]["num_segments"] = "0"
 defs["ImDrawList_AddBezierCubic"][1]["funcname"] = "AddBezierCubic"
+<<<<<<< HEAD
 defs["ImDrawList_AddBezierCubic"][1]["location"] = "imgui:2672"
+=======
+defs["ImDrawList_AddBezierCubic"][1]["location"] = "imgui:2665"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddBezierCubic"][1]["ov_cimguiname"] = "ImDrawList_AddBezierCubic"
 defs["ImDrawList_AddBezierCubic"][1]["ret"] = "void"
 defs["ImDrawList_AddBezierCubic"][1]["signature"] = "(const ImVec2,const ImVec2,const ImVec2,const ImVec2,ImU32,float,int)"
@@ -1144,7 +1344,11 @@ defs["ImDrawList_AddBezierQuadratic"][1]["cimguiname"] = "ImDrawList_AddBezierQu
 defs["ImDrawList_AddBezierQuadratic"][1]["defaults"] = {}
 defs["ImDrawList_AddBezierQuadratic"][1]["defaults"]["num_segments"] = "0"
 defs["ImDrawList_AddBezierQuadratic"][1]["funcname"] = "AddBezierQuadratic"
+<<<<<<< HEAD
 defs["ImDrawList_AddBezierQuadratic"][1]["location"] = "imgui:2673"
+=======
+defs["ImDrawList_AddBezierQuadratic"][1]["location"] = "imgui:2666"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddBezierQuadratic"][1]["ov_cimguiname"] = "ImDrawList_AddBezierQuadratic"
 defs["ImDrawList_AddBezierQuadratic"][1]["ret"] = "void"
 defs["ImDrawList_AddBezierQuadratic"][1]["signature"] = "(const ImVec2,const ImVec2,const ImVec2,ImU32,float,int)"
@@ -1168,7 +1372,11 @@ defs["ImDrawList_AddCallback"][1]["call_args"] = "(callback,callback_data)"
 defs["ImDrawList_AddCallback"][1]["cimguiname"] = "ImDrawList_AddCallback"
 defs["ImDrawList_AddCallback"][1]["defaults"] = {}
 defs["ImDrawList_AddCallback"][1]["funcname"] = "AddCallback"
+<<<<<<< HEAD
 defs["ImDrawList_AddCallback"][1]["location"] = "imgui:2697"
+=======
+defs["ImDrawList_AddCallback"][1]["location"] = "imgui:2690"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddCallback"][1]["ov_cimguiname"] = "ImDrawList_AddCallback"
 defs["ImDrawList_AddCallback"][1]["ret"] = "void"
 defs["ImDrawList_AddCallback"][1]["signature"] = "(ImDrawCallback,void*)"
@@ -1203,7 +1411,11 @@ defs["ImDrawList_AddCircle"][1]["defaults"] = {}
 defs["ImDrawList_AddCircle"][1]["defaults"]["num_segments"] = "0"
 defs["ImDrawList_AddCircle"][1]["defaults"]["thickness"] = "1.0f"
 defs["ImDrawList_AddCircle"][1]["funcname"] = "AddCircle"
+<<<<<<< HEAD
 defs["ImDrawList_AddCircle"][1]["location"] = "imgui:2664"
+=======
+defs["ImDrawList_AddCircle"][1]["location"] = "imgui:2657"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddCircle"][1]["ov_cimguiname"] = "ImDrawList_AddCircle"
 defs["ImDrawList_AddCircle"][1]["ret"] = "void"
 defs["ImDrawList_AddCircle"][1]["signature"] = "(const ImVec2,float,ImU32,int,float)"
@@ -1234,7 +1446,11 @@ defs["ImDrawList_AddCircleFilled"][1]["cimguiname"] = "ImDrawList_AddCircleFille
 defs["ImDrawList_AddCircleFilled"][1]["defaults"] = {}
 defs["ImDrawList_AddCircleFilled"][1]["defaults"]["num_segments"] = "0"
 defs["ImDrawList_AddCircleFilled"][1]["funcname"] = "AddCircleFilled"
+<<<<<<< HEAD
 defs["ImDrawList_AddCircleFilled"][1]["location"] = "imgui:2665"
+=======
+defs["ImDrawList_AddCircleFilled"][1]["location"] = "imgui:2658"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddCircleFilled"][1]["ov_cimguiname"] = "ImDrawList_AddCircleFilled"
 defs["ImDrawList_AddCircleFilled"][1]["ret"] = "void"
 defs["ImDrawList_AddCircleFilled"][1]["signature"] = "(const ImVec2,float,ImU32,int)"
@@ -1261,7 +1477,11 @@ defs["ImDrawList_AddConvexPolyFilled"][1]["call_args"] = "(points,num_points,col
 defs["ImDrawList_AddConvexPolyFilled"][1]["cimguiname"] = "ImDrawList_AddConvexPolyFilled"
 defs["ImDrawList_AddConvexPolyFilled"][1]["defaults"] = {}
 defs["ImDrawList_AddConvexPolyFilled"][1]["funcname"] = "AddConvexPolyFilled"
+<<<<<<< HEAD
 defs["ImDrawList_AddConvexPolyFilled"][1]["location"] = "imgui:2671"
+=======
+defs["ImDrawList_AddConvexPolyFilled"][1]["location"] = "imgui:2664"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddConvexPolyFilled"][1]["ov_cimguiname"] = "ImDrawList_AddConvexPolyFilled"
 defs["ImDrawList_AddConvexPolyFilled"][1]["ret"] = "void"
 defs["ImDrawList_AddConvexPolyFilled"][1]["signature"] = "(const ImVec2*,int,ImU32)"
@@ -1279,7 +1499,11 @@ defs["ImDrawList_AddDrawCmd"][1]["call_args"] = "()"
 defs["ImDrawList_AddDrawCmd"][1]["cimguiname"] = "ImDrawList_AddDrawCmd"
 defs["ImDrawList_AddDrawCmd"][1]["defaults"] = {}
 defs["ImDrawList_AddDrawCmd"][1]["funcname"] = "AddDrawCmd"
+<<<<<<< HEAD
 defs["ImDrawList_AddDrawCmd"][1]["location"] = "imgui:2698"
+=======
+defs["ImDrawList_AddDrawCmd"][1]["location"] = "imgui:2691"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddDrawCmd"][1]["ov_cimguiname"] = "ImDrawList_AddDrawCmd"
 defs["ImDrawList_AddDrawCmd"][1]["ret"] = "void"
 defs["ImDrawList_AddDrawCmd"][1]["signature"] = "()"
@@ -1318,7 +1542,11 @@ defs["ImDrawList_AddImage"][1]["defaults"]["col"] = "4294967295"
 defs["ImDrawList_AddImage"][1]["defaults"]["uv_max"] = "ImVec2(1,1)"
 defs["ImDrawList_AddImage"][1]["defaults"]["uv_min"] = "ImVec2(0,0)"
 defs["ImDrawList_AddImage"][1]["funcname"] = "AddImage"
+<<<<<<< HEAD
 defs["ImDrawList_AddImage"][1]["location"] = "imgui:2679"
+=======
+defs["ImDrawList_AddImage"][1]["location"] = "imgui:2672"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddImage"][1]["ov_cimguiname"] = "ImDrawList_AddImage"
 defs["ImDrawList_AddImage"][1]["ret"] = "void"
 defs["ImDrawList_AddImage"][1]["signature"] = "(ImTextureID,const ImVec2,const ImVec2,const ImVec2,const ImVec2,ImU32)"
@@ -1371,7 +1599,11 @@ defs["ImDrawList_AddImageQuad"][1]["defaults"]["uv2"] = "ImVec2(1,0)"
 defs["ImDrawList_AddImageQuad"][1]["defaults"]["uv3"] = "ImVec2(1,1)"
 defs["ImDrawList_AddImageQuad"][1]["defaults"]["uv4"] = "ImVec2(0,1)"
 defs["ImDrawList_AddImageQuad"][1]["funcname"] = "AddImageQuad"
+<<<<<<< HEAD
 defs["ImDrawList_AddImageQuad"][1]["location"] = "imgui:2680"
+=======
+defs["ImDrawList_AddImageQuad"][1]["location"] = "imgui:2673"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddImageQuad"][1]["ov_cimguiname"] = "ImDrawList_AddImageQuad"
 defs["ImDrawList_AddImageQuad"][1]["ret"] = "void"
 defs["ImDrawList_AddImageQuad"][1]["signature"] = "(ImTextureID,const ImVec2,const ImVec2,const ImVec2,const ImVec2,const ImVec2,const ImVec2,const ImVec2,const ImVec2,ImU32)"
@@ -1414,7 +1646,11 @@ defs["ImDrawList_AddImageRounded"][1]["cimguiname"] = "ImDrawList_AddImageRounde
 defs["ImDrawList_AddImageRounded"][1]["defaults"] = {}
 defs["ImDrawList_AddImageRounded"][1]["defaults"]["flags"] = "0"
 defs["ImDrawList_AddImageRounded"][1]["funcname"] = "AddImageRounded"
+<<<<<<< HEAD
 defs["ImDrawList_AddImageRounded"][1]["location"] = "imgui:2681"
+=======
+defs["ImDrawList_AddImageRounded"][1]["location"] = "imgui:2674"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddImageRounded"][1]["ov_cimguiname"] = "ImDrawList_AddImageRounded"
 defs["ImDrawList_AddImageRounded"][1]["ret"] = "void"
 defs["ImDrawList_AddImageRounded"][1]["signature"] = "(ImTextureID,const ImVec2,const ImVec2,const ImVec2,const ImVec2,ImU32,float,ImDrawFlags)"
@@ -1445,7 +1681,11 @@ defs["ImDrawList_AddLine"][1]["cimguiname"] = "ImDrawList_AddLine"
 defs["ImDrawList_AddLine"][1]["defaults"] = {}
 defs["ImDrawList_AddLine"][1]["defaults"]["thickness"] = "1.0f"
 defs["ImDrawList_AddLine"][1]["funcname"] = "AddLine"
+<<<<<<< HEAD
 defs["ImDrawList_AddLine"][1]["location"] = "imgui:2656"
+=======
+defs["ImDrawList_AddLine"][1]["location"] = "imgui:2649"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddLine"][1]["ov_cimguiname"] = "ImDrawList_AddLine"
 defs["ImDrawList_AddLine"][1]["ret"] = "void"
 defs["ImDrawList_AddLine"][1]["signature"] = "(const ImVec2,const ImVec2,ImU32,float)"
@@ -1479,7 +1719,11 @@ defs["ImDrawList_AddNgon"][1]["cimguiname"] = "ImDrawList_AddNgon"
 defs["ImDrawList_AddNgon"][1]["defaults"] = {}
 defs["ImDrawList_AddNgon"][1]["defaults"]["thickness"] = "1.0f"
 defs["ImDrawList_AddNgon"][1]["funcname"] = "AddNgon"
+<<<<<<< HEAD
 defs["ImDrawList_AddNgon"][1]["location"] = "imgui:2666"
+=======
+defs["ImDrawList_AddNgon"][1]["location"] = "imgui:2659"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddNgon"][1]["ov_cimguiname"] = "ImDrawList_AddNgon"
 defs["ImDrawList_AddNgon"][1]["ret"] = "void"
 defs["ImDrawList_AddNgon"][1]["signature"] = "(const ImVec2,float,ImU32,int,float)"
@@ -1509,7 +1753,11 @@ defs["ImDrawList_AddNgonFilled"][1]["call_args"] = "(center,radius,col,num_segme
 defs["ImDrawList_AddNgonFilled"][1]["cimguiname"] = "ImDrawList_AddNgonFilled"
 defs["ImDrawList_AddNgonFilled"][1]["defaults"] = {}
 defs["ImDrawList_AddNgonFilled"][1]["funcname"] = "AddNgonFilled"
+<<<<<<< HEAD
 defs["ImDrawList_AddNgonFilled"][1]["location"] = "imgui:2667"
+=======
+defs["ImDrawList_AddNgonFilled"][1]["location"] = "imgui:2660"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddNgonFilled"][1]["ov_cimguiname"] = "ImDrawList_AddNgonFilled"
 defs["ImDrawList_AddNgonFilled"][1]["ret"] = "void"
 defs["ImDrawList_AddNgonFilled"][1]["signature"] = "(const ImVec2,float,ImU32,int)"
@@ -1542,7 +1790,11 @@ defs["ImDrawList_AddPolyline"][1]["call_args"] = "(points,num_points,col,flags,t
 defs["ImDrawList_AddPolyline"][1]["cimguiname"] = "ImDrawList_AddPolyline"
 defs["ImDrawList_AddPolyline"][1]["defaults"] = {}
 defs["ImDrawList_AddPolyline"][1]["funcname"] = "AddPolyline"
+<<<<<<< HEAD
 defs["ImDrawList_AddPolyline"][1]["location"] = "imgui:2670"
+=======
+defs["ImDrawList_AddPolyline"][1]["location"] = "imgui:2663"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddPolyline"][1]["ov_cimguiname"] = "ImDrawList_AddPolyline"
 defs["ImDrawList_AddPolyline"][1]["ret"] = "void"
 defs["ImDrawList_AddPolyline"][1]["signature"] = "(const ImVec2*,int,ImU32,ImDrawFlags,float)"
@@ -1579,7 +1831,11 @@ defs["ImDrawList_AddQuad"][1]["cimguiname"] = "ImDrawList_AddQuad"
 defs["ImDrawList_AddQuad"][1]["defaults"] = {}
 defs["ImDrawList_AddQuad"][1]["defaults"]["thickness"] = "1.0f"
 defs["ImDrawList_AddQuad"][1]["funcname"] = "AddQuad"
+<<<<<<< HEAD
 defs["ImDrawList_AddQuad"][1]["location"] = "imgui:2660"
+=======
+defs["ImDrawList_AddQuad"][1]["location"] = "imgui:2653"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddQuad"][1]["ov_cimguiname"] = "ImDrawList_AddQuad"
 defs["ImDrawList_AddQuad"][1]["ret"] = "void"
 defs["ImDrawList_AddQuad"][1]["signature"] = "(const ImVec2,const ImVec2,const ImVec2,const ImVec2,ImU32,float)"
@@ -1612,7 +1868,11 @@ defs["ImDrawList_AddQuadFilled"][1]["call_args"] = "(p1,p2,p3,p4,col)"
 defs["ImDrawList_AddQuadFilled"][1]["cimguiname"] = "ImDrawList_AddQuadFilled"
 defs["ImDrawList_AddQuadFilled"][1]["defaults"] = {}
 defs["ImDrawList_AddQuadFilled"][1]["funcname"] = "AddQuadFilled"
+<<<<<<< HEAD
 defs["ImDrawList_AddQuadFilled"][1]["location"] = "imgui:2661"
+=======
+defs["ImDrawList_AddQuadFilled"][1]["location"] = "imgui:2654"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddQuadFilled"][1]["ov_cimguiname"] = "ImDrawList_AddQuadFilled"
 defs["ImDrawList_AddQuadFilled"][1]["ret"] = "void"
 defs["ImDrawList_AddQuadFilled"][1]["signature"] = "(const ImVec2,const ImVec2,const ImVec2,const ImVec2,ImU32)"
@@ -1651,7 +1911,11 @@ defs["ImDrawList_AddRect"][1]["defaults"]["flags"] = "0"
 defs["ImDrawList_AddRect"][1]["defaults"]["rounding"] = "0.0f"
 defs["ImDrawList_AddRect"][1]["defaults"]["thickness"] = "1.0f"
 defs["ImDrawList_AddRect"][1]["funcname"] = "AddRect"
+<<<<<<< HEAD
 defs["ImDrawList_AddRect"][1]["location"] = "imgui:2657"
+=======
+defs["ImDrawList_AddRect"][1]["location"] = "imgui:2650"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddRect"][1]["ov_cimguiname"] = "ImDrawList_AddRect"
 defs["ImDrawList_AddRect"][1]["ret"] = "void"
 defs["ImDrawList_AddRect"][1]["signature"] = "(const ImVec2,const ImVec2,ImU32,float,ImDrawFlags,float)"
@@ -1686,7 +1950,11 @@ defs["ImDrawList_AddRectFilled"][1]["defaults"] = {}
 defs["ImDrawList_AddRectFilled"][1]["defaults"]["flags"] = "0"
 defs["ImDrawList_AddRectFilled"][1]["defaults"]["rounding"] = "0.0f"
 defs["ImDrawList_AddRectFilled"][1]["funcname"] = "AddRectFilled"
+<<<<<<< HEAD
 defs["ImDrawList_AddRectFilled"][1]["location"] = "imgui:2658"
+=======
+defs["ImDrawList_AddRectFilled"][1]["location"] = "imgui:2651"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddRectFilled"][1]["ov_cimguiname"] = "ImDrawList_AddRectFilled"
 defs["ImDrawList_AddRectFilled"][1]["ret"] = "void"
 defs["ImDrawList_AddRectFilled"][1]["signature"] = "(const ImVec2,const ImVec2,ImU32,float,ImDrawFlags)"
@@ -1722,7 +1990,11 @@ defs["ImDrawList_AddRectFilledMultiColor"][1]["call_args"] = "(p_min,p_max,col_u
 defs["ImDrawList_AddRectFilledMultiColor"][1]["cimguiname"] = "ImDrawList_AddRectFilledMultiColor"
 defs["ImDrawList_AddRectFilledMultiColor"][1]["defaults"] = {}
 defs["ImDrawList_AddRectFilledMultiColor"][1]["funcname"] = "AddRectFilledMultiColor"
+<<<<<<< HEAD
 defs["ImDrawList_AddRectFilledMultiColor"][1]["location"] = "imgui:2659"
+=======
+defs["ImDrawList_AddRectFilledMultiColor"][1]["location"] = "imgui:2652"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddRectFilledMultiColor"][1]["ov_cimguiname"] = "ImDrawList_AddRectFilledMultiColor"
 defs["ImDrawList_AddRectFilledMultiColor"][1]["ret"] = "void"
 defs["ImDrawList_AddRectFilledMultiColor"][1]["signature"] = "(const ImVec2,const ImVec2,ImU32,ImU32,ImU32,ImU32)"
@@ -1753,7 +2025,11 @@ defs["ImDrawList_AddText"][1]["cimguiname"] = "ImDrawList_AddText"
 defs["ImDrawList_AddText"][1]["defaults"] = {}
 defs["ImDrawList_AddText"][1]["defaults"]["text_end"] = "NULL"
 defs["ImDrawList_AddText"][1]["funcname"] = "AddText"
+<<<<<<< HEAD
 defs["ImDrawList_AddText"][1]["location"] = "imgui:2668"
+=======
+defs["ImDrawList_AddText"][1]["location"] = "imgui:2661"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddText"][1]["ov_cimguiname"] = "ImDrawList_AddText_Vec2"
 defs["ImDrawList_AddText"][1]["ret"] = "void"
 defs["ImDrawList_AddText"][1]["signature"] = "(const ImVec2,ImU32,const char*,const char*)"
@@ -1796,7 +2072,11 @@ defs["ImDrawList_AddText"][2]["defaults"]["cpu_fine_clip_rect"] = "NULL"
 defs["ImDrawList_AddText"][2]["defaults"]["text_end"] = "NULL"
 defs["ImDrawList_AddText"][2]["defaults"]["wrap_width"] = "0.0f"
 defs["ImDrawList_AddText"][2]["funcname"] = "AddText"
+<<<<<<< HEAD
 defs["ImDrawList_AddText"][2]["location"] = "imgui:2669"
+=======
+defs["ImDrawList_AddText"][2]["location"] = "imgui:2662"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddText"][2]["ov_cimguiname"] = "ImDrawList_AddText_FontPtr"
 defs["ImDrawList_AddText"][2]["ret"] = "void"
 defs["ImDrawList_AddText"][2]["signature"] = "(const ImFont*,float,const ImVec2,ImU32,const char*,const char*,float,const ImVec4*)"
@@ -1831,7 +2111,11 @@ defs["ImDrawList_AddTriangle"][1]["cimguiname"] = "ImDrawList_AddTriangle"
 defs["ImDrawList_AddTriangle"][1]["defaults"] = {}
 defs["ImDrawList_AddTriangle"][1]["defaults"]["thickness"] = "1.0f"
 defs["ImDrawList_AddTriangle"][1]["funcname"] = "AddTriangle"
+<<<<<<< HEAD
 defs["ImDrawList_AddTriangle"][1]["location"] = "imgui:2662"
+=======
+defs["ImDrawList_AddTriangle"][1]["location"] = "imgui:2655"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddTriangle"][1]["ov_cimguiname"] = "ImDrawList_AddTriangle"
 defs["ImDrawList_AddTriangle"][1]["ret"] = "void"
 defs["ImDrawList_AddTriangle"][1]["signature"] = "(const ImVec2,const ImVec2,const ImVec2,ImU32,float)"
@@ -1861,7 +2145,11 @@ defs["ImDrawList_AddTriangleFilled"][1]["call_args"] = "(p1,p2,p3,col)"
 defs["ImDrawList_AddTriangleFilled"][1]["cimguiname"] = "ImDrawList_AddTriangleFilled"
 defs["ImDrawList_AddTriangleFilled"][1]["defaults"] = {}
 defs["ImDrawList_AddTriangleFilled"][1]["funcname"] = "AddTriangleFilled"
+<<<<<<< HEAD
 defs["ImDrawList_AddTriangleFilled"][1]["location"] = "imgui:2663"
+=======
+defs["ImDrawList_AddTriangleFilled"][1]["location"] = "imgui:2656"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_AddTriangleFilled"][1]["ov_cimguiname"] = "ImDrawList_AddTriangleFilled"
 defs["ImDrawList_AddTriangleFilled"][1]["ret"] = "void"
 defs["ImDrawList_AddTriangleFilled"][1]["signature"] = "(const ImVec2,const ImVec2,const ImVec2,ImU32)"
@@ -1879,7 +2167,11 @@ defs["ImDrawList_ChannelsMerge"][1]["call_args"] = "()"
 defs["ImDrawList_ChannelsMerge"][1]["cimguiname"] = "ImDrawList_ChannelsMerge"
 defs["ImDrawList_ChannelsMerge"][1]["defaults"] = {}
 defs["ImDrawList_ChannelsMerge"][1]["funcname"] = "ChannelsMerge"
+<<<<<<< HEAD
 defs["ImDrawList_ChannelsMerge"][1]["location"] = "imgui:2708"
+=======
+defs["ImDrawList_ChannelsMerge"][1]["location"] = "imgui:2701"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_ChannelsMerge"][1]["ov_cimguiname"] = "ImDrawList_ChannelsMerge"
 defs["ImDrawList_ChannelsMerge"][1]["ret"] = "void"
 defs["ImDrawList_ChannelsMerge"][1]["signature"] = "()"
@@ -1900,7 +2192,11 @@ defs["ImDrawList_ChannelsSetCurrent"][1]["call_args"] = "(n)"
 defs["ImDrawList_ChannelsSetCurrent"][1]["cimguiname"] = "ImDrawList_ChannelsSetCurrent"
 defs["ImDrawList_ChannelsSetCurrent"][1]["defaults"] = {}
 defs["ImDrawList_ChannelsSetCurrent"][1]["funcname"] = "ChannelsSetCurrent"
+<<<<<<< HEAD
 defs["ImDrawList_ChannelsSetCurrent"][1]["location"] = "imgui:2709"
+=======
+defs["ImDrawList_ChannelsSetCurrent"][1]["location"] = "imgui:2702"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_ChannelsSetCurrent"][1]["ov_cimguiname"] = "ImDrawList_ChannelsSetCurrent"
 defs["ImDrawList_ChannelsSetCurrent"][1]["ret"] = "void"
 defs["ImDrawList_ChannelsSetCurrent"][1]["signature"] = "(int)"
@@ -1921,7 +2217,11 @@ defs["ImDrawList_ChannelsSplit"][1]["call_args"] = "(count)"
 defs["ImDrawList_ChannelsSplit"][1]["cimguiname"] = "ImDrawList_ChannelsSplit"
 defs["ImDrawList_ChannelsSplit"][1]["defaults"] = {}
 defs["ImDrawList_ChannelsSplit"][1]["funcname"] = "ChannelsSplit"
+<<<<<<< HEAD
 defs["ImDrawList_ChannelsSplit"][1]["location"] = "imgui:2707"
+=======
+defs["ImDrawList_ChannelsSplit"][1]["location"] = "imgui:2700"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_ChannelsSplit"][1]["ov_cimguiname"] = "ImDrawList_ChannelsSplit"
 defs["ImDrawList_ChannelsSplit"][1]["ret"] = "void"
 defs["ImDrawList_ChannelsSplit"][1]["signature"] = "(int)"
@@ -1939,7 +2239,11 @@ defs["ImDrawList_CloneOutput"][1]["call_args"] = "()"
 defs["ImDrawList_CloneOutput"][1]["cimguiname"] = "ImDrawList_CloneOutput"
 defs["ImDrawList_CloneOutput"][1]["defaults"] = {}
 defs["ImDrawList_CloneOutput"][1]["funcname"] = "CloneOutput"
+<<<<<<< HEAD
 defs["ImDrawList_CloneOutput"][1]["location"] = "imgui:2699"
+=======
+defs["ImDrawList_CloneOutput"][1]["location"] = "imgui:2692"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_CloneOutput"][1]["ov_cimguiname"] = "ImDrawList_CloneOutput"
 defs["ImDrawList_CloneOutput"][1]["ret"] = "ImDrawList*"
 defs["ImDrawList_CloneOutput"][1]["signature"] = "()const"
@@ -1960,7 +2264,11 @@ defs["ImDrawList_GetClipRectMax"][1]["call_args"] = "()"
 defs["ImDrawList_GetClipRectMax"][1]["cimguiname"] = "ImDrawList_GetClipRectMax"
 defs["ImDrawList_GetClipRectMax"][1]["defaults"] = {}
 defs["ImDrawList_GetClipRectMax"][1]["funcname"] = "GetClipRectMax"
+<<<<<<< HEAD
 defs["ImDrawList_GetClipRectMax"][1]["location"] = "imgui:2647"
+=======
+defs["ImDrawList_GetClipRectMax"][1]["location"] = "imgui:2640"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_GetClipRectMax"][1]["nonUDT"] = 1
 defs["ImDrawList_GetClipRectMax"][1]["ov_cimguiname"] = "ImDrawList_GetClipRectMax"
 defs["ImDrawList_GetClipRectMax"][1]["ret"] = "void"
@@ -1982,7 +2290,11 @@ defs["ImDrawList_GetClipRectMin"][1]["call_args"] = "()"
 defs["ImDrawList_GetClipRectMin"][1]["cimguiname"] = "ImDrawList_GetClipRectMin"
 defs["ImDrawList_GetClipRectMin"][1]["defaults"] = {}
 defs["ImDrawList_GetClipRectMin"][1]["funcname"] = "GetClipRectMin"
+<<<<<<< HEAD
 defs["ImDrawList_GetClipRectMin"][1]["location"] = "imgui:2646"
+=======
+defs["ImDrawList_GetClipRectMin"][1]["location"] = "imgui:2639"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_GetClipRectMin"][1]["nonUDT"] = 1
 defs["ImDrawList_GetClipRectMin"][1]["ov_cimguiname"] = "ImDrawList_GetClipRectMin"
 defs["ImDrawList_GetClipRectMin"][1]["ret"] = "void"
@@ -2002,7 +2314,11 @@ defs["ImDrawList_ImDrawList"][1]["cimguiname"] = "ImDrawList_ImDrawList"
 defs["ImDrawList_ImDrawList"][1]["constructor"] = true
 defs["ImDrawList_ImDrawList"][1]["defaults"] = {}
 defs["ImDrawList_ImDrawList"][1]["funcname"] = "ImDrawList"
+<<<<<<< HEAD
 defs["ImDrawList_ImDrawList"][1]["location"] = "imgui:2638"
+=======
+defs["ImDrawList_ImDrawList"][1]["location"] = "imgui:2631"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_ImDrawList"][1]["ov_cimguiname"] = "ImDrawList_ImDrawList"
 defs["ImDrawList_ImDrawList"][1]["signature"] = "(ImDrawListSharedData*)"
 defs["ImDrawList_ImDrawList"][1]["stname"] = "ImDrawList"
@@ -2035,7 +2351,11 @@ defs["ImDrawList_PathArcTo"][1]["cimguiname"] = "ImDrawList_PathArcTo"
 defs["ImDrawList_PathArcTo"][1]["defaults"] = {}
 defs["ImDrawList_PathArcTo"][1]["defaults"]["num_segments"] = "0"
 defs["ImDrawList_PathArcTo"][1]["funcname"] = "PathArcTo"
+<<<<<<< HEAD
 defs["ImDrawList_PathArcTo"][1]["location"] = "imgui:2690"
+=======
+defs["ImDrawList_PathArcTo"][1]["location"] = "imgui:2683"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PathArcTo"][1]["ov_cimguiname"] = "ImDrawList_PathArcTo"
 defs["ImDrawList_PathArcTo"][1]["ret"] = "void"
 defs["ImDrawList_PathArcTo"][1]["signature"] = "(const ImVec2,float,float,float,int)"
@@ -2065,7 +2385,11 @@ defs["ImDrawList_PathArcToFast"][1]["call_args"] = "(center,radius,a_min_of_12,a
 defs["ImDrawList_PathArcToFast"][1]["cimguiname"] = "ImDrawList_PathArcToFast"
 defs["ImDrawList_PathArcToFast"][1]["defaults"] = {}
 defs["ImDrawList_PathArcToFast"][1]["funcname"] = "PathArcToFast"
+<<<<<<< HEAD
 defs["ImDrawList_PathArcToFast"][1]["location"] = "imgui:2691"
+=======
+defs["ImDrawList_PathArcToFast"][1]["location"] = "imgui:2684"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PathArcToFast"][1]["ov_cimguiname"] = "ImDrawList_PathArcToFast"
 defs["ImDrawList_PathArcToFast"][1]["ret"] = "void"
 defs["ImDrawList_PathArcToFast"][1]["signature"] = "(const ImVec2,float,int,int)"
@@ -2096,7 +2420,11 @@ defs["ImDrawList_PathBezierCubicCurveTo"][1]["cimguiname"] = "ImDrawList_PathBez
 defs["ImDrawList_PathBezierCubicCurveTo"][1]["defaults"] = {}
 defs["ImDrawList_PathBezierCubicCurveTo"][1]["defaults"]["num_segments"] = "0"
 defs["ImDrawList_PathBezierCubicCurveTo"][1]["funcname"] = "PathBezierCubicCurveTo"
+<<<<<<< HEAD
 defs["ImDrawList_PathBezierCubicCurveTo"][1]["location"] = "imgui:2692"
+=======
+defs["ImDrawList_PathBezierCubicCurveTo"][1]["location"] = "imgui:2685"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PathBezierCubicCurveTo"][1]["ov_cimguiname"] = "ImDrawList_PathBezierCubicCurveTo"
 defs["ImDrawList_PathBezierCubicCurveTo"][1]["ret"] = "void"
 defs["ImDrawList_PathBezierCubicCurveTo"][1]["signature"] = "(const ImVec2,const ImVec2,const ImVec2,int)"
@@ -2124,7 +2452,11 @@ defs["ImDrawList_PathBezierQuadraticCurveTo"][1]["cimguiname"] = "ImDrawList_Pat
 defs["ImDrawList_PathBezierQuadraticCurveTo"][1]["defaults"] = {}
 defs["ImDrawList_PathBezierQuadraticCurveTo"][1]["defaults"]["num_segments"] = "0"
 defs["ImDrawList_PathBezierQuadraticCurveTo"][1]["funcname"] = "PathBezierQuadraticCurveTo"
+<<<<<<< HEAD
 defs["ImDrawList_PathBezierQuadraticCurveTo"][1]["location"] = "imgui:2693"
+=======
+defs["ImDrawList_PathBezierQuadraticCurveTo"][1]["location"] = "imgui:2686"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PathBezierQuadraticCurveTo"][1]["ov_cimguiname"] = "ImDrawList_PathBezierQuadraticCurveTo"
 defs["ImDrawList_PathBezierQuadraticCurveTo"][1]["ret"] = "void"
 defs["ImDrawList_PathBezierQuadraticCurveTo"][1]["signature"] = "(const ImVec2,const ImVec2,int)"
@@ -2142,7 +2474,11 @@ defs["ImDrawList_PathClear"][1]["call_args"] = "()"
 defs["ImDrawList_PathClear"][1]["cimguiname"] = "ImDrawList_PathClear"
 defs["ImDrawList_PathClear"][1]["defaults"] = {}
 defs["ImDrawList_PathClear"][1]["funcname"] = "PathClear"
+<<<<<<< HEAD
 defs["ImDrawList_PathClear"][1]["location"] = "imgui:2685"
+=======
+defs["ImDrawList_PathClear"][1]["location"] = "imgui:2678"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PathClear"][1]["ov_cimguiname"] = "ImDrawList_PathClear"
 defs["ImDrawList_PathClear"][1]["ret"] = "void"
 defs["ImDrawList_PathClear"][1]["signature"] = "()"
@@ -2163,7 +2499,11 @@ defs["ImDrawList_PathFillConvex"][1]["call_args"] = "(col)"
 defs["ImDrawList_PathFillConvex"][1]["cimguiname"] = "ImDrawList_PathFillConvex"
 defs["ImDrawList_PathFillConvex"][1]["defaults"] = {}
 defs["ImDrawList_PathFillConvex"][1]["funcname"] = "PathFillConvex"
+<<<<<<< HEAD
 defs["ImDrawList_PathFillConvex"][1]["location"] = "imgui:2688"
+=======
+defs["ImDrawList_PathFillConvex"][1]["location"] = "imgui:2681"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PathFillConvex"][1]["ov_cimguiname"] = "ImDrawList_PathFillConvex"
 defs["ImDrawList_PathFillConvex"][1]["ret"] = "void"
 defs["ImDrawList_PathFillConvex"][1]["signature"] = "(ImU32)"
@@ -2184,7 +2524,11 @@ defs["ImDrawList_PathLineTo"][1]["call_args"] = "(pos)"
 defs["ImDrawList_PathLineTo"][1]["cimguiname"] = "ImDrawList_PathLineTo"
 defs["ImDrawList_PathLineTo"][1]["defaults"] = {}
 defs["ImDrawList_PathLineTo"][1]["funcname"] = "PathLineTo"
+<<<<<<< HEAD
 defs["ImDrawList_PathLineTo"][1]["location"] = "imgui:2686"
+=======
+defs["ImDrawList_PathLineTo"][1]["location"] = "imgui:2679"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PathLineTo"][1]["ov_cimguiname"] = "ImDrawList_PathLineTo"
 defs["ImDrawList_PathLineTo"][1]["ret"] = "void"
 defs["ImDrawList_PathLineTo"][1]["signature"] = "(const ImVec2)"
@@ -2205,7 +2549,11 @@ defs["ImDrawList_PathLineToMergeDuplicate"][1]["call_args"] = "(pos)"
 defs["ImDrawList_PathLineToMergeDuplicate"][1]["cimguiname"] = "ImDrawList_PathLineToMergeDuplicate"
 defs["ImDrawList_PathLineToMergeDuplicate"][1]["defaults"] = {}
 defs["ImDrawList_PathLineToMergeDuplicate"][1]["funcname"] = "PathLineToMergeDuplicate"
+<<<<<<< HEAD
 defs["ImDrawList_PathLineToMergeDuplicate"][1]["location"] = "imgui:2687"
+=======
+defs["ImDrawList_PathLineToMergeDuplicate"][1]["location"] = "imgui:2680"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PathLineToMergeDuplicate"][1]["ov_cimguiname"] = "ImDrawList_PathLineToMergeDuplicate"
 defs["ImDrawList_PathLineToMergeDuplicate"][1]["ret"] = "void"
 defs["ImDrawList_PathLineToMergeDuplicate"][1]["signature"] = "(const ImVec2)"
@@ -2237,7 +2585,11 @@ defs["ImDrawList_PathRect"][1]["defaults"] = {}
 defs["ImDrawList_PathRect"][1]["defaults"]["flags"] = "0"
 defs["ImDrawList_PathRect"][1]["defaults"]["rounding"] = "0.0f"
 defs["ImDrawList_PathRect"][1]["funcname"] = "PathRect"
+<<<<<<< HEAD
 defs["ImDrawList_PathRect"][1]["location"] = "imgui:2694"
+=======
+defs["ImDrawList_PathRect"][1]["location"] = "imgui:2687"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PathRect"][1]["ov_cimguiname"] = "ImDrawList_PathRect"
 defs["ImDrawList_PathRect"][1]["ret"] = "void"
 defs["ImDrawList_PathRect"][1]["signature"] = "(const ImVec2,const ImVec2,float,ImDrawFlags)"
@@ -2266,7 +2618,11 @@ defs["ImDrawList_PathStroke"][1]["defaults"] = {}
 defs["ImDrawList_PathStroke"][1]["defaults"]["flags"] = "0"
 defs["ImDrawList_PathStroke"][1]["defaults"]["thickness"] = "1.0f"
 defs["ImDrawList_PathStroke"][1]["funcname"] = "PathStroke"
+<<<<<<< HEAD
 defs["ImDrawList_PathStroke"][1]["location"] = "imgui:2689"
+=======
+defs["ImDrawList_PathStroke"][1]["location"] = "imgui:2682"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PathStroke"][1]["ov_cimguiname"] = "ImDrawList_PathStroke"
 defs["ImDrawList_PathStroke"][1]["ret"] = "void"
 defs["ImDrawList_PathStroke"][1]["signature"] = "(ImU32,ImDrawFlags,float)"
@@ -2284,7 +2640,11 @@ defs["ImDrawList_PopClipRect"][1]["call_args"] = "()"
 defs["ImDrawList_PopClipRect"][1]["cimguiname"] = "ImDrawList_PopClipRect"
 defs["ImDrawList_PopClipRect"][1]["defaults"] = {}
 defs["ImDrawList_PopClipRect"][1]["funcname"] = "PopClipRect"
+<<<<<<< HEAD
 defs["ImDrawList_PopClipRect"][1]["location"] = "imgui:2643"
+=======
+defs["ImDrawList_PopClipRect"][1]["location"] = "imgui:2636"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PopClipRect"][1]["ov_cimguiname"] = "ImDrawList_PopClipRect"
 defs["ImDrawList_PopClipRect"][1]["ret"] = "void"
 defs["ImDrawList_PopClipRect"][1]["signature"] = "()"
@@ -2302,7 +2662,11 @@ defs["ImDrawList_PopTextureID"][1]["call_args"] = "()"
 defs["ImDrawList_PopTextureID"][1]["cimguiname"] = "ImDrawList_PopTextureID"
 defs["ImDrawList_PopTextureID"][1]["defaults"] = {}
 defs["ImDrawList_PopTextureID"][1]["funcname"] = "PopTextureID"
+<<<<<<< HEAD
 defs["ImDrawList_PopTextureID"][1]["location"] = "imgui:2645"
+=======
+defs["ImDrawList_PopTextureID"][1]["location"] = "imgui:2638"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PopTextureID"][1]["ov_cimguiname"] = "ImDrawList_PopTextureID"
 defs["ImDrawList_PopTextureID"][1]["ret"] = "void"
 defs["ImDrawList_PopTextureID"][1]["signature"] = "()"
@@ -2347,7 +2711,11 @@ defs["ImDrawList_PrimQuadUV"][1]["call_args"] = "(a,b,c,d,uv_a,uv_b,uv_c,uv_d,co
 defs["ImDrawList_PrimQuadUV"][1]["cimguiname"] = "ImDrawList_PrimQuadUV"
 defs["ImDrawList_PrimQuadUV"][1]["defaults"] = {}
 defs["ImDrawList_PrimQuadUV"][1]["funcname"] = "PrimQuadUV"
+<<<<<<< HEAD
 defs["ImDrawList_PrimQuadUV"][1]["location"] = "imgui:2718"
+=======
+defs["ImDrawList_PrimQuadUV"][1]["location"] = "imgui:2711"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PrimQuadUV"][1]["ov_cimguiname"] = "ImDrawList_PrimQuadUV"
 defs["ImDrawList_PrimQuadUV"][1]["ret"] = "void"
 defs["ImDrawList_PrimQuadUV"][1]["signature"] = "(const ImVec2,const ImVec2,const ImVec2,const ImVec2,const ImVec2,const ImVec2,const ImVec2,const ImVec2,ImU32)"
@@ -2374,7 +2742,11 @@ defs["ImDrawList_PrimRect"][1]["call_args"] = "(a,b,col)"
 defs["ImDrawList_PrimRect"][1]["cimguiname"] = "ImDrawList_PrimRect"
 defs["ImDrawList_PrimRect"][1]["defaults"] = {}
 defs["ImDrawList_PrimRect"][1]["funcname"] = "PrimRect"
+<<<<<<< HEAD
 defs["ImDrawList_PrimRect"][1]["location"] = "imgui:2716"
+=======
+defs["ImDrawList_PrimRect"][1]["location"] = "imgui:2709"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PrimRect"][1]["ov_cimguiname"] = "ImDrawList_PrimRect"
 defs["ImDrawList_PrimRect"][1]["ret"] = "void"
 defs["ImDrawList_PrimRect"][1]["signature"] = "(const ImVec2,const ImVec2,ImU32)"
@@ -2407,7 +2779,11 @@ defs["ImDrawList_PrimRectUV"][1]["call_args"] = "(a,b,uv_a,uv_b,col)"
 defs["ImDrawList_PrimRectUV"][1]["cimguiname"] = "ImDrawList_PrimRectUV"
 defs["ImDrawList_PrimRectUV"][1]["defaults"] = {}
 defs["ImDrawList_PrimRectUV"][1]["funcname"] = "PrimRectUV"
+<<<<<<< HEAD
 defs["ImDrawList_PrimRectUV"][1]["location"] = "imgui:2717"
+=======
+defs["ImDrawList_PrimRectUV"][1]["location"] = "imgui:2710"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PrimRectUV"][1]["ov_cimguiname"] = "ImDrawList_PrimRectUV"
 defs["ImDrawList_PrimRectUV"][1]["ret"] = "void"
 defs["ImDrawList_PrimRectUV"][1]["signature"] = "(const ImVec2,const ImVec2,const ImVec2,const ImVec2,ImU32)"
@@ -2431,7 +2807,11 @@ defs["ImDrawList_PrimReserve"][1]["call_args"] = "(idx_count,vtx_count)"
 defs["ImDrawList_PrimReserve"][1]["cimguiname"] = "ImDrawList_PrimReserve"
 defs["ImDrawList_PrimReserve"][1]["defaults"] = {}
 defs["ImDrawList_PrimReserve"][1]["funcname"] = "PrimReserve"
+<<<<<<< HEAD
 defs["ImDrawList_PrimReserve"][1]["location"] = "imgui:2714"
+=======
+defs["ImDrawList_PrimReserve"][1]["location"] = "imgui:2707"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PrimReserve"][1]["ov_cimguiname"] = "ImDrawList_PrimReserve"
 defs["ImDrawList_PrimReserve"][1]["ret"] = "void"
 defs["ImDrawList_PrimReserve"][1]["signature"] = "(int,int)"
@@ -2455,7 +2835,11 @@ defs["ImDrawList_PrimUnreserve"][1]["call_args"] = "(idx_count,vtx_count)"
 defs["ImDrawList_PrimUnreserve"][1]["cimguiname"] = "ImDrawList_PrimUnreserve"
 defs["ImDrawList_PrimUnreserve"][1]["defaults"] = {}
 defs["ImDrawList_PrimUnreserve"][1]["funcname"] = "PrimUnreserve"
+<<<<<<< HEAD
 defs["ImDrawList_PrimUnreserve"][1]["location"] = "imgui:2715"
+=======
+defs["ImDrawList_PrimUnreserve"][1]["location"] = "imgui:2708"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PrimUnreserve"][1]["ov_cimguiname"] = "ImDrawList_PrimUnreserve"
 defs["ImDrawList_PrimUnreserve"][1]["ret"] = "void"
 defs["ImDrawList_PrimUnreserve"][1]["signature"] = "(int,int)"
@@ -2482,7 +2866,11 @@ defs["ImDrawList_PrimVtx"][1]["call_args"] = "(pos,uv,col)"
 defs["ImDrawList_PrimVtx"][1]["cimguiname"] = "ImDrawList_PrimVtx"
 defs["ImDrawList_PrimVtx"][1]["defaults"] = {}
 defs["ImDrawList_PrimVtx"][1]["funcname"] = "PrimVtx"
+<<<<<<< HEAD
 defs["ImDrawList_PrimVtx"][1]["location"] = "imgui:2721"
+=======
+defs["ImDrawList_PrimVtx"][1]["location"] = "imgui:2714"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PrimVtx"][1]["ov_cimguiname"] = "ImDrawList_PrimVtx"
 defs["ImDrawList_PrimVtx"][1]["ret"] = "void"
 defs["ImDrawList_PrimVtx"][1]["signature"] = "(const ImVec2,const ImVec2,ImU32)"
@@ -2503,7 +2891,11 @@ defs["ImDrawList_PrimWriteIdx"][1]["call_args"] = "(idx)"
 defs["ImDrawList_PrimWriteIdx"][1]["cimguiname"] = "ImDrawList_PrimWriteIdx"
 defs["ImDrawList_PrimWriteIdx"][1]["defaults"] = {}
 defs["ImDrawList_PrimWriteIdx"][1]["funcname"] = "PrimWriteIdx"
+<<<<<<< HEAD
 defs["ImDrawList_PrimWriteIdx"][1]["location"] = "imgui:2720"
+=======
+defs["ImDrawList_PrimWriteIdx"][1]["location"] = "imgui:2713"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PrimWriteIdx"][1]["ov_cimguiname"] = "ImDrawList_PrimWriteIdx"
 defs["ImDrawList_PrimWriteIdx"][1]["ret"] = "void"
 defs["ImDrawList_PrimWriteIdx"][1]["signature"] = "(ImDrawIdx)"
@@ -2530,7 +2922,11 @@ defs["ImDrawList_PrimWriteVtx"][1]["call_args"] = "(pos,uv,col)"
 defs["ImDrawList_PrimWriteVtx"][1]["cimguiname"] = "ImDrawList_PrimWriteVtx"
 defs["ImDrawList_PrimWriteVtx"][1]["defaults"] = {}
 defs["ImDrawList_PrimWriteVtx"][1]["funcname"] = "PrimWriteVtx"
+<<<<<<< HEAD
 defs["ImDrawList_PrimWriteVtx"][1]["location"] = "imgui:2719"
+=======
+defs["ImDrawList_PrimWriteVtx"][1]["location"] = "imgui:2712"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PrimWriteVtx"][1]["ov_cimguiname"] = "ImDrawList_PrimWriteVtx"
 defs["ImDrawList_PrimWriteVtx"][1]["ret"] = "void"
 defs["ImDrawList_PrimWriteVtx"][1]["signature"] = "(const ImVec2,const ImVec2,ImU32)"
@@ -2558,7 +2954,11 @@ defs["ImDrawList_PushClipRect"][1]["cimguiname"] = "ImDrawList_PushClipRect"
 defs["ImDrawList_PushClipRect"][1]["defaults"] = {}
 defs["ImDrawList_PushClipRect"][1]["defaults"]["intersect_with_current_clip_rect"] = "false"
 defs["ImDrawList_PushClipRect"][1]["funcname"] = "PushClipRect"
+<<<<<<< HEAD
 defs["ImDrawList_PushClipRect"][1]["location"] = "imgui:2641"
+=======
+defs["ImDrawList_PushClipRect"][1]["location"] = "imgui:2634"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PushClipRect"][1]["ov_cimguiname"] = "ImDrawList_PushClipRect"
 defs["ImDrawList_PushClipRect"][1]["ret"] = "void"
 defs["ImDrawList_PushClipRect"][1]["signature"] = "(const ImVec2,const ImVec2,bool)"
@@ -2576,7 +2976,11 @@ defs["ImDrawList_PushClipRectFullScreen"][1]["call_args"] = "()"
 defs["ImDrawList_PushClipRectFullScreen"][1]["cimguiname"] = "ImDrawList_PushClipRectFullScreen"
 defs["ImDrawList_PushClipRectFullScreen"][1]["defaults"] = {}
 defs["ImDrawList_PushClipRectFullScreen"][1]["funcname"] = "PushClipRectFullScreen"
+<<<<<<< HEAD
 defs["ImDrawList_PushClipRectFullScreen"][1]["location"] = "imgui:2642"
+=======
+defs["ImDrawList_PushClipRectFullScreen"][1]["location"] = "imgui:2635"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PushClipRectFullScreen"][1]["ov_cimguiname"] = "ImDrawList_PushClipRectFullScreen"
 defs["ImDrawList_PushClipRectFullScreen"][1]["ret"] = "void"
 defs["ImDrawList_PushClipRectFullScreen"][1]["signature"] = "()"
@@ -2597,7 +3001,11 @@ defs["ImDrawList_PushTextureID"][1]["call_args"] = "(texture_id)"
 defs["ImDrawList_PushTextureID"][1]["cimguiname"] = "ImDrawList_PushTextureID"
 defs["ImDrawList_PushTextureID"][1]["defaults"] = {}
 defs["ImDrawList_PushTextureID"][1]["funcname"] = "PushTextureID"
+<<<<<<< HEAD
 defs["ImDrawList_PushTextureID"][1]["location"] = "imgui:2644"
+=======
+defs["ImDrawList_PushTextureID"][1]["location"] = "imgui:2637"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_PushTextureID"][1]["ov_cimguiname"] = "ImDrawList_PushTextureID"
 defs["ImDrawList_PushTextureID"][1]["ret"] = "void"
 defs["ImDrawList_PushTextureID"][1]["signature"] = "(ImTextureID)"
@@ -2618,7 +3026,11 @@ defs["ImDrawList__CalcCircleAutoSegmentCount"][1]["call_args"] = "(radius)"
 defs["ImDrawList__CalcCircleAutoSegmentCount"][1]["cimguiname"] = "ImDrawList__CalcCircleAutoSegmentCount"
 defs["ImDrawList__CalcCircleAutoSegmentCount"][1]["defaults"] = {}
 defs["ImDrawList__CalcCircleAutoSegmentCount"][1]["funcname"] = "_CalcCircleAutoSegmentCount"
+<<<<<<< HEAD
 defs["ImDrawList__CalcCircleAutoSegmentCount"][1]["location"] = "imgui:2736"
+=======
+defs["ImDrawList__CalcCircleAutoSegmentCount"][1]["location"] = "imgui:2729"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList__CalcCircleAutoSegmentCount"][1]["ov_cimguiname"] = "ImDrawList__CalcCircleAutoSegmentCount"
 defs["ImDrawList__CalcCircleAutoSegmentCount"][1]["ret"] = "int"
 defs["ImDrawList__CalcCircleAutoSegmentCount"][1]["signature"] = "(float)const"
@@ -2636,7 +3048,11 @@ defs["ImDrawList__ClearFreeMemory"][1]["call_args"] = "()"
 defs["ImDrawList__ClearFreeMemory"][1]["cimguiname"] = "ImDrawList__ClearFreeMemory"
 defs["ImDrawList__ClearFreeMemory"][1]["defaults"] = {}
 defs["ImDrawList__ClearFreeMemory"][1]["funcname"] = "_ClearFreeMemory"
+<<<<<<< HEAD
 defs["ImDrawList__ClearFreeMemory"][1]["location"] = "imgui:2730"
+=======
+defs["ImDrawList__ClearFreeMemory"][1]["location"] = "imgui:2723"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList__ClearFreeMemory"][1]["ov_cimguiname"] = "ImDrawList__ClearFreeMemory"
 defs["ImDrawList__ClearFreeMemory"][1]["ret"] = "void"
 defs["ImDrawList__ClearFreeMemory"][1]["signature"] = "()"
@@ -2654,7 +3070,11 @@ defs["ImDrawList__OnChangedClipRect"][1]["call_args"] = "()"
 defs["ImDrawList__OnChangedClipRect"][1]["cimguiname"] = "ImDrawList__OnChangedClipRect"
 defs["ImDrawList__OnChangedClipRect"][1]["defaults"] = {}
 defs["ImDrawList__OnChangedClipRect"][1]["funcname"] = "_OnChangedClipRect"
+<<<<<<< HEAD
 defs["ImDrawList__OnChangedClipRect"][1]["location"] = "imgui:2733"
+=======
+defs["ImDrawList__OnChangedClipRect"][1]["location"] = "imgui:2726"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList__OnChangedClipRect"][1]["ov_cimguiname"] = "ImDrawList__OnChangedClipRect"
 defs["ImDrawList__OnChangedClipRect"][1]["ret"] = "void"
 defs["ImDrawList__OnChangedClipRect"][1]["signature"] = "()"
@@ -2672,7 +3092,11 @@ defs["ImDrawList__OnChangedTextureID"][1]["call_args"] = "()"
 defs["ImDrawList__OnChangedTextureID"][1]["cimguiname"] = "ImDrawList__OnChangedTextureID"
 defs["ImDrawList__OnChangedTextureID"][1]["defaults"] = {}
 defs["ImDrawList__OnChangedTextureID"][1]["funcname"] = "_OnChangedTextureID"
+<<<<<<< HEAD
 defs["ImDrawList__OnChangedTextureID"][1]["location"] = "imgui:2734"
+=======
+defs["ImDrawList__OnChangedTextureID"][1]["location"] = "imgui:2727"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList__OnChangedTextureID"][1]["ov_cimguiname"] = "ImDrawList__OnChangedTextureID"
 defs["ImDrawList__OnChangedTextureID"][1]["ret"] = "void"
 defs["ImDrawList__OnChangedTextureID"][1]["signature"] = "()"
@@ -2690,7 +3114,11 @@ defs["ImDrawList__OnChangedVtxOffset"][1]["call_args"] = "()"
 defs["ImDrawList__OnChangedVtxOffset"][1]["cimguiname"] = "ImDrawList__OnChangedVtxOffset"
 defs["ImDrawList__OnChangedVtxOffset"][1]["defaults"] = {}
 defs["ImDrawList__OnChangedVtxOffset"][1]["funcname"] = "_OnChangedVtxOffset"
+<<<<<<< HEAD
 defs["ImDrawList__OnChangedVtxOffset"][1]["location"] = "imgui:2735"
+=======
+defs["ImDrawList__OnChangedVtxOffset"][1]["location"] = "imgui:2728"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList__OnChangedVtxOffset"][1]["ov_cimguiname"] = "ImDrawList__OnChangedVtxOffset"
 defs["ImDrawList__OnChangedVtxOffset"][1]["ret"] = "void"
 defs["ImDrawList__OnChangedVtxOffset"][1]["signature"] = "()"
@@ -2723,7 +3151,11 @@ defs["ImDrawList__PathArcToFastEx"][1]["call_args"] = "(center,radius,a_min_samp
 defs["ImDrawList__PathArcToFastEx"][1]["cimguiname"] = "ImDrawList__PathArcToFastEx"
 defs["ImDrawList__PathArcToFastEx"][1]["defaults"] = {}
 defs["ImDrawList__PathArcToFastEx"][1]["funcname"] = "_PathArcToFastEx"
+<<<<<<< HEAD
 defs["ImDrawList__PathArcToFastEx"][1]["location"] = "imgui:2737"
+=======
+defs["ImDrawList__PathArcToFastEx"][1]["location"] = "imgui:2730"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList__PathArcToFastEx"][1]["ov_cimguiname"] = "ImDrawList__PathArcToFastEx"
 defs["ImDrawList__PathArcToFastEx"][1]["ret"] = "void"
 defs["ImDrawList__PathArcToFastEx"][1]["signature"] = "(const ImVec2,float,int,int,int)"
@@ -2756,7 +3188,11 @@ defs["ImDrawList__PathArcToN"][1]["call_args"] = "(center,radius,a_min,a_max,num
 defs["ImDrawList__PathArcToN"][1]["cimguiname"] = "ImDrawList__PathArcToN"
 defs["ImDrawList__PathArcToN"][1]["defaults"] = {}
 defs["ImDrawList__PathArcToN"][1]["funcname"] = "_PathArcToN"
+<<<<<<< HEAD
 defs["ImDrawList__PathArcToN"][1]["location"] = "imgui:2738"
+=======
+defs["ImDrawList__PathArcToN"][1]["location"] = "imgui:2731"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList__PathArcToN"][1]["ov_cimguiname"] = "ImDrawList__PathArcToN"
 defs["ImDrawList__PathArcToN"][1]["ret"] = "void"
 defs["ImDrawList__PathArcToN"][1]["signature"] = "(const ImVec2,float,float,float,int)"
@@ -2774,7 +3210,11 @@ defs["ImDrawList__PopUnusedDrawCmd"][1]["call_args"] = "()"
 defs["ImDrawList__PopUnusedDrawCmd"][1]["cimguiname"] = "ImDrawList__PopUnusedDrawCmd"
 defs["ImDrawList__PopUnusedDrawCmd"][1]["defaults"] = {}
 defs["ImDrawList__PopUnusedDrawCmd"][1]["funcname"] = "_PopUnusedDrawCmd"
+<<<<<<< HEAD
 defs["ImDrawList__PopUnusedDrawCmd"][1]["location"] = "imgui:2731"
+=======
+defs["ImDrawList__PopUnusedDrawCmd"][1]["location"] = "imgui:2724"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList__PopUnusedDrawCmd"][1]["ov_cimguiname"] = "ImDrawList__PopUnusedDrawCmd"
 defs["ImDrawList__PopUnusedDrawCmd"][1]["ret"] = "void"
 defs["ImDrawList__PopUnusedDrawCmd"][1]["signature"] = "()"
@@ -2792,7 +3232,11 @@ defs["ImDrawList__ResetForNewFrame"][1]["call_args"] = "()"
 defs["ImDrawList__ResetForNewFrame"][1]["cimguiname"] = "ImDrawList__ResetForNewFrame"
 defs["ImDrawList__ResetForNewFrame"][1]["defaults"] = {}
 defs["ImDrawList__ResetForNewFrame"][1]["funcname"] = "_ResetForNewFrame"
+<<<<<<< HEAD
 defs["ImDrawList__ResetForNewFrame"][1]["location"] = "imgui:2729"
+=======
+defs["ImDrawList__ResetForNewFrame"][1]["location"] = "imgui:2722"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList__ResetForNewFrame"][1]["ov_cimguiname"] = "ImDrawList__ResetForNewFrame"
 defs["ImDrawList__ResetForNewFrame"][1]["ret"] = "void"
 defs["ImDrawList__ResetForNewFrame"][1]["signature"] = "()"
@@ -2810,7 +3254,11 @@ defs["ImDrawList__TryMergeDrawCmds"][1]["call_args"] = "()"
 defs["ImDrawList__TryMergeDrawCmds"][1]["cimguiname"] = "ImDrawList__TryMergeDrawCmds"
 defs["ImDrawList__TryMergeDrawCmds"][1]["defaults"] = {}
 defs["ImDrawList__TryMergeDrawCmds"][1]["funcname"] = "_TryMergeDrawCmds"
+<<<<<<< HEAD
 defs["ImDrawList__TryMergeDrawCmds"][1]["location"] = "imgui:2732"
+=======
+defs["ImDrawList__TryMergeDrawCmds"][1]["location"] = "imgui:2725"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList__TryMergeDrawCmds"][1]["ov_cimguiname"] = "ImDrawList__TryMergeDrawCmds"
 defs["ImDrawList__TryMergeDrawCmds"][1]["ret"] = "void"
 defs["ImDrawList__TryMergeDrawCmds"][1]["signature"] = "()"
@@ -2827,7 +3275,11 @@ defs["ImDrawList_destroy"][1]["call_args"] = "(self)"
 defs["ImDrawList_destroy"][1]["cimguiname"] = "ImDrawList_destroy"
 defs["ImDrawList_destroy"][1]["defaults"] = {}
 defs["ImDrawList_destroy"][1]["destructor"] = true
+<<<<<<< HEAD
 defs["ImDrawList_destroy"][1]["location"] = "imgui:2640"
+=======
+defs["ImDrawList_destroy"][1]["location"] = "imgui:2633"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImDrawList_destroy"][1]["ov_cimguiname"] = "ImDrawList_destroy"
 defs["ImDrawList_destroy"][1]["realdestructor"] = true
 defs["ImDrawList_destroy"][1]["ret"] = "void"
@@ -2844,7 +3296,11 @@ defs["ImFontAtlasCustomRect_ImFontAtlasCustomRect"][1]["cimguiname"] = "ImFontAt
 defs["ImFontAtlasCustomRect_ImFontAtlasCustomRect"][1]["constructor"] = true
 defs["ImFontAtlasCustomRect_ImFontAtlasCustomRect"][1]["defaults"] = {}
 defs["ImFontAtlasCustomRect_ImFontAtlasCustomRect"][1]["funcname"] = "ImFontAtlasCustomRect"
+<<<<<<< HEAD
 defs["ImFontAtlasCustomRect_ImFontAtlasCustomRect"][1]["location"] = "imgui:2831"
+=======
+defs["ImFontAtlasCustomRect_ImFontAtlasCustomRect"][1]["location"] = "imgui:2824"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlasCustomRect_ImFontAtlasCustomRect"][1]["ov_cimguiname"] = "ImFontAtlasCustomRect_ImFontAtlasCustomRect"
 defs["ImFontAtlasCustomRect_ImFontAtlasCustomRect"][1]["signature"] = "()"
 defs["ImFontAtlasCustomRect_ImFontAtlasCustomRect"][1]["stname"] = "ImFontAtlasCustomRect"
@@ -2861,7 +3317,11 @@ defs["ImFontAtlasCustomRect_IsPacked"][1]["call_args"] = "()"
 defs["ImFontAtlasCustomRect_IsPacked"][1]["cimguiname"] = "ImFontAtlasCustomRect_IsPacked"
 defs["ImFontAtlasCustomRect_IsPacked"][1]["defaults"] = {}
 defs["ImFontAtlasCustomRect_IsPacked"][1]["funcname"] = "IsPacked"
+<<<<<<< HEAD
 defs["ImFontAtlasCustomRect_IsPacked"][1]["location"] = "imgui:2832"
+=======
+defs["ImFontAtlasCustomRect_IsPacked"][1]["location"] = "imgui:2825"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlasCustomRect_IsPacked"][1]["ov_cimguiname"] = "ImFontAtlasCustomRect_IsPacked"
 defs["ImFontAtlasCustomRect_IsPacked"][1]["ret"] = "bool"
 defs["ImFontAtlasCustomRect_IsPacked"][1]["signature"] = "()const"
@@ -2914,7 +3374,11 @@ defs["ImFontAtlas_AddCustomRectFontGlyph"][1]["cimguiname"] = "ImFontAtlas_AddCu
 defs["ImFontAtlas_AddCustomRectFontGlyph"][1]["defaults"] = {}
 defs["ImFontAtlas_AddCustomRectFontGlyph"][1]["defaults"]["offset"] = "ImVec2(0,0)"
 defs["ImFontAtlas_AddCustomRectFontGlyph"][1]["funcname"] = "AddCustomRectFontGlyph"
+<<<<<<< HEAD
 defs["ImFontAtlas_AddCustomRectFontGlyph"][1]["location"] = "imgui:2916"
+=======
+defs["ImFontAtlas_AddCustomRectFontGlyph"][1]["location"] = "imgui:2909"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_AddCustomRectFontGlyph"][1]["ov_cimguiname"] = "ImFontAtlas_AddCustomRectFontGlyph"
 defs["ImFontAtlas_AddCustomRectFontGlyph"][1]["ret"] = "int"
 defs["ImFontAtlas_AddCustomRectFontGlyph"][1]["signature"] = "(ImFont*,ImWchar,int,int,float,const ImVec2)"
@@ -2938,7 +3402,11 @@ defs["ImFontAtlas_AddCustomRectRegular"][1]["call_args"] = "(width,height)"
 defs["ImFontAtlas_AddCustomRectRegular"][1]["cimguiname"] = "ImFontAtlas_AddCustomRectRegular"
 defs["ImFontAtlas_AddCustomRectRegular"][1]["defaults"] = {}
 defs["ImFontAtlas_AddCustomRectRegular"][1]["funcname"] = "AddCustomRectRegular"
+<<<<<<< HEAD
 defs["ImFontAtlas_AddCustomRectRegular"][1]["location"] = "imgui:2915"
+=======
+defs["ImFontAtlas_AddCustomRectRegular"][1]["location"] = "imgui:2908"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_AddCustomRectRegular"][1]["ov_cimguiname"] = "ImFontAtlas_AddCustomRectRegular"
 defs["ImFontAtlas_AddCustomRectRegular"][1]["ret"] = "int"
 defs["ImFontAtlas_AddCustomRectRegular"][1]["signature"] = "(int,int)"
@@ -2959,7 +3427,11 @@ defs["ImFontAtlas_AddFont"][1]["call_args"] = "(font_cfg)"
 defs["ImFontAtlas_AddFont"][1]["cimguiname"] = "ImFontAtlas_AddFont"
 defs["ImFontAtlas_AddFont"][1]["defaults"] = {}
 defs["ImFontAtlas_AddFont"][1]["funcname"] = "AddFont"
+<<<<<<< HEAD
 defs["ImFontAtlas_AddFont"][1]["location"] = "imgui:2865"
+=======
+defs["ImFontAtlas_AddFont"][1]["location"] = "imgui:2858"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_AddFont"][1]["ov_cimguiname"] = "ImFontAtlas_AddFont"
 defs["ImFontAtlas_AddFont"][1]["ret"] = "ImFont*"
 defs["ImFontAtlas_AddFont"][1]["signature"] = "(const ImFontConfig*)"
@@ -2981,7 +3453,11 @@ defs["ImFontAtlas_AddFontDefault"][1]["cimguiname"] = "ImFontAtlas_AddFontDefaul
 defs["ImFontAtlas_AddFontDefault"][1]["defaults"] = {}
 defs["ImFontAtlas_AddFontDefault"][1]["defaults"]["font_cfg"] = "NULL"
 defs["ImFontAtlas_AddFontDefault"][1]["funcname"] = "AddFontDefault"
+<<<<<<< HEAD
 defs["ImFontAtlas_AddFontDefault"][1]["location"] = "imgui:2866"
+=======
+defs["ImFontAtlas_AddFontDefault"][1]["location"] = "imgui:2859"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_AddFontDefault"][1]["ov_cimguiname"] = "ImFontAtlas_AddFontDefault"
 defs["ImFontAtlas_AddFontDefault"][1]["ret"] = "ImFont*"
 defs["ImFontAtlas_AddFontDefault"][1]["signature"] = "(const ImFontConfig*)"
@@ -3013,7 +3489,11 @@ defs["ImFontAtlas_AddFontFromFileTTF"][1]["defaults"] = {}
 defs["ImFontAtlas_AddFontFromFileTTF"][1]["defaults"]["font_cfg"] = "NULL"
 defs["ImFontAtlas_AddFontFromFileTTF"][1]["defaults"]["glyph_ranges"] = "NULL"
 defs["ImFontAtlas_AddFontFromFileTTF"][1]["funcname"] = "AddFontFromFileTTF"
+<<<<<<< HEAD
 defs["ImFontAtlas_AddFontFromFileTTF"][1]["location"] = "imgui:2867"
+=======
+defs["ImFontAtlas_AddFontFromFileTTF"][1]["location"] = "imgui:2860"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_AddFontFromFileTTF"][1]["ov_cimguiname"] = "ImFontAtlas_AddFontFromFileTTF"
 defs["ImFontAtlas_AddFontFromFileTTF"][1]["ret"] = "ImFont*"
 defs["ImFontAtlas_AddFontFromFileTTF"][1]["signature"] = "(const char*,float,const ImFontConfig*,const ImWchar*)"
@@ -3045,7 +3525,11 @@ defs["ImFontAtlas_AddFontFromMemoryCompressedBase85TTF"][1]["defaults"] = {}
 defs["ImFontAtlas_AddFontFromMemoryCompressedBase85TTF"][1]["defaults"]["font_cfg"] = "NULL"
 defs["ImFontAtlas_AddFontFromMemoryCompressedBase85TTF"][1]["defaults"]["glyph_ranges"] = "NULL"
 defs["ImFontAtlas_AddFontFromMemoryCompressedBase85TTF"][1]["funcname"] = "AddFontFromMemoryCompressedBase85TTF"
+<<<<<<< HEAD
 defs["ImFontAtlas_AddFontFromMemoryCompressedBase85TTF"][1]["location"] = "imgui:2870"
+=======
+defs["ImFontAtlas_AddFontFromMemoryCompressedBase85TTF"][1]["location"] = "imgui:2863"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_AddFontFromMemoryCompressedBase85TTF"][1]["ov_cimguiname"] = "ImFontAtlas_AddFontFromMemoryCompressedBase85TTF"
 defs["ImFontAtlas_AddFontFromMemoryCompressedBase85TTF"][1]["ret"] = "ImFont*"
 defs["ImFontAtlas_AddFontFromMemoryCompressedBase85TTF"][1]["signature"] = "(const char*,float,const ImFontConfig*,const ImWchar*)"
@@ -3080,7 +3564,11 @@ defs["ImFontAtlas_AddFontFromMemoryCompressedTTF"][1]["defaults"] = {}
 defs["ImFontAtlas_AddFontFromMemoryCompressedTTF"][1]["defaults"]["font_cfg"] = "NULL"
 defs["ImFontAtlas_AddFontFromMemoryCompressedTTF"][1]["defaults"]["glyph_ranges"] = "NULL"
 defs["ImFontAtlas_AddFontFromMemoryCompressedTTF"][1]["funcname"] = "AddFontFromMemoryCompressedTTF"
+<<<<<<< HEAD
 defs["ImFontAtlas_AddFontFromMemoryCompressedTTF"][1]["location"] = "imgui:2869"
+=======
+defs["ImFontAtlas_AddFontFromMemoryCompressedTTF"][1]["location"] = "imgui:2862"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_AddFontFromMemoryCompressedTTF"][1]["ov_cimguiname"] = "ImFontAtlas_AddFontFromMemoryCompressedTTF"
 defs["ImFontAtlas_AddFontFromMemoryCompressedTTF"][1]["ret"] = "ImFont*"
 defs["ImFontAtlas_AddFontFromMemoryCompressedTTF"][1]["signature"] = "(const void*,int,float,const ImFontConfig*,const ImWchar*)"
@@ -3115,7 +3603,11 @@ defs["ImFontAtlas_AddFontFromMemoryTTF"][1]["defaults"] = {}
 defs["ImFontAtlas_AddFontFromMemoryTTF"][1]["defaults"]["font_cfg"] = "NULL"
 defs["ImFontAtlas_AddFontFromMemoryTTF"][1]["defaults"]["glyph_ranges"] = "NULL"
 defs["ImFontAtlas_AddFontFromMemoryTTF"][1]["funcname"] = "AddFontFromMemoryTTF"
+<<<<<<< HEAD
 defs["ImFontAtlas_AddFontFromMemoryTTF"][1]["location"] = "imgui:2868"
+=======
+defs["ImFontAtlas_AddFontFromMemoryTTF"][1]["location"] = "imgui:2861"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_AddFontFromMemoryTTF"][1]["ov_cimguiname"] = "ImFontAtlas_AddFontFromMemoryTTF"
 defs["ImFontAtlas_AddFontFromMemoryTTF"][1]["ret"] = "ImFont*"
 defs["ImFontAtlas_AddFontFromMemoryTTF"][1]["signature"] = "(void*,int,float,const ImFontConfig*,const ImWchar*)"
@@ -3133,7 +3625,11 @@ defs["ImFontAtlas_Build"][1]["call_args"] = "()"
 defs["ImFontAtlas_Build"][1]["cimguiname"] = "ImFontAtlas_Build"
 defs["ImFontAtlas_Build"][1]["defaults"] = {}
 defs["ImFontAtlas_Build"][1]["funcname"] = "Build"
+<<<<<<< HEAD
 defs["ImFontAtlas_Build"][1]["location"] = "imgui:2881"
+=======
+defs["ImFontAtlas_Build"][1]["location"] = "imgui:2874"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_Build"][1]["ov_cimguiname"] = "ImFontAtlas_Build"
 defs["ImFontAtlas_Build"][1]["ret"] = "bool"
 defs["ImFontAtlas_Build"][1]["signature"] = "()"
@@ -3160,7 +3656,11 @@ defs["ImFontAtlas_CalcCustomRectUV"][1]["call_args"] = "(rect,out_uv_min,out_uv_
 defs["ImFontAtlas_CalcCustomRectUV"][1]["cimguiname"] = "ImFontAtlas_CalcCustomRectUV"
 defs["ImFontAtlas_CalcCustomRectUV"][1]["defaults"] = {}
 defs["ImFontAtlas_CalcCustomRectUV"][1]["funcname"] = "CalcCustomRectUV"
+<<<<<<< HEAD
 defs["ImFontAtlas_CalcCustomRectUV"][1]["location"] = "imgui:2920"
+=======
+defs["ImFontAtlas_CalcCustomRectUV"][1]["location"] = "imgui:2913"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_CalcCustomRectUV"][1]["ov_cimguiname"] = "ImFontAtlas_CalcCustomRectUV"
 defs["ImFontAtlas_CalcCustomRectUV"][1]["ret"] = "void"
 defs["ImFontAtlas_CalcCustomRectUV"][1]["signature"] = "(const ImFontAtlasCustomRect*,ImVec2*,ImVec2*)const"
@@ -3178,7 +3678,11 @@ defs["ImFontAtlas_Clear"][1]["call_args"] = "()"
 defs["ImFontAtlas_Clear"][1]["cimguiname"] = "ImFontAtlas_Clear"
 defs["ImFontAtlas_Clear"][1]["defaults"] = {}
 defs["ImFontAtlas_Clear"][1]["funcname"] = "Clear"
+<<<<<<< HEAD
 defs["ImFontAtlas_Clear"][1]["location"] = "imgui:2874"
+=======
+defs["ImFontAtlas_Clear"][1]["location"] = "imgui:2867"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_Clear"][1]["ov_cimguiname"] = "ImFontAtlas_Clear"
 defs["ImFontAtlas_Clear"][1]["ret"] = "void"
 defs["ImFontAtlas_Clear"][1]["signature"] = "()"
@@ -3196,7 +3700,11 @@ defs["ImFontAtlas_ClearFonts"][1]["call_args"] = "()"
 defs["ImFontAtlas_ClearFonts"][1]["cimguiname"] = "ImFontAtlas_ClearFonts"
 defs["ImFontAtlas_ClearFonts"][1]["defaults"] = {}
 defs["ImFontAtlas_ClearFonts"][1]["funcname"] = "ClearFonts"
+<<<<<<< HEAD
 defs["ImFontAtlas_ClearFonts"][1]["location"] = "imgui:2873"
+=======
+defs["ImFontAtlas_ClearFonts"][1]["location"] = "imgui:2866"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_ClearFonts"][1]["ov_cimguiname"] = "ImFontAtlas_ClearFonts"
 defs["ImFontAtlas_ClearFonts"][1]["ret"] = "void"
 defs["ImFontAtlas_ClearFonts"][1]["signature"] = "()"
@@ -3214,7 +3722,11 @@ defs["ImFontAtlas_ClearInputData"][1]["call_args"] = "()"
 defs["ImFontAtlas_ClearInputData"][1]["cimguiname"] = "ImFontAtlas_ClearInputData"
 defs["ImFontAtlas_ClearInputData"][1]["defaults"] = {}
 defs["ImFontAtlas_ClearInputData"][1]["funcname"] = "ClearInputData"
+<<<<<<< HEAD
 defs["ImFontAtlas_ClearInputData"][1]["location"] = "imgui:2871"
+=======
+defs["ImFontAtlas_ClearInputData"][1]["location"] = "imgui:2864"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_ClearInputData"][1]["ov_cimguiname"] = "ImFontAtlas_ClearInputData"
 defs["ImFontAtlas_ClearInputData"][1]["ret"] = "void"
 defs["ImFontAtlas_ClearInputData"][1]["signature"] = "()"
@@ -3232,7 +3744,11 @@ defs["ImFontAtlas_ClearTexData"][1]["call_args"] = "()"
 defs["ImFontAtlas_ClearTexData"][1]["cimguiname"] = "ImFontAtlas_ClearTexData"
 defs["ImFontAtlas_ClearTexData"][1]["defaults"] = {}
 defs["ImFontAtlas_ClearTexData"][1]["funcname"] = "ClearTexData"
+<<<<<<< HEAD
 defs["ImFontAtlas_ClearTexData"][1]["location"] = "imgui:2872"
+=======
+defs["ImFontAtlas_ClearTexData"][1]["location"] = "imgui:2865"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_ClearTexData"][1]["ov_cimguiname"] = "ImFontAtlas_ClearTexData"
 defs["ImFontAtlas_ClearTexData"][1]["ret"] = "void"
 defs["ImFontAtlas_ClearTexData"][1]["signature"] = "()"
@@ -3253,7 +3769,11 @@ defs["ImFontAtlas_GetCustomRectByIndex"][1]["call_args"] = "(index)"
 defs["ImFontAtlas_GetCustomRectByIndex"][1]["cimguiname"] = "ImFontAtlas_GetCustomRectByIndex"
 defs["ImFontAtlas_GetCustomRectByIndex"][1]["defaults"] = {}
 defs["ImFontAtlas_GetCustomRectByIndex"][1]["funcname"] = "GetCustomRectByIndex"
+<<<<<<< HEAD
 defs["ImFontAtlas_GetCustomRectByIndex"][1]["location"] = "imgui:2917"
+=======
+defs["ImFontAtlas_GetCustomRectByIndex"][1]["location"] = "imgui:2910"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_GetCustomRectByIndex"][1]["ov_cimguiname"] = "ImFontAtlas_GetCustomRectByIndex"
 defs["ImFontAtlas_GetCustomRectByIndex"][1]["ret"] = "ImFontAtlasCustomRect*"
 defs["ImFontAtlas_GetCustomRectByIndex"][1]["signature"] = "(int)"
@@ -3271,7 +3791,11 @@ defs["ImFontAtlas_GetGlyphRangesChineseFull"][1]["call_args"] = "()"
 defs["ImFontAtlas_GetGlyphRangesChineseFull"][1]["cimguiname"] = "ImFontAtlas_GetGlyphRangesChineseFull"
 defs["ImFontAtlas_GetGlyphRangesChineseFull"][1]["defaults"] = {}
 defs["ImFontAtlas_GetGlyphRangesChineseFull"][1]["funcname"] = "GetGlyphRangesChineseFull"
+<<<<<<< HEAD
 defs["ImFontAtlas_GetGlyphRangesChineseFull"][1]["location"] = "imgui:2898"
+=======
+defs["ImFontAtlas_GetGlyphRangesChineseFull"][1]["location"] = "imgui:2891"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_GetGlyphRangesChineseFull"][1]["ov_cimguiname"] = "ImFontAtlas_GetGlyphRangesChineseFull"
 defs["ImFontAtlas_GetGlyphRangesChineseFull"][1]["ret"] = "const ImWchar*"
 defs["ImFontAtlas_GetGlyphRangesChineseFull"][1]["signature"] = "()"
@@ -3289,7 +3813,11 @@ defs["ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon"][1]["call_args"] = "()"
 defs["ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon"][1]["cimguiname"] = "ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon"
 defs["ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon"][1]["defaults"] = {}
 defs["ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon"][1]["funcname"] = "GetGlyphRangesChineseSimplifiedCommon"
+<<<<<<< HEAD
 defs["ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon"][1]["location"] = "imgui:2899"
+=======
+defs["ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon"][1]["location"] = "imgui:2892"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon"][1]["ov_cimguiname"] = "ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon"
 defs["ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon"][1]["ret"] = "const ImWchar*"
 defs["ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon"][1]["signature"] = "()"
@@ -3307,7 +3835,11 @@ defs["ImFontAtlas_GetGlyphRangesCyrillic"][1]["call_args"] = "()"
 defs["ImFontAtlas_GetGlyphRangesCyrillic"][1]["cimguiname"] = "ImFontAtlas_GetGlyphRangesCyrillic"
 defs["ImFontAtlas_GetGlyphRangesCyrillic"][1]["defaults"] = {}
 defs["ImFontAtlas_GetGlyphRangesCyrillic"][1]["funcname"] = "GetGlyphRangesCyrillic"
+<<<<<<< HEAD
 defs["ImFontAtlas_GetGlyphRangesCyrillic"][1]["location"] = "imgui:2900"
+=======
+defs["ImFontAtlas_GetGlyphRangesCyrillic"][1]["location"] = "imgui:2893"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_GetGlyphRangesCyrillic"][1]["ov_cimguiname"] = "ImFontAtlas_GetGlyphRangesCyrillic"
 defs["ImFontAtlas_GetGlyphRangesCyrillic"][1]["ret"] = "const ImWchar*"
 defs["ImFontAtlas_GetGlyphRangesCyrillic"][1]["signature"] = "()"
@@ -3325,7 +3857,11 @@ defs["ImFontAtlas_GetGlyphRangesDefault"][1]["call_args"] = "()"
 defs["ImFontAtlas_GetGlyphRangesDefault"][1]["cimguiname"] = "ImFontAtlas_GetGlyphRangesDefault"
 defs["ImFontAtlas_GetGlyphRangesDefault"][1]["defaults"] = {}
 defs["ImFontAtlas_GetGlyphRangesDefault"][1]["funcname"] = "GetGlyphRangesDefault"
+<<<<<<< HEAD
 defs["ImFontAtlas_GetGlyphRangesDefault"][1]["location"] = "imgui:2894"
+=======
+defs["ImFontAtlas_GetGlyphRangesDefault"][1]["location"] = "imgui:2887"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_GetGlyphRangesDefault"][1]["ov_cimguiname"] = "ImFontAtlas_GetGlyphRangesDefault"
 defs["ImFontAtlas_GetGlyphRangesDefault"][1]["ret"] = "const ImWchar*"
 defs["ImFontAtlas_GetGlyphRangesDefault"][1]["signature"] = "()"
@@ -3343,7 +3879,11 @@ defs["ImFontAtlas_GetGlyphRangesGreek"][1]["call_args"] = "()"
 defs["ImFontAtlas_GetGlyphRangesGreek"][1]["cimguiname"] = "ImFontAtlas_GetGlyphRangesGreek"
 defs["ImFontAtlas_GetGlyphRangesGreek"][1]["defaults"] = {}
 defs["ImFontAtlas_GetGlyphRangesGreek"][1]["funcname"] = "GetGlyphRangesGreek"
+<<<<<<< HEAD
 defs["ImFontAtlas_GetGlyphRangesGreek"][1]["location"] = "imgui:2895"
+=======
+defs["ImFontAtlas_GetGlyphRangesGreek"][1]["location"] = "imgui:2888"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_GetGlyphRangesGreek"][1]["ov_cimguiname"] = "ImFontAtlas_GetGlyphRangesGreek"
 defs["ImFontAtlas_GetGlyphRangesGreek"][1]["ret"] = "const ImWchar*"
 defs["ImFontAtlas_GetGlyphRangesGreek"][1]["signature"] = "()"
@@ -3361,7 +3901,11 @@ defs["ImFontAtlas_GetGlyphRangesJapanese"][1]["call_args"] = "()"
 defs["ImFontAtlas_GetGlyphRangesJapanese"][1]["cimguiname"] = "ImFontAtlas_GetGlyphRangesJapanese"
 defs["ImFontAtlas_GetGlyphRangesJapanese"][1]["defaults"] = {}
 defs["ImFontAtlas_GetGlyphRangesJapanese"][1]["funcname"] = "GetGlyphRangesJapanese"
+<<<<<<< HEAD
 defs["ImFontAtlas_GetGlyphRangesJapanese"][1]["location"] = "imgui:2897"
+=======
+defs["ImFontAtlas_GetGlyphRangesJapanese"][1]["location"] = "imgui:2890"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_GetGlyphRangesJapanese"][1]["ov_cimguiname"] = "ImFontAtlas_GetGlyphRangesJapanese"
 defs["ImFontAtlas_GetGlyphRangesJapanese"][1]["ret"] = "const ImWchar*"
 defs["ImFontAtlas_GetGlyphRangesJapanese"][1]["signature"] = "()"
@@ -3379,7 +3923,11 @@ defs["ImFontAtlas_GetGlyphRangesKorean"][1]["call_args"] = "()"
 defs["ImFontAtlas_GetGlyphRangesKorean"][1]["cimguiname"] = "ImFontAtlas_GetGlyphRangesKorean"
 defs["ImFontAtlas_GetGlyphRangesKorean"][1]["defaults"] = {}
 defs["ImFontAtlas_GetGlyphRangesKorean"][1]["funcname"] = "GetGlyphRangesKorean"
+<<<<<<< HEAD
 defs["ImFontAtlas_GetGlyphRangesKorean"][1]["location"] = "imgui:2896"
+=======
+defs["ImFontAtlas_GetGlyphRangesKorean"][1]["location"] = "imgui:2889"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_GetGlyphRangesKorean"][1]["ov_cimguiname"] = "ImFontAtlas_GetGlyphRangesKorean"
 defs["ImFontAtlas_GetGlyphRangesKorean"][1]["ret"] = "const ImWchar*"
 defs["ImFontAtlas_GetGlyphRangesKorean"][1]["signature"] = "()"
@@ -3397,7 +3945,11 @@ defs["ImFontAtlas_GetGlyphRangesThai"][1]["call_args"] = "()"
 defs["ImFontAtlas_GetGlyphRangesThai"][1]["cimguiname"] = "ImFontAtlas_GetGlyphRangesThai"
 defs["ImFontAtlas_GetGlyphRangesThai"][1]["defaults"] = {}
 defs["ImFontAtlas_GetGlyphRangesThai"][1]["funcname"] = "GetGlyphRangesThai"
+<<<<<<< HEAD
 defs["ImFontAtlas_GetGlyphRangesThai"][1]["location"] = "imgui:2901"
+=======
+defs["ImFontAtlas_GetGlyphRangesThai"][1]["location"] = "imgui:2894"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_GetGlyphRangesThai"][1]["ov_cimguiname"] = "ImFontAtlas_GetGlyphRangesThai"
 defs["ImFontAtlas_GetGlyphRangesThai"][1]["ret"] = "const ImWchar*"
 defs["ImFontAtlas_GetGlyphRangesThai"][1]["signature"] = "()"
@@ -3415,7 +3967,11 @@ defs["ImFontAtlas_GetGlyphRangesVietnamese"][1]["call_args"] = "()"
 defs["ImFontAtlas_GetGlyphRangesVietnamese"][1]["cimguiname"] = "ImFontAtlas_GetGlyphRangesVietnamese"
 defs["ImFontAtlas_GetGlyphRangesVietnamese"][1]["defaults"] = {}
 defs["ImFontAtlas_GetGlyphRangesVietnamese"][1]["funcname"] = "GetGlyphRangesVietnamese"
+<<<<<<< HEAD
 defs["ImFontAtlas_GetGlyphRangesVietnamese"][1]["location"] = "imgui:2902"
+=======
+defs["ImFontAtlas_GetGlyphRangesVietnamese"][1]["location"] = "imgui:2895"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_GetGlyphRangesVietnamese"][1]["ov_cimguiname"] = "ImFontAtlas_GetGlyphRangesVietnamese"
 defs["ImFontAtlas_GetGlyphRangesVietnamese"][1]["ret"] = "const ImWchar*"
 defs["ImFontAtlas_GetGlyphRangesVietnamese"][1]["signature"] = "()"
@@ -3448,7 +4004,11 @@ defs["ImFontAtlas_GetMouseCursorTexData"][1]["call_args"] = "(cursor,out_offset,
 defs["ImFontAtlas_GetMouseCursorTexData"][1]["cimguiname"] = "ImFontAtlas_GetMouseCursorTexData"
 defs["ImFontAtlas_GetMouseCursorTexData"][1]["defaults"] = {}
 defs["ImFontAtlas_GetMouseCursorTexData"][1]["funcname"] = "GetMouseCursorTexData"
+<<<<<<< HEAD
 defs["ImFontAtlas_GetMouseCursorTexData"][1]["location"] = "imgui:2921"
+=======
+defs["ImFontAtlas_GetMouseCursorTexData"][1]["location"] = "imgui:2914"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_GetMouseCursorTexData"][1]["ov_cimguiname"] = "ImFontAtlas_GetMouseCursorTexData"
 defs["ImFontAtlas_GetMouseCursorTexData"][1]["ret"] = "bool"
 defs["ImFontAtlas_GetMouseCursorTexData"][1]["signature"] = "(ImGuiMouseCursor,ImVec2*,ImVec2*,ImVec2[2],ImVec2[2])"
@@ -3479,7 +4039,11 @@ defs["ImFontAtlas_GetTexDataAsAlpha8"][1]["cimguiname"] = "ImFontAtlas_GetTexDat
 defs["ImFontAtlas_GetTexDataAsAlpha8"][1]["defaults"] = {}
 defs["ImFontAtlas_GetTexDataAsAlpha8"][1]["defaults"]["out_bytes_per_pixel"] = "NULL"
 defs["ImFontAtlas_GetTexDataAsAlpha8"][1]["funcname"] = "GetTexDataAsAlpha8"
+<<<<<<< HEAD
 defs["ImFontAtlas_GetTexDataAsAlpha8"][1]["location"] = "imgui:2882"
+=======
+defs["ImFontAtlas_GetTexDataAsAlpha8"][1]["location"] = "imgui:2875"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_GetTexDataAsAlpha8"][1]["ov_cimguiname"] = "ImFontAtlas_GetTexDataAsAlpha8"
 defs["ImFontAtlas_GetTexDataAsAlpha8"][1]["ret"] = "void"
 defs["ImFontAtlas_GetTexDataAsAlpha8"][1]["signature"] = "(unsigned char**,int*,int*,int*)"
@@ -3510,7 +4074,11 @@ defs["ImFontAtlas_GetTexDataAsRGBA32"][1]["cimguiname"] = "ImFontAtlas_GetTexDat
 defs["ImFontAtlas_GetTexDataAsRGBA32"][1]["defaults"] = {}
 defs["ImFontAtlas_GetTexDataAsRGBA32"][1]["defaults"]["out_bytes_per_pixel"] = "NULL"
 defs["ImFontAtlas_GetTexDataAsRGBA32"][1]["funcname"] = "GetTexDataAsRGBA32"
+<<<<<<< HEAD
 defs["ImFontAtlas_GetTexDataAsRGBA32"][1]["location"] = "imgui:2883"
+=======
+defs["ImFontAtlas_GetTexDataAsRGBA32"][1]["location"] = "imgui:2876"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_GetTexDataAsRGBA32"][1]["ov_cimguiname"] = "ImFontAtlas_GetTexDataAsRGBA32"
 defs["ImFontAtlas_GetTexDataAsRGBA32"][1]["ret"] = "void"
 defs["ImFontAtlas_GetTexDataAsRGBA32"][1]["signature"] = "(unsigned char**,int*,int*,int*)"
@@ -3526,7 +4094,11 @@ defs["ImFontAtlas_ImFontAtlas"][1]["cimguiname"] = "ImFontAtlas_ImFontAtlas"
 defs["ImFontAtlas_ImFontAtlas"][1]["constructor"] = true
 defs["ImFontAtlas_ImFontAtlas"][1]["defaults"] = {}
 defs["ImFontAtlas_ImFontAtlas"][1]["funcname"] = "ImFontAtlas"
+<<<<<<< HEAD
 defs["ImFontAtlas_ImFontAtlas"][1]["location"] = "imgui:2863"
+=======
+defs["ImFontAtlas_ImFontAtlas"][1]["location"] = "imgui:2856"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_ImFontAtlas"][1]["ov_cimguiname"] = "ImFontAtlas_ImFontAtlas"
 defs["ImFontAtlas_ImFontAtlas"][1]["signature"] = "()"
 defs["ImFontAtlas_ImFontAtlas"][1]["stname"] = "ImFontAtlas"
@@ -3543,7 +4115,11 @@ defs["ImFontAtlas_IsBuilt"][1]["call_args"] = "()"
 defs["ImFontAtlas_IsBuilt"][1]["cimguiname"] = "ImFontAtlas_IsBuilt"
 defs["ImFontAtlas_IsBuilt"][1]["defaults"] = {}
 defs["ImFontAtlas_IsBuilt"][1]["funcname"] = "IsBuilt"
+<<<<<<< HEAD
 defs["ImFontAtlas_IsBuilt"][1]["location"] = "imgui:2884"
+=======
+defs["ImFontAtlas_IsBuilt"][1]["location"] = "imgui:2877"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_IsBuilt"][1]["ov_cimguiname"] = "ImFontAtlas_IsBuilt"
 defs["ImFontAtlas_IsBuilt"][1]["ret"] = "bool"
 defs["ImFontAtlas_IsBuilt"][1]["signature"] = "()const"
@@ -3564,7 +4140,11 @@ defs["ImFontAtlas_SetTexID"][1]["call_args"] = "(id)"
 defs["ImFontAtlas_SetTexID"][1]["cimguiname"] = "ImFontAtlas_SetTexID"
 defs["ImFontAtlas_SetTexID"][1]["defaults"] = {}
 defs["ImFontAtlas_SetTexID"][1]["funcname"] = "SetTexID"
+<<<<<<< HEAD
 defs["ImFontAtlas_SetTexID"][1]["location"] = "imgui:2885"
+=======
+defs["ImFontAtlas_SetTexID"][1]["location"] = "imgui:2878"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_SetTexID"][1]["ov_cimguiname"] = "ImFontAtlas_SetTexID"
 defs["ImFontAtlas_SetTexID"][1]["ret"] = "void"
 defs["ImFontAtlas_SetTexID"][1]["signature"] = "(ImTextureID)"
@@ -3581,7 +4161,11 @@ defs["ImFontAtlas_destroy"][1]["call_args"] = "(self)"
 defs["ImFontAtlas_destroy"][1]["cimguiname"] = "ImFontAtlas_destroy"
 defs["ImFontAtlas_destroy"][1]["defaults"] = {}
 defs["ImFontAtlas_destroy"][1]["destructor"] = true
+<<<<<<< HEAD
 defs["ImFontAtlas_destroy"][1]["location"] = "imgui:2864"
+=======
+defs["ImFontAtlas_destroy"][1]["location"] = "imgui:2857"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontAtlas_destroy"][1]["ov_cimguiname"] = "ImFontAtlas_destroy"
 defs["ImFontAtlas_destroy"][1]["realdestructor"] = true
 defs["ImFontAtlas_destroy"][1]["ret"] = "void"
@@ -3598,7 +4182,11 @@ defs["ImFontConfig_ImFontConfig"][1]["cimguiname"] = "ImFontConfig_ImFontConfig"
 defs["ImFontConfig_ImFontConfig"][1]["constructor"] = true
 defs["ImFontConfig_ImFontConfig"][1]["defaults"] = {}
 defs["ImFontConfig_ImFontConfig"][1]["funcname"] = "ImFontConfig"
+<<<<<<< HEAD
 defs["ImFontConfig_ImFontConfig"][1]["location"] = "imgui:2791"
+=======
+defs["ImFontConfig_ImFontConfig"][1]["location"] = "imgui:2784"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontConfig_ImFontConfig"][1]["ov_cimguiname"] = "ImFontConfig_ImFontConfig"
 defs["ImFontConfig_ImFontConfig"][1]["signature"] = "()"
 defs["ImFontConfig_ImFontConfig"][1]["stname"] = "ImFontConfig"
@@ -3634,7 +4222,11 @@ defs["ImFontGlyphRangesBuilder_AddChar"][1]["call_args"] = "(c)"
 defs["ImFontGlyphRangesBuilder_AddChar"][1]["cimguiname"] = "ImFontGlyphRangesBuilder_AddChar"
 defs["ImFontGlyphRangesBuilder_AddChar"][1]["defaults"] = {}
 defs["ImFontGlyphRangesBuilder_AddChar"][1]["funcname"] = "AddChar"
+<<<<<<< HEAD
 defs["ImFontGlyphRangesBuilder_AddChar"][1]["location"] = "imgui:2816"
+=======
+defs["ImFontGlyphRangesBuilder_AddChar"][1]["location"] = "imgui:2809"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontGlyphRangesBuilder_AddChar"][1]["ov_cimguiname"] = "ImFontGlyphRangesBuilder_AddChar"
 defs["ImFontGlyphRangesBuilder_AddChar"][1]["ret"] = "void"
 defs["ImFontGlyphRangesBuilder_AddChar"][1]["signature"] = "(ImWchar)"
@@ -3655,7 +4247,11 @@ defs["ImFontGlyphRangesBuilder_AddRanges"][1]["call_args"] = "(ranges)"
 defs["ImFontGlyphRangesBuilder_AddRanges"][1]["cimguiname"] = "ImFontGlyphRangesBuilder_AddRanges"
 defs["ImFontGlyphRangesBuilder_AddRanges"][1]["defaults"] = {}
 defs["ImFontGlyphRangesBuilder_AddRanges"][1]["funcname"] = "AddRanges"
+<<<<<<< HEAD
 defs["ImFontGlyphRangesBuilder_AddRanges"][1]["location"] = "imgui:2818"
+=======
+defs["ImFontGlyphRangesBuilder_AddRanges"][1]["location"] = "imgui:2811"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontGlyphRangesBuilder_AddRanges"][1]["ov_cimguiname"] = "ImFontGlyphRangesBuilder_AddRanges"
 defs["ImFontGlyphRangesBuilder_AddRanges"][1]["ret"] = "void"
 defs["ImFontGlyphRangesBuilder_AddRanges"][1]["signature"] = "(const ImWchar*)"
@@ -3680,7 +4276,11 @@ defs["ImFontGlyphRangesBuilder_AddText"][1]["cimguiname"] = "ImFontGlyphRangesBu
 defs["ImFontGlyphRangesBuilder_AddText"][1]["defaults"] = {}
 defs["ImFontGlyphRangesBuilder_AddText"][1]["defaults"]["text_end"] = "NULL"
 defs["ImFontGlyphRangesBuilder_AddText"][1]["funcname"] = "AddText"
+<<<<<<< HEAD
 defs["ImFontGlyphRangesBuilder_AddText"][1]["location"] = "imgui:2817"
+=======
+defs["ImFontGlyphRangesBuilder_AddText"][1]["location"] = "imgui:2810"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontGlyphRangesBuilder_AddText"][1]["ov_cimguiname"] = "ImFontGlyphRangesBuilder_AddText"
 defs["ImFontGlyphRangesBuilder_AddText"][1]["ret"] = "void"
 defs["ImFontGlyphRangesBuilder_AddText"][1]["signature"] = "(const char*,const char*)"
@@ -3701,7 +4301,11 @@ defs["ImFontGlyphRangesBuilder_BuildRanges"][1]["call_args"] = "(out_ranges)"
 defs["ImFontGlyphRangesBuilder_BuildRanges"][1]["cimguiname"] = "ImFontGlyphRangesBuilder_BuildRanges"
 defs["ImFontGlyphRangesBuilder_BuildRanges"][1]["defaults"] = {}
 defs["ImFontGlyphRangesBuilder_BuildRanges"][1]["funcname"] = "BuildRanges"
+<<<<<<< HEAD
 defs["ImFontGlyphRangesBuilder_BuildRanges"][1]["location"] = "imgui:2819"
+=======
+defs["ImFontGlyphRangesBuilder_BuildRanges"][1]["location"] = "imgui:2812"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontGlyphRangesBuilder_BuildRanges"][1]["ov_cimguiname"] = "ImFontGlyphRangesBuilder_BuildRanges"
 defs["ImFontGlyphRangesBuilder_BuildRanges"][1]["ret"] = "void"
 defs["ImFontGlyphRangesBuilder_BuildRanges"][1]["signature"] = "(ImVector_ImWchar*)"
@@ -3719,7 +4323,11 @@ defs["ImFontGlyphRangesBuilder_Clear"][1]["call_args"] = "()"
 defs["ImFontGlyphRangesBuilder_Clear"][1]["cimguiname"] = "ImFontGlyphRangesBuilder_Clear"
 defs["ImFontGlyphRangesBuilder_Clear"][1]["defaults"] = {}
 defs["ImFontGlyphRangesBuilder_Clear"][1]["funcname"] = "Clear"
+<<<<<<< HEAD
 defs["ImFontGlyphRangesBuilder_Clear"][1]["location"] = "imgui:2813"
+=======
+defs["ImFontGlyphRangesBuilder_Clear"][1]["location"] = "imgui:2806"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontGlyphRangesBuilder_Clear"][1]["ov_cimguiname"] = "ImFontGlyphRangesBuilder_Clear"
 defs["ImFontGlyphRangesBuilder_Clear"][1]["ret"] = "void"
 defs["ImFontGlyphRangesBuilder_Clear"][1]["signature"] = "()"
@@ -3740,7 +4348,11 @@ defs["ImFontGlyphRangesBuilder_GetBit"][1]["call_args"] = "(n)"
 defs["ImFontGlyphRangesBuilder_GetBit"][1]["cimguiname"] = "ImFontGlyphRangesBuilder_GetBit"
 defs["ImFontGlyphRangesBuilder_GetBit"][1]["defaults"] = {}
 defs["ImFontGlyphRangesBuilder_GetBit"][1]["funcname"] = "GetBit"
+<<<<<<< HEAD
 defs["ImFontGlyphRangesBuilder_GetBit"][1]["location"] = "imgui:2814"
+=======
+defs["ImFontGlyphRangesBuilder_GetBit"][1]["location"] = "imgui:2807"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontGlyphRangesBuilder_GetBit"][1]["ov_cimguiname"] = "ImFontGlyphRangesBuilder_GetBit"
 defs["ImFontGlyphRangesBuilder_GetBit"][1]["ret"] = "bool"
 defs["ImFontGlyphRangesBuilder_GetBit"][1]["signature"] = "(size_t)const"
@@ -3756,7 +4368,11 @@ defs["ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder"][1]["cimguiname"] = "Im
 defs["ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder"][1]["constructor"] = true
 defs["ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder"][1]["defaults"] = {}
 defs["ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder"][1]["funcname"] = "ImFontGlyphRangesBuilder"
+<<<<<<< HEAD
 defs["ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder"][1]["location"] = "imgui:2812"
+=======
+defs["ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder"][1]["location"] = "imgui:2805"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder"][1]["ov_cimguiname"] = "ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder"
 defs["ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder"][1]["signature"] = "()"
 defs["ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder"][1]["stname"] = "ImFontGlyphRangesBuilder"
@@ -3776,7 +4392,11 @@ defs["ImFontGlyphRangesBuilder_SetBit"][1]["call_args"] = "(n)"
 defs["ImFontGlyphRangesBuilder_SetBit"][1]["cimguiname"] = "ImFontGlyphRangesBuilder_SetBit"
 defs["ImFontGlyphRangesBuilder_SetBit"][1]["defaults"] = {}
 defs["ImFontGlyphRangesBuilder_SetBit"][1]["funcname"] = "SetBit"
+<<<<<<< HEAD
 defs["ImFontGlyphRangesBuilder_SetBit"][1]["location"] = "imgui:2815"
+=======
+defs["ImFontGlyphRangesBuilder_SetBit"][1]["location"] = "imgui:2808"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFontGlyphRangesBuilder_SetBit"][1]["ov_cimguiname"] = "ImFontGlyphRangesBuilder_SetBit"
 defs["ImFontGlyphRangesBuilder_SetBit"][1]["ret"] = "void"
 defs["ImFontGlyphRangesBuilder_SetBit"][1]["signature"] = "(size_t)"
@@ -3843,7 +4463,11 @@ defs["ImFont_AddGlyph"][1]["call_args"] = "(src_cfg,c,x0,y0,x1,y1,u0,v0,u1,v1,ad
 defs["ImFont_AddGlyph"][1]["cimguiname"] = "ImFont_AddGlyph"
 defs["ImFont_AddGlyph"][1]["defaults"] = {}
 defs["ImFont_AddGlyph"][1]["funcname"] = "AddGlyph"
+<<<<<<< HEAD
 defs["ImFont_AddGlyph"][1]["location"] = "imgui:3011"
+=======
+defs["ImFont_AddGlyph"][1]["location"] = "imgui:3002"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_AddGlyph"][1]["ov_cimguiname"] = "ImFont_AddGlyph"
 defs["ImFont_AddGlyph"][1]["ret"] = "void"
 defs["ImFont_AddGlyph"][1]["signature"] = "(const ImFontConfig*,ImWchar,float,float,float,float,float,float,float,float,float)"
@@ -3871,7 +4495,11 @@ defs["ImFont_AddRemapChar"][1]["cimguiname"] = "ImFont_AddRemapChar"
 defs["ImFont_AddRemapChar"][1]["defaults"] = {}
 defs["ImFont_AddRemapChar"][1]["defaults"]["overwrite_dst"] = "true"
 defs["ImFont_AddRemapChar"][1]["funcname"] = "AddRemapChar"
+<<<<<<< HEAD
 defs["ImFont_AddRemapChar"][1]["location"] = "imgui:3012"
+=======
+defs["ImFont_AddRemapChar"][1]["location"] = "imgui:3003"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_AddRemapChar"][1]["ov_cimguiname"] = "ImFont_AddRemapChar"
 defs["ImFont_AddRemapChar"][1]["ret"] = "void"
 defs["ImFont_AddRemapChar"][1]["signature"] = "(ImWchar,ImWchar,bool)"
@@ -3889,7 +4517,11 @@ defs["ImFont_BuildLookupTable"][1]["call_args"] = "()"
 defs["ImFont_BuildLookupTable"][1]["cimguiname"] = "ImFont_BuildLookupTable"
 defs["ImFont_BuildLookupTable"][1]["defaults"] = {}
 defs["ImFont_BuildLookupTable"][1]["funcname"] = "BuildLookupTable"
+<<<<<<< HEAD
 defs["ImFont_BuildLookupTable"][1]["location"] = "imgui:3008"
+=======
+defs["ImFont_BuildLookupTable"][1]["location"] = "imgui:2999"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_BuildLookupTable"][1]["ov_cimguiname"] = "ImFont_BuildLookupTable"
 defs["ImFont_BuildLookupTable"][1]["ret"] = "void"
 defs["ImFont_BuildLookupTable"][1]["signature"] = "()"
@@ -3930,7 +4562,11 @@ defs["ImFont_CalcTextSizeA"][1]["defaults"] = {}
 defs["ImFont_CalcTextSizeA"][1]["defaults"]["remaining"] = "NULL"
 defs["ImFont_CalcTextSizeA"][1]["defaults"]["text_end"] = "NULL"
 defs["ImFont_CalcTextSizeA"][1]["funcname"] = "CalcTextSizeA"
+<<<<<<< HEAD
 defs["ImFont_CalcTextSizeA"][1]["location"] = "imgui:3002"
+=======
+defs["ImFont_CalcTextSizeA"][1]["location"] = "imgui:2993"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_CalcTextSizeA"][1]["nonUDT"] = 1
 defs["ImFont_CalcTextSizeA"][1]["ov_cimguiname"] = "ImFont_CalcTextSizeA"
 defs["ImFont_CalcTextSizeA"][1]["ret"] = "void"
@@ -3961,7 +4597,11 @@ defs["ImFont_CalcWordWrapPositionA"][1]["call_args"] = "(scale,text,text_end,wra
 defs["ImFont_CalcWordWrapPositionA"][1]["cimguiname"] = "ImFont_CalcWordWrapPositionA"
 defs["ImFont_CalcWordWrapPositionA"][1]["defaults"] = {}
 defs["ImFont_CalcWordWrapPositionA"][1]["funcname"] = "CalcWordWrapPositionA"
+<<<<<<< HEAD
 defs["ImFont_CalcWordWrapPositionA"][1]["location"] = "imgui:3003"
+=======
+defs["ImFont_CalcWordWrapPositionA"][1]["location"] = "imgui:2994"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_CalcWordWrapPositionA"][1]["ov_cimguiname"] = "ImFont_CalcWordWrapPositionA"
 defs["ImFont_CalcWordWrapPositionA"][1]["ret"] = "const char*"
 defs["ImFont_CalcWordWrapPositionA"][1]["signature"] = "(float,const char*,const char*,float)const"
@@ -3979,7 +4619,11 @@ defs["ImFont_ClearOutputData"][1]["call_args"] = "()"
 defs["ImFont_ClearOutputData"][1]["cimguiname"] = "ImFont_ClearOutputData"
 defs["ImFont_ClearOutputData"][1]["defaults"] = {}
 defs["ImFont_ClearOutputData"][1]["funcname"] = "ClearOutputData"
+<<<<<<< HEAD
 defs["ImFont_ClearOutputData"][1]["location"] = "imgui:3009"
+=======
+defs["ImFont_ClearOutputData"][1]["location"] = "imgui:3000"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_ClearOutputData"][1]["ov_cimguiname"] = "ImFont_ClearOutputData"
 defs["ImFont_ClearOutputData"][1]["ret"] = "void"
 defs["ImFont_ClearOutputData"][1]["signature"] = "()"
@@ -4000,7 +4644,11 @@ defs["ImFont_FindGlyph"][1]["call_args"] = "(c)"
 defs["ImFont_FindGlyph"][1]["cimguiname"] = "ImFont_FindGlyph"
 defs["ImFont_FindGlyph"][1]["defaults"] = {}
 defs["ImFont_FindGlyph"][1]["funcname"] = "FindGlyph"
+<<<<<<< HEAD
 defs["ImFont_FindGlyph"][1]["location"] = "imgui:2994"
+=======
+defs["ImFont_FindGlyph"][1]["location"] = "imgui:2985"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_FindGlyph"][1]["ov_cimguiname"] = "ImFont_FindGlyph"
 defs["ImFont_FindGlyph"][1]["ret"] = "const ImFontGlyph*"
 defs["ImFont_FindGlyph"][1]["signature"] = "(ImWchar)const"
@@ -4021,7 +4669,11 @@ defs["ImFont_FindGlyphNoFallback"][1]["call_args"] = "(c)"
 defs["ImFont_FindGlyphNoFallback"][1]["cimguiname"] = "ImFont_FindGlyphNoFallback"
 defs["ImFont_FindGlyphNoFallback"][1]["defaults"] = {}
 defs["ImFont_FindGlyphNoFallback"][1]["funcname"] = "FindGlyphNoFallback"
+<<<<<<< HEAD
 defs["ImFont_FindGlyphNoFallback"][1]["location"] = "imgui:2995"
+=======
+defs["ImFont_FindGlyphNoFallback"][1]["location"] = "imgui:2986"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_FindGlyphNoFallback"][1]["ov_cimguiname"] = "ImFont_FindGlyphNoFallback"
 defs["ImFont_FindGlyphNoFallback"][1]["ret"] = "const ImFontGlyph*"
 defs["ImFont_FindGlyphNoFallback"][1]["signature"] = "(ImWchar)const"
@@ -4042,7 +4694,11 @@ defs["ImFont_GetCharAdvance"][1]["call_args"] = "(c)"
 defs["ImFont_GetCharAdvance"][1]["cimguiname"] = "ImFont_GetCharAdvance"
 defs["ImFont_GetCharAdvance"][1]["defaults"] = {}
 defs["ImFont_GetCharAdvance"][1]["funcname"] = "GetCharAdvance"
+<<<<<<< HEAD
 defs["ImFont_GetCharAdvance"][1]["location"] = "imgui:2996"
+=======
+defs["ImFont_GetCharAdvance"][1]["location"] = "imgui:2987"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_GetCharAdvance"][1]["ov_cimguiname"] = "ImFont_GetCharAdvance"
 defs["ImFont_GetCharAdvance"][1]["ret"] = "float"
 defs["ImFont_GetCharAdvance"][1]["signature"] = "(ImWchar)const"
@@ -4060,7 +4716,11 @@ defs["ImFont_GetDebugName"][1]["call_args"] = "()"
 defs["ImFont_GetDebugName"][1]["cimguiname"] = "ImFont_GetDebugName"
 defs["ImFont_GetDebugName"][1]["defaults"] = {}
 defs["ImFont_GetDebugName"][1]["funcname"] = "GetDebugName"
+<<<<<<< HEAD
 defs["ImFont_GetDebugName"][1]["location"] = "imgui:2998"
+=======
+defs["ImFont_GetDebugName"][1]["location"] = "imgui:2989"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_GetDebugName"][1]["ov_cimguiname"] = "ImFont_GetDebugName"
 defs["ImFont_GetDebugName"][1]["ret"] = "const char*"
 defs["ImFont_GetDebugName"][1]["signature"] = "()const"
@@ -4081,7 +4741,11 @@ defs["ImFont_GrowIndex"][1]["call_args"] = "(new_size)"
 defs["ImFont_GrowIndex"][1]["cimguiname"] = "ImFont_GrowIndex"
 defs["ImFont_GrowIndex"][1]["defaults"] = {}
 defs["ImFont_GrowIndex"][1]["funcname"] = "GrowIndex"
+<<<<<<< HEAD
 defs["ImFont_GrowIndex"][1]["location"] = "imgui:3010"
+=======
+defs["ImFont_GrowIndex"][1]["location"] = "imgui:3001"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_GrowIndex"][1]["ov_cimguiname"] = "ImFont_GrowIndex"
 defs["ImFont_GrowIndex"][1]["ret"] = "void"
 defs["ImFont_GrowIndex"][1]["signature"] = "(int)"
@@ -4097,7 +4761,11 @@ defs["ImFont_ImFont"][1]["cimguiname"] = "ImFont_ImFont"
 defs["ImFont_ImFont"][1]["constructor"] = true
 defs["ImFont_ImFont"][1]["defaults"] = {}
 defs["ImFont_ImFont"][1]["funcname"] = "ImFont"
+<<<<<<< HEAD
 defs["ImFont_ImFont"][1]["location"] = "imgui:2992"
+=======
+defs["ImFont_ImFont"][1]["location"] = "imgui:2983"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_ImFont"][1]["ov_cimguiname"] = "ImFont_ImFont"
 defs["ImFont_ImFont"][1]["signature"] = "()"
 defs["ImFont_ImFont"][1]["stname"] = "ImFont"
@@ -4120,7 +4788,11 @@ defs["ImFont_IsGlyphRangeUnused"][1]["call_args"] = "(c_begin,c_last)"
 defs["ImFont_IsGlyphRangeUnused"][1]["cimguiname"] = "ImFont_IsGlyphRangeUnused"
 defs["ImFont_IsGlyphRangeUnused"][1]["defaults"] = {}
 defs["ImFont_IsGlyphRangeUnused"][1]["funcname"] = "IsGlyphRangeUnused"
+<<<<<<< HEAD
 defs["ImFont_IsGlyphRangeUnused"][1]["location"] = "imgui:3014"
+=======
+defs["ImFont_IsGlyphRangeUnused"][1]["location"] = "imgui:3005"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_IsGlyphRangeUnused"][1]["ov_cimguiname"] = "ImFont_IsGlyphRangeUnused"
 defs["ImFont_IsGlyphRangeUnused"][1]["ret"] = "bool"
 defs["ImFont_IsGlyphRangeUnused"][1]["signature"] = "(unsigned int,unsigned int)"
@@ -4138,7 +4810,11 @@ defs["ImFont_IsLoaded"][1]["call_args"] = "()"
 defs["ImFont_IsLoaded"][1]["cimguiname"] = "ImFont_IsLoaded"
 defs["ImFont_IsLoaded"][1]["defaults"] = {}
 defs["ImFont_IsLoaded"][1]["funcname"] = "IsLoaded"
+<<<<<<< HEAD
 defs["ImFont_IsLoaded"][1]["location"] = "imgui:2997"
+=======
+defs["ImFont_IsLoaded"][1]["location"] = "imgui:2988"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_IsLoaded"][1]["ov_cimguiname"] = "ImFont_IsLoaded"
 defs["ImFont_IsLoaded"][1]["ret"] = "bool"
 defs["ImFont_IsLoaded"][1]["signature"] = "()const"
@@ -4171,7 +4847,11 @@ defs["ImFont_RenderChar"][1]["call_args"] = "(draw_list,size,pos,col,c)"
 defs["ImFont_RenderChar"][1]["cimguiname"] = "ImFont_RenderChar"
 defs["ImFont_RenderChar"][1]["defaults"] = {}
 defs["ImFont_RenderChar"][1]["funcname"] = "RenderChar"
+<<<<<<< HEAD
 defs["ImFont_RenderChar"][1]["location"] = "imgui:3004"
+=======
+defs["ImFont_RenderChar"][1]["location"] = "imgui:2995"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_RenderChar"][1]["ov_cimguiname"] = "ImFont_RenderChar"
 defs["ImFont_RenderChar"][1]["ret"] = "void"
 defs["ImFont_RenderChar"][1]["signature"] = "(ImDrawList*,float,const ImVec2,ImU32,ImWchar)const"
@@ -4218,7 +4898,11 @@ defs["ImFont_RenderText"][1]["defaults"] = {}
 defs["ImFont_RenderText"][1]["defaults"]["cpu_fine_clip"] = "false"
 defs["ImFont_RenderText"][1]["defaults"]["wrap_width"] = "0.0f"
 defs["ImFont_RenderText"][1]["funcname"] = "RenderText"
+<<<<<<< HEAD
 defs["ImFont_RenderText"][1]["location"] = "imgui:3005"
+=======
+defs["ImFont_RenderText"][1]["location"] = "imgui:2996"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_RenderText"][1]["ov_cimguiname"] = "ImFont_RenderText"
 defs["ImFont_RenderText"][1]["ret"] = "void"
 defs["ImFont_RenderText"][1]["signature"] = "(ImDrawList*,float,const ImVec2,ImU32,const ImVec4,const char*,const char*,float,bool)const"
@@ -4242,7 +4926,11 @@ defs["ImFont_SetGlyphVisible"][1]["call_args"] = "(c,visible)"
 defs["ImFont_SetGlyphVisible"][1]["cimguiname"] = "ImFont_SetGlyphVisible"
 defs["ImFont_SetGlyphVisible"][1]["defaults"] = {}
 defs["ImFont_SetGlyphVisible"][1]["funcname"] = "SetGlyphVisible"
+<<<<<<< HEAD
 defs["ImFont_SetGlyphVisible"][1]["location"] = "imgui:3013"
+=======
+defs["ImFont_SetGlyphVisible"][1]["location"] = "imgui:3004"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_SetGlyphVisible"][1]["ov_cimguiname"] = "ImFont_SetGlyphVisible"
 defs["ImFont_SetGlyphVisible"][1]["ret"] = "void"
 defs["ImFont_SetGlyphVisible"][1]["signature"] = "(ImWchar,bool)"
@@ -4259,7 +4947,11 @@ defs["ImFont_destroy"][1]["call_args"] = "(self)"
 defs["ImFont_destroy"][1]["cimguiname"] = "ImFont_destroy"
 defs["ImFont_destroy"][1]["defaults"] = {}
 defs["ImFont_destroy"][1]["destructor"] = true
+<<<<<<< HEAD
 defs["ImFont_destroy"][1]["location"] = "imgui:2993"
+=======
+defs["ImFont_destroy"][1]["location"] = "imgui:2984"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImFont_destroy"][1]["ov_cimguiname"] = "ImFont_destroy"
 defs["ImFont_destroy"][1]["realdestructor"] = true
 defs["ImFont_destroy"][1]["ret"] = "void"
@@ -4276,7 +4968,11 @@ defs["ImGuiComboPreviewData_ImGuiComboPreviewData"][1]["cimguiname"] = "ImGuiCom
 defs["ImGuiComboPreviewData_ImGuiComboPreviewData"][1]["constructor"] = true
 defs["ImGuiComboPreviewData_ImGuiComboPreviewData"][1]["defaults"] = {}
 defs["ImGuiComboPreviewData_ImGuiComboPreviewData"][1]["funcname"] = "ImGuiComboPreviewData"
+<<<<<<< HEAD
 defs["ImGuiComboPreviewData_ImGuiComboPreviewData"][1]["location"] = "imgui_internal:1030"
+=======
+defs["ImGuiComboPreviewData_ImGuiComboPreviewData"][1]["location"] = "imgui_internal:1022"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiComboPreviewData_ImGuiComboPreviewData"][1]["ov_cimguiname"] = "ImGuiComboPreviewData_ImGuiComboPreviewData"
 defs["ImGuiComboPreviewData_ImGuiComboPreviewData"][1]["signature"] = "()"
 defs["ImGuiComboPreviewData_ImGuiComboPreviewData"][1]["stname"] = "ImGuiComboPreviewData"
@@ -4307,7 +5003,11 @@ defs["ImGuiContextHook_ImGuiContextHook"][1]["cimguiname"] = "ImGuiContextHook_I
 defs["ImGuiContextHook_ImGuiContextHook"][1]["constructor"] = true
 defs["ImGuiContextHook_ImGuiContextHook"][1]["defaults"] = {}
 defs["ImGuiContextHook_ImGuiContextHook"][1]["funcname"] = "ImGuiContextHook"
+<<<<<<< HEAD
 defs["ImGuiContextHook_ImGuiContextHook"][1]["location"] = "imgui_internal:1904"
+=======
+defs["ImGuiContextHook_ImGuiContextHook"][1]["location"] = "imgui_internal:1903"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiContextHook_ImGuiContextHook"][1]["ov_cimguiname"] = "ImGuiContextHook_ImGuiContextHook"
 defs["ImGuiContextHook_ImGuiContextHook"][1]["signature"] = "()"
 defs["ImGuiContextHook_ImGuiContextHook"][1]["stname"] = "ImGuiContextHook"
@@ -4341,7 +5041,11 @@ defs["ImGuiContext_ImGuiContext"][1]["cimguiname"] = "ImGuiContext_ImGuiContext"
 defs["ImGuiContext_ImGuiContext"][1]["constructor"] = true
 defs["ImGuiContext_ImGuiContext"][1]["defaults"] = {}
 defs["ImGuiContext_ImGuiContext"][1]["funcname"] = "ImGuiContext"
+<<<<<<< HEAD
 defs["ImGuiContext_ImGuiContext"][1]["location"] = "imgui_internal:2215"
+=======
+defs["ImGuiContext_ImGuiContext"][1]["location"] = "imgui_internal:2212"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiContext_ImGuiContext"][1]["ov_cimguiname"] = "ImGuiContext_ImGuiContext"
 defs["ImGuiContext_ImGuiContext"][1]["signature"] = "(ImFontAtlas*)"
 defs["ImGuiContext_ImGuiContext"][1]["stname"] = "ImGuiContext"
@@ -4372,7 +5076,11 @@ defs["ImGuiDockContext_ImGuiDockContext"][1]["cimguiname"] = "ImGuiDockContext_I
 defs["ImGuiDockContext_ImGuiDockContext"][1]["constructor"] = true
 defs["ImGuiDockContext_ImGuiDockContext"][1]["defaults"] = {}
 defs["ImGuiDockContext_ImGuiDockContext"][1]["funcname"] = "ImGuiDockContext"
+<<<<<<< HEAD
 defs["ImGuiDockContext_ImGuiDockContext"][1]["location"] = "imgui_internal:1716"
+=======
+defs["ImGuiDockContext_ImGuiDockContext"][1]["location"] = "imgui_internal:1708"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockContext_ImGuiDockContext"][1]["ov_cimguiname"] = "ImGuiDockContext_ImGuiDockContext"
 defs["ImGuiDockContext_ImGuiDockContext"][1]["signature"] = "()"
 defs["ImGuiDockContext_ImGuiDockContext"][1]["stname"] = "ImGuiDockContext"
@@ -4406,7 +5114,11 @@ defs["ImGuiDockNode_ImGuiDockNode"][1]["cimguiname"] = "ImGuiDockNode_ImGuiDockN
 defs["ImGuiDockNode_ImGuiDockNode"][1]["constructor"] = true
 defs["ImGuiDockNode_ImGuiDockNode"][1]["defaults"] = {}
 defs["ImGuiDockNode_ImGuiDockNode"][1]["funcname"] = "ImGuiDockNode"
+<<<<<<< HEAD
 defs["ImGuiDockNode_ImGuiDockNode"][1]["location"] = "imgui_internal:1673"
+=======
+defs["ImGuiDockNode_ImGuiDockNode"][1]["location"] = "imgui_internal:1665"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockNode_ImGuiDockNode"][1]["ov_cimguiname"] = "ImGuiDockNode_ImGuiDockNode"
 defs["ImGuiDockNode_ImGuiDockNode"][1]["signature"] = "(ImGuiID)"
 defs["ImGuiDockNode_ImGuiDockNode"][1]["stname"] = "ImGuiDockNode"
@@ -4423,7 +5135,11 @@ defs["ImGuiDockNode_IsCentralNode"][1]["call_args"] = "()"
 defs["ImGuiDockNode_IsCentralNode"][1]["cimguiname"] = "ImGuiDockNode_IsCentralNode"
 defs["ImGuiDockNode_IsCentralNode"][1]["defaults"] = {}
 defs["ImGuiDockNode_IsCentralNode"][1]["funcname"] = "IsCentralNode"
+<<<<<<< HEAD
 defs["ImGuiDockNode_IsCentralNode"][1]["location"] = "imgui_internal:1678"
+=======
+defs["ImGuiDockNode_IsCentralNode"][1]["location"] = "imgui_internal:1670"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockNode_IsCentralNode"][1]["ov_cimguiname"] = "ImGuiDockNode_IsCentralNode"
 defs["ImGuiDockNode_IsCentralNode"][1]["ret"] = "bool"
 defs["ImGuiDockNode_IsCentralNode"][1]["signature"] = "()const"
@@ -4441,7 +5157,11 @@ defs["ImGuiDockNode_IsDockSpace"][1]["call_args"] = "()"
 defs["ImGuiDockNode_IsDockSpace"][1]["cimguiname"] = "ImGuiDockNode_IsDockSpace"
 defs["ImGuiDockNode_IsDockSpace"][1]["defaults"] = {}
 defs["ImGuiDockNode_IsDockSpace"][1]["funcname"] = "IsDockSpace"
+<<<<<<< HEAD
 defs["ImGuiDockNode_IsDockSpace"][1]["location"] = "imgui_internal:1676"
+=======
+defs["ImGuiDockNode_IsDockSpace"][1]["location"] = "imgui_internal:1668"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockNode_IsDockSpace"][1]["ov_cimguiname"] = "ImGuiDockNode_IsDockSpace"
 defs["ImGuiDockNode_IsDockSpace"][1]["ret"] = "bool"
 defs["ImGuiDockNode_IsDockSpace"][1]["signature"] = "()const"
@@ -4459,7 +5179,11 @@ defs["ImGuiDockNode_IsEmpty"][1]["call_args"] = "()"
 defs["ImGuiDockNode_IsEmpty"][1]["cimguiname"] = "ImGuiDockNode_IsEmpty"
 defs["ImGuiDockNode_IsEmpty"][1]["defaults"] = {}
 defs["ImGuiDockNode_IsEmpty"][1]["funcname"] = "IsEmpty"
+<<<<<<< HEAD
 defs["ImGuiDockNode_IsEmpty"][1]["location"] = "imgui_internal:1683"
+=======
+defs["ImGuiDockNode_IsEmpty"][1]["location"] = "imgui_internal:1675"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockNode_IsEmpty"][1]["ov_cimguiname"] = "ImGuiDockNode_IsEmpty"
 defs["ImGuiDockNode_IsEmpty"][1]["ret"] = "bool"
 defs["ImGuiDockNode_IsEmpty"][1]["signature"] = "()const"
@@ -4477,7 +5201,11 @@ defs["ImGuiDockNode_IsFloatingNode"][1]["call_args"] = "()"
 defs["ImGuiDockNode_IsFloatingNode"][1]["cimguiname"] = "ImGuiDockNode_IsFloatingNode"
 defs["ImGuiDockNode_IsFloatingNode"][1]["defaults"] = {}
 defs["ImGuiDockNode_IsFloatingNode"][1]["funcname"] = "IsFloatingNode"
+<<<<<<< HEAD
 defs["ImGuiDockNode_IsFloatingNode"][1]["location"] = "imgui_internal:1677"
+=======
+defs["ImGuiDockNode_IsFloatingNode"][1]["location"] = "imgui_internal:1669"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockNode_IsFloatingNode"][1]["ov_cimguiname"] = "ImGuiDockNode_IsFloatingNode"
 defs["ImGuiDockNode_IsFloatingNode"][1]["ret"] = "bool"
 defs["ImGuiDockNode_IsFloatingNode"][1]["signature"] = "()const"
@@ -4495,7 +5223,11 @@ defs["ImGuiDockNode_IsHiddenTabBar"][1]["call_args"] = "()"
 defs["ImGuiDockNode_IsHiddenTabBar"][1]["cimguiname"] = "ImGuiDockNode_IsHiddenTabBar"
 defs["ImGuiDockNode_IsHiddenTabBar"][1]["defaults"] = {}
 defs["ImGuiDockNode_IsHiddenTabBar"][1]["funcname"] = "IsHiddenTabBar"
+<<<<<<< HEAD
 defs["ImGuiDockNode_IsHiddenTabBar"][1]["location"] = "imgui_internal:1679"
+=======
+defs["ImGuiDockNode_IsHiddenTabBar"][1]["location"] = "imgui_internal:1671"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockNode_IsHiddenTabBar"][1]["ov_cimguiname"] = "ImGuiDockNode_IsHiddenTabBar"
 defs["ImGuiDockNode_IsHiddenTabBar"][1]["ret"] = "bool"
 defs["ImGuiDockNode_IsHiddenTabBar"][1]["signature"] = "()const"
@@ -4513,7 +5245,11 @@ defs["ImGuiDockNode_IsLeafNode"][1]["call_args"] = "()"
 defs["ImGuiDockNode_IsLeafNode"][1]["cimguiname"] = "ImGuiDockNode_IsLeafNode"
 defs["ImGuiDockNode_IsLeafNode"][1]["defaults"] = {}
 defs["ImGuiDockNode_IsLeafNode"][1]["funcname"] = "IsLeafNode"
+<<<<<<< HEAD
 defs["ImGuiDockNode_IsLeafNode"][1]["location"] = "imgui_internal:1682"
+=======
+defs["ImGuiDockNode_IsLeafNode"][1]["location"] = "imgui_internal:1674"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockNode_IsLeafNode"][1]["ov_cimguiname"] = "ImGuiDockNode_IsLeafNode"
 defs["ImGuiDockNode_IsLeafNode"][1]["ret"] = "bool"
 defs["ImGuiDockNode_IsLeafNode"][1]["signature"] = "()const"
@@ -4531,7 +5267,11 @@ defs["ImGuiDockNode_IsNoTabBar"][1]["call_args"] = "()"
 defs["ImGuiDockNode_IsNoTabBar"][1]["cimguiname"] = "ImGuiDockNode_IsNoTabBar"
 defs["ImGuiDockNode_IsNoTabBar"][1]["defaults"] = {}
 defs["ImGuiDockNode_IsNoTabBar"][1]["funcname"] = "IsNoTabBar"
+<<<<<<< HEAD
 defs["ImGuiDockNode_IsNoTabBar"][1]["location"] = "imgui_internal:1680"
+=======
+defs["ImGuiDockNode_IsNoTabBar"][1]["location"] = "imgui_internal:1672"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockNode_IsNoTabBar"][1]["ov_cimguiname"] = "ImGuiDockNode_IsNoTabBar"
 defs["ImGuiDockNode_IsNoTabBar"][1]["ret"] = "bool"
 defs["ImGuiDockNode_IsNoTabBar"][1]["signature"] = "()const"
@@ -4549,7 +5289,11 @@ defs["ImGuiDockNode_IsRootNode"][1]["call_args"] = "()"
 defs["ImGuiDockNode_IsRootNode"][1]["cimguiname"] = "ImGuiDockNode_IsRootNode"
 defs["ImGuiDockNode_IsRootNode"][1]["defaults"] = {}
 defs["ImGuiDockNode_IsRootNode"][1]["funcname"] = "IsRootNode"
+<<<<<<< HEAD
 defs["ImGuiDockNode_IsRootNode"][1]["location"] = "imgui_internal:1675"
+=======
+defs["ImGuiDockNode_IsRootNode"][1]["location"] = "imgui_internal:1667"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockNode_IsRootNode"][1]["ov_cimguiname"] = "ImGuiDockNode_IsRootNode"
 defs["ImGuiDockNode_IsRootNode"][1]["ret"] = "bool"
 defs["ImGuiDockNode_IsRootNode"][1]["signature"] = "()const"
@@ -4567,7 +5311,11 @@ defs["ImGuiDockNode_IsSplitNode"][1]["call_args"] = "()"
 defs["ImGuiDockNode_IsSplitNode"][1]["cimguiname"] = "ImGuiDockNode_IsSplitNode"
 defs["ImGuiDockNode_IsSplitNode"][1]["defaults"] = {}
 defs["ImGuiDockNode_IsSplitNode"][1]["funcname"] = "IsSplitNode"
+<<<<<<< HEAD
 defs["ImGuiDockNode_IsSplitNode"][1]["location"] = "imgui_internal:1681"
+=======
+defs["ImGuiDockNode_IsSplitNode"][1]["location"] = "imgui_internal:1673"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockNode_IsSplitNode"][1]["ov_cimguiname"] = "ImGuiDockNode_IsSplitNode"
 defs["ImGuiDockNode_IsSplitNode"][1]["ret"] = "bool"
 defs["ImGuiDockNode_IsSplitNode"][1]["signature"] = "()const"
@@ -4588,7 +5336,11 @@ defs["ImGuiDockNode_Rect"][1]["call_args"] = "()"
 defs["ImGuiDockNode_Rect"][1]["cimguiname"] = "ImGuiDockNode_Rect"
 defs["ImGuiDockNode_Rect"][1]["defaults"] = {}
 defs["ImGuiDockNode_Rect"][1]["funcname"] = "Rect"
+<<<<<<< HEAD
 defs["ImGuiDockNode_Rect"][1]["location"] = "imgui_internal:1684"
+=======
+defs["ImGuiDockNode_Rect"][1]["location"] = "imgui_internal:1676"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockNode_Rect"][1]["nonUDT"] = 1
 defs["ImGuiDockNode_Rect"][1]["ov_cimguiname"] = "ImGuiDockNode_Rect"
 defs["ImGuiDockNode_Rect"][1]["ret"] = "void"
@@ -4610,7 +5362,11 @@ defs["ImGuiDockNode_SetLocalFlags"][1]["call_args"] = "(flags)"
 defs["ImGuiDockNode_SetLocalFlags"][1]["cimguiname"] = "ImGuiDockNode_SetLocalFlags"
 defs["ImGuiDockNode_SetLocalFlags"][1]["defaults"] = {}
 defs["ImGuiDockNode_SetLocalFlags"][1]["funcname"] = "SetLocalFlags"
+<<<<<<< HEAD
 defs["ImGuiDockNode_SetLocalFlags"][1]["location"] = "imgui_internal:1686"
+=======
+defs["ImGuiDockNode_SetLocalFlags"][1]["location"] = "imgui_internal:1678"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockNode_SetLocalFlags"][1]["ov_cimguiname"] = "ImGuiDockNode_SetLocalFlags"
 defs["ImGuiDockNode_SetLocalFlags"][1]["ret"] = "void"
 defs["ImGuiDockNode_SetLocalFlags"][1]["signature"] = "(ImGuiDockNodeFlags)"
@@ -4628,7 +5384,11 @@ defs["ImGuiDockNode_UpdateMergedFlags"][1]["call_args"] = "()"
 defs["ImGuiDockNode_UpdateMergedFlags"][1]["cimguiname"] = "ImGuiDockNode_UpdateMergedFlags"
 defs["ImGuiDockNode_UpdateMergedFlags"][1]["defaults"] = {}
 defs["ImGuiDockNode_UpdateMergedFlags"][1]["funcname"] = "UpdateMergedFlags"
+<<<<<<< HEAD
 defs["ImGuiDockNode_UpdateMergedFlags"][1]["location"] = "imgui_internal:1687"
+=======
+defs["ImGuiDockNode_UpdateMergedFlags"][1]["location"] = "imgui_internal:1679"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockNode_UpdateMergedFlags"][1]["ov_cimguiname"] = "ImGuiDockNode_UpdateMergedFlags"
 defs["ImGuiDockNode_UpdateMergedFlags"][1]["ret"] = "void"
 defs["ImGuiDockNode_UpdateMergedFlags"][1]["signature"] = "()"
@@ -4645,7 +5405,11 @@ defs["ImGuiDockNode_destroy"][1]["call_args"] = "(self)"
 defs["ImGuiDockNode_destroy"][1]["cimguiname"] = "ImGuiDockNode_destroy"
 defs["ImGuiDockNode_destroy"][1]["defaults"] = {}
 defs["ImGuiDockNode_destroy"][1]["destructor"] = true
+<<<<<<< HEAD
 defs["ImGuiDockNode_destroy"][1]["location"] = "imgui_internal:1674"
+=======
+defs["ImGuiDockNode_destroy"][1]["location"] = "imgui_internal:1666"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiDockNode_destroy"][1]["ov_cimguiname"] = "ImGuiDockNode_destroy"
 defs["ImGuiDockNode_destroy"][1]["realdestructor"] = true
 defs["ImGuiDockNode_destroy"][1]["ret"] = "void"
@@ -4667,7 +5431,11 @@ defs["ImGuiIO_AddFocusEvent"][1]["call_args"] = "(focused)"
 defs["ImGuiIO_AddFocusEvent"][1]["cimguiname"] = "ImGuiIO_AddFocusEvent"
 defs["ImGuiIO_AddFocusEvent"][1]["defaults"] = {}
 defs["ImGuiIO_AddFocusEvent"][1]["funcname"] = "AddFocusEvent"
+<<<<<<< HEAD
 defs["ImGuiIO_AddFocusEvent"][1]["location"] = "imgui:2067"
+=======
+defs["ImGuiIO_AddFocusEvent"][1]["location"] = "imgui:2060"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_AddFocusEvent"][1]["ov_cimguiname"] = "ImGuiIO_AddFocusEvent"
 defs["ImGuiIO_AddFocusEvent"][1]["ret"] = "void"
 defs["ImGuiIO_AddFocusEvent"][1]["signature"] = "(bool)"
@@ -4688,7 +5456,11 @@ defs["ImGuiIO_AddInputCharacter"][1]["call_args"] = "(c)"
 defs["ImGuiIO_AddInputCharacter"][1]["cimguiname"] = "ImGuiIO_AddInputCharacter"
 defs["ImGuiIO_AddInputCharacter"][1]["defaults"] = {}
 defs["ImGuiIO_AddInputCharacter"][1]["funcname"] = "AddInputCharacter"
+<<<<<<< HEAD
 defs["ImGuiIO_AddInputCharacter"][1]["location"] = "imgui:2068"
+=======
+defs["ImGuiIO_AddInputCharacter"][1]["location"] = "imgui:2061"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_AddInputCharacter"][1]["ov_cimguiname"] = "ImGuiIO_AddInputCharacter"
 defs["ImGuiIO_AddInputCharacter"][1]["ret"] = "void"
 defs["ImGuiIO_AddInputCharacter"][1]["signature"] = "(unsigned int)"
@@ -4709,7 +5481,11 @@ defs["ImGuiIO_AddInputCharacterUTF16"][1]["call_args"] = "(c)"
 defs["ImGuiIO_AddInputCharacterUTF16"][1]["cimguiname"] = "ImGuiIO_AddInputCharacterUTF16"
 defs["ImGuiIO_AddInputCharacterUTF16"][1]["defaults"] = {}
 defs["ImGuiIO_AddInputCharacterUTF16"][1]["funcname"] = "AddInputCharacterUTF16"
+<<<<<<< HEAD
 defs["ImGuiIO_AddInputCharacterUTF16"][1]["location"] = "imgui:2069"
+=======
+defs["ImGuiIO_AddInputCharacterUTF16"][1]["location"] = "imgui:2062"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_AddInputCharacterUTF16"][1]["ov_cimguiname"] = "ImGuiIO_AddInputCharacterUTF16"
 defs["ImGuiIO_AddInputCharacterUTF16"][1]["ret"] = "void"
 defs["ImGuiIO_AddInputCharacterUTF16"][1]["signature"] = "(ImWchar16)"
@@ -4730,7 +5506,11 @@ defs["ImGuiIO_AddInputCharactersUTF8"][1]["call_args"] = "(str)"
 defs["ImGuiIO_AddInputCharactersUTF8"][1]["cimguiname"] = "ImGuiIO_AddInputCharactersUTF8"
 defs["ImGuiIO_AddInputCharactersUTF8"][1]["defaults"] = {}
 defs["ImGuiIO_AddInputCharactersUTF8"][1]["funcname"] = "AddInputCharactersUTF8"
+<<<<<<< HEAD
 defs["ImGuiIO_AddInputCharactersUTF8"][1]["location"] = "imgui:2070"
+=======
+defs["ImGuiIO_AddInputCharactersUTF8"][1]["location"] = "imgui:2063"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_AddInputCharactersUTF8"][1]["ov_cimguiname"] = "ImGuiIO_AddInputCharactersUTF8"
 defs["ImGuiIO_AddInputCharactersUTF8"][1]["ret"] = "void"
 defs["ImGuiIO_AddInputCharactersUTF8"][1]["signature"] = "(const char*)"
@@ -4757,7 +5537,11 @@ defs["ImGuiIO_AddKeyAnalogEvent"][1]["call_args"] = "(key,down,v)"
 defs["ImGuiIO_AddKeyAnalogEvent"][1]["cimguiname"] = "ImGuiIO_AddKeyAnalogEvent"
 defs["ImGuiIO_AddKeyAnalogEvent"][1]["defaults"] = {}
 defs["ImGuiIO_AddKeyAnalogEvent"][1]["funcname"] = "AddKeyAnalogEvent"
+<<<<<<< HEAD
 defs["ImGuiIO_AddKeyAnalogEvent"][1]["location"] = "imgui:2062"
+=======
+defs["ImGuiIO_AddKeyAnalogEvent"][1]["location"] = "imgui:2055"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_AddKeyAnalogEvent"][1]["ov_cimguiname"] = "ImGuiIO_AddKeyAnalogEvent"
 defs["ImGuiIO_AddKeyAnalogEvent"][1]["ret"] = "void"
 defs["ImGuiIO_AddKeyAnalogEvent"][1]["signature"] = "(ImGuiKey,bool,float)"
@@ -4781,7 +5565,11 @@ defs["ImGuiIO_AddKeyEvent"][1]["call_args"] = "(key,down)"
 defs["ImGuiIO_AddKeyEvent"][1]["cimguiname"] = "ImGuiIO_AddKeyEvent"
 defs["ImGuiIO_AddKeyEvent"][1]["defaults"] = {}
 defs["ImGuiIO_AddKeyEvent"][1]["funcname"] = "AddKeyEvent"
+<<<<<<< HEAD
 defs["ImGuiIO_AddKeyEvent"][1]["location"] = "imgui:2061"
+=======
+defs["ImGuiIO_AddKeyEvent"][1]["location"] = "imgui:2054"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_AddKeyEvent"][1]["ov_cimguiname"] = "ImGuiIO_AddKeyEvent"
 defs["ImGuiIO_AddKeyEvent"][1]["ret"] = "void"
 defs["ImGuiIO_AddKeyEvent"][1]["signature"] = "(ImGuiKey,bool)"
@@ -4805,7 +5593,11 @@ defs["ImGuiIO_AddMouseButtonEvent"][1]["call_args"] = "(button,down)"
 defs["ImGuiIO_AddMouseButtonEvent"][1]["cimguiname"] = "ImGuiIO_AddMouseButtonEvent"
 defs["ImGuiIO_AddMouseButtonEvent"][1]["defaults"] = {}
 defs["ImGuiIO_AddMouseButtonEvent"][1]["funcname"] = "AddMouseButtonEvent"
+<<<<<<< HEAD
 defs["ImGuiIO_AddMouseButtonEvent"][1]["location"] = "imgui:2064"
+=======
+defs["ImGuiIO_AddMouseButtonEvent"][1]["location"] = "imgui:2057"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_AddMouseButtonEvent"][1]["ov_cimguiname"] = "ImGuiIO_AddMouseButtonEvent"
 defs["ImGuiIO_AddMouseButtonEvent"][1]["ret"] = "void"
 defs["ImGuiIO_AddMouseButtonEvent"][1]["signature"] = "(int,bool)"
@@ -4829,7 +5621,11 @@ defs["ImGuiIO_AddMousePosEvent"][1]["call_args"] = "(x,y)"
 defs["ImGuiIO_AddMousePosEvent"][1]["cimguiname"] = "ImGuiIO_AddMousePosEvent"
 defs["ImGuiIO_AddMousePosEvent"][1]["defaults"] = {}
 defs["ImGuiIO_AddMousePosEvent"][1]["funcname"] = "AddMousePosEvent"
+<<<<<<< HEAD
 defs["ImGuiIO_AddMousePosEvent"][1]["location"] = "imgui:2063"
+=======
+defs["ImGuiIO_AddMousePosEvent"][1]["location"] = "imgui:2056"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_AddMousePosEvent"][1]["ov_cimguiname"] = "ImGuiIO_AddMousePosEvent"
 defs["ImGuiIO_AddMousePosEvent"][1]["ret"] = "void"
 defs["ImGuiIO_AddMousePosEvent"][1]["signature"] = "(float,float)"
@@ -4850,7 +5646,11 @@ defs["ImGuiIO_AddMouseViewportEvent"][1]["call_args"] = "(id)"
 defs["ImGuiIO_AddMouseViewportEvent"][1]["cimguiname"] = "ImGuiIO_AddMouseViewportEvent"
 defs["ImGuiIO_AddMouseViewportEvent"][1]["defaults"] = {}
 defs["ImGuiIO_AddMouseViewportEvent"][1]["funcname"] = "AddMouseViewportEvent"
+<<<<<<< HEAD
 defs["ImGuiIO_AddMouseViewportEvent"][1]["location"] = "imgui:2066"
+=======
+defs["ImGuiIO_AddMouseViewportEvent"][1]["location"] = "imgui:2059"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_AddMouseViewportEvent"][1]["ov_cimguiname"] = "ImGuiIO_AddMouseViewportEvent"
 defs["ImGuiIO_AddMouseViewportEvent"][1]["ret"] = "void"
 defs["ImGuiIO_AddMouseViewportEvent"][1]["signature"] = "(ImGuiID)"
@@ -4874,7 +5674,11 @@ defs["ImGuiIO_AddMouseWheelEvent"][1]["call_args"] = "(wheel_x,wheel_y)"
 defs["ImGuiIO_AddMouseWheelEvent"][1]["cimguiname"] = "ImGuiIO_AddMouseWheelEvent"
 defs["ImGuiIO_AddMouseWheelEvent"][1]["defaults"] = {}
 defs["ImGuiIO_AddMouseWheelEvent"][1]["funcname"] = "AddMouseWheelEvent"
+<<<<<<< HEAD
 defs["ImGuiIO_AddMouseWheelEvent"][1]["location"] = "imgui:2065"
+=======
+defs["ImGuiIO_AddMouseWheelEvent"][1]["location"] = "imgui:2058"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_AddMouseWheelEvent"][1]["ov_cimguiname"] = "ImGuiIO_AddMouseWheelEvent"
 defs["ImGuiIO_AddMouseWheelEvent"][1]["ret"] = "void"
 defs["ImGuiIO_AddMouseWheelEvent"][1]["signature"] = "(float,float)"
@@ -4892,7 +5696,11 @@ defs["ImGuiIO_ClearInputCharacters"][1]["call_args"] = "()"
 defs["ImGuiIO_ClearInputCharacters"][1]["cimguiname"] = "ImGuiIO_ClearInputCharacters"
 defs["ImGuiIO_ClearInputCharacters"][1]["defaults"] = {}
 defs["ImGuiIO_ClearInputCharacters"][1]["funcname"] = "ClearInputCharacters"
+<<<<<<< HEAD
 defs["ImGuiIO_ClearInputCharacters"][1]["location"] = "imgui:2074"
+=======
+defs["ImGuiIO_ClearInputCharacters"][1]["location"] = "imgui:2067"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_ClearInputCharacters"][1]["ov_cimguiname"] = "ImGuiIO_ClearInputCharacters"
 defs["ImGuiIO_ClearInputCharacters"][1]["ret"] = "void"
 defs["ImGuiIO_ClearInputCharacters"][1]["signature"] = "()"
@@ -4910,7 +5718,11 @@ defs["ImGuiIO_ClearInputKeys"][1]["call_args"] = "()"
 defs["ImGuiIO_ClearInputKeys"][1]["cimguiname"] = "ImGuiIO_ClearInputKeys"
 defs["ImGuiIO_ClearInputKeys"][1]["defaults"] = {}
 defs["ImGuiIO_ClearInputKeys"][1]["funcname"] = "ClearInputKeys"
+<<<<<<< HEAD
 defs["ImGuiIO_ClearInputKeys"][1]["location"] = "imgui:2075"
+=======
+defs["ImGuiIO_ClearInputKeys"][1]["location"] = "imgui:2068"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_ClearInputKeys"][1]["ov_cimguiname"] = "ImGuiIO_ClearInputKeys"
 defs["ImGuiIO_ClearInputKeys"][1]["ret"] = "void"
 defs["ImGuiIO_ClearInputKeys"][1]["signature"] = "()"
@@ -4926,7 +5738,11 @@ defs["ImGuiIO_ImGuiIO"][1]["cimguiname"] = "ImGuiIO_ImGuiIO"
 defs["ImGuiIO_ImGuiIO"][1]["constructor"] = true
 defs["ImGuiIO_ImGuiIO"][1]["defaults"] = {}
 defs["ImGuiIO_ImGuiIO"][1]["funcname"] = "ImGuiIO"
+<<<<<<< HEAD
 defs["ImGuiIO_ImGuiIO"][1]["location"] = "imgui:2150"
+=======
+defs["ImGuiIO_ImGuiIO"][1]["location"] = "imgui:2143"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_ImGuiIO"][1]["ov_cimguiname"] = "ImGuiIO_ImGuiIO"
 defs["ImGuiIO_ImGuiIO"][1]["signature"] = "()"
 defs["ImGuiIO_ImGuiIO"][1]["stname"] = "ImGuiIO"
@@ -4946,7 +5762,11 @@ defs["ImGuiIO_SetAppAcceptingEvents"][1]["call_args"] = "(accepting_events)"
 defs["ImGuiIO_SetAppAcceptingEvents"][1]["cimguiname"] = "ImGuiIO_SetAppAcceptingEvents"
 defs["ImGuiIO_SetAppAcceptingEvents"][1]["defaults"] = {}
 defs["ImGuiIO_SetAppAcceptingEvents"][1]["funcname"] = "SetAppAcceptingEvents"
+<<<<<<< HEAD
 defs["ImGuiIO_SetAppAcceptingEvents"][1]["location"] = "imgui:2073"
+=======
+defs["ImGuiIO_SetAppAcceptingEvents"][1]["location"] = "imgui:2066"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_SetAppAcceptingEvents"][1]["ov_cimguiname"] = "ImGuiIO_SetAppAcceptingEvents"
 defs["ImGuiIO_SetAppAcceptingEvents"][1]["ret"] = "void"
 defs["ImGuiIO_SetAppAcceptingEvents"][1]["signature"] = "(bool)"
@@ -4977,7 +5797,11 @@ defs["ImGuiIO_SetKeyEventNativeData"][1]["cimguiname"] = "ImGuiIO_SetKeyEventNat
 defs["ImGuiIO_SetKeyEventNativeData"][1]["defaults"] = {}
 defs["ImGuiIO_SetKeyEventNativeData"][1]["defaults"]["native_legacy_index"] = "-1"
 defs["ImGuiIO_SetKeyEventNativeData"][1]["funcname"] = "SetKeyEventNativeData"
+<<<<<<< HEAD
 defs["ImGuiIO_SetKeyEventNativeData"][1]["location"] = "imgui:2072"
+=======
+defs["ImGuiIO_SetKeyEventNativeData"][1]["location"] = "imgui:2065"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiIO_SetKeyEventNativeData"][1]["ov_cimguiname"] = "ImGuiIO_SetKeyEventNativeData"
 defs["ImGuiIO_SetKeyEventNativeData"][1]["ret"] = "void"
 defs["ImGuiIO_SetKeyEventNativeData"][1]["signature"] = "(ImGuiKey,int,int,int)"
@@ -5009,7 +5833,11 @@ defs["ImGuiInputEvent_ImGuiInputEvent"][1]["cimguiname"] = "ImGuiInputEvent_ImGu
 defs["ImGuiInputEvent_ImGuiInputEvent"][1]["constructor"] = true
 defs["ImGuiInputEvent_ImGuiInputEvent"][1]["defaults"] = {}
 defs["ImGuiInputEvent_ImGuiInputEvent"][1]["funcname"] = "ImGuiInputEvent"
+<<<<<<< HEAD
 defs["ImGuiInputEvent_ImGuiInputEvent"][1]["location"] = "imgui_internal:1315"
+=======
+defs["ImGuiInputEvent_ImGuiInputEvent"][1]["location"] = "imgui_internal:1307"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputEvent_ImGuiInputEvent"][1]["ov_cimguiname"] = "ImGuiInputEvent_ImGuiInputEvent"
 defs["ImGuiInputEvent_ImGuiInputEvent"][1]["signature"] = "()"
 defs["ImGuiInputEvent_ImGuiInputEvent"][1]["stname"] = "ImGuiInputEvent"
@@ -5042,7 +5870,11 @@ defs["ImGuiInputTextCallbackData_ClearSelection"][1]["call_args"] = "()"
 defs["ImGuiInputTextCallbackData_ClearSelection"][1]["cimguiname"] = "ImGuiInputTextCallbackData_ClearSelection"
 defs["ImGuiInputTextCallbackData_ClearSelection"][1]["defaults"] = {}
 defs["ImGuiInputTextCallbackData_ClearSelection"][1]["funcname"] = "ClearSelection"
+<<<<<<< HEAD
 defs["ImGuiInputTextCallbackData_ClearSelection"][1]["location"] = "imgui:2191"
+=======
+defs["ImGuiInputTextCallbackData_ClearSelection"][1]["location"] = "imgui:2184"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextCallbackData_ClearSelection"][1]["ov_cimguiname"] = "ImGuiInputTextCallbackData_ClearSelection"
 defs["ImGuiInputTextCallbackData_ClearSelection"][1]["ret"] = "void"
 defs["ImGuiInputTextCallbackData_ClearSelection"][1]["signature"] = "()"
@@ -5066,7 +5898,11 @@ defs["ImGuiInputTextCallbackData_DeleteChars"][1]["call_args"] = "(pos,bytes_cou
 defs["ImGuiInputTextCallbackData_DeleteChars"][1]["cimguiname"] = "ImGuiInputTextCallbackData_DeleteChars"
 defs["ImGuiInputTextCallbackData_DeleteChars"][1]["defaults"] = {}
 defs["ImGuiInputTextCallbackData_DeleteChars"][1]["funcname"] = "DeleteChars"
+<<<<<<< HEAD
 defs["ImGuiInputTextCallbackData_DeleteChars"][1]["location"] = "imgui:2188"
+=======
+defs["ImGuiInputTextCallbackData_DeleteChars"][1]["location"] = "imgui:2181"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextCallbackData_DeleteChars"][1]["ov_cimguiname"] = "ImGuiInputTextCallbackData_DeleteChars"
 defs["ImGuiInputTextCallbackData_DeleteChars"][1]["ret"] = "void"
 defs["ImGuiInputTextCallbackData_DeleteChars"][1]["signature"] = "(int,int)"
@@ -5084,7 +5920,11 @@ defs["ImGuiInputTextCallbackData_HasSelection"][1]["call_args"] = "()"
 defs["ImGuiInputTextCallbackData_HasSelection"][1]["cimguiname"] = "ImGuiInputTextCallbackData_HasSelection"
 defs["ImGuiInputTextCallbackData_HasSelection"][1]["defaults"] = {}
 defs["ImGuiInputTextCallbackData_HasSelection"][1]["funcname"] = "HasSelection"
+<<<<<<< HEAD
 defs["ImGuiInputTextCallbackData_HasSelection"][1]["location"] = "imgui:2192"
+=======
+defs["ImGuiInputTextCallbackData_HasSelection"][1]["location"] = "imgui:2185"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextCallbackData_HasSelection"][1]["ov_cimguiname"] = "ImGuiInputTextCallbackData_HasSelection"
 defs["ImGuiInputTextCallbackData_HasSelection"][1]["ret"] = "bool"
 defs["ImGuiInputTextCallbackData_HasSelection"][1]["signature"] = "()const"
@@ -5100,7 +5940,11 @@ defs["ImGuiInputTextCallbackData_ImGuiInputTextCallbackData"][1]["cimguiname"] =
 defs["ImGuiInputTextCallbackData_ImGuiInputTextCallbackData"][1]["constructor"] = true
 defs["ImGuiInputTextCallbackData_ImGuiInputTextCallbackData"][1]["defaults"] = {}
 defs["ImGuiInputTextCallbackData_ImGuiInputTextCallbackData"][1]["funcname"] = "ImGuiInputTextCallbackData"
+<<<<<<< HEAD
 defs["ImGuiInputTextCallbackData_ImGuiInputTextCallbackData"][1]["location"] = "imgui:2187"
+=======
+defs["ImGuiInputTextCallbackData_ImGuiInputTextCallbackData"][1]["location"] = "imgui:2180"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextCallbackData_ImGuiInputTextCallbackData"][1]["ov_cimguiname"] = "ImGuiInputTextCallbackData_ImGuiInputTextCallbackData"
 defs["ImGuiInputTextCallbackData_ImGuiInputTextCallbackData"][1]["signature"] = "()"
 defs["ImGuiInputTextCallbackData_ImGuiInputTextCallbackData"][1]["stname"] = "ImGuiInputTextCallbackData"
@@ -5127,7 +5971,11 @@ defs["ImGuiInputTextCallbackData_InsertChars"][1]["cimguiname"] = "ImGuiInputTex
 defs["ImGuiInputTextCallbackData_InsertChars"][1]["defaults"] = {}
 defs["ImGuiInputTextCallbackData_InsertChars"][1]["defaults"]["text_end"] = "NULL"
 defs["ImGuiInputTextCallbackData_InsertChars"][1]["funcname"] = "InsertChars"
+<<<<<<< HEAD
 defs["ImGuiInputTextCallbackData_InsertChars"][1]["location"] = "imgui:2189"
+=======
+defs["ImGuiInputTextCallbackData_InsertChars"][1]["location"] = "imgui:2182"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextCallbackData_InsertChars"][1]["ov_cimguiname"] = "ImGuiInputTextCallbackData_InsertChars"
 defs["ImGuiInputTextCallbackData_InsertChars"][1]["ret"] = "void"
 defs["ImGuiInputTextCallbackData_InsertChars"][1]["signature"] = "(int,const char*,const char*)"
@@ -5145,7 +5993,11 @@ defs["ImGuiInputTextCallbackData_SelectAll"][1]["call_args"] = "()"
 defs["ImGuiInputTextCallbackData_SelectAll"][1]["cimguiname"] = "ImGuiInputTextCallbackData_SelectAll"
 defs["ImGuiInputTextCallbackData_SelectAll"][1]["defaults"] = {}
 defs["ImGuiInputTextCallbackData_SelectAll"][1]["funcname"] = "SelectAll"
+<<<<<<< HEAD
 defs["ImGuiInputTextCallbackData_SelectAll"][1]["location"] = "imgui:2190"
+=======
+defs["ImGuiInputTextCallbackData_SelectAll"][1]["location"] = "imgui:2183"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextCallbackData_SelectAll"][1]["ov_cimguiname"] = "ImGuiInputTextCallbackData_SelectAll"
 defs["ImGuiInputTextCallbackData_SelectAll"][1]["ret"] = "void"
 defs["ImGuiInputTextCallbackData_SelectAll"][1]["signature"] = "()"
@@ -5179,7 +6031,11 @@ defs["ImGuiInputTextState_ClearFreeMemory"][1]["call_args"] = "()"
 defs["ImGuiInputTextState_ClearFreeMemory"][1]["cimguiname"] = "ImGuiInputTextState_ClearFreeMemory"
 defs["ImGuiInputTextState_ClearFreeMemory"][1]["defaults"] = {}
 defs["ImGuiInputTextState_ClearFreeMemory"][1]["funcname"] = "ClearFreeMemory"
+<<<<<<< HEAD
 defs["ImGuiInputTextState_ClearFreeMemory"][1]["location"] = "imgui_internal:1089"
+=======
+defs["ImGuiInputTextState_ClearFreeMemory"][1]["location"] = "imgui_internal:1081"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextState_ClearFreeMemory"][1]["ov_cimguiname"] = "ImGuiInputTextState_ClearFreeMemory"
 defs["ImGuiInputTextState_ClearFreeMemory"][1]["ret"] = "void"
 defs["ImGuiInputTextState_ClearFreeMemory"][1]["signature"] = "()"
@@ -5197,7 +6053,11 @@ defs["ImGuiInputTextState_ClearSelection"][1]["call_args"] = "()"
 defs["ImGuiInputTextState_ClearSelection"][1]["cimguiname"] = "ImGuiInputTextState_ClearSelection"
 defs["ImGuiInputTextState_ClearSelection"][1]["defaults"] = {}
 defs["ImGuiInputTextState_ClearSelection"][1]["funcname"] = "ClearSelection"
+<<<<<<< HEAD
 defs["ImGuiInputTextState_ClearSelection"][1]["location"] = "imgui_internal:1098"
+=======
+defs["ImGuiInputTextState_ClearSelection"][1]["location"] = "imgui_internal:1090"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextState_ClearSelection"][1]["ov_cimguiname"] = "ImGuiInputTextState_ClearSelection"
 defs["ImGuiInputTextState_ClearSelection"][1]["ret"] = "void"
 defs["ImGuiInputTextState_ClearSelection"][1]["signature"] = "()"
@@ -5215,7 +6075,11 @@ defs["ImGuiInputTextState_ClearText"][1]["call_args"] = "()"
 defs["ImGuiInputTextState_ClearText"][1]["cimguiname"] = "ImGuiInputTextState_ClearText"
 defs["ImGuiInputTextState_ClearText"][1]["defaults"] = {}
 defs["ImGuiInputTextState_ClearText"][1]["funcname"] = "ClearText"
+<<<<<<< HEAD
 defs["ImGuiInputTextState_ClearText"][1]["location"] = "imgui_internal:1088"
+=======
+defs["ImGuiInputTextState_ClearText"][1]["location"] = "imgui_internal:1080"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextState_ClearText"][1]["ov_cimguiname"] = "ImGuiInputTextState_ClearText"
 defs["ImGuiInputTextState_ClearText"][1]["ret"] = "void"
 defs["ImGuiInputTextState_ClearText"][1]["signature"] = "()"
@@ -5233,7 +6097,11 @@ defs["ImGuiInputTextState_CursorAnimReset"][1]["call_args"] = "()"
 defs["ImGuiInputTextState_CursorAnimReset"][1]["cimguiname"] = "ImGuiInputTextState_CursorAnimReset"
 defs["ImGuiInputTextState_CursorAnimReset"][1]["defaults"] = {}
 defs["ImGuiInputTextState_CursorAnimReset"][1]["funcname"] = "CursorAnimReset"
+<<<<<<< HEAD
 defs["ImGuiInputTextState_CursorAnimReset"][1]["location"] = "imgui_internal:1095"
+=======
+defs["ImGuiInputTextState_CursorAnimReset"][1]["location"] = "imgui_internal:1087"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextState_CursorAnimReset"][1]["ov_cimguiname"] = "ImGuiInputTextState_CursorAnimReset"
 defs["ImGuiInputTextState_CursorAnimReset"][1]["ret"] = "void"
 defs["ImGuiInputTextState_CursorAnimReset"][1]["signature"] = "()"
@@ -5251,7 +6119,11 @@ defs["ImGuiInputTextState_CursorClamp"][1]["call_args"] = "()"
 defs["ImGuiInputTextState_CursorClamp"][1]["cimguiname"] = "ImGuiInputTextState_CursorClamp"
 defs["ImGuiInputTextState_CursorClamp"][1]["defaults"] = {}
 defs["ImGuiInputTextState_CursorClamp"][1]["funcname"] = "CursorClamp"
+<<<<<<< HEAD
 defs["ImGuiInputTextState_CursorClamp"][1]["location"] = "imgui_internal:1096"
+=======
+defs["ImGuiInputTextState_CursorClamp"][1]["location"] = "imgui_internal:1088"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextState_CursorClamp"][1]["ov_cimguiname"] = "ImGuiInputTextState_CursorClamp"
 defs["ImGuiInputTextState_CursorClamp"][1]["ret"] = "void"
 defs["ImGuiInputTextState_CursorClamp"][1]["signature"] = "()"
@@ -5269,7 +6141,11 @@ defs["ImGuiInputTextState_GetCursorPos"][1]["call_args"] = "()"
 defs["ImGuiInputTextState_GetCursorPos"][1]["cimguiname"] = "ImGuiInputTextState_GetCursorPos"
 defs["ImGuiInputTextState_GetCursorPos"][1]["defaults"] = {}
 defs["ImGuiInputTextState_GetCursorPos"][1]["funcname"] = "GetCursorPos"
+<<<<<<< HEAD
 defs["ImGuiInputTextState_GetCursorPos"][1]["location"] = "imgui_internal:1099"
+=======
+defs["ImGuiInputTextState_GetCursorPos"][1]["location"] = "imgui_internal:1091"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextState_GetCursorPos"][1]["ov_cimguiname"] = "ImGuiInputTextState_GetCursorPos"
 defs["ImGuiInputTextState_GetCursorPos"][1]["ret"] = "int"
 defs["ImGuiInputTextState_GetCursorPos"][1]["signature"] = "()const"
@@ -5287,7 +6163,11 @@ defs["ImGuiInputTextState_GetRedoAvailCount"][1]["call_args"] = "()"
 defs["ImGuiInputTextState_GetRedoAvailCount"][1]["cimguiname"] = "ImGuiInputTextState_GetRedoAvailCount"
 defs["ImGuiInputTextState_GetRedoAvailCount"][1]["defaults"] = {}
 defs["ImGuiInputTextState_GetRedoAvailCount"][1]["funcname"] = "GetRedoAvailCount"
+<<<<<<< HEAD
 defs["ImGuiInputTextState_GetRedoAvailCount"][1]["location"] = "imgui_internal:1091"
+=======
+defs["ImGuiInputTextState_GetRedoAvailCount"][1]["location"] = "imgui_internal:1083"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextState_GetRedoAvailCount"][1]["ov_cimguiname"] = "ImGuiInputTextState_GetRedoAvailCount"
 defs["ImGuiInputTextState_GetRedoAvailCount"][1]["ret"] = "int"
 defs["ImGuiInputTextState_GetRedoAvailCount"][1]["signature"] = "()const"
@@ -5305,7 +6185,11 @@ defs["ImGuiInputTextState_GetSelectionEnd"][1]["call_args"] = "()"
 defs["ImGuiInputTextState_GetSelectionEnd"][1]["cimguiname"] = "ImGuiInputTextState_GetSelectionEnd"
 defs["ImGuiInputTextState_GetSelectionEnd"][1]["defaults"] = {}
 defs["ImGuiInputTextState_GetSelectionEnd"][1]["funcname"] = "GetSelectionEnd"
+<<<<<<< HEAD
 defs["ImGuiInputTextState_GetSelectionEnd"][1]["location"] = "imgui_internal:1101"
+=======
+defs["ImGuiInputTextState_GetSelectionEnd"][1]["location"] = "imgui_internal:1093"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextState_GetSelectionEnd"][1]["ov_cimguiname"] = "ImGuiInputTextState_GetSelectionEnd"
 defs["ImGuiInputTextState_GetSelectionEnd"][1]["ret"] = "int"
 defs["ImGuiInputTextState_GetSelectionEnd"][1]["signature"] = "()const"
@@ -5323,7 +6207,11 @@ defs["ImGuiInputTextState_GetSelectionStart"][1]["call_args"] = "()"
 defs["ImGuiInputTextState_GetSelectionStart"][1]["cimguiname"] = "ImGuiInputTextState_GetSelectionStart"
 defs["ImGuiInputTextState_GetSelectionStart"][1]["defaults"] = {}
 defs["ImGuiInputTextState_GetSelectionStart"][1]["funcname"] = "GetSelectionStart"
+<<<<<<< HEAD
 defs["ImGuiInputTextState_GetSelectionStart"][1]["location"] = "imgui_internal:1100"
+=======
+defs["ImGuiInputTextState_GetSelectionStart"][1]["location"] = "imgui_internal:1092"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextState_GetSelectionStart"][1]["ov_cimguiname"] = "ImGuiInputTextState_GetSelectionStart"
 defs["ImGuiInputTextState_GetSelectionStart"][1]["ret"] = "int"
 defs["ImGuiInputTextState_GetSelectionStart"][1]["signature"] = "()const"
@@ -5341,7 +6229,11 @@ defs["ImGuiInputTextState_GetUndoAvailCount"][1]["call_args"] = "()"
 defs["ImGuiInputTextState_GetUndoAvailCount"][1]["cimguiname"] = "ImGuiInputTextState_GetUndoAvailCount"
 defs["ImGuiInputTextState_GetUndoAvailCount"][1]["defaults"] = {}
 defs["ImGuiInputTextState_GetUndoAvailCount"][1]["funcname"] = "GetUndoAvailCount"
+<<<<<<< HEAD
 defs["ImGuiInputTextState_GetUndoAvailCount"][1]["location"] = "imgui_internal:1090"
+=======
+defs["ImGuiInputTextState_GetUndoAvailCount"][1]["location"] = "imgui_internal:1082"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextState_GetUndoAvailCount"][1]["ov_cimguiname"] = "ImGuiInputTextState_GetUndoAvailCount"
 defs["ImGuiInputTextState_GetUndoAvailCount"][1]["ret"] = "int"
 defs["ImGuiInputTextState_GetUndoAvailCount"][1]["signature"] = "()const"
@@ -5359,7 +6251,11 @@ defs["ImGuiInputTextState_HasSelection"][1]["call_args"] = "()"
 defs["ImGuiInputTextState_HasSelection"][1]["cimguiname"] = "ImGuiInputTextState_HasSelection"
 defs["ImGuiInputTextState_HasSelection"][1]["defaults"] = {}
 defs["ImGuiInputTextState_HasSelection"][1]["funcname"] = "HasSelection"
+<<<<<<< HEAD
 defs["ImGuiInputTextState_HasSelection"][1]["location"] = "imgui_internal:1097"
+=======
+defs["ImGuiInputTextState_HasSelection"][1]["location"] = "imgui_internal:1089"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextState_HasSelection"][1]["ov_cimguiname"] = "ImGuiInputTextState_HasSelection"
 defs["ImGuiInputTextState_HasSelection"][1]["ret"] = "bool"
 defs["ImGuiInputTextState_HasSelection"][1]["signature"] = "()const"
@@ -5378,7 +6274,11 @@ defs["ImGuiInputTextState_ImGuiInputTextState"][1]["cimguiname"] = "ImGuiInputTe
 defs["ImGuiInputTextState_ImGuiInputTextState"][1]["constructor"] = true
 defs["ImGuiInputTextState_ImGuiInputTextState"][1]["defaults"] = {}
 defs["ImGuiInputTextState_ImGuiInputTextState"][1]["funcname"] = "ImGuiInputTextState"
+<<<<<<< HEAD
 defs["ImGuiInputTextState_ImGuiInputTextState"][1]["location"] = "imgui_internal:1087"
+=======
+defs["ImGuiInputTextState_ImGuiInputTextState"][1]["location"] = "imgui_internal:1079"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextState_ImGuiInputTextState"][1]["ov_cimguiname"] = "ImGuiInputTextState_ImGuiInputTextState"
 defs["ImGuiInputTextState_ImGuiInputTextState"][1]["signature"] = "(ImGuiContext*)"
 defs["ImGuiInputTextState_ImGuiInputTextState"][1]["stname"] = "ImGuiInputTextState"
@@ -5398,7 +6298,11 @@ defs["ImGuiInputTextState_OnKeyPressed"][1]["call_args"] = "(key)"
 defs["ImGuiInputTextState_OnKeyPressed"][1]["cimguiname"] = "ImGuiInputTextState_OnKeyPressed"
 defs["ImGuiInputTextState_OnKeyPressed"][1]["defaults"] = {}
 defs["ImGuiInputTextState_OnKeyPressed"][1]["funcname"] = "OnKeyPressed"
+<<<<<<< HEAD
 defs["ImGuiInputTextState_OnKeyPressed"][1]["location"] = "imgui_internal:1092"
+=======
+defs["ImGuiInputTextState_OnKeyPressed"][1]["location"] = "imgui_internal:1084"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextState_OnKeyPressed"][1]["ov_cimguiname"] = "ImGuiInputTextState_OnKeyPressed"
 defs["ImGuiInputTextState_OnKeyPressed"][1]["ret"] = "void"
 defs["ImGuiInputTextState_OnKeyPressed"][1]["signature"] = "(int)"
@@ -5416,7 +6320,11 @@ defs["ImGuiInputTextState_SelectAll"][1]["call_args"] = "()"
 defs["ImGuiInputTextState_SelectAll"][1]["cimguiname"] = "ImGuiInputTextState_SelectAll"
 defs["ImGuiInputTextState_SelectAll"][1]["defaults"] = {}
 defs["ImGuiInputTextState_SelectAll"][1]["funcname"] = "SelectAll"
+<<<<<<< HEAD
 defs["ImGuiInputTextState_SelectAll"][1]["location"] = "imgui_internal:1102"
+=======
+defs["ImGuiInputTextState_SelectAll"][1]["location"] = "imgui_internal:1094"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiInputTextState_SelectAll"][1]["ov_cimguiname"] = "ImGuiInputTextState_SelectAll"
 defs["ImGuiInputTextState_SelectAll"][1]["ret"] = "void"
 defs["ImGuiInputTextState_SelectAll"][1]["signature"] = "()"
@@ -5448,7 +6356,11 @@ defs["ImGuiKeyOwnerData_ImGuiKeyOwnerData"][1]["cimguiname"] = "ImGuiKeyOwnerDat
 defs["ImGuiKeyOwnerData_ImGuiKeyOwnerData"][1]["constructor"] = true
 defs["ImGuiKeyOwnerData_ImGuiKeyOwnerData"][1]["defaults"] = {}
 defs["ImGuiKeyOwnerData_ImGuiKeyOwnerData"][1]["funcname"] = "ImGuiKeyOwnerData"
+<<<<<<< HEAD
 defs["ImGuiKeyOwnerData_ImGuiKeyOwnerData"][1]["location"] = "imgui_internal:1357"
+=======
+defs["ImGuiKeyOwnerData_ImGuiKeyOwnerData"][1]["location"] = "imgui_internal:1349"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiKeyOwnerData_ImGuiKeyOwnerData"][1]["ov_cimguiname"] = "ImGuiKeyOwnerData_ImGuiKeyOwnerData"
 defs["ImGuiKeyOwnerData_ImGuiKeyOwnerData"][1]["signature"] = "()"
 defs["ImGuiKeyOwnerData_ImGuiKeyOwnerData"][1]["stname"] = "ImGuiKeyOwnerData"
@@ -5479,7 +6391,11 @@ defs["ImGuiKeyRoutingData_ImGuiKeyRoutingData"][1]["cimguiname"] = "ImGuiKeyRout
 defs["ImGuiKeyRoutingData_ImGuiKeyRoutingData"][1]["constructor"] = true
 defs["ImGuiKeyRoutingData_ImGuiKeyRoutingData"][1]["defaults"] = {}
 defs["ImGuiKeyRoutingData_ImGuiKeyRoutingData"][1]["funcname"] = "ImGuiKeyRoutingData"
+<<<<<<< HEAD
 defs["ImGuiKeyRoutingData_ImGuiKeyRoutingData"][1]["location"] = "imgui_internal:1333"
+=======
+defs["ImGuiKeyRoutingData_ImGuiKeyRoutingData"][1]["location"] = "imgui_internal:1325"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiKeyRoutingData_ImGuiKeyRoutingData"][1]["ov_cimguiname"] = "ImGuiKeyRoutingData_ImGuiKeyRoutingData"
 defs["ImGuiKeyRoutingData_ImGuiKeyRoutingData"][1]["signature"] = "()"
 defs["ImGuiKeyRoutingData_ImGuiKeyRoutingData"][1]["stname"] = "ImGuiKeyRoutingData"
@@ -5512,7 +6428,11 @@ defs["ImGuiKeyRoutingTable_Clear"][1]["call_args"] = "()"
 defs["ImGuiKeyRoutingTable_Clear"][1]["cimguiname"] = "ImGuiKeyRoutingTable_Clear"
 defs["ImGuiKeyRoutingTable_Clear"][1]["defaults"] = {}
 defs["ImGuiKeyRoutingTable_Clear"][1]["funcname"] = "Clear"
+<<<<<<< HEAD
 defs["ImGuiKeyRoutingTable_Clear"][1]["location"] = "imgui_internal:1345"
+=======
+defs["ImGuiKeyRoutingTable_Clear"][1]["location"] = "imgui_internal:1337"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiKeyRoutingTable_Clear"][1]["ov_cimguiname"] = "ImGuiKeyRoutingTable_Clear"
 defs["ImGuiKeyRoutingTable_Clear"][1]["ret"] = "void"
 defs["ImGuiKeyRoutingTable_Clear"][1]["signature"] = "()"
@@ -5528,7 +6448,11 @@ defs["ImGuiKeyRoutingTable_ImGuiKeyRoutingTable"][1]["cimguiname"] = "ImGuiKeyRo
 defs["ImGuiKeyRoutingTable_ImGuiKeyRoutingTable"][1]["constructor"] = true
 defs["ImGuiKeyRoutingTable_ImGuiKeyRoutingTable"][1]["defaults"] = {}
 defs["ImGuiKeyRoutingTable_ImGuiKeyRoutingTable"][1]["funcname"] = "ImGuiKeyRoutingTable"
+<<<<<<< HEAD
 defs["ImGuiKeyRoutingTable_ImGuiKeyRoutingTable"][1]["location"] = "imgui_internal:1344"
+=======
+defs["ImGuiKeyRoutingTable_ImGuiKeyRoutingTable"][1]["location"] = "imgui_internal:1336"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiKeyRoutingTable_ImGuiKeyRoutingTable"][1]["ov_cimguiname"] = "ImGuiKeyRoutingTable_ImGuiKeyRoutingTable"
 defs["ImGuiKeyRoutingTable_ImGuiKeyRoutingTable"][1]["signature"] = "()"
 defs["ImGuiKeyRoutingTable_ImGuiKeyRoutingTable"][1]["stname"] = "ImGuiKeyRoutingTable"
@@ -5559,7 +6483,11 @@ defs["ImGuiLastItemData_ImGuiLastItemData"][1]["cimguiname"] = "ImGuiLastItemDat
 defs["ImGuiLastItemData_ImGuiLastItemData"][1]["constructor"] = true
 defs["ImGuiLastItemData_ImGuiLastItemData"][1]["defaults"] = {}
 defs["ImGuiLastItemData_ImGuiLastItemData"][1]["funcname"] = "ImGuiLastItemData"
+<<<<<<< HEAD
 defs["ImGuiLastItemData_ImGuiLastItemData"][1]["location"] = "imgui_internal:1193"
+=======
+defs["ImGuiLastItemData_ImGuiLastItemData"][1]["location"] = "imgui_internal:1185"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiLastItemData_ImGuiLastItemData"][1]["ov_cimguiname"] = "ImGuiLastItemData_ImGuiLastItemData"
 defs["ImGuiLastItemData_ImGuiLastItemData"][1]["signature"] = "()"
 defs["ImGuiLastItemData_ImGuiLastItemData"][1]["stname"] = "ImGuiLastItemData"
@@ -5590,7 +6518,11 @@ defs["ImGuiListClipperData_ImGuiListClipperData"][1]["cimguiname"] = "ImGuiListC
 defs["ImGuiListClipperData_ImGuiListClipperData"][1]["constructor"] = true
 defs["ImGuiListClipperData_ImGuiListClipperData"][1]["defaults"] = {}
 defs["ImGuiListClipperData_ImGuiListClipperData"][1]["funcname"] = "ImGuiListClipperData"
+<<<<<<< HEAD
 defs["ImGuiListClipperData_ImGuiListClipperData"][1]["location"] = "imgui_internal:1433"
+=======
+defs["ImGuiListClipperData_ImGuiListClipperData"][1]["location"] = "imgui_internal:1425"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiListClipperData_ImGuiListClipperData"][1]["ov_cimguiname"] = "ImGuiListClipperData_ImGuiListClipperData"
 defs["ImGuiListClipperData_ImGuiListClipperData"][1]["signature"] = "()"
 defs["ImGuiListClipperData_ImGuiListClipperData"][1]["stname"] = "ImGuiListClipperData"
@@ -5610,7 +6542,11 @@ defs["ImGuiListClipperData_Reset"][1]["call_args"] = "(clipper)"
 defs["ImGuiListClipperData_Reset"][1]["cimguiname"] = "ImGuiListClipperData_Reset"
 defs["ImGuiListClipperData_Reset"][1]["defaults"] = {}
 defs["ImGuiListClipperData_Reset"][1]["funcname"] = "Reset"
+<<<<<<< HEAD
 defs["ImGuiListClipperData_Reset"][1]["location"] = "imgui_internal:1434"
+=======
+defs["ImGuiListClipperData_Reset"][1]["location"] = "imgui_internal:1426"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiListClipperData_Reset"][1]["ov_cimguiname"] = "ImGuiListClipperData_Reset"
 defs["ImGuiListClipperData_Reset"][1]["ret"] = "void"
 defs["ImGuiListClipperData_Reset"][1]["signature"] = "(ImGuiListClipper*)"
@@ -5648,7 +6584,11 @@ defs["ImGuiListClipperRange_FromIndices"][1]["cimguiname"] = "ImGuiListClipperRa
 defs["ImGuiListClipperRange_FromIndices"][1]["defaults"] = {}
 defs["ImGuiListClipperRange_FromIndices"][1]["funcname"] = "FromIndices"
 defs["ImGuiListClipperRange_FromIndices"][1]["is_static_function"] = true
+<<<<<<< HEAD
 defs["ImGuiListClipperRange_FromIndices"][1]["location"] = "imgui_internal:1420"
+=======
+defs["ImGuiListClipperRange_FromIndices"][1]["location"] = "imgui_internal:1412"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiListClipperRange_FromIndices"][1]["ov_cimguiname"] = "ImGuiListClipperRange_FromIndices"
 defs["ImGuiListClipperRange_FromIndices"][1]["ret"] = "ImGuiListClipperRange"
 defs["ImGuiListClipperRange_FromIndices"][1]["signature"] = "(int,int)"
@@ -5676,7 +6616,11 @@ defs["ImGuiListClipperRange_FromPositions"][1]["cimguiname"] = "ImGuiListClipper
 defs["ImGuiListClipperRange_FromPositions"][1]["defaults"] = {}
 defs["ImGuiListClipperRange_FromPositions"][1]["funcname"] = "FromPositions"
 defs["ImGuiListClipperRange_FromPositions"][1]["is_static_function"] = true
+<<<<<<< HEAD
 defs["ImGuiListClipperRange_FromPositions"][1]["location"] = "imgui_internal:1421"
+=======
+defs["ImGuiListClipperRange_FromPositions"][1]["location"] = "imgui_internal:1413"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiListClipperRange_FromPositions"][1]["ov_cimguiname"] = "ImGuiListClipperRange_FromPositions"
 defs["ImGuiListClipperRange_FromPositions"][1]["ret"] = "ImGuiListClipperRange"
 defs["ImGuiListClipperRange_FromPositions"][1]["signature"] = "(float,float,int,int)"
@@ -5701,7 +6645,11 @@ defs["ImGuiListClipper_Begin"][1]["cimguiname"] = "ImGuiListClipper_Begin"
 defs["ImGuiListClipper_Begin"][1]["defaults"] = {}
 defs["ImGuiListClipper_Begin"][1]["defaults"]["items_height"] = "-1.0f"
 defs["ImGuiListClipper_Begin"][1]["funcname"] = "Begin"
+<<<<<<< HEAD
 defs["ImGuiListClipper_Begin"][1]["location"] = "imgui:2424"
+=======
+defs["ImGuiListClipper_Begin"][1]["location"] = "imgui:2417"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiListClipper_Begin"][1]["ov_cimguiname"] = "ImGuiListClipper_Begin"
 defs["ImGuiListClipper_Begin"][1]["ret"] = "void"
 defs["ImGuiListClipper_Begin"][1]["signature"] = "(int,float)"
@@ -5719,7 +6667,11 @@ defs["ImGuiListClipper_End"][1]["call_args"] = "()"
 defs["ImGuiListClipper_End"][1]["cimguiname"] = "ImGuiListClipper_End"
 defs["ImGuiListClipper_End"][1]["defaults"] = {}
 defs["ImGuiListClipper_End"][1]["funcname"] = "End"
+<<<<<<< HEAD
 defs["ImGuiListClipper_End"][1]["location"] = "imgui:2425"
+=======
+defs["ImGuiListClipper_End"][1]["location"] = "imgui:2418"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiListClipper_End"][1]["ov_cimguiname"] = "ImGuiListClipper_End"
 defs["ImGuiListClipper_End"][1]["ret"] = "void"
 defs["ImGuiListClipper_End"][1]["signature"] = "()"
@@ -5743,7 +6695,11 @@ defs["ImGuiListClipper_ForceDisplayRangeByIndices"][1]["call_args"] = "(item_min
 defs["ImGuiListClipper_ForceDisplayRangeByIndices"][1]["cimguiname"] = "ImGuiListClipper_ForceDisplayRangeByIndices"
 defs["ImGuiListClipper_ForceDisplayRangeByIndices"][1]["defaults"] = {}
 defs["ImGuiListClipper_ForceDisplayRangeByIndices"][1]["funcname"] = "ForceDisplayRangeByIndices"
+<<<<<<< HEAD
 defs["ImGuiListClipper_ForceDisplayRangeByIndices"][1]["location"] = "imgui:2429"
+=======
+defs["ImGuiListClipper_ForceDisplayRangeByIndices"][1]["location"] = "imgui:2422"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiListClipper_ForceDisplayRangeByIndices"][1]["ov_cimguiname"] = "ImGuiListClipper_ForceDisplayRangeByIndices"
 defs["ImGuiListClipper_ForceDisplayRangeByIndices"][1]["ret"] = "void"
 defs["ImGuiListClipper_ForceDisplayRangeByIndices"][1]["signature"] = "(int,int)"
@@ -5759,7 +6715,11 @@ defs["ImGuiListClipper_ImGuiListClipper"][1]["cimguiname"] = "ImGuiListClipper_I
 defs["ImGuiListClipper_ImGuiListClipper"][1]["constructor"] = true
 defs["ImGuiListClipper_ImGuiListClipper"][1]["defaults"] = {}
 defs["ImGuiListClipper_ImGuiListClipper"][1]["funcname"] = "ImGuiListClipper"
+<<<<<<< HEAD
 defs["ImGuiListClipper_ImGuiListClipper"][1]["location"] = "imgui:2422"
+=======
+defs["ImGuiListClipper_ImGuiListClipper"][1]["location"] = "imgui:2415"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiListClipper_ImGuiListClipper"][1]["ov_cimguiname"] = "ImGuiListClipper_ImGuiListClipper"
 defs["ImGuiListClipper_ImGuiListClipper"][1]["signature"] = "()"
 defs["ImGuiListClipper_ImGuiListClipper"][1]["stname"] = "ImGuiListClipper"
@@ -5776,7 +6736,11 @@ defs["ImGuiListClipper_Step"][1]["call_args"] = "()"
 defs["ImGuiListClipper_Step"][1]["cimguiname"] = "ImGuiListClipper_Step"
 defs["ImGuiListClipper_Step"][1]["defaults"] = {}
 defs["ImGuiListClipper_Step"][1]["funcname"] = "Step"
+<<<<<<< HEAD
 defs["ImGuiListClipper_Step"][1]["location"] = "imgui:2426"
+=======
+defs["ImGuiListClipper_Step"][1]["location"] = "imgui:2419"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiListClipper_Step"][1]["ov_cimguiname"] = "ImGuiListClipper_Step"
 defs["ImGuiListClipper_Step"][1]["ret"] = "bool"
 defs["ImGuiListClipper_Step"][1]["signature"] = "()"
@@ -5793,7 +6757,11 @@ defs["ImGuiListClipper_destroy"][1]["call_args"] = "(self)"
 defs["ImGuiListClipper_destroy"][1]["cimguiname"] = "ImGuiListClipper_destroy"
 defs["ImGuiListClipper_destroy"][1]["defaults"] = {}
 defs["ImGuiListClipper_destroy"][1]["destructor"] = true
+<<<<<<< HEAD
 defs["ImGuiListClipper_destroy"][1]["location"] = "imgui:2423"
+=======
+defs["ImGuiListClipper_destroy"][1]["location"] = "imgui:2416"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiListClipper_destroy"][1]["ov_cimguiname"] = "ImGuiListClipper_destroy"
 defs["ImGuiListClipper_destroy"][1]["realdestructor"] = true
 defs["ImGuiListClipper_destroy"][1]["ret"] = "void"
@@ -5815,7 +6783,11 @@ defs["ImGuiMenuColumns_CalcNextTotalWidth"][1]["call_args"] = "(update_offsets)"
 defs["ImGuiMenuColumns_CalcNextTotalWidth"][1]["cimguiname"] = "ImGuiMenuColumns_CalcNextTotalWidth"
 defs["ImGuiMenuColumns_CalcNextTotalWidth"][1]["defaults"] = {}
 defs["ImGuiMenuColumns_CalcNextTotalWidth"][1]["funcname"] = "CalcNextTotalWidth"
+<<<<<<< HEAD
 defs["ImGuiMenuColumns_CalcNextTotalWidth"][1]["location"] = "imgui_internal:1064"
+=======
+defs["ImGuiMenuColumns_CalcNextTotalWidth"][1]["location"] = "imgui_internal:1056"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiMenuColumns_CalcNextTotalWidth"][1]["ov_cimguiname"] = "ImGuiMenuColumns_CalcNextTotalWidth"
 defs["ImGuiMenuColumns_CalcNextTotalWidth"][1]["ret"] = "void"
 defs["ImGuiMenuColumns_CalcNextTotalWidth"][1]["signature"] = "(bool)"
@@ -5845,7 +6817,11 @@ defs["ImGuiMenuColumns_DeclColumns"][1]["call_args"] = "(w_icon,w_label,w_shortc
 defs["ImGuiMenuColumns_DeclColumns"][1]["cimguiname"] = "ImGuiMenuColumns_DeclColumns"
 defs["ImGuiMenuColumns_DeclColumns"][1]["defaults"] = {}
 defs["ImGuiMenuColumns_DeclColumns"][1]["funcname"] = "DeclColumns"
+<<<<<<< HEAD
 defs["ImGuiMenuColumns_DeclColumns"][1]["location"] = "imgui_internal:1063"
+=======
+defs["ImGuiMenuColumns_DeclColumns"][1]["location"] = "imgui_internal:1055"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiMenuColumns_DeclColumns"][1]["ov_cimguiname"] = "ImGuiMenuColumns_DeclColumns"
 defs["ImGuiMenuColumns_DeclColumns"][1]["ret"] = "float"
 defs["ImGuiMenuColumns_DeclColumns"][1]["signature"] = "(float,float,float,float)"
@@ -5861,7 +6837,11 @@ defs["ImGuiMenuColumns_ImGuiMenuColumns"][1]["cimguiname"] = "ImGuiMenuColumns_I
 defs["ImGuiMenuColumns_ImGuiMenuColumns"][1]["constructor"] = true
 defs["ImGuiMenuColumns_ImGuiMenuColumns"][1]["defaults"] = {}
 defs["ImGuiMenuColumns_ImGuiMenuColumns"][1]["funcname"] = "ImGuiMenuColumns"
+<<<<<<< HEAD
 defs["ImGuiMenuColumns_ImGuiMenuColumns"][1]["location"] = "imgui_internal:1061"
+=======
+defs["ImGuiMenuColumns_ImGuiMenuColumns"][1]["location"] = "imgui_internal:1053"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiMenuColumns_ImGuiMenuColumns"][1]["ov_cimguiname"] = "ImGuiMenuColumns_ImGuiMenuColumns"
 defs["ImGuiMenuColumns_ImGuiMenuColumns"][1]["signature"] = "()"
 defs["ImGuiMenuColumns_ImGuiMenuColumns"][1]["stname"] = "ImGuiMenuColumns"
@@ -5884,7 +6864,11 @@ defs["ImGuiMenuColumns_Update"][1]["call_args"] = "(spacing,window_reappearing)"
 defs["ImGuiMenuColumns_Update"][1]["cimguiname"] = "ImGuiMenuColumns_Update"
 defs["ImGuiMenuColumns_Update"][1]["defaults"] = {}
 defs["ImGuiMenuColumns_Update"][1]["funcname"] = "Update"
+<<<<<<< HEAD
 defs["ImGuiMenuColumns_Update"][1]["location"] = "imgui_internal:1062"
+=======
+defs["ImGuiMenuColumns_Update"][1]["location"] = "imgui_internal:1054"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiMenuColumns_Update"][1]["ov_cimguiname"] = "ImGuiMenuColumns_Update"
 defs["ImGuiMenuColumns_Update"][1]["ret"] = "void"
 defs["ImGuiMenuColumns_Update"][1]["signature"] = "(float,bool)"
@@ -5906,6 +6890,40 @@ defs["ImGuiMenuColumns_destroy"][1]["ret"] = "void"
 defs["ImGuiMenuColumns_destroy"][1]["signature"] = "(ImGuiMenuColumns*)"
 defs["ImGuiMenuColumns_destroy"][1]["stname"] = "ImGuiMenuColumns"
 defs["ImGuiMenuColumns_destroy"]["(ImGuiMenuColumns*)"] = defs["ImGuiMenuColumns_destroy"][1]
+<<<<<<< HEAD
+=======
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"] = {}
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"][1] = {}
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"][1]["args"] = "()"
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"][1]["argsT"] = {}
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"][1]["argsoriginal"] = "()"
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"][1]["call_args"] = "()"
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"][1]["cimguiname"] = "ImGuiMetricsConfig_ImGuiMetricsConfig"
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"][1]["constructor"] = true
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"][1]["defaults"] = {}
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"][1]["funcname"] = "ImGuiMetricsConfig"
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"][1]["location"] = "imgui_internal:1854"
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"][1]["ov_cimguiname"] = "ImGuiMetricsConfig_ImGuiMetricsConfig"
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"][1]["signature"] = "()"
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"][1]["stname"] = "ImGuiMetricsConfig"
+defs["ImGuiMetricsConfig_ImGuiMetricsConfig"]["()"] = defs["ImGuiMetricsConfig_ImGuiMetricsConfig"][1]
+defs["ImGuiMetricsConfig_destroy"] = {}
+defs["ImGuiMetricsConfig_destroy"][1] = {}
+defs["ImGuiMetricsConfig_destroy"][1]["args"] = "(ImGuiMetricsConfig* self)"
+defs["ImGuiMetricsConfig_destroy"][1]["argsT"] = {}
+defs["ImGuiMetricsConfig_destroy"][1]["argsT"][1] = {}
+defs["ImGuiMetricsConfig_destroy"][1]["argsT"][1]["name"] = "self"
+defs["ImGuiMetricsConfig_destroy"][1]["argsT"][1]["type"] = "ImGuiMetricsConfig*"
+defs["ImGuiMetricsConfig_destroy"][1]["call_args"] = "(self)"
+defs["ImGuiMetricsConfig_destroy"][1]["cimguiname"] = "ImGuiMetricsConfig_destroy"
+defs["ImGuiMetricsConfig_destroy"][1]["defaults"] = {}
+defs["ImGuiMetricsConfig_destroy"][1]["destructor"] = true
+defs["ImGuiMetricsConfig_destroy"][1]["ov_cimguiname"] = "ImGuiMetricsConfig_destroy"
+defs["ImGuiMetricsConfig_destroy"][1]["ret"] = "void"
+defs["ImGuiMetricsConfig_destroy"][1]["signature"] = "(ImGuiMetricsConfig*)"
+defs["ImGuiMetricsConfig_destroy"][1]["stname"] = "ImGuiMetricsConfig"
+defs["ImGuiMetricsConfig_destroy"]["(ImGuiMetricsConfig*)"] = defs["ImGuiMetricsConfig_destroy"][1]
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiNavItemData_Clear"] = {}
 defs["ImGuiNavItemData_Clear"][1] = {}
 defs["ImGuiNavItemData_Clear"][1]["args"] = "(ImGuiNavItemData* self)"
@@ -5918,7 +6936,11 @@ defs["ImGuiNavItemData_Clear"][1]["call_args"] = "()"
 defs["ImGuiNavItemData_Clear"][1]["cimguiname"] = "ImGuiNavItemData_Clear"
 defs["ImGuiNavItemData_Clear"][1]["defaults"] = {}
 defs["ImGuiNavItemData_Clear"][1]["funcname"] = "Clear"
+<<<<<<< HEAD
 defs["ImGuiNavItemData_Clear"][1]["location"] = "imgui_internal:1510"
+=======
+defs["ImGuiNavItemData_Clear"][1]["location"] = "imgui_internal:1502"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiNavItemData_Clear"][1]["ov_cimguiname"] = "ImGuiNavItemData_Clear"
 defs["ImGuiNavItemData_Clear"][1]["ret"] = "void"
 defs["ImGuiNavItemData_Clear"][1]["signature"] = "()"
@@ -5934,7 +6956,11 @@ defs["ImGuiNavItemData_ImGuiNavItemData"][1]["cimguiname"] = "ImGuiNavItemData_I
 defs["ImGuiNavItemData_ImGuiNavItemData"][1]["constructor"] = true
 defs["ImGuiNavItemData_ImGuiNavItemData"][1]["defaults"] = {}
 defs["ImGuiNavItemData_ImGuiNavItemData"][1]["funcname"] = "ImGuiNavItemData"
+<<<<<<< HEAD
 defs["ImGuiNavItemData_ImGuiNavItemData"][1]["location"] = "imgui_internal:1509"
+=======
+defs["ImGuiNavItemData_ImGuiNavItemData"][1]["location"] = "imgui_internal:1501"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiNavItemData_ImGuiNavItemData"][1]["ov_cimguiname"] = "ImGuiNavItemData_ImGuiNavItemData"
 defs["ImGuiNavItemData_ImGuiNavItemData"][1]["signature"] = "()"
 defs["ImGuiNavItemData_ImGuiNavItemData"][1]["stname"] = "ImGuiNavItemData"
@@ -5967,7 +6993,11 @@ defs["ImGuiNextItemData_ClearFlags"][1]["call_args"] = "()"
 defs["ImGuiNextItemData_ClearFlags"][1]["cimguiname"] = "ImGuiNextItemData_ClearFlags"
 defs["ImGuiNextItemData_ClearFlags"][1]["defaults"] = {}
 defs["ImGuiNextItemData_ClearFlags"][1]["funcname"] = "ClearFlags"
+<<<<<<< HEAD
 defs["ImGuiNextItemData_ClearFlags"][1]["location"] = "imgui_internal:1180"
+=======
+defs["ImGuiNextItemData_ClearFlags"][1]["location"] = "imgui_internal:1172"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiNextItemData_ClearFlags"][1]["ov_cimguiname"] = "ImGuiNextItemData_ClearFlags"
 defs["ImGuiNextItemData_ClearFlags"][1]["ret"] = "void"
 defs["ImGuiNextItemData_ClearFlags"][1]["signature"] = "()"
@@ -5983,7 +7013,11 @@ defs["ImGuiNextItemData_ImGuiNextItemData"][1]["cimguiname"] = "ImGuiNextItemDat
 defs["ImGuiNextItemData_ImGuiNextItemData"][1]["constructor"] = true
 defs["ImGuiNextItemData_ImGuiNextItemData"][1]["defaults"] = {}
 defs["ImGuiNextItemData_ImGuiNextItemData"][1]["funcname"] = "ImGuiNextItemData"
+<<<<<<< HEAD
 defs["ImGuiNextItemData_ImGuiNextItemData"][1]["location"] = "imgui_internal:1179"
+=======
+defs["ImGuiNextItemData_ImGuiNextItemData"][1]["location"] = "imgui_internal:1171"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiNextItemData_ImGuiNextItemData"][1]["ov_cimguiname"] = "ImGuiNextItemData_ImGuiNextItemData"
 defs["ImGuiNextItemData_ImGuiNextItemData"][1]["signature"] = "()"
 defs["ImGuiNextItemData_ImGuiNextItemData"][1]["stname"] = "ImGuiNextItemData"
@@ -6016,7 +7050,11 @@ defs["ImGuiNextWindowData_ClearFlags"][1]["call_args"] = "()"
 defs["ImGuiNextWindowData_ClearFlags"][1]["cimguiname"] = "ImGuiNextWindowData_ClearFlags"
 defs["ImGuiNextWindowData_ClearFlags"][1]["defaults"] = {}
 defs["ImGuiNextWindowData_ClearFlags"][1]["funcname"] = "ClearFlags"
+<<<<<<< HEAD
 defs["ImGuiNextWindowData_ClearFlags"][1]["location"] = "imgui_internal:1161"
+=======
+defs["ImGuiNextWindowData_ClearFlags"][1]["location"] = "imgui_internal:1153"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiNextWindowData_ClearFlags"][1]["ov_cimguiname"] = "ImGuiNextWindowData_ClearFlags"
 defs["ImGuiNextWindowData_ClearFlags"][1]["ret"] = "void"
 defs["ImGuiNextWindowData_ClearFlags"][1]["signature"] = "()"
@@ -6032,7 +7070,11 @@ defs["ImGuiNextWindowData_ImGuiNextWindowData"][1]["cimguiname"] = "ImGuiNextWin
 defs["ImGuiNextWindowData_ImGuiNextWindowData"][1]["constructor"] = true
 defs["ImGuiNextWindowData_ImGuiNextWindowData"][1]["defaults"] = {}
 defs["ImGuiNextWindowData_ImGuiNextWindowData"][1]["funcname"] = "ImGuiNextWindowData"
+<<<<<<< HEAD
 defs["ImGuiNextWindowData_ImGuiNextWindowData"][1]["location"] = "imgui_internal:1160"
+=======
+defs["ImGuiNextWindowData_ImGuiNextWindowData"][1]["location"] = "imgui_internal:1152"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiNextWindowData_ImGuiNextWindowData"][1]["ov_cimguiname"] = "ImGuiNextWindowData_ImGuiNextWindowData"
 defs["ImGuiNextWindowData_ImGuiNextWindowData"][1]["signature"] = "()"
 defs["ImGuiNextWindowData_ImGuiNextWindowData"][1]["stname"] = "ImGuiNextWindowData"
@@ -6063,7 +7105,11 @@ defs["ImGuiOldColumnData_ImGuiOldColumnData"][1]["cimguiname"] = "ImGuiOldColumn
 defs["ImGuiOldColumnData_ImGuiOldColumnData"][1]["constructor"] = true
 defs["ImGuiOldColumnData_ImGuiOldColumnData"][1]["defaults"] = {}
 defs["ImGuiOldColumnData_ImGuiOldColumnData"][1]["funcname"] = "ImGuiOldColumnData"
+<<<<<<< HEAD
 defs["ImGuiOldColumnData_ImGuiOldColumnData"][1]["location"] = "imgui_internal:1545"
+=======
+defs["ImGuiOldColumnData_ImGuiOldColumnData"][1]["location"] = "imgui_internal:1537"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiOldColumnData_ImGuiOldColumnData"][1]["ov_cimguiname"] = "ImGuiOldColumnData_ImGuiOldColumnData"
 defs["ImGuiOldColumnData_ImGuiOldColumnData"][1]["signature"] = "()"
 defs["ImGuiOldColumnData_ImGuiOldColumnData"][1]["stname"] = "ImGuiOldColumnData"
@@ -6094,7 +7140,11 @@ defs["ImGuiOldColumns_ImGuiOldColumns"][1]["cimguiname"] = "ImGuiOldColumns_ImGu
 defs["ImGuiOldColumns_ImGuiOldColumns"][1]["constructor"] = true
 defs["ImGuiOldColumns_ImGuiOldColumns"][1]["defaults"] = {}
 defs["ImGuiOldColumns_ImGuiOldColumns"][1]["funcname"] = "ImGuiOldColumns"
+<<<<<<< HEAD
 defs["ImGuiOldColumns_ImGuiOldColumns"][1]["location"] = "imgui_internal:1566"
+=======
+defs["ImGuiOldColumns_ImGuiOldColumns"][1]["location"] = "imgui_internal:1558"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiOldColumns_ImGuiOldColumns"][1]["ov_cimguiname"] = "ImGuiOldColumns_ImGuiOldColumns"
 defs["ImGuiOldColumns_ImGuiOldColumns"][1]["signature"] = "()"
 defs["ImGuiOldColumns_ImGuiOldColumns"][1]["stname"] = "ImGuiOldColumns"
@@ -6125,7 +7175,11 @@ defs["ImGuiOnceUponAFrame_ImGuiOnceUponAFrame"][1]["cimguiname"] = "ImGuiOnceUpo
 defs["ImGuiOnceUponAFrame_ImGuiOnceUponAFrame"][1]["constructor"] = true
 defs["ImGuiOnceUponAFrame_ImGuiOnceUponAFrame"][1]["defaults"] = {}
 defs["ImGuiOnceUponAFrame_ImGuiOnceUponAFrame"][1]["funcname"] = "ImGuiOnceUponAFrame"
+<<<<<<< HEAD
 defs["ImGuiOnceUponAFrame_ImGuiOnceUponAFrame"][1]["location"] = "imgui:2288"
+=======
+defs["ImGuiOnceUponAFrame_ImGuiOnceUponAFrame"][1]["location"] = "imgui:2281"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiOnceUponAFrame_ImGuiOnceUponAFrame"][1]["ov_cimguiname"] = "ImGuiOnceUponAFrame_ImGuiOnceUponAFrame"
 defs["ImGuiOnceUponAFrame_ImGuiOnceUponAFrame"][1]["signature"] = "()"
 defs["ImGuiOnceUponAFrame_ImGuiOnceUponAFrame"][1]["stname"] = "ImGuiOnceUponAFrame"
@@ -6158,7 +7212,11 @@ defs["ImGuiPayload_Clear"][1]["call_args"] = "()"
 defs["ImGuiPayload_Clear"][1]["cimguiname"] = "ImGuiPayload_Clear"
 defs["ImGuiPayload_Clear"][1]["defaults"] = {}
 defs["ImGuiPayload_Clear"][1]["funcname"] = "Clear"
+<<<<<<< HEAD
 defs["ImGuiPayload_Clear"][1]["location"] = "imgui:2242"
+=======
+defs["ImGuiPayload_Clear"][1]["location"] = "imgui:2235"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiPayload_Clear"][1]["ov_cimguiname"] = "ImGuiPayload_Clear"
 defs["ImGuiPayload_Clear"][1]["ret"] = "void"
 defs["ImGuiPayload_Clear"][1]["signature"] = "()"
@@ -6174,7 +7232,11 @@ defs["ImGuiPayload_ImGuiPayload"][1]["cimguiname"] = "ImGuiPayload_ImGuiPayload"
 defs["ImGuiPayload_ImGuiPayload"][1]["constructor"] = true
 defs["ImGuiPayload_ImGuiPayload"][1]["defaults"] = {}
 defs["ImGuiPayload_ImGuiPayload"][1]["funcname"] = "ImGuiPayload"
+<<<<<<< HEAD
 defs["ImGuiPayload_ImGuiPayload"][1]["location"] = "imgui:2241"
+=======
+defs["ImGuiPayload_ImGuiPayload"][1]["location"] = "imgui:2234"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiPayload_ImGuiPayload"][1]["ov_cimguiname"] = "ImGuiPayload_ImGuiPayload"
 defs["ImGuiPayload_ImGuiPayload"][1]["signature"] = "()"
 defs["ImGuiPayload_ImGuiPayload"][1]["stname"] = "ImGuiPayload"
@@ -6194,7 +7256,11 @@ defs["ImGuiPayload_IsDataType"][1]["call_args"] = "(type)"
 defs["ImGuiPayload_IsDataType"][1]["cimguiname"] = "ImGuiPayload_IsDataType"
 defs["ImGuiPayload_IsDataType"][1]["defaults"] = {}
 defs["ImGuiPayload_IsDataType"][1]["funcname"] = "IsDataType"
+<<<<<<< HEAD
 defs["ImGuiPayload_IsDataType"][1]["location"] = "imgui:2243"
+=======
+defs["ImGuiPayload_IsDataType"][1]["location"] = "imgui:2236"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiPayload_IsDataType"][1]["ov_cimguiname"] = "ImGuiPayload_IsDataType"
 defs["ImGuiPayload_IsDataType"][1]["ret"] = "bool"
 defs["ImGuiPayload_IsDataType"][1]["signature"] = "(const char*)const"
@@ -6212,7 +7278,11 @@ defs["ImGuiPayload_IsDelivery"][1]["call_args"] = "()"
 defs["ImGuiPayload_IsDelivery"][1]["cimguiname"] = "ImGuiPayload_IsDelivery"
 defs["ImGuiPayload_IsDelivery"][1]["defaults"] = {}
 defs["ImGuiPayload_IsDelivery"][1]["funcname"] = "IsDelivery"
+<<<<<<< HEAD
 defs["ImGuiPayload_IsDelivery"][1]["location"] = "imgui:2245"
+=======
+defs["ImGuiPayload_IsDelivery"][1]["location"] = "imgui:2238"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiPayload_IsDelivery"][1]["ov_cimguiname"] = "ImGuiPayload_IsDelivery"
 defs["ImGuiPayload_IsDelivery"][1]["ret"] = "bool"
 defs["ImGuiPayload_IsDelivery"][1]["signature"] = "()const"
@@ -6230,7 +7300,11 @@ defs["ImGuiPayload_IsPreview"][1]["call_args"] = "()"
 defs["ImGuiPayload_IsPreview"][1]["cimguiname"] = "ImGuiPayload_IsPreview"
 defs["ImGuiPayload_IsPreview"][1]["defaults"] = {}
 defs["ImGuiPayload_IsPreview"][1]["funcname"] = "IsPreview"
+<<<<<<< HEAD
 defs["ImGuiPayload_IsPreview"][1]["location"] = "imgui:2244"
+=======
+defs["ImGuiPayload_IsPreview"][1]["location"] = "imgui:2237"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiPayload_IsPreview"][1]["ov_cimguiname"] = "ImGuiPayload_IsPreview"
 defs["ImGuiPayload_IsPreview"][1]["ret"] = "bool"
 defs["ImGuiPayload_IsPreview"][1]["signature"] = "()const"
@@ -6262,7 +7336,11 @@ defs["ImGuiPlatformIO_ImGuiPlatformIO"][1]["cimguiname"] = "ImGuiPlatformIO_ImGu
 defs["ImGuiPlatformIO_ImGuiPlatformIO"][1]["constructor"] = true
 defs["ImGuiPlatformIO_ImGuiPlatformIO"][1]["defaults"] = {}
 defs["ImGuiPlatformIO_ImGuiPlatformIO"][1]["funcname"] = "ImGuiPlatformIO"
+<<<<<<< HEAD
 defs["ImGuiPlatformIO_ImGuiPlatformIO"][1]["location"] = "imgui:3189"
+=======
+defs["ImGuiPlatformIO_ImGuiPlatformIO"][1]["location"] = "imgui:3180"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiPlatformIO_ImGuiPlatformIO"][1]["ov_cimguiname"] = "ImGuiPlatformIO_ImGuiPlatformIO"
 defs["ImGuiPlatformIO_ImGuiPlatformIO"][1]["signature"] = "()"
 defs["ImGuiPlatformIO_ImGuiPlatformIO"][1]["stname"] = "ImGuiPlatformIO"
@@ -6293,7 +7371,11 @@ defs["ImGuiPlatformImeData_ImGuiPlatformImeData"][1]["cimguiname"] = "ImGuiPlatf
 defs["ImGuiPlatformImeData_ImGuiPlatformImeData"][1]["constructor"] = true
 defs["ImGuiPlatformImeData_ImGuiPlatformImeData"][1]["defaults"] = {}
 defs["ImGuiPlatformImeData_ImGuiPlatformImeData"][1]["funcname"] = "ImGuiPlatformImeData"
+<<<<<<< HEAD
 defs["ImGuiPlatformImeData_ImGuiPlatformImeData"][1]["location"] = "imgui:3209"
+=======
+defs["ImGuiPlatformImeData_ImGuiPlatformImeData"][1]["location"] = "imgui:3200"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiPlatformImeData_ImGuiPlatformImeData"][1]["ov_cimguiname"] = "ImGuiPlatformImeData_ImGuiPlatformImeData"
 defs["ImGuiPlatformImeData_ImGuiPlatformImeData"][1]["signature"] = "()"
 defs["ImGuiPlatformImeData_ImGuiPlatformImeData"][1]["stname"] = "ImGuiPlatformImeData"
@@ -6324,7 +7406,11 @@ defs["ImGuiPlatformMonitor_ImGuiPlatformMonitor"][1]["cimguiname"] = "ImGuiPlatf
 defs["ImGuiPlatformMonitor_ImGuiPlatformMonitor"][1]["constructor"] = true
 defs["ImGuiPlatformMonitor_ImGuiPlatformMonitor"][1]["defaults"] = {}
 defs["ImGuiPlatformMonitor_ImGuiPlatformMonitor"][1]["funcname"] = "ImGuiPlatformMonitor"
+<<<<<<< HEAD
 defs["ImGuiPlatformMonitor_ImGuiPlatformMonitor"][1]["location"] = "imgui:3199"
+=======
+defs["ImGuiPlatformMonitor_ImGuiPlatformMonitor"][1]["location"] = "imgui:3190"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiPlatformMonitor_ImGuiPlatformMonitor"][1]["ov_cimguiname"] = "ImGuiPlatformMonitor_ImGuiPlatformMonitor"
 defs["ImGuiPlatformMonitor_ImGuiPlatformMonitor"][1]["signature"] = "()"
 defs["ImGuiPlatformMonitor_ImGuiPlatformMonitor"][1]["stname"] = "ImGuiPlatformMonitor"
@@ -6355,7 +7441,11 @@ defs["ImGuiPopupData_ImGuiPopupData"][1]["cimguiname"] = "ImGuiPopupData_ImGuiPo
 defs["ImGuiPopupData_ImGuiPopupData"][1]["constructor"] = true
 defs["ImGuiPopupData_ImGuiPopupData"][1]["defaults"] = {}
 defs["ImGuiPopupData_ImGuiPopupData"][1]["funcname"] = "ImGuiPopupData"
+<<<<<<< HEAD
 defs["ImGuiPopupData_ImGuiPopupData"][1]["location"] = "imgui_internal:1117"
+=======
+defs["ImGuiPopupData_ImGuiPopupData"][1]["location"] = "imgui_internal:1109"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiPopupData_ImGuiPopupData"][1]["ov_cimguiname"] = "ImGuiPopupData_ImGuiPopupData"
 defs["ImGuiPopupData_ImGuiPopupData"][1]["signature"] = "()"
 defs["ImGuiPopupData_ImGuiPopupData"][1]["stname"] = "ImGuiPopupData"
@@ -6389,7 +7479,11 @@ defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][1]["cimguiname"] = "ImGuiPtrOrIndex_ImGu
 defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][1]["constructor"] = true
 defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][1]["defaults"] = {}
 defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][1]["funcname"] = "ImGuiPtrOrIndex"
+<<<<<<< HEAD
 defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][1]["location"] = "imgui_internal:1233"
+=======
+defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][1]["location"] = "imgui_internal:1225"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][1]["ov_cimguiname"] = "ImGuiPtrOrIndex_ImGuiPtrOrIndex_Ptr"
 defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][1]["signature"] = "(void*)"
 defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][1]["stname"] = "ImGuiPtrOrIndex"
@@ -6405,7 +7499,11 @@ defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][2]["cimguiname"] = "ImGuiPtrOrIndex_ImGu
 defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][2]["constructor"] = true
 defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][2]["defaults"] = {}
 defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][2]["funcname"] = "ImGuiPtrOrIndex"
+<<<<<<< HEAD
 defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][2]["location"] = "imgui_internal:1234"
+=======
+defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][2]["location"] = "imgui_internal:1226"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][2]["ov_cimguiname"] = "ImGuiPtrOrIndex_ImGuiPtrOrIndex_Int"
 defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][2]["signature"] = "(int)"
 defs["ImGuiPtrOrIndex_ImGuiPtrOrIndex"][2]["stname"] = "ImGuiPtrOrIndex"
@@ -6437,7 +7535,11 @@ defs["ImGuiSettingsHandler_ImGuiSettingsHandler"][1]["cimguiname"] = "ImGuiSetti
 defs["ImGuiSettingsHandler_ImGuiSettingsHandler"][1]["constructor"] = true
 defs["ImGuiSettingsHandler_ImGuiSettingsHandler"][1]["defaults"] = {}
 defs["ImGuiSettingsHandler_ImGuiSettingsHandler"][1]["funcname"] = "ImGuiSettingsHandler"
+<<<<<<< HEAD
 defs["ImGuiSettingsHandler_ImGuiSettingsHandler"][1]["location"] = "imgui_internal:1802"
+=======
+defs["ImGuiSettingsHandler_ImGuiSettingsHandler"][1]["location"] = "imgui_internal:1793"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiSettingsHandler_ImGuiSettingsHandler"][1]["ov_cimguiname"] = "ImGuiSettingsHandler_ImGuiSettingsHandler"
 defs["ImGuiSettingsHandler_ImGuiSettingsHandler"][1]["signature"] = "()"
 defs["ImGuiSettingsHandler_ImGuiSettingsHandler"][1]["stname"] = "ImGuiSettingsHandler"
@@ -6468,7 +7570,11 @@ defs["ImGuiStackLevelInfo_ImGuiStackLevelInfo"][1]["cimguiname"] = "ImGuiStackLe
 defs["ImGuiStackLevelInfo_ImGuiStackLevelInfo"][1]["constructor"] = true
 defs["ImGuiStackLevelInfo_ImGuiStackLevelInfo"][1]["defaults"] = {}
 defs["ImGuiStackLevelInfo_ImGuiStackLevelInfo"][1]["funcname"] = "ImGuiStackLevelInfo"
+<<<<<<< HEAD
 defs["ImGuiStackLevelInfo_ImGuiStackLevelInfo"][1]["location"] = "imgui_internal:1873"
+=======
+defs["ImGuiStackLevelInfo_ImGuiStackLevelInfo"][1]["location"] = "imgui_internal:1872"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStackLevelInfo_ImGuiStackLevelInfo"][1]["ov_cimguiname"] = "ImGuiStackLevelInfo_ImGuiStackLevelInfo"
 defs["ImGuiStackLevelInfo_ImGuiStackLevelInfo"][1]["signature"] = "()"
 defs["ImGuiStackLevelInfo_ImGuiStackLevelInfo"][1]["stname"] = "ImGuiStackLevelInfo"
@@ -6501,7 +7607,11 @@ defs["ImGuiStackSizes_CompareWithCurrentState"][1]["call_args"] = "()"
 defs["ImGuiStackSizes_CompareWithCurrentState"][1]["cimguiname"] = "ImGuiStackSizes_CompareWithCurrentState"
 defs["ImGuiStackSizes_CompareWithCurrentState"][1]["defaults"] = {}
 defs["ImGuiStackSizes_CompareWithCurrentState"][1]["funcname"] = "CompareWithCurrentState"
+<<<<<<< HEAD
 defs["ImGuiStackSizes_CompareWithCurrentState"][1]["location"] = "imgui_internal:1210"
+=======
+defs["ImGuiStackSizes_CompareWithCurrentState"][1]["location"] = "imgui_internal:1202"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStackSizes_CompareWithCurrentState"][1]["ov_cimguiname"] = "ImGuiStackSizes_CompareWithCurrentState"
 defs["ImGuiStackSizes_CompareWithCurrentState"][1]["ret"] = "void"
 defs["ImGuiStackSizes_CompareWithCurrentState"][1]["signature"] = "()"
@@ -6517,7 +7627,11 @@ defs["ImGuiStackSizes_ImGuiStackSizes"][1]["cimguiname"] = "ImGuiStackSizes_ImGu
 defs["ImGuiStackSizes_ImGuiStackSizes"][1]["constructor"] = true
 defs["ImGuiStackSizes_ImGuiStackSizes"][1]["defaults"] = {}
 defs["ImGuiStackSizes_ImGuiStackSizes"][1]["funcname"] = "ImGuiStackSizes"
+<<<<<<< HEAD
 defs["ImGuiStackSizes_ImGuiStackSizes"][1]["location"] = "imgui_internal:1208"
+=======
+defs["ImGuiStackSizes_ImGuiStackSizes"][1]["location"] = "imgui_internal:1200"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStackSizes_ImGuiStackSizes"][1]["ov_cimguiname"] = "ImGuiStackSizes_ImGuiStackSizes"
 defs["ImGuiStackSizes_ImGuiStackSizes"][1]["signature"] = "()"
 defs["ImGuiStackSizes_ImGuiStackSizes"][1]["stname"] = "ImGuiStackSizes"
@@ -6534,7 +7648,11 @@ defs["ImGuiStackSizes_SetToCurrentState"][1]["call_args"] = "()"
 defs["ImGuiStackSizes_SetToCurrentState"][1]["cimguiname"] = "ImGuiStackSizes_SetToCurrentState"
 defs["ImGuiStackSizes_SetToCurrentState"][1]["defaults"] = {}
 defs["ImGuiStackSizes_SetToCurrentState"][1]["funcname"] = "SetToCurrentState"
+<<<<<<< HEAD
 defs["ImGuiStackSizes_SetToCurrentState"][1]["location"] = "imgui_internal:1209"
+=======
+defs["ImGuiStackSizes_SetToCurrentState"][1]["location"] = "imgui_internal:1201"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStackSizes_SetToCurrentState"][1]["ov_cimguiname"] = "ImGuiStackSizes_SetToCurrentState"
 defs["ImGuiStackSizes_SetToCurrentState"][1]["ret"] = "void"
 defs["ImGuiStackSizes_SetToCurrentState"][1]["signature"] = "()"
@@ -6566,7 +7684,11 @@ defs["ImGuiStackTool_ImGuiStackTool"][1]["cimguiname"] = "ImGuiStackTool_ImGuiSt
 defs["ImGuiStackTool_ImGuiStackTool"][1]["constructor"] = true
 defs["ImGuiStackTool_ImGuiStackTool"][1]["defaults"] = {}
 defs["ImGuiStackTool_ImGuiStackTool"][1]["funcname"] = "ImGuiStackTool"
+<<<<<<< HEAD
 defs["ImGuiStackTool_ImGuiStackTool"][1]["location"] = "imgui_internal:1886"
+=======
+defs["ImGuiStackTool_ImGuiStackTool"][1]["location"] = "imgui_internal:1885"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStackTool_ImGuiStackTool"][1]["ov_cimguiname"] = "ImGuiStackTool_ImGuiStackTool"
 defs["ImGuiStackTool_ImGuiStackTool"][1]["signature"] = "()"
 defs["ImGuiStackTool_ImGuiStackTool"][1]["stname"] = "ImGuiStackTool"
@@ -6603,7 +7725,11 @@ defs["ImGuiStoragePair_ImGuiStoragePair"][1]["cimguiname"] = "ImGuiStoragePair_I
 defs["ImGuiStoragePair_ImGuiStoragePair"][1]["constructor"] = true
 defs["ImGuiStoragePair_ImGuiStoragePair"][1]["defaults"] = {}
 defs["ImGuiStoragePair_ImGuiStoragePair"][1]["funcname"] = "ImGuiStoragePair"
+<<<<<<< HEAD
 defs["ImGuiStoragePair_ImGuiStoragePair"][1]["location"] = "imgui:2355"
+=======
+defs["ImGuiStoragePair_ImGuiStoragePair"][1]["location"] = "imgui:2348"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStoragePair_ImGuiStoragePair"][1]["ov_cimguiname"] = "ImGuiStoragePair_ImGuiStoragePair_Int"
 defs["ImGuiStoragePair_ImGuiStoragePair"][1]["signature"] = "(ImGuiID,int)"
 defs["ImGuiStoragePair_ImGuiStoragePair"][1]["stname"] = "ImGuiStoragePair"
@@ -6622,7 +7748,11 @@ defs["ImGuiStoragePair_ImGuiStoragePair"][2]["cimguiname"] = "ImGuiStoragePair_I
 defs["ImGuiStoragePair_ImGuiStoragePair"][2]["constructor"] = true
 defs["ImGuiStoragePair_ImGuiStoragePair"][2]["defaults"] = {}
 defs["ImGuiStoragePair_ImGuiStoragePair"][2]["funcname"] = "ImGuiStoragePair"
+<<<<<<< HEAD
 defs["ImGuiStoragePair_ImGuiStoragePair"][2]["location"] = "imgui:2356"
+=======
+defs["ImGuiStoragePair_ImGuiStoragePair"][2]["location"] = "imgui:2349"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStoragePair_ImGuiStoragePair"][2]["ov_cimguiname"] = "ImGuiStoragePair_ImGuiStoragePair_Float"
 defs["ImGuiStoragePair_ImGuiStoragePair"][2]["signature"] = "(ImGuiID,float)"
 defs["ImGuiStoragePair_ImGuiStoragePair"][2]["stname"] = "ImGuiStoragePair"
@@ -6641,7 +7771,11 @@ defs["ImGuiStoragePair_ImGuiStoragePair"][3]["cimguiname"] = "ImGuiStoragePair_I
 defs["ImGuiStoragePair_ImGuiStoragePair"][3]["constructor"] = true
 defs["ImGuiStoragePair_ImGuiStoragePair"][3]["defaults"] = {}
 defs["ImGuiStoragePair_ImGuiStoragePair"][3]["funcname"] = "ImGuiStoragePair"
+<<<<<<< HEAD
 defs["ImGuiStoragePair_ImGuiStoragePair"][3]["location"] = "imgui:2357"
+=======
+defs["ImGuiStoragePair_ImGuiStoragePair"][3]["location"] = "imgui:2350"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStoragePair_ImGuiStoragePair"][3]["ov_cimguiname"] = "ImGuiStoragePair_ImGuiStoragePair_Ptr"
 defs["ImGuiStoragePair_ImGuiStoragePair"][3]["signature"] = "(ImGuiID,void*)"
 defs["ImGuiStoragePair_ImGuiStoragePair"][3]["stname"] = "ImGuiStoragePair"
@@ -6676,7 +7810,11 @@ defs["ImGuiStorage_BuildSortByKey"][1]["call_args"] = "()"
 defs["ImGuiStorage_BuildSortByKey"][1]["cimguiname"] = "ImGuiStorage_BuildSortByKey"
 defs["ImGuiStorage_BuildSortByKey"][1]["defaults"] = {}
 defs["ImGuiStorage_BuildSortByKey"][1]["funcname"] = "BuildSortByKey"
+<<<<<<< HEAD
 defs["ImGuiStorage_BuildSortByKey"][1]["location"] = "imgui:2388"
+=======
+defs["ImGuiStorage_BuildSortByKey"][1]["location"] = "imgui:2381"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_BuildSortByKey"][1]["ov_cimguiname"] = "ImGuiStorage_BuildSortByKey"
 defs["ImGuiStorage_BuildSortByKey"][1]["ret"] = "void"
 defs["ImGuiStorage_BuildSortByKey"][1]["signature"] = "()"
@@ -6694,7 +7832,11 @@ defs["ImGuiStorage_Clear"][1]["call_args"] = "()"
 defs["ImGuiStorage_Clear"][1]["cimguiname"] = "ImGuiStorage_Clear"
 defs["ImGuiStorage_Clear"][1]["defaults"] = {}
 defs["ImGuiStorage_Clear"][1]["funcname"] = "Clear"
+<<<<<<< HEAD
 defs["ImGuiStorage_Clear"][1]["location"] = "imgui:2365"
+=======
+defs["ImGuiStorage_Clear"][1]["location"] = "imgui:2358"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_Clear"][1]["ov_cimguiname"] = "ImGuiStorage_Clear"
 defs["ImGuiStorage_Clear"][1]["ret"] = "void"
 defs["ImGuiStorage_Clear"][1]["signature"] = "()"
@@ -6719,7 +7861,11 @@ defs["ImGuiStorage_GetBool"][1]["cimguiname"] = "ImGuiStorage_GetBool"
 defs["ImGuiStorage_GetBool"][1]["defaults"] = {}
 defs["ImGuiStorage_GetBool"][1]["defaults"]["default_val"] = "false"
 defs["ImGuiStorage_GetBool"][1]["funcname"] = "GetBool"
+<<<<<<< HEAD
 defs["ImGuiStorage_GetBool"][1]["location"] = "imgui:2368"
+=======
+defs["ImGuiStorage_GetBool"][1]["location"] = "imgui:2361"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_GetBool"][1]["ov_cimguiname"] = "ImGuiStorage_GetBool"
 defs["ImGuiStorage_GetBool"][1]["ret"] = "bool"
 defs["ImGuiStorage_GetBool"][1]["signature"] = "(ImGuiID,bool)const"
@@ -6744,7 +7890,11 @@ defs["ImGuiStorage_GetBoolRef"][1]["cimguiname"] = "ImGuiStorage_GetBoolRef"
 defs["ImGuiStorage_GetBoolRef"][1]["defaults"] = {}
 defs["ImGuiStorage_GetBoolRef"][1]["defaults"]["default_val"] = "false"
 defs["ImGuiStorage_GetBoolRef"][1]["funcname"] = "GetBoolRef"
+<<<<<<< HEAD
 defs["ImGuiStorage_GetBoolRef"][1]["location"] = "imgui:2380"
+=======
+defs["ImGuiStorage_GetBoolRef"][1]["location"] = "imgui:2373"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_GetBoolRef"][1]["ov_cimguiname"] = "ImGuiStorage_GetBoolRef"
 defs["ImGuiStorage_GetBoolRef"][1]["ret"] = "bool*"
 defs["ImGuiStorage_GetBoolRef"][1]["signature"] = "(ImGuiID,bool)"
@@ -6769,7 +7919,11 @@ defs["ImGuiStorage_GetFloat"][1]["cimguiname"] = "ImGuiStorage_GetFloat"
 defs["ImGuiStorage_GetFloat"][1]["defaults"] = {}
 defs["ImGuiStorage_GetFloat"][1]["defaults"]["default_val"] = "0.0f"
 defs["ImGuiStorage_GetFloat"][1]["funcname"] = "GetFloat"
+<<<<<<< HEAD
 defs["ImGuiStorage_GetFloat"][1]["location"] = "imgui:2370"
+=======
+defs["ImGuiStorage_GetFloat"][1]["location"] = "imgui:2363"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_GetFloat"][1]["ov_cimguiname"] = "ImGuiStorage_GetFloat"
 defs["ImGuiStorage_GetFloat"][1]["ret"] = "float"
 defs["ImGuiStorage_GetFloat"][1]["signature"] = "(ImGuiID,float)const"
@@ -6794,7 +7948,11 @@ defs["ImGuiStorage_GetFloatRef"][1]["cimguiname"] = "ImGuiStorage_GetFloatRef"
 defs["ImGuiStorage_GetFloatRef"][1]["defaults"] = {}
 defs["ImGuiStorage_GetFloatRef"][1]["defaults"]["default_val"] = "0.0f"
 defs["ImGuiStorage_GetFloatRef"][1]["funcname"] = "GetFloatRef"
+<<<<<<< HEAD
 defs["ImGuiStorage_GetFloatRef"][1]["location"] = "imgui:2381"
+=======
+defs["ImGuiStorage_GetFloatRef"][1]["location"] = "imgui:2374"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_GetFloatRef"][1]["ov_cimguiname"] = "ImGuiStorage_GetFloatRef"
 defs["ImGuiStorage_GetFloatRef"][1]["ret"] = "float*"
 defs["ImGuiStorage_GetFloatRef"][1]["signature"] = "(ImGuiID,float)"
@@ -6819,7 +7977,11 @@ defs["ImGuiStorage_GetInt"][1]["cimguiname"] = "ImGuiStorage_GetInt"
 defs["ImGuiStorage_GetInt"][1]["defaults"] = {}
 defs["ImGuiStorage_GetInt"][1]["defaults"]["default_val"] = "0"
 defs["ImGuiStorage_GetInt"][1]["funcname"] = "GetInt"
+<<<<<<< HEAD
 defs["ImGuiStorage_GetInt"][1]["location"] = "imgui:2366"
+=======
+defs["ImGuiStorage_GetInt"][1]["location"] = "imgui:2359"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_GetInt"][1]["ov_cimguiname"] = "ImGuiStorage_GetInt"
 defs["ImGuiStorage_GetInt"][1]["ret"] = "int"
 defs["ImGuiStorage_GetInt"][1]["signature"] = "(ImGuiID,int)const"
@@ -6844,7 +8006,11 @@ defs["ImGuiStorage_GetIntRef"][1]["cimguiname"] = "ImGuiStorage_GetIntRef"
 defs["ImGuiStorage_GetIntRef"][1]["defaults"] = {}
 defs["ImGuiStorage_GetIntRef"][1]["defaults"]["default_val"] = "0"
 defs["ImGuiStorage_GetIntRef"][1]["funcname"] = "GetIntRef"
+<<<<<<< HEAD
 defs["ImGuiStorage_GetIntRef"][1]["location"] = "imgui:2379"
+=======
+defs["ImGuiStorage_GetIntRef"][1]["location"] = "imgui:2372"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_GetIntRef"][1]["ov_cimguiname"] = "ImGuiStorage_GetIntRef"
 defs["ImGuiStorage_GetIntRef"][1]["ret"] = "int*"
 defs["ImGuiStorage_GetIntRef"][1]["signature"] = "(ImGuiID,int)"
@@ -6865,7 +8031,11 @@ defs["ImGuiStorage_GetVoidPtr"][1]["call_args"] = "(key)"
 defs["ImGuiStorage_GetVoidPtr"][1]["cimguiname"] = "ImGuiStorage_GetVoidPtr"
 defs["ImGuiStorage_GetVoidPtr"][1]["defaults"] = {}
 defs["ImGuiStorage_GetVoidPtr"][1]["funcname"] = "GetVoidPtr"
+<<<<<<< HEAD
 defs["ImGuiStorage_GetVoidPtr"][1]["location"] = "imgui:2372"
+=======
+defs["ImGuiStorage_GetVoidPtr"][1]["location"] = "imgui:2365"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_GetVoidPtr"][1]["ov_cimguiname"] = "ImGuiStorage_GetVoidPtr"
 defs["ImGuiStorage_GetVoidPtr"][1]["ret"] = "void*"
 defs["ImGuiStorage_GetVoidPtr"][1]["signature"] = "(ImGuiID)const"
@@ -6890,7 +8060,11 @@ defs["ImGuiStorage_GetVoidPtrRef"][1]["cimguiname"] = "ImGuiStorage_GetVoidPtrRe
 defs["ImGuiStorage_GetVoidPtrRef"][1]["defaults"] = {}
 defs["ImGuiStorage_GetVoidPtrRef"][1]["defaults"]["default_val"] = "NULL"
 defs["ImGuiStorage_GetVoidPtrRef"][1]["funcname"] = "GetVoidPtrRef"
+<<<<<<< HEAD
 defs["ImGuiStorage_GetVoidPtrRef"][1]["location"] = "imgui:2382"
+=======
+defs["ImGuiStorage_GetVoidPtrRef"][1]["location"] = "imgui:2375"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_GetVoidPtrRef"][1]["ov_cimguiname"] = "ImGuiStorage_GetVoidPtrRef"
 defs["ImGuiStorage_GetVoidPtrRef"][1]["ret"] = "void**"
 defs["ImGuiStorage_GetVoidPtrRef"][1]["signature"] = "(ImGuiID,void*)"
@@ -6911,7 +8085,11 @@ defs["ImGuiStorage_SetAllInt"][1]["call_args"] = "(val)"
 defs["ImGuiStorage_SetAllInt"][1]["cimguiname"] = "ImGuiStorage_SetAllInt"
 defs["ImGuiStorage_SetAllInt"][1]["defaults"] = {}
 defs["ImGuiStorage_SetAllInt"][1]["funcname"] = "SetAllInt"
+<<<<<<< HEAD
 defs["ImGuiStorage_SetAllInt"][1]["location"] = "imgui:2385"
+=======
+defs["ImGuiStorage_SetAllInt"][1]["location"] = "imgui:2378"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_SetAllInt"][1]["ov_cimguiname"] = "ImGuiStorage_SetAllInt"
 defs["ImGuiStorage_SetAllInt"][1]["ret"] = "void"
 defs["ImGuiStorage_SetAllInt"][1]["signature"] = "(int)"
@@ -6935,7 +8113,11 @@ defs["ImGuiStorage_SetBool"][1]["call_args"] = "(key,val)"
 defs["ImGuiStorage_SetBool"][1]["cimguiname"] = "ImGuiStorage_SetBool"
 defs["ImGuiStorage_SetBool"][1]["defaults"] = {}
 defs["ImGuiStorage_SetBool"][1]["funcname"] = "SetBool"
+<<<<<<< HEAD
 defs["ImGuiStorage_SetBool"][1]["location"] = "imgui:2369"
+=======
+defs["ImGuiStorage_SetBool"][1]["location"] = "imgui:2362"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_SetBool"][1]["ov_cimguiname"] = "ImGuiStorage_SetBool"
 defs["ImGuiStorage_SetBool"][1]["ret"] = "void"
 defs["ImGuiStorage_SetBool"][1]["signature"] = "(ImGuiID,bool)"
@@ -6959,7 +8141,11 @@ defs["ImGuiStorage_SetFloat"][1]["call_args"] = "(key,val)"
 defs["ImGuiStorage_SetFloat"][1]["cimguiname"] = "ImGuiStorage_SetFloat"
 defs["ImGuiStorage_SetFloat"][1]["defaults"] = {}
 defs["ImGuiStorage_SetFloat"][1]["funcname"] = "SetFloat"
+<<<<<<< HEAD
 defs["ImGuiStorage_SetFloat"][1]["location"] = "imgui:2371"
+=======
+defs["ImGuiStorage_SetFloat"][1]["location"] = "imgui:2364"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_SetFloat"][1]["ov_cimguiname"] = "ImGuiStorage_SetFloat"
 defs["ImGuiStorage_SetFloat"][1]["ret"] = "void"
 defs["ImGuiStorage_SetFloat"][1]["signature"] = "(ImGuiID,float)"
@@ -6983,7 +8169,11 @@ defs["ImGuiStorage_SetInt"][1]["call_args"] = "(key,val)"
 defs["ImGuiStorage_SetInt"][1]["cimguiname"] = "ImGuiStorage_SetInt"
 defs["ImGuiStorage_SetInt"][1]["defaults"] = {}
 defs["ImGuiStorage_SetInt"][1]["funcname"] = "SetInt"
+<<<<<<< HEAD
 defs["ImGuiStorage_SetInt"][1]["location"] = "imgui:2367"
+=======
+defs["ImGuiStorage_SetInt"][1]["location"] = "imgui:2360"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_SetInt"][1]["ov_cimguiname"] = "ImGuiStorage_SetInt"
 defs["ImGuiStorage_SetInt"][1]["ret"] = "void"
 defs["ImGuiStorage_SetInt"][1]["signature"] = "(ImGuiID,int)"
@@ -7007,7 +8197,11 @@ defs["ImGuiStorage_SetVoidPtr"][1]["call_args"] = "(key,val)"
 defs["ImGuiStorage_SetVoidPtr"][1]["cimguiname"] = "ImGuiStorage_SetVoidPtr"
 defs["ImGuiStorage_SetVoidPtr"][1]["defaults"] = {}
 defs["ImGuiStorage_SetVoidPtr"][1]["funcname"] = "SetVoidPtr"
+<<<<<<< HEAD
 defs["ImGuiStorage_SetVoidPtr"][1]["location"] = "imgui:2373"
+=======
+defs["ImGuiStorage_SetVoidPtr"][1]["location"] = "imgui:2366"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStorage_SetVoidPtr"][1]["ov_cimguiname"] = "ImGuiStorage_SetVoidPtr"
 defs["ImGuiStorage_SetVoidPtr"][1]["ret"] = "void"
 defs["ImGuiStorage_SetVoidPtr"][1]["signature"] = "(ImGuiID,void*)"
@@ -7029,7 +8223,11 @@ defs["ImGuiStyleMod_ImGuiStyleMod"][1]["cimguiname"] = "ImGuiStyleMod_ImGuiStyle
 defs["ImGuiStyleMod_ImGuiStyleMod"][1]["constructor"] = true
 defs["ImGuiStyleMod_ImGuiStyleMod"][1]["defaults"] = {}
 defs["ImGuiStyleMod_ImGuiStyleMod"][1]["funcname"] = "ImGuiStyleMod"
+<<<<<<< HEAD
 defs["ImGuiStyleMod_ImGuiStyleMod"][1]["location"] = "imgui_internal:1015"
+=======
+defs["ImGuiStyleMod_ImGuiStyleMod"][1]["location"] = "imgui_internal:1007"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStyleMod_ImGuiStyleMod"][1]["ov_cimguiname"] = "ImGuiStyleMod_ImGuiStyleMod_Int"
 defs["ImGuiStyleMod_ImGuiStyleMod"][1]["signature"] = "(ImGuiStyleVar,int)"
 defs["ImGuiStyleMod_ImGuiStyleMod"][1]["stname"] = "ImGuiStyleMod"
@@ -7048,7 +8246,11 @@ defs["ImGuiStyleMod_ImGuiStyleMod"][2]["cimguiname"] = "ImGuiStyleMod_ImGuiStyle
 defs["ImGuiStyleMod_ImGuiStyleMod"][2]["constructor"] = true
 defs["ImGuiStyleMod_ImGuiStyleMod"][2]["defaults"] = {}
 defs["ImGuiStyleMod_ImGuiStyleMod"][2]["funcname"] = "ImGuiStyleMod"
+<<<<<<< HEAD
 defs["ImGuiStyleMod_ImGuiStyleMod"][2]["location"] = "imgui_internal:1016"
+=======
+defs["ImGuiStyleMod_ImGuiStyleMod"][2]["location"] = "imgui_internal:1008"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStyleMod_ImGuiStyleMod"][2]["ov_cimguiname"] = "ImGuiStyleMod_ImGuiStyleMod_Float"
 defs["ImGuiStyleMod_ImGuiStyleMod"][2]["signature"] = "(ImGuiStyleVar,float)"
 defs["ImGuiStyleMod_ImGuiStyleMod"][2]["stname"] = "ImGuiStyleMod"
@@ -7067,7 +8269,11 @@ defs["ImGuiStyleMod_ImGuiStyleMod"][3]["cimguiname"] = "ImGuiStyleMod_ImGuiStyle
 defs["ImGuiStyleMod_ImGuiStyleMod"][3]["constructor"] = true
 defs["ImGuiStyleMod_ImGuiStyleMod"][3]["defaults"] = {}
 defs["ImGuiStyleMod_ImGuiStyleMod"][3]["funcname"] = "ImGuiStyleMod"
+<<<<<<< HEAD
 defs["ImGuiStyleMod_ImGuiStyleMod"][3]["location"] = "imgui_internal:1017"
+=======
+defs["ImGuiStyleMod_ImGuiStyleMod"][3]["location"] = "imgui_internal:1009"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStyleMod_ImGuiStyleMod"][3]["ov_cimguiname"] = "ImGuiStyleMod_ImGuiStyleMod_Vec2"
 defs["ImGuiStyleMod_ImGuiStyleMod"][3]["signature"] = "(ImGuiStyleVar,ImVec2)"
 defs["ImGuiStyleMod_ImGuiStyleMod"][3]["stname"] = "ImGuiStyleMod"
@@ -7100,7 +8306,11 @@ defs["ImGuiStyle_ImGuiStyle"][1]["cimguiname"] = "ImGuiStyle_ImGuiStyle"
 defs["ImGuiStyle_ImGuiStyle"][1]["constructor"] = true
 defs["ImGuiStyle_ImGuiStyle"][1]["defaults"] = {}
 defs["ImGuiStyle_ImGuiStyle"][1]["funcname"] = "ImGuiStyle"
+<<<<<<< HEAD
 defs["ImGuiStyle_ImGuiStyle"][1]["location"] = "imgui:1957"
+=======
+defs["ImGuiStyle_ImGuiStyle"][1]["location"] = "imgui:1950"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStyle_ImGuiStyle"][1]["ov_cimguiname"] = "ImGuiStyle_ImGuiStyle"
 defs["ImGuiStyle_ImGuiStyle"][1]["signature"] = "()"
 defs["ImGuiStyle_ImGuiStyle"][1]["stname"] = "ImGuiStyle"
@@ -7120,7 +8330,11 @@ defs["ImGuiStyle_ScaleAllSizes"][1]["call_args"] = "(scale_factor)"
 defs["ImGuiStyle_ScaleAllSizes"][1]["cimguiname"] = "ImGuiStyle_ScaleAllSizes"
 defs["ImGuiStyle_ScaleAllSizes"][1]["defaults"] = {}
 defs["ImGuiStyle_ScaleAllSizes"][1]["funcname"] = "ScaleAllSizes"
+<<<<<<< HEAD
 defs["ImGuiStyle_ScaleAllSizes"][1]["location"] = "imgui:1958"
+=======
+defs["ImGuiStyle_ScaleAllSizes"][1]["location"] = "imgui:1951"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiStyle_ScaleAllSizes"][1]["ov_cimguiname"] = "ImGuiStyle_ScaleAllSizes"
 defs["ImGuiStyle_ScaleAllSizes"][1]["ret"] = "void"
 defs["ImGuiStyle_ScaleAllSizes"][1]["signature"] = "(float)"
@@ -7142,6 +8356,51 @@ defs["ImGuiStyle_destroy"][1]["ret"] = "void"
 defs["ImGuiStyle_destroy"][1]["signature"] = "(ImGuiStyle*)"
 defs["ImGuiStyle_destroy"][1]["stname"] = "ImGuiStyle"
 defs["ImGuiStyle_destroy"]["(ImGuiStyle*)"] = defs["ImGuiStyle_destroy"][1]
+<<<<<<< HEAD
+=======
+defs["ImGuiTabBar_GetTabName"] = {}
+defs["ImGuiTabBar_GetTabName"][1] = {}
+defs["ImGuiTabBar_GetTabName"][1]["args"] = "(ImGuiTabBar* self,const ImGuiTabItem* tab)"
+defs["ImGuiTabBar_GetTabName"][1]["argsT"] = {}
+defs["ImGuiTabBar_GetTabName"][1]["argsT"][1] = {}
+defs["ImGuiTabBar_GetTabName"][1]["argsT"][1]["name"] = "self"
+defs["ImGuiTabBar_GetTabName"][1]["argsT"][1]["type"] = "ImGuiTabBar*"
+defs["ImGuiTabBar_GetTabName"][1]["argsT"][2] = {}
+defs["ImGuiTabBar_GetTabName"][1]["argsT"][2]["name"] = "tab"
+defs["ImGuiTabBar_GetTabName"][1]["argsT"][2]["type"] = "const ImGuiTabItem*"
+defs["ImGuiTabBar_GetTabName"][1]["argsoriginal"] = "(const ImGuiTabItem* tab)"
+defs["ImGuiTabBar_GetTabName"][1]["call_args"] = "(tab)"
+defs["ImGuiTabBar_GetTabName"][1]["cimguiname"] = "ImGuiTabBar_GetTabName"
+defs["ImGuiTabBar_GetTabName"][1]["defaults"] = {}
+defs["ImGuiTabBar_GetTabName"][1]["funcname"] = "GetTabName"
+defs["ImGuiTabBar_GetTabName"][1]["location"] = "imgui_internal:2661"
+defs["ImGuiTabBar_GetTabName"][1]["ov_cimguiname"] = "ImGuiTabBar_GetTabName"
+defs["ImGuiTabBar_GetTabName"][1]["ret"] = "const char*"
+defs["ImGuiTabBar_GetTabName"][1]["signature"] = "(const ImGuiTabItem*)const"
+defs["ImGuiTabBar_GetTabName"][1]["stname"] = "ImGuiTabBar"
+defs["ImGuiTabBar_GetTabName"]["(const ImGuiTabItem*)const"] = defs["ImGuiTabBar_GetTabName"][1]
+defs["ImGuiTabBar_GetTabOrder"] = {}
+defs["ImGuiTabBar_GetTabOrder"][1] = {}
+defs["ImGuiTabBar_GetTabOrder"][1]["args"] = "(ImGuiTabBar* self,const ImGuiTabItem* tab)"
+defs["ImGuiTabBar_GetTabOrder"][1]["argsT"] = {}
+defs["ImGuiTabBar_GetTabOrder"][1]["argsT"][1] = {}
+defs["ImGuiTabBar_GetTabOrder"][1]["argsT"][1]["name"] = "self"
+defs["ImGuiTabBar_GetTabOrder"][1]["argsT"][1]["type"] = "ImGuiTabBar*"
+defs["ImGuiTabBar_GetTabOrder"][1]["argsT"][2] = {}
+defs["ImGuiTabBar_GetTabOrder"][1]["argsT"][2]["name"] = "tab"
+defs["ImGuiTabBar_GetTabOrder"][1]["argsT"][2]["type"] = "const ImGuiTabItem*"
+defs["ImGuiTabBar_GetTabOrder"][1]["argsoriginal"] = "(const ImGuiTabItem* tab)"
+defs["ImGuiTabBar_GetTabOrder"][1]["call_args"] = "(tab)"
+defs["ImGuiTabBar_GetTabOrder"][1]["cimguiname"] = "ImGuiTabBar_GetTabOrder"
+defs["ImGuiTabBar_GetTabOrder"][1]["defaults"] = {}
+defs["ImGuiTabBar_GetTabOrder"][1]["funcname"] = "GetTabOrder"
+defs["ImGuiTabBar_GetTabOrder"][1]["location"] = "imgui_internal:2660"
+defs["ImGuiTabBar_GetTabOrder"][1]["ov_cimguiname"] = "ImGuiTabBar_GetTabOrder"
+defs["ImGuiTabBar_GetTabOrder"][1]["ret"] = "int"
+defs["ImGuiTabBar_GetTabOrder"][1]["signature"] = "(const ImGuiTabItem*)const"
+defs["ImGuiTabBar_GetTabOrder"][1]["stname"] = "ImGuiTabBar"
+defs["ImGuiTabBar_GetTabOrder"]["(const ImGuiTabItem*)const"] = defs["ImGuiTabBar_GetTabOrder"][1]
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTabBar_ImGuiTabBar"] = {}
 defs["ImGuiTabBar_ImGuiTabBar"][1] = {}
 defs["ImGuiTabBar_ImGuiTabBar"][1]["args"] = "()"
@@ -7152,7 +8411,11 @@ defs["ImGuiTabBar_ImGuiTabBar"][1]["cimguiname"] = "ImGuiTabBar_ImGuiTabBar"
 defs["ImGuiTabBar_ImGuiTabBar"][1]["constructor"] = true
 defs["ImGuiTabBar_ImGuiTabBar"][1]["defaults"] = {}
 defs["ImGuiTabBar_ImGuiTabBar"][1]["funcname"] = "ImGuiTabBar"
+<<<<<<< HEAD
 defs["ImGuiTabBar_ImGuiTabBar"][1]["location"] = "imgui_internal:2663"
+=======
+defs["ImGuiTabBar_ImGuiTabBar"][1]["location"] = "imgui_internal:2659"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTabBar_ImGuiTabBar"][1]["ov_cimguiname"] = "ImGuiTabBar_ImGuiTabBar"
 defs["ImGuiTabBar_ImGuiTabBar"][1]["signature"] = "()"
 defs["ImGuiTabBar_ImGuiTabBar"][1]["stname"] = "ImGuiTabBar"
@@ -7183,7 +8446,11 @@ defs["ImGuiTabItem_ImGuiTabItem"][1]["cimguiname"] = "ImGuiTabItem_ImGuiTabItem"
 defs["ImGuiTabItem_ImGuiTabItem"][1]["constructor"] = true
 defs["ImGuiTabItem_ImGuiTabItem"][1]["defaults"] = {}
 defs["ImGuiTabItem_ImGuiTabItem"][1]["funcname"] = "ImGuiTabItem"
+<<<<<<< HEAD
 defs["ImGuiTabItem_ImGuiTabItem"][1]["location"] = "imgui_internal:2625"
+=======
+defs["ImGuiTabItem_ImGuiTabItem"][1]["location"] = "imgui_internal:2621"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTabItem_ImGuiTabItem"][1]["ov_cimguiname"] = "ImGuiTabItem_ImGuiTabItem"
 defs["ImGuiTabItem_ImGuiTabItem"][1]["signature"] = "()"
 defs["ImGuiTabItem_ImGuiTabItem"][1]["stname"] = "ImGuiTabItem"
@@ -7214,7 +8481,11 @@ defs["ImGuiTableColumnSettings_ImGuiTableColumnSettings"][1]["cimguiname"] = "Im
 defs["ImGuiTableColumnSettings_ImGuiTableColumnSettings"][1]["constructor"] = true
 defs["ImGuiTableColumnSettings_ImGuiTableColumnSettings"][1]["defaults"] = {}
 defs["ImGuiTableColumnSettings_ImGuiTableColumnSettings"][1]["funcname"] = "ImGuiTableColumnSettings"
+<<<<<<< HEAD
 defs["ImGuiTableColumnSettings_ImGuiTableColumnSettings"][1]["location"] = "imgui_internal:2905"
+=======
+defs["ImGuiTableColumnSettings_ImGuiTableColumnSettings"][1]["location"] = "imgui_internal:2910"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTableColumnSettings_ImGuiTableColumnSettings"][1]["ov_cimguiname"] = "ImGuiTableColumnSettings_ImGuiTableColumnSettings"
 defs["ImGuiTableColumnSettings_ImGuiTableColumnSettings"][1]["signature"] = "()"
 defs["ImGuiTableColumnSettings_ImGuiTableColumnSettings"][1]["stname"] = "ImGuiTableColumnSettings"
@@ -7245,7 +8516,11 @@ defs["ImGuiTableColumnSortSpecs_ImGuiTableColumnSortSpecs"][1]["cimguiname"] = "
 defs["ImGuiTableColumnSortSpecs_ImGuiTableColumnSortSpecs"][1]["constructor"] = true
 defs["ImGuiTableColumnSortSpecs_ImGuiTableColumnSortSpecs"][1]["defaults"] = {}
 defs["ImGuiTableColumnSortSpecs_ImGuiTableColumnSortSpecs"][1]["funcname"] = "ImGuiTableColumnSortSpecs"
+<<<<<<< HEAD
 defs["ImGuiTableColumnSortSpecs_ImGuiTableColumnSortSpecs"][1]["location"] = "imgui:2256"
+=======
+defs["ImGuiTableColumnSortSpecs_ImGuiTableColumnSortSpecs"][1]["location"] = "imgui:2249"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTableColumnSortSpecs_ImGuiTableColumnSortSpecs"][1]["ov_cimguiname"] = "ImGuiTableColumnSortSpecs_ImGuiTableColumnSortSpecs"
 defs["ImGuiTableColumnSortSpecs_ImGuiTableColumnSortSpecs"][1]["signature"] = "()"
 defs["ImGuiTableColumnSortSpecs_ImGuiTableColumnSortSpecs"][1]["stname"] = "ImGuiTableColumnSortSpecs"
@@ -7276,7 +8551,11 @@ defs["ImGuiTableColumn_ImGuiTableColumn"][1]["cimguiname"] = "ImGuiTableColumn_I
 defs["ImGuiTableColumn_ImGuiTableColumn"][1]["constructor"] = true
 defs["ImGuiTableColumn_ImGuiTableColumn"][1]["defaults"] = {}
 defs["ImGuiTableColumn_ImGuiTableColumn"][1]["funcname"] = "ImGuiTableColumn"
+<<<<<<< HEAD
 defs["ImGuiTableColumn_ImGuiTableColumn"][1]["location"] = "imgui_internal:2725"
+=======
+defs["ImGuiTableColumn_ImGuiTableColumn"][1]["location"] = "imgui_internal:2730"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTableColumn_ImGuiTableColumn"][1]["ov_cimguiname"] = "ImGuiTableColumn_ImGuiTableColumn"
 defs["ImGuiTableColumn_ImGuiTableColumn"][1]["signature"] = "()"
 defs["ImGuiTableColumn_ImGuiTableColumn"][1]["stname"] = "ImGuiTableColumn"
@@ -7307,7 +8586,11 @@ defs["ImGuiTableInstanceData_ImGuiTableInstanceData"][1]["cimguiname"] = "ImGuiT
 defs["ImGuiTableInstanceData_ImGuiTableInstanceData"][1]["constructor"] = true
 defs["ImGuiTableInstanceData_ImGuiTableInstanceData"][1]["defaults"] = {}
 defs["ImGuiTableInstanceData_ImGuiTableInstanceData"][1]["funcname"] = "ImGuiTableInstanceData"
+<<<<<<< HEAD
 defs["ImGuiTableInstanceData_ImGuiTableInstanceData"][1]["location"] = "imgui_internal:2754"
+=======
+defs["ImGuiTableInstanceData_ImGuiTableInstanceData"][1]["location"] = "imgui_internal:2758"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTableInstanceData_ImGuiTableInstanceData"][1]["ov_cimguiname"] = "ImGuiTableInstanceData_ImGuiTableInstanceData"
 defs["ImGuiTableInstanceData_ImGuiTableInstanceData"][1]["signature"] = "()"
 defs["ImGuiTableInstanceData_ImGuiTableInstanceData"][1]["stname"] = "ImGuiTableInstanceData"
@@ -7340,7 +8623,11 @@ defs["ImGuiTableSettings_GetColumnSettings"][1]["call_args"] = "()"
 defs["ImGuiTableSettings_GetColumnSettings"][1]["cimguiname"] = "ImGuiTableSettings_GetColumnSettings"
 defs["ImGuiTableSettings_GetColumnSettings"][1]["defaults"] = {}
 defs["ImGuiTableSettings_GetColumnSettings"][1]["funcname"] = "GetColumnSettings"
+<<<<<<< HEAD
 defs["ImGuiTableSettings_GetColumnSettings"][1]["location"] = "imgui_internal:2928"
+=======
+defs["ImGuiTableSettings_GetColumnSettings"][1]["location"] = "imgui_internal:2933"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTableSettings_GetColumnSettings"][1]["ov_cimguiname"] = "ImGuiTableSettings_GetColumnSettings"
 defs["ImGuiTableSettings_GetColumnSettings"][1]["ret"] = "ImGuiTableColumnSettings*"
 defs["ImGuiTableSettings_GetColumnSettings"][1]["signature"] = "()"
@@ -7356,7 +8643,11 @@ defs["ImGuiTableSettings_ImGuiTableSettings"][1]["cimguiname"] = "ImGuiTableSett
 defs["ImGuiTableSettings_ImGuiTableSettings"][1]["constructor"] = true
 defs["ImGuiTableSettings_ImGuiTableSettings"][1]["defaults"] = {}
 defs["ImGuiTableSettings_ImGuiTableSettings"][1]["funcname"] = "ImGuiTableSettings"
+<<<<<<< HEAD
 defs["ImGuiTableSettings_ImGuiTableSettings"][1]["location"] = "imgui_internal:2927"
+=======
+defs["ImGuiTableSettings_ImGuiTableSettings"][1]["location"] = "imgui_internal:2932"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTableSettings_ImGuiTableSettings"][1]["ov_cimguiname"] = "ImGuiTableSettings_ImGuiTableSettings"
 defs["ImGuiTableSettings_ImGuiTableSettings"][1]["signature"] = "()"
 defs["ImGuiTableSettings_ImGuiTableSettings"][1]["stname"] = "ImGuiTableSettings"
@@ -7387,7 +8678,11 @@ defs["ImGuiTableSortSpecs_ImGuiTableSortSpecs"][1]["cimguiname"] = "ImGuiTableSo
 defs["ImGuiTableSortSpecs_ImGuiTableSortSpecs"][1]["constructor"] = true
 defs["ImGuiTableSortSpecs_ImGuiTableSortSpecs"][1]["defaults"] = {}
 defs["ImGuiTableSortSpecs_ImGuiTableSortSpecs"][1]["funcname"] = "ImGuiTableSortSpecs"
+<<<<<<< HEAD
 defs["ImGuiTableSortSpecs_ImGuiTableSortSpecs"][1]["location"] = "imgui:2269"
+=======
+defs["ImGuiTableSortSpecs_ImGuiTableSortSpecs"][1]["location"] = "imgui:2262"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTableSortSpecs_ImGuiTableSortSpecs"][1]["ov_cimguiname"] = "ImGuiTableSortSpecs_ImGuiTableSortSpecs"
 defs["ImGuiTableSortSpecs_ImGuiTableSortSpecs"][1]["signature"] = "()"
 defs["ImGuiTableSortSpecs_ImGuiTableSortSpecs"][1]["stname"] = "ImGuiTableSortSpecs"
@@ -7418,7 +8713,11 @@ defs["ImGuiTableTempData_ImGuiTableTempData"][1]["cimguiname"] = "ImGuiTableTemp
 defs["ImGuiTableTempData_ImGuiTableTempData"][1]["constructor"] = true
 defs["ImGuiTableTempData_ImGuiTableTempData"][1]["defaults"] = {}
 defs["ImGuiTableTempData_ImGuiTableTempData"][1]["funcname"] = "ImGuiTableTempData"
+<<<<<<< HEAD
 defs["ImGuiTableTempData_ImGuiTableTempData"][1]["location"] = "imgui_internal:2890"
+=======
+defs["ImGuiTableTempData_ImGuiTableTempData"][1]["location"] = "imgui_internal:2895"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTableTempData_ImGuiTableTempData"][1]["ov_cimguiname"] = "ImGuiTableTempData_ImGuiTableTempData"
 defs["ImGuiTableTempData_ImGuiTableTempData"][1]["signature"] = "()"
 defs["ImGuiTableTempData_ImGuiTableTempData"][1]["stname"] = "ImGuiTableTempData"
@@ -7449,7 +8748,11 @@ defs["ImGuiTable_ImGuiTable"][1]["cimguiname"] = "ImGuiTable_ImGuiTable"
 defs["ImGuiTable_ImGuiTable"][1]["constructor"] = true
 defs["ImGuiTable_ImGuiTable"][1]["defaults"] = {}
 defs["ImGuiTable_ImGuiTable"][1]["funcname"] = "ImGuiTable"
+<<<<<<< HEAD
 defs["ImGuiTable_ImGuiTable"][1]["location"] = "imgui_internal:2866"
+=======
+defs["ImGuiTable_ImGuiTable"][1]["location"] = "imgui_internal:2871"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTable_ImGuiTable"][1]["ov_cimguiname"] = "ImGuiTable_ImGuiTable"
 defs["ImGuiTable_ImGuiTable"][1]["signature"] = "()"
 defs["ImGuiTable_ImGuiTable"][1]["stname"] = "ImGuiTable"
@@ -7465,7 +8768,11 @@ defs["ImGuiTable_destroy"][1]["call_args"] = "(self)"
 defs["ImGuiTable_destroy"][1]["cimguiname"] = "ImGuiTable_destroy"
 defs["ImGuiTable_destroy"][1]["defaults"] = {}
 defs["ImGuiTable_destroy"][1]["destructor"] = true
+<<<<<<< HEAD
 defs["ImGuiTable_destroy"][1]["location"] = "imgui_internal:2867"
+=======
+defs["ImGuiTable_destroy"][1]["location"] = "imgui_internal:2872"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTable_destroy"][1]["ov_cimguiname"] = "ImGuiTable_destroy"
 defs["ImGuiTable_destroy"][1]["realdestructor"] = true
 defs["ImGuiTable_destroy"][1]["ret"] = "void"
@@ -7482,7 +8789,11 @@ defs["ImGuiTextBuffer_ImGuiTextBuffer"][1]["cimguiname"] = "ImGuiTextBuffer_ImGu
 defs["ImGuiTextBuffer_ImGuiTextBuffer"][1]["constructor"] = true
 defs["ImGuiTextBuffer_ImGuiTextBuffer"][1]["defaults"] = {}
 defs["ImGuiTextBuffer_ImGuiTextBuffer"][1]["funcname"] = "ImGuiTextBuffer"
+<<<<<<< HEAD
 defs["ImGuiTextBuffer_ImGuiTextBuffer"][1]["location"] = "imgui:2326"
+=======
+defs["ImGuiTextBuffer_ImGuiTextBuffer"][1]["location"] = "imgui:2319"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextBuffer_ImGuiTextBuffer"][1]["ov_cimguiname"] = "ImGuiTextBuffer_ImGuiTextBuffer"
 defs["ImGuiTextBuffer_ImGuiTextBuffer"][1]["signature"] = "()"
 defs["ImGuiTextBuffer_ImGuiTextBuffer"][1]["stname"] = "ImGuiTextBuffer"
@@ -7506,7 +8817,11 @@ defs["ImGuiTextBuffer_append"][1]["cimguiname"] = "ImGuiTextBuffer_append"
 defs["ImGuiTextBuffer_append"][1]["defaults"] = {}
 defs["ImGuiTextBuffer_append"][1]["defaults"]["str_end"] = "NULL"
 defs["ImGuiTextBuffer_append"][1]["funcname"] = "append"
+<<<<<<< HEAD
 defs["ImGuiTextBuffer_append"][1]["location"] = "imgui:2335"
+=======
+defs["ImGuiTextBuffer_append"][1]["location"] = "imgui:2328"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextBuffer_append"][1]["ov_cimguiname"] = "ImGuiTextBuffer_append"
 defs["ImGuiTextBuffer_append"][1]["ret"] = "void"
 defs["ImGuiTextBuffer_append"][1]["signature"] = "(const char*,const char*)"
@@ -7531,7 +8846,11 @@ defs["ImGuiTextBuffer_appendf"][1]["cimguiname"] = "ImGuiTextBuffer_appendf"
 defs["ImGuiTextBuffer_appendf"][1]["defaults"] = {}
 defs["ImGuiTextBuffer_appendf"][1]["funcname"] = "appendf"
 defs["ImGuiTextBuffer_appendf"][1]["isvararg"] = "...)"
+<<<<<<< HEAD
 defs["ImGuiTextBuffer_appendf"][1]["location"] = "imgui:2336"
+=======
+defs["ImGuiTextBuffer_appendf"][1]["location"] = "imgui:2329"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextBuffer_appendf"][1]["manual"] = true
 defs["ImGuiTextBuffer_appendf"][1]["ov_cimguiname"] = "ImGuiTextBuffer_appendf"
 defs["ImGuiTextBuffer_appendf"][1]["ret"] = "void"
@@ -7556,7 +8875,11 @@ defs["ImGuiTextBuffer_appendfv"][1]["call_args"] = "(fmt,args)"
 defs["ImGuiTextBuffer_appendfv"][1]["cimguiname"] = "ImGuiTextBuffer_appendfv"
 defs["ImGuiTextBuffer_appendfv"][1]["defaults"] = {}
 defs["ImGuiTextBuffer_appendfv"][1]["funcname"] = "appendfv"
+<<<<<<< HEAD
 defs["ImGuiTextBuffer_appendfv"][1]["location"] = "imgui:2337"
+=======
+defs["ImGuiTextBuffer_appendfv"][1]["location"] = "imgui:2330"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextBuffer_appendfv"][1]["ov_cimguiname"] = "ImGuiTextBuffer_appendfv"
 defs["ImGuiTextBuffer_appendfv"][1]["ret"] = "void"
 defs["ImGuiTextBuffer_appendfv"][1]["signature"] = "(const char*,va_list)"
@@ -7574,7 +8897,11 @@ defs["ImGuiTextBuffer_begin"][1]["call_args"] = "()"
 defs["ImGuiTextBuffer_begin"][1]["cimguiname"] = "ImGuiTextBuffer_begin"
 defs["ImGuiTextBuffer_begin"][1]["defaults"] = {}
 defs["ImGuiTextBuffer_begin"][1]["funcname"] = "begin"
+<<<<<<< HEAD
 defs["ImGuiTextBuffer_begin"][1]["location"] = "imgui:2328"
+=======
+defs["ImGuiTextBuffer_begin"][1]["location"] = "imgui:2321"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextBuffer_begin"][1]["ov_cimguiname"] = "ImGuiTextBuffer_begin"
 defs["ImGuiTextBuffer_begin"][1]["ret"] = "const char*"
 defs["ImGuiTextBuffer_begin"][1]["signature"] = "()const"
@@ -7592,7 +8919,11 @@ defs["ImGuiTextBuffer_c_str"][1]["call_args"] = "()"
 defs["ImGuiTextBuffer_c_str"][1]["cimguiname"] = "ImGuiTextBuffer_c_str"
 defs["ImGuiTextBuffer_c_str"][1]["defaults"] = {}
 defs["ImGuiTextBuffer_c_str"][1]["funcname"] = "c_str"
+<<<<<<< HEAD
 defs["ImGuiTextBuffer_c_str"][1]["location"] = "imgui:2334"
+=======
+defs["ImGuiTextBuffer_c_str"][1]["location"] = "imgui:2327"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextBuffer_c_str"][1]["ov_cimguiname"] = "ImGuiTextBuffer_c_str"
 defs["ImGuiTextBuffer_c_str"][1]["ret"] = "const char*"
 defs["ImGuiTextBuffer_c_str"][1]["signature"] = "()const"
@@ -7610,7 +8941,11 @@ defs["ImGuiTextBuffer_clear"][1]["call_args"] = "()"
 defs["ImGuiTextBuffer_clear"][1]["cimguiname"] = "ImGuiTextBuffer_clear"
 defs["ImGuiTextBuffer_clear"][1]["defaults"] = {}
 defs["ImGuiTextBuffer_clear"][1]["funcname"] = "clear"
+<<<<<<< HEAD
 defs["ImGuiTextBuffer_clear"][1]["location"] = "imgui:2332"
+=======
+defs["ImGuiTextBuffer_clear"][1]["location"] = "imgui:2325"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextBuffer_clear"][1]["ov_cimguiname"] = "ImGuiTextBuffer_clear"
 defs["ImGuiTextBuffer_clear"][1]["ret"] = "void"
 defs["ImGuiTextBuffer_clear"][1]["signature"] = "()"
@@ -7644,7 +8979,11 @@ defs["ImGuiTextBuffer_empty"][1]["call_args"] = "()"
 defs["ImGuiTextBuffer_empty"][1]["cimguiname"] = "ImGuiTextBuffer_empty"
 defs["ImGuiTextBuffer_empty"][1]["defaults"] = {}
 defs["ImGuiTextBuffer_empty"][1]["funcname"] = "empty"
+<<<<<<< HEAD
 defs["ImGuiTextBuffer_empty"][1]["location"] = "imgui:2331"
+=======
+defs["ImGuiTextBuffer_empty"][1]["location"] = "imgui:2324"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextBuffer_empty"][1]["ov_cimguiname"] = "ImGuiTextBuffer_empty"
 defs["ImGuiTextBuffer_empty"][1]["ret"] = "bool"
 defs["ImGuiTextBuffer_empty"][1]["signature"] = "()const"
@@ -7662,7 +9001,11 @@ defs["ImGuiTextBuffer_end"][1]["call_args"] = "()"
 defs["ImGuiTextBuffer_end"][1]["cimguiname"] = "ImGuiTextBuffer_end"
 defs["ImGuiTextBuffer_end"][1]["defaults"] = {}
 defs["ImGuiTextBuffer_end"][1]["funcname"] = "end"
+<<<<<<< HEAD
 defs["ImGuiTextBuffer_end"][1]["location"] = "imgui:2329"
+=======
+defs["ImGuiTextBuffer_end"][1]["location"] = "imgui:2322"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextBuffer_end"][1]["ov_cimguiname"] = "ImGuiTextBuffer_end"
 defs["ImGuiTextBuffer_end"][1]["ret"] = "const char*"
 defs["ImGuiTextBuffer_end"][1]["signature"] = "()const"
@@ -7683,7 +9026,11 @@ defs["ImGuiTextBuffer_reserve"][1]["call_args"] = "(capacity)"
 defs["ImGuiTextBuffer_reserve"][1]["cimguiname"] = "ImGuiTextBuffer_reserve"
 defs["ImGuiTextBuffer_reserve"][1]["defaults"] = {}
 defs["ImGuiTextBuffer_reserve"][1]["funcname"] = "reserve"
+<<<<<<< HEAD
 defs["ImGuiTextBuffer_reserve"][1]["location"] = "imgui:2333"
+=======
+defs["ImGuiTextBuffer_reserve"][1]["location"] = "imgui:2326"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextBuffer_reserve"][1]["ov_cimguiname"] = "ImGuiTextBuffer_reserve"
 defs["ImGuiTextBuffer_reserve"][1]["ret"] = "void"
 defs["ImGuiTextBuffer_reserve"][1]["signature"] = "(int)"
@@ -7701,7 +9048,11 @@ defs["ImGuiTextBuffer_size"][1]["call_args"] = "()"
 defs["ImGuiTextBuffer_size"][1]["cimguiname"] = "ImGuiTextBuffer_size"
 defs["ImGuiTextBuffer_size"][1]["defaults"] = {}
 defs["ImGuiTextBuffer_size"][1]["funcname"] = "size"
+<<<<<<< HEAD
 defs["ImGuiTextBuffer_size"][1]["location"] = "imgui:2330"
+=======
+defs["ImGuiTextBuffer_size"][1]["location"] = "imgui:2323"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextBuffer_size"][1]["ov_cimguiname"] = "ImGuiTextBuffer_size"
 defs["ImGuiTextBuffer_size"][1]["ret"] = "int"
 defs["ImGuiTextBuffer_size"][1]["signature"] = "()const"
@@ -7719,7 +9070,11 @@ defs["ImGuiTextFilter_Build"][1]["call_args"] = "()"
 defs["ImGuiTextFilter_Build"][1]["cimguiname"] = "ImGuiTextFilter_Build"
 defs["ImGuiTextFilter_Build"][1]["defaults"] = {}
 defs["ImGuiTextFilter_Build"][1]["funcname"] = "Build"
+<<<<<<< HEAD
 defs["ImGuiTextFilter_Build"][1]["location"] = "imgui:2299"
+=======
+defs["ImGuiTextFilter_Build"][1]["location"] = "imgui:2292"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextFilter_Build"][1]["ov_cimguiname"] = "ImGuiTextFilter_Build"
 defs["ImGuiTextFilter_Build"][1]["ret"] = "void"
 defs["ImGuiTextFilter_Build"][1]["signature"] = "()"
@@ -7737,7 +9092,11 @@ defs["ImGuiTextFilter_Clear"][1]["call_args"] = "()"
 defs["ImGuiTextFilter_Clear"][1]["cimguiname"] = "ImGuiTextFilter_Clear"
 defs["ImGuiTextFilter_Clear"][1]["defaults"] = {}
 defs["ImGuiTextFilter_Clear"][1]["funcname"] = "Clear"
+<<<<<<< HEAD
 defs["ImGuiTextFilter_Clear"][1]["location"] = "imgui:2300"
+=======
+defs["ImGuiTextFilter_Clear"][1]["location"] = "imgui:2293"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextFilter_Clear"][1]["ov_cimguiname"] = "ImGuiTextFilter_Clear"
 defs["ImGuiTextFilter_Clear"][1]["ret"] = "void"
 defs["ImGuiTextFilter_Clear"][1]["signature"] = "()"
@@ -7763,7 +9122,11 @@ defs["ImGuiTextFilter_Draw"][1]["defaults"] = {}
 defs["ImGuiTextFilter_Draw"][1]["defaults"]["label"] = "\"Filter(inc,-exc)\""
 defs["ImGuiTextFilter_Draw"][1]["defaults"]["width"] = "0.0f"
 defs["ImGuiTextFilter_Draw"][1]["funcname"] = "Draw"
+<<<<<<< HEAD
 defs["ImGuiTextFilter_Draw"][1]["location"] = "imgui:2297"
+=======
+defs["ImGuiTextFilter_Draw"][1]["location"] = "imgui:2290"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextFilter_Draw"][1]["ov_cimguiname"] = "ImGuiTextFilter_Draw"
 defs["ImGuiTextFilter_Draw"][1]["ret"] = "bool"
 defs["ImGuiTextFilter_Draw"][1]["signature"] = "(const char*,float)"
@@ -7783,7 +9146,11 @@ defs["ImGuiTextFilter_ImGuiTextFilter"][1]["constructor"] = true
 defs["ImGuiTextFilter_ImGuiTextFilter"][1]["defaults"] = {}
 defs["ImGuiTextFilter_ImGuiTextFilter"][1]["defaults"]["default_filter"] = "\"\""
 defs["ImGuiTextFilter_ImGuiTextFilter"][1]["funcname"] = "ImGuiTextFilter"
+<<<<<<< HEAD
 defs["ImGuiTextFilter_ImGuiTextFilter"][1]["location"] = "imgui:2296"
+=======
+defs["ImGuiTextFilter_ImGuiTextFilter"][1]["location"] = "imgui:2289"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextFilter_ImGuiTextFilter"][1]["ov_cimguiname"] = "ImGuiTextFilter_ImGuiTextFilter"
 defs["ImGuiTextFilter_ImGuiTextFilter"][1]["signature"] = "(const char*)"
 defs["ImGuiTextFilter_ImGuiTextFilter"][1]["stname"] = "ImGuiTextFilter"
@@ -7800,7 +9167,11 @@ defs["ImGuiTextFilter_IsActive"][1]["call_args"] = "()"
 defs["ImGuiTextFilter_IsActive"][1]["cimguiname"] = "ImGuiTextFilter_IsActive"
 defs["ImGuiTextFilter_IsActive"][1]["defaults"] = {}
 defs["ImGuiTextFilter_IsActive"][1]["funcname"] = "IsActive"
+<<<<<<< HEAD
 defs["ImGuiTextFilter_IsActive"][1]["location"] = "imgui:2301"
+=======
+defs["ImGuiTextFilter_IsActive"][1]["location"] = "imgui:2294"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextFilter_IsActive"][1]["ov_cimguiname"] = "ImGuiTextFilter_IsActive"
 defs["ImGuiTextFilter_IsActive"][1]["ret"] = "bool"
 defs["ImGuiTextFilter_IsActive"][1]["signature"] = "()const"
@@ -7825,7 +9196,11 @@ defs["ImGuiTextFilter_PassFilter"][1]["cimguiname"] = "ImGuiTextFilter_PassFilte
 defs["ImGuiTextFilter_PassFilter"][1]["defaults"] = {}
 defs["ImGuiTextFilter_PassFilter"][1]["defaults"]["text_end"] = "NULL"
 defs["ImGuiTextFilter_PassFilter"][1]["funcname"] = "PassFilter"
+<<<<<<< HEAD
 defs["ImGuiTextFilter_PassFilter"][1]["location"] = "imgui:2298"
+=======
+defs["ImGuiTextFilter_PassFilter"][1]["location"] = "imgui:2291"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextFilter_PassFilter"][1]["ov_cimguiname"] = "ImGuiTextFilter_PassFilter"
 defs["ImGuiTextFilter_PassFilter"][1]["ret"] = "bool"
 defs["ImGuiTextFilter_PassFilter"][1]["signature"] = "(const char*,const char*)const"
@@ -7868,7 +9243,11 @@ defs["ImGuiTextIndex_append"][1]["call_args"] = "(base,old_size,new_size)"
 defs["ImGuiTextIndex_append"][1]["cimguiname"] = "ImGuiTextIndex_append"
 defs["ImGuiTextIndex_append"][1]["defaults"] = {}
 defs["ImGuiTextIndex_append"][1]["funcname"] = "append"
+<<<<<<< HEAD
 defs["ImGuiTextIndex_append"][1]["location"] = "imgui_internal:738"
+=======
+defs["ImGuiTextIndex_append"][1]["location"] = "imgui_internal:730"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextIndex_append"][1]["ov_cimguiname"] = "ImGuiTextIndex_append"
 defs["ImGuiTextIndex_append"][1]["ret"] = "void"
 defs["ImGuiTextIndex_append"][1]["signature"] = "(const char*,int,int)"
@@ -7886,7 +9265,11 @@ defs["ImGuiTextIndex_clear"][1]["call_args"] = "()"
 defs["ImGuiTextIndex_clear"][1]["cimguiname"] = "ImGuiTextIndex_clear"
 defs["ImGuiTextIndex_clear"][1]["defaults"] = {}
 defs["ImGuiTextIndex_clear"][1]["funcname"] = "clear"
+<<<<<<< HEAD
 defs["ImGuiTextIndex_clear"][1]["location"] = "imgui_internal:734"
+=======
+defs["ImGuiTextIndex_clear"][1]["location"] = "imgui_internal:726"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextIndex_clear"][1]["ov_cimguiname"] = "ImGuiTextIndex_clear"
 defs["ImGuiTextIndex_clear"][1]["ret"] = "void"
 defs["ImGuiTextIndex_clear"][1]["signature"] = "()"
@@ -7910,7 +9293,11 @@ defs["ImGuiTextIndex_get_line_begin"][1]["call_args"] = "(base,n)"
 defs["ImGuiTextIndex_get_line_begin"][1]["cimguiname"] = "ImGuiTextIndex_get_line_begin"
 defs["ImGuiTextIndex_get_line_begin"][1]["defaults"] = {}
 defs["ImGuiTextIndex_get_line_begin"][1]["funcname"] = "get_line_begin"
+<<<<<<< HEAD
 defs["ImGuiTextIndex_get_line_begin"][1]["location"] = "imgui_internal:736"
+=======
+defs["ImGuiTextIndex_get_line_begin"][1]["location"] = "imgui_internal:728"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextIndex_get_line_begin"][1]["ov_cimguiname"] = "ImGuiTextIndex_get_line_begin"
 defs["ImGuiTextIndex_get_line_begin"][1]["ret"] = "const char*"
 defs["ImGuiTextIndex_get_line_begin"][1]["signature"] = "(const char*,int)"
@@ -7934,7 +9321,11 @@ defs["ImGuiTextIndex_get_line_end"][1]["call_args"] = "(base,n)"
 defs["ImGuiTextIndex_get_line_end"][1]["cimguiname"] = "ImGuiTextIndex_get_line_end"
 defs["ImGuiTextIndex_get_line_end"][1]["defaults"] = {}
 defs["ImGuiTextIndex_get_line_end"][1]["funcname"] = "get_line_end"
+<<<<<<< HEAD
 defs["ImGuiTextIndex_get_line_end"][1]["location"] = "imgui_internal:737"
+=======
+defs["ImGuiTextIndex_get_line_end"][1]["location"] = "imgui_internal:729"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextIndex_get_line_end"][1]["ov_cimguiname"] = "ImGuiTextIndex_get_line_end"
 defs["ImGuiTextIndex_get_line_end"][1]["ret"] = "const char*"
 defs["ImGuiTextIndex_get_line_end"][1]["signature"] = "(const char*,int)"
@@ -7952,7 +9343,11 @@ defs["ImGuiTextIndex_size"][1]["call_args"] = "()"
 defs["ImGuiTextIndex_size"][1]["cimguiname"] = "ImGuiTextIndex_size"
 defs["ImGuiTextIndex_size"][1]["defaults"] = {}
 defs["ImGuiTextIndex_size"][1]["funcname"] = "size"
+<<<<<<< HEAD
 defs["ImGuiTextIndex_size"][1]["location"] = "imgui_internal:735"
+=======
+defs["ImGuiTextIndex_size"][1]["location"] = "imgui_internal:727"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextIndex_size"][1]["ov_cimguiname"] = "ImGuiTextIndex_size"
 defs["ImGuiTextIndex_size"][1]["ret"] = "int"
 defs["ImGuiTextIndex_size"][1]["signature"] = "()"
@@ -7968,7 +9363,11 @@ defs["ImGuiTextRange_ImGuiTextRange"][1]["cimguiname"] = "ImGuiTextRange_ImGuiTe
 defs["ImGuiTextRange_ImGuiTextRange"][1]["constructor"] = true
 defs["ImGuiTextRange_ImGuiTextRange"][1]["defaults"] = {}
 defs["ImGuiTextRange_ImGuiTextRange"][1]["funcname"] = "ImGuiTextRange"
+<<<<<<< HEAD
 defs["ImGuiTextRange_ImGuiTextRange"][1]["location"] = "imgui:2309"
+=======
+defs["ImGuiTextRange_ImGuiTextRange"][1]["location"] = "imgui:2302"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextRange_ImGuiTextRange"][1]["ov_cimguiname"] = "ImGuiTextRange_ImGuiTextRange_Nil"
 defs["ImGuiTextRange_ImGuiTextRange"][1]["signature"] = "()"
 defs["ImGuiTextRange_ImGuiTextRange"][1]["stname"] = "ImGuiTextRange"
@@ -7987,7 +9386,11 @@ defs["ImGuiTextRange_ImGuiTextRange"][2]["cimguiname"] = "ImGuiTextRange_ImGuiTe
 defs["ImGuiTextRange_ImGuiTextRange"][2]["constructor"] = true
 defs["ImGuiTextRange_ImGuiTextRange"][2]["defaults"] = {}
 defs["ImGuiTextRange_ImGuiTextRange"][2]["funcname"] = "ImGuiTextRange"
+<<<<<<< HEAD
 defs["ImGuiTextRange_ImGuiTextRange"][2]["location"] = "imgui:2310"
+=======
+defs["ImGuiTextRange_ImGuiTextRange"][2]["location"] = "imgui:2303"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextRange_ImGuiTextRange"][2]["ov_cimguiname"] = "ImGuiTextRange_ImGuiTextRange_Str"
 defs["ImGuiTextRange_ImGuiTextRange"][2]["signature"] = "(const char*,const char*)"
 defs["ImGuiTextRange_ImGuiTextRange"][2]["stname"] = "ImGuiTextRange"
@@ -8021,7 +9424,11 @@ defs["ImGuiTextRange_empty"][1]["call_args"] = "()"
 defs["ImGuiTextRange_empty"][1]["cimguiname"] = "ImGuiTextRange_empty"
 defs["ImGuiTextRange_empty"][1]["defaults"] = {}
 defs["ImGuiTextRange_empty"][1]["funcname"] = "empty"
+<<<<<<< HEAD
 defs["ImGuiTextRange_empty"][1]["location"] = "imgui:2311"
+=======
+defs["ImGuiTextRange_empty"][1]["location"] = "imgui:2304"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextRange_empty"][1]["ov_cimguiname"] = "ImGuiTextRange_empty"
 defs["ImGuiTextRange_empty"][1]["ret"] = "bool"
 defs["ImGuiTextRange_empty"][1]["signature"] = "()const"
@@ -8045,7 +9452,11 @@ defs["ImGuiTextRange_split"][1]["call_args"] = "(separator,out)"
 defs["ImGuiTextRange_split"][1]["cimguiname"] = "ImGuiTextRange_split"
 defs["ImGuiTextRange_split"][1]["defaults"] = {}
 defs["ImGuiTextRange_split"][1]["funcname"] = "split"
+<<<<<<< HEAD
 defs["ImGuiTextRange_split"][1]["location"] = "imgui:2312"
+=======
+defs["ImGuiTextRange_split"][1]["location"] = "imgui:2305"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiTextRange_split"][1]["ov_cimguiname"] = "ImGuiTextRange_split"
 defs["ImGuiTextRange_split"][1]["ret"] = "void"
 defs["ImGuiTextRange_split"][1]["signature"] = "(char,ImVector_ImGuiTextRange*)const"
@@ -8069,7 +9480,11 @@ defs["ImGuiViewportP_CalcWorkRectPos"][1]["call_args"] = "(off_min)"
 defs["ImGuiViewportP_CalcWorkRectPos"][1]["cimguiname"] = "ImGuiViewportP_CalcWorkRectPos"
 defs["ImGuiViewportP_CalcWorkRectPos"][1]["defaults"] = {}
 defs["ImGuiViewportP_CalcWorkRectPos"][1]["funcname"] = "CalcWorkRectPos"
+<<<<<<< HEAD
 defs["ImGuiViewportP_CalcWorkRectPos"][1]["location"] = "imgui_internal:1755"
+=======
+defs["ImGuiViewportP_CalcWorkRectPos"][1]["location"] = "imgui_internal:1747"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiViewportP_CalcWorkRectPos"][1]["nonUDT"] = 1
 defs["ImGuiViewportP_CalcWorkRectPos"][1]["ov_cimguiname"] = "ImGuiViewportP_CalcWorkRectPos"
 defs["ImGuiViewportP_CalcWorkRectPos"][1]["ret"] = "void"
@@ -8097,7 +9512,11 @@ defs["ImGuiViewportP_CalcWorkRectSize"][1]["call_args"] = "(off_min,off_max)"
 defs["ImGuiViewportP_CalcWorkRectSize"][1]["cimguiname"] = "ImGuiViewportP_CalcWorkRectSize"
 defs["ImGuiViewportP_CalcWorkRectSize"][1]["defaults"] = {}
 defs["ImGuiViewportP_CalcWorkRectSize"][1]["funcname"] = "CalcWorkRectSize"
+<<<<<<< HEAD
 defs["ImGuiViewportP_CalcWorkRectSize"][1]["location"] = "imgui_internal:1756"
+=======
+defs["ImGuiViewportP_CalcWorkRectSize"][1]["location"] = "imgui_internal:1748"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiViewportP_CalcWorkRectSize"][1]["nonUDT"] = 1
 defs["ImGuiViewportP_CalcWorkRectSize"][1]["ov_cimguiname"] = "ImGuiViewportP_CalcWorkRectSize"
 defs["ImGuiViewportP_CalcWorkRectSize"][1]["ret"] = "void"
@@ -8116,7 +9535,11 @@ defs["ImGuiViewportP_ClearRequestFlags"][1]["call_args"] = "()"
 defs["ImGuiViewportP_ClearRequestFlags"][1]["cimguiname"] = "ImGuiViewportP_ClearRequestFlags"
 defs["ImGuiViewportP_ClearRequestFlags"][1]["defaults"] = {}
 defs["ImGuiViewportP_ClearRequestFlags"][1]["funcname"] = "ClearRequestFlags"
+<<<<<<< HEAD
 defs["ImGuiViewportP_ClearRequestFlags"][1]["location"] = "imgui_internal:1752"
+=======
+defs["ImGuiViewportP_ClearRequestFlags"][1]["location"] = "imgui_internal:1744"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiViewportP_ClearRequestFlags"][1]["ov_cimguiname"] = "ImGuiViewportP_ClearRequestFlags"
 defs["ImGuiViewportP_ClearRequestFlags"][1]["ret"] = "void"
 defs["ImGuiViewportP_ClearRequestFlags"][1]["signature"] = "()"
@@ -8137,7 +9560,11 @@ defs["ImGuiViewportP_GetBuildWorkRect"][1]["call_args"] = "()"
 defs["ImGuiViewportP_GetBuildWorkRect"][1]["cimguiname"] = "ImGuiViewportP_GetBuildWorkRect"
 defs["ImGuiViewportP_GetBuildWorkRect"][1]["defaults"] = {}
 defs["ImGuiViewportP_GetBuildWorkRect"][1]["funcname"] = "GetBuildWorkRect"
+<<<<<<< HEAD
 defs["ImGuiViewportP_GetBuildWorkRect"][1]["location"] = "imgui_internal:1762"
+=======
+defs["ImGuiViewportP_GetBuildWorkRect"][1]["location"] = "imgui_internal:1754"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiViewportP_GetBuildWorkRect"][1]["nonUDT"] = 1
 defs["ImGuiViewportP_GetBuildWorkRect"][1]["ov_cimguiname"] = "ImGuiViewportP_GetBuildWorkRect"
 defs["ImGuiViewportP_GetBuildWorkRect"][1]["ret"] = "void"
@@ -8159,7 +9586,11 @@ defs["ImGuiViewportP_GetMainRect"][1]["call_args"] = "()"
 defs["ImGuiViewportP_GetMainRect"][1]["cimguiname"] = "ImGuiViewportP_GetMainRect"
 defs["ImGuiViewportP_GetMainRect"][1]["defaults"] = {}
 defs["ImGuiViewportP_GetMainRect"][1]["funcname"] = "GetMainRect"
+<<<<<<< HEAD
 defs["ImGuiViewportP_GetMainRect"][1]["location"] = "imgui_internal:1760"
+=======
+defs["ImGuiViewportP_GetMainRect"][1]["location"] = "imgui_internal:1752"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiViewportP_GetMainRect"][1]["nonUDT"] = 1
 defs["ImGuiViewportP_GetMainRect"][1]["ov_cimguiname"] = "ImGuiViewportP_GetMainRect"
 defs["ImGuiViewportP_GetMainRect"][1]["ret"] = "void"
@@ -8181,7 +9612,11 @@ defs["ImGuiViewportP_GetWorkRect"][1]["call_args"] = "()"
 defs["ImGuiViewportP_GetWorkRect"][1]["cimguiname"] = "ImGuiViewportP_GetWorkRect"
 defs["ImGuiViewportP_GetWorkRect"][1]["defaults"] = {}
 defs["ImGuiViewportP_GetWorkRect"][1]["funcname"] = "GetWorkRect"
+<<<<<<< HEAD
 defs["ImGuiViewportP_GetWorkRect"][1]["location"] = "imgui_internal:1761"
+=======
+defs["ImGuiViewportP_GetWorkRect"][1]["location"] = "imgui_internal:1753"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiViewportP_GetWorkRect"][1]["nonUDT"] = 1
 defs["ImGuiViewportP_GetWorkRect"][1]["ov_cimguiname"] = "ImGuiViewportP_GetWorkRect"
 defs["ImGuiViewportP_GetWorkRect"][1]["ret"] = "void"
@@ -8198,7 +9633,11 @@ defs["ImGuiViewportP_ImGuiViewportP"][1]["cimguiname"] = "ImGuiViewportP_ImGuiVi
 defs["ImGuiViewportP_ImGuiViewportP"][1]["constructor"] = true
 defs["ImGuiViewportP_ImGuiViewportP"][1]["defaults"] = {}
 defs["ImGuiViewportP_ImGuiViewportP"][1]["funcname"] = "ImGuiViewportP"
+<<<<<<< HEAD
 defs["ImGuiViewportP_ImGuiViewportP"][1]["location"] = "imgui_internal:1750"
+=======
+defs["ImGuiViewportP_ImGuiViewportP"][1]["location"] = "imgui_internal:1742"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiViewportP_ImGuiViewportP"][1]["ov_cimguiname"] = "ImGuiViewportP_ImGuiViewportP"
 defs["ImGuiViewportP_ImGuiViewportP"][1]["signature"] = "()"
 defs["ImGuiViewportP_ImGuiViewportP"][1]["stname"] = "ImGuiViewportP"
@@ -8215,7 +9654,11 @@ defs["ImGuiViewportP_UpdateWorkRect"][1]["call_args"] = "()"
 defs["ImGuiViewportP_UpdateWorkRect"][1]["cimguiname"] = "ImGuiViewportP_UpdateWorkRect"
 defs["ImGuiViewportP_UpdateWorkRect"][1]["defaults"] = {}
 defs["ImGuiViewportP_UpdateWorkRect"][1]["funcname"] = "UpdateWorkRect"
+<<<<<<< HEAD
 defs["ImGuiViewportP_UpdateWorkRect"][1]["location"] = "imgui_internal:1757"
+=======
+defs["ImGuiViewportP_UpdateWorkRect"][1]["location"] = "imgui_internal:1749"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiViewportP_UpdateWorkRect"][1]["ov_cimguiname"] = "ImGuiViewportP_UpdateWorkRect"
 defs["ImGuiViewportP_UpdateWorkRect"][1]["ret"] = "void"
 defs["ImGuiViewportP_UpdateWorkRect"][1]["signature"] = "()"
@@ -8232,7 +9675,11 @@ defs["ImGuiViewportP_destroy"][1]["call_args"] = "(self)"
 defs["ImGuiViewportP_destroy"][1]["cimguiname"] = "ImGuiViewportP_destroy"
 defs["ImGuiViewportP_destroy"][1]["defaults"] = {}
 defs["ImGuiViewportP_destroy"][1]["destructor"] = true
+<<<<<<< HEAD
 defs["ImGuiViewportP_destroy"][1]["location"] = "imgui_internal:1751"
+=======
+defs["ImGuiViewportP_destroy"][1]["location"] = "imgui_internal:1743"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiViewportP_destroy"][1]["ov_cimguiname"] = "ImGuiViewportP_destroy"
 defs["ImGuiViewportP_destroy"][1]["realdestructor"] = true
 defs["ImGuiViewportP_destroy"][1]["ret"] = "void"
@@ -8254,7 +9701,11 @@ defs["ImGuiViewport_GetCenter"][1]["call_args"] = "()"
 defs["ImGuiViewport_GetCenter"][1]["cimguiname"] = "ImGuiViewport_GetCenter"
 defs["ImGuiViewport_GetCenter"][1]["defaults"] = {}
 defs["ImGuiViewport_GetCenter"][1]["funcname"] = "GetCenter"
+<<<<<<< HEAD
 defs["ImGuiViewport_GetCenter"][1]["location"] = "imgui:3077"
+=======
+defs["ImGuiViewport_GetCenter"][1]["location"] = "imgui:3068"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiViewport_GetCenter"][1]["nonUDT"] = 1
 defs["ImGuiViewport_GetCenter"][1]["ov_cimguiname"] = "ImGuiViewport_GetCenter"
 defs["ImGuiViewport_GetCenter"][1]["ret"] = "void"
@@ -8276,7 +9727,11 @@ defs["ImGuiViewport_GetWorkCenter"][1]["call_args"] = "()"
 defs["ImGuiViewport_GetWorkCenter"][1]["cimguiname"] = "ImGuiViewport_GetWorkCenter"
 defs["ImGuiViewport_GetWorkCenter"][1]["defaults"] = {}
 defs["ImGuiViewport_GetWorkCenter"][1]["funcname"] = "GetWorkCenter"
+<<<<<<< HEAD
 defs["ImGuiViewport_GetWorkCenter"][1]["location"] = "imgui:3078"
+=======
+defs["ImGuiViewport_GetWorkCenter"][1]["location"] = "imgui:3069"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiViewport_GetWorkCenter"][1]["nonUDT"] = 1
 defs["ImGuiViewport_GetWorkCenter"][1]["ov_cimguiname"] = "ImGuiViewport_GetWorkCenter"
 defs["ImGuiViewport_GetWorkCenter"][1]["ret"] = "void"
@@ -8293,7 +9748,11 @@ defs["ImGuiViewport_ImGuiViewport"][1]["cimguiname"] = "ImGuiViewport_ImGuiViewp
 defs["ImGuiViewport_ImGuiViewport"][1]["constructor"] = true
 defs["ImGuiViewport_ImGuiViewport"][1]["defaults"] = {}
 defs["ImGuiViewport_ImGuiViewport"][1]["funcname"] = "ImGuiViewport"
+<<<<<<< HEAD
 defs["ImGuiViewport_ImGuiViewport"][1]["location"] = "imgui:3073"
+=======
+defs["ImGuiViewport_ImGuiViewport"][1]["location"] = "imgui:3064"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiViewport_ImGuiViewport"][1]["ov_cimguiname"] = "ImGuiViewport_ImGuiViewport"
 defs["ImGuiViewport_ImGuiViewport"][1]["signature"] = "()"
 defs["ImGuiViewport_ImGuiViewport"][1]["stname"] = "ImGuiViewport"
@@ -8309,7 +9768,11 @@ defs["ImGuiViewport_destroy"][1]["call_args"] = "(self)"
 defs["ImGuiViewport_destroy"][1]["cimguiname"] = "ImGuiViewport_destroy"
 defs["ImGuiViewport_destroy"][1]["defaults"] = {}
 defs["ImGuiViewport_destroy"][1]["destructor"] = true
+<<<<<<< HEAD
 defs["ImGuiViewport_destroy"][1]["location"] = "imgui:3074"
+=======
+defs["ImGuiViewport_destroy"][1]["location"] = "imgui:3065"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiViewport_destroy"][1]["ov_cimguiname"] = "ImGuiViewport_destroy"
 defs["ImGuiViewport_destroy"][1]["realdestructor"] = true
 defs["ImGuiViewport_destroy"][1]["ret"] = "void"
@@ -8326,7 +9789,11 @@ defs["ImGuiWindowClass_ImGuiWindowClass"][1]["cimguiname"] = "ImGuiWindowClass_I
 defs["ImGuiWindowClass_ImGuiWindowClass"][1]["constructor"] = true
 defs["ImGuiWindowClass_ImGuiWindowClass"][1]["defaults"] = {}
 defs["ImGuiWindowClass_ImGuiWindowClass"][1]["funcname"] = "ImGuiWindowClass"
+<<<<<<< HEAD
 defs["ImGuiWindowClass_ImGuiWindowClass"][1]["location"] = "imgui:2223"
+=======
+defs["ImGuiWindowClass_ImGuiWindowClass"][1]["location"] = "imgui:2216"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindowClass_ImGuiWindowClass"][1]["ov_cimguiname"] = "ImGuiWindowClass_ImGuiWindowClass"
 defs["ImGuiWindowClass_ImGuiWindowClass"][1]["signature"] = "()"
 defs["ImGuiWindowClass_ImGuiWindowClass"][1]["stname"] = "ImGuiWindowClass"
@@ -8359,7 +9826,11 @@ defs["ImGuiWindowSettings_GetName"][1]["call_args"] = "()"
 defs["ImGuiWindowSettings_GetName"][1]["cimguiname"] = "ImGuiWindowSettings_GetName"
 defs["ImGuiWindowSettings_GetName"][1]["defaults"] = {}
 defs["ImGuiWindowSettings_GetName"][1]["funcname"] = "GetName"
+<<<<<<< HEAD
 defs["ImGuiWindowSettings_GetName"][1]["location"] = "imgui_internal:1787"
+=======
+defs["ImGuiWindowSettings_GetName"][1]["location"] = "imgui_internal:1778"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindowSettings_GetName"][1]["ov_cimguiname"] = "ImGuiWindowSettings_GetName"
 defs["ImGuiWindowSettings_GetName"][1]["ret"] = "char*"
 defs["ImGuiWindowSettings_GetName"][1]["signature"] = "()"
@@ -8375,7 +9846,11 @@ defs["ImGuiWindowSettings_ImGuiWindowSettings"][1]["cimguiname"] = "ImGuiWindowS
 defs["ImGuiWindowSettings_ImGuiWindowSettings"][1]["constructor"] = true
 defs["ImGuiWindowSettings_ImGuiWindowSettings"][1]["defaults"] = {}
 defs["ImGuiWindowSettings_ImGuiWindowSettings"][1]["funcname"] = "ImGuiWindowSettings"
+<<<<<<< HEAD
 defs["ImGuiWindowSettings_ImGuiWindowSettings"][1]["location"] = "imgui_internal:1786"
+=======
+defs["ImGuiWindowSettings_ImGuiWindowSettings"][1]["location"] = "imgui_internal:1777"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindowSettings_ImGuiWindowSettings"][1]["ov_cimguiname"] = "ImGuiWindowSettings_ImGuiWindowSettings"
 defs["ImGuiWindowSettings_ImGuiWindowSettings"][1]["signature"] = "()"
 defs["ImGuiWindowSettings_ImGuiWindowSettings"][1]["stname"] = "ImGuiWindowSettings"
@@ -8408,7 +9883,11 @@ defs["ImGuiWindow_CalcFontSize"][1]["call_args"] = "()"
 defs["ImGuiWindow_CalcFontSize"][1]["cimguiname"] = "ImGuiWindow_CalcFontSize"
 defs["ImGuiWindow_CalcFontSize"][1]["defaults"] = {}
 defs["ImGuiWindow_CalcFontSize"][1]["funcname"] = "CalcFontSize"
+<<<<<<< HEAD
 defs["ImGuiWindow_CalcFontSize"][1]["location"] = "imgui_internal:2579"
+=======
+defs["ImGuiWindow_CalcFontSize"][1]["location"] = "imgui_internal:2575"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindow_CalcFontSize"][1]["ov_cimguiname"] = "ImGuiWindow_CalcFontSize"
 defs["ImGuiWindow_CalcFontSize"][1]["ret"] = "float"
 defs["ImGuiWindow_CalcFontSize"][1]["signature"] = "()const"
@@ -8433,7 +9912,11 @@ defs["ImGuiWindow_GetID"][1]["cimguiname"] = "ImGuiWindow_GetID"
 defs["ImGuiWindow_GetID"][1]["defaults"] = {}
 defs["ImGuiWindow_GetID"][1]["defaults"]["str_end"] = "NULL"
 defs["ImGuiWindow_GetID"][1]["funcname"] = "GetID"
+<<<<<<< HEAD
 defs["ImGuiWindow_GetID"][1]["location"] = "imgui_internal:2572"
+=======
+defs["ImGuiWindow_GetID"][1]["location"] = "imgui_internal:2568"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindow_GetID"][1]["ov_cimguiname"] = "ImGuiWindow_GetID_Str"
 defs["ImGuiWindow_GetID"][1]["ret"] = "ImGuiID"
 defs["ImGuiWindow_GetID"][1]["signature"] = "(const char*,const char*)"
@@ -8452,7 +9935,11 @@ defs["ImGuiWindow_GetID"][2]["call_args"] = "(ptr)"
 defs["ImGuiWindow_GetID"][2]["cimguiname"] = "ImGuiWindow_GetID"
 defs["ImGuiWindow_GetID"][2]["defaults"] = {}
 defs["ImGuiWindow_GetID"][2]["funcname"] = "GetID"
+<<<<<<< HEAD
 defs["ImGuiWindow_GetID"][2]["location"] = "imgui_internal:2573"
+=======
+defs["ImGuiWindow_GetID"][2]["location"] = "imgui_internal:2569"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindow_GetID"][2]["ov_cimguiname"] = "ImGuiWindow_GetID_Ptr"
 defs["ImGuiWindow_GetID"][2]["ret"] = "ImGuiID"
 defs["ImGuiWindow_GetID"][2]["signature"] = "(const void*)"
@@ -8471,7 +9958,11 @@ defs["ImGuiWindow_GetID"][3]["call_args"] = "(n)"
 defs["ImGuiWindow_GetID"][3]["cimguiname"] = "ImGuiWindow_GetID"
 defs["ImGuiWindow_GetID"][3]["defaults"] = {}
 defs["ImGuiWindow_GetID"][3]["funcname"] = "GetID"
+<<<<<<< HEAD
 defs["ImGuiWindow_GetID"][3]["location"] = "imgui_internal:2574"
+=======
+defs["ImGuiWindow_GetID"][3]["location"] = "imgui_internal:2570"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindow_GetID"][3]["ov_cimguiname"] = "ImGuiWindow_GetID_Int"
 defs["ImGuiWindow_GetID"][3]["ret"] = "ImGuiID"
 defs["ImGuiWindow_GetID"][3]["signature"] = "(int)"
@@ -8494,7 +9985,11 @@ defs["ImGuiWindow_GetIDFromRectangle"][1]["call_args"] = "(r_abs)"
 defs["ImGuiWindow_GetIDFromRectangle"][1]["cimguiname"] = "ImGuiWindow_GetIDFromRectangle"
 defs["ImGuiWindow_GetIDFromRectangle"][1]["defaults"] = {}
 defs["ImGuiWindow_GetIDFromRectangle"][1]["funcname"] = "GetIDFromRectangle"
+<<<<<<< HEAD
 defs["ImGuiWindow_GetIDFromRectangle"][1]["location"] = "imgui_internal:2575"
+=======
+defs["ImGuiWindow_GetIDFromRectangle"][1]["location"] = "imgui_internal:2571"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindow_GetIDFromRectangle"][1]["ov_cimguiname"] = "ImGuiWindow_GetIDFromRectangle"
 defs["ImGuiWindow_GetIDFromRectangle"][1]["ret"] = "ImGuiID"
 defs["ImGuiWindow_GetIDFromRectangle"][1]["signature"] = "(const ImRect)"
@@ -8516,7 +10011,11 @@ defs["ImGuiWindow_ImGuiWindow"][1]["cimguiname"] = "ImGuiWindow_ImGuiWindow"
 defs["ImGuiWindow_ImGuiWindow"][1]["constructor"] = true
 defs["ImGuiWindow_ImGuiWindow"][1]["defaults"] = {}
 defs["ImGuiWindow_ImGuiWindow"][1]["funcname"] = "ImGuiWindow"
+<<<<<<< HEAD
 defs["ImGuiWindow_ImGuiWindow"][1]["location"] = "imgui_internal:2568"
+=======
+defs["ImGuiWindow_ImGuiWindow"][1]["location"] = "imgui_internal:2564"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindow_ImGuiWindow"][1]["ov_cimguiname"] = "ImGuiWindow_ImGuiWindow"
 defs["ImGuiWindow_ImGuiWindow"][1]["signature"] = "(ImGuiContext*,const char*)"
 defs["ImGuiWindow_ImGuiWindow"][1]["stname"] = "ImGuiWindow"
@@ -8533,7 +10032,11 @@ defs["ImGuiWindow_MenuBarHeight"][1]["call_args"] = "()"
 defs["ImGuiWindow_MenuBarHeight"][1]["cimguiname"] = "ImGuiWindow_MenuBarHeight"
 defs["ImGuiWindow_MenuBarHeight"][1]["defaults"] = {}
 defs["ImGuiWindow_MenuBarHeight"][1]["funcname"] = "MenuBarHeight"
+<<<<<<< HEAD
 defs["ImGuiWindow_MenuBarHeight"][1]["location"] = "imgui_internal:2582"
+=======
+defs["ImGuiWindow_MenuBarHeight"][1]["location"] = "imgui_internal:2578"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindow_MenuBarHeight"][1]["ov_cimguiname"] = "ImGuiWindow_MenuBarHeight"
 defs["ImGuiWindow_MenuBarHeight"][1]["ret"] = "float"
 defs["ImGuiWindow_MenuBarHeight"][1]["signature"] = "()const"
@@ -8554,7 +10057,11 @@ defs["ImGuiWindow_MenuBarRect"][1]["call_args"] = "()"
 defs["ImGuiWindow_MenuBarRect"][1]["cimguiname"] = "ImGuiWindow_MenuBarRect"
 defs["ImGuiWindow_MenuBarRect"][1]["defaults"] = {}
 defs["ImGuiWindow_MenuBarRect"][1]["funcname"] = "MenuBarRect"
+<<<<<<< HEAD
 defs["ImGuiWindow_MenuBarRect"][1]["location"] = "imgui_internal:2583"
+=======
+defs["ImGuiWindow_MenuBarRect"][1]["location"] = "imgui_internal:2579"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindow_MenuBarRect"][1]["nonUDT"] = 1
 defs["ImGuiWindow_MenuBarRect"][1]["ov_cimguiname"] = "ImGuiWindow_MenuBarRect"
 defs["ImGuiWindow_MenuBarRect"][1]["ret"] = "void"
@@ -8576,7 +10083,11 @@ defs["ImGuiWindow_Rect"][1]["call_args"] = "()"
 defs["ImGuiWindow_Rect"][1]["cimguiname"] = "ImGuiWindow_Rect"
 defs["ImGuiWindow_Rect"][1]["defaults"] = {}
 defs["ImGuiWindow_Rect"][1]["funcname"] = "Rect"
+<<<<<<< HEAD
 defs["ImGuiWindow_Rect"][1]["location"] = "imgui_internal:2578"
+=======
+defs["ImGuiWindow_Rect"][1]["location"] = "imgui_internal:2574"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindow_Rect"][1]["nonUDT"] = 1
 defs["ImGuiWindow_Rect"][1]["ov_cimguiname"] = "ImGuiWindow_Rect"
 defs["ImGuiWindow_Rect"][1]["ret"] = "void"
@@ -8595,7 +10106,11 @@ defs["ImGuiWindow_TitleBarHeight"][1]["call_args"] = "()"
 defs["ImGuiWindow_TitleBarHeight"][1]["cimguiname"] = "ImGuiWindow_TitleBarHeight"
 defs["ImGuiWindow_TitleBarHeight"][1]["defaults"] = {}
 defs["ImGuiWindow_TitleBarHeight"][1]["funcname"] = "TitleBarHeight"
+<<<<<<< HEAD
 defs["ImGuiWindow_TitleBarHeight"][1]["location"] = "imgui_internal:2580"
+=======
+defs["ImGuiWindow_TitleBarHeight"][1]["location"] = "imgui_internal:2576"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindow_TitleBarHeight"][1]["ov_cimguiname"] = "ImGuiWindow_TitleBarHeight"
 defs["ImGuiWindow_TitleBarHeight"][1]["ret"] = "float"
 defs["ImGuiWindow_TitleBarHeight"][1]["signature"] = "()const"
@@ -8616,7 +10131,11 @@ defs["ImGuiWindow_TitleBarRect"][1]["call_args"] = "()"
 defs["ImGuiWindow_TitleBarRect"][1]["cimguiname"] = "ImGuiWindow_TitleBarRect"
 defs["ImGuiWindow_TitleBarRect"][1]["defaults"] = {}
 defs["ImGuiWindow_TitleBarRect"][1]["funcname"] = "TitleBarRect"
+<<<<<<< HEAD
 defs["ImGuiWindow_TitleBarRect"][1]["location"] = "imgui_internal:2581"
+=======
+defs["ImGuiWindow_TitleBarRect"][1]["location"] = "imgui_internal:2577"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindow_TitleBarRect"][1]["nonUDT"] = 1
 defs["ImGuiWindow_TitleBarRect"][1]["ov_cimguiname"] = "ImGuiWindow_TitleBarRect"
 defs["ImGuiWindow_TitleBarRect"][1]["ret"] = "void"
@@ -8634,7 +10153,11 @@ defs["ImGuiWindow_destroy"][1]["call_args"] = "(self)"
 defs["ImGuiWindow_destroy"][1]["cimguiname"] = "ImGuiWindow_destroy"
 defs["ImGuiWindow_destroy"][1]["defaults"] = {}
 defs["ImGuiWindow_destroy"][1]["destructor"] = true
+<<<<<<< HEAD
 defs["ImGuiWindow_destroy"][1]["location"] = "imgui_internal:2570"
+=======
+defs["ImGuiWindow_destroy"][1]["location"] = "imgui_internal:2566"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImGuiWindow_destroy"][1]["ov_cimguiname"] = "ImGuiWindow_destroy"
 defs["ImGuiWindow_destroy"][1]["realdestructor"] = true
 defs["ImGuiWindow_destroy"][1]["ret"] = "void"
@@ -8653,7 +10176,11 @@ defs["ImPool_Add"][1]["call_args"] = "()"
 defs["ImPool_Add"][1]["cimguiname"] = "ImPool_Add"
 defs["ImPool_Add"][1]["defaults"] = {}
 defs["ImPool_Add"][1]["funcname"] = "Add"
+<<<<<<< HEAD
 defs["ImPool_Add"][1]["location"] = "imgui_internal:687"
+=======
+defs["ImPool_Add"][1]["location"] = "imgui_internal:679"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_Add"][1]["ov_cimguiname"] = "ImPool_Add"
 defs["ImPool_Add"][1]["ret"] = "T*"
 defs["ImPool_Add"][1]["signature"] = "()"
@@ -8672,7 +10199,11 @@ defs["ImPool_Clear"][1]["call_args"] = "()"
 defs["ImPool_Clear"][1]["cimguiname"] = "ImPool_Clear"
 defs["ImPool_Clear"][1]["defaults"] = {}
 defs["ImPool_Clear"][1]["funcname"] = "Clear"
+<<<<<<< HEAD
 defs["ImPool_Clear"][1]["location"] = "imgui_internal:686"
+=======
+defs["ImPool_Clear"][1]["location"] = "imgui_internal:678"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_Clear"][1]["ov_cimguiname"] = "ImPool_Clear"
 defs["ImPool_Clear"][1]["ret"] = "void"
 defs["ImPool_Clear"][1]["signature"] = "()"
@@ -8694,7 +10225,11 @@ defs["ImPool_Contains"][1]["call_args"] = "(p)"
 defs["ImPool_Contains"][1]["cimguiname"] = "ImPool_Contains"
 defs["ImPool_Contains"][1]["defaults"] = {}
 defs["ImPool_Contains"][1]["funcname"] = "Contains"
+<<<<<<< HEAD
 defs["ImPool_Contains"][1]["location"] = "imgui_internal:685"
+=======
+defs["ImPool_Contains"][1]["location"] = "imgui_internal:677"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_Contains"][1]["ov_cimguiname"] = "ImPool_Contains"
 defs["ImPool_Contains"][1]["ret"] = "bool"
 defs["ImPool_Contains"][1]["signature"] = "(const T*)const"
@@ -8713,7 +10248,11 @@ defs["ImPool_GetAliveCount"][1]["call_args"] = "()"
 defs["ImPool_GetAliveCount"][1]["cimguiname"] = "ImPool_GetAliveCount"
 defs["ImPool_GetAliveCount"][1]["defaults"] = {}
 defs["ImPool_GetAliveCount"][1]["funcname"] = "GetAliveCount"
+<<<<<<< HEAD
 defs["ImPool_GetAliveCount"][1]["location"] = "imgui_internal:694"
+=======
+defs["ImPool_GetAliveCount"][1]["location"] = "imgui_internal:686"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_GetAliveCount"][1]["ov_cimguiname"] = "ImPool_GetAliveCount"
 defs["ImPool_GetAliveCount"][1]["ret"] = "int"
 defs["ImPool_GetAliveCount"][1]["signature"] = "()const"
@@ -8732,7 +10271,11 @@ defs["ImPool_GetBufSize"][1]["call_args"] = "()"
 defs["ImPool_GetBufSize"][1]["cimguiname"] = "ImPool_GetBufSize"
 defs["ImPool_GetBufSize"][1]["defaults"] = {}
 defs["ImPool_GetBufSize"][1]["funcname"] = "GetBufSize"
+<<<<<<< HEAD
 defs["ImPool_GetBufSize"][1]["location"] = "imgui_internal:695"
+=======
+defs["ImPool_GetBufSize"][1]["location"] = "imgui_internal:687"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_GetBufSize"][1]["ov_cimguiname"] = "ImPool_GetBufSize"
 defs["ImPool_GetBufSize"][1]["ret"] = "int"
 defs["ImPool_GetBufSize"][1]["signature"] = "()const"
@@ -8754,7 +10297,11 @@ defs["ImPool_GetByIndex"][1]["call_args"] = "(n)"
 defs["ImPool_GetByIndex"][1]["cimguiname"] = "ImPool_GetByIndex"
 defs["ImPool_GetByIndex"][1]["defaults"] = {}
 defs["ImPool_GetByIndex"][1]["funcname"] = "GetByIndex"
+<<<<<<< HEAD
 defs["ImPool_GetByIndex"][1]["location"] = "imgui_internal:682"
+=======
+defs["ImPool_GetByIndex"][1]["location"] = "imgui_internal:674"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_GetByIndex"][1]["ov_cimguiname"] = "ImPool_GetByIndex"
 defs["ImPool_GetByIndex"][1]["ret"] = "T*"
 defs["ImPool_GetByIndex"][1]["signature"] = "(ImPoolIdx)"
@@ -8776,7 +10323,11 @@ defs["ImPool_GetByKey"][1]["call_args"] = "(key)"
 defs["ImPool_GetByKey"][1]["cimguiname"] = "ImPool_GetByKey"
 defs["ImPool_GetByKey"][1]["defaults"] = {}
 defs["ImPool_GetByKey"][1]["funcname"] = "GetByKey"
+<<<<<<< HEAD
 defs["ImPool_GetByKey"][1]["location"] = "imgui_internal:681"
+=======
+defs["ImPool_GetByKey"][1]["location"] = "imgui_internal:673"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_GetByKey"][1]["ov_cimguiname"] = "ImPool_GetByKey"
 defs["ImPool_GetByKey"][1]["ret"] = "T*"
 defs["ImPool_GetByKey"][1]["signature"] = "(ImGuiID)"
@@ -8798,7 +10349,11 @@ defs["ImPool_GetIndex"][1]["call_args"] = "(p)"
 defs["ImPool_GetIndex"][1]["cimguiname"] = "ImPool_GetIndex"
 defs["ImPool_GetIndex"][1]["defaults"] = {}
 defs["ImPool_GetIndex"][1]["funcname"] = "GetIndex"
+<<<<<<< HEAD
 defs["ImPool_GetIndex"][1]["location"] = "imgui_internal:683"
+=======
+defs["ImPool_GetIndex"][1]["location"] = "imgui_internal:675"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_GetIndex"][1]["ov_cimguiname"] = "ImPool_GetIndex"
 defs["ImPool_GetIndex"][1]["ret"] = "ImPoolIdx"
 defs["ImPool_GetIndex"][1]["signature"] = "(const T*)const"
@@ -8817,7 +10372,11 @@ defs["ImPool_GetMapSize"][1]["call_args"] = "()"
 defs["ImPool_GetMapSize"][1]["cimguiname"] = "ImPool_GetMapSize"
 defs["ImPool_GetMapSize"][1]["defaults"] = {}
 defs["ImPool_GetMapSize"][1]["funcname"] = "GetMapSize"
+<<<<<<< HEAD
 defs["ImPool_GetMapSize"][1]["location"] = "imgui_internal:696"
+=======
+defs["ImPool_GetMapSize"][1]["location"] = "imgui_internal:688"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_GetMapSize"][1]["ov_cimguiname"] = "ImPool_GetMapSize"
 defs["ImPool_GetMapSize"][1]["ret"] = "int"
 defs["ImPool_GetMapSize"][1]["signature"] = "()const"
@@ -8839,7 +10398,11 @@ defs["ImPool_GetOrAddByKey"][1]["call_args"] = "(key)"
 defs["ImPool_GetOrAddByKey"][1]["cimguiname"] = "ImPool_GetOrAddByKey"
 defs["ImPool_GetOrAddByKey"][1]["defaults"] = {}
 defs["ImPool_GetOrAddByKey"][1]["funcname"] = "GetOrAddByKey"
+<<<<<<< HEAD
 defs["ImPool_GetOrAddByKey"][1]["location"] = "imgui_internal:684"
+=======
+defs["ImPool_GetOrAddByKey"][1]["location"] = "imgui_internal:676"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_GetOrAddByKey"][1]["ov_cimguiname"] = "ImPool_GetOrAddByKey"
 defs["ImPool_GetOrAddByKey"][1]["ret"] = "T*"
 defs["ImPool_GetOrAddByKey"][1]["signature"] = "(ImGuiID)"
@@ -8856,7 +10419,11 @@ defs["ImPool_ImPool"][1]["cimguiname"] = "ImPool_ImPool"
 defs["ImPool_ImPool"][1]["constructor"] = true
 defs["ImPool_ImPool"][1]["defaults"] = {}
 defs["ImPool_ImPool"][1]["funcname"] = "ImPool"
+<<<<<<< HEAD
 defs["ImPool_ImPool"][1]["location"] = "imgui_internal:679"
+=======
+defs["ImPool_ImPool"][1]["location"] = "imgui_internal:671"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_ImPool"][1]["ov_cimguiname"] = "ImPool_ImPool"
 defs["ImPool_ImPool"][1]["signature"] = "()"
 defs["ImPool_ImPool"][1]["stname"] = "ImPool"
@@ -8880,7 +10447,11 @@ defs["ImPool_Remove"][1]["call_args"] = "(key,p)"
 defs["ImPool_Remove"][1]["cimguiname"] = "ImPool_Remove"
 defs["ImPool_Remove"][1]["defaults"] = {}
 defs["ImPool_Remove"][1]["funcname"] = "Remove"
+<<<<<<< HEAD
 defs["ImPool_Remove"][1]["location"] = "imgui_internal:688"
+=======
+defs["ImPool_Remove"][1]["location"] = "imgui_internal:680"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_Remove"][1]["ov_cimguiname"] = "ImPool_Remove_TPtr"
 defs["ImPool_Remove"][1]["ret"] = "void"
 defs["ImPool_Remove"][1]["signature"] = "(ImGuiID,const T*)"
@@ -8903,7 +10474,11 @@ defs["ImPool_Remove"][2]["call_args"] = "(key,idx)"
 defs["ImPool_Remove"][2]["cimguiname"] = "ImPool_Remove"
 defs["ImPool_Remove"][2]["defaults"] = {}
 defs["ImPool_Remove"][2]["funcname"] = "Remove"
+<<<<<<< HEAD
 defs["ImPool_Remove"][2]["location"] = "imgui_internal:689"
+=======
+defs["ImPool_Remove"][2]["location"] = "imgui_internal:681"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_Remove"][2]["ov_cimguiname"] = "ImPool_Remove_PoolIdx"
 defs["ImPool_Remove"][2]["ret"] = "void"
 defs["ImPool_Remove"][2]["signature"] = "(ImGuiID,ImPoolIdx)"
@@ -8926,7 +10501,11 @@ defs["ImPool_Reserve"][1]["call_args"] = "(capacity)"
 defs["ImPool_Reserve"][1]["cimguiname"] = "ImPool_Reserve"
 defs["ImPool_Reserve"][1]["defaults"] = {}
 defs["ImPool_Reserve"][1]["funcname"] = "Reserve"
+<<<<<<< HEAD
 defs["ImPool_Reserve"][1]["location"] = "imgui_internal:690"
+=======
+defs["ImPool_Reserve"][1]["location"] = "imgui_internal:682"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_Reserve"][1]["ov_cimguiname"] = "ImPool_Reserve"
 defs["ImPool_Reserve"][1]["ret"] = "void"
 defs["ImPool_Reserve"][1]["signature"] = "(int)"
@@ -8948,7 +10527,11 @@ defs["ImPool_TryGetMapData"][1]["call_args"] = "(n)"
 defs["ImPool_TryGetMapData"][1]["cimguiname"] = "ImPool_TryGetMapData"
 defs["ImPool_TryGetMapData"][1]["defaults"] = {}
 defs["ImPool_TryGetMapData"][1]["funcname"] = "TryGetMapData"
+<<<<<<< HEAD
 defs["ImPool_TryGetMapData"][1]["location"] = "imgui_internal:697"
+=======
+defs["ImPool_TryGetMapData"][1]["location"] = "imgui_internal:689"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_TryGetMapData"][1]["ov_cimguiname"] = "ImPool_TryGetMapData"
 defs["ImPool_TryGetMapData"][1]["ret"] = "T*"
 defs["ImPool_TryGetMapData"][1]["signature"] = "(ImPoolIdx)"
@@ -8966,7 +10549,11 @@ defs["ImPool_destroy"][1]["call_args"] = "(self)"
 defs["ImPool_destroy"][1]["cimguiname"] = "ImPool_destroy"
 defs["ImPool_destroy"][1]["defaults"] = {}
 defs["ImPool_destroy"][1]["destructor"] = true
+<<<<<<< HEAD
 defs["ImPool_destroy"][1]["location"] = "imgui_internal:680"
+=======
+defs["ImPool_destroy"][1]["location"] = "imgui_internal:672"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImPool_destroy"][1]["ov_cimguiname"] = "ImPool_destroy"
 defs["ImPool_destroy"][1]["realdestructor"] = true
 defs["ImPool_destroy"][1]["ret"] = "void"
@@ -8989,7 +10576,11 @@ defs["ImRect_Add"][1]["call_args"] = "(p)"
 defs["ImRect_Add"][1]["cimguiname"] = "ImRect_Add"
 defs["ImRect_Add"][1]["defaults"] = {}
 defs["ImRect_Add"][1]["funcname"] = "Add"
+<<<<<<< HEAD
 defs["ImRect_Add"][1]["location"] = "imgui_internal:550"
+=======
+defs["ImRect_Add"][1]["location"] = "imgui_internal:548"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_Add"][1]["ov_cimguiname"] = "ImRect_Add_Vec2"
 defs["ImRect_Add"][1]["ret"] = "void"
 defs["ImRect_Add"][1]["signature"] = "(const ImVec2)"
@@ -9008,7 +10599,11 @@ defs["ImRect_Add"][2]["call_args"] = "(r)"
 defs["ImRect_Add"][2]["cimguiname"] = "ImRect_Add"
 defs["ImRect_Add"][2]["defaults"] = {}
 defs["ImRect_Add"][2]["funcname"] = "Add"
+<<<<<<< HEAD
 defs["ImRect_Add"][2]["location"] = "imgui_internal:551"
+=======
+defs["ImRect_Add"][2]["location"] = "imgui_internal:549"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_Add"][2]["ov_cimguiname"] = "ImRect_Add_Rect"
 defs["ImRect_Add"][2]["ret"] = "void"
 defs["ImRect_Add"][2]["signature"] = "(const ImRect)"
@@ -9030,7 +10625,11 @@ defs["ImRect_ClipWith"][1]["call_args"] = "(r)"
 defs["ImRect_ClipWith"][1]["cimguiname"] = "ImRect_ClipWith"
 defs["ImRect_ClipWith"][1]["defaults"] = {}
 defs["ImRect_ClipWith"][1]["funcname"] = "ClipWith"
+<<<<<<< HEAD
 defs["ImRect_ClipWith"][1]["location"] = "imgui_internal:557"
+=======
+defs["ImRect_ClipWith"][1]["location"] = "imgui_internal:555"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_ClipWith"][1]["ov_cimguiname"] = "ImRect_ClipWith"
 defs["ImRect_ClipWith"][1]["ret"] = "void"
 defs["ImRect_ClipWith"][1]["signature"] = "(const ImRect)"
@@ -9051,7 +10650,11 @@ defs["ImRect_ClipWithFull"][1]["call_args"] = "(r)"
 defs["ImRect_ClipWithFull"][1]["cimguiname"] = "ImRect_ClipWithFull"
 defs["ImRect_ClipWithFull"][1]["defaults"] = {}
 defs["ImRect_ClipWithFull"][1]["funcname"] = "ClipWithFull"
+<<<<<<< HEAD
 defs["ImRect_ClipWithFull"][1]["location"] = "imgui_internal:558"
+=======
+defs["ImRect_ClipWithFull"][1]["location"] = "imgui_internal:556"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_ClipWithFull"][1]["ov_cimguiname"] = "ImRect_ClipWithFull"
 defs["ImRect_ClipWithFull"][1]["ret"] = "void"
 defs["ImRect_ClipWithFull"][1]["signature"] = "(const ImRect)"
@@ -9072,7 +10675,11 @@ defs["ImRect_Contains"][1]["call_args"] = "(p)"
 defs["ImRect_Contains"][1]["cimguiname"] = "ImRect_Contains"
 defs["ImRect_Contains"][1]["defaults"] = {}
 defs["ImRect_Contains"][1]["funcname"] = "Contains"
+<<<<<<< HEAD
 defs["ImRect_Contains"][1]["location"] = "imgui_internal:547"
+=======
+defs["ImRect_Contains"][1]["location"] = "imgui_internal:545"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_Contains"][1]["ov_cimguiname"] = "ImRect_Contains_Vec2"
 defs["ImRect_Contains"][1]["ret"] = "bool"
 defs["ImRect_Contains"][1]["signature"] = "(const ImVec2)const"
@@ -9091,7 +10698,11 @@ defs["ImRect_Contains"][2]["call_args"] = "(r)"
 defs["ImRect_Contains"][2]["cimguiname"] = "ImRect_Contains"
 defs["ImRect_Contains"][2]["defaults"] = {}
 defs["ImRect_Contains"][2]["funcname"] = "Contains"
+<<<<<<< HEAD
 defs["ImRect_Contains"][2]["location"] = "imgui_internal:548"
+=======
+defs["ImRect_Contains"][2]["location"] = "imgui_internal:546"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_Contains"][2]["ov_cimguiname"] = "ImRect_Contains_Rect"
 defs["ImRect_Contains"][2]["ret"] = "bool"
 defs["ImRect_Contains"][2]["signature"] = "(const ImRect)const"
@@ -9113,7 +10724,11 @@ defs["ImRect_Expand"][1]["call_args"] = "(amount)"
 defs["ImRect_Expand"][1]["cimguiname"] = "ImRect_Expand"
 defs["ImRect_Expand"][1]["defaults"] = {}
 defs["ImRect_Expand"][1]["funcname"] = "Expand"
+<<<<<<< HEAD
 defs["ImRect_Expand"][1]["location"] = "imgui_internal:552"
+=======
+defs["ImRect_Expand"][1]["location"] = "imgui_internal:550"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_Expand"][1]["ov_cimguiname"] = "ImRect_Expand_Float"
 defs["ImRect_Expand"][1]["ret"] = "void"
 defs["ImRect_Expand"][1]["signature"] = "(const float)"
@@ -9132,7 +10747,11 @@ defs["ImRect_Expand"][2]["call_args"] = "(amount)"
 defs["ImRect_Expand"][2]["cimguiname"] = "ImRect_Expand"
 defs["ImRect_Expand"][2]["defaults"] = {}
 defs["ImRect_Expand"][2]["funcname"] = "Expand"
+<<<<<<< HEAD
 defs["ImRect_Expand"][2]["location"] = "imgui_internal:553"
+=======
+defs["ImRect_Expand"][2]["location"] = "imgui_internal:551"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_Expand"][2]["ov_cimguiname"] = "ImRect_Expand_Vec2"
 defs["ImRect_Expand"][2]["ret"] = "void"
 defs["ImRect_Expand"][2]["signature"] = "(const ImVec2)"
@@ -9151,7 +10770,11 @@ defs["ImRect_Floor"][1]["call_args"] = "()"
 defs["ImRect_Floor"][1]["cimguiname"] = "ImRect_Floor"
 defs["ImRect_Floor"][1]["defaults"] = {}
 defs["ImRect_Floor"][1]["funcname"] = "Floor"
+<<<<<<< HEAD
 defs["ImRect_Floor"][1]["location"] = "imgui_internal:559"
+=======
+defs["ImRect_Floor"][1]["location"] = "imgui_internal:557"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_Floor"][1]["ov_cimguiname"] = "ImRect_Floor"
 defs["ImRect_Floor"][1]["ret"] = "void"
 defs["ImRect_Floor"][1]["signature"] = "()"
@@ -9169,7 +10792,11 @@ defs["ImRect_GetArea"][1]["call_args"] = "()"
 defs["ImRect_GetArea"][1]["cimguiname"] = "ImRect_GetArea"
 defs["ImRect_GetArea"][1]["defaults"] = {}
 defs["ImRect_GetArea"][1]["funcname"] = "GetArea"
+<<<<<<< HEAD
 defs["ImRect_GetArea"][1]["location"] = "imgui_internal:542"
+=======
+defs["ImRect_GetArea"][1]["location"] = "imgui_internal:540"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_GetArea"][1]["ov_cimguiname"] = "ImRect_GetArea"
 defs["ImRect_GetArea"][1]["ret"] = "float"
 defs["ImRect_GetArea"][1]["signature"] = "()const"
@@ -9190,7 +10817,11 @@ defs["ImRect_GetBL"][1]["call_args"] = "()"
 defs["ImRect_GetBL"][1]["cimguiname"] = "ImRect_GetBL"
 defs["ImRect_GetBL"][1]["defaults"] = {}
 defs["ImRect_GetBL"][1]["funcname"] = "GetBL"
+<<<<<<< HEAD
 defs["ImRect_GetBL"][1]["location"] = "imgui_internal:545"
+=======
+defs["ImRect_GetBL"][1]["location"] = "imgui_internal:543"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_GetBL"][1]["nonUDT"] = 1
 defs["ImRect_GetBL"][1]["ov_cimguiname"] = "ImRect_GetBL"
 defs["ImRect_GetBL"][1]["ret"] = "void"
@@ -9212,7 +10843,11 @@ defs["ImRect_GetBR"][1]["call_args"] = "()"
 defs["ImRect_GetBR"][1]["cimguiname"] = "ImRect_GetBR"
 defs["ImRect_GetBR"][1]["defaults"] = {}
 defs["ImRect_GetBR"][1]["funcname"] = "GetBR"
+<<<<<<< HEAD
 defs["ImRect_GetBR"][1]["location"] = "imgui_internal:546"
+=======
+defs["ImRect_GetBR"][1]["location"] = "imgui_internal:544"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_GetBR"][1]["nonUDT"] = 1
 defs["ImRect_GetBR"][1]["ov_cimguiname"] = "ImRect_GetBR"
 defs["ImRect_GetBR"][1]["ret"] = "void"
@@ -9234,7 +10869,11 @@ defs["ImRect_GetCenter"][1]["call_args"] = "()"
 defs["ImRect_GetCenter"][1]["cimguiname"] = "ImRect_GetCenter"
 defs["ImRect_GetCenter"][1]["defaults"] = {}
 defs["ImRect_GetCenter"][1]["funcname"] = "GetCenter"
+<<<<<<< HEAD
 defs["ImRect_GetCenter"][1]["location"] = "imgui_internal:538"
+=======
+defs["ImRect_GetCenter"][1]["location"] = "imgui_internal:536"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_GetCenter"][1]["nonUDT"] = 1
 defs["ImRect_GetCenter"][1]["ov_cimguiname"] = "ImRect_GetCenter"
 defs["ImRect_GetCenter"][1]["ret"] = "void"
@@ -9253,7 +10892,11 @@ defs["ImRect_GetHeight"][1]["call_args"] = "()"
 defs["ImRect_GetHeight"][1]["cimguiname"] = "ImRect_GetHeight"
 defs["ImRect_GetHeight"][1]["defaults"] = {}
 defs["ImRect_GetHeight"][1]["funcname"] = "GetHeight"
+<<<<<<< HEAD
 defs["ImRect_GetHeight"][1]["location"] = "imgui_internal:541"
+=======
+defs["ImRect_GetHeight"][1]["location"] = "imgui_internal:539"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_GetHeight"][1]["ov_cimguiname"] = "ImRect_GetHeight"
 defs["ImRect_GetHeight"][1]["ret"] = "float"
 defs["ImRect_GetHeight"][1]["signature"] = "()const"
@@ -9274,7 +10917,11 @@ defs["ImRect_GetSize"][1]["call_args"] = "()"
 defs["ImRect_GetSize"][1]["cimguiname"] = "ImRect_GetSize"
 defs["ImRect_GetSize"][1]["defaults"] = {}
 defs["ImRect_GetSize"][1]["funcname"] = "GetSize"
+<<<<<<< HEAD
 defs["ImRect_GetSize"][1]["location"] = "imgui_internal:539"
+=======
+defs["ImRect_GetSize"][1]["location"] = "imgui_internal:537"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_GetSize"][1]["nonUDT"] = 1
 defs["ImRect_GetSize"][1]["ov_cimguiname"] = "ImRect_GetSize"
 defs["ImRect_GetSize"][1]["ret"] = "void"
@@ -9296,7 +10943,11 @@ defs["ImRect_GetTL"][1]["call_args"] = "()"
 defs["ImRect_GetTL"][1]["cimguiname"] = "ImRect_GetTL"
 defs["ImRect_GetTL"][1]["defaults"] = {}
 defs["ImRect_GetTL"][1]["funcname"] = "GetTL"
+<<<<<<< HEAD
 defs["ImRect_GetTL"][1]["location"] = "imgui_internal:543"
+=======
+defs["ImRect_GetTL"][1]["location"] = "imgui_internal:541"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_GetTL"][1]["nonUDT"] = 1
 defs["ImRect_GetTL"][1]["ov_cimguiname"] = "ImRect_GetTL"
 defs["ImRect_GetTL"][1]["ret"] = "void"
@@ -9318,7 +10969,11 @@ defs["ImRect_GetTR"][1]["call_args"] = "()"
 defs["ImRect_GetTR"][1]["cimguiname"] = "ImRect_GetTR"
 defs["ImRect_GetTR"][1]["defaults"] = {}
 defs["ImRect_GetTR"][1]["funcname"] = "GetTR"
+<<<<<<< HEAD
 defs["ImRect_GetTR"][1]["location"] = "imgui_internal:544"
+=======
+defs["ImRect_GetTR"][1]["location"] = "imgui_internal:542"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_GetTR"][1]["nonUDT"] = 1
 defs["ImRect_GetTR"][1]["ov_cimguiname"] = "ImRect_GetTR"
 defs["ImRect_GetTR"][1]["ret"] = "void"
@@ -9337,7 +10992,11 @@ defs["ImRect_GetWidth"][1]["call_args"] = "()"
 defs["ImRect_GetWidth"][1]["cimguiname"] = "ImRect_GetWidth"
 defs["ImRect_GetWidth"][1]["defaults"] = {}
 defs["ImRect_GetWidth"][1]["funcname"] = "GetWidth"
+<<<<<<< HEAD
 defs["ImRect_GetWidth"][1]["location"] = "imgui_internal:540"
+=======
+defs["ImRect_GetWidth"][1]["location"] = "imgui_internal:538"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_GetWidth"][1]["ov_cimguiname"] = "ImRect_GetWidth"
 defs["ImRect_GetWidth"][1]["ret"] = "float"
 defs["ImRect_GetWidth"][1]["signature"] = "()const"
@@ -9353,7 +11012,11 @@ defs["ImRect_ImRect"][1]["cimguiname"] = "ImRect_ImRect"
 defs["ImRect_ImRect"][1]["constructor"] = true
 defs["ImRect_ImRect"][1]["defaults"] = {}
 defs["ImRect_ImRect"][1]["funcname"] = "ImRect"
+<<<<<<< HEAD
 defs["ImRect_ImRect"][1]["location"] = "imgui_internal:533"
+=======
+defs["ImRect_ImRect"][1]["location"] = "imgui_internal:531"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_ImRect"][1]["ov_cimguiname"] = "ImRect_ImRect_Nil"
 defs["ImRect_ImRect"][1]["signature"] = "()"
 defs["ImRect_ImRect"][1]["stname"] = "ImRect"
@@ -9372,7 +11035,11 @@ defs["ImRect_ImRect"][2]["cimguiname"] = "ImRect_ImRect"
 defs["ImRect_ImRect"][2]["constructor"] = true
 defs["ImRect_ImRect"][2]["defaults"] = {}
 defs["ImRect_ImRect"][2]["funcname"] = "ImRect"
+<<<<<<< HEAD
 defs["ImRect_ImRect"][2]["location"] = "imgui_internal:534"
+=======
+defs["ImRect_ImRect"][2]["location"] = "imgui_internal:532"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_ImRect"][2]["ov_cimguiname"] = "ImRect_ImRect_Vec2"
 defs["ImRect_ImRect"][2]["signature"] = "(const ImVec2,const ImVec2)"
 defs["ImRect_ImRect"][2]["stname"] = "ImRect"
@@ -9388,7 +11055,11 @@ defs["ImRect_ImRect"][3]["cimguiname"] = "ImRect_ImRect"
 defs["ImRect_ImRect"][3]["constructor"] = true
 defs["ImRect_ImRect"][3]["defaults"] = {}
 defs["ImRect_ImRect"][3]["funcname"] = "ImRect"
+<<<<<<< HEAD
 defs["ImRect_ImRect"][3]["location"] = "imgui_internal:535"
+=======
+defs["ImRect_ImRect"][3]["location"] = "imgui_internal:533"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_ImRect"][3]["ov_cimguiname"] = "ImRect_ImRect_Vec4"
 defs["ImRect_ImRect"][3]["signature"] = "(const ImVec4)"
 defs["ImRect_ImRect"][3]["stname"] = "ImRect"
@@ -9413,7 +11084,11 @@ defs["ImRect_ImRect"][4]["cimguiname"] = "ImRect_ImRect"
 defs["ImRect_ImRect"][4]["constructor"] = true
 defs["ImRect_ImRect"][4]["defaults"] = {}
 defs["ImRect_ImRect"][4]["funcname"] = "ImRect"
+<<<<<<< HEAD
 defs["ImRect_ImRect"][4]["location"] = "imgui_internal:536"
+=======
+defs["ImRect_ImRect"][4]["location"] = "imgui_internal:534"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_ImRect"][4]["ov_cimguiname"] = "ImRect_ImRect_Float"
 defs["ImRect_ImRect"][4]["signature"] = "(float,float,float,float)"
 defs["ImRect_ImRect"][4]["stname"] = "ImRect"
@@ -9433,7 +11108,11 @@ defs["ImRect_IsInverted"][1]["call_args"] = "()"
 defs["ImRect_IsInverted"][1]["cimguiname"] = "ImRect_IsInverted"
 defs["ImRect_IsInverted"][1]["defaults"] = {}
 defs["ImRect_IsInverted"][1]["funcname"] = "IsInverted"
+<<<<<<< HEAD
 defs["ImRect_IsInverted"][1]["location"] = "imgui_internal:560"
+=======
+defs["ImRect_IsInverted"][1]["location"] = "imgui_internal:558"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_IsInverted"][1]["ov_cimguiname"] = "ImRect_IsInverted"
 defs["ImRect_IsInverted"][1]["ret"] = "bool"
 defs["ImRect_IsInverted"][1]["signature"] = "()const"
@@ -9454,7 +11133,11 @@ defs["ImRect_Overlaps"][1]["call_args"] = "(r)"
 defs["ImRect_Overlaps"][1]["cimguiname"] = "ImRect_Overlaps"
 defs["ImRect_Overlaps"][1]["defaults"] = {}
 defs["ImRect_Overlaps"][1]["funcname"] = "Overlaps"
+<<<<<<< HEAD
 defs["ImRect_Overlaps"][1]["location"] = "imgui_internal:549"
+=======
+defs["ImRect_Overlaps"][1]["location"] = "imgui_internal:547"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_Overlaps"][1]["ov_cimguiname"] = "ImRect_Overlaps"
 defs["ImRect_Overlaps"][1]["ret"] = "bool"
 defs["ImRect_Overlaps"][1]["signature"] = "(const ImRect)const"
@@ -9475,7 +11158,11 @@ defs["ImRect_ToVec4"][1]["call_args"] = "()"
 defs["ImRect_ToVec4"][1]["cimguiname"] = "ImRect_ToVec4"
 defs["ImRect_ToVec4"][1]["defaults"] = {}
 defs["ImRect_ToVec4"][1]["funcname"] = "ToVec4"
+<<<<<<< HEAD
 defs["ImRect_ToVec4"][1]["location"] = "imgui_internal:561"
+=======
+defs["ImRect_ToVec4"][1]["location"] = "imgui_internal:559"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_ToVec4"][1]["nonUDT"] = 1
 defs["ImRect_ToVec4"][1]["ov_cimguiname"] = "ImRect_ToVec4"
 defs["ImRect_ToVec4"][1]["ret"] = "void"
@@ -9497,7 +11184,11 @@ defs["ImRect_Translate"][1]["call_args"] = "(d)"
 defs["ImRect_Translate"][1]["cimguiname"] = "ImRect_Translate"
 defs["ImRect_Translate"][1]["defaults"] = {}
 defs["ImRect_Translate"][1]["funcname"] = "Translate"
+<<<<<<< HEAD
 defs["ImRect_Translate"][1]["location"] = "imgui_internal:554"
+=======
+defs["ImRect_Translate"][1]["location"] = "imgui_internal:552"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_Translate"][1]["ov_cimguiname"] = "ImRect_Translate"
 defs["ImRect_Translate"][1]["ret"] = "void"
 defs["ImRect_Translate"][1]["signature"] = "(const ImVec2)"
@@ -9518,7 +11209,11 @@ defs["ImRect_TranslateX"][1]["call_args"] = "(dx)"
 defs["ImRect_TranslateX"][1]["cimguiname"] = "ImRect_TranslateX"
 defs["ImRect_TranslateX"][1]["defaults"] = {}
 defs["ImRect_TranslateX"][1]["funcname"] = "TranslateX"
+<<<<<<< HEAD
 defs["ImRect_TranslateX"][1]["location"] = "imgui_internal:555"
+=======
+defs["ImRect_TranslateX"][1]["location"] = "imgui_internal:553"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_TranslateX"][1]["ov_cimguiname"] = "ImRect_TranslateX"
 defs["ImRect_TranslateX"][1]["ret"] = "void"
 defs["ImRect_TranslateX"][1]["signature"] = "(float)"
@@ -9539,7 +11234,11 @@ defs["ImRect_TranslateY"][1]["call_args"] = "(dy)"
 defs["ImRect_TranslateY"][1]["cimguiname"] = "ImRect_TranslateY"
 defs["ImRect_TranslateY"][1]["defaults"] = {}
 defs["ImRect_TranslateY"][1]["funcname"] = "TranslateY"
+<<<<<<< HEAD
 defs["ImRect_TranslateY"][1]["location"] = "imgui_internal:556"
+=======
+defs["ImRect_TranslateY"][1]["location"] = "imgui_internal:554"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImRect_TranslateY"][1]["ov_cimguiname"] = "ImRect_TranslateY"
 defs["ImRect_TranslateY"][1]["ret"] = "void"
 defs["ImRect_TranslateY"][1]["signature"] = "(float)"
@@ -9573,7 +11272,11 @@ defs["ImSpanAllocator_GetArenaSizeInBytes"][1]["call_args"] = "()"
 defs["ImSpanAllocator_GetArenaSizeInBytes"][1]["cimguiname"] = "ImSpanAllocator_GetArenaSizeInBytes"
 defs["ImSpanAllocator_GetArenaSizeInBytes"][1]["defaults"] = {}
 defs["ImSpanAllocator_GetArenaSizeInBytes"][1]["funcname"] = "GetArenaSizeInBytes"
+<<<<<<< HEAD
 defs["ImSpanAllocator_GetArenaSizeInBytes"][1]["location"] = "imgui_internal:659"
+=======
+defs["ImSpanAllocator_GetArenaSizeInBytes"][1]["location"] = "imgui_internal:651"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpanAllocator_GetArenaSizeInBytes"][1]["ov_cimguiname"] = "ImSpanAllocator_GetArenaSizeInBytes"
 defs["ImSpanAllocator_GetArenaSizeInBytes"][1]["ret"] = "int"
 defs["ImSpanAllocator_GetArenaSizeInBytes"][1]["signature"] = "()"
@@ -9595,7 +11298,11 @@ defs["ImSpanAllocator_GetSpanPtrBegin"][1]["call_args"] = "(n)"
 defs["ImSpanAllocator_GetSpanPtrBegin"][1]["cimguiname"] = "ImSpanAllocator_GetSpanPtrBegin"
 defs["ImSpanAllocator_GetSpanPtrBegin"][1]["defaults"] = {}
 defs["ImSpanAllocator_GetSpanPtrBegin"][1]["funcname"] = "GetSpanPtrBegin"
+<<<<<<< HEAD
 defs["ImSpanAllocator_GetSpanPtrBegin"][1]["location"] = "imgui_internal:661"
+=======
+defs["ImSpanAllocator_GetSpanPtrBegin"][1]["location"] = "imgui_internal:653"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpanAllocator_GetSpanPtrBegin"][1]["ov_cimguiname"] = "ImSpanAllocator_GetSpanPtrBegin"
 defs["ImSpanAllocator_GetSpanPtrBegin"][1]["ret"] = "void*"
 defs["ImSpanAllocator_GetSpanPtrBegin"][1]["signature"] = "(int)"
@@ -9617,7 +11324,11 @@ defs["ImSpanAllocator_GetSpanPtrEnd"][1]["call_args"] = "(n)"
 defs["ImSpanAllocator_GetSpanPtrEnd"][1]["cimguiname"] = "ImSpanAllocator_GetSpanPtrEnd"
 defs["ImSpanAllocator_GetSpanPtrEnd"][1]["defaults"] = {}
 defs["ImSpanAllocator_GetSpanPtrEnd"][1]["funcname"] = "GetSpanPtrEnd"
+<<<<<<< HEAD
 defs["ImSpanAllocator_GetSpanPtrEnd"][1]["location"] = "imgui_internal:662"
+=======
+defs["ImSpanAllocator_GetSpanPtrEnd"][1]["location"] = "imgui_internal:654"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpanAllocator_GetSpanPtrEnd"][1]["ov_cimguiname"] = "ImSpanAllocator_GetSpanPtrEnd"
 defs["ImSpanAllocator_GetSpanPtrEnd"][1]["ret"] = "void*"
 defs["ImSpanAllocator_GetSpanPtrEnd"][1]["signature"] = "(int)"
@@ -9634,7 +11345,11 @@ defs["ImSpanAllocator_ImSpanAllocator"][1]["cimguiname"] = "ImSpanAllocator_ImSp
 defs["ImSpanAllocator_ImSpanAllocator"][1]["constructor"] = true
 defs["ImSpanAllocator_ImSpanAllocator"][1]["defaults"] = {}
 defs["ImSpanAllocator_ImSpanAllocator"][1]["funcname"] = "ImSpanAllocator"
+<<<<<<< HEAD
 defs["ImSpanAllocator_ImSpanAllocator"][1]["location"] = "imgui_internal:657"
+=======
+defs["ImSpanAllocator_ImSpanAllocator"][1]["location"] = "imgui_internal:649"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpanAllocator_ImSpanAllocator"][1]["ov_cimguiname"] = "ImSpanAllocator_ImSpanAllocator"
 defs["ImSpanAllocator_ImSpanAllocator"][1]["signature"] = "()"
 defs["ImSpanAllocator_ImSpanAllocator"][1]["stname"] = "ImSpanAllocator"
@@ -9662,7 +11377,11 @@ defs["ImSpanAllocator_Reserve"][1]["cimguiname"] = "ImSpanAllocator_Reserve"
 defs["ImSpanAllocator_Reserve"][1]["defaults"] = {}
 defs["ImSpanAllocator_Reserve"][1]["defaults"]["a"] = "4"
 defs["ImSpanAllocator_Reserve"][1]["funcname"] = "Reserve"
+<<<<<<< HEAD
 defs["ImSpanAllocator_Reserve"][1]["location"] = "imgui_internal:658"
+=======
+defs["ImSpanAllocator_Reserve"][1]["location"] = "imgui_internal:650"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpanAllocator_Reserve"][1]["ov_cimguiname"] = "ImSpanAllocator_Reserve"
 defs["ImSpanAllocator_Reserve"][1]["ret"] = "void"
 defs["ImSpanAllocator_Reserve"][1]["signature"] = "(int,size_t,int)"
@@ -9684,7 +11403,11 @@ defs["ImSpanAllocator_SetArenaBasePtr"][1]["call_args"] = "(base_ptr)"
 defs["ImSpanAllocator_SetArenaBasePtr"][1]["cimguiname"] = "ImSpanAllocator_SetArenaBasePtr"
 defs["ImSpanAllocator_SetArenaBasePtr"][1]["defaults"] = {}
 defs["ImSpanAllocator_SetArenaBasePtr"][1]["funcname"] = "SetArenaBasePtr"
+<<<<<<< HEAD
 defs["ImSpanAllocator_SetArenaBasePtr"][1]["location"] = "imgui_internal:660"
+=======
+defs["ImSpanAllocator_SetArenaBasePtr"][1]["location"] = "imgui_internal:652"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpanAllocator_SetArenaBasePtr"][1]["ov_cimguiname"] = "ImSpanAllocator_SetArenaBasePtr"
 defs["ImSpanAllocator_SetArenaBasePtr"][1]["ret"] = "void"
 defs["ImSpanAllocator_SetArenaBasePtr"][1]["signature"] = "(void*)"
@@ -9718,7 +11441,11 @@ defs["ImSpan_ImSpan"][1]["cimguiname"] = "ImSpan_ImSpan"
 defs["ImSpan_ImSpan"][1]["constructor"] = true
 defs["ImSpan_ImSpan"][1]["defaults"] = {}
 defs["ImSpan_ImSpan"][1]["funcname"] = "ImSpan"
+<<<<<<< HEAD
 defs["ImSpan_ImSpan"][1]["location"] = "imgui_internal:625"
+=======
+defs["ImSpan_ImSpan"][1]["location"] = "imgui_internal:617"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpan_ImSpan"][1]["ov_cimguiname"] = "ImSpan_ImSpan_Nil"
 defs["ImSpan_ImSpan"][1]["signature"] = "()"
 defs["ImSpan_ImSpan"][1]["stname"] = "ImSpan"
@@ -9738,7 +11465,11 @@ defs["ImSpan_ImSpan"][2]["cimguiname"] = "ImSpan_ImSpan"
 defs["ImSpan_ImSpan"][2]["constructor"] = true
 defs["ImSpan_ImSpan"][2]["defaults"] = {}
 defs["ImSpan_ImSpan"][2]["funcname"] = "ImSpan"
+<<<<<<< HEAD
 defs["ImSpan_ImSpan"][2]["location"] = "imgui_internal:626"
+=======
+defs["ImSpan_ImSpan"][2]["location"] = "imgui_internal:618"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpan_ImSpan"][2]["ov_cimguiname"] = "ImSpan_ImSpan_TPtrInt"
 defs["ImSpan_ImSpan"][2]["signature"] = "(T*,int)"
 defs["ImSpan_ImSpan"][2]["stname"] = "ImSpan"
@@ -9758,7 +11489,11 @@ defs["ImSpan_ImSpan"][3]["cimguiname"] = "ImSpan_ImSpan"
 defs["ImSpan_ImSpan"][3]["constructor"] = true
 defs["ImSpan_ImSpan"][3]["defaults"] = {}
 defs["ImSpan_ImSpan"][3]["funcname"] = "ImSpan"
+<<<<<<< HEAD
 defs["ImSpan_ImSpan"][3]["location"] = "imgui_internal:627"
+=======
+defs["ImSpan_ImSpan"][3]["location"] = "imgui_internal:619"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpan_ImSpan"][3]["ov_cimguiname"] = "ImSpan_ImSpan_TPtrTPtr"
 defs["ImSpan_ImSpan"][3]["signature"] = "(T*,T*)"
 defs["ImSpan_ImSpan"][3]["stname"] = "ImSpan"
@@ -9778,7 +11513,11 @@ defs["ImSpan_begin"][1]["call_args"] = "()"
 defs["ImSpan_begin"][1]["cimguiname"] = "ImSpan_begin"
 defs["ImSpan_begin"][1]["defaults"] = {}
 defs["ImSpan_begin"][1]["funcname"] = "begin"
+<<<<<<< HEAD
 defs["ImSpan_begin"][1]["location"] = "imgui_internal:636"
+=======
+defs["ImSpan_begin"][1]["location"] = "imgui_internal:628"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpan_begin"][1]["ov_cimguiname"] = "ImSpan_begin_Nil"
 defs["ImSpan_begin"][1]["ret"] = "T*"
 defs["ImSpan_begin"][1]["signature"] = "()"
@@ -9795,7 +11534,11 @@ defs["ImSpan_begin"][2]["call_args"] = "()"
 defs["ImSpan_begin"][2]["cimguiname"] = "ImSpan_begin"
 defs["ImSpan_begin"][2]["defaults"] = {}
 defs["ImSpan_begin"][2]["funcname"] = "begin"
+<<<<<<< HEAD
 defs["ImSpan_begin"][2]["location"] = "imgui_internal:637"
+=======
+defs["ImSpan_begin"][2]["location"] = "imgui_internal:629"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpan_begin"][2]["ov_cimguiname"] = "ImSpan_begin__const"
 defs["ImSpan_begin"][2]["ret"] = "const T*"
 defs["ImSpan_begin"][2]["signature"] = "()const"
@@ -9832,7 +11575,11 @@ defs["ImSpan_end"][1]["call_args"] = "()"
 defs["ImSpan_end"][1]["cimguiname"] = "ImSpan_end"
 defs["ImSpan_end"][1]["defaults"] = {}
 defs["ImSpan_end"][1]["funcname"] = "end"
+<<<<<<< HEAD
 defs["ImSpan_end"][1]["location"] = "imgui_internal:638"
+=======
+defs["ImSpan_end"][1]["location"] = "imgui_internal:630"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpan_end"][1]["ov_cimguiname"] = "ImSpan_end_Nil"
 defs["ImSpan_end"][1]["ret"] = "T*"
 defs["ImSpan_end"][1]["signature"] = "()"
@@ -9849,7 +11596,11 @@ defs["ImSpan_end"][2]["call_args"] = "()"
 defs["ImSpan_end"][2]["cimguiname"] = "ImSpan_end"
 defs["ImSpan_end"][2]["defaults"] = {}
 defs["ImSpan_end"][2]["funcname"] = "end"
+<<<<<<< HEAD
 defs["ImSpan_end"][2]["location"] = "imgui_internal:639"
+=======
+defs["ImSpan_end"][2]["location"] = "imgui_internal:631"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpan_end"][2]["ov_cimguiname"] = "ImSpan_end__const"
 defs["ImSpan_end"][2]["ret"] = "const T*"
 defs["ImSpan_end"][2]["signature"] = "()const"
@@ -9872,7 +11623,11 @@ defs["ImSpan_index_from_ptr"][1]["call_args"] = "(it)"
 defs["ImSpan_index_from_ptr"][1]["cimguiname"] = "ImSpan_index_from_ptr"
 defs["ImSpan_index_from_ptr"][1]["defaults"] = {}
 defs["ImSpan_index_from_ptr"][1]["funcname"] = "index_from_ptr"
+<<<<<<< HEAD
 defs["ImSpan_index_from_ptr"][1]["location"] = "imgui_internal:642"
+=======
+defs["ImSpan_index_from_ptr"][1]["location"] = "imgui_internal:634"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpan_index_from_ptr"][1]["ov_cimguiname"] = "ImSpan_index_from_ptr"
 defs["ImSpan_index_from_ptr"][1]["ret"] = "int"
 defs["ImSpan_index_from_ptr"][1]["signature"] = "(const T*)const"
@@ -9897,7 +11652,11 @@ defs["ImSpan_set"][1]["call_args"] = "(data,size)"
 defs["ImSpan_set"][1]["cimguiname"] = "ImSpan_set"
 defs["ImSpan_set"][1]["defaults"] = {}
 defs["ImSpan_set"][1]["funcname"] = "set"
+<<<<<<< HEAD
 defs["ImSpan_set"][1]["location"] = "imgui_internal:629"
+=======
+defs["ImSpan_set"][1]["location"] = "imgui_internal:621"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpan_set"][1]["ov_cimguiname"] = "ImSpan_set_Int"
 defs["ImSpan_set"][1]["ret"] = "void"
 defs["ImSpan_set"][1]["signature"] = "(T*,int)"
@@ -9920,7 +11679,11 @@ defs["ImSpan_set"][2]["call_args"] = "(data,data_end)"
 defs["ImSpan_set"][2]["cimguiname"] = "ImSpan_set"
 defs["ImSpan_set"][2]["defaults"] = {}
 defs["ImSpan_set"][2]["funcname"] = "set"
+<<<<<<< HEAD
 defs["ImSpan_set"][2]["location"] = "imgui_internal:630"
+=======
+defs["ImSpan_set"][2]["location"] = "imgui_internal:622"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpan_set"][2]["ov_cimguiname"] = "ImSpan_set_TPtr"
 defs["ImSpan_set"][2]["ret"] = "void"
 defs["ImSpan_set"][2]["signature"] = "(T*,T*)"
@@ -9940,7 +11703,11 @@ defs["ImSpan_size"][1]["call_args"] = "()"
 defs["ImSpan_size"][1]["cimguiname"] = "ImSpan_size"
 defs["ImSpan_size"][1]["defaults"] = {}
 defs["ImSpan_size"][1]["funcname"] = "size"
+<<<<<<< HEAD
 defs["ImSpan_size"][1]["location"] = "imgui_internal:631"
+=======
+defs["ImSpan_size"][1]["location"] = "imgui_internal:623"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpan_size"][1]["ov_cimguiname"] = "ImSpan_size"
 defs["ImSpan_size"][1]["ret"] = "int"
 defs["ImSpan_size"][1]["signature"] = "()const"
@@ -9959,7 +11726,11 @@ defs["ImSpan_size_in_bytes"][1]["call_args"] = "()"
 defs["ImSpan_size_in_bytes"][1]["cimguiname"] = "ImSpan_size_in_bytes"
 defs["ImSpan_size_in_bytes"][1]["defaults"] = {}
 defs["ImSpan_size_in_bytes"][1]["funcname"] = "size_in_bytes"
+<<<<<<< HEAD
 defs["ImSpan_size_in_bytes"][1]["location"] = "imgui_internal:632"
+=======
+defs["ImSpan_size_in_bytes"][1]["location"] = "imgui_internal:624"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImSpan_size_in_bytes"][1]["ov_cimguiname"] = "ImSpan_size_in_bytes"
 defs["ImSpan_size_in_bytes"][1]["ret"] = "int"
 defs["ImSpan_size_in_bytes"][1]["signature"] = "()const"
@@ -9976,7 +11747,11 @@ defs["ImVec1_ImVec1"][1]["cimguiname"] = "ImVec1_ImVec1"
 defs["ImVec1_ImVec1"][1]["constructor"] = true
 defs["ImVec1_ImVec1"][1]["defaults"] = {}
 defs["ImVec1_ImVec1"][1]["funcname"] = "ImVec1"
+<<<<<<< HEAD
 defs["ImVec1_ImVec1"][1]["location"] = "imgui_internal:513"
+=======
+defs["ImVec1_ImVec1"][1]["location"] = "imgui_internal:511"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVec1_ImVec1"][1]["ov_cimguiname"] = "ImVec1_ImVec1_Nil"
 defs["ImVec1_ImVec1"][1]["signature"] = "()"
 defs["ImVec1_ImVec1"][1]["stname"] = "ImVec1"
@@ -9992,7 +11767,11 @@ defs["ImVec1_ImVec1"][2]["cimguiname"] = "ImVec1_ImVec1"
 defs["ImVec1_ImVec1"][2]["constructor"] = true
 defs["ImVec1_ImVec1"][2]["defaults"] = {}
 defs["ImVec1_ImVec1"][2]["funcname"] = "ImVec1"
+<<<<<<< HEAD
 defs["ImVec1_ImVec1"][2]["location"] = "imgui_internal:514"
+=======
+defs["ImVec1_ImVec1"][2]["location"] = "imgui_internal:512"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVec1_ImVec1"][2]["ov_cimguiname"] = "ImVec1_ImVec1_Float"
 defs["ImVec1_ImVec1"][2]["signature"] = "(float)"
 defs["ImVec1_ImVec1"][2]["stname"] = "ImVec1"
@@ -10075,7 +11854,11 @@ defs["ImVec2ih_ImVec2ih"][1]["cimguiname"] = "ImVec2ih_ImVec2ih"
 defs["ImVec2ih_ImVec2ih"][1]["constructor"] = true
 defs["ImVec2ih_ImVec2ih"][1]["defaults"] = {}
 defs["ImVec2ih_ImVec2ih"][1]["funcname"] = "ImVec2ih"
+<<<<<<< HEAD
 defs["ImVec2ih_ImVec2ih"][1]["location"] = "imgui_internal:521"
+=======
+defs["ImVec2ih_ImVec2ih"][1]["location"] = "imgui_internal:519"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVec2ih_ImVec2ih"][1]["ov_cimguiname"] = "ImVec2ih_ImVec2ih_Nil"
 defs["ImVec2ih_ImVec2ih"][1]["signature"] = "()"
 defs["ImVec2ih_ImVec2ih"][1]["stname"] = "ImVec2ih"
@@ -10094,7 +11877,11 @@ defs["ImVec2ih_ImVec2ih"][2]["cimguiname"] = "ImVec2ih_ImVec2ih"
 defs["ImVec2ih_ImVec2ih"][2]["constructor"] = true
 defs["ImVec2ih_ImVec2ih"][2]["defaults"] = {}
 defs["ImVec2ih_ImVec2ih"][2]["funcname"] = "ImVec2ih"
+<<<<<<< HEAD
 defs["ImVec2ih_ImVec2ih"][2]["location"] = "imgui_internal:522"
+=======
+defs["ImVec2ih_ImVec2ih"][2]["location"] = "imgui_internal:520"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVec2ih_ImVec2ih"][2]["ov_cimguiname"] = "ImVec2ih_ImVec2ih_short"
 defs["ImVec2ih_ImVec2ih"][2]["signature"] = "(short,short)"
 defs["ImVec2ih_ImVec2ih"][2]["stname"] = "ImVec2ih"
@@ -10110,7 +11897,11 @@ defs["ImVec2ih_ImVec2ih"][3]["cimguiname"] = "ImVec2ih_ImVec2ih"
 defs["ImVec2ih_ImVec2ih"][3]["constructor"] = true
 defs["ImVec2ih_ImVec2ih"][3]["defaults"] = {}
 defs["ImVec2ih_ImVec2ih"][3]["funcname"] = "ImVec2ih"
+<<<<<<< HEAD
 defs["ImVec2ih_ImVec2ih"][3]["location"] = "imgui_internal:523"
+=======
+defs["ImVec2ih_ImVec2ih"][3]["location"] = "imgui_internal:521"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVec2ih_ImVec2ih"][3]["ov_cimguiname"] = "ImVec2ih_ImVec2ih_Vec2"
 defs["ImVec2ih_ImVec2ih"][3]["signature"] = "(const ImVec2)"
 defs["ImVec2ih_ImVec2ih"][3]["stname"] = "ImVec2ih"
@@ -10200,7 +11991,11 @@ defs["ImVector_ImVector"][1]["cimguiname"] = "ImVector_ImVector"
 defs["ImVector_ImVector"][1]["constructor"] = true
 defs["ImVector_ImVector"][1]["defaults"] = {}
 defs["ImVector_ImVector"][1]["funcname"] = "ImVector"
+<<<<<<< HEAD
 defs["ImVector_ImVector"][1]["location"] = "imgui:1851"
+=======
+defs["ImVector_ImVector"][1]["location"] = "imgui:1847"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_ImVector"][1]["ov_cimguiname"] = "ImVector_ImVector_Nil"
 defs["ImVector_ImVector"][1]["signature"] = "()"
 defs["ImVector_ImVector"][1]["stname"] = "ImVector"
@@ -10217,7 +12012,11 @@ defs["ImVector_ImVector"][2]["cimguiname"] = "ImVector_ImVector"
 defs["ImVector_ImVector"][2]["constructor"] = true
 defs["ImVector_ImVector"][2]["defaults"] = {}
 defs["ImVector_ImVector"][2]["funcname"] = "ImVector"
+<<<<<<< HEAD
 defs["ImVector_ImVector"][2]["location"] = "imgui:1852"
+=======
+defs["ImVector_ImVector"][2]["location"] = "imgui:1848"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_ImVector"][2]["ov_cimguiname"] = "ImVector_ImVector_Vector_T_"
 defs["ImVector_ImVector"][2]["signature"] = "(const ImVector_T )"
 defs["ImVector_ImVector"][2]["stname"] = "ImVector"
@@ -10239,7 +12038,11 @@ defs["ImVector__grow_capacity"][1]["call_args"] = "(sz)"
 defs["ImVector__grow_capacity"][1]["cimguiname"] = "ImVector__grow_capacity"
 defs["ImVector__grow_capacity"][1]["defaults"] = {}
 defs["ImVector__grow_capacity"][1]["funcname"] = "_grow_capacity"
+<<<<<<< HEAD
 defs["ImVector__grow_capacity"][1]["location"] = "imgui:1878"
+=======
+defs["ImVector__grow_capacity"][1]["location"] = "imgui:1874"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector__grow_capacity"][1]["ov_cimguiname"] = "ImVector__grow_capacity"
 defs["ImVector__grow_capacity"][1]["ret"] = "int"
 defs["ImVector__grow_capacity"][1]["signature"] = "(int)const"
@@ -10258,7 +12061,11 @@ defs["ImVector_back"][1]["call_args"] = "()"
 defs["ImVector_back"][1]["cimguiname"] = "ImVector_back"
 defs["ImVector_back"][1]["defaults"] = {}
 defs["ImVector_back"][1]["funcname"] = "back"
+<<<<<<< HEAD
 defs["ImVector_back"][1]["location"] = "imgui:1874"
+=======
+defs["ImVector_back"][1]["location"] = "imgui:1870"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_back"][1]["ov_cimguiname"] = "ImVector_back_Nil"
 defs["ImVector_back"][1]["ret"] = "T*"
 defs["ImVector_back"][1]["retref"] = "&"
@@ -10276,7 +12083,11 @@ defs["ImVector_back"][2]["call_args"] = "()"
 defs["ImVector_back"][2]["cimguiname"] = "ImVector_back"
 defs["ImVector_back"][2]["defaults"] = {}
 defs["ImVector_back"][2]["funcname"] = "back"
+<<<<<<< HEAD
 defs["ImVector_back"][2]["location"] = "imgui:1875"
+=======
+defs["ImVector_back"][2]["location"] = "imgui:1871"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_back"][2]["ov_cimguiname"] = "ImVector_back__const"
 defs["ImVector_back"][2]["ret"] = "const T*"
 defs["ImVector_back"][2]["retref"] = "&"
@@ -10297,7 +12108,11 @@ defs["ImVector_begin"][1]["call_args"] = "()"
 defs["ImVector_begin"][1]["cimguiname"] = "ImVector_begin"
 defs["ImVector_begin"][1]["defaults"] = {}
 defs["ImVector_begin"][1]["funcname"] = "begin"
+<<<<<<< HEAD
 defs["ImVector_begin"][1]["location"] = "imgui:1868"
+=======
+defs["ImVector_begin"][1]["location"] = "imgui:1864"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_begin"][1]["ov_cimguiname"] = "ImVector_begin_Nil"
 defs["ImVector_begin"][1]["ret"] = "T*"
 defs["ImVector_begin"][1]["signature"] = "()"
@@ -10314,7 +12129,11 @@ defs["ImVector_begin"][2]["call_args"] = "()"
 defs["ImVector_begin"][2]["cimguiname"] = "ImVector_begin"
 defs["ImVector_begin"][2]["defaults"] = {}
 defs["ImVector_begin"][2]["funcname"] = "begin"
+<<<<<<< HEAD
 defs["ImVector_begin"][2]["location"] = "imgui:1869"
+=======
+defs["ImVector_begin"][2]["location"] = "imgui:1865"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_begin"][2]["ov_cimguiname"] = "ImVector_begin__const"
 defs["ImVector_begin"][2]["ret"] = "const T*"
 defs["ImVector_begin"][2]["signature"] = "()const"
@@ -10334,7 +12153,11 @@ defs["ImVector_capacity"][1]["call_args"] = "()"
 defs["ImVector_capacity"][1]["cimguiname"] = "ImVector_capacity"
 defs["ImVector_capacity"][1]["defaults"] = {}
 defs["ImVector_capacity"][1]["funcname"] = "capacity"
+<<<<<<< HEAD
 defs["ImVector_capacity"][1]["location"] = "imgui:1864"
+=======
+defs["ImVector_capacity"][1]["location"] = "imgui:1860"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_capacity"][1]["ov_cimguiname"] = "ImVector_capacity"
 defs["ImVector_capacity"][1]["ret"] = "int"
 defs["ImVector_capacity"][1]["signature"] = "()const"
@@ -10353,7 +12176,11 @@ defs["ImVector_clear"][1]["call_args"] = "()"
 defs["ImVector_clear"][1]["cimguiname"] = "ImVector_clear"
 defs["ImVector_clear"][1]["defaults"] = {}
 defs["ImVector_clear"][1]["funcname"] = "clear"
+<<<<<<< HEAD
 defs["ImVector_clear"][1]["location"] = "imgui:1856"
+=======
+defs["ImVector_clear"][1]["location"] = "imgui:1852"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_clear"][1]["ov_cimguiname"] = "ImVector_clear"
 defs["ImVector_clear"][1]["ret"] = "void"
 defs["ImVector_clear"][1]["signature"] = "()"
@@ -10372,7 +12199,11 @@ defs["ImVector_clear_delete"][1]["call_args"] = "()"
 defs["ImVector_clear_delete"][1]["cimguiname"] = "ImVector_clear_delete"
 defs["ImVector_clear_delete"][1]["defaults"] = {}
 defs["ImVector_clear_delete"][1]["funcname"] = "clear_delete"
+<<<<<<< HEAD
 defs["ImVector_clear_delete"][1]["location"] = "imgui:1857"
+=======
+defs["ImVector_clear_delete"][1]["location"] = "imgui:1853"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_clear_delete"][1]["ov_cimguiname"] = "ImVector_clear_delete"
 defs["ImVector_clear_delete"][1]["ret"] = "void"
 defs["ImVector_clear_delete"][1]["signature"] = "()"
@@ -10391,7 +12222,11 @@ defs["ImVector_clear_destruct"][1]["call_args"] = "()"
 defs["ImVector_clear_destruct"][1]["cimguiname"] = "ImVector_clear_destruct"
 defs["ImVector_clear_destruct"][1]["defaults"] = {}
 defs["ImVector_clear_destruct"][1]["funcname"] = "clear_destruct"
+<<<<<<< HEAD
 defs["ImVector_clear_destruct"][1]["location"] = "imgui:1858"
+=======
+defs["ImVector_clear_destruct"][1]["location"] = "imgui:1854"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_clear_destruct"][1]["ov_cimguiname"] = "ImVector_clear_destruct"
 defs["ImVector_clear_destruct"][1]["ret"] = "void"
 defs["ImVector_clear_destruct"][1]["signature"] = "()"
@@ -10413,7 +12248,11 @@ defs["ImVector_contains"][1]["call_args"] = "(v)"
 defs["ImVector_contains"][1]["cimguiname"] = "ImVector_contains"
 defs["ImVector_contains"][1]["defaults"] = {}
 defs["ImVector_contains"][1]["funcname"] = "contains"
+<<<<<<< HEAD
 defs["ImVector_contains"][1]["location"] = "imgui:1893"
+=======
+defs["ImVector_contains"][1]["location"] = "imgui:1889"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_contains"][1]["ov_cimguiname"] = "ImVector_contains"
 defs["ImVector_contains"][1]["ret"] = "bool"
 defs["ImVector_contains"][1]["signature"] = "(const T)const"
@@ -10431,7 +12270,11 @@ defs["ImVector_destroy"][1]["call_args"] = "(self)"
 defs["ImVector_destroy"][1]["cimguiname"] = "ImVector_destroy"
 defs["ImVector_destroy"][1]["defaults"] = {}
 defs["ImVector_destroy"][1]["destructor"] = true
+<<<<<<< HEAD
 defs["ImVector_destroy"][1]["location"] = "imgui:1854"
+=======
+defs["ImVector_destroy"][1]["location"] = "imgui:1850"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_destroy"][1]["ov_cimguiname"] = "ImVector_destroy"
 defs["ImVector_destroy"][1]["realdestructor"] = true
 defs["ImVector_destroy"][1]["ret"] = "void"
@@ -10451,7 +12294,11 @@ defs["ImVector_empty"][1]["call_args"] = "()"
 defs["ImVector_empty"][1]["cimguiname"] = "ImVector_empty"
 defs["ImVector_empty"][1]["defaults"] = {}
 defs["ImVector_empty"][1]["funcname"] = "empty"
+<<<<<<< HEAD
 defs["ImVector_empty"][1]["location"] = "imgui:1860"
+=======
+defs["ImVector_empty"][1]["location"] = "imgui:1856"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_empty"][1]["ov_cimguiname"] = "ImVector_empty"
 defs["ImVector_empty"][1]["ret"] = "bool"
 defs["ImVector_empty"][1]["signature"] = "()const"
@@ -10470,7 +12317,11 @@ defs["ImVector_end"][1]["call_args"] = "()"
 defs["ImVector_end"][1]["cimguiname"] = "ImVector_end"
 defs["ImVector_end"][1]["defaults"] = {}
 defs["ImVector_end"][1]["funcname"] = "end"
+<<<<<<< HEAD
 defs["ImVector_end"][1]["location"] = "imgui:1870"
+=======
+defs["ImVector_end"][1]["location"] = "imgui:1866"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_end"][1]["ov_cimguiname"] = "ImVector_end_Nil"
 defs["ImVector_end"][1]["ret"] = "T*"
 defs["ImVector_end"][1]["signature"] = "()"
@@ -10487,7 +12338,11 @@ defs["ImVector_end"][2]["call_args"] = "()"
 defs["ImVector_end"][2]["cimguiname"] = "ImVector_end"
 defs["ImVector_end"][2]["defaults"] = {}
 defs["ImVector_end"][2]["funcname"] = "end"
+<<<<<<< HEAD
 defs["ImVector_end"][2]["location"] = "imgui:1871"
+=======
+defs["ImVector_end"][2]["location"] = "imgui:1867"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_end"][2]["ov_cimguiname"] = "ImVector_end__const"
 defs["ImVector_end"][2]["ret"] = "const T*"
 defs["ImVector_end"][2]["signature"] = "()const"
@@ -10510,7 +12365,11 @@ defs["ImVector_erase"][1]["call_args"] = "(it)"
 defs["ImVector_erase"][1]["cimguiname"] = "ImVector_erase"
 defs["ImVector_erase"][1]["defaults"] = {}
 defs["ImVector_erase"][1]["funcname"] = "erase"
+<<<<<<< HEAD
 defs["ImVector_erase"][1]["location"] = "imgui:1889"
+=======
+defs["ImVector_erase"][1]["location"] = "imgui:1885"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_erase"][1]["ov_cimguiname"] = "ImVector_erase_Nil"
 defs["ImVector_erase"][1]["ret"] = "T*"
 defs["ImVector_erase"][1]["signature"] = "(const T*)"
@@ -10533,7 +12392,11 @@ defs["ImVector_erase"][2]["call_args"] = "(it,it_last)"
 defs["ImVector_erase"][2]["cimguiname"] = "ImVector_erase"
 defs["ImVector_erase"][2]["defaults"] = {}
 defs["ImVector_erase"][2]["funcname"] = "erase"
+<<<<<<< HEAD
 defs["ImVector_erase"][2]["location"] = "imgui:1890"
+=======
+defs["ImVector_erase"][2]["location"] = "imgui:1886"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_erase"][2]["ov_cimguiname"] = "ImVector_erase_TPtr"
 defs["ImVector_erase"][2]["ret"] = "T*"
 defs["ImVector_erase"][2]["signature"] = "(const T*,const T*)"
@@ -10556,7 +12419,11 @@ defs["ImVector_erase_unsorted"][1]["call_args"] = "(it)"
 defs["ImVector_erase_unsorted"][1]["cimguiname"] = "ImVector_erase_unsorted"
 defs["ImVector_erase_unsorted"][1]["defaults"] = {}
 defs["ImVector_erase_unsorted"][1]["funcname"] = "erase_unsorted"
+<<<<<<< HEAD
 defs["ImVector_erase_unsorted"][1]["location"] = "imgui:1891"
+=======
+defs["ImVector_erase_unsorted"][1]["location"] = "imgui:1887"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_erase_unsorted"][1]["ov_cimguiname"] = "ImVector_erase_unsorted"
 defs["ImVector_erase_unsorted"][1]["ret"] = "T*"
 defs["ImVector_erase_unsorted"][1]["signature"] = "(const T*)"
@@ -10578,7 +12445,11 @@ defs["ImVector_find"][1]["call_args"] = "(v)"
 defs["ImVector_find"][1]["cimguiname"] = "ImVector_find"
 defs["ImVector_find"][1]["defaults"] = {}
 defs["ImVector_find"][1]["funcname"] = "find"
+<<<<<<< HEAD
 defs["ImVector_find"][1]["location"] = "imgui:1894"
+=======
+defs["ImVector_find"][1]["location"] = "imgui:1890"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_find"][1]["ov_cimguiname"] = "ImVector_find_Nil"
 defs["ImVector_find"][1]["ret"] = "T*"
 defs["ImVector_find"][1]["signature"] = "(const T)"
@@ -10598,7 +12469,11 @@ defs["ImVector_find"][2]["call_args"] = "(v)"
 defs["ImVector_find"][2]["cimguiname"] = "ImVector_find"
 defs["ImVector_find"][2]["defaults"] = {}
 defs["ImVector_find"][2]["funcname"] = "find"
+<<<<<<< HEAD
 defs["ImVector_find"][2]["location"] = "imgui:1895"
+=======
+defs["ImVector_find"][2]["location"] = "imgui:1891"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_find"][2]["ov_cimguiname"] = "ImVector_find__const"
 defs["ImVector_find"][2]["ret"] = "const T*"
 defs["ImVector_find"][2]["signature"] = "(const T)const"
@@ -10621,7 +12496,11 @@ defs["ImVector_find_erase"][1]["call_args"] = "(v)"
 defs["ImVector_find_erase"][1]["cimguiname"] = "ImVector_find_erase"
 defs["ImVector_find_erase"][1]["defaults"] = {}
 defs["ImVector_find_erase"][1]["funcname"] = "find_erase"
+<<<<<<< HEAD
 defs["ImVector_find_erase"][1]["location"] = "imgui:1896"
+=======
+defs["ImVector_find_erase"][1]["location"] = "imgui:1892"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_find_erase"][1]["ov_cimguiname"] = "ImVector_find_erase"
 defs["ImVector_find_erase"][1]["ret"] = "bool"
 defs["ImVector_find_erase"][1]["signature"] = "(const T)"
@@ -10643,7 +12522,11 @@ defs["ImVector_find_erase_unsorted"][1]["call_args"] = "(v)"
 defs["ImVector_find_erase_unsorted"][1]["cimguiname"] = "ImVector_find_erase_unsorted"
 defs["ImVector_find_erase_unsorted"][1]["defaults"] = {}
 defs["ImVector_find_erase_unsorted"][1]["funcname"] = "find_erase_unsorted"
+<<<<<<< HEAD
 defs["ImVector_find_erase_unsorted"][1]["location"] = "imgui:1897"
+=======
+defs["ImVector_find_erase_unsorted"][1]["location"] = "imgui:1893"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_find_erase_unsorted"][1]["ov_cimguiname"] = "ImVector_find_erase_unsorted"
 defs["ImVector_find_erase_unsorted"][1]["ret"] = "bool"
 defs["ImVector_find_erase_unsorted"][1]["signature"] = "(const T)"
@@ -10662,7 +12545,11 @@ defs["ImVector_front"][1]["call_args"] = "()"
 defs["ImVector_front"][1]["cimguiname"] = "ImVector_front"
 defs["ImVector_front"][1]["defaults"] = {}
 defs["ImVector_front"][1]["funcname"] = "front"
+<<<<<<< HEAD
 defs["ImVector_front"][1]["location"] = "imgui:1872"
+=======
+defs["ImVector_front"][1]["location"] = "imgui:1868"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_front"][1]["ov_cimguiname"] = "ImVector_front_Nil"
 defs["ImVector_front"][1]["ret"] = "T*"
 defs["ImVector_front"][1]["retref"] = "&"
@@ -10680,7 +12567,11 @@ defs["ImVector_front"][2]["call_args"] = "()"
 defs["ImVector_front"][2]["cimguiname"] = "ImVector_front"
 defs["ImVector_front"][2]["defaults"] = {}
 defs["ImVector_front"][2]["funcname"] = "front"
+<<<<<<< HEAD
 defs["ImVector_front"][2]["location"] = "imgui:1873"
+=======
+defs["ImVector_front"][2]["location"] = "imgui:1869"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_front"][2]["ov_cimguiname"] = "ImVector_front__const"
 defs["ImVector_front"][2]["ret"] = "const T*"
 defs["ImVector_front"][2]["retref"] = "&"
@@ -10704,7 +12595,11 @@ defs["ImVector_index_from_ptr"][1]["call_args"] = "(it)"
 defs["ImVector_index_from_ptr"][1]["cimguiname"] = "ImVector_index_from_ptr"
 defs["ImVector_index_from_ptr"][1]["defaults"] = {}
 defs["ImVector_index_from_ptr"][1]["funcname"] = "index_from_ptr"
+<<<<<<< HEAD
 defs["ImVector_index_from_ptr"][1]["location"] = "imgui:1898"
+=======
+defs["ImVector_index_from_ptr"][1]["location"] = "imgui:1894"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_index_from_ptr"][1]["ov_cimguiname"] = "ImVector_index_from_ptr"
 defs["ImVector_index_from_ptr"][1]["ret"] = "int"
 defs["ImVector_index_from_ptr"][1]["signature"] = "(const T*)const"
@@ -10729,7 +12624,11 @@ defs["ImVector_insert"][1]["call_args"] = "(it,v)"
 defs["ImVector_insert"][1]["cimguiname"] = "ImVector_insert"
 defs["ImVector_insert"][1]["defaults"] = {}
 defs["ImVector_insert"][1]["funcname"] = "insert"
+<<<<<<< HEAD
 defs["ImVector_insert"][1]["location"] = "imgui:1892"
+=======
+defs["ImVector_insert"][1]["location"] = "imgui:1888"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_insert"][1]["ov_cimguiname"] = "ImVector_insert"
 defs["ImVector_insert"][1]["ret"] = "T*"
 defs["ImVector_insert"][1]["signature"] = "(const T*,const T)"
@@ -10748,7 +12647,11 @@ defs["ImVector_max_size"][1]["call_args"] = "()"
 defs["ImVector_max_size"][1]["cimguiname"] = "ImVector_max_size"
 defs["ImVector_max_size"][1]["defaults"] = {}
 defs["ImVector_max_size"][1]["funcname"] = "max_size"
+<<<<<<< HEAD
 defs["ImVector_max_size"][1]["location"] = "imgui:1863"
+=======
+defs["ImVector_max_size"][1]["location"] = "imgui:1859"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_max_size"][1]["ov_cimguiname"] = "ImVector_max_size"
 defs["ImVector_max_size"][1]["ret"] = "int"
 defs["ImVector_max_size"][1]["signature"] = "()const"
@@ -10767,7 +12670,11 @@ defs["ImVector_pop_back"][1]["call_args"] = "()"
 defs["ImVector_pop_back"][1]["cimguiname"] = "ImVector_pop_back"
 defs["ImVector_pop_back"][1]["defaults"] = {}
 defs["ImVector_pop_back"][1]["funcname"] = "pop_back"
+<<<<<<< HEAD
 defs["ImVector_pop_back"][1]["location"] = "imgui:1887"
+=======
+defs["ImVector_pop_back"][1]["location"] = "imgui:1883"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_pop_back"][1]["ov_cimguiname"] = "ImVector_pop_back"
 defs["ImVector_pop_back"][1]["ret"] = "void"
 defs["ImVector_pop_back"][1]["signature"] = "()"
@@ -10789,7 +12696,11 @@ defs["ImVector_push_back"][1]["call_args"] = "(v)"
 defs["ImVector_push_back"][1]["cimguiname"] = "ImVector_push_back"
 defs["ImVector_push_back"][1]["defaults"] = {}
 defs["ImVector_push_back"][1]["funcname"] = "push_back"
+<<<<<<< HEAD
 defs["ImVector_push_back"][1]["location"] = "imgui:1886"
+=======
+defs["ImVector_push_back"][1]["location"] = "imgui:1882"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_push_back"][1]["ov_cimguiname"] = "ImVector_push_back"
 defs["ImVector_push_back"][1]["ret"] = "void"
 defs["ImVector_push_back"][1]["signature"] = "(const T)"
@@ -10811,7 +12722,11 @@ defs["ImVector_push_front"][1]["call_args"] = "(v)"
 defs["ImVector_push_front"][1]["cimguiname"] = "ImVector_push_front"
 defs["ImVector_push_front"][1]["defaults"] = {}
 defs["ImVector_push_front"][1]["funcname"] = "push_front"
+<<<<<<< HEAD
 defs["ImVector_push_front"][1]["location"] = "imgui:1888"
+=======
+defs["ImVector_push_front"][1]["location"] = "imgui:1884"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_push_front"][1]["ov_cimguiname"] = "ImVector_push_front"
 defs["ImVector_push_front"][1]["ret"] = "void"
 defs["ImVector_push_front"][1]["signature"] = "(const T)"
@@ -10833,7 +12748,11 @@ defs["ImVector_reserve"][1]["call_args"] = "(new_capacity)"
 defs["ImVector_reserve"][1]["cimguiname"] = "ImVector_reserve"
 defs["ImVector_reserve"][1]["defaults"] = {}
 defs["ImVector_reserve"][1]["funcname"] = "reserve"
+<<<<<<< HEAD
 defs["ImVector_reserve"][1]["location"] = "imgui:1882"
+=======
+defs["ImVector_reserve"][1]["location"] = "imgui:1878"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_reserve"][1]["ov_cimguiname"] = "ImVector_reserve"
 defs["ImVector_reserve"][1]["ret"] = "void"
 defs["ImVector_reserve"][1]["signature"] = "(int)"
@@ -10855,7 +12774,11 @@ defs["ImVector_reserve_discard"][1]["call_args"] = "(new_capacity)"
 defs["ImVector_reserve_discard"][1]["cimguiname"] = "ImVector_reserve_discard"
 defs["ImVector_reserve_discard"][1]["defaults"] = {}
 defs["ImVector_reserve_discard"][1]["funcname"] = "reserve_discard"
+<<<<<<< HEAD
 defs["ImVector_reserve_discard"][1]["location"] = "imgui:1883"
+=======
+defs["ImVector_reserve_discard"][1]["location"] = "imgui:1879"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_reserve_discard"][1]["ov_cimguiname"] = "ImVector_reserve_discard"
 defs["ImVector_reserve_discard"][1]["ret"] = "void"
 defs["ImVector_reserve_discard"][1]["signature"] = "(int)"
@@ -10877,7 +12800,11 @@ defs["ImVector_resize"][1]["call_args"] = "(new_size)"
 defs["ImVector_resize"][1]["cimguiname"] = "ImVector_resize"
 defs["ImVector_resize"][1]["defaults"] = {}
 defs["ImVector_resize"][1]["funcname"] = "resize"
+<<<<<<< HEAD
 defs["ImVector_resize"][1]["location"] = "imgui:1879"
+=======
+defs["ImVector_resize"][1]["location"] = "imgui:1875"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_resize"][1]["ov_cimguiname"] = "ImVector_resize_Nil"
 defs["ImVector_resize"][1]["ret"] = "void"
 defs["ImVector_resize"][1]["signature"] = "(int)"
@@ -10900,7 +12827,11 @@ defs["ImVector_resize"][2]["call_args"] = "(new_size,v)"
 defs["ImVector_resize"][2]["cimguiname"] = "ImVector_resize"
 defs["ImVector_resize"][2]["defaults"] = {}
 defs["ImVector_resize"][2]["funcname"] = "resize"
+<<<<<<< HEAD
 defs["ImVector_resize"][2]["location"] = "imgui:1880"
+=======
+defs["ImVector_resize"][2]["location"] = "imgui:1876"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_resize"][2]["ov_cimguiname"] = "ImVector_resize_T"
 defs["ImVector_resize"][2]["ret"] = "void"
 defs["ImVector_resize"][2]["signature"] = "(int,const T)"
@@ -10923,7 +12854,11 @@ defs["ImVector_shrink"][1]["call_args"] = "(new_size)"
 defs["ImVector_shrink"][1]["cimguiname"] = "ImVector_shrink"
 defs["ImVector_shrink"][1]["defaults"] = {}
 defs["ImVector_shrink"][1]["funcname"] = "shrink"
+<<<<<<< HEAD
 defs["ImVector_shrink"][1]["location"] = "imgui:1881"
+=======
+defs["ImVector_shrink"][1]["location"] = "imgui:1877"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_shrink"][1]["ov_cimguiname"] = "ImVector_shrink"
 defs["ImVector_shrink"][1]["ret"] = "void"
 defs["ImVector_shrink"][1]["signature"] = "(int)"
@@ -10942,7 +12877,11 @@ defs["ImVector_size"][1]["call_args"] = "()"
 defs["ImVector_size"][1]["cimguiname"] = "ImVector_size"
 defs["ImVector_size"][1]["defaults"] = {}
 defs["ImVector_size"][1]["funcname"] = "size"
+<<<<<<< HEAD
 defs["ImVector_size"][1]["location"] = "imgui:1861"
+=======
+defs["ImVector_size"][1]["location"] = "imgui:1857"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_size"][1]["ov_cimguiname"] = "ImVector_size"
 defs["ImVector_size"][1]["ret"] = "int"
 defs["ImVector_size"][1]["signature"] = "()const"
@@ -10961,7 +12900,11 @@ defs["ImVector_size_in_bytes"][1]["call_args"] = "()"
 defs["ImVector_size_in_bytes"][1]["cimguiname"] = "ImVector_size_in_bytes"
 defs["ImVector_size_in_bytes"][1]["defaults"] = {}
 defs["ImVector_size_in_bytes"][1]["funcname"] = "size_in_bytes"
+<<<<<<< HEAD
 defs["ImVector_size_in_bytes"][1]["location"] = "imgui:1862"
+=======
+defs["ImVector_size_in_bytes"][1]["location"] = "imgui:1858"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_size_in_bytes"][1]["ov_cimguiname"] = "ImVector_size_in_bytes"
 defs["ImVector_size_in_bytes"][1]["ret"] = "int"
 defs["ImVector_size_in_bytes"][1]["signature"] = "()const"
@@ -10984,7 +12927,11 @@ defs["ImVector_swap"][1]["call_args"] = "(*rhs)"
 defs["ImVector_swap"][1]["cimguiname"] = "ImVector_swap"
 defs["ImVector_swap"][1]["defaults"] = {}
 defs["ImVector_swap"][1]["funcname"] = "swap"
+<<<<<<< HEAD
 defs["ImVector_swap"][1]["location"] = "imgui:1876"
+=======
+defs["ImVector_swap"][1]["location"] = "imgui:1872"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["ImVector_swap"][1]["ov_cimguiname"] = "ImVector_swap"
 defs["ImVector_swap"][1]["ret"] = "void"
 defs["ImVector_swap"][1]["signature"] = "(ImVector_T *)"
@@ -11007,7 +12954,11 @@ defs["igAcceptDragDropPayload"][1]["cimguiname"] = "igAcceptDragDropPayload"
 defs["igAcceptDragDropPayload"][1]["defaults"] = {}
 defs["igAcceptDragDropPayload"][1]["defaults"]["flags"] = "0"
 defs["igAcceptDragDropPayload"][1]["funcname"] = "AcceptDragDropPayload"
+<<<<<<< HEAD
 defs["igAcceptDragDropPayload"][1]["location"] = "imgui:842"
+=======
+defs["igAcceptDragDropPayload"][1]["location"] = "imgui:841"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igAcceptDragDropPayload"][1]["namespace"] = "ImGui"
 defs["igAcceptDragDropPayload"][1]["ov_cimguiname"] = "igAcceptDragDropPayload"
 defs["igAcceptDragDropPayload"][1]["ret"] = "const ImGuiPayload*"
@@ -11026,7 +12977,11 @@ defs["igActivateItem"][1]["call_args"] = "(id)"
 defs["igActivateItem"][1]["cimguiname"] = "igActivateItem"
 defs["igActivateItem"][1]["defaults"] = {}
 defs["igActivateItem"][1]["funcname"] = "ActivateItem"
+<<<<<<< HEAD
 defs["igActivateItem"][1]["location"] = "imgui_internal:3108"
+=======
+defs["igActivateItem"][1]["location"] = "imgui_internal:3109"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igActivateItem"][1]["namespace"] = "ImGui"
 defs["igActivateItem"][1]["ov_cimguiname"] = "igActivateItem"
 defs["igActivateItem"][1]["ret"] = "void"
@@ -11048,7 +13003,11 @@ defs["igAddContextHook"][1]["call_args"] = "(context,hook)"
 defs["igAddContextHook"][1]["cimguiname"] = "igAddContextHook"
 defs["igAddContextHook"][1]["defaults"] = {}
 defs["igAddContextHook"][1]["funcname"] = "AddContextHook"
+<<<<<<< HEAD
 defs["igAddContextHook"][1]["location"] = "imgui_internal:2988"
+=======
+defs["igAddContextHook"][1]["location"] = "imgui_internal:2993"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igAddContextHook"][1]["namespace"] = "ImGui"
 defs["igAddContextHook"][1]["ov_cimguiname"] = "igAddContextHook"
 defs["igAddContextHook"][1]["ret"] = "ImGuiID"
@@ -11067,7 +13026,11 @@ defs["igAddSettingsHandler"][1]["call_args"] = "(handler)"
 defs["igAddSettingsHandler"][1]["cimguiname"] = "igAddSettingsHandler"
 defs["igAddSettingsHandler"][1]["defaults"] = {}
 defs["igAddSettingsHandler"][1]["funcname"] = "AddSettingsHandler"
+<<<<<<< HEAD
 defs["igAddSettingsHandler"][1]["location"] = "imgui_internal:3005"
+=======
+defs["igAddSettingsHandler"][1]["location"] = "imgui_internal:3013"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igAddSettingsHandler"][1]["namespace"] = "ImGui"
 defs["igAddSettingsHandler"][1]["ov_cimguiname"] = "igAddSettingsHandler"
 defs["igAddSettingsHandler"][1]["ret"] = "void"
@@ -11105,7 +13068,11 @@ defs["igArrowButton"][1]["call_args"] = "(str_id,dir)"
 defs["igArrowButton"][1]["cimguiname"] = "igArrowButton"
 defs["igArrowButton"][1]["defaults"] = {}
 defs["igArrowButton"][1]["funcname"] = "ArrowButton"
+<<<<<<< HEAD
 defs["igArrowButton"][1]["location"] = "imgui:513"
+=======
+defs["igArrowButton"][1]["location"] = "imgui:512"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igArrowButton"][1]["namespace"] = "ImGui"
 defs["igArrowButton"][1]["ov_cimguiname"] = "igArrowButton"
 defs["igArrowButton"][1]["ret"] = "bool"
@@ -11134,7 +13101,11 @@ defs["igArrowButtonEx"][1]["cimguiname"] = "igArrowButtonEx"
 defs["igArrowButtonEx"][1]["defaults"] = {}
 defs["igArrowButtonEx"][1]["defaults"]["flags"] = "0"
 defs["igArrowButtonEx"][1]["funcname"] = "ArrowButtonEx"
+<<<<<<< HEAD
 defs["igArrowButtonEx"][1]["location"] = "imgui_internal:3378"
+=======
+defs["igArrowButtonEx"][1]["location"] = "imgui_internal:3370"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igArrowButtonEx"][1]["namespace"] = "ImGui"
 defs["igArrowButtonEx"][1]["ov_cimguiname"] = "igArrowButtonEx"
 defs["igArrowButtonEx"][1]["ret"] = "bool"
@@ -11253,7 +13224,11 @@ defs["igBeginChildEx"][1]["call_args"] = "(name,id,size_arg,border,flags)"
 defs["igBeginChildEx"][1]["cimguiname"] = "igBeginChildEx"
 defs["igBeginChildEx"][1]["defaults"] = {}
 defs["igBeginChildEx"][1]["funcname"] = "BeginChildEx"
+<<<<<<< HEAD
 defs["igBeginChildEx"][1]["location"] = "imgui_internal:3074"
+=======
+defs["igBeginChildEx"][1]["location"] = "imgui_internal:3075"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginChildEx"][1]["namespace"] = "ImGui"
 defs["igBeginChildEx"][1]["ov_cimguiname"] = "igBeginChildEx"
 defs["igBeginChildEx"][1]["ret"] = "bool"
@@ -11279,7 +13254,11 @@ defs["igBeginChildFrame"][1]["cimguiname"] = "igBeginChildFrame"
 defs["igBeginChildFrame"][1]["defaults"] = {}
 defs["igBeginChildFrame"][1]["defaults"]["flags"] = "0"
 defs["igBeginChildFrame"][1]["funcname"] = "BeginChildFrame"
+<<<<<<< HEAD
 defs["igBeginChildFrame"][1]["location"] = "imgui:906"
+=======
+defs["igBeginChildFrame"][1]["location"] = "imgui:905"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginChildFrame"][1]["namespace"] = "ImGui"
 defs["igBeginChildFrame"][1]["ov_cimguiname"] = "igBeginChildFrame"
 defs["igBeginChildFrame"][1]["ret"] = "bool"
@@ -11305,7 +13284,11 @@ defs["igBeginColumns"][1]["cimguiname"] = "igBeginColumns"
 defs["igBeginColumns"][1]["defaults"] = {}
 defs["igBeginColumns"][1]["defaults"]["flags"] = "0"
 defs["igBeginColumns"][1]["funcname"] = "BeginColumns"
+<<<<<<< HEAD
 defs["igBeginColumns"][1]["location"] = "imgui_internal:3264"
+=======
+defs["igBeginColumns"][1]["location"] = "imgui_internal:3263"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginColumns"][1]["namespace"] = "ImGui"
 defs["igBeginColumns"][1]["ov_cimguiname"] = "igBeginColumns"
 defs["igBeginColumns"][1]["ret"] = "void"
@@ -11331,7 +13314,11 @@ defs["igBeginCombo"][1]["cimguiname"] = "igBeginCombo"
 defs["igBeginCombo"][1]["defaults"] = {}
 defs["igBeginCombo"][1]["defaults"]["flags"] = "0"
 defs["igBeginCombo"][1]["funcname"] = "BeginCombo"
+<<<<<<< HEAD
 defs["igBeginCombo"][1]["location"] = "imgui:530"
+=======
+defs["igBeginCombo"][1]["location"] = "imgui:529"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginCombo"][1]["namespace"] = "ImGui"
 defs["igBeginCombo"][1]["ov_cimguiname"] = "igBeginCombo"
 defs["igBeginCombo"][1]["ret"] = "bool"
@@ -11356,7 +13343,11 @@ defs["igBeginComboPopup"][1]["call_args"] = "(popup_id,bb,flags)"
 defs["igBeginComboPopup"][1]["cimguiname"] = "igBeginComboPopup"
 defs["igBeginComboPopup"][1]["defaults"] = {}
 defs["igBeginComboPopup"][1]["funcname"] = "BeginComboPopup"
+<<<<<<< HEAD
 defs["igBeginComboPopup"][1]["location"] = "imgui_internal:3094"
+=======
+defs["igBeginComboPopup"][1]["location"] = "imgui_internal:3095"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginComboPopup"][1]["namespace"] = "ImGui"
 defs["igBeginComboPopup"][1]["ov_cimguiname"] = "igBeginComboPopup"
 defs["igBeginComboPopup"][1]["ret"] = "bool"
@@ -11372,7 +13363,11 @@ defs["igBeginComboPreview"][1]["call_args"] = "()"
 defs["igBeginComboPreview"][1]["cimguiname"] = "igBeginComboPreview"
 defs["igBeginComboPreview"][1]["defaults"] = {}
 defs["igBeginComboPreview"][1]["funcname"] = "BeginComboPreview"
+<<<<<<< HEAD
 defs["igBeginComboPreview"][1]["location"] = "imgui_internal:3095"
+=======
+defs["igBeginComboPreview"][1]["location"] = "imgui_internal:3096"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginComboPreview"][1]["namespace"] = "ImGui"
 defs["igBeginComboPreview"][1]["ov_cimguiname"] = "igBeginComboPreview"
 defs["igBeginComboPreview"][1]["ret"] = "bool"
@@ -11392,7 +13387,11 @@ defs["igBeginDisabled"][1]["cimguiname"] = "igBeginDisabled"
 defs["igBeginDisabled"][1]["defaults"] = {}
 defs["igBeginDisabled"][1]["defaults"]["disabled"] = "true"
 defs["igBeginDisabled"][1]["funcname"] = "BeginDisabled"
+<<<<<<< HEAD
 defs["igBeginDisabled"][1]["location"] = "imgui:850"
+=======
+defs["igBeginDisabled"][1]["location"] = "imgui:849"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginDisabled"][1]["namespace"] = "ImGui"
 defs["igBeginDisabled"][1]["ov_cimguiname"] = "igBeginDisabled"
 defs["igBeginDisabled"][1]["ret"] = "void"
@@ -11411,7 +13410,11 @@ defs["igBeginDockableDragDropSource"][1]["call_args"] = "(window)"
 defs["igBeginDockableDragDropSource"][1]["cimguiname"] = "igBeginDockableDragDropSource"
 defs["igBeginDockableDragDropSource"][1]["defaults"] = {}
 defs["igBeginDockableDragDropSource"][1]["funcname"] = "BeginDockableDragDropSource"
+<<<<<<< HEAD
 defs["igBeginDockableDragDropSource"][1]["location"] = "imgui_internal:3215"
+=======
+defs["igBeginDockableDragDropSource"][1]["location"] = "imgui_internal:3214"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginDockableDragDropSource"][1]["namespace"] = "ImGui"
 defs["igBeginDockableDragDropSource"][1]["ov_cimguiname"] = "igBeginDockableDragDropSource"
 defs["igBeginDockableDragDropSource"][1]["ret"] = "void"
@@ -11430,7 +13433,11 @@ defs["igBeginDockableDragDropTarget"][1]["call_args"] = "(window)"
 defs["igBeginDockableDragDropTarget"][1]["cimguiname"] = "igBeginDockableDragDropTarget"
 defs["igBeginDockableDragDropTarget"][1]["defaults"] = {}
 defs["igBeginDockableDragDropTarget"][1]["funcname"] = "BeginDockableDragDropTarget"
+<<<<<<< HEAD
 defs["igBeginDockableDragDropTarget"][1]["location"] = "imgui_internal:3216"
+=======
+defs["igBeginDockableDragDropTarget"][1]["location"] = "imgui_internal:3215"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginDockableDragDropTarget"][1]["namespace"] = "ImGui"
 defs["igBeginDockableDragDropTarget"][1]["ov_cimguiname"] = "igBeginDockableDragDropTarget"
 defs["igBeginDockableDragDropTarget"][1]["ret"] = "void"
@@ -11452,7 +13459,11 @@ defs["igBeginDocked"][1]["call_args"] = "(window,p_open)"
 defs["igBeginDocked"][1]["cimguiname"] = "igBeginDocked"
 defs["igBeginDocked"][1]["defaults"] = {}
 defs["igBeginDocked"][1]["funcname"] = "BeginDocked"
+<<<<<<< HEAD
 defs["igBeginDocked"][1]["location"] = "imgui_internal:3214"
+=======
+defs["igBeginDocked"][1]["location"] = "imgui_internal:3213"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginDocked"][1]["namespace"] = "ImGui"
 defs["igBeginDocked"][1]["ov_cimguiname"] = "igBeginDocked"
 defs["igBeginDocked"][1]["ret"] = "void"
@@ -11472,7 +13483,11 @@ defs["igBeginDragDropSource"][1]["cimguiname"] = "igBeginDragDropSource"
 defs["igBeginDragDropSource"][1]["defaults"] = {}
 defs["igBeginDragDropSource"][1]["defaults"]["flags"] = "0"
 defs["igBeginDragDropSource"][1]["funcname"] = "BeginDragDropSource"
+<<<<<<< HEAD
 defs["igBeginDragDropSource"][1]["location"] = "imgui:838"
+=======
+defs["igBeginDragDropSource"][1]["location"] = "imgui:837"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginDragDropSource"][1]["namespace"] = "ImGui"
 defs["igBeginDragDropSource"][1]["ov_cimguiname"] = "igBeginDragDropSource"
 defs["igBeginDragDropSource"][1]["ret"] = "bool"
@@ -11488,7 +13503,11 @@ defs["igBeginDragDropTarget"][1]["call_args"] = "()"
 defs["igBeginDragDropTarget"][1]["cimguiname"] = "igBeginDragDropTarget"
 defs["igBeginDragDropTarget"][1]["defaults"] = {}
 defs["igBeginDragDropTarget"][1]["funcname"] = "BeginDragDropTarget"
+<<<<<<< HEAD
 defs["igBeginDragDropTarget"][1]["location"] = "imgui:841"
+=======
+defs["igBeginDragDropTarget"][1]["location"] = "imgui:840"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginDragDropTarget"][1]["namespace"] = "ImGui"
 defs["igBeginDragDropTarget"][1]["ov_cimguiname"] = "igBeginDragDropTarget"
 defs["igBeginDragDropTarget"][1]["ret"] = "bool"
@@ -11510,7 +13529,11 @@ defs["igBeginDragDropTargetCustom"][1]["call_args"] = "(bb,id)"
 defs["igBeginDragDropTargetCustom"][1]["cimguiname"] = "igBeginDragDropTargetCustom"
 defs["igBeginDragDropTargetCustom"][1]["defaults"] = {}
 defs["igBeginDragDropTargetCustom"][1]["funcname"] = "BeginDragDropTargetCustom"
+<<<<<<< HEAD
 defs["igBeginDragDropTargetCustom"][1]["location"] = "imgui_internal:3257"
+=======
+defs["igBeginDragDropTargetCustom"][1]["location"] = "imgui_internal:3256"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginDragDropTargetCustom"][1]["namespace"] = "ImGui"
 defs["igBeginDragDropTargetCustom"][1]["ov_cimguiname"] = "igBeginDragDropTargetCustom"
 defs["igBeginDragDropTargetCustom"][1]["ret"] = "bool"
@@ -11549,7 +13572,11 @@ defs["igBeginListBox"][1]["cimguiname"] = "igBeginListBox"
 defs["igBeginListBox"][1]["defaults"] = {}
 defs["igBeginListBox"][1]["defaults"]["size"] = "ImVec2(0,0)"
 defs["igBeginListBox"][1]["funcname"] = "BeginListBox"
+<<<<<<< HEAD
 defs["igBeginListBox"][1]["location"] = "imgui:642"
+=======
+defs["igBeginListBox"][1]["location"] = "imgui:641"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginListBox"][1]["namespace"] = "ImGui"
 defs["igBeginListBox"][1]["ov_cimguiname"] = "igBeginListBox"
 defs["igBeginListBox"][1]["ret"] = "bool"
@@ -11565,7 +13592,11 @@ defs["igBeginMainMenuBar"][1]["call_args"] = "()"
 defs["igBeginMainMenuBar"][1]["cimguiname"] = "igBeginMainMenuBar"
 defs["igBeginMainMenuBar"][1]["defaults"] = {}
 defs["igBeginMainMenuBar"][1]["funcname"] = "BeginMainMenuBar"
+<<<<<<< HEAD
 defs["igBeginMainMenuBar"][1]["location"] = "imgui:668"
+=======
+defs["igBeginMainMenuBar"][1]["location"] = "imgui:667"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginMainMenuBar"][1]["namespace"] = "ImGui"
 defs["igBeginMainMenuBar"][1]["ov_cimguiname"] = "igBeginMainMenuBar"
 defs["igBeginMainMenuBar"][1]["ret"] = "bool"
@@ -11588,7 +13619,11 @@ defs["igBeginMenu"][1]["cimguiname"] = "igBeginMenu"
 defs["igBeginMenu"][1]["defaults"] = {}
 defs["igBeginMenu"][1]["defaults"]["enabled"] = "true"
 defs["igBeginMenu"][1]["funcname"] = "BeginMenu"
+<<<<<<< HEAD
 defs["igBeginMenu"][1]["location"] = "imgui:670"
+=======
+defs["igBeginMenu"][1]["location"] = "imgui:669"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginMenu"][1]["namespace"] = "ImGui"
 defs["igBeginMenu"][1]["ov_cimguiname"] = "igBeginMenu"
 defs["igBeginMenu"][1]["ret"] = "bool"
@@ -11604,7 +13639,11 @@ defs["igBeginMenuBar"][1]["call_args"] = "()"
 defs["igBeginMenuBar"][1]["cimguiname"] = "igBeginMenuBar"
 defs["igBeginMenuBar"][1]["defaults"] = {}
 defs["igBeginMenuBar"][1]["funcname"] = "BeginMenuBar"
+<<<<<<< HEAD
 defs["igBeginMenuBar"][1]["location"] = "imgui:666"
+=======
+defs["igBeginMenuBar"][1]["location"] = "imgui:665"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginMenuBar"][1]["namespace"] = "ImGui"
 defs["igBeginMenuBar"][1]["ov_cimguiname"] = "igBeginMenuBar"
 defs["igBeginMenuBar"][1]["ret"] = "bool"
@@ -11630,7 +13669,11 @@ defs["igBeginMenuEx"][1]["cimguiname"] = "igBeginMenuEx"
 defs["igBeginMenuEx"][1]["defaults"] = {}
 defs["igBeginMenuEx"][1]["defaults"]["enabled"] = "true"
 defs["igBeginMenuEx"][1]["funcname"] = "BeginMenuEx"
+<<<<<<< HEAD
 defs["igBeginMenuEx"][1]["location"] = "imgui_internal:3090"
+=======
+defs["igBeginMenuEx"][1]["location"] = "imgui_internal:3091"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginMenuEx"][1]["namespace"] = "ImGui"
 defs["igBeginMenuEx"][1]["ov_cimguiname"] = "igBeginMenuEx"
 defs["igBeginMenuEx"][1]["ret"] = "bool"
@@ -11653,7 +13696,11 @@ defs["igBeginPopup"][1]["cimguiname"] = "igBeginPopup"
 defs["igBeginPopup"][1]["defaults"] = {}
 defs["igBeginPopup"][1]["defaults"]["flags"] = "0"
 defs["igBeginPopup"][1]["funcname"] = "BeginPopup"
+<<<<<<< HEAD
 defs["igBeginPopup"][1]["location"] = "imgui:694"
+=======
+defs["igBeginPopup"][1]["location"] = "imgui:693"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginPopup"][1]["namespace"] = "ImGui"
 defs["igBeginPopup"][1]["ov_cimguiname"] = "igBeginPopup"
 defs["igBeginPopup"][1]["ret"] = "bool"
@@ -11677,7 +13724,11 @@ defs["igBeginPopupContextItem"][1]["defaults"] = {}
 defs["igBeginPopupContextItem"][1]["defaults"]["popup_flags"] = "1"
 defs["igBeginPopupContextItem"][1]["defaults"]["str_id"] = "NULL"
 defs["igBeginPopupContextItem"][1]["funcname"] = "BeginPopupContextItem"
+<<<<<<< HEAD
 defs["igBeginPopupContextItem"][1]["location"] = "imgui:716"
+=======
+defs["igBeginPopupContextItem"][1]["location"] = "imgui:715"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginPopupContextItem"][1]["namespace"] = "ImGui"
 defs["igBeginPopupContextItem"][1]["ov_cimguiname"] = "igBeginPopupContextItem"
 defs["igBeginPopupContextItem"][1]["ret"] = "bool"
@@ -11701,7 +13752,11 @@ defs["igBeginPopupContextVoid"][1]["defaults"] = {}
 defs["igBeginPopupContextVoid"][1]["defaults"]["popup_flags"] = "1"
 defs["igBeginPopupContextVoid"][1]["defaults"]["str_id"] = "NULL"
 defs["igBeginPopupContextVoid"][1]["funcname"] = "BeginPopupContextVoid"
+<<<<<<< HEAD
 defs["igBeginPopupContextVoid"][1]["location"] = "imgui:718"
+=======
+defs["igBeginPopupContextVoid"][1]["location"] = "imgui:717"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginPopupContextVoid"][1]["namespace"] = "ImGui"
 defs["igBeginPopupContextVoid"][1]["ov_cimguiname"] = "igBeginPopupContextVoid"
 defs["igBeginPopupContextVoid"][1]["ret"] = "bool"
@@ -11725,7 +13780,11 @@ defs["igBeginPopupContextWindow"][1]["defaults"] = {}
 defs["igBeginPopupContextWindow"][1]["defaults"]["popup_flags"] = "1"
 defs["igBeginPopupContextWindow"][1]["defaults"]["str_id"] = "NULL"
 defs["igBeginPopupContextWindow"][1]["funcname"] = "BeginPopupContextWindow"
+<<<<<<< HEAD
 defs["igBeginPopupContextWindow"][1]["location"] = "imgui:717"
+=======
+defs["igBeginPopupContextWindow"][1]["location"] = "imgui:716"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginPopupContextWindow"][1]["namespace"] = "ImGui"
 defs["igBeginPopupContextWindow"][1]["ov_cimguiname"] = "igBeginPopupContextWindow"
 defs["igBeginPopupContextWindow"][1]["ret"] = "bool"
@@ -11747,7 +13806,11 @@ defs["igBeginPopupEx"][1]["call_args"] = "(id,extra_flags)"
 defs["igBeginPopupEx"][1]["cimguiname"] = "igBeginPopupEx"
 defs["igBeginPopupEx"][1]["defaults"] = {}
 defs["igBeginPopupEx"][1]["funcname"] = "BeginPopupEx"
+<<<<<<< HEAD
 defs["igBeginPopupEx"][1]["location"] = "imgui_internal:3080"
+=======
+defs["igBeginPopupEx"][1]["location"] = "imgui_internal:3081"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginPopupEx"][1]["namespace"] = "ImGui"
 defs["igBeginPopupEx"][1]["ov_cimguiname"] = "igBeginPopupEx"
 defs["igBeginPopupEx"][1]["ret"] = "bool"
@@ -11774,7 +13837,11 @@ defs["igBeginPopupModal"][1]["defaults"] = {}
 defs["igBeginPopupModal"][1]["defaults"]["flags"] = "0"
 defs["igBeginPopupModal"][1]["defaults"]["p_open"] = "NULL"
 defs["igBeginPopupModal"][1]["funcname"] = "BeginPopupModal"
+<<<<<<< HEAD
 defs["igBeginPopupModal"][1]["location"] = "imgui:695"
+=======
+defs["igBeginPopupModal"][1]["location"] = "imgui:694"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginPopupModal"][1]["namespace"] = "ImGui"
 defs["igBeginPopupModal"][1]["ov_cimguiname"] = "igBeginPopupModal"
 defs["igBeginPopupModal"][1]["ret"] = "bool"
@@ -11797,7 +13864,11 @@ defs["igBeginTabBar"][1]["cimguiname"] = "igBeginTabBar"
 defs["igBeginTabBar"][1]["defaults"] = {}
 defs["igBeginTabBar"][1]["defaults"]["flags"] = "0"
 defs["igBeginTabBar"][1]["funcname"] = "BeginTabBar"
+<<<<<<< HEAD
 defs["igBeginTabBar"][1]["location"] = "imgui:796"
+=======
+defs["igBeginTabBar"][1]["location"] = "imgui:795"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginTabBar"][1]["namespace"] = "ImGui"
 defs["igBeginTabBar"][1]["ov_cimguiname"] = "igBeginTabBar"
 defs["igBeginTabBar"][1]["ret"] = "bool"
@@ -11825,7 +13896,11 @@ defs["igBeginTabBarEx"][1]["call_args"] = "(tab_bar,bb,flags,dock_node)"
 defs["igBeginTabBarEx"][1]["cimguiname"] = "igBeginTabBarEx"
 defs["igBeginTabBarEx"][1]["defaults"] = {}
 defs["igBeginTabBarEx"][1]["funcname"] = "BeginTabBarEx"
+<<<<<<< HEAD
 defs["igBeginTabBarEx"][1]["location"] = "imgui_internal:3330"
+=======
+defs["igBeginTabBarEx"][1]["location"] = "imgui_internal:3327"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginTabBarEx"][1]["namespace"] = "ImGui"
 defs["igBeginTabBarEx"][1]["ov_cimguiname"] = "igBeginTabBarEx"
 defs["igBeginTabBarEx"][1]["ret"] = "bool"
@@ -11852,7 +13927,11 @@ defs["igBeginTabItem"][1]["defaults"] = {}
 defs["igBeginTabItem"][1]["defaults"]["flags"] = "0"
 defs["igBeginTabItem"][1]["defaults"]["p_open"] = "NULL"
 defs["igBeginTabItem"][1]["funcname"] = "BeginTabItem"
+<<<<<<< HEAD
 defs["igBeginTabItem"][1]["location"] = "imgui:798"
+=======
+defs["igBeginTabItem"][1]["location"] = "imgui:797"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginTabItem"][1]["namespace"] = "ImGui"
 defs["igBeginTabItem"][1]["ov_cimguiname"] = "igBeginTabItem"
 defs["igBeginTabItem"][1]["ret"] = "bool"
@@ -11886,7 +13965,11 @@ defs["igBeginTable"][1]["defaults"]["flags"] = "0"
 defs["igBeginTable"][1]["defaults"]["inner_width"] = "0.0f"
 defs["igBeginTable"][1]["defaults"]["outer_size"] = "ImVec2(0.0f,0.0f)"
 defs["igBeginTable"][1]["funcname"] = "BeginTable"
+<<<<<<< HEAD
 defs["igBeginTable"][1]["location"] = "imgui:749"
+=======
+defs["igBeginTable"][1]["location"] = "imgui:748"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginTable"][1]["namespace"] = "ImGui"
 defs["igBeginTable"][1]["ov_cimguiname"] = "igBeginTable"
 defs["igBeginTable"][1]["ret"] = "bool"
@@ -11923,7 +14006,11 @@ defs["igBeginTableEx"][1]["defaults"]["flags"] = "0"
 defs["igBeginTableEx"][1]["defaults"]["inner_width"] = "0.0f"
 defs["igBeginTableEx"][1]["defaults"]["outer_size"] = "ImVec2(0,0)"
 defs["igBeginTableEx"][1]["funcname"] = "BeginTableEx"
+<<<<<<< HEAD
 defs["igBeginTableEx"][1]["location"] = "imgui_internal:3286"
+=======
+defs["igBeginTableEx"][1]["location"] = "imgui_internal:3285"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginTableEx"][1]["namespace"] = "ImGui"
 defs["igBeginTableEx"][1]["ov_cimguiname"] = "igBeginTableEx"
 defs["igBeginTableEx"][1]["ret"] = "bool"
@@ -11939,7 +14026,11 @@ defs["igBeginTooltip"][1]["call_args"] = "()"
 defs["igBeginTooltip"][1]["cimguiname"] = "igBeginTooltip"
 defs["igBeginTooltip"][1]["defaults"] = {}
 defs["igBeginTooltip"][1]["funcname"] = "BeginTooltip"
+<<<<<<< HEAD
 defs["igBeginTooltip"][1]["location"] = "imgui:677"
+=======
+defs["igBeginTooltip"][1]["location"] = "imgui:676"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginTooltip"][1]["namespace"] = "ImGui"
 defs["igBeginTooltip"][1]["ov_cimguiname"] = "igBeginTooltip"
 defs["igBeginTooltip"][1]["ret"] = "void"
@@ -11961,7 +14052,11 @@ defs["igBeginTooltipEx"][1]["call_args"] = "(tooltip_flags,extra_window_flags)"
 defs["igBeginTooltipEx"][1]["cimguiname"] = "igBeginTooltipEx"
 defs["igBeginTooltipEx"][1]["defaults"] = {}
 defs["igBeginTooltipEx"][1]["funcname"] = "BeginTooltipEx"
+<<<<<<< HEAD
 defs["igBeginTooltipEx"][1]["location"] = "imgui_internal:3081"
+=======
+defs["igBeginTooltipEx"][1]["location"] = "imgui_internal:3082"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginTooltipEx"][1]["namespace"] = "ImGui"
 defs["igBeginTooltipEx"][1]["ov_cimguiname"] = "igBeginTooltipEx"
 defs["igBeginTooltipEx"][1]["ret"] = "void"
@@ -11992,7 +14087,11 @@ defs["igBeginViewportSideBar"][1]["call_args"] = "(name,viewport,dir,size,window
 defs["igBeginViewportSideBar"][1]["cimguiname"] = "igBeginViewportSideBar"
 defs["igBeginViewportSideBar"][1]["defaults"] = {}
 defs["igBeginViewportSideBar"][1]["funcname"] = "BeginViewportSideBar"
+<<<<<<< HEAD
 defs["igBeginViewportSideBar"][1]["location"] = "imgui_internal:3089"
+=======
+defs["igBeginViewportSideBar"][1]["location"] = "imgui_internal:3090"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBeginViewportSideBar"][1]["namespace"] = "ImGui"
 defs["igBeginViewportSideBar"][1]["ov_cimguiname"] = "igBeginViewportSideBar"
 defs["igBeginViewportSideBar"][1]["ret"] = "bool"
@@ -12011,7 +14110,11 @@ defs["igBringWindowToDisplayBack"][1]["call_args"] = "(window)"
 defs["igBringWindowToDisplayBack"][1]["cimguiname"] = "igBringWindowToDisplayBack"
 defs["igBringWindowToDisplayBack"][1]["defaults"] = {}
 defs["igBringWindowToDisplayBack"][1]["funcname"] = "BringWindowToDisplayBack"
+<<<<<<< HEAD
 defs["igBringWindowToDisplayBack"][1]["location"] = "imgui_internal:2965"
+=======
+defs["igBringWindowToDisplayBack"][1]["location"] = "imgui_internal:2970"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBringWindowToDisplayBack"][1]["namespace"] = "ImGui"
 defs["igBringWindowToDisplayBack"][1]["ov_cimguiname"] = "igBringWindowToDisplayBack"
 defs["igBringWindowToDisplayBack"][1]["ret"] = "void"
@@ -12033,7 +14136,11 @@ defs["igBringWindowToDisplayBehind"][1]["call_args"] = "(window,above_window)"
 defs["igBringWindowToDisplayBehind"][1]["cimguiname"] = "igBringWindowToDisplayBehind"
 defs["igBringWindowToDisplayBehind"][1]["defaults"] = {}
 defs["igBringWindowToDisplayBehind"][1]["funcname"] = "BringWindowToDisplayBehind"
+<<<<<<< HEAD
 defs["igBringWindowToDisplayBehind"][1]["location"] = "imgui_internal:2966"
+=======
+defs["igBringWindowToDisplayBehind"][1]["location"] = "imgui_internal:2971"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBringWindowToDisplayBehind"][1]["namespace"] = "ImGui"
 defs["igBringWindowToDisplayBehind"][1]["ov_cimguiname"] = "igBringWindowToDisplayBehind"
 defs["igBringWindowToDisplayBehind"][1]["ret"] = "void"
@@ -12052,7 +14159,11 @@ defs["igBringWindowToDisplayFront"][1]["call_args"] = "(window)"
 defs["igBringWindowToDisplayFront"][1]["cimguiname"] = "igBringWindowToDisplayFront"
 defs["igBringWindowToDisplayFront"][1]["defaults"] = {}
 defs["igBringWindowToDisplayFront"][1]["funcname"] = "BringWindowToDisplayFront"
+<<<<<<< HEAD
 defs["igBringWindowToDisplayFront"][1]["location"] = "imgui_internal:2964"
+=======
+defs["igBringWindowToDisplayFront"][1]["location"] = "imgui_internal:2969"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBringWindowToDisplayFront"][1]["namespace"] = "ImGui"
 defs["igBringWindowToDisplayFront"][1]["ov_cimguiname"] = "igBringWindowToDisplayFront"
 defs["igBringWindowToDisplayFront"][1]["ret"] = "void"
@@ -12071,7 +14182,11 @@ defs["igBringWindowToFocusFront"][1]["call_args"] = "(window)"
 defs["igBringWindowToFocusFront"][1]["cimguiname"] = "igBringWindowToFocusFront"
 defs["igBringWindowToFocusFront"][1]["defaults"] = {}
 defs["igBringWindowToFocusFront"][1]["funcname"] = "BringWindowToFocusFront"
+<<<<<<< HEAD
 defs["igBringWindowToFocusFront"][1]["location"] = "imgui_internal:2963"
+=======
+defs["igBringWindowToFocusFront"][1]["location"] = "imgui_internal:2968"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBringWindowToFocusFront"][1]["namespace"] = "ImGui"
 defs["igBringWindowToFocusFront"][1]["ov_cimguiname"] = "igBringWindowToFocusFront"
 defs["igBringWindowToFocusFront"][1]["ret"] = "void"
@@ -12087,7 +14202,11 @@ defs["igBullet"][1]["call_args"] = "()"
 defs["igBullet"][1]["cimguiname"] = "igBullet"
 defs["igBullet"][1]["defaults"] = {}
 defs["igBullet"][1]["funcname"] = "Bullet"
+<<<<<<< HEAD
 defs["igBullet"][1]["location"] = "imgui:520"
+=======
+defs["igBullet"][1]["location"] = "imgui:519"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igBullet"][1]["namespace"] = "ImGui"
 defs["igBullet"][1]["ov_cimguiname"] = "igBullet"
 defs["igBullet"][1]["ret"] = "void"
@@ -12155,7 +14274,11 @@ defs["igButton"][1]["cimguiname"] = "igButton"
 defs["igButton"][1]["defaults"] = {}
 defs["igButton"][1]["defaults"]["size"] = "ImVec2(0,0)"
 defs["igButton"][1]["funcname"] = "Button"
+<<<<<<< HEAD
 defs["igButton"][1]["location"] = "imgui:510"
+=======
+defs["igButton"][1]["location"] = "imgui:509"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igButton"][1]["namespace"] = "ImGui"
 defs["igButton"][1]["ov_cimguiname"] = "igButton"
 defs["igButton"][1]["ret"] = "bool"
@@ -12187,7 +14310,11 @@ defs["igButtonBehavior"][1]["cimguiname"] = "igButtonBehavior"
 defs["igButtonBehavior"][1]["defaults"] = {}
 defs["igButtonBehavior"][1]["defaults"]["flags"] = "0"
 defs["igButtonBehavior"][1]["funcname"] = "ButtonBehavior"
+<<<<<<< HEAD
 defs["igButtonBehavior"][1]["location"] = "imgui_internal:3396"
+=======
+defs["igButtonBehavior"][1]["location"] = "imgui_internal:3387"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igButtonBehavior"][1]["namespace"] = "ImGui"
 defs["igButtonBehavior"][1]["ov_cimguiname"] = "igButtonBehavior"
 defs["igButtonBehavior"][1]["ret"] = "bool"
@@ -12214,7 +14341,11 @@ defs["igButtonEx"][1]["defaults"] = {}
 defs["igButtonEx"][1]["defaults"]["flags"] = "0"
 defs["igButtonEx"][1]["defaults"]["size_arg"] = "ImVec2(0,0)"
 defs["igButtonEx"][1]["funcname"] = "ButtonEx"
+<<<<<<< HEAD
 defs["igButtonEx"][1]["location"] = "imgui_internal:3377"
+=======
+defs["igButtonEx"][1]["location"] = "imgui_internal:3369"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igButtonEx"][1]["namespace"] = "ImGui"
 defs["igButtonEx"][1]["ov_cimguiname"] = "igButtonEx"
 defs["igButtonEx"][1]["ret"] = "bool"
@@ -12242,7 +14373,11 @@ defs["igCalcItemSize"][1]["call_args"] = "(size,default_w,default_h)"
 defs["igCalcItemSize"][1]["cimguiname"] = "igCalcItemSize"
 defs["igCalcItemSize"][1]["defaults"] = {}
 defs["igCalcItemSize"][1]["funcname"] = "CalcItemSize"
+<<<<<<< HEAD
 defs["igCalcItemSize"][1]["location"] = "imgui_internal:3056"
+=======
+defs["igCalcItemSize"][1]["location"] = "imgui_internal:3057"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCalcItemSize"][1]["namespace"] = "ImGui"
 defs["igCalcItemSize"][1]["nonUDT"] = 1
 defs["igCalcItemSize"][1]["ov_cimguiname"] = "igCalcItemSize"
@@ -12284,7 +14419,11 @@ defs["igCalcRoundingFlagsForRectInRect"][1]["call_args"] = "(r_in,r_outer,thresh
 defs["igCalcRoundingFlagsForRectInRect"][1]["cimguiname"] = "igCalcRoundingFlagsForRectInRect"
 defs["igCalcRoundingFlagsForRectInRect"][1]["defaults"] = {}
 defs["igCalcRoundingFlagsForRectInRect"][1]["funcname"] = "CalcRoundingFlagsForRectInRect"
+<<<<<<< HEAD
 defs["igCalcRoundingFlagsForRectInRect"][1]["location"] = "imgui_internal:3373"
+=======
+defs["igCalcRoundingFlagsForRectInRect"][1]["location"] = "imgui_internal:3365"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCalcRoundingFlagsForRectInRect"][1]["namespace"] = "ImGui"
 defs["igCalcRoundingFlagsForRectInRect"][1]["ov_cimguiname"] = "igCalcRoundingFlagsForRectInRect"
 defs["igCalcRoundingFlagsForRectInRect"][1]["ret"] = "ImDrawFlags"
@@ -12318,7 +14457,11 @@ defs["igCalcTextSize"][1]["defaults"]["hide_text_after_double_hash"] = "false"
 defs["igCalcTextSize"][1]["defaults"]["text_end"] = "NULL"
 defs["igCalcTextSize"][1]["defaults"]["wrap_width"] = "-1.0f"
 defs["igCalcTextSize"][1]["funcname"] = "CalcTextSize"
+<<<<<<< HEAD
 defs["igCalcTextSize"][1]["location"] = "imgui:910"
+=======
+defs["igCalcTextSize"][1]["location"] = "imgui:909"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCalcTextSize"][1]["namespace"] = "ImGui"
 defs["igCalcTextSize"][1]["nonUDT"] = 1
 defs["igCalcTextSize"][1]["ov_cimguiname"] = "igCalcTextSize"
@@ -12347,7 +14490,11 @@ defs["igCalcTypematicRepeatAmount"][1]["call_args"] = "(t0,t1,repeat_delay,repea
 defs["igCalcTypematicRepeatAmount"][1]["cimguiname"] = "igCalcTypematicRepeatAmount"
 defs["igCalcTypematicRepeatAmount"][1]["defaults"] = {}
 defs["igCalcTypematicRepeatAmount"][1]["funcname"] = "CalcTypematicRepeatAmount"
+<<<<<<< HEAD
 defs["igCalcTypematicRepeatAmount"][1]["location"] = "imgui_internal:3139"
+=======
+defs["igCalcTypematicRepeatAmount"][1]["location"] = "imgui_internal:3140"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCalcTypematicRepeatAmount"][1]["namespace"] = "ImGui"
 defs["igCalcTypematicRepeatAmount"][1]["ov_cimguiname"] = "igCalcTypematicRepeatAmount"
 defs["igCalcTypematicRepeatAmount"][1]["ret"] = "int"
@@ -12369,7 +14516,11 @@ defs["igCalcWindowNextAutoFitSize"][1]["call_args"] = "(window)"
 defs["igCalcWindowNextAutoFitSize"][1]["cimguiname"] = "igCalcWindowNextAutoFitSize"
 defs["igCalcWindowNextAutoFitSize"][1]["defaults"] = {}
 defs["igCalcWindowNextAutoFitSize"][1]["funcname"] = "CalcWindowNextAutoFitSize"
+<<<<<<< HEAD
 defs["igCalcWindowNextAutoFitSize"][1]["location"] = "imgui_internal:2948"
+=======
+defs["igCalcWindowNextAutoFitSize"][1]["location"] = "imgui_internal:2953"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCalcWindowNextAutoFitSize"][1]["namespace"] = "ImGui"
 defs["igCalcWindowNextAutoFitSize"][1]["nonUDT"] = 1
 defs["igCalcWindowNextAutoFitSize"][1]["ov_cimguiname"] = "igCalcWindowNextAutoFitSize"
@@ -12392,7 +14543,11 @@ defs["igCalcWrapWidthForPos"][1]["call_args"] = "(pos,wrap_pos_x)"
 defs["igCalcWrapWidthForPos"][1]["cimguiname"] = "igCalcWrapWidthForPos"
 defs["igCalcWrapWidthForPos"][1]["defaults"] = {}
 defs["igCalcWrapWidthForPos"][1]["funcname"] = "CalcWrapWidthForPos"
+<<<<<<< HEAD
 defs["igCalcWrapWidthForPos"][1]["location"] = "imgui_internal:3057"
+=======
+defs["igCalcWrapWidthForPos"][1]["location"] = "imgui_internal:3058"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCalcWrapWidthForPos"][1]["namespace"] = "ImGui"
 defs["igCalcWrapWidthForPos"][1]["ov_cimguiname"] = "igCalcWrapWidthForPos"
 defs["igCalcWrapWidthForPos"][1]["ret"] = "float"
@@ -12414,7 +14569,11 @@ defs["igCallContextHooks"][1]["call_args"] = "(context,type)"
 defs["igCallContextHooks"][1]["cimguiname"] = "igCallContextHooks"
 defs["igCallContextHooks"][1]["defaults"] = {}
 defs["igCallContextHooks"][1]["funcname"] = "CallContextHooks"
+<<<<<<< HEAD
 defs["igCallContextHooks"][1]["location"] = "imgui_internal:2990"
+=======
+defs["igCallContextHooks"][1]["location"] = "imgui_internal:2995"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCallContextHooks"][1]["namespace"] = "ImGui"
 defs["igCallContextHooks"][1]["ov_cimguiname"] = "igCallContextHooks"
 defs["igCallContextHooks"][1]["ret"] = "void"
@@ -12436,7 +14595,11 @@ defs["igCheckbox"][1]["call_args"] = "(label,v)"
 defs["igCheckbox"][1]["cimguiname"] = "igCheckbox"
 defs["igCheckbox"][1]["defaults"] = {}
 defs["igCheckbox"][1]["funcname"] = "Checkbox"
+<<<<<<< HEAD
 defs["igCheckbox"][1]["location"] = "imgui:514"
+=======
+defs["igCheckbox"][1]["location"] = "imgui:513"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCheckbox"][1]["namespace"] = "ImGui"
 defs["igCheckbox"][1]["ov_cimguiname"] = "igCheckbox"
 defs["igCheckbox"][1]["ret"] = "bool"
@@ -12461,7 +14624,11 @@ defs["igCheckboxFlags"][1]["call_args"] = "(label,flags,flags_value)"
 defs["igCheckboxFlags"][1]["cimguiname"] = "igCheckboxFlags"
 defs["igCheckboxFlags"][1]["defaults"] = {}
 defs["igCheckboxFlags"][1]["funcname"] = "CheckboxFlags"
+<<<<<<< HEAD
 defs["igCheckboxFlags"][1]["location"] = "imgui:515"
+=======
+defs["igCheckboxFlags"][1]["location"] = "imgui:514"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCheckboxFlags"][1]["namespace"] = "ImGui"
 defs["igCheckboxFlags"][1]["ov_cimguiname"] = "igCheckboxFlags_IntPtr"
 defs["igCheckboxFlags"][1]["ret"] = "bool"
@@ -12484,7 +14651,11 @@ defs["igCheckboxFlags"][2]["call_args"] = "(label,flags,flags_value)"
 defs["igCheckboxFlags"][2]["cimguiname"] = "igCheckboxFlags"
 defs["igCheckboxFlags"][2]["defaults"] = {}
 defs["igCheckboxFlags"][2]["funcname"] = "CheckboxFlags"
+<<<<<<< HEAD
 defs["igCheckboxFlags"][2]["location"] = "imgui:516"
+=======
+defs["igCheckboxFlags"][2]["location"] = "imgui:515"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCheckboxFlags"][2]["namespace"] = "ImGui"
 defs["igCheckboxFlags"][2]["ov_cimguiname"] = "igCheckboxFlags_UintPtr"
 defs["igCheckboxFlags"][2]["ret"] = "bool"
@@ -12507,7 +14678,11 @@ defs["igCheckboxFlags"][3]["call_args"] = "(label,flags,flags_value)"
 defs["igCheckboxFlags"][3]["cimguiname"] = "igCheckboxFlags"
 defs["igCheckboxFlags"][3]["defaults"] = {}
 defs["igCheckboxFlags"][3]["funcname"] = "CheckboxFlags"
+<<<<<<< HEAD
 defs["igCheckboxFlags"][3]["location"] = "imgui_internal:3382"
+=======
+defs["igCheckboxFlags"][3]["location"] = "imgui_internal:3373"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCheckboxFlags"][3]["namespace"] = "ImGui"
 defs["igCheckboxFlags"][3]["ov_cimguiname"] = "igCheckboxFlags_S64Ptr"
 defs["igCheckboxFlags"][3]["ret"] = "bool"
@@ -12530,7 +14705,11 @@ defs["igCheckboxFlags"][4]["call_args"] = "(label,flags,flags_value)"
 defs["igCheckboxFlags"][4]["cimguiname"] = "igCheckboxFlags"
 defs["igCheckboxFlags"][4]["defaults"] = {}
 defs["igCheckboxFlags"][4]["funcname"] = "CheckboxFlags"
+<<<<<<< HEAD
 defs["igCheckboxFlags"][4]["location"] = "imgui_internal:3383"
+=======
+defs["igCheckboxFlags"][4]["location"] = "imgui_internal:3374"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCheckboxFlags"][4]["namespace"] = "ImGui"
 defs["igCheckboxFlags"][4]["ov_cimguiname"] = "igCheckboxFlags_U64Ptr"
 defs["igCheckboxFlags"][4]["ret"] = "bool"
@@ -12549,7 +14728,11 @@ defs["igClearActiveID"][1]["call_args"] = "()"
 defs["igClearActiveID"][1]["cimguiname"] = "igClearActiveID"
 defs["igClearActiveID"][1]["defaults"] = {}
 defs["igClearActiveID"][1]["funcname"] = "ClearActiveID"
+<<<<<<< HEAD
 defs["igClearActiveID"][1]["location"] = "imgui_internal:3040"
+=======
+defs["igClearActiveID"][1]["location"] = "imgui_internal:3042"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igClearActiveID"][1]["namespace"] = "ImGui"
 defs["igClearActiveID"][1]["ov_cimguiname"] = "igClearActiveID"
 defs["igClearActiveID"][1]["ret"] = "void"
@@ -12565,7 +14748,11 @@ defs["igClearDragDrop"][1]["call_args"] = "()"
 defs["igClearDragDrop"][1]["cimguiname"] = "igClearDragDrop"
 defs["igClearDragDrop"][1]["defaults"] = {}
 defs["igClearDragDrop"][1]["funcname"] = "ClearDragDrop"
+<<<<<<< HEAD
 defs["igClearDragDrop"][1]["location"] = "imgui_internal:3258"
+=======
+defs["igClearDragDrop"][1]["location"] = "imgui_internal:3257"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igClearDragDrop"][1]["namespace"] = "ImGui"
 defs["igClearDragDrop"][1]["ov_cimguiname"] = "igClearDragDrop"
 defs["igClearDragDrop"][1]["ret"] = "void"
@@ -12581,7 +14768,11 @@ defs["igClearIniSettings"][1]["call_args"] = "()"
 defs["igClearIniSettings"][1]["cimguiname"] = "igClearIniSettings"
 defs["igClearIniSettings"][1]["defaults"] = {}
 defs["igClearIniSettings"][1]["funcname"] = "ClearIniSettings"
+<<<<<<< HEAD
 defs["igClearIniSettings"][1]["location"] = "imgui_internal:3004"
+=======
+defs["igClearIniSettings"][1]["location"] = "imgui_internal:3009"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igClearIniSettings"][1]["namespace"] = "ImGui"
 defs["igClearIniSettings"][1]["ov_cimguiname"] = "igClearIniSettings"
 defs["igClearIniSettings"][1]["ret"] = "void"
@@ -12622,7 +14813,11 @@ defs["igCloseButton"][1]["call_args"] = "(id,pos)"
 defs["igCloseButton"][1]["cimguiname"] = "igCloseButton"
 defs["igCloseButton"][1]["defaults"] = {}
 defs["igCloseButton"][1]["funcname"] = "CloseButton"
+<<<<<<< HEAD
 defs["igCloseButton"][1]["location"] = "imgui_internal:3386"
+=======
+defs["igCloseButton"][1]["location"] = "imgui_internal:3377"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCloseButton"][1]["namespace"] = "ImGui"
 defs["igCloseButton"][1]["ov_cimguiname"] = "igCloseButton"
 defs["igCloseButton"][1]["ret"] = "bool"
@@ -12638,7 +14833,11 @@ defs["igCloseCurrentPopup"][1]["call_args"] = "()"
 defs["igCloseCurrentPopup"][1]["cimguiname"] = "igCloseCurrentPopup"
 defs["igCloseCurrentPopup"][1]["defaults"] = {}
 defs["igCloseCurrentPopup"][1]["funcname"] = "CloseCurrentPopup"
+<<<<<<< HEAD
 defs["igCloseCurrentPopup"][1]["location"] = "imgui:709"
+=======
+defs["igCloseCurrentPopup"][1]["location"] = "imgui:708"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCloseCurrentPopup"][1]["namespace"] = "ImGui"
 defs["igCloseCurrentPopup"][1]["ov_cimguiname"] = "igCloseCurrentPopup"
 defs["igCloseCurrentPopup"][1]["ret"] = "void"
@@ -12660,7 +14859,11 @@ defs["igClosePopupToLevel"][1]["call_args"] = "(remaining,restore_focus_to_windo
 defs["igClosePopupToLevel"][1]["cimguiname"] = "igClosePopupToLevel"
 defs["igClosePopupToLevel"][1]["defaults"] = {}
 defs["igClosePopupToLevel"][1]["funcname"] = "ClosePopupToLevel"
+<<<<<<< HEAD
 defs["igClosePopupToLevel"][1]["location"] = "imgui_internal:3076"
+=======
+defs["igClosePopupToLevel"][1]["location"] = "imgui_internal:3077"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igClosePopupToLevel"][1]["namespace"] = "ImGui"
 defs["igClosePopupToLevel"][1]["ov_cimguiname"] = "igClosePopupToLevel"
 defs["igClosePopupToLevel"][1]["ret"] = "void"
@@ -12676,7 +14879,11 @@ defs["igClosePopupsExceptModals"][1]["call_args"] = "()"
 defs["igClosePopupsExceptModals"][1]["cimguiname"] = "igClosePopupsExceptModals"
 defs["igClosePopupsExceptModals"][1]["defaults"] = {}
 defs["igClosePopupsExceptModals"][1]["funcname"] = "ClosePopupsExceptModals"
+<<<<<<< HEAD
 defs["igClosePopupsExceptModals"][1]["location"] = "imgui_internal:3078"
+=======
+defs["igClosePopupsExceptModals"][1]["location"] = "imgui_internal:3079"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igClosePopupsExceptModals"][1]["namespace"] = "ImGui"
 defs["igClosePopupsExceptModals"][1]["ov_cimguiname"] = "igClosePopupsExceptModals"
 defs["igClosePopupsExceptModals"][1]["ret"] = "void"
@@ -12698,7 +14905,11 @@ defs["igClosePopupsOverWindow"][1]["call_args"] = "(ref_window,restore_focus_to_
 defs["igClosePopupsOverWindow"][1]["cimguiname"] = "igClosePopupsOverWindow"
 defs["igClosePopupsOverWindow"][1]["defaults"] = {}
 defs["igClosePopupsOverWindow"][1]["funcname"] = "ClosePopupsOverWindow"
+<<<<<<< HEAD
 defs["igClosePopupsOverWindow"][1]["location"] = "imgui_internal:3077"
+=======
+defs["igClosePopupsOverWindow"][1]["location"] = "imgui_internal:3078"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igClosePopupsOverWindow"][1]["namespace"] = "ImGui"
 defs["igClosePopupsOverWindow"][1]["ov_cimguiname"] = "igClosePopupsOverWindow"
 defs["igClosePopupsOverWindow"][1]["ret"] = "void"
@@ -12723,7 +14934,11 @@ defs["igCollapseButton"][1]["call_args"] = "(id,pos,dock_node)"
 defs["igCollapseButton"][1]["cimguiname"] = "igCollapseButton"
 defs["igCollapseButton"][1]["defaults"] = {}
 defs["igCollapseButton"][1]["funcname"] = "CollapseButton"
+<<<<<<< HEAD
 defs["igCollapseButton"][1]["location"] = "imgui_internal:3387"
+=======
+defs["igCollapseButton"][1]["location"] = "imgui_internal:3378"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCollapseButton"][1]["namespace"] = "ImGui"
 defs["igCollapseButton"][1]["ov_cimguiname"] = "igCollapseButton"
 defs["igCollapseButton"][1]["ret"] = "bool"
@@ -12746,7 +14961,11 @@ defs["igCollapsingHeader"][1]["cimguiname"] = "igCollapsingHeader"
 defs["igCollapsingHeader"][1]["defaults"] = {}
 defs["igCollapsingHeader"][1]["defaults"]["flags"] = "0"
 defs["igCollapsingHeader"][1]["funcname"] = "CollapsingHeader"
+<<<<<<< HEAD
 defs["igCollapsingHeader"][1]["location"] = "imgui:626"
+=======
+defs["igCollapsingHeader"][1]["location"] = "imgui:625"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCollapsingHeader"][1]["namespace"] = "ImGui"
 defs["igCollapsingHeader"][1]["ov_cimguiname"] = "igCollapsingHeader_TreeNodeFlags"
 defs["igCollapsingHeader"][1]["ret"] = "bool"
@@ -12770,7 +14989,11 @@ defs["igCollapsingHeader"][2]["cimguiname"] = "igCollapsingHeader"
 defs["igCollapsingHeader"][2]["defaults"] = {}
 defs["igCollapsingHeader"][2]["defaults"]["flags"] = "0"
 defs["igCollapsingHeader"][2]["funcname"] = "CollapsingHeader"
+<<<<<<< HEAD
 defs["igCollapsingHeader"][2]["location"] = "imgui:627"
+=======
+defs["igCollapsingHeader"][2]["location"] = "imgui:626"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCollapsingHeader"][2]["namespace"] = "ImGui"
 defs["igCollapsingHeader"][2]["ov_cimguiname"] = "igCollapsingHeader_BoolPtr"
 defs["igCollapsingHeader"][2]["ret"] = "bool"
@@ -12801,7 +15024,11 @@ defs["igColorButton"][1]["defaults"] = {}
 defs["igColorButton"][1]["defaults"]["flags"] = "0"
 defs["igColorButton"][1]["defaults"]["size"] = "ImVec2(0,0)"
 defs["igColorButton"][1]["funcname"] = "ColorButton"
+<<<<<<< HEAD
 defs["igColorButton"][1]["location"] = "imgui:607"
+=======
+defs["igColorButton"][1]["location"] = "imgui:606"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igColorButton"][1]["namespace"] = "ImGui"
 defs["igColorButton"][1]["ov_cimguiname"] = "igColorButton"
 defs["igColorButton"][1]["ret"] = "bool"
@@ -12820,7 +15047,11 @@ defs["igColorConvertFloat4ToU32"][1]["call_args"] = "(in)"
 defs["igColorConvertFloat4ToU32"][1]["cimguiname"] = "igColorConvertFloat4ToU32"
 defs["igColorConvertFloat4ToU32"][1]["defaults"] = {}
 defs["igColorConvertFloat4ToU32"][1]["funcname"] = "ColorConvertFloat4ToU32"
+<<<<<<< HEAD
 defs["igColorConvertFloat4ToU32"][1]["location"] = "imgui:914"
+=======
+defs["igColorConvertFloat4ToU32"][1]["location"] = "imgui:913"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igColorConvertFloat4ToU32"][1]["namespace"] = "ImGui"
 defs["igColorConvertFloat4ToU32"][1]["ov_cimguiname"] = "igColorConvertFloat4ToU32"
 defs["igColorConvertFloat4ToU32"][1]["ret"] = "ImU32"
@@ -12857,7 +15088,11 @@ defs["igColorConvertHSVtoRGB"][1]["call_args"] = "(h,s,v,*out_r,*out_g,*out_b)"
 defs["igColorConvertHSVtoRGB"][1]["cimguiname"] = "igColorConvertHSVtoRGB"
 defs["igColorConvertHSVtoRGB"][1]["defaults"] = {}
 defs["igColorConvertHSVtoRGB"][1]["funcname"] = "ColorConvertHSVtoRGB"
+<<<<<<< HEAD
 defs["igColorConvertHSVtoRGB"][1]["location"] = "imgui:916"
+=======
+defs["igColorConvertHSVtoRGB"][1]["location"] = "imgui:915"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igColorConvertHSVtoRGB"][1]["namespace"] = "ImGui"
 defs["igColorConvertHSVtoRGB"][1]["ov_cimguiname"] = "igColorConvertHSVtoRGB"
 defs["igColorConvertHSVtoRGB"][1]["ret"] = "void"
@@ -12894,7 +15129,11 @@ defs["igColorConvertRGBtoHSV"][1]["call_args"] = "(r,g,b,*out_h,*out_s,*out_v)"
 defs["igColorConvertRGBtoHSV"][1]["cimguiname"] = "igColorConvertRGBtoHSV"
 defs["igColorConvertRGBtoHSV"][1]["defaults"] = {}
 defs["igColorConvertRGBtoHSV"][1]["funcname"] = "ColorConvertRGBtoHSV"
+<<<<<<< HEAD
 defs["igColorConvertRGBtoHSV"][1]["location"] = "imgui:915"
+=======
+defs["igColorConvertRGBtoHSV"][1]["location"] = "imgui:914"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igColorConvertRGBtoHSV"][1]["namespace"] = "ImGui"
 defs["igColorConvertRGBtoHSV"][1]["ov_cimguiname"] = "igColorConvertRGBtoHSV"
 defs["igColorConvertRGBtoHSV"][1]["ret"] = "void"
@@ -12916,7 +15155,11 @@ defs["igColorConvertU32ToFloat4"][1]["call_args"] = "(in)"
 defs["igColorConvertU32ToFloat4"][1]["cimguiname"] = "igColorConvertU32ToFloat4"
 defs["igColorConvertU32ToFloat4"][1]["defaults"] = {}
 defs["igColorConvertU32ToFloat4"][1]["funcname"] = "ColorConvertU32ToFloat4"
+<<<<<<< HEAD
 defs["igColorConvertU32ToFloat4"][1]["location"] = "imgui:913"
+=======
+defs["igColorConvertU32ToFloat4"][1]["location"] = "imgui:912"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igColorConvertU32ToFloat4"][1]["namespace"] = "ImGui"
 defs["igColorConvertU32ToFloat4"][1]["nonUDT"] = 1
 defs["igColorConvertU32ToFloat4"][1]["ov_cimguiname"] = "igColorConvertU32ToFloat4"
@@ -12943,7 +15186,11 @@ defs["igColorEdit3"][1]["cimguiname"] = "igColorEdit3"
 defs["igColorEdit3"][1]["defaults"] = {}
 defs["igColorEdit3"][1]["defaults"]["flags"] = "0"
 defs["igColorEdit3"][1]["funcname"] = "ColorEdit3"
+<<<<<<< HEAD
 defs["igColorEdit3"][1]["location"] = "imgui:603"
+=======
+defs["igColorEdit3"][1]["location"] = "imgui:602"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igColorEdit3"][1]["namespace"] = "ImGui"
 defs["igColorEdit3"][1]["ov_cimguiname"] = "igColorEdit3"
 defs["igColorEdit3"][1]["ret"] = "bool"
@@ -12969,7 +15216,11 @@ defs["igColorEdit4"][1]["cimguiname"] = "igColorEdit4"
 defs["igColorEdit4"][1]["defaults"] = {}
 defs["igColorEdit4"][1]["defaults"]["flags"] = "0"
 defs["igColorEdit4"][1]["funcname"] = "ColorEdit4"
+<<<<<<< HEAD
 defs["igColorEdit4"][1]["location"] = "imgui:604"
+=======
+defs["igColorEdit4"][1]["location"] = "imgui:603"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igColorEdit4"][1]["namespace"] = "ImGui"
 defs["igColorEdit4"][1]["ov_cimguiname"] = "igColorEdit4"
 defs["igColorEdit4"][1]["ret"] = "bool"
@@ -12991,7 +15242,11 @@ defs["igColorEditOptionsPopup"][1]["call_args"] = "(col,flags)"
 defs["igColorEditOptionsPopup"][1]["cimguiname"] = "igColorEditOptionsPopup"
 defs["igColorEditOptionsPopup"][1]["defaults"] = {}
 defs["igColorEditOptionsPopup"][1]["funcname"] = "ColorEditOptionsPopup"
+<<<<<<< HEAD
 defs["igColorEditOptionsPopup"][1]["location"] = "imgui_internal:3432"
+=======
+defs["igColorEditOptionsPopup"][1]["location"] = "imgui_internal:3423"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igColorEditOptionsPopup"][1]["namespace"] = "ImGui"
 defs["igColorEditOptionsPopup"][1]["ov_cimguiname"] = "igColorEditOptionsPopup"
 defs["igColorEditOptionsPopup"][1]["ret"] = "void"
@@ -13017,7 +15272,11 @@ defs["igColorPicker3"][1]["cimguiname"] = "igColorPicker3"
 defs["igColorPicker3"][1]["defaults"] = {}
 defs["igColorPicker3"][1]["defaults"]["flags"] = "0"
 defs["igColorPicker3"][1]["funcname"] = "ColorPicker3"
+<<<<<<< HEAD
 defs["igColorPicker3"][1]["location"] = "imgui:605"
+=======
+defs["igColorPicker3"][1]["location"] = "imgui:604"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igColorPicker3"][1]["namespace"] = "ImGui"
 defs["igColorPicker3"][1]["ov_cimguiname"] = "igColorPicker3"
 defs["igColorPicker3"][1]["ret"] = "bool"
@@ -13047,7 +15306,11 @@ defs["igColorPicker4"][1]["defaults"] = {}
 defs["igColorPicker4"][1]["defaults"]["flags"] = "0"
 defs["igColorPicker4"][1]["defaults"]["ref_col"] = "NULL"
 defs["igColorPicker4"][1]["funcname"] = "ColorPicker4"
+<<<<<<< HEAD
 defs["igColorPicker4"][1]["location"] = "imgui:606"
+=======
+defs["igColorPicker4"][1]["location"] = "imgui:605"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igColorPicker4"][1]["namespace"] = "ImGui"
 defs["igColorPicker4"][1]["ov_cimguiname"] = "igColorPicker4"
 defs["igColorPicker4"][1]["ret"] = "bool"
@@ -13069,7 +15332,11 @@ defs["igColorPickerOptionsPopup"][1]["call_args"] = "(ref_col,flags)"
 defs["igColorPickerOptionsPopup"][1]["cimguiname"] = "igColorPickerOptionsPopup"
 defs["igColorPickerOptionsPopup"][1]["defaults"] = {}
 defs["igColorPickerOptionsPopup"][1]["funcname"] = "ColorPickerOptionsPopup"
+<<<<<<< HEAD
 defs["igColorPickerOptionsPopup"][1]["location"] = "imgui_internal:3433"
+=======
+defs["igColorPickerOptionsPopup"][1]["location"] = "imgui_internal:3424"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igColorPickerOptionsPopup"][1]["namespace"] = "ImGui"
 defs["igColorPickerOptionsPopup"][1]["ov_cimguiname"] = "igColorPickerOptionsPopup"
 defs["igColorPickerOptionsPopup"][1]["ret"] = "void"
@@ -13094,7 +15361,11 @@ defs["igColorTooltip"][1]["call_args"] = "(text,col,flags)"
 defs["igColorTooltip"][1]["cimguiname"] = "igColorTooltip"
 defs["igColorTooltip"][1]["defaults"] = {}
 defs["igColorTooltip"][1]["funcname"] = "ColorTooltip"
+<<<<<<< HEAD
 defs["igColorTooltip"][1]["location"] = "imgui_internal:3431"
+=======
+defs["igColorTooltip"][1]["location"] = "imgui_internal:3422"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igColorTooltip"][1]["namespace"] = "ImGui"
 defs["igColorTooltip"][1]["ov_cimguiname"] = "igColorTooltip"
 defs["igColorTooltip"][1]["ret"] = "void"
@@ -13122,7 +15393,11 @@ defs["igColumns"][1]["defaults"]["border"] = "true"
 defs["igColumns"][1]["defaults"]["count"] = "1"
 defs["igColumns"][1]["defaults"]["id"] = "NULL"
 defs["igColumns"][1]["funcname"] = "Columns"
+<<<<<<< HEAD
 defs["igColumns"][1]["location"] = "imgui:785"
+=======
+defs["igColumns"][1]["location"] = "imgui:784"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igColumns"][1]["namespace"] = "ImGui"
 defs["igColumns"][1]["ov_cimguiname"] = "igColumns"
 defs["igColumns"][1]["ret"] = "void"
@@ -13154,7 +15429,11 @@ defs["igCombo"][1]["cimguiname"] = "igCombo"
 defs["igCombo"][1]["defaults"] = {}
 defs["igCombo"][1]["defaults"]["popup_max_height_in_items"] = "-1"
 defs["igCombo"][1]["funcname"] = "Combo"
+<<<<<<< HEAD
 defs["igCombo"][1]["location"] = "imgui:532"
+=======
+defs["igCombo"][1]["location"] = "imgui:531"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCombo"][1]["namespace"] = "ImGui"
 defs["igCombo"][1]["ov_cimguiname"] = "igCombo_Str_arr"
 defs["igCombo"][1]["ret"] = "bool"
@@ -13181,7 +15460,11 @@ defs["igCombo"][2]["cimguiname"] = "igCombo"
 defs["igCombo"][2]["defaults"] = {}
 defs["igCombo"][2]["defaults"]["popup_max_height_in_items"] = "-1"
 defs["igCombo"][2]["funcname"] = "Combo"
+<<<<<<< HEAD
 defs["igCombo"][2]["location"] = "imgui:533"
+=======
+defs["igCombo"][2]["location"] = "imgui:532"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCombo"][2]["namespace"] = "ImGui"
 defs["igCombo"][2]["ov_cimguiname"] = "igCombo_Str"
 defs["igCombo"][2]["ret"] = "bool"
@@ -13216,7 +15499,11 @@ defs["igCombo"][3]["cimguiname"] = "igCombo"
 defs["igCombo"][3]["defaults"] = {}
 defs["igCombo"][3]["defaults"]["popup_max_height_in_items"] = "-1"
 defs["igCombo"][3]["funcname"] = "Combo"
+<<<<<<< HEAD
 defs["igCombo"][3]["location"] = "imgui:534"
+=======
+defs["igCombo"][3]["location"] = "imgui:533"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igCombo"][3]["namespace"] = "ImGui"
 defs["igCombo"][3]["ov_cimguiname"] = "igCombo_FnBoolPtr"
 defs["igCombo"][3]["ret"] = "bool"
@@ -13237,7 +15524,11 @@ defs["igConvertShortcutMod"][1]["call_args"] = "(key_chord)"
 defs["igConvertShortcutMod"][1]["cimguiname"] = "igConvertShortcutMod"
 defs["igConvertShortcutMod"][1]["defaults"] = {}
 defs["igConvertShortcutMod"][1]["funcname"] = "ConvertShortcutMod"
+<<<<<<< HEAD
 defs["igConvertShortcutMod"][1]["location"] = "imgui_internal:3121"
+=======
+defs["igConvertShortcutMod"][1]["location"] = "imgui_internal:3122"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igConvertShortcutMod"][1]["namespace"] = "ImGui"
 defs["igConvertShortcutMod"][1]["ov_cimguiname"] = "igConvertShortcutMod"
 defs["igConvertShortcutMod"][1]["ret"] = "ImGuiKeyChord"
@@ -13256,7 +15547,11 @@ defs["igConvertSingleModFlagToKey"][1]["call_args"] = "(key)"
 defs["igConvertSingleModFlagToKey"][1]["cimguiname"] = "igConvertSingleModFlagToKey"
 defs["igConvertSingleModFlagToKey"][1]["defaults"] = {}
 defs["igConvertSingleModFlagToKey"][1]["funcname"] = "ConvertSingleModFlagToKey"
+<<<<<<< HEAD
 defs["igConvertSingleModFlagToKey"][1]["location"] = "imgui_internal:3122"
+=======
+defs["igConvertSingleModFlagToKey"][1]["location"] = "imgui_internal:3123"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igConvertSingleModFlagToKey"][1]["namespace"] = "ImGui"
 defs["igConvertSingleModFlagToKey"][1]["ov_cimguiname"] = "igConvertSingleModFlagToKey"
 defs["igConvertSingleModFlagToKey"][1]["ret"] = "ImGuiKey"
@@ -13323,7 +15618,11 @@ defs["igDataTypeApplyFromText"][1]["call_args"] = "(buf,data_type,p_data,format)
 defs["igDataTypeApplyFromText"][1]["cimguiname"] = "igDataTypeApplyFromText"
 defs["igDataTypeApplyFromText"][1]["defaults"] = {}
 defs["igDataTypeApplyFromText"][1]["funcname"] = "DataTypeApplyFromText"
+<<<<<<< HEAD
 defs["igDataTypeApplyFromText"][1]["location"] = "imgui_internal:3419"
+=======
+defs["igDataTypeApplyFromText"][1]["location"] = "imgui_internal:3410"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDataTypeApplyFromText"][1]["namespace"] = "ImGui"
 defs["igDataTypeApplyFromText"][1]["ov_cimguiname"] = "igDataTypeApplyFromText"
 defs["igDataTypeApplyFromText"][1]["ret"] = "bool"
@@ -13354,7 +15653,11 @@ defs["igDataTypeApplyOp"][1]["call_args"] = "(data_type,op,output,arg_1,arg_2)"
 defs["igDataTypeApplyOp"][1]["cimguiname"] = "igDataTypeApplyOp"
 defs["igDataTypeApplyOp"][1]["defaults"] = {}
 defs["igDataTypeApplyOp"][1]["funcname"] = "DataTypeApplyOp"
+<<<<<<< HEAD
 defs["igDataTypeApplyOp"][1]["location"] = "imgui_internal:3418"
+=======
+defs["igDataTypeApplyOp"][1]["location"] = "imgui_internal:3409"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDataTypeApplyOp"][1]["namespace"] = "ImGui"
 defs["igDataTypeApplyOp"][1]["ov_cimguiname"] = "igDataTypeApplyOp"
 defs["igDataTypeApplyOp"][1]["ret"] = "void"
@@ -13382,7 +15685,11 @@ defs["igDataTypeClamp"][1]["call_args"] = "(data_type,p_data,p_min,p_max)"
 defs["igDataTypeClamp"][1]["cimguiname"] = "igDataTypeClamp"
 defs["igDataTypeClamp"][1]["defaults"] = {}
 defs["igDataTypeClamp"][1]["funcname"] = "DataTypeClamp"
+<<<<<<< HEAD
 defs["igDataTypeClamp"][1]["location"] = "imgui_internal:3421"
+=======
+defs["igDataTypeClamp"][1]["location"] = "imgui_internal:3412"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDataTypeClamp"][1]["namespace"] = "ImGui"
 defs["igDataTypeClamp"][1]["ov_cimguiname"] = "igDataTypeClamp"
 defs["igDataTypeClamp"][1]["ret"] = "bool"
@@ -13407,7 +15714,11 @@ defs["igDataTypeCompare"][1]["call_args"] = "(data_type,arg_1,arg_2)"
 defs["igDataTypeCompare"][1]["cimguiname"] = "igDataTypeCompare"
 defs["igDataTypeCompare"][1]["defaults"] = {}
 defs["igDataTypeCompare"][1]["funcname"] = "DataTypeCompare"
+<<<<<<< HEAD
 defs["igDataTypeCompare"][1]["location"] = "imgui_internal:3420"
+=======
+defs["igDataTypeCompare"][1]["location"] = "imgui_internal:3411"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDataTypeCompare"][1]["namespace"] = "ImGui"
 defs["igDataTypeCompare"][1]["ov_cimguiname"] = "igDataTypeCompare"
 defs["igDataTypeCompare"][1]["ret"] = "int"
@@ -13438,7 +15749,11 @@ defs["igDataTypeFormatString"][1]["call_args"] = "(buf,buf_size,data_type,p_data
 defs["igDataTypeFormatString"][1]["cimguiname"] = "igDataTypeFormatString"
 defs["igDataTypeFormatString"][1]["defaults"] = {}
 defs["igDataTypeFormatString"][1]["funcname"] = "DataTypeFormatString"
+<<<<<<< HEAD
 defs["igDataTypeFormatString"][1]["location"] = "imgui_internal:3417"
+=======
+defs["igDataTypeFormatString"][1]["location"] = "imgui_internal:3408"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDataTypeFormatString"][1]["namespace"] = "ImGui"
 defs["igDataTypeFormatString"][1]["ov_cimguiname"] = "igDataTypeFormatString"
 defs["igDataTypeFormatString"][1]["ret"] = "int"
@@ -13457,7 +15772,11 @@ defs["igDataTypeGetInfo"][1]["call_args"] = "(data_type)"
 defs["igDataTypeGetInfo"][1]["cimguiname"] = "igDataTypeGetInfo"
 defs["igDataTypeGetInfo"][1]["defaults"] = {}
 defs["igDataTypeGetInfo"][1]["funcname"] = "DataTypeGetInfo"
+<<<<<<< HEAD
 defs["igDataTypeGetInfo"][1]["location"] = "imgui_internal:3416"
+=======
+defs["igDataTypeGetInfo"][1]["location"] = "imgui_internal:3407"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDataTypeGetInfo"][1]["namespace"] = "ImGui"
 defs["igDataTypeGetInfo"][1]["ov_cimguiname"] = "igDataTypeGetInfo"
 defs["igDataTypeGetInfo"][1]["ret"] = "const ImGuiDataTypeInfo*"
@@ -13494,7 +15813,11 @@ defs["igDebugCheckVersionAndDataLayout"][1]["call_args"] = "(version_str,sz_io,s
 defs["igDebugCheckVersionAndDataLayout"][1]["cimguiname"] = "igDebugCheckVersionAndDataLayout"
 defs["igDebugCheckVersionAndDataLayout"][1]["defaults"] = {}
 defs["igDebugCheckVersionAndDataLayout"][1]["funcname"] = "DebugCheckVersionAndDataLayout"
+<<<<<<< HEAD
 defs["igDebugCheckVersionAndDataLayout"][1]["location"] = "imgui:967"
+=======
+defs["igDebugCheckVersionAndDataLayout"][1]["location"] = "imgui:966"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugCheckVersionAndDataLayout"][1]["namespace"] = "ImGui"
 defs["igDebugCheckVersionAndDataLayout"][1]["ov_cimguiname"] = "igDebugCheckVersionAndDataLayout"
 defs["igDebugCheckVersionAndDataLayout"][1]["ret"] = "bool"
@@ -13514,7 +15837,11 @@ defs["igDebugDrawItemRect"][1]["cimguiname"] = "igDebugDrawItemRect"
 defs["igDebugDrawItemRect"][1]["defaults"] = {}
 defs["igDebugDrawItemRect"][1]["defaults"]["col"] = "4278190335"
 defs["igDebugDrawItemRect"][1]["funcname"] = "DebugDrawItemRect"
+<<<<<<< HEAD
 defs["igDebugDrawItemRect"][1]["location"] = "imgui_internal:3458"
+=======
+defs["igDebugDrawItemRect"][1]["location"] = "imgui_internal:3449"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugDrawItemRect"][1]["namespace"] = "ImGui"
 defs["igDebugDrawItemRect"][1]["ov_cimguiname"] = "igDebugDrawItemRect"
 defs["igDebugDrawItemRect"][1]["ret"] = "void"
@@ -13542,7 +15869,11 @@ defs["igDebugHookIdInfo"][1]["call_args"] = "(id,data_type,data_id,data_id_end)"
 defs["igDebugHookIdInfo"][1]["cimguiname"] = "igDebugHookIdInfo"
 defs["igDebugHookIdInfo"][1]["defaults"] = {}
 defs["igDebugHookIdInfo"][1]["funcname"] = "DebugHookIdInfo"
+<<<<<<< HEAD
 defs["igDebugHookIdInfo"][1]["location"] = "imgui_internal:3461"
+=======
+defs["igDebugHookIdInfo"][1]["location"] = "imgui_internal:3452"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugHookIdInfo"][1]["namespace"] = "ImGui"
 defs["igDebugHookIdInfo"][1]["ov_cimguiname"] = "igDebugHookIdInfo"
 defs["igDebugHookIdInfo"][1]["ret"] = "void"
@@ -13561,7 +15892,11 @@ defs["igDebugLocateItem"][1]["call_args"] = "(target_id)"
 defs["igDebugLocateItem"][1]["cimguiname"] = "igDebugLocateItem"
 defs["igDebugLocateItem"][1]["defaults"] = {}
 defs["igDebugLocateItem"][1]["funcname"] = "DebugLocateItem"
+<<<<<<< HEAD
 defs["igDebugLocateItem"][1]["location"] = "imgui_internal:3455"
+=======
+defs["igDebugLocateItem"][1]["location"] = "imgui_internal:3446"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugLocateItem"][1]["namespace"] = "ImGui"
 defs["igDebugLocateItem"][1]["ov_cimguiname"] = "igDebugLocateItem"
 defs["igDebugLocateItem"][1]["ret"] = "void"
@@ -13580,7 +15915,11 @@ defs["igDebugLocateItemOnHover"][1]["call_args"] = "(target_id)"
 defs["igDebugLocateItemOnHover"][1]["cimguiname"] = "igDebugLocateItemOnHover"
 defs["igDebugLocateItemOnHover"][1]["defaults"] = {}
 defs["igDebugLocateItemOnHover"][1]["funcname"] = "DebugLocateItemOnHover"
+<<<<<<< HEAD
 defs["igDebugLocateItemOnHover"][1]["location"] = "imgui_internal:3456"
+=======
+defs["igDebugLocateItemOnHover"][1]["location"] = "imgui_internal:3447"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugLocateItemOnHover"][1]["namespace"] = "ImGui"
 defs["igDebugLocateItemOnHover"][1]["ov_cimguiname"] = "igDebugLocateItemOnHover"
 defs["igDebugLocateItemOnHover"][1]["ret"] = "void"
@@ -13596,7 +15935,11 @@ defs["igDebugLocateItemResolveWithLastItem"][1]["call_args"] = "()"
 defs["igDebugLocateItemResolveWithLastItem"][1]["cimguiname"] = "igDebugLocateItemResolveWithLastItem"
 defs["igDebugLocateItemResolveWithLastItem"][1]["defaults"] = {}
 defs["igDebugLocateItemResolveWithLastItem"][1]["funcname"] = "DebugLocateItemResolveWithLastItem"
+<<<<<<< HEAD
 defs["igDebugLocateItemResolveWithLastItem"][1]["location"] = "imgui_internal:3457"
+=======
+defs["igDebugLocateItemResolveWithLastItem"][1]["location"] = "imgui_internal:3448"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugLocateItemResolveWithLastItem"][1]["namespace"] = "ImGui"
 defs["igDebugLocateItemResolveWithLastItem"][1]["ov_cimguiname"] = "igDebugLocateItemResolveWithLastItem"
 defs["igDebugLocateItemResolveWithLastItem"][1]["ret"] = "void"
@@ -13619,7 +15962,11 @@ defs["igDebugLog"][1]["cimguiname"] = "igDebugLog"
 defs["igDebugLog"][1]["defaults"] = {}
 defs["igDebugLog"][1]["funcname"] = "DebugLog"
 defs["igDebugLog"][1]["isvararg"] = "...)"
+<<<<<<< HEAD
 defs["igDebugLog"][1]["location"] = "imgui_internal:3448"
+=======
+defs["igDebugLog"][1]["location"] = "imgui_internal:3439"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugLog"][1]["namespace"] = "ImGui"
 defs["igDebugLog"][1]["ov_cimguiname"] = "igDebugLog"
 defs["igDebugLog"][1]["ret"] = "void"
@@ -13641,7 +15988,11 @@ defs["igDebugLogV"][1]["call_args"] = "(fmt,args)"
 defs["igDebugLogV"][1]["cimguiname"] = "igDebugLogV"
 defs["igDebugLogV"][1]["defaults"] = {}
 defs["igDebugLogV"][1]["funcname"] = "DebugLogV"
+<<<<<<< HEAD
 defs["igDebugLogV"][1]["location"] = "imgui_internal:3449"
+=======
+defs["igDebugLogV"][1]["location"] = "imgui_internal:3440"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugLogV"][1]["namespace"] = "ImGui"
 defs["igDebugLogV"][1]["ov_cimguiname"] = "igDebugLogV"
 defs["igDebugLogV"][1]["ret"] = "void"
@@ -13660,7 +16011,11 @@ defs["igDebugNodeColumns"][1]["call_args"] = "(columns)"
 defs["igDebugNodeColumns"][1]["cimguiname"] = "igDebugNodeColumns"
 defs["igDebugNodeColumns"][1]["defaults"] = {}
 defs["igDebugNodeColumns"][1]["funcname"] = "DebugNodeColumns"
+<<<<<<< HEAD
 defs["igDebugNodeColumns"][1]["location"] = "imgui_internal:3462"
+=======
+defs["igDebugNodeColumns"][1]["location"] = "imgui_internal:3453"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeColumns"][1]["namespace"] = "ImGui"
 defs["igDebugNodeColumns"][1]["ov_cimguiname"] = "igDebugNodeColumns"
 defs["igDebugNodeColumns"][1]["ret"] = "void"
@@ -13682,7 +16037,11 @@ defs["igDebugNodeDockNode"][1]["call_args"] = "(node,label)"
 defs["igDebugNodeDockNode"][1]["cimguiname"] = "igDebugNodeDockNode"
 defs["igDebugNodeDockNode"][1]["defaults"] = {}
 defs["igDebugNodeDockNode"][1]["funcname"] = "DebugNodeDockNode"
+<<<<<<< HEAD
 defs["igDebugNodeDockNode"][1]["location"] = "imgui_internal:3463"
+=======
+defs["igDebugNodeDockNode"][1]["location"] = "imgui_internal:3454"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeDockNode"][1]["namespace"] = "ImGui"
 defs["igDebugNodeDockNode"][1]["ov_cimguiname"] = "igDebugNodeDockNode"
 defs["igDebugNodeDockNode"][1]["ret"] = "void"
@@ -13713,7 +16072,11 @@ defs["igDebugNodeDrawCmdShowMeshAndBoundingBox"][1]["call_args"] = "(out_draw_li
 defs["igDebugNodeDrawCmdShowMeshAndBoundingBox"][1]["cimguiname"] = "igDebugNodeDrawCmdShowMeshAndBoundingBox"
 defs["igDebugNodeDrawCmdShowMeshAndBoundingBox"][1]["defaults"] = {}
 defs["igDebugNodeDrawCmdShowMeshAndBoundingBox"][1]["funcname"] = "DebugNodeDrawCmdShowMeshAndBoundingBox"
+<<<<<<< HEAD
 defs["igDebugNodeDrawCmdShowMeshAndBoundingBox"][1]["location"] = "imgui_internal:3465"
+=======
+defs["igDebugNodeDrawCmdShowMeshAndBoundingBox"][1]["location"] = "imgui_internal:3456"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeDrawCmdShowMeshAndBoundingBox"][1]["namespace"] = "ImGui"
 defs["igDebugNodeDrawCmdShowMeshAndBoundingBox"][1]["ov_cimguiname"] = "igDebugNodeDrawCmdShowMeshAndBoundingBox"
 defs["igDebugNodeDrawCmdShowMeshAndBoundingBox"][1]["ret"] = "void"
@@ -13741,7 +16104,11 @@ defs["igDebugNodeDrawList"][1]["call_args"] = "(window,viewport,draw_list,label)
 defs["igDebugNodeDrawList"][1]["cimguiname"] = "igDebugNodeDrawList"
 defs["igDebugNodeDrawList"][1]["defaults"] = {}
 defs["igDebugNodeDrawList"][1]["funcname"] = "DebugNodeDrawList"
+<<<<<<< HEAD
 defs["igDebugNodeDrawList"][1]["location"] = "imgui_internal:3464"
+=======
+defs["igDebugNodeDrawList"][1]["location"] = "imgui_internal:3455"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeDrawList"][1]["namespace"] = "ImGui"
 defs["igDebugNodeDrawList"][1]["ov_cimguiname"] = "igDebugNodeDrawList"
 defs["igDebugNodeDrawList"][1]["ret"] = "void"
@@ -13760,7 +16127,11 @@ defs["igDebugNodeFont"][1]["call_args"] = "(font)"
 defs["igDebugNodeFont"][1]["cimguiname"] = "igDebugNodeFont"
 defs["igDebugNodeFont"][1]["defaults"] = {}
 defs["igDebugNodeFont"][1]["funcname"] = "DebugNodeFont"
+<<<<<<< HEAD
 defs["igDebugNodeFont"][1]["location"] = "imgui_internal:3466"
+=======
+defs["igDebugNodeFont"][1]["location"] = "imgui_internal:3457"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeFont"][1]["namespace"] = "ImGui"
 defs["igDebugNodeFont"][1]["ov_cimguiname"] = "igDebugNodeFont"
 defs["igDebugNodeFont"][1]["ret"] = "void"
@@ -13782,7 +16153,11 @@ defs["igDebugNodeFontGlyph"][1]["call_args"] = "(font,glyph)"
 defs["igDebugNodeFontGlyph"][1]["cimguiname"] = "igDebugNodeFontGlyph"
 defs["igDebugNodeFontGlyph"][1]["defaults"] = {}
 defs["igDebugNodeFontGlyph"][1]["funcname"] = "DebugNodeFontGlyph"
+<<<<<<< HEAD
 defs["igDebugNodeFontGlyph"][1]["location"] = "imgui_internal:3467"
+=======
+defs["igDebugNodeFontGlyph"][1]["location"] = "imgui_internal:3458"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeFontGlyph"][1]["namespace"] = "ImGui"
 defs["igDebugNodeFontGlyph"][1]["ov_cimguiname"] = "igDebugNodeFontGlyph"
 defs["igDebugNodeFontGlyph"][1]["ret"] = "void"
@@ -13801,7 +16176,11 @@ defs["igDebugNodeInputTextState"][1]["call_args"] = "(state)"
 defs["igDebugNodeInputTextState"][1]["cimguiname"] = "igDebugNodeInputTextState"
 defs["igDebugNodeInputTextState"][1]["defaults"] = {}
 defs["igDebugNodeInputTextState"][1]["funcname"] = "DebugNodeInputTextState"
+<<<<<<< HEAD
 defs["igDebugNodeInputTextState"][1]["location"] = "imgui_internal:3472"
+=======
+defs["igDebugNodeInputTextState"][1]["location"] = "imgui_internal:3463"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeInputTextState"][1]["namespace"] = "ImGui"
 defs["igDebugNodeInputTextState"][1]["ov_cimguiname"] = "igDebugNodeInputTextState"
 defs["igDebugNodeInputTextState"][1]["ret"] = "void"
@@ -13823,7 +16202,11 @@ defs["igDebugNodeStorage"][1]["call_args"] = "(storage,label)"
 defs["igDebugNodeStorage"][1]["cimguiname"] = "igDebugNodeStorage"
 defs["igDebugNodeStorage"][1]["defaults"] = {}
 defs["igDebugNodeStorage"][1]["funcname"] = "DebugNodeStorage"
+<<<<<<< HEAD
 defs["igDebugNodeStorage"][1]["location"] = "imgui_internal:3468"
+=======
+defs["igDebugNodeStorage"][1]["location"] = "imgui_internal:3459"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeStorage"][1]["namespace"] = "ImGui"
 defs["igDebugNodeStorage"][1]["ov_cimguiname"] = "igDebugNodeStorage"
 defs["igDebugNodeStorage"][1]["ret"] = "void"
@@ -13845,7 +16228,11 @@ defs["igDebugNodeTabBar"][1]["call_args"] = "(tab_bar,label)"
 defs["igDebugNodeTabBar"][1]["cimguiname"] = "igDebugNodeTabBar"
 defs["igDebugNodeTabBar"][1]["defaults"] = {}
 defs["igDebugNodeTabBar"][1]["funcname"] = "DebugNodeTabBar"
+<<<<<<< HEAD
 defs["igDebugNodeTabBar"][1]["location"] = "imgui_internal:3469"
+=======
+defs["igDebugNodeTabBar"][1]["location"] = "imgui_internal:3460"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeTabBar"][1]["namespace"] = "ImGui"
 defs["igDebugNodeTabBar"][1]["ov_cimguiname"] = "igDebugNodeTabBar"
 defs["igDebugNodeTabBar"][1]["ret"] = "void"
@@ -13864,7 +16251,11 @@ defs["igDebugNodeTable"][1]["call_args"] = "(table)"
 defs["igDebugNodeTable"][1]["cimguiname"] = "igDebugNodeTable"
 defs["igDebugNodeTable"][1]["defaults"] = {}
 defs["igDebugNodeTable"][1]["funcname"] = "DebugNodeTable"
+<<<<<<< HEAD
 defs["igDebugNodeTable"][1]["location"] = "imgui_internal:3470"
+=======
+defs["igDebugNodeTable"][1]["location"] = "imgui_internal:3461"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeTable"][1]["namespace"] = "ImGui"
 defs["igDebugNodeTable"][1]["ov_cimguiname"] = "igDebugNodeTable"
 defs["igDebugNodeTable"][1]["ret"] = "void"
@@ -13883,7 +16274,11 @@ defs["igDebugNodeTableSettings"][1]["call_args"] = "(settings)"
 defs["igDebugNodeTableSettings"][1]["cimguiname"] = "igDebugNodeTableSettings"
 defs["igDebugNodeTableSettings"][1]["defaults"] = {}
 defs["igDebugNodeTableSettings"][1]["funcname"] = "DebugNodeTableSettings"
+<<<<<<< HEAD
 defs["igDebugNodeTableSettings"][1]["location"] = "imgui_internal:3471"
+=======
+defs["igDebugNodeTableSettings"][1]["location"] = "imgui_internal:3462"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeTableSettings"][1]["namespace"] = "ImGui"
 defs["igDebugNodeTableSettings"][1]["ov_cimguiname"] = "igDebugNodeTableSettings"
 defs["igDebugNodeTableSettings"][1]["ret"] = "void"
@@ -13902,7 +16297,11 @@ defs["igDebugNodeViewport"][1]["call_args"] = "(viewport)"
 defs["igDebugNodeViewport"][1]["cimguiname"] = "igDebugNodeViewport"
 defs["igDebugNodeViewport"][1]["defaults"] = {}
 defs["igDebugNodeViewport"][1]["funcname"] = "DebugNodeViewport"
+<<<<<<< HEAD
 defs["igDebugNodeViewport"][1]["location"] = "imgui_internal:3477"
+=======
+defs["igDebugNodeViewport"][1]["location"] = "imgui_internal:3468"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeViewport"][1]["namespace"] = "ImGui"
 defs["igDebugNodeViewport"][1]["ov_cimguiname"] = "igDebugNodeViewport"
 defs["igDebugNodeViewport"][1]["ret"] = "void"
@@ -13924,7 +16323,11 @@ defs["igDebugNodeWindow"][1]["call_args"] = "(window,label)"
 defs["igDebugNodeWindow"][1]["cimguiname"] = "igDebugNodeWindow"
 defs["igDebugNodeWindow"][1]["defaults"] = {}
 defs["igDebugNodeWindow"][1]["funcname"] = "DebugNodeWindow"
+<<<<<<< HEAD
 defs["igDebugNodeWindow"][1]["location"] = "imgui_internal:3473"
+=======
+defs["igDebugNodeWindow"][1]["location"] = "imgui_internal:3464"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeWindow"][1]["namespace"] = "ImGui"
 defs["igDebugNodeWindow"][1]["ov_cimguiname"] = "igDebugNodeWindow"
 defs["igDebugNodeWindow"][1]["ret"] = "void"
@@ -13943,7 +16346,11 @@ defs["igDebugNodeWindowSettings"][1]["call_args"] = "(settings)"
 defs["igDebugNodeWindowSettings"][1]["cimguiname"] = "igDebugNodeWindowSettings"
 defs["igDebugNodeWindowSettings"][1]["defaults"] = {}
 defs["igDebugNodeWindowSettings"][1]["funcname"] = "DebugNodeWindowSettings"
+<<<<<<< HEAD
 defs["igDebugNodeWindowSettings"][1]["location"] = "imgui_internal:3474"
+=======
+defs["igDebugNodeWindowSettings"][1]["location"] = "imgui_internal:3465"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeWindowSettings"][1]["namespace"] = "ImGui"
 defs["igDebugNodeWindowSettings"][1]["ov_cimguiname"] = "igDebugNodeWindowSettings"
 defs["igDebugNodeWindowSettings"][1]["ret"] = "void"
@@ -13965,7 +16372,11 @@ defs["igDebugNodeWindowsList"][1]["call_args"] = "(windows,label)"
 defs["igDebugNodeWindowsList"][1]["cimguiname"] = "igDebugNodeWindowsList"
 defs["igDebugNodeWindowsList"][1]["defaults"] = {}
 defs["igDebugNodeWindowsList"][1]["funcname"] = "DebugNodeWindowsList"
+<<<<<<< HEAD
 defs["igDebugNodeWindowsList"][1]["location"] = "imgui_internal:3475"
+=======
+defs["igDebugNodeWindowsList"][1]["location"] = "imgui_internal:3466"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeWindowsList"][1]["namespace"] = "ImGui"
 defs["igDebugNodeWindowsList"][1]["ov_cimguiname"] = "igDebugNodeWindowsList"
 defs["igDebugNodeWindowsList"][1]["ret"] = "void"
@@ -13990,7 +16401,11 @@ defs["igDebugNodeWindowsListByBeginStackParent"][1]["call_args"] = "(windows,win
 defs["igDebugNodeWindowsListByBeginStackParent"][1]["cimguiname"] = "igDebugNodeWindowsListByBeginStackParent"
 defs["igDebugNodeWindowsListByBeginStackParent"][1]["defaults"] = {}
 defs["igDebugNodeWindowsListByBeginStackParent"][1]["funcname"] = "DebugNodeWindowsListByBeginStackParent"
+<<<<<<< HEAD
 defs["igDebugNodeWindowsListByBeginStackParent"][1]["location"] = "imgui_internal:3476"
+=======
+defs["igDebugNodeWindowsListByBeginStackParent"][1]["location"] = "imgui_internal:3467"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugNodeWindowsListByBeginStackParent"][1]["namespace"] = "ImGui"
 defs["igDebugNodeWindowsListByBeginStackParent"][1]["ov_cimguiname"] = "igDebugNodeWindowsListByBeginStackParent"
 defs["igDebugNodeWindowsListByBeginStackParent"][1]["ret"] = "void"
@@ -14009,7 +16424,11 @@ defs["igDebugRenderKeyboardPreview"][1]["call_args"] = "(draw_list)"
 defs["igDebugRenderKeyboardPreview"][1]["cimguiname"] = "igDebugRenderKeyboardPreview"
 defs["igDebugRenderKeyboardPreview"][1]["defaults"] = {}
 defs["igDebugRenderKeyboardPreview"][1]["funcname"] = "DebugRenderKeyboardPreview"
+<<<<<<< HEAD
 defs["igDebugRenderKeyboardPreview"][1]["location"] = "imgui_internal:3478"
+=======
+defs["igDebugRenderKeyboardPreview"][1]["location"] = "imgui_internal:3469"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugRenderKeyboardPreview"][1]["namespace"] = "ImGui"
 defs["igDebugRenderKeyboardPreview"][1]["ov_cimguiname"] = "igDebugRenderKeyboardPreview"
 defs["igDebugRenderKeyboardPreview"][1]["ret"] = "void"
@@ -14034,7 +16453,11 @@ defs["igDebugRenderViewportThumbnail"][1]["call_args"] = "(draw_list,viewport,bb
 defs["igDebugRenderViewportThumbnail"][1]["cimguiname"] = "igDebugRenderViewportThumbnail"
 defs["igDebugRenderViewportThumbnail"][1]["defaults"] = {}
 defs["igDebugRenderViewportThumbnail"][1]["funcname"] = "DebugRenderViewportThumbnail"
+<<<<<<< HEAD
 defs["igDebugRenderViewportThumbnail"][1]["location"] = "imgui_internal:3479"
+=======
+defs["igDebugRenderViewportThumbnail"][1]["location"] = "imgui_internal:3470"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugRenderViewportThumbnail"][1]["namespace"] = "ImGui"
 defs["igDebugRenderViewportThumbnail"][1]["ov_cimguiname"] = "igDebugRenderViewportThumbnail"
 defs["igDebugRenderViewportThumbnail"][1]["ret"] = "void"
@@ -14050,7 +16473,11 @@ defs["igDebugStartItemPicker"][1]["call_args"] = "()"
 defs["igDebugStartItemPicker"][1]["cimguiname"] = "igDebugStartItemPicker"
 defs["igDebugStartItemPicker"][1]["defaults"] = {}
 defs["igDebugStartItemPicker"][1]["funcname"] = "DebugStartItemPicker"
+<<<<<<< HEAD
 defs["igDebugStartItemPicker"][1]["location"] = "imgui_internal:3459"
+=======
+defs["igDebugStartItemPicker"][1]["location"] = "imgui_internal:3450"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugStartItemPicker"][1]["namespace"] = "ImGui"
 defs["igDebugStartItemPicker"][1]["ov_cimguiname"] = "igDebugStartItemPicker"
 defs["igDebugStartItemPicker"][1]["ret"] = "void"
@@ -14069,7 +16496,11 @@ defs["igDebugTextEncoding"][1]["call_args"] = "(text)"
 defs["igDebugTextEncoding"][1]["cimguiname"] = "igDebugTextEncoding"
 defs["igDebugTextEncoding"][1]["defaults"] = {}
 defs["igDebugTextEncoding"][1]["funcname"] = "DebugTextEncoding"
+<<<<<<< HEAD
 defs["igDebugTextEncoding"][1]["location"] = "imgui:966"
+=======
+defs["igDebugTextEncoding"][1]["location"] = "imgui:965"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDebugTextEncoding"][1]["namespace"] = "ImGui"
 defs["igDebugTextEncoding"][1]["ov_cimguiname"] = "igDebugTextEncoding"
 defs["igDebugTextEncoding"][1]["ret"] = "void"
@@ -14108,7 +16539,11 @@ defs["igDestroyPlatformWindow"][1]["call_args"] = "(viewport)"
 defs["igDestroyPlatformWindow"][1]["cimguiname"] = "igDestroyPlatformWindow"
 defs["igDestroyPlatformWindow"][1]["defaults"] = {}
 defs["igDestroyPlatformWindow"][1]["funcname"] = "DestroyPlatformWindow"
+<<<<<<< HEAD
 defs["igDestroyPlatformWindow"][1]["location"] = "imgui_internal:2995"
+=======
+defs["igDestroyPlatformWindow"][1]["location"] = "imgui_internal:3000"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDestroyPlatformWindow"][1]["namespace"] = "ImGui"
 defs["igDestroyPlatformWindow"][1]["ov_cimguiname"] = "igDestroyPlatformWindow"
 defs["igDestroyPlatformWindow"][1]["ret"] = "void"
@@ -14124,7 +16559,11 @@ defs["igDestroyPlatformWindows"][1]["call_args"] = "()"
 defs["igDestroyPlatformWindows"][1]["cimguiname"] = "igDestroyPlatformWindows"
 defs["igDestroyPlatformWindows"][1]["defaults"] = {}
 defs["igDestroyPlatformWindows"][1]["funcname"] = "DestroyPlatformWindows"
+<<<<<<< HEAD
 defs["igDestroyPlatformWindows"][1]["location"] = "imgui:984"
+=======
+defs["igDestroyPlatformWindows"][1]["location"] = "imgui:983"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDestroyPlatformWindows"][1]["namespace"] = "ImGui"
 defs["igDestroyPlatformWindows"][1]["ov_cimguiname"] = "igDestroyPlatformWindows"
 defs["igDestroyPlatformWindows"][1]["ret"] = "void"
@@ -14148,7 +16587,11 @@ defs["igDockBuilderAddNode"][1]["defaults"] = {}
 defs["igDockBuilderAddNode"][1]["defaults"]["flags"] = "0"
 defs["igDockBuilderAddNode"][1]["defaults"]["node_id"] = "0"
 defs["igDockBuilderAddNode"][1]["funcname"] = "DockBuilderAddNode"
+<<<<<<< HEAD
 defs["igDockBuilderAddNode"][1]["location"] = "imgui_internal:3231"
+=======
+defs["igDockBuilderAddNode"][1]["location"] = "imgui_internal:3230"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockBuilderAddNode"][1]["namespace"] = "ImGui"
 defs["igDockBuilderAddNode"][1]["ov_cimguiname"] = "igDockBuilderAddNode"
 defs["igDockBuilderAddNode"][1]["ret"] = "ImGuiID"
@@ -14173,7 +16616,11 @@ defs["igDockBuilderCopyDockSpace"][1]["call_args"] = "(src_dockspace_id,dst_dock
 defs["igDockBuilderCopyDockSpace"][1]["cimguiname"] = "igDockBuilderCopyDockSpace"
 defs["igDockBuilderCopyDockSpace"][1]["defaults"] = {}
 defs["igDockBuilderCopyDockSpace"][1]["funcname"] = "DockBuilderCopyDockSpace"
+<<<<<<< HEAD
 defs["igDockBuilderCopyDockSpace"][1]["location"] = "imgui_internal:3238"
+=======
+defs["igDockBuilderCopyDockSpace"][1]["location"] = "imgui_internal:3237"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockBuilderCopyDockSpace"][1]["namespace"] = "ImGui"
 defs["igDockBuilderCopyDockSpace"][1]["ov_cimguiname"] = "igDockBuilderCopyDockSpace"
 defs["igDockBuilderCopyDockSpace"][1]["ret"] = "void"
@@ -14198,7 +16645,11 @@ defs["igDockBuilderCopyNode"][1]["call_args"] = "(src_node_id,dst_node_id,out_no
 defs["igDockBuilderCopyNode"][1]["cimguiname"] = "igDockBuilderCopyNode"
 defs["igDockBuilderCopyNode"][1]["defaults"] = {}
 defs["igDockBuilderCopyNode"][1]["funcname"] = "DockBuilderCopyNode"
+<<<<<<< HEAD
 defs["igDockBuilderCopyNode"][1]["location"] = "imgui_internal:3239"
+=======
+defs["igDockBuilderCopyNode"][1]["location"] = "imgui_internal:3238"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockBuilderCopyNode"][1]["namespace"] = "ImGui"
 defs["igDockBuilderCopyNode"][1]["ov_cimguiname"] = "igDockBuilderCopyNode"
 defs["igDockBuilderCopyNode"][1]["ret"] = "void"
@@ -14220,7 +16671,11 @@ defs["igDockBuilderCopyWindowSettings"][1]["call_args"] = "(src_name,dst_name)"
 defs["igDockBuilderCopyWindowSettings"][1]["cimguiname"] = "igDockBuilderCopyWindowSettings"
 defs["igDockBuilderCopyWindowSettings"][1]["defaults"] = {}
 defs["igDockBuilderCopyWindowSettings"][1]["funcname"] = "DockBuilderCopyWindowSettings"
+<<<<<<< HEAD
 defs["igDockBuilderCopyWindowSettings"][1]["location"] = "imgui_internal:3240"
+=======
+defs["igDockBuilderCopyWindowSettings"][1]["location"] = "imgui_internal:3239"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockBuilderCopyWindowSettings"][1]["namespace"] = "ImGui"
 defs["igDockBuilderCopyWindowSettings"][1]["ov_cimguiname"] = "igDockBuilderCopyWindowSettings"
 defs["igDockBuilderCopyWindowSettings"][1]["ret"] = "void"
@@ -14242,7 +16697,11 @@ defs["igDockBuilderDockWindow"][1]["call_args"] = "(window_name,node_id)"
 defs["igDockBuilderDockWindow"][1]["cimguiname"] = "igDockBuilderDockWindow"
 defs["igDockBuilderDockWindow"][1]["defaults"] = {}
 defs["igDockBuilderDockWindow"][1]["funcname"] = "DockBuilderDockWindow"
+<<<<<<< HEAD
 defs["igDockBuilderDockWindow"][1]["location"] = "imgui_internal:3228"
+=======
+defs["igDockBuilderDockWindow"][1]["location"] = "imgui_internal:3227"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockBuilderDockWindow"][1]["namespace"] = "ImGui"
 defs["igDockBuilderDockWindow"][1]["ov_cimguiname"] = "igDockBuilderDockWindow"
 defs["igDockBuilderDockWindow"][1]["ret"] = "void"
@@ -14261,7 +16720,11 @@ defs["igDockBuilderFinish"][1]["call_args"] = "(node_id)"
 defs["igDockBuilderFinish"][1]["cimguiname"] = "igDockBuilderFinish"
 defs["igDockBuilderFinish"][1]["defaults"] = {}
 defs["igDockBuilderFinish"][1]["funcname"] = "DockBuilderFinish"
+<<<<<<< HEAD
 defs["igDockBuilderFinish"][1]["location"] = "imgui_internal:3241"
+=======
+defs["igDockBuilderFinish"][1]["location"] = "imgui_internal:3240"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockBuilderFinish"][1]["namespace"] = "ImGui"
 defs["igDockBuilderFinish"][1]["ov_cimguiname"] = "igDockBuilderFinish"
 defs["igDockBuilderFinish"][1]["ret"] = "void"
@@ -14280,7 +16743,11 @@ defs["igDockBuilderGetCentralNode"][1]["call_args"] = "(node_id)"
 defs["igDockBuilderGetCentralNode"][1]["cimguiname"] = "igDockBuilderGetCentralNode"
 defs["igDockBuilderGetCentralNode"][1]["defaults"] = {}
 defs["igDockBuilderGetCentralNode"][1]["funcname"] = "DockBuilderGetCentralNode"
+<<<<<<< HEAD
 defs["igDockBuilderGetCentralNode"][1]["location"] = "imgui_internal:3230"
+=======
+defs["igDockBuilderGetCentralNode"][1]["location"] = "imgui_internal:3229"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockBuilderGetCentralNode"][1]["namespace"] = "ImGui"
 defs["igDockBuilderGetCentralNode"][1]["ov_cimguiname"] = "igDockBuilderGetCentralNode"
 defs["igDockBuilderGetCentralNode"][1]["ret"] = "ImGuiDockNode*"
@@ -14299,7 +16766,11 @@ defs["igDockBuilderGetNode"][1]["call_args"] = "(node_id)"
 defs["igDockBuilderGetNode"][1]["cimguiname"] = "igDockBuilderGetNode"
 defs["igDockBuilderGetNode"][1]["defaults"] = {}
 defs["igDockBuilderGetNode"][1]["funcname"] = "DockBuilderGetNode"
+<<<<<<< HEAD
 defs["igDockBuilderGetNode"][1]["location"] = "imgui_internal:3229"
+=======
+defs["igDockBuilderGetNode"][1]["location"] = "imgui_internal:3228"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockBuilderGetNode"][1]["namespace"] = "ImGui"
 defs["igDockBuilderGetNode"][1]["ov_cimguiname"] = "igDockBuilderGetNode"
 defs["igDockBuilderGetNode"][1]["ret"] = "ImGuiDockNode*"
@@ -14318,7 +16789,11 @@ defs["igDockBuilderRemoveNode"][1]["call_args"] = "(node_id)"
 defs["igDockBuilderRemoveNode"][1]["cimguiname"] = "igDockBuilderRemoveNode"
 defs["igDockBuilderRemoveNode"][1]["defaults"] = {}
 defs["igDockBuilderRemoveNode"][1]["funcname"] = "DockBuilderRemoveNode"
+<<<<<<< HEAD
 defs["igDockBuilderRemoveNode"][1]["location"] = "imgui_internal:3232"
+=======
+defs["igDockBuilderRemoveNode"][1]["location"] = "imgui_internal:3231"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockBuilderRemoveNode"][1]["namespace"] = "ImGui"
 defs["igDockBuilderRemoveNode"][1]["ov_cimguiname"] = "igDockBuilderRemoveNode"
 defs["igDockBuilderRemoveNode"][1]["ret"] = "void"
@@ -14337,7 +16812,11 @@ defs["igDockBuilderRemoveNodeChildNodes"][1]["call_args"] = "(node_id)"
 defs["igDockBuilderRemoveNodeChildNodes"][1]["cimguiname"] = "igDockBuilderRemoveNodeChildNodes"
 defs["igDockBuilderRemoveNodeChildNodes"][1]["defaults"] = {}
 defs["igDockBuilderRemoveNodeChildNodes"][1]["funcname"] = "DockBuilderRemoveNodeChildNodes"
+<<<<<<< HEAD
 defs["igDockBuilderRemoveNodeChildNodes"][1]["location"] = "imgui_internal:3234"
+=======
+defs["igDockBuilderRemoveNodeChildNodes"][1]["location"] = "imgui_internal:3233"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockBuilderRemoveNodeChildNodes"][1]["namespace"] = "ImGui"
 defs["igDockBuilderRemoveNodeChildNodes"][1]["ov_cimguiname"] = "igDockBuilderRemoveNodeChildNodes"
 defs["igDockBuilderRemoveNodeChildNodes"][1]["ret"] = "void"
@@ -14360,7 +16839,11 @@ defs["igDockBuilderRemoveNodeDockedWindows"][1]["cimguiname"] = "igDockBuilderRe
 defs["igDockBuilderRemoveNodeDockedWindows"][1]["defaults"] = {}
 defs["igDockBuilderRemoveNodeDockedWindows"][1]["defaults"]["clear_settings_refs"] = "true"
 defs["igDockBuilderRemoveNodeDockedWindows"][1]["funcname"] = "DockBuilderRemoveNodeDockedWindows"
+<<<<<<< HEAD
 defs["igDockBuilderRemoveNodeDockedWindows"][1]["location"] = "imgui_internal:3233"
+=======
+defs["igDockBuilderRemoveNodeDockedWindows"][1]["location"] = "imgui_internal:3232"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockBuilderRemoveNodeDockedWindows"][1]["namespace"] = "ImGui"
 defs["igDockBuilderRemoveNodeDockedWindows"][1]["ov_cimguiname"] = "igDockBuilderRemoveNodeDockedWindows"
 defs["igDockBuilderRemoveNodeDockedWindows"][1]["ret"] = "void"
@@ -14382,7 +16865,11 @@ defs["igDockBuilderSetNodePos"][1]["call_args"] = "(node_id,pos)"
 defs["igDockBuilderSetNodePos"][1]["cimguiname"] = "igDockBuilderSetNodePos"
 defs["igDockBuilderSetNodePos"][1]["defaults"] = {}
 defs["igDockBuilderSetNodePos"][1]["funcname"] = "DockBuilderSetNodePos"
+<<<<<<< HEAD
 defs["igDockBuilderSetNodePos"][1]["location"] = "imgui_internal:3235"
+=======
+defs["igDockBuilderSetNodePos"][1]["location"] = "imgui_internal:3234"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockBuilderSetNodePos"][1]["namespace"] = "ImGui"
 defs["igDockBuilderSetNodePos"][1]["ov_cimguiname"] = "igDockBuilderSetNodePos"
 defs["igDockBuilderSetNodePos"][1]["ret"] = "void"
@@ -14404,7 +16891,11 @@ defs["igDockBuilderSetNodeSize"][1]["call_args"] = "(node_id,size)"
 defs["igDockBuilderSetNodeSize"][1]["cimguiname"] = "igDockBuilderSetNodeSize"
 defs["igDockBuilderSetNodeSize"][1]["defaults"] = {}
 defs["igDockBuilderSetNodeSize"][1]["funcname"] = "DockBuilderSetNodeSize"
+<<<<<<< HEAD
 defs["igDockBuilderSetNodeSize"][1]["location"] = "imgui_internal:3236"
+=======
+defs["igDockBuilderSetNodeSize"][1]["location"] = "imgui_internal:3235"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockBuilderSetNodeSize"][1]["namespace"] = "ImGui"
 defs["igDockBuilderSetNodeSize"][1]["ov_cimguiname"] = "igDockBuilderSetNodeSize"
 defs["igDockBuilderSetNodeSize"][1]["ret"] = "void"
@@ -14435,7 +16926,11 @@ defs["igDockBuilderSplitNode"][1]["call_args"] = "(node_id,split_dir,size_ratio_
 defs["igDockBuilderSplitNode"][1]["cimguiname"] = "igDockBuilderSplitNode"
 defs["igDockBuilderSplitNode"][1]["defaults"] = {}
 defs["igDockBuilderSplitNode"][1]["funcname"] = "DockBuilderSplitNode"
+<<<<<<< HEAD
 defs["igDockBuilderSplitNode"][1]["location"] = "imgui_internal:3237"
+=======
+defs["igDockBuilderSplitNode"][1]["location"] = "imgui_internal:3236"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockBuilderSplitNode"][1]["namespace"] = "ImGui"
 defs["igDockBuilderSplitNode"][1]["ov_cimguiname"] = "igDockBuilderSplitNode"
 defs["igDockBuilderSplitNode"][1]["ret"] = "ImGuiID"
@@ -14472,7 +16967,11 @@ defs["igDockContextCalcDropPosForDocking"][1]["call_args"] = "(target,target_nod
 defs["igDockContextCalcDropPosForDocking"][1]["cimguiname"] = "igDockContextCalcDropPosForDocking"
 defs["igDockContextCalcDropPosForDocking"][1]["defaults"] = {}
 defs["igDockContextCalcDropPosForDocking"][1]["funcname"] = "DockContextCalcDropPosForDocking"
+<<<<<<< HEAD
 defs["igDockContextCalcDropPosForDocking"][1]["location"] = "imgui_internal:3204"
+=======
+defs["igDockContextCalcDropPosForDocking"][1]["location"] = "imgui_internal:3203"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockContextCalcDropPosForDocking"][1]["namespace"] = "ImGui"
 defs["igDockContextCalcDropPosForDocking"][1]["ov_cimguiname"] = "igDockContextCalcDropPosForDocking"
 defs["igDockContextCalcDropPosForDocking"][1]["ret"] = "bool"
@@ -14497,7 +16996,11 @@ defs["igDockContextClearNodes"][1]["call_args"] = "(ctx,root_id,clear_settings_r
 defs["igDockContextClearNodes"][1]["cimguiname"] = "igDockContextClearNodes"
 defs["igDockContextClearNodes"][1]["defaults"] = {}
 defs["igDockContextClearNodes"][1]["funcname"] = "DockContextClearNodes"
+<<<<<<< HEAD
 defs["igDockContextClearNodes"][1]["location"] = "imgui_internal:3193"
+=======
+defs["igDockContextClearNodes"][1]["location"] = "imgui_internal:3194"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockContextClearNodes"][1]["namespace"] = "ImGui"
 defs["igDockContextClearNodes"][1]["ov_cimguiname"] = "igDockContextClearNodes"
 defs["igDockContextClearNodes"][1]["ret"] = "void"
@@ -14516,7 +17019,11 @@ defs["igDockContextEndFrame"][1]["call_args"] = "(ctx)"
 defs["igDockContextEndFrame"][1]["cimguiname"] = "igDockContextEndFrame"
 defs["igDockContextEndFrame"][1]["defaults"] = {}
 defs["igDockContextEndFrame"][1]["funcname"] = "DockContextEndFrame"
+<<<<<<< HEAD
 defs["igDockContextEndFrame"][1]["location"] = "imgui_internal:3197"
+=======
+defs["igDockContextEndFrame"][1]["location"] = "imgui_internal:3198"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockContextEndFrame"][1]["namespace"] = "ImGui"
 defs["igDockContextEndFrame"][1]["ov_cimguiname"] = "igDockContextEndFrame"
 defs["igDockContextEndFrame"][1]["ret"] = "void"
@@ -14538,7 +17045,11 @@ defs["igDockContextFindNodeByID"][1]["call_args"] = "(ctx,id)"
 defs["igDockContextFindNodeByID"][1]["cimguiname"] = "igDockContextFindNodeByID"
 defs["igDockContextFindNodeByID"][1]["defaults"] = {}
 defs["igDockContextFindNodeByID"][1]["funcname"] = "DockContextFindNodeByID"
+<<<<<<< HEAD
 defs["igDockContextFindNodeByID"][1]["location"] = "imgui_internal:3205"
+=======
+defs["igDockContextFindNodeByID"][1]["location"] = "imgui_internal:3204"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockContextFindNodeByID"][1]["namespace"] = "ImGui"
 defs["igDockContextFindNodeByID"][1]["ov_cimguiname"] = "igDockContextFindNodeByID"
 defs["igDockContextFindNodeByID"][1]["ret"] = "ImGuiDockNode*"
@@ -14557,7 +17068,11 @@ defs["igDockContextGenNodeID"][1]["call_args"] = "(ctx)"
 defs["igDockContextGenNodeID"][1]["cimguiname"] = "igDockContextGenNodeID"
 defs["igDockContextGenNodeID"][1]["defaults"] = {}
 defs["igDockContextGenNodeID"][1]["funcname"] = "DockContextGenNodeID"
+<<<<<<< HEAD
 defs["igDockContextGenNodeID"][1]["location"] = "imgui_internal:3198"
+=======
+defs["igDockContextGenNodeID"][1]["location"] = "imgui_internal:3199"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockContextGenNodeID"][1]["namespace"] = "ImGui"
 defs["igDockContextGenNodeID"][1]["ov_cimguiname"] = "igDockContextGenNodeID"
 defs["igDockContextGenNodeID"][1]["ret"] = "ImGuiID"
@@ -14576,7 +17091,11 @@ defs["igDockContextInitialize"][1]["call_args"] = "(ctx)"
 defs["igDockContextInitialize"][1]["cimguiname"] = "igDockContextInitialize"
 defs["igDockContextInitialize"][1]["defaults"] = {}
 defs["igDockContextInitialize"][1]["funcname"] = "DockContextInitialize"
+<<<<<<< HEAD
 defs["igDockContextInitialize"][1]["location"] = "imgui_internal:3191"
+=======
+defs["igDockContextInitialize"][1]["location"] = "imgui_internal:3192"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockContextInitialize"][1]["namespace"] = "ImGui"
 defs["igDockContextInitialize"][1]["ov_cimguiname"] = "igDockContextInitialize"
 defs["igDockContextInitialize"][1]["ret"] = "void"
@@ -14595,7 +17114,11 @@ defs["igDockContextNewFrameUpdateDocking"][1]["call_args"] = "(ctx)"
 defs["igDockContextNewFrameUpdateDocking"][1]["cimguiname"] = "igDockContextNewFrameUpdateDocking"
 defs["igDockContextNewFrameUpdateDocking"][1]["defaults"] = {}
 defs["igDockContextNewFrameUpdateDocking"][1]["funcname"] = "DockContextNewFrameUpdateDocking"
+<<<<<<< HEAD
 defs["igDockContextNewFrameUpdateDocking"][1]["location"] = "imgui_internal:3196"
+=======
+defs["igDockContextNewFrameUpdateDocking"][1]["location"] = "imgui_internal:3197"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockContextNewFrameUpdateDocking"][1]["namespace"] = "ImGui"
 defs["igDockContextNewFrameUpdateDocking"][1]["ov_cimguiname"] = "igDockContextNewFrameUpdateDocking"
 defs["igDockContextNewFrameUpdateDocking"][1]["ret"] = "void"
@@ -14614,7 +17137,11 @@ defs["igDockContextNewFrameUpdateUndocking"][1]["call_args"] = "(ctx)"
 defs["igDockContextNewFrameUpdateUndocking"][1]["cimguiname"] = "igDockContextNewFrameUpdateUndocking"
 defs["igDockContextNewFrameUpdateUndocking"][1]["defaults"] = {}
 defs["igDockContextNewFrameUpdateUndocking"][1]["funcname"] = "DockContextNewFrameUpdateUndocking"
+<<<<<<< HEAD
 defs["igDockContextNewFrameUpdateUndocking"][1]["location"] = "imgui_internal:3195"
+=======
+defs["igDockContextNewFrameUpdateUndocking"][1]["location"] = "imgui_internal:3196"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockContextNewFrameUpdateUndocking"][1]["namespace"] = "ImGui"
 defs["igDockContextNewFrameUpdateUndocking"][1]["ov_cimguiname"] = "igDockContextNewFrameUpdateUndocking"
 defs["igDockContextNewFrameUpdateUndocking"][1]["ret"] = "void"
@@ -14699,7 +17226,11 @@ defs["igDockContextQueueDock"][1]["call_args"] = "(ctx,target,target_node,payloa
 defs["igDockContextQueueDock"][1]["cimguiname"] = "igDockContextQueueDock"
 defs["igDockContextQueueDock"][1]["defaults"] = {}
 defs["igDockContextQueueDock"][1]["funcname"] = "DockContextQueueDock"
+<<<<<<< HEAD
 defs["igDockContextQueueDock"][1]["location"] = "imgui_internal:3199"
+=======
+defs["igDockContextQueueDock"][1]["location"] = "imgui_internal:3200"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockContextQueueDock"][1]["namespace"] = "ImGui"
 defs["igDockContextQueueDock"][1]["ov_cimguiname"] = "igDockContextQueueDock"
 defs["igDockContextQueueDock"][1]["ret"] = "void"
@@ -14721,7 +17252,11 @@ defs["igDockContextQueueUndockNode"][1]["call_args"] = "(ctx,node)"
 defs["igDockContextQueueUndockNode"][1]["cimguiname"] = "igDockContextQueueUndockNode"
 defs["igDockContextQueueUndockNode"][1]["defaults"] = {}
 defs["igDockContextQueueUndockNode"][1]["funcname"] = "DockContextQueueUndockNode"
+<<<<<<< HEAD
 defs["igDockContextQueueUndockNode"][1]["location"] = "imgui_internal:3201"
+=======
+defs["igDockContextQueueUndockNode"][1]["location"] = "imgui_internal:3202"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockContextQueueUndockNode"][1]["namespace"] = "ImGui"
 defs["igDockContextQueueUndockNode"][1]["ov_cimguiname"] = "igDockContextQueueUndockNode"
 defs["igDockContextQueueUndockNode"][1]["ret"] = "void"
@@ -14743,7 +17278,11 @@ defs["igDockContextQueueUndockWindow"][1]["call_args"] = "(ctx,window)"
 defs["igDockContextQueueUndockWindow"][1]["cimguiname"] = "igDockContextQueueUndockWindow"
 defs["igDockContextQueueUndockWindow"][1]["defaults"] = {}
 defs["igDockContextQueueUndockWindow"][1]["funcname"] = "DockContextQueueUndockWindow"
+<<<<<<< HEAD
 defs["igDockContextQueueUndockWindow"][1]["location"] = "imgui_internal:3200"
+=======
+defs["igDockContextQueueUndockWindow"][1]["location"] = "imgui_internal:3201"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockContextQueueUndockWindow"][1]["namespace"] = "ImGui"
 defs["igDockContextQueueUndockWindow"][1]["ov_cimguiname"] = "igDockContextQueueUndockWindow"
 defs["igDockContextQueueUndockWindow"][1]["ret"] = "void"
@@ -14762,7 +17301,11 @@ defs["igDockContextRebuildNodes"][1]["call_args"] = "(ctx)"
 defs["igDockContextRebuildNodes"][1]["cimguiname"] = "igDockContextRebuildNodes"
 defs["igDockContextRebuildNodes"][1]["defaults"] = {}
 defs["igDockContextRebuildNodes"][1]["funcname"] = "DockContextRebuildNodes"
+<<<<<<< HEAD
 defs["igDockContextRebuildNodes"][1]["location"] = "imgui_internal:3194"
+=======
+defs["igDockContextRebuildNodes"][1]["location"] = "imgui_internal:3195"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockContextRebuildNodes"][1]["namespace"] = "ImGui"
 defs["igDockContextRebuildNodes"][1]["ov_cimguiname"] = "igDockContextRebuildNodes"
 defs["igDockContextRebuildNodes"][1]["ret"] = "void"
@@ -14781,7 +17324,11 @@ defs["igDockContextShutdown"][1]["call_args"] = "(ctx)"
 defs["igDockContextShutdown"][1]["cimguiname"] = "igDockContextShutdown"
 defs["igDockContextShutdown"][1]["defaults"] = {}
 defs["igDockContextShutdown"][1]["funcname"] = "DockContextShutdown"
+<<<<<<< HEAD
 defs["igDockContextShutdown"][1]["location"] = "imgui_internal:3192"
+=======
+defs["igDockContextShutdown"][1]["location"] = "imgui_internal:3193"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockContextShutdown"][1]["namespace"] = "ImGui"
 defs["igDockContextShutdown"][1]["ov_cimguiname"] = "igDockContextShutdown"
 defs["igDockContextShutdown"][1]["ret"] = "void"
@@ -14800,7 +17347,11 @@ defs["igDockNodeBeginAmendTabBar"][1]["call_args"] = "(node)"
 defs["igDockNodeBeginAmendTabBar"][1]["cimguiname"] = "igDockNodeBeginAmendTabBar"
 defs["igDockNodeBeginAmendTabBar"][1]["defaults"] = {}
 defs["igDockNodeBeginAmendTabBar"][1]["funcname"] = "DockNodeBeginAmendTabBar"
+<<<<<<< HEAD
 defs["igDockNodeBeginAmendTabBar"][1]["location"] = "imgui_internal:3206"
+=======
+defs["igDockNodeBeginAmendTabBar"][1]["location"] = "imgui_internal:3205"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockNodeBeginAmendTabBar"][1]["namespace"] = "ImGui"
 defs["igDockNodeBeginAmendTabBar"][1]["ov_cimguiname"] = "igDockNodeBeginAmendTabBar"
 defs["igDockNodeBeginAmendTabBar"][1]["ret"] = "bool"
@@ -14816,7 +17367,11 @@ defs["igDockNodeEndAmendTabBar"][1]["call_args"] = "()"
 defs["igDockNodeEndAmendTabBar"][1]["cimguiname"] = "igDockNodeEndAmendTabBar"
 defs["igDockNodeEndAmendTabBar"][1]["defaults"] = {}
 defs["igDockNodeEndAmendTabBar"][1]["funcname"] = "DockNodeEndAmendTabBar"
+<<<<<<< HEAD
 defs["igDockNodeEndAmendTabBar"][1]["location"] = "imgui_internal:3207"
+=======
+defs["igDockNodeEndAmendTabBar"][1]["location"] = "imgui_internal:3206"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockNodeEndAmendTabBar"][1]["namespace"] = "ImGui"
 defs["igDockNodeEndAmendTabBar"][1]["ov_cimguiname"] = "igDockNodeEndAmendTabBar"
 defs["igDockNodeEndAmendTabBar"][1]["ret"] = "void"
@@ -14835,7 +17390,11 @@ defs["igDockNodeGetDepth"][1]["call_args"] = "(node)"
 defs["igDockNodeGetDepth"][1]["cimguiname"] = "igDockNodeGetDepth"
 defs["igDockNodeGetDepth"][1]["defaults"] = {}
 defs["igDockNodeGetDepth"][1]["funcname"] = "DockNodeGetDepth"
+<<<<<<< HEAD
 defs["igDockNodeGetDepth"][1]["location"] = "imgui_internal:3210"
+=======
+defs["igDockNodeGetDepth"][1]["location"] = "imgui_internal:3209"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockNodeGetDepth"][1]["namespace"] = "ImGui"
 defs["igDockNodeGetDepth"][1]["ov_cimguiname"] = "igDockNodeGetDepth"
 defs["igDockNodeGetDepth"][1]["ret"] = "int"
@@ -14854,7 +17413,11 @@ defs["igDockNodeGetRootNode"][1]["call_args"] = "(node)"
 defs["igDockNodeGetRootNode"][1]["cimguiname"] = "igDockNodeGetRootNode"
 defs["igDockNodeGetRootNode"][1]["defaults"] = {}
 defs["igDockNodeGetRootNode"][1]["funcname"] = "DockNodeGetRootNode"
+<<<<<<< HEAD
 defs["igDockNodeGetRootNode"][1]["location"] = "imgui_internal:3208"
+=======
+defs["igDockNodeGetRootNode"][1]["location"] = "imgui_internal:3207"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockNodeGetRootNode"][1]["namespace"] = "ImGui"
 defs["igDockNodeGetRootNode"][1]["ov_cimguiname"] = "igDockNodeGetRootNode"
 defs["igDockNodeGetRootNode"][1]["ret"] = "ImGuiDockNode*"
@@ -14873,7 +17436,11 @@ defs["igDockNodeGetWindowMenuButtonId"][1]["call_args"] = "(node)"
 defs["igDockNodeGetWindowMenuButtonId"][1]["cimguiname"] = "igDockNodeGetWindowMenuButtonId"
 defs["igDockNodeGetWindowMenuButtonId"][1]["defaults"] = {}
 defs["igDockNodeGetWindowMenuButtonId"][1]["funcname"] = "DockNodeGetWindowMenuButtonId"
+<<<<<<< HEAD
 defs["igDockNodeGetWindowMenuButtonId"][1]["location"] = "imgui_internal:3211"
+=======
+defs["igDockNodeGetWindowMenuButtonId"][1]["location"] = "imgui_internal:3210"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockNodeGetWindowMenuButtonId"][1]["namespace"] = "ImGui"
 defs["igDockNodeGetWindowMenuButtonId"][1]["ov_cimguiname"] = "igDockNodeGetWindowMenuButtonId"
 defs["igDockNodeGetWindowMenuButtonId"][1]["ret"] = "ImGuiID"
@@ -14895,7 +17462,11 @@ defs["igDockNodeIsInHierarchyOf"][1]["call_args"] = "(node,parent)"
 defs["igDockNodeIsInHierarchyOf"][1]["cimguiname"] = "igDockNodeIsInHierarchyOf"
 defs["igDockNodeIsInHierarchyOf"][1]["defaults"] = {}
 defs["igDockNodeIsInHierarchyOf"][1]["funcname"] = "DockNodeIsInHierarchyOf"
+<<<<<<< HEAD
 defs["igDockNodeIsInHierarchyOf"][1]["location"] = "imgui_internal:3209"
+=======
+defs["igDockNodeIsInHierarchyOf"][1]["location"] = "imgui_internal:3208"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockNodeIsInHierarchyOf"][1]["namespace"] = "ImGui"
 defs["igDockNodeIsInHierarchyOf"][1]["ov_cimguiname"] = "igDockNodeIsInHierarchyOf"
 defs["igDockNodeIsInHierarchyOf"][1]["ret"] = "bool"
@@ -14926,7 +17497,11 @@ defs["igDockSpace"][1]["defaults"]["flags"] = "0"
 defs["igDockSpace"][1]["defaults"]["size"] = "ImVec2(0,0)"
 defs["igDockSpace"][1]["defaults"]["window_class"] = "NULL"
 defs["igDockSpace"][1]["funcname"] = "DockSpace"
+<<<<<<< HEAD
 defs["igDockSpace"][1]["location"] = "imgui:816"
+=======
+defs["igDockSpace"][1]["location"] = "imgui:815"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockSpace"][1]["namespace"] = "ImGui"
 defs["igDockSpace"][1]["ov_cimguiname"] = "igDockSpace"
 defs["igDockSpace"][1]["ret"] = "ImGuiID"
@@ -14954,7 +17529,11 @@ defs["igDockSpaceOverViewport"][1]["defaults"]["flags"] = "0"
 defs["igDockSpaceOverViewport"][1]["defaults"]["viewport"] = "NULL"
 defs["igDockSpaceOverViewport"][1]["defaults"]["window_class"] = "NULL"
 defs["igDockSpaceOverViewport"][1]["funcname"] = "DockSpaceOverViewport"
+<<<<<<< HEAD
 defs["igDockSpaceOverViewport"][1]["location"] = "imgui:817"
+=======
+defs["igDockSpaceOverViewport"][1]["location"] = "imgui:816"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDockSpaceOverViewport"][1]["namespace"] = "ImGui"
 defs["igDockSpaceOverViewport"][1]["ov_cimguiname"] = "igDockSpaceOverViewport"
 defs["igDockSpaceOverViewport"][1]["ret"] = "ImGuiID"
@@ -14994,7 +17573,11 @@ defs["igDragBehavior"][1]["call_args"] = "(id,data_type,p_v,v_speed,p_min,p_max,
 defs["igDragBehavior"][1]["cimguiname"] = "igDragBehavior"
 defs["igDragBehavior"][1]["defaults"] = {}
 defs["igDragBehavior"][1]["funcname"] = "DragBehavior"
+<<<<<<< HEAD
 defs["igDragBehavior"][1]["location"] = "imgui_internal:3397"
+=======
+defs["igDragBehavior"][1]["location"] = "imgui_internal:3388"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDragBehavior"][1]["namespace"] = "ImGui"
 defs["igDragBehavior"][1]["ov_cimguiname"] = "igDragBehavior"
 defs["igDragBehavior"][1]["ret"] = "bool"
@@ -15036,7 +17619,11 @@ defs["igDragFloat"][1]["defaults"]["v_max"] = "0.0f"
 defs["igDragFloat"][1]["defaults"]["v_min"] = "0.0f"
 defs["igDragFloat"][1]["defaults"]["v_speed"] = "1.0f"
 defs["igDragFloat"][1]["funcname"] = "DragFloat"
+<<<<<<< HEAD
 defs["igDragFloat"][1]["location"] = "imgui:548"
+=======
+defs["igDragFloat"][1]["location"] = "imgui:547"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDragFloat"][1]["namespace"] = "ImGui"
 defs["igDragFloat"][1]["ov_cimguiname"] = "igDragFloat"
 defs["igDragFloat"][1]["ret"] = "bool"
@@ -15078,7 +17665,11 @@ defs["igDragFloat2"][1]["defaults"]["v_max"] = "0.0f"
 defs["igDragFloat2"][1]["defaults"]["v_min"] = "0.0f"
 defs["igDragFloat2"][1]["defaults"]["v_speed"] = "1.0f"
 defs["igDragFloat2"][1]["funcname"] = "DragFloat2"
+<<<<<<< HEAD
 defs["igDragFloat2"][1]["location"] = "imgui:549"
+=======
+defs["igDragFloat2"][1]["location"] = "imgui:548"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDragFloat2"][1]["namespace"] = "ImGui"
 defs["igDragFloat2"][1]["ov_cimguiname"] = "igDragFloat2"
 defs["igDragFloat2"][1]["ret"] = "bool"
@@ -15120,7 +17711,11 @@ defs["igDragFloat3"][1]["defaults"]["v_max"] = "0.0f"
 defs["igDragFloat3"][1]["defaults"]["v_min"] = "0.0f"
 defs["igDragFloat3"][1]["defaults"]["v_speed"] = "1.0f"
 defs["igDragFloat3"][1]["funcname"] = "DragFloat3"
+<<<<<<< HEAD
 defs["igDragFloat3"][1]["location"] = "imgui:550"
+=======
+defs["igDragFloat3"][1]["location"] = "imgui:549"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDragFloat3"][1]["namespace"] = "ImGui"
 defs["igDragFloat3"][1]["ov_cimguiname"] = "igDragFloat3"
 defs["igDragFloat3"][1]["ret"] = "bool"
@@ -15162,7 +17757,11 @@ defs["igDragFloat4"][1]["defaults"]["v_max"] = "0.0f"
 defs["igDragFloat4"][1]["defaults"]["v_min"] = "0.0f"
 defs["igDragFloat4"][1]["defaults"]["v_speed"] = "1.0f"
 defs["igDragFloat4"][1]["funcname"] = "DragFloat4"
+<<<<<<< HEAD
 defs["igDragFloat4"][1]["location"] = "imgui:551"
+=======
+defs["igDragFloat4"][1]["location"] = "imgui:550"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDragFloat4"][1]["namespace"] = "ImGui"
 defs["igDragFloat4"][1]["ov_cimguiname"] = "igDragFloat4"
 defs["igDragFloat4"][1]["ret"] = "bool"
@@ -15211,7 +17810,11 @@ defs["igDragFloatRange2"][1]["defaults"]["v_max"] = "0.0f"
 defs["igDragFloatRange2"][1]["defaults"]["v_min"] = "0.0f"
 defs["igDragFloatRange2"][1]["defaults"]["v_speed"] = "1.0f"
 defs["igDragFloatRange2"][1]["funcname"] = "DragFloatRange2"
+<<<<<<< HEAD
 defs["igDragFloatRange2"][1]["location"] = "imgui:552"
+=======
+defs["igDragFloatRange2"][1]["location"] = "imgui:551"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDragFloatRange2"][1]["namespace"] = "ImGui"
 defs["igDragFloatRange2"][1]["ov_cimguiname"] = "igDragFloatRange2"
 defs["igDragFloatRange2"][1]["ret"] = "bool"
@@ -15253,7 +17856,11 @@ defs["igDragInt"][1]["defaults"]["v_max"] = "0"
 defs["igDragInt"][1]["defaults"]["v_min"] = "0"
 defs["igDragInt"][1]["defaults"]["v_speed"] = "1.0f"
 defs["igDragInt"][1]["funcname"] = "DragInt"
+<<<<<<< HEAD
 defs["igDragInt"][1]["location"] = "imgui:553"
+=======
+defs["igDragInt"][1]["location"] = "imgui:552"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDragInt"][1]["namespace"] = "ImGui"
 defs["igDragInt"][1]["ov_cimguiname"] = "igDragInt"
 defs["igDragInt"][1]["ret"] = "bool"
@@ -15295,7 +17902,11 @@ defs["igDragInt2"][1]["defaults"]["v_max"] = "0"
 defs["igDragInt2"][1]["defaults"]["v_min"] = "0"
 defs["igDragInt2"][1]["defaults"]["v_speed"] = "1.0f"
 defs["igDragInt2"][1]["funcname"] = "DragInt2"
+<<<<<<< HEAD
 defs["igDragInt2"][1]["location"] = "imgui:554"
+=======
+defs["igDragInt2"][1]["location"] = "imgui:553"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDragInt2"][1]["namespace"] = "ImGui"
 defs["igDragInt2"][1]["ov_cimguiname"] = "igDragInt2"
 defs["igDragInt2"][1]["ret"] = "bool"
@@ -15337,7 +17948,11 @@ defs["igDragInt3"][1]["defaults"]["v_max"] = "0"
 defs["igDragInt3"][1]["defaults"]["v_min"] = "0"
 defs["igDragInt3"][1]["defaults"]["v_speed"] = "1.0f"
 defs["igDragInt3"][1]["funcname"] = "DragInt3"
+<<<<<<< HEAD
 defs["igDragInt3"][1]["location"] = "imgui:555"
+=======
+defs["igDragInt3"][1]["location"] = "imgui:554"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDragInt3"][1]["namespace"] = "ImGui"
 defs["igDragInt3"][1]["ov_cimguiname"] = "igDragInt3"
 defs["igDragInt3"][1]["ret"] = "bool"
@@ -15379,7 +17994,11 @@ defs["igDragInt4"][1]["defaults"]["v_max"] = "0"
 defs["igDragInt4"][1]["defaults"]["v_min"] = "0"
 defs["igDragInt4"][1]["defaults"]["v_speed"] = "1.0f"
 defs["igDragInt4"][1]["funcname"] = "DragInt4"
+<<<<<<< HEAD
 defs["igDragInt4"][1]["location"] = "imgui:556"
+=======
+defs["igDragInt4"][1]["location"] = "imgui:555"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDragInt4"][1]["namespace"] = "ImGui"
 defs["igDragInt4"][1]["ov_cimguiname"] = "igDragInt4"
 defs["igDragInt4"][1]["ret"] = "bool"
@@ -15428,7 +18047,11 @@ defs["igDragIntRange2"][1]["defaults"]["v_max"] = "0"
 defs["igDragIntRange2"][1]["defaults"]["v_min"] = "0"
 defs["igDragIntRange2"][1]["defaults"]["v_speed"] = "1.0f"
 defs["igDragIntRange2"][1]["funcname"] = "DragIntRange2"
+<<<<<<< HEAD
 defs["igDragIntRange2"][1]["location"] = "imgui:557"
+=======
+defs["igDragIntRange2"][1]["location"] = "imgui:556"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDragIntRange2"][1]["namespace"] = "ImGui"
 defs["igDragIntRange2"][1]["ov_cimguiname"] = "igDragIntRange2"
 defs["igDragIntRange2"][1]["ret"] = "bool"
@@ -15473,7 +18096,11 @@ defs["igDragScalar"][1]["defaults"]["p_max"] = "NULL"
 defs["igDragScalar"][1]["defaults"]["p_min"] = "NULL"
 defs["igDragScalar"][1]["defaults"]["v_speed"] = "1.0f"
 defs["igDragScalar"][1]["funcname"] = "DragScalar"
+<<<<<<< HEAD
 defs["igDragScalar"][1]["location"] = "imgui:558"
+=======
+defs["igDragScalar"][1]["location"] = "imgui:557"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDragScalar"][1]["namespace"] = "ImGui"
 defs["igDragScalar"][1]["ov_cimguiname"] = "igDragScalar"
 defs["igDragScalar"][1]["ret"] = "bool"
@@ -15521,7 +18148,11 @@ defs["igDragScalarN"][1]["defaults"]["p_max"] = "NULL"
 defs["igDragScalarN"][1]["defaults"]["p_min"] = "NULL"
 defs["igDragScalarN"][1]["defaults"]["v_speed"] = "1.0f"
 defs["igDragScalarN"][1]["funcname"] = "DragScalarN"
+<<<<<<< HEAD
 defs["igDragScalarN"][1]["location"] = "imgui:559"
+=======
+defs["igDragScalarN"][1]["location"] = "imgui:558"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igDragScalarN"][1]["namespace"] = "ImGui"
 defs["igDragScalarN"][1]["ov_cimguiname"] = "igDragScalarN"
 defs["igDragScalarN"][1]["ret"] = "bool"
@@ -15588,7 +18219,11 @@ defs["igEndChildFrame"][1]["call_args"] = "()"
 defs["igEndChildFrame"][1]["cimguiname"] = "igEndChildFrame"
 defs["igEndChildFrame"][1]["defaults"] = {}
 defs["igEndChildFrame"][1]["funcname"] = "EndChildFrame"
+<<<<<<< HEAD
 defs["igEndChildFrame"][1]["location"] = "imgui:907"
+=======
+defs["igEndChildFrame"][1]["location"] = "imgui:906"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndChildFrame"][1]["namespace"] = "ImGui"
 defs["igEndChildFrame"][1]["ov_cimguiname"] = "igEndChildFrame"
 defs["igEndChildFrame"][1]["ret"] = "void"
@@ -15604,7 +18239,11 @@ defs["igEndColumns"][1]["call_args"] = "()"
 defs["igEndColumns"][1]["cimguiname"] = "igEndColumns"
 defs["igEndColumns"][1]["defaults"] = {}
 defs["igEndColumns"][1]["funcname"] = "EndColumns"
+<<<<<<< HEAD
 defs["igEndColumns"][1]["location"] = "imgui_internal:3265"
+=======
+defs["igEndColumns"][1]["location"] = "imgui_internal:3264"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndColumns"][1]["namespace"] = "ImGui"
 defs["igEndColumns"][1]["ov_cimguiname"] = "igEndColumns"
 defs["igEndColumns"][1]["ret"] = "void"
@@ -15620,7 +18259,11 @@ defs["igEndCombo"][1]["call_args"] = "()"
 defs["igEndCombo"][1]["cimguiname"] = "igEndCombo"
 defs["igEndCombo"][1]["defaults"] = {}
 defs["igEndCombo"][1]["funcname"] = "EndCombo"
+<<<<<<< HEAD
 defs["igEndCombo"][1]["location"] = "imgui:531"
+=======
+defs["igEndCombo"][1]["location"] = "imgui:530"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndCombo"][1]["namespace"] = "ImGui"
 defs["igEndCombo"][1]["ov_cimguiname"] = "igEndCombo"
 defs["igEndCombo"][1]["ret"] = "void"
@@ -15636,7 +18279,11 @@ defs["igEndComboPreview"][1]["call_args"] = "()"
 defs["igEndComboPreview"][1]["cimguiname"] = "igEndComboPreview"
 defs["igEndComboPreview"][1]["defaults"] = {}
 defs["igEndComboPreview"][1]["funcname"] = "EndComboPreview"
+<<<<<<< HEAD
 defs["igEndComboPreview"][1]["location"] = "imgui_internal:3096"
+=======
+defs["igEndComboPreview"][1]["location"] = "imgui_internal:3097"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndComboPreview"][1]["namespace"] = "ImGui"
 defs["igEndComboPreview"][1]["ov_cimguiname"] = "igEndComboPreview"
 defs["igEndComboPreview"][1]["ret"] = "void"
@@ -15652,7 +18299,11 @@ defs["igEndDisabled"][1]["call_args"] = "()"
 defs["igEndDisabled"][1]["cimguiname"] = "igEndDisabled"
 defs["igEndDisabled"][1]["defaults"] = {}
 defs["igEndDisabled"][1]["funcname"] = "EndDisabled"
+<<<<<<< HEAD
 defs["igEndDisabled"][1]["location"] = "imgui:851"
+=======
+defs["igEndDisabled"][1]["location"] = "imgui:850"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndDisabled"][1]["namespace"] = "ImGui"
 defs["igEndDisabled"][1]["ov_cimguiname"] = "igEndDisabled"
 defs["igEndDisabled"][1]["ret"] = "void"
@@ -15668,7 +18319,11 @@ defs["igEndDragDropSource"][1]["call_args"] = "()"
 defs["igEndDragDropSource"][1]["cimguiname"] = "igEndDragDropSource"
 defs["igEndDragDropSource"][1]["defaults"] = {}
 defs["igEndDragDropSource"][1]["funcname"] = "EndDragDropSource"
+<<<<<<< HEAD
 defs["igEndDragDropSource"][1]["location"] = "imgui:840"
+=======
+defs["igEndDragDropSource"][1]["location"] = "imgui:839"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndDragDropSource"][1]["namespace"] = "ImGui"
 defs["igEndDragDropSource"][1]["ov_cimguiname"] = "igEndDragDropSource"
 defs["igEndDragDropSource"][1]["ret"] = "void"
@@ -15684,7 +18339,11 @@ defs["igEndDragDropTarget"][1]["call_args"] = "()"
 defs["igEndDragDropTarget"][1]["cimguiname"] = "igEndDragDropTarget"
 defs["igEndDragDropTarget"][1]["defaults"] = {}
 defs["igEndDragDropTarget"][1]["funcname"] = "EndDragDropTarget"
+<<<<<<< HEAD
 defs["igEndDragDropTarget"][1]["location"] = "imgui:843"
+=======
+defs["igEndDragDropTarget"][1]["location"] = "imgui:842"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndDragDropTarget"][1]["namespace"] = "ImGui"
 defs["igEndDragDropTarget"][1]["ov_cimguiname"] = "igEndDragDropTarget"
 defs["igEndDragDropTarget"][1]["ret"] = "void"
@@ -15732,7 +18391,11 @@ defs["igEndListBox"][1]["call_args"] = "()"
 defs["igEndListBox"][1]["cimguiname"] = "igEndListBox"
 defs["igEndListBox"][1]["defaults"] = {}
 defs["igEndListBox"][1]["funcname"] = "EndListBox"
+<<<<<<< HEAD
 defs["igEndListBox"][1]["location"] = "imgui:643"
+=======
+defs["igEndListBox"][1]["location"] = "imgui:642"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndListBox"][1]["namespace"] = "ImGui"
 defs["igEndListBox"][1]["ov_cimguiname"] = "igEndListBox"
 defs["igEndListBox"][1]["ret"] = "void"
@@ -15748,7 +18411,11 @@ defs["igEndMainMenuBar"][1]["call_args"] = "()"
 defs["igEndMainMenuBar"][1]["cimguiname"] = "igEndMainMenuBar"
 defs["igEndMainMenuBar"][1]["defaults"] = {}
 defs["igEndMainMenuBar"][1]["funcname"] = "EndMainMenuBar"
+<<<<<<< HEAD
 defs["igEndMainMenuBar"][1]["location"] = "imgui:669"
+=======
+defs["igEndMainMenuBar"][1]["location"] = "imgui:668"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndMainMenuBar"][1]["namespace"] = "ImGui"
 defs["igEndMainMenuBar"][1]["ov_cimguiname"] = "igEndMainMenuBar"
 defs["igEndMainMenuBar"][1]["ret"] = "void"
@@ -15764,7 +18431,11 @@ defs["igEndMenu"][1]["call_args"] = "()"
 defs["igEndMenu"][1]["cimguiname"] = "igEndMenu"
 defs["igEndMenu"][1]["defaults"] = {}
 defs["igEndMenu"][1]["funcname"] = "EndMenu"
+<<<<<<< HEAD
 defs["igEndMenu"][1]["location"] = "imgui:671"
+=======
+defs["igEndMenu"][1]["location"] = "imgui:670"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndMenu"][1]["namespace"] = "ImGui"
 defs["igEndMenu"][1]["ov_cimguiname"] = "igEndMenu"
 defs["igEndMenu"][1]["ret"] = "void"
@@ -15780,7 +18451,11 @@ defs["igEndMenuBar"][1]["call_args"] = "()"
 defs["igEndMenuBar"][1]["cimguiname"] = "igEndMenuBar"
 defs["igEndMenuBar"][1]["defaults"] = {}
 defs["igEndMenuBar"][1]["funcname"] = "EndMenuBar"
+<<<<<<< HEAD
 defs["igEndMenuBar"][1]["location"] = "imgui:667"
+=======
+defs["igEndMenuBar"][1]["location"] = "imgui:666"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndMenuBar"][1]["namespace"] = "ImGui"
 defs["igEndMenuBar"][1]["ov_cimguiname"] = "igEndMenuBar"
 defs["igEndMenuBar"][1]["ret"] = "void"
@@ -15796,7 +18471,11 @@ defs["igEndPopup"][1]["call_args"] = "()"
 defs["igEndPopup"][1]["cimguiname"] = "igEndPopup"
 defs["igEndPopup"][1]["defaults"] = {}
 defs["igEndPopup"][1]["funcname"] = "EndPopup"
+<<<<<<< HEAD
 defs["igEndPopup"][1]["location"] = "imgui:696"
+=======
+defs["igEndPopup"][1]["location"] = "imgui:695"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndPopup"][1]["namespace"] = "ImGui"
 defs["igEndPopup"][1]["ov_cimguiname"] = "igEndPopup"
 defs["igEndPopup"][1]["ret"] = "void"
@@ -15812,7 +18491,11 @@ defs["igEndTabBar"][1]["call_args"] = "()"
 defs["igEndTabBar"][1]["cimguiname"] = "igEndTabBar"
 defs["igEndTabBar"][1]["defaults"] = {}
 defs["igEndTabBar"][1]["funcname"] = "EndTabBar"
+<<<<<<< HEAD
 defs["igEndTabBar"][1]["location"] = "imgui:797"
+=======
+defs["igEndTabBar"][1]["location"] = "imgui:796"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndTabBar"][1]["namespace"] = "ImGui"
 defs["igEndTabBar"][1]["ov_cimguiname"] = "igEndTabBar"
 defs["igEndTabBar"][1]["ret"] = "void"
@@ -15828,7 +18511,11 @@ defs["igEndTabItem"][1]["call_args"] = "()"
 defs["igEndTabItem"][1]["cimguiname"] = "igEndTabItem"
 defs["igEndTabItem"][1]["defaults"] = {}
 defs["igEndTabItem"][1]["funcname"] = "EndTabItem"
+<<<<<<< HEAD
 defs["igEndTabItem"][1]["location"] = "imgui:799"
+=======
+defs["igEndTabItem"][1]["location"] = "imgui:798"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndTabItem"][1]["namespace"] = "ImGui"
 defs["igEndTabItem"][1]["ov_cimguiname"] = "igEndTabItem"
 defs["igEndTabItem"][1]["ret"] = "void"
@@ -15844,7 +18531,11 @@ defs["igEndTable"][1]["call_args"] = "()"
 defs["igEndTable"][1]["cimguiname"] = "igEndTable"
 defs["igEndTable"][1]["defaults"] = {}
 defs["igEndTable"][1]["funcname"] = "EndTable"
+<<<<<<< HEAD
 defs["igEndTable"][1]["location"] = "imgui:750"
+=======
+defs["igEndTable"][1]["location"] = "imgui:749"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndTable"][1]["namespace"] = "ImGui"
 defs["igEndTable"][1]["ov_cimguiname"] = "igEndTable"
 defs["igEndTable"][1]["ret"] = "void"
@@ -15860,7 +18551,11 @@ defs["igEndTooltip"][1]["call_args"] = "()"
 defs["igEndTooltip"][1]["cimguiname"] = "igEndTooltip"
 defs["igEndTooltip"][1]["defaults"] = {}
 defs["igEndTooltip"][1]["funcname"] = "EndTooltip"
+<<<<<<< HEAD
 defs["igEndTooltip"][1]["location"] = "imgui:678"
+=======
+defs["igEndTooltip"][1]["location"] = "imgui:677"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igEndTooltip"][1]["namespace"] = "ImGui"
 defs["igEndTooltip"][1]["ov_cimguiname"] = "igEndTooltip"
 defs["igEndTooltip"][1]["ret"] = "void"
@@ -15883,7 +18578,11 @@ defs["igErrorCheckEndFrameRecover"][1]["cimguiname"] = "igErrorCheckEndFrameReco
 defs["igErrorCheckEndFrameRecover"][1]["defaults"] = {}
 defs["igErrorCheckEndFrameRecover"][1]["defaults"]["user_data"] = "NULL"
 defs["igErrorCheckEndFrameRecover"][1]["funcname"] = "ErrorCheckEndFrameRecover"
+<<<<<<< HEAD
 defs["igErrorCheckEndFrameRecover"][1]["location"] = "imgui_internal:3452"
+=======
+defs["igErrorCheckEndFrameRecover"][1]["location"] = "imgui_internal:3443"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igErrorCheckEndFrameRecover"][1]["namespace"] = "ImGui"
 defs["igErrorCheckEndFrameRecover"][1]["ov_cimguiname"] = "igErrorCheckEndFrameRecover"
 defs["igErrorCheckEndFrameRecover"][1]["ret"] = "void"
@@ -15906,7 +18605,11 @@ defs["igErrorCheckEndWindowRecover"][1]["cimguiname"] = "igErrorCheckEndWindowRe
 defs["igErrorCheckEndWindowRecover"][1]["defaults"] = {}
 defs["igErrorCheckEndWindowRecover"][1]["defaults"]["user_data"] = "NULL"
 defs["igErrorCheckEndWindowRecover"][1]["funcname"] = "ErrorCheckEndWindowRecover"
+<<<<<<< HEAD
 defs["igErrorCheckEndWindowRecover"][1]["location"] = "imgui_internal:3453"
+=======
+defs["igErrorCheckEndWindowRecover"][1]["location"] = "imgui_internal:3444"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igErrorCheckEndWindowRecover"][1]["namespace"] = "ImGui"
 defs["igErrorCheckEndWindowRecover"][1]["ov_cimguiname"] = "igErrorCheckEndWindowRecover"
 defs["igErrorCheckEndWindowRecover"][1]["ret"] = "void"
@@ -15922,7 +18625,11 @@ defs["igErrorCheckUsingSetCursorPosToExtendParentBoundaries"][1]["call_args"] = 
 defs["igErrorCheckUsingSetCursorPosToExtendParentBoundaries"][1]["cimguiname"] = "igErrorCheckUsingSetCursorPosToExtendParentBoundaries"
 defs["igErrorCheckUsingSetCursorPosToExtendParentBoundaries"][1]["defaults"] = {}
 defs["igErrorCheckUsingSetCursorPosToExtendParentBoundaries"][1]["funcname"] = "ErrorCheckUsingSetCursorPosToExtendParentBoundaries"
+<<<<<<< HEAD
 defs["igErrorCheckUsingSetCursorPosToExtendParentBoundaries"][1]["location"] = "imgui_internal:3454"
+=======
+defs["igErrorCheckUsingSetCursorPosToExtendParentBoundaries"][1]["location"] = "imgui_internal:3445"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igErrorCheckUsingSetCursorPosToExtendParentBoundaries"][1]["namespace"] = "ImGui"
 defs["igErrorCheckUsingSetCursorPosToExtendParentBoundaries"][1]["ov_cimguiname"] = "igErrorCheckUsingSetCursorPosToExtendParentBoundaries"
 defs["igErrorCheckUsingSetCursorPosToExtendParentBoundaries"][1]["ret"] = "void"
@@ -15944,7 +18651,11 @@ defs["igFindBestWindowPosForPopup"][1]["call_args"] = "(window)"
 defs["igFindBestWindowPosForPopup"][1]["cimguiname"] = "igFindBestWindowPosForPopup"
 defs["igFindBestWindowPosForPopup"][1]["defaults"] = {}
 defs["igFindBestWindowPosForPopup"][1]["funcname"] = "FindBestWindowPosForPopup"
+<<<<<<< HEAD
 defs["igFindBestWindowPosForPopup"][1]["location"] = "imgui_internal:3085"
+=======
+defs["igFindBestWindowPosForPopup"][1]["location"] = "imgui_internal:3086"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFindBestWindowPosForPopup"][1]["namespace"] = "ImGui"
 defs["igFindBestWindowPosForPopup"][1]["nonUDT"] = 1
 defs["igFindBestWindowPosForPopup"][1]["ov_cimguiname"] = "igFindBestWindowPosForPopup"
@@ -15982,7 +18693,11 @@ defs["igFindBestWindowPosForPopupEx"][1]["call_args"] = "(ref_pos,size,last_dir,
 defs["igFindBestWindowPosForPopupEx"][1]["cimguiname"] = "igFindBestWindowPosForPopupEx"
 defs["igFindBestWindowPosForPopupEx"][1]["defaults"] = {}
 defs["igFindBestWindowPosForPopupEx"][1]["funcname"] = "FindBestWindowPosForPopupEx"
+<<<<<<< HEAD
 defs["igFindBestWindowPosForPopupEx"][1]["location"] = "imgui_internal:3086"
+=======
+defs["igFindBestWindowPosForPopupEx"][1]["location"] = "imgui_internal:3087"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFindBestWindowPosForPopupEx"][1]["namespace"] = "ImGui"
 defs["igFindBestWindowPosForPopupEx"][1]["nonUDT"] = 1
 defs["igFindBestWindowPosForPopupEx"][1]["ov_cimguiname"] = "igFindBestWindowPosForPopupEx"
@@ -16002,7 +18717,11 @@ defs["igFindBottomMostVisibleWindowWithinBeginStack"][1]["call_args"] = "(window
 defs["igFindBottomMostVisibleWindowWithinBeginStack"][1]["cimguiname"] = "igFindBottomMostVisibleWindowWithinBeginStack"
 defs["igFindBottomMostVisibleWindowWithinBeginStack"][1]["defaults"] = {}
 defs["igFindBottomMostVisibleWindowWithinBeginStack"][1]["funcname"] = "FindBottomMostVisibleWindowWithinBeginStack"
+<<<<<<< HEAD
 defs["igFindBottomMostVisibleWindowWithinBeginStack"][1]["location"] = "imgui_internal:2968"
+=======
+defs["igFindBottomMostVisibleWindowWithinBeginStack"][1]["location"] = "imgui_internal:2973"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFindBottomMostVisibleWindowWithinBeginStack"][1]["namespace"] = "ImGui"
 defs["igFindBottomMostVisibleWindowWithinBeginStack"][1]["ov_cimguiname"] = "igFindBottomMostVisibleWindowWithinBeginStack"
 defs["igFindBottomMostVisibleWindowWithinBeginStack"][1]["ret"] = "ImGuiWindow*"
@@ -16021,7 +18740,11 @@ defs["igFindHoveredViewportFromPlatformWindowStack"][1]["call_args"] = "(mouse_p
 defs["igFindHoveredViewportFromPlatformWindowStack"][1]["cimguiname"] = "igFindHoveredViewportFromPlatformWindowStack"
 defs["igFindHoveredViewportFromPlatformWindowStack"][1]["defaults"] = {}
 defs["igFindHoveredViewportFromPlatformWindowStack"][1]["funcname"] = "FindHoveredViewportFromPlatformWindowStack"
+<<<<<<< HEAD
 defs["igFindHoveredViewportFromPlatformWindowStack"][1]["location"] = "imgui_internal:2999"
+=======
+defs["igFindHoveredViewportFromPlatformWindowStack"][1]["location"] = "imgui_internal:3004"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFindHoveredViewportFromPlatformWindowStack"][1]["namespace"] = "ImGui"
 defs["igFindHoveredViewportFromPlatformWindowStack"][1]["ov_cimguiname"] = "igFindHoveredViewportFromPlatformWindowStack"
 defs["igFindHoveredViewportFromPlatformWindowStack"][1]["ret"] = "ImGuiViewportP*"
@@ -16043,13 +18766,39 @@ defs["igFindOrCreateColumns"][1]["call_args"] = "(window,id)"
 defs["igFindOrCreateColumns"][1]["cimguiname"] = "igFindOrCreateColumns"
 defs["igFindOrCreateColumns"][1]["defaults"] = {}
 defs["igFindOrCreateColumns"][1]["funcname"] = "FindOrCreateColumns"
+<<<<<<< HEAD
 defs["igFindOrCreateColumns"][1]["location"] = "imgui_internal:3270"
+=======
+defs["igFindOrCreateColumns"][1]["location"] = "imgui_internal:3269"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFindOrCreateColumns"][1]["namespace"] = "ImGui"
 defs["igFindOrCreateColumns"][1]["ov_cimguiname"] = "igFindOrCreateColumns"
 defs["igFindOrCreateColumns"][1]["ret"] = "ImGuiOldColumns*"
 defs["igFindOrCreateColumns"][1]["signature"] = "(ImGuiWindow*,ImGuiID)"
 defs["igFindOrCreateColumns"][1]["stname"] = ""
 defs["igFindOrCreateColumns"]["(ImGuiWindow*,ImGuiID)"] = defs["igFindOrCreateColumns"][1]
+<<<<<<< HEAD
+=======
+defs["igFindOrCreateWindowSettings"] = {}
+defs["igFindOrCreateWindowSettings"][1] = {}
+defs["igFindOrCreateWindowSettings"][1]["args"] = "(const char* name)"
+defs["igFindOrCreateWindowSettings"][1]["argsT"] = {}
+defs["igFindOrCreateWindowSettings"][1]["argsT"][1] = {}
+defs["igFindOrCreateWindowSettings"][1]["argsT"][1]["name"] = "name"
+defs["igFindOrCreateWindowSettings"][1]["argsT"][1]["type"] = "const char*"
+defs["igFindOrCreateWindowSettings"][1]["argsoriginal"] = "(const char* name)"
+defs["igFindOrCreateWindowSettings"][1]["call_args"] = "(name)"
+defs["igFindOrCreateWindowSettings"][1]["cimguiname"] = "igFindOrCreateWindowSettings"
+defs["igFindOrCreateWindowSettings"][1]["defaults"] = {}
+defs["igFindOrCreateWindowSettings"][1]["funcname"] = "FindOrCreateWindowSettings"
+defs["igFindOrCreateWindowSettings"][1]["location"] = "imgui_internal:3012"
+defs["igFindOrCreateWindowSettings"][1]["namespace"] = "ImGui"
+defs["igFindOrCreateWindowSettings"][1]["ov_cimguiname"] = "igFindOrCreateWindowSettings"
+defs["igFindOrCreateWindowSettings"][1]["ret"] = "ImGuiWindowSettings*"
+defs["igFindOrCreateWindowSettings"][1]["signature"] = "(const char*)"
+defs["igFindOrCreateWindowSettings"][1]["stname"] = ""
+defs["igFindOrCreateWindowSettings"]["(const char*)"] = defs["igFindOrCreateWindowSettings"][1]
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFindRenderedTextEnd"] = {}
 defs["igFindRenderedTextEnd"][1] = {}
 defs["igFindRenderedTextEnd"][1]["args"] = "(const char* text,const char* text_end)"
@@ -16066,7 +18815,11 @@ defs["igFindRenderedTextEnd"][1]["cimguiname"] = "igFindRenderedTextEnd"
 defs["igFindRenderedTextEnd"][1]["defaults"] = {}
 defs["igFindRenderedTextEnd"][1]["defaults"]["text_end"] = "NULL"
 defs["igFindRenderedTextEnd"][1]["funcname"] = "FindRenderedTextEnd"
+<<<<<<< HEAD
 defs["igFindRenderedTextEnd"][1]["location"] = "imgui_internal:3362"
+=======
+defs["igFindRenderedTextEnd"][1]["location"] = "imgui_internal:3354"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFindRenderedTextEnd"][1]["namespace"] = "ImGui"
 defs["igFindRenderedTextEnd"][1]["ov_cimguiname"] = "igFindRenderedTextEnd"
 defs["igFindRenderedTextEnd"][1]["ret"] = "const char*"
@@ -16085,7 +18838,11 @@ defs["igFindSettingsHandler"][1]["call_args"] = "(type_name)"
 defs["igFindSettingsHandler"][1]["cimguiname"] = "igFindSettingsHandler"
 defs["igFindSettingsHandler"][1]["defaults"] = {}
 defs["igFindSettingsHandler"][1]["funcname"] = "FindSettingsHandler"
+<<<<<<< HEAD
 defs["igFindSettingsHandler"][1]["location"] = "imgui_internal:3007"
+=======
+defs["igFindSettingsHandler"][1]["location"] = "imgui_internal:3015"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFindSettingsHandler"][1]["namespace"] = "ImGui"
 defs["igFindSettingsHandler"][1]["ov_cimguiname"] = "igFindSettingsHandler"
 defs["igFindSettingsHandler"][1]["ret"] = "ImGuiSettingsHandler*"
@@ -16104,7 +18861,11 @@ defs["igFindViewportByID"][1]["call_args"] = "(id)"
 defs["igFindViewportByID"][1]["cimguiname"] = "igFindViewportByID"
 defs["igFindViewportByID"][1]["defaults"] = {}
 defs["igFindViewportByID"][1]["funcname"] = "FindViewportByID"
+<<<<<<< HEAD
 defs["igFindViewportByID"][1]["location"] = "imgui:985"
+=======
+defs["igFindViewportByID"][1]["location"] = "imgui:984"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFindViewportByID"][1]["namespace"] = "ImGui"
 defs["igFindViewportByID"][1]["ov_cimguiname"] = "igFindViewportByID"
 defs["igFindViewportByID"][1]["ret"] = "ImGuiViewport*"
@@ -16123,7 +18884,11 @@ defs["igFindViewportByPlatformHandle"][1]["call_args"] = "(platform_handle)"
 defs["igFindViewportByPlatformHandle"][1]["cimguiname"] = "igFindViewportByPlatformHandle"
 defs["igFindViewportByPlatformHandle"][1]["defaults"] = {}
 defs["igFindViewportByPlatformHandle"][1]["funcname"] = "FindViewportByPlatformHandle"
+<<<<<<< HEAD
 defs["igFindViewportByPlatformHandle"][1]["location"] = "imgui:986"
+=======
+defs["igFindViewportByPlatformHandle"][1]["location"] = "imgui:985"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFindViewportByPlatformHandle"][1]["namespace"] = "ImGui"
 defs["igFindViewportByPlatformHandle"][1]["ov_cimguiname"] = "igFindViewportByPlatformHandle"
 defs["igFindViewportByPlatformHandle"][1]["ret"] = "ImGuiViewport*"
@@ -16142,7 +18907,11 @@ defs["igFindWindowByID"][1]["call_args"] = "(id)"
 defs["igFindWindowByID"][1]["cimguiname"] = "igFindWindowByID"
 defs["igFindWindowByID"][1]["defaults"] = {}
 defs["igFindWindowByID"][1]["funcname"] = "FindWindowByID"
+<<<<<<< HEAD
 defs["igFindWindowByID"][1]["location"] = "imgui_internal:2945"
+=======
+defs["igFindWindowByID"][1]["location"] = "imgui_internal:2950"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFindWindowByID"][1]["namespace"] = "ImGui"
 defs["igFindWindowByID"][1]["ov_cimguiname"] = "igFindWindowByID"
 defs["igFindWindowByID"][1]["ret"] = "ImGuiWindow*"
@@ -16161,7 +18930,11 @@ defs["igFindWindowByName"][1]["call_args"] = "(name)"
 defs["igFindWindowByName"][1]["cimguiname"] = "igFindWindowByName"
 defs["igFindWindowByName"][1]["defaults"] = {}
 defs["igFindWindowByName"][1]["funcname"] = "FindWindowByName"
+<<<<<<< HEAD
 defs["igFindWindowByName"][1]["location"] = "imgui_internal:2946"
+=======
+defs["igFindWindowByName"][1]["location"] = "imgui_internal:2951"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFindWindowByName"][1]["namespace"] = "ImGui"
 defs["igFindWindowByName"][1]["ov_cimguiname"] = "igFindWindowByName"
 defs["igFindWindowByName"][1]["ret"] = "ImGuiWindow*"
@@ -16180,13 +18953,18 @@ defs["igFindWindowDisplayIndex"][1]["call_args"] = "(window)"
 defs["igFindWindowDisplayIndex"][1]["cimguiname"] = "igFindWindowDisplayIndex"
 defs["igFindWindowDisplayIndex"][1]["defaults"] = {}
 defs["igFindWindowDisplayIndex"][1]["funcname"] = "FindWindowDisplayIndex"
+<<<<<<< HEAD
 defs["igFindWindowDisplayIndex"][1]["location"] = "imgui_internal:2967"
+=======
+defs["igFindWindowDisplayIndex"][1]["location"] = "imgui_internal:2972"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFindWindowDisplayIndex"][1]["namespace"] = "ImGui"
 defs["igFindWindowDisplayIndex"][1]["ov_cimguiname"] = "igFindWindowDisplayIndex"
 defs["igFindWindowDisplayIndex"][1]["ret"] = "int"
 defs["igFindWindowDisplayIndex"][1]["signature"] = "(ImGuiWindow*)"
 defs["igFindWindowDisplayIndex"][1]["stname"] = ""
 defs["igFindWindowDisplayIndex"]["(ImGuiWindow*)"] = defs["igFindWindowDisplayIndex"][1]
+<<<<<<< HEAD
 defs["igFindWindowSettingsByID"] = {}
 defs["igFindWindowSettingsByID"][1] = {}
 defs["igFindWindowSettingsByID"][1]["args"] = "(ImGuiID id)"
@@ -16225,6 +19003,27 @@ defs["igFindWindowSettingsByWindow"][1]["ret"] = "ImGuiWindowSettings*"
 defs["igFindWindowSettingsByWindow"][1]["signature"] = "(ImGuiWindow*)"
 defs["igFindWindowSettingsByWindow"][1]["stname"] = ""
 defs["igFindWindowSettingsByWindow"]["(ImGuiWindow*)"] = defs["igFindWindowSettingsByWindow"][1]
+=======
+defs["igFindWindowSettings"] = {}
+defs["igFindWindowSettings"][1] = {}
+defs["igFindWindowSettings"][1]["args"] = "(ImGuiID id)"
+defs["igFindWindowSettings"][1]["argsT"] = {}
+defs["igFindWindowSettings"][1]["argsT"][1] = {}
+defs["igFindWindowSettings"][1]["argsT"][1]["name"] = "id"
+defs["igFindWindowSettings"][1]["argsT"][1]["type"] = "ImGuiID"
+defs["igFindWindowSettings"][1]["argsoriginal"] = "(ImGuiID id)"
+defs["igFindWindowSettings"][1]["call_args"] = "(id)"
+defs["igFindWindowSettings"][1]["cimguiname"] = "igFindWindowSettings"
+defs["igFindWindowSettings"][1]["defaults"] = {}
+defs["igFindWindowSettings"][1]["funcname"] = "FindWindowSettings"
+defs["igFindWindowSettings"][1]["location"] = "imgui_internal:3011"
+defs["igFindWindowSettings"][1]["namespace"] = "ImGui"
+defs["igFindWindowSettings"][1]["ov_cimguiname"] = "igFindWindowSettings"
+defs["igFindWindowSettings"][1]["ret"] = "ImGuiWindowSettings*"
+defs["igFindWindowSettings"][1]["signature"] = "(ImGuiID)"
+defs["igFindWindowSettings"][1]["stname"] = ""
+defs["igFindWindowSettings"]["(ImGuiID)"] = defs["igFindWindowSettings"][1]
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFocusTopMostWindowUnderOne"] = {}
 defs["igFocusTopMostWindowUnderOne"][1] = {}
 defs["igFocusTopMostWindowUnderOne"][1]["args"] = "(ImGuiWindow* under_this_window,ImGuiWindow* ignore_window)"
@@ -16240,7 +19039,11 @@ defs["igFocusTopMostWindowUnderOne"][1]["call_args"] = "(under_this_window,ignor
 defs["igFocusTopMostWindowUnderOne"][1]["cimguiname"] = "igFocusTopMostWindowUnderOne"
 defs["igFocusTopMostWindowUnderOne"][1]["defaults"] = {}
 defs["igFocusTopMostWindowUnderOne"][1]["funcname"] = "FocusTopMostWindowUnderOne"
+<<<<<<< HEAD
 defs["igFocusTopMostWindowUnderOne"][1]["location"] = "imgui_internal:2962"
+=======
+defs["igFocusTopMostWindowUnderOne"][1]["location"] = "imgui_internal:2967"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFocusTopMostWindowUnderOne"][1]["namespace"] = "ImGui"
 defs["igFocusTopMostWindowUnderOne"][1]["ov_cimguiname"] = "igFocusTopMostWindowUnderOne"
 defs["igFocusTopMostWindowUnderOne"][1]["ret"] = "void"
@@ -16259,7 +19062,11 @@ defs["igFocusWindow"][1]["call_args"] = "(window)"
 defs["igFocusWindow"][1]["cimguiname"] = "igFocusWindow"
 defs["igFocusWindow"][1]["defaults"] = {}
 defs["igFocusWindow"][1]["funcname"] = "FocusWindow"
+<<<<<<< HEAD
 defs["igFocusWindow"][1]["location"] = "imgui_internal:2961"
+=======
+defs["igFocusWindow"][1]["location"] = "imgui_internal:2966"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igFocusWindow"][1]["namespace"] = "ImGui"
 defs["igFocusWindow"][1]["ov_cimguiname"] = "igFocusWindow"
 defs["igFocusWindow"][1]["ret"] = "void"
@@ -16278,7 +19085,11 @@ defs["igGcAwakeTransientWindowBuffers"][1]["call_args"] = "(window)"
 defs["igGcAwakeTransientWindowBuffers"][1]["cimguiname"] = "igGcAwakeTransientWindowBuffers"
 defs["igGcAwakeTransientWindowBuffers"][1]["defaults"] = {}
 defs["igGcAwakeTransientWindowBuffers"][1]["funcname"] = "GcAwakeTransientWindowBuffers"
+<<<<<<< HEAD
 defs["igGcAwakeTransientWindowBuffers"][1]["location"] = "imgui_internal:3445"
+=======
+defs["igGcAwakeTransientWindowBuffers"][1]["location"] = "imgui_internal:3436"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGcAwakeTransientWindowBuffers"][1]["namespace"] = "ImGui"
 defs["igGcAwakeTransientWindowBuffers"][1]["ov_cimguiname"] = "igGcAwakeTransientWindowBuffers"
 defs["igGcAwakeTransientWindowBuffers"][1]["ret"] = "void"
@@ -16294,7 +19105,11 @@ defs["igGcCompactTransientMiscBuffers"][1]["call_args"] = "()"
 defs["igGcCompactTransientMiscBuffers"][1]["cimguiname"] = "igGcCompactTransientMiscBuffers"
 defs["igGcCompactTransientMiscBuffers"][1]["defaults"] = {}
 defs["igGcCompactTransientMiscBuffers"][1]["funcname"] = "GcCompactTransientMiscBuffers"
+<<<<<<< HEAD
 defs["igGcCompactTransientMiscBuffers"][1]["location"] = "imgui_internal:3443"
+=======
+defs["igGcCompactTransientMiscBuffers"][1]["location"] = "imgui_internal:3434"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGcCompactTransientMiscBuffers"][1]["namespace"] = "ImGui"
 defs["igGcCompactTransientMiscBuffers"][1]["ov_cimguiname"] = "igGcCompactTransientMiscBuffers"
 defs["igGcCompactTransientMiscBuffers"][1]["ret"] = "void"
@@ -16313,7 +19128,11 @@ defs["igGcCompactTransientWindowBuffers"][1]["call_args"] = "(window)"
 defs["igGcCompactTransientWindowBuffers"][1]["cimguiname"] = "igGcCompactTransientWindowBuffers"
 defs["igGcCompactTransientWindowBuffers"][1]["defaults"] = {}
 defs["igGcCompactTransientWindowBuffers"][1]["funcname"] = "GcCompactTransientWindowBuffers"
+<<<<<<< HEAD
 defs["igGcCompactTransientWindowBuffers"][1]["location"] = "imgui_internal:3444"
+=======
+defs["igGcCompactTransientWindowBuffers"][1]["location"] = "imgui_internal:3435"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGcCompactTransientWindowBuffers"][1]["namespace"] = "ImGui"
 defs["igGcCompactTransientWindowBuffers"][1]["ov_cimguiname"] = "igGcCompactTransientWindowBuffers"
 defs["igGcCompactTransientWindowBuffers"][1]["ret"] = "void"
@@ -16329,7 +19148,11 @@ defs["igGetActiveID"][1]["call_args"] = "()"
 defs["igGetActiveID"][1]["cimguiname"] = "igGetActiveID"
 defs["igGetActiveID"][1]["defaults"] = {}
 defs["igGetActiveID"][1]["funcname"] = "GetActiveID"
+<<<<<<< HEAD
 defs["igGetActiveID"][1]["location"] = "imgui_internal:3036"
+=======
+defs["igGetActiveID"][1]["location"] = "imgui_internal:3038"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetActiveID"][1]["namespace"] = "ImGui"
 defs["igGetActiveID"][1]["ov_cimguiname"] = "igGetActiveID"
 defs["igGetActiveID"][1]["ret"] = "ImGuiID"
@@ -16354,7 +19177,11 @@ defs["igGetAllocatorFunctions"][1]["call_args"] = "(p_alloc_func,p_free_func,p_u
 defs["igGetAllocatorFunctions"][1]["cimguiname"] = "igGetAllocatorFunctions"
 defs["igGetAllocatorFunctions"][1]["defaults"] = {}
 defs["igGetAllocatorFunctions"][1]["funcname"] = "GetAllocatorFunctions"
+<<<<<<< HEAD
 defs["igGetAllocatorFunctions"][1]["location"] = "imgui:974"
+=======
+defs["igGetAllocatorFunctions"][1]["location"] = "imgui:973"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetAllocatorFunctions"][1]["namespace"] = "ImGui"
 defs["igGetAllocatorFunctions"][1]["ov_cimguiname"] = "igGetAllocatorFunctions"
 defs["igGetAllocatorFunctions"][1]["ret"] = "void"
@@ -16370,7 +19197,11 @@ defs["igGetBackgroundDrawList"][1]["call_args"] = "()"
 defs["igGetBackgroundDrawList"][1]["cimguiname"] = "igGetBackgroundDrawList"
 defs["igGetBackgroundDrawList"][1]["defaults"] = {}
 defs["igGetBackgroundDrawList"][1]["funcname"] = "GetBackgroundDrawList"
+<<<<<<< HEAD
 defs["igGetBackgroundDrawList"][1]["location"] = "imgui:892"
+=======
+defs["igGetBackgroundDrawList"][1]["location"] = "imgui:891"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetBackgroundDrawList"][1]["namespace"] = "ImGui"
 defs["igGetBackgroundDrawList"][1]["ov_cimguiname"] = "igGetBackgroundDrawList_Nil"
 defs["igGetBackgroundDrawList"][1]["ret"] = "ImDrawList*"
@@ -16387,7 +19218,11 @@ defs["igGetBackgroundDrawList"][2]["call_args"] = "(viewport)"
 defs["igGetBackgroundDrawList"][2]["cimguiname"] = "igGetBackgroundDrawList"
 defs["igGetBackgroundDrawList"][2]["defaults"] = {}
 defs["igGetBackgroundDrawList"][2]["funcname"] = "GetBackgroundDrawList"
+<<<<<<< HEAD
 defs["igGetBackgroundDrawList"][2]["location"] = "imgui:894"
+=======
+defs["igGetBackgroundDrawList"][2]["location"] = "imgui:893"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetBackgroundDrawList"][2]["namespace"] = "ImGui"
 defs["igGetBackgroundDrawList"][2]["ov_cimguiname"] = "igGetBackgroundDrawList_ViewportPtr"
 defs["igGetBackgroundDrawList"][2]["ret"] = "ImDrawList*"
@@ -16404,7 +19239,11 @@ defs["igGetClipboardText"][1]["call_args"] = "()"
 defs["igGetClipboardText"][1]["cimguiname"] = "igGetClipboardText"
 defs["igGetClipboardText"][1]["defaults"] = {}
 defs["igGetClipboardText"][1]["funcname"] = "GetClipboardText"
+<<<<<<< HEAD
 defs["igGetClipboardText"][1]["location"] = "imgui:953"
+=======
+defs["igGetClipboardText"][1]["location"] = "imgui:952"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetClipboardText"][1]["namespace"] = "ImGui"
 defs["igGetClipboardText"][1]["ov_cimguiname"] = "igGetClipboardText"
 defs["igGetClipboardText"][1]["ret"] = "const char*"
@@ -16479,7 +19318,11 @@ defs["igGetColumnIndex"][1]["call_args"] = "()"
 defs["igGetColumnIndex"][1]["cimguiname"] = "igGetColumnIndex"
 defs["igGetColumnIndex"][1]["defaults"] = {}
 defs["igGetColumnIndex"][1]["funcname"] = "GetColumnIndex"
+<<<<<<< HEAD
 defs["igGetColumnIndex"][1]["location"] = "imgui:787"
+=======
+defs["igGetColumnIndex"][1]["location"] = "imgui:786"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetColumnIndex"][1]["namespace"] = "ImGui"
 defs["igGetColumnIndex"][1]["ov_cimguiname"] = "igGetColumnIndex"
 defs["igGetColumnIndex"][1]["ret"] = "int"
@@ -16501,7 +19344,11 @@ defs["igGetColumnNormFromOffset"][1]["call_args"] = "(columns,offset)"
 defs["igGetColumnNormFromOffset"][1]["cimguiname"] = "igGetColumnNormFromOffset"
 defs["igGetColumnNormFromOffset"][1]["defaults"] = {}
 defs["igGetColumnNormFromOffset"][1]["funcname"] = "GetColumnNormFromOffset"
+<<<<<<< HEAD
 defs["igGetColumnNormFromOffset"][1]["location"] = "imgui_internal:3272"
+=======
+defs["igGetColumnNormFromOffset"][1]["location"] = "imgui_internal:3271"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetColumnNormFromOffset"][1]["namespace"] = "ImGui"
 defs["igGetColumnNormFromOffset"][1]["ov_cimguiname"] = "igGetColumnNormFromOffset"
 defs["igGetColumnNormFromOffset"][1]["ret"] = "float"
@@ -16521,7 +19368,11 @@ defs["igGetColumnOffset"][1]["cimguiname"] = "igGetColumnOffset"
 defs["igGetColumnOffset"][1]["defaults"] = {}
 defs["igGetColumnOffset"][1]["defaults"]["column_index"] = "-1"
 defs["igGetColumnOffset"][1]["funcname"] = "GetColumnOffset"
+<<<<<<< HEAD
 defs["igGetColumnOffset"][1]["location"] = "imgui:790"
+=======
+defs["igGetColumnOffset"][1]["location"] = "imgui:789"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetColumnOffset"][1]["namespace"] = "ImGui"
 defs["igGetColumnOffset"][1]["ov_cimguiname"] = "igGetColumnOffset"
 defs["igGetColumnOffset"][1]["ret"] = "float"
@@ -16543,7 +19394,11 @@ defs["igGetColumnOffsetFromNorm"][1]["call_args"] = "(columns,offset_norm)"
 defs["igGetColumnOffsetFromNorm"][1]["cimguiname"] = "igGetColumnOffsetFromNorm"
 defs["igGetColumnOffsetFromNorm"][1]["defaults"] = {}
 defs["igGetColumnOffsetFromNorm"][1]["funcname"] = "GetColumnOffsetFromNorm"
+<<<<<<< HEAD
 defs["igGetColumnOffsetFromNorm"][1]["location"] = "imgui_internal:3271"
+=======
+defs["igGetColumnOffsetFromNorm"][1]["location"] = "imgui_internal:3270"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetColumnOffsetFromNorm"][1]["namespace"] = "ImGui"
 defs["igGetColumnOffsetFromNorm"][1]["ov_cimguiname"] = "igGetColumnOffsetFromNorm"
 defs["igGetColumnOffsetFromNorm"][1]["ret"] = "float"
@@ -16563,7 +19418,11 @@ defs["igGetColumnWidth"][1]["cimguiname"] = "igGetColumnWidth"
 defs["igGetColumnWidth"][1]["defaults"] = {}
 defs["igGetColumnWidth"][1]["defaults"]["column_index"] = "-1"
 defs["igGetColumnWidth"][1]["funcname"] = "GetColumnWidth"
+<<<<<<< HEAD
 defs["igGetColumnWidth"][1]["location"] = "imgui:788"
+=======
+defs["igGetColumnWidth"][1]["location"] = "imgui:787"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetColumnWidth"][1]["namespace"] = "ImGui"
 defs["igGetColumnWidth"][1]["ov_cimguiname"] = "igGetColumnWidth"
 defs["igGetColumnWidth"][1]["ret"] = "float"
@@ -16579,7 +19438,11 @@ defs["igGetColumnsCount"][1]["call_args"] = "()"
 defs["igGetColumnsCount"][1]["cimguiname"] = "igGetColumnsCount"
 defs["igGetColumnsCount"][1]["defaults"] = {}
 defs["igGetColumnsCount"][1]["funcname"] = "GetColumnsCount"
+<<<<<<< HEAD
 defs["igGetColumnsCount"][1]["location"] = "imgui:792"
+=======
+defs["igGetColumnsCount"][1]["location"] = "imgui:791"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetColumnsCount"][1]["namespace"] = "ImGui"
 defs["igGetColumnsCount"][1]["ov_cimguiname"] = "igGetColumnsCount"
 defs["igGetColumnsCount"][1]["ret"] = "int"
@@ -16601,7 +19464,11 @@ defs["igGetColumnsID"][1]["call_args"] = "(str_id,count)"
 defs["igGetColumnsID"][1]["cimguiname"] = "igGetColumnsID"
 defs["igGetColumnsID"][1]["defaults"] = {}
 defs["igGetColumnsID"][1]["funcname"] = "GetColumnsID"
+<<<<<<< HEAD
 defs["igGetColumnsID"][1]["location"] = "imgui_internal:3269"
+=======
+defs["igGetColumnsID"][1]["location"] = "imgui_internal:3268"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetColumnsID"][1]["namespace"] = "ImGui"
 defs["igGetColumnsID"][1]["ov_cimguiname"] = "igGetColumnsID"
 defs["igGetColumnsID"][1]["ret"] = "ImGuiID"
@@ -16660,7 +19527,11 @@ defs["igGetContentRegionMaxAbs"][1]["call_args"] = "()"
 defs["igGetContentRegionMaxAbs"][1]["cimguiname"] = "igGetContentRegionMaxAbs"
 defs["igGetContentRegionMaxAbs"][1]["defaults"] = {}
 defs["igGetContentRegionMaxAbs"][1]["funcname"] = "GetContentRegionMaxAbs"
+<<<<<<< HEAD
 defs["igGetContentRegionMaxAbs"][1]["location"] = "imgui_internal:3060"
+=======
+defs["igGetContentRegionMaxAbs"][1]["location"] = "imgui_internal:3061"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetContentRegionMaxAbs"][1]["namespace"] = "ImGui"
 defs["igGetContentRegionMaxAbs"][1]["nonUDT"] = 1
 defs["igGetContentRegionMaxAbs"][1]["ov_cimguiname"] = "igGetContentRegionMaxAbs"
@@ -16693,13 +19564,18 @@ defs["igGetCurrentFocusScope"][1]["call_args"] = "()"
 defs["igGetCurrentFocusScope"][1]["cimguiname"] = "igGetCurrentFocusScope"
 defs["igGetCurrentFocusScope"][1]["defaults"] = {}
 defs["igGetCurrentFocusScope"][1]["funcname"] = "GetCurrentFocusScope"
+<<<<<<< HEAD
 defs["igGetCurrentFocusScope"][1]["location"] = "imgui_internal:3253"
+=======
+defs["igGetCurrentFocusScope"][1]["location"] = "imgui_internal:3252"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetCurrentFocusScope"][1]["namespace"] = "ImGui"
 defs["igGetCurrentFocusScope"][1]["ov_cimguiname"] = "igGetCurrentFocusScope"
 defs["igGetCurrentFocusScope"][1]["ret"] = "ImGuiID"
 defs["igGetCurrentFocusScope"][1]["signature"] = "()"
 defs["igGetCurrentFocusScope"][1]["stname"] = ""
 defs["igGetCurrentFocusScope"]["()"] = defs["igGetCurrentFocusScope"][1]
+<<<<<<< HEAD
 defs["igGetCurrentTabBar"] = {}
 defs["igGetCurrentTabBar"][1] = {}
 defs["igGetCurrentTabBar"][1]["args"] = "()"
@@ -16716,6 +19592,8 @@ defs["igGetCurrentTabBar"][1]["ret"] = "ImGuiTabBar*"
 defs["igGetCurrentTabBar"][1]["signature"] = "()"
 defs["igGetCurrentTabBar"][1]["stname"] = ""
 defs["igGetCurrentTabBar"]["()"] = defs["igGetCurrentTabBar"][1]
+=======
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetCurrentTable"] = {}
 defs["igGetCurrentTable"][1] = {}
 defs["igGetCurrentTable"][1]["args"] = "()"
@@ -16725,7 +19603,11 @@ defs["igGetCurrentTable"][1]["call_args"] = "()"
 defs["igGetCurrentTable"][1]["cimguiname"] = "igGetCurrentTable"
 defs["igGetCurrentTable"][1]["defaults"] = {}
 defs["igGetCurrentTable"][1]["funcname"] = "GetCurrentTable"
+<<<<<<< HEAD
 defs["igGetCurrentTable"][1]["location"] = "imgui_internal:3284"
+=======
+defs["igGetCurrentTable"][1]["location"] = "imgui_internal:3283"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetCurrentTable"][1]["namespace"] = "ImGui"
 defs["igGetCurrentTable"][1]["ov_cimguiname"] = "igGetCurrentTable"
 defs["igGetCurrentTable"][1]["ret"] = "ImGuiTable*"
@@ -16741,7 +19623,11 @@ defs["igGetCurrentWindow"][1]["call_args"] = "()"
 defs["igGetCurrentWindow"][1]["cimguiname"] = "igGetCurrentWindow"
 defs["igGetCurrentWindow"][1]["defaults"] = {}
 defs["igGetCurrentWindow"][1]["funcname"] = "GetCurrentWindow"
+<<<<<<< HEAD
 defs["igGetCurrentWindow"][1]["location"] = "imgui_internal:2944"
+=======
+defs["igGetCurrentWindow"][1]["location"] = "imgui_internal:2949"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetCurrentWindow"][1]["namespace"] = "ImGui"
 defs["igGetCurrentWindow"][1]["ov_cimguiname"] = "igGetCurrentWindow"
 defs["igGetCurrentWindow"][1]["ret"] = "ImGuiWindow*"
@@ -16757,7 +19643,11 @@ defs["igGetCurrentWindowRead"][1]["call_args"] = "()"
 defs["igGetCurrentWindowRead"][1]["cimguiname"] = "igGetCurrentWindowRead"
 defs["igGetCurrentWindowRead"][1]["defaults"] = {}
 defs["igGetCurrentWindowRead"][1]["funcname"] = "GetCurrentWindowRead"
+<<<<<<< HEAD
 defs["igGetCurrentWindowRead"][1]["location"] = "imgui_internal:2943"
+=======
+defs["igGetCurrentWindowRead"][1]["location"] = "imgui_internal:2948"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetCurrentWindowRead"][1]["namespace"] = "ImGui"
 defs["igGetCurrentWindowRead"][1]["ov_cimguiname"] = "igGetCurrentWindowRead"
 defs["igGetCurrentWindowRead"][1]["ret"] = "ImGuiWindow*"
@@ -16865,7 +19755,11 @@ defs["igGetDefaultFont"][1]["call_args"] = "()"
 defs["igGetDefaultFont"][1]["cimguiname"] = "igGetDefaultFont"
 defs["igGetDefaultFont"][1]["defaults"] = {}
 defs["igGetDefaultFont"][1]["funcname"] = "GetDefaultFont"
+<<<<<<< HEAD
 defs["igGetDefaultFont"][1]["location"] = "imgui_internal:2972"
+=======
+defs["igGetDefaultFont"][1]["location"] = "imgui_internal:2977"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetDefaultFont"][1]["namespace"] = "ImGui"
 defs["igGetDefaultFont"][1]["ov_cimguiname"] = "igGetDefaultFont"
 defs["igGetDefaultFont"][1]["ret"] = "ImFont*"
@@ -16881,7 +19775,11 @@ defs["igGetDragDropPayload"][1]["call_args"] = "()"
 defs["igGetDragDropPayload"][1]["cimguiname"] = "igGetDragDropPayload"
 defs["igGetDragDropPayload"][1]["defaults"] = {}
 defs["igGetDragDropPayload"][1]["funcname"] = "GetDragDropPayload"
+<<<<<<< HEAD
 defs["igGetDragDropPayload"][1]["location"] = "imgui:844"
+=======
+defs["igGetDragDropPayload"][1]["location"] = "imgui:843"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetDragDropPayload"][1]["namespace"] = "ImGui"
 defs["igGetDragDropPayload"][1]["ov_cimguiname"] = "igGetDragDropPayload"
 defs["igGetDragDropPayload"][1]["ret"] = "const ImGuiPayload*"
@@ -16913,7 +19811,11 @@ defs["igGetDrawListSharedData"][1]["call_args"] = "()"
 defs["igGetDrawListSharedData"][1]["cimguiname"] = "igGetDrawListSharedData"
 defs["igGetDrawListSharedData"][1]["defaults"] = {}
 defs["igGetDrawListSharedData"][1]["funcname"] = "GetDrawListSharedData"
+<<<<<<< HEAD
 defs["igGetDrawListSharedData"][1]["location"] = "imgui:902"
+=======
+defs["igGetDrawListSharedData"][1]["location"] = "imgui:901"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetDrawListSharedData"][1]["namespace"] = "ImGui"
 defs["igGetDrawListSharedData"][1]["ov_cimguiname"] = "igGetDrawListSharedData"
 defs["igGetDrawListSharedData"][1]["ret"] = "ImDrawListSharedData*"
@@ -16929,7 +19831,11 @@ defs["igGetFocusID"][1]["call_args"] = "()"
 defs["igGetFocusID"][1]["cimguiname"] = "igGetFocusID"
 defs["igGetFocusID"][1]["defaults"] = {}
 defs["igGetFocusID"][1]["funcname"] = "GetFocusID"
+<<<<<<< HEAD
 defs["igGetFocusID"][1]["location"] = "imgui_internal:3037"
+=======
+defs["igGetFocusID"][1]["location"] = "imgui_internal:3039"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetFocusID"][1]["namespace"] = "ImGui"
 defs["igGetFocusID"][1]["ov_cimguiname"] = "igGetFocusID"
 defs["igGetFocusID"][1]["ret"] = "ImGuiID"
@@ -16997,7 +19903,11 @@ defs["igGetForegroundDrawList"][1]["call_args"] = "()"
 defs["igGetForegroundDrawList"][1]["cimguiname"] = "igGetForegroundDrawList"
 defs["igGetForegroundDrawList"][1]["defaults"] = {}
 defs["igGetForegroundDrawList"][1]["funcname"] = "GetForegroundDrawList"
+<<<<<<< HEAD
 defs["igGetForegroundDrawList"][1]["location"] = "imgui:893"
+=======
+defs["igGetForegroundDrawList"][1]["location"] = "imgui:892"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetForegroundDrawList"][1]["namespace"] = "ImGui"
 defs["igGetForegroundDrawList"][1]["ov_cimguiname"] = "igGetForegroundDrawList_Nil"
 defs["igGetForegroundDrawList"][1]["ret"] = "ImDrawList*"
@@ -17014,7 +19924,11 @@ defs["igGetForegroundDrawList"][2]["call_args"] = "(viewport)"
 defs["igGetForegroundDrawList"][2]["cimguiname"] = "igGetForegroundDrawList"
 defs["igGetForegroundDrawList"][2]["defaults"] = {}
 defs["igGetForegroundDrawList"][2]["funcname"] = "GetForegroundDrawList"
+<<<<<<< HEAD
 defs["igGetForegroundDrawList"][2]["location"] = "imgui:895"
+=======
+defs["igGetForegroundDrawList"][2]["location"] = "imgui:894"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetForegroundDrawList"][2]["namespace"] = "ImGui"
 defs["igGetForegroundDrawList"][2]["ov_cimguiname"] = "igGetForegroundDrawList_ViewportPtr"
 defs["igGetForegroundDrawList"][2]["ret"] = "ImDrawList*"
@@ -17031,7 +19945,11 @@ defs["igGetForegroundDrawList"][3]["call_args"] = "(window)"
 defs["igGetForegroundDrawList"][3]["cimguiname"] = "igGetForegroundDrawList"
 defs["igGetForegroundDrawList"][3]["defaults"] = {}
 defs["igGetForegroundDrawList"][3]["funcname"] = "GetForegroundDrawList"
+<<<<<<< HEAD
 defs["igGetForegroundDrawList"][3]["location"] = "imgui_internal:2973"
+=======
+defs["igGetForegroundDrawList"][3]["location"] = "imgui_internal:2978"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetForegroundDrawList"][3]["namespace"] = "ImGui"
 defs["igGetForegroundDrawList"][3]["ov_cimguiname"] = "igGetForegroundDrawList_WindowPtr"
 defs["igGetForegroundDrawList"][3]["ret"] = "ImDrawList*"
@@ -17049,7 +19967,11 @@ defs["igGetFrameCount"][1]["call_args"] = "()"
 defs["igGetFrameCount"][1]["cimguiname"] = "igGetFrameCount"
 defs["igGetFrameCount"][1]["defaults"] = {}
 defs["igGetFrameCount"][1]["funcname"] = "GetFrameCount"
+<<<<<<< HEAD
 defs["igGetFrameCount"][1]["location"] = "imgui:901"
+=======
+defs["igGetFrameCount"][1]["location"] = "imgui:900"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetFrameCount"][1]["namespace"] = "ImGui"
 defs["igGetFrameCount"][1]["ov_cimguiname"] = "igGetFrameCount"
 defs["igGetFrameCount"][1]["ret"] = "int"
@@ -17097,7 +20019,11 @@ defs["igGetHoveredID"][1]["call_args"] = "()"
 defs["igGetHoveredID"][1]["cimguiname"] = "igGetHoveredID"
 defs["igGetHoveredID"][1]["defaults"] = {}
 defs["igGetHoveredID"][1]["funcname"] = "GetHoveredID"
+<<<<<<< HEAD
 defs["igGetHoveredID"][1]["location"] = "imgui_internal:3041"
+=======
+defs["igGetHoveredID"][1]["location"] = "imgui_internal:3043"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetHoveredID"][1]["namespace"] = "ImGui"
 defs["igGetHoveredID"][1]["ov_cimguiname"] = "igGetHoveredID"
 defs["igGetHoveredID"][1]["ret"] = "ImGuiID"
@@ -17180,7 +20106,11 @@ defs["igGetIDWithSeed"][1]["call_args"] = "(str_id_begin,str_id_end,seed)"
 defs["igGetIDWithSeed"][1]["cimguiname"] = "igGetIDWithSeed"
 defs["igGetIDWithSeed"][1]["defaults"] = {}
 defs["igGetIDWithSeed"][1]["funcname"] = "GetIDWithSeed"
+<<<<<<< HEAD
 defs["igGetIDWithSeed"][1]["location"] = "imgui_internal:3046"
+=======
+defs["igGetIDWithSeed"][1]["location"] = "imgui_internal:3048"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetIDWithSeed"][1]["namespace"] = "ImGui"
 defs["igGetIDWithSeed"][1]["ov_cimguiname"] = "igGetIDWithSeed_Str"
 defs["igGetIDWithSeed"][1]["ret"] = "ImGuiID"
@@ -17237,7 +20167,11 @@ defs["igGetInputTextState"][1]["call_args"] = "(id)"
 defs["igGetInputTextState"][1]["cimguiname"] = "igGetInputTextState"
 defs["igGetInputTextState"][1]["defaults"] = {}
 defs["igGetInputTextState"][1]["funcname"] = "GetInputTextState"
+<<<<<<< HEAD
 defs["igGetInputTextState"][1]["location"] = "imgui_internal:3428"
+=======
+defs["igGetInputTextState"][1]["location"] = "imgui_internal:3419"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetInputTextState"][1]["namespace"] = "ImGui"
 defs["igGetInputTextState"][1]["ov_cimguiname"] = "igGetInputTextState"
 defs["igGetInputTextState"][1]["ret"] = "ImGuiInputTextState*"
@@ -17253,7 +20187,11 @@ defs["igGetItemFlags"][1]["call_args"] = "()"
 defs["igGetItemFlags"][1]["cimguiname"] = "igGetItemFlags"
 defs["igGetItemFlags"][1]["defaults"] = {}
 defs["igGetItemFlags"][1]["funcname"] = "GetItemFlags"
+<<<<<<< HEAD
 defs["igGetItemFlags"][1]["location"] = "imgui_internal:3035"
+=======
+defs["igGetItemFlags"][1]["location"] = "imgui_internal:3037"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetItemFlags"][1]["namespace"] = "ImGui"
 defs["igGetItemFlags"][1]["ov_cimguiname"] = "igGetItemFlags"
 defs["igGetItemFlags"][1]["ret"] = "ImGuiItemFlags"
@@ -17269,7 +20207,11 @@ defs["igGetItemID"][1]["call_args"] = "()"
 defs["igGetItemID"][1]["cimguiname"] = "igGetItemID"
 defs["igGetItemID"][1]["defaults"] = {}
 defs["igGetItemID"][1]["funcname"] = "GetItemID"
+<<<<<<< HEAD
 defs["igGetItemID"][1]["location"] = "imgui:879"
+=======
+defs["igGetItemID"][1]["location"] = "imgui:878"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetItemID"][1]["namespace"] = "ImGui"
 defs["igGetItemID"][1]["ov_cimguiname"] = "igGetItemID"
 defs["igGetItemID"][1]["ret"] = "ImGuiID"
@@ -17288,7 +20230,11 @@ defs["igGetItemRectMax"][1]["call_args"] = "()"
 defs["igGetItemRectMax"][1]["cimguiname"] = "igGetItemRectMax"
 defs["igGetItemRectMax"][1]["defaults"] = {}
 defs["igGetItemRectMax"][1]["funcname"] = "GetItemRectMax"
+<<<<<<< HEAD
 defs["igGetItemRectMax"][1]["location"] = "imgui:881"
+=======
+defs["igGetItemRectMax"][1]["location"] = "imgui:880"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetItemRectMax"][1]["namespace"] = "ImGui"
 defs["igGetItemRectMax"][1]["nonUDT"] = 1
 defs["igGetItemRectMax"][1]["ov_cimguiname"] = "igGetItemRectMax"
@@ -17308,7 +20254,11 @@ defs["igGetItemRectMin"][1]["call_args"] = "()"
 defs["igGetItemRectMin"][1]["cimguiname"] = "igGetItemRectMin"
 defs["igGetItemRectMin"][1]["defaults"] = {}
 defs["igGetItemRectMin"][1]["funcname"] = "GetItemRectMin"
+<<<<<<< HEAD
 defs["igGetItemRectMin"][1]["location"] = "imgui:880"
+=======
+defs["igGetItemRectMin"][1]["location"] = "imgui:879"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetItemRectMin"][1]["namespace"] = "ImGui"
 defs["igGetItemRectMin"][1]["nonUDT"] = 1
 defs["igGetItemRectMin"][1]["ov_cimguiname"] = "igGetItemRectMin"
@@ -17328,7 +20278,11 @@ defs["igGetItemRectSize"][1]["call_args"] = "()"
 defs["igGetItemRectSize"][1]["cimguiname"] = "igGetItemRectSize"
 defs["igGetItemRectSize"][1]["defaults"] = {}
 defs["igGetItemRectSize"][1]["funcname"] = "GetItemRectSize"
+<<<<<<< HEAD
 defs["igGetItemRectSize"][1]["location"] = "imgui:882"
+=======
+defs["igGetItemRectSize"][1]["location"] = "imgui:881"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetItemRectSize"][1]["namespace"] = "ImGui"
 defs["igGetItemRectSize"][1]["nonUDT"] = 1
 defs["igGetItemRectSize"][1]["ov_cimguiname"] = "igGetItemRectSize"
@@ -17345,7 +20299,11 @@ defs["igGetItemStatusFlags"][1]["call_args"] = "()"
 defs["igGetItemStatusFlags"][1]["cimguiname"] = "igGetItemStatusFlags"
 defs["igGetItemStatusFlags"][1]["defaults"] = {}
 defs["igGetItemStatusFlags"][1]["funcname"] = "GetItemStatusFlags"
+<<<<<<< HEAD
 defs["igGetItemStatusFlags"][1]["location"] = "imgui_internal:3034"
+=======
+defs["igGetItemStatusFlags"][1]["location"] = "imgui_internal:3036"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetItemStatusFlags"][1]["namespace"] = "ImGui"
 defs["igGetItemStatusFlags"][1]["ov_cimguiname"] = "igGetItemStatusFlags"
 defs["igGetItemStatusFlags"][1]["ret"] = "ImGuiItemStatusFlags"
@@ -17370,7 +20328,11 @@ defs["igGetKeyChordName"][1]["call_args"] = "(key_chord,out_buf,out_buf_size)"
 defs["igGetKeyChordName"][1]["cimguiname"] = "igGetKeyChordName"
 defs["igGetKeyChordName"][1]["defaults"] = {}
 defs["igGetKeyChordName"][1]["funcname"] = "GetKeyChordName"
+<<<<<<< HEAD
 defs["igGetKeyChordName"][1]["location"] = "imgui_internal:3134"
+=======
+defs["igGetKeyChordName"][1]["location"] = "imgui_internal:3135"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetKeyChordName"][1]["namespace"] = "ImGui"
 defs["igGetKeyChordName"][1]["ov_cimguiname"] = "igGetKeyChordName"
 defs["igGetKeyChordName"][1]["ret"] = "void"
@@ -17389,7 +20351,11 @@ defs["igGetKeyData"][1]["call_args"] = "(key)"
 defs["igGetKeyData"][1]["cimguiname"] = "igGetKeyData"
 defs["igGetKeyData"][1]["defaults"] = {}
 defs["igGetKeyData"][1]["funcname"] = "GetKeyData"
+<<<<<<< HEAD
 defs["igGetKeyData"][1]["location"] = "imgui_internal:3133"
+=======
+defs["igGetKeyData"][1]["location"] = "imgui_internal:3134"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetKeyData"][1]["namespace"] = "ImGui"
 defs["igGetKeyData"][1]["ov_cimguiname"] = "igGetKeyData"
 defs["igGetKeyData"][1]["ret"] = "ImGuiKeyData*"
@@ -17408,7 +20374,11 @@ defs["igGetKeyIndex"][1]["call_args"] = "(key)"
 defs["igGetKeyIndex"][1]["cimguiname"] = "igGetKeyIndex"
 defs["igGetKeyIndex"][1]["defaults"] = {}
 defs["igGetKeyIndex"][1]["funcname"] = "GetKeyIndex"
+<<<<<<< HEAD
 defs["igGetKeyIndex"][1]["location"] = "imgui:3221"
+=======
+defs["igGetKeyIndex"][1]["location"] = "imgui:3212"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetKeyIndex"][1]["namespace"] = "ImGui"
 defs["igGetKeyIndex"][1]["ov_cimguiname"] = "igGetKeyIndex"
 defs["igGetKeyIndex"][1]["ret"] = "ImGuiKey"
@@ -17439,7 +20409,11 @@ defs["igGetKeyMagnitude2d"][1]["call_args"] = "(key_left,key_right,key_up,key_do
 defs["igGetKeyMagnitude2d"][1]["cimguiname"] = "igGetKeyMagnitude2d"
 defs["igGetKeyMagnitude2d"][1]["defaults"] = {}
 defs["igGetKeyMagnitude2d"][1]["funcname"] = "GetKeyMagnitude2d"
+<<<<<<< HEAD
 defs["igGetKeyMagnitude2d"][1]["location"] = "imgui_internal:3137"
+=======
+defs["igGetKeyMagnitude2d"][1]["location"] = "imgui_internal:3138"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetKeyMagnitude2d"][1]["namespace"] = "ImGui"
 defs["igGetKeyMagnitude2d"][1]["nonUDT"] = 1
 defs["igGetKeyMagnitude2d"][1]["ov_cimguiname"] = "igGetKeyMagnitude2d"
@@ -17459,7 +20433,11 @@ defs["igGetKeyName"][1]["call_args"] = "(key)"
 defs["igGetKeyName"][1]["cimguiname"] = "igGetKeyName"
 defs["igGetKeyName"][1]["defaults"] = {}
 defs["igGetKeyName"][1]["funcname"] = "GetKeyName"
+<<<<<<< HEAD
 defs["igGetKeyName"][1]["location"] = "imgui:927"
+=======
+defs["igGetKeyName"][1]["location"] = "imgui:926"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetKeyName"][1]["namespace"] = "ImGui"
 defs["igGetKeyName"][1]["ov_cimguiname"] = "igGetKeyName"
 defs["igGetKeyName"][1]["ret"] = "const char*"
@@ -17478,7 +20456,11 @@ defs["igGetKeyOwner"][1]["call_args"] = "(key)"
 defs["igGetKeyOwner"][1]["cimguiname"] = "igGetKeyOwner"
 defs["igGetKeyOwner"][1]["defaults"] = {}
 defs["igGetKeyOwner"][1]["funcname"] = "GetKeyOwner"
+<<<<<<< HEAD
 defs["igGetKeyOwner"][1]["location"] = "imgui_internal:3155"
+=======
+defs["igGetKeyOwner"][1]["location"] = "imgui_internal:3156"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetKeyOwner"][1]["namespace"] = "ImGui"
 defs["igGetKeyOwner"][1]["ov_cimguiname"] = "igGetKeyOwner"
 defs["igGetKeyOwner"][1]["ret"] = "ImGuiID"
@@ -17497,7 +20479,11 @@ defs["igGetKeyOwnerData"][1]["call_args"] = "(key)"
 defs["igGetKeyOwnerData"][1]["cimguiname"] = "igGetKeyOwnerData"
 defs["igGetKeyOwnerData"][1]["defaults"] = {}
 defs["igGetKeyOwnerData"][1]["funcname"] = "GetKeyOwnerData"
+<<<<<<< HEAD
 defs["igGetKeyOwnerData"][1]["location"] = "imgui_internal:3159"
+=======
+defs["igGetKeyOwnerData"][1]["location"] = "imgui_internal:3160"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetKeyOwnerData"][1]["namespace"] = "ImGui"
 defs["igGetKeyOwnerData"][1]["ov_cimguiname"] = "igGetKeyOwnerData"
 defs["igGetKeyOwnerData"][1]["ret"] = "ImGuiKeyOwnerData*"
@@ -17522,7 +20508,11 @@ defs["igGetKeyPressedAmount"][1]["call_args"] = "(key,repeat_delay,rate)"
 defs["igGetKeyPressedAmount"][1]["cimguiname"] = "igGetKeyPressedAmount"
 defs["igGetKeyPressedAmount"][1]["defaults"] = {}
 defs["igGetKeyPressedAmount"][1]["funcname"] = "GetKeyPressedAmount"
+<<<<<<< HEAD
 defs["igGetKeyPressedAmount"][1]["location"] = "imgui:926"
+=======
+defs["igGetKeyPressedAmount"][1]["location"] = "imgui:925"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetKeyPressedAmount"][1]["namespace"] = "ImGui"
 defs["igGetKeyPressedAmount"][1]["ov_cimguiname"] = "igGetKeyPressedAmount"
 defs["igGetKeyPressedAmount"][1]["ret"] = "int"
@@ -17538,7 +20528,11 @@ defs["igGetMainViewport"][1]["call_args"] = "()"
 defs["igGetMainViewport"][1]["cimguiname"] = "igGetMainViewport"
 defs["igGetMainViewport"][1]["defaults"] = {}
 defs["igGetMainViewport"][1]["funcname"] = "GetMainViewport"
+<<<<<<< HEAD
 defs["igGetMainViewport"][1]["location"] = "imgui:889"
+=======
+defs["igGetMainViewport"][1]["location"] = "imgui:888"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetMainViewport"][1]["namespace"] = "ImGui"
 defs["igGetMainViewport"][1]["ov_cimguiname"] = "igGetMainViewport"
 defs["igGetMainViewport"][1]["ret"] = "ImGuiViewport*"
@@ -17557,7 +20551,11 @@ defs["igGetMouseClickedCount"][1]["call_args"] = "(button)"
 defs["igGetMouseClickedCount"][1]["cimguiname"] = "igGetMouseClickedCount"
 defs["igGetMouseClickedCount"][1]["defaults"] = {}
 defs["igGetMouseClickedCount"][1]["funcname"] = "GetMouseClickedCount"
+<<<<<<< HEAD
 defs["igGetMouseClickedCount"][1]["location"] = "imgui:938"
+=======
+defs["igGetMouseClickedCount"][1]["location"] = "imgui:937"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetMouseClickedCount"][1]["namespace"] = "ImGui"
 defs["igGetMouseClickedCount"][1]["ov_cimguiname"] = "igGetMouseClickedCount"
 defs["igGetMouseClickedCount"][1]["ret"] = "int"
@@ -17573,7 +20571,11 @@ defs["igGetMouseCursor"][1]["call_args"] = "()"
 defs["igGetMouseCursor"][1]["cimguiname"] = "igGetMouseCursor"
 defs["igGetMouseCursor"][1]["defaults"] = {}
 defs["igGetMouseCursor"][1]["funcname"] = "GetMouseCursor"
+<<<<<<< HEAD
 defs["igGetMouseCursor"][1]["location"] = "imgui:947"
+=======
+defs["igGetMouseCursor"][1]["location"] = "imgui:946"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetMouseCursor"][1]["namespace"] = "ImGui"
 defs["igGetMouseCursor"][1]["ov_cimguiname"] = "igGetMouseCursor"
 defs["igGetMouseCursor"][1]["ret"] = "ImGuiMouseCursor"
@@ -17600,7 +20602,11 @@ defs["igGetMouseDragDelta"][1]["defaults"] = {}
 defs["igGetMouseDragDelta"][1]["defaults"]["button"] = "0"
 defs["igGetMouseDragDelta"][1]["defaults"]["lock_threshold"] = "-1.0f"
 defs["igGetMouseDragDelta"][1]["funcname"] = "GetMouseDragDelta"
+<<<<<<< HEAD
 defs["igGetMouseDragDelta"][1]["location"] = "imgui:945"
+=======
+defs["igGetMouseDragDelta"][1]["location"] = "imgui:944"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetMouseDragDelta"][1]["namespace"] = "ImGui"
 defs["igGetMouseDragDelta"][1]["nonUDT"] = 1
 defs["igGetMouseDragDelta"][1]["ov_cimguiname"] = "igGetMouseDragDelta"
@@ -17620,7 +20626,11 @@ defs["igGetMousePos"][1]["call_args"] = "()"
 defs["igGetMousePos"][1]["cimguiname"] = "igGetMousePos"
 defs["igGetMousePos"][1]["defaults"] = {}
 defs["igGetMousePos"][1]["funcname"] = "GetMousePos"
+<<<<<<< HEAD
 defs["igGetMousePos"][1]["location"] = "imgui:942"
+=======
+defs["igGetMousePos"][1]["location"] = "imgui:941"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetMousePos"][1]["namespace"] = "ImGui"
 defs["igGetMousePos"][1]["nonUDT"] = 1
 defs["igGetMousePos"][1]["ov_cimguiname"] = "igGetMousePos"
@@ -17640,7 +20650,11 @@ defs["igGetMousePosOnOpeningCurrentPopup"][1]["call_args"] = "()"
 defs["igGetMousePosOnOpeningCurrentPopup"][1]["cimguiname"] = "igGetMousePosOnOpeningCurrentPopup"
 defs["igGetMousePosOnOpeningCurrentPopup"][1]["defaults"] = {}
 defs["igGetMousePosOnOpeningCurrentPopup"][1]["funcname"] = "GetMousePosOnOpeningCurrentPopup"
+<<<<<<< HEAD
 defs["igGetMousePosOnOpeningCurrentPopup"][1]["location"] = "imgui:943"
+=======
+defs["igGetMousePosOnOpeningCurrentPopup"][1]["location"] = "imgui:942"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetMousePosOnOpeningCurrentPopup"][1]["namespace"] = "ImGui"
 defs["igGetMousePosOnOpeningCurrentPopup"][1]["nonUDT"] = 1
 defs["igGetMousePosOnOpeningCurrentPopup"][1]["ov_cimguiname"] = "igGetMousePosOnOpeningCurrentPopup"
@@ -17660,7 +20674,11 @@ defs["igGetNavTweakPressedAmount"][1]["call_args"] = "(axis)"
 defs["igGetNavTweakPressedAmount"][1]["cimguiname"] = "igGetNavTweakPressedAmount"
 defs["igGetNavTweakPressedAmount"][1]["defaults"] = {}
 defs["igGetNavTweakPressedAmount"][1]["funcname"] = "GetNavTweakPressedAmount"
+<<<<<<< HEAD
 defs["igGetNavTweakPressedAmount"][1]["location"] = "imgui_internal:3138"
+=======
+defs["igGetNavTweakPressedAmount"][1]["location"] = "imgui_internal:3139"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetNavTweakPressedAmount"][1]["namespace"] = "ImGui"
 defs["igGetNavTweakPressedAmount"][1]["ov_cimguiname"] = "igGetNavTweakPressedAmount"
 defs["igGetNavTweakPressedAmount"][1]["ret"] = "float"
@@ -17676,7 +20694,11 @@ defs["igGetPlatformIO"][1]["call_args"] = "()"
 defs["igGetPlatformIO"][1]["cimguiname"] = "igGetPlatformIO"
 defs["igGetPlatformIO"][1]["defaults"] = {}
 defs["igGetPlatformIO"][1]["funcname"] = "GetPlatformIO"
+<<<<<<< HEAD
 defs["igGetPlatformIO"][1]["location"] = "imgui:981"
+=======
+defs["igGetPlatformIO"][1]["location"] = "imgui:980"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetPlatformIO"][1]["namespace"] = "ImGui"
 defs["igGetPlatformIO"][1]["ov_cimguiname"] = "igGetPlatformIO"
 defs["igGetPlatformIO"][1]["ret"] = "ImGuiPlatformIO*"
@@ -17699,7 +20721,11 @@ defs["igGetPopupAllowedExtentRect"][1]["call_args"] = "(window)"
 defs["igGetPopupAllowedExtentRect"][1]["cimguiname"] = "igGetPopupAllowedExtentRect"
 defs["igGetPopupAllowedExtentRect"][1]["defaults"] = {}
 defs["igGetPopupAllowedExtentRect"][1]["funcname"] = "GetPopupAllowedExtentRect"
+<<<<<<< HEAD
 defs["igGetPopupAllowedExtentRect"][1]["location"] = "imgui_internal:3082"
+=======
+defs["igGetPopupAllowedExtentRect"][1]["location"] = "imgui_internal:3083"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetPopupAllowedExtentRect"][1]["namespace"] = "ImGui"
 defs["igGetPopupAllowedExtentRect"][1]["nonUDT"] = 1
 defs["igGetPopupAllowedExtentRect"][1]["ov_cimguiname"] = "igGetPopupAllowedExtentRect"
@@ -17783,7 +20809,11 @@ defs["igGetShortcutRoutingData"][1]["call_args"] = "(key_chord)"
 defs["igGetShortcutRoutingData"][1]["cimguiname"] = "igGetShortcutRoutingData"
 defs["igGetShortcutRoutingData"][1]["defaults"] = {}
 defs["igGetShortcutRoutingData"][1]["funcname"] = "GetShortcutRoutingData"
+<<<<<<< HEAD
 defs["igGetShortcutRoutingData"][1]["location"] = "imgui_internal:3187"
+=======
+defs["igGetShortcutRoutingData"][1]["location"] = "imgui_internal:3188"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetShortcutRoutingData"][1]["namespace"] = "ImGui"
 defs["igGetShortcutRoutingData"][1]["ov_cimguiname"] = "igGetShortcutRoutingData"
 defs["igGetShortcutRoutingData"][1]["ret"] = "ImGuiKeyRoutingData*"
@@ -17799,7 +20829,11 @@ defs["igGetStateStorage"][1]["call_args"] = "()"
 defs["igGetStateStorage"][1]["cimguiname"] = "igGetStateStorage"
 defs["igGetStateStorage"][1]["defaults"] = {}
 defs["igGetStateStorage"][1]["funcname"] = "GetStateStorage"
+<<<<<<< HEAD
 defs["igGetStateStorage"][1]["location"] = "imgui:905"
+=======
+defs["igGetStateStorage"][1]["location"] = "imgui:904"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetStateStorage"][1]["namespace"] = "ImGui"
 defs["igGetStateStorage"][1]["ov_cimguiname"] = "igGetStateStorage"
 defs["igGetStateStorage"][1]["ret"] = "ImGuiStorage*"
@@ -17835,7 +20869,11 @@ defs["igGetStyleColorName"][1]["call_args"] = "(idx)"
 defs["igGetStyleColorName"][1]["cimguiname"] = "igGetStyleColorName"
 defs["igGetStyleColorName"][1]["defaults"] = {}
 defs["igGetStyleColorName"][1]["funcname"] = "GetStyleColorName"
+<<<<<<< HEAD
 defs["igGetStyleColorName"][1]["location"] = "imgui:903"
+=======
+defs["igGetStyleColorName"][1]["location"] = "imgui:902"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetStyleColorName"][1]["namespace"] = "ImGui"
 defs["igGetStyleColorName"][1]["ov_cimguiname"] = "igGetStyleColorName"
 defs["igGetStyleColorName"][1]["ret"] = "const char*"
@@ -17903,7 +20941,11 @@ defs["igGetTime"][1]["call_args"] = "()"
 defs["igGetTime"][1]["cimguiname"] = "igGetTime"
 defs["igGetTime"][1]["defaults"] = {}
 defs["igGetTime"][1]["funcname"] = "GetTime"
+<<<<<<< HEAD
 defs["igGetTime"][1]["location"] = "imgui:900"
+=======
+defs["igGetTime"][1]["location"] = "imgui:899"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetTime"][1]["namespace"] = "ImGui"
 defs["igGetTime"][1]["ov_cimguiname"] = "igGetTime"
 defs["igGetTime"][1]["ret"] = "double"
@@ -17919,7 +20961,11 @@ defs["igGetTopMostAndVisiblePopupModal"][1]["call_args"] = "()"
 defs["igGetTopMostAndVisiblePopupModal"][1]["cimguiname"] = "igGetTopMostAndVisiblePopupModal"
 defs["igGetTopMostAndVisiblePopupModal"][1]["defaults"] = {}
 defs["igGetTopMostAndVisiblePopupModal"][1]["funcname"] = "GetTopMostAndVisiblePopupModal"
+<<<<<<< HEAD
 defs["igGetTopMostAndVisiblePopupModal"][1]["location"] = "imgui_internal:3084"
+=======
+defs["igGetTopMostAndVisiblePopupModal"][1]["location"] = "imgui_internal:3085"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetTopMostAndVisiblePopupModal"][1]["namespace"] = "ImGui"
 defs["igGetTopMostAndVisiblePopupModal"][1]["ov_cimguiname"] = "igGetTopMostAndVisiblePopupModal"
 defs["igGetTopMostAndVisiblePopupModal"][1]["ret"] = "ImGuiWindow*"
@@ -17935,7 +20981,11 @@ defs["igGetTopMostPopupModal"][1]["call_args"] = "()"
 defs["igGetTopMostPopupModal"][1]["cimguiname"] = "igGetTopMostPopupModal"
 defs["igGetTopMostPopupModal"][1]["defaults"] = {}
 defs["igGetTopMostPopupModal"][1]["funcname"] = "GetTopMostPopupModal"
+<<<<<<< HEAD
 defs["igGetTopMostPopupModal"][1]["location"] = "imgui_internal:3083"
+=======
+defs["igGetTopMostPopupModal"][1]["location"] = "imgui_internal:3084"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetTopMostPopupModal"][1]["namespace"] = "ImGui"
 defs["igGetTopMostPopupModal"][1]["ov_cimguiname"] = "igGetTopMostPopupModal"
 defs["igGetTopMostPopupModal"][1]["ret"] = "ImGuiWindow*"
@@ -17951,7 +21001,11 @@ defs["igGetTreeNodeToLabelSpacing"][1]["call_args"] = "()"
 defs["igGetTreeNodeToLabelSpacing"][1]["cimguiname"] = "igGetTreeNodeToLabelSpacing"
 defs["igGetTreeNodeToLabelSpacing"][1]["defaults"] = {}
 defs["igGetTreeNodeToLabelSpacing"][1]["funcname"] = "GetTreeNodeToLabelSpacing"
+<<<<<<< HEAD
 defs["igGetTreeNodeToLabelSpacing"][1]["location"] = "imgui:625"
+=======
+defs["igGetTreeNodeToLabelSpacing"][1]["location"] = "imgui:624"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetTreeNodeToLabelSpacing"][1]["namespace"] = "ImGui"
 defs["igGetTreeNodeToLabelSpacing"][1]["ov_cimguiname"] = "igGetTreeNodeToLabelSpacing"
 defs["igGetTreeNodeToLabelSpacing"][1]["ret"] = "float"
@@ -17976,7 +21030,11 @@ defs["igGetTypematicRepeatRate"][1]["call_args"] = "(flags,repeat_delay,repeat_r
 defs["igGetTypematicRepeatRate"][1]["cimguiname"] = "igGetTypematicRepeatRate"
 defs["igGetTypematicRepeatRate"][1]["defaults"] = {}
 defs["igGetTypematicRepeatRate"][1]["funcname"] = "GetTypematicRepeatRate"
+<<<<<<< HEAD
 defs["igGetTypematicRepeatRate"][1]["location"] = "imgui_internal:3140"
+=======
+defs["igGetTypematicRepeatRate"][1]["location"] = "imgui_internal:3141"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetTypematicRepeatRate"][1]["namespace"] = "ImGui"
 defs["igGetTypematicRepeatRate"][1]["ov_cimguiname"] = "igGetTypematicRepeatRate"
 defs["igGetTypematicRepeatRate"][1]["ret"] = "void"
@@ -18011,7 +21069,11 @@ defs["igGetViewportPlatformMonitor"][1]["call_args"] = "(viewport)"
 defs["igGetViewportPlatformMonitor"][1]["cimguiname"] = "igGetViewportPlatformMonitor"
 defs["igGetViewportPlatformMonitor"][1]["defaults"] = {}
 defs["igGetViewportPlatformMonitor"][1]["funcname"] = "GetViewportPlatformMonitor"
+<<<<<<< HEAD
 defs["igGetViewportPlatformMonitor"][1]["location"] = "imgui_internal:2998"
+=======
+defs["igGetViewportPlatformMonitor"][1]["location"] = "imgui_internal:3003"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetViewportPlatformMonitor"][1]["namespace"] = "ImGui"
 defs["igGetViewportPlatformMonitor"][1]["ov_cimguiname"] = "igGetViewportPlatformMonitor"
 defs["igGetViewportPlatformMonitor"][1]["ret"] = "const ImGuiPlatformMonitor*"
@@ -18030,7 +21092,11 @@ defs["igGetWindowAlwaysWantOwnTabBar"][1]["call_args"] = "(window)"
 defs["igGetWindowAlwaysWantOwnTabBar"][1]["cimguiname"] = "igGetWindowAlwaysWantOwnTabBar"
 defs["igGetWindowAlwaysWantOwnTabBar"][1]["defaults"] = {}
 defs["igGetWindowAlwaysWantOwnTabBar"][1]["funcname"] = "GetWindowAlwaysWantOwnTabBar"
+<<<<<<< HEAD
 defs["igGetWindowAlwaysWantOwnTabBar"][1]["location"] = "imgui_internal:3213"
+=======
+defs["igGetWindowAlwaysWantOwnTabBar"][1]["location"] = "imgui_internal:3212"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetWindowAlwaysWantOwnTabBar"][1]["namespace"] = "ImGui"
 defs["igGetWindowAlwaysWantOwnTabBar"][1]["ov_cimguiname"] = "igGetWindowAlwaysWantOwnTabBar"
 defs["igGetWindowAlwaysWantOwnTabBar"][1]["ret"] = "bool"
@@ -18086,7 +21152,11 @@ defs["igGetWindowDockID"][1]["call_args"] = "()"
 defs["igGetWindowDockID"][1]["cimguiname"] = "igGetWindowDockID"
 defs["igGetWindowDockID"][1]["defaults"] = {}
 defs["igGetWindowDockID"][1]["funcname"] = "GetWindowDockID"
+<<<<<<< HEAD
 defs["igGetWindowDockID"][1]["location"] = "imgui:820"
+=======
+defs["igGetWindowDockID"][1]["location"] = "imgui:819"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetWindowDockID"][1]["namespace"] = "ImGui"
 defs["igGetWindowDockID"][1]["ov_cimguiname"] = "igGetWindowDockID"
 defs["igGetWindowDockID"][1]["ret"] = "ImGuiID"
@@ -18102,7 +21172,11 @@ defs["igGetWindowDockNode"][1]["call_args"] = "()"
 defs["igGetWindowDockNode"][1]["cimguiname"] = "igGetWindowDockNode"
 defs["igGetWindowDockNode"][1]["defaults"] = {}
 defs["igGetWindowDockNode"][1]["funcname"] = "GetWindowDockNode"
+<<<<<<< HEAD
 defs["igGetWindowDockNode"][1]["location"] = "imgui_internal:3212"
+=======
+defs["igGetWindowDockNode"][1]["location"] = "imgui_internal:3211"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetWindowDockNode"][1]["namespace"] = "ImGui"
 defs["igGetWindowDockNode"][1]["ov_cimguiname"] = "igGetWindowDockNode"
 defs["igGetWindowDockNode"][1]["ret"] = "ImGuiDockNode*"
@@ -18192,7 +21266,11 @@ defs["igGetWindowResizeBorderID"][1]["call_args"] = "(window,dir)"
 defs["igGetWindowResizeBorderID"][1]["cimguiname"] = "igGetWindowResizeBorderID"
 defs["igGetWindowResizeBorderID"][1]["defaults"] = {}
 defs["igGetWindowResizeBorderID"][1]["funcname"] = "GetWindowResizeBorderID"
+<<<<<<< HEAD
 defs["igGetWindowResizeBorderID"][1]["location"] = "imgui_internal:3393"
+=======
+defs["igGetWindowResizeBorderID"][1]["location"] = "imgui_internal:3384"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetWindowResizeBorderID"][1]["namespace"] = "ImGui"
 defs["igGetWindowResizeBorderID"][1]["ov_cimguiname"] = "igGetWindowResizeBorderID"
 defs["igGetWindowResizeBorderID"][1]["ret"] = "ImGuiID"
@@ -18214,7 +21292,11 @@ defs["igGetWindowResizeCornerID"][1]["call_args"] = "(window,n)"
 defs["igGetWindowResizeCornerID"][1]["cimguiname"] = "igGetWindowResizeCornerID"
 defs["igGetWindowResizeCornerID"][1]["defaults"] = {}
 defs["igGetWindowResizeCornerID"][1]["funcname"] = "GetWindowResizeCornerID"
+<<<<<<< HEAD
 defs["igGetWindowResizeCornerID"][1]["location"] = "imgui_internal:3392"
+=======
+defs["igGetWindowResizeCornerID"][1]["location"] = "imgui_internal:3383"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetWindowResizeCornerID"][1]["namespace"] = "ImGui"
 defs["igGetWindowResizeCornerID"][1]["ov_cimguiname"] = "igGetWindowResizeCornerID"
 defs["igGetWindowResizeCornerID"][1]["ret"] = "ImGuiID"
@@ -18236,7 +21318,11 @@ defs["igGetWindowScrollbarID"][1]["call_args"] = "(window,axis)"
 defs["igGetWindowScrollbarID"][1]["cimguiname"] = "igGetWindowScrollbarID"
 defs["igGetWindowScrollbarID"][1]["defaults"] = {}
 defs["igGetWindowScrollbarID"][1]["funcname"] = "GetWindowScrollbarID"
+<<<<<<< HEAD
 defs["igGetWindowScrollbarID"][1]["location"] = "imgui_internal:3391"
+=======
+defs["igGetWindowScrollbarID"][1]["location"] = "imgui_internal:3382"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetWindowScrollbarID"][1]["namespace"] = "ImGui"
 defs["igGetWindowScrollbarID"][1]["ov_cimguiname"] = "igGetWindowScrollbarID"
 defs["igGetWindowScrollbarID"][1]["ret"] = "ImGuiID"
@@ -18261,7 +21347,11 @@ defs["igGetWindowScrollbarRect"][1]["call_args"] = "(window,axis)"
 defs["igGetWindowScrollbarRect"][1]["cimguiname"] = "igGetWindowScrollbarRect"
 defs["igGetWindowScrollbarRect"][1]["defaults"] = {}
 defs["igGetWindowScrollbarRect"][1]["funcname"] = "GetWindowScrollbarRect"
+<<<<<<< HEAD
 defs["igGetWindowScrollbarRect"][1]["location"] = "imgui_internal:3390"
+=======
+defs["igGetWindowScrollbarRect"][1]["location"] = "imgui_internal:3381"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igGetWindowScrollbarRect"][1]["namespace"] = "ImGui"
 defs["igGetWindowScrollbarRect"][1]["nonUDT"] = 1
 defs["igGetWindowScrollbarRect"][1]["ov_cimguiname"] = "igGetWindowScrollbarRect"
@@ -18333,7 +21423,11 @@ defs["igImAbs"][1]["call_args"] = "(x)"
 defs["igImAbs"][1]["cimguiname"] = "igImAbs"
 defs["igImAbs"][1]["defaults"] = {}
 defs["igImAbs"][1]["funcname"] = "ImAbs"
+<<<<<<< HEAD
 defs["igImAbs"][1]["location"] = "imgui_internal:450"
+=======
+defs["igImAbs"][1]["location"] = "imgui_internal:448"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImAbs"][1]["ov_cimguiname"] = "igImAbs_Int"
 defs["igImAbs"][1]["ret"] = "int"
 defs["igImAbs"][1]["signature"] = "(int)"
@@ -18349,7 +21443,11 @@ defs["igImAbs"][2]["call_args"] = "(x)"
 defs["igImAbs"][2]["cimguiname"] = "igImAbs"
 defs["igImAbs"][2]["defaults"] = {}
 defs["igImAbs"][2]["funcname"] = "ImAbs"
+<<<<<<< HEAD
 defs["igImAbs"][2]["location"] = "imgui_internal:451"
+=======
+defs["igImAbs"][2]["location"] = "imgui_internal:449"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImAbs"][2]["ov_cimguiname"] = "igImAbs_Float"
 defs["igImAbs"][2]["ret"] = "float"
 defs["igImAbs"][2]["signature"] = "(float)"
@@ -18365,7 +21463,11 @@ defs["igImAbs"][3]["call_args"] = "(x)"
 defs["igImAbs"][3]["cimguiname"] = "igImAbs"
 defs["igImAbs"][3]["defaults"] = {}
 defs["igImAbs"][3]["funcname"] = "ImAbs"
+<<<<<<< HEAD
 defs["igImAbs"][3]["location"] = "imgui_internal:452"
+=======
+defs["igImAbs"][3]["location"] = "imgui_internal:450"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImAbs"][3]["ov_cimguiname"] = "igImAbs_double"
 defs["igImAbs"][3]["ret"] = "double"
 defs["igImAbs"][3]["signature"] = "(double)"
@@ -18388,7 +21490,11 @@ defs["igImAlphaBlendColors"][1]["call_args"] = "(col_a,col_b)"
 defs["igImAlphaBlendColors"][1]["cimguiname"] = "igImAlphaBlendColors"
 defs["igImAlphaBlendColors"][1]["defaults"] = {}
 defs["igImAlphaBlendColors"][1]["funcname"] = "ImAlphaBlendColors"
+<<<<<<< HEAD
 defs["igImAlphaBlendColors"][1]["location"] = "imgui_internal:340"
+=======
+defs["igImAlphaBlendColors"][1]["location"] = "imgui_internal:338"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImAlphaBlendColors"][1]["ov_cimguiname"] = "igImAlphaBlendColors"
 defs["igImAlphaBlendColors"][1]["ret"] = "ImU32"
 defs["igImAlphaBlendColors"][1]["signature"] = "(ImU32,ImU32)"
@@ -18421,7 +21527,11 @@ defs["igImBezierCubicCalc"][1]["call_args"] = "(p1,p2,p3,p4,t)"
 defs["igImBezierCubicCalc"][1]["cimguiname"] = "igImBezierCubicCalc"
 defs["igImBezierCubicCalc"][1]["defaults"] = {}
 defs["igImBezierCubicCalc"][1]["funcname"] = "ImBezierCubicCalc"
+<<<<<<< HEAD
 defs["igImBezierCubicCalc"][1]["location"] = "imgui_internal:496"
+=======
+defs["igImBezierCubicCalc"][1]["location"] = "imgui_internal:494"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImBezierCubicCalc"][1]["nonUDT"] = 1
 defs["igImBezierCubicCalc"][1]["ov_cimguiname"] = "igImBezierCubicCalc"
 defs["igImBezierCubicCalc"][1]["ret"] = "void"
@@ -18458,7 +21568,11 @@ defs["igImBezierCubicClosestPoint"][1]["call_args"] = "(p1,p2,p3,p4,p,num_segmen
 defs["igImBezierCubicClosestPoint"][1]["cimguiname"] = "igImBezierCubicClosestPoint"
 defs["igImBezierCubicClosestPoint"][1]["defaults"] = {}
 defs["igImBezierCubicClosestPoint"][1]["funcname"] = "ImBezierCubicClosestPoint"
+<<<<<<< HEAD
 defs["igImBezierCubicClosestPoint"][1]["location"] = "imgui_internal:497"
+=======
+defs["igImBezierCubicClosestPoint"][1]["location"] = "imgui_internal:495"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImBezierCubicClosestPoint"][1]["nonUDT"] = 1
 defs["igImBezierCubicClosestPoint"][1]["ov_cimguiname"] = "igImBezierCubicClosestPoint"
 defs["igImBezierCubicClosestPoint"][1]["ret"] = "void"
@@ -18495,7 +21609,11 @@ defs["igImBezierCubicClosestPointCasteljau"][1]["call_args"] = "(p1,p2,p3,p4,p,t
 defs["igImBezierCubicClosestPointCasteljau"][1]["cimguiname"] = "igImBezierCubicClosestPointCasteljau"
 defs["igImBezierCubicClosestPointCasteljau"][1]["defaults"] = {}
 defs["igImBezierCubicClosestPointCasteljau"][1]["funcname"] = "ImBezierCubicClosestPointCasteljau"
+<<<<<<< HEAD
 defs["igImBezierCubicClosestPointCasteljau"][1]["location"] = "imgui_internal:498"
+=======
+defs["igImBezierCubicClosestPointCasteljau"][1]["location"] = "imgui_internal:496"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImBezierCubicClosestPointCasteljau"][1]["nonUDT"] = 1
 defs["igImBezierCubicClosestPointCasteljau"][1]["ov_cimguiname"] = "igImBezierCubicClosestPointCasteljau"
 defs["igImBezierCubicClosestPointCasteljau"][1]["ret"] = "void"
@@ -18526,7 +21644,11 @@ defs["igImBezierQuadraticCalc"][1]["call_args"] = "(p1,p2,p3,t)"
 defs["igImBezierQuadraticCalc"][1]["cimguiname"] = "igImBezierQuadraticCalc"
 defs["igImBezierQuadraticCalc"][1]["defaults"] = {}
 defs["igImBezierQuadraticCalc"][1]["funcname"] = "ImBezierQuadraticCalc"
+<<<<<<< HEAD
 defs["igImBezierQuadraticCalc"][1]["location"] = "imgui_internal:499"
+=======
+defs["igImBezierQuadraticCalc"][1]["location"] = "imgui_internal:497"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImBezierQuadraticCalc"][1]["nonUDT"] = 1
 defs["igImBezierQuadraticCalc"][1]["ov_cimguiname"] = "igImBezierQuadraticCalc"
 defs["igImBezierQuadraticCalc"][1]["ret"] = "void"
@@ -18569,7 +21691,11 @@ defs["igImBitArrayClearBit"][1]["call_args"] = "(arr,n)"
 defs["igImBitArrayClearBit"][1]["cimguiname"] = "igImBitArrayClearBit"
 defs["igImBitArrayClearBit"][1]["defaults"] = {}
 defs["igImBitArrayClearBit"][1]["funcname"] = "ImBitArrayClearBit"
+<<<<<<< HEAD
 defs["igImBitArrayClearBit"][1]["location"] = "imgui_internal:570"
+=======
+defs["igImBitArrayClearBit"][1]["location"] = "imgui_internal:565"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImBitArrayClearBit"][1]["ov_cimguiname"] = "igImBitArrayClearBit"
 defs["igImBitArrayClearBit"][1]["ret"] = "void"
 defs["igImBitArrayClearBit"][1]["signature"] = "(ImU32*,int)"
@@ -18608,7 +21734,11 @@ defs["igImBitArraySetBit"][1]["call_args"] = "(arr,n)"
 defs["igImBitArraySetBit"][1]["cimguiname"] = "igImBitArraySetBit"
 defs["igImBitArraySetBit"][1]["defaults"] = {}
 defs["igImBitArraySetBit"][1]["funcname"] = "ImBitArraySetBit"
+<<<<<<< HEAD
 defs["igImBitArraySetBit"][1]["location"] = "imgui_internal:571"
+=======
+defs["igImBitArraySetBit"][1]["location"] = "imgui_internal:566"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImBitArraySetBit"][1]["ov_cimguiname"] = "igImBitArraySetBit"
 defs["igImBitArraySetBit"][1]["ret"] = "void"
 defs["igImBitArraySetBit"][1]["signature"] = "(ImU32*,int)"
@@ -18632,7 +21762,11 @@ defs["igImBitArraySetBitRange"][1]["call_args"] = "(arr,n,n2)"
 defs["igImBitArraySetBitRange"][1]["cimguiname"] = "igImBitArraySetBitRange"
 defs["igImBitArraySetBitRange"][1]["defaults"] = {}
 defs["igImBitArraySetBitRange"][1]["funcname"] = "ImBitArraySetBitRange"
+<<<<<<< HEAD
 defs["igImBitArraySetBitRange"][1]["location"] = "imgui_internal:572"
+=======
+defs["igImBitArraySetBitRange"][1]["location"] = "imgui_internal:567"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImBitArraySetBitRange"][1]["ov_cimguiname"] = "igImBitArraySetBitRange"
 defs["igImBitArraySetBitRange"][1]["ret"] = "void"
 defs["igImBitArraySetBitRange"][1]["signature"] = "(ImU32*,int,int)"
@@ -18653,7 +21787,11 @@ defs["igImBitArrayTestBit"][1]["call_args"] = "(arr,n)"
 defs["igImBitArrayTestBit"][1]["cimguiname"] = "igImBitArrayTestBit"
 defs["igImBitArrayTestBit"][1]["defaults"] = {}
 defs["igImBitArrayTestBit"][1]["funcname"] = "ImBitArrayTestBit"
+<<<<<<< HEAD
 defs["igImBitArrayTestBit"][1]["location"] = "imgui_internal:569"
+=======
+defs["igImBitArrayTestBit"][1]["location"] = "imgui_internal:564"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImBitArrayTestBit"][1]["ov_cimguiname"] = "igImBitArrayTestBit"
 defs["igImBitArrayTestBit"][1]["ret"] = "bool"
 defs["igImBitArrayTestBit"][1]["signature"] = "(const ImU32*,int)"
@@ -18671,7 +21809,11 @@ defs["igImCharIsBlankA"][1]["call_args"] = "(c)"
 defs["igImCharIsBlankA"][1]["cimguiname"] = "igImCharIsBlankA"
 defs["igImCharIsBlankA"][1]["defaults"] = {}
 defs["igImCharIsBlankA"][1]["funcname"] = "ImCharIsBlankA"
+<<<<<<< HEAD
 defs["igImCharIsBlankA"][1]["location"] = "imgui_internal:362"
+=======
+defs["igImCharIsBlankA"][1]["location"] = "imgui_internal:360"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImCharIsBlankA"][1]["ov_cimguiname"] = "igImCharIsBlankA"
 defs["igImCharIsBlankA"][1]["ret"] = "bool"
 defs["igImCharIsBlankA"][1]["signature"] = "(char)"
@@ -18689,7 +21831,11 @@ defs["igImCharIsBlankW"][1]["call_args"] = "(c)"
 defs["igImCharIsBlankW"][1]["cimguiname"] = "igImCharIsBlankW"
 defs["igImCharIsBlankW"][1]["defaults"] = {}
 defs["igImCharIsBlankW"][1]["funcname"] = "ImCharIsBlankW"
+<<<<<<< HEAD
 defs["igImCharIsBlankW"][1]["location"] = "imgui_internal:363"
+=======
+defs["igImCharIsBlankW"][1]["location"] = "imgui_internal:361"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImCharIsBlankW"][1]["ov_cimguiname"] = "igImCharIsBlankW"
 defs["igImCharIsBlankW"][1]["ret"] = "bool"
 defs["igImCharIsBlankW"][1]["signature"] = "(unsigned int)"
@@ -18716,7 +21862,11 @@ defs["igImClamp"][1]["call_args"] = "(v,mn,mx)"
 defs["igImClamp"][1]["cimguiname"] = "igImClamp"
 defs["igImClamp"][1]["defaults"] = {}
 defs["igImClamp"][1]["funcname"] = "ImClamp"
+<<<<<<< HEAD
 defs["igImClamp"][1]["location"] = "imgui_internal:474"
+=======
+defs["igImClamp"][1]["location"] = "imgui_internal:472"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImClamp"][1]["nonUDT"] = 1
 defs["igImClamp"][1]["ov_cimguiname"] = "igImClamp"
 defs["igImClamp"][1]["ret"] = "void"
@@ -18738,7 +21888,11 @@ defs["igImDot"][1]["call_args"] = "(a,b)"
 defs["igImDot"][1]["cimguiname"] = "igImDot"
 defs["igImDot"][1]["defaults"] = {}
 defs["igImDot"][1]["funcname"] = "ImDot"
+<<<<<<< HEAD
 defs["igImDot"][1]["location"] = "imgui_internal:487"
+=======
+defs["igImDot"][1]["location"] = "imgui_internal:485"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImDot"][1]["ov_cimguiname"] = "igImDot"
 defs["igImDot"][1]["ret"] = "float"
 defs["igImDot"][1]["signature"] = "(const ImVec2,const ImVec2)"
@@ -18762,7 +21916,11 @@ defs["igImExponentialMovingAverage"][1]["call_args"] = "(avg,sample,n)"
 defs["igImExponentialMovingAverage"][1]["cimguiname"] = "igImExponentialMovingAverage"
 defs["igImExponentialMovingAverage"][1]["defaults"] = {}
 defs["igImExponentialMovingAverage"][1]["funcname"] = "ImExponentialMovingAverage"
+<<<<<<< HEAD
 defs["igImExponentialMovingAverage"][1]["location"] = "imgui_internal:492"
+=======
+defs["igImExponentialMovingAverage"][1]["location"] = "imgui_internal:490"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImExponentialMovingAverage"][1]["ov_cimguiname"] = "igImExponentialMovingAverage"
 defs["igImExponentialMovingAverage"][1]["ret"] = "float"
 defs["igImExponentialMovingAverage"][1]["signature"] = "(float,float,int)"
@@ -18780,7 +21938,11 @@ defs["igImFileClose"][1]["call_args"] = "(file)"
 defs["igImFileClose"][1]["cimguiname"] = "igImFileClose"
 defs["igImFileClose"][1]["defaults"] = {}
 defs["igImFileClose"][1]["funcname"] = "ImFileClose"
+<<<<<<< HEAD
 defs["igImFileClose"][1]["location"] = "imgui_internal:423"
+=======
+defs["igImFileClose"][1]["location"] = "imgui_internal:421"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFileClose"][1]["ov_cimguiname"] = "igImFileClose"
 defs["igImFileClose"][1]["ret"] = "bool"
 defs["igImFileClose"][1]["signature"] = "(ImFileHandle)"
@@ -18798,7 +21960,11 @@ defs["igImFileGetSize"][1]["call_args"] = "(file)"
 defs["igImFileGetSize"][1]["cimguiname"] = "igImFileGetSize"
 defs["igImFileGetSize"][1]["defaults"] = {}
 defs["igImFileGetSize"][1]["funcname"] = "ImFileGetSize"
+<<<<<<< HEAD
 defs["igImFileGetSize"][1]["location"] = "imgui_internal:424"
+=======
+defs["igImFileGetSize"][1]["location"] = "imgui_internal:422"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFileGetSize"][1]["ov_cimguiname"] = "igImFileGetSize"
 defs["igImFileGetSize"][1]["ret"] = "ImU64"
 defs["igImFileGetSize"][1]["signature"] = "(ImFileHandle)"
@@ -18827,7 +21993,11 @@ defs["igImFileLoadToMemory"][1]["defaults"] = {}
 defs["igImFileLoadToMemory"][1]["defaults"]["out_file_size"] = "NULL"
 defs["igImFileLoadToMemory"][1]["defaults"]["padding_bytes"] = "0"
 defs["igImFileLoadToMemory"][1]["funcname"] = "ImFileLoadToMemory"
+<<<<<<< HEAD
 defs["igImFileLoadToMemory"][1]["location"] = "imgui_internal:430"
+=======
+defs["igImFileLoadToMemory"][1]["location"] = "imgui_internal:428"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFileLoadToMemory"][1]["ov_cimguiname"] = "igImFileLoadToMemory"
 defs["igImFileLoadToMemory"][1]["ret"] = "void*"
 defs["igImFileLoadToMemory"][1]["signature"] = "(const char*,const char*,size_t*,int)"
@@ -18848,7 +22018,11 @@ defs["igImFileOpen"][1]["call_args"] = "(filename,mode)"
 defs["igImFileOpen"][1]["cimguiname"] = "igImFileOpen"
 defs["igImFileOpen"][1]["defaults"] = {}
 defs["igImFileOpen"][1]["funcname"] = "ImFileOpen"
+<<<<<<< HEAD
 defs["igImFileOpen"][1]["location"] = "imgui_internal:422"
+=======
+defs["igImFileOpen"][1]["location"] = "imgui_internal:420"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFileOpen"][1]["ov_cimguiname"] = "igImFileOpen"
 defs["igImFileOpen"][1]["ret"] = "ImFileHandle"
 defs["igImFileOpen"][1]["signature"] = "(const char*,const char*)"
@@ -18875,7 +22049,11 @@ defs["igImFileRead"][1]["call_args"] = "(data,size,count,file)"
 defs["igImFileRead"][1]["cimguiname"] = "igImFileRead"
 defs["igImFileRead"][1]["defaults"] = {}
 defs["igImFileRead"][1]["funcname"] = "ImFileRead"
+<<<<<<< HEAD
 defs["igImFileRead"][1]["location"] = "imgui_internal:425"
+=======
+defs["igImFileRead"][1]["location"] = "imgui_internal:423"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFileRead"][1]["ov_cimguiname"] = "igImFileRead"
 defs["igImFileRead"][1]["ret"] = "ImU64"
 defs["igImFileRead"][1]["signature"] = "(void*,ImU64,ImU64,ImFileHandle)"
@@ -18902,7 +22080,11 @@ defs["igImFileWrite"][1]["call_args"] = "(data,size,count,file)"
 defs["igImFileWrite"][1]["cimguiname"] = "igImFileWrite"
 defs["igImFileWrite"][1]["defaults"] = {}
 defs["igImFileWrite"][1]["funcname"] = "ImFileWrite"
+<<<<<<< HEAD
 defs["igImFileWrite"][1]["location"] = "imgui_internal:426"
+=======
+defs["igImFileWrite"][1]["location"] = "imgui_internal:424"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFileWrite"][1]["ov_cimguiname"] = "igImFileWrite"
 defs["igImFileWrite"][1]["ret"] = "ImU64"
 defs["igImFileWrite"][1]["signature"] = "(const void*,ImU64,ImU64,ImFileHandle)"
@@ -18920,7 +22102,11 @@ defs["igImFloor"][1]["call_args"] = "(f)"
 defs["igImFloor"][1]["cimguiname"] = "igImFloor"
 defs["igImFloor"][1]["defaults"] = {}
 defs["igImFloor"][1]["funcname"] = "ImFloor"
+<<<<<<< HEAD
 defs["igImFloor"][1]["location"] = "imgui_internal:482"
+=======
+defs["igImFloor"][1]["location"] = "imgui_internal:480"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFloor"][1]["ov_cimguiname"] = "igImFloor_Float"
 defs["igImFloor"][1]["ret"] = "float"
 defs["igImFloor"][1]["signature"] = "(float)"
@@ -18939,7 +22125,11 @@ defs["igImFloor"][2]["call_args"] = "(v)"
 defs["igImFloor"][2]["cimguiname"] = "igImFloor"
 defs["igImFloor"][2]["defaults"] = {}
 defs["igImFloor"][2]["funcname"] = "ImFloor"
+<<<<<<< HEAD
 defs["igImFloor"][2]["location"] = "imgui_internal:484"
+=======
+defs["igImFloor"][2]["location"] = "imgui_internal:482"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFloor"][2]["nonUDT"] = 1
 defs["igImFloor"][2]["ov_cimguiname"] = "igImFloor_Vec2"
 defs["igImFloor"][2]["ret"] = "void"
@@ -18959,7 +22149,11 @@ defs["igImFloorSigned"][1]["call_args"] = "(f)"
 defs["igImFloorSigned"][1]["cimguiname"] = "igImFloorSigned"
 defs["igImFloorSigned"][1]["defaults"] = {}
 defs["igImFloorSigned"][1]["funcname"] = "ImFloorSigned"
+<<<<<<< HEAD
 defs["igImFloorSigned"][1]["location"] = "imgui_internal:483"
+=======
+defs["igImFloorSigned"][1]["location"] = "imgui_internal:481"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFloorSigned"][1]["ov_cimguiname"] = "igImFloorSigned_Float"
 defs["igImFloorSigned"][1]["ret"] = "float"
 defs["igImFloorSigned"][1]["signature"] = "(float)"
@@ -18978,7 +22172,11 @@ defs["igImFloorSigned"][2]["call_args"] = "(v)"
 defs["igImFloorSigned"][2]["cimguiname"] = "igImFloorSigned"
 defs["igImFloorSigned"][2]["defaults"] = {}
 defs["igImFloorSigned"][2]["funcname"] = "ImFloorSigned"
+<<<<<<< HEAD
 defs["igImFloorSigned"][2]["location"] = "imgui_internal:485"
+=======
+defs["igImFloorSigned"][2]["location"] = "imgui_internal:483"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFloorSigned"][2]["nonUDT"] = 1
 defs["igImFloorSigned"][2]["ov_cimguiname"] = "igImFloorSigned_Vec2"
 defs["igImFloorSigned"][2]["ret"] = "void"
@@ -18998,7 +22196,11 @@ defs["igImFontAtlasBuildFinish"][1]["call_args"] = "(atlas)"
 defs["igImFontAtlasBuildFinish"][1]["cimguiname"] = "igImFontAtlasBuildFinish"
 defs["igImFontAtlasBuildFinish"][1]["defaults"] = {}
 defs["igImFontAtlasBuildFinish"][1]["funcname"] = "ImFontAtlasBuildFinish"
+<<<<<<< HEAD
 defs["igImFontAtlasBuildFinish"][1]["location"] = "imgui_internal:3518"
+=======
+defs["igImFontAtlasBuildFinish"][1]["location"] = "imgui_internal:3509"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFontAtlasBuildFinish"][1]["ov_cimguiname"] = "igImFontAtlasBuildFinish"
 defs["igImFontAtlasBuildFinish"][1]["ret"] = "void"
 defs["igImFontAtlasBuildFinish"][1]["signature"] = "(ImFontAtlas*)"
@@ -19016,7 +22218,11 @@ defs["igImFontAtlasBuildInit"][1]["call_args"] = "(atlas)"
 defs["igImFontAtlasBuildInit"][1]["cimguiname"] = "igImFontAtlasBuildInit"
 defs["igImFontAtlasBuildInit"][1]["defaults"] = {}
 defs["igImFontAtlasBuildInit"][1]["funcname"] = "ImFontAtlasBuildInit"
+<<<<<<< HEAD
 defs["igImFontAtlasBuildInit"][1]["location"] = "imgui_internal:3515"
+=======
+defs["igImFontAtlasBuildInit"][1]["location"] = "imgui_internal:3506"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFontAtlasBuildInit"][1]["ov_cimguiname"] = "igImFontAtlasBuildInit"
 defs["igImFontAtlasBuildInit"][1]["ret"] = "void"
 defs["igImFontAtlasBuildInit"][1]["signature"] = "(ImFontAtlas*)"
@@ -19037,7 +22243,11 @@ defs["igImFontAtlasBuildMultiplyCalcLookupTable"][1]["call_args"] = "(out_table,
 defs["igImFontAtlasBuildMultiplyCalcLookupTable"][1]["cimguiname"] = "igImFontAtlasBuildMultiplyCalcLookupTable"
 defs["igImFontAtlasBuildMultiplyCalcLookupTable"][1]["defaults"] = {}
 defs["igImFontAtlasBuildMultiplyCalcLookupTable"][1]["funcname"] = "ImFontAtlasBuildMultiplyCalcLookupTable"
+<<<<<<< HEAD
 defs["igImFontAtlasBuildMultiplyCalcLookupTable"][1]["location"] = "imgui_internal:3521"
+=======
+defs["igImFontAtlasBuildMultiplyCalcLookupTable"][1]["location"] = "imgui_internal:3512"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFontAtlasBuildMultiplyCalcLookupTable"][1]["ov_cimguiname"] = "igImFontAtlasBuildMultiplyCalcLookupTable"
 defs["igImFontAtlasBuildMultiplyCalcLookupTable"][1]["ret"] = "void"
 defs["igImFontAtlasBuildMultiplyCalcLookupTable"][1]["signature"] = "(unsigned char[256],float)"
@@ -19073,7 +22283,11 @@ defs["igImFontAtlasBuildMultiplyRectAlpha8"][1]["call_args"] = "(table,pixels,x,
 defs["igImFontAtlasBuildMultiplyRectAlpha8"][1]["cimguiname"] = "igImFontAtlasBuildMultiplyRectAlpha8"
 defs["igImFontAtlasBuildMultiplyRectAlpha8"][1]["defaults"] = {}
 defs["igImFontAtlasBuildMultiplyRectAlpha8"][1]["funcname"] = "ImFontAtlasBuildMultiplyRectAlpha8"
+<<<<<<< HEAD
 defs["igImFontAtlasBuildMultiplyRectAlpha8"][1]["location"] = "imgui_internal:3522"
+=======
+defs["igImFontAtlasBuildMultiplyRectAlpha8"][1]["location"] = "imgui_internal:3513"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFontAtlasBuildMultiplyRectAlpha8"][1]["ov_cimguiname"] = "igImFontAtlasBuildMultiplyRectAlpha8"
 defs["igImFontAtlasBuildMultiplyRectAlpha8"][1]["ret"] = "void"
 defs["igImFontAtlasBuildMultiplyRectAlpha8"][1]["signature"] = "(const unsigned char[256],unsigned char*,int,int,int,int,int)"
@@ -19094,7 +22308,11 @@ defs["igImFontAtlasBuildPackCustomRects"][1]["call_args"] = "(atlas,stbrp_contex
 defs["igImFontAtlasBuildPackCustomRects"][1]["cimguiname"] = "igImFontAtlasBuildPackCustomRects"
 defs["igImFontAtlasBuildPackCustomRects"][1]["defaults"] = {}
 defs["igImFontAtlasBuildPackCustomRects"][1]["funcname"] = "ImFontAtlasBuildPackCustomRects"
+<<<<<<< HEAD
 defs["igImFontAtlasBuildPackCustomRects"][1]["location"] = "imgui_internal:3517"
+=======
+defs["igImFontAtlasBuildPackCustomRects"][1]["location"] = "imgui_internal:3508"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFontAtlasBuildPackCustomRects"][1]["ov_cimguiname"] = "igImFontAtlasBuildPackCustomRects"
 defs["igImFontAtlasBuildPackCustomRects"][1]["ret"] = "void"
 defs["igImFontAtlasBuildPackCustomRects"][1]["signature"] = "(ImFontAtlas*,void*)"
@@ -19133,7 +22351,11 @@ defs["igImFontAtlasBuildRender32bppRectFromString"][1]["call_args"] = "(atlas,x,
 defs["igImFontAtlasBuildRender32bppRectFromString"][1]["cimguiname"] = "igImFontAtlasBuildRender32bppRectFromString"
 defs["igImFontAtlasBuildRender32bppRectFromString"][1]["defaults"] = {}
 defs["igImFontAtlasBuildRender32bppRectFromString"][1]["funcname"] = "ImFontAtlasBuildRender32bppRectFromString"
+<<<<<<< HEAD
 defs["igImFontAtlasBuildRender32bppRectFromString"][1]["location"] = "imgui_internal:3520"
+=======
+defs["igImFontAtlasBuildRender32bppRectFromString"][1]["location"] = "imgui_internal:3511"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFontAtlasBuildRender32bppRectFromString"][1]["ov_cimguiname"] = "igImFontAtlasBuildRender32bppRectFromString"
 defs["igImFontAtlasBuildRender32bppRectFromString"][1]["ret"] = "void"
 defs["igImFontAtlasBuildRender32bppRectFromString"][1]["signature"] = "(ImFontAtlas*,int,int,int,int,const char*,char,unsigned int)"
@@ -19172,7 +22394,11 @@ defs["igImFontAtlasBuildRender8bppRectFromString"][1]["call_args"] = "(atlas,x,y
 defs["igImFontAtlasBuildRender8bppRectFromString"][1]["cimguiname"] = "igImFontAtlasBuildRender8bppRectFromString"
 defs["igImFontAtlasBuildRender8bppRectFromString"][1]["defaults"] = {}
 defs["igImFontAtlasBuildRender8bppRectFromString"][1]["funcname"] = "ImFontAtlasBuildRender8bppRectFromString"
+<<<<<<< HEAD
 defs["igImFontAtlasBuildRender8bppRectFromString"][1]["location"] = "imgui_internal:3519"
+=======
+defs["igImFontAtlasBuildRender8bppRectFromString"][1]["location"] = "imgui_internal:3510"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFontAtlasBuildRender8bppRectFromString"][1]["ov_cimguiname"] = "igImFontAtlasBuildRender8bppRectFromString"
 defs["igImFontAtlasBuildRender8bppRectFromString"][1]["ret"] = "void"
 defs["igImFontAtlasBuildRender8bppRectFromString"][1]["signature"] = "(ImFontAtlas*,int,int,int,int,const char*,char,unsigned char)"
@@ -19202,7 +22428,11 @@ defs["igImFontAtlasBuildSetupFont"][1]["call_args"] = "(atlas,font,font_config,a
 defs["igImFontAtlasBuildSetupFont"][1]["cimguiname"] = "igImFontAtlasBuildSetupFont"
 defs["igImFontAtlasBuildSetupFont"][1]["defaults"] = {}
 defs["igImFontAtlasBuildSetupFont"][1]["funcname"] = "ImFontAtlasBuildSetupFont"
+<<<<<<< HEAD
 defs["igImFontAtlasBuildSetupFont"][1]["location"] = "imgui_internal:3516"
+=======
+defs["igImFontAtlasBuildSetupFont"][1]["location"] = "imgui_internal:3507"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFontAtlasBuildSetupFont"][1]["ov_cimguiname"] = "igImFontAtlasBuildSetupFont"
 defs["igImFontAtlasBuildSetupFont"][1]["ret"] = "void"
 defs["igImFontAtlasBuildSetupFont"][1]["signature"] = "(ImFontAtlas*,ImFont*,ImFontConfig*,float,float)"
@@ -19217,7 +22447,11 @@ defs["igImFontAtlasGetBuilderForStbTruetype"][1]["call_args"] = "()"
 defs["igImFontAtlasGetBuilderForStbTruetype"][1]["cimguiname"] = "igImFontAtlasGetBuilderForStbTruetype"
 defs["igImFontAtlasGetBuilderForStbTruetype"][1]["defaults"] = {}
 defs["igImFontAtlasGetBuilderForStbTruetype"][1]["funcname"] = "ImFontAtlasGetBuilderForStbTruetype"
+<<<<<<< HEAD
 defs["igImFontAtlasGetBuilderForStbTruetype"][1]["location"] = "imgui_internal:3513"
+=======
+defs["igImFontAtlasGetBuilderForStbTruetype"][1]["location"] = "imgui_internal:3504"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFontAtlasGetBuilderForStbTruetype"][1]["ov_cimguiname"] = "igImFontAtlasGetBuilderForStbTruetype"
 defs["igImFontAtlasGetBuilderForStbTruetype"][1]["ret"] = "const ImFontBuilderIO*"
 defs["igImFontAtlasGetBuilderForStbTruetype"][1]["signature"] = "()"
@@ -19245,7 +22479,11 @@ defs["igImFormatString"][1]["cimguiname"] = "igImFormatString"
 defs["igImFormatString"][1]["defaults"] = {}
 defs["igImFormatString"][1]["funcname"] = "ImFormatString"
 defs["igImFormatString"][1]["isvararg"] = "...)"
+<<<<<<< HEAD
 defs["igImFormatString"][1]["location"] = "imgui_internal:367"
+=======
+defs["igImFormatString"][1]["location"] = "imgui_internal:365"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFormatString"][1]["ov_cimguiname"] = "igImFormatString"
 defs["igImFormatString"][1]["ret"] = "int"
 defs["igImFormatString"][1]["signature"] = "(char*,size_t,const char*,...)"
@@ -19273,7 +22511,11 @@ defs["igImFormatStringToTempBuffer"][1]["cimguiname"] = "igImFormatStringToTempB
 defs["igImFormatStringToTempBuffer"][1]["defaults"] = {}
 defs["igImFormatStringToTempBuffer"][1]["funcname"] = "ImFormatStringToTempBuffer"
 defs["igImFormatStringToTempBuffer"][1]["isvararg"] = "...)"
+<<<<<<< HEAD
 defs["igImFormatStringToTempBuffer"][1]["location"] = "imgui_internal:369"
+=======
+defs["igImFormatStringToTempBuffer"][1]["location"] = "imgui_internal:367"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFormatStringToTempBuffer"][1]["ov_cimguiname"] = "igImFormatStringToTempBuffer"
 defs["igImFormatStringToTempBuffer"][1]["ret"] = "void"
 defs["igImFormatStringToTempBuffer"][1]["signature"] = "(const char**,const char**,const char*,...)"
@@ -19300,7 +22542,11 @@ defs["igImFormatStringToTempBufferV"][1]["call_args"] = "(out_buf,out_buf_end,fm
 defs["igImFormatStringToTempBufferV"][1]["cimguiname"] = "igImFormatStringToTempBufferV"
 defs["igImFormatStringToTempBufferV"][1]["defaults"] = {}
 defs["igImFormatStringToTempBufferV"][1]["funcname"] = "ImFormatStringToTempBufferV"
+<<<<<<< HEAD
 defs["igImFormatStringToTempBufferV"][1]["location"] = "imgui_internal:370"
+=======
+defs["igImFormatStringToTempBufferV"][1]["location"] = "imgui_internal:368"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFormatStringToTempBufferV"][1]["ov_cimguiname"] = "igImFormatStringToTempBufferV"
 defs["igImFormatStringToTempBufferV"][1]["ret"] = "void"
 defs["igImFormatStringToTempBufferV"][1]["signature"] = "(const char**,const char**,const char*,va_list)"
@@ -19327,7 +22573,11 @@ defs["igImFormatStringV"][1]["call_args"] = "(buf,buf_size,fmt,args)"
 defs["igImFormatStringV"][1]["cimguiname"] = "igImFormatStringV"
 defs["igImFormatStringV"][1]["defaults"] = {}
 defs["igImFormatStringV"][1]["funcname"] = "ImFormatStringV"
+<<<<<<< HEAD
 defs["igImFormatStringV"][1]["location"] = "imgui_internal:368"
+=======
+defs["igImFormatStringV"][1]["location"] = "imgui_internal:366"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImFormatStringV"][1]["ov_cimguiname"] = "igImFormatStringV"
 defs["igImFormatStringV"][1]["ret"] = "int"
 defs["igImFormatStringV"][1]["signature"] = "(char*,size_t,const char*,va_list)"
@@ -19348,7 +22598,11 @@ defs["igImGetDirQuadrantFromDelta"][1]["call_args"] = "(dx,dy)"
 defs["igImGetDirQuadrantFromDelta"][1]["cimguiname"] = "igImGetDirQuadrantFromDelta"
 defs["igImGetDirQuadrantFromDelta"][1]["defaults"] = {}
 defs["igImGetDirQuadrantFromDelta"][1]["funcname"] = "ImGetDirQuadrantFromDelta"
+<<<<<<< HEAD
 defs["igImGetDirQuadrantFromDelta"][1]["location"] = "imgui_internal:505"
+=======
+defs["igImGetDirQuadrantFromDelta"][1]["location"] = "imgui_internal:503"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImGetDirQuadrantFromDelta"][1]["ov_cimguiname"] = "igImGetDirQuadrantFromDelta"
 defs["igImGetDirQuadrantFromDelta"][1]["ret"] = "ImGuiDir"
 defs["igImGetDirQuadrantFromDelta"][1]["signature"] = "(float,float)"
@@ -19373,7 +22627,11 @@ defs["igImHashData"][1]["cimguiname"] = "igImHashData"
 defs["igImHashData"][1]["defaults"] = {}
 defs["igImHashData"][1]["defaults"]["seed"] = "0"
 defs["igImHashData"][1]["funcname"] = "ImHashData"
+<<<<<<< HEAD
 defs["igImHashData"][1]["location"] = "imgui_internal:331"
+=======
+defs["igImHashData"][1]["location"] = "imgui_internal:329"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImHashData"][1]["ov_cimguiname"] = "igImHashData"
 defs["igImHashData"][1]["ret"] = "ImGuiID"
 defs["igImHashData"][1]["signature"] = "(const void*,size_t,ImGuiID)"
@@ -19399,7 +22657,11 @@ defs["igImHashStr"][1]["defaults"] = {}
 defs["igImHashStr"][1]["defaults"]["data_size"] = "0"
 defs["igImHashStr"][1]["defaults"]["seed"] = "0"
 defs["igImHashStr"][1]["funcname"] = "ImHashStr"
+<<<<<<< HEAD
 defs["igImHashStr"][1]["location"] = "imgui_internal:332"
+=======
+defs["igImHashStr"][1]["location"] = "imgui_internal:330"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImHashStr"][1]["ov_cimguiname"] = "igImHashStr"
 defs["igImHashStr"][1]["ret"] = "ImGuiID"
 defs["igImHashStr"][1]["signature"] = "(const char*,size_t,ImGuiID)"
@@ -19420,7 +22682,11 @@ defs["igImInvLength"][1]["call_args"] = "(lhs,fail_value)"
 defs["igImInvLength"][1]["cimguiname"] = "igImInvLength"
 defs["igImInvLength"][1]["defaults"] = {}
 defs["igImInvLength"][1]["funcname"] = "ImInvLength"
+<<<<<<< HEAD
 defs["igImInvLength"][1]["location"] = "imgui_internal:481"
+=======
+defs["igImInvLength"][1]["location"] = "imgui_internal:479"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImInvLength"][1]["ov_cimguiname"] = "igImInvLength"
 defs["igImInvLength"][1]["ret"] = "float"
 defs["igImInvLength"][1]["signature"] = "(const ImVec2,float)"
@@ -19438,7 +22704,11 @@ defs["igImIsFloatAboveGuaranteedIntegerPrecision"][1]["call_args"] = "(f)"
 defs["igImIsFloatAboveGuaranteedIntegerPrecision"][1]["cimguiname"] = "igImIsFloatAboveGuaranteedIntegerPrecision"
 defs["igImIsFloatAboveGuaranteedIntegerPrecision"][1]["defaults"] = {}
 defs["igImIsFloatAboveGuaranteedIntegerPrecision"][1]["funcname"] = "ImIsFloatAboveGuaranteedIntegerPrecision"
+<<<<<<< HEAD
 defs["igImIsFloatAboveGuaranteedIntegerPrecision"][1]["location"] = "imgui_internal:491"
+=======
+defs["igImIsFloatAboveGuaranteedIntegerPrecision"][1]["location"] = "imgui_internal:489"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImIsFloatAboveGuaranteedIntegerPrecision"][1]["ov_cimguiname"] = "igImIsFloatAboveGuaranteedIntegerPrecision"
 defs["igImIsFloatAboveGuaranteedIntegerPrecision"][1]["ret"] = "bool"
 defs["igImIsFloatAboveGuaranteedIntegerPrecision"][1]["signature"] = "(float)"
@@ -19456,7 +22726,11 @@ defs["igImIsPowerOfTwo"][1]["call_args"] = "(v)"
 defs["igImIsPowerOfTwo"][1]["cimguiname"] = "igImIsPowerOfTwo"
 defs["igImIsPowerOfTwo"][1]["defaults"] = {}
 defs["igImIsPowerOfTwo"][1]["funcname"] = "ImIsPowerOfTwo"
+<<<<<<< HEAD
 defs["igImIsPowerOfTwo"][1]["location"] = "imgui_internal:343"
+=======
+defs["igImIsPowerOfTwo"][1]["location"] = "imgui_internal:341"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImIsPowerOfTwo"][1]["ov_cimguiname"] = "igImIsPowerOfTwo_Int"
 defs["igImIsPowerOfTwo"][1]["ret"] = "bool"
 defs["igImIsPowerOfTwo"][1]["signature"] = "(int)"
@@ -19472,7 +22746,11 @@ defs["igImIsPowerOfTwo"][2]["call_args"] = "(v)"
 defs["igImIsPowerOfTwo"][2]["cimguiname"] = "igImIsPowerOfTwo"
 defs["igImIsPowerOfTwo"][2]["defaults"] = {}
 defs["igImIsPowerOfTwo"][2]["funcname"] = "ImIsPowerOfTwo"
+<<<<<<< HEAD
 defs["igImIsPowerOfTwo"][2]["location"] = "imgui_internal:344"
+=======
+defs["igImIsPowerOfTwo"][2]["location"] = "imgui_internal:342"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImIsPowerOfTwo"][2]["ov_cimguiname"] = "igImIsPowerOfTwo_U64"
 defs["igImIsPowerOfTwo"][2]["ret"] = "bool"
 defs["igImIsPowerOfTwo"][2]["signature"] = "(ImU64)"
@@ -19491,7 +22769,11 @@ defs["igImLengthSqr"][1]["call_args"] = "(lhs)"
 defs["igImLengthSqr"][1]["cimguiname"] = "igImLengthSqr"
 defs["igImLengthSqr"][1]["defaults"] = {}
 defs["igImLengthSqr"][1]["funcname"] = "ImLengthSqr"
+<<<<<<< HEAD
 defs["igImLengthSqr"][1]["location"] = "imgui_internal:479"
+=======
+defs["igImLengthSqr"][1]["location"] = "imgui_internal:477"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImLengthSqr"][1]["ov_cimguiname"] = "igImLengthSqr_Vec2"
 defs["igImLengthSqr"][1]["ret"] = "float"
 defs["igImLengthSqr"][1]["signature"] = "(const ImVec2)"
@@ -19507,7 +22789,11 @@ defs["igImLengthSqr"][2]["call_args"] = "(lhs)"
 defs["igImLengthSqr"][2]["cimguiname"] = "igImLengthSqr"
 defs["igImLengthSqr"][2]["defaults"] = {}
 defs["igImLengthSqr"][2]["funcname"] = "ImLengthSqr"
+<<<<<<< HEAD
 defs["igImLengthSqr"][2]["location"] = "imgui_internal:480"
+=======
+defs["igImLengthSqr"][2]["location"] = "imgui_internal:478"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImLengthSqr"][2]["ov_cimguiname"] = "igImLengthSqr_Vec4"
 defs["igImLengthSqr"][2]["ret"] = "float"
 defs["igImLengthSqr"][2]["signature"] = "(const ImVec4)"
@@ -19535,7 +22821,11 @@ defs["igImLerp"][1]["call_args"] = "(a,b,t)"
 defs["igImLerp"][1]["cimguiname"] = "igImLerp"
 defs["igImLerp"][1]["defaults"] = {}
 defs["igImLerp"][1]["funcname"] = "ImLerp"
+<<<<<<< HEAD
 defs["igImLerp"][1]["location"] = "imgui_internal:475"
+=======
+defs["igImLerp"][1]["location"] = "imgui_internal:473"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImLerp"][1]["nonUDT"] = 1
 defs["igImLerp"][1]["ov_cimguiname"] = "igImLerp_Vec2Float"
 defs["igImLerp"][1]["ret"] = "void"
@@ -19561,7 +22851,11 @@ defs["igImLerp"][2]["call_args"] = "(a,b,t)"
 defs["igImLerp"][2]["cimguiname"] = "igImLerp"
 defs["igImLerp"][2]["defaults"] = {}
 defs["igImLerp"][2]["funcname"] = "ImLerp"
+<<<<<<< HEAD
 defs["igImLerp"][2]["location"] = "imgui_internal:476"
+=======
+defs["igImLerp"][2]["location"] = "imgui_internal:474"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImLerp"][2]["nonUDT"] = 1
 defs["igImLerp"][2]["ov_cimguiname"] = "igImLerp_Vec2Vec2"
 defs["igImLerp"][2]["ret"] = "void"
@@ -19587,7 +22881,11 @@ defs["igImLerp"][3]["call_args"] = "(a,b,t)"
 defs["igImLerp"][3]["cimguiname"] = "igImLerp"
 defs["igImLerp"][3]["defaults"] = {}
 defs["igImLerp"][3]["funcname"] = "ImLerp"
+<<<<<<< HEAD
 defs["igImLerp"][3]["location"] = "imgui_internal:477"
+=======
+defs["igImLerp"][3]["location"] = "imgui_internal:475"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImLerp"][3]["nonUDT"] = 1
 defs["igImLerp"][3]["ov_cimguiname"] = "igImLerp_Vec4"
 defs["igImLerp"][3]["ret"] = "void"
@@ -19617,7 +22915,11 @@ defs["igImLineClosestPoint"][1]["call_args"] = "(a,b,p)"
 defs["igImLineClosestPoint"][1]["cimguiname"] = "igImLineClosestPoint"
 defs["igImLineClosestPoint"][1]["defaults"] = {}
 defs["igImLineClosestPoint"][1]["funcname"] = "ImLineClosestPoint"
+<<<<<<< HEAD
 defs["igImLineClosestPoint"][1]["location"] = "imgui_internal:500"
+=======
+defs["igImLineClosestPoint"][1]["location"] = "imgui_internal:498"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImLineClosestPoint"][1]["nonUDT"] = 1
 defs["igImLineClosestPoint"][1]["ov_cimguiname"] = "igImLineClosestPoint"
 defs["igImLineClosestPoint"][1]["ret"] = "void"
@@ -19642,7 +22944,11 @@ defs["igImLinearSweep"][1]["call_args"] = "(current,target,speed)"
 defs["igImLinearSweep"][1]["cimguiname"] = "igImLinearSweep"
 defs["igImLinearSweep"][1]["defaults"] = {}
 defs["igImLinearSweep"][1]["funcname"] = "ImLinearSweep"
+<<<<<<< HEAD
 defs["igImLinearSweep"][1]["location"] = "imgui_internal:489"
+=======
+defs["igImLinearSweep"][1]["location"] = "imgui_internal:487"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImLinearSweep"][1]["ov_cimguiname"] = "igImLinearSweep"
 defs["igImLinearSweep"][1]["ret"] = "float"
 defs["igImLinearSweep"][1]["signature"] = "(float,float,float)"
@@ -19660,7 +22966,11 @@ defs["igImLog"][1]["call_args"] = "(x)"
 defs["igImLog"][1]["cimguiname"] = "igImLog"
 defs["igImLog"][1]["defaults"] = {}
 defs["igImLog"][1]["funcname"] = "ImLog"
+<<<<<<< HEAD
 defs["igImLog"][1]["location"] = "imgui_internal:448"
+=======
+defs["igImLog"][1]["location"] = "imgui_internal:446"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImLog"][1]["ov_cimguiname"] = "igImLog_Float"
 defs["igImLog"][1]["ret"] = "float"
 defs["igImLog"][1]["signature"] = "(float)"
@@ -19676,7 +22986,11 @@ defs["igImLog"][2]["call_args"] = "(x)"
 defs["igImLog"][2]["cimguiname"] = "igImLog"
 defs["igImLog"][2]["defaults"] = {}
 defs["igImLog"][2]["funcname"] = "ImLog"
+<<<<<<< HEAD
 defs["igImLog"][2]["location"] = "imgui_internal:449"
+=======
+defs["igImLog"][2]["location"] = "imgui_internal:447"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImLog"][2]["ov_cimguiname"] = "igImLog_double"
 defs["igImLog"][2]["ret"] = "double"
 defs["igImLog"][2]["signature"] = "(double)"
@@ -19701,7 +23015,11 @@ defs["igImMax"][1]["call_args"] = "(lhs,rhs)"
 defs["igImMax"][1]["cimguiname"] = "igImMax"
 defs["igImMax"][1]["defaults"] = {}
 defs["igImMax"][1]["funcname"] = "ImMax"
+<<<<<<< HEAD
 defs["igImMax"][1]["location"] = "imgui_internal:473"
+=======
+defs["igImMax"][1]["location"] = "imgui_internal:471"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImMax"][1]["nonUDT"] = 1
 defs["igImMax"][1]["ov_cimguiname"] = "igImMax"
 defs["igImMax"][1]["ret"] = "void"
@@ -19726,7 +23044,11 @@ defs["igImMin"][1]["call_args"] = "(lhs,rhs)"
 defs["igImMin"][1]["cimguiname"] = "igImMin"
 defs["igImMin"][1]["defaults"] = {}
 defs["igImMin"][1]["funcname"] = "ImMin"
+<<<<<<< HEAD
 defs["igImMin"][1]["location"] = "imgui_internal:472"
+=======
+defs["igImMin"][1]["location"] = "imgui_internal:470"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImMin"][1]["nonUDT"] = 1
 defs["igImMin"][1]["ov_cimguiname"] = "igImMin"
 defs["igImMin"][1]["ret"] = "void"
@@ -19748,7 +23070,11 @@ defs["igImModPositive"][1]["call_args"] = "(a,b)"
 defs["igImModPositive"][1]["cimguiname"] = "igImModPositive"
 defs["igImModPositive"][1]["defaults"] = {}
 defs["igImModPositive"][1]["funcname"] = "ImModPositive"
+<<<<<<< HEAD
 defs["igImModPositive"][1]["location"] = "imgui_internal:486"
+=======
+defs["igImModPositive"][1]["location"] = "imgui_internal:484"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImModPositive"][1]["ov_cimguiname"] = "igImModPositive"
 defs["igImModPositive"][1]["ret"] = "int"
 defs["igImModPositive"][1]["signature"] = "(int,int)"
@@ -19772,7 +23098,11 @@ defs["igImMul"][1]["call_args"] = "(lhs,rhs)"
 defs["igImMul"][1]["cimguiname"] = "igImMul"
 defs["igImMul"][1]["defaults"] = {}
 defs["igImMul"][1]["funcname"] = "ImMul"
+<<<<<<< HEAD
 defs["igImMul"][1]["location"] = "imgui_internal:490"
+=======
+defs["igImMul"][1]["location"] = "imgui_internal:488"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImMul"][1]["nonUDT"] = 1
 defs["igImMul"][1]["ov_cimguiname"] = "igImMul"
 defs["igImMul"][1]["ret"] = "void"
@@ -19791,7 +23121,11 @@ defs["igImParseFormatFindEnd"][1]["call_args"] = "(format)"
 defs["igImParseFormatFindEnd"][1]["cimguiname"] = "igImParseFormatFindEnd"
 defs["igImParseFormatFindEnd"][1]["defaults"] = {}
 defs["igImParseFormatFindEnd"][1]["funcname"] = "ImParseFormatFindEnd"
+<<<<<<< HEAD
 defs["igImParseFormatFindEnd"][1]["location"] = "imgui_internal:372"
+=======
+defs["igImParseFormatFindEnd"][1]["location"] = "imgui_internal:370"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImParseFormatFindEnd"][1]["ov_cimguiname"] = "igImParseFormatFindEnd"
 defs["igImParseFormatFindEnd"][1]["ret"] = "const char*"
 defs["igImParseFormatFindEnd"][1]["signature"] = "(const char*)"
@@ -19809,7 +23143,11 @@ defs["igImParseFormatFindStart"][1]["call_args"] = "(format)"
 defs["igImParseFormatFindStart"][1]["cimguiname"] = "igImParseFormatFindStart"
 defs["igImParseFormatFindStart"][1]["defaults"] = {}
 defs["igImParseFormatFindStart"][1]["funcname"] = "ImParseFormatFindStart"
+<<<<<<< HEAD
 defs["igImParseFormatFindStart"][1]["location"] = "imgui_internal:371"
+=======
+defs["igImParseFormatFindStart"][1]["location"] = "imgui_internal:369"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImParseFormatFindStart"][1]["ov_cimguiname"] = "igImParseFormatFindStart"
 defs["igImParseFormatFindStart"][1]["ret"] = "const char*"
 defs["igImParseFormatFindStart"][1]["signature"] = "(const char*)"
@@ -19830,7 +23168,11 @@ defs["igImParseFormatPrecision"][1]["call_args"] = "(format,default_value)"
 defs["igImParseFormatPrecision"][1]["cimguiname"] = "igImParseFormatPrecision"
 defs["igImParseFormatPrecision"][1]["defaults"] = {}
 defs["igImParseFormatPrecision"][1]["funcname"] = "ImParseFormatPrecision"
+<<<<<<< HEAD
 defs["igImParseFormatPrecision"][1]["location"] = "imgui_internal:376"
+=======
+defs["igImParseFormatPrecision"][1]["location"] = "imgui_internal:374"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImParseFormatPrecision"][1]["ov_cimguiname"] = "igImParseFormatPrecision"
 defs["igImParseFormatPrecision"][1]["ret"] = "int"
 defs["igImParseFormatPrecision"][1]["signature"] = "(const char*,int)"
@@ -19854,7 +23196,11 @@ defs["igImParseFormatSanitizeForPrinting"][1]["call_args"] = "(fmt_in,fmt_out,fm
 defs["igImParseFormatSanitizeForPrinting"][1]["cimguiname"] = "igImParseFormatSanitizeForPrinting"
 defs["igImParseFormatSanitizeForPrinting"][1]["defaults"] = {}
 defs["igImParseFormatSanitizeForPrinting"][1]["funcname"] = "ImParseFormatSanitizeForPrinting"
+<<<<<<< HEAD
 defs["igImParseFormatSanitizeForPrinting"][1]["location"] = "imgui_internal:374"
+=======
+defs["igImParseFormatSanitizeForPrinting"][1]["location"] = "imgui_internal:372"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImParseFormatSanitizeForPrinting"][1]["ov_cimguiname"] = "igImParseFormatSanitizeForPrinting"
 defs["igImParseFormatSanitizeForPrinting"][1]["ret"] = "void"
 defs["igImParseFormatSanitizeForPrinting"][1]["signature"] = "(const char*,char*,size_t)"
@@ -19878,7 +23224,11 @@ defs["igImParseFormatSanitizeForScanning"][1]["call_args"] = "(fmt_in,fmt_out,fm
 defs["igImParseFormatSanitizeForScanning"][1]["cimguiname"] = "igImParseFormatSanitizeForScanning"
 defs["igImParseFormatSanitizeForScanning"][1]["defaults"] = {}
 defs["igImParseFormatSanitizeForScanning"][1]["funcname"] = "ImParseFormatSanitizeForScanning"
+<<<<<<< HEAD
 defs["igImParseFormatSanitizeForScanning"][1]["location"] = "imgui_internal:375"
+=======
+defs["igImParseFormatSanitizeForScanning"][1]["location"] = "imgui_internal:373"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImParseFormatSanitizeForScanning"][1]["ov_cimguiname"] = "igImParseFormatSanitizeForScanning"
 defs["igImParseFormatSanitizeForScanning"][1]["ret"] = "const char*"
 defs["igImParseFormatSanitizeForScanning"][1]["signature"] = "(const char*,char*,size_t)"
@@ -19902,7 +23252,11 @@ defs["igImParseFormatTrimDecorations"][1]["call_args"] = "(format,buf,buf_size)"
 defs["igImParseFormatTrimDecorations"][1]["cimguiname"] = "igImParseFormatTrimDecorations"
 defs["igImParseFormatTrimDecorations"][1]["defaults"] = {}
 defs["igImParseFormatTrimDecorations"][1]["funcname"] = "ImParseFormatTrimDecorations"
+<<<<<<< HEAD
 defs["igImParseFormatTrimDecorations"][1]["location"] = "imgui_internal:373"
+=======
+defs["igImParseFormatTrimDecorations"][1]["location"] = "imgui_internal:371"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImParseFormatTrimDecorations"][1]["ov_cimguiname"] = "igImParseFormatTrimDecorations"
 defs["igImParseFormatTrimDecorations"][1]["ret"] = "const char*"
 defs["igImParseFormatTrimDecorations"][1]["signature"] = "(const char*,char*,size_t)"
@@ -19923,7 +23277,11 @@ defs["igImPow"][1]["call_args"] = "(x,y)"
 defs["igImPow"][1]["cimguiname"] = "igImPow"
 defs["igImPow"][1]["defaults"] = {}
 defs["igImPow"][1]["funcname"] = "ImPow"
+<<<<<<< HEAD
 defs["igImPow"][1]["location"] = "imgui_internal:446"
+=======
+defs["igImPow"][1]["location"] = "imgui_internal:444"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImPow"][1]["ov_cimguiname"] = "igImPow_Float"
 defs["igImPow"][1]["ret"] = "float"
 defs["igImPow"][1]["signature"] = "(float,float)"
@@ -19942,7 +23300,11 @@ defs["igImPow"][2]["call_args"] = "(x,y)"
 defs["igImPow"][2]["cimguiname"] = "igImPow"
 defs["igImPow"][2]["defaults"] = {}
 defs["igImPow"][2]["funcname"] = "ImPow"
+<<<<<<< HEAD
 defs["igImPow"][2]["location"] = "imgui_internal:447"
+=======
+defs["igImPow"][2]["location"] = "imgui_internal:445"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImPow"][2]["ov_cimguiname"] = "igImPow_double"
 defs["igImPow"][2]["ret"] = "double"
 defs["igImPow"][2]["signature"] = "(double,double)"
@@ -19972,7 +23334,11 @@ defs["igImQsort"][1]["call_args"] = "(base,count,size_of_element,compare_func)"
 defs["igImQsort"][1]["cimguiname"] = "igImQsort"
 defs["igImQsort"][1]["defaults"] = {}
 defs["igImQsort"][1]["funcname"] = "ImQsort"
+<<<<<<< HEAD
 defs["igImQsort"][1]["location"] = "imgui_internal:336"
+=======
+defs["igImQsort"][1]["location"] = "imgui_internal:334"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImQsort"][1]["ov_cimguiname"] = "igImQsort"
 defs["igImQsort"][1]["ret"] = "void"
 defs["igImQsort"][1]["signature"] = "(void*,size_t,size_t,int(*)(void const*,void const*))"
@@ -19999,7 +23365,11 @@ defs["igImRotate"][1]["call_args"] = "(v,cos_a,sin_a)"
 defs["igImRotate"][1]["cimguiname"] = "igImRotate"
 defs["igImRotate"][1]["defaults"] = {}
 defs["igImRotate"][1]["funcname"] = "ImRotate"
+<<<<<<< HEAD
 defs["igImRotate"][1]["location"] = "imgui_internal:488"
+=======
+defs["igImRotate"][1]["location"] = "imgui_internal:486"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImRotate"][1]["nonUDT"] = 1
 defs["igImRotate"][1]["ov_cimguiname"] = "igImRotate"
 defs["igImRotate"][1]["ret"] = "void"
@@ -20018,7 +23388,11 @@ defs["igImRsqrt"][1]["call_args"] = "(x)"
 defs["igImRsqrt"][1]["cimguiname"] = "igImRsqrt"
 defs["igImRsqrt"][1]["defaults"] = {}
 defs["igImRsqrt"][1]["funcname"] = "ImRsqrt"
+<<<<<<< HEAD
 defs["igImRsqrt"][1]["location"] = "imgui_internal:458"
+=======
+defs["igImRsqrt"][1]["location"] = "imgui_internal:454"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImRsqrt"][1]["ov_cimguiname"] = "igImRsqrt_Float"
 defs["igImRsqrt"][1]["ret"] = "float"
 defs["igImRsqrt"][1]["signature"] = "(float)"
@@ -20034,7 +23408,11 @@ defs["igImRsqrt"][2]["call_args"] = "(x)"
 defs["igImRsqrt"][2]["cimguiname"] = "igImRsqrt"
 defs["igImRsqrt"][2]["defaults"] = {}
 defs["igImRsqrt"][2]["funcname"] = "ImRsqrt"
+<<<<<<< HEAD
 defs["igImRsqrt"][2]["location"] = "imgui_internal:460"
+=======
+defs["igImRsqrt"][2]["location"] = "imgui_internal:458"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImRsqrt"][2]["ov_cimguiname"] = "igImRsqrt_double"
 defs["igImRsqrt"][2]["ret"] = "double"
 defs["igImRsqrt"][2]["signature"] = "(double)"
@@ -20053,7 +23431,11 @@ defs["igImSaturate"][1]["call_args"] = "(f)"
 defs["igImSaturate"][1]["cimguiname"] = "igImSaturate"
 defs["igImSaturate"][1]["defaults"] = {}
 defs["igImSaturate"][1]["funcname"] = "ImSaturate"
+<<<<<<< HEAD
 defs["igImSaturate"][1]["location"] = "imgui_internal:478"
+=======
+defs["igImSaturate"][1]["location"] = "imgui_internal:476"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImSaturate"][1]["ov_cimguiname"] = "igImSaturate"
 defs["igImSaturate"][1]["ret"] = "float"
 defs["igImSaturate"][1]["signature"] = "(float)"
@@ -20071,7 +23453,11 @@ defs["igImSign"][1]["call_args"] = "(x)"
 defs["igImSign"][1]["cimguiname"] = "igImSign"
 defs["igImSign"][1]["defaults"] = {}
 defs["igImSign"][1]["funcname"] = "ImSign"
+<<<<<<< HEAD
 defs["igImSign"][1]["location"] = "imgui_internal:453"
+=======
+defs["igImSign"][1]["location"] = "imgui_internal:451"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImSign"][1]["ov_cimguiname"] = "igImSign_Float"
 defs["igImSign"][1]["ret"] = "float"
 defs["igImSign"][1]["signature"] = "(float)"
@@ -20087,7 +23473,11 @@ defs["igImSign"][2]["call_args"] = "(x)"
 defs["igImSign"][2]["cimguiname"] = "igImSign"
 defs["igImSign"][2]["defaults"] = {}
 defs["igImSign"][2]["funcname"] = "ImSign"
+<<<<<<< HEAD
 defs["igImSign"][2]["location"] = "imgui_internal:454"
+=======
+defs["igImSign"][2]["location"] = "imgui_internal:452"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImSign"][2]["ov_cimguiname"] = "igImSign_double"
 defs["igImSign"][2]["ret"] = "double"
 defs["igImSign"][2]["signature"] = "(double)"
@@ -20106,7 +23496,11 @@ defs["igImStrSkipBlank"][1]["call_args"] = "(str)"
 defs["igImStrSkipBlank"][1]["cimguiname"] = "igImStrSkipBlank"
 defs["igImStrSkipBlank"][1]["defaults"] = {}
 defs["igImStrSkipBlank"][1]["funcname"] = "ImStrSkipBlank"
+<<<<<<< HEAD
 defs["igImStrSkipBlank"][1]["location"] = "imgui_internal:359"
+=======
+defs["igImStrSkipBlank"][1]["location"] = "imgui_internal:357"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImStrSkipBlank"][1]["ov_cimguiname"] = "igImStrSkipBlank"
 defs["igImStrSkipBlank"][1]["ret"] = "const char*"
 defs["igImStrSkipBlank"][1]["signature"] = "(const char*)"
@@ -20124,7 +23518,11 @@ defs["igImStrTrimBlanks"][1]["call_args"] = "(str)"
 defs["igImStrTrimBlanks"][1]["cimguiname"] = "igImStrTrimBlanks"
 defs["igImStrTrimBlanks"][1]["defaults"] = {}
 defs["igImStrTrimBlanks"][1]["funcname"] = "ImStrTrimBlanks"
+<<<<<<< HEAD
 defs["igImStrTrimBlanks"][1]["location"] = "imgui_internal:358"
+=======
+defs["igImStrTrimBlanks"][1]["location"] = "imgui_internal:356"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImStrTrimBlanks"][1]["ov_cimguiname"] = "igImStrTrimBlanks"
 defs["igImStrTrimBlanks"][1]["ret"] = "void"
 defs["igImStrTrimBlanks"][1]["signature"] = "(char*)"
@@ -20145,7 +23543,11 @@ defs["igImStrbolW"][1]["call_args"] = "(buf_mid_line,buf_begin)"
 defs["igImStrbolW"][1]["cimguiname"] = "igImStrbolW"
 defs["igImStrbolW"][1]["defaults"] = {}
 defs["igImStrbolW"][1]["funcname"] = "ImStrbolW"
+<<<<<<< HEAD
 defs["igImStrbolW"][1]["location"] = "imgui_internal:356"
+=======
+defs["igImStrbolW"][1]["location"] = "imgui_internal:354"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImStrbolW"][1]["ov_cimguiname"] = "igImStrbolW"
 defs["igImStrbolW"][1]["ret"] = "const ImWchar*"
 defs["igImStrbolW"][1]["signature"] = "(const ImWchar*,const ImWchar*)"
@@ -20169,7 +23571,11 @@ defs["igImStrchrRange"][1]["call_args"] = "(str_begin,str_end,c)"
 defs["igImStrchrRange"][1]["cimguiname"] = "igImStrchrRange"
 defs["igImStrchrRange"][1]["defaults"] = {}
 defs["igImStrchrRange"][1]["funcname"] = "ImStrchrRange"
+<<<<<<< HEAD
 defs["igImStrchrRange"][1]["location"] = "imgui_internal:353"
+=======
+defs["igImStrchrRange"][1]["location"] = "imgui_internal:351"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImStrchrRange"][1]["ov_cimguiname"] = "igImStrchrRange"
 defs["igImStrchrRange"][1]["ret"] = "const char*"
 defs["igImStrchrRange"][1]["signature"] = "(const char*,const char*,char)"
@@ -20187,7 +23593,11 @@ defs["igImStrdup"][1]["call_args"] = "(str)"
 defs["igImStrdup"][1]["cimguiname"] = "igImStrdup"
 defs["igImStrdup"][1]["defaults"] = {}
 defs["igImStrdup"][1]["funcname"] = "ImStrdup"
+<<<<<<< HEAD
 defs["igImStrdup"][1]["location"] = "imgui_internal:351"
+=======
+defs["igImStrdup"][1]["location"] = "imgui_internal:349"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImStrdup"][1]["ov_cimguiname"] = "igImStrdup"
 defs["igImStrdup"][1]["ret"] = "char*"
 defs["igImStrdup"][1]["signature"] = "(const char*)"
@@ -20211,7 +23621,11 @@ defs["igImStrdupcpy"][1]["call_args"] = "(dst,p_dst_size,str)"
 defs["igImStrdupcpy"][1]["cimguiname"] = "igImStrdupcpy"
 defs["igImStrdupcpy"][1]["defaults"] = {}
 defs["igImStrdupcpy"][1]["funcname"] = "ImStrdupcpy"
+<<<<<<< HEAD
 defs["igImStrdupcpy"][1]["location"] = "imgui_internal:352"
+=======
+defs["igImStrdupcpy"][1]["location"] = "imgui_internal:350"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImStrdupcpy"][1]["ov_cimguiname"] = "igImStrdupcpy"
 defs["igImStrdupcpy"][1]["ret"] = "char*"
 defs["igImStrdupcpy"][1]["signature"] = "(char*,size_t*,const char*)"
@@ -20232,7 +23646,11 @@ defs["igImStreolRange"][1]["call_args"] = "(str,str_end)"
 defs["igImStreolRange"][1]["cimguiname"] = "igImStreolRange"
 defs["igImStreolRange"][1]["defaults"] = {}
 defs["igImStreolRange"][1]["funcname"] = "ImStreolRange"
+<<<<<<< HEAD
 defs["igImStreolRange"][1]["location"] = "imgui_internal:355"
+=======
+defs["igImStreolRange"][1]["location"] = "imgui_internal:353"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImStreolRange"][1]["ov_cimguiname"] = "igImStreolRange"
 defs["igImStreolRange"][1]["ret"] = "const char*"
 defs["igImStreolRange"][1]["signature"] = "(const char*,const char*)"
@@ -20253,7 +23671,11 @@ defs["igImStricmp"][1]["call_args"] = "(str1,str2)"
 defs["igImStricmp"][1]["cimguiname"] = "igImStricmp"
 defs["igImStricmp"][1]["defaults"] = {}
 defs["igImStricmp"][1]["funcname"] = "ImStricmp"
+<<<<<<< HEAD
 defs["igImStricmp"][1]["location"] = "imgui_internal:348"
+=======
+defs["igImStricmp"][1]["location"] = "imgui_internal:346"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImStricmp"][1]["ov_cimguiname"] = "igImStricmp"
 defs["igImStricmp"][1]["ret"] = "int"
 defs["igImStricmp"][1]["signature"] = "(const char*,const char*)"
@@ -20280,7 +23702,11 @@ defs["igImStristr"][1]["call_args"] = "(haystack,haystack_end,needle,needle_end)
 defs["igImStristr"][1]["cimguiname"] = "igImStristr"
 defs["igImStristr"][1]["defaults"] = {}
 defs["igImStristr"][1]["funcname"] = "ImStristr"
+<<<<<<< HEAD
 defs["igImStristr"][1]["location"] = "imgui_internal:357"
+=======
+defs["igImStristr"][1]["location"] = "imgui_internal:355"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImStristr"][1]["ov_cimguiname"] = "igImStristr"
 defs["igImStristr"][1]["ret"] = "const char*"
 defs["igImStristr"][1]["signature"] = "(const char*,const char*,const char*,const char*)"
@@ -20298,7 +23724,11 @@ defs["igImStrlenW"][1]["call_args"] = "(str)"
 defs["igImStrlenW"][1]["cimguiname"] = "igImStrlenW"
 defs["igImStrlenW"][1]["defaults"] = {}
 defs["igImStrlenW"][1]["funcname"] = "ImStrlenW"
+<<<<<<< HEAD
 defs["igImStrlenW"][1]["location"] = "imgui_internal:354"
+=======
+defs["igImStrlenW"][1]["location"] = "imgui_internal:352"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImStrlenW"][1]["ov_cimguiname"] = "igImStrlenW"
 defs["igImStrlenW"][1]["ret"] = "int"
 defs["igImStrlenW"][1]["signature"] = "(const ImWchar*)"
@@ -20322,7 +23752,11 @@ defs["igImStrncpy"][1]["call_args"] = "(dst,src,count)"
 defs["igImStrncpy"][1]["cimguiname"] = "igImStrncpy"
 defs["igImStrncpy"][1]["defaults"] = {}
 defs["igImStrncpy"][1]["funcname"] = "ImStrncpy"
+<<<<<<< HEAD
 defs["igImStrncpy"][1]["location"] = "imgui_internal:350"
+=======
+defs["igImStrncpy"][1]["location"] = "imgui_internal:348"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImStrncpy"][1]["ov_cimguiname"] = "igImStrncpy"
 defs["igImStrncpy"][1]["ret"] = "void"
 defs["igImStrncpy"][1]["signature"] = "(char*,const char*,size_t)"
@@ -20346,7 +23780,11 @@ defs["igImStrnicmp"][1]["call_args"] = "(str1,str2,count)"
 defs["igImStrnicmp"][1]["cimguiname"] = "igImStrnicmp"
 defs["igImStrnicmp"][1]["defaults"] = {}
 defs["igImStrnicmp"][1]["funcname"] = "ImStrnicmp"
+<<<<<<< HEAD
 defs["igImStrnicmp"][1]["location"] = "imgui_internal:349"
+=======
+defs["igImStrnicmp"][1]["location"] = "imgui_internal:347"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImStrnicmp"][1]["ov_cimguiname"] = "igImStrnicmp"
 defs["igImStrnicmp"][1]["ret"] = "int"
 defs["igImStrnicmp"][1]["signature"] = "(const char*,const char*,size_t)"
@@ -20370,7 +23808,11 @@ defs["igImTextCharFromUtf8"][1]["call_args"] = "(out_char,in_text,in_text_end)"
 defs["igImTextCharFromUtf8"][1]["cimguiname"] = "igImTextCharFromUtf8"
 defs["igImTextCharFromUtf8"][1]["defaults"] = {}
 defs["igImTextCharFromUtf8"][1]["funcname"] = "ImTextCharFromUtf8"
+<<<<<<< HEAD
 defs["igImTextCharFromUtf8"][1]["location"] = "imgui_internal:381"
+=======
+defs["igImTextCharFromUtf8"][1]["location"] = "imgui_internal:379"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImTextCharFromUtf8"][1]["ov_cimguiname"] = "igImTextCharFromUtf8"
 defs["igImTextCharFromUtf8"][1]["ret"] = "int"
 defs["igImTextCharFromUtf8"][1]["signature"] = "(unsigned int*,const char*,const char*)"
@@ -20391,7 +23833,11 @@ defs["igImTextCharToUtf8"][1]["call_args"] = "(out_buf,c)"
 defs["igImTextCharToUtf8"][1]["cimguiname"] = "igImTextCharToUtf8"
 defs["igImTextCharToUtf8"][1]["defaults"] = {}
 defs["igImTextCharToUtf8"][1]["funcname"] = "ImTextCharToUtf8"
+<<<<<<< HEAD
 defs["igImTextCharToUtf8"][1]["location"] = "imgui_internal:379"
+=======
+defs["igImTextCharToUtf8"][1]["location"] = "imgui_internal:377"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImTextCharToUtf8"][1]["ov_cimguiname"] = "igImTextCharToUtf8"
 defs["igImTextCharToUtf8"][1]["ret"] = "const char*"
 defs["igImTextCharToUtf8"][1]["signature"] = "(char[5],unsigned int)"
@@ -20412,7 +23858,11 @@ defs["igImTextCountCharsFromUtf8"][1]["call_args"] = "(in_text,in_text_end)"
 defs["igImTextCountCharsFromUtf8"][1]["cimguiname"] = "igImTextCountCharsFromUtf8"
 defs["igImTextCountCharsFromUtf8"][1]["defaults"] = {}
 defs["igImTextCountCharsFromUtf8"][1]["funcname"] = "ImTextCountCharsFromUtf8"
+<<<<<<< HEAD
 defs["igImTextCountCharsFromUtf8"][1]["location"] = "imgui_internal:383"
+=======
+defs["igImTextCountCharsFromUtf8"][1]["location"] = "imgui_internal:381"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImTextCountCharsFromUtf8"][1]["ov_cimguiname"] = "igImTextCountCharsFromUtf8"
 defs["igImTextCountCharsFromUtf8"][1]["ret"] = "int"
 defs["igImTextCountCharsFromUtf8"][1]["signature"] = "(const char*,const char*)"
@@ -20433,7 +23883,11 @@ defs["igImTextCountUtf8BytesFromChar"][1]["call_args"] = "(in_text,in_text_end)"
 defs["igImTextCountUtf8BytesFromChar"][1]["cimguiname"] = "igImTextCountUtf8BytesFromChar"
 defs["igImTextCountUtf8BytesFromChar"][1]["defaults"] = {}
 defs["igImTextCountUtf8BytesFromChar"][1]["funcname"] = "ImTextCountUtf8BytesFromChar"
+<<<<<<< HEAD
 defs["igImTextCountUtf8BytesFromChar"][1]["location"] = "imgui_internal:384"
+=======
+defs["igImTextCountUtf8BytesFromChar"][1]["location"] = "imgui_internal:382"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImTextCountUtf8BytesFromChar"][1]["ov_cimguiname"] = "igImTextCountUtf8BytesFromChar"
 defs["igImTextCountUtf8BytesFromChar"][1]["ret"] = "int"
 defs["igImTextCountUtf8BytesFromChar"][1]["signature"] = "(const char*,const char*)"
@@ -20454,7 +23908,11 @@ defs["igImTextCountUtf8BytesFromStr"][1]["call_args"] = "(in_text,in_text_end)"
 defs["igImTextCountUtf8BytesFromStr"][1]["cimguiname"] = "igImTextCountUtf8BytesFromStr"
 defs["igImTextCountUtf8BytesFromStr"][1]["defaults"] = {}
 defs["igImTextCountUtf8BytesFromStr"][1]["funcname"] = "ImTextCountUtf8BytesFromStr"
+<<<<<<< HEAD
 defs["igImTextCountUtf8BytesFromStr"][1]["location"] = "imgui_internal:385"
+=======
+defs["igImTextCountUtf8BytesFromStr"][1]["location"] = "imgui_internal:383"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImTextCountUtf8BytesFromStr"][1]["ov_cimguiname"] = "igImTextCountUtf8BytesFromStr"
 defs["igImTextCountUtf8BytesFromStr"][1]["ret"] = "int"
 defs["igImTextCountUtf8BytesFromStr"][1]["signature"] = "(const ImWchar*,const ImWchar*)"
@@ -20485,7 +23943,11 @@ defs["igImTextStrFromUtf8"][1]["cimguiname"] = "igImTextStrFromUtf8"
 defs["igImTextStrFromUtf8"][1]["defaults"] = {}
 defs["igImTextStrFromUtf8"][1]["defaults"]["in_remaining"] = "NULL"
 defs["igImTextStrFromUtf8"][1]["funcname"] = "ImTextStrFromUtf8"
+<<<<<<< HEAD
 defs["igImTextStrFromUtf8"][1]["location"] = "imgui_internal:382"
+=======
+defs["igImTextStrFromUtf8"][1]["location"] = "imgui_internal:380"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImTextStrFromUtf8"][1]["ov_cimguiname"] = "igImTextStrFromUtf8"
 defs["igImTextStrFromUtf8"][1]["ret"] = "int"
 defs["igImTextStrFromUtf8"][1]["signature"] = "(ImWchar*,int,const char*,const char*,const char**)"
@@ -20512,7 +23974,11 @@ defs["igImTextStrToUtf8"][1]["call_args"] = "(out_buf,out_buf_size,in_text,in_te
 defs["igImTextStrToUtf8"][1]["cimguiname"] = "igImTextStrToUtf8"
 defs["igImTextStrToUtf8"][1]["defaults"] = {}
 defs["igImTextStrToUtf8"][1]["funcname"] = "ImTextStrToUtf8"
+<<<<<<< HEAD
 defs["igImTextStrToUtf8"][1]["location"] = "imgui_internal:380"
+=======
+defs["igImTextStrToUtf8"][1]["location"] = "imgui_internal:378"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImTextStrToUtf8"][1]["ov_cimguiname"] = "igImTextStrToUtf8"
 defs["igImTextStrToUtf8"][1]["ret"] = "int"
 defs["igImTextStrToUtf8"][1]["signature"] = "(char*,int,const ImWchar*,const ImWchar*)"
@@ -20530,7 +23996,11 @@ defs["igImToUpper"][1]["call_args"] = "(c)"
 defs["igImToUpper"][1]["cimguiname"] = "igImToUpper"
 defs["igImToUpper"][1]["defaults"] = {}
 defs["igImToUpper"][1]["funcname"] = "ImToUpper"
+<<<<<<< HEAD
 defs["igImToUpper"][1]["location"] = "imgui_internal:361"
+=======
+defs["igImToUpper"][1]["location"] = "imgui_internal:359"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImToUpper"][1]["ov_cimguiname"] = "igImToUpper"
 defs["igImToUpper"][1]["ret"] = "char"
 defs["igImToUpper"][1]["signature"] = "(char)"
@@ -20554,7 +24024,11 @@ defs["igImTriangleArea"][1]["call_args"] = "(a,b,c)"
 defs["igImTriangleArea"][1]["cimguiname"] = "igImTriangleArea"
 defs["igImTriangleArea"][1]["defaults"] = {}
 defs["igImTriangleArea"][1]["funcname"] = "ImTriangleArea"
+<<<<<<< HEAD
 defs["igImTriangleArea"][1]["location"] = "imgui_internal:504"
+=======
+defs["igImTriangleArea"][1]["location"] = "imgui_internal:502"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImTriangleArea"][1]["ov_cimguiname"] = "igImTriangleArea"
 defs["igImTriangleArea"][1]["ret"] = "float"
 defs["igImTriangleArea"][1]["signature"] = "(const ImVec2,const ImVec2,const ImVec2)"
@@ -20593,7 +24067,11 @@ defs["igImTriangleBarycentricCoords"][1]["call_args"] = "(a,b,c,p,*out_u,*out_v,
 defs["igImTriangleBarycentricCoords"][1]["cimguiname"] = "igImTriangleBarycentricCoords"
 defs["igImTriangleBarycentricCoords"][1]["defaults"] = {}
 defs["igImTriangleBarycentricCoords"][1]["funcname"] = "ImTriangleBarycentricCoords"
+<<<<<<< HEAD
 defs["igImTriangleBarycentricCoords"][1]["location"] = "imgui_internal:503"
+=======
+defs["igImTriangleBarycentricCoords"][1]["location"] = "imgui_internal:501"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImTriangleBarycentricCoords"][1]["ov_cimguiname"] = "igImTriangleBarycentricCoords"
 defs["igImTriangleBarycentricCoords"][1]["ret"] = "void"
 defs["igImTriangleBarycentricCoords"][1]["signature"] = "(const ImVec2,const ImVec2,const ImVec2,const ImVec2,float*,float*,float*)"
@@ -20623,7 +24101,11 @@ defs["igImTriangleClosestPoint"][1]["call_args"] = "(a,b,c,p)"
 defs["igImTriangleClosestPoint"][1]["cimguiname"] = "igImTriangleClosestPoint"
 defs["igImTriangleClosestPoint"][1]["defaults"] = {}
 defs["igImTriangleClosestPoint"][1]["funcname"] = "ImTriangleClosestPoint"
+<<<<<<< HEAD
 defs["igImTriangleClosestPoint"][1]["location"] = "imgui_internal:502"
+=======
+defs["igImTriangleClosestPoint"][1]["location"] = "imgui_internal:500"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImTriangleClosestPoint"][1]["nonUDT"] = 1
 defs["igImTriangleClosestPoint"][1]["ov_cimguiname"] = "igImTriangleClosestPoint"
 defs["igImTriangleClosestPoint"][1]["ret"] = "void"
@@ -20651,7 +24133,11 @@ defs["igImTriangleContainsPoint"][1]["call_args"] = "(a,b,c,p)"
 defs["igImTriangleContainsPoint"][1]["cimguiname"] = "igImTriangleContainsPoint"
 defs["igImTriangleContainsPoint"][1]["defaults"] = {}
 defs["igImTriangleContainsPoint"][1]["funcname"] = "ImTriangleContainsPoint"
+<<<<<<< HEAD
 defs["igImTriangleContainsPoint"][1]["location"] = "imgui_internal:501"
+=======
+defs["igImTriangleContainsPoint"][1]["location"] = "imgui_internal:499"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImTriangleContainsPoint"][1]["ov_cimguiname"] = "igImTriangleContainsPoint"
 defs["igImTriangleContainsPoint"][1]["ret"] = "bool"
 defs["igImTriangleContainsPoint"][1]["signature"] = "(const ImVec2,const ImVec2,const ImVec2,const ImVec2)"
@@ -20669,7 +24155,11 @@ defs["igImUpperPowerOfTwo"][1]["call_args"] = "(v)"
 defs["igImUpperPowerOfTwo"][1]["cimguiname"] = "igImUpperPowerOfTwo"
 defs["igImUpperPowerOfTwo"][1]["defaults"] = {}
 defs["igImUpperPowerOfTwo"][1]["funcname"] = "ImUpperPowerOfTwo"
+<<<<<<< HEAD
 defs["igImUpperPowerOfTwo"][1]["location"] = "imgui_internal:345"
+=======
+defs["igImUpperPowerOfTwo"][1]["location"] = "imgui_internal:343"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImUpperPowerOfTwo"][1]["ov_cimguiname"] = "igImUpperPowerOfTwo"
 defs["igImUpperPowerOfTwo"][1]["ret"] = "int"
 defs["igImUpperPowerOfTwo"][1]["signature"] = "(int)"
@@ -20706,7 +24196,11 @@ defs["igImage"][1]["defaults"]["tint_col"] = "ImVec4(1,1,1,1)"
 defs["igImage"][1]["defaults"]["uv0"] = "ImVec2(0,0)"
 defs["igImage"][1]["defaults"]["uv1"] = "ImVec2(1,1)"
 defs["igImage"][1]["funcname"] = "Image"
+<<<<<<< HEAD
 defs["igImage"][1]["location"] = "imgui:524"
+=======
+defs["igImage"][1]["location"] = "imgui:523"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImage"][1]["namespace"] = "ImGui"
 defs["igImage"][1]["ov_cimguiname"] = "igImage"
 defs["igImage"][1]["ret"] = "void"
@@ -20747,7 +24241,11 @@ defs["igImageButton"][1]["defaults"]["tint_col"] = "ImVec4(1,1,1,1)"
 defs["igImageButton"][1]["defaults"]["uv0"] = "ImVec2(0,0)"
 defs["igImageButton"][1]["defaults"]["uv1"] = "ImVec2(1,1)"
 defs["igImageButton"][1]["funcname"] = "ImageButton"
+<<<<<<< HEAD
 defs["igImageButton"][1]["location"] = "imgui:525"
+=======
+defs["igImageButton"][1]["location"] = "imgui:524"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImageButton"][1]["namespace"] = "ImGui"
 defs["igImageButton"][1]["ov_cimguiname"] = "igImageButton"
 defs["igImageButton"][1]["ret"] = "bool"
@@ -20788,7 +24286,11 @@ defs["igImageButtonEx"][1]["cimguiname"] = "igImageButtonEx"
 defs["igImageButtonEx"][1]["defaults"] = {}
 defs["igImageButtonEx"][1]["defaults"]["flags"] = "0"
 defs["igImageButtonEx"][1]["funcname"] = "ImageButtonEx"
+<<<<<<< HEAD
 defs["igImageButtonEx"][1]["location"] = "imgui_internal:3379"
+=======
+defs["igImageButtonEx"][1]["location"] = "imgui_internal:3371"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igImageButtonEx"][1]["namespace"] = "ImGui"
 defs["igImageButtonEx"][1]["ov_cimguiname"] = "igImageButtonEx"
 defs["igImageButtonEx"][1]["ret"] = "bool"
@@ -20824,7 +24326,11 @@ defs["igInitialize"][1]["call_args"] = "()"
 defs["igInitialize"][1]["cimguiname"] = "igInitialize"
 defs["igInitialize"][1]["defaults"] = {}
 defs["igInitialize"][1]["funcname"] = "Initialize"
+<<<<<<< HEAD
 defs["igInitialize"][1]["location"] = "imgui_internal:2976"
+=======
+defs["igInitialize"][1]["location"] = "imgui_internal:2981"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInitialize"][1]["namespace"] = "ImGui"
 defs["igInitialize"][1]["ov_cimguiname"] = "igInitialize"
 defs["igInitialize"][1]["ret"] = "void"
@@ -20862,7 +24368,11 @@ defs["igInputDouble"][1]["defaults"]["format"] = "\"%.6f\""
 defs["igInputDouble"][1]["defaults"]["step"] = "0.0"
 defs["igInputDouble"][1]["defaults"]["step_fast"] = "0.0"
 defs["igInputDouble"][1]["funcname"] = "InputDouble"
+<<<<<<< HEAD
 defs["igInputDouble"][1]["location"] = "imgui:596"
+=======
+defs["igInputDouble"][1]["location"] = "imgui:595"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputDouble"][1]["namespace"] = "ImGui"
 defs["igInputDouble"][1]["ov_cimguiname"] = "igInputDouble"
 defs["igInputDouble"][1]["ret"] = "bool"
@@ -20900,7 +24410,11 @@ defs["igInputFloat"][1]["defaults"]["format"] = "\"%.3f\""
 defs["igInputFloat"][1]["defaults"]["step"] = "0.0f"
 defs["igInputFloat"][1]["defaults"]["step_fast"] = "0.0f"
 defs["igInputFloat"][1]["funcname"] = "InputFloat"
+<<<<<<< HEAD
 defs["igInputFloat"][1]["location"] = "imgui:588"
+=======
+defs["igInputFloat"][1]["location"] = "imgui:587"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputFloat"][1]["namespace"] = "ImGui"
 defs["igInputFloat"][1]["ov_cimguiname"] = "igInputFloat"
 defs["igInputFloat"][1]["ret"] = "bool"
@@ -20930,7 +24444,11 @@ defs["igInputFloat2"][1]["defaults"] = {}
 defs["igInputFloat2"][1]["defaults"]["flags"] = "0"
 defs["igInputFloat2"][1]["defaults"]["format"] = "\"%.3f\""
 defs["igInputFloat2"][1]["funcname"] = "InputFloat2"
+<<<<<<< HEAD
 defs["igInputFloat2"][1]["location"] = "imgui:589"
+=======
+defs["igInputFloat2"][1]["location"] = "imgui:588"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputFloat2"][1]["namespace"] = "ImGui"
 defs["igInputFloat2"][1]["ov_cimguiname"] = "igInputFloat2"
 defs["igInputFloat2"][1]["ret"] = "bool"
@@ -20960,7 +24478,11 @@ defs["igInputFloat3"][1]["defaults"] = {}
 defs["igInputFloat3"][1]["defaults"]["flags"] = "0"
 defs["igInputFloat3"][1]["defaults"]["format"] = "\"%.3f\""
 defs["igInputFloat3"][1]["funcname"] = "InputFloat3"
+<<<<<<< HEAD
 defs["igInputFloat3"][1]["location"] = "imgui:590"
+=======
+defs["igInputFloat3"][1]["location"] = "imgui:589"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputFloat3"][1]["namespace"] = "ImGui"
 defs["igInputFloat3"][1]["ov_cimguiname"] = "igInputFloat3"
 defs["igInputFloat3"][1]["ret"] = "bool"
@@ -20990,7 +24512,11 @@ defs["igInputFloat4"][1]["defaults"] = {}
 defs["igInputFloat4"][1]["defaults"]["flags"] = "0"
 defs["igInputFloat4"][1]["defaults"]["format"] = "\"%.3f\""
 defs["igInputFloat4"][1]["funcname"] = "InputFloat4"
+<<<<<<< HEAD
 defs["igInputFloat4"][1]["location"] = "imgui:591"
+=======
+defs["igInputFloat4"][1]["location"] = "imgui:590"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputFloat4"][1]["namespace"] = "ImGui"
 defs["igInputFloat4"][1]["ov_cimguiname"] = "igInputFloat4"
 defs["igInputFloat4"][1]["ret"] = "bool"
@@ -21024,7 +24550,11 @@ defs["igInputInt"][1]["defaults"]["flags"] = "0"
 defs["igInputInt"][1]["defaults"]["step"] = "1"
 defs["igInputInt"][1]["defaults"]["step_fast"] = "100"
 defs["igInputInt"][1]["funcname"] = "InputInt"
+<<<<<<< HEAD
 defs["igInputInt"][1]["location"] = "imgui:592"
+=======
+defs["igInputInt"][1]["location"] = "imgui:591"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputInt"][1]["namespace"] = "ImGui"
 defs["igInputInt"][1]["ov_cimguiname"] = "igInputInt"
 defs["igInputInt"][1]["ret"] = "bool"
@@ -21050,7 +24580,11 @@ defs["igInputInt2"][1]["cimguiname"] = "igInputInt2"
 defs["igInputInt2"][1]["defaults"] = {}
 defs["igInputInt2"][1]["defaults"]["flags"] = "0"
 defs["igInputInt2"][1]["funcname"] = "InputInt2"
+<<<<<<< HEAD
 defs["igInputInt2"][1]["location"] = "imgui:593"
+=======
+defs["igInputInt2"][1]["location"] = "imgui:592"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputInt2"][1]["namespace"] = "ImGui"
 defs["igInputInt2"][1]["ov_cimguiname"] = "igInputInt2"
 defs["igInputInt2"][1]["ret"] = "bool"
@@ -21076,7 +24610,11 @@ defs["igInputInt3"][1]["cimguiname"] = "igInputInt3"
 defs["igInputInt3"][1]["defaults"] = {}
 defs["igInputInt3"][1]["defaults"]["flags"] = "0"
 defs["igInputInt3"][1]["funcname"] = "InputInt3"
+<<<<<<< HEAD
 defs["igInputInt3"][1]["location"] = "imgui:594"
+=======
+defs["igInputInt3"][1]["location"] = "imgui:593"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputInt3"][1]["namespace"] = "ImGui"
 defs["igInputInt3"][1]["ov_cimguiname"] = "igInputInt3"
 defs["igInputInt3"][1]["ret"] = "bool"
@@ -21102,7 +24640,11 @@ defs["igInputInt4"][1]["cimguiname"] = "igInputInt4"
 defs["igInputInt4"][1]["defaults"] = {}
 defs["igInputInt4"][1]["defaults"]["flags"] = "0"
 defs["igInputInt4"][1]["funcname"] = "InputInt4"
+<<<<<<< HEAD
 defs["igInputInt4"][1]["location"] = "imgui:595"
+=======
+defs["igInputInt4"][1]["location"] = "imgui:594"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputInt4"][1]["namespace"] = "ImGui"
 defs["igInputInt4"][1]["ov_cimguiname"] = "igInputInt4"
 defs["igInputInt4"][1]["ret"] = "bool"
@@ -21143,7 +24685,11 @@ defs["igInputScalar"][1]["defaults"]["format"] = "NULL"
 defs["igInputScalar"][1]["defaults"]["p_step"] = "NULL"
 defs["igInputScalar"][1]["defaults"]["p_step_fast"] = "NULL"
 defs["igInputScalar"][1]["funcname"] = "InputScalar"
+<<<<<<< HEAD
 defs["igInputScalar"][1]["location"] = "imgui:597"
+=======
+defs["igInputScalar"][1]["location"] = "imgui:596"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputScalar"][1]["namespace"] = "ImGui"
 defs["igInputScalar"][1]["ov_cimguiname"] = "igInputScalar"
 defs["igInputScalar"][1]["ret"] = "bool"
@@ -21187,7 +24733,11 @@ defs["igInputScalarN"][1]["defaults"]["format"] = "NULL"
 defs["igInputScalarN"][1]["defaults"]["p_step"] = "NULL"
 defs["igInputScalarN"][1]["defaults"]["p_step_fast"] = "NULL"
 defs["igInputScalarN"][1]["funcname"] = "InputScalarN"
+<<<<<<< HEAD
 defs["igInputScalarN"][1]["location"] = "imgui:598"
+=======
+defs["igInputScalarN"][1]["location"] = "imgui:597"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputScalarN"][1]["namespace"] = "ImGui"
 defs["igInputScalarN"][1]["ov_cimguiname"] = "igInputScalarN"
 defs["igInputScalarN"][1]["ret"] = "bool"
@@ -21224,7 +24774,11 @@ defs["igInputText"][1]["defaults"]["callback"] = "NULL"
 defs["igInputText"][1]["defaults"]["flags"] = "0"
 defs["igInputText"][1]["defaults"]["user_data"] = "NULL"
 defs["igInputText"][1]["funcname"] = "InputText"
+<<<<<<< HEAD
 defs["igInputText"][1]["location"] = "imgui:585"
+=======
+defs["igInputText"][1]["location"] = "imgui:584"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputText"][1]["namespace"] = "ImGui"
 defs["igInputText"][1]["ov_cimguiname"] = "igInputText"
 defs["igInputText"][1]["ret"] = "bool"
@@ -21266,7 +24820,11 @@ defs["igInputTextEx"][1]["defaults"] = {}
 defs["igInputTextEx"][1]["defaults"]["callback"] = "NULL"
 defs["igInputTextEx"][1]["defaults"]["user_data"] = "NULL"
 defs["igInputTextEx"][1]["funcname"] = "InputTextEx"
+<<<<<<< HEAD
 defs["igInputTextEx"][1]["location"] = "imgui_internal:3424"
+=======
+defs["igInputTextEx"][1]["location"] = "imgui_internal:3415"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputTextEx"][1]["namespace"] = "ImGui"
 defs["igInputTextEx"][1]["ov_cimguiname"] = "igInputTextEx"
 defs["igInputTextEx"][1]["ret"] = "bool"
@@ -21307,7 +24865,11 @@ defs["igInputTextMultiline"][1]["defaults"]["flags"] = "0"
 defs["igInputTextMultiline"][1]["defaults"]["size"] = "ImVec2(0,0)"
 defs["igInputTextMultiline"][1]["defaults"]["user_data"] = "NULL"
 defs["igInputTextMultiline"][1]["funcname"] = "InputTextMultiline"
+<<<<<<< HEAD
 defs["igInputTextMultiline"][1]["location"] = "imgui:586"
+=======
+defs["igInputTextMultiline"][1]["location"] = "imgui:585"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputTextMultiline"][1]["namespace"] = "ImGui"
 defs["igInputTextMultiline"][1]["ov_cimguiname"] = "igInputTextMultiline"
 defs["igInputTextMultiline"][1]["ret"] = "bool"
@@ -21347,7 +24909,11 @@ defs["igInputTextWithHint"][1]["defaults"]["callback"] = "NULL"
 defs["igInputTextWithHint"][1]["defaults"]["flags"] = "0"
 defs["igInputTextWithHint"][1]["defaults"]["user_data"] = "NULL"
 defs["igInputTextWithHint"][1]["funcname"] = "InputTextWithHint"
+<<<<<<< HEAD
 defs["igInputTextWithHint"][1]["location"] = "imgui:587"
+=======
+defs["igInputTextWithHint"][1]["location"] = "imgui:586"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInputTextWithHint"][1]["namespace"] = "ImGui"
 defs["igInputTextWithHint"][1]["ov_cimguiname"] = "igInputTextWithHint"
 defs["igInputTextWithHint"][1]["ret"] = "bool"
@@ -21373,7 +24939,11 @@ defs["igInvisibleButton"][1]["cimguiname"] = "igInvisibleButton"
 defs["igInvisibleButton"][1]["defaults"] = {}
 defs["igInvisibleButton"][1]["defaults"]["flags"] = "0"
 defs["igInvisibleButton"][1]["funcname"] = "InvisibleButton"
+<<<<<<< HEAD
 defs["igInvisibleButton"][1]["location"] = "imgui:512"
+=======
+defs["igInvisibleButton"][1]["location"] = "imgui:511"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igInvisibleButton"][1]["namespace"] = "ImGui"
 defs["igInvisibleButton"][1]["ov_cimguiname"] = "igInvisibleButton"
 defs["igInvisibleButton"][1]["ret"] = "bool"
@@ -21392,7 +24962,11 @@ defs["igIsActiveIdUsingNavDir"][1]["call_args"] = "(dir)"
 defs["igIsActiveIdUsingNavDir"][1]["cimguiname"] = "igIsActiveIdUsingNavDir"
 defs["igIsActiveIdUsingNavDir"][1]["defaults"] = {}
 defs["igIsActiveIdUsingNavDir"][1]["funcname"] = "IsActiveIdUsingNavDir"
+<<<<<<< HEAD
 defs["igIsActiveIdUsingNavDir"][1]["location"] = "imgui_internal:3142"
+=======
+defs["igIsActiveIdUsingNavDir"][1]["location"] = "imgui_internal:3143"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsActiveIdUsingNavDir"][1]["namespace"] = "ImGui"
 defs["igIsActiveIdUsingNavDir"][1]["ov_cimguiname"] = "igIsActiveIdUsingNavDir"
 defs["igIsActiveIdUsingNavDir"][1]["ret"] = "bool"
@@ -21411,7 +24985,11 @@ defs["igIsAliasKey"][1]["call_args"] = "(key)"
 defs["igIsAliasKey"][1]["cimguiname"] = "igIsAliasKey"
 defs["igIsAliasKey"][1]["defaults"] = {}
 defs["igIsAliasKey"][1]["funcname"] = "IsAliasKey"
+<<<<<<< HEAD
 defs["igIsAliasKey"][1]["location"] = "imgui_internal:3120"
+=======
+defs["igIsAliasKey"][1]["location"] = "imgui_internal:3121"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsAliasKey"][1]["namespace"] = "ImGui"
 defs["igIsAliasKey"][1]["ov_cimguiname"] = "igIsAliasKey"
 defs["igIsAliasKey"][1]["ret"] = "bool"
@@ -21427,7 +25005,11 @@ defs["igIsAnyItemActive"][1]["call_args"] = "()"
 defs["igIsAnyItemActive"][1]["cimguiname"] = "igIsAnyItemActive"
 defs["igIsAnyItemActive"][1]["defaults"] = {}
 defs["igIsAnyItemActive"][1]["funcname"] = "IsAnyItemActive"
+<<<<<<< HEAD
 defs["igIsAnyItemActive"][1]["location"] = "imgui:877"
+=======
+defs["igIsAnyItemActive"][1]["location"] = "imgui:876"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsAnyItemActive"][1]["namespace"] = "ImGui"
 defs["igIsAnyItemActive"][1]["ov_cimguiname"] = "igIsAnyItemActive"
 defs["igIsAnyItemActive"][1]["ret"] = "bool"
@@ -21443,7 +25025,11 @@ defs["igIsAnyItemFocused"][1]["call_args"] = "()"
 defs["igIsAnyItemFocused"][1]["cimguiname"] = "igIsAnyItemFocused"
 defs["igIsAnyItemFocused"][1]["defaults"] = {}
 defs["igIsAnyItemFocused"][1]["funcname"] = "IsAnyItemFocused"
+<<<<<<< HEAD
 defs["igIsAnyItemFocused"][1]["location"] = "imgui:878"
+=======
+defs["igIsAnyItemFocused"][1]["location"] = "imgui:877"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsAnyItemFocused"][1]["namespace"] = "ImGui"
 defs["igIsAnyItemFocused"][1]["ov_cimguiname"] = "igIsAnyItemFocused"
 defs["igIsAnyItemFocused"][1]["ret"] = "bool"
@@ -21459,7 +25045,11 @@ defs["igIsAnyItemHovered"][1]["call_args"] = "()"
 defs["igIsAnyItemHovered"][1]["cimguiname"] = "igIsAnyItemHovered"
 defs["igIsAnyItemHovered"][1]["defaults"] = {}
 defs["igIsAnyItemHovered"][1]["funcname"] = "IsAnyItemHovered"
+<<<<<<< HEAD
 defs["igIsAnyItemHovered"][1]["location"] = "imgui:876"
+=======
+defs["igIsAnyItemHovered"][1]["location"] = "imgui:875"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsAnyItemHovered"][1]["namespace"] = "ImGui"
 defs["igIsAnyItemHovered"][1]["ov_cimguiname"] = "igIsAnyItemHovered"
 defs["igIsAnyItemHovered"][1]["ret"] = "bool"
@@ -21475,7 +25065,11 @@ defs["igIsAnyMouseDown"][1]["call_args"] = "()"
 defs["igIsAnyMouseDown"][1]["cimguiname"] = "igIsAnyMouseDown"
 defs["igIsAnyMouseDown"][1]["defaults"] = {}
 defs["igIsAnyMouseDown"][1]["funcname"] = "IsAnyMouseDown"
+<<<<<<< HEAD
 defs["igIsAnyMouseDown"][1]["location"] = "imgui:941"
+=======
+defs["igIsAnyMouseDown"][1]["location"] = "imgui:940"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsAnyMouseDown"][1]["namespace"] = "ImGui"
 defs["igIsAnyMouseDown"][1]["ov_cimguiname"] = "igIsAnyMouseDown"
 defs["igIsAnyMouseDown"][1]["ret"] = "bool"
@@ -21497,7 +25091,11 @@ defs["igIsClippedEx"][1]["call_args"] = "(bb,id)"
 defs["igIsClippedEx"][1]["cimguiname"] = "igIsClippedEx"
 defs["igIsClippedEx"][1]["defaults"] = {}
 defs["igIsClippedEx"][1]["funcname"] = "IsClippedEx"
+<<<<<<< HEAD
 defs["igIsClippedEx"][1]["location"] = "imgui_internal:3054"
+=======
+defs["igIsClippedEx"][1]["location"] = "imgui_internal:3055"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsClippedEx"][1]["namespace"] = "ImGui"
 defs["igIsClippedEx"][1]["ov_cimguiname"] = "igIsClippedEx"
 defs["igIsClippedEx"][1]["ret"] = "bool"
@@ -21513,7 +25111,11 @@ defs["igIsDragDropActive"][1]["call_args"] = "()"
 defs["igIsDragDropActive"][1]["cimguiname"] = "igIsDragDropActive"
 defs["igIsDragDropActive"][1]["defaults"] = {}
 defs["igIsDragDropActive"][1]["funcname"] = "IsDragDropActive"
+<<<<<<< HEAD
 defs["igIsDragDropActive"][1]["location"] = "imgui_internal:3256"
+=======
+defs["igIsDragDropActive"][1]["location"] = "imgui_internal:3255"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsDragDropActive"][1]["namespace"] = "ImGui"
 defs["igIsDragDropActive"][1]["ov_cimguiname"] = "igIsDragDropActive"
 defs["igIsDragDropActive"][1]["ret"] = "bool"
@@ -21529,7 +25131,11 @@ defs["igIsDragDropPayloadBeingAccepted"][1]["call_args"] = "()"
 defs["igIsDragDropPayloadBeingAccepted"][1]["cimguiname"] = "igIsDragDropPayloadBeingAccepted"
 defs["igIsDragDropPayloadBeingAccepted"][1]["defaults"] = {}
 defs["igIsDragDropPayloadBeingAccepted"][1]["funcname"] = "IsDragDropPayloadBeingAccepted"
+<<<<<<< HEAD
 defs["igIsDragDropPayloadBeingAccepted"][1]["location"] = "imgui_internal:3259"
+=======
+defs["igIsDragDropPayloadBeingAccepted"][1]["location"] = "imgui_internal:3258"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsDragDropPayloadBeingAccepted"][1]["namespace"] = "ImGui"
 defs["igIsDragDropPayloadBeingAccepted"][1]["ov_cimguiname"] = "igIsDragDropPayloadBeingAccepted"
 defs["igIsDragDropPayloadBeingAccepted"][1]["ret"] = "bool"
@@ -21548,7 +25154,11 @@ defs["igIsGamepadKey"][1]["call_args"] = "(key)"
 defs["igIsGamepadKey"][1]["cimguiname"] = "igIsGamepadKey"
 defs["igIsGamepadKey"][1]["defaults"] = {}
 defs["igIsGamepadKey"][1]["funcname"] = "IsGamepadKey"
+<<<<<<< HEAD
 defs["igIsGamepadKey"][1]["location"] = "imgui_internal:3118"
+=======
+defs["igIsGamepadKey"][1]["location"] = "imgui_internal:3119"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsGamepadKey"][1]["namespace"] = "ImGui"
 defs["igIsGamepadKey"][1]["ov_cimguiname"] = "igIsGamepadKey"
 defs["igIsGamepadKey"][1]["ret"] = "bool"
@@ -21564,7 +25174,11 @@ defs["igIsItemActivated"][1]["call_args"] = "()"
 defs["igIsItemActivated"][1]["cimguiname"] = "igIsItemActivated"
 defs["igIsItemActivated"][1]["defaults"] = {}
 defs["igIsItemActivated"][1]["funcname"] = "IsItemActivated"
+<<<<<<< HEAD
 defs["igIsItemActivated"][1]["location"] = "imgui:872"
+=======
+defs["igIsItemActivated"][1]["location"] = "imgui:871"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsItemActivated"][1]["namespace"] = "ImGui"
 defs["igIsItemActivated"][1]["ov_cimguiname"] = "igIsItemActivated"
 defs["igIsItemActivated"][1]["ret"] = "bool"
@@ -21580,7 +25194,11 @@ defs["igIsItemActive"][1]["call_args"] = "()"
 defs["igIsItemActive"][1]["cimguiname"] = "igIsItemActive"
 defs["igIsItemActive"][1]["defaults"] = {}
 defs["igIsItemActive"][1]["funcname"] = "IsItemActive"
+<<<<<<< HEAD
 defs["igIsItemActive"][1]["location"] = "imgui:867"
+=======
+defs["igIsItemActive"][1]["location"] = "imgui:866"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsItemActive"][1]["namespace"] = "ImGui"
 defs["igIsItemActive"][1]["ov_cimguiname"] = "igIsItemActive"
 defs["igIsItemActive"][1]["ret"] = "bool"
@@ -21600,7 +25218,11 @@ defs["igIsItemClicked"][1]["cimguiname"] = "igIsItemClicked"
 defs["igIsItemClicked"][1]["defaults"] = {}
 defs["igIsItemClicked"][1]["defaults"]["mouse_button"] = "0"
 defs["igIsItemClicked"][1]["funcname"] = "IsItemClicked"
+<<<<<<< HEAD
 defs["igIsItemClicked"][1]["location"] = "imgui:869"
+=======
+defs["igIsItemClicked"][1]["location"] = "imgui:868"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsItemClicked"][1]["namespace"] = "ImGui"
 defs["igIsItemClicked"][1]["ov_cimguiname"] = "igIsItemClicked"
 defs["igIsItemClicked"][1]["ret"] = "bool"
@@ -21616,7 +25238,11 @@ defs["igIsItemDeactivated"][1]["call_args"] = "()"
 defs["igIsItemDeactivated"][1]["cimguiname"] = "igIsItemDeactivated"
 defs["igIsItemDeactivated"][1]["defaults"] = {}
 defs["igIsItemDeactivated"][1]["funcname"] = "IsItemDeactivated"
+<<<<<<< HEAD
 defs["igIsItemDeactivated"][1]["location"] = "imgui:873"
+=======
+defs["igIsItemDeactivated"][1]["location"] = "imgui:872"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsItemDeactivated"][1]["namespace"] = "ImGui"
 defs["igIsItemDeactivated"][1]["ov_cimguiname"] = "igIsItemDeactivated"
 defs["igIsItemDeactivated"][1]["ret"] = "bool"
@@ -21632,7 +25258,11 @@ defs["igIsItemDeactivatedAfterEdit"][1]["call_args"] = "()"
 defs["igIsItemDeactivatedAfterEdit"][1]["cimguiname"] = "igIsItemDeactivatedAfterEdit"
 defs["igIsItemDeactivatedAfterEdit"][1]["defaults"] = {}
 defs["igIsItemDeactivatedAfterEdit"][1]["funcname"] = "IsItemDeactivatedAfterEdit"
+<<<<<<< HEAD
 defs["igIsItemDeactivatedAfterEdit"][1]["location"] = "imgui:874"
+=======
+defs["igIsItemDeactivatedAfterEdit"][1]["location"] = "imgui:873"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsItemDeactivatedAfterEdit"][1]["namespace"] = "ImGui"
 defs["igIsItemDeactivatedAfterEdit"][1]["ov_cimguiname"] = "igIsItemDeactivatedAfterEdit"
 defs["igIsItemDeactivatedAfterEdit"][1]["ret"] = "bool"
@@ -21648,7 +25278,11 @@ defs["igIsItemEdited"][1]["call_args"] = "()"
 defs["igIsItemEdited"][1]["cimguiname"] = "igIsItemEdited"
 defs["igIsItemEdited"][1]["defaults"] = {}
 defs["igIsItemEdited"][1]["funcname"] = "IsItemEdited"
+<<<<<<< HEAD
 defs["igIsItemEdited"][1]["location"] = "imgui:871"
+=======
+defs["igIsItemEdited"][1]["location"] = "imgui:870"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsItemEdited"][1]["namespace"] = "ImGui"
 defs["igIsItemEdited"][1]["ov_cimguiname"] = "igIsItemEdited"
 defs["igIsItemEdited"][1]["ret"] = "bool"
@@ -21664,7 +25298,11 @@ defs["igIsItemFocused"][1]["call_args"] = "()"
 defs["igIsItemFocused"][1]["cimguiname"] = "igIsItemFocused"
 defs["igIsItemFocused"][1]["defaults"] = {}
 defs["igIsItemFocused"][1]["funcname"] = "IsItemFocused"
+<<<<<<< HEAD
 defs["igIsItemFocused"][1]["location"] = "imgui:868"
+=======
+defs["igIsItemFocused"][1]["location"] = "imgui:867"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsItemFocused"][1]["namespace"] = "ImGui"
 defs["igIsItemFocused"][1]["ov_cimguiname"] = "igIsItemFocused"
 defs["igIsItemFocused"][1]["ret"] = "bool"
@@ -21684,7 +25322,11 @@ defs["igIsItemHovered"][1]["cimguiname"] = "igIsItemHovered"
 defs["igIsItemHovered"][1]["defaults"] = {}
 defs["igIsItemHovered"][1]["defaults"]["flags"] = "0"
 defs["igIsItemHovered"][1]["funcname"] = "IsItemHovered"
+<<<<<<< HEAD
 defs["igIsItemHovered"][1]["location"] = "imgui:866"
+=======
+defs["igIsItemHovered"][1]["location"] = "imgui:865"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsItemHovered"][1]["namespace"] = "ImGui"
 defs["igIsItemHovered"][1]["ov_cimguiname"] = "igIsItemHovered"
 defs["igIsItemHovered"][1]["ret"] = "bool"
@@ -21700,7 +25342,11 @@ defs["igIsItemToggledOpen"][1]["call_args"] = "()"
 defs["igIsItemToggledOpen"][1]["cimguiname"] = "igIsItemToggledOpen"
 defs["igIsItemToggledOpen"][1]["defaults"] = {}
 defs["igIsItemToggledOpen"][1]["funcname"] = "IsItemToggledOpen"
+<<<<<<< HEAD
 defs["igIsItemToggledOpen"][1]["location"] = "imgui:875"
+=======
+defs["igIsItemToggledOpen"][1]["location"] = "imgui:874"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsItemToggledOpen"][1]["namespace"] = "ImGui"
 defs["igIsItemToggledOpen"][1]["ov_cimguiname"] = "igIsItemToggledOpen"
 defs["igIsItemToggledOpen"][1]["ret"] = "bool"
@@ -21716,7 +25362,11 @@ defs["igIsItemToggledSelection"][1]["call_args"] = "()"
 defs["igIsItemToggledSelection"][1]["cimguiname"] = "igIsItemToggledSelection"
 defs["igIsItemToggledSelection"][1]["defaults"] = {}
 defs["igIsItemToggledSelection"][1]["funcname"] = "IsItemToggledSelection"
+<<<<<<< HEAD
 defs["igIsItemToggledSelection"][1]["location"] = "imgui_internal:3059"
+=======
+defs["igIsItemToggledSelection"][1]["location"] = "imgui_internal:3060"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsItemToggledSelection"][1]["namespace"] = "ImGui"
 defs["igIsItemToggledSelection"][1]["ov_cimguiname"] = "igIsItemToggledSelection"
 defs["igIsItemToggledSelection"][1]["ret"] = "bool"
@@ -21732,7 +25382,11 @@ defs["igIsItemVisible"][1]["call_args"] = "()"
 defs["igIsItemVisible"][1]["cimguiname"] = "igIsItemVisible"
 defs["igIsItemVisible"][1]["defaults"] = {}
 defs["igIsItemVisible"][1]["funcname"] = "IsItemVisible"
+<<<<<<< HEAD
 defs["igIsItemVisible"][1]["location"] = "imgui:870"
+=======
+defs["igIsItemVisible"][1]["location"] = "imgui:869"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsItemVisible"][1]["namespace"] = "ImGui"
 defs["igIsItemVisible"][1]["ov_cimguiname"] = "igIsItemVisible"
 defs["igIsItemVisible"][1]["ret"] = "bool"
@@ -21751,7 +25405,11 @@ defs["igIsKeyDown"][1]["call_args"] = "(key)"
 defs["igIsKeyDown"][1]["cimguiname"] = "igIsKeyDown"
 defs["igIsKeyDown"][1]["defaults"] = {}
 defs["igIsKeyDown"][1]["funcname"] = "IsKeyDown"
+<<<<<<< HEAD
 defs["igIsKeyDown"][1]["location"] = "imgui:923"
+=======
+defs["igIsKeyDown"][1]["location"] = "imgui:922"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsKeyDown"][1]["namespace"] = "ImGui"
 defs["igIsKeyDown"][1]["ov_cimguiname"] = "igIsKeyDown_Nil"
 defs["igIsKeyDown"][1]["ret"] = "bool"
@@ -21771,7 +25429,11 @@ defs["igIsKeyDown"][2]["call_args"] = "(key,owner_id)"
 defs["igIsKeyDown"][2]["cimguiname"] = "igIsKeyDown"
 defs["igIsKeyDown"][2]["defaults"] = {}
 defs["igIsKeyDown"][2]["funcname"] = "IsKeyDown"
+<<<<<<< HEAD
 defs["igIsKeyDown"][2]["location"] = "imgui_internal:3167"
+=======
+defs["igIsKeyDown"][2]["location"] = "imgui_internal:3168"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsKeyDown"][2]["namespace"] = "ImGui"
 defs["igIsKeyDown"][2]["ov_cimguiname"] = "igIsKeyDown_ID"
 defs["igIsKeyDown"][2]["ret"] = "bool"
@@ -21795,7 +25457,11 @@ defs["igIsKeyPressed"][1]["cimguiname"] = "igIsKeyPressed"
 defs["igIsKeyPressed"][1]["defaults"] = {}
 defs["igIsKeyPressed"][1]["defaults"]["repeat"] = "true"
 defs["igIsKeyPressed"][1]["funcname"] = "IsKeyPressed"
+<<<<<<< HEAD
 defs["igIsKeyPressed"][1]["location"] = "imgui:924"
+=======
+defs["igIsKeyPressed"][1]["location"] = "imgui:923"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsKeyPressed"][1]["namespace"] = "ImGui"
 defs["igIsKeyPressed"][1]["ov_cimguiname"] = "igIsKeyPressed_Bool"
 defs["igIsKeyPressed"][1]["ret"] = "bool"
@@ -21819,7 +25485,11 @@ defs["igIsKeyPressed"][2]["cimguiname"] = "igIsKeyPressed"
 defs["igIsKeyPressed"][2]["defaults"] = {}
 defs["igIsKeyPressed"][2]["defaults"]["flags"] = "0"
 defs["igIsKeyPressed"][2]["funcname"] = "IsKeyPressed"
+<<<<<<< HEAD
 defs["igIsKeyPressed"][2]["location"] = "imgui_internal:3168"
+=======
+defs["igIsKeyPressed"][2]["location"] = "imgui_internal:3169"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsKeyPressed"][2]["namespace"] = "ImGui"
 defs["igIsKeyPressed"][2]["ov_cimguiname"] = "igIsKeyPressed_ID"
 defs["igIsKeyPressed"][2]["ret"] = "bool"
@@ -21843,7 +25513,11 @@ defs["igIsKeyPressedMap"][1]["cimguiname"] = "igIsKeyPressedMap"
 defs["igIsKeyPressedMap"][1]["defaults"] = {}
 defs["igIsKeyPressedMap"][1]["defaults"]["repeat"] = "true"
 defs["igIsKeyPressedMap"][1]["funcname"] = "IsKeyPressedMap"
+<<<<<<< HEAD
 defs["igIsKeyPressedMap"][1]["location"] = "imgui_internal:3495"
+=======
+defs["igIsKeyPressedMap"][1]["location"] = "imgui_internal:3486"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsKeyPressedMap"][1]["namespace"] = "ImGui"
 defs["igIsKeyPressedMap"][1]["ov_cimguiname"] = "igIsKeyPressedMap"
 defs["igIsKeyPressedMap"][1]["ret"] = "bool"
@@ -21862,7 +25536,11 @@ defs["igIsKeyReleased"][1]["call_args"] = "(key)"
 defs["igIsKeyReleased"][1]["cimguiname"] = "igIsKeyReleased"
 defs["igIsKeyReleased"][1]["defaults"] = {}
 defs["igIsKeyReleased"][1]["funcname"] = "IsKeyReleased"
+<<<<<<< HEAD
 defs["igIsKeyReleased"][1]["location"] = "imgui:925"
+=======
+defs["igIsKeyReleased"][1]["location"] = "imgui:924"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsKeyReleased"][1]["namespace"] = "ImGui"
 defs["igIsKeyReleased"][1]["ov_cimguiname"] = "igIsKeyReleased_Nil"
 defs["igIsKeyReleased"][1]["ret"] = "bool"
@@ -21882,7 +25560,11 @@ defs["igIsKeyReleased"][2]["call_args"] = "(key,owner_id)"
 defs["igIsKeyReleased"][2]["cimguiname"] = "igIsKeyReleased"
 defs["igIsKeyReleased"][2]["defaults"] = {}
 defs["igIsKeyReleased"][2]["funcname"] = "IsKeyReleased"
+<<<<<<< HEAD
 defs["igIsKeyReleased"][2]["location"] = "imgui_internal:3169"
+=======
+defs["igIsKeyReleased"][2]["location"] = "imgui_internal:3170"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsKeyReleased"][2]["namespace"] = "ImGui"
 defs["igIsKeyReleased"][2]["ov_cimguiname"] = "igIsKeyReleased_ID"
 defs["igIsKeyReleased"][2]["ret"] = "bool"
@@ -21902,7 +25584,11 @@ defs["igIsKeyboardKey"][1]["call_args"] = "(key)"
 defs["igIsKeyboardKey"][1]["cimguiname"] = "igIsKeyboardKey"
 defs["igIsKeyboardKey"][1]["defaults"] = {}
 defs["igIsKeyboardKey"][1]["funcname"] = "IsKeyboardKey"
+<<<<<<< HEAD
 defs["igIsKeyboardKey"][1]["location"] = "imgui_internal:3117"
+=======
+defs["igIsKeyboardKey"][1]["location"] = "imgui_internal:3118"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsKeyboardKey"][1]["namespace"] = "ImGui"
 defs["igIsKeyboardKey"][1]["ov_cimguiname"] = "igIsKeyboardKey"
 defs["igIsKeyboardKey"][1]["ret"] = "bool"
@@ -21921,7 +25607,11 @@ defs["igIsLegacyKey"][1]["call_args"] = "(key)"
 defs["igIsLegacyKey"][1]["cimguiname"] = "igIsLegacyKey"
 defs["igIsLegacyKey"][1]["defaults"] = {}
 defs["igIsLegacyKey"][1]["funcname"] = "IsLegacyKey"
+<<<<<<< HEAD
 defs["igIsLegacyKey"][1]["location"] = "imgui_internal:3116"
+=======
+defs["igIsLegacyKey"][1]["location"] = "imgui_internal:3117"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsLegacyKey"][1]["namespace"] = "ImGui"
 defs["igIsLegacyKey"][1]["ov_cimguiname"] = "igIsLegacyKey"
 defs["igIsLegacyKey"][1]["ret"] = "bool"
@@ -21944,7 +25634,11 @@ defs["igIsMouseClicked"][1]["cimguiname"] = "igIsMouseClicked"
 defs["igIsMouseClicked"][1]["defaults"] = {}
 defs["igIsMouseClicked"][1]["defaults"]["repeat"] = "false"
 defs["igIsMouseClicked"][1]["funcname"] = "IsMouseClicked"
+<<<<<<< HEAD
 defs["igIsMouseClicked"][1]["location"] = "imgui:935"
+=======
+defs["igIsMouseClicked"][1]["location"] = "imgui:934"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsMouseClicked"][1]["namespace"] = "ImGui"
 defs["igIsMouseClicked"][1]["ov_cimguiname"] = "igIsMouseClicked_Bool"
 defs["igIsMouseClicked"][1]["ret"] = "bool"
@@ -21968,7 +25662,11 @@ defs["igIsMouseClicked"][2]["cimguiname"] = "igIsMouseClicked"
 defs["igIsMouseClicked"][2]["defaults"] = {}
 defs["igIsMouseClicked"][2]["defaults"]["flags"] = "0"
 defs["igIsMouseClicked"][2]["funcname"] = "IsMouseClicked"
+<<<<<<< HEAD
 defs["igIsMouseClicked"][2]["location"] = "imgui_internal:3171"
+=======
+defs["igIsMouseClicked"][2]["location"] = "imgui_internal:3172"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsMouseClicked"][2]["namespace"] = "ImGui"
 defs["igIsMouseClicked"][2]["ov_cimguiname"] = "igIsMouseClicked_ID"
 defs["igIsMouseClicked"][2]["ret"] = "bool"
@@ -21988,7 +25686,11 @@ defs["igIsMouseDoubleClicked"][1]["call_args"] = "(button)"
 defs["igIsMouseDoubleClicked"][1]["cimguiname"] = "igIsMouseDoubleClicked"
 defs["igIsMouseDoubleClicked"][1]["defaults"] = {}
 defs["igIsMouseDoubleClicked"][1]["funcname"] = "IsMouseDoubleClicked"
+<<<<<<< HEAD
 defs["igIsMouseDoubleClicked"][1]["location"] = "imgui:937"
+=======
+defs["igIsMouseDoubleClicked"][1]["location"] = "imgui:936"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsMouseDoubleClicked"][1]["namespace"] = "ImGui"
 defs["igIsMouseDoubleClicked"][1]["ov_cimguiname"] = "igIsMouseDoubleClicked"
 defs["igIsMouseDoubleClicked"][1]["ret"] = "bool"
@@ -22007,7 +25709,11 @@ defs["igIsMouseDown"][1]["call_args"] = "(button)"
 defs["igIsMouseDown"][1]["cimguiname"] = "igIsMouseDown"
 defs["igIsMouseDown"][1]["defaults"] = {}
 defs["igIsMouseDown"][1]["funcname"] = "IsMouseDown"
+<<<<<<< HEAD
 defs["igIsMouseDown"][1]["location"] = "imgui:934"
+=======
+defs["igIsMouseDown"][1]["location"] = "imgui:933"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsMouseDown"][1]["namespace"] = "ImGui"
 defs["igIsMouseDown"][1]["ov_cimguiname"] = "igIsMouseDown_Nil"
 defs["igIsMouseDown"][1]["ret"] = "bool"
@@ -22027,7 +25733,11 @@ defs["igIsMouseDown"][2]["call_args"] = "(button,owner_id)"
 defs["igIsMouseDown"][2]["cimguiname"] = "igIsMouseDown"
 defs["igIsMouseDown"][2]["defaults"] = {}
 defs["igIsMouseDown"][2]["funcname"] = "IsMouseDown"
+<<<<<<< HEAD
 defs["igIsMouseDown"][2]["location"] = "imgui_internal:3170"
+=======
+defs["igIsMouseDown"][2]["location"] = "imgui_internal:3171"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsMouseDown"][2]["namespace"] = "ImGui"
 defs["igIsMouseDown"][2]["ov_cimguiname"] = "igIsMouseDown_ID"
 defs["igIsMouseDown"][2]["ret"] = "bool"
@@ -22051,7 +25761,11 @@ defs["igIsMouseDragPastThreshold"][1]["cimguiname"] = "igIsMouseDragPastThreshol
 defs["igIsMouseDragPastThreshold"][1]["defaults"] = {}
 defs["igIsMouseDragPastThreshold"][1]["defaults"]["lock_threshold"] = "-1.0f"
 defs["igIsMouseDragPastThreshold"][1]["funcname"] = "IsMouseDragPastThreshold"
+<<<<<<< HEAD
 defs["igIsMouseDragPastThreshold"][1]["location"] = "imgui_internal:3136"
+=======
+defs["igIsMouseDragPastThreshold"][1]["location"] = "imgui_internal:3137"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsMouseDragPastThreshold"][1]["namespace"] = "ImGui"
 defs["igIsMouseDragPastThreshold"][1]["ov_cimguiname"] = "igIsMouseDragPastThreshold"
 defs["igIsMouseDragPastThreshold"][1]["ret"] = "bool"
@@ -22074,7 +25788,11 @@ defs["igIsMouseDragging"][1]["cimguiname"] = "igIsMouseDragging"
 defs["igIsMouseDragging"][1]["defaults"] = {}
 defs["igIsMouseDragging"][1]["defaults"]["lock_threshold"] = "-1.0f"
 defs["igIsMouseDragging"][1]["funcname"] = "IsMouseDragging"
+<<<<<<< HEAD
 defs["igIsMouseDragging"][1]["location"] = "imgui:944"
+=======
+defs["igIsMouseDragging"][1]["location"] = "imgui:943"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsMouseDragging"][1]["namespace"] = "ImGui"
 defs["igIsMouseDragging"][1]["ov_cimguiname"] = "igIsMouseDragging"
 defs["igIsMouseDragging"][1]["ret"] = "bool"
@@ -22100,7 +25818,11 @@ defs["igIsMouseHoveringRect"][1]["cimguiname"] = "igIsMouseHoveringRect"
 defs["igIsMouseHoveringRect"][1]["defaults"] = {}
 defs["igIsMouseHoveringRect"][1]["defaults"]["clip"] = "true"
 defs["igIsMouseHoveringRect"][1]["funcname"] = "IsMouseHoveringRect"
+<<<<<<< HEAD
 defs["igIsMouseHoveringRect"][1]["location"] = "imgui:939"
+=======
+defs["igIsMouseHoveringRect"][1]["location"] = "imgui:938"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsMouseHoveringRect"][1]["namespace"] = "ImGui"
 defs["igIsMouseHoveringRect"][1]["ov_cimguiname"] = "igIsMouseHoveringRect"
 defs["igIsMouseHoveringRect"][1]["ret"] = "bool"
@@ -22119,7 +25841,11 @@ defs["igIsMouseKey"][1]["call_args"] = "(key)"
 defs["igIsMouseKey"][1]["cimguiname"] = "igIsMouseKey"
 defs["igIsMouseKey"][1]["defaults"] = {}
 defs["igIsMouseKey"][1]["funcname"] = "IsMouseKey"
+<<<<<<< HEAD
 defs["igIsMouseKey"][1]["location"] = "imgui_internal:3119"
+=======
+defs["igIsMouseKey"][1]["location"] = "imgui_internal:3120"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsMouseKey"][1]["namespace"] = "ImGui"
 defs["igIsMouseKey"][1]["ov_cimguiname"] = "igIsMouseKey"
 defs["igIsMouseKey"][1]["ret"] = "bool"
@@ -22139,7 +25865,11 @@ defs["igIsMousePosValid"][1]["cimguiname"] = "igIsMousePosValid"
 defs["igIsMousePosValid"][1]["defaults"] = {}
 defs["igIsMousePosValid"][1]["defaults"]["mouse_pos"] = "NULL"
 defs["igIsMousePosValid"][1]["funcname"] = "IsMousePosValid"
+<<<<<<< HEAD
 defs["igIsMousePosValid"][1]["location"] = "imgui:940"
+=======
+defs["igIsMousePosValid"][1]["location"] = "imgui:939"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsMousePosValid"][1]["namespace"] = "ImGui"
 defs["igIsMousePosValid"][1]["ov_cimguiname"] = "igIsMousePosValid"
 defs["igIsMousePosValid"][1]["ret"] = "bool"
@@ -22158,7 +25888,11 @@ defs["igIsMouseReleased"][1]["call_args"] = "(button)"
 defs["igIsMouseReleased"][1]["cimguiname"] = "igIsMouseReleased"
 defs["igIsMouseReleased"][1]["defaults"] = {}
 defs["igIsMouseReleased"][1]["funcname"] = "IsMouseReleased"
+<<<<<<< HEAD
 defs["igIsMouseReleased"][1]["location"] = "imgui:936"
+=======
+defs["igIsMouseReleased"][1]["location"] = "imgui:935"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsMouseReleased"][1]["namespace"] = "ImGui"
 defs["igIsMouseReleased"][1]["ov_cimguiname"] = "igIsMouseReleased_Nil"
 defs["igIsMouseReleased"][1]["ret"] = "bool"
@@ -22178,7 +25912,11 @@ defs["igIsMouseReleased"][2]["call_args"] = "(button,owner_id)"
 defs["igIsMouseReleased"][2]["cimguiname"] = "igIsMouseReleased"
 defs["igIsMouseReleased"][2]["defaults"] = {}
 defs["igIsMouseReleased"][2]["funcname"] = "IsMouseReleased"
+<<<<<<< HEAD
 defs["igIsMouseReleased"][2]["location"] = "imgui_internal:3172"
+=======
+defs["igIsMouseReleased"][2]["location"] = "imgui_internal:3173"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsMouseReleased"][2]["namespace"] = "ImGui"
 defs["igIsMouseReleased"][2]["ov_cimguiname"] = "igIsMouseReleased_ID"
 defs["igIsMouseReleased"][2]["ret"] = "bool"
@@ -22198,7 +25936,11 @@ defs["igIsNamedKey"][1]["call_args"] = "(key)"
 defs["igIsNamedKey"][1]["cimguiname"] = "igIsNamedKey"
 defs["igIsNamedKey"][1]["defaults"] = {}
 defs["igIsNamedKey"][1]["funcname"] = "IsNamedKey"
+<<<<<<< HEAD
 defs["igIsNamedKey"][1]["location"] = "imgui_internal:3114"
+=======
+defs["igIsNamedKey"][1]["location"] = "imgui_internal:3115"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsNamedKey"][1]["namespace"] = "ImGui"
 defs["igIsNamedKey"][1]["ov_cimguiname"] = "igIsNamedKey"
 defs["igIsNamedKey"][1]["ret"] = "bool"
@@ -22217,7 +25959,11 @@ defs["igIsNamedKeyOrModKey"][1]["call_args"] = "(key)"
 defs["igIsNamedKeyOrModKey"][1]["cimguiname"] = "igIsNamedKeyOrModKey"
 defs["igIsNamedKeyOrModKey"][1]["defaults"] = {}
 defs["igIsNamedKeyOrModKey"][1]["funcname"] = "IsNamedKeyOrModKey"
+<<<<<<< HEAD
 defs["igIsNamedKeyOrModKey"][1]["location"] = "imgui_internal:3115"
+=======
+defs["igIsNamedKeyOrModKey"][1]["location"] = "imgui_internal:3116"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsNamedKeyOrModKey"][1]["namespace"] = "ImGui"
 defs["igIsNamedKeyOrModKey"][1]["ov_cimguiname"] = "igIsNamedKeyOrModKey"
 defs["igIsNamedKeyOrModKey"][1]["ret"] = "bool"
@@ -22240,7 +25986,11 @@ defs["igIsPopupOpen"][1]["cimguiname"] = "igIsPopupOpen"
 defs["igIsPopupOpen"][1]["defaults"] = {}
 defs["igIsPopupOpen"][1]["defaults"]["flags"] = "0"
 defs["igIsPopupOpen"][1]["funcname"] = "IsPopupOpen"
+<<<<<<< HEAD
 defs["igIsPopupOpen"][1]["location"] = "imgui:724"
+=======
+defs["igIsPopupOpen"][1]["location"] = "imgui:723"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsPopupOpen"][1]["namespace"] = "ImGui"
 defs["igIsPopupOpen"][1]["ov_cimguiname"] = "igIsPopupOpen_Str"
 defs["igIsPopupOpen"][1]["ret"] = "bool"
@@ -22260,7 +26010,11 @@ defs["igIsPopupOpen"][2]["call_args"] = "(id,popup_flags)"
 defs["igIsPopupOpen"][2]["cimguiname"] = "igIsPopupOpen"
 defs["igIsPopupOpen"][2]["defaults"] = {}
 defs["igIsPopupOpen"][2]["funcname"] = "IsPopupOpen"
+<<<<<<< HEAD
 defs["igIsPopupOpen"][2]["location"] = "imgui_internal:3079"
+=======
+defs["igIsPopupOpen"][2]["location"] = "imgui_internal:3080"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsPopupOpen"][2]["namespace"] = "ImGui"
 defs["igIsPopupOpen"][2]["ov_cimguiname"] = "igIsPopupOpen_ID"
 defs["igIsPopupOpen"][2]["ret"] = "bool"
@@ -22280,7 +26034,11 @@ defs["igIsRectVisible"][1]["call_args"] = "(size)"
 defs["igIsRectVisible"][1]["cimguiname"] = "igIsRectVisible"
 defs["igIsRectVisible"][1]["defaults"] = {}
 defs["igIsRectVisible"][1]["funcname"] = "IsRectVisible"
+<<<<<<< HEAD
 defs["igIsRectVisible"][1]["location"] = "imgui:898"
+=======
+defs["igIsRectVisible"][1]["location"] = "imgui:897"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsRectVisible"][1]["namespace"] = "ImGui"
 defs["igIsRectVisible"][1]["ov_cimguiname"] = "igIsRectVisible_Nil"
 defs["igIsRectVisible"][1]["ret"] = "bool"
@@ -22300,7 +26058,11 @@ defs["igIsRectVisible"][2]["call_args"] = "(rect_min,rect_max)"
 defs["igIsRectVisible"][2]["cimguiname"] = "igIsRectVisible"
 defs["igIsRectVisible"][2]["defaults"] = {}
 defs["igIsRectVisible"][2]["funcname"] = "IsRectVisible"
+<<<<<<< HEAD
 defs["igIsRectVisible"][2]["location"] = "imgui:899"
+=======
+defs["igIsRectVisible"][2]["location"] = "imgui:898"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsRectVisible"][2]["namespace"] = "ImGui"
 defs["igIsRectVisible"][2]["ov_cimguiname"] = "igIsRectVisible_Vec2"
 defs["igIsRectVisible"][2]["ret"] = "bool"
@@ -22323,7 +26085,11 @@ defs["igIsWindowAbove"][1]["call_args"] = "(potential_above,potential_below)"
 defs["igIsWindowAbove"][1]["cimguiname"] = "igIsWindowAbove"
 defs["igIsWindowAbove"][1]["defaults"] = {}
 defs["igIsWindowAbove"][1]["funcname"] = "IsWindowAbove"
+<<<<<<< HEAD
 defs["igIsWindowAbove"][1]["location"] = "imgui_internal:2951"
+=======
+defs["igIsWindowAbove"][1]["location"] = "imgui_internal:2956"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsWindowAbove"][1]["namespace"] = "ImGui"
 defs["igIsWindowAbove"][1]["ov_cimguiname"] = "igIsWindowAbove"
 defs["igIsWindowAbove"][1]["ret"] = "bool"
@@ -22367,7 +26133,11 @@ defs["igIsWindowChildOf"][1]["call_args"] = "(window,potential_parent,popup_hier
 defs["igIsWindowChildOf"][1]["cimguiname"] = "igIsWindowChildOf"
 defs["igIsWindowChildOf"][1]["defaults"] = {}
 defs["igIsWindowChildOf"][1]["funcname"] = "IsWindowChildOf"
+<<<<<<< HEAD
 defs["igIsWindowChildOf"][1]["location"] = "imgui_internal:2949"
+=======
+defs["igIsWindowChildOf"][1]["location"] = "imgui_internal:2954"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsWindowChildOf"][1]["namespace"] = "ImGui"
 defs["igIsWindowChildOf"][1]["ov_cimguiname"] = "igIsWindowChildOf"
 defs["igIsWindowChildOf"][1]["ret"] = "bool"
@@ -22399,7 +26169,11 @@ defs["igIsWindowDocked"][1]["call_args"] = "()"
 defs["igIsWindowDocked"][1]["cimguiname"] = "igIsWindowDocked"
 defs["igIsWindowDocked"][1]["defaults"] = {}
 defs["igIsWindowDocked"][1]["funcname"] = "IsWindowDocked"
+<<<<<<< HEAD
 defs["igIsWindowDocked"][1]["location"] = "imgui:821"
+=======
+defs["igIsWindowDocked"][1]["location"] = "imgui:820"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsWindowDocked"][1]["namespace"] = "ImGui"
 defs["igIsWindowDocked"][1]["ov_cimguiname"] = "igIsWindowDocked"
 defs["igIsWindowDocked"][1]["ret"] = "bool"
@@ -22458,7 +26232,11 @@ defs["igIsWindowNavFocusable"][1]["call_args"] = "(window)"
 defs["igIsWindowNavFocusable"][1]["cimguiname"] = "igIsWindowNavFocusable"
 defs["igIsWindowNavFocusable"][1]["defaults"] = {}
 defs["igIsWindowNavFocusable"][1]["funcname"] = "IsWindowNavFocusable"
+<<<<<<< HEAD
 defs["igIsWindowNavFocusable"][1]["location"] = "imgui_internal:2952"
+=======
+defs["igIsWindowNavFocusable"][1]["location"] = "imgui_internal:2957"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsWindowNavFocusable"][1]["namespace"] = "ImGui"
 defs["igIsWindowNavFocusable"][1]["ov_cimguiname"] = "igIsWindowNavFocusable"
 defs["igIsWindowNavFocusable"][1]["ret"] = "bool"
@@ -22480,7 +26258,11 @@ defs["igIsWindowWithinBeginStackOf"][1]["call_args"] = "(window,potential_parent
 defs["igIsWindowWithinBeginStackOf"][1]["cimguiname"] = "igIsWindowWithinBeginStackOf"
 defs["igIsWindowWithinBeginStackOf"][1]["defaults"] = {}
 defs["igIsWindowWithinBeginStackOf"][1]["funcname"] = "IsWindowWithinBeginStackOf"
+<<<<<<< HEAD
 defs["igIsWindowWithinBeginStackOf"][1]["location"] = "imgui_internal:2950"
+=======
+defs["igIsWindowWithinBeginStackOf"][1]["location"] = "imgui_internal:2955"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igIsWindowWithinBeginStackOf"][1]["namespace"] = "ImGui"
 defs["igIsWindowWithinBeginStackOf"][1]["ov_cimguiname"] = "igIsWindowWithinBeginStackOf"
 defs["igIsWindowWithinBeginStackOf"][1]["ret"] = "bool"
@@ -22510,7 +26292,11 @@ defs["igItemAdd"][1]["defaults"] = {}
 defs["igItemAdd"][1]["defaults"]["extra_flags"] = "0"
 defs["igItemAdd"][1]["defaults"]["nav_bb"] = "NULL"
 defs["igItemAdd"][1]["funcname"] = "ItemAdd"
+<<<<<<< HEAD
 defs["igItemAdd"][1]["location"] = "imgui_internal:3052"
+=======
+defs["igItemAdd"][1]["location"] = "imgui_internal:3053"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igItemAdd"][1]["namespace"] = "ImGui"
 defs["igItemAdd"][1]["ov_cimguiname"] = "igItemAdd"
 defs["igItemAdd"][1]["ret"] = "bool"
@@ -22532,7 +26318,11 @@ defs["igItemHoverable"][1]["call_args"] = "(bb,id)"
 defs["igItemHoverable"][1]["cimguiname"] = "igItemHoverable"
 defs["igItemHoverable"][1]["defaults"] = {}
 defs["igItemHoverable"][1]["funcname"] = "ItemHoverable"
+<<<<<<< HEAD
 defs["igItemHoverable"][1]["location"] = "imgui_internal:3053"
+=======
+defs["igItemHoverable"][1]["location"] = "imgui_internal:3054"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igItemHoverable"][1]["namespace"] = "ImGui"
 defs["igItemHoverable"][1]["ov_cimguiname"] = "igItemHoverable"
 defs["igItemHoverable"][1]["ret"] = "bool"
@@ -22555,7 +26345,11 @@ defs["igItemSize"][1]["cimguiname"] = "igItemSize"
 defs["igItemSize"][1]["defaults"] = {}
 defs["igItemSize"][1]["defaults"]["text_baseline_y"] = "-1.0f"
 defs["igItemSize"][1]["funcname"] = "ItemSize"
+<<<<<<< HEAD
 defs["igItemSize"][1]["location"] = "imgui_internal:3050"
+=======
+defs["igItemSize"][1]["location"] = "imgui_internal:3051"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igItemSize"][1]["namespace"] = "ImGui"
 defs["igItemSize"][1]["ov_cimguiname"] = "igItemSize_Vec2"
 defs["igItemSize"][1]["ret"] = "void"
@@ -22576,7 +26370,11 @@ defs["igItemSize"][2]["cimguiname"] = "igItemSize"
 defs["igItemSize"][2]["defaults"] = {}
 defs["igItemSize"][2]["defaults"]["text_baseline_y"] = "-1.0f"
 defs["igItemSize"][2]["funcname"] = "ItemSize"
+<<<<<<< HEAD
 defs["igItemSize"][2]["location"] = "imgui_internal:3051"
+=======
+defs["igItemSize"][2]["location"] = "imgui_internal:3052"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igItemSize"][2]["namespace"] = "ImGui"
 defs["igItemSize"][2]["ov_cimguiname"] = "igItemSize_Rect"
 defs["igItemSize"][2]["ret"] = "void"
@@ -22596,7 +26394,11 @@ defs["igKeepAliveID"][1]["call_args"] = "(id)"
 defs["igKeepAliveID"][1]["cimguiname"] = "igKeepAliveID"
 defs["igKeepAliveID"][1]["defaults"] = {}
 defs["igKeepAliveID"][1]["funcname"] = "KeepAliveID"
+<<<<<<< HEAD
 defs["igKeepAliveID"][1]["location"] = "imgui_internal:3043"
+=======
+defs["igKeepAliveID"][1]["location"] = "imgui_internal:3045"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igKeepAliveID"][1]["namespace"] = "ImGui"
 defs["igKeepAliveID"][1]["ov_cimguiname"] = "igKeepAliveID"
 defs["igKeepAliveID"][1]["ret"] = "void"
@@ -22679,7 +26481,11 @@ defs["igListBox"][1]["cimguiname"] = "igListBox"
 defs["igListBox"][1]["defaults"] = {}
 defs["igListBox"][1]["defaults"]["height_in_items"] = "-1"
 defs["igListBox"][1]["funcname"] = "ListBox"
+<<<<<<< HEAD
 defs["igListBox"][1]["location"] = "imgui:644"
+=======
+defs["igListBox"][1]["location"] = "imgui:643"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igListBox"][1]["namespace"] = "ImGui"
 defs["igListBox"][1]["ov_cimguiname"] = "igListBox_Str_arr"
 defs["igListBox"][1]["ret"] = "bool"
@@ -22714,7 +26520,11 @@ defs["igListBox"][2]["cimguiname"] = "igListBox"
 defs["igListBox"][2]["defaults"] = {}
 defs["igListBox"][2]["defaults"]["height_in_items"] = "-1"
 defs["igListBox"][2]["funcname"] = "ListBox"
+<<<<<<< HEAD
 defs["igListBox"][2]["location"] = "imgui:645"
+=======
+defs["igListBox"][2]["location"] = "imgui:644"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igListBox"][2]["namespace"] = "ImGui"
 defs["igListBox"][2]["ov_cimguiname"] = "igListBox_FnBoolPtr"
 defs["igListBox"][2]["ret"] = "bool"
@@ -22734,7 +26544,11 @@ defs["igLoadIniSettingsFromDisk"][1]["call_args"] = "(ini_filename)"
 defs["igLoadIniSettingsFromDisk"][1]["cimguiname"] = "igLoadIniSettingsFromDisk"
 defs["igLoadIniSettingsFromDisk"][1]["defaults"] = {}
 defs["igLoadIniSettingsFromDisk"][1]["funcname"] = "LoadIniSettingsFromDisk"
+<<<<<<< HEAD
 defs["igLoadIniSettingsFromDisk"][1]["location"] = "imgui:960"
+=======
+defs["igLoadIniSettingsFromDisk"][1]["location"] = "imgui:959"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLoadIniSettingsFromDisk"][1]["namespace"] = "ImGui"
 defs["igLoadIniSettingsFromDisk"][1]["ov_cimguiname"] = "igLoadIniSettingsFromDisk"
 defs["igLoadIniSettingsFromDisk"][1]["ret"] = "void"
@@ -22757,7 +26571,11 @@ defs["igLoadIniSettingsFromMemory"][1]["cimguiname"] = "igLoadIniSettingsFromMem
 defs["igLoadIniSettingsFromMemory"][1]["defaults"] = {}
 defs["igLoadIniSettingsFromMemory"][1]["defaults"]["ini_size"] = "0"
 defs["igLoadIniSettingsFromMemory"][1]["funcname"] = "LoadIniSettingsFromMemory"
+<<<<<<< HEAD
 defs["igLoadIniSettingsFromMemory"][1]["location"] = "imgui:961"
+=======
+defs["igLoadIniSettingsFromMemory"][1]["location"] = "imgui:960"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLoadIniSettingsFromMemory"][1]["namespace"] = "ImGui"
 defs["igLoadIniSettingsFromMemory"][1]["ov_cimguiname"] = "igLoadIniSettingsFromMemory"
 defs["igLoadIniSettingsFromMemory"][1]["ret"] = "void"
@@ -22776,7 +26594,11 @@ defs["igLocalizeGetMsg"][1]["call_args"] = "(key)"
 defs["igLocalizeGetMsg"][1]["cimguiname"] = "igLocalizeGetMsg"
 defs["igLocalizeGetMsg"][1]["defaults"] = {}
 defs["igLocalizeGetMsg"][1]["funcname"] = "LocalizeGetMsg"
+<<<<<<< HEAD
 defs["igLocalizeGetMsg"][1]["location"] = "imgui_internal:3017"
+=======
+defs["igLocalizeGetMsg"][1]["location"] = "imgui_internal:3019"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLocalizeGetMsg"][1]["namespace"] = "ImGui"
 defs["igLocalizeGetMsg"][1]["ov_cimguiname"] = "igLocalizeGetMsg"
 defs["igLocalizeGetMsg"][1]["ret"] = "const char*"
@@ -22798,7 +26620,11 @@ defs["igLocalizeRegisterEntries"][1]["call_args"] = "(entries,count)"
 defs["igLocalizeRegisterEntries"][1]["cimguiname"] = "igLocalizeRegisterEntries"
 defs["igLocalizeRegisterEntries"][1]["defaults"] = {}
 defs["igLocalizeRegisterEntries"][1]["funcname"] = "LocalizeRegisterEntries"
+<<<<<<< HEAD
 defs["igLocalizeRegisterEntries"][1]["location"] = "imgui_internal:3016"
+=======
+defs["igLocalizeRegisterEntries"][1]["location"] = "imgui_internal:3018"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLocalizeRegisterEntries"][1]["namespace"] = "ImGui"
 defs["igLocalizeRegisterEntries"][1]["ov_cimguiname"] = "igLocalizeRegisterEntries"
 defs["igLocalizeRegisterEntries"][1]["ret"] = "void"
@@ -22820,7 +26646,11 @@ defs["igLogBegin"][1]["call_args"] = "(type,auto_open_depth)"
 defs["igLogBegin"][1]["cimguiname"] = "igLogBegin"
 defs["igLogBegin"][1]["defaults"] = {}
 defs["igLogBegin"][1]["funcname"] = "LogBegin"
+<<<<<<< HEAD
 defs["igLogBegin"][1]["location"] = "imgui_internal:3068"
+=======
+defs["igLogBegin"][1]["location"] = "imgui_internal:3069"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLogBegin"][1]["namespace"] = "ImGui"
 defs["igLogBegin"][1]["ov_cimguiname"] = "igLogBegin"
 defs["igLogBegin"][1]["ret"] = "void"
@@ -22836,7 +26666,11 @@ defs["igLogButtons"][1]["call_args"] = "()"
 defs["igLogButtons"][1]["cimguiname"] = "igLogButtons"
 defs["igLogButtons"][1]["defaults"] = {}
 defs["igLogButtons"][1]["funcname"] = "LogButtons"
+<<<<<<< HEAD
 defs["igLogButtons"][1]["location"] = "imgui:829"
+=======
+defs["igLogButtons"][1]["location"] = "imgui:828"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLogButtons"][1]["namespace"] = "ImGui"
 defs["igLogButtons"][1]["ov_cimguiname"] = "igLogButtons"
 defs["igLogButtons"][1]["ret"] = "void"
@@ -22852,7 +26686,11 @@ defs["igLogFinish"][1]["call_args"] = "()"
 defs["igLogFinish"][1]["cimguiname"] = "igLogFinish"
 defs["igLogFinish"][1]["defaults"] = {}
 defs["igLogFinish"][1]["funcname"] = "LogFinish"
+<<<<<<< HEAD
 defs["igLogFinish"][1]["location"] = "imgui:828"
+=======
+defs["igLogFinish"][1]["location"] = "imgui:827"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLogFinish"][1]["namespace"] = "ImGui"
 defs["igLogFinish"][1]["ov_cimguiname"] = "igLogFinish"
 defs["igLogFinish"][1]["ret"] = "void"
@@ -22878,7 +26716,11 @@ defs["igLogRenderedText"][1]["cimguiname"] = "igLogRenderedText"
 defs["igLogRenderedText"][1]["defaults"] = {}
 defs["igLogRenderedText"][1]["defaults"]["text_end"] = "NULL"
 defs["igLogRenderedText"][1]["funcname"] = "LogRenderedText"
+<<<<<<< HEAD
 defs["igLogRenderedText"][1]["location"] = "imgui_internal:3070"
+=======
+defs["igLogRenderedText"][1]["location"] = "imgui_internal:3071"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLogRenderedText"][1]["namespace"] = "ImGui"
 defs["igLogRenderedText"][1]["ov_cimguiname"] = "igLogRenderedText"
 defs["igLogRenderedText"][1]["ret"] = "void"
@@ -22900,7 +26742,11 @@ defs["igLogSetNextTextDecoration"][1]["call_args"] = "(prefix,suffix)"
 defs["igLogSetNextTextDecoration"][1]["cimguiname"] = "igLogSetNextTextDecoration"
 defs["igLogSetNextTextDecoration"][1]["defaults"] = {}
 defs["igLogSetNextTextDecoration"][1]["funcname"] = "LogSetNextTextDecoration"
+<<<<<<< HEAD
 defs["igLogSetNextTextDecoration"][1]["location"] = "imgui_internal:3071"
+=======
+defs["igLogSetNextTextDecoration"][1]["location"] = "imgui_internal:3072"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLogSetNextTextDecoration"][1]["namespace"] = "ImGui"
 defs["igLogSetNextTextDecoration"][1]["ov_cimguiname"] = "igLogSetNextTextDecoration"
 defs["igLogSetNextTextDecoration"][1]["ret"] = "void"
@@ -22923,7 +26769,11 @@ defs["igLogText"][1]["cimguiname"] = "igLogText"
 defs["igLogText"][1]["defaults"] = {}
 defs["igLogText"][1]["funcname"] = "LogText"
 defs["igLogText"][1]["isvararg"] = "...)"
+<<<<<<< HEAD
 defs["igLogText"][1]["location"] = "imgui:830"
+=======
+defs["igLogText"][1]["location"] = "imgui:829"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLogText"][1]["manual"] = true
 defs["igLogText"][1]["namespace"] = "ImGui"
 defs["igLogText"][1]["ov_cimguiname"] = "igLogText"
@@ -22946,7 +26796,11 @@ defs["igLogTextV"][1]["call_args"] = "(fmt,args)"
 defs["igLogTextV"][1]["cimguiname"] = "igLogTextV"
 defs["igLogTextV"][1]["defaults"] = {}
 defs["igLogTextV"][1]["funcname"] = "LogTextV"
+<<<<<<< HEAD
 defs["igLogTextV"][1]["location"] = "imgui:831"
+=======
+defs["igLogTextV"][1]["location"] = "imgui:830"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLogTextV"][1]["namespace"] = "ImGui"
 defs["igLogTextV"][1]["ov_cimguiname"] = "igLogTextV"
 defs["igLogTextV"][1]["ret"] = "void"
@@ -22966,7 +26820,11 @@ defs["igLogToBuffer"][1]["cimguiname"] = "igLogToBuffer"
 defs["igLogToBuffer"][1]["defaults"] = {}
 defs["igLogToBuffer"][1]["defaults"]["auto_open_depth"] = "-1"
 defs["igLogToBuffer"][1]["funcname"] = "LogToBuffer"
+<<<<<<< HEAD
 defs["igLogToBuffer"][1]["location"] = "imgui_internal:3069"
+=======
+defs["igLogToBuffer"][1]["location"] = "imgui_internal:3070"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLogToBuffer"][1]["namespace"] = "ImGui"
 defs["igLogToBuffer"][1]["ov_cimguiname"] = "igLogToBuffer"
 defs["igLogToBuffer"][1]["ret"] = "void"
@@ -22986,7 +26844,11 @@ defs["igLogToClipboard"][1]["cimguiname"] = "igLogToClipboard"
 defs["igLogToClipboard"][1]["defaults"] = {}
 defs["igLogToClipboard"][1]["defaults"]["auto_open_depth"] = "-1"
 defs["igLogToClipboard"][1]["funcname"] = "LogToClipboard"
+<<<<<<< HEAD
 defs["igLogToClipboard"][1]["location"] = "imgui:827"
+=======
+defs["igLogToClipboard"][1]["location"] = "imgui:826"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLogToClipboard"][1]["namespace"] = "ImGui"
 defs["igLogToClipboard"][1]["ov_cimguiname"] = "igLogToClipboard"
 defs["igLogToClipboard"][1]["ret"] = "void"
@@ -23010,7 +26872,11 @@ defs["igLogToFile"][1]["defaults"] = {}
 defs["igLogToFile"][1]["defaults"]["auto_open_depth"] = "-1"
 defs["igLogToFile"][1]["defaults"]["filename"] = "NULL"
 defs["igLogToFile"][1]["funcname"] = "LogToFile"
+<<<<<<< HEAD
 defs["igLogToFile"][1]["location"] = "imgui:826"
+=======
+defs["igLogToFile"][1]["location"] = "imgui:825"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLogToFile"][1]["namespace"] = "ImGui"
 defs["igLogToFile"][1]["ov_cimguiname"] = "igLogToFile"
 defs["igLogToFile"][1]["ret"] = "void"
@@ -23030,7 +26896,11 @@ defs["igLogToTTY"][1]["cimguiname"] = "igLogToTTY"
 defs["igLogToTTY"][1]["defaults"] = {}
 defs["igLogToTTY"][1]["defaults"]["auto_open_depth"] = "-1"
 defs["igLogToTTY"][1]["funcname"] = "LogToTTY"
+<<<<<<< HEAD
 defs["igLogToTTY"][1]["location"] = "imgui:825"
+=======
+defs["igLogToTTY"][1]["location"] = "imgui:824"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igLogToTTY"][1]["namespace"] = "ImGui"
 defs["igLogToTTY"][1]["ov_cimguiname"] = "igLogToTTY"
 defs["igLogToTTY"][1]["ret"] = "void"
@@ -23046,7 +26916,11 @@ defs["igMarkIniSettingsDirty"][1]["call_args"] = "()"
 defs["igMarkIniSettingsDirty"][1]["cimguiname"] = "igMarkIniSettingsDirty"
 defs["igMarkIniSettingsDirty"][1]["defaults"] = {}
 defs["igMarkIniSettingsDirty"][1]["funcname"] = "MarkIniSettingsDirty"
+<<<<<<< HEAD
 defs["igMarkIniSettingsDirty"][1]["location"] = "imgui_internal:3002"
+=======
+defs["igMarkIniSettingsDirty"][1]["location"] = "imgui_internal:3007"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igMarkIniSettingsDirty"][1]["namespace"] = "ImGui"
 defs["igMarkIniSettingsDirty"][1]["ov_cimguiname"] = "igMarkIniSettingsDirty_Nil"
 defs["igMarkIniSettingsDirty"][1]["ret"] = "void"
@@ -23063,7 +26937,11 @@ defs["igMarkIniSettingsDirty"][2]["call_args"] = "(window)"
 defs["igMarkIniSettingsDirty"][2]["cimguiname"] = "igMarkIniSettingsDirty"
 defs["igMarkIniSettingsDirty"][2]["defaults"] = {}
 defs["igMarkIniSettingsDirty"][2]["funcname"] = "MarkIniSettingsDirty"
+<<<<<<< HEAD
 defs["igMarkIniSettingsDirty"][2]["location"] = "imgui_internal:3003"
+=======
+defs["igMarkIniSettingsDirty"][2]["location"] = "imgui_internal:3008"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igMarkIniSettingsDirty"][2]["namespace"] = "ImGui"
 defs["igMarkIniSettingsDirty"][2]["ov_cimguiname"] = "igMarkIniSettingsDirty_WindowPtr"
 defs["igMarkIniSettingsDirty"][2]["ret"] = "void"
@@ -23083,7 +26961,11 @@ defs["igMarkItemEdited"][1]["call_args"] = "(id)"
 defs["igMarkItemEdited"][1]["cimguiname"] = "igMarkItemEdited"
 defs["igMarkItemEdited"][1]["defaults"] = {}
 defs["igMarkItemEdited"][1]["funcname"] = "MarkItemEdited"
+<<<<<<< HEAD
 defs["igMarkItemEdited"][1]["location"] = "imgui_internal:3044"
+=======
+defs["igMarkItemEdited"][1]["location"] = "imgui_internal:3046"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igMarkItemEdited"][1]["namespace"] = "ImGui"
 defs["igMarkItemEdited"][1]["ov_cimguiname"] = "igMarkItemEdited"
 defs["igMarkItemEdited"][1]["ret"] = "void"
@@ -23102,7 +26984,11 @@ defs["igMemAlloc"][1]["call_args"] = "(size)"
 defs["igMemAlloc"][1]["cimguiname"] = "igMemAlloc"
 defs["igMemAlloc"][1]["defaults"] = {}
 defs["igMemAlloc"][1]["funcname"] = "MemAlloc"
+<<<<<<< HEAD
 defs["igMemAlloc"][1]["location"] = "imgui:975"
+=======
+defs["igMemAlloc"][1]["location"] = "imgui:974"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igMemAlloc"][1]["namespace"] = "ImGui"
 defs["igMemAlloc"][1]["ov_cimguiname"] = "igMemAlloc"
 defs["igMemAlloc"][1]["ret"] = "void*"
@@ -23121,7 +27007,11 @@ defs["igMemFree"][1]["call_args"] = "(ptr)"
 defs["igMemFree"][1]["cimguiname"] = "igMemFree"
 defs["igMemFree"][1]["defaults"] = {}
 defs["igMemFree"][1]["funcname"] = "MemFree"
+<<<<<<< HEAD
 defs["igMemFree"][1]["location"] = "imgui:976"
+=======
+defs["igMemFree"][1]["location"] = "imgui:975"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igMemFree"][1]["namespace"] = "ImGui"
 defs["igMemFree"][1]["ov_cimguiname"] = "igMemFree"
 defs["igMemFree"][1]["ret"] = "void"
@@ -23152,7 +27042,11 @@ defs["igMenuItem"][1]["defaults"]["enabled"] = "true"
 defs["igMenuItem"][1]["defaults"]["selected"] = "false"
 defs["igMenuItem"][1]["defaults"]["shortcut"] = "NULL"
 defs["igMenuItem"][1]["funcname"] = "MenuItem"
+<<<<<<< HEAD
 defs["igMenuItem"][1]["location"] = "imgui:672"
+=======
+defs["igMenuItem"][1]["location"] = "imgui:671"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igMenuItem"][1]["namespace"] = "ImGui"
 defs["igMenuItem"][1]["ov_cimguiname"] = "igMenuItem_Bool"
 defs["igMenuItem"][1]["ret"] = "bool"
@@ -23179,7 +27073,11 @@ defs["igMenuItem"][2]["cimguiname"] = "igMenuItem"
 defs["igMenuItem"][2]["defaults"] = {}
 defs["igMenuItem"][2]["defaults"]["enabled"] = "true"
 defs["igMenuItem"][2]["funcname"] = "MenuItem"
+<<<<<<< HEAD
 defs["igMenuItem"][2]["location"] = "imgui:673"
+=======
+defs["igMenuItem"][2]["location"] = "imgui:672"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igMenuItem"][2]["namespace"] = "ImGui"
 defs["igMenuItem"][2]["ov_cimguiname"] = "igMenuItem_BoolPtr"
 defs["igMenuItem"][2]["ret"] = "bool"
@@ -23214,7 +27112,11 @@ defs["igMenuItemEx"][1]["defaults"]["enabled"] = "true"
 defs["igMenuItemEx"][1]["defaults"]["selected"] = "false"
 defs["igMenuItemEx"][1]["defaults"]["shortcut"] = "NULL"
 defs["igMenuItemEx"][1]["funcname"] = "MenuItemEx"
+<<<<<<< HEAD
 defs["igMenuItemEx"][1]["location"] = "imgui_internal:3091"
+=======
+defs["igMenuItemEx"][1]["location"] = "imgui_internal:3092"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igMenuItemEx"][1]["namespace"] = "ImGui"
 defs["igMenuItemEx"][1]["ov_cimguiname"] = "igMenuItemEx"
 defs["igMenuItemEx"][1]["ret"] = "bool"
@@ -23233,7 +27135,11 @@ defs["igMouseButtonToKey"][1]["call_args"] = "(button)"
 defs["igMouseButtonToKey"][1]["cimguiname"] = "igMouseButtonToKey"
 defs["igMouseButtonToKey"][1]["defaults"] = {}
 defs["igMouseButtonToKey"][1]["funcname"] = "MouseButtonToKey"
+<<<<<<< HEAD
 defs["igMouseButtonToKey"][1]["location"] = "imgui_internal:3135"
+=======
+defs["igMouseButtonToKey"][1]["location"] = "imgui_internal:3136"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igMouseButtonToKey"][1]["namespace"] = "ImGui"
 defs["igMouseButtonToKey"][1]["ov_cimguiname"] = "igMouseButtonToKey"
 defs["igMouseButtonToKey"][1]["ret"] = "ImGuiKey"
@@ -23249,7 +27155,11 @@ defs["igNavInitRequestApplyResult"][1]["call_args"] = "()"
 defs["igNavInitRequestApplyResult"][1]["cimguiname"] = "igNavInitRequestApplyResult"
 defs["igNavInitRequestApplyResult"][1]["defaults"] = {}
 defs["igNavInitRequestApplyResult"][1]["funcname"] = "NavInitRequestApplyResult"
+<<<<<<< HEAD
 defs["igNavInitRequestApplyResult"][1]["location"] = "imgui_internal:3100"
+=======
+defs["igNavInitRequestApplyResult"][1]["location"] = "imgui_internal:3101"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igNavInitRequestApplyResult"][1]["namespace"] = "ImGui"
 defs["igNavInitRequestApplyResult"][1]["ov_cimguiname"] = "igNavInitRequestApplyResult"
 defs["igNavInitRequestApplyResult"][1]["ret"] = "void"
@@ -23271,7 +27181,11 @@ defs["igNavInitWindow"][1]["call_args"] = "(window,force_reinit)"
 defs["igNavInitWindow"][1]["cimguiname"] = "igNavInitWindow"
 defs["igNavInitWindow"][1]["defaults"] = {}
 defs["igNavInitWindow"][1]["funcname"] = "NavInitWindow"
+<<<<<<< HEAD
 defs["igNavInitWindow"][1]["location"] = "imgui_internal:3099"
+=======
+defs["igNavInitWindow"][1]["location"] = "imgui_internal:3100"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igNavInitWindow"][1]["namespace"] = "ImGui"
 defs["igNavInitWindow"][1]["ov_cimguiname"] = "igNavInitWindow"
 defs["igNavInitWindow"][1]["ret"] = "void"
@@ -23287,7 +27201,11 @@ defs["igNavMoveRequestApplyResult"][1]["call_args"] = "()"
 defs["igNavMoveRequestApplyResult"][1]["cimguiname"] = "igNavMoveRequestApplyResult"
 defs["igNavMoveRequestApplyResult"][1]["defaults"] = {}
 defs["igNavMoveRequestApplyResult"][1]["funcname"] = "NavMoveRequestApplyResult"
+<<<<<<< HEAD
 defs["igNavMoveRequestApplyResult"][1]["location"] = "imgui_internal:3106"
+=======
+defs["igNavMoveRequestApplyResult"][1]["location"] = "imgui_internal:3107"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igNavMoveRequestApplyResult"][1]["namespace"] = "ImGui"
 defs["igNavMoveRequestApplyResult"][1]["ov_cimguiname"] = "igNavMoveRequestApplyResult"
 defs["igNavMoveRequestApplyResult"][1]["ret"] = "void"
@@ -23303,7 +27221,11 @@ defs["igNavMoveRequestButNoResultYet"][1]["call_args"] = "()"
 defs["igNavMoveRequestButNoResultYet"][1]["cimguiname"] = "igNavMoveRequestButNoResultYet"
 defs["igNavMoveRequestButNoResultYet"][1]["defaults"] = {}
 defs["igNavMoveRequestButNoResultYet"][1]["funcname"] = "NavMoveRequestButNoResultYet"
+<<<<<<< HEAD
 defs["igNavMoveRequestButNoResultYet"][1]["location"] = "imgui_internal:3101"
+=======
+defs["igNavMoveRequestButNoResultYet"][1]["location"] = "imgui_internal:3102"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igNavMoveRequestButNoResultYet"][1]["namespace"] = "ImGui"
 defs["igNavMoveRequestButNoResultYet"][1]["ov_cimguiname"] = "igNavMoveRequestButNoResultYet"
 defs["igNavMoveRequestButNoResultYet"][1]["ret"] = "bool"
@@ -23319,7 +27241,11 @@ defs["igNavMoveRequestCancel"][1]["call_args"] = "()"
 defs["igNavMoveRequestCancel"][1]["cimguiname"] = "igNavMoveRequestCancel"
 defs["igNavMoveRequestCancel"][1]["defaults"] = {}
 defs["igNavMoveRequestCancel"][1]["funcname"] = "NavMoveRequestCancel"
+<<<<<<< HEAD
 defs["igNavMoveRequestCancel"][1]["location"] = "imgui_internal:3105"
+=======
+defs["igNavMoveRequestCancel"][1]["location"] = "imgui_internal:3106"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igNavMoveRequestCancel"][1]["namespace"] = "ImGui"
 defs["igNavMoveRequestCancel"][1]["ov_cimguiname"] = "igNavMoveRequestCancel"
 defs["igNavMoveRequestCancel"][1]["ret"] = "void"
@@ -23347,7 +27273,11 @@ defs["igNavMoveRequestForward"][1]["call_args"] = "(move_dir,clip_dir,move_flags
 defs["igNavMoveRequestForward"][1]["cimguiname"] = "igNavMoveRequestForward"
 defs["igNavMoveRequestForward"][1]["defaults"] = {}
 defs["igNavMoveRequestForward"][1]["funcname"] = "NavMoveRequestForward"
+<<<<<<< HEAD
 defs["igNavMoveRequestForward"][1]["location"] = "imgui_internal:3103"
+=======
+defs["igNavMoveRequestForward"][1]["location"] = "imgui_internal:3104"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igNavMoveRequestForward"][1]["namespace"] = "ImGui"
 defs["igNavMoveRequestForward"][1]["ov_cimguiname"] = "igNavMoveRequestForward"
 defs["igNavMoveRequestForward"][1]["ret"] = "void"
@@ -23366,7 +27296,11 @@ defs["igNavMoveRequestResolveWithLastItem"][1]["call_args"] = "(result)"
 defs["igNavMoveRequestResolveWithLastItem"][1]["cimguiname"] = "igNavMoveRequestResolveWithLastItem"
 defs["igNavMoveRequestResolveWithLastItem"][1]["defaults"] = {}
 defs["igNavMoveRequestResolveWithLastItem"][1]["funcname"] = "NavMoveRequestResolveWithLastItem"
+<<<<<<< HEAD
 defs["igNavMoveRequestResolveWithLastItem"][1]["location"] = "imgui_internal:3104"
+=======
+defs["igNavMoveRequestResolveWithLastItem"][1]["location"] = "imgui_internal:3105"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igNavMoveRequestResolveWithLastItem"][1]["namespace"] = "ImGui"
 defs["igNavMoveRequestResolveWithLastItem"][1]["ov_cimguiname"] = "igNavMoveRequestResolveWithLastItem"
 defs["igNavMoveRequestResolveWithLastItem"][1]["ret"] = "void"
@@ -23394,7 +27328,11 @@ defs["igNavMoveRequestSubmit"][1]["call_args"] = "(move_dir,clip_dir,move_flags,
 defs["igNavMoveRequestSubmit"][1]["cimguiname"] = "igNavMoveRequestSubmit"
 defs["igNavMoveRequestSubmit"][1]["defaults"] = {}
 defs["igNavMoveRequestSubmit"][1]["funcname"] = "NavMoveRequestSubmit"
+<<<<<<< HEAD
 defs["igNavMoveRequestSubmit"][1]["location"] = "imgui_internal:3102"
+=======
+defs["igNavMoveRequestSubmit"][1]["location"] = "imgui_internal:3103"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igNavMoveRequestSubmit"][1]["namespace"] = "ImGui"
 defs["igNavMoveRequestSubmit"][1]["ov_cimguiname"] = "igNavMoveRequestSubmit"
 defs["igNavMoveRequestSubmit"][1]["ret"] = "void"
@@ -23416,7 +27354,11 @@ defs["igNavMoveRequestTryWrapping"][1]["call_args"] = "(window,move_flags)"
 defs["igNavMoveRequestTryWrapping"][1]["cimguiname"] = "igNavMoveRequestTryWrapping"
 defs["igNavMoveRequestTryWrapping"][1]["defaults"] = {}
 defs["igNavMoveRequestTryWrapping"][1]["funcname"] = "NavMoveRequestTryWrapping"
+<<<<<<< HEAD
 defs["igNavMoveRequestTryWrapping"][1]["location"] = "imgui_internal:3107"
+=======
+defs["igNavMoveRequestTryWrapping"][1]["location"] = "imgui_internal:3108"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igNavMoveRequestTryWrapping"][1]["namespace"] = "ImGui"
 defs["igNavMoveRequestTryWrapping"][1]["ov_cimguiname"] = "igNavMoveRequestTryWrapping"
 defs["igNavMoveRequestTryWrapping"][1]["ret"] = "void"
@@ -23464,7 +27406,11 @@ defs["igNextColumn"][1]["call_args"] = "()"
 defs["igNextColumn"][1]["cimguiname"] = "igNextColumn"
 defs["igNextColumn"][1]["defaults"] = {}
 defs["igNextColumn"][1]["funcname"] = "NextColumn"
+<<<<<<< HEAD
 defs["igNextColumn"][1]["location"] = "imgui:786"
+=======
+defs["igNextColumn"][1]["location"] = "imgui:785"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igNextColumn"][1]["namespace"] = "ImGui"
 defs["igNextColumn"][1]["ov_cimguiname"] = "igNextColumn"
 defs["igNextColumn"][1]["ret"] = "void"
@@ -23487,7 +27433,11 @@ defs["igOpenPopup"][1]["cimguiname"] = "igOpenPopup"
 defs["igOpenPopup"][1]["defaults"] = {}
 defs["igOpenPopup"][1]["defaults"]["popup_flags"] = "0"
 defs["igOpenPopup"][1]["funcname"] = "OpenPopup"
+<<<<<<< HEAD
 defs["igOpenPopup"][1]["location"] = "imgui:706"
+=======
+defs["igOpenPopup"][1]["location"] = "imgui:705"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igOpenPopup"][1]["namespace"] = "ImGui"
 defs["igOpenPopup"][1]["ov_cimguiname"] = "igOpenPopup_Str"
 defs["igOpenPopup"][1]["ret"] = "void"
@@ -23508,7 +27458,11 @@ defs["igOpenPopup"][2]["cimguiname"] = "igOpenPopup"
 defs["igOpenPopup"][2]["defaults"] = {}
 defs["igOpenPopup"][2]["defaults"]["popup_flags"] = "0"
 defs["igOpenPopup"][2]["funcname"] = "OpenPopup"
+<<<<<<< HEAD
 defs["igOpenPopup"][2]["location"] = "imgui:707"
+=======
+defs["igOpenPopup"][2]["location"] = "imgui:706"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igOpenPopup"][2]["namespace"] = "ImGui"
 defs["igOpenPopup"][2]["ov_cimguiname"] = "igOpenPopup_ID"
 defs["igOpenPopup"][2]["ret"] = "void"
@@ -23532,7 +27486,11 @@ defs["igOpenPopupEx"][1]["cimguiname"] = "igOpenPopupEx"
 defs["igOpenPopupEx"][1]["defaults"] = {}
 defs["igOpenPopupEx"][1]["defaults"]["popup_flags"] = "ImGuiPopupFlags_None"
 defs["igOpenPopupEx"][1]["funcname"] = "OpenPopupEx"
+<<<<<<< HEAD
 defs["igOpenPopupEx"][1]["location"] = "imgui_internal:3075"
+=======
+defs["igOpenPopupEx"][1]["location"] = "imgui_internal:3076"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igOpenPopupEx"][1]["namespace"] = "ImGui"
 defs["igOpenPopupEx"][1]["ov_cimguiname"] = "igOpenPopupEx"
 defs["igOpenPopupEx"][1]["ret"] = "void"
@@ -23556,7 +27514,11 @@ defs["igOpenPopupOnItemClick"][1]["defaults"] = {}
 defs["igOpenPopupOnItemClick"][1]["defaults"]["popup_flags"] = "1"
 defs["igOpenPopupOnItemClick"][1]["defaults"]["str_id"] = "NULL"
 defs["igOpenPopupOnItemClick"][1]["funcname"] = "OpenPopupOnItemClick"
+<<<<<<< HEAD
 defs["igOpenPopupOnItemClick"][1]["location"] = "imgui:708"
+=======
+defs["igOpenPopupOnItemClick"][1]["location"] = "imgui:707"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igOpenPopupOnItemClick"][1]["namespace"] = "ImGui"
 defs["igOpenPopupOnItemClick"][1]["ov_cimguiname"] = "igOpenPopupOnItemClick"
 defs["igOpenPopupOnItemClick"][1]["ret"] = "void"
@@ -23604,7 +27566,11 @@ defs["igPlotEx"][1]["call_args"] = "(plot_type,label,values_getter,data,values_c
 defs["igPlotEx"][1]["cimguiname"] = "igPlotEx"
 defs["igPlotEx"][1]["defaults"] = {}
 defs["igPlotEx"][1]["funcname"] = "PlotEx"
+<<<<<<< HEAD
 defs["igPlotEx"][1]["location"] = "imgui_internal:3436"
+=======
+defs["igPlotEx"][1]["location"] = "imgui_internal:3427"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPlotEx"][1]["namespace"] = "ImGui"
 defs["igPlotEx"][1]["ov_cimguiname"] = "igPlotEx"
 defs["igPlotEx"][1]["ret"] = "int"
@@ -23642,7 +27608,7 @@ defs["igPlotHistogram"][1]["argsT"][8]["type"] = "ImVec2"
 defs["igPlotHistogram"][1]["argsT"][9] = {}
 defs["igPlotHistogram"][1]["argsT"][9]["name"] = "stride"
 defs["igPlotHistogram"][1]["argsT"][9]["type"] = "int"
-defs["igPlotHistogram"][1]["argsoriginal"] = "(const char* label,const float* values,int values_count,int values_offset=0,const char* overlay_text=((void*)0),float scale_min=3.40282347e+38F,float scale_max=3.40282347e+38F,ImVec2 graph_size=ImVec2(0,0),int stride=sizeof(float))"
+defs["igPlotHistogram"][1]["argsoriginal"] = "(const char* label,const float* values,int values_count,int values_offset=0,const char* overlay_text=((void*)0),float scale_min=3.40282346638528859811704183484516925e+38F,float scale_max=3.40282346638528859811704183484516925e+38F,ImVec2 graph_size=ImVec2(0,0),int stride=sizeof(float))"
 defs["igPlotHistogram"][1]["call_args"] = "(label,values,values_count,values_offset,overlay_text,scale_min,scale_max,graph_size,stride)"
 defs["igPlotHistogram"][1]["cimguiname"] = "igPlotHistogram"
 defs["igPlotHistogram"][1]["defaults"] = {}
@@ -23653,7 +27619,11 @@ defs["igPlotHistogram"][1]["defaults"]["scale_min"] = "FLT_MAX"
 defs["igPlotHistogram"][1]["defaults"]["stride"] = "sizeof(float)"
 defs["igPlotHistogram"][1]["defaults"]["values_offset"] = "0"
 defs["igPlotHistogram"][1]["funcname"] = "PlotHistogram"
+<<<<<<< HEAD
 defs["igPlotHistogram"][1]["location"] = "imgui:651"
+=======
+defs["igPlotHistogram"][1]["location"] = "imgui:650"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPlotHistogram"][1]["namespace"] = "ImGui"
 defs["igPlotHistogram"][1]["ov_cimguiname"] = "igPlotHistogram_FloatPtr"
 defs["igPlotHistogram"][1]["ret"] = "void"
@@ -23691,7 +27661,7 @@ defs["igPlotHistogram"][2]["argsT"][8]["type"] = "float"
 defs["igPlotHistogram"][2]["argsT"][9] = {}
 defs["igPlotHistogram"][2]["argsT"][9]["name"] = "graph_size"
 defs["igPlotHistogram"][2]["argsT"][9]["type"] = "ImVec2"
-defs["igPlotHistogram"][2]["argsoriginal"] = "(const char* label,float(*values_getter)(void* data,int idx),void* data,int values_count,int values_offset=0,const char* overlay_text=((void*)0),float scale_min=3.40282347e+38F,float scale_max=3.40282347e+38F,ImVec2 graph_size=ImVec2(0,0))"
+defs["igPlotHistogram"][2]["argsoriginal"] = "(const char* label,float(*values_getter)(void* data,int idx),void* data,int values_count,int values_offset=0,const char* overlay_text=((void*)0),float scale_min=3.40282346638528859811704183484516925e+38F,float scale_max=3.40282346638528859811704183484516925e+38F,ImVec2 graph_size=ImVec2(0,0))"
 defs["igPlotHistogram"][2]["call_args"] = "(label,values_getter,data,values_count,values_offset,overlay_text,scale_min,scale_max,graph_size)"
 defs["igPlotHistogram"][2]["cimguiname"] = "igPlotHistogram"
 defs["igPlotHistogram"][2]["defaults"] = {}
@@ -23701,7 +27671,11 @@ defs["igPlotHistogram"][2]["defaults"]["scale_max"] = "FLT_MAX"
 defs["igPlotHistogram"][2]["defaults"]["scale_min"] = "FLT_MAX"
 defs["igPlotHistogram"][2]["defaults"]["values_offset"] = "0"
 defs["igPlotHistogram"][2]["funcname"] = "PlotHistogram"
+<<<<<<< HEAD
 defs["igPlotHistogram"][2]["location"] = "imgui:652"
+=======
+defs["igPlotHistogram"][2]["location"] = "imgui:651"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPlotHistogram"][2]["namespace"] = "ImGui"
 defs["igPlotHistogram"][2]["ov_cimguiname"] = "igPlotHistogram_FnFloatPtr"
 defs["igPlotHistogram"][2]["ret"] = "void"
@@ -23740,7 +27714,7 @@ defs["igPlotLines"][1]["argsT"][8]["type"] = "ImVec2"
 defs["igPlotLines"][1]["argsT"][9] = {}
 defs["igPlotLines"][1]["argsT"][9]["name"] = "stride"
 defs["igPlotLines"][1]["argsT"][9]["type"] = "int"
-defs["igPlotLines"][1]["argsoriginal"] = "(const char* label,const float* values,int values_count,int values_offset=0,const char* overlay_text=((void*)0),float scale_min=3.40282347e+38F,float scale_max=3.40282347e+38F,ImVec2 graph_size=ImVec2(0,0),int stride=sizeof(float))"
+defs["igPlotLines"][1]["argsoriginal"] = "(const char* label,const float* values,int values_count,int values_offset=0,const char* overlay_text=((void*)0),float scale_min=3.40282346638528859811704183484516925e+38F,float scale_max=3.40282346638528859811704183484516925e+38F,ImVec2 graph_size=ImVec2(0,0),int stride=sizeof(float))"
 defs["igPlotLines"][1]["call_args"] = "(label,values,values_count,values_offset,overlay_text,scale_min,scale_max,graph_size,stride)"
 defs["igPlotLines"][1]["cimguiname"] = "igPlotLines"
 defs["igPlotLines"][1]["defaults"] = {}
@@ -23751,7 +27725,11 @@ defs["igPlotLines"][1]["defaults"]["scale_min"] = "FLT_MAX"
 defs["igPlotLines"][1]["defaults"]["stride"] = "sizeof(float)"
 defs["igPlotLines"][1]["defaults"]["values_offset"] = "0"
 defs["igPlotLines"][1]["funcname"] = "PlotLines"
+<<<<<<< HEAD
 defs["igPlotLines"][1]["location"] = "imgui:649"
+=======
+defs["igPlotLines"][1]["location"] = "imgui:648"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPlotLines"][1]["namespace"] = "ImGui"
 defs["igPlotLines"][1]["ov_cimguiname"] = "igPlotLines_FloatPtr"
 defs["igPlotLines"][1]["ret"] = "void"
@@ -23789,7 +27767,7 @@ defs["igPlotLines"][2]["argsT"][8]["type"] = "float"
 defs["igPlotLines"][2]["argsT"][9] = {}
 defs["igPlotLines"][2]["argsT"][9]["name"] = "graph_size"
 defs["igPlotLines"][2]["argsT"][9]["type"] = "ImVec2"
-defs["igPlotLines"][2]["argsoriginal"] = "(const char* label,float(*values_getter)(void* data,int idx),void* data,int values_count,int values_offset=0,const char* overlay_text=((void*)0),float scale_min=3.40282347e+38F,float scale_max=3.40282347e+38F,ImVec2 graph_size=ImVec2(0,0))"
+defs["igPlotLines"][2]["argsoriginal"] = "(const char* label,float(*values_getter)(void* data,int idx),void* data,int values_count,int values_offset=0,const char* overlay_text=((void*)0),float scale_min=3.40282346638528859811704183484516925e+38F,float scale_max=3.40282346638528859811704183484516925e+38F,ImVec2 graph_size=ImVec2(0,0))"
 defs["igPlotLines"][2]["call_args"] = "(label,values_getter,data,values_count,values_offset,overlay_text,scale_min,scale_max,graph_size)"
 defs["igPlotLines"][2]["cimguiname"] = "igPlotLines"
 defs["igPlotLines"][2]["defaults"] = {}
@@ -23799,7 +27777,11 @@ defs["igPlotLines"][2]["defaults"]["scale_max"] = "FLT_MAX"
 defs["igPlotLines"][2]["defaults"]["scale_min"] = "FLT_MAX"
 defs["igPlotLines"][2]["defaults"]["values_offset"] = "0"
 defs["igPlotLines"][2]["funcname"] = "PlotLines"
+<<<<<<< HEAD
 defs["igPlotLines"][2]["location"] = "imgui:650"
+=======
+defs["igPlotLines"][2]["location"] = "imgui:649"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPlotLines"][2]["namespace"] = "ImGui"
 defs["igPlotLines"][2]["ov_cimguiname"] = "igPlotLines_FnFloatPtr"
 defs["igPlotLines"][2]["ret"] = "void"
@@ -23848,7 +27830,11 @@ defs["igPopClipRect"][1]["call_args"] = "()"
 defs["igPopClipRect"][1]["cimguiname"] = "igPopClipRect"
 defs["igPopClipRect"][1]["defaults"] = {}
 defs["igPopClipRect"][1]["funcname"] = "PopClipRect"
+<<<<<<< HEAD
 defs["igPopClipRect"][1]["location"] = "imgui:856"
+=======
+defs["igPopClipRect"][1]["location"] = "imgui:855"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPopClipRect"][1]["namespace"] = "ImGui"
 defs["igPopClipRect"][1]["ov_cimguiname"] = "igPopClipRect"
 defs["igPopClipRect"][1]["ret"] = "void"
@@ -23864,7 +27850,11 @@ defs["igPopColumnsBackground"][1]["call_args"] = "()"
 defs["igPopColumnsBackground"][1]["cimguiname"] = "igPopColumnsBackground"
 defs["igPopColumnsBackground"][1]["defaults"] = {}
 defs["igPopColumnsBackground"][1]["funcname"] = "PopColumnsBackground"
+<<<<<<< HEAD
 defs["igPopColumnsBackground"][1]["location"] = "imgui_internal:3268"
+=======
+defs["igPopColumnsBackground"][1]["location"] = "imgui_internal:3267"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPopColumnsBackground"][1]["namespace"] = "ImGui"
 defs["igPopColumnsBackground"][1]["ov_cimguiname"] = "igPopColumnsBackground"
 defs["igPopColumnsBackground"][1]["ret"] = "void"
@@ -23880,7 +27870,11 @@ defs["igPopFocusScope"][1]["call_args"] = "()"
 defs["igPopFocusScope"][1]["cimguiname"] = "igPopFocusScope"
 defs["igPopFocusScope"][1]["defaults"] = {}
 defs["igPopFocusScope"][1]["funcname"] = "PopFocusScope"
+<<<<<<< HEAD
 defs["igPopFocusScope"][1]["location"] = "imgui_internal:3252"
+=======
+defs["igPopFocusScope"][1]["location"] = "imgui_internal:3251"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPopFocusScope"][1]["namespace"] = "ImGui"
 defs["igPopFocusScope"][1]["ov_cimguiname"] = "igPopFocusScope"
 defs["igPopFocusScope"][1]["ret"] = "void"
@@ -23928,7 +27922,11 @@ defs["igPopItemFlag"][1]["call_args"] = "()"
 defs["igPopItemFlag"][1]["cimguiname"] = "igPopItemFlag"
 defs["igPopItemFlag"][1]["defaults"] = {}
 defs["igPopItemFlag"][1]["funcname"] = "PopItemFlag"
+<<<<<<< HEAD
 defs["igPopItemFlag"][1]["location"] = "imgui_internal:3065"
+=======
+defs["igPopItemFlag"][1]["location"] = "imgui_internal:3066"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPopItemFlag"][1]["namespace"] = "ImGui"
 defs["igPopItemFlag"][1]["ov_cimguiname"] = "igPopItemFlag"
 defs["igPopItemFlag"][1]["ret"] = "void"
@@ -24020,14 +28018,18 @@ defs["igProgressBar"][1]["argsT"][2]["type"] = "const ImVec2"
 defs["igProgressBar"][1]["argsT"][3] = {}
 defs["igProgressBar"][1]["argsT"][3]["name"] = "overlay"
 defs["igProgressBar"][1]["argsT"][3]["type"] = "const char*"
-defs["igProgressBar"][1]["argsoriginal"] = "(float fraction,const ImVec2& size_arg=ImVec2(-1.17549435e-38F,0),const char* overlay=((void*)0))"
+defs["igProgressBar"][1]["argsoriginal"] = "(float fraction,const ImVec2& size_arg=ImVec2(-1.17549435082228750796873653722224568e-38F,0),const char* overlay=((void*)0))"
 defs["igProgressBar"][1]["call_args"] = "(fraction,size_arg,overlay)"
 defs["igProgressBar"][1]["cimguiname"] = "igProgressBar"
 defs["igProgressBar"][1]["defaults"] = {}
 defs["igProgressBar"][1]["defaults"]["overlay"] = "NULL"
 defs["igProgressBar"][1]["defaults"]["size_arg"] = "ImVec2(-FLT_MIN,0)"
 defs["igProgressBar"][1]["funcname"] = "ProgressBar"
+<<<<<<< HEAD
 defs["igProgressBar"][1]["location"] = "imgui:519"
+=======
+defs["igProgressBar"][1]["location"] = "imgui:518"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igProgressBar"][1]["namespace"] = "ImGui"
 defs["igProgressBar"][1]["ov_cimguiname"] = "igProgressBar"
 defs["igProgressBar"][1]["ret"] = "void"
@@ -24090,7 +28092,11 @@ defs["igPushClipRect"][1]["call_args"] = "(clip_rect_min,clip_rect_max,intersect
 defs["igPushClipRect"][1]["cimguiname"] = "igPushClipRect"
 defs["igPushClipRect"][1]["defaults"] = {}
 defs["igPushClipRect"][1]["funcname"] = "PushClipRect"
+<<<<<<< HEAD
 defs["igPushClipRect"][1]["location"] = "imgui:855"
+=======
+defs["igPushClipRect"][1]["location"] = "imgui:854"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPushClipRect"][1]["namespace"] = "ImGui"
 defs["igPushClipRect"][1]["ov_cimguiname"] = "igPushClipRect"
 defs["igPushClipRect"][1]["ret"] = "void"
@@ -24109,7 +28115,11 @@ defs["igPushColumnClipRect"][1]["call_args"] = "(column_index)"
 defs["igPushColumnClipRect"][1]["cimguiname"] = "igPushColumnClipRect"
 defs["igPushColumnClipRect"][1]["defaults"] = {}
 defs["igPushColumnClipRect"][1]["funcname"] = "PushColumnClipRect"
+<<<<<<< HEAD
 defs["igPushColumnClipRect"][1]["location"] = "imgui_internal:3266"
+=======
+defs["igPushColumnClipRect"][1]["location"] = "imgui_internal:3265"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPushColumnClipRect"][1]["namespace"] = "ImGui"
 defs["igPushColumnClipRect"][1]["ov_cimguiname"] = "igPushColumnClipRect"
 defs["igPushColumnClipRect"][1]["ret"] = "void"
@@ -24125,7 +28135,11 @@ defs["igPushColumnsBackground"][1]["call_args"] = "()"
 defs["igPushColumnsBackground"][1]["cimguiname"] = "igPushColumnsBackground"
 defs["igPushColumnsBackground"][1]["defaults"] = {}
 defs["igPushColumnsBackground"][1]["funcname"] = "PushColumnsBackground"
+<<<<<<< HEAD
 defs["igPushColumnsBackground"][1]["location"] = "imgui_internal:3267"
+=======
+defs["igPushColumnsBackground"][1]["location"] = "imgui_internal:3266"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPushColumnsBackground"][1]["namespace"] = "ImGui"
 defs["igPushColumnsBackground"][1]["ov_cimguiname"] = "igPushColumnsBackground"
 defs["igPushColumnsBackground"][1]["ret"] = "void"
@@ -24144,7 +28158,11 @@ defs["igPushFocusScope"][1]["call_args"] = "(id)"
 defs["igPushFocusScope"][1]["cimguiname"] = "igPushFocusScope"
 defs["igPushFocusScope"][1]["defaults"] = {}
 defs["igPushFocusScope"][1]["funcname"] = "PushFocusScope"
+<<<<<<< HEAD
 defs["igPushFocusScope"][1]["location"] = "imgui_internal:3251"
+=======
+defs["igPushFocusScope"][1]["location"] = "imgui_internal:3250"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPushFocusScope"][1]["namespace"] = "ImGui"
 defs["igPushFocusScope"][1]["ov_cimguiname"] = "igPushFocusScope"
 defs["igPushFocusScope"][1]["ret"] = "void"
@@ -24261,7 +28279,11 @@ defs["igPushItemFlag"][1]["call_args"] = "(option,enabled)"
 defs["igPushItemFlag"][1]["cimguiname"] = "igPushItemFlag"
 defs["igPushItemFlag"][1]["defaults"] = {}
 defs["igPushItemFlag"][1]["funcname"] = "PushItemFlag"
+<<<<<<< HEAD
 defs["igPushItemFlag"][1]["location"] = "imgui_internal:3064"
+=======
+defs["igPushItemFlag"][1]["location"] = "imgui_internal:3065"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPushItemFlag"][1]["namespace"] = "ImGui"
 defs["igPushItemFlag"][1]["ov_cimguiname"] = "igPushItemFlag"
 defs["igPushItemFlag"][1]["ret"] = "void"
@@ -24302,7 +28324,11 @@ defs["igPushMultiItemsWidths"][1]["call_args"] = "(components,width_full)"
 defs["igPushMultiItemsWidths"][1]["cimguiname"] = "igPushMultiItemsWidths"
 defs["igPushMultiItemsWidths"][1]["defaults"] = {}
 defs["igPushMultiItemsWidths"][1]["funcname"] = "PushMultiItemsWidths"
+<<<<<<< HEAD
 defs["igPushMultiItemsWidths"][1]["location"] = "imgui_internal:3058"
+=======
+defs["igPushMultiItemsWidths"][1]["location"] = "imgui_internal:3059"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPushMultiItemsWidths"][1]["namespace"] = "ImGui"
 defs["igPushMultiItemsWidths"][1]["ov_cimguiname"] = "igPushMultiItemsWidths"
 defs["igPushMultiItemsWidths"][1]["ret"] = "void"
@@ -24321,7 +28347,11 @@ defs["igPushOverrideID"][1]["call_args"] = "(id)"
 defs["igPushOverrideID"][1]["cimguiname"] = "igPushOverrideID"
 defs["igPushOverrideID"][1]["defaults"] = {}
 defs["igPushOverrideID"][1]["funcname"] = "PushOverrideID"
+<<<<<<< HEAD
 defs["igPushOverrideID"][1]["location"] = "imgui_internal:3045"
+=======
+defs["igPushOverrideID"][1]["location"] = "imgui_internal:3047"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igPushOverrideID"][1]["namespace"] = "ImGui"
 defs["igPushOverrideID"][1]["ov_cimguiname"] = "igPushOverrideID"
 defs["igPushOverrideID"][1]["ret"] = "void"
@@ -24449,7 +28479,11 @@ defs["igRadioButton"][1]["call_args"] = "(label,active)"
 defs["igRadioButton"][1]["cimguiname"] = "igRadioButton"
 defs["igRadioButton"][1]["defaults"] = {}
 defs["igRadioButton"][1]["funcname"] = "RadioButton"
+<<<<<<< HEAD
 defs["igRadioButton"][1]["location"] = "imgui:517"
+=======
+defs["igRadioButton"][1]["location"] = "imgui:516"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRadioButton"][1]["namespace"] = "ImGui"
 defs["igRadioButton"][1]["ov_cimguiname"] = "igRadioButton_Bool"
 defs["igRadioButton"][1]["ret"] = "bool"
@@ -24472,7 +28506,11 @@ defs["igRadioButton"][2]["call_args"] = "(label,v,v_button)"
 defs["igRadioButton"][2]["cimguiname"] = "igRadioButton"
 defs["igRadioButton"][2]["defaults"] = {}
 defs["igRadioButton"][2]["funcname"] = "RadioButton"
+<<<<<<< HEAD
 defs["igRadioButton"][2]["location"] = "imgui:518"
+=======
+defs["igRadioButton"][2]["location"] = "imgui:517"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRadioButton"][2]["namespace"] = "ImGui"
 defs["igRadioButton"][2]["ov_cimguiname"] = "igRadioButton_IntPtr"
 defs["igRadioButton"][2]["ret"] = "bool"
@@ -24495,7 +28533,11 @@ defs["igRemoveContextHook"][1]["call_args"] = "(context,hook_to_remove)"
 defs["igRemoveContextHook"][1]["cimguiname"] = "igRemoveContextHook"
 defs["igRemoveContextHook"][1]["defaults"] = {}
 defs["igRemoveContextHook"][1]["funcname"] = "RemoveContextHook"
+<<<<<<< HEAD
 defs["igRemoveContextHook"][1]["location"] = "imgui_internal:2989"
+=======
+defs["igRemoveContextHook"][1]["location"] = "imgui_internal:2994"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRemoveContextHook"][1]["namespace"] = "ImGui"
 defs["igRemoveContextHook"][1]["ov_cimguiname"] = "igRemoveContextHook"
 defs["igRemoveContextHook"][1]["ret"] = "void"
@@ -24514,7 +28556,11 @@ defs["igRemoveSettingsHandler"][1]["call_args"] = "(type_name)"
 defs["igRemoveSettingsHandler"][1]["cimguiname"] = "igRemoveSettingsHandler"
 defs["igRemoveSettingsHandler"][1]["defaults"] = {}
 defs["igRemoveSettingsHandler"][1]["funcname"] = "RemoveSettingsHandler"
+<<<<<<< HEAD
 defs["igRemoveSettingsHandler"][1]["location"] = "imgui_internal:3006"
+=======
+defs["igRemoveSettingsHandler"][1]["location"] = "imgui_internal:3014"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRemoveSettingsHandler"][1]["namespace"] = "ImGui"
 defs["igRemoveSettingsHandler"][1]["ov_cimguiname"] = "igRemoveSettingsHandler"
 defs["igRemoveSettingsHandler"][1]["ret"] = "void"
@@ -24562,7 +28608,11 @@ defs["igRenderArrow"][1]["cimguiname"] = "igRenderArrow"
 defs["igRenderArrow"][1]["defaults"] = {}
 defs["igRenderArrow"][1]["defaults"]["scale"] = "1.0f"
 defs["igRenderArrow"][1]["funcname"] = "RenderArrow"
+<<<<<<< HEAD
 defs["igRenderArrow"][1]["location"] = "imgui_internal:3366"
+=======
+defs["igRenderArrow"][1]["location"] = "imgui_internal:3358"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderArrow"][1]["namespace"] = "ImGui"
 defs["igRenderArrow"][1]["ov_cimguiname"] = "igRenderArrow"
 defs["igRenderArrow"][1]["ret"] = "void"
@@ -24590,7 +28640,11 @@ defs["igRenderArrowDockMenu"][1]["call_args"] = "(draw_list,p_min,sz,col)"
 defs["igRenderArrowDockMenu"][1]["cimguiname"] = "igRenderArrowDockMenu"
 defs["igRenderArrowDockMenu"][1]["defaults"] = {}
 defs["igRenderArrowDockMenu"][1]["funcname"] = "RenderArrowDockMenu"
+<<<<<<< HEAD
 defs["igRenderArrowDockMenu"][1]["location"] = "imgui_internal:3370"
+=======
+defs["igRenderArrowDockMenu"][1]["location"] = "imgui_internal:3362"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderArrowDockMenu"][1]["namespace"] = "ImGui"
 defs["igRenderArrowDockMenu"][1]["ov_cimguiname"] = "igRenderArrowDockMenu"
 defs["igRenderArrowDockMenu"][1]["ret"] = "void"
@@ -24621,7 +28675,11 @@ defs["igRenderArrowPointingAt"][1]["call_args"] = "(draw_list,pos,half_sz,direct
 defs["igRenderArrowPointingAt"][1]["cimguiname"] = "igRenderArrowPointingAt"
 defs["igRenderArrowPointingAt"][1]["defaults"] = {}
 defs["igRenderArrowPointingAt"][1]["funcname"] = "RenderArrowPointingAt"
+<<<<<<< HEAD
 defs["igRenderArrowPointingAt"][1]["location"] = "imgui_internal:3369"
+=======
+defs["igRenderArrowPointingAt"][1]["location"] = "imgui_internal:3361"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderArrowPointingAt"][1]["namespace"] = "ImGui"
 defs["igRenderArrowPointingAt"][1]["ov_cimguiname"] = "igRenderArrowPointingAt"
 defs["igRenderArrowPointingAt"][1]["ret"] = "void"
@@ -24646,7 +28704,11 @@ defs["igRenderBullet"][1]["call_args"] = "(draw_list,pos,col)"
 defs["igRenderBullet"][1]["cimguiname"] = "igRenderBullet"
 defs["igRenderBullet"][1]["defaults"] = {}
 defs["igRenderBullet"][1]["funcname"] = "RenderBullet"
+<<<<<<< HEAD
 defs["igRenderBullet"][1]["location"] = "imgui_internal:3367"
+=======
+defs["igRenderBullet"][1]["location"] = "imgui_internal:3359"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderBullet"][1]["namespace"] = "ImGui"
 defs["igRenderBullet"][1]["ov_cimguiname"] = "igRenderBullet"
 defs["igRenderBullet"][1]["ret"] = "void"
@@ -24674,7 +28736,11 @@ defs["igRenderCheckMark"][1]["call_args"] = "(draw_list,pos,col,sz)"
 defs["igRenderCheckMark"][1]["cimguiname"] = "igRenderCheckMark"
 defs["igRenderCheckMark"][1]["defaults"] = {}
 defs["igRenderCheckMark"][1]["funcname"] = "RenderCheckMark"
+<<<<<<< HEAD
 defs["igRenderCheckMark"][1]["location"] = "imgui_internal:3368"
+=======
+defs["igRenderCheckMark"][1]["location"] = "imgui_internal:3360"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderCheckMark"][1]["namespace"] = "ImGui"
 defs["igRenderCheckMark"][1]["ov_cimguiname"] = "igRenderCheckMark"
 defs["igRenderCheckMark"][1]["ret"] = "void"
@@ -24716,7 +28782,11 @@ defs["igRenderColorRectWithAlphaCheckerboard"][1]["defaults"] = {}
 defs["igRenderColorRectWithAlphaCheckerboard"][1]["defaults"]["flags"] = "0"
 defs["igRenderColorRectWithAlphaCheckerboard"][1]["defaults"]["rounding"] = "0.0f"
 defs["igRenderColorRectWithAlphaCheckerboard"][1]["funcname"] = "RenderColorRectWithAlphaCheckerboard"
+<<<<<<< HEAD
 defs["igRenderColorRectWithAlphaCheckerboard"][1]["location"] = "imgui_internal:3360"
+=======
+defs["igRenderColorRectWithAlphaCheckerboard"][1]["location"] = "imgui_internal:3352"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderColorRectWithAlphaCheckerboard"][1]["namespace"] = "ImGui"
 defs["igRenderColorRectWithAlphaCheckerboard"][1]["ov_cimguiname"] = "igRenderColorRectWithAlphaCheckerboard"
 defs["igRenderColorRectWithAlphaCheckerboard"][1]["ret"] = "void"
@@ -24735,7 +28805,11 @@ defs["igRenderDragDropTargetRect"][1]["call_args"] = "(bb)"
 defs["igRenderDragDropTargetRect"][1]["cimguiname"] = "igRenderDragDropTargetRect"
 defs["igRenderDragDropTargetRect"][1]["defaults"] = {}
 defs["igRenderDragDropTargetRect"][1]["funcname"] = "RenderDragDropTargetRect"
+<<<<<<< HEAD
 defs["igRenderDragDropTargetRect"][1]["location"] = "imgui_internal:3260"
+=======
+defs["igRenderDragDropTargetRect"][1]["location"] = "imgui_internal:3259"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderDragDropTargetRect"][1]["namespace"] = "ImGui"
 defs["igRenderDragDropTargetRect"][1]["ov_cimguiname"] = "igRenderDragDropTargetRect"
 defs["igRenderDragDropTargetRect"][1]["ret"] = "void"
@@ -24768,7 +28842,11 @@ defs["igRenderFrame"][1]["defaults"] = {}
 defs["igRenderFrame"][1]["defaults"]["border"] = "true"
 defs["igRenderFrame"][1]["defaults"]["rounding"] = "0.0f"
 defs["igRenderFrame"][1]["funcname"] = "RenderFrame"
+<<<<<<< HEAD
 defs["igRenderFrame"][1]["location"] = "imgui_internal:3358"
+=======
+defs["igRenderFrame"][1]["location"] = "imgui_internal:3350"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderFrame"][1]["namespace"] = "ImGui"
 defs["igRenderFrame"][1]["ov_cimguiname"] = "igRenderFrame"
 defs["igRenderFrame"][1]["ret"] = "void"
@@ -24794,7 +28872,11 @@ defs["igRenderFrameBorder"][1]["cimguiname"] = "igRenderFrameBorder"
 defs["igRenderFrameBorder"][1]["defaults"] = {}
 defs["igRenderFrameBorder"][1]["defaults"]["rounding"] = "0.0f"
 defs["igRenderFrameBorder"][1]["funcname"] = "RenderFrameBorder"
+<<<<<<< HEAD
 defs["igRenderFrameBorder"][1]["location"] = "imgui_internal:3359"
+=======
+defs["igRenderFrameBorder"][1]["location"] = "imgui_internal:3351"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderFrameBorder"][1]["namespace"] = "ImGui"
 defs["igRenderFrameBorder"][1]["ov_cimguiname"] = "igRenderFrameBorder"
 defs["igRenderFrameBorder"][1]["ret"] = "void"
@@ -24828,7 +28910,11 @@ defs["igRenderMouseCursor"][1]["call_args"] = "(pos,scale,mouse_cursor,col_fill,
 defs["igRenderMouseCursor"][1]["cimguiname"] = "igRenderMouseCursor"
 defs["igRenderMouseCursor"][1]["defaults"] = {}
 defs["igRenderMouseCursor"][1]["funcname"] = "RenderMouseCursor"
+<<<<<<< HEAD
 defs["igRenderMouseCursor"][1]["location"] = "imgui_internal:3363"
+=======
+defs["igRenderMouseCursor"][1]["location"] = "imgui_internal:3355"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderMouseCursor"][1]["namespace"] = "ImGui"
 defs["igRenderMouseCursor"][1]["ov_cimguiname"] = "igRenderMouseCursor"
 defs["igRenderMouseCursor"][1]["ret"] = "void"
@@ -24854,7 +28940,11 @@ defs["igRenderNavHighlight"][1]["cimguiname"] = "igRenderNavHighlight"
 defs["igRenderNavHighlight"][1]["defaults"] = {}
 defs["igRenderNavHighlight"][1]["defaults"]["flags"] = "ImGuiNavHighlightFlags_TypeDefault"
 defs["igRenderNavHighlight"][1]["funcname"] = "RenderNavHighlight"
+<<<<<<< HEAD
 defs["igRenderNavHighlight"][1]["location"] = "imgui_internal:3361"
+=======
+defs["igRenderNavHighlight"][1]["location"] = "imgui_internal:3353"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderNavHighlight"][1]["namespace"] = "ImGui"
 defs["igRenderNavHighlight"][1]["ov_cimguiname"] = "igRenderNavHighlight"
 defs["igRenderNavHighlight"][1]["ret"] = "void"
@@ -24878,7 +28968,11 @@ defs["igRenderPlatformWindowsDefault"][1]["defaults"] = {}
 defs["igRenderPlatformWindowsDefault"][1]["defaults"]["platform_render_arg"] = "NULL"
 defs["igRenderPlatformWindowsDefault"][1]["defaults"]["renderer_render_arg"] = "NULL"
 defs["igRenderPlatformWindowsDefault"][1]["funcname"] = "RenderPlatformWindowsDefault"
+<<<<<<< HEAD
 defs["igRenderPlatformWindowsDefault"][1]["location"] = "imgui:983"
+=======
+defs["igRenderPlatformWindowsDefault"][1]["location"] = "imgui:982"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderPlatformWindowsDefault"][1]["namespace"] = "ImGui"
 defs["igRenderPlatformWindowsDefault"][1]["ov_cimguiname"] = "igRenderPlatformWindowsDefault"
 defs["igRenderPlatformWindowsDefault"][1]["ret"] = "void"
@@ -24912,7 +29006,11 @@ defs["igRenderRectFilledRangeH"][1]["call_args"] = "(draw_list,rect,col,x_start_
 defs["igRenderRectFilledRangeH"][1]["cimguiname"] = "igRenderRectFilledRangeH"
 defs["igRenderRectFilledRangeH"][1]["defaults"] = {}
 defs["igRenderRectFilledRangeH"][1]["funcname"] = "RenderRectFilledRangeH"
+<<<<<<< HEAD
 defs["igRenderRectFilledRangeH"][1]["location"] = "imgui_internal:3371"
+=======
+defs["igRenderRectFilledRangeH"][1]["location"] = "imgui_internal:3363"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderRectFilledRangeH"][1]["namespace"] = "ImGui"
 defs["igRenderRectFilledRangeH"][1]["ov_cimguiname"] = "igRenderRectFilledRangeH"
 defs["igRenderRectFilledRangeH"][1]["ret"] = "void"
@@ -24943,7 +29041,11 @@ defs["igRenderRectFilledWithHole"][1]["call_args"] = "(draw_list,outer,inner,col
 defs["igRenderRectFilledWithHole"][1]["cimguiname"] = "igRenderRectFilledWithHole"
 defs["igRenderRectFilledWithHole"][1]["defaults"] = {}
 defs["igRenderRectFilledWithHole"][1]["funcname"] = "RenderRectFilledWithHole"
+<<<<<<< HEAD
 defs["igRenderRectFilledWithHole"][1]["location"] = "imgui_internal:3372"
+=======
+defs["igRenderRectFilledWithHole"][1]["location"] = "imgui_internal:3364"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderRectFilledWithHole"][1]["namespace"] = "ImGui"
 defs["igRenderRectFilledWithHole"][1]["ov_cimguiname"] = "igRenderRectFilledWithHole"
 defs["igRenderRectFilledWithHole"][1]["ret"] = "void"
@@ -24973,7 +29075,11 @@ defs["igRenderText"][1]["defaults"] = {}
 defs["igRenderText"][1]["defaults"]["hide_text_after_hash"] = "true"
 defs["igRenderText"][1]["defaults"]["text_end"] = "NULL"
 defs["igRenderText"][1]["funcname"] = "RenderText"
+<<<<<<< HEAD
 defs["igRenderText"][1]["location"] = "imgui_internal:3353"
+=======
+defs["igRenderText"][1]["location"] = "imgui_internal:3345"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderText"][1]["namespace"] = "ImGui"
 defs["igRenderText"][1]["ov_cimguiname"] = "igRenderText"
 defs["igRenderText"][1]["ret"] = "void"
@@ -25012,7 +29118,11 @@ defs["igRenderTextClipped"][1]["defaults"] = {}
 defs["igRenderTextClipped"][1]["defaults"]["align"] = "ImVec2(0,0)"
 defs["igRenderTextClipped"][1]["defaults"]["clip_rect"] = "NULL"
 defs["igRenderTextClipped"][1]["funcname"] = "RenderTextClipped"
+<<<<<<< HEAD
 defs["igRenderTextClipped"][1]["location"] = "imgui_internal:3355"
+=======
+defs["igRenderTextClipped"][1]["location"] = "imgui_internal:3347"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderTextClipped"][1]["namespace"] = "ImGui"
 defs["igRenderTextClipped"][1]["ov_cimguiname"] = "igRenderTextClipped"
 defs["igRenderTextClipped"][1]["ret"] = "void"
@@ -25054,7 +29164,11 @@ defs["igRenderTextClippedEx"][1]["defaults"] = {}
 defs["igRenderTextClippedEx"][1]["defaults"]["align"] = "ImVec2(0,0)"
 defs["igRenderTextClippedEx"][1]["defaults"]["clip_rect"] = "NULL"
 defs["igRenderTextClippedEx"][1]["funcname"] = "RenderTextClippedEx"
+<<<<<<< HEAD
 defs["igRenderTextClippedEx"][1]["location"] = "imgui_internal:3356"
+=======
+defs["igRenderTextClippedEx"][1]["location"] = "imgui_internal:3348"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderTextClippedEx"][1]["namespace"] = "ImGui"
 defs["igRenderTextClippedEx"][1]["ov_cimguiname"] = "igRenderTextClippedEx"
 defs["igRenderTextClippedEx"][1]["ret"] = "void"
@@ -25094,7 +29208,11 @@ defs["igRenderTextEllipsis"][1]["call_args"] = "(draw_list,pos_min,pos_max,clip_
 defs["igRenderTextEllipsis"][1]["cimguiname"] = "igRenderTextEllipsis"
 defs["igRenderTextEllipsis"][1]["defaults"] = {}
 defs["igRenderTextEllipsis"][1]["funcname"] = "RenderTextEllipsis"
+<<<<<<< HEAD
 defs["igRenderTextEllipsis"][1]["location"] = "imgui_internal:3357"
+=======
+defs["igRenderTextEllipsis"][1]["location"] = "imgui_internal:3349"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderTextEllipsis"][1]["namespace"] = "ImGui"
 defs["igRenderTextEllipsis"][1]["ov_cimguiname"] = "igRenderTextEllipsis"
 defs["igRenderTextEllipsis"][1]["ret"] = "void"
@@ -25122,7 +29240,11 @@ defs["igRenderTextWrapped"][1]["call_args"] = "(pos,text,text_end,wrap_width)"
 defs["igRenderTextWrapped"][1]["cimguiname"] = "igRenderTextWrapped"
 defs["igRenderTextWrapped"][1]["defaults"] = {}
 defs["igRenderTextWrapped"][1]["funcname"] = "RenderTextWrapped"
+<<<<<<< HEAD
 defs["igRenderTextWrapped"][1]["location"] = "imgui_internal:3354"
+=======
+defs["igRenderTextWrapped"][1]["location"] = "imgui_internal:3346"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igRenderTextWrapped"][1]["namespace"] = "ImGui"
 defs["igRenderTextWrapped"][1]["ov_cimguiname"] = "igRenderTextWrapped"
 defs["igRenderTextWrapped"][1]["ret"] = "void"
@@ -25142,7 +29264,11 @@ defs["igResetMouseDragDelta"][1]["cimguiname"] = "igResetMouseDragDelta"
 defs["igResetMouseDragDelta"][1]["defaults"] = {}
 defs["igResetMouseDragDelta"][1]["defaults"]["button"] = "0"
 defs["igResetMouseDragDelta"][1]["funcname"] = "ResetMouseDragDelta"
+<<<<<<< HEAD
 defs["igResetMouseDragDelta"][1]["location"] = "imgui:946"
+=======
+defs["igResetMouseDragDelta"][1]["location"] = "imgui:945"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igResetMouseDragDelta"][1]["namespace"] = "ImGui"
 defs["igResetMouseDragDelta"][1]["ov_cimguiname"] = "igResetMouseDragDelta"
 defs["igResetMouseDragDelta"][1]["ret"] = "void"
@@ -25185,7 +29311,11 @@ defs["igSaveIniSettingsToDisk"][1]["call_args"] = "(ini_filename)"
 defs["igSaveIniSettingsToDisk"][1]["cimguiname"] = "igSaveIniSettingsToDisk"
 defs["igSaveIniSettingsToDisk"][1]["defaults"] = {}
 defs["igSaveIniSettingsToDisk"][1]["funcname"] = "SaveIniSettingsToDisk"
+<<<<<<< HEAD
 defs["igSaveIniSettingsToDisk"][1]["location"] = "imgui:962"
+=======
+defs["igSaveIniSettingsToDisk"][1]["location"] = "imgui:961"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSaveIniSettingsToDisk"][1]["namespace"] = "ImGui"
 defs["igSaveIniSettingsToDisk"][1]["ov_cimguiname"] = "igSaveIniSettingsToDisk"
 defs["igSaveIniSettingsToDisk"][1]["ret"] = "void"
@@ -25205,7 +29335,11 @@ defs["igSaveIniSettingsToMemory"][1]["cimguiname"] = "igSaveIniSettingsToMemory"
 defs["igSaveIniSettingsToMemory"][1]["defaults"] = {}
 defs["igSaveIniSettingsToMemory"][1]["defaults"]["out_ini_size"] = "NULL"
 defs["igSaveIniSettingsToMemory"][1]["funcname"] = "SaveIniSettingsToMemory"
+<<<<<<< HEAD
 defs["igSaveIniSettingsToMemory"][1]["location"] = "imgui:963"
+=======
+defs["igSaveIniSettingsToMemory"][1]["location"] = "imgui:962"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSaveIniSettingsToMemory"][1]["namespace"] = "ImGui"
 defs["igSaveIniSettingsToMemory"][1]["ov_cimguiname"] = "igSaveIniSettingsToMemory"
 defs["igSaveIniSettingsToMemory"][1]["ret"] = "const char*"
@@ -25227,7 +29361,11 @@ defs["igScaleWindowsInViewport"][1]["call_args"] = "(viewport,scale)"
 defs["igScaleWindowsInViewport"][1]["cimguiname"] = "igScaleWindowsInViewport"
 defs["igScaleWindowsInViewport"][1]["defaults"] = {}
 defs["igScaleWindowsInViewport"][1]["funcname"] = "ScaleWindowsInViewport"
+<<<<<<< HEAD
 defs["igScaleWindowsInViewport"][1]["location"] = "imgui_internal:2994"
+=======
+defs["igScaleWindowsInViewport"][1]["location"] = "imgui_internal:2999"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igScaleWindowsInViewport"][1]["namespace"] = "ImGui"
 defs["igScaleWindowsInViewport"][1]["ov_cimguiname"] = "igScaleWindowsInViewport"
 defs["igScaleWindowsInViewport"][1]["ret"] = "void"
@@ -25249,7 +29387,11 @@ defs["igScrollToBringRectIntoView"][1]["call_args"] = "(window,rect)"
 defs["igScrollToBringRectIntoView"][1]["cimguiname"] = "igScrollToBringRectIntoView"
 defs["igScrollToBringRectIntoView"][1]["defaults"] = {}
 defs["igScrollToBringRectIntoView"][1]["funcname"] = "ScrollToBringRectIntoView"
+<<<<<<< HEAD
 defs["igScrollToBringRectIntoView"][1]["location"] = "imgui_internal:3030"
+=======
+defs["igScrollToBringRectIntoView"][1]["location"] = "imgui_internal:3032"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igScrollToBringRectIntoView"][1]["namespace"] = "ImGui"
 defs["igScrollToBringRectIntoView"][1]["ov_cimguiname"] = "igScrollToBringRectIntoView"
 defs["igScrollToBringRectIntoView"][1]["ret"] = "void"
@@ -25269,7 +29411,11 @@ defs["igScrollToItem"][1]["cimguiname"] = "igScrollToItem"
 defs["igScrollToItem"][1]["defaults"] = {}
 defs["igScrollToItem"][1]["defaults"]["flags"] = "0"
 defs["igScrollToItem"][1]["funcname"] = "ScrollToItem"
+<<<<<<< HEAD
 defs["igScrollToItem"][1]["location"] = "imgui_internal:3026"
+=======
+defs["igScrollToItem"][1]["location"] = "imgui_internal:3028"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igScrollToItem"][1]["namespace"] = "ImGui"
 defs["igScrollToItem"][1]["ov_cimguiname"] = "igScrollToItem"
 defs["igScrollToItem"][1]["ret"] = "void"
@@ -25295,7 +29441,11 @@ defs["igScrollToRect"][1]["cimguiname"] = "igScrollToRect"
 defs["igScrollToRect"][1]["defaults"] = {}
 defs["igScrollToRect"][1]["defaults"]["flags"] = "0"
 defs["igScrollToRect"][1]["funcname"] = "ScrollToRect"
+<<<<<<< HEAD
 defs["igScrollToRect"][1]["location"] = "imgui_internal:3027"
+=======
+defs["igScrollToRect"][1]["location"] = "imgui_internal:3029"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igScrollToRect"][1]["namespace"] = "ImGui"
 defs["igScrollToRect"][1]["ov_cimguiname"] = "igScrollToRect"
 defs["igScrollToRect"][1]["ret"] = "void"
@@ -25324,7 +29474,11 @@ defs["igScrollToRectEx"][1]["cimguiname"] = "igScrollToRectEx"
 defs["igScrollToRectEx"][1]["defaults"] = {}
 defs["igScrollToRectEx"][1]["defaults"]["flags"] = "0"
 defs["igScrollToRectEx"][1]["funcname"] = "ScrollToRectEx"
+<<<<<<< HEAD
 defs["igScrollToRectEx"][1]["location"] = "imgui_internal:3028"
+=======
+defs["igScrollToRectEx"][1]["location"] = "imgui_internal:3030"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igScrollToRectEx"][1]["namespace"] = "ImGui"
 defs["igScrollToRectEx"][1]["nonUDT"] = 1
 defs["igScrollToRectEx"][1]["ov_cimguiname"] = "igScrollToRectEx"
@@ -25344,7 +29498,11 @@ defs["igScrollbar"][1]["call_args"] = "(axis)"
 defs["igScrollbar"][1]["cimguiname"] = "igScrollbar"
 defs["igScrollbar"][1]["defaults"] = {}
 defs["igScrollbar"][1]["funcname"] = "Scrollbar"
+<<<<<<< HEAD
 defs["igScrollbar"][1]["location"] = "imgui_internal:3388"
+=======
+defs["igScrollbar"][1]["location"] = "imgui_internal:3379"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igScrollbar"][1]["namespace"] = "ImGui"
 defs["igScrollbar"][1]["ov_cimguiname"] = "igScrollbar"
 defs["igScrollbar"][1]["ret"] = "void"
@@ -25381,7 +29539,11 @@ defs["igScrollbarEx"][1]["call_args"] = "(bb,id,axis,p_scroll_v,avail_v,contents
 defs["igScrollbarEx"][1]["cimguiname"] = "igScrollbarEx"
 defs["igScrollbarEx"][1]["defaults"] = {}
 defs["igScrollbarEx"][1]["funcname"] = "ScrollbarEx"
+<<<<<<< HEAD
 defs["igScrollbarEx"][1]["location"] = "imgui_internal:3389"
+=======
+defs["igScrollbarEx"][1]["location"] = "imgui_internal:3380"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igScrollbarEx"][1]["namespace"] = "ImGui"
 defs["igScrollbarEx"][1]["ov_cimguiname"] = "igScrollbarEx"
 defs["igScrollbarEx"][1]["ret"] = "bool"
@@ -25412,7 +29574,11 @@ defs["igSelectable"][1]["defaults"]["flags"] = "0"
 defs["igSelectable"][1]["defaults"]["selected"] = "false"
 defs["igSelectable"][1]["defaults"]["size"] = "ImVec2(0,0)"
 defs["igSelectable"][1]["funcname"] = "Selectable"
+<<<<<<< HEAD
 defs["igSelectable"][1]["location"] = "imgui:633"
+=======
+defs["igSelectable"][1]["location"] = "imgui:632"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSelectable"][1]["namespace"] = "ImGui"
 defs["igSelectable"][1]["ov_cimguiname"] = "igSelectable_Bool"
 defs["igSelectable"][1]["ret"] = "bool"
@@ -25440,7 +29606,11 @@ defs["igSelectable"][2]["defaults"] = {}
 defs["igSelectable"][2]["defaults"]["flags"] = "0"
 defs["igSelectable"][2]["defaults"]["size"] = "ImVec2(0,0)"
 defs["igSelectable"][2]["funcname"] = "Selectable"
+<<<<<<< HEAD
 defs["igSelectable"][2]["location"] = "imgui:634"
+=======
+defs["igSelectable"][2]["location"] = "imgui:633"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSelectable"][2]["namespace"] = "ImGui"
 defs["igSelectable"][2]["ov_cimguiname"] = "igSelectable_BoolPtr"
 defs["igSelectable"][2]["ret"] = "bool"
@@ -25476,7 +29646,11 @@ defs["igSeparatorEx"][1]["call_args"] = "(flags)"
 defs["igSeparatorEx"][1]["cimguiname"] = "igSeparatorEx"
 defs["igSeparatorEx"][1]["defaults"] = {}
 defs["igSeparatorEx"][1]["funcname"] = "SeparatorEx"
+<<<<<<< HEAD
 defs["igSeparatorEx"][1]["location"] = "imgui_internal:3380"
+=======
+defs["igSeparatorEx"][1]["location"] = "imgui_internal:3372"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSeparatorEx"][1]["namespace"] = "ImGui"
 defs["igSeparatorEx"][1]["ov_cimguiname"] = "igSeparatorEx"
 defs["igSeparatorEx"][1]["ret"] = "void"
@@ -25545,7 +29719,11 @@ defs["igSetActiveID"][1]["call_args"] = "(id,window)"
 defs["igSetActiveID"][1]["cimguiname"] = "igSetActiveID"
 defs["igSetActiveID"][1]["defaults"] = {}
 defs["igSetActiveID"][1]["funcname"] = "SetActiveID"
+<<<<<<< HEAD
 defs["igSetActiveID"][1]["location"] = "imgui_internal:3038"
+=======
+defs["igSetActiveID"][1]["location"] = "imgui_internal:3040"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetActiveID"][1]["namespace"] = "ImGui"
 defs["igSetActiveID"][1]["ov_cimguiname"] = "igSetActiveID"
 defs["igSetActiveID"][1]["ret"] = "void"
@@ -25561,7 +29739,11 @@ defs["igSetActiveIdUsingAllKeyboardKeys"][1]["call_args"] = "()"
 defs["igSetActiveIdUsingAllKeyboardKeys"][1]["cimguiname"] = "igSetActiveIdUsingAllKeyboardKeys"
 defs["igSetActiveIdUsingAllKeyboardKeys"][1]["defaults"] = {}
 defs["igSetActiveIdUsingAllKeyboardKeys"][1]["funcname"] = "SetActiveIdUsingAllKeyboardKeys"
+<<<<<<< HEAD
 defs["igSetActiveIdUsingAllKeyboardKeys"][1]["location"] = "imgui_internal:3141"
+=======
+defs["igSetActiveIdUsingAllKeyboardKeys"][1]["location"] = "imgui_internal:3142"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetActiveIdUsingAllKeyboardKeys"][1]["namespace"] = "ImGui"
 defs["igSetActiveIdUsingAllKeyboardKeys"][1]["ov_cimguiname"] = "igSetActiveIdUsingAllKeyboardKeys"
 defs["igSetActiveIdUsingAllKeyboardKeys"][1]["ret"] = "void"
@@ -25587,7 +29769,11 @@ defs["igSetAllocatorFunctions"][1]["cimguiname"] = "igSetAllocatorFunctions"
 defs["igSetAllocatorFunctions"][1]["defaults"] = {}
 defs["igSetAllocatorFunctions"][1]["defaults"]["user_data"] = "NULL"
 defs["igSetAllocatorFunctions"][1]["funcname"] = "SetAllocatorFunctions"
+<<<<<<< HEAD
 defs["igSetAllocatorFunctions"][1]["location"] = "imgui:973"
+=======
+defs["igSetAllocatorFunctions"][1]["location"] = "imgui:972"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetAllocatorFunctions"][1]["namespace"] = "ImGui"
 defs["igSetAllocatorFunctions"][1]["ov_cimguiname"] = "igSetAllocatorFunctions"
 defs["igSetAllocatorFunctions"][1]["ret"] = "void"
@@ -25606,7 +29792,11 @@ defs["igSetClipboardText"][1]["call_args"] = "(text)"
 defs["igSetClipboardText"][1]["cimguiname"] = "igSetClipboardText"
 defs["igSetClipboardText"][1]["defaults"] = {}
 defs["igSetClipboardText"][1]["funcname"] = "SetClipboardText"
+<<<<<<< HEAD
 defs["igSetClipboardText"][1]["location"] = "imgui:954"
+=======
+defs["igSetClipboardText"][1]["location"] = "imgui:953"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetClipboardText"][1]["namespace"] = "ImGui"
 defs["igSetClipboardText"][1]["ov_cimguiname"] = "igSetClipboardText"
 defs["igSetClipboardText"][1]["ret"] = "void"
@@ -25625,7 +29815,11 @@ defs["igSetColorEditOptions"][1]["call_args"] = "(flags)"
 defs["igSetColorEditOptions"][1]["cimguiname"] = "igSetColorEditOptions"
 defs["igSetColorEditOptions"][1]["defaults"] = {}
 defs["igSetColorEditOptions"][1]["funcname"] = "SetColorEditOptions"
+<<<<<<< HEAD
 defs["igSetColorEditOptions"][1]["location"] = "imgui:608"
+=======
+defs["igSetColorEditOptions"][1]["location"] = "imgui:607"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetColorEditOptions"][1]["namespace"] = "ImGui"
 defs["igSetColorEditOptions"][1]["ov_cimguiname"] = "igSetColorEditOptions"
 defs["igSetColorEditOptions"][1]["ret"] = "void"
@@ -25647,7 +29841,11 @@ defs["igSetColumnOffset"][1]["call_args"] = "(column_index,offset_x)"
 defs["igSetColumnOffset"][1]["cimguiname"] = "igSetColumnOffset"
 defs["igSetColumnOffset"][1]["defaults"] = {}
 defs["igSetColumnOffset"][1]["funcname"] = "SetColumnOffset"
+<<<<<<< HEAD
 defs["igSetColumnOffset"][1]["location"] = "imgui:791"
+=======
+defs["igSetColumnOffset"][1]["location"] = "imgui:790"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetColumnOffset"][1]["namespace"] = "ImGui"
 defs["igSetColumnOffset"][1]["ov_cimguiname"] = "igSetColumnOffset"
 defs["igSetColumnOffset"][1]["ret"] = "void"
@@ -25669,7 +29867,11 @@ defs["igSetColumnWidth"][1]["call_args"] = "(column_index,width)"
 defs["igSetColumnWidth"][1]["cimguiname"] = "igSetColumnWidth"
 defs["igSetColumnWidth"][1]["defaults"] = {}
 defs["igSetColumnWidth"][1]["funcname"] = "SetColumnWidth"
+<<<<<<< HEAD
 defs["igSetColumnWidth"][1]["location"] = "imgui:789"
+=======
+defs["igSetColumnWidth"][1]["location"] = "imgui:788"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetColumnWidth"][1]["namespace"] = "ImGui"
 defs["igSetColumnWidth"][1]["ov_cimguiname"] = "igSetColumnWidth"
 defs["igSetColumnWidth"][1]["ret"] = "void"
@@ -25707,7 +29909,11 @@ defs["igSetCurrentFont"][1]["call_args"] = "(font)"
 defs["igSetCurrentFont"][1]["cimguiname"] = "igSetCurrentFont"
 defs["igSetCurrentFont"][1]["defaults"] = {}
 defs["igSetCurrentFont"][1]["funcname"] = "SetCurrentFont"
+<<<<<<< HEAD
 defs["igSetCurrentFont"][1]["location"] = "imgui_internal:2971"
+=======
+defs["igSetCurrentFont"][1]["location"] = "imgui_internal:2976"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetCurrentFont"][1]["namespace"] = "ImGui"
 defs["igSetCurrentFont"][1]["ov_cimguiname"] = "igSetCurrentFont"
 defs["igSetCurrentFont"][1]["ret"] = "void"
@@ -25729,7 +29935,11 @@ defs["igSetCurrentViewport"][1]["call_args"] = "(window,viewport)"
 defs["igSetCurrentViewport"][1]["cimguiname"] = "igSetCurrentViewport"
 defs["igSetCurrentViewport"][1]["defaults"] = {}
 defs["igSetCurrentViewport"][1]["funcname"] = "SetCurrentViewport"
+<<<<<<< HEAD
 defs["igSetCurrentViewport"][1]["location"] = "imgui_internal:2997"
+=======
+defs["igSetCurrentViewport"][1]["location"] = "imgui_internal:3002"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetCurrentViewport"][1]["namespace"] = "ImGui"
 defs["igSetCurrentViewport"][1]["ov_cimguiname"] = "igSetCurrentViewport"
 defs["igSetCurrentViewport"][1]["ret"] = "void"
@@ -25834,7 +30044,11 @@ defs["igSetDragDropPayload"][1]["cimguiname"] = "igSetDragDropPayload"
 defs["igSetDragDropPayload"][1]["defaults"] = {}
 defs["igSetDragDropPayload"][1]["defaults"]["cond"] = "0"
 defs["igSetDragDropPayload"][1]["funcname"] = "SetDragDropPayload"
+<<<<<<< HEAD
 defs["igSetDragDropPayload"][1]["location"] = "imgui:839"
+=======
+defs["igSetDragDropPayload"][1]["location"] = "imgui:838"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetDragDropPayload"][1]["namespace"] = "ImGui"
 defs["igSetDragDropPayload"][1]["ov_cimguiname"] = "igSetDragDropPayload"
 defs["igSetDragDropPayload"][1]["ret"] = "bool"
@@ -25856,7 +30070,11 @@ defs["igSetFocusID"][1]["call_args"] = "(id,window)"
 defs["igSetFocusID"][1]["cimguiname"] = "igSetFocusID"
 defs["igSetFocusID"][1]["defaults"] = {}
 defs["igSetFocusID"][1]["funcname"] = "SetFocusID"
+<<<<<<< HEAD
 defs["igSetFocusID"][1]["location"] = "imgui_internal:3039"
+=======
+defs["igSetFocusID"][1]["location"] = "imgui_internal:3041"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetFocusID"][1]["namespace"] = "ImGui"
 defs["igSetFocusID"][1]["ov_cimguiname"] = "igSetFocusID"
 defs["igSetFocusID"][1]["ret"] = "void"
@@ -25875,7 +30093,11 @@ defs["igSetHoveredID"][1]["call_args"] = "(id)"
 defs["igSetHoveredID"][1]["cimguiname"] = "igSetHoveredID"
 defs["igSetHoveredID"][1]["defaults"] = {}
 defs["igSetHoveredID"][1]["funcname"] = "SetHoveredID"
+<<<<<<< HEAD
 defs["igSetHoveredID"][1]["location"] = "imgui_internal:3042"
+=======
+defs["igSetHoveredID"][1]["location"] = "imgui_internal:3044"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetHoveredID"][1]["namespace"] = "ImGui"
 defs["igSetHoveredID"][1]["ov_cimguiname"] = "igSetHoveredID"
 defs["igSetHoveredID"][1]["ret"] = "void"
@@ -25891,7 +30113,11 @@ defs["igSetItemAllowOverlap"][1]["call_args"] = "()"
 defs["igSetItemAllowOverlap"][1]["cimguiname"] = "igSetItemAllowOverlap"
 defs["igSetItemAllowOverlap"][1]["defaults"] = {}
 defs["igSetItemAllowOverlap"][1]["funcname"] = "SetItemAllowOverlap"
+<<<<<<< HEAD
 defs["igSetItemAllowOverlap"][1]["location"] = "imgui:883"
+=======
+defs["igSetItemAllowOverlap"][1]["location"] = "imgui:882"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetItemAllowOverlap"][1]["namespace"] = "ImGui"
 defs["igSetItemAllowOverlap"][1]["ov_cimguiname"] = "igSetItemAllowOverlap"
 defs["igSetItemAllowOverlap"][1]["ret"] = "void"
@@ -25907,7 +30133,11 @@ defs["igSetItemDefaultFocus"][1]["call_args"] = "()"
 defs["igSetItemDefaultFocus"][1]["cimguiname"] = "igSetItemDefaultFocus"
 defs["igSetItemDefaultFocus"][1]["defaults"] = {}
 defs["igSetItemDefaultFocus"][1]["funcname"] = "SetItemDefaultFocus"
+<<<<<<< HEAD
 defs["igSetItemDefaultFocus"][1]["location"] = "imgui:860"
+=======
+defs["igSetItemDefaultFocus"][1]["location"] = "imgui:859"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetItemDefaultFocus"][1]["namespace"] = "ImGui"
 defs["igSetItemDefaultFocus"][1]["ov_cimguiname"] = "igSetItemDefaultFocus"
 defs["igSetItemDefaultFocus"][1]["ret"] = "void"
@@ -25930,7 +30160,11 @@ defs["igSetItemKeyOwner"][1]["cimguiname"] = "igSetItemKeyOwner"
 defs["igSetItemKeyOwner"][1]["defaults"] = {}
 defs["igSetItemKeyOwner"][1]["defaults"]["flags"] = "0"
 defs["igSetItemKeyOwner"][1]["funcname"] = "SetItemKeyOwner"
+<<<<<<< HEAD
 defs["igSetItemKeyOwner"][1]["location"] = "imgui_internal:3157"
+=======
+defs["igSetItemKeyOwner"][1]["location"] = "imgui_internal:3158"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetItemKeyOwner"][1]["namespace"] = "ImGui"
 defs["igSetItemKeyOwner"][1]["ov_cimguiname"] = "igSetItemKeyOwner"
 defs["igSetItemKeyOwner"][1]["ret"] = "void"
@@ -25956,7 +30190,11 @@ defs["igSetKeyOwner"][1]["cimguiname"] = "igSetKeyOwner"
 defs["igSetKeyOwner"][1]["defaults"] = {}
 defs["igSetKeyOwner"][1]["defaults"]["flags"] = "0"
 defs["igSetKeyOwner"][1]["funcname"] = "SetKeyOwner"
+<<<<<<< HEAD
 defs["igSetKeyOwner"][1]["location"] = "imgui_internal:3156"
+=======
+defs["igSetKeyOwner"][1]["location"] = "imgui_internal:3157"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetKeyOwner"][1]["namespace"] = "ImGui"
 defs["igSetKeyOwner"][1]["ov_cimguiname"] = "igSetKeyOwner"
 defs["igSetKeyOwner"][1]["ret"] = "void"
@@ -25976,7 +30214,11 @@ defs["igSetKeyboardFocusHere"][1]["cimguiname"] = "igSetKeyboardFocusHere"
 defs["igSetKeyboardFocusHere"][1]["defaults"] = {}
 defs["igSetKeyboardFocusHere"][1]["defaults"]["offset"] = "0"
 defs["igSetKeyboardFocusHere"][1]["funcname"] = "SetKeyboardFocusHere"
+<<<<<<< HEAD
 defs["igSetKeyboardFocusHere"][1]["location"] = "imgui:861"
+=======
+defs["igSetKeyboardFocusHere"][1]["location"] = "imgui:860"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetKeyboardFocusHere"][1]["namespace"] = "ImGui"
 defs["igSetKeyboardFocusHere"][1]["ov_cimguiname"] = "igSetKeyboardFocusHere"
 defs["igSetKeyboardFocusHere"][1]["ret"] = "void"
@@ -26004,7 +30246,11 @@ defs["igSetLastItemData"][1]["call_args"] = "(item_id,in_flags,status_flags,item
 defs["igSetLastItemData"][1]["cimguiname"] = "igSetLastItemData"
 defs["igSetLastItemData"][1]["defaults"] = {}
 defs["igSetLastItemData"][1]["funcname"] = "SetLastItemData"
+<<<<<<< HEAD
 defs["igSetLastItemData"][1]["location"] = "imgui_internal:3055"
+=======
+defs["igSetLastItemData"][1]["location"] = "imgui_internal:3056"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetLastItemData"][1]["namespace"] = "ImGui"
 defs["igSetLastItemData"][1]["ov_cimguiname"] = "igSetLastItemData"
 defs["igSetLastItemData"][1]["ret"] = "void"
@@ -26023,7 +30269,11 @@ defs["igSetMouseCursor"][1]["call_args"] = "(cursor_type)"
 defs["igSetMouseCursor"][1]["cimguiname"] = "igSetMouseCursor"
 defs["igSetMouseCursor"][1]["defaults"] = {}
 defs["igSetMouseCursor"][1]["funcname"] = "SetMouseCursor"
+<<<<<<< HEAD
 defs["igSetMouseCursor"][1]["location"] = "imgui:948"
+=======
+defs["igSetMouseCursor"][1]["location"] = "imgui:947"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetMouseCursor"][1]["namespace"] = "ImGui"
 defs["igSetMouseCursor"][1]["ov_cimguiname"] = "igSetMouseCursor"
 defs["igSetMouseCursor"][1]["ret"] = "void"
@@ -26051,7 +30301,11 @@ defs["igSetNavID"][1]["call_args"] = "(id,nav_layer,focus_scope_id,rect_rel)"
 defs["igSetNavID"][1]["cimguiname"] = "igSetNavID"
 defs["igSetNavID"][1]["defaults"] = {}
 defs["igSetNavID"][1]["funcname"] = "SetNavID"
+<<<<<<< HEAD
 defs["igSetNavID"][1]["location"] = "imgui_internal:3110"
+=======
+defs["igSetNavID"][1]["location"] = "imgui_internal:3111"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetNavID"][1]["namespace"] = "ImGui"
 defs["igSetNavID"][1]["ov_cimguiname"] = "igSetNavID"
 defs["igSetNavID"][1]["ret"] = "void"
@@ -26070,7 +30324,11 @@ defs["igSetNavWindow"][1]["call_args"] = "(window)"
 defs["igSetNavWindow"][1]["cimguiname"] = "igSetNavWindow"
 defs["igSetNavWindow"][1]["defaults"] = {}
 defs["igSetNavWindow"][1]["funcname"] = "SetNavWindow"
+<<<<<<< HEAD
 defs["igSetNavWindow"][1]["location"] = "imgui_internal:3109"
+=======
+defs["igSetNavWindow"][1]["location"] = "imgui_internal:3110"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetNavWindow"][1]["namespace"] = "ImGui"
 defs["igSetNavWindow"][1]["ov_cimguiname"] = "igSetNavWindow"
 defs["igSetNavWindow"][1]["ret"] = "void"
@@ -26089,7 +30347,11 @@ defs["igSetNextFrameWantCaptureKeyboard"][1]["call_args"] = "(want_capture_keybo
 defs["igSetNextFrameWantCaptureKeyboard"][1]["cimguiname"] = "igSetNextFrameWantCaptureKeyboard"
 defs["igSetNextFrameWantCaptureKeyboard"][1]["defaults"] = {}
 defs["igSetNextFrameWantCaptureKeyboard"][1]["funcname"] = "SetNextFrameWantCaptureKeyboard"
+<<<<<<< HEAD
 defs["igSetNextFrameWantCaptureKeyboard"][1]["location"] = "imgui:928"
+=======
+defs["igSetNextFrameWantCaptureKeyboard"][1]["location"] = "imgui:927"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetNextFrameWantCaptureKeyboard"][1]["namespace"] = "ImGui"
 defs["igSetNextFrameWantCaptureKeyboard"][1]["ov_cimguiname"] = "igSetNextFrameWantCaptureKeyboard"
 defs["igSetNextFrameWantCaptureKeyboard"][1]["ret"] = "void"
@@ -26108,7 +30370,11 @@ defs["igSetNextFrameWantCaptureMouse"][1]["call_args"] = "(want_capture_mouse)"
 defs["igSetNextFrameWantCaptureMouse"][1]["cimguiname"] = "igSetNextFrameWantCaptureMouse"
 defs["igSetNextFrameWantCaptureMouse"][1]["defaults"] = {}
 defs["igSetNextFrameWantCaptureMouse"][1]["funcname"] = "SetNextFrameWantCaptureMouse"
+<<<<<<< HEAD
 defs["igSetNextFrameWantCaptureMouse"][1]["location"] = "imgui:949"
+=======
+defs["igSetNextFrameWantCaptureMouse"][1]["location"] = "imgui:948"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetNextFrameWantCaptureMouse"][1]["namespace"] = "ImGui"
 defs["igSetNextFrameWantCaptureMouse"][1]["ov_cimguiname"] = "igSetNextFrameWantCaptureMouse"
 defs["igSetNextFrameWantCaptureMouse"][1]["ret"] = "void"
@@ -26131,7 +30397,11 @@ defs["igSetNextItemOpen"][1]["cimguiname"] = "igSetNextItemOpen"
 defs["igSetNextItemOpen"][1]["defaults"] = {}
 defs["igSetNextItemOpen"][1]["defaults"]["cond"] = "0"
 defs["igSetNextItemOpen"][1]["funcname"] = "SetNextItemOpen"
+<<<<<<< HEAD
 defs["igSetNextItemOpen"][1]["location"] = "imgui:628"
+=======
+defs["igSetNextItemOpen"][1]["location"] = "imgui:627"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetNextItemOpen"][1]["namespace"] = "ImGui"
 defs["igSetNextItemOpen"][1]["ov_cimguiname"] = "igSetNextItemOpen"
 defs["igSetNextItemOpen"][1]["ret"] = "void"
@@ -26188,7 +30458,11 @@ defs["igSetNextWindowClass"][1]["call_args"] = "(window_class)"
 defs["igSetNextWindowClass"][1]["cimguiname"] = "igSetNextWindowClass"
 defs["igSetNextWindowClass"][1]["defaults"] = {}
 defs["igSetNextWindowClass"][1]["funcname"] = "SetNextWindowClass"
+<<<<<<< HEAD
 defs["igSetNextWindowClass"][1]["location"] = "imgui:819"
+=======
+defs["igSetNextWindowClass"][1]["location"] = "imgui:818"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetNextWindowClass"][1]["namespace"] = "ImGui"
 defs["igSetNextWindowClass"][1]["ov_cimguiname"] = "igSetNextWindowClass"
 defs["igSetNextWindowClass"][1]["ret"] = "void"
@@ -26253,7 +30527,11 @@ defs["igSetNextWindowDockID"][1]["cimguiname"] = "igSetNextWindowDockID"
 defs["igSetNextWindowDockID"][1]["defaults"] = {}
 defs["igSetNextWindowDockID"][1]["defaults"]["cond"] = "0"
 defs["igSetNextWindowDockID"][1]["funcname"] = "SetNextWindowDockID"
+<<<<<<< HEAD
 defs["igSetNextWindowDockID"][1]["location"] = "imgui:818"
+=======
+defs["igSetNextWindowDockID"][1]["location"] = "imgui:817"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetNextWindowDockID"][1]["namespace"] = "ImGui"
 defs["igSetNextWindowDockID"][1]["ov_cimguiname"] = "igSetNextWindowDockID"
 defs["igSetNextWindowDockID"][1]["ret"] = "void"
@@ -26433,7 +30711,11 @@ defs["igSetScrollFromPosX"][2]["call_args"] = "(window,local_x,center_x_ratio)"
 defs["igSetScrollFromPosX"][2]["cimguiname"] = "igSetScrollFromPosX"
 defs["igSetScrollFromPosX"][2]["defaults"] = {}
 defs["igSetScrollFromPosX"][2]["funcname"] = "SetScrollFromPosX"
+<<<<<<< HEAD
 defs["igSetScrollFromPosX"][2]["location"] = "imgui_internal:3022"
+=======
+defs["igSetScrollFromPosX"][2]["location"] = "imgui_internal:3024"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetScrollFromPosX"][2]["namespace"] = "ImGui"
 defs["igSetScrollFromPosX"][2]["ov_cimguiname"] = "igSetScrollFromPosX_WindowPtr"
 defs["igSetScrollFromPosX"][2]["ret"] = "void"
@@ -26480,7 +30762,11 @@ defs["igSetScrollFromPosY"][2]["call_args"] = "(window,local_y,center_y_ratio)"
 defs["igSetScrollFromPosY"][2]["cimguiname"] = "igSetScrollFromPosY"
 defs["igSetScrollFromPosY"][2]["defaults"] = {}
 defs["igSetScrollFromPosY"][2]["funcname"] = "SetScrollFromPosY"
+<<<<<<< HEAD
 defs["igSetScrollFromPosY"][2]["location"] = "imgui_internal:3023"
+=======
+defs["igSetScrollFromPosY"][2]["location"] = "imgui_internal:3025"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetScrollFromPosY"][2]["namespace"] = "ImGui"
 defs["igSetScrollFromPosY"][2]["ov_cimguiname"] = "igSetScrollFromPosY_WindowPtr"
 defs["igSetScrollFromPosY"][2]["ret"] = "void"
@@ -26560,7 +30846,11 @@ defs["igSetScrollX"][2]["call_args"] = "(window,scroll_x)"
 defs["igSetScrollX"][2]["cimguiname"] = "igSetScrollX"
 defs["igSetScrollX"][2]["defaults"] = {}
 defs["igSetScrollX"][2]["funcname"] = "SetScrollX"
+<<<<<<< HEAD
 defs["igSetScrollX"][2]["location"] = "imgui_internal:3020"
+=======
+defs["igSetScrollX"][2]["location"] = "imgui_internal:3022"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetScrollX"][2]["namespace"] = "ImGui"
 defs["igSetScrollX"][2]["ov_cimguiname"] = "igSetScrollX_WindowPtr"
 defs["igSetScrollX"][2]["ret"] = "void"
@@ -26600,7 +30890,11 @@ defs["igSetScrollY"][2]["call_args"] = "(window,scroll_y)"
 defs["igSetScrollY"][2]["cimguiname"] = "igSetScrollY"
 defs["igSetScrollY"][2]["defaults"] = {}
 defs["igSetScrollY"][2]["funcname"] = "SetScrollY"
+<<<<<<< HEAD
 defs["igSetScrollY"][2]["location"] = "imgui_internal:3021"
+=======
+defs["igSetScrollY"][2]["location"] = "imgui_internal:3023"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetScrollY"][2]["namespace"] = "ImGui"
 defs["igSetScrollY"][2]["ov_cimguiname"] = "igSetScrollY_WindowPtr"
 defs["igSetScrollY"][2]["ret"] = "void"
@@ -26628,7 +30922,11 @@ defs["igSetShortcutRouting"][1]["defaults"] = {}
 defs["igSetShortcutRouting"][1]["defaults"]["flags"] = "0"
 defs["igSetShortcutRouting"][1]["defaults"]["owner_id"] = "0"
 defs["igSetShortcutRouting"][1]["funcname"] = "SetShortcutRouting"
+<<<<<<< HEAD
 defs["igSetShortcutRouting"][1]["location"] = "imgui_internal:3185"
+=======
+defs["igSetShortcutRouting"][1]["location"] = "imgui_internal:3186"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetShortcutRouting"][1]["namespace"] = "ImGui"
 defs["igSetShortcutRouting"][1]["ov_cimguiname"] = "igSetShortcutRouting"
 defs["igSetShortcutRouting"][1]["ret"] = "bool"
@@ -26647,7 +30945,11 @@ defs["igSetStateStorage"][1]["call_args"] = "(storage)"
 defs["igSetStateStorage"][1]["cimguiname"] = "igSetStateStorage"
 defs["igSetStateStorage"][1]["defaults"] = {}
 defs["igSetStateStorage"][1]["funcname"] = "SetStateStorage"
+<<<<<<< HEAD
 defs["igSetStateStorage"][1]["location"] = "imgui:904"
+=======
+defs["igSetStateStorage"][1]["location"] = "imgui:903"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetStateStorage"][1]["namespace"] = "ImGui"
 defs["igSetStateStorage"][1]["ov_cimguiname"] = "igSetStateStorage"
 defs["igSetStateStorage"][1]["ret"] = "void"
@@ -26666,7 +30968,11 @@ defs["igSetTabItemClosed"][1]["call_args"] = "(tab_or_docked_window_label)"
 defs["igSetTabItemClosed"][1]["cimguiname"] = "igSetTabItemClosed"
 defs["igSetTabItemClosed"][1]["defaults"] = {}
 defs["igSetTabItemClosed"][1]["funcname"] = "SetTabItemClosed"
+<<<<<<< HEAD
 defs["igSetTabItemClosed"][1]["location"] = "imgui:801"
+=======
+defs["igSetTabItemClosed"][1]["location"] = "imgui:800"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetTabItemClosed"][1]["namespace"] = "ImGui"
 defs["igSetTabItemClosed"][1]["ov_cimguiname"] = "igSetTabItemClosed"
 defs["igSetTabItemClosed"][1]["ret"] = "void"
@@ -26689,7 +30995,11 @@ defs["igSetTooltip"][1]["cimguiname"] = "igSetTooltip"
 defs["igSetTooltip"][1]["defaults"] = {}
 defs["igSetTooltip"][1]["funcname"] = "SetTooltip"
 defs["igSetTooltip"][1]["isvararg"] = "...)"
+<<<<<<< HEAD
 defs["igSetTooltip"][1]["location"] = "imgui:679"
+=======
+defs["igSetTooltip"][1]["location"] = "imgui:678"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetTooltip"][1]["namespace"] = "ImGui"
 defs["igSetTooltip"][1]["ov_cimguiname"] = "igSetTooltip"
 defs["igSetTooltip"][1]["ret"] = "void"
@@ -26711,7 +31021,11 @@ defs["igSetTooltipV"][1]["call_args"] = "(fmt,args)"
 defs["igSetTooltipV"][1]["cimguiname"] = "igSetTooltipV"
 defs["igSetTooltipV"][1]["defaults"] = {}
 defs["igSetTooltipV"][1]["funcname"] = "SetTooltipV"
+<<<<<<< HEAD
 defs["igSetTooltipV"][1]["location"] = "imgui:680"
+=======
+defs["igSetTooltipV"][1]["location"] = "imgui:679"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetTooltipV"][1]["namespace"] = "ImGui"
 defs["igSetTooltipV"][1]["ov_cimguiname"] = "igSetTooltipV"
 defs["igSetTooltipV"][1]["ret"] = "void"
@@ -26733,7 +31047,11 @@ defs["igSetWindowClipRectBeforeSetChannel"][1]["call_args"] = "(window,clip_rect
 defs["igSetWindowClipRectBeforeSetChannel"][1]["cimguiname"] = "igSetWindowClipRectBeforeSetChannel"
 defs["igSetWindowClipRectBeforeSetChannel"][1]["defaults"] = {}
 defs["igSetWindowClipRectBeforeSetChannel"][1]["funcname"] = "SetWindowClipRectBeforeSetChannel"
+<<<<<<< HEAD
 defs["igSetWindowClipRectBeforeSetChannel"][1]["location"] = "imgui_internal:3263"
+=======
+defs["igSetWindowClipRectBeforeSetChannel"][1]["location"] = "imgui_internal:3262"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetWindowClipRectBeforeSetChannel"][1]["namespace"] = "ImGui"
 defs["igSetWindowClipRectBeforeSetChannel"][1]["ov_cimguiname"] = "igSetWindowClipRectBeforeSetChannel"
 defs["igSetWindowClipRectBeforeSetChannel"][1]["ret"] = "void"
@@ -26804,7 +31122,11 @@ defs["igSetWindowCollapsed"][3]["cimguiname"] = "igSetWindowCollapsed"
 defs["igSetWindowCollapsed"][3]["defaults"] = {}
 defs["igSetWindowCollapsed"][3]["defaults"]["cond"] = "0"
 defs["igSetWindowCollapsed"][3]["funcname"] = "SetWindowCollapsed"
+<<<<<<< HEAD
 defs["igSetWindowCollapsed"][3]["location"] = "imgui_internal:2955"
+=======
+defs["igSetWindowCollapsed"][3]["location"] = "imgui_internal:2960"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetWindowCollapsed"][3]["namespace"] = "ImGui"
 defs["igSetWindowCollapsed"][3]["ov_cimguiname"] = "igSetWindowCollapsed_WindowPtr"
 defs["igSetWindowCollapsed"][3]["ret"] = "void"
@@ -26831,7 +31153,11 @@ defs["igSetWindowDock"][1]["call_args"] = "(window,dock_id,cond)"
 defs["igSetWindowDock"][1]["cimguiname"] = "igSetWindowDock"
 defs["igSetWindowDock"][1]["defaults"] = {}
 defs["igSetWindowDock"][1]["funcname"] = "SetWindowDock"
+<<<<<<< HEAD
 defs["igSetWindowDock"][1]["location"] = "imgui_internal:3217"
+=======
+defs["igSetWindowDock"][1]["location"] = "imgui_internal:3216"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetWindowDock"][1]["namespace"] = "ImGui"
 defs["igSetWindowDock"][1]["ov_cimguiname"] = "igSetWindowDock"
 defs["igSetWindowDock"][1]["ret"] = "void"
@@ -26909,7 +31235,11 @@ defs["igSetWindowHitTestHole"][1]["call_args"] = "(window,pos,size)"
 defs["igSetWindowHitTestHole"][1]["cimguiname"] = "igSetWindowHitTestHole"
 defs["igSetWindowHitTestHole"][1]["defaults"] = {}
 defs["igSetWindowHitTestHole"][1]["funcname"] = "SetWindowHitTestHole"
+<<<<<<< HEAD
 defs["igSetWindowHitTestHole"][1]["location"] = "imgui_internal:2956"
+=======
+defs["igSetWindowHitTestHole"][1]["location"] = "imgui_internal:2961"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetWindowHitTestHole"][1]["namespace"] = "ImGui"
 defs["igSetWindowHitTestHole"][1]["ov_cimguiname"] = "igSetWindowHitTestHole"
 defs["igSetWindowHitTestHole"][1]["ret"] = "void"
@@ -26980,7 +31310,11 @@ defs["igSetWindowPos"][3]["cimguiname"] = "igSetWindowPos"
 defs["igSetWindowPos"][3]["defaults"] = {}
 defs["igSetWindowPos"][3]["defaults"]["cond"] = "0"
 defs["igSetWindowPos"][3]["funcname"] = "SetWindowPos"
+<<<<<<< HEAD
 defs["igSetWindowPos"][3]["location"] = "imgui_internal:2953"
+=======
+defs["igSetWindowPos"][3]["location"] = "imgui_internal:2958"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetWindowPos"][3]["namespace"] = "ImGui"
 defs["igSetWindowPos"][3]["ov_cimguiname"] = "igSetWindowPos_WindowPtr"
 defs["igSetWindowPos"][3]["ret"] = "void"
@@ -27053,7 +31387,11 @@ defs["igSetWindowSize"][3]["cimguiname"] = "igSetWindowSize"
 defs["igSetWindowSize"][3]["defaults"] = {}
 defs["igSetWindowSize"][3]["defaults"]["cond"] = "0"
 defs["igSetWindowSize"][3]["funcname"] = "SetWindowSize"
+<<<<<<< HEAD
 defs["igSetWindowSize"][3]["location"] = "imgui_internal:2954"
+=======
+defs["igSetWindowSize"][3]["location"] = "imgui_internal:2959"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetWindowSize"][3]["namespace"] = "ImGui"
 defs["igSetWindowSize"][3]["ov_cimguiname"] = "igSetWindowSize_WindowPtr"
 defs["igSetWindowSize"][3]["ret"] = "void"
@@ -27077,7 +31415,11 @@ defs["igSetWindowViewport"][1]["call_args"] = "(window,viewport)"
 defs["igSetWindowViewport"][1]["cimguiname"] = "igSetWindowViewport"
 defs["igSetWindowViewport"][1]["defaults"] = {}
 defs["igSetWindowViewport"][1]["funcname"] = "SetWindowViewport"
+<<<<<<< HEAD
 defs["igSetWindowViewport"][1]["location"] = "imgui_internal:2996"
+=======
+defs["igSetWindowViewport"][1]["location"] = "imgui_internal:3001"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSetWindowViewport"][1]["namespace"] = "ImGui"
 defs["igSetWindowViewport"][1]["ov_cimguiname"] = "igSetWindowViewport"
 defs["igSetWindowViewport"][1]["ret"] = "void"
@@ -27114,7 +31456,11 @@ defs["igShadeVertsLinearColorGradientKeepAlpha"][1]["call_args"] = "(draw_list,v
 defs["igShadeVertsLinearColorGradientKeepAlpha"][1]["cimguiname"] = "igShadeVertsLinearColorGradientKeepAlpha"
 defs["igShadeVertsLinearColorGradientKeepAlpha"][1]["defaults"] = {}
 defs["igShadeVertsLinearColorGradientKeepAlpha"][1]["funcname"] = "ShadeVertsLinearColorGradientKeepAlpha"
+<<<<<<< HEAD
 defs["igShadeVertsLinearColorGradientKeepAlpha"][1]["location"] = "imgui_internal:3439"
+=======
+defs["igShadeVertsLinearColorGradientKeepAlpha"][1]["location"] = "imgui_internal:3430"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igShadeVertsLinearColorGradientKeepAlpha"][1]["namespace"] = "ImGui"
 defs["igShadeVertsLinearColorGradientKeepAlpha"][1]["ov_cimguiname"] = "igShadeVertsLinearColorGradientKeepAlpha"
 defs["igShadeVertsLinearColorGradientKeepAlpha"][1]["ret"] = "void"
@@ -27154,7 +31500,11 @@ defs["igShadeVertsLinearUV"][1]["call_args"] = "(draw_list,vert_start_idx,vert_e
 defs["igShadeVertsLinearUV"][1]["cimguiname"] = "igShadeVertsLinearUV"
 defs["igShadeVertsLinearUV"][1]["defaults"] = {}
 defs["igShadeVertsLinearUV"][1]["funcname"] = "ShadeVertsLinearUV"
+<<<<<<< HEAD
 defs["igShadeVertsLinearUV"][1]["location"] = "imgui_internal:3440"
+=======
+defs["igShadeVertsLinearUV"][1]["location"] = "imgui_internal:3431"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igShadeVertsLinearUV"][1]["namespace"] = "ImGui"
 defs["igShadeVertsLinearUV"][1]["ov_cimguiname"] = "igShadeVertsLinearUV"
 defs["igShadeVertsLinearUV"][1]["ret"] = "void"
@@ -27181,7 +31531,11 @@ defs["igShortcut"][1]["defaults"] = {}
 defs["igShortcut"][1]["defaults"]["flags"] = "0"
 defs["igShortcut"][1]["defaults"]["owner_id"] = "0"
 defs["igShortcut"][1]["funcname"] = "Shortcut"
+<<<<<<< HEAD
 defs["igShortcut"][1]["location"] = "imgui_internal:3184"
+=======
+defs["igShortcut"][1]["location"] = "imgui_internal:3185"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igShortcut"][1]["namespace"] = "ImGui"
 defs["igShortcut"][1]["ov_cimguiname"] = "igShortcut"
 defs["igShortcut"][1]["ret"] = "bool"
@@ -27260,7 +31614,11 @@ defs["igShowFontAtlas"][1]["call_args"] = "(atlas)"
 defs["igShowFontAtlas"][1]["cimguiname"] = "igShowFontAtlas"
 defs["igShowFontAtlas"][1]["defaults"] = {}
 defs["igShowFontAtlas"][1]["funcname"] = "ShowFontAtlas"
+<<<<<<< HEAD
 defs["igShowFontAtlas"][1]["location"] = "imgui_internal:3460"
+=======
+defs["igShowFontAtlas"][1]["location"] = "imgui_internal:3451"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igShowFontAtlas"][1]["namespace"] = "ImGui"
 defs["igShowFontAtlas"][1]["ov_cimguiname"] = "igShowFontAtlas"
 defs["igShowFontAtlas"][1]["ret"] = "void"
@@ -27399,7 +31757,11 @@ defs["igShrinkWidths"][1]["call_args"] = "(items,count,width_excess)"
 defs["igShrinkWidths"][1]["cimguiname"] = "igShrinkWidths"
 defs["igShrinkWidths"][1]["defaults"] = {}
 defs["igShrinkWidths"][1]["funcname"] = "ShrinkWidths"
+<<<<<<< HEAD
 defs["igShrinkWidths"][1]["location"] = "imgui_internal:3061"
+=======
+defs["igShrinkWidths"][1]["location"] = "imgui_internal:3062"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igShrinkWidths"][1]["namespace"] = "ImGui"
 defs["igShrinkWidths"][1]["ov_cimguiname"] = "igShrinkWidths"
 defs["igShrinkWidths"][1]["ret"] = "void"
@@ -27415,7 +31777,11 @@ defs["igShutdown"][1]["call_args"] = "()"
 defs["igShutdown"][1]["cimguiname"] = "igShutdown"
 defs["igShutdown"][1]["defaults"] = {}
 defs["igShutdown"][1]["funcname"] = "Shutdown"
+<<<<<<< HEAD
 defs["igShutdown"][1]["location"] = "imgui_internal:2977"
+=======
+defs["igShutdown"][1]["location"] = "imgui_internal:2982"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igShutdown"][1]["namespace"] = "ImGui"
 defs["igShutdown"][1]["ov_cimguiname"] = "igShutdown"
 defs["igShutdown"][1]["ret"] = "void"
@@ -27453,7 +31819,11 @@ defs["igSliderAngle"][1]["defaults"]["format"] = "\"%.0f deg\""
 defs["igSliderAngle"][1]["defaults"]["v_degrees_max"] = "+360.0f"
 defs["igSliderAngle"][1]["defaults"]["v_degrees_min"] = "-360.0f"
 defs["igSliderAngle"][1]["funcname"] = "SliderAngle"
+<<<<<<< HEAD
 defs["igSliderAngle"][1]["location"] = "imgui:571"
+=======
+defs["igSliderAngle"][1]["location"] = "imgui:570"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSliderAngle"][1]["namespace"] = "ImGui"
 defs["igSliderAngle"][1]["ov_cimguiname"] = "igSliderAngle"
 defs["igSliderAngle"][1]["ret"] = "bool"
@@ -27496,7 +31866,11 @@ defs["igSliderBehavior"][1]["call_args"] = "(bb,id,data_type,p_v,p_min,p_max,for
 defs["igSliderBehavior"][1]["cimguiname"] = "igSliderBehavior"
 defs["igSliderBehavior"][1]["defaults"] = {}
 defs["igSliderBehavior"][1]["funcname"] = "SliderBehavior"
+<<<<<<< HEAD
 defs["igSliderBehavior"][1]["location"] = "imgui_internal:3398"
+=======
+defs["igSliderBehavior"][1]["location"] = "imgui_internal:3389"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSliderBehavior"][1]["namespace"] = "ImGui"
 defs["igSliderBehavior"][1]["ov_cimguiname"] = "igSliderBehavior"
 defs["igSliderBehavior"][1]["ret"] = "bool"
@@ -27532,7 +31906,11 @@ defs["igSliderFloat"][1]["defaults"] = {}
 defs["igSliderFloat"][1]["defaults"]["flags"] = "0"
 defs["igSliderFloat"][1]["defaults"]["format"] = "\"%.3f\""
 defs["igSliderFloat"][1]["funcname"] = "SliderFloat"
+<<<<<<< HEAD
 defs["igSliderFloat"][1]["location"] = "imgui:567"
+=======
+defs["igSliderFloat"][1]["location"] = "imgui:566"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSliderFloat"][1]["namespace"] = "ImGui"
 defs["igSliderFloat"][1]["ov_cimguiname"] = "igSliderFloat"
 defs["igSliderFloat"][1]["ret"] = "bool"
@@ -27568,7 +31946,11 @@ defs["igSliderFloat2"][1]["defaults"] = {}
 defs["igSliderFloat2"][1]["defaults"]["flags"] = "0"
 defs["igSliderFloat2"][1]["defaults"]["format"] = "\"%.3f\""
 defs["igSliderFloat2"][1]["funcname"] = "SliderFloat2"
+<<<<<<< HEAD
 defs["igSliderFloat2"][1]["location"] = "imgui:568"
+=======
+defs["igSliderFloat2"][1]["location"] = "imgui:567"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSliderFloat2"][1]["namespace"] = "ImGui"
 defs["igSliderFloat2"][1]["ov_cimguiname"] = "igSliderFloat2"
 defs["igSliderFloat2"][1]["ret"] = "bool"
@@ -27604,7 +31986,11 @@ defs["igSliderFloat3"][1]["defaults"] = {}
 defs["igSliderFloat3"][1]["defaults"]["flags"] = "0"
 defs["igSliderFloat3"][1]["defaults"]["format"] = "\"%.3f\""
 defs["igSliderFloat3"][1]["funcname"] = "SliderFloat3"
+<<<<<<< HEAD
 defs["igSliderFloat3"][1]["location"] = "imgui:569"
+=======
+defs["igSliderFloat3"][1]["location"] = "imgui:568"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSliderFloat3"][1]["namespace"] = "ImGui"
 defs["igSliderFloat3"][1]["ov_cimguiname"] = "igSliderFloat3"
 defs["igSliderFloat3"][1]["ret"] = "bool"
@@ -27640,7 +32026,11 @@ defs["igSliderFloat4"][1]["defaults"] = {}
 defs["igSliderFloat4"][1]["defaults"]["flags"] = "0"
 defs["igSliderFloat4"][1]["defaults"]["format"] = "\"%.3f\""
 defs["igSliderFloat4"][1]["funcname"] = "SliderFloat4"
+<<<<<<< HEAD
 defs["igSliderFloat4"][1]["location"] = "imgui:570"
+=======
+defs["igSliderFloat4"][1]["location"] = "imgui:569"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSliderFloat4"][1]["namespace"] = "ImGui"
 defs["igSliderFloat4"][1]["ov_cimguiname"] = "igSliderFloat4"
 defs["igSliderFloat4"][1]["ret"] = "bool"
@@ -27676,7 +32066,11 @@ defs["igSliderInt"][1]["defaults"] = {}
 defs["igSliderInt"][1]["defaults"]["flags"] = "0"
 defs["igSliderInt"][1]["defaults"]["format"] = "\"%d\""
 defs["igSliderInt"][1]["funcname"] = "SliderInt"
+<<<<<<< HEAD
 defs["igSliderInt"][1]["location"] = "imgui:572"
+=======
+defs["igSliderInt"][1]["location"] = "imgui:571"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSliderInt"][1]["namespace"] = "ImGui"
 defs["igSliderInt"][1]["ov_cimguiname"] = "igSliderInt"
 defs["igSliderInt"][1]["ret"] = "bool"
@@ -27712,7 +32106,11 @@ defs["igSliderInt2"][1]["defaults"] = {}
 defs["igSliderInt2"][1]["defaults"]["flags"] = "0"
 defs["igSliderInt2"][1]["defaults"]["format"] = "\"%d\""
 defs["igSliderInt2"][1]["funcname"] = "SliderInt2"
+<<<<<<< HEAD
 defs["igSliderInt2"][1]["location"] = "imgui:573"
+=======
+defs["igSliderInt2"][1]["location"] = "imgui:572"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSliderInt2"][1]["namespace"] = "ImGui"
 defs["igSliderInt2"][1]["ov_cimguiname"] = "igSliderInt2"
 defs["igSliderInt2"][1]["ret"] = "bool"
@@ -27748,7 +32146,11 @@ defs["igSliderInt3"][1]["defaults"] = {}
 defs["igSliderInt3"][1]["defaults"]["flags"] = "0"
 defs["igSliderInt3"][1]["defaults"]["format"] = "\"%d\""
 defs["igSliderInt3"][1]["funcname"] = "SliderInt3"
+<<<<<<< HEAD
 defs["igSliderInt3"][1]["location"] = "imgui:574"
+=======
+defs["igSliderInt3"][1]["location"] = "imgui:573"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSliderInt3"][1]["namespace"] = "ImGui"
 defs["igSliderInt3"][1]["ov_cimguiname"] = "igSliderInt3"
 defs["igSliderInt3"][1]["ret"] = "bool"
@@ -27784,7 +32186,11 @@ defs["igSliderInt4"][1]["defaults"] = {}
 defs["igSliderInt4"][1]["defaults"]["flags"] = "0"
 defs["igSliderInt4"][1]["defaults"]["format"] = "\"%d\""
 defs["igSliderInt4"][1]["funcname"] = "SliderInt4"
+<<<<<<< HEAD
 defs["igSliderInt4"][1]["location"] = "imgui:575"
+=======
+defs["igSliderInt4"][1]["location"] = "imgui:574"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSliderInt4"][1]["namespace"] = "ImGui"
 defs["igSliderInt4"][1]["ov_cimguiname"] = "igSliderInt4"
 defs["igSliderInt4"][1]["ret"] = "bool"
@@ -27823,7 +32229,11 @@ defs["igSliderScalar"][1]["defaults"] = {}
 defs["igSliderScalar"][1]["defaults"]["flags"] = "0"
 defs["igSliderScalar"][1]["defaults"]["format"] = "NULL"
 defs["igSliderScalar"][1]["funcname"] = "SliderScalar"
+<<<<<<< HEAD
 defs["igSliderScalar"][1]["location"] = "imgui:576"
+=======
+defs["igSliderScalar"][1]["location"] = "imgui:575"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSliderScalar"][1]["namespace"] = "ImGui"
 defs["igSliderScalar"][1]["ov_cimguiname"] = "igSliderScalar"
 defs["igSliderScalar"][1]["ret"] = "bool"
@@ -27865,7 +32275,11 @@ defs["igSliderScalarN"][1]["defaults"] = {}
 defs["igSliderScalarN"][1]["defaults"]["flags"] = "0"
 defs["igSliderScalarN"][1]["defaults"]["format"] = "NULL"
 defs["igSliderScalarN"][1]["funcname"] = "SliderScalarN"
+<<<<<<< HEAD
 defs["igSliderScalarN"][1]["location"] = "imgui:577"
+=======
+defs["igSliderScalarN"][1]["location"] = "imgui:576"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSliderScalarN"][1]["namespace"] = "ImGui"
 defs["igSliderScalarN"][1]["ov_cimguiname"] = "igSliderScalarN"
 defs["igSliderScalarN"][1]["ret"] = "bool"
@@ -27884,7 +32298,11 @@ defs["igSmallButton"][1]["call_args"] = "(label)"
 defs["igSmallButton"][1]["cimguiname"] = "igSmallButton"
 defs["igSmallButton"][1]["defaults"] = {}
 defs["igSmallButton"][1]["funcname"] = "SmallButton"
+<<<<<<< HEAD
 defs["igSmallButton"][1]["location"] = "imgui:511"
+=======
+defs["igSmallButton"][1]["location"] = "imgui:510"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSmallButton"][1]["namespace"] = "ImGui"
 defs["igSmallButton"][1]["ov_cimguiname"] = "igSmallButton"
 defs["igSmallButton"][1]["ret"] = "bool"
@@ -27949,7 +32367,11 @@ defs["igSplitterBehavior"][1]["defaults"]["bg_col"] = "0"
 defs["igSplitterBehavior"][1]["defaults"]["hover_extend"] = "0.0f"
 defs["igSplitterBehavior"][1]["defaults"]["hover_visibility_delay"] = "0.0f"
 defs["igSplitterBehavior"][1]["funcname"] = "SplitterBehavior"
+<<<<<<< HEAD
 defs["igSplitterBehavior"][1]["location"] = "imgui_internal:3399"
+=======
+defs["igSplitterBehavior"][1]["location"] = "imgui_internal:3390"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igSplitterBehavior"][1]["namespace"] = "ImGui"
 defs["igSplitterBehavior"][1]["ov_cimguiname"] = "igSplitterBehavior"
 defs["igSplitterBehavior"][1]["ret"] = "bool"
@@ -27968,7 +32390,11 @@ defs["igStartMouseMovingWindow"][1]["call_args"] = "(window)"
 defs["igStartMouseMovingWindow"][1]["cimguiname"] = "igStartMouseMovingWindow"
 defs["igStartMouseMovingWindow"][1]["defaults"] = {}
 defs["igStartMouseMovingWindow"][1]["funcname"] = "StartMouseMovingWindow"
+<<<<<<< HEAD
 defs["igStartMouseMovingWindow"][1]["location"] = "imgui_internal:2982"
+=======
+defs["igStartMouseMovingWindow"][1]["location"] = "imgui_internal:2987"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igStartMouseMovingWindow"][1]["namespace"] = "ImGui"
 defs["igStartMouseMovingWindow"][1]["ov_cimguiname"] = "igStartMouseMovingWindow"
 defs["igStartMouseMovingWindow"][1]["ret"] = "void"
@@ -27993,7 +32419,11 @@ defs["igStartMouseMovingWindowOrNode"][1]["call_args"] = "(window,node,undock_fl
 defs["igStartMouseMovingWindowOrNode"][1]["cimguiname"] = "igStartMouseMovingWindowOrNode"
 defs["igStartMouseMovingWindowOrNode"][1]["defaults"] = {}
 defs["igStartMouseMovingWindowOrNode"][1]["funcname"] = "StartMouseMovingWindowOrNode"
+<<<<<<< HEAD
 defs["igStartMouseMovingWindowOrNode"][1]["location"] = "imgui_internal:2983"
+=======
+defs["igStartMouseMovingWindowOrNode"][1]["location"] = "imgui_internal:2988"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igStartMouseMovingWindowOrNode"][1]["namespace"] = "ImGui"
 defs["igStartMouseMovingWindowOrNode"][1]["ov_cimguiname"] = "igStartMouseMovingWindowOrNode"
 defs["igStartMouseMovingWindowOrNode"][1]["ret"] = "void"
@@ -28078,7 +32508,11 @@ defs["igTabBarAddTab"][1]["call_args"] = "(tab_bar,tab_flags,window)"
 defs["igTabBarAddTab"][1]["cimguiname"] = "igTabBarAddTab"
 defs["igTabBarAddTab"][1]["defaults"] = {}
 defs["igTabBarAddTab"][1]["funcname"] = "TabBarAddTab"
+<<<<<<< HEAD
 defs["igTabBarAddTab"][1]["location"] = "imgui_internal:3337"
+=======
+defs["igTabBarAddTab"][1]["location"] = "imgui_internal:3330"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTabBarAddTab"][1]["namespace"] = "ImGui"
 defs["igTabBarAddTab"][1]["ov_cimguiname"] = "igTabBarAddTab"
 defs["igTabBarAddTab"][1]["ret"] = "void"
@@ -28100,7 +32534,11 @@ defs["igTabBarCloseTab"][1]["call_args"] = "(tab_bar,tab)"
 defs["igTabBarCloseTab"][1]["cimguiname"] = "igTabBarCloseTab"
 defs["igTabBarCloseTab"][1]["defaults"] = {}
 defs["igTabBarCloseTab"][1]["funcname"] = "TabBarCloseTab"
+<<<<<<< HEAD
 defs["igTabBarCloseTab"][1]["location"] = "imgui_internal:3339"
+=======
+defs["igTabBarCloseTab"][1]["location"] = "imgui_internal:3332"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTabBarCloseTab"][1]["namespace"] = "ImGui"
 defs["igTabBarCloseTab"][1]["ov_cimguiname"] = "igTabBarCloseTab"
 defs["igTabBarCloseTab"][1]["ret"] = "void"
@@ -28119,7 +32557,11 @@ defs["igTabBarFindMostRecentlySelectedTabForActiveWindow"][1]["call_args"] = "(t
 defs["igTabBarFindMostRecentlySelectedTabForActiveWindow"][1]["cimguiname"] = "igTabBarFindMostRecentlySelectedTabForActiveWindow"
 defs["igTabBarFindMostRecentlySelectedTabForActiveWindow"][1]["defaults"] = {}
 defs["igTabBarFindMostRecentlySelectedTabForActiveWindow"][1]["funcname"] = "TabBarFindMostRecentlySelectedTabForActiveWindow"
+<<<<<<< HEAD
 defs["igTabBarFindMostRecentlySelectedTabForActiveWindow"][1]["location"] = "imgui_internal:3333"
+=======
+defs["igTabBarFindMostRecentlySelectedTabForActiveWindow"][1]["location"] = "imgui_internal:3329"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTabBarFindMostRecentlySelectedTabForActiveWindow"][1]["namespace"] = "ImGui"
 defs["igTabBarFindMostRecentlySelectedTabForActiveWindow"][1]["ov_cimguiname"] = "igTabBarFindMostRecentlySelectedTabForActiveWindow"
 defs["igTabBarFindMostRecentlySelectedTabForActiveWindow"][1]["ret"] = "ImGuiTabItem*"
@@ -28141,7 +32583,11 @@ defs["igTabBarFindTabByID"][1]["call_args"] = "(tab_bar,tab_id)"
 defs["igTabBarFindTabByID"][1]["cimguiname"] = "igTabBarFindTabByID"
 defs["igTabBarFindTabByID"][1]["defaults"] = {}
 defs["igTabBarFindTabByID"][1]["funcname"] = "TabBarFindTabByID"
+<<<<<<< HEAD
 defs["igTabBarFindTabByID"][1]["location"] = "imgui_internal:3331"
+=======
+defs["igTabBarFindTabByID"][1]["location"] = "imgui_internal:3328"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTabBarFindTabByID"][1]["namespace"] = "ImGui"
 defs["igTabBarFindTabByID"][1]["ov_cimguiname"] = "igTabBarFindTabByID"
 defs["igTabBarFindTabByID"][1]["ret"] = "ImGuiTabItem*"
@@ -28245,7 +32691,11 @@ defs["igTabBarProcessReorder"][1]["call_args"] = "(tab_bar)"
 defs["igTabBarProcessReorder"][1]["cimguiname"] = "igTabBarProcessReorder"
 defs["igTabBarProcessReorder"][1]["defaults"] = {}
 defs["igTabBarProcessReorder"][1]["funcname"] = "TabBarProcessReorder"
+<<<<<<< HEAD
 defs["igTabBarProcessReorder"][1]["location"] = "imgui_internal:3343"
+=======
+defs["igTabBarProcessReorder"][1]["location"] = "imgui_internal:3335"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTabBarProcessReorder"][1]["namespace"] = "ImGui"
 defs["igTabBarProcessReorder"][1]["ov_cimguiname"] = "igTabBarProcessReorder"
 defs["igTabBarProcessReorder"][1]["ret"] = "bool"
@@ -28292,7 +32742,11 @@ defs["igTabBarQueueReorder"][1]["call_args"] = "(tab_bar,tab,offset)"
 defs["igTabBarQueueReorder"][1]["cimguiname"] = "igTabBarQueueReorder"
 defs["igTabBarQueueReorder"][1]["defaults"] = {}
 defs["igTabBarQueueReorder"][1]["funcname"] = "TabBarQueueReorder"
+<<<<<<< HEAD
 defs["igTabBarQueueReorder"][1]["location"] = "imgui_internal:3341"
+=======
+defs["igTabBarQueueReorder"][1]["location"] = "imgui_internal:3333"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTabBarQueueReorder"][1]["namespace"] = "ImGui"
 defs["igTabBarQueueReorder"][1]["ov_cimguiname"] = "igTabBarQueueReorder"
 defs["igTabBarQueueReorder"][1]["ret"] = "void"
@@ -28317,7 +32771,11 @@ defs["igTabBarQueueReorderFromMousePos"][1]["call_args"] = "(tab_bar,tab,mouse_p
 defs["igTabBarQueueReorderFromMousePos"][1]["cimguiname"] = "igTabBarQueueReorderFromMousePos"
 defs["igTabBarQueueReorderFromMousePos"][1]["defaults"] = {}
 defs["igTabBarQueueReorderFromMousePos"][1]["funcname"] = "TabBarQueueReorderFromMousePos"
+<<<<<<< HEAD
 defs["igTabBarQueueReorderFromMousePos"][1]["location"] = "imgui_internal:3342"
+=======
+defs["igTabBarQueueReorderFromMousePos"][1]["location"] = "imgui_internal:3334"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTabBarQueueReorderFromMousePos"][1]["namespace"] = "ImGui"
 defs["igTabBarQueueReorderFromMousePos"][1]["ov_cimguiname"] = "igTabBarQueueReorderFromMousePos"
 defs["igTabBarQueueReorderFromMousePos"][1]["ret"] = "void"
@@ -28339,7 +32797,11 @@ defs["igTabBarRemoveTab"][1]["call_args"] = "(tab_bar,tab_id)"
 defs["igTabBarRemoveTab"][1]["cimguiname"] = "igTabBarRemoveTab"
 defs["igTabBarRemoveTab"][1]["defaults"] = {}
 defs["igTabBarRemoveTab"][1]["funcname"] = "TabBarRemoveTab"
+<<<<<<< HEAD
 defs["igTabBarRemoveTab"][1]["location"] = "imgui_internal:3338"
+=======
+defs["igTabBarRemoveTab"][1]["location"] = "imgui_internal:3331"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTabBarRemoveTab"][1]["namespace"] = "ImGui"
 defs["igTabBarRemoveTab"][1]["ov_cimguiname"] = "igTabBarRemoveTab"
 defs["igTabBarRemoveTab"][1]["ret"] = "void"
@@ -28367,7 +32829,11 @@ defs["igTabItemBackground"][1]["call_args"] = "(draw_list,bb,flags,col)"
 defs["igTabItemBackground"][1]["cimguiname"] = "igTabItemBackground"
 defs["igTabItemBackground"][1]["defaults"] = {}
 defs["igTabItemBackground"][1]["funcname"] = "TabItemBackground"
+<<<<<<< HEAD
 defs["igTabItemBackground"][1]["location"] = "imgui_internal:3347"
+=======
+defs["igTabItemBackground"][1]["location"] = "imgui_internal:3339"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTabItemBackground"][1]["namespace"] = "ImGui"
 defs["igTabItemBackground"][1]["ov_cimguiname"] = "igTabItemBackground"
 defs["igTabItemBackground"][1]["ret"] = "void"
@@ -28390,7 +32856,11 @@ defs["igTabItemButton"][1]["cimguiname"] = "igTabItemButton"
 defs["igTabItemButton"][1]["defaults"] = {}
 defs["igTabItemButton"][1]["defaults"]["flags"] = "0"
 defs["igTabItemButton"][1]["funcname"] = "TabItemButton"
+<<<<<<< HEAD
 defs["igTabItemButton"][1]["location"] = "imgui:800"
+=======
+defs["igTabItemButton"][1]["location"] = "imgui:799"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTabItemButton"][1]["namespace"] = "ImGui"
 defs["igTabItemButton"][1]["ov_cimguiname"] = "igTabItemButton"
 defs["igTabItemButton"][1]["ret"] = "bool"
@@ -28415,7 +32885,11 @@ defs["igTabItemCalcSize"][1]["call_args"] = "(label,has_close_button_or_unsaved_
 defs["igTabItemCalcSize"][1]["cimguiname"] = "igTabItemCalcSize"
 defs["igTabItemCalcSize"][1]["defaults"] = {}
 defs["igTabItemCalcSize"][1]["funcname"] = "TabItemCalcSize"
+<<<<<<< HEAD
 defs["igTabItemCalcSize"][1]["location"] = "imgui_internal:3345"
+=======
+defs["igTabItemCalcSize"][1]["location"] = "imgui_internal:3337"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTabItemCalcSize"][1]["namespace"] = "ImGui"
 defs["igTabItemCalcSize"][1]["nonUDT"] = 1
 defs["igTabItemCalcSize"][1]["ov_cimguiname"] = "igTabItemCalcSize_Str"
@@ -28436,7 +32910,11 @@ defs["igTabItemCalcSize"][2]["call_args"] = "(window)"
 defs["igTabItemCalcSize"][2]["cimguiname"] = "igTabItemCalcSize"
 defs["igTabItemCalcSize"][2]["defaults"] = {}
 defs["igTabItemCalcSize"][2]["funcname"] = "TabItemCalcSize"
+<<<<<<< HEAD
 defs["igTabItemCalcSize"][2]["location"] = "imgui_internal:3346"
+=======
+defs["igTabItemCalcSize"][2]["location"] = "imgui_internal:3338"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTabItemCalcSize"][2]["namespace"] = "ImGui"
 defs["igTabItemCalcSize"][2]["nonUDT"] = 1
 defs["igTabItemCalcSize"][2]["ov_cimguiname"] = "igTabItemCalcSize_WindowPtr"
@@ -28469,7 +32947,11 @@ defs["igTabItemEx"][1]["call_args"] = "(tab_bar,label,p_open,flags,docked_window
 defs["igTabItemEx"][1]["cimguiname"] = "igTabItemEx"
 defs["igTabItemEx"][1]["defaults"] = {}
 defs["igTabItemEx"][1]["funcname"] = "TabItemEx"
+<<<<<<< HEAD
 defs["igTabItemEx"][1]["location"] = "imgui_internal:3344"
+=======
+defs["igTabItemEx"][1]["location"] = "imgui_internal:3336"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTabItemEx"][1]["namespace"] = "ImGui"
 defs["igTabItemEx"][1]["ov_cimguiname"] = "igTabItemEx"
 defs["igTabItemEx"][1]["ret"] = "bool"
@@ -28515,7 +32997,11 @@ defs["igTabItemLabelAndCloseButton"][1]["call_args"] = "(draw_list,bb,flags,fram
 defs["igTabItemLabelAndCloseButton"][1]["cimguiname"] = "igTabItemLabelAndCloseButton"
 defs["igTabItemLabelAndCloseButton"][1]["defaults"] = {}
 defs["igTabItemLabelAndCloseButton"][1]["funcname"] = "TabItemLabelAndCloseButton"
+<<<<<<< HEAD
 defs["igTabItemLabelAndCloseButton"][1]["location"] = "imgui_internal:3348"
+=======
+defs["igTabItemLabelAndCloseButton"][1]["location"] = "imgui_internal:3340"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTabItemLabelAndCloseButton"][1]["namespace"] = "ImGui"
 defs["igTabItemLabelAndCloseButton"][1]["ov_cimguiname"] = "igTabItemLabelAndCloseButton"
 defs["igTabItemLabelAndCloseButton"][1]["ret"] = "void"
@@ -28534,7 +33020,11 @@ defs["igTableBeginApplyRequests"][1]["call_args"] = "(table)"
 defs["igTableBeginApplyRequests"][1]["cimguiname"] = "igTableBeginApplyRequests"
 defs["igTableBeginApplyRequests"][1]["defaults"] = {}
 defs["igTableBeginApplyRequests"][1]["funcname"] = "TableBeginApplyRequests"
+<<<<<<< HEAD
 defs["igTableBeginApplyRequests"][1]["location"] = "imgui_internal:3288"
+=======
+defs["igTableBeginApplyRequests"][1]["location"] = "imgui_internal:3287"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableBeginApplyRequests"][1]["namespace"] = "ImGui"
 defs["igTableBeginApplyRequests"][1]["ov_cimguiname"] = "igTableBeginApplyRequests"
 defs["igTableBeginApplyRequests"][1]["ret"] = "void"
@@ -28556,7 +33046,11 @@ defs["igTableBeginCell"][1]["call_args"] = "(table,column_n)"
 defs["igTableBeginCell"][1]["cimguiname"] = "igTableBeginCell"
 defs["igTableBeginCell"][1]["defaults"] = {}
 defs["igTableBeginCell"][1]["funcname"] = "TableBeginCell"
+<<<<<<< HEAD
 defs["igTableBeginCell"][1]["location"] = "imgui_internal:3306"
+=======
+defs["igTableBeginCell"][1]["location"] = "imgui_internal:3304"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableBeginCell"][1]["namespace"] = "ImGui"
 defs["igTableBeginCell"][1]["ov_cimguiname"] = "igTableBeginCell"
 defs["igTableBeginCell"][1]["ret"] = "void"
@@ -28575,7 +33069,11 @@ defs["igTableBeginContextMenuPopup"][1]["call_args"] = "(table)"
 defs["igTableBeginContextMenuPopup"][1]["cimguiname"] = "igTableBeginContextMenuPopup"
 defs["igTableBeginContextMenuPopup"][1]["defaults"] = {}
 defs["igTableBeginContextMenuPopup"][1]["funcname"] = "TableBeginContextMenuPopup"
+<<<<<<< HEAD
 defs["igTableBeginContextMenuPopup"][1]["location"] = "imgui_internal:3295"
+=======
+defs["igTableBeginContextMenuPopup"][1]["location"] = "imgui_internal:3294"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableBeginContextMenuPopup"][1]["namespace"] = "ImGui"
 defs["igTableBeginContextMenuPopup"][1]["ov_cimguiname"] = "igTableBeginContextMenuPopup"
 defs["igTableBeginContextMenuPopup"][1]["ret"] = "bool"
@@ -28597,7 +33095,11 @@ defs["igTableBeginInitMemory"][1]["call_args"] = "(table,columns_count)"
 defs["igTableBeginInitMemory"][1]["cimguiname"] = "igTableBeginInitMemory"
 defs["igTableBeginInitMemory"][1]["defaults"] = {}
 defs["igTableBeginInitMemory"][1]["funcname"] = "TableBeginInitMemory"
+<<<<<<< HEAD
 defs["igTableBeginInitMemory"][1]["location"] = "imgui_internal:3287"
+=======
+defs["igTableBeginInitMemory"][1]["location"] = "imgui_internal:3286"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableBeginInitMemory"][1]["namespace"] = "ImGui"
 defs["igTableBeginInitMemory"][1]["ov_cimguiname"] = "igTableBeginInitMemory"
 defs["igTableBeginInitMemory"][1]["ret"] = "void"
@@ -28616,7 +33118,11 @@ defs["igTableBeginRow"][1]["call_args"] = "(table)"
 defs["igTableBeginRow"][1]["cimguiname"] = "igTableBeginRow"
 defs["igTableBeginRow"][1]["defaults"] = {}
 defs["igTableBeginRow"][1]["funcname"] = "TableBeginRow"
+<<<<<<< HEAD
 defs["igTableBeginRow"][1]["location"] = "imgui_internal:3304"
+=======
+defs["igTableBeginRow"][1]["location"] = "imgui_internal:3302"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableBeginRow"][1]["namespace"] = "ImGui"
 defs["igTableBeginRow"][1]["ov_cimguiname"] = "igTableBeginRow"
 defs["igTableBeginRow"][1]["ret"] = "void"
@@ -28635,7 +33141,11 @@ defs["igTableDrawBorders"][1]["call_args"] = "(table)"
 defs["igTableDrawBorders"][1]["cimguiname"] = "igTableDrawBorders"
 defs["igTableDrawBorders"][1]["defaults"] = {}
 defs["igTableDrawBorders"][1]["funcname"] = "TableDrawBorders"
+<<<<<<< HEAD
 defs["igTableDrawBorders"][1]["location"] = "imgui_internal:3293"
+=======
+defs["igTableDrawBorders"][1]["location"] = "imgui_internal:3292"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableDrawBorders"][1]["namespace"] = "ImGui"
 defs["igTableDrawBorders"][1]["ov_cimguiname"] = "igTableDrawBorders"
 defs["igTableDrawBorders"][1]["ret"] = "void"
@@ -28654,7 +33164,11 @@ defs["igTableDrawContextMenu"][1]["call_args"] = "(table)"
 defs["igTableDrawContextMenu"][1]["cimguiname"] = "igTableDrawContextMenu"
 defs["igTableDrawContextMenu"][1]["defaults"] = {}
 defs["igTableDrawContextMenu"][1]["funcname"] = "TableDrawContextMenu"
+<<<<<<< HEAD
 defs["igTableDrawContextMenu"][1]["location"] = "imgui_internal:3294"
+=======
+defs["igTableDrawContextMenu"][1]["location"] = "imgui_internal:3293"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableDrawContextMenu"][1]["namespace"] = "ImGui"
 defs["igTableDrawContextMenu"][1]["ov_cimguiname"] = "igTableDrawContextMenu"
 defs["igTableDrawContextMenu"][1]["ret"] = "void"
@@ -28673,7 +33187,11 @@ defs["igTableEndCell"][1]["call_args"] = "(table)"
 defs["igTableEndCell"][1]["cimguiname"] = "igTableEndCell"
 defs["igTableEndCell"][1]["defaults"] = {}
 defs["igTableEndCell"][1]["funcname"] = "TableEndCell"
+<<<<<<< HEAD
 defs["igTableEndCell"][1]["location"] = "imgui_internal:3307"
+=======
+defs["igTableEndCell"][1]["location"] = "imgui_internal:3305"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableEndCell"][1]["namespace"] = "ImGui"
 defs["igTableEndCell"][1]["ov_cimguiname"] = "igTableEndCell"
 defs["igTableEndCell"][1]["ret"] = "void"
@@ -28692,7 +33210,11 @@ defs["igTableEndRow"][1]["call_args"] = "(table)"
 defs["igTableEndRow"][1]["cimguiname"] = "igTableEndRow"
 defs["igTableEndRow"][1]["defaults"] = {}
 defs["igTableEndRow"][1]["funcname"] = "TableEndRow"
+<<<<<<< HEAD
 defs["igTableEndRow"][1]["location"] = "imgui_internal:3305"
+=======
+defs["igTableEndRow"][1]["location"] = "imgui_internal:3303"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableEndRow"][1]["namespace"] = "ImGui"
 defs["igTableEndRow"][1]["ov_cimguiname"] = "igTableEndRow"
 defs["igTableEndRow"][1]["ret"] = "void"
@@ -28711,7 +33233,11 @@ defs["igTableFindByID"][1]["call_args"] = "(id)"
 defs["igTableFindByID"][1]["cimguiname"] = "igTableFindByID"
 defs["igTableFindByID"][1]["defaults"] = {}
 defs["igTableFindByID"][1]["funcname"] = "TableFindByID"
+<<<<<<< HEAD
 defs["igTableFindByID"][1]["location"] = "imgui_internal:3285"
+=======
+defs["igTableFindByID"][1]["location"] = "imgui_internal:3284"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableFindByID"][1]["namespace"] = "ImGui"
 defs["igTableFindByID"][1]["ov_cimguiname"] = "igTableFindByID"
 defs["igTableFindByID"][1]["ret"] = "ImGuiTable*"
@@ -28733,7 +33259,11 @@ defs["igTableFixColumnSortDirection"][1]["call_args"] = "(table,column)"
 defs["igTableFixColumnSortDirection"][1]["cimguiname"] = "igTableFixColumnSortDirection"
 defs["igTableFixColumnSortDirection"][1]["defaults"] = {}
 defs["igTableFixColumnSortDirection"][1]["funcname"] = "TableFixColumnSortDirection"
+<<<<<<< HEAD
 defs["igTableFixColumnSortDirection"][1]["location"] = "imgui_internal:3302"
+=======
+defs["igTableFixColumnSortDirection"][1]["location"] = "imgui_internal:3300"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableFixColumnSortDirection"][1]["namespace"] = "ImGui"
 defs["igTableFixColumnSortDirection"][1]["ov_cimguiname"] = "igTableFixColumnSortDirection"
 defs["igTableFixColumnSortDirection"][1]["ret"] = "void"
@@ -28749,7 +33279,11 @@ defs["igTableGcCompactSettings"][1]["call_args"] = "()"
 defs["igTableGcCompactSettings"][1]["cimguiname"] = "igTableGcCompactSettings"
 defs["igTableGcCompactSettings"][1]["defaults"] = {}
 defs["igTableGcCompactSettings"][1]["funcname"] = "TableGcCompactSettings"
+<<<<<<< HEAD
 defs["igTableGcCompactSettings"][1]["location"] = "imgui_internal:3317"
+=======
+defs["igTableGcCompactSettings"][1]["location"] = "imgui_internal:3315"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGcCompactSettings"][1]["namespace"] = "ImGui"
 defs["igTableGcCompactSettings"][1]["ov_cimguiname"] = "igTableGcCompactSettings"
 defs["igTableGcCompactSettings"][1]["ret"] = "void"
@@ -28768,7 +33302,11 @@ defs["igTableGcCompactTransientBuffers"][1]["call_args"] = "(table)"
 defs["igTableGcCompactTransientBuffers"][1]["cimguiname"] = "igTableGcCompactTransientBuffers"
 defs["igTableGcCompactTransientBuffers"][1]["defaults"] = {}
 defs["igTableGcCompactTransientBuffers"][1]["funcname"] = "TableGcCompactTransientBuffers"
+<<<<<<< HEAD
 defs["igTableGcCompactTransientBuffers"][1]["location"] = "imgui_internal:3315"
+=======
+defs["igTableGcCompactTransientBuffers"][1]["location"] = "imgui_internal:3313"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGcCompactTransientBuffers"][1]["namespace"] = "ImGui"
 defs["igTableGcCompactTransientBuffers"][1]["ov_cimguiname"] = "igTableGcCompactTransientBuffers_TablePtr"
 defs["igTableGcCompactTransientBuffers"][1]["ret"] = "void"
@@ -28785,7 +33323,11 @@ defs["igTableGcCompactTransientBuffers"][2]["call_args"] = "(table)"
 defs["igTableGcCompactTransientBuffers"][2]["cimguiname"] = "igTableGcCompactTransientBuffers"
 defs["igTableGcCompactTransientBuffers"][2]["defaults"] = {}
 defs["igTableGcCompactTransientBuffers"][2]["funcname"] = "TableGcCompactTransientBuffers"
+<<<<<<< HEAD
 defs["igTableGcCompactTransientBuffers"][2]["location"] = "imgui_internal:3316"
+=======
+defs["igTableGcCompactTransientBuffers"][2]["location"] = "imgui_internal:3314"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGcCompactTransientBuffers"][2]["namespace"] = "ImGui"
 defs["igTableGcCompactTransientBuffers"][2]["ov_cimguiname"] = "igTableGcCompactTransientBuffers_TableTempDataPtr"
 defs["igTableGcCompactTransientBuffers"][2]["ret"] = "void"
@@ -28805,7 +33347,11 @@ defs["igTableGetBoundSettings"][1]["call_args"] = "(table)"
 defs["igTableGetBoundSettings"][1]["cimguiname"] = "igTableGetBoundSettings"
 defs["igTableGetBoundSettings"][1]["defaults"] = {}
 defs["igTableGetBoundSettings"][1]["funcname"] = "TableGetBoundSettings"
+<<<<<<< HEAD
 defs["igTableGetBoundSettings"][1]["location"] = "imgui_internal:3323"
+=======
+defs["igTableGetBoundSettings"][1]["location"] = "imgui_internal:3321"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetBoundSettings"][1]["namespace"] = "ImGui"
 defs["igTableGetBoundSettings"][1]["ov_cimguiname"] = "igTableGetBoundSettings"
 defs["igTableGetBoundSettings"][1]["ret"] = "ImGuiTableSettings*"
@@ -28830,7 +33376,11 @@ defs["igTableGetCellBgRect"][1]["call_args"] = "(table,column_n)"
 defs["igTableGetCellBgRect"][1]["cimguiname"] = "igTableGetCellBgRect"
 defs["igTableGetCellBgRect"][1]["defaults"] = {}
 defs["igTableGetCellBgRect"][1]["funcname"] = "TableGetCellBgRect"
+<<<<<<< HEAD
 defs["igTableGetCellBgRect"][1]["location"] = "imgui_internal:3308"
+=======
+defs["igTableGetCellBgRect"][1]["location"] = "imgui_internal:3306"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetCellBgRect"][1]["namespace"] = "ImGui"
 defs["igTableGetCellBgRect"][1]["nonUDT"] = 1
 defs["igTableGetCellBgRect"][1]["ov_cimguiname"] = "igTableGetCellBgRect"
@@ -28847,7 +33397,11 @@ defs["igTableGetColumnCount"][1]["call_args"] = "()"
 defs["igTableGetColumnCount"][1]["cimguiname"] = "igTableGetColumnCount"
 defs["igTableGetColumnCount"][1]["defaults"] = {}
 defs["igTableGetColumnCount"][1]["funcname"] = "TableGetColumnCount"
+<<<<<<< HEAD
 defs["igTableGetColumnCount"][1]["location"] = "imgui:775"
+=======
+defs["igTableGetColumnCount"][1]["location"] = "imgui:774"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetColumnCount"][1]["namespace"] = "ImGui"
 defs["igTableGetColumnCount"][1]["ov_cimguiname"] = "igTableGetColumnCount"
 defs["igTableGetColumnCount"][1]["ret"] = "int"
@@ -28867,7 +33421,11 @@ defs["igTableGetColumnFlags"][1]["cimguiname"] = "igTableGetColumnFlags"
 defs["igTableGetColumnFlags"][1]["defaults"] = {}
 defs["igTableGetColumnFlags"][1]["defaults"]["column_n"] = "-1"
 defs["igTableGetColumnFlags"][1]["funcname"] = "TableGetColumnFlags"
+<<<<<<< HEAD
 defs["igTableGetColumnFlags"][1]["location"] = "imgui:779"
+=======
+defs["igTableGetColumnFlags"][1]["location"] = "imgui:778"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetColumnFlags"][1]["namespace"] = "ImGui"
 defs["igTableGetColumnFlags"][1]["ov_cimguiname"] = "igTableGetColumnFlags"
 defs["igTableGetColumnFlags"][1]["ret"] = "ImGuiTableColumnFlags"
@@ -28883,7 +33441,11 @@ defs["igTableGetColumnIndex"][1]["call_args"] = "()"
 defs["igTableGetColumnIndex"][1]["cimguiname"] = "igTableGetColumnIndex"
 defs["igTableGetColumnIndex"][1]["defaults"] = {}
 defs["igTableGetColumnIndex"][1]["funcname"] = "TableGetColumnIndex"
+<<<<<<< HEAD
 defs["igTableGetColumnIndex"][1]["location"] = "imgui:776"
+=======
+defs["igTableGetColumnIndex"][1]["location"] = "imgui:775"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetColumnIndex"][1]["namespace"] = "ImGui"
 defs["igTableGetColumnIndex"][1]["ov_cimguiname"] = "igTableGetColumnIndex"
 defs["igTableGetColumnIndex"][1]["ret"] = "int"
@@ -28903,7 +33465,11 @@ defs["igTableGetColumnName"][1]["cimguiname"] = "igTableGetColumnName"
 defs["igTableGetColumnName"][1]["defaults"] = {}
 defs["igTableGetColumnName"][1]["defaults"]["column_n"] = "-1"
 defs["igTableGetColumnName"][1]["funcname"] = "TableGetColumnName"
+<<<<<<< HEAD
 defs["igTableGetColumnName"][1]["location"] = "imgui:778"
+=======
+defs["igTableGetColumnName"][1]["location"] = "imgui:777"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetColumnName"][1]["namespace"] = "ImGui"
 defs["igTableGetColumnName"][1]["ov_cimguiname"] = "igTableGetColumnName_Int"
 defs["igTableGetColumnName"][1]["ret"] = "const char*"
@@ -28923,7 +33489,11 @@ defs["igTableGetColumnName"][2]["call_args"] = "(table,column_n)"
 defs["igTableGetColumnName"][2]["cimguiname"] = "igTableGetColumnName"
 defs["igTableGetColumnName"][2]["defaults"] = {}
 defs["igTableGetColumnName"][2]["funcname"] = "TableGetColumnName"
+<<<<<<< HEAD
 defs["igTableGetColumnName"][2]["location"] = "imgui_internal:3309"
+=======
+defs["igTableGetColumnName"][2]["location"] = "imgui_internal:3307"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetColumnName"][2]["namespace"] = "ImGui"
 defs["igTableGetColumnName"][2]["ov_cimguiname"] = "igTableGetColumnName_TablePtr"
 defs["igTableGetColumnName"][2]["ret"] = "const char*"
@@ -28943,7 +33513,11 @@ defs["igTableGetColumnNextSortDirection"][1]["call_args"] = "(column)"
 defs["igTableGetColumnNextSortDirection"][1]["cimguiname"] = "igTableGetColumnNextSortDirection"
 defs["igTableGetColumnNextSortDirection"][1]["defaults"] = {}
 defs["igTableGetColumnNextSortDirection"][1]["funcname"] = "TableGetColumnNextSortDirection"
+<<<<<<< HEAD
 defs["igTableGetColumnNextSortDirection"][1]["location"] = "imgui_internal:3301"
+=======
+defs["igTableGetColumnNextSortDirection"][1]["location"] = "imgui_internal:3299"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetColumnNextSortDirection"][1]["namespace"] = "ImGui"
 defs["igTableGetColumnNextSortDirection"][1]["ov_cimguiname"] = "igTableGetColumnNextSortDirection"
 defs["igTableGetColumnNextSortDirection"][1]["ret"] = "ImGuiSortDirection"
@@ -28969,7 +33543,11 @@ defs["igTableGetColumnResizeID"][1]["cimguiname"] = "igTableGetColumnResizeID"
 defs["igTableGetColumnResizeID"][1]["defaults"] = {}
 defs["igTableGetColumnResizeID"][1]["defaults"]["instance_no"] = "0"
 defs["igTableGetColumnResizeID"][1]["funcname"] = "TableGetColumnResizeID"
+<<<<<<< HEAD
 defs["igTableGetColumnResizeID"][1]["location"] = "imgui_internal:3310"
+=======
+defs["igTableGetColumnResizeID"][1]["location"] = "imgui_internal:3308"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetColumnResizeID"][1]["namespace"] = "ImGui"
 defs["igTableGetColumnResizeID"][1]["ov_cimguiname"] = "igTableGetColumnResizeID"
 defs["igTableGetColumnResizeID"][1]["ret"] = "ImGuiID"
@@ -28991,7 +33569,11 @@ defs["igTableGetColumnWidthAuto"][1]["call_args"] = "(table,column)"
 defs["igTableGetColumnWidthAuto"][1]["cimguiname"] = "igTableGetColumnWidthAuto"
 defs["igTableGetColumnWidthAuto"][1]["defaults"] = {}
 defs["igTableGetColumnWidthAuto"][1]["funcname"] = "TableGetColumnWidthAuto"
+<<<<<<< HEAD
 defs["igTableGetColumnWidthAuto"][1]["location"] = "imgui_internal:3303"
+=======
+defs["igTableGetColumnWidthAuto"][1]["location"] = "imgui_internal:3301"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetColumnWidthAuto"][1]["namespace"] = "ImGui"
 defs["igTableGetColumnWidthAuto"][1]["ov_cimguiname"] = "igTableGetColumnWidthAuto"
 defs["igTableGetColumnWidthAuto"][1]["ret"] = "float"
@@ -29007,7 +33589,11 @@ defs["igTableGetHeaderRowHeight"][1]["call_args"] = "()"
 defs["igTableGetHeaderRowHeight"][1]["cimguiname"] = "igTableGetHeaderRowHeight"
 defs["igTableGetHeaderRowHeight"][1]["defaults"] = {}
 defs["igTableGetHeaderRowHeight"][1]["funcname"] = "TableGetHeaderRowHeight"
+<<<<<<< HEAD
 defs["igTableGetHeaderRowHeight"][1]["location"] = "imgui_internal:3279"
+=======
+defs["igTableGetHeaderRowHeight"][1]["location"] = "imgui_internal:3278"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetHeaderRowHeight"][1]["namespace"] = "ImGui"
 defs["igTableGetHeaderRowHeight"][1]["ov_cimguiname"] = "igTableGetHeaderRowHeight"
 defs["igTableGetHeaderRowHeight"][1]["ret"] = "float"
@@ -29023,7 +33609,11 @@ defs["igTableGetHoveredColumn"][1]["call_args"] = "()"
 defs["igTableGetHoveredColumn"][1]["cimguiname"] = "igTableGetHoveredColumn"
 defs["igTableGetHoveredColumn"][1]["defaults"] = {}
 defs["igTableGetHoveredColumn"][1]["funcname"] = "TableGetHoveredColumn"
+<<<<<<< HEAD
 defs["igTableGetHoveredColumn"][1]["location"] = "imgui_internal:3278"
+=======
+defs["igTableGetHoveredColumn"][1]["location"] = "imgui_internal:3277"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetHoveredColumn"][1]["namespace"] = "ImGui"
 defs["igTableGetHoveredColumn"][1]["ov_cimguiname"] = "igTableGetHoveredColumn"
 defs["igTableGetHoveredColumn"][1]["ret"] = "int"
@@ -29045,7 +33635,11 @@ defs["igTableGetInstanceData"][1]["call_args"] = "(table,instance_no)"
 defs["igTableGetInstanceData"][1]["cimguiname"] = "igTableGetInstanceData"
 defs["igTableGetInstanceData"][1]["defaults"] = {}
 defs["igTableGetInstanceData"][1]["funcname"] = "TableGetInstanceData"
+<<<<<<< HEAD
 defs["igTableGetInstanceData"][1]["location"] = "imgui_internal:3297"
+=======
+defs["igTableGetInstanceData"][1]["location"] = "imgui_internal:3296"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetInstanceData"][1]["namespace"] = "ImGui"
 defs["igTableGetInstanceData"][1]["ov_cimguiname"] = "igTableGetInstanceData"
 defs["igTableGetInstanceData"][1]["ret"] = "ImGuiTableInstanceData*"
@@ -29089,7 +33683,11 @@ defs["igTableGetMaxColumnWidth"][1]["call_args"] = "(table,column_n)"
 defs["igTableGetMaxColumnWidth"][1]["cimguiname"] = "igTableGetMaxColumnWidth"
 defs["igTableGetMaxColumnWidth"][1]["defaults"] = {}
 defs["igTableGetMaxColumnWidth"][1]["funcname"] = "TableGetMaxColumnWidth"
+<<<<<<< HEAD
 defs["igTableGetMaxColumnWidth"][1]["location"] = "imgui_internal:3311"
+=======
+defs["igTableGetMaxColumnWidth"][1]["location"] = "imgui_internal:3309"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetMaxColumnWidth"][1]["namespace"] = "ImGui"
 defs["igTableGetMaxColumnWidth"][1]["ov_cimguiname"] = "igTableGetMaxColumnWidth"
 defs["igTableGetMaxColumnWidth"][1]["ret"] = "float"
@@ -29105,7 +33703,11 @@ defs["igTableGetRowIndex"][1]["call_args"] = "()"
 defs["igTableGetRowIndex"][1]["cimguiname"] = "igTableGetRowIndex"
 defs["igTableGetRowIndex"][1]["defaults"] = {}
 defs["igTableGetRowIndex"][1]["funcname"] = "TableGetRowIndex"
+<<<<<<< HEAD
 defs["igTableGetRowIndex"][1]["location"] = "imgui:777"
+=======
+defs["igTableGetRowIndex"][1]["location"] = "imgui:776"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetRowIndex"][1]["namespace"] = "ImGui"
 defs["igTableGetRowIndex"][1]["ov_cimguiname"] = "igTableGetRowIndex"
 defs["igTableGetRowIndex"][1]["ret"] = "int"
@@ -29121,7 +33723,11 @@ defs["igTableGetSortSpecs"][1]["call_args"] = "()"
 defs["igTableGetSortSpecs"][1]["cimguiname"] = "igTableGetSortSpecs"
 defs["igTableGetSortSpecs"][1]["defaults"] = {}
 defs["igTableGetSortSpecs"][1]["funcname"] = "TableGetSortSpecs"
+<<<<<<< HEAD
 defs["igTableGetSortSpecs"][1]["location"] = "imgui:774"
+=======
+defs["igTableGetSortSpecs"][1]["location"] = "imgui:773"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableGetSortSpecs"][1]["namespace"] = "ImGui"
 defs["igTableGetSortSpecs"][1]["ov_cimguiname"] = "igTableGetSortSpecs"
 defs["igTableGetSortSpecs"][1]["ret"] = "ImGuiTableSortSpecs*"
@@ -29140,7 +33746,11 @@ defs["igTableHeader"][1]["call_args"] = "(label)"
 defs["igTableHeader"][1]["cimguiname"] = "igTableHeader"
 defs["igTableHeader"][1]["defaults"] = {}
 defs["igTableHeader"][1]["funcname"] = "TableHeader"
+<<<<<<< HEAD
 defs["igTableHeader"][1]["location"] = "imgui:766"
+=======
+defs["igTableHeader"][1]["location"] = "imgui:765"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableHeader"][1]["namespace"] = "ImGui"
 defs["igTableHeader"][1]["ov_cimguiname"] = "igTableHeader"
 defs["igTableHeader"][1]["ret"] = "void"
@@ -29156,7 +33766,11 @@ defs["igTableHeadersRow"][1]["call_args"] = "()"
 defs["igTableHeadersRow"][1]["cimguiname"] = "igTableHeadersRow"
 defs["igTableHeadersRow"][1]["defaults"] = {}
 defs["igTableHeadersRow"][1]["funcname"] = "TableHeadersRow"
+<<<<<<< HEAD
 defs["igTableHeadersRow"][1]["location"] = "imgui:765"
+=======
+defs["igTableHeadersRow"][1]["location"] = "imgui:764"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableHeadersRow"][1]["namespace"] = "ImGui"
 defs["igTableHeadersRow"][1]["ov_cimguiname"] = "igTableHeadersRow"
 defs["igTableHeadersRow"][1]["ret"] = "void"
@@ -29175,7 +33789,11 @@ defs["igTableLoadSettings"][1]["call_args"] = "(table)"
 defs["igTableLoadSettings"][1]["cimguiname"] = "igTableLoadSettings"
 defs["igTableLoadSettings"][1]["defaults"] = {}
 defs["igTableLoadSettings"][1]["funcname"] = "TableLoadSettings"
+<<<<<<< HEAD
 defs["igTableLoadSettings"][1]["location"] = "imgui_internal:3320"
+=======
+defs["igTableLoadSettings"][1]["location"] = "imgui_internal:3318"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableLoadSettings"][1]["namespace"] = "ImGui"
 defs["igTableLoadSettings"][1]["ov_cimguiname"] = "igTableLoadSettings"
 defs["igTableLoadSettings"][1]["ret"] = "void"
@@ -29194,7 +33812,11 @@ defs["igTableMergeDrawChannels"][1]["call_args"] = "(table)"
 defs["igTableMergeDrawChannels"][1]["cimguiname"] = "igTableMergeDrawChannels"
 defs["igTableMergeDrawChannels"][1]["defaults"] = {}
 defs["igTableMergeDrawChannels"][1]["funcname"] = "TableMergeDrawChannels"
+<<<<<<< HEAD
 defs["igTableMergeDrawChannels"][1]["location"] = "imgui_internal:3296"
+=======
+defs["igTableMergeDrawChannels"][1]["location"] = "imgui_internal:3295"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableMergeDrawChannels"][1]["namespace"] = "ImGui"
 defs["igTableMergeDrawChannels"][1]["ov_cimguiname"] = "igTableMergeDrawChannels"
 defs["igTableMergeDrawChannels"][1]["ret"] = "void"
@@ -29210,7 +33832,11 @@ defs["igTableNextColumn"][1]["call_args"] = "()"
 defs["igTableNextColumn"][1]["cimguiname"] = "igTableNextColumn"
 defs["igTableNextColumn"][1]["defaults"] = {}
 defs["igTableNextColumn"][1]["funcname"] = "TableNextColumn"
+<<<<<<< HEAD
 defs["igTableNextColumn"][1]["location"] = "imgui:752"
+=======
+defs["igTableNextColumn"][1]["location"] = "imgui:751"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableNextColumn"][1]["namespace"] = "ImGui"
 defs["igTableNextColumn"][1]["ov_cimguiname"] = "igTableNextColumn"
 defs["igTableNextColumn"][1]["ret"] = "bool"
@@ -29234,7 +33860,11 @@ defs["igTableNextRow"][1]["defaults"] = {}
 defs["igTableNextRow"][1]["defaults"]["min_row_height"] = "0.0f"
 defs["igTableNextRow"][1]["defaults"]["row_flags"] = "0"
 defs["igTableNextRow"][1]["funcname"] = "TableNextRow"
+<<<<<<< HEAD
 defs["igTableNextRow"][1]["location"] = "imgui:751"
+=======
+defs["igTableNextRow"][1]["location"] = "imgui:750"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableNextRow"][1]["namespace"] = "ImGui"
 defs["igTableNextRow"][1]["ov_cimguiname"] = "igTableNextRow"
 defs["igTableNextRow"][1]["ret"] = "void"
@@ -29254,7 +33884,11 @@ defs["igTableOpenContextMenu"][1]["cimguiname"] = "igTableOpenContextMenu"
 defs["igTableOpenContextMenu"][1]["defaults"] = {}
 defs["igTableOpenContextMenu"][1]["defaults"]["column_n"] = "-1"
 defs["igTableOpenContextMenu"][1]["funcname"] = "TableOpenContextMenu"
+<<<<<<< HEAD
 defs["igTableOpenContextMenu"][1]["location"] = "imgui_internal:3275"
+=======
+defs["igTableOpenContextMenu"][1]["location"] = "imgui_internal:3274"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableOpenContextMenu"][1]["namespace"] = "ImGui"
 defs["igTableOpenContextMenu"][1]["ov_cimguiname"] = "igTableOpenContextMenu"
 defs["igTableOpenContextMenu"][1]["ret"] = "void"
@@ -29270,7 +33904,11 @@ defs["igTablePopBackgroundChannel"][1]["call_args"] = "()"
 defs["igTablePopBackgroundChannel"][1]["cimguiname"] = "igTablePopBackgroundChannel"
 defs["igTablePopBackgroundChannel"][1]["defaults"] = {}
 defs["igTablePopBackgroundChannel"][1]["funcname"] = "TablePopBackgroundChannel"
+<<<<<<< HEAD
 defs["igTablePopBackgroundChannel"][1]["location"] = "imgui_internal:3281"
+=======
+defs["igTablePopBackgroundChannel"][1]["location"] = "imgui_internal:3280"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTablePopBackgroundChannel"][1]["namespace"] = "ImGui"
 defs["igTablePopBackgroundChannel"][1]["ov_cimguiname"] = "igTablePopBackgroundChannel"
 defs["igTablePopBackgroundChannel"][1]["ret"] = "void"
@@ -29286,7 +33924,11 @@ defs["igTablePushBackgroundChannel"][1]["call_args"] = "()"
 defs["igTablePushBackgroundChannel"][1]["cimguiname"] = "igTablePushBackgroundChannel"
 defs["igTablePushBackgroundChannel"][1]["defaults"] = {}
 defs["igTablePushBackgroundChannel"][1]["funcname"] = "TablePushBackgroundChannel"
+<<<<<<< HEAD
 defs["igTablePushBackgroundChannel"][1]["location"] = "imgui_internal:3280"
+=======
+defs["igTablePushBackgroundChannel"][1]["location"] = "imgui_internal:3279"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTablePushBackgroundChannel"][1]["namespace"] = "ImGui"
 defs["igTablePushBackgroundChannel"][1]["ov_cimguiname"] = "igTablePushBackgroundChannel"
 defs["igTablePushBackgroundChannel"][1]["ret"] = "void"
@@ -29305,7 +33947,11 @@ defs["igTableRemove"][1]["call_args"] = "(table)"
 defs["igTableRemove"][1]["cimguiname"] = "igTableRemove"
 defs["igTableRemove"][1]["defaults"] = {}
 defs["igTableRemove"][1]["funcname"] = "TableRemove"
+<<<<<<< HEAD
 defs["igTableRemove"][1]["location"] = "imgui_internal:3314"
+=======
+defs["igTableRemove"][1]["location"] = "imgui_internal:3312"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableRemove"][1]["namespace"] = "ImGui"
 defs["igTableRemove"][1]["ov_cimguiname"] = "igTableRemove"
 defs["igTableRemove"][1]["ret"] = "void"
@@ -29324,7 +33970,11 @@ defs["igTableResetSettings"][1]["call_args"] = "(table)"
 defs["igTableResetSettings"][1]["cimguiname"] = "igTableResetSettings"
 defs["igTableResetSettings"][1]["defaults"] = {}
 defs["igTableResetSettings"][1]["funcname"] = "TableResetSettings"
+<<<<<<< HEAD
 defs["igTableResetSettings"][1]["location"] = "imgui_internal:3322"
+=======
+defs["igTableResetSettings"][1]["location"] = "imgui_internal:3320"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableResetSettings"][1]["namespace"] = "ImGui"
 defs["igTableResetSettings"][1]["ov_cimguiname"] = "igTableResetSettings"
 defs["igTableResetSettings"][1]["ret"] = "void"
@@ -29343,7 +33993,11 @@ defs["igTableSaveSettings"][1]["call_args"] = "(table)"
 defs["igTableSaveSettings"][1]["cimguiname"] = "igTableSaveSettings"
 defs["igTableSaveSettings"][1]["defaults"] = {}
 defs["igTableSaveSettings"][1]["funcname"] = "TableSaveSettings"
+<<<<<<< HEAD
 defs["igTableSaveSettings"][1]["location"] = "imgui_internal:3321"
+=======
+defs["igTableSaveSettings"][1]["location"] = "imgui_internal:3319"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSaveSettings"][1]["namespace"] = "ImGui"
 defs["igTableSaveSettings"][1]["ov_cimguiname"] = "igTableSaveSettings"
 defs["igTableSaveSettings"][1]["ret"] = "void"
@@ -29369,7 +34023,11 @@ defs["igTableSetBgColor"][1]["cimguiname"] = "igTableSetBgColor"
 defs["igTableSetBgColor"][1]["defaults"] = {}
 defs["igTableSetBgColor"][1]["defaults"]["column_n"] = "-1"
 defs["igTableSetBgColor"][1]["funcname"] = "TableSetBgColor"
+<<<<<<< HEAD
 defs["igTableSetBgColor"][1]["location"] = "imgui:781"
+=======
+defs["igTableSetBgColor"][1]["location"] = "imgui:780"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSetBgColor"][1]["namespace"] = "ImGui"
 defs["igTableSetBgColor"][1]["ov_cimguiname"] = "igTableSetBgColor"
 defs["igTableSetBgColor"][1]["ret"] = "void"
@@ -29391,7 +34049,11 @@ defs["igTableSetColumnEnabled"][1]["call_args"] = "(column_n,v)"
 defs["igTableSetColumnEnabled"][1]["cimguiname"] = "igTableSetColumnEnabled"
 defs["igTableSetColumnEnabled"][1]["defaults"] = {}
 defs["igTableSetColumnEnabled"][1]["funcname"] = "TableSetColumnEnabled"
+<<<<<<< HEAD
 defs["igTableSetColumnEnabled"][1]["location"] = "imgui:780"
+=======
+defs["igTableSetColumnEnabled"][1]["location"] = "imgui:779"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSetColumnEnabled"][1]["namespace"] = "ImGui"
 defs["igTableSetColumnEnabled"][1]["ov_cimguiname"] = "igTableSetColumnEnabled"
 defs["igTableSetColumnEnabled"][1]["ret"] = "void"
@@ -29410,7 +34072,11 @@ defs["igTableSetColumnIndex"][1]["call_args"] = "(column_n)"
 defs["igTableSetColumnIndex"][1]["cimguiname"] = "igTableSetColumnIndex"
 defs["igTableSetColumnIndex"][1]["defaults"] = {}
 defs["igTableSetColumnIndex"][1]["funcname"] = "TableSetColumnIndex"
+<<<<<<< HEAD
 defs["igTableSetColumnIndex"][1]["location"] = "imgui:753"
+=======
+defs["igTableSetColumnIndex"][1]["location"] = "imgui:752"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSetColumnIndex"][1]["namespace"] = "ImGui"
 defs["igTableSetColumnIndex"][1]["ov_cimguiname"] = "igTableSetColumnIndex"
 defs["igTableSetColumnIndex"][1]["ret"] = "bool"
@@ -29435,7 +34101,11 @@ defs["igTableSetColumnSortDirection"][1]["call_args"] = "(column_n,sort_directio
 defs["igTableSetColumnSortDirection"][1]["cimguiname"] = "igTableSetColumnSortDirection"
 defs["igTableSetColumnSortDirection"][1]["defaults"] = {}
 defs["igTableSetColumnSortDirection"][1]["funcname"] = "TableSetColumnSortDirection"
+<<<<<<< HEAD
 defs["igTableSetColumnSortDirection"][1]["location"] = "imgui_internal:3277"
+=======
+defs["igTableSetColumnSortDirection"][1]["location"] = "imgui_internal:3276"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSetColumnSortDirection"][1]["namespace"] = "ImGui"
 defs["igTableSetColumnSortDirection"][1]["ov_cimguiname"] = "igTableSetColumnSortDirection"
 defs["igTableSetColumnSortDirection"][1]["ret"] = "void"
@@ -29457,7 +34127,11 @@ defs["igTableSetColumnWidth"][1]["call_args"] = "(column_n,width)"
 defs["igTableSetColumnWidth"][1]["cimguiname"] = "igTableSetColumnWidth"
 defs["igTableSetColumnWidth"][1]["defaults"] = {}
 defs["igTableSetColumnWidth"][1]["funcname"] = "TableSetColumnWidth"
+<<<<<<< HEAD
 defs["igTableSetColumnWidth"][1]["location"] = "imgui_internal:3276"
+=======
+defs["igTableSetColumnWidth"][1]["location"] = "imgui_internal:3275"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSetColumnWidth"][1]["namespace"] = "ImGui"
 defs["igTableSetColumnWidth"][1]["ov_cimguiname"] = "igTableSetColumnWidth"
 defs["igTableSetColumnWidth"][1]["ret"] = "void"
@@ -29476,7 +34150,11 @@ defs["igTableSetColumnWidthAutoAll"][1]["call_args"] = "(table)"
 defs["igTableSetColumnWidthAutoAll"][1]["cimguiname"] = "igTableSetColumnWidthAutoAll"
 defs["igTableSetColumnWidthAutoAll"][1]["defaults"] = {}
 defs["igTableSetColumnWidthAutoAll"][1]["funcname"] = "TableSetColumnWidthAutoAll"
+<<<<<<< HEAD
 defs["igTableSetColumnWidthAutoAll"][1]["location"] = "imgui_internal:3313"
+=======
+defs["igTableSetColumnWidthAutoAll"][1]["location"] = "imgui_internal:3311"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSetColumnWidthAutoAll"][1]["namespace"] = "ImGui"
 defs["igTableSetColumnWidthAutoAll"][1]["ov_cimguiname"] = "igTableSetColumnWidthAutoAll"
 defs["igTableSetColumnWidthAutoAll"][1]["ret"] = "void"
@@ -29498,7 +34176,11 @@ defs["igTableSetColumnWidthAutoSingle"][1]["call_args"] = "(table,column_n)"
 defs["igTableSetColumnWidthAutoSingle"][1]["cimguiname"] = "igTableSetColumnWidthAutoSingle"
 defs["igTableSetColumnWidthAutoSingle"][1]["defaults"] = {}
 defs["igTableSetColumnWidthAutoSingle"][1]["funcname"] = "TableSetColumnWidthAutoSingle"
+<<<<<<< HEAD
 defs["igTableSetColumnWidthAutoSingle"][1]["location"] = "imgui_internal:3312"
+=======
+defs["igTableSetColumnWidthAutoSingle"][1]["location"] = "imgui_internal:3310"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSetColumnWidthAutoSingle"][1]["namespace"] = "ImGui"
 defs["igTableSetColumnWidthAutoSingle"][1]["ov_cimguiname"] = "igTableSetColumnWidthAutoSingle"
 defs["igTableSetColumnWidthAutoSingle"][1]["ret"] = "void"
@@ -29514,7 +34196,11 @@ defs["igTableSettingsAddSettingsHandler"][1]["call_args"] = "()"
 defs["igTableSettingsAddSettingsHandler"][1]["cimguiname"] = "igTableSettingsAddSettingsHandler"
 defs["igTableSettingsAddSettingsHandler"][1]["defaults"] = {}
 defs["igTableSettingsAddSettingsHandler"][1]["funcname"] = "TableSettingsAddSettingsHandler"
+<<<<<<< HEAD
 defs["igTableSettingsAddSettingsHandler"][1]["location"] = "imgui_internal:3324"
+=======
+defs["igTableSettingsAddSettingsHandler"][1]["location"] = "imgui_internal:3322"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSettingsAddSettingsHandler"][1]["namespace"] = "ImGui"
 defs["igTableSettingsAddSettingsHandler"][1]["ov_cimguiname"] = "igTableSettingsAddSettingsHandler"
 defs["igTableSettingsAddSettingsHandler"][1]["ret"] = "void"
@@ -29536,7 +34222,11 @@ defs["igTableSettingsCreate"][1]["call_args"] = "(id,columns_count)"
 defs["igTableSettingsCreate"][1]["cimguiname"] = "igTableSettingsCreate"
 defs["igTableSettingsCreate"][1]["defaults"] = {}
 defs["igTableSettingsCreate"][1]["funcname"] = "TableSettingsCreate"
+<<<<<<< HEAD
 defs["igTableSettingsCreate"][1]["location"] = "imgui_internal:3325"
+=======
+defs["igTableSettingsCreate"][1]["location"] = "imgui_internal:3323"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSettingsCreate"][1]["namespace"] = "ImGui"
 defs["igTableSettingsCreate"][1]["ov_cimguiname"] = "igTableSettingsCreate"
 defs["igTableSettingsCreate"][1]["ret"] = "ImGuiTableSettings*"
@@ -29555,7 +34245,11 @@ defs["igTableSettingsFindByID"][1]["call_args"] = "(id)"
 defs["igTableSettingsFindByID"][1]["cimguiname"] = "igTableSettingsFindByID"
 defs["igTableSettingsFindByID"][1]["defaults"] = {}
 defs["igTableSettingsFindByID"][1]["funcname"] = "TableSettingsFindByID"
+<<<<<<< HEAD
 defs["igTableSettingsFindByID"][1]["location"] = "imgui_internal:3326"
+=======
+defs["igTableSettingsFindByID"][1]["location"] = "imgui_internal:3324"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSettingsFindByID"][1]["namespace"] = "ImGui"
 defs["igTableSettingsFindByID"][1]["ov_cimguiname"] = "igTableSettingsFindByID"
 defs["igTableSettingsFindByID"][1]["ret"] = "ImGuiTableSettings*"
@@ -29586,7 +34280,11 @@ defs["igTableSetupColumn"][1]["defaults"]["flags"] = "0"
 defs["igTableSetupColumn"][1]["defaults"]["init_width_or_weight"] = "0.0f"
 defs["igTableSetupColumn"][1]["defaults"]["user_id"] = "0"
 defs["igTableSetupColumn"][1]["funcname"] = "TableSetupColumn"
+<<<<<<< HEAD
 defs["igTableSetupColumn"][1]["location"] = "imgui:763"
+=======
+defs["igTableSetupColumn"][1]["location"] = "imgui:762"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSetupColumn"][1]["namespace"] = "ImGui"
 defs["igTableSetupColumn"][1]["ov_cimguiname"] = "igTableSetupColumn"
 defs["igTableSetupColumn"][1]["ret"] = "void"
@@ -29605,7 +34303,11 @@ defs["igTableSetupDrawChannels"][1]["call_args"] = "(table)"
 defs["igTableSetupDrawChannels"][1]["cimguiname"] = "igTableSetupDrawChannels"
 defs["igTableSetupDrawChannels"][1]["defaults"] = {}
 defs["igTableSetupDrawChannels"][1]["funcname"] = "TableSetupDrawChannels"
+<<<<<<< HEAD
 defs["igTableSetupDrawChannels"][1]["location"] = "imgui_internal:3289"
+=======
+defs["igTableSetupDrawChannels"][1]["location"] = "imgui_internal:3288"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSetupDrawChannels"][1]["namespace"] = "ImGui"
 defs["igTableSetupDrawChannels"][1]["ov_cimguiname"] = "igTableSetupDrawChannels"
 defs["igTableSetupDrawChannels"][1]["ret"] = "void"
@@ -29627,7 +34329,11 @@ defs["igTableSetupScrollFreeze"][1]["call_args"] = "(cols,rows)"
 defs["igTableSetupScrollFreeze"][1]["cimguiname"] = "igTableSetupScrollFreeze"
 defs["igTableSetupScrollFreeze"][1]["defaults"] = {}
 defs["igTableSetupScrollFreeze"][1]["funcname"] = "TableSetupScrollFreeze"
+<<<<<<< HEAD
 defs["igTableSetupScrollFreeze"][1]["location"] = "imgui:764"
+=======
+defs["igTableSetupScrollFreeze"][1]["location"] = "imgui:763"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSetupScrollFreeze"][1]["namespace"] = "ImGui"
 defs["igTableSetupScrollFreeze"][1]["ov_cimguiname"] = "igTableSetupScrollFreeze"
 defs["igTableSetupScrollFreeze"][1]["ret"] = "void"
@@ -29646,7 +34352,11 @@ defs["igTableSortSpecsBuild"][1]["call_args"] = "(table)"
 defs["igTableSortSpecsBuild"][1]["cimguiname"] = "igTableSortSpecsBuild"
 defs["igTableSortSpecsBuild"][1]["defaults"] = {}
 defs["igTableSortSpecsBuild"][1]["funcname"] = "TableSortSpecsBuild"
+<<<<<<< HEAD
 defs["igTableSortSpecsBuild"][1]["location"] = "imgui_internal:3300"
+=======
+defs["igTableSortSpecsBuild"][1]["location"] = "imgui_internal:3298"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSortSpecsBuild"][1]["namespace"] = "ImGui"
 defs["igTableSortSpecsBuild"][1]["ov_cimguiname"] = "igTableSortSpecsBuild"
 defs["igTableSortSpecsBuild"][1]["ret"] = "void"
@@ -29665,7 +34375,11 @@ defs["igTableSortSpecsSanitize"][1]["call_args"] = "(table)"
 defs["igTableSortSpecsSanitize"][1]["cimguiname"] = "igTableSortSpecsSanitize"
 defs["igTableSortSpecsSanitize"][1]["defaults"] = {}
 defs["igTableSortSpecsSanitize"][1]["funcname"] = "TableSortSpecsSanitize"
+<<<<<<< HEAD
 defs["igTableSortSpecsSanitize"][1]["location"] = "imgui_internal:3299"
+=======
+defs["igTableSortSpecsSanitize"][1]["location"] = "imgui_internal:3297"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableSortSpecsSanitize"][1]["namespace"] = "ImGui"
 defs["igTableSortSpecsSanitize"][1]["ov_cimguiname"] = "igTableSortSpecsSanitize"
 defs["igTableSortSpecsSanitize"][1]["ret"] = "void"
@@ -29684,7 +34398,11 @@ defs["igTableUpdateBorders"][1]["call_args"] = "(table)"
 defs["igTableUpdateBorders"][1]["cimguiname"] = "igTableUpdateBorders"
 defs["igTableUpdateBorders"][1]["defaults"] = {}
 defs["igTableUpdateBorders"][1]["funcname"] = "TableUpdateBorders"
+<<<<<<< HEAD
 defs["igTableUpdateBorders"][1]["location"] = "imgui_internal:3291"
+=======
+defs["igTableUpdateBorders"][1]["location"] = "imgui_internal:3290"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableUpdateBorders"][1]["namespace"] = "ImGui"
 defs["igTableUpdateBorders"][1]["ov_cimguiname"] = "igTableUpdateBorders"
 defs["igTableUpdateBorders"][1]["ret"] = "void"
@@ -29703,7 +34421,11 @@ defs["igTableUpdateColumnsWeightFromWidth"][1]["call_args"] = "(table)"
 defs["igTableUpdateColumnsWeightFromWidth"][1]["cimguiname"] = "igTableUpdateColumnsWeightFromWidth"
 defs["igTableUpdateColumnsWeightFromWidth"][1]["defaults"] = {}
 defs["igTableUpdateColumnsWeightFromWidth"][1]["funcname"] = "TableUpdateColumnsWeightFromWidth"
+<<<<<<< HEAD
 defs["igTableUpdateColumnsWeightFromWidth"][1]["location"] = "imgui_internal:3292"
+=======
+defs["igTableUpdateColumnsWeightFromWidth"][1]["location"] = "imgui_internal:3291"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableUpdateColumnsWeightFromWidth"][1]["namespace"] = "ImGui"
 defs["igTableUpdateColumnsWeightFromWidth"][1]["ov_cimguiname"] = "igTableUpdateColumnsWeightFromWidth"
 defs["igTableUpdateColumnsWeightFromWidth"][1]["ret"] = "void"
@@ -29722,7 +34444,11 @@ defs["igTableUpdateLayout"][1]["call_args"] = "(table)"
 defs["igTableUpdateLayout"][1]["cimguiname"] = "igTableUpdateLayout"
 defs["igTableUpdateLayout"][1]["defaults"] = {}
 defs["igTableUpdateLayout"][1]["funcname"] = "TableUpdateLayout"
+<<<<<<< HEAD
 defs["igTableUpdateLayout"][1]["location"] = "imgui_internal:3290"
+=======
+defs["igTableUpdateLayout"][1]["location"] = "imgui_internal:3289"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTableUpdateLayout"][1]["namespace"] = "ImGui"
 defs["igTableUpdateLayout"][1]["ov_cimguiname"] = "igTableUpdateLayout"
 defs["igTableUpdateLayout"][1]["ret"] = "void"
@@ -29741,7 +34467,11 @@ defs["igTempInputIsActive"][1]["call_args"] = "(id)"
 defs["igTempInputIsActive"][1]["cimguiname"] = "igTempInputIsActive"
 defs["igTempInputIsActive"][1]["defaults"] = {}
 defs["igTempInputIsActive"][1]["funcname"] = "TempInputIsActive"
+<<<<<<< HEAD
 defs["igTempInputIsActive"][1]["location"] = "imgui_internal:3427"
+=======
+defs["igTempInputIsActive"][1]["location"] = "imgui_internal:3418"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTempInputIsActive"][1]["namespace"] = "ImGui"
 defs["igTempInputIsActive"][1]["ov_cimguiname"] = "igTempInputIsActive"
 defs["igTempInputIsActive"][1]["ret"] = "bool"
@@ -29783,7 +34513,11 @@ defs["igTempInputScalar"][1]["defaults"] = {}
 defs["igTempInputScalar"][1]["defaults"]["p_clamp_max"] = "NULL"
 defs["igTempInputScalar"][1]["defaults"]["p_clamp_min"] = "NULL"
 defs["igTempInputScalar"][1]["funcname"] = "TempInputScalar"
+<<<<<<< HEAD
 defs["igTempInputScalar"][1]["location"] = "imgui_internal:3426"
+=======
+defs["igTempInputScalar"][1]["location"] = "imgui_internal:3417"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTempInputScalar"][1]["namespace"] = "ImGui"
 defs["igTempInputScalar"][1]["ov_cimguiname"] = "igTempInputScalar"
 defs["igTempInputScalar"][1]["ret"] = "bool"
@@ -29817,7 +34551,11 @@ defs["igTempInputText"][1]["call_args"] = "(bb,id,label,buf,buf_size,flags)"
 defs["igTempInputText"][1]["cimguiname"] = "igTempInputText"
 defs["igTempInputText"][1]["defaults"] = {}
 defs["igTempInputText"][1]["funcname"] = "TempInputText"
+<<<<<<< HEAD
 defs["igTempInputText"][1]["location"] = "imgui_internal:3425"
+=======
+defs["igTempInputText"][1]["location"] = "imgui_internal:3416"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTempInputText"][1]["namespace"] = "ImGui"
 defs["igTempInputText"][1]["ov_cimguiname"] = "igTempInputText"
 defs["igTempInputText"][1]["ret"] = "bool"
@@ -29839,7 +34577,11 @@ defs["igTestKeyOwner"][1]["call_args"] = "(key,owner_id)"
 defs["igTestKeyOwner"][1]["cimguiname"] = "igTestKeyOwner"
 defs["igTestKeyOwner"][1]["defaults"] = {}
 defs["igTestKeyOwner"][1]["funcname"] = "TestKeyOwner"
+<<<<<<< HEAD
 defs["igTestKeyOwner"][1]["location"] = "imgui_internal:3158"
+=======
+defs["igTestKeyOwner"][1]["location"] = "imgui_internal:3159"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTestKeyOwner"][1]["namespace"] = "ImGui"
 defs["igTestKeyOwner"][1]["ov_cimguiname"] = "igTestKeyOwner"
 defs["igTestKeyOwner"][1]["ret"] = "bool"
@@ -29861,7 +34603,11 @@ defs["igTestShortcutRouting"][1]["call_args"] = "(key_chord,owner_id)"
 defs["igTestShortcutRouting"][1]["cimguiname"] = "igTestShortcutRouting"
 defs["igTestShortcutRouting"][1]["defaults"] = {}
 defs["igTestShortcutRouting"][1]["funcname"] = "TestShortcutRouting"
+<<<<<<< HEAD
 defs["igTestShortcutRouting"][1]["location"] = "imgui_internal:3186"
+=======
+defs["igTestShortcutRouting"][1]["location"] = "imgui_internal:3187"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTestShortcutRouting"][1]["namespace"] = "ImGui"
 defs["igTestShortcutRouting"][1]["ov_cimguiname"] = "igTestShortcutRouting"
 defs["igTestShortcutRouting"][1]["ret"] = "bool"
@@ -30007,7 +34753,11 @@ defs["igTextEx"][1]["defaults"] = {}
 defs["igTextEx"][1]["defaults"]["flags"] = "0"
 defs["igTextEx"][1]["defaults"]["text_end"] = "NULL"
 defs["igTextEx"][1]["funcname"] = "TextEx"
+<<<<<<< HEAD
 defs["igTextEx"][1]["location"] = "imgui_internal:3376"
+=======
+defs["igTextEx"][1]["location"] = "imgui_internal:3368"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTextEx"][1]["namespace"] = "ImGui"
 defs["igTextEx"][1]["ov_cimguiname"] = "igTextEx"
 defs["igTextEx"][1]["ret"] = "void"
@@ -30122,7 +34872,11 @@ defs["igTranslateWindowsInViewport"][1]["call_args"] = "(viewport,old_pos,new_po
 defs["igTranslateWindowsInViewport"][1]["cimguiname"] = "igTranslateWindowsInViewport"
 defs["igTranslateWindowsInViewport"][1]["defaults"] = {}
 defs["igTranslateWindowsInViewport"][1]["funcname"] = "TranslateWindowsInViewport"
+<<<<<<< HEAD
 defs["igTranslateWindowsInViewport"][1]["location"] = "imgui_internal:2993"
+=======
+defs["igTranslateWindowsInViewport"][1]["location"] = "imgui_internal:2998"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTranslateWindowsInViewport"][1]["namespace"] = "ImGui"
 defs["igTranslateWindowsInViewport"][1]["ov_cimguiname"] = "igTranslateWindowsInViewport"
 defs["igTranslateWindowsInViewport"][1]["ret"] = "void"
@@ -30141,7 +34895,11 @@ defs["igTreeNode"][1]["call_args"] = "(label)"
 defs["igTreeNode"][1]["cimguiname"] = "igTreeNode"
 defs["igTreeNode"][1]["defaults"] = {}
 defs["igTreeNode"][1]["funcname"] = "TreeNode"
+<<<<<<< HEAD
 defs["igTreeNode"][1]["location"] = "imgui:612"
+=======
+defs["igTreeNode"][1]["location"] = "imgui:611"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreeNode"][1]["namespace"] = "ImGui"
 defs["igTreeNode"][1]["ov_cimguiname"] = "igTreeNode_Str"
 defs["igTreeNode"][1]["ret"] = "bool"
@@ -30165,7 +34923,11 @@ defs["igTreeNode"][2]["cimguiname"] = "igTreeNode"
 defs["igTreeNode"][2]["defaults"] = {}
 defs["igTreeNode"][2]["funcname"] = "TreeNode"
 defs["igTreeNode"][2]["isvararg"] = "...)"
+<<<<<<< HEAD
 defs["igTreeNode"][2]["location"] = "imgui:613"
+=======
+defs["igTreeNode"][2]["location"] = "imgui:612"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreeNode"][2]["namespace"] = "ImGui"
 defs["igTreeNode"][2]["ov_cimguiname"] = "igTreeNode_StrStr"
 defs["igTreeNode"][2]["ret"] = "bool"
@@ -30189,7 +34951,11 @@ defs["igTreeNode"][3]["cimguiname"] = "igTreeNode"
 defs["igTreeNode"][3]["defaults"] = {}
 defs["igTreeNode"][3]["funcname"] = "TreeNode"
 defs["igTreeNode"][3]["isvararg"] = "...)"
+<<<<<<< HEAD
 defs["igTreeNode"][3]["location"] = "imgui:614"
+=======
+defs["igTreeNode"][3]["location"] = "imgui:613"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreeNode"][3]["namespace"] = "ImGui"
 defs["igTreeNode"][3]["ov_cimguiname"] = "igTreeNode_Ptr"
 defs["igTreeNode"][3]["ret"] = "bool"
@@ -30220,7 +34986,11 @@ defs["igTreeNodeBehavior"][1]["cimguiname"] = "igTreeNodeBehavior"
 defs["igTreeNodeBehavior"][1]["defaults"] = {}
 defs["igTreeNodeBehavior"][1]["defaults"]["label_end"] = "NULL"
 defs["igTreeNodeBehavior"][1]["funcname"] = "TreeNodeBehavior"
+<<<<<<< HEAD
 defs["igTreeNodeBehavior"][1]["location"] = "imgui_internal:3400"
+=======
+defs["igTreeNodeBehavior"][1]["location"] = "imgui_internal:3391"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreeNodeBehavior"][1]["namespace"] = "ImGui"
 defs["igTreeNodeBehavior"][1]["ov_cimguiname"] = "igTreeNodeBehavior"
 defs["igTreeNodeBehavior"][1]["ret"] = "bool"
@@ -30243,7 +35013,11 @@ defs["igTreeNodeEx"][1]["cimguiname"] = "igTreeNodeEx"
 defs["igTreeNodeEx"][1]["defaults"] = {}
 defs["igTreeNodeEx"][1]["defaults"]["flags"] = "0"
 defs["igTreeNodeEx"][1]["funcname"] = "TreeNodeEx"
+<<<<<<< HEAD
 defs["igTreeNodeEx"][1]["location"] = "imgui:617"
+=======
+defs["igTreeNodeEx"][1]["location"] = "imgui:616"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreeNodeEx"][1]["namespace"] = "ImGui"
 defs["igTreeNodeEx"][1]["ov_cimguiname"] = "igTreeNodeEx_Str"
 defs["igTreeNodeEx"][1]["ret"] = "bool"
@@ -30270,7 +35044,11 @@ defs["igTreeNodeEx"][2]["cimguiname"] = "igTreeNodeEx"
 defs["igTreeNodeEx"][2]["defaults"] = {}
 defs["igTreeNodeEx"][2]["funcname"] = "TreeNodeEx"
 defs["igTreeNodeEx"][2]["isvararg"] = "...)"
+<<<<<<< HEAD
 defs["igTreeNodeEx"][2]["location"] = "imgui:618"
+=======
+defs["igTreeNodeEx"][2]["location"] = "imgui:617"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreeNodeEx"][2]["namespace"] = "ImGui"
 defs["igTreeNodeEx"][2]["ov_cimguiname"] = "igTreeNodeEx_StrStr"
 defs["igTreeNodeEx"][2]["ret"] = "bool"
@@ -30297,7 +35075,11 @@ defs["igTreeNodeEx"][3]["cimguiname"] = "igTreeNodeEx"
 defs["igTreeNodeEx"][3]["defaults"] = {}
 defs["igTreeNodeEx"][3]["funcname"] = "TreeNodeEx"
 defs["igTreeNodeEx"][3]["isvararg"] = "...)"
+<<<<<<< HEAD
 defs["igTreeNodeEx"][3]["location"] = "imgui:619"
+=======
+defs["igTreeNodeEx"][3]["location"] = "imgui:618"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreeNodeEx"][3]["namespace"] = "ImGui"
 defs["igTreeNodeEx"][3]["ov_cimguiname"] = "igTreeNodeEx_Ptr"
 defs["igTreeNodeEx"][3]["ret"] = "bool"
@@ -30327,7 +35109,11 @@ defs["igTreeNodeExV"][1]["call_args"] = "(str_id,flags,fmt,args)"
 defs["igTreeNodeExV"][1]["cimguiname"] = "igTreeNodeExV"
 defs["igTreeNodeExV"][1]["defaults"] = {}
 defs["igTreeNodeExV"][1]["funcname"] = "TreeNodeExV"
+<<<<<<< HEAD
 defs["igTreeNodeExV"][1]["location"] = "imgui:620"
+=======
+defs["igTreeNodeExV"][1]["location"] = "imgui:619"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreeNodeExV"][1]["namespace"] = "ImGui"
 defs["igTreeNodeExV"][1]["ov_cimguiname"] = "igTreeNodeExV_Str"
 defs["igTreeNodeExV"][1]["ret"] = "bool"
@@ -30353,7 +35139,11 @@ defs["igTreeNodeExV"][2]["call_args"] = "(ptr_id,flags,fmt,args)"
 defs["igTreeNodeExV"][2]["cimguiname"] = "igTreeNodeExV"
 defs["igTreeNodeExV"][2]["defaults"] = {}
 defs["igTreeNodeExV"][2]["funcname"] = "TreeNodeExV"
+<<<<<<< HEAD
 defs["igTreeNodeExV"][2]["location"] = "imgui:621"
+=======
+defs["igTreeNodeExV"][2]["location"] = "imgui:620"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreeNodeExV"][2]["namespace"] = "ImGui"
 defs["igTreeNodeExV"][2]["ov_cimguiname"] = "igTreeNodeExV_Ptr"
 defs["igTreeNodeExV"][2]["ret"] = "bool"
@@ -30376,7 +35166,11 @@ defs["igTreeNodeSetOpen"][1]["call_args"] = "(id,open)"
 defs["igTreeNodeSetOpen"][1]["cimguiname"] = "igTreeNodeSetOpen"
 defs["igTreeNodeSetOpen"][1]["defaults"] = {}
 defs["igTreeNodeSetOpen"][1]["funcname"] = "TreeNodeSetOpen"
+<<<<<<< HEAD
 defs["igTreeNodeSetOpen"][1]["location"] = "imgui_internal:3402"
+=======
+defs["igTreeNodeSetOpen"][1]["location"] = "imgui_internal:3393"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreeNodeSetOpen"][1]["namespace"] = "ImGui"
 defs["igTreeNodeSetOpen"][1]["ov_cimguiname"] = "igTreeNodeSetOpen"
 defs["igTreeNodeSetOpen"][1]["ret"] = "void"
@@ -30398,7 +35192,11 @@ defs["igTreeNodeUpdateNextOpen"][1]["call_args"] = "(id,flags)"
 defs["igTreeNodeUpdateNextOpen"][1]["cimguiname"] = "igTreeNodeUpdateNextOpen"
 defs["igTreeNodeUpdateNextOpen"][1]["defaults"] = {}
 defs["igTreeNodeUpdateNextOpen"][1]["funcname"] = "TreeNodeUpdateNextOpen"
+<<<<<<< HEAD
 defs["igTreeNodeUpdateNextOpen"][1]["location"] = "imgui_internal:3403"
+=======
+defs["igTreeNodeUpdateNextOpen"][1]["location"] = "imgui_internal:3394"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreeNodeUpdateNextOpen"][1]["namespace"] = "ImGui"
 defs["igTreeNodeUpdateNextOpen"][1]["ov_cimguiname"] = "igTreeNodeUpdateNextOpen"
 defs["igTreeNodeUpdateNextOpen"][1]["ret"] = "bool"
@@ -30423,7 +35221,11 @@ defs["igTreeNodeV"][1]["call_args"] = "(str_id,fmt,args)"
 defs["igTreeNodeV"][1]["cimguiname"] = "igTreeNodeV"
 defs["igTreeNodeV"][1]["defaults"] = {}
 defs["igTreeNodeV"][1]["funcname"] = "TreeNodeV"
+<<<<<<< HEAD
 defs["igTreeNodeV"][1]["location"] = "imgui:615"
+=======
+defs["igTreeNodeV"][1]["location"] = "imgui:614"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreeNodeV"][1]["namespace"] = "ImGui"
 defs["igTreeNodeV"][1]["ov_cimguiname"] = "igTreeNodeV_Str"
 defs["igTreeNodeV"][1]["ret"] = "bool"
@@ -30446,7 +35248,11 @@ defs["igTreeNodeV"][2]["call_args"] = "(ptr_id,fmt,args)"
 defs["igTreeNodeV"][2]["cimguiname"] = "igTreeNodeV"
 defs["igTreeNodeV"][2]["defaults"] = {}
 defs["igTreeNodeV"][2]["funcname"] = "TreeNodeV"
+<<<<<<< HEAD
 defs["igTreeNodeV"][2]["location"] = "imgui:616"
+=======
+defs["igTreeNodeV"][2]["location"] = "imgui:615"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreeNodeV"][2]["namespace"] = "ImGui"
 defs["igTreeNodeV"][2]["ov_cimguiname"] = "igTreeNodeV_Ptr"
 defs["igTreeNodeV"][2]["ret"] = "bool"
@@ -30463,7 +35269,11 @@ defs["igTreePop"][1]["call_args"] = "()"
 defs["igTreePop"][1]["cimguiname"] = "igTreePop"
 defs["igTreePop"][1]["defaults"] = {}
 defs["igTreePop"][1]["funcname"] = "TreePop"
+<<<<<<< HEAD
 defs["igTreePop"][1]["location"] = "imgui:624"
+=======
+defs["igTreePop"][1]["location"] = "imgui:623"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreePop"][1]["namespace"] = "ImGui"
 defs["igTreePop"][1]["ov_cimguiname"] = "igTreePop"
 defs["igTreePop"][1]["ret"] = "void"
@@ -30482,7 +35292,11 @@ defs["igTreePush"][1]["call_args"] = "(str_id)"
 defs["igTreePush"][1]["cimguiname"] = "igTreePush"
 defs["igTreePush"][1]["defaults"] = {}
 defs["igTreePush"][1]["funcname"] = "TreePush"
+<<<<<<< HEAD
 defs["igTreePush"][1]["location"] = "imgui:622"
+=======
+defs["igTreePush"][1]["location"] = "imgui:621"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreePush"][1]["namespace"] = "ImGui"
 defs["igTreePush"][1]["ov_cimguiname"] = "igTreePush_Str"
 defs["igTreePush"][1]["ret"] = "void"
@@ -30499,7 +35313,11 @@ defs["igTreePush"][2]["call_args"] = "(ptr_id)"
 defs["igTreePush"][2]["cimguiname"] = "igTreePush"
 defs["igTreePush"][2]["defaults"] = {}
 defs["igTreePush"][2]["funcname"] = "TreePush"
+<<<<<<< HEAD
 defs["igTreePush"][2]["location"] = "imgui:623"
+=======
+defs["igTreePush"][2]["location"] = "imgui:622"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreePush"][2]["namespace"] = "ImGui"
 defs["igTreePush"][2]["ov_cimguiname"] = "igTreePush_Ptr"
 defs["igTreePush"][2]["ret"] = "void"
@@ -30519,7 +35337,11 @@ defs["igTreePushOverrideID"][1]["call_args"] = "(id)"
 defs["igTreePushOverrideID"][1]["cimguiname"] = "igTreePushOverrideID"
 defs["igTreePushOverrideID"][1]["defaults"] = {}
 defs["igTreePushOverrideID"][1]["funcname"] = "TreePushOverrideID"
+<<<<<<< HEAD
 defs["igTreePushOverrideID"][1]["location"] = "imgui_internal:3401"
+=======
+defs["igTreePushOverrideID"][1]["location"] = "imgui_internal:3392"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igTreePushOverrideID"][1]["namespace"] = "ImGui"
 defs["igTreePushOverrideID"][1]["ov_cimguiname"] = "igTreePushOverrideID"
 defs["igTreePushOverrideID"][1]["ret"] = "void"
@@ -30555,7 +35377,11 @@ defs["igUpdateHoveredWindowAndCaptureFlags"][1]["call_args"] = "()"
 defs["igUpdateHoveredWindowAndCaptureFlags"][1]["cimguiname"] = "igUpdateHoveredWindowAndCaptureFlags"
 defs["igUpdateHoveredWindowAndCaptureFlags"][1]["defaults"] = {}
 defs["igUpdateHoveredWindowAndCaptureFlags"][1]["funcname"] = "UpdateHoveredWindowAndCaptureFlags"
+<<<<<<< HEAD
 defs["igUpdateHoveredWindowAndCaptureFlags"][1]["location"] = "imgui_internal:2981"
+=======
+defs["igUpdateHoveredWindowAndCaptureFlags"][1]["location"] = "imgui_internal:2986"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igUpdateHoveredWindowAndCaptureFlags"][1]["namespace"] = "ImGui"
 defs["igUpdateHoveredWindowAndCaptureFlags"][1]["ov_cimguiname"] = "igUpdateHoveredWindowAndCaptureFlags"
 defs["igUpdateHoveredWindowAndCaptureFlags"][1]["ret"] = "void"
@@ -30574,7 +35400,11 @@ defs["igUpdateInputEvents"][1]["call_args"] = "(trickle_fast_inputs)"
 defs["igUpdateInputEvents"][1]["cimguiname"] = "igUpdateInputEvents"
 defs["igUpdateInputEvents"][1]["defaults"] = {}
 defs["igUpdateInputEvents"][1]["funcname"] = "UpdateInputEvents"
+<<<<<<< HEAD
 defs["igUpdateInputEvents"][1]["location"] = "imgui_internal:2980"
+=======
+defs["igUpdateInputEvents"][1]["location"] = "imgui_internal:2985"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igUpdateInputEvents"][1]["namespace"] = "ImGui"
 defs["igUpdateInputEvents"][1]["ov_cimguiname"] = "igUpdateInputEvents"
 defs["igUpdateInputEvents"][1]["ret"] = "void"
@@ -30590,7 +35420,11 @@ defs["igUpdateMouseMovingWindowEndFrame"][1]["call_args"] = "()"
 defs["igUpdateMouseMovingWindowEndFrame"][1]["cimguiname"] = "igUpdateMouseMovingWindowEndFrame"
 defs["igUpdateMouseMovingWindowEndFrame"][1]["defaults"] = {}
 defs["igUpdateMouseMovingWindowEndFrame"][1]["funcname"] = "UpdateMouseMovingWindowEndFrame"
+<<<<<<< HEAD
 defs["igUpdateMouseMovingWindowEndFrame"][1]["location"] = "imgui_internal:2985"
+=======
+defs["igUpdateMouseMovingWindowEndFrame"][1]["location"] = "imgui_internal:2990"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igUpdateMouseMovingWindowEndFrame"][1]["namespace"] = "ImGui"
 defs["igUpdateMouseMovingWindowEndFrame"][1]["ov_cimguiname"] = "igUpdateMouseMovingWindowEndFrame"
 defs["igUpdateMouseMovingWindowEndFrame"][1]["ret"] = "void"
@@ -30606,7 +35440,11 @@ defs["igUpdateMouseMovingWindowNewFrame"][1]["call_args"] = "()"
 defs["igUpdateMouseMovingWindowNewFrame"][1]["cimguiname"] = "igUpdateMouseMovingWindowNewFrame"
 defs["igUpdateMouseMovingWindowNewFrame"][1]["defaults"] = {}
 defs["igUpdateMouseMovingWindowNewFrame"][1]["funcname"] = "UpdateMouseMovingWindowNewFrame"
+<<<<<<< HEAD
 defs["igUpdateMouseMovingWindowNewFrame"][1]["location"] = "imgui_internal:2984"
+=======
+defs["igUpdateMouseMovingWindowNewFrame"][1]["location"] = "imgui_internal:2989"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igUpdateMouseMovingWindowNewFrame"][1]["namespace"] = "ImGui"
 defs["igUpdateMouseMovingWindowNewFrame"][1]["ov_cimguiname"] = "igUpdateMouseMovingWindowNewFrame"
 defs["igUpdateMouseMovingWindowNewFrame"][1]["ret"] = "void"
@@ -30622,7 +35460,11 @@ defs["igUpdatePlatformWindows"][1]["call_args"] = "()"
 defs["igUpdatePlatformWindows"][1]["cimguiname"] = "igUpdatePlatformWindows"
 defs["igUpdatePlatformWindows"][1]["defaults"] = {}
 defs["igUpdatePlatformWindows"][1]["funcname"] = "UpdatePlatformWindows"
+<<<<<<< HEAD
 defs["igUpdatePlatformWindows"][1]["location"] = "imgui:982"
+=======
+defs["igUpdatePlatformWindows"][1]["location"] = "imgui:981"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igUpdatePlatformWindows"][1]["namespace"] = "ImGui"
 defs["igUpdatePlatformWindows"][1]["ov_cimguiname"] = "igUpdatePlatformWindows"
 defs["igUpdatePlatformWindows"][1]["ret"] = "void"
@@ -30647,7 +35489,11 @@ defs["igUpdateWindowParentAndRootLinks"][1]["call_args"] = "(window,flags,parent
 defs["igUpdateWindowParentAndRootLinks"][1]["cimguiname"] = "igUpdateWindowParentAndRootLinks"
 defs["igUpdateWindowParentAndRootLinks"][1]["defaults"] = {}
 defs["igUpdateWindowParentAndRootLinks"][1]["funcname"] = "UpdateWindowParentAndRootLinks"
+<<<<<<< HEAD
 defs["igUpdateWindowParentAndRootLinks"][1]["location"] = "imgui_internal:2947"
+=======
+defs["igUpdateWindowParentAndRootLinks"][1]["location"] = "imgui_internal:2952"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igUpdateWindowParentAndRootLinks"][1]["namespace"] = "ImGui"
 defs["igUpdateWindowParentAndRootLinks"][1]["ov_cimguiname"] = "igUpdateWindowParentAndRootLinks"
 defs["igUpdateWindowParentAndRootLinks"][1]["ret"] = "void"
@@ -30686,7 +35532,11 @@ defs["igVSliderFloat"][1]["defaults"] = {}
 defs["igVSliderFloat"][1]["defaults"]["flags"] = "0"
 defs["igVSliderFloat"][1]["defaults"]["format"] = "\"%.3f\""
 defs["igVSliderFloat"][1]["funcname"] = "VSliderFloat"
+<<<<<<< HEAD
 defs["igVSliderFloat"][1]["location"] = "imgui:578"
+=======
+defs["igVSliderFloat"][1]["location"] = "imgui:577"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igVSliderFloat"][1]["namespace"] = "ImGui"
 defs["igVSliderFloat"][1]["ov_cimguiname"] = "igVSliderFloat"
 defs["igVSliderFloat"][1]["ret"] = "bool"
@@ -30725,7 +35575,11 @@ defs["igVSliderInt"][1]["defaults"] = {}
 defs["igVSliderInt"][1]["defaults"]["flags"] = "0"
 defs["igVSliderInt"][1]["defaults"]["format"] = "\"%d\""
 defs["igVSliderInt"][1]["funcname"] = "VSliderInt"
+<<<<<<< HEAD
 defs["igVSliderInt"][1]["location"] = "imgui:579"
+=======
+defs["igVSliderInt"][1]["location"] = "imgui:578"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igVSliderInt"][1]["namespace"] = "ImGui"
 defs["igVSliderInt"][1]["ov_cimguiname"] = "igVSliderInt"
 defs["igVSliderInt"][1]["ret"] = "bool"
@@ -30767,7 +35621,11 @@ defs["igVSliderScalar"][1]["defaults"] = {}
 defs["igVSliderScalar"][1]["defaults"]["flags"] = "0"
 defs["igVSliderScalar"][1]["defaults"]["format"] = "NULL"
 defs["igVSliderScalar"][1]["funcname"] = "VSliderScalar"
+<<<<<<< HEAD
 defs["igVSliderScalar"][1]["location"] = "imgui:580"
+=======
+defs["igVSliderScalar"][1]["location"] = "imgui:579"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igVSliderScalar"][1]["namespace"] = "ImGui"
 defs["igVSliderScalar"][1]["ov_cimguiname"] = "igVSliderScalar"
 defs["igVSliderScalar"][1]["ret"] = "bool"
@@ -30789,7 +35647,11 @@ defs["igValue"][1]["call_args"] = "(prefix,b)"
 defs["igValue"][1]["cimguiname"] = "igValue"
 defs["igValue"][1]["defaults"] = {}
 defs["igValue"][1]["funcname"] = "Value"
+<<<<<<< HEAD
 defs["igValue"][1]["location"] = "imgui:656"
+=======
+defs["igValue"][1]["location"] = "imgui:655"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igValue"][1]["namespace"] = "ImGui"
 defs["igValue"][1]["ov_cimguiname"] = "igValue_Bool"
 defs["igValue"][1]["ret"] = "void"
@@ -30809,7 +35671,11 @@ defs["igValue"][2]["call_args"] = "(prefix,v)"
 defs["igValue"][2]["cimguiname"] = "igValue"
 defs["igValue"][2]["defaults"] = {}
 defs["igValue"][2]["funcname"] = "Value"
+<<<<<<< HEAD
 defs["igValue"][2]["location"] = "imgui:657"
+=======
+defs["igValue"][2]["location"] = "imgui:656"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igValue"][2]["namespace"] = "ImGui"
 defs["igValue"][2]["ov_cimguiname"] = "igValue_Int"
 defs["igValue"][2]["ret"] = "void"
@@ -30829,7 +35695,11 @@ defs["igValue"][3]["call_args"] = "(prefix,v)"
 defs["igValue"][3]["cimguiname"] = "igValue"
 defs["igValue"][3]["defaults"] = {}
 defs["igValue"][3]["funcname"] = "Value"
+<<<<<<< HEAD
 defs["igValue"][3]["location"] = "imgui:658"
+=======
+defs["igValue"][3]["location"] = "imgui:657"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igValue"][3]["namespace"] = "ImGui"
 defs["igValue"][3]["ov_cimguiname"] = "igValue_Uint"
 defs["igValue"][3]["ret"] = "void"
@@ -30853,7 +35723,11 @@ defs["igValue"][4]["cimguiname"] = "igValue"
 defs["igValue"][4]["defaults"] = {}
 defs["igValue"][4]["defaults"]["float_format"] = "NULL"
 defs["igValue"][4]["funcname"] = "Value"
+<<<<<<< HEAD
 defs["igValue"][4]["location"] = "imgui:659"
+=======
+defs["igValue"][4]["location"] = "imgui:658"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igValue"][4]["namespace"] = "ImGui"
 defs["igValue"][4]["ov_cimguiname"] = "igValue_Float"
 defs["igValue"][4]["ret"] = "void"
@@ -30881,7 +35755,11 @@ defs["igWindowRectAbsToRel"][1]["call_args"] = "(window,r)"
 defs["igWindowRectAbsToRel"][1]["cimguiname"] = "igWindowRectAbsToRel"
 defs["igWindowRectAbsToRel"][1]["defaults"] = {}
 defs["igWindowRectAbsToRel"][1]["funcname"] = "WindowRectAbsToRel"
+<<<<<<< HEAD
 defs["igWindowRectAbsToRel"][1]["location"] = "imgui_internal:2957"
+=======
+defs["igWindowRectAbsToRel"][1]["location"] = "imgui_internal:2962"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igWindowRectAbsToRel"][1]["namespace"] = "ImGui"
 defs["igWindowRectAbsToRel"][1]["nonUDT"] = 1
 defs["igWindowRectAbsToRel"][1]["ov_cimguiname"] = "igWindowRectAbsToRel"
@@ -30907,7 +35785,11 @@ defs["igWindowRectRelToAbs"][1]["call_args"] = "(window,r)"
 defs["igWindowRectRelToAbs"][1]["cimguiname"] = "igWindowRectRelToAbs"
 defs["igWindowRectRelToAbs"][1]["defaults"] = {}
 defs["igWindowRectRelToAbs"][1]["funcname"] = "WindowRectRelToAbs"
+<<<<<<< HEAD
 defs["igWindowRectRelToAbs"][1]["location"] = "imgui_internal:2958"
+=======
+defs["igWindowRectRelToAbs"][1]["location"] = "imgui_internal:2963"
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 defs["igWindowRectRelToAbs"][1]["namespace"] = "ImGui"
 defs["igWindowRectRelToAbs"][1]["nonUDT"] = 1
 defs["igWindowRectRelToAbs"][1]["ov_cimguiname"] = "igWindowRectRelToAbs"

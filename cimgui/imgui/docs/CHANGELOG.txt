@@ -99,6 +99,7 @@ Other changes:
 
 
 -----------------------------------------------------------------------
+<<<<<<< HEAD
  VERSION 1.89.4 WIP (In Progress)
 -----------------------------------------------------------------------
 
@@ -222,6 +223,14 @@ Docking+Viewports Branch:
 Decorated log and release notes: https://github.com/ocornut/imgui/releases/tag/v1.89.2
 
 All changes:
+=======
+ VERSION 1.89.2 (Released 2023-01-05)
+-----------------------------------------------------------------------
+
+Decorated log and release notes: https://github.com/ocornut/imgui/releases/tag/v1.89.2
+
+Other changes:
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 
 - Tables, Nav, Scrolling: fixed scrolling functions and focus tracking with frozen rows and
   frozen columns. Windows now have a better understanding of outer/inner decoration sizes,

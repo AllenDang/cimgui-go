@@ -221,6 +221,12 @@ func (self PlotAxis) WillRender() bool {
 	return C.ImPlotAxis_WillRender(self.handle()) == C.bool(true)
 }
 
+func (self PlotAnnotation) Destroy() {
+
+	C.ImPlotAnnotation_destroy(self.handle())
+
+}
+
 func (self PlotAxis) Destroy() {
 	C.ImPlotAxis_destroy(self.handle())
 }
@@ -844,9 +850,9 @@ func PlotBeginPlotV(title_id string, size Vec2, flags PlotFlags) bool {
 }
 
 // PlotBeginSubplotsV parameter default value hint:
-// col_ratios: ((void*)0)
+// col_ratios: NULL
 // flags: 0
-// row_ratios: ((void*)0)
+// row_ratios: NULL
 func PlotBeginSubplotsV(title_id string, rows int32, cols int32, size Vec2, flags PlotSubplotFlags, row_ratios *float32, col_ratios *float32) bool {
 	title_idArg, title_idFin := wrapString(title_id)
 	row_ratiosArg, row_ratiosFin := wrapNumberPtr[C.float, float32](row_ratios)
@@ -861,7 +867,7 @@ func PlotBeginSubplotsV(title_id string, rows int32, cols int32, size Vec2, flag
 }
 
 // PlotBustColorCacheV parameter default value hint:
-// plot_title_id: ((void*)0)
+// plot_title_id: NULL
 func PlotBustColorCacheV(plot_title_id string) {
 	plot_title_idArg, plot_title_idFin := wrapString(plot_title_id)
 	C.ImPlot_BustColorCache(plot_title_idArg)
@@ -972,7 +978,7 @@ func PlotColormapScaleV(label string, scale_min float64, scale_max float64, size
 // PlotColormapSliderV parameter default value hint:
 // cmap: -1
 // format: ""
-// out: ((void*)0)
+// out: NULL
 func PlotColormapSliderV(label string, t *float32, out *Vec4, format string, cmap PlotColormap) bool {
 	labelArg, labelFin := wrapString(label)
 	tArg, tFin := wrapNumberPtr[C.float, float32](t)
@@ -1004,7 +1010,7 @@ func PlotCreateContext() PlotContext {
 }
 
 // PlotDestroyContextV parameter default value hint:
-// ctx: ((void*)0)
+// ctx: NULL
 func PlotDestroyContextV(ctx PlotContext) {
 	C.ImPlot_DestroyContext(ctx.handle())
 }
@@ -1061,6 +1067,10 @@ func PlotDragRectV(id int32, x1 *float64, y1 *float64, x2 *float64, y2 *float64,
 		x2Fin()
 		y2Fin()
 	}()
+<<<<<<< HEAD
+=======
+
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.ImPlot_DragRect(C.int(id), x1Arg, y1Arg, x2Arg, y2Arg, col.toC(), C.ImPlotDragToolFlags(flags)) == C.bool(true)
 }
 
@@ -1276,6 +1286,17 @@ func PlotGetPlotDrawList() DrawList {
 	return (DrawList)(unsafe.Pointer(C.ImPlot_GetPlotDrawList()))
 }
 
+// PlotGetPlotLimitsV parameter default value hint:
+// x_axis: -1
+// y_axis: -1
+func PlotGetPlotLimitsV(x_axis PlotAxisEnum, y_axis PlotAxisEnum) PlotRect {
+	pOut := &ImPlotRect{}
+
+	C.ImPlot_GetPlotLimits(pOut.handle(), C.ImAxis(x_axis), C.ImAxis(y_axis))
+
+	return *pOut
+}
+
 // PlotGetPlotMousePosV parameter default value hint:
 // x_axis: -1
 // y_axis: -1
@@ -1297,6 +1318,17 @@ func PlotGetPlotPos() Vec2 {
 	C.ImPlot_GetPlotPos(pOutArg)
 
 	pOutFin()
+
+	return *pOut
+}
+
+// PlotGetPlotSelectionV parameter default value hint:
+// x_axis: -1
+// y_axis: -1
+func PlotGetPlotSelectionV(x_axis PlotAxisEnum, y_axis PlotAxisEnum) PlotRect {
+	pOut := &ImPlotRect{}
+
+	C.ImPlot_GetPlotSelection(pOut.handle(), C.ImAxis(x_axis), C.ImAxis(y_axis))
 
 	return *pOut
 }
@@ -2160,13 +2192,13 @@ func PlotItemIconVec4(col Vec4) {
 }
 
 // PlotMapInputDefaultV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func PlotMapInputDefaultV(dst PlotInputMap) {
 	C.ImPlot_MapInputDefault(dst.handle())
 }
 
 // PlotMapInputReverseV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func PlotMapInputReverseV(dst PlotInputMap) {
 	C.ImPlot_MapInputReverse(dst.handle())
 }
@@ -7088,7 +7120,7 @@ func PlotSetupAxesLimitsV(x_min float64, x_max float64, y_min float64, y_max flo
 
 // PlotSetupAxisV parameter default value hint:
 // flags: 0
-// label: ((void*)0)
+// label: NULL
 func PlotSetupAxisV(axis PlotAxisEnum, label string, flags PlotAxisFlags) {
 	labelArg, labelFin := wrapString(label)
 	C.ImPlot_SetupAxis(C.ImAxis(axis), labelArg, C.ImPlotAxisFlags(flags))
@@ -7128,7 +7160,7 @@ func PlotSetupAxisScalePlotScale(axis PlotAxisEnum, scale PlotScale) {
 
 // PlotSetupAxisTicksdoubleV parameter default value hint:
 // keep_default: false
-// labels: ((void*)0)
+// labels: NULL
 func PlotSetupAxisTicksdoubleV(axis PlotAxisEnum, v_min float64, v_max float64, n_ticks int32, labels []string, keep_default bool) {
 	labelsArg, labelsFin := wrapStringList(labels)
 	C.ImPlot_SetupAxisTicks_double(C.ImAxis(axis), C.double(v_min), C.double(v_max), C.int(n_ticks), labelsArg, C.bool(keep_default))
@@ -7206,7 +7238,7 @@ func PlotShowColormapSelector(label string) bool {
 }
 
 // PlotShowDemoWindowV parameter default value hint:
-// p_open: ((void*)0)
+// p_open: NULL
 func PlotShowDemoWindowV(p_open *bool) {
 	p_openArg, p_openFin := wrapBool(p_open)
 	C.ImPlot_ShowDemoWindow(p_openArg)
@@ -7228,7 +7260,7 @@ func PlotShowLegendContextMenu(legend PlotLegend, visible bool) bool {
 }
 
 // PlotShowMetricsWindowV parameter default value hint:
-// p_popen: ((void*)0)
+// p_popen: NULL
 func PlotShowMetricsWindowV(p_popen *bool) {
 	p_popenArg, p_popenFin := wrapBool(p_popen)
 	C.ImPlot_ShowMetricsWindow(p_popenArg)
@@ -7241,7 +7273,7 @@ func PlotShowPlotContextMenu(plot PlotPlot) {
 }
 
 // PlotShowStyleEditorV parameter default value hint:
-// ref: ((void*)0)
+// ref: NULL
 func PlotShowStyleEditorV(ref PlotStyle) {
 	C.ImPlot_ShowStyleEditor(ref.handle())
 }
@@ -7275,25 +7307,25 @@ func PlotShowUserGuide() {
 }
 
 // PlotStyleColorsAutoV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func PlotStyleColorsAutoV(dst PlotStyle) {
 	C.ImPlot_StyleColorsAuto(dst.handle())
 }
 
 // PlotStyleColorsClassicV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func PlotStyleColorsClassicV(dst PlotStyle) {
 	C.ImPlot_StyleColorsClassic(dst.handle())
 }
 
 // PlotStyleColorsDarkV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func PlotStyleColorsDarkV(dst PlotStyle) {
 	C.ImPlot_StyleColorsDark(dst.handle())
 }
 
 // PlotStyleColorsLightV parameter default value hint:
-// dst: ((void*)0)
+// dst: NULL
 func PlotStyleColorsLightV(dst PlotStyle) {
 	C.ImPlot_StyleColorsLight(dst.handle())
 }
@@ -7544,6 +7576,10 @@ func PlotDragRect(id int32, x1 *float64, y1 *float64, x2 *float64, y2 *float64, 
 		x2Fin()
 		y2Fin()
 	}()
+<<<<<<< HEAD
+=======
+
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.wrap_ImPlot_DragRect(C.int(id), x1Arg, y1Arg, x2Arg, y2Arg, col.toC()) == C.bool(true)
 }
 
@@ -7562,6 +7598,14 @@ func PlotGetColormapSize() int {
 	return int(C.wrap_ImPlot_GetColormapSize())
 }
 
+func PlotGetPlotLimits() PlotRect {
+	pOut := &ImPlotRect{}
+
+	C.wrap_ImPlot_GetPlotLimits(pOut.handle())
+
+	return *pOut
+}
+
 func PlotGetPlotMousePos() PlotPoint {
 	pOut := &PlotPoint{}
 	pOutArg, pOutFin := wrap[C.ImPlotPoint, *PlotPoint](pOut)
@@ -7569,6 +7613,14 @@ func PlotGetPlotMousePos() PlotPoint {
 	C.wrap_ImPlot_GetPlotMousePos(pOutArg)
 
 	pOutFin()
+
+	return *pOut
+}
+
+func PlotGetPlotSelection() PlotRect {
+	pOut := &ImPlotRect{}
+
+	C.wrap_ImPlot_GetPlotSelection(pOut.handle())
 
 	return *pOut
 }
@@ -12266,10 +12318,20 @@ func (self PlotContext) MousePosStringBuilder() TextBuffer {
 }
 
 func (self PlotContext) SetSortItems(v PlotItemGroup) {
+<<<<<<< HEAD
 	C.wrap_ImPlotContext_SetSortItems(self.handle(), v.handle())
 }
 
 func (self PlotContext) SortItems() PlotItemGroup {
+=======
+
+	C.wrap_ImPlotContext_SetSortItems(self.handle(), v.handle())
+
+}
+
+func (self PlotContext) SortItems() PlotItemGroup {
+
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return (PlotItemGroup)(unsafe.Pointer(C.wrap_ImPlotContext_GetSortItems(self.handle())))
 }
 
@@ -12322,50 +12384,110 @@ func (self PlotDateTimeSpec) Use24HourClock() bool {
 }
 
 func (self PlotInputMap) SetPanMod(v int32) {
+<<<<<<< HEAD
 	C.wrap_ImPlotInputMap_SetPanMod(self.handle(), C.int(v))
 }
 
 func (self PlotInputMap) PanMod() int {
+=======
+
+	C.wrap_ImPlotInputMap_SetPanMod(self.handle(), C.int(v))
+
+}
+
+func (self PlotInputMap) PanMod() int {
+
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return int(C.wrap_ImPlotInputMap_GetPanMod(self.handle()))
 }
 
 func (self PlotInputMap) SetSelectMod(v int32) {
+<<<<<<< HEAD
 	C.wrap_ImPlotInputMap_SetSelectMod(self.handle(), C.int(v))
 }
 
 func (self PlotInputMap) SelectMod() int {
+=======
+
+	C.wrap_ImPlotInputMap_SetSelectMod(self.handle(), C.int(v))
+
+}
+
+func (self PlotInputMap) SelectMod() int {
+
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return int(C.wrap_ImPlotInputMap_GetSelectMod(self.handle()))
 }
 
 func (self PlotInputMap) SetSelectHorzMod(v int32) {
+<<<<<<< HEAD
 	C.wrap_ImPlotInputMap_SetSelectHorzMod(self.handle(), C.int(v))
 }
 
 func (self PlotInputMap) SelectHorzMod() int {
+=======
+
+	C.wrap_ImPlotInputMap_SetSelectHorzMod(self.handle(), C.int(v))
+
+}
+
+func (self PlotInputMap) SelectHorzMod() int {
+
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return int(C.wrap_ImPlotInputMap_GetSelectHorzMod(self.handle()))
 }
 
 func (self PlotInputMap) SetSelectVertMod(v int32) {
+<<<<<<< HEAD
 	C.wrap_ImPlotInputMap_SetSelectVertMod(self.handle(), C.int(v))
 }
 
 func (self PlotInputMap) SelectVertMod() int {
+=======
+
+	C.wrap_ImPlotInputMap_SetSelectVertMod(self.handle(), C.int(v))
+
+}
+
+func (self PlotInputMap) SelectVertMod() int {
+
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return int(C.wrap_ImPlotInputMap_GetSelectVertMod(self.handle()))
 }
 
 func (self PlotInputMap) SetOverrideMod(v int32) {
+<<<<<<< HEAD
 	C.wrap_ImPlotInputMap_SetOverrideMod(self.handle(), C.int(v))
 }
 
 func (self PlotInputMap) OverrideMod() int {
+=======
+
+	C.wrap_ImPlotInputMap_SetOverrideMod(self.handle(), C.int(v))
+
+}
+
+func (self PlotInputMap) OverrideMod() int {
+
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return int(C.wrap_ImPlotInputMap_GetOverrideMod(self.handle()))
 }
 
 func (self PlotInputMap) SetZoomMod(v int32) {
+<<<<<<< HEAD
 	C.wrap_ImPlotInputMap_SetZoomMod(self.handle(), C.int(v))
 }
 
 func (self PlotInputMap) ZoomMod() int {
+=======
+
+	C.wrap_ImPlotInputMap_SetZoomMod(self.handle(), C.int(v))
+
+}
+
+func (self PlotInputMap) ZoomMod() int {
+
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return int(C.wrap_ImPlotInputMap_GetZoomMod(self.handle()))
 }
 

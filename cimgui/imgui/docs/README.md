@@ -166,7 +166,11 @@ We occasionally tag [Releases](https://github.com/ocornut/imgui/releases) (with 
 
 **Who uses Dear ImGui?**
 
+<<<<<<< HEAD
 See the [Quotes](https://github.com/ocornut/imgui/wiki/Quotes), [Sponsors](https://github.com/ocornut/imgui/wiki/Sponsors), and [Software using Dear ImGui](https://github.com/ocornut/imgui/wiki/Software-using-dear-imgui) Wiki pages for an idea of who is using Dear ImGui. Please add your game/software if you can! Also, see the [Gallery Threads](https://github.com/ocornut/imgui/issues/5886)!
+=======
+See the [Quotes](https://github.com/ocornut/imgui/wiki/Quotes), [Sponsors](https://github.com/ocornut/imgui/wiki/Sponsors), and [Software using Dear ImGui](https://github.com/ocornut/imgui/wiki/Software-using-dear-imgui) Wiki pages for an idea of who is using Dear ImGui. Please add your game/software if you can! Also, see the [Gallery Threads](https://github.com/ocornut/imgui/issues/5243)!
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 
 How to help
 -----------

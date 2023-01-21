@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // dear imgui, v1.89.4 WIP
+=======
+// dear imgui, v1.89.2
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 // (tables and columns code)
 
 /*
@@ -1149,7 +1153,11 @@ void ImGui::TableUpdateLayout(ImGuiTable* table)
     if (table->IsSortSpecsDirty && (table->Flags & ImGuiTableFlags_Sortable))
         TableSortSpecsBuild(table);
 
+<<<<<<< HEAD
     // [Part 13] Setup inner window decoration size (for scrolling / nav tracking to properly take account of frozen rows/columns)
+=======
+    // [Part 14] Setup inner window decoration size (for scrolling / nav tracking to properly take account of frozen rows/columns)
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
     if (table->FreezeColumnsRequest > 0)
         table->InnerWindow->DecoInnerSizeX1 = table->Columns[table->DisplayOrderToIndex[table->FreezeColumnsRequest - 1]].MaxX - table->OuterRect.Min.x;
     if (table->FreezeRowsRequest > 0)

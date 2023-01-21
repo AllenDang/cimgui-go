@@ -6,7 +6,11 @@ _(You may browse this at https://github.com/ocornut/imgui/blob/master/docs/BACKE
 your application or engine to easily integrate Dear ImGui.** Each backend is typically self-contained in a pair of files: imgui_impl_XXXX.cpp + imgui_impl_XXXX.h.
 
 - The 'Platform' backends are in charge of: mouse/keyboard/gamepad inputs, cursor shape, timing, and windowing.<BR>
+<<<<<<< HEAD
   e.g. Windows ([imgui_impl_win32.cpp](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_win32.cpp)), GLFW ([imgui_impl_glfw.cpp](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_glfw.cpp)), SDL2 ([imgui_impl_sdl2.cpp](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_sdl2.cpp)), etc.
+=======
+  e.g. Windows ([imgui_impl_win32.cpp](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_win32.cpp)), GLFW ([imgui_impl_glfw.cpp](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_glfw.cpp)), SDL2 ([imgui_impl_sdl.cpp](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_sdl.cpp)), etc.
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 
 - The 'Renderer' backends are in charge of: creating atlas texture, and rendering imgui draw data.<BR>
   e.g. DirectX11 ([imgui_impl_dx11.cpp](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_dx11.cpp)), OpenGL/WebGL ([imgui_impl_opengl3.cpp](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_opengl3.cpp)), Vulkan ([imgui_impl_vulkan.cpp](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_vulkan.cpp)), etc.

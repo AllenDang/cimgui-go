@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // dear imgui, v1.89.4 WIP
+=======
+// dear imgui, v1.89.2
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 // (headers)
 
 // Help:
@@ -22,8 +26,13 @@
 
 // Library Version
 // (Integer encoded as XYYZZ for use in #if preprocessor conditionals, e.g. '#if IMGUI_VERSION_NUM > 12345')
+<<<<<<< HEAD
 #define IMGUI_VERSION               "1.89.4 WIP"
 #define IMGUI_VERSION_NUM           18931
+=======
+#define IMGUI_VERSION               "1.89.2"
+#define IMGUI_VERSION_NUM           18920
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 #define IMGUI_HAS_TABLE
 #define IMGUI_HAS_VIEWPORT          // Viewport WIP branch
 #define IMGUI_HAS_DOCK              // Docking WIP branch
@@ -2113,8 +2122,13 @@ struct ImGuiIO
     // (reading from those variables is fair game, as they are extremely unlikely to be moving anywhere)
     ImVec2      MousePos;                           // Mouse position, in pixels. Set to ImVec2(-FLT_MAX, -FLT_MAX) if mouse is unavailable (on another screen, etc.)
     bool        MouseDown[5];                       // Mouse buttons: 0=left, 1=right, 2=middle + extras (ImGuiMouseButton_COUNT == 5). Dear ImGui mostly uses left and right buttons. Other buttons allow us to track if the mouse is being used by your application + available to user as a convenience via IsMouse** API.
+<<<<<<< HEAD
     float       MouseWheel;                         // Mouse wheel Vertical: 1 unit scrolls about 5 lines text. >0 scrolls Up, <0 scrolls Down. Hold SHIFT to turn vertical scroll into horizontal scroll.
     float       MouseWheelH;                        // Mouse wheel Horizontal. >0 scrolls Left, <0 scrolls Right. Most users don't have a mouse with a horizontal wheel, may not be filled by all backends.
+=======
+    float       MouseWheel;                         // Mouse wheel Vertical: 1 unit scrolls about 5 lines text.
+    float       MouseWheelH;                        // Mouse wheel Horizontal. Most users don't have a mouse with a horizontal wheel, may not be filled by all backends.
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
     ImGuiID     MouseHoveredViewport;               // (Optional) Modify using io.AddMouseViewportEvent(). With multi-viewports: viewport the OS mouse is hovering. If possible _IGNORING_ viewports with the ImGuiViewportFlags_NoInputs flag is much better (few backends can handle that). Set io.BackendFlags |= ImGuiBackendFlags_HasMouseHoveredViewport if you can provide this info. If you don't imgui will infer the value using the rectangles and last focused time of the viewports it knows about (ignoring other OS windows).
     bool        KeyCtrl;                            // Keyboard modifier down: Control
     bool        KeyShift;                           // Keyboard modifier down: Shift

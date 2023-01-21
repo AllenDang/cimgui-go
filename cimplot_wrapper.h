@@ -42,10 +42,14 @@ extern bool wrap_ImPlot_DragPoint(int id,double* x,double* y,const ImVec4 col);
 extern bool wrap_ImPlot_DragRect(int id,double* x1,double* y1,double* x2,double* y2,const ImVec4 col);
 extern void wrap_ImPlot_GetColormapColor(ImVec4* pOut,int idx);
 extern int wrap_ImPlot_GetColormapSize();
+<<<<<<< HEAD
 extern void wrap_ImPlot_GetLocationPos(ImVec2* pOut,const ImRect outer_rect,const ImVec2 inner_size,ImPlotLocation location);
 extern ImPlotRect wrap_ImPlot_GetPlotLimits();
+=======
+extern void wrap_ImPlot_GetPlotLimits(ImPlotRect* pOut);
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 extern void wrap_ImPlot_GetPlotMousePos(ImPlotPoint* pOut);
-extern ImPlotRect wrap_ImPlot_GetPlotSelection();
+extern void wrap_ImPlot_GetPlotSelection(ImPlotRect* pOut);
 extern void wrap_ImPlot_HideNextItem();
 extern bool wrap_ImPlot_ImAlmostEqual(double v1,double v2);
 extern void wrap_ImPlot_LabelAxisValue(const ImPlotAxis axis,double value,char* buff,int size);

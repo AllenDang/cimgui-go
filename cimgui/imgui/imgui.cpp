@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // dear imgui, v1.89.4 WIP
+=======
+// dear imgui, v1.89.2
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 // (main code and documentation)
 
 // Help:
@@ -394,7 +398,10 @@ CODE
                         - likewise io.MousePos and GetMousePos() will use OS coordinates.
                           If you query mouse positions to interact with non-imgui coordinates you will need to offset them, e.g. subtract GetWindowViewport()->Pos.
 
+<<<<<<< HEAD
  - 2023/02/07 (1.89.3) - backends: renamed "imgui_impl_sdl.cpp" to "imgui_impl_sdl2.cpp" and "imgui_impl_sdl.h" to "imgui_impl_sdl2.h". (#6146) This is in prevision for the future release of SDL3.
+=======
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
  - 2022/10/26 (1.89) - commented out redirecting OpenPopupContextItem() which was briefly the name of OpenPopupOnItemClick() from 1.77 to 1.79.
  - 2022/10/12 (1.89) - removed runtime patching of invalid "%f"/"%0.f" format strings for DragInt()/SliderInt(). This was obsoleted in 1.61 (May 2018). See 1.61 changelog for details.
  - 2022/09/26 (1.89) - renamed and merged keyboard modifiers key enums and flags into a same set. Kept inline redirection enums (will obsolete).
@@ -9122,8 +9129,12 @@ void ImGui::UpdateMouseWheel()
 
     // Mouse wheel scrolling
     // As a standard behavior holding SHIFT while using Vertical Mouse Wheel triggers Horizontal scroll instead
+<<<<<<< HEAD
     // - We avoid doing it on OSX as it the OS input layer handles this already.
     // - However this means when running on OSX over Emcripten, Shift+WheelY will incur two swappings (1 in OS, 1 here), cancelling the feature.
+=======
+    // (we avoid doing it on OSX as it the OS input layer handles this already)
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
     const bool swap_axis = g.IO.KeyShift && !g.IO.ConfigMacOSXBehaviors;
     if (swap_axis)
     {
@@ -19716,7 +19727,11 @@ void ImGui::DebugNodeTabBar(ImGuiTabBar* tab_bar, const char* label)
             if (SmallButton("<")) { TabBarQueueReorder(tab_bar, tab, -1); } SameLine(0, 2);
             if (SmallButton(">")) { TabBarQueueReorder(tab_bar, tab, +1); } SameLine();
             Text("%02d%c Tab 0x%08X '%s' Offset: %.2f, Width: %.2f/%.2f",
+<<<<<<< HEAD
                 tab_n, (tab->ID == tab_bar->SelectedTabId) ? '*' : ' ', tab->ID, TabBarGetTabName(tab_bar, tab), tab->Offset, tab->Width, tab->ContentWidth);
+=======
+                tab_n, (tab->ID == tab_bar->SelectedTabId) ? '*' : ' ', tab->ID, (tab->Window || tab->NameOffset != -1) ? tab_bar->GetTabName(tab) : "???", tab->Offset, tab->Width, tab->ContentWidth);
+>>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
             PopID();
         }
         TreePop();
