@@ -425,7 +425,7 @@ func (self PlotItemGroup) ItemIndex(item PlotItem) int {
 	return int(C.ImPlotItemGroup_GetItemIndex(self.handle(), item.handle()))
 }
 
-func (self PlotItemGroup) ItemID(id ID) PlotItem {
+func (self PlotItemGroup) ItemByID(id ID) PlotItem {
 
 	return (PlotItem)(unsafe.Pointer(C.ImPlotItemGroup_GetItem_ID(self.handle(), C.ImGuiID(id))))
 }
