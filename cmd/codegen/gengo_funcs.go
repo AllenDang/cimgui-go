@@ -365,6 +365,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 				args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType)))
 				argWrappers = append(argWrappers, ArgumentWrapperData{
 					VarName: fmt.Sprintf("%s.handle()", a.Name),
+					ArgType: pureType,
 				})
 
 				g.shouldGenerate = true
