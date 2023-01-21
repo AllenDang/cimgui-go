@@ -9,16 +9,25 @@
 extern "C" {
 #endif
 
+extern void wrap_ImPlotAnnotationCollection_Append(ImPlotAnnotationCollection* self,const ImVec2 pos,const ImVec2 off,ImU32 bg,ImU32 fg,bool clamp,const char* fmt);
+extern void wrap_ImPlotTagCollection_Append(ImPlotTagCollection* self,ImAxis axis,double value,ImU32 bg,ImU32 fg,const char* fmt);
+extern void wrap_ImPlot_AddTextCenteredV(ImDrawList* DrawList,ImVec2 top_center,ImU32 col,const char* text_begin);
+extern void wrap_ImPlot_AddTextVerticalV(ImDrawList* DrawList,ImVec2 pos,ImU32 col,const char* text_begin);
 extern void wrap_ImPlot_Annotation_Str(double x,double y,const ImVec4 col,const ImVec2 pix_offset,bool clamp,const char* fmt);
 extern void wrap_ImPlot_TagX_Str(double x,const ImVec4 col,const char* fmt);
 extern void wrap_ImPlot_TagY_Str(double y,const ImVec4 col,const char* fmt);
+extern bool wrap_ImPlotAxis_SetMax(ImPlotAxis* self,double _max);
+extern bool wrap_ImPlotAxis_SetMin(ImPlotAxis* self,double _min);
 extern ImPlotColormap wrap_ImPlot_AddColormap_U32Ptr(const char* name,const ImU32* cols,int size);
 extern ImPlotColormap wrap_ImPlot_AddColormap_Vec4Ptr(const char* name,const ImVec4* cols,int size);
+extern void wrap_ImPlot_AddTextCentered(ImDrawList* DrawList,ImVec2 top_center,ImU32 col,const char* text_begin);
+extern void wrap_ImPlot_AddTextVertical(ImDrawList* DrawList,ImVec2 pos,ImU32 col,const char* text_begin);
 extern void wrap_ImPlot_Annotation_Bool(double x,double y,const ImVec4 col,const ImVec2 pix_offset,bool clamp);
 extern bool wrap_ImPlot_BeginAlignedPlots(const char* group_id);
 extern bool wrap_ImPlot_BeginDragDropSourceAxis(ImAxis axis);
 extern bool wrap_ImPlot_BeginDragDropSourceItem(const char* label_id);
 extern bool wrap_ImPlot_BeginDragDropSourcePlot();
+extern bool wrap_ImPlot_BeginItem(const char* label_id);
 extern bool wrap_ImPlot_BeginLegendPopup(const char* label_id);
 extern bool wrap_ImPlot_BeginPlot(const char* title_id);
 extern bool wrap_ImPlot_BeginSubplots(const char* title_id,int rows,int cols,const ImVec2 size);
@@ -33,10 +42,13 @@ extern bool wrap_ImPlot_DragPoint(int id,double* x,double* y,const ImVec4 col);
 extern bool wrap_ImPlot_DragRect(int id,double* x_min,double* y_min,double* x_max,double* y_max,const ImVec4 col);
 extern void wrap_ImPlot_GetColormapColor(ImVec4* pOut,int idx);
 extern int wrap_ImPlot_GetColormapSize();
+extern void wrap_ImPlot_GetLocationPos(ImVec2* pOut,const ImRect outer_rect,const ImVec2 inner_size,ImPlotLocation location);
 extern ImPlotRect wrap_ImPlot_GetPlotLimits();
 extern void wrap_ImPlot_GetPlotMousePos(ImPlotPoint* pOut);
 extern ImPlotRect wrap_ImPlot_GetPlotSelection();
 extern void wrap_ImPlot_HideNextItem();
+extern bool wrap_ImPlot_ImAlmostEqual(double v1,double v2);
+extern void wrap_ImPlot_LabelAxisValue(const ImPlotAxis axis,double value,char* buff,int size);
 extern void wrap_ImPlot_MapInputDefault();
 extern void wrap_ImPlot_MapInputReverse();
 extern void wrap_ImPlot_PixelsToPlot_Float(ImPlotPoint* pOut,float x,float y);
@@ -276,6 +288,7 @@ extern void wrap_ImPlot_PopColormap();
 extern void wrap_ImPlot_PopStyleColor();
 extern void wrap_ImPlot_PopStyleVar();
 extern void wrap_ImPlot_PushPlotClipRect();
+extern ImPlotItem* wrap_ImPlot_RegisterOrGetItem(const char* label_id,ImPlotItemFlags flags);
 extern void wrap_ImPlot_SampleColormap(ImVec4* pOut,float t);
 extern void wrap_ImPlot_SetNextAxesLimits(double x_min,double x_max,double y_min,double y_max);
 extern void wrap_ImPlot_SetNextAxisLimits(ImAxis axis,double v_min,double v_max);
@@ -293,6 +306,9 @@ extern void wrap_ImPlot_SetupAxisTicks_double(ImAxis axis,double v_min,double v_
 extern void wrap_ImPlot_SetupAxisTicks_doublePtr(ImAxis axis,const double* values,int n_ticks);
 extern void wrap_ImPlot_SetupLegend(ImPlotLocation location);
 extern void wrap_ImPlot_SetupMouseText(ImPlotLocation location);
+extern void wrap_ImPlot_ShowAltLegend(const char* title_id);
+extern void wrap_ImPlot_ShowAxisContextMenu(ImPlotAxis* axis,ImPlotAxis* equal_axis);
+extern bool wrap_ImPlot_ShowDatePicker(const char* id,int* level,ImPlotTime* t);
 extern void wrap_ImPlot_ShowDemoWindow();
 extern void wrap_ImPlot_ShowMetricsWindow();
 extern void wrap_ImPlot_ShowStyleEditor();

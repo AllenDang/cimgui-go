@@ -58,6 +58,7 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"unsigned int*":            simplePtrW("uint32", "C.uint"),
 		"double":                   simpleW("float64", "C.double"),
 		"double*":                  simplePtrW("float64", "C.double"),
+		"const double*":            simplePtrSliceW("C.double", "float64"),
 		"bool":                     simpleW("bool", "C.bool"),
 		"bool*":                    boolPtrW,
 		"int[2]":                   simplePtrArrayW(2, "C.int", "int32"),
