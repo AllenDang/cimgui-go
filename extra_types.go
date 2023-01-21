@@ -8,7 +8,7 @@ import "image/color"
 type (
 	Wchar               C.uint
 	ID                  C.ImGuiID
-	TextureID           uintptr
+	TextureID           C.ImTextureID
 	DrawIdx             C.ImDrawIdx
 	TableColumnIdx      C.ImGuiTableColumnIdx
 	TableDrawChannelIdx C.ImGuiTableDrawChannelIdx
