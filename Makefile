@@ -55,6 +55,10 @@ define update
 	@echo "updating $1 from $2"
 	rm -rf $1
 	git clone --recurse-submodules $2 $1
+	cd $1; \
+		echo "$1 ($2) HEAD is on: `git rev-parse HEAD`" > VERSION.txt
+	cd $1/$3; \
+		echo "$1/$3 HEAD is on: `git rev-parse HEAD`" >> ../VERSION.txt
 	rm -rf $1/.git $1/$3/.git
 	cd $1/generator; \
 		sh generator.sh
