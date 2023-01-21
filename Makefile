@@ -56,9 +56,8 @@ define update
 	rm -rf $1
 	git clone --recurse-submodules $2 $1
 	rm -rf $1/.git $1/$3/.git
-	cd $1/generator
-	./generator.sh
-	cd ../../
+	cd $1/generator; \
+		sh generator.sh
 endef
 
 .PHONY: update
