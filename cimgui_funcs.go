@@ -564,17 +564,14 @@ func (self FontAtlas) MouseCursorTexData(cursor MouseCursor, out_offset *Vec2, o
 	defer func() {
 		out_offsetFin()
 		out_sizeFin()
-		func() {
-			for _, out_uv_borderV := range out_uv_borderFin {
-				out_uv_borderV()
-			}
-		}()
 
-		func() {
-			for _, out_uv_fillV := range out_uv_fillFin {
-				out_uv_fillV()
-			}
-		}()
+		for _, out_uv_borderV := range out_uv_borderFin {
+			out_uv_borderV()
+		}
+
+		for _, out_uv_fillV := range out_uv_fillFin {
+			out_uv_fillV()
+		}
 
 	}()
 	return C.ImFontAtlas_GetMouseCursorTexData(self.handle(), C.ImGuiMouseCursor(cursor), out_offsetArg, out_sizeArg, (*C.ImVec2)(&out_uv_borderArg[0]), (*C.ImVec2)(&out_uv_fillArg[0])) == C.bool(true)
@@ -1672,11 +1669,9 @@ func ColorEdit3V(label string, col *[3]float32, flags ColorEditFlags) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, colV := range colArg {
-				(*col)[i] = float32(colV)
-			}
-		}()
+		for i, colV := range colArg {
+			(*col)[i] = float32(colV)
+		}
 
 	}()
 	return C.igColorEdit3(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags)) == C.bool(true)
@@ -1695,11 +1690,9 @@ func ColorEdit4V(label string, col *[4]float32, flags ColorEditFlags) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, colV := range colArg {
-				(*col)[i] = float32(colV)
-			}
-		}()
+		for i, colV := range colArg {
+			(*col)[i] = float32(colV)
+		}
 
 	}()
 	return C.igColorEdit4(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags)) == C.bool(true)
@@ -1718,11 +1711,9 @@ func ColorPicker3V(label string, col *[3]float32, flags ColorEditFlags) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, colV := range colArg {
-				(*col)[i] = float32(colV)
-			}
-		}()
+		for i, colV := range colArg {
+			(*col)[i] = float32(colV)
+		}
 
 	}()
 	return C.igColorPicker3(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags)) == C.bool(true)
@@ -1742,11 +1733,9 @@ func ColorPicker4V(label string, col *[4]float32, flags ColorEditFlags, ref_col 
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, colV := range colArg {
-				(*col)[i] = float32(colV)
-			}
-		}()
+		for i, colV := range colArg {
+			(*col)[i] = float32(colV)
+		}
 
 	}()
 	return C.igColorPicker4(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags), (*C.float)(&(ref_col[0]))) == C.bool(true)
@@ -1884,11 +1873,9 @@ func DragFloat2V(label string, v *[2]float32, v_speed float32, v_min float32, v_
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 		formatFin()
 
@@ -1914,11 +1901,9 @@ func DragFloat3V(label string, v *[3]float32, v_speed float32, v_min float32, v_
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 		formatFin()
 
@@ -1944,11 +1929,9 @@ func DragFloat4V(label string, v *[4]float32, v_speed float32, v_min float32, v_
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 		formatFin()
 
@@ -2019,11 +2002,9 @@ func DragInt2V(label string, v *[2]int32, v_speed float32, v_min int32, v_max in
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 		formatFin()
 
@@ -2049,11 +2030,9 @@ func DragInt3V(label string, v *[3]int32, v_speed float32, v_min int32, v_max in
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 		formatFin()
 
@@ -2079,11 +2058,9 @@ func DragInt4V(label string, v *[4]int32, v_speed float32, v_min int32, v_max in
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 		formatFin()
 
@@ -2728,11 +2705,9 @@ func InputFloat2V(label string, v *[2]float32, format string, flags InputTextFla
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 		formatFin()
 
@@ -2755,11 +2730,9 @@ func InputFloat3V(label string, v *[3]float32, format string, flags InputTextFla
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 		formatFin()
 
@@ -2782,11 +2755,9 @@ func InputFloat4V(label string, v *[4]float32, format string, flags InputTextFla
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 		formatFin()
 
@@ -2823,11 +2794,9 @@ func InputInt2V(label string, v *[2]int32, flags InputTextFlags) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 	}()
 	return C.igInputInt2(labelArg, (*C.int)(&vArg[0]), C.ImGuiInputTextFlags(flags)) == C.bool(true)
@@ -2846,11 +2815,9 @@ func InputInt3V(label string, v *[3]int32, flags InputTextFlags) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 	}()
 	return C.igInputInt3(labelArg, (*C.int)(&vArg[0]), C.ImGuiInputTextFlags(flags)) == C.bool(true)
@@ -2869,11 +2836,9 @@ func InputInt4V(label string, v *[4]int32, flags InputTextFlags) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 	}()
 	return C.igInputInt4(labelArg, (*C.int)(&vArg[0]), C.ImGuiInputTextFlags(flags)) == C.bool(true)
@@ -3867,11 +3832,9 @@ func SliderFloat2V(label string, v *[2]float32, v_min float32, v_max float32, fo
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 		formatFin()
 
@@ -3894,11 +3857,9 @@ func SliderFloat3V(label string, v *[3]float32, v_min float32, v_max float32, fo
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 		formatFin()
 
@@ -3921,11 +3882,9 @@ func SliderFloat4V(label string, v *[4]float32, v_min float32, v_max float32, fo
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 		formatFin()
 
@@ -3965,11 +3924,9 @@ func SliderInt2V(label string, v *[2]int32, v_min int32, v_max int32, format str
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 		formatFin()
 
@@ -3992,11 +3949,9 @@ func SliderInt3V(label string, v *[3]int32, v_min int32, v_max int32, format str
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 		formatFin()
 
@@ -4019,11 +3974,9 @@ func SliderInt4V(label string, v *[4]int32, v_min int32, v_max int32, format str
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 		formatFin()
 
@@ -4831,11 +4784,9 @@ func ColorEdit3(label string, col *[3]float32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, colV := range colArg {
-				(*col)[i] = float32(colV)
-			}
-		}()
+		for i, colV := range colArg {
+			(*col)[i] = float32(colV)
+		}
 
 	}()
 	return C.wrap_igColorEdit3(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
@@ -4852,11 +4803,9 @@ func ColorEdit4(label string, col *[4]float32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, colV := range colArg {
-				(*col)[i] = float32(colV)
-			}
-		}()
+		for i, colV := range colArg {
+			(*col)[i] = float32(colV)
+		}
 
 	}()
 	return C.wrap_igColorEdit4(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
@@ -4873,11 +4822,9 @@ func ColorPicker3(label string, col *[3]float32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, colV := range colArg {
-				(*col)[i] = float32(colV)
-			}
-		}()
+		for i, colV := range colArg {
+			(*col)[i] = float32(colV)
+		}
 
 	}()
 	return C.wrap_igColorPicker3(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
@@ -4894,11 +4841,9 @@ func ColorPicker4(label string, col *[4]float32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, colV := range colArg {
-				(*col)[i] = float32(colV)
-			}
-		}()
+		for i, colV := range colArg {
+			(*col)[i] = float32(colV)
+		}
 
 	}()
 	return C.wrap_igColorPicker4(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
@@ -4975,11 +4920,9 @@ func DragFloat2(label string, v *[2]float32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 	}()
 	return C.wrap_igDragFloat2(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
@@ -4996,11 +4939,9 @@ func DragFloat3(label string, v *[3]float32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 	}()
 	return C.wrap_igDragFloat3(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
@@ -5017,11 +4958,9 @@ func DragFloat4(label string, v *[4]float32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 	}()
 	return C.wrap_igDragFloat4(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
@@ -5064,11 +5003,9 @@ func DragInt2(label string, v *[2]int32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 	}()
 	return C.wrap_igDragInt2(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
@@ -5085,11 +5022,9 @@ func DragInt3(label string, v *[3]int32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 	}()
 	return C.wrap_igDragInt3(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
@@ -5106,11 +5041,9 @@ func DragInt4(label string, v *[4]int32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 	}()
 	return C.wrap_igDragInt4(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
@@ -5226,11 +5159,9 @@ func InputFloat2(label string, v *[2]float32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 	}()
 	return C.wrap_igInputFloat2(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
@@ -5247,11 +5178,9 @@ func InputFloat3(label string, v *[3]float32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 	}()
 	return C.wrap_igInputFloat3(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
@@ -5268,11 +5197,9 @@ func InputFloat4(label string, v *[4]float32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 	}()
 	return C.wrap_igInputFloat4(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
@@ -5301,11 +5228,9 @@ func InputInt2(label string, v *[2]int32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 	}()
 	return C.wrap_igInputInt2(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
@@ -5322,11 +5247,9 @@ func InputInt3(label string, v *[3]int32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 	}()
 	return C.wrap_igInputInt3(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
@@ -5343,11 +5266,9 @@ func InputInt4(label string, v *[4]int32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 	}()
 	return C.wrap_igInputInt4(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
@@ -5722,11 +5643,9 @@ func SliderFloat2(label string, v *[2]float32, v_min float32, v_max float32) boo
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 	}()
 	return C.wrap_igSliderFloat2(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max)) == C.bool(true)
@@ -5743,11 +5662,9 @@ func SliderFloat3(label string, v *[3]float32, v_min float32, v_max float32) boo
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 	}()
 	return C.wrap_igSliderFloat3(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max)) == C.bool(true)
@@ -5764,11 +5681,9 @@ func SliderFloat4(label string, v *[4]float32, v_min float32, v_max float32) boo
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = float32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = float32(vV)
+		}
 
 	}()
 	return C.wrap_igSliderFloat4(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max)) == C.bool(true)
@@ -5797,11 +5712,9 @@ func SliderInt2(label string, v *[2]int32, v_min int32, v_max int32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 	}()
 	return C.wrap_igSliderInt2(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max)) == C.bool(true)
@@ -5818,11 +5731,9 @@ func SliderInt3(label string, v *[3]int32, v_min int32, v_max int32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 	}()
 	return C.wrap_igSliderInt3(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max)) == C.bool(true)
@@ -5839,11 +5750,9 @@ func SliderInt4(label string, v *[4]int32, v_min int32, v_max int32) bool {
 	defer func() {
 		labelFin()
 
-		func() {
-			for i, vV := range vArg {
-				(*v)[i] = int32(vV)
-			}
-		}()
+		for i, vV := range vArg {
+			(*v)[i] = int32(vV)
+		}
 
 	}()
 	return C.wrap_igSliderInt4(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max)) == C.bool(true)
