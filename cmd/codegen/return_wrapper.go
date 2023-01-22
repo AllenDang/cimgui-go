@@ -35,6 +35,7 @@ func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 		"ImColor":                  wrappableR("Color"),
 		"ImPlotPoint":              wrappableR("PlotPoint"),
 		"ImRect":                   wrappableR("Rect"),
+		"ImPlotTime":               wrappableR("PlotTime"),
 		"ImGuiTableColumnIdx":      simpleR("TableColumnIdx"),
 		"ImGuiTableDrawChannelIdx": simpleR("TableDrawChannelIdx"),
 		"void*":                    simpleR("unsafe.Pointer"),

@@ -91,6 +91,8 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"ImPlotPoint":              wrappableW("PlotPoint"),
 		"const ImPlotPoint":        wrappableW("PlotPoint"),
 		"ImPlotPoint*":             wrappablePtrW("*PlotPoint", "C.ImPlotPoint"),
+		"const ImPlotTime":         wrappableW("PlotTime"),
+		"ImPlotTime*":              wrappablePtrW("*PlotTime", "C.ImPlotTime"),
 	}
 
 	if wrapper, ok := argWrapperMap[argType]; ok {
