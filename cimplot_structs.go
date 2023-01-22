@@ -328,17 +328,3 @@ func (data PlotTicker) c() C.ImPlotTicker {
 func newPlotTickerFromC(cvalue C.ImPlotTicker) PlotTicker {
 	return PlotTicker(unsafe.Pointer(&cvalue))
 }
-
-type PlotTime uintptr
-
-func (data PlotTime) handle() *C.ImPlotTime {
-	return (*C.ImPlotTime)(unsafe.Pointer(data))
-}
-
-func (data PlotTime) c() C.ImPlotTime {
-	return *(data.handle())
-}
-
-func newPlotTimeFromC(cvalue C.ImPlotTime) PlotTime {
-	return PlotTime(unsafe.Pointer(&cvalue))
-}
