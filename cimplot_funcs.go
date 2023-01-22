@@ -839,6 +839,42 @@ func (self PlotTicker) Destroy() {
 
 }
 
+func PlotTimeFromDouble(t float64) PlotTime {
+	pOut := &PlotTime{}
+	pOutArg, pOutFin := wrap[C.ImPlotTime, *PlotTime](pOut)
+
+	C.ImPlotTime_FromDouble(pOutArg, C.double(t))
+
+	pOutFin()
+	return *pOut
+}
+
+func (self *PlotTime) RollOver() {
+	selfArg, selfFin := wrap[C.ImPlotTime, *PlotTime](self)
+
+	C.ImPlotTime_RollOver(selfArg)
+
+	selfFin()
+}
+
+func (self *PlotTime) ToDouble() float64 {
+	selfArg, selfFin := wrap[C.ImPlotTime, *PlotTime](self)
+
+	defer func() {
+		selfFin()
+	}()
+
+	return float64(C.ImPlotTime_ToDouble(selfArg))
+}
+
+func (self *PlotTime) Destroy() {
+	selfArg, selfFin := wrap[C.ImPlotTime, *PlotTime](self)
+
+	C.ImPlotTime_destroy(selfArg)
+
+	selfFin()
+}
+
 // PlotAddColormapU32PtrV parameter default value hint:
 // qual: true
 func PlotAddColormapU32PtrV(name string, cols *[]uint32, size int32, qual bool) PlotColormap {
@@ -893,6 +929,16 @@ func PlotAddTextVerticalV(DrawList DrawList, pos Vec2, col uint32, text_begin st
 	C.wrap_ImPlot_AddTextVerticalV(DrawList.handle(), pos.toC(), C.ImU32(col), text_beginArg)
 
 	text_beginFin()
+}
+
+func PlotAddTime(t PlotTime, unit PlotTimeUnit, count int32) PlotTime {
+	pOut := &PlotTime{}
+	pOutArg, pOutFin := wrap[C.ImPlotTime, *PlotTime](pOut)
+
+	C.ImPlot_AddTime(pOutArg, t.toC(), C.ImPlotTimeUnit(unit), C.int(count))
+
+	pOutFin()
+	return *pOut
 }
 
 func PlotAllAxesInputLocked(axes PlotAxis, count int32) bool {
@@ -1068,6 +1114,16 @@ func PlotCancelPlotSelection() {
 
 }
 
+func PlotCeilTime(t PlotTime, unit PlotTimeUnit) PlotTime {
+	pOut := &PlotTime{}
+	pOutArg, pOutFin := wrap[C.ImPlotTime, *PlotTime](pOut)
+
+	C.ImPlot_CeilTime(pOutArg, t.toC(), C.ImPlotTimeUnit(unit))
+
+	pOutFin()
+	return *pOut
+}
+
 func PlotClampLabelPos(pos Vec2, size Vec2, Min Vec2, Max Vec2) Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -1130,6 +1186,16 @@ func PlotColormapSliderV(label string, t *float32, out *Vec4, format string, cma
 	}()
 
 	return C.ImPlot_ColormapSlider(labelArg, tArg, outArg, formatArg, C.ImPlotColormap(cmap)) == C.bool(true)
+}
+
+func PlotCombineDateTime(date_part PlotTime, time_part PlotTime) PlotTime {
+	pOut := &PlotTime{}
+	pOutArg, pOutFin := wrap[C.ImPlotTime, *PlotTime](pOut)
+
+	C.ImPlot_CombineDateTime(pOutArg, date_part.toC(), time_part.toC())
+
+	pOutFin()
+	return *pOut
 }
 
 func PlotCreateContext() PlotContext {
@@ -1267,6 +1333,36 @@ func PlotFitPointY(y float64) {
 func PlotFitThisFrame() bool {
 
 	return C.ImPlot_FitThisFrame() == C.bool(true)
+}
+
+func PlotFloorTime(t PlotTime, unit PlotTimeUnit) PlotTime {
+	pOut := &PlotTime{}
+	pOutArg, pOutFin := wrap[C.ImPlotTime, *PlotTime](pOut)
+
+	C.ImPlot_FloorTime(pOutArg, t.toC(), C.ImPlotTimeUnit(unit))
+
+	pOutFin()
+	return *pOut
+}
+
+func PlotFormatDate(t PlotTime, buffer string, size int32, fmt PlotDateFmt, use_iso_8601 bool) int {
+	bufferArg, bufferFin := wrapString(buffer)
+
+	defer func() {
+		bufferFin()
+	}()
+
+	return int(C.ImPlot_FormatDate(t.toC(), bufferArg, C.int(size), C.ImPlotDateFmt(fmt), C.bool(use_iso_8601)))
+}
+
+func PlotFormatTime(t PlotTime, buffer string, size int32, fmt PlotTimeFmt, use_24_hr_clk bool) int {
+	bufferArg, bufferFin := wrapString(buffer)
+
+	defer func() {
+		bufferFin()
+	}()
+
+	return int(C.ImPlot_FormatTime(t.toC(), bufferArg, C.int(size), C.ImPlotTimeFmt(fmt), C.bool(use_24_hr_clk)))
 }
 
 func PlotFormatterDefault(value float64, buff string, size int32, data unsafe.Pointer) int {
@@ -1479,6 +1575,11 @@ func PlotGetStyleColorVec4(idx PlotCol) Vec4 {
 
 	pOutFin()
 	return *pOut
+}
+
+func PlotGetYear(t PlotTime) int {
+
+	return int(C.ImPlot_GetYear(t.toC()))
 }
 
 // PlotHideNextItemV parameter default value hint:
@@ -7892,6 +7993,16 @@ func PlotResetCtxForNextSubplot(ctx PlotContext) {
 
 }
 
+func PlotRoundTime(t PlotTime, unit PlotTimeUnit) PlotTime {
+	pOut := &PlotTime{}
+	pOutArg, pOutFin := wrap[C.ImPlotTime, *PlotTime](pOut)
+
+	C.ImPlot_RoundTime(pOutArg, t.toC(), C.ImPlotTimeUnit(unit))
+
+	pOutFin()
+	return *pOut
+}
+
 func PlotRoundTo(val float64, prec int32) float64 {
 
 	return float64(C.ImPlot_RoundTo(C.double(val), C.int(prec)))
@@ -8183,21 +8294,6 @@ func PlotShowColormapSelector(label string) bool {
 	return C.ImPlot_ShowColormapSelector(labelArg) == C.bool(true)
 }
 
-// PlotShowDatePickerV parameter default value hint:
-// t1: ((void*)0)
-// t2: ((void*)0)
-func PlotShowDatePickerV(id string, level *int32, t PlotTime, t1 PlotTime, t2 PlotTime) bool {
-	idArg, idFin := wrapString(id)
-	levelArg, levelFin := wrapNumberPtr[C.int, int32](level)
-
-	defer func() {
-		idFin()
-		levelFin()
-	}()
-
-	return C.ImPlot_ShowDatePicker(idArg, levelArg, t.handle(), t1.handle(), t2.handle()) == C.bool(true)
-}
-
 // PlotShowDemoWindowV parameter default value hint:
 // p_open: ((void*)0)
 func PlotShowDemoWindowV(p_open *bool) {
@@ -8263,14 +8359,16 @@ func PlotShowSubplotsContextMenu(subplot PlotSubplot) {
 
 }
 
-func PlotShowTimePicker(id string, t PlotTime) bool {
+func PlotShowTimePicker(id string, t *PlotTime) bool {
 	idArg, idFin := wrapString(id)
+	tArg, tFin := wrap[C.ImPlotTime, *PlotTime](t)
 
 	defer func() {
 		idFin()
+		tFin()
 	}()
 
-	return C.ImPlot_ShowTimePicker(idArg, t.handle()) == C.bool(true)
+	return C.ImPlot_ShowTimePicker(idArg, tArg) == C.bool(true)
 }
 
 func PlotShowUserGuide() {
@@ -13366,16 +13464,18 @@ func PlotShowAxisContextMenu(axis PlotAxis, equal_axis PlotAxis) {
 
 }
 
-func PlotShowDatePicker(id string, level *int32, t PlotTime) bool {
+func PlotShowDatePicker(id string, level *int32, t *PlotTime) bool {
 	idArg, idFin := wrapString(id)
 	levelArg, levelFin := wrapNumberPtr[C.int, int32](level)
+	tArg, tFin := wrap[C.ImPlotTime, *PlotTime](t)
 
 	defer func() {
 		idFin()
 		levelFin()
+		tFin()
 	}()
 
-	return C.wrap_ImPlot_ShowDatePicker(idArg, levelArg, t.handle()) == C.bool(true)
+	return C.wrap_ImPlot_ShowDatePicker(idArg, levelArg, tArg) == C.bool(true)
 }
 
 func PlotShowDemoWindow() {
@@ -13704,12 +13804,16 @@ func (self PlotAxis) PickerLevel() int {
 
 func (self PlotAxis) PickerTimeMin() PlotTime {
 
-	return newPlotTimeFromC(C.wrap_ImPlotAxis_GetPickerTimeMin(self.handle()))
+	out := &PlotTime{}
+	out.fromC(C.wrap_ImPlotAxis_GetPickerTimeMin(self.handle()))
+	return *out
 }
 
 func (self PlotAxis) PickerTimeMax() PlotTime {
 
-	return newPlotTimeFromC(C.wrap_ImPlotAxis_GetPickerTimeMax(self.handle()))
+	out := &PlotTime{}
+	out.fromC(C.wrap_ImPlotAxis_GetPickerTimeMax(self.handle()))
+	return *out
 }
 
 func (self PlotAxis) SetTransformData(v unsafe.Pointer) {
@@ -15676,15 +15780,4 @@ func (self PlotTicker) SetLevels(v int32) {
 func (self PlotTicker) Levels() int {
 
 	return int(C.wrap_ImPlotTicker_GetLevels(self.handle()))
-}
-
-func (self PlotTime) SetUs(v int32) {
-
-	C.wrap_ImPlotTime_SetUs(self.handle(), C.int(v))
-
-}
-
-func (self PlotTime) Us() int {
-
-	return int(C.wrap_ImPlotTime_GetUs(self.handle()))
 }

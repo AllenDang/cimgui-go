@@ -53,7 +53,6 @@ extern "C" {
 			strings.Contains(f.FuncName, "TextRange") ||
 			strings.Contains(f.FuncName, "ImVector") ||
 			strings.Contains(f.FuncName, "Allocator") ||
-			strings.Contains(f.FuncName, "ImPlotTime") ||
 			strings.Contains(f.FuncName, "MakeTime") ||
 			strings.Contains(f.FuncName, "__") {
 			shouldSkip = true
