@@ -24,6 +24,7 @@ var skippedStructs = map[string]bool{
 	"ImVec4":         true,
 	"ImColor":        true,
 	"ImRect":         true,
+	"ImPlotTime":     true,
 	"StbUndoRecord":  true,
 	"StbUndoState":   true,
 	"StbTexteditRow": true,

@@ -76,6 +76,7 @@ func shouldSkipStruct(name string) bool {
 		"ImRect":      true,
 		"ImColor":     true,
 		"ImPlotPoint": true,
+		"ImPlotTime":  true,
 	}
 
 	if !strings.HasPrefix(name, "Im") {
