@@ -5,5 +5,5 @@ typedef unsigned long long xulong;
 typedef long long xlong;
 #else
 typedef unsigned long xulong;
-typedef long xxlong;
+typedef long xlong;
 #endif

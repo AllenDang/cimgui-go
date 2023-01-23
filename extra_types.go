@@ -204,7 +204,7 @@ func (i *PlotTime) fromC(p C.ImPlotTime) *PlotTime {
 }
 
 func (p PlotTime) toC() C.ImPlotTime {
-	return C.ImPlotTime{S: C.xxlong(p.S), Us: C.int(p.Us)}
+	return C.ImPlotTime{S: C.xlong(p.S), Us: C.int(p.Us)}
 }
 
 // wrappableType represents a GO type that can be converted into a C value
