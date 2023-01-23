@@ -2,7 +2,9 @@ package imgui
 
 // #include "cimgui_wrapper.h"
 // #include "cimplot_wrapper.h"
+// #include "extra_types.h"
 import "C"
+
 import (
 	"image/color"
 	"time"
@@ -202,7 +204,7 @@ func (i *PlotTime) fromC(p C.ImPlotTime) *PlotTime {
 }
 
 func (p PlotTime) toC() C.ImPlotTime {
-	return C.ImPlotTime{S: C.long(p.S), Us: C.int(p.Us)}
+	return C.ImPlotTime{S: C.xxlong(p.S), Us: C.int(p.Us)}
 }
 
 // wrappableType represents a GO type that can be converted into a C value
