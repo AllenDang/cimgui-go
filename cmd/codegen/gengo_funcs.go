@@ -213,13 +213,13 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 	g.sb.WriteString(g.generateFuncDeclarationStmt(receiver, funcName, args, returnType, f))
 	argInvokeStmt, declarations, finishers := g.generateFuncBody(argWrappers)
 	g.sb.WriteString(strings.Join(declarations, "\n"))
-	g.sb.WriteString("\n\n")
+	if len(declarations) > 0 {
+		g.sb.WriteString("\n")
+	}
 
 	if shouldDefer {
 		g.writeFinishers(shouldDefer, finishers)
 	}
-
-	g.sb.WriteString("\n")
 
 	// write non-return function calls (finalizers called normally)
 	switch returnTypeType {
@@ -232,8 +232,6 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 	if !shouldDefer {
 		g.writeFinishers(shouldDefer, finishers)
 	}
-
-	g.sb.WriteString("\n")
 
 	switch returnTypeType {
 	case returnTypeNonUDT:
@@ -400,13 +398,16 @@ func (g *goFuncsGenerator) writeFinishers(shouldDefer bool, finishers []string) 
 	if len(finishers) == 0 {
 		return
 	}
+
 	g.sb.WriteString("\n")
+
 	if shouldDefer {
 		g.sb.WriteString("defer func() {\n")
 		defer g.sb.WriteString("\n}()\n")
 	}
 
 	g.sb.WriteString(strings.Join(finishers, "\n"))
+	g.sb.WriteString("\n\n")
 }
 
 // isEnum returns true when given string is a valid enum type.

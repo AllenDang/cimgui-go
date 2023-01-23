@@ -220,11 +220,9 @@ for i, %[1]sV := range %[1]s {
 }`, arg.Name, cArrayType),
 			VarName: fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name),
 			Finalizer: fmt.Sprintf(`
-func() {
-  for i, %[1]sV := range %[1]sArg {
-    (*%[1]s)[i] = %[3]s(%[1]sV)
-  }
-}()
+for i, %[1]sV := range %[1]sArg {
+	(*%[1]s)[i] = %[3]s(%[1]sV)
+}
 
 `, arg.Name, cArrayType, goArrayType),
 		}
@@ -241,11 +239,10 @@ for i, %[1]sV := range *%[1]s {
   %[1]sArg[i] = %[2]s(%[1]sV)
 }
 `, arg.Name, cArrayType, goArrayType),
-			Finalizer: fmt.Sprintf(`func() {
+			Finalizer: fmt.Sprintf(`
   for i, %[1]sV := range %[1]sArg {
     (*%[1]s)[i] = %[3]s(%[1]sV)
   }
-}()
 `, arg.Name, cArrayType, goArrayType),
 			VarName: fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name),
 		}
@@ -286,11 +283,10 @@ for i, %[1]sV := range %[1]s {
   	%[1]sArg[i] = *tmp
 }
 `, arg.Name, cArrayType, goArrayType),
-			Finalizer: fmt.Sprintf(`func() {
+			Finalizer: fmt.Sprintf(`
   for _, %[1]sV := range %[1]sFin {
     %[1]sV()
   }
-}()
 `, arg.Name, cArrayType, goArrayType),
 			VarName: fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name),
 		}
