@@ -20,7 +20,7 @@ define generate
 endef
 
 define cimgui
-	$(call generate,cimgui,cimgui/cimgui.h,cimgui/generator/output/definitions.json,cimgui/generator/output/structs_and_enums.json)
+	$(call generate,cimgui,cimgui/cimgui.h,cimgui/cimgui_templates/definitions.json,cimgui/cimgui_templates/structs_and_enums.json)
 endef
 
 ## cimgui: generate cimgui binding
@@ -29,7 +29,7 @@ cimgui:
 	$(call cimgui)
 
 define cimplot
-	$(call generate,cimplot,cimplot/cimplot.h,cimplot/generator/output/definitions.json,cimplot/generator/output/structs_and_enums.json,-r cimgui/generator/output/structs_and_enums.json)
+	$(call generate,cimplot,cimgui/cimplot.h,cimgui/cimplot_templates/definitions.json,cimgui/cimplot_templates/structs_and_enums.json,-r cimgui/cimgui_templates/structs_and_enums.json)
 endef
 
 ## cimplot: generate implot binding
@@ -53,21 +53,29 @@ generate: cimgui cimplot
 # $3 - $1/<c++ repo>/
 define update
 	@echo "updating $1 from $2"
-	rm -rf $1
-	git clone --recurse-submodules $2 $1
-	cd $1; \
-		echo "$1 ($2) HEAD is on: `git rev-parse HEAD`" > VERSION.txt
-	cd $1/$3; \
-		echo "$1/$3 HEAD is on: `git rev-parse HEAD`" >> ../VERSION.txt
-	rm -rf $1/.git $1/$3/.git
-	cd $1/generator; \
+	#mkdir -p tmp/
+	#if test -e tmp/$1; then \
+		#rm -rf tmp/*; \
+	#fi
+	#git clone --recurse-submodules $2 tmp/$1
+	cd tmp/$1/generator; \
 		sh generator.sh
-	echo "// placeholder package used to include this code in vendor dir.\npackage doc" >> $1/doc.go
-	cat $1/doc.go >> $1/$3/doc.go
+	cp tmp/$1/$1* cimgui/
+	mkdir cimgui/$1_templates
+	cp tmp/$1/generator/output/*json cimgui/$1_templates
+	mkdir -p cimgui/$3
+	cp tmp/$1/$3/*cpp cimgui/$3
+	cp tmp/$1/$3/*h cimgui/$3
+	cd tmp/$1; \
+		echo "$1 ($2) HEAD is on: `git rev-parse HEAD`" >> ../../cimgui/VERSION.txt
+	cd tmp/$1/$3; \
+		echo "$1/$3 HEAD is on: `git rev-parse HEAD`" >> ../../../VERSION.txt
+	echo "// placeholder package used to include this code in vendor dir.\npackage doc" >> cimgui/doc.go
 endef
 
 .PHONY: update
 update:
+	rm -rf cimgui/*
 	$(call update,cimgui,https://github.com/cimgui/cimgui,imgui)
 	$(call cimgui)
 	$(call update,cimplot,https://github.com/cimgui/cimplot,implot)
