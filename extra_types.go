@@ -11,7 +11,7 @@ import (
 )
 
 type (
-	Wchar               C.uint
+	Wchar               C.ImWchar
 	ID                  C.ImGuiID
 	TextureID           C.ImTextureID
 	DrawIdx             C.ImDrawIdx

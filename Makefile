@@ -53,14 +53,15 @@ generate: cimgui cimplot
 # $3 - $1/<c++ repo>/
 define update
 	@echo "updating $1 from $2"
-	#mkdir -p tmp/
-	#if test -e tmp/$1; then \
-		#rm -rf tmp/*; \
-	#fi
-	#git clone --recurse-submodules $2 tmp/$1
+	mkdir -p tmp/
+	if test -e tmp/$1; then \
+		rm -rf tmp/*; \
+	fi
+	git clone --recurse-submodules $2 tmp/$1
 	cd tmp/$1/generator; \
 		sh generator.sh
 	cp tmp/$1/$1* cimgui/
+	cp tmp/$1/generator/output/$1* cimgui/
 	mkdir cimgui/$1_templates
 	cp tmp/$1/generator/output/*json cimgui/$1_templates
 	mkdir -p cimgui/$3
@@ -70,7 +71,7 @@ define update
 		echo "$1 ($2) HEAD is on: `git rev-parse HEAD`" >> ../../cimgui/VERSION.txt
 	cd tmp/$1/$3; \
 		echo "$1/$3 HEAD is on: `git rev-parse HEAD`" >> ../../../VERSION.txt
-	echo -e "// placeholder package used to include this code in vendor dir.\npackage doc" > cimgui/doc.go
+	echo -e "// placeholder package used to include this code in vendor dir.\npackage doc\n\nimport _ \"C\"" > cimgui/doc.go
 endef
 
 .PHONY: update
