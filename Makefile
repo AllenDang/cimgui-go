@@ -70,8 +70,8 @@ define update
 	cd tmp/$1; \
 		echo "$1 ($2) HEAD is on: `git rev-parse HEAD`" >> ../../cimgui/VERSION.txt
 	cd tmp/$1/$3; \
-		echo "$1/$3 HEAD is on: `git rev-parse HEAD`" >> ../../../VERSION.txt
-	echo -e "// placeholder package used to include this code in vendor dir.\npackage doc\n\nimport _ \"C\"" > cimgui/doc.go
+		echo "$1/$3 HEAD is on: `git rev-parse HEAD`" >> ../../../cimgui/VERSION.txt
+	echo -e "// placeholder package used to include this code in vendor dir.\npackage doc\n\nimport \"C\"" > cimgui/doc.go
 endef
 
 .PHONY: update
