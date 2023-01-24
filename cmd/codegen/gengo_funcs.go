@@ -159,10 +159,9 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 		outArg := argWrappers[0]
 		returnType = strings.TrimPrefix(outArg.ArgType, "*")
 
-		// returnStmt = fmt.Sprintf("return *%s", args[0])
 		returnStmt = fmt.Sprintf("return *%s", f.ArgsT[0].Name)
 
-		argWrappers[0].ArgDef = fmt.Sprintf(`%s := &%s{}
+		argWrappers[0].ArgDef = fmt.Sprintf(`%s := new(%s)
 %s
 		`, f.ArgsT[0].Name, returnType, outArg.ArgDef)
 		args = args[1:]
@@ -365,7 +364,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 				args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType)))
 				argWrappers = append(argWrappers, ArgumentWrapperData{
 					VarName: fmt.Sprintf("%s.handle()", a.Name),
-					ArgType: pureType,
+					ArgType: renameGoIdentifier(pureType),
 				})
 
 				g.shouldGenerate = true
