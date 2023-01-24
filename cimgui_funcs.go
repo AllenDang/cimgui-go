@@ -12,7 +12,7 @@ import "unsafe"
 // ColorHSVV parameter default value hint:
 // a: 1.0f
 func ColorHSVV(h float32, s float32, v float32, a float32) Color {
-	pOut := &Color{}
+	pOut := new(Color)
 	pOutArg, pOutFin := wrap[C.ImColor, *Color](pOut)
 
 	C.ImColor_HSV(pOutArg, C.float(h), C.float(s), C.float(v), C.float(a))
@@ -263,7 +263,7 @@ func (self DrawList) CloneOutput() DrawList {
 }
 
 func (self DrawList) ClipRectMax() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.ImDrawList_GetClipRectMax(pOutArg, self.handle())
@@ -274,7 +274,7 @@ func (self DrawList) ClipRectMax() Vec2 {
 }
 
 func (self DrawList) ClipRectMin() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.ImDrawList_GetClipRectMin(pOutArg, self.handle())
@@ -658,7 +658,7 @@ func (self Font) BuildLookupTable() {
 // remaining: NULL
 // text_end: NULL
 func (self Font) CalcTextSizeAV(size float32, max_width float32, wrap_width float32, text_begin string, remaining []string) Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	text_beginArg, text_beginFin := wrapString(text_begin)
@@ -1199,7 +1199,7 @@ func (self TextFilter) Destroy() {
 }
 
 func (self Viewport) Center() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.ImGuiViewport_GetCenter(pOutArg, self.handle())
@@ -1210,7 +1210,7 @@ func (self Viewport) Center() Vec2 {
 }
 
 func (self Viewport) WorkCenter() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.ImGuiViewport_GetWorkCenter(pOutArg, self.handle())
@@ -1523,7 +1523,7 @@ func CalcItemWidth() float32 {
 // text_end: NULL
 // wrap_width: -1.0f
 func CalcTextSizeV(text string, hide_text_after_double_hash bool, wrap_width float32) Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	textArg, textFin := wrapString(text)
@@ -1635,7 +1635,7 @@ func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s
 }
 
 func ColorConvertU32ToFloat4(in uint32) Vec4 {
-	pOut := &Vec4{}
+	pOut := new(Vec4)
 	pOutArg, pOutFin := wrap[C.ImVec4, *Vec4](pOut)
 
 	C.igColorConvertU32ToFloat4(pOutArg, C.ImU32(in))
@@ -2228,7 +2228,7 @@ func ColumnsCount() int {
 }
 
 func ContentRegionAvail() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetContentRegionAvail(pOutArg)
@@ -2239,7 +2239,7 @@ func ContentRegionAvail() Vec2 {
 }
 
 func ContentRegionMax() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetContentRegionMax(pOutArg)
@@ -2254,7 +2254,7 @@ func CurrentContext() Context {
 }
 
 func CursorPos() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetCursorPos(pOutArg)
@@ -2273,7 +2273,7 @@ func CursorPosY() float32 {
 }
 
 func CursorScreenPos() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetCursorScreenPos(pOutArg)
@@ -2284,7 +2284,7 @@ func CursorScreenPos() Vec2 {
 }
 
 func CursorStartPos() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetCursorStartPos(pOutArg)
@@ -2315,7 +2315,7 @@ func FontSize() float32 {
 }
 
 func FontTexUvWhitePixel() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetFontTexUvWhitePixel(pOutArg)
@@ -2382,7 +2382,7 @@ func ItemID() ID {
 }
 
 func ItemRectMax() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetItemRectMax(pOutArg)
@@ -2393,7 +2393,7 @@ func ItemRectMax() Vec2 {
 }
 
 func ItemRectMin() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetItemRectMin(pOutArg)
@@ -2404,7 +2404,7 @@ func ItemRectMin() Vec2 {
 }
 
 func ItemRectSize() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetItemRectSize(pOutArg)
@@ -2446,7 +2446,7 @@ func CurrentMouseCursor() MouseCursor {
 // button: 0
 // lock_threshold: -1.0f
 func MouseDragDeltaV(button MouseButton, lock_threshold float32) Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetMouseDragDelta(pOutArg, C.ImGuiMouseButton(button), C.float(lock_threshold))
@@ -2457,7 +2457,7 @@ func MouseDragDeltaV(button MouseButton, lock_threshold float32) Vec2 {
 }
 
 func MousePos() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetMousePos(pOutArg)
@@ -2468,7 +2468,7 @@ func MousePos() Vec2 {
 }
 
 func MousePosOnOpeningCurrentPopup() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetMousePosOnOpeningCurrentPopup(pOutArg)
@@ -2533,7 +2533,7 @@ func Version() string {
 }
 
 func WindowContentRegionMax() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetWindowContentRegionMax(pOutArg)
@@ -2544,7 +2544,7 @@ func WindowContentRegionMax() Vec2 {
 }
 
 func WindowContentRegionMin() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetWindowContentRegionMin(pOutArg)
@@ -2571,7 +2571,7 @@ func WindowHeight() float32 {
 }
 
 func WindowPos() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetWindowPos(pOutArg)
@@ -2582,7 +2582,7 @@ func WindowPos() Vec2 {
 }
 
 func WindowSize() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.igGetWindowSize(pOutArg)
@@ -4298,7 +4298,7 @@ func ValueUint(prefix string, v uint32) {
 }
 
 func ColorHSV(h float32, s float32, v float32) Color {
-	pOut := &Color{}
+	pOut := new(Color)
 	pOutArg, pOutFin := wrap[C.ImColor, *Color](pOut)
 
 	C.wrap_ImColor_HSV(pOutArg, C.float(h), C.float(s), C.float(v))
@@ -4451,7 +4451,7 @@ func (self Font) AddRemapChar(dst Wchar, src Wchar) {
 }
 
 func (self Font) CalcTextSizeA(size float32, max_width float32, wrap_width float32, text_begin string) Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	text_beginArg, text_beginFin := wrapString(text_begin)
@@ -4644,7 +4644,7 @@ func Button(label string) bool {
 }
 
 func CalcTextSize(text string) Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	textArg, textFin := wrapString(text)
@@ -4990,7 +4990,7 @@ func ColumnWidth() float32 {
 }
 
 func MouseDragDelta() Vec2 {
-	pOut := &Vec2{}
+	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.wrap_igGetMouseDragDelta(pOutArg)
