@@ -37,7 +37,7 @@ jobs:
       run: cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/windows/x64
 
     - name: configure cimgui
-      run: cmake -G Ninja -B build -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On
+      run: cmake -G Ninja -B build -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DIMGUI_USE_WCHAR32
       working-directory: .\cimgui
 
     - name: make cimgui

@@ -27,7 +27,7 @@ jobs:
       working-directory: ./thirdparty/glfw
 
     - name: configure glfw for arm64
-      run: cmake -S . -Bbuild -DCMAKE_OSX_ARCHITECTURES=arm64
+      run: cmake -S . -Bbuild -DCMAKE_OSX_ARCHITECTURES=arm64 -DIMGUI_USE_WCHAR32
       working-directory: ./thirdparty/glfw
 
     - name: make glfw arm64
