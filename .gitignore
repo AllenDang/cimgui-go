@@ -66,3 +66,7 @@ thirdparty/glfw/build
 .idea
 # Vim cache files
 *.swp
+
+
+# update rule's temporary directory
+tmp/
