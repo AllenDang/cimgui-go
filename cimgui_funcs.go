@@ -624,7 +624,7 @@ func (self FontGlyphRangesBuilder) Clear() {
 }
 
 func (self FontGlyphRangesBuilder) Bit(n uint64) bool {
-	return C.ImFontGlyphRangesBuilder_GetBit(self.handle(), C.xlong(n)) == C.bool(true)
+	return C.ImFontGlyphRangesBuilder_GetBit(self.handle(), C.xulong(n)) == C.bool(true)
 }
 
 func NewFontGlyphRangesBuilder() FontGlyphRangesBuilder {
@@ -632,7 +632,7 @@ func NewFontGlyphRangesBuilder() FontGlyphRangesBuilder {
 }
 
 func (self FontGlyphRangesBuilder) SetBit(n uint64) {
-	C.ImFontGlyphRangesBuilder_SetBit(self.handle(), C.xlong(n))
+	C.ImFontGlyphRangesBuilder_SetBit(self.handle(), C.xulong(n))
 }
 
 func (self FontGlyphRangesBuilder) Destroy() {
@@ -1798,7 +1798,7 @@ func DebugCheckVersionAndDataLayout(version_str string, sz_io uint64, sz_style u
 		version_strFin()
 
 	}()
-	return C.igDebugCheckVersionAndDataLayout(version_strArg, C.xlong(sz_io), C.xlong(sz_style), C.xlong(sz_vec2), C.xlong(sz_vec4), C.xlong(sz_drawvert), C.xlong(sz_drawidx)) == C.bool(true)
+	return C.igDebugCheckVersionAndDataLayout(version_strArg, C.xulong(sz_io), C.xulong(sz_style), C.xulong(sz_vec2), C.xulong(sz_vec4), C.xulong(sz_drawvert), C.xulong(sz_drawidx)) == C.bool(true)
 }
 
 func DebugTextEncoding(text string) {
@@ -3088,7 +3088,7 @@ func LoadIniSettingsFromDisk(ini_filename string) {
 // ini_size: 0
 func LoadIniSettingsFromMemoryV(ini_data string, ini_size uint64) {
 	ini_dataArg, ini_dataFin := wrapString(ini_data)
-	C.igLoadIniSettingsFromMemory(ini_dataArg, C.xlong(ini_size))
+	C.igLoadIniSettingsFromMemory(ini_dataArg, C.xulong(ini_size))
 
 	ini_dataFin()
 
@@ -3134,7 +3134,7 @@ func LogToTTYV(auto_open_depth int32) {
 }
 
 func MemAlloc(size uint64) unsafe.Pointer {
-	return unsafe.Pointer(C.igMemAlloc(C.xlong(size)))
+	return unsafe.Pointer(C.igMemAlloc(C.xulong(size)))
 }
 
 func MemFree(ptr unsafe.Pointer) {
@@ -3422,7 +3422,7 @@ func SaveIniSettingsToDisk(ini_filename string) {
 // SaveIniSettingsToMemoryV parameter default value hint:
 // out_ini_size: NULL
 func SaveIniSettingsToMemoryV(out_ini_size *uint64) string {
-	return C.GoString(C.igSaveIniSettingsToMemory((*C.xlong)(out_ini_size)))
+	return C.GoString(C.igSaveIniSettingsToMemory((*C.xulong)(out_ini_size)))
 }
 
 // SelectableBoolV parameter default value hint:
@@ -3507,7 +3507,7 @@ func SetDragDropPayloadV(typeArg string, data unsafe.Pointer, sz uint64, cond Co
 		typeArgFin()
 
 	}()
-	return C.igSetDragDropPayload(typeArgArg, (data), C.xlong(sz), C.ImGuiCond(cond)) == C.bool(true)
+	return C.igSetDragDropPayload(typeArgArg, (data), C.xulong(sz), C.ImGuiCond(cond)) == C.bool(true)
 }
 
 func SetItemAllowOverlap() {
@@ -5501,7 +5501,7 @@ func SetDragDropPayload(typeArg string, data unsafe.Pointer, sz uint64) bool {
 		typeArgFin()
 
 	}()
-	return C.wrap_igSetDragDropPayload(typeArgArg, (data), C.xlong(sz)) == C.bool(true)
+	return C.wrap_igSetDragDropPayload(typeArgArg, (data), C.xulong(sz)) == C.bool(true)
 }
 
 func SetKeyboardFocusHere() {
@@ -8375,7 +8375,7 @@ func (self ContextHook) UserData() unsafe.Pointer {
 }
 
 func (self DataTypeInfo) SetSize(v uint64) {
-	C.wrap_ImGuiDataTypeInfo_SetSize(self.handle(), C.xlong(v))
+	C.wrap_ImGuiDataTypeInfo_SetSize(self.handle(), C.xulong(v))
 }
 
 func (self DataTypeInfo) Size() float64 {

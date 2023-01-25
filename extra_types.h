@@ -1,7 +1,9 @@
 #pragma once
 
 #ifdef __WIN32
-typedef unsigned long long xlong;
+typedef unsigned long long xulong;
+typedef long long xlong;
 #else
-typedef unsigned long xlong;
+typedef unsigned long xulong;
+typedef long xlong;
 #endif

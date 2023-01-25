@@ -30,7 +30,7 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"const char* const[]":      charPtrPtrW,
 		"unsigned char":            simpleW("uint", "C.uchar"),
 		"unsigned char**":          uCharPtrW,
-		"size_t":                   simpleW("uint64", "C.xlong"),
+		"size_t":                   simpleW("uint64", "C.xulong"),
 		"size_t*":                  sizeTPtrW,
 		"float":                    floatW,
 		"float*":                   floatPtrW,
@@ -130,7 +130,7 @@ func uCharPtrW(arg ArgDef) ArgumentWrapperData {
 func sizeTPtrW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType: "*uint64",
-		VarName: fmt.Sprintf("(*C.xlong)(%s)", arg.Name),
+		VarName: fmt.Sprintf("(*C.xulong)(%s)", arg.Name),
 	}
 }
 

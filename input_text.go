@@ -72,7 +72,7 @@ func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, ca
 		labelArg,
 		hintArg,
 		(*C.char)(state.buf.ptr),
-		C.xlong(len(*buf)+1),
+		C.xulong(len(*buf)+1),
 		C.ImGuiInputTextFlags(flags),
 		C.ImGuiInputTextCallback(C.generalInputTextCallback),
 		unsafe.Pointer(&stateHandle),
@@ -101,7 +101,7 @@ func InputTextMultiline(label string, buf *string, size Vec2, flags InputTextFla
 	return C.igInputTextMultiline(
 		labelArg,
 		(*C.char)(state.buf.ptr),
-		C.xlong(len(*buf)+1),
+		C.xulong(len(*buf)+1),
 		size.toC(),
 		C.ImGuiInputTextFlags(flags),
 		C.ImGuiInputTextCallback(C.generalInputTextCallback),
