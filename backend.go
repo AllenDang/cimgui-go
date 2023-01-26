@@ -89,6 +89,16 @@ func (w GLFWwindow) DisplaySize() (width int32, height int32) {
 	return
 }
 
+func (w GLFWwindow) SetWindowShouldClose(value bool) {
+	var valueInt int
+
+	if value {
+		valueInt = 1
+	}
+
+	C.igGLFWWindow_SetShouldClose(w.handle(), C.int(valueInt))
+}
+
 //export glfwWindowLoopCallback
 func glfwWindowLoopCallback() {
 	if loopFunc != nil {
