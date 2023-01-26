@@ -89,7 +89,7 @@ func (w GLFWwindow) DisplaySize() (width int32, height int32) {
 	return
 }
 
-func (w GLFWwindow) SetWindowShouldClose(value bool) {
+func (w GLFWwindow) SetShouldClose(value bool) {
 	var valueInt int
 
 	if value {
