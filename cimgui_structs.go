@@ -539,6 +539,48 @@ func newKeyDataFromC(cvalue C.ImGuiKeyData) KeyData {
 	return KeyData(unsafe.Pointer(&cvalue))
 }
 
+type KeyOwnerData uintptr
+
+func (data KeyOwnerData) handle() *C.ImGuiKeyOwnerData {
+	return (*C.ImGuiKeyOwnerData)(unsafe.Pointer(data))
+}
+
+func (data KeyOwnerData) c() C.ImGuiKeyOwnerData {
+	return *(data.handle())
+}
+
+func newKeyOwnerDataFromC(cvalue C.ImGuiKeyOwnerData) KeyOwnerData {
+	return KeyOwnerData(unsafe.Pointer(&cvalue))
+}
+
+type KeyRoutingData uintptr
+
+func (data KeyRoutingData) handle() *C.ImGuiKeyRoutingData {
+	return (*C.ImGuiKeyRoutingData)(unsafe.Pointer(data))
+}
+
+func (data KeyRoutingData) c() C.ImGuiKeyRoutingData {
+	return *(data.handle())
+}
+
+func newKeyRoutingDataFromC(cvalue C.ImGuiKeyRoutingData) KeyRoutingData {
+	return KeyRoutingData(unsafe.Pointer(&cvalue))
+}
+
+type KeyRoutingTable uintptr
+
+func (data KeyRoutingTable) handle() *C.ImGuiKeyRoutingTable {
+	return (*C.ImGuiKeyRoutingTable)(unsafe.Pointer(data))
+}
+
+func (data KeyRoutingTable) c() C.ImGuiKeyRoutingTable {
+	return *(data.handle())
+}
+
+func newKeyRoutingTableFromC(cvalue C.ImGuiKeyRoutingTable) KeyRoutingTable {
+	return KeyRoutingTable(unsafe.Pointer(&cvalue))
+}
+
 type LastItemData uintptr
 
 func (data LastItemData) handle() *C.ImGuiLastItemData {
@@ -593,6 +635,20 @@ func (data ListClipperRange) c() C.ImGuiListClipperRange {
 
 func newListClipperRangeFromC(cvalue C.ImGuiListClipperRange) ListClipperRange {
 	return ListClipperRange(unsafe.Pointer(&cvalue))
+}
+
+type LocEntry uintptr
+
+func (data LocEntry) handle() *C.ImGuiLocEntry {
+	return (*C.ImGuiLocEntry)(unsafe.Pointer(data))
+}
+
+func (data LocEntry) c() C.ImGuiLocEntry {
+	return *(data.handle())
+}
+
+func newLocEntryFromC(cvalue C.ImGuiLocEntry) LocEntry {
+	return LocEntry(unsafe.Pointer(&cvalue))
 }
 
 type MenuColumns uintptr
@@ -1111,6 +1167,20 @@ func (data TextFilter) c() C.ImGuiTextFilter {
 
 func newTextFilterFromC(cvalue C.ImGuiTextFilter) TextFilter {
 	return TextFilter(unsafe.Pointer(&cvalue))
+}
+
+type TextIndex uintptr
+
+func (data TextIndex) handle() *C.ImGuiTextIndex {
+	return (*C.ImGuiTextIndex)(unsafe.Pointer(data))
+}
+
+func (data TextIndex) c() C.ImGuiTextIndex {
+	return *(data.handle())
+}
+
+func newTextIndexFromC(cvalue C.ImGuiTextIndex) TextIndex {
+	return TextIndex(unsafe.Pointer(&cvalue))
 }
 
 type TextRange uintptr

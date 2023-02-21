@@ -1176,9 +1176,9 @@ CIMGUI_API bool ImPlot_DragLineY(int id,double* y,const ImVec4 col,float thickne
 {
     return ImPlot::DragLineY(id,y,col,thickness,flags);
 }
-CIMGUI_API bool ImPlot_DragRect(int id,double* x_min,double* y_min,double* x_max,double* y_max,const ImVec4 col,ImPlotDragToolFlags flags)
+CIMGUI_API bool ImPlot_DragRect(int id,double* x1,double* y1,double* x2,double* y2,const ImVec4 col,ImPlotDragToolFlags flags)
 {
-    return ImPlot::DragRect(id,x_min,y_min,x_max,y_max,col,flags);
+    return ImPlot::DragRect(id,x1,y1,x2,y2,col,flags);
 }
 CIMGUI_API void ImPlot_Annotation_Bool(double x,double y,const ImVec4 col,const ImVec2 pix_offset,bool clamp,bool round)
 {
@@ -2082,6 +2082,14 @@ CIMGUI_API ImPlotPointError* ImPlotPointError_ImPlotPointError(double x,double y
     return IM_NEW(ImPlotPointError)(x,y,neg,pos);
 }
 CIMGUI_API void ImPlotPointError_destroy(ImPlotPointError* self)
+{
+    IM_DELETE(self);
+}
+CIMGUI_API ImPlotAnnotation* ImPlotAnnotation_ImPlotAnnotation(void)
+{
+    return IM_NEW(ImPlotAnnotation)();
+}
+CIMGUI_API void ImPlotAnnotation_destroy(ImPlotAnnotation* self)
 {
     IM_DELETE(self);
 }

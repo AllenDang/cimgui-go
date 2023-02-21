@@ -27,17 +27,19 @@ const (
 	PlotAxisFlagsNoTickLabels  = 8
 	PlotAxisFlagsNoInitialFit  = 16
 	PlotAxisFlagsNoMenus       = 32
-	PlotAxisFlagsOpposite      = 64
-	PlotAxisFlagsForeground    = 128
-	PlotAxisFlagsInvert        = 256
-	PlotAxisFlagsAutoFit       = 512
-	PlotAxisFlagsRangeFit      = 1024
-	PlotAxisFlagsPanStretch    = 2048
-	PlotAxisFlagsLockMin       = 4096
-	PlotAxisFlagsLockMax       = 8192
-	PlotAxisFlagsLock          = 12288
+	PlotAxisFlagsNoSideSwitch  = 64
+	PlotAxisFlagsNoHighlight   = 128
+	PlotAxisFlagsOpposite      = 256
+	PlotAxisFlagsForeground    = 512
+	PlotAxisFlagsInvert        = 1024
+	PlotAxisFlagsAutoFit       = 2048
+	PlotAxisFlagsRangeFit      = 4096
+	PlotAxisFlagsPanStretch    = 8192
+	PlotAxisFlagsLockMin       = 16384
+	PlotAxisFlagsLockMax       = 32768
+	PlotAxisFlagsLock          = 49152
 	PlotAxisFlagsNoDecorations = 15
-	PlotAxisFlagsAuxDefault    = 66
+	PlotAxisFlagsAuxDefault    = 258
 )
 
 // original name: ImPlotBarGroupsFlags_
@@ -254,6 +256,7 @@ const (
 	PlotLegendFlagsNoMenus         = 8
 	PlotLegendFlagsOutside         = 16
 	PlotLegendFlagsHorizontal      = 32
+	PlotLegendFlagsSort            = 64
 )
 
 // original name: ImPlotLineFlags_
@@ -265,6 +268,7 @@ const (
 	PlotLineFlagsLoop     = 2048
 	PlotLineFlagsSkipNaN  = 4096
 	PlotLineFlagsNoClip   = 8192
+	PlotLineFlagsShaded   = 16384
 )
 
 // original name: ImPlotLocation_
@@ -349,6 +353,7 @@ type PlotStairsFlags int
 const (
 	PlotStairsFlagsNone    = 0
 	PlotStairsFlagsPreStep = 1024
+	PlotStairsFlagsShaded  = 2048
 )
 
 // original name: ImPlotStemsFlags_
@@ -428,10 +433,11 @@ const (
 	PlotTimeFmtSUs      = 2
 	PlotTimeFmtSMs      = 3
 	PlotTimeFmtS        = 4
-	PlotTimeFmtHrMinSMs = 5
-	PlotTimeFmtHrMinS   = 6
-	PlotTimeFmtHrMin    = 7
-	PlotTimeFmtHr       = 8
+	PlotTimeFmtMinSMs   = 5
+	PlotTimeFmtHrMinSMs = 6
+	PlotTimeFmtHrMinS   = 7
+	PlotTimeFmtHrMin    = 8
+	PlotTimeFmtHr       = 9
 )
 
 // original name: ImPlotTimeUnit_

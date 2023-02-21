@@ -10,6 +10,7 @@ CIMGUI_API void ImGui_ImplGlfw_Shutdown(void);
 CIMGUI_API void ImGui_ImplGlfw_NewFrame(void);
 CIMGUI_API void ImGui_ImplGlfw_InstallCallbacks(GLFWwindow* window);
 CIMGUI_API void ImGui_ImplGlfw_RestoreCallbacks(GLFWwindow* window);
+CIMGUI_API void ImGui_ImplGlfw_SetCallbacksChainForAllWindows(bool chain_for_all_windows);
 CIMGUI_API void ImGui_ImplGlfw_WindowFocusCallback(GLFWwindow* window,int focused);
 CIMGUI_API void ImGui_ImplGlfw_CursorEnterCallback(GLFWwindow* window,int entered);
 CIMGUI_API void ImGui_ImplGlfw_CursorPosCallback(GLFWwindow* window,double x,double y);

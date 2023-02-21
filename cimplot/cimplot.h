@@ -119,14 +119,16 @@ typedef enum {
   ImPlotAxisFlags_NoTickLabels = 1 << 3,
   ImPlotAxisFlags_NoInitialFit = 1 << 4,
   ImPlotAxisFlags_NoMenus = 1 << 5,
-  ImPlotAxisFlags_Opposite = 1 << 6,
-  ImPlotAxisFlags_Foreground = 1 << 7,
-  ImPlotAxisFlags_Invert = 1 << 8,
-  ImPlotAxisFlags_AutoFit = 1 << 9,
-  ImPlotAxisFlags_RangeFit = 1 << 10,
-  ImPlotAxisFlags_PanStretch = 1 << 11,
-  ImPlotAxisFlags_LockMin = 1 << 12,
-  ImPlotAxisFlags_LockMax = 1 << 13,
+  ImPlotAxisFlags_NoSideSwitch = 1 << 6,
+  ImPlotAxisFlags_NoHighlight = 1 << 7,
+  ImPlotAxisFlags_Opposite = 1 << 8,
+  ImPlotAxisFlags_Foreground = 1 << 9,
+  ImPlotAxisFlags_Invert = 1 << 10,
+  ImPlotAxisFlags_AutoFit = 1 << 11,
+  ImPlotAxisFlags_RangeFit = 1 << 12,
+  ImPlotAxisFlags_PanStretch = 1 << 13,
+  ImPlotAxisFlags_LockMin = 1 << 14,
+  ImPlotAxisFlags_LockMax = 1 << 15,
   ImPlotAxisFlags_Lock = ImPlotAxisFlags_LockMin | ImPlotAxisFlags_LockMax,
   ImPlotAxisFlags_NoDecorations = ImPlotAxisFlags_NoLabel | ImPlotAxisFlags_NoGridLines | ImPlotAxisFlags_NoTickMarks |
                                   ImPlotAxisFlags_NoTickLabels,
@@ -154,6 +156,7 @@ typedef enum {
   ImPlotLegendFlags_NoMenus = 1 << 3,
   ImPlotLegendFlags_Outside = 1 << 4,
   ImPlotLegendFlags_Horizontal = 1 << 5,
+  ImPlotLegendFlags_Sort = 1 << 6,
 } ImPlotLegendFlags_;
 typedef enum {
   ImPlotMouseTextFlags_None = 0,
@@ -185,12 +188,17 @@ typedef enum {
   ImPlotLineFlags_Loop = 1 << 11,
   ImPlotLineFlags_SkipNaN = 1 << 12,
   ImPlotLineFlags_NoClip = 1 << 13,
+  ImPlotLineFlags_Shaded = 1 << 14,
 } ImPlotLineFlags_;
 typedef enum {
   ImPlotScatterFlags_None = 0,
   ImPlotScatterFlags_NoClip = 1 << 10,
 } ImPlotScatterFlags_;
-typedef enum { ImPlotStairsFlags_None = 0, ImPlotStairsFlags_PreStep = 1 << 10 } ImPlotStairsFlags_;
+typedef enum {
+  ImPlotStairsFlags_None = 0,
+  ImPlotStairsFlags_PreStep = 1 << 10,
+  ImPlotStairsFlags_Shaded = 1 << 11
+} ImPlotStairsFlags_;
 typedef enum { ImPlotShadedFlags_None = 0 } ImPlotShadedFlags_;
 typedef enum {
   ImPlotBarsFlags_None = 0,
@@ -391,16 +399,16 @@ struct ImPlotStyle {
 typedef struct ImPlotInputMap ImPlotInputMap;
 struct ImPlotInputMap {
   ImGuiMouseButton Pan;
-  ImGuiModFlags PanMod;
+  int PanMod;
   ImGuiMouseButton Fit;
   ImGuiMouseButton Select;
   ImGuiMouseButton SelectCancel;
-  ImGuiModFlags SelectMod;
-  ImGuiModFlags SelectHorzMod;
-  ImGuiModFlags SelectVertMod;
+  int SelectMod;
+  int SelectHorzMod;
+  int SelectVertMod;
   ImGuiMouseButton Menu;
-  ImGuiModFlags OverrideMod;
-  ImGuiModFlags ZoomMod;
+  int OverrideMod;
+  int ZoomMod;
   float ZoomRate;
 };
 typedef int (*ImPlotFormatter)(double value, char *buff, int size, void *user_data);
@@ -443,6 +451,7 @@ typedef enum {
   ImPlotTimeFmt_SUs,
   ImPlotTimeFmt_SMs,
   ImPlotTimeFmt_S,
+  ImPlotTimeFmt_MinSMs,
   ImPlotTimeFmt_HrMinSMs,
   ImPlotTimeFmt_HrMinS,
   ImPlotTimeFmt_HrMin,
@@ -463,12 +472,6 @@ struct ImPlotTime {
   int Us;
 };
 typedef struct ImPlotColormapData ImPlotColormapData;
-typedef struct ImVector_int {
-  int Size;
-  int Capacity;
-  int *Data;
-} ImVector_int;
-
 typedef struct ImVector_bool {
   int Size;
   int Capacity;
@@ -806,6 +809,7 @@ struct ImPlotContext {
   ImPlotInputMap InputMap;
   bool OpenContextThisFrame;
   ImGuiTextBuffer MousePosStringBuilder;
+  ImPlotItemGroup *SortItems;
   ImPool_ImPlotAlignmentData AlignmentData;
   ImPlotAlignmentData *CurrentAlignmentH;
   ImPlotAlignmentData *CurrentAlignmentV;
@@ -1457,7 +1461,7 @@ CIMGUI_API void ImPlot_PlotDummy(const char *label_id, ImPlotDummyFlags flags);
 CIMGUI_API bool ImPlot_DragPoint(int id, double *x, double *y, const ImVec4 col, float size, ImPlotDragToolFlags flags);
 CIMGUI_API bool ImPlot_DragLineX(int id, double *x, const ImVec4 col, float thickness, ImPlotDragToolFlags flags);
 CIMGUI_API bool ImPlot_DragLineY(int id, double *y, const ImVec4 col, float thickness, ImPlotDragToolFlags flags);
-CIMGUI_API bool ImPlot_DragRect(int id, double *x_min, double *y_min, double *x_max, double *y_max, const ImVec4 col,
+CIMGUI_API bool ImPlot_DragRect(int id, double *x1, double *y1, double *x2, double *y2, const ImVec4 col,
                                 ImPlotDragToolFlags flags);
 CIMGUI_API void ImPlot_Annotation_Bool(double x, double y, const ImVec4 col, const ImVec2 pix_offset, bool clamp,
                                        bool round);
@@ -1692,6 +1696,8 @@ CIMGUI_API ImU32 ImPlotColormapData_GetTableColor(ImPlotColormapData *self, ImPl
 CIMGUI_API ImU32 ImPlotColormapData_LerpTable(ImPlotColormapData *self, ImPlotColormap cmap, float t);
 CIMGUI_API ImPlotPointError *ImPlotPointError_ImPlotPointError(double x, double y, double neg, double pos);
 CIMGUI_API void ImPlotPointError_destroy(ImPlotPointError *self);
+CIMGUI_API ImPlotAnnotation *ImPlotAnnotation_ImPlotAnnotation(void);
+CIMGUI_API void ImPlotAnnotation_destroy(ImPlotAnnotation *self);
 CIMGUI_API ImPlotAnnotationCollection *ImPlotAnnotationCollection_ImPlotAnnotationCollection(void);
 CIMGUI_API void ImPlotAnnotationCollection_destroy(ImPlotAnnotationCollection *self);
 CIMGUI_API void ImPlotAnnotationCollection_AppendV(ImPlotAnnotationCollection *self, const ImVec2 pos, const ImVec2 off,

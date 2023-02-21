@@ -67,6 +67,14 @@ func (self PlotAnnotationCollection) Destroy() {
 	C.ImPlotAnnotationCollection_destroy(self.handle())
 }
 
+func NewPlotAnnotation() PlotAnnotation {
+	return (PlotAnnotation)(unsafe.Pointer(C.ImPlotAnnotation_ImPlotAnnotation()))
+}
+
+func (self PlotAnnotation) Destroy() {
+	C.ImPlotAnnotation_destroy(self.handle())
+}
+
 func (self PlotAxis) ApplyFit(padding float32) {
 	C.ImPlotAxis_ApplyFit(self.handle(), C.float(padding))
 }
@@ -1071,20 +1079,20 @@ func PlotDragPointV(id int32, x *float64, y *float64, col Vec4, size float32, fl
 
 // PlotDragRectV parameter default value hint:
 // flags: 0
-func PlotDragRectV(id int32, x_min *float64, y_min *float64, x_max *float64, y_max *float64, col Vec4, flags PlotDragToolFlags) bool {
-	x_minArg, x_minFin := wrapNumberPtr[C.double, float64](x_min)
-	y_minArg, y_minFin := wrapNumberPtr[C.double, float64](y_min)
-	x_maxArg, x_maxFin := wrapNumberPtr[C.double, float64](x_max)
-	y_maxArg, y_maxFin := wrapNumberPtr[C.double, float64](y_max)
+func PlotDragRectV(id int32, x1 *float64, y1 *float64, x2 *float64, y2 *float64, col Vec4, flags PlotDragToolFlags) bool {
+	x1Arg, x1Fin := wrapNumberPtr[C.double, float64](x1)
+	y1Arg, y1Fin := wrapNumberPtr[C.double, float64](y1)
+	x2Arg, x2Fin := wrapNumberPtr[C.double, float64](x2)
+	y2Arg, y2Fin := wrapNumberPtr[C.double, float64](y2)
 
 	defer func() {
-		x_minFin()
-		y_minFin()
-		x_maxFin()
-		y_maxFin()
+		x1Fin()
+		y1Fin()
+		x2Fin()
+		y2Fin()
 
 	}()
-	return C.ImPlot_DragRect(C.int(id), x_minArg, y_minArg, x_maxArg, y_maxArg, col.toC(), C.ImPlotDragToolFlags(flags)) == C.bool(true)
+	return C.ImPlot_DragRect(C.int(id), x1Arg, y1Arg, x2Arg, y2Arg, col.toC(), C.ImPlotDragToolFlags(flags)) == C.bool(true)
 }
 
 func PlotEndAlignedPlots() {
@@ -7875,20 +7883,20 @@ func PlotDragPoint(id int32, x *float64, y *float64, col Vec4) bool {
 	return C.wrap_ImPlot_DragPoint(C.int(id), xArg, yArg, col.toC()) == C.bool(true)
 }
 
-func PlotDragRect(id int32, x_min *float64, y_min *float64, x_max *float64, y_max *float64, col Vec4) bool {
-	x_minArg, x_minFin := wrapNumberPtr[C.double, float64](x_min)
-	y_minArg, y_minFin := wrapNumberPtr[C.double, float64](y_min)
-	x_maxArg, x_maxFin := wrapNumberPtr[C.double, float64](x_max)
-	y_maxArg, y_maxFin := wrapNumberPtr[C.double, float64](y_max)
+func PlotDragRect(id int32, x1 *float64, y1 *float64, x2 *float64, y2 *float64, col Vec4) bool {
+	x1Arg, x1Fin := wrapNumberPtr[C.double, float64](x1)
+	y1Arg, y1Fin := wrapNumberPtr[C.double, float64](y1)
+	x2Arg, x2Fin := wrapNumberPtr[C.double, float64](x2)
+	y2Arg, y2Fin := wrapNumberPtr[C.double, float64](y2)
 
 	defer func() {
-		x_minFin()
-		y_minFin()
-		x_maxFin()
-		y_maxFin()
+		x1Fin()
+		y1Fin()
+		x2Fin()
+		y2Fin()
 
 	}()
-	return C.wrap_ImPlot_DragRect(C.int(id), x_minArg, y_minArg, x_maxArg, y_maxArg, col.toC()) == C.bool(true)
+	return C.wrap_ImPlot_DragRect(C.int(id), x1Arg, y1Arg, x2Arg, y2Arg, col.toC()) == C.bool(true)
 }
 
 func PlotGetColormapColor(idx int32) Vec4 {
@@ -12839,6 +12847,14 @@ func (self PlotContext) MousePosStringBuilder() TextBuffer {
 	return newTextBufferFromC(C.wrap_ImPlotContext_GetMousePosStringBuilder(self.handle()))
 }
 
+func (self PlotContext) SetSortItems(v PlotItemGroup) {
+	C.wrap_ImPlotContext_SetSortItems(self.handle(), v.handle())
+}
+
+func (self PlotContext) SortItems() PlotItemGroup {
+	return (PlotItemGroup)(unsafe.Pointer(C.wrap_ImPlotContext_GetSortItems(self.handle())))
+}
+
 func (self PlotContext) SetCurrentAlignmentH(v PlotAlignmentData) {
 	C.wrap_ImPlotContext_SetCurrentAlignmentH(self.handle(), v.handle())
 }
@@ -12885,6 +12901,54 @@ func (self PlotDateTimeSpec) SetUse24HourClock(v bool) {
 
 func (self PlotDateTimeSpec) Use24HourClock() bool {
 	return C.wrap_ImPlotDateTimeSpec_GetUse24HourClock(self.handle()) == C.bool(true)
+}
+
+func (self PlotInputMap) SetPanMod(v int32) {
+	C.wrap_ImPlotInputMap_SetPanMod(self.handle(), C.int(v))
+}
+
+func (self PlotInputMap) PanMod() int {
+	return int(C.wrap_ImPlotInputMap_GetPanMod(self.handle()))
+}
+
+func (self PlotInputMap) SetSelectMod(v int32) {
+	C.wrap_ImPlotInputMap_SetSelectMod(self.handle(), C.int(v))
+}
+
+func (self PlotInputMap) SelectMod() int {
+	return int(C.wrap_ImPlotInputMap_GetSelectMod(self.handle()))
+}
+
+func (self PlotInputMap) SetSelectHorzMod(v int32) {
+	C.wrap_ImPlotInputMap_SetSelectHorzMod(self.handle(), C.int(v))
+}
+
+func (self PlotInputMap) SelectHorzMod() int {
+	return int(C.wrap_ImPlotInputMap_GetSelectHorzMod(self.handle()))
+}
+
+func (self PlotInputMap) SetSelectVertMod(v int32) {
+	C.wrap_ImPlotInputMap_SetSelectVertMod(self.handle(), C.int(v))
+}
+
+func (self PlotInputMap) SelectVertMod() int {
+	return int(C.wrap_ImPlotInputMap_GetSelectVertMod(self.handle()))
+}
+
+func (self PlotInputMap) SetOverrideMod(v int32) {
+	C.wrap_ImPlotInputMap_SetOverrideMod(self.handle(), C.int(v))
+}
+
+func (self PlotInputMap) OverrideMod() int {
+	return int(C.wrap_ImPlotInputMap_GetOverrideMod(self.handle()))
+}
+
+func (self PlotInputMap) SetZoomMod(v int32) {
+	C.wrap_ImPlotInputMap_SetZoomMod(self.handle(), C.int(v))
+}
+
+func (self PlotInputMap) ZoomMod() int {
+	return int(C.wrap_ImPlotInputMap_GetZoomMod(self.handle()))
 }
 
 func (self PlotInputMap) SetZoomRate(v float32) {

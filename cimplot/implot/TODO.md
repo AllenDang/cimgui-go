@@ -31,7 +31,6 @@ The list below represents a combination of high-priority work, nice-to-have feat
 
 ## Legend
 
-- `ImPlotLegendFlags_SortItems`
 - `ImPlotLegendFlags_Scroll`
 - improve legend icons (e.g. adopt markers, gradients, etc)
 - make legend frame use ButtonBehavior (maybe impossible)
@@ -45,6 +44,8 @@ The list below represents a combination of high-priority work, nice-to-have feat
 - first frame render delay might fix "fit pop" effect
 - move some code to new `implot_tools.cpp`
 - ColormapSlider (see metrics)
+- FillAlpha should not affect markers?
+- fix mouse text for time axes
 
 ## Optimizations
 

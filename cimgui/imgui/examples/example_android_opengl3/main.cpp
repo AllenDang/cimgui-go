@@ -9,6 +9,7 @@
 #include <android/asset_manager.h>
 #include <EGL/egl.h>
 #include <GLES3/gl3.h>
+#include <string>
 
 // Data
 static EGLDisplay           g_EglDisplay = EGL_NO_DISPLAY;
@@ -17,13 +18,75 @@ static EGLContext           g_EglContext = EGL_NO_CONTEXT;
 static struct android_app*  g_App = NULL;
 static bool                 g_Initialized = false;
 static char                 g_LogTag[] = "ImGuiExample";
+static std::string          g_IniFilename = "";
 
 // Forward declarations of helper functions
+static void Init(struct android_app* app);
+static void Shutdown();
+static void MainLoopStep();
 static int ShowSoftKeyboardInput();
 static int PollUnicodeChars();
 static int GetAssetData(const char* filename, void** out_data);
 
-void init(struct android_app* app)
+// Main code
+static void handleAppCmd(struct android_app* app, int32_t appCmd)
+{
+    switch (appCmd)
+    {
+    case APP_CMD_SAVE_STATE:
+        break;
+    case APP_CMD_INIT_WINDOW:
+        Init(app);
+        break;
+    case APP_CMD_TERM_WINDOW:
+        Shutdown();
+        break;
+    case APP_CMD_GAINED_FOCUS:
+    case APP_CMD_LOST_FOCUS:
+        break;
+    }
+}
+
+static int32_t handleInputEvent(struct android_app* app, AInputEvent* inputEvent)
+{
+    return ImGui_ImplAndroid_HandleInputEvent(inputEvent);
+}
+
+void android_main(struct android_app* app)
+{
+    app->onAppCmd = handleAppCmd;
+    app->onInputEvent = handleInputEvent;
+
+    while (true)
+    {
+        int out_events;
+        struct android_poll_source* out_data;
+
+        // Poll all events. If the app is not visible, this loop blocks until g_Initialized == true.
+        while (ALooper_pollAll(g_Initialized ? 0 : -1, NULL, &out_events, (void**)&out_data) >= 0)
+        {
+            // Process one event
+            if (out_data != NULL)
+                out_data->process(app, out_data);
+
+            // Exit the app by returning from within the infinite loop
+            if (app->destroyRequested != 0)
+            {
+                // shutdown() should have been called already while processing the
+                // app command APP_CMD_TERM_WINDOW. But we play save here
+                if (!g_Initialized)
+                    Shutdown();
+
+                return;
+            }
+        }
+
+        // Initiate a new frame
+        MainLoopStep();
+    }
+}
+
+void Init(struct android_app* app)
 {
     if (g_Initialized)
         return;
@@ -70,9 +133,10 @@ void init(struct android_app* app)
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
 
-    // Disable loading/saving of .ini file from disk.
-    // FIXME: Consider using LoadIniSettingsFromMemory() / SaveIniSettingsToMemory() to save in appropriate location for Android.
-    io.IniFilename = NULL;
+    // Redirect loading/saving of .ini file to our location.
+    // Make sure 'g_IniFilename' persists while we use Dear ImGui.
+    g_IniFilename = std::string(app->activity->internalDataPath) + "/imgui.ini";
+    io.IniFilename = g_IniFilename.c_str();;
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
@@ -99,17 +163,17 @@ void init(struct android_app* app)
     //void* font_data;
     //int font_data_size;
     //ImFont* font;
+    //font_data_size = GetAssetData("segoeui.ttf", &font_data);
+    //font = io.Fonts->AddFontFromMemoryTTF(font_data, font_data_size, 16.0f);
+    //IM_ASSERT(font != NULL);
+    //font_data_size = GetAssetData("DroidSans.ttf", &font_data);
+    //font = io.Fonts->AddFontFromMemoryTTF(font_data, font_data_size, 16.0f);
+    //IM_ASSERT(font != NULL);
     //font_data_size = GetAssetData("Roboto-Medium.ttf", &font_data);
     //font = io.Fonts->AddFontFromMemoryTTF(font_data, font_data_size, 16.0f);
     //IM_ASSERT(font != NULL);
     //font_data_size = GetAssetData("Cousine-Regular.ttf", &font_data);
     //font = io.Fonts->AddFontFromMemoryTTF(font_data, font_data_size, 15.0f);
-    //IM_ASSERT(font != NULL);
-    //font_data_size = GetAssetData("DroidSans.ttf", &font_data);
-    //font = io.Fonts->AddFontFromMemoryTTF(font_data, font_data_size, 16.0f);
-    //IM_ASSERT(font != NULL);
-    //font_data_size = GetAssetData("ProggyTiny.ttf", &font_data);
-    //font = io.Fonts->AddFontFromMemoryTTF(font_data, font_data_size, 10.0f);
     //IM_ASSERT(font != NULL);
     //font_data_size = GetAssetData("ArialUni.ttf", &font_data);
     //font = io.Fonts->AddFontFromMemoryTTF(font_data, font_data_size, 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
@@ -122,13 +186,14 @@ void init(struct android_app* app)
     g_Initialized = true;
 }
 
-void tick()
+void MainLoopStep()
 {
     ImGuiIO& io = ImGui::GetIO();
     if (g_EglDisplay == EGL_NO_DISPLAY)
         return;
 
     // Our state
+    // (we use static, which essentially makes the variable globals, as a convenience to keep the example code easy to follow)
     static bool show_demo_window = true;
     static bool show_another_window = false;
     static ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
@@ -152,7 +217,7 @@ void tick()
     if (show_demo_window)
         ImGui::ShowDemoWindow(&show_demo_window);
 
-    // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+    // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
     {
         static float f = 0.0f;
         static int counter = 0;
@@ -194,7 +259,7 @@ void tick()
     eglSwapBuffers(g_EglDisplay, g_EglSurface);
 }
 
-void shutdown()
+void Shutdown()
 {
     if (!g_Initialized)
         return;
@@ -225,63 +290,7 @@ void shutdown()
     g_Initialized = false;
 }
 
-static void handleAppCmd(struct android_app* app, int32_t appCmd)
-{
-    switch (appCmd)
-    {
-    case APP_CMD_SAVE_STATE:
-        break;
-    case APP_CMD_INIT_WINDOW:
-        init(app);
-        break;
-    case APP_CMD_TERM_WINDOW:
-        shutdown();
-        break;
-    case APP_CMD_GAINED_FOCUS:
-        break;
-    case APP_CMD_LOST_FOCUS:
-        break;
-    }
-}
-
-static int32_t handleInputEvent(struct android_app* app, AInputEvent* inputEvent)
-{
-    return ImGui_ImplAndroid_HandleInputEvent(inputEvent);
-}
-
-void android_main(struct android_app* app)
-{
-    app->onAppCmd = handleAppCmd;
-    app->onInputEvent = handleInputEvent;
-
-    while (true)
-    {
-        int out_events;
-        struct android_poll_source* out_data;
-
-        // Poll all events. If the app is not visible, this loop blocks until g_Initialized == true.
-        while (ALooper_pollAll(g_Initialized ? 0 : -1, NULL, &out_events, (void**)&out_data) >= 0)
-        {
-            // Process one event
-            if (out_data != NULL)
-                out_data->process(app, out_data);
-
-            // Exit the app by returning from within the infinite loop
-            if (app->destroyRequested != 0)
-            {
-                // shutdown() should have been called already while processing the
-                // app command APP_CMD_TERM_WINDOW. But we play save here
-                if (!g_Initialized)
-                    shutdown();
-
-                return;
-            }
-        }
-
-        // Initiate a new frame
-        tick();
-    }
-}
+// Helper functions
 
 // Unfortunately, there is no way to show the on-screen input from native code.
 // Therefore, we call ShowSoftKeyboardInput() of the main activity implemented in MainActivity.kt via JNI.

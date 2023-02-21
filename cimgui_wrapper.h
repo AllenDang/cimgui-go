@@ -143,8 +143,8 @@ extern bool wrap_igInputTextWithHint(const char* label,const char* hint,char* bu
 extern bool wrap_igInvisibleButton(const char* str_id,const ImVec2 size);
 extern bool wrap_igIsItemClicked();
 extern bool wrap_igIsItemHovered();
-extern bool wrap_igIsKeyPressed(ImGuiKey key);
-extern bool wrap_igIsMouseClicked(ImGuiMouseButton button);
+extern bool wrap_igIsKeyPressed_Bool(ImGuiKey key);
+extern bool wrap_igIsMouseClicked_Bool(ImGuiMouseButton button);
 extern bool wrap_igIsMouseDragging(ImGuiMouseButton button);
 extern bool wrap_igIsMouseHoveringRect(const ImVec2 r_min,const ImVec2 r_max);
 extern bool wrap_igIsMousePosValid();
@@ -219,7 +219,6 @@ extern void wrap_igTableSetBgColor(ImGuiTableBgTarget target,ImU32 color);
 extern void wrap_igTableSetupColumn(const char* label);
 extern void wrap_igTextUnformatted(const char* text);
 extern bool wrap_igTreeNodeEx_Str(const char* label);
-extern void wrap_igTreePush_Ptr();
 extern void wrap_igUnindent();
 extern bool wrap_igVSliderFloat(const char* label,const ImVec2 size,float* v,float v_min,float v_max);
 extern bool wrap_igVSliderInt(const char* label,const ImVec2 size,int* v,int v_min,int v_max);

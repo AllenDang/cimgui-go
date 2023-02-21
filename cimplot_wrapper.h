@@ -39,7 +39,7 @@ extern void wrap_ImPlot_DestroyContext();
 extern bool wrap_ImPlot_DragLineX(int id,double* x,const ImVec4 col);
 extern bool wrap_ImPlot_DragLineY(int id,double* y,const ImVec4 col);
 extern bool wrap_ImPlot_DragPoint(int id,double* x,double* y,const ImVec4 col);
-extern bool wrap_ImPlot_DragRect(int id,double* x_min,double* y_min,double* x_max,double* y_max,const ImVec4 col);
+extern bool wrap_ImPlot_DragRect(int id,double* x1,double* y1,double* x2,double* y2,const ImVec4 col);
 extern void wrap_ImPlot_GetColormapColor(ImVec4* pOut,int idx);
 extern int wrap_ImPlot_GetColormapSize();
 extern void wrap_ImPlot_GetLocationPos(ImVec2* pOut,const ImRect outer_rect,const ImVec2 inner_size,ImPlotLocation location);

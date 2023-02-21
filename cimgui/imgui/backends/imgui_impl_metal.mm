@@ -13,7 +13,7 @@
 
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
-//  2022-XX-XX: Metal: Added support for multiple windows via the ImGuiPlatformIO interface.
+//  2023-XX-XX: Metal: Added support for multiple windows via the ImGuiPlatformIO interface.
 //  2022-08-23: Metal: Update deprecated property 'sampleCount'->'rasterSampleCount'.
 //  2022-07-05: Metal: Add dispatch synchronization.
 //  2022-06-30: Metal: Use __bridge for ARC based systems.
@@ -84,7 +84,7 @@ struct ImGui_ImplMetal_Data
 };
 
 static ImGui_ImplMetal_Data*    ImGui_ImplMetal_CreateBackendData() { return IM_NEW(ImGui_ImplMetal_Data)(); }
-static ImGui_ImplMetal_Data*    ImGui_ImplMetal_GetBackendData()    { return ImGui::GetCurrentContext() ? (ImGui_ImplMetal_Data*)ImGui::GetIO().BackendRendererUserData : NULL; }
+static ImGui_ImplMetal_Data*    ImGui_ImplMetal_GetBackendData()    { return ImGui::GetCurrentContext() ? (ImGui_ImplMetal_Data*)ImGui::GetIO().BackendRendererUserData : nullptr; }
 static void                     ImGui_ImplMetal_DestroyBackendData(){ IM_DELETE(ImGui_ImplMetal_GetBackendData()); }
 
 static inline CFTimeInterval    GetMachAbsoluteTimeInSeconds()      { return (CFTimeInterval)(double)(clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1e9); }
@@ -310,7 +310,7 @@ void ImGui_ImplMetal_RenderDrawData(ImDrawData* drawData, id<MTLCommandBuffer> c
     {
         dispatch_async(dispatch_get_main_queue(), ^{
             ImGui_ImplMetal_Data* bd = ImGui_ImplMetal_GetBackendData();
-            if (bd != NULL)
+            if (bd != nullptr)
             {
                 @synchronized(bd->SharedMetalContext.bufferCache)
                 {
@@ -400,7 +400,7 @@ struct ImGuiViewportDataMetal
     CAMetalLayer*               MetalLayer;
     id<MTLCommandQueue>         CommandQueue;
     MTLRenderPassDescriptor*    RenderPassDescriptor;
-    void*                       Handle = NULL;
+    void*                       Handle = nullptr;
     bool                        FirstFrame = true;
 };
 
@@ -413,9 +413,9 @@ static void ImGui_ImplMetal_CreateWindow(ImGuiViewport* viewport)
     // PlatformHandleRaw should always be a NSWindow*, whereas PlatformHandle might be a higher-level handle (e.g. GLFWWindow*, SDL_Window*).
     // Some back-ends will leave PlatformHandleRaw NULL, in which case we assume PlatformHandle will contain the NSWindow*.
     void* handle = viewport->PlatformHandleRaw ? viewport->PlatformHandleRaw : viewport->PlatformHandle;
-    IM_ASSERT(handle != NULL);
+    IM_ASSERT(handle != nullptr);
 
-    id<MTLDevice> device = [bd->SharedMetalContext.depthStencilState device];
+    id<MTLDevice> device = bd->SharedMetalContext.device;
     CAMetalLayer* layer = [CAMetalLayer layer];
     layer.device = device;
     layer.framebufferOnly = YES;
@@ -437,7 +437,7 @@ static void ImGui_ImplMetal_DestroyWindow(ImGuiViewport* viewport)
     // The main viewport (owned by the application) will always have RendererUserData == NULL since we didn't create the data for it.
     if (ImGuiViewportDataMetal* data = (ImGuiViewportDataMetal*)viewport->RendererUserData)
         IM_DELETE(data);
-    viewport->RendererUserData = NULL;
+    viewport->RendererUserData = nullptr;
 }
 
 inline static CGSize MakeScaledSize(CGSize size, CGFloat scale)

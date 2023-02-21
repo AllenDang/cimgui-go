@@ -64,14 +64,16 @@ enum ImPlotAxisFlags_ {
     ImPlotAxisFlags_NoTickLabels = 1 << 3,
     ImPlotAxisFlags_NoInitialFit = 1 << 4,
     ImPlotAxisFlags_NoMenus = 1 << 5,
-    ImPlotAxisFlags_Opposite = 1 << 6,
-    ImPlotAxisFlags_Foreground = 1 << 7,
-    ImPlotAxisFlags_Invert = 1 << 8,
-    ImPlotAxisFlags_AutoFit = 1 << 9,
-    ImPlotAxisFlags_RangeFit = 1 << 10,
-    ImPlotAxisFlags_PanStretch = 1 << 11,
-    ImPlotAxisFlags_LockMin = 1 << 12,
-    ImPlotAxisFlags_LockMax = 1 << 13,
+    ImPlotAxisFlags_NoSideSwitch = 1 << 6,
+    ImPlotAxisFlags_NoHighlight = 1 << 7,
+    ImPlotAxisFlags_Opposite = 1 << 8,
+    ImPlotAxisFlags_Foreground = 1 << 9,
+    ImPlotAxisFlags_Invert = 1 << 10,
+    ImPlotAxisFlags_AutoFit = 1 << 11,
+    ImPlotAxisFlags_RangeFit = 1 << 12,
+    ImPlotAxisFlags_PanStretch = 1 << 13,
+    ImPlotAxisFlags_LockMin = 1 << 14,
+    ImPlotAxisFlags_LockMax = 1 << 15,
     ImPlotAxisFlags_Lock = ImPlotAxisFlags_LockMin | ImPlotAxisFlags_LockMax,
     ImPlotAxisFlags_NoDecorations = ImPlotAxisFlags_NoLabel | ImPlotAxisFlags_NoGridLines | ImPlotAxisFlags_NoTickMarks | ImPlotAxisFlags_NoTickLabels,
     ImPlotAxisFlags_AuxDefault = ImPlotAxisFlags_NoGridLines | ImPlotAxisFlags_Opposite
@@ -98,6 +100,7 @@ enum ImPlotLegendFlags_ {
     ImPlotLegendFlags_NoMenus = 1 << 3,
     ImPlotLegendFlags_Outside = 1 << 4,
     ImPlotLegendFlags_Horizontal = 1 << 5,
+    ImPlotLegendFlags_Sort = 1 << 6,
 };
 enum ImPlotMouseTextFlags_ {
     ImPlotMouseTextFlags_None = 0,
@@ -129,6 +132,7 @@ enum ImPlotLineFlags_ {
     ImPlotLineFlags_Loop = 1 << 11,
     ImPlotLineFlags_SkipNaN = 1 << 12,
     ImPlotLineFlags_NoClip = 1 << 13,
+    ImPlotLineFlags_Shaded = 1 << 14,
 };
 enum ImPlotScatterFlags_ {
     ImPlotScatterFlags_None = 0,
@@ -136,7 +140,8 @@ enum ImPlotScatterFlags_ {
 };
 enum ImPlotStairsFlags_ {
     ImPlotStairsFlags_None = 0,
-    ImPlotStairsFlags_PreStep = 1 << 10
+    ImPlotStairsFlags_PreStep = 1 << 10,
+    ImPlotStairsFlags_Shaded = 1 << 11
 };
 enum ImPlotShadedFlags_ {
     ImPlotShadedFlags_None = 0
@@ -371,16 +376,16 @@ struct ImPlotStyle {
 };
 struct ImPlotInputMap {
     ImGuiMouseButton Pan;
-    ImGuiModFlags PanMod;
+    int PanMod;
     ImGuiMouseButton Fit;
     ImGuiMouseButton Select;
     ImGuiMouseButton SelectCancel;
-    ImGuiModFlags SelectMod;
-    ImGuiModFlags SelectHorzMod;
-    ImGuiModFlags SelectVertMod;
+    int SelectMod;
+    int SelectHorzMod;
+    int SelectVertMod;
     ImGuiMouseButton Menu;
-    ImGuiModFlags OverrideMod;
-    ImGuiModFlags ZoomMod;
+    int OverrideMod;
+    int ZoomMod;
     float ZoomRate;
                ImPlotInputMap();
 };
@@ -458,7 +463,7 @@ template <typename T> void PlotDigital(const char* label_id, const T* xs, const 
            bool DragPoint(int id, double* x, double* y, const ImVec4& col, float size = 4, ImPlotDragToolFlags flags=0);
            bool DragLineX(int id, double* x, const ImVec4& col, float thickness = 1, ImPlotDragToolFlags flags=0);
            bool DragLineY(int id, double* y, const ImVec4& col, float thickness = 1, ImPlotDragToolFlags flags=0);
-           bool DragRect(int id, double* x_min, double* y_min, double* x_max, double* y_max, const ImVec4& col, ImPlotDragToolFlags flags=0);
+           bool DragRect(int id, double* x1, double* y1, double* x2, double* y2, const ImVec4& col, ImPlotDragToolFlags flags=0);
            void Annotation(double x, double y, const ImVec4& col, const ImVec2& pix_offset, bool clamp, bool round = false);
            void Annotation(double x, double y, const ImVec4& col, const ImVec2& pix_offset, bool clamp, const char* fmt, ...) __attribute__((format(printf, 6, 6 +1)));
            void AnnotationV(double x, double y, const ImVec4& col, const ImVec2& pix_offset, bool clamp, const char* fmt, va_list args) __attribute__((format(printf, 6, 0)));
@@ -606,7 +611,7 @@ static inline double ImMean(const T* values, int count) {
     double den = 1.0 / count;
     double mu = 0;
     for (int i = 0; i < count; ++i)
-        mu += values[i] * den;
+        mu += (double)values[i] * den;
     return mu;
 }
 template <typename T>
@@ -615,7 +620,7 @@ static inline double ImStdDev(const T* values, int count) {
     double mu = ImMean(values, count);
     double x = 0;
     for (int i = 0; i < count; ++i)
-        x += (values[i] - mu) * (values[i] - mu) * den;
+        x += ((double)values[i] - mu) * ((double)values[i] - mu) * den;
     return sqrt(x);
 }
 static inline ImU32 ImMixU32(ImU32 a, ImU32 b, ImU32 s) {
@@ -675,6 +680,7 @@ enum ImPlotTimeFmt_ {
     ImPlotTimeFmt_SUs,
     ImPlotTimeFmt_SMs,
     ImPlotTimeFmt_S,
+    ImPlotTimeFmt_MinSMs,
     ImPlotTimeFmt_HrMinSMs,
     ImPlotTimeFmt_HrMinS,
     ImPlotTimeFmt_HrMin,
@@ -811,6 +817,11 @@ struct ImPlotAnnotation {
     ImU32 ColorFg;
     int TextOffset;
     bool Clamp;
+    ImPlotAnnotation() {
+        ColorBg = ColorFg = 0;
+        TextOffset = 0;
+        Clamp = false;
+    }
 };
 struct ImPlotAnnotationCollection {
     ImVector<ImPlotAnnotation> Annotations;
@@ -895,6 +906,7 @@ struct ImPlotTick
     int Level;
     int Idx;
     ImPlotTick(double value, bool major, int level, bool show_label) {
+        PixelPos = 0;
         PlotPos = value;
         Major = major;
         ShowLabel = show_label;
@@ -1001,6 +1013,7 @@ struct ImPlotAxis
     bool Hovered;
     bool Held;
     ImPlotAxis() {
+        ID = 0;
         Flags = PreviousFlags = ImPlotAxisFlags_None;
         Range.Min = 0;
         Range.Max = 1;
@@ -1093,7 +1106,7 @@ struct ImPlotAxis
     }
     inline void SetAspect(double unit_per_pix) {
         double new_size = unit_per_pix * PixelSize();
-        double delta = (new_size - Range.Size()) * 0.5f;
+        double delta = (new_size - Range.Size()) * 0.5;
         if (IsLocked())
             return;
         else if (IsLockedMin() && !IsLockedMax())
@@ -1119,7 +1132,7 @@ struct ImPlotAxis
             Range.Max += delta;
         }
         if (z > ConstraintZoom.Max) {
-            double delta = (z - ConstraintZoom.Max) * 0.5f;
+            double delta = (z - ConstraintZoom.Max) * 0.5;
             Range.Min += delta;
             Range.Max -= delta;
         }
@@ -1255,6 +1268,7 @@ struct ImPlotItem
     bool SeenThisFrame;
     ImPlotItem() {
         ID = 0;
+        Color = (((ImU32)(255)<<24) | ((ImU32)(255)<<16) | ((ImU32)(255)<<8) | ((ImU32)(255)<<0));
         NameOffset = -1;
         Show = true;
         SeenThisFrame = false;
@@ -1288,7 +1302,7 @@ struct ImPlotItemGroup
     ImPlotLegend Legend;
     ImPool<ImPlotItem> ItemPool;
     int ColormapIdx;
-    ImPlotItemGroup() { ColormapIdx = 0; }
+    ImPlotItemGroup() { ID = 0; ColormapIdx = 0; }
     int GetItemCount() const { return ItemPool.GetBufSize(); }
     ImGuiID GetItemID(const char* label_id) { return ImGui::GetID(label_id); }
     ImPlotItem* GetItem(ImGuiID id) { return ItemPool.GetByKey(id); }
@@ -1416,11 +1430,15 @@ struct ImPlotSubplot {
     bool FrameHovered;
     bool HasTitle;
     ImPlotSubplot() {
+        ID = 0;
+        Flags = PreviousFlags = ImPlotSubplotFlags_None;
         Rows = Cols = CurrentIdx = 0;
         FrameHovered = false;
         Items.Legend.Location = ImPlotLocation_North;
         Items.Legend.Flags = ImPlotLegendFlags_Horizontal|ImPlotLegendFlags_Outside;
         Items.Legend.CanGoInside = false;
+        TempSizes[0] = TempSizes[1] = 0;
+        FrameHovered = false;
         HasTitle = false;
     }
 };
@@ -1495,6 +1513,7 @@ struct ImPlotContext {
     ImPlotInputMap InputMap;
     bool OpenContextThisFrame;
     ImGuiTextBuffer MousePosStringBuilder;
+    ImPlotItemGroup* SortItems;
     ImPool<ImPlotAlignmentData> AlignmentData;
     ImPlotAlignmentData* CurrentAlignmentH;
     ImPlotAlignmentData* CurrentAlignmentV;

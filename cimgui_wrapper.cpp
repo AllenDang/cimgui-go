@@ -138,8 +138,8 @@ bool wrap_igInputTextWithHint(const char* label,const char* hint,char* buf,size_
 bool wrap_igInvisibleButton(const char* str_id,const ImVec2 size) { return igInvisibleButton(str_id,size,0); }
 bool wrap_igIsItemClicked() { return igIsItemClicked(0); }
 bool wrap_igIsItemHovered() { return igIsItemHovered(0); }
-bool wrap_igIsKeyPressed(ImGuiKey key) { return igIsKeyPressed(key,true); }
-bool wrap_igIsMouseClicked(ImGuiMouseButton button) { return igIsMouseClicked(button,false); }
+bool wrap_igIsKeyPressed_Bool(ImGuiKey key) { return igIsKeyPressed_Bool(key,true); }
+bool wrap_igIsMouseClicked_Bool(ImGuiMouseButton button) { return igIsMouseClicked_Bool(button,false); }
 bool wrap_igIsMouseDragging(ImGuiMouseButton button) { return igIsMouseDragging(button,-1.0f); }
 bool wrap_igIsMouseHoveringRect(const ImVec2 r_min,const ImVec2 r_max) { return igIsMouseHoveringRect(r_min,r_max,true); }
 bool wrap_igIsMousePosValid() { return igIsMousePosValid(NULL); }
@@ -214,7 +214,6 @@ void wrap_igTableSetBgColor(ImGuiTableBgTarget target,ImU32 color) { igTableSetB
 void wrap_igTableSetupColumn(const char* label) { igTableSetupColumn(label,0,0.0f,0); }
 void wrap_igTextUnformatted(const char* text) { wrap_igTextUnformattedV(text); }
 bool wrap_igTreeNodeEx_Str(const char* label) { return igTreeNodeEx_Str(label,0); }
-void wrap_igTreePush_Ptr() { igTreePush_Ptr(NULL); }
 void wrap_igUnindent() { igUnindent(0.0f); }
 bool wrap_igVSliderFloat(const char* label,const ImVec2 size,float* v,float v_min,float v_max) { return igVSliderFloat(label,size,v,v_min,v_max,"%.3f",0); }
 bool wrap_igVSliderInt(const char* label,const ImVec2 size,int* v,int v_min,int v_max) { return igVSliderInt(label,size,v,v_min,v_max,"%d",0); }

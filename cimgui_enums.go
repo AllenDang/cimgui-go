@@ -96,6 +96,8 @@ const (
 	ButtonFlagsNoHoldingActiveId             = 131072
 	ButtonFlagsNoNavFocus                    = 262144
 	ButtonFlagsNoHoveredOnFocus              = 524288
+	ButtonFlagsNoSetKeyOwner                 = 1048576
+	ButtonFlagsNoTestKeyOwner                = 2097152
 	ButtonFlagsPressedOnMask                 = 1008
 	ButtonFlagsPressedOnDefault              = 32
 )
@@ -434,6 +436,9 @@ const (
 	HoveredFlagsNoNavOverride                = 1024
 	HoveredFlagsRectOnly                     = 416
 	HoveredFlagsRootAndChildWindows          = 3
+	HoveredFlagsDelayNormal                  = 2048
+	HoveredFlagsDelayShort                   = 4096
+	HoveredFlagsNoSharedDelay                = 8192
 )
 
 // original name: ImGuiInputEventType
@@ -455,12 +460,30 @@ const (
 type InputFlags int
 
 const (
-	InputFlagsNone               = 0
-	InputFlagsRepeat             = 1
-	InputFlagsRepeatRateDefault  = 2
-	InputFlagsRepeatRateNavMove  = 4
-	InputFlagsRepeatRateNavTweak = 8
-	InputFlagsRepeatRateMask     = 14
+	InputFlagsNone                       = 0
+	InputFlagsRepeat                     = 1
+	InputFlagsRepeatRateDefault          = 2
+	InputFlagsRepeatRateNavMove          = 4
+	InputFlagsRepeatRateNavTweak         = 8
+	InputFlagsRepeatRateMask             = 14
+	InputFlagsCondHovered                = 16
+	InputFlagsCondActive                 = 32
+	InputFlagsCondDefault                = 48
+	InputFlagsCondMask                   = 48
+	InputFlagsLockThisFrame              = 64
+	InputFlagsLockUntilRelease           = 128
+	InputFlagsRouteFocused               = 256
+	InputFlagsRouteGlobalLow             = 512
+	InputFlagsRouteGlobal                = 1024
+	InputFlagsRouteGlobalHigh            = 2048
+	InputFlagsRouteMask                  = 3840
+	InputFlagsRouteAlways                = 4096
+	InputFlagsRouteUnlessBgFocused       = 8192
+	InputFlagsRouteExtraMask             = 12288
+	InputFlagsSupportedByIsKeyPressed    = 15
+	InputFlagsSupportedByShortcut        = 16143
+	InputFlagsSupportedBySetKeyOwner     = 192
+	InputFlagsSupportedBySetItemKeyOwner = 240
 )
 
 // original name: ImGuiInputSource
@@ -510,6 +533,7 @@ const (
 	InputTextFlagsCharsScientific     = 131072
 	InputTextFlagsCallbackResize      = 262144
 	InputTextFlagsCallbackEdit        = 524288
+	InputTextFlagsEscapeClearsAll     = 1048576
 )
 
 // original name: ImGuiItemFlags_
@@ -525,7 +549,8 @@ const (
 	ItemFlagsSelectableDontClosePopup = 32
 	ItemFlagsMixedValue               = 64
 	ItemFlagsReadOnly                 = 128
-	ItemFlagsInputable                = 256
+	ItemFlagsNoWindowHoverableCheck   = 256
+	ItemFlagsInputable                = 1024
 )
 
 // original name: ImGuiItemStatusFlags_
@@ -542,181 +567,167 @@ const (
 	ItemStatusFlagsDeactivated      = 64
 	ItemStatusFlagsHoveredWindow    = 128
 	ItemStatusFlagsFocusedByTabbing = 256
+	ItemStatusFlagsVisible          = 512
 )
 
-// original name: ImGuiKeyPrivate_
-type KeyPrivate int
-
-const (
-	KeyLegacyNativeKeyBEGIN = 0
-	KeyLegacyNativeKeyEND   = 512
-	KeyKeyboardBEGIN        = 512
-	KeyKeyboardEND          = 617
-	KeyGamepadBEGIN         = 617
-	KeyGamepadEND           = 641
-	KeyAliasesBEGIN         = 645
-	KeyAliasesEND           = 652
-	KeyNavKeyboardTweakSlow = 641
-	KeyNavKeyboardTweakFast = 642
-	KeyNavGamepadTweakSlow  = 627
-	KeyNavGamepadTweakFast  = 628
-	KeyNavGamepadActivate   = 622
-	KeyNavGamepadCancel     = 620
-	KeyNavGamepadMenu       = 619
-	KeyNavGamepadInput      = 621
-)
-
-// original name: ImGuiKey_
+// original name: ImGuiKey
 type Key int
 
 const (
-	KeyNone               = 0
-	KeyTab                = 512
-	KeyLeftArrow          = 513
-	KeyRightArrow         = 514
-	KeyUpArrow            = 515
-	KeyDownArrow          = 516
-	KeyPageUp             = 517
-	KeyPageDown           = 518
-	KeyHome               = 519
-	KeyEnd                = 520
-	KeyInsert             = 521
-	KeyDelete             = 522
-	KeyBackspace          = 523
-	KeySpace              = 524
-	KeyEnter              = 525
-	KeyEscape             = 526
-	KeyLeftCtrl           = 527
-	KeyLeftShift          = 528
-	KeyLeftAlt            = 529
-	KeyLeftSuper          = 530
-	KeyRightCtrl          = 531
-	KeyRightShift         = 532
-	KeyRightAlt           = 533
-	KeyRightSuper         = 534
-	KeyMenu               = 535
-	Key0                  = 536
-	Key1                  = 537
-	Key2                  = 538
-	Key3                  = 539
-	Key4                  = 540
-	Key5                  = 541
-	Key6                  = 542
-	Key7                  = 543
-	Key8                  = 544
-	Key9                  = 545
-	KeyA                  = 546
-	KeyB                  = 547
-	KeyC                  = 548
-	KeyD                  = 549
-	KeyE                  = 550
-	KeyF                  = 551
-	KeyG                  = 552
-	KeyH                  = 553
-	KeyI                  = 554
-	KeyJ                  = 555
-	KeyK                  = 556
-	KeyL                  = 557
-	KeyM                  = 558
-	KeyN                  = 559
-	KeyO                  = 560
-	KeyP                  = 561
-	KeyQ                  = 562
-	KeyR                  = 563
-	KeyS                  = 564
-	KeyT                  = 565
-	KeyU                  = 566
-	KeyV                  = 567
-	KeyW                  = 568
-	KeyX                  = 569
-	KeyY                  = 570
-	KeyZ                  = 571
-	KeyF1                 = 572
-	KeyF2                 = 573
-	KeyF3                 = 574
-	KeyF4                 = 575
-	KeyF5                 = 576
-	KeyF6                 = 577
-	KeyF7                 = 578
-	KeyF8                 = 579
-	KeyF9                 = 580
-	KeyF10                = 581
-	KeyF11                = 582
-	KeyF12                = 583
-	KeyApostrophe         = 584
-	KeyComma              = 585
-	KeyMinus              = 586
-	KeyPeriod             = 587
-	KeySlash              = 588
-	KeySemicolon          = 589
-	KeyEqual              = 590
-	KeyLeftBracket        = 591
-	KeyBackslash          = 592
-	KeyRightBracket       = 593
-	KeyGraveAccent        = 594
-	KeyCapsLock           = 595
-	KeyScrollLock         = 596
-	KeyNumLock            = 597
-	KeyPrintScreen        = 598
-	KeyPause              = 599
-	KeyKeypad0            = 600
-	KeyKeypad1            = 601
-	KeyKeypad2            = 602
-	KeyKeypad3            = 603
-	KeyKeypad4            = 604
-	KeyKeypad5            = 605
-	KeyKeypad6            = 606
-	KeyKeypad7            = 607
-	KeyKeypad8            = 608
-	KeyKeypad9            = 609
-	KeyKeypadDecimal      = 610
-	KeyKeypadDivide       = 611
-	KeyKeypadMultiply     = 612
-	KeyKeypadSubtract     = 613
-	KeyKeypadAdd          = 614
-	KeyKeypadEnter        = 615
-	KeyKeypadEqual        = 616
-	KeyGamepadStart       = 617
-	KeyGamepadBack        = 618
-	KeyGamepadFaceLeft    = 619
-	KeyGamepadFaceRight   = 620
-	KeyGamepadFaceUp      = 621
-	KeyGamepadFaceDown    = 622
-	KeyGamepadDpadLeft    = 623
-	KeyGamepadDpadRight   = 624
-	KeyGamepadDpadUp      = 625
-	KeyGamepadDpadDown    = 626
-	KeyGamepadL1          = 627
-	KeyGamepadR1          = 628
-	KeyGamepadL2          = 629
-	KeyGamepadR2          = 630
-	KeyGamepadL3          = 631
-	KeyGamepadR3          = 632
-	KeyGamepadLStickLeft  = 633
-	KeyGamepadLStickRight = 634
-	KeyGamepadLStickUp    = 635
-	KeyGamepadLStickDown  = 636
-	KeyGamepadRStickLeft  = 637
-	KeyGamepadRStickRight = 638
-	KeyGamepadRStickUp    = 639
-	KeyGamepadRStickDown  = 640
-	KeyModCtrl            = 641
-	KeyModShift           = 642
-	KeyModAlt             = 643
-	KeyModSuper           = 644
-	KeyMouseLeft          = 645
-	KeyMouseRight         = 646
-	KeyMouseMiddle        = 647
-	KeyMouseX1            = 648
-	KeyMouseX2            = 649
-	KeyMouseWheelX        = 650
-	KeyMouseWheelY        = 651
-	KeyCOUNT              = 652
-	KeyNamedKeyBEGIN      = 512
-	KeyNamedKeyEND        = 652
-	KeyNamedKeyCOUNT      = 140
-	KeyKeysDataSIZE       = 652
-	KeyKeysDataOFFSET     = 0
+	KeyNone                = 0
+	KeyTab                 = 512
+	KeyLeftArrow           = 513
+	KeyRightArrow          = 514
+	KeyUpArrow             = 515
+	KeyDownArrow           = 516
+	KeyPageUp              = 517
+	KeyPageDown            = 518
+	KeyHome                = 519
+	KeyEnd                 = 520
+	KeyInsert              = 521
+	KeyDelete              = 522
+	KeyBackspace           = 523
+	KeySpace               = 524
+	KeyEnter               = 525
+	KeyEscape              = 526
+	KeyLeftCtrl            = 527
+	KeyLeftShift           = 528
+	KeyLeftAlt             = 529
+	KeyLeftSuper           = 530
+	KeyRightCtrl           = 531
+	KeyRightShift          = 532
+	KeyRightAlt            = 533
+	KeyRightSuper          = 534
+	KeyMenu                = 535
+	Key0                   = 536
+	Key1                   = 537
+	Key2                   = 538
+	Key3                   = 539
+	Key4                   = 540
+	Key5                   = 541
+	Key6                   = 542
+	Key7                   = 543
+	Key8                   = 544
+	Key9                   = 545
+	KeyA                   = 546
+	KeyB                   = 547
+	KeyC                   = 548
+	KeyD                   = 549
+	KeyE                   = 550
+	KeyF                   = 551
+	KeyG                   = 552
+	KeyH                   = 553
+	KeyI                   = 554
+	KeyJ                   = 555
+	KeyK                   = 556
+	KeyL                   = 557
+	KeyM                   = 558
+	KeyN                   = 559
+	KeyO                   = 560
+	KeyP                   = 561
+	KeyQ                   = 562
+	KeyR                   = 563
+	KeyS                   = 564
+	KeyT                   = 565
+	KeyU                   = 566
+	KeyV                   = 567
+	KeyW                   = 568
+	KeyX                   = 569
+	KeyY                   = 570
+	KeyZ                   = 571
+	KeyF1                  = 572
+	KeyF2                  = 573
+	KeyF3                  = 574
+	KeyF4                  = 575
+	KeyF5                  = 576
+	KeyF6                  = 577
+	KeyF7                  = 578
+	KeyF8                  = 579
+	KeyF9                  = 580
+	KeyF10                 = 581
+	KeyF11                 = 582
+	KeyF12                 = 583
+	KeyApostrophe          = 584
+	KeyComma               = 585
+	KeyMinus               = 586
+	KeyPeriod              = 587
+	KeySlash               = 588
+	KeySemicolon           = 589
+	KeyEqual               = 590
+	KeyLeftBracket         = 591
+	KeyBackslash           = 592
+	KeyRightBracket        = 593
+	KeyGraveAccent         = 594
+	KeyCapsLock            = 595
+	KeyScrollLock          = 596
+	KeyNumLock             = 597
+	KeyPrintScreen         = 598
+	KeyPause               = 599
+	KeyKeypad0             = 600
+	KeyKeypad1             = 601
+	KeyKeypad2             = 602
+	KeyKeypad3             = 603
+	KeyKeypad4             = 604
+	KeyKeypad5             = 605
+	KeyKeypad6             = 606
+	KeyKeypad7             = 607
+	KeyKeypad8             = 608
+	KeyKeypad9             = 609
+	KeyKeypadDecimal       = 610
+	KeyKeypadDivide        = 611
+	KeyKeypadMultiply      = 612
+	KeyKeypadSubtract      = 613
+	KeyKeypadAdd           = 614
+	KeyKeypadEnter         = 615
+	KeyKeypadEqual         = 616
+	KeyGamepadStart        = 617
+	KeyGamepadBack         = 618
+	KeyGamepadFaceLeft     = 619
+	KeyGamepadFaceRight    = 620
+	KeyGamepadFaceUp       = 621
+	KeyGamepadFaceDown     = 622
+	KeyGamepadDpadLeft     = 623
+	KeyGamepadDpadRight    = 624
+	KeyGamepadDpadUp       = 625
+	KeyGamepadDpadDown     = 626
+	KeyGamepadL1           = 627
+	KeyGamepadR1           = 628
+	KeyGamepadL2           = 629
+	KeyGamepadR2           = 630
+	KeyGamepadL3           = 631
+	KeyGamepadR3           = 632
+	KeyGamepadLStickLeft   = 633
+	KeyGamepadLStickRight  = 634
+	KeyGamepadLStickUp     = 635
+	KeyGamepadLStickDown   = 636
+	KeyGamepadRStickLeft   = 637
+	KeyGamepadRStickRight  = 638
+	KeyGamepadRStickUp     = 639
+	KeyGamepadRStickDown   = 640
+	KeyMouseLeft           = 641
+	KeyMouseRight          = 642
+	KeyMouseMiddle         = 643
+	KeyMouseX1             = 644
+	KeyMouseX2             = 645
+	KeyMouseWheelX         = 646
+	KeyMouseWheelY         = 647
+	KeyReservedForModCtrl  = 648
+	KeyReservedForModShift = 649
+	KeyReservedForModAlt   = 650
+	KeyReservedForModSuper = 651
+	KeyCOUNT               = 652
+	ModNone                = 0
+	ModCtrl                = 4096
+	ModShift               = 8192
+	ModAlt                 = 16384
+	ModSuper               = 32768
+	ModShortcut            = 2048
+	ModMask                = 63488
+	KeyNamedKeyBEGIN       = 512
+	KeyNamedKeyEND         = 652
+	KeyNamedKeyCOUNT       = 140
+	KeyKeysDataSIZE        = 652
+	KeyKeysDataOFFSET      = 0
 )
 
 // original name: ImGuiLayoutType_
@@ -725,6 +736,21 @@ type LayoutType int
 const (
 	LayoutTypeHorizontal = 0
 	LayoutTypeVertical   = 1
+)
+
+// original name: ImGuiLocKey
+type LocKey int
+
+const (
+	LocKeyTableSizeOne         = 0
+	LocKeyTableSizeAllFit      = 1
+	LocKeyTableSizeAllDefault  = 2
+	LocKeyTableResetOrder      = 3
+	LocKeyWindowingMainMenuBar = 4
+	LocKeyWindowingPopup       = 5
+	LocKeyWindowingUntitled    = 6
+	LocKeyDockingHideTabBar    = 7
+	LocKeyCOUNT                = 8
 )
 
 // original name: ImGuiLogType
@@ -736,18 +762,6 @@ const (
 	LogTypeFile      = 2
 	LogTypeBuffer    = 3
 	LogTypeClipboard = 4
-)
-
-// original name: ImGuiModFlags_
-type ModFlags int
-
-const (
-	ModFlagsNone  = 0
-	ModFlagsCtrl  = 1
-	ModFlagsShift = 2
-	ModFlagsAlt   = 4
-	ModFlagsSuper = 8
-	ModFlagsAll   = 15
 )
 
 // original name: ImGuiMouseButton_
@@ -938,9 +952,9 @@ const (
 	SelectableFlagsSelectOnClick        = 4194304
 	SelectableFlagsSelectOnRelease      = 8388608
 	SelectableFlagsSpanAvailWidth       = 16777216
-	SelectableFlagsDrawHoveredWhenHeld  = 33554432
-	SelectableFlagsSetNavIdOnHover      = 67108864
-	SelectableFlagsNoPadWithHalfSpacing = 134217728
+	SelectableFlagsSetNavIdOnHover      = 33554432
+	SelectableFlagsNoPadWithHalfSpacing = 67108864
+	SelectableFlagsNoSetKeyOwner        = 134217728
 )
 
 // original name: ImGuiSelectableFlags_
@@ -998,32 +1012,35 @@ const (
 type StyleVar int
 
 const (
-	StyleVarAlpha               = 0
-	StyleVarDisabledAlpha       = 1
-	StyleVarWindowPadding       = 2
-	StyleVarWindowRounding      = 3
-	StyleVarWindowBorderSize    = 4
-	StyleVarWindowMinSize       = 5
-	StyleVarWindowTitleAlign    = 6
-	StyleVarChildRounding       = 7
-	StyleVarChildBorderSize     = 8
-	StyleVarPopupRounding       = 9
-	StyleVarPopupBorderSize     = 10
-	StyleVarFramePadding        = 11
-	StyleVarFrameRounding       = 12
-	StyleVarFrameBorderSize     = 13
-	StyleVarItemSpacing         = 14
-	StyleVarItemInnerSpacing    = 15
-	StyleVarIndentSpacing       = 16
-	StyleVarCellPadding         = 17
-	StyleVarScrollbarSize       = 18
-	StyleVarScrollbarRounding   = 19
-	StyleVarGrabMinSize         = 20
-	StyleVarGrabRounding        = 21
-	StyleVarTabRounding         = 22
-	StyleVarButtonTextAlign     = 23
-	StyleVarSelectableTextAlign = 24
-	StyleVarCOUNT               = 25
+	StyleVarAlpha                   = 0
+	StyleVarDisabledAlpha           = 1
+	StyleVarWindowPadding           = 2
+	StyleVarWindowRounding          = 3
+	StyleVarWindowBorderSize        = 4
+	StyleVarWindowMinSize           = 5
+	StyleVarWindowTitleAlign        = 6
+	StyleVarChildRounding           = 7
+	StyleVarChildBorderSize         = 8
+	StyleVarPopupRounding           = 9
+	StyleVarPopupBorderSize         = 10
+	StyleVarFramePadding            = 11
+	StyleVarFrameRounding           = 12
+	StyleVarFrameBorderSize         = 13
+	StyleVarItemSpacing             = 14
+	StyleVarItemInnerSpacing        = 15
+	StyleVarIndentSpacing           = 16
+	StyleVarCellPadding             = 17
+	StyleVarScrollbarSize           = 18
+	StyleVarScrollbarRounding       = 19
+	StyleVarGrabMinSize             = 20
+	StyleVarGrabRounding            = 21
+	StyleVarTabRounding             = 22
+	StyleVarButtonTextAlign         = 23
+	StyleVarSelectableTextAlign     = 24
+	StyleVarSeparatorTextBorderSize = 25
+	StyleVarSeparatorTextAlign      = 26
+	StyleVarSeparatorTextPadding    = 27
+	StyleVarCOUNT                   = 28
 )
 
 // original name: ImGuiTabBarFlagsPrivate_
