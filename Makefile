@@ -14,9 +14,9 @@ all: generate
 define generate
 	@echo "Generating for $(1)"
 	go run github.com/AllenDang/cimgui-go/cmd/codegen -p $(1) -i $(2) -d $(3) -e $(4) $(5)
-	gofmt -w $(1)_enums.go
-	gofmt -w $(1)_structs.go
-	gofmt -w $(1)_funcs.go
+	go run mvdan.cc/gofumpt@latest -w $(1)_enums.go
+	go run mvdan.cc/gofumpt@latest -w $(1)_structs.go
+	go run mvdan.cc/gofumpt@latest -w $(1)_funcs.go
 endef
 
 ## cimgui: generate cimgui binding

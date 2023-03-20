@@ -29,7 +29,6 @@ func (self *Color) SetHSVV(h float32, s float32, v float32, a float32) {
 	C.ImColor_SetHSV(selfArg, C.float(h), C.float(s), C.float(v), C.float(a))
 
 	selfFin()
-
 }
 
 func (self *Color) Destroy() {
@@ -37,7 +36,6 @@ func (self *Color) Destroy() {
 	C.ImColor_destroy(selfArg)
 
 	selfFin()
-
 }
 
 func (self DrawCmd) TexID() TextureID {
@@ -134,7 +132,6 @@ func (self DrawList) AddConvexPolyFilled(points *Vec2, num_points int32, col uin
 	C.ImDrawList_AddConvexPolyFilled(self.handle(), pointsArg, C.int(num_points), C.ImU32(col))
 
 	pointsFin()
-
 }
 
 func (self DrawList) AddDrawCmd() {
@@ -186,7 +183,6 @@ func (self DrawList) AddPolyline(points *Vec2, num_points int32, col uint32, fla
 	C.ImDrawList_AddPolyline(self.handle(), pointsArg, C.int(num_points), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
 
 	pointsFin()
-
 }
 
 // AddQuadV parameter default value hint:
@@ -229,7 +225,6 @@ func (self DrawList) AddTextFontPtrV(font Font, font_size float32, pos Vec2, col
 
 	text_beginFin()
 	cpu_fine_clip_rectFin()
-
 }
 
 // AddTextVec2V parameter default value hint:
@@ -239,7 +234,6 @@ func (self DrawList) AddTextVec2V(pos Vec2, col uint32, text_begin string) {
 	C.wrap_ImDrawList_AddText_Vec2V(self.handle(), pos.toC(), C.ImU32(col), text_beginArg)
 
 	text_beginFin()
-
 }
 
 // AddTriangleV parameter default value hint:
@@ -444,7 +438,6 @@ func (self FontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, 
 
 	defer func() {
 		filenameFin()
-
 	}()
 	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromFileTTF(self.handle(), filenameArg, C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
@@ -457,7 +450,6 @@ func (self FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data
 
 	defer func() {
 		compressed_font_data_base85Fin()
-
 	}()
 	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(self.handle(), compressed_font_data_base85Arg, C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
@@ -487,7 +479,6 @@ func (self FontAtlas) CalcCustomRectUV(rect FontAtlasCustomRect, out_uv_min *Vec
 
 	out_uv_minFin()
 	out_uv_maxFin()
-
 }
 
 func (self FontAtlas) Clear() {
@@ -576,7 +567,6 @@ func (self FontAtlas) MouseCursorTexData(cursor MouseCursor, out_offset *Vec2, o
 		for _, out_uv_fillV := range out_uv_fillFin {
 			out_uv_fillV()
 		}
-
 	}()
 	return C.ImFontAtlas_GetMouseCursorTexData(self.handle(), C.ImGuiMouseCursor(cursor), out_offsetArg, out_sizeArg, (*C.ImVec2)(&out_uv_borderArg[0]), (*C.ImVec2)(&out_uv_fillArg[0])) == C.bool(true)
 }
@@ -620,7 +610,6 @@ func (self FontGlyphRangesBuilder) AddTextV(text string) {
 	C.wrap_ImFontGlyphRangesBuilder_AddTextV(self.handle(), textArg)
 
 	textFin()
-
 }
 
 func (self FontGlyphRangesBuilder) Clear() {
@@ -680,7 +669,6 @@ func (self Font) CalcWordWrapPositionA(scale float32, text string, wrap_width fl
 
 	defer func() {
 		textFin()
-
 	}()
 	return C.GoString(C.wrap_ImFont_CalcWordWrapPositionA(self.handle(), C.float(scale), textArg, C.float(wrap_width)))
 }
@@ -733,7 +721,6 @@ func (self Font) RenderTextV(draw_list DrawList, size float32, pos Vec2, col uin
 	C.wrap_ImFont_RenderTextV(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), clip_rect.toC(), text_beginArg, C.float(wrap_width), C.bool(cpu_fine_clip))
 
 	text_beginFin()
-
 }
 
 func (self Font) SetGlyphVisible(c Wchar, visible bool) {
@@ -773,7 +760,6 @@ func (self IO) AddInputCharactersUTF8(str string) {
 	C.ImGuiIO_AddInputCharactersUTF8(self.handle(), strArg)
 
 	strFin()
-
 }
 
 func (self IO) AddKeyAnalogEvent(key Key, down bool, v float32) {
@@ -853,7 +839,6 @@ func (self InputTextCallbackData) InsertCharsV(pos int32, text string) {
 	C.wrap_ImGuiInputTextCallbackData_InsertCharsV(self.handle(), C.int(pos), textArg)
 
 	textFin()
-
 }
 
 func (self InputTextCallbackData) SelectAll() {
@@ -959,7 +944,6 @@ func (self Payload) IsDataType(typeArg string) bool {
 
 	defer func() {
 		typeArgFin()
-
 	}()
 	return C.ImGuiPayload_IsDataType(self.handle(), typeArgArg) == C.bool(true)
 }
@@ -1097,7 +1081,6 @@ func (self TextBuffer) AppendV(str string, str_end string) {
 
 	strFin()
 	str_endFin()
-
 }
 
 func (self TextBuffer) Appendf(fmt string) {
@@ -1105,7 +1088,6 @@ func (self TextBuffer) Appendf(fmt string) {
 	C.wrap_ImGuiTextBuffer_Appendf(self.handle(), fmtArg)
 
 	fmtFin()
-
 }
 
 func (self TextBuffer) Begin() string {
@@ -1156,7 +1138,6 @@ func (self TextFilter) DrawV(label string, width float32) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.ImGuiTextFilter_Draw(self.handle(), labelArg, C.float(width)) == C.bool(true)
 }
@@ -1168,7 +1149,6 @@ func NewTextFilter(default_filter string) TextFilter {
 
 	defer func() {
 		default_filterFin()
-
 	}()
 	return (TextFilter)(unsafe.Pointer(C.ImGuiTextFilter_ImGuiTextFilter(default_filterArg)))
 }
@@ -1184,7 +1164,6 @@ func (self TextFilter) PassFilterV(text string) bool {
 
 	defer func() {
 		textFin()
-
 	}()
 	return C.wrap_ImGuiTextFilter_PassFilterV(self.handle(), textArg) == C.bool(true)
 }
@@ -1240,7 +1219,6 @@ func (self *Rect) Destroy() {
 	C.ImRect_destroy(selfArg)
 
 	selfFin()
-
 }
 
 func (self *Vec2) Destroy() {
@@ -1248,7 +1226,6 @@ func (self *Vec2) Destroy() {
 	C.ImVec2_destroy(selfArg)
 
 	selfFin()
-
 }
 
 func (self *Vec4) Destroy() {
@@ -1256,7 +1233,6 @@ func (self *Vec4) Destroy() {
 	C.ImVec4_destroy(selfArg)
 
 	selfFin()
-
 }
 
 // AcceptDragDropPayloadV parameter default value hint:
@@ -1266,7 +1242,6 @@ func AcceptDragDropPayloadV(typeArg string, flags DragDropFlags) Payload {
 
 	defer func() {
 		typeArgFin()
-
 	}()
 	return (Payload)(unsafe.Pointer(C.igAcceptDragDropPayload(typeArgArg, C.ImGuiDragDropFlags(flags))))
 }
@@ -1280,7 +1255,6 @@ func ArrowButton(str_id string, dir Dir) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.igArrowButton(str_idArg, C.ImGuiDir(dir)) == C.bool(true)
 }
@@ -1295,7 +1269,6 @@ func BeginV(name string, p_open *bool, flags WindowFlags) bool {
 	defer func() {
 		nameFin()
 		p_openFin()
-
 	}()
 	return C.igBegin(nameArg, p_openArg, C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
@@ -1323,7 +1296,6 @@ func BeginChildStrV(str_id string, size Vec2, border bool, flags WindowFlags) bo
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.igBeginChild_Str(str_idArg, size.toC(), C.bool(border), C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
@@ -1337,7 +1309,6 @@ func BeginComboV(label string, preview_value string, flags ComboFlags) bool {
 	defer func() {
 		labelFin()
 		preview_valueFin()
-
 	}()
 	return C.igBeginCombo(labelArg, preview_valueArg, C.ImGuiComboFlags(flags)) == C.bool(true)
 }
@@ -1369,7 +1340,6 @@ func BeginListBoxV(label string, size Vec2) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.igBeginListBox(labelArg, size.toC()) == C.bool(true)
 }
@@ -1385,7 +1355,6 @@ func BeginMenuV(label string, enabled bool) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.igBeginMenu(labelArg, C.bool(enabled)) == C.bool(true)
 }
@@ -1401,7 +1370,6 @@ func BeginPopupV(str_id string, flags WindowFlags) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.igBeginPopup(str_idArg, C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
@@ -1414,7 +1382,6 @@ func BeginPopupContextItemV(str_id string, popup_flags PopupFlags) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.igBeginPopupContextItem(str_idArg, C.ImGuiPopupFlags(popup_flags)) == C.bool(true)
 }
@@ -1427,7 +1394,6 @@ func BeginPopupContextVoidV(str_id string, popup_flags PopupFlags) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.igBeginPopupContextVoid(str_idArg, C.ImGuiPopupFlags(popup_flags)) == C.bool(true)
 }
@@ -1440,7 +1406,6 @@ func BeginPopupContextWindowV(str_id string, popup_flags PopupFlags) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.igBeginPopupContextWindow(str_idArg, C.ImGuiPopupFlags(popup_flags)) == C.bool(true)
 }
@@ -1455,7 +1420,6 @@ func BeginPopupModalV(name string, p_open *bool, flags WindowFlags) bool {
 	defer func() {
 		nameFin()
 		p_openFin()
-
 	}()
 	return C.igBeginPopupModal(nameArg, p_openArg, C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
@@ -1467,7 +1431,6 @@ func BeginTabBarV(str_id string, flags TabBarFlags) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.igBeginTabBar(str_idArg, C.ImGuiTabBarFlags(flags)) == C.bool(true)
 }
@@ -1482,7 +1445,6 @@ func BeginTabItemV(label string, p_open *bool, flags TabItemFlags) bool {
 	defer func() {
 		labelFin()
 		p_openFin()
-
 	}()
 	return C.igBeginTabItem(labelArg, p_openArg, C.ImGuiTabItemFlags(flags)) == C.bool(true)
 }
@@ -1496,7 +1458,6 @@ func BeginTableV(str_id string, column int32, flags TableFlags, outer_size Vec2,
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.igBeginTable(str_idArg, C.int(column), C.ImGuiTableFlags(flags), outer_size.toC(), C.float(inner_width)) == C.bool(true)
 }
@@ -1514,7 +1475,6 @@ func BulletText(fmt string) {
 	C.wrap_igBulletText(fmtArg)
 
 	fmtFin()
-
 }
 
 // ButtonV parameter default value hint:
@@ -1524,7 +1484,6 @@ func ButtonV(label string, size Vec2) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.igButton(labelArg, size.toC()) == C.bool(true)
 }
@@ -1557,7 +1516,6 @@ func Checkbox(label string, v *bool) bool {
 	defer func() {
 		labelFin()
 		vFin()
-
 	}()
 	return C.igCheckbox(labelArg, vArg) == C.bool(true)
 }
@@ -1569,7 +1527,6 @@ func CheckboxFlagsIntPtr(label string, flags *int32, flags_value int32) bool {
 	defer func() {
 		labelFin()
 		flagsFin()
-
 	}()
 	return C.igCheckboxFlags_IntPtr(labelArg, flagsArg, C.int(flags_value)) == C.bool(true)
 }
@@ -1581,7 +1538,6 @@ func CheckboxFlagsUintPtr(label string, flags *uint32, flags_value uint32) bool 
 	defer func() {
 		labelFin()
 		flagsFin()
-
 	}()
 	return C.igCheckboxFlags_UintPtr(labelArg, flagsArg, C.uint(flags_value)) == C.bool(true)
 }
@@ -1599,7 +1555,6 @@ func CollapsingHeaderBoolPtrV(label string, p_visible *bool, flags TreeNodeFlags
 	defer func() {
 		labelFin()
 		p_visibleFin()
-
 	}()
 	return C.igCollapsingHeader_BoolPtr(labelArg, p_visibleArg, C.ImGuiTreeNodeFlags(flags)) == C.bool(true)
 }
@@ -1611,7 +1566,6 @@ func CollapsingHeaderTreeNodeFlagsV(label string, flags TreeNodeFlags) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.igCollapsingHeader_TreeNodeFlags(labelArg, C.ImGuiTreeNodeFlags(flags)) == C.bool(true)
 }
@@ -1624,7 +1578,6 @@ func ColorButtonV(desc_id string, col Vec4, flags ColorEditFlags, size Vec2) boo
 
 	defer func() {
 		desc_idFin()
-
 	}()
 	return C.igColorButton(desc_idArg, col.toC(), C.ImGuiColorEditFlags(flags), size.toC()) == C.bool(true)
 }
@@ -1642,7 +1595,6 @@ func ColorConvertHSVtoRGB(h float32, s float32, v float32, out_r *float32, out_g
 	out_rFin()
 	out_gFin()
 	out_bFin()
-
 }
 
 func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s *float32, out_v *float32) {
@@ -1654,7 +1606,6 @@ func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s
 	out_hFin()
 	out_sFin()
 	out_vFin()
-
 }
 
 func ColorConvertU32ToFloat4(in uint32) Vec4 {
@@ -1684,7 +1635,6 @@ func ColorEdit3V(label string, col *[3]float32, flags ColorEditFlags) bool {
 		for i, colV := range colArg {
 			(*col)[i] = float32(colV)
 		}
-
 	}()
 	return C.igColorEdit3(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags)) == C.bool(true)
 }
@@ -1705,7 +1655,6 @@ func ColorEdit4V(label string, col *[4]float32, flags ColorEditFlags) bool {
 		for i, colV := range colArg {
 			(*col)[i] = float32(colV)
 		}
-
 	}()
 	return C.igColorEdit4(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags)) == C.bool(true)
 }
@@ -1726,7 +1675,6 @@ func ColorPicker3V(label string, col *[3]float32, flags ColorEditFlags) bool {
 		for i, colV := range colArg {
 			(*col)[i] = float32(colV)
 		}
-
 	}()
 	return C.igColorPicker3(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags)) == C.bool(true)
 }
@@ -1748,7 +1696,6 @@ func ColorPicker4V(label string, col *[4]float32, flags ColorEditFlags, ref_col 
 		for i, colV := range colArg {
 			(*col)[i] = float32(colV)
 		}
-
 	}()
 	return C.igColorPicker4(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags), (*C.float)(&(ref_col[0]))) == C.bool(true)
 }
@@ -1762,7 +1709,6 @@ func ColumnsV(count int32, id string, border bool) {
 	C.igColumns(C.int(count), idArg, C.bool(border))
 
 	idFin()
-
 }
 
 // ComboStrV parameter default value hint:
@@ -1776,7 +1722,6 @@ func ComboStrV(label string, current_item *int32, items_separated_by_zeros strin
 		labelFin()
 		current_itemFin()
 		items_separated_by_zerosFin()
-
 	}()
 	return C.igCombo_Str(labelArg, current_itemArg, items_separated_by_zerosArg, C.int(popup_max_height_in_items)) == C.bool(true)
 }
@@ -1792,7 +1737,6 @@ func ComboStrarrV(label string, current_item *int32, items []string, items_count
 		labelFin()
 		current_itemFin()
 		itemsFin()
-
 	}()
 	return C.igCombo_Str_arr(labelArg, current_itemArg, itemsArg, C.int(items_count), C.int(popup_max_height_in_items)) == C.bool(true)
 }
@@ -1808,7 +1752,6 @@ func DebugCheckVersionAndDataLayout(version_str string, sz_io uint64, sz_style u
 
 	defer func() {
 		version_strFin()
-
 	}()
 	return C.igDebugCheckVersionAndDataLayout(version_strArg, C.xulong(sz_io), C.xulong(sz_style), C.xulong(sz_vec2), C.xulong(sz_vec4), C.xulong(sz_drawvert), C.xulong(sz_drawidx)) == C.bool(true)
 }
@@ -1818,7 +1761,6 @@ func DebugTextEncoding(text string) {
 	C.igDebugTextEncoding(textArg)
 
 	textFin()
-
 }
 
 // DestroyContextV parameter default value hint:
@@ -1862,7 +1804,6 @@ func DragFloatV(label string, v *float32, v_speed float32, v_min float32, v_max 
 		labelFin()
 		vFin()
 		formatFin()
-
 	}()
 	return C.igDragFloat(labelArg, vArg, C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -1890,7 +1831,6 @@ func DragFloat2V(label string, v *[2]float32, v_speed float32, v_min float32, v_
 		}
 
 		formatFin()
-
 	}()
 	return C.igDragFloat2(labelArg, (*C.float)(&vArg[0]), C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -1918,7 +1858,6 @@ func DragFloat3V(label string, v *[3]float32, v_speed float32, v_min float32, v_
 		}
 
 		formatFin()
-
 	}()
 	return C.igDragFloat3(labelArg, (*C.float)(&vArg[0]), C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -1946,7 +1885,6 @@ func DragFloat4V(label string, v *[4]float32, v_speed float32, v_min float32, v_
 		}
 
 		formatFin()
-
 	}()
 	return C.igDragFloat4(labelArg, (*C.float)(&vArg[0]), C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -1971,7 +1909,6 @@ func DragFloatRange2V(label string, v_current_min *float32, v_current_max *float
 		v_current_maxFin()
 		formatFin()
 		format_maxFin()
-
 	}()
 	return C.igDragFloatRange2(labelArg, v_current_minArg, v_current_maxArg, C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, format_maxArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -1991,7 +1928,6 @@ func DragIntV(label string, v *int32, v_speed float32, v_min int32, v_max int32,
 		labelFin()
 		vFin()
 		formatFin()
-
 	}()
 	return C.igDragInt(labelArg, vArg, C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -2019,7 +1955,6 @@ func DragInt2V(label string, v *[2]int32, v_speed float32, v_min int32, v_max in
 		}
 
 		formatFin()
-
 	}()
 	return C.igDragInt2(labelArg, (*C.int)(&vArg[0]), C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -2047,7 +1982,6 @@ func DragInt3V(label string, v *[3]int32, v_speed float32, v_min int32, v_max in
 		}
 
 		formatFin()
-
 	}()
 	return C.igDragInt3(labelArg, (*C.int)(&vArg[0]), C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -2075,7 +2009,6 @@ func DragInt4V(label string, v *[4]int32, v_speed float32, v_min int32, v_max in
 		}
 
 		formatFin()
-
 	}()
 	return C.igDragInt4(labelArg, (*C.int)(&vArg[0]), C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -2100,7 +2033,6 @@ func DragIntRange2V(label string, v_current_min *int32, v_current_max *int32, v_
 		v_current_maxFin()
 		formatFin()
 		format_maxFin()
-
 	}()
 	return C.igDragIntRange2(labelArg, v_current_minArg, v_current_maxArg, C.float(v_speed), C.int(v_min), C.int(v_max), formatArg, format_maxArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -2118,7 +2050,6 @@ func DragScalarV(label string, data_type DataType, p_data unsafe.Pointer, v_spee
 	defer func() {
 		labelFin()
 		formatFin()
-
 	}()
 	return C.igDragScalar(labelArg, C.ImGuiDataType(data_type), (p_data), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -2136,7 +2067,6 @@ func DragScalarNV(label string, data_type DataType, p_data unsafe.Pointer, compo
 	defer func() {
 		labelFin()
 		formatFin()
-
 	}()
 	return C.igDragScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -2398,7 +2328,6 @@ func IDStr(str_id string) ID {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return ID(C.igGetID_Str(str_idArg))
 }
@@ -2410,7 +2339,6 @@ func IDStrStr(str_id_begin string, str_id_end string) ID {
 	defer func() {
 		str_id_beginFin()
 		str_id_endFin()
-
 	}()
 	return ID(C.igGetID_StrStr(str_id_beginArg, str_id_endArg))
 }
@@ -2657,7 +2585,6 @@ func ImageButtonV(str_id string, user_texture_id TextureID, size Vec2, uv0 Vec2,
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.igImageButton(str_idArg, C.ImTextureID(user_texture_id), size.toC(), uv0.toC(), uv1.toC(), bg_col.toC(), tint_col.toC()) == C.bool(true)
 }
@@ -2682,7 +2609,6 @@ func InputDoubleV(label string, v *float64, step float64, step_fast float64, for
 		labelFin()
 		vFin()
 		formatFin()
-
 	}()
 	return C.igInputDouble(labelArg, vArg, C.double(step), C.double(step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
@@ -2701,7 +2627,6 @@ func InputFloatV(label string, v *float32, step float32, step_fast float32, form
 		labelFin()
 		vFin()
 		formatFin()
-
 	}()
 	return C.igInputFloat(labelArg, vArg, C.float(step), C.float(step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
@@ -2726,7 +2651,6 @@ func InputFloat2V(label string, v *[2]float32, format string, flags InputTextFla
 		}
 
 		formatFin()
-
 	}()
 	return C.igInputFloat2(labelArg, (*C.float)(&vArg[0]), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
@@ -2751,7 +2675,6 @@ func InputFloat3V(label string, v *[3]float32, format string, flags InputTextFla
 		}
 
 		formatFin()
-
 	}()
 	return C.igInputFloat3(labelArg, (*C.float)(&vArg[0]), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
@@ -2776,7 +2699,6 @@ func InputFloat4V(label string, v *[4]float32, format string, flags InputTextFla
 		}
 
 		formatFin()
-
 	}()
 	return C.igInputFloat4(labelArg, (*C.float)(&vArg[0]), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
@@ -2792,7 +2714,6 @@ func InputIntV(label string, v *int32, step int32, step_fast int32, flags InputT
 	defer func() {
 		labelFin()
 		vFin()
-
 	}()
 	return C.igInputInt(labelArg, vArg, C.int(step), C.int(step_fast), C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
@@ -2813,7 +2734,6 @@ func InputInt2V(label string, v *[2]int32, flags InputTextFlags) bool {
 		for i, vV := range vArg {
 			(*v)[i] = int32(vV)
 		}
-
 	}()
 	return C.igInputInt2(labelArg, (*C.int)(&vArg[0]), C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
@@ -2834,7 +2754,6 @@ func InputInt3V(label string, v *[3]int32, flags InputTextFlags) bool {
 		for i, vV := range vArg {
 			(*v)[i] = int32(vV)
 		}
-
 	}()
 	return C.igInputInt3(labelArg, (*C.int)(&vArg[0]), C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
@@ -2855,7 +2774,6 @@ func InputInt4V(label string, v *[4]int32, flags InputTextFlags) bool {
 		for i, vV := range vArg {
 			(*v)[i] = int32(vV)
 		}
-
 	}()
 	return C.igInputInt4(labelArg, (*C.int)(&vArg[0]), C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
@@ -2872,7 +2790,6 @@ func InputScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_ste
 	defer func() {
 		labelFin()
 		formatFin()
-
 	}()
 	return C.igInputScalar(labelArg, C.ImGuiDataType(data_type), (p_data), (p_step), (p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
@@ -2889,7 +2806,6 @@ func InputScalarNV(label string, data_type DataType, p_data unsafe.Pointer, comp
 	defer func() {
 		labelFin()
 		formatFin()
-
 	}()
 	return C.igInputScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), (p_step), (p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
@@ -2901,7 +2817,6 @@ func InvisibleButtonV(str_id string, size Vec2, flags ButtonFlags) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.igInvisibleButton(str_idArg, size.toC(), C.ImGuiButtonFlags(flags)) == C.bool(true)
 }
@@ -3013,7 +2928,6 @@ func IsMousePosValidV(mouse_pos *Vec2) bool {
 
 	defer func() {
 		mouse_posFin()
-
 	}()
 	return C.igIsMousePosValid(mouse_posArg) == C.bool(true)
 }
@@ -3029,7 +2943,6 @@ func IsPopupOpenStrV(str_id string, flags PopupFlags) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.igIsPopupOpen_Str(str_idArg, C.ImGuiPopupFlags(flags)) == C.bool(true)
 }
@@ -3073,7 +2986,6 @@ func LabelText(label string, fmt string) {
 
 	labelFin()
 	fmtFin()
-
 }
 
 // ListBoxStrarrV parameter default value hint:
@@ -3087,7 +2999,6 @@ func ListBoxStrarrV(label string, current_item *int32, items []string, items_cou
 		labelFin()
 		current_itemFin()
 		itemsFin()
-
 	}()
 	return C.igListBox_Str_arr(labelArg, current_itemArg, itemsArg, C.int(items_count), C.int(height_in_items)) == C.bool(true)
 }
@@ -3097,7 +3008,6 @@ func LoadIniSettingsFromDisk(ini_filename string) {
 	C.igLoadIniSettingsFromDisk(ini_filenameArg)
 
 	ini_filenameFin()
-
 }
 
 // LoadIniSettingsFromMemoryV parameter default value hint:
@@ -3107,7 +3017,6 @@ func LoadIniSettingsFromMemoryV(ini_data string, ini_size uint64) {
 	C.igLoadIniSettingsFromMemory(ini_dataArg, C.xulong(ini_size))
 
 	ini_dataFin()
-
 }
 
 func LogButtons() {
@@ -3123,7 +3032,6 @@ func LogText(fmt string) {
 	C.wrap_igLogText(fmtArg)
 
 	fmtFin()
-
 }
 
 // LogToClipboardV parameter default value hint:
@@ -3140,7 +3048,6 @@ func LogToFileV(auto_open_depth int32, filename string) {
 	C.igLogToFile(C.int(auto_open_depth), filenameArg)
 
 	filenameFin()
-
 }
 
 // LogToTTYV parameter default value hint:
@@ -3168,7 +3075,6 @@ func MenuItemBoolV(label string, shortcut string, selected bool, enabled bool) b
 	defer func() {
 		labelFin()
 		shortcutFin()
-
 	}()
 	return C.igMenuItem_Bool(labelArg, shortcutArg, C.bool(selected), C.bool(enabled)) == C.bool(true)
 }
@@ -3184,7 +3090,6 @@ func MenuItemBoolPtrV(label string, shortcut string, p_selected *bool, enabled b
 		labelFin()
 		shortcutFin()
 		p_selectedFin()
-
 	}()
 	return C.igMenuItem_BoolPtr(labelArg, shortcutArg, p_selectedArg, C.bool(enabled)) == C.bool(true)
 }
@@ -3209,7 +3114,6 @@ func OpenPopupOnItemClickV(str_id string, popup_flags PopupFlags) {
 	C.igOpenPopupOnItemClick(str_idArg, C.ImGuiPopupFlags(popup_flags))
 
 	str_idFin()
-
 }
 
 // OpenPopupIDV parameter default value hint:
@@ -3225,7 +3129,6 @@ func OpenPopupStrV(str_id string, popup_flags PopupFlags) {
 	C.igOpenPopup_Str(str_idArg, C.ImGuiPopupFlags(popup_flags))
 
 	str_idFin()
-
 }
 
 // PlotHistogramFloatPtrV parameter default value hint:
@@ -3242,7 +3145,6 @@ func PlotHistogramFloatPtrV(label string, values []float32, values_count int32, 
 
 	labelFin()
 	overlay_textFin()
-
 }
 
 // PlotLinesFloatPtrV parameter default value hint:
@@ -3259,7 +3161,6 @@ func PlotLinesFloatPtrV(label string, values []float32, values_count int32, valu
 
 	labelFin()
 	overlay_textFin()
-
 }
 
 func PopAllowKeyboardFocus() {
@@ -3310,7 +3211,6 @@ func ProgressBarV(fraction float32, size_arg Vec2, overlay string) {
 	C.igProgressBar(C.float(fraction), size_arg.toC(), overlayArg)
 
 	overlayFin()
-
 }
 
 func PushAllowKeyboardFocus(allow_keyboard_focus bool) {
@@ -3342,7 +3242,6 @@ func PushIDStr(str_id string) {
 	C.igPushID_Str(str_idArg)
 
 	str_idFin()
-
 }
 
 func PushIDStrStr(str_id_begin string, str_id_end string) {
@@ -3352,7 +3251,6 @@ func PushIDStrStr(str_id_begin string, str_id_end string) {
 
 	str_id_beginFin()
 	str_id_endFin()
-
 }
 
 func PushItemWidth(item_width float32) {
@@ -3386,7 +3284,6 @@ func RadioButtonBool(label string, active bool) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.igRadioButton_Bool(labelArg, C.bool(active)) == C.bool(true)
 }
@@ -3398,7 +3295,6 @@ func RadioButtonIntPtr(label string, v *int32, v_button int32) bool {
 	defer func() {
 		labelFin()
 		vFin()
-
 	}()
 	return C.igRadioButton_IntPtr(labelArg, vArg, C.int(v_button)) == C.bool(true)
 }
@@ -3432,7 +3328,6 @@ func SaveIniSettingsToDisk(ini_filename string) {
 	C.igSaveIniSettingsToDisk(ini_filenameArg)
 
 	ini_filenameFin()
-
 }
 
 // SaveIniSettingsToMemoryV parameter default value hint:
@@ -3450,7 +3345,6 @@ func SelectableBoolV(label string, selected bool, flags SelectableFlags, size Ve
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.igSelectable_Bool(labelArg, C.bool(selected), C.ImGuiSelectableFlags(flags), size.toC()) == C.bool(true)
 }
@@ -3465,7 +3359,6 @@ func SelectableBoolPtrV(label string, p_selected *bool, flags SelectableFlags, s
 	defer func() {
 		labelFin()
 		p_selectedFin()
-
 	}()
 	return C.igSelectable_BoolPtr(labelArg, p_selectedArg, C.ImGuiSelectableFlags(flags), size.toC()) == C.bool(true)
 }
@@ -3479,7 +3372,6 @@ func SeparatorText(label string) {
 	C.igSeparatorText(labelArg)
 
 	labelFin()
-
 }
 
 func SetClipboardText(text string) {
@@ -3487,7 +3379,6 @@ func SetClipboardText(text string) {
 	C.igSetClipboardText(textArg)
 
 	textFin()
-
 }
 
 func SetColorEditOptions(flags ColorEditFlags) {
@@ -3529,7 +3420,6 @@ func SetDragDropPayloadV(typeArg string, data unsafe.Pointer, sz uint64, cond Co
 
 	defer func() {
 		typeArgFin()
-
 	}()
 	return C.igSetDragDropPayload(typeArgArg, (data), C.xulong(sz), C.ImGuiCond(cond)) == C.bool(true)
 }
@@ -3656,7 +3546,6 @@ func SetTabItemClosed(tab_or_docked_window_label string) {
 	C.igSetTabItemClosed(tab_or_docked_window_labelArg)
 
 	tab_or_docked_window_labelFin()
-
 }
 
 func SetTooltip(fmt string) {
@@ -3664,7 +3553,6 @@ func SetTooltip(fmt string) {
 	C.wrap_igSetTooltip(fmtArg)
 
 	fmtFin()
-
 }
 
 // SetWindowCollapsedBoolV parameter default value hint:
@@ -3680,7 +3568,6 @@ func SetWindowCollapsedStrV(name string, collapsed bool, cond Cond) {
 	C.igSetWindowCollapsed_Str(nameArg, C.bool(collapsed), C.ImGuiCond(cond))
 
 	nameFin()
-
 }
 
 func SetWindowFocusNil() {
@@ -3692,7 +3579,6 @@ func SetWindowFocusStr(name string) {
 	C.igSetWindowFocus_Str(nameArg)
 
 	nameFin()
-
 }
 
 func SetWindowFontScale(scale float32) {
@@ -3706,7 +3592,6 @@ func SetWindowPosStrV(name string, pos Vec2, cond Cond) {
 	C.igSetWindowPos_Str(nameArg, pos.toC(), C.ImGuiCond(cond))
 
 	nameFin()
-
 }
 
 // SetWindowPosVec2V parameter default value hint:
@@ -3722,7 +3607,6 @@ func SetWindowSizeStrV(name string, size Vec2, cond Cond) {
 	C.igSetWindowSize_Str(nameArg, size.toC(), C.ImGuiCond(cond))
 
 	nameFin()
-
 }
 
 // SetWindowSizeVec2V parameter default value hint:
@@ -3738,7 +3622,6 @@ func ShowAboutWindowV(p_open *bool) {
 	C.igShowAboutWindow(p_openArg)
 
 	p_openFin()
-
 }
 
 // ShowDebugLogWindowV parameter default value hint:
@@ -3748,7 +3631,6 @@ func ShowDebugLogWindowV(p_open *bool) {
 	C.igShowDebugLogWindow(p_openArg)
 
 	p_openFin()
-
 }
 
 // ShowDemoWindowV parameter default value hint:
@@ -3758,7 +3640,6 @@ func ShowDemoWindowV(p_open *bool) {
 	C.igShowDemoWindow(p_openArg)
 
 	p_openFin()
-
 }
 
 func ShowFontSelector(label string) {
@@ -3766,7 +3647,6 @@ func ShowFontSelector(label string) {
 	C.igShowFontSelector(labelArg)
 
 	labelFin()
-
 }
 
 // ShowMetricsWindowV parameter default value hint:
@@ -3776,7 +3656,6 @@ func ShowMetricsWindowV(p_open *bool) {
 	C.igShowMetricsWindow(p_openArg)
 
 	p_openFin()
-
 }
 
 // ShowStackToolWindowV parameter default value hint:
@@ -3786,7 +3665,6 @@ func ShowStackToolWindowV(p_open *bool) {
 	C.igShowStackToolWindow(p_openArg)
 
 	p_openFin()
-
 }
 
 // ShowStyleEditorV parameter default value hint:
@@ -3800,7 +3678,6 @@ func ShowStyleSelector(label string) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.igShowStyleSelector(labelArg) == C.bool(true)
 }
@@ -3823,7 +3700,6 @@ func SliderAngleV(label string, v_rad *float32, v_degrees_min float32, v_degrees
 		labelFin()
 		v_radFin()
 		formatFin()
-
 	}()
 	return C.igSliderAngle(labelArg, v_radArg, C.float(v_degrees_min), C.float(v_degrees_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -3840,7 +3716,6 @@ func SliderFloatV(label string, v *float32, v_min float32, v_max float32, format
 		labelFin()
 		vFin()
 		formatFin()
-
 	}()
 	return C.igSliderFloat(labelArg, vArg, C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -3865,7 +3740,6 @@ func SliderFloat2V(label string, v *[2]float32, v_min float32, v_max float32, fo
 		}
 
 		formatFin()
-
 	}()
 	return C.igSliderFloat2(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -3890,7 +3764,6 @@ func SliderFloat3V(label string, v *[3]float32, v_min float32, v_max float32, fo
 		}
 
 		formatFin()
-
 	}()
 	return C.igSliderFloat3(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -3915,7 +3788,6 @@ func SliderFloat4V(label string, v *[4]float32, v_min float32, v_max float32, fo
 		}
 
 		formatFin()
-
 	}()
 	return C.igSliderFloat4(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -3932,7 +3804,6 @@ func SliderIntV(label string, v *int32, v_min int32, v_max int32, format string,
 		labelFin()
 		vFin()
 		formatFin()
-
 	}()
 	return C.igSliderInt(labelArg, vArg, C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -3957,7 +3828,6 @@ func SliderInt2V(label string, v *[2]int32, v_min int32, v_max int32, format str
 		}
 
 		formatFin()
-
 	}()
 	return C.igSliderInt2(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -3982,7 +3852,6 @@ func SliderInt3V(label string, v *[3]int32, v_min int32, v_max int32, format str
 		}
 
 		formatFin()
-
 	}()
 	return C.igSliderInt3(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -4007,7 +3876,6 @@ func SliderInt4V(label string, v *[4]int32, v_min int32, v_max int32, format str
 		}
 
 		formatFin()
-
 	}()
 	return C.igSliderInt4(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -4022,7 +3890,6 @@ func SliderScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_mi
 	defer func() {
 		labelFin()
 		formatFin()
-
 	}()
 	return C.igSliderScalar(labelArg, C.ImGuiDataType(data_type), (p_data), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -4037,7 +3904,6 @@ func SliderScalarNV(label string, data_type DataType, p_data unsafe.Pointer, com
 	defer func() {
 		labelFin()
 		formatFin()
-
 	}()
 	return C.igSliderScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -4047,7 +3913,6 @@ func SmallButton(label string) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.igSmallButton(labelArg) == C.bool(true)
 }
@@ -4081,7 +3946,6 @@ func TabItemButtonV(label string, flags TabItemFlags) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.igTabItemButton(labelArg, C.ImGuiTabItemFlags(flags)) == C.bool(true)
 }
@@ -4119,7 +3983,6 @@ func TableHeader(label string) {
 	C.igTableHeader(labelArg)
 
 	labelFin()
-
 }
 
 func TableHeadersRow() {
@@ -4160,7 +4023,6 @@ func TableSetupColumnV(label string, flags TableColumnFlags, init_width_or_weigh
 	C.igTableSetupColumn(labelArg, C.ImGuiTableColumnFlags(flags), C.float(init_width_or_weight), C.ImGuiID(user_id))
 
 	labelFin()
-
 }
 
 func TableSetupScrollFreeze(cols int32, rows int32) {
@@ -4172,7 +4034,6 @@ func Text(fmt string) {
 	C.wrap_igText(fmtArg)
 
 	fmtFin()
-
 }
 
 func TextColored(col Vec4, fmt string) {
@@ -4180,7 +4041,6 @@ func TextColored(col Vec4, fmt string) {
 	C.wrap_igTextColored(col.toC(), fmtArg)
 
 	fmtFin()
-
 }
 
 func TextDisabled(fmt string) {
@@ -4188,7 +4048,6 @@ func TextDisabled(fmt string) {
 	C.wrap_igTextDisabled(fmtArg)
 
 	fmtFin()
-
 }
 
 // TextUnformattedV parameter default value hint:
@@ -4198,7 +4057,6 @@ func TextUnformattedV(text string) {
 	C.wrap_igTextUnformattedV(textArg)
 
 	textFin()
-
 }
 
 func TextWrapped(fmt string) {
@@ -4206,7 +4064,6 @@ func TextWrapped(fmt string) {
 	C.wrap_igTextWrapped(fmtArg)
 
 	fmtFin()
-
 }
 
 func TreeNodeExPtr(ptr_id unsafe.Pointer, flags TreeNodeFlags, fmt string) bool {
@@ -4214,7 +4071,6 @@ func TreeNodeExPtr(ptr_id unsafe.Pointer, flags TreeNodeFlags, fmt string) bool 
 
 	defer func() {
 		fmtFin()
-
 	}()
 	return C.wrap_igTreeNodeEx_Ptr((ptr_id), C.ImGuiTreeNodeFlags(flags), fmtArg) == C.bool(true)
 }
@@ -4226,7 +4082,6 @@ func TreeNodeExStrV(label string, flags TreeNodeFlags) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.igTreeNodeEx_Str(labelArg, C.ImGuiTreeNodeFlags(flags)) == C.bool(true)
 }
@@ -4238,7 +4093,6 @@ func TreeNodeExStrStr(str_id string, flags TreeNodeFlags, fmt string) bool {
 	defer func() {
 		str_idFin()
 		fmtFin()
-
 	}()
 	return C.wrap_igTreeNodeEx_StrStr(str_idArg, C.ImGuiTreeNodeFlags(flags), fmtArg) == C.bool(true)
 }
@@ -4248,7 +4102,6 @@ func TreeNodePtr(ptr_id unsafe.Pointer, fmt string) bool {
 
 	defer func() {
 		fmtFin()
-
 	}()
 	return C.wrap_igTreeNode_Ptr((ptr_id), fmtArg) == C.bool(true)
 }
@@ -4258,7 +4111,6 @@ func TreeNodeStr(label string) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.igTreeNode_Str(labelArg) == C.bool(true)
 }
@@ -4270,7 +4122,6 @@ func TreeNodeStrStr(str_id string, fmt string) bool {
 	defer func() {
 		str_idFin()
 		fmtFin()
-
 	}()
 	return C.wrap_igTreeNode_StrStr(str_idArg, fmtArg) == C.bool(true)
 }
@@ -4288,7 +4139,6 @@ func TreePushStr(str_id string) {
 	C.igTreePush_Str(str_idArg)
 
 	str_idFin()
-
 }
 
 // UnindentV parameter default value hint:
@@ -4313,7 +4163,6 @@ func VSliderFloatV(label string, size Vec2, v *float32, v_min float32, v_max flo
 		labelFin()
 		vFin()
 		formatFin()
-
 	}()
 	return C.igVSliderFloat(labelArg, size.toC(), vArg, C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -4330,7 +4179,6 @@ func VSliderIntV(label string, size Vec2, v *int32, v_min int32, v_max int32, fo
 		labelFin()
 		vFin()
 		formatFin()
-
 	}()
 	return C.igVSliderInt(labelArg, size.toC(), vArg, C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -4345,7 +4193,6 @@ func VSliderScalarV(label string, size Vec2, data_type DataType, p_data unsafe.P
 	defer func() {
 		labelFin()
 		formatFin()
-
 	}()
 	return C.igVSliderScalar(labelArg, size.toC(), C.ImGuiDataType(data_type), (p_data), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
@@ -4355,7 +4202,6 @@ func ValueBool(prefix string, b bool) {
 	C.igValue_Bool(prefixArg, C.bool(b))
 
 	prefixFin()
-
 }
 
 // ValueFloatV parameter default value hint:
@@ -4367,7 +4213,6 @@ func ValueFloatV(prefix string, v float32, float_format string) {
 
 	prefixFin()
 	float_formatFin()
-
 }
 
 func ValueInt(prefix string, v int32) {
@@ -4375,7 +4220,6 @@ func ValueInt(prefix string, v int32) {
 	C.igValue_Int(prefixArg, C.int(v))
 
 	prefixFin()
-
 }
 
 func ValueUint(prefix string, v uint32) {
@@ -4383,7 +4227,6 @@ func ValueUint(prefix string, v uint32) {
 	C.igValue_Uint(prefixArg, C.uint(v))
 
 	prefixFin()
-
 }
 
 func ColorHSV(h float32, s float32, v float32) Color {
@@ -4402,7 +4245,6 @@ func (self *Color) SetHSV(h float32, s float32, v float32) {
 	C.wrap_ImColor_SetHSV(selfArg, C.float(h), C.float(s), C.float(v))
 
 	selfFin()
-
 }
 
 func (self DrawList) AddBezierCubic(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32, thickness float32) {
@@ -4458,7 +4300,6 @@ func (self DrawList) AddTextFontPtr(font Font, font_size float32, pos Vec2, col 
 	C.wrap_ImDrawList_AddText_FontPtr(self.handle(), font.handle(), C.float(font_size), pos.toC(), C.ImU32(col), text_beginArg)
 
 	text_beginFin()
-
 }
 
 func (self DrawList) AddTextVec2(pos Vec2, col uint32, text_begin string) {
@@ -4466,7 +4307,6 @@ func (self DrawList) AddTextVec2(pos Vec2, col uint32, text_begin string) {
 	C.wrap_ImDrawList_AddText_Vec2(self.handle(), pos.toC(), C.ImU32(col), text_beginArg)
 
 	text_beginFin()
-
 }
 
 func (self DrawList) AddTriangle(p1 Vec2, p2 Vec2, p3 Vec2, col uint32) {
@@ -4510,7 +4350,6 @@ func (self FontAtlas) AddFontFromFileTTF(filename string, size_pixels float32) F
 
 	defer func() {
 		filenameFin()
-
 	}()
 	return (Font)(unsafe.Pointer(C.wrap_ImFontAtlas_AddFontFromFileTTF(self.handle(), filenameArg, C.float(size_pixels))))
 }
@@ -4520,7 +4359,6 @@ func (self FontAtlas) AddFontFromMemoryCompressedBase85TTF(compressed_font_data_
 
 	defer func() {
 		compressed_font_data_base85Fin()
-
 	}()
 	return (Font)(unsafe.Pointer(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(self.handle(), compressed_font_data_base85Arg, C.float(size_pixels))))
 }
@@ -4538,7 +4376,6 @@ func (self FontGlyphRangesBuilder) AddText(text string) {
 	C.wrap_ImFontGlyphRangesBuilder_AddText(self.handle(), textArg)
 
 	textFin()
-
 }
 
 func (self Font) AddRemapChar(dst Wchar, src Wchar) {
@@ -4563,7 +4400,6 @@ func (self Font) RenderText(draw_list DrawList, size float32, pos Vec2, col uint
 	C.wrap_ImFont_RenderText(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), clip_rect.toC(), text_beginArg)
 
 	text_beginFin()
-
 }
 
 func (self IO) SetKeyEventNativeData(key Key, native_keycode int32, native_scancode int32) {
@@ -4575,7 +4411,6 @@ func (self InputTextCallbackData) InsertChars(pos int32, text string) {
 	C.wrap_ImGuiInputTextCallbackData_InsertChars(self.handle(), C.int(pos), textArg)
 
 	textFin()
-
 }
 
 func (self ListClipper) Begin(items_count int32) {
@@ -4587,7 +4422,6 @@ func (self TextBuffer) Append(str string) {
 	C.wrap_ImGuiTextBuffer_Append(self.handle(), strArg)
 
 	strFin()
-
 }
 
 func (self TextFilter) Draw() bool {
@@ -4599,7 +4433,6 @@ func (self TextFilter) PassFilter(text string) bool {
 
 	defer func() {
 		textFin()
-
 	}()
 	return C.wrap_ImGuiTextFilter_PassFilter(self.handle(), textArg) == C.bool(true)
 }
@@ -4609,7 +4442,6 @@ func AcceptDragDropPayload(typeArg string) Payload {
 
 	defer func() {
 		typeArgFin()
-
 	}()
 	return (Payload)(unsafe.Pointer(C.wrap_igAcceptDragDropPayload(typeArgArg)))
 }
@@ -4619,7 +4451,6 @@ func Begin(name string) bool {
 
 	defer func() {
 		nameFin()
-
 	}()
 	return C.wrap_igBegin(nameArg) == C.bool(true)
 }
@@ -4637,7 +4468,6 @@ func BeginChildStr(str_id string) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.wrap_igBeginChild_Str(str_idArg) == C.bool(true)
 }
@@ -4649,7 +4479,6 @@ func BeginCombo(label string, preview_value string) bool {
 	defer func() {
 		labelFin()
 		preview_valueFin()
-
 	}()
 	return C.wrap_igBeginCombo(labelArg, preview_valueArg) == C.bool(true)
 }
@@ -4667,7 +4496,6 @@ func BeginListBox(label string) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igBeginListBox(labelArg) == C.bool(true)
 }
@@ -4677,7 +4505,6 @@ func BeginMenu(label string) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igBeginMenu(labelArg) == C.bool(true)
 }
@@ -4687,7 +4514,6 @@ func BeginPopup(str_id string) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.wrap_igBeginPopup(str_idArg) == C.bool(true)
 }
@@ -4709,7 +4535,6 @@ func BeginPopupModal(name string) bool {
 
 	defer func() {
 		nameFin()
-
 	}()
 	return C.wrap_igBeginPopupModal(nameArg) == C.bool(true)
 }
@@ -4719,7 +4544,6 @@ func BeginTabBar(str_id string) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.wrap_igBeginTabBar(str_idArg) == C.bool(true)
 }
@@ -4729,7 +4553,6 @@ func BeginTabItem(label string) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igBeginTabItem(labelArg) == C.bool(true)
 }
@@ -4739,7 +4562,6 @@ func BeginTable(str_id string, column int32) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.wrap_igBeginTable(str_idArg, C.int(column)) == C.bool(true)
 }
@@ -4749,7 +4571,6 @@ func Button(label string) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igButton(labelArg) == C.bool(true)
 }
@@ -4774,7 +4595,6 @@ func CollapsingHeaderBoolPtr(label string, p_visible *bool) bool {
 	defer func() {
 		labelFin()
 		p_visibleFin()
-
 	}()
 	return C.wrap_igCollapsingHeader_BoolPtr(labelArg, p_visibleArg) == C.bool(true)
 }
@@ -4784,7 +4604,6 @@ func CollapsingHeaderTreeNodeFlags(label string) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igCollapsingHeader_TreeNodeFlags(labelArg) == C.bool(true)
 }
@@ -4794,7 +4613,6 @@ func ColorButton(desc_id string, col Vec4) bool {
 
 	defer func() {
 		desc_idFin()
-
 	}()
 	return C.wrap_igColorButton(desc_idArg, col.toC()) == C.bool(true)
 }
@@ -4813,7 +4631,6 @@ func ColorEdit3(label string, col *[3]float32) bool {
 		for i, colV := range colArg {
 			(*col)[i] = float32(colV)
 		}
-
 	}()
 	return C.wrap_igColorEdit3(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
 }
@@ -4832,7 +4649,6 @@ func ColorEdit4(label string, col *[4]float32) bool {
 		for i, colV := range colArg {
 			(*col)[i] = float32(colV)
 		}
-
 	}()
 	return C.wrap_igColorEdit4(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
 }
@@ -4851,7 +4667,6 @@ func ColorPicker3(label string, col *[3]float32) bool {
 		for i, colV := range colArg {
 			(*col)[i] = float32(colV)
 		}
-
 	}()
 	return C.wrap_igColorPicker3(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
 }
@@ -4870,7 +4685,6 @@ func ColorPicker4(label string, col *[4]float32) bool {
 		for i, colV := range colArg {
 			(*col)[i] = float32(colV)
 		}
-
 	}()
 	return C.wrap_igColorPicker4(labelArg, (*C.float)(&colArg[0])) == C.bool(true)
 }
@@ -4888,7 +4702,6 @@ func ComboStr(label string, current_item *int32, items_separated_by_zeros string
 		labelFin()
 		current_itemFin()
 		items_separated_by_zerosFin()
-
 	}()
 	return C.wrap_igCombo_Str(labelArg, current_itemArg, items_separated_by_zerosArg) == C.bool(true)
 }
@@ -4902,7 +4715,6 @@ func ComboStrarr(label string, current_item *int32, items []string, items_count 
 		labelFin()
 		current_itemFin()
 		itemsFin()
-
 	}()
 	return C.wrap_igCombo_Str_arr(labelArg, current_itemArg, itemsArg, C.int(items_count)) == C.bool(true)
 }
@@ -4930,7 +4742,6 @@ func DragFloat(label string, v *float32) bool {
 	defer func() {
 		labelFin()
 		vFin()
-
 	}()
 	return C.wrap_igDragFloat(labelArg, vArg) == C.bool(true)
 }
@@ -4949,7 +4760,6 @@ func DragFloat2(label string, v *[2]float32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = float32(vV)
 		}
-
 	}()
 	return C.wrap_igDragFloat2(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
 }
@@ -4968,7 +4778,6 @@ func DragFloat3(label string, v *[3]float32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = float32(vV)
 		}
-
 	}()
 	return C.wrap_igDragFloat3(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
 }
@@ -4987,7 +4796,6 @@ func DragFloat4(label string, v *[4]float32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = float32(vV)
 		}
-
 	}()
 	return C.wrap_igDragFloat4(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
 }
@@ -5001,7 +4809,6 @@ func DragFloatRange2(label string, v_current_min *float32, v_current_max *float3
 		labelFin()
 		v_current_minFin()
 		v_current_maxFin()
-
 	}()
 	return C.wrap_igDragFloatRange2(labelArg, v_current_minArg, v_current_maxArg) == C.bool(true)
 }
@@ -5013,7 +4820,6 @@ func DragInt(label string, v *int32) bool {
 	defer func() {
 		labelFin()
 		vFin()
-
 	}()
 	return C.wrap_igDragInt(labelArg, vArg) == C.bool(true)
 }
@@ -5032,7 +4838,6 @@ func DragInt2(label string, v *[2]int32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = int32(vV)
 		}
-
 	}()
 	return C.wrap_igDragInt2(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
 }
@@ -5051,7 +4856,6 @@ func DragInt3(label string, v *[3]int32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = int32(vV)
 		}
-
 	}()
 	return C.wrap_igDragInt3(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
 }
@@ -5070,7 +4874,6 @@ func DragInt4(label string, v *[4]int32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = int32(vV)
 		}
-
 	}()
 	return C.wrap_igDragInt4(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
 }
@@ -5084,7 +4887,6 @@ func DragIntRange2(label string, v_current_min *int32, v_current_max *int32) boo
 		labelFin()
 		v_current_minFin()
 		v_current_maxFin()
-
 	}()
 	return C.wrap_igDragIntRange2(labelArg, v_current_minArg, v_current_maxArg) == C.bool(true)
 }
@@ -5094,7 +4896,6 @@ func DragScalar(label string, data_type DataType, p_data unsafe.Pointer) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igDragScalar(labelArg, C.ImGuiDataType(data_type), (p_data)) == C.bool(true)
 }
@@ -5104,7 +4905,6 @@ func DragScalarN(label string, data_type DataType, p_data unsafe.Pointer, compon
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igDragScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components)) == C.bool(true)
 }
@@ -5141,7 +4941,6 @@ func ImageButton(str_id string, user_texture_id TextureID, size Vec2) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.wrap_igImageButton(str_idArg, C.ImTextureID(user_texture_id), size.toC()) == C.bool(true)
 }
@@ -5157,7 +4956,6 @@ func InputDouble(label string, v *float64) bool {
 	defer func() {
 		labelFin()
 		vFin()
-
 	}()
 	return C.wrap_igInputDouble(labelArg, vArg) == C.bool(true)
 }
@@ -5169,7 +4967,6 @@ func InputFloat(label string, v *float32) bool {
 	defer func() {
 		labelFin()
 		vFin()
-
 	}()
 	return C.wrap_igInputFloat(labelArg, vArg) == C.bool(true)
 }
@@ -5188,7 +4985,6 @@ func InputFloat2(label string, v *[2]float32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = float32(vV)
 		}
-
 	}()
 	return C.wrap_igInputFloat2(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
 }
@@ -5207,7 +5003,6 @@ func InputFloat3(label string, v *[3]float32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = float32(vV)
 		}
-
 	}()
 	return C.wrap_igInputFloat3(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
 }
@@ -5226,7 +5021,6 @@ func InputFloat4(label string, v *[4]float32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = float32(vV)
 		}
-
 	}()
 	return C.wrap_igInputFloat4(labelArg, (*C.float)(&vArg[0])) == C.bool(true)
 }
@@ -5238,7 +5032,6 @@ func InputInt(label string, v *int32) bool {
 	defer func() {
 		labelFin()
 		vFin()
-
 	}()
 	return C.wrap_igInputInt(labelArg, vArg) == C.bool(true)
 }
@@ -5257,7 +5050,6 @@ func InputInt2(label string, v *[2]int32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = int32(vV)
 		}
-
 	}()
 	return C.wrap_igInputInt2(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
 }
@@ -5276,7 +5068,6 @@ func InputInt3(label string, v *[3]int32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = int32(vV)
 		}
-
 	}()
 	return C.wrap_igInputInt3(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
 }
@@ -5295,7 +5086,6 @@ func InputInt4(label string, v *[4]int32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = int32(vV)
 		}
-
 	}()
 	return C.wrap_igInputInt4(labelArg, (*C.int)(&vArg[0])) == C.bool(true)
 }
@@ -5305,7 +5095,6 @@ func InputScalar(label string, data_type DataType, p_data unsafe.Pointer) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igInputScalar(labelArg, C.ImGuiDataType(data_type), (p_data)) == C.bool(true)
 }
@@ -5315,7 +5104,6 @@ func InputScalarN(label string, data_type DataType, p_data unsafe.Pointer, compo
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igInputScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components)) == C.bool(true)
 }
@@ -5325,7 +5113,6 @@ func InvisibleButton(str_id string, size Vec2) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.wrap_igInvisibleButton(str_idArg, size.toC()) == C.bool(true)
 }
@@ -5363,7 +5150,6 @@ func IsPopupOpenStr(str_id string) bool {
 
 	defer func() {
 		str_idFin()
-
 	}()
 	return C.wrap_igIsPopupOpen_Str(str_idArg) == C.bool(true)
 }
@@ -5385,7 +5171,6 @@ func ListBoxStrarr(label string, current_item *int32, items []string, items_coun
 		labelFin()
 		current_itemFin()
 		itemsFin()
-
 	}()
 	return C.wrap_igListBox_Str_arr(labelArg, current_itemArg, itemsArg, C.int(items_count)) == C.bool(true)
 }
@@ -5395,7 +5180,6 @@ func LoadIniSettingsFromMemory(ini_data string) {
 	C.wrap_igLoadIniSettingsFromMemory(ini_dataArg)
 
 	ini_dataFin()
-
 }
 
 func LogToClipboard() {
@@ -5415,7 +5199,6 @@ func MenuItemBool(label string) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igMenuItem_Bool(labelArg) == C.bool(true)
 }
@@ -5429,7 +5212,6 @@ func MenuItemBoolPtr(label string, shortcut string, p_selected *bool) bool {
 		labelFin()
 		shortcutFin()
 		p_selectedFin()
-
 	}()
 	return C.wrap_igMenuItem_BoolPtr(labelArg, shortcutArg, p_selectedArg) == C.bool(true)
 }
@@ -5447,7 +5229,6 @@ func OpenPopupStr(str_id string) {
 	C.wrap_igOpenPopup_Str(str_idArg)
 
 	str_idFin()
-
 }
 
 func PlotHistogramFloatPtr(label string, values []float32, values_count int32) {
@@ -5455,7 +5236,6 @@ func PlotHistogramFloatPtr(label string, values []float32, values_count int32) {
 	C.wrap_igPlotHistogram_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count))
 
 	labelFin()
-
 }
 
 func PlotLinesFloatPtr(label string, values []float32, values_count int32) {
@@ -5463,7 +5243,6 @@ func PlotLinesFloatPtr(label string, values []float32, values_count int32) {
 	C.wrap_igPlotLines_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count))
 
 	labelFin()
-
 }
 
 func PopStyleColor() {
@@ -5503,7 +5282,6 @@ func SelectableBool(label string) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igSelectable_Bool(labelArg) == C.bool(true)
 }
@@ -5515,7 +5293,6 @@ func SelectableBoolPtr(label string, p_selected *bool) bool {
 	defer func() {
 		labelFin()
 		p_selectedFin()
-
 	}()
 	return C.wrap_igSelectable_BoolPtr(labelArg, p_selectedArg) == C.bool(true)
 }
@@ -5525,7 +5302,6 @@ func SetDragDropPayload(typeArg string, data unsafe.Pointer, sz uint64) bool {
 
 	defer func() {
 		typeArgFin()
-
 	}()
 	return C.wrap_igSetDragDropPayload(typeArgArg, (data), C.xulong(sz)) == C.bool(true)
 }
@@ -5583,7 +5359,6 @@ func SetWindowCollapsedStr(name string, collapsed bool) {
 	C.wrap_igSetWindowCollapsed_Str(nameArg, C.bool(collapsed))
 
 	nameFin()
-
 }
 
 func SetWindowPosStr(name string, pos Vec2) {
@@ -5591,7 +5366,6 @@ func SetWindowPosStr(name string, pos Vec2) {
 	C.wrap_igSetWindowPos_Str(nameArg, pos.toC())
 
 	nameFin()
-
 }
 
 func SetWindowPosVec2(pos Vec2) {
@@ -5603,7 +5377,6 @@ func SetWindowSizeStr(name string, size Vec2) {
 	C.wrap_igSetWindowSize_Str(nameArg, size.toC())
 
 	nameFin()
-
 }
 
 func SetWindowSizeVec2(size Vec2) {
@@ -5641,7 +5414,6 @@ func SliderAngle(label string, v_rad *float32) bool {
 	defer func() {
 		labelFin()
 		v_radFin()
-
 	}()
 	return C.wrap_igSliderAngle(labelArg, v_radArg) == C.bool(true)
 }
@@ -5653,7 +5425,6 @@ func SliderFloat(label string, v *float32, v_min float32, v_max float32) bool {
 	defer func() {
 		labelFin()
 		vFin()
-
 	}()
 	return C.wrap_igSliderFloat(labelArg, vArg, C.float(v_min), C.float(v_max)) == C.bool(true)
 }
@@ -5672,7 +5443,6 @@ func SliderFloat2(label string, v *[2]float32, v_min float32, v_max float32) boo
 		for i, vV := range vArg {
 			(*v)[i] = float32(vV)
 		}
-
 	}()
 	return C.wrap_igSliderFloat2(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max)) == C.bool(true)
 }
@@ -5691,7 +5461,6 @@ func SliderFloat3(label string, v *[3]float32, v_min float32, v_max float32) boo
 		for i, vV := range vArg {
 			(*v)[i] = float32(vV)
 		}
-
 	}()
 	return C.wrap_igSliderFloat3(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max)) == C.bool(true)
 }
@@ -5710,7 +5479,6 @@ func SliderFloat4(label string, v *[4]float32, v_min float32, v_max float32) boo
 		for i, vV := range vArg {
 			(*v)[i] = float32(vV)
 		}
-
 	}()
 	return C.wrap_igSliderFloat4(labelArg, (*C.float)(&vArg[0]), C.float(v_min), C.float(v_max)) == C.bool(true)
 }
@@ -5722,7 +5490,6 @@ func SliderInt(label string, v *int32, v_min int32, v_max int32) bool {
 	defer func() {
 		labelFin()
 		vFin()
-
 	}()
 	return C.wrap_igSliderInt(labelArg, vArg, C.int(v_min), C.int(v_max)) == C.bool(true)
 }
@@ -5741,7 +5508,6 @@ func SliderInt2(label string, v *[2]int32, v_min int32, v_max int32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = int32(vV)
 		}
-
 	}()
 	return C.wrap_igSliderInt2(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max)) == C.bool(true)
 }
@@ -5760,7 +5526,6 @@ func SliderInt3(label string, v *[3]int32, v_min int32, v_max int32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = int32(vV)
 		}
-
 	}()
 	return C.wrap_igSliderInt3(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max)) == C.bool(true)
 }
@@ -5779,7 +5544,6 @@ func SliderInt4(label string, v *[4]int32, v_min int32, v_max int32) bool {
 		for i, vV := range vArg {
 			(*v)[i] = int32(vV)
 		}
-
 	}()
 	return C.wrap_igSliderInt4(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max)) == C.bool(true)
 }
@@ -5789,7 +5553,6 @@ func SliderScalar(label string, data_type DataType, p_data unsafe.Pointer, p_min
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igSliderScalar(labelArg, C.ImGuiDataType(data_type), (p_data), (p_min), (p_max)) == C.bool(true)
 }
@@ -5799,7 +5562,6 @@ func SliderScalarN(label string, data_type DataType, p_data unsafe.Pointer, comp
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igSliderScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), (p_min), (p_max)) == C.bool(true)
 }
@@ -5821,7 +5583,6 @@ func TabItemButton(label string) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igTabItemButton(labelArg) == C.bool(true)
 }
@@ -5847,7 +5608,6 @@ func TableSetupColumn(label string) {
 	C.wrap_igTableSetupColumn(labelArg)
 
 	labelFin()
-
 }
 
 func TextUnformatted(text string) {
@@ -5855,7 +5615,6 @@ func TextUnformatted(text string) {
 	C.wrap_igTextUnformatted(textArg)
 
 	textFin()
-
 }
 
 func TreeNodeExStr(label string) bool {
@@ -5863,7 +5622,6 @@ func TreeNodeExStr(label string) bool {
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igTreeNodeEx_Str(labelArg) == C.bool(true)
 }
@@ -5879,7 +5637,6 @@ func VSliderFloat(label string, size Vec2, v *float32, v_min float32, v_max floa
 	defer func() {
 		labelFin()
 		vFin()
-
 	}()
 	return C.wrap_igVSliderFloat(labelArg, size.toC(), vArg, C.float(v_min), C.float(v_max)) == C.bool(true)
 }
@@ -5891,7 +5648,6 @@ func VSliderInt(label string, size Vec2, v *int32, v_min int32, v_max int32) boo
 	defer func() {
 		labelFin()
 		vFin()
-
 	}()
 	return C.wrap_igVSliderInt(labelArg, size.toC(), vArg, C.int(v_min), C.int(v_max)) == C.bool(true)
 }
@@ -5901,7 +5657,6 @@ func VSliderScalar(label string, size Vec2, data_type DataType, p_data unsafe.Po
 
 	defer func() {
 		labelFin()
-
 	}()
 	return C.wrap_igVSliderScalar(labelArg, size.toC(), C.ImGuiDataType(data_type), (p_data), (p_min), (p_max)) == C.bool(true)
 }
@@ -5911,7 +5666,6 @@ func ValueFloat(prefix string, v float32) {
 	C.wrap_igValue_Float(prefixArg, C.float(v))
 
 	prefixFin()
-
 }
 
 func (self DrawCmd) SetClipRect(v Vec4) {
@@ -6089,7 +5843,6 @@ func (self DrawList) SetOwnerName(v string) {
 	C.wrap_ImDrawList_Set_OwnerName(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self DrawList) OwnerName() string {
@@ -6193,7 +5946,6 @@ func (self DrawListSharedData) SetTexUvLines(v *Vec4) {
 	C.wrap_ImDrawListSharedData_SetTexUvLines(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self DrawListSharedData) TexUvLines() *Vec4 {
@@ -6435,7 +6187,6 @@ func (self FontAtlas) SetTexPixelsRGBA32(v *uint32) {
 	C.wrap_ImFontAtlas_SetTexPixelsRGBA32(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self FontAtlas) SetTexWidth(v int32) {
@@ -8293,7 +8044,6 @@ func (self Context) SetLogNextPrefix(v string) {
 	C.wrap_ImGuiContext_SetLogNextPrefix(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self Context) LogNextPrefix() string {
@@ -8305,7 +8055,6 @@ func (self Context) SetLogNextSuffix(v string) {
 	C.wrap_ImGuiContext_SetLogNextSuffix(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self Context) LogNextSuffix() string {
@@ -8509,7 +8258,6 @@ func (self DataTypeInfo) SetName(v string) {
 	C.wrap_ImGuiDataTypeInfo_SetName(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self DataTypeInfo) Name() string {
@@ -8521,7 +8269,6 @@ func (self DataTypeInfo) SetPrintFmt(v string) {
 	C.wrap_ImGuiDataTypeInfo_SetPrintFmt(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self DataTypeInfo) PrintFmt() string {
@@ -8533,7 +8280,6 @@ func (self DataTypeInfo) SetScanFmt(v string) {
 	C.wrap_ImGuiDataTypeInfo_SetScanFmt(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self DataTypeInfo) ScanFmt() string {
@@ -8983,7 +8729,6 @@ func (self IO) SetIniFilename(v string) {
 	C.wrap_ImGuiIO_SetIniFilename(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self IO) IniFilename() string {
@@ -8995,7 +8740,6 @@ func (self IO) SetLogFilename(v string) {
 	C.wrap_ImGuiIO_SetLogFilename(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self IO) LogFilename() string {
@@ -9249,7 +8993,6 @@ func (self IO) SetBackendPlatformName(v string) {
 	C.wrap_ImGuiIO_SetBackendPlatformName(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self IO) BackendPlatformName() string {
@@ -9261,7 +9004,6 @@ func (self IO) SetBackendRendererName(v string) {
 	C.wrap_ImGuiIO_SetBackendRendererName(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self IO) BackendRendererName() string {
@@ -9703,7 +9445,6 @@ func (self InputTextCallbackData) SetBuf(v string) {
 	C.wrap_ImGuiInputTextCallbackData_SetBuf(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self InputTextCallbackData) Buf() string {
@@ -10137,7 +9878,6 @@ func (self LocEntry) SetText(v string) {
 	C.wrap_ImGuiLocEntry_SetText(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self LocEntry) Text() string {
@@ -10947,7 +10687,6 @@ func (self SettingsHandler) SetTypeName(v string) {
 	C.wrap_ImGuiSettingsHandler_SetTypeName(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self SettingsHandler) TypeName() string {
@@ -13343,7 +13082,6 @@ func (self TextRange) Setb(v string) {
 	C.wrap_ImGuiTextRange_Setb(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self TextRange) b() string {
@@ -13355,7 +13093,6 @@ func (self TextRange) Sete(v string) {
 	C.wrap_ImGuiTextRange_Sete(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self TextRange) e() string {
@@ -13667,7 +13404,6 @@ func (self Window) SetName(v string) {
 	C.wrap_ImGuiWindow_SetName(self.handle(), vArg)
 
 	vFin()
-
 }
 
 func (self Window) Name() string {
