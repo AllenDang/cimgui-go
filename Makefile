@@ -66,7 +66,7 @@ define update
 	cp tmp/$1/generator/output/*json cimgui/$1_templates
 	mkdir -p cimgui/$3
 	cp tmp/$1/$3/*cpp cimgui/$3
-	cp tmp/$1/$3/*h cimgui/$3
+	cp -r tmp/$1/$3/* cimgui/$3
 	cd tmp/$1; \
 		echo "$1 ($2) HEAD is on: `git rev-parse HEAD`" >> ../../cimgui/VERSION.txt
 	cd tmp/$1/$3; \
