@@ -13,10 +13,7 @@
 
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
-<<<<<<< HEAD
 //  2023-01-25: Revert automatic pipeline layout generation (see https://github.com/gpuweb/gpuweb/issues/2470)
-=======
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 //  2022-11-24: Fixed validation error with default depth buffer settings.
 //  2022-11-10: Fixed rendering when a depth buffer is enabled. Added 'WGPUTextureFormat depth_format' parameter to ImGui_ImplWGPU_Init().
 //  2022-10-11: Using 'nullptr' instead of 'NULL' as per our switch to C++11.

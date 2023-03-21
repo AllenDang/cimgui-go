@@ -21,15 +21,13 @@
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
 //  2023-XX-XX: Platform: Added support for multiple windows via the ImGuiPlatformIO interface.
-<<<<<<< HEAD:cimgui/imgui/backends/imgui_impl_sdl2.cpp
+//  2023-02-23: Accept SDL_GetPerformanceCounter() not returning a monotonically increasing value. (#6189, #6114, #3644)
 //  2023-02-07: Implement IME handler (io.SetPlatformImeDataFn will call SDL_SetTextInputRect()/SDL_StartTextInput()).
 //  2023-02-07: *BREAKING CHANGE* Renamed this backend file from imgui_impl_sdl.cpp/.h to imgui_impl_sdl2.cpp/.h in prevision for the future release of SDL3.
 //  2023-02-02: Avoid calling SDL_SetCursor() when cursor has not changed, as the function is surprisingly costly on Mac with latest SDL (may be fixed in next SDL version).
 //  2023-02-02: Added support for SDL 2.0.18+ preciseX/preciseY mouse wheel data for smooth scrolling + Scaling X value on Emscripten (bug?). (#4019, #6096)
 //  2023-02-02: Removed SDL_MOUSEWHEEL value clamping, as values seem correct in latest Emscripten. (#4019)
 //  2023-02-01: Flipping SDL_MOUSEWHEEL 'wheel.x' value to match other backends and offer consistent horizontal scrolling direction. (#4019, #6096, #1463)
-=======
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot):cimgui/imgui/backends/imgui_impl_sdl.cpp
 //  2022-10-11: Using 'nullptr' instead of 'NULL' as per our switch to C++11.
 //  2022-09-26: Inputs: Disable SDL 2.0.22 new "auto capture" (SDL_HINT_MOUSE_AUTO_CAPTURE) which prevents drag and drop across windows for multi-viewport support + don't capture when drag and dropping. (#5710)
 //  2022-09-26: Inputs: Renamed ImGuiKey_ModXXX introduced in 1.87 to ImGuiMod_XXX (old names still supported).
@@ -435,10 +433,7 @@ static bool ImGui_ImplSDL2_Init(SDL_Window* window, SDL_Renderer* renderer, void
     io.SetClipboardTextFn = ImGui_ImplSDL2_SetClipboardText;
     io.GetClipboardTextFn = ImGui_ImplSDL2_GetClipboardText;
     io.ClipboardUserData = nullptr;
-<<<<<<< HEAD:cimgui/imgui/backends/imgui_impl_sdl2.cpp
     io.SetPlatformImeDataFn = ImGui_ImplSDL2_SetPlatformImeData;
-=======
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot):cimgui/imgui/backends/imgui_impl_sdl.cpp
 
     // Load mouse cursors
     bd->MouseCursors[ImGuiMouseCursor_Arrow] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
@@ -476,7 +471,6 @@ static bool ImGui_ImplSDL2_Init(SDL_Window* window, SDL_Renderer* renderer, void
     SDL_SetHint(SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH, "1");
 #endif
 
-<<<<<<< HEAD:cimgui/imgui/backends/imgui_impl_sdl2.cpp
     // From 2.0.18: Enable native IME.
     // IMPORTANT: This is used at the time of SDL_CreateWindow() so this will only affects secondary windows, if any.
     // For the main window to be affected, your application needs to call this manually before calling SDL_CreateWindow().
@@ -484,8 +478,6 @@ static bool ImGui_ImplSDL2_Init(SDL_Window* window, SDL_Renderer* renderer, void
     SDL_SetHint(SDL_HINT_IME_SHOW_UI, "1");
 #endif
 
-=======
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot):cimgui/imgui/backends/imgui_impl_sdl.cpp
     // From 2.0.22: Disable auto-capture, this is preventing drag and drop across multiple windows (see #5710)
 #ifdef SDL_HINT_MOUSE_AUTO_CAPTURE
     SDL_SetHint(SDL_HINT_MOUSE_AUTO_CAPTURE, "0");
@@ -743,8 +735,11 @@ void ImGui_ImplSDL2_NewFrame()
         io.DisplayFramebufferScale = ImVec2((float)display_w / w, (float)display_h / h);
 
     // Setup time step (we don't use SDL_GetTicks() because it is using millisecond resolution)
+    // (Accept SDL_GetPerformanceCounter() not returning a monotonically increasing value. Happens in VMs and Emscripten, see #6189, #6114, #3644)
     static Uint64 frequency = SDL_GetPerformanceFrequency();
     Uint64 current_time = SDL_GetPerformanceCounter();
+    if (current_time <= bd->Time)
+        current_time = bd->Time + 1;
     io.DeltaTime = bd->Time > 0 ? (float)((double)(current_time - bd->Time) / frequency) : (float)(1.0f / 60.0f);
     bd->Time = current_time;
 

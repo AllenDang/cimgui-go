@@ -21,11 +21,9 @@
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
 //  2023-XX-XX: Platform: Added support for multiple windows via the ImGuiPlatformIO interface.
-<<<<<<< HEAD
+//  2023-03-14: Emscripten: Avoid using glfwGetError() and glfwGetGamepadState() which are not correctly implemented in Emscripten emulation. (#6240)
 //  2023-02-03: Emscripten: Registering custom low-level mouse wheel handler to get more accurate scrolling impulses on Emscripten. (#4019, #6096)
 //  2023-01-18: Handle unsupported glfwGetVideoMode() call on e.g. Emscripten.
-=======
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 //  2023-01-04: Inputs: Fixed mods state on Linux when using Alt-GR text input (e.g. German keyboard layout), could lead to broken text input. Revert a 2022/01/17 change were we resumed using mods provided by GLFW, turns out they were faulty.
 //  2022-11-22: Perform a dummy glfwGetError() read to cancel missing names with glfwGetKeyName(). (#5908)
 //  2022-10-18: Perform a dummy glfwGetError() read to cancel missing mouse cursors errors. Using GLFW_VERSION_COMBINED directly. (#5785)
@@ -90,7 +88,6 @@
 #include <GLFW/glfw3native.h>   // for glfwGetCocoaWindow()
 #endif
 
-<<<<<<< HEAD
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #include <emscripten/html5.h>
@@ -117,31 +114,9 @@
 #else
 #define GLFW_HAS_MOUSE_PASSTHROUGH      (0)
 #endif
-=======
-// We gather version tests as define in order to easily see which features are version-dependent.
-#define GLFW_VERSION_COMBINED           (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 + GLFW_VERSION_REVISION)
-#define GLFW_HAS_WINDOW_TOPMOST         (GLFW_VERSION_COMBINED >= 3200) // 3.2+ GLFW_FLOATING
-#define GLFW_HAS_WINDOW_HOVERED         (GLFW_VERSION_COMBINED >= 3300) // 3.3+ GLFW_HOVERED
-#define GLFW_HAS_WINDOW_ALPHA           (GLFW_VERSION_COMBINED >= 3300) // 3.3+ glfwSetWindowOpacity
-#define GLFW_HAS_PER_MONITOR_DPI        (GLFW_VERSION_COMBINED >= 3300) // 3.3+ glfwGetMonitorContentScale
-#define GLFW_HAS_VULKAN                 (GLFW_VERSION_COMBINED >= 3200) // 3.2+ glfwCreateWindowSurface
-#define GLFW_HAS_FOCUS_WINDOW           (GLFW_VERSION_COMBINED >= 3200) // 3.2+ glfwFocusWindow
-#define GLFW_HAS_FOCUS_ON_SHOW          (GLFW_VERSION_COMBINED >= 3300) // 3.3+ GLFW_FOCUS_ON_SHOW
-#define GLFW_HAS_MONITOR_WORK_AREA      (GLFW_VERSION_COMBINED >= 3300) // 3.3+ glfwGetMonitorWorkarea
-#define GLFW_HAS_OSX_WINDOW_POS_FIX     (GLFW_VERSION_COMBINED >= 3301) // 3.3.1+ Fixed: Resizing window repositions it on MacOS #1553
-#ifdef GLFW_RESIZE_NESW_CURSOR          // Let's be nice to people who pulled GLFW between 2019-04-16 (3.4 define) and 2019-11-29 (cursors defines) // FIXME: Remove when GLFW 3.4 is released?
-#define GLFW_HAS_NEW_CURSORS            (GLFW_VERSION_COMBINED >= 3400) // 3.4+ GLFW_RESIZE_ALL_CURSOR, GLFW_RESIZE_NESW_CURSOR, GLFW_RESIZE_NWSE_CURSOR, GLFW_NOT_ALLOWED_CURSOR
-#else
-#define GLFW_HAS_NEW_CURSORS            (0)
-#endif
-#ifdef GLFW_MOUSE_PASSTHROUGH           // Let's be nice to people who pulled GLFW between 2019-04-16 (3.4 define) and 2020-07-17 (passthrough)
-#define GLFW_HAS_MOUSE_PASSTHROUGH      (GLFW_VERSION_COMBINED >= 3400) // 3.4+ GLFW_MOUSE_PASSTHROUGH
-#else
-#define GLFW_HAS_MOUSE_PASSTHROUGH      (0)
-#endif
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 #define GLFW_HAS_GAMEPAD_API            (GLFW_VERSION_COMBINED >= 3300) // 3.3+ glfwGetGamepadState() new api
 #define GLFW_HAS_GETKEYNAME             (GLFW_VERSION_COMBINED >= 3200) // 3.2+ glfwGetKeyName()
+#define GLFW_HAS_GETERROR               (GLFW_VERSION_COMBINED >= 3300) // 3.3+ glfwGetError()
 
 // GLFW data
 enum GlfwClientApi
@@ -331,25 +306,18 @@ static void ImGui_ImplGlfw_UpdateKeyModifiers()
     io.AddKeyEvent(ImGuiMod_Shift, (glfwGetKey(bd->Window, GLFW_KEY_LEFT_SHIFT)   == GLFW_PRESS) || (glfwGetKey(bd->Window, GLFW_KEY_RIGHT_SHIFT)   == GLFW_PRESS));
     io.AddKeyEvent(ImGuiMod_Alt,   (glfwGetKey(bd->Window, GLFW_KEY_LEFT_ALT)     == GLFW_PRESS) || (glfwGetKey(bd->Window, GLFW_KEY_RIGHT_ALT)     == GLFW_PRESS));
     io.AddKeyEvent(ImGuiMod_Super, (glfwGetKey(bd->Window, GLFW_KEY_LEFT_SUPER)   == GLFW_PRESS) || (glfwGetKey(bd->Window, GLFW_KEY_RIGHT_SUPER)   == GLFW_PRESS));
-<<<<<<< HEAD
 }
 
 static bool ImGui_ImplGlfw_ShouldChainCallback(GLFWwindow* window)
 {
     ImGui_ImplGlfw_Data* bd = ImGui_ImplGlfw_GetBackendData();
     return bd->CallbacksChainForAllWindows ? true : (window == bd->Window);
-=======
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 }
 
 void ImGui_ImplGlfw_MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
     ImGui_ImplGlfw_Data* bd = ImGui_ImplGlfw_GetBackendData();
-<<<<<<< HEAD
     if (bd->PrevUserCallbackMousebutton != nullptr && ImGui_ImplGlfw_ShouldChainCallback(window))
-=======
-    if (bd->PrevUserCallbackMousebutton != nullptr && window == bd->Window)
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
         bd->PrevUserCallbackMousebutton(window, button, action, mods);
 
     ImGui_ImplGlfw_UpdateKeyModifiers();
@@ -362,11 +330,7 @@ void ImGui_ImplGlfw_MouseButtonCallback(GLFWwindow* window, int button, int acti
 void ImGui_ImplGlfw_ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
     ImGui_ImplGlfw_Data* bd = ImGui_ImplGlfw_GetBackendData();
-<<<<<<< HEAD
     if (bd->PrevUserCallbackScroll != nullptr && ImGui_ImplGlfw_ShouldChainCallback(window))
-=======
-    if (bd->PrevUserCallbackScroll != nullptr && window == bd->Window)
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
         bd->PrevUserCallbackScroll(window, xoffset, yoffset);
 
 #ifdef __EMSCRIPTEN__
@@ -391,7 +355,7 @@ static int ImGui_ImplGlfw_TranslateUntranslatedKey(int key, int scancode)
     GLFWerrorfun prev_error_callback = glfwSetErrorCallback(nullptr);
     const char* key_name = glfwGetKeyName(key, scancode);
     glfwSetErrorCallback(prev_error_callback);
-#if (GLFW_VERSION_COMBINED >= 3300) // Eat errors (see #5908)
+#if GLFW_HAS_GETERROR && !defined(__EMSCRIPTEN__) // Eat errors (see #5908)
     (void)glfwGetError(NULL);
 #endif
     if (key_name && key_name[0] != 0 && key_name[1] == 0)
@@ -414,11 +378,7 @@ static int ImGui_ImplGlfw_TranslateUntranslatedKey(int key, int scancode)
 void ImGui_ImplGlfw_KeyCallback(GLFWwindow* window, int keycode, int scancode, int action, int mods)
 {
     ImGui_ImplGlfw_Data* bd = ImGui_ImplGlfw_GetBackendData();
-<<<<<<< HEAD
     if (bd->PrevUserCallbackKey != nullptr && ImGui_ImplGlfw_ShouldChainCallback(window))
-=======
-    if (bd->PrevUserCallbackKey != nullptr && window == bd->Window)
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
         bd->PrevUserCallbackKey(window, keycode, scancode, action, mods);
 
     if (action != GLFW_PRESS && action != GLFW_RELEASE)
@@ -440,11 +400,7 @@ void ImGui_ImplGlfw_KeyCallback(GLFWwindow* window, int keycode, int scancode, i
 void ImGui_ImplGlfw_WindowFocusCallback(GLFWwindow* window, int focused)
 {
     ImGui_ImplGlfw_Data* bd = ImGui_ImplGlfw_GetBackendData();
-<<<<<<< HEAD
     if (bd->PrevUserCallbackWindowFocus != nullptr && ImGui_ImplGlfw_ShouldChainCallback(window))
-=======
-    if (bd->PrevUserCallbackWindowFocus != nullptr && window == bd->Window)
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
         bd->PrevUserCallbackWindowFocus(window, focused);
 
     ImGuiIO& io = ImGui::GetIO();
@@ -454,11 +410,7 @@ void ImGui_ImplGlfw_WindowFocusCallback(GLFWwindow* window, int focused)
 void ImGui_ImplGlfw_CursorPosCallback(GLFWwindow* window, double x, double y)
 {
     ImGui_ImplGlfw_Data* bd = ImGui_ImplGlfw_GetBackendData();
-<<<<<<< HEAD
     if (bd->PrevUserCallbackCursorPos != nullptr && ImGui_ImplGlfw_ShouldChainCallback(window))
-=======
-    if (bd->PrevUserCallbackCursorPos != nullptr && window == bd->Window)
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
         bd->PrevUserCallbackCursorPos(window, x, y);
     if (glfwGetInputMode(window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
         return;
@@ -480,11 +432,7 @@ void ImGui_ImplGlfw_CursorPosCallback(GLFWwindow* window, double x, double y)
 void ImGui_ImplGlfw_CursorEnterCallback(GLFWwindow* window, int entered)
 {
     ImGui_ImplGlfw_Data* bd = ImGui_ImplGlfw_GetBackendData();
-<<<<<<< HEAD
     if (bd->PrevUserCallbackCursorEnter != nullptr && ImGui_ImplGlfw_ShouldChainCallback(window))
-=======
-    if (bd->PrevUserCallbackCursorEnter != nullptr && window == bd->Window)
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
         bd->PrevUserCallbackCursorEnter(window, entered);
     if (glfwGetInputMode(window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
         return;
@@ -506,11 +454,7 @@ void ImGui_ImplGlfw_CursorEnterCallback(GLFWwindow* window, int entered)
 void ImGui_ImplGlfw_CharCallback(GLFWwindow* window, unsigned int c)
 {
     ImGui_ImplGlfw_Data* bd = ImGui_ImplGlfw_GetBackendData();
-<<<<<<< HEAD
     if (bd->PrevUserCallbackChar != nullptr && ImGui_ImplGlfw_ShouldChainCallback(window))
-=======
-    if (bd->PrevUserCallbackChar != nullptr && window == bd->Window)
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
         bd->PrevUserCallbackChar(window, c);
 
     ImGuiIO& io = ImGui::GetIO();
@@ -581,7 +525,6 @@ void ImGui_ImplGlfw_RestoreCallbacks(GLFWwindow* window)
     bd->PrevUserCallbackKey = nullptr;
     bd->PrevUserCallbackChar = nullptr;
     bd->PrevUserCallbackMonitor = nullptr;
-<<<<<<< HEAD
 }
 
 // Set to 'true' to enable chaining installed callbacks for all windows (including secondary viewports created by backends or by user.
@@ -592,8 +535,6 @@ void ImGui_ImplGlfw_SetCallbacksChainForAllWindows(bool chain_for_all_windows)
 {
     ImGui_ImplGlfw_Data* bd = ImGui_ImplGlfw_GetBackendData();
     bd->CallbacksChainForAllWindows = chain_for_all_windows;
-=======
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 }
 
 static bool ImGui_ImplGlfw_Init(GLFWwindow* window, bool install_callbacks, GlfwClientApi client_api)
@@ -643,7 +584,7 @@ static bool ImGui_ImplGlfw_Init(GLFWwindow* window, bool install_callbacks, Glfw
     bd->MouseCursors[ImGuiMouseCursor_NotAllowed] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
 #endif
     glfwSetErrorCallback(prev_error_callback);
-#if (GLFW_VERSION_COMBINED >= 3300) // Eat errors (see #5785)
+#if GLFW_HAS_GETERROR && !defined(__EMSCRIPTEN__) // Eat errors (see #5908)
     (void)glfwGetError(NULL);
 #endif
 
@@ -824,7 +765,7 @@ static void ImGui_ImplGlfw_UpdateGamepads()
         return;
 
     io.BackendFlags &= ~ImGuiBackendFlags_HasGamepad;
-#if GLFW_HAS_GAMEPAD_API
+#if GLFW_HAS_GAMEPAD_API && !defined(__EMSCRIPTEN__)
     GLFWgamepadstate gamepad;
     if (!glfwGetGamepadState(GLFW_JOYSTICK_1, &gamepad))
         return;

@@ -37,12 +37,8 @@ bool wrap_ImPlot_DragPoint(int id,double* x,double* y,const ImVec4 col) { return
 bool wrap_ImPlot_DragRect(int id,double* x1,double* y1,double* x2,double* y2,const ImVec4 col) { return ImPlot_DragRect(id,x1,y1,x2,y2,col,0); }
 void wrap_ImPlot_GetColormapColor(ImVec4* pOut,int idx) { ImPlot_GetColormapColor(pOut,idx,-1); }
 int wrap_ImPlot_GetColormapSize() { return ImPlot_GetColormapSize(-1); }
-<<<<<<< HEAD
 void wrap_ImPlot_GetLocationPos(ImVec2* pOut,const ImRect outer_rect,const ImVec2 inner_size,ImPlotLocation location) { ImPlot_GetLocationPos(pOut,outer_rect,inner_size,location,(ImVec2){.x=0, .y=0}); }
-ImPlotRect wrap_ImPlot_GetPlotLimits() { return ImPlot_GetPlotLimits(-1,-1); }
-=======
 void wrap_ImPlot_GetPlotLimits(ImPlotRect* pOut) { ImPlot_GetPlotLimits(pOut,-1,-1); }
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 void wrap_ImPlot_GetPlotMousePos(ImPlotPoint* pOut) { ImPlot_GetPlotMousePos(pOut,-1,-1); }
 void wrap_ImPlot_GetPlotSelection(ImPlotRect* pOut) { ImPlot_GetPlotSelection(pOut,-1,-1); }
 void wrap_ImPlot_HideNextItem() { ImPlot_HideNextItem(true,ImPlotCond_Once); }

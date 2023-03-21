@@ -485,8 +485,6 @@ void wrap_ImGuiContext_SetNavActivateDownId(ImGuiContext *ImGuiContextPtr, ImGui
 ImGuiID wrap_ImGuiContext_GetNavActivateDownId(ImGuiContext *self) { return self->NavActivateDownId; }
 void wrap_ImGuiContext_SetNavActivatePressedId(ImGuiContext *ImGuiContextPtr, ImGuiID v) { ImGuiContextPtr->NavActivatePressedId = v; }
 ImGuiID wrap_ImGuiContext_GetNavActivatePressedId(ImGuiContext *self) { return self->NavActivatePressedId; }
-void wrap_ImGuiContext_SetNavActivateInputId(ImGuiContext *ImGuiContextPtr, ImGuiID v) { ImGuiContextPtr->NavActivateInputId = v; }
-ImGuiID wrap_ImGuiContext_GetNavActivateInputId(ImGuiContext *self) { return self->NavActivateInputId; }
 void wrap_ImGuiContext_SetNavActivateFlags(ImGuiContext *ImGuiContextPtr, ImGuiActivateFlags v) { ImGuiContextPtr->NavActivateFlags = v; }
 ImGuiActivateFlags wrap_ImGuiContext_GetNavActivateFlags(ImGuiContext *self) { return self->NavActivateFlags; }
 void wrap_ImGuiContext_SetNavJustMovedToId(ImGuiContext *ImGuiContextPtr, ImGuiID v) { ImGuiContextPtr->NavJustMovedToId = v; }
@@ -747,8 +745,12 @@ void wrap_ImGuiContext_SetDebugLogBuf(ImGuiContext *ImGuiContextPtr, ImGuiTextBu
 ImGuiTextBuffer wrap_ImGuiContext_GetDebugLogBuf(ImGuiContext *self) { return self->DebugLogBuf; }
 void wrap_ImGuiContext_SetDebugLogIndex(ImGuiContext *ImGuiContextPtr, ImGuiTextIndex v) { ImGuiContextPtr->DebugLogIndex = v; }
 ImGuiTextIndex wrap_ImGuiContext_GetDebugLogIndex(ImGuiContext *self) { return self->DebugLogIndex; }
+void wrap_ImGuiContext_SetDebugLogClipperAutoDisableFrames(ImGuiContext *ImGuiContextPtr, ImU8 v) { ImGuiContextPtr->DebugLogClipperAutoDisableFrames = v; }
+ImU8 wrap_ImGuiContext_GetDebugLogClipperAutoDisableFrames(ImGuiContext *self) { return self->DebugLogClipperAutoDisableFrames; }
 void wrap_ImGuiContext_SetDebugLocateFrames(ImGuiContext *ImGuiContextPtr, ImU8 v) { ImGuiContextPtr->DebugLocateFrames = v; }
 ImU8 wrap_ImGuiContext_GetDebugLocateFrames(ImGuiContext *self) { return self->DebugLocateFrames; }
+void wrap_ImGuiContext_SetDebugBeginReturnValueCullDepth(ImGuiContext *ImGuiContextPtr, ImS8 v) { ImGuiContextPtr->DebugBeginReturnValueCullDepth = v; }
+ImS8 wrap_ImGuiContext_GetDebugBeginReturnValueCullDepth(ImGuiContext *self) { return self->DebugBeginReturnValueCullDepth; }
 void wrap_ImGuiContext_SetDebugItemPickerActive(ImGuiContext *ImGuiContextPtr, bool v) { ImGuiContextPtr->DebugItemPickerActive = v; }
 bool wrap_ImGuiContext_GetDebugItemPickerActive(ImGuiContext *self) { return self->DebugItemPickerActive; }
 void wrap_ImGuiContext_SetDebugItemPickerMouseButton(ImGuiContext *ImGuiContextPtr, ImU8 v) { ImGuiContextPtr->DebugItemPickerMouseButton = v; }
@@ -793,6 +795,12 @@ void wrap_ImGuiDataTypeInfo_SetPrintFmt(ImGuiDataTypeInfo *ImGuiDataTypeInfoPtr,
 const char* wrap_ImGuiDataTypeInfo_GetPrintFmt(ImGuiDataTypeInfo *self) { return self->PrintFmt; }
 void wrap_ImGuiDataTypeInfo_SetScanFmt(ImGuiDataTypeInfo *ImGuiDataTypeInfoPtr, const char* v) { ImGuiDataTypeInfoPtr->ScanFmt = v; }
 const char* wrap_ImGuiDataTypeInfo_GetScanFmt(ImGuiDataTypeInfo *self) { return self->ScanFmt; }
+void wrap_ImGuiDataVarInfo_SetType(ImGuiDataVarInfo *ImGuiDataVarInfoPtr, ImGuiDataType v) { ImGuiDataVarInfoPtr->Type = v; }
+ImGuiDataType wrap_ImGuiDataVarInfo_GetType(ImGuiDataVarInfo *self) { return self->Type; }
+void wrap_ImGuiDataVarInfo_SetCount(ImGuiDataVarInfo *ImGuiDataVarInfoPtr, ImU32 v) { ImGuiDataVarInfoPtr->Count = v; }
+ImU32 wrap_ImGuiDataVarInfo_GetCount(ImGuiDataVarInfo *self) { return self->Count; }
+void wrap_ImGuiDataVarInfo_SetOffset(ImGuiDataVarInfo *ImGuiDataVarInfoPtr, ImU32 v) { ImGuiDataVarInfoPtr->Offset = v; }
+ImU32 wrap_ImGuiDataVarInfo_GetOffset(ImGuiDataVarInfo *self) { return self->Offset; }
 void wrap_ImGuiDockContext_SetNodes(ImGuiDockContext *ImGuiDockContextPtr, ImGuiStorage v) { ImGuiDockContextPtr->Nodes = v; }
 ImGuiStorage wrap_ImGuiDockContext_GetNodes(ImGuiDockContext *self) { return self->Nodes; }
 void wrap_ImGuiDockContext_SetRequests(ImGuiDockContext *ImGuiDockContextPtr, ImVector_ImGuiDockRequest v) { ImGuiDockContextPtr->Requests = v; }
@@ -975,6 +983,10 @@ void wrap_ImGuiIO_SetConfigWindowsMoveFromTitleBarOnly(ImGuiIO *ImGuiIOPtr, bool
 bool wrap_ImGuiIO_GetConfigWindowsMoveFromTitleBarOnly(ImGuiIO *self) { return self->ConfigWindowsMoveFromTitleBarOnly; }
 void wrap_ImGuiIO_SetConfigMemoryCompactTimer(ImGuiIO *ImGuiIOPtr, float v) { ImGuiIOPtr->ConfigMemoryCompactTimer = v; }
 float wrap_ImGuiIO_GetConfigMemoryCompactTimer(ImGuiIO *self) { return self->ConfigMemoryCompactTimer; }
+void wrap_ImGuiIO_SetConfigDebugBeginReturnValueOnce(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->ConfigDebugBeginReturnValueOnce = v; }
+bool wrap_ImGuiIO_GetConfigDebugBeginReturnValueOnce(ImGuiIO *self) { return self->ConfigDebugBeginReturnValueOnce; }
+void wrap_ImGuiIO_SetConfigDebugBeginReturnValueLoop(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->ConfigDebugBeginReturnValueLoop = v; }
+bool wrap_ImGuiIO_GetConfigDebugBeginReturnValueLoop(ImGuiIO *self) { return self->ConfigDebugBeginReturnValueLoop; }
 void wrap_ImGuiIO_SetBackendPlatformName(ImGuiIO *ImGuiIOPtr, const char* v) { ImGuiIOPtr->BackendPlatformName = v; }
 const char* wrap_ImGuiIO_GetBackendPlatformName(ImGuiIO *self) { return self->BackendPlatformName; }
 void wrap_ImGuiIO_SetBackendRendererName(ImGuiIO *ImGuiIOPtr, const char* v) { ImGuiIOPtr->BackendRendererName = v; }
@@ -1017,6 +1029,8 @@ void wrap_ImGuiIO_SetMetricsActiveAllocations(ImGuiIO *ImGuiIOPtr, int v) { ImGu
 int wrap_ImGuiIO_GetMetricsActiveAllocations(ImGuiIO *self) { return self->MetricsActiveAllocations; }
 void wrap_ImGuiIO_SetMouseDelta(ImGuiIO *ImGuiIOPtr, ImVec2 v) { ImGuiIOPtr->MouseDelta = v; }
 ImVec2 wrap_ImGuiIO_GetMouseDelta(ImGuiIO *self) { return self->MouseDelta; }
+void wrap_ImGuiIO_SetCtx(ImGuiIO *ImGuiIOPtr, ImGuiContext* v) { ImGuiIOPtr->Ctx = v; }
+ImGuiContext* wrap_ImGuiIO_GetCtx(ImGuiIO *self) { return self->Ctx; }
 void wrap_ImGuiIO_SetMousePos(ImGuiIO *ImGuiIOPtr, ImVec2 v) { ImGuiIOPtr->MousePos = v; }
 ImVec2 wrap_ImGuiIO_GetMousePos(ImGuiIO *self) { return self->MousePos; }
 void wrap_ImGuiIO_SetMouseWheel(ImGuiIO *ImGuiIOPtr, float v) { ImGuiIOPtr->MouseWheel = v; }
@@ -1081,6 +1095,8 @@ void wrap_ImGuiInputEventMouseWheel_SetWheelY(ImGuiInputEventMouseWheel *ImGuiIn
 float wrap_ImGuiInputEventMouseWheel_GetWheelY(ImGuiInputEventMouseWheel *self) { return self->WheelY; }
 void wrap_ImGuiInputEventText_SetChar(ImGuiInputEventText *ImGuiInputEventTextPtr, unsigned int v) { ImGuiInputEventTextPtr->Char = v; }
 unsigned int wrap_ImGuiInputEventText_GetChar(ImGuiInputEventText *self) { return self->Char; }
+void wrap_ImGuiInputTextCallbackData_SetCtx(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, ImGuiContext* v) { ImGuiInputTextCallbackDataPtr->Ctx = v; }
+ImGuiContext* wrap_ImGuiInputTextCallbackData_GetCtx(ImGuiInputTextCallbackData *self) { return self->Ctx; }
 void wrap_ImGuiInputTextCallbackData_SetEventFlag(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, ImGuiInputTextFlags v) { ImGuiInputTextCallbackDataPtr->EventFlag = v; }
 ImGuiInputTextFlags wrap_ImGuiInputTextCallbackData_GetEventFlag(ImGuiInputTextCallbackData *self) { return self->EventFlag; }
 void wrap_ImGuiInputTextCallbackData_SetFlags(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, ImGuiInputTextFlags v) { ImGuiInputTextCallbackDataPtr->Flags = v; }
@@ -1179,6 +1195,8 @@ void wrap_ImGuiLastItemData_SetNavRect(ImGuiLastItemData *ImGuiLastItemDataPtr, 
 ImRect wrap_ImGuiLastItemData_GetNavRect(ImGuiLastItemData *self) { return self->NavRect; }
 void wrap_ImGuiLastItemData_SetDisplayRect(ImGuiLastItemData *ImGuiLastItemDataPtr, ImRect v) { ImGuiLastItemDataPtr->DisplayRect = v; }
 ImRect wrap_ImGuiLastItemData_GetDisplayRect(ImGuiLastItemData *self) { return self->DisplayRect; }
+void wrap_ImGuiListClipper_SetCtx(ImGuiListClipper *ImGuiListClipperPtr, ImGuiContext* v) { ImGuiListClipperPtr->Ctx = v; }
+ImGuiContext* wrap_ImGuiListClipper_GetCtx(ImGuiListClipper *self) { return self->Ctx; }
 void wrap_ImGuiListClipper_SetDisplayStart(ImGuiListClipper *ImGuiListClipperPtr, int v) { ImGuiListClipperPtr->DisplayStart = v; }
 int wrap_ImGuiListClipper_GetDisplayStart(ImGuiListClipper *self) { return self->DisplayStart; }
 void wrap_ImGuiListClipper_SetDisplayEnd(ImGuiListClipper *ImGuiListClipperPtr, int v) { ImGuiListClipperPtr->DisplayEnd = v; }
@@ -2107,6 +2125,8 @@ void wrap_ImGuiViewportP_SetBuildWorkOffsetMin(ImGuiViewportP *ImGuiViewportPPtr
 ImVec2 wrap_ImGuiViewportP_GetBuildWorkOffsetMin(ImGuiViewportP *self) { return self->BuildWorkOffsetMin; }
 void wrap_ImGuiViewportP_SetBuildWorkOffsetMax(ImGuiViewportP *ImGuiViewportPPtr, ImVec2 v) { ImGuiViewportPPtr->BuildWorkOffsetMax = v; }
 ImVec2 wrap_ImGuiViewportP_GetBuildWorkOffsetMax(ImGuiViewportP *self) { return self->BuildWorkOffsetMax; }
+void wrap_ImGuiWindow_SetCtx(ImGuiWindow *ImGuiWindowPtr, ImGuiContext* v) { ImGuiWindowPtr->Ctx = v; }
+ImGuiContext* wrap_ImGuiWindow_GetCtx(ImGuiWindow *self) { return self->Ctx; }
 void wrap_ImGuiWindow_SetName(ImGuiWindow *ImGuiWindowPtr, char* v) { ImGuiWindowPtr->Name = v; }
 char* wrap_ImGuiWindow_GetName(ImGuiWindow *self) { return self->Name; }
 void wrap_ImGuiWindow_SetID(ImGuiWindow *ImGuiWindowPtr, ImGuiID v) { ImGuiWindowPtr->ID = v; }

@@ -36,11 +36,8 @@ typedef DWORD (WINAPI *PFN_XInputGetState)(DWORD, XINPUT_STATE*);
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
 //  2023-XX-XX: Platform: Added support for multiple windows via the ImGuiPlatformIO interface.
-<<<<<<< HEAD
 //  2023-02-15: Inputs: Use WM_NCMOUSEMOVE / WM_NCMOUSELEAVE to track mouse position over non-client area (e.g. OS decorations) when app is not focused. (#6045, #6162)
 //  2023-02-02: Inputs: Flipping WM_MOUSEHWHEEL (horizontal mouse-wheel) value to match other backends and offer consistent horizontal scrolling direction. (#4019, #6096, #1463)
-=======
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 //  2022-10-11: Using 'nullptr' instead of 'NULL' as per our switch to C++11.
 //  2022-09-28: Inputs: Convert WM_CHAR values with MultiByteToWideChar() when window class was registered as MBCS (not Unicode).
 //  2022-09-26: Inputs: Renamed ImGuiKey_ModXXX introduced in 1.87 to ImGuiMod_XXX (old names still supported).
@@ -616,7 +613,6 @@ IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARA
         break;
     }
     case WM_MOUSELEAVE:
-<<<<<<< HEAD
     case WM_NCMOUSELEAVE:
     {
         const int area = (msg == WM_MOUSELEAVE) ? 1 : 2;
@@ -627,12 +623,6 @@ IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARA
             bd->MouseTrackedArea = 0;
             io.AddMousePosEvent(-FLT_MAX, -FLT_MAX);
         }
-=======
-        if (bd->MouseHwnd == hwnd)
-            bd->MouseHwnd = nullptr;
-        bd->MouseTracked = false;
-        io.AddMousePosEvent(-FLT_MAX, -FLT_MAX);
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
         break;
     }
     case WM_LBUTTONDOWN: case WM_LBUTTONDBLCLK:

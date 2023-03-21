@@ -518,16 +518,8 @@ func (self FontAtlas) GlyphRangesDefault() *Wchar {
 }
 
 func (self FontAtlas) GlyphRangesGreek() *Wchar {
-<<<<<<< HEAD
 	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesGreek(self.handle()))
 }
-=======
-
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesGreek(self.handle()))
-}
-
-func (self FontAtlas) GlyphRangesJapanese() *Wchar {
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 
 func (self FontAtlas) GlyphRangesJapanese() *Wchar {
 	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesJapanese(self.handle()))
@@ -871,24 +863,6 @@ func (self KeyRoutingData) Destroy() {
 
 func (self KeyRoutingTable) Destroy() {
 	C.ImGuiKeyRoutingTable_destroy(self.handle())
-}
-
-func (self KeyOwnerData) Destroy() {
-
-	C.ImGuiKeyOwnerData_destroy(self.handle())
-
-}
-
-func (self KeyRoutingData) Destroy() {
-
-	C.ImGuiKeyRoutingData_destroy(self.handle())
-
-}
-
-func (self KeyRoutingTable) Destroy() {
-
-	C.ImGuiKeyRoutingTable_destroy(self.handle())
-
 }
 
 func (self LastItemData) Destroy() {
@@ -1488,8 +1462,8 @@ func BeginTableV(str_id string, column int32, flags TableFlags, outer_size Vec2,
 	return C.igBeginTable(str_idArg, C.int(column), C.ImGuiTableFlags(flags), outer_size.toC(), C.float(inner_width)) == C.bool(true)
 }
 
-func BeginTooltip() {
-	C.igBeginTooltip()
+func BeginTooltip() bool {
+	return C.igBeginTooltip() == C.bool(true)
 }
 
 func Bullet() {
@@ -2374,10 +2348,6 @@ func CurrentIO() IO {
 }
 
 func ItemID() ID {
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return ID(C.igGetItemID())
 }
 
@@ -2415,10 +2385,6 @@ func ItemRectSize() Vec2 {
 }
 
 func KeyIndex(key Key) Key {
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return Key(C.igGetKeyIndex(C.ImGuiKey(key)))
 }
 
@@ -2916,38 +2882,22 @@ func IsItemVisible() bool {
 }
 
 func IsKeyDownNil(key Key) bool {
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.igIsKeyDown_Nil(C.ImGuiKey(key)) == C.bool(true)
 }
 
 // IsKeyPressedBoolV parameter default value hint:
 // repeat: true
 func IsKeyPressedBoolV(key Key, repeat bool) bool {
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.igIsKeyPressed_Bool(C.ImGuiKey(key), C.bool(repeat)) == C.bool(true)
 }
 
 func IsKeyReleasedNil(key Key) bool {
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.igIsKeyReleased_Nil(C.ImGuiKey(key)) == C.bool(true)
 }
 
 // IsMouseClickedBoolV parameter default value hint:
 // repeat: false
 func IsMouseClickedBoolV(button MouseButton, repeat bool) bool {
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.igIsMouseClicked_Bool(C.ImGuiMouseButton(button), C.bool(repeat)) == C.bool(true)
 }
 
@@ -2956,10 +2906,6 @@ func IsMouseDoubleClicked(button MouseButton) bool {
 }
 
 func IsMouseDownNil(button MouseButton) bool {
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.igIsMouseDown_Nil(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
@@ -2987,10 +2933,6 @@ func IsMousePosValidV(mouse_pos *Vec2) bool {
 }
 
 func IsMouseReleasedNil(button MouseButton) bool {
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.igIsMouseReleased_Nil(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
@@ -3221,10 +3163,6 @@ func PlotLinesFloatPtrV(label string, values []float32, values_count int32, valu
 	overlay_textFin()
 }
 
-func PopAllowKeyboardFocus() {
-	C.igPopAllowKeyboardFocus()
-}
-
 func PopButtonRepeat() {
 	C.igPopButtonRepeat()
 }
@@ -3257,6 +3195,10 @@ func PopStyleVarV(count int32) {
 	C.igPopStyleVar(C.int(count))
 }
 
+func PopTabStop() {
+	C.igPopTabStop()
+}
+
 func PopTextWrapPos() {
 	C.igPopTextWrapPos()
 }
@@ -3269,10 +3211,6 @@ func ProgressBarV(fraction float32, size_arg Vec2, overlay string) {
 	C.igProgressBar(C.float(fraction), size_arg.toC(), overlayArg)
 
 	overlayFin()
-}
-
-func PushAllowKeyboardFocus(allow_keyboard_focus bool) {
-	C.igPushAllowKeyboardFocus(C.bool(allow_keyboard_focus))
 }
 
 func PushButtonRepeat(repeat bool) {
@@ -3329,6 +3267,10 @@ func PushStyleVarFloat(idx StyleVar, val float32) {
 
 func PushStyleVarVec2(idx StyleVar, val Vec2) {
 	C.igPushStyleVar_Vec2(C.ImGuiStyleVar(idx), val.toC())
+}
+
+func PushTabStop(tab_stop bool) {
+	C.igPushTabStop(C.bool(tab_stop))
 }
 
 // PushTextWrapPosV parameter default value hint:
@@ -3555,12 +3497,6 @@ func SetNextWindowPosV(pos Vec2, cond Cond, pivot Vec2) {
 
 func SetNextWindowScroll(scroll Vec2) {
 	C.igSetNextWindowScroll(scroll.toC())
-}
-
-func SetNextWindowScroll(scroll Vec2) {
-
-	C.igSetNextWindowScroll(scroll.toC())
-
 }
 
 // SetNextWindowSizeV parameter default value hint:
@@ -4195,10 +4131,6 @@ func TreePop() {
 }
 
 func TreePushPtr(ptr_id unsafe.Pointer) {
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	C.igTreePush_Ptr((ptr_id))
 }
 
@@ -5194,18 +5126,10 @@ func IsItemHovered() bool {
 }
 
 func IsKeyPressedBool(key Key) bool {
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.wrap_igIsKeyPressed_Bool(C.ImGuiKey(key)) == C.bool(true)
 }
 
 func IsMouseClickedBool(button MouseButton) bool {
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.wrap_igIsMouseClicked_Bool(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
@@ -6235,20 +6159,10 @@ func (self FontAtlas) Locked() bool {
 }
 
 func (self FontAtlas) SetUserData(v unsafe.Pointer) {
-<<<<<<< HEAD
 	C.wrap_ImFontAtlas_SetUserData(self.handle(), (v))
 }
 
 func (self FontAtlas) UserData() unsafe.Pointer {
-=======
-
-	C.wrap_ImFontAtlas_SetUserData(self.handle(), (v))
-
-}
-
-func (self FontAtlas) UserData() unsafe.Pointer {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return unsafe.Pointer(C.wrap_ImFontAtlas_GetUserData(self.handle()))
 }
 
@@ -6944,7 +6858,6 @@ func (self Context) WheelingWindowRefMousePos() Vec2 {
 }
 
 func (self Context) SetWheelingWindowStartFrame(v int32) {
-<<<<<<< HEAD
 	C.wrap_ImGuiContext_SetWheelingWindowStartFrame(self.handle(), C.int(v))
 }
 
@@ -6957,64 +6870,24 @@ func (self Context) SetWheelingWindowReleaseTimer(v float32) {
 }
 
 func (self Context) WheelingWindowReleaseTimer() float32 {
-=======
-
-	C.wrap_ImGuiContext_SetWheelingWindowStartFrame(self.handle(), C.int(v))
-
-}
-
-func (self Context) WheelingWindowStartFrame() int {
-
-	return int(C.wrap_ImGuiContext_GetWheelingWindowStartFrame(self.handle()))
-}
-
-func (self Context) SetWheelingWindowReleaseTimer(v float32) {
-
-	C.wrap_ImGuiContext_SetWheelingWindowReleaseTimer(self.handle(), C.float(v))
-
-}
-
-func (self Context) WheelingWindowReleaseTimer() float32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return float32(C.wrap_ImGuiContext_GetWheelingWindowReleaseTimer(self.handle()))
 }
 
 func (self Context) SetWheelingWindowWheelRemainder(v Vec2) {
-<<<<<<< HEAD
 	C.wrap_ImGuiContext_SetWheelingWindowWheelRemainder(self.handle(), v.toC())
 }
 
 func (self Context) WheelingWindowWheelRemainder() Vec2 {
-=======
-
-	C.wrap_ImGuiContext_SetWheelingWindowWheelRemainder(self.handle(), v.toC())
-
-}
-
-func (self Context) WheelingWindowWheelRemainder() Vec2 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	out := &Vec2{}
 	out.fromC(C.wrap_ImGuiContext_GetWheelingWindowWheelRemainder(self.handle()))
 	return *out
 }
 
 func (self Context) SetWheelingAxisAvg(v Vec2) {
-<<<<<<< HEAD
 	C.wrap_ImGuiContext_SetWheelingAxisAvg(self.handle(), v.toC())
 }
 
 func (self Context) WheelingAxisAvg() Vec2 {
-=======
-
-	C.wrap_ImGuiContext_SetWheelingAxisAvg(self.handle(), v.toC())
-
-}
-
-func (self Context) WheelingAxisAvg() Vec2 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	out := &Vec2{}
 	out.fromC(C.wrap_ImGuiContext_GetWheelingAxisAvg(self.handle()))
 	return *out
@@ -7231,10 +7104,6 @@ func (self Context) LastActiveIdTimer() float32 {
 }
 
 func (self Context) KeysRoutingTable() KeyRoutingTable {
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return newKeyRoutingTableFromC(C.wrap_ImGuiContext_GetKeysRoutingTable(self.handle()))
 }
 
@@ -7247,20 +7116,10 @@ func (self Context) ActiveIdUsingNavDirMask() uint32 {
 }
 
 func (self Context) SetActiveIdUsingAllKeyboardKeys(v bool) {
-<<<<<<< HEAD
 	C.wrap_ImGuiContext_SetActiveIdUsingAllKeyboardKeys(self.handle(), C.bool(v))
 }
 
 func (self Context) ActiveIdUsingAllKeyboardKeys() bool {
-=======
-
-	C.wrap_ImGuiContext_SetActiveIdUsingAllKeyboardKeys(self.handle(), C.bool(v))
-
-}
-
-func (self Context) ActiveIdUsingAllKeyboardKeys() bool {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.wrap_ImGuiContext_GetActiveIdUsingAllKeyboardKeys(self.handle()) == C.bool(true)
 }
 
@@ -7273,20 +7132,10 @@ func (self Context) ActiveIdUsingNavInputMask() uint32 {
 }
 
 func (self Context) SetCurrentFocusScopeId(v ID) {
-<<<<<<< HEAD
 	C.wrap_ImGuiContext_SetCurrentFocusScopeId(self.handle(), C.ImGuiID(v))
 }
 
 func (self Context) CurrentFocusScopeId() ID {
-=======
-
-	C.wrap_ImGuiContext_SetCurrentFocusScopeId(self.handle(), C.ImGuiID(v))
-
-}
-
-func (self Context) CurrentFocusScopeId() ID {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return ID(C.wrap_ImGuiContext_GetCurrentFocusScopeId(self.handle()))
 }
 
@@ -7299,22 +7148,8 @@ func (self Context) CurrentItemFlags() ItemFlags {
 }
 
 func (self Context) SetDebugLocateId(v ID) {
-<<<<<<< HEAD
 	C.wrap_ImGuiContext_SetDebugLocateId(self.handle(), C.ImGuiID(v))
 }
-=======
-
-	C.wrap_ImGuiContext_SetDebugLocateId(self.handle(), C.ImGuiID(v))
-
-}
-
-func (self Context) DebugLocateId() ID {
-
-	return ID(C.wrap_ImGuiContext_GetDebugLocateId(self.handle()))
-}
-
-func (self Context) NextItemData() NextItemData {
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 
 func (self Context) DebugLocateId() ID {
 	return ID(C.wrap_ImGuiContext_GetDebugLocateId(self.handle()))
@@ -7438,14 +7273,6 @@ func (self Context) SetNavActivatePressedId(v ID) {
 
 func (self Context) NavActivatePressedId() ID {
 	return ID(C.wrap_ImGuiContext_GetNavActivatePressedId(self.handle()))
-}
-
-func (self Context) SetNavActivateInputId(v ID) {
-	C.wrap_ImGuiContext_SetNavActivateInputId(self.handle(), C.ImGuiID(v))
-}
-
-func (self Context) NavActivateInputId() ID {
-	return ID(C.wrap_ImGuiContext_GetNavActivateInputId(self.handle()))
 }
 
 func (self Context) SetNavActivateFlags(v ActivateFlags) {
@@ -7937,74 +7764,34 @@ func (self Context) CurrentTabBar() TabBar {
 }
 
 func (self Context) SetHoverDelayId(v ID) {
-<<<<<<< HEAD
 	C.wrap_ImGuiContext_SetHoverDelayId(self.handle(), C.ImGuiID(v))
 }
 
 func (self Context) HoverDelayId() ID {
-=======
-
-	C.wrap_ImGuiContext_SetHoverDelayId(self.handle(), C.ImGuiID(v))
-
-}
-
-func (self Context) HoverDelayId() ID {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return ID(C.wrap_ImGuiContext_GetHoverDelayId(self.handle()))
 }
 
 func (self Context) SetHoverDelayIdPreviousFrame(v ID) {
-<<<<<<< HEAD
 	C.wrap_ImGuiContext_SetHoverDelayIdPreviousFrame(self.handle(), C.ImGuiID(v))
 }
 
 func (self Context) HoverDelayIdPreviousFrame() ID {
-=======
-
-	C.wrap_ImGuiContext_SetHoverDelayIdPreviousFrame(self.handle(), C.ImGuiID(v))
-
-}
-
-func (self Context) HoverDelayIdPreviousFrame() ID {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return ID(C.wrap_ImGuiContext_GetHoverDelayIdPreviousFrame(self.handle()))
 }
 
 func (self Context) SetHoverDelayTimer(v float32) {
-<<<<<<< HEAD
 	C.wrap_ImGuiContext_SetHoverDelayTimer(self.handle(), C.float(v))
 }
 
 func (self Context) HoverDelayTimer() float32 {
-=======
-
-	C.wrap_ImGuiContext_SetHoverDelayTimer(self.handle(), C.float(v))
-
-}
-
-func (self Context) HoverDelayTimer() float32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return float32(C.wrap_ImGuiContext_GetHoverDelayTimer(self.handle()))
 }
 
 func (self Context) SetHoverDelayClearTimer(v float32) {
-<<<<<<< HEAD
 	C.wrap_ImGuiContext_SetHoverDelayClearTimer(self.handle(), C.float(v))
 }
 
 func (self Context) HoverDelayClearTimer() float32 {
-=======
-
-	C.wrap_ImGuiContext_SetHoverDelayClearTimer(self.handle(), C.float(v))
-
-}
-
-func (self Context) HoverDelayClearTimer() float32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return float32(C.wrap_ImGuiContext_GetHoverDelayClearTimer(self.handle()))
 }
 
@@ -8319,29 +8106,31 @@ func (self Context) DebugLogBuf() TextBuffer {
 }
 
 func (self Context) DebugLogIndex() TextIndex {
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return newTextIndexFromC(C.wrap_ImGuiContext_GetDebugLogIndex(self.handle()))
 }
 
+func (self Context) SetDebugLogClipperAutoDisableFrames(v uint) {
+	C.wrap_ImGuiContext_SetDebugLogClipperAutoDisableFrames(self.handle(), C.ImU8(v))
+}
+
+func (self Context) DebugLogClipperAutoDisableFrames() uint32 {
+	return uint32(C.wrap_ImGuiContext_GetDebugLogClipperAutoDisableFrames(self.handle()))
+}
+
 func (self Context) SetDebugLocateFrames(v uint) {
-<<<<<<< HEAD
 	C.wrap_ImGuiContext_SetDebugLocateFrames(self.handle(), C.ImU8(v))
 }
 
 func (self Context) DebugLocateFrames() uint32 {
-=======
-
-	C.wrap_ImGuiContext_SetDebugLocateFrames(self.handle(), C.ImU8(v))
-
-}
-
-func (self Context) DebugLocateFrames() uint32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return uint32(C.wrap_ImGuiContext_GetDebugLocateFrames(self.handle()))
+}
+
+func (self Context) SetDebugBeginReturnValueCullDepth(v int) {
+	C.wrap_ImGuiContext_SetDebugBeginReturnValueCullDepth(self.handle(), C.ImS8(v))
+}
+
+func (self Context) DebugBeginReturnValueCullDepth() int {
+	return int(C.wrap_ImGuiContext_GetDebugBeginReturnValueCullDepth(self.handle()))
 }
 
 func (self Context) SetDebugItemPickerActive(v bool) {
@@ -8503,6 +8292,30 @@ func (self DataTypeInfo) SetScanFmt(v string) {
 
 func (self DataTypeInfo) ScanFmt() string {
 	return C.GoString(C.wrap_ImGuiDataTypeInfo_GetScanFmt(self.handle()))
+}
+
+func (self DataVarInfo) SetType(v DataType) {
+	C.wrap_ImGuiDataVarInfo_SetType(self.handle(), C.ImGuiDataType(v))
+}
+
+func (self DataVarInfo) Type() DataType {
+	return DataType(C.wrap_ImGuiDataVarInfo_GetType(self.handle()))
+}
+
+func (self DataVarInfo) SetCount(v uint32) {
+	C.wrap_ImGuiDataVarInfo_SetCount(self.handle(), C.ImU32(v))
+}
+
+func (self DataVarInfo) Count() uint32 {
+	return uint32(C.wrap_ImGuiDataVarInfo_GetCount(self.handle()))
+}
+
+func (self DataVarInfo) SetOffset(v uint32) {
+	C.wrap_ImGuiDataVarInfo_SetOffset(self.handle(), C.ImU32(v))
+}
+
+func (self DataVarInfo) Offset() uint32 {
+	return uint32(C.wrap_ImGuiDataVarInfo_GetOffset(self.handle()))
 }
 
 func (self DockContext) Nodes() Storage {
@@ -9006,38 +8819,18 @@ func (self IO) KeyRepeatRate() float32 {
 }
 
 func (self IO) SetHoverDelayNormal(v float32) {
-<<<<<<< HEAD
 	C.wrap_ImGuiIO_SetHoverDelayNormal(self.handle(), C.float(v))
 }
 
 func (self IO) HoverDelayNormal() float32 {
-=======
-
-	C.wrap_ImGuiIO_SetHoverDelayNormal(self.handle(), C.float(v))
-
-}
-
-func (self IO) HoverDelayNormal() float32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return float32(C.wrap_ImGuiIO_GetHoverDelayNormal(self.handle()))
 }
 
 func (self IO) SetHoverDelayShort(v float32) {
-<<<<<<< HEAD
 	C.wrap_ImGuiIO_SetHoverDelayShort(self.handle(), C.float(v))
 }
 
 func (self IO) HoverDelayShort() float32 {
-=======
-
-	C.wrap_ImGuiIO_SetHoverDelayShort(self.handle(), C.float(v))
-
-}
-
-func (self IO) HoverDelayShort() float32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return float32(C.wrap_ImGuiIO_GetHoverDelayShort(self.handle()))
 }
 
@@ -9227,6 +9020,22 @@ func (self IO) ConfigMemoryCompactTimer() float32 {
 	return float32(C.wrap_ImGuiIO_GetConfigMemoryCompactTimer(self.handle()))
 }
 
+func (self IO) SetConfigDebugBeginReturnValueOnce(v bool) {
+	C.wrap_ImGuiIO_SetConfigDebugBeginReturnValueOnce(self.handle(), C.bool(v))
+}
+
+func (self IO) ConfigDebugBeginReturnValueOnce() bool {
+	return C.wrap_ImGuiIO_GetConfigDebugBeginReturnValueOnce(self.handle()) == C.bool(true)
+}
+
+func (self IO) SetConfigDebugBeginReturnValueLoop(v bool) {
+	C.wrap_ImGuiIO_SetConfigDebugBeginReturnValueLoop(self.handle(), C.bool(v))
+}
+
+func (self IO) ConfigDebugBeginReturnValueLoop() bool {
+	return C.wrap_ImGuiIO_GetConfigDebugBeginReturnValueLoop(self.handle()) == C.bool(true)
+}
+
 func (self IO) SetBackendPlatformName(v string) {
 	vArg, vFin := wrapString(v)
 	C.wrap_ImGuiIO_SetBackendPlatformName(self.handle(), vArg)
@@ -9401,6 +9210,14 @@ func (self IO) MouseDelta() Vec2 {
 	out := &Vec2{}
 	out.fromC(C.wrap_ImGuiIO_GetMouseDelta(self.handle()))
 	return *out
+}
+
+func (self IO) SetCtx(v Context) {
+	C.wrap_ImGuiIO_SetCtx(self.handle(), v.handle())
+}
+
+func (self IO) Ctx() Context {
+	return (Context)(unsafe.Pointer(C.wrap_ImGuiIO_GetCtx(self.handle())))
 }
 
 func (self IO) SetMousePos(v Vec2) {
@@ -9639,6 +9456,14 @@ func (self InputEventText) Char() uint32 {
 	return uint32(C.wrap_ImGuiInputEventText_GetChar(self.handle()))
 }
 
+func (self InputTextCallbackData) SetCtx(v Context) {
+	C.wrap_ImGuiInputTextCallbackData_SetCtx(self.handle(), v.handle())
+}
+
+func (self InputTextCallbackData) Ctx() Context {
+	return (Context)(unsafe.Pointer(C.wrap_ImGuiInputTextCallbackData_GetCtx(self.handle())))
+}
+
 func (self InputTextCallbackData) SetEventFlag(v InputTextFlags) {
 	C.wrap_ImGuiInputTextCallbackData_SetEventFlag(self.handle(), C.ImGuiInputTextFlags(v))
 }
@@ -9739,20 +9564,10 @@ func (self InputTextCallbackData) SelectionEnd() int {
 }
 
 func (self InputTextState) SetCtx(v Context) {
-<<<<<<< HEAD
 	C.wrap_ImGuiInputTextState_SetCtx(self.handle(), v.handle())
 }
 
 func (self InputTextState) Ctx() Context {
-=======
-
-	C.wrap_ImGuiInputTextState_SetCtx(self.handle(), v.handle())
-
-}
-
-func (self InputTextState) Ctx() Context {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return (Context)(unsafe.Pointer(C.wrap_ImGuiInputTextState_GetCtx(self.handle())))
 }
 
@@ -9877,146 +9692,66 @@ func (self KeyData) AnalogValue() float32 {
 }
 
 func (self KeyOwnerData) SetOwnerCurr(v ID) {
-<<<<<<< HEAD
 	C.wrap_ImGuiKeyOwnerData_SetOwnerCurr(self.handle(), C.ImGuiID(v))
 }
 
 func (self KeyOwnerData) OwnerCurr() ID {
-=======
-
-	C.wrap_ImGuiKeyOwnerData_SetOwnerCurr(self.handle(), C.ImGuiID(v))
-
-}
-
-func (self KeyOwnerData) OwnerCurr() ID {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return ID(C.wrap_ImGuiKeyOwnerData_GetOwnerCurr(self.handle()))
 }
 
 func (self KeyOwnerData) SetOwnerNext(v ID) {
-<<<<<<< HEAD
 	C.wrap_ImGuiKeyOwnerData_SetOwnerNext(self.handle(), C.ImGuiID(v))
 }
 
 func (self KeyOwnerData) OwnerNext() ID {
-=======
-
-	C.wrap_ImGuiKeyOwnerData_SetOwnerNext(self.handle(), C.ImGuiID(v))
-
-}
-
-func (self KeyOwnerData) OwnerNext() ID {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return ID(C.wrap_ImGuiKeyOwnerData_GetOwnerNext(self.handle()))
 }
 
 func (self KeyOwnerData) SetLockThisFrame(v bool) {
-<<<<<<< HEAD
 	C.wrap_ImGuiKeyOwnerData_SetLockThisFrame(self.handle(), C.bool(v))
 }
 
 func (self KeyOwnerData) LockThisFrame() bool {
-=======
-
-	C.wrap_ImGuiKeyOwnerData_SetLockThisFrame(self.handle(), C.bool(v))
-
-}
-
-func (self KeyOwnerData) LockThisFrame() bool {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.wrap_ImGuiKeyOwnerData_GetLockThisFrame(self.handle()) == C.bool(true)
 }
 
 func (self KeyOwnerData) SetLockUntilRelease(v bool) {
-<<<<<<< HEAD
 	C.wrap_ImGuiKeyOwnerData_SetLockUntilRelease(self.handle(), C.bool(v))
 }
 
 func (self KeyOwnerData) LockUntilRelease() bool {
-=======
-
-	C.wrap_ImGuiKeyOwnerData_SetLockUntilRelease(self.handle(), C.bool(v))
-
-}
-
-func (self KeyOwnerData) LockUntilRelease() bool {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.wrap_ImGuiKeyOwnerData_GetLockUntilRelease(self.handle()) == C.bool(true)
 }
 
 func (self KeyRoutingData) SetMods(v uint) {
-<<<<<<< HEAD
 	C.wrap_ImGuiKeyRoutingData_SetMods(self.handle(), C.ImU16(v))
 }
 
 func (self KeyRoutingData) Mods() uint32 {
-=======
-
-	C.wrap_ImGuiKeyRoutingData_SetMods(self.handle(), C.ImU16(v))
-
-}
-
-func (self KeyRoutingData) Mods() uint32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return uint32(C.wrap_ImGuiKeyRoutingData_GetMods(self.handle()))
 }
 
 func (self KeyRoutingData) SetRoutingNextScore(v uint) {
-<<<<<<< HEAD
 	C.wrap_ImGuiKeyRoutingData_SetRoutingNextScore(self.handle(), C.ImU8(v))
 }
 
 func (self KeyRoutingData) RoutingNextScore() uint32 {
-=======
-
-	C.wrap_ImGuiKeyRoutingData_SetRoutingNextScore(self.handle(), C.ImU8(v))
-
-}
-
-func (self KeyRoutingData) RoutingNextScore() uint32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return uint32(C.wrap_ImGuiKeyRoutingData_GetRoutingNextScore(self.handle()))
 }
 
 func (self KeyRoutingData) SetRoutingCurr(v ID) {
-<<<<<<< HEAD
 	C.wrap_ImGuiKeyRoutingData_SetRoutingCurr(self.handle(), C.ImGuiID(v))
 }
 
 func (self KeyRoutingData) RoutingCurr() ID {
-=======
-
-	C.wrap_ImGuiKeyRoutingData_SetRoutingCurr(self.handle(), C.ImGuiID(v))
-
-}
-
-func (self KeyRoutingData) RoutingCurr() ID {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return ID(C.wrap_ImGuiKeyRoutingData_GetRoutingCurr(self.handle()))
 }
 
 func (self KeyRoutingData) SetRoutingNext(v ID) {
-<<<<<<< HEAD
 	C.wrap_ImGuiKeyRoutingData_SetRoutingNext(self.handle(), C.ImGuiID(v))
 }
 
 func (self KeyRoutingData) RoutingNext() ID {
-=======
-
-	C.wrap_ImGuiKeyRoutingData_SetRoutingNext(self.handle(), C.ImGuiID(v))
-
-}
-
-func (self KeyRoutingData) RoutingNext() ID {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return ID(C.wrap_ImGuiKeyRoutingData_GetRoutingNext(self.handle()))
 }
 
@@ -10072,6 +9807,14 @@ func (self LastItemData) DisplayRect() Rect {
 	out := &Rect{}
 	out.fromC(C.wrap_ImGuiLastItemData_GetDisplayRect(self.handle()))
 	return *out
+}
+
+func (self ListClipper) SetCtx(v Context) {
+	C.wrap_ImGuiListClipper_SetCtx(self.handle(), v.handle())
+}
+
+func (self ListClipper) Ctx() Context {
+	return (Context)(unsafe.Pointer(C.wrap_ImGuiListClipper_GetCtx(self.handle())))
 }
 
 func (self ListClipper) SetDisplayStart(v int32) {
@@ -10195,39 +9938,21 @@ func (self ListClipperRange) PosToIndexOffsetMax() int {
 }
 
 func (self LocEntry) SetKey(v LocKey) {
-<<<<<<< HEAD
 	C.wrap_ImGuiLocEntry_SetKey(self.handle(), C.ImGuiLocKey(v))
 }
 
 func (self LocEntry) Key() LocKey {
-=======
-
-	C.wrap_ImGuiLocEntry_SetKey(self.handle(), C.ImGuiLocKey(v))
-
-}
-
-func (self LocEntry) Key() LocKey {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return LocKey(C.wrap_ImGuiLocEntry_GetKey(self.handle()))
 }
 
 func (self LocEntry) SetText(v string) {
 	vArg, vFin := wrapString(v)
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	C.wrap_ImGuiLocEntry_SetText(self.handle(), vArg)
 
 	vFin()
 }
 
 func (self LocEntry) Text() string {
-<<<<<<< HEAD
-=======
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.GoString(C.wrap_ImGuiLocEntry_GetText(self.handle()))
 }
 
@@ -10962,20 +10687,10 @@ func (self PopupData) Window() Window {
 }
 
 func (self PopupData) SetBackupNavWindow(v Window) {
-<<<<<<< HEAD
 	C.wrap_ImGuiPopupData_SetBackupNavWindow(self.handle(), v.handle())
 }
 
 func (self PopupData) BackupNavWindow() Window {
-=======
-
-	C.wrap_ImGuiPopupData_SetBackupNavWindow(self.handle(), v.handle())
-
-}
-
-func (self PopupData) BackupNavWindow() Window {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return (Window)(unsafe.Pointer(C.wrap_ImGuiPopupData_GetBackupNavWindow(self.handle())))
 }
 
@@ -12745,38 +12460,18 @@ func (self Table) IsDefaultSizingPolicy() bool {
 }
 
 func (self Table) SetHasScrollbarYCurr(v bool) {
-<<<<<<< HEAD
 	C.wrap_ImGuiTable_SetHasScrollbarYCurr(self.handle(), C.bool(v))
 }
 
 func (self Table) HasScrollbarYCurr() bool {
-=======
-
-	C.wrap_ImGuiTable_SetHasScrollbarYCurr(self.handle(), C.bool(v))
-
-}
-
-func (self Table) HasScrollbarYCurr() bool {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.wrap_ImGuiTable_GetHasScrollbarYCurr(self.handle()) == C.bool(true)
 }
 
 func (self Table) SetHasScrollbarYPrev(v bool) {
-<<<<<<< HEAD
 	C.wrap_ImGuiTable_SetHasScrollbarYPrev(self.handle(), C.bool(v))
 }
 
 func (self Table) HasScrollbarYPrev() bool {
-=======
-
-	C.wrap_ImGuiTable_SetHasScrollbarYPrev(self.handle(), C.bool(v))
-
-}
-
-func (self Table) HasScrollbarYPrev() bool {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.wrap_ImGuiTable_GetHasScrollbarYPrev(self.handle()) == C.bool(true)
 }
 
@@ -13263,20 +12958,10 @@ func (self TableInstanceData) LastFirstRowHeight() float32 {
 }
 
 func (self TableInstanceData) SetLastFrozenHeight(v float32) {
-<<<<<<< HEAD
 	C.wrap_ImGuiTableInstanceData_SetLastFrozenHeight(self.handle(), C.float(v))
 }
 
 func (self TableInstanceData) LastFrozenHeight() float32 {
-=======
-
-	C.wrap_ImGuiTableInstanceData_SetLastFrozenHeight(self.handle(), C.float(v))
-
-}
-
-func (self TableInstanceData) LastFrozenHeight() float32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return float32(C.wrap_ImGuiTableInstanceData_GetLastFrozenHeight(self.handle()))
 }
 
@@ -13457,20 +13142,10 @@ func (self TextFilter) CountGrep() int {
 }
 
 func (self TextIndex) SetEndOffset(v int32) {
-<<<<<<< HEAD
 	C.wrap_ImGuiTextIndex_SetEndOffset(self.handle(), C.int(v))
 }
 
 func (self TextIndex) EndOffset() int {
-=======
-
-	C.wrap_ImGuiTextIndex_SetEndOffset(self.handle(), C.int(v))
-
-}
-
-func (self TextIndex) EndOffset() int {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return int(C.wrap_ImGuiTextIndex_GetEndOffset(self.handle()))
 }
 
@@ -13609,20 +13284,10 @@ func (self Viewport) PlatformHandleRaw() unsafe.Pointer {
 }
 
 func (self Viewport) SetPlatformWindowCreated(v bool) {
-<<<<<<< HEAD
 	C.wrap_ImGuiViewport_SetPlatformWindowCreated(self.handle(), C.bool(v))
 }
 
 func (self Viewport) PlatformWindowCreated() bool {
-=======
-
-	C.wrap_ImGuiViewport_SetPlatformWindowCreated(self.handle(), C.bool(v))
-
-}
-
-func (self Viewport) PlatformWindowCreated() bool {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.wrap_ImGuiViewport_GetPlatformWindowCreated(self.handle()) == C.bool(true)
 }
 
@@ -13806,6 +13471,14 @@ func (self ViewportP) BuildWorkOffsetMax() Vec2 {
 	return *out
 }
 
+func (self Window) SetCtx(v Context) {
+	C.wrap_ImGuiWindow_SetCtx(self.handle(), v.handle())
+}
+
+func (self Window) Ctx() Context {
+	return (Context)(unsafe.Pointer(C.wrap_ImGuiWindow_GetCtx(self.handle())))
+}
+
 func (self Window) SetName(v string) {
 	vArg, vFin := wrapString(v)
 	C.wrap_ImGuiWindow_SetName(self.handle(), vArg)
@@ -13966,110 +13639,50 @@ func (self Window) WindowBorderSize() float32 {
 }
 
 func (self Window) SetDecoOuterSizeX1(v float32) {
-<<<<<<< HEAD
 	C.wrap_ImGuiWindow_SetDecoOuterSizeX1(self.handle(), C.float(v))
 }
 
 func (self Window) DecoOuterSizeX1() float32 {
-=======
-
-	C.wrap_ImGuiWindow_SetDecoOuterSizeX1(self.handle(), C.float(v))
-
-}
-
-func (self Window) DecoOuterSizeX1() float32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return float32(C.wrap_ImGuiWindow_GetDecoOuterSizeX1(self.handle()))
 }
 
 func (self Window) SetDecoOuterSizeY1(v float32) {
-<<<<<<< HEAD
 	C.wrap_ImGuiWindow_SetDecoOuterSizeY1(self.handle(), C.float(v))
 }
 
 func (self Window) DecoOuterSizeY1() float32 {
-=======
-
-	C.wrap_ImGuiWindow_SetDecoOuterSizeY1(self.handle(), C.float(v))
-
-}
-
-func (self Window) DecoOuterSizeY1() float32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return float32(C.wrap_ImGuiWindow_GetDecoOuterSizeY1(self.handle()))
 }
 
 func (self Window) SetDecoOuterSizeX2(v float32) {
-<<<<<<< HEAD
 	C.wrap_ImGuiWindow_SetDecoOuterSizeX2(self.handle(), C.float(v))
 }
 
 func (self Window) DecoOuterSizeX2() float32 {
-=======
-
-	C.wrap_ImGuiWindow_SetDecoOuterSizeX2(self.handle(), C.float(v))
-
-}
-
-func (self Window) DecoOuterSizeX2() float32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return float32(C.wrap_ImGuiWindow_GetDecoOuterSizeX2(self.handle()))
 }
 
 func (self Window) SetDecoOuterSizeY2(v float32) {
-<<<<<<< HEAD
 	C.wrap_ImGuiWindow_SetDecoOuterSizeY2(self.handle(), C.float(v))
 }
 
 func (self Window) DecoOuterSizeY2() float32 {
-=======
-
-	C.wrap_ImGuiWindow_SetDecoOuterSizeY2(self.handle(), C.float(v))
-
-}
-
-func (self Window) DecoOuterSizeY2() float32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return float32(C.wrap_ImGuiWindow_GetDecoOuterSizeY2(self.handle()))
 }
 
 func (self Window) SetDecoInnerSizeX1(v float32) {
-<<<<<<< HEAD
 	C.wrap_ImGuiWindow_SetDecoInnerSizeX1(self.handle(), C.float(v))
 }
 
 func (self Window) DecoInnerSizeX1() float32 {
-=======
-
-	C.wrap_ImGuiWindow_SetDecoInnerSizeX1(self.handle(), C.float(v))
-
-}
-
-func (self Window) DecoInnerSizeX1() float32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return float32(C.wrap_ImGuiWindow_GetDecoInnerSizeX1(self.handle()))
 }
 
 func (self Window) SetDecoInnerSizeY1(v float32) {
-<<<<<<< HEAD
 	C.wrap_ImGuiWindow_SetDecoInnerSizeY1(self.handle(), C.float(v))
 }
 
 func (self Window) DecoInnerSizeY1() float32 {
-=======
-
-	C.wrap_ImGuiWindow_SetDecoInnerSizeY1(self.handle(), C.float(v))
-
-}
-
-func (self Window) DecoInnerSizeY1() float32 {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return float32(C.wrap_ImGuiWindow_GetDecoInnerSizeY1(self.handle()))
 }
 
@@ -14286,20 +13899,10 @@ func (self Window) BeginCount() int {
 }
 
 func (self Window) SetBeginCountPreviousFrame(v int) {
-<<<<<<< HEAD
 	C.wrap_ImGuiWindow_SetBeginCountPreviousFrame(self.handle(), C.short(v))
 }
 
 func (self Window) BeginCountPreviousFrame() int {
-=======
-
-	C.wrap_ImGuiWindow_SetBeginCountPreviousFrame(self.handle(), C.short(v))
-
-}
-
-func (self Window) BeginCountPreviousFrame() int {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return int(C.wrap_ImGuiWindow_GetBeginCountPreviousFrame(self.handle()))
 }
 
@@ -14670,20 +14273,10 @@ func (self Window) NavLastChildNavWindow() Window {
 }
 
 func (self Window) SetNavRootFocusScopeId(v ID) {
-<<<<<<< HEAD
 	C.wrap_ImGuiWindow_SetNavRootFocusScopeId(self.handle(), C.ImGuiID(v))
 }
 
 func (self Window) NavRootFocusScopeId() ID {
-=======
-
-	C.wrap_ImGuiWindow_SetNavRootFocusScopeId(self.handle(), C.ImGuiID(v))
-
-}
-
-func (self Window) NavRootFocusScopeId() ID {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return ID(C.wrap_ImGuiWindow_GetNavRootFocusScopeId(self.handle()))
 }
 
@@ -15036,20 +14629,10 @@ func (self WindowTempData) IsSameLine() bool {
 }
 
 func (self WindowTempData) SetIsSetPos(v bool) {
-<<<<<<< HEAD
 	C.wrap_ImGuiWindowTempData_SetIsSetPos(self.handle(), C.bool(v))
 }
 
 func (self WindowTempData) IsSetPos() bool {
-=======
-
-	C.wrap_ImGuiWindowTempData_SetIsSetPos(self.handle(), C.bool(v))
-
-}
-
-func (self WindowTempData) IsSetPos() bool {
-
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
 	return C.wrap_ImGuiWindowTempData_GetIsSetPos(self.handle()) == C.bool(true)
 }
 

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-// dear imgui, v1.89.4 WIP
-=======
-// dear imgui, v1.89.2
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
+// dear imgui, v1.89.4
 // (drawing and font code)
 
 /*
@@ -30,13 +26,12 @@ Index of this file:
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include "imgui.h"
-#ifndef IMGUI_DISABLE
-
 #ifndef IMGUI_DEFINE_MATH_OPERATORS
 #define IMGUI_DEFINE_MATH_OPERATORS
 #endif
 
+#include "imgui.h"
+#ifndef IMGUI_DISABLE
 #include "imgui_internal.h"
 #ifdef IMGUI_ENABLE_FREETYPE
 #include "misc/freetype/imgui_freetype.h"
@@ -3590,29 +3585,17 @@ void ImFont::RenderText(ImDrawList* draw_list, float size, const ImVec2& pos, Im
         while (y + line_height < clip_rect.y && s < text_end)
         {
             const char* line_end = (const char*)memchr(s, '\n', text_end - s);
-<<<<<<< HEAD
-=======
-            const char* line_next = line_end ? line_end + 1 : text_end;
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
             if (word_wrap_enabled)
             {
                 // FIXME-OPT: This is not optimal as do first do a search for \n before calling CalcWordWrapPositionA().
                 // If the specs for CalcWordWrapPositionA() were reworked to optionally return on \n we could combine both.
                 // However it is still better than nothing performing the fast-forward!
-<<<<<<< HEAD
                 s = CalcWordWrapPositionA(scale, s, line_end ? line_end : text_end, wrap_width);
-=======
-                s = CalcWordWrapPositionA(scale, s, line_next, wrap_width);
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
                 s = CalcWordWrapNextLineStartA(s, text_end);
             }
             else
             {
-<<<<<<< HEAD
                 s = line_end ? line_end + 1 : text_end;
-=======
-                s = line_next;
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
             }
             y += line_height;
         }

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-// dear imgui, v1.89.4 WIP
-=======
-// dear imgui, v1.89.2
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
+// dear imgui, v1.89.4
 // (tables and columns code)
 
 /*
@@ -192,12 +188,12 @@ Index of this file:
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include "imgui.h"
-#ifndef IMGUI_DISABLE
-
 #ifndef IMGUI_DEFINE_MATH_OPERATORS
 #define IMGUI_DEFINE_MATH_OPERATORS
 #endif
+
+#include "imgui.h"
+#ifndef IMGUI_DISABLE
 #include "imgui_internal.h"
 
 // System includes
@@ -1153,11 +1149,7 @@ void ImGui::TableUpdateLayout(ImGuiTable* table)
     if (table->IsSortSpecsDirty && (table->Flags & ImGuiTableFlags_Sortable))
         TableSortSpecsBuild(table);
 
-<<<<<<< HEAD
     // [Part 13] Setup inner window decoration size (for scrolling / nav tracking to properly take account of frozen rows/columns)
-=======
-    // [Part 14] Setup inner window decoration size (for scrolling / nav tracking to properly take account of frozen rows/columns)
->>>>>>> aff58f6 (code: udpate to the lates version of cimgui and cimplot)
     if (table->FreezeColumnsRequest > 0)
         table->InnerWindow->DecoInnerSizeX1 = table->Columns[table->DisplayOrderToIndex[table->FreezeColumnsRequest - 1]].MaxX - table->OuterRect.Min.x;
     if (table->FreezeRowsRequest > 0)
@@ -2007,10 +1999,6 @@ void ImGui::TableBeginCell(ImGuiTable* table, int column_n)
     window->WorkRect.Max.x = column->WorkMaxX;
     window->DC.ItemWidth = column->ItemWidth;
 
-    // To allow ImGuiListClipper to function we propagate our row height
-    if (!column->IsEnabled)
-        window->DC.CursorPos.y = ImMax(window->DC.CursorPos.y, table->RowPosY2);
-
     window->SkipItems = column->IsSkipItems;
     if (column->IsSkipItems)
     {
@@ -2057,7 +2045,8 @@ void ImGui::TableEndCell(ImGuiTable* table)
     else
         p_max_pos_x = table->IsUnfrozenRows ? &column->ContentMaxXUnfrozen : &column->ContentMaxXFrozen;
     *p_max_pos_x = ImMax(*p_max_pos_x, window->DC.CursorMaxPos.x);
-    table->RowPosY2 = ImMax(table->RowPosY2, window->DC.CursorMaxPos.y + table->CellPaddingY);
+    if (column->IsEnabled)
+        table->RowPosY2 = ImMax(table->RowPosY2, window->DC.CursorMaxPos.y + table->CellPaddingY);
     column->ItemWidth = window->DC.ItemWidth;
 
     // Propagate text baseline for the entire row
