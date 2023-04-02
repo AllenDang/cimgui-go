@@ -2227,6 +2227,10 @@ func CurrentContext() Context {
 	return (Context)(unsafe.Pointer(C.igGetCurrentContext()))
 }
 
+func CurrentWindow() Window {
+	return (Window)(unsafe.Pointer(C.igGetCurrentWindow()))
+}
+
 func CursorPos() Vec2 {
 	pOut := &Vec2{}
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -3583,6 +3587,10 @@ func SetWindowFocusStr(name string) {
 
 func SetWindowFontScale(scale float32) {
 	C.igSetWindowFontScale(C.float(scale))
+}
+
+func SetWindowHitTestHole(window Window, pos Vec2, size Vec2) {
+	C.igSetWindowHitTestHole(window.handle(), pos.toC(), size.toC())
 }
 
 // SetWindowPosStrV parameter default value hint:

@@ -1,11 +1,16 @@
 package main
 
 import (
+	_ "embed"
+	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
 	"unicode"
 )
+
+//go:embed whitelist.json
+var whitelistJson []byte
 
 // Returns if should export func
 func shouldExportFunc(funcName string) bool {
@@ -18,9 +23,33 @@ func shouldExportFunc(funcName string) bool {
 	return false
 }
 
+type whitelistMap map[string]map[string]struct{}
+
+func loadWhitelist() (whitelistMap, error) {
+	// Load whitelist
+	var whitelistRaw map[string][]string
+	if err := json.Unmarshal(whitelistJson, &whitelistRaw); err != nil {
+		return nil, err
+	}
+	whitelist := map[string]map[string]struct{}{}
+
+	for namespace, funcs := range whitelistRaw {
+		whitelist[namespace] = map[string]struct{}{}
+		for _, f := range funcs {
+			whitelist[namespace][f] = struct{}{}
+		}
+	}
+	return whitelist, nil
+}
+
 // Generate cpp wrapper and return valid functions
 func generateCppWrapper(prefix, includePath string, funcDefs []FuncDef) ([]FuncDef, error) {
 	var validFuncs []FuncDef
+
+	whitelist, err := loadWhitelist()
+	if err != nil {
+		return nil, err
+	}
 
 	// Generate header
 	var headerSb strings.Builder
@@ -78,8 +107,18 @@ extern "C" {
 			}
 		}
 
-		if len(f.FuncName) == 0 || strings.Contains(f.Location, "imgui_internal") {
+		if len(f.FuncName) == 0 {
 			shouldSkip = true
+		}
+
+		if strings.Contains(f.Location, "imgui_internal") {
+			shouldSkip = true
+
+			// Keep if function is in whitelist
+			internalWhitelist := whitelist["internal"]
+			if _, ok := internalWhitelist[f.FuncName]; ok {
+				shouldSkip = false
+			}
 		}
 
 		funcName := f.FuncName
