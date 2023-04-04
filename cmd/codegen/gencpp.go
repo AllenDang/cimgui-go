@@ -78,7 +78,7 @@ extern "C" {
 			}
 		}
 
-		if len(f.FuncName) == 0 || strings.Contains(f.Location, "imgui_internal") {
+		if len(f.FuncName) == 0 {
 			shouldSkip = true
 		}
 
@@ -297,7 +297,7 @@ extern "C" {
 			}
 		}
 
-		//cppSb.WriteString(fmt.Sprintf("// %#v\n", f))
+		// cppSb.WriteString(fmt.Sprintf("// %#v\n", f))
 
 		if f.AllCallArgs == actualCallArgsStr {
 			cWrapperFuncName = f.FuncName

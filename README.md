@@ -13,8 +13,9 @@ It works on macOS(arm64/x86), windows(x64), Arch Linux/KDE and Fedora Workstatio
 4. Use github workflow to compile cimgui and glfw to static lib and place them in /lib folder for further link. 
 
 ## Naming convention
-For functions, 'Im/ImGui/ig' is trimmed.
-'GetCursorPos' is renamed to 'GetDrawCursor', same with "SetCursor...".
+
+- For functions, 'Im/ImGui/ig' is trimmed.
+- If function comes from `imgui_internal.h`, `Internal` prefix is added.
 
 ## Function coverage
 Currently most of the functions are generated, except memory related stuff (eg. memory allocator, storage management, etc...).
