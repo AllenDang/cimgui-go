@@ -298,10 +298,18 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 		receiver = fmt.Sprintf("(self %s)", renameGoIdentifier(receiver))
 	}
 
+	funcName = renameGoIdentifier(funcName)
+
+	// if file comes from imgui_internal.h,prefix Internal is added.
+	// ref: https://github.com/AllenDang/cimgui-go/pull/118
+	if strings.Contains(f.Location, "imgui_internal") {
+		funcName = "Internal" + funcName
+	}
+
 	return fmt.Sprintf("%sfunc %s %s(%s) %s {\n",
 		strings.Replace(commentSb.String(), "%s", renameGoIdentifier(funcName), 1),
 		renameGoIdentifier(receiver),
-		renameGoIdentifier(funcName),
+		funcName,
 		strings.Join(args, ","),
 		renameGoIdentifier(returnType))
 }
