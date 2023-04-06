@@ -1259,6 +1259,19 @@ func PlotGetLastItemColor() Vec4 {
 	return *pOut
 }
 
+// PlotGetLocationPosV parameter default value hint:
+// pad: ImVec2(0,0)
+func PlotGetLocationPosV(outer_rect Rect, inner_size Vec2, location PlotLocation, pad Vec2) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+
+	C.ImPlot_GetLocationPos(pOutArg, outer_rect.toC(), inner_size.toC(), C.ImPlotLocation(location), pad.toC())
+
+	pOutFin()
+
+	return *pOut
+}
+
 func PlotGetMarkerName(idx PlotMarker) string {
 	return C.GoString(C.ImPlot_GetMarkerName(C.ImPlotMarker(idx)))
 }
@@ -6947,6 +6960,19 @@ func PlotRegisterOrGetItemV(label_id string, flags PlotItemFlags, just_created *
 	return (PlotItem)(unsafe.Pointer(C.ImPlot_RegisterOrGetItem(label_idArg, C.ImPlotItemFlags(flags), just_createdArg)))
 }
 
+func PlotRenderColorBar(colors *[]uint32, size int32, DrawList DrawList, bounds Rect, vert bool, reversed bool, continuous bool) {
+	colorsArg := make([]C.ImU32, len(*colors))
+	for i, colorsV := range *colors {
+		colorsArg[i] = C.ImU32(colorsV)
+	}
+
+	C.ImPlot_RenderColorBar((*C.ImU32)(&colorsArg[0]), C.int(size), DrawList.handle(), bounds.toC(), C.bool(vert), C.bool(reversed), C.bool(continuous))
+
+	for i, colorsV := range colorsArg {
+		(*colors)[i] = uint32(colorsV)
+	}
+}
+
 func PlotResetCtxForNextAlignedPlots(ctx PlotContext) {
 	C.ImPlot_ResetCtxForNextAlignedPlots(ctx.handle())
 }
@@ -7225,6 +7251,10 @@ func PlotShowInputMapSelector(label string) bool {
 
 func PlotShowLegendContextMenu(legend PlotLegend, visible bool) bool {
 	return C.ImPlot_ShowLegendContextMenu(legend.handle(), C.bool(visible)) == C.bool(true)
+}
+
+func PlotShowLegendEntries(items PlotItemGroup, legend_bb Rect, interactable bool, pad Vec2, spacing Vec2, vertical bool, DrawList DrawList) bool {
+	return C.ImPlot_ShowLegendEntries(items.handle(), legend_bb.toC(), C.bool(interactable), pad.toC(), spacing.toC(), C.bool(vertical), DrawList.handle()) == C.bool(true)
 }
 
 // PlotShowMetricsWindowV parameter default value hint:
@@ -7560,6 +7590,17 @@ func PlotGetColormapColor(idx int32) Vec4 {
 
 func PlotGetColormapSize() int {
 	return int(C.wrap_ImPlot_GetColormapSize())
+}
+
+func PlotGetLocationPos(outer_rect Rect, inner_size Vec2, location PlotLocation) Vec2 {
+	pOut := &Vec2{}
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+
+	C.wrap_ImPlot_GetLocationPos(pOutArg, outer_rect.toC(), inner_size.toC(), C.ImPlotLocation(location))
+
+	pOutFin()
+
+	return *pOut
 }
 
 func PlotGetPlotMousePos() PlotPoint {
