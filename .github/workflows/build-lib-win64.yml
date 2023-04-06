@@ -38,14 +38,14 @@ jobs:
 
     - name: configure cimgui
       run: cmake -G Ninja -B build -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On
-      working-directory: .\cimgui
+      working-directory: .\lib
 
     - name: make cimgui
       run: cmake --build build
-      working-directory: .\cimgui
+      working-directory: .\lib
 
     - name: copy cimgui to lib
-      run: cp -f ./cimgui/build/cimgui.a ./lib/windows/x64/
+      run: cp -f ./lib/build/cimgui.a ./lib/windows/x64/
 
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:

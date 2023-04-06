@@ -44,12 +44,12 @@ jobs:
 
     - name: make cimgui for x64
       run: make
-      working-directory: ./cimgui/build
+      working-directory: ./lib/build
 
     - name: copy cimgui x64 to lib
       run: |
         mkdir -p ./lib/macos/x64
-        cp -f ./cimgui/build/cimgui.a ./lib/macos/x64/
+        cp -f ./lib/build/cimgui.a ./lib/macos/x64/
 
     - name: clean up
       run: cmake --build ./build --target clean
@@ -61,12 +61,12 @@ jobs:
 
     - name: make cimgui for arm64
       run: make
-      working-directory: ./cimgui/build
+      working-directory: ./lib/build
 
     - name: copy cimgui arm64 to lib
       run: |
         mkdir -p ./lib/macos/arm64
-        cp -f ./cimgui/build/cimgui.a ./lib/macos/arm64/
+        cp -f ./lib/build/cimgui.a ./lib/macos/arm64/
 
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
