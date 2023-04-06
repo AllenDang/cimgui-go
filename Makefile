@@ -38,3 +38,19 @@ compile_cimgui_macos:
 ## generate: generates both bindings (equal to `all`)
 .PHONY: generate
 generate: cimgui cimplot
+
+
+.PHONY: update
+update:
+	rm -f VERSION.txt
+	rm -rf cimgui/
+	git clone --recurse-submodules git@github.com:cimgui/cimgui
+	cd cimgui; \
+		echo "cimgui at $(git rev-parse HEAD)" >> ../VERSION.txt; \
+		rm -rf .git
+	cd cimgui/imgui; \
+		echo "cimgui/imgui at `git rev-parse HEAD`" >> ../../VERSION.txt; \
+		rm -rf .git
+	cd cimgui/generator; \
+		./generator.sh -DIMGUI_USE_WCHAR32; \
+		cp output/*h ..
