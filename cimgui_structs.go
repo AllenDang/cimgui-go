@@ -329,6 +329,20 @@ func newDataTypeTempStorageFromC(cvalue C.ImGuiDataTypeTempStorage) DataTypeTemp
 	return DataTypeTempStorage(unsafe.Pointer(&cvalue))
 }
 
+type DataVarInfo uintptr
+
+func (data DataVarInfo) handle() *C.ImGuiDataVarInfo {
+	return (*C.ImGuiDataVarInfo)(unsafe.Pointer(data))
+}
+
+func (data DataVarInfo) c() C.ImGuiDataVarInfo {
+	return *(data.handle())
+}
+
+func newDataVarInfoFromC(cvalue C.ImGuiDataVarInfo) DataVarInfo {
+	return DataVarInfo(unsafe.Pointer(&cvalue))
+}
+
 type DockContext uintptr
 
 func (data DockContext) handle() *C.ImGuiDockContext {

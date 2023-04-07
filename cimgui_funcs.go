@@ -799,6 +799,10 @@ func (self Context) Destroy() {
 	C.ImGuiContext_destroy(self.handle())
 }
 
+func (self DataVarInfo) InternalVarPtr(parent unsafe.Pointer) unsafe.Pointer {
+	return unsafe.Pointer(C.ImGuiDataVarInfo_GetVarPtr(self.handle(), (parent)))
+}
+
 func InternalNewDockContext() DockContext {
 	return (DockContext)(unsafe.Pointer(C.ImGuiDockContext_ImGuiDockContext()))
 }
@@ -1020,8 +1024,8 @@ func (self InputTextState) InternalHasSelection() bool {
 	return C.ImGuiInputTextState_HasSelection(self.handle()) == C.bool(true)
 }
 
-func InternalNewInputTextState(ctx Context) InputTextState {
-	return (InputTextState)(unsafe.Pointer(C.ImGuiInputTextState_ImGuiInputTextState(ctx.handle())))
+func InternalNewInputTextState() InputTextState {
+	return (InputTextState)(unsafe.Pointer(C.ImGuiInputTextState_ImGuiInputTextState()))
 }
 
 func (self InputTextState) InternalOnKeyPressed(key int32) {
@@ -1279,16 +1283,16 @@ func (self StackLevelInfo) Destroy() {
 	C.ImGuiStackLevelInfo_destroy(self.handle())
 }
 
-func (self StackSizes) InternalCompareWithCurrentState() {
-	C.ImGuiStackSizes_CompareWithCurrentState(self.handle())
+func (self StackSizes) InternalCompareWithContextState(ctx Context) {
+	C.ImGuiStackSizes_CompareWithContextState(self.handle(), ctx.handle())
 }
 
 func InternalNewStackSizes() StackSizes {
 	return (StackSizes)(unsafe.Pointer(C.ImGuiStackSizes_ImGuiStackSizes()))
 }
 
-func (self StackSizes) InternalSetToCurrentState() {
-	C.ImGuiStackSizes_SetToCurrentState(self.handle())
+func (self StackSizes) InternalSetToContextState(ctx Context) {
+	C.ImGuiStackSizes_SetToContextState(self.handle(), ctx.handle())
 }
 
 func (self StackSizes) Destroy() {
@@ -2268,12 +2272,12 @@ func InternalBeginTableExV(name string, id ID, columns_count int32, flags TableF
 	return C.igBeginTableEx(nameArg, C.ImGuiID(id), C.int(columns_count), C.ImGuiTableFlags(flags), outer_size.toC(), C.float(inner_width)) == C.bool(true)
 }
 
-func BeginTooltip() {
-	C.igBeginTooltip()
+func BeginTooltip() bool {
+	return C.igBeginTooltip() == C.bool(true)
 }
 
-func InternalBeginTooltipEx(tooltip_flags TooltipFlags, extra_window_flags WindowFlags) {
-	C.igBeginTooltipEx(C.ImGuiTooltipFlags(tooltip_flags), C.ImGuiWindowFlags(extra_window_flags))
+func InternalBeginTooltipEx(tooltip_flags TooltipFlags, extra_window_flags WindowFlags) bool {
+	return C.igBeginTooltipEx(C.ImGuiTooltipFlags(tooltip_flags), C.ImGuiWindowFlags(extra_window_flags)) == C.bool(true)
 }
 
 func InternalBeginViewportSideBar(name string, viewport Viewport, dir Dir, size float32, window_flags WindowFlags) bool {
@@ -3010,6 +3014,10 @@ func InternalDockNodeGetWindowMenuButtonId(node DockNode) ID {
 
 func InternalDockNodeIsInHierarchyOf(node DockNode, parent DockNode) bool {
 	return C.igDockNodeIsInHierarchyOf(node.handle(), parent.handle()) == C.bool(true)
+}
+
+func InternalDockNodeWindowMenuHandlerDefault(ctx Context, node DockNode, tab_bar TabBar) {
+	C.igDockNodeWindowMenuHandler_Default(ctx.handle(), node.handle(), tab_bar.handle())
 }
 
 // DockSpaceV parameter default value hint:
@@ -3957,6 +3965,10 @@ func StyleColorVec4(idx Col) *Vec4 {
 	out := &Vec4{}
 	out.fromC(*C.igGetStyleColorVec4(C.ImGuiCol(idx)))
 	return out
+}
+
+func InternalStyleVarInfo(idx StyleVar) DataVarInfo {
+	return (DataVarInfo)(unsafe.Pointer(C.igGetStyleVarInfo(C.ImGuiStyleVar(idx))))
 }
 
 func TextLineHeight() float32 {
@@ -5535,10 +5547,6 @@ func PlotLinesFloatPtrV(label string, values []float32, values_count int32, valu
 	overlay_textFin()
 }
 
-func PopAllowKeyboardFocus() {
-	C.igPopAllowKeyboardFocus()
-}
-
 func PopButtonRepeat() {
 	C.igPopButtonRepeat()
 }
@@ -5583,6 +5591,10 @@ func PopStyleVarV(count int32) {
 	C.igPopStyleVar(C.int(count))
 }
 
+func PopTabStop() {
+	C.igPopTabStop()
+}
+
 func PopTextWrapPos() {
 	C.igPopTextWrapPos()
 }
@@ -5595,10 +5607,6 @@ func ProgressBarV(fraction float32, size_arg Vec2, overlay string) {
 	C.igProgressBar(C.float(fraction), size_arg.toC(), overlayArg)
 
 	overlayFin()
-}
-
-func PushAllowKeyboardFocus(allow_keyboard_focus bool) {
-	C.igPushAllowKeyboardFocus(C.bool(allow_keyboard_focus))
 }
 
 func PushButtonRepeat(repeat bool) {
@@ -5679,6 +5687,10 @@ func PushStyleVarFloat(idx StyleVar, val float32) {
 
 func PushStyleVarVec2(idx StyleVar, val Vec2) {
 	C.igPushStyleVar_Vec2(C.ImGuiStyleVar(idx), val.toC())
+}
+
+func PushTabStop(tab_stop bool) {
+	C.igPushTabStop(C.bool(tab_stop))
 }
 
 // PushTextWrapPosV parameter default value hint:
@@ -6167,6 +6179,10 @@ func SetWindowFocusStr(name string) {
 
 func SetWindowFontScale(scale float32) {
 	C.igSetWindowFontScale(C.float(scale))
+}
+
+func InternalSetWindowHiddendAndSkipItemsForCurrentFrame(window Window) {
+	C.igSetWindowHiddendAndSkipItemsForCurrentFrame(window.handle())
 }
 
 func InternalSetWindowHitTestHole(window Window, pos Vec2, size Vec2) {
@@ -10513,14 +10529,6 @@ func (self Context) NavActivatePressedId() ID {
 	return ID(C.wrap_ImGuiContext_GetNavActivatePressedId(self.handle()))
 }
 
-func (self Context) SetNavActivateInputId(v ID) {
-	C.wrap_ImGuiContext_SetNavActivateInputId(self.handle(), C.ImGuiID(v))
-}
-
-func (self Context) NavActivateInputId() ID {
-	return ID(C.wrap_ImGuiContext_GetNavActivateInputId(self.handle()))
-}
-
 func (self Context) SetNavActivateFlags(v ActivateFlags) {
 	C.wrap_ImGuiContext_SetNavActivateFlags(self.handle(), C.ImGuiActivateFlags(v))
 }
@@ -11355,12 +11363,28 @@ func (self Context) DebugLogIndex() TextIndex {
 	return newTextIndexFromC(C.wrap_ImGuiContext_GetDebugLogIndex(self.handle()))
 }
 
+func (self Context) SetDebugLogClipperAutoDisableFrames(v uint) {
+	C.wrap_ImGuiContext_SetDebugLogClipperAutoDisableFrames(self.handle(), C.ImU8(v))
+}
+
+func (self Context) DebugLogClipperAutoDisableFrames() uint32 {
+	return uint32(C.wrap_ImGuiContext_GetDebugLogClipperAutoDisableFrames(self.handle()))
+}
+
 func (self Context) SetDebugLocateFrames(v uint) {
 	C.wrap_ImGuiContext_SetDebugLocateFrames(self.handle(), C.ImU8(v))
 }
 
 func (self Context) DebugLocateFrames() uint32 {
 	return uint32(C.wrap_ImGuiContext_GetDebugLocateFrames(self.handle()))
+}
+
+func (self Context) SetDebugBeginReturnValueCullDepth(v int) {
+	C.wrap_ImGuiContext_SetDebugBeginReturnValueCullDepth(self.handle(), C.ImS8(v))
+}
+
+func (self Context) DebugBeginReturnValueCullDepth() int {
+	return int(C.wrap_ImGuiContext_GetDebugBeginReturnValueCullDepth(self.handle()))
 }
 
 func (self Context) SetDebugItemPickerActive(v bool) {
@@ -11522,6 +11546,30 @@ func (self DataTypeInfo) SetScanFmt(v string) {
 
 func (self DataTypeInfo) ScanFmt() string {
 	return C.GoString(C.wrap_ImGuiDataTypeInfo_GetScanFmt(self.handle()))
+}
+
+func (self DataVarInfo) SetType(v DataType) {
+	C.wrap_ImGuiDataVarInfo_SetType(self.handle(), C.ImGuiDataType(v))
+}
+
+func (self DataVarInfo) Type() DataType {
+	return DataType(C.wrap_ImGuiDataVarInfo_GetType(self.handle()))
+}
+
+func (self DataVarInfo) SetCount(v uint32) {
+	C.wrap_ImGuiDataVarInfo_SetCount(self.handle(), C.ImU32(v))
+}
+
+func (self DataVarInfo) Count() uint32 {
+	return uint32(C.wrap_ImGuiDataVarInfo_GetCount(self.handle()))
+}
+
+func (self DataVarInfo) SetOffset(v uint32) {
+	C.wrap_ImGuiDataVarInfo_SetOffset(self.handle(), C.ImU32(v))
+}
+
+func (self DataVarInfo) Offset() uint32 {
+	return uint32(C.wrap_ImGuiDataVarInfo_GetOffset(self.handle()))
 }
 
 func (self DockContext) Nodes() Storage {
@@ -12226,6 +12274,22 @@ func (self IO) ConfigMemoryCompactTimer() float32 {
 	return float32(C.wrap_ImGuiIO_GetConfigMemoryCompactTimer(self.handle()))
 }
 
+func (self IO) SetConfigDebugBeginReturnValueOnce(v bool) {
+	C.wrap_ImGuiIO_SetConfigDebugBeginReturnValueOnce(self.handle(), C.bool(v))
+}
+
+func (self IO) ConfigDebugBeginReturnValueOnce() bool {
+	return C.wrap_ImGuiIO_GetConfigDebugBeginReturnValueOnce(self.handle()) == C.bool(true)
+}
+
+func (self IO) SetConfigDebugBeginReturnValueLoop(v bool) {
+	C.wrap_ImGuiIO_SetConfigDebugBeginReturnValueLoop(self.handle(), C.bool(v))
+}
+
+func (self IO) ConfigDebugBeginReturnValueLoop() bool {
+	return C.wrap_ImGuiIO_GetConfigDebugBeginReturnValueLoop(self.handle()) == C.bool(true)
+}
+
 func (self IO) SetBackendPlatformName(v string) {
 	vArg, vFin := wrapString(v)
 	C.wrap_ImGuiIO_SetBackendPlatformName(self.handle(), vArg)
@@ -12400,6 +12464,14 @@ func (self IO) MouseDelta() Vec2 {
 	out := &Vec2{}
 	out.fromC(C.wrap_ImGuiIO_GetMouseDelta(self.handle()))
 	return *out
+}
+
+func (self IO) SetCtx(v Context) {
+	C.wrap_ImGuiIO_SetCtx(self.handle(), v.handle())
+}
+
+func (self IO) Ctx() Context {
+	return (Context)(unsafe.Pointer(C.wrap_ImGuiIO_GetCtx(self.handle())))
 }
 
 func (self IO) SetMousePos(v Vec2) {
@@ -12636,6 +12708,14 @@ func (self InputEventText) SetChar(v uint32) {
 
 func (self InputEventText) Char() uint32 {
 	return uint32(C.wrap_ImGuiInputEventText_GetChar(self.handle()))
+}
+
+func (self InputTextCallbackData) SetCtx(v Context) {
+	C.wrap_ImGuiInputTextCallbackData_SetCtx(self.handle(), v.handle())
+}
+
+func (self InputTextCallbackData) Ctx() Context {
+	return (Context)(unsafe.Pointer(C.wrap_ImGuiInputTextCallbackData_GetCtx(self.handle())))
 }
 
 func (self InputTextCallbackData) SetEventFlag(v InputTextFlags) {
@@ -12981,6 +13061,14 @@ func (self LastItemData) DisplayRect() Rect {
 	out := &Rect{}
 	out.fromC(C.wrap_ImGuiLastItemData_GetDisplayRect(self.handle()))
 	return *out
+}
+
+func (self ListClipper) SetCtx(v Context) {
+	C.wrap_ImGuiListClipper_SetCtx(self.handle(), v.handle())
+}
+
+func (self ListClipper) Ctx() Context {
+	return (Context)(unsafe.Pointer(C.wrap_ImGuiListClipper_GetCtx(self.handle())))
 }
 
 func (self ListClipper) SetDisplayStart(v int32) {
@@ -16635,6 +16723,14 @@ func (self ViewportP) BuildWorkOffsetMax() Vec2 {
 	out := &Vec2{}
 	out.fromC(C.wrap_ImGuiViewportP_GetBuildWorkOffsetMax(self.handle()))
 	return *out
+}
+
+func (self Window) SetCtx(v Context) {
+	C.wrap_ImGuiWindow_SetCtx(self.handle(), v.handle())
+}
+
+func (self Window) Ctx() Context {
+	return (Context)(unsafe.Pointer(C.wrap_ImGuiWindow_GetCtx(self.handle())))
 }
 
 func (self Window) SetName(v string) {
