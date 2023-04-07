@@ -26,7 +26,7 @@ jobs:
         cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/linux/x64
 
     - name: configure cimgui
-      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On
+      run: cmake -Bbuild
       working-directory: ./lib
 
     - name: make cimgui
