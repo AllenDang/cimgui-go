@@ -66,3 +66,6 @@ thirdparty/glfw/build
 .idea
 # Vim cache files
 *.swp
+
+# make update temporary directory
+tmp
