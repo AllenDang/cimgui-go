@@ -40,7 +40,7 @@ jobs:
 
     - name: configure cimgui for x64
       run: cmake -Bbuild -DCMAKE_OSX_ARCHITECTURES=x86_64
-      working-directory: ./cimgui
+      working-directory: ./lib
 
     - name: make cimgui for x64
       run: make
@@ -53,11 +53,11 @@ jobs:
 
     - name: clean up
       run: cmake --build ./build --target clean
-      working-directory: ./cimgui
+      working-directory: ./lib
 
     - name: configure cimgui for arm64
       run: cmake -Bbuild -DCMAKE_OSX_ARCHITECTURES=arm64
-      working-directory: ./cimgui
+      working-directory: ./lib
 
     - name: make cimgui for arm64
       run: make
