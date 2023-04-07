@@ -18,14 +18,16 @@ file(GLOB IMGUI_SOURCES
     ../cimgui/imgui/imgui_draw.cpp
     ../cimgui/imgui/imgui_demo.cpp
     ../cimgui/imgui/imgui_widgets.cpp
-    ../cimplot/implot/implot.cpp
-    ../cimplot/implot/implot_items.cpp
-    ../cimplot/implot/implot_demo.cpp
-    ../cimplot/cimplot.cpp
+    ../cimgui/implot/implot.cpp
+    ../cimgui/implot/implot_items.cpp
+    ../cimgui/implot/implot_demo.cpp
+    ../cimgui/cimplot.cpp
 	${TABLES_SOURCE}
 )
 
-set(IMGUI_STATIC "no" CACHE STRING "Build as a static library")
+set(CMAKE_BUILD_TYPE "Release")
+set(IMGUI_USE_WCHAR32 "yes")
+set(IMGUI_STATIC "on" CACHE STRING "Build as a static library")
 set(IMGUI_FREETYPE "no" CACHE STRING "Build with freetype library")
 set(IMGUI_LIBRARIES )
 
