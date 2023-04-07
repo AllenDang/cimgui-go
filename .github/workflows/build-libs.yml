@@ -26,7 +26,7 @@ jobs:
         cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/linux/x64
 
     - name: configure cimgui
-      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On
+      run: cmake -Bbuild
       working-directory: ./lib
 
     - name: make cimgui
@@ -52,7 +52,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@main
-
+    - run: git pull
     - name: Install MinGW
       uses: msys2/setup-msys2@v2
       with:
@@ -93,10 +93,9 @@ jobs:
   build-macos:
     needs: build-windows-x64
     runs-on: macos-latest
-
     steps:
     - uses: actions/checkout@main
-
+    - run: git pull
     - name: configure glfw for x64
       run: cmake -S . -Bbuild -DCMAKE_OSX_ARCHITECTURES=x86_64
       working-directory: ./thirdparty/glfw
@@ -126,7 +125,7 @@ jobs:
         cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/macos/arm64
 
     - name: configure cimgui for x64
-      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=x86_64
+      run: cmake -Bbuild -DCMAKE_OSX_ARCHITECTURES=x86_64
       working-directory: ./cimgui
 
     - name: make cimgui for x64
