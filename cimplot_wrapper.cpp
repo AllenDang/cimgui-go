@@ -2,7 +2,7 @@
 // DO NOT EDIT.
 
 #include "cimplot_wrapper.h"
-#include "cimplot/cimplot.h"
+#include "cimgui/cimplot.h"
 
 void wrap_ImPlotAnnotationCollection_Append(ImPlotAnnotationCollection* self,const ImVec2 pos,const ImVec2 off,ImU32 bg,ImU32 fg,bool clamp,const char* fmt) { ImPlotAnnotationCollection_Append(self,pos,off,bg,fg,clamp,fmt); }
 void wrap_ImPlotTagCollection_Append(ImPlotTagCollection* self,ImAxis axis,double value,ImU32 bg,ImU32 fg,const char* fmt) { ImPlotTagCollection_Append(self,axis,value,bg,fg,fmt); }
@@ -38,9 +38,9 @@ bool wrap_ImPlot_DragRect(int id,double* x1,double* y1,double* x2,double* y2,con
 void wrap_ImPlot_GetColormapColor(ImVec4* pOut,int idx) { ImPlot_GetColormapColor(pOut,idx,-1); }
 int wrap_ImPlot_GetColormapSize() { return ImPlot_GetColormapSize(-1); }
 void wrap_ImPlot_GetLocationPos(ImVec2* pOut,const ImRect outer_rect,const ImVec2 inner_size,ImPlotLocation location) { ImPlot_GetLocationPos(pOut,outer_rect,inner_size,location,(ImVec2){.x=0, .y=0}); }
-ImPlotRect wrap_ImPlot_GetPlotLimits() { return ImPlot_GetPlotLimits(-1,-1); }
+void wrap_ImPlot_GetPlotLimits(ImPlotRect* pOut) { ImPlot_GetPlotLimits(pOut,-1,-1); }
 void wrap_ImPlot_GetPlotMousePos(ImPlotPoint* pOut) { ImPlot_GetPlotMousePos(pOut,-1,-1); }
-ImPlotRect wrap_ImPlot_GetPlotSelection() { return ImPlot_GetPlotSelection(-1,-1); }
+void wrap_ImPlot_GetPlotSelection(ImPlotRect* pOut) { ImPlot_GetPlotSelection(pOut,-1,-1); }
 void wrap_ImPlot_HideNextItem() { ImPlot_HideNextItem(true,ImPlotCond_Once); }
 bool wrap_ImPlot_ImAlmostEqual(double v1,double v2) { return ImPlot_ImAlmostEqual(v1,v2,2); }
 void wrap_ImPlot_LabelAxisValue(const ImPlotAxis axis,double value,char* buff,int size) { ImPlot_LabelAxisValue(axis,value,buff,size,false); }

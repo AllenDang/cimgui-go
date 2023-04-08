@@ -489,8 +489,6 @@ extern void wrap_ImGuiContext_SetNavActivateDownId(ImGuiContext *ImGuiContextPtr
 extern ImGuiID wrap_ImGuiContext_GetNavActivateDownId(ImGuiContext *self);
 extern void wrap_ImGuiContext_SetNavActivatePressedId(ImGuiContext *ImGuiContextPtr, ImGuiID v);
 extern ImGuiID wrap_ImGuiContext_GetNavActivatePressedId(ImGuiContext *self);
-extern void wrap_ImGuiContext_SetNavActivateInputId(ImGuiContext *ImGuiContextPtr, ImGuiID v);
-extern ImGuiID wrap_ImGuiContext_GetNavActivateInputId(ImGuiContext *self);
 extern void wrap_ImGuiContext_SetNavActivateFlags(ImGuiContext *ImGuiContextPtr, ImGuiActivateFlags v);
 extern ImGuiActivateFlags wrap_ImGuiContext_GetNavActivateFlags(ImGuiContext *self);
 extern void wrap_ImGuiContext_SetNavJustMovedToId(ImGuiContext *ImGuiContextPtr, ImGuiID v);
@@ -751,8 +749,12 @@ extern void wrap_ImGuiContext_SetDebugLogBuf(ImGuiContext *ImGuiContextPtr, ImGu
 extern ImGuiTextBuffer wrap_ImGuiContext_GetDebugLogBuf(ImGuiContext *self);
 extern void wrap_ImGuiContext_SetDebugLogIndex(ImGuiContext *ImGuiContextPtr, ImGuiTextIndex v);
 extern ImGuiTextIndex wrap_ImGuiContext_GetDebugLogIndex(ImGuiContext *self);
+extern void wrap_ImGuiContext_SetDebugLogClipperAutoDisableFrames(ImGuiContext *ImGuiContextPtr, ImU8 v);
+extern ImU8 wrap_ImGuiContext_GetDebugLogClipperAutoDisableFrames(ImGuiContext *self);
 extern void wrap_ImGuiContext_SetDebugLocateFrames(ImGuiContext *ImGuiContextPtr, ImU8 v);
 extern ImU8 wrap_ImGuiContext_GetDebugLocateFrames(ImGuiContext *self);
+extern void wrap_ImGuiContext_SetDebugBeginReturnValueCullDepth(ImGuiContext *ImGuiContextPtr, ImS8 v);
+extern ImS8 wrap_ImGuiContext_GetDebugBeginReturnValueCullDepth(ImGuiContext *self);
 extern void wrap_ImGuiContext_SetDebugItemPickerActive(ImGuiContext *ImGuiContextPtr, bool v);
 extern bool wrap_ImGuiContext_GetDebugItemPickerActive(ImGuiContext *self);
 extern void wrap_ImGuiContext_SetDebugItemPickerMouseButton(ImGuiContext *ImGuiContextPtr, ImU8 v);
@@ -797,6 +799,12 @@ extern void wrap_ImGuiDataTypeInfo_SetPrintFmt(ImGuiDataTypeInfo *ImGuiDataTypeI
 extern const char* wrap_ImGuiDataTypeInfo_GetPrintFmt(ImGuiDataTypeInfo *self);
 extern void wrap_ImGuiDataTypeInfo_SetScanFmt(ImGuiDataTypeInfo *ImGuiDataTypeInfoPtr, const char* v);
 extern const char* wrap_ImGuiDataTypeInfo_GetScanFmt(ImGuiDataTypeInfo *self);
+extern void wrap_ImGuiDataVarInfo_SetType(ImGuiDataVarInfo *ImGuiDataVarInfoPtr, ImGuiDataType v);
+extern ImGuiDataType wrap_ImGuiDataVarInfo_GetType(ImGuiDataVarInfo *self);
+extern void wrap_ImGuiDataVarInfo_SetCount(ImGuiDataVarInfo *ImGuiDataVarInfoPtr, ImU32 v);
+extern ImU32 wrap_ImGuiDataVarInfo_GetCount(ImGuiDataVarInfo *self);
+extern void wrap_ImGuiDataVarInfo_SetOffset(ImGuiDataVarInfo *ImGuiDataVarInfoPtr, ImU32 v);
+extern ImU32 wrap_ImGuiDataVarInfo_GetOffset(ImGuiDataVarInfo *self);
 extern void wrap_ImGuiDockContext_SetNodes(ImGuiDockContext *ImGuiDockContextPtr, ImGuiStorage v);
 extern ImGuiStorage wrap_ImGuiDockContext_GetNodes(ImGuiDockContext *self);
 extern void wrap_ImGuiDockContext_SetRequests(ImGuiDockContext *ImGuiDockContextPtr, ImVector_ImGuiDockRequest v);
@@ -979,6 +987,10 @@ extern void wrap_ImGuiIO_SetConfigWindowsMoveFromTitleBarOnly(ImGuiIO *ImGuiIOPt
 extern bool wrap_ImGuiIO_GetConfigWindowsMoveFromTitleBarOnly(ImGuiIO *self);
 extern void wrap_ImGuiIO_SetConfigMemoryCompactTimer(ImGuiIO *ImGuiIOPtr, float v);
 extern float wrap_ImGuiIO_GetConfigMemoryCompactTimer(ImGuiIO *self);
+extern void wrap_ImGuiIO_SetConfigDebugBeginReturnValueOnce(ImGuiIO *ImGuiIOPtr, bool v);
+extern bool wrap_ImGuiIO_GetConfigDebugBeginReturnValueOnce(ImGuiIO *self);
+extern void wrap_ImGuiIO_SetConfigDebugBeginReturnValueLoop(ImGuiIO *ImGuiIOPtr, bool v);
+extern bool wrap_ImGuiIO_GetConfigDebugBeginReturnValueLoop(ImGuiIO *self);
 extern void wrap_ImGuiIO_SetBackendPlatformName(ImGuiIO *ImGuiIOPtr, const char* v);
 extern const char* wrap_ImGuiIO_GetBackendPlatformName(ImGuiIO *self);
 extern void wrap_ImGuiIO_SetBackendRendererName(ImGuiIO *ImGuiIOPtr, const char* v);
@@ -1021,6 +1033,8 @@ extern void wrap_ImGuiIO_SetMetricsActiveAllocations(ImGuiIO *ImGuiIOPtr, int v)
 extern int wrap_ImGuiIO_GetMetricsActiveAllocations(ImGuiIO *self);
 extern void wrap_ImGuiIO_SetMouseDelta(ImGuiIO *ImGuiIOPtr, ImVec2 v);
 extern ImVec2 wrap_ImGuiIO_GetMouseDelta(ImGuiIO *self);
+extern void wrap_ImGuiIO_SetCtx(ImGuiIO *ImGuiIOPtr, ImGuiContext* v);
+extern ImGuiContext* wrap_ImGuiIO_GetCtx(ImGuiIO *self);
 extern void wrap_ImGuiIO_SetMousePos(ImGuiIO *ImGuiIOPtr, ImVec2 v);
 extern ImVec2 wrap_ImGuiIO_GetMousePos(ImGuiIO *self);
 extern void wrap_ImGuiIO_SetMouseWheel(ImGuiIO *ImGuiIOPtr, float v);
@@ -1085,6 +1099,8 @@ extern void wrap_ImGuiInputEventMouseWheel_SetWheelY(ImGuiInputEventMouseWheel *
 extern float wrap_ImGuiInputEventMouseWheel_GetWheelY(ImGuiInputEventMouseWheel *self);
 extern void wrap_ImGuiInputEventText_SetChar(ImGuiInputEventText *ImGuiInputEventTextPtr, unsigned int v);
 extern unsigned int wrap_ImGuiInputEventText_GetChar(ImGuiInputEventText *self);
+extern void wrap_ImGuiInputTextCallbackData_SetCtx(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, ImGuiContext* v);
+extern ImGuiContext* wrap_ImGuiInputTextCallbackData_GetCtx(ImGuiInputTextCallbackData *self);
 extern void wrap_ImGuiInputTextCallbackData_SetEventFlag(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, ImGuiInputTextFlags v);
 extern ImGuiInputTextFlags wrap_ImGuiInputTextCallbackData_GetEventFlag(ImGuiInputTextCallbackData *self);
 extern void wrap_ImGuiInputTextCallbackData_SetFlags(ImGuiInputTextCallbackData *ImGuiInputTextCallbackDataPtr, ImGuiInputTextFlags v);
@@ -1183,6 +1199,8 @@ extern void wrap_ImGuiLastItemData_SetNavRect(ImGuiLastItemData *ImGuiLastItemDa
 extern ImRect wrap_ImGuiLastItemData_GetNavRect(ImGuiLastItemData *self);
 extern void wrap_ImGuiLastItemData_SetDisplayRect(ImGuiLastItemData *ImGuiLastItemDataPtr, ImRect v);
 extern ImRect wrap_ImGuiLastItemData_GetDisplayRect(ImGuiLastItemData *self);
+extern void wrap_ImGuiListClipper_SetCtx(ImGuiListClipper *ImGuiListClipperPtr, ImGuiContext* v);
+extern ImGuiContext* wrap_ImGuiListClipper_GetCtx(ImGuiListClipper *self);
 extern void wrap_ImGuiListClipper_SetDisplayStart(ImGuiListClipper *ImGuiListClipperPtr, int v);
 extern int wrap_ImGuiListClipper_GetDisplayStart(ImGuiListClipper *self);
 extern void wrap_ImGuiListClipper_SetDisplayEnd(ImGuiListClipper *ImGuiListClipperPtr, int v);
@@ -2111,6 +2129,8 @@ extern void wrap_ImGuiViewportP_SetBuildWorkOffsetMin(ImGuiViewportP *ImGuiViewp
 extern ImVec2 wrap_ImGuiViewportP_GetBuildWorkOffsetMin(ImGuiViewportP *self);
 extern void wrap_ImGuiViewportP_SetBuildWorkOffsetMax(ImGuiViewportP *ImGuiViewportPPtr, ImVec2 v);
 extern ImVec2 wrap_ImGuiViewportP_GetBuildWorkOffsetMax(ImGuiViewportP *self);
+extern void wrap_ImGuiWindow_SetCtx(ImGuiWindow *ImGuiWindowPtr, ImGuiContext* v);
+extern ImGuiContext* wrap_ImGuiWindow_GetCtx(ImGuiWindow *self);
 extern void wrap_ImGuiWindow_SetName(ImGuiWindow *ImGuiWindowPtr, char* v);
 extern char* wrap_ImGuiWindow_GetName(ImGuiWindow *self);
 extern void wrap_ImGuiWindow_SetID(ImGuiWindow *ImGuiWindowPtr, ImGuiID v);

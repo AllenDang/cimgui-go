@@ -22,15 +22,16 @@ Currently most of the functions are generated, except memory related stuff (eg. 
 If you find any function is missing, report an issue.
 
 ## Generate binding
-Install [GNU make](https://www.gnu.org/software/make/manual/make.html)
+Install [GNU make](https://www.gnu.org/software/make/manual/make.html) and run `make` to re-generate bunding.
 
-### Update imgui
-1. Drop source code of imgui to `cimgui/imgui`.
-2. Run `cd cimgui/generator; ./generator.sh`.
-3. Run `make cimgui`.
+## Update
 
-### Update implot
-1. Drop source code of implot to `cimplot/implot`.
-2. Run `cd cimplot/generator; ./generator.sh`.
-3. Run `make cimplot`.
+To update to the latest version of dependencies, run `make update`.
+After doing this, commit changes and navigate to GitHub.
+In Actions tab, manually trigger workflows for each platform.
 
+## How does it work?
+
+- `cimgui/` directory holds C binding for C++ Dear ImGui libraries
+- generator bases on `cimgui/{package_name}_templates` and generates all necessary GO/C code
+- `libs/` contains pre-built shared libraries. `cimgui.go` includes and uses to decrease building time.
