@@ -17,6 +17,7 @@ type (
 	DrawIdx             C.ImDrawIdx
 	TableColumnIdx      C.ImGuiTableColumnIdx
 	TableDrawChannelIdx C.ImGuiTableDrawChannelIdx
+	KeyChord            C.ImGuiKeyChord
 )
 
 var _ wrappableType[C.ImVec2, *Vec2] = &Vec2{}

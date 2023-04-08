@@ -3903,6 +3903,13 @@ func InternalItemStatusFlags() ItemStatusFlags {
 	return ItemStatusFlags(C.igGetItemStatusFlags())
 }
 
+func InternalKeyChordName(key_chord KeyChord, out_buf string, out_buf_size int32) {
+	out_bufArg, out_bufFin := wrapString(out_buf)
+	C.igGetKeyChordName(C.ImGuiKeyChord(key_chord), out_bufArg, C.int(out_buf_size))
+
+	out_bufFin()
+}
+
 func InternalKeyData(key Key) KeyData {
 	return (KeyData)(unsafe.Pointer(C.igGetKeyData(C.ImGuiKey(key))))
 }
@@ -4019,6 +4026,10 @@ func ScrollX() float32 {
 
 func ScrollY() float32 {
 	return float32(C.igGetScrollY())
+}
+
+func InternalShortcutRoutingData(key_chord KeyChord) KeyRoutingData {
+	return (KeyRoutingData)(unsafe.Pointer(C.igGetShortcutRoutingData(C.ImGuiKeyChord(key_chord))))
 }
 
 func CurrentStyle() Style {
@@ -6254,6 +6265,13 @@ func InternalSetScrollYWindowPtr(window Window, scroll_y float32) {
 	C.igSetScrollY_WindowPtr(window.handle(), C.float(scroll_y))
 }
 
+// InternalSetShortcutRoutingV parameter default value hint:
+// flags: 0
+// owner_id: 0
+func InternalSetShortcutRoutingV(key_chord KeyChord, owner_id ID, flags InputFlags) bool {
+	return C.igSetShortcutRouting(C.ImGuiKeyChord(key_chord), C.ImGuiID(owner_id), C.ImGuiInputFlags(flags)) == C.bool(true)
+}
+
 func SetTabItemClosed(tab_or_docked_window_label string) {
 	tab_or_docked_window_labelArg, tab_or_docked_window_labelFin := wrapString(tab_or_docked_window_label)
 	C.igSetTabItemClosed(tab_or_docked_window_labelArg)
@@ -6368,6 +6386,13 @@ func InternalShadeVertsLinearColorGradientKeepAlpha(draw_list DrawList, vert_sta
 
 func InternalShadeVertsLinearUV(draw_list DrawList, vert_start_idx int32, vert_end_idx int32, a Vec2, b Vec2, uv_a Vec2, uv_b Vec2, clamp bool) {
 	C.igShadeVertsLinearUV(draw_list.handle(), C.int(vert_start_idx), C.int(vert_end_idx), a.toC(), b.toC(), uv_a.toC(), uv_b.toC(), C.bool(clamp))
+}
+
+// InternalShortcutV parameter default value hint:
+// flags: 0
+// owner_id: 0
+func InternalShortcutV(key_chord KeyChord, owner_id ID, flags InputFlags) bool {
+	return C.igShortcut(C.ImGuiKeyChord(key_chord), C.ImGuiID(owner_id), C.ImGuiInputFlags(flags)) == C.bool(true)
 }
 
 // ShowAboutWindowV parameter default value hint:
@@ -7158,6 +7183,10 @@ func InternalTempInputText(bb Rect, id ID, label string, buf string, buf_size in
 
 func InternalTestKeyOwner(key Key, owner_id ID) bool {
 	return C.igTestKeyOwner(C.ImGuiKey(key), C.ImGuiID(owner_id)) == C.bool(true)
+}
+
+func InternalTestShortcutRouting(key_chord KeyChord, owner_id ID) bool {
+	return C.igTestShortcutRouting(C.ImGuiKeyChord(key_chord), C.ImGuiID(owner_id)) == C.bool(true)
 }
 
 func Text(fmt string) {
@@ -8821,6 +8850,10 @@ func SetScrollHereY() {
 	C.wrap_igSetScrollHereY()
 }
 
+func InternalSetShortcutRouting(key_chord KeyChord) bool {
+	return C.wrap_igSetShortcutRouting(C.ImGuiKeyChord(key_chord)) == C.bool(true)
+}
+
 func SetWindowCollapsedBool(collapsed bool) {
 	C.wrap_igSetWindowCollapsed_Bool(C.bool(collapsed))
 }
@@ -8864,6 +8897,10 @@ func SetWindowSizeVec2(size Vec2) {
 
 func InternalSetWindowSizeWindowPtr(window Window, size Vec2) {
 	C.wrap_igSetWindowSize_WindowPtr(window.handle(), size.toC())
+}
+
+func InternalShortcut(key_chord KeyChord) bool {
+	return C.wrap_igShortcut(C.ImGuiKeyChord(key_chord)) == C.bool(true)
 }
 
 func ShowAboutWindow() {
@@ -10836,6 +10873,10 @@ func (self Context) NavJustMovedToFocusScopeId() ID {
 	return ID(C.wrap_ImGuiContext_GetNavJustMovedToFocusScopeId(self.handle()))
 }
 
+func (self Context) SetNavJustMovedToKeyMods(v KeyChord) {
+	C.wrap_ImGuiContext_SetNavJustMovedToKeyMods(self.handle(), C.ImGuiKeyChord(v))
+}
+
 func (self Context) SetNavNextActivateId(v ID) {
 	C.wrap_ImGuiContext_SetNavNextActivateId(self.handle(), C.ImGuiID(v))
 }
@@ -10982,6 +11023,10 @@ func (self Context) NavMoveScrollFlags() ScrollFlags {
 	return ScrollFlags(C.wrap_ImGuiContext_GetNavMoveScrollFlags(self.handle()))
 }
 
+func (self Context) SetNavMoveKeyMods(v KeyChord) {
+	C.wrap_ImGuiContext_SetNavMoveKeyMods(self.handle(), C.ImGuiKeyChord(v))
+}
+
 func (self Context) SetNavMoveDir(v Dir) {
 	C.wrap_ImGuiContext_SetNavMoveDir(self.handle(), C.ImGuiDir(v))
 }
@@ -11064,6 +11109,14 @@ func (self Context) NavMoveResultOther() NavItemData {
 
 func (self Context) NavTabbingResultFirst() NavItemData {
 	return newNavItemDataFromC(C.wrap_ImGuiContext_GetNavTabbingResultFirst(self.handle()))
+}
+
+func (self Context) SetConfigNavWindowingKeyNext(v KeyChord) {
+	C.wrap_ImGuiContext_SetConfigNavWindowingKeyNext(self.handle(), C.ImGuiKeyChord(v))
+}
+
+func (self Context) SetConfigNavWindowingKeyPrev(v KeyChord) {
+	C.wrap_ImGuiContext_SetConfigNavWindowingKeyPrev(self.handle(), C.ImGuiKeyChord(v))
 }
 
 func (self Context) SetNavWindowingTarget(v Window) {
@@ -12757,6 +12810,10 @@ func (self IO) SetKeySuper(v bool) {
 
 func (self IO) KeySuper() bool {
 	return C.wrap_ImGuiIO_GetKeySuper(self.handle()) == C.bool(true)
+}
+
+func (self IO) SetKeyMods(v KeyChord) {
+	C.wrap_ImGuiIO_SetKeyMods(self.handle(), C.ImGuiKeyChord(v))
 }
 
 func (self IO) SetWantCaptureMouseUnlessPopupClose(v bool) {

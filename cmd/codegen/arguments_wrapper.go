@@ -74,6 +74,7 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"ImDrawIdx":                simpleW("DrawIdx", "C.ImDrawIdx"),
 		"ImGuiTableColumnIdx":      simpleW("TableColumnIdx", "C.ImGuiTableColumnIdx"),
 		"ImGuiTableDrawChannelIdx": simpleW("TableDrawChannelIdx", "C.ImGuiTableDrawChannelIdx"),
+		"ImGuiKeyChord":            simpleW("KeyChord", "C.ImGuiKeyChord"),
 		"void*":                    simpleW("unsafe.Pointer", ""),
 		"const void*":              simpleW("unsafe.Pointer", ""),
 		"const ImVec2":             wrappableW("Vec2"),
