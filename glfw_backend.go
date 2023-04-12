@@ -17,7 +17,7 @@ package imgui
 // extern void afterCreateContext();
 // extern void beforeDestoryContext();
 // #include <stdint.h>
-// #include "backend.h"
+// #include "glfw_backend.h"
 import "C"
 
 import (
@@ -116,7 +116,7 @@ func (b *GLFWBackend) CreateWindow(title string, width, height int, flags GLFWWi
 	titleArg, titleFin := wrapString(title)
 	defer titleFin()
 
-	//b.window = uintptr(unsafe.Pointer(C.igCreateGLFWWindow(titleArg, C.int(width), C.int(height), C.GLFWWindowFlags(flags), C.VoidCallback(C.afterCreateContext))))
+	// b.window = uintptr(unsafe.Pointer(C.igCreateGLFWWindow(titleArg, C.int(width), C.int(height), C.GLFWWindowFlags(flags), C.VoidCallback(C.afterCreateContext))))
 	b.window = uintptr(unsafe.Pointer(C.igCreateGLFWWindow(
 		titleArg,
 		C.int(width),

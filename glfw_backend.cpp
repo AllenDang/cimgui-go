@@ -3,7 +3,7 @@
 #define CIMGUI_USE_GLFW
 #define CIMGUI_USE_OPENGL3
 
-#include "backend.h"
+#include "glfw_backend.h"
 #include "cimgui/cimgui.h"
 #include "cimgui/cimgui_impl.h"
 #include "thirdparty/glfw/include/GLFW/glfw3.h" // Will drag system OpenGL headers
