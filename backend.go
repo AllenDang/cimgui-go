@@ -84,6 +84,15 @@ type Backend interface {
 	CreateWindow(title string, width, height int, flags GLFWWindowFlags)
 
 	// for C callbacks
+	// What happens here is a bit tricky:
+	// - user sets these callbacks via Set* methods of the backend
+	// - callbacks are stored in currentContext variable
+	// - functions below just returns that callbacks
+	// - on top of this file is a set of global function with names similar to these below
+	// - these functions are exported to C
+	// - backend implementation uses C references to Go callbacks to share them (again ;-) )
+	//   into backend code.
+	// As you can see this is all to convert Go callback int C callback
 	afterCreateHook() func()
 	beforeRenderHook() func()
 	loopFunc() func()
