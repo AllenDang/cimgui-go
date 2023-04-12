@@ -20,7 +20,7 @@ var (
 	a              float32
 	color4         [4]float32 = [4]float32{r, g, b, a}
 	selected       bool
-	window         imgui.GLFWwindow
+	backend        imgui.Backend
 	img            *image.RGBA
 	texture        *imgui.Texture
 	barValues      []int64
@@ -39,7 +39,7 @@ func showWidgetsDemo() {
 	imgui.SetNextWindowSizeV(imgui.NewVec2(300, 300), imgui.CondOnce)
 	imgui.Begin("Window 1")
 	if imgui.ButtonV("Click Me", imgui.NewVec2(80, 20)) {
-		w, h := window.DisplaySize()
+		w, h := backend.DisplaySize()
 		fmt.Println(w, h)
 	}
 	imgui.TextUnformatted("Unformatted text")
@@ -120,12 +120,13 @@ func main() {
 		barValues = append(barValues, int64(i+1))
 	}
 
-	imgui.SetAfterCreateContextHook(afterCreateContext)
-	imgui.SetBeforeDestroyContextHook(beforeDestroyContext)
+	backend = imgui.CreateBackend()
+	backend.SetAfterCreateContextHook(afterCreateContext)
+	backend.SetBeforeDestroyContextHook(beforeDestroyContext)
 
-	imgui.SetBgColor(imgui.NewVec4(0.45, 0.55, 0.6, 1.0))
+	backend.SetBgColor(imgui.NewVec4(0.45, 0.55, 0.6, 1.0))
 
-	window = imgui.CreateGlfwWindow("Hello from cimgui-go", 1200, 900, 0)
+	backend.CreateWindow("Hello from cimgui-go", 1200, 900, 0)
 
-	window.Run(loop)
+	backend.Run(loop)
 }
