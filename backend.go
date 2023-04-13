@@ -1,23 +1,10 @@
-//go:build !exclude_cimgui_glfw
-// +build !exclude_cimgui_glfw
-
 package imgui
 
-// #cgo amd64,linux LDFLAGS: ${SRCDIR}/lib/linux/x64/libglfw3.a -ldl -lGL -lX11
-// #cgo amd64,windows LDFLAGS: -L${SRCDIR}/lib/windows/x64 -l:libglfw3.a -lgdi32 -lopengl32 -limm32
-// #cgo darwin LDFLAGS: -framework Cocoa -framework IOKit -framework CoreVideo
-// #cgo amd64,darwin LDFLAGS: ${SRCDIR}/lib/macos/x64/libglfw3.a
-// #cgo arm64,darwin LDFLAGS: ${SRCDIR}/lib/macos/arm64/libglfw3.a
-// #cgo !gles2,darwin LDFLAGS: -framework OpenGL
-// #cgo gles2,darwin LDFLAGS: -lGLESv2
-// #cgo CPPFLAGS: -DCIMGUI_GO_USE_GLFW
-// extern void glfwWindowLoopCallback();
-// extern void glfwBeforeRender();
-// extern void glfwAfterRender();
-// extern void glfwAfterCreateContext();
-// extern void glfwBeforeDestoryContext();
-// #include <stdint.h>
-// #include "backend.h"
+// extern void loopCallback();
+// extern void beforeRender();
+// extern void afterRender();
+// extern void afterCreateContext();
+// extern void beforeDestoryContext();
 import "C"
 
 import (
@@ -25,137 +12,99 @@ import (
 	"unsafe"
 )
 
-type GLFWWindowFlags int
+var currentBackend Backend
 
-const (
-	GLFWWindowFlagsNone         GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsNone)
-	GLFWWindowFlagsNotResizable GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsNotResizable)
-	GLFWWindowFlagsMaximized    GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsMaximized)
-	GLFWWindowFlagsFloating     GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsFloating)
-	GLFWWindowFlagsFrameless    GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsFrameless)
-	GLFWWindowFlagsTransparent  GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsTransparent)
-)
-
-type voidCallbackFunc func()
-
-var (
-	afterCreateContext   voidCallbackFunc
-	loopFunc             voidCallbackFunc
-	beforeRender         voidCallbackFunc
-	afterRender          voidCallbackFunc
-	beforeDestoryContext voidCallbackFunc
-)
-
-type GLFWwindow uintptr
-
-func (w GLFWwindow) handle() *C.GLFWwindow {
-	return (*C.GLFWwindow)(unsafe.Pointer(w))
-}
-
-func SetAfterCreateContextHook(hook func()) {
-	afterCreateContext = hook
-}
-
-func SetBeforeDestroyContextHook(hook func()) {
-	beforeDestoryContext = hook
-}
-
-func SetBeforeRenderHook(hook func()) {
-	beforeRender = hook
-}
-
-func SetAfterRenderHook(hook func()) {
-	afterRender = hook
-}
-
-func SetBgColor(color Vec4) {
-	C.igSetBgColor(color.toC())
-}
-
-func (w GLFWwindow) Run(loop func()) {
-	loopFunc = loop
-	C.igRunLoop(w.handle(), C.VoidCallback(C.glfwWindowLoopCallback), C.VoidCallback(C.glfwBeforeRender), C.VoidCallback(C.glfwAfterRender), C.VoidCallback(C.glfwBeforeDestoryContext))
-}
-
-func (w GLFWwindow) DisplaySize() (width int32, height int32) {
-	widthArg, widthFin := wrapNumberPtr[C.int, int32](&width)
-	defer widthFin()
-
-	heightArg, heightFin := wrapNumberPtr[C.int, int32](&height)
-	defer heightFin()
-
-	C.igGLFWWindow_GetDisplaySize(w.handle(), widthArg, heightArg)
-
-	return
-}
-
-func (w GLFWwindow) SetShouldClose(value bool) {
-	C.igGLFWWindow_SetShouldClose(w.handle(), C.int(castBool(value)))
-}
-
-//export glfwWindowLoopCallback
-func glfwWindowLoopCallback() {
-	if loopFunc != nil {
-		loopFunc()
+//export loopCallback
+func loopCallback() {
+	if currentBackend != nil {
+		if f := currentBackend.loopFunc(); f != nil {
+			f()
+		}
 	}
 }
 
-//export glfwBeforeRender
-func glfwBeforeRender() {
-	if beforeRender != nil {
-		beforeRender()
+//export beforeRender
+func beforeRender() {
+	if currentBackend != nil {
+		if f := currentBackend.beforeRenderHook(); f != nil {
+			f()
+		}
 	}
 }
 
-//export glfwAfterRender
-func glfwAfterRender() {
-	if afterRender != nil {
-		afterRender()
+//export afterRender
+func afterRender() {
+	if currentBackend != nil {
+		if f := currentBackend.afterRenderHook(); f != nil {
+			f()
+		}
 	}
 }
 
-//export glfwAfterCreateContext
-func glfwAfterCreateContext() {
-	if afterCreateContext != nil {
-		afterCreateContext()
+//export afterCreateContext
+func afterCreateContext() {
+	if currentBackend != nil {
+		if f := currentBackend.afterCreateHook(); f != nil {
+			f()
+		}
 	}
 }
 
-//export glfwBeforeDestoryContext
-func glfwBeforeDestoryContext() {
-	if beforeDestoryContext != nil {
-		beforeDestoryContext()
+//export beforeDestoryContext
+func beforeDestoryContext() {
+	if currentBackend != nil {
+		if f := currentBackend.beforeDestroyHook(); f != nil {
+			f()
+		}
 	}
 }
 
-func CreateGlfwWindow(title string, width, height int, flags GLFWWindowFlags) GLFWwindow {
-	titleArg, titleFin := wrapString(title)
-	defer titleFin()
+// Backend is a special interface that implements all methods required
+// to render imgui application.
+type Backend interface {
+	SetAfterCreateContextHook(func())
+	SetBeforeDestroyContextHook(func())
+	SetBeforeRenderHook(func())
+	SetAfterRenderHook(func())
 
-	window := GLFWwindow(unsafe.Pointer(C.igCreateGLFWWindow(titleArg, C.int(width), C.int(height), C.GLFWWindowFlags(flags), C.VoidCallback(C.glfwAfterCreateContext))))
-	if window == 0 {
-		panic("Failed to create GLFW window")
-	}
+	SetBgColor(color Vec4)
+	Run(func())
+	Refresh()
 
-	return window
+	DisplaySize() (width, height int32)
+	SetShouldClose(bool)
+
+	SetTargetFPS(fps uint)
+
+	CreateTexture(pixels unsafe.Pointer, width, Height int) TextureID
+	CreateTextureRgba(img *image.RGBA, width, height int) TextureID
+	DeleteTexture(id TextureID)
+
+	// TODO: flags needs generic layer
+	CreateWindow(title string, width, height int, flags GLFWWindowFlags)
+
+	// for C callbacks
+	// What happens here is a bit tricky:
+	// - user sets these callbacks via Set* methods of the backend
+	// - callbacks are stored in currentContext variable
+	// - functions below just returns that callbacks
+	// - on top of this file is a set of global function with names similar to these below
+	// - these functions are exported to C
+	// - backend implementation uses C references to Go callbacks to share them (again ;-) )
+	//   into backend code.
+	// As you can see this is all to convert Go callback int C callback
+	afterCreateHook() func()
+	beforeRenderHook() func()
+	loopFunc() func()
+	afterRenderHook() func()
+	beforeDestroyHook() func()
 }
 
-func SetTargetFPS(fps uint) {
-	C.igSetTargetFPS(C.uint(fps))
+func CreateBackend( /*TODO: backend type*/ ) Backend {
+	currentBackend = &GLFWBackend{}
+	return currentBackend
 }
 
-func Refresh() {
-	C.igRefresh()
-}
-
-func CreateTexture(pixels unsafe.Pointer, width, height int) TextureID {
-	return TextureID(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
-}
-
-func CreateTextureRgba(img *image.RGBA, width, height int) TextureID {
-	return TextureID(C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height)))
-}
-
-func DeleteTexture(id TextureID) {
-	C.igDeleteTexture(C.ImTextureID(id))
+func GetBackend() Backend {
+	return currentBackend
 }
