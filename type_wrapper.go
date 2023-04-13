@@ -2,7 +2,7 @@ package imgui
 
 // #include <memory.h>
 // #include <stdlib.h>
-// #include "cimgui_wrapper.h"
+// #include <stdbool.h>
 import "C"
 import "unsafe"
 
