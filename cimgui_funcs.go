@@ -7,7 +7,12 @@ package imgui
 // #include "cimgui_structs_accessor.h"
 // #include "cimgui_wrapper.h"
 import "C"
-import "unsafe"
+
+import (
+	"unsafe"
+
+	"github.com/AllenDang/cimgui-go/internal/wrapper"
+)
 
 func (self BitVector) InternalClear() {
 	C.ImBitVector_Clear(self.handle())
@@ -263,7 +268,7 @@ func (self DrawList) AddRectFilledMultiColor(p_min Vec2, p_max Vec2, col_upr_lef
 // text_end: NULL
 // wrap_width: 0.0f
 func (self DrawList) AddTextFontPtrV(font Font, font_size float32, pos Vec2, col uint32, text_begin string, wrap_width float32, cpu_fine_clip_rect *Vec4) {
-	text_beginArg, text_beginFin := WrapString(text_begin)
+	text_beginArg, text_beginFin := wrapper.WrapString(text_begin)
 	cpu_fine_clip_rectArg, cpu_fine_clip_rectFin := wrap[C.ImVec4, *Vec4](cpu_fine_clip_rect)
 	C.wrap_ImDrawList_AddText_FontPtrV(self.handle(), font.handle(), C.float(font_size), pos.toC(), C.ImU32(col), text_beginArg, C.float(wrap_width), cpu_fine_clip_rectArg)
 
@@ -274,7 +279,7 @@ func (self DrawList) AddTextFontPtrV(font Font, font_size float32, pos Vec2, col
 // AddTextVec2V parameter default value hint:
 // text_end: NULL
 func (self DrawList) AddTextVec2V(pos Vec2, col uint32, text_begin string) {
-	text_beginArg, text_beginFin := WrapString(text_begin)
+	text_beginArg, text_beginFin := wrapper.WrapString(text_begin)
 	C.wrap_ImDrawList_AddText_Vec2V(self.handle(), pos.toC(), C.ImU32(col), text_beginArg)
 
 	text_beginFin()
@@ -478,7 +483,7 @@ func (self FontAtlas) AddFontDefaultV(font_cfg FontConfig) Font {
 // font_cfg: NULL
 // glyph_ranges: NULL
 func (self FontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
-	filenameArg, filenameFin := WrapString(filename)
+	filenameArg, filenameFin := wrapper.WrapString(filename)
 
 	defer func() {
 		filenameFin()
@@ -490,7 +495,7 @@ func (self FontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, 
 // font_cfg: NULL
 // glyph_ranges: NULL
 func (self FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data_base85 string, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
-	compressed_font_data_base85Arg, compressed_font_data_base85Fin := WrapString(compressed_font_data_base85)
+	compressed_font_data_base85Arg, compressed_font_data_base85Fin := wrapper.WrapString(compressed_font_data_base85)
 
 	defer func() {
 		compressed_font_data_base85Fin()
@@ -650,7 +655,7 @@ func (self FontGlyphRangesBuilder) AddRanges(ranges *Wchar) {
 // AddTextV parameter default value hint:
 // text_end: NULL
 func (self FontGlyphRangesBuilder) AddTextV(text string) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_ImFontGlyphRangesBuilder_AddTextV(self.handle(), textArg)
 
 	textFin()
@@ -697,8 +702,8 @@ func (self Font) CalcTextSizeAV(size float32, max_width float32, wrap_width floa
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
-	text_beginArg, text_beginFin := WrapString(text_begin)
-	remainingArg, remainingFin := WrapStringList(remaining)
+	text_beginArg, text_beginFin := wrapper.WrapString(text_begin)
+	remainingArg, remainingFin := wrapper.WrapStringList(remaining)
 	C.wrap_ImFont_CalcTextSizeAV(pOutArg, self.handle(), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, remainingArg)
 
 	pOutFin()
@@ -709,7 +714,7 @@ func (self Font) CalcTextSizeAV(size float32, max_width float32, wrap_width floa
 }
 
 func (self Font) CalcWordWrapPositionA(scale float32, text string, wrap_width float32) string {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 
 	defer func() {
 		textFin()
@@ -761,7 +766,7 @@ func (self Font) RenderChar(draw_list DrawList, size float32, pos Vec2, col uint
 // cpu_fine_clip: false
 // wrap_width: 0.0f
 func (self Font) RenderTextV(draw_list DrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string, wrap_width float32, cpu_fine_clip bool) {
-	text_beginArg, text_beginFin := WrapString(text_begin)
+	text_beginArg, text_beginFin := wrapper.WrapString(text_begin)
 	C.wrap_ImFont_RenderTextV(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), clip_rect.toC(), text_beginArg, C.float(wrap_width), C.bool(cpu_fine_clip))
 
 	text_beginFin()
@@ -883,7 +888,7 @@ func (self IO) AddInputCharacter(c uint32) {
 }
 
 func (self IO) AddInputCharactersUTF8(str string) {
-	strArg, strFin := WrapString(str)
+	strArg, strFin := wrapper.WrapString(str)
 	C.ImGuiIO_AddInputCharactersUTF8(self.handle(), strArg)
 
 	strFin()
@@ -966,7 +971,7 @@ func NewInputTextCallbackData() InputTextCallbackData {
 // InsertCharsV parameter default value hint:
 // text_end: NULL
 func (self InputTextCallbackData) InsertCharsV(pos int32, text string) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_ImGuiInputTextCallbackData_InsertCharsV(self.handle(), C.int(pos), textArg)
 
 	textFin()
@@ -1203,7 +1208,7 @@ func NewPayload() Payload {
 }
 
 func (self Payload) IsDataType(typeArg string) bool {
-	typeArgArg, typeArgFin := WrapString(typeArg)
+	typeArgArg, typeArgFin := wrapper.WrapString(typeArg)
 
 	defer func() {
 		typeArgFin()
@@ -1426,8 +1431,8 @@ func NewTextBuffer() TextBuffer {
 // AppendV parameter default value hint:
 // str_end: NULL
 func (self TextBuffer) AppendV(str string, str_end string) {
-	strArg, strFin := WrapString(str)
-	str_endArg, str_endFin := WrapString(str_end)
+	strArg, strFin := wrapper.WrapString(str)
+	str_endArg, str_endFin := wrapper.WrapString(str_end)
 	C.ImGuiTextBuffer_append(self.handle(), strArg, str_endArg)
 
 	strFin()
@@ -1435,7 +1440,7 @@ func (self TextBuffer) AppendV(str string, str_end string) {
 }
 
 func (self TextBuffer) Appendf(fmt string) {
-	fmtArg, fmtFin := WrapString(fmt)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 	C.wrap_ImGuiTextBuffer_Appendf(self.handle(), fmtArg)
 
 	fmtFin()
@@ -1485,7 +1490,7 @@ func (self TextFilter) Clear() {
 // label: "Filter(inc,-exc)"
 // width: 0.0f
 func (self TextFilter) DrawV(label string, width float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -1496,7 +1501,7 @@ func (self TextFilter) DrawV(label string, width float32) bool {
 // NewTextFilter parameter default value hint:
 // default_filter: ""
 func NewTextFilter(default_filter string) TextFilter {
-	default_filterArg, default_filterFin := WrapString(default_filter)
+	default_filterArg, default_filterFin := wrapper.WrapString(default_filter)
 
 	defer func() {
 		default_filterFin()
@@ -1511,7 +1516,7 @@ func (self TextFilter) IsActive() bool {
 // PassFilterV parameter default value hint:
 // text_end: NULL
 func (self TextFilter) PassFilterV(text string) bool {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 
 	defer func() {
 		textFin()
@@ -1524,7 +1529,7 @@ func (self TextFilter) Destroy() {
 }
 
 func (self TextIndex) InternalAppend(base string, old_size int32, new_size int32) {
-	baseArg, baseFin := WrapString(base)
+	baseArg, baseFin := wrapper.WrapString(base)
 	C.ImGuiTextIndex_append(self.handle(), baseArg, C.int(old_size), C.int(new_size))
 
 	baseFin()
@@ -1535,7 +1540,7 @@ func (self TextIndex) InternalClear() {
 }
 
 func (self TextIndex) Internalgetlinebegin(base string, n int32) string {
-	baseArg, baseFin := WrapString(base)
+	baseArg, baseFin := wrapper.WrapString(base)
 
 	defer func() {
 		baseFin()
@@ -1544,7 +1549,7 @@ func (self TextIndex) Internalgetlinebegin(base string, n int32) string {
 }
 
 func (self TextIndex) Internalgetlineend(base string, n int32) string {
-	baseArg, baseFin := WrapString(base)
+	baseArg, baseFin := wrapper.WrapString(base)
 
 	defer func() {
 		baseFin()
@@ -1696,8 +1701,8 @@ func (self Window) InternalIDPtr(ptr unsafe.Pointer) ID {
 // InternalIDStrV parameter default value hint:
 // str_end: NULL
 func (self Window) InternalIDStrV(str string, str_end string) ID {
-	strArg, strFin := WrapString(str)
-	str_endArg, str_endFin := WrapString(str_end)
+	strArg, strFin := wrapper.WrapString(str)
+	str_endArg, str_endFin := wrapper.WrapString(str_end)
 
 	defer func() {
 		strFin()
@@ -1707,7 +1712,7 @@ func (self Window) InternalIDStrV(str string, str_end string) ID {
 }
 
 func InternalNewWindow(context Context, name string) Window {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 
 	defer func() {
 		nameFin()
@@ -2001,7 +2006,7 @@ func (self *Vec4) Destroy() {
 // AcceptDragDropPayloadV parameter default value hint:
 // flags: 0
 func AcceptDragDropPayloadV(typeArg string, flags DragDropFlags) Payload {
-	typeArgArg, typeArgFin := WrapString(typeArg)
+	typeArgArg, typeArgFin := wrapper.WrapString(typeArg)
 
 	defer func() {
 		typeArgFin()
@@ -2026,7 +2031,7 @@ func AlignTextToFramePadding() {
 }
 
 func ArrowButton(str_id string, dir Dir) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -2037,7 +2042,7 @@ func ArrowButton(str_id string, dir Dir) bool {
 // InternalArrowButtonExV parameter default value hint:
 // flags: 0
 func InternalArrowButtonExV(str_id string, dir Dir, size_arg Vec2, flags ButtonFlags) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -2049,8 +2054,8 @@ func InternalArrowButtonExV(str_id string, dir Dir, size_arg Vec2, flags ButtonF
 // flags: 0
 // p_open: NULL
 func BeginV(name string, p_open *bool, flags WindowFlags) bool {
-	nameArg, nameFin := WrapString(name)
-	p_openArg, p_openFin := WrapBool(p_open)
+	nameArg, nameFin := wrapper.WrapString(name)
+	p_openArg, p_openFin := wrapper.WrapBool(p_open)
 
 	defer func() {
 		nameFin()
@@ -2060,7 +2065,7 @@ func BeginV(name string, p_open *bool, flags WindowFlags) bool {
 }
 
 func InternalBeginChildEx(name string, id ID, size_arg Vec2, border bool, flags WindowFlags) bool {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 
 	defer func() {
 		nameFin()
@@ -2087,7 +2092,7 @@ func BeginChildIDV(id ID, size Vec2, border bool, flags WindowFlags) bool {
 // flags: 0
 // size: ImVec2(0,0)
 func BeginChildStrV(str_id string, size Vec2, border bool, flags WindowFlags) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -2098,7 +2103,7 @@ func BeginChildStrV(str_id string, size Vec2, border bool, flags WindowFlags) bo
 // InternalBeginColumnsV parameter default value hint:
 // flags: 0
 func InternalBeginColumnsV(str_id string, count int32, flags OldColumnFlags) {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 	C.igBeginColumns(str_idArg, C.int(count), C.ImGuiOldColumnFlags(flags))
 
 	str_idFin()
@@ -2107,8 +2112,8 @@ func InternalBeginColumnsV(str_id string, count int32, flags OldColumnFlags) {
 // BeginComboV parameter default value hint:
 // flags: 0
 func BeginComboV(label string, preview_value string, flags ComboFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	preview_valueArg, preview_valueFin := WrapString(preview_value)
+	labelArg, labelFin := wrapper.WrapString(label)
+	preview_valueArg, preview_valueFin := wrapper.WrapString(preview_value)
 
 	defer func() {
 		labelFin()
@@ -2140,7 +2145,7 @@ func InternalBeginDockableDragDropTarget(window Window) {
 }
 
 func InternalBeginDocked(window Window, p_open *bool) {
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := wrapper.WrapBool(p_open)
 	C.igBeginDocked(window.handle(), p_openArg)
 
 	p_openFin()
@@ -2167,7 +2172,7 @@ func BeginGroup() {
 // BeginListBoxV parameter default value hint:
 // size: ImVec2(0,0)
 func BeginListBoxV(label string, size Vec2) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -2182,7 +2187,7 @@ func BeginMainMenuBar() bool {
 // BeginMenuV parameter default value hint:
 // enabled: true
 func BeginMenuV(label string, enabled bool) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -2197,8 +2202,8 @@ func BeginMenuBar() bool {
 // InternalBeginMenuExV parameter default value hint:
 // enabled: true
 func InternalBeginMenuExV(label string, icon string, enabled bool) bool {
-	labelArg, labelFin := WrapString(label)
-	iconArg, iconFin := WrapString(icon)
+	labelArg, labelFin := wrapper.WrapString(label)
+	iconArg, iconFin := wrapper.WrapString(icon)
 
 	defer func() {
 		labelFin()
@@ -2210,7 +2215,7 @@ func InternalBeginMenuExV(label string, icon string, enabled bool) bool {
 // BeginPopupV parameter default value hint:
 // flags: 0
 func BeginPopupV(str_id string, flags WindowFlags) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -2222,7 +2227,7 @@ func BeginPopupV(str_id string, flags WindowFlags) bool {
 // popup_flags: 1
 // str_id: NULL
 func BeginPopupContextItemV(str_id string, popup_flags PopupFlags) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -2234,7 +2239,7 @@ func BeginPopupContextItemV(str_id string, popup_flags PopupFlags) bool {
 // popup_flags: 1
 // str_id: NULL
 func BeginPopupContextVoidV(str_id string, popup_flags PopupFlags) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -2246,7 +2251,7 @@ func BeginPopupContextVoidV(str_id string, popup_flags PopupFlags) bool {
 // popup_flags: 1
 // str_id: NULL
 func BeginPopupContextWindowV(str_id string, popup_flags PopupFlags) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -2262,8 +2267,8 @@ func InternalBeginPopupEx(id ID, extra_flags WindowFlags) bool {
 // flags: 0
 // p_open: NULL
 func BeginPopupModalV(name string, p_open *bool, flags WindowFlags) bool {
-	nameArg, nameFin := WrapString(name)
-	p_openArg, p_openFin := WrapBool(p_open)
+	nameArg, nameFin := wrapper.WrapString(name)
+	p_openArg, p_openFin := wrapper.WrapBool(p_open)
 
 	defer func() {
 		nameFin()
@@ -2275,7 +2280,7 @@ func BeginPopupModalV(name string, p_open *bool, flags WindowFlags) bool {
 // BeginTabBarV parameter default value hint:
 // flags: 0
 func BeginTabBarV(str_id string, flags TabBarFlags) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -2291,8 +2296,8 @@ func InternalBeginTabBarEx(tab_bar TabBar, bb Rect, flags TabBarFlags, dock_node
 // flags: 0
 // p_open: NULL
 func BeginTabItemV(label string, p_open *bool, flags TabItemFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	p_openArg, p_openFin := WrapBool(p_open)
+	labelArg, labelFin := wrapper.WrapString(label)
+	p_openArg, p_openFin := wrapper.WrapBool(p_open)
 
 	defer func() {
 		labelFin()
@@ -2306,7 +2311,7 @@ func BeginTabItemV(label string, p_open *bool, flags TabItemFlags) bool {
 // inner_width: 0.0f
 // outer_size: ImVec2(0.0f,0.0f)
 func BeginTableV(str_id string, column int32, flags TableFlags, outer_size Vec2, inner_width float32) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -2319,7 +2324,7 @@ func BeginTableV(str_id string, column int32, flags TableFlags, outer_size Vec2,
 // inner_width: 0.0f
 // outer_size: ImVec2(0,0)
 func InternalBeginTableExV(name string, id ID, columns_count int32, flags TableFlags, outer_size Vec2, inner_width float32) bool {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 
 	defer func() {
 		nameFin()
@@ -2336,7 +2341,7 @@ func InternalBeginTooltipEx(tooltip_flags TooltipFlags, extra_window_flags Windo
 }
 
 func InternalBeginViewportSideBar(name string, viewport Viewport, dir Dir, size float32, window_flags WindowFlags) bool {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 
 	defer func() {
 		nameFin()
@@ -2365,7 +2370,7 @@ func Bullet() {
 }
 
 func BulletText(fmt string) {
-	fmtArg, fmtFin := WrapString(fmt)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 	C.wrap_igBulletText(fmtArg)
 
 	fmtFin()
@@ -2374,7 +2379,7 @@ func BulletText(fmt string) {
 // ButtonV parameter default value hint:
 // size: ImVec2(0,0)
 func ButtonV(label string, size Vec2) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -2385,8 +2390,8 @@ func ButtonV(label string, size Vec2) bool {
 // InternalButtonBehaviorV parameter default value hint:
 // flags: 0
 func InternalButtonBehaviorV(bb Rect, id ID, out_hovered *bool, out_held *bool, flags ButtonFlags) bool {
-	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
-	out_heldArg, out_heldFin := WrapBool(out_held)
+	out_hoveredArg, out_hoveredFin := wrapper.WrapBool(out_hovered)
+	out_heldArg, out_heldFin := wrapper.WrapBool(out_held)
 
 	defer func() {
 		out_hoveredFin()
@@ -2399,7 +2404,7 @@ func InternalButtonBehaviorV(bb Rect, id ID, out_hovered *bool, out_held *bool, 
 // flags: 0
 // size_arg: ImVec2(0,0)
 func InternalButtonExV(label string, size_arg Vec2, flags ButtonFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -2434,7 +2439,7 @@ func CalcTextSizeV(text string, hide_text_after_double_hash bool, wrap_width flo
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_igCalcTextSizeV(pOutArg, textArg, C.bool(hide_text_after_double_hash), C.float(wrap_width))
 
 	pOutFin()
@@ -2467,8 +2472,8 @@ func InternalCallContextHooks(context Context, typeArg ContextHookType) {
 }
 
 func Checkbox(label string, v *bool) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapBool(v)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapBool(v)
 
 	defer func() {
 		labelFin()
@@ -2478,8 +2483,8 @@ func Checkbox(label string, v *bool) bool {
 }
 
 func CheckboxFlagsIntPtr(label string, flags *int32, flags_value int32) bool {
-	labelArg, labelFin := WrapString(label)
-	flagsArg, flagsFin := WrapNumberPtr[C.int, int32](flags)
+	labelArg, labelFin := wrapper.WrapString(label)
+	flagsArg, flagsFin := wrapper.WrapNumberPtr[C.int, int32](flags)
 
 	defer func() {
 		labelFin()
@@ -2489,8 +2494,8 @@ func CheckboxFlagsIntPtr(label string, flags *int32, flags_value int32) bool {
 }
 
 func CheckboxFlagsUintPtr(label string, flags *uint32, flags_value uint32) bool {
-	labelArg, labelFin := WrapString(label)
-	flagsArg, flagsFin := WrapNumberPtr[C.uint, uint32](flags)
+	labelArg, labelFin := wrapper.WrapString(label)
+	flagsArg, flagsFin := wrapper.WrapNumberPtr[C.uint, uint32](flags)
 
 	defer func() {
 		labelFin()
@@ -2512,7 +2517,7 @@ func InternalClearIniSettings() {
 }
 
 func InternalClearWindowSettings(name string) {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 	C.igClearWindowSettings(nameArg)
 
 	nameFin()
@@ -2545,8 +2550,8 @@ func InternalCollapseButton(id ID, pos Vec2, dock_node DockNode) bool {
 // CollapsingHeaderBoolPtrV parameter default value hint:
 // flags: 0
 func CollapsingHeaderBoolPtrV(label string, p_visible *bool, flags TreeNodeFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	p_visibleArg, p_visibleFin := WrapBool(p_visible)
+	labelArg, labelFin := wrapper.WrapString(label)
+	p_visibleArg, p_visibleFin := wrapper.WrapBool(p_visible)
 
 	defer func() {
 		labelFin()
@@ -2558,7 +2563,7 @@ func CollapsingHeaderBoolPtrV(label string, p_visible *bool, flags TreeNodeFlags
 // CollapsingHeaderTreeNodeFlagsV parameter default value hint:
 // flags: 0
 func CollapsingHeaderTreeNodeFlagsV(label string, flags TreeNodeFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -2570,7 +2575,7 @@ func CollapsingHeaderTreeNodeFlagsV(label string, flags TreeNodeFlags) bool {
 // flags: 0
 // size: ImVec2(0,0)
 func ColorButtonV(desc_id string, col Vec4, flags ColorEditFlags, size Vec2) bool {
-	desc_idArg, desc_idFin := WrapString(desc_id)
+	desc_idArg, desc_idFin := wrapper.WrapString(desc_id)
 
 	defer func() {
 		desc_idFin()
@@ -2583,9 +2588,9 @@ func ColorConvertFloat4ToU32(in Vec4) uint32 {
 }
 
 func ColorConvertHSVtoRGB(h float32, s float32, v float32, out_r *float32, out_g *float32, out_b *float32) {
-	out_rArg, out_rFin := WrapNumberPtr[C.float, float32](out_r)
-	out_gArg, out_gFin := WrapNumberPtr[C.float, float32](out_g)
-	out_bArg, out_bFin := WrapNumberPtr[C.float, float32](out_b)
+	out_rArg, out_rFin := wrapper.WrapNumberPtr[C.float, float32](out_r)
+	out_gArg, out_gFin := wrapper.WrapNumberPtr[C.float, float32](out_g)
+	out_bArg, out_bFin := wrapper.WrapNumberPtr[C.float, float32](out_b)
 	C.igColorConvertHSVtoRGB(C.float(h), C.float(s), C.float(v), out_rArg, out_gArg, out_bArg)
 
 	out_rFin()
@@ -2594,9 +2599,9 @@ func ColorConvertHSVtoRGB(h float32, s float32, v float32, out_r *float32, out_g
 }
 
 func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s *float32, out_v *float32) {
-	out_hArg, out_hFin := WrapNumberPtr[C.float, float32](out_h)
-	out_sArg, out_sFin := WrapNumberPtr[C.float, float32](out_s)
-	out_vArg, out_vFin := WrapNumberPtr[C.float, float32](out_v)
+	out_hArg, out_hFin := wrapper.WrapNumberPtr[C.float, float32](out_h)
+	out_sArg, out_sFin := wrapper.WrapNumberPtr[C.float, float32](out_s)
+	out_vArg, out_vFin := wrapper.WrapNumberPtr[C.float, float32](out_v)
 	C.igColorConvertRGBtoHSV(C.float(r), C.float(g), C.float(b), out_hArg, out_sArg, out_vArg)
 
 	out_hFin()
@@ -2618,7 +2623,7 @@ func ColorConvertU32ToFloat4(in uint32) Vec4 {
 // ColorEdit3V parameter default value hint:
 // flags: 0
 func ColorEdit3V(label string, col *[3]float32, flags ColorEditFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
@@ -2638,7 +2643,7 @@ func ColorEdit3V(label string, col *[3]float32, flags ColorEditFlags) bool {
 // ColorEdit4V parameter default value hint:
 // flags: 0
 func ColorEdit4V(label string, col *[4]float32, flags ColorEditFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
@@ -2662,7 +2667,7 @@ func InternalColorEditOptionsPopup(col []float32, flags ColorEditFlags) {
 // ColorPicker3V parameter default value hint:
 // flags: 0
 func ColorPicker3V(label string, col *[3]float32, flags ColorEditFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
@@ -2683,7 +2688,7 @@ func ColorPicker3V(label string, col *[3]float32, flags ColorEditFlags) bool {
 // flags: 0
 // ref_col: NULL
 func ColorPicker4V(label string, col *[4]float32, flags ColorEditFlags, ref_col []float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
@@ -2705,7 +2710,7 @@ func InternalColorPickerOptionsPopup(ref_col []float32, flags ColorEditFlags) {
 }
 
 func InternalColorTooltip(text string, col []float32, flags ColorEditFlags) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.igColorTooltip(textArg, (*C.float)(&(col[0])), C.ImGuiColorEditFlags(flags))
 
 	textFin()
@@ -2716,7 +2721,7 @@ func InternalColorTooltip(text string, col []float32, flags ColorEditFlags) {
 // count: 1
 // id: NULL
 func ColumnsV(count int32, id string, border bool) {
-	idArg, idFin := WrapString(id)
+	idArg, idFin := wrapper.WrapString(id)
 	C.igColumns(C.int(count), idArg, C.bool(border))
 
 	idFin()
@@ -2725,9 +2730,9 @@ func ColumnsV(count int32, id string, border bool) {
 // ComboStrV parameter default value hint:
 // popup_max_height_in_items: -1
 func ComboStrV(label string, current_item *int32, items_separated_by_zeros string, popup_max_height_in_items int32) bool {
-	labelArg, labelFin := WrapString(label)
-	current_itemArg, current_itemFin := WrapNumberPtr[C.int, int32](current_item)
-	items_separated_by_zerosArg, items_separated_by_zerosFin := WrapString(items_separated_by_zeros)
+	labelArg, labelFin := wrapper.WrapString(label)
+	current_itemArg, current_itemFin := wrapper.WrapNumberPtr[C.int, int32](current_item)
+	items_separated_by_zerosArg, items_separated_by_zerosFin := wrapper.WrapString(items_separated_by_zeros)
 
 	defer func() {
 		labelFin()
@@ -2740,9 +2745,9 @@ func ComboStrV(label string, current_item *int32, items_separated_by_zeros strin
 // ComboStrarrV parameter default value hint:
 // popup_max_height_in_items: -1
 func ComboStrarrV(label string, current_item *int32, items []string, items_count int32, popup_max_height_in_items int32) bool {
-	labelArg, labelFin := WrapString(label)
-	current_itemArg, current_itemFin := WrapNumberPtr[C.int, int32](current_item)
-	itemsArg, itemsFin := WrapStringList(items)
+	labelArg, labelFin := wrapper.WrapString(label)
+	current_itemArg, current_itemFin := wrapper.WrapNumberPtr[C.int, int32](current_item)
+	itemsArg, itemsFin := wrapper.WrapStringList(items)
 
 	defer func() {
 		labelFin()
@@ -2763,7 +2768,7 @@ func CreateContextV(shared_font_atlas FontAtlas) Context {
 }
 
 func InternalCreateNewWindowSettings(name string) WindowSettings {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 
 	defer func() {
 		nameFin()
@@ -2772,8 +2777,8 @@ func InternalCreateNewWindowSettings(name string) WindowSettings {
 }
 
 func InternalDataTypeApplyFromText(buf string, data_type DataType, p_data unsafe.Pointer, format string) bool {
-	bufArg, bufFin := WrapString(buf)
-	formatArg, formatFin := WrapString(format)
+	bufArg, bufFin := wrapper.WrapString(buf)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		bufFin()
@@ -2795,8 +2800,8 @@ func InternalDataTypeCompare(data_type DataType, arg_1 unsafe.Pointer, arg_2 uns
 }
 
 func InternalDataTypeFormatString(buf string, buf_size int32, data_type DataType, p_data unsafe.Pointer, format string) int {
-	bufArg, bufFin := WrapString(buf)
-	formatArg, formatFin := WrapString(format)
+	bufArg, bufFin := wrapper.WrapString(buf)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		bufFin()
@@ -2810,7 +2815,7 @@ func InternalDataTypeGetInfo(data_type DataType) DataTypeInfo {
 }
 
 func DebugCheckVersionAndDataLayout(version_str string, sz_io uint64, sz_style uint64, sz_vec2 uint64, sz_vec4 uint64, sz_drawvert uint64, sz_drawidx uint64) bool {
-	version_strArg, version_strFin := WrapString(version_str)
+	version_strArg, version_strFin := wrapper.WrapString(version_str)
 
 	defer func() {
 		version_strFin()
@@ -2841,7 +2846,7 @@ func InternalDebugLocateItemResolveWithLastItem() {
 }
 
 func InternalDebugLog(fmt string) {
-	fmtArg, fmtFin := WrapString(fmt)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 	C.wrap_igDebugLog(fmtArg)
 
 	fmtFin()
@@ -2852,7 +2857,7 @@ func InternalDebugNodeColumns(columns OldColumns) {
 }
 
 func InternalDebugNodeDockNode(node DockNode, label string) {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 	C.igDebugNodeDockNode(node.handle(), labelArg)
 
 	labelFin()
@@ -2863,7 +2868,7 @@ func InternalDebugNodeDrawCmdShowMeshAndBoundingBox(out_draw_list DrawList, draw
 }
 
 func InternalDebugNodeDrawList(window Window, viewport ViewportP, draw_list DrawList, label string) {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 	C.igDebugNodeDrawList(window.handle(), viewport.handle(), draw_list.handle(), labelArg)
 
 	labelFin()
@@ -2882,7 +2887,7 @@ func InternalDebugNodeInputTextState(state InputTextState) {
 }
 
 func InternalDebugNodeTabBar(tab_bar TabBar, label string) {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 	C.igDebugNodeTabBar(tab_bar.handle(), labelArg)
 
 	labelFin()
@@ -2901,7 +2906,7 @@ func InternalDebugNodeViewport(viewport ViewportP) {
 }
 
 func InternalDebugNodeWindow(window Window, label string) {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 	C.igDebugNodeWindow(window.handle(), labelArg)
 
 	labelFin()
@@ -2924,7 +2929,7 @@ func InternalDebugStartItemPicker() {
 }
 
 func DebugTextEncoding(text string) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.igDebugTextEncoding(textArg)
 
 	textFin()
@@ -2952,8 +2957,8 @@ func InternalDockBuilderAddNodeV(node_id ID, flags DockNodeFlags) ID {
 }
 
 func InternalDockBuilderCopyWindowSettings(src_name string, dst_name string) {
-	src_nameArg, src_nameFin := WrapString(src_name)
-	dst_nameArg, dst_nameFin := WrapString(dst_name)
+	src_nameArg, src_nameFin := wrapper.WrapString(src_name)
+	dst_nameArg, dst_nameFin := wrapper.WrapString(dst_name)
 	C.igDockBuilderCopyWindowSettings(src_nameArg, dst_nameArg)
 
 	src_nameFin()
@@ -2961,7 +2966,7 @@ func InternalDockBuilderCopyWindowSettings(src_name string, dst_name string) {
 }
 
 func InternalDockBuilderDockWindow(window_name string, node_id ID) {
-	window_nameArg, window_nameFin := WrapString(window_name)
+	window_nameArg, window_nameFin := wrapper.WrapString(window_name)
 	C.igDockBuilderDockWindow(window_nameArg, C.ImGuiID(node_id))
 
 	window_nameFin()
@@ -3113,7 +3118,7 @@ func DockSpaceOverViewportV(viewport Viewport, flags DockNodeFlags, window_class
 }
 
 func InternalDragBehavior(id ID, data_type DataType, p_v unsafe.Pointer, v_speed float32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		formatFin()
@@ -3128,9 +3133,9 @@ func InternalDragBehavior(id ID, data_type DataType, p_v unsafe.Pointer, v_speed
 // v_min: 0.0f
 // v_speed: 1.0f
 func DragFloatV(label string, v *float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.float, float32](v)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -3147,13 +3152,13 @@ func DragFloatV(label string, v *float32, v_speed float32, v_min float32, v_max 
 // v_min: 0.0f
 // v_speed: 1.0f
 func DragFloat2V(label string, v *[2]float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
 		vArg[i] = C.float(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -3174,13 +3179,13 @@ func DragFloat2V(label string, v *[2]float32, v_speed float32, v_min float32, v_
 // v_min: 0.0f
 // v_speed: 1.0f
 func DragFloat3V(label string, v *[3]float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
 		vArg[i] = C.float(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -3201,13 +3206,13 @@ func DragFloat3V(label string, v *[3]float32, v_speed float32, v_min float32, v_
 // v_min: 0.0f
 // v_speed: 1.0f
 func DragFloat4V(label string, v *[4]float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
 		vArg[i] = C.float(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -3229,11 +3234,11 @@ func DragFloat4V(label string, v *[4]float32, v_speed float32, v_min float32, v_
 // v_min: 0.0f
 // v_speed: 1.0f
 func DragFloatRange2V(label string, v_current_min *float32, v_current_max *float32, v_speed float32, v_min float32, v_max float32, format string, format_max string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	v_current_minArg, v_current_minFin := WrapNumberPtr[C.float, float32](v_current_min)
-	v_current_maxArg, v_current_maxFin := WrapNumberPtr[C.float, float32](v_current_max)
-	formatArg, formatFin := WrapString(format)
-	format_maxArg, format_maxFin := WrapString(format_max)
+	labelArg, labelFin := wrapper.WrapString(label)
+	v_current_minArg, v_current_minFin := wrapper.WrapNumberPtr[C.float, float32](v_current_min)
+	v_current_maxArg, v_current_maxFin := wrapper.WrapNumberPtr[C.float, float32](v_current_max)
+	formatArg, formatFin := wrapper.WrapString(format)
+	format_maxArg, format_maxFin := wrapper.WrapString(format_max)
 
 	defer func() {
 		labelFin()
@@ -3252,9 +3257,9 @@ func DragFloatRange2V(label string, v_current_min *float32, v_current_max *float
 // v_min: 0
 // v_speed: 1.0f
 func DragIntV(label string, v *int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.int, int32](v)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -3271,13 +3276,13 @@ func DragIntV(label string, v *int32, v_speed float32, v_min int32, v_max int32,
 // v_min: 0
 // v_speed: 1.0f
 func DragInt2V(label string, v *[2]int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
 		vArg[i] = C.int(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -3298,13 +3303,13 @@ func DragInt2V(label string, v *[2]int32, v_speed float32, v_min int32, v_max in
 // v_min: 0
 // v_speed: 1.0f
 func DragInt3V(label string, v *[3]int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
 		vArg[i] = C.int(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -3325,13 +3330,13 @@ func DragInt3V(label string, v *[3]int32, v_speed float32, v_min int32, v_max in
 // v_min: 0
 // v_speed: 1.0f
 func DragInt4V(label string, v *[4]int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
 		vArg[i] = C.int(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -3353,11 +3358,11 @@ func DragInt4V(label string, v *[4]int32, v_speed float32, v_min int32, v_max in
 // v_min: 0
 // v_speed: 1.0f
 func DragIntRange2V(label string, v_current_min *int32, v_current_max *int32, v_speed float32, v_min int32, v_max int32, format string, format_max string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	v_current_minArg, v_current_minFin := WrapNumberPtr[C.int, int32](v_current_min)
-	v_current_maxArg, v_current_maxFin := WrapNumberPtr[C.int, int32](v_current_max)
-	formatArg, formatFin := WrapString(format)
-	format_maxArg, format_maxFin := WrapString(format_max)
+	labelArg, labelFin := wrapper.WrapString(label)
+	v_current_minArg, v_current_minFin := wrapper.WrapNumberPtr[C.int, int32](v_current_min)
+	v_current_maxArg, v_current_maxFin := wrapper.WrapNumberPtr[C.int, int32](v_current_max)
+	formatArg, formatFin := wrapper.WrapString(format)
+	format_maxArg, format_maxFin := wrapper.WrapString(format_max)
 
 	defer func() {
 		labelFin()
@@ -3376,8 +3381,8 @@ func DragIntRange2V(label string, v_current_min *int32, v_current_max *int32, v_
 // p_min: NULL
 // v_speed: 1.0f
 func DragScalarV(label string, data_type DataType, p_data unsafe.Pointer, v_speed float32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -3393,8 +3398,8 @@ func DragScalarV(label string, data_type DataType, p_data unsafe.Pointer, v_spee
 // p_min: NULL
 // v_speed: 1.0f
 func DragScalarNV(label string, data_type DataType, p_data unsafe.Pointer, components int32, v_speed float32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -3517,7 +3522,7 @@ func InternalFindOrCreateColumns(window Window, id ID) OldColumns {
 // InternalFindRenderedTextEndV parameter default value hint:
 // text_end: NULL
 func InternalFindRenderedTextEndV(text string) string {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 
 	defer func() {
 		textFin()
@@ -3526,7 +3531,7 @@ func InternalFindRenderedTextEndV(text string) string {
 }
 
 func InternalFindSettingsHandler(type_name string) SettingsHandler {
-	type_nameArg, type_nameFin := WrapString(type_name)
+	type_nameArg, type_nameFin := wrapper.WrapString(type_name)
 
 	defer func() {
 		type_nameFin()
@@ -3547,7 +3552,7 @@ func InternalFindWindowByID(id ID) Window {
 }
 
 func InternalFindWindowByName(name string) Window {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 
 	defer func() {
 		nameFin()
@@ -3646,7 +3651,7 @@ func ColumnsCount() int {
 }
 
 func InternalColumnsID(str_id string, count int32) ID {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -3824,8 +3829,8 @@ func InternalIDWithSeedInt(n int32, seed ID) ID {
 }
 
 func InternalIDWithSeedStr(str_id_begin string, str_id_end string, seed ID) ID {
-	str_id_beginArg, str_id_beginFin := WrapString(str_id_begin)
-	str_id_endArg, str_id_endFin := WrapString(str_id_end)
+	str_id_beginArg, str_id_beginFin := wrapper.WrapString(str_id_begin)
+	str_id_endArg, str_id_endFin := wrapper.WrapString(str_id_end)
 
 	defer func() {
 		str_id_beginFin()
@@ -3839,7 +3844,7 @@ func IDPtr(ptr_id unsafe.Pointer) ID {
 }
 
 func IDStr(str_id string) ID {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -3848,8 +3853,8 @@ func IDStr(str_id string) ID {
 }
 
 func IDStrStr(str_id_begin string, str_id_end string) ID {
-	str_id_beginArg, str_id_beginFin := WrapString(str_id_begin)
-	str_id_endArg, str_id_endFin := WrapString(str_id_end)
+	str_id_beginArg, str_id_beginFin := wrapper.WrapString(str_id_begin)
+	str_id_endArg, str_id_endFin := wrapper.WrapString(str_id_end)
 
 	defer func() {
 		str_id_beginFin()
@@ -3912,7 +3917,7 @@ func InternalItemStatusFlags() ItemStatusFlags {
 }
 
 func InternalKeyChordName(key_chord KeyChord, out_buf string, out_buf_size int32) {
-	out_bufArg, out_bufFin := WrapString(out_buf)
+	out_bufArg, out_bufFin := wrapper.WrapString(out_buf)
 	C.igGetKeyChordName(C.ImGuiKeyChord(key_chord), out_bufArg, C.int(out_buf_size))
 
 	out_bufFin()
@@ -4083,8 +4088,8 @@ func TreeNodeToLabelSpacing() float32 {
 }
 
 func InternalTypematicRepeatRate(flags InputFlags, repeat_delay *float32, repeat_rate *float32) {
-	repeat_delayArg, repeat_delayFin := WrapNumberPtr[C.float, float32](repeat_delay)
-	repeat_rateArg, repeat_rateFin := WrapNumberPtr[C.float, float32](repeat_rate)
+	repeat_delayArg, repeat_delayFin := wrapper.WrapNumberPtr[C.float, float32](repeat_delay)
+	repeat_rateArg, repeat_rateFin := wrapper.WrapNumberPtr[C.float, float32](repeat_rate)
 	C.igGetTypematicRepeatRate(C.ImGuiInputFlags(flags), repeat_delayArg, repeat_rateArg)
 
 	repeat_delayFin()
@@ -4299,8 +4304,8 @@ func InternalImExponentialMovingAverage(avg float32, sample float32, n int32) fl
 // out_file_size: NULL
 // padding_bytes: 0
 func InternalImFileLoadToMemoryV(filename string, mode string, out_file_size *uint64, padding_bytes int32) unsafe.Pointer {
-	filenameArg, filenameFin := WrapString(filename)
-	modeArg, modeFin := WrapString(mode)
+	filenameArg, filenameFin := wrapper.WrapString(filename)
+	modeArg, modeFin := wrapper.WrapString(mode)
 
 	defer func() {
 		filenameFin()
@@ -4360,8 +4365,8 @@ func InternalImFontAtlasGetBuilderForStbTruetype() FontBuilderIO {
 }
 
 func InternalImFormatString(buf string, buf_size uint64, fmt string) int {
-	bufArg, bufFin := WrapString(buf)
-	fmtArg, fmtFin := WrapString(fmt)
+	bufArg, bufFin := wrapper.WrapString(buf)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 
 	defer func() {
 		bufFin()
@@ -4371,9 +4376,9 @@ func InternalImFormatString(buf string, buf_size uint64, fmt string) int {
 }
 
 func InternalImFormatStringToTempBuffer(out_buf []string, out_buf_end []string, fmt string) {
-	out_bufArg, out_bufFin := WrapStringList(out_buf)
-	out_buf_endArg, out_buf_endFin := WrapStringList(out_buf_end)
-	fmtArg, fmtFin := WrapString(fmt)
+	out_bufArg, out_bufFin := wrapper.WrapStringList(out_buf)
+	out_buf_endArg, out_buf_endFin := wrapper.WrapStringList(out_buf_end)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 	C.wrap_igImFormatStringToTempBuffer(out_bufArg, out_buf_endArg, fmtArg)
 
 	out_bufFin()
@@ -4395,7 +4400,7 @@ func InternalImHashDataV(data unsafe.Pointer, data_size uint64, seed ID) ID {
 // data_size: 0
 // seed: 0
 func InternalImHashStrV(data string, data_size uint64, seed ID) ID {
-	dataArg, dataFin := WrapString(data)
+	dataArg, dataFin := wrapper.WrapString(data)
 
 	defer func() {
 		dataFin()
@@ -4521,7 +4526,7 @@ func InternalImMul(lhs Vec2, rhs Vec2) Vec2 {
 }
 
 func InternalImParseFormatFindEnd(format string) string {
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		formatFin()
@@ -4530,7 +4535,7 @@ func InternalImParseFormatFindEnd(format string) string {
 }
 
 func InternalImParseFormatFindStart(format string) string {
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		formatFin()
@@ -4539,7 +4544,7 @@ func InternalImParseFormatFindStart(format string) string {
 }
 
 func InternalImParseFormatPrecision(format string, default_value int32) int {
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		formatFin()
@@ -4548,8 +4553,8 @@ func InternalImParseFormatPrecision(format string, default_value int32) int {
 }
 
 func InternalImParseFormatSanitizeForPrinting(fmt_in string, fmt_out string, fmt_out_size uint64) {
-	fmt_inArg, fmt_inFin := WrapString(fmt_in)
-	fmt_outArg, fmt_outFin := WrapString(fmt_out)
+	fmt_inArg, fmt_inFin := wrapper.WrapString(fmt_in)
+	fmt_outArg, fmt_outFin := wrapper.WrapString(fmt_out)
 	C.igImParseFormatSanitizeForPrinting(fmt_inArg, fmt_outArg, C.xulong(fmt_out_size))
 
 	fmt_inFin()
@@ -4557,8 +4562,8 @@ func InternalImParseFormatSanitizeForPrinting(fmt_in string, fmt_out string, fmt
 }
 
 func InternalImParseFormatSanitizeForScanning(fmt_in string, fmt_out string, fmt_out_size uint64) string {
-	fmt_inArg, fmt_inFin := WrapString(fmt_in)
-	fmt_outArg, fmt_outFin := WrapString(fmt_out)
+	fmt_inArg, fmt_inFin := wrapper.WrapString(fmt_in)
+	fmt_outArg, fmt_outFin := wrapper.WrapString(fmt_out)
 
 	defer func() {
 		fmt_inFin()
@@ -4568,8 +4573,8 @@ func InternalImParseFormatSanitizeForScanning(fmt_in string, fmt_out string, fmt
 }
 
 func InternalImParseFormatTrimDecorations(format string, buf string, buf_size uint64) string {
-	formatArg, formatFin := WrapString(format)
-	bufArg, bufFin := WrapString(buf)
+	formatArg, formatFin := wrapper.WrapString(format)
+	bufArg, bufFin := wrapper.WrapString(buf)
 
 	defer func() {
 		formatFin()
@@ -4618,7 +4623,7 @@ func InternalImSignDouble(x float64) float64 {
 }
 
 func InternalImStrSkipBlank(str string) string {
-	strArg, strFin := WrapString(str)
+	strArg, strFin := wrapper.WrapString(str)
 
 	defer func() {
 		strFin()
@@ -4627,7 +4632,7 @@ func InternalImStrSkipBlank(str string) string {
 }
 
 func InternalImStrTrimBlanks(str string) {
-	strArg, strFin := WrapString(str)
+	strArg, strFin := wrapper.WrapString(str)
 	C.igImStrTrimBlanks(strArg)
 
 	strFin()
@@ -4638,7 +4643,7 @@ func InternalImStrbolW(buf_mid_line *Wchar, buf_begin *Wchar) *Wchar {
 }
 
 func InternalImStrdup(str string) string {
-	strArg, strFin := WrapString(str)
+	strArg, strFin := wrapper.WrapString(str)
 
 	defer func() {
 		strFin()
@@ -4647,8 +4652,8 @@ func InternalImStrdup(str string) string {
 }
 
 func InternalImStrdupcpy(dst string, p_dst_size *uint64, str string) string {
-	dstArg, dstFin := WrapString(dst)
-	strArg, strFin := WrapString(str)
+	dstArg, dstFin := wrapper.WrapString(dst)
+	strArg, strFin := wrapper.WrapString(str)
 
 	defer func() {
 		dstFin()
@@ -4658,8 +4663,8 @@ func InternalImStrdupcpy(dst string, p_dst_size *uint64, str string) string {
 }
 
 func InternalImStreolRange(str string, str_end string) string {
-	strArg, strFin := WrapString(str)
-	str_endArg, str_endFin := WrapString(str_end)
+	strArg, strFin := wrapper.WrapString(str)
+	str_endArg, str_endFin := wrapper.WrapString(str_end)
 
 	defer func() {
 		strFin()
@@ -4669,8 +4674,8 @@ func InternalImStreolRange(str string, str_end string) string {
 }
 
 func InternalImStricmp(str1 string, str2 string) int {
-	str1Arg, str1Fin := WrapString(str1)
-	str2Arg, str2Fin := WrapString(str2)
+	str1Arg, str1Fin := wrapper.WrapString(str1)
+	str2Arg, str2Fin := wrapper.WrapString(str2)
 
 	defer func() {
 		str1Fin()
@@ -4680,10 +4685,10 @@ func InternalImStricmp(str1 string, str2 string) int {
 }
 
 func InternalImStristr(haystack string, haystack_end string, needle string, needle_end string) string {
-	haystackArg, haystackFin := WrapString(haystack)
-	haystack_endArg, haystack_endFin := WrapString(haystack_end)
-	needleArg, needleFin := WrapString(needle)
-	needle_endArg, needle_endFin := WrapString(needle_end)
+	haystackArg, haystackFin := wrapper.WrapString(haystack)
+	haystack_endArg, haystack_endFin := wrapper.WrapString(haystack_end)
+	needleArg, needleFin := wrapper.WrapString(needle)
+	needle_endArg, needle_endFin := wrapper.WrapString(needle_end)
 
 	defer func() {
 		haystackFin()
@@ -4699,8 +4704,8 @@ func InternalImStrlenW(str *Wchar) int {
 }
 
 func InternalImStrncpy(dst string, src string, count uint64) {
-	dstArg, dstFin := WrapString(dst)
-	srcArg, srcFin := WrapString(src)
+	dstArg, dstFin := wrapper.WrapString(dst)
+	srcArg, srcFin := wrapper.WrapString(src)
 	C.igImStrncpy(dstArg, srcArg, C.xulong(count))
 
 	dstFin()
@@ -4708,8 +4713,8 @@ func InternalImStrncpy(dst string, src string, count uint64) {
 }
 
 func InternalImStrnicmp(str1 string, str2 string, count uint64) int {
-	str1Arg, str1Fin := WrapString(str1)
-	str2Arg, str2Fin := WrapString(str2)
+	str1Arg, str1Fin := wrapper.WrapString(str1)
+	str2Arg, str2Fin := wrapper.WrapString(str2)
 
 	defer func() {
 		str1Fin()
@@ -4719,9 +4724,9 @@ func InternalImStrnicmp(str1 string, str2 string, count uint64) int {
 }
 
 func InternalImTextCharFromUtf8(out_char *uint32, in_text string, in_text_end string) int {
-	out_charArg, out_charFin := WrapNumberPtr[C.uint, uint32](out_char)
-	in_textArg, in_textFin := WrapString(in_text)
-	in_text_endArg, in_text_endFin := WrapString(in_text_end)
+	out_charArg, out_charFin := wrapper.WrapNumberPtr[C.uint, uint32](out_char)
+	in_textArg, in_textFin := wrapper.WrapString(in_text)
+	in_text_endArg, in_text_endFin := wrapper.WrapString(in_text_end)
 
 	defer func() {
 		out_charFin()
@@ -4732,8 +4737,8 @@ func InternalImTextCharFromUtf8(out_char *uint32, in_text string, in_text_end st
 }
 
 func InternalImTextCountCharsFromUtf8(in_text string, in_text_end string) int {
-	in_textArg, in_textFin := WrapString(in_text)
-	in_text_endArg, in_text_endFin := WrapString(in_text_end)
+	in_textArg, in_textFin := wrapper.WrapString(in_text)
+	in_text_endArg, in_text_endFin := wrapper.WrapString(in_text_end)
 
 	defer func() {
 		in_textFin()
@@ -4743,8 +4748,8 @@ func InternalImTextCountCharsFromUtf8(in_text string, in_text_end string) int {
 }
 
 func InternalImTextCountUtf8BytesFromChar(in_text string, in_text_end string) int {
-	in_textArg, in_textFin := WrapString(in_text)
-	in_text_endArg, in_text_endFin := WrapString(in_text_end)
+	in_textArg, in_textFin := wrapper.WrapString(in_text)
+	in_text_endArg, in_text_endFin := wrapper.WrapString(in_text_end)
 
 	defer func() {
 		in_textFin()
@@ -4758,7 +4763,7 @@ func InternalImTextCountUtf8BytesFromStr(in_text *Wchar, in_text_end *Wchar) int
 }
 
 func InternalImTextStrToUtf8(out_buf string, out_buf_size int32, in_text *Wchar, in_text_end *Wchar) int {
-	out_bufArg, out_bufFin := WrapString(out_buf)
+	out_bufArg, out_bufFin := wrapper.WrapString(out_buf)
 
 	defer func() {
 		out_bufFin()
@@ -4771,9 +4776,9 @@ func InternalImTriangleArea(a Vec2, b Vec2, c Vec2) float32 {
 }
 
 func InternalImTriangleBarycentricCoords(a Vec2, b Vec2, c Vec2, p Vec2, out_u *float32, out_v *float32, out_w *float32) {
-	out_uArg, out_uFin := WrapNumberPtr[C.float, float32](out_u)
-	out_vArg, out_vFin := WrapNumberPtr[C.float, float32](out_v)
-	out_wArg, out_wFin := WrapNumberPtr[C.float, float32](out_w)
+	out_uArg, out_uFin := wrapper.WrapNumberPtr[C.float, float32](out_u)
+	out_vArg, out_vFin := wrapper.WrapNumberPtr[C.float, float32](out_v)
+	out_wArg, out_wFin := wrapper.WrapNumberPtr[C.float, float32](out_w)
 	C.igImTriangleBarycentricCoords(a.toC(), b.toC(), c.toC(), p.toC(), out_uArg, out_vArg, out_wArg)
 
 	out_uFin()
@@ -4815,7 +4820,7 @@ func ImageV(user_texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, tint_col V
 // uv0: ImVec2(0,0)
 // uv1: ImVec2(1,1)
 func ImageButtonV(str_id string, user_texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, bg_col Vec4, tint_col Vec4) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -4845,9 +4850,9 @@ func InternalInitialize() {
 // step: 0.0
 // step_fast: 0.0
 func InputDoubleV(label string, v *float64, step float64, step_fast float64, format string, flags InputTextFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.double, float64](v)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.double, float64](v)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -4863,9 +4868,9 @@ func InputDoubleV(label string, v *float64, step float64, step_fast float64, for
 // step: 0.0f
 // step_fast: 0.0f
 func InputFloatV(label string, v *float32, step float32, step_fast float32, format string, flags InputTextFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.float, float32](v)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -4879,13 +4884,13 @@ func InputFloatV(label string, v *float32, step float32, step_fast float32, form
 // flags: 0
 // format: "%.3f"
 func InputFloat2V(label string, v *[2]float32, format string, flags InputTextFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
 		vArg[i] = C.float(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -4903,13 +4908,13 @@ func InputFloat2V(label string, v *[2]float32, format string, flags InputTextFla
 // flags: 0
 // format: "%.3f"
 func InputFloat3V(label string, v *[3]float32, format string, flags InputTextFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
 		vArg[i] = C.float(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -4927,13 +4932,13 @@ func InputFloat3V(label string, v *[3]float32, format string, flags InputTextFla
 // flags: 0
 // format: "%.3f"
 func InputFloat4V(label string, v *[4]float32, format string, flags InputTextFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
 		vArg[i] = C.float(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -4952,8 +4957,8 @@ func InputFloat4V(label string, v *[4]float32, format string, flags InputTextFla
 // step: 1
 // step_fast: 100
 func InputIntV(label string, v *int32, step int32, step_fast int32, flags InputTextFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.int, int32](v)
 
 	defer func() {
 		labelFin()
@@ -4965,7 +4970,7 @@ func InputIntV(label string, v *int32, step int32, step_fast int32, flags InputT
 // InputInt2V parameter default value hint:
 // flags: 0
 func InputInt2V(label string, v *[2]int32, flags InputTextFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
@@ -4985,7 +4990,7 @@ func InputInt2V(label string, v *[2]int32, flags InputTextFlags) bool {
 // InputInt3V parameter default value hint:
 // flags: 0
 func InputInt3V(label string, v *[3]int32, flags InputTextFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
@@ -5005,7 +5010,7 @@ func InputInt3V(label string, v *[3]int32, flags InputTextFlags) bool {
 // InputInt4V parameter default value hint:
 // flags: 0
 func InputInt4V(label string, v *[4]int32, flags InputTextFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
@@ -5028,8 +5033,8 @@ func InputInt4V(label string, v *[4]int32, flags InputTextFlags) bool {
 // p_step: NULL
 // p_step_fast: NULL
 func InputScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_step unsafe.Pointer, p_step_fast unsafe.Pointer, format string, flags InputTextFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -5044,8 +5049,8 @@ func InputScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_ste
 // p_step: NULL
 // p_step_fast: NULL
 func InputScalarNV(label string, data_type DataType, p_data unsafe.Pointer, components int32, p_step unsafe.Pointer, p_step_fast unsafe.Pointer, format string, flags InputTextFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -5057,7 +5062,7 @@ func InputScalarNV(label string, data_type DataType, p_data unsafe.Pointer, comp
 // InvisibleButtonV parameter default value hint:
 // flags: 0
 func InvisibleButtonV(str_id string, size Vec2, flags ButtonFlags) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -5275,7 +5280,7 @@ func InternalIsPopupOpenID(id ID, popup_flags PopupFlags) bool {
 // IsPopupOpenStrV parameter default value hint:
 // flags: 0
 func IsPopupOpenStrV(str_id string, flags PopupFlags) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -5352,8 +5357,8 @@ func InternalKeepAliveID(id ID) {
 }
 
 func LabelText(label string, fmt string) {
-	labelArg, labelFin := WrapString(label)
-	fmtArg, fmtFin := WrapString(fmt)
+	labelArg, labelFin := wrapper.WrapString(label)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 	C.wrap_igLabelText(labelArg, fmtArg)
 
 	labelFin()
@@ -5363,9 +5368,9 @@ func LabelText(label string, fmt string) {
 // ListBoxStrarrV parameter default value hint:
 // height_in_items: -1
 func ListBoxStrarrV(label string, current_item *int32, items []string, items_count int32, height_in_items int32) bool {
-	labelArg, labelFin := WrapString(label)
-	current_itemArg, current_itemFin := WrapNumberPtr[C.int, int32](current_item)
-	itemsArg, itemsFin := WrapStringList(items)
+	labelArg, labelFin := wrapper.WrapString(label)
+	current_itemArg, current_itemFin := wrapper.WrapNumberPtr[C.int, int32](current_item)
+	itemsArg, itemsFin := wrapper.WrapStringList(items)
 
 	defer func() {
 		labelFin()
@@ -5376,7 +5381,7 @@ func ListBoxStrarrV(label string, current_item *int32, items []string, items_cou
 }
 
 func LoadIniSettingsFromDisk(ini_filename string) {
-	ini_filenameArg, ini_filenameFin := WrapString(ini_filename)
+	ini_filenameArg, ini_filenameFin := wrapper.WrapString(ini_filename)
 	C.igLoadIniSettingsFromDisk(ini_filenameArg)
 
 	ini_filenameFin()
@@ -5385,7 +5390,7 @@ func LoadIniSettingsFromDisk(ini_filename string) {
 // LoadIniSettingsFromMemoryV parameter default value hint:
 // ini_size: 0
 func LoadIniSettingsFromMemoryV(ini_data string, ini_size uint64) {
-	ini_dataArg, ini_dataFin := WrapString(ini_data)
+	ini_dataArg, ini_dataFin := wrapper.WrapString(ini_data)
 	C.igLoadIniSettingsFromMemory(ini_dataArg, C.xulong(ini_size))
 
 	ini_dataFin()
@@ -5415,7 +5420,7 @@ func LogFinish() {
 // text_end: NULL
 func InternalLogRenderedTextV(ref_pos *Vec2, text string) {
 	ref_posArg, ref_posFin := wrap[C.ImVec2, *Vec2](ref_pos)
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_igLogRenderedTextV(ref_posArg, textArg)
 
 	ref_posFin()
@@ -5423,8 +5428,8 @@ func InternalLogRenderedTextV(ref_pos *Vec2, text string) {
 }
 
 func InternalLogSetNextTextDecoration(prefix string, suffix string) {
-	prefixArg, prefixFin := WrapString(prefix)
-	suffixArg, suffixFin := WrapString(suffix)
+	prefixArg, prefixFin := wrapper.WrapString(prefix)
+	suffixArg, suffixFin := wrapper.WrapString(suffix)
 	C.igLogSetNextTextDecoration(prefixArg, suffixArg)
 
 	prefixFin()
@@ -5432,7 +5437,7 @@ func InternalLogSetNextTextDecoration(prefix string, suffix string) {
 }
 
 func LogText(fmt string) {
-	fmtArg, fmtFin := WrapString(fmt)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 	C.wrap_igLogText(fmtArg)
 
 	fmtFin()
@@ -5454,7 +5459,7 @@ func LogToClipboardV(auto_open_depth int32) {
 // auto_open_depth: -1
 // filename: NULL
 func LogToFileV(auto_open_depth int32, filename string) {
-	filenameArg, filenameFin := WrapString(filename)
+	filenameArg, filenameFin := wrapper.WrapString(filename)
 	C.igLogToFile(C.int(auto_open_depth), filenameArg)
 
 	filenameFin()
@@ -5491,9 +5496,9 @@ func MemFree(ptr unsafe.Pointer) {
 // selected: false
 // shortcut: NULL
 func InternalMenuItemExV(label string, icon string, shortcut string, selected bool, enabled bool) bool {
-	labelArg, labelFin := WrapString(label)
-	iconArg, iconFin := WrapString(icon)
-	shortcutArg, shortcutFin := WrapString(shortcut)
+	labelArg, labelFin := wrapper.WrapString(label)
+	iconArg, iconFin := wrapper.WrapString(icon)
+	shortcutArg, shortcutFin := wrapper.WrapString(shortcut)
 
 	defer func() {
 		labelFin()
@@ -5508,8 +5513,8 @@ func InternalMenuItemExV(label string, icon string, shortcut string, selected bo
 // selected: false
 // shortcut: NULL
 func MenuItemBoolV(label string, shortcut string, selected bool, enabled bool) bool {
-	labelArg, labelFin := WrapString(label)
-	shortcutArg, shortcutFin := WrapString(shortcut)
+	labelArg, labelFin := wrapper.WrapString(label)
+	shortcutArg, shortcutFin := wrapper.WrapString(shortcut)
 
 	defer func() {
 		labelFin()
@@ -5521,9 +5526,9 @@ func MenuItemBoolV(label string, shortcut string, selected bool, enabled bool) b
 // MenuItemBoolPtrV parameter default value hint:
 // enabled: true
 func MenuItemBoolPtrV(label string, shortcut string, p_selected *bool, enabled bool) bool {
-	labelArg, labelFin := WrapString(label)
-	shortcutArg, shortcutFin := WrapString(shortcut)
-	p_selectedArg, p_selectedFin := WrapBool(p_selected)
+	labelArg, labelFin := wrapper.WrapString(label)
+	shortcutArg, shortcutFin := wrapper.WrapString(shortcut)
+	p_selectedArg, p_selectedFin := wrapper.WrapBool(p_selected)
 
 	defer func() {
 		labelFin()
@@ -5595,7 +5600,7 @@ func InternalOpenPopupExV(id ID, popup_flags PopupFlags) {
 // popup_flags: 1
 // str_id: NULL
 func OpenPopupOnItemClickV(str_id string, popup_flags PopupFlags) {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 	C.igOpenPopupOnItemClick(str_idArg, C.ImGuiPopupFlags(popup_flags))
 
 	str_idFin()
@@ -5610,7 +5615,7 @@ func OpenPopupIDV(id ID, popup_flags PopupFlags) {
 // OpenPopupStrV parameter default value hint:
 // popup_flags: 0
 func OpenPopupStrV(str_id string, popup_flags PopupFlags) {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 	C.igOpenPopup_Str(str_idArg, C.ImGuiPopupFlags(popup_flags))
 
 	str_idFin()
@@ -5624,8 +5629,8 @@ func OpenPopupStrV(str_id string, popup_flags PopupFlags) {
 // stride: sizeof(float)
 // values_offset: 0
 func PlotHistogramFloatPtrV(label string, values []float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2, stride int32) {
-	labelArg, labelFin := WrapString(label)
-	overlay_textArg, overlay_textFin := WrapString(overlay_text)
+	labelArg, labelFin := wrapper.WrapString(label)
+	overlay_textArg, overlay_textFin := wrapper.WrapString(overlay_text)
 	C.igPlotHistogram_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), graph_size.toC(), C.int(stride))
 
 	labelFin()
@@ -5640,8 +5645,8 @@ func PlotHistogramFloatPtrV(label string, values []float32, values_count int32, 
 // stride: sizeof(float)
 // values_offset: 0
 func PlotLinesFloatPtrV(label string, values []float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2, stride int32) {
-	labelArg, labelFin := WrapString(label)
-	overlay_textArg, overlay_textFin := WrapString(overlay_text)
+	labelArg, labelFin := wrapper.WrapString(label)
+	overlay_textArg, overlay_textFin := wrapper.WrapString(overlay_text)
 	C.igPlotLines_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), graph_size.toC(), C.int(stride))
 
 	labelFin()
@@ -5704,7 +5709,7 @@ func PopTextWrapPos() {
 // overlay: NULL
 // size_arg: ImVec2(-FLT_MIN,0)
 func ProgressBarV(fraction float32, size_arg Vec2, overlay string) {
-	overlayArg, overlayFin := WrapString(overlay)
+	overlayArg, overlayFin := wrapper.WrapString(overlay)
 	C.igProgressBar(C.float(fraction), size_arg.toC(), overlayArg)
 
 	overlayFin()
@@ -5743,15 +5748,15 @@ func PushIDPtr(ptr_id unsafe.Pointer) {
 }
 
 func PushIDStr(str_id string) {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 	C.igPushID_Str(str_idArg)
 
 	str_idFin()
 }
 
 func PushIDStrStr(str_id_begin string, str_id_end string) {
-	str_id_beginArg, str_id_beginFin := WrapString(str_id_begin)
-	str_id_endArg, str_id_endFin := WrapString(str_id_end)
+	str_id_beginArg, str_id_beginFin := wrapper.WrapString(str_id_begin)
+	str_id_endArg, str_id_endFin := wrapper.WrapString(str_id_end)
 	C.igPushID_StrStr(str_id_beginArg, str_id_endArg)
 
 	str_id_beginFin()
@@ -5801,7 +5806,7 @@ func PushTextWrapPosV(wrap_local_pos_x float32) {
 }
 
 func RadioButtonBool(label string, active bool) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -5810,8 +5815,8 @@ func RadioButtonBool(label string, active bool) bool {
 }
 
 func RadioButtonIntPtr(label string, v *int32, v_button int32) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.int, int32](v)
 
 	defer func() {
 		labelFin()
@@ -5825,7 +5830,7 @@ func InternalRemoveContextHook(context Context, hook_to_remove ID) {
 }
 
 func InternalRemoveSettingsHandler(type_name string) {
-	type_nameArg, type_nameFin := WrapString(type_name)
+	type_nameArg, type_nameFin := wrapper.WrapString(type_name)
 	C.igRemoveSettingsHandler(type_nameArg)
 
 	type_nameFin()
@@ -5910,14 +5915,14 @@ func InternalRenderRectFilledWithHole(draw_list DrawList, outer Rect, inner Rect
 // hide_text_after_hash: true
 // text_end: NULL
 func InternalRenderTextV(pos Vec2, text string, hide_text_after_hash bool) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_igRenderTextV(pos.toC(), textArg, C.bool(hide_text_after_hash))
 
 	textFin()
 }
 
 func InternalRenderTextEllipsis(draw_list DrawList, pos_min Vec2, pos_max Vec2, clip_max_x float32, ellipsis_max_x float32, text string, text_size_if_known *Vec2) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	text_size_if_knownArg, text_size_if_knownFin := wrap[C.ImVec2, *Vec2](text_size_if_known)
 	C.wrap_igRenderTextEllipsis(draw_list.handle(), pos_min.toC(), pos_max.toC(), C.float(clip_max_x), C.float(ellipsis_max_x), textArg, text_size_if_knownArg)
 
@@ -5926,7 +5931,7 @@ func InternalRenderTextEllipsis(draw_list DrawList, pos_min Vec2, pos_max Vec2, 
 }
 
 func InternalRenderTextWrapped(pos Vec2, text string, wrap_width float32) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_igRenderTextWrapped(pos.toC(), textArg, C.float(wrap_width))
 
 	textFin()
@@ -5946,7 +5951,7 @@ func SameLineV(offset_from_start_x float32, spacing float32) {
 }
 
 func SaveIniSettingsToDisk(ini_filename string) {
-	ini_filenameArg, ini_filenameFin := WrapString(ini_filename)
+	ini_filenameArg, ini_filenameFin := wrapper.WrapString(ini_filename)
 	C.igSaveIniSettingsToDisk(ini_filenameArg)
 
 	ini_filenameFin()
@@ -6000,7 +6005,7 @@ func InternalScrollbar(axis Axis) {
 // selected: false
 // size: ImVec2(0,0)
 func SelectableBoolV(label string, selected bool, flags SelectableFlags, size Vec2) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -6012,8 +6017,8 @@ func SelectableBoolV(label string, selected bool, flags SelectableFlags, size Ve
 // flags: 0
 // size: ImVec2(0,0)
 func SelectableBoolPtrV(label string, p_selected *bool, flags SelectableFlags, size Vec2) bool {
-	labelArg, labelFin := WrapString(label)
-	p_selectedArg, p_selectedFin := WrapBool(p_selected)
+	labelArg, labelFin := wrapper.WrapString(label)
+	p_selectedArg, p_selectedFin := wrapper.WrapBool(p_selected)
 
 	defer func() {
 		labelFin()
@@ -6031,15 +6036,15 @@ func InternalSeparatorEx(flags SeparatorFlags) {
 }
 
 func SeparatorText(label string) {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 	C.igSeparatorText(labelArg)
 
 	labelFin()
 }
 
 func InternalSeparatorTextEx(id ID, label string, label_end string, extra_width float32) {
-	labelArg, labelFin := WrapString(label)
-	label_endArg, label_endFin := WrapString(label_end)
+	labelArg, labelFin := wrapper.WrapString(label)
+	label_endArg, label_endFin := wrapper.WrapString(label_end)
 	C.igSeparatorTextEx(C.ImGuiID(id), labelArg, label_endArg, C.float(extra_width))
 
 	labelFin()
@@ -6055,7 +6060,7 @@ func InternalSetActiveIdUsingAllKeyboardKeys() {
 }
 
 func SetClipboardText(text string) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.igSetClipboardText(textArg)
 
 	textFin()
@@ -6104,7 +6109,7 @@ func SetCursorScreenPos(pos Vec2) {
 // SetDragDropPayloadV parameter default value hint:
 // cond: 0
 func SetDragDropPayloadV(typeArg string, data unsafe.Pointer, sz uint64, cond Cond) bool {
-	typeArgArg, typeArgFin := WrapString(typeArg)
+	typeArgArg, typeArgFin := wrapper.WrapString(typeArg)
 
 	defer func() {
 		typeArgFin()
@@ -6285,14 +6290,14 @@ func InternalSetShortcutRoutingV(key_chord KeyChord, owner_id ID, flags InputFla
 }
 
 func SetTabItemClosed(tab_or_docked_window_label string) {
-	tab_or_docked_window_labelArg, tab_or_docked_window_labelFin := WrapString(tab_or_docked_window_label)
+	tab_or_docked_window_labelArg, tab_or_docked_window_labelFin := wrapper.WrapString(tab_or_docked_window_label)
 	C.igSetTabItemClosed(tab_or_docked_window_labelArg)
 
 	tab_or_docked_window_labelFin()
 }
 
 func SetTooltip(fmt string) {
-	fmtArg, fmtFin := WrapString(fmt)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 	C.wrap_igSetTooltip(fmtArg)
 
 	fmtFin()
@@ -6311,7 +6316,7 @@ func SetWindowCollapsedBoolV(collapsed bool, cond Cond) {
 // SetWindowCollapsedStrV parameter default value hint:
 // cond: 0
 func SetWindowCollapsedStrV(name string, collapsed bool, cond Cond) {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 	C.igSetWindowCollapsed_Str(nameArg, C.bool(collapsed), C.ImGuiCond(cond))
 
 	nameFin()
@@ -6332,7 +6337,7 @@ func SetWindowFocusNil() {
 }
 
 func SetWindowFocusStr(name string) {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 	C.igSetWindowFocus_Str(nameArg)
 
 	nameFin()
@@ -6353,7 +6358,7 @@ func InternalSetWindowHitTestHole(window Window, pos Vec2, size Vec2) {
 // SetWindowPosStrV parameter default value hint:
 // cond: 0
 func SetWindowPosStrV(name string, pos Vec2, cond Cond) {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 	C.igSetWindowPos_Str(nameArg, pos.toC(), C.ImGuiCond(cond))
 
 	nameFin()
@@ -6374,7 +6379,7 @@ func InternalSetWindowPosWindowPtrV(window Window, pos Vec2, cond Cond) {
 // SetWindowSizeStrV parameter default value hint:
 // cond: 0
 func SetWindowSizeStrV(name string, size Vec2, cond Cond) {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 	C.igSetWindowSize_Str(nameArg, size.toC(), C.ImGuiCond(cond))
 
 	nameFin()
@@ -6414,7 +6419,7 @@ func InternalShortcutV(key_chord KeyChord, owner_id ID, flags InputFlags) bool {
 // ShowAboutWindowV parameter default value hint:
 // p_open: NULL
 func ShowAboutWindowV(p_open *bool) {
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := wrapper.WrapBool(p_open)
 	C.igShowAboutWindow(p_openArg)
 
 	p_openFin()
@@ -6423,7 +6428,7 @@ func ShowAboutWindowV(p_open *bool) {
 // ShowDebugLogWindowV parameter default value hint:
 // p_open: NULL
 func ShowDebugLogWindowV(p_open *bool) {
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := wrapper.WrapBool(p_open)
 	C.igShowDebugLogWindow(p_openArg)
 
 	p_openFin()
@@ -6432,7 +6437,7 @@ func ShowDebugLogWindowV(p_open *bool) {
 // ShowDemoWindowV parameter default value hint:
 // p_open: NULL
 func ShowDemoWindowV(p_open *bool) {
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := wrapper.WrapBool(p_open)
 	C.igShowDemoWindow(p_openArg)
 
 	p_openFin()
@@ -6443,7 +6448,7 @@ func InternalShowFontAtlas(atlas FontAtlas) {
 }
 
 func ShowFontSelector(label string) {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 	C.igShowFontSelector(labelArg)
 
 	labelFin()
@@ -6452,7 +6457,7 @@ func ShowFontSelector(label string) {
 // ShowMetricsWindowV parameter default value hint:
 // p_open: NULL
 func ShowMetricsWindowV(p_open *bool) {
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := wrapper.WrapBool(p_open)
 	C.igShowMetricsWindow(p_openArg)
 
 	p_openFin()
@@ -6461,7 +6466,7 @@ func ShowMetricsWindowV(p_open *bool) {
 // ShowStackToolWindowV parameter default value hint:
 // p_open: NULL
 func ShowStackToolWindowV(p_open *bool) {
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := wrapper.WrapBool(p_open)
 	C.igShowStackToolWindow(p_openArg)
 
 	p_openFin()
@@ -6474,7 +6479,7 @@ func ShowStyleEditorV(ref Style) {
 }
 
 func ShowStyleSelector(label string) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -6500,9 +6505,9 @@ func InternalShutdown() {
 // v_degrees_max: +360.0f
 // v_degrees_min: -360.0f
 func SliderAngleV(label string, v_rad *float32, v_degrees_min float32, v_degrees_max float32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	v_radArg, v_radFin := WrapNumberPtr[C.float, float32](v_rad)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	v_radArg, v_radFin := wrapper.WrapNumberPtr[C.float, float32](v_rad)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -6513,7 +6518,7 @@ func SliderAngleV(label string, v_rad *float32, v_degrees_min float32, v_degrees
 }
 
 func InternalSliderBehavior(bb Rect, id ID, data_type DataType, p_v unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags, out_grab_bb *Rect) bool {
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 	out_grab_bbArg, out_grab_bbFin := wrap[C.ImRect, *Rect](out_grab_bb)
 
 	defer func() {
@@ -6527,9 +6532,9 @@ func InternalSliderBehavior(bb Rect, id ID, data_type DataType, p_v unsafe.Point
 // flags: 0
 // format: "%.3f"
 func SliderFloatV(label string, v *float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.float, float32](v)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -6543,13 +6548,13 @@ func SliderFloatV(label string, v *float32, v_min float32, v_max float32, format
 // flags: 0
 // format: "%.3f"
 func SliderFloat2V(label string, v *[2]float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
 		vArg[i] = C.float(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -6567,13 +6572,13 @@ func SliderFloat2V(label string, v *[2]float32, v_min float32, v_max float32, fo
 // flags: 0
 // format: "%.3f"
 func SliderFloat3V(label string, v *[3]float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
 		vArg[i] = C.float(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -6591,13 +6596,13 @@ func SliderFloat3V(label string, v *[3]float32, v_min float32, v_max float32, fo
 // flags: 0
 // format: "%.3f"
 func SliderFloat4V(label string, v *[4]float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
 		vArg[i] = C.float(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -6615,9 +6620,9 @@ func SliderFloat4V(label string, v *[4]float32, v_min float32, v_max float32, fo
 // flags: 0
 // format: "%d"
 func SliderIntV(label string, v *int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.int, int32](v)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -6631,13 +6636,13 @@ func SliderIntV(label string, v *int32, v_min int32, v_max int32, format string,
 // flags: 0
 // format: "%d"
 func SliderInt2V(label string, v *[2]int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
 		vArg[i] = C.int(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -6655,13 +6660,13 @@ func SliderInt2V(label string, v *[2]int32, v_min int32, v_max int32, format str
 // flags: 0
 // format: "%d"
 func SliderInt3V(label string, v *[3]int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
 		vArg[i] = C.int(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -6679,13 +6684,13 @@ func SliderInt3V(label string, v *[3]int32, v_min int32, v_max int32, format str
 // flags: 0
 // format: "%d"
 func SliderInt4V(label string, v *[4]int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
 		vArg[i] = C.int(vV)
 	}
-	formatArg, formatFin := WrapString(format)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -6703,8 +6708,8 @@ func SliderInt4V(label string, v *[4]int32, v_min int32, v_max int32, format str
 // flags: 0
 // format: NULL
 func SliderScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -6717,8 +6722,8 @@ func SliderScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_mi
 // flags: 0
 // format: NULL
 func SliderScalarNV(label string, data_type DataType, p_data unsafe.Pointer, components int32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -6728,7 +6733,7 @@ func SliderScalarNV(label string, data_type DataType, p_data unsafe.Pointer, com
 }
 
 func SmallButton(label string) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -6745,8 +6750,8 @@ func Spacing() {
 // hover_extend: 0.0f
 // hover_visibility_delay: 0.0f
 func InternalSplitterBehaviorV(bb Rect, id ID, axis Axis, size1 *float32, size2 *float32, min_size1 float32, min_size2 float32, hover_extend float32, hover_visibility_delay float32, bg_col uint32) bool {
-	size1Arg, size1Fin := WrapNumberPtr[C.float, float32](size1)
-	size2Arg, size2Fin := WrapNumberPtr[C.float, float32](size2)
+	size1Arg, size1Fin := wrapper.WrapNumberPtr[C.float, float32](size1)
+	size2Arg, size2Fin := wrapper.WrapNumberPtr[C.float, float32](size2)
 
 	defer func() {
 		size1Fin()
@@ -6840,7 +6845,7 @@ func InternalTabItemBackground(draw_list DrawList, bb Rect, flags TabItemFlags, 
 // TabItemButtonV parameter default value hint:
 // flags: 0
 func TabItemButtonV(label string, flags TabItemFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -6852,7 +6857,7 @@ func InternalTabItemCalcSizeStr(label string, has_close_button_or_unsaved_marker
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 	C.igTabItemCalcSize_Str(pOutArg, labelArg, C.bool(has_close_button_or_unsaved_marker))
 
 	pOutFin()
@@ -6873,8 +6878,8 @@ func InternalTabItemCalcSizeWindowPtr(window Window) Vec2 {
 }
 
 func InternalTabItemEx(tab_bar TabBar, label string, p_open *bool, flags TabItemFlags, docked_window Window) bool {
-	labelArg, labelFin := WrapString(label)
-	p_openArg, p_openFin := WrapBool(p_open)
+	labelArg, labelFin := wrapper.WrapString(label)
+	p_openArg, p_openFin := wrapper.WrapBool(p_open)
 
 	defer func() {
 		labelFin()
@@ -6884,9 +6889,9 @@ func InternalTabItemEx(tab_bar TabBar, label string, p_open *bool, flags TabItem
 }
 
 func InternalTabItemLabelAndCloseButton(draw_list DrawList, bb Rect, flags TabItemFlags, frame_padding Vec2, label string, tab_id ID, close_button_id ID, is_contents_visible bool, out_just_closed *bool, out_text_clipped *bool) {
-	labelArg, labelFin := WrapString(label)
-	out_just_closedArg, out_just_closedFin := WrapBool(out_just_closed)
-	out_text_clippedArg, out_text_clippedFin := WrapBool(out_text_clipped)
+	labelArg, labelFin := wrapper.WrapString(label)
+	out_just_closedArg, out_just_closedFin := wrapper.WrapBool(out_just_closed)
+	out_text_clippedArg, out_text_clippedFin := wrapper.WrapBool(out_text_clipped)
 	C.igTabItemLabelAndCloseButton(draw_list.handle(), bb.toC(), C.ImGuiTabItemFlags(flags), frame_padding.toC(), labelArg, C.ImGuiID(tab_id), C.ImGuiID(close_button_id), C.bool(is_contents_visible), out_just_closedArg, out_text_clippedArg)
 
 	labelFin()
@@ -7032,7 +7037,7 @@ func TableGetSortSpecs() TableSortSpecs {
 }
 
 func TableHeader(label string) {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 	C.igTableHeader(labelArg)
 
 	labelFin()
@@ -7134,7 +7139,7 @@ func InternalTableSettingsFindByID(id ID) TableSettings {
 // init_width_or_weight: 0.0f
 // user_id: 0
 func TableSetupColumnV(label string, flags TableColumnFlags, init_width_or_weight float32, user_id ID) {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 	C.igTableSetupColumn(labelArg, C.ImGuiTableColumnFlags(flags), C.float(init_width_or_weight), C.ImGuiID(user_id))
 
 	labelFin()
@@ -7176,8 +7181,8 @@ func InternalTempInputIsActive(id ID) bool {
 // p_clamp_max: NULL
 // p_clamp_min: NULL
 func InternalTempInputScalarV(bb Rect, id ID, label string, data_type DataType, p_data unsafe.Pointer, format string, p_clamp_min unsafe.Pointer, p_clamp_max unsafe.Pointer) bool {
-	labelArg, labelFin := WrapString(label)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -7187,8 +7192,8 @@ func InternalTempInputScalarV(bb Rect, id ID, label string, data_type DataType, 
 }
 
 func InternalTempInputText(bb Rect, id ID, label string, buf string, buf_size int32, flags InputTextFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	bufArg, bufFin := WrapString(buf)
+	labelArg, labelFin := wrapper.WrapString(label)
+	bufArg, bufFin := wrapper.WrapString(buf)
 
 	defer func() {
 		labelFin()
@@ -7206,21 +7211,21 @@ func InternalTestShortcutRouting(key_chord KeyChord, owner_id ID) bool {
 }
 
 func Text(fmt string) {
-	fmtArg, fmtFin := WrapString(fmt)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 	C.wrap_igText(fmtArg)
 
 	fmtFin()
 }
 
 func TextColored(col Vec4, fmt string) {
-	fmtArg, fmtFin := WrapString(fmt)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 	C.wrap_igTextColored(col.toC(), fmtArg)
 
 	fmtFin()
 }
 
 func TextDisabled(fmt string) {
-	fmtArg, fmtFin := WrapString(fmt)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 	C.wrap_igTextDisabled(fmtArg)
 
 	fmtFin()
@@ -7230,7 +7235,7 @@ func TextDisabled(fmt string) {
 // flags: 0
 // text_end: NULL
 func InternalTextExV(text string, flags TextFlags) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_igTextExV(textArg, C.ImGuiTextFlags(flags))
 
 	textFin()
@@ -7239,14 +7244,14 @@ func InternalTextExV(text string, flags TextFlags) {
 // TextUnformattedV parameter default value hint:
 // text_end: NULL
 func TextUnformattedV(text string) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_igTextUnformattedV(textArg)
 
 	textFin()
 }
 
 func TextWrapped(fmt string) {
-	fmtArg, fmtFin := WrapString(fmt)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 	C.wrap_igTextWrapped(fmtArg)
 
 	fmtFin()
@@ -7259,8 +7264,8 @@ func InternalTranslateWindowsInViewport(viewport ViewportP, old_pos Vec2, new_po
 // InternalTreeNodeBehaviorV parameter default value hint:
 // label_end: NULL
 func InternalTreeNodeBehaviorV(id ID, flags TreeNodeFlags, label string, label_end string) bool {
-	labelArg, labelFin := WrapString(label)
-	label_endArg, label_endFin := WrapString(label_end)
+	labelArg, labelFin := wrapper.WrapString(label)
+	label_endArg, label_endFin := wrapper.WrapString(label_end)
 
 	defer func() {
 		labelFin()
@@ -7270,7 +7275,7 @@ func InternalTreeNodeBehaviorV(id ID, flags TreeNodeFlags, label string, label_e
 }
 
 func TreeNodeExPtr(ptr_id unsafe.Pointer, flags TreeNodeFlags, fmt string) bool {
-	fmtArg, fmtFin := WrapString(fmt)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 
 	defer func() {
 		fmtFin()
@@ -7281,7 +7286,7 @@ func TreeNodeExPtr(ptr_id unsafe.Pointer, flags TreeNodeFlags, fmt string) bool 
 // TreeNodeExStrV parameter default value hint:
 // flags: 0
 func TreeNodeExStrV(label string, flags TreeNodeFlags) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -7290,8 +7295,8 @@ func TreeNodeExStrV(label string, flags TreeNodeFlags) bool {
 }
 
 func TreeNodeExStrStr(str_id string, flags TreeNodeFlags, fmt string) bool {
-	str_idArg, str_idFin := WrapString(str_id)
-	fmtArg, fmtFin := WrapString(fmt)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 
 	defer func() {
 		str_idFin()
@@ -7309,7 +7314,7 @@ func InternalTreeNodeUpdateNextOpen(id ID, flags TreeNodeFlags) bool {
 }
 
 func TreeNodePtr(ptr_id unsafe.Pointer, fmt string) bool {
-	fmtArg, fmtFin := WrapString(fmt)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 
 	defer func() {
 		fmtFin()
@@ -7318,7 +7323,7 @@ func TreeNodePtr(ptr_id unsafe.Pointer, fmt string) bool {
 }
 
 func TreeNodeStr(label string) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -7327,8 +7332,8 @@ func TreeNodeStr(label string) bool {
 }
 
 func TreeNodeStrStr(str_id string, fmt string) bool {
-	str_idArg, str_idFin := WrapString(str_id)
-	fmtArg, fmtFin := WrapString(fmt)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
+	fmtArg, fmtFin := wrapper.WrapString(fmt)
 
 	defer func() {
 		str_idFin()
@@ -7350,7 +7355,7 @@ func TreePushPtr(ptr_id unsafe.Pointer) {
 }
 
 func TreePushStr(str_id string) {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 	C.igTreePush_Str(str_idArg)
 
 	str_idFin()
@@ -7390,9 +7395,9 @@ func InternalUpdateWindowParentAndRootLinks(window Window, flags WindowFlags, pa
 // flags: 0
 // format: "%.3f"
 func VSliderFloatV(label string, size Vec2, v *float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.float, float32](v)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -7406,9 +7411,9 @@ func VSliderFloatV(label string, size Vec2, v *float32, v_min float32, v_max flo
 // flags: 0
 // format: "%d"
 func VSliderIntV(label string, size Vec2, v *int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.int, int32](v)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -7422,8 +7427,8 @@ func VSliderIntV(label string, size Vec2, v *int32, v_min int32, v_max int32, fo
 // flags: 0
 // format: NULL
 func VSliderScalarV(label string, size Vec2, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -7433,7 +7438,7 @@ func VSliderScalarV(label string, size Vec2, data_type DataType, p_data unsafe.P
 }
 
 func ValueBool(prefix string, b bool) {
-	prefixArg, prefixFin := WrapString(prefix)
+	prefixArg, prefixFin := wrapper.WrapString(prefix)
 	C.igValue_Bool(prefixArg, C.bool(b))
 
 	prefixFin()
@@ -7442,8 +7447,8 @@ func ValueBool(prefix string, b bool) {
 // ValueFloatV parameter default value hint:
 // float_format: NULL
 func ValueFloatV(prefix string, v float32, float_format string) {
-	prefixArg, prefixFin := WrapString(prefix)
-	float_formatArg, float_formatFin := WrapString(float_format)
+	prefixArg, prefixFin := wrapper.WrapString(prefix)
+	float_formatArg, float_formatFin := wrapper.WrapString(float_format)
 	C.igValue_Float(prefixArg, C.float(v), float_formatArg)
 
 	prefixFin()
@@ -7451,14 +7456,14 @@ func ValueFloatV(prefix string, v float32, float_format string) {
 }
 
 func ValueInt(prefix string, v int32) {
-	prefixArg, prefixFin := WrapString(prefix)
+	prefixArg, prefixFin := wrapper.WrapString(prefix)
 	C.igValue_Int(prefixArg, C.int(v))
 
 	prefixFin()
 }
 
 func ValueUint(prefix string, v uint32) {
-	prefixArg, prefixFin := WrapString(prefix)
+	prefixArg, prefixFin := wrapper.WrapString(prefix)
 	C.igValue_Uint(prefixArg, C.uint(v))
 
 	prefixFin()
@@ -7553,14 +7558,14 @@ func (self DrawList) AddRectFilled(p_min Vec2, p_max Vec2, col uint32) {
 }
 
 func (self DrawList) AddTextFontPtr(font Font, font_size float32, pos Vec2, col uint32, text_begin string) {
-	text_beginArg, text_beginFin := WrapString(text_begin)
+	text_beginArg, text_beginFin := wrapper.WrapString(text_begin)
 	C.wrap_ImDrawList_AddText_FontPtr(self.handle(), font.handle(), C.float(font_size), pos.toC(), C.ImU32(col), text_beginArg)
 
 	text_beginFin()
 }
 
 func (self DrawList) AddTextVec2(pos Vec2, col uint32, text_begin string) {
-	text_beginArg, text_beginFin := WrapString(text_begin)
+	text_beginArg, text_beginFin := wrapper.WrapString(text_begin)
 	C.wrap_ImDrawList_AddText_Vec2(self.handle(), pos.toC(), C.ImU32(col), text_beginArg)
 
 	text_beginFin()
@@ -7603,7 +7608,7 @@ func (self FontAtlas) AddFontDefault() Font {
 }
 
 func (self FontAtlas) AddFontFromFileTTF(filename string, size_pixels float32) Font {
-	filenameArg, filenameFin := WrapString(filename)
+	filenameArg, filenameFin := wrapper.WrapString(filename)
 
 	defer func() {
 		filenameFin()
@@ -7612,7 +7617,7 @@ func (self FontAtlas) AddFontFromFileTTF(filename string, size_pixels float32) F
 }
 
 func (self FontAtlas) AddFontFromMemoryCompressedBase85TTF(compressed_font_data_base85 string, size_pixels float32) Font {
-	compressed_font_data_base85Arg, compressed_font_data_base85Fin := WrapString(compressed_font_data_base85)
+	compressed_font_data_base85Arg, compressed_font_data_base85Fin := wrapper.WrapString(compressed_font_data_base85)
 
 	defer func() {
 		compressed_font_data_base85Fin()
@@ -7629,7 +7634,7 @@ func (self FontAtlas) AddFontFromMemoryTTF(font_data unsafe.Pointer, font_size i
 }
 
 func (self FontGlyphRangesBuilder) AddText(text string) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_ImFontGlyphRangesBuilder_AddText(self.handle(), textArg)
 
 	textFin()
@@ -7643,7 +7648,7 @@ func (self Font) CalcTextSizeA(size float32, max_width float32, wrap_width float
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
-	text_beginArg, text_beginFin := WrapString(text_begin)
+	text_beginArg, text_beginFin := wrapper.WrapString(text_begin)
 	C.wrap_ImFont_CalcTextSizeA(pOutArg, self.handle(), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg)
 
 	pOutFin()
@@ -7653,7 +7658,7 @@ func (self Font) CalcTextSizeA(size float32, max_width float32, wrap_width float
 }
 
 func (self Font) RenderText(draw_list DrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string) {
-	text_beginArg, text_beginFin := WrapString(text_begin)
+	text_beginArg, text_beginFin := wrapper.WrapString(text_begin)
 	C.wrap_ImFont_RenderText(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), clip_rect.toC(), text_beginArg)
 
 	text_beginFin()
@@ -7664,7 +7669,7 @@ func (self IO) SetKeyEventNativeData(key Key, native_keycode int32, native_scanc
 }
 
 func (self InputTextCallbackData) InsertChars(pos int32, text string) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_ImGuiInputTextCallbackData_InsertChars(self.handle(), C.int(pos), textArg)
 
 	textFin()
@@ -7675,7 +7680,7 @@ func (self ListClipper) Begin(items_count int32) {
 }
 
 func (self TextBuffer) Append(str string) {
-	strArg, strFin := WrapString(str)
+	strArg, strFin := wrapper.WrapString(str)
 	C.wrap_ImGuiTextBuffer_Append(self.handle(), strArg)
 
 	strFin()
@@ -7686,7 +7691,7 @@ func (self TextFilter) Draw() bool {
 }
 
 func (self TextFilter) PassFilter(text string) bool {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 
 	defer func() {
 		textFin()
@@ -7695,7 +7700,7 @@ func (self TextFilter) PassFilter(text string) bool {
 }
 
 func (self Window) InternalIDStr(str string) ID {
-	strArg, strFin := WrapString(str)
+	strArg, strFin := wrapper.WrapString(str)
 
 	defer func() {
 		strFin()
@@ -7704,7 +7709,7 @@ func (self Window) InternalIDStr(str string) ID {
 }
 
 func AcceptDragDropPayload(typeArg string) Payload {
-	typeArgArg, typeArgFin := WrapString(typeArg)
+	typeArgArg, typeArgFin := wrapper.WrapString(typeArg)
 
 	defer func() {
 		typeArgFin()
@@ -7713,7 +7718,7 @@ func AcceptDragDropPayload(typeArg string) Payload {
 }
 
 func InternalArrowButtonEx(str_id string, dir Dir, size_arg Vec2) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -7722,7 +7727,7 @@ func InternalArrowButtonEx(str_id string, dir Dir, size_arg Vec2) bool {
 }
 
 func Begin(name string) bool {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 
 	defer func() {
 		nameFin()
@@ -7739,7 +7744,7 @@ func BeginChildID(id ID) bool {
 }
 
 func BeginChildStr(str_id string) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -7748,15 +7753,15 @@ func BeginChildStr(str_id string) bool {
 }
 
 func InternalBeginColumns(str_id string, count int32) {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 	C.wrap_igBeginColumns(str_idArg, C.int(count))
 
 	str_idFin()
 }
 
 func BeginCombo(label string, preview_value string) bool {
-	labelArg, labelFin := WrapString(label)
-	preview_valueArg, preview_valueFin := WrapString(preview_value)
+	labelArg, labelFin := wrapper.WrapString(label)
+	preview_valueArg, preview_valueFin := wrapper.WrapString(preview_value)
 
 	defer func() {
 		labelFin()
@@ -7774,7 +7779,7 @@ func BeginDragDropSource() bool {
 }
 
 func BeginListBox(label string) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -7783,7 +7788,7 @@ func BeginListBox(label string) bool {
 }
 
 func BeginMenu(label string) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -7792,8 +7797,8 @@ func BeginMenu(label string) bool {
 }
 
 func InternalBeginMenuEx(label string, icon string) bool {
-	labelArg, labelFin := WrapString(label)
-	iconArg, iconFin := WrapString(icon)
+	labelArg, labelFin := wrapper.WrapString(label)
+	iconArg, iconFin := wrapper.WrapString(icon)
 
 	defer func() {
 		labelFin()
@@ -7803,7 +7808,7 @@ func InternalBeginMenuEx(label string, icon string) bool {
 }
 
 func BeginPopup(str_id string) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -7824,7 +7829,7 @@ func BeginPopupContextWindow() bool {
 }
 
 func BeginPopupModal(name string) bool {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 
 	defer func() {
 		nameFin()
@@ -7833,7 +7838,7 @@ func BeginPopupModal(name string) bool {
 }
 
 func BeginTabBar(str_id string) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -7842,7 +7847,7 @@ func BeginTabBar(str_id string) bool {
 }
 
 func BeginTabItem(label string) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -7851,7 +7856,7 @@ func BeginTabItem(label string) bool {
 }
 
 func BeginTable(str_id string, column int32) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -7860,7 +7865,7 @@ func BeginTable(str_id string, column int32) bool {
 }
 
 func InternalBeginTableEx(name string, id ID, columns_count int32) bool {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 
 	defer func() {
 		nameFin()
@@ -7869,7 +7874,7 @@ func InternalBeginTableEx(name string, id ID, columns_count int32) bool {
 }
 
 func Button(label string) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -7878,8 +7883,8 @@ func Button(label string) bool {
 }
 
 func InternalButtonBehavior(bb Rect, id ID, out_hovered *bool, out_held *bool) bool {
-	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
-	out_heldArg, out_heldFin := WrapBool(out_held)
+	out_hoveredArg, out_hoveredFin := wrapper.WrapBool(out_hovered)
+	out_heldArg, out_heldFin := wrapper.WrapBool(out_held)
 
 	defer func() {
 		out_hoveredFin()
@@ -7889,7 +7894,7 @@ func InternalButtonBehavior(bb Rect, id ID, out_hovered *bool, out_held *bool) b
 }
 
 func InternalButtonEx(label string) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -7901,7 +7906,7 @@ func CalcTextSize(text string) Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_igCalcTextSize(pOutArg, textArg)
 
 	pOutFin()
@@ -7911,8 +7916,8 @@ func CalcTextSize(text string) Vec2 {
 }
 
 func CollapsingHeaderBoolPtr(label string, p_visible *bool) bool {
-	labelArg, labelFin := WrapString(label)
-	p_visibleArg, p_visibleFin := WrapBool(p_visible)
+	labelArg, labelFin := wrapper.WrapString(label)
+	p_visibleArg, p_visibleFin := wrapper.WrapBool(p_visible)
 
 	defer func() {
 		labelFin()
@@ -7922,7 +7927,7 @@ func CollapsingHeaderBoolPtr(label string, p_visible *bool) bool {
 }
 
 func CollapsingHeaderTreeNodeFlags(label string) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -7931,7 +7936,7 @@ func CollapsingHeaderTreeNodeFlags(label string) bool {
 }
 
 func ColorButton(desc_id string, col Vec4) bool {
-	desc_idArg, desc_idFin := WrapString(desc_id)
+	desc_idArg, desc_idFin := wrapper.WrapString(desc_id)
 
 	defer func() {
 		desc_idFin()
@@ -7940,7 +7945,7 @@ func ColorButton(desc_id string, col Vec4) bool {
 }
 
 func ColorEdit3(label string, col *[3]float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
@@ -7958,7 +7963,7 @@ func ColorEdit3(label string, col *[3]float32) bool {
 }
 
 func ColorEdit4(label string, col *[4]float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
@@ -7976,7 +7981,7 @@ func ColorEdit4(label string, col *[4]float32) bool {
 }
 
 func ColorPicker3(label string, col *[3]float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
@@ -7994,7 +7999,7 @@ func ColorPicker3(label string, col *[3]float32) bool {
 }
 
 func ColorPicker4(label string, col *[4]float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
@@ -8016,9 +8021,9 @@ func Columns() {
 }
 
 func ComboStr(label string, current_item *int32, items_separated_by_zeros string) bool {
-	labelArg, labelFin := WrapString(label)
-	current_itemArg, current_itemFin := WrapNumberPtr[C.int, int32](current_item)
-	items_separated_by_zerosArg, items_separated_by_zerosFin := WrapString(items_separated_by_zeros)
+	labelArg, labelFin := wrapper.WrapString(label)
+	current_itemArg, current_itemFin := wrapper.WrapNumberPtr[C.int, int32](current_item)
+	items_separated_by_zerosArg, items_separated_by_zerosFin := wrapper.WrapString(items_separated_by_zeros)
 
 	defer func() {
 		labelFin()
@@ -8029,9 +8034,9 @@ func ComboStr(label string, current_item *int32, items_separated_by_zeros string
 }
 
 func ComboStrarr(label string, current_item *int32, items []string, items_count int32) bool {
-	labelArg, labelFin := WrapString(label)
-	current_itemArg, current_itemFin := WrapNumberPtr[C.int, int32](current_item)
-	itemsArg, itemsFin := WrapStringList(items)
+	labelArg, labelFin := wrapper.WrapString(label)
+	current_itemArg, current_itemFin := wrapper.WrapNumberPtr[C.int, int32](current_item)
+	itemsArg, itemsFin := wrapper.WrapStringList(items)
 
 	defer func() {
 		labelFin()
@@ -8074,8 +8079,8 @@ func DockSpaceOverViewport() ID {
 }
 
 func DragFloat(label string, v *float32) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.float, float32](v)
 
 	defer func() {
 		labelFin()
@@ -8085,7 +8090,7 @@ func DragFloat(label string, v *float32) bool {
 }
 
 func DragFloat2(label string, v *[2]float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
@@ -8103,7 +8108,7 @@ func DragFloat2(label string, v *[2]float32) bool {
 }
 
 func DragFloat3(label string, v *[3]float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
@@ -8121,7 +8126,7 @@ func DragFloat3(label string, v *[3]float32) bool {
 }
 
 func DragFloat4(label string, v *[4]float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
@@ -8139,9 +8144,9 @@ func DragFloat4(label string, v *[4]float32) bool {
 }
 
 func DragFloatRange2(label string, v_current_min *float32, v_current_max *float32) bool {
-	labelArg, labelFin := WrapString(label)
-	v_current_minArg, v_current_minFin := WrapNumberPtr[C.float, float32](v_current_min)
-	v_current_maxArg, v_current_maxFin := WrapNumberPtr[C.float, float32](v_current_max)
+	labelArg, labelFin := wrapper.WrapString(label)
+	v_current_minArg, v_current_minFin := wrapper.WrapNumberPtr[C.float, float32](v_current_min)
+	v_current_maxArg, v_current_maxFin := wrapper.WrapNumberPtr[C.float, float32](v_current_max)
 
 	defer func() {
 		labelFin()
@@ -8152,8 +8157,8 @@ func DragFloatRange2(label string, v_current_min *float32, v_current_max *float3
 }
 
 func DragInt(label string, v *int32) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.int, int32](v)
 
 	defer func() {
 		labelFin()
@@ -8163,7 +8168,7 @@ func DragInt(label string, v *int32) bool {
 }
 
 func DragInt2(label string, v *[2]int32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
@@ -8181,7 +8186,7 @@ func DragInt2(label string, v *[2]int32) bool {
 }
 
 func DragInt3(label string, v *[3]int32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
@@ -8199,7 +8204,7 @@ func DragInt3(label string, v *[3]int32) bool {
 }
 
 func DragInt4(label string, v *[4]int32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
@@ -8217,9 +8222,9 @@ func DragInt4(label string, v *[4]int32) bool {
 }
 
 func DragIntRange2(label string, v_current_min *int32, v_current_max *int32) bool {
-	labelArg, labelFin := WrapString(label)
-	v_current_minArg, v_current_minFin := WrapNumberPtr[C.int, int32](v_current_min)
-	v_current_maxArg, v_current_maxFin := WrapNumberPtr[C.int, int32](v_current_max)
+	labelArg, labelFin := wrapper.WrapString(label)
+	v_current_minArg, v_current_minFin := wrapper.WrapNumberPtr[C.int, int32](v_current_min)
+	v_current_maxArg, v_current_maxFin := wrapper.WrapNumberPtr[C.int, int32](v_current_max)
 
 	defer func() {
 		labelFin()
@@ -8230,7 +8235,7 @@ func DragIntRange2(label string, v_current_min *int32, v_current_max *int32) boo
 }
 
 func DragScalar(label string, data_type DataType, p_data unsafe.Pointer) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -8239,7 +8244,7 @@ func DragScalar(label string, data_type DataType, p_data unsafe.Pointer) bool {
 }
 
 func DragScalarN(label string, data_type DataType, p_data unsafe.Pointer, components int32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -8248,7 +8253,7 @@ func DragScalarN(label string, data_type DataType, p_data unsafe.Pointer, compon
 }
 
 func InternalFindRenderedTextEnd(text string) string {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 
 	defer func() {
 		textFin()
@@ -8280,8 +8285,8 @@ func MouseDragDelta() Vec2 {
 }
 
 func InternalImFileLoadToMemory(filename string, mode string) unsafe.Pointer {
-	filenameArg, filenameFin := WrapString(filename)
-	modeArg, modeFin := WrapString(mode)
+	filenameArg, filenameFin := wrapper.WrapString(filename)
+	modeArg, modeFin := wrapper.WrapString(mode)
 
 	defer func() {
 		filenameFin()
@@ -8295,7 +8300,7 @@ func InternalImHashData(data unsafe.Pointer, data_size uint64) ID {
 }
 
 func InternalImHashStr(data string) ID {
-	dataArg, dataFin := WrapString(data)
+	dataArg, dataFin := wrapper.WrapString(data)
 
 	defer func() {
 		dataFin()
@@ -8308,7 +8313,7 @@ func Image(user_texture_id TextureID, size Vec2) {
 }
 
 func ImageButton(str_id string, user_texture_id TextureID, size Vec2) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -8325,8 +8330,8 @@ func Indent() {
 }
 
 func InputDouble(label string, v *float64) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.double, float64](v)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.double, float64](v)
 
 	defer func() {
 		labelFin()
@@ -8336,8 +8341,8 @@ func InputDouble(label string, v *float64) bool {
 }
 
 func InputFloat(label string, v *float32) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.float, float32](v)
 
 	defer func() {
 		labelFin()
@@ -8347,7 +8352,7 @@ func InputFloat(label string, v *float32) bool {
 }
 
 func InputFloat2(label string, v *[2]float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
@@ -8365,7 +8370,7 @@ func InputFloat2(label string, v *[2]float32) bool {
 }
 
 func InputFloat3(label string, v *[3]float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
@@ -8383,7 +8388,7 @@ func InputFloat3(label string, v *[3]float32) bool {
 }
 
 func InputFloat4(label string, v *[4]float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
@@ -8401,8 +8406,8 @@ func InputFloat4(label string, v *[4]float32) bool {
 }
 
 func InputInt(label string, v *int32) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.int, int32](v)
 
 	defer func() {
 		labelFin()
@@ -8412,7 +8417,7 @@ func InputInt(label string, v *int32) bool {
 }
 
 func InputInt2(label string, v *[2]int32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
@@ -8430,7 +8435,7 @@ func InputInt2(label string, v *[2]int32) bool {
 }
 
 func InputInt3(label string, v *[3]int32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
@@ -8448,7 +8453,7 @@ func InputInt3(label string, v *[3]int32) bool {
 }
 
 func InputInt4(label string, v *[4]int32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
@@ -8466,7 +8471,7 @@ func InputInt4(label string, v *[4]int32) bool {
 }
 
 func InputScalar(label string, data_type DataType, p_data unsafe.Pointer) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -8475,7 +8480,7 @@ func InputScalar(label string, data_type DataType, p_data unsafe.Pointer) bool {
 }
 
 func InputScalarN(label string, data_type DataType, p_data unsafe.Pointer, components int32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -8484,9 +8489,9 @@ func InputScalarN(label string, data_type DataType, p_data unsafe.Pointer, compo
 }
 
 func InternalInputTextEx(label string, hint string, buf string, buf_size int32, size_arg Vec2, flags InputTextFlags) bool {
-	labelArg, labelFin := WrapString(label)
-	hintArg, hintFin := WrapString(hint)
-	bufArg, bufFin := WrapString(buf)
+	labelArg, labelFin := wrapper.WrapString(label)
+	hintArg, hintFin := wrapper.WrapString(hint)
+	bufArg, bufFin := wrapper.WrapString(buf)
 
 	defer func() {
 		labelFin()
@@ -8497,7 +8502,7 @@ func InternalInputTextEx(label string, hint string, buf string, buf_size int32, 
 }
 
 func InvisibleButton(str_id string, size Vec2) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -8550,7 +8555,7 @@ func IsMousePosValid() bool {
 }
 
 func IsPopupOpenStr(str_id string) bool {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 
 	defer func() {
 		str_idFin()
@@ -8579,9 +8584,9 @@ func InternalItemSizeVec2(size Vec2) {
 }
 
 func ListBoxStrarr(label string, current_item *int32, items []string, items_count int32) bool {
-	labelArg, labelFin := WrapString(label)
-	current_itemArg, current_itemFin := WrapNumberPtr[C.int, int32](current_item)
-	itemsArg, itemsFin := WrapStringList(items)
+	labelArg, labelFin := wrapper.WrapString(label)
+	current_itemArg, current_itemFin := wrapper.WrapNumberPtr[C.int, int32](current_item)
+	itemsArg, itemsFin := wrapper.WrapStringList(items)
 
 	defer func() {
 		labelFin()
@@ -8592,7 +8597,7 @@ func ListBoxStrarr(label string, current_item *int32, items []string, items_coun
 }
 
 func LoadIniSettingsFromMemory(ini_data string) {
-	ini_dataArg, ini_dataFin := WrapString(ini_data)
+	ini_dataArg, ini_dataFin := wrapper.WrapString(ini_data)
 	C.wrap_igLoadIniSettingsFromMemory(ini_dataArg)
 
 	ini_dataFin()
@@ -8600,7 +8605,7 @@ func LoadIniSettingsFromMemory(ini_data string) {
 
 func InternalLogRenderedText(ref_pos *Vec2, text string) {
 	ref_posArg, ref_posFin := wrap[C.ImVec2, *Vec2](ref_pos)
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_igLogRenderedText(ref_posArg, textArg)
 
 	ref_posFin()
@@ -8624,8 +8629,8 @@ func LogToTTY() {
 }
 
 func InternalMenuItemEx(label string, icon string) bool {
-	labelArg, labelFin := WrapString(label)
-	iconArg, iconFin := WrapString(icon)
+	labelArg, labelFin := wrapper.WrapString(label)
+	iconArg, iconFin := wrapper.WrapString(icon)
 
 	defer func() {
 		labelFin()
@@ -8635,7 +8640,7 @@ func InternalMenuItemEx(label string, icon string) bool {
 }
 
 func MenuItemBool(label string) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -8644,9 +8649,9 @@ func MenuItemBool(label string) bool {
 }
 
 func MenuItemBoolPtr(label string, shortcut string, p_selected *bool) bool {
-	labelArg, labelFin := WrapString(label)
-	shortcutArg, shortcutFin := WrapString(shortcut)
-	p_selectedArg, p_selectedFin := WrapBool(p_selected)
+	labelArg, labelFin := wrapper.WrapString(label)
+	shortcutArg, shortcutFin := wrapper.WrapString(shortcut)
+	p_selectedArg, p_selectedFin := wrapper.WrapBool(p_selected)
 
 	defer func() {
 		labelFin()
@@ -8669,21 +8674,21 @@ func OpenPopupID(id ID) {
 }
 
 func OpenPopupStr(str_id string) {
-	str_idArg, str_idFin := WrapString(str_id)
+	str_idArg, str_idFin := wrapper.WrapString(str_id)
 	C.wrap_igOpenPopup_Str(str_idArg)
 
 	str_idFin()
 }
 
 func PlotHistogramFloatPtr(label string, values []float32, values_count int32) {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 	C.wrap_igPlotHistogram_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count))
 
 	labelFin()
 }
 
 func PlotLinesFloatPtr(label string, values []float32, values_count int32) {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 	C.wrap_igPlotLines_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count))
 
 	labelFin()
@@ -8730,14 +8735,14 @@ func RenderPlatformWindowsDefault() {
 }
 
 func InternalRenderText(pos Vec2, text string) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_igRenderText(pos.toC(), textArg)
 
 	textFin()
 }
 
 func InternalRenderTextClipped(pos_min Vec2, pos_max Vec2, text string, text_size_if_known *Vec2) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	text_size_if_knownArg, text_size_if_knownFin := wrap[C.ImVec2, *Vec2](text_size_if_known)
 	C.wrap_igRenderTextClipped(pos_min.toC(), pos_max.toC(), textArg, text_size_if_knownArg)
 
@@ -8746,7 +8751,7 @@ func InternalRenderTextClipped(pos_min Vec2, pos_max Vec2, text string, text_siz
 }
 
 func InternalRenderTextClippedEx(draw_list DrawList, pos_min Vec2, pos_max Vec2, text string, text_size_if_known *Vec2) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	text_size_if_knownArg, text_size_if_knownFin := wrap[C.ImVec2, *Vec2](text_size_if_known)
 	C.wrap_igRenderTextClippedEx(draw_list.handle(), pos_min.toC(), pos_max.toC(), textArg, text_size_if_knownArg)
 
@@ -8786,7 +8791,7 @@ func InternalScrollToRectEx(window Window, rect Rect) Vec2 {
 }
 
 func SelectableBool(label string) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -8795,8 +8800,8 @@ func SelectableBool(label string) bool {
 }
 
 func SelectableBoolPtr(label string, p_selected *bool) bool {
-	labelArg, labelFin := WrapString(label)
-	p_selectedArg, p_selectedFin := WrapBool(p_selected)
+	labelArg, labelFin := wrapper.WrapString(label)
+	p_selectedArg, p_selectedFin := wrapper.WrapBool(p_selected)
 
 	defer func() {
 		labelFin()
@@ -8806,7 +8811,7 @@ func SelectableBoolPtr(label string, p_selected *bool) bool {
 }
 
 func SetDragDropPayload(typeArg string, data unsafe.Pointer, sz uint64) bool {
-	typeArgArg, typeArgFin := WrapString(typeArg)
+	typeArgArg, typeArgFin := wrapper.WrapString(typeArg)
 
 	defer func() {
 		typeArgFin()
@@ -8875,7 +8880,7 @@ func SetWindowCollapsedBool(collapsed bool) {
 }
 
 func SetWindowCollapsedStr(name string, collapsed bool) {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 	C.wrap_igSetWindowCollapsed_Str(nameArg, C.bool(collapsed))
 
 	nameFin()
@@ -8886,7 +8891,7 @@ func InternalSetWindowCollapsedWindowPtr(window Window, collapsed bool) {
 }
 
 func SetWindowPosStr(name string, pos Vec2) {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 	C.wrap_igSetWindowPos_Str(nameArg, pos.toC())
 
 	nameFin()
@@ -8901,7 +8906,7 @@ func InternalSetWindowPosWindowPtr(window Window, pos Vec2) {
 }
 
 func SetWindowSizeStr(name string, size Vec2) {
-	nameArg, nameFin := WrapString(name)
+	nameArg, nameFin := wrapper.WrapString(name)
 	C.wrap_igSetWindowSize_Str(nameArg, size.toC())
 
 	nameFin()
@@ -8944,8 +8949,8 @@ func ShowStyleEditor() {
 }
 
 func SliderAngle(label string, v_rad *float32) bool {
-	labelArg, labelFin := WrapString(label)
-	v_radArg, v_radFin := WrapNumberPtr[C.float, float32](v_rad)
+	labelArg, labelFin := wrapper.WrapString(label)
+	v_radArg, v_radFin := wrapper.WrapNumberPtr[C.float, float32](v_rad)
 
 	defer func() {
 		labelFin()
@@ -8955,8 +8960,8 @@ func SliderAngle(label string, v_rad *float32) bool {
 }
 
 func SliderFloat(label string, v *float32, v_min float32, v_max float32) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.float, float32](v)
 
 	defer func() {
 		labelFin()
@@ -8966,7 +8971,7 @@ func SliderFloat(label string, v *float32, v_min float32, v_max float32) bool {
 }
 
 func SliderFloat2(label string, v *[2]float32, v_min float32, v_max float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
@@ -8984,7 +8989,7 @@ func SliderFloat2(label string, v *[2]float32, v_min float32, v_max float32) boo
 }
 
 func SliderFloat3(label string, v *[3]float32, v_min float32, v_max float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
@@ -9002,7 +9007,7 @@ func SliderFloat3(label string, v *[3]float32, v_min float32, v_max float32) boo
 }
 
 func SliderFloat4(label string, v *[4]float32, v_min float32, v_max float32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.float, len(v))
 	for i, vV := range v {
@@ -9020,8 +9025,8 @@ func SliderFloat4(label string, v *[4]float32, v_min float32, v_max float32) boo
 }
 
 func SliderInt(label string, v *int32, v_min int32, v_max int32) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.int, int32](v)
 
 	defer func() {
 		labelFin()
@@ -9031,7 +9036,7 @@ func SliderInt(label string, v *int32, v_min int32, v_max int32) bool {
 }
 
 func SliderInt2(label string, v *[2]int32, v_min int32, v_max int32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
@@ -9049,7 +9054,7 @@ func SliderInt2(label string, v *[2]int32, v_min int32, v_max int32) bool {
 }
 
 func SliderInt3(label string, v *[3]int32, v_min int32, v_max int32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
@@ -9067,7 +9072,7 @@ func SliderInt3(label string, v *[3]int32, v_min int32, v_max int32) bool {
 }
 
 func SliderInt4(label string, v *[4]int32, v_min int32, v_max int32) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	vArg := make([]C.int, len(v))
 	for i, vV := range v {
@@ -9085,7 +9090,7 @@ func SliderInt4(label string, v *[4]int32, v_min int32, v_max int32) bool {
 }
 
 func SliderScalar(label string, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -9094,7 +9099,7 @@ func SliderScalar(label string, data_type DataType, p_data unsafe.Pointer, p_min
 }
 
 func SliderScalarN(label string, data_type DataType, p_data unsafe.Pointer, components int32, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -9103,8 +9108,8 @@ func SliderScalarN(label string, data_type DataType, p_data unsafe.Pointer, comp
 }
 
 func InternalSplitterBehavior(bb Rect, id ID, axis Axis, size1 *float32, size2 *float32, min_size1 float32, min_size2 float32) bool {
-	size1Arg, size1Fin := WrapNumberPtr[C.float, float32](size1)
-	size2Arg, size2Fin := WrapNumberPtr[C.float, float32](size2)
+	size1Arg, size1Fin := wrapper.WrapNumberPtr[C.float, float32](size1)
+	size2Arg, size2Fin := wrapper.WrapNumberPtr[C.float, float32](size2)
 
 	defer func() {
 		size1Fin()
@@ -9126,7 +9131,7 @@ func StyleColorsLight() {
 }
 
 func TabItemButton(label string) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -9159,15 +9164,15 @@ func TableSetBgColor(target TableBgTarget, color uint32) {
 }
 
 func TableSetupColumn(label string) {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 	C.wrap_igTableSetupColumn(labelArg)
 
 	labelFin()
 }
 
 func InternalTempInputScalar(bb Rect, id ID, label string, data_type DataType, p_data unsafe.Pointer, format string) bool {
-	labelArg, labelFin := WrapString(label)
-	formatArg, formatFin := WrapString(format)
+	labelArg, labelFin := wrapper.WrapString(label)
+	formatArg, formatFin := wrapper.WrapString(format)
 
 	defer func() {
 		labelFin()
@@ -9177,21 +9182,21 @@ func InternalTempInputScalar(bb Rect, id ID, label string, data_type DataType, p
 }
 
 func InternalTextEx(text string) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_igTextEx(textArg)
 
 	textFin()
 }
 
 func TextUnformatted(text string) {
-	textArg, textFin := WrapString(text)
+	textArg, textFin := wrapper.WrapString(text)
 	C.wrap_igTextUnformatted(textArg)
 
 	textFin()
 }
 
 func InternalTreeNodeBehavior(id ID, flags TreeNodeFlags, label string) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -9200,7 +9205,7 @@ func InternalTreeNodeBehavior(id ID, flags TreeNodeFlags, label string) bool {
 }
 
 func TreeNodeExStr(label string) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -9213,8 +9218,8 @@ func Unindent() {
 }
 
 func VSliderFloat(label string, size Vec2, v *float32, v_min float32, v_max float32) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.float, float32](v)
 
 	defer func() {
 		labelFin()
@@ -9224,8 +9229,8 @@ func VSliderFloat(label string, size Vec2, v *float32, v_min float32, v_max floa
 }
 
 func VSliderInt(label string, size Vec2, v *int32, v_min int32, v_max int32) bool {
-	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	labelArg, labelFin := wrapper.WrapString(label)
+	vArg, vFin := wrapper.WrapNumberPtr[C.int, int32](v)
 
 	defer func() {
 		labelFin()
@@ -9235,7 +9240,7 @@ func VSliderInt(label string, size Vec2, v *int32, v_min int32, v_max int32) boo
 }
 
 func VSliderScalar(label string, size Vec2, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := wrapper.WrapString(label)
 
 	defer func() {
 		labelFin()
@@ -9244,7 +9249,7 @@ func VSliderScalar(label string, size Vec2, data_type DataType, p_data unsafe.Po
 }
 
 func ValueFloat(prefix string, v float32) {
-	prefixArg, prefixFin := WrapString(prefix)
+	prefixArg, prefixFin := wrapper.WrapString(prefix)
 	C.wrap_igValue_Float(prefixArg, C.float(v))
 
 	prefixFin()
@@ -9421,7 +9426,7 @@ func (self DrawList) Data() DrawListSharedData {
 }
 
 func (self DrawList) SetOwnerName(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImDrawList_Set_OwnerName(self.handle(), vArg)
 
 	vFin()
@@ -9765,7 +9770,7 @@ func (self FontAtlas) TexPixelsUseColors() bool {
 }
 
 func (self FontAtlas) SetTexPixelsRGBA32(v *uint32) {
-	vArg, vFin := WrapNumberPtr[C.uint, uint32](v)
+	vArg, vFin := wrapper.WrapNumberPtr[C.uint, uint32](v)
 	C.wrap_ImFontAtlas_SetTexPixelsRGBA32(self.handle(), vArg)
 
 	vFin()
@@ -11630,7 +11635,7 @@ func (self Context) LogBuffer() TextBuffer {
 }
 
 func (self Context) SetLogNextPrefix(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiContext_SetLogNextPrefix(self.handle(), vArg)
 
 	vFin()
@@ -11641,7 +11646,7 @@ func (self Context) LogNextPrefix() string {
 }
 
 func (self Context) SetLogNextSuffix(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiContext_SetLogNextSuffix(self.handle(), vArg)
 
 	vFin()
@@ -11860,7 +11865,7 @@ func (self DataTypeInfo) Size() float64 {
 }
 
 func (self DataTypeInfo) SetName(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiDataTypeInfo_SetName(self.handle(), vArg)
 
 	vFin()
@@ -11871,7 +11876,7 @@ func (self DataTypeInfo) Name() string {
 }
 
 func (self DataTypeInfo) SetPrintFmt(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiDataTypeInfo_SetPrintFmt(self.handle(), vArg)
 
 	vFin()
@@ -11882,7 +11887,7 @@ func (self DataTypeInfo) PrintFmt() string {
 }
 
 func (self DataTypeInfo) SetScanFmt(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiDataTypeInfo_SetScanFmt(self.handle(), vArg)
 
 	vFin()
@@ -12355,7 +12360,7 @@ func (self IO) IniSavingRate() float32 {
 }
 
 func (self IO) SetIniFilename(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiIO_SetIniFilename(self.handle(), vArg)
 
 	vFin()
@@ -12366,7 +12371,7 @@ func (self IO) IniFilename() string {
 }
 
 func (self IO) SetLogFilename(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiIO_SetLogFilename(self.handle(), vArg)
 
 	vFin()
@@ -12635,7 +12640,7 @@ func (self IO) ConfigDebugBeginReturnValueLoop() bool {
 }
 
 func (self IO) SetBackendPlatformName(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiIO_SetBackendPlatformName(self.handle(), vArg)
 
 	vFin()
@@ -12646,7 +12651,7 @@ func (self IO) BackendPlatformName() string {
 }
 
 func (self IO) SetBackendRendererName(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiIO_SetBackendRendererName(self.handle(), vArg)
 
 	vFin()
@@ -13107,7 +13112,7 @@ func (self InputTextCallbackData) EventKey() Key {
 }
 
 func (self InputTextCallbackData) SetBuf(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiInputTextCallbackData_SetBuf(self.handle(), vArg)
 
 	vFin()
@@ -13548,7 +13553,7 @@ func (self LocEntry) Key() LocKey {
 }
 
 func (self LocEntry) SetText(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiLocEntry_SetText(self.handle(), vArg)
 
 	vFin()
@@ -14357,7 +14362,7 @@ func (self PtrOrIndex) Index() int {
 }
 
 func (self SettingsHandler) SetTypeName(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiSettingsHandler_SetTypeName(self.handle(), vArg)
 
 	vFin()
@@ -16752,7 +16757,7 @@ func (self TextIndex) EndOffset() int {
 }
 
 func (self TextRange) Setb(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiTextRange_Setb(self.handle(), vArg)
 
 	vFin()
@@ -16763,7 +16768,7 @@ func (self TextRange) b() string {
 }
 
 func (self TextRange) Sete(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiTextRange_Sete(self.handle(), vArg)
 
 	vFin()
@@ -17082,7 +17087,7 @@ func (self Window) Ctx() Context {
 }
 
 func (self Window) SetName(v string) {
-	vArg, vFin := WrapString(v)
+	vArg, vFin := wrapper.WrapString(v)
 	C.wrap_ImGuiWindow_SetName(self.handle(), vArg)
 
 	vFin()

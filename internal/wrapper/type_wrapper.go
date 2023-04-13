@@ -1,4 +1,4 @@
-package imgui
+package wrapper
 
 // #include <memory.h>
 // #include <stdlib.h>
@@ -143,4 +143,12 @@ func (buf *StringBuffer) ToGo() string {
 	}
 	PtrToByteSlice(buf.ptr)[buf.size-1] = 0
 	return C.GoString((*C.char)(buf.ptr))
+}
+
+func (buf *StringBuffer) Ptr() unsafe.Pointer {
+	return buf.ptr
+}
+
+func (buf *StringBuffer) Size() int {
+	return buf.size
 }

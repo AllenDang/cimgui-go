@@ -21,6 +21,7 @@ package imgui
 import "C"
 
 import (
+	"github.com/AllenDang/cimgui-go/internal/wrapper"
 	"image"
 	"unsafe"
 )
@@ -97,10 +98,10 @@ func (b *GLFWBackend) loopFunc() func() {
 }
 
 func (b GLFWBackend) DisplaySize() (width int32, height int32) {
-	widthArg, widthFin := WrapNumberPtr[C.int, int32](&width)
+	widthArg, widthFin := wrapper.WrapNumberPtr[C.int, int32](&width)
 	defer widthFin()
 
-	heightArg, heightFin := WrapNumberPtr[C.int, int32](&height)
+	heightArg, heightFin := wrapper.WrapNumberPtr[C.int, int32](&height)
 	defer heightFin()
 
 	C.igGLFWWindow_GetDisplaySize(b.handle(), widthArg, heightArg)
@@ -109,11 +110,11 @@ func (b GLFWBackend) DisplaySize() (width int32, height int32) {
 }
 
 func (b GLFWBackend) SetShouldClose(value bool) {
-	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(CastBool(value)))
+	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(wrapper.CastBool(value)))
 }
 
 func (b *GLFWBackend) CreateWindow(title string, width, height int, flags GLFWWindowFlags) {
-	titleArg, titleFin := WrapString(title)
+	titleArg, titleFin := wrapper.WrapString(title)
 	defer titleFin()
 
 	// b.window = uintptr(unsafe.Pointer(C.igCreateGLFWWindow(titleArg, C.int(width), C.int(height), C.GLFWWindowFlags(flags), C.VoidCallback(C.afterCreateContext))))
