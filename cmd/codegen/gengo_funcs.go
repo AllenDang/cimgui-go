@@ -4,7 +4,6 @@ import "C"
 import (
 	"fmt"
 	"os"
-	"sort"
 	"strings"
 )
 
@@ -265,18 +264,22 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 	if len(f.Defaults) > 0 {
 		commentSb.WriteString("// %s parameter default value hint:\n")
 
-		// sort lexicographically for determenistic generation
 		type defaultParam struct {
 			name  string
 			value string
 		}
 		defaults := make([]defaultParam, 0, len(f.Defaults))
-		for n, v := range f.Defaults {
-			defaults = append(defaults, defaultParam{name: n, value: v})
+		// sort according to the order of the arguments
+		for _, arg := range args {
+			if idx := strings.Index(arg, " "); idx != -1 {
+				arg = arg[:idx]
+			}
+			d, ok := f.Defaults[arg]
+			if !ok {
+				continue
+			}
+			defaults = append(defaults, defaultParam{name: arg, value: d})
 		}
-		sort.Slice(defaults, func(i, j int) bool {
-			return defaults[i].name < defaults[j].name
-		})
 
 		for _, p := range defaults {
 			commentSb.WriteString(fmt.Sprintf("// %s: %s\n", p.name, p.value))

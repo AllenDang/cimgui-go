@@ -183,19 +183,19 @@ func (self DrawList) AddDrawCmd() {
 }
 
 // AddImageV parameter default value hint:
-// col: 4294967295
-// uv_max: ImVec2(1,1)
 // uv_min: ImVec2(0,0)
+// uv_max: ImVec2(1,1)
+// col: 4294967295
 func (self DrawList) AddImageV(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32) {
 	C.ImDrawList_AddImage(self.handle(), C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col))
 }
 
 // AddImageQuadV parameter default value hint:
-// col: 4294967295
 // uv1: ImVec2(0,0)
 // uv2: ImVec2(1,0)
 // uv3: ImVec2(1,1)
 // uv4: ImVec2(0,1)
+// col: 4294967295
 func (self DrawList) AddImageQuadV(user_texture_id TextureID, p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, uv1 Vec2, uv2 Vec2, uv3 Vec2, uv4 Vec2, col uint32) {
 	C.ImDrawList_AddImageQuad(self.handle(), C.ImTextureID(user_texture_id), p1.toC(), p2.toC(), p3.toC(), p4.toC(), uv1.toC(), uv2.toC(), uv3.toC(), uv4.toC(), C.ImU32(col))
 }
@@ -240,16 +240,16 @@ func (self DrawList) AddQuadFilled(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint3
 }
 
 // AddRectV parameter default value hint:
-// flags: 0
 // rounding: 0.0f
+// flags: 0
 // thickness: 1.0f
 func (self DrawList) AddRectV(p_min Vec2, p_max Vec2, col uint32, rounding float32, flags DrawFlags, thickness float32) {
 	C.ImDrawList_AddRect(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags), C.float(thickness))
 }
 
 // AddRectFilledV parameter default value hint:
-// flags: 0
 // rounding: 0.0f
+// flags: 0
 func (self DrawList) AddRectFilledV(p_min Vec2, p_max Vec2, col uint32, rounding float32, flags DrawFlags) {
 	C.ImDrawList_AddRectFilled(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
 }
@@ -259,9 +259,8 @@ func (self DrawList) AddRectFilledMultiColor(p_min Vec2, p_max Vec2, col_upr_lef
 }
 
 // AddTextFontPtrV parameter default value hint:
-// cpu_fine_clip_rect: NULL
-// text_end: NULL
 // wrap_width: 0.0f
+// cpu_fine_clip_rect: NULL
 func (self DrawList) AddTextFontPtrV(font Font, font_size float32, pos Vec2, col uint32, text_begin string, wrap_width float32, cpu_fine_clip_rect *Vec4) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	cpu_fine_clip_rectArg, cpu_fine_clip_rectFin := wrap[C.ImVec4, *Vec4](cpu_fine_clip_rect)
@@ -272,7 +271,6 @@ func (self DrawList) AddTextFontPtrV(font Font, font_size float32, pos Vec2, col
 }
 
 // AddTextVec2V parameter default value hint:
-// text_end: NULL
 func (self DrawList) AddTextVec2V(pos Vec2, col uint32, text_begin string) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	C.wrap_ImDrawList_AddText_Vec2V(self.handle(), pos.toC(), C.ImU32(col), text_beginArg)
@@ -371,8 +369,8 @@ func (self DrawList) PathLineToMergeDuplicate(pos Vec2) {
 }
 
 // PathRectV parameter default value hint:
-// flags: 0
 // rounding: 0.0f
+// flags: 0
 func (self DrawList) PathRectV(rect_min Vec2, rect_max Vec2, rounding float32, flags DrawFlags) {
 	C.ImDrawList_PathRect(self.handle(), rect_min.toC(), rect_max.toC(), C.float(rounding), C.ImDrawFlags(flags))
 }
@@ -648,7 +646,6 @@ func (self FontGlyphRangesBuilder) AddRanges(ranges *Wchar) {
 }
 
 // AddTextV parameter default value hint:
-// text_end: NULL
 func (self FontGlyphRangesBuilder) AddTextV(text string) {
 	textArg, textFin := wrapString(text)
 	C.wrap_ImFontGlyphRangesBuilder_AddTextV(self.handle(), textArg)
@@ -692,7 +689,6 @@ func (self Font) BuildLookupTable() {
 
 // CalcTextSizeAV parameter default value hint:
 // remaining: NULL
-// text_end: NULL
 func (self Font) CalcTextSizeAV(size float32, max_width float32, wrap_width float32, text_begin string, remaining []string) Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -758,8 +754,8 @@ func (self Font) RenderChar(draw_list DrawList, size float32, pos Vec2, col uint
 }
 
 // RenderTextV parameter default value hint:
-// cpu_fine_clip: false
 // wrap_width: 0.0f
+// cpu_fine_clip: false
 func (self Font) RenderTextV(draw_list DrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string, wrap_width float32, cpu_fine_clip bool) {
 	text_beginArg, text_beginFin := wrapString(text_begin)
 	C.wrap_ImFont_RenderTextV(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), clip_rect.toC(), text_beginArg, C.float(wrap_width), C.bool(cpu_fine_clip))
@@ -964,7 +960,6 @@ func NewInputTextCallbackData() InputTextCallbackData {
 }
 
 // InsertCharsV parameter default value hint:
-// text_end: NULL
 func (self InputTextCallbackData) InsertCharsV(pos int32, text string) {
 	textArg, textFin := wrapString(text)
 	C.wrap_ImGuiInputTextCallbackData_InsertCharsV(self.handle(), C.int(pos), textArg)
@@ -1509,7 +1504,6 @@ func (self TextFilter) IsActive() bool {
 }
 
 // PassFilterV parameter default value hint:
-// text_end: NULL
 func (self TextFilter) PassFilterV(text string) bool {
 	textArg, textFin := wrapString(text)
 
@@ -2046,8 +2040,8 @@ func InternalArrowButtonExV(str_id string, dir Dir, size_arg Vec2, flags ButtonF
 }
 
 // BeginV parameter default value hint:
-// flags: 0
 // p_open: NULL
+// flags: 0
 func BeginV(name string, p_open *bool, flags WindowFlags) bool {
 	nameArg, nameFin := wrapString(name)
 	p_openArg, p_openFin := wrapBool(p_open)
@@ -2075,17 +2069,17 @@ func BeginChildFrameV(id ID, size Vec2, flags WindowFlags) bool {
 }
 
 // BeginChildIDV parameter default value hint:
+// size: ImVec2(0,0)
 // border: false
 // flags: 0
-// size: ImVec2(0,0)
 func BeginChildIDV(id ID, size Vec2, border bool, flags WindowFlags) bool {
 	return C.igBeginChild_ID(C.ImGuiID(id), size.toC(), C.bool(border), C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
 
 // BeginChildStrV parameter default value hint:
+// size: ImVec2(0,0)
 // border: false
 // flags: 0
-// size: ImVec2(0,0)
 func BeginChildStrV(str_id string, size Vec2, border bool, flags WindowFlags) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 
@@ -2219,8 +2213,8 @@ func BeginPopupV(str_id string, flags WindowFlags) bool {
 }
 
 // BeginPopupContextItemV parameter default value hint:
-// popup_flags: 1
 // str_id: NULL
+// popup_flags: 1
 func BeginPopupContextItemV(str_id string, popup_flags PopupFlags) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 
@@ -2231,8 +2225,8 @@ func BeginPopupContextItemV(str_id string, popup_flags PopupFlags) bool {
 }
 
 // BeginPopupContextVoidV parameter default value hint:
-// popup_flags: 1
 // str_id: NULL
+// popup_flags: 1
 func BeginPopupContextVoidV(str_id string, popup_flags PopupFlags) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 
@@ -2243,8 +2237,8 @@ func BeginPopupContextVoidV(str_id string, popup_flags PopupFlags) bool {
 }
 
 // BeginPopupContextWindowV parameter default value hint:
-// popup_flags: 1
 // str_id: NULL
+// popup_flags: 1
 func BeginPopupContextWindowV(str_id string, popup_flags PopupFlags) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 
@@ -2259,8 +2253,8 @@ func InternalBeginPopupEx(id ID, extra_flags WindowFlags) bool {
 }
 
 // BeginPopupModalV parameter default value hint:
-// flags: 0
 // p_open: NULL
+// flags: 0
 func BeginPopupModalV(name string, p_open *bool, flags WindowFlags) bool {
 	nameArg, nameFin := wrapString(name)
 	p_openArg, p_openFin := wrapBool(p_open)
@@ -2288,8 +2282,8 @@ func InternalBeginTabBarEx(tab_bar TabBar, bb Rect, flags TabBarFlags, dock_node
 }
 
 // BeginTabItemV parameter default value hint:
-// flags: 0
 // p_open: NULL
+// flags: 0
 func BeginTabItemV(label string, p_open *bool, flags TabItemFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	p_openArg, p_openFin := wrapBool(p_open)
@@ -2303,8 +2297,8 @@ func BeginTabItemV(label string, p_open *bool, flags TabItemFlags) bool {
 
 // BeginTableV parameter default value hint:
 // flags: 0
-// inner_width: 0.0f
 // outer_size: ImVec2(0.0f,0.0f)
+// inner_width: 0.0f
 func BeginTableV(str_id string, column int32, flags TableFlags, outer_size Vec2, inner_width float32) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 
@@ -2316,8 +2310,8 @@ func BeginTableV(str_id string, column int32, flags TableFlags, outer_size Vec2,
 
 // InternalBeginTableExV parameter default value hint:
 // flags: 0
-// inner_width: 0.0f
 // outer_size: ImVec2(0,0)
+// inner_width: 0.0f
 func InternalBeginTableExV(name string, id ID, columns_count int32, flags TableFlags, outer_size Vec2, inner_width float32) bool {
 	nameArg, nameFin := wrapString(name)
 
@@ -2396,8 +2390,8 @@ func InternalButtonBehaviorV(bb Rect, id ID, out_hovered *bool, out_held *bool, 
 }
 
 // InternalButtonExV parameter default value hint:
-// flags: 0
 // size_arg: ImVec2(0,0)
+// flags: 0
 func InternalButtonExV(label string, size_arg Vec2, flags ButtonFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -2428,7 +2422,6 @@ func InternalCalcRoundingFlagsForRectInRect(r_in Rect, r_outer Rect, threshold f
 
 // CalcTextSizeV parameter default value hint:
 // hide_text_after_double_hash: false
-// text_end: NULL
 // wrap_width: -1.0f
 func CalcTextSizeV(text string, hide_text_after_double_hash bool, wrap_width float32) Vec2 {
 	pOut := new(Vec2)
@@ -2712,9 +2705,9 @@ func InternalColorTooltip(text string, col []float32, flags ColorEditFlags) {
 }
 
 // ColumnsV parameter default value hint:
-// border: true
 // count: 1
 // id: NULL
+// border: true
 func ColumnsV(count int32, id string, border bool) {
 	idArg, idFin := wrapString(id)
 	C.igColumns(C.int(count), idArg, C.bool(border))
@@ -2945,8 +2938,8 @@ func DestroyPlatformWindows() {
 }
 
 // InternalDockBuilderAddNodeV parameter default value hint:
-// flags: 0
 // node_id: 0
+// flags: 0
 func InternalDockBuilderAddNodeV(node_id ID, flags DockNodeFlags) ID {
 	return ID(C.igDockBuilderAddNode(C.ImGuiID(node_id), C.ImGuiDockNodeFlags(flags)))
 }
@@ -3097,16 +3090,16 @@ func InternalDockNodeWindowMenuHandlerDefault(ctx Context, node DockNode, tab_ba
 }
 
 // DockSpaceV parameter default value hint:
-// flags: 0
 // size: ImVec2(0,0)
+// flags: 0
 // window_class: NULL
 func DockSpaceV(id ID, size Vec2, flags DockNodeFlags, window_class WindowClass) ID {
 	return ID(C.igDockSpace(C.ImGuiID(id), size.toC(), C.ImGuiDockNodeFlags(flags), window_class.handle()))
 }
 
 // DockSpaceOverViewportV parameter default value hint:
-// flags: 0
 // viewport: NULL
+// flags: 0
 // window_class: NULL
 func DockSpaceOverViewportV(viewport Viewport, flags DockNodeFlags, window_class WindowClass) ID {
 	return ID(C.igDockSpaceOverViewport(viewport.handle(), C.ImGuiDockNodeFlags(flags), window_class.handle()))
@@ -3122,11 +3115,11 @@ func InternalDragBehavior(id ID, data_type DataType, p_v unsafe.Pointer, v_speed
 }
 
 // DragFloatV parameter default value hint:
-// flags: 0
-// format: "%.3f"
-// v_max: 0.0f
-// v_min: 0.0f
 // v_speed: 1.0f
+// v_min: 0.0f
+// v_max: 0.0f
+// format: "%.3f"
+// flags: 0
 func DragFloatV(label string, v *float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	vArg, vFin := wrapNumberPtr[C.float, float32](v)
@@ -3141,11 +3134,11 @@ func DragFloatV(label string, v *float32, v_speed float32, v_min float32, v_max 
 }
 
 // DragFloat2V parameter default value hint:
-// flags: 0
-// format: "%.3f"
-// v_max: 0.0f
-// v_min: 0.0f
 // v_speed: 1.0f
+// v_min: 0.0f
+// v_max: 0.0f
+// format: "%.3f"
+// flags: 0
 func DragFloat2V(label string, v *[2]float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -3168,11 +3161,11 @@ func DragFloat2V(label string, v *[2]float32, v_speed float32, v_min float32, v_
 }
 
 // DragFloat3V parameter default value hint:
-// flags: 0
-// format: "%.3f"
-// v_max: 0.0f
-// v_min: 0.0f
 // v_speed: 1.0f
+// v_min: 0.0f
+// v_max: 0.0f
+// format: "%.3f"
+// flags: 0
 func DragFloat3V(label string, v *[3]float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -3195,11 +3188,11 @@ func DragFloat3V(label string, v *[3]float32, v_speed float32, v_min float32, v_
 }
 
 // DragFloat4V parameter default value hint:
-// flags: 0
-// format: "%.3f"
-// v_max: 0.0f
-// v_min: 0.0f
 // v_speed: 1.0f
+// v_min: 0.0f
+// v_max: 0.0f
+// format: "%.3f"
+// flags: 0
 func DragFloat4V(label string, v *[4]float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -3222,12 +3215,12 @@ func DragFloat4V(label string, v *[4]float32, v_speed float32, v_min float32, v_
 }
 
 // DragFloatRange2V parameter default value hint:
-// flags: 0
+// v_speed: 1.0f
+// v_min: 0.0f
+// v_max: 0.0f
 // format: "%.3f"
 // format_max: NULL
-// v_max: 0.0f
-// v_min: 0.0f
-// v_speed: 1.0f
+// flags: 0
 func DragFloatRange2V(label string, v_current_min *float32, v_current_max *float32, v_speed float32, v_min float32, v_max float32, format string, format_max string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	v_current_minArg, v_current_minFin := wrapNumberPtr[C.float, float32](v_current_min)
@@ -3246,11 +3239,11 @@ func DragFloatRange2V(label string, v_current_min *float32, v_current_max *float
 }
 
 // DragIntV parameter default value hint:
-// flags: 0
-// format: "%d"
-// v_max: 0
-// v_min: 0
 // v_speed: 1.0f
+// v_min: 0
+// v_max: 0
+// format: "%d"
+// flags: 0
 func DragIntV(label string, v *int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	vArg, vFin := wrapNumberPtr[C.int, int32](v)
@@ -3265,11 +3258,11 @@ func DragIntV(label string, v *int32, v_speed float32, v_min int32, v_max int32,
 }
 
 // DragInt2V parameter default value hint:
-// flags: 0
-// format: "%d"
-// v_max: 0
-// v_min: 0
 // v_speed: 1.0f
+// v_min: 0
+// v_max: 0
+// format: "%d"
+// flags: 0
 func DragInt2V(label string, v *[2]int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -3292,11 +3285,11 @@ func DragInt2V(label string, v *[2]int32, v_speed float32, v_min int32, v_max in
 }
 
 // DragInt3V parameter default value hint:
-// flags: 0
-// format: "%d"
-// v_max: 0
-// v_min: 0
 // v_speed: 1.0f
+// v_min: 0
+// v_max: 0
+// format: "%d"
+// flags: 0
 func DragInt3V(label string, v *[3]int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -3319,11 +3312,11 @@ func DragInt3V(label string, v *[3]int32, v_speed float32, v_min int32, v_max in
 }
 
 // DragInt4V parameter default value hint:
-// flags: 0
-// format: "%d"
-// v_max: 0
-// v_min: 0
 // v_speed: 1.0f
+// v_min: 0
+// v_max: 0
+// format: "%d"
+// flags: 0
 func DragInt4V(label string, v *[4]int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -3346,12 +3339,12 @@ func DragInt4V(label string, v *[4]int32, v_speed float32, v_min int32, v_max in
 }
 
 // DragIntRange2V parameter default value hint:
-// flags: 0
+// v_speed: 1.0f
+// v_min: 0
+// v_max: 0
 // format: "%d"
 // format_max: NULL
-// v_max: 0
-// v_min: 0
-// v_speed: 1.0f
+// flags: 0
 func DragIntRange2V(label string, v_current_min *int32, v_current_max *int32, v_speed float32, v_min int32, v_max int32, format string, format_max string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	v_current_minArg, v_current_minFin := wrapNumberPtr[C.int, int32](v_current_min)
@@ -3370,11 +3363,11 @@ func DragIntRange2V(label string, v_current_min *int32, v_current_max *int32, v_
 }
 
 // DragScalarV parameter default value hint:
-// flags: 0
-// format: NULL
-// p_max: NULL
-// p_min: NULL
 // v_speed: 1.0f
+// p_min: NULL
+// p_max: NULL
+// format: NULL
+// flags: 0
 func DragScalarV(label string, data_type DataType, p_data unsafe.Pointer, v_speed float32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	formatArg, formatFin := wrapString(format)
@@ -3387,11 +3380,11 @@ func DragScalarV(label string, data_type DataType, p_data unsafe.Pointer, v_spee
 }
 
 // DragScalarNV parameter default value hint:
-// flags: 0
-// format: NULL
-// p_max: NULL
-// p_min: NULL
 // v_speed: 1.0f
+// p_min: NULL
+// p_max: NULL
+// format: NULL
+// flags: 0
 func DragScalarNV(label string, data_type DataType, p_data unsafe.Pointer, components int32, v_speed float32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	formatArg, formatFin := wrapString(format)
@@ -3515,7 +3508,6 @@ func InternalFindOrCreateColumns(window Window, id ID) OldColumns {
 }
 
 // InternalFindRenderedTextEndV parameter default value hint:
-// text_end: NULL
 func InternalFindRenderedTextEndV(text string) string {
 	textArg, textFin := wrapString(text)
 
@@ -4801,19 +4793,19 @@ func InternalImUpperPowerOfTwo(v int32) int {
 }
 
 // ImageV parameter default value hint:
-// border_col: ImVec4(0,0,0,0)
-// tint_col: ImVec4(1,1,1,1)
 // uv0: ImVec2(0,0)
 // uv1: ImVec2(1,1)
+// tint_col: ImVec4(1,1,1,1)
+// border_col: ImVec4(0,0,0,0)
 func ImageV(user_texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, tint_col Vec4, border_col Vec4) {
 	C.igImage(C.ImTextureID(user_texture_id), size.toC(), uv0.toC(), uv1.toC(), tint_col.toC(), border_col.toC())
 }
 
 // ImageButtonV parameter default value hint:
-// bg_col: ImVec4(0,0,0,0)
-// tint_col: ImVec4(1,1,1,1)
 // uv0: ImVec2(0,0)
 // uv1: ImVec2(1,1)
+// bg_col: ImVec4(0,0,0,0)
+// tint_col: ImVec4(1,1,1,1)
 func ImageButtonV(str_id string, user_texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, bg_col Vec4, tint_col Vec4) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 
@@ -4840,10 +4832,10 @@ func InternalInitialize() {
 }
 
 // InputDoubleV parameter default value hint:
-// flags: 0
-// format: "%.6f"
 // step: 0.0
 // step_fast: 0.0
+// format: "%.6f"
+// flags: 0
 func InputDoubleV(label string, v *float64, step float64, step_fast float64, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	vArg, vFin := wrapNumberPtr[C.double, float64](v)
@@ -4858,10 +4850,10 @@ func InputDoubleV(label string, v *float64, step float64, step_fast float64, for
 }
 
 // InputFloatV parameter default value hint:
-// flags: 0
-// format: "%.3f"
 // step: 0.0f
 // step_fast: 0.0f
+// format: "%.3f"
+// flags: 0
 func InputFloatV(label string, v *float32, step float32, step_fast float32, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	vArg, vFin := wrapNumberPtr[C.float, float32](v)
@@ -4876,8 +4868,8 @@ func InputFloatV(label string, v *float32, step float32, step_fast float32, form
 }
 
 // InputFloat2V parameter default value hint:
-// flags: 0
 // format: "%.3f"
+// flags: 0
 func InputFloat2V(label string, v *[2]float32, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -4900,8 +4892,8 @@ func InputFloat2V(label string, v *[2]float32, format string, flags InputTextFla
 }
 
 // InputFloat3V parameter default value hint:
-// flags: 0
 // format: "%.3f"
+// flags: 0
 func InputFloat3V(label string, v *[3]float32, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -4924,8 +4916,8 @@ func InputFloat3V(label string, v *[3]float32, format string, flags InputTextFla
 }
 
 // InputFloat4V parameter default value hint:
-// flags: 0
 // format: "%.3f"
+// flags: 0
 func InputFloat4V(label string, v *[4]float32, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -4948,9 +4940,9 @@ func InputFloat4V(label string, v *[4]float32, format string, flags InputTextFla
 }
 
 // InputIntV parameter default value hint:
-// flags: 0
 // step: 1
 // step_fast: 100
+// flags: 0
 func InputIntV(label string, v *int32, step int32, step_fast int32, flags InputTextFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	vArg, vFin := wrapNumberPtr[C.int, int32](v)
@@ -5023,10 +5015,10 @@ func InputInt4V(label string, v *[4]int32, flags InputTextFlags) bool {
 }
 
 // InputScalarV parameter default value hint:
-// flags: 0
-// format: NULL
 // p_step: NULL
 // p_step_fast: NULL
+// format: NULL
+// flags: 0
 func InputScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_step unsafe.Pointer, p_step_fast unsafe.Pointer, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	formatArg, formatFin := wrapString(format)
@@ -5039,10 +5031,10 @@ func InputScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_ste
 }
 
 // InputScalarNV parameter default value hint:
-// flags: 0
-// format: NULL
 // p_step: NULL
 // p_step_fast: NULL
+// format: NULL
+// flags: 0
 func InputScalarNV(label string, data_type DataType, p_data unsafe.Pointer, components int32, p_step unsafe.Pointer, p_step_fast unsafe.Pointer, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	formatArg, formatFin := wrapString(format)
@@ -5412,7 +5404,6 @@ func LogFinish() {
 }
 
 // InternalLogRenderedTextV parameter default value hint:
-// text_end: NULL
 func InternalLogRenderedTextV(ref_pos *Vec2, text string) {
 	ref_posArg, ref_posFin := wrap[C.ImVec2, *Vec2](ref_pos)
 	textArg, textFin := wrapString(text)
@@ -5487,9 +5478,9 @@ func MemFree(ptr unsafe.Pointer) {
 }
 
 // InternalMenuItemExV parameter default value hint:
-// enabled: true
-// selected: false
 // shortcut: NULL
+// selected: false
+// enabled: true
 func InternalMenuItemExV(label string, icon string, shortcut string, selected bool, enabled bool) bool {
 	labelArg, labelFin := wrapString(label)
 	iconArg, iconFin := wrapString(icon)
@@ -5504,9 +5495,9 @@ func InternalMenuItemExV(label string, icon string, shortcut string, selected bo
 }
 
 // MenuItemBoolV parameter default value hint:
-// enabled: true
-// selected: false
 // shortcut: NULL
+// selected: false
+// enabled: true
 func MenuItemBoolV(label string, shortcut string, selected bool, enabled bool) bool {
 	labelArg, labelFin := wrapString(label)
 	shortcutArg, shortcutFin := wrapString(shortcut)
@@ -5592,8 +5583,8 @@ func InternalOpenPopupExV(id ID, popup_flags PopupFlags) {
 }
 
 // OpenPopupOnItemClickV parameter default value hint:
-// popup_flags: 1
 // str_id: NULL
+// popup_flags: 1
 func OpenPopupOnItemClickV(str_id string, popup_flags PopupFlags) {
 	str_idArg, str_idFin := wrapString(str_id)
 	C.igOpenPopupOnItemClick(str_idArg, C.ImGuiPopupFlags(popup_flags))
@@ -5617,12 +5608,12 @@ func OpenPopupStrV(str_id string, popup_flags PopupFlags) {
 }
 
 // PlotHistogramFloatPtrV parameter default value hint:
-// graph_size: ImVec2(0,0)
-// overlay_text: NULL
-// scale_max: FLT_MAX
-// scale_min: FLT_MAX
-// stride: sizeof(float)
 // values_offset: 0
+// overlay_text: NULL
+// scale_min: FLT_MAX
+// scale_max: FLT_MAX
+// graph_size: ImVec2(0,0)
+// stride: sizeof(float)
 func PlotHistogramFloatPtrV(label string, values []float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2, stride int32) {
 	labelArg, labelFin := wrapString(label)
 	overlay_textArg, overlay_textFin := wrapString(overlay_text)
@@ -5633,12 +5624,12 @@ func PlotHistogramFloatPtrV(label string, values []float32, values_count int32, 
 }
 
 // PlotLinesFloatPtrV parameter default value hint:
-// graph_size: ImVec2(0,0)
-// overlay_text: NULL
-// scale_max: FLT_MAX
-// scale_min: FLT_MAX
-// stride: sizeof(float)
 // values_offset: 0
+// overlay_text: NULL
+// scale_min: FLT_MAX
+// scale_max: FLT_MAX
+// graph_size: ImVec2(0,0)
+// stride: sizeof(float)
 func PlotLinesFloatPtrV(label string, values []float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2, stride int32) {
 	labelArg, labelFin := wrapString(label)
 	overlay_textArg, overlay_textFin := wrapString(overlay_text)
@@ -5701,8 +5692,8 @@ func PopTextWrapPos() {
 }
 
 // ProgressBarV parameter default value hint:
-// overlay: NULL
 // size_arg: ImVec2(-FLT_MIN,0)
+// overlay: NULL
 func ProgressBarV(fraction float32, size_arg Vec2, overlay string) {
 	overlayArg, overlayFin := wrapString(overlay)
 	C.igProgressBar(C.float(fraction), size_arg.toC(), overlayArg)
@@ -5858,8 +5849,8 @@ func InternalRenderCheckMark(draw_list DrawList, pos Vec2, col uint32, sz float3
 }
 
 // InternalRenderColorRectWithAlphaCheckerboardV parameter default value hint:
-// flags: 0
 // rounding: 0.0f
+// flags: 0
 func InternalRenderColorRectWithAlphaCheckerboardV(draw_list DrawList, p_min Vec2, p_max Vec2, fill_col uint32, grid_step float32, grid_off Vec2, rounding float32, flags DrawFlags) {
 	C.igRenderColorRectWithAlphaCheckerboard(draw_list.handle(), p_min.toC(), p_max.toC(), C.ImU32(fill_col), C.float(grid_step), grid_off.toC(), C.float(rounding), C.ImDrawFlags(flags))
 }
@@ -5908,7 +5899,6 @@ func InternalRenderRectFilledWithHole(draw_list DrawList, outer Rect, inner Rect
 
 // InternalRenderTextV parameter default value hint:
 // hide_text_after_hash: true
-// text_end: NULL
 func InternalRenderTextV(pos Vec2, text string, hide_text_after_hash bool) {
 	textArg, textFin := wrapString(text)
 	C.wrap_igRenderTextV(pos.toC(), textArg, C.bool(hide_text_after_hash))
@@ -5996,8 +5986,8 @@ func InternalScrollbar(axis Axis) {
 }
 
 // SelectableBoolV parameter default value hint:
-// flags: 0
 // selected: false
+// flags: 0
 // size: ImVec2(0,0)
 func SelectableBoolV(label string, selected bool, flags SelectableFlags, size Vec2) bool {
 	labelArg, labelFin := wrapString(label)
@@ -6278,8 +6268,8 @@ func InternalSetScrollYWindowPtr(window Window, scroll_y float32) {
 }
 
 // InternalSetShortcutRoutingV parameter default value hint:
-// flags: 0
 // owner_id: 0
+// flags: 0
 func InternalSetShortcutRoutingV(key_chord KeyChord, owner_id ID, flags InputFlags) bool {
 	return C.igSetShortcutRouting(C.ImGuiKeyChord(key_chord), C.ImGuiID(owner_id), C.ImGuiInputFlags(flags)) == C.bool(true)
 }
@@ -6405,8 +6395,8 @@ func InternalShadeVertsLinearUV(draw_list DrawList, vert_start_idx int32, vert_e
 }
 
 // InternalShortcutV parameter default value hint:
-// flags: 0
 // owner_id: 0
+// flags: 0
 func InternalShortcutV(key_chord KeyChord, owner_id ID, flags InputFlags) bool {
 	return C.igShortcut(C.ImGuiKeyChord(key_chord), C.ImGuiID(owner_id), C.ImGuiInputFlags(flags)) == C.bool(true)
 }
@@ -6495,10 +6485,10 @@ func InternalShutdown() {
 }
 
 // SliderAngleV parameter default value hint:
-// flags: 0
-// format: "%.0f deg"
-// v_degrees_max: +360.0f
 // v_degrees_min: -360.0f
+// v_degrees_max: +360.0f
+// format: "%.0f deg"
+// flags: 0
 func SliderAngleV(label string, v_rad *float32, v_degrees_min float32, v_degrees_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	v_radArg, v_radFin := wrapNumberPtr[C.float, float32](v_rad)
@@ -6524,8 +6514,8 @@ func InternalSliderBehavior(bb Rect, id ID, data_type DataType, p_v unsafe.Point
 }
 
 // SliderFloatV parameter default value hint:
-// flags: 0
 // format: "%.3f"
+// flags: 0
 func SliderFloatV(label string, v *float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	vArg, vFin := wrapNumberPtr[C.float, float32](v)
@@ -6540,8 +6530,8 @@ func SliderFloatV(label string, v *float32, v_min float32, v_max float32, format
 }
 
 // SliderFloat2V parameter default value hint:
-// flags: 0
 // format: "%.3f"
+// flags: 0
 func SliderFloat2V(label string, v *[2]float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -6564,8 +6554,8 @@ func SliderFloat2V(label string, v *[2]float32, v_min float32, v_max float32, fo
 }
 
 // SliderFloat3V parameter default value hint:
-// flags: 0
 // format: "%.3f"
+// flags: 0
 func SliderFloat3V(label string, v *[3]float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -6588,8 +6578,8 @@ func SliderFloat3V(label string, v *[3]float32, v_min float32, v_max float32, fo
 }
 
 // SliderFloat4V parameter default value hint:
-// flags: 0
 // format: "%.3f"
+// flags: 0
 func SliderFloat4V(label string, v *[4]float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -6612,8 +6602,8 @@ func SliderFloat4V(label string, v *[4]float32, v_min float32, v_max float32, fo
 }
 
 // SliderIntV parameter default value hint:
-// flags: 0
 // format: "%d"
+// flags: 0
 func SliderIntV(label string, v *int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	vArg, vFin := wrapNumberPtr[C.int, int32](v)
@@ -6628,8 +6618,8 @@ func SliderIntV(label string, v *int32, v_min int32, v_max int32, format string,
 }
 
 // SliderInt2V parameter default value hint:
-// flags: 0
 // format: "%d"
+// flags: 0
 func SliderInt2V(label string, v *[2]int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -6652,8 +6642,8 @@ func SliderInt2V(label string, v *[2]int32, v_min int32, v_max int32, format str
 }
 
 // SliderInt3V parameter default value hint:
-// flags: 0
 // format: "%d"
+// flags: 0
 func SliderInt3V(label string, v *[3]int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -6676,8 +6666,8 @@ func SliderInt3V(label string, v *[3]int32, v_min int32, v_max int32, format str
 }
 
 // SliderInt4V parameter default value hint:
-// flags: 0
 // format: "%d"
+// flags: 0
 func SliderInt4V(label string, v *[4]int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -6700,8 +6690,8 @@ func SliderInt4V(label string, v *[4]int32, v_min int32, v_max int32, format str
 }
 
 // SliderScalarV parameter default value hint:
-// flags: 0
 // format: NULL
+// flags: 0
 func SliderScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	formatArg, formatFin := wrapString(format)
@@ -6714,8 +6704,8 @@ func SliderScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_mi
 }
 
 // SliderScalarNV parameter default value hint:
-// flags: 0
 // format: NULL
+// flags: 0
 func SliderScalarNV(label string, data_type DataType, p_data unsafe.Pointer, components int32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	formatArg, formatFin := wrapString(format)
@@ -6741,9 +6731,9 @@ func Spacing() {
 }
 
 // InternalSplitterBehaviorV parameter default value hint:
-// bg_col: 0
 // hover_extend: 0.0f
 // hover_visibility_delay: 0.0f
+// bg_col: 0
 func InternalSplitterBehaviorV(bb Rect, id ID, axis Axis, size1 *float32, size2 *float32, min_size1 float32, min_size2 float32, hover_extend float32, hover_visibility_delay float32, bg_col uint32) bool {
 	size1Arg, size1Fin := wrapNumberPtr[C.float, float32](size1)
 	size2Arg, size2Fin := wrapNumberPtr[C.float, float32](size2)
@@ -7055,8 +7045,8 @@ func TableNextColumn() bool {
 }
 
 // TableNextRowV parameter default value hint:
-// min_row_height: 0.0f
 // row_flags: 0
+// min_row_height: 0.0f
 func TableNextRowV(row_flags TableRowFlags, min_row_height float32) {
 	C.igTableNextRow(C.ImGuiTableRowFlags(row_flags), C.float(min_row_height))
 }
@@ -7173,8 +7163,8 @@ func InternalTempInputIsActive(id ID) bool {
 }
 
 // InternalTempInputScalarV parameter default value hint:
-// p_clamp_max: NULL
 // p_clamp_min: NULL
+// p_clamp_max: NULL
 func InternalTempInputScalarV(bb Rect, id ID, label string, data_type DataType, p_data unsafe.Pointer, format string, p_clamp_min unsafe.Pointer, p_clamp_max unsafe.Pointer) bool {
 	labelArg, labelFin := wrapString(label)
 	formatArg, formatFin := wrapString(format)
@@ -7228,7 +7218,6 @@ func TextDisabled(fmt string) {
 
 // InternalTextExV parameter default value hint:
 // flags: 0
-// text_end: NULL
 func InternalTextExV(text string, flags TextFlags) {
 	textArg, textFin := wrapString(text)
 	C.wrap_igTextExV(textArg, C.ImGuiTextFlags(flags))
@@ -7237,7 +7226,6 @@ func InternalTextExV(text string, flags TextFlags) {
 }
 
 // TextUnformattedV parameter default value hint:
-// text_end: NULL
 func TextUnformattedV(text string) {
 	textArg, textFin := wrapString(text)
 	C.wrap_igTextUnformattedV(textArg)
@@ -7387,8 +7375,8 @@ func InternalUpdateWindowParentAndRootLinks(window Window, flags WindowFlags, pa
 }
 
 // VSliderFloatV parameter default value hint:
-// flags: 0
 // format: "%.3f"
+// flags: 0
 func VSliderFloatV(label string, size Vec2, v *float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	vArg, vFin := wrapNumberPtr[C.float, float32](v)
@@ -7403,8 +7391,8 @@ func VSliderFloatV(label string, size Vec2, v *float32, v_min float32, v_max flo
 }
 
 // VSliderIntV parameter default value hint:
-// flags: 0
 // format: "%d"
+// flags: 0
 func VSliderIntV(label string, size Vec2, v *int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	vArg, vFin := wrapNumberPtr[C.int, int32](v)
@@ -7419,8 +7407,8 @@ func VSliderIntV(label string, size Vec2, v *int32, v_min int32, v_max int32, fo
 }
 
 // VSliderScalarV parameter default value hint:
-// flags: 0
 // format: NULL
+// flags: 0
 func VSliderScalarV(label string, size Vec2, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
 	labelArg, labelFin := wrapString(label)
 	formatArg, formatFin := wrapString(format)
