@@ -54,5 +54,4 @@ jobs:
 
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        push_options: '--force'
         commit_message: Update windows lib from ci
