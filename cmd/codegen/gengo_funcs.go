@@ -64,10 +64,14 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 		// stop, when the function should not be generated
 		if !generator.shouldGenerate {
-			fmt.Printf("not generated: %s%s\n", f.FuncName, f.Args)
+			if flags.showNotGenerated {
+				fmt.Printf("not generated: %s%s\n", f.FuncName, f.Args)
+			}
 			continue
 		} else {
-			fmt.Printf("generated: %s%s\n", f.FuncName, f.Args)
+			if flags.showGenerated {
+				fmt.Printf("generated: %s%s\n", f.FuncName, f.Args)
+			}
 		}
 
 		if noErrors := generator.GenerateFunction(f, args, argWrappers); !noErrors {
@@ -75,7 +79,11 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 		}
 	}
 
-	fmt.Printf("Convert progress: %d/%d\n", generator.convertedFuncCount, len(validFuncs))
+	fmt.Printf("Convert progress: %d/%d (%.2f%%)\n",
+		generator.convertedFuncCount,
+		len(validFuncs),
+		100*float32(generator.convertedFuncCount)/float32(len(validFuncs)),
+	)
 
 	goFile, err := os.Create(fmt.Sprintf("%s_funcs.go", prefix))
 	if err != nil {
