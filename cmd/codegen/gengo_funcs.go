@@ -3,6 +3,7 @@ package main
 import "C"
 import (
 	"fmt"
+	"github.com/kpango/glg"
 	"os"
 	"strings"
 )
@@ -65,12 +66,12 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 		// stop, when the function should not be generated
 		if !generator.shouldGenerate {
 			if flags.showNotGenerated {
-				fmt.Printf("not generated: %s%s\n", f.FuncName, f.Args)
+				glg.Failf("not generated: %s%s", f.FuncName, f.Args)
 			}
 			continue
 		} else {
 			if flags.showGenerated {
-				fmt.Printf("generated: %s%s\n", f.FuncName, f.Args)
+				glg.Successf("generated: %s%s", f.FuncName, f.Args)
 			}
 		}
 
@@ -79,7 +80,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 		}
 	}
 
-	fmt.Printf("Convert progress: %d/%d (%.2f%%)\n",
+	glg.Infof("Convert progress: %d/%d (%.2f%%)",
 		generator.convertedFuncCount,
 		len(validFuncs),
 		100*float32(generator.convertedFuncCount)/float32(len(validFuncs)),
@@ -212,7 +213,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 
 		funcName = "New" + returnType + suffix
 	default:
-		fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)
+		glg.Debugf("Unknown return type \"%s\" in function %s", f.Ret, f.FuncName)
 		return false
 	}
 
@@ -384,7 +385,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 		}
 
 		if !g.shouldGenerate {
-			fmt.Printf("Unknown argument type \"%s\" in function %s\n", a.Type, f.FuncName)
+			glg.Debugf("Unknown argument type \"%s\" in function %s", a.Type, f.FuncName)
 			break
 		}
 	}
