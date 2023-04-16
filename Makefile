@@ -38,10 +38,10 @@ cimplot:
 	$(call cimplot)
 
 compile_cimgui_macos:
-	rm -rf ./cimgui/build
-	cd ./cimgui; cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=arm64
-	cd ./cimgui/build; make
-	cp -f ./cimgui/build/cimgui.a ./lib/macos/arm64/
+	rm -rf ./lib/build
+	cd ./lib; cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=arm64
+	cd ./lib/build; make
+	cp -f ./lib/build/cimgui.a ./lib/macos/arm64/
 
 ## generate: generates both bindings (equal to `all`)
 .PHONY: generate
