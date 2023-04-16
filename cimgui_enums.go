@@ -316,17 +316,18 @@ const (
 type DebugLogFlags int
 
 const (
-	DebugLogFlagsNone          = 0
-	DebugLogFlagsEventActiveId = 1
-	DebugLogFlagsEventFocus    = 2
-	DebugLogFlagsEventPopup    = 4
-	DebugLogFlagsEventNav      = 8
-	DebugLogFlagsEventClipper  = 16
-	DebugLogFlagsEventIO       = 32
-	DebugLogFlagsEventDocking  = 64
-	DebugLogFlagsEventViewport = 128
-	DebugLogFlagsEventMask     = 255
-	DebugLogFlagsOutputToTTY   = 1024
+	DebugLogFlagsNone           = 0
+	DebugLogFlagsEventActiveId  = 1
+	DebugLogFlagsEventFocus     = 2
+	DebugLogFlagsEventPopup     = 4
+	DebugLogFlagsEventNav       = 8
+	DebugLogFlagsEventClipper   = 16
+	DebugLogFlagsEventSelection = 32
+	DebugLogFlagsEventIO        = 64
+	DebugLogFlagsEventDocking   = 128
+	DebugLogFlagsEventViewport  = 256
+	DebugLogFlagsEventMask      = 511
+	DebugLogFlagsOutputToTTY    = 1024
 )
 
 // original name: ImGuiDir_
@@ -495,8 +496,7 @@ const (
 	InputSourceKeyboard  = 2
 	InputSourceGamepad   = 3
 	InputSourceClipboard = 4
-	InputSourceNav       = 5
-	InputSourceCOUNT     = 6
+	InputSourceCOUNT     = 5
 )
 
 // original name: ImGuiInputTextFlagsPrivate_
@@ -789,6 +789,16 @@ const (
 	MouseCursorHand       = 7
 	MouseCursorNotAllowed = 8
 	MouseCursorCOUNT      = 9
+)
+
+// original name: ImGuiMouseSource
+type MouseSource int
+
+const (
+	MouseSourceMouse       = 0
+	MouseSourceTouchScreen = 1
+	MouseSourcePen         = 2
+	MouseSourceCOUNT       = 3
 )
 
 // original name: ImGuiNavHighlightFlags_
@@ -1247,10 +1257,11 @@ const (
 	ViewportFlagsNoFocusOnClick      = 64
 	ViewportFlagsNoInputs            = 128
 	ViewportFlagsNoRendererClear     = 256
-	ViewportFlagsTopMost             = 512
-	ViewportFlagsMinimized           = 1024
-	ViewportFlagsNoAutoMerge         = 2048
-	ViewportFlagsCanHostOtherWindows = 4096
+	ViewportFlagsNoAutoMerge         = 512
+	ViewportFlagsTopMost             = 1024
+	ViewportFlagsCanHostOtherWindows = 2048
+	ViewportFlagsIsMinimized         = 4096
+	ViewportFlagsIsFocused           = 8192
 )
 
 // original name: ImGuiWindowDockStyleCol

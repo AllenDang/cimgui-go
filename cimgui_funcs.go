@@ -901,6 +901,10 @@ func (self IO) AddMousePosEvent(x float32, y float32) {
 	C.ImGuiIO_AddMousePosEvent(self.handle(), C.float(x), C.float(y))
 }
 
+func (self IO) AddMouseSourceEvent(source MouseSource) {
+	C.ImGuiIO_AddMouseSourceEvent(self.handle(), C.ImGuiMouseSource(source))
+}
+
 func (self IO) AddMouseViewportEvent(id ID) {
 	C.ImGuiIO_AddMouseViewportEvent(self.handle(), C.ImGuiID(id))
 }
@@ -973,6 +977,18 @@ func (self InputTextCallbackData) SelectAll() {
 
 func (self InputTextCallbackData) Destroy() {
 	C.ImGuiInputTextCallbackData_destroy(self.handle())
+}
+
+func (self InputTextDeactivatedState) InternalClearFreeMemory() {
+	C.ImGuiInputTextDeactivatedState_ClearFreeMemory(self.handle())
+}
+
+func InternalNewInputTextDeactivatedState() InputTextDeactivatedState {
+	return (InputTextDeactivatedState)(unsafe.Pointer(C.ImGuiInputTextDeactivatedState_ImGuiInputTextDeactivatedState()))
+}
+
+func (self InputTextDeactivatedState) Destroy() {
+	C.ImGuiInputTextDeactivatedState_destroy(self.handle())
 }
 
 func (self InputTextState) InternalClearFreeMemory() {
@@ -2745,8 +2761,8 @@ func ComboStrarrV(label string, current_item *int32, items []string, items_count
 	return C.igCombo_Str_arr(labelArg, current_itemArg, itemsArg, C.int(items_count), C.int(popup_max_height_in_items)) == C.bool(true)
 }
 
-func InternalConvertSingleModFlagToKey(key Key) Key {
-	return Key(C.igConvertSingleModFlagToKey(C.ImGuiKey(key)))
+func InternalConvertSingleModFlagToKey(ctx Context, key Key) Key {
+	return Key(C.igConvertSingleModFlagToKey(ctx.handle(), C.ImGuiKey(key)))
 }
 
 // CreateContextV parameter default value hint:
@@ -3559,8 +3575,8 @@ func InternalFindWindowSettingsByWindow(window Window) WindowSettings {
 	return (WindowSettings)(unsafe.Pointer(C.igFindWindowSettingsByWindow(window.handle())))
 }
 
-func InternalFocusTopMostWindowUnderOne(under_this_window Window, ignore_window Window) {
-	C.igFocusTopMostWindowUnderOne(under_this_window.handle(), ignore_window.handle())
+func InternalFocusTopMostWindowUnderOne(under_this_window Window, ignore_window Window, filter_viewport Viewport) {
+	C.igFocusTopMostWindowUnderOne(under_this_window.handle(), ignore_window.handle(), filter_viewport.handle())
 }
 
 func InternalFocusWindow(window Window) {
@@ -3910,8 +3926,12 @@ func InternalKeyChordName(key_chord KeyChord, out_buf string, out_buf_size int32
 	out_bufFin()
 }
 
-func InternalKeyData(key Key) KeyData {
-	return (KeyData)(unsafe.Pointer(C.igGetKeyData(C.ImGuiKey(key))))
+func InternalKeyDataContextPtr(ctx Context, key Key) KeyData {
+	return (KeyData)(unsafe.Pointer(C.igGetKeyData_ContextPtr(ctx.handle(), C.ImGuiKey(key))))
+}
+
+func InternalKeyDataKey(key Key) KeyData {
+	return (KeyData)(unsafe.Pointer(C.igGetKeyData_Key(C.ImGuiKey(key))))
 }
 
 func KeyIndex(key Key) Key {
@@ -3937,8 +3957,8 @@ func InternalKeyOwner(key Key) ID {
 	return ID(C.igGetKeyOwner(C.ImGuiKey(key)))
 }
 
-func InternalKeyOwnerData(key Key) KeyOwnerData {
-	return (KeyOwnerData)(unsafe.Pointer(C.igGetKeyOwnerData(C.ImGuiKey(key))))
+func InternalKeyOwnerData(ctx Context, key Key) KeyOwnerData {
+	return (KeyOwnerData)(unsafe.Pointer(C.igGetKeyOwnerData(ctx.handle(), C.ImGuiKey(key))))
 }
 
 func KeyPressedAmount(key Key, repeat_delay float32, rate float32) int {
@@ -5046,6 +5066,10 @@ func InputScalarNV(label string, data_type DataType, p_data unsafe.Pointer, comp
 	return C.igInputScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), (p_step), (p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
+func InternalInputTextDeactivateHook(id ID) {
+	C.igInputTextDeactivateHook(C.ImGuiID(id))
+}
+
 // InvisibleButtonV parameter default value hint:
 // flags: 0
 func InvisibleButtonV(str_id string, size Vec2, flags ButtonFlags) bool {
@@ -5297,6 +5321,12 @@ func InternalIsWindowChildOf(window Window, potential_parent Window, popup_hiera
 
 func IsWindowCollapsed() bool {
 	return C.igIsWindowCollapsed() == C.bool(true)
+}
+
+// InternalIsWindowContentHoverableV parameter default value hint:
+// flags: 0
+func InternalIsWindowContentHoverableV(window Window, flags HoveredFlags) bool {
+	return C.igIsWindowContentHoverable(window.handle(), C.ImGuiHoveredFlags(flags)) == C.bool(true)
 }
 
 func IsWindowDocked() bool {
@@ -6128,6 +6158,12 @@ func InternalSetItemKeyOwnerV(key Key, flags InputFlags) {
 // flags: 0
 func InternalSetKeyOwnerV(key Key, owner_id ID, flags InputFlags) {
 	C.igSetKeyOwner(C.ImGuiKey(key), C.ImGuiID(owner_id), C.ImGuiInputFlags(flags))
+}
+
+// InternalSetKeyOwnersForKeyChordV parameter default value hint:
+// flags: 0
+func InternalSetKeyOwnersForKeyChordV(key KeyChord, owner_id ID, flags InputFlags) {
+	C.igSetKeyOwnersForKeyChord(C.ImGuiKeyChord(key), C.ImGuiID(owner_id), C.ImGuiInputFlags(flags))
 }
 
 // SetKeyboardFocusHereV parameter default value hint:
@@ -8546,6 +8582,10 @@ func IsPopupOpenStr(str_id string) bool {
 	return C.wrap_igIsPopupOpen_Str(str_idArg) == C.bool(true)
 }
 
+func InternalIsWindowContentHoverable(window Window) bool {
+	return C.wrap_igIsWindowContentHoverable(window.handle()) == C.bool(true)
+}
+
 func IsWindowFocused() bool {
 	return C.wrap_igIsWindowFocused() == C.bool(true)
 }
@@ -8808,6 +8848,10 @@ func InternalSetItemKeyOwner(key Key) {
 
 func InternalSetKeyOwner(key Key, owner_id ID) {
 	C.wrap_igSetKeyOwner(C.ImGuiKey(key), C.ImGuiID(owner_id))
+}
+
+func InternalSetKeyOwnersForKeyChord(key KeyChord, owner_id ID) {
+	C.wrap_igSetKeyOwnersForKeyChord(C.ImGuiKeyChord(key), C.ImGuiID(owner_id))
 }
 
 func SetKeyboardFocusHere() {
@@ -10355,6 +10399,22 @@ func (self Context) TestEngine() unsafe.Pointer {
 	return unsafe.Pointer(C.wrap_ImGuiContext_GetTestEngine(self.handle()))
 }
 
+func (self Context) SetInputEventsNextMouseSource(v MouseSource) {
+	C.wrap_ImGuiContext_SetInputEventsNextMouseSource(self.handle(), C.ImGuiMouseSource(v))
+}
+
+func (self Context) InputEventsNextMouseSource() MouseSource {
+	return MouseSource(C.wrap_ImGuiContext_GetInputEventsNextMouseSource(self.handle()))
+}
+
+func (self Context) SetInputEventsNextEventId(v uint32) {
+	C.wrap_ImGuiContext_SetInputEventsNextEventId(self.handle(), C.ImU32(v))
+}
+
+func (self Context) InputEventsNextEventId() uint32 {
+	return uint32(C.wrap_ImGuiContext_GetInputEventsNextEventId(self.handle()))
+}
+
 func (self Context) WindowsById() Storage {
 	return newStorageFromC(C.wrap_ImGuiContext_GetWindowsById(self.handle()))
 }
@@ -10789,12 +10849,12 @@ func (self Context) FallbackMonitor() PlatformMonitor {
 	return newPlatformMonitorFromC(C.wrap_ImGuiContext_GetFallbackMonitor(self.handle()))
 }
 
-func (self Context) SetViewportFrontMostStampCount(v int32) {
-	C.wrap_ImGuiContext_SetViewportFrontMostStampCount(self.handle(), C.int(v))
+func (self Context) SetViewportFocusedStampCount(v int32) {
+	C.wrap_ImGuiContext_SetViewportFocusedStampCount(self.handle(), C.int(v))
 }
 
-func (self Context) ViewportFrontMostStampCount() int {
-	return int(C.wrap_ImGuiContext_GetViewportFrontMostStampCount(self.handle()))
+func (self Context) ViewportFocusedStampCount() int {
+	return int(C.wrap_ImGuiContext_GetViewportFocusedStampCount(self.handle()))
 }
 
 func (self Context) SetNavWindow(v Window) {
@@ -11393,6 +11453,10 @@ func (self Context) MouseLastValidPos() Vec2 {
 
 func (self Context) InputTextState() InputTextState {
 	return newInputTextStateFromC(C.wrap_ImGuiContext_GetInputTextState(self.handle()))
+}
+
+func (self Context) InputTextDeactivatedState() InputTextDeactivatedState {
+	return newInputTextDeactivatedStateFromC(C.wrap_ImGuiContext_GetInputTextDeactivatedState(self.handle()))
 }
 
 func (self Context) InputTextPasswordFont() Font {
@@ -12832,6 +12896,14 @@ func (self IO) MouseWheelH() float32 {
 	return float32(C.wrap_ImGuiIO_GetMouseWheelH(self.handle()))
 }
 
+func (self IO) SetMouseSource(v MouseSource) {
+	C.wrap_ImGuiIO_SetMouseSource(self.handle(), C.ImGuiMouseSource(v))
+}
+
+func (self IO) MouseSource() MouseSource {
+	return MouseSource(C.wrap_ImGuiIO_GetMouseSource(self.handle()))
+}
+
 func (self IO) SetMouseHoveredViewport(v ID) {
 	C.wrap_ImGuiIO_SetMouseHoveredViewport(self.handle(), C.ImGuiID(v))
 }
@@ -12894,6 +12966,14 @@ func (self IO) MousePosPrev() Vec2 {
 	return *out
 }
 
+func (self IO) SetMouseWheelRequestAxisSwap(v bool) {
+	C.wrap_ImGuiIO_SetMouseWheelRequestAxisSwap(self.handle(), C.bool(v))
+}
+
+func (self IO) MouseWheelRequestAxisSwap() bool {
+	return C.wrap_ImGuiIO_GetMouseWheelRequestAxisSwap(self.handle()) == C.bool(true)
+}
+
 func (self IO) SetPenPressure(v float32) {
 	C.wrap_ImGuiIO_SetPenPressure(self.handle(), C.float(v))
 }
@@ -12940,6 +13020,14 @@ func (self InputEvent) SetSource(v InputSource) {
 
 func (self InputEvent) Source() InputSource {
 	return InputSource(C.wrap_ImGuiInputEvent_GetSource(self.handle()))
+}
+
+func (self InputEvent) SetEventId(v uint32) {
+	C.wrap_ImGuiInputEvent_SetEventId(self.handle(), C.ImU32(v))
+}
+
+func (self InputEvent) EventId() uint32 {
+	return uint32(C.wrap_ImGuiInputEvent_GetEventId(self.handle()))
 }
 
 func (self InputEvent) SetAddedByTestEngine(v bool) {
@@ -12998,6 +13086,14 @@ func (self InputEventMouseButton) Down() bool {
 	return C.wrap_ImGuiInputEventMouseButton_GetDown(self.handle()) == C.bool(true)
 }
 
+func (self InputEventMouseButton) SetMouseSource(v MouseSource) {
+	C.wrap_ImGuiInputEventMouseButton_SetMouseSource(self.handle(), C.ImGuiMouseSource(v))
+}
+
+func (self InputEventMouseButton) MouseSource() MouseSource {
+	return MouseSource(C.wrap_ImGuiInputEventMouseButton_GetMouseSource(self.handle()))
+}
+
 func (self InputEventMousePos) SetPosX(v float32) {
 	C.wrap_ImGuiInputEventMousePos_SetPosX(self.handle(), C.float(v))
 }
@@ -13012,6 +13108,14 @@ func (self InputEventMousePos) SetPosY(v float32) {
 
 func (self InputEventMousePos) PosY() float32 {
 	return float32(C.wrap_ImGuiInputEventMousePos_GetPosY(self.handle()))
+}
+
+func (self InputEventMousePos) SetMouseSource(v MouseSource) {
+	C.wrap_ImGuiInputEventMousePos_SetMouseSource(self.handle(), C.ImGuiMouseSource(v))
+}
+
+func (self InputEventMousePos) MouseSource() MouseSource {
+	return MouseSource(C.wrap_ImGuiInputEventMousePos_GetMouseSource(self.handle()))
 }
 
 func (self InputEventMouseViewport) SetHoveredViewportID(v ID) {
@@ -13036,6 +13140,14 @@ func (self InputEventMouseWheel) SetWheelY(v float32) {
 
 func (self InputEventMouseWheel) WheelY() float32 {
 	return float32(C.wrap_ImGuiInputEventMouseWheel_GetWheelY(self.handle()))
+}
+
+func (self InputEventMouseWheel) SetMouseSource(v MouseSource) {
+	C.wrap_ImGuiInputEventMouseWheel_SetMouseSource(self.handle(), C.ImGuiMouseSource(v))
+}
+
+func (self InputEventMouseWheel) MouseSource() MouseSource {
+	return MouseSource(C.wrap_ImGuiInputEventMouseWheel_GetMouseSource(self.handle()))
 }
 
 func (self InputEventText) SetChar(v uint32) {
@@ -13151,6 +13263,14 @@ func (self InputTextCallbackData) SetSelectionEnd(v int32) {
 
 func (self InputTextCallbackData) SelectionEnd() int {
 	return int(C.wrap_ImGuiInputTextCallbackData_GetSelectionEnd(self.handle()))
+}
+
+func (self InputTextDeactivatedState) SetID(v ID) {
+	C.wrap_ImGuiInputTextDeactivatedState_SetID(self.handle(), C.ImGuiID(v))
+}
+
+func (self InputTextDeactivatedState) ID() ID {
+	return ID(C.wrap_ImGuiInputTextDeactivatedState_GetID(self.handle()))
 }
 
 func (self InputTextState) SetCtx(v Context) {
@@ -16909,6 +17029,14 @@ func (self ViewportP) ImGuiViewport() Viewport {
 	return newViewportFromC(C.wrap_ImGuiViewportP_Get_ImGuiViewport(self.handle()))
 }
 
+func (self ViewportP) SetWindow(v Window) {
+	C.wrap_ImGuiViewportP_SetWindow(self.handle(), v.handle())
+}
+
+func (self ViewportP) Window() Window {
+	return (Window)(unsafe.Pointer(C.wrap_ImGuiViewportP_GetWindow(self.handle())))
+}
+
 func (self ViewportP) SetIdx(v int32) {
 	C.wrap_ImGuiViewportP_SetIdx(self.handle(), C.int(v))
 }
@@ -16925,12 +17053,12 @@ func (self ViewportP) LastFrameActive() int {
 	return int(C.wrap_ImGuiViewportP_GetLastFrameActive(self.handle()))
 }
 
-func (self ViewportP) SetLastFrontMostStampCount(v int32) {
-	C.wrap_ImGuiViewportP_SetLastFrontMostStampCount(self.handle(), C.int(v))
+func (self ViewportP) SetLastFocusedStampCount(v int32) {
+	C.wrap_ImGuiViewportP_SetLastFocusedStampCount(self.handle(), C.int(v))
 }
 
-func (self ViewportP) LastFrontMostStampCount() int {
-	return int(C.wrap_ImGuiViewportP_GetLastFrontMostStampCount(self.handle()))
+func (self ViewportP) LastFocusedStampCount() int {
+	return int(C.wrap_ImGuiViewportP_GetLastFocusedStampCount(self.handle()))
 }
 
 func (self ViewportP) SetLastNameHash(v ID) {
@@ -16967,20 +17095,20 @@ func (self ViewportP) LastAlpha() float32 {
 	return float32(C.wrap_ImGuiViewportP_GetLastAlpha(self.handle()))
 }
 
+func (self ViewportP) SetLastFocusedHadNavWindow(v bool) {
+	C.wrap_ImGuiViewportP_SetLastFocusedHadNavWindow(self.handle(), C.bool(v))
+}
+
+func (self ViewportP) LastFocusedHadNavWindow() bool {
+	return C.wrap_ImGuiViewportP_GetLastFocusedHadNavWindow(self.handle()) == C.bool(true)
+}
+
 func (self ViewportP) SetPlatformMonitor(v int) {
 	C.wrap_ImGuiViewportP_SetPlatformMonitor(self.handle(), C.short(v))
 }
 
 func (self ViewportP) PlatformMonitor() int {
 	return int(C.wrap_ImGuiViewportP_GetPlatformMonitor(self.handle()))
-}
-
-func (self ViewportP) SetWindow(v Window) {
-	C.wrap_ImGuiViewportP_SetWindow(self.handle(), v.handle())
-}
-
-func (self ViewportP) Window() Window {
-	return (Window)(unsafe.Pointer(C.wrap_ImGuiViewportP_GetWindow(self.handle())))
 }
 
 func (self ViewportP) DrawDataP() DrawData {
