@@ -320,12 +320,13 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 	for i, a := range f.ArgsT {
 		g.shouldGenerate = false
 
-		if a.Name == "type" {
-			a.Name = "typeArg"
+		if a.Name == "type" || a.Name == "range" {
+			a.Name += "Arg"
 		}
 
 		if i == 0 && f.StructSetter {
 			g.shouldGenerate = true
+			continue
 		}
 
 		if f.StructGetter && g.structNames[a.Type] {
@@ -359,20 +360,29 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 			continue
 		}
 
+		pureType := strings.TrimPrefix(a.Type, "const ")
+		isPointer := false
 		if strings.HasSuffix(a.Type, "*") {
-			pureType := strings.TrimPrefix(a.Type, "const ")
 			pureType = strings.TrimSuffix(pureType, "*")
+			isPointer = true
+		}
 
-			if g.structNames[pureType] {
-				args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType)))
-				argWrappers = append(argWrappers, ArgumentWrapperData{
-					VarName: fmt.Sprintf("%s.handle()", a.Name),
-					ArgType: renameGoIdentifier(pureType),
-				})
-
-				g.shouldGenerate = true
-				continue
+		if g.structNames[pureType] {
+			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType)))
+			w := ArgumentWrapperData{
+				ArgType: renameGoIdentifier(pureType),
 			}
+
+			if isPointer {
+				w.VarName = fmt.Sprintf("%s.handle()", a.Name)
+			} else {
+				w.VarName = fmt.Sprintf("%s.c()", a.Name)
+
+			}
+			argWrappers = append(argWrappers, w)
+
+			g.shouldGenerate = true
+			continue
 		}
 
 		if !g.shouldGenerate {
