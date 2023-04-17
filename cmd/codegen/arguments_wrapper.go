@@ -68,6 +68,7 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"float[3]":                 simplePtrArrayW(3, "C.float", "float32"),
 		"float[4]":                 simplePtrArrayW(4, "C.float", "float32"),
 		"ImWchar":                  simpleW("Wchar", "C.ImWchar"),
+		"ImWchar16":                simpleW("rune", "C.ImWchar16"),
 		"const ImWchar*":           simpleW("*Wchar", "(*C.ImWchar)"),
 		"ImGuiID":                  simpleW("ImGuiID", "C.ImGuiID"),
 		"ImTextureID":              simpleW("TextureID", "C.ImTextureID"),
