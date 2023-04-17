@@ -4830,6 +4830,20 @@ func InternalImTextCharFromUtf8(out_char *uint32, in_text string, in_text_end st
 	return int(C.igImTextCharFromUtf8(out_charArg, in_textArg, in_text_endArg))
 }
 
+func InternalImTextCharToUtf8(out_buf *[5]rune, c uint32) string {
+	out_bufArg := make([]C.char, len(out_buf))
+	for i, out_bufV := range out_buf {
+		out_bufArg[i] = C.char(out_bufV)
+	}
+
+	defer func() {
+		for i, out_bufV := range out_bufArg {
+			(*out_buf)[i] = rune(out_bufV)
+		}
+	}()
+	return C.GoString(C.igImTextCharToUtf8((*C.char)(&out_bufArg[0]), C.uint(c)))
+}
+
 func InternalImTextCountCharsFromUtf8(in_text string, in_text_end string) int {
 	in_textArg, in_textFin := wrapString(in_text)
 	in_text_endArg, in_text_endFin := wrapString(in_text_end)
