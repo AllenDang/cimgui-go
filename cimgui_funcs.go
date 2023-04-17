@@ -3045,6 +3045,17 @@ func InternalDockBuilderSetNodeSize(node_id ID, size Vec2) {
 	C.igDockBuilderSetNodeSize(C.ImGuiID(node_id), size.toC())
 }
 
+func InternalDockBuilderSplitNode(node_id ID, split_dir Dir, size_ratio_for_node_at_dir float32, out_id_at_dir *ID, out_id_at_opposite_dir *ID) ID {
+	out_id_at_dirArg, out_id_at_dirFin := wrapNumberPtr[C.ImGuiID, ID](out_id_at_dir)
+	out_id_at_opposite_dirArg, out_id_at_opposite_dirFin := wrapNumberPtr[C.ImGuiID, ID](out_id_at_opposite_dir)
+
+	defer func() {
+		out_id_at_dirFin()
+		out_id_at_opposite_dirFin()
+	}()
+	return ID(C.igDockBuilderSplitNode(C.ImGuiID(node_id), C.ImGuiDir(split_dir), C.float(size_ratio_for_node_at_dir), out_id_at_dirArg, out_id_at_opposite_dirArg))
+}
+
 func InternalDockContextCalcDropPosForDocking(target Window, target_node DockNode, payload_window Window, payload_node DockNode, split_dir Dir, split_outer bool, out_pos *Vec2) bool {
 	out_posArg, out_posFin := wrap[C.ImVec2, *Vec2](out_pos)
 
