@@ -47,6 +47,8 @@ func main() {
 	prefix := flag.String("p", "", "prefix for the generated file")
 	include := flag.String("i", "", "include header file")
 
+	parse()
+
 	flag.Parse()
 
 	stat, err := os.Stat(*defJsonPath)
