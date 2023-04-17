@@ -1984,6 +1984,10 @@ func PlotImOverlapsS32(min_a int, max_a int, min_b int, max_b int) bool {
 	return C.ImPlot_ImOverlaps_S32(C.ImS32(min_a), C.ImS32(max_a), C.ImS32(min_b), C.ImS32(max_b)) == C.bool(true)
 }
 
+func PlotImOverlapsS64(min_a int64, max_a int64, min_b int64, max_b int64) bool {
+	return C.ImPlot_ImOverlaps_S64(C.ImS64(min_a), C.ImS64(max_a), C.ImS64(min_b), C.ImS64(max_b)) == C.bool(true)
+}
+
 func PlotImOverlapsS8(min_a int, max_a int, min_b int, max_b int) bool {
 	return C.ImPlot_ImOverlaps_S8(C.ImS8(min_a), C.ImS8(max_a), C.ImS8(min_b), C.ImS8(max_b)) == C.bool(true)
 }
