@@ -1837,6 +1837,13 @@ func (self *Rect) InternalContainsVec2(p Vec2) bool {
 	return C.ImRect_Contains_Vec2(selfArg, p.toC()) == C.bool(true)
 }
 
+func (self *Rect) InternalExpandFloat(amount float32) {
+	selfArg, selfFin := wrap[C.ImRect, *Rect](self)
+	C.ImRect_Expand_Float(selfArg, C.float(amount))
+
+	selfFin()
+}
+
 func (self *Rect) InternalExpandVec2(amount Vec2) {
 	selfArg, selfFin := wrap[C.ImRect, *Rect](self)
 	C.ImRect_Expand_Vec2(selfArg, amount.toC())
