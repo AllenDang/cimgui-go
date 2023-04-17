@@ -2499,8 +2499,6 @@ extern void wrap_ImGuiWindowTempData_SetItemWidthStack(ImGuiWindowTempData *ImGu
 extern ImVector_float wrap_ImGuiWindowTempData_GetItemWidthStack(ImGuiWindowTempData *self);
 extern void wrap_ImGuiWindowTempData_SetTextWrapPosStack(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVector_float v);
 extern ImVector_float wrap_ImGuiWindowTempData_GetTextWrapPosStack(ImGuiWindowTempData *self);
-extern void wrap_ImVec1_Setx(ImVec1 *ImVec1Ptr, float v);
-extern float wrap_ImVec1_Getx(ImVec1 *self);
 extern void wrap_ImVec2ih_Setx(ImVec2ih *ImVec2ihPtr, short v);
 extern short wrap_ImVec2ih_Getx(ImVec2ih *self);
 extern void wrap_ImVec2ih_Sety(ImVec2ih *ImVec2ihPtr, short v);

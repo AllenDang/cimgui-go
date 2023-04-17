@@ -2015,6 +2015,13 @@ func (self *Rect) Destroy() {
 	selfFin()
 }
 
+func (self *Vec1) Destroy() {
+	selfArg, selfFin := wrap[C.ImVec1, *Vec1](self)
+	C.ImVec1_destroy(selfArg)
+
+	selfFin()
+}
+
 func (self *Vec2) Destroy() {
 	selfArg, selfFin := wrap[C.ImVec2, *Vec2](self)
 	C.ImVec2_destroy(selfArg)
@@ -12489,6 +12496,14 @@ func (self GroupData) BackupCursorMaxPos() Vec2 {
 	return *out
 }
 
+func (self GroupData) SetBackupIndent(v Vec1) {
+	C.wrap_ImGuiGroupData_SetBackupIndent(self.handle(), v.toC())
+}
+
+func (self GroupData) SetBackupGroupOffset(v Vec1) {
+	C.wrap_ImGuiGroupData_SetBackupGroupOffset(self.handle(), v.toC())
+}
+
 func (self GroupData) SetBackupCurrLineSize(v Vec2) {
 	C.wrap_ImGuiGroupData_SetBackupCurrLineSize(self.handle(), v.toC())
 }
@@ -17042,6 +17057,10 @@ func (self TableTempData) HostBackupCursorMaxPos() Vec2 {
 	return *out
 }
 
+func (self TableTempData) SetHostBackupColumnsOffset(v Vec1) {
+	C.wrap_ImGuiTableTempData_SetHostBackupColumnsOffset(self.handle(), v.toC())
+}
+
 func (self TableTempData) SetHostBackupItemWidth(v float32) {
 	C.wrap_ImGuiTableTempData_SetHostBackupItemWidth(self.handle(), C.float(v))
 }
@@ -18607,6 +18626,18 @@ func (self WindowTempData) SetIsSetPos(v bool) {
 
 func (self WindowTempData) IsSetPos() bool {
 	return C.wrap_ImGuiWindowTempData_GetIsSetPos(self.handle()) == C.bool(true)
+}
+
+func (self WindowTempData) SetIndent(v Vec1) {
+	C.wrap_ImGuiWindowTempData_SetIndent(self.handle(), v.toC())
+}
+
+func (self WindowTempData) SetColumnsOffset(v Vec1) {
+	C.wrap_ImGuiWindowTempData_SetColumnsOffset(self.handle(), v.toC())
+}
+
+func (self WindowTempData) SetGroupOffset(v Vec1) {
+	C.wrap_ImGuiWindowTempData_SetGroupOffset(self.handle(), v.toC())
 }
 
 func (self WindowTempData) SetCursorStartPosLossyness(v Vec2) {

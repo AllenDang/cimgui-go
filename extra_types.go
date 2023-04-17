@@ -19,6 +19,25 @@ type (
 	KeyChord            C.ImGuiKeyChord
 )
 
+var _ wrappableType[C.ImVec1, *Vec1] = &Vec1{}
+
+type Vec1 struct {
+	X float32
+}
+
+func NewVec1(x float32) Vec1 {
+	return Vec1{X: x}
+}
+
+func (i *Vec1) fromC(vec1 C.ImVec1) *Vec1 {
+	*i = NewVec1(float32(vec1.x))
+	return i
+}
+
+func (i Vec1) toC() C.ImVec1 {
+	return C.ImVec1{x: C.float(i.X)}
+}
+
 var _ wrappableType[C.ImVec2, *Vec2] = &Vec2{}
 
 type Vec2 struct {
