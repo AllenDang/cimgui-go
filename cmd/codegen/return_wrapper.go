@@ -15,6 +15,7 @@ func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 		"const char*":              {"string", "return C.GoString(%s)"},
 		"const ImWchar*":           simpleR("(*Wchar)"),
 		"ImWchar":                  simpleR("Wchar"),
+		"ImWchar16":                simpleR("rune"),
 		"float":                    simpleR("float32"),
 		"double":                   simpleR("float64"),
 		"int":                      simpleR("int"),
