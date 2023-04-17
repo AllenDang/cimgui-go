@@ -24,6 +24,7 @@ type argumentWrapper func(arg ArgDef) ArgumentWrapperData
 
 func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 	argWrapperMap := map[string]argumentWrapper{
+		"char":                     simpleW("rune", "C.char"),
 		"char*":                    constCharW,
 		"const char*":              constCharW,
 		"const char**":             charPtrPtrW,

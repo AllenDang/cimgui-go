@@ -4319,6 +4319,10 @@ func InternalImBitArrayTestBit(arr *[]uint32, n int32) bool {
 	return C.igImBitArrayTestBit((*C.ImU32)(&arrArg[0]), C.int(n)) == C.bool(true)
 }
 
+func InternalImCharIsBlankA(c rune) bool {
+	return C.igImCharIsBlankA(C.char(c)) == C.bool(true)
+}
+
 func InternalImCharIsBlankW(c uint32) bool {
 	return C.igImCharIsBlankW(C.uint(c)) == C.bool(true)
 }
@@ -4396,6 +4400,20 @@ func InternalImFontAtlasBuildInit(atlas FontAtlas) {
 
 func InternalImFontAtlasBuildPackCustomRects(atlas FontAtlas, stbrp_context_opaque unsafe.Pointer) {
 	C.igImFontAtlasBuildPackCustomRects(atlas.handle(), (stbrp_context_opaque))
+}
+
+func InternalImFontAtlasBuildRender32bppRectFromString(atlas FontAtlas, x int32, y int32, w int32, h int32, in_str string, in_marker_char rune, in_marker_pixel_value uint32) {
+	in_strArg, in_strFin := wrapString(in_str)
+	C.igImFontAtlasBuildRender32bppRectFromString(atlas.handle(), C.int(x), C.int(y), C.int(w), C.int(h), in_strArg, C.char(in_marker_char), C.uint(in_marker_pixel_value))
+
+	in_strFin()
+}
+
+func InternalImFontAtlasBuildRender8bppRectFromString(atlas FontAtlas, x int32, y int32, w int32, h int32, in_str string, in_marker_char rune, in_marker_pixel_value uint) {
+	in_strArg, in_strFin := wrapString(in_str)
+	C.igImFontAtlasBuildRender8bppRectFromString(atlas.handle(), C.int(x), C.int(y), C.int(w), C.int(h), in_strArg, C.char(in_marker_char), C.uchar(in_marker_pixel_value))
+
+	in_strFin()
 }
 
 func InternalImFontAtlasBuildSetupFont(atlas FontAtlas, font Font, font_config FontConfig, ascent float32, descent float32) {
@@ -4689,6 +4707,17 @@ func InternalImStrbolW(buf_mid_line *rune, buf_begin *rune) *rune {
 		buf_beginFin()
 	}()
 	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.igImStrbolW(buf_mid_lineArg, buf_beginArg)))))
+}
+
+func InternalImStrchrRange(str_begin string, str_end string, c rune) string {
+	str_beginArg, str_beginFin := wrapString(str_begin)
+	str_endArg, str_endFin := wrapString(str_end)
+
+	defer func() {
+		str_beginFin()
+		str_endFin()
+	}()
+	return C.GoString(C.igImStrchrRange(str_beginArg, str_endArg, C.char(c)))
 }
 
 func InternalImStrdup(str string) string {
@@ -11780,6 +11809,10 @@ func (self Context) SetPlatformImeViewport(v ID) {
 
 func (self Context) PlatformImeViewport() ID {
 	return ID(C.wrap_ImGuiContext_GetPlatformImeViewport(self.handle()))
+}
+
+func (self Context) SetPlatformLocaleDecimalPoint(v rune) {
+	C.wrap_ImGuiContext_SetPlatformLocaleDecimalPoint(self.handle(), C.char(v))
 }
 
 func (self Context) SetDockContext(v DockContext) {
