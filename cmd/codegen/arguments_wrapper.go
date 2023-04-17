@@ -100,6 +100,7 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"ImRect":                   wrappableW("Rect"),
 		"const ImRect":             wrappableW("Rect"),
 		"ImRect*":                  wrappablePtrW("*Rect", "C.ImRect"),
+		"const ImRect*":            wrappablePtrW("*Rect", "C.ImRect"),
 		"ImPlotPoint":              wrappableW("PlotPoint"),
 		"const ImPlotPoint":        wrappableW("PlotPoint"),
 		"ImPlotPoint*":             wrappablePtrW("*PlotPoint", "C.ImPlotPoint"),

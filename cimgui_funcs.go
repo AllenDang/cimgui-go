@@ -5465,6 +5465,18 @@ func InternalIsWindowWithinBeginStackOf(window Window, potential_parent Window) 
 	return C.igIsWindowWithinBeginStackOf(window.handle(), potential_parent.handle()) == C.bool(true)
 }
 
+// InternalItemAddV parameter default value hint:
+// nav_bb: NULL
+// extra_flags: 0
+func InternalItemAddV(bb Rect, id ID, nav_bb *Rect, extra_flags ItemFlags) bool {
+	nav_bbArg, nav_bbFin := wrap[C.ImRect, *Rect](nav_bb)
+
+	defer func() {
+		nav_bbFin()
+	}()
+	return C.igItemAdd(bb.toC(), C.ImGuiID(id), nav_bbArg, C.ImGuiItemFlags(extra_flags)) == C.bool(true)
+}
+
 func InternalItemHoverable(bb Rect, id ID) bool {
 	return C.igItemHoverable(bb.toC(), C.ImGuiID(id)) == C.bool(true)
 }
@@ -6046,6 +6058,34 @@ func InternalRenderTextV(pos Vec2, text string, hide_text_after_hash bool) {
 	C.wrap_igRenderTextV(pos.toC(), textArg, C.bool(hide_text_after_hash))
 
 	textFin()
+}
+
+// InternalRenderTextClippedV parameter default value hint:
+// align: ImVec2(0,0)
+// clip_rect: NULL
+func InternalRenderTextClippedV(pos_min Vec2, pos_max Vec2, text string, text_size_if_known *Vec2, align Vec2, clip_rect *Rect) {
+	textArg, textFin := wrapString(text)
+	text_size_if_knownArg, text_size_if_knownFin := wrap[C.ImVec2, *Vec2](text_size_if_known)
+	clip_rectArg, clip_rectFin := wrap[C.ImRect, *Rect](clip_rect)
+	C.wrap_igRenderTextClippedV(pos_min.toC(), pos_max.toC(), textArg, text_size_if_knownArg, align.toC(), clip_rectArg)
+
+	textFin()
+	text_size_if_knownFin()
+	clip_rectFin()
+}
+
+// InternalRenderTextClippedExV parameter default value hint:
+// align: ImVec2(0,0)
+// clip_rect: NULL
+func InternalRenderTextClippedExV(draw_list DrawList, pos_min Vec2, pos_max Vec2, text string, text_size_if_known *Vec2, align Vec2, clip_rect *Rect) {
+	textArg, textFin := wrapString(text)
+	text_size_if_knownArg, text_size_if_knownFin := wrap[C.ImVec2, *Vec2](text_size_if_known)
+	clip_rectArg, clip_rectFin := wrap[C.ImRect, *Rect](clip_rect)
+	C.wrap_igRenderTextClippedExV(draw_list.handle(), pos_min.toC(), pos_max.toC(), textArg, text_size_if_knownArg, align.toC(), clip_rectArg)
+
+	textFin()
+	text_size_if_knownFin()
+	clip_rectFin()
 }
 
 func InternalRenderTextEllipsis(draw_list DrawList, pos_min Vec2, pos_max Vec2, clip_max_x float32, ellipsis_max_x float32, text string, text_size_if_known *Vec2) {
