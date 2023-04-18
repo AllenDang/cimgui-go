@@ -21,6 +21,8 @@ type FuncDef struct {
 	Defaults map[string]string `json:"defaults"`
 	// Location represents an exact location in DearImGui's source code
 	Location string `json:"location"`
+	// Comment on function
+	Comment string `json:"comment"`
 
 	Constructor  bool `json:"constructor"`
 	Destructor   bool `json:"destructor"`
