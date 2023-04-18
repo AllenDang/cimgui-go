@@ -19,8 +19,9 @@ type EnumDef struct {
 
 // EnumValueDef represents a definition of an ImGui enum value.
 type EnumValueDef struct {
-	Name  string `json:"name"`
-	Value int    `json:"calc_value"`
+	Name    string `json:"name"`
+	Value   int    `json:"calc_value"`
+	Comment string `json:"comment"`
 }
 
 // getEnumDefs takes a json file bytes (struct_and_enums.json) and returns a slice of EnumDef.

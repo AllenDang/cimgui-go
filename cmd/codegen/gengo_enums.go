@@ -25,7 +25,7 @@ func generateGoEnums(prefix string, enums []EnumDef) []string {
 
 		for _, v := range e.Values {
 			vName := strings.TrimSuffix(v.Name, "_")
-			sb.WriteString(fmt.Sprintf("\t%s = %d\n", renameGoIdentifier(vName), v.Value))
+			sb.WriteString(fmt.Sprintf("%s\n\t%s = %d\n", v.Comment, renameGoIdentifier(vName), v.Value))
 		}
 
 		sb.WriteString(")\n\n")
