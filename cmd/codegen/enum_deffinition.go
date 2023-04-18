@@ -8,13 +8,15 @@ import (
 
 // EnumsSection appears in json file on top of enums deffinition section.
 type EnumsSection struct {
-	Enums json.RawMessage `json:"enums"`
+	EnumComments json.RawMessage `json:"enum_comments"`
+	Enums        json.RawMessage `json:"enums"`
 }
 
 // EnumDef represents a definition of an ImGui enum (like flags).
 type EnumDef struct {
-	Name   string
-	Values []EnumValueDef
+	Name         string
+	CommentAbove string
+	Values       []EnumValueDef
 }
 
 // EnumValueDef represents a definition of an ImGui enum value.
@@ -22,6 +24,10 @@ type EnumValueDef struct {
 	Name    string `json:"name"`
 	Value   int    `json:"calc_value"`
 	Comment string `json:"comment"`
+}
+
+type EnumCommentDef struct {
+	Above string `json:"above"`
 }
 
 // getEnumDefs takes a json file bytes (struct_and_enums.json) and returns a slice of EnumDef.
@@ -40,6 +46,14 @@ func getEnumDefs(enumJsonBytes []byte) ([]EnumDef, error) {
 		return nil, fmt.Errorf("cannot unmarshal enums section: %w", err)
 	}
 
+	enumCommentsJson := make(map[string]json.RawMessage)
+	if enumSectionJson.EnumComments != nil {
+		err = json.Unmarshal(enumSectionJson.EnumComments, &enumCommentsJson)
+		if err != nil {
+			return nil, fmt.Errorf("cannot unmarshal enum comments section: %w", err)
+		}
+	}
+
 	for k, v := range enumJson {
 		var enumValues []EnumValueDef
 		err := json.Unmarshal(v, &enumValues)
@@ -47,10 +61,22 @@ func getEnumDefs(enumJsonBytes []byte) ([]EnumDef, error) {
 			return nil, fmt.Errorf("cannot unmarshal enum %s: %w", k, err)
 		}
 
-		enums = append(enums, EnumDef{
+		enum := EnumDef{
 			Name:   k,
 			Values: enumValues,
-		})
+		}
+
+		if commentData, ok := enumCommentsJson[k]; ok {
+			var enumCommentValue EnumCommentDef
+			err := json.Unmarshal(commentData, &enumCommentValue)
+			if err != nil {
+				return nil, fmt.Errorf("cannot unmarshal enum comment data %s: %w", k, err)
+			}
+
+			enum.CommentAbove = enumCommentValue.Above
+		}
+
+		enums = append(enums, enum)
 	}
 
 	// sort lexicographically for determenistic generation
