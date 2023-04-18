@@ -24,6 +24,8 @@ type argumentWrapper func(arg ArgDef) ArgumentWrapperData
 
 func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 	argWrapperMap := map[string]argumentWrapper{
+		"char":                     simpleW("rune", "C.char"),
+		"char[5]":                  simplePtrArrayW(5, "C.char", "rune"),
 		"char*":                    constCharW,
 		"const char*":              constCharW,
 		"const char**":             charPtrPtrW,
@@ -32,7 +34,8 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"unsigned char**":          uCharPtrW,
 		"size_t":                   simpleW("uint64", "C.xulong"),
 		"size_t*":                  sizeTPtrW,
-		"float":                    floatW,
+		"float":                    simpleW("float32", "C.float"),
+		"const float":              simpleW("float32", "C.float"),
 		"float*":                   floatPtrW,
 		"const float*":             floatArrayW,
 		"short":                    simpleW("int", "C.short"),
@@ -51,6 +54,7 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"const ImS16*":             simplePtrSliceW("C.ImS16", "int"),
 		"ImS32":                    simpleW("int", "C.ImS32"),
 		"const ImS32*":             simplePtrSliceW("C.ImS32", "int32"),
+		"ImS64":                    simpleW("int64", "C.ImS64"),
 		"const ImS64*":             int64ArrayW,
 		"int":                      simpleW("int32", "C.int"),
 		"int*":                     simplePtrW("int32", "C.int"),
@@ -67,9 +71,11 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"float[2]":                 simplePtrArrayW(2, "C.float", "float32"),
 		"float[3]":                 simplePtrArrayW(3, "C.float", "float32"),
 		"float[4]":                 simplePtrArrayW(4, "C.float", "float32"),
-		"ImWchar":                  simpleW("Wchar", "C.ImWchar"),
-		"const ImWchar*":           simpleW("*Wchar", "(*C.ImWchar)"),
-		"ImGuiID":                  simpleW("ImGuiID", "C.ImGuiID"),
+		"ImWchar":                  simpleW("rune", "C.ImWchar"),
+		"ImWchar16":                simpleW("rune", "C.ImWchar16"),
+		"const ImWchar*":           simplePtrW("rune", "C.ImWchar"),
+		"ImGuiID":                  simpleW("ID", "C.ImGuiID"),
+		"ImGuiID*":                 simplePtrW("ID", "C.ImGuiID"),
 		"ImTextureID":              simpleW("TextureID", "C.ImTextureID"),
 		"ImDrawIdx":                simpleW("DrawIdx", "C.ImDrawIdx"),
 		"ImGuiTableColumnIdx":      simpleW("TableColumnIdx", "C.ImGuiTableColumnIdx"),
@@ -77,6 +83,10 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"ImGuiKeyChord":            simpleW("KeyChord", "C.ImGuiKeyChord"),
 		"void*":                    simpleW("unsafe.Pointer", ""),
 		"const void*":              simpleW("unsafe.Pointer", ""),
+		"const ImVec1":             wrappableW("Vec1"),
+		"const ImVec1*":            wrappablePtrW("*Vec1", "C.ImVec1"),
+		"ImVec1":                   wrappableW("Vec1"),
+		"ImVec1*":                  wrappablePtrW("*Vec1", "C.ImVec1"),
 		"const ImVec2":             wrappableW("Vec2"),
 		"const ImVec2*":            wrappablePtrW("*Vec2", "C.ImVec2"),
 		"ImVec2":                   wrappableW("Vec2"),
@@ -90,6 +100,7 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"ImRect":                   wrappableW("Rect"),
 		"const ImRect":             wrappableW("Rect"),
 		"ImRect*":                  wrappablePtrW("*Rect", "C.ImRect"),
+		"const ImRect*":            wrappablePtrW("*Rect", "C.ImRect"),
 		"ImPlotPoint":              wrappableW("PlotPoint"),
 		"const ImPlotPoint":        wrappableW("PlotPoint"),
 		"ImPlotPoint*":             wrappablePtrW("*PlotPoint", "C.ImPlotPoint"),
@@ -133,13 +144,6 @@ func sizeTPtrW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType: "*uint64",
 		VarName: fmt.Sprintf("(*C.xulong)(%s)", arg.Name),
-	}
-}
-
-func floatW(arg ArgDef) ArgumentWrapperData {
-	return ArgumentWrapperData{
-		ArgType: "float32",
-		VarName: fmt.Sprintf("C.float(%s)", arg.Name),
 	}
 }
 

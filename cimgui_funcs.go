@@ -454,7 +454,7 @@ func (self FontAtlasCustomRect) Destroy() {
 
 // AddCustomRectFontGlyphV parameter default value hint:
 // offset: ImVec2(0,0)
-func (self FontAtlas) AddCustomRectFontGlyphV(font Font, id Wchar, width int32, height int32, advance_x float32, offset Vec2) int {
+func (self FontAtlas) AddCustomRectFontGlyphV(font Font, id rune, width int32, height int32, advance_x float32, offset Vec2) int {
 	return int(C.ImFontAtlas_AddCustomRectFontGlyph(self.handle(), font.handle(), C.ImWchar(id), C.int(width), C.int(height), C.float(advance_x), offset.toC()))
 }
 
@@ -475,39 +475,53 @@ func (self FontAtlas) AddFontDefaultV(font_cfg FontConfig) Font {
 // AddFontFromFileTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self FontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
+func (self FontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, font_cfg FontConfig, glyph_ranges *rune) Font {
 	filenameArg, filenameFin := wrapString(filename)
+	glyph_rangesArg, glyph_rangesFin := wrapNumberPtr[C.ImWchar, rune](glyph_ranges)
 
 	defer func() {
 		filenameFin()
+		glyph_rangesFin()
 	}()
-	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromFileTTF(self.handle(), filenameArg, C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
+	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromFileTTF(self.handle(), filenameArg, C.float(size_pixels), font_cfg.handle(), glyph_rangesArg)))
 }
 
 // AddFontFromMemoryCompressedBase85TTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data_base85 string, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
+func (self FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data_base85 string, size_pixels float32, font_cfg FontConfig, glyph_ranges *rune) Font {
 	compressed_font_data_base85Arg, compressed_font_data_base85Fin := wrapString(compressed_font_data_base85)
+	glyph_rangesArg, glyph_rangesFin := wrapNumberPtr[C.ImWchar, rune](glyph_ranges)
 
 	defer func() {
 		compressed_font_data_base85Fin()
+		glyph_rangesFin()
 	}()
-	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(self.handle(), compressed_font_data_base85Arg, C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
+	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(self.handle(), compressed_font_data_base85Arg, C.float(size_pixels), font_cfg.handle(), glyph_rangesArg)))
 }
 
 // AddFontFromMemoryCompressedTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsafe.Pointer, compressed_font_size int32, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
-	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryCompressedTTF(self.handle(), (compressed_font_data), C.int(compressed_font_size), C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
+func (self FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsafe.Pointer, compressed_font_size int32, size_pixels float32, font_cfg FontConfig, glyph_ranges *rune) Font {
+	glyph_rangesArg, glyph_rangesFin := wrapNumberPtr[C.ImWchar, rune](glyph_ranges)
+
+	defer func() {
+		glyph_rangesFin()
+	}()
+	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryCompressedTTF(self.handle(), (compressed_font_data), C.int(compressed_font_size), C.float(size_pixels), font_cfg.handle(), glyph_rangesArg)))
 }
 
 // AddFontFromMemoryTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self FontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_size int32, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
-	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryTTF(self.handle(), (font_data), C.int(font_size), C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
+func (self FontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_size int32, size_pixels float32, font_cfg FontConfig, glyph_ranges *rune) Font {
+	glyph_rangesArg, glyph_rangesFin := wrapNumberPtr[C.ImWchar, rune](glyph_ranges)
+
+	defer func() {
+		glyph_rangesFin()
+	}()
+	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryTTF(self.handle(), (font_data), C.int(font_size), C.float(size_pixels), font_cfg.handle(), glyph_rangesArg)))
 }
 
 func (self FontAtlas) Build() bool {
@@ -543,40 +557,40 @@ func (self FontAtlas) CustomRectByIndex(index int32) FontAtlasCustomRect {
 	return (FontAtlasCustomRect)(unsafe.Pointer(C.ImFontAtlas_GetCustomRectByIndex(self.handle(), C.int(index))))
 }
 
-func (self FontAtlas) GlyphRangesChineseFull() *Wchar {
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesChineseFull(self.handle()))
+func (self FontAtlas) GlyphRangesChineseFull() *rune {
+	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesChineseFull(self.handle())))))
 }
 
-func (self FontAtlas) GlyphRangesChineseSimplifiedCommon() *Wchar {
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon(self.handle()))
+func (self FontAtlas) GlyphRangesChineseSimplifiedCommon() *rune {
+	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon(self.handle())))))
 }
 
-func (self FontAtlas) GlyphRangesCyrillic() *Wchar {
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesCyrillic(self.handle()))
+func (self FontAtlas) GlyphRangesCyrillic() *rune {
+	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesCyrillic(self.handle())))))
 }
 
-func (self FontAtlas) GlyphRangesDefault() *Wchar {
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesDefault(self.handle()))
+func (self FontAtlas) GlyphRangesDefault() *rune {
+	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesDefault(self.handle())))))
 }
 
-func (self FontAtlas) GlyphRangesGreek() *Wchar {
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesGreek(self.handle()))
+func (self FontAtlas) GlyphRangesGreek() *rune {
+	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesGreek(self.handle())))))
 }
 
-func (self FontAtlas) GlyphRangesJapanese() *Wchar {
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesJapanese(self.handle()))
+func (self FontAtlas) GlyphRangesJapanese() *rune {
+	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesJapanese(self.handle())))))
 }
 
-func (self FontAtlas) GlyphRangesKorean() *Wchar {
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesKorean(self.handle()))
+func (self FontAtlas) GlyphRangesKorean() *rune {
+	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesKorean(self.handle())))))
 }
 
-func (self FontAtlas) GlyphRangesThai() *Wchar {
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesThai(self.handle()))
+func (self FontAtlas) GlyphRangesThai() *rune {
+	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesThai(self.handle())))))
 }
 
-func (self FontAtlas) GlyphRangesVietnamese() *Wchar {
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesVietnamese(self.handle()))
+func (self FontAtlas) GlyphRangesVietnamese() *rune {
+	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesVietnamese(self.handle())))))
 }
 
 func (self FontAtlas) MouseCursorTexData(cursor MouseCursor, out_offset *Vec2, out_size *Vec2, out_uv_border [2]*Vec2, out_uv_fill [2]*Vec2) bool {
@@ -637,12 +651,15 @@ func (self FontConfig) Destroy() {
 	C.ImFontConfig_destroy(self.handle())
 }
 
-func (self FontGlyphRangesBuilder) AddChar(c Wchar) {
+func (self FontGlyphRangesBuilder) AddChar(c rune) {
 	C.ImFontGlyphRangesBuilder_AddChar(self.handle(), C.ImWchar(c))
 }
 
-func (self FontGlyphRangesBuilder) AddRanges(ranges *Wchar) {
-	C.ImFontGlyphRangesBuilder_AddRanges(self.handle(), (*C.ImWchar)(ranges))
+func (self FontGlyphRangesBuilder) AddRanges(ranges *rune) {
+	rangesArg, rangesFin := wrapNumberPtr[C.ImWchar, rune](ranges)
+	C.ImFontGlyphRangesBuilder_AddRanges(self.handle(), rangesArg)
+
+	rangesFin()
 }
 
 // AddTextV parameter default value hint:
@@ -673,13 +690,13 @@ func (self FontGlyphRangesBuilder) Destroy() {
 	C.ImFontGlyphRangesBuilder_destroy(self.handle())
 }
 
-func (self Font) AddGlyph(src_cfg FontConfig, c Wchar, x0 float32, y0 float32, x1 float32, y1 float32, u0 float32, v0 float32, u1 float32, v1 float32, advance_x float32) {
+func (self Font) AddGlyph(src_cfg FontConfig, c rune, x0 float32, y0 float32, x1 float32, y1 float32, u0 float32, v0 float32, u1 float32, v1 float32, advance_x float32) {
 	C.ImFont_AddGlyph(self.handle(), src_cfg.handle(), C.ImWchar(c), C.float(x0), C.float(y0), C.float(x1), C.float(y1), C.float(u0), C.float(v0), C.float(u1), C.float(v1), C.float(advance_x))
 }
 
 // AddRemapCharV parameter default value hint:
 // overwrite_dst: true
-func (self Font) AddRemapCharV(dst Wchar, src Wchar, overwrite_dst bool) {
+func (self Font) AddRemapCharV(dst rune, src rune, overwrite_dst bool) {
 	C.ImFont_AddRemapChar(self.handle(), C.ImWchar(dst), C.ImWchar(src), C.bool(overwrite_dst))
 }
 
@@ -717,15 +734,15 @@ func (self Font) ClearOutputData() {
 	C.ImFont_ClearOutputData(self.handle())
 }
 
-func (self Font) FindGlyph(c Wchar) FontGlyph {
+func (self Font) FindGlyph(c rune) FontGlyph {
 	return (FontGlyph)(unsafe.Pointer(C.ImFont_FindGlyph(self.handle(), C.ImWchar(c))))
 }
 
-func (self Font) FindGlyphNoFallback(c Wchar) FontGlyph {
+func (self Font) FindGlyphNoFallback(c rune) FontGlyph {
 	return (FontGlyph)(unsafe.Pointer(C.ImFont_FindGlyphNoFallback(self.handle(), C.ImWchar(c))))
 }
 
-func (self Font) CharAdvance(c Wchar) float32 {
+func (self Font) CharAdvance(c rune) float32 {
 	return float32(C.ImFont_GetCharAdvance(self.handle(), C.ImWchar(c)))
 }
 
@@ -749,7 +766,7 @@ func (self Font) IsLoaded() bool {
 	return C.ImFont_IsLoaded(self.handle()) == C.bool(true)
 }
 
-func (self Font) RenderChar(draw_list DrawList, size float32, pos Vec2, col uint32, c Wchar) {
+func (self Font) RenderChar(draw_list DrawList, size float32, pos Vec2, col uint32, c rune) {
 	C.ImFont_RenderChar(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), C.ImWchar(c))
 }
 
@@ -763,7 +780,7 @@ func (self Font) RenderTextV(draw_list DrawList, size float32, pos Vec2, col uin
 	text_beginFin()
 }
 
-func (self Font) SetGlyphVisible(c Wchar, visible bool) {
+func (self Font) SetGlyphVisible(c rune, visible bool) {
 	C.ImFont_SetGlyphVisible(self.handle(), C.ImWchar(c), C.bool(visible))
 }
 
@@ -876,6 +893,10 @@ func (self IO) AddFocusEvent(focused bool) {
 
 func (self IO) AddInputCharacter(c uint32) {
 	C.ImGuiIO_AddInputCharacter(self.handle(), C.uint(c))
+}
+
+func (self IO) AddInputCharacterUTF16(c rune) {
+	C.ImGuiIO_AddInputCharacterUTF16(self.handle(), C.ImWchar16(c))
 }
 
 func (self IO) AddInputCharactersUTF8(str string) {
@@ -1816,6 +1837,13 @@ func (self *Rect) InternalContainsVec2(p Vec2) bool {
 	return C.ImRect_Contains_Vec2(selfArg, p.toC()) == C.bool(true)
 }
 
+func (self *Rect) InternalExpandFloat(amount float32) {
+	selfArg, selfFin := wrap[C.ImRect, *Rect](self)
+	C.ImRect_Expand_Float(selfArg, C.float(amount))
+
+	selfFin()
+}
+
 func (self *Rect) InternalExpandVec2(amount Vec2) {
 	selfArg, selfFin := wrap[C.ImRect, *Rect](self)
 	C.ImRect_Expand_Vec2(selfArg, amount.toC())
@@ -1990,6 +2018,13 @@ func (self *Rect) InternalTranslateY(dy float32) {
 func (self *Rect) Destroy() {
 	selfArg, selfFin := wrap[C.ImRect, *Rect](self)
 	C.ImRect_destroy(selfArg)
+
+	selfFin()
+}
+
+func (self *Vec1) Destroy() {
+	selfArg, selfFin := wrap[C.ImVec1, *Vec1](self)
+	C.ImVec1_destroy(selfArg)
 
 	selfFin()
 }
@@ -3008,6 +3043,17 @@ func InternalDockBuilderSetNodePos(node_id ID, pos Vec2) {
 
 func InternalDockBuilderSetNodeSize(node_id ID, size Vec2) {
 	C.igDockBuilderSetNodeSize(C.ImGuiID(node_id), size.toC())
+}
+
+func InternalDockBuilderSplitNode(node_id ID, split_dir Dir, size_ratio_for_node_at_dir float32, out_id_at_dir *ID, out_id_at_opposite_dir *ID) ID {
+	out_id_at_dirArg, out_id_at_dirFin := wrapNumberPtr[C.ImGuiID, ID](out_id_at_dir)
+	out_id_at_opposite_dirArg, out_id_at_opposite_dirFin := wrapNumberPtr[C.ImGuiID, ID](out_id_at_opposite_dir)
+
+	defer func() {
+		out_id_at_dirFin()
+		out_id_at_opposite_dirFin()
+	}()
+	return ID(C.igDockBuilderSplitNode(C.ImGuiID(node_id), C.ImGuiDir(split_dir), C.float(size_ratio_for_node_at_dir), out_id_at_dirArg, out_id_at_opposite_dirArg))
 }
 
 func InternalDockContextCalcDropPosForDocking(target Window, target_node DockNode, payload_window Window, payload_node DockNode, split_dir Dir, split_outer bool, out_pos *Vec2) bool {
@@ -4284,6 +4330,10 @@ func InternalImBitArrayTestBit(arr *[]uint32, n int32) bool {
 	return C.igImBitArrayTestBit((*C.ImU32)(&arrArg[0]), C.int(n)) == C.bool(true)
 }
 
+func InternalImCharIsBlankA(c rune) bool {
+	return C.igImCharIsBlankA(C.char(c)) == C.bool(true)
+}
+
 func InternalImCharIsBlankW(c uint32) bool {
 	return C.igImCharIsBlankW(C.uint(c)) == C.bool(true)
 }
@@ -4361,6 +4411,20 @@ func InternalImFontAtlasBuildInit(atlas FontAtlas) {
 
 func InternalImFontAtlasBuildPackCustomRects(atlas FontAtlas, stbrp_context_opaque unsafe.Pointer) {
 	C.igImFontAtlasBuildPackCustomRects(atlas.handle(), (stbrp_context_opaque))
+}
+
+func InternalImFontAtlasBuildRender32bppRectFromString(atlas FontAtlas, x int32, y int32, w int32, h int32, in_str string, in_marker_char rune, in_marker_pixel_value uint32) {
+	in_strArg, in_strFin := wrapString(in_str)
+	C.igImFontAtlasBuildRender32bppRectFromString(atlas.handle(), C.int(x), C.int(y), C.int(w), C.int(h), in_strArg, C.char(in_marker_char), C.uint(in_marker_pixel_value))
+
+	in_strFin()
+}
+
+func InternalImFontAtlasBuildRender8bppRectFromString(atlas FontAtlas, x int32, y int32, w int32, h int32, in_str string, in_marker_char rune, in_marker_pixel_value uint) {
+	in_strArg, in_strFin := wrapString(in_str)
+	C.igImFontAtlasBuildRender8bppRectFromString(atlas.handle(), C.int(x), C.int(y), C.int(w), C.int(h), in_strArg, C.char(in_marker_char), C.uchar(in_marker_pixel_value))
+
+	in_strFin()
 }
 
 func InternalImFontAtlasBuildSetupFont(atlas FontAtlas, font Font, font_config FontConfig, ascent float32, descent float32) {
@@ -4645,8 +4709,26 @@ func InternalImStrTrimBlanks(str string) {
 	strFin()
 }
 
-func InternalImStrbolW(buf_mid_line *Wchar, buf_begin *Wchar) *Wchar {
-	return (*Wchar)(C.igImStrbolW((*C.ImWchar)(buf_mid_line), (*C.ImWchar)(buf_begin)))
+func InternalImStrbolW(buf_mid_line *rune, buf_begin *rune) *rune {
+	buf_mid_lineArg, buf_mid_lineFin := wrapNumberPtr[C.ImWchar, rune](buf_mid_line)
+	buf_beginArg, buf_beginFin := wrapNumberPtr[C.ImWchar, rune](buf_begin)
+
+	defer func() {
+		buf_mid_lineFin()
+		buf_beginFin()
+	}()
+	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.igImStrbolW(buf_mid_lineArg, buf_beginArg)))))
+}
+
+func InternalImStrchrRange(str_begin string, str_end string, c rune) string {
+	str_beginArg, str_beginFin := wrapString(str_begin)
+	str_endArg, str_endFin := wrapString(str_end)
+
+	defer func() {
+		str_beginFin()
+		str_endFin()
+	}()
+	return C.GoString(C.igImStrchrRange(str_beginArg, str_endArg, C.char(c)))
 }
 
 func InternalImStrdup(str string) string {
@@ -4706,8 +4788,13 @@ func InternalImStristr(haystack string, haystack_end string, needle string, need
 	return C.GoString(C.igImStristr(haystackArg, haystack_endArg, needleArg, needle_endArg))
 }
 
-func InternalImStrlenW(str *Wchar) int {
-	return int(C.igImStrlenW((*C.ImWchar)(str)))
+func InternalImStrlenW(str *rune) int {
+	strArg, strFin := wrapNumberPtr[C.ImWchar, rune](str)
+
+	defer func() {
+		strFin()
+	}()
+	return int(C.igImStrlenW(strArg))
 }
 
 func InternalImStrncpy(dst string, src string, count uint64) {
@@ -4743,6 +4830,20 @@ func InternalImTextCharFromUtf8(out_char *uint32, in_text string, in_text_end st
 	return int(C.igImTextCharFromUtf8(out_charArg, in_textArg, in_text_endArg))
 }
 
+func InternalImTextCharToUtf8(out_buf *[5]rune, c uint32) string {
+	out_bufArg := make([]C.char, len(out_buf))
+	for i, out_bufV := range out_buf {
+		out_bufArg[i] = C.char(out_bufV)
+	}
+
+	defer func() {
+		for i, out_bufV := range out_bufArg {
+			(*out_buf)[i] = rune(out_bufV)
+		}
+	}()
+	return C.GoString(C.igImTextCharToUtf8((*C.char)(&out_bufArg[0]), C.uint(c)))
+}
+
 func InternalImTextCountCharsFromUtf8(in_text string, in_text_end string) int {
 	in_textArg, in_textFin := wrapString(in_text)
 	in_text_endArg, in_text_endFin := wrapString(in_text_end)
@@ -4765,17 +4866,28 @@ func InternalImTextCountUtf8BytesFromChar(in_text string, in_text_end string) in
 	return int(C.igImTextCountUtf8BytesFromChar(in_textArg, in_text_endArg))
 }
 
-func InternalImTextCountUtf8BytesFromStr(in_text *Wchar, in_text_end *Wchar) int {
-	return int(C.igImTextCountUtf8BytesFromStr((*C.ImWchar)(in_text), (*C.ImWchar)(in_text_end)))
+func InternalImTextCountUtf8BytesFromStr(in_text *rune, in_text_end *rune) int {
+	in_textArg, in_textFin := wrapNumberPtr[C.ImWchar, rune](in_text)
+	in_text_endArg, in_text_endFin := wrapNumberPtr[C.ImWchar, rune](in_text_end)
+
+	defer func() {
+		in_textFin()
+		in_text_endFin()
+	}()
+	return int(C.igImTextCountUtf8BytesFromStr(in_textArg, in_text_endArg))
 }
 
-func InternalImTextStrToUtf8(out_buf string, out_buf_size int32, in_text *Wchar, in_text_end *Wchar) int {
+func InternalImTextStrToUtf8(out_buf string, out_buf_size int32, in_text *rune, in_text_end *rune) int {
 	out_bufArg, out_bufFin := wrapString(out_buf)
+	in_textArg, in_textFin := wrapNumberPtr[C.ImWchar, rune](in_text)
+	in_text_endArg, in_text_endFin := wrapNumberPtr[C.ImWchar, rune](in_text_end)
 
 	defer func() {
 		out_bufFin()
+		in_textFin()
+		in_text_endFin()
 	}()
-	return int(C.igImTextStrToUtf8(out_bufArg, C.int(out_buf_size), (*C.ImWchar)(in_text), (*C.ImWchar)(in_text_end)))
+	return int(C.igImTextStrToUtf8(out_bufArg, C.int(out_buf_size), in_textArg, in_text_endArg))
 }
 
 func InternalImTriangleArea(a Vec2, b Vec2, c Vec2) float32 {
@@ -5351,6 +5463,18 @@ func InternalIsWindowNavFocusable(window Window) bool {
 
 func InternalIsWindowWithinBeginStackOf(window Window, potential_parent Window) bool {
 	return C.igIsWindowWithinBeginStackOf(window.handle(), potential_parent.handle()) == C.bool(true)
+}
+
+// InternalItemAddV parameter default value hint:
+// nav_bb: NULL
+// extra_flags: 0
+func InternalItemAddV(bb Rect, id ID, nav_bb *Rect, extra_flags ItemFlags) bool {
+	nav_bbArg, nav_bbFin := wrap[C.ImRect, *Rect](nav_bb)
+
+	defer func() {
+		nav_bbFin()
+	}()
+	return C.igItemAdd(bb.toC(), C.ImGuiID(id), nav_bbArg, C.ImGuiItemFlags(extra_flags)) == C.bool(true)
 }
 
 func InternalItemHoverable(bb Rect, id ID) bool {
@@ -5934,6 +6058,34 @@ func InternalRenderTextV(pos Vec2, text string, hide_text_after_hash bool) {
 	C.wrap_igRenderTextV(pos.toC(), textArg, C.bool(hide_text_after_hash))
 
 	textFin()
+}
+
+// InternalRenderTextClippedV parameter default value hint:
+// align: ImVec2(0,0)
+// clip_rect: NULL
+func InternalRenderTextClippedV(pos_min Vec2, pos_max Vec2, text string, text_size_if_known *Vec2, align Vec2, clip_rect *Rect) {
+	textArg, textFin := wrapString(text)
+	text_size_if_knownArg, text_size_if_knownFin := wrap[C.ImVec2, *Vec2](text_size_if_known)
+	clip_rectArg, clip_rectFin := wrap[C.ImRect, *Rect](clip_rect)
+	C.wrap_igRenderTextClippedV(pos_min.toC(), pos_max.toC(), textArg, text_size_if_knownArg, align.toC(), clip_rectArg)
+
+	textFin()
+	text_size_if_knownFin()
+	clip_rectFin()
+}
+
+// InternalRenderTextClippedExV parameter default value hint:
+// align: ImVec2(0,0)
+// clip_rect: NULL
+func InternalRenderTextClippedExV(draw_list DrawList, pos_min Vec2, pos_max Vec2, text string, text_size_if_known *Vec2, align Vec2, clip_rect *Rect) {
+	textArg, textFin := wrapString(text)
+	text_size_if_knownArg, text_size_if_knownFin := wrap[C.ImVec2, *Vec2](text_size_if_known)
+	clip_rectArg, clip_rectFin := wrap[C.ImRect, *Rect](clip_rect)
+	C.wrap_igRenderTextClippedExV(draw_list.handle(), pos_min.toC(), pos_max.toC(), textArg, text_size_if_knownArg, align.toC(), clip_rectArg)
+
+	textFin()
+	text_size_if_knownFin()
+	clip_rectFin()
 }
 
 func InternalRenderTextEllipsis(draw_list DrawList, pos_min Vec2, pos_max Vec2, clip_max_x float32, ellipsis_max_x float32, text string, text_size_if_known *Vec2) {
@@ -7618,7 +7770,7 @@ func (self DrawList) PushClipRect(clip_rect_min Vec2, clip_rect_max Vec2) {
 	C.wrap_ImDrawList_PushClipRect(self.handle(), clip_rect_min.toC(), clip_rect_max.toC())
 }
 
-func (self FontAtlas) AddCustomRectFontGlyph(font Font, id Wchar, width int32, height int32, advance_x float32) int {
+func (self FontAtlas) AddCustomRectFontGlyph(font Font, id rune, width int32, height int32, advance_x float32) int {
 	return int(C.wrap_ImFontAtlas_AddCustomRectFontGlyph(self.handle(), font.handle(), C.ImWchar(id), C.int(width), C.int(height), C.float(advance_x)))
 }
 
@@ -7659,7 +7811,7 @@ func (self FontGlyphRangesBuilder) AddText(text string) {
 	textFin()
 }
 
-func (self Font) AddRemapChar(dst Wchar, src Wchar) {
+func (self Font) AddRemapChar(dst rune, src rune) {
 	C.wrap_ImFont_AddRemapChar(self.handle(), C.ImWchar(dst), C.ImWchar(src))
 }
 
@@ -9668,20 +9820,20 @@ func (self Font) ConfigDataCount() int {
 	return int(C.wrap_ImFont_GetConfigDataCount(self.handle()))
 }
 
-func (self Font) SetFallbackChar(v Wchar) {
+func (self Font) SetFallbackChar(v rune) {
 	C.wrap_ImFont_SetFallbackChar(self.handle(), C.ImWchar(v))
 }
 
-func (self Font) FallbackChar() Wchar {
-	return Wchar(C.wrap_ImFont_GetFallbackChar(self.handle()))
+func (self Font) FallbackChar() rune {
+	return rune(C.wrap_ImFont_GetFallbackChar(self.handle()))
 }
 
-func (self Font) SetEllipsisChar(v Wchar) {
+func (self Font) SetEllipsisChar(v rune) {
 	C.wrap_ImFont_SetEllipsisChar(self.handle(), C.ImWchar(v))
 }
 
-func (self Font) EllipsisChar() Wchar {
-	return Wchar(C.wrap_ImFont_GetEllipsisChar(self.handle()))
+func (self Font) EllipsisChar() rune {
+	return rune(C.wrap_ImFont_GetEllipsisChar(self.handle()))
 }
 
 func (self Font) SetEllipsisCharCount(v int) {
@@ -10013,12 +10165,15 @@ func (self FontConfig) GlyphOffset() Vec2 {
 	return *out
 }
 
-func (self FontConfig) SetGlyphRanges(v *Wchar) {
-	C.wrap_ImFontConfig_SetGlyphRanges(self.handle(), (*C.ImWchar)(v))
+func (self FontConfig) SetGlyphRanges(v *rune) {
+	vArg, vFin := wrapNumberPtr[C.ImWchar, rune](v)
+	C.wrap_ImFontConfig_SetGlyphRanges(self.handle(), vArg)
+
+	vFin()
 }
 
-func (self FontConfig) GlyphRanges() *Wchar {
-	return (*Wchar)(C.wrap_ImFontConfig_GetGlyphRanges(self.handle()))
+func (self FontConfig) GlyphRanges() *rune {
+	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.wrap_ImFontConfig_GetGlyphRanges(self.handle())))))
 }
 
 func (self FontConfig) SetGlyphMinAdvanceX(v float32) {
@@ -10061,12 +10216,12 @@ func (self FontConfig) RasterizerMultiply() float32 {
 	return float32(C.wrap_ImFontConfig_GetRasterizerMultiply(self.handle()))
 }
 
-func (self FontConfig) SetEllipsisChar(v Wchar) {
+func (self FontConfig) SetEllipsisChar(v rune) {
 	C.wrap_ImFontConfig_SetEllipsisChar(self.handle(), C.ImWchar(v))
 }
 
-func (self FontConfig) EllipsisChar() Wchar {
-	return Wchar(C.wrap_ImFontConfig_GetEllipsisChar(self.handle()))
+func (self FontConfig) EllipsisChar() rune {
+	return rune(C.wrap_ImFontConfig_GetEllipsisChar(self.handle()))
 }
 
 func (self FontConfig) SetDstFont(v Font) {
@@ -11721,6 +11876,10 @@ func (self Context) PlatformImeViewport() ID {
 	return ID(C.wrap_ImGuiContext_GetPlatformImeViewport(self.handle()))
 }
 
+func (self Context) SetPlatformLocaleDecimalPoint(v rune) {
+	C.wrap_ImGuiContext_SetPlatformLocaleDecimalPoint(self.handle(), C.char(v))
+}
+
 func (self Context) SetDockContext(v DockContext) {
 	C.wrap_ImGuiContext_SetDockContext(self.handle(), v.c())
 }
@@ -12442,6 +12601,14 @@ func (self GroupData) BackupCursorMaxPos() Vec2 {
 	return *out
 }
 
+func (self GroupData) SetBackupIndent(v Vec1) {
+	C.wrap_ImGuiGroupData_SetBackupIndent(self.handle(), v.toC())
+}
+
+func (self GroupData) SetBackupGroupOffset(v Vec1) {
+	C.wrap_ImGuiGroupData_SetBackupGroupOffset(self.handle(), v.toC())
+}
+
 func (self GroupData) SetBackupCurrLineSize(v Vec2) {
 	C.wrap_ImGuiGroupData_SetBackupCurrLineSize(self.handle(), v.toC())
 }
@@ -13134,6 +13301,14 @@ func (self IO) BackendUsingLegacyNavInputArray() bool {
 	return C.wrap_ImGuiIO_GetBackendUsingLegacyNavInputArray(self.handle()) == C.bool(true)
 }
 
+func (self IO) SetInputQueueSurrogate(v rune) {
+	C.wrap_ImGuiIO_SetInputQueueSurrogate(self.handle(), C.ImWchar16(v))
+}
+
+func (self IO) InputQueueSurrogate() rune {
+	return rune(C.wrap_ImGuiIO_GetInputQueueSurrogate(self.handle()))
+}
+
 func (self InputEvent) SetType(v InputEventType) {
 	C.wrap_ImGuiInputEvent_SetType(self.handle(), C.ImGuiInputEventType(v))
 }
@@ -13318,12 +13493,12 @@ func (self InputTextCallbackData) UserData() unsafe.Pointer {
 	return unsafe.Pointer(C.wrap_ImGuiInputTextCallbackData_GetUserData(self.handle()))
 }
 
-func (self InputTextCallbackData) SetEventChar(v Wchar) {
+func (self InputTextCallbackData) SetEventChar(v rune) {
 	C.wrap_ImGuiInputTextCallbackData_SetEventChar(self.handle(), C.ImWchar(v))
 }
 
-func (self InputTextCallbackData) EventChar() Wchar {
-	return Wchar(C.wrap_ImGuiInputTextCallbackData_GetEventChar(self.handle()))
+func (self InputTextCallbackData) EventChar() rune {
+	return rune(C.wrap_ImGuiInputTextCallbackData_GetEventChar(self.handle()))
 }
 
 func (self InputTextCallbackData) SetEventKey(v Key) {
@@ -16987,6 +17162,10 @@ func (self TableTempData) HostBackupCursorMaxPos() Vec2 {
 	return *out
 }
 
+func (self TableTempData) SetHostBackupColumnsOffset(v Vec1) {
+	C.wrap_ImGuiTableTempData_SetHostBackupColumnsOffset(self.handle(), v.toC())
+}
+
 func (self TableTempData) SetHostBackupItemWidth(v float32) {
 	C.wrap_ImGuiTableTempData_SetHostBackupItemWidth(self.handle(), C.float(v))
 }
@@ -18552,6 +18731,18 @@ func (self WindowTempData) SetIsSetPos(v bool) {
 
 func (self WindowTempData) IsSetPos() bool {
 	return C.wrap_ImGuiWindowTempData_GetIsSetPos(self.handle()) == C.bool(true)
+}
+
+func (self WindowTempData) SetIndent(v Vec1) {
+	C.wrap_ImGuiWindowTempData_SetIndent(self.handle(), v.toC())
+}
+
+func (self WindowTempData) SetColumnsOffset(v Vec1) {
+	C.wrap_ImGuiWindowTempData_SetColumnsOffset(self.handle(), v.toC())
+}
+
+func (self WindowTempData) SetGroupOffset(v Vec1) {
+	C.wrap_ImGuiWindowTempData_SetGroupOffset(self.handle(), v.toC())
 }
 
 func (self WindowTempData) SetCursorStartPosLossyness(v Vec2) {
