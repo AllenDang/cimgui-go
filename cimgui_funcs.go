@@ -3596,10 +3596,6 @@ func FindViewportByPlatformHandle(platform_handle unsafe.Pointer) Viewport {
 	return (Viewport)(unsafe.Pointer(C.igFindViewportByPlatformHandle((platform_handle))))
 }
 
-func InternalFindWindowByID(id ID) Window {
-	return (Window)(unsafe.Pointer(C.igFindWindowByID(C.ImGuiID(id))))
-}
-
 func InternalFindWindowByName(name string) Window {
 	nameArg, nameFin := wrapString(name)
 
@@ -3755,14 +3751,6 @@ func InternalCurrentTabBar() TabBar {
 
 func InternalCurrentTable() Table {
 	return (Table)(unsafe.Pointer(C.igGetCurrentTable()))
-}
-
-func InternalCurrentWindow() Window {
-	return (Window)(unsafe.Pointer(C.igGetCurrentWindow()))
-}
-
-func InternalCurrentWindowRead() Window {
-	return (Window)(unsafe.Pointer(C.igGetCurrentWindowRead()))
 }
 
 func CursorPos() Vec2 {
@@ -4429,10 +4417,6 @@ func InternalImFontAtlasBuildRender8bppRectFromString(atlas FontAtlas, x int32, 
 
 func InternalImFontAtlasBuildSetupFont(atlas FontAtlas, font Font, font_config FontConfig, ascent float32, descent float32) {
 	C.igImFontAtlasBuildSetupFont(atlas.handle(), font.handle(), font_config.handle(), C.float(ascent), C.float(descent))
-}
-
-func InternalImFontAtlasGetBuilderForStbTruetype() FontBuilderIO {
-	return (FontBuilderIO)(unsafe.Pointer(C.igImFontAtlasGetBuilderForStbTruetype()))
 }
 
 func InternalImFormatString(buf string, buf_size uint64, fmt string) int {
@@ -9997,14 +9981,6 @@ func (self FontAtlas) TexUvWhitePixel() Vec2 {
 	out := &Vec2{}
 	out.fromC(C.wrap_ImFontAtlas_GetTexUvWhitePixel(self.handle()))
 	return *out
-}
-
-func (self FontAtlas) SetFontBuilderIO(v FontBuilderIO) {
-	C.wrap_ImFontAtlas_SetFontBuilderIO(self.handle(), v.handle())
-}
-
-func (self FontAtlas) FontBuilderIO() FontBuilderIO {
-	return (FontBuilderIO)(unsafe.Pointer(C.wrap_ImFontAtlas_GetFontBuilderIO(self.handle())))
 }
 
 func (self FontAtlas) SetFontBuilderFlags(v uint32) {

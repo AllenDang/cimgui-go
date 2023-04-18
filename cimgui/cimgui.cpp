@@ -3784,1568 +3784,1556 @@ CIMGUI_API ImGuiTableColumnSettings* ImGuiTableSettings_GetColumnSettings(ImGuiT
 {
     return self->GetColumnSettings();
 }
-CIMGUI_API ImGuiWindow* igGetCurrentWindowRead()
-{
-    return ImGui::GetCurrentWindowRead();
-}
-CIMGUI_API ImGuiWindow* igGetCurrentWindow()
-{
-    return ImGui::GetCurrentWindow();
-}
-CIMGUI_API ImGuiWindow* igFindWindowByID(ImGuiID id)
-{
-    return ImGui::FindWindowByID(id);
-}
 CIMGUI_API ImGuiWindow* igFindWindowByName(const char* name)
 {
-    return ImGui::FindWindowByName(name);
+    return FindWindowByName(name);
 }
 CIMGUI_API void igUpdateWindowParentAndRootLinks(ImGuiWindow* window,ImGuiWindowFlags flags,ImGuiWindow* parent_window)
 {
-    return ImGui::UpdateWindowParentAndRootLinks(window,flags,parent_window);
+    return UpdateWindowParentAndRootLinks(window,flags,parent_window);
 }
 CIMGUI_API void igCalcWindowNextAutoFitSize(ImVec2 *pOut,ImGuiWindow* window)
 {
-    *pOut = ImGui::CalcWindowNextAutoFitSize(window);
+    *pOut = CalcWindowNextAutoFitSize(window);
 }
 CIMGUI_API bool igIsWindowChildOf(ImGuiWindow* window,ImGuiWindow* potential_parent,bool popup_hierarchy,bool dock_hierarchy)
 {
-    return ImGui::IsWindowChildOf(window,potential_parent,popup_hierarchy,dock_hierarchy);
+    return IsWindowChildOf(window,potential_parent,popup_hierarchy,dock_hierarchy);
 }
 CIMGUI_API bool igIsWindowWithinBeginStackOf(ImGuiWindow* window,ImGuiWindow* potential_parent)
 {
-    return ImGui::IsWindowWithinBeginStackOf(window,potential_parent);
+    return IsWindowWithinBeginStackOf(window,potential_parent);
 }
 CIMGUI_API bool igIsWindowAbove(ImGuiWindow* potential_above,ImGuiWindow* potential_below)
 {
-    return ImGui::IsWindowAbove(potential_above,potential_below);
+    return IsWindowAbove(potential_above,potential_below);
 }
 CIMGUI_API bool igIsWindowNavFocusable(ImGuiWindow* window)
 {
-    return ImGui::IsWindowNavFocusable(window);
+    return IsWindowNavFocusable(window);
 }
 CIMGUI_API void igSetWindowPos_WindowPtr(ImGuiWindow* window,const ImVec2 pos,ImGuiCond cond)
 {
-    return ImGui::SetWindowPos(window,pos,cond);
+    return SetWindowPos(window,pos,cond);
 }
 CIMGUI_API void igSetWindowSize_WindowPtr(ImGuiWindow* window,const ImVec2 size,ImGuiCond cond)
 {
-    return ImGui::SetWindowSize(window,size,cond);
+    return SetWindowSize(window,size,cond);
 }
 CIMGUI_API void igSetWindowCollapsed_WindowPtr(ImGuiWindow* window,bool collapsed,ImGuiCond cond)
 {
-    return ImGui::SetWindowCollapsed(window,collapsed,cond);
+    return SetWindowCollapsed(window,collapsed,cond);
 }
 CIMGUI_API void igSetWindowHitTestHole(ImGuiWindow* window,const ImVec2 pos,const ImVec2 size)
 {
-    return ImGui::SetWindowHitTestHole(window,pos,size);
+    return SetWindowHitTestHole(window,pos,size);
 }
 CIMGUI_API void igSetWindowHiddendAndSkipItemsForCurrentFrame(ImGuiWindow* window)
 {
-    return ImGui::SetWindowHiddendAndSkipItemsForCurrentFrame(window);
+    return SetWindowHiddendAndSkipItemsForCurrentFrame(window);
 }
 CIMGUI_API void igWindowRectAbsToRel(ImRect *pOut,ImGuiWindow* window,const ImRect r)
 {
-    *pOut = ImGui::WindowRectAbsToRel(window,r);
+    *pOut = WindowRectAbsToRel(window,r);
 }
 CIMGUI_API void igWindowRectRelToAbs(ImRect *pOut,ImGuiWindow* window,const ImRect r)
 {
-    *pOut = ImGui::WindowRectRelToAbs(window,r);
+    *pOut = WindowRectRelToAbs(window,r);
 }
 CIMGUI_API void igFocusWindow(ImGuiWindow* window)
 {
-    return ImGui::FocusWindow(window);
+    return FocusWindow(window);
 }
 CIMGUI_API void igFocusTopMostWindowUnderOne(ImGuiWindow* under_this_window,ImGuiWindow* ignore_window,ImGuiViewport* filter_viewport)
 {
-    return ImGui::FocusTopMostWindowUnderOne(under_this_window,ignore_window,filter_viewport);
+    return FocusTopMostWindowUnderOne(under_this_window,ignore_window,filter_viewport);
 }
 CIMGUI_API void igBringWindowToFocusFront(ImGuiWindow* window)
 {
-    return ImGui::BringWindowToFocusFront(window);
+    return BringWindowToFocusFront(window);
 }
 CIMGUI_API void igBringWindowToDisplayFront(ImGuiWindow* window)
 {
-    return ImGui::BringWindowToDisplayFront(window);
+    return BringWindowToDisplayFront(window);
 }
 CIMGUI_API void igBringWindowToDisplayBack(ImGuiWindow* window)
 {
-    return ImGui::BringWindowToDisplayBack(window);
+    return BringWindowToDisplayBack(window);
 }
 CIMGUI_API void igBringWindowToDisplayBehind(ImGuiWindow* window,ImGuiWindow* above_window)
 {
-    return ImGui::BringWindowToDisplayBehind(window,above_window);
+    return BringWindowToDisplayBehind(window,above_window);
 }
 CIMGUI_API int igFindWindowDisplayIndex(ImGuiWindow* window)
 {
-    return ImGui::FindWindowDisplayIndex(window);
+    return FindWindowDisplayIndex(window);
 }
 CIMGUI_API ImGuiWindow* igFindBottomMostVisibleWindowWithinBeginStack(ImGuiWindow* window)
 {
-    return ImGui::FindBottomMostVisibleWindowWithinBeginStack(window);
+    return FindBottomMostVisibleWindowWithinBeginStack(window);
 }
 CIMGUI_API void igSetCurrentFont(ImFont* font)
 {
-    return ImGui::SetCurrentFont(font);
+    return SetCurrentFont(font);
 }
 CIMGUI_API ImFont* igGetDefaultFont()
 {
-    return ImGui::GetDefaultFont();
+    return GetDefaultFont();
 }
 CIMGUI_API ImDrawList* igGetForegroundDrawList_WindowPtr(ImGuiWindow* window)
 {
-    return ImGui::GetForegroundDrawList(window);
+    return GetForegroundDrawList(window);
 }
 CIMGUI_API void igInitialize()
 {
-    return ImGui::Initialize();
+    return Initialize();
 }
 CIMGUI_API void igShutdown()
 {
-    return ImGui::Shutdown();
+    return Shutdown();
 }
 CIMGUI_API void igUpdateInputEvents(bool trickle_fast_inputs)
 {
-    return ImGui::UpdateInputEvents(trickle_fast_inputs);
+    return UpdateInputEvents(trickle_fast_inputs);
 }
 CIMGUI_API void igUpdateHoveredWindowAndCaptureFlags()
 {
-    return ImGui::UpdateHoveredWindowAndCaptureFlags();
+    return UpdateHoveredWindowAndCaptureFlags();
 }
 CIMGUI_API void igStartMouseMovingWindow(ImGuiWindow* window)
 {
-    return ImGui::StartMouseMovingWindow(window);
+    return StartMouseMovingWindow(window);
 }
 CIMGUI_API void igStartMouseMovingWindowOrNode(ImGuiWindow* window,ImGuiDockNode* node,bool undock_floating_node)
 {
-    return ImGui::StartMouseMovingWindowOrNode(window,node,undock_floating_node);
+    return StartMouseMovingWindowOrNode(window,node,undock_floating_node);
 }
 CIMGUI_API void igUpdateMouseMovingWindowNewFrame()
 {
-    return ImGui::UpdateMouseMovingWindowNewFrame();
+    return UpdateMouseMovingWindowNewFrame();
 }
 CIMGUI_API void igUpdateMouseMovingWindowEndFrame()
 {
-    return ImGui::UpdateMouseMovingWindowEndFrame();
+    return UpdateMouseMovingWindowEndFrame();
 }
 CIMGUI_API ImGuiID igAddContextHook(ImGuiContext* context,const ImGuiContextHook* hook)
 {
-    return ImGui::AddContextHook(context,hook);
+    return AddContextHook(context,hook);
 }
 CIMGUI_API void igRemoveContextHook(ImGuiContext* context,ImGuiID hook_to_remove)
 {
-    return ImGui::RemoveContextHook(context,hook_to_remove);
+    return RemoveContextHook(context,hook_to_remove);
 }
 CIMGUI_API void igCallContextHooks(ImGuiContext* context,ImGuiContextHookType type)
 {
-    return ImGui::CallContextHooks(context,type);
+    return CallContextHooks(context,type);
 }
 CIMGUI_API void igTranslateWindowsInViewport(ImGuiViewportP* viewport,const ImVec2 old_pos,const ImVec2 new_pos)
 {
-    return ImGui::TranslateWindowsInViewport(viewport,old_pos,new_pos);
+    return TranslateWindowsInViewport(viewport,old_pos,new_pos);
 }
 CIMGUI_API void igScaleWindowsInViewport(ImGuiViewportP* viewport,float scale)
 {
-    return ImGui::ScaleWindowsInViewport(viewport,scale);
+    return ScaleWindowsInViewport(viewport,scale);
 }
 CIMGUI_API void igDestroyPlatformWindow(ImGuiViewportP* viewport)
 {
-    return ImGui::DestroyPlatformWindow(viewport);
+    return DestroyPlatformWindow(viewport);
 }
 CIMGUI_API void igSetWindowViewport(ImGuiWindow* window,ImGuiViewportP* viewport)
 {
-    return ImGui::SetWindowViewport(window,viewport);
+    return SetWindowViewport(window,viewport);
 }
 CIMGUI_API void igSetCurrentViewport(ImGuiWindow* window,ImGuiViewportP* viewport)
 {
-    return ImGui::SetCurrentViewport(window,viewport);
+    return SetCurrentViewport(window,viewport);
 }
 CIMGUI_API const ImGuiPlatformMonitor* igGetViewportPlatformMonitor(ImGuiViewport* viewport)
 {
-    return ImGui::GetViewportPlatformMonitor(viewport);
+    return GetViewportPlatformMonitor(viewport);
 }
 CIMGUI_API ImGuiViewportP* igFindHoveredViewportFromPlatformWindowStack(const ImVec2 mouse_platform_pos)
 {
-    return ImGui::FindHoveredViewportFromPlatformWindowStack(mouse_platform_pos);
+    return FindHoveredViewportFromPlatformWindowStack(mouse_platform_pos);
 }
 CIMGUI_API void igMarkIniSettingsDirty_Nil()
 {
-    return ImGui::MarkIniSettingsDirty();
+    return MarkIniSettingsDirty();
 }
 CIMGUI_API void igMarkIniSettingsDirty_WindowPtr(ImGuiWindow* window)
 {
-    return ImGui::MarkIniSettingsDirty(window);
+    return MarkIniSettingsDirty(window);
 }
 CIMGUI_API void igClearIniSettings()
 {
-    return ImGui::ClearIniSettings();
+    return ClearIniSettings();
 }
 CIMGUI_API void igAddSettingsHandler(const ImGuiSettingsHandler* handler)
 {
-    return ImGui::AddSettingsHandler(handler);
+    return AddSettingsHandler(handler);
 }
 CIMGUI_API void igRemoveSettingsHandler(const char* type_name)
 {
-    return ImGui::RemoveSettingsHandler(type_name);
+    return RemoveSettingsHandler(type_name);
 }
 CIMGUI_API ImGuiSettingsHandler* igFindSettingsHandler(const char* type_name)
 {
-    return ImGui::FindSettingsHandler(type_name);
+    return FindSettingsHandler(type_name);
 }
 CIMGUI_API ImGuiWindowSettings* igCreateNewWindowSettings(const char* name)
 {
-    return ImGui::CreateNewWindowSettings(name);
+    return CreateNewWindowSettings(name);
 }
 CIMGUI_API ImGuiWindowSettings* igFindWindowSettingsByID(ImGuiID id)
 {
-    return ImGui::FindWindowSettingsByID(id);
+    return FindWindowSettingsByID(id);
 }
 CIMGUI_API ImGuiWindowSettings* igFindWindowSettingsByWindow(ImGuiWindow* window)
 {
-    return ImGui::FindWindowSettingsByWindow(window);
+    return FindWindowSettingsByWindow(window);
 }
 CIMGUI_API void igClearWindowSettings(const char* name)
 {
-    return ImGui::ClearWindowSettings(name);
+    return ClearWindowSettings(name);
 }
 CIMGUI_API void igLocalizeRegisterEntries(const ImGuiLocEntry* entries,int count)
 {
-    return ImGui::LocalizeRegisterEntries(entries,count);
+    return LocalizeRegisterEntries(entries,count);
 }
 CIMGUI_API const char* igLocalizeGetMsg(ImGuiLocKey key)
 {
-    return ImGui::LocalizeGetMsg(key);
+    return LocalizeGetMsg(key);
 }
 CIMGUI_API void igSetScrollX_WindowPtr(ImGuiWindow* window,float scroll_x)
 {
-    return ImGui::SetScrollX(window,scroll_x);
+    return SetScrollX(window,scroll_x);
 }
 CIMGUI_API void igSetScrollY_WindowPtr(ImGuiWindow* window,float scroll_y)
 {
-    return ImGui::SetScrollY(window,scroll_y);
+    return SetScrollY(window,scroll_y);
 }
 CIMGUI_API void igSetScrollFromPosX_WindowPtr(ImGuiWindow* window,float local_x,float center_x_ratio)
 {
-    return ImGui::SetScrollFromPosX(window,local_x,center_x_ratio);
+    return SetScrollFromPosX(window,local_x,center_x_ratio);
 }
 CIMGUI_API void igSetScrollFromPosY_WindowPtr(ImGuiWindow* window,float local_y,float center_y_ratio)
 {
-    return ImGui::SetScrollFromPosY(window,local_y,center_y_ratio);
+    return SetScrollFromPosY(window,local_y,center_y_ratio);
 }
 CIMGUI_API void igScrollToItem(ImGuiScrollFlags flags)
 {
-    return ImGui::ScrollToItem(flags);
+    return ScrollToItem(flags);
 }
 CIMGUI_API void igScrollToRect(ImGuiWindow* window,const ImRect rect,ImGuiScrollFlags flags)
 {
-    return ImGui::ScrollToRect(window,rect,flags);
+    return ScrollToRect(window,rect,flags);
 }
 CIMGUI_API void igScrollToRectEx(ImVec2 *pOut,ImGuiWindow* window,const ImRect rect,ImGuiScrollFlags flags)
 {
-    *pOut = ImGui::ScrollToRectEx(window,rect,flags);
+    *pOut = ScrollToRectEx(window,rect,flags);
 }
 CIMGUI_API void igScrollToBringRectIntoView(ImGuiWindow* window,const ImRect rect)
 {
-    return ImGui::ScrollToBringRectIntoView(window,rect);
+    return ScrollToBringRectIntoView(window,rect);
 }
 CIMGUI_API ImGuiItemStatusFlags igGetItemStatusFlags()
 {
-    return ImGui::GetItemStatusFlags();
+    return GetItemStatusFlags();
 }
 CIMGUI_API ImGuiItemFlags igGetItemFlags()
 {
-    return ImGui::GetItemFlags();
+    return GetItemFlags();
 }
 CIMGUI_API ImGuiID igGetActiveID()
 {
-    return ImGui::GetActiveID();
+    return GetActiveID();
 }
 CIMGUI_API ImGuiID igGetFocusID()
 {
-    return ImGui::GetFocusID();
+    return GetFocusID();
 }
 CIMGUI_API void igSetActiveID(ImGuiID id,ImGuiWindow* window)
 {
-    return ImGui::SetActiveID(id,window);
+    return SetActiveID(id,window);
 }
 CIMGUI_API void igSetFocusID(ImGuiID id,ImGuiWindow* window)
 {
-    return ImGui::SetFocusID(id,window);
+    return SetFocusID(id,window);
 }
 CIMGUI_API void igClearActiveID()
 {
-    return ImGui::ClearActiveID();
+    return ClearActiveID();
 }
 CIMGUI_API ImGuiID igGetHoveredID()
 {
-    return ImGui::GetHoveredID();
+    return GetHoveredID();
 }
 CIMGUI_API void igSetHoveredID(ImGuiID id)
 {
-    return ImGui::SetHoveredID(id);
+    return SetHoveredID(id);
 }
 CIMGUI_API void igKeepAliveID(ImGuiID id)
 {
-    return ImGui::KeepAliveID(id);
+    return KeepAliveID(id);
 }
 CIMGUI_API void igMarkItemEdited(ImGuiID id)
 {
-    return ImGui::MarkItemEdited(id);
+    return MarkItemEdited(id);
 }
 CIMGUI_API void igPushOverrideID(ImGuiID id)
 {
-    return ImGui::PushOverrideID(id);
+    return PushOverrideID(id);
 }
 CIMGUI_API ImGuiID igGetIDWithSeed_Str(const char* str_id_begin,const char* str_id_end,ImGuiID seed)
 {
-    return ImGui::GetIDWithSeed(str_id_begin,str_id_end,seed);
+    return GetIDWithSeed(str_id_begin,str_id_end,seed);
 }
 CIMGUI_API ImGuiID igGetIDWithSeed_Int(int n,ImGuiID seed)
 {
-    return ImGui::GetIDWithSeed(n,seed);
+    return GetIDWithSeed(n,seed);
 }
 CIMGUI_API void igItemSize_Vec2(const ImVec2 size,float text_baseline_y)
 {
-    return ImGui::ItemSize(size,text_baseline_y);
+    return ItemSize(size,text_baseline_y);
 }
 CIMGUI_API void igItemSize_Rect(const ImRect bb,float text_baseline_y)
 {
-    return ImGui::ItemSize(bb,text_baseline_y);
+    return ItemSize(bb,text_baseline_y);
 }
 CIMGUI_API bool igItemAdd(const ImRect bb,ImGuiID id,const ImRect* nav_bb,ImGuiItemFlags extra_flags)
 {
-    return ImGui::ItemAdd(bb,id,nav_bb,extra_flags);
+    return ItemAdd(bb,id,nav_bb,extra_flags);
 }
 CIMGUI_API bool igItemHoverable(const ImRect bb,ImGuiID id)
 {
-    return ImGui::ItemHoverable(bb,id);
+    return ItemHoverable(bb,id);
 }
 CIMGUI_API bool igIsWindowContentHoverable(ImGuiWindow* window,ImGuiHoveredFlags flags)
 {
-    return ImGui::IsWindowContentHoverable(window,flags);
+    return IsWindowContentHoverable(window,flags);
 }
 CIMGUI_API bool igIsClippedEx(const ImRect bb,ImGuiID id)
 {
-    return ImGui::IsClippedEx(bb,id);
+    return IsClippedEx(bb,id);
 }
 CIMGUI_API void igSetLastItemData(ImGuiID item_id,ImGuiItemFlags in_flags,ImGuiItemStatusFlags status_flags,const ImRect item_rect)
 {
-    return ImGui::SetLastItemData(item_id,in_flags,status_flags,item_rect);
+    return SetLastItemData(item_id,in_flags,status_flags,item_rect);
 }
 CIMGUI_API void igCalcItemSize(ImVec2 *pOut,ImVec2 size,float default_w,float default_h)
 {
-    *pOut = ImGui::CalcItemSize(size,default_w,default_h);
+    *pOut = CalcItemSize(size,default_w,default_h);
 }
 CIMGUI_API float igCalcWrapWidthForPos(const ImVec2 pos,float wrap_pos_x)
 {
-    return ImGui::CalcWrapWidthForPos(pos,wrap_pos_x);
+    return CalcWrapWidthForPos(pos,wrap_pos_x);
 }
 CIMGUI_API void igPushMultiItemsWidths(int components,float width_full)
 {
-    return ImGui::PushMultiItemsWidths(components,width_full);
+    return PushMultiItemsWidths(components,width_full);
 }
 CIMGUI_API bool igIsItemToggledSelection()
 {
-    return ImGui::IsItemToggledSelection();
+    return IsItemToggledSelection();
 }
 CIMGUI_API void igGetContentRegionMaxAbs(ImVec2 *pOut)
 {
-    *pOut = ImGui::GetContentRegionMaxAbs();
+    *pOut = GetContentRegionMaxAbs();
 }
 CIMGUI_API void igShrinkWidths(ImGuiShrinkWidthItem* items,int count,float width_excess)
 {
-    return ImGui::ShrinkWidths(items,count,width_excess);
+    return ShrinkWidths(items,count,width_excess);
 }
 CIMGUI_API void igPushItemFlag(ImGuiItemFlags option,bool enabled)
 {
-    return ImGui::PushItemFlag(option,enabled);
+    return PushItemFlag(option,enabled);
 }
 CIMGUI_API void igPopItemFlag()
 {
-    return ImGui::PopItemFlag();
+    return PopItemFlag();
 }
 CIMGUI_API const ImGuiDataVarInfo* igGetStyleVarInfo(ImGuiStyleVar idx)
 {
-    return ImGui::GetStyleVarInfo(idx);
+    return GetStyleVarInfo(idx);
 }
 CIMGUI_API void igLogBegin(ImGuiLogType type,int auto_open_depth)
 {
-    return ImGui::LogBegin(type,auto_open_depth);
+    return LogBegin(type,auto_open_depth);
 }
 CIMGUI_API void igLogToBuffer(int auto_open_depth)
 {
-    return ImGui::LogToBuffer(auto_open_depth);
+    return LogToBuffer(auto_open_depth);
 }
 CIMGUI_API void igLogRenderedText(const ImVec2* ref_pos,const char* text,const char* text_end)
 {
-    return ImGui::LogRenderedText(ref_pos,text,text_end);
+    return LogRenderedText(ref_pos,text,text_end);
 }
 CIMGUI_API void igLogSetNextTextDecoration(const char* prefix,const char* suffix)
 {
-    return ImGui::LogSetNextTextDecoration(prefix,suffix);
+    return LogSetNextTextDecoration(prefix,suffix);
 }
 CIMGUI_API bool igBeginChildEx(const char* name,ImGuiID id,const ImVec2 size_arg,bool border,ImGuiWindowFlags flags)
 {
-    return ImGui::BeginChildEx(name,id,size_arg,border,flags);
+    return BeginChildEx(name,id,size_arg,border,flags);
 }
 CIMGUI_API void igOpenPopupEx(ImGuiID id,ImGuiPopupFlags popup_flags)
 {
-    return ImGui::OpenPopupEx(id,popup_flags);
+    return OpenPopupEx(id,popup_flags);
 }
 CIMGUI_API void igClosePopupToLevel(int remaining,bool restore_focus_to_window_under_popup)
 {
-    return ImGui::ClosePopupToLevel(remaining,restore_focus_to_window_under_popup);
+    return ClosePopupToLevel(remaining,restore_focus_to_window_under_popup);
 }
 CIMGUI_API void igClosePopupsOverWindow(ImGuiWindow* ref_window,bool restore_focus_to_window_under_popup)
 {
-    return ImGui::ClosePopupsOverWindow(ref_window,restore_focus_to_window_under_popup);
+    return ClosePopupsOverWindow(ref_window,restore_focus_to_window_under_popup);
 }
 CIMGUI_API void igClosePopupsExceptModals()
 {
-    return ImGui::ClosePopupsExceptModals();
+    return ClosePopupsExceptModals();
 }
 CIMGUI_API bool igIsPopupOpen_ID(ImGuiID id,ImGuiPopupFlags popup_flags)
 {
-    return ImGui::IsPopupOpen(id,popup_flags);
+    return IsPopupOpen(id,popup_flags);
 }
 CIMGUI_API bool igBeginPopupEx(ImGuiID id,ImGuiWindowFlags extra_flags)
 {
-    return ImGui::BeginPopupEx(id,extra_flags);
+    return BeginPopupEx(id,extra_flags);
 }
 CIMGUI_API bool igBeginTooltipEx(ImGuiTooltipFlags tooltip_flags,ImGuiWindowFlags extra_window_flags)
 {
-    return ImGui::BeginTooltipEx(tooltip_flags,extra_window_flags);
+    return BeginTooltipEx(tooltip_flags,extra_window_flags);
 }
 CIMGUI_API void igGetPopupAllowedExtentRect(ImRect *pOut,ImGuiWindow* window)
 {
-    *pOut = ImGui::GetPopupAllowedExtentRect(window);
+    *pOut = GetPopupAllowedExtentRect(window);
 }
 CIMGUI_API ImGuiWindow* igGetTopMostPopupModal()
 {
-    return ImGui::GetTopMostPopupModal();
+    return GetTopMostPopupModal();
 }
 CIMGUI_API ImGuiWindow* igGetTopMostAndVisiblePopupModal()
 {
-    return ImGui::GetTopMostAndVisiblePopupModal();
+    return GetTopMostAndVisiblePopupModal();
 }
 CIMGUI_API void igFindBestWindowPosForPopup(ImVec2 *pOut,ImGuiWindow* window)
 {
-    *pOut = ImGui::FindBestWindowPosForPopup(window);
+    *pOut = FindBestWindowPosForPopup(window);
 }
 CIMGUI_API void igFindBestWindowPosForPopupEx(ImVec2 *pOut,const ImVec2 ref_pos,const ImVec2 size,ImGuiDir* last_dir,const ImRect r_outer,const ImRect r_avoid,ImGuiPopupPositionPolicy policy)
 {
-    *pOut = ImGui::FindBestWindowPosForPopupEx(ref_pos,size,last_dir,r_outer,r_avoid,policy);
+    *pOut = FindBestWindowPosForPopupEx(ref_pos,size,last_dir,r_outer,r_avoid,policy);
 }
 CIMGUI_API bool igBeginViewportSideBar(const char* name,ImGuiViewport* viewport,ImGuiDir dir,float size,ImGuiWindowFlags window_flags)
 {
-    return ImGui::BeginViewportSideBar(name,viewport,dir,size,window_flags);
+    return BeginViewportSideBar(name,viewport,dir,size,window_flags);
 }
 CIMGUI_API bool igBeginMenuEx(const char* label,const char* icon,bool enabled)
 {
-    return ImGui::BeginMenuEx(label,icon,enabled);
+    return BeginMenuEx(label,icon,enabled);
 }
 CIMGUI_API bool igMenuItemEx(const char* label,const char* icon,const char* shortcut,bool selected,bool enabled)
 {
-    return ImGui::MenuItemEx(label,icon,shortcut,selected,enabled);
+    return MenuItemEx(label,icon,shortcut,selected,enabled);
 }
 CIMGUI_API bool igBeginComboPopup(ImGuiID popup_id,const ImRect bb,ImGuiComboFlags flags)
 {
-    return ImGui::BeginComboPopup(popup_id,bb,flags);
+    return BeginComboPopup(popup_id,bb,flags);
 }
 CIMGUI_API bool igBeginComboPreview()
 {
-    return ImGui::BeginComboPreview();
+    return BeginComboPreview();
 }
 CIMGUI_API void igEndComboPreview()
 {
-    return ImGui::EndComboPreview();
+    return EndComboPreview();
 }
 CIMGUI_API void igNavInitWindow(ImGuiWindow* window,bool force_reinit)
 {
-    return ImGui::NavInitWindow(window,force_reinit);
+    return NavInitWindow(window,force_reinit);
 }
 CIMGUI_API void igNavInitRequestApplyResult()
 {
-    return ImGui::NavInitRequestApplyResult();
+    return NavInitRequestApplyResult();
 }
 CIMGUI_API bool igNavMoveRequestButNoResultYet()
 {
-    return ImGui::NavMoveRequestButNoResultYet();
+    return NavMoveRequestButNoResultYet();
 }
 CIMGUI_API void igNavMoveRequestSubmit(ImGuiDir move_dir,ImGuiDir clip_dir,ImGuiNavMoveFlags move_flags,ImGuiScrollFlags scroll_flags)
 {
-    return ImGui::NavMoveRequestSubmit(move_dir,clip_dir,move_flags,scroll_flags);
+    return NavMoveRequestSubmit(move_dir,clip_dir,move_flags,scroll_flags);
 }
 CIMGUI_API void igNavMoveRequestForward(ImGuiDir move_dir,ImGuiDir clip_dir,ImGuiNavMoveFlags move_flags,ImGuiScrollFlags scroll_flags)
 {
-    return ImGui::NavMoveRequestForward(move_dir,clip_dir,move_flags,scroll_flags);
+    return NavMoveRequestForward(move_dir,clip_dir,move_flags,scroll_flags);
 }
 CIMGUI_API void igNavMoveRequestResolveWithLastItem(ImGuiNavItemData* result)
 {
-    return ImGui::NavMoveRequestResolveWithLastItem(result);
+    return NavMoveRequestResolveWithLastItem(result);
 }
 CIMGUI_API void igNavMoveRequestCancel()
 {
-    return ImGui::NavMoveRequestCancel();
+    return NavMoveRequestCancel();
 }
 CIMGUI_API void igNavMoveRequestApplyResult()
 {
-    return ImGui::NavMoveRequestApplyResult();
+    return NavMoveRequestApplyResult();
 }
 CIMGUI_API void igNavMoveRequestTryWrapping(ImGuiWindow* window,ImGuiNavMoveFlags move_flags)
 {
-    return ImGui::NavMoveRequestTryWrapping(window,move_flags);
+    return NavMoveRequestTryWrapping(window,move_flags);
 }
 CIMGUI_API void igActivateItem(ImGuiID id)
 {
-    return ImGui::ActivateItem(id);
+    return ActivateItem(id);
 }
 CIMGUI_API void igSetNavWindow(ImGuiWindow* window)
 {
-    return ImGui::SetNavWindow(window);
+    return SetNavWindow(window);
 }
 CIMGUI_API void igSetNavID(ImGuiID id,ImGuiNavLayer nav_layer,ImGuiID focus_scope_id,const ImRect rect_rel)
 {
-    return ImGui::SetNavID(id,nav_layer,focus_scope_id,rect_rel);
+    return SetNavID(id,nav_layer,focus_scope_id,rect_rel);
 }
 CIMGUI_API bool igIsNamedKey(ImGuiKey key)
 {
-    return ImGui::IsNamedKey(key);
+    return IsNamedKey(key);
 }
 CIMGUI_API bool igIsNamedKeyOrModKey(ImGuiKey key)
 {
-    return ImGui::IsNamedKeyOrModKey(key);
+    return IsNamedKeyOrModKey(key);
 }
 CIMGUI_API bool igIsLegacyKey(ImGuiKey key)
 {
-    return ImGui::IsLegacyKey(key);
+    return IsLegacyKey(key);
 }
 CIMGUI_API bool igIsKeyboardKey(ImGuiKey key)
 {
-    return ImGui::IsKeyboardKey(key);
+    return IsKeyboardKey(key);
 }
 CIMGUI_API bool igIsGamepadKey(ImGuiKey key)
 {
-    return ImGui::IsGamepadKey(key);
+    return IsGamepadKey(key);
 }
 CIMGUI_API bool igIsMouseKey(ImGuiKey key)
 {
-    return ImGui::IsMouseKey(key);
+    return IsMouseKey(key);
 }
 CIMGUI_API bool igIsAliasKey(ImGuiKey key)
 {
-    return ImGui::IsAliasKey(key);
+    return IsAliasKey(key);
 }
 CIMGUI_API ImGuiKeyChord igConvertShortcutMod(ImGuiKeyChord key_chord)
 {
-    return ImGui::ConvertShortcutMod(key_chord);
+    return ConvertShortcutMod(key_chord);
 }
 CIMGUI_API ImGuiKey igConvertSingleModFlagToKey(ImGuiContext* ctx,ImGuiKey key)
 {
-    return ImGui::ConvertSingleModFlagToKey(ctx,key);
+    return ConvertSingleModFlagToKey(ctx,key);
 }
 CIMGUI_API ImGuiKeyData* igGetKeyData_ContextPtr(ImGuiContext* ctx,ImGuiKey key)
 {
-    return ImGui::GetKeyData(ctx,key);
+    return GetKeyData(ctx,key);
 }
 CIMGUI_API ImGuiKeyData* igGetKeyData_Key(ImGuiKey key)
 {
-    return ImGui::GetKeyData(key);
+    return GetKeyData(key);
 }
 CIMGUI_API void igGetKeyChordName(ImGuiKeyChord key_chord,char* out_buf,int out_buf_size)
 {
-    return ImGui::GetKeyChordName(key_chord,out_buf,out_buf_size);
+    return GetKeyChordName(key_chord,out_buf,out_buf_size);
 }
 CIMGUI_API ImGuiKey igMouseButtonToKey(ImGuiMouseButton button)
 {
-    return ImGui::MouseButtonToKey(button);
+    return MouseButtonToKey(button);
 }
 CIMGUI_API bool igIsMouseDragPastThreshold(ImGuiMouseButton button,float lock_threshold)
 {
-    return ImGui::IsMouseDragPastThreshold(button,lock_threshold);
+    return IsMouseDragPastThreshold(button,lock_threshold);
 }
 CIMGUI_API void igGetKeyMagnitude2d(ImVec2 *pOut,ImGuiKey key_left,ImGuiKey key_right,ImGuiKey key_up,ImGuiKey key_down)
 {
-    *pOut = ImGui::GetKeyMagnitude2d(key_left,key_right,key_up,key_down);
+    *pOut = GetKeyMagnitude2d(key_left,key_right,key_up,key_down);
 }
 CIMGUI_API float igGetNavTweakPressedAmount(ImGuiAxis axis)
 {
-    return ImGui::GetNavTweakPressedAmount(axis);
+    return GetNavTweakPressedAmount(axis);
 }
 CIMGUI_API int igCalcTypematicRepeatAmount(float t0,float t1,float repeat_delay,float repeat_rate)
 {
-    return ImGui::CalcTypematicRepeatAmount(t0,t1,repeat_delay,repeat_rate);
+    return CalcTypematicRepeatAmount(t0,t1,repeat_delay,repeat_rate);
 }
 CIMGUI_API void igGetTypematicRepeatRate(ImGuiInputFlags flags,float* repeat_delay,float* repeat_rate)
 {
-    return ImGui::GetTypematicRepeatRate(flags,repeat_delay,repeat_rate);
+    return GetTypematicRepeatRate(flags,repeat_delay,repeat_rate);
 }
 CIMGUI_API void igSetActiveIdUsingAllKeyboardKeys()
 {
-    return ImGui::SetActiveIdUsingAllKeyboardKeys();
+    return SetActiveIdUsingAllKeyboardKeys();
 }
 CIMGUI_API bool igIsActiveIdUsingNavDir(ImGuiDir dir)
 {
-    return ImGui::IsActiveIdUsingNavDir(dir);
+    return IsActiveIdUsingNavDir(dir);
 }
 CIMGUI_API ImGuiID igGetKeyOwner(ImGuiKey key)
 {
-    return ImGui::GetKeyOwner(key);
+    return GetKeyOwner(key);
 }
 CIMGUI_API void igSetKeyOwner(ImGuiKey key,ImGuiID owner_id,ImGuiInputFlags flags)
 {
-    return ImGui::SetKeyOwner(key,owner_id,flags);
+    return SetKeyOwner(key,owner_id,flags);
 }
 CIMGUI_API void igSetKeyOwnersForKeyChord(ImGuiKeyChord key,ImGuiID owner_id,ImGuiInputFlags flags)
 {
-    return ImGui::SetKeyOwnersForKeyChord(key,owner_id,flags);
+    return SetKeyOwnersForKeyChord(key,owner_id,flags);
 }
 CIMGUI_API void igSetItemKeyOwner(ImGuiKey key,ImGuiInputFlags flags)
 {
-    return ImGui::SetItemKeyOwner(key,flags);
+    return SetItemKeyOwner(key,flags);
 }
 CIMGUI_API bool igTestKeyOwner(ImGuiKey key,ImGuiID owner_id)
 {
-    return ImGui::TestKeyOwner(key,owner_id);
+    return TestKeyOwner(key,owner_id);
 }
 CIMGUI_API ImGuiKeyOwnerData* igGetKeyOwnerData(ImGuiContext* ctx,ImGuiKey key)
 {
-    return ImGui::GetKeyOwnerData(ctx,key);
+    return GetKeyOwnerData(ctx,key);
 }
 CIMGUI_API bool igIsKeyDown_ID(ImGuiKey key,ImGuiID owner_id)
 {
-    return ImGui::IsKeyDown(key,owner_id);
+    return IsKeyDown(key,owner_id);
 }
 CIMGUI_API bool igIsKeyPressed_ID(ImGuiKey key,ImGuiID owner_id,ImGuiInputFlags flags)
 {
-    return ImGui::IsKeyPressed(key,owner_id,flags);
+    return IsKeyPressed(key,owner_id,flags);
 }
 CIMGUI_API bool igIsKeyReleased_ID(ImGuiKey key,ImGuiID owner_id)
 {
-    return ImGui::IsKeyReleased(key,owner_id);
+    return IsKeyReleased(key,owner_id);
 }
 CIMGUI_API bool igIsMouseDown_ID(ImGuiMouseButton button,ImGuiID owner_id)
 {
-    return ImGui::IsMouseDown(button,owner_id);
+    return IsMouseDown(button,owner_id);
 }
 CIMGUI_API bool igIsMouseClicked_ID(ImGuiMouseButton button,ImGuiID owner_id,ImGuiInputFlags flags)
 {
-    return ImGui::IsMouseClicked(button,owner_id,flags);
+    return IsMouseClicked(button,owner_id,flags);
 }
 CIMGUI_API bool igIsMouseReleased_ID(ImGuiMouseButton button,ImGuiID owner_id)
 {
-    return ImGui::IsMouseReleased(button,owner_id);
+    return IsMouseReleased(button,owner_id);
 }
 CIMGUI_API bool igShortcut(ImGuiKeyChord key_chord,ImGuiID owner_id,ImGuiInputFlags flags)
 {
-    return ImGui::Shortcut(key_chord,owner_id,flags);
+    return Shortcut(key_chord,owner_id,flags);
 }
 CIMGUI_API bool igSetShortcutRouting(ImGuiKeyChord key_chord,ImGuiID owner_id,ImGuiInputFlags flags)
 {
-    return ImGui::SetShortcutRouting(key_chord,owner_id,flags);
+    return SetShortcutRouting(key_chord,owner_id,flags);
 }
 CIMGUI_API bool igTestShortcutRouting(ImGuiKeyChord key_chord,ImGuiID owner_id)
 {
-    return ImGui::TestShortcutRouting(key_chord,owner_id);
+    return TestShortcutRouting(key_chord,owner_id);
 }
 CIMGUI_API ImGuiKeyRoutingData* igGetShortcutRoutingData(ImGuiKeyChord key_chord)
 {
-    return ImGui::GetShortcutRoutingData(key_chord);
+    return GetShortcutRoutingData(key_chord);
 }
 CIMGUI_API void igDockContextInitialize(ImGuiContext* ctx)
 {
-    return ImGui::DockContextInitialize(ctx);
+    return DockContextInitialize(ctx);
 }
 CIMGUI_API void igDockContextShutdown(ImGuiContext* ctx)
 {
-    return ImGui::DockContextShutdown(ctx);
+    return DockContextShutdown(ctx);
 }
 CIMGUI_API void igDockContextClearNodes(ImGuiContext* ctx,ImGuiID root_id,bool clear_settings_refs)
 {
-    return ImGui::DockContextClearNodes(ctx,root_id,clear_settings_refs);
+    return DockContextClearNodes(ctx,root_id,clear_settings_refs);
 }
 CIMGUI_API void igDockContextRebuildNodes(ImGuiContext* ctx)
 {
-    return ImGui::DockContextRebuildNodes(ctx);
+    return DockContextRebuildNodes(ctx);
 }
 CIMGUI_API void igDockContextNewFrameUpdateUndocking(ImGuiContext* ctx)
 {
-    return ImGui::DockContextNewFrameUpdateUndocking(ctx);
+    return DockContextNewFrameUpdateUndocking(ctx);
 }
 CIMGUI_API void igDockContextNewFrameUpdateDocking(ImGuiContext* ctx)
 {
-    return ImGui::DockContextNewFrameUpdateDocking(ctx);
+    return DockContextNewFrameUpdateDocking(ctx);
 }
 CIMGUI_API void igDockContextEndFrame(ImGuiContext* ctx)
 {
-    return ImGui::DockContextEndFrame(ctx);
+    return DockContextEndFrame(ctx);
 }
 CIMGUI_API ImGuiID igDockContextGenNodeID(ImGuiContext* ctx)
 {
-    return ImGui::DockContextGenNodeID(ctx);
+    return DockContextGenNodeID(ctx);
 }
 CIMGUI_API void igDockContextQueueDock(ImGuiContext* ctx,ImGuiWindow* target,ImGuiDockNode* target_node,ImGuiWindow* payload,ImGuiDir split_dir,float split_ratio,bool split_outer)
 {
-    return ImGui::DockContextQueueDock(ctx,target,target_node,payload,split_dir,split_ratio,split_outer);
+    return DockContextQueueDock(ctx,target,target_node,payload,split_dir,split_ratio,split_outer);
 }
 CIMGUI_API void igDockContextQueueUndockWindow(ImGuiContext* ctx,ImGuiWindow* window)
 {
-    return ImGui::DockContextQueueUndockWindow(ctx,window);
+    return DockContextQueueUndockWindow(ctx,window);
 }
 CIMGUI_API void igDockContextQueueUndockNode(ImGuiContext* ctx,ImGuiDockNode* node)
 {
-    return ImGui::DockContextQueueUndockNode(ctx,node);
+    return DockContextQueueUndockNode(ctx,node);
 }
 CIMGUI_API void igDockContextProcessUndockWindow(ImGuiContext* ctx,ImGuiWindow* window,bool clear_persistent_docking_ref)
 {
-    return ImGui::DockContextProcessUndockWindow(ctx,window,clear_persistent_docking_ref);
+    return DockContextProcessUndockWindow(ctx,window,clear_persistent_docking_ref);
 }
 CIMGUI_API void igDockContextProcessUndockNode(ImGuiContext* ctx,ImGuiDockNode* node)
 {
-    return ImGui::DockContextProcessUndockNode(ctx,node);
+    return DockContextProcessUndockNode(ctx,node);
 }
 CIMGUI_API bool igDockContextCalcDropPosForDocking(ImGuiWindow* target,ImGuiDockNode* target_node,ImGuiWindow* payload_window,ImGuiDockNode* payload_node,ImGuiDir split_dir,bool split_outer,ImVec2* out_pos)
 {
-    return ImGui::DockContextCalcDropPosForDocking(target,target_node,payload_window,payload_node,split_dir,split_outer,out_pos);
+    return DockContextCalcDropPosForDocking(target,target_node,payload_window,payload_node,split_dir,split_outer,out_pos);
 }
 CIMGUI_API ImGuiDockNode* igDockContextFindNodeByID(ImGuiContext* ctx,ImGuiID id)
 {
-    return ImGui::DockContextFindNodeByID(ctx,id);
+    return DockContextFindNodeByID(ctx,id);
 }
 CIMGUI_API void igDockNodeWindowMenuHandler_Default(ImGuiContext* ctx,ImGuiDockNode* node,ImGuiTabBar* tab_bar)
 {
-    return ImGui::DockNodeWindowMenuHandler_Default(ctx,node,tab_bar);
+    return DockNodeWindowMenuHandler_Default(ctx,node,tab_bar);
 }
 CIMGUI_API bool igDockNodeBeginAmendTabBar(ImGuiDockNode* node)
 {
-    return ImGui::DockNodeBeginAmendTabBar(node);
+    return DockNodeBeginAmendTabBar(node);
 }
 CIMGUI_API void igDockNodeEndAmendTabBar()
 {
-    return ImGui::DockNodeEndAmendTabBar();
+    return DockNodeEndAmendTabBar();
 }
 CIMGUI_API ImGuiDockNode* igDockNodeGetRootNode(ImGuiDockNode* node)
 {
-    return ImGui::DockNodeGetRootNode(node);
+    return DockNodeGetRootNode(node);
 }
 CIMGUI_API bool igDockNodeIsInHierarchyOf(ImGuiDockNode* node,ImGuiDockNode* parent)
 {
-    return ImGui::DockNodeIsInHierarchyOf(node,parent);
+    return DockNodeIsInHierarchyOf(node,parent);
 }
 CIMGUI_API int igDockNodeGetDepth(const ImGuiDockNode* node)
 {
-    return ImGui::DockNodeGetDepth(node);
+    return DockNodeGetDepth(node);
 }
 CIMGUI_API ImGuiID igDockNodeGetWindowMenuButtonId(const ImGuiDockNode* node)
 {
-    return ImGui::DockNodeGetWindowMenuButtonId(node);
+    return DockNodeGetWindowMenuButtonId(node);
 }
 CIMGUI_API ImGuiDockNode* igGetWindowDockNode()
 {
-    return ImGui::GetWindowDockNode();
+    return GetWindowDockNode();
 }
 CIMGUI_API bool igGetWindowAlwaysWantOwnTabBar(ImGuiWindow* window)
 {
-    return ImGui::GetWindowAlwaysWantOwnTabBar(window);
+    return GetWindowAlwaysWantOwnTabBar(window);
 }
 CIMGUI_API void igBeginDocked(ImGuiWindow* window,bool* p_open)
 {
-    return ImGui::BeginDocked(window,p_open);
+    return BeginDocked(window,p_open);
 }
 CIMGUI_API void igBeginDockableDragDropSource(ImGuiWindow* window)
 {
-    return ImGui::BeginDockableDragDropSource(window);
+    return BeginDockableDragDropSource(window);
 }
 CIMGUI_API void igBeginDockableDragDropTarget(ImGuiWindow* window)
 {
-    return ImGui::BeginDockableDragDropTarget(window);
+    return BeginDockableDragDropTarget(window);
 }
 CIMGUI_API void igSetWindowDock(ImGuiWindow* window,ImGuiID dock_id,ImGuiCond cond)
 {
-    return ImGui::SetWindowDock(window,dock_id,cond);
+    return SetWindowDock(window,dock_id,cond);
 }
 CIMGUI_API void igDockBuilderDockWindow(const char* window_name,ImGuiID node_id)
 {
-    return ImGui::DockBuilderDockWindow(window_name,node_id);
+    return DockBuilderDockWindow(window_name,node_id);
 }
 CIMGUI_API ImGuiDockNode* igDockBuilderGetNode(ImGuiID node_id)
 {
-    return ImGui::DockBuilderGetNode(node_id);
+    return DockBuilderGetNode(node_id);
 }
 CIMGUI_API ImGuiDockNode* igDockBuilderGetCentralNode(ImGuiID node_id)
 {
-    return ImGui::DockBuilderGetCentralNode(node_id);
+    return DockBuilderGetCentralNode(node_id);
 }
 CIMGUI_API ImGuiID igDockBuilderAddNode(ImGuiID node_id,ImGuiDockNodeFlags flags)
 {
-    return ImGui::DockBuilderAddNode(node_id,flags);
+    return DockBuilderAddNode(node_id,flags);
 }
 CIMGUI_API void igDockBuilderRemoveNode(ImGuiID node_id)
 {
-    return ImGui::DockBuilderRemoveNode(node_id);
+    return DockBuilderRemoveNode(node_id);
 }
 CIMGUI_API void igDockBuilderRemoveNodeDockedWindows(ImGuiID node_id,bool clear_settings_refs)
 {
-    return ImGui::DockBuilderRemoveNodeDockedWindows(node_id,clear_settings_refs);
+    return DockBuilderRemoveNodeDockedWindows(node_id,clear_settings_refs);
 }
 CIMGUI_API void igDockBuilderRemoveNodeChildNodes(ImGuiID node_id)
 {
-    return ImGui::DockBuilderRemoveNodeChildNodes(node_id);
+    return DockBuilderRemoveNodeChildNodes(node_id);
 }
 CIMGUI_API void igDockBuilderSetNodePos(ImGuiID node_id,ImVec2 pos)
 {
-    return ImGui::DockBuilderSetNodePos(node_id,pos);
+    return DockBuilderSetNodePos(node_id,pos);
 }
 CIMGUI_API void igDockBuilderSetNodeSize(ImGuiID node_id,ImVec2 size)
 {
-    return ImGui::DockBuilderSetNodeSize(node_id,size);
+    return DockBuilderSetNodeSize(node_id,size);
 }
 CIMGUI_API ImGuiID igDockBuilderSplitNode(ImGuiID node_id,ImGuiDir split_dir,float size_ratio_for_node_at_dir,ImGuiID* out_id_at_dir,ImGuiID* out_id_at_opposite_dir)
 {
-    return ImGui::DockBuilderSplitNode(node_id,split_dir,size_ratio_for_node_at_dir,out_id_at_dir,out_id_at_opposite_dir);
+    return DockBuilderSplitNode(node_id,split_dir,size_ratio_for_node_at_dir,out_id_at_dir,out_id_at_opposite_dir);
 }
 CIMGUI_API void igDockBuilderCopyDockSpace(ImGuiID src_dockspace_id,ImGuiID dst_dockspace_id,ImVector_const_charPtr* in_window_remap_pairs)
 {
-    return ImGui::DockBuilderCopyDockSpace(src_dockspace_id,dst_dockspace_id,in_window_remap_pairs);
+    return DockBuilderCopyDockSpace(src_dockspace_id,dst_dockspace_id,in_window_remap_pairs);
 }
 CIMGUI_API void igDockBuilderCopyNode(ImGuiID src_node_id,ImGuiID dst_node_id,ImVector_ImGuiID* out_node_remap_pairs)
 {
-    return ImGui::DockBuilderCopyNode(src_node_id,dst_node_id,out_node_remap_pairs);
+    return DockBuilderCopyNode(src_node_id,dst_node_id,out_node_remap_pairs);
 }
 CIMGUI_API void igDockBuilderCopyWindowSettings(const char* src_name,const char* dst_name)
 {
-    return ImGui::DockBuilderCopyWindowSettings(src_name,dst_name);
+    return DockBuilderCopyWindowSettings(src_name,dst_name);
 }
 CIMGUI_API void igDockBuilderFinish(ImGuiID node_id)
 {
-    return ImGui::DockBuilderFinish(node_id);
+    return DockBuilderFinish(node_id);
 }
 CIMGUI_API void igPushFocusScope(ImGuiID id)
 {
-    return ImGui::PushFocusScope(id);
+    return PushFocusScope(id);
 }
 CIMGUI_API void igPopFocusScope()
 {
-    return ImGui::PopFocusScope();
+    return PopFocusScope();
 }
 CIMGUI_API ImGuiID igGetCurrentFocusScope()
 {
-    return ImGui::GetCurrentFocusScope();
+    return GetCurrentFocusScope();
 }
 CIMGUI_API bool igIsDragDropActive()
 {
-    return ImGui::IsDragDropActive();
+    return IsDragDropActive();
 }
 CIMGUI_API bool igBeginDragDropTargetCustom(const ImRect bb,ImGuiID id)
 {
-    return ImGui::BeginDragDropTargetCustom(bb,id);
+    return BeginDragDropTargetCustom(bb,id);
 }
 CIMGUI_API void igClearDragDrop()
 {
-    return ImGui::ClearDragDrop();
+    return ClearDragDrop();
 }
 CIMGUI_API bool igIsDragDropPayloadBeingAccepted()
 {
-    return ImGui::IsDragDropPayloadBeingAccepted();
+    return IsDragDropPayloadBeingAccepted();
 }
 CIMGUI_API void igRenderDragDropTargetRect(const ImRect bb)
 {
-    return ImGui::RenderDragDropTargetRect(bb);
+    return RenderDragDropTargetRect(bb);
 }
 CIMGUI_API void igSetWindowClipRectBeforeSetChannel(ImGuiWindow* window,const ImRect clip_rect)
 {
-    return ImGui::SetWindowClipRectBeforeSetChannel(window,clip_rect);
+    return SetWindowClipRectBeforeSetChannel(window,clip_rect);
 }
 CIMGUI_API void igBeginColumns(const char* str_id,int count,ImGuiOldColumnFlags flags)
 {
-    return ImGui::BeginColumns(str_id,count,flags);
+    return BeginColumns(str_id,count,flags);
 }
 CIMGUI_API void igEndColumns()
 {
-    return ImGui::EndColumns();
+    return EndColumns();
 }
 CIMGUI_API void igPushColumnClipRect(int column_index)
 {
-    return ImGui::PushColumnClipRect(column_index);
+    return PushColumnClipRect(column_index);
 }
 CIMGUI_API void igPushColumnsBackground()
 {
-    return ImGui::PushColumnsBackground();
+    return PushColumnsBackground();
 }
 CIMGUI_API void igPopColumnsBackground()
 {
-    return ImGui::PopColumnsBackground();
+    return PopColumnsBackground();
 }
 CIMGUI_API ImGuiID igGetColumnsID(const char* str_id,int count)
 {
-    return ImGui::GetColumnsID(str_id,count);
+    return GetColumnsID(str_id,count);
 }
 CIMGUI_API ImGuiOldColumns* igFindOrCreateColumns(ImGuiWindow* window,ImGuiID id)
 {
-    return ImGui::FindOrCreateColumns(window,id);
+    return FindOrCreateColumns(window,id);
 }
 CIMGUI_API float igGetColumnOffsetFromNorm(const ImGuiOldColumns* columns,float offset_norm)
 {
-    return ImGui::GetColumnOffsetFromNorm(columns,offset_norm);
+    return GetColumnOffsetFromNorm(columns,offset_norm);
 }
 CIMGUI_API float igGetColumnNormFromOffset(const ImGuiOldColumns* columns,float offset)
 {
-    return ImGui::GetColumnNormFromOffset(columns,offset);
+    return GetColumnNormFromOffset(columns,offset);
 }
 CIMGUI_API void igTableOpenContextMenu(int column_n)
 {
-    return ImGui::TableOpenContextMenu(column_n);
+    return TableOpenContextMenu(column_n);
 }
 CIMGUI_API void igTableSetColumnWidth(int column_n,float width)
 {
-    return ImGui::TableSetColumnWidth(column_n,width);
+    return TableSetColumnWidth(column_n,width);
 }
 CIMGUI_API void igTableSetColumnSortDirection(int column_n,ImGuiSortDirection sort_direction,bool append_to_sort_specs)
 {
-    return ImGui::TableSetColumnSortDirection(column_n,sort_direction,append_to_sort_specs);
+    return TableSetColumnSortDirection(column_n,sort_direction,append_to_sort_specs);
 }
 CIMGUI_API int igTableGetHoveredColumn()
 {
-    return ImGui::TableGetHoveredColumn();
+    return TableGetHoveredColumn();
 }
 CIMGUI_API float igTableGetHeaderRowHeight()
 {
-    return ImGui::TableGetHeaderRowHeight();
+    return TableGetHeaderRowHeight();
 }
 CIMGUI_API void igTablePushBackgroundChannel()
 {
-    return ImGui::TablePushBackgroundChannel();
+    return TablePushBackgroundChannel();
 }
 CIMGUI_API void igTablePopBackgroundChannel()
 {
-    return ImGui::TablePopBackgroundChannel();
+    return TablePopBackgroundChannel();
 }
 CIMGUI_API ImGuiTable* igGetCurrentTable()
 {
-    return ImGui::GetCurrentTable();
+    return GetCurrentTable();
 }
 CIMGUI_API ImGuiTable* igTableFindByID(ImGuiID id)
 {
-    return ImGui::TableFindByID(id);
+    return TableFindByID(id);
 }
 CIMGUI_API bool igBeginTableEx(const char* name,ImGuiID id,int columns_count,ImGuiTableFlags flags,const ImVec2 outer_size,float inner_width)
 {
-    return ImGui::BeginTableEx(name,id,columns_count,flags,outer_size,inner_width);
+    return BeginTableEx(name,id,columns_count,flags,outer_size,inner_width);
 }
 CIMGUI_API void igTableBeginInitMemory(ImGuiTable* table,int columns_count)
 {
-    return ImGui::TableBeginInitMemory(table,columns_count);
+    return TableBeginInitMemory(table,columns_count);
 }
 CIMGUI_API void igTableBeginApplyRequests(ImGuiTable* table)
 {
-    return ImGui::TableBeginApplyRequests(table);
+    return TableBeginApplyRequests(table);
 }
 CIMGUI_API void igTableSetupDrawChannels(ImGuiTable* table)
 {
-    return ImGui::TableSetupDrawChannels(table);
+    return TableSetupDrawChannels(table);
 }
 CIMGUI_API void igTableUpdateLayout(ImGuiTable* table)
 {
-    return ImGui::TableUpdateLayout(table);
+    return TableUpdateLayout(table);
 }
 CIMGUI_API void igTableUpdateBorders(ImGuiTable* table)
 {
-    return ImGui::TableUpdateBorders(table);
+    return TableUpdateBorders(table);
 }
 CIMGUI_API void igTableUpdateColumnsWeightFromWidth(ImGuiTable* table)
 {
-    return ImGui::TableUpdateColumnsWeightFromWidth(table);
+    return TableUpdateColumnsWeightFromWidth(table);
 }
 CIMGUI_API void igTableDrawBorders(ImGuiTable* table)
 {
-    return ImGui::TableDrawBorders(table);
+    return TableDrawBorders(table);
 }
 CIMGUI_API void igTableDrawContextMenu(ImGuiTable* table)
 {
-    return ImGui::TableDrawContextMenu(table);
+    return TableDrawContextMenu(table);
 }
 CIMGUI_API bool igTableBeginContextMenuPopup(ImGuiTable* table)
 {
-    return ImGui::TableBeginContextMenuPopup(table);
+    return TableBeginContextMenuPopup(table);
 }
 CIMGUI_API void igTableMergeDrawChannels(ImGuiTable* table)
 {
-    return ImGui::TableMergeDrawChannels(table);
+    return TableMergeDrawChannels(table);
 }
 CIMGUI_API ImGuiTableInstanceData* igTableGetInstanceData(ImGuiTable* table,int instance_no)
 {
-    return ImGui::TableGetInstanceData(table,instance_no);
+    return TableGetInstanceData(table,instance_no);
 }
 CIMGUI_API ImGuiID igTableGetInstanceID(ImGuiTable* table,int instance_no)
 {
-    return ImGui::TableGetInstanceID(table,instance_no);
+    return TableGetInstanceID(table,instance_no);
 }
 CIMGUI_API void igTableSortSpecsSanitize(ImGuiTable* table)
 {
-    return ImGui::TableSortSpecsSanitize(table);
+    return TableSortSpecsSanitize(table);
 }
 CIMGUI_API void igTableSortSpecsBuild(ImGuiTable* table)
 {
-    return ImGui::TableSortSpecsBuild(table);
+    return TableSortSpecsBuild(table);
 }
 CIMGUI_API ImGuiSortDirection igTableGetColumnNextSortDirection(ImGuiTableColumn* column)
 {
-    return ImGui::TableGetColumnNextSortDirection(column);
+    return TableGetColumnNextSortDirection(column);
 }
 CIMGUI_API void igTableFixColumnSortDirection(ImGuiTable* table,ImGuiTableColumn* column)
 {
-    return ImGui::TableFixColumnSortDirection(table,column);
+    return TableFixColumnSortDirection(table,column);
 }
 CIMGUI_API float igTableGetColumnWidthAuto(ImGuiTable* table,ImGuiTableColumn* column)
 {
-    return ImGui::TableGetColumnWidthAuto(table,column);
+    return TableGetColumnWidthAuto(table,column);
 }
 CIMGUI_API void igTableBeginRow(ImGuiTable* table)
 {
-    return ImGui::TableBeginRow(table);
+    return TableBeginRow(table);
 }
 CIMGUI_API void igTableEndRow(ImGuiTable* table)
 {
-    return ImGui::TableEndRow(table);
+    return TableEndRow(table);
 }
 CIMGUI_API void igTableBeginCell(ImGuiTable* table,int column_n)
 {
-    return ImGui::TableBeginCell(table,column_n);
+    return TableBeginCell(table,column_n);
 }
 CIMGUI_API void igTableEndCell(ImGuiTable* table)
 {
-    return ImGui::TableEndCell(table);
+    return TableEndCell(table);
 }
 CIMGUI_API void igTableGetCellBgRect(ImRect *pOut,const ImGuiTable* table,int column_n)
 {
-    *pOut = ImGui::TableGetCellBgRect(table,column_n);
+    *pOut = TableGetCellBgRect(table,column_n);
 }
 CIMGUI_API const char* igTableGetColumnName_TablePtr(const ImGuiTable* table,int column_n)
 {
-    return ImGui::TableGetColumnName(table,column_n);
+    return TableGetColumnName(table,column_n);
 }
 CIMGUI_API ImGuiID igTableGetColumnResizeID(ImGuiTable* table,int column_n,int instance_no)
 {
-    return ImGui::TableGetColumnResizeID(table,column_n,instance_no);
+    return TableGetColumnResizeID(table,column_n,instance_no);
 }
 CIMGUI_API float igTableGetMaxColumnWidth(const ImGuiTable* table,int column_n)
 {
-    return ImGui::TableGetMaxColumnWidth(table,column_n);
+    return TableGetMaxColumnWidth(table,column_n);
 }
 CIMGUI_API void igTableSetColumnWidthAutoSingle(ImGuiTable* table,int column_n)
 {
-    return ImGui::TableSetColumnWidthAutoSingle(table,column_n);
+    return TableSetColumnWidthAutoSingle(table,column_n);
 }
 CIMGUI_API void igTableSetColumnWidthAutoAll(ImGuiTable* table)
 {
-    return ImGui::TableSetColumnWidthAutoAll(table);
+    return TableSetColumnWidthAutoAll(table);
 }
 CIMGUI_API void igTableRemove(ImGuiTable* table)
 {
-    return ImGui::TableRemove(table);
+    return TableRemove(table);
 }
 CIMGUI_API void igTableGcCompactTransientBuffers_TablePtr(ImGuiTable* table)
 {
-    return ImGui::TableGcCompactTransientBuffers(table);
+    return TableGcCompactTransientBuffers(table);
 }
 CIMGUI_API void igTableGcCompactTransientBuffers_TableTempDataPtr(ImGuiTableTempData* table)
 {
-    return ImGui::TableGcCompactTransientBuffers(table);
+    return TableGcCompactTransientBuffers(table);
 }
 CIMGUI_API void igTableGcCompactSettings()
 {
-    return ImGui::TableGcCompactSettings();
+    return TableGcCompactSettings();
 }
 CIMGUI_API void igTableLoadSettings(ImGuiTable* table)
 {
-    return ImGui::TableLoadSettings(table);
+    return TableLoadSettings(table);
 }
 CIMGUI_API void igTableSaveSettings(ImGuiTable* table)
 {
-    return ImGui::TableSaveSettings(table);
+    return TableSaveSettings(table);
 }
 CIMGUI_API void igTableResetSettings(ImGuiTable* table)
 {
-    return ImGui::TableResetSettings(table);
+    return TableResetSettings(table);
 }
 CIMGUI_API ImGuiTableSettings* igTableGetBoundSettings(ImGuiTable* table)
 {
-    return ImGui::TableGetBoundSettings(table);
+    return TableGetBoundSettings(table);
 }
 CIMGUI_API void igTableSettingsAddSettingsHandler()
 {
-    return ImGui::TableSettingsAddSettingsHandler();
+    return TableSettingsAddSettingsHandler();
 }
 CIMGUI_API ImGuiTableSettings* igTableSettingsCreate(ImGuiID id,int columns_count)
 {
-    return ImGui::TableSettingsCreate(id,columns_count);
+    return TableSettingsCreate(id,columns_count);
 }
 CIMGUI_API ImGuiTableSettings* igTableSettingsFindByID(ImGuiID id)
 {
-    return ImGui::TableSettingsFindByID(id);
+    return TableSettingsFindByID(id);
 }
 CIMGUI_API ImGuiTabBar* igGetCurrentTabBar()
 {
-    return ImGui::GetCurrentTabBar();
+    return GetCurrentTabBar();
 }
 CIMGUI_API bool igBeginTabBarEx(ImGuiTabBar* tab_bar,const ImRect bb,ImGuiTabBarFlags flags,ImGuiDockNode* dock_node)
 {
-    return ImGui::BeginTabBarEx(tab_bar,bb,flags,dock_node);
+    return BeginTabBarEx(tab_bar,bb,flags,dock_node);
 }
 CIMGUI_API ImGuiTabItem* igTabBarFindTabByID(ImGuiTabBar* tab_bar,ImGuiID tab_id)
 {
-    return ImGui::TabBarFindTabByID(tab_bar,tab_id);
+    return TabBarFindTabByID(tab_bar,tab_id);
 }
 CIMGUI_API ImGuiTabItem* igTabBarFindTabByOrder(ImGuiTabBar* tab_bar,int order)
 {
-    return ImGui::TabBarFindTabByOrder(tab_bar,order);
+    return TabBarFindTabByOrder(tab_bar,order);
 }
 CIMGUI_API ImGuiTabItem* igTabBarFindMostRecentlySelectedTabForActiveWindow(ImGuiTabBar* tab_bar)
 {
-    return ImGui::TabBarFindMostRecentlySelectedTabForActiveWindow(tab_bar);
+    return TabBarFindMostRecentlySelectedTabForActiveWindow(tab_bar);
 }
 CIMGUI_API ImGuiTabItem* igTabBarGetCurrentTab(ImGuiTabBar* tab_bar)
 {
-    return ImGui::TabBarGetCurrentTab(tab_bar);
+    return TabBarGetCurrentTab(tab_bar);
 }
 CIMGUI_API int igTabBarGetTabOrder(ImGuiTabBar* tab_bar,ImGuiTabItem* tab)
 {
-    return ImGui::TabBarGetTabOrder(tab_bar,tab);
+    return TabBarGetTabOrder(tab_bar,tab);
 }
 CIMGUI_API const char* igTabBarGetTabName(ImGuiTabBar* tab_bar,ImGuiTabItem* tab)
 {
-    return ImGui::TabBarGetTabName(tab_bar,tab);
+    return TabBarGetTabName(tab_bar,tab);
 }
 CIMGUI_API void igTabBarAddTab(ImGuiTabBar* tab_bar,ImGuiTabItemFlags tab_flags,ImGuiWindow* window)
 {
-    return ImGui::TabBarAddTab(tab_bar,tab_flags,window);
+    return TabBarAddTab(tab_bar,tab_flags,window);
 }
 CIMGUI_API void igTabBarRemoveTab(ImGuiTabBar* tab_bar,ImGuiID tab_id)
 {
-    return ImGui::TabBarRemoveTab(tab_bar,tab_id);
+    return TabBarRemoveTab(tab_bar,tab_id);
 }
 CIMGUI_API void igTabBarCloseTab(ImGuiTabBar* tab_bar,ImGuiTabItem* tab)
 {
-    return ImGui::TabBarCloseTab(tab_bar,tab);
+    return TabBarCloseTab(tab_bar,tab);
 }
 CIMGUI_API void igTabBarQueueFocus(ImGuiTabBar* tab_bar,ImGuiTabItem* tab)
 {
-    return ImGui::TabBarQueueFocus(tab_bar,tab);
+    return TabBarQueueFocus(tab_bar,tab);
 }
 CIMGUI_API void igTabBarQueueReorder(ImGuiTabBar* tab_bar,ImGuiTabItem* tab,int offset)
 {
-    return ImGui::TabBarQueueReorder(tab_bar,tab,offset);
+    return TabBarQueueReorder(tab_bar,tab,offset);
 }
 CIMGUI_API void igTabBarQueueReorderFromMousePos(ImGuiTabBar* tab_bar,ImGuiTabItem* tab,ImVec2 mouse_pos)
 {
-    return ImGui::TabBarQueueReorderFromMousePos(tab_bar,tab,mouse_pos);
+    return TabBarQueueReorderFromMousePos(tab_bar,tab,mouse_pos);
 }
 CIMGUI_API bool igTabBarProcessReorder(ImGuiTabBar* tab_bar)
 {
-    return ImGui::TabBarProcessReorder(tab_bar);
+    return TabBarProcessReorder(tab_bar);
 }
 CIMGUI_API bool igTabItemEx(ImGuiTabBar* tab_bar,const char* label,bool* p_open,ImGuiTabItemFlags flags,ImGuiWindow* docked_window)
 {
-    return ImGui::TabItemEx(tab_bar,label,p_open,flags,docked_window);
+    return TabItemEx(tab_bar,label,p_open,flags,docked_window);
 }
 CIMGUI_API void igTabItemCalcSize_Str(ImVec2 *pOut,const char* label,bool has_close_button_or_unsaved_marker)
 {
-    *pOut = ImGui::TabItemCalcSize(label,has_close_button_or_unsaved_marker);
+    *pOut = TabItemCalcSize(label,has_close_button_or_unsaved_marker);
 }
 CIMGUI_API void igTabItemCalcSize_WindowPtr(ImVec2 *pOut,ImGuiWindow* window)
 {
-    *pOut = ImGui::TabItemCalcSize(window);
+    *pOut = TabItemCalcSize(window);
 }
 CIMGUI_API void igTabItemBackground(ImDrawList* draw_list,const ImRect bb,ImGuiTabItemFlags flags,ImU32 col)
 {
-    return ImGui::TabItemBackground(draw_list,bb,flags,col);
+    return TabItemBackground(draw_list,bb,flags,col);
 }
 CIMGUI_API void igTabItemLabelAndCloseButton(ImDrawList* draw_list,const ImRect bb,ImGuiTabItemFlags flags,ImVec2 frame_padding,const char* label,ImGuiID tab_id,ImGuiID close_button_id,bool is_contents_visible,bool* out_just_closed,bool* out_text_clipped)
 {
-    return ImGui::TabItemLabelAndCloseButton(draw_list,bb,flags,frame_padding,label,tab_id,close_button_id,is_contents_visible,out_just_closed,out_text_clipped);
+    return TabItemLabelAndCloseButton(draw_list,bb,flags,frame_padding,label,tab_id,close_button_id,is_contents_visible,out_just_closed,out_text_clipped);
 }
 CIMGUI_API void igRenderText(ImVec2 pos,const char* text,const char* text_end,bool hide_text_after_hash)
 {
-    return ImGui::RenderText(pos,text,text_end,hide_text_after_hash);
+    return RenderText(pos,text,text_end,hide_text_after_hash);
 }
 CIMGUI_API void igRenderTextWrapped(ImVec2 pos,const char* text,const char* text_end,float wrap_width)
 {
-    return ImGui::RenderTextWrapped(pos,text,text_end,wrap_width);
+    return RenderTextWrapped(pos,text,text_end,wrap_width);
 }
 CIMGUI_API void igRenderTextClipped(const ImVec2 pos_min,const ImVec2 pos_max,const char* text,const char* text_end,const ImVec2* text_size_if_known,const ImVec2 align,const ImRect* clip_rect)
 {
-    return ImGui::RenderTextClipped(pos_min,pos_max,text,text_end,text_size_if_known,align,clip_rect);
+    return RenderTextClipped(pos_min,pos_max,text,text_end,text_size_if_known,align,clip_rect);
 }
 CIMGUI_API void igRenderTextClippedEx(ImDrawList* draw_list,const ImVec2 pos_min,const ImVec2 pos_max,const char* text,const char* text_end,const ImVec2* text_size_if_known,const ImVec2 align,const ImRect* clip_rect)
 {
-    return ImGui::RenderTextClippedEx(draw_list,pos_min,pos_max,text,text_end,text_size_if_known,align,clip_rect);
+    return RenderTextClippedEx(draw_list,pos_min,pos_max,text,text_end,text_size_if_known,align,clip_rect);
 }
 CIMGUI_API void igRenderTextEllipsis(ImDrawList* draw_list,const ImVec2 pos_min,const ImVec2 pos_max,float clip_max_x,float ellipsis_max_x,const char* text,const char* text_end,const ImVec2* text_size_if_known)
 {
-    return ImGui::RenderTextEllipsis(draw_list,pos_min,pos_max,clip_max_x,ellipsis_max_x,text,text_end,text_size_if_known);
+    return RenderTextEllipsis(draw_list,pos_min,pos_max,clip_max_x,ellipsis_max_x,text,text_end,text_size_if_known);
 }
 CIMGUI_API void igRenderFrame(ImVec2 p_min,ImVec2 p_max,ImU32 fill_col,bool border,float rounding)
 {
-    return ImGui::RenderFrame(p_min,p_max,fill_col,border,rounding);
+    return RenderFrame(p_min,p_max,fill_col,border,rounding);
 }
 CIMGUI_API void igRenderFrameBorder(ImVec2 p_min,ImVec2 p_max,float rounding)
 {
-    return ImGui::RenderFrameBorder(p_min,p_max,rounding);
+    return RenderFrameBorder(p_min,p_max,rounding);
 }
 CIMGUI_API void igRenderColorRectWithAlphaCheckerboard(ImDrawList* draw_list,ImVec2 p_min,ImVec2 p_max,ImU32 fill_col,float grid_step,ImVec2 grid_off,float rounding,ImDrawFlags flags)
 {
-    return ImGui::RenderColorRectWithAlphaCheckerboard(draw_list,p_min,p_max,fill_col,grid_step,grid_off,rounding,flags);
+    return RenderColorRectWithAlphaCheckerboard(draw_list,p_min,p_max,fill_col,grid_step,grid_off,rounding,flags);
 }
 CIMGUI_API void igRenderNavHighlight(const ImRect bb,ImGuiID id,ImGuiNavHighlightFlags flags)
 {
-    return ImGui::RenderNavHighlight(bb,id,flags);
+    return RenderNavHighlight(bb,id,flags);
 }
 CIMGUI_API const char* igFindRenderedTextEnd(const char* text,const char* text_end)
 {
-    return ImGui::FindRenderedTextEnd(text,text_end);
+    return FindRenderedTextEnd(text,text_end);
 }
 CIMGUI_API void igRenderMouseCursor(ImVec2 pos,float scale,ImGuiMouseCursor mouse_cursor,ImU32 col_fill,ImU32 col_border,ImU32 col_shadow)
 {
-    return ImGui::RenderMouseCursor(pos,scale,mouse_cursor,col_fill,col_border,col_shadow);
+    return RenderMouseCursor(pos,scale,mouse_cursor,col_fill,col_border,col_shadow);
 }
 CIMGUI_API void igRenderArrow(ImDrawList* draw_list,ImVec2 pos,ImU32 col,ImGuiDir dir,float scale)
 {
-    return ImGui::RenderArrow(draw_list,pos,col,dir,scale);
+    return RenderArrow(draw_list,pos,col,dir,scale);
 }
 CIMGUI_API void igRenderBullet(ImDrawList* draw_list,ImVec2 pos,ImU32 col)
 {
-    return ImGui::RenderBullet(draw_list,pos,col);
+    return RenderBullet(draw_list,pos,col);
 }
 CIMGUI_API void igRenderCheckMark(ImDrawList* draw_list,ImVec2 pos,ImU32 col,float sz)
 {
-    return ImGui::RenderCheckMark(draw_list,pos,col,sz);
+    return RenderCheckMark(draw_list,pos,col,sz);
 }
 CIMGUI_API void igRenderArrowPointingAt(ImDrawList* draw_list,ImVec2 pos,ImVec2 half_sz,ImGuiDir direction,ImU32 col)
 {
-    return ImGui::RenderArrowPointingAt(draw_list,pos,half_sz,direction,col);
+    return RenderArrowPointingAt(draw_list,pos,half_sz,direction,col);
 }
 CIMGUI_API void igRenderArrowDockMenu(ImDrawList* draw_list,ImVec2 p_min,float sz,ImU32 col)
 {
-    return ImGui::RenderArrowDockMenu(draw_list,p_min,sz,col);
+    return RenderArrowDockMenu(draw_list,p_min,sz,col);
 }
 CIMGUI_API void igRenderRectFilledRangeH(ImDrawList* draw_list,const ImRect rect,ImU32 col,float x_start_norm,float x_end_norm,float rounding)
 {
-    return ImGui::RenderRectFilledRangeH(draw_list,rect,col,x_start_norm,x_end_norm,rounding);
+    return RenderRectFilledRangeH(draw_list,rect,col,x_start_norm,x_end_norm,rounding);
 }
 CIMGUI_API void igRenderRectFilledWithHole(ImDrawList* draw_list,const ImRect outer,const ImRect inner,ImU32 col,float rounding)
 {
-    return ImGui::RenderRectFilledWithHole(draw_list,outer,inner,col,rounding);
+    return RenderRectFilledWithHole(draw_list,outer,inner,col,rounding);
 }
 CIMGUI_API ImDrawFlags igCalcRoundingFlagsForRectInRect(const ImRect r_in,const ImRect r_outer,float threshold)
 {
-    return ImGui::CalcRoundingFlagsForRectInRect(r_in,r_outer,threshold);
+    return CalcRoundingFlagsForRectInRect(r_in,r_outer,threshold);
 }
 CIMGUI_API void igTextEx(const char* text,const char* text_end,ImGuiTextFlags flags)
 {
-    return ImGui::TextEx(text,text_end,flags);
+    return TextEx(text,text_end,flags);
 }
 CIMGUI_API bool igButtonEx(const char* label,const ImVec2 size_arg,ImGuiButtonFlags flags)
 {
-    return ImGui::ButtonEx(label,size_arg,flags);
+    return ButtonEx(label,size_arg,flags);
 }
 CIMGUI_API bool igArrowButtonEx(const char* str_id,ImGuiDir dir,ImVec2 size_arg,ImGuiButtonFlags flags)
 {
-    return ImGui::ArrowButtonEx(str_id,dir,size_arg,flags);
+    return ArrowButtonEx(str_id,dir,size_arg,flags);
 }
 CIMGUI_API bool igImageButtonEx(ImGuiID id,ImTextureID texture_id,const ImVec2 size,const ImVec2 uv0,const ImVec2 uv1,const ImVec4 bg_col,const ImVec4 tint_col,ImGuiButtonFlags flags)
 {
-    return ImGui::ImageButtonEx(id,texture_id,size,uv0,uv1,bg_col,tint_col,flags);
+    return ImageButtonEx(id,texture_id,size,uv0,uv1,bg_col,tint_col,flags);
 }
 CIMGUI_API void igSeparatorEx(ImGuiSeparatorFlags flags)
 {
-    return ImGui::SeparatorEx(flags);
+    return SeparatorEx(flags);
 }
 CIMGUI_API void igSeparatorTextEx(ImGuiID id,const char* label,const char* label_end,float extra_width)
 {
-    return ImGui::SeparatorTextEx(id,label,label_end,extra_width);
+    return SeparatorTextEx(id,label,label_end,extra_width);
 }
 CIMGUI_API bool igCheckboxFlags_S64Ptr(const char* label,ImS64* flags,ImS64 flags_value)
 {
-    return ImGui::CheckboxFlags(label,flags,flags_value);
+    return CheckboxFlags(label,flags,flags_value);
 }
 CIMGUI_API bool igCheckboxFlags_U64Ptr(const char* label,ImU64* flags,ImU64 flags_value)
 {
-    return ImGui::CheckboxFlags(label,flags,flags_value);
+    return CheckboxFlags(label,flags,flags_value);
 }
 CIMGUI_API bool igCloseButton(ImGuiID id,const ImVec2 pos)
 {
-    return ImGui::CloseButton(id,pos);
+    return CloseButton(id,pos);
 }
 CIMGUI_API bool igCollapseButton(ImGuiID id,const ImVec2 pos,ImGuiDockNode* dock_node)
 {
-    return ImGui::CollapseButton(id,pos,dock_node);
+    return CollapseButton(id,pos,dock_node);
 }
 CIMGUI_API void igScrollbar(ImGuiAxis axis)
 {
-    return ImGui::Scrollbar(axis);
+    return Scrollbar(axis);
 }
 CIMGUI_API bool igScrollbarEx(const ImRect bb,ImGuiID id,ImGuiAxis axis,ImS64* p_scroll_v,ImS64 avail_v,ImS64 contents_v,ImDrawFlags flags)
 {
-    return ImGui::ScrollbarEx(bb,id,axis,p_scroll_v,avail_v,contents_v,flags);
+    return ScrollbarEx(bb,id,axis,p_scroll_v,avail_v,contents_v,flags);
 }
 CIMGUI_API void igGetWindowScrollbarRect(ImRect *pOut,ImGuiWindow* window,ImGuiAxis axis)
 {
-    *pOut = ImGui::GetWindowScrollbarRect(window,axis);
+    *pOut = GetWindowScrollbarRect(window,axis);
 }
 CIMGUI_API ImGuiID igGetWindowScrollbarID(ImGuiWindow* window,ImGuiAxis axis)
 {
-    return ImGui::GetWindowScrollbarID(window,axis);
+    return GetWindowScrollbarID(window,axis);
 }
 CIMGUI_API ImGuiID igGetWindowResizeCornerID(ImGuiWindow* window,int n)
 {
-    return ImGui::GetWindowResizeCornerID(window,n);
+    return GetWindowResizeCornerID(window,n);
 }
 CIMGUI_API ImGuiID igGetWindowResizeBorderID(ImGuiWindow* window,ImGuiDir dir)
 {
-    return ImGui::GetWindowResizeBorderID(window,dir);
+    return GetWindowResizeBorderID(window,dir);
 }
 CIMGUI_API bool igButtonBehavior(const ImRect bb,ImGuiID id,bool* out_hovered,bool* out_held,ImGuiButtonFlags flags)
 {
-    return ImGui::ButtonBehavior(bb,id,out_hovered,out_held,flags);
+    return ButtonBehavior(bb,id,out_hovered,out_held,flags);
 }
 CIMGUI_API bool igDragBehavior(ImGuiID id,ImGuiDataType data_type,void* p_v,float v_speed,const void* p_min,const void* p_max,const char* format,ImGuiSliderFlags flags)
 {
-    return ImGui::DragBehavior(id,data_type,p_v,v_speed,p_min,p_max,format,flags);
+    return DragBehavior(id,data_type,p_v,v_speed,p_min,p_max,format,flags);
 }
 CIMGUI_API bool igSliderBehavior(const ImRect bb,ImGuiID id,ImGuiDataType data_type,void* p_v,const void* p_min,const void* p_max,const char* format,ImGuiSliderFlags flags,ImRect* out_grab_bb)
 {
-    return ImGui::SliderBehavior(bb,id,data_type,p_v,p_min,p_max,format,flags,out_grab_bb);
+    return SliderBehavior(bb,id,data_type,p_v,p_min,p_max,format,flags,out_grab_bb);
 }
 CIMGUI_API bool igSplitterBehavior(const ImRect bb,ImGuiID id,ImGuiAxis axis,float* size1,float* size2,float min_size1,float min_size2,float hover_extend,float hover_visibility_delay,ImU32 bg_col)
 {
-    return ImGui::SplitterBehavior(bb,id,axis,size1,size2,min_size1,min_size2,hover_extend,hover_visibility_delay,bg_col);
+    return SplitterBehavior(bb,id,axis,size1,size2,min_size1,min_size2,hover_extend,hover_visibility_delay,bg_col);
 }
 CIMGUI_API bool igTreeNodeBehavior(ImGuiID id,ImGuiTreeNodeFlags flags,const char* label,const char* label_end)
 {
-    return ImGui::TreeNodeBehavior(id,flags,label,label_end);
+    return TreeNodeBehavior(id,flags,label,label_end);
 }
 CIMGUI_API void igTreePushOverrideID(ImGuiID id)
 {
-    return ImGui::TreePushOverrideID(id);
+    return TreePushOverrideID(id);
 }
 CIMGUI_API void igTreeNodeSetOpen(ImGuiID id,bool open)
 {
-    return ImGui::TreeNodeSetOpen(id,open);
+    return TreeNodeSetOpen(id,open);
 }
 CIMGUI_API bool igTreeNodeUpdateNextOpen(ImGuiID id,ImGuiTreeNodeFlags flags)
 {
-    return ImGui::TreeNodeUpdateNextOpen(id,flags);
+    return TreeNodeUpdateNextOpen(id,flags);
 }
 CIMGUI_API const ImGuiDataTypeInfo* igDataTypeGetInfo(ImGuiDataType data_type)
 {
-    return ImGui::DataTypeGetInfo(data_type);
+    return DataTypeGetInfo(data_type);
 }
 CIMGUI_API int igDataTypeFormatString(char* buf,int buf_size,ImGuiDataType data_type,const void* p_data,const char* format)
 {
-    return ImGui::DataTypeFormatString(buf,buf_size,data_type,p_data,format);
+    return DataTypeFormatString(buf,buf_size,data_type,p_data,format);
 }
 CIMGUI_API void igDataTypeApplyOp(ImGuiDataType data_type,int op,void* output,const void* arg_1,const void* arg_2)
 {
-    return ImGui::DataTypeApplyOp(data_type,op,output,arg_1,arg_2);
+    return DataTypeApplyOp(data_type,op,output,arg_1,arg_2);
 }
 CIMGUI_API bool igDataTypeApplyFromText(const char* buf,ImGuiDataType data_type,void* p_data,const char* format)
 {
-    return ImGui::DataTypeApplyFromText(buf,data_type,p_data,format);
+    return DataTypeApplyFromText(buf,data_type,p_data,format);
 }
 CIMGUI_API int igDataTypeCompare(ImGuiDataType data_type,const void* arg_1,const void* arg_2)
 {
-    return ImGui::DataTypeCompare(data_type,arg_1,arg_2);
+    return DataTypeCompare(data_type,arg_1,arg_2);
 }
 CIMGUI_API bool igDataTypeClamp(ImGuiDataType data_type,void* p_data,const void* p_min,const void* p_max)
 {
-    return ImGui::DataTypeClamp(data_type,p_data,p_min,p_max);
+    return DataTypeClamp(data_type,p_data,p_min,p_max);
 }
 CIMGUI_API bool igInputTextEx(const char* label,const char* hint,char* buf,int buf_size,const ImVec2 size_arg,ImGuiInputTextFlags flags,ImGuiInputTextCallback callback,void* user_data)
 {
-    return ImGui::InputTextEx(label,hint,buf,buf_size,size_arg,flags,callback,user_data);
+    return InputTextEx(label,hint,buf,buf_size,size_arg,flags,callback,user_data);
 }
 CIMGUI_API void igInputTextDeactivateHook(ImGuiID id)
 {
-    return ImGui::InputTextDeactivateHook(id);
+    return InputTextDeactivateHook(id);
 }
 CIMGUI_API bool igTempInputText(const ImRect bb,ImGuiID id,const char* label,char* buf,int buf_size,ImGuiInputTextFlags flags)
 {
-    return ImGui::TempInputText(bb,id,label,buf,buf_size,flags);
+    return TempInputText(bb,id,label,buf,buf_size,flags);
 }
 CIMGUI_API bool igTempInputScalar(const ImRect bb,ImGuiID id,const char* label,ImGuiDataType data_type,void* p_data,const char* format,const void* p_clamp_min,const void* p_clamp_max)
 {
-    return ImGui::TempInputScalar(bb,id,label,data_type,p_data,format,p_clamp_min,p_clamp_max);
+    return TempInputScalar(bb,id,label,data_type,p_data,format,p_clamp_min,p_clamp_max);
 }
 CIMGUI_API bool igTempInputIsActive(ImGuiID id)
 {
-    return ImGui::TempInputIsActive(id);
+    return TempInputIsActive(id);
 }
 CIMGUI_API ImGuiInputTextState* igGetInputTextState(ImGuiID id)
 {
-    return ImGui::GetInputTextState(id);
+    return GetInputTextState(id);
 }
 CIMGUI_API void igColorTooltip(const char* text,const float* col,ImGuiColorEditFlags flags)
 {
-    return ImGui::ColorTooltip(text,col,flags);
+    return ColorTooltip(text,col,flags);
 }
 CIMGUI_API void igColorEditOptionsPopup(const float* col,ImGuiColorEditFlags flags)
 {
-    return ImGui::ColorEditOptionsPopup(col,flags);
+    return ColorEditOptionsPopup(col,flags);
 }
 CIMGUI_API void igColorPickerOptionsPopup(const float* ref_col,ImGuiColorEditFlags flags)
 {
-    return ImGui::ColorPickerOptionsPopup(ref_col,flags);
+    return ColorPickerOptionsPopup(ref_col,flags);
 }
 CIMGUI_API int igPlotEx(ImGuiPlotType plot_type,const char* label,float(*values_getter)(void* data,int idx),void* data,int values_count,int values_offset,const char* overlay_text,float scale_min,float scale_max,const ImVec2 size_arg)
 {
-    return ImGui::PlotEx(plot_type,label,values_getter,data,values_count,values_offset,overlay_text,scale_min,scale_max,size_arg);
+    return PlotEx(plot_type,label,values_getter,data,values_count,values_offset,overlay_text,scale_min,scale_max,size_arg);
 }
 CIMGUI_API void igShadeVertsLinearColorGradientKeepAlpha(ImDrawList* draw_list,int vert_start_idx,int vert_end_idx,ImVec2 gradient_p0,ImVec2 gradient_p1,ImU32 col0,ImU32 col1)
 {
-    return ImGui::ShadeVertsLinearColorGradientKeepAlpha(draw_list,vert_start_idx,vert_end_idx,gradient_p0,gradient_p1,col0,col1);
+    return ShadeVertsLinearColorGradientKeepAlpha(draw_list,vert_start_idx,vert_end_idx,gradient_p0,gradient_p1,col0,col1);
 }
 CIMGUI_API void igShadeVertsLinearUV(ImDrawList* draw_list,int vert_start_idx,int vert_end_idx,const ImVec2 a,const ImVec2 b,const ImVec2 uv_a,const ImVec2 uv_b,bool clamp)
 {
-    return ImGui::ShadeVertsLinearUV(draw_list,vert_start_idx,vert_end_idx,a,b,uv_a,uv_b,clamp);
+    return ShadeVertsLinearUV(draw_list,vert_start_idx,vert_end_idx,a,b,uv_a,uv_b,clamp);
 }
 CIMGUI_API void igGcCompactTransientMiscBuffers()
 {
-    return ImGui::GcCompactTransientMiscBuffers();
+    return GcCompactTransientMiscBuffers();
 }
 CIMGUI_API void igGcCompactTransientWindowBuffers(ImGuiWindow* window)
 {
-    return ImGui::GcCompactTransientWindowBuffers(window);
+    return GcCompactTransientWindowBuffers(window);
 }
 CIMGUI_API void igGcAwakeTransientWindowBuffers(ImGuiWindow* window)
 {
-    return ImGui::GcAwakeTransientWindowBuffers(window);
+    return GcAwakeTransientWindowBuffers(window);
 }
 CIMGUI_API void igDebugLog(const char* fmt,...)
 {
     va_list args;
     va_start(args, fmt);
-    ImGui::DebugLogV(fmt,args);
+    DebugLogV(fmt,args);
     va_end(args);
 }
 CIMGUI_API void igDebugLogV(const char* fmt,va_list args)
 {
-    return ImGui::DebugLogV(fmt,args);
+    return DebugLogV(fmt,args);
 }
 CIMGUI_API void igErrorCheckEndFrameRecover(ImGuiErrorLogCallback log_callback,void* user_data)
 {
-    return ImGui::ErrorCheckEndFrameRecover(log_callback,user_data);
+    return ErrorCheckEndFrameRecover(log_callback,user_data);
 }
 CIMGUI_API void igErrorCheckEndWindowRecover(ImGuiErrorLogCallback log_callback,void* user_data)
 {
-    return ImGui::ErrorCheckEndWindowRecover(log_callback,user_data);
+    return ErrorCheckEndWindowRecover(log_callback,user_data);
 }
 CIMGUI_API void igErrorCheckUsingSetCursorPosToExtendParentBoundaries()
 {
-    return ImGui::ErrorCheckUsingSetCursorPosToExtendParentBoundaries();
+    return ErrorCheckUsingSetCursorPosToExtendParentBoundaries();
 }
 CIMGUI_API void igDebugLocateItem(ImGuiID target_id)
 {
-    return ImGui::DebugLocateItem(target_id);
+    return DebugLocateItem(target_id);
 }
 CIMGUI_API void igDebugLocateItemOnHover(ImGuiID target_id)
 {
-    return ImGui::DebugLocateItemOnHover(target_id);
+    return DebugLocateItemOnHover(target_id);
 }
 CIMGUI_API void igDebugLocateItemResolveWithLastItem()
 {
-    return ImGui::DebugLocateItemResolveWithLastItem();
+    return DebugLocateItemResolveWithLastItem();
 }
 CIMGUI_API void igDebugDrawItemRect(ImU32 col)
 {
-    return ImGui::DebugDrawItemRect(col);
+    return DebugDrawItemRect(col);
 }
 CIMGUI_API void igDebugStartItemPicker()
 {
-    return ImGui::DebugStartItemPicker();
+    return DebugStartItemPicker();
 }
 CIMGUI_API void igShowFontAtlas(ImFontAtlas* atlas)
 {
-    return ImGui::ShowFontAtlas(atlas);
+    return ShowFontAtlas(atlas);
 }
 CIMGUI_API void igDebugHookIdInfo(ImGuiID id,ImGuiDataType data_type,const void* data_id,const void* data_id_end)
 {
-    return ImGui::DebugHookIdInfo(id,data_type,data_id,data_id_end);
+    return DebugHookIdInfo(id,data_type,data_id,data_id_end);
 }
 CIMGUI_API void igDebugNodeColumns(ImGuiOldColumns* columns)
 {
-    return ImGui::DebugNodeColumns(columns);
+    return DebugNodeColumns(columns);
 }
 CIMGUI_API void igDebugNodeDockNode(ImGuiDockNode* node,const char* label)
 {
-    return ImGui::DebugNodeDockNode(node,label);
+    return DebugNodeDockNode(node,label);
 }
 CIMGUI_API void igDebugNodeDrawList(ImGuiWindow* window,ImGuiViewportP* viewport,const ImDrawList* draw_list,const char* label)
 {
-    return ImGui::DebugNodeDrawList(window,viewport,draw_list,label);
+    return DebugNodeDrawList(window,viewport,draw_list,label);
 }
 CIMGUI_API void igDebugNodeDrawCmdShowMeshAndBoundingBox(ImDrawList* out_draw_list,const ImDrawList* draw_list,const ImDrawCmd* draw_cmd,bool show_mesh,bool show_aabb)
 {
-    return ImGui::DebugNodeDrawCmdShowMeshAndBoundingBox(out_draw_list,draw_list,draw_cmd,show_mesh,show_aabb);
+    return DebugNodeDrawCmdShowMeshAndBoundingBox(out_draw_list,draw_list,draw_cmd,show_mesh,show_aabb);
 }
 CIMGUI_API void igDebugNodeFont(ImFont* font)
 {
-    return ImGui::DebugNodeFont(font);
+    return DebugNodeFont(font);
 }
 CIMGUI_API void igDebugNodeFontGlyph(ImFont* font,const ImFontGlyph* glyph)
 {
-    return ImGui::DebugNodeFontGlyph(font,glyph);
+    return DebugNodeFontGlyph(font,glyph);
 }
 CIMGUI_API void igDebugNodeStorage(ImGuiStorage* storage,const char* label)
 {
-    return ImGui::DebugNodeStorage(storage,label);
+    return DebugNodeStorage(storage,label);
 }
 CIMGUI_API void igDebugNodeTabBar(ImGuiTabBar* tab_bar,const char* label)
 {
-    return ImGui::DebugNodeTabBar(tab_bar,label);
+    return DebugNodeTabBar(tab_bar,label);
 }
 CIMGUI_API void igDebugNodeTable(ImGuiTable* table)
 {
-    return ImGui::DebugNodeTable(table);
+    return DebugNodeTable(table);
 }
 CIMGUI_API void igDebugNodeTableSettings(ImGuiTableSettings* settings)
 {
-    return ImGui::DebugNodeTableSettings(settings);
+    return DebugNodeTableSettings(settings);
 }
 CIMGUI_API void igDebugNodeInputTextState(ImGuiInputTextState* state)
 {
-    return ImGui::DebugNodeInputTextState(state);
+    return DebugNodeInputTextState(state);
 }
 CIMGUI_API void igDebugNodeWindow(ImGuiWindow* window,const char* label)
 {
-    return ImGui::DebugNodeWindow(window,label);
+    return DebugNodeWindow(window,label);
 }
 CIMGUI_API void igDebugNodeWindowSettings(ImGuiWindowSettings* settings)
 {
-    return ImGui::DebugNodeWindowSettings(settings);
+    return DebugNodeWindowSettings(settings);
 }
 CIMGUI_API void igDebugNodeWindowsList(ImVector_ImGuiWindowPtr* windows,const char* label)
 {
-    return ImGui::DebugNodeWindowsList(windows,label);
+    return DebugNodeWindowsList(windows,label);
 }
 CIMGUI_API void igDebugNodeWindowsListByBeginStackParent(ImGuiWindow** windows,int windows_size,ImGuiWindow* parent_in_begin_stack)
 {
-    return ImGui::DebugNodeWindowsListByBeginStackParent(windows,windows_size,parent_in_begin_stack);
+    return DebugNodeWindowsListByBeginStackParent(windows,windows_size,parent_in_begin_stack);
 }
 CIMGUI_API void igDebugNodeViewport(ImGuiViewportP* viewport)
 {
-    return ImGui::DebugNodeViewport(viewport);
+    return DebugNodeViewport(viewport);
 }
 CIMGUI_API void igDebugRenderKeyboardPreview(ImDrawList* draw_list)
 {
-    return ImGui::DebugRenderKeyboardPreview(draw_list);
+    return DebugRenderKeyboardPreview(draw_list);
 }
 CIMGUI_API void igDebugRenderViewportThumbnail(ImDrawList* draw_list,ImGuiViewportP* viewport,const ImRect bb)
 {
-    return ImGui::DebugRenderViewportThumbnail(draw_list,viewport,bb);
+    return DebugRenderViewportThumbnail(draw_list,viewport,bb);
 }
 CIMGUI_API bool igIsKeyPressedMap(ImGuiKey key,bool repeat)
 {
-    return ImGui::IsKeyPressedMap(key,repeat);
+    return IsKeyPressedMap(key,repeat);
 }
 CIMGUI_API const ImFontBuilderIO* igImFontAtlasGetBuilderForStbTruetype()
 {
