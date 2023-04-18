@@ -26,8 +26,9 @@ type EnumValueDef struct {
 	Comment string `json:"comment"`
 }
 
-type EnumCommentDef struct {
-	Above string `json:"above"`
+type CommentDef struct {
+	Above    string `json:"above"`
+	Sameline string `json:"sameline"`
 }
 
 // getEnumDefs takes a json file bytes (struct_and_enums.json) and returns a slice of EnumDef.
@@ -67,7 +68,7 @@ func getEnumDefs(enumJsonBytes []byte) ([]EnumDef, error) {
 		}
 
 		if commentData, ok := enumCommentsJson[k]; ok {
-			var enumCommentValue EnumCommentDef
+			var enumCommentValue CommentDef
 			err := json.Unmarshal(commentData, &enumCommentValue)
 			if err != nil {
 				return nil, fmt.Errorf("cannot unmarshal enum comment data %s: %w", k, err)
