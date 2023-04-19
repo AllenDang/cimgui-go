@@ -13632,6 +13632,14 @@ func (self InputTextState) ScrollX() float32 {
 	return float32(C.wrap_ImGuiInputTextState_GetScrollX(self.handle()))
 }
 
+func (self InputTextState) SetStb(v STBTexteditState) {
+	C.wrap_ImGuiInputTextState_SetStb(self.handle(), v.c())
+}
+
+func (self InputTextState) Stb() STBTexteditState {
+	return newSTBTexteditStateFromC(C.wrap_ImGuiInputTextState_GetStb(self.handle()))
+}
+
 func (self InputTextState) SetCursorAnim(v float32) {
 	C.wrap_ImGuiInputTextState_SetCursorAnim(self.handle(), C.float(v))
 }
@@ -18891,4 +18899,84 @@ func (self WindowTempData) SetTextWrapPos(v float32) {
 
 func (self WindowTempData) TextWrapPos() float32 {
 	return float32(C.wrap_ImGuiWindowTempData_GetTextWrapPos(self.handle()))
+}
+
+func (self STBTexteditState) TexteditStateGetcursor() int {
+	return int(C.wrap_STB_TexteditState_Getcursor(self.handle()))
+}
+
+func (self STBTexteditState) TexteditStateGetselectstart() int {
+	return int(C.wrap_STB_TexteditState_Getselect_start(self.handle()))
+}
+
+func (self STBTexteditState) TexteditStateGetselectend() int {
+	return int(C.wrap_STB_TexteditState_Getselect_end(self.handle()))
+}
+
+func (self STBTexteditState) TexteditStateGetrowcountperpage() int {
+	return int(C.wrap_STB_TexteditState_Getrow_count_per_page(self.handle()))
+}
+
+func (self STBTexteditState) TexteditStateGetpreferredx() float32 {
+	return float32(C.wrap_STB_TexteditState_Getpreferred_x(self.handle()))
+}
+
+func (self STBTexteditState) TexteditStateGetundostate() StbUndoState {
+	return newStbUndoStateFromC(C.wrap_STB_TexteditState_Getundostate(self.handle()))
+}
+
+func (self StbTexteditRow) x0() float32 {
+	return float32(C.wrap_StbTexteditRow_Getx0(self.handle()))
+}
+
+func (self StbTexteditRow) x1() float32 {
+	return float32(C.wrap_StbTexteditRow_Getx1(self.handle()))
+}
+
+func (self StbTexteditRow) baselineydelta() float32 {
+	return float32(C.wrap_StbTexteditRow_Getbaseline_y_delta(self.handle()))
+}
+
+func (self StbTexteditRow) ymin() float32 {
+	return float32(C.wrap_StbTexteditRow_Getymin(self.handle()))
+}
+
+func (self StbTexteditRow) ymax() float32 {
+	return float32(C.wrap_StbTexteditRow_Getymax(self.handle()))
+}
+
+func (self StbTexteditRow) numchars() int {
+	return int(C.wrap_StbTexteditRow_Getnum_chars(self.handle()))
+}
+
+func (self StbUndoRecord) where() int {
+	return int(C.wrap_StbUndoRecord_Getwhere(self.handle()))
+}
+
+func (self StbUndoRecord) insertlength() int {
+	return int(C.wrap_StbUndoRecord_Getinsert_length(self.handle()))
+}
+
+func (self StbUndoRecord) deletelength() int {
+	return int(C.wrap_StbUndoRecord_Getdelete_length(self.handle()))
+}
+
+func (self StbUndoRecord) charstorage() int {
+	return int(C.wrap_StbUndoRecord_Getchar_storage(self.handle()))
+}
+
+func (self StbUndoState) undopoint() int {
+	return int(C.wrap_StbUndoState_Getundo_point(self.handle()))
+}
+
+func (self StbUndoState) redopoint() int {
+	return int(C.wrap_StbUndoState_Getredo_point(self.handle()))
+}
+
+func (self StbUndoState) undocharpoint() int {
+	return int(C.wrap_StbUndoState_Getundo_char_point(self.handle()))
+}
+
+func (self StbUndoState) redocharpoint() int {
+	return int(C.wrap_StbUndoState_Getredo_char_point(self.handle()))
 }

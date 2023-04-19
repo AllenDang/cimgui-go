@@ -7,6 +7,20 @@ package imgui
 import "C"
 import "unsafe"
 
+type FormatterTimeData uintptr
+
+func (data FormatterTimeData) handle() *C.Formatter_Time_Data {
+	return (*C.Formatter_Time_Data)(unsafe.Pointer(data))
+}
+
+func (data FormatterTimeData) c() C.Formatter_Time_Data {
+	return *(data.handle())
+}
+
+func newFormatterTimeDataFromC(cvalue C.Formatter_Time_Data) FormatterTimeData {
+	return FormatterTimeData(unsafe.Pointer(&cvalue))
+}
+
 type PlotAlignmentData uintptr
 
 func (data PlotAlignmentData) handle() *C.ImPlotAlignmentData {

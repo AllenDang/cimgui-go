@@ -12427,6 +12427,20 @@ func PlotTagYBool(y float64, col Vec4) {
 	C.wrap_ImPlot_TagY_Bool(C.double(y), col.toC())
 }
 
+func (self FormatterTimeData) TimeDataGetTime() PlotTime {
+	out := &PlotTime{}
+	out.fromC(C.wrap_Formatter_Time_Data_GetTime(self.handle()))
+	return *out
+}
+
+func (self FormatterTimeData) TimeDataGetSpec() PlotDateTimeSpec {
+	return newPlotDateTimeSpecFromC(C.wrap_Formatter_Time_Data_GetSpec(self.handle()))
+}
+
+func (self FormatterTimeData) TimeDataGetUserFormatterData() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_Formatter_Time_Data_GetUserFormatterData(self.handle()))
+}
+
 func (self PlotAlignmentData) SetVertical(v bool) {
 	C.wrap_ImPlotAlignmentData_SetVertical(self.handle(), C.bool(v))
 }
