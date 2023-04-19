@@ -37,6 +37,15 @@ endef
 cimplot:
 	$(call cimplot)
 
+define cimnodes
+	$(call generate,cimnodes,cimgui/cimnodes.h,cimgui/cimnodes_templates/definitions.json,cimgui/cimnodes_templates/structs_and_enums.json,-r cimgui/cimgui_templates/structs_and_enums.json)
+endef
+
+## cimnodes: generate imnodes binding
+.PHONY: cimnodes
+cimnodes:
+	$(call cimnodes)
+
 compile_cimgui_macos:
 	rm -rf ./lib/build
 	cd ./lib; cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=arm64
@@ -62,14 +71,16 @@ define update
 	cd tmp/$1/$3; \
 		git checkout $4
 	cd tmp/$1/generator; \
-		sh generator.sh -DIMGUI_USE_WCHAR32
-	cp tmp/$1/$1* cimgui/
-	cp tmp/$1/generator/output/$1* cimgui/
+		bash generator.sh -c "glfw opengl3 opengl2 sdl2 -DIMGUI_USE_WCHAR32"
+	cp -f tmp/$1/$1* cimgui/
+	if test -e tmp/$1/generator/output/$1*; then \
+		cp -f tmp/$1/generator/output/$1* cimgui/; \
+	fi
 	mkdir cimgui/$1_templates
-	cp tmp/$1/generator/output/*json cimgui/$1_templates
+	cp -f tmp/$1/generator/output/*json cimgui/$1_templates
 	mkdir -p cimgui/$3
-	cp tmp/$1/$3/*cpp cimgui/$3
-	cp -r tmp/$1/$3/* cimgui/$3
+	cp -f tmp/$1/$3/*cpp cimgui/$3
+	cp -rf tmp/$1/$3/* cimgui/$3
 	cd tmp/$1; \
 		echo "$1 ($2) HEAD is on: `git rev-parse HEAD`" >> ../../cimgui/VERSION.txt
 	cd tmp/$1/$3; \
@@ -83,3 +94,5 @@ update:
 	$(call cimgui)
 	$(call update,cimplot,https://github.com/cimgui/cimplot,implot,master)
 	$(call cimplot)
+	$(call update,cimnodes,https://github.com/cimgui/cimnodes,imnodes,master)
+	$(call cimnodes)
