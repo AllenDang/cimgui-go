@@ -31,6 +31,7 @@ set(IMGUI_USE_WCHAR32 "yes")
 set(IMGUI_STATIC "on" CACHE STRING "Build as a static library")
 set(IMGUI_FREETYPE "no" CACHE STRING "Build with freetype library")
 set(IMGUI_LIBRARIES )
+add_definitions(-DIMNODES_NAMESPACE=imnodes)
 
 #glfw
 set(GLFW3_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/glfw)
