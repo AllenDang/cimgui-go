@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"sort"
-	"strings"
 )
 
 // StructSection appears in json file on top of structs definition section.
@@ -77,10 +76,6 @@ func shouldSkipStruct(name string) bool {
 		"ImColor":     true,
 		"ImPlotPoint": true,
 		"ImPlotTime":  true,
-	}
-
-	if !strings.HasPrefix(name, "Im") {
-		return true
 	}
 
 	// Skip all value type struct
