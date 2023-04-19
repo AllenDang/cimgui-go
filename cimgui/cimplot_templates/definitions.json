@@ -3864,11 +3864,11 @@
           "type": "const char*"
         }
       ],
-      "argsoriginal": "(ImDrawList* DrawList,ImVec2 top_center,ImU32 col,const char* text_begin,const char* text_end=((void*)0))",
+      "argsoriginal": "(ImDrawList* DrawList,ImVec2 top_center,ImU32 col,const char* text_begin,const char* text_end=nullptr)",
       "call_args": "(DrawList,top_center,col,text_begin,text_end)",
       "cimguiname": "ImPlot_AddTextCentered",
       "defaults": {
-        "text_end": "NULL"
+        "text_end": "nullptr"
       },
       "funcname": "AddTextCentered",
       "location": "implot_internal:1453",
@@ -3904,11 +3904,11 @@
           "type": "const char*"
         }
       ],
-      "argsoriginal": "(ImDrawList* DrawList,ImVec2 pos,ImU32 col,const char* text_begin,const char* text_end=((void*)0))",
+      "argsoriginal": "(ImDrawList* DrawList,ImVec2 pos,ImU32 col,const char* text_begin,const char* text_end=nullptr)",
       "call_args": "(DrawList,pos,col,text_begin,text_end)",
       "cimguiname": "ImPlot_AddTextVertical",
       "defaults": {
-        "text_end": "NULL"
+        "text_end": "nullptr"
       },
       "funcname": "AddTextVertical",
       "location": "implot_internal:1451",
@@ -4484,13 +4484,13 @@
           "type": "float*"
         }
       ],
-      "argsoriginal": "(const char* title_id,int rows,int cols,const ImVec2& size,ImPlotSubplotFlags flags=0,float* row_ratios=((void*)0),float* col_ratios=((void*)0))",
+      "argsoriginal": "(const char* title_id,int rows,int cols,const ImVec2& size,ImPlotSubplotFlags flags=0,float* row_ratios=nullptr,float* col_ratios=nullptr)",
       "call_args": "(title_id,rows,cols,size,flags,row_ratios,col_ratios)",
       "cimguiname": "ImPlot_BeginSubplots",
       "defaults": {
-        "col_ratios": "NULL",
+        "col_ratios": "nullptr",
         "flags": "0",
-        "row_ratios": "NULL"
+        "row_ratios": "nullptr"
       },
       "funcname": "BeginSubplots",
       "location": "implot:688",
@@ -4510,11 +4510,11 @@
           "type": "const char*"
         }
       ],
-      "argsoriginal": "(const char* plot_title_id=((void*)0))",
+      "argsoriginal": "(const char* plot_title_id=nullptr)",
       "call_args": "(plot_title_id)",
       "cimguiname": "ImPlot_BustColorCache",
       "defaults": {
-        "plot_title_id": "NULL"
+        "plot_title_id": "nullptr"
       },
       "funcname": "BustColorCache",
       "location": "implot:1193",
@@ -5329,13 +5329,13 @@
           "type": "ImPlotColormap"
         }
       ],
-      "argsoriginal": "(const char* label,float* t,ImVec4* out=((void*)0),const char* format=\"\",ImPlotColormap cmap=-1)",
+      "argsoriginal": "(const char* label,float* t,ImVec4* out=nullptr,const char* format=\"\",ImPlotColormap cmap=-1)",
       "call_args": "(label,t,out,format,cmap)",
       "cimguiname": "ImPlot_ColormapSlider",
       "defaults": {
         "cmap": "-1",
         "format": "\"\"",
-        "out": "NULL"
+        "out": "nullptr"
       },
       "funcname": "ColormapSlider",
       "location": "implot:1182",
@@ -5403,11 +5403,11 @@
           "type": "ImPlotContext*"
         }
       ],
-      "argsoriginal": "(ImPlotContext* ctx=((void*)0))",
+      "argsoriginal": "(ImPlotContext* ctx=nullptr)",
       "call_args": "(ctx)",
       "cimguiname": "ImPlot_DestroyContext",
       "defaults": {
-        "ctx": "NULL"
+        "ctx": "nullptr"
       },
       "funcname": "DestroyContext",
       "location": "implot:600",
@@ -10475,11 +10475,11 @@
           "type": "ImPlotInputMap*"
         }
       ],
-      "argsoriginal": "(ImPlotInputMap* dst=((void*)0))",
+      "argsoriginal": "(ImPlotInputMap* dst=nullptr)",
       "call_args": "(dst)",
       "cimguiname": "ImPlot_MapInputDefault",
       "defaults": {
-        "dst": "NULL"
+        "dst": "nullptr"
       },
       "funcname": "MapInputDefault",
       "location": "implot:1203",
@@ -10499,11 +10499,11 @@
           "type": "ImPlotInputMap*"
         }
       ],
-      "argsoriginal": "(ImPlotInputMap* dst=((void*)0))",
+      "argsoriginal": "(ImPlotInputMap* dst=nullptr)",
       "call_args": "(dst)",
       "cimguiname": "ImPlot_MapInputReverse",
       "defaults": {
-        "dst": "NULL"
+        "dst": "nullptr"
       },
       "funcname": "MapInputReverse",
       "location": "implot:1205",
@@ -23159,11 +23159,11 @@
           "type": "bool*"
         }
       ],
-      "argsoriginal": "(const char* label_id,ImPlotItemFlags flags,bool* just_created=((void*)0))",
+      "argsoriginal": "(const char* label_id,ImPlotItemFlags flags,bool* just_created=nullptr)",
       "call_args": "(label_id,flags,just_created)",
       "cimguiname": "ImPlot_RegisterOrGetItem",
       "defaults": {
-        "just_created": "NULL"
+        "just_created": "nullptr"
       },
       "funcname": "RegisterOrGetItem",
       "location": "implot_internal:1329",
@@ -23870,12 +23870,12 @@
           "type": "ImPlotAxisFlags"
         }
       ],
-      "argsoriginal": "(ImAxis axis,const char* label=((void*)0),ImPlotAxisFlags flags=0)",
+      "argsoriginal": "(ImAxis axis,const char* label=nullptr,ImPlotAxisFlags flags=0)",
       "call_args": "(axis,label,flags)",
       "cimguiname": "ImPlot_SetupAxis",
       "defaults": {
         "flags": "0",
-        "label": "NULL"
+        "label": "nullptr"
       },
       "funcname": "SetupAxis",
       "location": "implot:730",
@@ -23927,11 +23927,11 @@
           "type": "void*"
         }
       ],
-      "argsoriginal": "(ImAxis axis,ImPlotFormatter formatter,void* data=((void*)0))",
+      "argsoriginal": "(ImAxis axis,ImPlotFormatter formatter,void* data=nullptr)",
       "call_args": "(axis,formatter,data)",
       "cimguiname": "ImPlot_SetupAxisFormat",
       "defaults": {
-        "data": "NULL"
+        "data": "nullptr"
       },
       "funcname": "SetupAxisFormat",
       "location": "implot:738",
@@ -24083,11 +24083,11 @@
           "type": "void*"
         }
       ],
-      "argsoriginal": "(ImAxis axis,ImPlotTransform forward,ImPlotTransform inverse,void* data=((void*)0))",
+      "argsoriginal": "(ImAxis axis,ImPlotTransform forward,ImPlotTransform inverse,void* data=nullptr)",
       "call_args": "(axis,forward,inverse,data)",
       "cimguiname": "ImPlot_SetupAxisScale",
       "defaults": {
-        "data": "NULL"
+        "data": "nullptr"
       },
       "funcname": "SetupAxisScale",
       "location": "implot:746",
@@ -24123,12 +24123,12 @@
           "type": "bool"
         }
       ],
-      "argsoriginal": "(ImAxis axis,const double* values,int n_ticks,const char* const labels[]=((void*)0),bool keep_default=false)",
+      "argsoriginal": "(ImAxis axis,const double* values,int n_ticks,const char* const labels[]=nullptr,bool keep_default=false)",
       "call_args": "(axis,values,n_ticks,labels,keep_default)",
       "cimguiname": "ImPlot_SetupAxisTicks",
       "defaults": {
         "keep_default": "false",
-        "labels": "NULL"
+        "labels": "nullptr"
       },
       "funcname": "SetupAxisTicks",
       "location": "implot:740",
@@ -24166,12 +24166,12 @@
           "type": "bool"
         }
       ],
-      "argsoriginal": "(ImAxis axis,double v_min,double v_max,int n_ticks,const char* const labels[]=((void*)0),bool keep_default=false)",
+      "argsoriginal": "(ImAxis axis,double v_min,double v_max,int n_ticks,const char* const labels[]=nullptr,bool keep_default=false)",
       "call_args": "(axis,v_min,v_max,n_ticks,labels,keep_default)",
       "cimguiname": "ImPlot_SetupAxisTicks",
       "defaults": {
         "keep_default": "false",
-        "labels": "NULL"
+        "labels": "nullptr"
       },
       "funcname": "SetupAxisTicks",
       "location": "implot:742",
@@ -24420,12 +24420,12 @@
           "type": "const ImPlotTime*"
         }
       ],
-      "argsoriginal": "(const char* id,int* level,ImPlotTime* t,const ImPlotTime* t1=((void*)0),const ImPlotTime* t2=((void*)0))",
+      "argsoriginal": "(const char* id,int* level,ImPlotTime* t,const ImPlotTime* t1=nullptr,const ImPlotTime* t2=nullptr)",
       "call_args": "(id,level,t,t1,t2)",
       "cimguiname": "ImPlot_ShowDatePicker",
       "defaults": {
-        "t1": "NULL",
-        "t2": "NULL"
+        "t1": "nullptr",
+        "t2": "nullptr"
       },
       "funcname": "ShowDatePicker",
       "location": "implot_internal:1592",
@@ -24445,11 +24445,11 @@
           "type": "bool*"
         }
       ],
-      "argsoriginal": "(bool* p_open=((void*)0))",
+      "argsoriginal": "(bool* p_open=nullptr)",
       "call_args": "(p_open)",
       "cimguiname": "ImPlot_ShowDemoWindow",
       "defaults": {
-        "p_open": "NULL"
+        "p_open": "nullptr"
       },
       "funcname": "ShowDemoWindow",
       "location": "implot:1241",
@@ -24566,11 +24566,11 @@
           "type": "bool*"
         }
       ],
-      "argsoriginal": "(bool* p_popen=((void*)0))",
+      "argsoriginal": "(bool* p_popen=nullptr)",
       "call_args": "(p_popen)",
       "cimguiname": "ImPlot_ShowMetricsWindow",
       "defaults": {
-        "p_popen": "NULL"
+        "p_popen": "nullptr"
       },
       "funcname": "ShowMetricsWindow",
       "location": "implot:1234",
@@ -24613,11 +24613,11 @@
           "type": "ImPlotStyle*"
         }
       ],
-      "argsoriginal": "(ImPlotStyle* ref=((void*)0))",
+      "argsoriginal": "(ImPlotStyle* ref=nullptr)",
       "call_args": "(ref)",
       "cimguiname": "ImPlot_ShowStyleEditor",
       "defaults": {
-        "ref": "NULL"
+        "ref": "nullptr"
       },
       "funcname": "ShowStyleEditor",
       "location": "implot:1230",
@@ -24725,11 +24725,11 @@
           "type": "ImPlotStyle*"
         }
       ],
-      "argsoriginal": "(ImPlotStyle* dst=((void*)0))",
+      "argsoriginal": "(ImPlotStyle* dst=nullptr)",
       "call_args": "(dst)",
       "cimguiname": "ImPlot_StyleColorsAuto",
       "defaults": {
-        "dst": "NULL"
+        "dst": "nullptr"
       },
       "funcname": "StyleColorsAuto",
       "location": "implot:1080",
@@ -24749,11 +24749,11 @@
           "type": "ImPlotStyle*"
         }
       ],
-      "argsoriginal": "(ImPlotStyle* dst=((void*)0))",
+      "argsoriginal": "(ImPlotStyle* dst=nullptr)",
       "call_args": "(dst)",
       "cimguiname": "ImPlot_StyleColorsClassic",
       "defaults": {
-        "dst": "NULL"
+        "dst": "nullptr"
       },
       "funcname": "StyleColorsClassic",
       "location": "implot:1082",
@@ -24773,11 +24773,11 @@
           "type": "ImPlotStyle*"
         }
       ],
-      "argsoriginal": "(ImPlotStyle* dst=((void*)0))",
+      "argsoriginal": "(ImPlotStyle* dst=nullptr)",
       "call_args": "(dst)",
       "cimguiname": "ImPlot_StyleColorsDark",
       "defaults": {
-        "dst": "NULL"
+        "dst": "nullptr"
       },
       "funcname": "StyleColorsDark",
       "location": "implot:1084",
@@ -24797,11 +24797,11 @@
           "type": "ImPlotStyle*"
         }
       ],
-      "argsoriginal": "(ImPlotStyle* dst=((void*)0))",
+      "argsoriginal": "(ImPlotStyle* dst=nullptr)",
       "call_args": "(dst)",
       "cimguiname": "ImPlot_StyleColorsLight",
       "defaults": {
-        "dst": "NULL"
+        "dst": "nullptr"
       },
       "funcname": "StyleColorsLight",
       "location": "implot:1086",

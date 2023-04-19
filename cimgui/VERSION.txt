@@ -1,4 +1,6 @@
-cimgui (https://github.com/cimgui/cimgui) HEAD is on: a0d46db2f26d7d8dc111e0e328394e88ba39d89d
+cimgui (https://github.com/cimgui/cimgui) HEAD is on: ffda7805d28acc13b423eaa46706d809cc4c59b5
 cimgui/imgui HEAD is on: 0ea3b87bd63ecbf359585b7c235839146e84dedb
-cimplot (https://github.com/cimgui/cimplot) HEAD is on: c5b296924f3b65b7e0cadf1d1175b24e702936e9
-cimplot/implot HEAD is on: 33c5a965f55f80057f197257d1d1cdb06523e963
+cimplot (https://github.com/cimgui/cimplot) HEAD is on: 37a4268eeb584489ccd33659fcf7c9751581ddb3
+cimplot/implot HEAD is on: fb084f371976007d22706ac8f7748f41411721e6
+cimnodes (https://github.com/cimgui/cimnodes) HEAD is on: 987e75fef847e53ffdd627c4a0dcdcdaa1d3760d
+cimnodes/imnodes HEAD is on: 4f6ddd604558288bcc435398a177015dae923600
