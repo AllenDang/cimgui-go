@@ -9,6 +9,14 @@ package imgui
 import "C"
 import "unsafe"
 
+func NewEmulateThreeButtonMouse() EmulateThreeButtonMouse {
+	return (EmulateThreeButtonMouse)(unsafe.Pointer(C.EmulateThreeButtonMouse_EmulateThreeButtonMouse()))
+}
+
+func (self EmulateThreeButtonMouse) Destroy() {
+	C.EmulateThreeButtonMouse_destroy(self.handle())
+}
+
 func NewNodesIO() NodesIO {
 	return (NodesIO)(unsafe.Pointer(C.ImNodesIO_ImNodesIO()))
 }
@@ -23,6 +31,46 @@ func NewNodesStyle() NodesStyle {
 
 func (self NodesStyle) Destroy() {
 	C.ImNodesStyle_destroy(self.handle())
+}
+
+func NewLinkDetachWithModifierClick() LinkDetachWithModifierClick {
+	return (LinkDetachWithModifierClick)(unsafe.Pointer(C.LinkDetachWithModifierClick_LinkDetachWithModifierClick()))
+}
+
+func (self LinkDetachWithModifierClick) Destroy() {
+	C.LinkDetachWithModifierClick_destroy(self.handle())
+}
+
+func NewMultipleSelectModifier() MultipleSelectModifier {
+	return (MultipleSelectModifier)(unsafe.Pointer(C.MultipleSelectModifier_MultipleSelectModifier()))
+}
+
+func (self MultipleSelectModifier) Destroy() {
+	C.MultipleSelectModifier_destroy(self.handle())
+}
+
+func (self NodesIO) SetEmulateThreeButtonMouse(v EmulateThreeButtonMouse) {
+	C.wrap_ImNodesIO_SetEmulateThreeButtonMouse(self.handle(), v.c())
+}
+
+func (self NodesIO) EmulateThreeButtonMouse() EmulateThreeButtonMouse {
+	return newEmulateThreeButtonMouseFromC(C.wrap_ImNodesIO_GetEmulateThreeButtonMouse(self.handle()))
+}
+
+func (self NodesIO) SetLinkDetachWithModifierClick(v LinkDetachWithModifierClick) {
+	C.wrap_ImNodesIO_SetLinkDetachWithModifierClick(self.handle(), v.c())
+}
+
+func (self NodesIO) LinkDetachWithModifierClick() LinkDetachWithModifierClick {
+	return newLinkDetachWithModifierClickFromC(C.wrap_ImNodesIO_GetLinkDetachWithModifierClick(self.handle()))
+}
+
+func (self NodesIO) SetMultipleSelectModifier(v MultipleSelectModifier) {
+	C.wrap_ImNodesIO_SetMultipleSelectModifier(self.handle(), v.c())
+}
+
+func (self NodesIO) MultipleSelectModifier() MultipleSelectModifier {
+	return newMultipleSelectModifierFromC(C.wrap_ImNodesIO_GetMultipleSelectModifier(self.handle()))
 }
 
 func (self NodesIO) SetAltMouseButton(v int32) {

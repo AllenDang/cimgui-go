@@ -7,6 +7,20 @@ package imgui
 import "C"
 import "unsafe"
 
+type EmulateThreeButtonMouse uintptr
+
+func (data EmulateThreeButtonMouse) handle() *C.EmulateThreeButtonMouse {
+	return (*C.EmulateThreeButtonMouse)(unsafe.Pointer(data))
+}
+
+func (data EmulateThreeButtonMouse) c() C.EmulateThreeButtonMouse {
+	return *(data.handle())
+}
+
+func newEmulateThreeButtonMouseFromC(cvalue C.EmulateThreeButtonMouse) EmulateThreeButtonMouse {
+	return EmulateThreeButtonMouse(unsafe.Pointer(&cvalue))
+}
+
 type NodesIO uintptr
 
 func (data NodesIO) handle() *C.ImNodesIO {
@@ -33,4 +47,32 @@ func (data NodesStyle) c() C.ImNodesStyle {
 
 func newNodesStyleFromC(cvalue C.ImNodesStyle) NodesStyle {
 	return NodesStyle(unsafe.Pointer(&cvalue))
+}
+
+type LinkDetachWithModifierClick uintptr
+
+func (data LinkDetachWithModifierClick) handle() *C.LinkDetachWithModifierClick {
+	return (*C.LinkDetachWithModifierClick)(unsafe.Pointer(data))
+}
+
+func (data LinkDetachWithModifierClick) c() C.LinkDetachWithModifierClick {
+	return *(data.handle())
+}
+
+func newLinkDetachWithModifierClickFromC(cvalue C.LinkDetachWithModifierClick) LinkDetachWithModifierClick {
+	return LinkDetachWithModifierClick(unsafe.Pointer(&cvalue))
+}
+
+type MultipleSelectModifier uintptr
+
+func (data MultipleSelectModifier) handle() *C.MultipleSelectModifier {
+	return (*C.MultipleSelectModifier)(unsafe.Pointer(data))
+}
+
+func (data MultipleSelectModifier) c() C.MultipleSelectModifier {
+	return *(data.handle())
+}
+
+func newMultipleSelectModifierFromC(cvalue C.MultipleSelectModifier) MultipleSelectModifier {
+	return MultipleSelectModifier(unsafe.Pointer(&cvalue))
 }
