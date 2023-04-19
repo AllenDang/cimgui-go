@@ -22,6 +22,7 @@ file(GLOB IMGUI_SOURCES
     ../cimgui/implot/implot_items.cpp
     ../cimgui/implot/implot_demo.cpp
     ../cimgui/cimplot.cpp
+    ../cimgui/cimnodes.cpp
 	${TABLES_SOURCE}
 )
 
