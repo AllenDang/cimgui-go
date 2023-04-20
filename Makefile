@@ -38,10 +38,10 @@ cimplot:
 	$(call cimplot)
 
 compile_cimgui_macos:
-	rm -rf ./cimgui/build
-	cd ./cimgui; cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=arm64
-	cd ./cimgui/build; make
-	cp -f ./cimgui/build/cimgui.a ./lib/macos/arm64/
+	rm -rf ./lib/build
+	cd ./lib; cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=arm64
+	cd ./lib/build; make
+	cp -f ./lib/build/cimgui.a ./lib/macos/arm64/
 
 ## generate: generates both bindings (equal to `all`)
 .PHONY: generate
@@ -51,6 +51,7 @@ generate: cimgui cimplot
 # $1 - subrepo directory
 # $2 - repository URL
 # $3 - $1/<c++ repo>/
+# $4 - branch in $3 (cd tmp/$1/$3 && git checkout $4)
 define update
 	@echo "updating $1 from $2"
 	mkdir -p tmp/
@@ -58,6 +59,8 @@ define update
 		rm -rf tmp/*; \
 	fi
 	git clone --recurse-submodules $2 tmp/$1
+	cd tmp/$1/$3; \
+		git checkout $4
 	cd tmp/$1/generator; \
 		sh generator.sh -DIMGUI_USE_WCHAR32
 	cp tmp/$1/$1* cimgui/
@@ -76,7 +79,7 @@ endef
 .PHONY: update
 update:
 	rm -rf cimgui/*
-	$(call update,cimgui,https://github.com/cimgui/cimgui,imgui)
+	$(call update,cimgui,https://github.com/cimgui/cimgui,imgui,docking)
 	$(call cimgui)
-	$(call update,cimplot,https://github.com/cimgui/cimplot,implot)
+	$(call update,cimplot,https://github.com/cimgui/cimplot,implot,master)
 	$(call cimplot)

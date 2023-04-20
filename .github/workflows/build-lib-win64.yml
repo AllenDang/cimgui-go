@@ -7,6 +7,11 @@ jobs:
   build-windows-x64:
     runs-on: windows-latest
 
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
     defaults:
       run:
         shell: msys2 {0}
@@ -49,4 +54,5 @@ jobs:
 
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
+        push_options: '--force'
         commit_message: Update windows lib from ci

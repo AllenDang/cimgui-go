@@ -3,8 +3,8 @@ package main
 import "C"
 import (
 	"fmt"
+	"github.com/kpango/glg"
 	"os"
-	"sort"
 	"strings"
 )
 
@@ -65,10 +65,14 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 		// stop, when the function should not be generated
 		if !generator.shouldGenerate {
-			fmt.Printf("not generated: %s%s\n", f.FuncName, f.Args)
+			if flags.showNotGenerated {
+				glg.Failf("not generated: %s%s", f.FuncName, f.Args)
+			}
 			continue
 		} else {
-			fmt.Printf("generated: %s%s\n", f.FuncName, f.Args)
+			if flags.showGenerated {
+				glg.Successf("generated: %s%s", f.FuncName, f.Args)
+			}
 		}
 
 		if noErrors := generator.GenerateFunction(f, args, argWrappers); !noErrors {
@@ -76,7 +80,11 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 		}
 	}
 
-	fmt.Printf("Convert progress: %d/%d\n", generator.convertedFuncCount, len(validFuncs))
+	glg.Infof("Convert progress: %d/%d (%.2f%%)",
+		generator.convertedFuncCount,
+		len(validFuncs),
+		100*float32(generator.convertedFuncCount)/float32(len(validFuncs)),
+	)
 
 	goFile, err := os.Create(fmt.Sprintf("%s_funcs.go", prefix))
 	if err != nil {
@@ -205,7 +213,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 
 		funcName = "New" + returnType + suffix
 	default:
-		fmt.Printf("Unknown return type \"%s\" in function %s\n", f.Ret, f.FuncName)
+		glg.Debugf("Unknown return type \"%s\" in function %s", f.Ret, f.FuncName)
 		return false
 	}
 
@@ -265,18 +273,22 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 	if len(f.Defaults) > 0 {
 		commentSb.WriteString("// %s parameter default value hint:\n")
 
-		// sort lexicographically for determenistic generation
 		type defaultParam struct {
 			name  string
 			value string
 		}
 		defaults := make([]defaultParam, 0, len(f.Defaults))
-		for n, v := range f.Defaults {
-			defaults = append(defaults, defaultParam{name: n, value: v})
+		// sort according to the order of the arguments
+		for _, arg := range args {
+			if idx := strings.Index(arg, " "); idx != -1 {
+				arg = arg[:idx]
+			}
+			d, ok := f.Defaults[arg]
+			if !ok {
+				continue
+			}
+			defaults = append(defaults, defaultParam{name: arg, value: d})
 		}
-		sort.Slice(defaults, func(i, j int) bool {
-			return defaults[i].name < defaults[j].name
-		})
 
 		for _, p := range defaults {
 			commentSb.WriteString(fmt.Sprintf("// %s: %s\n", p.name, p.value))
@@ -317,12 +329,13 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 	for i, a := range f.ArgsT {
 		g.shouldGenerate = false
 
-		if a.Name == "type" {
-			a.Name = "typeArg"
+		if a.Name == "type" || a.Name == "range" {
+			a.Name += "Arg"
 		}
 
 		if i == 0 && f.StructSetter {
 			g.shouldGenerate = true
+			continue
 		}
 
 		if f.StructGetter && g.structNames[a.Type] {
@@ -356,24 +369,33 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 			continue
 		}
 
+		pureType := strings.TrimPrefix(a.Type, "const ")
+		isPointer := false
 		if strings.HasSuffix(a.Type, "*") {
-			pureType := strings.TrimPrefix(a.Type, "const ")
 			pureType = strings.TrimSuffix(pureType, "*")
+			isPointer = true
+		}
 
-			if g.structNames[pureType] {
-				args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType)))
-				argWrappers = append(argWrappers, ArgumentWrapperData{
-					VarName: fmt.Sprintf("%s.handle()", a.Name),
-					ArgType: renameGoIdentifier(pureType),
-				})
-
-				g.shouldGenerate = true
-				continue
+		if g.structNames[pureType] {
+			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType)))
+			w := ArgumentWrapperData{
+				ArgType: renameGoIdentifier(pureType),
 			}
+
+			if isPointer {
+				w.VarName = fmt.Sprintf("%s.handle()", a.Name)
+			} else {
+				w.VarName = fmt.Sprintf("%s.c()", a.Name)
+
+			}
+			argWrappers = append(argWrappers, w)
+
+			g.shouldGenerate = true
+			continue
 		}
 
 		if !g.shouldGenerate {
-			fmt.Printf("Unknown argument type \"%s\" in function %s\n", a.Type, f.FuncName)
+			glg.Debugf("Unknown argument type \"%s\" in function %s", a.Type, f.FuncName)
 			break
 		}
 	}

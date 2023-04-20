@@ -179,6 +179,7 @@ bool wrap_igIsMouseDragging(ImGuiMouseButton button) { return igIsMouseDragging(
 bool wrap_igIsMouseHoveringRect(const ImVec2 r_min,const ImVec2 r_max) { return igIsMouseHoveringRect(r_min,r_max,true); }
 bool wrap_igIsMousePosValid() { return igIsMousePosValid(NULL); }
 bool wrap_igIsPopupOpen_Str(const char* str_id) { return igIsPopupOpen_Str(str_id,0); }
+bool wrap_igIsWindowContentHoverable(ImGuiWindow* window) { return igIsWindowContentHoverable(window,0); }
 bool wrap_igIsWindowFocused() { return igIsWindowFocused(0); }
 bool wrap_igIsWindowHovered() { return igIsWindowHovered(0); }
 bool wrap_igItemAdd(const ImRect bb,ImGuiID id) { return igItemAdd(bb,id,NULL,0); }
@@ -224,6 +225,7 @@ bool wrap_igSelectable_BoolPtr(const char* label,bool* p_selected) { return igSe
 bool wrap_igSetDragDropPayload(const char* type,const void* data,size_t sz) { return igSetDragDropPayload(type,data,sz,0); }
 void wrap_igSetItemKeyOwner(ImGuiKey key) { igSetItemKeyOwner(key,0); }
 void wrap_igSetKeyOwner(ImGuiKey key,ImGuiID owner_id) { igSetKeyOwner(key,owner_id,0); }
+void wrap_igSetKeyOwnersForKeyChord(ImGuiKeyChord key,ImGuiID owner_id) { igSetKeyOwnersForKeyChord(key,owner_id,0); }
 void wrap_igSetKeyboardFocusHere() { igSetKeyboardFocusHere(0); }
 void wrap_igSetNextItemOpen(bool is_open) { igSetNextItemOpen(is_open,0); }
 void wrap_igSetNextWindowCollapsed(bool collapsed) { igSetNextWindowCollapsed(collapsed,0); }

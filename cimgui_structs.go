@@ -525,6 +525,20 @@ func newInputTextCallbackDataFromC(cvalue C.ImGuiInputTextCallbackData) InputTex
 	return InputTextCallbackData(unsafe.Pointer(&cvalue))
 }
 
+type InputTextDeactivatedState uintptr
+
+func (data InputTextDeactivatedState) handle() *C.ImGuiInputTextDeactivatedState {
+	return (*C.ImGuiInputTextDeactivatedState)(unsafe.Pointer(data))
+}
+
+func (data InputTextDeactivatedState) c() C.ImGuiInputTextDeactivatedState {
+	return *(data.handle())
+}
+
+func newInputTextDeactivatedStateFromC(cvalue C.ImGuiInputTextDeactivatedState) InputTextDeactivatedState {
+	return InputTextDeactivatedState(unsafe.Pointer(&cvalue))
+}
+
 type InputTextState uintptr
 
 func (data InputTextState) handle() *C.ImGuiInputTextState {

@@ -361,6 +361,7 @@ func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []S
 		"ImGuiIO_SetAppAcceptingEvents": true,
 		"ImGuiDockNode_SetLocalFlags":   true,
 		"ImFontAtlas_SetTexID":          true,
+		"ImVec1_Getx":                   true,
 		"ImVec2_Getx":                   true,
 		"ImVec2_Gety":                   true,
 		"ImVec4_Getx":                   true,
