@@ -5,6 +5,13 @@ NAME=cimgui-go Code Generator
 ## all: generates both bindings.
 all: generate
 
+## setup: prepare some dependencies
+.PHONY: setup
+setup:
+	go get mvdan.cc/gofumpt@latest
+	cd cmd/codegen; \
+		go build -o ../../codegen .
+
 # Parameters:
 # $1: prefix
 # $2: include path (of header file)
@@ -13,7 +20,7 @@ all: generate
 # $5: additional agruments to codegen call (e.g. -r option)
 define generate
 	@echo "Generating for $(1)"
-	go run github.com/AllenDang/cimgui-go/cmd/codegen -p $(1) -i $(2) -d $(3) -e $(4) $(5)
+	./codegen -p $(1) -i $(2) -d $(3) -e $(4) $(5)
 	go run mvdan.cc/gofumpt@latest -w $(1)_enums.go
 	go run mvdan.cc/gofumpt@latest -w $(1)_structs.go
 	go run mvdan.cc/gofumpt@latest -w $(1)_funcs.go
@@ -25,7 +32,7 @@ endef
 
 ## cimgui: generate cimgui binding
 .PHONY: cimgui
-cimgui:
+cimgui: setup
 	$(call cimgui)
 
 define cimplot
@@ -34,7 +41,7 @@ endef
 
 ## cimplot: generate implot binding
 .PHONY: cimplot
-cimplot:
+cimplot: setup
 	$(call cimplot)
 
 compile_cimgui_macos:
@@ -77,7 +84,7 @@ define update
 endef
 
 .PHONY: update
-update:
+update: setup
 	rm -rf cimgui/*
 	$(call update,cimgui,https://github.com/cimgui/cimgui,imgui,docking)
 	$(call cimgui)
