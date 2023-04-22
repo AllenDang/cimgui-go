@@ -3727,6 +3727,10 @@ func InternalFindBestWindowPosForPopup(window Window) Vec2 {
 	return *pOut
 }
 
+func InternalFindBlockingModal(window Window) Window {
+	return (Window)(unsafe.Pointer(C.igFindBlockingModal(window.handle())))
+}
+
 func InternalFindBottomMostVisibleWindowWithinBeginStack(window Window) Window {
 	return (Window)(unsafe.Pointer(C.igFindBottomMostVisibleWindowWithinBeginStack(window.handle())))
 }
@@ -3769,6 +3773,10 @@ func FindViewportByPlatformHandle(platform_handle unsafe.Pointer) Viewport {
 	return (Viewport)(unsafe.Pointer(C.igFindViewportByPlatformHandle((platform_handle))))
 }
 
+func InternalFindWindowByID(id ID) Window {
+	return (Window)(unsafe.Pointer(C.igFindWindowByID(C.ImGuiID(id))))
+}
+
 func InternalFindWindowByName(name string) Window {
 	nameArg, nameFin := wrapString(name)
 
@@ -3790,12 +3798,14 @@ func InternalFindWindowSettingsByWindow(window Window) WindowSettings {
 	return (WindowSettings)(unsafe.Pointer(C.igFindWindowSettingsByWindow(window.handle())))
 }
 
-func InternalFocusTopMostWindowUnderOne(under_this_window Window, ignore_window Window, filter_viewport Viewport) {
-	C.igFocusTopMostWindowUnderOne(under_this_window.handle(), ignore_window.handle(), filter_viewport.handle())
+func InternalFocusTopMostWindowUnderOne(under_this_window Window, ignore_window Window, filter_viewport Viewport, flags FocusRequestFlags) {
+	C.igFocusTopMostWindowUnderOne(under_this_window.handle(), ignore_window.handle(), filter_viewport.handle(), C.ImGuiFocusRequestFlags(flags))
 }
 
-func InternalFocusWindow(window Window) {
-	C.igFocusWindow(window.handle())
+// InternalFocusWindowV parameter default value hint:
+// flags: 0
+func InternalFocusWindowV(window Window, flags FocusRequestFlags) {
+	C.igFocusWindow(window.handle(), C.ImGuiFocusRequestFlags(flags))
 }
 
 func InternalGcAwakeTransientWindowBuffers(window Window) {
@@ -3935,6 +3945,14 @@ func InternalCurrentTabBar() TabBar {
 
 func InternalCurrentTable() Table {
 	return (Table)(unsafe.Pointer(C.igGetCurrentTable()))
+}
+
+func InternalCurrentWindow() Window {
+	return (Window)(unsafe.Pointer(C.igGetCurrentWindow()))
+}
+
+func InternalCurrentWindowRead() Window {
+	return (Window)(unsafe.Pointer(C.igGetCurrentWindowRead()))
 }
 
 // cursor position in window coordinates (relative to window position)
@@ -4659,6 +4677,10 @@ func InternalImFontAtlasBuildRender8bppRectFromString(atlas FontAtlas, x int32, 
 
 func InternalImFontAtlasBuildSetupFont(atlas FontAtlas, font Font, font_config FontConfig, ascent float32, descent float32) {
 	C.igImFontAtlasBuildSetupFont(atlas.handle(), font.handle(), font_config.handle(), C.float(ascent), C.float(descent))
+}
+
+func InternalImFontAtlasGetBuilderForStbTruetype() FontBuilderIO {
+	return (FontBuilderIO)(unsafe.Pointer(C.igImFontAtlasGetBuilderForStbTruetype()))
 }
 
 func InternalImFormatString(buf string, buf_size uint64, fmt string) int {
@@ -6005,6 +6027,10 @@ func InternalNavMoveRequestTryWrapping(window Window, move_flags NavMoveFlags) {
 	C.igNavMoveRequestTryWrapping(window.handle(), C.ImGuiNavMoveFlags(move_flags))
 }
 
+func InternalNavUpdateCurrentWindowIsScrollPushableX() {
+	C.igNavUpdateCurrentWindowIsScrollPushableX()
+}
+
 // start a new Dear ImGui frame, you can submit any command from this point until Render()/EndFrame().
 func NewFrame() {
 	C.igNewFrame()
@@ -6252,7 +6278,7 @@ func PushTextWrapPosV(wrap_local_pos_x float32) {
 	C.igPushTextWrapPos(C.float(wrap_local_pos_x))
 }
 
-// use with e.g. if (RadioButton("one", my_value==1)) { my_value = 1; }
+// use with e.g. if (RadioButton("one", my_value==1))  my_value = 1;
 func RadioButtonBool(label string, active bool) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -6628,7 +6654,7 @@ func SetItemDefaultFocus() {
 	C.igSetItemDefaultFocus()
 }
 
-// Set key owner to last item if it is hovered or active. Equivalent to 'if (IsItemHovered() || IsItemActive()) { SetKeyOwner(key, GetItemID());'.
+// Set key owner to last item if it is hovered or active. Equivalent to 'if (IsItemHovered() || IsItemActive())  SetKeyOwner(key, GetItemID());'.
 // InternalSetItemKeyOwnerV parameter default value hint:
 // flags: 0
 func InternalSetItemKeyOwnerV(key Key, flags InputFlags) {
@@ -8840,6 +8866,10 @@ func InternalFindRenderedTextEnd(text string) string {
 	return C.GoString(C.wrap_igFindRenderedTextEnd(textArg))
 }
 
+func InternalFocusWindow(window Window) {
+	C.wrap_igFocusWindow(window.handle())
+}
+
 func ColorU32Col(idx Col) uint32 {
 	return uint32(C.wrap_igGetColorU32_Col(C.ImGuiCol(idx)))
 }
@@ -10405,6 +10435,14 @@ func (self FontAtlas) TexUvWhitePixel() Vec2 {
 	out := &Vec2{}
 	out.fromC(C.wrap_ImFontAtlas_GetTexUvWhitePixel(self.handle()))
 	return *out
+}
+
+func (self FontAtlas) SetFontBuilderIO(v FontBuilderIO) {
+	C.wrap_ImFontAtlas_SetFontBuilderIO(self.handle(), v.handle())
+}
+
+func (self FontAtlas) FontBuilderIO() FontBuilderIO {
+	return (FontBuilderIO)(unsafe.Pointer(C.wrap_ImFontAtlas_GetFontBuilderIO(self.handle())))
 }
 
 func (self FontAtlas) SetFontBuilderFlags(v uint32) {
@@ -15091,6 +15129,14 @@ func (self PlatformMonitor) DpiScale() float32 {
 	return float32(C.wrap_ImGuiPlatformMonitor_GetDpiScale(self.handle()))
 }
 
+func (self PlatformMonitor) SetPlatformHandle(v unsafe.Pointer) {
+	C.wrap_ImGuiPlatformMonitor_SetPlatformHandle(self.handle(), (v))
+}
+
+func (self PlatformMonitor) PlatformHandle() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiPlatformMonitor_GetPlatformHandle(self.handle()))
+}
+
 func (self PopupData) SetPopupId(v ID) {
 	C.wrap_ImGuiPopupData_SetPopupId(self.handle(), C.ImGuiID(v))
 }
@@ -19179,6 +19225,14 @@ func (self WindowTempData) NavLayersActiveMaskNext() int {
 	return int(C.wrap_ImGuiWindowTempData_GetNavLayersActiveMaskNext(self.handle()))
 }
 
+func (self WindowTempData) SetNavIsScrollPushableX(v bool) {
+	C.wrap_ImGuiWindowTempData_SetNavIsScrollPushableX(self.handle(), C.bool(v))
+}
+
+func (self WindowTempData) NavIsScrollPushableX() bool {
+	return C.wrap_ImGuiWindowTempData_GetNavIsScrollPushableX(self.handle()) == C.bool(true)
+}
+
 func (self WindowTempData) SetNavHideHighlightOneFrame(v bool) {
 	C.wrap_ImGuiWindowTempData_SetNavHideHighlightOneFrame(self.handle(), C.bool(v))
 }
@@ -19187,12 +19241,12 @@ func (self WindowTempData) NavHideHighlightOneFrame() bool {
 	return C.wrap_ImGuiWindowTempData_GetNavHideHighlightOneFrame(self.handle()) == C.bool(true)
 }
 
-func (self WindowTempData) SetNavHasScroll(v bool) {
-	C.wrap_ImGuiWindowTempData_SetNavHasScroll(self.handle(), C.bool(v))
+func (self WindowTempData) SetNavWindowHasScrollY(v bool) {
+	C.wrap_ImGuiWindowTempData_SetNavWindowHasScrollY(self.handle(), C.bool(v))
 }
 
-func (self WindowTempData) NavHasScroll() bool {
-	return C.wrap_ImGuiWindowTempData_GetNavHasScroll(self.handle()) == C.bool(true)
+func (self WindowTempData) NavWindowHasScrollY() bool {
+	return C.wrap_ImGuiWindowTempData_GetNavWindowHasScrollY(self.handle()) == C.bool(true)
 }
 
 func (self WindowTempData) SetMenuBarAppending(v bool) {

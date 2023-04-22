@@ -1439,6 +1439,8 @@ extern void wrap_ImGuiPlatformMonitor_SetWorkSize(ImGuiPlatformMonitor *ImGuiPla
 extern ImVec2 wrap_ImGuiPlatformMonitor_GetWorkSize(ImGuiPlatformMonitor *self);
 extern void wrap_ImGuiPlatformMonitor_SetDpiScale(ImGuiPlatformMonitor *ImGuiPlatformMonitorPtr, float v);
 extern float wrap_ImGuiPlatformMonitor_GetDpiScale(ImGuiPlatformMonitor *self);
+extern void wrap_ImGuiPlatformMonitor_SetPlatformHandle(ImGuiPlatformMonitor *ImGuiPlatformMonitorPtr, void* v);
+extern void* wrap_ImGuiPlatformMonitor_GetPlatformHandle(ImGuiPlatformMonitor *self);
 extern void wrap_ImGuiPopupData_SetPopupId(ImGuiPopupData *ImGuiPopupDataPtr, ImGuiID v);
 extern ImGuiID wrap_ImGuiPopupData_GetPopupId(ImGuiPopupData *self);
 extern void wrap_ImGuiPopupData_SetWindow(ImGuiPopupData *ImGuiPopupDataPtr, ImGuiWindow* v);
@@ -2465,10 +2467,12 @@ extern void wrap_ImGuiWindowTempData_SetNavLayersActiveMask(ImGuiWindowTempData 
 extern short wrap_ImGuiWindowTempData_GetNavLayersActiveMask(ImGuiWindowTempData *self);
 extern void wrap_ImGuiWindowTempData_SetNavLayersActiveMaskNext(ImGuiWindowTempData *ImGuiWindowTempDataPtr, short v);
 extern short wrap_ImGuiWindowTempData_GetNavLayersActiveMaskNext(ImGuiWindowTempData *self);
+extern void wrap_ImGuiWindowTempData_SetNavIsScrollPushableX(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v);
+extern bool wrap_ImGuiWindowTempData_GetNavIsScrollPushableX(ImGuiWindowTempData *self);
 extern void wrap_ImGuiWindowTempData_SetNavHideHighlightOneFrame(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v);
 extern bool wrap_ImGuiWindowTempData_GetNavHideHighlightOneFrame(ImGuiWindowTempData *self);
-extern void wrap_ImGuiWindowTempData_SetNavHasScroll(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v);
-extern bool wrap_ImGuiWindowTempData_GetNavHasScroll(ImGuiWindowTempData *self);
+extern void wrap_ImGuiWindowTempData_SetNavWindowHasScrollY(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v);
+extern bool wrap_ImGuiWindowTempData_GetNavWindowHasScrollY(ImGuiWindowTempData *self);
 extern void wrap_ImGuiWindowTempData_SetMenuBarAppending(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v);
 extern bool wrap_ImGuiWindowTempData_GetMenuBarAppending(ImGuiWindowTempData *self);
 extern void wrap_ImGuiWindowTempData_SetMenuBarOffset(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v);

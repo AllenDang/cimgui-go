@@ -236,6 +236,21 @@ func newFontAtlasCustomRectFromC(cvalue C.ImFontAtlasCustomRect) FontAtlasCustom
 	return FontAtlasCustomRect(unsafe.Pointer(&cvalue))
 }
 
+// This structure is likely to evolve as we add support for incremental atlas updates
+type FontBuilderIO uintptr
+
+func (data FontBuilderIO) handle() *C.ImFontBuilderIO {
+	return (*C.ImFontBuilderIO)(unsafe.Pointer(data))
+}
+
+func (data FontBuilderIO) c() C.ImFontBuilderIO {
+	return *(data.handle())
+}
+
+func newFontBuilderIOFromC(cvalue C.ImFontBuilderIO) FontBuilderIO {
+	return FontBuilderIO(unsafe.Pointer(&cvalue))
+}
+
 type FontConfig uintptr
 
 func (data FontConfig) handle() *C.ImFontConfig {

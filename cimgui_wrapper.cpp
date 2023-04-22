@@ -139,6 +139,7 @@ bool wrap_igDragScalarN(const char* label,ImGuiDataType data_type,void* p_data,i
 void wrap_igErrorCheckEndFrameRecover(ImGuiErrorLogCallback log_callback) { igErrorCheckEndFrameRecover(log_callback,NULL); }
 void wrap_igErrorCheckEndWindowRecover(ImGuiErrorLogCallback log_callback) { igErrorCheckEndWindowRecover(log_callback,NULL); }
 const char* wrap_igFindRenderedTextEnd(const char* text) { return wrap_igFindRenderedTextEndV(text); }
+void wrap_igFocusWindow(ImGuiWindow* window) { igFocusWindow(window,0); }
 ImU32 wrap_igGetColorU32_Col(ImGuiCol idx) { return igGetColorU32_Col(idx,1.0f); }
 float wrap_igGetColumnOffset() { return igGetColumnOffset(-1); }
 float wrap_igGetColumnWidth() { return igGetColumnWidth(-1); }

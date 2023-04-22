@@ -674,6 +674,20 @@ const (
 	DragDropFlagsAcceptPeekOnly = 3072
 )
 
+// Flags for FocusWindow(). This is not called ImGuiFocusFlags to avoid confusion with public-facing ImGuiFocusedFlags.
+// FIXME: Once we finishing replacing more uses of GetTopMostPopupModal()+IsWindowWithinBeginStackOf()
+// and FindBlockingModal() with this, we may want to change the flag to be opt-out instead of opt-in.
+// original name: ImGuiFocusRequestFlags_
+type FocusRequestFlags int
+
+const (
+	FocusRequestFlagsNone = 0
+	// Find last focused child (if any) and focus it instead.
+	FocusRequestFlagsRestoreFocusedChild = 1
+	// Do not set focus if the window is below a modal.
+	FocusRequestFlagsUnlessBelowModal = 2
+)
+
 // Flags for ImGui::IsWindowFocused()
 // original name: ImGuiFocusedFlags_
 type FocusedFlags int
