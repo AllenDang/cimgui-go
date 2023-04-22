@@ -25,6 +25,7 @@ import "unsafe"
 			continue
 		}
 
+		sb.WriteString(fmt.Sprintf("%s\n", s.CommentAbove))
 		sb.WriteString(fmt.Sprintf(`type %[1]s uintptr
 
 func (data %[1]s) handle() *C.%[2]s {

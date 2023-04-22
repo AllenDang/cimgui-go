@@ -3,9 +3,10 @@ package main
 import "C"
 import (
 	"fmt"
-	"github.com/kpango/glg"
 	"os"
 	"strings"
+
+	"github.com/kpango/glg"
 )
 
 // returnTypeType represents an arbitrary type of return value of the function.
@@ -270,6 +271,14 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 
 	// Generate default param value hint
 	var commentSb strings.Builder
+	comments := strings.Split(f.Comment, "\n")
+	for i, comment := range comments {
+		if !strings.HasPrefix(comment, "//") {
+			comments[i] = "// " + comments[i]
+		}
+	}
+
+	commentSb.WriteString(fmt.Sprintf("%s\n", strings.Join(comments, "\n")))
 	if len(f.Defaults) > 0 {
 		commentSb.WriteString("// %s parameter default value hint:\n")
 
@@ -386,7 +395,6 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 				w.VarName = fmt.Sprintf("%s.handle()", a.Name)
 			} else {
 				w.VarName = fmt.Sprintf("%s.c()", a.Name)
-
 			}
 			argWrappers = append(argWrappers, w)
 

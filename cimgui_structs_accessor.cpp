@@ -1435,6 +1435,8 @@ void wrap_ImGuiPlatformMonitor_SetWorkSize(ImGuiPlatformMonitor *ImGuiPlatformMo
 ImVec2 wrap_ImGuiPlatformMonitor_GetWorkSize(ImGuiPlatformMonitor *self) { return self->WorkSize; }
 void wrap_ImGuiPlatformMonitor_SetDpiScale(ImGuiPlatformMonitor *ImGuiPlatformMonitorPtr, float v) { ImGuiPlatformMonitorPtr->DpiScale = v; }
 float wrap_ImGuiPlatformMonitor_GetDpiScale(ImGuiPlatformMonitor *self) { return self->DpiScale; }
+void wrap_ImGuiPlatformMonitor_SetPlatformHandle(ImGuiPlatformMonitor *ImGuiPlatformMonitorPtr, void* v) { ImGuiPlatformMonitorPtr->PlatformHandle = v; }
+void* wrap_ImGuiPlatformMonitor_GetPlatformHandle(ImGuiPlatformMonitor *self) { return self->PlatformHandle; }
 void wrap_ImGuiPopupData_SetPopupId(ImGuiPopupData *ImGuiPopupDataPtr, ImGuiID v) { ImGuiPopupDataPtr->PopupId = v; }
 ImGuiID wrap_ImGuiPopupData_GetPopupId(ImGuiPopupData *self) { return self->PopupId; }
 void wrap_ImGuiPopupData_SetWindow(ImGuiPopupData *ImGuiPopupDataPtr, ImGuiWindow* v) { ImGuiPopupDataPtr->Window = v; }
@@ -2461,10 +2463,12 @@ void wrap_ImGuiWindowTempData_SetNavLayersActiveMask(ImGuiWindowTempData *ImGuiW
 short wrap_ImGuiWindowTempData_GetNavLayersActiveMask(ImGuiWindowTempData *self) { return self->NavLayersActiveMask; }
 void wrap_ImGuiWindowTempData_SetNavLayersActiveMaskNext(ImGuiWindowTempData *ImGuiWindowTempDataPtr, short v) { ImGuiWindowTempDataPtr->NavLayersActiveMaskNext = v; }
 short wrap_ImGuiWindowTempData_GetNavLayersActiveMaskNext(ImGuiWindowTempData *self) { return self->NavLayersActiveMaskNext; }
+void wrap_ImGuiWindowTempData_SetNavIsScrollPushableX(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v) { ImGuiWindowTempDataPtr->NavIsScrollPushableX = v; }
+bool wrap_ImGuiWindowTempData_GetNavIsScrollPushableX(ImGuiWindowTempData *self) { return self->NavIsScrollPushableX; }
 void wrap_ImGuiWindowTempData_SetNavHideHighlightOneFrame(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v) { ImGuiWindowTempDataPtr->NavHideHighlightOneFrame = v; }
 bool wrap_ImGuiWindowTempData_GetNavHideHighlightOneFrame(ImGuiWindowTempData *self) { return self->NavHideHighlightOneFrame; }
-void wrap_ImGuiWindowTempData_SetNavHasScroll(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v) { ImGuiWindowTempDataPtr->NavHasScroll = v; }
-bool wrap_ImGuiWindowTempData_GetNavHasScroll(ImGuiWindowTempData *self) { return self->NavHasScroll; }
+void wrap_ImGuiWindowTempData_SetNavWindowHasScrollY(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v) { ImGuiWindowTempDataPtr->NavWindowHasScrollY = v; }
+bool wrap_ImGuiWindowTempData_GetNavWindowHasScrollY(ImGuiWindowTempData *self) { return self->NavWindowHasScrollY; }
 void wrap_ImGuiWindowTempData_SetMenuBarAppending(ImGuiWindowTempData *ImGuiWindowTempDataPtr, bool v) { ImGuiWindowTempDataPtr->MenuBarAppending = v; }
 bool wrap_ImGuiWindowTempData_GetMenuBarAppending(ImGuiWindowTempData *self) { return self->MenuBarAppending; }
 void wrap_ImGuiWindowTempData_SetMenuBarOffset(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVec2 v) { ImGuiWindowTempDataPtr->MenuBarOffset = v; }

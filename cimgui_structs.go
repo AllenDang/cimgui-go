@@ -7,6 +7,8 @@ package imgui
 import "C"
 import "unsafe"
 
+// Helper: ImBitVector
+// Store 1-bit per value.
 type BitVector uintptr
 
 func (data BitVector) handle() *C.ImBitVector {
@@ -21,6 +23,7 @@ func newBitVectorFromC(cvalue C.ImBitVector) BitVector {
 	return BitVector(unsafe.Pointer(&cvalue))
 }
 
+// [Internal] For use by ImDrawListSplitter
 type DrawChannel uintptr
 
 func (data DrawChannel) handle() *C.ImDrawChannel {
@@ -35,6 +38,11 @@ func newDrawChannelFromC(cvalue C.ImDrawChannel) DrawChannel {
 	return DrawChannel(unsafe.Pointer(&cvalue))
 }
 
+// Typically, 1 command = 1 GPU draw call (unless command is a callback)
+//   - VtxOffset: When 'io.BackendFlags & ImGuiBackendFlags_RendererHasVtxOffset' is enabled,
+//     this fields allow us to render meshes larger than 64K vertices while keeping 16-bit indices.
+//     Backends made for <1.71. will typically ignore the VtxOffset fields.
+//   - The ClipRect/TextureId/VtxOffset fields must be contiguous as we memcmp() them together (this is asserted for).
 type DrawCmd uintptr
 
 func (data DrawCmd) handle() *C.ImDrawCmd {
@@ -49,6 +57,7 @@ func newDrawCmdFromC(cvalue C.ImDrawCmd) DrawCmd {
 	return DrawCmd(unsafe.Pointer(&cvalue))
 }
 
+// [Internal] For use by ImDrawList
 type DrawCmdHeader uintptr
 
 func (data DrawCmdHeader) handle() *C.ImDrawCmdHeader {
@@ -63,6 +72,9 @@ func newDrawCmdHeaderFromC(cvalue C.ImDrawCmdHeader) DrawCmdHeader {
 	return DrawCmdHeader(unsafe.Pointer(&cvalue))
 }
 
+// All draw data to render a Dear ImGui frame
+// (NB: the style and the naming convention here is a little inconsistent, we currently preserve them for backward compatibility purpose,
+// as this is one of the oldest structure exposed by the library! Basically, ImDrawList == CmdList)
 type DrawData uintptr
 
 func (data DrawData) handle() *C.ImDrawData {
@@ -91,6 +103,15 @@ func newDrawDataBuilderFromC(cvalue C.ImDrawDataBuilder) DrawDataBuilder {
 	return DrawDataBuilder(unsafe.Pointer(&cvalue))
 }
 
+// Draw command list
+// This is the low-level list of polygons that ImGui:: functions are filling. At the end of the frame,
+// all command lists are passed to your ImGuiIO::RenderDrawListFn function for rendering.
+// Each dear imgui window contains its own ImDrawList. You can use ImGui::GetWindowDrawList() to
+// access the current window draw list and draw custom primitives.
+// You can interleave normal ImGui:: calls and adding primitives to the current draw list.
+// In single viewport mode, top-left is == GetMainViewport()->Pos (generally 0,0), bottom-right is == GetMainViewport()->Pos+Size (generally io.DisplaySize).
+// You are totally free to apply whatever transformation matrix to want to the data (depending on the use of the transformation you may want to apply it to ClipRect as well!)
+// Important: Primitives are always added to the list and not culled (culling is done at higher-level by ImGui:: functions), if you use this API a lot consider coarse culling your drawn objects.
 type DrawList uintptr
 
 func (data DrawList) handle() *C.ImDrawList {
@@ -105,6 +126,8 @@ func newDrawListFromC(cvalue C.ImDrawList) DrawList {
 	return DrawList(unsafe.Pointer(&cvalue))
 }
 
+// Data shared between all ImDrawList instances
+// You may want to create your own instance of this if you want to use ImDrawList completely without ImGui. In that case, watch out for future changes to this structure.
 type DrawListSharedData uintptr
 
 func (data DrawListSharedData) handle() *C.ImDrawListSharedData {
@@ -119,6 +142,8 @@ func newDrawListSharedDataFromC(cvalue C.ImDrawListSharedData) DrawListSharedDat
 	return DrawListSharedData(unsafe.Pointer(&cvalue))
 }
 
+// Split/Merge functions are used to split the draw list into different layers which can be drawn into out of order.
+// This is used by the Columns/Tables API, so items of each column can be batched together in a same draw call.
 type DrawListSplitter uintptr
 
 func (data DrawListSplitter) handle() *C.ImDrawListSplitter {
@@ -147,6 +172,8 @@ func newDrawVertFromC(cvalue C.ImDrawVert) DrawVert {
 	return DrawVert(unsafe.Pointer(&cvalue))
 }
 
+// Font runtime data and rendering
+// ImFontAtlas automatically loads a default embedded font for you when you call GetTexDataAsAlpha8() or GetTexDataAsRGBA32().
 type Font uintptr
 
 func (data Font) handle() *C.ImFont {
@@ -161,6 +188,25 @@ func newFontFromC(cvalue C.ImFont) Font {
 	return Font(unsafe.Pointer(&cvalue))
 }
 
+// Load and rasterize multiple TTF/OTF fonts into a same texture. The font atlas will build a single texture holding:
+//   - One or more fonts.
+//   - Custom graphics data needed to render the shapes needed by Dear ImGui.
+//   - Mouse cursor shapes for software cursor rendering (unless setting 'Flags |= ImFontAtlasFlags_NoMouseCursors' in the font atlas).
+//
+// It is the user-code responsibility to setup/build the atlas, then upload the pixel data into a texture accessible by your graphics api.
+//   - Optionally, call any of the AddFont*** functions. If you don't call any, the default font embedded in the code will be loaded for you.
+//   - Call GetTexDataAsAlpha8() or GetTexDataAsRGBA32() to build and retrieve pixels data.
+//   - Upload the pixels data into a texture within your graphics system (see imgui_impl_xxxx.cpp examples)
+//   - Call SetTexID(my_tex_id); and pass the pointer/identifier to your texture in a format natural to your graphics API.
+//     This value will be passed back to you during rendering to identify the texture. Read FAQ entry about ImTextureID for more details.
+//
+// Common pitfalls:
+//   - If you pass a 'glyph_ranges' array to AddFont*** functions, you need to make sure that your array persist up until the
+//     atlas is build (when calling GetTexData*** or Build()). We only copy the pointer, not the data.
+//   - Important: By default, AddFontFromMemoryTTF() takes ownership of the data. Even though we are not writing to it, we will free the pointer on destruction.
+//     You can set font_cfg->FontDataOwnedByAtlas=false to keep ownership of your data and it won't be freed,
+//   - Even though many functions are suffixed with "TTF", OTF data is supported just as well.
+//   - This is an old API and it is currently awkward for those and various other reasons! We will address them in the future!
 type FontAtlas uintptr
 
 func (data FontAtlas) handle() *C.ImFontAtlas {
@@ -175,6 +221,7 @@ func newFontAtlasFromC(cvalue C.ImFontAtlas) FontAtlas {
 	return FontAtlas(unsafe.Pointer(&cvalue))
 }
 
+// See ImFontAtlas::AddCustomRectXXX functions.
 type FontAtlasCustomRect uintptr
 
 func (data FontAtlasCustomRect) handle() *C.ImFontAtlasCustomRect {
@@ -189,6 +236,7 @@ func newFontAtlasCustomRectFromC(cvalue C.ImFontAtlasCustomRect) FontAtlasCustom
 	return FontAtlasCustomRect(unsafe.Pointer(&cvalue))
 }
 
+// This structure is likely to evolve as we add support for incremental atlas updates
 type FontBuilderIO uintptr
 
 func (data FontBuilderIO) handle() *C.ImFontBuilderIO {
@@ -217,6 +265,8 @@ func newFontConfigFromC(cvalue C.ImFontConfig) FontConfig {
 	return FontConfig(unsafe.Pointer(&cvalue))
 }
 
+// Hold rendering data for one glyph.
+// (Note: some language parsers may fail to convert the 31+1 bitfield members, in this case maybe drop store a single u32 or we can rework this)
 type FontGlyph uintptr
 
 func (data FontGlyph) handle() *C.ImFontGlyph {
@@ -231,6 +281,8 @@ func newFontGlyphFromC(cvalue C.ImFontGlyph) FontGlyph {
 	return FontGlyph(unsafe.Pointer(&cvalue))
 }
 
+// Helper to build glyph ranges from text/string data. Feed your application strings/characters to it then call BuildRanges().
+// This is essentially a tightly packed of vector of 64k booleans = 8KB storage.
 type FontGlyphRangesBuilder uintptr
 
 func (data FontGlyphRangesBuilder) handle() *C.ImFontGlyphRangesBuilder {
@@ -245,6 +297,7 @@ func newFontGlyphRangesBuilderFromC(cvalue C.ImFontGlyphRangesBuilder) FontGlyph
 	return FontGlyphRangesBuilder(unsafe.Pointer(&cvalue))
 }
 
+// Stacked color modifier, backup of modified data so we can restore it
 type ColorMod uintptr
 
 func (data ColorMod) handle() *C.ImGuiColorMod {
@@ -259,6 +312,7 @@ func newColorModFromC(cvalue C.ImGuiColorMod) ColorMod {
 	return ColorMod(unsafe.Pointer(&cvalue))
 }
 
+// Storage data for BeginComboPreview()/EndComboPreview()
 type ComboPreviewData uintptr
 
 func (data ComboPreviewData) handle() *C.ImGuiComboPreviewData {
@@ -301,6 +355,7 @@ func newContextHookFromC(cvalue C.ImGuiContextHook) ContextHook {
 	return ContextHook(unsafe.Pointer(&cvalue))
 }
 
+// Type information associated to one ImGuiDataType. Retrieve with DataTypeGetInfo().
 type DataTypeInfo uintptr
 
 func (data DataTypeInfo) handle() *C.ImGuiDataTypeInfo {
@@ -357,6 +412,7 @@ func newDockContextFromC(cvalue C.ImGuiDockContext) DockContext {
 	return DockContext(unsafe.Pointer(&cvalue))
 }
 
+// sizeof() 156~192
 type DockNode uintptr
 
 func (data DockNode) handle() *C.ImGuiDockNode {
@@ -371,6 +427,7 @@ func newDockNodeFromC(cvalue C.ImGuiDockNode) DockNode {
 	return DockNode(unsafe.Pointer(&cvalue))
 }
 
+// Stacked storage data for BeginGroup()/EndGroup()
 type GroupData uintptr
 
 func (data GroupData) handle() *C.ImGuiGroupData {
@@ -455,6 +512,8 @@ func newInputEventMouseButtonFromC(cvalue C.ImGuiInputEventMouseButton) InputEve
 	return InputEventMouseButton(unsafe.Pointer(&cvalue))
 }
 
+// FIXME: Structures in the union below need to be declared as anonymous unions appears to be an extension?
+// Using ImVec2() would fail on Clang 'union member 'MousePos' has a non-trivial default constructor'
 type InputEventMousePos uintptr
 
 func (data InputEventMousePos) handle() *C.ImGuiInputEventMousePos {
@@ -511,6 +570,15 @@ func newInputEventTextFromC(cvalue C.ImGuiInputEventText) InputEventText {
 	return InputEventText(unsafe.Pointer(&cvalue))
 }
 
+// Shared state of InputText(), passed as an argument to your callback when a ImGuiInputTextFlags_Callback* flag is used.
+// The callback function should return 0 by default.
+// Callbacks (follow a flag name and see comments in ImGuiInputTextFlags_ declarations for more details)
+// - ImGuiInputTextFlags_CallbackEdit:        Callback on buffer edit (note that InputText() already returns true on edit, the callback is useful mainly to manipulate the underlying buffer while focus is active)
+// - ImGuiInputTextFlags_CallbackAlways:      Callback on each iteration
+// - ImGuiInputTextFlags_CallbackCompletion:  Callback on pressing TAB
+// - ImGuiInputTextFlags_CallbackHistory:     Callback on pressing Up/Down arrows
+// - ImGuiInputTextFlags_CallbackCharFilter:  Callback on character inputs to replace or discard them. Modify 'EventChar' to replace or discard, or return 1 in callback to discard.
+// - ImGuiInputTextFlags_CallbackResize:      Callback on buffer capacity changes request (beyond 'buf_size' parameter value), allowing the string to grow.
 type InputTextCallbackData uintptr
 
 func (data InputTextCallbackData) handle() *C.ImGuiInputTextCallbackData {
@@ -525,6 +593,7 @@ func newInputTextCallbackDataFromC(cvalue C.ImGuiInputTextCallbackData) InputTex
 	return InputTextCallbackData(unsafe.Pointer(&cvalue))
 }
 
+// Internal temporary state for deactivating InputText() instances.
 type InputTextDeactivatedState uintptr
 
 func (data InputTextDeactivatedState) handle() *C.ImGuiInputTextDeactivatedState {
@@ -539,6 +608,8 @@ func newInputTextDeactivatedStateFromC(cvalue C.ImGuiInputTextDeactivatedState) 
 	return InputTextDeactivatedState(unsafe.Pointer(&cvalue))
 }
 
+// Internal state of the currently focused/edited text input box
+// For a given item ID, access with ImGui::GetInputTextState()
 type InputTextState uintptr
 
 func (data InputTextState) handle() *C.ImGuiInputTextState {
@@ -553,6 +624,8 @@ func newInputTextStateFromC(cvalue C.ImGuiInputTextState) InputTextState {
 	return InputTextState(unsafe.Pointer(&cvalue))
 }
 
+// [Internal] Storage used by IsKeyDown(), IsKeyPressed() etc functions.
+// If prior to 1.87 you used io.KeysDownDuration[] (which was marked as internal), you should use GetKeyData(key)->DownDuration and *NOT* io.KeysData[key]->DownDuration.
 type KeyData uintptr
 
 func (data KeyData) handle() *C.ImGuiKeyData {
@@ -567,6 +640,8 @@ func newKeyDataFromC(cvalue C.ImGuiKeyData) KeyData {
 	return KeyData(unsafe.Pointer(&cvalue))
 }
 
+// This extends ImGuiKeyData but only for named keys (legacy keys don't support the new features)
+// Stored in main context (1 per named key). In the future it might be merged into ImGuiKeyData.
 type KeyOwnerData uintptr
 
 func (data KeyOwnerData) handle() *C.ImGuiKeyOwnerData {
@@ -581,6 +656,7 @@ func newKeyOwnerDataFromC(cvalue C.ImGuiKeyOwnerData) KeyOwnerData {
 	return KeyOwnerData(unsafe.Pointer(&cvalue))
 }
 
+// Routing table entry (sizeof() == 16 bytes)
 type KeyRoutingData uintptr
 
 func (data KeyRoutingData) handle() *C.ImGuiKeyRoutingData {
@@ -595,6 +671,8 @@ func newKeyRoutingDataFromC(cvalue C.ImGuiKeyRoutingData) KeyRoutingData {
 	return KeyRoutingData(unsafe.Pointer(&cvalue))
 }
 
+// Routing table: maintain a desired owner for each possible key-chord (key + mods), and setup owner in NewFrame() when mods are matching.
+// Stored in main context (1 instance)
 type KeyRoutingTable uintptr
 
 func (data KeyRoutingTable) handle() *C.ImGuiKeyRoutingTable {
@@ -609,6 +687,7 @@ func newKeyRoutingTableFromC(cvalue C.ImGuiKeyRoutingTable) KeyRoutingTable {
 	return KeyRoutingTable(unsafe.Pointer(&cvalue))
 }
 
+// Status storage for the last submitted item
 type LastItemData uintptr
 
 func (data LastItemData) handle() *C.ImGuiLastItemData {
@@ -623,6 +702,30 @@ func newLastItemDataFromC(cvalue C.ImGuiLastItemData) LastItemData {
 	return LastItemData(unsafe.Pointer(&cvalue))
 }
 
+// Helper: Manually clip large list of items.
+// If you have lots evenly spaced items and you have random access to the list, you can perform coarse
+// clipping based on visibility to only submit items that are in view.
+// The clipper calculates the range of visible items and advance the cursor to compensate for the non-visible items we have skipped.
+// (Dear ImGui already clip items based on their bounds but: it needs to first layout the item to do so, and generally
+//
+//	fetching/submitting your own data incurs additional cost. Coarse clipping using ImGuiListClipper allows you to easily
+//	scale using lists with tens of thousands of items without a problem)
+//
+// Usage:
+//
+//	ImGuiListClipper clipper;
+//	clipper.Begin(1000);         // We have 1000 elements, evenly spaced.
+//	while (clipper.Step())
+//	    for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
+//	        ImGui::Text("line number %d", i);
+//
+// Generally what happens is:
+// - Clipper lets you process the first element (DisplayStart = 0, DisplayEnd = 1) regardless of it being visible or not.
+// - User code submit that one element.
+// - Clipper can measure the height of the first element
+// - Clipper calculate the actual range of elements to display based on the current clipping rectangle, position the cursor before the first visible element.
+// - User code submit visible elements.
+// - The clipper also handles various subtleties related to keyboard/gamepad navigation, wrapping etc.
 type ListClipper uintptr
 
 func (data ListClipper) handle() *C.ImGuiListClipper {
@@ -637,6 +740,7 @@ func newListClipperFromC(cvalue C.ImGuiListClipper) ListClipper {
 	return ListClipper(unsafe.Pointer(&cvalue))
 }
 
+// Temporary clipper data, buffers shared/reused between instances
 type ListClipperData uintptr
 
 func (data ListClipperData) handle() *C.ImGuiListClipperData {
@@ -679,6 +783,7 @@ func newLocEntryFromC(cvalue C.ImGuiLocEntry) LocEntry {
 	return LocEntry(unsafe.Pointer(&cvalue))
 }
 
+// Simple column measurement, currently used for MenuItem() only.. This is very short-sighted/throw-away code and NOT a generic helper.
 type MenuColumns uintptr
 
 func (data MenuColumns) handle() *C.ImGuiMenuColumns {
@@ -735,6 +840,7 @@ func newNextItemDataFromC(cvalue C.ImGuiNextItemData) NextItemData {
 	return NextItemData(unsafe.Pointer(&cvalue))
 }
 
+// Storage for SetNexWindow** functions
 type NextWindowData uintptr
 
 func (data NextWindowData) handle() *C.ImGuiNextWindowData {
@@ -777,6 +883,8 @@ func newOldColumnsFromC(cvalue C.ImGuiOldColumns) OldColumns {
 	return OldColumns(unsafe.Pointer(&cvalue))
 }
 
+// Helper: Execute a block of code at maximum once a frame. Convenient if you want to quickly create a UI within deep-nested code that runs multiple times every frame.
+// Usage: static ImGuiOnceUponAFrame oaf; if (oaf) ImGui::Text("This will be called only once per frame");
 type OnceUponAFrame uintptr
 
 func (data OnceUponAFrame) handle() *C.ImGuiOnceUponAFrame {
@@ -791,6 +899,7 @@ func newOnceUponAFrameFromC(cvalue C.ImGuiOnceUponAFrame) OnceUponAFrame {
 	return OnceUponAFrame(unsafe.Pointer(&cvalue))
 }
 
+// Data payload for Drag and Drop operations: AcceptDragDropPayload(), GetDragDropPayload()
 type Payload uintptr
 
 func (data Payload) handle() *C.ImGuiPayload {
@@ -805,6 +914,7 @@ func newPayloadFromC(cvalue C.ImGuiPayload) Payload {
 	return Payload(unsafe.Pointer(&cvalue))
 }
 
+// (Optional) Access via ImGui::GetPlatformIO()
 type PlatformIO uintptr
 
 func (data PlatformIO) handle() *C.ImGuiPlatformIO {
@@ -819,6 +929,7 @@ func newPlatformIOFromC(cvalue C.ImGuiPlatformIO) PlatformIO {
 	return PlatformIO(unsafe.Pointer(&cvalue))
 }
 
+// (Optional) Support for IME (Input Method Editor) via the io.SetPlatformImeDataFn() function.
 type PlatformImeData uintptr
 
 func (data PlatformImeData) handle() *C.ImGuiPlatformImeData {
@@ -833,6 +944,8 @@ func newPlatformImeDataFromC(cvalue C.ImGuiPlatformImeData) PlatformImeData {
 	return PlatformImeData(unsafe.Pointer(&cvalue))
 }
 
+// (Optional) This is required when enabling multi-viewport. Represent the bounds of each connected monitor/display and their DPI.
+// We use this information for multiple DPI support + clamping the position of popups and tooltips so they don't straddle multiple monitors.
 type PlatformMonitor uintptr
 
 func (data PlatformMonitor) handle() *C.ImGuiPlatformMonitor {
@@ -847,6 +960,7 @@ func newPlatformMonitorFromC(cvalue C.ImGuiPlatformMonitor) PlatformMonitor {
 	return PlatformMonitor(unsafe.Pointer(&cvalue))
 }
 
+// Storage for current popup stack
 type PopupData uintptr
 
 func (data PopupData) handle() *C.ImGuiPopupData {
@@ -903,6 +1017,8 @@ func newShrinkWidthItemFromC(cvalue C.ImGuiShrinkWidthItem) ShrinkWidthItem {
 	return ShrinkWidthItem(unsafe.Pointer(&cvalue))
 }
 
+// Resizing callback data to apply custom constraint. As enabled by SetNextWindowSizeConstraints(). Callback is called during the next Begin().
+// NB: For basic min/max size constraint on each axis you don't need to use the callback! The SetNextWindowSizeConstraints() parameters are enough.
 type SizeCallbackData uintptr
 
 func (data SizeCallbackData) handle() *C.ImGuiSizeCallbackData {
@@ -945,6 +1061,7 @@ func newStackSizesFromC(cvalue C.ImGuiStackSizes) StackSizes {
 	return StackSizes(unsafe.Pointer(&cvalue))
 }
 
+// State for Stack tool queries
 type StackTool uintptr
 
 func (data StackTool) handle() *C.ImGuiStackTool {
@@ -959,6 +1076,14 @@ func newStackToolFromC(cvalue C.ImGuiStackTool) StackTool {
 	return StackTool(unsafe.Pointer(&cvalue))
 }
 
+// Helper: Key->Value storage
+// Typically you don't have to worry about this since a storage is held within each Window.
+// We use it to e.g. store collapse state for a tree (Int 0/1)
+// This is optimized for efficient lookup (dichotomy into a contiguous buffer) and rare insertion (typically tied to user interactions aka max once a frame)
+// You can use it as custom user storage for temporary values. Declare your own storage if, for example:
+// - You want to manipulate the open/close state of a particular sub-tree in your interface (tree node uses Int 0/1 to store their state).
+// - You want to store custom debug data easily without adding or editing structures in your code (probably not efficient, but convenient)
+// Types are NOT stored, so it is up to you to make sure your Key don't collide with different types.
 type Storage uintptr
 
 func (data Storage) handle() *C.ImGuiStorage {
@@ -973,6 +1098,7 @@ func newStorageFromC(cvalue C.ImGuiStorage) Storage {
 	return Storage(unsafe.Pointer(&cvalue))
 }
 
+// [Internal]
 type StoragePair uintptr
 
 func (data StoragePair) handle() *C.ImGuiStoragePair {
@@ -1001,6 +1127,7 @@ func newStyleFromC(cvalue C.ImGuiStyle) Style {
 	return Style(unsafe.Pointer(&cvalue))
 }
 
+// Stacked style modifier, backup of modified data so we can restore it. Data type inferred from the variable.
 type StyleMod uintptr
 
 func (data StyleMod) handle() *C.ImGuiStyleMod {
@@ -1015,6 +1142,7 @@ func newStyleModFromC(cvalue C.ImGuiStyleMod) StyleMod {
 	return StyleMod(unsafe.Pointer(&cvalue))
 }
 
+// Storage for a tab bar (sizeof() 152 bytes)
 type TabBar uintptr
 
 func (data TabBar) handle() *C.ImGuiTabBar {
@@ -1029,6 +1157,7 @@ func newTabBarFromC(cvalue C.ImGuiTabBar) TabBar {
 	return TabBar(unsafe.Pointer(&cvalue))
 }
 
+// Storage for one active tab item (sizeof() 48 bytes)
 type TabItem uintptr
 
 func (data TabItem) handle() *C.ImGuiTabItem {
@@ -1043,6 +1172,7 @@ func newTabItemFromC(cvalue C.ImGuiTabItem) TabItem {
 	return TabItem(unsafe.Pointer(&cvalue))
 }
 
+// FIXME-TABLE: more transient data could be stored in a stacked ImGuiTableTempData: e.g. SortSpecs, incoming RowData
 type Table uintptr
 
 func (data Table) handle() *C.ImGuiTable {
@@ -1057,6 +1187,8 @@ func newTableFromC(cvalue C.ImGuiTable) Table {
 	return Table(unsafe.Pointer(&cvalue))
 }
 
+// Transient cell data stored per row.
+// sizeof() ~ 6
 type TableCellData uintptr
 
 func (data TableCellData) handle() *C.ImGuiTableCellData {
@@ -1071,6 +1203,10 @@ func newTableCellDataFromC(cvalue C.ImGuiTableCellData) TableCellData {
 	return TableCellData(unsafe.Pointer(&cvalue))
 }
 
+// [Internal] sizeof() ~ 104
+// We use the terminology "Enabled" to refer to a column that is not Hidden by user/api.
+// We use the terminology "Clipped" to refer to a column that is out of sight because of scrolling/clipping.
+// This is in contrast with some user-facing api such as IsItemVisible() / IsRectVisible() which use "Visible" to mean "not clipped".
 type TableColumn uintptr
 
 func (data TableColumn) handle() *C.ImGuiTableColumn {
@@ -1085,6 +1221,7 @@ func newTableColumnFromC(cvalue C.ImGuiTableColumn) TableColumn {
 	return TableColumn(unsafe.Pointer(&cvalue))
 }
 
+// sizeof() ~ 12
 type TableColumnSettings uintptr
 
 func (data TableColumnSettings) handle() *C.ImGuiTableColumnSettings {
@@ -1099,6 +1236,7 @@ func newTableColumnSettingsFromC(cvalue C.ImGuiTableColumnSettings) TableColumnS
 	return TableColumnSettings(unsafe.Pointer(&cvalue))
 }
 
+// Sorting specification for one column of a table (sizeof == 12 bytes)
 type TableColumnSortSpecs uintptr
 
 func (data TableColumnSortSpecs) handle() *C.ImGuiTableColumnSortSpecs {
@@ -1113,6 +1251,7 @@ func newTableColumnSortSpecsFromC(cvalue C.ImGuiTableColumnSortSpecs) TableColum
 	return TableColumnSortSpecs(unsafe.Pointer(&cvalue))
 }
 
+// Per-instance data that needs preserving across frames (seemingly most others do not need to be preserved aside from debug needs. Does that means they could be moved to ImGuiTableTempData?)
 type TableInstanceData uintptr
 
 func (data TableInstanceData) handle() *C.ImGuiTableInstanceData {
@@ -1127,6 +1266,7 @@ func newTableInstanceDataFromC(cvalue C.ImGuiTableInstanceData) TableInstanceDat
 	return TableInstanceData(unsafe.Pointer(&cvalue))
 }
 
+// This is designed to be stored in a single ImChunkStream (1 header followed by N ImGuiTableColumnSettings, etc.)
 type TableSettings uintptr
 
 func (data TableSettings) handle() *C.ImGuiTableSettings {
@@ -1141,6 +1281,10 @@ func newTableSettingsFromC(cvalue C.ImGuiTableSettings) TableSettings {
 	return TableSettings(unsafe.Pointer(&cvalue))
 }
 
+// Sorting specifications for a table (often handling sort specs for a single column, occasionally more)
+// Obtained by calling TableGetSortSpecs().
+// When 'SpecsDirty == true' you can sort your data. It will be true with sorting specs have changed since last call, or the first time.
+// Make sure to set 'SpecsDirty = false' after sorting, else you may wastefully sort your data every frame!
 type TableSortSpecs uintptr
 
 func (data TableSortSpecs) handle() *C.ImGuiTableSortSpecs {
@@ -1155,6 +1299,9 @@ func newTableSortSpecsFromC(cvalue C.ImGuiTableSortSpecs) TableSortSpecs {
 	return TableSortSpecs(unsafe.Pointer(&cvalue))
 }
 
+// Transient data that are only needed between BeginTable() and EndTable(), those buffers are shared (1 per level of stacked table).
+// - Accessing those requires chasing an extra pointer so for very frequently used data we leave them in the main table structure.
+// - We also leave out of this structure data that tend to be particularly useful for debugging/metrics.
 type TableTempData uintptr
 
 func (data TableTempData) handle() *C.ImGuiTableTempData {
@@ -1169,6 +1316,8 @@ func newTableTempDataFromC(cvalue C.ImGuiTableTempData) TableTempData {
 	return TableTempData(unsafe.Pointer(&cvalue))
 }
 
+// Helper: Growable text buffer for logging/accumulating text
+// (this could be called 'ImGuiTextBuilder' / 'ImGuiStringBuilder')
 type TextBuffer uintptr
 
 func (data TextBuffer) handle() *C.ImGuiTextBuffer {
@@ -1183,6 +1332,7 @@ func newTextBufferFromC(cvalue C.ImGuiTextBuffer) TextBuffer {
 	return TextBuffer(unsafe.Pointer(&cvalue))
 }
 
+// Helper: Parse and apply text filters. In format "aaaaa[,bbbb][,ccccc]"
 type TextFilter uintptr
 
 func (data TextFilter) handle() *C.ImGuiTextFilter {
@@ -1197,6 +1347,8 @@ func newTextFilterFromC(cvalue C.ImGuiTextFilter) TextFilter {
 	return TextFilter(unsafe.Pointer(&cvalue))
 }
 
+// Helper: ImGuiTextIndex<>
+// Maintain a line index for a text buffer. This is a strong candidate to be moved into the public API.
 type TextIndex uintptr
 
 func (data TextIndex) handle() *C.ImGuiTextIndex {
@@ -1211,6 +1363,7 @@ func newTextIndexFromC(cvalue C.ImGuiTextIndex) TextIndex {
 	return TextIndex(unsafe.Pointer(&cvalue))
 }
 
+// [Internal]
 type TextRange uintptr
 
 func (data TextRange) handle() *C.ImGuiTextRange {
@@ -1225,6 +1378,13 @@ func newTextRangeFromC(cvalue C.ImGuiTextRange) TextRange {
 	return TextRange(unsafe.Pointer(&cvalue))
 }
 
+// - Currently represents the Platform Window created by the application which is hosting our Dear ImGui windows.
+// - With multi-viewport enabled, we extend this concept to have multiple active viewports.
+// - In the future we will extend this concept further to also represent Platform Monitor and support a "no main platform window" operation mode.
+// - About Main Area vs Work Area:
+//   - Main Area = entire viewport.
+//   - Work Area = entire viewport minus sections used by main menu bars (for platform windows), or by task bar (for platform monitor).
+//   - Windows are generally trying to stay within the Work Area of their host viewport.
 type Viewport uintptr
 
 func (data Viewport) handle() *C.ImGuiViewport {
@@ -1239,6 +1399,8 @@ func newViewportFromC(cvalue C.ImGuiViewport) Viewport {
 	return Viewport(unsafe.Pointer(&cvalue))
 }
 
+// ImGuiViewport Private/Internals fields (cardinal sin: we are using inheritance!)
+// Every instance of ImGuiViewport is in fact a ImGuiViewportP.
 type ViewportP uintptr
 
 func (data ViewportP) handle() *C.ImGuiViewportP {
@@ -1253,6 +1415,7 @@ func newViewportPFromC(cvalue C.ImGuiViewportP) ViewportP {
 	return ViewportP(unsafe.Pointer(&cvalue))
 }
 
+// Storage for one window
 type Window uintptr
 
 func (data Window) handle() *C.ImGuiWindow {
@@ -1267,6 +1430,13 @@ func newWindowFromC(cvalue C.ImGuiWindow) Window {
 	return Window(unsafe.Pointer(&cvalue))
 }
 
+// [ALPHA] Rarely used / very advanced uses only. Use with SetNextWindowClass() and DockSpace() functions.
+// Important: the content of this class is still highly WIP and likely to change and be refactored
+// before we stabilize Docking features. Please be mindful if using this.
+// Provide hints:
+// - To the platform backend via altered viewport flags (enable/disable OS decoration, OS task bar icons, etc.)
+// - To the platform backend for OS level parent/child relationships of viewport.
+// - To the docking system for various options and filtering.
 type WindowClass uintptr
 
 func (data WindowClass) handle() *C.ImGuiWindowClass {
@@ -1295,6 +1465,9 @@ func newWindowDockStyleFromC(cvalue C.ImGuiWindowDockStyle) WindowDockStyle {
 	return WindowDockStyle(unsafe.Pointer(&cvalue))
 }
 
+// Windows data saved in imgui.ini file
+// Because we never destroy or rename ImGuiWindowSettings, we can store the names in a separate buffer easily.
+// (this is designed to be stored in a ImChunkStream buffer, with the variable-length Name following our structure)
 type WindowSettings uintptr
 
 func (data WindowSettings) handle() *C.ImGuiWindowSettings {
@@ -1309,6 +1482,7 @@ func newWindowSettingsFromC(cvalue C.ImGuiWindowSettings) WindowSettings {
 	return WindowSettings(unsafe.Pointer(&cvalue))
 }
 
+// Data saved for each window pushed into the stack
 type WindowStackData uintptr
 
 func (data WindowStackData) handle() *C.ImGuiWindowStackData {
@@ -1323,6 +1497,9 @@ func newWindowStackDataFromC(cvalue C.ImGuiWindowStackData) WindowStackData {
 	return WindowStackData(unsafe.Pointer(&cvalue))
 }
 
+// Transient per-window data, reset at the beginning of the frame. This used to be called ImGuiDrawContext, hence the DC variable name in ImGuiWindow.
+// (That's theory, in practice the delimitation between ImGuiWindow and ImGuiWindowTempData is quite tenuous and could be reconsidered..)
+// (This doesn't need a constructor because we zero-clear it as part of ImGuiWindow and all frame-temporary data are setup on Begin)
 type WindowTempData uintptr
 
 func (data WindowTempData) handle() *C.ImGuiWindowTempData {
