@@ -5,7 +5,7 @@ package imgui
 // extern void afterRender();
 // extern void afterCreateContext();
 // extern void beforeDestoryContext();
-// extern void dropCallback(int, char**);
+// extern void dropCallback(void*, int, char**);
 import "C"
 
 import (
@@ -63,7 +63,7 @@ func beforeDestoryContext() {
 type DropCallback func([]string)
 
 //export dropCallback
-func dropCallback(count C.int, names **C.char) {
+func dropCallback(wnd unsafe.Pointer, count C.int, names **C.char) {
 	namesSlice := make([]string, int(count))
 	for i := 0; i < int(count); i++ {
 		var x *C.char

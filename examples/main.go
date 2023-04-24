@@ -128,5 +128,9 @@ func main() {
 
 	backend.CreateWindow("Hello from cimgui-go", 1200, 900, 0)
 
+	backend.SetDropCallback(func(p []string) {
+		fmt.Printf("drop triggered: %v", p)
+	})
+
 	backend.Run(loop)
 }
