@@ -44,6 +44,7 @@ type GLFWBackend struct {
 	beforeRender         voidCallbackFunc
 	afterRender          voidCallbackFunc
 	beforeDestoryContext voidCallbackFunc
+	dropCB               DropCallback
 	window               uintptr
 }
 
@@ -94,6 +95,14 @@ func (b *GLFWBackend) Run(loop func()) {
 
 func (b *GLFWBackend) loopFunc() func() {
 	return b.loop
+}
+
+func (b *GLFWBackend) SetDropCallback(cb DropCallback) {
+	b.dropCB = cb
+}
+
+func (b *GLFWBackend) dropCallback() DropCallback {
+	return b.dropCB
 }
 
 func (b GLFWBackend) DisplaySize() (width int32, height int32) {

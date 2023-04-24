@@ -59,6 +59,20 @@ func beforeDestoryContext() {
 	}
 }
 
+type DropCallback func([]string)
+
+//export dropCallback
+func dropCallback(window unsafe.Pointer, count C.int, names **C.char) {
+	namesSlice := make([]string, int(count))
+	for i := 0; i < int(count); i++ {
+		var x *C.char
+		p := (**C.char)(unsafe.Pointer(uintptr(unsafe.Pointer(names)) + uintptr(i)*unsafe.Sizeof(x)))
+		namesSlice[i] = C.GoString(*p)
+	}
+
+	currentBackend.dropCallback()(namesSlice)
+}
+
 // Backend is a special interface that implements all methods required
 // to render imgui application.
 type Backend interface {
@@ -79,6 +93,7 @@ type Backend interface {
 	CreateTexture(pixels unsafe.Pointer, width, Height int) TextureID
 	CreateTextureRgba(img *image.RGBA, width, height int) TextureID
 	DeleteTexture(id TextureID)
+	SetDropCallback(DropCallback)
 
 	// TODO: flags needs generic layer
 	CreateWindow(title string, width, height int, flags GLFWWindowFlags)
@@ -98,6 +113,7 @@ type Backend interface {
 	loopFunc() func()
 	afterRenderHook() func()
 	beforeDestroyHook() func()
+	dropCallback() DropCallback
 }
 
 func CreateBackend( /*TODO: backend type*/ ) Backend {
