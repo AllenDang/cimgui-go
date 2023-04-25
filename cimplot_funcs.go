@@ -859,8 +859,8 @@ func PlotBeginPlotV(title_id string, size Vec2, flags PlotFlags) bool {
 
 // PlotBeginSubplotsV parameter default value hint:
 // flags: 0
-// row_ratios: NULL
-// col_ratios: NULL
+// row_ratios: nullptr
+// col_ratios: nullptr
 func PlotBeginSubplotsV(title_id string, rows int32, cols int32, size Vec2, flags PlotSubplotFlags, row_ratios *float32, col_ratios *float32) bool {
 	title_idArg, title_idFin := wrapString(title_id)
 	row_ratiosArg, row_ratiosFin := wrapNumberPtr[C.float, float32](row_ratios)
@@ -875,7 +875,7 @@ func PlotBeginSubplotsV(title_id string, rows int32, cols int32, size Vec2, flag
 }
 
 // PlotBustColorCacheV parameter default value hint:
-// plot_title_id: NULL
+// plot_title_id: nullptr
 func PlotBustColorCacheV(plot_title_id string) {
 	plot_title_idArg, plot_title_idFin := wrapString(plot_title_id)
 	C.ImPlot_BustColorCache(plot_title_idArg)
@@ -1137,7 +1137,7 @@ func PlotColormapScaleV(label string, scale_min float64, scale_max float64, size
 }
 
 // PlotColormapSliderV parameter default value hint:
-// out: NULL
+// out: nullptr
 // format: ""
 // cmap: -1
 func PlotColormapSliderV(label string, t *float32, out *Vec4, format string, cmap PlotColormap) bool {
@@ -1171,7 +1171,7 @@ func PlotCreateContext() PlotContext {
 }
 
 // PlotDestroyContextV parameter default value hint:
-// ctx: NULL
+// ctx: nullptr
 func PlotDestroyContextV(ctx PlotContext) {
 	C.ImPlot_DestroyContext(ctx.handle())
 }
@@ -2382,13 +2382,13 @@ func PlotLabelAxisValueV(axis PlotAxis, value float64, buff string, size int32, 
 }
 
 // PlotMapInputDefaultV parameter default value hint:
-// dst: NULL
+// dst: nullptr
 func PlotMapInputDefaultV(dst PlotInputMap) {
 	C.ImPlot_MapInputDefault(dst.handle())
 }
 
 // PlotMapInputReverseV parameter default value hint:
-// dst: NULL
+// dst: nullptr
 func PlotMapInputReverseV(dst PlotInputMap) {
 	C.ImPlot_MapInputReverse(dst.handle())
 }
@@ -7596,7 +7596,7 @@ func PlotRangesOverlap(r1 PlotRange, r2 PlotRange) bool {
 }
 
 // PlotRegisterOrGetItemV parameter default value hint:
-// just_created: NULL
+// just_created: nullptr
 func PlotRegisterOrGetItemV(label_id string, flags PlotItemFlags, just_created *bool) PlotItem {
 	label_idArg, label_idFin := wrapString(label_id)
 	just_createdArg, just_createdFin := wrapBool(just_created)
@@ -7761,7 +7761,7 @@ func PlotSetupAxesLimitsV(x_min float64, x_max float64, y_min float64, y_max flo
 }
 
 // PlotSetupAxisV parameter default value hint:
-// label: NULL
+// label: nullptr
 // flags: 0
 func PlotSetupAxisV(axis PlotAxisEnum, label string, flags PlotAxisFlags) {
 	labelArg, labelFin := wrapString(label)
@@ -7801,7 +7801,7 @@ func PlotSetupAxisScalePlotScale(axis PlotAxisEnum, scale PlotScale) {
 }
 
 // PlotSetupAxisTicksdoubleV parameter default value hint:
-// labels: NULL
+// labels: nullptr
 // keep_default: false
 func PlotSetupAxisTicksdoubleV(axis PlotAxisEnum, v_min float64, v_max float64, n_ticks int32, labels []string, keep_default bool) {
 	labelsArg, labelsFin := wrapStringList(labels)
@@ -7811,7 +7811,7 @@ func PlotSetupAxisTicksdoubleV(axis PlotAxisEnum, v_min float64, v_max float64, 
 }
 
 // PlotSetupAxisTicksdoublePtrV parameter default value hint:
-// labels: NULL
+// labels: nullptr
 // keep_default: false
 func PlotSetupAxisTicksdoublePtrV(axis PlotAxisEnum, values *[]float64, n_ticks int32, labels []string, keep_default bool) {
 	valuesArg := make([]C.double, len(*values))
@@ -7880,7 +7880,7 @@ func PlotShowColormapSelector(label string) bool {
 }
 
 // PlotShowDemoWindowV parameter default value hint:
-// p_open: NULL
+// p_open: nullptr
 func PlotShowDemoWindowV(p_open *bool) {
 	p_openArg, p_openFin := wrapBool(p_open)
 	C.ImPlot_ShowDemoWindow(p_openArg)
@@ -7906,7 +7906,7 @@ func PlotShowLegendEntries(items PlotItemGroup, legend_bb Rect, interactable boo
 }
 
 // PlotShowMetricsWindowV parameter default value hint:
-// p_popen: NULL
+// p_popen: nullptr
 func PlotShowMetricsWindowV(p_popen *bool) {
 	p_popenArg, p_popenFin := wrapBool(p_popen)
 	C.ImPlot_ShowMetricsWindow(p_popenArg)
@@ -7919,7 +7919,7 @@ func PlotShowPlotContextMenu(plot PlotPlot) {
 }
 
 // PlotShowStyleEditorV parameter default value hint:
-// ref: NULL
+// ref: nullptr
 func PlotShowStyleEditorV(ref PlotStyle) {
 	C.ImPlot_ShowStyleEditor(ref.handle())
 }
@@ -7953,25 +7953,25 @@ func PlotShowUserGuide() {
 }
 
 // PlotStyleColorsAutoV parameter default value hint:
-// dst: NULL
+// dst: nullptr
 func PlotStyleColorsAutoV(dst PlotStyle) {
 	C.ImPlot_StyleColorsAuto(dst.handle())
 }
 
 // PlotStyleColorsClassicV parameter default value hint:
-// dst: NULL
+// dst: nullptr
 func PlotStyleColorsClassicV(dst PlotStyle) {
 	C.ImPlot_StyleColorsClassic(dst.handle())
 }
 
 // PlotStyleColorsDarkV parameter default value hint:
-// dst: NULL
+// dst: nullptr
 func PlotStyleColorsDarkV(dst PlotStyle) {
 	C.ImPlot_StyleColorsDark(dst.handle())
 }
 
 // PlotStyleColorsLightV parameter default value hint:
-// dst: NULL
+// dst: nullptr
 func PlotStyleColorsLightV(dst PlotStyle) {
 	C.ImPlot_StyleColorsLight(dst.handle())
 }

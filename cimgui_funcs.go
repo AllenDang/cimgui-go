@@ -62,6 +62,7 @@ func (self DrawCmd) TexID() TextureID {
 	return TextureID(C.ImDrawCmd_GetTexID(self.handle()))
 }
 
+// Also ensure our padding fields are zeroed
 func NewDrawCmd() DrawCmd {
 	return (DrawCmd)(unsafe.Pointer(C.ImDrawCmd_ImDrawCmd()))
 }
@@ -86,10 +87,12 @@ func (self DrawDataBuilder) InternalDrawListCount() int {
 	return int(C.ImDrawDataBuilder_GetDrawListCount(self.handle()))
 }
 
+// The ImDrawList are owned by ImGuiContext!
 func (self DrawData) Clear() {
 	C.ImDrawData_Clear(self.handle())
 }
 
+// Helper to convert all buffers from indexed to non-indexed, in case you cannot render indexed. Note: this is slow and most likely a waste of resources. Always prefer indexed rendering!
 func (self DrawData) DeIndexAllBuffers() {
 	C.ImDrawData_DeIndexAllBuffers(self.handle())
 }
@@ -98,6 +101,7 @@ func NewDrawData() DrawData {
 	return (DrawData)(unsafe.Pointer(C.ImDrawData_ImDrawData()))
 }
 
+// Helper to scale the ClipRect field of each ImDrawCmd. Use if your final output buffer is at a different scale than Dear ImGui expects, or if there is a difference between your window resolution and framebuffer resolution.
 func (self DrawData) ScaleClipRects(fb_scale Vec2) {
 	C.ImDrawData_ScaleClipRects(self.handle(), fb_scale.toC())
 }
@@ -118,6 +122,7 @@ func (self DrawListSharedData) Destroy() {
 	C.ImDrawListSharedData_destroy(self.handle())
 }
 
+// Do not clear Channels[] so our allocations are reused next frame
 func (self DrawListSplitter) Clear() {
 	C.ImDrawListSplitter_Clear(self.handle())
 }
@@ -146,12 +151,14 @@ func (self DrawListSplitter) Destroy() {
 	C.ImDrawListSplitter_destroy(self.handle())
 }
 
+// Cubic Bezier (4 control points)
 // AddBezierCubicV parameter default value hint:
 // num_segments: 0
 func (self DrawList) AddBezierCubicV(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint32, thickness float32, num_segments int32) {
 	C.ImDrawList_AddBezierCubic(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col), C.float(thickness), C.int(num_segments))
 }
 
+// Quadratic Bezier (3 control points)
 // AddBezierQuadraticV parameter default value hint:
 // num_segments: 0
 func (self DrawList) AddBezierQuadraticV(p1 Vec2, p2 Vec2, p3 Vec2, col uint32, thickness float32, num_segments int32) {
@@ -178,6 +185,7 @@ func (self DrawList) AddConvexPolyFilled(points *Vec2, num_points int32, col uin
 	pointsFin()
 }
 
+// This is useful if you need to forcefully create a new draw call (to allow for dependent rendering / blending). Otherwise primitives are merged into the same draw-call as much as possible
 func (self DrawList) AddDrawCmd() {
 	C.ImDrawList_AddDrawCmd(self.handle())
 }
@@ -239,6 +247,7 @@ func (self DrawList) AddQuadFilled(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, col uint3
 	C.ImDrawList_AddQuadFilled(self.handle(), p1.toC(), p2.toC(), p3.toC(), p4.toC(), C.ImU32(col))
 }
 
+// a: upper-left, b: lower-right (== upper-left + size)
 // AddRectV parameter default value hint:
 // rounding: 0.0f
 // flags: 0
@@ -247,6 +256,7 @@ func (self DrawList) AddRectV(p_min Vec2, p_max Vec2, col uint32, rounding float
 	C.ImDrawList_AddRect(self.handle(), p_min.toC(), p_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags), C.float(thickness))
 }
 
+// a: upper-left, b: lower-right (== upper-left + size)
 // AddRectFilledV parameter default value hint:
 // rounding: 0.0f
 // flags: 0
@@ -300,6 +310,7 @@ func (self DrawList) ChannelsSplit(count int32) {
 	C.ImDrawList_ChannelsSplit(self.handle(), C.int(count))
 }
 
+// Create a clone of the CmdBuffer/IdxBuffer/VtxBuffer.
 func (self DrawList) CloneOutput() DrawList {
 	return (DrawList)(unsafe.Pointer(C.ImDrawList_CloneOutput(self.handle())))
 }
@@ -336,16 +347,19 @@ func (self DrawList) PathArcToV(center Vec2, radius float32, a_min float32, a_ma
 	C.ImDrawList_PathArcTo(self.handle(), center.toC(), C.float(radius), C.float(a_min), C.float(a_max), C.int(num_segments))
 }
 
+// Use precomputed angles for a 12 steps circle
 func (self DrawList) PathArcToFast(center Vec2, radius float32, a_min_of_12 int32, a_max_of_12 int32) {
 	C.ImDrawList_PathArcToFast(self.handle(), center.toC(), C.float(radius), C.int(a_min_of_12), C.int(a_max_of_12))
 }
 
+// Cubic Bezier (4 control points)
 // PathBezierCubicCurveToV parameter default value hint:
 // num_segments: 0
 func (self DrawList) PathBezierCubicCurveToV(p2 Vec2, p3 Vec2, p4 Vec2, num_segments int32) {
 	C.ImDrawList_PathBezierCubicCurveTo(self.handle(), p2.toC(), p3.toC(), p4.toC(), C.int(num_segments))
 }
 
+// Quadratic Bezier (3 control points)
 // PathBezierQuadraticCurveToV parameter default value hint:
 // num_segments: 0
 func (self DrawList) PathBezierQuadraticCurveToV(p2 Vec2, p3 Vec2, num_segments int32) {
@@ -394,6 +408,7 @@ func (self DrawList) PrimQuadUV(a Vec2, b Vec2, c Vec2, d Vec2, uv_a Vec2, uv_b 
 	C.ImDrawList_PrimQuadUV(self.handle(), a.toC(), b.toC(), c.toC(), d.toC(), uv_a.toC(), uv_b.toC(), uv_c.toC(), uv_d.toC(), C.ImU32(col))
 }
 
+// Axis aligned rectangle (composed of two triangles)
 func (self DrawList) PrimRect(a Vec2, b Vec2, col uint32) {
 	C.ImDrawList_PrimRect(self.handle(), a.toC(), b.toC(), C.ImU32(col))
 }
@@ -410,6 +425,7 @@ func (self DrawList) PrimUnreserve(idx_count int32, vtx_count int32) {
 	C.ImDrawList_PrimUnreserve(self.handle(), C.int(idx_count), C.int(vtx_count))
 }
 
+// Write vertex with unique index
 func (self DrawList) PrimVtx(pos Vec2, uv Vec2, col uint32) {
 	C.ImDrawList_PrimVtx(self.handle(), pos.toC(), uv.toC(), C.ImU32(col))
 }
@@ -422,6 +438,7 @@ func (self DrawList) PrimWriteVtx(pos Vec2, uv Vec2, col uint32) {
 	C.ImDrawList_PrimWriteVtx(self.handle(), pos.toC(), uv.toC(), C.ImU32(col))
 }
 
+// Render-level scissoring. This is passed down to your render function but not used for CPU-side coarse clipping. Prefer using higher-level ImGui::PushClipRect() to affect logic (hit-testing and widget culling)
 // PushClipRectV parameter default value hint:
 // intersect_with_current_clip_rect: false
 func (self DrawList) PushClipRectV(clip_rect_min Vec2, clip_rect_max Vec2, intersect_with_current_clip_rect bool) {
@@ -486,6 +503,7 @@ func (self FontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, 
 	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromFileTTF(self.handle(), filenameArg, C.float(size_pixels), font_cfg.handle(), glyph_rangesArg)))
 }
 
+// 'compressed_font_data_base85' still owned by caller. Compress with binary_to_compressed_c.cpp with -base85 parameter.
 // AddFontFromMemoryCompressedBase85TTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
@@ -500,6 +518,7 @@ func (self FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data
 	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(self.handle(), compressed_font_data_base85Arg, C.float(size_pixels), font_cfg.handle(), glyph_rangesArg)))
 }
 
+// 'compressed_font_data' still owned by caller. Compress with binary_to_compressed_c.cpp.
 // AddFontFromMemoryCompressedTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
@@ -512,6 +531,7 @@ func (self FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsaf
 	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryCompressedTTF(self.handle(), (compressed_font_data), C.int(compressed_font_size), C.float(size_pixels), font_cfg.handle(), glyph_rangesArg)))
 }
 
+// Note: Transfer ownership of 'ttf_data' to ImFontAtlas! Will be deleted after destruction of the atlas. Set font_cfg->FontDataOwnedByAtlas=false to keep ownership of your data and it won't be freed.
 // AddFontFromMemoryTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
@@ -524,6 +544,7 @@ func (self FontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_size 
 	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryTTF(self.handle(), (font_data), C.int(font_size), C.float(size_pixels), font_cfg.handle(), glyph_rangesArg)))
 }
 
+// Build pixels data. This is called automatically for you by the GetTexData*** functions.
 func (self FontAtlas) Build() bool {
 	return C.ImFontAtlas_Build(self.handle()) == C.bool(true)
 }
@@ -537,18 +558,22 @@ func (self FontAtlas) CalcCustomRectUV(rect FontAtlasCustomRect, out_uv_min *Vec
 	out_uv_maxFin()
 }
 
+// Clear all input and output.
 func (self FontAtlas) Clear() {
 	C.ImFontAtlas_Clear(self.handle())
 }
 
+// Clear output font data (glyphs storage, UV coordinates).
 func (self FontAtlas) ClearFonts() {
 	C.ImFontAtlas_ClearFonts(self.handle())
 }
 
+// Clear input data (all ImFontConfig structures including sizes, TTF data, glyph ranges, etc.) = all the data used to build the texture and fonts.
 func (self FontAtlas) ClearInputData() {
 	C.ImFontAtlas_ClearInputData(self.handle())
 }
 
+// Clear output texture data (CPU side). Saves RAM once the texture has been copied to graphics memory.
 func (self FontAtlas) ClearTexData() {
 	C.ImFontAtlas_ClearTexData(self.handle())
 }
@@ -557,38 +582,47 @@ func (self FontAtlas) CustomRectByIndex(index int32) FontAtlasCustomRect {
 	return (FontAtlasCustomRect)(unsafe.Pointer(C.ImFontAtlas_GetCustomRectByIndex(self.handle(), C.int(index))))
 }
 
+// Default + Half-Width + Japanese Hiragana/Katakana + full set of about 21000 CJK Unified Ideographs
 func (self FontAtlas) GlyphRangesChineseFull() *rune {
 	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesChineseFull(self.handle())))))
 }
 
+// Default + Half-Width + Japanese Hiragana/Katakana + set of 2500 CJK Unified Ideographs for common simplified Chinese
 func (self FontAtlas) GlyphRangesChineseSimplifiedCommon() *rune {
 	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon(self.handle())))))
 }
 
+// Default + about 400 Cyrillic characters
 func (self FontAtlas) GlyphRangesCyrillic() *rune {
 	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesCyrillic(self.handle())))))
 }
 
+// Basic Latin, Extended Latin
 func (self FontAtlas) GlyphRangesDefault() *rune {
 	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesDefault(self.handle())))))
 }
 
+// Default + Greek and Coptic
 func (self FontAtlas) GlyphRangesGreek() *rune {
 	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesGreek(self.handle())))))
 }
 
+// Default + Hiragana, Katakana, Half-Width, Selection of 2999 Ideographs
 func (self FontAtlas) GlyphRangesJapanese() *rune {
 	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesJapanese(self.handle())))))
 }
 
+// Default + Korean characters
 func (self FontAtlas) GlyphRangesKorean() *rune {
 	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesKorean(self.handle())))))
 }
 
+// Default + Thai characters
 func (self FontAtlas) GlyphRangesThai() *rune {
 	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesThai(self.handle())))))
 }
 
+// Default + Vietnamese characters
 func (self FontAtlas) GlyphRangesVietnamese() *rune {
 	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesVietnamese(self.handle())))))
 }
@@ -631,6 +665,7 @@ func NewFontAtlas() FontAtlas {
 	return (FontAtlas)(unsafe.Pointer(C.ImFontAtlas_ImFontAtlas()))
 }
 
+// Bit ambiguous: used to detect when user didn't build texture but effectively we should check TexID != 0 except that would be backend dependent...
 func (self FontAtlas) IsBuilt() bool {
 	return C.ImFontAtlas_IsBuilt(self.handle()) == C.bool(true)
 }
@@ -651,10 +686,12 @@ func (self FontConfig) Destroy() {
 	C.ImFontConfig_destroy(self.handle())
 }
 
+// Add character
 func (self FontGlyphRangesBuilder) AddChar(c rune) {
 	C.ImFontGlyphRangesBuilder_AddChar(self.handle(), C.ImWchar(c))
 }
 
+// Add ranges, e.g. builder.AddRanges(ImFontAtlas::GetGlyphRangesDefault()) to force add all of ASCII/Latin+Ext
 func (self FontGlyphRangesBuilder) AddRanges(ranges *rune) {
 	rangesArg, rangesFin := wrapNumberPtr[C.ImWchar, rune](ranges)
 	C.ImFontGlyphRangesBuilder_AddRanges(self.handle(), rangesArg)
@@ -662,6 +699,7 @@ func (self FontGlyphRangesBuilder) AddRanges(ranges *rune) {
 	rangesFin()
 }
 
+// Add string (each character of the UTF-8 string are added)
 // AddTextV parameter default value hint:
 func (self FontGlyphRangesBuilder) AddTextV(text string) {
 	textArg, textFin := wrapString(text)
@@ -674,6 +712,7 @@ func (self FontGlyphRangesBuilder) Clear() {
 	C.ImFontGlyphRangesBuilder_Clear(self.handle())
 }
 
+// Get bit n in the array
 func (self FontGlyphRangesBuilder) Bit(n uint64) bool {
 	return C.ImFontGlyphRangesBuilder_GetBit(self.handle(), C.xulong(n)) == C.bool(true)
 }
@@ -682,6 +721,7 @@ func NewFontGlyphRangesBuilder() FontGlyphRangesBuilder {
 	return (FontGlyphRangesBuilder)(unsafe.Pointer(C.ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder()))
 }
 
+// Set bit n in the array
 func (self FontGlyphRangesBuilder) SetBit(n uint64) {
 	C.ImFontGlyphRangesBuilder_SetBit(self.handle(), C.xulong(n))
 }
@@ -694,6 +734,7 @@ func (self Font) AddGlyph(src_cfg FontConfig, c rune, x0 float32, y0 float32, x1
 	C.ImFont_AddGlyph(self.handle(), src_cfg.handle(), C.ImWchar(c), C.float(x0), C.float(y0), C.float(x1), C.float(y1), C.float(u0), C.float(v0), C.float(u1), C.float(v1), C.float(advance_x))
 }
 
+// Makes 'dst' character/glyph points to 'src' character/glyph. Currently needs to be called AFTER fonts have been built.
 // AddRemapCharV parameter default value hint:
 // overwrite_dst: true
 func (self Font) AddRemapCharV(dst rune, src rune, overwrite_dst bool) {
@@ -704,6 +745,7 @@ func (self Font) BuildLookupTable() {
 	C.ImFont_BuildLookupTable(self.handle())
 }
 
+// utf8
 // CalcTextSizeAV parameter default value hint:
 // remaining: NULL
 func (self Font) CalcTextSizeAV(size float32, max_width float32, wrap_width float32, text_begin string, remaining []string) Vec2 {
@@ -804,6 +846,43 @@ func (self ContextHook) Destroy() {
 	C.ImGuiContextHook_destroy(self.handle())
 }
 
+// // Different to ensure initial submission
+//
+//	    PlatformImeViewport = 0;
+//	    PlatformLocaleDecimalPoint = '.';
+//
+//	    DockNodeWindowMenuHandler =                                    ((void *)0)                                       ;
+//
+//	    SettingsLoaded = false;
+//	    SettingsDirtyTimer = 0.0f;
+//	    HookIdNext = 0;
+//
+//	    memset(LocalizationTable, 0, sizeof(LocalizationTable));
+//
+//	    LogEnabled = false;
+//	    LogType = ImGuiLogType_None;
+//	    LogNextPrefix = LogNextSuffix =                                        ((void *)0)                                           ;
+//	    LogFile =                  ((void *)0)                     ;
+//	    LogLinePosY = 3.40282346638528859811704183484516925e+38F;
+//	    LogLineFirstItem = false;
+//	    LogDepthRef = 0;
+//	    LogDepthToExpand = LogDepthToExpandDefault = 2;
+//
+//	    DebugLogFlags = ImGuiDebugLogFlags_OutputToTTY;
+//	    DebugLocateId = 0;
+//	    DebugLogClipperAutoDisableFrames = 0;
+//	    DebugLocateFrames = 0;
+//	    DebugBeginReturnValueCullDepth = -1;
+//	    DebugItemPickerActive = false;
+//	    DebugItemPickerMouseButton = ImGuiMouseButton_Left;
+//	    DebugItemPickerBreakId = 0;
+//	    DebugHoveredDockNode =                               ((void *)0)                                  ;
+//
+//	    memset(FramerateSecPerFrame, 0, sizeof(FramerateSecPerFrame));
+//	    FramerateSecPerFrameIdx = FramerateSecPerFrameCount = 0;
+//	    FramerateSecPerFrameAccum = 0.0f;
+//	    WantCaptureMouseNextFrame = WantCaptureKeyboardNextFrame = WantTextInputNextFrame = -1;
+//	}
 func InternalNewContext(shared_font_atlas FontAtlas) Context {
 	return (Context)(unsafe.Pointer(C.ImGuiContext_ImGuiContext(shared_font_atlas.handle())))
 }
@@ -844,6 +923,7 @@ func (self DockNode) InternalIsFloatingNode() bool {
 	return C.ImGuiDockNode_IsFloatingNode(self.handle()) == C.bool(true)
 }
 
+// Hidden tab bar can be shown back by clicking the small triangle
 func (self DockNode) InternalIsHiddenTabBar() bool {
 	return C.ImGuiDockNode_IsHiddenTabBar(self.handle()) == C.bool(true)
 }
@@ -852,6 +932,7 @@ func (self DockNode) InternalIsLeafNode() bool {
 	return C.ImGuiDockNode_IsLeafNode(self.handle()) == C.bool(true)
 }
 
+// Never show a tab bar
 func (self DockNode) InternalIsNoTabBar() bool {
 	return C.ImGuiDockNode_IsNoTabBar(self.handle()) == C.bool(true)
 }
@@ -887,18 +968,22 @@ func (self DockNode) InternalDestroy() {
 	C.ImGuiDockNode_destroy(self.handle())
 }
 
+// Queue a gain/loss of focus for the application (generally based on OS/platform focus of your window)
 func (self IO) AddFocusEvent(focused bool) {
 	C.ImGuiIO_AddFocusEvent(self.handle(), C.bool(focused))
 }
 
+// Queue a new character input
 func (self IO) AddInputCharacter(c uint32) {
 	C.ImGuiIO_AddInputCharacter(self.handle(), C.uint(c))
 }
 
+// Queue a new character input from a UTF-16 character, it can be a surrogate
 func (self IO) AddInputCharacterUTF16(c rune) {
 	C.ImGuiIO_AddInputCharacterUTF16(self.handle(), C.ImWchar16(c))
 }
 
+// Queue a new characters input from a UTF-8 string
 func (self IO) AddInputCharactersUTF8(str string) {
 	strArg, strFin := wrapString(str)
 	C.ImGuiIO_AddInputCharactersUTF8(self.handle(), strArg)
@@ -906,38 +991,47 @@ func (self IO) AddInputCharactersUTF8(str string) {
 	strFin()
 }
 
+// Queue a new key down/up event for analog values (e.g. ImGuiKey_Gamepad_ values). Dead-zones should be handled by the backend.
 func (self IO) AddKeyAnalogEvent(key Key, down bool, v float32) {
 	C.ImGuiIO_AddKeyAnalogEvent(self.handle(), C.ImGuiKey(key), C.bool(down), C.float(v))
 }
 
+// Queue a new key down/up event. Key should be "translated" (as in, generally ImGuiKey_A matches the key end-user would use to emit an 'A' character)
 func (self IO) AddKeyEvent(key Key, down bool) {
 	C.ImGuiIO_AddKeyEvent(self.handle(), C.ImGuiKey(key), C.bool(down))
 }
 
+// Queue a mouse button change
 func (self IO) AddMouseButtonEvent(button int32, down bool) {
 	C.ImGuiIO_AddMouseButtonEvent(self.handle(), C.int(button), C.bool(down))
 }
 
+// Queue a mouse position update. Use -FLT_MAX,-FLT_MAX to signify no mouse (e.g. app not focused and not hovered)
 func (self IO) AddMousePosEvent(x float32, y float32) {
 	C.ImGuiIO_AddMousePosEvent(self.handle(), C.float(x), C.float(y))
 }
 
+// Queue a mouse source change (Mouse/TouchScreen/Pen)
 func (self IO) AddMouseSourceEvent(source MouseSource) {
 	C.ImGuiIO_AddMouseSourceEvent(self.handle(), C.ImGuiMouseSource(source))
 }
 
+// Queue a mouse hovered viewport. Requires backend to set ImGuiBackendFlags_HasMouseHoveredViewport to call this (for multi-viewport support).
 func (self IO) AddMouseViewportEvent(id ID) {
 	C.ImGuiIO_AddMouseViewportEvent(self.handle(), C.ImGuiID(id))
 }
 
+// Queue a mouse wheel update. wheel_y<0: scroll down, wheel_y>0: scroll up, wheel_x<0: scroll right, wheel_x>0: scroll left.
 func (self IO) AddMouseWheelEvent(wheel_x float32, wheel_y float32) {
 	C.ImGuiIO_AddMouseWheelEvent(self.handle(), C.float(wheel_x), C.float(wheel_y))
 }
 
+// [Internal] Clear the text input buffer manually
 func (self IO) ClearInputCharacters() {
 	C.ImGuiIO_ClearInputCharacters(self.handle())
 }
 
+// [Internal] Release all keys
 func (self IO) ClearInputKeys() {
 	C.ImGuiIO_ClearInputKeys(self.handle())
 }
@@ -946,10 +1040,12 @@ func NewIO() IO {
 	return (IO)(unsafe.Pointer(C.ImGuiIO_ImGuiIO()))
 }
 
+// Set master flag for accepting key/mouse/text events (default to true). Useful if you have native dialog boxes that are interrupting your application loop/refresh, and you want to disable events being queued while your app is frozen.
 func (self IO) SetAppAcceptingEvents(accepting_events bool) {
 	C.ImGuiIO_SetAppAcceptingEvents(self.handle(), C.bool(accepting_events))
 }
 
+// [Optional] Specify index for legacy <1.87 IsKeyXXX() functions with native indices + specify native keycode, scancode.
 // SetKeyEventNativeDataV parameter default value hint:
 // native_legacy_index: -1
 func (self IO) SetKeyEventNativeDataV(key Key, native_keycode int32, native_scancode int32, native_legacy_index int32) {
@@ -1024,6 +1120,7 @@ func (self InputTextState) InternalClearText() {
 	C.ImGuiInputTextState_ClearText(self.handle())
 }
 
+// After a user-input the cursor stays on for a while without blinking
 func (self InputTextState) InternalCursorAnimReset() {
 	C.ImGuiInputTextState_CursorAnimReset(self.handle())
 }
@@ -1060,6 +1157,7 @@ func InternalNewInputTextState() InputTextState {
 	return (InputTextState)(unsafe.Pointer(C.ImGuiInputTextState_ImGuiInputTextState()))
 }
 
+// Cannot be inline because we call in code in stb_textedit.h implementation
 func (self InputTextState) InternalOnKeyPressed(key int32) {
 	C.ImGuiInputTextState_OnKeyPressed(self.handle(), C.int(key))
 }
@@ -1126,10 +1224,12 @@ func (self ListClipper) BeginV(items_count int32, items_height float32) {
 	C.ImGuiListClipper_Begin(self.handle(), C.int(items_count), C.float(items_height))
 }
 
+// Automatically called on the last call of Step() that returns false.
 func (self ListClipper) End() {
 	C.ImGuiListClipper_End(self.handle())
 }
 
+// item_max is exclusive e.g. use (42, 42+1) to make item 42 always visible BUT due to alignment/padding of certain items it is likely that an extra item may be included on either end of the display range.
 func (self ListClipper) ForceDisplayRangeByIndices(item_min int32, item_max int32) {
 	C.ImGuiListClipper_ForceDisplayRangeByIndices(self.handle(), C.int(item_min), C.int(item_max))
 }
@@ -1138,6 +1238,7 @@ func NewListClipper() ListClipper {
 	return (ListClipper)(unsafe.Pointer(C.ImGuiListClipper_ImGuiListClipper()))
 }
 
+// Call until it returns false. The DisplayStart/DisplayEnd fields will be set and you can process/draw those items.
 func (self ListClipper) Step() bool {
 	return C.ImGuiListClipper_Step(self.handle()) == C.bool(true)
 }
@@ -1178,6 +1279,7 @@ func (self NavItemData) Destroy() {
 	C.ImGuiNavItemData_destroy(self.handle())
 }
 
+// Also cleared manually by ItemAdd()!
 func (self NextItemData) InternalClearFlags() {
 	C.ImGuiNextItemData_ClearFlags(self.handle())
 }
@@ -1255,6 +1357,7 @@ func (self Payload) Destroy() {
 	C.ImGuiPayload_destroy(self.handle())
 }
 
+// Zero clear
 func NewPlatformIO() PlatformIO {
 	return (PlatformIO)(unsafe.Pointer(C.ImGuiPlatformIO_ImGuiPlatformIO()))
 }
@@ -1493,6 +1596,7 @@ func (self TextBuffer) Empty() bool {
 	return C.ImGuiTextBuffer_empty(self.handle()) == C.bool(true)
 }
 
+// Buf is zero-terminated, so end() will point on the zero-terminator
 func (self TextBuffer) End() string {
 	return C.GoString(C.ImGuiTextBuffer_end(self.handle()))
 }
@@ -1513,6 +1617,7 @@ func (self TextFilter) Clear() {
 	C.ImGuiTextFilter_Clear(self.handle())
 }
 
+// Helper calling InputText+Build
 // DrawV parameter default value hint:
 // label: "Filter(inc,-exc)"
 // width: 0.0f
@@ -1650,6 +1755,7 @@ func InternalNewViewportP() ViewportP {
 	return (ViewportP)(unsafe.Pointer(C.ImGuiViewportP_ImGuiViewportP()))
 }
 
+// Update public fields
 func (self ViewportP) InternalUpdateWorkRect() {
 	C.ImGuiViewportP_UpdateWorkRect(self.handle())
 }
@@ -1805,6 +1911,7 @@ func (self *Rect) InternalAddVec2(p Vec2) {
 	selfFin()
 }
 
+// Simple version, may lead to an inverted rectangle, which is fine for Contains/Overlaps test but not for display.
 func (self *Rect) InternalClipWith(r Rect) {
 	selfArg, selfFin := wrap[C.ImRect, *Rect](self)
 	C.ImRect_ClipWith(selfArg, r.toC())
@@ -1812,6 +1919,7 @@ func (self *Rect) InternalClipWith(r Rect) {
 	selfFin()
 }
 
+// Full version, ensure both points are fully clipped.
 func (self *Rect) InternalClipWithFull(r Rect) {
 	selfArg, selfFin := wrap[C.ImRect, *Rect](self)
 	C.ImRect_ClipWithFull(selfArg, r.toC())
@@ -1867,6 +1975,7 @@ func (self *Rect) InternalArea() float32 {
 	return float32(C.ImRect_GetArea(selfArg))
 }
 
+// Bottom-left
 func (self *Rect) InternalBL() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -1880,6 +1989,7 @@ func (self *Rect) InternalBL() Vec2 {
 	return *pOut
 }
 
+// Bottom-right
 func (self *Rect) InternalBR() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -1928,6 +2038,7 @@ func (self *Rect) InternalSize() Vec2 {
 	return *pOut
 }
 
+// Top-left
 func (self *Rect) InternalTL() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -1941,6 +2052,7 @@ func (self *Rect) InternalTL() Vec2 {
 	return *pOut
 }
 
+// Top-right
 func (self *Rect) InternalTR() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -2043,6 +2155,7 @@ func (self *Vec4) Destroy() {
 	selfFin()
 }
 
+// accept contents of a given type. If ImGuiDragDropFlags_AcceptBeforeDelivery is set you can peek into the payload before the mouse button is released.
 // AcceptDragDropPayloadV parameter default value hint:
 // flags: 0
 func AcceptDragDropPayloadV(typeArg string, flags DragDropFlags) Payload {
@@ -2054,6 +2167,7 @@ func AcceptDragDropPayloadV(typeArg string, flags DragDropFlags) Payload {
 	return (Payload)(unsafe.Pointer(C.igAcceptDragDropPayload(typeArgArg, C.ImGuiDragDropFlags(flags))))
 }
 
+// Remotely activate a button, checkbox, tree node etc. given its unique ID. activation is queued and processed on the next frame when the item is encountered again.
 func InternalActivateItem(id ID) {
 	C.igActivateItem(C.ImGuiID(id))
 }
@@ -2066,10 +2180,12 @@ func InternalAddSettingsHandler(handler SettingsHandler) {
 	C.igAddSettingsHandler(handler.handle())
 }
 
+// vertically align upcoming text baseline to FramePadding.y so that it will align properly to regularly framed items (call if you have text on a line before a framed item)
 func AlignTextToFramePadding() {
 	C.igAlignTextToFramePadding()
 }
 
+// square button with an arrow shape
 func ArrowButton(str_id string, dir Dir) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 
@@ -2113,6 +2229,7 @@ func InternalBeginChildEx(name string, id ID, size_arg Vec2, border bool, flags 
 	return C.igBeginChildEx(nameArg, C.ImGuiID(id), size_arg.toC(), C.bool(border), C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
 
+// helper to create a child window / scrolling region that looks like a normal widget frame
 // BeginChildFrameV parameter default value hint:
 // flags: 0
 func BeginChildFrameV(id ID, size Vec2, flags WindowFlags) bool {
@@ -2140,6 +2257,7 @@ func BeginChildStrV(str_id string, size Vec2, border bool, flags WindowFlags) bo
 	return C.igBeginChild_Str(str_idArg, size.toC(), C.bool(border), C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
 
+// setup number of columns. use an identifier to distinguish multiple column sets. close with EndColumns().
 // InternalBeginColumnsV parameter default value hint:
 // flags: 0
 func InternalBeginColumnsV(str_id string, count int32, flags OldColumnFlags) {
@@ -2191,12 +2309,14 @@ func InternalBeginDocked(window Window, p_open *bool) {
 	p_openFin()
 }
 
+// call after submitting an item which may be dragged. when this return true, you can call SetDragDropPayload() + EndDragDropSource()
 // BeginDragDropSourceV parameter default value hint:
 // flags: 0
 func BeginDragDropSourceV(flags DragDropFlags) bool {
 	return C.igBeginDragDropSource(C.ImGuiDragDropFlags(flags)) == C.bool(true)
 }
 
+// call after submitting an item that may receive a payload. If this returns true, you can call AcceptDragDropPayload() + EndDragDropTarget()
 func BeginDragDropTarget() bool {
 	return C.igBeginDragDropTarget() == C.bool(true)
 }
@@ -2205,10 +2325,12 @@ func InternalBeginDragDropTargetCustom(bb Rect, id ID) bool {
 	return C.igBeginDragDropTargetCustom(bb.toC(), C.ImGuiID(id)) == C.bool(true)
 }
 
+// lock horizontal starting position
 func BeginGroup() {
 	C.igBeginGroup()
 }
 
+// open a framed scrolling region
 // BeginListBoxV parameter default value hint:
 // size: ImVec2(0,0)
 func BeginListBoxV(label string, size Vec2) bool {
@@ -2220,10 +2342,12 @@ func BeginListBoxV(label string, size Vec2) bool {
 	return C.igBeginListBox(labelArg, size.toC()) == C.bool(true)
 }
 
+// create and append to a full screen menu-bar.
 func BeginMainMenuBar() bool {
 	return C.igBeginMainMenuBar() == C.bool(true)
 }
 
+// create a sub-menu entry. only call EndMenu() if this returns true!
 // BeginMenuV parameter default value hint:
 // enabled: true
 func BeginMenuV(label string, enabled bool) bool {
@@ -2235,6 +2359,7 @@ func BeginMenuV(label string, enabled bool) bool {
 	return C.igBeginMenu(labelArg, C.bool(enabled)) == C.bool(true)
 }
 
+// append to menu-bar of current window (requires ImGuiWindowFlags_MenuBar flag set on parent window).
 func BeginMenuBar() bool {
 	return C.igBeginMenuBar() == C.bool(true)
 }
@@ -2252,6 +2377,7 @@ func InternalBeginMenuExV(label string, icon string, enabled bool) bool {
 	return C.igBeginMenuEx(labelArg, iconArg, C.bool(enabled)) == C.bool(true)
 }
 
+// return true if the popup is open, and you can start outputting to it.
 // BeginPopupV parameter default value hint:
 // flags: 0
 func BeginPopupV(str_id string, flags WindowFlags) bool {
@@ -2263,6 +2389,7 @@ func BeginPopupV(str_id string, flags WindowFlags) bool {
 	return C.igBeginPopup(str_idArg, C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
 
+// open+begin popup when clicked on last item. Use str_id==NULL to associate the popup to previous item. If you want to use that on a non-interactive item such as Text() you need to pass in an explicit ID here. read comments in .cpp!
 // BeginPopupContextItemV parameter default value hint:
 // str_id: NULL
 // popup_flags: 1
@@ -2275,6 +2402,7 @@ func BeginPopupContextItemV(str_id string, popup_flags PopupFlags) bool {
 	return C.igBeginPopupContextItem(str_idArg, C.ImGuiPopupFlags(popup_flags)) == C.bool(true)
 }
 
+// open+begin popup when clicked in void (where there are no windows).
 // BeginPopupContextVoidV parameter default value hint:
 // str_id: NULL
 // popup_flags: 1
@@ -2287,6 +2415,7 @@ func BeginPopupContextVoidV(str_id string, popup_flags PopupFlags) bool {
 	return C.igBeginPopupContextVoid(str_idArg, C.ImGuiPopupFlags(popup_flags)) == C.bool(true)
 }
 
+// open+begin popup when clicked on current window.
 // BeginPopupContextWindowV parameter default value hint:
 // str_id: NULL
 // popup_flags: 1
@@ -2303,6 +2432,7 @@ func InternalBeginPopupEx(id ID, extra_flags WindowFlags) bool {
 	return C.igBeginPopupEx(C.ImGuiID(id), C.ImGuiWindowFlags(extra_flags)) == C.bool(true)
 }
 
+// return true if the modal is open, and you can start outputting to it.
 // BeginPopupModalV parameter default value hint:
 // p_open: NULL
 // flags: 0
@@ -2317,6 +2447,7 @@ func BeginPopupModalV(name string, p_open *bool, flags WindowFlags) bool {
 	return C.igBeginPopupModal(nameArg, p_openArg, C.ImGuiWindowFlags(flags)) == C.bool(true)
 }
 
+// create and append into a TabBar
 // BeginTabBarV parameter default value hint:
 // flags: 0
 func BeginTabBarV(str_id string, flags TabBarFlags) bool {
@@ -2332,6 +2463,7 @@ func InternalBeginTabBarEx(tab_bar TabBar, bb Rect, flags TabBarFlags, dock_node
 	return C.igBeginTabBarEx(tab_bar.handle(), bb.toC(), C.ImGuiTabBarFlags(flags), dock_node.handle()) == C.bool(true)
 }
 
+// create a Tab. Returns true if the Tab is selected.
 // BeginTabItemV parameter default value hint:
 // p_open: NULL
 // flags: 0
@@ -2372,6 +2504,7 @@ func InternalBeginTableExV(name string, id ID, columns_count int32, flags TableF
 	return C.igBeginTableEx(nameArg, C.ImGuiID(id), C.int(columns_count), C.ImGuiTableFlags(flags), outer_size.toC(), C.float(inner_width)) == C.bool(true)
 }
 
+// begin/append a tooltip window. to create full-featured tooltip (with any kind of items).
 func BeginTooltip() bool {
 	return C.igBeginTooltip() == C.bool(true)
 }
@@ -2405,10 +2538,12 @@ func InternalBringWindowToFocusFront(window Window) {
 	C.igBringWindowToFocusFront(window.handle())
 }
 
+// draw a small circle + keep the cursor on the same line. advance cursor x position by GetTreeNodeToLabelSpacing(), same distance that TreeNode() uses
 func Bullet() {
 	C.igBullet()
 }
 
+// shortcut for Bullet()+Text()
 func BulletText(fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	C.wrap_igBulletText(fmtArg)
@@ -2416,6 +2551,7 @@ func BulletText(fmt string) {
 	fmtFin()
 }
 
+// button
 // ButtonV parameter default value hint:
 // size: ImVec2(0,0)
 func ButtonV(label string, size Vec2) bool {
@@ -2463,6 +2599,7 @@ func InternalCalcItemSize(size Vec2, default_w float32, default_h float32) Vec2 
 	return *pOut
 }
 
+// width of item given pushed settings and current cursor position. NOT necessarily the width of last item unlike most 'Item' functions.
 func CalcItemWidth() float32 {
 	return float32(C.igCalcItemWidth())
 }
@@ -2566,6 +2703,7 @@ func InternalCloseButton(id ID, pos Vec2) bool {
 	return C.igCloseButton(C.ImGuiID(id), pos.toC()) == C.bool(true)
 }
 
+// manually close the popup we have begin-ed into.
 func CloseCurrentPopup() {
 	C.igCloseCurrentPopup()
 }
@@ -2586,6 +2724,7 @@ func InternalCollapseButton(id ID, pos Vec2, dock_node DockNode) bool {
 	return C.igCollapseButton(C.ImGuiID(id), pos.toC(), dock_node.handle()) == C.bool(true)
 }
 
+// when 'p_visible != NULL': if '*p_visible==true' display an additional small close button on upper right of the header which will set the bool to false when clicked, if '*p_visible==false' don't display the header.
 // CollapsingHeaderBoolPtrV parameter default value hint:
 // flags: 0
 func CollapsingHeaderBoolPtrV(label string, p_visible *bool, flags TreeNodeFlags) bool {
@@ -2599,6 +2738,7 @@ func CollapsingHeaderBoolPtrV(label string, p_visible *bool, flags TreeNodeFlags
 	return C.igCollapsingHeader_BoolPtr(labelArg, p_visibleArg, C.ImGuiTreeNodeFlags(flags)) == C.bool(true)
 }
 
+// if returning 'true' the header is open. doesn't indent nor push on ID stack. user doesn't have to call TreePop().
 // CollapsingHeaderTreeNodeFlagsV parameter default value hint:
 // flags: 0
 func CollapsingHeaderTreeNodeFlagsV(label string, flags TreeNodeFlags) bool {
@@ -2610,6 +2750,7 @@ func CollapsingHeaderTreeNodeFlagsV(label string, flags TreeNodeFlags) bool {
 	return C.igCollapsingHeader_TreeNodeFlags(labelArg, C.ImGuiTreeNodeFlags(flags)) == C.bool(true)
 }
 
+// display a color square/button, hover for details, return true when pressed.
 // ColorButtonV parameter default value hint:
 // flags: 0
 // size: ImVec2(0,0)
@@ -2766,6 +2907,7 @@ func ColumnsV(count int32, id string, border bool) {
 	idFin()
 }
 
+// Separate items with \0 within a string, end item-list with \0\0. e.g. "One\0Two\0Three\0"
 // ComboStrV parameter default value hint:
 // popup_max_height_in_items: -1
 func ComboStrV(label string, current_item *int32, items_separated_by_zeros string, popup_max_height_in_items int32) bool {
@@ -2853,6 +2995,7 @@ func InternalDataTypeGetInfo(data_type DataType) DataTypeInfo {
 	return (DataTypeInfo)(unsafe.Pointer(C.igDataTypeGetInfo(C.ImGuiDataType(data_type))))
 }
 
+// This is called by IMGUI_CHECKVERSION() macro.
 func DebugCheckVersionAndDataLayout(version_str string, sz_io uint64, sz_style uint64, sz_vec2 uint64, sz_vec4 uint64, sz_drawvert uint64, sz_drawidx uint64) bool {
 	version_strArg, version_strFin := wrapString(version_str)
 
@@ -2872,10 +3015,12 @@ func InternalDebugHookIdInfo(id ID, data_type DataType, data_id unsafe.Pointer, 
 	C.igDebugHookIdInfo(C.ImGuiID(id), C.ImGuiDataType(data_type), (data_id), (data_id_end))
 }
 
+// Call sparingly: only 1 at the same time!
 func InternalDebugLocateItem(target_id ID) {
 	C.igDebugLocateItem(C.ImGuiID(target_id))
 }
 
+// Only call on reaction to a mouse Hover: because only 1 at the same time!
 func InternalDebugLocateItemOnHover(target_id ID) {
 	C.igDebugLocateItemOnHover(C.ImGuiID(target_id))
 }
@@ -2974,6 +3119,7 @@ func DebugTextEncoding(text string) {
 	textFin()
 }
 
+// NULL = destroy current context
 // DestroyContextV parameter default value hint:
 // ctx: NULL
 func DestroyContextV(ctx Context) {
@@ -2984,6 +3130,7 @@ func InternalDestroyPlatformWindow(viewport ViewportP) {
 	C.igDestroyPlatformWindow(viewport.handle())
 }
 
+// call DestroyWindow platform functions for all viewports. call from backend Shutdown() if you need to close platform windows before imgui shutdown. otherwise will be called by DestroyContext().
 func DestroyPlatformWindows() {
 	C.igDestroyPlatformWindows()
 }
@@ -3023,10 +3170,12 @@ func InternalDockBuilderGetNode(node_id ID) DockNode {
 	return (DockNode)(unsafe.Pointer(C.igDockBuilderGetNode(C.ImGuiID(node_id))))
 }
 
+// Remove node and all its child, undock all windows
 func InternalDockBuilderRemoveNode(node_id ID) {
 	C.igDockBuilderRemoveNode(C.ImGuiID(node_id))
 }
 
+// Remove all split/hierarchy. All remaining docked windows will be re-docked to the remaining root node (node_id).
 func InternalDockBuilderRemoveNodeChildNodes(node_id ID) {
 	C.igDockBuilderRemoveNodeChildNodes(C.ImGuiID(node_id))
 }
@@ -3045,6 +3194,7 @@ func InternalDockBuilderSetNodeSize(node_id ID, size Vec2) {
 	C.igDockBuilderSetNodeSize(C.ImGuiID(node_id), size.toC())
 }
 
+// Create 2 child nodes in this parent node.
 func InternalDockBuilderSplitNode(node_id ID, split_dir Dir, size_ratio_for_node_at_dir float32, out_id_at_dir *ID, out_id_at_opposite_dir *ID) ID {
 	out_id_at_dirArg, out_id_at_dirFin := wrapNumberPtr[C.ImGuiID, ID](out_id_at_dir)
 	out_id_at_opposite_dirArg, out_id_at_opposite_dirFin := wrapNumberPtr[C.ImGuiID, ID](out_id_at_opposite_dir)
@@ -3065,6 +3215,7 @@ func InternalDockContextCalcDropPosForDocking(target Window, target_node DockNod
 	return C.igDockContextCalcDropPosForDocking(target.handle(), target_node.handle(), payload_window.handle(), payload_node.handle(), C.ImGuiDir(split_dir), C.bool(split_outer), out_posArg) == C.bool(true)
 }
 
+// Use root_id==0 to clear all
 func InternalDockContextClearNodes(ctx Context, root_id ID, clear_settings_refs bool) {
 	C.igDockContextClearNodes(ctx.handle(), C.ImGuiID(root_id), C.bool(clear_settings_refs))
 }
@@ -3176,6 +3327,7 @@ func InternalDragBehavior(id ID, data_type DataType, p_v unsafe.Pointer, v_speed
 	return C.igDragBehavior(C.ImGuiID(id), C.ImGuiDataType(data_type), (p_v), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
+// If v_min >= v_max we have no bound
 // DragFloatV parameter default value hint:
 // v_speed: 1.0f
 // v_min: 0.0f
@@ -3300,6 +3452,7 @@ func DragFloatRange2V(label string, v_current_min *float32, v_current_max *float
 	return C.igDragFloatRange2(labelArg, v_current_minArg, v_current_maxArg, C.float(v_speed), C.float(v_min), C.float(v_max), formatArg, format_maxArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
+// If v_min >= v_max we have no bound
 // DragIntV parameter default value hint:
 // v_speed: 1.0f
 // v_min: 0
@@ -3458,6 +3611,7 @@ func DragScalarNV(label string, data_type DataType, p_data unsafe.Pointer, compo
 	return C.igDragScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
+// add a dummy item of given size. unlike InvisibleButton(), Dummy() won't take the mouse click or be navigable into.
 func Dummy(size Vec2) {
 	C.igDummy(size.toC())
 }
@@ -3470,14 +3624,17 @@ func EndChild() {
 	C.igEndChild()
 }
 
+// always call EndChildFrame() regardless of BeginChildFrame() return values (which indicates a collapsed/clipped window)
 func EndChildFrame() {
 	C.igEndChildFrame()
 }
 
+// close columns
 func InternalEndColumns() {
 	C.igEndColumns()
 }
 
+// only call EndCombo() if BeginCombo() returns true!
 func EndCombo() {
 	C.igEndCombo()
 }
@@ -3490,54 +3647,67 @@ func EndDisabled() {
 	C.igEndDisabled()
 }
 
+// only call EndDragDropSource() if BeginDragDropSource() returns true!
 func EndDragDropSource() {
 	C.igEndDragDropSource()
 }
 
+// only call EndDragDropTarget() if BeginDragDropTarget() returns true!
 func EndDragDropTarget() {
 	C.igEndDragDropTarget()
 }
 
+// ends the Dear ImGui frame. automatically called by Render(). If you don't need to render data (skipping rendering) you may call EndFrame() without Render()... but you'll have wasted CPU already! If you don't need to render, better to not create any windows and not call NewFrame() at all!
 func EndFrame() {
 	C.igEndFrame()
 }
 
+// unlock horizontal starting position + capture the whole group bounding box into one "item" (so you can use IsItemHovered() or layout primitives such as SameLine() on whole group, etc.)
 func EndGroup() {
 	C.igEndGroup()
 }
 
+// only call EndListBox() if BeginListBox() returned true!
 func EndListBox() {
 	C.igEndListBox()
 }
 
+// only call EndMainMenuBar() if BeginMainMenuBar() returns true!
 func EndMainMenuBar() {
 	C.igEndMainMenuBar()
 }
 
+// only call EndMenu() if BeginMenu() returns true!
 func EndMenu() {
 	C.igEndMenu()
 }
 
+// only call EndMenuBar() if BeginMenuBar() returns true!
 func EndMenuBar() {
 	C.igEndMenuBar()
 }
 
+// only call EndPopup() if BeginPopupXXX() returns true!
 func EndPopup() {
 	C.igEndPopup()
 }
 
+// only call EndTabBar() if BeginTabBar() returns true!
 func EndTabBar() {
 	C.igEndTabBar()
 }
 
+// only call EndTabItem() if BeginTabItem() returns true!
 func EndTabItem() {
 	C.igEndTabItem()
 }
 
+// only call EndTable() if BeginTable() returns true!
 func EndTable() {
 	C.igEndTable()
 }
 
+// only call EndTooltip() if BeginTooltip() returns true!
 func EndTooltip() {
 	C.igEndTooltip()
 }
@@ -3557,6 +3727,10 @@ func InternalFindBestWindowPosForPopup(window Window) Vec2 {
 	return *pOut
 }
 
+func InternalFindBlockingModal(window Window) Window {
+	return (Window)(unsafe.Pointer(C.igFindBlockingModal(window.handle())))
+}
+
 func InternalFindBottomMostVisibleWindowWithinBeginStack(window Window) Window {
 	return (Window)(unsafe.Pointer(C.igFindBottomMostVisibleWindowWithinBeginStack(window.handle())))
 }
@@ -3569,6 +3743,7 @@ func InternalFindOrCreateColumns(window Window, id ID) OldColumns {
 	return (OldColumns)(unsafe.Pointer(C.igFindOrCreateColumns(window.handle(), C.ImGuiID(id))))
 }
 
+// Find the optional ## from which we stop displaying text.
 // InternalFindRenderedTextEndV parameter default value hint:
 func InternalFindRenderedTextEndV(text string) string {
 	textArg, textFin := wrapString(text)
@@ -3588,10 +3763,12 @@ func InternalFindSettingsHandler(type_name string) SettingsHandler {
 	return (SettingsHandler)(unsafe.Pointer(C.igFindSettingsHandler(type_nameArg)))
 }
 
+// this is a helper for backends.
 func FindViewportByID(id ID) Viewport {
 	return (Viewport)(unsafe.Pointer(C.igFindViewportByID(C.ImGuiID(id))))
 }
 
+// this is a helper for backends. the type platform_handle is decided by the backend (e.g. HWND, MyWindow*, GLFWwindow* etc.)
 func FindViewportByPlatformHandle(platform_handle unsafe.Pointer) Viewport {
 	return (Viewport)(unsafe.Pointer(C.igFindViewportByPlatformHandle((platform_handle))))
 }
@@ -3621,12 +3798,14 @@ func InternalFindWindowSettingsByWindow(window Window) WindowSettings {
 	return (WindowSettings)(unsafe.Pointer(C.igFindWindowSettingsByWindow(window.handle())))
 }
 
-func InternalFocusTopMostWindowUnderOne(under_this_window Window, ignore_window Window, filter_viewport Viewport) {
-	C.igFocusTopMostWindowUnderOne(under_this_window.handle(), ignore_window.handle(), filter_viewport.handle())
+func InternalFocusTopMostWindowUnderOne(under_this_window Window, ignore_window Window, filter_viewport Viewport, flags FocusRequestFlags) {
+	C.igFocusTopMostWindowUnderOne(under_this_window.handle(), ignore_window.handle(), filter_viewport.handle(), C.ImGuiFocusRequestFlags(flags))
 }
 
-func InternalFocusWindow(window Window) {
-	C.igFocusWindow(window.handle())
+// InternalFocusWindowV parameter default value hint:
+// flags: 0
+func InternalFocusWindowV(window Window, flags FocusRequestFlags) {
+	C.igFocusWindow(window.handle(), C.ImGuiFocusRequestFlags(flags))
 }
 
 func InternalGcAwakeTransientWindowBuffers(window Window) {
@@ -3645,10 +3824,12 @@ func InternalActiveID() ID {
 	return ID(C.igGetActiveID())
 }
 
+// get background draw list for the viewport associated to the current window. this draw list will be the first rendering one. Useful to quickly draw shapes/text behind dear imgui contents.
 func BackgroundDrawListNil() DrawList {
 	return (DrawList)(unsafe.Pointer(C.igGetBackgroundDrawList_Nil()))
 }
 
+// get background draw list for the given viewport. this draw list will be the first rendering one. Useful to quickly draw shapes/text behind dear imgui contents.
 func BackgroundDrawListViewportPtr(viewport Viewport) DrawList {
 	return (DrawList)(unsafe.Pointer(C.igGetBackgroundDrawList_ViewportPtr(viewport.handle())))
 }
@@ -3657,20 +3838,24 @@ func ClipboardText() string {
 	return C.GoString(C.igGetClipboardText())
 }
 
+// retrieve given style color with style alpha applied and optional extra alpha multiplier, packed as a 32-bit value suitable for ImDrawList
 // ColorU32ColV parameter default value hint:
 // alpha_mul: 1.0f
 func ColorU32ColV(idx Col, alpha_mul float32) uint32 {
 	return uint32(C.igGetColorU32_Col(C.ImGuiCol(idx), C.float(alpha_mul)))
 }
 
+// retrieve given color with style alpha applied, packed as a 32-bit value suitable for ImDrawList
 func ColorU32U32(col uint32) uint32 {
 	return uint32(C.igGetColorU32_U32(C.ImU32(col)))
 }
 
+// retrieve given color with style alpha applied, packed as a 32-bit value suitable for ImDrawList
 func ColorU32Vec4(col Vec4) uint32 {
 	return uint32(C.igGetColorU32_Vec4(col.toC()))
 }
 
+// get current column index
 func ColumnIndex() int {
 	return int(C.igGetColumnIndex())
 }
@@ -3679,6 +3864,7 @@ func InternalColumnNormFromOffset(columns OldColumns, offset float32) float32 {
 	return float32(C.igGetColumnNormFromOffset(columns.handle(), C.float(offset)))
 }
 
+// get position of column line (in pixels, from the left side of the contents region). pass -1 to use current column, otherwise 0..GetColumnsCount() inclusive. column 0 is typically 0.0f
 // ColumnOffsetV parameter default value hint:
 // column_index: -1
 func ColumnOffsetV(column_index int32) float32 {
@@ -3689,6 +3875,7 @@ func InternalColumnOffsetFromNorm(columns OldColumns, offset_norm float32) float
 	return float32(C.igGetColumnOffsetFromNorm(columns.handle(), C.float(offset_norm)))
 }
 
+// get column width (in pixels). pass -1 to use current column
 // ColumnWidthV parameter default value hint:
 // column_index: -1
 func ColumnWidthV(column_index int32) float32 {
@@ -3708,6 +3895,7 @@ func InternalColumnsID(str_id string, count int32) ID {
 	return ID(C.igGetColumnsID(str_idArg, C.int(count)))
 }
 
+// == GetContentRegionMax() - GetCursorPos()
 func ContentRegionAvail() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -3719,6 +3907,7 @@ func ContentRegionAvail() Vec2 {
 	return *pOut
 }
 
+// current content boundaries (typically window boundaries including scrolling, or current column boundaries), in windows coordinates
 func ContentRegionMax() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -3745,6 +3934,7 @@ func CurrentContext() Context {
 	return (Context)(unsafe.Pointer(C.igGetCurrentContext()))
 }
 
+// Focus scope we are outputting into, set by PushFocusScope()
 func InternalCurrentFocusScope() ID {
 	return ID(C.igGetCurrentFocusScope())
 }
@@ -3765,6 +3955,7 @@ func InternalCurrentWindowRead() Window {
 	return (Window)(unsafe.Pointer(C.igGetCurrentWindowRead()))
 }
 
+// cursor position in window coordinates (relative to window position)
 func CursorPos() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -3776,14 +3967,17 @@ func CursorPos() Vec2 {
 	return *pOut
 }
 
+// (some functions are using window-relative coordinates, such as: GetCursorPos, GetCursorStartPos, GetContentRegionMax, GetWindowContentRegion* etc.
 func CursorPosX() float32 {
 	return float32(C.igGetCursorPosX())
 }
 
+// other functions such as GetCursorScreenPos or everything in ImDrawList::
 func CursorPosY() float32 {
 	return float32(C.igGetCursorPosY())
 }
 
+// cursor position in absolute coordinates (useful to work with ImDrawList API). generally top-left == GetMainViewport()->Pos == (0,0) in single viewport mode, and bottom-right == GetMainViewport()->Pos+Size == io.DisplaySize in single-viewport mode.
 func CursorScreenPos() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -3795,6 +3989,7 @@ func CursorScreenPos() Vec2 {
 	return *pOut
 }
 
+// initial cursor position in window coordinates
 func CursorStartPos() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -3810,14 +4005,17 @@ func InternalDefaultFont() Font {
 	return (Font)(unsafe.Pointer(C.igGetDefaultFont()))
 }
 
+// peek directly into the current payload from anywhere. may return NULL. use ImGuiPayload::IsDataType() to test for the payload type.
 func DragDropPayload() Payload {
 	return (Payload)(unsafe.Pointer(C.igGetDragDropPayload()))
 }
 
+// valid after Render() and until the next call to NewFrame(). this is what you have to render.
 func CurrentDrawData() DrawData {
 	return (DrawData)(unsafe.Pointer(C.igGetDrawData()))
 }
 
+// you may use this when creating your own ImDrawList instances.
 func CurrentDrawListSharedData() DrawListSharedData {
 	return (DrawListSharedData)(unsafe.Pointer(C.igGetDrawListSharedData()))
 }
@@ -3826,14 +4024,17 @@ func InternalFocusID() ID {
 	return ID(C.igGetFocusID())
 }
 
+// get current font
 func CurrentFont() Font {
 	return (Font)(unsafe.Pointer(C.igGetFont()))
 }
 
+// get current font size (= height in pixels) of current font with current scale applied
 func FontSize() float32 {
 	return float32(C.igGetFontSize())
 }
 
+// get UV coordinate for a while pixel, useful to draw custom shapes via the ImDrawList API
 func FontTexUvWhitePixel() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -3845,10 +4046,12 @@ func FontTexUvWhitePixel() Vec2 {
 	return *pOut
 }
 
+// get foreground draw list for the viewport associated to the current window. this draw list will be the last rendered one. Useful to quickly draw shapes/text over dear imgui contents.
 func ForegroundDrawListNil() DrawList {
 	return (DrawList)(unsafe.Pointer(C.igGetForegroundDrawList_Nil()))
 }
 
+// get foreground draw list for the given viewport. this draw list will be the last rendered one. Useful to quickly draw shapes/text over dear imgui contents.
 func ForegroundDrawListViewportPtr(viewport Viewport) DrawList {
 	return (DrawList)(unsafe.Pointer(C.igGetForegroundDrawList_ViewportPtr(viewport.handle())))
 }
@@ -3857,14 +4060,17 @@ func InternalForegroundDrawListWindowPtr(window Window) DrawList {
 	return (DrawList)(unsafe.Pointer(C.igGetForegroundDrawList_WindowPtr(window.handle())))
 }
 
+// get global imgui frame count. incremented by 1 every frame.
 func FrameCount() int {
 	return int(C.igGetFrameCount())
 }
 
+// ~ FontSize + style.FramePadding.y * 2
 func FrameHeight() float32 {
 	return float32(C.igGetFrameHeight())
 }
 
+// ~ FontSize + style.FramePadding.y * 2 + style.ItemSpacing.y (distance in pixels between 2 consecutive lines of framed widgets)
 func FrameHeightWithSpacing() float32 {
 	return float32(C.igGetFrameHeightWithSpacing())
 }
@@ -3892,6 +4098,7 @@ func IDPtr(ptr_id unsafe.Pointer) ID {
 	return ID(C.igGetID_Ptr((ptr_id)))
 }
 
+// calculate unique ID (hash of whole ID stack + given parameter). e.g. if you want to query into ImGuiStorage yourself
 func IDStr(str_id string) ID {
 	str_idArg, str_idFin := wrapString(str_id)
 
@@ -3912,10 +4119,12 @@ func IDStrStr(str_id_begin string, str_id_end string) ID {
 	return ID(C.igGetID_StrStr(str_id_beginArg, str_id_endArg))
 }
 
+// access the IO structure (mouse/keyboard/gamepad inputs, time, various configuration options/flags)
 func CurrentIO() IO {
 	return (IO)(unsafe.Pointer(C.igGetIO()))
 }
 
+// Get input text state if active
 func InternalInputTextState(id ID) InputTextState {
 	return (InputTextState)(unsafe.Pointer(C.igGetInputTextState(C.ImGuiID(id))))
 }
@@ -3924,10 +4133,12 @@ func InternalItemFlags() ItemFlags {
 	return ItemFlags(C.igGetItemFlags())
 }
 
+// get ID of last item (~~ often same ImGui::GetID(label) beforehand)
 func ItemID() ID {
 	return ID(C.igGetItemID())
 }
 
+// get lower-right bounding rectangle of the last item (screen space)
 func ItemRectMax() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -3939,6 +4150,7 @@ func ItemRectMax() Vec2 {
 	return *pOut
 }
 
+// get upper-left bounding rectangle of the last item (screen space)
 func ItemRectMin() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -3950,6 +4162,7 @@ func ItemRectMin() Vec2 {
 	return *pOut
 }
 
+// get size of last item
 func ItemRectSize() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -3980,6 +4193,7 @@ func InternalKeyDataKey(key Key) KeyData {
 	return (KeyData)(unsafe.Pointer(C.igGetKeyData_Key(C.ImGuiKey(key))))
 }
 
+// map ImGuiKey_* values into legacy native key index. == io.KeyMap[key]
 func KeyIndex(key Key) Key {
 	return Key(C.igGetKeyIndex(C.ImGuiKey(key)))
 }
@@ -3995,6 +4209,7 @@ func InternalKeyMagnitude2d(key_left Key, key_right Key, key_up Key, key_down Ke
 	return *pOut
 }
 
+// [DEBUG] returns English name of the key. Those names a provided for debugging purpose and are not meant to be saved persistently not compared.
 func KeyName(key Key) string {
 	return C.GoString(C.igGetKeyName(C.ImGuiKey(key)))
 }
@@ -4007,22 +4222,27 @@ func InternalKeyOwnerData(ctx Context, key Key) KeyOwnerData {
 	return (KeyOwnerData)(unsafe.Pointer(C.igGetKeyOwnerData(ctx.handle(), C.ImGuiKey(key))))
 }
 
+// uses provided repeat rate/delay. return a count, most often 0 or 1 but might be >1 if RepeatRate is small enough that DeltaTime > RepeatRate
 func KeyPressedAmount(key Key, repeat_delay float32, rate float32) int {
 	return int(C.igGetKeyPressedAmount(C.ImGuiKey(key), C.float(repeat_delay), C.float(rate)))
 }
 
+// return primary/default viewport. This can never be NULL.
 func MainViewport() Viewport {
 	return (Viewport)(unsafe.Pointer(C.igGetMainViewport()))
 }
 
+// return the number of successive mouse-clicks at the time where a click happen (otherwise 0).
 func MouseClickedCount(button MouseButton) int {
 	return int(C.igGetMouseClickedCount(C.ImGuiMouseButton(button)))
 }
 
+// get desired mouse cursor shape. Important: reset in ImGui::NewFrame(), this is updated during the frame. valid before Render(). If you use software rendering by setting io.MouseDrawCursor ImGui will render those for you
 func CurrentMouseCursor() MouseCursor {
 	return MouseCursor(C.igGetMouseCursor())
 }
 
+// return the delta from the initial clicking position while the mouse button is pressed or was just released. This is locked and return 0.0f until the mouse moves past a distance threshold at least once (if lock_threshold < -1.0f, uses io.MouseDraggingThreshold)
 // MouseDragDeltaV parameter default value hint:
 // button: 0
 // lock_threshold: -1.0f
@@ -4037,6 +4257,7 @@ func MouseDragDeltaV(button MouseButton, lock_threshold float32) Vec2 {
 	return *pOut
 }
 
+// shortcut to ImGui::GetIO().MousePos provided by user, to be consistent with other calls
 func MousePos() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -4048,6 +4269,7 @@ func MousePos() Vec2 {
 	return *pOut
 }
 
+// retrieve mouse position at the time of opening popup we have BeginPopup() into (helper to avoid user backing that value themselves)
 func MousePosOnOpeningCurrentPopup() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -4063,6 +4285,7 @@ func InternalNavTweakPressedAmount(axis Axis) float32 {
 	return float32(C.igGetNavTweakPressedAmount(C.ImGuiAxis(axis)))
 }
 
+// platform/renderer functions, for backend to setup + viewports list.
 func CurrentPlatformIO() PlatformIO {
 	return (PlatformIO)(unsafe.Pointer(C.igGetPlatformIO()))
 }
@@ -4078,18 +4301,22 @@ func InternalPopupAllowedExtentRect(window Window) Rect {
 	return *pOut
 }
 
+// get maximum scrolling amount ~~ ContentSize.x - WindowSize.x - DecorationsSize.x
 func ScrollMaxX() float32 {
 	return float32(C.igGetScrollMaxX())
 }
 
+// get maximum scrolling amount ~~ ContentSize.y - WindowSize.y - DecorationsSize.y
 func ScrollMaxY() float32 {
 	return float32(C.igGetScrollMaxY())
 }
 
+// get scrolling amount [0 .. GetScrollMaxX()]
 func ScrollX() float32 {
 	return float32(C.igGetScrollX())
 }
 
+// get scrolling amount [0 .. GetScrollMaxY()]
 func ScrollY() float32 {
 	return float32(C.igGetScrollY())
 }
@@ -4098,14 +4325,17 @@ func InternalShortcutRoutingData(key_chord KeyChord) KeyRoutingData {
 	return (KeyRoutingData)(unsafe.Pointer(C.igGetShortcutRoutingData(C.ImGuiKeyChord(key_chord))))
 }
 
+// access the Style structure (colors, sizes). Always use PushStyleCol(), PushStyleVar() to modify style mid-frame!
 func CurrentStyle() Style {
 	return (Style)(unsafe.Pointer(C.igGetStyle()))
 }
 
+// get a string corresponding to the enum value (for display, saving, etc.).
 func StyleColorName(idx Col) string {
 	return C.GoString(C.igGetStyleColorName(C.ImGuiCol(idx)))
 }
 
+// retrieve style color as stored in ImGuiStyle structure. use to feed back into PushStyleColor(), otherwise use GetColorU32() to get style color with style alpha baked in.
 func StyleColorVec4(idx Col) *Vec4 {
 	out := &Vec4{}
 	out.fromC(*C.igGetStyleColorVec4(C.ImGuiCol(idx)))
@@ -4116,14 +4346,17 @@ func InternalStyleVarInfo(idx StyleVar) DataVarInfo {
 	return (DataVarInfo)(unsafe.Pointer(C.igGetStyleVarInfo(C.ImGuiStyleVar(idx))))
 }
 
+// ~ FontSize
 func TextLineHeight() float32 {
 	return float32(C.igGetTextLineHeight())
 }
 
+// ~ FontSize + style.ItemSpacing.y (distance in pixels between 2 consecutive lines of text)
 func TextLineHeightWithSpacing() float32 {
 	return float32(C.igGetTextLineHeightWithSpacing())
 }
 
+// get global imgui time. incremented by io.DeltaTime every frame.
 func Time() float64 {
 	return float64(C.igGetTime())
 }
@@ -4136,6 +4369,7 @@ func InternalTopMostPopupModal() Window {
 	return (Window)(unsafe.Pointer(C.igGetTopMostPopupModal()))
 }
 
+// horizontal distance preceding label when using TreeNode*() or Bullet() == (g.FontSize + style.FramePadding.x*2) for a regular unframed TreeNode
 func TreeNodeToLabelSpacing() float32 {
 	return float32(C.igGetTreeNodeToLabelSpacing())
 }
@@ -4149,6 +4383,7 @@ func InternalTypematicRepeatRate(flags InputFlags, repeat_delay *float32, repeat
 	repeat_rateFin()
 }
 
+// get the compiled version string e.g. "1.80 WIP" (essentially the value for IMGUI_VERSION from the compiled version of imgui.cpp)
 func Version() string {
 	return C.GoString(C.igGetVersion())
 }
@@ -4161,6 +4396,7 @@ func InternalWindowAlwaysWantOwnTabBar(window Window) bool {
 	return C.igGetWindowAlwaysWantOwnTabBar(window.handle()) == C.bool(true)
 }
 
+// content boundaries max for the full window (roughly (0,0)+Size-Scroll) where Size can be overridden with SetNextWindowContentSize(), in window coordinates
 func WindowContentRegionMax() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -4172,6 +4408,7 @@ func WindowContentRegionMax() Vec2 {
 	return *pOut
 }
 
+// content boundaries min for the full window (roughly (0,0)-Scroll), in window coordinates
 func WindowContentRegionMin() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -4191,18 +4428,22 @@ func InternalWindowDockNode() DockNode {
 	return (DockNode)(unsafe.Pointer(C.igGetWindowDockNode()))
 }
 
+// get DPI scale currently associated to the current window's viewport.
 func WindowDpiScale() float32 {
 	return float32(C.igGetWindowDpiScale())
 }
 
+// get draw list associated to the current window, to append your own drawing primitives
 func WindowDrawList() DrawList {
 	return (DrawList)(unsafe.Pointer(C.igGetWindowDrawList()))
 }
 
+// get current window height (shortcut for GetWindowSize().y)
 func WindowHeight() float32 {
 	return float32(C.igGetWindowHeight())
 }
 
+// get current window position in screen space (useful if you want to do your own drawing via the DrawList API)
 func WindowPos() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -4218,6 +4459,7 @@ func InternalWindowResizeBorderID(window Window, dir Dir) ID {
 	return ID(C.igGetWindowResizeBorderID(window.handle(), C.ImGuiDir(dir)))
 }
 
+// 0..3: corners
 func InternalWindowResizeCornerID(window Window, n int32) ID {
 	return ID(C.igGetWindowResizeCornerID(window.handle(), C.int(n)))
 }
@@ -4237,6 +4479,7 @@ func InternalWindowScrollbarRect(window Window, axis Axis) Rect {
 	return *pOut
 }
 
+// get current window size
 func WindowSize() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -4248,10 +4491,12 @@ func WindowSize() Vec2 {
 	return *pOut
 }
 
+// get viewport currently associated to the current window.
 func WindowViewport() Viewport {
 	return (Viewport)(unsafe.Pointer(C.igGetWindowViewport()))
 }
 
+// get current window width (shortcut for GetWindowSize().x)
 func WindowWidth() float32 {
 	return float32(C.igGetWindowWidth())
 }
@@ -4283,6 +4528,7 @@ func InternalImBezierCubicCalc(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, t float32) Ve
 	return *pOut
 }
 
+// For curves with explicit number of segments
 func InternalImBezierCubicClosestPoint(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, p Vec2, num_segments int32) Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -4294,6 +4540,7 @@ func InternalImBezierCubicClosestPoint(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, p Vec
 	return *pOut
 }
 
+// For auto-tessellated curves you can use tess_tol = style.CurveTessellationTol
 func InternalImBezierCubicClosestPointCasteljau(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, p Vec2, tess_tol float32) Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -4371,6 +4618,7 @@ func InternalImFileLoadToMemoryV(filename string, mode string, out_file_size *ui
 	return unsafe.Pointer(C.igImFileLoadToMemory(filenameArg, modeArg, (*C.xulong)(out_file_size), C.int(padding_bytes)))
 }
 
+// Decent replacement for floorf()
 func InternalImFloorSignedFloat(f float32) float32 {
 	return float32(C.igImFloorSigned_Float(C.float(f)))
 }
@@ -4551,6 +4799,7 @@ func InternalImLinearSweep(current float32, target float32, speed float32) float
 	return float32(C.igImLinearSweep(C.float(current), C.float(target), C.float(speed)))
 }
 
+// DragBehaviorT/SliderBehaviorT uses ImLog with either float/double and need the precision
 func InternalImLogFloat(x float32) float32 {
 	return float32(C.igImLog_Float(C.float(x)))
 }
@@ -4654,6 +4903,7 @@ func InternalImParseFormatTrimDecorations(format string, buf string, buf_size ui
 	return C.GoString(C.igImParseFormatTrimDecorations(formatArg, bufArg, C.xulong(buf_size)))
 }
 
+// DragBehaviorT/SliderBehaviorT uses ImPow with either float/double and need the precision
 func InternalImPowFloat(x float32, y float32) float32 {
 	return float32(C.igImPow_Float(C.float(x), C.float(y)))
 }
@@ -4685,6 +4935,7 @@ func InternalImSaturate(f float32) float32 {
 	return float32(C.igImSaturate(C.float(f)))
 }
 
+// Sign operator - returns -1, 0 or 1 based on sign of argument
 func InternalImSignFloat(x float32) float32 {
 	return float32(C.igImSign_Float(C.float(x)))
 }
@@ -4709,6 +4960,7 @@ func InternalImStrTrimBlanks(str string) {
 	strFin()
 }
 
+// Find beginning-of-line
 func InternalImStrbolW(buf_mid_line *rune, buf_begin *rune) *rune {
 	buf_mid_lineArg, buf_mid_lineFin := wrapNumberPtr[C.ImWchar, rune](buf_mid_line)
 	buf_beginArg, buf_beginFin := wrapNumberPtr[C.ImWchar, rune](buf_begin)
@@ -4751,6 +5003,7 @@ func InternalImStrdupcpy(dst string, p_dst_size *uint64, str string) string {
 	return C.GoString(C.igImStrdupcpy(dstArg, (*C.xulong)(p_dst_size), strArg))
 }
 
+// End end-of-line
 func InternalImStreolRange(str string, str_end string) string {
 	strArg, strFin := wrapString(str)
 	str_endArg, str_endFin := wrapString(str_end)
@@ -4817,6 +5070,7 @@ func InternalImStrnicmp(str1 string, str2 string, count uint64) int {
 	return int(C.igImStrnicmp(str1Arg, str2Arg, C.xulong(count)))
 }
 
+// read one character. return input UTF-8 bytes count
 func InternalImTextCharFromUtf8(out_char *uint32, in_text string, in_text_end string) int {
 	out_charArg, out_charFin := wrapNumberPtr[C.uint, uint32](out_char)
 	in_textArg, in_textFin := wrapString(in_text)
@@ -4830,6 +5084,7 @@ func InternalImTextCharFromUtf8(out_char *uint32, in_text string, in_text_end st
 	return int(C.igImTextCharFromUtf8(out_charArg, in_textArg, in_text_endArg))
 }
 
+// return out_buf
 func InternalImTextCharToUtf8(out_buf *[5]rune, c uint32) string {
 	out_bufArg := make([]C.char, len(out_buf))
 	for i, out_bufV := range out_buf {
@@ -4844,6 +5099,7 @@ func InternalImTextCharToUtf8(out_buf *[5]rune, c uint32) string {
 	return C.GoString(C.igImTextCharToUtf8((*C.char)(&out_bufArg[0]), C.uint(c)))
 }
 
+// return number of UTF-8 code-points (NOT bytes count)
 func InternalImTextCountCharsFromUtf8(in_text string, in_text_end string) int {
 	in_textArg, in_textFin := wrapString(in_text)
 	in_text_endArg, in_text_endFin := wrapString(in_text_end)
@@ -4855,6 +5111,7 @@ func InternalImTextCountCharsFromUtf8(in_text string, in_text_end string) int {
 	return int(C.igImTextCountCharsFromUtf8(in_textArg, in_text_endArg))
 }
 
+// return number of bytes to express one char in UTF-8
 func InternalImTextCountUtf8BytesFromChar(in_text string, in_text_end string) int {
 	in_textArg, in_textFin := wrapString(in_text)
 	in_text_endArg, in_text_endFin := wrapString(in_text_end)
@@ -4866,6 +5123,7 @@ func InternalImTextCountUtf8BytesFromChar(in_text string, in_text_end string) in
 	return int(C.igImTextCountUtf8BytesFromChar(in_textArg, in_text_endArg))
 }
 
+// return number of bytes to express string in UTF-8
 func InternalImTextCountUtf8BytesFromStr(in_text *rune, in_text_end *rune) int {
 	in_textArg, in_textFin := wrapNumberPtr[C.ImWchar, rune](in_text)
 	in_text_endArg, in_text_endFin := wrapNumberPtr[C.ImWchar, rune](in_text_end)
@@ -4877,6 +5135,7 @@ func InternalImTextCountUtf8BytesFromStr(in_text *rune, in_text_end *rune) int {
 	return int(C.igImTextCountUtf8BytesFromStr(in_textArg, in_text_endArg))
 }
 
+// return output UTF-8 bytes count
 func InternalImTextStrToUtf8(out_buf string, out_buf_size int32, in_text *rune, in_text_end *rune) int {
 	out_bufArg, out_bufFin := wrapString(out_buf)
 	in_textArg, in_textFin := wrapNumberPtr[C.ImWchar, rune](in_text)
@@ -4953,6 +5212,7 @@ func InternalImageButtonExV(id ID, texture_id TextureID, size Vec2, uv0 Vec2, uv
 	return C.igImageButtonEx(C.ImGuiID(id), C.ImTextureID(texture_id), size.toC(), uv0.toC(), uv1.toC(), bg_col.toC(), tint_col.toC(), C.ImGuiButtonFlags(flags)) == C.bool(true)
 }
 
+// move content position toward the right, by indent_w, or style.IndentSpacing if indent_w <= 0
 // IndentV parameter default value hint:
 // indent_w: 0.0f
 func IndentV(indent_w float32) {
@@ -5182,6 +5442,7 @@ func InternalInputTextDeactivateHook(id ID) {
 	C.igInputTextDeactivateHook(C.ImGuiID(id))
 }
 
+// flexible button behavior without the visuals, frequently useful to build custom behaviors using the public api (along with IsItemActive, IsItemHovered, etc.)
 // InvisibleButtonV parameter default value hint:
 // flags: 0
 func InvisibleButtonV(str_id string, size Vec2, flags ButtonFlags) bool {
@@ -5201,18 +5462,22 @@ func InternalIsAliasKey(key Key) bool {
 	return C.igIsAliasKey(C.ImGuiKey(key)) == C.bool(true)
 }
 
+// is any item active?
 func IsAnyItemActive() bool {
 	return C.igIsAnyItemActive() == C.bool(true)
 }
 
+// is any item focused?
 func IsAnyItemFocused() bool {
 	return C.igIsAnyItemFocused() == C.bool(true)
 }
 
+// is any item hovered?
 func IsAnyItemHovered() bool {
 	return C.igIsAnyItemHovered() == C.bool(true)
 }
 
+// [WILL OBSOLETE] is any mouse button held? This was designed for backends, but prefer having backend maintain a mask of held mouse buttons, because upcoming input queue system will make this invalid.
 func IsAnyMouseDown() bool {
 	return C.igIsAnyMouseDown() == C.bool(true)
 }
@@ -5233,50 +5498,61 @@ func InternalIsGamepadKey(key Key) bool {
 	return C.igIsGamepadKey(C.ImGuiKey(key)) == C.bool(true)
 }
 
+// was the last item just made active (item was previously inactive).
 func IsItemActivated() bool {
 	return C.igIsItemActivated() == C.bool(true)
 }
 
+// is the last item active? (e.g. button being held, text field being edited. This will continuously return true while holding mouse button on an item. Items that don't interact will always return false)
 func IsItemActive() bool {
 	return C.igIsItemActive() == C.bool(true)
 }
 
+// is the last item hovered and mouse clicked on? (**)  == IsMouseClicked(mouse_button) && IsItemHovered()Important. (**) this is NOT equivalent to the behavior of e.g. Button(). Read comments in function definition.
 // IsItemClickedV parameter default value hint:
 // mouse_button: 0
 func IsItemClickedV(mouse_button MouseButton) bool {
 	return C.igIsItemClicked(C.ImGuiMouseButton(mouse_button)) == C.bool(true)
 }
 
+// was the last item just made inactive (item was previously active). Useful for Undo/Redo patterns with widgets that require continuous editing.
 func IsItemDeactivated() bool {
 	return C.igIsItemDeactivated() == C.bool(true)
 }
 
+// was the last item just made inactive and made a value change when it was active? (e.g. Slider/Drag moved). Useful for Undo/Redo patterns with widgets that require continuous editing. Note that you may get false positives (some widgets such as Combo()/ListBox()/Selectable() will return true even when clicking an already selected item).
 func IsItemDeactivatedAfterEdit() bool {
 	return C.igIsItemDeactivatedAfterEdit() == C.bool(true)
 }
 
+// did the last item modify its underlying value this frame? or was pressed? This is generally the same as the "bool" return value of many widgets.
 func IsItemEdited() bool {
 	return C.igIsItemEdited() == C.bool(true)
 }
 
+// is the last item focused for keyboard/gamepad navigation?
 func IsItemFocused() bool {
 	return C.igIsItemFocused() == C.bool(true)
 }
 
+// is the last item hovered? (and usable, aka not blocked by a popup, etc.). See ImGuiHoveredFlags for more options.
 // IsItemHoveredV parameter default value hint:
 // flags: 0
 func IsItemHoveredV(flags HoveredFlags) bool {
 	return C.igIsItemHovered(C.ImGuiHoveredFlags(flags)) == C.bool(true)
 }
 
+// was the last item open state toggled? set by TreeNode().
 func IsItemToggledOpen() bool {
 	return C.igIsItemToggledOpen() == C.bool(true)
 }
 
+// Was the last item selection toggled? (after Selectable(), TreeNode() etc. We only returns toggle _event_ in order to handle clipping correctly)
 func InternalIsItemToggledSelection() bool {
 	return C.igIsItemToggledSelection() == C.bool(true)
 }
 
+// is the last item visible? (items may be out of sight because of clipping/scrolling)
 func IsItemVisible() bool {
 	return C.igIsItemVisible() == C.bool(true)
 }
@@ -5285,22 +5561,26 @@ func InternalIsKeyDownID(key Key, owner_id ID) bool {
 	return C.igIsKeyDown_ID(C.ImGuiKey(key), C.ImGuiID(owner_id)) == C.bool(true)
 }
 
+// is key being held.
 func IsKeyDownNil(key Key) bool {
 	return C.igIsKeyDown_Nil(C.ImGuiKey(key)) == C.bool(true)
 }
 
+// Removed in 1.87: Mapping from named key is always identity!
 // InternalIsKeyPressedMapV parameter default value hint:
 // repeat: true
 func InternalIsKeyPressedMapV(key Key, repeat bool) bool {
 	return C.igIsKeyPressedMap(C.ImGuiKey(key), C.bool(repeat)) == C.bool(true)
 }
 
+// was key pressed (went from !Down to Down)? if repeat=true, uses io.KeyRepeatDelay / KeyRepeatRate
 // IsKeyPressedBoolV parameter default value hint:
 // repeat: true
 func IsKeyPressedBoolV(key Key, repeat bool) bool {
 	return C.igIsKeyPressed_Bool(C.ImGuiKey(key), C.bool(repeat)) == C.bool(true)
 }
 
+// Important: when transitioning from old to new IsKeyPressed(): old API has "bool repeat = true", so would default to repeat. New API requiress explicit ImGuiInputFlags_Repeat.
 // InternalIsKeyPressedIDV parameter default value hint:
 // flags: 0
 func InternalIsKeyPressedIDV(key Key, owner_id ID, flags InputFlags) bool {
@@ -5311,6 +5591,7 @@ func InternalIsKeyReleasedID(key Key, owner_id ID) bool {
 	return C.igIsKeyReleased_ID(C.ImGuiKey(key), C.ImGuiID(owner_id)) == C.bool(true)
 }
 
+// was key released (went from Down to !Down)?
 func IsKeyReleasedNil(key Key) bool {
 	return C.igIsKeyReleased_Nil(C.ImGuiKey(key)) == C.bool(true)
 }
@@ -5323,6 +5604,7 @@ func InternalIsLegacyKey(key Key) bool {
 	return C.igIsLegacyKey(C.ImGuiKey(key)) == C.bool(true)
 }
 
+// did mouse button clicked? (went from !Down to Down). Same as GetMouseClickedCount() == 1.
 // IsMouseClickedBoolV parameter default value hint:
 // repeat: false
 func IsMouseClickedBoolV(button MouseButton, repeat bool) bool {
@@ -5335,6 +5617,7 @@ func InternalIsMouseClickedIDV(button MouseButton, owner_id ID, flags InputFlags
 	return C.igIsMouseClicked_ID(C.ImGuiMouseButton(button), C.ImGuiID(owner_id), C.ImGuiInputFlags(flags)) == C.bool(true)
 }
 
+// did mouse button double-clicked? Same as GetMouseClickedCount() == 2. (note that a double-click will also report IsMouseClicked() == true)
 func IsMouseDoubleClicked(button MouseButton) bool {
 	return C.igIsMouseDoubleClicked(C.ImGuiMouseButton(button)) == C.bool(true)
 }
@@ -5343,6 +5626,7 @@ func InternalIsMouseDownID(button MouseButton, owner_id ID) bool {
 	return C.igIsMouseDown_ID(C.ImGuiMouseButton(button), C.ImGuiID(owner_id)) == C.bool(true)
 }
 
+// is mouse button held?
 func IsMouseDownNil(button MouseButton) bool {
 	return C.igIsMouseDown_Nil(C.ImGuiMouseButton(button)) == C.bool(true)
 }
@@ -5353,12 +5637,14 @@ func InternalIsMouseDragPastThresholdV(button MouseButton, lock_threshold float3
 	return C.igIsMouseDragPastThreshold(C.ImGuiMouseButton(button), C.float(lock_threshold)) == C.bool(true)
 }
 
+// is mouse dragging? (if lock_threshold < -1.0f, uses io.MouseDraggingThreshold)
 // IsMouseDraggingV parameter default value hint:
 // lock_threshold: -1.0f
 func IsMouseDraggingV(button MouseButton, lock_threshold float32) bool {
 	return C.igIsMouseDragging(C.ImGuiMouseButton(button), C.float(lock_threshold)) == C.bool(true)
 }
 
+// is mouse hovering given bounding rect (in screen space). clipped by current clipping settings, but disregarding of other consideration of focus/window ordering/popup-block.
 // IsMouseHoveringRectV parameter default value hint:
 // clip: true
 func IsMouseHoveringRectV(r_min Vec2, r_max Vec2, clip bool) bool {
@@ -5369,6 +5655,7 @@ func InternalIsMouseKey(key Key) bool {
 	return C.igIsMouseKey(C.ImGuiKey(key)) == C.bool(true)
 }
 
+// by convention we use (-FLT_MAX,-FLT_MAX) to denote that there is no mouse available
 // IsMousePosValidV parameter default value hint:
 // mouse_pos: NULL
 func IsMousePosValidV(mouse_pos *Vec2) bool {
@@ -5384,6 +5671,7 @@ func InternalIsMouseReleasedID(button MouseButton, owner_id ID) bool {
 	return C.igIsMouseReleased_ID(C.ImGuiMouseButton(button), C.ImGuiID(owner_id)) == C.bool(true)
 }
 
+// did mouse button released? (went from Down to !Down)
 func IsMouseReleasedNil(button MouseButton) bool {
 	return C.igIsMouseReleased_Nil(C.ImGuiMouseButton(button)) == C.bool(true)
 }
@@ -5400,6 +5688,7 @@ func InternalIsPopupOpenID(id ID, popup_flags PopupFlags) bool {
 	return C.igIsPopupOpen_ID(C.ImGuiID(id), C.ImGuiPopupFlags(popup_flags)) == C.bool(true)
 }
 
+// return true if the popup is open.
 // IsPopupOpenStrV parameter default value hint:
 // flags: 0
 func IsPopupOpenStrV(str_id string, flags PopupFlags) bool {
@@ -5411,10 +5700,12 @@ func IsPopupOpenStrV(str_id string, flags PopupFlags) bool {
 	return C.igIsPopupOpen_Str(str_idArg, C.ImGuiPopupFlags(flags)) == C.bool(true)
 }
 
+// test if rectangle (of given size, starting from cursor position) is visible / not clipped.
 func IsRectVisibleNil(size Vec2) bool {
 	return C.igIsRectVisible_Nil(size.toC()) == C.bool(true)
 }
 
+// test if rectangle (in screen space) is visible / not clipped. to perform coarse clipping on user's side.
 func IsRectVisibleVec2(rect_min Vec2, rect_max Vec2) bool {
 	return C.igIsRectVisible_Vec2(rect_min.toC(), rect_max.toC()) == C.bool(true)
 }
@@ -5441,16 +5732,19 @@ func InternalIsWindowContentHoverableV(window Window, flags HoveredFlags) bool {
 	return C.igIsWindowContentHoverable(window.handle(), C.ImGuiHoveredFlags(flags)) == C.bool(true)
 }
 
+// is current window docked into another window?
 func IsWindowDocked() bool {
 	return C.igIsWindowDocked() == C.bool(true)
 }
 
+// is current window focused? or its root/child, depending on flags. see flags for options.
 // IsWindowFocusedV parameter default value hint:
 // flags: 0
 func IsWindowFocusedV(flags FocusedFlags) bool {
 	return C.igIsWindowFocused(C.ImGuiFocusedFlags(flags)) == C.bool(true)
 }
 
+// is current window hovered (and typically: not blocked by a popup/modal)? see flags for options. NB: If you are trying to check whether your mouse should be dispatched to imgui or to your app, you should use the 'io.WantCaptureMouse' boolean for that! Please read the FAQ!
 // IsWindowHoveredV parameter default value hint:
 // flags: 0
 func IsWindowHoveredV(flags HoveredFlags) bool {
@@ -5481,6 +5775,7 @@ func InternalItemHoverable(bb Rect, id ID) bool {
 	return C.igItemHoverable(bb.toC(), C.ImGuiID(id)) == C.bool(true)
 }
 
+// FIXME: This is a misleading API since we expect CursorPos to be bb.Min.
 // InternalItemSizeRectV parameter default value hint:
 // text_baseline_y: -1.0f
 func InternalItemSizeRectV(bb Rect, text_baseline_y float32) {
@@ -5497,6 +5792,7 @@ func InternalKeepAliveID(id ID) {
 	C.igKeepAliveID(C.ImGuiID(id))
 }
 
+// display text+label aligned the same way as value+label widgets
 func LabelText(label string, fmt string) {
 	labelArg, labelFin := wrapString(label)
 	fmtArg, fmtFin := wrapString(fmt)
@@ -5521,6 +5817,7 @@ func ListBoxStrarrV(label string, current_item *int32, items []string, items_cou
 	return C.igListBox_Str_arr(labelArg, current_itemArg, itemsArg, C.int(items_count), C.int(height_in_items)) == C.bool(true)
 }
 
+// call after CreateContext() and before the first call to NewFrame(). NewFrame() automatically calls LoadIniSettingsFromDisk(io.IniFilename).
 func LoadIniSettingsFromDisk(ini_filename string) {
 	ini_filenameArg, ini_filenameFin := wrapString(ini_filename)
 	C.igLoadIniSettingsFromDisk(ini_filenameArg)
@@ -5528,6 +5825,7 @@ func LoadIniSettingsFromDisk(ini_filename string) {
 	ini_filenameFin()
 }
 
+// call after CreateContext() and before the first call to NewFrame() to provide .ini data from your own data source.
 // LoadIniSettingsFromMemoryV parameter default value hint:
 // ini_size: 0
 func LoadIniSettingsFromMemoryV(ini_data string, ini_size uint64) {
@@ -5545,14 +5843,17 @@ func InternalLocalizeRegisterEntries(entries LocEntry, count int32) {
 	C.igLocalizeRegisterEntries(entries.handle(), C.int(count))
 }
 
+// -> BeginCapture() when we design v2 api, for now stay under the radar by using the old name.
 func InternalLogBegin(typeArg LogType, auto_open_depth int32) {
 	C.igLogBegin(C.ImGuiLogType(typeArg), C.int(auto_open_depth))
 }
 
+// helper to display buttons for logging to tty/file/clipboard
 func LogButtons() {
 	C.igLogButtons()
 }
 
+// stop logging (close file, etc.)
 func LogFinish() {
 	C.igLogFinish()
 }
@@ -5576,6 +5877,7 @@ func InternalLogSetNextTextDecoration(prefix string, suffix string) {
 	suffixFin()
 }
 
+// pass text data straight to log (without being displayed)
 func LogText(fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	C.wrap_igLogText(fmtArg)
@@ -5583,18 +5885,21 @@ func LogText(fmt string) {
 	fmtFin()
 }
 
+// Start logging/capturing to internal buffer
 // InternalLogToBufferV parameter default value hint:
 // auto_open_depth: -1
 func InternalLogToBufferV(auto_open_depth int32) {
 	C.igLogToBuffer(C.int(auto_open_depth))
 }
 
+// start logging to OS clipboard
 // LogToClipboardV parameter default value hint:
 // auto_open_depth: -1
 func LogToClipboardV(auto_open_depth int32) {
 	C.igLogToClipboard(C.int(auto_open_depth))
 }
 
+// start logging to file
 // LogToFileV parameter default value hint:
 // auto_open_depth: -1
 // filename: NULL
@@ -5605,6 +5910,7 @@ func LogToFileV(auto_open_depth int32, filename string) {
 	filenameFin()
 }
 
+// start logging to tty (stdout)
 // LogToTTYV parameter default value hint:
 // auto_open_depth: -1
 func LogToTTYV(auto_open_depth int32) {
@@ -5619,6 +5925,7 @@ func InternalMarkIniSettingsDirtyWindowPtr(window Window) {
 	C.igMarkIniSettingsDirty_WindowPtr(window.handle())
 }
 
+// Mark data associated to given item as "edited", used by IsItemDeactivatedAfterEdit() function.
 func InternalMarkItemEdited(id ID) {
 	C.igMarkItemEdited(C.ImGuiID(id))
 }
@@ -5648,6 +5955,7 @@ func InternalMenuItemExV(label string, icon string, shortcut string, selected bo
 	return C.igMenuItemEx(labelArg, iconArg, shortcutArg, C.bool(selected), C.bool(enabled)) == C.bool(true)
 }
 
+// return true when activated.
 // MenuItemBoolV parameter default value hint:
 // shortcut: NULL
 // selected: false
@@ -5663,6 +5971,7 @@ func MenuItemBoolV(label string, shortcut string, selected bool, enabled bool) b
 	return C.igMenuItem_Bool(labelArg, shortcutArg, C.bool(selected), C.bool(enabled)) == C.bool(true)
 }
 
+// return true when activated + toggle (*p_selected) if p_selected != NULL
 // MenuItemBoolPtrV parameter default value hint:
 // enabled: true
 func MenuItemBoolPtrV(label string, shortcut string, p_selected *bool, enabled bool) bool {
@@ -5718,14 +6027,21 @@ func InternalNavMoveRequestTryWrapping(window Window, move_flags NavMoveFlags) {
 	C.igNavMoveRequestTryWrapping(window.handle(), C.ImGuiNavMoveFlags(move_flags))
 }
 
+func InternalNavUpdateCurrentWindowIsScrollPushableX() {
+	C.igNavUpdateCurrentWindowIsScrollPushableX()
+}
+
+// start a new Dear ImGui frame, you can submit any command from this point until Render()/EndFrame().
 func NewFrame() {
 	C.igNewFrame()
 }
 
+// undo a SameLine() or force a new line when in a horizontal-layout context.
 func NewLine() {
 	C.igNewLine()
 }
 
+// next column, defaults to current row or next row if the current row is finished
 func NextColumn() {
 	C.igNextColumn()
 }
@@ -5736,6 +6052,7 @@ func InternalOpenPopupExV(id ID, popup_flags PopupFlags) {
 	C.igOpenPopupEx(C.ImGuiID(id), C.ImGuiPopupFlags(popup_flags))
 }
 
+// helper to open popup when clicked on last item. Default to ImGuiPopupFlags_MouseButtonRight == 1. (note: actually triggers on the mouse _released_ event to be consistent with popup behaviors)
 // OpenPopupOnItemClickV parameter default value hint:
 // str_id: NULL
 // popup_flags: 1
@@ -5746,12 +6063,14 @@ func OpenPopupOnItemClickV(str_id string, popup_flags PopupFlags) {
 	str_idFin()
 }
 
+// id overload to facilitate calling from nested stacks
 // OpenPopupIDV parameter default value hint:
 // popup_flags: 0
 func OpenPopupIDV(id ID, popup_flags PopupFlags) {
 	C.igOpenPopup_ID(C.ImGuiID(id), C.ImGuiPopupFlags(popup_flags))
 }
 
+// call to mark popup as open (don't call every frame!).
 // OpenPopupStrV parameter default value hint:
 // popup_flags: 0
 func OpenPopupStrV(str_id string, popup_flags PopupFlags) {
@@ -5813,6 +6132,7 @@ func PopFont() {
 	C.igPopFont()
 }
 
+// pop from the ID stack.
 func PopID() {
 	C.igPopID()
 }
@@ -5855,6 +6175,7 @@ func ProgressBarV(fraction float32, size_arg Vec2, overlay string) {
 	overlayFin()
 }
 
+// in 'repeat' mode, Button*() functions return repeated true in a typematic manner (using io.KeyRepeatDelay/io.KeyRepeatRate setting). Note that you can call IsItemActive() after any Button() to tell if the button is held in the current frame.
 func PushButtonRepeat(repeat bool) {
 	C.igPushButtonRepeat(C.bool(repeat))
 }
@@ -5875,18 +6196,22 @@ func InternalPushFocusScope(id ID) {
 	C.igPushFocusScope(C.ImGuiID(id))
 }
 
+// use NULL as a shortcut to push default font
 func PushFont(font Font) {
 	C.igPushFont(font.handle())
 }
 
+// push integer into the ID stack (will hash integer).
 func PushIDInt(int_id int32) {
 	C.igPushID_Int(C.int(int_id))
 }
 
+// push pointer into the ID stack (will hash pointer).
 func PushIDPtr(ptr_id unsafe.Pointer) {
 	C.igPushID_Ptr((ptr_id))
 }
 
+// push string into the ID stack (will hash string).
 func PushIDStr(str_id string) {
 	str_idArg, str_idFin := wrapString(str_id)
 	C.igPushID_Str(str_idArg)
@@ -5894,6 +6219,7 @@ func PushIDStr(str_id string) {
 	str_idFin()
 }
 
+// push string into the ID stack (will hash string).
 func PushIDStrStr(str_id_begin string, str_id_end string) {
 	str_id_beginArg, str_id_beginFin := wrapString(str_id_begin)
 	str_id_endArg, str_id_endFin := wrapString(str_id_end)
@@ -5907,6 +6233,7 @@ func InternalPushItemFlag(option ItemFlags, enabled bool) {
 	C.igPushItemFlag(C.ImGuiItemFlags(option), C.bool(enabled))
 }
 
+// push width of items for common large "item+label" widgets. >0.0f: width in pixels, <0.0f align xx pixels to the right of window (so -FLT_MIN always align width to the right side).
 func PushItemWidth(item_width float32) {
 	C.igPushItemWidth(C.float(item_width))
 }
@@ -5915,10 +6242,12 @@ func InternalPushMultiItemsWidths(components int32, width_full float32) {
 	C.igPushMultiItemsWidths(C.int(components), C.float(width_full))
 }
 
+// Push given value as-is at the top of the ID stack (whereas PushID combines old and new hashes)
 func InternalPushOverrideID(id ID) {
 	C.igPushOverrideID(C.ImGuiID(id))
 }
 
+// modify a style color. always use this if you modify the style after NewFrame().
 func PushStyleColorU32(idx Col, col uint32) {
 	C.igPushStyleColor_U32(C.ImGuiCol(idx), C.ImU32(col))
 }
@@ -5927,24 +6256,29 @@ func PushStyleColorVec4(idx Col, col Vec4) {
 	C.igPushStyleColor_Vec4(C.ImGuiCol(idx), col.toC())
 }
 
+// modify a style float variable. always use this if you modify the style after NewFrame().
 func PushStyleVarFloat(idx StyleVar, val float32) {
 	C.igPushStyleVar_Float(C.ImGuiStyleVar(idx), C.float(val))
 }
 
+// modify a style ImVec2 variable. always use this if you modify the style after NewFrame().
 func PushStyleVarVec2(idx StyleVar, val Vec2) {
 	C.igPushStyleVar_Vec2(C.ImGuiStyleVar(idx), val.toC())
 }
 
+// == tab stop enable. Allow focusing using TAB/Shift-TAB, enabled by default but you can disable it for certain widgets
 func PushTabStop(tab_stop bool) {
 	C.igPushTabStop(C.bool(tab_stop))
 }
 
+// push word-wrapping position for Text*() commands. < 0.0f: no wrapping; 0.0f: wrap to end of window (or column); > 0.0f: wrap at 'wrap_pos_x' position in window local space
 // PushTextWrapPosV parameter default value hint:
 // wrap_local_pos_x: 0.0f
 func PushTextWrapPosV(wrap_local_pos_x float32) {
 	C.igPushTextWrapPos(C.float(wrap_local_pos_x))
 }
 
+// use with e.g. if (RadioButton("one", my_value==1))  my_value = 1;
 func RadioButtonBool(label string, active bool) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -5954,6 +6288,7 @@ func RadioButtonBool(label string, active bool) bool {
 	return C.igRadioButton_Bool(labelArg, C.bool(active)) == C.bool(true)
 }
 
+// shortcut to handle the above pattern when value is an integer
 func RadioButtonIntPtr(label string, v *int32, v_button int32) bool {
 	labelArg, labelFin := wrapString(label)
 	vArg, vFin := wrapNumberPtr[C.int, int32](v)
@@ -5976,6 +6311,7 @@ func InternalRemoveSettingsHandler(type_name string) {
 	type_nameFin()
 }
 
+// ends the Dear ImGui frame, finalize the draw data. You can then get call GetDrawData().
 func Render() {
 	C.igRender()
 }
@@ -6030,12 +6366,14 @@ func InternalRenderMouseCursor(pos Vec2, scale float32, mouse_cursor MouseCursor
 	C.igRenderMouseCursor(pos.toC(), C.float(scale), C.ImGuiMouseCursor(mouse_cursor), C.ImU32(col_fill), C.ImU32(col_border), C.ImU32(col_shadow))
 }
 
+// Navigation highlight
 // InternalRenderNavHighlightV parameter default value hint:
 // flags: ImGuiNavHighlightFlags_TypeDefault
 func InternalRenderNavHighlightV(bb Rect, id ID, flags NavHighlightFlags) {
 	C.igRenderNavHighlight(bb.toC(), C.ImGuiID(id), C.ImGuiNavHighlightFlags(flags))
 }
 
+// call in main loop. will call RenderWindow/SwapBuffers platform functions for each secondary viewport which doesn't have the ImGuiViewportFlags_Minimized flag set. May be reimplemented by user for custom rendering needs.
 // RenderPlatformWindowsDefaultV parameter default value hint:
 // platform_render_arg: NULL
 // renderer_render_arg: NULL
@@ -6110,6 +6448,7 @@ func ResetMouseDragDeltaV(button MouseButton) {
 	C.igResetMouseDragDelta(C.ImGuiMouseButton(button))
 }
 
+// call between widgets or groups to layout them horizontally. X position given in window coordinates.
 // SameLineV parameter default value hint:
 // offset_from_start_x: 0.0f
 // spacing: -1.0f
@@ -6117,6 +6456,7 @@ func SameLineV(offset_from_start_x float32, spacing float32) {
 	C.igSameLine(C.float(offset_from_start_x), C.float(spacing))
 }
 
+// this is automatically called (if io.IniFilename is not empty) a few seconds after any modification that should be reflected in the .ini file (and also by DestroyContext).
 func SaveIniSettingsToDisk(ini_filename string) {
 	ini_filenameArg, ini_filenameFin := wrapString(ini_filename)
 	C.igSaveIniSettingsToDisk(ini_filenameArg)
@@ -6124,6 +6464,7 @@ func SaveIniSettingsToDisk(ini_filename string) {
 	ini_filenameFin()
 }
 
+// return a zero-terminated string with the .ini data which you can save by your own mean. call when io.WantSaveIniSettings is set, then save data by your own mean and clear io.WantSaveIniSettings.
 // SaveIniSettingsToMemoryV parameter default value hint:
 // out_ini_size: NULL
 func SaveIniSettingsToMemoryV(out_ini_size *uint64) string {
@@ -6167,6 +6508,7 @@ func InternalScrollbar(axis Axis) {
 	C.igScrollbar(C.ImGuiAxis(axis))
 }
 
+// "bool selected" carry the selection state (read-only). Selectable() is clicked is returns true so you can modify your selection state. size.x==0.0: use remaining width, size.x>0.0: specify width. size.y==0.0: use label height, size.y>0.0: specify height
 // SelectableBoolV parameter default value hint:
 // selected: false
 // flags: 0
@@ -6180,6 +6522,7 @@ func SelectableBoolV(label string, selected bool, flags SelectableFlags, size Ve
 	return C.igSelectable_Bool(labelArg, C.bool(selected), C.ImGuiSelectableFlags(flags), size.toC()) == C.bool(true)
 }
 
+// "bool* p_selected" point to the selection state (read-write), as a convenient helper.
 // SelectableBoolPtrV parameter default value hint:
 // flags: 0
 // size: ImVec2(0,0)
@@ -6194,6 +6537,7 @@ func SelectableBoolPtrV(label string, p_selected *bool, flags SelectableFlags, s
 	return C.igSelectable_BoolPtr(labelArg, p_selectedArg, C.ImGuiSelectableFlags(flags), size.toC()) == C.bool(true)
 }
 
+// separator, generally horizontal. inside a menu bar or in horizontal layout mode, this becomes a vertical separator.
 func Separator() {
 	C.igSeparator()
 }
@@ -6202,6 +6546,7 @@ func InternalSeparatorEx(flags SeparatorFlags) {
 	C.igSeparatorEx(C.ImGuiSeparatorFlags(flags))
 }
 
+// currently: formatted text with an horizontal line
 func SeparatorText(label string) {
 	labelArg, labelFin := wrapString(label)
 	C.igSeparatorText(labelArg)
@@ -6233,14 +6578,17 @@ func SetClipboardText(text string) {
 	textFin()
 }
 
+// initialize current options (generally on application startup) if you want to select a default format, picker type, etc. User will be able to change many settings, unless you pass the _NoOptions flag to your calls.
 func SetColorEditOptions(flags ColorEditFlags) {
 	C.igSetColorEditOptions(C.ImGuiColorEditFlags(flags))
 }
 
+// set position of column line (in pixels, from the left side of the contents region). pass -1 to use current column
 func SetColumnOffset(column_index int32, offset_x float32) {
 	C.igSetColumnOffset(C.int(column_index), C.float(offset_x))
 }
 
+// set column width (in pixels). pass -1 to use current column
 func SetColumnWidth(column_index int32, width float32) {
 	C.igSetColumnWidth(C.int(column_index), C.float(width))
 }
@@ -6257,10 +6605,12 @@ func InternalSetCurrentViewport(window Window, viewport ViewportP) {
 	C.igSetCurrentViewport(window.handle(), viewport.handle())
 }
 
+// are using the main, absolute coordinate system.
 func SetCursorPos(local_pos Vec2) {
 	C.igSetCursorPos(local_pos.toC())
 }
 
+// GetWindowPos() + GetCursorPos() == GetCursorScreenPos() etc.)
 func SetCursorPosX(local_x float32) {
 	C.igSetCursorPosX(C.float(local_x))
 }
@@ -6269,10 +6619,12 @@ func SetCursorPosY(local_y float32) {
 	C.igSetCursorPosY(C.float(local_y))
 }
 
+// cursor position in absolute coordinates
 func SetCursorScreenPos(pos Vec2) {
 	C.igSetCursorScreenPos(pos.toC())
 }
 
+// type is a user defined string of maximum 32 characters. Strings starting with '_' are reserved for dear imgui internal types. Data is copied and held by imgui. Return true when payload has been accepted.
 // SetDragDropPayloadV parameter default value hint:
 // cond: 0
 func SetDragDropPayloadV(typeArg string, data unsafe.Pointer, sz uint64, cond Cond) bool {
@@ -6292,14 +6644,17 @@ func InternalSetHoveredID(id ID) {
 	C.igSetHoveredID(C.ImGuiID(id))
 }
 
+// allow last item to be overlapped by a subsequent item. sometimes useful with invisible buttons, selectables, etc. to catch unused area.
 func SetItemAllowOverlap() {
 	C.igSetItemAllowOverlap()
 }
 
+// make last item the default focused item of a window.
 func SetItemDefaultFocus() {
 	C.igSetItemDefaultFocus()
 }
 
+// Set key owner to last item if it is hovered or active. Equivalent to 'if (IsItemHovered() || IsItemActive())  SetKeyOwner(key, GetItemID());'.
 // InternalSetItemKeyOwnerV parameter default value hint:
 // flags: 0
 func InternalSetItemKeyOwnerV(key Key, flags InputFlags) {
@@ -6318,6 +6673,7 @@ func InternalSetKeyOwnersForKeyChordV(key KeyChord, owner_id ID, flags InputFlag
 	C.igSetKeyOwnersForKeyChord(C.ImGuiKeyChord(key), C.ImGuiID(owner_id), C.ImGuiInputFlags(flags))
 }
 
+// focus keyboard on the next widget. Use positive 'offset' to access sub components of a multiple component widget. Use -1 to access previous widget.
 // SetKeyboardFocusHereV parameter default value hint:
 // offset: 0
 func SetKeyboardFocusHereV(offset int32) {
@@ -6328,6 +6684,7 @@ func InternalSetLastItemData(item_id ID, in_flags ItemFlags, status_flags ItemSt
 	C.igSetLastItemData(C.ImGuiID(item_id), C.ImGuiItemFlags(in_flags), C.ImGuiItemStatusFlags(status_flags), item_rect.toC())
 }
 
+// set desired mouse cursor shape
 func SetMouseCursor(cursor_type MouseCursor) {
 	C.igSetMouseCursor(C.ImGuiMouseCursor(cursor_type))
 }
@@ -6340,52 +6697,63 @@ func InternalSetNavWindow(window Window) {
 	C.igSetNavWindow(window.handle())
 }
 
+// Override io.WantCaptureKeyboard flag next frame (said flag is left for your application to handle, typically when true it instructs your app to ignore inputs). e.g. force capture keyboard when your widget is being hovered. This is equivalent to setting "io.WantCaptureKeyboard = want_capture_keyboard"; after the next NewFrame() call.
 func SetNextFrameWantCaptureKeyboard(want_capture_keyboard bool) {
 	C.igSetNextFrameWantCaptureKeyboard(C.bool(want_capture_keyboard))
 }
 
+// Override io.WantCaptureMouse flag next frame (said flag is left for your application to handle, typical when true it instucts your app to ignore inputs). This is equivalent to setting "io.WantCaptureMouse = want_capture_mouse;" after the next NewFrame() call.
 func SetNextFrameWantCaptureMouse(want_capture_mouse bool) {
 	C.igSetNextFrameWantCaptureMouse(C.bool(want_capture_mouse))
 }
 
+// set next TreeNode/CollapsingHeader open state.
 // SetNextItemOpenV parameter default value hint:
 // cond: 0
 func SetNextItemOpenV(is_open bool, cond Cond) {
 	C.igSetNextItemOpen(C.bool(is_open), C.ImGuiCond(cond))
 }
 
+// set width of the _next_ common large "item+label" widget. >0.0f: width in pixels, <0.0f align xx pixels to the right of window (so -FLT_MIN always align width to the right side)
 func SetNextItemWidth(item_width float32) {
 	C.igSetNextItemWidth(C.float(item_width))
 }
 
+// set next window background color alpha. helper to easily override the Alpha component of ImGuiCol_WindowBg/ChildBg/PopupBg. you may also use ImGuiWindowFlags_NoBackground.
 func SetNextWindowBgAlpha(alpha float32) {
 	C.igSetNextWindowBgAlpha(C.float(alpha))
 }
 
+// set next window class (control docking compatibility + provide hints to platform backend via custom viewport flags and platform parent/child relationship)
 func SetNextWindowClass(window_class WindowClass) {
 	C.igSetNextWindowClass(window_class.handle())
 }
 
+// set next window collapsed state. call before Begin()
 // SetNextWindowCollapsedV parameter default value hint:
 // cond: 0
 func SetNextWindowCollapsedV(collapsed bool, cond Cond) {
 	C.igSetNextWindowCollapsed(C.bool(collapsed), C.ImGuiCond(cond))
 }
 
+// set next window content size (~ scrollable client area, which enforce the range of scrollbars). Not including window decorations (title bar, menu bar, etc.) nor WindowPadding. set an axis to 0.0f to leave it automatic. call before Begin()
 func SetNextWindowContentSize(size Vec2) {
 	C.igSetNextWindowContentSize(size.toC())
 }
 
+// set next window dock id
 // SetNextWindowDockIDV parameter default value hint:
 // cond: 0
 func SetNextWindowDockIDV(dock_id ID, cond Cond) {
 	C.igSetNextWindowDockID(C.ImGuiID(dock_id), C.ImGuiCond(cond))
 }
 
+// set next window to be focused / top-most. call before Begin()
 func SetNextWindowFocus() {
 	C.igSetNextWindowFocus()
 }
 
+// set next window position. call before Begin(). use pivot=(0.5f,0.5f) to center on given point, etc.
 // SetNextWindowPosV parameter default value hint:
 // cond: 0
 // pivot: ImVec2(0,0)
@@ -6393,20 +6761,24 @@ func SetNextWindowPosV(pos Vec2, cond Cond, pivot Vec2) {
 	C.igSetNextWindowPos(pos.toC(), C.ImGuiCond(cond), pivot.toC())
 }
 
+// set next window scrolling value (use < 0.0f to not affect a given axis).
 func SetNextWindowScroll(scroll Vec2) {
 	C.igSetNextWindowScroll(scroll.toC())
 }
 
+// set next window size. set axis to 0.0f to force an auto-fit on this axis. call before Begin()
 // SetNextWindowSizeV parameter default value hint:
 // cond: 0
 func SetNextWindowSizeV(size Vec2, cond Cond) {
 	C.igSetNextWindowSize(size.toC(), C.ImGuiCond(cond))
 }
 
+// set next window viewport
 func SetNextWindowViewport(viewport_id ID) {
 	C.igSetNextWindowViewport(C.ImGuiID(viewport_id))
 }
 
+// adjust scrolling amount to make given position visible. Generally GetCursorStartPos() + offset to compute a valid position.
 // SetScrollFromPosXFloatV parameter default value hint:
 // center_x_ratio: 0.5f
 func SetScrollFromPosXFloatV(local_x float32, center_x_ratio float32) {
@@ -6417,6 +6789,7 @@ func InternalSetScrollFromPosXWindowPtr(window Window, local_x float32, center_x
 	C.igSetScrollFromPosX_WindowPtr(window.handle(), C.float(local_x), C.float(center_x_ratio))
 }
 
+// adjust scrolling amount to make given position visible. Generally GetCursorStartPos() + offset to compute a valid position.
 // SetScrollFromPosYFloatV parameter default value hint:
 // center_y_ratio: 0.5f
 func SetScrollFromPosYFloatV(local_y float32, center_y_ratio float32) {
@@ -6427,18 +6800,21 @@ func InternalSetScrollFromPosYWindowPtr(window Window, local_y float32, center_y
 	C.igSetScrollFromPosY_WindowPtr(window.handle(), C.float(local_y), C.float(center_y_ratio))
 }
 
+// adjust scrolling amount to make current cursor position visible. center_x_ratio=0.0: left, 0.5: center, 1.0: right. When using to make a "default/current item" visible, consider using SetItemDefaultFocus() instead.
 // SetScrollHereXV parameter default value hint:
 // center_x_ratio: 0.5f
 func SetScrollHereXV(center_x_ratio float32) {
 	C.igSetScrollHereX(C.float(center_x_ratio))
 }
 
+// adjust scrolling amount to make current cursor position visible. center_y_ratio=0.0: top, 0.5: center, 1.0: bottom. When using to make a "default/current item" visible, consider using SetItemDefaultFocus() instead.
 // SetScrollHereYV parameter default value hint:
 // center_y_ratio: 0.5f
 func SetScrollHereYV(center_y_ratio float32) {
 	C.igSetScrollHereY(C.float(center_y_ratio))
 }
 
+// set scrolling amount [0 .. GetScrollMaxX()]
 func SetScrollXFloat(scroll_x float32) {
 	C.igSetScrollX_Float(C.float(scroll_x))
 }
@@ -6447,6 +6823,7 @@ func InternalSetScrollXWindowPtr(window Window, scroll_x float32) {
 	C.igSetScrollX_WindowPtr(window.handle(), C.float(scroll_x))
 }
 
+// set scrolling amount [0 .. GetScrollMaxY()]
 func SetScrollYFloat(scroll_y float32) {
 	C.igSetScrollY_Float(C.float(scroll_y))
 }
@@ -6462,6 +6839,7 @@ func InternalSetShortcutRoutingV(key_chord KeyChord, owner_id ID, flags InputFla
 	return C.igSetShortcutRouting(C.ImGuiKeyChord(key_chord), C.ImGuiID(owner_id), C.ImGuiInputFlags(flags)) == C.bool(true)
 }
 
+// notify TabBar or Docking system of a closed tab/window ahead (useful to reduce visual flicker on reorderable tab bars). For tab-bar: call after BeginTabBar() and before Tab submissions. Otherwise call with a window name.
 func SetTabItemClosed(tab_or_docked_window_label string) {
 	tab_or_docked_window_labelArg, tab_or_docked_window_labelFin := wrapString(tab_or_docked_window_label)
 	C.igSetTabItemClosed(tab_or_docked_window_labelArg)
@@ -6469,6 +6847,7 @@ func SetTabItemClosed(tab_or_docked_window_label string) {
 	tab_or_docked_window_labelFin()
 }
 
+// set a text-only tooltip, typically use with ImGui::IsItemHovered(). override any previous call to SetTooltip().
 func SetTooltip(fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	C.wrap_igSetTooltip(fmtArg)
@@ -6480,12 +6859,14 @@ func InternalSetWindowClipRectBeforeSetChannel(window Window, clip_rect Rect) {
 	C.igSetWindowClipRectBeforeSetChannel(window.handle(), clip_rect.toC())
 }
 
+// (not recommended) set current window collapsed state. prefer using SetNextWindowCollapsed().
 // SetWindowCollapsedBoolV parameter default value hint:
 // cond: 0
 func SetWindowCollapsedBoolV(collapsed bool, cond Cond) {
 	C.igSetWindowCollapsed_Bool(C.bool(collapsed), C.ImGuiCond(cond))
 }
 
+// set named window collapsed state
 // SetWindowCollapsedStrV parameter default value hint:
 // cond: 0
 func SetWindowCollapsedStrV(name string, collapsed bool, cond Cond) {
@@ -6505,10 +6886,12 @@ func InternalSetWindowDock(window Window, dock_id ID, cond Cond) {
 	C.igSetWindowDock(window.handle(), C.ImGuiID(dock_id), C.ImGuiCond(cond))
 }
 
+// (not recommended) set current window to be focused / top-most. prefer using SetNextWindowFocus().
 func SetWindowFocusNil() {
 	C.igSetWindowFocus_Nil()
 }
 
+// set named window to be focused / top-most. use NULL to remove focus.
 func SetWindowFocusStr(name string) {
 	nameArg, nameFin := wrapString(name)
 	C.igSetWindowFocus_Str(nameArg)
@@ -6516,6 +6899,7 @@ func SetWindowFocusStr(name string) {
 	nameFin()
 }
 
+// [OBSOLETE] set font scale. Adjust IO.FontGlobalScale if you want to scale all windows. This is an old API! For correct scaling, prefer to reload font + rebuild ImFontAtlas + call style.ScaleAllSizes().
 func SetWindowFontScale(scale float32) {
 	C.igSetWindowFontScale(C.float(scale))
 }
@@ -6528,6 +6912,7 @@ func InternalSetWindowHitTestHole(window Window, pos Vec2, size Vec2) {
 	C.igSetWindowHitTestHole(window.handle(), pos.toC(), size.toC())
 }
 
+// set named window position.
 // SetWindowPosStrV parameter default value hint:
 // cond: 0
 func SetWindowPosStrV(name string, pos Vec2, cond Cond) {
@@ -6537,6 +6922,7 @@ func SetWindowPosStrV(name string, pos Vec2, cond Cond) {
 	nameFin()
 }
 
+// (not recommended) set current window position - call within Begin()/End(). prefer using SetNextWindowPos(), as this may incur tearing and side-effects.
 // SetWindowPosVec2V parameter default value hint:
 // cond: 0
 func SetWindowPosVec2V(pos Vec2, cond Cond) {
@@ -6549,6 +6935,7 @@ func InternalSetWindowPosWindowPtrV(window Window, pos Vec2, cond Cond) {
 	C.igSetWindowPos_WindowPtr(window.handle(), pos.toC(), C.ImGuiCond(cond))
 }
 
+// set named window size. set axis to 0.0f to force an auto-fit on this axis.
 // SetWindowSizeStrV parameter default value hint:
 // cond: 0
 func SetWindowSizeStrV(name string, size Vec2, cond Cond) {
@@ -6558,6 +6945,7 @@ func SetWindowSizeStrV(name string, size Vec2, cond Cond) {
 	nameFin()
 }
 
+// (not recommended) set current window size - call within Begin()/End(). set to ImVec2(0, 0) to force an auto-fit. prefer using SetNextWindowSize(), as this may incur tearing and minor side-effects.
 // SetWindowSizeVec2V parameter default value hint:
 // cond: 0
 func SetWindowSizeVec2V(size Vec2, cond Cond) {
@@ -6589,6 +6977,7 @@ func InternalShortcutV(key_chord KeyChord, owner_id ID, flags InputFlags) bool {
 	return C.igShortcut(C.ImGuiKeyChord(key_chord), C.ImGuiID(owner_id), C.ImGuiInputFlags(flags)) == C.bool(true)
 }
 
+// create About window. display Dear ImGui version, credits and build/system information.
 // ShowAboutWindowV parameter default value hint:
 // p_open: NULL
 func ShowAboutWindowV(p_open *bool) {
@@ -6598,6 +6987,7 @@ func ShowAboutWindowV(p_open *bool) {
 	p_openFin()
 }
 
+// create Debug Log window. display a simplified log of important dear imgui events.
 // ShowDebugLogWindowV parameter default value hint:
 // p_open: NULL
 func ShowDebugLogWindowV(p_open *bool) {
@@ -6607,6 +6997,7 @@ func ShowDebugLogWindowV(p_open *bool) {
 	p_openFin()
 }
 
+// create Demo window. demonstrate most ImGui features. call this to learn about the library! try to make it always available in your application!
 // ShowDemoWindowV parameter default value hint:
 // p_open: NULL
 func ShowDemoWindowV(p_open *bool) {
@@ -6620,6 +7011,7 @@ func InternalShowFontAtlas(atlas FontAtlas) {
 	C.igShowFontAtlas(atlas.handle())
 }
 
+// add font selector block (not a window), essentially a combo listing the loaded fonts.
 func ShowFontSelector(label string) {
 	labelArg, labelFin := wrapString(label)
 	C.igShowFontSelector(labelArg)
@@ -6627,6 +7019,7 @@ func ShowFontSelector(label string) {
 	labelFin()
 }
 
+// create Metrics/Debugger window. display Dear ImGui internals: windows, draw commands, various internal state, etc.
 // ShowMetricsWindowV parameter default value hint:
 // p_open: NULL
 func ShowMetricsWindowV(p_open *bool) {
@@ -6636,6 +7029,7 @@ func ShowMetricsWindowV(p_open *bool) {
 	p_openFin()
 }
 
+// create Stack Tool window. hover items with mouse to query information about the source of their unique ID.
 // ShowStackToolWindowV parameter default value hint:
 // p_open: NULL
 func ShowStackToolWindowV(p_open *bool) {
@@ -6645,12 +7039,14 @@ func ShowStackToolWindowV(p_open *bool) {
 	p_openFin()
 }
 
+// add style editor block (not a window). you can pass in a reference ImGuiStyle structure to compare to, revert to and save to (else it uses the default style)
 // ShowStyleEditorV parameter default value hint:
 // ref: NULL
 func ShowStyleEditorV(ref Style) {
 	C.igShowStyleEditor(ref.handle())
 }
 
+// add style selector block (not a window), essentially a combo listing the default styles.
 func ShowStyleSelector(label string) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -6660,6 +7056,7 @@ func ShowStyleSelector(label string) bool {
 	return C.igShowStyleSelector(labelArg) == C.bool(true)
 }
 
+// add basic help/info block (not a window): how to manipulate ImGui as an end-user (mouse/keyboard controls).
 func ShowUserGuide() {
 	C.igShowUserGuide()
 }
@@ -6668,6 +7065,7 @@ func InternalShrinkWidths(items ShrinkWidthItem, count int32, width_excess float
 	C.igShrinkWidths(items.handle(), C.int(count), C.float(width_excess))
 }
 
+// Since 1.60 this is a _private_ function. You can call DestroyContext() to destroy the context created by CreateContext().
 func InternalShutdown() {
 	C.igShutdown()
 }
@@ -6701,6 +7099,7 @@ func InternalSliderBehavior(bb Rect, id ID, data_type DataType, p_v unsafe.Point
 	return C.igSliderBehavior(bb.toC(), C.ImGuiID(id), C.ImGuiDataType(data_type), (p_v), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags), out_grab_bbArg) == C.bool(true)
 }
 
+// adjust format to decorate the value with a prefix or a suffix for in-slider labels or unit display.
 // SliderFloatV parameter default value hint:
 // format: "%.3f"
 // flags: 0
@@ -6905,6 +7304,7 @@ func SliderScalarNV(label string, data_type DataType, p_data unsafe.Pointer, com
 	return C.igSliderScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
+// button with FramePadding=(0,0) to easily embed within text
 func SmallButton(label string) bool {
 	labelArg, labelFin := wrapString(label)
 
@@ -6914,6 +7314,7 @@ func SmallButton(label string) bool {
 	return C.igSmallButton(labelArg) == C.bool(true)
 }
 
+// add vertical spacing.
 func Spacing() {
 	C.igSpacing()
 }
@@ -6941,18 +7342,21 @@ func InternalStartMouseMovingWindowOrNode(window Window, node DockNode, undock_f
 	C.igStartMouseMovingWindowOrNode(window.handle(), node.handle(), C.bool(undock_floating_node))
 }
 
+// classic imgui style
 // StyleColorsClassicV parameter default value hint:
 // dst: NULL
 func StyleColorsClassicV(dst Style) {
 	C.igStyleColorsClassic(dst.handle())
 }
 
+// new, recommended style (default)
 // StyleColorsDarkV parameter default value hint:
 // dst: NULL
 func StyleColorsDarkV(dst Style) {
 	C.igStyleColorsDark(dst.handle())
 }
 
+// best used with borders and a custom, thicker font
 // StyleColorsLightV parameter default value hint:
 // dst: NULL
 func StyleColorsLightV(dst Style) {
@@ -7015,6 +7419,7 @@ func InternalTabItemBackground(draw_list DrawList, bb Rect, flags TabItemFlags, 
 	C.igTabItemBackground(draw_list.handle(), bb.toC(), C.ImGuiTabItemFlags(flags), C.ImU32(col))
 }
 
+// create a Tab behaving like a button. return true when clicked. cannot be selected in the tab bar.
 // TabItemButtonV parameter default value hint:
 // flags: 0
 func TabItemButtonV(label string, flags TabItemFlags) bool {
@@ -7143,20 +7548,24 @@ func InternalTableGetCellBgRect(table Table, column_n int32) Rect {
 	return *pOut
 }
 
+// return number of columns (value passed to BeginTable)
 func TableGetColumnCount() int {
 	return int(C.igTableGetColumnCount())
 }
 
+// return column flags so you can query their Enabled/Visible/Sorted/Hovered status flags. Pass -1 to use current column.
 // TableGetColumnFlagsV parameter default value hint:
 // column_n: -1
 func TableGetColumnFlagsV(column_n int32) TableColumnFlags {
 	return TableColumnFlags(C.igTableGetColumnFlags(C.int(column_n)))
 }
 
+// return current column index.
 func TableGetColumnIndex() int {
 	return int(C.igTableGetColumnIndex())
 }
 
+// return "" if column didn't have a name declared by TableSetupColumn(). Pass -1 to use current column.
 // TableGetColumnNameIntV parameter default value hint:
 // column_n: -1
 func TableGetColumnNameIntV(column_n int32) string {
@@ -7185,6 +7594,7 @@ func InternalTableGetHeaderRowHeight() float32 {
 	return float32(C.igTableGetHeaderRowHeight())
 }
 
+// May use (TableGetColumnFlags() & ImGuiTableColumnFlags_IsHovered) instead. Return hovered column. return -1 when table is not hovered. return columns_count if the unused space at the right of visible columns is hovered.
 func InternalTableGetHoveredColumn() int {
 	return int(C.igTableGetHoveredColumn())
 }
@@ -7201,14 +7611,17 @@ func InternalTableGetMaxColumnWidth(table Table, column_n int32) float32 {
 	return float32(C.igTableGetMaxColumnWidth(table.handle(), C.int(column_n)))
 }
 
+// return current row index.
 func TableGetRowIndex() int {
 	return int(C.igTableGetRowIndex())
 }
 
+// get latest sort specs for the table (NULL if not sorting).  Lifetime: don't hold on this pointer over multiple frames or past any subsequent call to BeginTable().
 func TableGetSortSpecs() TableSortSpecs {
 	return (TableSortSpecs)(unsafe.Pointer(C.igTableGetSortSpecs()))
 }
 
+// submit one header cell manually (rarely used)
 func TableHeader(label string) {
 	labelArg, labelFin := wrapString(label)
 	C.igTableHeader(labelArg)
@@ -7216,6 +7629,7 @@ func TableHeader(label string) {
 	labelFin()
 }
 
+// submit all headers cells based on data provided to TableSetupColumn() + submit context menu
 func TableHeadersRow() {
 	C.igTableHeadersRow()
 }
@@ -7228,10 +7642,12 @@ func InternalTableMergeDrawChannels(table Table) {
 	C.igTableMergeDrawChannels(table.handle())
 }
 
+// append into the next column (or first column of next row if currently in last column). Return true when column is visible.
 func TableNextColumn() bool {
 	return C.igTableNextColumn() == C.bool(true)
 }
 
+// append into the first cell of a new row.
 // TableNextRowV parameter default value hint:
 // row_flags: 0
 // min_row_height: 0.0f
@@ -7265,16 +7681,19 @@ func InternalTableSaveSettings(table Table) {
 	C.igTableSaveSettings(table.handle())
 }
 
+// change the color of a cell, row, or column. See ImGuiTableBgTarget_ flags for details.
 // TableSetBgColorV parameter default value hint:
 // column_n: -1
 func TableSetBgColorV(target TableBgTarget, color uint32, column_n int32) {
 	C.igTableSetBgColor(C.ImGuiTableBgTarget(target), C.ImU32(color), C.int(column_n))
 }
 
+// change user accessible enabled/disabled state of a column. Set to false to hide the column. User can use the context menu to change this themselves (right-click in headers, or right-click in columns body with ImGuiTableFlags_ContextMenuInBody)
 func TableSetColumnEnabled(column_n int32, v bool) {
 	C.igTableSetColumnEnabled(C.int(column_n), C.bool(v))
 }
 
+// append into the specified column. Return true when column is visible.
 func TableSetColumnIndex(column_n int32) bool {
 	return C.igTableSetColumnIndex(C.int(column_n)) == C.bool(true)
 }
@@ -7322,6 +7741,7 @@ func InternalTableSetupDrawChannels(table Table) {
 	C.igTableSetupDrawChannels(table.handle())
 }
 
+// lock columns/rows so they stay visible when scrolled.
 func TableSetupScrollFreeze(cols int32, rows int32) {
 	C.igTableSetupScrollFreeze(C.int(cols), C.int(rows))
 }
@@ -7375,6 +7795,7 @@ func InternalTempInputText(bb Rect, id ID, label string, buf string, buf_size in
 	return C.igTempInputText(bb.toC(), C.ImGuiID(id), labelArg, bufArg, C.int(buf_size), C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
+// Test that key is either not owned, either owned by 'owner_id'
 func InternalTestKeyOwner(key Key, owner_id ID) bool {
 	return C.igTestKeyOwner(C.ImGuiKey(key), C.ImGuiID(owner_id)) == C.bool(true)
 }
@@ -7383,6 +7804,7 @@ func InternalTestShortcutRouting(key_chord KeyChord, owner_id ID) bool {
 	return C.igTestShortcutRouting(C.ImGuiKeyChord(key_chord), C.ImGuiID(owner_id)) == C.bool(true)
 }
 
+// formatted text
 func Text(fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	C.wrap_igText(fmtArg)
@@ -7390,6 +7812,7 @@ func Text(fmt string) {
 	fmtFin()
 }
 
+// shortcut for PushStyleColor(ImGuiCol_Text, col); Text(fmt, ...); PopStyleColor();
 func TextColored(col Vec4, fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	C.wrap_igTextColored(col.toC(), fmtArg)
@@ -7397,6 +7820,7 @@ func TextColored(col Vec4, fmt string) {
 	fmtFin()
 }
 
+// shortcut for PushStyleColor(ImGuiCol_Text, style.Colors[ImGuiCol_TextDisabled]); Text(fmt, ...); PopStyleColor();
 func TextDisabled(fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	C.wrap_igTextDisabled(fmtArg)
@@ -7413,7 +7837,8 @@ func InternalTextExV(text string, flags TextFlags) {
 	textFin()
 }
 
-// TextUnformattedV parameter default value hint:
+// raw text without formatting. Roughly equivalent to Text("TextUnformattedV", text) but: A) doesn't require null terminated string if 'text_end' is specified, B) it's faster, no memory copy is done, no buffer size limits, recommended for long chunks of text.
+// %s parameter default value hint:
 func TextUnformattedV(text string) {
 	textArg, textFin := wrapString(text)
 	C.wrap_igTextUnformattedV(textArg)
@@ -7421,6 +7846,7 @@ func TextUnformattedV(text string) {
 	textFin()
 }
 
+// shortcut for PushTextWrapPos(0.0f); Text(fmt, ...); PopTextWrapPos();. Note that this won't work on an auto-resizing window if there's no other widgets to extend the window width, yoy may need to set a size using SetNextWindowSize().
 func TextWrapped(fmt string) {
 	fmtArg, fmtFin := wrapString(fmt)
 	C.wrap_igTextWrapped(fmtArg)
@@ -7480,10 +7906,12 @@ func InternalTreeNodeSetOpen(id ID, open bool) {
 	C.igTreeNodeSetOpen(C.ImGuiID(id), C.bool(open))
 }
 
+// Return open state. Consume previous SetNextItemOpen() data, if any. May return true when logging.
 func InternalTreeNodeUpdateNextOpen(id ID, flags TreeNodeFlags) bool {
 	return C.igTreeNodeUpdateNextOpen(C.ImGuiID(id), C.ImGuiTreeNodeFlags(flags)) == C.bool(true)
 }
 
+// "
 func TreeNodePtr(ptr_id unsafe.Pointer, fmt string) bool {
 	fmtArg, fmtFin := wrapString(fmt)
 
@@ -7502,6 +7930,7 @@ func TreeNodeStr(label string) bool {
 	return C.igTreeNode_Str(labelArg) == C.bool(true)
 }
 
+// helper variation to easily decorelate the id from the displayed string. Read the FAQ about why and how to use ID. to align arbitrary text at the same level as a TreeNode() you can use Bullet().
 func TreeNodeStrStr(str_id string, fmt string) bool {
 	str_idArg, str_idFin := wrapString(str_id)
 	fmtArg, fmtFin := wrapString(fmt)
@@ -7513,6 +7942,7 @@ func TreeNodeStrStr(str_id string, fmt string) bool {
 	return C.wrap_igTreeNode_StrStr(str_idArg, fmtArg) == C.bool(true)
 }
 
+// ~ Unindent()+PopId()
 func TreePop() {
 	C.igTreePop()
 }
@@ -7521,10 +7951,12 @@ func InternalTreePushOverrideID(id ID) {
 	C.igTreePushOverrideID(C.ImGuiID(id))
 }
 
+// "
 func TreePushPtr(ptr_id unsafe.Pointer) {
 	C.igTreePush_Ptr((ptr_id))
 }
 
+// ~ Indent()+PushId(). Already called by TreeNode() when returning true, but you can call TreePush/TreePop yourself if desired.
 func TreePushStr(str_id string) {
 	str_idArg, str_idFin := wrapString(str_id)
 	C.igTreePush_Str(str_idArg)
@@ -7532,6 +7964,7 @@ func TreePushStr(str_id string) {
 	str_idFin()
 }
 
+// move content position back to the left, by indent_w, or style.IndentSpacing if indent_w <= 0
 // UnindentV parameter default value hint:
 // indent_w: 0.0f
 func UnindentV(indent_w float32) {
@@ -7554,6 +7987,7 @@ func InternalUpdateMouseMovingWindowNewFrame() {
 	C.igUpdateMouseMovingWindowNewFrame()
 }
 
+// call in main loop. will call CreateWindow/ResizeWindow/etc. platform functions for each secondary viewport, and DestroyWindow for each inactive viewport.
 func UpdatePlatformWindows() {
 	C.igUpdatePlatformWindows()
 }
@@ -8430,6 +8864,10 @@ func InternalFindRenderedTextEnd(text string) string {
 		textFin()
 	}()
 	return C.GoString(C.wrap_igFindRenderedTextEnd(textArg))
+}
+
+func InternalFocusWindow(window Window) {
+	C.wrap_igFocusWindow(window.handle())
 }
 
 func ColorU32Col(idx Col) uint32 {
@@ -14699,6 +15137,14 @@ func (self PlatformMonitor) DpiScale() float32 {
 	return float32(C.wrap_ImGuiPlatformMonitor_GetDpiScale(self.handle()))
 }
 
+func (self PlatformMonitor) SetPlatformHandle(v unsafe.Pointer) {
+	C.wrap_ImGuiPlatformMonitor_SetPlatformHandle(self.handle(), (v))
+}
+
+func (self PlatformMonitor) PlatformHandle() unsafe.Pointer {
+	return unsafe.Pointer(C.wrap_ImGuiPlatformMonitor_GetPlatformHandle(self.handle()))
+}
+
 func (self PopupData) SetPopupId(v ID) {
 	C.wrap_ImGuiPopupData_SetPopupId(self.handle(), C.ImGuiID(v))
 }
@@ -18787,6 +19233,14 @@ func (self WindowTempData) NavLayersActiveMaskNext() int {
 	return int(C.wrap_ImGuiWindowTempData_GetNavLayersActiveMaskNext(self.handle()))
 }
 
+func (self WindowTempData) SetNavIsScrollPushableX(v bool) {
+	C.wrap_ImGuiWindowTempData_SetNavIsScrollPushableX(self.handle(), C.bool(v))
+}
+
+func (self WindowTempData) NavIsScrollPushableX() bool {
+	return C.wrap_ImGuiWindowTempData_GetNavIsScrollPushableX(self.handle()) == C.bool(true)
+}
+
 func (self WindowTempData) SetNavHideHighlightOneFrame(v bool) {
 	C.wrap_ImGuiWindowTempData_SetNavHideHighlightOneFrame(self.handle(), C.bool(v))
 }
@@ -18795,12 +19249,12 @@ func (self WindowTempData) NavHideHighlightOneFrame() bool {
 	return C.wrap_ImGuiWindowTempData_GetNavHideHighlightOneFrame(self.handle()) == C.bool(true)
 }
 
-func (self WindowTempData) SetNavHasScroll(v bool) {
-	C.wrap_ImGuiWindowTempData_SetNavHasScroll(self.handle(), C.bool(v))
+func (self WindowTempData) SetNavWindowHasScrollY(v bool) {
+	C.wrap_ImGuiWindowTempData_SetNavWindowHasScrollY(self.handle(), C.bool(v))
 }
 
-func (self WindowTempData) NavHasScroll() bool {
-	return C.wrap_ImGuiWindowTempData_GetNavHasScroll(self.handle()) == C.bool(true)
+func (self WindowTempData) NavWindowHasScrollY() bool {
+	return C.wrap_ImGuiWindowTempData_GetNavWindowHasScrollY(self.handle()) == C.bool(true)
 }
 
 func (self WindowTempData) SetMenuBarAppending(v bool) {

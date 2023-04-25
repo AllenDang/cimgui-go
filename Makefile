@@ -62,7 +62,7 @@ define update
 	cd tmp/$1/$3; \
 		git checkout $4
 	cd tmp/$1/generator; \
-		sh generator.sh -DIMGUI_USE_WCHAR32
+		bash generator.sh --target "internal noimstrv comments" --cflags "glfw opengl3 opengl2 sdl2 -DIMGUI_USE_WCHAR32"
 	cp tmp/$1/$1* cimgui/
 	cp tmp/$1/generator/output/$1* cimgui/
 	mkdir cimgui/$1_templates
