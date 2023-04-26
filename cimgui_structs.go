@@ -1513,3 +1513,59 @@ func (data WindowTempData) c() C.ImGuiWindowTempData {
 func newWindowTempDataFromC(cvalue C.ImGuiWindowTempData) WindowTempData {
 	return WindowTempData(unsafe.Pointer(&cvalue))
 }
+
+type STBTexteditState uintptr
+
+func (data STBTexteditState) handle() *C.STB_TexteditState {
+	return (*C.STB_TexteditState)(unsafe.Pointer(data))
+}
+
+func (data STBTexteditState) c() C.STB_TexteditState {
+	return *(data.handle())
+}
+
+func newSTBTexteditStateFromC(cvalue C.STB_TexteditState) STBTexteditState {
+	return STBTexteditState(unsafe.Pointer(&cvalue))
+}
+
+type StbTexteditRow uintptr
+
+func (data StbTexteditRow) handle() *C.StbTexteditRow {
+	return (*C.StbTexteditRow)(unsafe.Pointer(data))
+}
+
+func (data StbTexteditRow) c() C.StbTexteditRow {
+	return *(data.handle())
+}
+
+func newStbTexteditRowFromC(cvalue C.StbTexteditRow) StbTexteditRow {
+	return StbTexteditRow(unsafe.Pointer(&cvalue))
+}
+
+type StbUndoRecord uintptr
+
+func (data StbUndoRecord) handle() *C.StbUndoRecord {
+	return (*C.StbUndoRecord)(unsafe.Pointer(data))
+}
+
+func (data StbUndoRecord) c() C.StbUndoRecord {
+	return *(data.handle())
+}
+
+func newStbUndoRecordFromC(cvalue C.StbUndoRecord) StbUndoRecord {
+	return StbUndoRecord(unsafe.Pointer(&cvalue))
+}
+
+type StbUndoState uintptr
+
+func (data StbUndoState) handle() *C.StbUndoState {
+	return (*C.StbUndoState)(unsafe.Pointer(data))
+}
+
+func (data StbUndoState) c() C.StbUndoState {
+	return *(data.handle())
+}
+
+func newStbUndoStateFromC(cvalue C.StbUndoState) StbUndoState {
+	return StbUndoState(unsafe.Pointer(&cvalue))
+}
