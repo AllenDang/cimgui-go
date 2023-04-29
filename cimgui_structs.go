@@ -1528,6 +1528,7 @@ func newSTBTexteditStateFromC(cvalue C.STB_TexteditState) STBTexteditState {
 	return STBTexteditState(unsafe.Pointer(&cvalue))
 }
 
+// result of layout query
 type StbTexteditRow uintptr
 
 func (data StbTexteditRow) handle() *C.StbTexteditRow {
@@ -1542,6 +1543,13 @@ func newStbTexteditRowFromC(cvalue C.StbTexteditRow) StbTexteditRow {
 	return StbTexteditRow(unsafe.Pointer(&cvalue))
 }
 
+// //////////////////////////////////////////////////////////////////////
+//
+//	STB_TexteditState
+//
+// Definition of STB_TexteditState which you should store
+// per-textfield; it includes cursor position, selection state,
+// and undo state.
 type StbUndoRecord uintptr
 
 func (data StbUndoRecord) handle() *C.StbUndoRecord {
