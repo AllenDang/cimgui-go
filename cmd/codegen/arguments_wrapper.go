@@ -24,6 +24,8 @@ type argumentWrapper func(arg ArgDef) ArgumentWrapperData
 
 func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 	argWrapperMap := map[string]argumentWrapper{
+		"char":                     simpleW("rune", "C.char"),
+		"char[5]":                  simplePtrArrayW(5, "C.char", "rune"),
 		"char*":                    constCharW,
 		"const char*":              constCharW,
 		"const char**":             charPtrPtrW,
@@ -71,6 +73,7 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"float[4]":                 simplePtrArrayW(4, "C.float", "float32"),
 		"ImWchar":                  simpleW("Wchar", "C.ImWchar"),
 		"const ImWchar*":           simpleW("*Wchar", "(*C.ImWchar)"),
+		"ImWchar15":                simpleW("uint16", "C.ImWchar16"),
 		"ImGuiID":                  simpleW("ID", "C.ImGuiID"),
 		"ImGuiID*":                 simplePtrW("ID", "C.ImGuiID"),
 		"ImTextureID":              simpleW("TextureID", "C.ImTextureID"),

@@ -4555,6 +4555,10 @@ func InternalImBitArrayTestBit(arr *[]uint32, n int32) bool {
 	return C.igImBitArrayTestBit((*C.ImU32)(&arrArg[0]), C.int(n)) == C.bool(true)
 }
 
+func InternalImCharIsBlankA(c rune) bool {
+	return C.igImCharIsBlankA(C.char(c)) == C.bool(true)
+}
+
 func InternalImCharIsBlankW(c uint32) bool {
 	return C.igImCharIsBlankW(C.uint(c)) == C.bool(true)
 }
@@ -4633,6 +4637,20 @@ func InternalImFontAtlasBuildInit(atlas FontAtlas) {
 
 func InternalImFontAtlasBuildPackCustomRects(atlas FontAtlas, stbrp_context_opaque unsafe.Pointer) {
 	C.igImFontAtlasBuildPackCustomRects(atlas.handle(), (stbrp_context_opaque))
+}
+
+func InternalImFontAtlasBuildRender32bppRectFromString(atlas FontAtlas, x int32, y int32, w int32, h int32, in_str string, in_marker_char rune, in_marker_pixel_value uint32) {
+	in_strArg, in_strFin := wrapString(in_str)
+	C.igImFontAtlasBuildRender32bppRectFromString(atlas.handle(), C.int(x), C.int(y), C.int(w), C.int(h), in_strArg, C.char(in_marker_char), C.uint(in_marker_pixel_value))
+
+	in_strFin()
+}
+
+func InternalImFontAtlasBuildRender8bppRectFromString(atlas FontAtlas, x int32, y int32, w int32, h int32, in_str string, in_marker_char rune, in_marker_pixel_value uint) {
+	in_strArg, in_strFin := wrapString(in_str)
+	C.igImFontAtlasBuildRender8bppRectFromString(atlas.handle(), C.int(x), C.int(y), C.int(w), C.int(h), in_strArg, C.char(in_marker_char), C.uchar(in_marker_pixel_value))
+
+	in_strFin()
 }
 
 func InternalImFontAtlasBuildSetupFont(atlas FontAtlas, font Font, font_config FontConfig, ascent float32, descent float32) {
@@ -4925,6 +4943,17 @@ func InternalImStrbolW(buf_mid_line *Wchar, buf_begin *Wchar) *Wchar {
 	return (*Wchar)(C.igImStrbolW((*C.ImWchar)(buf_mid_line), (*C.ImWchar)(buf_begin)))
 }
 
+func InternalImStrchrRange(str_begin string, str_end string, c rune) string {
+	str_beginArg, str_beginFin := wrapString(str_begin)
+	str_endArg, str_endFin := wrapString(str_end)
+
+	defer func() {
+		str_beginFin()
+		str_endFin()
+	}()
+	return C.GoString(C.igImStrchrRange(str_beginArg, str_endArg, C.char(c)))
+}
+
 func InternalImStrdup(str string) string {
 	strArg, strFin := wrapString(str)
 
@@ -5019,6 +5048,21 @@ func InternalImTextCharFromUtf8(out_char *uint32, in_text string, in_text_end st
 		in_text_endFin()
 	}()
 	return int(C.igImTextCharFromUtf8(out_charArg, in_textArg, in_text_endArg))
+}
+
+// return out_buf
+func InternalImTextCharToUtf8(out_buf *[5]rune, c uint32) string {
+	out_bufArg := make([]C.char, len(out_buf))
+	for i, out_bufV := range out_buf {
+		out_bufArg[i] = C.char(out_bufV)
+	}
+
+	defer func() {
+		for i, out_bufV := range out_bufArg {
+			(*out_buf)[i] = rune(out_bufV)
+		}
+	}()
+	return C.GoString(C.igImTextCharToUtf8((*C.char)(&out_bufArg[0]), C.uint(c)))
 }
 
 // return number of UTF-8 code-points (NOT bytes count)
@@ -12222,6 +12266,10 @@ func (self Context) PlatformImeViewport() ID {
 	return ID(C.wrap_ImGuiContext_GetPlatformImeViewport(self.handle()))
 }
 
+func (self Context) SetPlatformLocaleDecimalPoint(v rune) {
+	C.wrap_ImGuiContext_SetPlatformLocaleDecimalPoint(self.handle(), C.char(v))
+}
+
 func (self Context) SetDockContext(v DockContext) {
 	C.wrap_ImGuiContext_SetDockContext(self.handle(), v.c())
 }
@@ -13641,6 +13689,10 @@ func (self IO) SetBackendUsingLegacyNavInputArray(v bool) {
 
 func (self IO) BackendUsingLegacyNavInputArray() bool {
 	return C.wrap_ImGuiIO_GetBackendUsingLegacyNavInputArray(self.handle()) == C.bool(true)
+}
+
+func (self IO) InputQueueSurrogate() uint16 {
+	return uint16(C.wrap_ImGuiIO_GetInputQueueSurrogate(self.handle()))
 }
 
 func (self InputEvent) SetType(v InputEventType) {
