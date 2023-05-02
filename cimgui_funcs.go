@@ -471,7 +471,7 @@ func (self FontAtlasCustomRect) Destroy() {
 
 // AddCustomRectFontGlyphV parameter default value hint:
 // offset: ImVec2(0,0)
-func (self FontAtlas) AddCustomRectFontGlyphV(font Font, id rune, width int32, height int32, advance_x float32, offset Vec2) int {
+func (self FontAtlas) AddCustomRectFontGlyphV(font Font, id Wchar, width int32, height int32, advance_x float32, offset Vec2) int {
 	return int(C.ImFontAtlas_AddCustomRectFontGlyph(self.handle(), font.handle(), C.ImWchar(id), C.int(width), C.int(height), C.float(advance_x), offset.toC()))
 }
 
@@ -492,56 +492,42 @@ func (self FontAtlas) AddFontDefaultV(font_cfg FontConfig) Font {
 // AddFontFromFileTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self FontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, font_cfg FontConfig, glyph_ranges *rune) Font {
+func (self FontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
 	filenameArg, filenameFin := wrapString(filename)
-	glyph_rangesArg, glyph_rangesFin := wrapNumberPtr[C.ImWchar, rune](glyph_ranges)
 
 	defer func() {
 		filenameFin()
-		glyph_rangesFin()
 	}()
-	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromFileTTF(self.handle(), filenameArg, C.float(size_pixels), font_cfg.handle(), glyph_rangesArg)))
+	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromFileTTF(self.handle(), filenameArg, C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
 
 // 'compressed_font_data_base85' still owned by caller. Compress with binary_to_compressed_c.cpp with -base85 parameter.
 // AddFontFromMemoryCompressedBase85TTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data_base85 string, size_pixels float32, font_cfg FontConfig, glyph_ranges *rune) Font {
+func (self FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data_base85 string, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
 	compressed_font_data_base85Arg, compressed_font_data_base85Fin := wrapString(compressed_font_data_base85)
-	glyph_rangesArg, glyph_rangesFin := wrapNumberPtr[C.ImWchar, rune](glyph_ranges)
 
 	defer func() {
 		compressed_font_data_base85Fin()
-		glyph_rangesFin()
 	}()
-	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(self.handle(), compressed_font_data_base85Arg, C.float(size_pixels), font_cfg.handle(), glyph_rangesArg)))
+	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(self.handle(), compressed_font_data_base85Arg, C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
 
 // 'compressed_font_data' still owned by caller. Compress with binary_to_compressed_c.cpp.
 // AddFontFromMemoryCompressedTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsafe.Pointer, compressed_font_size int32, size_pixels float32, font_cfg FontConfig, glyph_ranges *rune) Font {
-	glyph_rangesArg, glyph_rangesFin := wrapNumberPtr[C.ImWchar, rune](glyph_ranges)
-
-	defer func() {
-		glyph_rangesFin()
-	}()
-	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryCompressedTTF(self.handle(), (compressed_font_data), C.int(compressed_font_size), C.float(size_pixels), font_cfg.handle(), glyph_rangesArg)))
+func (self FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsafe.Pointer, compressed_font_size int32, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
+	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryCompressedTTF(self.handle(), (compressed_font_data), C.int(compressed_font_size), C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
 
 // Note: Transfer ownership of 'ttf_data' to ImFontAtlas! Will be deleted after destruction of the atlas. Set font_cfg->FontDataOwnedByAtlas=false to keep ownership of your data and it won't be freed.
 // AddFontFromMemoryTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self FontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_size int32, size_pixels float32, font_cfg FontConfig, glyph_ranges *rune) Font {
-	glyph_rangesArg, glyph_rangesFin := wrapNumberPtr[C.ImWchar, rune](glyph_ranges)
-
-	defer func() {
-		glyph_rangesFin()
-	}()
-	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryTTF(self.handle(), (font_data), C.int(font_size), C.float(size_pixels), font_cfg.handle(), glyph_rangesArg)))
+func (self FontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_size int32, size_pixels float32, font_cfg FontConfig, glyph_ranges *Wchar) Font {
+	return (Font)(unsafe.Pointer(C.ImFontAtlas_AddFontFromMemoryTTF(self.handle(), (font_data), C.int(font_size), C.float(size_pixels), font_cfg.handle(), (*C.ImWchar)(glyph_ranges))))
 }
 
 // Build pixels data. This is called automatically for you by the GetTexData*** functions.
@@ -583,48 +569,48 @@ func (self FontAtlas) CustomRectByIndex(index int32) FontAtlasCustomRect {
 }
 
 // Default + Half-Width + Japanese Hiragana/Katakana + full set of about 21000 CJK Unified Ideographs
-func (self FontAtlas) GlyphRangesChineseFull() *rune {
-	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesChineseFull(self.handle())))))
+func (self FontAtlas) GlyphRangesChineseFull() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesChineseFull(self.handle()))
 }
 
 // Default + Half-Width + Japanese Hiragana/Katakana + set of 2500 CJK Unified Ideographs for common simplified Chinese
-func (self FontAtlas) GlyphRangesChineseSimplifiedCommon() *rune {
-	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon(self.handle())))))
+func (self FontAtlas) GlyphRangesChineseSimplifiedCommon() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon(self.handle()))
 }
 
 // Default + about 400 Cyrillic characters
-func (self FontAtlas) GlyphRangesCyrillic() *rune {
-	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesCyrillic(self.handle())))))
+func (self FontAtlas) GlyphRangesCyrillic() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesCyrillic(self.handle()))
 }
 
 // Basic Latin, Extended Latin
-func (self FontAtlas) GlyphRangesDefault() *rune {
-	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesDefault(self.handle())))))
+func (self FontAtlas) GlyphRangesDefault() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesDefault(self.handle()))
 }
 
 // Default + Greek and Coptic
-func (self FontAtlas) GlyphRangesGreek() *rune {
-	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesGreek(self.handle())))))
+func (self FontAtlas) GlyphRangesGreek() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesGreek(self.handle()))
 }
 
 // Default + Hiragana, Katakana, Half-Width, Selection of 2999 Ideographs
-func (self FontAtlas) GlyphRangesJapanese() *rune {
-	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesJapanese(self.handle())))))
+func (self FontAtlas) GlyphRangesJapanese() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesJapanese(self.handle()))
 }
 
 // Default + Korean characters
-func (self FontAtlas) GlyphRangesKorean() *rune {
-	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesKorean(self.handle())))))
+func (self FontAtlas) GlyphRangesKorean() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesKorean(self.handle()))
 }
 
 // Default + Thai characters
-func (self FontAtlas) GlyphRangesThai() *rune {
-	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesThai(self.handle())))))
+func (self FontAtlas) GlyphRangesThai() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesThai(self.handle()))
 }
 
 // Default + Vietnamese characters
-func (self FontAtlas) GlyphRangesVietnamese() *rune {
-	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.ImFontAtlas_GetGlyphRangesVietnamese(self.handle())))))
+func (self FontAtlas) GlyphRangesVietnamese() *Wchar {
+	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesVietnamese(self.handle()))
 }
 
 func (self FontAtlas) MouseCursorTexData(cursor MouseCursor, out_offset *Vec2, out_size *Vec2, out_uv_border [2]*Vec2, out_uv_fill [2]*Vec2) bool {
@@ -687,16 +673,13 @@ func (self FontConfig) Destroy() {
 }
 
 // Add character
-func (self FontGlyphRangesBuilder) AddChar(c rune) {
+func (self FontGlyphRangesBuilder) AddChar(c Wchar) {
 	C.ImFontGlyphRangesBuilder_AddChar(self.handle(), C.ImWchar(c))
 }
 
 // Add ranges, e.g. builder.AddRanges(ImFontAtlas::GetGlyphRangesDefault()) to force add all of ASCII/Latin+Ext
-func (self FontGlyphRangesBuilder) AddRanges(ranges *rune) {
-	rangesArg, rangesFin := wrapNumberPtr[C.ImWchar, rune](ranges)
-	C.ImFontGlyphRangesBuilder_AddRanges(self.handle(), rangesArg)
-
-	rangesFin()
+func (self FontGlyphRangesBuilder) AddRanges(ranges *Wchar) {
+	C.ImFontGlyphRangesBuilder_AddRanges(self.handle(), (*C.ImWchar)(ranges))
 }
 
 // Add string (each character of the UTF-8 string are added)
@@ -730,14 +713,14 @@ func (self FontGlyphRangesBuilder) Destroy() {
 	C.ImFontGlyphRangesBuilder_destroy(self.handle())
 }
 
-func (self Font) AddGlyph(src_cfg FontConfig, c rune, x0 float32, y0 float32, x1 float32, y1 float32, u0 float32, v0 float32, u1 float32, v1 float32, advance_x float32) {
+func (self Font) AddGlyph(src_cfg FontConfig, c Wchar, x0 float32, y0 float32, x1 float32, y1 float32, u0 float32, v0 float32, u1 float32, v1 float32, advance_x float32) {
 	C.ImFont_AddGlyph(self.handle(), src_cfg.handle(), C.ImWchar(c), C.float(x0), C.float(y0), C.float(x1), C.float(y1), C.float(u0), C.float(v0), C.float(u1), C.float(v1), C.float(advance_x))
 }
 
 // Makes 'dst' character/glyph points to 'src' character/glyph. Currently needs to be called AFTER fonts have been built.
 // AddRemapCharV parameter default value hint:
 // overwrite_dst: true
-func (self Font) AddRemapCharV(dst rune, src rune, overwrite_dst bool) {
+func (self Font) AddRemapCharV(dst Wchar, src Wchar, overwrite_dst bool) {
 	C.ImFont_AddRemapChar(self.handle(), C.ImWchar(dst), C.ImWchar(src), C.bool(overwrite_dst))
 }
 
@@ -776,15 +759,15 @@ func (self Font) ClearOutputData() {
 	C.ImFont_ClearOutputData(self.handle())
 }
 
-func (self Font) FindGlyph(c rune) FontGlyph {
+func (self Font) FindGlyph(c Wchar) FontGlyph {
 	return (FontGlyph)(unsafe.Pointer(C.ImFont_FindGlyph(self.handle(), C.ImWchar(c))))
 }
 
-func (self Font) FindGlyphNoFallback(c rune) FontGlyph {
+func (self Font) FindGlyphNoFallback(c Wchar) FontGlyph {
 	return (FontGlyph)(unsafe.Pointer(C.ImFont_FindGlyphNoFallback(self.handle(), C.ImWchar(c))))
 }
 
-func (self Font) CharAdvance(c rune) float32 {
+func (self Font) CharAdvance(c Wchar) float32 {
 	return float32(C.ImFont_GetCharAdvance(self.handle(), C.ImWchar(c)))
 }
 
@@ -808,7 +791,7 @@ func (self Font) IsLoaded() bool {
 	return C.ImFont_IsLoaded(self.handle()) == C.bool(true)
 }
 
-func (self Font) RenderChar(draw_list DrawList, size float32, pos Vec2, col uint32, c rune) {
+func (self Font) RenderChar(draw_list DrawList, size float32, pos Vec2, col uint32, c Wchar) {
 	C.ImFont_RenderChar(self.handle(), draw_list.handle(), C.float(size), pos.toC(), C.ImU32(col), C.ImWchar(c))
 }
 
@@ -822,7 +805,7 @@ func (self Font) RenderTextV(draw_list DrawList, size float32, pos Vec2, col uin
 	text_beginFin()
 }
 
-func (self Font) SetGlyphVisible(c rune, visible bool) {
+func (self Font) SetGlyphVisible(c Wchar, visible bool) {
 	C.ImFont_SetGlyphVisible(self.handle(), C.ImWchar(c), C.bool(visible))
 }
 
@@ -976,11 +959,6 @@ func (self IO) AddFocusEvent(focused bool) {
 // Queue a new character input
 func (self IO) AddInputCharacter(c uint32) {
 	C.ImGuiIO_AddInputCharacter(self.handle(), C.uint(c))
-}
-
-// Queue a new character input from a UTF-16 character, it can be a surrogate
-func (self IO) AddInputCharacterUTF16(c rune) {
-	C.ImGuiIO_AddInputCharacterUTF16(self.handle(), C.ImWchar16(c))
 }
 
 // Queue a new characters input from a UTF-8 string
@@ -4961,15 +4939,8 @@ func InternalImStrTrimBlanks(str string) {
 }
 
 // Find beginning-of-line
-func InternalImStrbolW(buf_mid_line *rune, buf_begin *rune) *rune {
-	buf_mid_lineArg, buf_mid_lineFin := wrapNumberPtr[C.ImWchar, rune](buf_mid_line)
-	buf_beginArg, buf_beginFin := wrapNumberPtr[C.ImWchar, rune](buf_begin)
-
-	defer func() {
-		buf_mid_lineFin()
-		buf_beginFin()
-	}()
-	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.igImStrbolW(buf_mid_lineArg, buf_beginArg)))))
+func InternalImStrbolW(buf_mid_line *Wchar, buf_begin *Wchar) *Wchar {
+	return (*Wchar)(C.igImStrbolW((*C.ImWchar)(buf_mid_line), (*C.ImWchar)(buf_begin)))
 }
 
 func InternalImStrchrRange(str_begin string, str_end string, c rune) string {
@@ -5041,13 +5012,8 @@ func InternalImStristr(haystack string, haystack_end string, needle string, need
 	return C.GoString(C.igImStristr(haystackArg, haystack_endArg, needleArg, needle_endArg))
 }
 
-func InternalImStrlenW(str *rune) int {
-	strArg, strFin := wrapNumberPtr[C.ImWchar, rune](str)
-
-	defer func() {
-		strFin()
-	}()
-	return int(C.igImStrlenW(strArg))
+func InternalImStrlenW(str *Wchar) int {
+	return int(C.igImStrlenW((*C.ImWchar)(str)))
 }
 
 func InternalImStrncpy(dst string, src string, count uint64) {
@@ -5124,29 +5090,18 @@ func InternalImTextCountUtf8BytesFromChar(in_text string, in_text_end string) in
 }
 
 // return number of bytes to express string in UTF-8
-func InternalImTextCountUtf8BytesFromStr(in_text *rune, in_text_end *rune) int {
-	in_textArg, in_textFin := wrapNumberPtr[C.ImWchar, rune](in_text)
-	in_text_endArg, in_text_endFin := wrapNumberPtr[C.ImWchar, rune](in_text_end)
-
-	defer func() {
-		in_textFin()
-		in_text_endFin()
-	}()
-	return int(C.igImTextCountUtf8BytesFromStr(in_textArg, in_text_endArg))
+func InternalImTextCountUtf8BytesFromStr(in_text *Wchar, in_text_end *Wchar) int {
+	return int(C.igImTextCountUtf8BytesFromStr((*C.ImWchar)(in_text), (*C.ImWchar)(in_text_end)))
 }
 
 // return output UTF-8 bytes count
-func InternalImTextStrToUtf8(out_buf string, out_buf_size int32, in_text *rune, in_text_end *rune) int {
+func InternalImTextStrToUtf8(out_buf string, out_buf_size int32, in_text *Wchar, in_text_end *Wchar) int {
 	out_bufArg, out_bufFin := wrapString(out_buf)
-	in_textArg, in_textFin := wrapNumberPtr[C.ImWchar, rune](in_text)
-	in_text_endArg, in_text_endFin := wrapNumberPtr[C.ImWchar, rune](in_text_end)
 
 	defer func() {
 		out_bufFin()
-		in_textFin()
-		in_text_endFin()
 	}()
-	return int(C.igImTextStrToUtf8(out_bufArg, C.int(out_buf_size), in_textArg, in_text_endArg))
+	return int(C.igImTextStrToUtf8(out_bufArg, C.int(out_buf_size), (*C.ImWchar)(in_text), (*C.ImWchar)(in_text_end)))
 }
 
 func InternalImTriangleArea(a Vec2, b Vec2, c Vec2) float32 {
@@ -8204,7 +8159,7 @@ func (self DrawList) PushClipRect(clip_rect_min Vec2, clip_rect_max Vec2) {
 	C.wrap_ImDrawList_PushClipRect(self.handle(), clip_rect_min.toC(), clip_rect_max.toC())
 }
 
-func (self FontAtlas) AddCustomRectFontGlyph(font Font, id rune, width int32, height int32, advance_x float32) int {
+func (self FontAtlas) AddCustomRectFontGlyph(font Font, id Wchar, width int32, height int32, advance_x float32) int {
 	return int(C.wrap_ImFontAtlas_AddCustomRectFontGlyph(self.handle(), font.handle(), C.ImWchar(id), C.int(width), C.int(height), C.float(advance_x)))
 }
 
@@ -8245,7 +8200,7 @@ func (self FontGlyphRangesBuilder) AddText(text string) {
 	textFin()
 }
 
-func (self Font) AddRemapChar(dst rune, src rune) {
+func (self Font) AddRemapChar(dst Wchar, src Wchar) {
 	C.wrap_ImFont_AddRemapChar(self.handle(), C.ImWchar(dst), C.ImWchar(src))
 }
 
@@ -10258,20 +10213,20 @@ func (self Font) ConfigDataCount() int {
 	return int(C.wrap_ImFont_GetConfigDataCount(self.handle()))
 }
 
-func (self Font) SetFallbackChar(v rune) {
+func (self Font) SetFallbackChar(v Wchar) {
 	C.wrap_ImFont_SetFallbackChar(self.handle(), C.ImWchar(v))
 }
 
-func (self Font) FallbackChar() rune {
-	return rune(C.wrap_ImFont_GetFallbackChar(self.handle()))
+func (self Font) FallbackChar() Wchar {
+	return Wchar(C.wrap_ImFont_GetFallbackChar(self.handle()))
 }
 
-func (self Font) SetEllipsisChar(v rune) {
+func (self Font) SetEllipsisChar(v Wchar) {
 	C.wrap_ImFont_SetEllipsisChar(self.handle(), C.ImWchar(v))
 }
 
-func (self Font) EllipsisChar() rune {
-	return rune(C.wrap_ImFont_GetEllipsisChar(self.handle()))
+func (self Font) EllipsisChar() Wchar {
+	return Wchar(C.wrap_ImFont_GetEllipsisChar(self.handle()))
 }
 
 func (self Font) SetEllipsisCharCount(v int) {
@@ -10603,15 +10558,12 @@ func (self FontConfig) GlyphOffset() Vec2 {
 	return *out
 }
 
-func (self FontConfig) SetGlyphRanges(v *rune) {
-	vArg, vFin := wrapNumberPtr[C.ImWchar, rune](v)
-	C.wrap_ImFontConfig_SetGlyphRanges(self.handle(), vArg)
-
-	vFin()
+func (self FontConfig) SetGlyphRanges(v *Wchar) {
+	C.wrap_ImFontConfig_SetGlyphRanges(self.handle(), (*C.ImWchar)(v))
 }
 
-func (self FontConfig) GlyphRanges() *rune {
-	return (*rune)(unsafe.Pointer((*uint)(unsafe.Pointer(C.wrap_ImFontConfig_GetGlyphRanges(self.handle())))))
+func (self FontConfig) GlyphRanges() *Wchar {
+	return (*Wchar)(C.wrap_ImFontConfig_GetGlyphRanges(self.handle()))
 }
 
 func (self FontConfig) SetGlyphMinAdvanceX(v float32) {
@@ -10654,12 +10606,12 @@ func (self FontConfig) RasterizerMultiply() float32 {
 	return float32(C.wrap_ImFontConfig_GetRasterizerMultiply(self.handle()))
 }
 
-func (self FontConfig) SetEllipsisChar(v rune) {
+func (self FontConfig) SetEllipsisChar(v Wchar) {
 	C.wrap_ImFontConfig_SetEllipsisChar(self.handle(), C.ImWchar(v))
 }
 
-func (self FontConfig) EllipsisChar() rune {
-	return rune(C.wrap_ImFontConfig_GetEllipsisChar(self.handle()))
+func (self FontConfig) EllipsisChar() Wchar {
+	return Wchar(C.wrap_ImFontConfig_GetEllipsisChar(self.handle()))
 }
 
 func (self FontConfig) SetDstFont(v Font) {
@@ -13739,12 +13691,8 @@ func (self IO) BackendUsingLegacyNavInputArray() bool {
 	return C.wrap_ImGuiIO_GetBackendUsingLegacyNavInputArray(self.handle()) == C.bool(true)
 }
 
-func (self IO) SetInputQueueSurrogate(v rune) {
-	C.wrap_ImGuiIO_SetInputQueueSurrogate(self.handle(), C.ImWchar16(v))
-}
-
-func (self IO) InputQueueSurrogate() rune {
-	return rune(C.wrap_ImGuiIO_GetInputQueueSurrogate(self.handle()))
+func (self IO) InputQueueSurrogate() uint16 {
+	return uint16(C.wrap_ImGuiIO_GetInputQueueSurrogate(self.handle()))
 }
 
 func (self InputEvent) SetType(v InputEventType) {
@@ -13931,12 +13879,12 @@ func (self InputTextCallbackData) UserData() unsafe.Pointer {
 	return unsafe.Pointer(C.wrap_ImGuiInputTextCallbackData_GetUserData(self.handle()))
 }
 
-func (self InputTextCallbackData) SetEventChar(v rune) {
+func (self InputTextCallbackData) SetEventChar(v Wchar) {
 	C.wrap_ImGuiInputTextCallbackData_SetEventChar(self.handle(), C.ImWchar(v))
 }
 
-func (self InputTextCallbackData) EventChar() rune {
-	return rune(C.wrap_ImGuiInputTextCallbackData_GetEventChar(self.handle()))
+func (self InputTextCallbackData) EventChar() Wchar {
+	return Wchar(C.wrap_ImGuiInputTextCallbackData_GetEventChar(self.handle()))
 }
 
 func (self InputTextCallbackData) SetEventKey(v Key) {

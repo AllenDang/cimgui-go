@@ -45,10 +45,8 @@ func (gr GlyphRange) Destroy() {
 	C.wrap_DestroyGlyphRange(gr.handle())
 }
 
-func (gr GlyphRange) Data() *rune {
-	return (*rune)(unsafe.Pointer((*uint)(
-		unsafe.Pointer(C.wrap_GlyphRange_GetData(gr.handle())),
-	)))
+func (gr GlyphRange) Data() *Wchar {
+	return (*Wchar)(C.wrap_GlyphRange_GetData(gr.handle()))
 }
 
 func (fa FontAtlas) GetFontCount() int {
