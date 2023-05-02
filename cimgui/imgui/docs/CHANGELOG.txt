@@ -99,6 +99,46 @@ Other changes:
 
 
 -----------------------------------------------------------------------
+ VERSION 1.89.6 WIP (In Progress)
+-----------------------------------------------------------------------
+
+Breaking changes:
+
+- Backends: GLUT: Removed call to ImGui::NewFrame() from ImGui_ImplGLUT_NewFrame().
+  It needs to be called from the main app loop, like with every other backends. (#6337) [@GereonV]
+
+Other changes:
+
+- Tables: Fixed a small miscalculation in TableHeader() leading to an empty tooltip
+  showing when a sorting column has no visible name. (#6342) [@lukaasm]
+- InputText: Avoid setting io.WantTextInputNextFrame during the deactivation frame.
+  (#6341) [@lukaasm]
+- Nav: Fixed navigation within tables/columns where item boundaries goes beyond columns limits,
+  unclipped bounding boxes would interfere with other columns. (#2221) [@zzzyap, @ocornut]
+- Debug Tools: Debug Log: Fixed not parsing 0xXXXXXXXX values for geo-locating on mouse
+  hover hover when the identifier is at the end of the line. (#5855)
+- Backends: Clear bits sets io.BackendFlags on backend Shutdown(). (#6334, #6335] [@GereonV]
+  Potentially this would facilitate switching runtime backend mid-session.
+- Backends: Win32: Added ImGui_ImplWin32_InitForOpenGL() to facilitate combining raw
+  Win32/Winapi with OpenGL. (#3218)
+- Backends: OpenGL3: Restore front and back polygon mode separately when supported
+  by context (Desktop 3.0, 3.1, or 3.2+ with compat bit). (#6333) [@GereonV]
+- Examples: Added native Win32+OpenGL3 example. We don't recommend using this setup but we
+  provide it for completeness. (#3218, #5170, #6086, #2772, #2600, #2359, #2022, #1553) [@learn-more]
+
+Docking+Viewports Branch:
+
+- Viewports: Fixed platform-side focus (e.g. Alt+Tab) from leading to accidental
+  closure of Modal windows. Regression from 1.89.5. (#6357, #6299)
+- Viewports: Added void* ImGuiPlatformMonitor::PlatformHandle field (backend-dependant),
+  for usage by user code.
+- Backends: SDL2: Update monitor list when receiving a display event. (#6348)
+  Note however that SDL2 currently doesn't have an event for a DPI/Scaling change,
+  so monitor data won't be updated in this situation.
+- Backends: SDL3: Update monitor list when receiving a display event. (#6348)
+
+
+-----------------------------------------------------------------------
  VERSION 1.89.5 (Released 2023-04-13)
 -----------------------------------------------------------------------
 

@@ -144,6 +144,7 @@ extern bool wrap_igDragScalarN(const char* label,ImGuiDataType data_type,void* p
 extern void wrap_igErrorCheckEndFrameRecover(ImGuiErrorLogCallback log_callback);
 extern void wrap_igErrorCheckEndWindowRecover(ImGuiErrorLogCallback log_callback);
 extern const char* wrap_igFindRenderedTextEnd(const char* text);
+extern void wrap_igFocusWindow(ImGuiWindow* window);
 extern ImU32 wrap_igGetColorU32_Col(ImGuiCol idx);
 extern float wrap_igGetColumnOffset();
 extern float wrap_igGetColumnWidth();

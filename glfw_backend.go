@@ -96,6 +96,10 @@ func (b *GLFWBackend) loopFunc() func() {
 	return b.loop
 }
 
+func (b *GLFWBackend) SetWindowPos(x, y int) {
+	C.igGLFWWindow_SetWindowPos(b.handle(), C.int(x), C.int(y))
+}
+
 func (b GLFWBackend) DisplaySize() (width int32, height int32) {
 	widthArg, widthFin := WrapNumberPtr[C.int, int32](&width)
 	defer widthFin()

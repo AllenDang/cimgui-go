@@ -284,6 +284,7 @@ extern "C" {
 				NonUDT:           f.NonUDT,
 				CWrapperFuncName: cWrapperFuncName,
 				AllCallArgs:      f.AllCallArgs,
+				Comment:          f.Comment,
 			})
 		}
 

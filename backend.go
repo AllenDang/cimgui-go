@@ -71,6 +71,7 @@ type Backend interface {
 	Run(func())
 	Refresh()
 
+	SetWindowPos(x, y int)
 	DisplaySize() (width, height int32)
 	SetShouldClose(bool)
 
