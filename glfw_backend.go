@@ -44,6 +44,7 @@ type GLFWBackend struct {
 	beforeRender         voidCallbackFunc
 	afterRender          voidCallbackFunc
 	beforeDestoryContext voidCallbackFunc
+	dropCB               DropCallback
 	window               uintptr
 }
 
@@ -94,6 +95,10 @@ func (b *GLFWBackend) Run(loop func()) {
 
 func (b *GLFWBackend) loopFunc() func() {
 	return b.loop
+}
+
+func (b *GLFWBackend) dropCallback() DropCallback {
+	return b.dropCB
 }
 
 func (b *GLFWBackend) SetWindowPos(x, y int) {
@@ -151,4 +156,11 @@ func (b *GLFWBackend) CreateTextureRgba(img *image.RGBA, width, height int) Text
 
 func (b *GLFWBackend) DeleteTexture(id TextureID) {
 	C.igDeleteTexture(C.ImTextureID(id))
+}
+
+// SetDropCallback sets the drop callback which is called when an object
+// is dropped over the window.
+func (b *GLFWBackend) SetDropCallback(cbfun DropCallback) {
+	b.dropCB = cbfun
+	C.igGLFWWindow_SetDropCallbackCB(b.handle())
 }

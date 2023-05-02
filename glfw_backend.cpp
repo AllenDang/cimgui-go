@@ -285,4 +285,8 @@ void igGLFWWindow_SetShouldClose(GLFWwindow *window, int value){
   glfwSetWindowShouldClose(window, value);
 }
 
+void igGLFWWindow_SetDropCallbackCB(GLFWwindow *wnd){
+ glfwSetDropCallback(wnd, (GLFWdropfun)dropCallback);
+}
+
 #endif

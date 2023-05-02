@@ -32,9 +32,12 @@ extern void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback before
 extern void igGLFWWindow_GetDisplaySize(GLFWwindow *window, int *width, int *height);
 extern void igGLFWWindow_SetWindowPos(GLFWwindow *window, int x, int y);
 extern void igGLFWWindow_SetShouldClose(GLFWwindow *window, int value);
+extern void igGLFWWindow_SetDropCallbackCB(GLFWwindow *window);
 extern void igRefresh();
 extern ImTextureID igCreateTexture(unsigned char *pixels, int width, int height);
 extern void igDeleteTexture(ImTextureID id);
+
+extern void dropCallback(int, char**);
 
 #ifdef __cplusplus
 }
