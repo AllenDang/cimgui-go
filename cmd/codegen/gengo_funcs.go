@@ -249,11 +249,11 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 	case returnTypeEnum:
 		g.sb.WriteString(fmt.Sprintf("return %s(C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStructPtr:
-		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("return new%sFromC(*C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStruct:
 		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", renameGoIdentifier(f.Ret), f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeConstructor:
-		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("return new%sFromC(*C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	}
 
 	g.sb.WriteString("}\n\n")
@@ -350,7 +350,8 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 		if f.StructGetter && g.structNames[a.Type] {
 			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(a.Type)))
 			argWrappers = append(argWrappers, ArgumentWrapperData{
-				VarName: fmt.Sprintf("%s.handle()", a.Name),
+				VarName:   fmt.Sprintf("%s.handle()", a.Name),
+				Finalizer: fmt.Sprintf("%s.release()", a.Name),
 			})
 
 			g.shouldGenerate = true
