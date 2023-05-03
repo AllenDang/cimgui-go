@@ -12,7 +12,9 @@ func generateGoStructs(prefix string, structs []StructDef) []string {
 
 	sb.WriteString(goPackageHeader)
 	sb.WriteString(fmt.Sprintf(
-		`// #include "%s_wrapper.h"
+		`// #include <stdlib.h>
+// #include <memory.h>
+// #include "%s_wrapper.h"
 import "C"
 import "unsafe"
 
@@ -57,7 +59,8 @@ func generateStruct(s StructDef, sb *strings.Builder) {
 	fmt.Fprintf(sb, "type %s struct {\n", renameGoIdentifier(s.Name))
 	// Generate struct fields:
 	for i, field := range s.Members {
-		if field.Name == "" { // <- this means that type is union or something like that
+		if field.Name == "" || // <- this means that type is union or something like that.
+			strings.ContainsAny(field.Name, "[]") { // <- this means that it is an array; TODO
 			isTODO = true
 			// reset struct body and fill it with temporary data
 			structBody = &strings.Builder{}
@@ -79,7 +82,7 @@ data uintptr
 			typeName = "uintptr"
 		}
 
-		fmt.Fprintf(structBody, "%s %s\n", field.Name, typeName)
+		fmt.Fprintf(structBody, "%s %s\n", renameStructField(field.Name), typeName)
 	}
 
 	fmt.Fprintln(sb, structBody)
@@ -92,7 +95,7 @@ func (data %[1]s) handle() *C.%[2]s {
 `, renameGoIdentifier(s.Name), s.Name)
 
 	if isTODO {
-		fmt.Fprintf(sb, "return (*C.%s)(unsafe.Pointer(data))", s.Name)
+		fmt.Fprintf(sb, "return (*C.%s)(unsafe.Pointer(data.data))", s.Name)
 	} else {
 		fmt.Fprintf(sb, "result := new(C.%s)\n", s.Name)
 		for i, m := range s.Members {
@@ -101,7 +104,7 @@ func (data %[1]s) handle() *C.%[2]s {
 				Type: "uintptr", // TODO
 			})
 
-			fmt.Fprintf(sb, "%s\nresult.%s = %s\n", wr.ArgDef, s.Members[i].Name, wr.VarName)
+			fmt.Fprintf(sb, "%s\nresult.%s = %s\n", wr.ArgDef, renameStructField(m.Name), wr.VarName)
 		}
 
 		fmt.Fprintf(sb, "return result\n")
@@ -121,7 +124,7 @@ func (data %[1]s) release(result *C.%[2]s) {
 `, renameGoIdentifier(s.Name), s.Name)
 
 	if isTODO {
-		fmt.Fprintf(sb, "C.Free(unsafe.Pointer(result))")
+		fmt.Fprintf(sb, "C.free(unsafe.Pointer(result.data))")
 	} else {
 		for i, m := range s.Members {
 			wr := wrappers[i].toC(ArgDef{
@@ -139,14 +142,14 @@ func (data %[1]s) release(result *C.%[2]s) {
 	fmt.Fprintf(sb, "func new%[1]sFromC(cvalue C.%[2]s) %[1]s {\n", renameGoIdentifier(s.Name), s.Name)
 
 	if isTODO {
-		fmt.Fprintf(sb, "return %[1]s(unsafe.Pointer(&cvalue))", s.Name)
+		fmt.Fprintf(sb, "return %[1]s(unsafe.Pointer(&cvalue.data))", s.Name)
 	} else {
 		fmt.Fprintf(sb, "result := new(%s)\n", renameGoIdentifier(s.Name))
 		for i, m := range s.Members {
 			w := wrappers[i].fromC
 			stmt := strings.TrimPrefix(w.returnStmt, "return")
 			stmt = fmt.Sprintf(stmt, fmt.Sprintf("cvalue.%s", s.Name))
-			fmt.Fprintf(sb, "result.%s = %s\n", m.Name, stmt)
+			fmt.Fprintf(sb, "result.%s = %s\n", renameStructField(m.Name), stmt)
 		}
 
 		fmt.Fprintf(sb, "return result\n")
@@ -158,4 +161,10 @@ func (data %[1]s) release(result *C.%[2]s) {
 	//`, renameGoIdentifier(s.Name), s.Name))
 
 	fmt.Fprintf(sb, "}\n")
+}
+
+func renameStructField(original string) (result string) {
+	result = strings.TrimPrefix(original, "_")
+	result = "Field" + result
+	return result
 }
