@@ -100,11 +100,11 @@ func (data %[1]s) handle() *C.%[2]s {
 		fmt.Fprintf(sb, "result := new(C.%s)\n", s.Name)
 		for i, m := range s.Members {
 			wr := wrappers[i].toC(ArgDef{
-				Name: fmt.Sprintf("data.%s", m.Name),
+				Name: fmt.Sprintf("data.%s", renameStructField(m.Name)),
 				Type: "uintptr", // TODO
 			})
 
-			fmt.Fprintf(sb, "%s\nresult.%s = %s\n", wr.ArgDef, renameStructField(m.Name), wr.VarName)
+			fmt.Fprintf(sb, "%s\nresult.%s = %s\n", wr.ArgDef, m.Name, wr.VarName)
 		}
 
 		fmt.Fprintf(sb, "return result\n")
