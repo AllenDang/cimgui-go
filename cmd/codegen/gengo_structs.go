@@ -121,7 +121,7 @@ func (data %[1]s) release(result *C.%[2]s) {
 `, renameGoIdentifier(s.Name), s.Name)
 
 	if isTODO {
-		fmt.Fprintf(sb, "C.free(unsafe.Pointer(result))")
+		fmt.Fprintf(sb, "C.Free(unsafe.Pointer(result))")
 	} else {
 		for i, m := range s.Members {
 			wr := wrappers[i].toC(ArgDef{
@@ -135,10 +135,27 @@ func (data %[1]s) release(result *C.%[2]s) {
 
 	fmt.Fprintf(sb, "}\n")
 
-	sb.WriteString(fmt.Sprintf(`
-func new%[1]sFromC(cvalue C.%[2]s) %[1]s {
-  return %[1]s(unsafe.Pointer(&cvalue))
-}
+	// new X FromC
+	fmt.Fprintf(sb, "func new%[1]sFromC(cvalue C.%[2]s) %[1]s {\n", renameGoIdentifier(s.Name), s.Name)
 
-`, renameGoIdentifier(s.Name), s.Name))
+	if isTODO {
+		fmt.Fprintf(sb, "return %[1]s(unsafe.Pointer(&cvalue))", s.Name)
+	} else {
+		fmt.Fprintf(sb, "result := new(%s)\n", renameGoIdentifier(s.Name))
+		for i, m := range s.Members {
+			w := wrappers[i].fromC
+			stmt := strings.TrimPrefix(w.returnStmt, "return")
+			stmt = fmt.Sprintf(stmt, fmt.Sprintf("cvalue.%s", s.Name))
+			fmt.Fprintf(sb, "result.%s = %s\n", m.Name, stmt)
+		}
+
+		fmt.Fprintf(sb, "return result\n")
+	}
+
+	//sb.WriteString(fmt.Sprintf(`
+	//return %[1]s(unsafe.Pointer(&cvalue))
+
+	//`, renameGoIdentifier(s.Name), s.Name))
+
+	fmt.Fprintf(sb, "}\n")
 }
