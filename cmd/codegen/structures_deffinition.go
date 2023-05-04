@@ -27,6 +27,7 @@ type StructMemberDef struct {
 	Size         int    `json:"size"`
 	Comment      CommentDef
 	CommentData  json.RawMessage `json:"comment"`
+	Bitfield     string          `json:"bitfield"`
 }
 
 // getStructDefs takes a json file bytes (struct_and_enums.json) and returns a slice of StructDef.

@@ -111,6 +111,7 @@ func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) {
 
 		if field.Name == "" || // <- this means that type is union or something like that.
 			strings.ContainsAny(field.Name, "[]") || // <- this means that it is an array; TODO
+			field.Bitfield != "" || // see https://github.com/golang/go/issues/59982
 			isTODO {
 			isTODO = true
 			// reset struct body and fill it with temporary data
