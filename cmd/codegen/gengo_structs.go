@@ -14,6 +14,7 @@ func generateGoStructs(prefix string, structs []StructDef) []string {
 	sb.WriteString(fmt.Sprintf(
 		`// #include <stdlib.h>
 // #include <memory.h>
+// #include "extra_types.h"
 // #include "%s_wrapper.h"
 import "C"
 import "unsafe"
@@ -29,7 +30,7 @@ import "unsafe"
 		}
 
 		sb.WriteString(fmt.Sprintf("%s\n", s.CommentAbove))
-		generateStruct(s, &sb)
+		generateStruct(s, structs, &sb)
 
 		structNames = append(structNames, s.Name)
 	}
@@ -46,10 +47,10 @@ import "unsafe"
 	return structNames
 }
 
-func generateStruct(s StructDef, sb *strings.Builder) {
+func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) {
 	type wrapper struct {
 		fromC returnWrapper
-		toC   argumentWrapper
+		toC   ArgumentWrapperData
 	}
 
 	var wrappers = make(map[int]wrapper)
@@ -59,8 +60,58 @@ func generateStruct(s StructDef, sb *strings.Builder) {
 	fmt.Fprintf(sb, "type %s struct {\n", renameGoIdentifier(s.Name))
 	// Generate struct fields:
 	for i, field := range s.Members {
+		argDef := ArgDef{
+			Name: fmt.Sprintf("data.%s", renameStructField(field.Name)),
+			Type: field.Type,
+		}
+
+		typeName := ""
+
+		// first of all check if the type isn't another stuct
+		var isOtherStruct bool
+		for _, otherS := range defs {
+			if otherS.Name == field.Type {
+				isOtherStruct = true
+				break
+			}
+		}
+
+		toC, toCErr := argWrapper(field.Type)
+		fromC, fromCErr := getReturnTypeWrapperFunc(field.Type)
+		switch {
+		case toCErr == nil && fromCErr == nil:
+			wrappers[i] = wrapper{
+				toC:   toC(argDef),
+				fromC: fromC,
+			}
+			typeName = wrappers[i].toC.ArgType
+		case isOtherStruct:
+			wrappers[i] = wrapper{
+				fromC: returnWrapper{
+					returnType: field.Type,
+					returnStmt: fmt.Sprintf("new%sFromC(%%s)", field.Type),
+				},
+				toC: ArgumentWrapperData{
+					ArgType:   field.Type,
+					Finalizer: fmt.Sprintf("%s.release()", field.Name),
+					VarName:   fmt.Sprintf("%s.handle()", field.Name),
+				},
+			}
+
+			typeName = "uintptr"
+		default:
+			//wrappers[i] = wrapper{
+			//	fromC: simpleR("uintptr"),
+			//	toC:   simpleW("uintptr", field.Type)(argDef),
+			//}
+			//
+			//typeName = "uintptr"
+			isTODO = true
+		}
+
 		if field.Name == "" || // <- this means that type is union or something like that.
-			strings.ContainsAny(field.Name, "[]") { // <- this means that it is an array; TODO
+			strings.ContainsAny(field.Name, "[]") || // <- this means that it is an array; TODO
+			isTODO {
 			isTODO = true
 			// reset struct body and fill it with temporary data
 			structBody = &strings.Builder{}
@@ -69,17 +120,6 @@ func generateStruct(s StructDef, sb *strings.Builder) {
 data uintptr
 `)
 			continue
-		}
-
-		typeName := ""
-		switch field.Type {
-		default:
-			wrappers[i] = wrapper{
-				fromC: simpleR("uintptr"),
-				toC:   simpleW("uintptr", field.Name),
-			}
-
-			typeName = "uintptr"
 		}
 
 		fmt.Fprintf(structBody, "%s %s\n", renameStructField(field.Name), typeName)
@@ -99,12 +139,11 @@ func (data %[1]s) handle() *C.%[2]s {
 	} else {
 		fmt.Fprintf(sb, "result := new(C.%s)\n", s.Name)
 		for i, m := range s.Members {
-			wr := wrappers[i].toC(ArgDef{
-				Name: fmt.Sprintf("data.%s", renameStructField(m.Name)),
-				Type: "uintptr", // TODO
-			})
-
-			fmt.Fprintf(sb, "%s\nresult.%s = %s\n", wr.ArgDef, m.Name, wr.VarName)
+			fmt.Fprintf(sb,
+				"%s\nresult.%s = %s\n",
+				wrappers[i].toC.ArgDef,
+				m.Name, wrappers[i].toC.VarName,
+			)
 		}
 
 		fmt.Fprintf(sb, "return result\n")
@@ -124,15 +163,12 @@ func (data %[1]s) release(result *C.%[2]s) {
 `, renameGoIdentifier(s.Name), s.Name)
 
 	if isTODO {
-		fmt.Fprintf(sb, "C.free(unsafe.Pointer(result.data))")
+		fmt.Fprintf(sb, "C.free(unsafe.Pointer(result))")
 	} else {
-		for i, m := range s.Members {
-			wr := wrappers[i].toC(ArgDef{
-				Name: fmt.Sprintf("data.%s", m.Name),
-				Type: "uintptr", // TODO
-			})
-
-			fmt.Fprintf(sb, "%s\n", wr.Finalizer)
+		for i := range s.Members {
+			fmt.Fprintf(sb,
+				"%s\n",
+				wrappers[i].toC.Finalizer)
 		}
 	}
 
@@ -141,19 +177,19 @@ func (data %[1]s) release(result *C.%[2]s) {
 	// new X FromC
 	fmt.Fprintf(sb, "func new%[1]sFromC(cvalue C.%[2]s) %[1]s {\n", renameGoIdentifier(s.Name), s.Name)
 
+	fmt.Fprintf(sb, "result := new(%s)\n", renameGoIdentifier(s.Name))
 	if isTODO {
-		fmt.Fprintf(sb, "return %[1]s(unsafe.Pointer(&cvalue.data))", s.Name)
+		fmt.Fprintf(sb, "result.data = uintptr(unsafe.Pointer(&cvalue))\n")
 	} else {
-		fmt.Fprintf(sb, "result := new(%s)\n", renameGoIdentifier(s.Name))
 		for i, m := range s.Members {
 			w := wrappers[i].fromC
 			stmt := strings.TrimPrefix(w.returnStmt, "return")
-			stmt = fmt.Sprintf(stmt, fmt.Sprintf("cvalue.%s", s.Name))
+			stmt = fmt.Sprintf(stmt, fmt.Sprintf("cvalue.%s", m.Name))
 			fmt.Fprintf(sb, "result.%s = %s\n", renameStructField(m.Name), stmt)
 		}
-
-		fmt.Fprintf(sb, "return result\n")
 	}
+
+	fmt.Fprintf(sb, "return *result\n")
 
 	//sb.WriteString(fmt.Sprintf(`
 	//return %[1]s(unsafe.Pointer(&cvalue))

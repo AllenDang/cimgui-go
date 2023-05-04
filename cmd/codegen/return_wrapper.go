@@ -68,9 +68,6 @@ func simpleR(goType string) returnWrapper {
 func wrappableR(goType string) returnWrapper {
 	return returnWrapper{
 		returnType: goType,
-		returnStmt: fmt.Sprintf(`out := &%s{}
-out.fromC(%s)
-return *out
-`, goType, "%s"),
+		returnStmt: fmt.Sprintf("return *(&%s{}).fromC(%s)", goType, "%s"),
 	}
 }
