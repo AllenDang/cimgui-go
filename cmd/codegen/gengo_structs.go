@@ -61,7 +61,7 @@ func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) {
 	// Generate struct fields:
 	for i, field := range s.Members {
 		argDef := ArgDef{
-			Name: fmt.Sprintf("data.%s", renameStructField(field.Name)),
+			Name: renameStructField(field.Name),
 			Type: field.Type,
 		}
 
@@ -141,9 +141,10 @@ func (data %[1]s) handle() *C.%[2]s {
 		fmt.Fprintf(sb, "result := new(C.%s)\n", s.Name)
 		for i, m := range s.Members {
 			fmt.Fprintf(sb,
-				"%s\nresult.%s = %s\n",
+				"%[4]s := data.%[4]s\n%[1]s\nresult.%[2]s = %[3]s\n",
 				wrappers[i].toC.ArgDef,
 				m.Name, wrappers[i].toC.VarName,
+				renameStructField(m.Name),
 			)
 		}
 
