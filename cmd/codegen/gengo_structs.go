@@ -84,6 +84,7 @@ func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) {
 				toC:   toC(argDef),
 				fromC: fromC,
 			}
+
 			typeName = wrappers[i].toC.ArgType
 		case isOtherStruct:
 			wrappers[i] = wrapper{

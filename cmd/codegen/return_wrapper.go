@@ -40,7 +40,7 @@ func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 		"ImGuiTableColumnIdx":      simpleR("TableColumnIdx"),
 		"ImGuiTableDrawChannelIdx": simpleR("TableDrawChannelIdx"),
 		"void*":                    simpleR("unsafe.Pointer"),
-		"size_t":                   simpleR("float64"),
+		"size_t":                   simpleR("uint64"),
 	}
 
 	if v, ok := returnWrapperMap[returnType]; ok {
