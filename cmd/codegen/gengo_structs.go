@@ -90,11 +90,12 @@ func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) {
 			wrappers[i] = wrapper{
 				fromC: returnWrapper{
 					returnType: field.Type,
-					returnStmt: fmt.Sprintf("new%sFromC(%%s)", field.Type),
+					// TODO: maybe all struct fields of this type should be pointers?
+					returnStmt: fmt.Sprintf("*new%sFromC(%%s)", field.Type),
 				},
 				toC: ArgumentWrapperData{
 					ArgType:   field.Type,
-					ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := %[2]s.handle()", field.Name, renameStructField(field.Name)),
+					ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := %[2]s.c()", field.Name, renameStructField(field.Name)),
 					Finalizer: fmt.Sprintf("%sFin()", field.Name),
 					VarName:   fmt.Sprintf("%sArg", field.Name),
 				},
