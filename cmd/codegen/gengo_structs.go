@@ -70,7 +70,7 @@ func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) {
 		// first of all check if the type isn't another stuct
 		var isOtherStruct bool
 		for _, otherS := range defs {
-			if otherS.Name == field.Type {
+			if otherS.Name == field.Type && !shouldSkipStruct(field.Type) {
 				isOtherStruct = true
 				break
 			}
@@ -93,12 +93,13 @@ func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) {
 				},
 				toC: ArgumentWrapperData{
 					ArgType:   field.Type,
-					Finalizer: fmt.Sprintf("%s.release()", field.Name),
-					VarName:   fmt.Sprintf("%s.handle()", field.Name),
+					ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := %[2]s.handle()", field.Name, renameStructField(field.Name)),
+					Finalizer: fmt.Sprintf("%sFin()", field.Name),
+					VarName:   fmt.Sprintf("%sArg", field.Name),
 				},
 			}
 
-			typeName = "uintptr"
+			typeName = renameGoIdentifier(field.Type)
 		default:
 			//wrappers[i] = wrapper{
 			//	fromC: simpleR("uintptr"),
@@ -132,13 +133,13 @@ data uintptr
 
 	// handlers:
 	fmt.Fprintf(sb, `
-func (data %[1]s) handle() *C.%[2]s {
+func (data %[1]s) handle() (result *C.%[2]s, releaseFn func()) {
 `, renameGoIdentifier(s.Name), s.Name)
 
 	if isTODO {
-		fmt.Fprintf(sb, "return (*C.%s)(unsafe.Pointer(data.data))", s.Name)
+		fmt.Fprintf(sb, "return (*C.%s)(unsafe.Pointer(data.data)), func() {C.free(unsafe.Pointer(result))}", s.Name)
 	} else {
-		fmt.Fprintf(sb, "result := new(C.%s)\n", s.Name)
+		fmt.Fprintf(sb, "result = new(C.%s)\n", s.Name)
 		for i, m := range s.Members {
 			fmt.Fprintf(sb,
 				"%[4]s := data.%[4]s\n%[1]s\nresult.%[2]s = %[3]s\n",
@@ -148,33 +149,26 @@ func (data %[1]s) handle() *C.%[2]s {
 			)
 		}
 
-		fmt.Fprintf(sb, "return result\n")
-	}
+		// finalizer (release func)
+		fmt.Fprintf(sb, "releaseFn = func() {\n")
 
-	fmt.Fprintf(sb, "}\n")
-
-	fmt.Fprintf(sb, `
-	func (data %[1]s) c() C.%[2]s {
-		return *(data.handle())
-	}
-`, renameGoIdentifier(s.Name), s.Name)
-
-	// release func:
-	fmt.Fprintf(sb, `
-func (data %[1]s) release(result *C.%[2]s) {
-`, renameGoIdentifier(s.Name), s.Name)
-
-	if isTODO {
-		fmt.Fprintf(sb, "C.free(unsafe.Pointer(result))")
-	} else {
 		for i := range s.Members {
 			fmt.Fprintf(sb,
 				"%s\n",
 				wrappers[i].toC.Finalizer)
 		}
+
+		fmt.Fprintf(sb, "}\nreturn result, releaseFn\n")
 	}
 
 	fmt.Fprintf(sb, "}\n")
+
+	fmt.Fprintf(sb, `
+	func (data %[1]s) c() (result C.%[2]s, fin func()) {
+		resultPtr, finFn := data.handle()
+		return *resultPtr, finFn
+	}
+`, renameGoIdentifier(s.Name), s.Name)
 
 	// new X FromC
 	fmt.Fprintf(sb, "func new%[1]sFromC(cvalue C.%[2]s) %[1]s {\n", renameGoIdentifier(s.Name), s.Name)

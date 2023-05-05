@@ -234,7 +234,11 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 	case returnTypeVoid, returnTypeNonUDT:
 		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStructSetter:
-		g.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.CWrapperFuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf(`
+selfArg, selfFin := self.handle()
+defer selfFin()
+C.%s(selfArg, %s)
+`, f.CWrapperFuncName, argInvokeStmt))
 	}
 
 	if !shouldDefer {
@@ -350,8 +354,9 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 		if f.StructGetter && g.structNames[a.Type] {
 			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(a.Type)))
 			argWrappers = append(argWrappers, ArgumentWrapperData{
-				VarName:   fmt.Sprintf("%s.handle()", a.Name),
-				Finalizer: fmt.Sprintf("%s.release()", a.Name),
+				ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.handle()", a.Name),
+				VarName:   fmt.Sprintf("%sArg", a.Name),
+				Finalizer: fmt.Sprintf("%sFin()", a.Name),
 			})
 
 			g.shouldGenerate = true
@@ -389,14 +394,20 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 		if g.structNames[pureType] {
 			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType)))
 			w := ArgumentWrapperData{
-				ArgType: renameGoIdentifier(pureType),
+				ArgType:   renameGoIdentifier(pureType),
+				VarName:   fmt.Sprintf("%sArg", a.Name),
+				Finalizer: fmt.Sprintf("%sFin()", a.Name),
 			}
 
+			fn := ""
 			if isPointer {
-				w.VarName = fmt.Sprintf("%s.handle()", a.Name)
+				fn = "handle"
 			} else {
-				w.VarName = fmt.Sprintf("%s.c()", a.Name)
+				fn = "c"
 			}
+
+			w.ArgDef = fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.%[2]s()", a.Name, fn)
+
 			argWrappers = append(argWrappers, w)
 
 			g.shouldGenerate = true
