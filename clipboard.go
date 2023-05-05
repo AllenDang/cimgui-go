@@ -55,7 +55,9 @@ type ClipboardHandler interface {
 }
 
 func (io IO) SetClipboardHandler(handler ClipboardHandler) {
-	rawIO := io.handle()
+	rawIO, rawIOFin := io.handle()
+	defer rawIOFin()
+
 	rawIO.GetClipboardTextFn = (C.get_clipboard_cb)(C.get_clipboard_callback)
 	rawIO.SetClipboardTextFn = (C.set_clipboard_cb)(C.set_clipboard_callback)
 
