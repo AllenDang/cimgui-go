@@ -90,8 +90,7 @@ func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) {
 			wrappers[i] = wrapper{
 				fromC: returnWrapper{
 					returnType: field.Type,
-					// TODO: maybe all struct fields of this type should be pointers?
-					returnStmt: fmt.Sprintf("*new%sFromC(%%s)", field.Type),
+					returnStmt: fmt.Sprintf("new%sFromC(%%s)", renameGoIdentifier(field.Type)),
 				},
 				toC: ArgumentWrapperData{
 					ArgType:   field.Type,
@@ -139,7 +138,10 @@ func (data %[1]s) handle() (result *C.%[2]s, releaseFn func()) {
 `, renameGoIdentifier(s.Name), s.Name)
 
 	if isTODO {
-		fmt.Fprintf(sb, "return (*C.%s)(unsafe.Pointer(data.data)), func() {C.free(unsafe.Pointer(result))}", s.Name)
+		fmt.Fprintf(sb, `
+result = (*C.%s)(unsafe.Pointer(data.data))
+return result, func() {}
+`, s.Name)
 	} else {
 		fmt.Fprintf(sb, "result = new(C.%s)\n", s.Name)
 		for i, m := range s.Members {
