@@ -3,11 +3,15 @@ package main
 import "C"
 import (
 	"fmt"
+	"github.com/kpango/glg"
 	"os"
 	"strings"
 )
 
 func generateGoStructs(prefix string, structs []StructDef) []string {
+	glg.Infof("Generating %d structs", len(structs))
+	var progress int
+
 	var sb strings.Builder
 
 	sb.WriteString(goPackageHeader)
@@ -26,11 +30,14 @@ import "unsafe"
 
 	for _, s := range structs {
 		if shouldSkipStruct(s.Name) {
+			progress++
 			continue
 		}
 
 		sb.WriteString(fmt.Sprintf("%s\n", s.CommentAbove))
-		generateStruct(s, structs, &sb)
+		if generateStruct(s, structs, &sb) {
+			progress++
+		}
 
 		structNames = append(structNames, s.Name)
 	}
@@ -44,10 +51,18 @@ import "unsafe"
 
 	_, _ = structFile.WriteString(sb.String())
 
+	glg.Infof("%d of %d structs fully generated (%.2f %%)",
+		progress,
+		len(structs),
+		float32(progress)/float32(len(structs))*100,
+	)
+
 	return structNames
 }
 
-func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) {
+func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) (generationComplete bool) {
+	generationComplete = true
+
 	type wrapper struct {
 		fromC returnWrapper
 		toC   ArgumentWrapperData
@@ -102,20 +117,30 @@ func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) {
 
 			typeName = renameGoIdentifier(field.Type)
 		default:
-			//wrappers[i] = wrapper{
-			//	fromC: simpleR("uintptr"),
-			//	toC:   simpleW("uintptr", field.Type)(argDef),
-			//}
-			//
-			//typeName = "uintptr"
 			isTODO = true
 		}
 
 		if field.Name == "" || // <- this means that type is union or something like that.
 			strings.ContainsAny(field.Name, "[]") || // <- this means that it is an array; TODO
-			field.Bitfield != "" || // see https://github.com/golang/go/issues/59982
+			field.Bitfield != "" ||
 			isTODO {
+			generationComplete = false
 			isTODO = true
+			/*
+					This may happen due to the following things:
+						- member has no name (the only case that I found is when field is "union {...}"
+				        see https://github.com/cimgui/cimgui/issues/241
+						- the field is an array - for some reason the [] is treated as part of name and that case
+						is simply not yet implemented (TODO)
+						- field is a bitfield and go does not (and is not going to) support it
+						see https://github.com/golang/go/issues/59982
+						- or finally (I believe the most common reason) type of this field is not implemented
+						in argument_wrapper.go and return_wrapper.go. This should be present in both maps
+						in order to make this generator work for that type.
+			*/
+			glg.Failf("Cannot generate struct \"%s\", because its member %s is of unsupported type %s",
+				s.Name, field.Name, field.Type,
+			)
 			// reset struct body and fill it with temporary data
 			structBody = &strings.Builder{}
 			fmt.Fprint(structBody, `
@@ -189,14 +214,9 @@ return result, func() {}
 		}
 	}
 
-	fmt.Fprintf(sb, "return *result\n")
+	fmt.Fprintf(sb, "return *result\n}\n")
 
-	//sb.WriteString(fmt.Sprintf(`
-	//return %[1]s(unsafe.Pointer(&cvalue))
-
-	//`, renameGoIdentifier(s.Name), s.Name))
-
-	fmt.Fprintf(sb, "}\n")
+	return
 }
 
 func renameStructField(original string) (result string) {
