@@ -16,6 +16,7 @@ It works on macOS(arm64/x86), windows(x64), Arch Linux/KDE and Fedora Workstatio
 
 - For functions, 'Im/ImGui/ig' is trimmed.
 - If function comes from `imgui_internal.h`, `Internal` prefix is added.
+- Struct fields (if any exported) are prefixed with word `Field`
 
 ## Function coverage
 Currently most of the functions are generated, except memory related stuff (eg. memory allocator, storage management, etc...).
