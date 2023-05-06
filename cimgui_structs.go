@@ -535,10 +535,10 @@ func newContextHookFromC(cvalue C.ImGuiContextHook) ContextHook {
 
 // Type information associated to one ImGuiDataType. Retrieve with DataTypeGetInfo().
 type DataTypeInfo struct {
-	FieldSize     uint64
-	FieldName     string
-	FieldPrintFmt string
-	FieldScanFmt  string
+	FieldSize     uint64 // Size in bytes
+	FieldName     string // Short descriptive name for the type, for debugging
+	FieldPrintFmt string // Default printf format for the type
+	FieldScanFmt  string // Default scanf format for the type
 }
 
 func (data DataTypeInfo) handle() (result *C.ImGuiDataTypeInfo, releaseFn func()) {
@@ -965,10 +965,10 @@ func newInputTextStateFromC(cvalue C.ImGuiInputTextState) InputTextState {
 // [Internal] Storage used by IsKeyDown(), IsKeyPressed() etc functions.
 // If prior to 1.87 you used io.KeysDownDuration[] (which was marked as internal), you should use GetKeyData(key)->DownDuration and *NOT* io.KeysData[key]->DownDuration.
 type KeyData struct {
-	FieldDown             bool
-	FieldDownDuration     float32
-	FieldDownDurationPrev float32
-	FieldAnalogValue      float32
+	FieldDown             bool    // True for if key is down
+	FieldDownDuration     float32 // Duration the key has been down (<0.0f: not pressed, 0.0f: just pressed, >0.0f: time held)
+	FieldDownDurationPrev float32 // Last frame duration the key has been down
+	FieldAnalogValue      float32 // 0.0f..1.0f for gamepad values
 }
 
 func (data KeyData) handle() (result *C.ImGuiKeyData, releaseFn func()) {
@@ -1009,8 +1009,8 @@ func newKeyDataFromC(cvalue C.ImGuiKeyData) KeyData {
 type KeyOwnerData struct {
 	FieldOwnerCurr        ID
 	FieldOwnerNext        ID
-	FieldLockThisFrame    bool
-	FieldLockUntilRelease bool
+	FieldLockThisFrame    bool // Reading this key requires explicit owner id (until end of frame). Set by ImGuiInputFlags_LockThisFrame.
+	FieldLockUntilRelease bool // Reading this key requires explicit owner id (until key is released). Set by ImGuiInputFlags_LockUntilRelease. When this is true LockThisFrame is always true as well.
 }
 
 func (data KeyOwnerData) handle() (result *C.ImGuiKeyOwnerData, releaseFn func()) {
@@ -1183,9 +1183,9 @@ func newListClipperDataFromC(cvalue C.ImGuiListClipperData) ListClipperData {
 type ListClipperRange struct {
 	FieldMin                 int32
 	FieldMax                 int32
-	FieldPosToIndexConvert   bool
-	FieldPosToIndexOffsetMin int
-	FieldPosToIndexOffsetMax int
+	FieldPosToIndexConvert   bool // Begin/End are absolute position (will be converted to indices later)
+	FieldPosToIndexOffsetMin int  // Add to Min after converting to indices
+	FieldPosToIndexOffsetMax int  // Add to Min after converting to indices
 }
 
 func (data ListClipperRange) handle() (result *C.ImGuiListClipperRange, releaseFn func()) {
@@ -1522,9 +1522,9 @@ func newPlatformIOFromC(cvalue C.ImGuiPlatformIO) PlatformIO {
 
 // (Optional) Support for IME (Input Method Editor) via the io.SetPlatformImeDataFn() function.
 type PlatformImeData struct {
-	FieldWantVisible     bool
-	FieldInputPos        Vec2
-	FieldInputLineHeight float32
+	FieldWantVisible     bool    // A widget wants the IME to be visible
+	FieldInputPos        Vec2    // Position of the input cursor
+	FieldInputLineHeight float32 // Line height
 }
 
 func (data PlatformImeData) handle() (result *C.ImGuiPlatformImeData, releaseFn func()) {
@@ -1559,12 +1559,12 @@ func newPlatformImeDataFromC(cvalue C.ImGuiPlatformImeData) PlatformImeData {
 // (Optional) This is required when enabling multi-viewport. Represent the bounds of each connected monitor/display and their DPI.
 // We use this information for multiple DPI support + clamping the position of popups and tooltips so they don't straddle multiple monitors.
 type PlatformMonitor struct {
-	FieldMainPos        Vec2
-	FieldMainSize       Vec2
-	FieldWorkPos        Vec2
-	FieldWorkSize       Vec2
-	FieldDpiScale       float32
-	FieldPlatformHandle unsafe.Pointer
+	FieldMainPos        Vec2           // Coordinates of the area displayed on this monitor (Min = upper left, Max = bottom right)
+	FieldMainSize       Vec2           // Coordinates of the area displayed on this monitor (Min = upper left, Max = bottom right)
+	FieldWorkPos        Vec2           // Coordinates without task bars / side bars / menu bars. Used to avoid positioning popups/tooltips inside this region. If you don't have this info, please copy the value for MainPos/MainSize.
+	FieldWorkSize       Vec2           // Coordinates without task bars / side bars / menu bars. Used to avoid positioning popups/tooltips inside this region. If you don't have this info, please copy the value for MainPos/MainSize.
+	FieldDpiScale       float32        // 1.0f = 96 DPI
+	FieldPlatformHandle unsafe.Pointer // Backend dependant data (e.g. HMONITOR, GLFWmonitor*, SDL Display Index, NSScreen*)
 }
 
 func (data PlatformMonitor) handle() (result *C.ImGuiPlatformMonitor, releaseFn func()) {
@@ -1631,8 +1631,8 @@ func newPopupDataFromC(cvalue C.ImGuiPopupData) PopupData {
 }
 
 type PtrOrIndex struct {
-	FieldPtr   unsafe.Pointer
-	FieldIndex int32
+	FieldPtr   unsafe.Pointer // Either field can be set, not both. e.g. Dock node tab bars are loose while BeginTabBar() ones are in a pool.
+	FieldIndex int32          // Usually index in a main pool.
 }
 
 func (data PtrOrIndex) handle() (result *C.ImGuiPtrOrIndex, releaseFn func()) {
@@ -1719,10 +1719,10 @@ func newShrinkWidthItemFromC(cvalue C.ImGuiShrinkWidthItem) ShrinkWidthItem {
 // Resizing callback data to apply custom constraint. As enabled by SetNextWindowSizeConstraints(). Callback is called during the next Begin().
 // NB: For basic min/max size constraint on each axis you don't need to use the callback! The SetNextWindowSizeConstraints() parameters are enough.
 type SizeCallbackData struct {
-	FieldUserData    unsafe.Pointer
-	FieldPos         Vec2
-	FieldCurrentSize Vec2
-	FieldDesiredSize Vec2
+	FieldUserData    unsafe.Pointer // Read-only.   What user passed to SetNextWindowSizeConstraints(). Generally store an integer or float in here (need reinterpret_cast<>).
+	FieldPos         Vec2           // Read-only.   Window position, for reference.
+	FieldCurrentSize Vec2           // Read-only.   Current window size.
+	FieldDesiredSize Vec2           // Read-write.  Desired size, based on user's mouse position. Write to this field to restrain resizing.
 }
 
 func (data SizeCallbackData) handle() (result *C.ImGuiSizeCallbackData, releaseFn func()) {
@@ -2029,8 +2029,8 @@ func newTableFromC(cvalue C.ImGuiTable) Table {
 // Transient cell data stored per row.
 // sizeof() ~ 6
 type TableCellData struct {
-	FieldBgColor uint32
-	FieldColumn  TableColumnIdx
+	FieldBgColor uint32         // Actual color
+	FieldColumn  TableColumnIdx // Column number
 }
 
 func (data TableCellData) handle() (result *C.ImGuiTableCellData, releaseFn func()) {
@@ -2130,9 +2130,9 @@ func newTableColumnSortSpecsFromC(cvalue C.ImGuiTableColumnSortSpecs) TableColum
 // Per-instance data that needs preserving across frames (seemingly most others do not need to be preserved aside from debug needs. Does that means they could be moved to ImGuiTableTempData?)
 type TableInstanceData struct {
 	FieldTableInstanceID    ID
-	FieldLastOuterHeight    float32
-	FieldLastFirstRowHeight float32
-	FieldLastFrozenHeight   float32
+	FieldLastOuterHeight    float32 // Outer height from last frame
+	FieldLastFirstRowHeight float32 // Height of first row from last frame (FIXME: this is used as "header height" and may be reworked)
+	FieldLastFrozenHeight   float32 // Height of frozen section from last frame
 }
 
 func (data TableInstanceData) handle() (result *C.ImGuiTableInstanceData, releaseFn func()) {
@@ -2555,11 +2555,11 @@ func newSTBTexteditStateFromC(cvalue C.STB_TexteditState) STBTexteditState {
 
 // result of layout query
 type StbTexteditRow struct {
-	Fieldx0               float32
-	Fieldx1               float32
-	Fieldbaseline_y_delta float32
-	Fieldymin             float32
-	Fieldymax             float32
+	Fieldx0               float32 // starting x location, end x location (allows for align=right, etc)
+	Fieldx1               float32 // starting x location, end x location (allows for align=right, etc)
+	Fieldbaseline_y_delta float32 // position of baseline relative to previous row's baseline
+	Fieldymin             float32 // height of row above and below baseline
+	Fieldymax             float32 // height of row above and below baseline
 	Fieldnum_chars        int32
 }
 
@@ -2612,6 +2612,7 @@ func newStbTexteditRowFromC(cvalue C.StbTexteditRow) StbTexteditRow {
 // per-textfield; it includes cursor position, selection state,
 // and undo state.
 type StbUndoRecord struct {
+	// private data
 	Fieldwhere         int32
 	Fieldinsert_length int32
 	Fielddelete_length int32
