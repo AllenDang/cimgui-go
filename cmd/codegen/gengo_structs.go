@@ -147,7 +147,7 @@ func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) (generat
 // TODO: contains unsupported fields
 data uintptr
 `)
-			continue
+			break
 		}
 
 		fmt.Fprintf(structBody, "%s %s\n", renameStructField(field.Name), typeName)
