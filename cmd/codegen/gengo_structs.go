@@ -150,7 +150,15 @@ data uintptr
 			break
 		}
 
-		fmt.Fprintf(structBody, "%s %s\n", renameStructField(field.Name), typeName)
+		if field.Comment.Above != "" {
+			field.Comment.Above += "\n"
+		}
+
+		fmt.Fprintf(structBody, "%s%s %s %s\n",
+			field.Comment.Above,
+			renameStructField(field.Name), typeName,
+			field.Comment.Sameline,
+		)
 	}
 
 	fmt.Fprintln(sb, structBody)
