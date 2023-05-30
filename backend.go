@@ -118,8 +118,8 @@ type Backend interface {
 	dropCallback() DropCallback
 }
 
-func CreateBackend( /*TODO: backend type*/ ) Backend {
-	currentBackend = &GLFWBackend{}
+func CreateBackend(backend Backend) Backend {
+	currentBackend = backend
 	return currentBackend
 }
 

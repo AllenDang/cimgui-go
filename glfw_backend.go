@@ -48,6 +48,10 @@ type GLFWBackend struct {
 	window               uintptr
 }
 
+func NewGLFWBackend() *GLFWBackend {
+	return &GLFWBackend{}
+}
+
 func (b *GLFWBackend) handle() *C.GLFWwindow {
 	return (*C.GLFWwindow)(unsafe.Pointer(b.window))
 }
