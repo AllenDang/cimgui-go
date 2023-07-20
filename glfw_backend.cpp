@@ -287,4 +287,8 @@ void igGLFWWindow_SetSize(GLFWwindow *window, int width, int height) { glfwSetWi
 
 void igGLFWWindow_SetTitle(GLFWwindow *window, const char *title) { glfwSetWindowTitle(window, title); }
 
+void igGLFWWindow_SetSizeLimits(GLFWwindow *window, int minWidth, int minHeight, int maxWidth, int maxHeight) {
+  glfwSetWindowSizeLimits(window, minWidth, minHeight, maxWidth, maxHeight);
+}
+
 #endif

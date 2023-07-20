@@ -132,6 +132,13 @@ func (b *GLFWBackend) SetWindowTitle(title string) {
 	C.igGLFWWindow_SetTitle(b.handle(), titleArg)
 }
 
+// The minimum and maximum size of the content area of a windowed mode window.
+// To specify only a minimum size or only a maximum one, set the other pair to -1
+// e.g. SetWindowSizeLimits(640, 480, -1, -1)
+func (b *GLFWBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight int) {
+	C.igGLFWWindow_SetSizeLimits(b.handle(), C.int(minWidth), C.int(minHeight), C.int(maxWidth), C.int(maxHeight))
+}
+
 func (b GLFWBackend) SetShouldClose(value bool) {
 	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(castBool(value)))
 }
