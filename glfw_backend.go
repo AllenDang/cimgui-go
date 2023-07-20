@@ -45,6 +45,7 @@ type GLFWBackend struct {
 	afterRender          voidCallbackFunc
 	beforeDestoryContext voidCallbackFunc
 	dropCB               DropCallback
+	closeCB              WindowCloseCallback
 	window               uintptr
 }
 
@@ -103,6 +104,10 @@ func (b *GLFWBackend) loopFunc() func() {
 
 func (b *GLFWBackend) dropCallback() DropCallback {
 	return b.dropCB
+}
+
+func (b *GLFWBackend) closeCallback() WindowCloseCallback {
+	return b.closeCB
 }
 
 func (b *GLFWBackend) SetWindowPos(x, y int) {
@@ -185,4 +190,9 @@ func (b *GLFWBackend) DeleteTexture(id TextureID) {
 func (b *GLFWBackend) SetDropCallback(cbfun DropCallback) {
 	b.dropCB = cbfun
 	C.igGLFWWindow_SetDropCallbackCB(b.handle())
+}
+
+func (b *GLFWBackend) SetCloseCallback(cbfun WindowCloseCallback) {
+	b.closeCB = cbfun
+	C.igGLFWWindow_SetCloseCallback(b.handle())
 }

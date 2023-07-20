@@ -62,6 +62,13 @@ func beforeDestoryContext() {
 
 type DropCallback func([]string)
 
+type WindowCloseCallback func(wnd unsafe.Pointer)
+
+//export closeCallback
+func closeCallback(wnd unsafe.Pointer) {
+	currentBackend.closeCallback()(wnd)
+}
+
 //export dropCallback
 func dropCallback(wnd unsafe.Pointer, count C.int, names **C.char) {
 	namesSlice := make([]string, int(count))
@@ -87,6 +94,9 @@ type Backend interface {
 	Refresh()
 
 	SetWindowPos(x, y int)
+	SetWindowSize(width, height int)
+	SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight int)
+	SetWindowTitle(title string)
 	DisplaySize() (width, height int32)
 	SetShouldClose(bool)
 
@@ -96,6 +106,7 @@ type Backend interface {
 	CreateTextureRgba(img *image.RGBA, width, height int) TextureID
 	DeleteTexture(id TextureID)
 	SetDropCallback(DropCallback)
+	SetCloseCallback(WindowCloseCallback)
 
 	// TODO: flags needs generic layer
 	CreateWindow(title string, width, height int, flags GLFWWindowFlags)
@@ -116,6 +127,7 @@ type Backend interface {
 	afterRenderHook() func()
 	beforeDestroyHook() func()
 	dropCallback() DropCallback
+	closeCallback() WindowCloseCallback
 }
 
 func CreateBackend(backend Backend) Backend {
