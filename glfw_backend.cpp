@@ -285,4 +285,6 @@ void igGLFWWindow_SetDropCallbackCB(GLFWwindow *wnd) { glfwSetDropCallback(wnd, 
 
 void igGLFWWindow_SetSize(GLFWwindow *window, int width, int height) { glfwSetWindowSize(window, width, height); }
 
+void igGLFWWindow_SetTitle(GLFWwindow *window, const char *title) { glfwSetWindowTitle(window, title); }
+
 #endif

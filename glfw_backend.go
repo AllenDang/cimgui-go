@@ -125,6 +125,13 @@ func (b GLFWBackend) DisplaySize() (width int32, height int32) {
 	return
 }
 
+func (b *GLFWBackend) SetWindowTitle(title string) {
+	titleArg, titleFin := wrapString(title)
+	defer titleFin()
+
+	C.igGLFWWindow_SetTitle(b.handle(), titleArg)
+}
+
 func (b GLFWBackend) SetShouldClose(value bool) {
 	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(castBool(value)))
 }
