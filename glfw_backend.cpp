@@ -277,16 +277,12 @@ void igGLFWWindow_GetDisplaySize(GLFWwindow *window, int *width, int *height) {
   glfwGetWindowSize(window, width, height);
 }
 
-void igGLFWWindow_SetWindowPos(GLFWwindow *window, int x, int y){
-  glfwSetWindowPos(window, x, y);
-}
+void igGLFWWindow_SetWindowPos(GLFWwindow *window, int x, int y) { glfwSetWindowPos(window, x, y); }
 
-void igGLFWWindow_SetShouldClose(GLFWwindow *window, int value){
-  glfwSetWindowShouldClose(window, value);
-}
+void igGLFWWindow_SetShouldClose(GLFWwindow *window, int value) { glfwSetWindowShouldClose(window, value); }
 
-void igGLFWWindow_SetDropCallbackCB(GLFWwindow *wnd){
- glfwSetDropCallback(wnd, (GLFWdropfun)dropCallback);
-}
+void igGLFWWindow_SetDropCallbackCB(GLFWwindow *wnd) { glfwSetDropCallback(wnd, (GLFWdropfun)dropCallback); }
+
+void igGLFWWindow_SetSize(GLFWwindow *window, int width, int height) { glfwSetWindowSize(window, width, height); }
 
 #endif
