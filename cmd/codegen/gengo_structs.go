@@ -161,8 +161,8 @@ func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, sb *strings.
 						in argument_wrapper.go and return_wrapper.go. This should be present in both maps
 						in order to make this generator work for that type.
 			*/
-			glg.Failf("Cannot generate struct \"%s\", because its member \"%s\" is of unsupported type \"%s\"",
-				s.Name, field.Name, field.Type,
+			glg.Failf("Cannot generate struct \"%s\", because its member \"%s\" (bitfield %v) is of unsupported type \"%s\" ",
+				s.Name, field.Name, field.Bitfield, field.Type,
 			)
 			// reset struct body and fill it with temporary data
 			structBody = &strings.Builder{}
