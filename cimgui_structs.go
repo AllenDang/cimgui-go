@@ -14,11 +14,11 @@ import "unsafe"
 // Store 1-bit per value.
 type BitVector struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data BitVector) handle() (result *C.ImBitVector, releaseFn func()) {
-	result = (*C.ImBitVector)(unsafe.Pointer(data.data))
+	result = (*C.ImBitVector)(data.data)
 	return result, func() {}
 }
 
@@ -29,18 +29,18 @@ func (data BitVector) c() (result C.ImBitVector, fin func()) {
 
 func newBitVectorFromC(cvalue C.ImBitVector) BitVector {
 	result := new(BitVector)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // [Internal] For use by ImDrawListSplitter
 type DrawChannel struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data DrawChannel) handle() (result *C.ImDrawChannel, releaseFn func()) {
-	result = (*C.ImDrawChannel)(unsafe.Pointer(data.data))
+	result = (*C.ImDrawChannel)(data.data)
 	return result, func() {}
 }
 
@@ -51,7 +51,7 @@ func (data DrawChannel) c() (result C.ImDrawChannel, fin func()) {
 
 func newDrawChannelFromC(cvalue C.ImDrawChannel) DrawChannel {
 	result := new(DrawChannel)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -62,11 +62,11 @@ func newDrawChannelFromC(cvalue C.ImDrawChannel) DrawChannel {
 //   - The ClipRect/TextureId/VtxOffset fields must be contiguous as we memcmp() them together (this is asserted for).
 type DrawCmd struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data DrawCmd) handle() (result *C.ImDrawCmd, releaseFn func()) {
-	result = (*C.ImDrawCmd)(unsafe.Pointer(data.data))
+	result = (*C.ImDrawCmd)(data.data)
 	return result, func() {}
 }
 
@@ -77,7 +77,7 @@ func (data DrawCmd) c() (result C.ImDrawCmd, fin func()) {
 
 func newDrawCmdFromC(cvalue C.ImDrawCmd) DrawCmd {
 	result := new(DrawCmd)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -122,11 +122,11 @@ func newDrawCmdHeaderFromC(cvalue C.ImDrawCmdHeader) DrawCmdHeader {
 // as this is one of the oldest structure exposed by the library! Basically, ImDrawList == CmdList)
 type DrawData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data DrawData) handle() (result *C.ImDrawData, releaseFn func()) {
-	result = (*C.ImDrawData)(unsafe.Pointer(data.data))
+	result = (*C.ImDrawData)(data.data)
 	return result, func() {}
 }
 
@@ -137,17 +137,17 @@ func (data DrawData) c() (result C.ImDrawData, fin func()) {
 
 func newDrawDataFromC(cvalue C.ImDrawData) DrawData {
 	result := new(DrawData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type DrawDataBuilder struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data DrawDataBuilder) handle() (result *C.ImDrawDataBuilder, releaseFn func()) {
-	result = (*C.ImDrawDataBuilder)(unsafe.Pointer(data.data))
+	result = (*C.ImDrawDataBuilder)(data.data)
 	return result, func() {}
 }
 
@@ -158,7 +158,7 @@ func (data DrawDataBuilder) c() (result C.ImDrawDataBuilder, fin func()) {
 
 func newDrawDataBuilderFromC(cvalue C.ImDrawDataBuilder) DrawDataBuilder {
 	result := new(DrawDataBuilder)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -173,11 +173,11 @@ func newDrawDataBuilderFromC(cvalue C.ImDrawDataBuilder) DrawDataBuilder {
 // Important: Primitives are always added to the list and not culled (culling is done at higher-level by ImGui:: functions), if you use this API a lot consider coarse culling your drawn objects.
 type DrawList struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data DrawList) handle() (result *C.ImDrawList, releaseFn func()) {
-	result = (*C.ImDrawList)(unsafe.Pointer(data.data))
+	result = (*C.ImDrawList)(data.data)
 	return result, func() {}
 }
 
@@ -188,7 +188,7 @@ func (data DrawList) c() (result C.ImDrawList, fin func()) {
 
 func newDrawListFromC(cvalue C.ImDrawList) DrawList {
 	result := new(DrawList)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -196,11 +196,11 @@ func newDrawListFromC(cvalue C.ImDrawList) DrawList {
 // You may want to create your own instance of this if you want to use ImDrawList completely without ImGui. In that case, watch out for future changes to this structure.
 type DrawListSharedData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data DrawListSharedData) handle() (result *C.ImDrawListSharedData, releaseFn func()) {
-	result = (*C.ImDrawListSharedData)(unsafe.Pointer(data.data))
+	result = (*C.ImDrawListSharedData)(data.data)
 	return result, func() {}
 }
 
@@ -211,7 +211,7 @@ func (data DrawListSharedData) c() (result C.ImDrawListSharedData, fin func()) {
 
 func newDrawListSharedDataFromC(cvalue C.ImDrawListSharedData) DrawListSharedData {
 	result := new(DrawListSharedData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -219,11 +219,11 @@ func newDrawListSharedDataFromC(cvalue C.ImDrawListSharedData) DrawListSharedDat
 // This is used by the Columns/Tables API, so items of each column can be batched together in a same draw call.
 type DrawListSplitter struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data DrawListSplitter) handle() (result *C.ImDrawListSplitter, releaseFn func()) {
-	result = (*C.ImDrawListSplitter)(unsafe.Pointer(data.data))
+	result = (*C.ImDrawListSplitter)(data.data)
 	return result, func() {}
 }
 
@@ -234,7 +234,7 @@ func (data DrawListSplitter) c() (result C.ImDrawListSplitter, fin func()) {
 
 func newDrawListSplitterFromC(cvalue C.ImDrawListSplitter) DrawListSplitter {
 	result := new(DrawListSplitter)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -277,11 +277,11 @@ func newDrawVertFromC(cvalue C.ImDrawVert) DrawVert {
 // ImFontAtlas automatically loads a default embedded font for you when you call GetTexDataAsAlpha8() or GetTexDataAsRGBA32().
 type Font struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data Font) handle() (result *C.ImFont, releaseFn func()) {
-	result = (*C.ImFont)(unsafe.Pointer(data.data))
+	result = (*C.ImFont)(data.data)
 	return result, func() {}
 }
 
@@ -292,7 +292,7 @@ func (data Font) c() (result C.ImFont, fin func()) {
 
 func newFontFromC(cvalue C.ImFont) Font {
 	result := new(Font)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -317,11 +317,11 @@ func newFontFromC(cvalue C.ImFont) Font {
 //   - This is an old API and it is currently awkward for those and various other reasons! We will address them in the future!
 type FontAtlas struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data FontAtlas) handle() (result *C.ImFontAtlas, releaseFn func()) {
-	result = (*C.ImFontAtlas)(unsafe.Pointer(data.data))
+	result = (*C.ImFontAtlas)(data.data)
 	return result, func() {}
 }
 
@@ -332,18 +332,18 @@ func (data FontAtlas) c() (result C.ImFontAtlas, fin func()) {
 
 func newFontAtlasFromC(cvalue C.ImFontAtlas) FontAtlas {
 	result := new(FontAtlas)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // See ImFontAtlas::AddCustomRectXXX functions.
 type FontAtlasCustomRect struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data FontAtlasCustomRect) handle() (result *C.ImFontAtlasCustomRect, releaseFn func()) {
-	result = (*C.ImFontAtlasCustomRect)(unsafe.Pointer(data.data))
+	result = (*C.ImFontAtlasCustomRect)(data.data)
 	return result, func() {}
 }
 
@@ -354,18 +354,18 @@ func (data FontAtlasCustomRect) c() (result C.ImFontAtlasCustomRect, fin func())
 
 func newFontAtlasCustomRectFromC(cvalue C.ImFontAtlasCustomRect) FontAtlasCustomRect {
 	result := new(FontAtlasCustomRect)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // This structure is likely to evolve as we add support for incremental atlas updates
 type FontBuilderIO struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data FontBuilderIO) handle() (result *C.ImFontBuilderIO, releaseFn func()) {
-	result = (*C.ImFontBuilderIO)(unsafe.Pointer(data.data))
+	result = (*C.ImFontBuilderIO)(data.data)
 	return result, func() {}
 }
 
@@ -376,17 +376,17 @@ func (data FontBuilderIO) c() (result C.ImFontBuilderIO, fin func()) {
 
 func newFontBuilderIOFromC(cvalue C.ImFontBuilderIO) FontBuilderIO {
 	result := new(FontBuilderIO)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type FontConfig struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data FontConfig) handle() (result *C.ImFontConfig, releaseFn func()) {
-	result = (*C.ImFontConfig)(unsafe.Pointer(data.data))
+	result = (*C.ImFontConfig)(data.data)
 	return result, func() {}
 }
 
@@ -397,7 +397,7 @@ func (data FontConfig) c() (result C.ImFontConfig, fin func()) {
 
 func newFontConfigFromC(cvalue C.ImFontConfig) FontConfig {
 	result := new(FontConfig)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -405,11 +405,11 @@ func newFontConfigFromC(cvalue C.ImFontConfig) FontConfig {
 // (Note: some language parsers may fail to convert the 31+1 bitfield members, in this case maybe drop store a single u32 or we can rework this)
 type FontGlyph struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data FontGlyph) handle() (result *C.ImFontGlyph, releaseFn func()) {
-	result = (*C.ImFontGlyph)(unsafe.Pointer(data.data))
+	result = (*C.ImFontGlyph)(data.data)
 	return result, func() {}
 }
 
@@ -420,7 +420,7 @@ func (data FontGlyph) c() (result C.ImFontGlyph, fin func()) {
 
 func newFontGlyphFromC(cvalue C.ImFontGlyph) FontGlyph {
 	result := new(FontGlyph)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -428,11 +428,11 @@ func newFontGlyphFromC(cvalue C.ImFontGlyph) FontGlyph {
 // This is essentially a tightly packed of vector of 64k booleans = 8KB storage.
 type FontGlyphRangesBuilder struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data FontGlyphRangesBuilder) handle() (result *C.ImFontGlyphRangesBuilder, releaseFn func()) {
-	result = (*C.ImFontGlyphRangesBuilder)(unsafe.Pointer(data.data))
+	result = (*C.ImFontGlyphRangesBuilder)(data.data)
 	return result, func() {}
 }
 
@@ -443,18 +443,18 @@ func (data FontGlyphRangesBuilder) c() (result C.ImFontGlyphRangesBuilder, fin f
 
 func newFontGlyphRangesBuilderFromC(cvalue C.ImFontGlyphRangesBuilder) FontGlyphRangesBuilder {
 	result := new(FontGlyphRangesBuilder)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Stacked color modifier, backup of modified data so we can restore it
 type ColorMod struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data ColorMod) handle() (result *C.ImGuiColorMod, releaseFn func()) {
-	result = (*C.ImGuiColorMod)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiColorMod)(data.data)
 	return result, func() {}
 }
 
@@ -465,18 +465,18 @@ func (data ColorMod) c() (result C.ImGuiColorMod, fin func()) {
 
 func newColorModFromC(cvalue C.ImGuiColorMod) ColorMod {
 	result := new(ColorMod)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Storage data for BeginComboPreview()/EndComboPreview()
 type ComboPreviewData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data ComboPreviewData) handle() (result *C.ImGuiComboPreviewData, releaseFn func()) {
-	result = (*C.ImGuiComboPreviewData)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiComboPreviewData)(data.data)
 	return result, func() {}
 }
 
@@ -487,17 +487,17 @@ func (data ComboPreviewData) c() (result C.ImGuiComboPreviewData, fin func()) {
 
 func newComboPreviewDataFromC(cvalue C.ImGuiComboPreviewData) ComboPreviewData {
 	result := new(ComboPreviewData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type Context struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data Context) handle() (result *C.ImGuiContext, releaseFn func()) {
-	result = (*C.ImGuiContext)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiContext)(data.data)
 	return result, func() {}
 }
 
@@ -508,17 +508,17 @@ func (data Context) c() (result C.ImGuiContext, fin func()) {
 
 func newContextFromC(cvalue C.ImGuiContext) Context {
 	result := new(Context)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type ContextHook struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data ContextHook) handle() (result *C.ImGuiContextHook, releaseFn func()) {
-	result = (*C.ImGuiContextHook)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiContextHook)(data.data)
 	return result, func() {}
 }
 
@@ -529,7 +529,7 @@ func (data ContextHook) c() (result C.ImGuiContextHook, fin func()) {
 
 func newContextHookFromC(cvalue C.ImGuiContextHook) ContextHook {
 	result := new(ContextHook)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -579,11 +579,11 @@ func newDataTypeInfoFromC(cvalue C.ImGuiDataTypeInfo) DataTypeInfo {
 
 type DataTypeTempStorage struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data DataTypeTempStorage) handle() (result *C.ImGuiDataTypeTempStorage, releaseFn func()) {
-	result = (*C.ImGuiDataTypeTempStorage)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiDataTypeTempStorage)(data.data)
 	return result, func() {}
 }
 
@@ -594,17 +594,17 @@ func (data DataTypeTempStorage) c() (result C.ImGuiDataTypeTempStorage, fin func
 
 func newDataTypeTempStorageFromC(cvalue C.ImGuiDataTypeTempStorage) DataTypeTempStorage {
 	result := new(DataTypeTempStorage)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type DataVarInfo struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data DataVarInfo) handle() (result *C.ImGuiDataVarInfo, releaseFn func()) {
-	result = (*C.ImGuiDataVarInfo)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiDataVarInfo)(data.data)
 	return result, func() {}
 }
 
@@ -615,17 +615,17 @@ func (data DataVarInfo) c() (result C.ImGuiDataVarInfo, fin func()) {
 
 func newDataVarInfoFromC(cvalue C.ImGuiDataVarInfo) DataVarInfo {
 	result := new(DataVarInfo)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type DockContext struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data DockContext) handle() (result *C.ImGuiDockContext, releaseFn func()) {
-	result = (*C.ImGuiDockContext)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiDockContext)(data.data)
 	return result, func() {}
 }
 
@@ -636,18 +636,18 @@ func (data DockContext) c() (result C.ImGuiDockContext, fin func()) {
 
 func newDockContextFromC(cvalue C.ImGuiDockContext) DockContext {
 	result := new(DockContext)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // sizeof() 156~192
 type DockNode struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data DockNode) handle() (result *C.ImGuiDockNode, releaseFn func()) {
-	result = (*C.ImGuiDockNode)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiDockNode)(data.data)
 	return result, func() {}
 }
 
@@ -658,18 +658,18 @@ func (data DockNode) c() (result C.ImGuiDockNode, fin func()) {
 
 func newDockNodeFromC(cvalue C.ImGuiDockNode) DockNode {
 	result := new(DockNode)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Stacked storage data for BeginGroup()/EndGroup()
 type GroupData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data GroupData) handle() (result *C.ImGuiGroupData, releaseFn func()) {
-	result = (*C.ImGuiGroupData)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiGroupData)(data.data)
 	return result, func() {}
 }
 
@@ -680,17 +680,17 @@ func (data GroupData) c() (result C.ImGuiGroupData, fin func()) {
 
 func newGroupDataFromC(cvalue C.ImGuiGroupData) GroupData {
 	result := new(GroupData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type IO struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data IO) handle() (result *C.ImGuiIO, releaseFn func()) {
-	result = (*C.ImGuiIO)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiIO)(data.data)
 	return result, func() {}
 }
 
@@ -701,17 +701,17 @@ func (data IO) c() (result C.ImGuiIO, fin func()) {
 
 func newIOFromC(cvalue C.ImGuiIO) IO {
 	result := new(IO)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type InputEvent struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data InputEvent) handle() (result *C.ImGuiInputEvent, releaseFn func()) {
-	result = (*C.ImGuiInputEvent)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiInputEvent)(data.data)
 	return result, func() {}
 }
 
@@ -722,7 +722,7 @@ func (data InputEvent) c() (result C.ImGuiInputEvent, fin func()) {
 
 func newInputEventFromC(cvalue C.ImGuiInputEvent) InputEvent {
 	result := new(InputEvent)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -753,11 +753,11 @@ func newInputEventAppFocusedFromC(cvalue C.ImGuiInputEventAppFocused) InputEvent
 
 type InputEventKey struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data InputEventKey) handle() (result *C.ImGuiInputEventKey, releaseFn func()) {
-	result = (*C.ImGuiInputEventKey)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiInputEventKey)(data.data)
 	return result, func() {}
 }
 
@@ -768,17 +768,17 @@ func (data InputEventKey) c() (result C.ImGuiInputEventKey, fin func()) {
 
 func newInputEventKeyFromC(cvalue C.ImGuiInputEventKey) InputEventKey {
 	result := new(InputEventKey)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type InputEventMouseButton struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data InputEventMouseButton) handle() (result *C.ImGuiInputEventMouseButton, releaseFn func()) {
-	result = (*C.ImGuiInputEventMouseButton)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiInputEventMouseButton)(data.data)
 	return result, func() {}
 }
 
@@ -789,7 +789,7 @@ func (data InputEventMouseButton) c() (result C.ImGuiInputEventMouseButton, fin 
 
 func newInputEventMouseButtonFromC(cvalue C.ImGuiInputEventMouseButton) InputEventMouseButton {
 	result := new(InputEventMouseButton)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -797,11 +797,11 @@ func newInputEventMouseButtonFromC(cvalue C.ImGuiInputEventMouseButton) InputEve
 // Using ImVec2() would fail on Clang 'union member 'MousePos' has a non-trivial default constructor'
 type InputEventMousePos struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data InputEventMousePos) handle() (result *C.ImGuiInputEventMousePos, releaseFn func()) {
-	result = (*C.ImGuiInputEventMousePos)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiInputEventMousePos)(data.data)
 	return result, func() {}
 }
 
@@ -812,7 +812,7 @@ func (data InputEventMousePos) c() (result C.ImGuiInputEventMousePos, fin func()
 
 func newInputEventMousePosFromC(cvalue C.ImGuiInputEventMousePos) InputEventMousePos {
 	result := new(InputEventMousePos)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -843,11 +843,11 @@ func newInputEventMouseViewportFromC(cvalue C.ImGuiInputEventMouseViewport) Inpu
 
 type InputEventMouseWheel struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data InputEventMouseWheel) handle() (result *C.ImGuiInputEventMouseWheel, releaseFn func()) {
-	result = (*C.ImGuiInputEventMouseWheel)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiInputEventMouseWheel)(data.data)
 	return result, func() {}
 }
 
@@ -858,7 +858,7 @@ func (data InputEventMouseWheel) c() (result C.ImGuiInputEventMouseWheel, fin fu
 
 func newInputEventMouseWheelFromC(cvalue C.ImGuiInputEventMouseWheel) InputEventMouseWheel {
 	result := new(InputEventMouseWheel)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -898,11 +898,11 @@ func newInputEventTextFromC(cvalue C.ImGuiInputEventText) InputEventText {
 // - ImGuiInputTextFlags_CallbackResize:      Callback on buffer capacity changes request (beyond 'buf_size' parameter value), allowing the string to grow.
 type InputTextCallbackData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data InputTextCallbackData) handle() (result *C.ImGuiInputTextCallbackData, releaseFn func()) {
-	result = (*C.ImGuiInputTextCallbackData)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiInputTextCallbackData)(data.data)
 	return result, func() {}
 }
 
@@ -913,18 +913,18 @@ func (data InputTextCallbackData) c() (result C.ImGuiInputTextCallbackData, fin 
 
 func newInputTextCallbackDataFromC(cvalue C.ImGuiInputTextCallbackData) InputTextCallbackData {
 	result := new(InputTextCallbackData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Internal temporary state for deactivating InputText() instances.
 type InputTextDeactivatedState struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data InputTextDeactivatedState) handle() (result *C.ImGuiInputTextDeactivatedState, releaseFn func()) {
-	result = (*C.ImGuiInputTextDeactivatedState)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiInputTextDeactivatedState)(data.data)
 	return result, func() {}
 }
 
@@ -935,7 +935,7 @@ func (data InputTextDeactivatedState) c() (result C.ImGuiInputTextDeactivatedSta
 
 func newInputTextDeactivatedStateFromC(cvalue C.ImGuiInputTextDeactivatedState) InputTextDeactivatedState {
 	result := new(InputTextDeactivatedState)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -943,11 +943,11 @@ func newInputTextDeactivatedStateFromC(cvalue C.ImGuiInputTextDeactivatedState) 
 // For a given item ID, access with ImGui::GetInputTextState()
 type InputTextState struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data InputTextState) handle() (result *C.ImGuiInputTextState, releaseFn func()) {
-	result = (*C.ImGuiInputTextState)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiInputTextState)(data.data)
 	return result, func() {}
 }
 
@@ -958,7 +958,7 @@ func (data InputTextState) c() (result C.ImGuiInputTextState, fin func()) {
 
 func newInputTextStateFromC(cvalue C.ImGuiInputTextState) InputTextState {
 	result := new(InputTextState)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -1049,11 +1049,11 @@ func newKeyOwnerDataFromC(cvalue C.ImGuiKeyOwnerData) KeyOwnerData {
 // Routing table entry (sizeof() == 16 bytes)
 type KeyRoutingData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data KeyRoutingData) handle() (result *C.ImGuiKeyRoutingData, releaseFn func()) {
-	result = (*C.ImGuiKeyRoutingData)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiKeyRoutingData)(data.data)
 	return result, func() {}
 }
 
@@ -1064,7 +1064,7 @@ func (data KeyRoutingData) c() (result C.ImGuiKeyRoutingData, fin func()) {
 
 func newKeyRoutingDataFromC(cvalue C.ImGuiKeyRoutingData) KeyRoutingData {
 	result := new(KeyRoutingData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -1072,11 +1072,11 @@ func newKeyRoutingDataFromC(cvalue C.ImGuiKeyRoutingData) KeyRoutingData {
 // Stored in main context (1 instance)
 type KeyRoutingTable struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data KeyRoutingTable) handle() (result *C.ImGuiKeyRoutingTable, releaseFn func()) {
-	result = (*C.ImGuiKeyRoutingTable)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiKeyRoutingTable)(data.data)
 	return result, func() {}
 }
 
@@ -1087,18 +1087,18 @@ func (data KeyRoutingTable) c() (result C.ImGuiKeyRoutingTable, fin func()) {
 
 func newKeyRoutingTableFromC(cvalue C.ImGuiKeyRoutingTable) KeyRoutingTable {
 	result := new(KeyRoutingTable)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Status storage for the last submitted item
 type LastItemData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data LastItemData) handle() (result *C.ImGuiLastItemData, releaseFn func()) {
-	result = (*C.ImGuiLastItemData)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiLastItemData)(data.data)
 	return result, func() {}
 }
 
@@ -1109,7 +1109,7 @@ func (data LastItemData) c() (result C.ImGuiLastItemData, fin func()) {
 
 func newLastItemDataFromC(cvalue C.ImGuiLastItemData) LastItemData {
 	result := new(LastItemData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -1139,11 +1139,11 @@ func newLastItemDataFromC(cvalue C.ImGuiLastItemData) LastItemData {
 // - The clipper also handles various subtleties related to keyboard/gamepad navigation, wrapping etc.
 type ListClipper struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data ListClipper) handle() (result *C.ImGuiListClipper, releaseFn func()) {
-	result = (*C.ImGuiListClipper)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiListClipper)(data.data)
 	return result, func() {}
 }
 
@@ -1154,18 +1154,18 @@ func (data ListClipper) c() (result C.ImGuiListClipper, fin func()) {
 
 func newListClipperFromC(cvalue C.ImGuiListClipper) ListClipper {
 	result := new(ListClipper)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Temporary clipper data, buffers shared/reused between instances
 type ListClipperData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data ListClipperData) handle() (result *C.ImGuiListClipperData, releaseFn func()) {
-	result = (*C.ImGuiListClipperData)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiListClipperData)(data.data)
 	return result, func() {}
 }
 
@@ -1176,7 +1176,7 @@ func (data ListClipperData) c() (result C.ImGuiListClipperData, fin func()) {
 
 func newListClipperDataFromC(cvalue C.ImGuiListClipperData) ListClipperData {
 	result := new(ListClipperData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -1227,11 +1227,11 @@ func newListClipperRangeFromC(cvalue C.ImGuiListClipperRange) ListClipperRange {
 
 type LocEntry struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data LocEntry) handle() (result *C.ImGuiLocEntry, releaseFn func()) {
-	result = (*C.ImGuiLocEntry)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiLocEntry)(data.data)
 	return result, func() {}
 }
 
@@ -1242,18 +1242,18 @@ func (data LocEntry) c() (result C.ImGuiLocEntry, fin func()) {
 
 func newLocEntryFromC(cvalue C.ImGuiLocEntry) LocEntry {
 	result := new(LocEntry)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Simple column measurement, currently used for MenuItem() only.. This is very short-sighted/throw-away code and NOT a generic helper.
 type MenuColumns struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data MenuColumns) handle() (result *C.ImGuiMenuColumns, releaseFn func()) {
-	result = (*C.ImGuiMenuColumns)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiMenuColumns)(data.data)
 	return result, func() {}
 }
 
@@ -1264,7 +1264,7 @@ func (data MenuColumns) c() (result C.ImGuiMenuColumns, fin func()) {
 
 func newMenuColumnsFromC(cvalue C.ImGuiMenuColumns) MenuColumns {
 	result := new(MenuColumns)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -1345,11 +1345,11 @@ func newMetricsConfigFromC(cvalue C.ImGuiMetricsConfig) MetricsConfig {
 
 type NavItemData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data NavItemData) handle() (result *C.ImGuiNavItemData, releaseFn func()) {
-	result = (*C.ImGuiNavItemData)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiNavItemData)(data.data)
 	return result, func() {}
 }
 
@@ -1360,17 +1360,17 @@ func (data NavItemData) c() (result C.ImGuiNavItemData, fin func()) {
 
 func newNavItemDataFromC(cvalue C.ImGuiNavItemData) NavItemData {
 	result := new(NavItemData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type NextItemData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data NextItemData) handle() (result *C.ImGuiNextItemData, releaseFn func()) {
-	result = (*C.ImGuiNextItemData)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiNextItemData)(data.data)
 	return result, func() {}
 }
 
@@ -1381,18 +1381,18 @@ func (data NextItemData) c() (result C.ImGuiNextItemData, fin func()) {
 
 func newNextItemDataFromC(cvalue C.ImGuiNextItemData) NextItemData {
 	result := new(NextItemData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Storage for SetNexWindow** functions
 type NextWindowData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data NextWindowData) handle() (result *C.ImGuiNextWindowData, releaseFn func()) {
-	result = (*C.ImGuiNextWindowData)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiNextWindowData)(data.data)
 	return result, func() {}
 }
 
@@ -1403,17 +1403,17 @@ func (data NextWindowData) c() (result C.ImGuiNextWindowData, fin func()) {
 
 func newNextWindowDataFromC(cvalue C.ImGuiNextWindowData) NextWindowData {
 	result := new(NextWindowData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type OldColumnData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data OldColumnData) handle() (result *C.ImGuiOldColumnData, releaseFn func()) {
-	result = (*C.ImGuiOldColumnData)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiOldColumnData)(data.data)
 	return result, func() {}
 }
 
@@ -1424,17 +1424,17 @@ func (data OldColumnData) c() (result C.ImGuiOldColumnData, fin func()) {
 
 func newOldColumnDataFromC(cvalue C.ImGuiOldColumnData) OldColumnData {
 	result := new(OldColumnData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type OldColumns struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data OldColumns) handle() (result *C.ImGuiOldColumns, releaseFn func()) {
-	result = (*C.ImGuiOldColumns)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiOldColumns)(data.data)
 	return result, func() {}
 }
 
@@ -1445,7 +1445,7 @@ func (data OldColumns) c() (result C.ImGuiOldColumns, fin func()) {
 
 func newOldColumnsFromC(cvalue C.ImGuiOldColumns) OldColumns {
 	result := new(OldColumns)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -1479,11 +1479,11 @@ func newOnceUponAFrameFromC(cvalue C.ImGuiOnceUponAFrame) OnceUponAFrame {
 // Data payload for Drag and Drop operations: AcceptDragDropPayload(), GetDragDropPayload()
 type Payload struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data Payload) handle() (result *C.ImGuiPayload, releaseFn func()) {
-	result = (*C.ImGuiPayload)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiPayload)(data.data)
 	return result, func() {}
 }
 
@@ -1494,18 +1494,18 @@ func (data Payload) c() (result C.ImGuiPayload, fin func()) {
 
 func newPayloadFromC(cvalue C.ImGuiPayload) Payload {
 	result := new(Payload)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // (Optional) Access via ImGui::GetPlatformIO()
 type PlatformIO struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlatformIO) handle() (result *C.ImGuiPlatformIO, releaseFn func()) {
-	result = (*C.ImGuiPlatformIO)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiPlatformIO)(data.data)
 	return result, func() {}
 }
 
@@ -1516,7 +1516,7 @@ func (data PlatformIO) c() (result C.ImGuiPlatformIO, fin func()) {
 
 func newPlatformIOFromC(cvalue C.ImGuiPlatformIO) PlatformIO {
 	result := new(PlatformIO)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -1611,11 +1611,11 @@ func newPlatformMonitorFromC(cvalue C.ImGuiPlatformMonitor) PlatformMonitor {
 // Storage for current popup stack
 type PopupData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PopupData) handle() (result *C.ImGuiPopupData, releaseFn func()) {
-	result = (*C.ImGuiPopupData)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiPopupData)(data.data)
 	return result, func() {}
 }
 
@@ -1626,7 +1626,7 @@ func (data PopupData) c() (result C.ImGuiPopupData, fin func()) {
 
 func newPopupDataFromC(cvalue C.ImGuiPopupData) PopupData {
 	result := new(PopupData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -1662,11 +1662,11 @@ func newPtrOrIndexFromC(cvalue C.ImGuiPtrOrIndex) PtrOrIndex {
 
 type SettingsHandler struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data SettingsHandler) handle() (result *C.ImGuiSettingsHandler, releaseFn func()) {
-	result = (*C.ImGuiSettingsHandler)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiSettingsHandler)(data.data)
 	return result, func() {}
 }
 
@@ -1677,7 +1677,7 @@ func (data SettingsHandler) c() (result C.ImGuiSettingsHandler, fin func()) {
 
 func newSettingsHandlerFromC(cvalue C.ImGuiSettingsHandler) SettingsHandler {
 	result := new(SettingsHandler)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -1760,11 +1760,11 @@ func newSizeCallbackDataFromC(cvalue C.ImGuiSizeCallbackData) SizeCallbackData {
 
 type StackLevelInfo struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data StackLevelInfo) handle() (result *C.ImGuiStackLevelInfo, releaseFn func()) {
-	result = (*C.ImGuiStackLevelInfo)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiStackLevelInfo)(data.data)
 	return result, func() {}
 }
 
@@ -1775,7 +1775,7 @@ func (data StackLevelInfo) c() (result C.ImGuiStackLevelInfo, fin func()) {
 
 func newStackLevelInfoFromC(cvalue C.ImGuiStackLevelInfo) StackLevelInfo {
 	result := new(StackLevelInfo)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -1847,11 +1847,11 @@ func newStackSizesFromC(cvalue C.ImGuiStackSizes) StackSizes {
 // State for Stack tool queries
 type StackTool struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data StackTool) handle() (result *C.ImGuiStackTool, releaseFn func()) {
-	result = (*C.ImGuiStackTool)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiStackTool)(data.data)
 	return result, func() {}
 }
 
@@ -1862,7 +1862,7 @@ func (data StackTool) c() (result C.ImGuiStackTool, fin func()) {
 
 func newStackToolFromC(cvalue C.ImGuiStackTool) StackTool {
 	result := new(StackTool)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -1876,11 +1876,11 @@ func newStackToolFromC(cvalue C.ImGuiStackTool) StackTool {
 // Types are NOT stored, so it is up to you to make sure your Key don't collide with different types.
 type Storage struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data Storage) handle() (result *C.ImGuiStorage, releaseFn func()) {
-	result = (*C.ImGuiStorage)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiStorage)(data.data)
 	return result, func() {}
 }
 
@@ -1891,18 +1891,18 @@ func (data Storage) c() (result C.ImGuiStorage, fin func()) {
 
 func newStorageFromC(cvalue C.ImGuiStorage) Storage {
 	result := new(Storage)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // [Internal]
 type StoragePair struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data StoragePair) handle() (result *C.ImGuiStoragePair, releaseFn func()) {
-	result = (*C.ImGuiStoragePair)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiStoragePair)(data.data)
 	return result, func() {}
 }
 
@@ -1913,17 +1913,17 @@ func (data StoragePair) c() (result C.ImGuiStoragePair, fin func()) {
 
 func newStoragePairFromC(cvalue C.ImGuiStoragePair) StoragePair {
 	result := new(StoragePair)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type Style struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data Style) handle() (result *C.ImGuiStyle, releaseFn func()) {
-	result = (*C.ImGuiStyle)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiStyle)(data.data)
 	return result, func() {}
 }
 
@@ -1934,18 +1934,18 @@ func (data Style) c() (result C.ImGuiStyle, fin func()) {
 
 func newStyleFromC(cvalue C.ImGuiStyle) Style {
 	result := new(Style)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Stacked style modifier, backup of modified data so we can restore it. Data type inferred from the variable.
 type StyleMod struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data StyleMod) handle() (result *C.ImGuiStyleMod, releaseFn func()) {
-	result = (*C.ImGuiStyleMod)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiStyleMod)(data.data)
 	return result, func() {}
 }
 
@@ -1956,18 +1956,18 @@ func (data StyleMod) c() (result C.ImGuiStyleMod, fin func()) {
 
 func newStyleModFromC(cvalue C.ImGuiStyleMod) StyleMod {
 	result := new(StyleMod)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Storage for a tab bar (sizeof() 152 bytes)
 type TabBar struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data TabBar) handle() (result *C.ImGuiTabBar, releaseFn func()) {
-	result = (*C.ImGuiTabBar)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiTabBar)(data.data)
 	return result, func() {}
 }
 
@@ -1978,18 +1978,18 @@ func (data TabBar) c() (result C.ImGuiTabBar, fin func()) {
 
 func newTabBarFromC(cvalue C.ImGuiTabBar) TabBar {
 	result := new(TabBar)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Storage for one active tab item (sizeof() 48 bytes)
 type TabItem struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data TabItem) handle() (result *C.ImGuiTabItem, releaseFn func()) {
-	result = (*C.ImGuiTabItem)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiTabItem)(data.data)
 	return result, func() {}
 }
 
@@ -2000,18 +2000,18 @@ func (data TabItem) c() (result C.ImGuiTabItem, fin func()) {
 
 func newTabItemFromC(cvalue C.ImGuiTabItem) TabItem {
 	result := new(TabItem)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // FIXME-TABLE: more transient data could be stored in a stacked ImGuiTableTempData: e.g. SortSpecs, incoming RowData
 type Table struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data Table) handle() (result *C.ImGuiTable, releaseFn func()) {
-	result = (*C.ImGuiTable)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiTable)(data.data)
 	return result, func() {}
 }
 
@@ -2022,7 +2022,7 @@ func (data Table) c() (result C.ImGuiTable, fin func()) {
 
 func newTableFromC(cvalue C.ImGuiTable) Table {
 	result := new(Table)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -2064,11 +2064,11 @@ func newTableCellDataFromC(cvalue C.ImGuiTableCellData) TableCellData {
 // This is in contrast with some user-facing api such as IsItemVisible() / IsRectVisible() which use "Visible" to mean "not clipped".
 type TableColumn struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data TableColumn) handle() (result *C.ImGuiTableColumn, releaseFn func()) {
-	result = (*C.ImGuiTableColumn)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiTableColumn)(data.data)
 	return result, func() {}
 }
 
@@ -2079,18 +2079,18 @@ func (data TableColumn) c() (result C.ImGuiTableColumn, fin func()) {
 
 func newTableColumnFromC(cvalue C.ImGuiTableColumn) TableColumn {
 	result := new(TableColumn)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // sizeof() ~ 12
 type TableColumnSettings struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data TableColumnSettings) handle() (result *C.ImGuiTableColumnSettings, releaseFn func()) {
-	result = (*C.ImGuiTableColumnSettings)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiTableColumnSettings)(data.data)
 	return result, func() {}
 }
 
@@ -2101,18 +2101,18 @@ func (data TableColumnSettings) c() (result C.ImGuiTableColumnSettings, fin func
 
 func newTableColumnSettingsFromC(cvalue C.ImGuiTableColumnSettings) TableColumnSettings {
 	result := new(TableColumnSettings)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Sorting specification for one column of a table (sizeof == 12 bytes)
 type TableColumnSortSpecs struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data TableColumnSortSpecs) handle() (result *C.ImGuiTableColumnSortSpecs, releaseFn func()) {
-	result = (*C.ImGuiTableColumnSortSpecs)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiTableColumnSortSpecs)(data.data)
 	return result, func() {}
 }
 
@@ -2123,7 +2123,7 @@ func (data TableColumnSortSpecs) c() (result C.ImGuiTableColumnSortSpecs, fin fu
 
 func newTableColumnSortSpecsFromC(cvalue C.ImGuiTableColumnSortSpecs) TableColumnSortSpecs {
 	result := new(TableColumnSortSpecs)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -2171,11 +2171,11 @@ func newTableInstanceDataFromC(cvalue C.ImGuiTableInstanceData) TableInstanceDat
 // This is designed to be stored in a single ImChunkStream (1 header followed by N ImGuiTableColumnSettings, etc.)
 type TableSettings struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data TableSettings) handle() (result *C.ImGuiTableSettings, releaseFn func()) {
-	result = (*C.ImGuiTableSettings)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiTableSettings)(data.data)
 	return result, func() {}
 }
 
@@ -2186,7 +2186,7 @@ func (data TableSettings) c() (result C.ImGuiTableSettings, fin func()) {
 
 func newTableSettingsFromC(cvalue C.ImGuiTableSettings) TableSettings {
 	result := new(TableSettings)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -2196,11 +2196,11 @@ func newTableSettingsFromC(cvalue C.ImGuiTableSettings) TableSettings {
 // Make sure to set 'SpecsDirty = false' after sorting, else you may wastefully sort your data every frame!
 type TableSortSpecs struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data TableSortSpecs) handle() (result *C.ImGuiTableSortSpecs, releaseFn func()) {
-	result = (*C.ImGuiTableSortSpecs)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiTableSortSpecs)(data.data)
 	return result, func() {}
 }
 
@@ -2211,7 +2211,7 @@ func (data TableSortSpecs) c() (result C.ImGuiTableSortSpecs, fin func()) {
 
 func newTableSortSpecsFromC(cvalue C.ImGuiTableSortSpecs) TableSortSpecs {
 	result := new(TableSortSpecs)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -2220,11 +2220,11 @@ func newTableSortSpecsFromC(cvalue C.ImGuiTableSortSpecs) TableSortSpecs {
 // - We also leave out of this structure data that tend to be particularly useful for debugging/metrics.
 type TableTempData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data TableTempData) handle() (result *C.ImGuiTableTempData, releaseFn func()) {
-	result = (*C.ImGuiTableTempData)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiTableTempData)(data.data)
 	return result, func() {}
 }
 
@@ -2235,7 +2235,7 @@ func (data TableTempData) c() (result C.ImGuiTableTempData, fin func()) {
 
 func newTableTempDataFromC(cvalue C.ImGuiTableTempData) TableTempData {
 	result := new(TableTempData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -2243,11 +2243,11 @@ func newTableTempDataFromC(cvalue C.ImGuiTableTempData) TableTempData {
 // (this could be called 'ImGuiTextBuilder' / 'ImGuiStringBuilder')
 type TextBuffer struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data TextBuffer) handle() (result *C.ImGuiTextBuffer, releaseFn func()) {
-	result = (*C.ImGuiTextBuffer)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiTextBuffer)(data.data)
 	return result, func() {}
 }
 
@@ -2258,18 +2258,18 @@ func (data TextBuffer) c() (result C.ImGuiTextBuffer, fin func()) {
 
 func newTextBufferFromC(cvalue C.ImGuiTextBuffer) TextBuffer {
 	result := new(TextBuffer)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Helper: Parse and apply text filters. In format "aaaaa[,bbbb][,ccccc]"
 type TextFilter struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data TextFilter) handle() (result *C.ImGuiTextFilter, releaseFn func()) {
-	result = (*C.ImGuiTextFilter)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiTextFilter)(data.data)
 	return result, func() {}
 }
 
@@ -2280,7 +2280,7 @@ func (data TextFilter) c() (result C.ImGuiTextFilter, fin func()) {
 
 func newTextFilterFromC(cvalue C.ImGuiTextFilter) TextFilter {
 	result := new(TextFilter)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -2288,11 +2288,11 @@ func newTextFilterFromC(cvalue C.ImGuiTextFilter) TextFilter {
 // Maintain a line index for a text buffer. This is a strong candidate to be moved into the public API.
 type TextIndex struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data TextIndex) handle() (result *C.ImGuiTextIndex, releaseFn func()) {
-	result = (*C.ImGuiTextIndex)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiTextIndex)(data.data)
 	return result, func() {}
 }
 
@@ -2303,7 +2303,7 @@ func (data TextIndex) c() (result C.ImGuiTextIndex, fin func()) {
 
 func newTextIndexFromC(cvalue C.ImGuiTextIndex) TextIndex {
 	result := new(TextIndex)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -2349,11 +2349,11 @@ func newTextRangeFromC(cvalue C.ImGuiTextRange) TextRange {
 //   - Windows are generally trying to stay within the Work Area of their host viewport.
 type Viewport struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data Viewport) handle() (result *C.ImGuiViewport, releaseFn func()) {
-	result = (*C.ImGuiViewport)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiViewport)(data.data)
 	return result, func() {}
 }
 
@@ -2364,7 +2364,7 @@ func (data Viewport) c() (result C.ImGuiViewport, fin func()) {
 
 func newViewportFromC(cvalue C.ImGuiViewport) Viewport {
 	result := new(Viewport)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -2372,11 +2372,11 @@ func newViewportFromC(cvalue C.ImGuiViewport) Viewport {
 // Every instance of ImGuiViewport is in fact a ImGuiViewportP.
 type ViewportP struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data ViewportP) handle() (result *C.ImGuiViewportP, releaseFn func()) {
-	result = (*C.ImGuiViewportP)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiViewportP)(data.data)
 	return result, func() {}
 }
 
@@ -2387,18 +2387,18 @@ func (data ViewportP) c() (result C.ImGuiViewportP, fin func()) {
 
 func newViewportPFromC(cvalue C.ImGuiViewportP) ViewportP {
 	result := new(ViewportP)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Storage for one window
 type Window struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data Window) handle() (result *C.ImGuiWindow, releaseFn func()) {
-	result = (*C.ImGuiWindow)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiWindow)(data.data)
 	return result, func() {}
 }
 
@@ -2409,7 +2409,7 @@ func (data Window) c() (result C.ImGuiWindow, fin func()) {
 
 func newWindowFromC(cvalue C.ImGuiWindow) Window {
 	result := new(Window)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -2422,11 +2422,11 @@ func newWindowFromC(cvalue C.ImGuiWindow) Window {
 // - To the docking system for various options and filtering.
 type WindowClass struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data WindowClass) handle() (result *C.ImGuiWindowClass, releaseFn func()) {
-	result = (*C.ImGuiWindowClass)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiWindowClass)(data.data)
 	return result, func() {}
 }
 
@@ -2437,17 +2437,17 @@ func (data WindowClass) c() (result C.ImGuiWindowClass, fin func()) {
 
 func newWindowClassFromC(cvalue C.ImGuiWindowClass) WindowClass {
 	result := new(WindowClass)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type WindowDockStyle struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data WindowDockStyle) handle() (result *C.ImGuiWindowDockStyle, releaseFn func()) {
-	result = (*C.ImGuiWindowDockStyle)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiWindowDockStyle)(data.data)
 	return result, func() {}
 }
 
@@ -2458,7 +2458,7 @@ func (data WindowDockStyle) c() (result C.ImGuiWindowDockStyle, fin func()) {
 
 func newWindowDockStyleFromC(cvalue C.ImGuiWindowDockStyle) WindowDockStyle {
 	result := new(WindowDockStyle)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -2467,11 +2467,11 @@ func newWindowDockStyleFromC(cvalue C.ImGuiWindowDockStyle) WindowDockStyle {
 // (this is designed to be stored in a ImChunkStream buffer, with the variable-length Name following our structure)
 type WindowSettings struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data WindowSettings) handle() (result *C.ImGuiWindowSettings, releaseFn func()) {
-	result = (*C.ImGuiWindowSettings)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiWindowSettings)(data.data)
 	return result, func() {}
 }
 
@@ -2482,18 +2482,18 @@ func (data WindowSettings) c() (result C.ImGuiWindowSettings, fin func()) {
 
 func newWindowSettingsFromC(cvalue C.ImGuiWindowSettings) WindowSettings {
 	result := new(WindowSettings)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 // Data saved for each window pushed into the stack
 type WindowStackData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data WindowStackData) handle() (result *C.ImGuiWindowStackData, releaseFn func()) {
-	result = (*C.ImGuiWindowStackData)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiWindowStackData)(data.data)
 	return result, func() {}
 }
 
@@ -2504,7 +2504,7 @@ func (data WindowStackData) c() (result C.ImGuiWindowStackData, fin func()) {
 
 func newWindowStackDataFromC(cvalue C.ImGuiWindowStackData) WindowStackData {
 	result := new(WindowStackData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -2513,11 +2513,11 @@ func newWindowStackDataFromC(cvalue C.ImGuiWindowStackData) WindowStackData {
 // (This doesn't need a constructor because we zero-clear it as part of ImGuiWindow and all frame-temporary data are setup on Begin)
 type WindowTempData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data WindowTempData) handle() (result *C.ImGuiWindowTempData, releaseFn func()) {
-	result = (*C.ImGuiWindowTempData)(unsafe.Pointer(data.data))
+	result = (*C.ImGuiWindowTempData)(data.data)
 	return result, func() {}
 }
 
@@ -2528,17 +2528,17 @@ func (data WindowTempData) c() (result C.ImGuiWindowTempData, fin func()) {
 
 func newWindowTempDataFromC(cvalue C.ImGuiWindowTempData) WindowTempData {
 	result := new(WindowTempData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type STBTexteditState struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data STBTexteditState) handle() (result *C.STB_TexteditState, releaseFn func()) {
-	result = (*C.STB_TexteditState)(unsafe.Pointer(data.data))
+	result = (*C.STB_TexteditState)(data.data)
 	return result, func() {}
 }
 
@@ -2549,7 +2549,7 @@ func (data STBTexteditState) c() (result C.STB_TexteditState, fin func()) {
 
 func newSTBTexteditStateFromC(cvalue C.STB_TexteditState) STBTexteditState {
 	result := new(STBTexteditState)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -2654,11 +2654,11 @@ func newStbUndoRecordFromC(cvalue C.StbUndoRecord) StbUndoRecord {
 
 type StbUndoState struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data StbUndoState) handle() (result *C.StbUndoState, releaseFn func()) {
-	result = (*C.StbUndoState)(unsafe.Pointer(data.data))
+	result = (*C.StbUndoState)(data.data)
 	return result, func() {}
 }
 
@@ -2669,6 +2669,6 @@ func (data StbUndoState) c() (result C.StbUndoState, fin func()) {
 
 func newStbUndoStateFromC(cvalue C.StbUndoState) StbUndoState {
 	result := new(StbUndoState)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }

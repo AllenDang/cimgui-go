@@ -145,7 +145,7 @@ func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) (generat
 			structBody = &strings.Builder{}
 			fmt.Fprint(structBody, `
 // TODO: contains unsupported fields
-data uintptr
+data unsafe.Pointer
 `)
 			break
 		}
@@ -172,7 +172,7 @@ func (data %[1]s) handle() (result *C.%[2]s, releaseFn func()) {
 
 	if isTODO {
 		fmt.Fprintf(sb, `
-result = (*C.%s)(unsafe.Pointer(data.data))
+result = (*C.%s)(data.data)
 return result, func() {}
 `, s.Name)
 	} else {
@@ -212,7 +212,7 @@ return result, func() {}
 
 	fmt.Fprintf(sb, "result := new(%s)\n", renameGoIdentifier(s.Name))
 	if isTODO {
-		fmt.Fprintf(sb, "result.data = uintptr(unsafe.Pointer(&cvalue))\n")
+		fmt.Fprintf(sb, "result.data = unsafe.Pointer(&cvalue)\n")
 	} else {
 		for i, m := range s.Members {
 			w := wrappers[i].fromC

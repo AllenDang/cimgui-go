@@ -12,11 +12,11 @@ import "unsafe"
 
 type FormatterTimeData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data FormatterTimeData) handle() (result *C.Formatter_Time_Data, releaseFn func()) {
-	result = (*C.Formatter_Time_Data)(unsafe.Pointer(data.data))
+	result = (*C.Formatter_Time_Data)(data.data)
 	return result, func() {}
 }
 
@@ -27,7 +27,7 @@ func (data FormatterTimeData) c() (result C.Formatter_Time_Data, fin func()) {
 
 func newFormatterTimeDataFromC(cvalue C.Formatter_Time_Data) FormatterTimeData {
 	result := new(FormatterTimeData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -128,11 +128,11 @@ func newPlotAnnotationFromC(cvalue C.ImPlotAnnotation) PlotAnnotation {
 
 type PlotAnnotationCollection struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotAnnotationCollection) handle() (result *C.ImPlotAnnotationCollection, releaseFn func()) {
-	result = (*C.ImPlotAnnotationCollection)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotAnnotationCollection)(data.data)
 	return result, func() {}
 }
 
@@ -143,17 +143,17 @@ func (data PlotAnnotationCollection) c() (result C.ImPlotAnnotationCollection, f
 
 func newPlotAnnotationCollectionFromC(cvalue C.ImPlotAnnotationCollection) PlotAnnotationCollection {
 	result := new(PlotAnnotationCollection)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type PlotAxis struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotAxis) handle() (result *C.ImPlotAxis, releaseFn func()) {
-	result = (*C.ImPlotAxis)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotAxis)(data.data)
 	return result, func() {}
 }
 
@@ -164,17 +164,17 @@ func (data PlotAxis) c() (result C.ImPlotAxis, fin func()) {
 
 func newPlotAxisFromC(cvalue C.ImPlotAxis) PlotAxis {
 	result := new(PlotAxis)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type PlotColormapData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotColormapData) handle() (result *C.ImPlotColormapData, releaseFn func()) {
-	result = (*C.ImPlotColormapData)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotColormapData)(data.data)
 	return result, func() {}
 }
 
@@ -185,17 +185,17 @@ func (data PlotColormapData) c() (result C.ImPlotColormapData, fin func()) {
 
 func newPlotColormapDataFromC(cvalue C.ImPlotColormapData) PlotColormapData {
 	result := new(PlotColormapData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type PlotContext struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotContext) handle() (result *C.ImPlotContext, releaseFn func()) {
-	result = (*C.ImPlotContext)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotContext)(data.data)
 	return result, func() {}
 }
 
@@ -206,17 +206,17 @@ func (data PlotContext) c() (result C.ImPlotContext, fin func()) {
 
 func newPlotContextFromC(cvalue C.ImPlotContext) PlotContext {
 	result := new(PlotContext)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type PlotDateTimeSpec struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotDateTimeSpec) handle() (result *C.ImPlotDateTimeSpec, releaseFn func()) {
-	result = (*C.ImPlotDateTimeSpec)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotDateTimeSpec)(data.data)
 	return result, func() {}
 }
 
@@ -227,17 +227,17 @@ func (data PlotDateTimeSpec) c() (result C.ImPlotDateTimeSpec, fin func()) {
 
 func newPlotDateTimeSpecFromC(cvalue C.ImPlotDateTimeSpec) PlotDateTimeSpec {
 	result := new(PlotDateTimeSpec)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type PlotInputMap struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotInputMap) handle() (result *C.ImPlotInputMap, releaseFn func()) {
-	result = (*C.ImPlotInputMap)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotInputMap)(data.data)
 	return result, func() {}
 }
 
@@ -248,7 +248,7 @@ func (data PlotInputMap) c() (result C.ImPlotInputMap, fin func()) {
 
 func newPlotInputMapFromC(cvalue C.ImPlotInputMap) PlotInputMap {
 	result := new(PlotInputMap)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -309,11 +309,11 @@ func newPlotItemFromC(cvalue C.ImPlotItem) PlotItem {
 
 type PlotItemGroup struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotItemGroup) handle() (result *C.ImPlotItemGroup, releaseFn func()) {
-	result = (*C.ImPlotItemGroup)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotItemGroup)(data.data)
 	return result, func() {}
 }
 
@@ -324,17 +324,17 @@ func (data PlotItemGroup) c() (result C.ImPlotItemGroup, fin func()) {
 
 func newPlotItemGroupFromC(cvalue C.ImPlotItemGroup) PlotItemGroup {
 	result := new(PlotItemGroup)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type PlotLegend struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotLegend) handle() (result *C.ImPlotLegend, releaseFn func()) {
-	result = (*C.ImPlotLegend)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotLegend)(data.data)
 	return result, func() {}
 }
 
@@ -345,17 +345,17 @@ func (data PlotLegend) c() (result C.ImPlotLegend, fin func()) {
 
 func newPlotLegendFromC(cvalue C.ImPlotLegend) PlotLegend {
 	result := new(PlotLegend)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type PlotNextItemData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotNextItemData) handle() (result *C.ImPlotNextItemData, releaseFn func()) {
-	result = (*C.ImPlotNextItemData)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotNextItemData)(data.data)
 	return result, func() {}
 }
 
@@ -366,17 +366,17 @@ func (data PlotNextItemData) c() (result C.ImPlotNextItemData, fin func()) {
 
 func newPlotNextItemDataFromC(cvalue C.ImPlotNextItemData) PlotNextItemData {
 	result := new(PlotNextItemData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type PlotNextPlotData struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotNextPlotData) handle() (result *C.ImPlotNextPlotData, releaseFn func()) {
-	result = (*C.ImPlotNextPlotData)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotNextPlotData)(data.data)
 	return result, func() {}
 }
 
@@ -387,17 +387,17 @@ func (data PlotNextPlotData) c() (result C.ImPlotNextPlotData, fin func()) {
 
 func newPlotNextPlotDataFromC(cvalue C.ImPlotNextPlotData) PlotNextPlotData {
 	result := new(PlotNextPlotData)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type PlotPlot struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotPlot) handle() (result *C.ImPlotPlot, releaseFn func()) {
-	result = (*C.ImPlotPlot)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotPlot)(data.data)
 	return result, func() {}
 }
 
@@ -408,7 +408,7 @@ func (data PlotPlot) c() (result C.ImPlotPlot, fin func()) {
 
 func newPlotPlotFromC(cvalue C.ImPlotPlot) PlotPlot {
 	result := new(PlotPlot)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -516,11 +516,11 @@ func newPlotRectFromC(cvalue C.ImPlotRect) PlotRect {
 
 type PlotStyle struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotStyle) handle() (result *C.ImPlotStyle, releaseFn func()) {
-	result = (*C.ImPlotStyle)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotStyle)(data.data)
 	return result, func() {}
 }
 
@@ -531,17 +531,17 @@ func (data PlotStyle) c() (result C.ImPlotStyle, fin func()) {
 
 func newPlotStyleFromC(cvalue C.ImPlotStyle) PlotStyle {
 	result := new(PlotStyle)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type PlotSubplot struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotSubplot) handle() (result *C.ImPlotSubplot, releaseFn func()) {
-	result = (*C.ImPlotSubplot)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotSubplot)(data.data)
 	return result, func() {}
 }
 
@@ -552,17 +552,17 @@ func (data PlotSubplot) c() (result C.ImPlotSubplot, fin func()) {
 
 func newPlotSubplotFromC(cvalue C.ImPlotSubplot) PlotSubplot {
 	result := new(PlotSubplot)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type PlotTag struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotTag) handle() (result *C.ImPlotTag, releaseFn func()) {
-	result = (*C.ImPlotTag)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotTag)(data.data)
 	return result, func() {}
 }
 
@@ -573,17 +573,17 @@ func (data PlotTag) c() (result C.ImPlotTag, fin func()) {
 
 func newPlotTagFromC(cvalue C.ImPlotTag) PlotTag {
 	result := new(PlotTag)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
 type PlotTagCollection struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotTagCollection) handle() (result *C.ImPlotTagCollection, releaseFn func()) {
-	result = (*C.ImPlotTagCollection)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotTagCollection)(data.data)
 	return result, func() {}
 }
 
@@ -594,7 +594,7 @@ func (data PlotTagCollection) c() (result C.ImPlotTagCollection, fin func()) {
 
 func newPlotTagCollectionFromC(cvalue C.ImPlotTagCollection) PlotTagCollection {
 	result := new(PlotTagCollection)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
 
@@ -660,11 +660,11 @@ func newPlotTickFromC(cvalue C.ImPlotTick) PlotTick {
 
 type PlotTicker struct {
 	// TODO: contains unsupported fields
-	data uintptr
+	data unsafe.Pointer
 }
 
 func (data PlotTicker) handle() (result *C.ImPlotTicker, releaseFn func()) {
-	result = (*C.ImPlotTicker)(unsafe.Pointer(data.data))
+	result = (*C.ImPlotTicker)(data.data)
 	return result, func() {}
 }
 
@@ -675,6 +675,6 @@ func (data PlotTicker) c() (result C.ImPlotTicker, fin func()) {
 
 func newPlotTickerFromC(cvalue C.ImPlotTicker) PlotTicker {
 	result := new(PlotTicker)
-	result.data = uintptr(unsafe.Pointer(&cvalue))
+	result.data = unsafe.Pointer(&cvalue)
 	return *result
 }
