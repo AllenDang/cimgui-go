@@ -62,7 +62,7 @@ func beforeDestoryContext() {
 
 type DropCallback func([]string)
 
-type WindowCloseCallback func(wnd unsafe.Pointer)
+type WindowCloseCallback func(b Backend)
 
 //export closeCallback
 func closeCallback(wnd unsafe.Pointer) {
@@ -127,7 +127,7 @@ type Backend interface {
 	afterRenderHook() func()
 	beforeDestroyHook() func()
 	dropCallback() DropCallback
-	closeCallback() WindowCloseCallback
+	closeCallback() func(window unsafe.Pointer)
 }
 
 func CreateBackend(backend Backend) Backend {
