@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func generateGoStructs(prefix string, structs []StructDef) []string {
+func generateGoStructs(prefix string, structs []StructDef, enums []EnumDef) []string {
 	glg.Infof("Generating %d structs", len(structs))
 	var progress int
 
@@ -35,7 +35,7 @@ import "unsafe"
 		}
 
 		sb.WriteString(fmt.Sprintf("%s\n", s.CommentAbove))
-		if generateStruct(s, structs, &sb) {
+		if generateStruct(s, structs, enums, &sb) {
 			progress++
 		}
 
@@ -60,7 +60,7 @@ import "unsafe"
 	return structNames
 }
 
-func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) (generationComplete bool) {
+func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, sb *strings.Builder) (generationComplete bool) {
 	generationComplete = true
 
 	type wrapper struct {
@@ -73,6 +73,7 @@ func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) (generat
 	var structBody *strings.Builder = &strings.Builder{}
 
 	fmt.Fprintf(sb, "type %s struct {\n", renameGoIdentifier(s.Name))
+
 	// Generate struct fields:
 	for i, field := range s.Members {
 		argDef := ArgDef{
@@ -87,6 +88,15 @@ func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) (generat
 		for _, otherS := range defs {
 			if otherS.Name == field.Type && !shouldSkipStruct(field.Type) {
 				isOtherStruct = true
+				break
+			}
+		}
+
+		// and same for enums
+		var isEnum bool
+		for _, enum := range enums {
+			if enum.Name == field.Type && !shouldSkipStruct(field.Type) {
+				isEnum = true
 				break
 			}
 		}
@@ -112,6 +122,19 @@ func generateStruct(s StructDef, defs []StructDef, sb *strings.Builder) (generat
 					ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := %[2]s.c()", field.Name, renameStructField(field.Name)),
 					Finalizer: fmt.Sprintf("%sFin()", field.Name),
 					VarName:   fmt.Sprintf("%sArg", field.Name),
+				},
+			}
+
+			typeName = renameGoIdentifier(field.Type)
+		case isEnum:
+			wrappers[i] = wrapper{
+				fromC: returnWrapper{
+					returnType: field.Type,
+					returnStmt: fmt.Sprintf("%s(%%s)", renameGoIdentifier(field.Type)),
+				},
+				toC: ArgumentWrapperData{
+					ArgType: field.Type,
+					VarName: fmt.Sprintf("C.%s(%s)", field.Type, renameStructField(field.Name)),
 				},
 			}
 

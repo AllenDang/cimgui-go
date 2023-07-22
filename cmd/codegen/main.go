@@ -102,7 +102,7 @@ func main() {
 
 	// generate code
 	enumNames := generateGoEnums(*prefix, enums)
-	structNames := generateGoStructs(*prefix, structs)
+	structNames := generateGoStructs(*prefix, structs, enums)
 
 	structAccessorFuncs, err := generateCppStructsAccessor(*prefix, validFuncs, structs)
 	if err != nil {

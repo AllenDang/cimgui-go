@@ -752,13 +752,25 @@ func newInputEventAppFocusedFromC(cvalue C.ImGuiInputEventAppFocused) InputEvent
 }
 
 type InputEventKey struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldKey         Key
+	FieldDown        bool
+	FieldAnalogValue float32
 }
 
 func (data InputEventKey) handle() (result *C.ImGuiInputEventKey, releaseFn func()) {
-	result = (*C.ImGuiInputEventKey)(data.data)
-	return result, func() {}
+	result = new(C.ImGuiInputEventKey)
+	FieldKey := data.FieldKey
+
+	result.Key = C.ImGuiKey(FieldKey)
+	FieldDown := data.FieldDown
+
+	result.Down = C.bool(FieldDown)
+	FieldAnalogValue := data.FieldAnalogValue
+
+	result.AnalogValue = C.float(FieldAnalogValue)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (data InputEventKey) c() (result C.ImGuiInputEventKey, fin func()) {
@@ -768,18 +780,32 @@ func (data InputEventKey) c() (result C.ImGuiInputEventKey, fin func()) {
 
 func newInputEventKeyFromC(cvalue C.ImGuiInputEventKey) InputEventKey {
 	result := new(InputEventKey)
-	result.data = unsafe.Pointer(&cvalue)
+	result.FieldKey = Key(cvalue.Key)
+	result.FieldDown = cvalue.Down == C.bool(true)
+	result.FieldAnalogValue = float32(cvalue.AnalogValue)
 	return *result
 }
 
 type InputEventMouseButton struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldButton      int32
+	FieldDown        bool
+	FieldMouseSource MouseSource
 }
 
 func (data InputEventMouseButton) handle() (result *C.ImGuiInputEventMouseButton, releaseFn func()) {
-	result = (*C.ImGuiInputEventMouseButton)(data.data)
-	return result, func() {}
+	result = new(C.ImGuiInputEventMouseButton)
+	FieldButton := data.FieldButton
+
+	result.Button = C.int(FieldButton)
+	FieldDown := data.FieldDown
+
+	result.Down = C.bool(FieldDown)
+	FieldMouseSource := data.FieldMouseSource
+
+	result.MouseSource = C.ImGuiMouseSource(FieldMouseSource)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (data InputEventMouseButton) c() (result C.ImGuiInputEventMouseButton, fin func()) {
@@ -789,20 +815,34 @@ func (data InputEventMouseButton) c() (result C.ImGuiInputEventMouseButton, fin 
 
 func newInputEventMouseButtonFromC(cvalue C.ImGuiInputEventMouseButton) InputEventMouseButton {
 	result := new(InputEventMouseButton)
-	result.data = unsafe.Pointer(&cvalue)
+	result.FieldButton = int32(cvalue.Button)
+	result.FieldDown = cvalue.Down == C.bool(true)
+	result.FieldMouseSource = MouseSource(cvalue.MouseSource)
 	return *result
 }
 
 // FIXME: Structures in the union below need to be declared as anonymous unions appears to be an extension?
 // Using ImVec2() would fail on Clang 'union member 'MousePos' has a non-trivial default constructor'
 type InputEventMousePos struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldPosX        float32
+	FieldPosY        float32
+	FieldMouseSource MouseSource
 }
 
 func (data InputEventMousePos) handle() (result *C.ImGuiInputEventMousePos, releaseFn func()) {
-	result = (*C.ImGuiInputEventMousePos)(data.data)
-	return result, func() {}
+	result = new(C.ImGuiInputEventMousePos)
+	FieldPosX := data.FieldPosX
+
+	result.PosX = C.float(FieldPosX)
+	FieldPosY := data.FieldPosY
+
+	result.PosY = C.float(FieldPosY)
+	FieldMouseSource := data.FieldMouseSource
+
+	result.MouseSource = C.ImGuiMouseSource(FieldMouseSource)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (data InputEventMousePos) c() (result C.ImGuiInputEventMousePos, fin func()) {
@@ -812,7 +852,9 @@ func (data InputEventMousePos) c() (result C.ImGuiInputEventMousePos, fin func()
 
 func newInputEventMousePosFromC(cvalue C.ImGuiInputEventMousePos) InputEventMousePos {
 	result := new(InputEventMousePos)
-	result.data = unsafe.Pointer(&cvalue)
+	result.FieldPosX = float32(cvalue.PosX)
+	result.FieldPosY = float32(cvalue.PosY)
+	result.FieldMouseSource = MouseSource(cvalue.MouseSource)
 	return *result
 }
 
@@ -842,13 +884,25 @@ func newInputEventMouseViewportFromC(cvalue C.ImGuiInputEventMouseViewport) Inpu
 }
 
 type InputEventMouseWheel struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldWheelX      float32
+	FieldWheelY      float32
+	FieldMouseSource MouseSource
 }
 
 func (data InputEventMouseWheel) handle() (result *C.ImGuiInputEventMouseWheel, releaseFn func()) {
-	result = (*C.ImGuiInputEventMouseWheel)(data.data)
-	return result, func() {}
+	result = new(C.ImGuiInputEventMouseWheel)
+	FieldWheelX := data.FieldWheelX
+
+	result.WheelX = C.float(FieldWheelX)
+	FieldWheelY := data.FieldWheelY
+
+	result.WheelY = C.float(FieldWheelY)
+	FieldMouseSource := data.FieldMouseSource
+
+	result.MouseSource = C.ImGuiMouseSource(FieldMouseSource)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (data InputEventMouseWheel) c() (result C.ImGuiInputEventMouseWheel, fin func()) {
@@ -858,7 +912,9 @@ func (data InputEventMouseWheel) c() (result C.ImGuiInputEventMouseWheel, fin fu
 
 func newInputEventMouseWheelFromC(cvalue C.ImGuiInputEventMouseWheel) InputEventMouseWheel {
 	result := new(InputEventMouseWheel)
-	result.data = unsafe.Pointer(&cvalue)
+	result.FieldWheelX = float32(cvalue.WheelX)
+	result.FieldWheelY = float32(cvalue.WheelY)
+	result.FieldMouseSource = MouseSource(cvalue.MouseSource)
 	return *result
 }
 
@@ -1226,13 +1282,22 @@ func newListClipperRangeFromC(cvalue C.ImGuiListClipperRange) ListClipperRange {
 }
 
 type LocEntry struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldKey  LocKey
+	FieldText string
 }
 
 func (data LocEntry) handle() (result *C.ImGuiLocEntry, releaseFn func()) {
-	result = (*C.ImGuiLocEntry)(data.data)
-	return result, func() {}
+	result = new(C.ImGuiLocEntry)
+	FieldKey := data.FieldKey
+
+	result.Key = C.ImGuiLocKey(FieldKey)
+	FieldText := data.FieldText
+	FieldTextArg, FieldTextFin := wrapString(FieldText)
+	result.Text = FieldTextArg
+	releaseFn = func() {
+		FieldTextFin()
+	}
+	return result, releaseFn
 }
 
 func (data LocEntry) c() (result C.ImGuiLocEntry, fin func()) {
@@ -1242,7 +1307,8 @@ func (data LocEntry) c() (result C.ImGuiLocEntry, fin func()) {
 
 func newLocEntryFromC(cvalue C.ImGuiLocEntry) LocEntry {
 	result := new(LocEntry)
-	result.data = unsafe.Pointer(&cvalue)
+	result.FieldKey = LocKey(cvalue.Key)
+	result.FieldText = C.GoString(cvalue.Text)
 	return *result
 }
 
