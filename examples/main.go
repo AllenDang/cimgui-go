@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"image"
-	"unsafe"
 
 	imgui "github.com/AllenDang/cimgui-go"
 )
@@ -133,8 +132,8 @@ func main() {
 		fmt.Printf("drop triggered: %v", p)
 	})
 
-	backend.SetCloseCallback(func(wnd unsafe.Pointer) {
-		fmt.Printf("window is closing")
+	backend.SetCloseCallback(func(b imgui.Backend) {
+		fmt.Println("window is closing")
 	})
 
 	backend.Run(loop)

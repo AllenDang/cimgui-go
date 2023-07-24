@@ -45,7 +45,7 @@ type GLFWBackend struct {
 	afterRender          voidCallbackFunc
 	beforeDestoryContext voidCallbackFunc
 	dropCB               DropCallback
-	closeCB              WindowCloseCallback
+	closeCB              func(pointer unsafe.Pointer)
 	window               uintptr
 }
 
@@ -106,7 +106,7 @@ func (b *GLFWBackend) dropCallback() DropCallback {
 	return b.dropCB
 }
 
-func (b *GLFWBackend) closeCallback() WindowCloseCallback {
+func (b *GLFWBackend) closeCallback() func(wnd unsafe.Pointer) {
 	return b.closeCB
 }
 
@@ -193,6 +193,9 @@ func (b *GLFWBackend) SetDropCallback(cbfun DropCallback) {
 }
 
 func (b *GLFWBackend) SetCloseCallback(cbfun WindowCloseCallback) {
-	b.closeCB = cbfun
+	b.closeCB = func(_ unsafe.Pointer) {
+		cbfun(b)
+	}
+
 	C.igGLFWWindow_SetCloseCallback(b.handle())
 }
