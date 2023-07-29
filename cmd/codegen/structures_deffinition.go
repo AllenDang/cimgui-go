@@ -105,7 +105,6 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 
 func shouldSkipStruct(name string) bool {
 	valueTypeStructs := map[string]bool{
-		"ImVec1":      true,
 		"ImVec2ih":    true,
 		"ImVec2":      true,
 		"ImVec4":      true,

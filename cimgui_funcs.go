@@ -3117,8 +3117,16 @@ func (self *Rect) Destroy() {
 	selfFin()
 }
 
-func (self *Vec1) Destroy() {
-	selfArg, selfFin := wrap[C.ImVec1, *Vec1](self)
+func InternalNewVec1Float(_x float32) Vec1 {
+	return newVec1FromC(*C.ImVec1_ImVec1_Float(C.float(_x)))
+}
+
+func InternalNewVec1Nil() Vec1 {
+	return newVec1FromC(*C.ImVec1_ImVec1_Nil())
+}
+
+func (self Vec1) Destroy() {
+	selfArg, selfFin := self.handle()
 	C.ImVec1_destroy(selfArg)
 
 	selfFin()
@@ -17781,15 +17789,41 @@ func (self GroupData) BackupCursorMaxPos() Vec2 {
 }
 
 func (self GroupData) SetBackupIndent(v Vec1) {
+	vArg, vFin := v.c()
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiGroupData_SetBackupIndent(selfArg, v.toC())
+	C.wrap_ImGuiGroupData_SetBackupIndent(selfArg, vArg)
+
+	vFin()
+}
+
+func (self GroupData) BackupIndent() Vec1 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVec1FromC(C.wrap_ImGuiGroupData_GetBackupIndent(selfArg))
 }
 
 func (self GroupData) SetBackupGroupOffset(v Vec1) {
+	vArg, vFin := v.c()
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiGroupData_SetBackupGroupOffset(selfArg, v.toC())
+	C.wrap_ImGuiGroupData_SetBackupGroupOffset(selfArg, vArg)
+
+	vFin()
+}
+
+func (self GroupData) BackupGroupOffset() Vec1 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVec1FromC(C.wrap_ImGuiGroupData_GetBackupGroupOffset(selfArg))
 }
 
 func (self GroupData) SetBackupCurrLineSize(v Vec2) {
@@ -26201,9 +26235,22 @@ func (self TableTempData) HostBackupCursorMaxPos() Vec2 {
 }
 
 func (self TableTempData) SetHostBackupColumnsOffset(v Vec1) {
+	vArg, vFin := v.c()
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiTableTempData_SetHostBackupColumnsOffset(selfArg, v.toC())
+	C.wrap_ImGuiTableTempData_SetHostBackupColumnsOffset(selfArg, vArg)
+
+	vFin()
+}
+
+func (self TableTempData) HostBackupColumnsOffset() Vec1 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVec1FromC(C.wrap_ImGuiTableTempData_GetHostBackupColumnsOffset(selfArg))
 }
 
 func (self TableTempData) SetHostBackupItemWidth(v float32) {
@@ -29083,21 +29130,60 @@ func (self WindowTempData) IsSetPos() bool {
 }
 
 func (self WindowTempData) SetIndent(v Vec1) {
+	vArg, vFin := v.c()
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiWindowTempData_SetIndent(selfArg, v.toC())
+	C.wrap_ImGuiWindowTempData_SetIndent(selfArg, vArg)
+
+	vFin()
+}
+
+func (self WindowTempData) Indent() Vec1 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVec1FromC(C.wrap_ImGuiWindowTempData_GetIndent(selfArg))
 }
 
 func (self WindowTempData) SetColumnsOffset(v Vec1) {
+	vArg, vFin := v.c()
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiWindowTempData_SetColumnsOffset(selfArg, v.toC())
+	C.wrap_ImGuiWindowTempData_SetColumnsOffset(selfArg, vArg)
+
+	vFin()
+}
+
+func (self WindowTempData) ColumnsOffset() Vec1 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVec1FromC(C.wrap_ImGuiWindowTempData_GetColumnsOffset(selfArg))
 }
 
 func (self WindowTempData) SetGroupOffset(v Vec1) {
+	vArg, vFin := v.c()
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiWindowTempData_SetGroupOffset(selfArg, v.toC())
+	C.wrap_ImGuiWindowTempData_SetGroupOffset(selfArg, vArg)
+
+	vFin()
+}
+
+func (self WindowTempData) GroupOffset() Vec1 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVec1FromC(C.wrap_ImGuiWindowTempData_GetGroupOffset(selfArg))
 }
 
 func (self WindowTempData) SetCursorStartPosLossyness(v Vec2) {

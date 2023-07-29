@@ -664,13 +664,59 @@ func newDockNodeFromC(cvalue C.ImGuiDockNode) DockNode {
 
 // Stacked storage data for BeginGroup()/EndGroup()
 type GroupData struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldWindowID                           ID
+	FieldBackupCursorPos                    Vec2
+	FieldBackupCursorMaxPos                 Vec2
+	FieldBackupIndent                       Vec1
+	FieldBackupGroupOffset                  Vec1
+	FieldBackupCurrLineSize                 Vec2
+	FieldBackupCurrLineTextBaseOffset       float32
+	FieldBackupActiveIdIsAlive              ID
+	FieldBackupActiveIdPreviousFrameIsAlive bool
+	FieldBackupHoveredIdIsAlive             bool
+	FieldEmitItem                           bool
 }
 
 func (data GroupData) handle() (result *C.ImGuiGroupData, releaseFn func()) {
-	result = (*C.ImGuiGroupData)(data.data)
-	return result, func() {}
+	result = new(C.ImGuiGroupData)
+	FieldWindowID := data.FieldWindowID
+
+	result.WindowID = C.ImGuiID(FieldWindowID)
+	FieldBackupCursorPos := data.FieldBackupCursorPos
+
+	result.BackupCursorPos = FieldBackupCursorPos.toC()
+	FieldBackupCursorMaxPos := data.FieldBackupCursorMaxPos
+
+	result.BackupCursorMaxPos = FieldBackupCursorMaxPos.toC()
+	FieldBackupIndent := data.FieldBackupIndent
+	BackupIndentArg, BackupIndentFin := FieldBackupIndent.c()
+	result.BackupIndent = BackupIndentArg
+	FieldBackupGroupOffset := data.FieldBackupGroupOffset
+	BackupGroupOffsetArg, BackupGroupOffsetFin := FieldBackupGroupOffset.c()
+	result.BackupGroupOffset = BackupGroupOffsetArg
+	FieldBackupCurrLineSize := data.FieldBackupCurrLineSize
+
+	result.BackupCurrLineSize = FieldBackupCurrLineSize.toC()
+	FieldBackupCurrLineTextBaseOffset := data.FieldBackupCurrLineTextBaseOffset
+
+	result.BackupCurrLineTextBaseOffset = C.float(FieldBackupCurrLineTextBaseOffset)
+	FieldBackupActiveIdIsAlive := data.FieldBackupActiveIdIsAlive
+
+	result.BackupActiveIdIsAlive = C.ImGuiID(FieldBackupActiveIdIsAlive)
+	FieldBackupActiveIdPreviousFrameIsAlive := data.FieldBackupActiveIdPreviousFrameIsAlive
+
+	result.BackupActiveIdPreviousFrameIsAlive = C.bool(FieldBackupActiveIdPreviousFrameIsAlive)
+	FieldBackupHoveredIdIsAlive := data.FieldBackupHoveredIdIsAlive
+
+	result.BackupHoveredIdIsAlive = C.bool(FieldBackupHoveredIdIsAlive)
+	FieldEmitItem := data.FieldEmitItem
+
+	result.EmitItem = C.bool(FieldEmitItem)
+	releaseFn = func() {
+		BackupIndentFin()
+		BackupGroupOffsetFin()
+	}
+	return result, releaseFn
 }
 
 func (data GroupData) c() (result C.ImGuiGroupData, fin func()) {
@@ -680,7 +726,17 @@ func (data GroupData) c() (result C.ImGuiGroupData, fin func()) {
 
 func newGroupDataFromC(cvalue C.ImGuiGroupData) GroupData {
 	result := new(GroupData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.FieldWindowID = ID(cvalue.WindowID)
+	result.FieldBackupCursorPos = *(&Vec2{}).fromC(cvalue.BackupCursorPos)
+	result.FieldBackupCursorMaxPos = *(&Vec2{}).fromC(cvalue.BackupCursorMaxPos)
+	result.FieldBackupIndent = newVec1FromC(cvalue.BackupIndent)
+	result.FieldBackupGroupOffset = newVec1FromC(cvalue.BackupGroupOffset)
+	result.FieldBackupCurrLineSize = *(&Vec2{}).fromC(cvalue.BackupCurrLineSize)
+	result.FieldBackupCurrLineTextBaseOffset = float32(cvalue.BackupCurrLineTextBaseOffset)
+	result.FieldBackupActiveIdIsAlive = ID(cvalue.BackupActiveIdIsAlive)
+	result.FieldBackupActiveIdPreviousFrameIsAlive = cvalue.BackupActiveIdPreviousFrameIsAlive == C.bool(true)
+	result.FieldBackupHoveredIdIsAlive = cvalue.BackupHoveredIdIsAlive == C.bool(true)
+	result.FieldEmitItem = cvalue.EmitItem == C.bool(true)
 	return *result
 }
 
@@ -2285,13 +2341,65 @@ func newTableSortSpecsFromC(cvalue C.ImGuiTableSortSpecs) TableSortSpecs {
 // - Accessing those requires chasing an extra pointer so for very frequently used data we leave them in the main table structure.
 // - We also leave out of this structure data that tend to be particularly useful for debugging/metrics.
 type TableTempData struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldTableIndex                   int32   // Index in g.Tables.Buf[] pool
+	FieldLastTimeActive               float32 // Last timestamp this structure was used
+	FieldUserOuterSize                Vec2    // outer_size.x passed to BeginTable()
+	FieldDrawSplitter                 DrawListSplitter
+	FieldHostBackupWorkRect           Rect    // Backup of InnerWindow->WorkRect at the end of BeginTable()
+	FieldHostBackupParentWorkRect     Rect    // Backup of InnerWindow->ParentWorkRect at the end of BeginTable()
+	FieldHostBackupPrevLineSize       Vec2    // Backup of InnerWindow->DC.PrevLineSize at the end of BeginTable()
+	FieldHostBackupCurrLineSize       Vec2    // Backup of InnerWindow->DC.CurrLineSize at the end of BeginTable()
+	FieldHostBackupCursorMaxPos       Vec2    // Backup of InnerWindow->DC.CursorMaxPos at the end of BeginTable()
+	FieldHostBackupColumnsOffset      Vec1    // Backup of OuterWindow->DC.ColumnsOffset at the end of BeginTable()
+	FieldHostBackupItemWidth          float32 // Backup of OuterWindow->DC.ItemWidth at the end of BeginTable()
+	FieldHostBackupItemWidthStackSize int32   // Backup of OuterWindow->DC.ItemWidthStack.Size at the end of BeginTable()
+
 }
 
 func (data TableTempData) handle() (result *C.ImGuiTableTempData, releaseFn func()) {
-	result = (*C.ImGuiTableTempData)(data.data)
-	return result, func() {}
+	result = new(C.ImGuiTableTempData)
+	FieldTableIndex := data.FieldTableIndex
+
+	result.TableIndex = C.int(FieldTableIndex)
+	FieldLastTimeActive := data.FieldLastTimeActive
+
+	result.LastTimeActive = C.float(FieldLastTimeActive)
+	FieldUserOuterSize := data.FieldUserOuterSize
+
+	result.UserOuterSize = FieldUserOuterSize.toC()
+	FieldDrawSplitter := data.FieldDrawSplitter
+	DrawSplitterArg, DrawSplitterFin := FieldDrawSplitter.c()
+	result.DrawSplitter = DrawSplitterArg
+	FieldHostBackupWorkRect := data.FieldHostBackupWorkRect
+
+	result.HostBackupWorkRect = FieldHostBackupWorkRect.toC()
+	FieldHostBackupParentWorkRect := data.FieldHostBackupParentWorkRect
+
+	result.HostBackupParentWorkRect = FieldHostBackupParentWorkRect.toC()
+	FieldHostBackupPrevLineSize := data.FieldHostBackupPrevLineSize
+
+	result.HostBackupPrevLineSize = FieldHostBackupPrevLineSize.toC()
+	FieldHostBackupCurrLineSize := data.FieldHostBackupCurrLineSize
+
+	result.HostBackupCurrLineSize = FieldHostBackupCurrLineSize.toC()
+	FieldHostBackupCursorMaxPos := data.FieldHostBackupCursorMaxPos
+
+	result.HostBackupCursorMaxPos = FieldHostBackupCursorMaxPos.toC()
+	FieldHostBackupColumnsOffset := data.FieldHostBackupColumnsOffset
+	HostBackupColumnsOffsetArg, HostBackupColumnsOffsetFin := FieldHostBackupColumnsOffset.c()
+	result.HostBackupColumnsOffset = HostBackupColumnsOffsetArg
+	FieldHostBackupItemWidth := data.FieldHostBackupItemWidth
+
+	result.HostBackupItemWidth = C.float(FieldHostBackupItemWidth)
+	FieldHostBackupItemWidthStackSize := data.FieldHostBackupItemWidthStackSize
+
+	result.HostBackupItemWidthStackSize = C.int(FieldHostBackupItemWidthStackSize)
+	releaseFn = func() {
+		DrawSplitterFin()
+
+		HostBackupColumnsOffsetFin()
+	}
+	return result, releaseFn
 }
 
 func (data TableTempData) c() (result C.ImGuiTableTempData, fin func()) {
@@ -2301,7 +2409,18 @@ func (data TableTempData) c() (result C.ImGuiTableTempData, fin func()) {
 
 func newTableTempDataFromC(cvalue C.ImGuiTableTempData) TableTempData {
 	result := new(TableTempData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.FieldTableIndex = int32(cvalue.TableIndex)
+	result.FieldLastTimeActive = float32(cvalue.LastTimeActive)
+	result.FieldUserOuterSize = *(&Vec2{}).fromC(cvalue.UserOuterSize)
+	result.FieldDrawSplitter = newDrawListSplitterFromC(cvalue.DrawSplitter)
+	result.FieldHostBackupWorkRect = *(&Rect{}).fromC(cvalue.HostBackupWorkRect)
+	result.FieldHostBackupParentWorkRect = *(&Rect{}).fromC(cvalue.HostBackupParentWorkRect)
+	result.FieldHostBackupPrevLineSize = *(&Vec2{}).fromC(cvalue.HostBackupPrevLineSize)
+	result.FieldHostBackupCurrLineSize = *(&Vec2{}).fromC(cvalue.HostBackupCurrLineSize)
+	result.FieldHostBackupCursorMaxPos = *(&Vec2{}).fromC(cvalue.HostBackupCursorMaxPos)
+	result.FieldHostBackupColumnsOffset = newVec1FromC(cvalue.HostBackupColumnsOffset)
+	result.FieldHostBackupItemWidth = float32(cvalue.HostBackupItemWidth)
+	result.FieldHostBackupItemWidthStackSize = int32(cvalue.HostBackupItemWidthStackSize)
 	return *result
 }
 
@@ -2595,6 +2714,31 @@ func (data WindowTempData) c() (result C.ImGuiWindowTempData, fin func()) {
 func newWindowTempDataFromC(cvalue C.ImGuiWindowTempData) WindowTempData {
 	result := new(WindowTempData)
 	result.data = unsafe.Pointer(&cvalue)
+	return *result
+}
+
+type Vec1 struct {
+	Fieldx float32
+}
+
+func (data Vec1) handle() (result *C.ImVec1, releaseFn func()) {
+	result = new(C.ImVec1)
+	Fieldx := data.Fieldx
+
+	result.x = C.float(Fieldx)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
+
+func (data Vec1) c() (result C.ImVec1, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
+}
+
+func newVec1FromC(cvalue C.ImVec1) Vec1 {
+	result := new(Vec1)
+	result.Fieldx = float32(cvalue.x)
 	return *result
 }
 
