@@ -27,6 +27,7 @@ type StructMemberDef struct {
 	Size         int    `json:"size"`
 	Comment      CommentDef
 	CommentData  json.RawMessage `json:"comment"`
+	Bitfield     string          `json:"bitfield"`
 }
 
 // getStructDefs takes a json file bytes (struct_and_enums.json) and returns a slice of StructDef.
@@ -104,7 +105,6 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 
 func shouldSkipStruct(name string) bool {
 	valueTypeStructs := map[string]bool{
-		"ImVec1":      true,
 		"ImVec2ih":    true,
 		"ImVec2":      true,
 		"ImVec4":      true,

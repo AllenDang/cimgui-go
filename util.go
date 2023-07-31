@@ -50,7 +50,10 @@ func (gr GlyphRange) Data() *Wchar {
 }
 
 func (fa FontAtlas) GetFontCount() int {
-	return int(C.wrap_ImFontAtlas_GetFontCount(fa.handle()))
+	selfArg, selfFin := fa.handle()
+	defer selfFin()
+
+	return int(C.wrap_ImFontAtlas_GetFontCount(selfArg))
 }
 
 func (self FontAtlas) GetTextureDataAsAlpha8() (pixels unsafe.Pointer, width int32, height int32, outBytesPerPixel int32) {
@@ -59,7 +62,10 @@ func (self FontAtlas) GetTextureDataAsAlpha8() (pixels unsafe.Pointer, width int
 	var h C.int
 	var bp C.int
 
-	C.ImFontAtlas_GetTexDataAsAlpha8(self.handle(), &p, &w, &h, &bp)
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+
+	C.ImFontAtlas_GetTexDataAsAlpha8(selfArg, &p, &w, &h, &bp)
 
 	pixels = unsafe.Pointer(p)
 	width = int32(w)
@@ -75,7 +81,10 @@ func (self FontAtlas) GetTextureDataAsRGBA32() (pixels unsafe.Pointer, width int
 	var h C.int
 	var bp C.int
 
-	C.ImFontAtlas_GetTexDataAsRGBA32(self.handle(), &p, &w, &h, &bp)
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+
+	C.ImFontAtlas_GetTexDataAsRGBA32(selfArg, &p, &w, &h, &bp)
 
 	pixels = unsafe.Pointer(p)
 	width = int32(w)

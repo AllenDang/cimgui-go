@@ -18,7 +18,7 @@ func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 		"ImWchar16":                simpleR("uint16"),
 		"float":                    simpleR("float32"),
 		"double":                   simpleR("float64"),
-		"int":                      simpleR("int"),
+		"int":                      simpleR("int32"),
 		"unsigned int":             simpleR("uint32"),
 		"short":                    simpleR("int"),
 		"ImS8":                     simpleR("int"),
@@ -40,7 +40,7 @@ func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 		"ImGuiTableColumnIdx":      simpleR("TableColumnIdx"),
 		"ImGuiTableDrawChannelIdx": simpleR("TableDrawChannelIdx"),
 		"void*":                    simpleR("unsafe.Pointer"),
-		"size_t":                   simpleR("float64"),
+		"size_t":                   simpleR("uint64"),
 	}
 
 	if v, ok := returnWrapperMap[returnType]; ok {
@@ -68,9 +68,6 @@ func simpleR(goType string) returnWrapper {
 func wrappableR(goType string) returnWrapper {
 	return returnWrapper{
 		returnType: goType,
-		returnStmt: fmt.Sprintf(`out := &%s{}
-out.fromC(%s)
-return *out
-`, goType, "%s"),
+		returnStmt: fmt.Sprintf("return *(&%s{}).fromC(%s)", goType, "%s"),
 	}
 }
