@@ -31,6 +31,7 @@ extern void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback before
                       VoidCallback beforeDestroyContext);
 extern void igGLFWWindow_GetDisplaySize(GLFWwindow *window, int *width, int *height);
 extern void igGLFWWindow_SetWindowPos(GLFWwindow *window, int x, int y);
+extern void igGLFWWindow_GetWindowPos(GLFWwindow *window, int *x, int *y);
 extern void igGLFWWindow_SetShouldClose(GLFWwindow *window, int value);
 extern void igGLFWWindow_SetDropCallbackCB(GLFWwindow *window);
 extern void igGLFWWindow_SetSize(GLFWwindow *window, int width, int height);

@@ -94,6 +94,7 @@ type Backend interface {
 	Refresh()
 
 	SetWindowPos(x, y int)
+	GetWindowPos() (x, y int32)
 	SetWindowSize(width, height int)
 	SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight int)
 	SetWindowTitle(title string)

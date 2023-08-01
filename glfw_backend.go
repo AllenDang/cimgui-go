@@ -114,6 +114,18 @@ func (b *GLFWBackend) SetWindowPos(x, y int) {
 	C.igGLFWWindow_SetWindowPos(b.handle(), C.int(x), C.int(y))
 }
 
+func (b *GLFWBackend) GetWindowPos() (x, y int32) {
+	xArg, xFin := wrapNumberPtr[C.int, int32](&x)
+	defer xFin()
+
+	yArg, yFin := wrapNumberPtr[C.int, int32](&y)
+	defer yFin()
+
+	C.igGLFWWindow_GetWindowPos(b.handle(), xArg, yArg)
+
+	return
+}
+
 func (b *GLFWBackend) SetWindowSize(width, height int) {
 	C.igGLFWWindow_SetSize(b.handle(), C.int(width), C.int(height))
 }
