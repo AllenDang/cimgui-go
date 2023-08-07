@@ -21,8 +21,8 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
-void MyAssert(bool cond/*const char *expr*/, const char *file, int line) {
-        if (!cond) {
+static void MyAssert(bool cond/*const char *expr*/, const char *file, int line) {
+        if (cond) {
                 return;
         }
     FILE *log_file = fopen("error.log", "a");
