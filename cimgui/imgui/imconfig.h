@@ -16,8 +16,23 @@
 
 //---- Define assertion handler. Defaults to calling assert().
 // If your macro uses multiple statements, make sure is enclosed in a 'do { .. } while (0)' block so it can be used as a single statement.
-//#define IM_ASSERT(_EXPR)  MyAssert(_EXPR)
-#define IM_ASSERT(_EXPR)  ((void)(_EXPR))     // Disable asserts
+/#define IM_ASSERT(_EXPR)  MyAssert(_EXPR)
+//#define IM_ASSERT(_EXPR)  ((void)(_EXPR))     // Disable asserts
+//
+void MyAssert(const char *expr, const char *file, int line) {
+    FILE *log_file = fopen("error.log", "a");
+    if (log_file) {
+        fprintf(log_file, "Error in expression: %s\n", expr);
+        fprintf(log_file, "File: %s, Line: %d\n", file, line);
+        fclose(log_file);
+    }
+
+    fprintf(stdout, "Error in expression: %s\n", expr);
+    fprintf(stdout, "File: %s, Line: %d\n", file, line);
+
+    // Instead of throwing an exception, we're using exit(1) to terminate the program.
+    exit(1);
+}
 
 //---- Define attributes of all API symbols declarations, e.g. for DLL under Windows
 // Using Dear ImGui via a shared library is not recommended, because of function call overhead and because we don't guarantee backward nor forward ABI compatibility.
