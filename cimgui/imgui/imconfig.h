@@ -19,6 +19,8 @@
 /#define IM_ASSERT(_EXPR)  MyAssert(_EXPR)
 //#define IM_ASSERT(_EXPR)  ((void)(_EXPR))     // Disable asserts
 //
+#include <stdio.h>
+#include <stdlib.h>
 void MyAssert(const char *expr, const char *file, int line) {
     FILE *log_file = fopen("error.log", "a");
     if (log_file) {
