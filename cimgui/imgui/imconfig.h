@@ -16,20 +16,23 @@
 
 //---- Define assertion handler. Defaults to calling assert().
 // If your macro uses multiple statements, make sure is enclosed in a 'do { .. } while (0)' block so it can be used as a single statement.
-/#define IM_ASSERT(_EXPR)  MyAssert(_EXPR)
+#define IM_ASSERT(_EXPR)  MyAssert(_EXPR, __FILE__, __LINE__)
 //#define IM_ASSERT(_EXPR)  ((void)(_EXPR))     // Disable asserts
 //
 #include <stdio.h>
 #include <stdlib.h>
-void MyAssert(const char *expr, const char *file, int line) {
+void MyAssert(bool cond/*const char *expr*/, const char *file, int line) {
+        if (!cond) {
+                return;
+        }
     FILE *log_file = fopen("error.log", "a");
     if (log_file) {
-        fprintf(log_file, "Error in expression: %s\n", expr);
+        //fprintf(log_file, "Error in expression: %s\n", expr);
         fprintf(log_file, "File: %s, Line: %d\n", file, line);
         fclose(log_file);
     }
 
-    fprintf(stdout, "Error in expression: %s\n", expr);
+    //fprintf(stdout, "Error in expression: %s\n", expr);
     fprintf(stdout, "File: %s, Line: %d\n", file, line);
 
     // Instead of throwing an exception, we're using exit(1) to terminate the program.
