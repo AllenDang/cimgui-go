@@ -231,11 +231,11 @@ return result, func() {}
 `, renameGoIdentifier(s.Name), s.Name)
 
 	// new X FromC
-	fmt.Fprintf(sb, "func new%[1]sFromC(cvalue C.%[2]s) %[1]s {\n", renameGoIdentifier(s.Name), s.Name)
+	fmt.Fprintf(sb, "func new%[1]sFromC(cvalue *C.%[2]s) %[1]s {\n", renameGoIdentifier(s.Name), s.Name)
 
 	fmt.Fprintf(sb, "result := new(%s)\n", renameGoIdentifier(s.Name))
 	if isTODO {
-		fmt.Fprintf(sb, "result.data = unsafe.Pointer(&cvalue)\n")
+		fmt.Fprintf(sb, "result.data = unsafe.Pointer(cvalue)\n")
 	} else {
 		for i, m := range s.Members {
 			w := wrappers[i].fromC

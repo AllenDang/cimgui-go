@@ -253,11 +253,19 @@ C.%s(selfArg, %s)
 	case returnTypeEnum:
 		g.sb.WriteString(fmt.Sprintf("return %s(C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStructPtr:
-		g.sb.WriteString(fmt.Sprintf("return new%sFromC(*C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStruct:
-		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", renameGoIdentifier(f.Ret), f.CWrapperFuncName, argInvokeStmt))
+		// FIXME: this may crash
+		g.sb.WriteString(fmt.Sprintf(`
+result := C.%s(%s)
+return new%sFromC(&result)
+`,
+			f.CWrapperFuncName,
+			argInvokeStmt,
+			renameGoIdentifier(f.Ret),
+		))
 	case returnTypeConstructor:
-		g.sb.WriteString(fmt.Sprintf("return new%sFromC(*C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	}
 
 	g.sb.WriteString("}\n\n")
