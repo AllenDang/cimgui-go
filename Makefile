@@ -80,6 +80,7 @@ endef
 update:
 	rm -rf cimgui/*
 	$(call update,cimgui,https://github.com/cimgui/cimgui,imgui,docking)
+	cat templates/assert.h >> cimgui/imgui/imconfig.h
 	$(call cimgui)
 	$(call update,cimplot,https://github.com/cimgui/cimplot,implot,master)
 	$(call cimplot)
