@@ -27,9 +27,9 @@ func (data BitVector) c() (result C.ImBitVector, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newBitVectorFromC(cvalue C.ImBitVector) BitVector {
+func newBitVectorFromC(cvalue *C.ImBitVector) BitVector {
 	result := new(BitVector)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -49,9 +49,9 @@ func (data DrawChannel) c() (result C.ImDrawChannel, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newDrawChannelFromC(cvalue C.ImDrawChannel) DrawChannel {
+func newDrawChannelFromC(cvalue *C.ImDrawChannel) DrawChannel {
 	result := new(DrawChannel)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -75,9 +75,9 @@ func (data DrawCmd) c() (result C.ImDrawCmd, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newDrawCmdFromC(cvalue C.ImDrawCmd) DrawCmd {
+func newDrawCmdFromC(cvalue *C.ImDrawCmd) DrawCmd {
 	result := new(DrawCmd)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -109,7 +109,7 @@ func (data DrawCmdHeader) c() (result C.ImDrawCmdHeader, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newDrawCmdHeaderFromC(cvalue C.ImDrawCmdHeader) DrawCmdHeader {
+func newDrawCmdHeaderFromC(cvalue *C.ImDrawCmdHeader) DrawCmdHeader {
 	result := new(DrawCmdHeader)
 	result.FieldClipRect = *(&Vec4{}).fromC(cvalue.ClipRect)
 	result.FieldTextureId = TextureID(cvalue.TextureId)
@@ -135,9 +135,9 @@ func (data DrawData) c() (result C.ImDrawData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newDrawDataFromC(cvalue C.ImDrawData) DrawData {
+func newDrawDataFromC(cvalue *C.ImDrawData) DrawData {
 	result := new(DrawData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -156,9 +156,9 @@ func (data DrawDataBuilder) c() (result C.ImDrawDataBuilder, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newDrawDataBuilderFromC(cvalue C.ImDrawDataBuilder) DrawDataBuilder {
+func newDrawDataBuilderFromC(cvalue *C.ImDrawDataBuilder) DrawDataBuilder {
 	result := new(DrawDataBuilder)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -186,9 +186,9 @@ func (data DrawList) c() (result C.ImDrawList, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newDrawListFromC(cvalue C.ImDrawList) DrawList {
+func newDrawListFromC(cvalue *C.ImDrawList) DrawList {
 	result := new(DrawList)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -209,9 +209,9 @@ func (data DrawListSharedData) c() (result C.ImDrawListSharedData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newDrawListSharedDataFromC(cvalue C.ImDrawListSharedData) DrawListSharedData {
+func newDrawListSharedDataFromC(cvalue *C.ImDrawListSharedData) DrawListSharedData {
 	result := new(DrawListSharedData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -232,9 +232,9 @@ func (data DrawListSplitter) c() (result C.ImDrawListSplitter, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newDrawListSplitterFromC(cvalue C.ImDrawListSplitter) DrawListSplitter {
+func newDrawListSplitterFromC(cvalue *C.ImDrawListSplitter) DrawListSplitter {
 	result := new(DrawListSplitter)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -265,7 +265,7 @@ func (data DrawVert) c() (result C.ImDrawVert, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newDrawVertFromC(cvalue C.ImDrawVert) DrawVert {
+func newDrawVertFromC(cvalue *C.ImDrawVert) DrawVert {
 	result := new(DrawVert)
 	result.Fieldpos = *(&Vec2{}).fromC(cvalue.pos)
 	result.Fielduv = *(&Vec2{}).fromC(cvalue.uv)
@@ -290,9 +290,9 @@ func (data Font) c() (result C.ImFont, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newFontFromC(cvalue C.ImFont) Font {
+func newFontFromC(cvalue *C.ImFont) Font {
 	result := new(Font)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -330,9 +330,9 @@ func (data FontAtlas) c() (result C.ImFontAtlas, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newFontAtlasFromC(cvalue C.ImFontAtlas) FontAtlas {
+func newFontAtlasFromC(cvalue *C.ImFontAtlas) FontAtlas {
 	result := new(FontAtlas)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -352,9 +352,9 @@ func (data FontAtlasCustomRect) c() (result C.ImFontAtlasCustomRect, fin func())
 	return *resultPtr, finFn
 }
 
-func newFontAtlasCustomRectFromC(cvalue C.ImFontAtlasCustomRect) FontAtlasCustomRect {
+func newFontAtlasCustomRectFromC(cvalue *C.ImFontAtlasCustomRect) FontAtlasCustomRect {
 	result := new(FontAtlasCustomRect)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -374,9 +374,9 @@ func (data FontBuilderIO) c() (result C.ImFontBuilderIO, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newFontBuilderIOFromC(cvalue C.ImFontBuilderIO) FontBuilderIO {
+func newFontBuilderIOFromC(cvalue *C.ImFontBuilderIO) FontBuilderIO {
 	result := new(FontBuilderIO)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -395,9 +395,9 @@ func (data FontConfig) c() (result C.ImFontConfig, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newFontConfigFromC(cvalue C.ImFontConfig) FontConfig {
+func newFontConfigFromC(cvalue *C.ImFontConfig) FontConfig {
 	result := new(FontConfig)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -418,9 +418,9 @@ func (data FontGlyph) c() (result C.ImFontGlyph, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newFontGlyphFromC(cvalue C.ImFontGlyph) FontGlyph {
+func newFontGlyphFromC(cvalue *C.ImFontGlyph) FontGlyph {
 	result := new(FontGlyph)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -441,9 +441,9 @@ func (data FontGlyphRangesBuilder) c() (result C.ImFontGlyphRangesBuilder, fin f
 	return *resultPtr, finFn
 }
 
-func newFontGlyphRangesBuilderFromC(cvalue C.ImFontGlyphRangesBuilder) FontGlyphRangesBuilder {
+func newFontGlyphRangesBuilderFromC(cvalue *C.ImFontGlyphRangesBuilder) FontGlyphRangesBuilder {
 	result := new(FontGlyphRangesBuilder)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -463,9 +463,9 @@ func (data ColorMod) c() (result C.ImGuiColorMod, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newColorModFromC(cvalue C.ImGuiColorMod) ColorMod {
+func newColorModFromC(cvalue *C.ImGuiColorMod) ColorMod {
 	result := new(ColorMod)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -485,9 +485,9 @@ func (data ComboPreviewData) c() (result C.ImGuiComboPreviewData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newComboPreviewDataFromC(cvalue C.ImGuiComboPreviewData) ComboPreviewData {
+func newComboPreviewDataFromC(cvalue *C.ImGuiComboPreviewData) ComboPreviewData {
 	result := new(ComboPreviewData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -506,9 +506,9 @@ func (data Context) c() (result C.ImGuiContext, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newContextFromC(cvalue C.ImGuiContext) Context {
+func newContextFromC(cvalue *C.ImGuiContext) Context {
 	result := new(Context)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -527,9 +527,9 @@ func (data ContextHook) c() (result C.ImGuiContextHook, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newContextHookFromC(cvalue C.ImGuiContextHook) ContextHook {
+func newContextHookFromC(cvalue *C.ImGuiContextHook) ContextHook {
 	result := new(ContextHook)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -568,7 +568,7 @@ func (data DataTypeInfo) c() (result C.ImGuiDataTypeInfo, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newDataTypeInfoFromC(cvalue C.ImGuiDataTypeInfo) DataTypeInfo {
+func newDataTypeInfoFromC(cvalue *C.ImGuiDataTypeInfo) DataTypeInfo {
 	result := new(DataTypeInfo)
 	result.FieldSize = uint64(cvalue.Size)
 	result.FieldName = C.GoString(cvalue.Name)
@@ -592,9 +592,9 @@ func (data DataTypeTempStorage) c() (result C.ImGuiDataTypeTempStorage, fin func
 	return *resultPtr, finFn
 }
 
-func newDataTypeTempStorageFromC(cvalue C.ImGuiDataTypeTempStorage) DataTypeTempStorage {
+func newDataTypeTempStorageFromC(cvalue *C.ImGuiDataTypeTempStorage) DataTypeTempStorage {
 	result := new(DataTypeTempStorage)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -613,9 +613,9 @@ func (data DataVarInfo) c() (result C.ImGuiDataVarInfo, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newDataVarInfoFromC(cvalue C.ImGuiDataVarInfo) DataVarInfo {
+func newDataVarInfoFromC(cvalue *C.ImGuiDataVarInfo) DataVarInfo {
 	result := new(DataVarInfo)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -634,9 +634,9 @@ func (data DockContext) c() (result C.ImGuiDockContext, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newDockContextFromC(cvalue C.ImGuiDockContext) DockContext {
+func newDockContextFromC(cvalue *C.ImGuiDockContext) DockContext {
 	result := new(DockContext)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -656,9 +656,9 @@ func (data DockNode) c() (result C.ImGuiDockNode, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newDockNodeFromC(cvalue C.ImGuiDockNode) DockNode {
+func newDockNodeFromC(cvalue *C.ImGuiDockNode) DockNode {
 	result := new(DockNode)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -724,13 +724,13 @@ func (data GroupData) c() (result C.ImGuiGroupData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newGroupDataFromC(cvalue C.ImGuiGroupData) GroupData {
+func newGroupDataFromC(cvalue *C.ImGuiGroupData) GroupData {
 	result := new(GroupData)
 	result.FieldWindowID = ID(cvalue.WindowID)
 	result.FieldBackupCursorPos = *(&Vec2{}).fromC(cvalue.BackupCursorPos)
 	result.FieldBackupCursorMaxPos = *(&Vec2{}).fromC(cvalue.BackupCursorMaxPos)
-	result.FieldBackupIndent = newVec1FromC(cvalue.BackupIndent)
-	result.FieldBackupGroupOffset = newVec1FromC(cvalue.BackupGroupOffset)
+	result.FieldBackupIndent = newVec1FromC(&cvalue.BackupIndent)
+	result.FieldBackupGroupOffset = newVec1FromC(&cvalue.BackupGroupOffset)
 	result.FieldBackupCurrLineSize = *(&Vec2{}).fromC(cvalue.BackupCurrLineSize)
 	result.FieldBackupCurrLineTextBaseOffset = float32(cvalue.BackupCurrLineTextBaseOffset)
 	result.FieldBackupActiveIdIsAlive = ID(cvalue.BackupActiveIdIsAlive)
@@ -755,9 +755,9 @@ func (data IO) c() (result C.ImGuiIO, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newIOFromC(cvalue C.ImGuiIO) IO {
+func newIOFromC(cvalue *C.ImGuiIO) IO {
 	result := new(IO)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -776,9 +776,9 @@ func (data InputEvent) c() (result C.ImGuiInputEvent, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newInputEventFromC(cvalue C.ImGuiInputEvent) InputEvent {
+func newInputEventFromC(cvalue *C.ImGuiInputEvent) InputEvent {
 	result := new(InputEvent)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -801,7 +801,7 @@ func (data InputEventAppFocused) c() (result C.ImGuiInputEventAppFocused, fin fu
 	return *resultPtr, finFn
 }
 
-func newInputEventAppFocusedFromC(cvalue C.ImGuiInputEventAppFocused) InputEventAppFocused {
+func newInputEventAppFocusedFromC(cvalue *C.ImGuiInputEventAppFocused) InputEventAppFocused {
 	result := new(InputEventAppFocused)
 	result.FieldFocused = cvalue.Focused == C.bool(true)
 	return *result
@@ -834,7 +834,7 @@ func (data InputEventKey) c() (result C.ImGuiInputEventKey, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newInputEventKeyFromC(cvalue C.ImGuiInputEventKey) InputEventKey {
+func newInputEventKeyFromC(cvalue *C.ImGuiInputEventKey) InputEventKey {
 	result := new(InputEventKey)
 	result.FieldKey = Key(cvalue.Key)
 	result.FieldDown = cvalue.Down == C.bool(true)
@@ -869,7 +869,7 @@ func (data InputEventMouseButton) c() (result C.ImGuiInputEventMouseButton, fin 
 	return *resultPtr, finFn
 }
 
-func newInputEventMouseButtonFromC(cvalue C.ImGuiInputEventMouseButton) InputEventMouseButton {
+func newInputEventMouseButtonFromC(cvalue *C.ImGuiInputEventMouseButton) InputEventMouseButton {
 	result := new(InputEventMouseButton)
 	result.FieldButton = int32(cvalue.Button)
 	result.FieldDown = cvalue.Down == C.bool(true)
@@ -906,7 +906,7 @@ func (data InputEventMousePos) c() (result C.ImGuiInputEventMousePos, fin func()
 	return *resultPtr, finFn
 }
 
-func newInputEventMousePosFromC(cvalue C.ImGuiInputEventMousePos) InputEventMousePos {
+func newInputEventMousePosFromC(cvalue *C.ImGuiInputEventMousePos) InputEventMousePos {
 	result := new(InputEventMousePos)
 	result.FieldPosX = float32(cvalue.PosX)
 	result.FieldPosY = float32(cvalue.PosY)
@@ -933,7 +933,7 @@ func (data InputEventMouseViewport) c() (result C.ImGuiInputEventMouseViewport, 
 	return *resultPtr, finFn
 }
 
-func newInputEventMouseViewportFromC(cvalue C.ImGuiInputEventMouseViewport) InputEventMouseViewport {
+func newInputEventMouseViewportFromC(cvalue *C.ImGuiInputEventMouseViewport) InputEventMouseViewport {
 	result := new(InputEventMouseViewport)
 	result.FieldHoveredViewportID = ID(cvalue.HoveredViewportID)
 	return *result
@@ -966,7 +966,7 @@ func (data InputEventMouseWheel) c() (result C.ImGuiInputEventMouseWheel, fin fu
 	return *resultPtr, finFn
 }
 
-func newInputEventMouseWheelFromC(cvalue C.ImGuiInputEventMouseWheel) InputEventMouseWheel {
+func newInputEventMouseWheelFromC(cvalue *C.ImGuiInputEventMouseWheel) InputEventMouseWheel {
 	result := new(InputEventMouseWheel)
 	result.FieldWheelX = float32(cvalue.WheelX)
 	result.FieldWheelY = float32(cvalue.WheelY)
@@ -993,7 +993,7 @@ func (data InputEventText) c() (result C.ImGuiInputEventText, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newInputEventTextFromC(cvalue C.ImGuiInputEventText) InputEventText {
+func newInputEventTextFromC(cvalue *C.ImGuiInputEventText) InputEventText {
 	result := new(InputEventText)
 	result.FieldChar = uint32(cvalue.Char)
 	return *result
@@ -1023,9 +1023,9 @@ func (data InputTextCallbackData) c() (result C.ImGuiInputTextCallbackData, fin 
 	return *resultPtr, finFn
 }
 
-func newInputTextCallbackDataFromC(cvalue C.ImGuiInputTextCallbackData) InputTextCallbackData {
+func newInputTextCallbackDataFromC(cvalue *C.ImGuiInputTextCallbackData) InputTextCallbackData {
 	result := new(InputTextCallbackData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1045,9 +1045,9 @@ func (data InputTextDeactivatedState) c() (result C.ImGuiInputTextDeactivatedSta
 	return *resultPtr, finFn
 }
 
-func newInputTextDeactivatedStateFromC(cvalue C.ImGuiInputTextDeactivatedState) InputTextDeactivatedState {
+func newInputTextDeactivatedStateFromC(cvalue *C.ImGuiInputTextDeactivatedState) InputTextDeactivatedState {
 	result := new(InputTextDeactivatedState)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1068,9 +1068,9 @@ func (data InputTextState) c() (result C.ImGuiInputTextState, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newInputTextStateFromC(cvalue C.ImGuiInputTextState) InputTextState {
+func newInputTextStateFromC(cvalue *C.ImGuiInputTextState) InputTextState {
 	result := new(InputTextState)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1107,7 +1107,7 @@ func (data KeyData) c() (result C.ImGuiKeyData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newKeyDataFromC(cvalue C.ImGuiKeyData) KeyData {
+func newKeyDataFromC(cvalue *C.ImGuiKeyData) KeyData {
 	result := new(KeyData)
 	result.FieldDown = cvalue.Down == C.bool(true)
 	result.FieldDownDuration = float32(cvalue.DownDuration)
@@ -1149,7 +1149,7 @@ func (data KeyOwnerData) c() (result C.ImGuiKeyOwnerData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newKeyOwnerDataFromC(cvalue C.ImGuiKeyOwnerData) KeyOwnerData {
+func newKeyOwnerDataFromC(cvalue *C.ImGuiKeyOwnerData) KeyOwnerData {
 	result := new(KeyOwnerData)
 	result.FieldOwnerCurr = ID(cvalue.OwnerCurr)
 	result.FieldOwnerNext = ID(cvalue.OwnerNext)
@@ -1174,9 +1174,9 @@ func (data KeyRoutingData) c() (result C.ImGuiKeyRoutingData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newKeyRoutingDataFromC(cvalue C.ImGuiKeyRoutingData) KeyRoutingData {
+func newKeyRoutingDataFromC(cvalue *C.ImGuiKeyRoutingData) KeyRoutingData {
 	result := new(KeyRoutingData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1197,9 +1197,9 @@ func (data KeyRoutingTable) c() (result C.ImGuiKeyRoutingTable, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newKeyRoutingTableFromC(cvalue C.ImGuiKeyRoutingTable) KeyRoutingTable {
+func newKeyRoutingTableFromC(cvalue *C.ImGuiKeyRoutingTable) KeyRoutingTable {
 	result := new(KeyRoutingTable)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1219,9 +1219,9 @@ func (data LastItemData) c() (result C.ImGuiLastItemData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newLastItemDataFromC(cvalue C.ImGuiLastItemData) LastItemData {
+func newLastItemDataFromC(cvalue *C.ImGuiLastItemData) LastItemData {
 	result := new(LastItemData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1264,9 +1264,9 @@ func (data ListClipper) c() (result C.ImGuiListClipper, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newListClipperFromC(cvalue C.ImGuiListClipper) ListClipper {
+func newListClipperFromC(cvalue *C.ImGuiListClipper) ListClipper {
 	result := new(ListClipper)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1286,9 +1286,9 @@ func (data ListClipperData) c() (result C.ImGuiListClipperData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newListClipperDataFromC(cvalue C.ImGuiListClipperData) ListClipperData {
+func newListClipperDataFromC(cvalue *C.ImGuiListClipperData) ListClipperData {
 	result := new(ListClipperData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1327,7 +1327,7 @@ func (data ListClipperRange) c() (result C.ImGuiListClipperRange, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newListClipperRangeFromC(cvalue C.ImGuiListClipperRange) ListClipperRange {
+func newListClipperRangeFromC(cvalue *C.ImGuiListClipperRange) ListClipperRange {
 	result := new(ListClipperRange)
 	result.FieldMin = int32(cvalue.Min)
 	result.FieldMax = int32(cvalue.Max)
@@ -1361,7 +1361,7 @@ func (data LocEntry) c() (result C.ImGuiLocEntry, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newLocEntryFromC(cvalue C.ImGuiLocEntry) LocEntry {
+func newLocEntryFromC(cvalue *C.ImGuiLocEntry) LocEntry {
 	result := new(LocEntry)
 	result.FieldKey = LocKey(cvalue.Key)
 	result.FieldText = C.GoString(cvalue.Text)
@@ -1384,9 +1384,9 @@ func (data MenuColumns) c() (result C.ImGuiMenuColumns, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newMenuColumnsFromC(cvalue C.ImGuiMenuColumns) MenuColumns {
+func newMenuColumnsFromC(cvalue *C.ImGuiMenuColumns) MenuColumns {
 	result := new(MenuColumns)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1449,7 +1449,7 @@ func (data MetricsConfig) c() (result C.ImGuiMetricsConfig, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newMetricsConfigFromC(cvalue C.ImGuiMetricsConfig) MetricsConfig {
+func newMetricsConfigFromC(cvalue *C.ImGuiMetricsConfig) MetricsConfig {
 	result := new(MetricsConfig)
 	result.FieldShowDebugLog = cvalue.ShowDebugLog == C.bool(true)
 	result.FieldShowStackTool = cvalue.ShowStackTool == C.bool(true)
@@ -1480,9 +1480,9 @@ func (data NavItemData) c() (result C.ImGuiNavItemData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newNavItemDataFromC(cvalue C.ImGuiNavItemData) NavItemData {
+func newNavItemDataFromC(cvalue *C.ImGuiNavItemData) NavItemData {
 	result := new(NavItemData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1501,9 +1501,9 @@ func (data NextItemData) c() (result C.ImGuiNextItemData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newNextItemDataFromC(cvalue C.ImGuiNextItemData) NextItemData {
+func newNextItemDataFromC(cvalue *C.ImGuiNextItemData) NextItemData {
 	result := new(NextItemData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1523,9 +1523,9 @@ func (data NextWindowData) c() (result C.ImGuiNextWindowData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newNextWindowDataFromC(cvalue C.ImGuiNextWindowData) NextWindowData {
+func newNextWindowDataFromC(cvalue *C.ImGuiNextWindowData) NextWindowData {
 	result := new(NextWindowData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1544,9 +1544,9 @@ func (data OldColumnData) c() (result C.ImGuiOldColumnData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newOldColumnDataFromC(cvalue C.ImGuiOldColumnData) OldColumnData {
+func newOldColumnDataFromC(cvalue *C.ImGuiOldColumnData) OldColumnData {
 	result := new(OldColumnData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1565,9 +1565,9 @@ func (data OldColumns) c() (result C.ImGuiOldColumns, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newOldColumnsFromC(cvalue C.ImGuiOldColumns) OldColumns {
+func newOldColumnsFromC(cvalue *C.ImGuiOldColumns) OldColumns {
 	result := new(OldColumns)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1592,7 +1592,7 @@ func (data OnceUponAFrame) c() (result C.ImGuiOnceUponAFrame, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newOnceUponAFrameFromC(cvalue C.ImGuiOnceUponAFrame) OnceUponAFrame {
+func newOnceUponAFrameFromC(cvalue *C.ImGuiOnceUponAFrame) OnceUponAFrame {
 	result := new(OnceUponAFrame)
 	result.FieldRefFrame = int32(cvalue.RefFrame)
 	return *result
@@ -1614,9 +1614,9 @@ func (data Payload) c() (result C.ImGuiPayload, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPayloadFromC(cvalue C.ImGuiPayload) Payload {
+func newPayloadFromC(cvalue *C.ImGuiPayload) Payload {
 	result := new(Payload)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1636,9 +1636,9 @@ func (data PlatformIO) c() (result C.ImGuiPlatformIO, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlatformIOFromC(cvalue C.ImGuiPlatformIO) PlatformIO {
+func newPlatformIOFromC(cvalue *C.ImGuiPlatformIO) PlatformIO {
 	result := new(PlatformIO)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1670,7 +1670,7 @@ func (data PlatformImeData) c() (result C.ImGuiPlatformImeData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlatformImeDataFromC(cvalue C.ImGuiPlatformImeData) PlatformImeData {
+func newPlatformImeDataFromC(cvalue *C.ImGuiPlatformImeData) PlatformImeData {
 	result := new(PlatformImeData)
 	result.FieldWantVisible = cvalue.WantVisible == C.bool(true)
 	result.FieldInputPos = *(&Vec2{}).fromC(cvalue.InputPos)
@@ -1719,7 +1719,7 @@ func (data PlatformMonitor) c() (result C.ImGuiPlatformMonitor, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlatformMonitorFromC(cvalue C.ImGuiPlatformMonitor) PlatformMonitor {
+func newPlatformMonitorFromC(cvalue *C.ImGuiPlatformMonitor) PlatformMonitor {
 	result := new(PlatformMonitor)
 	result.FieldMainPos = *(&Vec2{}).fromC(cvalue.MainPos)
 	result.FieldMainSize = *(&Vec2{}).fromC(cvalue.MainSize)
@@ -1746,9 +1746,9 @@ func (data PopupData) c() (result C.ImGuiPopupData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPopupDataFromC(cvalue C.ImGuiPopupData) PopupData {
+func newPopupDataFromC(cvalue *C.ImGuiPopupData) PopupData {
 	result := new(PopupData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1775,7 +1775,7 @@ func (data PtrOrIndex) c() (result C.ImGuiPtrOrIndex, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPtrOrIndexFromC(cvalue C.ImGuiPtrOrIndex) PtrOrIndex {
+func newPtrOrIndexFromC(cvalue *C.ImGuiPtrOrIndex) PtrOrIndex {
 	result := new(PtrOrIndex)
 	result.FieldPtr = unsafe.Pointer(cvalue.Ptr)
 	result.FieldIndex = int32(cvalue.Index)
@@ -1797,9 +1797,9 @@ func (data SettingsHandler) c() (result C.ImGuiSettingsHandler, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newSettingsHandlerFromC(cvalue C.ImGuiSettingsHandler) SettingsHandler {
+func newSettingsHandlerFromC(cvalue *C.ImGuiSettingsHandler) SettingsHandler {
 	result := new(SettingsHandler)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1830,7 +1830,7 @@ func (data ShrinkWidthItem) c() (result C.ImGuiShrinkWidthItem, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newShrinkWidthItemFromC(cvalue C.ImGuiShrinkWidthItem) ShrinkWidthItem {
+func newShrinkWidthItemFromC(cvalue *C.ImGuiShrinkWidthItem) ShrinkWidthItem {
 	result := new(ShrinkWidthItem)
 	result.FieldIndex = int32(cvalue.Index)
 	result.FieldWidth = float32(cvalue.Width)
@@ -1871,7 +1871,7 @@ func (data SizeCallbackData) c() (result C.ImGuiSizeCallbackData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newSizeCallbackDataFromC(cvalue C.ImGuiSizeCallbackData) SizeCallbackData {
+func newSizeCallbackDataFromC(cvalue *C.ImGuiSizeCallbackData) SizeCallbackData {
 	result := new(SizeCallbackData)
 	result.FieldUserData = unsafe.Pointer(cvalue.UserData)
 	result.FieldPos = *(&Vec2{}).fromC(cvalue.Pos)
@@ -1895,9 +1895,9 @@ func (data StackLevelInfo) c() (result C.ImGuiStackLevelInfo, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newStackLevelInfoFromC(cvalue C.ImGuiStackLevelInfo) StackLevelInfo {
+func newStackLevelInfoFromC(cvalue *C.ImGuiStackLevelInfo) StackLevelInfo {
 	result := new(StackLevelInfo)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -1952,7 +1952,7 @@ func (data StackSizes) c() (result C.ImGuiStackSizes, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newStackSizesFromC(cvalue C.ImGuiStackSizes) StackSizes {
+func newStackSizesFromC(cvalue *C.ImGuiStackSizes) StackSizes {
 	result := new(StackSizes)
 	result.FieldSizeOfIDStack = int(cvalue.SizeOfIDStack)
 	result.FieldSizeOfColorStack = int(cvalue.SizeOfColorStack)
@@ -1982,9 +1982,9 @@ func (data StackTool) c() (result C.ImGuiStackTool, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newStackToolFromC(cvalue C.ImGuiStackTool) StackTool {
+func newStackToolFromC(cvalue *C.ImGuiStackTool) StackTool {
 	result := new(StackTool)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2011,9 +2011,9 @@ func (data Storage) c() (result C.ImGuiStorage, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newStorageFromC(cvalue C.ImGuiStorage) Storage {
+func newStorageFromC(cvalue *C.ImGuiStorage) Storage {
 	result := new(Storage)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2033,9 +2033,9 @@ func (data StoragePair) c() (result C.ImGuiStoragePair, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newStoragePairFromC(cvalue C.ImGuiStoragePair) StoragePair {
+func newStoragePairFromC(cvalue *C.ImGuiStoragePair) StoragePair {
 	result := new(StoragePair)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2054,9 +2054,9 @@ func (data Style) c() (result C.ImGuiStyle, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newStyleFromC(cvalue C.ImGuiStyle) Style {
+func newStyleFromC(cvalue *C.ImGuiStyle) Style {
 	result := new(Style)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2076,9 +2076,9 @@ func (data StyleMod) c() (result C.ImGuiStyleMod, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newStyleModFromC(cvalue C.ImGuiStyleMod) StyleMod {
+func newStyleModFromC(cvalue *C.ImGuiStyleMod) StyleMod {
 	result := new(StyleMod)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2098,9 +2098,9 @@ func (data TabBar) c() (result C.ImGuiTabBar, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newTabBarFromC(cvalue C.ImGuiTabBar) TabBar {
+func newTabBarFromC(cvalue *C.ImGuiTabBar) TabBar {
 	result := new(TabBar)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2120,9 +2120,9 @@ func (data TabItem) c() (result C.ImGuiTabItem, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newTabItemFromC(cvalue C.ImGuiTabItem) TabItem {
+func newTabItemFromC(cvalue *C.ImGuiTabItem) TabItem {
 	result := new(TabItem)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2142,9 +2142,9 @@ func (data Table) c() (result C.ImGuiTable, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newTableFromC(cvalue C.ImGuiTable) Table {
+func newTableFromC(cvalue *C.ImGuiTable) Table {
 	result := new(Table)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2173,7 +2173,7 @@ func (data TableCellData) c() (result C.ImGuiTableCellData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newTableCellDataFromC(cvalue C.ImGuiTableCellData) TableCellData {
+func newTableCellDataFromC(cvalue *C.ImGuiTableCellData) TableCellData {
 	result := new(TableCellData)
 	result.FieldBgColor = uint32(cvalue.BgColor)
 	result.FieldColumn = TableColumnIdx(cvalue.Column)
@@ -2199,9 +2199,9 @@ func (data TableColumn) c() (result C.ImGuiTableColumn, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newTableColumnFromC(cvalue C.ImGuiTableColumn) TableColumn {
+func newTableColumnFromC(cvalue *C.ImGuiTableColumn) TableColumn {
 	result := new(TableColumn)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2221,9 +2221,9 @@ func (data TableColumnSettings) c() (result C.ImGuiTableColumnSettings, fin func
 	return *resultPtr, finFn
 }
 
-func newTableColumnSettingsFromC(cvalue C.ImGuiTableColumnSettings) TableColumnSettings {
+func newTableColumnSettingsFromC(cvalue *C.ImGuiTableColumnSettings) TableColumnSettings {
 	result := new(TableColumnSettings)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2243,9 +2243,9 @@ func (data TableColumnSortSpecs) c() (result C.ImGuiTableColumnSortSpecs, fin fu
 	return *resultPtr, finFn
 }
 
-func newTableColumnSortSpecsFromC(cvalue C.ImGuiTableColumnSortSpecs) TableColumnSortSpecs {
+func newTableColumnSortSpecsFromC(cvalue *C.ImGuiTableColumnSortSpecs) TableColumnSortSpecs {
 	result := new(TableColumnSortSpecs)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2281,7 +2281,7 @@ func (data TableInstanceData) c() (result C.ImGuiTableInstanceData, fin func()) 
 	return *resultPtr, finFn
 }
 
-func newTableInstanceDataFromC(cvalue C.ImGuiTableInstanceData) TableInstanceData {
+func newTableInstanceDataFromC(cvalue *C.ImGuiTableInstanceData) TableInstanceData {
 	result := new(TableInstanceData)
 	result.FieldTableInstanceID = ID(cvalue.TableInstanceID)
 	result.FieldLastOuterHeight = float32(cvalue.LastOuterHeight)
@@ -2306,9 +2306,9 @@ func (data TableSettings) c() (result C.ImGuiTableSettings, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newTableSettingsFromC(cvalue C.ImGuiTableSettings) TableSettings {
+func newTableSettingsFromC(cvalue *C.ImGuiTableSettings) TableSettings {
 	result := new(TableSettings)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2331,9 +2331,9 @@ func (data TableSortSpecs) c() (result C.ImGuiTableSortSpecs, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newTableSortSpecsFromC(cvalue C.ImGuiTableSortSpecs) TableSortSpecs {
+func newTableSortSpecsFromC(cvalue *C.ImGuiTableSortSpecs) TableSortSpecs {
 	result := new(TableSortSpecs)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2407,18 +2407,18 @@ func (data TableTempData) c() (result C.ImGuiTableTempData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newTableTempDataFromC(cvalue C.ImGuiTableTempData) TableTempData {
+func newTableTempDataFromC(cvalue *C.ImGuiTableTempData) TableTempData {
 	result := new(TableTempData)
 	result.FieldTableIndex = int32(cvalue.TableIndex)
 	result.FieldLastTimeActive = float32(cvalue.LastTimeActive)
 	result.FieldUserOuterSize = *(&Vec2{}).fromC(cvalue.UserOuterSize)
-	result.FieldDrawSplitter = newDrawListSplitterFromC(cvalue.DrawSplitter)
+	result.FieldDrawSplitter = newDrawListSplitterFromC(&cvalue.DrawSplitter)
 	result.FieldHostBackupWorkRect = *(&Rect{}).fromC(cvalue.HostBackupWorkRect)
 	result.FieldHostBackupParentWorkRect = *(&Rect{}).fromC(cvalue.HostBackupParentWorkRect)
 	result.FieldHostBackupPrevLineSize = *(&Vec2{}).fromC(cvalue.HostBackupPrevLineSize)
 	result.FieldHostBackupCurrLineSize = *(&Vec2{}).fromC(cvalue.HostBackupCurrLineSize)
 	result.FieldHostBackupCursorMaxPos = *(&Vec2{}).fromC(cvalue.HostBackupCursorMaxPos)
-	result.FieldHostBackupColumnsOffset = newVec1FromC(cvalue.HostBackupColumnsOffset)
+	result.FieldHostBackupColumnsOffset = newVec1FromC(&cvalue.HostBackupColumnsOffset)
 	result.FieldHostBackupItemWidth = float32(cvalue.HostBackupItemWidth)
 	result.FieldHostBackupItemWidthStackSize = int32(cvalue.HostBackupItemWidthStackSize)
 	return *result
@@ -2441,9 +2441,9 @@ func (data TextBuffer) c() (result C.ImGuiTextBuffer, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newTextBufferFromC(cvalue C.ImGuiTextBuffer) TextBuffer {
+func newTextBufferFromC(cvalue *C.ImGuiTextBuffer) TextBuffer {
 	result := new(TextBuffer)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2463,9 +2463,9 @@ func (data TextFilter) c() (result C.ImGuiTextFilter, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newTextFilterFromC(cvalue C.ImGuiTextFilter) TextFilter {
+func newTextFilterFromC(cvalue *C.ImGuiTextFilter) TextFilter {
 	result := new(TextFilter)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2486,9 +2486,9 @@ func (data TextIndex) c() (result C.ImGuiTextIndex, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newTextIndexFromC(cvalue C.ImGuiTextIndex) TextIndex {
+func newTextIndexFromC(cvalue *C.ImGuiTextIndex) TextIndex {
 	result := new(TextIndex)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2518,7 +2518,7 @@ func (data TextRange) c() (result C.ImGuiTextRange, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newTextRangeFromC(cvalue C.ImGuiTextRange) TextRange {
+func newTextRangeFromC(cvalue *C.ImGuiTextRange) TextRange {
 	result := new(TextRange)
 	result.Fieldb = C.GoString(cvalue.b)
 	result.Fielde = C.GoString(cvalue.e)
@@ -2547,9 +2547,9 @@ func (data Viewport) c() (result C.ImGuiViewport, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newViewportFromC(cvalue C.ImGuiViewport) Viewport {
+func newViewportFromC(cvalue *C.ImGuiViewport) Viewport {
 	result := new(Viewport)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2570,9 +2570,9 @@ func (data ViewportP) c() (result C.ImGuiViewportP, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newViewportPFromC(cvalue C.ImGuiViewportP) ViewportP {
+func newViewportPFromC(cvalue *C.ImGuiViewportP) ViewportP {
 	result := new(ViewportP)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2592,9 +2592,9 @@ func (data Window) c() (result C.ImGuiWindow, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newWindowFromC(cvalue C.ImGuiWindow) Window {
+func newWindowFromC(cvalue *C.ImGuiWindow) Window {
 	result := new(Window)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2620,9 +2620,9 @@ func (data WindowClass) c() (result C.ImGuiWindowClass, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newWindowClassFromC(cvalue C.ImGuiWindowClass) WindowClass {
+func newWindowClassFromC(cvalue *C.ImGuiWindowClass) WindowClass {
 	result := new(WindowClass)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2641,9 +2641,9 @@ func (data WindowDockStyle) c() (result C.ImGuiWindowDockStyle, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newWindowDockStyleFromC(cvalue C.ImGuiWindowDockStyle) WindowDockStyle {
+func newWindowDockStyleFromC(cvalue *C.ImGuiWindowDockStyle) WindowDockStyle {
 	result := new(WindowDockStyle)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2665,9 +2665,9 @@ func (data WindowSettings) c() (result C.ImGuiWindowSettings, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newWindowSettingsFromC(cvalue C.ImGuiWindowSettings) WindowSettings {
+func newWindowSettingsFromC(cvalue *C.ImGuiWindowSettings) WindowSettings {
 	result := new(WindowSettings)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2687,9 +2687,9 @@ func (data WindowStackData) c() (result C.ImGuiWindowStackData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newWindowStackDataFromC(cvalue C.ImGuiWindowStackData) WindowStackData {
+func newWindowStackDataFromC(cvalue *C.ImGuiWindowStackData) WindowStackData {
 	result := new(WindowStackData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2711,9 +2711,9 @@ func (data WindowTempData) c() (result C.ImGuiWindowTempData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newWindowTempDataFromC(cvalue C.ImGuiWindowTempData) WindowTempData {
+func newWindowTempDataFromC(cvalue *C.ImGuiWindowTempData) WindowTempData {
 	result := new(WindowTempData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2736,7 +2736,7 @@ func (data Vec1) c() (result C.ImVec1, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newVec1FromC(cvalue C.ImVec1) Vec1 {
+func newVec1FromC(cvalue *C.ImVec1) Vec1 {
 	result := new(Vec1)
 	result.Fieldx = float32(cvalue.x)
 	return *result
@@ -2757,9 +2757,9 @@ func (data STBTexteditState) c() (result C.STB_TexteditState, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newSTBTexteditStateFromC(cvalue C.STB_TexteditState) STBTexteditState {
+func newSTBTexteditStateFromC(cvalue *C.STB_TexteditState) STBTexteditState {
 	result := new(STBTexteditState)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -2803,7 +2803,7 @@ func (data StbTexteditRow) c() (result C.StbTexteditRow, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newStbTexteditRowFromC(cvalue C.StbTexteditRow) StbTexteditRow {
+func newStbTexteditRowFromC(cvalue *C.StbTexteditRow) StbTexteditRow {
 	result := new(StbTexteditRow)
 	result.Fieldx0 = float32(cvalue.x0)
 	result.Fieldx1 = float32(cvalue.x1)
@@ -2853,7 +2853,7 @@ func (data StbUndoRecord) c() (result C.StbUndoRecord, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newStbUndoRecordFromC(cvalue C.StbUndoRecord) StbUndoRecord {
+func newStbUndoRecordFromC(cvalue *C.StbUndoRecord) StbUndoRecord {
 	result := new(StbUndoRecord)
 	result.Fieldwhere = int32(cvalue.where)
 	result.Fieldinsert_length = int32(cvalue.insert_length)
@@ -2877,8 +2877,8 @@ func (data StbUndoState) c() (result C.StbUndoState, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newStbUndoStateFromC(cvalue C.StbUndoState) StbUndoState {
+func newStbUndoStateFromC(cvalue *C.StbUndoState) StbUndoState {
 	result := new(StbUndoState)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
