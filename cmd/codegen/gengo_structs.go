@@ -115,7 +115,7 @@ func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, sb *strings.
 			wrappers[i] = wrapper{
 				fromC: returnWrapper{
 					returnType: field.Type,
-					returnStmt: fmt.Sprintf("new%sFromC(%%s)", renameGoIdentifier(field.Type)),
+					returnStmt: fmt.Sprintf("new%sFromC(&%%s)", renameGoIdentifier(field.Type)),
 				},
 				toC: ArgumentWrapperData{
 					ArgType:   field.Type,
