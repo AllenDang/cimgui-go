@@ -255,7 +255,6 @@ C.%s(selfArg, %s)
 	case returnTypeStructPtr:
 		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStruct:
-		// FIXME: this may crash
 		g.sb.WriteString(fmt.Sprintf(`
 result := C.%s(%s)
 return new%sFromC(&result)
