@@ -33,7 +33,7 @@ func (d DrawData) CommandLists() []DrawList {
 func (d DrawData) getDrawListAt(idx int32) DrawList {
 	drawDataArg, drawDataFin := d.handle()
 	defer drawDataFin()
-	return newDrawListFromC(*C.wrap_DrawData_GetDrawListAt(drawDataArg, C.int(idx)))
+	return newDrawListFromC(C.wrap_DrawData_GetDrawListAt(drawDataArg, C.int(idx)))
 }
 
 func (d DrawList) GetVertexBuffer() (unsafe.Pointer, int) {
@@ -58,7 +58,7 @@ func (d DrawList) getDrawCmdAt(idx int) DrawCmd {
 	dataArg, dataFin := d.handle()
 	defer dataFin()
 
-	return newDrawCmdFromC(*C.wrap_DrawList_GetDrawCmdAt(dataArg, C.int(idx)))
+	return newDrawCmdFromC(C.wrap_DrawList_GetDrawCmdAt(dataArg, C.int(idx)))
 }
 
 func (d DrawList) Commands() []DrawCmd {
