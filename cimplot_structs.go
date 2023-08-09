@@ -25,9 +25,9 @@ func (data FormatterTimeData) c() (result C.Formatter_Time_Data, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newFormatterTimeDataFromC(cvalue C.Formatter_Time_Data) FormatterTimeData {
+func newFormatterTimeDataFromC(cvalue *C.Formatter_Time_Data) FormatterTimeData {
 	result := new(FormatterTimeData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -66,7 +66,7 @@ func (data PlotAlignmentData) c() (result C.ImPlotAlignmentData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotAlignmentDataFromC(cvalue C.ImPlotAlignmentData) PlotAlignmentData {
+func newPlotAlignmentDataFromC(cvalue *C.ImPlotAlignmentData) PlotAlignmentData {
 	result := new(PlotAlignmentData)
 	result.FieldVertical = cvalue.Vertical == C.bool(true)
 	result.FieldPadA = float32(cvalue.PadA)
@@ -115,7 +115,7 @@ func (data PlotAnnotation) c() (result C.ImPlotAnnotation, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotAnnotationFromC(cvalue C.ImPlotAnnotation) PlotAnnotation {
+func newPlotAnnotationFromC(cvalue *C.ImPlotAnnotation) PlotAnnotation {
 	result := new(PlotAnnotation)
 	result.FieldPos = *(&Vec2{}).fromC(cvalue.Pos)
 	result.FieldOffset = *(&Vec2{}).fromC(cvalue.Offset)
@@ -141,9 +141,9 @@ func (data PlotAnnotationCollection) c() (result C.ImPlotAnnotationCollection, f
 	return *resultPtr, finFn
 }
 
-func newPlotAnnotationCollectionFromC(cvalue C.ImPlotAnnotationCollection) PlotAnnotationCollection {
+func newPlotAnnotationCollectionFromC(cvalue *C.ImPlotAnnotationCollection) PlotAnnotationCollection {
 	result := new(PlotAnnotationCollection)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -162,9 +162,9 @@ func (data PlotAxis) c() (result C.ImPlotAxis, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotAxisFromC(cvalue C.ImPlotAxis) PlotAxis {
+func newPlotAxisFromC(cvalue *C.ImPlotAxis) PlotAxis {
 	result := new(PlotAxis)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -183,9 +183,9 @@ func (data PlotColormapData) c() (result C.ImPlotColormapData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotColormapDataFromC(cvalue C.ImPlotColormapData) PlotColormapData {
+func newPlotColormapDataFromC(cvalue *C.ImPlotColormapData) PlotColormapData {
 	result := new(PlotColormapData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -204,9 +204,9 @@ func (data PlotContext) c() (result C.ImPlotContext, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotContextFromC(cvalue C.ImPlotContext) PlotContext {
+func newPlotContextFromC(cvalue *C.ImPlotContext) PlotContext {
 	result := new(PlotContext)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -225,9 +225,9 @@ func (data PlotDateTimeSpec) c() (result C.ImPlotDateTimeSpec, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotDateTimeSpecFromC(cvalue C.ImPlotDateTimeSpec) PlotDateTimeSpec {
+func newPlotDateTimeSpecFromC(cvalue *C.ImPlotDateTimeSpec) PlotDateTimeSpec {
 	result := new(PlotDateTimeSpec)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -246,9 +246,9 @@ func (data PlotInputMap) c() (result C.ImPlotInputMap, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotInputMapFromC(cvalue C.ImPlotInputMap) PlotInputMap {
+func newPlotInputMapFromC(cvalue *C.ImPlotInputMap) PlotInputMap {
 	result := new(PlotInputMap)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -295,7 +295,7 @@ func (data PlotItem) c() (result C.ImPlotItem, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotItemFromC(cvalue C.ImPlotItem) PlotItem {
+func newPlotItemFromC(cvalue *C.ImPlotItem) PlotItem {
 	result := new(PlotItem)
 	result.FieldID = ID(cvalue.ID)
 	result.FieldColor = uint32(cvalue.Color)
@@ -322,9 +322,9 @@ func (data PlotItemGroup) c() (result C.ImPlotItemGroup, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotItemGroupFromC(cvalue C.ImPlotItemGroup) PlotItemGroup {
+func newPlotItemGroupFromC(cvalue *C.ImPlotItemGroup) PlotItemGroup {
 	result := new(PlotItemGroup)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -343,9 +343,9 @@ func (data PlotLegend) c() (result C.ImPlotLegend, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotLegendFromC(cvalue C.ImPlotLegend) PlotLegend {
+func newPlotLegendFromC(cvalue *C.ImPlotLegend) PlotLegend {
 	result := new(PlotLegend)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -364,9 +364,9 @@ func (data PlotNextItemData) c() (result C.ImPlotNextItemData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotNextItemDataFromC(cvalue C.ImPlotNextItemData) PlotNextItemData {
+func newPlotNextItemDataFromC(cvalue *C.ImPlotNextItemData) PlotNextItemData {
 	result := new(PlotNextItemData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -385,9 +385,9 @@ func (data PlotNextPlotData) c() (result C.ImPlotNextPlotData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotNextPlotDataFromC(cvalue C.ImPlotNextPlotData) PlotNextPlotData {
+func newPlotNextPlotDataFromC(cvalue *C.ImPlotNextPlotData) PlotNextPlotData {
 	result := new(PlotNextPlotData)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -406,9 +406,9 @@ func (data PlotPlot) c() (result C.ImPlotPlot, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotPlotFromC(cvalue C.ImPlotPlot) PlotPlot {
+func newPlotPlotFromC(cvalue *C.ImPlotPlot) PlotPlot {
 	result := new(PlotPlot)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -443,7 +443,7 @@ func (data PlotPointError) c() (result C.ImPlotPointError, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotPointErrorFromC(cvalue C.ImPlotPointError) PlotPointError {
+func newPlotPointErrorFromC(cvalue *C.ImPlotPointError) PlotPointError {
 	result := new(PlotPointError)
 	result.FieldX = float64(cvalue.X)
 	result.FieldY = float64(cvalue.Y)
@@ -475,7 +475,7 @@ func (data PlotRange) c() (result C.ImPlotRange, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotRangeFromC(cvalue C.ImPlotRange) PlotRange {
+func newPlotRangeFromC(cvalue *C.ImPlotRange) PlotRange {
 	result := new(PlotRange)
 	result.FieldMin = float64(cvalue.Min)
 	result.FieldMax = float64(cvalue.Max)
@@ -507,10 +507,10 @@ func (data PlotRect) c() (result C.ImPlotRect, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotRectFromC(cvalue C.ImPlotRect) PlotRect {
+func newPlotRectFromC(cvalue *C.ImPlotRect) PlotRect {
 	result := new(PlotRect)
-	result.FieldX = newPlotRangeFromC(cvalue.X)
-	result.FieldY = newPlotRangeFromC(cvalue.Y)
+	result.FieldX = newPlotRangeFromC(&cvalue.X)
+	result.FieldY = newPlotRangeFromC(&cvalue.Y)
 	return *result
 }
 
@@ -529,9 +529,9 @@ func (data PlotStyle) c() (result C.ImPlotStyle, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotStyleFromC(cvalue C.ImPlotStyle) PlotStyle {
+func newPlotStyleFromC(cvalue *C.ImPlotStyle) PlotStyle {
 	result := new(PlotStyle)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -550,9 +550,9 @@ func (data PlotSubplot) c() (result C.ImPlotSubplot, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotSubplotFromC(cvalue C.ImPlotSubplot) PlotSubplot {
+func newPlotSubplotFromC(cvalue *C.ImPlotSubplot) PlotSubplot {
 	result := new(PlotSubplot)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -571,9 +571,9 @@ func (data PlotTag) c() (result C.ImPlotTag, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotTagFromC(cvalue C.ImPlotTag) PlotTag {
+func newPlotTagFromC(cvalue *C.ImPlotTag) PlotTag {
 	result := new(PlotTag)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -592,9 +592,9 @@ func (data PlotTagCollection) c() (result C.ImPlotTagCollection, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotTagCollectionFromC(cvalue C.ImPlotTagCollection) PlotTagCollection {
+func newPlotTagCollectionFromC(cvalue *C.ImPlotTagCollection) PlotTagCollection {
 	result := new(PlotTagCollection)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }
 
@@ -645,7 +645,7 @@ func (data PlotTick) c() (result C.ImPlotTick, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotTickFromC(cvalue C.ImPlotTick) PlotTick {
+func newPlotTickFromC(cvalue *C.ImPlotTick) PlotTick {
 	result := new(PlotTick)
 	result.FieldPlotPos = float64(cvalue.PlotPos)
 	result.FieldPixelPos = float32(cvalue.PixelPos)
@@ -673,8 +673,8 @@ func (data PlotTicker) c() (result C.ImPlotTicker, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotTickerFromC(cvalue C.ImPlotTicker) PlotTicker {
+func newPlotTickerFromC(cvalue *C.ImPlotTicker) PlotTicker {
 	result := new(PlotTicker)
-	result.data = unsafe.Pointer(&cvalue)
+	result.data = unsafe.Pointer(cvalue)
 	return *result
 }

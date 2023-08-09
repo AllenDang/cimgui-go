@@ -26,7 +26,7 @@ func (state *inputTextInternalState) release() {
 
 //export generalInputTextCallback
 func generalInputTextCallback(cbData *C.ImGuiInputTextCallbackData) C.int {
-	data := newInputTextCallbackDataFromC(*cbData)
+	data := newInputTextCallbackDataFromC(cbData)
 
 	bufHandle := (*cgo.Handle)(cbData.UserData)
 	statePtr := bufHandle.Value().(*inputTextInternalState)
