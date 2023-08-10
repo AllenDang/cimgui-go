@@ -190,19 +190,19 @@ data unsafe.Pointer
 
 	// handlers:
 	fmt.Fprintf(sb, `
-func (data %[1]s) handle() (result *C.%[2]s, releaseFn func()) {
+func (self %[1]s) handle() (result *C.%[2]s, releaseFn func()) {
 `, renameGoIdentifier(s.Name), s.Name)
 
 	if isTODO {
 		fmt.Fprintf(sb, `
-result = (*C.%s)(data.data)
+result = (*C.%s)(self.data)
 return result, func() {}
 `, s.Name)
 	} else {
 		fmt.Fprintf(sb, "result = new(C.%s)\n", s.Name)
 		for i, m := range s.Members {
 			fmt.Fprintf(sb,
-				"%[4]s := data.%[4]s\n%[1]s\nresult.%[2]s = %[3]s\n",
+				"%[4]s := self.%[4]s\n%[1]s\nresult.%[2]s = %[3]s\n",
 				wrappers[i].toC.ArgDef,
 				m.Name, wrappers[i].toC.VarName,
 				renameStructField(m.Name),
@@ -224,8 +224,8 @@ return result, func() {}
 	fmt.Fprintf(sb, "}\n")
 
 	fmt.Fprintf(sb, `
-	func (data %[1]s) c() (result C.%[2]s, fin func()) {
-		resultPtr, finFn := data.handle()
+	func (self %[1]s) c() (result C.%[2]s, fin func()) {
+		resultPtr, finFn := self.handle()
 		return *resultPtr, finFn
 	}
 `, renameGoIdentifier(s.Name), s.Name)
