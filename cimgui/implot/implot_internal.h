@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// ImPlot v0.14
+// ImPlot v0.15
 
 // You may use this file to debug, understand or extend ImPlot features but we
 // don't provide any guarantee of forward compatibility!
@@ -1288,9 +1288,10 @@ IMPLOT_API void ShowPlotContextMenu(ImPlotPlot& plot);
 
 // Lock Setup and call SetupFinish if necessary.
 static inline void SetupLock() {
-    if (!GImPlot->CurrentPlot->SetupLocked)
+    ImPlotContext& gp = *GImPlot;
+    if (!gp.CurrentPlot->SetupLocked)
         SetupFinish();
-    GImPlot->CurrentPlot->SetupLocked = true;
+    gp.CurrentPlot->SetupLocked = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -1438,7 +1439,7 @@ static inline const ImPlotNextItemData& GetItemData() { return GImPlot->NextItem
 
 // Returns true if a color is set to be automatically determined
 static inline bool IsColorAuto(const ImVec4& col) { return col.w == -1; }
-// Returns true if a style color is set to be automaticaly determined
+// Returns true if a style color is set to be automatically determined
 static inline bool IsColorAuto(ImPlotCol idx) { return IsColorAuto(GImPlot->Style.Colors[idx]); }
 // Returns the automatically deduced style color
 IMPLOT_API ImVec4 GetAutoColor(ImPlotCol idx);

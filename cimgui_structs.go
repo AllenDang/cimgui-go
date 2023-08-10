@@ -721,6 +721,20 @@ func newNavItemDataFromC(cvalue C.ImGuiNavItemData) NavItemData {
 	return NavItemData(unsafe.Pointer(&cvalue))
 }
 
+type NavTreeNodeData uintptr
+
+func (data NavTreeNodeData) handle() *C.ImGuiNavTreeNodeData {
+	return (*C.ImGuiNavTreeNodeData)(unsafe.Pointer(data))
+}
+
+func (data NavTreeNodeData) c() C.ImGuiNavTreeNodeData {
+	return *(data.handle())
+}
+
+func newNavTreeNodeDataFromC(cvalue C.ImGuiNavTreeNodeData) NavTreeNodeData {
+	return NavTreeNodeData(unsafe.Pointer(&cvalue))
+}
+
 type NextItemData uintptr
 
 func (data NextItemData) handle() *C.ImGuiNextItemData {

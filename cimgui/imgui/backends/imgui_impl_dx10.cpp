@@ -32,6 +32,7 @@
 //  2016-05-07: DirectX10: Disabling depth-write.
 
 #include "imgui.h"
+#ifndef IMGUI_DISABLE
 #include "imgui_impl_dx10.h"
 
 // DirectX
@@ -577,6 +578,7 @@ void ImGui_ImplDX10_Shutdown()
     if (bd->pd3dDevice) { bd->pd3dDevice->Release(); }
     io.BackendRendererName = nullptr;
     io.BackendRendererUserData = nullptr;
+    io.BackendFlags &= ~(ImGuiBackendFlags_RendererHasVtxOffset | ImGuiBackendFlags_RendererHasViewports);
     IM_DELETE(bd);
 }
 
@@ -712,3 +714,6 @@ void ImGui_ImplDX10_ShutdownPlatformInterface()
     ImGui::DestroyPlatformWindows();
 }
 
+//-----------------------------------------------------------------------------
+
+#endif // #ifndef IMGUI_DISABLE

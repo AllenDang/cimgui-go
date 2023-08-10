@@ -89,7 +89,7 @@ const (
 	ButtonFlagsPressedOnDragDropHold         = 512
 	ButtonFlagsRepeat                        = 1024
 	ButtonFlagsFlattenChildren               = 2048
-	ButtonFlagsAllowItemOverlap              = 4096
+	ButtonFlagsAllowOverlap                  = 4096
 	ButtonFlagsDontClosePopups               = 8192
 	ButtonFlagsAlignTextBaseLine             = 32768
 	ButtonFlagsNoKeyModifiers                = 65536
@@ -407,6 +407,15 @@ const (
 	DragDropFlagsAcceptPeekOnly           = 3072
 )
 
+// original name: ImGuiFocusRequestFlags_
+type FocusRequestFlags int
+
+const (
+	FocusRequestFlagsNone                = 0
+	FocusRequestFlagsRestoreFocusedChild = 1
+	FocusRequestFlagsUnlessBelowModal    = 2
+)
+
 // original name: ImGuiFocusedFlags_
 type FocusedFlags int
 
@@ -418,6 +427,15 @@ const (
 	FocusedFlagsNoPopupHierarchy    = 8
 	FocusedFlagsDockHierarchy       = 16
 	FocusedFlagsRootAndChildWindows = 3
+)
+
+// original name: ImGuiHoveredFlagsPrivate_
+type HoveredFlagsPrivate int
+
+const (
+	HoveredFlagsDelayMask                     = 245760
+	HoveredFlagsAllowedMaskForIsWindowHovered = 12479
+	HoveredFlagsAllowedMaskForIsItemHovered   = 262048
 )
 
 // original name: ImGuiHoveredFlags_
@@ -432,14 +450,19 @@ const (
 	HoveredFlagsDockHierarchy                = 16
 	HoveredFlagsAllowWhenBlockedByPopup      = 32
 	HoveredFlagsAllowWhenBlockedByActiveItem = 128
-	HoveredFlagsAllowWhenOverlapped          = 256
-	HoveredFlagsAllowWhenDisabled            = 512
-	HoveredFlagsNoNavOverride                = 1024
-	HoveredFlagsRectOnly                     = 416
+	HoveredFlagsAllowWhenOverlappedByItem    = 256
+	HoveredFlagsAllowWhenOverlappedByWindow  = 512
+	HoveredFlagsAllowWhenDisabled            = 1024
+	HoveredFlagsNoNavOverride                = 2048
+	HoveredFlagsAllowWhenOverlapped          = 768
+	HoveredFlagsRectOnly                     = 928
 	HoveredFlagsRootAndChildWindows          = 3
-	HoveredFlagsDelayNormal                  = 2048
-	HoveredFlagsDelayShort                   = 4096
-	HoveredFlagsNoSharedDelay                = 8192
+	HoveredFlagsForTooltip                   = 4096
+	HoveredFlagsStationary                   = 8192
+	HoveredFlagsDelayNone                    = 16384
+	HoveredFlagsDelayShort                   = 32768
+	HoveredFlagsDelayNormal                  = 65536
+	HoveredFlagsNoSharedDelay                = 131072
 )
 
 // original name: ImGuiInputEventType
@@ -550,6 +573,7 @@ const (
 	ItemFlagsMixedValue               = 64
 	ItemFlagsReadOnly                 = 128
 	ItemFlagsNoWindowHoverableCheck   = 256
+	ItemFlagsAllowOverlap             = 512
 	ItemFlagsInputable                = 1024
 )
 
@@ -742,15 +766,16 @@ const (
 type LocKey int
 
 const (
-	LocKeyTableSizeOne         = 0
-	LocKeyTableSizeAllFit      = 1
-	LocKeyTableSizeAllDefault  = 2
-	LocKeyTableResetOrder      = 3
-	LocKeyWindowingMainMenuBar = 4
-	LocKeyWindowingPopup       = 5
-	LocKeyWindowingUntitled    = 6
-	LocKeyDockingHideTabBar    = 7
-	LocKeyCOUNT                = 8
+	LocKeyVersionStr           = 0
+	LocKeyTableSizeOne         = 1
+	LocKeyTableSizeAllFit      = 2
+	LocKeyTableSizeAllDefault  = 3
+	LocKeyTableResetOrder      = 4
+	LocKeyWindowingMainMenuBar = 5
+	LocKeyWindowingPopup       = 6
+	LocKeyWindowingUntitled    = 7
+	LocKeyDockingHideTabBar    = 8
+	LocKeyCOUNT                = 9
 )
 
 // original name: ImGuiLogType
@@ -853,15 +878,18 @@ const (
 	NavMoveFlagsLoopY               = 2
 	NavMoveFlagsWrapX               = 4
 	NavMoveFlagsWrapY               = 8
+	NavMoveFlagsWrapMask            = 15
 	NavMoveFlagsAllowCurrentNavId   = 16
 	NavMoveFlagsAlsoScoreVisibleSet = 32
 	NavMoveFlagsScrollToEdgeY       = 64
 	NavMoveFlagsForwarded           = 128
 	NavMoveFlagsDebugNoResult       = 256
 	NavMoveFlagsFocusApi            = 512
-	NavMoveFlagsTabbing             = 1024
-	NavMoveFlagsActivate            = 2048
-	NavMoveFlagsDontSetNavHighlight = 4096
+	NavMoveFlagsIsTabbing           = 1024
+	NavMoveFlagsIsPageMove          = 2048
+	NavMoveFlagsActivate            = 4096
+	NavMoveFlagsNoSelect            = 8192
+	NavMoveFlagsNoSetNavHighlight   = 16384
 )
 
 // original name: ImGuiNextItemDataFlags_
@@ -976,7 +1004,7 @@ const (
 	SelectableFlagsSpanAllColumns   = 2
 	SelectableFlagsAllowDoubleClick = 4
 	SelectableFlagsDisabled         = 8
-	SelectableFlagsAllowItemOverlap = 16
+	SelectableFlagsAllowOverlap     = 16
 )
 
 // original name: ImGuiSeparatorFlags_
@@ -1050,7 +1078,8 @@ const (
 	StyleVarSeparatorTextBorderSize = 25
 	StyleVarSeparatorTextAlign      = 26
 	StyleVarSeparatorTextPadding    = 27
-	StyleVarCOUNT                   = 28
+	StyleVarDockingSeparatorSize    = 28
+	StyleVarCOUNT                   = 29
 )
 
 // original name: ImGuiTabBarFlagsPrivate_
@@ -1210,8 +1239,8 @@ const (
 type TooltipFlags int
 
 const (
-	TooltipFlagsNone                    = 0
-	TooltipFlagsOverridePreviousTooltip = 1
+	TooltipFlagsNone             = 0
+	TooltipFlagsOverridePrevious = 2
 )
 
 // original name: ImGuiTreeNodeFlagsPrivate_
@@ -1219,6 +1248,7 @@ type TreeNodeFlagsPrivate int
 
 const (
 	TreeNodeFlagsClipLabelForTrailingButton = 1048576
+	TreeNodeFlagsUpsideDownArrow            = 2097152
 )
 
 // original name: ImGuiTreeNodeFlags_
@@ -1228,7 +1258,7 @@ const (
 	TreeNodeFlagsNone                 = 0
 	TreeNodeFlagsSelected             = 1
 	TreeNodeFlagsFramed               = 2
-	TreeNodeFlagsAllowItemOverlap     = 4
+	TreeNodeFlagsAllowOverlap         = 4
 	TreeNodeFlagsNoTreePushOnOpen     = 8
 	TreeNodeFlagsNoAutoOpenOnLog      = 16
 	TreeNodeFlagsDefaultOpen          = 32
