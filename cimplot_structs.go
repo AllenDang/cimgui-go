@@ -3,342 +3,678 @@
 
 package imgui
 
+// #include <stdlib.h>
+// #include <memory.h>
+// #include "extra_types.h"
 // #include "cimplot_wrapper.h"
 import "C"
 import "unsafe"
 
-type FormatterTimeData uintptr
+type FormatterTimeData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
+
+func (data FormatterTimeData) handle() (result *C.Formatter_Time_Data, releaseFn func()) {
+	result = (*C.Formatter_Time_Data)(data.data)
+	return result, func() {}
+}
 
-func (data FormatterTimeData) handle() *C.Formatter_Time_Data {
-	return (*C.Formatter_Time_Data)(unsafe.Pointer(data))
+func (data FormatterTimeData) c() (result C.Formatter_Time_Data, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data FormatterTimeData) c() C.Formatter_Time_Data {
-	return *(data.handle())
+func newFormatterTimeDataFromC(cvalue *C.Formatter_Time_Data) FormatterTimeData {
+	result := new(FormatterTimeData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newFormatterTimeDataFromC(cvalue C.Formatter_Time_Data) FormatterTimeData {
-	return FormatterTimeData(unsafe.Pointer(&cvalue))
+type PlotAlignmentData struct {
+	FieldVertical bool
+	FieldPadA     float32
+	FieldPadB     float32
+	FieldPadAMax  float32
+	FieldPadBMax  float32
 }
+
+func (data PlotAlignmentData) handle() (result *C.ImPlotAlignmentData, releaseFn func()) {
+	result = new(C.ImPlotAlignmentData)
+	FieldVertical := data.FieldVertical
+
+	result.Vertical = C.bool(FieldVertical)
+	FieldPadA := data.FieldPadA
+
+	result.PadA = C.float(FieldPadA)
+	FieldPadB := data.FieldPadB
+
+	result.PadB = C.float(FieldPadB)
+	FieldPadAMax := data.FieldPadAMax
 
-type PlotAlignmentData uintptr
+	result.PadAMax = C.float(FieldPadAMax)
+	FieldPadBMax := data.FieldPadBMax
 
-func (data PlotAlignmentData) handle() *C.ImPlotAlignmentData {
-	return (*C.ImPlotAlignmentData)(unsafe.Pointer(data))
+	result.PadBMax = C.float(FieldPadBMax)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
-func (data PlotAlignmentData) c() C.ImPlotAlignmentData {
-	return *(data.handle())
+func (data PlotAlignmentData) c() (result C.ImPlotAlignmentData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newPlotAlignmentDataFromC(cvalue C.ImPlotAlignmentData) PlotAlignmentData {
-	return PlotAlignmentData(unsafe.Pointer(&cvalue))
+func newPlotAlignmentDataFromC(cvalue *C.ImPlotAlignmentData) PlotAlignmentData {
+	result := new(PlotAlignmentData)
+	result.FieldVertical = cvalue.Vertical == C.bool(true)
+	result.FieldPadA = float32(cvalue.PadA)
+	result.FieldPadB = float32(cvalue.PadB)
+	result.FieldPadAMax = float32(cvalue.PadAMax)
+	result.FieldPadBMax = float32(cvalue.PadBMax)
+	return *result
 }
+
+type PlotAnnotation struct {
+	FieldPos        Vec2
+	FieldOffset     Vec2
+	FieldColorBg    uint32
+	FieldColorFg    uint32
+	FieldTextOffset int32
+	FieldClamp      bool
+}
+
+func (data PlotAnnotation) handle() (result *C.ImPlotAnnotation, releaseFn func()) {
+	result = new(C.ImPlotAnnotation)
+	FieldPos := data.FieldPos
+
+	result.Pos = FieldPos.toC()
+	FieldOffset := data.FieldOffset
+
+	result.Offset = FieldOffset.toC()
+	FieldColorBg := data.FieldColorBg
+
+	result.ColorBg = C.ImU32(FieldColorBg)
+	FieldColorFg := data.FieldColorFg
+
+	result.ColorFg = C.ImU32(FieldColorFg)
+	FieldTextOffset := data.FieldTextOffset
 
-type PlotAnnotation uintptr
+	result.TextOffset = C.int(FieldTextOffset)
+	FieldClamp := data.FieldClamp
 
-func (data PlotAnnotation) handle() *C.ImPlotAnnotation {
-	return (*C.ImPlotAnnotation)(unsafe.Pointer(data))
+	result.Clamp = C.bool(FieldClamp)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
-func (data PlotAnnotation) c() C.ImPlotAnnotation {
-	return *(data.handle())
+func (data PlotAnnotation) c() (result C.ImPlotAnnotation, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newPlotAnnotationFromC(cvalue C.ImPlotAnnotation) PlotAnnotation {
-	return PlotAnnotation(unsafe.Pointer(&cvalue))
+func newPlotAnnotationFromC(cvalue *C.ImPlotAnnotation) PlotAnnotation {
+	result := new(PlotAnnotation)
+	result.FieldPos = *(&Vec2{}).fromC(cvalue.Pos)
+	result.FieldOffset = *(&Vec2{}).fromC(cvalue.Offset)
+	result.FieldColorBg = uint32(cvalue.ColorBg)
+	result.FieldColorFg = uint32(cvalue.ColorFg)
+	result.FieldTextOffset = int32(cvalue.TextOffset)
+	result.FieldClamp = cvalue.Clamp == C.bool(true)
+	return *result
 }
 
-type PlotAnnotationCollection uintptr
+type PlotAnnotationCollection struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
+
+func (data PlotAnnotationCollection) handle() (result *C.ImPlotAnnotationCollection, releaseFn func()) {
+	result = (*C.ImPlotAnnotationCollection)(data.data)
+	return result, func() {}
+}
 
-func (data PlotAnnotationCollection) handle() *C.ImPlotAnnotationCollection {
-	return (*C.ImPlotAnnotationCollection)(unsafe.Pointer(data))
+func (data PlotAnnotationCollection) c() (result C.ImPlotAnnotationCollection, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotAnnotationCollection) c() C.ImPlotAnnotationCollection {
-	return *(data.handle())
+func newPlotAnnotationCollectionFromC(cvalue *C.ImPlotAnnotationCollection) PlotAnnotationCollection {
+	result := new(PlotAnnotationCollection)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotAnnotationCollectionFromC(cvalue C.ImPlotAnnotationCollection) PlotAnnotationCollection {
-	return PlotAnnotationCollection(unsafe.Pointer(&cvalue))
+type PlotAxis struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PlotAxis uintptr
+func (data PlotAxis) handle() (result *C.ImPlotAxis, releaseFn func()) {
+	result = (*C.ImPlotAxis)(data.data)
+	return result, func() {}
+}
 
-func (data PlotAxis) handle() *C.ImPlotAxis {
-	return (*C.ImPlotAxis)(unsafe.Pointer(data))
+func (data PlotAxis) c() (result C.ImPlotAxis, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotAxis) c() C.ImPlotAxis {
-	return *(data.handle())
+func newPlotAxisFromC(cvalue *C.ImPlotAxis) PlotAxis {
+	result := new(PlotAxis)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotAxisFromC(cvalue C.ImPlotAxis) PlotAxis {
-	return PlotAxis(unsafe.Pointer(&cvalue))
+type PlotColormapData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PlotColormapData uintptr
+func (data PlotColormapData) handle() (result *C.ImPlotColormapData, releaseFn func()) {
+	result = (*C.ImPlotColormapData)(data.data)
+	return result, func() {}
+}
 
-func (data PlotColormapData) handle() *C.ImPlotColormapData {
-	return (*C.ImPlotColormapData)(unsafe.Pointer(data))
+func (data PlotColormapData) c() (result C.ImPlotColormapData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotColormapData) c() C.ImPlotColormapData {
-	return *(data.handle())
+func newPlotColormapDataFromC(cvalue *C.ImPlotColormapData) PlotColormapData {
+	result := new(PlotColormapData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotColormapDataFromC(cvalue C.ImPlotColormapData) PlotColormapData {
-	return PlotColormapData(unsafe.Pointer(&cvalue))
+type PlotContext struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PlotContext uintptr
+func (data PlotContext) handle() (result *C.ImPlotContext, releaseFn func()) {
+	result = (*C.ImPlotContext)(data.data)
+	return result, func() {}
+}
 
-func (data PlotContext) handle() *C.ImPlotContext {
-	return (*C.ImPlotContext)(unsafe.Pointer(data))
+func (data PlotContext) c() (result C.ImPlotContext, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotContext) c() C.ImPlotContext {
-	return *(data.handle())
+func newPlotContextFromC(cvalue *C.ImPlotContext) PlotContext {
+	result := new(PlotContext)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotContextFromC(cvalue C.ImPlotContext) PlotContext {
-	return PlotContext(unsafe.Pointer(&cvalue))
+type PlotDateTimeSpec struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PlotDateTimeSpec uintptr
+func (data PlotDateTimeSpec) handle() (result *C.ImPlotDateTimeSpec, releaseFn func()) {
+	result = (*C.ImPlotDateTimeSpec)(data.data)
+	return result, func() {}
+}
 
-func (data PlotDateTimeSpec) handle() *C.ImPlotDateTimeSpec {
-	return (*C.ImPlotDateTimeSpec)(unsafe.Pointer(data))
+func (data PlotDateTimeSpec) c() (result C.ImPlotDateTimeSpec, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotDateTimeSpec) c() C.ImPlotDateTimeSpec {
-	return *(data.handle())
+func newPlotDateTimeSpecFromC(cvalue *C.ImPlotDateTimeSpec) PlotDateTimeSpec {
+	result := new(PlotDateTimeSpec)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotDateTimeSpecFromC(cvalue C.ImPlotDateTimeSpec) PlotDateTimeSpec {
-	return PlotDateTimeSpec(unsafe.Pointer(&cvalue))
+type PlotInputMap struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PlotInputMap uintptr
+func (data PlotInputMap) handle() (result *C.ImPlotInputMap, releaseFn func()) {
+	result = (*C.ImPlotInputMap)(data.data)
+	return result, func() {}
+}
 
-func (data PlotInputMap) handle() *C.ImPlotInputMap {
-	return (*C.ImPlotInputMap)(unsafe.Pointer(data))
+func (data PlotInputMap) c() (result C.ImPlotInputMap, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotInputMap) c() C.ImPlotInputMap {
-	return *(data.handle())
+func newPlotInputMapFromC(cvalue *C.ImPlotInputMap) PlotInputMap {
+	result := new(PlotInputMap)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotInputMapFromC(cvalue C.ImPlotInputMap) PlotInputMap {
-	return PlotInputMap(unsafe.Pointer(&cvalue))
+type PlotItem struct {
+	FieldID              ID
+	FieldColor           uint32
+	FieldLegendHoverRect Rect
+	FieldNameOffset      int32
+	FieldShow            bool
+	FieldLegendHovered   bool
+	FieldSeenThisFrame   bool
 }
+
+func (data PlotItem) handle() (result *C.ImPlotItem, releaseFn func()) {
+	result = new(C.ImPlotItem)
+	FieldID := data.FieldID
+
+	result.ID = C.ImGuiID(FieldID)
+	FieldColor := data.FieldColor
+
+	result.Color = C.ImU32(FieldColor)
+	FieldLegendHoverRect := data.FieldLegendHoverRect
+
+	result.LegendHoverRect = FieldLegendHoverRect.toC()
+	FieldNameOffset := data.FieldNameOffset
+
+	result.NameOffset = C.int(FieldNameOffset)
+	FieldShow := data.FieldShow
+
+	result.Show = C.bool(FieldShow)
+	FieldLegendHovered := data.FieldLegendHovered
 
-type PlotItem uintptr
+	result.LegendHovered = C.bool(FieldLegendHovered)
+	FieldSeenThisFrame := data.FieldSeenThisFrame
 
-func (data PlotItem) handle() *C.ImPlotItem {
-	return (*C.ImPlotItem)(unsafe.Pointer(data))
+	result.SeenThisFrame = C.bool(FieldSeenThisFrame)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
-func (data PlotItem) c() C.ImPlotItem {
-	return *(data.handle())
+func (data PlotItem) c() (result C.ImPlotItem, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newPlotItemFromC(cvalue C.ImPlotItem) PlotItem {
-	return PlotItem(unsafe.Pointer(&cvalue))
+func newPlotItemFromC(cvalue *C.ImPlotItem) PlotItem {
+	result := new(PlotItem)
+	result.FieldID = ID(cvalue.ID)
+	result.FieldColor = uint32(cvalue.Color)
+	result.FieldLegendHoverRect = *(&Rect{}).fromC(cvalue.LegendHoverRect)
+	result.FieldNameOffset = int32(cvalue.NameOffset)
+	result.FieldShow = cvalue.Show == C.bool(true)
+	result.FieldLegendHovered = cvalue.LegendHovered == C.bool(true)
+	result.FieldSeenThisFrame = cvalue.SeenThisFrame == C.bool(true)
+	return *result
 }
 
-type PlotItemGroup uintptr
+type PlotItemGroup struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
+
+func (data PlotItemGroup) handle() (result *C.ImPlotItemGroup, releaseFn func()) {
+	result = (*C.ImPlotItemGroup)(data.data)
+	return result, func() {}
+}
 
-func (data PlotItemGroup) handle() *C.ImPlotItemGroup {
-	return (*C.ImPlotItemGroup)(unsafe.Pointer(data))
+func (data PlotItemGroup) c() (result C.ImPlotItemGroup, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotItemGroup) c() C.ImPlotItemGroup {
-	return *(data.handle())
+func newPlotItemGroupFromC(cvalue *C.ImPlotItemGroup) PlotItemGroup {
+	result := new(PlotItemGroup)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotItemGroupFromC(cvalue C.ImPlotItemGroup) PlotItemGroup {
-	return PlotItemGroup(unsafe.Pointer(&cvalue))
+type PlotLegend struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PlotLegend uintptr
+func (data PlotLegend) handle() (result *C.ImPlotLegend, releaseFn func()) {
+	result = (*C.ImPlotLegend)(data.data)
+	return result, func() {}
+}
 
-func (data PlotLegend) handle() *C.ImPlotLegend {
-	return (*C.ImPlotLegend)(unsafe.Pointer(data))
+func (data PlotLegend) c() (result C.ImPlotLegend, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotLegend) c() C.ImPlotLegend {
-	return *(data.handle())
+func newPlotLegendFromC(cvalue *C.ImPlotLegend) PlotLegend {
+	result := new(PlotLegend)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotLegendFromC(cvalue C.ImPlotLegend) PlotLegend {
-	return PlotLegend(unsafe.Pointer(&cvalue))
+type PlotNextItemData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PlotNextItemData uintptr
+func (data PlotNextItemData) handle() (result *C.ImPlotNextItemData, releaseFn func()) {
+	result = (*C.ImPlotNextItemData)(data.data)
+	return result, func() {}
+}
 
-func (data PlotNextItemData) handle() *C.ImPlotNextItemData {
-	return (*C.ImPlotNextItemData)(unsafe.Pointer(data))
+func (data PlotNextItemData) c() (result C.ImPlotNextItemData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotNextItemData) c() C.ImPlotNextItemData {
-	return *(data.handle())
+func newPlotNextItemDataFromC(cvalue *C.ImPlotNextItemData) PlotNextItemData {
+	result := new(PlotNextItemData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotNextItemDataFromC(cvalue C.ImPlotNextItemData) PlotNextItemData {
-	return PlotNextItemData(unsafe.Pointer(&cvalue))
+type PlotNextPlotData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PlotNextPlotData uintptr
+func (data PlotNextPlotData) handle() (result *C.ImPlotNextPlotData, releaseFn func()) {
+	result = (*C.ImPlotNextPlotData)(data.data)
+	return result, func() {}
+}
 
-func (data PlotNextPlotData) handle() *C.ImPlotNextPlotData {
-	return (*C.ImPlotNextPlotData)(unsafe.Pointer(data))
+func (data PlotNextPlotData) c() (result C.ImPlotNextPlotData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotNextPlotData) c() C.ImPlotNextPlotData {
-	return *(data.handle())
+func newPlotNextPlotDataFromC(cvalue *C.ImPlotNextPlotData) PlotNextPlotData {
+	result := new(PlotNextPlotData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotNextPlotDataFromC(cvalue C.ImPlotNextPlotData) PlotNextPlotData {
-	return PlotNextPlotData(unsafe.Pointer(&cvalue))
+type PlotPlot struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PlotPlot uintptr
+func (data PlotPlot) handle() (result *C.ImPlotPlot, releaseFn func()) {
+	result = (*C.ImPlotPlot)(data.data)
+	return result, func() {}
+}
 
-func (data PlotPlot) handle() *C.ImPlotPlot {
-	return (*C.ImPlotPlot)(unsafe.Pointer(data))
+func (data PlotPlot) c() (result C.ImPlotPlot, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotPlot) c() C.ImPlotPlot {
-	return *(data.handle())
+func newPlotPlotFromC(cvalue *C.ImPlotPlot) PlotPlot {
+	result := new(PlotPlot)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotPlotFromC(cvalue C.ImPlotPlot) PlotPlot {
-	return PlotPlot(unsafe.Pointer(&cvalue))
+type PlotPointError struct {
+	FieldX   float64
+	FieldY   float64
+	FieldNeg float64
+	FieldPos float64
 }
 
-type PlotPointError uintptr
+func (data PlotPointError) handle() (result *C.ImPlotPointError, releaseFn func()) {
+	result = new(C.ImPlotPointError)
+	FieldX := data.FieldX
 
-func (data PlotPointError) handle() *C.ImPlotPointError {
-	return (*C.ImPlotPointError)(unsafe.Pointer(data))
+	result.X = C.double(FieldX)
+	FieldY := data.FieldY
+
+	result.Y = C.double(FieldY)
+	FieldNeg := data.FieldNeg
+
+	result.Neg = C.double(FieldNeg)
+	FieldPos := data.FieldPos
+
+	result.Pos = C.double(FieldPos)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
-func (data PlotPointError) c() C.ImPlotPointError {
-	return *(data.handle())
+func (data PlotPointError) c() (result C.ImPlotPointError, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newPlotPointErrorFromC(cvalue C.ImPlotPointError) PlotPointError {
-	return PlotPointError(unsafe.Pointer(&cvalue))
+func newPlotPointErrorFromC(cvalue *C.ImPlotPointError) PlotPointError {
+	result := new(PlotPointError)
+	result.FieldX = float64(cvalue.X)
+	result.FieldY = float64(cvalue.Y)
+	result.FieldNeg = float64(cvalue.Neg)
+	result.FieldPos = float64(cvalue.Pos)
+	return *result
 }
+
+type PlotRange struct {
+	FieldMin float64
+	FieldMax float64
+}
+
+func (data PlotRange) handle() (result *C.ImPlotRange, releaseFn func()) {
+	result = new(C.ImPlotRange)
+	FieldMin := data.FieldMin
+
+	result.Min = C.double(FieldMin)
+	FieldMax := data.FieldMax
 
-type PlotRange uintptr
+	result.Max = C.double(FieldMax)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
 
-func (data PlotRange) handle() *C.ImPlotRange {
-	return (*C.ImPlotRange)(unsafe.Pointer(data))
+func (data PlotRange) c() (result C.ImPlotRange, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotRange) c() C.ImPlotRange {
-	return *(data.handle())
+func newPlotRangeFromC(cvalue *C.ImPlotRange) PlotRange {
+	result := new(PlotRange)
+	result.FieldMin = float64(cvalue.Min)
+	result.FieldMax = float64(cvalue.Max)
+	return *result
 }
 
-func newPlotRangeFromC(cvalue C.ImPlotRange) PlotRange {
-	return PlotRange(unsafe.Pointer(&cvalue))
+type PlotRect struct {
+	FieldX PlotRange
+	FieldY PlotRange
 }
 
-type PlotRect uintptr
+func (data PlotRect) handle() (result *C.ImPlotRect, releaseFn func()) {
+	result = new(C.ImPlotRect)
+	FieldX := data.FieldX
+	XArg, XFin := FieldX.c()
+	result.X = XArg
+	FieldY := data.FieldY
+	YArg, YFin := FieldY.c()
+	result.Y = YArg
+	releaseFn = func() {
+		XFin()
+		YFin()
+	}
+	return result, releaseFn
+}
 
-func (data PlotRect) handle() *C.ImPlotRect {
-	return (*C.ImPlotRect)(unsafe.Pointer(data))
+func (data PlotRect) c() (result C.ImPlotRect, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotRect) c() C.ImPlotRect {
-	return *(data.handle())
+func newPlotRectFromC(cvalue *C.ImPlotRect) PlotRect {
+	result := new(PlotRect)
+	result.FieldX = newPlotRangeFromC(&cvalue.X)
+	result.FieldY = newPlotRangeFromC(&cvalue.Y)
+	return *result
 }
 
-func newPlotRectFromC(cvalue C.ImPlotRect) PlotRect {
-	return PlotRect(unsafe.Pointer(&cvalue))
+type PlotStyle struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PlotStyle uintptr
+func (data PlotStyle) handle() (result *C.ImPlotStyle, releaseFn func()) {
+	result = (*C.ImPlotStyle)(data.data)
+	return result, func() {}
+}
 
-func (data PlotStyle) handle() *C.ImPlotStyle {
-	return (*C.ImPlotStyle)(unsafe.Pointer(data))
+func (data PlotStyle) c() (result C.ImPlotStyle, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotStyle) c() C.ImPlotStyle {
-	return *(data.handle())
+func newPlotStyleFromC(cvalue *C.ImPlotStyle) PlotStyle {
+	result := new(PlotStyle)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotStyleFromC(cvalue C.ImPlotStyle) PlotStyle {
-	return PlotStyle(unsafe.Pointer(&cvalue))
+type PlotSubplot struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PlotSubplot uintptr
+func (data PlotSubplot) handle() (result *C.ImPlotSubplot, releaseFn func()) {
+	result = (*C.ImPlotSubplot)(data.data)
+	return result, func() {}
+}
 
-func (data PlotSubplot) handle() *C.ImPlotSubplot {
-	return (*C.ImPlotSubplot)(unsafe.Pointer(data))
+func (data PlotSubplot) c() (result C.ImPlotSubplot, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotSubplot) c() C.ImPlotSubplot {
-	return *(data.handle())
+func newPlotSubplotFromC(cvalue *C.ImPlotSubplot) PlotSubplot {
+	result := new(PlotSubplot)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotSubplotFromC(cvalue C.ImPlotSubplot) PlotSubplot {
-	return PlotSubplot(unsafe.Pointer(&cvalue))
+type PlotTag struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PlotTag uintptr
+func (data PlotTag) handle() (result *C.ImPlotTag, releaseFn func()) {
+	result = (*C.ImPlotTag)(data.data)
+	return result, func() {}
+}
 
-func (data PlotTag) handle() *C.ImPlotTag {
-	return (*C.ImPlotTag)(unsafe.Pointer(data))
+func (data PlotTag) c() (result C.ImPlotTag, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotTag) c() C.ImPlotTag {
-	return *(data.handle())
+func newPlotTagFromC(cvalue *C.ImPlotTag) PlotTag {
+	result := new(PlotTag)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotTagFromC(cvalue C.ImPlotTag) PlotTag {
-	return PlotTag(unsafe.Pointer(&cvalue))
+type PlotTagCollection struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PlotTagCollection uintptr
+func (data PlotTagCollection) handle() (result *C.ImPlotTagCollection, releaseFn func()) {
+	result = (*C.ImPlotTagCollection)(data.data)
+	return result, func() {}
+}
 
-func (data PlotTagCollection) handle() *C.ImPlotTagCollection {
-	return (*C.ImPlotTagCollection)(unsafe.Pointer(data))
+func (data PlotTagCollection) c() (result C.ImPlotTagCollection, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlotTagCollection) c() C.ImPlotTagCollection {
-	return *(data.handle())
+func newPlotTagCollectionFromC(cvalue *C.ImPlotTagCollection) PlotTagCollection {
+	result := new(PlotTagCollection)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlotTagCollectionFromC(cvalue C.ImPlotTagCollection) PlotTagCollection {
-	return PlotTagCollection(unsafe.Pointer(&cvalue))
+type PlotTick struct {
+	FieldPlotPos    float64
+	FieldPixelPos   float32
+	FieldLabelSize  Vec2
+	FieldTextOffset int32
+	FieldMajor      bool
+	FieldShowLabel  bool
+	FieldLevel      int32
+	FieldIdx        int32
 }
+
+func (data PlotTick) handle() (result *C.ImPlotTick, releaseFn func()) {
+	result = new(C.ImPlotTick)
+	FieldPlotPos := data.FieldPlotPos
 
-type PlotTick uintptr
+	result.PlotPos = C.double(FieldPlotPos)
+	FieldPixelPos := data.FieldPixelPos
 
-func (data PlotTick) handle() *C.ImPlotTick {
-	return (*C.ImPlotTick)(unsafe.Pointer(data))
+	result.PixelPos = C.float(FieldPixelPos)
+	FieldLabelSize := data.FieldLabelSize
+
+	result.LabelSize = FieldLabelSize.toC()
+	FieldTextOffset := data.FieldTextOffset
+
+	result.TextOffset = C.int(FieldTextOffset)
+	FieldMajor := data.FieldMajor
+
+	result.Major = C.bool(FieldMajor)
+	FieldShowLabel := data.FieldShowLabel
+
+	result.ShowLabel = C.bool(FieldShowLabel)
+	FieldLevel := data.FieldLevel
+
+	result.Level = C.int(FieldLevel)
+	FieldIdx := data.FieldIdx
+
+	result.Idx = C.int(FieldIdx)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
-func (data PlotTick) c() C.ImPlotTick {
-	return *(data.handle())
+func (data PlotTick) c() (result C.ImPlotTick, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newPlotTickFromC(cvalue C.ImPlotTick) PlotTick {
-	return PlotTick(unsafe.Pointer(&cvalue))
+func newPlotTickFromC(cvalue *C.ImPlotTick) PlotTick {
+	result := new(PlotTick)
+	result.FieldPlotPos = float64(cvalue.PlotPos)
+	result.FieldPixelPos = float32(cvalue.PixelPos)
+	result.FieldLabelSize = *(&Vec2{}).fromC(cvalue.LabelSize)
+	result.FieldTextOffset = int32(cvalue.TextOffset)
+	result.FieldMajor = cvalue.Major == C.bool(true)
+	result.FieldShowLabel = cvalue.ShowLabel == C.bool(true)
+	result.FieldLevel = int32(cvalue.Level)
+	result.FieldIdx = int32(cvalue.Idx)
+	return *result
 }
 
-type PlotTicker uintptr
+type PlotTicker struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
 
-func (data PlotTicker) handle() *C.ImPlotTicker {
-	return (*C.ImPlotTicker)(unsafe.Pointer(data))
+func (data PlotTicker) handle() (result *C.ImPlotTicker, releaseFn func()) {
+	result = (*C.ImPlotTicker)(data.data)
+	return result, func() {}
 }
 
-func (data PlotTicker) c() C.ImPlotTicker {
-	return *(data.handle())
+func (data PlotTicker) c() (result C.ImPlotTicker, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newPlotTickerFromC(cvalue C.ImPlotTicker) PlotTicker {
-	return PlotTicker(unsafe.Pointer(&cvalue))
+func newPlotTickerFromC(cvalue *C.ImPlotTicker) PlotTicker {
+	result := new(PlotTicker)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }

@@ -3,1406 +3,2919 @@
 
 package imgui
 
+// #include <stdlib.h>
+// #include <memory.h>
+// #include "extra_types.h"
 // #include "cimgui_wrapper.h"
 import "C"
 import "unsafe"
 
-type BitVector uintptr
+// Helper: ImBitVector
+// Store 1-bit per value.
+type BitVector struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
+
+func (data BitVector) handle() (result *C.ImBitVector, releaseFn func()) {
+	result = (*C.ImBitVector)(data.data)
+	return result, func() {}
+}
+
+func (data BitVector) c() (result C.ImBitVector, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
+}
+
+func newBitVectorFromC(cvalue *C.ImBitVector) BitVector {
+	result := new(BitVector)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
+}
+
+// [Internal] For use by ImDrawListSplitter
+type DrawChannel struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
 
-func (data BitVector) handle() *C.ImBitVector {
-	return (*C.ImBitVector)(unsafe.Pointer(data))
+func (data DrawChannel) handle() (result *C.ImDrawChannel, releaseFn func()) {
+	result = (*C.ImDrawChannel)(data.data)
+	return result, func() {}
 }
 
-func (data BitVector) c() C.ImBitVector {
-	return *(data.handle())
+func (data DrawChannel) c() (result C.ImDrawChannel, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newBitVectorFromC(cvalue C.ImBitVector) BitVector {
-	return BitVector(unsafe.Pointer(&cvalue))
+func newDrawChannelFromC(cvalue *C.ImDrawChannel) DrawChannel {
+	result := new(DrawChannel)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-type DrawChannel uintptr
+// Typically, 1 command = 1 GPU draw call (unless command is a callback)
+//   - VtxOffset: When 'io.BackendFlags & ImGuiBackendFlags_RendererHasVtxOffset' is enabled,
+//     this fields allow us to render meshes larger than 64K vertices while keeping 16-bit indices.
+//     Backends made for <1.71. will typically ignore the VtxOffset fields.
+//   - The ClipRect/TextureId/VtxOffset fields must be contiguous as we memcmp() them together (this is asserted for).
+type DrawCmd struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
+
+func (data DrawCmd) handle() (result *C.ImDrawCmd, releaseFn func()) {
+	result = (*C.ImDrawCmd)(data.data)
+	return result, func() {}
+}
 
-func (data DrawChannel) handle() *C.ImDrawChannel {
-	return (*C.ImDrawChannel)(unsafe.Pointer(data))
+func (data DrawCmd) c() (result C.ImDrawCmd, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data DrawChannel) c() C.ImDrawChannel {
-	return *(data.handle())
+func newDrawCmdFromC(cvalue *C.ImDrawCmd) DrawCmd {
+	result := new(DrawCmd)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newDrawChannelFromC(cvalue C.ImDrawChannel) DrawChannel {
-	return DrawChannel(unsafe.Pointer(&cvalue))
+// [Internal] For use by ImDrawList
+type DrawCmdHeader struct {
+	FieldClipRect  Vec4
+	FieldTextureId TextureID
+	FieldVtxOffset uint32
 }
+
+func (data DrawCmdHeader) handle() (result *C.ImDrawCmdHeader, releaseFn func()) {
+	result = new(C.ImDrawCmdHeader)
+	FieldClipRect := data.FieldClipRect
 
-type DrawCmd uintptr
+	result.ClipRect = FieldClipRect.toC()
+	FieldTextureId := data.FieldTextureId
 
-func (data DrawCmd) handle() *C.ImDrawCmd {
-	return (*C.ImDrawCmd)(unsafe.Pointer(data))
+	result.TextureId = C.ImTextureID(FieldTextureId)
+	FieldVtxOffset := data.FieldVtxOffset
+
+	result.VtxOffset = C.uint(FieldVtxOffset)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
+
+func (data DrawCmdHeader) c() (result C.ImDrawCmdHeader, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data DrawCmd) c() C.ImDrawCmd {
-	return *(data.handle())
+func newDrawCmdHeaderFromC(cvalue *C.ImDrawCmdHeader) DrawCmdHeader {
+	result := new(DrawCmdHeader)
+	result.FieldClipRect = *(&Vec4{}).fromC(cvalue.ClipRect)
+	result.FieldTextureId = TextureID(cvalue.TextureId)
+	result.FieldVtxOffset = uint32(cvalue.VtxOffset)
+	return *result
 }
 
-func newDrawCmdFromC(cvalue C.ImDrawCmd) DrawCmd {
-	return DrawCmd(unsafe.Pointer(&cvalue))
+// All draw data to render a Dear ImGui frame
+// (NB: the style and the naming convention here is a little inconsistent, we currently preserve them for backward compatibility purpose,
+// as this is one of the oldest structure exposed by the library! Basically, ImDrawList == CmdList)
+type DrawData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type DrawCmdHeader uintptr
+func (data DrawData) handle() (result *C.ImDrawData, releaseFn func()) {
+	result = (*C.ImDrawData)(data.data)
+	return result, func() {}
+}
 
-func (data DrawCmdHeader) handle() *C.ImDrawCmdHeader {
-	return (*C.ImDrawCmdHeader)(unsafe.Pointer(data))
+func (data DrawData) c() (result C.ImDrawData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data DrawCmdHeader) c() C.ImDrawCmdHeader {
-	return *(data.handle())
+func newDrawDataFromC(cvalue *C.ImDrawData) DrawData {
+	result := new(DrawData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newDrawCmdHeaderFromC(cvalue C.ImDrawCmdHeader) DrawCmdHeader {
-	return DrawCmdHeader(unsafe.Pointer(&cvalue))
+type DrawDataBuilder struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type DrawData uintptr
+func (data DrawDataBuilder) handle() (result *C.ImDrawDataBuilder, releaseFn func()) {
+	result = (*C.ImDrawDataBuilder)(data.data)
+	return result, func() {}
+}
 
-func (data DrawData) handle() *C.ImDrawData {
-	return (*C.ImDrawData)(unsafe.Pointer(data))
+func (data DrawDataBuilder) c() (result C.ImDrawDataBuilder, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data DrawData) c() C.ImDrawData {
-	return *(data.handle())
+func newDrawDataBuilderFromC(cvalue *C.ImDrawDataBuilder) DrawDataBuilder {
+	result := new(DrawDataBuilder)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newDrawDataFromC(cvalue C.ImDrawData) DrawData {
-	return DrawData(unsafe.Pointer(&cvalue))
+// Draw command list
+// This is the low-level list of polygons that ImGui:: functions are filling. At the end of the frame,
+// all command lists are passed to your ImGuiIO::RenderDrawListFn function for rendering.
+// Each dear imgui window contains its own ImDrawList. You can use ImGui::GetWindowDrawList() to
+// access the current window draw list and draw custom primitives.
+// You can interleave normal ImGui:: calls and adding primitives to the current draw list.
+// In single viewport mode, top-left is == GetMainViewport()->Pos (generally 0,0), bottom-right is == GetMainViewport()->Pos+Size (generally io.DisplaySize).
+// You are totally free to apply whatever transformation matrix to want to the data (depending on the use of the transformation you may want to apply it to ClipRect as well!)
+// Important: Primitives are always added to the list and not culled (culling is done at higher-level by ImGui:: functions), if you use this API a lot consider coarse culling your drawn objects.
+type DrawList struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type DrawDataBuilder uintptr
+func (data DrawList) handle() (result *C.ImDrawList, releaseFn func()) {
+	result = (*C.ImDrawList)(data.data)
+	return result, func() {}
+}
 
-func (data DrawDataBuilder) handle() *C.ImDrawDataBuilder {
-	return (*C.ImDrawDataBuilder)(unsafe.Pointer(data))
+func (data DrawList) c() (result C.ImDrawList, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data DrawDataBuilder) c() C.ImDrawDataBuilder {
-	return *(data.handle())
+func newDrawListFromC(cvalue *C.ImDrawList) DrawList {
+	result := new(DrawList)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newDrawDataBuilderFromC(cvalue C.ImDrawDataBuilder) DrawDataBuilder {
-	return DrawDataBuilder(unsafe.Pointer(&cvalue))
+// Data shared between all ImDrawList instances
+// You may want to create your own instance of this if you want to use ImDrawList completely without ImGui. In that case, watch out for future changes to this structure.
+type DrawListSharedData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type DrawList uintptr
+func (data DrawListSharedData) handle() (result *C.ImDrawListSharedData, releaseFn func()) {
+	result = (*C.ImDrawListSharedData)(data.data)
+	return result, func() {}
+}
 
-func (data DrawList) handle() *C.ImDrawList {
-	return (*C.ImDrawList)(unsafe.Pointer(data))
+func (data DrawListSharedData) c() (result C.ImDrawListSharedData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data DrawList) c() C.ImDrawList {
-	return *(data.handle())
+func newDrawListSharedDataFromC(cvalue *C.ImDrawListSharedData) DrawListSharedData {
+	result := new(DrawListSharedData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newDrawListFromC(cvalue C.ImDrawList) DrawList {
-	return DrawList(unsafe.Pointer(&cvalue))
+// Split/Merge functions are used to split the draw list into different layers which can be drawn into out of order.
+// This is used by the Columns/Tables API, so items of each column can be batched together in a same draw call.
+type DrawListSplitter struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type DrawListSharedData uintptr
+func (data DrawListSplitter) handle() (result *C.ImDrawListSplitter, releaseFn func()) {
+	result = (*C.ImDrawListSplitter)(data.data)
+	return result, func() {}
+}
 
-func (data DrawListSharedData) handle() *C.ImDrawListSharedData {
-	return (*C.ImDrawListSharedData)(unsafe.Pointer(data))
+func (data DrawListSplitter) c() (result C.ImDrawListSplitter, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data DrawListSharedData) c() C.ImDrawListSharedData {
-	return *(data.handle())
+func newDrawListSplitterFromC(cvalue *C.ImDrawListSplitter) DrawListSplitter {
+	result := new(DrawListSplitter)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newDrawListSharedDataFromC(cvalue C.ImDrawListSharedData) DrawListSharedData {
-	return DrawListSharedData(unsafe.Pointer(&cvalue))
+type DrawVert struct {
+	Fieldpos Vec2
+	Fielduv  Vec2
+	Fieldcol uint32
 }
+
+func (data DrawVert) handle() (result *C.ImDrawVert, releaseFn func()) {
+	result = new(C.ImDrawVert)
+	Fieldpos := data.Fieldpos
+
+	result.pos = Fieldpos.toC()
+	Fielduv := data.Fielduv
 
-type DrawListSplitter uintptr
+	result.uv = Fielduv.toC()
+	Fieldcol := data.Fieldcol
 
-func (data DrawListSplitter) handle() *C.ImDrawListSplitter {
-	return (*C.ImDrawListSplitter)(unsafe.Pointer(data))
+	result.col = C.ImU32(Fieldcol)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
-func (data DrawListSplitter) c() C.ImDrawListSplitter {
-	return *(data.handle())
+func (data DrawVert) c() (result C.ImDrawVert, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newDrawListSplitterFromC(cvalue C.ImDrawListSplitter) DrawListSplitter {
-	return DrawListSplitter(unsafe.Pointer(&cvalue))
+func newDrawVertFromC(cvalue *C.ImDrawVert) DrawVert {
+	result := new(DrawVert)
+	result.Fieldpos = *(&Vec2{}).fromC(cvalue.pos)
+	result.Fielduv = *(&Vec2{}).fromC(cvalue.uv)
+	result.Fieldcol = uint32(cvalue.col)
+	return *result
 }
 
-type DrawVert uintptr
+// Font runtime data and rendering
+// ImFontAtlas automatically loads a default embedded font for you when you call GetTexDataAsAlpha8() or GetTexDataAsRGBA32().
+type Font struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
+
+func (data Font) handle() (result *C.ImFont, releaseFn func()) {
+	result = (*C.ImFont)(data.data)
+	return result, func() {}
+}
 
-func (data DrawVert) handle() *C.ImDrawVert {
-	return (*C.ImDrawVert)(unsafe.Pointer(data))
+func (data Font) c() (result C.ImFont, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data DrawVert) c() C.ImDrawVert {
-	return *(data.handle())
+func newFontFromC(cvalue *C.ImFont) Font {
+	result := new(Font)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newDrawVertFromC(cvalue C.ImDrawVert) DrawVert {
-	return DrawVert(unsafe.Pointer(&cvalue))
+// Load and rasterize multiple TTF/OTF fonts into a same texture. The font atlas will build a single texture holding:
+//   - One or more fonts.
+//   - Custom graphics data needed to render the shapes needed by Dear ImGui.
+//   - Mouse cursor shapes for software cursor rendering (unless setting 'Flags |= ImFontAtlasFlags_NoMouseCursors' in the font atlas).
+//
+// It is the user-code responsibility to setup/build the atlas, then upload the pixel data into a texture accessible by your graphics api.
+//   - Optionally, call any of the AddFont*** functions. If you don't call any, the default font embedded in the code will be loaded for you.
+//   - Call GetTexDataAsAlpha8() or GetTexDataAsRGBA32() to build and retrieve pixels data.
+//   - Upload the pixels data into a texture within your graphics system (see imgui_impl_xxxx.cpp examples)
+//   - Call SetTexID(my_tex_id); and pass the pointer/identifier to your texture in a format natural to your graphics API.
+//     This value will be passed back to you during rendering to identify the texture. Read FAQ entry about ImTextureID for more details.
+//
+// Common pitfalls:
+//   - If you pass a 'glyph_ranges' array to AddFont*** functions, you need to make sure that your array persist up until the
+//     atlas is build (when calling GetTexData*** or Build()). We only copy the pointer, not the data.
+//   - Important: By default, AddFontFromMemoryTTF() takes ownership of the data. Even though we are not writing to it, we will free the pointer on destruction.
+//     You can set font_cfg->FontDataOwnedByAtlas=false to keep ownership of your data and it won't be freed,
+//   - Even though many functions are suffixed with "TTF", OTF data is supported just as well.
+//   - This is an old API and it is currently awkward for those and various other reasons! We will address them in the future!
+type FontAtlas struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type Font uintptr
+func (data FontAtlas) handle() (result *C.ImFontAtlas, releaseFn func()) {
+	result = (*C.ImFontAtlas)(data.data)
+	return result, func() {}
+}
 
-func (data Font) handle() *C.ImFont {
-	return (*C.ImFont)(unsafe.Pointer(data))
+func (data FontAtlas) c() (result C.ImFontAtlas, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data Font) c() C.ImFont {
-	return *(data.handle())
+func newFontAtlasFromC(cvalue *C.ImFontAtlas) FontAtlas {
+	result := new(FontAtlas)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newFontFromC(cvalue C.ImFont) Font {
-	return Font(unsafe.Pointer(&cvalue))
+// See ImFontAtlas::AddCustomRectXXX functions.
+type FontAtlasCustomRect struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type FontAtlas uintptr
+func (data FontAtlasCustomRect) handle() (result *C.ImFontAtlasCustomRect, releaseFn func()) {
+	result = (*C.ImFontAtlasCustomRect)(data.data)
+	return result, func() {}
+}
 
-func (data FontAtlas) handle() *C.ImFontAtlas {
-	return (*C.ImFontAtlas)(unsafe.Pointer(data))
+func (data FontAtlasCustomRect) c() (result C.ImFontAtlasCustomRect, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data FontAtlas) c() C.ImFontAtlas {
-	return *(data.handle())
+func newFontAtlasCustomRectFromC(cvalue *C.ImFontAtlasCustomRect) FontAtlasCustomRect {
+	result := new(FontAtlasCustomRect)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newFontAtlasFromC(cvalue C.ImFontAtlas) FontAtlas {
-	return FontAtlas(unsafe.Pointer(&cvalue))
+// This structure is likely to evolve as we add support for incremental atlas updates
+type FontBuilderIO struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type FontAtlasCustomRect uintptr
+func (data FontBuilderIO) handle() (result *C.ImFontBuilderIO, releaseFn func()) {
+	result = (*C.ImFontBuilderIO)(data.data)
+	return result, func() {}
+}
 
-func (data FontAtlasCustomRect) handle() *C.ImFontAtlasCustomRect {
-	return (*C.ImFontAtlasCustomRect)(unsafe.Pointer(data))
+func (data FontBuilderIO) c() (result C.ImFontBuilderIO, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data FontAtlasCustomRect) c() C.ImFontAtlasCustomRect {
-	return *(data.handle())
+func newFontBuilderIOFromC(cvalue *C.ImFontBuilderIO) FontBuilderIO {
+	result := new(FontBuilderIO)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newFontAtlasCustomRectFromC(cvalue C.ImFontAtlasCustomRect) FontAtlasCustomRect {
-	return FontAtlasCustomRect(unsafe.Pointer(&cvalue))
+type FontConfig struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type FontBuilderIO uintptr
+func (data FontConfig) handle() (result *C.ImFontConfig, releaseFn func()) {
+	result = (*C.ImFontConfig)(data.data)
+	return result, func() {}
+}
 
-func (data FontBuilderIO) handle() *C.ImFontBuilderIO {
-	return (*C.ImFontBuilderIO)(unsafe.Pointer(data))
+func (data FontConfig) c() (result C.ImFontConfig, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data FontBuilderIO) c() C.ImFontBuilderIO {
-	return *(data.handle())
+func newFontConfigFromC(cvalue *C.ImFontConfig) FontConfig {
+	result := new(FontConfig)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newFontBuilderIOFromC(cvalue C.ImFontBuilderIO) FontBuilderIO {
-	return FontBuilderIO(unsafe.Pointer(&cvalue))
+// Hold rendering data for one glyph.
+// (Note: some language parsers may fail to convert the 31+1 bitfield members, in this case maybe drop store a single u32 or we can rework this)
+type FontGlyph struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type FontConfig uintptr
+func (data FontGlyph) handle() (result *C.ImFontGlyph, releaseFn func()) {
+	result = (*C.ImFontGlyph)(data.data)
+	return result, func() {}
+}
 
-func (data FontConfig) handle() *C.ImFontConfig {
-	return (*C.ImFontConfig)(unsafe.Pointer(data))
+func (data FontGlyph) c() (result C.ImFontGlyph, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data FontConfig) c() C.ImFontConfig {
-	return *(data.handle())
+func newFontGlyphFromC(cvalue *C.ImFontGlyph) FontGlyph {
+	result := new(FontGlyph)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newFontConfigFromC(cvalue C.ImFontConfig) FontConfig {
-	return FontConfig(unsafe.Pointer(&cvalue))
+// Helper to build glyph ranges from text/string data. Feed your application strings/characters to it then call BuildRanges().
+// This is essentially a tightly packed of vector of 64k booleans = 8KB storage.
+type FontGlyphRangesBuilder struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type FontGlyph uintptr
+func (data FontGlyphRangesBuilder) handle() (result *C.ImFontGlyphRangesBuilder, releaseFn func()) {
+	result = (*C.ImFontGlyphRangesBuilder)(data.data)
+	return result, func() {}
+}
 
-func (data FontGlyph) handle() *C.ImFontGlyph {
-	return (*C.ImFontGlyph)(unsafe.Pointer(data))
+func (data FontGlyphRangesBuilder) c() (result C.ImFontGlyphRangesBuilder, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data FontGlyph) c() C.ImFontGlyph {
-	return *(data.handle())
+func newFontGlyphRangesBuilderFromC(cvalue *C.ImFontGlyphRangesBuilder) FontGlyphRangesBuilder {
+	result := new(FontGlyphRangesBuilder)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newFontGlyphFromC(cvalue C.ImFontGlyph) FontGlyph {
-	return FontGlyph(unsafe.Pointer(&cvalue))
+// Stacked color modifier, backup of modified data so we can restore it
+type ColorMod struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type FontGlyphRangesBuilder uintptr
+func (data ColorMod) handle() (result *C.ImGuiColorMod, releaseFn func()) {
+	result = (*C.ImGuiColorMod)(data.data)
+	return result, func() {}
+}
 
-func (data FontGlyphRangesBuilder) handle() *C.ImFontGlyphRangesBuilder {
-	return (*C.ImFontGlyphRangesBuilder)(unsafe.Pointer(data))
+func (data ColorMod) c() (result C.ImGuiColorMod, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data FontGlyphRangesBuilder) c() C.ImFontGlyphRangesBuilder {
-	return *(data.handle())
+func newColorModFromC(cvalue *C.ImGuiColorMod) ColorMod {
+	result := new(ColorMod)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newFontGlyphRangesBuilderFromC(cvalue C.ImFontGlyphRangesBuilder) FontGlyphRangesBuilder {
-	return FontGlyphRangesBuilder(unsafe.Pointer(&cvalue))
+// Storage data for BeginComboPreview()/EndComboPreview()
+type ComboPreviewData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type ColorMod uintptr
+func (data ComboPreviewData) handle() (result *C.ImGuiComboPreviewData, releaseFn func()) {
+	result = (*C.ImGuiComboPreviewData)(data.data)
+	return result, func() {}
+}
 
-func (data ColorMod) handle() *C.ImGuiColorMod {
-	return (*C.ImGuiColorMod)(unsafe.Pointer(data))
+func (data ComboPreviewData) c() (result C.ImGuiComboPreviewData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data ColorMod) c() C.ImGuiColorMod {
-	return *(data.handle())
+func newComboPreviewDataFromC(cvalue *C.ImGuiComboPreviewData) ComboPreviewData {
+	result := new(ComboPreviewData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newColorModFromC(cvalue C.ImGuiColorMod) ColorMod {
-	return ColorMod(unsafe.Pointer(&cvalue))
+type Context struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type ComboPreviewData uintptr
+func (data Context) handle() (result *C.ImGuiContext, releaseFn func()) {
+	result = (*C.ImGuiContext)(data.data)
+	return result, func() {}
+}
 
-func (data ComboPreviewData) handle() *C.ImGuiComboPreviewData {
-	return (*C.ImGuiComboPreviewData)(unsafe.Pointer(data))
+func (data Context) c() (result C.ImGuiContext, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data ComboPreviewData) c() C.ImGuiComboPreviewData {
-	return *(data.handle())
+func newContextFromC(cvalue *C.ImGuiContext) Context {
+	result := new(Context)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newComboPreviewDataFromC(cvalue C.ImGuiComboPreviewData) ComboPreviewData {
-	return ComboPreviewData(unsafe.Pointer(&cvalue))
+type ContextHook struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type Context uintptr
+func (data ContextHook) handle() (result *C.ImGuiContextHook, releaseFn func()) {
+	result = (*C.ImGuiContextHook)(data.data)
+	return result, func() {}
+}
 
-func (data Context) handle() *C.ImGuiContext {
-	return (*C.ImGuiContext)(unsafe.Pointer(data))
+func (data ContextHook) c() (result C.ImGuiContextHook, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data Context) c() C.ImGuiContext {
-	return *(data.handle())
+func newContextHookFromC(cvalue *C.ImGuiContextHook) ContextHook {
+	result := new(ContextHook)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newContextFromC(cvalue C.ImGuiContext) Context {
-	return Context(unsafe.Pointer(&cvalue))
+// Type information associated to one ImGuiDataType. Retrieve with DataTypeGetInfo().
+type DataTypeInfo struct {
+	FieldSize     uint64 // Size in bytes
+	FieldName     string // Short descriptive name for the type, for debugging
+	FieldPrintFmt string // Default printf format for the type
+	FieldScanFmt  string // Default scanf format for the type
 }
+
+func (data DataTypeInfo) handle() (result *C.ImGuiDataTypeInfo, releaseFn func()) {
+	result = new(C.ImGuiDataTypeInfo)
+	FieldSize := data.FieldSize
 
-type ContextHook uintptr
+	result.Size = C.xulong(FieldSize)
+	FieldName := data.FieldName
+	FieldNameArg, FieldNameFin := wrapString(FieldName)
+	result.Name = FieldNameArg
+	FieldPrintFmt := data.FieldPrintFmt
+	FieldPrintFmtArg, FieldPrintFmtFin := wrapString(FieldPrintFmt)
+	result.PrintFmt = FieldPrintFmtArg
+	FieldScanFmt := data.FieldScanFmt
+	FieldScanFmtArg, FieldScanFmtFin := wrapString(FieldScanFmt)
+	result.ScanFmt = FieldScanFmtArg
+	releaseFn = func() {
+		FieldNameFin()
+		FieldPrintFmtFin()
+		FieldScanFmtFin()
+	}
+	return result, releaseFn
+}
 
-func (data ContextHook) handle() *C.ImGuiContextHook {
-	return (*C.ImGuiContextHook)(unsafe.Pointer(data))
+func (data DataTypeInfo) c() (result C.ImGuiDataTypeInfo, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data ContextHook) c() C.ImGuiContextHook {
-	return *(data.handle())
+func newDataTypeInfoFromC(cvalue *C.ImGuiDataTypeInfo) DataTypeInfo {
+	result := new(DataTypeInfo)
+	result.FieldSize = uint64(cvalue.Size)
+	result.FieldName = C.GoString(cvalue.Name)
+	result.FieldPrintFmt = C.GoString(cvalue.PrintFmt)
+	result.FieldScanFmt = C.GoString(cvalue.ScanFmt)
+	return *result
 }
 
-func newContextHookFromC(cvalue C.ImGuiContextHook) ContextHook {
-	return ContextHook(unsafe.Pointer(&cvalue))
+type DataTypeTempStorage struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type DataTypeInfo uintptr
+func (data DataTypeTempStorage) handle() (result *C.ImGuiDataTypeTempStorage, releaseFn func()) {
+	result = (*C.ImGuiDataTypeTempStorage)(data.data)
+	return result, func() {}
+}
 
-func (data DataTypeInfo) handle() *C.ImGuiDataTypeInfo {
-	return (*C.ImGuiDataTypeInfo)(unsafe.Pointer(data))
+func (data DataTypeTempStorage) c() (result C.ImGuiDataTypeTempStorage, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data DataTypeInfo) c() C.ImGuiDataTypeInfo {
-	return *(data.handle())
+func newDataTypeTempStorageFromC(cvalue *C.ImGuiDataTypeTempStorage) DataTypeTempStorage {
+	result := new(DataTypeTempStorage)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newDataTypeInfoFromC(cvalue C.ImGuiDataTypeInfo) DataTypeInfo {
-	return DataTypeInfo(unsafe.Pointer(&cvalue))
+type DataVarInfo struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type DataTypeTempStorage uintptr
+func (data DataVarInfo) handle() (result *C.ImGuiDataVarInfo, releaseFn func()) {
+	result = (*C.ImGuiDataVarInfo)(data.data)
+	return result, func() {}
+}
 
-func (data DataTypeTempStorage) handle() *C.ImGuiDataTypeTempStorage {
-	return (*C.ImGuiDataTypeTempStorage)(unsafe.Pointer(data))
+func (data DataVarInfo) c() (result C.ImGuiDataVarInfo, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data DataTypeTempStorage) c() C.ImGuiDataTypeTempStorage {
-	return *(data.handle())
+func newDataVarInfoFromC(cvalue *C.ImGuiDataVarInfo) DataVarInfo {
+	result := new(DataVarInfo)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newDataTypeTempStorageFromC(cvalue C.ImGuiDataTypeTempStorage) DataTypeTempStorage {
-	return DataTypeTempStorage(unsafe.Pointer(&cvalue))
+type DockContext struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type DataVarInfo uintptr
+func (data DockContext) handle() (result *C.ImGuiDockContext, releaseFn func()) {
+	result = (*C.ImGuiDockContext)(data.data)
+	return result, func() {}
+}
 
-func (data DataVarInfo) handle() *C.ImGuiDataVarInfo {
-	return (*C.ImGuiDataVarInfo)(unsafe.Pointer(data))
+func (data DockContext) c() (result C.ImGuiDockContext, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data DataVarInfo) c() C.ImGuiDataVarInfo {
-	return *(data.handle())
+func newDockContextFromC(cvalue *C.ImGuiDockContext) DockContext {
+	result := new(DockContext)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newDataVarInfoFromC(cvalue C.ImGuiDataVarInfo) DataVarInfo {
-	return DataVarInfo(unsafe.Pointer(&cvalue))
+// sizeof() 156~192
+type DockNode struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type DockContext uintptr
+func (data DockNode) handle() (result *C.ImGuiDockNode, releaseFn func()) {
+	result = (*C.ImGuiDockNode)(data.data)
+	return result, func() {}
+}
 
-func (data DockContext) handle() *C.ImGuiDockContext {
-	return (*C.ImGuiDockContext)(unsafe.Pointer(data))
+func (data DockNode) c() (result C.ImGuiDockNode, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data DockContext) c() C.ImGuiDockContext {
-	return *(data.handle())
+func newDockNodeFromC(cvalue *C.ImGuiDockNode) DockNode {
+	result := new(DockNode)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newDockContextFromC(cvalue C.ImGuiDockContext) DockContext {
-	return DockContext(unsafe.Pointer(&cvalue))
+// Stacked storage data for BeginGroup()/EndGroup()
+type GroupData struct {
+	FieldWindowID                           ID
+	FieldBackupCursorPos                    Vec2
+	FieldBackupCursorMaxPos                 Vec2
+	FieldBackupIndent                       Vec1
+	FieldBackupGroupOffset                  Vec1
+	FieldBackupCurrLineSize                 Vec2
+	FieldBackupCurrLineTextBaseOffset       float32
+	FieldBackupActiveIdIsAlive              ID
+	FieldBackupActiveIdPreviousFrameIsAlive bool
+	FieldBackupHoveredIdIsAlive             bool
+	FieldEmitItem                           bool
 }
+
+func (data GroupData) handle() (result *C.ImGuiGroupData, releaseFn func()) {
+	result = new(C.ImGuiGroupData)
+	FieldWindowID := data.FieldWindowID
+
+	result.WindowID = C.ImGuiID(FieldWindowID)
+	FieldBackupCursorPos := data.FieldBackupCursorPos
+
+	result.BackupCursorPos = FieldBackupCursorPos.toC()
+	FieldBackupCursorMaxPos := data.FieldBackupCursorMaxPos
+
+	result.BackupCursorMaxPos = FieldBackupCursorMaxPos.toC()
+	FieldBackupIndent := data.FieldBackupIndent
+	BackupIndentArg, BackupIndentFin := FieldBackupIndent.c()
+	result.BackupIndent = BackupIndentArg
+	FieldBackupGroupOffset := data.FieldBackupGroupOffset
+	BackupGroupOffsetArg, BackupGroupOffsetFin := FieldBackupGroupOffset.c()
+	result.BackupGroupOffset = BackupGroupOffsetArg
+	FieldBackupCurrLineSize := data.FieldBackupCurrLineSize
+
+	result.BackupCurrLineSize = FieldBackupCurrLineSize.toC()
+	FieldBackupCurrLineTextBaseOffset := data.FieldBackupCurrLineTextBaseOffset
+
+	result.BackupCurrLineTextBaseOffset = C.float(FieldBackupCurrLineTextBaseOffset)
+	FieldBackupActiveIdIsAlive := data.FieldBackupActiveIdIsAlive
 
-type DockNode uintptr
+	result.BackupActiveIdIsAlive = C.ImGuiID(FieldBackupActiveIdIsAlive)
+	FieldBackupActiveIdPreviousFrameIsAlive := data.FieldBackupActiveIdPreviousFrameIsAlive
 
-func (data DockNode) handle() *C.ImGuiDockNode {
-	return (*C.ImGuiDockNode)(unsafe.Pointer(data))
+	result.BackupActiveIdPreviousFrameIsAlive = C.bool(FieldBackupActiveIdPreviousFrameIsAlive)
+	FieldBackupHoveredIdIsAlive := data.FieldBackupHoveredIdIsAlive
+
+	result.BackupHoveredIdIsAlive = C.bool(FieldBackupHoveredIdIsAlive)
+	FieldEmitItem := data.FieldEmitItem
+
+	result.EmitItem = C.bool(FieldEmitItem)
+	releaseFn = func() {
+		BackupIndentFin()
+		BackupGroupOffsetFin()
+	}
+	return result, releaseFn
+}
+
+func (data GroupData) c() (result C.ImGuiGroupData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data DockNode) c() C.ImGuiDockNode {
-	return *(data.handle())
+func newGroupDataFromC(cvalue *C.ImGuiGroupData) GroupData {
+	result := new(GroupData)
+	result.FieldWindowID = ID(cvalue.WindowID)
+	result.FieldBackupCursorPos = *(&Vec2{}).fromC(cvalue.BackupCursorPos)
+	result.FieldBackupCursorMaxPos = *(&Vec2{}).fromC(cvalue.BackupCursorMaxPos)
+	result.FieldBackupIndent = newVec1FromC(&cvalue.BackupIndent)
+	result.FieldBackupGroupOffset = newVec1FromC(&cvalue.BackupGroupOffset)
+	result.FieldBackupCurrLineSize = *(&Vec2{}).fromC(cvalue.BackupCurrLineSize)
+	result.FieldBackupCurrLineTextBaseOffset = float32(cvalue.BackupCurrLineTextBaseOffset)
+	result.FieldBackupActiveIdIsAlive = ID(cvalue.BackupActiveIdIsAlive)
+	result.FieldBackupActiveIdPreviousFrameIsAlive = cvalue.BackupActiveIdPreviousFrameIsAlive == C.bool(true)
+	result.FieldBackupHoveredIdIsAlive = cvalue.BackupHoveredIdIsAlive == C.bool(true)
+	result.FieldEmitItem = cvalue.EmitItem == C.bool(true)
+	return *result
 }
 
-func newDockNodeFromC(cvalue C.ImGuiDockNode) DockNode {
-	return DockNode(unsafe.Pointer(&cvalue))
+type IO struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type GroupData uintptr
+func (data IO) handle() (result *C.ImGuiIO, releaseFn func()) {
+	result = (*C.ImGuiIO)(data.data)
+	return result, func() {}
+}
 
-func (data GroupData) handle() *C.ImGuiGroupData {
-	return (*C.ImGuiGroupData)(unsafe.Pointer(data))
+func (data IO) c() (result C.ImGuiIO, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data GroupData) c() C.ImGuiGroupData {
-	return *(data.handle())
+func newIOFromC(cvalue *C.ImGuiIO) IO {
+	result := new(IO)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newGroupDataFromC(cvalue C.ImGuiGroupData) GroupData {
-	return GroupData(unsafe.Pointer(&cvalue))
+type InputEvent struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type IO uintptr
+func (data InputEvent) handle() (result *C.ImGuiInputEvent, releaseFn func()) {
+	result = (*C.ImGuiInputEvent)(data.data)
+	return result, func() {}
+}
 
-func (data IO) handle() *C.ImGuiIO {
-	return (*C.ImGuiIO)(unsafe.Pointer(data))
+func (data InputEvent) c() (result C.ImGuiInputEvent, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data IO) c() C.ImGuiIO {
-	return *(data.handle())
+func newInputEventFromC(cvalue *C.ImGuiInputEvent) InputEvent {
+	result := new(InputEvent)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newIOFromC(cvalue C.ImGuiIO) IO {
-	return IO(unsafe.Pointer(&cvalue))
+type InputEventAppFocused struct {
+	FieldFocused bool
 }
+
+func (data InputEventAppFocused) handle() (result *C.ImGuiInputEventAppFocused, releaseFn func()) {
+	result = new(C.ImGuiInputEventAppFocused)
+	FieldFocused := data.FieldFocused
 
-type InputEvent uintptr
+	result.Focused = C.bool(FieldFocused)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
 
-func (data InputEvent) handle() *C.ImGuiInputEvent {
-	return (*C.ImGuiInputEvent)(unsafe.Pointer(data))
+func (data InputEventAppFocused) c() (result C.ImGuiInputEventAppFocused, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data InputEvent) c() C.ImGuiInputEvent {
-	return *(data.handle())
+func newInputEventAppFocusedFromC(cvalue *C.ImGuiInputEventAppFocused) InputEventAppFocused {
+	result := new(InputEventAppFocused)
+	result.FieldFocused = cvalue.Focused == C.bool(true)
+	return *result
 }
 
-func newInputEventFromC(cvalue C.ImGuiInputEvent) InputEvent {
-	return InputEvent(unsafe.Pointer(&cvalue))
+type InputEventKey struct {
+	FieldKey         Key
+	FieldDown        bool
+	FieldAnalogValue float32
 }
+
+func (data InputEventKey) handle() (result *C.ImGuiInputEventKey, releaseFn func()) {
+	result = new(C.ImGuiInputEventKey)
+	FieldKey := data.FieldKey
+
+	result.Key = C.ImGuiKey(FieldKey)
+	FieldDown := data.FieldDown
 
-type InputEventAppFocused uintptr
+	result.Down = C.bool(FieldDown)
+	FieldAnalogValue := data.FieldAnalogValue
 
-func (data InputEventAppFocused) handle() *C.ImGuiInputEventAppFocused {
-	return (*C.ImGuiInputEventAppFocused)(unsafe.Pointer(data))
+	result.AnalogValue = C.float(FieldAnalogValue)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
-func (data InputEventAppFocused) c() C.ImGuiInputEventAppFocused {
-	return *(data.handle())
+func (data InputEventKey) c() (result C.ImGuiInputEventKey, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newInputEventAppFocusedFromC(cvalue C.ImGuiInputEventAppFocused) InputEventAppFocused {
-	return InputEventAppFocused(unsafe.Pointer(&cvalue))
+func newInputEventKeyFromC(cvalue *C.ImGuiInputEventKey) InputEventKey {
+	result := new(InputEventKey)
+	result.FieldKey = Key(cvalue.Key)
+	result.FieldDown = cvalue.Down == C.bool(true)
+	result.FieldAnalogValue = float32(cvalue.AnalogValue)
+	return *result
 }
+
+type InputEventMouseButton struct {
+	FieldButton      int32
+	FieldDown        bool
+	FieldMouseSource MouseSource
+}
+
+func (data InputEventMouseButton) handle() (result *C.ImGuiInputEventMouseButton, releaseFn func()) {
+	result = new(C.ImGuiInputEventMouseButton)
+	FieldButton := data.FieldButton
+
+	result.Button = C.int(FieldButton)
+	FieldDown := data.FieldDown
 
-type InputEventKey uintptr
+	result.Down = C.bool(FieldDown)
+	FieldMouseSource := data.FieldMouseSource
 
-func (data InputEventKey) handle() *C.ImGuiInputEventKey {
-	return (*C.ImGuiInputEventKey)(unsafe.Pointer(data))
+	result.MouseSource = C.ImGuiMouseSource(FieldMouseSource)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
-func (data InputEventKey) c() C.ImGuiInputEventKey {
-	return *(data.handle())
+func (data InputEventMouseButton) c() (result C.ImGuiInputEventMouseButton, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newInputEventKeyFromC(cvalue C.ImGuiInputEventKey) InputEventKey {
-	return InputEventKey(unsafe.Pointer(&cvalue))
+func newInputEventMouseButtonFromC(cvalue *C.ImGuiInputEventMouseButton) InputEventMouseButton {
+	result := new(InputEventMouseButton)
+	result.FieldButton = int32(cvalue.Button)
+	result.FieldDown = cvalue.Down == C.bool(true)
+	result.FieldMouseSource = MouseSource(cvalue.MouseSource)
+	return *result
 }
 
-type InputEventMouseButton uintptr
+// FIXME: Structures in the union below need to be declared as anonymous unions appears to be an extension?
+// Using ImVec2() would fail on Clang 'union member 'MousePos' has a non-trivial default constructor'
+type InputEventMousePos struct {
+	FieldPosX        float32
+	FieldPosY        float32
+	FieldMouseSource MouseSource
+}
+
+func (data InputEventMousePos) handle() (result *C.ImGuiInputEventMousePos, releaseFn func()) {
+	result = new(C.ImGuiInputEventMousePos)
+	FieldPosX := data.FieldPosX
+
+	result.PosX = C.float(FieldPosX)
+	FieldPosY := data.FieldPosY
 
-func (data InputEventMouseButton) handle() *C.ImGuiInputEventMouseButton {
-	return (*C.ImGuiInputEventMouseButton)(unsafe.Pointer(data))
+	result.PosY = C.float(FieldPosY)
+	FieldMouseSource := data.FieldMouseSource
+
+	result.MouseSource = C.ImGuiMouseSource(FieldMouseSource)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
+
+func (data InputEventMousePos) c() (result C.ImGuiInputEventMousePos, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data InputEventMouseButton) c() C.ImGuiInputEventMouseButton {
-	return *(data.handle())
+func newInputEventMousePosFromC(cvalue *C.ImGuiInputEventMousePos) InputEventMousePos {
+	result := new(InputEventMousePos)
+	result.FieldPosX = float32(cvalue.PosX)
+	result.FieldPosY = float32(cvalue.PosY)
+	result.FieldMouseSource = MouseSource(cvalue.MouseSource)
+	return *result
 }
 
-func newInputEventMouseButtonFromC(cvalue C.ImGuiInputEventMouseButton) InputEventMouseButton {
-	return InputEventMouseButton(unsafe.Pointer(&cvalue))
+type InputEventMouseViewport struct {
+	FieldHoveredViewportID ID
 }
+
+func (data InputEventMouseViewport) handle() (result *C.ImGuiInputEventMouseViewport, releaseFn func()) {
+	result = new(C.ImGuiInputEventMouseViewport)
+	FieldHoveredViewportID := data.FieldHoveredViewportID
 
-type InputEventMousePos uintptr
+	result.HoveredViewportID = C.ImGuiID(FieldHoveredViewportID)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
 
-func (data InputEventMousePos) handle() *C.ImGuiInputEventMousePos {
-	return (*C.ImGuiInputEventMousePos)(unsafe.Pointer(data))
+func (data InputEventMouseViewport) c() (result C.ImGuiInputEventMouseViewport, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data InputEventMousePos) c() C.ImGuiInputEventMousePos {
-	return *(data.handle())
+func newInputEventMouseViewportFromC(cvalue *C.ImGuiInputEventMouseViewport) InputEventMouseViewport {
+	result := new(InputEventMouseViewport)
+	result.FieldHoveredViewportID = ID(cvalue.HoveredViewportID)
+	return *result
 }
 
-func newInputEventMousePosFromC(cvalue C.ImGuiInputEventMousePos) InputEventMousePos {
-	return InputEventMousePos(unsafe.Pointer(&cvalue))
+type InputEventMouseWheel struct {
+	FieldWheelX      float32
+	FieldWheelY      float32
+	FieldMouseSource MouseSource
 }
+
+func (data InputEventMouseWheel) handle() (result *C.ImGuiInputEventMouseWheel, releaseFn func()) {
+	result = new(C.ImGuiInputEventMouseWheel)
+	FieldWheelX := data.FieldWheelX
+
+	result.WheelX = C.float(FieldWheelX)
+	FieldWheelY := data.FieldWheelY
 
-type InputEventMouseViewport uintptr
+	result.WheelY = C.float(FieldWheelY)
+	FieldMouseSource := data.FieldMouseSource
 
-func (data InputEventMouseViewport) handle() *C.ImGuiInputEventMouseViewport {
-	return (*C.ImGuiInputEventMouseViewport)(unsafe.Pointer(data))
+	result.MouseSource = C.ImGuiMouseSource(FieldMouseSource)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
-func (data InputEventMouseViewport) c() C.ImGuiInputEventMouseViewport {
-	return *(data.handle())
+func (data InputEventMouseWheel) c() (result C.ImGuiInputEventMouseWheel, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newInputEventMouseViewportFromC(cvalue C.ImGuiInputEventMouseViewport) InputEventMouseViewport {
-	return InputEventMouseViewport(unsafe.Pointer(&cvalue))
+func newInputEventMouseWheelFromC(cvalue *C.ImGuiInputEventMouseWheel) InputEventMouseWheel {
+	result := new(InputEventMouseWheel)
+	result.FieldWheelX = float32(cvalue.WheelX)
+	result.FieldWheelY = float32(cvalue.WheelY)
+	result.FieldMouseSource = MouseSource(cvalue.MouseSource)
+	return *result
 }
 
-type InputEventMouseWheel uintptr
+type InputEventText struct {
+	FieldChar uint32
+}
+
+func (data InputEventText) handle() (result *C.ImGuiInputEventText, releaseFn func()) {
+	result = new(C.ImGuiInputEventText)
+	FieldChar := data.FieldChar
+
+	result.Char = C.uint(FieldChar)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
 
-func (data InputEventMouseWheel) handle() *C.ImGuiInputEventMouseWheel {
-	return (*C.ImGuiInputEventMouseWheel)(unsafe.Pointer(data))
+func (data InputEventText) c() (result C.ImGuiInputEventText, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data InputEventMouseWheel) c() C.ImGuiInputEventMouseWheel {
-	return *(data.handle())
+func newInputEventTextFromC(cvalue *C.ImGuiInputEventText) InputEventText {
+	result := new(InputEventText)
+	result.FieldChar = uint32(cvalue.Char)
+	return *result
 }
 
-func newInputEventMouseWheelFromC(cvalue C.ImGuiInputEventMouseWheel) InputEventMouseWheel {
-	return InputEventMouseWheel(unsafe.Pointer(&cvalue))
+// Shared state of InputText(), passed as an argument to your callback when a ImGuiInputTextFlags_Callback* flag is used.
+// The callback function should return 0 by default.
+// Callbacks (follow a flag name and see comments in ImGuiInputTextFlags_ declarations for more details)
+// - ImGuiInputTextFlags_CallbackEdit:        Callback on buffer edit (note that InputText() already returns true on edit, the callback is useful mainly to manipulate the underlying buffer while focus is active)
+// - ImGuiInputTextFlags_CallbackAlways:      Callback on each iteration
+// - ImGuiInputTextFlags_CallbackCompletion:  Callback on pressing TAB
+// - ImGuiInputTextFlags_CallbackHistory:     Callback on pressing Up/Down arrows
+// - ImGuiInputTextFlags_CallbackCharFilter:  Callback on character inputs to replace or discard them. Modify 'EventChar' to replace or discard, or return 1 in callback to discard.
+// - ImGuiInputTextFlags_CallbackResize:      Callback on buffer capacity changes request (beyond 'buf_size' parameter value), allowing the string to grow.
+type InputTextCallbackData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type InputEventText uintptr
+func (data InputTextCallbackData) handle() (result *C.ImGuiInputTextCallbackData, releaseFn func()) {
+	result = (*C.ImGuiInputTextCallbackData)(data.data)
+	return result, func() {}
+}
 
-func (data InputEventText) handle() *C.ImGuiInputEventText {
-	return (*C.ImGuiInputEventText)(unsafe.Pointer(data))
+func (data InputTextCallbackData) c() (result C.ImGuiInputTextCallbackData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data InputEventText) c() C.ImGuiInputEventText {
-	return *(data.handle())
+func newInputTextCallbackDataFromC(cvalue *C.ImGuiInputTextCallbackData) InputTextCallbackData {
+	result := new(InputTextCallbackData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newInputEventTextFromC(cvalue C.ImGuiInputEventText) InputEventText {
-	return InputEventText(unsafe.Pointer(&cvalue))
+// Internal temporary state for deactivating InputText() instances.
+type InputTextDeactivatedState struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type InputTextCallbackData uintptr
+func (data InputTextDeactivatedState) handle() (result *C.ImGuiInputTextDeactivatedState, releaseFn func()) {
+	result = (*C.ImGuiInputTextDeactivatedState)(data.data)
+	return result, func() {}
+}
 
-func (data InputTextCallbackData) handle() *C.ImGuiInputTextCallbackData {
-	return (*C.ImGuiInputTextCallbackData)(unsafe.Pointer(data))
+func (data InputTextDeactivatedState) c() (result C.ImGuiInputTextDeactivatedState, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data InputTextCallbackData) c() C.ImGuiInputTextCallbackData {
-	return *(data.handle())
+func newInputTextDeactivatedStateFromC(cvalue *C.ImGuiInputTextDeactivatedState) InputTextDeactivatedState {
+	result := new(InputTextDeactivatedState)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newInputTextCallbackDataFromC(cvalue C.ImGuiInputTextCallbackData) InputTextCallbackData {
-	return InputTextCallbackData(unsafe.Pointer(&cvalue))
+// Internal state of the currently focused/edited text input box
+// For a given item ID, access with ImGui::GetInputTextState()
+type InputTextState struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type InputTextDeactivatedState uintptr
+func (data InputTextState) handle() (result *C.ImGuiInputTextState, releaseFn func()) {
+	result = (*C.ImGuiInputTextState)(data.data)
+	return result, func() {}
+}
 
-func (data InputTextDeactivatedState) handle() *C.ImGuiInputTextDeactivatedState {
-	return (*C.ImGuiInputTextDeactivatedState)(unsafe.Pointer(data))
+func (data InputTextState) c() (result C.ImGuiInputTextState, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data InputTextDeactivatedState) c() C.ImGuiInputTextDeactivatedState {
-	return *(data.handle())
+func newInputTextStateFromC(cvalue *C.ImGuiInputTextState) InputTextState {
+	result := new(InputTextState)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newInputTextDeactivatedStateFromC(cvalue C.ImGuiInputTextDeactivatedState) InputTextDeactivatedState {
-	return InputTextDeactivatedState(unsafe.Pointer(&cvalue))
+// [Internal] Storage used by IsKeyDown(), IsKeyPressed() etc functions.
+// If prior to 1.87 you used io.KeysDownDuration[] (which was marked as internal), you should use GetKeyData(key)->DownDuration and *NOT* io.KeysData[key]->DownDuration.
+type KeyData struct {
+	FieldDown             bool    // True for if key is down
+	FieldDownDuration     float32 // Duration the key has been down (<0.0f: not pressed, 0.0f: just pressed, >0.0f: time held)
+	FieldDownDurationPrev float32 // Last frame duration the key has been down
+	FieldAnalogValue      float32 // 0.0f..1.0f for gamepad values
 }
+
+func (data KeyData) handle() (result *C.ImGuiKeyData, releaseFn func()) {
+	result = new(C.ImGuiKeyData)
+	FieldDown := data.FieldDown
+
+	result.Down = C.bool(FieldDown)
+	FieldDownDuration := data.FieldDownDuration
+
+	result.DownDuration = C.float(FieldDownDuration)
+	FieldDownDurationPrev := data.FieldDownDurationPrev
+
+	result.DownDurationPrev = C.float(FieldDownDurationPrev)
+	FieldAnalogValue := data.FieldAnalogValue
 
-type InputTextState uintptr
+	result.AnalogValue = C.float(FieldAnalogValue)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
 
-func (data InputTextState) handle() *C.ImGuiInputTextState {
-	return (*C.ImGuiInputTextState)(unsafe.Pointer(data))
+func (data KeyData) c() (result C.ImGuiKeyData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data InputTextState) c() C.ImGuiInputTextState {
-	return *(data.handle())
+func newKeyDataFromC(cvalue *C.ImGuiKeyData) KeyData {
+	result := new(KeyData)
+	result.FieldDown = cvalue.Down == C.bool(true)
+	result.FieldDownDuration = float32(cvalue.DownDuration)
+	result.FieldDownDurationPrev = float32(cvalue.DownDurationPrev)
+	result.FieldAnalogValue = float32(cvalue.AnalogValue)
+	return *result
 }
 
-func newInputTextStateFromC(cvalue C.ImGuiInputTextState) InputTextState {
-	return InputTextState(unsafe.Pointer(&cvalue))
+// This extends ImGuiKeyData but only for named keys (legacy keys don't support the new features)
+// Stored in main context (1 per named key). In the future it might be merged into ImGuiKeyData.
+type KeyOwnerData struct {
+	FieldOwnerCurr        ID
+	FieldOwnerNext        ID
+	FieldLockThisFrame    bool // Reading this key requires explicit owner id (until end of frame). Set by ImGuiInputFlags_LockThisFrame.
+	FieldLockUntilRelease bool // Reading this key requires explicit owner id (until key is released). Set by ImGuiInputFlags_LockUntilRelease. When this is true LockThisFrame is always true as well.
 }
+
+func (data KeyOwnerData) handle() (result *C.ImGuiKeyOwnerData, releaseFn func()) {
+	result = new(C.ImGuiKeyOwnerData)
+	FieldOwnerCurr := data.FieldOwnerCurr
+
+	result.OwnerCurr = C.ImGuiID(FieldOwnerCurr)
+	FieldOwnerNext := data.FieldOwnerNext
 
-type KeyData uintptr
+	result.OwnerNext = C.ImGuiID(FieldOwnerNext)
+	FieldLockThisFrame := data.FieldLockThisFrame
 
-func (data KeyData) handle() *C.ImGuiKeyData {
-	return (*C.ImGuiKeyData)(unsafe.Pointer(data))
+	result.LockThisFrame = C.bool(FieldLockThisFrame)
+	FieldLockUntilRelease := data.FieldLockUntilRelease
+
+	result.LockUntilRelease = C.bool(FieldLockUntilRelease)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
+
+func (data KeyOwnerData) c() (result C.ImGuiKeyOwnerData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data KeyData) c() C.ImGuiKeyData {
-	return *(data.handle())
+func newKeyOwnerDataFromC(cvalue *C.ImGuiKeyOwnerData) KeyOwnerData {
+	result := new(KeyOwnerData)
+	result.FieldOwnerCurr = ID(cvalue.OwnerCurr)
+	result.FieldOwnerNext = ID(cvalue.OwnerNext)
+	result.FieldLockThisFrame = cvalue.LockThisFrame == C.bool(true)
+	result.FieldLockUntilRelease = cvalue.LockUntilRelease == C.bool(true)
+	return *result
 }
 
-func newKeyDataFromC(cvalue C.ImGuiKeyData) KeyData {
-	return KeyData(unsafe.Pointer(&cvalue))
+// Routing table entry (sizeof() == 16 bytes)
+type KeyRoutingData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type KeyOwnerData uintptr
+func (data KeyRoutingData) handle() (result *C.ImGuiKeyRoutingData, releaseFn func()) {
+	result = (*C.ImGuiKeyRoutingData)(data.data)
+	return result, func() {}
+}
 
-func (data KeyOwnerData) handle() *C.ImGuiKeyOwnerData {
-	return (*C.ImGuiKeyOwnerData)(unsafe.Pointer(data))
+func (data KeyRoutingData) c() (result C.ImGuiKeyRoutingData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data KeyOwnerData) c() C.ImGuiKeyOwnerData {
-	return *(data.handle())
+func newKeyRoutingDataFromC(cvalue *C.ImGuiKeyRoutingData) KeyRoutingData {
+	result := new(KeyRoutingData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newKeyOwnerDataFromC(cvalue C.ImGuiKeyOwnerData) KeyOwnerData {
-	return KeyOwnerData(unsafe.Pointer(&cvalue))
+// Routing table: maintain a desired owner for each possible key-chord (key + mods), and setup owner in NewFrame() when mods are matching.
+// Stored in main context (1 instance)
+type KeyRoutingTable struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type KeyRoutingData uintptr
+func (data KeyRoutingTable) handle() (result *C.ImGuiKeyRoutingTable, releaseFn func()) {
+	result = (*C.ImGuiKeyRoutingTable)(data.data)
+	return result, func() {}
+}
 
-func (data KeyRoutingData) handle() *C.ImGuiKeyRoutingData {
-	return (*C.ImGuiKeyRoutingData)(unsafe.Pointer(data))
+func (data KeyRoutingTable) c() (result C.ImGuiKeyRoutingTable, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data KeyRoutingData) c() C.ImGuiKeyRoutingData {
-	return *(data.handle())
+func newKeyRoutingTableFromC(cvalue *C.ImGuiKeyRoutingTable) KeyRoutingTable {
+	result := new(KeyRoutingTable)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newKeyRoutingDataFromC(cvalue C.ImGuiKeyRoutingData) KeyRoutingData {
-	return KeyRoutingData(unsafe.Pointer(&cvalue))
+// Status storage for the last submitted item
+type LastItemData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type KeyRoutingTable uintptr
+func (data LastItemData) handle() (result *C.ImGuiLastItemData, releaseFn func()) {
+	result = (*C.ImGuiLastItemData)(data.data)
+	return result, func() {}
+}
 
-func (data KeyRoutingTable) handle() *C.ImGuiKeyRoutingTable {
-	return (*C.ImGuiKeyRoutingTable)(unsafe.Pointer(data))
+func (data LastItemData) c() (result C.ImGuiLastItemData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data KeyRoutingTable) c() C.ImGuiKeyRoutingTable {
-	return *(data.handle())
+func newLastItemDataFromC(cvalue *C.ImGuiLastItemData) LastItemData {
+	result := new(LastItemData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newKeyRoutingTableFromC(cvalue C.ImGuiKeyRoutingTable) KeyRoutingTable {
-	return KeyRoutingTable(unsafe.Pointer(&cvalue))
+// Helper: Manually clip large list of items.
+// If you have lots evenly spaced items and you have random access to the list, you can perform coarse
+// clipping based on visibility to only submit items that are in view.
+// The clipper calculates the range of visible items and advance the cursor to compensate for the non-visible items we have skipped.
+// (Dear ImGui already clip items based on their bounds but: it needs to first layout the item to do so, and generally
+//
+//	fetching/submitting your own data incurs additional cost. Coarse clipping using ImGuiListClipper allows you to easily
+//	scale using lists with tens of thousands of items without a problem)
+//
+// Usage:
+//
+//	ImGuiListClipper clipper;
+//	clipper.Begin(1000);         // We have 1000 elements, evenly spaced.
+//	while (clipper.Step())
+//	    for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
+//	        ImGui::Text("line number %d", i);
+//
+// Generally what happens is:
+// - Clipper lets you process the first element (DisplayStart = 0, DisplayEnd = 1) regardless of it being visible or not.
+// - User code submit that one element.
+// - Clipper can measure the height of the first element
+// - Clipper calculate the actual range of elements to display based on the current clipping rectangle, position the cursor before the first visible element.
+// - User code submit visible elements.
+// - The clipper also handles various subtleties related to keyboard/gamepad navigation, wrapping etc.
+type ListClipper struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type LastItemData uintptr
+func (data ListClipper) handle() (result *C.ImGuiListClipper, releaseFn func()) {
+	result = (*C.ImGuiListClipper)(data.data)
+	return result, func() {}
+}
 
-func (data LastItemData) handle() *C.ImGuiLastItemData {
-	return (*C.ImGuiLastItemData)(unsafe.Pointer(data))
+func (data ListClipper) c() (result C.ImGuiListClipper, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data LastItemData) c() C.ImGuiLastItemData {
-	return *(data.handle())
+func newListClipperFromC(cvalue *C.ImGuiListClipper) ListClipper {
+	result := new(ListClipper)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newLastItemDataFromC(cvalue C.ImGuiLastItemData) LastItemData {
-	return LastItemData(unsafe.Pointer(&cvalue))
+// Temporary clipper data, buffers shared/reused between instances
+type ListClipperData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type ListClipper uintptr
+func (data ListClipperData) handle() (result *C.ImGuiListClipperData, releaseFn func()) {
+	result = (*C.ImGuiListClipperData)(data.data)
+	return result, func() {}
+}
 
-func (data ListClipper) handle() *C.ImGuiListClipper {
-	return (*C.ImGuiListClipper)(unsafe.Pointer(data))
+func (data ListClipperData) c() (result C.ImGuiListClipperData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data ListClipper) c() C.ImGuiListClipper {
-	return *(data.handle())
+func newListClipperDataFromC(cvalue *C.ImGuiListClipperData) ListClipperData {
+	result := new(ListClipperData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newListClipperFromC(cvalue C.ImGuiListClipper) ListClipper {
-	return ListClipper(unsafe.Pointer(&cvalue))
+// Note that Max is exclusive, so perhaps should be using a Begin/End convention.
+type ListClipperRange struct {
+	FieldMin                 int32
+	FieldMax                 int32
+	FieldPosToIndexConvert   bool // Begin/End are absolute position (will be converted to indices later)
+	FieldPosToIndexOffsetMin int  // Add to Min after converting to indices
+	FieldPosToIndexOffsetMax int  // Add to Min after converting to indices
 }
+
+func (data ListClipperRange) handle() (result *C.ImGuiListClipperRange, releaseFn func()) {
+	result = new(C.ImGuiListClipperRange)
+	FieldMin := data.FieldMin
+
+	result.Min = C.int(FieldMin)
+	FieldMax := data.FieldMax
+
+	result.Max = C.int(FieldMax)
+	FieldPosToIndexConvert := data.FieldPosToIndexConvert
 
-type ListClipperData uintptr
+	result.PosToIndexConvert = C.bool(FieldPosToIndexConvert)
+	FieldPosToIndexOffsetMin := data.FieldPosToIndexOffsetMin
 
-func (data ListClipperData) handle() *C.ImGuiListClipperData {
-	return (*C.ImGuiListClipperData)(unsafe.Pointer(data))
+	result.PosToIndexOffsetMin = C.ImS8(FieldPosToIndexOffsetMin)
+	FieldPosToIndexOffsetMax := data.FieldPosToIndexOffsetMax
+
+	result.PosToIndexOffsetMax = C.ImS8(FieldPosToIndexOffsetMax)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
+
+func (data ListClipperRange) c() (result C.ImGuiListClipperRange, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data ListClipperData) c() C.ImGuiListClipperData {
-	return *(data.handle())
+func newListClipperRangeFromC(cvalue *C.ImGuiListClipperRange) ListClipperRange {
+	result := new(ListClipperRange)
+	result.FieldMin = int32(cvalue.Min)
+	result.FieldMax = int32(cvalue.Max)
+	result.FieldPosToIndexConvert = cvalue.PosToIndexConvert == C.bool(true)
+	result.FieldPosToIndexOffsetMin = int(cvalue.PosToIndexOffsetMin)
+	result.FieldPosToIndexOffsetMax = int(cvalue.PosToIndexOffsetMax)
+	return *result
 }
 
-func newListClipperDataFromC(cvalue C.ImGuiListClipperData) ListClipperData {
-	return ListClipperData(unsafe.Pointer(&cvalue))
+type LocEntry struct {
+	FieldKey  LocKey
+	FieldText string
 }
 
-type ListClipperRange uintptr
+func (data LocEntry) handle() (result *C.ImGuiLocEntry, releaseFn func()) {
+	result = new(C.ImGuiLocEntry)
+	FieldKey := data.FieldKey
 
-func (data ListClipperRange) handle() *C.ImGuiListClipperRange {
-	return (*C.ImGuiListClipperRange)(unsafe.Pointer(data))
+	result.Key = C.ImGuiLocKey(FieldKey)
+	FieldText := data.FieldText
+	FieldTextArg, FieldTextFin := wrapString(FieldText)
+	result.Text = FieldTextArg
+	releaseFn = func() {
+		FieldTextFin()
+	}
+	return result, releaseFn
 }
 
-func (data ListClipperRange) c() C.ImGuiListClipperRange {
-	return *(data.handle())
+func (data LocEntry) c() (result C.ImGuiLocEntry, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newListClipperRangeFromC(cvalue C.ImGuiListClipperRange) ListClipperRange {
-	return ListClipperRange(unsafe.Pointer(&cvalue))
+func newLocEntryFromC(cvalue *C.ImGuiLocEntry) LocEntry {
+	result := new(LocEntry)
+	result.FieldKey = LocKey(cvalue.Key)
+	result.FieldText = C.GoString(cvalue.Text)
+	return *result
 }
 
-type LocEntry uintptr
+// Simple column measurement, currently used for MenuItem() only.. This is very short-sighted/throw-away code and NOT a generic helper.
+type MenuColumns struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
+
+func (data MenuColumns) handle() (result *C.ImGuiMenuColumns, releaseFn func()) {
+	result = (*C.ImGuiMenuColumns)(data.data)
+	return result, func() {}
+}
 
-func (data LocEntry) handle() *C.ImGuiLocEntry {
-	return (*C.ImGuiLocEntry)(unsafe.Pointer(data))
+func (data MenuColumns) c() (result C.ImGuiMenuColumns, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data LocEntry) c() C.ImGuiLocEntry {
-	return *(data.handle())
+func newMenuColumnsFromC(cvalue *C.ImGuiMenuColumns) MenuColumns {
+	result := new(MenuColumns)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newLocEntryFromC(cvalue C.ImGuiLocEntry) LocEntry {
-	return LocEntry(unsafe.Pointer(&cvalue))
+type MetricsConfig struct {
+	FieldShowDebugLog                 bool
+	FieldShowStackTool                bool
+	FieldShowWindowsRects             bool
+	FieldShowWindowsBeginOrder        bool
+	FieldShowTablesRects              bool
+	FieldShowDrawCmdMesh              bool
+	FieldShowDrawCmdBoundingBoxes     bool
+	FieldShowAtlasTintedWithTextColor bool
+	FieldShowDockingNodes             bool
+	FieldShowWindowsRectsType         int32
+	FieldShowTablesRectsType          int32
 }
+
+func (data MetricsConfig) handle() (result *C.ImGuiMetricsConfig, releaseFn func()) {
+	result = new(C.ImGuiMetricsConfig)
+	FieldShowDebugLog := data.FieldShowDebugLog
+
+	result.ShowDebugLog = C.bool(FieldShowDebugLog)
+	FieldShowStackTool := data.FieldShowStackTool
+
+	result.ShowStackTool = C.bool(FieldShowStackTool)
+	FieldShowWindowsRects := data.FieldShowWindowsRects
+
+	result.ShowWindowsRects = C.bool(FieldShowWindowsRects)
+	FieldShowWindowsBeginOrder := data.FieldShowWindowsBeginOrder
+
+	result.ShowWindowsBeginOrder = C.bool(FieldShowWindowsBeginOrder)
+	FieldShowTablesRects := data.FieldShowTablesRects
+
+	result.ShowTablesRects = C.bool(FieldShowTablesRects)
+	FieldShowDrawCmdMesh := data.FieldShowDrawCmdMesh
+
+	result.ShowDrawCmdMesh = C.bool(FieldShowDrawCmdMesh)
+	FieldShowDrawCmdBoundingBoxes := data.FieldShowDrawCmdBoundingBoxes
+
+	result.ShowDrawCmdBoundingBoxes = C.bool(FieldShowDrawCmdBoundingBoxes)
+	FieldShowAtlasTintedWithTextColor := data.FieldShowAtlasTintedWithTextColor
 
-type MenuColumns uintptr
+	result.ShowAtlasTintedWithTextColor = C.bool(FieldShowAtlasTintedWithTextColor)
+	FieldShowDockingNodes := data.FieldShowDockingNodes
 
-func (data MenuColumns) handle() *C.ImGuiMenuColumns {
-	return (*C.ImGuiMenuColumns)(unsafe.Pointer(data))
+	result.ShowDockingNodes = C.bool(FieldShowDockingNodes)
+	FieldShowWindowsRectsType := data.FieldShowWindowsRectsType
+
+	result.ShowWindowsRectsType = C.int(FieldShowWindowsRectsType)
+	FieldShowTablesRectsType := data.FieldShowTablesRectsType
+
+	result.ShowTablesRectsType = C.int(FieldShowTablesRectsType)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
+
+func (data MetricsConfig) c() (result C.ImGuiMetricsConfig, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data MenuColumns) c() C.ImGuiMenuColumns {
-	return *(data.handle())
+func newMetricsConfigFromC(cvalue *C.ImGuiMetricsConfig) MetricsConfig {
+	result := new(MetricsConfig)
+	result.FieldShowDebugLog = cvalue.ShowDebugLog == C.bool(true)
+	result.FieldShowStackTool = cvalue.ShowStackTool == C.bool(true)
+	result.FieldShowWindowsRects = cvalue.ShowWindowsRects == C.bool(true)
+	result.FieldShowWindowsBeginOrder = cvalue.ShowWindowsBeginOrder == C.bool(true)
+	result.FieldShowTablesRects = cvalue.ShowTablesRects == C.bool(true)
+	result.FieldShowDrawCmdMesh = cvalue.ShowDrawCmdMesh == C.bool(true)
+	result.FieldShowDrawCmdBoundingBoxes = cvalue.ShowDrawCmdBoundingBoxes == C.bool(true)
+	result.FieldShowAtlasTintedWithTextColor = cvalue.ShowAtlasTintedWithTextColor == C.bool(true)
+	result.FieldShowDockingNodes = cvalue.ShowDockingNodes == C.bool(true)
+	result.FieldShowWindowsRectsType = int32(cvalue.ShowWindowsRectsType)
+	result.FieldShowTablesRectsType = int32(cvalue.ShowTablesRectsType)
+	return *result
 }
 
-func newMenuColumnsFromC(cvalue C.ImGuiMenuColumns) MenuColumns {
-	return MenuColumns(unsafe.Pointer(&cvalue))
+type NavItemData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type MetricsConfig uintptr
+func (data NavItemData) handle() (result *C.ImGuiNavItemData, releaseFn func()) {
+	result = (*C.ImGuiNavItemData)(data.data)
+	return result, func() {}
+}
 
-func (data MetricsConfig) handle() *C.ImGuiMetricsConfig {
-	return (*C.ImGuiMetricsConfig)(unsafe.Pointer(data))
+func (data NavItemData) c() (result C.ImGuiNavItemData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data MetricsConfig) c() C.ImGuiMetricsConfig {
-	return *(data.handle())
+func newNavItemDataFromC(cvalue *C.ImGuiNavItemData) NavItemData {
+	result := new(NavItemData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newMetricsConfigFromC(cvalue C.ImGuiMetricsConfig) MetricsConfig {
-	return MetricsConfig(unsafe.Pointer(&cvalue))
+// Store data emitted by TreeNode() for usage by TreePop() to implement ImGuiTreeNodeFlags_NavLeftJumpsBackHere.
+// This is the minimum amount of data that we need to perform the equivalent of NavApplyItemToResult() and which we can't infer in TreePop()
+// Only stored when the node is a potential candidate for landing on a Left arrow jump.
+type NavTreeNodeData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type NavItemData uintptr
+func (data NavTreeNodeData) handle() (result *C.ImGuiNavTreeNodeData, releaseFn func()) {
+	result = (*C.ImGuiNavTreeNodeData)(data.data)
+	return result, func() {}
+}
 
-func (data NavItemData) handle() *C.ImGuiNavItemData {
-	return (*C.ImGuiNavItemData)(unsafe.Pointer(data))
+func (data NavTreeNodeData) c() (result C.ImGuiNavTreeNodeData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data NavItemData) c() C.ImGuiNavItemData {
-	return *(data.handle())
+func newNavTreeNodeDataFromC(cvalue *C.ImGuiNavTreeNodeData) NavTreeNodeData {
+	result := new(NavTreeNodeData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newNavItemDataFromC(cvalue C.ImGuiNavItemData) NavItemData {
-	return NavItemData(unsafe.Pointer(&cvalue))
+type NextItemData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type NavTreeNodeData uintptr
+func (data NextItemData) handle() (result *C.ImGuiNextItemData, releaseFn func()) {
+	result = (*C.ImGuiNextItemData)(data.data)
+	return result, func() {}
+}
 
-func (data NavTreeNodeData) handle() *C.ImGuiNavTreeNodeData {
-	return (*C.ImGuiNavTreeNodeData)(unsafe.Pointer(data))
+func (data NextItemData) c() (result C.ImGuiNextItemData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data NavTreeNodeData) c() C.ImGuiNavTreeNodeData {
-	return *(data.handle())
+func newNextItemDataFromC(cvalue *C.ImGuiNextItemData) NextItemData {
+	result := new(NextItemData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newNavTreeNodeDataFromC(cvalue C.ImGuiNavTreeNodeData) NavTreeNodeData {
-	return NavTreeNodeData(unsafe.Pointer(&cvalue))
+// Storage for SetNexWindow** functions
+type NextWindowData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type NextItemData uintptr
+func (data NextWindowData) handle() (result *C.ImGuiNextWindowData, releaseFn func()) {
+	result = (*C.ImGuiNextWindowData)(data.data)
+	return result, func() {}
+}
 
-func (data NextItemData) handle() *C.ImGuiNextItemData {
-	return (*C.ImGuiNextItemData)(unsafe.Pointer(data))
+func (data NextWindowData) c() (result C.ImGuiNextWindowData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data NextItemData) c() C.ImGuiNextItemData {
-	return *(data.handle())
+func newNextWindowDataFromC(cvalue *C.ImGuiNextWindowData) NextWindowData {
+	result := new(NextWindowData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newNextItemDataFromC(cvalue C.ImGuiNextItemData) NextItemData {
-	return NextItemData(unsafe.Pointer(&cvalue))
+type OldColumnData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type NextWindowData uintptr
+func (data OldColumnData) handle() (result *C.ImGuiOldColumnData, releaseFn func()) {
+	result = (*C.ImGuiOldColumnData)(data.data)
+	return result, func() {}
+}
 
-func (data NextWindowData) handle() *C.ImGuiNextWindowData {
-	return (*C.ImGuiNextWindowData)(unsafe.Pointer(data))
+func (data OldColumnData) c() (result C.ImGuiOldColumnData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data NextWindowData) c() C.ImGuiNextWindowData {
-	return *(data.handle())
+func newOldColumnDataFromC(cvalue *C.ImGuiOldColumnData) OldColumnData {
+	result := new(OldColumnData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newNextWindowDataFromC(cvalue C.ImGuiNextWindowData) NextWindowData {
-	return NextWindowData(unsafe.Pointer(&cvalue))
+type OldColumns struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type OldColumnData uintptr
+func (data OldColumns) handle() (result *C.ImGuiOldColumns, releaseFn func()) {
+	result = (*C.ImGuiOldColumns)(data.data)
+	return result, func() {}
+}
 
-func (data OldColumnData) handle() *C.ImGuiOldColumnData {
-	return (*C.ImGuiOldColumnData)(unsafe.Pointer(data))
+func (data OldColumns) c() (result C.ImGuiOldColumns, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data OldColumnData) c() C.ImGuiOldColumnData {
-	return *(data.handle())
+func newOldColumnsFromC(cvalue *C.ImGuiOldColumns) OldColumns {
+	result := new(OldColumns)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newOldColumnDataFromC(cvalue C.ImGuiOldColumnData) OldColumnData {
-	return OldColumnData(unsafe.Pointer(&cvalue))
+// Helper: Execute a block of code at maximum once a frame. Convenient if you want to quickly create a UI within deep-nested code that runs multiple times every frame.
+// Usage: static ImGuiOnceUponAFrame oaf; if (oaf) ImGui::Text("This will be called only once per frame");
+type OnceUponAFrame struct {
+	FieldRefFrame int32
 }
 
-type OldColumns uintptr
+func (data OnceUponAFrame) handle() (result *C.ImGuiOnceUponAFrame, releaseFn func()) {
+	result = new(C.ImGuiOnceUponAFrame)
+	FieldRefFrame := data.FieldRefFrame
 
-func (data OldColumns) handle() *C.ImGuiOldColumns {
-	return (*C.ImGuiOldColumns)(unsafe.Pointer(data))
+	result.RefFrame = C.int(FieldRefFrame)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
-func (data OldColumns) c() C.ImGuiOldColumns {
-	return *(data.handle())
+func (data OnceUponAFrame) c() (result C.ImGuiOnceUponAFrame, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newOldColumnsFromC(cvalue C.ImGuiOldColumns) OldColumns {
-	return OldColumns(unsafe.Pointer(&cvalue))
+func newOnceUponAFrameFromC(cvalue *C.ImGuiOnceUponAFrame) OnceUponAFrame {
+	result := new(OnceUponAFrame)
+	result.FieldRefFrame = int32(cvalue.RefFrame)
+	return *result
 }
 
-type OnceUponAFrame uintptr
+// Data payload for Drag and Drop operations: AcceptDragDropPayload(), GetDragDropPayload()
+type Payload struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
+
+func (data Payload) handle() (result *C.ImGuiPayload, releaseFn func()) {
+	result = (*C.ImGuiPayload)(data.data)
+	return result, func() {}
+}
 
-func (data OnceUponAFrame) handle() *C.ImGuiOnceUponAFrame {
-	return (*C.ImGuiOnceUponAFrame)(unsafe.Pointer(data))
+func (data Payload) c() (result C.ImGuiPayload, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data OnceUponAFrame) c() C.ImGuiOnceUponAFrame {
-	return *(data.handle())
+func newPayloadFromC(cvalue *C.ImGuiPayload) Payload {
+	result := new(Payload)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newOnceUponAFrameFromC(cvalue C.ImGuiOnceUponAFrame) OnceUponAFrame {
-	return OnceUponAFrame(unsafe.Pointer(&cvalue))
+// (Optional) Access via ImGui::GetPlatformIO()
+type PlatformIO struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type Payload uintptr
+func (data PlatformIO) handle() (result *C.ImGuiPlatformIO, releaseFn func()) {
+	result = (*C.ImGuiPlatformIO)(data.data)
+	return result, func() {}
+}
 
-func (data Payload) handle() *C.ImGuiPayload {
-	return (*C.ImGuiPayload)(unsafe.Pointer(data))
+func (data PlatformIO) c() (result C.ImGuiPlatformIO, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data Payload) c() C.ImGuiPayload {
-	return *(data.handle())
+func newPlatformIOFromC(cvalue *C.ImGuiPlatformIO) PlatformIO {
+	result := new(PlatformIO)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPayloadFromC(cvalue C.ImGuiPayload) Payload {
-	return Payload(unsafe.Pointer(&cvalue))
+// (Optional) Support for IME (Input Method Editor) via the io.SetPlatformImeDataFn() function.
+type PlatformImeData struct {
+	FieldWantVisible     bool    // A widget wants the IME to be visible
+	FieldInputPos        Vec2    // Position of the input cursor
+	FieldInputLineHeight float32 // Line height
 }
 
-type PlatformIO uintptr
+func (data PlatformImeData) handle() (result *C.ImGuiPlatformImeData, releaseFn func()) {
+	result = new(C.ImGuiPlatformImeData)
+	FieldWantVisible := data.FieldWantVisible
 
-func (data PlatformIO) handle() *C.ImGuiPlatformIO {
-	return (*C.ImGuiPlatformIO)(unsafe.Pointer(data))
+	result.WantVisible = C.bool(FieldWantVisible)
+	FieldInputPos := data.FieldInputPos
+
+	result.InputPos = FieldInputPos.toC()
+	FieldInputLineHeight := data.FieldInputLineHeight
+
+	result.InputLineHeight = C.float(FieldInputLineHeight)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
+
+func (data PlatformImeData) c() (result C.ImGuiPlatformImeData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlatformIO) c() C.ImGuiPlatformIO {
-	return *(data.handle())
+func newPlatformImeDataFromC(cvalue *C.ImGuiPlatformImeData) PlatformImeData {
+	result := new(PlatformImeData)
+	result.FieldWantVisible = cvalue.WantVisible == C.bool(true)
+	result.FieldInputPos = *(&Vec2{}).fromC(cvalue.InputPos)
+	result.FieldInputLineHeight = float32(cvalue.InputLineHeight)
+	return *result
 }
 
-func newPlatformIOFromC(cvalue C.ImGuiPlatformIO) PlatformIO {
-	return PlatformIO(unsafe.Pointer(&cvalue))
+// (Optional) This is required when enabling multi-viewport. Represent the bounds of each connected monitor/display and their DPI.
+// We use this information for multiple DPI support + clamping the position of popups and tooltips so they don't straddle multiple monitors.
+type PlatformMonitor struct {
+	FieldMainPos        Vec2           // Coordinates of the area displayed on this monitor (Min = upper left, Max = bottom right)
+	FieldMainSize       Vec2           // Coordinates of the area displayed on this monitor (Min = upper left, Max = bottom right)
+	FieldWorkPos        Vec2           // Coordinates without task bars / side bars / menu bars. Used to avoid positioning popups/tooltips inside this region. If you don't have this info, please copy the value for MainPos/MainSize.
+	FieldWorkSize       Vec2           // Coordinates without task bars / side bars / menu bars. Used to avoid positioning popups/tooltips inside this region. If you don't have this info, please copy the value for MainPos/MainSize.
+	FieldDpiScale       float32        // 1.0f = 96 DPI
+	FieldPlatformHandle unsafe.Pointer // Backend dependant data (e.g. HMONITOR, GLFWmonitor*, SDL Display Index, NSScreen*)
 }
+
+func (data PlatformMonitor) handle() (result *C.ImGuiPlatformMonitor, releaseFn func()) {
+	result = new(C.ImGuiPlatformMonitor)
+	FieldMainPos := data.FieldMainPos
+
+	result.MainPos = FieldMainPos.toC()
+	FieldMainSize := data.FieldMainSize
+
+	result.MainSize = FieldMainSize.toC()
+	FieldWorkPos := data.FieldWorkPos
 
-type PlatformImeData uintptr
+	result.WorkPos = FieldWorkPos.toC()
+	FieldWorkSize := data.FieldWorkSize
 
-func (data PlatformImeData) handle() *C.ImGuiPlatformImeData {
-	return (*C.ImGuiPlatformImeData)(unsafe.Pointer(data))
+	result.WorkSize = FieldWorkSize.toC()
+	FieldDpiScale := data.FieldDpiScale
+
+	result.DpiScale = C.float(FieldDpiScale)
+	FieldPlatformHandle := data.FieldPlatformHandle
+
+	result.PlatformHandle = (FieldPlatformHandle)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
+
+func (data PlatformMonitor) c() (result C.ImGuiPlatformMonitor, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlatformImeData) c() C.ImGuiPlatformImeData {
-	return *(data.handle())
+func newPlatformMonitorFromC(cvalue *C.ImGuiPlatformMonitor) PlatformMonitor {
+	result := new(PlatformMonitor)
+	result.FieldMainPos = *(&Vec2{}).fromC(cvalue.MainPos)
+	result.FieldMainSize = *(&Vec2{}).fromC(cvalue.MainSize)
+	result.FieldWorkPos = *(&Vec2{}).fromC(cvalue.WorkPos)
+	result.FieldWorkSize = *(&Vec2{}).fromC(cvalue.WorkSize)
+	result.FieldDpiScale = float32(cvalue.DpiScale)
+	result.FieldPlatformHandle = unsafe.Pointer(cvalue.PlatformHandle)
+	return *result
 }
 
-func newPlatformImeDataFromC(cvalue C.ImGuiPlatformImeData) PlatformImeData {
-	return PlatformImeData(unsafe.Pointer(&cvalue))
+// Storage for current popup stack
+type PopupData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PlatformMonitor uintptr
+func (data PopupData) handle() (result *C.ImGuiPopupData, releaseFn func()) {
+	result = (*C.ImGuiPopupData)(data.data)
+	return result, func() {}
+}
 
-func (data PlatformMonitor) handle() *C.ImGuiPlatformMonitor {
-	return (*C.ImGuiPlatformMonitor)(unsafe.Pointer(data))
+func (data PopupData) c() (result C.ImGuiPopupData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PlatformMonitor) c() C.ImGuiPlatformMonitor {
-	return *(data.handle())
+func newPopupDataFromC(cvalue *C.ImGuiPopupData) PopupData {
+	result := new(PopupData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPlatformMonitorFromC(cvalue C.ImGuiPlatformMonitor) PlatformMonitor {
-	return PlatformMonitor(unsafe.Pointer(&cvalue))
+type PtrOrIndex struct {
+	FieldPtr   unsafe.Pointer // Either field can be set, not both. e.g. Dock node tab bars are loose while BeginTabBar() ones are in a pool.
+	FieldIndex int32          // Usually index in a main pool.
 }
+
+func (data PtrOrIndex) handle() (result *C.ImGuiPtrOrIndex, releaseFn func()) {
+	result = new(C.ImGuiPtrOrIndex)
+	FieldPtr := data.FieldPtr
+
+	result.Ptr = (FieldPtr)
+	FieldIndex := data.FieldIndex
 
-type PopupData uintptr
+	result.Index = C.int(FieldIndex)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
 
-func (data PopupData) handle() *C.ImGuiPopupData {
-	return (*C.ImGuiPopupData)(unsafe.Pointer(data))
+func (data PtrOrIndex) c() (result C.ImGuiPtrOrIndex, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PopupData) c() C.ImGuiPopupData {
-	return *(data.handle())
+func newPtrOrIndexFromC(cvalue *C.ImGuiPtrOrIndex) PtrOrIndex {
+	result := new(PtrOrIndex)
+	result.FieldPtr = unsafe.Pointer(cvalue.Ptr)
+	result.FieldIndex = int32(cvalue.Index)
+	return *result
 }
 
-func newPopupDataFromC(cvalue C.ImGuiPopupData) PopupData {
-	return PopupData(unsafe.Pointer(&cvalue))
+type SettingsHandler struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type PtrOrIndex uintptr
+func (data SettingsHandler) handle() (result *C.ImGuiSettingsHandler, releaseFn func()) {
+	result = (*C.ImGuiSettingsHandler)(data.data)
+	return result, func() {}
+}
 
-func (data PtrOrIndex) handle() *C.ImGuiPtrOrIndex {
-	return (*C.ImGuiPtrOrIndex)(unsafe.Pointer(data))
+func (data SettingsHandler) c() (result C.ImGuiSettingsHandler, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data PtrOrIndex) c() C.ImGuiPtrOrIndex {
-	return *(data.handle())
+func newSettingsHandlerFromC(cvalue *C.ImGuiSettingsHandler) SettingsHandler {
+	result := new(SettingsHandler)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newPtrOrIndexFromC(cvalue C.ImGuiPtrOrIndex) PtrOrIndex {
-	return PtrOrIndex(unsafe.Pointer(&cvalue))
+type ShrinkWidthItem struct {
+	FieldIndex        int32
+	FieldWidth        float32
+	FieldInitialWidth float32
 }
+
+func (data ShrinkWidthItem) handle() (result *C.ImGuiShrinkWidthItem, releaseFn func()) {
+	result = new(C.ImGuiShrinkWidthItem)
+	FieldIndex := data.FieldIndex
 
-type SettingsHandler uintptr
+	result.Index = C.int(FieldIndex)
+	FieldWidth := data.FieldWidth
 
-func (data SettingsHandler) handle() *C.ImGuiSettingsHandler {
-	return (*C.ImGuiSettingsHandler)(unsafe.Pointer(data))
+	result.Width = C.float(FieldWidth)
+	FieldInitialWidth := data.FieldInitialWidth
+
+	result.InitialWidth = C.float(FieldInitialWidth)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
+
+func (data ShrinkWidthItem) c() (result C.ImGuiShrinkWidthItem, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data SettingsHandler) c() C.ImGuiSettingsHandler {
-	return *(data.handle())
+func newShrinkWidthItemFromC(cvalue *C.ImGuiShrinkWidthItem) ShrinkWidthItem {
+	result := new(ShrinkWidthItem)
+	result.FieldIndex = int32(cvalue.Index)
+	result.FieldWidth = float32(cvalue.Width)
+	result.FieldInitialWidth = float32(cvalue.InitialWidth)
+	return *result
 }
 
-func newSettingsHandlerFromC(cvalue C.ImGuiSettingsHandler) SettingsHandler {
-	return SettingsHandler(unsafe.Pointer(&cvalue))
+// Resizing callback data to apply custom constraint. As enabled by SetNextWindowSizeConstraints(). Callback is called during the next Begin().
+// NB: For basic min/max size constraint on each axis you don't need to use the callback! The SetNextWindowSizeConstraints() parameters are enough.
+type SizeCallbackData struct {
+	FieldUserData    unsafe.Pointer // Read-only.   What user passed to SetNextWindowSizeConstraints(). Generally store an integer or float in here (need reinterpret_cast<>).
+	FieldPos         Vec2           // Read-only.   Window position, for reference.
+	FieldCurrentSize Vec2           // Read-only.   Current window size.
+	FieldDesiredSize Vec2           // Read-write.  Desired size, based on user's mouse position. Write to this field to restrain resizing.
 }
+
+func (data SizeCallbackData) handle() (result *C.ImGuiSizeCallbackData, releaseFn func()) {
+	result = new(C.ImGuiSizeCallbackData)
+	FieldUserData := data.FieldUserData
 
-type ShrinkWidthItem uintptr
+	result.UserData = (FieldUserData)
+	FieldPos := data.FieldPos
 
-func (data ShrinkWidthItem) handle() *C.ImGuiShrinkWidthItem {
-	return (*C.ImGuiShrinkWidthItem)(unsafe.Pointer(data))
+	result.Pos = FieldPos.toC()
+	FieldCurrentSize := data.FieldCurrentSize
+
+	result.CurrentSize = FieldCurrentSize.toC()
+	FieldDesiredSize := data.FieldDesiredSize
+
+	result.DesiredSize = FieldDesiredSize.toC()
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
+
+func (data SizeCallbackData) c() (result C.ImGuiSizeCallbackData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data ShrinkWidthItem) c() C.ImGuiShrinkWidthItem {
-	return *(data.handle())
+func newSizeCallbackDataFromC(cvalue *C.ImGuiSizeCallbackData) SizeCallbackData {
+	result := new(SizeCallbackData)
+	result.FieldUserData = unsafe.Pointer(cvalue.UserData)
+	result.FieldPos = *(&Vec2{}).fromC(cvalue.Pos)
+	result.FieldCurrentSize = *(&Vec2{}).fromC(cvalue.CurrentSize)
+	result.FieldDesiredSize = *(&Vec2{}).fromC(cvalue.DesiredSize)
+	return *result
 }
 
-func newShrinkWidthItemFromC(cvalue C.ImGuiShrinkWidthItem) ShrinkWidthItem {
-	return ShrinkWidthItem(unsafe.Pointer(&cvalue))
+type StackLevelInfo struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type SizeCallbackData uintptr
+func (data StackLevelInfo) handle() (result *C.ImGuiStackLevelInfo, releaseFn func()) {
+	result = (*C.ImGuiStackLevelInfo)(data.data)
+	return result, func() {}
+}
 
-func (data SizeCallbackData) handle() *C.ImGuiSizeCallbackData {
-	return (*C.ImGuiSizeCallbackData)(unsafe.Pointer(data))
+func (data StackLevelInfo) c() (result C.ImGuiStackLevelInfo, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data SizeCallbackData) c() C.ImGuiSizeCallbackData {
-	return *(data.handle())
+func newStackLevelInfoFromC(cvalue *C.ImGuiStackLevelInfo) StackLevelInfo {
+	result := new(StackLevelInfo)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newSizeCallbackDataFromC(cvalue C.ImGuiSizeCallbackData) SizeCallbackData {
-	return SizeCallbackData(unsafe.Pointer(&cvalue))
+type StackSizes struct {
+	FieldSizeOfIDStack         int
+	FieldSizeOfColorStack      int
+	FieldSizeOfStyleVarStack   int
+	FieldSizeOfFontStack       int
+	FieldSizeOfFocusScopeStack int
+	FieldSizeOfGroupStack      int
+	FieldSizeOfItemFlagsStack  int
+	FieldSizeOfBeginPopupStack int
+	FieldSizeOfDisabledStack   int
 }
+
+func (data StackSizes) handle() (result *C.ImGuiStackSizes, releaseFn func()) {
+	result = new(C.ImGuiStackSizes)
+	FieldSizeOfIDStack := data.FieldSizeOfIDStack
+
+	result.SizeOfIDStack = C.short(FieldSizeOfIDStack)
+	FieldSizeOfColorStack := data.FieldSizeOfColorStack
 
-type StackLevelInfo uintptr
+	result.SizeOfColorStack = C.short(FieldSizeOfColorStack)
+	FieldSizeOfStyleVarStack := data.FieldSizeOfStyleVarStack
 
-func (data StackLevelInfo) handle() *C.ImGuiStackLevelInfo {
-	return (*C.ImGuiStackLevelInfo)(unsafe.Pointer(data))
+	result.SizeOfStyleVarStack = C.short(FieldSizeOfStyleVarStack)
+	FieldSizeOfFontStack := data.FieldSizeOfFontStack
+
+	result.SizeOfFontStack = C.short(FieldSizeOfFontStack)
+	FieldSizeOfFocusScopeStack := data.FieldSizeOfFocusScopeStack
+
+	result.SizeOfFocusScopeStack = C.short(FieldSizeOfFocusScopeStack)
+	FieldSizeOfGroupStack := data.FieldSizeOfGroupStack
+
+	result.SizeOfGroupStack = C.short(FieldSizeOfGroupStack)
+	FieldSizeOfItemFlagsStack := data.FieldSizeOfItemFlagsStack
+
+	result.SizeOfItemFlagsStack = C.short(FieldSizeOfItemFlagsStack)
+	FieldSizeOfBeginPopupStack := data.FieldSizeOfBeginPopupStack
+
+	result.SizeOfBeginPopupStack = C.short(FieldSizeOfBeginPopupStack)
+	FieldSizeOfDisabledStack := data.FieldSizeOfDisabledStack
+
+	result.SizeOfDisabledStack = C.short(FieldSizeOfDisabledStack)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
+
+func (data StackSizes) c() (result C.ImGuiStackSizes, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data StackLevelInfo) c() C.ImGuiStackLevelInfo {
-	return *(data.handle())
+func newStackSizesFromC(cvalue *C.ImGuiStackSizes) StackSizes {
+	result := new(StackSizes)
+	result.FieldSizeOfIDStack = int(cvalue.SizeOfIDStack)
+	result.FieldSizeOfColorStack = int(cvalue.SizeOfColorStack)
+	result.FieldSizeOfStyleVarStack = int(cvalue.SizeOfStyleVarStack)
+	result.FieldSizeOfFontStack = int(cvalue.SizeOfFontStack)
+	result.FieldSizeOfFocusScopeStack = int(cvalue.SizeOfFocusScopeStack)
+	result.FieldSizeOfGroupStack = int(cvalue.SizeOfGroupStack)
+	result.FieldSizeOfItemFlagsStack = int(cvalue.SizeOfItemFlagsStack)
+	result.FieldSizeOfBeginPopupStack = int(cvalue.SizeOfBeginPopupStack)
+	result.FieldSizeOfDisabledStack = int(cvalue.SizeOfDisabledStack)
+	return *result
 }
 
-func newStackLevelInfoFromC(cvalue C.ImGuiStackLevelInfo) StackLevelInfo {
-	return StackLevelInfo(unsafe.Pointer(&cvalue))
+// State for Stack tool queries
+type StackTool struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type StackSizes uintptr
+func (data StackTool) handle() (result *C.ImGuiStackTool, releaseFn func()) {
+	result = (*C.ImGuiStackTool)(data.data)
+	return result, func() {}
+}
 
-func (data StackSizes) handle() *C.ImGuiStackSizes {
-	return (*C.ImGuiStackSizes)(unsafe.Pointer(data))
+func (data StackTool) c() (result C.ImGuiStackTool, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data StackSizes) c() C.ImGuiStackSizes {
-	return *(data.handle())
+func newStackToolFromC(cvalue *C.ImGuiStackTool) StackTool {
+	result := new(StackTool)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newStackSizesFromC(cvalue C.ImGuiStackSizes) StackSizes {
-	return StackSizes(unsafe.Pointer(&cvalue))
+// Helper: Key->Value storage
+// Typically you don't have to worry about this since a storage is held within each Window.
+// We use it to e.g. store collapse state for a tree (Int 0/1)
+// This is optimized for efficient lookup (dichotomy into a contiguous buffer) and rare insertion (typically tied to user interactions aka max once a frame)
+// You can use it as custom user storage for temporary values. Declare your own storage if, for example:
+// - You want to manipulate the open/close state of a particular sub-tree in your interface (tree node uses Int 0/1 to store their state).
+// - You want to store custom debug data easily without adding or editing structures in your code (probably not efficient, but convenient)
+// Types are NOT stored, so it is up to you to make sure your Key don't collide with different types.
+type Storage struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type StackTool uintptr
+func (data Storage) handle() (result *C.ImGuiStorage, releaseFn func()) {
+	result = (*C.ImGuiStorage)(data.data)
+	return result, func() {}
+}
 
-func (data StackTool) handle() *C.ImGuiStackTool {
-	return (*C.ImGuiStackTool)(unsafe.Pointer(data))
+func (data Storage) c() (result C.ImGuiStorage, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data StackTool) c() C.ImGuiStackTool {
-	return *(data.handle())
+func newStorageFromC(cvalue *C.ImGuiStorage) Storage {
+	result := new(Storage)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newStackToolFromC(cvalue C.ImGuiStackTool) StackTool {
-	return StackTool(unsafe.Pointer(&cvalue))
+// [Internal]
+type StoragePair struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type Storage uintptr
+func (data StoragePair) handle() (result *C.ImGuiStoragePair, releaseFn func()) {
+	result = (*C.ImGuiStoragePair)(data.data)
+	return result, func() {}
+}
 
-func (data Storage) handle() *C.ImGuiStorage {
-	return (*C.ImGuiStorage)(unsafe.Pointer(data))
+func (data StoragePair) c() (result C.ImGuiStoragePair, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data Storage) c() C.ImGuiStorage {
-	return *(data.handle())
+func newStoragePairFromC(cvalue *C.ImGuiStoragePair) StoragePair {
+	result := new(StoragePair)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newStorageFromC(cvalue C.ImGuiStorage) Storage {
-	return Storage(unsafe.Pointer(&cvalue))
+type Style struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type StoragePair uintptr
+func (data Style) handle() (result *C.ImGuiStyle, releaseFn func()) {
+	result = (*C.ImGuiStyle)(data.data)
+	return result, func() {}
+}
 
-func (data StoragePair) handle() *C.ImGuiStoragePair {
-	return (*C.ImGuiStoragePair)(unsafe.Pointer(data))
+func (data Style) c() (result C.ImGuiStyle, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data StoragePair) c() C.ImGuiStoragePair {
-	return *(data.handle())
+func newStyleFromC(cvalue *C.ImGuiStyle) Style {
+	result := new(Style)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newStoragePairFromC(cvalue C.ImGuiStoragePair) StoragePair {
-	return StoragePair(unsafe.Pointer(&cvalue))
+// Stacked style modifier, backup of modified data so we can restore it. Data type inferred from the variable.
+type StyleMod struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type Style uintptr
+func (data StyleMod) handle() (result *C.ImGuiStyleMod, releaseFn func()) {
+	result = (*C.ImGuiStyleMod)(data.data)
+	return result, func() {}
+}
 
-func (data Style) handle() *C.ImGuiStyle {
-	return (*C.ImGuiStyle)(unsafe.Pointer(data))
+func (data StyleMod) c() (result C.ImGuiStyleMod, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data Style) c() C.ImGuiStyle {
-	return *(data.handle())
+func newStyleModFromC(cvalue *C.ImGuiStyleMod) StyleMod {
+	result := new(StyleMod)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newStyleFromC(cvalue C.ImGuiStyle) Style {
-	return Style(unsafe.Pointer(&cvalue))
+// Storage for a tab bar (sizeof() 152 bytes)
+type TabBar struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type StyleMod uintptr
+func (data TabBar) handle() (result *C.ImGuiTabBar, releaseFn func()) {
+	result = (*C.ImGuiTabBar)(data.data)
+	return result, func() {}
+}
 
-func (data StyleMod) handle() *C.ImGuiStyleMod {
-	return (*C.ImGuiStyleMod)(unsafe.Pointer(data))
+func (data TabBar) c() (result C.ImGuiTabBar, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data StyleMod) c() C.ImGuiStyleMod {
-	return *(data.handle())
+func newTabBarFromC(cvalue *C.ImGuiTabBar) TabBar {
+	result := new(TabBar)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newStyleModFromC(cvalue C.ImGuiStyleMod) StyleMod {
-	return StyleMod(unsafe.Pointer(&cvalue))
+// Storage for one active tab item (sizeof() 48 bytes)
+type TabItem struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type TabBar uintptr
+func (data TabItem) handle() (result *C.ImGuiTabItem, releaseFn func()) {
+	result = (*C.ImGuiTabItem)(data.data)
+	return result, func() {}
+}
 
-func (data TabBar) handle() *C.ImGuiTabBar {
-	return (*C.ImGuiTabBar)(unsafe.Pointer(data))
+func (data TabItem) c() (result C.ImGuiTabItem, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data TabBar) c() C.ImGuiTabBar {
-	return *(data.handle())
+func newTabItemFromC(cvalue *C.ImGuiTabItem) TabItem {
+	result := new(TabItem)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newTabBarFromC(cvalue C.ImGuiTabBar) TabBar {
-	return TabBar(unsafe.Pointer(&cvalue))
+// FIXME-TABLE: more transient data could be stored in a stacked ImGuiTableTempData: e.g. SortSpecs, incoming RowData
+// sizeof() ~ 580 bytes + heap allocs described in TableBeginInitMemory()
+type Table struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type TabItem uintptr
+func (data Table) handle() (result *C.ImGuiTable, releaseFn func()) {
+	result = (*C.ImGuiTable)(data.data)
+	return result, func() {}
+}
 
-func (data TabItem) handle() *C.ImGuiTabItem {
-	return (*C.ImGuiTabItem)(unsafe.Pointer(data))
+func (data Table) c() (result C.ImGuiTable, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data TabItem) c() C.ImGuiTabItem {
-	return *(data.handle())
+func newTableFromC(cvalue *C.ImGuiTable) Table {
+	result := new(Table)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newTabItemFromC(cvalue C.ImGuiTabItem) TabItem {
-	return TabItem(unsafe.Pointer(&cvalue))
+// Transient cell data stored per row.
+// sizeof() ~ 6
+type TableCellData struct {
+	FieldBgColor uint32         // Actual color
+	FieldColumn  TableColumnIdx // Column number
 }
+
+func (data TableCellData) handle() (result *C.ImGuiTableCellData, releaseFn func()) {
+	result = new(C.ImGuiTableCellData)
+	FieldBgColor := data.FieldBgColor
 
-type Table uintptr
+	result.BgColor = C.ImU32(FieldBgColor)
+	FieldColumn := data.FieldColumn
 
-func (data Table) handle() *C.ImGuiTable {
-	return (*C.ImGuiTable)(unsafe.Pointer(data))
+	result.Column = C.ImGuiTableColumnIdx(FieldColumn)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
-func (data Table) c() C.ImGuiTable {
-	return *(data.handle())
+func (data TableCellData) c() (result C.ImGuiTableCellData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newTableFromC(cvalue C.ImGuiTable) Table {
-	return Table(unsafe.Pointer(&cvalue))
+func newTableCellDataFromC(cvalue *C.ImGuiTableCellData) TableCellData {
+	result := new(TableCellData)
+	result.FieldBgColor = uint32(cvalue.BgColor)
+	result.FieldColumn = TableColumnIdx(cvalue.Column)
+	return *result
 }
 
-type TableCellData uintptr
+// [Internal] sizeof() ~ 112
+// We use the terminology "Enabled" to refer to a column that is not Hidden by user/api.
+// We use the terminology "Clipped" to refer to a column that is out of sight because of scrolling/clipping.
+// This is in contrast with some user-facing api such as IsItemVisible() / IsRectVisible() which use "Visible" to mean "not clipped".
+type TableColumn struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
+
+func (data TableColumn) handle() (result *C.ImGuiTableColumn, releaseFn func()) {
+	result = (*C.ImGuiTableColumn)(data.data)
+	return result, func() {}
+}
 
-func (data TableCellData) handle() *C.ImGuiTableCellData {
-	return (*C.ImGuiTableCellData)(unsafe.Pointer(data))
+func (data TableColumn) c() (result C.ImGuiTableColumn, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data TableCellData) c() C.ImGuiTableCellData {
-	return *(data.handle())
+func newTableColumnFromC(cvalue *C.ImGuiTableColumn) TableColumn {
+	result := new(TableColumn)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newTableCellDataFromC(cvalue C.ImGuiTableCellData) TableCellData {
-	return TableCellData(unsafe.Pointer(&cvalue))
+// sizeof() ~ 12
+type TableColumnSettings struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type TableColumn uintptr
+func (data TableColumnSettings) handle() (result *C.ImGuiTableColumnSettings, releaseFn func()) {
+	result = (*C.ImGuiTableColumnSettings)(data.data)
+	return result, func() {}
+}
 
-func (data TableColumn) handle() *C.ImGuiTableColumn {
-	return (*C.ImGuiTableColumn)(unsafe.Pointer(data))
+func (data TableColumnSettings) c() (result C.ImGuiTableColumnSettings, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data TableColumn) c() C.ImGuiTableColumn {
-	return *(data.handle())
+func newTableColumnSettingsFromC(cvalue *C.ImGuiTableColumnSettings) TableColumnSettings {
+	result := new(TableColumnSettings)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newTableColumnFromC(cvalue C.ImGuiTableColumn) TableColumn {
-	return TableColumn(unsafe.Pointer(&cvalue))
+// Sorting specification for one column of a table (sizeof == 12 bytes)
+type TableColumnSortSpecs struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type TableColumnSettings uintptr
+func (data TableColumnSortSpecs) handle() (result *C.ImGuiTableColumnSortSpecs, releaseFn func()) {
+	result = (*C.ImGuiTableColumnSortSpecs)(data.data)
+	return result, func() {}
+}
 
-func (data TableColumnSettings) handle() *C.ImGuiTableColumnSettings {
-	return (*C.ImGuiTableColumnSettings)(unsafe.Pointer(data))
+func (data TableColumnSortSpecs) c() (result C.ImGuiTableColumnSortSpecs, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data TableColumnSettings) c() C.ImGuiTableColumnSettings {
-	return *(data.handle())
+func newTableColumnSortSpecsFromC(cvalue *C.ImGuiTableColumnSortSpecs) TableColumnSortSpecs {
+	result := new(TableColumnSortSpecs)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newTableColumnSettingsFromC(cvalue C.ImGuiTableColumnSettings) TableColumnSettings {
-	return TableColumnSettings(unsafe.Pointer(&cvalue))
+// Per-instance data that needs preserving across frames (seemingly most others do not need to be preserved aside from debug needs. Does that means they could be moved to ImGuiTableTempData?)
+type TableInstanceData struct {
+	FieldTableInstanceID    ID
+	FieldLastOuterHeight    float32 // Outer height from last frame
+	FieldLastFirstRowHeight float32 // Height of first row from last frame (FIXME: this is used as "header height" and may be reworked)
+	FieldLastFrozenHeight   float32 // Height of frozen section from last frame
+	FieldHoveredRowLast     int32   // Index of row which was hovered last frame.
+	FieldHoveredRowNext     int32   // Index of row hovered this frame, set after encountering it.
 }
+
+func (data TableInstanceData) handle() (result *C.ImGuiTableInstanceData, releaseFn func()) {
+	result = new(C.ImGuiTableInstanceData)
+	FieldTableInstanceID := data.FieldTableInstanceID
+
+	result.TableInstanceID = C.ImGuiID(FieldTableInstanceID)
+	FieldLastOuterHeight := data.FieldLastOuterHeight
+
+	result.LastOuterHeight = C.float(FieldLastOuterHeight)
+	FieldLastFirstRowHeight := data.FieldLastFirstRowHeight
+
+	result.LastFirstRowHeight = C.float(FieldLastFirstRowHeight)
+	FieldLastFrozenHeight := data.FieldLastFrozenHeight
+
+	result.LastFrozenHeight = C.float(FieldLastFrozenHeight)
+	FieldHoveredRowLast := data.FieldHoveredRowLast
+
+	result.HoveredRowLast = C.int(FieldHoveredRowLast)
+	FieldHoveredRowNext := data.FieldHoveredRowNext
 
-type TableColumnSortSpecs uintptr
+	result.HoveredRowNext = C.int(FieldHoveredRowNext)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
 
-func (data TableColumnSortSpecs) handle() *C.ImGuiTableColumnSortSpecs {
-	return (*C.ImGuiTableColumnSortSpecs)(unsafe.Pointer(data))
+func (data TableInstanceData) c() (result C.ImGuiTableInstanceData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data TableColumnSortSpecs) c() C.ImGuiTableColumnSortSpecs {
-	return *(data.handle())
+func newTableInstanceDataFromC(cvalue *C.ImGuiTableInstanceData) TableInstanceData {
+	result := new(TableInstanceData)
+	result.FieldTableInstanceID = ID(cvalue.TableInstanceID)
+	result.FieldLastOuterHeight = float32(cvalue.LastOuterHeight)
+	result.FieldLastFirstRowHeight = float32(cvalue.LastFirstRowHeight)
+	result.FieldLastFrozenHeight = float32(cvalue.LastFrozenHeight)
+	result.FieldHoveredRowLast = int32(cvalue.HoveredRowLast)
+	result.FieldHoveredRowNext = int32(cvalue.HoveredRowNext)
+	return *result
 }
 
-func newTableColumnSortSpecsFromC(cvalue C.ImGuiTableColumnSortSpecs) TableColumnSortSpecs {
-	return TableColumnSortSpecs(unsafe.Pointer(&cvalue))
+// This is designed to be stored in a single ImChunkStream (1 header followed by N ImGuiTableColumnSettings, etc.)
+type TableSettings struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type TableInstanceData uintptr
+func (data TableSettings) handle() (result *C.ImGuiTableSettings, releaseFn func()) {
+	result = (*C.ImGuiTableSettings)(data.data)
+	return result, func() {}
+}
 
-func (data TableInstanceData) handle() *C.ImGuiTableInstanceData {
-	return (*C.ImGuiTableInstanceData)(unsafe.Pointer(data))
+func (data TableSettings) c() (result C.ImGuiTableSettings, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data TableInstanceData) c() C.ImGuiTableInstanceData {
-	return *(data.handle())
+func newTableSettingsFromC(cvalue *C.ImGuiTableSettings) TableSettings {
+	result := new(TableSettings)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newTableInstanceDataFromC(cvalue C.ImGuiTableInstanceData) TableInstanceData {
-	return TableInstanceData(unsafe.Pointer(&cvalue))
+// Sorting specifications for a table (often handling sort specs for a single column, occasionally more)
+// Obtained by calling TableGetSortSpecs().
+// When 'SpecsDirty == true' you can sort your data. It will be true with sorting specs have changed since last call, or the first time.
+// Make sure to set 'SpecsDirty = false' after sorting, else you may wastefully sort your data every frame!
+type TableSortSpecs struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type TableSettings uintptr
+func (data TableSortSpecs) handle() (result *C.ImGuiTableSortSpecs, releaseFn func()) {
+	result = (*C.ImGuiTableSortSpecs)(data.data)
+	return result, func() {}
+}
 
-func (data TableSettings) handle() *C.ImGuiTableSettings {
-	return (*C.ImGuiTableSettings)(unsafe.Pointer(data))
+func (data TableSortSpecs) c() (result C.ImGuiTableSortSpecs, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data TableSettings) c() C.ImGuiTableSettings {
-	return *(data.handle())
+func newTableSortSpecsFromC(cvalue *C.ImGuiTableSortSpecs) TableSortSpecs {
+	result := new(TableSortSpecs)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newTableSettingsFromC(cvalue C.ImGuiTableSettings) TableSettings {
-	return TableSettings(unsafe.Pointer(&cvalue))
+// Transient data that are only needed between BeginTable() and EndTable(), those buffers are shared (1 per level of stacked table).
+// - Accessing those requires chasing an extra pointer so for very frequently used data we leave them in the main table structure.
+// - We also leave out of this structure data that tend to be particularly useful for debugging/metrics.
+// sizeof() ~ 112 bytes.
+type TableTempData struct {
+	FieldTableIndex                   int32   // Index in g.Tables.Buf[] pool
+	FieldLastTimeActive               float32 // Last timestamp this structure was used
+	FieldUserOuterSize                Vec2    // outer_size.x passed to BeginTable()
+	FieldDrawSplitter                 DrawListSplitter
+	FieldHostBackupWorkRect           Rect    // Backup of InnerWindow->WorkRect at the end of BeginTable()
+	FieldHostBackupParentWorkRect     Rect    // Backup of InnerWindow->ParentWorkRect at the end of BeginTable()
+	FieldHostBackupPrevLineSize       Vec2    // Backup of InnerWindow->DC.PrevLineSize at the end of BeginTable()
+	FieldHostBackupCurrLineSize       Vec2    // Backup of InnerWindow->DC.CurrLineSize at the end of BeginTable()
+	FieldHostBackupCursorMaxPos       Vec2    // Backup of InnerWindow->DC.CursorMaxPos at the end of BeginTable()
+	FieldHostBackupColumnsOffset      Vec1    // Backup of OuterWindow->DC.ColumnsOffset at the end of BeginTable()
+	FieldHostBackupItemWidth          float32 // Backup of OuterWindow->DC.ItemWidth at the end of BeginTable()
+	FieldHostBackupItemWidthStackSize int32   // Backup of OuterWindow->DC.ItemWidthStack.Size at the end of BeginTable()
+
 }
+
+func (data TableTempData) handle() (result *C.ImGuiTableTempData, releaseFn func()) {
+	result = new(C.ImGuiTableTempData)
+	FieldTableIndex := data.FieldTableIndex
+
+	result.TableIndex = C.int(FieldTableIndex)
+	FieldLastTimeActive := data.FieldLastTimeActive
+
+	result.LastTimeActive = C.float(FieldLastTimeActive)
+	FieldUserOuterSize := data.FieldUserOuterSize
+
+	result.UserOuterSize = FieldUserOuterSize.toC()
+	FieldDrawSplitter := data.FieldDrawSplitter
+	DrawSplitterArg, DrawSplitterFin := FieldDrawSplitter.c()
+	result.DrawSplitter = DrawSplitterArg
+	FieldHostBackupWorkRect := data.FieldHostBackupWorkRect
+
+	result.HostBackupWorkRect = FieldHostBackupWorkRect.toC()
+	FieldHostBackupParentWorkRect := data.FieldHostBackupParentWorkRect
+
+	result.HostBackupParentWorkRect = FieldHostBackupParentWorkRect.toC()
+	FieldHostBackupPrevLineSize := data.FieldHostBackupPrevLineSize
+
+	result.HostBackupPrevLineSize = FieldHostBackupPrevLineSize.toC()
+	FieldHostBackupCurrLineSize := data.FieldHostBackupCurrLineSize
+
+	result.HostBackupCurrLineSize = FieldHostBackupCurrLineSize.toC()
+	FieldHostBackupCursorMaxPos := data.FieldHostBackupCursorMaxPos
+
+	result.HostBackupCursorMaxPos = FieldHostBackupCursorMaxPos.toC()
+	FieldHostBackupColumnsOffset := data.FieldHostBackupColumnsOffset
+	HostBackupColumnsOffsetArg, HostBackupColumnsOffsetFin := FieldHostBackupColumnsOffset.c()
+	result.HostBackupColumnsOffset = HostBackupColumnsOffsetArg
+	FieldHostBackupItemWidth := data.FieldHostBackupItemWidth
+
+	result.HostBackupItemWidth = C.float(FieldHostBackupItemWidth)
+	FieldHostBackupItemWidthStackSize := data.FieldHostBackupItemWidthStackSize
 
-type TableSortSpecs uintptr
+	result.HostBackupItemWidthStackSize = C.int(FieldHostBackupItemWidthStackSize)
+	releaseFn = func() {
+		DrawSplitterFin()
 
-func (data TableSortSpecs) handle() *C.ImGuiTableSortSpecs {
-	return (*C.ImGuiTableSortSpecs)(unsafe.Pointer(data))
+		HostBackupColumnsOffsetFin()
+	}
+	return result, releaseFn
 }
 
-func (data TableSortSpecs) c() C.ImGuiTableSortSpecs {
-	return *(data.handle())
+func (data TableTempData) c() (result C.ImGuiTableTempData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newTableSortSpecsFromC(cvalue C.ImGuiTableSortSpecs) TableSortSpecs {
-	return TableSortSpecs(unsafe.Pointer(&cvalue))
+func newTableTempDataFromC(cvalue *C.ImGuiTableTempData) TableTempData {
+	result := new(TableTempData)
+	result.FieldTableIndex = int32(cvalue.TableIndex)
+	result.FieldLastTimeActive = float32(cvalue.LastTimeActive)
+	result.FieldUserOuterSize = *(&Vec2{}).fromC(cvalue.UserOuterSize)
+	result.FieldDrawSplitter = newDrawListSplitterFromC(&cvalue.DrawSplitter)
+	result.FieldHostBackupWorkRect = *(&Rect{}).fromC(cvalue.HostBackupWorkRect)
+	result.FieldHostBackupParentWorkRect = *(&Rect{}).fromC(cvalue.HostBackupParentWorkRect)
+	result.FieldHostBackupPrevLineSize = *(&Vec2{}).fromC(cvalue.HostBackupPrevLineSize)
+	result.FieldHostBackupCurrLineSize = *(&Vec2{}).fromC(cvalue.HostBackupCurrLineSize)
+	result.FieldHostBackupCursorMaxPos = *(&Vec2{}).fromC(cvalue.HostBackupCursorMaxPos)
+	result.FieldHostBackupColumnsOffset = newVec1FromC(&cvalue.HostBackupColumnsOffset)
+	result.FieldHostBackupItemWidth = float32(cvalue.HostBackupItemWidth)
+	result.FieldHostBackupItemWidthStackSize = int32(cvalue.HostBackupItemWidthStackSize)
+	return *result
 }
 
-type TableTempData uintptr
+// Helper: Growable text buffer for logging/accumulating text
+// (this could be called 'ImGuiTextBuilder' / 'ImGuiStringBuilder')
+type TextBuffer struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
+
+func (data TextBuffer) handle() (result *C.ImGuiTextBuffer, releaseFn func()) {
+	result = (*C.ImGuiTextBuffer)(data.data)
+	return result, func() {}
+}
 
-func (data TableTempData) handle() *C.ImGuiTableTempData {
-	return (*C.ImGuiTableTempData)(unsafe.Pointer(data))
+func (data TextBuffer) c() (result C.ImGuiTextBuffer, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data TableTempData) c() C.ImGuiTableTempData {
-	return *(data.handle())
+func newTextBufferFromC(cvalue *C.ImGuiTextBuffer) TextBuffer {
+	result := new(TextBuffer)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newTableTempDataFromC(cvalue C.ImGuiTableTempData) TableTempData {
-	return TableTempData(unsafe.Pointer(&cvalue))
+// Helper: Parse and apply text filters. In format "aaaaa[,bbbb][,ccccc]"
+type TextFilter struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type TextBuffer uintptr
+func (data TextFilter) handle() (result *C.ImGuiTextFilter, releaseFn func()) {
+	result = (*C.ImGuiTextFilter)(data.data)
+	return result, func() {}
+}
 
-func (data TextBuffer) handle() *C.ImGuiTextBuffer {
-	return (*C.ImGuiTextBuffer)(unsafe.Pointer(data))
+func (data TextFilter) c() (result C.ImGuiTextFilter, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data TextBuffer) c() C.ImGuiTextBuffer {
-	return *(data.handle())
+func newTextFilterFromC(cvalue *C.ImGuiTextFilter) TextFilter {
+	result := new(TextFilter)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newTextBufferFromC(cvalue C.ImGuiTextBuffer) TextBuffer {
-	return TextBuffer(unsafe.Pointer(&cvalue))
+// Helper: ImGuiTextIndex<>
+// Maintain a line index for a text buffer. This is a strong candidate to be moved into the public API.
+type TextIndex struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type TextFilter uintptr
+func (data TextIndex) handle() (result *C.ImGuiTextIndex, releaseFn func()) {
+	result = (*C.ImGuiTextIndex)(data.data)
+	return result, func() {}
+}
 
-func (data TextFilter) handle() *C.ImGuiTextFilter {
-	return (*C.ImGuiTextFilter)(unsafe.Pointer(data))
+func (data TextIndex) c() (result C.ImGuiTextIndex, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data TextFilter) c() C.ImGuiTextFilter {
-	return *(data.handle())
+func newTextIndexFromC(cvalue *C.ImGuiTextIndex) TextIndex {
+	result := new(TextIndex)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newTextFilterFromC(cvalue C.ImGuiTextFilter) TextFilter {
-	return TextFilter(unsafe.Pointer(&cvalue))
+// [Internal]
+type TextRange struct {
+	Fieldb string
+	Fielde string
 }
 
-type TextIndex uintptr
+func (data TextRange) handle() (result *C.ImGuiTextRange, releaseFn func()) {
+	result = new(C.ImGuiTextRange)
+	Fieldb := data.Fieldb
+	FieldbArg, FieldbFin := wrapString(Fieldb)
+	result.b = FieldbArg
+	Fielde := data.Fielde
+	FieldeArg, FieldeFin := wrapString(Fielde)
+	result.e = FieldeArg
+	releaseFn = func() {
+		FieldbFin()
+		FieldeFin()
+	}
+	return result, releaseFn
+}
 
-func (data TextIndex) handle() *C.ImGuiTextIndex {
-	return (*C.ImGuiTextIndex)(unsafe.Pointer(data))
+func (data TextRange) c() (result C.ImGuiTextRange, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data TextIndex) c() C.ImGuiTextIndex {
-	return *(data.handle())
+func newTextRangeFromC(cvalue *C.ImGuiTextRange) TextRange {
+	result := new(TextRange)
+	result.Fieldb = C.GoString(cvalue.b)
+	result.Fielde = C.GoString(cvalue.e)
+	return *result
 }
 
-func newTextIndexFromC(cvalue C.ImGuiTextIndex) TextIndex {
-	return TextIndex(unsafe.Pointer(&cvalue))
+// - Currently represents the Platform Window created by the application which is hosting our Dear ImGui windows.
+// - With multi-viewport enabled, we extend this concept to have multiple active viewports.
+// - In the future we will extend this concept further to also represent Platform Monitor and support a "no main platform window" operation mode.
+// - About Main Area vs Work Area:
+//   - Main Area = entire viewport.
+//   - Work Area = entire viewport minus sections used by main menu bars (for platform windows), or by task bar (for platform monitor).
+//   - Windows are generally trying to stay within the Work Area of their host viewport.
+type Viewport struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type TextRange uintptr
+func (data Viewport) handle() (result *C.ImGuiViewport, releaseFn func()) {
+	result = (*C.ImGuiViewport)(data.data)
+	return result, func() {}
+}
 
-func (data TextRange) handle() *C.ImGuiTextRange {
-	return (*C.ImGuiTextRange)(unsafe.Pointer(data))
+func (data Viewport) c() (result C.ImGuiViewport, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data TextRange) c() C.ImGuiTextRange {
-	return *(data.handle())
+func newViewportFromC(cvalue *C.ImGuiViewport) Viewport {
+	result := new(Viewport)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newTextRangeFromC(cvalue C.ImGuiTextRange) TextRange {
-	return TextRange(unsafe.Pointer(&cvalue))
+// ImGuiViewport Private/Internals fields (cardinal sin: we are using inheritance!)
+// Every instance of ImGuiViewport is in fact a ImGuiViewportP.
+type ViewportP struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type Viewport uintptr
+func (data ViewportP) handle() (result *C.ImGuiViewportP, releaseFn func()) {
+	result = (*C.ImGuiViewportP)(data.data)
+	return result, func() {}
+}
 
-func (data Viewport) handle() *C.ImGuiViewport {
-	return (*C.ImGuiViewport)(unsafe.Pointer(data))
+func (data ViewportP) c() (result C.ImGuiViewportP, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data Viewport) c() C.ImGuiViewport {
-	return *(data.handle())
+func newViewportPFromC(cvalue *C.ImGuiViewportP) ViewportP {
+	result := new(ViewportP)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newViewportFromC(cvalue C.ImGuiViewport) Viewport {
-	return Viewport(unsafe.Pointer(&cvalue))
+// Storage for one window
+type Window struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type ViewportP uintptr
+func (data Window) handle() (result *C.ImGuiWindow, releaseFn func()) {
+	result = (*C.ImGuiWindow)(data.data)
+	return result, func() {}
+}
 
-func (data ViewportP) handle() *C.ImGuiViewportP {
-	return (*C.ImGuiViewportP)(unsafe.Pointer(data))
+func (data Window) c() (result C.ImGuiWindow, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data ViewportP) c() C.ImGuiViewportP {
-	return *(data.handle())
+func newWindowFromC(cvalue *C.ImGuiWindow) Window {
+	result := new(Window)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newViewportPFromC(cvalue C.ImGuiViewportP) ViewportP {
-	return ViewportP(unsafe.Pointer(&cvalue))
+// [ALPHA] Rarely used / very advanced uses only. Use with SetNextWindowClass() and DockSpace() functions.
+// Important: the content of this class is still highly WIP and likely to change and be refactored
+// before we stabilize Docking features. Please be mindful if using this.
+// Provide hints:
+// - To the platform backend via altered viewport flags (enable/disable OS decoration, OS task bar icons, etc.)
+// - To the platform backend for OS level parent/child relationships of viewport.
+// - To the docking system for various options and filtering.
+type WindowClass struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type Window uintptr
+func (data WindowClass) handle() (result *C.ImGuiWindowClass, releaseFn func()) {
+	result = (*C.ImGuiWindowClass)(data.data)
+	return result, func() {}
+}
 
-func (data Window) handle() *C.ImGuiWindow {
-	return (*C.ImGuiWindow)(unsafe.Pointer(data))
+func (data WindowClass) c() (result C.ImGuiWindowClass, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data Window) c() C.ImGuiWindow {
-	return *(data.handle())
+func newWindowClassFromC(cvalue *C.ImGuiWindowClass) WindowClass {
+	result := new(WindowClass)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newWindowFromC(cvalue C.ImGuiWindow) Window {
-	return Window(unsafe.Pointer(&cvalue))
+type WindowDockStyle struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type WindowClass uintptr
+func (data WindowDockStyle) handle() (result *C.ImGuiWindowDockStyle, releaseFn func()) {
+	result = (*C.ImGuiWindowDockStyle)(data.data)
+	return result, func() {}
+}
 
-func (data WindowClass) handle() *C.ImGuiWindowClass {
-	return (*C.ImGuiWindowClass)(unsafe.Pointer(data))
+func (data WindowDockStyle) c() (result C.ImGuiWindowDockStyle, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data WindowClass) c() C.ImGuiWindowClass {
-	return *(data.handle())
+func newWindowDockStyleFromC(cvalue *C.ImGuiWindowDockStyle) WindowDockStyle {
+	result := new(WindowDockStyle)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newWindowClassFromC(cvalue C.ImGuiWindowClass) WindowClass {
-	return WindowClass(unsafe.Pointer(&cvalue))
+// Windows data saved in imgui.ini file
+// Because we never destroy or rename ImGuiWindowSettings, we can store the names in a separate buffer easily.
+// (this is designed to be stored in a ImChunkStream buffer, with the variable-length Name following our structure)
+type WindowSettings struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type WindowDockStyle uintptr
+func (data WindowSettings) handle() (result *C.ImGuiWindowSettings, releaseFn func()) {
+	result = (*C.ImGuiWindowSettings)(data.data)
+	return result, func() {}
+}
 
-func (data WindowDockStyle) handle() *C.ImGuiWindowDockStyle {
-	return (*C.ImGuiWindowDockStyle)(unsafe.Pointer(data))
+func (data WindowSettings) c() (result C.ImGuiWindowSettings, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data WindowDockStyle) c() C.ImGuiWindowDockStyle {
-	return *(data.handle())
+func newWindowSettingsFromC(cvalue *C.ImGuiWindowSettings) WindowSettings {
+	result := new(WindowSettings)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newWindowDockStyleFromC(cvalue C.ImGuiWindowDockStyle) WindowDockStyle {
-	return WindowDockStyle(unsafe.Pointer(&cvalue))
+// Data saved for each window pushed into the stack
+type WindowStackData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type WindowSettings uintptr
+func (data WindowStackData) handle() (result *C.ImGuiWindowStackData, releaseFn func()) {
+	result = (*C.ImGuiWindowStackData)(data.data)
+	return result, func() {}
+}
 
-func (data WindowSettings) handle() *C.ImGuiWindowSettings {
-	return (*C.ImGuiWindowSettings)(unsafe.Pointer(data))
+func (data WindowStackData) c() (result C.ImGuiWindowStackData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data WindowSettings) c() C.ImGuiWindowSettings {
-	return *(data.handle())
+func newWindowStackDataFromC(cvalue *C.ImGuiWindowStackData) WindowStackData {
+	result := new(WindowStackData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newWindowSettingsFromC(cvalue C.ImGuiWindowSettings) WindowSettings {
-	return WindowSettings(unsafe.Pointer(&cvalue))
+// Transient per-window data, reset at the beginning of the frame. This used to be called ImGuiDrawContext, hence the DC variable name in ImGuiWindow.
+// (That's theory, in practice the delimitation between ImGuiWindow and ImGuiWindowTempData is quite tenuous and could be reconsidered..)
+// (This doesn't need a constructor because we zero-clear it as part of ImGuiWindow and all frame-temporary data are setup on Begin)
+type WindowTempData struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type WindowStackData uintptr
+func (data WindowTempData) handle() (result *C.ImGuiWindowTempData, releaseFn func()) {
+	result = (*C.ImGuiWindowTempData)(data.data)
+	return result, func() {}
+}
 
-func (data WindowStackData) handle() *C.ImGuiWindowStackData {
-	return (*C.ImGuiWindowStackData)(unsafe.Pointer(data))
+func (data WindowTempData) c() (result C.ImGuiWindowTempData, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data WindowStackData) c() C.ImGuiWindowStackData {
-	return *(data.handle())
+func newWindowTempDataFromC(cvalue *C.ImGuiWindowTempData) WindowTempData {
+	result := new(WindowTempData)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newWindowStackDataFromC(cvalue C.ImGuiWindowStackData) WindowStackData {
-	return WindowStackData(unsafe.Pointer(&cvalue))
+type Vec1 struct {
+	Fieldx float32
 }
 
-type WindowTempData uintptr
+func (data Vec1) handle() (result *C.ImVec1, releaseFn func()) {
+	result = new(C.ImVec1)
+	Fieldx := data.Fieldx
 
-func (data WindowTempData) handle() *C.ImGuiWindowTempData {
-	return (*C.ImGuiWindowTempData)(unsafe.Pointer(data))
+	result.x = C.float(Fieldx)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
-func (data WindowTempData) c() C.ImGuiWindowTempData {
-	return *(data.handle())
+func (data Vec1) c() (result C.ImVec1, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newWindowTempDataFromC(cvalue C.ImGuiWindowTempData) WindowTempData {
-	return WindowTempData(unsafe.Pointer(&cvalue))
+func newVec1FromC(cvalue *C.ImVec1) Vec1 {
+	result := new(Vec1)
+	result.Fieldx = float32(cvalue.x)
+	return *result
 }
 
-type STBTexteditState uintptr
+type STBTexteditState struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
+
+func (data STBTexteditState) handle() (result *C.STB_TexteditState, releaseFn func()) {
+	result = (*C.STB_TexteditState)(data.data)
+	return result, func() {}
+}
 
-func (data STBTexteditState) handle() *C.STB_TexteditState {
-	return (*C.STB_TexteditState)(unsafe.Pointer(data))
+func (data STBTexteditState) c() (result C.STB_TexteditState, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data STBTexteditState) c() C.STB_TexteditState {
-	return *(data.handle())
+func newSTBTexteditStateFromC(cvalue *C.STB_TexteditState) STBTexteditState {
+	result := new(STBTexteditState)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func newSTBTexteditStateFromC(cvalue C.STB_TexteditState) STBTexteditState {
-	return STBTexteditState(unsafe.Pointer(&cvalue))
+// result of layout query
+type StbTexteditRow struct {
+	Fieldx0               float32 // starting x location, end x location (allows for align=right, etc)
+	Fieldx1               float32 // starting x location, end x location (allows for align=right, etc)
+	Fieldbaseline_y_delta float32 // position of baseline relative to previous row's baseline
+	Fieldymin             float32 // height of row above and below baseline
+	Fieldymax             float32 // height of row above and below baseline
+	Fieldnum_chars        int32
 }
+
+func (data StbTexteditRow) handle() (result *C.StbTexteditRow, releaseFn func()) {
+	result = new(C.StbTexteditRow)
+	Fieldx0 := data.Fieldx0
+
+	result.x0 = C.float(Fieldx0)
+	Fieldx1 := data.Fieldx1
+
+	result.x1 = C.float(Fieldx1)
+	Fieldbaseline_y_delta := data.Fieldbaseline_y_delta
+
+	result.baseline_y_delta = C.float(Fieldbaseline_y_delta)
+	Fieldymin := data.Fieldymin
 
-type StbTexteditRow uintptr
+	result.ymin = C.float(Fieldymin)
+	Fieldymax := data.Fieldymax
 
-func (data StbTexteditRow) handle() *C.StbTexteditRow {
-	return (*C.StbTexteditRow)(unsafe.Pointer(data))
+	result.ymax = C.float(Fieldymax)
+	Fieldnum_chars := data.Fieldnum_chars
+
+	result.num_chars = C.int(Fieldnum_chars)
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
+
+func (data StbTexteditRow) c() (result C.StbTexteditRow, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data StbTexteditRow) c() C.StbTexteditRow {
-	return *(data.handle())
+func newStbTexteditRowFromC(cvalue *C.StbTexteditRow) StbTexteditRow {
+	result := new(StbTexteditRow)
+	result.Fieldx0 = float32(cvalue.x0)
+	result.Fieldx1 = float32(cvalue.x1)
+	result.Fieldbaseline_y_delta = float32(cvalue.baseline_y_delta)
+	result.Fieldymin = float32(cvalue.ymin)
+	result.Fieldymax = float32(cvalue.ymax)
+	result.Fieldnum_chars = int32(cvalue.num_chars)
+	return *result
 }
 
-func newStbTexteditRowFromC(cvalue C.StbTexteditRow) StbTexteditRow {
-	return StbTexteditRow(unsafe.Pointer(&cvalue))
+// //////////////////////////////////////////////////////////////////////
+//
+//	STB_TexteditState
+//
+// Definition of STB_TexteditState which you should store
+// per-textfield; it includes cursor position, selection state,
+// and undo state.
+type StbUndoRecord struct {
+	// private data
+	Fieldwhere         int32
+	Fieldinsert_length int32
+	Fielddelete_length int32
+	Fieldchar_storage  int32
 }
 
-type StbUndoRecord uintptr
+func (data StbUndoRecord) handle() (result *C.StbUndoRecord, releaseFn func()) {
+	result = new(C.StbUndoRecord)
+	Fieldwhere := data.Fieldwhere
 
-func (data StbUndoRecord) handle() *C.StbUndoRecord {
-	return (*C.StbUndoRecord)(unsafe.Pointer(data))
+	result.where = C.int(Fieldwhere)
+	Fieldinsert_length := data.Fieldinsert_length
+
+	result.insert_length = C.int(Fieldinsert_length)
+	Fielddelete_length := data.Fielddelete_length
+
+	result.delete_length = C.int(Fielddelete_length)
+	Fieldchar_storage := data.Fieldchar_storage
+
+	result.char_storage = C.int(Fieldchar_storage)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
-func (data StbUndoRecord) c() C.StbUndoRecord {
-	return *(data.handle())
+func (data StbUndoRecord) c() (result C.StbUndoRecord, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newStbUndoRecordFromC(cvalue C.StbUndoRecord) StbUndoRecord {
-	return StbUndoRecord(unsafe.Pointer(&cvalue))
+func newStbUndoRecordFromC(cvalue *C.StbUndoRecord) StbUndoRecord {
+	result := new(StbUndoRecord)
+	result.Fieldwhere = int32(cvalue.where)
+	result.Fieldinsert_length = int32(cvalue.insert_length)
+	result.Fielddelete_length = int32(cvalue.delete_length)
+	result.Fieldchar_storage = int32(cvalue.char_storage)
+	return *result
 }
 
-type StbUndoState uintptr
+type StbUndoState struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
 
-func (data StbUndoState) handle() *C.StbUndoState {
-	return (*C.StbUndoState)(unsafe.Pointer(data))
+func (data StbUndoState) handle() (result *C.StbUndoState, releaseFn func()) {
+	result = (*C.StbUndoState)(data.data)
+	return result, func() {}
 }
 
-func (data StbUndoState) c() C.StbUndoState {
-	return *(data.handle())
+func (data StbUndoState) c() (result C.StbUndoState, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newStbUndoStateFromC(cvalue C.StbUndoState) StbUndoState {
-	return StbUndoState(unsafe.Pointer(&cvalue))
+func newStbUndoStateFromC(cvalue *C.StbUndoState) StbUndoState {
+	result := new(StbUndoState)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }

@@ -120,13 +120,21 @@ func main() {
 		barValues = append(barValues, int64(i+1))
 	}
 
-	backend = imgui.CreateBackend()
+	backend = imgui.CreateBackend(imgui.NewGLFWBackend())
 	backend.SetAfterCreateContextHook(afterCreateContext)
 	backend.SetBeforeDestroyContextHook(beforeDestroyContext)
 
 	backend.SetBgColor(imgui.NewVec4(0.45, 0.55, 0.6, 1.0))
 
 	backend.CreateWindow("Hello from cimgui-go", 1200, 900, 0)
+
+	backend.SetDropCallback(func(p []string) {
+		fmt.Printf("drop triggered: %v", p)
+	})
+
+	backend.SetCloseCallback(func(b imgui.Backend) {
+		fmt.Println("window is closing")
+	})
 
 	backend.Run(loop)
 }

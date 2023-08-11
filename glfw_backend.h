@@ -30,10 +30,20 @@ extern GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height, 
 extern void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
                       VoidCallback beforeDestroyContext);
 extern void igGLFWWindow_GetDisplaySize(GLFWwindow *window, int *width, int *height);
+extern void igGLFWWindow_SetWindowPos(GLFWwindow *window, int x, int y);
+extern void igGLFWWindow_GetWindowPos(GLFWwindow *window, int *x, int *y);
 extern void igGLFWWindow_SetShouldClose(GLFWwindow *window, int value);
+extern void igGLFWWindow_SetDropCallbackCB(GLFWwindow *window);
+extern void igGLFWWindow_SetSize(GLFWwindow *window, int width, int height);
+extern void igGLFWWindow_SetTitle(GLFWwindow *window, const char *title);
+extern void igGLFWWindow_SetSizeLimits(GLFWwindow *window, int minWidth, int minHeight, int maxWidth, int maxHeight);
+extern void igGLFWWindow_SetCloseCallback(GLFWwindow *window);
 extern void igRefresh();
 extern ImTextureID igCreateTexture(unsigned char *pixels, int width, int height);
 extern void igDeleteTexture(ImTextureID id);
+
+extern void dropCallback(int, char **);
+extern void closeCallback(GLFWwindow *window);
 
 #ifdef __cplusplus
 }

@@ -3,76 +3,141 @@
 
 package imgui
 
+// #include <stdlib.h>
+// #include <memory.h>
+// #include "extra_types.h"
 // #include "cimnodes_wrapper.h"
 import "C"
 import "unsafe"
 
-type EmulateThreeButtonMouse uintptr
-
-func (data EmulateThreeButtonMouse) handle() *C.EmulateThreeButtonMouse {
-	return (*C.EmulateThreeButtonMouse)(unsafe.Pointer(data))
+type EmulateThreeButtonMouse struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-func (data EmulateThreeButtonMouse) c() C.EmulateThreeButtonMouse {
-	return *(data.handle())
+func (data EmulateThreeButtonMouse) handle() (result *C.EmulateThreeButtonMouse, releaseFn func()) {
+	result = (*C.EmulateThreeButtonMouse)(data.data)
+	return result, func() {}
 }
 
-func newEmulateThreeButtonMouseFromC(cvalue C.EmulateThreeButtonMouse) EmulateThreeButtonMouse {
-	return EmulateThreeButtonMouse(unsafe.Pointer(&cvalue))
+func (data EmulateThreeButtonMouse) c() (result C.EmulateThreeButtonMouse, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-type NodesIO uintptr
-
-func (data NodesIO) handle() *C.ImNodesIO {
-	return (*C.ImNodesIO)(unsafe.Pointer(data))
+func newEmulateThreeButtonMouseFromC(cvalue *C.EmulateThreeButtonMouse) EmulateThreeButtonMouse {
+	result := new(EmulateThreeButtonMouse)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-func (data NodesIO) c() C.ImNodesIO {
-	return *(data.handle())
+type NodesIO struct {
+	FieldEmulateThreeButtonMouse     EmulateThreeButtonMouse
+	FieldLinkDetachWithModifierClick LinkDetachWithModifierClick
+	FieldMultipleSelectModifier      MultipleSelectModifier
+	FieldAltMouseButton              int32
+	FieldAutoPanningSpeed            float32
 }
 
-func newNodesIOFromC(cvalue C.ImNodesIO) NodesIO {
-	return NodesIO(unsafe.Pointer(&cvalue))
+func (data NodesIO) handle() (result *C.ImNodesIO, releaseFn func()) {
+	result = new(C.ImNodesIO)
+	FieldEmulateThreeButtonMouse := data.FieldEmulateThreeButtonMouse
+	EmulateThreeButtonMouseArg, EmulateThreeButtonMouseFin := FieldEmulateThreeButtonMouse.c()
+	result.EmulateThreeButtonMouse = EmulateThreeButtonMouseArg
+	FieldLinkDetachWithModifierClick := data.FieldLinkDetachWithModifierClick
+	LinkDetachWithModifierClickArg, LinkDetachWithModifierClickFin := FieldLinkDetachWithModifierClick.c()
+	result.LinkDetachWithModifierClick = LinkDetachWithModifierClickArg
+	FieldMultipleSelectModifier := data.FieldMultipleSelectModifier
+	MultipleSelectModifierArg, MultipleSelectModifierFin := FieldMultipleSelectModifier.c()
+	result.MultipleSelectModifier = MultipleSelectModifierArg
+	FieldAltMouseButton := data.FieldAltMouseButton
+
+	result.AltMouseButton = C.int(FieldAltMouseButton)
+	FieldAutoPanningSpeed := data.FieldAutoPanningSpeed
+
+	result.AutoPanningSpeed = C.float(FieldAutoPanningSpeed)
+	releaseFn = func() {
+		EmulateThreeButtonMouseFin()
+		LinkDetachWithModifierClickFin()
+		MultipleSelectModifierFin()
+	}
+	return result, releaseFn
 }
 
-type NodesStyle uintptr
-
-func (data NodesStyle) handle() *C.ImNodesStyle {
-	return (*C.ImNodesStyle)(unsafe.Pointer(data))
+func (data NodesIO) c() (result C.ImNodesIO, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func (data NodesStyle) c() C.ImNodesStyle {
-	return *(data.handle())
+func newNodesIOFromC(cvalue *C.ImNodesIO) NodesIO {
+	result := new(NodesIO)
+	result.FieldEmulateThreeButtonMouse = newEmulateThreeButtonMouseFromC(&cvalue.EmulateThreeButtonMouse)
+	result.FieldLinkDetachWithModifierClick = newLinkDetachWithModifierClickFromC(&cvalue.LinkDetachWithModifierClick)
+	result.FieldMultipleSelectModifier = newMultipleSelectModifierFromC(&cvalue.MultipleSelectModifier)
+	result.FieldAltMouseButton = int32(cvalue.AltMouseButton)
+	result.FieldAutoPanningSpeed = float32(cvalue.AutoPanningSpeed)
+	return *result
 }
 
-func newNodesStyleFromC(cvalue C.ImNodesStyle) NodesStyle {
-	return NodesStyle(unsafe.Pointer(&cvalue))
+type NodesStyle struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-type LinkDetachWithModifierClick uintptr
-
-func (data LinkDetachWithModifierClick) handle() *C.LinkDetachWithModifierClick {
-	return (*C.LinkDetachWithModifierClick)(unsafe.Pointer(data))
+func (data NodesStyle) handle() (result *C.ImNodesStyle, releaseFn func()) {
+	result = (*C.ImNodesStyle)(data.data)
+	return result, func() {}
 }
 
-func (data LinkDetachWithModifierClick) c() C.LinkDetachWithModifierClick {
-	return *(data.handle())
+func (data NodesStyle) c() (result C.ImNodesStyle, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
 }
 
-func newLinkDetachWithModifierClickFromC(cvalue C.LinkDetachWithModifierClick) LinkDetachWithModifierClick {
-	return LinkDetachWithModifierClick(unsafe.Pointer(&cvalue))
+func newNodesStyleFromC(cvalue *C.ImNodesStyle) NodesStyle {
+	result := new(NodesStyle)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }
 
-type MultipleSelectModifier uintptr
-
-func (data MultipleSelectModifier) handle() *C.MultipleSelectModifier {
-	return (*C.MultipleSelectModifier)(unsafe.Pointer(data))
+type LinkDetachWithModifierClick struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
-func (data MultipleSelectModifier) c() C.MultipleSelectModifier {
-	return *(data.handle())
+func (data LinkDetachWithModifierClick) handle() (result *C.LinkDetachWithModifierClick, releaseFn func()) {
+	result = (*C.LinkDetachWithModifierClick)(data.data)
+	return result, func() {}
 }
 
-func newMultipleSelectModifierFromC(cvalue C.MultipleSelectModifier) MultipleSelectModifier {
-	return MultipleSelectModifier(unsafe.Pointer(&cvalue))
+func (data LinkDetachWithModifierClick) c() (result C.LinkDetachWithModifierClick, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
+}
+
+func newLinkDetachWithModifierClickFromC(cvalue *C.LinkDetachWithModifierClick) LinkDetachWithModifierClick {
+	result := new(LinkDetachWithModifierClick)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
+}
+
+type MultipleSelectModifier struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
+
+func (data MultipleSelectModifier) handle() (result *C.MultipleSelectModifier, releaseFn func()) {
+	result = (*C.MultipleSelectModifier)(data.data)
+	return result, func() {}
+}
+
+func (data MultipleSelectModifier) c() (result C.MultipleSelectModifier, fin func()) {
+	resultPtr, finFn := data.handle()
+	return *resultPtr, finFn
+}
+
+func newMultipleSelectModifierFromC(cvalue *C.MultipleSelectModifier) MultipleSelectModifier {
+	result := new(MultipleSelectModifier)
+	result.data = unsafe.Pointer(cvalue)
+	return *result
 }

@@ -5,6 +5,7 @@ package imgui
 // extern void afterRender();
 // extern void afterCreateContext();
 // extern void beforeDestoryContext();
+// extern void dropCallback(void*, int, char**);
 import "C"
 
 import (
@@ -59,6 +60,27 @@ func beforeDestoryContext() {
 	}
 }
 
+type DropCallback func([]string)
+
+type WindowCloseCallback func(b Backend)
+
+//export closeCallback
+func closeCallback(wnd unsafe.Pointer) {
+	currentBackend.closeCallback()(wnd)
+}
+
+//export dropCallback
+func dropCallback(wnd unsafe.Pointer, count C.int, names **C.char) {
+	namesSlice := make([]string, int(count))
+	for i := 0; i < int(count); i++ {
+		var x *C.char
+		p := (**C.char)(unsafe.Pointer(uintptr(unsafe.Pointer(names)) + uintptr(i)*unsafe.Sizeof(x)))
+		namesSlice[i] = C.GoString(*p)
+	}
+
+	currentBackend.dropCallback()(namesSlice)
+}
+
 // Backend is a special interface that implements all methods required
 // to render imgui application.
 type Backend interface {
@@ -71,6 +93,11 @@ type Backend interface {
 	Run(func())
 	Refresh()
 
+	SetWindowPos(x, y int)
+	GetWindowPos() (x, y int32)
+	SetWindowSize(width, height int)
+	SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight int)
+	SetWindowTitle(title string)
 	DisplaySize() (width, height int32)
 	SetShouldClose(bool)
 
@@ -79,6 +106,8 @@ type Backend interface {
 	CreateTexture(pixels unsafe.Pointer, width, Height int) TextureID
 	CreateTextureRgba(img *image.RGBA, width, height int) TextureID
 	DeleteTexture(id TextureID)
+	SetDropCallback(DropCallback)
+	SetCloseCallback(WindowCloseCallback)
 
 	// TODO: flags needs generic layer
 	CreateWindow(title string, width, height int, flags GLFWWindowFlags)
@@ -98,10 +127,12 @@ type Backend interface {
 	loopFunc() func()
 	afterRenderHook() func()
 	beforeDestroyHook() func()
+	dropCallback() DropCallback
+	closeCallback() func(window unsafe.Pointer)
 }
 
-func CreateBackend( /*TODO: backend type*/ ) Backend {
-	currentBackend = &GLFWBackend{}
+func CreateBackend(backend Backend) Backend {
+	currentBackend = backend
 	return currentBackend
 }
 

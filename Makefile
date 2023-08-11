@@ -71,7 +71,7 @@ define update
 	cd tmp/$1/$3; \
 		git checkout $4
 	cd tmp/$1/generator; \
-		bash generator.sh -c "glfw opengl3 opengl2 sdl2 -DIMGUI_USE_WCHAR32"
+		bash generator.sh --target "internal noimstrv comments" --cflags "glfw opengl3 opengl2 sdl2 -DIMGUI_USE_WCHAR32"
 	cp -f tmp/$1/$1* cimgui/
 	if test -e tmp/$1/generator/output/$1*; then \
 		cp -f tmp/$1/generator/output/$1* cimgui/; \
@@ -91,6 +91,7 @@ endef
 update:
 	rm -rf cimgui/*
 	$(call update,cimgui,https://github.com/cimgui/cimgui,imgui,docking)
+	cat templates/assert.h >> cimgui/imgui/imconfig.h
 	$(call cimgui)
 	$(call update,cimplot,https://github.com/cimgui/cimplot,implot,master)
 	$(call cimplot)
