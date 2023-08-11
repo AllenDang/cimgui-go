@@ -7,7 +7,6 @@ package imgui
 // #include "cimnodes_structs_accessor.h"
 // #include "cimnodes_wrapper.h"
 import "C"
-import "unsafe"
 
 func NewEmulateThreeButtonMouse() EmulateThreeButtonMouse {
 	return newEmulateThreeButtonMouseFromC(C.EmulateThreeButtonMouse_EmulateThreeButtonMouse())
