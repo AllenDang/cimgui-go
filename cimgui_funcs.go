@@ -1516,6 +1516,14 @@ func (self IO) AddInputCharacter(c uint32) {
 	selfFin()
 }
 
+// Queue a new character input from a UTF-16 character, it can be a surrogate
+func (self IO) AddInputCharacterUTF16(c uint16) {
+	selfArg, selfFin := self.handle()
+	C.ImGuiIO_AddInputCharacterUTF16(selfArg, C.ImWchar16(c))
+
+	selfFin()
+}
+
 // Queue a new characters input from a UTF-8 string
 func (self IO) AddInputCharactersUTF8(str string) {
 	selfArg, selfFin := self.handle()
@@ -19171,6 +19179,12 @@ func (self IO) BackendUsingLegacyNavInputArray() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiIO_GetBackendUsingLegacyNavInputArray(selfArg) == C.bool(true)
+}
+
+func (self IO) SetInputQueueSurrogate(v uint16) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetInputQueueSurrogate(selfArg, C.ImWchar16(v))
 }
 
 func (self IO) InputQueueSurrogate() uint16 {

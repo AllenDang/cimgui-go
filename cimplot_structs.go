@@ -15,13 +15,13 @@ type FormatterTimeData struct {
 	data unsafe.Pointer
 }
 
-func (data FormatterTimeData) handle() (result *C.Formatter_Time_Data, releaseFn func()) {
-	result = (*C.Formatter_Time_Data)(data.data)
+func (self FormatterTimeData) handle() (result *C.Formatter_Time_Data, releaseFn func()) {
+	result = (*C.Formatter_Time_Data)(self.data)
 	return result, func() {}
 }
 
-func (data FormatterTimeData) c() (result C.Formatter_Time_Data, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self FormatterTimeData) c() (result C.Formatter_Time_Data, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -39,21 +39,21 @@ type PlotAlignmentData struct {
 	FieldPadBMax  float32
 }
 
-func (data PlotAlignmentData) handle() (result *C.ImPlotAlignmentData, releaseFn func()) {
+func (self PlotAlignmentData) handle() (result *C.ImPlotAlignmentData, releaseFn func()) {
 	result = new(C.ImPlotAlignmentData)
-	FieldVertical := data.FieldVertical
+	FieldVertical := self.FieldVertical
 
 	result.Vertical = C.bool(FieldVertical)
-	FieldPadA := data.FieldPadA
+	FieldPadA := self.FieldPadA
 
 	result.PadA = C.float(FieldPadA)
-	FieldPadB := data.FieldPadB
+	FieldPadB := self.FieldPadB
 
 	result.PadB = C.float(FieldPadB)
-	FieldPadAMax := data.FieldPadAMax
+	FieldPadAMax := self.FieldPadAMax
 
 	result.PadAMax = C.float(FieldPadAMax)
-	FieldPadBMax := data.FieldPadBMax
+	FieldPadBMax := self.FieldPadBMax
 
 	result.PadBMax = C.float(FieldPadBMax)
 	releaseFn = func() {
@@ -61,8 +61,8 @@ func (data PlotAlignmentData) handle() (result *C.ImPlotAlignmentData, releaseFn
 	return result, releaseFn
 }
 
-func (data PlotAlignmentData) c() (result C.ImPlotAlignmentData, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotAlignmentData) c() (result C.ImPlotAlignmentData, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -85,24 +85,24 @@ type PlotAnnotation struct {
 	FieldClamp      bool
 }
 
-func (data PlotAnnotation) handle() (result *C.ImPlotAnnotation, releaseFn func()) {
+func (self PlotAnnotation) handle() (result *C.ImPlotAnnotation, releaseFn func()) {
 	result = new(C.ImPlotAnnotation)
-	FieldPos := data.FieldPos
+	FieldPos := self.FieldPos
 
 	result.Pos = FieldPos.toC()
-	FieldOffset := data.FieldOffset
+	FieldOffset := self.FieldOffset
 
 	result.Offset = FieldOffset.toC()
-	FieldColorBg := data.FieldColorBg
+	FieldColorBg := self.FieldColorBg
 
 	result.ColorBg = C.ImU32(FieldColorBg)
-	FieldColorFg := data.FieldColorFg
+	FieldColorFg := self.FieldColorFg
 
 	result.ColorFg = C.ImU32(FieldColorFg)
-	FieldTextOffset := data.FieldTextOffset
+	FieldTextOffset := self.FieldTextOffset
 
 	result.TextOffset = C.int(FieldTextOffset)
-	FieldClamp := data.FieldClamp
+	FieldClamp := self.FieldClamp
 
 	result.Clamp = C.bool(FieldClamp)
 	releaseFn = func() {
@@ -110,8 +110,8 @@ func (data PlotAnnotation) handle() (result *C.ImPlotAnnotation, releaseFn func(
 	return result, releaseFn
 }
 
-func (data PlotAnnotation) c() (result C.ImPlotAnnotation, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotAnnotation) c() (result C.ImPlotAnnotation, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -131,13 +131,13 @@ type PlotAnnotationCollection struct {
 	data unsafe.Pointer
 }
 
-func (data PlotAnnotationCollection) handle() (result *C.ImPlotAnnotationCollection, releaseFn func()) {
-	result = (*C.ImPlotAnnotationCollection)(data.data)
+func (self PlotAnnotationCollection) handle() (result *C.ImPlotAnnotationCollection, releaseFn func()) {
+	result = (*C.ImPlotAnnotationCollection)(self.data)
 	return result, func() {}
 }
 
-func (data PlotAnnotationCollection) c() (result C.ImPlotAnnotationCollection, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotAnnotationCollection) c() (result C.ImPlotAnnotationCollection, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -152,13 +152,13 @@ type PlotAxis struct {
 	data unsafe.Pointer
 }
 
-func (data PlotAxis) handle() (result *C.ImPlotAxis, releaseFn func()) {
-	result = (*C.ImPlotAxis)(data.data)
+func (self PlotAxis) handle() (result *C.ImPlotAxis, releaseFn func()) {
+	result = (*C.ImPlotAxis)(self.data)
 	return result, func() {}
 }
 
-func (data PlotAxis) c() (result C.ImPlotAxis, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotAxis) c() (result C.ImPlotAxis, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -173,13 +173,13 @@ type PlotColormapData struct {
 	data unsafe.Pointer
 }
 
-func (data PlotColormapData) handle() (result *C.ImPlotColormapData, releaseFn func()) {
-	result = (*C.ImPlotColormapData)(data.data)
+func (self PlotColormapData) handle() (result *C.ImPlotColormapData, releaseFn func()) {
+	result = (*C.ImPlotColormapData)(self.data)
 	return result, func() {}
 }
 
-func (data PlotColormapData) c() (result C.ImPlotColormapData, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotColormapData) c() (result C.ImPlotColormapData, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -194,13 +194,13 @@ type PlotContext struct {
 	data unsafe.Pointer
 }
 
-func (data PlotContext) handle() (result *C.ImPlotContext, releaseFn func()) {
-	result = (*C.ImPlotContext)(data.data)
+func (self PlotContext) handle() (result *C.ImPlotContext, releaseFn func()) {
+	result = (*C.ImPlotContext)(self.data)
 	return result, func() {}
 }
 
-func (data PlotContext) c() (result C.ImPlotContext, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotContext) c() (result C.ImPlotContext, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -215,13 +215,13 @@ type PlotDateTimeSpec struct {
 	data unsafe.Pointer
 }
 
-func (data PlotDateTimeSpec) handle() (result *C.ImPlotDateTimeSpec, releaseFn func()) {
-	result = (*C.ImPlotDateTimeSpec)(data.data)
+func (self PlotDateTimeSpec) handle() (result *C.ImPlotDateTimeSpec, releaseFn func()) {
+	result = (*C.ImPlotDateTimeSpec)(self.data)
 	return result, func() {}
 }
 
-func (data PlotDateTimeSpec) c() (result C.ImPlotDateTimeSpec, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotDateTimeSpec) c() (result C.ImPlotDateTimeSpec, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -236,13 +236,13 @@ type PlotInputMap struct {
 	data unsafe.Pointer
 }
 
-func (data PlotInputMap) handle() (result *C.ImPlotInputMap, releaseFn func()) {
-	result = (*C.ImPlotInputMap)(data.data)
+func (self PlotInputMap) handle() (result *C.ImPlotInputMap, releaseFn func()) {
+	result = (*C.ImPlotInputMap)(self.data)
 	return result, func() {}
 }
 
-func (data PlotInputMap) c() (result C.ImPlotInputMap, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotInputMap) c() (result C.ImPlotInputMap, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -262,27 +262,27 @@ type PlotItem struct {
 	FieldSeenThisFrame   bool
 }
 
-func (data PlotItem) handle() (result *C.ImPlotItem, releaseFn func()) {
+func (self PlotItem) handle() (result *C.ImPlotItem, releaseFn func()) {
 	result = new(C.ImPlotItem)
-	FieldID := data.FieldID
+	FieldID := self.FieldID
 
 	result.ID = C.ImGuiID(FieldID)
-	FieldColor := data.FieldColor
+	FieldColor := self.FieldColor
 
 	result.Color = C.ImU32(FieldColor)
-	FieldLegendHoverRect := data.FieldLegendHoverRect
+	FieldLegendHoverRect := self.FieldLegendHoverRect
 
 	result.LegendHoverRect = FieldLegendHoverRect.toC()
-	FieldNameOffset := data.FieldNameOffset
+	FieldNameOffset := self.FieldNameOffset
 
 	result.NameOffset = C.int(FieldNameOffset)
-	FieldShow := data.FieldShow
+	FieldShow := self.FieldShow
 
 	result.Show = C.bool(FieldShow)
-	FieldLegendHovered := data.FieldLegendHovered
+	FieldLegendHovered := self.FieldLegendHovered
 
 	result.LegendHovered = C.bool(FieldLegendHovered)
-	FieldSeenThisFrame := data.FieldSeenThisFrame
+	FieldSeenThisFrame := self.FieldSeenThisFrame
 
 	result.SeenThisFrame = C.bool(FieldSeenThisFrame)
 	releaseFn = func() {
@@ -290,8 +290,8 @@ func (data PlotItem) handle() (result *C.ImPlotItem, releaseFn func()) {
 	return result, releaseFn
 }
 
-func (data PlotItem) c() (result C.ImPlotItem, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotItem) c() (result C.ImPlotItem, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -312,13 +312,13 @@ type PlotItemGroup struct {
 	data unsafe.Pointer
 }
 
-func (data PlotItemGroup) handle() (result *C.ImPlotItemGroup, releaseFn func()) {
-	result = (*C.ImPlotItemGroup)(data.data)
+func (self PlotItemGroup) handle() (result *C.ImPlotItemGroup, releaseFn func()) {
+	result = (*C.ImPlotItemGroup)(self.data)
 	return result, func() {}
 }
 
-func (data PlotItemGroup) c() (result C.ImPlotItemGroup, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotItemGroup) c() (result C.ImPlotItemGroup, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -333,13 +333,13 @@ type PlotLegend struct {
 	data unsafe.Pointer
 }
 
-func (data PlotLegend) handle() (result *C.ImPlotLegend, releaseFn func()) {
-	result = (*C.ImPlotLegend)(data.data)
+func (self PlotLegend) handle() (result *C.ImPlotLegend, releaseFn func()) {
+	result = (*C.ImPlotLegend)(self.data)
 	return result, func() {}
 }
 
-func (data PlotLegend) c() (result C.ImPlotLegend, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotLegend) c() (result C.ImPlotLegend, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -354,13 +354,13 @@ type PlotNextItemData struct {
 	data unsafe.Pointer
 }
 
-func (data PlotNextItemData) handle() (result *C.ImPlotNextItemData, releaseFn func()) {
-	result = (*C.ImPlotNextItemData)(data.data)
+func (self PlotNextItemData) handle() (result *C.ImPlotNextItemData, releaseFn func()) {
+	result = (*C.ImPlotNextItemData)(self.data)
 	return result, func() {}
 }
 
-func (data PlotNextItemData) c() (result C.ImPlotNextItemData, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotNextItemData) c() (result C.ImPlotNextItemData, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -375,13 +375,13 @@ type PlotNextPlotData struct {
 	data unsafe.Pointer
 }
 
-func (data PlotNextPlotData) handle() (result *C.ImPlotNextPlotData, releaseFn func()) {
-	result = (*C.ImPlotNextPlotData)(data.data)
+func (self PlotNextPlotData) handle() (result *C.ImPlotNextPlotData, releaseFn func()) {
+	result = (*C.ImPlotNextPlotData)(self.data)
 	return result, func() {}
 }
 
-func (data PlotNextPlotData) c() (result C.ImPlotNextPlotData, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotNextPlotData) c() (result C.ImPlotNextPlotData, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -396,13 +396,13 @@ type PlotPlot struct {
 	data unsafe.Pointer
 }
 
-func (data PlotPlot) handle() (result *C.ImPlotPlot, releaseFn func()) {
-	result = (*C.ImPlotPlot)(data.data)
+func (self PlotPlot) handle() (result *C.ImPlotPlot, releaseFn func()) {
+	result = (*C.ImPlotPlot)(self.data)
 	return result, func() {}
 }
 
-func (data PlotPlot) c() (result C.ImPlotPlot, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotPlot) c() (result C.ImPlotPlot, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -419,18 +419,18 @@ type PlotPointError struct {
 	FieldPos float64
 }
 
-func (data PlotPointError) handle() (result *C.ImPlotPointError, releaseFn func()) {
+func (self PlotPointError) handle() (result *C.ImPlotPointError, releaseFn func()) {
 	result = new(C.ImPlotPointError)
-	FieldX := data.FieldX
+	FieldX := self.FieldX
 
 	result.X = C.double(FieldX)
-	FieldY := data.FieldY
+	FieldY := self.FieldY
 
 	result.Y = C.double(FieldY)
-	FieldNeg := data.FieldNeg
+	FieldNeg := self.FieldNeg
 
 	result.Neg = C.double(FieldNeg)
-	FieldPos := data.FieldPos
+	FieldPos := self.FieldPos
 
 	result.Pos = C.double(FieldPos)
 	releaseFn = func() {
@@ -438,8 +438,8 @@ func (data PlotPointError) handle() (result *C.ImPlotPointError, releaseFn func(
 	return result, releaseFn
 }
 
-func (data PlotPointError) c() (result C.ImPlotPointError, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotPointError) c() (result C.ImPlotPointError, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -457,12 +457,12 @@ type PlotRange struct {
 	FieldMax float64
 }
 
-func (data PlotRange) handle() (result *C.ImPlotRange, releaseFn func()) {
+func (self PlotRange) handle() (result *C.ImPlotRange, releaseFn func()) {
 	result = new(C.ImPlotRange)
-	FieldMin := data.FieldMin
+	FieldMin := self.FieldMin
 
 	result.Min = C.double(FieldMin)
-	FieldMax := data.FieldMax
+	FieldMax := self.FieldMax
 
 	result.Max = C.double(FieldMax)
 	releaseFn = func() {
@@ -470,8 +470,8 @@ func (data PlotRange) handle() (result *C.ImPlotRange, releaseFn func()) {
 	return result, releaseFn
 }
 
-func (data PlotRange) c() (result C.ImPlotRange, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotRange) c() (result C.ImPlotRange, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -487,12 +487,12 @@ type PlotRect struct {
 	FieldY PlotRange
 }
 
-func (data PlotRect) handle() (result *C.ImPlotRect, releaseFn func()) {
+func (self PlotRect) handle() (result *C.ImPlotRect, releaseFn func()) {
 	result = new(C.ImPlotRect)
-	FieldX := data.FieldX
+	FieldX := self.FieldX
 	XArg, XFin := FieldX.c()
 	result.X = XArg
-	FieldY := data.FieldY
+	FieldY := self.FieldY
 	YArg, YFin := FieldY.c()
 	result.Y = YArg
 	releaseFn = func() {
@@ -502,8 +502,8 @@ func (data PlotRect) handle() (result *C.ImPlotRect, releaseFn func()) {
 	return result, releaseFn
 }
 
-func (data PlotRect) c() (result C.ImPlotRect, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotRect) c() (result C.ImPlotRect, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -519,13 +519,13 @@ type PlotStyle struct {
 	data unsafe.Pointer
 }
 
-func (data PlotStyle) handle() (result *C.ImPlotStyle, releaseFn func()) {
-	result = (*C.ImPlotStyle)(data.data)
+func (self PlotStyle) handle() (result *C.ImPlotStyle, releaseFn func()) {
+	result = (*C.ImPlotStyle)(self.data)
 	return result, func() {}
 }
 
-func (data PlotStyle) c() (result C.ImPlotStyle, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotStyle) c() (result C.ImPlotStyle, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -540,13 +540,13 @@ type PlotSubplot struct {
 	data unsafe.Pointer
 }
 
-func (data PlotSubplot) handle() (result *C.ImPlotSubplot, releaseFn func()) {
-	result = (*C.ImPlotSubplot)(data.data)
+func (self PlotSubplot) handle() (result *C.ImPlotSubplot, releaseFn func()) {
+	result = (*C.ImPlotSubplot)(self.data)
 	return result, func() {}
 }
 
-func (data PlotSubplot) c() (result C.ImPlotSubplot, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotSubplot) c() (result C.ImPlotSubplot, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -561,13 +561,13 @@ type PlotTag struct {
 	data unsafe.Pointer
 }
 
-func (data PlotTag) handle() (result *C.ImPlotTag, releaseFn func()) {
-	result = (*C.ImPlotTag)(data.data)
+func (self PlotTag) handle() (result *C.ImPlotTag, releaseFn func()) {
+	result = (*C.ImPlotTag)(self.data)
 	return result, func() {}
 }
 
-func (data PlotTag) c() (result C.ImPlotTag, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotTag) c() (result C.ImPlotTag, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -582,13 +582,13 @@ type PlotTagCollection struct {
 	data unsafe.Pointer
 }
 
-func (data PlotTagCollection) handle() (result *C.ImPlotTagCollection, releaseFn func()) {
-	result = (*C.ImPlotTagCollection)(data.data)
+func (self PlotTagCollection) handle() (result *C.ImPlotTagCollection, releaseFn func()) {
+	result = (*C.ImPlotTagCollection)(self.data)
 	return result, func() {}
 }
 
-func (data PlotTagCollection) c() (result C.ImPlotTagCollection, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotTagCollection) c() (result C.ImPlotTagCollection, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -609,30 +609,30 @@ type PlotTick struct {
 	FieldIdx        int32
 }
 
-func (data PlotTick) handle() (result *C.ImPlotTick, releaseFn func()) {
+func (self PlotTick) handle() (result *C.ImPlotTick, releaseFn func()) {
 	result = new(C.ImPlotTick)
-	FieldPlotPos := data.FieldPlotPos
+	FieldPlotPos := self.FieldPlotPos
 
 	result.PlotPos = C.double(FieldPlotPos)
-	FieldPixelPos := data.FieldPixelPos
+	FieldPixelPos := self.FieldPixelPos
 
 	result.PixelPos = C.float(FieldPixelPos)
-	FieldLabelSize := data.FieldLabelSize
+	FieldLabelSize := self.FieldLabelSize
 
 	result.LabelSize = FieldLabelSize.toC()
-	FieldTextOffset := data.FieldTextOffset
+	FieldTextOffset := self.FieldTextOffset
 
 	result.TextOffset = C.int(FieldTextOffset)
-	FieldMajor := data.FieldMajor
+	FieldMajor := self.FieldMajor
 
 	result.Major = C.bool(FieldMajor)
-	FieldShowLabel := data.FieldShowLabel
+	FieldShowLabel := self.FieldShowLabel
 
 	result.ShowLabel = C.bool(FieldShowLabel)
-	FieldLevel := data.FieldLevel
+	FieldLevel := self.FieldLevel
 
 	result.Level = C.int(FieldLevel)
-	FieldIdx := data.FieldIdx
+	FieldIdx := self.FieldIdx
 
 	result.Idx = C.int(FieldIdx)
 	releaseFn = func() {
@@ -640,8 +640,8 @@ func (data PlotTick) handle() (result *C.ImPlotTick, releaseFn func()) {
 	return result, releaseFn
 }
 
-func (data PlotTick) c() (result C.ImPlotTick, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotTick) c() (result C.ImPlotTick, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
@@ -663,13 +663,13 @@ type PlotTicker struct {
 	data unsafe.Pointer
 }
 
-func (data PlotTicker) handle() (result *C.ImPlotTicker, releaseFn func()) {
-	result = (*C.ImPlotTicker)(data.data)
+func (self PlotTicker) handle() (result *C.ImPlotTicker, releaseFn func()) {
+	result = (*C.ImPlotTicker)(self.data)
 	return result, func() {}
 }
 
-func (data PlotTicker) c() (result C.ImPlotTicker, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self PlotTicker) c() (result C.ImPlotTicker, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
