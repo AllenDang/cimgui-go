@@ -76,3 +76,8 @@ func renameGoIdentifier(n string) string {
 	}
 	return n
 }
+
+func renameEnum(e string) string {
+	e = strings.TrimSuffix(e, "_")
+	return renameGoIdentifier(e)
+}

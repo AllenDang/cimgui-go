@@ -102,7 +102,7 @@ func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, refEnums, re
 		// and same for enums
 		var isEnum bool
 		for _, enum := range enums {
-			if renameGoIdentifier(enum.Name) == renameGoIdentifier(field.Type) && !shouldSkipStruct(field.Type) {
+			if renameEnum(enum.Name) == renameEnum(field.Type) && !shouldSkipStruct(field.Type) {
 				isEnum = true
 				break
 			}
