@@ -635,13 +635,33 @@ func newPlotSubplotFromC(cvalue *C.ImPlotSubplot) PlotSubplot {
 }
 
 type PlotTag struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldAxis       PlotAxisEnum
+	FieldValue      float64
+	FieldColorBg    uint32
+	FieldColorFg    uint32
+	FieldTextOffset int32
 }
 
 func (self PlotTag) handle() (result *C.ImPlotTag, releaseFn func()) {
-	result = (*C.ImPlotTag)(self.data)
-	return result, func() {}
+	result = new(C.ImPlotTag)
+	FieldAxis := self.FieldAxis
+
+	result.Axis = C.ImAxis(FieldAxis)
+	FieldValue := self.FieldValue
+
+	result.Value = C.double(FieldValue)
+	FieldColorBg := self.FieldColorBg
+
+	result.ColorBg = C.ImU32(FieldColorBg)
+	FieldColorFg := self.FieldColorFg
+
+	result.ColorFg = C.ImU32(FieldColorFg)
+	FieldTextOffset := self.FieldTextOffset
+
+	result.TextOffset = C.int(FieldTextOffset)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (self PlotTag) c() (result C.ImPlotTag, fin func()) {
@@ -651,7 +671,11 @@ func (self PlotTag) c() (result C.ImPlotTag, fin func()) {
 
 func newPlotTagFromC(cvalue *C.ImPlotTag) PlotTag {
 	result := new(PlotTag)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldAxis = PlotAxisEnum(cvalue.Axis)
+	result.FieldValue = float64(cvalue.Value)
+	result.FieldColorBg = uint32(cvalue.ColorBg)
+	result.FieldColorFg = uint32(cvalue.ColorFg)
+	result.FieldTextOffset = int32(cvalue.TextOffset)
 	return *result
 }
 

@@ -1322,6 +1322,29 @@ func PlotBeginAlignedPlotsV(group_id string, vertical bool) bool {
 	return C.ImPlot_BeginAlignedPlots(group_idArg, C.bool(vertical)) == C.bool(true)
 }
 
+// PlotBeginDragDropSourceAxisV parameter default value hint:
+// flags: 0
+func PlotBeginDragDropSourceAxisV(axis PlotAxisEnum, flags DragDropFlags) bool {
+	return C.ImPlot_BeginDragDropSourceAxis(C.ImAxis(axis), C.ImGuiDragDropFlags(flags)) == C.bool(true)
+}
+
+// PlotBeginDragDropSourceItemV parameter default value hint:
+// flags: 0
+func PlotBeginDragDropSourceItemV(label_id string, flags DragDropFlags) bool {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	defer func() {
+		label_idFin()
+	}()
+	return C.ImPlot_BeginDragDropSourceItem(label_idArg, C.ImGuiDragDropFlags(flags)) == C.bool(true)
+}
+
+// PlotBeginDragDropSourcePlotV parameter default value hint:
+// flags: 0
+func PlotBeginDragDropSourcePlotV(flags DragDropFlags) bool {
+	return C.ImPlot_BeginDragDropSourcePlot(C.ImGuiDragDropFlags(flags)) == C.bool(true)
+}
+
 func PlotBeginDragDropTargetAxis(axis PlotAxisEnum) bool {
 	return C.ImPlot_BeginDragDropTargetAxis(C.ImAxis(axis)) == C.bool(true)
 }
@@ -1344,6 +1367,17 @@ func PlotBeginItemV(label_id string, flags PlotItemFlags, recolor_from PlotCol) 
 		label_idFin()
 	}()
 	return C.ImPlot_BeginItem(label_idArg, C.ImPlotItemFlags(flags), C.ImPlotCol(recolor_from)) == C.bool(true)
+}
+
+// PlotBeginLegendPopupV parameter default value hint:
+// mouse_button: 1
+func PlotBeginLegendPopupV(label_id string, mouse_button MouseButton) bool {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	defer func() {
+		label_idFin()
+	}()
+	return C.ImPlot_BeginLegendPopup(label_idArg, C.ImGuiMouseButton(mouse_button)) == C.bool(true)
 }
 
 // PlotBeginPlotV parameter default value hint:
@@ -14551,6 +14585,21 @@ func (self PlotDateTimeSpec) Use24HourClock() bool {
 	return C.wrap_ImPlotDateTimeSpec_GetUse24HourClock(selfArg) == C.bool(true)
 }
 
+func (self PlotInputMap) SetPan(v MouseButton) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotInputMap_SetPan(selfArg, C.ImGuiMouseButton(v))
+}
+
+func (self PlotInputMap) Pan() MouseButton {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return MouseButton(C.wrap_ImPlotInputMap_GetPan(selfArg))
+}
+
 func (self PlotInputMap) SetPanMod(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14564,6 +14613,51 @@ func (self PlotInputMap) PanMod() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImPlotInputMap_GetPanMod(selfArg))
+}
+
+func (self PlotInputMap) SetFit(v MouseButton) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotInputMap_SetFit(selfArg, C.ImGuiMouseButton(v))
+}
+
+func (self PlotInputMap) Fit() MouseButton {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return MouseButton(C.wrap_ImPlotInputMap_GetFit(selfArg))
+}
+
+func (self PlotInputMap) SetSelect(v MouseButton) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotInputMap_SetSelect(selfArg, C.ImGuiMouseButton(v))
+}
+
+func (self PlotInputMap) Select() MouseButton {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return MouseButton(C.wrap_ImPlotInputMap_GetSelect(selfArg))
+}
+
+func (self PlotInputMap) SetSelectCancel(v MouseButton) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotInputMap_SetSelectCancel(selfArg, C.ImGuiMouseButton(v))
+}
+
+func (self PlotInputMap) SelectCancel() MouseButton {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return MouseButton(C.wrap_ImPlotInputMap_GetSelectCancel(selfArg))
 }
 
 func (self PlotInputMap) SetSelectMod(v int32) {
@@ -14609,6 +14703,21 @@ func (self PlotInputMap) SelectVertMod() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImPlotInputMap_GetSelectVertMod(selfArg))
+}
+
+func (self PlotInputMap) SetMenu(v MouseButton) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotInputMap_SetMenu(selfArg, C.ImGuiMouseButton(v))
+}
+
+func (self PlotInputMap) Menu() MouseButton {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return MouseButton(C.wrap_ImPlotInputMap_GetMenu(selfArg))
 }
 
 func (self PlotInputMap) SetOverrideMod(v int32) {
