@@ -12888,10 +12888,28 @@ func (self FontAtlasCustomRect) SetWidth(v uint) {
 	C.wrap_ImFontAtlasCustomRect_SetWidth(selfArg, C.ushort(v))
 }
 
+func (self FontAtlasCustomRect) Width() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_ImFontAtlasCustomRect_GetWidth(selfArg))
+}
+
 func (self FontAtlasCustomRect) SetHeight(v uint) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImFontAtlasCustomRect_SetHeight(selfArg, C.ushort(v))
+}
+
+func (self FontAtlasCustomRect) Height() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_ImFontAtlasCustomRect_GetHeight(selfArg))
 }
 
 func (self FontAtlasCustomRect) SetX(v uint) {
@@ -12900,10 +12918,28 @@ func (self FontAtlasCustomRect) SetX(v uint) {
 	C.wrap_ImFontAtlasCustomRect_SetX(selfArg, C.ushort(v))
 }
 
+func (self FontAtlasCustomRect) X() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_ImFontAtlasCustomRect_GetX(selfArg))
+}
+
 func (self FontAtlasCustomRect) SetY(v uint) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImFontAtlasCustomRect_SetY(selfArg, C.ushort(v))
+}
+
+func (self FontAtlasCustomRect) Y() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_ImFontAtlasCustomRect_GetY(selfArg))
 }
 
 func (self FontAtlasCustomRect) SetGlyphID(v uint32) {
