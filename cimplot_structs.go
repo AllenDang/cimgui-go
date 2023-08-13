@@ -232,13 +232,61 @@ func newPlotDateTimeSpecFromC(cvalue *C.ImPlotDateTimeSpec) PlotDateTimeSpec {
 }
 
 type PlotInputMap struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldPan           MouseButton
+	FieldPanMod        int32
+	FieldFit           MouseButton
+	FieldSelect        MouseButton
+	FieldSelectCancel  MouseButton
+	FieldSelectMod     int32
+	FieldSelectHorzMod int32
+	FieldSelectVertMod int32
+	FieldMenu          MouseButton
+	FieldOverrideMod   int32
+	FieldZoomMod       int32
+	FieldZoomRate      float32
 }
 
 func (self PlotInputMap) handle() (result *C.ImPlotInputMap, releaseFn func()) {
-	result = (*C.ImPlotInputMap)(self.data)
-	return result, func() {}
+	result = new(C.ImPlotInputMap)
+	FieldPan := self.FieldPan
+
+	result.Pan = C.ImGuiMouseButton(FieldPan)
+	FieldPanMod := self.FieldPanMod
+
+	result.PanMod = C.int(FieldPanMod)
+	FieldFit := self.FieldFit
+
+	result.Fit = C.ImGuiMouseButton(FieldFit)
+	FieldSelect := self.FieldSelect
+
+	result.Select = C.ImGuiMouseButton(FieldSelect)
+	FieldSelectCancel := self.FieldSelectCancel
+
+	result.SelectCancel = C.ImGuiMouseButton(FieldSelectCancel)
+	FieldSelectMod := self.FieldSelectMod
+
+	result.SelectMod = C.int(FieldSelectMod)
+	FieldSelectHorzMod := self.FieldSelectHorzMod
+
+	result.SelectHorzMod = C.int(FieldSelectHorzMod)
+	FieldSelectVertMod := self.FieldSelectVertMod
+
+	result.SelectVertMod = C.int(FieldSelectVertMod)
+	FieldMenu := self.FieldMenu
+
+	result.Menu = C.ImGuiMouseButton(FieldMenu)
+	FieldOverrideMod := self.FieldOverrideMod
+
+	result.OverrideMod = C.int(FieldOverrideMod)
+	FieldZoomMod := self.FieldZoomMod
+
+	result.ZoomMod = C.int(FieldZoomMod)
+	FieldZoomRate := self.FieldZoomRate
+
+	result.ZoomRate = C.float(FieldZoomRate)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (self PlotInputMap) c() (result C.ImPlotInputMap, fin func()) {
@@ -248,7 +296,18 @@ func (self PlotInputMap) c() (result C.ImPlotInputMap, fin func()) {
 
 func newPlotInputMapFromC(cvalue *C.ImPlotInputMap) PlotInputMap {
 	result := new(PlotInputMap)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldPan = MouseButton(cvalue.Pan)
+	result.FieldPanMod = int32(cvalue.PanMod)
+	result.FieldFit = MouseButton(cvalue.Fit)
+	result.FieldSelect = MouseButton(cvalue.Select)
+	result.FieldSelectCancel = MouseButton(cvalue.SelectCancel)
+	result.FieldSelectMod = int32(cvalue.SelectMod)
+	result.FieldSelectHorzMod = int32(cvalue.SelectHorzMod)
+	result.FieldSelectVertMod = int32(cvalue.SelectVertMod)
+	result.FieldMenu = MouseButton(cvalue.Menu)
+	result.FieldOverrideMod = int32(cvalue.OverrideMod)
+	result.FieldZoomMod = int32(cvalue.ZoomMod)
+	result.FieldZoomRate = float32(cvalue.ZoomRate)
 	return *result
 }
 

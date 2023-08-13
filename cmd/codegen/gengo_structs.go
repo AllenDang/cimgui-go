@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func generateGoStructs(prefix string, structs []StructDef, enums []EnumDef) []string {
+func generateGoStructs(prefix string, structs []StructDef, enums []EnumDef, refEnums, refStructs []string) []string {
 	glg.Infof("Generating %d structs", len(structs))
 	var progress int
 
@@ -35,7 +35,7 @@ import "unsafe"
 		}
 
 		sb.WriteString(fmt.Sprintf("%s\n", s.CommentAbove))
-		if generateStruct(s, structs, enums, &sb) {
+		if generateStruct(s, structs, enums, refEnums, refStructs, &sb) {
 			progress++
 		}
 
@@ -60,7 +60,7 @@ import "unsafe"
 	return structNames
 }
 
-func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, sb *strings.Builder) (generationComplete bool) {
+func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, refEnums, refStructs []string, sb *strings.Builder) (generationComplete bool) {
 	generationComplete = true
 
 	type wrapper struct {
@@ -92,10 +92,24 @@ func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, sb *strings.
 			}
 		}
 
+		for _, otherS := range refStructs {
+			if otherS == field.Type && !shouldSkipStruct(field.Type) {
+				isOtherStruct = true
+				break
+			}
+		}
+
 		// and same for enums
 		var isEnum bool
 		for _, enum := range enums {
 			if enum.Name == field.Type && !shouldSkipStruct(field.Type) {
+				isEnum = true
+				break
+			}
+		}
+
+		for _, enum := range refEnums {
+			if enum == renameGoIdentifier(field.Type) && !shouldSkipStruct(field.Type) {
 				isEnum = true
 				break
 			}

@@ -100,9 +100,18 @@ func main() {
 		log.Panic(err)
 	}
 
+	var es, ss = make([]string, 0), make([]string, 0)
+	// generate reference only enum and struct names
+	if len(refEnumJsonBytes) > 0 {
+		es, ss, err = getEnumAndStructNames(refEnumJsonBytes)
+		if err != nil {
+			log.Panic(err)
+		}
+	}
+
 	// generate code
 	enumNames := generateGoEnums(*prefix, enums)
-	structNames := generateGoStructs(*prefix, structs, enums)
+	structNames := generateGoStructs(*prefix, structs, enums, es, ss)
 
 	structAccessorFuncs, err := generateCppStructsAccessor(*prefix, validFuncs, structs)
 	if err != nil {
@@ -111,13 +120,7 @@ func main() {
 
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
-	// generate reference only enum and struct names
 	if len(refEnumJsonBytes) > 0 {
-		es, ss, err := getEnumAndStructNames(refEnumJsonBytes)
-		if err != nil {
-			log.Panic(err)
-		}
-
 		enumNames = append(enumNames, es...)
 		structNames = append(structNames, ss...)
 	}
