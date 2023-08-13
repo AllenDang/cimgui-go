@@ -211,13 +211,29 @@ func newPlotContextFromC(cvalue *C.ImPlotContext) PlotContext {
 }
 
 type PlotDateTimeSpec struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldDate           PlotDateFmt
+	FieldTime           PlotTimeFmt
+	FieldUseISO8601     bool
+	FieldUse24HourClock bool
 }
 
 func (self PlotDateTimeSpec) handle() (result *C.ImPlotDateTimeSpec, releaseFn func()) {
-	result = (*C.ImPlotDateTimeSpec)(self.data)
-	return result, func() {}
+	result = new(C.ImPlotDateTimeSpec)
+	FieldDate := self.FieldDate
+
+	result.Date = C.ImPlotDateFmt(FieldDate)
+	FieldTime := self.FieldTime
+
+	result.Time = C.ImPlotTimeFmt(FieldTime)
+	FieldUseISO8601 := self.FieldUseISO8601
+
+	result.UseISO8601 = C.bool(FieldUseISO8601)
+	FieldUse24HourClock := self.FieldUse24HourClock
+
+	result.Use24HourClock = C.bool(FieldUse24HourClock)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (self PlotDateTimeSpec) c() (result C.ImPlotDateTimeSpec, fin func()) {
@@ -227,7 +243,10 @@ func (self PlotDateTimeSpec) c() (result C.ImPlotDateTimeSpec, fin func()) {
 
 func newPlotDateTimeSpecFromC(cvalue *C.ImPlotDateTimeSpec) PlotDateTimeSpec {
 	result := new(PlotDateTimeSpec)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldDate = PlotDateFmt(cvalue.Date)
+	result.FieldTime = PlotTimeFmt(cvalue.Time)
+	result.FieldUseISO8601 = cvalue.UseISO8601 == C.bool(true)
+	result.FieldUse24HourClock = cvalue.Use24HourClock == C.bool(true)
 	return *result
 }
 

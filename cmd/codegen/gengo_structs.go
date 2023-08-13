@@ -86,14 +86,14 @@ func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, refEnums, re
 		// first of all check if the type isn't another stuct
 		var isOtherStruct bool
 		for _, otherS := range defs {
-			if otherS.Name == field.Type && !shouldSkipStruct(field.Type) {
+			if renameGoIdentifier(otherS.Name) == renameGoIdentifier(field.Type) && !shouldSkipStruct(field.Type) {
 				isOtherStruct = true
 				break
 			}
 		}
 
 		for _, otherS := range refStructs {
-			if otherS == field.Type && !shouldSkipStruct(field.Type) {
+			if renameGoIdentifier(otherS) == renameGoIdentifier(field.Type) && !shouldSkipStruct(field.Type) {
 				isOtherStruct = true
 				break
 			}
@@ -102,14 +102,14 @@ func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, refEnums, re
 		// and same for enums
 		var isEnum bool
 		for _, enum := range enums {
-			if enum.Name == field.Type && !shouldSkipStruct(field.Type) {
+			if renameGoIdentifier(enum.Name) == renameGoIdentifier(field.Type) && !shouldSkipStruct(field.Type) {
 				isEnum = true
 				break
 			}
 		}
 
 		for _, enum := range refEnums {
-			if enum == renameGoIdentifier(field.Type) && !shouldSkipStruct(field.Type) {
+			if renameGoIdentifier(enum) == renameGoIdentifier(field.Type) && !shouldSkipStruct(field.Type) {
 				isEnum = true
 				break
 			}

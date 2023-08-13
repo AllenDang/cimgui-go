@@ -449,13 +449,21 @@ func newFontGlyphRangesBuilderFromC(cvalue *C.ImFontGlyphRangesBuilder) FontGlyp
 
 // Stacked color modifier, backup of modified data so we can restore it
 type ColorMod struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldCol         Col
+	FieldBackupValue Vec4
 }
 
 func (self ColorMod) handle() (result *C.ImGuiColorMod, releaseFn func()) {
-	result = (*C.ImGuiColorMod)(self.data)
-	return result, func() {}
+	result = new(C.ImGuiColorMod)
+	FieldCol := self.FieldCol
+
+	result.Col = C.ImGuiCol(FieldCol)
+	FieldBackupValue := self.FieldBackupValue
+
+	result.BackupValue = FieldBackupValue.toC()
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (self ColorMod) c() (result C.ImGuiColorMod, fin func()) {
@@ -465,19 +473,44 @@ func (self ColorMod) c() (result C.ImGuiColorMod, fin func()) {
 
 func newColorModFromC(cvalue *C.ImGuiColorMod) ColorMod {
 	result := new(ColorMod)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldCol = Col(cvalue.Col)
+	result.FieldBackupValue = *(&Vec4{}).fromC(cvalue.BackupValue)
 	return *result
 }
 
 // Storage data for BeginComboPreview()/EndComboPreview()
 type ComboPreviewData struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldPreviewRect                  Rect
+	FieldBackupCursorPos              Vec2
+	FieldBackupCursorMaxPos           Vec2
+	FieldBackupCursorPosPrevLine      Vec2
+	FieldBackupPrevLineTextBaseOffset float32
+	FieldBackupLayout                 LayoutType
 }
 
 func (self ComboPreviewData) handle() (result *C.ImGuiComboPreviewData, releaseFn func()) {
-	result = (*C.ImGuiComboPreviewData)(self.data)
-	return result, func() {}
+	result = new(C.ImGuiComboPreviewData)
+	FieldPreviewRect := self.FieldPreviewRect
+
+	result.PreviewRect = FieldPreviewRect.toC()
+	FieldBackupCursorPos := self.FieldBackupCursorPos
+
+	result.BackupCursorPos = FieldBackupCursorPos.toC()
+	FieldBackupCursorMaxPos := self.FieldBackupCursorMaxPos
+
+	result.BackupCursorMaxPos = FieldBackupCursorMaxPos.toC()
+	FieldBackupCursorPosPrevLine := self.FieldBackupCursorPosPrevLine
+
+	result.BackupCursorPosPrevLine = FieldBackupCursorPosPrevLine.toC()
+	FieldBackupPrevLineTextBaseOffset := self.FieldBackupPrevLineTextBaseOffset
+
+	result.BackupPrevLineTextBaseOffset = C.float(FieldBackupPrevLineTextBaseOffset)
+	FieldBackupLayout := self.FieldBackupLayout
+
+	result.BackupLayout = C.ImGuiLayoutType(FieldBackupLayout)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (self ComboPreviewData) c() (result C.ImGuiComboPreviewData, fin func()) {
@@ -487,7 +520,12 @@ func (self ComboPreviewData) c() (result C.ImGuiComboPreviewData, fin func()) {
 
 func newComboPreviewDataFromC(cvalue *C.ImGuiComboPreviewData) ComboPreviewData {
 	result := new(ComboPreviewData)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldPreviewRect = *(&Rect{}).fromC(cvalue.PreviewRect)
+	result.FieldBackupCursorPos = *(&Vec2{}).fromC(cvalue.BackupCursorPos)
+	result.FieldBackupCursorMaxPos = *(&Vec2{}).fromC(cvalue.BackupCursorMaxPos)
+	result.FieldBackupCursorPosPrevLine = *(&Vec2{}).fromC(cvalue.BackupCursorPosPrevLine)
+	result.FieldBackupPrevLineTextBaseOffset = float32(cvalue.BackupPrevLineTextBaseOffset)
+	result.FieldBackupLayout = LayoutType(cvalue.BackupLayout)
 	return *result
 }
 
@@ -599,13 +637,25 @@ func newDataTypeTempStorageFromC(cvalue *C.ImGuiDataTypeTempStorage) DataTypeTem
 }
 
 type DataVarInfo struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldType   DataType
+	FieldCount  uint32 // 1+
+	FieldOffset uint32 // Offset in parent structure
 }
 
 func (self DataVarInfo) handle() (result *C.ImGuiDataVarInfo, releaseFn func()) {
-	result = (*C.ImGuiDataVarInfo)(self.data)
-	return result, func() {}
+	result = new(C.ImGuiDataVarInfo)
+	FieldType := self.FieldType
+
+	result.Type = C.ImGuiDataType(FieldType)
+	FieldCount := self.FieldCount
+
+	result.Count = C.ImU32(FieldCount)
+	FieldOffset := self.FieldOffset
+
+	result.Offset = C.ImU32(FieldOffset)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (self DataVarInfo) c() (result C.ImGuiDataVarInfo, fin func()) {
@@ -615,7 +665,9 @@ func (self DataVarInfo) c() (result C.ImGuiDataVarInfo, fin func()) {
 
 func newDataVarInfoFromC(cvalue *C.ImGuiDataVarInfo) DataVarInfo {
 	result := new(DataVarInfo)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldType = DataType(cvalue.Type)
+	result.FieldCount = uint32(cvalue.Count)
+	result.FieldOffset = uint32(cvalue.Offset)
 	return *result
 }
 
@@ -1205,13 +1257,37 @@ func newKeyRoutingTableFromC(cvalue *C.ImGuiKeyRoutingTable) KeyRoutingTable {
 
 // Status storage for the last submitted item
 type LastItemData struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldID          ID
+	FieldInFlags     ItemFlags       // See ImGuiItemFlags_
+	FieldStatusFlags ItemStatusFlags // See ImGuiItemStatusFlags_
+	FieldRect        Rect            // Full rectangle
+	FieldNavRect     Rect            // Navigation scoring rectangle (not displayed)
+	FieldDisplayRect Rect            // Display rectangle (only if ImGuiItemStatusFlags_HasDisplayRect is set)
 }
 
 func (self LastItemData) handle() (result *C.ImGuiLastItemData, releaseFn func()) {
-	result = (*C.ImGuiLastItemData)(self.data)
-	return result, func() {}
+	result = new(C.ImGuiLastItemData)
+	FieldID := self.FieldID
+
+	result.ID = C.ImGuiID(FieldID)
+	FieldInFlags := self.FieldInFlags
+
+	result.InFlags = C.ImGuiItemFlags(FieldInFlags)
+	FieldStatusFlags := self.FieldStatusFlags
+
+	result.StatusFlags = C.ImGuiItemStatusFlags(FieldStatusFlags)
+	FieldRect := self.FieldRect
+
+	result.Rect = FieldRect.toC()
+	FieldNavRect := self.FieldNavRect
+
+	result.NavRect = FieldNavRect.toC()
+	FieldDisplayRect := self.FieldDisplayRect
+
+	result.DisplayRect = FieldDisplayRect.toC()
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (self LastItemData) c() (result C.ImGuiLastItemData, fin func()) {
@@ -1221,7 +1297,12 @@ func (self LastItemData) c() (result C.ImGuiLastItemData, fin func()) {
 
 func newLastItemDataFromC(cvalue *C.ImGuiLastItemData) LastItemData {
 	result := new(LastItemData)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldID = ID(cvalue.ID)
+	result.FieldInFlags = ItemFlags(cvalue.InFlags)
+	result.FieldStatusFlags = ItemStatusFlags(cvalue.StatusFlags)
+	result.FieldRect = *(&Rect{}).fromC(cvalue.Rect)
+	result.FieldNavRect = *(&Rect{}).fromC(cvalue.NavRect)
+	result.FieldDisplayRect = *(&Rect{}).fromC(cvalue.DisplayRect)
 	return *result
 }
 
@@ -1487,13 +1568,33 @@ func newNavItemDataFromC(cvalue *C.ImGuiNavItemData) NavItemData {
 }
 
 type NextItemData struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldFlags        NextItemDataFlags
+	FieldWidth        float32 // Set by SetNextItemWidth()
+	FieldFocusScopeId ID      // Set by SetNextItemMultiSelectData() (!= 0 signify value has been set, so it's an alternate version of HasSelectionData, we don't use Flags for this because they are cleared too early. This is mostly used for debugging)
+	FieldOpenCond     Cond
+	FieldOpenVal      bool // Set by SetNextItemOpen()
 }
 
 func (self NextItemData) handle() (result *C.ImGuiNextItemData, releaseFn func()) {
-	result = (*C.ImGuiNextItemData)(self.data)
-	return result, func() {}
+	result = new(C.ImGuiNextItemData)
+	FieldFlags := self.FieldFlags
+
+	result.Flags = C.ImGuiNextItemDataFlags(FieldFlags)
+	FieldWidth := self.FieldWidth
+
+	result.Width = C.float(FieldWidth)
+	FieldFocusScopeId := self.FieldFocusScopeId
+
+	result.FocusScopeId = C.ImGuiID(FieldFocusScopeId)
+	FieldOpenCond := self.FieldOpenCond
+
+	result.OpenCond = C.ImGuiCond(FieldOpenCond)
+	FieldOpenVal := self.FieldOpenVal
+
+	result.OpenVal = C.bool(FieldOpenVal)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (self NextItemData) c() (result C.ImGuiNextItemData, fin func()) {
@@ -1503,7 +1604,11 @@ func (self NextItemData) c() (result C.ImGuiNextItemData, fin func()) {
 
 func newNextItemDataFromC(cvalue *C.ImGuiNextItemData) NextItemData {
 	result := new(NextItemData)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldFlags = NextItemDataFlags(cvalue.Flags)
+	result.FieldWidth = float32(cvalue.Width)
+	result.FieldFocusScopeId = ID(cvalue.FocusScopeId)
+	result.FieldOpenCond = Cond(cvalue.OpenCond)
+	result.FieldOpenVal = cvalue.OpenVal == C.bool(true)
 	return *result
 }
 
@@ -1530,13 +1635,29 @@ func newNextWindowDataFromC(cvalue *C.ImGuiNextWindowData) NextWindowData {
 }
 
 type OldColumnData struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldOffsetNorm             float32 // Column start offset, normalized 0.0 (far left) -> 1.0 (far right)
+	FieldOffsetNormBeforeResize float32
+	FieldFlags                  OldColumnFlags // Not exposed
+	FieldClipRect               Rect
 }
 
 func (self OldColumnData) handle() (result *C.ImGuiOldColumnData, releaseFn func()) {
-	result = (*C.ImGuiOldColumnData)(self.data)
-	return result, func() {}
+	result = new(C.ImGuiOldColumnData)
+	FieldOffsetNorm := self.FieldOffsetNorm
+
+	result.OffsetNorm = C.float(FieldOffsetNorm)
+	FieldOffsetNormBeforeResize := self.FieldOffsetNormBeforeResize
+
+	result.OffsetNormBeforeResize = C.float(FieldOffsetNormBeforeResize)
+	FieldFlags := self.FieldFlags
+
+	result.Flags = C.ImGuiOldColumnFlags(FieldFlags)
+	FieldClipRect := self.FieldClipRect
+
+	result.ClipRect = FieldClipRect.toC()
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (self OldColumnData) c() (result C.ImGuiOldColumnData, fin func()) {
@@ -1546,7 +1667,10 @@ func (self OldColumnData) c() (result C.ImGuiOldColumnData, fin func()) {
 
 func newOldColumnDataFromC(cvalue *C.ImGuiOldColumnData) OldColumnData {
 	result := new(OldColumnData)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldOffsetNorm = float32(cvalue.OffsetNorm)
+	result.FieldOffsetNormBeforeResize = float32(cvalue.OffsetNormBeforeResize)
+	result.FieldFlags = OldColumnFlags(cvalue.Flags)
+	result.FieldClipRect = *(&Rect{}).fromC(cvalue.ClipRect)
 	return *result
 }
 
@@ -2292,13 +2416,37 @@ func newTableInstanceDataFromC(cvalue *C.ImGuiTableInstanceData) TableInstanceDa
 
 // This is designed to be stored in a single ImChunkStream (1 header followed by N ImGuiTableColumnSettings, etc.)
 type TableSettings struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldID              ID         // Set to 0 to invalidate/delete the setting
+	FieldSaveFlags       TableFlags // Indicate data we want to save using the Resizable/Reorderable/Sortable/Hideable flags (could be using its own flags..)
+	FieldRefScale        float32    // Reference scale to be able to rescale columns on font/dpi changes.
+	FieldColumnsCount    TableColumnIdx
+	FieldColumnsCountMax TableColumnIdx // Maximum number of columns this settings instance can store, we can recycle a settings instance with lower number of columns but not higher
+	FieldWantApply       bool           // Set when loaded from .ini data (to enable merging/loading .ini data into an already running context)
 }
 
 func (self TableSettings) handle() (result *C.ImGuiTableSettings, releaseFn func()) {
-	result = (*C.ImGuiTableSettings)(self.data)
-	return result, func() {}
+	result = new(C.ImGuiTableSettings)
+	FieldID := self.FieldID
+
+	result.ID = C.ImGuiID(FieldID)
+	FieldSaveFlags := self.FieldSaveFlags
+
+	result.SaveFlags = C.ImGuiTableFlags(FieldSaveFlags)
+	FieldRefScale := self.FieldRefScale
+
+	result.RefScale = C.float(FieldRefScale)
+	FieldColumnsCount := self.FieldColumnsCount
+
+	result.ColumnsCount = C.ImGuiTableColumnIdx(FieldColumnsCount)
+	FieldColumnsCountMax := self.FieldColumnsCountMax
+
+	result.ColumnsCountMax = C.ImGuiTableColumnIdx(FieldColumnsCountMax)
+	FieldWantApply := self.FieldWantApply
+
+	result.WantApply = C.bool(FieldWantApply)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (self TableSettings) c() (result C.ImGuiTableSettings, fin func()) {
@@ -2308,7 +2456,12 @@ func (self TableSettings) c() (result C.ImGuiTableSettings, fin func()) {
 
 func newTableSettingsFromC(cvalue *C.ImGuiTableSettings) TableSettings {
 	result := new(TableSettings)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldID = ID(cvalue.ID)
+	result.FieldSaveFlags = TableFlags(cvalue.SaveFlags)
+	result.FieldRefScale = float32(cvalue.RefScale)
+	result.FieldColumnsCount = TableColumnIdx(cvalue.ColumnsCount)
+	result.FieldColumnsCountMax = TableColumnIdx(cvalue.ColumnsCountMax)
+	result.FieldWantApply = cvalue.WantApply == C.bool(true)
 	return *result
 }
 
@@ -2606,13 +2759,45 @@ func newWindowFromC(cvalue *C.ImGuiWindow) Window {
 // - To the platform backend for OS level parent/child relationships of viewport.
 // - To the docking system for various options and filtering.
 type WindowClass struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldClassId                    ID            // User data. 0 = Default class (unclassed). Windows of different classes cannot be docked with each others.
+	FieldParentViewportId           ID            // Hint for the platform backend. -1: use default. 0: request platform backend to not parent the platform. != 0: request platform backend to create a parent<>child relationship between the platform windows. Not conforming backends are free to e.g. parent every viewport to the main viewport or not.
+	FieldViewportFlagsOverrideSet   ViewportFlags // Viewport flags to set when a window of this class owns a viewport. This allows you to enforce OS decoration or task bar icon, override the defaults on a per-window basis.
+	FieldViewportFlagsOverrideClear ViewportFlags // Viewport flags to clear when a window of this class owns a viewport. This allows you to enforce OS decoration or task bar icon, override the defaults on a per-window basis.
+	FieldTabItemFlagsOverrideSet    TabItemFlags  // [EXPERIMENTAL] TabItem flags to set when a window of this class gets submitted into a dock node tab bar. May use with ImGuiTabItemFlags_Leading or ImGuiTabItemFlags_Trailing.
+	FieldDockNodeFlagsOverrideSet   DockNodeFlags // [EXPERIMENTAL] Dock node flags to set when a window of this class is hosted by a dock node (it doesn't have to be selected!)
+	FieldDockingAlwaysTabBar        bool          // Set to true to enforce single floating windows of this class always having their own docking node (equivalent of setting the global io.ConfigDockingAlwaysTabBar)
+	FieldDockingAllowUnclassed      bool          // Set to true to allow windows of this class to be docked/merged with an unclassed window. // FIXME-DOCK: Move to DockNodeFlags override?
 }
 
 func (self WindowClass) handle() (result *C.ImGuiWindowClass, releaseFn func()) {
-	result = (*C.ImGuiWindowClass)(self.data)
-	return result, func() {}
+	result = new(C.ImGuiWindowClass)
+	FieldClassId := self.FieldClassId
+
+	result.ClassId = C.ImGuiID(FieldClassId)
+	FieldParentViewportId := self.FieldParentViewportId
+
+	result.ParentViewportId = C.ImGuiID(FieldParentViewportId)
+	FieldViewportFlagsOverrideSet := self.FieldViewportFlagsOverrideSet
+
+	result.ViewportFlagsOverrideSet = C.ImGuiViewportFlags(FieldViewportFlagsOverrideSet)
+	FieldViewportFlagsOverrideClear := self.FieldViewportFlagsOverrideClear
+
+	result.ViewportFlagsOverrideClear = C.ImGuiViewportFlags(FieldViewportFlagsOverrideClear)
+	FieldTabItemFlagsOverrideSet := self.FieldTabItemFlagsOverrideSet
+
+	result.TabItemFlagsOverrideSet = C.ImGuiTabItemFlags(FieldTabItemFlagsOverrideSet)
+	FieldDockNodeFlagsOverrideSet := self.FieldDockNodeFlagsOverrideSet
+
+	result.DockNodeFlagsOverrideSet = C.ImGuiDockNodeFlags(FieldDockNodeFlagsOverrideSet)
+	FieldDockingAlwaysTabBar := self.FieldDockingAlwaysTabBar
+
+	result.DockingAlwaysTabBar = C.bool(FieldDockingAlwaysTabBar)
+	FieldDockingAllowUnclassed := self.FieldDockingAllowUnclassed
+
+	result.DockingAllowUnclassed = C.bool(FieldDockingAllowUnclassed)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (self WindowClass) c() (result C.ImGuiWindowClass, fin func()) {
@@ -2622,7 +2807,14 @@ func (self WindowClass) c() (result C.ImGuiWindowClass, fin func()) {
 
 func newWindowClassFromC(cvalue *C.ImGuiWindowClass) WindowClass {
 	result := new(WindowClass)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldClassId = ID(cvalue.ClassId)
+	result.FieldParentViewportId = ID(cvalue.ParentViewportId)
+	result.FieldViewportFlagsOverrideSet = ViewportFlags(cvalue.ViewportFlagsOverrideSet)
+	result.FieldViewportFlagsOverrideClear = ViewportFlags(cvalue.ViewportFlagsOverrideClear)
+	result.FieldTabItemFlagsOverrideSet = TabItemFlags(cvalue.TabItemFlagsOverrideSet)
+	result.FieldDockNodeFlagsOverrideSet = DockNodeFlags(cvalue.DockNodeFlagsOverrideSet)
+	result.FieldDockingAlwaysTabBar = cvalue.DockingAlwaysTabBar == C.bool(true)
+	result.FieldDockingAllowUnclassed = cvalue.DockingAllowUnclassed == C.bool(true)
 	return *result
 }
 
