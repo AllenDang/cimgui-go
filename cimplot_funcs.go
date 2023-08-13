@@ -13613,6 +13613,12 @@ func (self PlotAxis) PickerLevel() int32 {
 	return int32(C.wrap_ImPlotAxis_GetPickerLevel(selfArg))
 }
 
+func (self PlotAxis) SetPickerTimeMin(v PlotTime) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotAxis_SetPickerTimeMin(selfArg, v.toC())
+}
+
 func (self PlotAxis) PickerTimeMin() PlotTime {
 	selfArg, selfFin := self.handle()
 
@@ -13620,6 +13626,12 @@ func (self PlotAxis) PickerTimeMin() PlotTime {
 		selfFin()
 	}()
 	return *(&PlotTime{}).fromC(C.wrap_ImPlotAxis_GetPickerTimeMin(selfArg))
+}
+
+func (self PlotAxis) SetPickerTimeMax(v PlotTime) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotAxis_SetPickerTimeMax(selfArg, v.toC())
 }
 
 func (self PlotAxis) PickerTimeMax() PlotTime {
@@ -16646,4 +16658,8 @@ func (self PlotTicker) Levels() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImPlotTicker_GetLevels(selfArg))
+}
+
+func (self PlotTime) Us() int32 {
+	return int32(C.wrap_ImPlotTime_GetUs(self.toC()))
 }
