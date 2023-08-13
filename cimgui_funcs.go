@@ -6489,6 +6489,10 @@ func InternalImTextStrToUtf8(out_buf string, out_buf_size int32, in_text *Wchar,
 	return int32(C.igImTextStrToUtf8(out_bufArg, C.int(out_buf_size), (*C.ImWchar)(in_text), (*C.ImWchar)(in_text_end)))
 }
 
+func InternalImToUpper(c rune) rune {
+	return rune(C.igImToUpper(C.char(c)))
+}
+
 func InternalImTriangleArea(a Vec2, b Vec2, c Vec2) float32 {
 	return float32(C.igImTriangleArea(a.toC(), b.toC(), c.toC()))
 }
@@ -16487,6 +16491,15 @@ func (self Context) SetPlatformLocaleDecimalPoint(v rune) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetPlatformLocaleDecimalPoint(selfArg, C.char(v))
+}
+
+func (self Context) PlatformLocaleDecimalPoint() rune {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return rune(C.wrap_ImGuiContext_GetPlatformLocaleDecimalPoint(selfArg))
 }
 
 func (self Context) SetDockContext(v DockContext) {
