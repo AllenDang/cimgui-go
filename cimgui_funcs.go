@@ -5923,6 +5923,58 @@ func InternalImBezierQuadraticCalc(p1 Vec2, p2 Vec2, p3 Vec2, t float32) Vec2 {
 	return *pOut
 }
 
+func InternalImBitArrayClearAllBits(arr *[]uint32, bitcount int32) {
+	arrArg := make([]C.ImU32, len(*arr))
+	for i, arrV := range *arr {
+		arrArg[i] = C.ImU32(arrV)
+	}
+
+	C.igImBitArrayClearAllBits((*C.ImU32)(&arrArg[0]), C.int(bitcount))
+
+	for i, arrV := range arrArg {
+		(*arr)[i] = uint32(arrV)
+	}
+}
+
+func InternalImBitArrayClearBit(arr *[]uint32, n int32) {
+	arrArg := make([]C.ImU32, len(*arr))
+	for i, arrV := range *arr {
+		arrArg[i] = C.ImU32(arrV)
+	}
+
+	C.igImBitArrayClearBit((*C.ImU32)(&arrArg[0]), C.int(n))
+
+	for i, arrV := range arrArg {
+		(*arr)[i] = uint32(arrV)
+	}
+}
+
+func InternalImBitArraySetBit(arr *[]uint32, n int32) {
+	arrArg := make([]C.ImU32, len(*arr))
+	for i, arrV := range *arr {
+		arrArg[i] = C.ImU32(arrV)
+	}
+
+	C.igImBitArraySetBit((*C.ImU32)(&arrArg[0]), C.int(n))
+
+	for i, arrV := range arrArg {
+		(*arr)[i] = uint32(arrV)
+	}
+}
+
+func InternalImBitArraySetBitRange(arr *[]uint32, n int32, n2 int32) {
+	arrArg := make([]C.ImU32, len(*arr))
+	for i, arrV := range *arr {
+		arrArg[i] = C.ImU32(arrV)
+	}
+
+	C.igImBitArraySetBitRange((*C.ImU32)(&arrArg[0]), C.int(n), C.int(n2))
+
+	for i, arrV := range arrArg {
+		(*arr)[i] = uint32(arrV)
+	}
+}
+
 func InternalImBitArrayTestBit(arr *[]uint32, n int32) bool {
 	arrArg := make([]C.ImU32, len(*arr))
 	for i, arrV := range *arr {
