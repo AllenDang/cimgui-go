@@ -29698,6 +29698,15 @@ func (self STBTexteditState) TexteditStateGetselectend() int32 {
 	return int32(C.wrap_STB_TexteditState_Getselect_end(selfArg))
 }
 
+func (self STBTexteditState) TexteditStateGetinsertmode() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Getinsert_mode(selfArg))
+}
+
 func (self STBTexteditState) TexteditStateGetrowcountperpage() int32 {
 	selfArg, selfFin := self.handle()
 
@@ -29705,6 +29714,69 @@ func (self STBTexteditState) TexteditStateGetrowcountperpage() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_STB_TexteditState_Getrow_count_per_page(selfArg))
+}
+
+func (self STBTexteditState) TexteditStateGetcursoratendofline() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Getcursor_at_end_of_line(selfArg))
+}
+
+func (self STBTexteditState) TexteditStateGetinitialized() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Getinitialized(selfArg))
+}
+
+func (self STBTexteditState) TexteditStateGethaspreferredx() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Gethas_preferred_x(selfArg))
+}
+
+func (self STBTexteditState) TexteditStateGetsingleline() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Getsingle_line(selfArg))
+}
+
+func (self STBTexteditState) TexteditStateGetpadding1() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Getpadding1(selfArg))
+}
+
+func (self STBTexteditState) TexteditStateGetpadding2() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Getpadding2(selfArg))
+}
+
+func (self STBTexteditState) TexteditStateGetpadding3() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Getpadding3(selfArg))
 }
 
 func (self STBTexteditState) TexteditStateGetpreferredx() float32 {
