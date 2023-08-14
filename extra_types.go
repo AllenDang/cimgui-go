@@ -70,12 +70,12 @@ func (i Vec4) toC() C.ImVec4 {
 var _ wrappableType[C.ImColor, *Color] = &Color{}
 
 type Color struct {
-	Value Vec4
+	FieldValue Vec4
 }
 
 func NewColor(r, g, b, a float32) Color {
 	return Color{
-		Value: Vec4{
+		FieldValue: Vec4{
 			X: r,
 			Y: g,
 			Z: b,
@@ -109,7 +109,7 @@ func (i *Color) fromC(col C.ImColor) *Color {
 }
 
 func (i Color) toC() C.ImColor {
-	return C.ImColor{Value: i.Value.toC()}
+	return C.ImColor{Value: i.FieldValue.toC()}
 }
 
 func colorComponent(v float32) uint8 {
@@ -124,18 +124,18 @@ func colorComponent(v float32) uint8 {
 }
 
 func (i Color) Pack() uint32 {
-	return uint32(colorComponent(i.Value.X))<<0 |
-		uint32(colorComponent(i.Value.Y))<<8 |
-		uint32(colorComponent(i.Value.Z))<<16 |
-		uint32(colorComponent(i.Value.W))<<24
+	return uint32(colorComponent(i.FieldValue.X))<<0 |
+		uint32(colorComponent(i.FieldValue.Y))<<8 |
+		uint32(colorComponent(i.FieldValue.Z))<<16 |
+		uint32(colorComponent(i.FieldValue.W))<<24
 }
 
 func (i Color) Color() color.Color {
 	return color.NRGBA{
-		R: colorComponent(i.Value.X),
-		G: colorComponent(i.Value.Y),
-		B: colorComponent(i.Value.Z),
-		A: colorComponent(i.Value.W),
+		R: colorComponent(i.FieldValue.X),
+		G: colorComponent(i.FieldValue.Y),
+		B: colorComponent(i.FieldValue.Z),
+		A: colorComponent(i.FieldValue.W),
 	}
 }
 
