@@ -150,7 +150,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 		} else {
 			returnTypeType = returnTypeVoid
 		}
-	} else if g.enumNames[goEnumName] {
+	} else if g.enumNames[renameEnum(goEnumName)] {
 		returnTypeType = returnTypeEnum
 	} else if strings.HasSuffix(f.Ret, "*") && (g.structNames[strings.TrimSuffix(f.Ret, "*")] || g.structNames[strings.TrimSuffix(strings.TrimPrefix(f.Ret, "const "), "*")]) {
 		returnTypeType = returnTypeStructPtr
@@ -470,7 +470,7 @@ func (g *goFuncsGenerator) writeFinishers(shouldDefer bool, finishers []string) 
 // isEnum returns true when given string is a valid enum type.
 func (g *goFuncsGenerator) isEnum(argType string) bool {
 	for en := range g.enumNames {
-		if argType == en {
+		if renameEnum(argType) == en {
 			return true
 		}
 	}

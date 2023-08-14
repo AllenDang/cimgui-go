@@ -446,7 +446,7 @@ extern "C" {
 				ArgsT: []ArgDef{
 					{
 						Name: "self",
-						Type: s.Name,
+						Type: s.Name + "*",
 					},
 				},
 				FuncName:         getterFuncName,

@@ -1516,6 +1516,14 @@ func (self IO) AddInputCharacter(c uint32) {
 	selfFin()
 }
 
+// Queue a new character input from a UTF-16 character, it can be a surrogate
+func (self IO) AddInputCharacterUTF16(c uint16) {
+	selfArg, selfFin := self.handle()
+	C.ImGuiIO_AddInputCharacterUTF16(selfArg, C.ImWchar16(c))
+
+	selfFin()
+}
+
 // Queue a new characters input from a UTF-8 string
 func (self IO) AddInputCharactersUTF8(str string) {
 	selfArg, selfFin := self.handle()
@@ -6479,6 +6487,10 @@ func InternalImTextStrToUtf8(out_buf string, out_buf_size int32, in_text *Wchar,
 		out_bufFin()
 	}()
 	return int32(C.igImTextStrToUtf8(out_bufArg, C.int(out_buf_size), (*C.ImWchar)(in_text), (*C.ImWchar)(in_text_end)))
+}
+
+func InternalImToUpper(c rune) rune {
+	return rune(C.igImToUpper(C.char(c)))
 }
 
 func InternalImTriangleArea(a Vec2, b Vec2, c Vec2) float32 {
@@ -11760,6 +11772,15 @@ func ValueFloat(prefix string, v float32) {
 	prefixFin()
 }
 
+func (self *Color) Value() Vec4 {
+	selfArg, selfFin := wrap[C.ImColor, *Color](self)
+
+	defer func() {
+		selfFin()
+	}()
+	return *(&Vec4{}).fromC(C.wrap_ImColor_GetValue(selfArg))
+}
+
 func (self DrawCmd) SetClipRect(v Vec4) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -12880,10 +12901,28 @@ func (self FontAtlasCustomRect) SetWidth(v uint) {
 	C.wrap_ImFontAtlasCustomRect_SetWidth(selfArg, C.ushort(v))
 }
 
+func (self FontAtlasCustomRect) Width() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_ImFontAtlasCustomRect_GetWidth(selfArg))
+}
+
 func (self FontAtlasCustomRect) SetHeight(v uint) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImFontAtlasCustomRect_SetHeight(selfArg, C.ushort(v))
+}
+
+func (self FontAtlasCustomRect) Height() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_ImFontAtlasCustomRect_GetHeight(selfArg))
 }
 
 func (self FontAtlasCustomRect) SetX(v uint) {
@@ -12892,10 +12931,28 @@ func (self FontAtlasCustomRect) SetX(v uint) {
 	C.wrap_ImFontAtlasCustomRect_SetX(selfArg, C.ushort(v))
 }
 
+func (self FontAtlasCustomRect) X() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_ImFontAtlasCustomRect_GetX(selfArg))
+}
+
 func (self FontAtlasCustomRect) SetY(v uint) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImFontAtlasCustomRect_SetY(selfArg, C.ushort(v))
+}
+
+func (self FontAtlasCustomRect) Y() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_ImFontAtlasCustomRect_GetY(selfArg))
 }
 
 func (self FontAtlasCustomRect) SetGlyphID(v uint32) {
@@ -16445,6 +16502,15 @@ func (self Context) SetPlatformLocaleDecimalPoint(v rune) {
 	C.wrap_ImGuiContext_SetPlatformLocaleDecimalPoint(selfArg, C.char(v))
 }
 
+func (self Context) PlatformLocaleDecimalPoint() rune {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return rune(C.wrap_ImGuiContext_GetPlatformLocaleDecimalPoint(selfArg))
+}
+
 func (self Context) SetDockContext(v DockContext) {
 	vArg, vFin := v.c()
 
@@ -19171,6 +19237,12 @@ func (self IO) BackendUsingLegacyNavInputArray() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiIO_GetBackendUsingLegacyNavInputArray(selfArg) == C.bool(true)
+}
+
+func (self IO) SetInputQueueSurrogate(v uint16) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetInputQueueSurrogate(selfArg, C.ImWchar16(v))
 }
 
 func (self IO) InputQueueSurrogate() uint16 {

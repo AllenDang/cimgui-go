@@ -73,7 +73,7 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"float[4]":                 simplePtrArrayW(4, "C.float", "float32"),
 		"ImWchar":                  simpleW("Wchar", "C.ImWchar"),
 		"const ImWchar*":           simpleW("*Wchar", "(*C.ImWchar)"),
-		"ImWchar15":                simpleW("uint16", "C.ImWchar16"),
+		"ImWchar16":                simpleW("uint16", "C.ImWchar16"),
 		"ImGuiID":                  simpleW("ID", "C.ImGuiID"),
 		"ImGuiID*":                 simplePtrW("ID", "C.ImGuiID"),
 		"ImTextureID":              simpleW("TextureID", "C.ImTextureID"),
@@ -100,6 +100,7 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"ImPlotPoint":              wrappableW("PlotPoint"),
 		"const ImPlotPoint":        wrappableW("PlotPoint"),
 		"ImPlotPoint*":             wrappablePtrW("*PlotPoint", "C.ImPlotPoint"),
+		"ImPlotTime":               wrappableW("PlotTime"),
 		"const ImPlotTime":         wrappableW("PlotTime"),
 		"ImPlotTime*":              wrappablePtrW("*PlotTime", "C.ImPlotTime"),
 	}

@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func generateGoStructs(prefix string, structs []StructDef, enums []EnumDef) []string {
+func generateGoStructs(prefix string, structs []StructDef, enums []EnumDef, refEnums, refStructs []string) []string {
 	glg.Infof("Generating %d structs", len(structs))
 	var progress int
 
@@ -35,7 +35,7 @@ import "unsafe"
 		}
 
 		sb.WriteString(fmt.Sprintf("%s\n", s.CommentAbove))
-		if generateStruct(s, structs, enums, &sb) {
+		if generateStruct(s, structs, enums, refEnums, refStructs, &sb) {
 			progress++
 		}
 
@@ -60,7 +60,7 @@ import "unsafe"
 	return structNames
 }
 
-func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, sb *strings.Builder) (generationComplete bool) {
+func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, refEnums, refStructs []string, sb *strings.Builder) (generationComplete bool) {
 	generationComplete = true
 
 	type wrapper struct {
@@ -86,7 +86,14 @@ func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, sb *strings.
 		// first of all check if the type isn't another stuct
 		var isOtherStruct bool
 		for _, otherS := range defs {
-			if otherS.Name == field.Type && !shouldSkipStruct(field.Type) {
+			if renameGoIdentifier(otherS.Name) == renameGoIdentifier(field.Type) && !shouldSkipStruct(field.Type) {
+				isOtherStruct = true
+				break
+			}
+		}
+
+		for _, otherS := range refStructs {
+			if renameGoIdentifier(otherS) == renameGoIdentifier(field.Type) && !shouldSkipStruct(field.Type) {
 				isOtherStruct = true
 				break
 			}
@@ -95,7 +102,14 @@ func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, sb *strings.
 		// and same for enums
 		var isEnum bool
 		for _, enum := range enums {
-			if enum.Name == field.Type && !shouldSkipStruct(field.Type) {
+			if renameEnum(enum.Name) == renameEnum(field.Type) && !shouldSkipStruct(field.Type) {
+				isEnum = true
+				break
+			}
+		}
+
+		for _, enum := range refEnums {
+			if renameGoIdentifier(enum) == renameGoIdentifier(field.Type) && !shouldSkipStruct(field.Type) {
 				isEnum = true
 				break
 			}
@@ -190,19 +204,19 @@ data unsafe.Pointer
 
 	// handlers:
 	fmt.Fprintf(sb, `
-func (data %[1]s) handle() (result *C.%[2]s, releaseFn func()) {
+func (self %[1]s) handle() (result *C.%[2]s, releaseFn func()) {
 `, renameGoIdentifier(s.Name), s.Name)
 
 	if isTODO {
 		fmt.Fprintf(sb, `
-result = (*C.%s)(data.data)
+result = (*C.%s)(self.data)
 return result, func() {}
 `, s.Name)
 	} else {
 		fmt.Fprintf(sb, "result = new(C.%s)\n", s.Name)
 		for i, m := range s.Members {
 			fmt.Fprintf(sb,
-				"%[4]s := data.%[4]s\n%[1]s\nresult.%[2]s = %[3]s\n",
+				"%[4]s := self.%[4]s\n%[1]s\nresult.%[2]s = %[3]s\n",
 				wrappers[i].toC.ArgDef,
 				m.Name, wrappers[i].toC.VarName,
 				renameStructField(m.Name),
@@ -224,8 +238,8 @@ return result, func() {}
 	fmt.Fprintf(sb, "}\n")
 
 	fmt.Fprintf(sb, `
-	func (data %[1]s) c() (result C.%[2]s, fin func()) {
-		resultPtr, finFn := data.handle()
+	func (self %[1]s) c() (result C.%[2]s, fin func()) {
+		resultPtr, finFn := self.handle()
 		return *resultPtr, finFn
 	}
 `, renameGoIdentifier(s.Name), s.Name)

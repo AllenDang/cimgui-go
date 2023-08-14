@@ -1322,6 +1322,29 @@ func PlotBeginAlignedPlotsV(group_id string, vertical bool) bool {
 	return C.ImPlot_BeginAlignedPlots(group_idArg, C.bool(vertical)) == C.bool(true)
 }
 
+// PlotBeginDragDropSourceAxisV parameter default value hint:
+// flags: 0
+func PlotBeginDragDropSourceAxisV(axis PlotAxisEnum, flags DragDropFlags) bool {
+	return C.ImPlot_BeginDragDropSourceAxis(C.ImAxis(axis), C.ImGuiDragDropFlags(flags)) == C.bool(true)
+}
+
+// PlotBeginDragDropSourceItemV parameter default value hint:
+// flags: 0
+func PlotBeginDragDropSourceItemV(label_id string, flags DragDropFlags) bool {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	defer func() {
+		label_idFin()
+	}()
+	return C.ImPlot_BeginDragDropSourceItem(label_idArg, C.ImGuiDragDropFlags(flags)) == C.bool(true)
+}
+
+// PlotBeginDragDropSourcePlotV parameter default value hint:
+// flags: 0
+func PlotBeginDragDropSourcePlotV(flags DragDropFlags) bool {
+	return C.ImPlot_BeginDragDropSourcePlot(C.ImGuiDragDropFlags(flags)) == C.bool(true)
+}
+
 func PlotBeginDragDropTargetAxis(axis PlotAxisEnum) bool {
 	return C.ImPlot_BeginDragDropTargetAxis(C.ImAxis(axis)) == C.bool(true)
 }
@@ -1344,6 +1367,17 @@ func PlotBeginItemV(label_id string, flags PlotItemFlags, recolor_from PlotCol) 
 		label_idFin()
 	}()
 	return C.ImPlot_BeginItem(label_idArg, C.ImPlotItemFlags(flags), C.ImPlotCol(recolor_from)) == C.bool(true)
+}
+
+// PlotBeginLegendPopupV parameter default value hint:
+// mouse_button: 1
+func PlotBeginLegendPopupV(label_id string, mouse_button MouseButton) bool {
+	label_idArg, label_idFin := wrapString(label_id)
+
+	defer func() {
+		label_idFin()
+	}()
+	return C.ImPlot_BeginLegendPopup(label_idArg, C.ImGuiMouseButton(mouse_button)) == C.bool(true)
 }
 
 // PlotBeginPlotV parameter default value hint:
@@ -2179,6 +2213,10 @@ func PlotImMaxArrayS32Ptr(values *[]int32, count int32) int {
 	return int(C.ImPlot_ImMaxArray_S32Ptr((*C.ImS32)(&valuesArg[0]), C.int(count)))
 }
 
+func PlotImMaxArrayS64Ptr(values []int64, count int32) int64 {
+	return int64(C.ImPlot_ImMaxArray_S64Ptr((*C.longlong)(&(values[0])), C.int(count)))
+}
+
 func PlotImMaxArrayS8Ptr(values *[]int8, count int32) int {
 	valuesArg := make([]C.ImS8, len(*values))
 	for i, valuesV := range *values {
@@ -2395,6 +2433,10 @@ func PlotImMinArrayS32Ptr(values *[]int32, count int32) int {
 	return int(C.ImPlot_ImMinArray_S32Ptr((*C.ImS32)(&valuesArg[0]), C.int(count)))
 }
 
+func PlotImMinArrayS64Ptr(values []int64, count int32) int64 {
+	return int64(C.ImPlot_ImMinArray_S64Ptr((*C.longlong)(&(values[0])), C.int(count)))
+}
+
 func PlotImMinArrayS8Ptr(values *[]int8, count int32) int {
 	valuesArg := make([]C.ImS8, len(*values))
 	for i, valuesV := range *values {
@@ -2564,6 +2606,10 @@ func PlotImRemap01S32(x int, x0 int, x1 int) int {
 	return int(C.ImPlot_ImRemap01_S32(C.ImS32(x), C.ImS32(x0), C.ImS32(x1)))
 }
 
+func PlotImRemap01S64(x int64, x0 int64, x1 int64) int64 {
+	return int64(C.ImPlot_ImRemap01_S64(C.ImS64(x), C.ImS64(x0), C.ImS64(x1)))
+}
+
 func PlotImRemap01S8(x int, x0 int, x1 int) int {
 	return int(C.ImPlot_ImRemap01_S8(C.ImS8(x), C.ImS8(x0), C.ImS8(x1)))
 }
@@ -2598,6 +2644,10 @@ func PlotImRemapS16(x int, x0 int, x1 int, y0 int, y1 int) int {
 
 func PlotImRemapS32(x int, x0 int, x1 int, y0 int, y1 int) int {
 	return int(C.ImPlot_ImRemap_S32(C.ImS32(x), C.ImS32(x0), C.ImS32(x1), C.ImS32(y0), C.ImS32(y1)))
+}
+
+func PlotImRemapS64(x int64, x0 int64, x1 int64, y0 int64, y1 int64) int64 {
+	return int64(C.ImPlot_ImRemap_S64(C.ImS64(x), C.ImS64(x0), C.ImS64(x1), C.ImS64(y0), C.ImS64(y1)))
 }
 
 func PlotImRemapS8(x int, x0 int, x1 int, y0 int, y1 int) int {
@@ -2772,6 +2822,10 @@ func PlotImSumS32Ptr(values *[]int32, count int32) int {
 		}
 	}()
 	return int(C.ImPlot_ImSum_S32Ptr((*C.ImS32)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImSumS64Ptr(values []int64, count int32) int64 {
+	return int64(C.ImPlot_ImSum_S64Ptr((*C.longlong)(&(values[0])), C.int(count)))
 }
 
 func PlotImSumS8Ptr(values *[]int8, count int32) int {
@@ -13613,6 +13667,12 @@ func (self PlotAxis) PickerLevel() int32 {
 	return int32(C.wrap_ImPlotAxis_GetPickerLevel(selfArg))
 }
 
+func (self PlotAxis) SetPickerTimeMin(v PlotTime) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotAxis_SetPickerTimeMin(selfArg, v.toC())
+}
+
 func (self PlotAxis) PickerTimeMin() PlotTime {
 	selfArg, selfFin := self.handle()
 
@@ -13620,6 +13680,12 @@ func (self PlotAxis) PickerTimeMin() PlotTime {
 		selfFin()
 	}()
 	return *(&PlotTime{}).fromC(C.wrap_ImPlotAxis_GetPickerTimeMin(selfArg))
+}
+
+func (self PlotAxis) SetPickerTimeMax(v PlotTime) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotAxis_SetPickerTimeMax(selfArg, v.toC())
 }
 
 func (self PlotAxis) PickerTimeMax() PlotTime {
@@ -14539,6 +14605,21 @@ func (self PlotDateTimeSpec) Use24HourClock() bool {
 	return C.wrap_ImPlotDateTimeSpec_GetUse24HourClock(selfArg) == C.bool(true)
 }
 
+func (self PlotInputMap) SetPan(v MouseButton) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotInputMap_SetPan(selfArg, C.ImGuiMouseButton(v))
+}
+
+func (self PlotInputMap) Pan() MouseButton {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return MouseButton(C.wrap_ImPlotInputMap_GetPan(selfArg))
+}
+
 func (self PlotInputMap) SetPanMod(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14552,6 +14633,51 @@ func (self PlotInputMap) PanMod() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImPlotInputMap_GetPanMod(selfArg))
+}
+
+func (self PlotInputMap) SetFit(v MouseButton) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotInputMap_SetFit(selfArg, C.ImGuiMouseButton(v))
+}
+
+func (self PlotInputMap) Fit() MouseButton {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return MouseButton(C.wrap_ImPlotInputMap_GetFit(selfArg))
+}
+
+func (self PlotInputMap) SetSelect(v MouseButton) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotInputMap_SetSelect(selfArg, C.ImGuiMouseButton(v))
+}
+
+func (self PlotInputMap) Select() MouseButton {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return MouseButton(C.wrap_ImPlotInputMap_GetSelect(selfArg))
+}
+
+func (self PlotInputMap) SetSelectCancel(v MouseButton) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotInputMap_SetSelectCancel(selfArg, C.ImGuiMouseButton(v))
+}
+
+func (self PlotInputMap) SelectCancel() MouseButton {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return MouseButton(C.wrap_ImPlotInputMap_GetSelectCancel(selfArg))
 }
 
 func (self PlotInputMap) SetSelectMod(v int32) {
@@ -14597,6 +14723,21 @@ func (self PlotInputMap) SelectVertMod() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImPlotInputMap_GetSelectVertMod(selfArg))
+}
+
+func (self PlotInputMap) SetMenu(v MouseButton) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotInputMap_SetMenu(selfArg, C.ImGuiMouseButton(v))
+}
+
+func (self PlotInputMap) Menu() MouseButton {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return MouseButton(C.wrap_ImPlotInputMap_GetMenu(selfArg))
 }
 
 func (self PlotInputMap) SetOverrideMod(v int32) {
@@ -16646,4 +16787,13 @@ func (self PlotTicker) Levels() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImPlotTicker_GetLevels(selfArg))
+}
+
+func (self *PlotTime) Us() int32 {
+	selfArg, selfFin := wrap[C.ImPlotTime, *PlotTime](self)
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImPlotTime_GetUs(selfArg))
 }

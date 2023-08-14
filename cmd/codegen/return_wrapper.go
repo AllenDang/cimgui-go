@@ -11,6 +11,7 @@ type returnWrapper struct {
 func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 	returnWrapperMap := map[string]returnWrapper{
 		"bool":                     {"bool", "return %s == C.bool(true)"},
+		"char":                     simpleR("rune"),
 		"char*":                    {"string", "return C.GoString(%s)"},
 		"const char*":              {"string", "return C.GoString(%s)"},
 		"const ImWchar*":           simpleR("(*Wchar)"),
@@ -21,9 +22,11 @@ func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 		"int":                      simpleR("int32"),
 		"unsigned int":             simpleR("uint32"),
 		"short":                    simpleR("int"),
+		"unsigned short":           simpleR("uint"),
 		"ImS8":                     simpleR("int"),
 		"ImS16":                    simpleR("int"),
 		"ImS32":                    simpleR("int"),
+		"ImS64":                    simpleR("int64"),
 		"ImU8":                     simpleR("uint32"),
 		"ImU16":                    simpleR("uint32"),
 		"ImU32":                    simpleR("uint32"),
