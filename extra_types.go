@@ -183,20 +183,20 @@ func (p PlotPoint) toC() C.ImPlotPoint {
 }
 
 type PlotTime struct {
-	S  int // second part
-	Us int // microsecond part
+	S       int // second part
+	FieldUs int // microsecond part
 }
 
 func NewPlotTime(t time.Time) PlotTime {
 	ts := t.UnixMicro()
 	return PlotTime{
-		S:  int(ts / 1e6),
-		Us: int(ts % 1e6),
+		S:       int(ts / 1e6),
+		FieldUs: int(ts % 1e6),
 	}
 }
 
 func (i PlotTime) Time() time.Time {
-	return time.Unix(int64(i.S), int64(i.Us)*int64(time.Microsecond))
+	return time.Unix(int64(i.S), int64(i.FieldUs)*int64(time.Microsecond))
 }
 
 func (i *PlotTime) fromC(p C.ImPlotTime) *PlotTime {
@@ -205,7 +205,7 @@ func (i *PlotTime) fromC(p C.ImPlotTime) *PlotTime {
 }
 
 func (p PlotTime) toC() C.ImPlotTime {
-	return C.ImPlotTime{S: C.xlong(p.S), Us: C.int(p.Us)}
+	return C.ImPlotTime{S: C.xlong(p.S), Us: C.int(p.FieldUs)}
 }
 
 // wrappableType represents a GO type that can be converted into a C value

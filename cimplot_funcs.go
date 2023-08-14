@@ -16769,6 +16769,11 @@ func (self PlotTicker) Levels() int32 {
 	return int32(C.wrap_ImPlotTicker_GetLevels(selfArg))
 }
 
-func (self PlotTime) Us() int32 {
-	return int32(C.wrap_ImPlotTime_GetUs(self.toC()))
+func (self *PlotTime) Us() int32 {
+	selfArg, selfFin := wrap[C.ImPlotTime, *PlotTime](self)
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImPlotTime_GetUs(selfArg))
 }
