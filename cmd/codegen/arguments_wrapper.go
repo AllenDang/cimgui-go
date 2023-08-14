@@ -47,6 +47,7 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"ImU32":                    simpleW("uint32", "C.ImU32"),
 		"const ImU32*":             simplePtrSliceW("C.ImU32", "uint32"),
 		"ImU64":                    simpleW("uint64", "C.ImU64"),
+		"ImU64*":                   simplePtrSliceW("C.ImU64", "uint64"),
 		"const ImU64*":             uint64ArrayW,
 		"ImS8":                     simpleW("int", "C.ImS8"),
 		"const ImS8*":              simplePtrSliceW("C.ImS8", "int8"),

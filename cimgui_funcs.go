@@ -3714,6 +3714,23 @@ func CheckboxFlagsIntPtr(label string, flags *int32, flags_value int32) bool {
 	return C.igCheckboxFlags_IntPtr(labelArg, flagsArg, C.int(flags_value)) == C.bool(true)
 }
 
+func InternalCheckboxFlagsU64Ptr(label string, flags *[]uint64, flags_value uint64) bool {
+	labelArg, labelFin := wrapString(label)
+	flagsArg := make([]C.ImU64, len(*flags))
+	for i, flagsV := range *flags {
+		flagsArg[i] = C.ImU64(flagsV)
+	}
+
+	defer func() {
+		labelFin()
+
+		for i, flagsV := range flagsArg {
+			(*flags)[i] = uint64(flagsV)
+		}
+	}()
+	return C.igCheckboxFlags_U64Ptr(labelArg, (*C.ImU64)(&flagsArg[0]), C.ImU64(flags_value)) == C.bool(true)
+}
+
 func CheckboxFlagsUintPtr(label string, flags *uint32, flags_value uint32) bool {
 	labelArg, labelFin := wrapString(label)
 	flagsArg, flagsFin := wrapNumberPtr[C.uint, uint32](flags)
