@@ -266,6 +266,6 @@ return result, func() {}
 
 func renameStructField(original string) (result string) {
 	result = strings.TrimPrefix(original, "_")
-	result = "Field" + result
+	result = "Field" + strings.ToTitle(result)
 	return result
 }
