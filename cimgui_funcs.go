@@ -11772,6 +11772,15 @@ func ValueFloat(prefix string, v float32) {
 	prefixFin()
 }
 
+func (self *Color) Value() Vec4 {
+	selfArg, selfFin := wrap[C.ImColor, *Color](self)
+
+	defer func() {
+		selfFin()
+	}()
+	return *(&Vec4{}).fromC(C.wrap_ImColor_GetValue(selfArg))
+}
+
 func (self DrawCmd) SetClipRect(v Vec4) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
