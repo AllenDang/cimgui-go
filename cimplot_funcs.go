@@ -2213,6 +2213,10 @@ func PlotImMaxArrayS32Ptr(values *[]int32, count int32) int {
 	return int(C.ImPlot_ImMaxArray_S32Ptr((*C.ImS32)(&valuesArg[0]), C.int(count)))
 }
 
+func PlotImMaxArrayS64Ptr(values []int64, count int32) int64 {
+	return int64(C.ImPlot_ImMaxArray_S64Ptr((*C.longlong)(&(values[0])), C.int(count)))
+}
+
 func PlotImMaxArrayS8Ptr(values *[]int8, count int32) int {
 	valuesArg := make([]C.ImS8, len(*values))
 	for i, valuesV := range *values {
@@ -2429,6 +2433,10 @@ func PlotImMinArrayS32Ptr(values *[]int32, count int32) int {
 	return int(C.ImPlot_ImMinArray_S32Ptr((*C.ImS32)(&valuesArg[0]), C.int(count)))
 }
 
+func PlotImMinArrayS64Ptr(values []int64, count int32) int64 {
+	return int64(C.ImPlot_ImMinArray_S64Ptr((*C.longlong)(&(values[0])), C.int(count)))
+}
+
 func PlotImMinArrayS8Ptr(values *[]int8, count int32) int {
 	valuesArg := make([]C.ImS8, len(*values))
 	for i, valuesV := range *values {
@@ -2598,6 +2606,10 @@ func PlotImRemap01S32(x int, x0 int, x1 int) int {
 	return int(C.ImPlot_ImRemap01_S32(C.ImS32(x), C.ImS32(x0), C.ImS32(x1)))
 }
 
+func PlotImRemap01S64(x int64, x0 int64, x1 int64) int64 {
+	return int64(C.ImPlot_ImRemap01_S64(C.ImS64(x), C.ImS64(x0), C.ImS64(x1)))
+}
+
 func PlotImRemap01S8(x int, x0 int, x1 int) int {
 	return int(C.ImPlot_ImRemap01_S8(C.ImS8(x), C.ImS8(x0), C.ImS8(x1)))
 }
@@ -2632,6 +2644,10 @@ func PlotImRemapS16(x int, x0 int, x1 int, y0 int, y1 int) int {
 
 func PlotImRemapS32(x int, x0 int, x1 int, y0 int, y1 int) int {
 	return int(C.ImPlot_ImRemap_S32(C.ImS32(x), C.ImS32(x0), C.ImS32(x1), C.ImS32(y0), C.ImS32(y1)))
+}
+
+func PlotImRemapS64(x int64, x0 int64, x1 int64, y0 int64, y1 int64) int64 {
+	return int64(C.ImPlot_ImRemap_S64(C.ImS64(x), C.ImS64(x0), C.ImS64(x1), C.ImS64(y0), C.ImS64(y1)))
 }
 
 func PlotImRemapS8(x int, x0 int, x1 int, y0 int, y1 int) int {
@@ -2806,6 +2822,10 @@ func PlotImSumS32Ptr(values *[]int32, count int32) int {
 		}
 	}()
 	return int(C.ImPlot_ImSum_S32Ptr((*C.ImS32)(&valuesArg[0]), C.int(count)))
+}
+
+func PlotImSumS64Ptr(values []int64, count int32) int64 {
+	return int64(C.ImPlot_ImSum_S64Ptr((*C.longlong)(&(values[0])), C.int(count)))
 }
 
 func PlotImSumS8Ptr(values *[]int8, count int32) int {

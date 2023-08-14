@@ -26,6 +26,7 @@ func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 		"ImS8":                     simpleR("int"),
 		"ImS16":                    simpleR("int"),
 		"ImS32":                    simpleR("int"),
+		"ImS64":                    simpleR("int64"),
 		"ImU8":                     simpleR("uint32"),
 		"ImU16":                    simpleR("uint32"),
 		"ImU32":                    simpleR("uint32"),
