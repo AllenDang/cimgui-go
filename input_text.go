@@ -26,13 +26,13 @@ func (state *inputTextInternalState) release() {
 
 //export generalInputTextCallback
 func generalInputTextCallback(cbData *C.ImGuiInputTextCallbackData) C.int {
-	data := InputTextCallbackData(unsafe.Pointer(cbData))
+	data := newInputTextCallbackDataFromC(cbData)
 
-	bufHandle := (*cgo.Handle)(data.c().UserData)
+	bufHandle := (*cgo.Handle)(cbData.UserData)
 	statePtr := bufHandle.Value().(*inputTextInternalState)
 
 	if data.EventFlag() == InputTextFlagsCallbackResize {
-		statePtr.buf.ResizeTo(data.BufSize())
+		statePtr.buf.ResizeTo(int(data.BufSize()))
 		C.wrap_ImGuiInputTextCallbackData_SetBuf(cbData, (*C.char)(statePtr.buf.ptr))
 		data.SetBufSize(int32(statePtr.buf.size))
 		data.SetBufTextLen(int32(data.BufTextLen()))

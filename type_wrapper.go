@@ -72,7 +72,6 @@ func WrapStringList(value []string) (wrapped **C.char, finisher func()) {
 	wrapped = (**C.char)(unsafe.Pointer(&wrappedList[0]))
 
 	finisher = func() {
-		C.free(unsafe.Pointer(wrapped))
 		for _, v := range wrappedList {
 			C.free(unsafe.Pointer(v))
 		}

@@ -150,7 +150,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 		} else {
 			returnTypeType = returnTypeVoid
 		}
-	} else if g.enumNames[goEnumName] {
+	} else if g.enumNames[renameEnum(goEnumName)] {
 		returnTypeType = returnTypeEnum
 	} else if strings.HasSuffix(f.Ret, "*") && (g.structNames[strings.TrimSuffix(f.Ret, "*")] || g.structNames[strings.TrimSuffix(strings.TrimPrefix(f.Ret, "const "), "*")]) {
 		returnTypeType = returnTypeStructPtr
@@ -234,7 +234,11 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 	case returnTypeVoid, returnTypeNonUDT:
 		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStructSetter:
-		g.sb.WriteString(fmt.Sprintf("C.%s(self.handle(), %s)\n", f.CWrapperFuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf(`
+selfArg, selfFin := self.handle()
+defer selfFin()
+C.%s(selfArg, %s)
+`, f.CWrapperFuncName, argInvokeStmt))
 	}
 
 	if !shouldDefer {
@@ -249,11 +253,18 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 	case returnTypeEnum:
 		g.sb.WriteString(fmt.Sprintf("return %s(C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStructPtr:
-		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStruct:
-		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", renameGoIdentifier(f.Ret), f.CWrapperFuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf(`
+result := C.%s(%s)
+return new%sFromC(&result)
+`,
+			f.CWrapperFuncName,
+			argInvokeStmt,
+			renameGoIdentifier(f.Ret),
+		))
 	case returnTypeConstructor:
-		g.sb.WriteString(fmt.Sprintf("return (%s)(unsafe.Pointer(C.%s(%s)))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
+		g.sb.WriteString(fmt.Sprintf("return new%sFromC(C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	}
 
 	g.sb.WriteString("}\n\n")
@@ -350,7 +361,9 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 		if f.StructGetter && g.structNames[a.Type] {
 			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(a.Type)))
 			argWrappers = append(argWrappers, ArgumentWrapperData{
-				VarName: fmt.Sprintf("%s.handle()", a.Name),
+				ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.handle()", a.Name),
+				VarName:   fmt.Sprintf("%sArg", a.Name),
+				Finalizer: fmt.Sprintf("%sFin()", a.Name),
 			})
 
 			g.shouldGenerate = true
@@ -388,14 +401,20 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 		if g.structNames[pureType] {
 			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType)))
 			w := ArgumentWrapperData{
-				ArgType: renameGoIdentifier(pureType),
+				ArgType:   renameGoIdentifier(pureType),
+				VarName:   fmt.Sprintf("%sArg", a.Name),
+				Finalizer: fmt.Sprintf("%sFin()", a.Name),
 			}
 
+			fn := ""
 			if isPointer {
-				w.VarName = fmt.Sprintf("%s.handle()", a.Name)
+				fn = "handle"
 			} else {
-				w.VarName = fmt.Sprintf("%s.c()", a.Name)
+				fn = "c"
 			}
+
+			w.ArgDef = fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.%[2]s()", a.Name, fn)
+
 			argWrappers = append(argWrappers, w)
 
 			g.shouldGenerate = true
@@ -451,7 +470,7 @@ func (g *goFuncsGenerator) writeFinishers(shouldDefer bool, finishers []string) 
 // isEnum returns true when given string is a valid enum type.
 func (g *goFuncsGenerator) isEnum(argType string) bool {
 	for en := range g.enumNames {
-		if argType == en {
+		if renameEnum(argType) == en {
 			return true
 		}
 	}
