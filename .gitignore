@@ -71,4 +71,4 @@ thirdparty/glfw/build
 tmp
 
 # make setup codegen build
-./codegen
+/codegen
