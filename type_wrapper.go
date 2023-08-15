@@ -2,18 +2,18 @@ package imgui
 
 // #include <memory.h>
 // #include <stdlib.h>
-// #include "cimgui_wrapper.h"
+// #include <stdbool.h>
 import "C"
 import "unsafe"
 
-func castBool(value bool) (cast int) {
+func CastBool(value bool) (cast int) {
 	if value {
 		cast = 1
 	}
 	return
 }
 
-func wrapBool(goValue *bool) (wrapped *C.bool, finisher func()) {
+func WrapBool(goValue *bool) (wrapped *C.bool, finisher func()) {
 	if goValue != nil {
 		var cValue C.bool
 		if *goValue {
@@ -38,8 +38,8 @@ type Number interface {
 		~float32 | ~float64
 }
 
-// wrapPtrCType is a generic method to convert GOTYPE (int32/float32 e.t.c.) into CTYPE (c_int/c_float e.t.c.)
-func wrapNumberPtr[CTYPE Number, GOTYPE Number](goValue *GOTYPE) (wrapped *CTYPE, finisher func()) {
+// WrapNumberPtr is a generic method to convert GOTYPE (int32/float32 e.t.c.) into CTYPE (c_int/c_float e.t.c.)
+func WrapNumberPtr[CTYPE Number, GOTYPE Number](goValue *GOTYPE) (wrapped *CTYPE, finisher func()) {
 	if goValue != nil {
 		cValue := CTYPE(*goValue)
 		wrapped = &cValue
@@ -53,13 +53,13 @@ func wrapNumberPtr[CTYPE Number, GOTYPE Number](goValue *GOTYPE) (wrapped *CTYPE
 	return
 }
 
-func wrapString(value string) (wrapped *C.char, finisher func()) {
+func WrapString(value string) (wrapped *C.char, finisher func()) {
 	wrapped = C.CString(value)
 	finisher = func() { C.free(unsafe.Pointer(wrapped)) } // nolint: gas
 	return
 }
 
-func wrapStringList(value []string) (wrapped **C.char, finisher func()) {
+func WrapStringList(value []string) (wrapped **C.char, finisher func()) {
 	if len(value) == 0 {
 		return nil, func() {}
 	}
@@ -87,37 +87,37 @@ func wrapStringList(value []string) (wrapped **C.char, finisher func()) {
 // by the size of the elements.
 const unrealisticLargePointer = 1 << 30
 
-func ptrToByteSlice(p unsafe.Pointer) []byte {
+func PtrToByteSlice(p unsafe.Pointer) []byte {
 	return (*[unrealisticLargePointer]byte)(p)[:]
 }
 
-func ptrToUint16Slice(p unsafe.Pointer) []uint16 {
+func PtrToUint16Slice(p unsafe.Pointer) []uint16 {
 	return (*[unrealisticLargePointer / 2]uint16)(p)[:]
 }
 
-type stringBuffer struct {
+type StringBuffer struct {
 	ptr  unsafe.Pointer
 	size int
 }
 
-func newStringBuffer(initialValue string) *stringBuffer {
+func NewStringBuffer(initialValue string) *StringBuffer {
 	rawText := []byte(initialValue)
 	bufSize := len(rawText) + 1
 	newPtr := C.malloc(C.size_t(bufSize))
 	zeroOffset := bufSize - 1
-	buf := ptrToByteSlice(newPtr)
+	buf := PtrToByteSlice(newPtr)
 	copy(buf[:zeroOffset], rawText)
 	buf[zeroOffset] = 0
 
-	return &stringBuffer{ptr: newPtr, size: bufSize}
+	return &StringBuffer{ptr: newPtr, size: bufSize}
 }
 
-func (buf *stringBuffer) free() {
+func (buf *StringBuffer) Free() {
 	C.free(buf.ptr)
 	buf.size = 0
 }
 
-func (buf *stringBuffer) resizeTo(requestedSize int) {
+func (buf *StringBuffer) ResizeTo(requestedSize int) {
 	bufSize := requestedSize
 	if bufSize < 1 {
 		bufSize = 1
@@ -130,16 +130,16 @@ func (buf *stringBuffer) resizeTo(requestedSize int) {
 	if copySize > 0 {
 		C.memcpy(newPtr, buf.ptr, C.size_t(copySize))
 	}
-	ptrToByteSlice(newPtr)[bufSize-1] = 0
+	PtrToByteSlice(newPtr)[bufSize-1] = 0
 	C.free(buf.ptr)
 	buf.ptr = newPtr
 	buf.size = bufSize
 }
 
-func (buf stringBuffer) toGo() string {
+func (buf *StringBuffer) ToGo() string {
 	if (buf.ptr == nil) || (buf.size < 1) {
 		return ""
 	}
-	ptrToByteSlice(buf.ptr)[buf.size-1] = 0
+	PtrToByteSlice(buf.ptr)[buf.size-1] = 0
 	return C.GoString((*C.char)(buf.ptr))
 }

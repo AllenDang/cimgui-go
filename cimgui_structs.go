@@ -585,13 +585,13 @@ func (self DataTypeInfo) handle() (result *C.ImGuiDataTypeInfo, releaseFn func()
 
 	result.Size = C.xulong(FieldSIZE)
 	FieldNAME := self.FieldNAME
-	FieldNAMEArg, FieldNAMEFin := wrapString(FieldNAME)
+	FieldNAMEArg, FieldNAMEFin := WrapString(FieldNAME)
 	result.Name = FieldNAMEArg
 	FieldPRINTFMT := self.FieldPRINTFMT
-	FieldPRINTFMTArg, FieldPRINTFMTFin := wrapString(FieldPRINTFMT)
+	FieldPRINTFMTArg, FieldPRINTFMTFin := WrapString(FieldPRINTFMT)
 	result.PrintFmt = FieldPRINTFMTArg
 	FieldSCANFMT := self.FieldSCANFMT
-	FieldSCANFMTArg, FieldSCANFMTFin := wrapString(FieldSCANFMT)
+	FieldSCANFMTArg, FieldSCANFMTFin := WrapString(FieldSCANFMT)
 	result.ScanFmt = FieldSCANFMTArg
 	releaseFn = func() {
 		FieldNAMEFin()
@@ -1429,7 +1429,7 @@ func (self LocEntry) handle() (result *C.ImGuiLocEntry, releaseFn func()) {
 
 	result.Key = C.ImGuiLocKey(FieldKEY)
 	FieldTEXT := self.FieldTEXT
-	FieldTEXTArg, FieldTEXTFin := wrapString(FieldTEXT)
+	FieldTEXTArg, FieldTEXTFin := WrapString(FieldTEXT)
 	result.Text = FieldTEXTArg
 	releaseFn = func() {
 		FieldTEXTFin()
@@ -2654,10 +2654,10 @@ type TextRange struct {
 func (self TextRange) handle() (result *C.ImGuiTextRange, releaseFn func()) {
 	result = new(C.ImGuiTextRange)
 	FieldB := self.FieldB
-	FieldBArg, FieldBFin := wrapString(FieldB)
+	FieldBArg, FieldBFin := WrapString(FieldB)
 	result.b = FieldBArg
 	FieldE := self.FieldE
-	FieldEArg, FieldEFin := wrapString(FieldE)
+	FieldEArg, FieldEFin := WrapString(FieldE)
 	result.e = FieldEArg
 	releaseFn = func() {
 		FieldBFin()

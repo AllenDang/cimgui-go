@@ -115,10 +115,10 @@ func (b *GLFWBackend) SetWindowPos(x, y int) {
 }
 
 func (b *GLFWBackend) GetWindowPos() (x, y int32) {
-	xArg, xFin := wrapNumberPtr[C.int, int32](&x)
+	xArg, xFin := WrapNumberPtr[C.int, int32](&x)
 	defer xFin()
 
-	yArg, yFin := wrapNumberPtr[C.int, int32](&y)
+	yArg, yFin := WrapNumberPtr[C.int, int32](&y)
 	defer yFin()
 
 	C.igGLFWWindow_GetWindowPos(b.handle(), xArg, yArg)
@@ -131,10 +131,10 @@ func (b *GLFWBackend) SetWindowSize(width, height int) {
 }
 
 func (b GLFWBackend) DisplaySize() (width int32, height int32) {
-	widthArg, widthFin := wrapNumberPtr[C.int, int32](&width)
+	widthArg, widthFin := WrapNumberPtr[C.int, int32](&width)
 	defer widthFin()
 
-	heightArg, heightFin := wrapNumberPtr[C.int, int32](&height)
+	heightArg, heightFin := WrapNumberPtr[C.int, int32](&height)
 	defer heightFin()
 
 	C.igGLFWWindow_GetDisplaySize(b.handle(), widthArg, heightArg)
@@ -143,7 +143,7 @@ func (b GLFWBackend) DisplaySize() (width int32, height int32) {
 }
 
 func (b *GLFWBackend) SetWindowTitle(title string) {
-	titleArg, titleFin := wrapString(title)
+	titleArg, titleFin := WrapString(title)
 	defer titleFin()
 
 	C.igGLFWWindow_SetTitle(b.handle(), titleArg)
@@ -157,11 +157,11 @@ func (b *GLFWBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeig
 }
 
 func (b GLFWBackend) SetShouldClose(value bool) {
-	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(castBool(value)))
+	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(CastBool(value)))
 }
 
 func (b *GLFWBackend) CreateWindow(title string, width, height int, flags GLFWWindowFlags) {
-	titleArg, titleFin := wrapString(title)
+	titleArg, titleFin := WrapString(title)
 	defer titleFin()
 
 	// b.window = uintptr(unsafe.Pointer(C.igCreateGLFWWindow(titleArg, C.int(width), C.int(height), C.GLFWWindowFlags(flags), C.VoidCallback(C.afterCreateContext))))

@@ -118,7 +118,7 @@ func constCharW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType:   "string",
 		VarName:   fmt.Sprintf("%sArg", arg.Name),
-		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := wrapString(%[1]s)", arg.Name),
+		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := WrapString(%[1]s)", arg.Name),
 		Finalizer: fmt.Sprintf("%sFin()", arg.Name),
 	}
 }
@@ -127,7 +127,7 @@ func charPtrPtrW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType:   "[]string",
 		VarName:   fmt.Sprintf("%sArg", arg.Name),
-		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := wrapStringList(%[1]s)", arg.Name),
+		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := WrapStringList(%[1]s)", arg.Name),
 		Finalizer: fmt.Sprintf("%sFin()", arg.Name),
 	}
 }
@@ -161,7 +161,7 @@ func floatArrayW(arg ArgDef) ArgumentWrapperData {
 func boolPtrW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType:   "*bool",
-		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := wrapBool(%[1]s)", arg.Name),
+		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := WrapBool(%[1]s)", arg.Name),
 		Finalizer: fmt.Sprintf("%[1]sFin()", arg.Name),
 		VarName:   fmt.Sprintf("%sArg", arg.Name),
 	}
@@ -206,7 +206,7 @@ func simplePtrW(goType, cType string) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
 		return ArgumentWrapperData{
 			ArgType:   fmt.Sprintf("*%s", goType),
-			ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := wrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
+			ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := WrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
 			Finalizer: fmt.Sprintf("%[1]sFin()", arg.Name, cType, goType),
 			VarName:   fmt.Sprintf("%sArg", arg.Name),
 		}
