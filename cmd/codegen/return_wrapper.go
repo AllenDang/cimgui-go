@@ -10,10 +10,10 @@ type returnWrapper struct {
 
 func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 	returnWrapperMap := map[string]returnWrapper{
-		"bool":          {"bool", "return %s == C.bool(true)"},
-		"char":          simpleR("rune"),
-		"unsigned char": simpleR("uint"),
-		//"unsigned char*":           simplePtrR("*uint"), // TODO: it seems to fail
+		"bool":                     {"bool", "return %s == C.bool(true)"},
+		"char":                     simpleR("rune"),
+		"unsigned char":            simpleR("uint"),
+		"unsigned char*":           {"(*uint)", "return (*uint)(unsafe.Pointer(%s))"}, // NOTE: This should work but I'm not 100% sure
 		"char*":                    {"string", "return C.GoString(%s)"},
 		"const char*":              {"string", "return C.GoString(%s)"},
 		"const ImWchar*":           simpleR("(*Wchar)"),

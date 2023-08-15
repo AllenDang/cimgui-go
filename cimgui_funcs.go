@@ -12887,6 +12887,15 @@ func (self FontAtlas) SetTexPixelsAlpha8(v *uint) {
 	vFin()
 }
 
+func (self FontAtlas) TexPixelsAlpha8() *uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*uint)(unsafe.Pointer(C.wrap_ImFontAtlas_GetTexPixelsAlpha8(selfArg)))
+}
+
 func (self FontAtlas) SetTexPixelsRGBA32(v *uint32) {
 	vArg, vFin := WrapNumberPtr[C.uint, uint32](v)
 
