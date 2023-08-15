@@ -3714,6 +3714,23 @@ func CheckboxFlagsIntPtr(label string, flags *int32, flags_value int32) bool {
 	return C.igCheckboxFlags_IntPtr(labelArg, flagsArg, C.int(flags_value)) == C.bool(true)
 }
 
+func InternalCheckboxFlagsU64Ptr(label string, flags *[]uint64, flags_value uint64) bool {
+	labelArg, labelFin := wrapString(label)
+	flagsArg := make([]C.ImU64, len(*flags))
+	for i, flagsV := range *flags {
+		flagsArg[i] = C.ImU64(flagsV)
+	}
+
+	defer func() {
+		labelFin()
+
+		for i, flagsV := range flagsArg {
+			(*flags)[i] = uint64(flagsV)
+		}
+	}()
+	return C.igCheckboxFlags_U64Ptr(labelArg, (*C.ImU64)(&flagsArg[0]), C.ImU64(flags_value)) == C.bool(true)
+}
+
 func CheckboxFlagsUintPtr(label string, flags *uint32, flags_value uint32) bool {
 	labelArg, labelFin := wrapString(label)
 	flagsArg, flagsFin := wrapNumberPtr[C.uint, uint32](flags)
@@ -5904,6 +5921,58 @@ func InternalImBezierQuadraticCalc(p1 Vec2, p2 Vec2, p3 Vec2, t float32) Vec2 {
 	pOutFin()
 
 	return *pOut
+}
+
+func InternalImBitArrayClearAllBits(arr *[]uint32, bitcount int32) {
+	arrArg := make([]C.ImU32, len(*arr))
+	for i, arrV := range *arr {
+		arrArg[i] = C.ImU32(arrV)
+	}
+
+	C.igImBitArrayClearAllBits((*C.ImU32)(&arrArg[0]), C.int(bitcount))
+
+	for i, arrV := range arrArg {
+		(*arr)[i] = uint32(arrV)
+	}
+}
+
+func InternalImBitArrayClearBit(arr *[]uint32, n int32) {
+	arrArg := make([]C.ImU32, len(*arr))
+	for i, arrV := range *arr {
+		arrArg[i] = C.ImU32(arrV)
+	}
+
+	C.igImBitArrayClearBit((*C.ImU32)(&arrArg[0]), C.int(n))
+
+	for i, arrV := range arrArg {
+		(*arr)[i] = uint32(arrV)
+	}
+}
+
+func InternalImBitArraySetBit(arr *[]uint32, n int32) {
+	arrArg := make([]C.ImU32, len(*arr))
+	for i, arrV := range *arr {
+		arrArg[i] = C.ImU32(arrV)
+	}
+
+	C.igImBitArraySetBit((*C.ImU32)(&arrArg[0]), C.int(n))
+
+	for i, arrV := range arrArg {
+		(*arr)[i] = uint32(arrV)
+	}
+}
+
+func InternalImBitArraySetBitRange(arr *[]uint32, n int32, n2 int32) {
+	arrArg := make([]C.ImU32, len(*arr))
+	for i, arrV := range *arr {
+		arrArg[i] = C.ImU32(arrV)
+	}
+
+	C.igImBitArraySetBitRange((*C.ImU32)(&arrArg[0]), C.int(n), C.int(n2))
+
+	for i, arrV := range arrArg {
+		(*arr)[i] = uint32(arrV)
+	}
 }
 
 func InternalImBitArrayTestBit(arr *[]uint32, n int32) bool {
@@ -29698,6 +29767,15 @@ func (self STBTexteditState) TexteditStateGetselectend() int32 {
 	return int32(C.wrap_STB_TexteditState_Getselect_end(selfArg))
 }
 
+func (self STBTexteditState) TexteditStateGetinsertmode() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Getinsert_mode(selfArg))
+}
+
 func (self STBTexteditState) TexteditStateGetrowcountperpage() int32 {
 	selfArg, selfFin := self.handle()
 
@@ -29705,6 +29783,69 @@ func (self STBTexteditState) TexteditStateGetrowcountperpage() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_STB_TexteditState_Getrow_count_per_page(selfArg))
+}
+
+func (self STBTexteditState) TexteditStateGetcursoratendofline() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Getcursor_at_end_of_line(selfArg))
+}
+
+func (self STBTexteditState) TexteditStateGetinitialized() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Getinitialized(selfArg))
+}
+
+func (self STBTexteditState) TexteditStateGethaspreferredx() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Gethas_preferred_x(selfArg))
+}
+
+func (self STBTexteditState) TexteditStateGetsingleline() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Getsingle_line(selfArg))
+}
+
+func (self STBTexteditState) TexteditStateGetpadding1() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Getpadding1(selfArg))
+}
+
+func (self STBTexteditState) TexteditStateGetpadding2() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Getpadding2(selfArg))
+}
+
+func (self STBTexteditState) TexteditStateGetpadding3() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_Getpadding3(selfArg))
 }
 
 func (self STBTexteditState) TexteditStateGetpreferredx() float32 {

@@ -12,6 +12,7 @@ func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 	returnWrapperMap := map[string]returnWrapper{
 		"bool":                     {"bool", "return %s == C.bool(true)"},
 		"char":                     simpleR("rune"),
+		"unsigned char":            simpleR("uint"),
 		"char*":                    {"string", "return C.GoString(%s)"},
 		"const char*":              {"string", "return C.GoString(%s)"},
 		"const ImWchar*":           simpleR("(*Wchar)"),

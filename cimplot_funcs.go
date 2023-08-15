@@ -2520,6 +2520,59 @@ func PlotImMinMaxArrayFloatPtr(values []float32, count int32, min_out *float32, 
 	max_outFin()
 }
 
+func PlotImMinMaxArrayU32Ptr(values *[]uint32, count int32, min_out *[]uint32, max_out *[]uint32) {
+	valuesArg := make([]C.ImU32, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU32(valuesV)
+	}
+
+	min_outArg := make([]C.ImU32, len(*min_out))
+	for i, min_outV := range *min_out {
+		min_outArg[i] = C.ImU32(min_outV)
+	}
+
+	max_outArg := make([]C.ImU32, len(*max_out))
+	for i, max_outV := range *max_out {
+		max_outArg[i] = C.ImU32(max_outV)
+	}
+
+	C.ImPlot_ImMinMaxArray_U32Ptr((*C.ImU32)(&valuesArg[0]), C.int(count), (*C.ImU32)(&min_outArg[0]), (*C.ImU32)(&max_outArg[0]))
+
+	for i, valuesV := range valuesArg {
+		(*values)[i] = uint32(valuesV)
+	}
+
+	for i, min_outV := range min_outArg {
+		(*min_out)[i] = uint32(min_outV)
+	}
+
+	for i, max_outV := range max_outArg {
+		(*max_out)[i] = uint32(max_outV)
+	}
+}
+
+func PlotImMinMaxArrayU64Ptr(values []uint64, count int32, min_out *[]uint64, max_out *[]uint64) {
+	min_outArg := make([]C.ImU64, len(*min_out))
+	for i, min_outV := range *min_out {
+		min_outArg[i] = C.ImU64(min_outV)
+	}
+
+	max_outArg := make([]C.ImU64, len(*max_out))
+	for i, max_outV := range *max_out {
+		max_outArg[i] = C.ImU64(max_outV)
+	}
+
+	C.ImPlot_ImMinMaxArray_U64Ptr((*C.ulonglong)(&(values[0])), C.int(count), (*C.ImU64)(&min_outArg[0]), (*C.ImU64)(&max_outArg[0]))
+
+	for i, min_outV := range min_outArg {
+		(*min_out)[i] = uint64(min_outV)
+	}
+
+	for i, max_outV := range max_outArg {
+		(*max_out)[i] = uint64(max_outV)
+	}
+}
+
 func PlotImMinMaxArraydoublePtr(values *[]float64, count int32, min_out *float64, max_out *float64) {
 	valuesArg := make([]C.double, len(*values))
 	for i, valuesV := range *values {
