@@ -2520,6 +2520,15 @@ func PlotImMinMaxArrayFloatPtr(values []float32, count int32, min_out *float32, 
 	max_outFin()
 }
 
+func PlotImMinMaxArrayS64Ptr(values []int64, count int32, min_out *int64, max_out *int64) {
+	min_outArg, min_outFin := WrapNumberPtr[C.ImS64, int64](min_out)
+	max_outArg, max_outFin := WrapNumberPtr[C.ImS64, int64](max_out)
+	C.ImPlot_ImMinMaxArray_S64Ptr((*C.longlong)(&(values[0])), C.int(count), min_outArg, max_outArg)
+
+	min_outFin()
+	max_outFin()
+}
+
 func PlotImMinMaxArrayU32Ptr(values *[]uint32, count int32, min_out *[]uint32, max_out *[]uint32) {
 	valuesArg := make([]C.ImU32, len(*values))
 	for i, valuesV := range *values {

@@ -3714,6 +3714,17 @@ func CheckboxFlagsIntPtr(label string, flags *int32, flags_value int32) bool {
 	return C.igCheckboxFlags_IntPtr(labelArg, flagsArg, C.int(flags_value)) == C.bool(true)
 }
 
+func InternalCheckboxFlagsS64Ptr(label string, flags *int64, flags_value int64) bool {
+	labelArg, labelFin := WrapString(label)
+	flagsArg, flagsFin := WrapNumberPtr[C.ImS64, int64](flags)
+
+	defer func() {
+		labelFin()
+		flagsFin()
+	}()
+	return C.igCheckboxFlags_S64Ptr(labelArg, flagsArg, C.ImS64(flags_value)) == C.bool(true)
+}
+
 func InternalCheckboxFlagsU64Ptr(label string, flags *[]uint64, flags_value uint64) bool {
 	labelArg, labelFin := WrapString(label)
 	flagsArg := make([]C.ImU64, len(*flags))
@@ -6548,6 +6559,22 @@ func InternalImTextCountUtf8BytesFromStr(in_text *Wchar, in_text_end *Wchar) int
 	return int32(C.igImTextCountUtf8BytesFromStr((*C.ImWchar)(in_text), (*C.ImWchar)(in_text_end)))
 }
 
+// return input UTF-8 bytes count
+// InternalImTextStrFromUtf8V parameter default value hint:
+// in_remaining: NULL
+func InternalImTextStrFromUtf8V(out_buf *Wchar, out_buf_size int32, in_text string, in_text_end string, in_remaining []string) int32 {
+	in_textArg, in_textFin := WrapString(in_text)
+	in_text_endArg, in_text_endFin := WrapString(in_text_end)
+	in_remainingArg, in_remainingFin := WrapStringList(in_remaining)
+
+	defer func() {
+		in_textFin()
+		in_text_endFin()
+		in_remainingFin()
+	}()
+	return int32(C.igImTextStrFromUtf8((*C.ImWchar)(out_buf), C.int(out_buf_size), in_textArg, in_text_endArg, in_remainingArg))
+}
+
 // return output UTF-8 bytes count
 func InternalImTextStrToUtf8(out_buf string, out_buf_size int32, in_text *Wchar, in_text_end *Wchar) int32 {
 	out_bufArg, out_bufFin := WrapString(out_buf)
@@ -8010,6 +8037,15 @@ func InternalScrollToRectExV(window Window, rect Rect, flags ScrollFlags) Vec2 {
 
 func InternalScrollbar(axis Axis) {
 	C.igScrollbar(C.ImGuiAxis(axis))
+}
+
+func InternalScrollbarEx(bb Rect, id ID, axis Axis, p_scroll_v *int64, avail_v int64, contents_v int64, flags DrawFlags) bool {
+	p_scroll_vArg, p_scroll_vFin := WrapNumberPtr[C.ImS64, int64](p_scroll_v)
+
+	defer func() {
+		p_scroll_vFin()
+	}()
+	return C.igScrollbarEx(bb.toC(), C.ImGuiID(id), C.ImGuiAxis(axis), p_scroll_vArg, C.ImS64(avail_v), C.ImS64(contents_v), C.ImDrawFlags(flags)) == C.bool(true)
 }
 
 // "bool selected" carry the selection state (read-only). Selectable() is clicked is returns true so you can modify your selection state. size.x==0.0: use remaining width, size.x>0.0: specify width. size.y==0.0: use label height, size.y>0.0: specify height
@@ -10854,6 +10890,17 @@ func InternalImHashStr(data string) ID {
 	return ID(C.wrap_igImHashStr(dataArg))
 }
 
+func InternalImTextStrFromUtf8(out_buf *Wchar, out_buf_size int32, in_text string, in_text_end string) int32 {
+	in_textArg, in_textFin := WrapString(in_text)
+	in_text_endArg, in_text_endFin := WrapString(in_text_end)
+
+	defer func() {
+		in_textFin()
+		in_text_endFin()
+	}()
+	return int32(C.wrap_igImTextStrFromUtf8((*C.ImWchar)(out_buf), C.int(out_buf_size), in_textArg, in_text_endArg))
+}
+
 func Image(user_texture_id TextureID, size Vec2) {
 	C.wrap_igImage(C.ImTextureID(user_texture_id), size.toC())
 }
@@ -12830,6 +12877,25 @@ func (self FontAtlas) TexPixelsUseColors() bool {
 	return C.wrap_ImFontAtlas_GetTexPixelsUseColors(selfArg) == C.bool(true)
 }
 
+func (self FontAtlas) SetTexPixelsAlpha8(v *uint) {
+	vArg, vFin := WrapNumberPtr[C.uchar, uint](v)
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImFontAtlas_SetTexPixelsAlpha8(selfArg, vArg)
+
+	vFin()
+}
+
+func (self FontAtlas) TexPixelsAlpha8() *uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*uint)(C.wrap_ImFontAtlas_GetTexPixelsAlpha8(selfArg))
+}
+
 func (self FontAtlas) SetTexPixelsRGBA32(v *uint32) {
 	vArg, vFin := WrapNumberPtr[C.uint, uint32](v)
 
@@ -12838,6 +12904,15 @@ func (self FontAtlas) SetTexPixelsRGBA32(v *uint32) {
 	C.wrap_ImFontAtlas_SetTexPixelsRGBA32(selfArg, vArg)
 
 	vFin()
+}
+
+func (self FontAtlas) TexPixelsRGBA32() *uint32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*uint32)(C.wrap_ImFontAtlas_GetTexPixelsRGBA32(selfArg))
 }
 
 func (self FontAtlas) SetTexWidth(v int32) {
