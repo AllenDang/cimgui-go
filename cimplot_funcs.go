@@ -24,7 +24,7 @@ func (self PlotAlignmentData) End() {
 }
 
 func NewPlotAlignmentData() PlotAlignmentData {
-	return newPlotAlignmentDataFromC(C.ImPlotAlignmentData_ImPlotAlignmentData())
+	return *newPlotAlignmentDataFromC(C.ImPlotAlignmentData_ImPlotAlignmentData())
 }
 
 func (self PlotAlignmentData) Reset() {
@@ -75,7 +75,7 @@ func (self PlotAnnotationCollection) Text(idx int32) string {
 }
 
 func NewPlotAnnotationCollection() PlotAnnotationCollection {
-	return newPlotAnnotationCollectionFromC(C.ImPlotAnnotationCollection_ImPlotAnnotationCollection())
+	return *newPlotAnnotationCollectionFromC(C.ImPlotAnnotationCollection_ImPlotAnnotationCollection())
 }
 
 func (self PlotAnnotationCollection) Reset() {
@@ -93,7 +93,7 @@ func (self PlotAnnotationCollection) Destroy() {
 }
 
 func NewPlotAnnotation() PlotAnnotation {
-	return newPlotAnnotationFromC(C.ImPlotAnnotation_ImPlotAnnotation())
+	return *newPlotAnnotationFromC(C.ImPlotAnnotation_ImPlotAnnotation())
 }
 
 func (self PlotAnnotation) Destroy() {
@@ -197,7 +197,7 @@ func (self PlotAxis) HasTickMarks() bool {
 }
 
 func NewPlotAxis() PlotAxis {
-	return newPlotAxisFromC(C.ImPlotAxis_ImPlotAxis())
+	return *newPlotAxisFromC(C.ImPlotAxis_ImPlotAxis())
 }
 
 func (self PlotAxis) IsAutoFitting() bool {
@@ -500,7 +500,7 @@ func (self PlotColormapData) TableSize(cmap PlotColormap) int32 {
 }
 
 func NewPlotColormapData() PlotColormapData {
-	return newPlotColormapDataFromC(C.ImPlotColormapData_ImPlotColormapData())
+	return *newPlotColormapDataFromC(C.ImPlotColormapData_ImPlotColormapData())
 }
 
 func (self PlotColormapData) IsQual(cmap PlotColormap) bool {
@@ -543,14 +543,14 @@ func (self PlotColormapData) Destroy() {
 }
 
 func NewPlotDateTimeSpecNil() PlotDateTimeSpec {
-	return newPlotDateTimeSpecFromC(C.ImPlotDateTimeSpec_ImPlotDateTimeSpec_Nil())
+	return *newPlotDateTimeSpecFromC(C.ImPlotDateTimeSpec_ImPlotDateTimeSpec_Nil())
 }
 
 // NewPlotDateTimeSpecPlotDateFmt parameter default value hint:
 // use_24_hr_clk: false
 // use_iso_8601: false
 func NewPlotDateTimeSpecPlotDateFmt(date_fmt PlotDateFmt, time_fmt PlotTimeFmt, use_24_hr_clk bool, use_iso_8601 bool) PlotDateTimeSpec {
-	return newPlotDateTimeSpecFromC(C.ImPlotDateTimeSpec_ImPlotDateTimeSpec_PlotDateFmt(C.ImPlotDateFmt(date_fmt), C.ImPlotTimeFmt(time_fmt), C.bool(use_24_hr_clk), C.bool(use_iso_8601)))
+	return *newPlotDateTimeSpecFromC(C.ImPlotDateTimeSpec_ImPlotDateTimeSpec_PlotDateFmt(C.ImPlotDateFmt(date_fmt), C.ImPlotTimeFmt(time_fmt), C.bool(use_24_hr_clk), C.bool(use_iso_8601)))
 }
 
 func (self PlotDateTimeSpec) Destroy() {
@@ -561,7 +561,7 @@ func (self PlotDateTimeSpec) Destroy() {
 }
 
 func NewPlotInputMap() PlotInputMap {
-	return newPlotInputMapFromC(C.ImPlotInputMap_ImPlotInputMap())
+	return *newPlotInputMapFromC(C.ImPlotInputMap_ImPlotInputMap())
 }
 
 func (self PlotInputMap) Destroy() {
@@ -577,7 +577,7 @@ func (self PlotItemGroup) ItemByIndex(i int32) PlotItem {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotItemFromC(C.ImPlotItemGroup_GetItemByIndex(selfArg, C.int(i)))
+	return *newPlotItemFromC(C.ImPlotItemGroup_GetItemByIndex(selfArg, C.int(i)))
 }
 
 func (self PlotItemGroup) ItemCount() int32 {
@@ -617,7 +617,7 @@ func (self PlotItemGroup) ItemByID(id ID) PlotItem {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotItemFromC(C.ImPlotItemGroup_GetItem_ID(selfArg, C.ImGuiID(id)))
+	return *newPlotItemFromC(C.ImPlotItemGroup_GetItem_ID(selfArg, C.ImGuiID(id)))
 }
 
 func (self PlotItemGroup) ItemStr(label_id string) PlotItem {
@@ -628,7 +628,7 @@ func (self PlotItemGroup) ItemStr(label_id string) PlotItem {
 		selfFin()
 		label_idFin()
 	}()
-	return newPlotItemFromC(C.ImPlotItemGroup_GetItem_Str(selfArg, label_idArg))
+	return *newPlotItemFromC(C.ImPlotItemGroup_GetItem_Str(selfArg, label_idArg))
 }
 
 func (self PlotItemGroup) LegendCount() int32 {
@@ -646,7 +646,7 @@ func (self PlotItemGroup) LegendItem(i int32) PlotItem {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotItemFromC(C.ImPlotItemGroup_GetLegendItem(selfArg, C.int(i)))
+	return *newPlotItemFromC(C.ImPlotItemGroup_GetLegendItem(selfArg, C.int(i)))
 }
 
 func (self PlotItemGroup) LegendLabel(i int32) string {
@@ -664,11 +664,11 @@ func (self PlotItemGroup) OrAddItem(id ID) PlotItem {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotItemFromC(C.ImPlotItemGroup_GetOrAddItem(selfArg, C.ImGuiID(id)))
+	return *newPlotItemFromC(C.ImPlotItemGroup_GetOrAddItem(selfArg, C.ImGuiID(id)))
 }
 
 func NewPlotItemGroup() PlotItemGroup {
-	return newPlotItemGroupFromC(C.ImPlotItemGroup_ImPlotItemGroup())
+	return *newPlotItemGroupFromC(C.ImPlotItemGroup_ImPlotItemGroup())
 }
 
 func (self PlotItemGroup) Reset() {
@@ -686,7 +686,7 @@ func (self PlotItemGroup) Destroy() {
 }
 
 func NewPlotItem() PlotItem {
-	return newPlotItemFromC(C.ImPlotItem_ImPlotItem())
+	return *newPlotItemFromC(C.ImPlotItem_ImPlotItem())
 }
 
 func (self PlotItem) Destroy() {
@@ -697,7 +697,7 @@ func (self PlotItem) Destroy() {
 }
 
 func NewPlotLegend() PlotLegend {
-	return newPlotLegendFromC(C.ImPlotLegend_ImPlotLegend())
+	return *newPlotLegendFromC(C.ImPlotLegend_ImPlotLegend())
 }
 
 func (self PlotLegend) Reset() {
@@ -715,7 +715,7 @@ func (self PlotLegend) Destroy() {
 }
 
 func NewPlotNextItemData() PlotNextItemData {
-	return newPlotNextItemDataFromC(C.ImPlotNextItemData_ImPlotNextItemData())
+	return *newPlotNextItemDataFromC(C.ImPlotNextItemData_ImPlotNextItemData())
 }
 
 func (self PlotNextItemData) Reset() {
@@ -733,7 +733,7 @@ func (self PlotNextItemData) Destroy() {
 }
 
 func NewPlotNextPlotData() PlotNextPlotData {
-	return newPlotNextPlotDataFromC(C.ImPlotNextPlotData_ImPlotNextPlotData())
+	return *newPlotNextPlotDataFromC(C.ImPlotNextPlotData_ImPlotNextPlotData())
 }
 
 func (self PlotNextPlotData) Reset() {
@@ -805,7 +805,7 @@ func (self PlotPlot) HasTitle() bool {
 }
 
 func NewPlotPlot() PlotPlot {
-	return newPlotPlotFromC(C.ImPlotPlot_ImPlotPlot())
+	return *newPlotPlotFromC(C.ImPlotPlot_ImPlotPlot())
 }
 
 func (self PlotPlot) IsInputLocked() bool {
@@ -843,7 +843,7 @@ func (self PlotPlot) XAxisNil(i int32) PlotAxis {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotAxisFromC(C.ImPlotPlot_XAxis_Nil(selfArg, C.int(i)))
+	return *newPlotAxisFromC(C.ImPlotPlot_XAxis_Nil(selfArg, C.int(i)))
 }
 
 func (self PlotPlot) YAxisNil(i int32) PlotAxis {
@@ -852,7 +852,7 @@ func (self PlotPlot) YAxisNil(i int32) PlotAxis {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotAxisFromC(C.ImPlotPlot_YAxis_Nil(selfArg, C.int(i)))
+	return *newPlotAxisFromC(C.ImPlotPlot_YAxis_Nil(selfArg, C.int(i)))
 }
 
 func (self PlotPlot) Destroy() {
@@ -863,7 +863,7 @@ func (self PlotPlot) Destroy() {
 }
 
 func NewPlotPointError(x float64, y float64, neg float64, pos float64) PlotPointError {
-	return newPlotPointErrorFromC(C.ImPlotPointError_ImPlotPointError(C.double(x), C.double(y), C.double(neg), C.double(pos)))
+	return *newPlotPointErrorFromC(C.ImPlotPointError_ImPlotPointError(C.double(x), C.double(y), C.double(neg), C.double(pos)))
 }
 
 func (self PlotPointError) Destroy() {
@@ -899,11 +899,11 @@ func (self PlotRange) Contains(value float64) bool {
 }
 
 func NewPlotRangeNil() PlotRange {
-	return newPlotRangeFromC(C.ImPlotRange_ImPlotRange_Nil())
+	return *newPlotRangeFromC(C.ImPlotRange_ImPlotRange_Nil())
 }
 
 func NewPlotRangedouble(_min float64, _max float64) PlotRange {
-	return newPlotRangeFromC(C.ImPlotRange_ImPlotRange_double(C.double(_min), C.double(_max)))
+	return *newPlotRangeFromC(C.ImPlotRange_ImPlotRange_double(C.double(_min), C.double(_max)))
 }
 
 func (self PlotRange) Size() float64 {
@@ -967,11 +967,11 @@ func (self PlotRect) Containsdouble(x float64, y float64) bool {
 }
 
 func NewPlotRectNil() PlotRect {
-	return newPlotRectFromC(C.ImPlotRect_ImPlotRect_Nil())
+	return *newPlotRectFromC(C.ImPlotRect_ImPlotRect_Nil())
 }
 
 func NewPlotRectdouble(x_min float64, x_max float64, y_min float64, y_max float64) PlotRect {
-	return newPlotRectFromC(C.ImPlotRect_ImPlotRect_double(C.double(x_min), C.double(x_max), C.double(y_min), C.double(y_max)))
+	return *newPlotRectFromC(C.ImPlotRect_ImPlotRect_double(C.double(x_min), C.double(x_max), C.double(y_min), C.double(y_max)))
 }
 
 func (self PlotRect) Max() PlotPoint {
@@ -1021,7 +1021,7 @@ func (self PlotRect) Destroy() {
 }
 
 func NewPlotStyle() PlotStyle {
-	return newPlotStyleFromC(C.ImPlotStyle_ImPlotStyle())
+	return *newPlotStyleFromC(C.ImPlotStyle_ImPlotStyle())
 }
 
 func (self PlotStyle) Destroy() {
@@ -1032,7 +1032,7 @@ func (self PlotStyle) Destroy() {
 }
 
 func NewPlotSubplot() PlotSubplot {
-	return newPlotSubplotFromC(C.ImPlotSubplot_ImPlotSubplot())
+	return *newPlotSubplotFromC(C.ImPlotSubplot_ImPlotSubplot())
 }
 
 func (self PlotSubplot) Destroy() {
@@ -1061,7 +1061,7 @@ func (self PlotTagCollection) Text(idx int32) string {
 }
 
 func NewPlotTagCollection() PlotTagCollection {
-	return newPlotTagCollectionFromC(C.ImPlotTagCollection_ImPlotTagCollection())
+	return *newPlotTagCollectionFromC(C.ImPlotTagCollection_ImPlotTagCollection())
 }
 
 func (self PlotTagCollection) Reset() {
@@ -1079,7 +1079,7 @@ func (self PlotTagCollection) Destroy() {
 }
 
 func NewPlotTick(value float64, major bool, level int32, show_label bool) PlotTick {
-	return newPlotTickFromC(C.ImPlotTick_ImPlotTick(C.double(value), C.bool(major), C.int(level), C.bool(show_label)))
+	return *newPlotTickFromC(C.ImPlotTick_ImPlotTick(C.double(value), C.bool(major), C.int(level), C.bool(show_label)))
 }
 
 func (self PlotTick) Destroy() {
@@ -1097,7 +1097,7 @@ func (self PlotTicker) AddTickPlotTick(tick PlotTick) PlotTick {
 		selfFin()
 		tickFin()
 	}()
-	return newPlotTickFromC(C.ImPlotTicker_AddTick_PlotTick(selfArg, tickArg))
+	return *newPlotTickFromC(C.ImPlotTicker_AddTick_PlotTick(selfArg, tickArg))
 }
 
 func (self PlotTicker) AddTickdoubleStr(value float64, major bool, level int32, show_label bool, label string) PlotTick {
@@ -1108,7 +1108,7 @@ func (self PlotTicker) AddTickdoubleStr(value float64, major bool, level int32, 
 		selfFin()
 		labelFin()
 	}()
-	return newPlotTickFromC(C.ImPlotTicker_AddTick_doubleStr(selfArg, C.double(value), C.bool(major), C.int(level), C.bool(show_label), labelArg))
+	return *newPlotTickFromC(C.ImPlotTicker_AddTick_doubleStr(selfArg, C.double(value), C.bool(major), C.int(level), C.bool(show_label), labelArg))
 }
 
 func (self PlotTicker) TextInt(idx int32) string {
@@ -1132,7 +1132,7 @@ func (self PlotTicker) TextPlotTick(tick PlotTick) string {
 }
 
 func NewPlotTicker() PlotTicker {
-	return newPlotTickerFromC(C.ImPlotTicker_ImPlotTicker())
+	return *newPlotTickerFromC(C.ImPlotTicker_ImPlotTicker())
 }
 
 func (self PlotTicker) OverrideSizeLate(size Vec2) {
@@ -1724,7 +1724,7 @@ func PlotCombineDateTime(date_part PlotTime, time_part PlotTime) PlotTime {
 }
 
 func PlotCreateContext() PlotContext {
-	return newPlotContextFromC(C.ImPlot_CreateContext())
+	return *newPlotContextFromC(C.ImPlot_CreateContext())
 }
 
 // PlotDestroyContextV parameter default value hint:
@@ -1954,15 +1954,15 @@ func PlotGetColormapSizeV(cmap PlotColormap) int32 {
 }
 
 func PlotGetCurrentContext() PlotContext {
-	return newPlotContextFromC(C.ImPlot_GetCurrentContext())
+	return *newPlotContextFromC(C.ImPlot_GetCurrentContext())
 }
 
 func PlotGetCurrentItem() PlotItem {
-	return newPlotItemFromC(C.ImPlot_GetCurrentItem())
+	return *newPlotItemFromC(C.ImPlot_GetCurrentItem())
 }
 
 func PlotGetCurrentPlot() PlotPlot {
-	return newPlotPlotFromC(C.ImPlot_GetCurrentPlot())
+	return *newPlotPlotFromC(C.ImPlot_GetCurrentPlot())
 }
 
 func PlotGetDaysInMonth(year int32, month int32) int32 {
@@ -1970,7 +1970,7 @@ func PlotGetDaysInMonth(year int32, month int32) int32 {
 }
 
 func PlotGetInputMap() PlotInputMap {
-	return newPlotInputMapFromC(C.ImPlot_GetInputMap())
+	return *newPlotInputMapFromC(C.ImPlot_GetInputMap())
 }
 
 func PlotGetItem(label_id string) PlotItem {
@@ -1979,11 +1979,11 @@ func PlotGetItem(label_id string) PlotItem {
 	defer func() {
 		label_idFin()
 	}()
-	return newPlotItemFromC(C.ImPlot_GetItem(label_idArg))
+	return *newPlotItemFromC(C.ImPlot_GetItem(label_idArg))
 }
 
 func PlotGetItemData() PlotNextItemData {
-	return newPlotNextItemDataFromC(C.ImPlot_GetItemData())
+	return *newPlotNextItemDataFromC(C.ImPlot_GetItemData())
 }
 
 func PlotGetLastItemColor() Vec4 {
@@ -2020,11 +2020,11 @@ func PlotGetPlot(title string) PlotPlot {
 	defer func() {
 		titleFin()
 	}()
-	return newPlotPlotFromC(C.ImPlot_GetPlot(titleArg))
+	return *newPlotPlotFromC(C.ImPlot_GetPlot(titleArg))
 }
 
 func PlotGetPlotDrawList() DrawList {
-	return newDrawListFromC(C.ImPlot_GetPlotDrawList())
+	return *newDrawListFromC(C.ImPlot_GetPlotDrawList())
 }
 
 // PlotGetPlotLimitsV parameter default value hint:
@@ -2092,7 +2092,7 @@ func PlotGetPlotSize() Vec2 {
 }
 
 func PlotGetStyle() PlotStyle {
-	return newPlotStyleFromC(C.ImPlot_GetStyle())
+	return *newPlotStyleFromC(C.ImPlot_GetStyle())
 }
 
 func PlotGetStyleColorName(idx PlotCol) string {
@@ -8343,7 +8343,7 @@ func PlotRegisterOrGetItemV(label_id string, flags PlotItemFlags, just_created *
 		label_idFin()
 		just_createdFin()
 	}()
-	return newPlotItemFromC(C.ImPlot_RegisterOrGetItem(label_idArg, C.ImPlotItemFlags(flags), just_createdArg))
+	return *newPlotItemFromC(C.ImPlot_RegisterOrGetItem(label_idArg, C.ImPlotItemFlags(flags), just_createdArg))
 }
 
 func PlotRenderColorBar(colors *[]uint32, size int32, DrawList DrawList, bounds Rect, vert bool, reversed bool, continuous bool) {
@@ -13101,7 +13101,7 @@ func PlotRegisterOrGetItem(label_id string, flags PlotItemFlags) PlotItem {
 	defer func() {
 		label_idFin()
 	}()
-	return newPlotItemFromC(C.wrap_ImPlot_RegisterOrGetItem(label_idArg, C.ImPlotItemFlags(flags)))
+	return *newPlotItemFromC(C.wrap_ImPlot_RegisterOrGetItem(label_idArg, C.ImPlotItemFlags(flags)))
 }
 
 func PlotSampleColormap(t float32) Vec4 {
@@ -13267,7 +13267,7 @@ func (self FormatterTimeData) TimeDataGetSpec() PlotDateTimeSpec {
 	}()
 
 	result := C.wrap_Formatter_Time_Data_GetSpec(selfArg)
-	return newPlotDateTimeSpecFromC(&result)
+	return *newPlotDateTimeSpecFromC(&result)
 }
 
 func (self FormatterTimeData) TimeDataGetUserFormatterData() unsafe.Pointer {
@@ -13462,7 +13462,7 @@ func (self PlotAnnotationCollection) TextBuffer() TextBuffer {
 	}()
 
 	result := C.wrap_ImPlotAnnotationCollection_GetTextBuffer(selfArg)
-	return newTextBufferFromC(&result)
+	return *newTextBufferFromC(&result)
 }
 
 func (self PlotAnnotationCollection) SetSize(v int32) {
@@ -13543,7 +13543,7 @@ func (self PlotAxis) Range() PlotRange {
 	}()
 
 	result := C.wrap_ImPlotAxis_GetRange(selfArg)
-	return newPlotRangeFromC(&result)
+	return *newPlotRangeFromC(&result)
 }
 
 func (self PlotAxis) SetRangeCond(v PlotCond) {
@@ -13594,7 +13594,7 @@ func (self PlotAxis) FitExtents() PlotRange {
 	}()
 
 	result := C.wrap_ImPlotAxis_GetFitExtents(selfArg)
-	return newPlotRangeFromC(&result)
+	return *newPlotRangeFromC(&result)
 }
 
 func (self PlotAxis) SetOrthoAxis(v PlotAxis) {
@@ -13613,7 +13613,7 @@ func (self PlotAxis) OrthoAxis() PlotAxis {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotAxisFromC(C.wrap_ImPlotAxis_GetOrthoAxis(selfArg))
+	return *newPlotAxisFromC(C.wrap_ImPlotAxis_GetOrthoAxis(selfArg))
 }
 
 func (self PlotAxis) SetConstraintRange(v PlotRange) {
@@ -13634,7 +13634,7 @@ func (self PlotAxis) ConstraintRange() PlotRange {
 	}()
 
 	result := C.wrap_ImPlotAxis_GetConstraintRange(selfArg)
-	return newPlotRangeFromC(&result)
+	return *newPlotRangeFromC(&result)
 }
 
 func (self PlotAxis) SetConstraintZoom(v PlotRange) {
@@ -13655,7 +13655,7 @@ func (self PlotAxis) ConstraintZoom() PlotRange {
 	}()
 
 	result := C.wrap_ImPlotAxis_GetConstraintZoom(selfArg)
-	return newPlotRangeFromC(&result)
+	return *newPlotRangeFromC(&result)
 }
 
 func (self PlotAxis) SetTicker(v PlotTicker) {
@@ -13676,7 +13676,7 @@ func (self PlotAxis) Ticker() PlotTicker {
 	}()
 
 	result := C.wrap_ImPlotAxis_GetTicker(selfArg)
-	return newPlotTickerFromC(&result)
+	return *newPlotTickerFromC(&result)
 }
 
 func (self PlotAxis) SetFormatterData(v unsafe.Pointer) {
@@ -14167,7 +14167,7 @@ func (self PlotColormapData) Text() TextBuffer {
 	}()
 
 	result := C.wrap_ImPlotColormapData_GetText(selfArg)
-	return newTextBufferFromC(&result)
+	return *newTextBufferFromC(&result)
 }
 
 func (self PlotColormapData) SetMap(v Storage) {
@@ -14188,7 +14188,7 @@ func (self PlotColormapData) Map() Storage {
 	}()
 
 	result := C.wrap_ImPlotColormapData_GetMap(selfArg)
-	return newStorageFromC(&result)
+	return *newStorageFromC(&result)
 }
 
 func (self PlotColormapData) SetCount(v int32) {
@@ -14222,7 +14222,7 @@ func (self PlotContext) CurrentPlot() PlotPlot {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotPlotFromC(C.wrap_ImPlotContext_GetCurrentPlot(selfArg))
+	return *newPlotPlotFromC(C.wrap_ImPlotContext_GetCurrentPlot(selfArg))
 }
 
 func (self PlotContext) SetCurrentSubplot(v PlotSubplot) {
@@ -14241,7 +14241,7 @@ func (self PlotContext) CurrentSubplot() PlotSubplot {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotSubplotFromC(C.wrap_ImPlotContext_GetCurrentSubplot(selfArg))
+	return *newPlotSubplotFromC(C.wrap_ImPlotContext_GetCurrentSubplot(selfArg))
 }
 
 func (self PlotContext) SetCurrentItems(v PlotItemGroup) {
@@ -14260,7 +14260,7 @@ func (self PlotContext) CurrentItems() PlotItemGroup {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotItemGroupFromC(C.wrap_ImPlotContext_GetCurrentItems(selfArg))
+	return *newPlotItemGroupFromC(C.wrap_ImPlotContext_GetCurrentItems(selfArg))
 }
 
 func (self PlotContext) SetCurrentItem(v PlotItem) {
@@ -14279,7 +14279,7 @@ func (self PlotContext) CurrentItem() PlotItem {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotItemFromC(C.wrap_ImPlotContext_GetCurrentItem(selfArg))
+	return *newPlotItemFromC(C.wrap_ImPlotContext_GetCurrentItem(selfArg))
 }
 
 func (self PlotContext) SetPreviousItem(v PlotItem) {
@@ -14298,7 +14298,7 @@ func (self PlotContext) PreviousItem() PlotItem {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotItemFromC(C.wrap_ImPlotContext_GetPreviousItem(selfArg))
+	return *newPlotItemFromC(C.wrap_ImPlotContext_GetPreviousItem(selfArg))
 }
 
 func (self PlotContext) SetCTicker(v PlotTicker) {
@@ -14319,7 +14319,7 @@ func (self PlotContext) CTicker() PlotTicker {
 	}()
 
 	result := C.wrap_ImPlotContext_GetCTicker(selfArg)
-	return newPlotTickerFromC(&result)
+	return *newPlotTickerFromC(&result)
 }
 
 func (self PlotContext) SetAnnotations(v PlotAnnotationCollection) {
@@ -14340,7 +14340,7 @@ func (self PlotContext) Annotations() PlotAnnotationCollection {
 	}()
 
 	result := C.wrap_ImPlotContext_GetAnnotations(selfArg)
-	return newPlotAnnotationCollectionFromC(&result)
+	return *newPlotAnnotationCollectionFromC(&result)
 }
 
 func (self PlotContext) SetTags(v PlotTagCollection) {
@@ -14361,7 +14361,7 @@ func (self PlotContext) Tags() PlotTagCollection {
 	}()
 
 	result := C.wrap_ImPlotContext_GetTags(selfArg)
-	return newPlotTagCollectionFromC(&result)
+	return *newPlotTagCollectionFromC(&result)
 }
 
 func (self PlotContext) SetChildWindowMade(v bool) {
@@ -14397,7 +14397,7 @@ func (self PlotContext) Style() PlotStyle {
 	}()
 
 	result := C.wrap_ImPlotContext_GetStyle(selfArg)
-	return newPlotStyleFromC(&result)
+	return *newPlotStyleFromC(&result)
 }
 
 func (self PlotContext) SetColormapData(v PlotColormapData) {
@@ -14418,7 +14418,7 @@ func (self PlotContext) ColormapData() PlotColormapData {
 	}()
 
 	result := C.wrap_ImPlotContext_GetColormapData(selfArg)
-	return newPlotColormapDataFromC(&result)
+	return *newPlotColormapDataFromC(&result)
 }
 
 func (self PlotContext) SetDigitalPlotItemCnt(v int32) {
@@ -14469,7 +14469,7 @@ func (self PlotContext) NextPlotData() PlotNextPlotData {
 	}()
 
 	result := C.wrap_ImPlotContext_GetNextPlotData(selfArg)
-	return newPlotNextPlotDataFromC(&result)
+	return *newPlotNextPlotDataFromC(&result)
 }
 
 func (self PlotContext) SetNextItemData(v PlotNextItemData) {
@@ -14490,7 +14490,7 @@ func (self PlotContext) NextItemData() PlotNextItemData {
 	}()
 
 	result := C.wrap_ImPlotContext_GetNextItemData(selfArg)
-	return newPlotNextItemDataFromC(&result)
+	return *newPlotNextItemDataFromC(&result)
 }
 
 func (self PlotContext) SetInputMap(v PlotInputMap) {
@@ -14511,7 +14511,7 @@ func (self PlotContext) InputMap() PlotInputMap {
 	}()
 
 	result := C.wrap_ImPlotContext_GetInputMap(selfArg)
-	return newPlotInputMapFromC(&result)
+	return *newPlotInputMapFromC(&result)
 }
 
 func (self PlotContext) SetOpenContextThisFrame(v bool) {
@@ -14547,7 +14547,7 @@ func (self PlotContext) MousePosStringBuilder() TextBuffer {
 	}()
 
 	result := C.wrap_ImPlotContext_GetMousePosStringBuilder(selfArg)
-	return newTextBufferFromC(&result)
+	return *newTextBufferFromC(&result)
 }
 
 func (self PlotContext) SetSortItems(v PlotItemGroup) {
@@ -14566,7 +14566,7 @@ func (self PlotContext) SortItems() PlotItemGroup {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotItemGroupFromC(C.wrap_ImPlotContext_GetSortItems(selfArg))
+	return *newPlotItemGroupFromC(C.wrap_ImPlotContext_GetSortItems(selfArg))
 }
 
 func (self PlotContext) SetCurrentAlignmentH(v PlotAlignmentData) {
@@ -14585,7 +14585,7 @@ func (self PlotContext) CurrentAlignmentH() PlotAlignmentData {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotAlignmentDataFromC(C.wrap_ImPlotContext_GetCurrentAlignmentH(selfArg))
+	return *newPlotAlignmentDataFromC(C.wrap_ImPlotContext_GetCurrentAlignmentH(selfArg))
 }
 
 func (self PlotContext) SetCurrentAlignmentV(v PlotAlignmentData) {
@@ -14604,7 +14604,7 @@ func (self PlotContext) CurrentAlignmentV() PlotAlignmentData {
 	defer func() {
 		selfFin()
 	}()
-	return newPlotAlignmentDataFromC(C.wrap_ImPlotContext_GetCurrentAlignmentV(selfArg))
+	return *newPlotAlignmentDataFromC(C.wrap_ImPlotContext_GetCurrentAlignmentV(selfArg))
 }
 
 func (self PlotDateTimeSpec) SetDate(v PlotDateFmt) {
@@ -14985,7 +14985,7 @@ func (self PlotItemGroup) Legend() PlotLegend {
 	}()
 
 	result := C.wrap_ImPlotItemGroup_GetLegend(selfArg)
-	return newPlotLegendFromC(&result)
+	return *newPlotLegendFromC(&result)
 }
 
 func (self PlotItemGroup) SetColormapIdx(v int32) {
@@ -15081,7 +15081,7 @@ func (self PlotLegend) Labels() TextBuffer {
 	}()
 
 	result := C.wrap_ImPlotLegend_GetLabels(selfArg)
-	return newTextBufferFromC(&result)
+	return *newTextBufferFromC(&result)
 }
 
 func (self PlotLegend) SetRect(v Rect) {
@@ -15477,7 +15477,7 @@ func (self PlotPlot) TextBuffer() TextBuffer {
 	}()
 
 	result := C.wrap_ImPlotPlot_GetTextBuffer(selfArg)
-	return newTextBufferFromC(&result)
+	return *newTextBufferFromC(&result)
 }
 
 func (self PlotPlot) SetItems(v PlotItemGroup) {
@@ -15498,7 +15498,7 @@ func (self PlotPlot) Items() PlotItemGroup {
 	}()
 
 	result := C.wrap_ImPlotPlot_GetItems(selfArg)
-	return newPlotItemGroupFromC(&result)
+	return *newPlotItemGroupFromC(&result)
 }
 
 func (self PlotPlot) SetCurrentX(v PlotAxisEnum) {
@@ -15879,7 +15879,7 @@ func (self PlotRect) X() PlotRange {
 	}()
 
 	result := C.wrap_ImPlotRect_GetX(selfArg)
-	return newPlotRangeFromC(&result)
+	return *newPlotRangeFromC(&result)
 }
 
 func (self PlotRect) SetY(v PlotRange) {
@@ -15900,7 +15900,7 @@ func (self PlotRect) Y() PlotRange {
 	}()
 
 	result := C.wrap_ImPlotRect_GetY(selfArg)
-	return newPlotRangeFromC(&result)
+	return *newPlotRangeFromC(&result)
 }
 
 func (self PlotStyle) SetLineWeight(v float32) {
@@ -16431,7 +16431,7 @@ func (self PlotSubplot) Items() PlotItemGroup {
 	}()
 
 	result := C.wrap_ImPlotSubplot_GetItems(selfArg)
-	return newPlotItemGroupFromC(&result)
+	return *newPlotItemGroupFromC(&result)
 }
 
 func (self PlotSubplot) SetRows(v int32) {
@@ -16647,7 +16647,7 @@ func (self PlotTagCollection) TextBuffer() TextBuffer {
 	}()
 
 	result := C.wrap_ImPlotTagCollection_GetTextBuffer(selfArg)
-	return newTextBufferFromC(&result)
+	return *newTextBufferFromC(&result)
 }
 
 func (self PlotTagCollection) SetSize(v int32) {
@@ -16803,7 +16803,7 @@ func (self PlotTicker) TextBuffer() TextBuffer {
 	}()
 
 	result := C.wrap_ImPlotTicker_GetTextBuffer(selfArg)
-	return newTextBufferFromC(&result)
+	return *newTextBufferFromC(&result)
 }
 
 func (self PlotTicker) SetMaxSize(v Vec2) {

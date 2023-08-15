@@ -40,7 +40,7 @@ func generalInputTextCallback(cbData *C.ImGuiInputTextCallbackData) C.int {
 	}
 
 	if statePtr.callback != nil {
-		return C.int(statePtr.callback(data))
+		return C.int(statePtr.callback(*data))
 	}
 
 	return 0

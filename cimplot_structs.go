@@ -25,10 +25,10 @@ func (self FormatterTimeData) c() (result C.Formatter_Time_Data, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newFormatterTimeDataFromC(cvalue *C.Formatter_Time_Data) FormatterTimeData {
+func newFormatterTimeDataFromC(cvalue *C.Formatter_Time_Data) *FormatterTimeData {
 	result := new(FormatterTimeData)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type PlotAlignmentData struct {
@@ -66,14 +66,14 @@ func (self PlotAlignmentData) c() (result C.ImPlotAlignmentData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotAlignmentDataFromC(cvalue *C.ImPlotAlignmentData) PlotAlignmentData {
+func newPlotAlignmentDataFromC(cvalue *C.ImPlotAlignmentData) *PlotAlignmentData {
 	result := new(PlotAlignmentData)
 	result.FieldVERTICAL = cvalue.Vertical == C.bool(true)
 	result.FieldPADA = float32(cvalue.PadA)
 	result.FieldPADB = float32(cvalue.PadB)
 	result.FieldPADAMAX = float32(cvalue.PadAMax)
 	result.FieldPADBMAX = float32(cvalue.PadBMax)
-	return *result
+	return result
 }
 
 type PlotAnnotation struct {
@@ -115,7 +115,7 @@ func (self PlotAnnotation) c() (result C.ImPlotAnnotation, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotAnnotationFromC(cvalue *C.ImPlotAnnotation) PlotAnnotation {
+func newPlotAnnotationFromC(cvalue *C.ImPlotAnnotation) *PlotAnnotation {
 	result := new(PlotAnnotation)
 	result.FieldPOS = *(&Vec2{}).fromC(cvalue.Pos)
 	result.FieldOFFSET = *(&Vec2{}).fromC(cvalue.Offset)
@@ -123,7 +123,7 @@ func newPlotAnnotationFromC(cvalue *C.ImPlotAnnotation) PlotAnnotation {
 	result.FieldCOLORFG = uint32(cvalue.ColorFg)
 	result.FieldTEXTOFFSET = int32(cvalue.TextOffset)
 	result.FieldCLAMP = cvalue.Clamp == C.bool(true)
-	return *result
+	return result
 }
 
 type PlotAnnotationCollection struct {
@@ -141,10 +141,10 @@ func (self PlotAnnotationCollection) c() (result C.ImPlotAnnotationCollection, f
 	return *resultPtr, finFn
 }
 
-func newPlotAnnotationCollectionFromC(cvalue *C.ImPlotAnnotationCollection) PlotAnnotationCollection {
+func newPlotAnnotationCollectionFromC(cvalue *C.ImPlotAnnotationCollection) *PlotAnnotationCollection {
 	result := new(PlotAnnotationCollection)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type PlotAxis struct {
@@ -162,10 +162,10 @@ func (self PlotAxis) c() (result C.ImPlotAxis, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotAxisFromC(cvalue *C.ImPlotAxis) PlotAxis {
+func newPlotAxisFromC(cvalue *C.ImPlotAxis) *PlotAxis {
 	result := new(PlotAxis)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type PlotColormapData struct {
@@ -183,10 +183,10 @@ func (self PlotColormapData) c() (result C.ImPlotColormapData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotColormapDataFromC(cvalue *C.ImPlotColormapData) PlotColormapData {
+func newPlotColormapDataFromC(cvalue *C.ImPlotColormapData) *PlotColormapData {
 	result := new(PlotColormapData)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type PlotContext struct {
@@ -204,10 +204,10 @@ func (self PlotContext) c() (result C.ImPlotContext, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotContextFromC(cvalue *C.ImPlotContext) PlotContext {
+func newPlotContextFromC(cvalue *C.ImPlotContext) *PlotContext {
 	result := new(PlotContext)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type PlotDateTimeSpec struct {
@@ -241,13 +241,13 @@ func (self PlotDateTimeSpec) c() (result C.ImPlotDateTimeSpec, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotDateTimeSpecFromC(cvalue *C.ImPlotDateTimeSpec) PlotDateTimeSpec {
+func newPlotDateTimeSpecFromC(cvalue *C.ImPlotDateTimeSpec) *PlotDateTimeSpec {
 	result := new(PlotDateTimeSpec)
 	result.FieldDATE = PlotDateFmt(cvalue.Date)
 	result.FieldTIME = PlotTimeFmt(cvalue.Time)
 	result.FieldUSEISO8601 = cvalue.UseISO8601 == C.bool(true)
 	result.FieldUSE24HOURCLOCK = cvalue.Use24HourClock == C.bool(true)
-	return *result
+	return result
 }
 
 type PlotInputMap struct {
@@ -313,7 +313,7 @@ func (self PlotInputMap) c() (result C.ImPlotInputMap, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotInputMapFromC(cvalue *C.ImPlotInputMap) PlotInputMap {
+func newPlotInputMapFromC(cvalue *C.ImPlotInputMap) *PlotInputMap {
 	result := new(PlotInputMap)
 	result.FieldPAN = MouseButton(cvalue.Pan)
 	result.FieldPANMOD = int32(cvalue.PanMod)
@@ -327,7 +327,7 @@ func newPlotInputMapFromC(cvalue *C.ImPlotInputMap) PlotInputMap {
 	result.FieldOVERRIDEMOD = int32(cvalue.OverrideMod)
 	result.FieldZOOMMOD = int32(cvalue.ZoomMod)
 	result.FieldZOOMRATE = float32(cvalue.ZoomRate)
-	return *result
+	return result
 }
 
 type PlotItem struct {
@@ -373,7 +373,7 @@ func (self PlotItem) c() (result C.ImPlotItem, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotItemFromC(cvalue *C.ImPlotItem) PlotItem {
+func newPlotItemFromC(cvalue *C.ImPlotItem) *PlotItem {
 	result := new(PlotItem)
 	result.FieldID = ID(cvalue.ID)
 	result.FieldCOLOR = uint32(cvalue.Color)
@@ -382,7 +382,7 @@ func newPlotItemFromC(cvalue *C.ImPlotItem) PlotItem {
 	result.FieldSHOW = cvalue.Show == C.bool(true)
 	result.FieldLEGENDHOVERED = cvalue.LegendHovered == C.bool(true)
 	result.FieldSEENTHISFRAME = cvalue.SeenThisFrame == C.bool(true)
-	return *result
+	return result
 }
 
 type PlotItemGroup struct {
@@ -400,10 +400,10 @@ func (self PlotItemGroup) c() (result C.ImPlotItemGroup, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotItemGroupFromC(cvalue *C.ImPlotItemGroup) PlotItemGroup {
+func newPlotItemGroupFromC(cvalue *C.ImPlotItemGroup) *PlotItemGroup {
 	result := new(PlotItemGroup)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type PlotLegend struct {
@@ -421,10 +421,10 @@ func (self PlotLegend) c() (result C.ImPlotLegend, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotLegendFromC(cvalue *C.ImPlotLegend) PlotLegend {
+func newPlotLegendFromC(cvalue *C.ImPlotLegend) *PlotLegend {
 	result := new(PlotLegend)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type PlotNextItemData struct {
@@ -442,10 +442,10 @@ func (self PlotNextItemData) c() (result C.ImPlotNextItemData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotNextItemDataFromC(cvalue *C.ImPlotNextItemData) PlotNextItemData {
+func newPlotNextItemDataFromC(cvalue *C.ImPlotNextItemData) *PlotNextItemData {
 	result := new(PlotNextItemData)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type PlotNextPlotData struct {
@@ -463,10 +463,10 @@ func (self PlotNextPlotData) c() (result C.ImPlotNextPlotData, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotNextPlotDataFromC(cvalue *C.ImPlotNextPlotData) PlotNextPlotData {
+func newPlotNextPlotDataFromC(cvalue *C.ImPlotNextPlotData) *PlotNextPlotData {
 	result := new(PlotNextPlotData)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type PlotPlot struct {
@@ -484,10 +484,10 @@ func (self PlotPlot) c() (result C.ImPlotPlot, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotPlotFromC(cvalue *C.ImPlotPlot) PlotPlot {
+func newPlotPlotFromC(cvalue *C.ImPlotPlot) *PlotPlot {
 	result := new(PlotPlot)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type PlotPointError struct {
@@ -521,13 +521,13 @@ func (self PlotPointError) c() (result C.ImPlotPointError, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotPointErrorFromC(cvalue *C.ImPlotPointError) PlotPointError {
+func newPlotPointErrorFromC(cvalue *C.ImPlotPointError) *PlotPointError {
 	result := new(PlotPointError)
 	result.FieldX = float64(cvalue.X)
 	result.FieldY = float64(cvalue.Y)
 	result.FieldNEG = float64(cvalue.Neg)
 	result.FieldPOS = float64(cvalue.Pos)
-	return *result
+	return result
 }
 
 type PlotRange struct {
@@ -553,11 +553,11 @@ func (self PlotRange) c() (result C.ImPlotRange, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotRangeFromC(cvalue *C.ImPlotRange) PlotRange {
+func newPlotRangeFromC(cvalue *C.ImPlotRange) *PlotRange {
 	result := new(PlotRange)
 	result.FieldMIN = float64(cvalue.Min)
 	result.FieldMAX = float64(cvalue.Max)
-	return *result
+	return result
 }
 
 type PlotRect struct {
@@ -585,11 +585,11 @@ func (self PlotRect) c() (result C.ImPlotRect, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotRectFromC(cvalue *C.ImPlotRect) PlotRect {
+func newPlotRectFromC(cvalue *C.ImPlotRect) *PlotRect {
 	result := new(PlotRect)
-	result.FieldX = newPlotRangeFromC(&cvalue.X)
-	result.FieldY = newPlotRangeFromC(&cvalue.Y)
-	return *result
+	result.FieldX = *newPlotRangeFromC(&cvalue.X)
+	result.FieldY = *newPlotRangeFromC(&cvalue.Y)
+	return result
 }
 
 type PlotStyle struct {
@@ -607,10 +607,10 @@ func (self PlotStyle) c() (result C.ImPlotStyle, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotStyleFromC(cvalue *C.ImPlotStyle) PlotStyle {
+func newPlotStyleFromC(cvalue *C.ImPlotStyle) *PlotStyle {
 	result := new(PlotStyle)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type PlotSubplot struct {
@@ -628,10 +628,10 @@ func (self PlotSubplot) c() (result C.ImPlotSubplot, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotSubplotFromC(cvalue *C.ImPlotSubplot) PlotSubplot {
+func newPlotSubplotFromC(cvalue *C.ImPlotSubplot) *PlotSubplot {
 	result := new(PlotSubplot)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type PlotTag struct {
@@ -669,14 +669,14 @@ func (self PlotTag) c() (result C.ImPlotTag, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotTagFromC(cvalue *C.ImPlotTag) PlotTag {
+func newPlotTagFromC(cvalue *C.ImPlotTag) *PlotTag {
 	result := new(PlotTag)
 	result.FieldAXIS = PlotAxisEnum(cvalue.Axis)
 	result.FieldVALUE = float64(cvalue.Value)
 	result.FieldCOLORBG = uint32(cvalue.ColorBg)
 	result.FieldCOLORFG = uint32(cvalue.ColorFg)
 	result.FieldTEXTOFFSET = int32(cvalue.TextOffset)
-	return *result
+	return result
 }
 
 type PlotTagCollection struct {
@@ -694,10 +694,10 @@ func (self PlotTagCollection) c() (result C.ImPlotTagCollection, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotTagCollectionFromC(cvalue *C.ImPlotTagCollection) PlotTagCollection {
+func newPlotTagCollectionFromC(cvalue *C.ImPlotTagCollection) *PlotTagCollection {
 	result := new(PlotTagCollection)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type PlotTick struct {
@@ -747,7 +747,7 @@ func (self PlotTick) c() (result C.ImPlotTick, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotTickFromC(cvalue *C.ImPlotTick) PlotTick {
+func newPlotTickFromC(cvalue *C.ImPlotTick) *PlotTick {
 	result := new(PlotTick)
 	result.FieldPLOTPOS = float64(cvalue.PlotPos)
 	result.FieldPIXELPOS = float32(cvalue.PixelPos)
@@ -757,7 +757,7 @@ func newPlotTickFromC(cvalue *C.ImPlotTick) PlotTick {
 	result.FieldSHOWLABEL = cvalue.ShowLabel == C.bool(true)
 	result.FieldLEVEL = int32(cvalue.Level)
 	result.FieldIDX = int32(cvalue.Idx)
-	return *result
+	return result
 }
 
 type PlotTicker struct {
@@ -775,8 +775,8 @@ func (self PlotTicker) c() (result C.ImPlotTicker, fin func()) {
 	return *resultPtr, finFn
 }
 
-func newPlotTickerFromC(cvalue *C.ImPlotTicker) PlotTicker {
+func newPlotTickerFromC(cvalue *C.ImPlotTicker) *PlotTicker {
 	result := new(PlotTicker)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
