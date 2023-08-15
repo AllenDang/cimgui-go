@@ -49,14 +49,14 @@ func (gr GlyphRange) Data() *Wchar {
 	return (*Wchar)(C.wrap_GlyphRange_GetData(gr.handle()))
 }
 
-func (fa FontAtlas) GetFontCount() int {
+func (fa FontAtlas) FontCount() int {
 	selfArg, selfFin := fa.handle()
 	defer selfFin()
 
 	return int(C.wrap_ImFontAtlas_GetFontCount(selfArg))
 }
 
-func (self FontAtlas) GetTextureDataAsAlpha8() (pixels unsafe.Pointer, width int32, height int32, outBytesPerPixel int32) {
+func (self FontAtlas) TextureDataAsAlpha8() (pixels unsafe.Pointer, width int32, height int32, outBytesPerPixel int32) {
 	var p *C.uchar
 	var w C.int
 	var h C.int
@@ -106,6 +106,7 @@ func Ptr(data interface{}) unsafe.Pointer {
 	if data == nil {
 		return unsafe.Pointer(nil)
 	}
+
 	var addr unsafe.Pointer
 	v := reflect.ValueOf(data)
 	switch v.Type().Kind() {
@@ -127,5 +128,6 @@ func Ptr(data interface{}) unsafe.Pointer {
 	default:
 		panic(fmt.Errorf("unsupported type %s; must be a slice or pointer to a singular scalar value or the first element of an array or slice", v.Type()))
 	}
+
 	return addr
 }
