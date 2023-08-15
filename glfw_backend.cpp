@@ -277,16 +277,24 @@ void igGLFWWindow_GetDisplaySize(GLFWwindow *window, int *width, int *height) {
   glfwGetWindowSize(window, width, height);
 }
 
-void igGLFWWindow_SetWindowPos(GLFWwindow *window, int x, int y){
-  glfwSetWindowPos(window, x, y);
+void igGLFWWindow_SetWindowPos(GLFWwindow *window, int x, int y) { glfwSetWindowPos(window, x, y); }
+
+void igGLFWWindow_GetWindowPos(GLFWwindow *window, int *x, int *y) { glfwGetWindowPos(window, x, y); }
+
+void igGLFWWindow_SetShouldClose(GLFWwindow *window, int value) { glfwSetWindowShouldClose(window, value); }
+
+void igGLFWWindow_SetDropCallbackCB(GLFWwindow *wnd) { glfwSetDropCallback(wnd, (GLFWdropfun)dropCallback); }
+
+void igGLFWWindow_SetCloseCallback(GLFWwindow *window) {
+  glfwSetWindowCloseCallback(window, (GLFWwindowclosefun)closeCallback);
 }
 
-void igGLFWWindow_SetShouldClose(GLFWwindow *window, int value){
-  glfwSetWindowShouldClose(window, value);
-}
+void igGLFWWindow_SetSize(GLFWwindow *window, int width, int height) { glfwSetWindowSize(window, width, height); }
 
-void igGLFWWindow_SetDropCallbackCB(GLFWwindow *wnd){
- glfwSetDropCallback(wnd, (GLFWdropfun)dropCallback);
+void igGLFWWindow_SetTitle(GLFWwindow *window, const char *title) { glfwSetWindowTitle(window, title); }
+
+void igGLFWWindow_SetSizeLimits(GLFWwindow *window, int minWidth, int minHeight, int maxWidth, int maxHeight) {
+  glfwSetWindowSizeLimits(window, minWidth, minHeight, maxWidth, maxHeight);
 }
 
 #endif

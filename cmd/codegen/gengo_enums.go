@@ -15,7 +15,7 @@ func generateGoEnums(prefix string, enums []EnumDef) []string {
 	var enumNames []string
 	for _, e := range enums {
 		originalName := e.Name
-		eName := strings.TrimSuffix(e.Name, "_")
+		eName := renameEnum(e.Name)
 
 		enumNames = append(enumNames, eName)
 

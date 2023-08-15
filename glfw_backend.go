@@ -45,7 +45,12 @@ type GLFWBackend struct {
 	afterRender          voidCallbackFunc
 	beforeDestoryContext voidCallbackFunc
 	dropCB               DropCallback
+	closeCB              func(pointer unsafe.Pointer)
 	window               uintptr
+}
+
+func NewGLFWBackend() *GLFWBackend {
+	return &GLFWBackend{}
 }
 
 func (b *GLFWBackend) handle() *C.GLFWwindow {
@@ -101,8 +106,28 @@ func (b *GLFWBackend) dropCallback() DropCallback {
 	return b.dropCB
 }
 
+func (b *GLFWBackend) closeCallback() func(wnd unsafe.Pointer) {
+	return b.closeCB
+}
+
 func (b *GLFWBackend) SetWindowPos(x, y int) {
 	C.igGLFWWindow_SetWindowPos(b.handle(), C.int(x), C.int(y))
+}
+
+func (b *GLFWBackend) GetWindowPos() (x, y int32) {
+	xArg, xFin := wrapNumberPtr[C.int, int32](&x)
+	defer xFin()
+
+	yArg, yFin := wrapNumberPtr[C.int, int32](&y)
+	defer yFin()
+
+	C.igGLFWWindow_GetWindowPos(b.handle(), xArg, yArg)
+
+	return
+}
+
+func (b *GLFWBackend) SetWindowSize(width, height int) {
+	C.igGLFWWindow_SetSize(b.handle(), C.int(width), C.int(height))
 }
 
 func (b GLFWBackend) DisplaySize() (width int32, height int32) {
@@ -115,6 +140,20 @@ func (b GLFWBackend) DisplaySize() (width int32, height int32) {
 	C.igGLFWWindow_GetDisplaySize(b.handle(), widthArg, heightArg)
 
 	return
+}
+
+func (b *GLFWBackend) SetWindowTitle(title string) {
+	titleArg, titleFin := wrapString(title)
+	defer titleFin()
+
+	C.igGLFWWindow_SetTitle(b.handle(), titleArg)
+}
+
+// The minimum and maximum size of the content area of a windowed mode window.
+// To specify only a minimum size or only a maximum one, set the other pair to -1
+// e.g. SetWindowSizeLimits(640, 480, -1, -1)
+func (b *GLFWBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight int) {
+	C.igGLFWWindow_SetSizeLimits(b.handle(), C.int(minWidth), C.int(minHeight), C.int(maxWidth), C.int(maxHeight))
 }
 
 func (b GLFWBackend) SetShouldClose(value bool) {
@@ -163,4 +202,12 @@ func (b *GLFWBackend) DeleteTexture(id TextureID) {
 func (b *GLFWBackend) SetDropCallback(cbfun DropCallback) {
 	b.dropCB = cbfun
 	C.igGLFWWindow_SetDropCallbackCB(b.handle())
+}
+
+func (b *GLFWBackend) SetCloseCallback(cbfun WindowCloseCallback) {
+	b.closeCB = func(_ unsafe.Pointer) {
+		cbfun(b)
+	}
+
+	C.igGLFWWindow_SetCloseCallback(b.handle())
 }

@@ -120,7 +120,7 @@ func main() {
 		barValues = append(barValues, int64(i+1))
 	}
 
-	backend = imgui.CreateBackend()
+	backend = imgui.CreateBackend(imgui.NewGLFWBackend())
 	backend.SetAfterCreateContextHook(afterCreateContext)
 	backend.SetBeforeDestroyContextHook(beforeDestroyContext)
 
@@ -130,6 +130,10 @@ func main() {
 
 	backend.SetDropCallback(func(p []string) {
 		fmt.Printf("drop triggered: %v", p)
+	})
+
+	backend.SetCloseCallback(func(b imgui.Backend) {
+		fmt.Println("window is closing")
 	})
 
 	backend.Run(loop)
