@@ -435,7 +435,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, isEnum func(s
 			VarName: "*" + a.Name + "VecArg",
 			ArgType: fmt.Sprintf("Vector[%s]", w.ArgType),
 			// TODO: we lose pointer here \/
-			ArgDef: fmt.Sprintf(`%[5]s := *%[2]s.Data
+			ArgDef: fmt.Sprintf(`%[5]s := %[2]s.Data
 %[1]s
 %[2]sVecArg := new(C.%[3]s)
 %[2]sVecArg.Size = C.int(%[2]s.Size)
