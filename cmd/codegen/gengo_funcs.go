@@ -349,9 +349,6 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 	for i, a := range f.ArgsT {
 		g.shouldGenerate = false
 
-		if strings.Contains(f.FuncName, "SetStorage") {
-			fmt.Println("--------------------------")
-		}
 		decl, wrapper, err := getArgWrapper(
 			&a,
 			i == 0 && f.StructSetter,
@@ -423,9 +420,6 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, isEnum func(s
 			Name: dataName,
 			Type: pureType,
 		}, false, false, isEnum, structNames)
-		if a.Name == "v" {
-			fmt.Println(w.ArgType)
-		}
 
 		if err != nil {
 			return "", ArgumentWrapperData{}, fmt.Errorf("creating vector wrapper %w", err)
