@@ -349,85 +349,120 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 	for i, a := range f.ArgsT {
 		g.shouldGenerate = false
 
-		if a.Name == "type" || a.Name == "range" {
-			a.Name += "Arg"
-		}
+		decl, wrapper, err := getArgWrapper(
+			&a,
+			i == 0 && f.StructSetter,
+			f.StructGetter && g.structNames[a.Type],
+			g.isEnum,
+			g.structNames,
+		)
 
-		if i == 0 && f.StructSetter {
-			g.shouldGenerate = true
-			continue
-		}
-
-		if f.StructGetter && g.structNames[a.Type] {
-			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(a.Type)))
-			argWrappers = append(argWrappers, ArgumentWrapperData{
-				ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.handle()", a.Name),
-				VarName:   fmt.Sprintf("%sArg", a.Name),
-				Finalizer: fmt.Sprintf("%sFin()", a.Name),
-			})
-
-			g.shouldGenerate = true
-
-			continue
-		}
-
-		if v, err := argWrapper(a.Type); err == nil {
-			arg := v(a)
-			argWrappers = append(argWrappers, arg)
-
-			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(arg.ArgType)))
-
-			g.shouldGenerate = true
-			continue
-		}
-
-		if goEnumName := a.Type; g.isEnum(goEnumName) {
-			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(goEnumName)))
-			argWrappers = append(argWrappers, ArgumentWrapperData{
-				VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
-			})
-
-			g.shouldGenerate = true
-			continue
-		}
-
-		pureType := strings.TrimPrefix(a.Type, "const ")
-		isPointer := false
-		if strings.HasSuffix(a.Type, "*") {
-			pureType = strings.TrimSuffix(pureType, "*")
-			isPointer = true
-		}
-
-		if g.structNames[pureType] {
-			args = append(args, fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType)))
-			w := ArgumentWrapperData{
-				ArgType:   renameGoIdentifier(pureType),
-				VarName:   fmt.Sprintf("%sArg", a.Name),
-				Finalizer: fmt.Sprintf("%sFin()", a.Name),
-			}
-
-			fn := ""
-			if isPointer {
-				fn = "handle"
-			} else {
-				fn = "c"
-			}
-
-			w.ArgDef = fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.%[2]s()", a.Name, fn)
-
-			argWrappers = append(argWrappers, w)
-
-			g.shouldGenerate = true
-			continue
-		}
-
-		if !g.shouldGenerate {
+		if err != nil {
 			glg.Debugf("Unknown argument type \"%s\" in function %s", a.Type, f.FuncName)
 			break
+		}
+
+		g.shouldGenerate = true
+		if len(decl) > 0 {
+			args = append(args, decl)
+			argWrappers = append(argWrappers, wrapper)
 		}
 	}
 
 	return args, argWrappers
+}
+
+// TODO: don't pass isEnum func here (dirty workaround)
+func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, isEnum func(string) bool, structNames map[string]bool) (argDeclaration string, data ArgumentWrapperData, err error) {
+	if a.Name == "type" || a.Name == "range" {
+		a.Name += "Arg"
+	}
+
+	if makeFirstArgReceiver {
+		return "", ArgumentWrapperData{}, nil
+	}
+
+	if isGetter {
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(a.Type))
+		data = ArgumentWrapperData{
+			ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.handle()", a.Name),
+			VarName:   fmt.Sprintf("%sArg", a.Name),
+			Finalizer: fmt.Sprintf("%sFin()", a.Name),
+		}
+
+		return
+	}
+
+	if v, err := argWrapper(a.Type); err == nil {
+		arg := v(*a)
+		data = arg
+
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(arg.ArgType))
+
+		return argDeclaration, data, nil
+	}
+
+	if goEnumName := a.Type; isEnum(goEnumName) {
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(goEnumName))
+		data = ArgumentWrapperData{
+			VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
+		}
+
+		return
+	}
+
+	//if strings.HasPrefix(a.Type, "ImVector_") && !strings.HasSuffix(a.Type, "*") {
+	//	pureType := strings.TrimPrefix(a.Type, "ImVector_")
+	//	_, w, err := getArgWrapper(&ArgDef{
+	//		Name: a.Name,
+	//		Type: pureType,
+	//	}, false, isEnum)
+	//
+	//	if err != nil {
+	//		return "", ArgumentWrapperData{}, fmt.Errorf("creating vector wrapper %w", err)
+	//	}
+	//
+	//	vecData := vectorW(pureType)(*a)
+	//
+	//	argDeclaration = fmt.Sprintf("%s %s", a.Name, vecData.ArgType)
+	//
+	//	data = ArgumentWrapperData{
+	//		VarName: fmt.Sprintf(""),
+	//	}
+	//
+	//	return
+	//}
+
+	pureType := strings.TrimPrefix(a.Type, "const ")
+	isPointer := false
+	if strings.HasSuffix(a.Type, "*") {
+		pureType = strings.TrimSuffix(pureType, "*")
+		isPointer = true
+	}
+
+	if structNames[pureType] {
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType))
+		w := ArgumentWrapperData{
+			ArgType:   renameGoIdentifier(pureType),
+			VarName:   fmt.Sprintf("%sArg", a.Name),
+			Finalizer: fmt.Sprintf("%sFin()", a.Name),
+		}
+
+		fn := ""
+		if isPointer {
+			fn = "handle"
+		} else {
+			fn = "c"
+		}
+
+		w.ArgDef = fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.%[2]s()", a.Name, fn)
+
+		data = w
+
+		return
+	}
+
+	return "", ArgumentWrapperData{}, fmt.Errorf("unknown argument type \"%s\"", a.Type)
 }
 
 // Generate function body
