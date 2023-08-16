@@ -405,33 +405,40 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, isEnum func(s
 	if goEnumName := a.Type; isEnum(goEnumName) {
 		argDeclaration = fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(goEnumName))
 		data = ArgumentWrapperData{
+			ArgType: renameEnum(a.Type),
 			VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
 		}
 
 		return
 	}
 
-	//if strings.HasPrefix(a.Type, "ImVector_") && !strings.HasSuffix(a.Type, "*") {
-	//	pureType := strings.TrimPrefix(a.Type, "ImVector_")
-	//	_, w, err := getArgWrapper(&ArgDef{
-	//		Name: a.Name,
-	//		Type: pureType,
-	//	}, false, isEnum)
-	//
-	//	if err != nil {
-	//		return "", ArgumentWrapperData{}, fmt.Errorf("creating vector wrapper %w", err)
-	//	}
-	//
-	//	vecData := vectorW(pureType)(*a)
-	//
-	//	argDeclaration = fmt.Sprintf("%s %s", a.Name, vecData.ArgType)
-	//
-	//	data = ArgumentWrapperData{
-	//		VarName: fmt.Sprintf(""),
-	//	}
-	//
-	//	return
-	//}
+	if strings.HasPrefix(a.Type, "ImVector_") && !strings.HasSuffix(a.Type, "*") {
+		pureType := strings.TrimPrefix(a.Type, "ImVector_")
+		dataName := a.Name + "Data"
+		_, w, err := getArgWrapper(&ArgDef{
+			Name: dataName,
+			Type: pureType,
+		}, false, false, isEnum, structNames)
+
+		if err != nil {
+			return "", ArgumentWrapperData{}, fmt.Errorf("creating vector wrapper %w", err)
+		}
+
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, fmt.Sprintf("Vector[%s]", w.ArgType))
+
+		data = ArgumentWrapperData{
+			VarName: a.Name + "Arg",
+			ArgType: fmt.Sprintf("Vector[%s]", w.ArgType),
+			ArgDef: fmt.Sprintf(`%[1]s
+%[2]sArg := new(C.%[3]s)
+%[2]sArg.Size = %[2]s.Size
+%[2]sArg.Capacity = %[2]s.Capacity
+%[2]sArg.Data = %[4]s
+`, w.ArgDef, a.Name, a.Type, w.VarName),
+		}
+
+		return argDeclaration, data, nil
+	}
 
 	pureType := strings.TrimPrefix(a.Type, "const ")
 	isPointer := false
