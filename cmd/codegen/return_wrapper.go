@@ -13,6 +13,7 @@ func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 		"bool":                     {"bool", "return %s == C.bool(true)"},
 		"char":                     simpleR("rune"),
 		"unsigned char":            simpleR("uint"),
+		"unsigned char*":           {"(*uint)", "return (*uint)(unsafe.Pointer(%s))"}, // NOTE: This should work but I'm not 100% sure
 		"char*":                    {"string", "return C.GoString(%s)"},
 		"const char*":              {"string", "return C.GoString(%s)"},
 		"const ImWchar*":           simpleR("(*Wchar)"),
@@ -22,6 +23,7 @@ func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 		"double":                   simpleR("float64"),
 		"int":                      simpleR("int32"),
 		"unsigned int":             simpleR("uint32"),
+		"unsigned int*":            simplePtrR("*uint32"),
 		"short":                    simpleR("int"),
 		"unsigned short":           simpleR("uint"),
 		"ImS8":                     simpleR("int"),
@@ -67,6 +69,10 @@ return out
 
 func simpleR(goType string) returnWrapper {
 	return returnWrapper{goType, fmt.Sprintf("return %s(%s)", goType, "%s")}
+}
+
+func simplePtrR(goType string) returnWrapper {
+	return returnWrapper{goType, fmt.Sprintf("return (%s)(%s)", goType, "%s")}
 }
 
 func wrappableR(goType string) returnWrapper {

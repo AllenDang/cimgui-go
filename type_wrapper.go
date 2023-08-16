@@ -33,8 +33,8 @@ func WrapBool(goValue *bool) (wrapped *C.bool, finisher func()) {
 // It could be anything that you can convert to that type (e.g. C.int is a Number,
 // because it can be directly converted to int)
 type Number interface {
-	~int8 | ~int16 | ~int32 | ~int64 |
-		~uint8 | ~uint16 | ~uint32 | ~uint64 |
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 |
 		~float32 | ~float64
 }
 
