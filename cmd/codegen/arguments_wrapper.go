@@ -216,6 +216,16 @@ func simplePtrW(goType, cType string) argumentWrapper {
 	}
 }
 
+func vectorW(baseGoType string) argumentWrapper {
+	return func(arg ArgDef) ArgumentWrapperData {
+		return ArgumentWrapperData{
+			ArgType: fmt.Sprintf("Vector[%s]", baseGoType),
+			ArgDef:  fmt.Sprintf(`%[1]sArg := newVectorFromC(%[1]s.Size, %[1]s.Capacity, new%[2]sFromC(%[1]s.Data))`, arg.Name, baseGoType),
+			VarName: fmt.Sprintf("%sArg", arg.Name),
+		}
+	}
+}
+
 // C.int*, C.int[] as well as C.int[2] -> [2]*int32
 func simplePtrArrayW(size int, cArrayType, goArrayType string) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
