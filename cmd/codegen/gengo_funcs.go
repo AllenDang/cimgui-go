@@ -349,6 +349,9 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 	for i, a := range f.ArgsT {
 		g.shouldGenerate = false
 
+		if strings.Contains(f.FuncName, "SetStorage") {
+			fmt.Println("--------------------------")
+		}
 		decl, wrapper, err := getArgWrapper(
 			&a,
 			i == 0 && f.StructSetter,
@@ -412,30 +415,37 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, isEnum func(s
 		return
 	}
 
-	if strings.HasPrefix(a.Type, "ImVector_") && !strings.HasSuffix(a.Type, "*") {
-		pureType := strings.TrimPrefix(a.Type, "ImVector_")
+	if strings.HasPrefix(a.Type, "ImVector_") &&
+		!(strings.HasSuffix(a.Type, "*") || strings.HasSuffix(a.Type, "]")) {
+		pureType := strings.TrimPrefix(a.Type, "ImVector_") + "*"
 		dataName := a.Name + "Data"
 		_, w, err := getArgWrapper(&ArgDef{
 			Name: dataName,
 			Type: pureType,
 		}, false, false, isEnum, structNames)
+		if a.Name == "v" {
+			fmt.Println(w.ArgType)
+		}
 
 		if err != nil {
 			return "", ArgumentWrapperData{}, fmt.Errorf("creating vector wrapper %w", err)
 		}
 
-		argDeclaration = fmt.Sprintf("%s %s", a.Name, fmt.Sprintf("Vector[%s]", w.ArgType))
-
 		data = ArgumentWrapperData{
-			VarName: a.Name + "Arg",
+			VarName: "*" + a.Name + "VecArg",
 			ArgType: fmt.Sprintf("Vector[%s]", w.ArgType),
-			ArgDef: fmt.Sprintf(`%[1]s
-%[2]sArg := new(C.%[3]s)
-%[2]sArg.Size = %[2]s.Size
-%[2]sArg.Capacity = %[2]s.Capacity
-%[2]sArg.Data = %[4]s
-`, w.ArgDef, a.Name, a.Type, w.VarName),
+			// TODO: we lose pointer here \/
+			ArgDef: fmt.Sprintf(`%[5]s := *%[2]s.Data
+%[1]s
+%[2]sVecArg := new(C.%[3]s)
+%[2]sVecArg.Size = C.int(%[2]s.Size)
+%[2]sVecArg.Capacity = C.int(%[2]s.Capacity)
+%[2]sVecArg.Data = %[4]s
+`, w.ArgDef, a.Name, a.Type, w.VarName, dataName),
+			Finalizer: w.Finalizer,
 		}
+
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, data.ArgType)
 
 		return argDeclaration, data, nil
 	}
