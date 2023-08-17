@@ -13444,6 +13444,21 @@ func (self PlotAnnotation) Clamp() bool {
 	return C.wrap_ImPlotAnnotation_GetClamp(selfArg) == C.bool(true)
 }
 
+func (self PlotAnnotationCollection) SetAnnotations(v Vector[PlotAnnotation]) {
+	vData := v.Data
+	vDataArg, vDataFin := vData.handle()
+	vVecArg := new(C.ImVector_ImPlotAnnotation)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotAnnotationCollection_SetAnnotations(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
 func (self PlotAnnotationCollection) SetTextBuffer(v TextBuffer) {
 	vArg, vFin := v.c()
 
@@ -14149,6 +14164,87 @@ func (self PlotAxis) Held() bool {
 	return C.wrap_ImPlotAxis_GetHeld(selfArg) == C.bool(true)
 }
 
+func (self PlotColormapData) SetKeyCounts(v Vector[*int32]) {
+	vData := v.Data
+	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
+	vVecArg := new(C.ImVector_int)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotColormapData_SetKeyCounts(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
+func (self PlotColormapData) SetKeyOffsets(v Vector[*int32]) {
+	vData := v.Data
+	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
+	vVecArg := new(C.ImVector_int)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotColormapData_SetKeyOffsets(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
+func (self PlotColormapData) SetTables(v Vector[*[]uint32]) {
+	vData := v.Data
+	vDataArg := make([]C.ImU32, len(*vData))
+	for i, vDataV := range *vData {
+		vDataArg[i] = C.ImU32(vDataV)
+	}
+
+	vVecArg := new(C.ImVector_ImU32)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = (*C.ImU32)(&vDataArg[0])
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotColormapData_SetTables(selfArg, *vVecArg)
+
+	for i, vDataV := range vDataArg {
+		(*vData)[i] = uint32(vDataV)
+	}
+}
+
+func (self PlotColormapData) SetTableSizes(v Vector[*int32]) {
+	vData := v.Data
+	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
+	vVecArg := new(C.ImVector_int)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotColormapData_SetTableSizes(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
+func (self PlotColormapData) SetTableOffsets(v Vector[*int32]) {
+	vData := v.Data
+	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
+	vVecArg := new(C.ImVector_int)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotColormapData_SetTableOffsets(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
 func (self PlotColormapData) SetText(v TextBuffer) {
 	vArg, vFin := v.c()
 
@@ -14168,6 +14264,36 @@ func (self PlotColormapData) Text() TextBuffer {
 
 	result := C.wrap_ImPlotColormapData_GetText(selfArg)
 	return *newTextBufferFromC(&result)
+}
+
+func (self PlotColormapData) SetTextOffsets(v Vector[*int32]) {
+	vData := v.Data
+	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
+	vVecArg := new(C.ImVector_int)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotColormapData_SetTextOffsets(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
+func (self PlotColormapData) SetQuals(v Vector[*bool]) {
+	vData := v.Data
+	vDataArg, vDataFin := WrapBool(vData)
+	vVecArg := new(C.ImVector_bool)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotColormapData_SetQuals(selfArg, *vVecArg)
+
+	vDataFin()
 }
 
 func (self PlotColormapData) SetMap(v Storage) {
@@ -14400,6 +14526,36 @@ func (self PlotContext) Style() PlotStyle {
 	return *newPlotStyleFromC(&result)
 }
 
+func (self PlotContext) SetColorModifiers(v Vector[ColorMod]) {
+	vData := v.Data
+	vDataArg, vDataFin := vData.handle()
+	vVecArg := new(C.ImVector_ImGuiColorMod)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotContext_SetColorModifiers(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
+func (self PlotContext) SetStyleModifiers(v Vector[StyleMod]) {
+	vData := v.Data
+	vDataArg, vDataFin := vData.handle()
+	vVecArg := new(C.ImVector_ImGuiStyleMod)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotContext_SetStyleModifiers(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
 func (self PlotContext) SetColormapData(v PlotColormapData) {
 	vArg, vFin := v.c()
 
@@ -14419,6 +14575,51 @@ func (self PlotContext) ColormapData() PlotColormapData {
 
 	result := C.wrap_ImPlotContext_GetColormapData(selfArg)
 	return *newPlotColormapDataFromC(&result)
+}
+
+func (self PlotContext) SetTempDouble1(v Vector[*float64]) {
+	vData := v.Data
+	vDataArg, vDataFin := WrapNumberPtr[C.double, float64](vData)
+	vVecArg := new(C.ImVector_double)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotContext_SetTempDouble1(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
+func (self PlotContext) SetTempDouble2(v Vector[*float64]) {
+	vData := v.Data
+	vDataArg, vDataFin := WrapNumberPtr[C.double, float64](vData)
+	vVecArg := new(C.ImVector_double)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotContext_SetTempDouble2(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
+func (self PlotContext) SetTempInt1(v Vector[*int32]) {
+	vData := v.Data
+	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
+	vVecArg := new(C.ImVector_int)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotContext_SetTempInt1(selfArg, *vVecArg)
+
+	vDataFin()
 }
 
 func (self PlotContext) SetDigitalPlotItemCnt(v int32) {
@@ -15061,6 +15262,21 @@ func (self PlotLegend) PreviousLocation() PlotLocation {
 		selfFin()
 	}()
 	return PlotLocation(C.wrap_ImPlotLegend_GetPreviousLocation(selfArg))
+}
+
+func (self PlotLegend) SetIndices(v Vector[*int32]) {
+	vData := v.Data
+	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
+	vVecArg := new(C.ImVector_int)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotLegend_SetIndices(selfArg, *vVecArg)
+
+	vDataFin()
 }
 
 func (self PlotLegend) SetLabels(v TextBuffer) {
@@ -16524,6 +16740,96 @@ func (self PlotSubplot) CellSize() Vec2 {
 	return *(&Vec2{}).fromC(C.wrap_ImPlotSubplot_GetCellSize(selfArg))
 }
 
+func (self PlotSubplot) SetRowAlignmentData(v Vector[PlotAlignmentData]) {
+	vData := v.Data
+	vDataArg, vDataFin := vData.handle()
+	vVecArg := new(C.ImVector_ImPlotAlignmentData)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotSubplot_SetRowAlignmentData(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
+func (self PlotSubplot) SetColAlignmentData(v Vector[PlotAlignmentData]) {
+	vData := v.Data
+	vDataArg, vDataFin := vData.handle()
+	vVecArg := new(C.ImVector_ImPlotAlignmentData)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotSubplot_SetColAlignmentData(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
+func (self PlotSubplot) SetRowRatios(v Vector[*float32]) {
+	vData := v.Data
+	vDataArg, vDataFin := WrapNumberPtr[C.float, float32](vData)
+	vVecArg := new(C.ImVector_float)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotSubplot_SetRowRatios(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
+func (self PlotSubplot) SetColRatios(v Vector[*float32]) {
+	vData := v.Data
+	vDataArg, vDataFin := WrapNumberPtr[C.float, float32](vData)
+	vVecArg := new(C.ImVector_float)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotSubplot_SetColRatios(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
+func (self PlotSubplot) SetRowLinkData(v Vector[PlotRange]) {
+	vData := v.Data
+	vDataArg, vDataFin := vData.handle()
+	vVecArg := new(C.ImVector_ImPlotRange)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotSubplot_SetRowLinkData(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
+func (self PlotSubplot) SetColLinkData(v Vector[PlotRange]) {
+	vData := v.Data
+	vDataArg, vDataFin := vData.handle()
+	vVecArg := new(C.ImVector_ImPlotRange)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotSubplot_SetColLinkData(selfArg, *vVecArg)
+
+	vDataFin()
+}
+
 func (self PlotSubplot) SetFrameHovered(v bool) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -16627,6 +16933,21 @@ func (self PlotTag) TextOffset() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImPlotTag_GetTextOffset(selfArg))
+}
+
+func (self PlotTagCollection) SetTags(v Vector[PlotTag]) {
+	vData := v.Data
+	vDataArg, vDataFin := vData.handle()
+	vVecArg := new(C.ImVector_ImPlotTag)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotTagCollection_SetTags(selfArg, *vVecArg)
+
+	vDataFin()
 }
 
 func (self PlotTagCollection) SetTextBuffer(v TextBuffer) {
@@ -16783,6 +17104,21 @@ func (self PlotTick) Idx() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImPlotTick_GetIdx(selfArg))
+}
+
+func (self PlotTicker) SetTicks(v Vector[PlotTick]) {
+	vData := v.Data
+	vDataArg, vDataFin := vData.handle()
+	vVecArg := new(C.ImVector_ImPlotTick)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotTicker_SetTicks(selfArg, *vVecArg)
+
+	vDataFin()
 }
 
 func (self PlotTicker) SetTextBuffer(v TextBuffer) {

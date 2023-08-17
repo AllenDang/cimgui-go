@@ -208,6 +208,16 @@ func (p PlotTime) toC() C.ImPlotTime {
 	return C.ImPlotTime{S: C.xlong(p.S), Us: C.int(p.FieldUs)}
 }
 
+type Vector[T any] struct {
+	Size     int
+	Capacity int
+	Data     T
+}
+
+func newVectorFromC[T any](size, capacity int, data T) Vector[T] {
+	return Vector[T]{Size: size, Capacity: capacity, Data: data}
+}
+
 // wrappableType represents a GO type that can be converted into a C value
 // and back - into a GO value.
 // CTYPE represents the equivalent C type of self.
