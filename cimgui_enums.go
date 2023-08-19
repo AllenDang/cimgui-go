@@ -137,8 +137,8 @@ const (
 	ButtonFlagsRepeat = 1024
 	// allow interactions even if a child window is overlapping
 	ButtonFlagsFlattenChildren = 2048
-	// require previous frame HoveredId to either match id or be null before being usable, use along with SetItemAllowOverlap()
-	ButtonFlagsAllowItemOverlap = 4096
+	// require previous frame HoveredId to either match id or be null before being usable.
+	ButtonFlagsAllowOverlap = 4096
 	// disable automatically closing parent popup on press // [UNUSED]
 	ButtonFlagsDontClosePopups = 8192
 	// vertically align button to match text baseline - ButtonEx() only // FIXME: Should be removed and handled by SmallButton(), not possible currently because of DC.CursorPosPrevLine
@@ -708,6 +708,18 @@ const (
 	FocusedFlagsRootAndChildWindows = 3
 )
 
+// Extend ImGuiHoveredFlags_
+// original name: ImGuiHoveredFlagsPrivate_
+type HoveredFlagsPrivate int
+
+const (
+	HoveredFlagsDelayMask = 245760
+
+	HoveredFlagsAllowedMaskForIsWindowHovered = 12479
+
+	HoveredFlagsAllowedMaskForIsItemHovered = 262048
+)
+
 // Flags for ImGui::IsItemHovered(), ImGui::IsWindowHovered()
 // Note: if you are trying to check whether your mouse should be dispatched to Dear ImGui or to your app, you should use 'io.WantCaptureMouse' instead! Please read the FAQ!
 // Note: windows with the ImGuiWindowFlags_NoInputs flag are ignored by IsWindowHovered() calls.
@@ -731,22 +743,32 @@ const (
 	HoveredFlagsAllowWhenBlockedByPopup = 32
 	// Return true even if an active item is blocking access to this item/window. Useful for Drag and Drop patterns.
 	HoveredFlagsAllowWhenBlockedByActiveItem = 128
-	// IsItemHovered() only: Return true even if the position is obstructed or overlapped by another window
-	HoveredFlagsAllowWhenOverlapped = 256
+	// IsItemHovered() only: Return true even if the item uses AllowOverlap mode and is overlapped by another hoverable item.
+	HoveredFlagsAllowWhenOverlappedByItem = 256
+	// IsItemHovered() only: Return true even if the position is obstructed or overlapped by another window.
+	HoveredFlagsAllowWhenOverlappedByWindow = 512
 	// IsItemHovered() only: Return true even if the item is disabled
-	HoveredFlagsAllowWhenDisabled = 512
-	// Disable using gamepad/keyboard navigation state when active, always query mouse.
-	HoveredFlagsNoNavOverride = 1024
+	HoveredFlagsAllowWhenDisabled = 1024
+	// IsItemHovered() only: Disable using gamepad/keyboard navigation state when active, always query mouse
+	HoveredFlagsNoNavOverride = 2048
 
-	HoveredFlagsRectOnly = 416
+	HoveredFlagsAllowWhenOverlapped = 768
+
+	HoveredFlagsRectOnly = 928
 
 	HoveredFlagsRootAndChildWindows = 3
-	// Return true after io.HoverDelayNormal elapsed (~0.30 sec)
-	HoveredFlagsDelayNormal = 2048
-	// Return true after io.HoverDelayShort elapsed (~0.10 sec)
-	HoveredFlagsDelayShort = 4096
-	// Disable shared delay system where moving from one item to the next keeps the previous timer for a short time (standard for tooltips with long delays)
-	HoveredFlagsNoSharedDelay = 8192
+	// Shortcut for standard flags when using IsItemHovered() + SetTooltip() sequence.
+	HoveredFlagsForTooltip = 4096
+	// Require mouse to be stationary for style.HoverStationaryDelay (~0.15 sec) _at least one time_. After this, can move on same item/window. Using the stationary test tends to reduces the need for a long delay.
+	HoveredFlagsStationary = 8192
+	// IsItemHovered() only: Return true immediately (default). As this is the default you generally ignore this.
+	HoveredFlagsDelayNone = 16384
+	// IsItemHovered() only: Return true after style.HoverDelayShort elapsed (~0.15 sec) (shared between items) + requires mouse to be stationary for style.HoverStationaryDelay (once per item).
+	HoveredFlagsDelayShort = 32768
+	// IsItemHovered() only: Return true after style.HoverDelayNormal elapsed (~0.40 sec) (shared between items) + requires mouse to be stationary for style.HoverStationaryDelay (once per item).
+	HoveredFlagsDelayNormal = 65536
+	// IsItemHovered() only: Disable shared delay system where moving from one item to the next keeps the previous timer for a short time (standard for tooltips with long delays)
+	HoveredFlagsNoSharedDelay = 131072
 )
 
 // [Internal] Key ranges
@@ -938,6 +960,8 @@ const (
 	ItemFlagsReadOnly = 128
 	// false     // Disable hoverable check in ItemHoverable()
 	ItemFlagsNoWindowHoverableCheck = 256
+	// false     // Allow being overlapped by another widget. Not-hovered to Hovered transition deferred by a frame.
+	ItemFlagsAllowOverlap = 512
 	// false     // [WIP] Auto-activate input mode when tab focused. Currently only used and supported by a few items before it becomes a generic feature.
 	ItemFlagsInputable = 1024
 )
@@ -1305,23 +1329,25 @@ const (
 type LocKey int
 
 const (
-	LocKeyTableSizeOne = 0
+	LocKeyVersionStr = 0
 
-	LocKeyTableSizeAllFit = 1
+	LocKeyTableSizeOne = 1
 
-	LocKeyTableSizeAllDefault = 2
+	LocKeyTableSizeAllFit = 2
 
-	LocKeyTableResetOrder = 3
+	LocKeyTableSizeAllDefault = 3
 
-	LocKeyWindowingMainMenuBar = 4
+	LocKeyTableResetOrder = 4
 
-	LocKeyWindowingPopup = 5
+	LocKeyWindowingMainMenuBar = 5
 
-	LocKeyWindowingUntitled = 6
+	LocKeyWindowingPopup = 6
 
-	LocKeyDockingHideTabBar = 7
+	LocKeyWindowingUntitled = 7
 
-	LocKeyCOUNT = 8
+	LocKeyDockingHideTabBar = 8
+
+	LocKeyCOUNT = 9
 )
 
 // original name: ImGuiLogType
@@ -1483,6 +1509,8 @@ const (
 	NavMoveFlagsWrapX = 4
 	// This is not super useful but provided for completeness
 	NavMoveFlagsWrapY = 8
+
+	NavMoveFlagsWrapMask = 15
 	// Allow scoring and considering the current NavId as a move target candidate. This is used when the move source is offset (e.g. pressing PageDown actually needs to send a Up move request, if we are pressing PageDown from the bottom-most item we need to stay in place)
 	NavMoveFlagsAllowCurrentNavId = 16
 	// Store alternate result in NavMoveResultLocalVisible that only comprise elements that are already fully visible (used by PageUp/PageDown)
@@ -1493,14 +1521,18 @@ const (
 	NavMoveFlagsForwarded = 128
 	// Dummy scoring for debug purpose, don't apply result
 	NavMoveFlagsDebugNoResult = 256
-
+	// Requests from focus API can land/focus/activate items even if they are marked with _NoTabStop (see NavProcessItemForTabbingRequest() for details)
 	NavMoveFlagsFocusApi = 512
 	// == Focus + Activate if item is Inputable + DontChangeNavHighlight
-	NavMoveFlagsTabbing = 1024
-
-	NavMoveFlagsActivate = 2048
+	NavMoveFlagsIsTabbing = 1024
+	// Identify a PageDown/PageUp request.
+	NavMoveFlagsIsPageMove = 2048
+	// Activate/select target item.
+	NavMoveFlagsActivate = 4096
+	// Don't trigger selection by not setting g.NavJustMovedTo
+	NavMoveFlagsNoSelect = 8192
 	// Do not alter the visible state of keyboard vs mouse nav highlight
-	NavMoveFlagsDontSetNavHighlight = 4096
+	NavMoveFlagsNoSetNavHighlight = 16384
 )
 
 // original name: ImGuiNextItemDataFlags_
@@ -1680,7 +1712,7 @@ const (
 	// Cannot be selected, display grayed out text
 	SelectableFlagsDisabled = 8
 	// (WIP) Hit testing to allow subsequent widgets to overlap this one
-	SelectableFlagsAllowItemOverlap = 16
+	SelectableFlagsAllowOverlap = 16
 )
 
 // original name: ImGuiSeparatorFlags_
@@ -1692,7 +1724,7 @@ const (
 	SeparatorFlagsHorizontal = 1
 
 	SeparatorFlagsVertical = 2
-
+	// Make separator cover all columns of a legacy Columns() set.
 	SeparatorFlagsSpanAllColumns = 4
 )
 
@@ -1807,8 +1839,10 @@ const (
 	StyleVarSeparatorTextAlign = 26
 	// ImVec2    SeparatorTextPadding
 	StyleVarSeparatorTextPadding = 27
+	// float     DockingSeparatorSize
+	StyleVarDockingSeparatorSize = 28
 
-	StyleVarCOUNT = 28
+	StyleVarCOUNT = 29
 )
 
 // Extend ImGuiTabBarFlags_
@@ -2099,8 +2133,8 @@ type TooltipFlags int
 
 const (
 	TooltipFlagsNone = 0
-	// Override will clear/ignore previously submitted tooltip (defaults to append)
-	TooltipFlagsOverridePreviousTooltip = 1
+	// Clear/ignore previously submitted tooltip (defaults to append)
+	TooltipFlagsOverridePrevious = 2
 )
 
 // Extend ImGuiTreeNodeFlags_
@@ -2109,6 +2143,8 @@ type TreeNodeFlagsPrivate int
 
 const (
 	TreeNodeFlagsClipLabelForTrailingButton = 1048576
+	// (FIXME-WIP) Turn Down arrow into an Up arrow, but reversed trees (#6517)
+	TreeNodeFlagsUpsideDownArrow = 2097152
 )
 
 // Flags for ImGui::TreeNodeEx(), ImGui::CollapsingHeader*()
@@ -2122,7 +2158,7 @@ const (
 	// Draw frame with background (e.g. for CollapsingHeader)
 	TreeNodeFlagsFramed = 2
 	// Hit testing to allow subsequent widgets to overlap this one
-	TreeNodeFlagsAllowItemOverlap = 4
+	TreeNodeFlagsAllowOverlap = 4
 	// Don't do a TreePush() when open (e.g. for CollapsingHeader) = no extra indent nor pushing on ID stack
 	TreeNodeFlagsNoTreePushOnOpen = 8
 	// Don't automatically and temporarily open node when Logging is active (by default logging will automatically open tree nodes)

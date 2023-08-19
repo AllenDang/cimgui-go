@@ -32,6 +32,7 @@ extern void wrap_igRenderTextClippedV(const ImVec2 pos_min,const ImVec2 pos_max,
 extern void wrap_igRenderTextClippedExV(ImDrawList* draw_list,const ImVec2 pos_min,const ImVec2 pos_max,const char* text,const ImVec2* text_size_if_known,const ImVec2 align,const ImRect* clip_rect);
 extern void wrap_igRenderTextEllipsis(ImDrawList* draw_list,const ImVec2 pos_min,const ImVec2 pos_max,float clip_max_x,float ellipsis_max_x,const char* text,const ImVec2* text_size_if_known);
 extern void wrap_igRenderTextWrapped(ImVec2 pos,const char* text,float wrap_width);
+extern void wrap_igSetItemTooltip(const char* fmt);
 extern void wrap_igSetTooltip(const char* fmt);
 extern void wrap_igText(const char* fmt);
 extern void wrap_igTextColored(const ImVec4 col,const char* fmt);
@@ -228,6 +229,7 @@ extern void wrap_igScrollToRect(ImGuiWindow* window,const ImRect rect);
 extern void wrap_igScrollToRectEx(ImVec2* pOut,ImGuiWindow* window,const ImRect rect);
 extern bool wrap_igSelectable_Bool(const char* label);
 extern bool wrap_igSelectable_BoolPtr(const char* label,bool* p_selected);
+extern void wrap_igSeparatorEx(ImGuiSeparatorFlags flags);
 extern bool wrap_igSetDragDropPayload(const char* type,const void* data,size_t sz);
 extern void wrap_igSetItemKeyOwner(ImGuiKey key);
 extern void wrap_igSetKeyOwner(ImGuiKey key,ImGuiID owner_id);
