@@ -353,8 +353,8 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 			&a,
 			i == 0 && f.StructSetter,
 			f.StructGetter && g.structNames[a.Type],
-			g.isEnum,
 			g.structNames,
+			g.enumNames,
 		)
 
 		if err != nil {
@@ -372,8 +372,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 	return args, argWrappers
 }
 
-// TODO: don't pass isEnum func here (dirty workaround)
-func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, isEnum func(string) bool, structNames map[string]bool) (argDeclaration string, data ArgumentWrapperData, err error) {
+func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames, enumNames map[string]bool) (argDeclaration string, data ArgumentWrapperData, err error) {
 	if a.Name == "type" || a.Name == "range" {
 		a.Name += "Arg"
 	}
@@ -402,7 +401,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, isEnum func(s
 		return argDeclaration, data, nil
 	}
 
-	if goEnumName := a.Type; isEnum(goEnumName) {
+	if goEnumName := a.Type; isEnum(goEnumName, enumNames) {
 		argDeclaration = fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(goEnumName))
 		data = ArgumentWrapperData{
 			ArgType: renameEnum(a.Type),
@@ -419,7 +418,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, isEnum func(s
 		_, w, err := getArgWrapper(&ArgDef{
 			Name: dataName,
 			Type: pureType,
-		}, false, false, isEnum, structNames)
+		}, false, false, structNames, enumNames)
 
 		if err != nil {
 			return "", ArgumentWrapperData{}, fmt.Errorf("creating vector wrapper %w", err)
@@ -514,8 +513,8 @@ func (g *goFuncsGenerator) writeFinishers(shouldDefer bool, finishers []string) 
 }
 
 // isEnum returns true when given string is a valid enum type.
-func (g *goFuncsGenerator) isEnum(argType string) bool {
-	for en := range g.enumNames {
+func isEnum(argType string, enumNames map[string]bool) bool {
+	for en := range enumNames {
 		if renameEnum(argType) == en {
 			return true
 		}
