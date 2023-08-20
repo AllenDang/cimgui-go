@@ -27,6 +27,7 @@ void wrap_igRenderTextClippedV(const ImVec2 pos_min,const ImVec2 pos_max,const c
 void wrap_igRenderTextClippedExV(ImDrawList* draw_list,const ImVec2 pos_min,const ImVec2 pos_max,const char* text,const ImVec2* text_size_if_known,const ImVec2 align,const ImRect* clip_rect) { igRenderTextClippedEx(draw_list,pos_min,pos_max,text,0,text_size_if_known,align,clip_rect); }
 void wrap_igRenderTextEllipsis(ImDrawList* draw_list,const ImVec2 pos_min,const ImVec2 pos_max,float clip_max_x,float ellipsis_max_x,const char* text,const ImVec2* text_size_if_known) { igRenderTextEllipsis(draw_list,pos_min,pos_max,clip_max_x,ellipsis_max_x,text,0,text_size_if_known); }
 void wrap_igRenderTextWrapped(ImVec2 pos,const char* text,float wrap_width) { igRenderTextWrapped(pos,text,0,wrap_width); }
+void wrap_igSetItemTooltip(const char* fmt) { igSetItemTooltip(fmt); }
 void wrap_igSetTooltip(const char* fmt) { igSetTooltip(fmt); }
 void wrap_igText(const char* fmt) { igText(fmt); }
 void wrap_igTextColored(const ImVec4 col,const char* fmt) { igTextColored(col,fmt); }
@@ -223,6 +224,7 @@ void wrap_igScrollToRect(ImGuiWindow* window,const ImRect rect) { igScrollToRect
 void wrap_igScrollToRectEx(ImVec2* pOut,ImGuiWindow* window,const ImRect rect) { igScrollToRectEx(pOut,window,rect,0); }
 bool wrap_igSelectable_Bool(const char* label) { return igSelectable_Bool(label,false,0,(ImVec2){.x=0, .y=0}); }
 bool wrap_igSelectable_BoolPtr(const char* label,bool* p_selected) { return igSelectable_BoolPtr(label,p_selected,0,(ImVec2){.x=0, .y=0}); }
+void wrap_igSeparatorEx(ImGuiSeparatorFlags flags) { igSeparatorEx(flags,1.0f); }
 bool wrap_igSetDragDropPayload(const char* type,const void* data,size_t sz) { return igSetDragDropPayload(type,data,sz,0); }
 void wrap_igSetItemKeyOwner(ImGuiKey key) { igSetItemKeyOwner(key,0); }
 void wrap_igSetKeyOwner(ImGuiKey key,ImGuiID owner_id) { igSetKeyOwner(key,owner_id,0); }

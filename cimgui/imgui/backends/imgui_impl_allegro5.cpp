@@ -6,7 +6,8 @@
 //  [X] Platform: Keyboard support. Since 1.87 we are using the io.AddKeyEvent() function. Pass ImGuiKey values to all key functions e.g. ImGui::IsKeyPressed(ImGuiKey_Space). [Legacy ALLEGRO_KEY_* values will also be supported unless IMGUI_DISABLE_OBSOLETE_KEYIO is set]
 //  [X] Platform: Clipboard support (from Allegro 5.1.12)
 //  [X] Platform: Mouse cursor shape and visibility. Disable with 'io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange'.
-// Issues:
+// Missing features:
+//  [ ] Renderer: Multi-viewport support (multiple windows)..
 //  [ ] Renderer: The renderer is suboptimal as we need to convert vertices manually.
 //  [ ] Platform: Missing gamepad support.
 
@@ -47,10 +48,11 @@
 //  2018-02-06: Misc: Removed call to ImGui::Shutdown() which is not available from 1.60 WIP, user needs to call CreateContext/DestroyContext themselves.
 //  2018-02-06: Inputs: Added mapping for ImGuiKey_Space.
 
+#include "imgui.h"
+#ifndef IMGUI_DISABLE
+#include "imgui_impl_allegro5.h"
 #include <stdint.h>     // uint64_t
 #include <cstring>      // memcpy
-#include "imgui.h"
-#include "imgui_impl_allegro5.h"
 
 // Allegro
 #include <allegro5/allegro.h>
@@ -603,3 +605,7 @@ void ImGui_ImplAllegro5_NewFrame()
     // Setup mouse cursor shape
     ImGui_ImplAllegro5_UpdateMouseCursor();
 }
+
+//-----------------------------------------------------------------------------
+
+#endif // #ifndef IMGUI_DISABLE

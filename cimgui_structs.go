@@ -1518,6 +1518,7 @@ func newListClipperDataFromC(cvalue *C.ImGuiListClipperData) *ListClipperData {
 	return result
 }
 
+// Note that Max is exclusive, so perhaps should be using a Begin/End convention.
 type ListClipperRange struct {
 	FieldMIN                 int32
 	FieldMAX                 int32
@@ -1752,10 +1753,49 @@ func newNavItemDataFromC(cvalue *C.ImGuiNavItemData) *NavItemData {
 	return result
 }
 
+// Store data emitted by TreeNode() for usage by TreePop() to implement ImGuiTreeNodeFlags_NavLeftJumpsBackHere.
+// This is the minimum amount of data that we need to perform the equivalent of NavApplyItemToResult() and which we can't infer in TreePop()
+// Only stored when the node is a potential candidate for landing on a Left arrow jump.
+type NavTreeNodeData struct {
+	FieldID      ID
+	FieldINFLAGS ItemFlags
+	FieldNAVRECT Rect
+}
+
+func (self NavTreeNodeData) handle() (result *C.ImGuiNavTreeNodeData, releaseFn func()) {
+	result = new(C.ImGuiNavTreeNodeData)
+	FieldID := self.FieldID
+
+	result.ID = C.ImGuiID(FieldID)
+	FieldINFLAGS := self.FieldINFLAGS
+
+	result.InFlags = C.ImGuiItemFlags(FieldINFLAGS)
+	FieldNAVRECT := self.FieldNAVRECT
+
+	result.NavRect = FieldNAVRECT.toC()
+	releaseFn = func() {
+	}
+	return result, releaseFn
+}
+
+func (self NavTreeNodeData) c() (result C.ImGuiNavTreeNodeData, fin func()) {
+	resultPtr, finFn := self.handle()
+	return *resultPtr, finFn
+}
+
+func newNavTreeNodeDataFromC(cvalue *C.ImGuiNavTreeNodeData) *NavTreeNodeData {
+	result := new(NavTreeNodeData)
+	result.FieldID = ID(cvalue.ID)
+	result.FieldINFLAGS = ItemFlags(cvalue.InFlags)
+	result.FieldNAVRECT = *(&Rect{}).fromC(cvalue.NavRect)
+	return result
+}
+
 type NextItemData struct {
 	FieldFLAGS        NextItemDataFlags
-	FieldWIDTH        float32 // Set by SetNextItemWidth()
-	FieldFOCUSSCOPEID ID      // Set by SetNextItemMultiSelectData() (!= 0 signify value has been set, so it's an alternate version of HasSelectionData, we don't use Flags for this because they are cleared too early. This is mostly used for debugging)
+	FieldITEMFLAGS    ItemFlags // Currently only tested/used for ImGuiItemFlags_AllowOverlap.
+	FieldWIDTH        float32   // Set by SetNextItemWidth()
+	FieldFOCUSSCOPEID ID        // Set by SetNextItemMultiSelectData() (!= 0 signify value has been set, so it's an alternate version of HasSelectionData, we don't use Flags for this because they are cleared too early. This is mostly used for debugging)
 	FieldOPENCOND     Cond
 	FieldOPENVAL      bool // Set by SetNextItemOpen()
 }
@@ -1765,6 +1805,9 @@ func (self NextItemData) handle() (result *C.ImGuiNextItemData, releaseFn func()
 	FieldFLAGS := self.FieldFLAGS
 
 	result.Flags = C.ImGuiNextItemDataFlags(FieldFLAGS)
+	FieldITEMFLAGS := self.FieldITEMFLAGS
+
+	result.ItemFlags = C.ImGuiItemFlags(FieldITEMFLAGS)
 	FieldWIDTH := self.FieldWIDTH
 
 	result.Width = C.float(FieldWIDTH)
@@ -1790,6 +1833,7 @@ func (self NextItemData) c() (result C.ImGuiNextItemData, fin func()) {
 func newNextItemDataFromC(cvalue *C.ImGuiNextItemData) *NextItemData {
 	result := new(NextItemData)
 	result.FieldFLAGS = NextItemDataFlags(cvalue.Flags)
+	result.FieldITEMFLAGS = ItemFlags(cvalue.ItemFlags)
 	result.FieldWIDTH = float32(cvalue.Width)
 	result.FieldFOCUSSCOPEID = ID(cvalue.FocusScopeId)
 	result.FieldOPENCOND = Cond(cvalue.OpenCond)
@@ -2542,6 +2586,7 @@ func newTabItemFromC(cvalue *C.ImGuiTabItem) *TabItem {
 }
 
 // FIXME-TABLE: more transient data could be stored in a stacked ImGuiTableTempData: e.g. SortSpecs, incoming RowData
+// sizeof() ~ 580 bytes + heap allocs described in TableBeginInitMemory()
 type Table struct {
 	// TODO: contains unsupported fields
 	data unsafe.Pointer
@@ -2595,7 +2640,7 @@ func newTableCellDataFromC(cvalue *C.ImGuiTableCellData) *TableCellData {
 	return result
 }
 
-// [Internal] sizeof() ~ 104
+// [Internal] sizeof() ~ 112
 // We use the terminology "Enabled" to refer to a column that is not Hidden by user/api.
 // We use the terminology "Clipped" to refer to a column that is out of sight because of scrolling/clipping.
 // This is in contrast with some user-facing api such as IsItemVisible() / IsRectVisible() which use "Visible" to mean "not clipped".
@@ -2670,6 +2715,8 @@ type TableInstanceData struct {
 	FieldLASTOUTERHEIGHT    float32 // Outer height from last frame
 	FieldLASTFIRSTROWHEIGHT float32 // Height of first row from last frame (FIXME: this is used as "header height" and may be reworked)
 	FieldLASTFROZENHEIGHT   float32 // Height of frozen section from last frame
+	FieldHOVEREDROWLAST     int32   // Index of row which was hovered last frame.
+	FieldHOVEREDROWNEXT     int32   // Index of row hovered this frame, set after encountering it.
 }
 
 func (self TableInstanceData) handle() (result *C.ImGuiTableInstanceData, releaseFn func()) {
@@ -2686,6 +2733,12 @@ func (self TableInstanceData) handle() (result *C.ImGuiTableInstanceData, releas
 	FieldLASTFROZENHEIGHT := self.FieldLASTFROZENHEIGHT
 
 	result.LastFrozenHeight = C.float(FieldLASTFROZENHEIGHT)
+	FieldHOVEREDROWLAST := self.FieldHOVEREDROWLAST
+
+	result.HoveredRowLast = C.int(FieldHOVEREDROWLAST)
+	FieldHOVEREDROWNEXT := self.FieldHOVEREDROWNEXT
+
+	result.HoveredRowNext = C.int(FieldHOVEREDROWNEXT)
 	releaseFn = func() {
 	}
 	return result, releaseFn
@@ -2702,6 +2755,8 @@ func newTableInstanceDataFromC(cvalue *C.ImGuiTableInstanceData) *TableInstanceD
 	result.FieldLASTOUTERHEIGHT = float32(cvalue.LastOuterHeight)
 	result.FieldLASTFIRSTROWHEIGHT = float32(cvalue.LastFirstRowHeight)
 	result.FieldLASTFROZENHEIGHT = float32(cvalue.LastFrozenHeight)
+	result.FieldHOVEREDROWLAST = int32(cvalue.HoveredRowLast)
+	result.FieldHOVEREDROWNEXT = int32(cvalue.HoveredRowNext)
 	return result
 }
 
@@ -2784,6 +2839,7 @@ func newTableSortSpecsFromC(cvalue *C.ImGuiTableSortSpecs) *TableSortSpecs {
 // Transient data that are only needed between BeginTable() and EndTable(), those buffers are shared (1 per level of stacked table).
 // - Accessing those requires chasing an extra pointer so for very frequently used data we leave them in the main table structure.
 // - We also leave out of this structure data that tend to be particularly useful for debugging/metrics.
+// sizeof() ~ 112 bytes.
 type TableTempData struct {
 	FieldTABLEINDEX                   int32   // Index in g.Tables.Buf[] pool
 	FieldLASTTIMEACTIVE               float32 // Last timestamp this structure was used
