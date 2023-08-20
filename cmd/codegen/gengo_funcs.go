@@ -273,6 +273,46 @@ return *new%sFromC(&result)
 	return true
 }
 
+func getReturnWrapper(
+	t string,
+	structNames,
+	enumNames map[string]bool,
+) (returnWrapper, error) {
+	w, err := getReturnTypeWrapperFunc(t)
+	switch {
+	case err != nil:
+		return w, nil
+	case structNames[t]:
+		return returnWrapper{
+			returnType: renameGoIdentifier(t),
+			returnStmt: fmt.Sprintf(`
+return *new%sFromC(&%%s)
+`, renameGoIdentifier(t)),
+		}, nil
+	case isEnum(t, enumNames):
+		return returnWrapper{
+			returnType: renameEnum(t),
+			returnStmt: fmt.Sprintf("return %s(%%s)", renameEnum(t)),
+		}, nil
+	case strings.HasSuffix(t, "*") && structNames[strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const ")]:
+		return returnWrapper{
+			returnType: "*" + renameGoIdentifier(strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const ")),
+			returnStmt: fmt.Sprintf(`
+return new%sFromC(%%s)
+`, renameGoIdentifier(strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const "))),
+		}, nil
+	case strings.HasSuffix(t, "*") && isEnum(strings.TrimSuffix(t, "*"), enumNames):
+		return returnWrapper{
+			returnType: "*" + renameEnum(strings.TrimSuffix(t, "*")),
+			returnStmt: fmt.Sprintf(`
+return %s(%%s)
+`, renameEnum(strings.TrimSuffix(t, "*"))),
+		}, nil
+	default:
+		return returnWrapper{}, fmt.Errorf("unknown return type %s", t)
+	}
+}
+
 // this method is responsible for createing a function declaration statement.
 // it takes function name, list of arguments and return type and returns go statement.
 // e.g.: func (self *ImGuiType) FuncName(arg1 type1, arg2 type2) returnType {
