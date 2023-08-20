@@ -128,7 +128,7 @@ import "unsafe"
 }
 
 func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrappers []ArgumentWrapperData) (noErrors bool) {
-	var returnType, returnStmt, receiver string
+	var returnType, cfuncCall, receiver string
 	funcName := f.FuncName
 	shouldDefer := false
 
@@ -168,7 +168,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 		outArg := argWrappers[0]
 		returnType = strings.TrimPrefix(outArg.ArgType, "*")
 
-		returnStmt = fmt.Sprintf("return *%s", f.ArgsT[0].Name)
+		cfuncCall = fmt.Sprintf("*%s", f.ArgsT[0].Name)
 
 		argWrappers[0].ArgDef = fmt.Sprintf(`%s := new(%s)
 %s
@@ -185,7 +185,6 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 	case returnTypeKnown:
 		shouldDefer = true
 		returnType = rf.returnType
-		returnStmt = rf.returnStmt
 	case returnTypeEnum:
 		shouldDefer = true
 		returnType = goEnumName
@@ -218,6 +217,11 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 		return false
 	}
 
+	rw, err := getReturnWrapper(returnType, g.structNames, g.enumNames)
+	if err != nil {
+		return false
+	}
+
 	g.sb.WriteString(g.generateFuncDeclarationStmt(receiver, funcName, args, returnType, f))
 	argInvokeStmt, declarations, finishers := g.generateFuncBody(argWrappers)
 	g.sb.WriteString(strings.Join(declarations, "\n"))
@@ -246,25 +250,25 @@ C.%s(selfArg, %s)
 	}
 
 	switch returnTypeType {
-	case returnTypeNonUDT:
-		g.sb.WriteString(fmt.Sprintf("%s", returnStmt))
-	case returnTypeKnown:
-		g.sb.WriteString(fmt.Sprintf(returnStmt, fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)))
-	case returnTypeEnum:
-		g.sb.WriteString(fmt.Sprintf("return %s(C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
-	case returnTypeStructPtr:
-		g.sb.WriteString(fmt.Sprintf("return *new%sFromC(C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStruct:
 		g.sb.WriteString(fmt.Sprintf(`
 result := C.%s(%s)
-return *new%sFromC(&result)
 `,
 			f.CWrapperFuncName,
 			argInvokeStmt,
-			renameGoIdentifier(f.Ret),
 		))
+		cfuncCall = "result"
+	case returnTypeKnown:
+		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
 	case returnTypeConstructor:
-		g.sb.WriteString(fmt.Sprintf("return *new%sFromC(C.%s(%s))", renameGoIdentifier(returnType), f.CWrapperFuncName, argInvokeStmt))
+		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
+	case returnTypeStructPtr:
+		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
+	}
+
+	switch returnTypeType {
+	case returnTypeNonUDT, returnTypeKnown, returnTypeEnum, returnTypeStructPtr, returnTypeConstructor, returnTypeStruct:
+		g.sb.WriteString(fmt.Sprintf(rw.returnStmt, cfuncCall))
 	}
 
 	g.sb.WriteString("}\n\n")
@@ -280,7 +284,7 @@ func getReturnWrapper(
 ) (returnWrapper, error) {
 	w, err := getReturnTypeWrapperFunc(t)
 	switch {
-	case err != nil:
+	case err == nil:
 		return w, nil
 	case structNames[t]:
 		return returnWrapper{
