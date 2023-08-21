@@ -219,7 +219,10 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 
 	rw, err := getReturnWrapper(returnType, g.structNames, g.enumNames)
 	if err != nil {
-		return false
+		switch returnTypeType {
+		case returnTypeNonUDT, returnTypeKnown, returnTypeEnum, returnTypeStructPtr, returnTypeConstructor, returnTypeStruct:
+			return false
+		}
 	}
 
 	g.sb.WriteString(g.generateFuncDeclarationStmt(receiver, funcName, args, returnType, f))
@@ -290,7 +293,7 @@ func getReturnWrapper(
 		return returnWrapper{
 			returnType: renameGoIdentifier(t),
 			returnStmt: fmt.Sprintf(`
-return *new%sFromC(&%%s)
+return *new%sFromC(%%s)
 `, renameGoIdentifier(t)),
 		}, nil
 	case isEnum(t, enumNames):
