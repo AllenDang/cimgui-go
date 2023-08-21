@@ -221,7 +221,6 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 	if err != nil {
 		switch returnTypeType {
 		case returnTypeKnown, returnTypeEnum, returnTypeStructPtr, returnTypeConstructor, returnTypeStruct:
-			fmt.Println(returnType)
 			return false
 		}
 	}
@@ -309,6 +308,17 @@ return *new%sFromC(%%s)
 		return returnWrapper{
 			returnType: renameEnum(t),
 			returnStmt: fmt.Sprintf("return %s(%%s)", renameEnum(t)),
+		}, nil
+	case strings.HasPrefix(t, "ImVector_") &&
+		!(strings.HasSuffix(t, "*") || strings.HasSuffix(t, "]")):
+		pureType := strings.TrimPrefix(t, "ImVector_") + "*"
+		rw, err := getReturnWrapper(pureType, structNames, enumNames)
+		if err != nil {
+			return returnWrapper{}, fmt.Errorf("creating vector wrapper %w", err)
+		}
+		return returnWrapper{
+			returnType: fmt.Sprintf("Vector[%s]", rw.returnType),
+			returnStmt: fmt.Sprintf("newVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
 		}, nil
 	case strings.HasSuffix(t, "*") && structNames[strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const ")]:
 		return returnWrapper{
