@@ -134,7 +134,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 
 	// determine kind of function:
 	returnTypeType := returnTypeUnknown
-	rf, err := getReturnTypeWrapperFunc(f.Ret)
+	_, err := getReturnTypeWrapperFunc(f.Ret)
 	if err == nil {
 		returnTypeType = returnTypeKnown
 	}
@@ -184,7 +184,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 		receiver = funcParts[0]
 	case returnTypeKnown:
 		shouldDefer = true
-		returnType = rf.returnType
+		returnType = f.Ret
 	case returnTypeEnum:
 		shouldDefer = true
 		returnType = goEnumName
@@ -220,9 +220,14 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 	rw, err := getReturnWrapper(returnType, g.structNames, g.enumNames)
 	if err != nil {
 		switch returnTypeType {
-		case returnTypeNonUDT, returnTypeKnown, returnTypeEnum, returnTypeStructPtr, returnTypeConstructor, returnTypeStruct:
+		case returnTypeKnown, returnTypeEnum, returnTypeStructPtr, returnTypeConstructor, returnTypeStruct:
+			fmt.Println(returnType)
 			return false
 		}
+	}
+
+	if rw.returnType != "" {
+		returnType = rw.returnType
 	}
 
 	g.sb.WriteString(g.generateFuncDeclarationStmt(receiver, funcName, args, returnType, f))
@@ -260,17 +265,21 @@ result := C.%s(%s)
 			f.CWrapperFuncName,
 			argInvokeStmt,
 		))
-		cfuncCall = "result"
+		cfuncCall = "&result"
 	case returnTypeKnown:
 		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
 	case returnTypeConstructor:
 		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
 	case returnTypeStructPtr:
 		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
+	case returnTypeEnum:
+		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
 	}
 
 	switch returnTypeType {
-	case returnTypeNonUDT, returnTypeKnown, returnTypeEnum, returnTypeStructPtr, returnTypeConstructor, returnTypeStruct:
+	case returnTypeNonUDT:
+		g.sb.WriteString(fmt.Sprintf("return %s", cfuncCall))
+	case returnTypeKnown, returnTypeEnum, returnTypeStructPtr, returnTypeConstructor, returnTypeStruct:
 		g.sb.WriteString(fmt.Sprintf(rw.returnStmt, cfuncCall))
 	}
 
