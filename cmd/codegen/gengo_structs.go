@@ -60,7 +60,22 @@ import "unsafe"
 	return structNames
 }
 
-func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, refEnums, refStructs []string, sb *strings.Builder) (generationComplete bool) {
+func generateStruct(s StructDef, defs []StructDef, enumDefs []EnumDef, refEnums, refStructs []string, sb *strings.Builder) (generationComplete bool) {
+	structs, enums := make(map[string]bool), make(map[string]bool)
+	for _, s := range defs {
+		structs[s.Name] = true
+	}
+	for _, s := range refStructs {
+		structs[s] = true
+	}
+
+	for _, e := range enumDefs {
+		enums[e.Name] = true
+	}
+	for _, e := range refEnums {
+		enums[e] = true
+	}
+
 	generationComplete = true
 
 	type wrapper struct {
@@ -76,106 +91,32 @@ func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, refEnums, re
 
 	// Generate struct fields:
 	for i, field := range s.Members {
+		var typeName string
+
 		argDef := ArgDef{
 			Name: renameStructField(field.Name),
 			Type: field.Type,
 		}
 
-		isPtr := strings.HasSuffix(field.Type, "*")
-		isDoublePtr := strings.HasSuffix(field.Type, "**")
-		pureType := strings.TrimSuffix(field.Type, "*")
+		_, toC, toCErr := getArgWrapper(
+			&argDef,
+			false, false,
+			structs, enums,
+		)
 
-		typeName := ""
+		fromC, fromCErr := getReturnWrapper(
+			field.Type,
+			structs, enums,
+		)
 
-		// first of all check if the type isn't another stuct
-		var isOtherStruct bool
-		for _, otherS := range defs {
-			if renameGoIdentifier(otherS.Name) == renameGoIdentifier(pureType) && !shouldSkipStruct(pureType) {
-				isOtherStruct = true
-				break
-			}
-		}
-
-		for _, otherS := range refStructs {
-			if renameGoIdentifier(otherS) == renameGoIdentifier(pureType) && !shouldSkipStruct(pureType) {
-				isOtherStruct = true
-				break
-			}
-		}
-
-		// and same for enums
-		var isEnum bool
-		for _, enum := range enums {
-			if renameEnum(enum.Name) == renameEnum(pureType) {
-				isEnum = true
-				break
-			}
-		}
-
-		for _, enum := range refEnums {
-			if renameGoIdentifier(enum) == renameGoIdentifier(pureType) {
-				isEnum = true
-				break
-			}
-		}
-
-		toC, toCErr := argWrapper(field.Type)
-		fromC, fromCErr := getReturnTypeWrapperFunc(field.Type)
 		switch {
 		case toCErr == nil && fromCErr == nil:
 			wrappers[i] = wrapper{
-				toC:   toC(argDef),
+				toC:   toC,
 				fromC: fromC,
 			}
 
 			typeName = wrappers[i].toC.ArgType
-		case isOtherStruct:
-			if isDoublePtr {
-				isTODO = true
-				break
-			}
-			if isPtr {
-				wrappers[i] = wrapper{
-					fromC: returnWrapper{
-						returnType: "*" + pureType,
-						returnStmt: fmt.Sprintf("new%sFromC(%%s)", renameGoIdentifier(pureType)),
-					},
-					toC: ArgumentWrapperData{
-						ArgType:   "*" + pureType,
-						ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := %[2]s.handle()", field.Name, renameStructField(field.Name)),
-						Finalizer: fmt.Sprintf("%sFin()", field.Name),
-						VarName:   fmt.Sprintf("%sArg", field.Name),
-					},
-				}
-				typeName = "*" + renameGoIdentifier(pureType)
-			} else {
-				wrappers[i] = wrapper{
-					fromC: returnWrapper{
-						returnType: field.Type,
-						returnStmt: fmt.Sprintf("*new%sFromC(&%%s)", renameGoIdentifier(field.Type)),
-					},
-					toC: ArgumentWrapperData{
-						ArgType:   field.Type,
-						ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := %[2]s.c()", field.Name, renameStructField(field.Name)),
-						Finalizer: fmt.Sprintf("%sFin()", field.Name),
-						VarName:   fmt.Sprintf("%sArg", field.Name),
-					},
-				}
-				typeName = renameGoIdentifier(pureType)
-			}
-		case isEnum:
-			wrappers[i] = wrapper{
-				fromC: returnWrapper{
-					returnType: field.Type,
-					returnStmt: fmt.Sprintf("%s(%%s)", renameGoIdentifier(field.Type)),
-				},
-				toC: ArgumentWrapperData{
-					ArgType: field.Type,
-					VarName: fmt.Sprintf("C.%s(%s)", field.Type, renameStructField(field.Name)),
-				},
-			}
-
-			typeName = renameGoIdentifier(field.Type)
 		default:
 			isTODO = true
 		}
