@@ -790,9 +790,9 @@ func newGroupDataFromC(cvalue *C.ImGuiGroupData) *GroupData {
 	result.FieldWindowID = ID(cvalue.WindowID)
 	result.FieldBackupCursorPos = *(&Vec2{}).fromC(cvalue.BackupCursorPos)
 	result.FieldBackupCursorMaxPos = *(&Vec2{}).fromC(cvalue.BackupCursorMaxPos)
-	result.FieldBackupIndent = *newVec1FromC(&cvalue.BackupIndent)
+	result.FieldBackupIndent = *newVec1FromC(func() *C.ImVec1 { result := cvalue.BackupIndent; return &result }())
 
-	result.FieldBackupGroupOffset = *newVec1FromC(&cvalue.BackupGroupOffset)
+	result.FieldBackupGroupOffset = *newVec1FromC(func() *C.ImVec1 { result := cvalue.BackupGroupOffset; return &result }())
 
 	result.FieldBackupCurrLineSize = *(&Vec2{}).fromC(cvalue.BackupCurrLineSize)
 	result.FieldBackupCurrLineTextBaseOffset = float32(cvalue.BackupCurrLineTextBaseOffset)
@@ -2633,14 +2633,14 @@ func newTableTempDataFromC(cvalue *C.ImGuiTableTempData) *TableTempData {
 	result.FieldTableIndex = int32(cvalue.TableIndex)
 	result.FieldLastTimeActive = float32(cvalue.LastTimeActive)
 	result.FieldUserOuterSize = *(&Vec2{}).fromC(cvalue.UserOuterSize)
-	result.FieldDrawSplitter = *newDrawListSplitterFromC(&cvalue.DrawSplitter)
+	result.FieldDrawSplitter = *newDrawListSplitterFromC(func() *C.ImDrawListSplitter { result := cvalue.DrawSplitter; return &result }())
 
 	result.FieldHostBackupWorkRect = *(&Rect{}).fromC(cvalue.HostBackupWorkRect)
 	result.FieldHostBackupParentWorkRect = *(&Rect{}).fromC(cvalue.HostBackupParentWorkRect)
 	result.FieldHostBackupPrevLineSize = *(&Vec2{}).fromC(cvalue.HostBackupPrevLineSize)
 	result.FieldHostBackupCurrLineSize = *(&Vec2{}).fromC(cvalue.HostBackupCurrLineSize)
 	result.FieldHostBackupCursorMaxPos = *(&Vec2{}).fromC(cvalue.HostBackupCursorMaxPos)
-	result.FieldHostBackupColumnsOffset = *newVec1FromC(&cvalue.HostBackupColumnsOffset)
+	result.FieldHostBackupColumnsOffset = *newVec1FromC(func() *C.ImVec1 { result := cvalue.HostBackupColumnsOffset; return &result }())
 
 	result.FieldHostBackupItemWidth = float32(cvalue.HostBackupItemWidth)
 	result.FieldHostBackupItemWidthStackSize = int32(cvalue.HostBackupItemWidthStackSize)
@@ -2939,9 +2939,9 @@ func (self WindowStackData) c() (result C.ImGuiWindowStackData, fin func()) {
 func newWindowStackDataFromC(cvalue *C.ImGuiWindowStackData) *WindowStackData {
 	result := new(WindowStackData)
 	result.FieldWindow = newWindowFromC(cvalue.Window)
-	result.FieldParentLastItemDataBackup = *newLastItemDataFromC(&cvalue.ParentLastItemDataBackup)
+	result.FieldParentLastItemDataBackup = *newLastItemDataFromC(func() *C.ImGuiLastItemData { result := cvalue.ParentLastItemDataBackup; return &result }())
 
-	result.FieldStackSizesOnBegin = *newStackSizesFromC(&cvalue.StackSizesOnBegin)
+	result.FieldStackSizesOnBegin = *newStackSizesFromC(func() *C.ImGuiStackSizes { result := cvalue.StackSizesOnBegin; return &result }())
 
 	return result
 }
@@ -3086,7 +3086,7 @@ func newSTBTexteditStateFromC(cvalue *C.STB_TexteditState) *STBTexteditState {
 	result.FieldPadding2 = uint(cvalue.padding2)
 	result.FieldPadding3 = uint(cvalue.padding3)
 	result.FieldPreferred_x = float32(cvalue.preferred_x)
-	result.FieldUndostate = *newStbUndoStateFromC(&cvalue.undostate)
+	result.FieldUndostate = *newStbUndoStateFromC(func() *C.StbUndoState { result := cvalue.undostate; return &result }())
 
 	return result
 }

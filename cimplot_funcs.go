@@ -13267,7 +13267,7 @@ func (self FormatterTimeData) TimeDataGetSpec() PlotDateTimeSpec {
 	}()
 
 	result := C.wrap_Formatter_Time_Data_GetSpec(selfArg)
-	return *newPlotDateTimeSpecFromC(&result)
+	return *newPlotDateTimeSpecFromC(func() *C.ImPlotDateTimeSpec { result := result; return &result }())
 }
 
 func (self FormatterTimeData) TimeDataGetUserFormatterData() unsafe.Pointer {
@@ -13459,6 +13459,15 @@ func (self PlotAnnotationCollection) SetAnnotations(v Vector[*PlotAnnotation]) {
 	vDataFin()
 }
 
+func (self PlotAnnotationCollection) Annotations() Vector[*PlotAnnotation] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImPlotAnnotationCollection_GetAnnotations(selfArg).Size, C.wrap_ImPlotAnnotationCollection_GetAnnotations(selfArg).Capacity, newPlotAnnotationFromC(C.wrap_ImPlotAnnotationCollection_GetAnnotations(selfArg).Data))
+}
+
 func (self PlotAnnotationCollection) SetTextBuffer(v TextBuffer) {
 	vArg, vFin := v.c()
 
@@ -13477,7 +13486,7 @@ func (self PlotAnnotationCollection) TextBuffer() TextBuffer {
 	}()
 
 	result := C.wrap_ImPlotAnnotationCollection_GetTextBuffer(selfArg)
-	return *newTextBufferFromC(&result)
+	return *newTextBufferFromC(func() *C.ImGuiTextBuffer { result := result; return &result }())
 }
 
 func (self PlotAnnotationCollection) SetSize(v int32) {
@@ -13558,7 +13567,7 @@ func (self PlotAxis) Range() PlotRange {
 	}()
 
 	result := C.wrap_ImPlotAxis_GetRange(selfArg)
-	return *newPlotRangeFromC(&result)
+	return *newPlotRangeFromC(func() *C.ImPlotRange { result := result; return &result }())
 }
 
 func (self PlotAxis) SetRangeCond(v PlotCond) {
@@ -13609,7 +13618,7 @@ func (self PlotAxis) FitExtents() PlotRange {
 	}()
 
 	result := C.wrap_ImPlotAxis_GetFitExtents(selfArg)
-	return *newPlotRangeFromC(&result)
+	return *newPlotRangeFromC(func() *C.ImPlotRange { result := result; return &result }())
 }
 
 func (self PlotAxis) SetOrthoAxis(v PlotAxis) {
@@ -13649,7 +13658,7 @@ func (self PlotAxis) ConstraintRange() PlotRange {
 	}()
 
 	result := C.wrap_ImPlotAxis_GetConstraintRange(selfArg)
-	return *newPlotRangeFromC(&result)
+	return *newPlotRangeFromC(func() *C.ImPlotRange { result := result; return &result }())
 }
 
 func (self PlotAxis) SetConstraintZoom(v PlotRange) {
@@ -13670,7 +13679,7 @@ func (self PlotAxis) ConstraintZoom() PlotRange {
 	}()
 
 	result := C.wrap_ImPlotAxis_GetConstraintZoom(selfArg)
-	return *newPlotRangeFromC(&result)
+	return *newPlotRangeFromC(func() *C.ImPlotRange { result := result; return &result }())
 }
 
 func (self PlotAxis) SetTicker(v PlotTicker) {
@@ -13691,7 +13700,7 @@ func (self PlotAxis) Ticker() PlotTicker {
 	}()
 
 	result := C.wrap_ImPlotAxis_GetTicker(selfArg)
-	return *newPlotTickerFromC(&result)
+	return *newPlotTickerFromC(func() *C.ImPlotTicker { result := result; return &result }())
 }
 
 func (self PlotAxis) SetFormatterData(v unsafe.Pointer) {
@@ -14263,7 +14272,7 @@ func (self PlotColormapData) Text() TextBuffer {
 	}()
 
 	result := C.wrap_ImPlotColormapData_GetText(selfArg)
-	return *newTextBufferFromC(&result)
+	return *newTextBufferFromC(func() *C.ImGuiTextBuffer { result := result; return &result }())
 }
 
 func (self PlotColormapData) SetTextOffsets(v Vector[*int32]) {
@@ -14314,7 +14323,7 @@ func (self PlotColormapData) Map() Storage {
 	}()
 
 	result := C.wrap_ImPlotColormapData_GetMap(selfArg)
-	return *newStorageFromC(&result)
+	return *newStorageFromC(func() *C.ImGuiStorage { result := result; return &result }())
 }
 
 func (self PlotColormapData) SetCount(v int32) {
@@ -14445,7 +14454,7 @@ func (self PlotContext) CTicker() PlotTicker {
 	}()
 
 	result := C.wrap_ImPlotContext_GetCTicker(selfArg)
-	return *newPlotTickerFromC(&result)
+	return *newPlotTickerFromC(func() *C.ImPlotTicker { result := result; return &result }())
 }
 
 func (self PlotContext) SetAnnotations(v PlotAnnotationCollection) {
@@ -14466,7 +14475,7 @@ func (self PlotContext) Annotations() PlotAnnotationCollection {
 	}()
 
 	result := C.wrap_ImPlotContext_GetAnnotations(selfArg)
-	return *newPlotAnnotationCollectionFromC(&result)
+	return *newPlotAnnotationCollectionFromC(func() *C.ImPlotAnnotationCollection { result := result; return &result }())
 }
 
 func (self PlotContext) SetTags(v PlotTagCollection) {
@@ -14487,7 +14496,7 @@ func (self PlotContext) Tags() PlotTagCollection {
 	}()
 
 	result := C.wrap_ImPlotContext_GetTags(selfArg)
-	return *newPlotTagCollectionFromC(&result)
+	return *newPlotTagCollectionFromC(func() *C.ImPlotTagCollection { result := result; return &result }())
 }
 
 func (self PlotContext) SetChildWindowMade(v bool) {
@@ -14523,7 +14532,7 @@ func (self PlotContext) Style() PlotStyle {
 	}()
 
 	result := C.wrap_ImPlotContext_GetStyle(selfArg)
-	return *newPlotStyleFromC(&result)
+	return *newPlotStyleFromC(func() *C.ImPlotStyle { result := result; return &result }())
 }
 
 func (self PlotContext) SetColorModifiers(v Vector[*ColorMod]) {
@@ -14541,6 +14550,15 @@ func (self PlotContext) SetColorModifiers(v Vector[*ColorMod]) {
 	vDataFin()
 }
 
+func (self PlotContext) ColorModifiers() Vector[*ColorMod] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImPlotContext_GetColorModifiers(selfArg).Size, C.wrap_ImPlotContext_GetColorModifiers(selfArg).Capacity, newColorModFromC(C.wrap_ImPlotContext_GetColorModifiers(selfArg).Data))
+}
+
 func (self PlotContext) SetStyleModifiers(v Vector[*StyleMod]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
@@ -14554,6 +14572,15 @@ func (self PlotContext) SetStyleModifiers(v Vector[*StyleMod]) {
 	C.wrap_ImPlotContext_SetStyleModifiers(selfArg, *vVecArg)
 
 	vDataFin()
+}
+
+func (self PlotContext) StyleModifiers() Vector[*StyleMod] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImPlotContext_GetStyleModifiers(selfArg).Size, C.wrap_ImPlotContext_GetStyleModifiers(selfArg).Capacity, newStyleModFromC(C.wrap_ImPlotContext_GetStyleModifiers(selfArg).Data))
 }
 
 func (self PlotContext) SetColormapData(v PlotColormapData) {
@@ -14574,7 +14601,16 @@ func (self PlotContext) ColormapData() PlotColormapData {
 	}()
 
 	result := C.wrap_ImPlotContext_GetColormapData(selfArg)
-	return *newPlotColormapDataFromC(&result)
+	return *newPlotColormapDataFromC(func() *C.ImPlotColormapData { result := result; return &result }())
+}
+
+func (self PlotContext) ColormapModifiers() Vector[*PlotColormap] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImPlotContext_GetColormapModifiers(selfArg).Size, C.wrap_ImPlotContext_GetColormapModifiers(selfArg).Capacity, (*PlotColormap)(C.wrap_ImPlotContext_GetColormapModifiers(selfArg).Data))
 }
 
 func (self PlotContext) SetTempDouble1(v Vector[*float64]) {
@@ -14670,7 +14706,7 @@ func (self PlotContext) NextPlotData() PlotNextPlotData {
 	}()
 
 	result := C.wrap_ImPlotContext_GetNextPlotData(selfArg)
-	return *newPlotNextPlotDataFromC(&result)
+	return *newPlotNextPlotDataFromC(func() *C.ImPlotNextPlotData { result := result; return &result }())
 }
 
 func (self PlotContext) SetNextItemData(v PlotNextItemData) {
@@ -14691,7 +14727,7 @@ func (self PlotContext) NextItemData() PlotNextItemData {
 	}()
 
 	result := C.wrap_ImPlotContext_GetNextItemData(selfArg)
-	return *newPlotNextItemDataFromC(&result)
+	return *newPlotNextItemDataFromC(func() *C.ImPlotNextItemData { result := result; return &result }())
 }
 
 func (self PlotContext) SetInputMap(v PlotInputMap) {
@@ -14712,7 +14748,7 @@ func (self PlotContext) InputMap() PlotInputMap {
 	}()
 
 	result := C.wrap_ImPlotContext_GetInputMap(selfArg)
-	return *newPlotInputMapFromC(&result)
+	return *newPlotInputMapFromC(func() *C.ImPlotInputMap { result := result; return &result }())
 }
 
 func (self PlotContext) SetOpenContextThisFrame(v bool) {
@@ -14748,7 +14784,7 @@ func (self PlotContext) MousePosStringBuilder() TextBuffer {
 	}()
 
 	result := C.wrap_ImPlotContext_GetMousePosStringBuilder(selfArg)
-	return *newTextBufferFromC(&result)
+	return *newTextBufferFromC(func() *C.ImGuiTextBuffer { result := result; return &result }())
 }
 
 func (self PlotContext) SetSortItems(v PlotItemGroup) {
@@ -15186,7 +15222,7 @@ func (self PlotItemGroup) Legend() PlotLegend {
 	}()
 
 	result := C.wrap_ImPlotItemGroup_GetLegend(selfArg)
-	return *newPlotLegendFromC(&result)
+	return *newPlotLegendFromC(func() *C.ImPlotLegend { result := result; return &result }())
 }
 
 func (self PlotItemGroup) SetColormapIdx(v int32) {
@@ -15297,7 +15333,7 @@ func (self PlotLegend) Labels() TextBuffer {
 	}()
 
 	result := C.wrap_ImPlotLegend_GetLabels(selfArg)
-	return *newTextBufferFromC(&result)
+	return *newTextBufferFromC(func() *C.ImGuiTextBuffer { result := result; return &result }())
 }
 
 func (self PlotLegend) SetRect(v Rect) {
@@ -15693,7 +15729,7 @@ func (self PlotPlot) TextBuffer() TextBuffer {
 	}()
 
 	result := C.wrap_ImPlotPlot_GetTextBuffer(selfArg)
-	return *newTextBufferFromC(&result)
+	return *newTextBufferFromC(func() *C.ImGuiTextBuffer { result := result; return &result }())
 }
 
 func (self PlotPlot) SetItems(v PlotItemGroup) {
@@ -15714,7 +15750,7 @@ func (self PlotPlot) Items() PlotItemGroup {
 	}()
 
 	result := C.wrap_ImPlotPlot_GetItems(selfArg)
-	return *newPlotItemGroupFromC(&result)
+	return *newPlotItemGroupFromC(func() *C.ImPlotItemGroup { result := result; return &result }())
 }
 
 func (self PlotPlot) SetCurrentX(v PlotAxisEnum) {
@@ -16095,7 +16131,7 @@ func (self PlotRect) X() PlotRange {
 	}()
 
 	result := C.wrap_ImPlotRect_GetX(selfArg)
-	return *newPlotRangeFromC(&result)
+	return *newPlotRangeFromC(func() *C.ImPlotRange { result := result; return &result }())
 }
 
 func (self PlotRect) SetY(v PlotRange) {
@@ -16116,7 +16152,7 @@ func (self PlotRect) Y() PlotRange {
 	}()
 
 	result := C.wrap_ImPlotRect_GetY(selfArg)
-	return *newPlotRangeFromC(&result)
+	return *newPlotRangeFromC(func() *C.ImPlotRange { result := result; return &result }())
 }
 
 func (self PlotStyle) SetLineWeight(v float32) {
@@ -16647,7 +16683,7 @@ func (self PlotSubplot) Items() PlotItemGroup {
 	}()
 
 	result := C.wrap_ImPlotSubplot_GetItems(selfArg)
-	return *newPlotItemGroupFromC(&result)
+	return *newPlotItemGroupFromC(func() *C.ImPlotItemGroup { result := result; return &result }())
 }
 
 func (self PlotSubplot) SetRows(v int32) {
@@ -16755,6 +16791,15 @@ func (self PlotSubplot) SetRowAlignmentData(v Vector[*PlotAlignmentData]) {
 	vDataFin()
 }
 
+func (self PlotSubplot) RowAlignmentData() Vector[*PlotAlignmentData] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImPlotSubplot_GetRowAlignmentData(selfArg).Size, C.wrap_ImPlotSubplot_GetRowAlignmentData(selfArg).Capacity, newPlotAlignmentDataFromC(C.wrap_ImPlotSubplot_GetRowAlignmentData(selfArg).Data))
+}
+
 func (self PlotSubplot) SetColAlignmentData(v Vector[*PlotAlignmentData]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
@@ -16768,6 +16813,15 @@ func (self PlotSubplot) SetColAlignmentData(v Vector[*PlotAlignmentData]) {
 	C.wrap_ImPlotSubplot_SetColAlignmentData(selfArg, *vVecArg)
 
 	vDataFin()
+}
+
+func (self PlotSubplot) ColAlignmentData() Vector[*PlotAlignmentData] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImPlotSubplot_GetColAlignmentData(selfArg).Size, C.wrap_ImPlotSubplot_GetColAlignmentData(selfArg).Capacity, newPlotAlignmentDataFromC(C.wrap_ImPlotSubplot_GetColAlignmentData(selfArg).Data))
 }
 
 func (self PlotSubplot) SetRowRatios(v Vector[*float32]) {
@@ -16815,6 +16869,15 @@ func (self PlotSubplot) SetRowLinkData(v Vector[*PlotRange]) {
 	vDataFin()
 }
 
+func (self PlotSubplot) RowLinkData() Vector[*PlotRange] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImPlotSubplot_GetRowLinkData(selfArg).Size, C.wrap_ImPlotSubplot_GetRowLinkData(selfArg).Capacity, newPlotRangeFromC(C.wrap_ImPlotSubplot_GetRowLinkData(selfArg).Data))
+}
+
 func (self PlotSubplot) SetColLinkData(v Vector[*PlotRange]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
@@ -16828,6 +16891,15 @@ func (self PlotSubplot) SetColLinkData(v Vector[*PlotRange]) {
 	C.wrap_ImPlotSubplot_SetColLinkData(selfArg, *vVecArg)
 
 	vDataFin()
+}
+
+func (self PlotSubplot) ColLinkData() Vector[*PlotRange] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImPlotSubplot_GetColLinkData(selfArg).Size, C.wrap_ImPlotSubplot_GetColLinkData(selfArg).Capacity, newPlotRangeFromC(C.wrap_ImPlotSubplot_GetColLinkData(selfArg).Data))
 }
 
 func (self PlotSubplot) SetFrameHovered(v bool) {
@@ -16950,6 +17022,15 @@ func (self PlotTagCollection) SetTags(v Vector[*PlotTag]) {
 	vDataFin()
 }
 
+func (self PlotTagCollection) Tags() Vector[*PlotTag] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImPlotTagCollection_GetTags(selfArg).Size, C.wrap_ImPlotTagCollection_GetTags(selfArg).Capacity, newPlotTagFromC(C.wrap_ImPlotTagCollection_GetTags(selfArg).Data))
+}
+
 func (self PlotTagCollection) SetTextBuffer(v TextBuffer) {
 	vArg, vFin := v.c()
 
@@ -16968,7 +17049,7 @@ func (self PlotTagCollection) TextBuffer() TextBuffer {
 	}()
 
 	result := C.wrap_ImPlotTagCollection_GetTextBuffer(selfArg)
-	return *newTextBufferFromC(&result)
+	return *newTextBufferFromC(func() *C.ImGuiTextBuffer { result := result; return &result }())
 }
 
 func (self PlotTagCollection) SetSize(v int32) {
@@ -17121,6 +17202,15 @@ func (self PlotTicker) SetTicks(v Vector[*PlotTick]) {
 	vDataFin()
 }
 
+func (self PlotTicker) Ticks() Vector[*PlotTick] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImPlotTicker_GetTicks(selfArg).Size, C.wrap_ImPlotTicker_GetTicks(selfArg).Capacity, newPlotTickFromC(C.wrap_ImPlotTicker_GetTicks(selfArg).Data))
+}
+
 func (self PlotTicker) SetTextBuffer(v TextBuffer) {
 	vArg, vFin := v.c()
 
@@ -17139,7 +17229,7 @@ func (self PlotTicker) TextBuffer() TextBuffer {
 	}()
 
 	result := C.wrap_ImPlotTicker_GetTextBuffer(selfArg)
-	return *newTextBufferFromC(&result)
+	return *newTextBufferFromC(func() *C.ImGuiTextBuffer { result := result; return &result }())
 }
 
 func (self PlotTicker) SetMaxSize(v Vec2) {
