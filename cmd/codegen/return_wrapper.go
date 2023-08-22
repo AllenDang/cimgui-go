@@ -90,7 +90,7 @@ func getReturnWrapper(
 	case strings.HasSuffix(t, "*") && isEnum(strings.TrimSuffix(t, "*"), enumNames):
 		return returnWrapper{
 			returnType: "*" + renameEnum(strings.TrimSuffix(t, "*")),
-			returnStmt: fmt.Sprintf("%s(%%s)", renameEnum(strings.TrimSuffix(t, "*"))),
+			returnStmt: fmt.Sprintf("(*%s)(%%s)", renameEnum(strings.TrimSuffix(t, "*"))),
 		}, nil
 	default:
 		return returnWrapper{}, fmt.Errorf("unknown return type %s", t)
