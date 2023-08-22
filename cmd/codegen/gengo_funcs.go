@@ -134,7 +134,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 
 	// determine kind of function:
 	returnTypeType := returnTypeUnknown
-	_, err := getReturnTypeWrapperFunc(f.Ret)
+	_, err := getReturnWrapper(f.Ret, g.structNames, g.enumNames) // TODO: we call this twice now
 	if err == nil {
 		returnTypeType = returnTypeKnown
 	}
@@ -280,52 +280,6 @@ result := C.%s(%s)
 	g.convertedFuncCount += 1
 
 	return true
-}
-
-func getReturnWrapper(
-	t string,
-	structNames,
-	enumNames map[string]bool,
-) (returnWrapper, error) {
-	w, err := getReturnTypeWrapperFunc(t)
-	switch {
-	case err == nil:
-		return w, nil
-	case structNames[t] && !shouldSkipStruct(t):
-		return returnWrapper{
-			returnType: renameGoIdentifier(t),
-			returnStmt: fmt.Sprintf(`*new%sFromC(&%%s)
-`, renameGoIdentifier(t)),
-		}, nil
-	case isEnum(t, enumNames):
-		return returnWrapper{
-			returnType: renameEnum(t),
-			returnStmt: fmt.Sprintf("%s(%%s)", renameEnum(t)),
-		}, nil
-	case strings.HasPrefix(t, "ImVector_") &&
-		!(strings.HasSuffix(t, "*") || strings.HasSuffix(t, "]")):
-		pureType := strings.TrimPrefix(t, "ImVector_") + "*"
-		rw, err := getReturnWrapper(pureType, structNames, enumNames)
-		if err != nil {
-			return returnWrapper{}, fmt.Errorf("creating vector wrapper %w", err)
-		}
-		return returnWrapper{
-			returnType: fmt.Sprintf("Vector[%s]", rw.returnType),
-			returnStmt: fmt.Sprintf("newVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
-		}, nil
-	case strings.HasSuffix(t, "*") && structNames[strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const ")] && !shouldSkipStruct(strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const ")):
-		return returnWrapper{
-			returnType: "*" + renameGoIdentifier(strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const ")),
-			returnStmt: fmt.Sprintf("new%sFromC(%%s)", renameGoIdentifier(strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const "))),
-		}, nil
-	case strings.HasSuffix(t, "*") && isEnum(strings.TrimSuffix(t, "*"), enumNames):
-		return returnWrapper{
-			returnType: "*" + renameEnum(strings.TrimSuffix(t, "*")),
-			returnStmt: fmt.Sprintf("%s(%%s)", renameEnum(strings.TrimSuffix(t, "*"))),
-		}, nil
-	default:
-		return returnWrapper{}, fmt.Errorf("unknown return type %s", t)
-	}
 }
 
 // this method is responsible for createing a function declaration statement.

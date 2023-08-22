@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 // Wrapper for return value
 type returnWrapper struct {
@@ -8,7 +11,11 @@ type returnWrapper struct {
 	returnStmt string
 }
 
-func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
+func getReturnWrapper(
+	t string,
+	structNames,
+	enumNames map[string]bool,
+) (returnWrapper, error) {
 	returnWrapperMap := map[string]returnWrapper{
 		"bool":                     {"bool", "%s == C.bool(true)"},
 		"char":                     simpleR("rune"),
@@ -49,11 +56,45 @@ func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 		"size_t":                   simpleR("uint64"),
 	}
 
-	if v, ok := returnWrapperMap[returnType]; ok {
-		return v, nil
+	w, known := returnWrapperMap[t]
+	switch {
+	case known:
+		return w, nil
+	case structNames[t] && !shouldSkipStruct(t):
+		return returnWrapper{
+			returnType: renameGoIdentifier(t),
+			returnStmt: fmt.Sprintf(`*new%sFromC(func() *C.%s {result := %%s; return &result}())
+`, renameGoIdentifier(t), t),
+		}, nil
+	case isEnum(t, enumNames):
+		return returnWrapper{
+			returnType: renameEnum(t),
+			returnStmt: fmt.Sprintf("%s(%%s)", renameEnum(t)),
+		}, nil
+	case strings.HasPrefix(t, "ImVector_") &&
+		!(strings.HasSuffix(t, "*") || strings.HasSuffix(t, "]")):
+		pureType := strings.TrimPrefix(t, "ImVector_") + "*"
+		rw, err := getReturnWrapper(pureType, structNames, enumNames)
+		if err != nil {
+			return returnWrapper{}, fmt.Errorf("creating vector wrapper %w", err)
+		}
+		return returnWrapper{
+			returnType: fmt.Sprintf("Vector[%s]", rw.returnType),
+			returnStmt: fmt.Sprintf("newVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
+		}, nil
+	case strings.HasSuffix(t, "*") && structNames[strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const ")] && !shouldSkipStruct(strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const ")):
+		return returnWrapper{
+			returnType: "*" + renameGoIdentifier(strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const ")),
+			returnStmt: fmt.Sprintf("new%sFromC(%%s)", renameGoIdentifier(strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const "))),
+		}, nil
+	case strings.HasSuffix(t, "*") && isEnum(strings.TrimSuffix(t, "*"), enumNames):
+		return returnWrapper{
+			returnType: "*" + renameEnum(strings.TrimSuffix(t, "*")),
+			returnStmt: fmt.Sprintf("%s(%%s)", renameEnum(strings.TrimSuffix(t, "*"))),
+		}, nil
+	default:
+		return returnWrapper{}, fmt.Errorf("unknown return type %s", t)
 	}
-
-	return returnWrapper{}, fmt.Errorf("return type %s not found", returnType)
 }
 
 func imVec4PtrReturnW() returnWrapper {
