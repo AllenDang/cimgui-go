@@ -111,6 +111,12 @@ func generateStruct(s StructDef, defs []StructDef, enumDefs []EnumDef, refEnums,
 
 		switch {
 		case toCErr == nil && fromCErr == nil:
+			if toC.ArgType != fromC.returnType { // <- this absolutly shouldn't happen
+				panic(fmt.Sprintf(`
+%s != %s
+%s
+`, toC.ArgType, fromC.returnType, field.Type))
+			}
 			wrappers[i] = wrapper{
 				toC:   toC,
 				fromC: fromC,
