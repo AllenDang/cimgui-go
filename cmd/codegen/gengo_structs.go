@@ -228,7 +228,11 @@ return result, func() {}
 }
 
 func renameStructField(original string) (result string) {
-	result = strings.TrimPrefix(original, "_")
-	result = "Field" + strings.ToTitle(result)
+	original = strings.TrimPrefix(original, "_")
+	result = "Field" + strings.ToUpper(result[0:])
+	if len(original) > 1 {
+		result += original[1:]
+	}
+
 	return result
 }
