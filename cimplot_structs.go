@@ -164,7 +164,7 @@ func (self PlotAnnotationCollection) c() (result C.ImPlotAnnotationCollection, f
 func newPlotAnnotationCollectionFromC(cvalue *C.ImPlotAnnotationCollection) *PlotAnnotationCollection {
 	result := new(PlotAnnotationCollection)
 	result.FieldAnnotations = newVectorFromC(cvalue.Annotations.Size, cvalue.Annotations.Capacity, newPlotAnnotationFromC(cvalue.Annotations.Data))
-	result.FieldTextBuffer = *newTextBufferFromC(cvalue.TextBuffer)
+	result.FieldTextBuffer = *newTextBufferFromC(&cvalue.TextBuffer)
 
 	result.FieldSize = int32(cvalue.Size)
 	return result
@@ -591,9 +591,9 @@ func (self PlotRect) c() (result C.ImPlotRect, fin func()) {
 
 func newPlotRectFromC(cvalue *C.ImPlotRect) *PlotRect {
 	result := new(PlotRect)
-	result.FieldX = *newPlotRangeFromC(cvalue.X)
+	result.FieldX = *newPlotRangeFromC(&cvalue.X)
 
-	result.FieldY = *newPlotRangeFromC(cvalue.Y)
+	result.FieldY = *newPlotRangeFromC(&cvalue.Y)
 
 	return result
 }
@@ -699,7 +699,7 @@ func (self PlotTagCollection) c() (result C.ImPlotTagCollection, fin func()) {
 func newPlotTagCollectionFromC(cvalue *C.ImPlotTagCollection) *PlotTagCollection {
 	result := new(PlotTagCollection)
 	result.FieldTags = newVectorFromC(cvalue.Tags.Size, cvalue.Tags.Capacity, newPlotTagFromC(cvalue.Tags.Data))
-	result.FieldTextBuffer = *newTextBufferFromC(cvalue.TextBuffer)
+	result.FieldTextBuffer = *newTextBufferFromC(&cvalue.TextBuffer)
 
 	result.FieldSize = int32(cvalue.Size)
 	return result
@@ -811,7 +811,7 @@ func (self PlotTicker) c() (result C.ImPlotTicker, fin func()) {
 func newPlotTickerFromC(cvalue *C.ImPlotTicker) *PlotTicker {
 	result := new(PlotTicker)
 	result.FieldTicks = newVectorFromC(cvalue.Ticks.Size, cvalue.Ticks.Capacity, newPlotTickFromC(cvalue.Ticks.Data))
-	result.FieldTextBuffer = *newTextBufferFromC(cvalue.TextBuffer)
+	result.FieldTextBuffer = *newTextBufferFromC(&cvalue.TextBuffer)
 
 	result.FieldMaxSize = *(&Vec2{}).fromC(cvalue.MaxSize)
 	result.FieldLateSize = *(&Vec2{}).fromC(cvalue.LateSize)
