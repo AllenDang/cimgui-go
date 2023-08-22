@@ -192,26 +192,20 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 		// return Im struct ptr
 		shouldDefer = true
 		returnType = strings.TrimPrefix(f.Ret, "const ")
-		returnType = strings.TrimSuffix(returnType, "*")
 	case returnTypeStruct:
 		shouldDefer = true
 		returnType = f.Ret
 	case returnTypeConstructor:
 		shouldDefer = true
 		parts := strings.Split(f.FuncName, "_")
-
-		returnType = parts[0]
-
-		if !g.structNames[returnType] {
-			return false
-		}
+		returnType = parts[0] + "*"
 
 		suffix := ""
 		if len(parts) > 2 {
 			suffix = strings.Join(parts[2:], "")
 		}
 
-		funcName = "New" + returnType + suffix
+		funcName = "New" + parts[0] + suffix
 	default:
 		glg.Debugf("Unknown return type \"%s\" in function %s", f.Ret, f.FuncName)
 		return false
@@ -264,7 +258,7 @@ result := C.%s(%s)
 			f.CWrapperFuncName,
 			argInvokeStmt,
 		))
-		cfuncCall = "&result"
+		cfuncCall = "result"
 	case returnTypeKnown:
 		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
 	case returnTypeConstructor:
@@ -300,7 +294,7 @@ func getReturnWrapper(
 	case structNames[t] && !shouldSkipStruct(t):
 		return returnWrapper{
 			returnType: renameGoIdentifier(t),
-			returnStmt: fmt.Sprintf(`*new%sFromC(%%s)
+			returnStmt: fmt.Sprintf(`*new%sFromC(&%%s)
 `, renameGoIdentifier(t)),
 		}, nil
 	case isEnum(t, enumNames):
