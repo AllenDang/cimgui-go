@@ -13821,6 +13821,15 @@ func (self PlotAxis) SetLinkedMin(v *float64) {
 	vFin()
 }
 
+func (self PlotAxis) LinkedMin() *float64 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*float64)(C.wrap_ImPlotAxis_GetLinkedMin(selfArg))
+}
+
 func (self PlotAxis) SetLinkedMax(v *float64) {
 	vArg, vFin := WrapNumberPtr[C.double, float64](v)
 
@@ -13829,6 +13838,15 @@ func (self PlotAxis) SetLinkedMax(v *float64) {
 	C.wrap_ImPlotAxis_SetLinkedMax(selfArg, vArg)
 
 	vFin()
+}
+
+func (self PlotAxis) LinkedMax() *float64 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*float64)(C.wrap_ImPlotAxis_GetLinkedMax(selfArg))
 }
 
 func (self PlotAxis) SetPickerLevel(v int32) {
@@ -14766,6 +14784,15 @@ func (self PlotContext) SetTempDouble1(v Vector[*float64]) {
 	vDataFin()
 }
 
+func (self PlotContext) TempDouble1() Vector[*float64] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImPlotContext_GetTempDouble1(selfArg).Size, C.wrap_ImPlotContext_GetTempDouble1(selfArg).Capacity, (*float64)(C.wrap_ImPlotContext_GetTempDouble1(selfArg).Data))
+}
+
 func (self PlotContext) SetTempDouble2(v Vector[*float64]) {
 	vData := v.Data
 	vDataArg, vDataFin := WrapNumberPtr[C.double, float64](vData)
@@ -14779,6 +14806,15 @@ func (self PlotContext) SetTempDouble2(v Vector[*float64]) {
 	C.wrap_ImPlotContext_SetTempDouble2(selfArg, *vVecArg)
 
 	vDataFin()
+}
+
+func (self PlotContext) TempDouble2() Vector[*float64] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImPlotContext_GetTempDouble2(selfArg).Size, C.wrap_ImPlotContext_GetTempDouble2(selfArg).Capacity, (*float64)(C.wrap_ImPlotContext_GetTempDouble2(selfArg).Data))
 }
 
 func (self PlotContext) SetTempInt1(v Vector[*int32]) {
