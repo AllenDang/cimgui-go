@@ -461,7 +461,6 @@ func (self DrawList) CloneOutput() DrawList {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newDrawListFromC(C.ImDrawList_CloneOutput(selfArg))
 }
 
@@ -497,7 +496,6 @@ func NewDrawList(shared_data DrawListSharedData) DrawList {
 	defer func() {
 		shared_dataFin()
 	}()
-
 	return *newDrawListFromC(C.ImDrawList_ImDrawList(shared_dataArg))
 }
 
@@ -739,7 +737,6 @@ func (self FontAtlas) AddFont(font_cfg FontConfig) Font {
 		selfFin()
 		font_cfgFin()
 	}()
-
 	return *newFontFromC(C.ImFontAtlas_AddFont(selfArg, font_cfgArg))
 }
 
@@ -753,7 +750,6 @@ func (self FontAtlas) AddFontDefaultV(font_cfg FontConfig) Font {
 		selfFin()
 		font_cfgFin()
 	}()
-
 	return *newFontFromC(C.ImFontAtlas_AddFontDefault(selfArg, font_cfgArg))
 }
 
@@ -770,7 +766,6 @@ func (self FontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, 
 		filenameFin()
 		font_cfgFin()
 	}()
-
 	return *newFontFromC(C.ImFontAtlas_AddFontFromFileTTF(selfArg, filenameArg, C.float(size_pixels), font_cfgArg, (*C.ImWchar)(glyph_ranges)))
 }
 
@@ -788,7 +783,6 @@ func (self FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data
 		compressed_font_data_base85Fin()
 		font_cfgFin()
 	}()
-
 	return *newFontFromC(C.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(selfArg, compressed_font_data_base85Arg, C.float(size_pixels), font_cfgArg, (*C.ImWchar)(glyph_ranges)))
 }
 
@@ -804,7 +798,6 @@ func (self FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsaf
 		selfFin()
 		font_cfgFin()
 	}()
-
 	return *newFontFromC(C.ImFontAtlas_AddFontFromMemoryCompressedTTF(selfArg, (compressed_font_data), C.int(compressed_font_size), C.float(size_pixels), font_cfgArg, (*C.ImWchar)(glyph_ranges)))
 }
 
@@ -820,7 +813,6 @@ func (self FontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_size 
 		selfFin()
 		font_cfgFin()
 	}()
-
 	return *newFontFromC(C.ImFontAtlas_AddFontFromMemoryTTF(selfArg, (font_data), C.int(font_size), C.float(size_pixels), font_cfgArg, (*C.ImWchar)(glyph_ranges)))
 }
 
@@ -885,7 +877,6 @@ func (self FontAtlas) CustomRectByIndex(index int32) FontAtlasCustomRect {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontAtlasCustomRectFromC(C.ImFontAtlas_GetCustomRectByIndex(selfArg, C.int(index)))
 }
 
@@ -1187,7 +1178,6 @@ func (self Font) FindGlyph(c Wchar) FontGlyph {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontGlyphFromC(C.ImFont_FindGlyph(selfArg, C.ImWchar(c)))
 }
 
@@ -1197,7 +1187,6 @@ func (self Font) FindGlyphNoFallback(c Wchar) FontGlyph {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontGlyphFromC(C.ImFont_FindGlyphNoFallback(selfArg, C.ImWchar(c)))
 }
 
@@ -1350,7 +1339,6 @@ func InternalNewContext(shared_font_atlas FontAtlas) Context {
 	defer func() {
 		shared_font_atlasFin()
 	}()
-
 	return *newContextFromC(C.ImGuiContext_ImGuiContext(shared_font_atlasArg))
 }
 
@@ -2350,7 +2338,6 @@ func (self TableSettings) InternalColumnSettings() TableColumnSettings {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newTableColumnSettingsFromC(C.ImGuiTableSettings_GetColumnSettings(selfArg))
 }
 
@@ -2528,7 +2515,6 @@ func NewTextFilter(default_filter string) TextFilter {
 	defer func() {
 		default_filterFin()
 	}()
-
 	return *newTextFilterFromC(C.ImGuiTextFilter_ImGuiTextFilter(default_filterArg))
 }
 
@@ -2825,7 +2811,6 @@ func InternalNewWindow(context Context, name string) Window {
 		contextFin()
 		nameFin()
 	}()
-
 	return *newWindowFromC(C.ImGuiWindow_ImGuiWindow(contextArg, nameArg))
 }
 
@@ -3168,7 +3153,6 @@ func AcceptDragDropPayloadV(typeArg string, flags DragDropFlags) Payload {
 	defer func() {
 		typeArgFin()
 	}()
-
 	return *newPayloadFromC(C.igAcceptDragDropPayload(typeArgArg, C.ImGuiDragDropFlags(flags)))
 }
 
@@ -4047,7 +4031,6 @@ func CreateContextV(shared_font_atlas FontAtlas) Context {
 	defer func() {
 		shared_font_atlasFin()
 	}()
-
 	return *newContextFromC(C.igCreateContext(shared_font_atlasArg))
 }
 
@@ -4057,7 +4040,6 @@ func InternalCreateNewWindowSettings(name string) WindowSettings {
 	defer func() {
 		nameFin()
 	}()
-
 	return *newWindowSettingsFromC(C.igCreateNewWindowSettings(nameArg))
 }
 
@@ -4407,7 +4389,6 @@ func InternalDockContextFindNodeByID(ctx Context, id ID) DockNode {
 	defer func() {
 		ctxFin()
 	}()
-
 	return *newDockNodeFromC(C.igDockContextFindNodeByID(ctxArg, C.ImGuiID(id)))
 }
 
@@ -4534,7 +4515,6 @@ func InternalDockNodeGetRootNode(node DockNode) DockNode {
 	defer func() {
 		nodeFin()
 	}()
-
 	return *newDockNodeFromC(C.igDockNodeGetRootNode(nodeArg))
 }
 
@@ -5014,7 +4994,6 @@ func InternalFindBlockingModal(window Window) Window {
 	defer func() {
 		windowFin()
 	}()
-
 	return *newWindowFromC(C.igFindBlockingModal(windowArg))
 }
 
@@ -5024,7 +5003,6 @@ func InternalFindBottomMostVisibleWindowWithinBeginStack(window Window) Window {
 	defer func() {
 		windowFin()
 	}()
-
 	return *newWindowFromC(C.igFindBottomMostVisibleWindowWithinBeginStack(windowArg))
 }
 
@@ -5038,7 +5016,6 @@ func InternalFindOrCreateColumns(window Window, id ID) OldColumns {
 	defer func() {
 		windowFin()
 	}()
-
 	return *newOldColumnsFromC(C.igFindOrCreateColumns(windowArg, C.ImGuiID(id)))
 }
 
@@ -5059,7 +5036,6 @@ func InternalFindSettingsHandler(type_name string) SettingsHandler {
 	defer func() {
 		type_nameFin()
 	}()
-
 	return *newSettingsHandlerFromC(C.igFindSettingsHandler(type_nameArg))
 }
 
@@ -5083,7 +5059,6 @@ func InternalFindWindowByName(name string) Window {
 	defer func() {
 		nameFin()
 	}()
-
 	return *newWindowFromC(C.igFindWindowByName(nameArg))
 }
 
@@ -5106,7 +5081,6 @@ func InternalFindWindowSettingsByWindow(window Window) WindowSettings {
 	defer func() {
 		windowFin()
 	}()
-
 	return *newWindowSettingsFromC(C.igFindWindowSettingsByWindow(windowArg))
 }
 
@@ -5169,7 +5143,6 @@ func BackgroundDrawListViewportPtr(viewport Viewport) DrawList {
 	defer func() {
 		viewportFin()
 	}()
-
 	return *newDrawListFromC(C.igGetBackgroundDrawList_ViewportPtr(viewportArg))
 }
 
@@ -5407,7 +5380,6 @@ func ForegroundDrawListViewportPtr(viewport Viewport) DrawList {
 	defer func() {
 		viewportFin()
 	}()
-
 	return *newDrawListFromC(C.igGetForegroundDrawList_ViewportPtr(viewportArg))
 }
 
@@ -5417,7 +5389,6 @@ func InternalForegroundDrawListWindowPtr(window Window) DrawList {
 	defer func() {
 		windowFin()
 	}()
-
 	return *newDrawListFromC(C.igGetForegroundDrawList_WindowPtr(windowArg))
 }
 
@@ -5552,7 +5523,6 @@ func InternalKeyDataContextPtr(ctx Context, key Key) KeyData {
 	defer func() {
 		ctxFin()
 	}()
-
 	return *newKeyDataFromC(C.igGetKeyData_ContextPtr(ctxArg, C.ImGuiKey(key)))
 }
 
@@ -5591,7 +5561,6 @@ func InternalKeyOwnerData(ctx Context, key Key) KeyOwnerData {
 	defer func() {
 		ctxFin()
 	}()
-
 	return *newKeyOwnerDataFromC(C.igGetKeyOwnerData(ctxArg, C.ImGuiKey(key)))
 }
 
@@ -5712,9 +5681,7 @@ func StyleColorName(idx Col) string {
 
 // retrieve style color as stored in ImGuiStyle structure. use to feed back into PushStyleColor(), otherwise use GetColorU32() to get style color with style alpha baked in.
 func StyleColorVec4(idx Col) *Vec4 {
-	out := &Vec4{}
-	out.fromC(*C.igGetStyleColorVec4(C.ImGuiCol(idx)))
-	return out
+	return (&Vec4{}).fromC(*C.igGetStyleColorVec4(C.ImGuiCol(idx)))
 }
 
 func InternalStyleVarInfo(idx StyleVar) DataVarInfo {
@@ -5769,7 +5736,6 @@ func InternalViewportPlatformMonitor(viewport Viewport) PlatformMonitor {
 	defer func() {
 		viewportFin()
 	}()
-
 	return *newPlatformMonitorFromC(C.igGetViewportPlatformMonitor(viewportArg))
 }
 
@@ -9071,7 +9037,6 @@ func InternalTabBarFindMostRecentlySelectedTabForActiveWindow(tab_bar TabBar) Ta
 	defer func() {
 		tab_barFin()
 	}()
-
 	return *newTabItemFromC(C.igTabBarFindMostRecentlySelectedTabForActiveWindow(tab_barArg))
 }
 
@@ -9081,7 +9046,6 @@ func InternalTabBarFindTabByID(tab_bar TabBar, tab_id ID) TabItem {
 	defer func() {
 		tab_barFin()
 	}()
-
 	return *newTabItemFromC(C.igTabBarFindTabByID(tab_barArg, C.ImGuiID(tab_id)))
 }
 
@@ -9091,7 +9055,6 @@ func InternalTabBarFindTabByOrder(tab_bar TabBar, order int32) TabItem {
 	defer func() {
 		tab_barFin()
 	}()
-
 	return *newTabItemFromC(C.igTabBarFindTabByOrder(tab_barArg, C.int(order)))
 }
 
@@ -9101,7 +9064,6 @@ func InternalTabBarGetCurrentTab(tab_bar TabBar) TabItem {
 	defer func() {
 		tab_barFin()
 	}()
-
 	return *newTabItemFromC(C.igTabBarGetCurrentTab(tab_barArg))
 }
 
@@ -9345,7 +9307,6 @@ func InternalTableGetBoundSettings(table Table) TableSettings {
 	defer func() {
 		tableFin()
 	}()
-
 	return *newTableSettingsFromC(C.igTableGetBoundSettings(tableArg))
 }
 
@@ -9446,7 +9407,6 @@ func InternalTableGetInstanceData(table Table, instance_no int32) TableInstanceD
 	defer func() {
 		tableFin()
 	}()
-
 	return *newTableInstanceDataFromC(C.igTableGetInstanceData(tableArg, C.int(instance_no)))
 }
 
@@ -10205,7 +10165,6 @@ func (self FontAtlas) AddFontDefault() Font {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontFromC(C.wrap_ImFontAtlas_AddFontDefault(selfArg))
 }
 
@@ -10217,7 +10176,6 @@ func (self FontAtlas) AddFontFromFileTTF(filename string, size_pixels float32) F
 		selfFin()
 		filenameFin()
 	}()
-
 	return *newFontFromC(C.wrap_ImFontAtlas_AddFontFromFileTTF(selfArg, filenameArg, C.float(size_pixels)))
 }
 
@@ -10229,7 +10187,6 @@ func (self FontAtlas) AddFontFromMemoryCompressedBase85TTF(compressed_font_data_
 		selfFin()
 		compressed_font_data_base85Fin()
 	}()
-
 	return *newFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(selfArg, compressed_font_data_base85Arg, C.float(size_pixels)))
 }
 
@@ -10239,7 +10196,6 @@ func (self FontAtlas) AddFontFromMemoryCompressedTTF(compressed_font_data unsafe
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedTTF(selfArg, (compressed_font_data), C.int(compressed_font_size), C.float(size_pixels)))
 }
 
@@ -10249,7 +10205,6 @@ func (self FontAtlas) AddFontFromMemoryTTF(font_data unsafe.Pointer, font_size i
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryTTF(selfArg, (font_data), C.int(font_size), C.float(size_pixels)))
 }
 
@@ -10364,7 +10319,6 @@ func AcceptDragDropPayload(typeArg string) Payload {
 	defer func() {
 		typeArgFin()
 	}()
-
 	return *newPayloadFromC(C.wrap_igAcceptDragDropPayload(typeArgArg))
 }
 
@@ -12003,7 +11957,7 @@ func (self *Color) Value() Vec4 {
 	return *(&Vec4{}).fromC(C.wrap_ImColor_GetValue(selfArg))
 }
 
-func (self DrawChannel) SetCmdBuffer(v Vector[DrawCmd]) {
+func (self DrawChannel) SetCmdBuffer(v Vector[*DrawCmd]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImDrawCmd)
@@ -12274,11 +12228,10 @@ func (self DrawData) OwnerViewport() Viewport {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newViewportFromC(C.wrap_ImDrawData_GetOwnerViewport(selfArg))
 }
 
-func (self DrawList) SetCmdBuffer(v Vector[DrawCmd]) {
+func (self DrawList) SetCmdBuffer(v Vector[*DrawCmd]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImDrawCmd)
@@ -12293,7 +12246,7 @@ func (self DrawList) SetCmdBuffer(v Vector[DrawCmd]) {
 	vDataFin()
 }
 
-func (self DrawList) SetVtxBuffer(v Vector[DrawVert]) {
+func (self DrawList) SetVtxBuffer(v Vector[*DrawVert]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImDrawVert)
@@ -12354,7 +12307,6 @@ func (self DrawList) Data() DrawListSharedData {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newDrawListSharedDataFromC(C.wrap_ImDrawList_Get_Data(selfArg))
 }
 
@@ -12393,7 +12345,6 @@ func (self DrawList) VtxWritePtr() DrawVert {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newDrawVertFromC(C.wrap_ImDrawList_Get_VtxWritePtr(selfArg))
 }
 
@@ -12445,7 +12396,6 @@ func (self DrawList) CmdHeader() DrawCmdHeader {
 	}()
 
 	result := C.wrap_ImDrawList_Get_CmdHeader(selfArg)
-
 	return *newDrawCmdHeaderFromC(&result)
 }
 
@@ -12467,7 +12417,6 @@ func (self DrawList) Splitter() DrawListSplitter {
 	}()
 
 	result := C.wrap_ImDrawList_Get_Splitter(selfArg)
-
 	return *newDrawListSplitterFromC(&result)
 }
 
@@ -12517,7 +12466,6 @@ func (self DrawListSharedData) Font() Font {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontFromC(C.wrap_ImDrawListSharedData_GetFont(selfArg))
 }
 
@@ -12642,9 +12590,7 @@ func (self DrawListSharedData) TexUvLines() *Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	out := &Vec4{}
-	out.fromC(*C.wrap_ImDrawListSharedData_GetTexUvLines(selfArg))
-	return out
+	return (&Vec4{}).fromC(*C.wrap_ImDrawListSharedData_GetTexUvLines(selfArg))
 }
 
 func (self DrawListSplitter) SetCurrent(v int32) {
@@ -12677,7 +12623,7 @@ func (self DrawListSplitter) Count() int32 {
 	return int32(C.wrap_ImDrawListSplitter_Get_Count(selfArg))
 }
 
-func (self DrawListSplitter) SetChannels(v Vector[DrawChannel]) {
+func (self DrawListSplitter) SetChannels(v Vector[*DrawChannel]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImDrawChannel)
@@ -12795,7 +12741,7 @@ func (self Font) SetIndexLookup(v Vector[*Wchar]) {
 	C.wrap_ImFont_SetIndexLookup(selfArg, *vVecArg)
 }
 
-func (self Font) SetGlyphs(v Vector[FontGlyph]) {
+func (self Font) SetGlyphs(v Vector[*FontGlyph]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImFontGlyph)
@@ -12826,7 +12772,6 @@ func (self Font) FallbackGlyph() FontGlyph {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontGlyphFromC(C.wrap_ImFont_GetFallbackGlyph(selfArg))
 }
 
@@ -12846,7 +12791,6 @@ func (self Font) ContainerAtlas() FontAtlas {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontAtlasFromC(C.wrap_ImFont_GetContainerAtlas(selfArg))
 }
 
@@ -12866,7 +12810,6 @@ func (self Font) ConfigData() FontConfig {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontConfigFromC(C.wrap_ImFont_GetConfigData(selfArg))
 }
 
@@ -13238,7 +13181,7 @@ func (self FontAtlas) TexUvWhitePixel() Vec2 {
 	return *(&Vec2{}).fromC(C.wrap_ImFontAtlas_GetTexUvWhitePixel(selfArg))
 }
 
-func (self FontAtlas) SetCustomRects(v Vector[FontAtlasCustomRect]) {
+func (self FontAtlas) SetCustomRects(v Vector[*FontAtlasCustomRect]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImFontAtlasCustomRect)
@@ -13253,7 +13196,7 @@ func (self FontAtlas) SetCustomRects(v Vector[FontAtlasCustomRect]) {
 	vDataFin()
 }
 
-func (self FontAtlas) SetConfigData(v Vector[FontConfig]) {
+func (self FontAtlas) SetConfigData(v Vector[*FontConfig]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImFontConfig)
@@ -13284,7 +13227,6 @@ func (self FontAtlas) FontBuilderIO() FontBuilderIO {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontBuilderIOFromC(C.wrap_ImFontAtlas_GetFontBuilderIO(selfArg))
 }
 
@@ -13454,7 +13396,6 @@ func (self FontAtlasCustomRect) Font() Font {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontFromC(C.wrap_ImFontAtlasCustomRect_GetFont(selfArg))
 }
 
@@ -13729,7 +13670,6 @@ func (self FontConfig) DstFont() Font {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontFromC(C.wrap_ImFontConfig_GetDstFont(selfArg))
 }
 
@@ -14102,7 +14042,6 @@ func (self Context) IO() IO {
 	}()
 
 	result := C.wrap_ImGuiContext_GetIO(selfArg)
-
 	return *newIOFromC(&result)
 }
 
@@ -14124,7 +14063,6 @@ func (self Context) PlatformIO() PlatformIO {
 	}()
 
 	result := C.wrap_ImGuiContext_GetPlatformIO(selfArg)
-
 	return *newPlatformIOFromC(&result)
 }
 
@@ -14146,7 +14084,6 @@ func (self Context) Style() Style {
 	}()
 
 	result := C.wrap_ImGuiContext_GetStyle(selfArg)
-
 	return *newStyleFromC(&result)
 }
 
@@ -14196,7 +14133,6 @@ func (self Context) Font() Font {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontFromC(C.wrap_ImGuiContext_GetFont(selfArg))
 }
 
@@ -14248,7 +14184,6 @@ func (self Context) DrawListSharedData() DrawListSharedData {
 	}()
 
 	result := C.wrap_ImGuiContext_GetDrawListSharedData(selfArg)
-
 	return *newDrawListSharedDataFromC(&result)
 }
 
@@ -14417,7 +14352,7 @@ func (self Context) TestEngine() unsafe.Pointer {
 	return unsafe.Pointer(C.wrap_ImGuiContext_GetTestEngine(selfArg))
 }
 
-func (self Context) SetInputEventsQueue(v Vector[InputEvent]) {
+func (self Context) SetInputEventsQueue(v Vector[*InputEvent]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiInputEvent)
@@ -14432,7 +14367,7 @@ func (self Context) SetInputEventsQueue(v Vector[InputEvent]) {
 	vDataFin()
 }
 
-func (self Context) SetInputEventsTrail(v Vector[InputEvent]) {
+func (self Context) SetInputEventsTrail(v Vector[*InputEvent]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiInputEvent)
@@ -14477,7 +14412,7 @@ func (self Context) InputEventsNextEventId() uint32 {
 	return uint32(C.wrap_ImGuiContext_GetInputEventsNextEventId(selfArg))
 }
 
-func (self Context) SetCurrentWindowStack(v Vector[WindowStackData]) {
+func (self Context) SetCurrentWindowStack(v Vector[*WindowStackData]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiWindowStackData)
@@ -14510,7 +14445,6 @@ func (self Context) WindowsById() Storage {
 	}()
 
 	result := C.wrap_ImGuiContext_GetWindowsById(selfArg)
-
 	return *newStorageFromC(&result)
 }
 
@@ -14560,7 +14494,6 @@ func (self Context) CurrentWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiContext_GetCurrentWindow(selfArg))
 }
 
@@ -14580,7 +14513,6 @@ func (self Context) HoveredWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiContext_GetHoveredWindow(selfArg))
 }
 
@@ -14600,7 +14532,6 @@ func (self Context) HoveredWindowUnderMovingWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiContext_GetHoveredWindowUnderMovingWindow(selfArg))
 }
 
@@ -14620,7 +14551,6 @@ func (self Context) MovingWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiContext_GetMovingWindow(selfArg))
 }
 
@@ -14640,7 +14570,6 @@ func (self Context) WheelingWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiContext_GetWheelingWindow(selfArg))
 }
 
@@ -14990,7 +14919,6 @@ func (self Context) ActiveIdWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiContext_GetActiveIdWindow(selfArg))
 }
 
@@ -15085,7 +15013,6 @@ func (self Context) ActiveIdPreviousFrameWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiContext_GetActiveIdPreviousFrameWindow(selfArg))
 }
 
@@ -15137,7 +15064,6 @@ func (self Context) KeysRoutingTable() KeyRoutingTable {
 	}()
 
 	result := C.wrap_ImGuiContext_GetKeysRoutingTable(selfArg)
-
 	return *newKeyRoutingTableFromC(&result)
 }
 
@@ -15249,7 +15175,6 @@ func (self Context) NextItemData() NextItemData {
 	}()
 
 	result := C.wrap_ImGuiContext_GetNextItemData(selfArg)
-
 	return *newNextItemDataFromC(&result)
 }
 
@@ -15271,7 +15196,6 @@ func (self Context) LastItemData() LastItemData {
 	}()
 
 	result := C.wrap_ImGuiContext_GetLastItemData(selfArg)
-
 	return *newLastItemDataFromC(&result)
 }
 
@@ -15293,11 +15217,10 @@ func (self Context) NextWindowData() NextWindowData {
 	}()
 
 	result := C.wrap_ImGuiContext_GetNextWindowData(selfArg)
-
 	return *newNextWindowDataFromC(&result)
 }
 
-func (self Context) SetColorStack(v Vector[ColorMod]) {
+func (self Context) SetColorStack(v Vector[*ColorMod]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiColorMod)
@@ -15312,7 +15235,7 @@ func (self Context) SetColorStack(v Vector[ColorMod]) {
 	vDataFin()
 }
 
-func (self Context) SetStyleVarStack(v Vector[StyleMod]) {
+func (self Context) SetStyleVarStack(v Vector[*StyleMod]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiStyleMod)
@@ -15342,7 +15265,7 @@ func (self Context) SetFocusScopeStack(v Vector[*ID]) {
 	vDataFin()
 }
 
-func (self Context) SetGroupStack(v Vector[GroupData]) {
+func (self Context) SetGroupStack(v Vector[*GroupData]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiGroupData)
@@ -15357,7 +15280,7 @@ func (self Context) SetGroupStack(v Vector[GroupData]) {
 	vDataFin()
 }
 
-func (self Context) SetOpenPopupStack(v Vector[PopupData]) {
+func (self Context) SetOpenPopupStack(v Vector[*PopupData]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiPopupData)
@@ -15372,7 +15295,7 @@ func (self Context) SetOpenPopupStack(v Vector[PopupData]) {
 	vDataFin()
 }
 
-func (self Context) SetBeginPopupStack(v Vector[PopupData]) {
+func (self Context) SetBeginPopupStack(v Vector[*PopupData]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiPopupData)
@@ -15387,7 +15310,7 @@ func (self Context) SetBeginPopupStack(v Vector[PopupData]) {
 	vDataFin()
 }
 
-func (self Context) SetNavTreeNodeStack(v Vector[NavTreeNodeData]) {
+func (self Context) SetNavTreeNodeStack(v Vector[*NavTreeNodeData]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiNavTreeNodeData)
@@ -15448,7 +15371,6 @@ func (self Context) CurrentViewport() ViewportP {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newViewportPFromC(C.wrap_ImGuiContext_GetCurrentViewport(selfArg))
 }
 
@@ -15468,7 +15390,6 @@ func (self Context) MouseViewport() ViewportP {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newViewportPFromC(C.wrap_ImGuiContext_GetMouseViewport(selfArg))
 }
 
@@ -15488,7 +15409,6 @@ func (self Context) MouseLastHoveredViewport() ViewportP {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newViewportPFromC(C.wrap_ImGuiContext_GetMouseLastHoveredViewport(selfArg))
 }
 
@@ -15525,7 +15445,6 @@ func (self Context) FallbackMonitor() PlatformMonitor {
 	}()
 
 	result := C.wrap_ImGuiContext_GetFallbackMonitor(selfArg)
-
 	return *newPlatformMonitorFromC(&result)
 }
 
@@ -15590,7 +15509,6 @@ func (self Context) NavWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiContext_GetNavWindow(selfArg))
 }
 
@@ -15903,7 +15821,6 @@ func (self Context) NavInitResult() NavItemData {
 	}()
 
 	result := C.wrap_ImGuiContext_GetNavInitResult(selfArg)
-
 	return *newNavItemDataFromC(&result)
 }
 
@@ -16126,7 +16043,6 @@ func (self Context) NavMoveResultLocal() NavItemData {
 	}()
 
 	result := C.wrap_ImGuiContext_GetNavMoveResultLocal(selfArg)
-
 	return *newNavItemDataFromC(&result)
 }
 
@@ -16148,7 +16064,6 @@ func (self Context) NavMoveResultLocalVisible() NavItemData {
 	}()
 
 	result := C.wrap_ImGuiContext_GetNavMoveResultLocalVisible(selfArg)
-
 	return *newNavItemDataFromC(&result)
 }
 
@@ -16170,7 +16085,6 @@ func (self Context) NavMoveResultOther() NavItemData {
 	}()
 
 	result := C.wrap_ImGuiContext_GetNavMoveResultOther(selfArg)
-
 	return *newNavItemDataFromC(&result)
 }
 
@@ -16192,7 +16106,6 @@ func (self Context) NavTabbingResultFirst() NavItemData {
 	}()
 
 	result := C.wrap_ImGuiContext_GetNavTabbingResultFirst(selfArg)
-
 	return *newNavItemDataFromC(&result)
 }
 
@@ -16224,7 +16137,6 @@ func (self Context) NavWindowingTarget() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiContext_GetNavWindowingTarget(selfArg))
 }
 
@@ -16244,7 +16156,6 @@ func (self Context) NavWindowingTargetAnim() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiContext_GetNavWindowingTargetAnim(selfArg))
 }
 
@@ -16264,7 +16175,6 @@ func (self Context) NavWindowingListWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiContext_GetNavWindowingListWindow(selfArg))
 }
 
@@ -16466,7 +16376,6 @@ func (self Context) DragDropPayload() Payload {
 	}()
 
 	result := C.wrap_ImGuiContext_GetDragDropPayload(selfArg)
-
 	return *newPayloadFromC(&result)
 }
 
@@ -16605,7 +16514,7 @@ func (self Context) ClipperTempDataStacked() int32 {
 	return int32(C.wrap_ImGuiContext_GetClipperTempDataStacked(selfArg))
 }
 
-func (self Context) SetClipperTempData(v Vector[ListClipperData]) {
+func (self Context) SetClipperTempData(v Vector[*ListClipperData]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiListClipperData)
@@ -16636,7 +16545,6 @@ func (self Context) CurrentTable() Table {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newTableFromC(C.wrap_ImGuiContext_GetCurrentTable(selfArg))
 }
 
@@ -16655,7 +16563,7 @@ func (self Context) TablesTempDataStacked() int32 {
 	return int32(C.wrap_ImGuiContext_GetTablesTempDataStacked(selfArg))
 }
 
-func (self Context) SetTablesTempData(v Vector[TableTempData]) {
+func (self Context) SetTablesTempData(v Vector[*TableTempData]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiTableTempData)
@@ -16685,7 +16593,7 @@ func (self Context) SetTablesLastTimeActive(v Vector[*float32]) {
 	vDataFin()
 }
 
-func (self Context) SetDrawChannelsTempMergeBuffer(v Vector[DrawChannel]) {
+func (self Context) SetDrawChannelsTempMergeBuffer(v Vector[*DrawChannel]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImDrawChannel)
@@ -16716,11 +16624,10 @@ func (self Context) CurrentTabBar() TabBar {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newTabBarFromC(C.wrap_ImGuiContext_GetCurrentTabBar(selfArg))
 }
 
-func (self Context) SetCurrentTabBarStack(v Vector[PtrOrIndex]) {
+func (self Context) SetCurrentTabBarStack(v Vector[*PtrOrIndex]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiPtrOrIndex)
@@ -16735,7 +16642,7 @@ func (self Context) SetCurrentTabBarStack(v Vector[PtrOrIndex]) {
 	vDataFin()
 }
 
-func (self Context) SetShrinkWidthBuffer(v Vector[ShrinkWidthItem]) {
+func (self Context) SetShrinkWidthBuffer(v Vector[*ShrinkWidthItem]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiShrinkWidthItem)
@@ -16903,7 +16810,6 @@ func (self Context) InputTextState() InputTextState {
 	}()
 
 	result := C.wrap_ImGuiContext_GetInputTextState(selfArg)
-
 	return *newInputTextStateFromC(&result)
 }
 
@@ -16925,7 +16831,6 @@ func (self Context) InputTextDeactivatedState() InputTextDeactivatedState {
 	}()
 
 	result := C.wrap_ImGuiContext_GetInputTextDeactivatedState(selfArg)
-
 	return *newInputTextDeactivatedStateFromC(&result)
 }
 
@@ -16947,7 +16852,6 @@ func (self Context) InputTextPasswordFont() Font {
 	}()
 
 	result := C.wrap_ImGuiContext_GetInputTextPasswordFont(selfArg)
-
 	return *newFontFromC(&result)
 }
 
@@ -17089,7 +16993,6 @@ func (self Context) ComboPreviewData() ComboPreviewData {
 	}()
 
 	result := C.wrap_ImGuiContext_GetComboPreviewData(selfArg)
-
 	return *newComboPreviewDataFromC(&result)
 }
 
@@ -17291,7 +17194,6 @@ func (self Context) PlatformImeData() PlatformImeData {
 	}()
 
 	result := C.wrap_ImGuiContext_GetPlatformImeData(selfArg)
-
 	return *newPlatformImeDataFromC(&result)
 }
 
@@ -17313,7 +17215,6 @@ func (self Context) PlatformImeDataPrev() PlatformImeData {
 	}()
 
 	result := C.wrap_ImGuiContext_GetPlatformImeDataPrev(selfArg)
-
 	return *newPlatformImeDataFromC(&result)
 }
 
@@ -17365,7 +17266,6 @@ func (self Context) DockContext() DockContext {
 	}()
 
 	result := C.wrap_ImGuiContext_GetDockContext(selfArg)
-
 	return *newDockContextFromC(&result)
 }
 
@@ -17417,11 +17317,10 @@ func (self Context) SettingsIniData() TextBuffer {
 	}()
 
 	result := C.wrap_ImGuiContext_GetSettingsIniData(selfArg)
-
 	return *newTextBufferFromC(&result)
 }
 
-func (self Context) SetSettingsHandlers(v Vector[SettingsHandler]) {
+func (self Context) SetSettingsHandlers(v Vector[*SettingsHandler]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiSettingsHandler)
@@ -17436,7 +17335,7 @@ func (self Context) SetSettingsHandlers(v Vector[SettingsHandler]) {
 	vDataFin()
 }
 
-func (self Context) SetHooks(v Vector[ContextHook]) {
+func (self Context) SetHooks(v Vector[*ContextHook]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiContextHook)
@@ -17514,7 +17413,6 @@ func (self Context) LogBuffer() TextBuffer {
 	}()
 
 	result := C.wrap_ImGuiContext_GetLogBuffer(selfArg)
-
 	return *newTextBufferFromC(&result)
 }
 
@@ -17664,7 +17562,6 @@ func (self Context) DebugLogBuf() TextBuffer {
 	}()
 
 	result := C.wrap_ImGuiContext_GetDebugLogBuf(selfArg)
-
 	return *newTextBufferFromC(&result)
 }
 
@@ -17686,7 +17583,6 @@ func (self Context) DebugLogIndex() TextIndex {
 	}()
 
 	result := C.wrap_ImGuiContext_GetDebugLogIndex(selfArg)
-
 	return *newTextIndexFromC(&result)
 }
 
@@ -17798,7 +17694,6 @@ func (self Context) DebugMetricsConfig() MetricsConfig {
 	}()
 
 	result := C.wrap_ImGuiContext_GetDebugMetricsConfig(selfArg)
-
 	return *newMetricsConfigFromC(&result)
 }
 
@@ -17820,7 +17715,6 @@ func (self Context) DebugStackTool() StackTool {
 	}()
 
 	result := C.wrap_ImGuiContext_GetDebugStackTool(selfArg)
-
 	return *newStackToolFromC(&result)
 }
 
@@ -17840,7 +17734,6 @@ func (self Context) DebugHoveredDockNode() DockNode {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newDockNodeFromC(C.wrap_ImGuiContext_GetDebugHoveredDockNode(selfArg))
 }
 
@@ -18144,7 +18037,6 @@ func (self DockContext) Nodes() Storage {
 	}()
 
 	result := C.wrap_ImGuiDockContext_GetNodes(selfArg)
-
 	return *newStorageFromC(&result)
 }
 
@@ -18254,7 +18146,6 @@ func (self DockNode) ParentNode() DockNode {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newDockNodeFromC(C.wrap_ImGuiDockNode_GetParentNode(selfArg))
 }
 
@@ -18274,7 +18165,6 @@ func (self DockNode) TabBar() TabBar {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newTabBarFromC(C.wrap_ImGuiDockNode_GetTabBar(selfArg))
 }
 
@@ -18356,7 +18246,6 @@ func (self DockNode) WindowClass() WindowClass {
 	}()
 
 	result := C.wrap_ImGuiDockNode_GetWindowClass(selfArg)
-
 	return *newWindowClassFromC(&result)
 }
 
@@ -18391,7 +18280,6 @@ func (self DockNode) HostWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiDockNode_GetHostWindow(selfArg))
 }
 
@@ -18411,7 +18299,6 @@ func (self DockNode) VisibleWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiDockNode_GetVisibleWindow(selfArg))
 }
 
@@ -18431,7 +18318,6 @@ func (self DockNode) CentralNode() DockNode {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newDockNodeFromC(C.wrap_ImGuiDockNode_GetCentralNode(selfArg))
 }
 
@@ -18451,7 +18337,6 @@ func (self DockNode) OnlyNodeWithWindows() DockNode {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newDockNodeFromC(C.wrap_ImGuiDockNode_GetOnlyNodeWithWindows(selfArg))
 }
 
@@ -18848,7 +18733,6 @@ func (self GroupData) BackupIndent() Vec1 {
 	}()
 
 	result := C.wrap_ImGuiGroupData_GetBackupIndent(selfArg)
-
 	return *newVec1FromC(&result)
 }
 
@@ -18870,7 +18754,6 @@ func (self GroupData) BackupGroupOffset() Vec1 {
 	}()
 
 	result := C.wrap_ImGuiGroupData_GetBackupGroupOffset(selfArg)
-
 	return *newVec1FromC(&result)
 }
 
@@ -19108,7 +18991,6 @@ func (self IO) Fonts() FontAtlas {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontAtlasFromC(C.wrap_ImGuiIO_GetFonts(selfArg))
 }
 
@@ -19158,7 +19040,6 @@ func (self IO) FontDefault() Font {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newFontFromC(C.wrap_ImGuiIO_GetFontDefault(selfArg))
 }
 
@@ -19906,7 +19787,6 @@ func (self IO) Ctx() Context {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newContextFromC(C.wrap_ImGuiIO_GetCtx(selfArg))
 }
 
@@ -20485,7 +20365,6 @@ func (self InputTextCallbackData) Ctx() Context {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newContextFromC(C.wrap_ImGuiInputTextCallbackData_GetCtx(selfArg))
 }
 
@@ -20719,7 +20598,6 @@ func (self InputTextState) Ctx() Context {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newContextFromC(C.wrap_ImGuiInputTextState_GetCtx(selfArg))
 }
 
@@ -20874,7 +20752,6 @@ func (self InputTextState) Stb() STBTexteditState {
 	}()
 
 	result := C.wrap_ImGuiInputTextState_GetStb(selfArg)
-
 	return *newSTBTexteditStateFromC(&result)
 }
 
@@ -21133,7 +21010,7 @@ func (self KeyRoutingData) RoutingNext() ID {
 	return ID(C.wrap_ImGuiKeyRoutingData_GetRoutingNext(selfArg))
 }
 
-func (self KeyRoutingTable) SetEntries(v Vector[KeyRoutingData]) {
+func (self KeyRoutingTable) SetEntries(v Vector[*KeyRoutingData]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiKeyRoutingData)
@@ -21148,7 +21025,7 @@ func (self KeyRoutingTable) SetEntries(v Vector[KeyRoutingData]) {
 	vDataFin()
 }
 
-func (self KeyRoutingTable) SetEntriesNext(v Vector[KeyRoutingData]) {
+func (self KeyRoutingTable) SetEntriesNext(v Vector[*KeyRoutingData]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiKeyRoutingData)
@@ -21269,7 +21146,6 @@ func (self ListClipper) Ctx() Context {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newContextFromC(C.wrap_ImGuiListClipper_GetCtx(selfArg))
 }
 
@@ -21379,7 +21255,6 @@ func (self ListClipperData) ListClipper() ListClipper {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newListClipperFromC(C.wrap_ImGuiListClipperData_GetListClipper(selfArg))
 }
 
@@ -21428,7 +21303,7 @@ func (self ListClipperData) ItemsFrozen() int32 {
 	return int32(C.wrap_ImGuiListClipperData_GetItemsFrozen(selfArg))
 }
 
-func (self ListClipperData) SetRanges(v Vector[ListClipperRange]) {
+func (self ListClipperData) SetRanges(v Vector[*ListClipperRange]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiListClipperRange)
@@ -21838,7 +21713,6 @@ func (self NavItemData) Window() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiNavItemData_GetWindow(selfArg))
 }
 
@@ -22355,7 +22229,6 @@ func (self NextWindowData) WindowClass() WindowClass {
 	}()
 
 	result := C.wrap_ImGuiNextWindowData_GetWindowClass(selfArg)
-
 	return *newWindowClassFromC(&result)
 }
 
@@ -22659,7 +22532,7 @@ func (self OldColumns) HostBackupParentWorkRect() Rect {
 	return *(&Rect{}).fromC(C.wrap_ImGuiOldColumns_GetHostBackupParentWorkRect(selfArg))
 }
 
-func (self OldColumns) SetColumns(v Vector[OldColumnData]) {
+func (self OldColumns) SetColumns(v Vector[*OldColumnData]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiOldColumnData)
@@ -22692,7 +22565,6 @@ func (self OldColumns) Splitter() DrawListSplitter {
 	}()
 
 	result := C.wrap_ImGuiOldColumns_GetSplitter(selfArg)
-
 	return *newDrawListSplitterFromC(&result)
 }
 
@@ -22816,7 +22688,7 @@ func (self Payload) Delivery() bool {
 	return C.wrap_ImGuiPayload_GetDelivery(selfArg) == C.bool(true)
 }
 
-func (self PlatformIO) SetMonitors(v Vector[PlatformMonitor]) {
+func (self PlatformIO) SetMonitors(v Vector[*PlatformMonitor]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiPlatformMonitor)
@@ -22997,7 +22869,6 @@ func (self PopupData) Window() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiPopupData_GetWindow(selfArg))
 }
 
@@ -23017,7 +22888,6 @@ func (self PopupData) BackupNavWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiPopupData_GetBackupNavWindow(selfArg))
 }
 
@@ -23520,7 +23390,7 @@ func (self StackTool) QueryId() ID {
 	return ID(C.wrap_ImGuiStackTool_GetQueryId(selfArg))
 }
 
-func (self StackTool) SetResults(v Vector[StackLevelInfo]) {
+func (self StackTool) SetResults(v Vector[*StackLevelInfo]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiStackLevelInfo)
@@ -23565,7 +23435,7 @@ func (self StackTool) CopyToClipboardLastTime() float32 {
 	return float32(C.wrap_ImGuiStackTool_GetCopyToClipboardLastTime(selfArg))
 }
 
-func (self Storage) SetData(v Vector[StoragePair]) {
+func (self Storage) SetData(v Vector[*StoragePair]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiStoragePair)
@@ -24345,7 +24215,7 @@ func (self StyleMod) VarIdx() StyleVar {
 	return StyleVar(C.wrap_ImGuiStyleMod_GetVarIdx(selfArg))
 }
 
-func (self TabBar) SetTabs(v Vector[TabItem]) {
+func (self TabBar) SetTabs(v Vector[*TabItem]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiTabItem)
@@ -24813,7 +24683,6 @@ func (self TabBar) TabsNames() TextBuffer {
 	}()
 
 	result := C.wrap_ImGuiTabBar_GetTabsNames(selfArg)
-
 	return *newTextBufferFromC(&result)
 }
 
@@ -24863,7 +24732,6 @@ func (self TabItem) Window() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiTabItem_GetWindow(selfArg))
 }
 
@@ -25078,7 +24946,6 @@ func (self Table) TempData() TableTempData {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newTableTempDataFromC(C.wrap_ImGuiTable_GetTempData(selfArg))
 }
 
@@ -25743,7 +25610,6 @@ func (self Table) OuterWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiTable_GetOuterWindow(selfArg))
 }
 
@@ -25763,7 +25629,6 @@ func (self Table) InnerWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiTable_GetInnerWindow(selfArg))
 }
 
@@ -25785,7 +25650,6 @@ func (self Table) ColumnsNames() TextBuffer {
 	}()
 
 	result := C.wrap_ImGuiTable_GetColumnsNames(selfArg)
-
 	return *newTextBufferFromC(&result)
 }
 
@@ -25805,7 +25669,6 @@ func (self Table) DrawSplitter() DrawListSplitter {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newDrawListSplitterFromC(C.wrap_ImGuiTable_GetDrawSplitter(selfArg))
 }
 
@@ -25827,11 +25690,10 @@ func (self Table) InstanceDataFirst() TableInstanceData {
 	}()
 
 	result := C.wrap_ImGuiTable_GetInstanceDataFirst(selfArg)
-
 	return *newTableInstanceDataFromC(&result)
 }
 
-func (self Table) SetInstanceDataExtra(v Vector[TableInstanceData]) {
+func (self Table) SetInstanceDataExtra(v Vector[*TableInstanceData]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiTableInstanceData)
@@ -25864,11 +25726,10 @@ func (self Table) SortSpecsSingle() TableColumnSortSpecs {
 	}()
 
 	result := C.wrap_ImGuiTable_GetSortSpecsSingle(selfArg)
-
 	return *newTableColumnSortSpecsFromC(&result)
 }
 
-func (self Table) SetSortSpecsMulti(v Vector[TableColumnSortSpecs]) {
+func (self Table) SetSortSpecsMulti(v Vector[*TableColumnSortSpecs]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiTableColumnSortSpecs)
@@ -25901,7 +25762,6 @@ func (self Table) SortSpecs() TableSortSpecs {
 	}()
 
 	result := C.wrap_ImGuiTable_GetSortSpecs(selfArg)
-
 	return *newTableSortSpecsFromC(&result)
 }
 
@@ -27556,7 +27416,6 @@ func (self TableSortSpecs) Specs() TableColumnSortSpecs {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newTableColumnSortSpecsFromC(C.wrap_ImGuiTableSortSpecs_GetSpecs(selfArg))
 }
 
@@ -27653,7 +27512,6 @@ func (self TableTempData) DrawSplitter() DrawListSplitter {
 	}()
 
 	result := C.wrap_ImGuiTableTempData_GetDrawSplitter(selfArg)
-
 	return *newDrawListSplitterFromC(&result)
 }
 
@@ -27750,7 +27608,6 @@ func (self TableTempData) HostBackupColumnsOffset() Vec1 {
 	}()
 
 	result := C.wrap_ImGuiTableTempData_GetHostBackupColumnsOffset(selfArg)
-
 	return *newVec1FromC(&result)
 }
 
@@ -27799,7 +27656,7 @@ func (self TextBuffer) SetBuf(v Vector[string]) {
 	vDataFin()
 }
 
-func (self TextFilter) SetFilters(v Vector[TextRange]) {
+func (self TextFilter) SetFilters(v Vector[*TextRange]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiTextRange)
@@ -28033,7 +27890,6 @@ func (self Viewport) DrawData() DrawData {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newDrawDataFromC(C.wrap_ImGuiViewport_GetDrawData(selfArg))
 }
 
@@ -28175,7 +28031,6 @@ func (self ViewportP) ImGuiViewport() Viewport {
 	}()
 
 	result := C.wrap_ImGuiViewportP_Get_ImGuiViewport(selfArg)
-
 	return *newViewportFromC(&result)
 }
 
@@ -28195,7 +28050,6 @@ func (self ViewportP) Window() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiViewportP_GetWindow(selfArg))
 }
 
@@ -28352,7 +28206,6 @@ func (self ViewportP) DrawDataP() DrawData {
 	}()
 
 	result := C.wrap_ImGuiViewportP_GetDrawDataP(selfArg)
-
 	return *newDrawDataFromC(&result)
 }
 
@@ -28374,7 +28227,6 @@ func (self ViewportP) DrawDataBuilder() DrawDataBuilder {
 	}()
 
 	result := C.wrap_ImGuiViewportP_GetDrawDataBuilder(selfArg)
-
 	return *newDrawDataBuilderFromC(&result)
 }
 
@@ -28499,7 +28351,6 @@ func (self Window) Ctx() Context {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newContextFromC(C.wrap_ImGuiWindow_GetCtx(selfArg))
 }
 
@@ -28585,7 +28436,6 @@ func (self Window) WindowClass() WindowClass {
 	}()
 
 	result := C.wrap_ImGuiWindow_GetWindowClass(selfArg)
-
 	return *newWindowClassFromC(&result)
 }
 
@@ -28605,7 +28455,6 @@ func (self Window) Viewport() ViewportP {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newViewportPFromC(C.wrap_ImGuiWindow_GetViewport(selfArg))
 }
 
@@ -29587,7 +29436,6 @@ func (self Window) DC() WindowTempData {
 	}()
 
 	result := C.wrap_ImGuiWindow_GetDC(selfArg)
-
 	return *newWindowTempDataFromC(&result)
 }
 
@@ -29774,11 +29622,10 @@ func (self Window) StateStorage() Storage {
 	}()
 
 	result := C.wrap_ImGuiWindow_GetStateStorage(selfArg)
-
 	return *newStorageFromC(&result)
 }
 
-func (self Window) SetColumnsStorage(v Vector[OldColumns]) {
+func (self Window) SetColumnsStorage(v Vector[*OldColumns]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiOldColumns)
@@ -29854,7 +29701,6 @@ func (self Window) DrawList() DrawList {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newDrawListFromC(C.wrap_ImGuiWindow_GetDrawList(selfArg))
 }
 
@@ -29876,7 +29722,6 @@ func (self Window) DrawListInst() DrawList {
 	}()
 
 	result := C.wrap_ImGuiWindow_GetDrawListInst(selfArg)
-
 	return *newDrawListFromC(&result)
 }
 
@@ -29896,7 +29741,6 @@ func (self Window) ParentWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiWindow_GetParentWindow(selfArg))
 }
 
@@ -29916,7 +29760,6 @@ func (self Window) ParentWindowInBeginStack() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiWindow_GetParentWindowInBeginStack(selfArg))
 }
 
@@ -29936,7 +29779,6 @@ func (self Window) RootWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiWindow_GetRootWindow(selfArg))
 }
 
@@ -29956,7 +29798,6 @@ func (self Window) RootWindowPopupTree() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiWindow_GetRootWindowPopupTree(selfArg))
 }
 
@@ -29976,7 +29817,6 @@ func (self Window) RootWindowDockTree() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiWindow_GetRootWindowDockTree(selfArg))
 }
 
@@ -29996,7 +29836,6 @@ func (self Window) RootWindowForTitleBarHighlight() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiWindow_GetRootWindowForTitleBarHighlight(selfArg))
 }
 
@@ -30016,7 +29855,6 @@ func (self Window) RootWindowForNav() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiWindow_GetRootWindowForNav(selfArg))
 }
 
@@ -30036,7 +29874,6 @@ func (self Window) NavLastChildNavWindow() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiWindow_GetNavLastChildNavWindow(selfArg))
 }
 
@@ -30193,7 +30030,6 @@ func (self Window) DockStyle() WindowDockStyle {
 	}()
 
 	result := C.wrap_ImGuiWindow_GetDockStyle(selfArg)
-
 	return *newWindowDockStyleFromC(&result)
 }
 
@@ -30213,7 +30049,6 @@ func (self Window) DockNode() DockNode {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newDockNodeFromC(C.wrap_ImGuiWindow_GetDockNode(selfArg))
 }
 
@@ -30233,7 +30068,6 @@ func (self Window) DockNodeAsHost() DockNode {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newDockNodeFromC(C.wrap_ImGuiWindow_GetDockNodeAsHost(selfArg))
 }
 
@@ -30538,7 +30372,6 @@ func (self WindowStackData) Window() Window {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newWindowFromC(C.wrap_ImGuiWindowStackData_GetWindow(selfArg))
 }
 
@@ -30560,7 +30393,6 @@ func (self WindowStackData) ParentLastItemDataBackup() LastItemData {
 	}()
 
 	result := C.wrap_ImGuiWindowStackData_GetParentLastItemDataBackup(selfArg)
-
 	return *newLastItemDataFromC(&result)
 }
 
@@ -30582,7 +30414,6 @@ func (self WindowStackData) StackSizesOnBegin() StackSizes {
 	}()
 
 	result := C.wrap_ImGuiWindowStackData_GetStackSizesOnBegin(selfArg)
-
 	return *newStackSizesFromC(&result)
 }
 
@@ -30769,7 +30600,6 @@ func (self WindowTempData) Indent() Vec1 {
 	}()
 
 	result := C.wrap_ImGuiWindowTempData_GetIndent(selfArg)
-
 	return *newVec1FromC(&result)
 }
 
@@ -30791,7 +30621,6 @@ func (self WindowTempData) ColumnsOffset() Vec1 {
 	}()
 
 	result := C.wrap_ImGuiWindowTempData_GetColumnsOffset(selfArg)
-
 	return *newVec1FromC(&result)
 }
 
@@ -30813,7 +30642,6 @@ func (self WindowTempData) GroupOffset() Vec1 {
 	}()
 
 	result := C.wrap_ImGuiWindowTempData_GetGroupOffset(selfArg)
-
 	return *newVec1FromC(&result)
 }
 
@@ -30970,7 +30798,6 @@ func (self WindowTempData) MenuColumns() MenuColumns {
 	}()
 
 	result := C.wrap_ImGuiWindowTempData_GetMenuColumns(selfArg)
-
 	return *newMenuColumnsFromC(&result)
 }
 
@@ -31020,7 +30847,6 @@ func (self WindowTempData) StateStorage() Storage {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newStorageFromC(C.wrap_ImGuiWindowTempData_GetStateStorage(selfArg))
 }
 
@@ -31040,7 +30866,6 @@ func (self WindowTempData) CurrentColumns() OldColumns {
 	defer func() {
 		selfFin()
 	}()
-
 	return *newOldColumnsFromC(C.wrap_ImGuiWindowTempData_GetCurrentColumns(selfArg))
 }
 
@@ -31274,7 +31099,6 @@ func (self STBTexteditState) TexteditStateGetundostate() StbUndoState {
 	}()
 
 	result := C.wrap_STB_TexteditState_Getundostate(selfArg)
-
 	return *newStbUndoStateFromC(&result)
 }
 
