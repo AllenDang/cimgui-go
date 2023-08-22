@@ -217,8 +217,7 @@ return result, func() {}
 	} else {
 		for i, m := range s.Members {
 			w := wrappers[i].fromC
-			stmt := strings.TrimPrefix(w.returnStmt, "return")
-			stmt = fmt.Sprintf(stmt, fmt.Sprintf("cvalue.%s", m.Name))
+			stmt := fmt.Sprintf(w.returnStmt, fmt.Sprintf("cvalue.%s", m.Name))
 			fmt.Fprintf(sb, "result.%s = %s\n", renameStructField(m.Name), stmt)
 		}
 	}

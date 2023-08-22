@@ -475,11 +475,13 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames, 
 	if strings.HasPrefix(a.Type, "ImVector_") &&
 		!(strings.HasSuffix(a.Type, "*") || strings.HasSuffix(a.Type, "]")) {
 		pureType := strings.TrimPrefix(a.Type, "ImVector_") + "*"
+		fmt.Println(pureType)
 		dataName := a.Name + "Data"
 		_, w, err := getArgWrapper(&ArgDef{
 			Name: dataName,
 			Type: pureType,
 		}, false, false, structNames, enumNames)
+		fmt.Printf("%#v\n", w)
 
 		if err != nil {
 			return "", ArgumentWrapperData{}, fmt.Errorf("creating vector wrapper %w", err)
@@ -521,6 +523,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames, 
 
 		fn := ""
 		if isPointer {
+			w.ArgType = "*" + w.ArgType
 			fn = "handle"
 		} else {
 			fn = "c"
