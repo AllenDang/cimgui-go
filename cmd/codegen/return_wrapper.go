@@ -10,12 +10,12 @@ type returnWrapper struct {
 
 func getReturnTypeWrapperFunc(returnType string) (returnWrapper, error) {
 	returnWrapperMap := map[string]returnWrapper{
-		"bool":                     {"bool", "return %s == C.bool(true)"},
+		"bool":                     {"bool", "%s == C.bool(true)"},
 		"char":                     simpleR("rune"),
 		"unsigned char":            simpleR("uint"),
-		"unsigned char*":           {"(*uint)", "return (*uint)(unsafe.Pointer(%s))"}, // NOTE: This should work but I'm not 100% sure
-		"char*":                    {"string", "return C.GoString(%s)"},
-		"const char*":              {"string", "return C.GoString(%s)"},
+		"unsigned char*":           {"(*uint)", "(*uint)(unsafe.Pointer(%s))"}, // NOTE: This should work but I'm not 100% sure
+		"char*":                    {"string", "C.GoString(%s)"},
+		"const char*":              {"string", "C.GoString(%s)"},
 		"const ImWchar*":           simpleR("(*Wchar)"),
 		"ImWchar":                  simpleR("Wchar"),
 		"ImWchar16":                simpleR("uint16"),
@@ -60,24 +60,21 @@ func imVec4PtrReturnW() returnWrapper {
 	// TODO: verify if it wraps correctly
 	return returnWrapper{
 		returnType: "*Vec4",
-		returnStmt: `out := &Vec4{}
-out.fromC(*%s)
-return out
-`,
+		returnStmt: "(&Vec4{}).fromC(*%s)",
 	}
 }
 
 func simpleR(goType string) returnWrapper {
-	return returnWrapper{goType, fmt.Sprintf("return %s(%s)", goType, "%s")}
+	return returnWrapper{goType, fmt.Sprintf("%s(%s)", goType, "%s")}
 }
 
 func simplePtrR(goType string) returnWrapper {
-	return returnWrapper{goType, fmt.Sprintf("return (%s)(%s)", goType, "%s")}
+	return returnWrapper{goType, fmt.Sprintf("(%s)(%s)", goType, "%s")}
 }
 
 func wrappableR(goType string) returnWrapper {
 	return returnWrapper{
 		returnType: goType,
-		returnStmt: fmt.Sprintf("return *(&%s{}).fromC(%s)", goType, "%s"),
+		returnStmt: fmt.Sprintf("*(&%s{}).fromC(%s)", goType, "%s"),
 	}
 }

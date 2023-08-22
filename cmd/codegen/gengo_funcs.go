@@ -279,7 +279,7 @@ result := C.%s(%s)
 	case returnTypeNonUDT:
 		g.sb.WriteString(fmt.Sprintf("return %s", cfuncCall))
 	case returnTypeKnown, returnTypeEnum, returnTypeStructPtr, returnTypeConstructor, returnTypeStruct:
-		g.sb.WriteString(fmt.Sprintf(rw.returnStmt, cfuncCall))
+		g.sb.WriteString("return " + fmt.Sprintf(rw.returnStmt, cfuncCall))
 	}
 
 	g.sb.WriteString("}\n\n")
@@ -297,17 +297,16 @@ func getReturnWrapper(
 	switch {
 	case err == nil:
 		return w, nil
-	case structNames[t]:
+	case structNames[t] && !shouldSkipStruct(t):
 		return returnWrapper{
 			returnType: renameGoIdentifier(t),
-			returnStmt: fmt.Sprintf(`
-return *new%sFromC(%%s)
+			returnStmt: fmt.Sprintf(`*new%sFromC(%%s)
 `, renameGoIdentifier(t)),
 		}, nil
 	case isEnum(t, enumNames):
 		return returnWrapper{
 			returnType: renameEnum(t),
-			returnStmt: fmt.Sprintf("return %s(%%s)", renameEnum(t)),
+			returnStmt: fmt.Sprintf("%s(%%s)", renameEnum(t)),
 		}, nil
 	case strings.HasPrefix(t, "ImVector_") &&
 		!(strings.HasSuffix(t, "*") || strings.HasSuffix(t, "]")):
@@ -318,21 +317,17 @@ return *new%sFromC(%%s)
 		}
 		return returnWrapper{
 			returnType: fmt.Sprintf("Vector[%s]", rw.returnType),
-			returnStmt: fmt.Sprintf("newVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
+			returnStmt: fmt.Sprintf("newVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
 		}, nil
-	case strings.HasSuffix(t, "*") && structNames[strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const ")]:
+	case strings.HasSuffix(t, "*") && structNames[strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const ")] && !shouldSkipStruct(strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const ")):
 		return returnWrapper{
 			returnType: "*" + renameGoIdentifier(strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const ")),
-			returnStmt: fmt.Sprintf(`
-return new%sFromC(%%s)
-`, renameGoIdentifier(strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const "))),
+			returnStmt: fmt.Sprintf("new%sFromC(%%s)", renameGoIdentifier(strings.TrimPrefix(strings.TrimSuffix(t, "*"), "const "))),
 		}, nil
 	case strings.HasSuffix(t, "*") && isEnum(strings.TrimSuffix(t, "*"), enumNames):
 		return returnWrapper{
 			returnType: "*" + renameEnum(strings.TrimSuffix(t, "*")),
-			returnStmt: fmt.Sprintf(`
-return %s(%%s)
-`, renameEnum(strings.TrimSuffix(t, "*"))),
+			returnStmt: fmt.Sprintf("%s(%%s)", renameEnum(strings.TrimSuffix(t, "*"))),
 		}, nil
 	default:
 		return returnWrapper{}, fmt.Errorf("unknown return type %s", t)
