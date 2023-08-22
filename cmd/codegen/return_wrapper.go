@@ -27,6 +27,7 @@ func getReturnWrapper(
 		"ImWchar":                  simpleR("Wchar"),
 		"ImWchar16":                simpleR("uint16"),
 		"float":                    simpleR("float32"),
+		"float*":                   simplePtrR("*float32"),
 		"double":                   simpleR("float64"),
 		"int":                      simpleR("int32"),
 		"int*":                     simplePtrR("*int32"),
