@@ -12728,7 +12728,7 @@ func (self Font) FontSize() float32 {
 	return float32(C.wrap_ImFont_GetFontSize(selfArg))
 }
 
-func (self Font) SetIndexLookup(v Vector[*Wchar]) {
+func (self Font) SetIndexLookup(v Vector[(*Wchar)]) {
 	vData := v.Data
 
 	vVecArg := new(C.ImVector_ImWchar)
@@ -12813,19 +12813,19 @@ func (self Font) ConfigData() FontConfig {
 	return *newFontConfigFromC(C.wrap_ImFont_GetConfigData(selfArg))
 }
 
-func (self Font) SetConfigDataCount(v int) {
+func (self Font) SetConfigDataCount(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImFont_SetConfigDataCount(selfArg, C.short(v))
 }
 
-func (self Font) ConfigDataCount() int {
+func (self Font) ConfigDataCount() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImFont_GetConfigDataCount(selfArg))
+	return int16(C.wrap_ImFont_GetConfigDataCount(selfArg))
 }
 
 func (self Font) SetFallbackChar(v Wchar) {
@@ -12858,19 +12858,19 @@ func (self Font) EllipsisChar() Wchar {
 	return Wchar(C.wrap_ImFont_GetEllipsisChar(selfArg))
 }
 
-func (self Font) SetEllipsisCharCount(v int) {
+func (self Font) SetEllipsisCharCount(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImFont_SetEllipsisCharCount(selfArg, C.short(v))
 }
 
-func (self Font) EllipsisCharCount() int {
+func (self Font) EllipsisCharCount() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImFont_GetEllipsisCharCount(selfArg))
+	return int16(C.wrap_ImFont_GetEllipsisCharCount(selfArg))
 }
 
 func (self Font) SetEllipsisWidth(v float32) {
@@ -13275,64 +13275,64 @@ func (self FontAtlas) PackIdLines() int32 {
 	return int32(C.wrap_ImFontAtlas_GetPackIdLines(selfArg))
 }
 
-func (self FontAtlasCustomRect) SetWidth(v uint) {
+func (self FontAtlasCustomRect) SetWidth(v uint16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImFontAtlasCustomRect_SetWidth(selfArg, C.ushort(v))
 }
 
-func (self FontAtlasCustomRect) Width() uint {
+func (self FontAtlasCustomRect) Width() uint16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint(C.wrap_ImFontAtlasCustomRect_GetWidth(selfArg))
+	return uint16(C.wrap_ImFontAtlasCustomRect_GetWidth(selfArg))
 }
 
-func (self FontAtlasCustomRect) SetHeight(v uint) {
+func (self FontAtlasCustomRect) SetHeight(v uint16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImFontAtlasCustomRect_SetHeight(selfArg, C.ushort(v))
 }
 
-func (self FontAtlasCustomRect) Height() uint {
+func (self FontAtlasCustomRect) Height() uint16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint(C.wrap_ImFontAtlasCustomRect_GetHeight(selfArg))
+	return uint16(C.wrap_ImFontAtlasCustomRect_GetHeight(selfArg))
 }
 
-func (self FontAtlasCustomRect) SetX(v uint) {
+func (self FontAtlasCustomRect) SetX(v uint16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImFontAtlasCustomRect_SetX(selfArg, C.ushort(v))
 }
 
-func (self FontAtlasCustomRect) X() uint {
+func (self FontAtlasCustomRect) X() uint16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint(C.wrap_ImFontAtlasCustomRect_GetX(selfArg))
+	return uint16(C.wrap_ImFontAtlasCustomRect_GetX(selfArg))
 }
 
-func (self FontAtlasCustomRect) SetY(v uint) {
+func (self FontAtlasCustomRect) SetY(v uint16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImFontAtlasCustomRect_SetY(selfArg, C.ushort(v))
 }
 
-func (self FontAtlasCustomRect) Y() uint {
+func (self FontAtlasCustomRect) Y() uint16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint(C.wrap_ImFontAtlasCustomRect_GetY(selfArg))
+	return uint16(C.wrap_ImFontAtlasCustomRect_GetY(selfArg))
 }
 
 func (self FontAtlasCustomRect) SetGlyphID(v uint32) {
@@ -17116,34 +17116,34 @@ func (self Context) DisabledAlphaBackup() float32 {
 	return float32(C.wrap_ImGuiContext_GetDisabledAlphaBackup(selfArg))
 }
 
-func (self Context) SetDisabledStackSize(v int) {
+func (self Context) SetDisabledStackSize(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetDisabledStackSize(selfArg, C.short(v))
 }
 
-func (self Context) DisabledStackSize() int {
+func (self Context) DisabledStackSize() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiContext_GetDisabledStackSize(selfArg))
+	return int16(C.wrap_ImGuiContext_GetDisabledStackSize(selfArg))
 }
 
-func (self Context) SetTooltipOverrideCount(v int) {
+func (self Context) SetTooltipOverrideCount(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetTooltipOverrideCount(selfArg, C.short(v))
 }
 
-func (self Context) TooltipOverrideCount() int {
+func (self Context) TooltipOverrideCount() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiContext_GetTooltipOverrideCount(selfArg))
+	return int16(C.wrap_ImGuiContext_GetTooltipOverrideCount(selfArg))
 }
 
 func (self Context) SetClipboardHandlerData(v Vector[string]) {
@@ -17586,34 +17586,34 @@ func (self Context) DebugLogIndex() TextIndex {
 	return *newTextIndexFromC(&result)
 }
 
-func (self Context) SetDebugLogClipperAutoDisableFrames(v uint) {
+func (self Context) SetDebugLogClipperAutoDisableFrames(v byte) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetDebugLogClipperAutoDisableFrames(selfArg, C.ImU8(v))
 }
 
-func (self Context) DebugLogClipperAutoDisableFrames() uint32 {
+func (self Context) DebugLogClipperAutoDisableFrames() byte {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiContext_GetDebugLogClipperAutoDisableFrames(selfArg))
+	return byte(C.wrap_ImGuiContext_GetDebugLogClipperAutoDisableFrames(selfArg))
 }
 
-func (self Context) SetDebugLocateFrames(v uint) {
+func (self Context) SetDebugLocateFrames(v byte) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetDebugLocateFrames(selfArg, C.ImU8(v))
 }
 
-func (self Context) DebugLocateFrames() uint32 {
+func (self Context) DebugLocateFrames() byte {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiContext_GetDebugLocateFrames(selfArg))
+	return byte(C.wrap_ImGuiContext_GetDebugLocateFrames(selfArg))
 }
 
 func (self Context) SetDebugBeginReturnValueCullDepth(v int) {
@@ -17646,19 +17646,19 @@ func (self Context) DebugItemPickerActive() bool {
 	return C.wrap_ImGuiContext_GetDebugItemPickerActive(selfArg) == C.bool(true)
 }
 
-func (self Context) SetDebugItemPickerMouseButton(v uint) {
+func (self Context) SetDebugItemPickerMouseButton(v byte) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetDebugItemPickerMouseButton(selfArg, C.ImU8(v))
 }
 
-func (self Context) DebugItemPickerMouseButton() uint32 {
+func (self Context) DebugItemPickerMouseButton() byte {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiContext_GetDebugItemPickerMouseButton(selfArg))
+	return byte(C.wrap_ImGuiContext_GetDebugItemPickerMouseButton(selfArg))
 }
 
 func (self Context) SetDebugItemPickerBreakId(v ID) {
@@ -20051,7 +20051,7 @@ func (self IO) InputQueueSurrogate() uint16 {
 	return uint16(C.wrap_ImGuiIO_GetInputQueueSurrogate(selfArg))
 }
 
-func (self IO) SetInputQueueCharacters(v Vector[*Wchar]) {
+func (self IO) SetInputQueueCharacters(v Vector[(*Wchar)]) {
 	vData := v.Data
 
 	vVecArg := new(C.ImVector_ImWchar)
@@ -20646,7 +20646,7 @@ func (self InputTextState) CurLenA() int32 {
 	return int32(C.wrap_ImGuiInputTextState_GetCurLenA(selfArg))
 }
 
-func (self InputTextState) SetTextW(v Vector[*Wchar]) {
+func (self InputTextState) SetTextW(v Vector[(*Wchar)]) {
 	vData := v.Data
 
 	vVecArg := new(C.ImVector_ImWchar)
@@ -20950,34 +20950,34 @@ func (self KeyOwnerData) LockUntilRelease() bool {
 	return C.wrap_ImGuiKeyOwnerData_GetLockUntilRelease(selfArg) == C.bool(true)
 }
 
-func (self KeyRoutingData) SetMods(v uint) {
+func (self KeyRoutingData) SetMods(v uint16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiKeyRoutingData_SetMods(selfArg, C.ImU16(v))
 }
 
-func (self KeyRoutingData) Mods() uint32 {
+func (self KeyRoutingData) Mods() uint16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiKeyRoutingData_GetMods(selfArg))
+	return uint16(C.wrap_ImGuiKeyRoutingData_GetMods(selfArg))
 }
 
-func (self KeyRoutingData) SetRoutingNextScore(v uint) {
+func (self KeyRoutingData) SetRoutingNextScore(v byte) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiKeyRoutingData_SetRoutingNextScore(selfArg, C.ImU8(v))
 }
 
-func (self KeyRoutingData) RoutingNextScore() uint32 {
+func (self KeyRoutingData) RoutingNextScore() byte {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiKeyRoutingData_GetRoutingNextScore(selfArg))
+	return byte(C.wrap_ImGuiKeyRoutingData_GetRoutingNextScore(selfArg))
 }
 
 func (self KeyRoutingData) SetRoutingCurr(v ID) {
@@ -21457,79 +21457,79 @@ func (self MenuColumns) NextTotalWidth() uint32 {
 	return uint32(C.wrap_ImGuiMenuColumns_GetNextTotalWidth(selfArg))
 }
 
-func (self MenuColumns) SetSpacing(v uint) {
+func (self MenuColumns) SetSpacing(v uint16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiMenuColumns_SetSpacing(selfArg, C.ImU16(v))
 }
 
-func (self MenuColumns) Spacing() uint32 {
+func (self MenuColumns) Spacing() uint16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiMenuColumns_GetSpacing(selfArg))
+	return uint16(C.wrap_ImGuiMenuColumns_GetSpacing(selfArg))
 }
 
-func (self MenuColumns) SetOffsetIcon(v uint) {
+func (self MenuColumns) SetOffsetIcon(v uint16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiMenuColumns_SetOffsetIcon(selfArg, C.ImU16(v))
 }
 
-func (self MenuColumns) OffsetIcon() uint32 {
+func (self MenuColumns) OffsetIcon() uint16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiMenuColumns_GetOffsetIcon(selfArg))
+	return uint16(C.wrap_ImGuiMenuColumns_GetOffsetIcon(selfArg))
 }
 
-func (self MenuColumns) SetOffsetLabel(v uint) {
+func (self MenuColumns) SetOffsetLabel(v uint16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiMenuColumns_SetOffsetLabel(selfArg, C.ImU16(v))
 }
 
-func (self MenuColumns) OffsetLabel() uint32 {
+func (self MenuColumns) OffsetLabel() uint16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiMenuColumns_GetOffsetLabel(selfArg))
+	return uint16(C.wrap_ImGuiMenuColumns_GetOffsetLabel(selfArg))
 }
 
-func (self MenuColumns) SetOffsetShortcut(v uint) {
+func (self MenuColumns) SetOffsetShortcut(v uint16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiMenuColumns_SetOffsetShortcut(selfArg, C.ImU16(v))
 }
 
-func (self MenuColumns) OffsetShortcut() uint32 {
+func (self MenuColumns) OffsetShortcut() uint16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiMenuColumns_GetOffsetShortcut(selfArg))
+	return uint16(C.wrap_ImGuiMenuColumns_GetOffsetShortcut(selfArg))
 }
 
-func (self MenuColumns) SetOffsetMark(v uint) {
+func (self MenuColumns) SetOffsetMark(v uint16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiMenuColumns_SetOffsetMark(selfArg, C.ImU16(v))
 }
 
-func (self MenuColumns) OffsetMark() uint32 {
+func (self MenuColumns) OffsetMark() uint16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiMenuColumns_GetOffsetMark(selfArg))
+	return uint16(C.wrap_ImGuiMenuColumns_GetOffsetMark(selfArg))
 }
 
 func (self MetricsConfig) SetShowDebugLog(v bool) {
@@ -23210,139 +23210,139 @@ func (self StackLevelInfo) DataType() DataType {
 	return DataType(C.wrap_ImGuiStackLevelInfo_GetDataType(selfArg))
 }
 
-func (self StackSizes) SetSizeOfIDStack(v int) {
+func (self StackSizes) SetSizeOfIDStack(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiStackSizes_SetSizeOfIDStack(selfArg, C.short(v))
 }
 
-func (self StackSizes) SizeOfIDStack() int {
+func (self StackSizes) SizeOfIDStack() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiStackSizes_GetSizeOfIDStack(selfArg))
+	return int16(C.wrap_ImGuiStackSizes_GetSizeOfIDStack(selfArg))
 }
 
-func (self StackSizes) SetSizeOfColorStack(v int) {
+func (self StackSizes) SetSizeOfColorStack(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiStackSizes_SetSizeOfColorStack(selfArg, C.short(v))
 }
 
-func (self StackSizes) SizeOfColorStack() int {
+func (self StackSizes) SizeOfColorStack() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiStackSizes_GetSizeOfColorStack(selfArg))
+	return int16(C.wrap_ImGuiStackSizes_GetSizeOfColorStack(selfArg))
 }
 
-func (self StackSizes) SetSizeOfStyleVarStack(v int) {
+func (self StackSizes) SetSizeOfStyleVarStack(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiStackSizes_SetSizeOfStyleVarStack(selfArg, C.short(v))
 }
 
-func (self StackSizes) SizeOfStyleVarStack() int {
+func (self StackSizes) SizeOfStyleVarStack() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiStackSizes_GetSizeOfStyleVarStack(selfArg))
+	return int16(C.wrap_ImGuiStackSizes_GetSizeOfStyleVarStack(selfArg))
 }
 
-func (self StackSizes) SetSizeOfFontStack(v int) {
+func (self StackSizes) SetSizeOfFontStack(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiStackSizes_SetSizeOfFontStack(selfArg, C.short(v))
 }
 
-func (self StackSizes) SizeOfFontStack() int {
+func (self StackSizes) SizeOfFontStack() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiStackSizes_GetSizeOfFontStack(selfArg))
+	return int16(C.wrap_ImGuiStackSizes_GetSizeOfFontStack(selfArg))
 }
 
-func (self StackSizes) SetSizeOfFocusScopeStack(v int) {
+func (self StackSizes) SetSizeOfFocusScopeStack(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiStackSizes_SetSizeOfFocusScopeStack(selfArg, C.short(v))
 }
 
-func (self StackSizes) SizeOfFocusScopeStack() int {
+func (self StackSizes) SizeOfFocusScopeStack() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiStackSizes_GetSizeOfFocusScopeStack(selfArg))
+	return int16(C.wrap_ImGuiStackSizes_GetSizeOfFocusScopeStack(selfArg))
 }
 
-func (self StackSizes) SetSizeOfGroupStack(v int) {
+func (self StackSizes) SetSizeOfGroupStack(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiStackSizes_SetSizeOfGroupStack(selfArg, C.short(v))
 }
 
-func (self StackSizes) SizeOfGroupStack() int {
+func (self StackSizes) SizeOfGroupStack() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiStackSizes_GetSizeOfGroupStack(selfArg))
+	return int16(C.wrap_ImGuiStackSizes_GetSizeOfGroupStack(selfArg))
 }
 
-func (self StackSizes) SetSizeOfItemFlagsStack(v int) {
+func (self StackSizes) SetSizeOfItemFlagsStack(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiStackSizes_SetSizeOfItemFlagsStack(selfArg, C.short(v))
 }
 
-func (self StackSizes) SizeOfItemFlagsStack() int {
+func (self StackSizes) SizeOfItemFlagsStack() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiStackSizes_GetSizeOfItemFlagsStack(selfArg))
+	return int16(C.wrap_ImGuiStackSizes_GetSizeOfItemFlagsStack(selfArg))
 }
 
-func (self StackSizes) SetSizeOfBeginPopupStack(v int) {
+func (self StackSizes) SetSizeOfBeginPopupStack(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiStackSizes_SetSizeOfBeginPopupStack(selfArg, C.short(v))
 }
 
-func (self StackSizes) SizeOfBeginPopupStack() int {
+func (self StackSizes) SizeOfBeginPopupStack() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiStackSizes_GetSizeOfBeginPopupStack(selfArg))
+	return int16(C.wrap_ImGuiStackSizes_GetSizeOfBeginPopupStack(selfArg))
 }
 
-func (self StackSizes) SetSizeOfDisabledStack(v int) {
+func (self StackSizes) SetSizeOfDisabledStack(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiStackSizes_SetSizeOfDisabledStack(selfArg, C.short(v))
 }
 
-func (self StackSizes) SizeOfDisabledStack() int {
+func (self StackSizes) SizeOfDisabledStack() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiStackSizes_GetSizeOfDisabledStack(selfArg))
+	return int16(C.wrap_ImGuiStackSizes_GetSizeOfDisabledStack(selfArg))
 }
 
 func (self StackTool) SetLastActiveFrame(v int32) {
@@ -26950,94 +26950,94 @@ func (self TableColumn) NavLayerCurrent() int {
 	return int(C.wrap_ImGuiTableColumn_GetNavLayerCurrent(selfArg))
 }
 
-func (self TableColumn) SetAutoFitQueue(v uint) {
+func (self TableColumn) SetAutoFitQueue(v byte) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiTableColumn_SetAutoFitQueue(selfArg, C.ImU8(v))
 }
 
-func (self TableColumn) AutoFitQueue() uint32 {
+func (self TableColumn) AutoFitQueue() byte {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiTableColumn_GetAutoFitQueue(selfArg))
+	return byte(C.wrap_ImGuiTableColumn_GetAutoFitQueue(selfArg))
 }
 
-func (self TableColumn) SetCannotSkipItemsQueue(v uint) {
+func (self TableColumn) SetCannotSkipItemsQueue(v byte) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiTableColumn_SetCannotSkipItemsQueue(selfArg, C.ImU8(v))
 }
 
-func (self TableColumn) CannotSkipItemsQueue() uint32 {
+func (self TableColumn) CannotSkipItemsQueue() byte {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiTableColumn_GetCannotSkipItemsQueue(selfArg))
+	return byte(C.wrap_ImGuiTableColumn_GetCannotSkipItemsQueue(selfArg))
 }
 
-func (self TableColumn) SetSortDirection(v uint) {
+func (self TableColumn) SetSortDirection(v byte) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiTableColumn_SetSortDirection(selfArg, C.ImU8(v))
 }
 
-func (self TableColumn) SortDirection() uint32 {
+func (self TableColumn) SortDirection() byte {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiTableColumn_GetSortDirection(selfArg))
+	return byte(C.wrap_ImGuiTableColumn_GetSortDirection(selfArg))
 }
 
-func (self TableColumn) SetSortDirectionsAvailCount(v uint) {
+func (self TableColumn) SetSortDirectionsAvailCount(v byte) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiTableColumn_SetSortDirectionsAvailCount(selfArg, C.ImU8(v))
 }
 
-func (self TableColumn) SortDirectionsAvailCount() uint32 {
+func (self TableColumn) SortDirectionsAvailCount() byte {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiTableColumn_GetSortDirectionsAvailCount(selfArg))
+	return byte(C.wrap_ImGuiTableColumn_GetSortDirectionsAvailCount(selfArg))
 }
 
-func (self TableColumn) SetSortDirectionsAvailMask(v uint) {
+func (self TableColumn) SetSortDirectionsAvailMask(v byte) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiTableColumn_SetSortDirectionsAvailMask(selfArg, C.ImU8(v))
 }
 
-func (self TableColumn) SortDirectionsAvailMask() uint32 {
+func (self TableColumn) SortDirectionsAvailMask() byte {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiTableColumn_GetSortDirectionsAvailMask(selfArg))
+	return byte(C.wrap_ImGuiTableColumn_GetSortDirectionsAvailMask(selfArg))
 }
 
-func (self TableColumn) SetSortDirectionsAvailList(v uint) {
+func (self TableColumn) SetSortDirectionsAvailList(v byte) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiTableColumn_SetSortDirectionsAvailList(selfArg, C.ImU8(v))
 }
 
-func (self TableColumn) SortDirectionsAvailList() uint32 {
+func (self TableColumn) SortDirectionsAvailList() byte {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiTableColumn_GetSortDirectionsAvailList(selfArg))
+	return byte(C.wrap_ImGuiTableColumn_GetSortDirectionsAvailList(selfArg))
 }
 
 func (self TableColumnSettings) SetWidthOrWeight(v float32) {
@@ -27115,49 +27115,49 @@ func (self TableColumnSettings) SortOrder() TableColumnIdx {
 	return TableColumnIdx(C.wrap_ImGuiTableColumnSettings_GetSortOrder(selfArg))
 }
 
-func (self TableColumnSettings) SetSortDirection(v uint) {
+func (self TableColumnSettings) SetSortDirection(v byte) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiTableColumnSettings_SetSortDirection(selfArg, C.ImU8(v))
 }
 
-func (self TableColumnSettings) SortDirection() uint32 {
+func (self TableColumnSettings) SortDirection() byte {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiTableColumnSettings_GetSortDirection(selfArg))
+	return byte(C.wrap_ImGuiTableColumnSettings_GetSortDirection(selfArg))
 }
 
-func (self TableColumnSettings) SetIsEnabled(v uint) {
+func (self TableColumnSettings) SetIsEnabled(v byte) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiTableColumnSettings_SetIsEnabled(selfArg, C.ImU8(v))
 }
 
-func (self TableColumnSettings) IsEnabled() uint32 {
+func (self TableColumnSettings) IsEnabled() byte {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiTableColumnSettings_GetIsEnabled(selfArg))
+	return byte(C.wrap_ImGuiTableColumnSettings_GetIsEnabled(selfArg))
 }
 
-func (self TableColumnSettings) SetIsStretch(v uint) {
+func (self TableColumnSettings) SetIsStretch(v byte) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiTableColumnSettings_SetIsStretch(selfArg, C.ImU8(v))
 }
 
-func (self TableColumnSettings) IsStretch() uint32 {
+func (self TableColumnSettings) IsStretch() byte {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImGuiTableColumnSettings_GetIsStretch(selfArg))
+	return byte(C.wrap_ImGuiTableColumnSettings_GetIsStretch(selfArg))
 }
 
 func (self TableColumnSortSpecs) SetColumnUserID(v ID) {
@@ -28173,19 +28173,19 @@ func (self ViewportP) LastFocusedHadNavWindow() bool {
 	return C.wrap_ImGuiViewportP_GetLastFocusedHadNavWindow(selfArg) == C.bool(true)
 }
 
-func (self ViewportP) SetPlatformMonitor(v int) {
+func (self ViewportP) SetPlatformMonitor(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiViewportP_SetPlatformMonitor(selfArg, C.short(v))
 }
 
-func (self ViewportP) PlatformMonitor() int {
+func (self ViewportP) PlatformMonitor() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiViewportP_GetPlatformMonitor(selfArg))
+	return int16(C.wrap_ImGuiViewportP_GetPlatformMonitor(selfArg))
 }
 
 func (self ViewportP) SetDrawDataP(v DrawData) {
@@ -29088,79 +29088,79 @@ func (self Window) HasCloseButton() bool {
 	return C.wrap_ImGuiWindow_GetHasCloseButton(selfArg) == C.bool(true)
 }
 
-func (self Window) SetBeginCount(v int) {
+func (self Window) SetBeginCount(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiWindow_SetBeginCount(selfArg, C.short(v))
 }
 
-func (self Window) BeginCount() int {
+func (self Window) BeginCount() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiWindow_GetBeginCount(selfArg))
+	return int16(C.wrap_ImGuiWindow_GetBeginCount(selfArg))
 }
 
-func (self Window) SetBeginCountPreviousFrame(v int) {
+func (self Window) SetBeginCountPreviousFrame(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiWindow_SetBeginCountPreviousFrame(selfArg, C.short(v))
 }
 
-func (self Window) BeginCountPreviousFrame() int {
+func (self Window) BeginCountPreviousFrame() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiWindow_GetBeginCountPreviousFrame(selfArg))
+	return int16(C.wrap_ImGuiWindow_GetBeginCountPreviousFrame(selfArg))
 }
 
-func (self Window) SetBeginOrderWithinParent(v int) {
+func (self Window) SetBeginOrderWithinParent(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiWindow_SetBeginOrderWithinParent(selfArg, C.short(v))
 }
 
-func (self Window) BeginOrderWithinParent() int {
+func (self Window) BeginOrderWithinParent() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiWindow_GetBeginOrderWithinParent(selfArg))
+	return int16(C.wrap_ImGuiWindow_GetBeginOrderWithinParent(selfArg))
 }
 
-func (self Window) SetBeginOrderWithinContext(v int) {
+func (self Window) SetBeginOrderWithinContext(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiWindow_SetBeginOrderWithinContext(selfArg, C.short(v))
 }
 
-func (self Window) BeginOrderWithinContext() int {
+func (self Window) BeginOrderWithinContext() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiWindow_GetBeginOrderWithinContext(selfArg))
+	return int16(C.wrap_ImGuiWindow_GetBeginOrderWithinContext(selfArg))
 }
 
-func (self Window) SetFocusOrder(v int) {
+func (self Window) SetFocusOrder(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiWindow_SetFocusOrder(selfArg, C.short(v))
 }
 
-func (self Window) FocusOrder() int {
+func (self Window) FocusOrder() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiWindow_GetFocusOrder(selfArg))
+	return int16(C.wrap_ImGuiWindow_GetFocusOrder(selfArg))
 }
 
 func (self Window) SetPopupId(v ID) {
@@ -29997,19 +29997,19 @@ func (self Window) DockTabWantClose() bool {
 	return C.wrap_ImGuiWindow_GetDockTabWantClose(selfArg) == C.bool(true)
 }
 
-func (self Window) SetDockOrder(v int) {
+func (self Window) SetDockOrder(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiWindow_SetDockOrder(selfArg, C.short(v))
 }
 
-func (self Window) DockOrder() int {
+func (self Window) DockOrder() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiWindow_GetDockOrder(selfArg))
+	return int16(C.wrap_ImGuiWindow_GetDockOrder(selfArg))
 }
 
 func (self Window) SetDockStyle(v WindowDockStyle) {
@@ -30296,19 +30296,19 @@ func (self WindowSettings) ClassId() ID {
 	return ID(C.wrap_ImGuiWindowSettings_GetClassId(selfArg))
 }
 
-func (self WindowSettings) SetDockOrder(v int) {
+func (self WindowSettings) SetDockOrder(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiWindowSettings_SetDockOrder(selfArg, C.short(v))
 }
 
-func (self WindowSettings) DockOrder() int {
+func (self WindowSettings) DockOrder() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiWindowSettings_GetDockOrder(selfArg))
+	return int16(C.wrap_ImGuiWindowSettings_GetDockOrder(selfArg))
 }
 
 func (self WindowSettings) SetCollapsed(v bool) {
@@ -30675,34 +30675,34 @@ func (self WindowTempData) NavLayerCurrent() NavLayer {
 	return NavLayer(C.wrap_ImGuiWindowTempData_GetNavLayerCurrent(selfArg))
 }
 
-func (self WindowTempData) SetNavLayersActiveMask(v int) {
+func (self WindowTempData) SetNavLayersActiveMask(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiWindowTempData_SetNavLayersActiveMask(selfArg, C.short(v))
 }
 
-func (self WindowTempData) NavLayersActiveMask() int {
+func (self WindowTempData) NavLayersActiveMask() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiWindowTempData_GetNavLayersActiveMask(selfArg))
+	return int16(C.wrap_ImGuiWindowTempData_GetNavLayersActiveMask(selfArg))
 }
 
-func (self WindowTempData) SetNavLayersActiveMaskNext(v int) {
+func (self WindowTempData) SetNavLayersActiveMaskNext(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiWindowTempData_SetNavLayersActiveMaskNext(selfArg, C.short(v))
 }
 
-func (self WindowTempData) NavLayersActiveMaskNext() int {
+func (self WindowTempData) NavLayersActiveMaskNext() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiWindowTempData_GetNavLayersActiveMaskNext(selfArg))
+	return int16(C.wrap_ImGuiWindowTempData_GetNavLayersActiveMaskNext(selfArg))
 }
 
 func (self WindowTempData) SetNavIsScrollPushableX(v bool) {
@@ -31192,22 +31192,22 @@ func (self StbUndoRecord) charstorage() int32 {
 	return int32(C.wrap_StbUndoRecord_Getchar_storage(selfArg))
 }
 
-func (self StbUndoState) undopoint() int {
+func (self StbUndoState) undopoint() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_StbUndoState_Getundo_point(selfArg))
+	return int16(C.wrap_StbUndoState_Getundo_point(selfArg))
 }
 
-func (self StbUndoState) redopoint() int {
+func (self StbUndoState) redopoint() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_StbUndoState_Getredo_point(selfArg))
+	return int16(C.wrap_StbUndoState_Getredo_point(selfArg))
 }
 
 func (self StbUndoState) undocharpoint() int32 {

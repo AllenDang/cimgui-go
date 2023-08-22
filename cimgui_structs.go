@@ -359,10 +359,10 @@ func newFontAtlasFromC(cvalue *C.ImFontAtlas) *FontAtlas {
 
 // See ImFontAtlas::AddCustomRectXXX functions.
 type FontAtlasCustomRect struct {
-	FieldWidth         uint    // Input    // Desired rectangle dimension
-	FieldHeight        uint    // Input    // Desired rectangle dimension
-	FieldX             uint    // Output   // Packed position in Atlas
-	FieldY             uint    // Output   // Packed position in Atlas
+	FieldWidth         uint16  // Input    // Desired rectangle dimension
+	FieldHeight        uint16  // Input    // Desired rectangle dimension
+	FieldX             uint16  // Output   // Packed position in Atlas
+	FieldY             uint16  // Output   // Packed position in Atlas
 	FieldGlyphID       uint32  // Input    // For custom font glyphs only (ID < 0x110000)
 	FieldGlyphAdvanceX float32 // Input    // For custom font glyphs only: glyph xadvance
 	FieldGlyphOffset   Vec2    // Input    // For custom font glyphs only: glyph display offset
@@ -408,10 +408,10 @@ func (self FontAtlasCustomRect) c() (result C.ImFontAtlasCustomRect, fin func())
 
 func newFontAtlasCustomRectFromC(cvalue *C.ImFontAtlasCustomRect) *FontAtlasCustomRect {
 	result := new(FontAtlasCustomRect)
-	result.FieldWidth = uint(cvalue.Width)
-	result.FieldHeight = uint(cvalue.Height)
-	result.FieldX = uint(cvalue.X)
-	result.FieldY = uint(cvalue.Y)
+	result.FieldWidth = uint16(cvalue.Width)
+	result.FieldHeight = uint16(cvalue.Height)
+	result.FieldX = uint16(cvalue.X)
+	result.FieldY = uint16(cvalue.Y)
 	result.FieldGlyphID = uint32(cvalue.GlyphID)
 	result.FieldGlyphAdvanceX = float32(cvalue.GlyphAdvanceX)
 	result.FieldGlyphOffset = *(&Vec2{}).fromC(cvalue.GlyphOffset)
@@ -2049,15 +2049,15 @@ func newStackLevelInfoFromC(cvalue *C.ImGuiStackLevelInfo) *StackLevelInfo {
 }
 
 type StackSizes struct {
-	FieldSizeOfIDStack         int
-	FieldSizeOfColorStack      int
-	FieldSizeOfStyleVarStack   int
-	FieldSizeOfFontStack       int
-	FieldSizeOfFocusScopeStack int
-	FieldSizeOfGroupStack      int
-	FieldSizeOfItemFlagsStack  int
-	FieldSizeOfBeginPopupStack int
-	FieldSizeOfDisabledStack   int
+	FieldSizeOfIDStack         int16
+	FieldSizeOfColorStack      int16
+	FieldSizeOfStyleVarStack   int16
+	FieldSizeOfFontStack       int16
+	FieldSizeOfFocusScopeStack int16
+	FieldSizeOfGroupStack      int16
+	FieldSizeOfItemFlagsStack  int16
+	FieldSizeOfBeginPopupStack int16
+	FieldSizeOfDisabledStack   int16
 }
 
 func (self StackSizes) handle() (result *C.ImGuiStackSizes, releaseFn func()) {
@@ -2101,15 +2101,15 @@ func (self StackSizes) c() (result C.ImGuiStackSizes, fin func()) {
 
 func newStackSizesFromC(cvalue *C.ImGuiStackSizes) *StackSizes {
 	result := new(StackSizes)
-	result.FieldSizeOfIDStack = int(cvalue.SizeOfIDStack)
-	result.FieldSizeOfColorStack = int(cvalue.SizeOfColorStack)
-	result.FieldSizeOfStyleVarStack = int(cvalue.SizeOfStyleVarStack)
-	result.FieldSizeOfFontStack = int(cvalue.SizeOfFontStack)
-	result.FieldSizeOfFocusScopeStack = int(cvalue.SizeOfFocusScopeStack)
-	result.FieldSizeOfGroupStack = int(cvalue.SizeOfGroupStack)
-	result.FieldSizeOfItemFlagsStack = int(cvalue.SizeOfItemFlagsStack)
-	result.FieldSizeOfBeginPopupStack = int(cvalue.SizeOfBeginPopupStack)
-	result.FieldSizeOfDisabledStack = int(cvalue.SizeOfDisabledStack)
+	result.FieldSizeOfIDStack = int16(cvalue.SizeOfIDStack)
+	result.FieldSizeOfColorStack = int16(cvalue.SizeOfColorStack)
+	result.FieldSizeOfStyleVarStack = int16(cvalue.SizeOfStyleVarStack)
+	result.FieldSizeOfFontStack = int16(cvalue.SizeOfFontStack)
+	result.FieldSizeOfFocusScopeStack = int16(cvalue.SizeOfFocusScopeStack)
+	result.FieldSizeOfGroupStack = int16(cvalue.SizeOfGroupStack)
+	result.FieldSizeOfItemFlagsStack = int16(cvalue.SizeOfItemFlagsStack)
+	result.FieldSizeOfBeginPopupStack = int16(cvalue.SizeOfBeginPopupStack)
+	result.FieldSizeOfDisabledStack = int16(cvalue.SizeOfDisabledStack)
 	return result
 }
 

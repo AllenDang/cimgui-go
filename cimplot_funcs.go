@@ -2231,7 +2231,7 @@ func PlotImMaxArrayS8Ptr(values *[]int8, count int32) int {
 	return int(C.ImPlot_ImMaxArray_S8Ptr((*C.ImS8)(&valuesArg[0]), C.int(count)))
 }
 
-func PlotImMaxArrayU16Ptr(values *[]uint16, count int32) uint32 {
+func PlotImMaxArrayU16Ptr(values *[]uint16, count int32) uint16 {
 	valuesArg := make([]C.ImU16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU16(valuesV)
@@ -2242,7 +2242,7 @@ func PlotImMaxArrayU16Ptr(values *[]uint16, count int32) uint32 {
 			(*values)[i] = uint16(valuesV)
 		}
 	}()
-	return uint32(C.ImPlot_ImMaxArray_U16Ptr((*C.ImU16)(&valuesArg[0]), C.int(count)))
+	return uint16(C.ImPlot_ImMaxArray_U16Ptr((*C.ImU16)(&valuesArg[0]), C.int(count)))
 }
 
 func PlotImMaxArrayU32Ptr(values *[]uint32, count int32) uint32 {
@@ -2263,7 +2263,7 @@ func PlotImMaxArrayU64Ptr(values []uint64, count int32) uint64 {
 	return uint64(C.ImPlot_ImMaxArray_U64Ptr((*C.ulonglong)(&(values[0])), C.int(count)))
 }
 
-func PlotImMaxArrayU8Ptr(values *[]byte, count int32) uint32 {
+func PlotImMaxArrayU8Ptr(values *[]byte, count int32) byte {
 	valuesArg := make([]C.ImU8, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU8(valuesV)
@@ -2274,7 +2274,7 @@ func PlotImMaxArrayU8Ptr(values *[]byte, count int32) uint32 {
 			(*values)[i] = byte(valuesV)
 		}
 	}()
-	return uint32(C.ImPlot_ImMaxArray_U8Ptr((*C.ImU8)(&valuesArg[0]), C.int(count)))
+	return byte(C.ImPlot_ImMaxArray_U8Ptr((*C.ImU8)(&valuesArg[0]), C.int(count)))
 }
 
 func PlotImMaxArraydoublePtr(values *[]float64, count int32) float64 {
@@ -2451,7 +2451,7 @@ func PlotImMinArrayS8Ptr(values *[]int8, count int32) int {
 	return int(C.ImPlot_ImMinArray_S8Ptr((*C.ImS8)(&valuesArg[0]), C.int(count)))
 }
 
-func PlotImMinArrayU16Ptr(values *[]uint16, count int32) uint32 {
+func PlotImMinArrayU16Ptr(values *[]uint16, count int32) uint16 {
 	valuesArg := make([]C.ImU16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU16(valuesV)
@@ -2462,7 +2462,7 @@ func PlotImMinArrayU16Ptr(values *[]uint16, count int32) uint32 {
 			(*values)[i] = uint16(valuesV)
 		}
 	}()
-	return uint32(C.ImPlot_ImMinArray_U16Ptr((*C.ImU16)(&valuesArg[0]), C.int(count)))
+	return uint16(C.ImPlot_ImMinArray_U16Ptr((*C.ImU16)(&valuesArg[0]), C.int(count)))
 }
 
 func PlotImMinArrayU32Ptr(values *[]uint32, count int32) uint32 {
@@ -2483,7 +2483,7 @@ func PlotImMinArrayU64Ptr(values []uint64, count int32) uint64 {
 	return uint64(C.ImPlot_ImMinArray_U64Ptr((*C.ulonglong)(&(values[0])), C.int(count)))
 }
 
-func PlotImMinArrayU8Ptr(values *[]byte, count int32) uint32 {
+func PlotImMinArrayU8Ptr(values *[]byte, count int32) byte {
 	valuesArg := make([]C.ImU8, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU8(valuesV)
@@ -2494,7 +2494,7 @@ func PlotImMinArrayU8Ptr(values *[]byte, count int32) uint32 {
 			(*values)[i] = byte(valuesV)
 		}
 	}()
-	return uint32(C.ImPlot_ImMinArray_U8Ptr((*C.ImU8)(&valuesArg[0]), C.int(count)))
+	return byte(C.ImPlot_ImMinArray_U8Ptr((*C.ImU8)(&valuesArg[0]), C.int(count)))
 }
 
 func PlotImMinArraydoublePtr(values *[]float64, count int32) float64 {
@@ -2632,7 +2632,7 @@ func PlotImOverlapsS8(min_a int, max_a int, min_b int, max_b int) bool {
 	return C.ImPlot_ImOverlaps_S8(C.ImS8(min_a), C.ImS8(max_a), C.ImS8(min_b), C.ImS8(max_b)) == C.bool(true)
 }
 
-func PlotImOverlapsU16(min_a uint, max_a uint, min_b uint, max_b uint) bool {
+func PlotImOverlapsU16(min_a uint16, max_a uint16, min_b uint16, max_b uint16) bool {
 	return C.ImPlot_ImOverlaps_U16(C.ImU16(min_a), C.ImU16(max_a), C.ImU16(min_b), C.ImU16(max_b)) == C.bool(true)
 }
 
@@ -2644,7 +2644,7 @@ func PlotImOverlapsU64(min_a uint64, max_a uint64, min_b uint64, max_b uint64) b
 	return C.ImPlot_ImOverlaps_U64(C.ImU64(min_a), C.ImU64(max_a), C.ImU64(min_b), C.ImU64(max_b)) == C.bool(true)
 }
 
-func PlotImOverlapsU8(min_a uint, max_a uint, min_b uint, max_b uint) bool {
+func PlotImOverlapsU8(min_a byte, max_a byte, min_b byte, max_b byte) bool {
 	return C.ImPlot_ImOverlaps_U8(C.ImU8(min_a), C.ImU8(max_a), C.ImU8(min_b), C.ImU8(max_b)) == C.bool(true)
 }
 
@@ -2676,8 +2676,8 @@ func PlotImRemap01S8(x int, x0 int, x1 int) int {
 	return int(C.ImPlot_ImRemap01_S8(C.ImS8(x), C.ImS8(x0), C.ImS8(x1)))
 }
 
-func PlotImRemap01U16(x uint, x0 uint, x1 uint) uint32 {
-	return uint32(C.ImPlot_ImRemap01_U16(C.ImU16(x), C.ImU16(x0), C.ImU16(x1)))
+func PlotImRemap01U16(x uint16, x0 uint16, x1 uint16) uint16 {
+	return uint16(C.ImPlot_ImRemap01_U16(C.ImU16(x), C.ImU16(x0), C.ImU16(x1)))
 }
 
 func PlotImRemap01U32(x uint32, x0 uint32, x1 uint32) uint32 {
@@ -2688,8 +2688,8 @@ func PlotImRemap01U64(x uint64, x0 uint64, x1 uint64) uint64 {
 	return uint64(C.ImPlot_ImRemap01_U64(C.ImU64(x), C.ImU64(x0), C.ImU64(x1)))
 }
 
-func PlotImRemap01U8(x uint, x0 uint, x1 uint) uint32 {
-	return uint32(C.ImPlot_ImRemap01_U8(C.ImU8(x), C.ImU8(x0), C.ImU8(x1)))
+func PlotImRemap01U8(x byte, x0 byte, x1 byte) byte {
+	return byte(C.ImPlot_ImRemap01_U8(C.ImU8(x), C.ImU8(x0), C.ImU8(x1)))
 }
 
 func PlotImRemap01double(x float64, x0 float64, x1 float64) float64 {
@@ -2716,8 +2716,8 @@ func PlotImRemapS8(x int, x0 int, x1 int, y0 int, y1 int) int {
 	return int(C.ImPlot_ImRemap_S8(C.ImS8(x), C.ImS8(x0), C.ImS8(x1), C.ImS8(y0), C.ImS8(y1)))
 }
 
-func PlotImRemapU16(x uint, x0 uint, x1 uint, y0 uint, y1 uint) uint32 {
-	return uint32(C.ImPlot_ImRemap_U16(C.ImU16(x), C.ImU16(x0), C.ImU16(x1), C.ImU16(y0), C.ImU16(y1)))
+func PlotImRemapU16(x uint16, x0 uint16, x1 uint16, y0 uint16, y1 uint16) uint16 {
+	return uint16(C.ImPlot_ImRemap_U16(C.ImU16(x), C.ImU16(x0), C.ImU16(x1), C.ImU16(y0), C.ImU16(y1)))
 }
 
 func PlotImRemapU32(x uint32, x0 uint32, x1 uint32, y0 uint32, y1 uint32) uint32 {
@@ -2728,8 +2728,8 @@ func PlotImRemapU64(x uint64, x0 uint64, x1 uint64, y0 uint64, y1 uint64) uint64
 	return uint64(C.ImPlot_ImRemap_U64(C.ImU64(x), C.ImU64(x0), C.ImU64(x1), C.ImU64(y0), C.ImU64(y1)))
 }
 
-func PlotImRemapU8(x uint, x0 uint, x1 uint, y0 uint, y1 uint) uint32 {
-	return uint32(C.ImPlot_ImRemap_U8(C.ImU8(x), C.ImU8(x0), C.ImU8(x1), C.ImU8(y0), C.ImU8(y1)))
+func PlotImRemapU8(x byte, x0 byte, x1 byte, y0 byte, y1 byte) byte {
+	return byte(C.ImPlot_ImRemap_U8(C.ImU8(x), C.ImU8(x0), C.ImU8(x1), C.ImU8(y0), C.ImU8(y1)))
 }
 
 func PlotImRemapdouble(x float64, x0 float64, x1 float64, y0 float64, y1 float64) float64 {
@@ -2904,7 +2904,7 @@ func PlotImSumS8Ptr(values *[]int8, count int32) int {
 	return int(C.ImPlot_ImSum_S8Ptr((*C.ImS8)(&valuesArg[0]), C.int(count)))
 }
 
-func PlotImSumU16Ptr(values *[]uint16, count int32) uint32 {
+func PlotImSumU16Ptr(values *[]uint16, count int32) uint16 {
 	valuesArg := make([]C.ImU16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU16(valuesV)
@@ -2915,7 +2915,7 @@ func PlotImSumU16Ptr(values *[]uint16, count int32) uint32 {
 			(*values)[i] = uint16(valuesV)
 		}
 	}()
-	return uint32(C.ImPlot_ImSum_U16Ptr((*C.ImU16)(&valuesArg[0]), C.int(count)))
+	return uint16(C.ImPlot_ImSum_U16Ptr((*C.ImU16)(&valuesArg[0]), C.int(count)))
 }
 
 func PlotImSumU32Ptr(values *[]uint32, count int32) uint32 {
@@ -2936,7 +2936,7 @@ func PlotImSumU64Ptr(values []uint64, count int32) uint64 {
 	return uint64(C.ImPlot_ImSum_U64Ptr((*C.ulonglong)(&(values[0])), C.int(count)))
 }
 
-func PlotImSumU8Ptr(values *[]byte, count int32) uint32 {
+func PlotImSumU8Ptr(values *[]byte, count int32) byte {
 	valuesArg := make([]C.ImU8, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU8(valuesV)
@@ -2947,7 +2947,7 @@ func PlotImSumU8Ptr(values *[]byte, count int32) uint32 {
 			(*values)[i] = byte(valuesV)
 		}
 	}()
-	return uint32(C.ImPlot_ImSum_U8Ptr((*C.ImU8)(&valuesArg[0]), C.int(count)))
+	return byte(C.ImPlot_ImSum_U8Ptr((*C.ImU8)(&valuesArg[0]), C.int(count)))
 }
 
 func PlotImSumdoublePtr(values *[]float64, count int32) float64 {
