@@ -109,15 +109,6 @@ func generateStruct(s StructDef, defs []StructDef, enumDefs []EnumDef, refEnums,
 			structs, enums,
 		)
 
-		if renameGoIdentifier(s.Name) == "GroupData" && renameStructField(field.Name) == "FieldBackupIndent" {
-			fmt.Printf(`
-field.type: %s
-toC: %#v
-fromC: %#v
-`, field.Type, toC, fromC)
-			//panic("")
-		}
-
 		switch {
 		case toCErr == nil && fromCErr == nil:
 			if toC.ArgType != fromC.returnType { // <- this absolutly shouldn't happen
