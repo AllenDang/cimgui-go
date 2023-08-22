@@ -251,11 +251,7 @@ result := C.%s(%s)
 			argInvokeStmt,
 		))
 		cfuncCall = "result"
-	case returnTypeKnown:
-		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
-	case returnTypeConstructor:
-		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
-	case returnTypeStructPtr:
+	case returnTypeKnown, returnTypeConstructor, returnTypeStructPtr:
 		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
 	}
 
