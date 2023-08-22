@@ -214,8 +214,8 @@ type Vector[T any] struct {
 	Data     T
 }
 
-func newVectorFromC[T any](size, capacity int, data T) Vector[T] {
-	return Vector[T]{Size: size, Capacity: capacity, Data: data}
+func newVectorFromC[T any](size, capacity C.int, data T) Vector[T] {
+	return Vector[T]{Size: int(size), Capacity: int(capacity), Data: data}
 }
 
 // wrappableType represents a GO type that can be converted into a C value
