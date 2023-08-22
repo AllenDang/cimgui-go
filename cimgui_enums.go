@@ -6,7 +6,7 @@ package imgui
 // Flags for ImDrawList functions
 // (Legacy: bit 0 must always correspond to ImDrawFlags_Closed to be backward compatible with old API using a bool. Bits 1..3 must be unused)
 // original name: ImDrawFlags_
-type DrawFlags int
+type DrawFlags int32
 
 const (
 	DrawFlagsNone = 0
@@ -41,7 +41,7 @@ const (
 // Flags for ImDrawList instance. Those are set automatically by ImGui:: functions from ImGuiIO settings, and generally not manipulated directly.
 // It is however possible to temporarily alter flags between calls to ImDrawList:: functions.
 // original name: ImDrawListFlags_
-type DrawListFlags int
+type DrawListFlags int32
 
 const (
 	DrawListFlagsNone = 0
@@ -57,7 +57,7 @@ const (
 
 // Flags for ImFontAtlas build
 // original name: ImFontAtlasFlags_
-type FontAtlasFlags int
+type FontAtlasFlags int32
 
 const (
 	FontAtlasFlagsNone = 0
@@ -70,7 +70,7 @@ const (
 )
 
 // original name: ImGuiActivateFlags_
-type ActivateFlags int
+type ActivateFlags int32
 
 const (
 	ActivateFlagsNone = 0
@@ -84,7 +84,7 @@ const (
 
 // X/Y enums are fixed to 0/1 so they may be used to index ImVec2
 // original name: ImGuiAxis
-type Axis int
+type Axis int32
 
 const (
 	AxisNone = -1
@@ -96,7 +96,7 @@ const (
 
 // Backend capabilities flags stored in io.BackendFlags. Set by imgui_impl_xxx or custom backend.
 // original name: ImGuiBackendFlags_
-type BackendFlags int
+type BackendFlags int32
 
 const (
 	BackendFlagsNone = 0
@@ -118,7 +118,7 @@ const (
 
 // Extend ImGuiButtonFlags_
 // original name: ImGuiButtonFlagsPrivate_
-type ButtonFlagsPrivate int
+type ButtonFlagsPrivate int32
 
 const (
 	// return true on click (mouse down event)
@@ -163,7 +163,7 @@ const (
 
 // Flags for InvisibleButton() [extended in imgui_internal.h]
 // original name: ImGuiButtonFlags_
-type ButtonFlags int
+type ButtonFlags int32
 
 const (
 	ButtonFlagsNone = 0
@@ -181,7 +181,7 @@ const (
 
 // Enumeration for PushStyleColor() / PopStyleColor()
 // original name: ImGuiCol_
-type Col int
+type Col int32
 
 const (
 	ColText = 0
@@ -299,7 +299,7 @@ const (
 
 // Flags for ColorEdit3() / ColorEdit4() / ColorPicker3() / ColorPicker4() / ColorButton()
 // original name: ImGuiColorEditFlags_
-type ColorEditFlags int
+type ColorEditFlags int32
 
 const (
 	ColorEditFlagsNone = 0
@@ -363,7 +363,7 @@ const (
 
 // Extend ImGuiComboFlags_
 // original name: ImGuiComboFlagsPrivate_
-type ComboFlagsPrivate int
+type ComboFlagsPrivate int32
 
 const (
 	// enable BeginComboPreview()
@@ -372,7 +372,7 @@ const (
 
 // Flags for ImGui::BeginCombo()
 // original name: ImGuiComboFlags_
-type ComboFlags int
+type ComboFlags int32
 
 const (
 	ComboFlagsNone = 0
@@ -398,7 +398,7 @@ const (
 // Represent a condition.
 // Important: Treat as a regular enum! Do NOT combine multiple values using binary operators! All the functions above treat 0 as a shortcut to ImGuiCond_Always.
 // original name: ImGuiCond_
-type Cond int
+type Cond int32
 
 const (
 	// No condition (always set the variable), same as _Always
@@ -415,7 +415,7 @@ const (
 
 // Configuration flags stored in io.ConfigFlags. Set by user/application.
 // original name: ImGuiConfigFlags_
-type ConfigFlags int
+type ConfigFlags int32
 
 const (
 	ConfigFlagsNone = 0
@@ -446,7 +446,7 @@ const (
 )
 
 // original name: ImGuiContextHookType
-type ContextHookType int
+type ContextHookType int32
 
 const (
 	ContextHookTypeNewFramePre = 0
@@ -468,7 +468,7 @@ const (
 
 // Store the source authority (dock node vs window) of a field
 // original name: ImGuiDataAuthority_
-type DataAuthority int
+type DataAuthority int32
 
 const (
 	DataAuthorityAuto = 0
@@ -480,7 +480,7 @@ const (
 
 // Extend ImGuiDataType_
 // original name: ImGuiDataTypePrivate_
-type DataTypePrivate int
+type DataTypePrivate int32
 
 const (
 	DataTypeString = 11
@@ -492,7 +492,7 @@ const (
 
 // A primary data type
 // original name: ImGuiDataType_
-type DataType int
+type DataType int32
 
 const (
 	// signed char / char (with sensible compilers)
@@ -520,7 +520,7 @@ const (
 )
 
 // original name: ImGuiDebugLogFlags_
-type DebugLogFlags int
+type DebugLogFlags int32
 
 const (
 	DebugLogFlagsNone = 0
@@ -550,7 +550,7 @@ const (
 
 // A cardinal direction
 // original name: ImGuiDir_
-type Dir int
+type Dir int32
 
 const (
 	DirNone = -1
@@ -568,7 +568,7 @@ const (
 
 // Extend ImGuiDockNodeFlags_
 // original name: ImGuiDockNodeFlagsPrivate_
-type DockNodeFlagsPrivate int
+type DockNodeFlagsPrivate int32
 
 const (
 	// Local, Saved  // A dockspace is a node that occupy space within an existing user window. Otherwise the node is floating and create its own window.
@@ -615,7 +615,7 @@ const (
 // (Some flags can be applied to individual nodes directly)
 // FIXME-DOCK: Also see ImGuiDockNodeFlagsPrivate_ which may involve using the WIP and internal DockBuilder api.
 // original name: ImGuiDockNodeFlags_
-type DockNodeFlags int
+type DockNodeFlags int32
 
 const (
 	DockNodeFlagsNone = 0
@@ -634,7 +634,7 @@ const (
 )
 
 // original name: ImGuiDockNodeState
-type DockNodeState int
+type DockNodeState int32
 
 const (
 	DockNodeStateUnknown = 0
@@ -648,7 +648,7 @@ const (
 
 // Flags for ImGui::BeginDragDropSource(), ImGui::AcceptDragDropPayload()
 // original name: ImGuiDragDropFlags_
-type DragDropFlags int
+type DragDropFlags int32
 
 const (
 	DragDropFlagsNone = 0
@@ -678,7 +678,7 @@ const (
 // FIXME: Once we finishing replacing more uses of GetTopMostPopupModal()+IsWindowWithinBeginStackOf()
 // and FindBlockingModal() with this, we may want to change the flag to be opt-out instead of opt-in.
 // original name: ImGuiFocusRequestFlags_
-type FocusRequestFlags int
+type FocusRequestFlags int32
 
 const (
 	FocusRequestFlagsNone = 0
@@ -690,7 +690,7 @@ const (
 
 // Flags for ImGui::IsWindowFocused()
 // original name: ImGuiFocusedFlags_
-type FocusedFlags int
+type FocusedFlags int32
 
 const (
 	FocusedFlagsNone = 0
@@ -710,7 +710,7 @@ const (
 
 // Extend ImGuiHoveredFlags_
 // original name: ImGuiHoveredFlagsPrivate_
-type HoveredFlagsPrivate int
+type HoveredFlagsPrivate int32
 
 const (
 	HoveredFlagsDelayMask = 245760
@@ -724,7 +724,7 @@ const (
 // Note: if you are trying to check whether your mouse should be dispatched to Dear ImGui or to your app, you should use 'io.WantCaptureMouse' instead! Please read the FAQ!
 // Note: windows with the ImGuiWindowFlags_NoInputs flag are ignored by IsWindowHovered() calls.
 // original name: ImGuiHoveredFlags_
-type HoveredFlags int
+type HoveredFlags int32
 
 const (
 	// Return true if directly over the item/window, not obstructed by another window, not obstructed by an active popup or modal blocking inputs under them.
@@ -774,7 +774,7 @@ const (
 // [Internal] Key ranges
 // [Internal] Named shortcuts for Navigation
 // original name: ImGuiInputEventType
-type InputEventType int
+type InputEventType int32
 
 const (
 	InputEventTypeNone = 0
@@ -799,7 +799,7 @@ const (
 // Flags for extended versions of IsKeyPressed(), IsMouseClicked(), Shortcut(), SetKeyOwner(), SetItemKeyOwner()
 // Don't mistake with ImGuiInputTextFlags! (for ImGui::InputText() function)
 // original name: ImGuiInputFlags_
-type InputFlags int
+type InputFlags int32
 
 const (
 	InputFlagsNone = 0
@@ -852,7 +852,7 @@ const (
 )
 
 // original name: ImGuiInputSource
-type InputSource int
+type InputSource int32
 
 const (
 	InputSourceNone = 0
@@ -870,7 +870,7 @@ const (
 
 // Extend ImGuiInputTextFlags_
 // original name: ImGuiInputTextFlagsPrivate_
-type InputTextFlagsPrivate int
+type InputTextFlagsPrivate int32
 
 const (
 	// For internal use by InputTextMultiline()
@@ -884,7 +884,7 @@ const (
 // Flags for ImGui::InputText()
 // (Those are per-item flags. There are shared flags in ImGuiIO: io.ConfigInputTextCursorBlink and io.ConfigInputTextEnterKeepActive)
 // original name: ImGuiInputTextFlags_
-type InputTextFlags int
+type InputTextFlags int32
 
 const (
 	InputTextFlagsNone = 0
@@ -938,7 +938,7 @@ const (
 // Current window shared by all windows.
 // This is going to be exposed in imgui.h when stabilized enough.
 // original name: ImGuiItemFlags_
-type ItemFlags int
+type ItemFlags int32
 
 const (
 	ItemFlagsNone = 0
@@ -969,7 +969,7 @@ const (
 // Status flags for an already submitted item
 // - output: stored in g.LastItemData.StatusFlags
 // original name: ImGuiItemStatusFlags_
-type ItemStatusFlags int
+type ItemStatusFlags int32
 
 const (
 	ItemStatusFlagsNone = 0
@@ -1001,7 +1001,7 @@ const (
 // Read details about the 1.87 and 1.89 transition : https://github.com/ocornut/imgui/issues/4921
 // Note that "Keys" related to physical keys and are not the same concept as input "Characters", the later are submitted via io.AddInputCharacter().
 // original name: ImGuiKey
-type Key int
+type Key int32
 
 const (
 	KeyNone = 0
@@ -1316,7 +1316,7 @@ const (
 // FIXME: this is in development, not exposed/functional as a generic feature yet.
 // Horizontal/Vertical enums are fixed to 0/1 so they may be used to index ImVec2
 // original name: ImGuiLayoutType_
-type LayoutType int
+type LayoutType int32
 
 const (
 	LayoutTypeHorizontal = 0
@@ -1326,7 +1326,7 @@ const (
 
 // This is experimental and not officially supported, it'll probably fall short of features, if/when it does we may backtrack.
 // original name: ImGuiLocKey
-type LocKey int
+type LocKey int32
 
 const (
 	LocKeyVersionStr = 0
@@ -1351,7 +1351,7 @@ const (
 )
 
 // original name: ImGuiLogType
-type LogType int
+type LogType int32
 
 const (
 	LogTypeNone = 0
@@ -1368,7 +1368,7 @@ const (
 // Identify a mouse button.
 // Those values are guaranteed to be stable and we frequently use 0/1 directly. Named enums provided for convenience.
 // original name: ImGuiMouseButton_
-type MouseButton int
+type MouseButton int32
 
 const (
 	MouseButtonLeft = 0
@@ -1383,7 +1383,7 @@ const (
 // Enumeration for GetMouseCursor()
 // User code may request backend to display given cursor by calling SetMouseCursor(), which is why we have some cursors that are marked unused here
 // original name: ImGuiMouseCursor_
-type MouseCursor int
+type MouseCursor int32
 
 const (
 	MouseCursorNone = -1
@@ -1414,7 +1414,7 @@ const (
 // But that "Mouse" data can come from different source which occasionally may be useful for application to know about.
 // You can submit a change of pointer type using io.AddMouseSourceEvent().
 // original name: ImGuiMouseSource
-type MouseSource int
+type MouseSource int32
 
 const (
 	// Input is coming from an actual mouse.
@@ -1428,7 +1428,7 @@ const (
 )
 
 // original name: ImGuiNavHighlightFlags_
-type NavHighlightFlags int
+type NavHighlightFlags int32
 
 const (
 	NavHighlightFlagsNone = 0
@@ -1446,7 +1446,7 @@ const (
 // Official backends between 1.60 and 1.86: will keep working and feed gamepad inputs as long as IMGUI_DISABLE_OBSOLETE_KEYIO is not set.
 // Custom backends: feed gamepad inputs via io.AddKeyEvent() and ImGuiKey_GamepadXXX enums.
 // original name: ImGuiNavInput
-type NavInput int
+type NavInput int32
 
 const (
 	NavInputActivate = 0
@@ -1485,7 +1485,7 @@ const (
 )
 
 // original name: ImGuiNavLayer
-type NavLayer int
+type NavLayer int32
 
 const (
 	// Main scrolling layer
@@ -1497,7 +1497,7 @@ const (
 )
 
 // original name: ImGuiNavMoveFlags_
-type NavMoveFlags int
+type NavMoveFlags int32
 
 const (
 	NavMoveFlagsNone = 0
@@ -1536,7 +1536,7 @@ const (
 )
 
 // original name: ImGuiNextItemDataFlags_
-type NextItemDataFlags int
+type NextItemDataFlags int32
 
 const (
 	NextItemDataFlagsNone = 0
@@ -1547,7 +1547,7 @@ const (
 )
 
 // original name: ImGuiNextWindowDataFlags_
-type NextWindowDataFlags int
+type NextWindowDataFlags int32
 
 const (
 	NextWindowDataFlagsNone = 0
@@ -1577,7 +1577,7 @@ const (
 
 // Flags for internal's BeginColumns(). Prefix using BeginTable() nowadays!
 // original name: ImGuiOldColumnFlags_
-type OldColumnFlags int
+type OldColumnFlags int32
 
 const (
 	OldColumnFlagsNone = 0
@@ -1594,7 +1594,7 @@ const (
 )
 
 // original name: ImGuiPlotType
-type PlotType int
+type PlotType int32
 
 const (
 	PlotTypeLines = 0
@@ -1612,7 +1612,7 @@ const (
 //   - Multiple buttons currently cannot be combined/or-ed in those functions (we could allow it later).
 //
 // original name: ImGuiPopupFlags_
-type PopupFlags int
+type PopupFlags int32
 
 const (
 	PopupFlagsNone = 0
@@ -1639,7 +1639,7 @@ const (
 )
 
 // original name: ImGuiPopupPositionPolicy
-type PopupPositionPolicy int
+type PopupPositionPolicy int32
 
 const (
 	PopupPositionPolicyDefault = 0
@@ -1651,7 +1651,7 @@ const (
 
 // Early work-in-progress API for ScrollToItem()
 // original name: ImGuiScrollFlags_
-type ScrollFlags int
+type ScrollFlags int32
 
 const (
 	ScrollFlagsNone = 0
@@ -1677,7 +1677,7 @@ const (
 
 // Extend ImGuiSelectableFlags_
 // original name: ImGuiSelectableFlagsPrivate_
-type SelectableFlagsPrivate int
+type SelectableFlagsPrivate int32
 
 const (
 	SelectableFlagsNoHoldingActiveID = 1048576
@@ -1699,7 +1699,7 @@ const (
 
 // Flags for ImGui::Selectable()
 // original name: ImGuiSelectableFlags_
-type SelectableFlags int
+type SelectableFlags int32
 
 const (
 	SelectableFlagsNone = 0
@@ -1716,7 +1716,7 @@ const (
 )
 
 // original name: ImGuiSeparatorFlags_
-type SeparatorFlags int
+type SeparatorFlags int32
 
 const (
 	SeparatorFlagsNone = 0
@@ -1730,7 +1730,7 @@ const (
 
 // Extend ImGuiSliderFlags_
 // original name: ImGuiSliderFlagsPrivate_
-type SliderFlagsPrivate int
+type SliderFlagsPrivate int32
 
 const (
 	// Should this slider be orientated vertically?
@@ -1743,7 +1743,7 @@ const (
 // We use the same sets of flags for DragXXX() and SliderXXX() functions as the features are the same and it makes it easier to swap them.
 // (Those are per-item flags. There are shared flags in ImGuiIO: io.ConfigDragClickToInputText)
 // original name: ImGuiSliderFlags_
-type SliderFlags int
+type SliderFlags int32
 
 const (
 	SliderFlagsNone = 0
@@ -1761,7 +1761,7 @@ const (
 
 // A sorting direction
 // original name: ImGuiSortDirection_
-type SortDirection int
+type SortDirection int32
 
 const (
 	SortDirectionNone = 0
@@ -1780,7 +1780,7 @@ const (
 //   - When changing this enum, you need to update the associated internal table GStyleVarInfo[] accordingly. This is where we link enum values to members offset/type.
 //
 // original name: ImGuiStyleVar_
-type StyleVar int
+type StyleVar int32
 
 const (
 	// float     Alpha
@@ -1847,7 +1847,7 @@ const (
 
 // Extend ImGuiTabBarFlags_
 // original name: ImGuiTabBarFlagsPrivate_
-type TabBarFlagsPrivate int
+type TabBarFlagsPrivate int32
 
 const (
 	// Part of a dock node [we don't use this in the master branch but it facilitate branch syncing to keep this around]
@@ -1860,7 +1860,7 @@ const (
 
 // Flags for ImGui::BeginTabBar()
 // original name: ImGuiTabBarFlags_
-type TabBarFlags int
+type TabBarFlags int32
 
 const (
 	TabBarFlagsNone = 0
@@ -1888,7 +1888,7 @@ const (
 
 // Extend ImGuiTabItemFlags_
 // original name: ImGuiTabItemFlagsPrivate_
-type TabItemFlagsPrivate int
+type TabItemFlagsPrivate int32
 
 const (
 	TabItemFlagsSectionMask = 192
@@ -1904,7 +1904,7 @@ const (
 
 // Flags for ImGui::BeginTabItem()
 // original name: ImGuiTabItemFlags_
-type TabItemFlags int
+type TabItemFlags int32
 
 const (
 	TabItemFlagsNone = 0
@@ -1937,7 +1937,7 @@ const (
 // If you set the color of RowBg0 target, your color will override the existing RowBg0 color.
 // If you set the color of RowBg1 or ColumnBg1 target, your color will blend over the RowBg0 color.
 // original name: ImGuiTableBgTarget_
-type TableBgTarget int
+type TableBgTarget int32
 
 const (
 	TableBgTargetNone = 0
@@ -1951,7 +1951,7 @@ const (
 
 // Flags for ImGui::TableSetupColumn()
 // original name: ImGuiTableColumnFlags_
-type TableColumnFlags int
+type TableColumnFlags int32
 
 const (
 	TableColumnFlagsNone = 0
@@ -2033,7 +2033,7 @@ const (
 //   - Read on documentation at the top of imgui_tables.cpp for details.
 //
 // original name: ImGuiTableFlags_
-type TableFlags int
+type TableFlags int32
 
 const (
 	TableFlagsNone = 0
@@ -2111,7 +2111,7 @@ const (
 
 // Flags for ImGui::TableNextRow()
 // original name: ImGuiTableRowFlags_
-type TableRowFlags int
+type TableRowFlags int32
 
 const (
 	TableRowFlagsNone = 0
@@ -2120,7 +2120,7 @@ const (
 )
 
 // original name: ImGuiTextFlags_
-type TextFlags int
+type TextFlags int32
 
 const (
 	TextFlagsNone = 0
@@ -2129,7 +2129,7 @@ const (
 )
 
 // original name: ImGuiTooltipFlags_
-type TooltipFlags int
+type TooltipFlags int32
 
 const (
 	TooltipFlagsNone = 0
@@ -2139,7 +2139,7 @@ const (
 
 // Extend ImGuiTreeNodeFlags_
 // original name: ImGuiTreeNodeFlagsPrivate_
-type TreeNodeFlagsPrivate int
+type TreeNodeFlagsPrivate int32
 
 const (
 	TreeNodeFlagsClipLabelForTrailingButton = 1048576
@@ -2149,7 +2149,7 @@ const (
 
 // Flags for ImGui::TreeNodeEx(), ImGui::CollapsingHeader*()
 // original name: ImGuiTreeNodeFlags_
-type TreeNodeFlags int
+type TreeNodeFlags int32
 
 const (
 	TreeNodeFlagsNone = 0
@@ -2187,7 +2187,7 @@ const (
 
 // Flags stored in ImGuiViewport::Flags, giving indications to the platform backends.
 // original name: ImGuiViewportFlags_
-type ViewportFlags int
+type ViewportFlags int32
 
 const (
 	ViewportFlagsNone = 0
@@ -2226,7 +2226,7 @@ const (
 // A better solution may involve appending into a log of colors in ImGuiContext + store offsets into those arrays in ImGuiWindow,
 // but it would be more complex as we'd need to double-buffer both as e.g. drop target may refer to window from last frame.
 // original name: ImGuiWindowDockStyleCol
-type WindowDockStyleCol int
+type WindowDockStyleCol int32
 
 const (
 	WindowDockStyleColText = 0
@@ -2247,7 +2247,7 @@ const (
 // Flags for ImGui::Begin()
 // (Those are per-window flags. There are shared flags in ImGuiIO: io.ConfigWindowsResizeFromEdges and io.ConfigWindowsMoveFromTitleBarOnly)
 // original name: ImGuiWindowFlags_
-type WindowFlags int
+type WindowFlags int32
 
 const (
 	WindowFlagsNone = 0
