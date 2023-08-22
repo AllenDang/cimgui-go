@@ -12748,6 +12748,15 @@ func (self Font) SetIndexAdvanceX(v Vector[*float32]) {
 	vDataFin()
 }
 
+func (self Font) IndexAdvanceX() Vector[*float32] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImFont_GetIndexAdvanceX(selfArg).Size, C.wrap_ImFont_GetIndexAdvanceX(selfArg).Capacity, (*float32)(C.wrap_ImFont_GetIndexAdvanceX(selfArg).Data))
+}
+
 func (self Font) SetFallbackAdvanceX(v float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -16776,6 +16785,15 @@ func (self Context) SetTablesLastTimeActive(v Vector[*float32]) {
 	C.wrap_ImGuiContext_SetTablesLastTimeActive(selfArg, *vVecArg)
 
 	vDataFin()
+}
+
+func (self Context) TablesLastTimeActive() Vector[*float32] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImGuiContext_GetTablesLastTimeActive(selfArg).Size, C.wrap_ImGuiContext_GetTablesLastTimeActive(selfArg).Capacity, (*float32)(C.wrap_ImGuiContext_GetTablesLastTimeActive(selfArg).Data))
 }
 
 func (self Context) SetDrawChannelsTempMergeBuffer(v Vector[*DrawChannel]) {
@@ -28084,6 +28102,15 @@ func (self TextIndex) SetLineOffsets(v Vector[*int32]) {
 	vDataFin()
 }
 
+func (self TextIndex) LineOffsets() Vector[*int32] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImGuiTextIndex_GetLineOffsets(selfArg).Size, C.wrap_ImGuiTextIndex_GetLineOffsets(selfArg).Capacity, (*int32)(C.wrap_ImGuiTextIndex_GetLineOffsets(selfArg).Data))
+}
+
 func (self TextIndex) SetEndOffset(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -31351,6 +31378,15 @@ func (self WindowTempData) SetItemWidthStack(v Vector[*float32]) {
 	vDataFin()
 }
 
+func (self WindowTempData) ItemWidthStack() Vector[*float32] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImGuiWindowTempData_GetItemWidthStack(selfArg).Size, C.wrap_ImGuiWindowTempData_GetItemWidthStack(selfArg).Capacity, (*float32)(C.wrap_ImGuiWindowTempData_GetItemWidthStack(selfArg).Data))
+}
+
 func (self WindowTempData) SetTextWrapPosStack(v Vector[*float32]) {
 	vData := v.Data
 	vDataArg, vDataFin := WrapNumberPtr[C.float, float32](vData)
@@ -31364,6 +31400,15 @@ func (self WindowTempData) SetTextWrapPosStack(v Vector[*float32]) {
 	C.wrap_ImGuiWindowTempData_SetTextWrapPosStack(selfArg, *vVecArg)
 
 	vDataFin()
+}
+
+func (self WindowTempData) TextWrapPosStack() Vector[*float32] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImGuiWindowTempData_GetTextWrapPosStack(selfArg).Size, C.wrap_ImGuiWindowTempData_GetTextWrapPosStack(selfArg).Capacity, (*float32)(C.wrap_ImGuiWindowTempData_GetTextWrapPosStack(selfArg).Data))
 }
 
 func (self STBTexteditState) TexteditStateGetcursor() int32 {

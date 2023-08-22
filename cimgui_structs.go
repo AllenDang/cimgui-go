@@ -2706,13 +2706,28 @@ func newTextFilterFromC(cvalue *C.ImGuiTextFilter) *TextFilter {
 // Helper: ImGuiTextIndex<>
 // Maintain a line index for a text buffer. This is a strong candidate to be moved into the public API.
 type TextIndex struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldLineOffsets Vector[*int32]
+	FieldEndOffset   int32 // Because we don't own text buffer we need to maintain EndOffset (may bake in LineOffsets?)
 }
 
 func (self TextIndex) handle() (result *C.ImGuiTextIndex, releaseFn func()) {
-	result = (*C.ImGuiTextIndex)(self.data)
-	return result, func() {}
+	result = new(C.ImGuiTextIndex)
+	FieldLineOffsets := self.FieldLineOffsets
+	FieldLineOffsetsData := FieldLineOffsets.Data
+	FieldLineOffsetsDataArg, FieldLineOffsetsDataFin := WrapNumberPtr[C.int, int32](FieldLineOffsetsData)
+	FieldLineOffsetsVecArg := new(C.ImVector_int)
+	FieldLineOffsetsVecArg.Size = C.int(FieldLineOffsets.Size)
+	FieldLineOffsetsVecArg.Capacity = C.int(FieldLineOffsets.Capacity)
+	FieldLineOffsetsVecArg.Data = FieldLineOffsetsDataArg
+
+	result.LineOffsets = *FieldLineOffsetsVecArg
+	FieldEndOffset := self.FieldEndOffset
+
+	result.EndOffset = C.int(FieldEndOffset)
+	releaseFn = func() {
+		FieldLineOffsetsDataFin()
+	}
+	return result, releaseFn
 }
 
 func (self TextIndex) c() (result C.ImGuiTextIndex, fin func()) {
@@ -2722,7 +2737,8 @@ func (self TextIndex) c() (result C.ImGuiTextIndex, fin func()) {
 
 func newTextIndexFromC(cvalue *C.ImGuiTextIndex) *TextIndex {
 	result := new(TextIndex)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldLineOffsets = newVectorFromC(cvalue.LineOffsets.Size, cvalue.LineOffsets.Capacity, (*int32)(cvalue.LineOffsets.Data))
+	result.FieldEndOffset = int32(cvalue.EndOffset)
 	return result
 }
 
