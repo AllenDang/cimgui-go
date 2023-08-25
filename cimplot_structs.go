@@ -234,13 +234,29 @@ func newPlotContextFromC(cvalue *C.ImPlotContext) *PlotContext {
 }
 
 type PlotDateTimeSpec struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldDate           PlotDateFmt
+	FieldTime           PlotTimeFmt
+	FieldUseISO8601     bool
+	FieldUse24HourClock bool
 }
 
 func (self PlotDateTimeSpec) handle() (result *C.ImPlotDateTimeSpec, releaseFn func()) {
-	result = (*C.ImPlotDateTimeSpec)(self.data)
-	return result, func() {}
+	result = new(C.ImPlotDateTimeSpec)
+	FieldDate := self.FieldDate
+
+	result.Date = C.ImPlotDateFmt(FieldDate)
+	FieldTime := self.FieldTime
+
+	result.Time = C.ImPlotTimeFmt(FieldTime)
+	FieldUseISO8601 := self.FieldUseISO8601
+
+	result.UseISO8601 = C.bool(FieldUseISO8601)
+	FieldUse24HourClock := self.FieldUse24HourClock
+
+	result.Use24HourClock = C.bool(FieldUse24HourClock)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (self PlotDateTimeSpec) c() (result C.ImPlotDateTimeSpec, fin func()) {
@@ -250,7 +266,10 @@ func (self PlotDateTimeSpec) c() (result C.ImPlotDateTimeSpec, fin func()) {
 
 func newPlotDateTimeSpecFromC(cvalue *C.ImPlotDateTimeSpec) *PlotDateTimeSpec {
 	result := new(PlotDateTimeSpec)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldDate = PlotDateFmt(cvalue.Date)
+	result.FieldTime = PlotTimeFmt(cvalue.Time)
+	result.FieldUseISO8601 = cvalue.UseISO8601 == C.bool(true)
+	result.FieldUse24HourClock = cvalue.Use24HourClock == C.bool(true)
 	return result
 }
 
@@ -411,13 +430,61 @@ func newPlotItemGroupFromC(cvalue *C.ImPlotItemGroup) *PlotItemGroup {
 }
 
 type PlotLegend struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldFlags            PlotLegendFlags
+	FieldPreviousFlags    PlotLegendFlags
+	FieldLocation         PlotLocation
+	FieldPreviousLocation PlotLocation
+	FieldIndices          Vector[*int32]
+	FieldLabels           TextBuffer
+	FieldRect             Rect
+	FieldHovered          bool
+	FieldHeld             bool
+	FieldCanGoInside      bool
 }
 
 func (self PlotLegend) handle() (result *C.ImPlotLegend, releaseFn func()) {
-	result = (*C.ImPlotLegend)(self.data)
-	return result, func() {}
+	result = new(C.ImPlotLegend)
+	FieldFlags := self.FieldFlags
+
+	result.Flags = C.ImPlotLegendFlags(FieldFlags)
+	FieldPreviousFlags := self.FieldPreviousFlags
+
+	result.PreviousFlags = C.ImPlotLegendFlags(FieldPreviousFlags)
+	FieldLocation := self.FieldLocation
+
+	result.Location = C.ImPlotLocation(FieldLocation)
+	FieldPreviousLocation := self.FieldPreviousLocation
+
+	result.PreviousLocation = C.ImPlotLocation(FieldPreviousLocation)
+	FieldIndices := self.FieldIndices
+	FieldIndicesData := FieldIndices.Data
+	FieldIndicesDataArg, FieldIndicesDataFin := WrapNumberPtr[C.int, int32](FieldIndicesData)
+	FieldIndicesVecArg := new(C.ImVector_int)
+	FieldIndicesVecArg.Size = C.int(FieldIndices.Size)
+	FieldIndicesVecArg.Capacity = C.int(FieldIndices.Capacity)
+	FieldIndicesVecArg.Data = FieldIndicesDataArg
+
+	result.Indices = *FieldIndicesVecArg
+	FieldLabels := self.FieldLabels
+	FieldLabelsArg, FieldLabelsFin := FieldLabels.c()
+	result.Labels = FieldLabelsArg
+	FieldRect := self.FieldRect
+
+	result.Rect = FieldRect.toC()
+	FieldHovered := self.FieldHovered
+
+	result.Hovered = C.bool(FieldHovered)
+	FieldHeld := self.FieldHeld
+
+	result.Held = C.bool(FieldHeld)
+	FieldCanGoInside := self.FieldCanGoInside
+
+	result.CanGoInside = C.bool(FieldCanGoInside)
+	releaseFn = func() {
+		FieldIndicesDataFin()
+		FieldLabelsFin()
+	}
+	return result, releaseFn
 }
 
 func (self PlotLegend) c() (result C.ImPlotLegend, fin func()) {
@@ -427,7 +494,17 @@ func (self PlotLegend) c() (result C.ImPlotLegend, fin func()) {
 
 func newPlotLegendFromC(cvalue *C.ImPlotLegend) *PlotLegend {
 	result := new(PlotLegend)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldFlags = PlotLegendFlags(cvalue.Flags)
+	result.FieldPreviousFlags = PlotLegendFlags(cvalue.PreviousFlags)
+	result.FieldLocation = PlotLocation(cvalue.Location)
+	result.FieldPreviousLocation = PlotLocation(cvalue.PreviousLocation)
+	result.FieldIndices = newVectorFromC(cvalue.Indices.Size, cvalue.Indices.Capacity, (*int32)(cvalue.Indices.Data))
+	result.FieldLabels = *newTextBufferFromC(func() *C.ImGuiTextBuffer { result := cvalue.Labels; return &result }())
+
+	result.FieldRect = *(&Rect{}).fromC(cvalue.Rect)
+	result.FieldHovered = cvalue.Hovered == C.bool(true)
+	result.FieldHeld = cvalue.Held == C.bool(true)
+	result.FieldCanGoInside = cvalue.CanGoInside == C.bool(true)
 	return result
 }
 
@@ -641,13 +718,33 @@ func newPlotSubplotFromC(cvalue *C.ImPlotSubplot) *PlotSubplot {
 }
 
 type PlotTag struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldAxis       PlotAxisEnum
+	FieldValue      float64
+	FieldColorBg    uint32
+	FieldColorFg    uint32
+	FieldTextOffset int32
 }
 
 func (self PlotTag) handle() (result *C.ImPlotTag, releaseFn func()) {
-	result = (*C.ImPlotTag)(self.data)
-	return result, func() {}
+	result = new(C.ImPlotTag)
+	FieldAxis := self.FieldAxis
+
+	result.Axis = C.ImAxis(FieldAxis)
+	FieldValue := self.FieldValue
+
+	result.Value = C.double(FieldValue)
+	FieldColorBg := self.FieldColorBg
+
+	result.ColorBg = C.ImU32(FieldColorBg)
+	FieldColorFg := self.FieldColorFg
+
+	result.ColorFg = C.ImU32(FieldColorFg)
+	FieldTextOffset := self.FieldTextOffset
+
+	result.TextOffset = C.int(FieldTextOffset)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (self PlotTag) c() (result C.ImPlotTag, fin func()) {
@@ -657,7 +754,11 @@ func (self PlotTag) c() (result C.ImPlotTag, fin func()) {
 
 func newPlotTagFromC(cvalue *C.ImPlotTag) *PlotTag {
 	result := new(PlotTag)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldAxis = PlotAxisEnum(cvalue.Axis)
+	result.FieldValue = float64(cvalue.Value)
+	result.FieldColorBg = uint32(cvalue.ColorBg)
+	result.FieldColorFg = uint32(cvalue.ColorFg)
+	result.FieldTextOffset = int32(cvalue.TextOffset)
 	return result
 }
 
