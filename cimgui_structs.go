@@ -1255,13 +1255,101 @@ func newInputTextDeactivatedStateFromC(cvalue *C.ImGuiInputTextDeactivatedState)
 // Internal state of the currently focused/edited text input box
 // For a given item ID, access with ImGui::GetInputTextState()
 type InputTextState struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldCtx                  *Context         // parent UI context (needs to be set explicitly by parent).
+	FieldID                   ID               // widget id owning the text state
+	FieldCurLenW              int32            // we need to maintain our buffer length in both UTF-8 and wchar format. UTF-8 length is valid even if TextA is not.
+	FieldCurLenA              int32            // we need to maintain our buffer length in both UTF-8 and wchar format. UTF-8 length is valid even if TextA is not.
+	FieldTextW                Vector[(*Wchar)] // edit buffer, we need to persist but can't guarantee the persistence of the user-provided buffer. so we copy into own buffer.
+	FieldTextA                Vector[string]   // temporary UTF8 buffer for callbacks and other operations. this is not updated in every code-path! size=capacity.
+	FieldInitialTextA         Vector[string]   // backup of end-user buffer at the time of focus (in UTF-8, unaltered)
+	FieldTextAIsValid         bool             // temporary UTF8 buffer is not initially valid before we make the widget active (until then we pull the data from user argument)
+	FieldBufCapacityA         int32            // end-user buffer capacity
+	FieldScrollX              float32          // horizontal scrolling/offset
+	FieldStb                  STBTexteditState // state for stb_textedit.h
+	FieldCursorAnim           float32          // timer for cursor blink, reset on every user action so the cursor reappears immediately
+	FieldCursorFollow         bool             // set when we want scrolling to follow the current cursor position (not always!)
+	FieldSelectedAllMouseLock bool             // after a double-click to select all, we ignore further mouse drags to update selection
+	FieldEdited               bool             // edited this frame
+	FieldFlags                InputTextFlags   // copy of InputText() flags. may be used to check if e.g. ImGuiInputTextFlags_Password is set.
 }
 
 func (self InputTextState) handle() (result *C.ImGuiInputTextState, releaseFn func()) {
-	result = (*C.ImGuiInputTextState)(self.data)
-	return result, func() {}
+	result = new(C.ImGuiInputTextState)
+	FieldCtx := self.FieldCtx
+	FieldCtxArg, FieldCtxFin := FieldCtx.handle()
+	result.Ctx = FieldCtxArg
+	FieldID := self.FieldID
+
+	result.ID = C.ImGuiID(FieldID)
+	FieldCurLenW := self.FieldCurLenW
+
+	result.CurLenW = C.int(FieldCurLenW)
+	FieldCurLenA := self.FieldCurLenA
+
+	result.CurLenA = C.int(FieldCurLenA)
+	FieldTextW := self.FieldTextW
+	FieldTextWData := FieldTextW.Data
+
+	FieldTextWVecArg := new(C.ImVector_ImWchar)
+	FieldTextWVecArg.Size = C.int(FieldTextW.Size)
+	FieldTextWVecArg.Capacity = C.int(FieldTextW.Capacity)
+	FieldTextWVecArg.Data = (*C.ImWchar)(FieldTextWData)
+
+	result.TextW = *FieldTextWVecArg
+	FieldTextA := self.FieldTextA
+	FieldTextAData := FieldTextA.Data
+	FieldTextADataArg, FieldTextADataFin := WrapString(FieldTextAData)
+	FieldTextAVecArg := new(C.ImVector_char)
+	FieldTextAVecArg.Size = C.int(FieldTextA.Size)
+	FieldTextAVecArg.Capacity = C.int(FieldTextA.Capacity)
+	FieldTextAVecArg.Data = FieldTextADataArg
+
+	result.TextA = *FieldTextAVecArg
+	FieldInitialTextA := self.FieldInitialTextA
+	FieldInitialTextAData := FieldInitialTextA.Data
+	FieldInitialTextADataArg, FieldInitialTextADataFin := WrapString(FieldInitialTextAData)
+	FieldInitialTextAVecArg := new(C.ImVector_char)
+	FieldInitialTextAVecArg.Size = C.int(FieldInitialTextA.Size)
+	FieldInitialTextAVecArg.Capacity = C.int(FieldInitialTextA.Capacity)
+	FieldInitialTextAVecArg.Data = FieldInitialTextADataArg
+
+	result.InitialTextA = *FieldInitialTextAVecArg
+	FieldTextAIsValid := self.FieldTextAIsValid
+
+	result.TextAIsValid = C.bool(FieldTextAIsValid)
+	FieldBufCapacityA := self.FieldBufCapacityA
+
+	result.BufCapacityA = C.int(FieldBufCapacityA)
+	FieldScrollX := self.FieldScrollX
+
+	result.ScrollX = C.float(FieldScrollX)
+	FieldStb := self.FieldStb
+	FieldStbArg, FieldStbFin := FieldStb.c()
+	result.Stb = FieldStbArg
+	FieldCursorAnim := self.FieldCursorAnim
+
+	result.CursorAnim = C.float(FieldCursorAnim)
+	FieldCursorFollow := self.FieldCursorFollow
+
+	result.CursorFollow = C.bool(FieldCursorFollow)
+	FieldSelectedAllMouseLock := self.FieldSelectedAllMouseLock
+
+	result.SelectedAllMouseLock = C.bool(FieldSelectedAllMouseLock)
+	FieldEdited := self.FieldEdited
+
+	result.Edited = C.bool(FieldEdited)
+	FieldFlags := self.FieldFlags
+
+	result.Flags = C.ImGuiInputTextFlags(FieldFlags)
+	releaseFn = func() {
+		FieldCtxFin()
+
+		FieldTextADataFin()
+		FieldInitialTextADataFin()
+
+		FieldStbFin()
+	}
+	return result, releaseFn
 }
 
 func (self InputTextState) c() (result C.ImGuiInputTextState, fin func()) {
@@ -1271,7 +1359,23 @@ func (self InputTextState) c() (result C.ImGuiInputTextState, fin func()) {
 
 func newInputTextStateFromC(cvalue *C.ImGuiInputTextState) *InputTextState {
 	result := new(InputTextState)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldCtx = newContextFromC(cvalue.Ctx)
+	result.FieldID = ID(cvalue.ID)
+	result.FieldCurLenW = int32(cvalue.CurLenW)
+	result.FieldCurLenA = int32(cvalue.CurLenA)
+	result.FieldTextW = newVectorFromC(cvalue.TextW.Size, cvalue.TextW.Capacity, (*Wchar)(cvalue.TextW.Data))
+	result.FieldTextA = newVectorFromC(cvalue.TextA.Size, cvalue.TextA.Capacity, C.GoString(cvalue.TextA.Data))
+	result.FieldInitialTextA = newVectorFromC(cvalue.InitialTextA.Size, cvalue.InitialTextA.Capacity, C.GoString(cvalue.InitialTextA.Data))
+	result.FieldTextAIsValid = cvalue.TextAIsValid == C.bool(true)
+	result.FieldBufCapacityA = int32(cvalue.BufCapacityA)
+	result.FieldScrollX = float32(cvalue.ScrollX)
+	result.FieldStb = *newSTBTexteditStateFromC(func() *C.STB_TexteditState { result := cvalue.Stb; return &result }())
+
+	result.FieldCursorAnim = float32(cvalue.CursorAnim)
+	result.FieldCursorFollow = cvalue.CursorFollow == C.bool(true)
+	result.FieldSelectedAllMouseLock = cvalue.SelectedAllMouseLock == C.bool(true)
+	result.FieldEdited = cvalue.Edited == C.bool(true)
+	result.FieldFlags = InputTextFlags(cvalue.Flags)
 	return result
 }
 

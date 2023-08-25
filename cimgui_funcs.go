@@ -12800,6 +12800,15 @@ func (self Font) SetIndexLookup(v Vector[(*Wchar)]) {
 	C.wrap_ImFont_SetIndexLookup(selfArg, *vVecArg)
 }
 
+func (self Font) IndexLookup() Vector[(*Wchar)] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImFont_GetIndexLookup(selfArg).Size, C.wrap_ImFont_GetIndexLookup(selfArg).Capacity, (*Wchar)(C.wrap_ImFont_GetIndexLookup(selfArg).Data))
+}
+
 func (self Font) SetGlyphs(v Vector[*FontGlyph]) {
 	vData := v.Data
 	vDataArg, vDataFin := vData.handle()
@@ -20330,6 +20339,15 @@ func (self IO) SetInputQueueCharacters(v Vector[(*Wchar)]) {
 	C.wrap_ImGuiIO_SetInputQueueCharacters(selfArg, *vVecArg)
 }
 
+func (self IO) InputQueueCharacters() Vector[(*Wchar)] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImGuiIO_GetInputQueueCharacters(selfArg).Size, C.wrap_ImGuiIO_GetInputQueueCharacters(selfArg).Capacity, (*Wchar)(C.wrap_ImGuiIO_GetInputQueueCharacters(selfArg).Data))
+}
+
 func (self InputEvent) SetType(v InputEventType) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -20932,6 +20950,15 @@ func (self InputTextState) SetTextW(v Vector[(*Wchar)]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiInputTextState_SetTextW(selfArg, *vVecArg)
+}
+
+func (self InputTextState) TextW() Vector[(*Wchar)] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImGuiInputTextState_GetTextW(selfArg).Size, C.wrap_ImGuiInputTextState_GetTextW(selfArg).Capacity, (*Wchar)(C.wrap_ImGuiInputTextState_GetTextW(selfArg).Data))
 }
 
 func (self InputTextState) SetTextA(v Vector[string]) {
