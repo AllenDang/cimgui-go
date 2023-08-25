@@ -20,7 +20,7 @@ func getReturnWrapper(
 		"bool":                     {"bool", "%s == C.bool(true)"},
 		"char":                     simpleR("rune"),
 		"unsigned char":            simpleR("uint"),
-		"unsigned char*":           {"(*uint)", "(*uint)(unsafe.Pointer(%s))"}, // NOTE: This should work but I'm not 100% sure
+		"unsigned char*":           {"*uint", "(*uint)(unsafe.Pointer(%s))"}, // NOTE: This should work but I'm not 100% sure
 		"char*":                    {"string", "C.GoString(%s)"},
 		"const char*":              {"string", "C.GoString(%s)"},
 		"const ImWchar*":           simpleR("(*Wchar)"),

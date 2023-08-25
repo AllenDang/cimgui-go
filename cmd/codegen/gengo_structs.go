@@ -70,7 +70,7 @@ func generateStruct(s StructDef, defs []StructDef, enumDefs []EnumDef, refEnums,
 	}
 
 	for _, e := range enumDefs {
-		enums[e.Name] = true
+		enums[renameEnum(e.Name)] = true
 	}
 	for _, e := range refEnums {
 		enums[e] = true
