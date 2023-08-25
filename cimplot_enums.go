@@ -4,7 +4,7 @@
 package imgui
 
 // original name: ImAxis_
-type PlotAxisEnum int
+type PlotAxisEnum int32
 
 const (
 	AxisX1 = 0
@@ -23,7 +23,7 @@ const (
 )
 
 // original name: ImPlotAxisFlags_
-type PlotAxisFlags int
+type PlotAxisFlags int32
 
 const (
 	PlotAxisFlagsNone = 0
@@ -68,7 +68,7 @@ const (
 )
 
 // original name: ImPlotBarGroupsFlags_
-type PlotBarGroupsFlags int
+type PlotBarGroupsFlags int32
 
 const (
 	PlotBarGroupsFlagsNone = 0
@@ -79,7 +79,7 @@ const (
 )
 
 // original name: ImPlotBarsFlags_
-type PlotBarsFlags int
+type PlotBarsFlags int32
 
 const (
 	PlotBarsFlagsNone = 0
@@ -88,7 +88,7 @@ const (
 )
 
 // original name: ImPlotBin_
-type PlotBin int
+type PlotBin int32
 
 const (
 	PlotBinSqrt = -1
@@ -101,7 +101,7 @@ const (
 )
 
 // original name: ImPlotCol_
-type PlotCol int
+type PlotCol int32
 
 const (
 	PlotColLine = 0
@@ -150,7 +150,7 @@ const (
 )
 
 // original name: ImPlotColormapScaleFlags_
-type PlotColormapScaleFlags int
+type PlotColormapScaleFlags int32
 
 const (
 	PlotColormapScaleFlagsNone = 0
@@ -163,7 +163,7 @@ const (
 )
 
 // original name: ImPlotColormap_
-type PlotColormap int
+type PlotColormap int32
 
 const (
 	PlotColormapDeep = 0
@@ -200,7 +200,7 @@ const (
 )
 
 // original name: ImPlotCond_
-type PlotCond int
+type PlotCond int32
 
 const (
 	PlotCondNone = 0
@@ -211,7 +211,7 @@ const (
 )
 
 // original name: ImPlotDateFmt_
-type PlotDateFmt int
+type PlotDateFmt int32
 
 const (
 	PlotDateFmtNone = 0
@@ -228,14 +228,14 @@ const (
 )
 
 // original name: ImPlotDigitalFlags_
-type PlotDigitalFlags int
+type PlotDigitalFlags int32
 
 const (
 	PlotDigitalFlagsNone = 0
 )
 
 // original name: ImPlotDragToolFlags_
-type PlotDragToolFlags int
+type PlotDragToolFlags int32
 
 const (
 	PlotDragToolFlagsNone = 0
@@ -250,14 +250,14 @@ const (
 )
 
 // original name: ImPlotDummyFlags_
-type PlotDummyFlags int
+type PlotDummyFlags int32
 
 const (
 	PlotDummyFlagsNone = 0
 )
 
 // original name: ImPlotErrorBarsFlags_
-type PlotErrorBarsFlags int
+type PlotErrorBarsFlags int32
 
 const (
 	PlotErrorBarsFlagsNone = 0
@@ -266,7 +266,7 @@ const (
 )
 
 // original name: ImPlotFlags_
-type PlotFlags int
+type PlotFlags int32
 
 const (
 	PlotFlagsNone = 0
@@ -295,7 +295,7 @@ const (
 )
 
 // original name: ImPlotHeatmapFlags_
-type PlotHeatmapFlags int
+type PlotHeatmapFlags int32
 
 const (
 	PlotHeatmapFlagsNone = 0
@@ -304,7 +304,7 @@ const (
 )
 
 // original name: ImPlotHistogramFlags_
-type PlotHistogramFlags int
+type PlotHistogramFlags int32
 
 const (
 	PlotHistogramFlagsNone = 0
@@ -321,14 +321,14 @@ const (
 )
 
 // original name: ImPlotImageFlags_
-type PlotImageFlags int
+type PlotImageFlags int32
 
 const (
 	PlotImageFlagsNone = 0
 )
 
 // original name: ImPlotInfLinesFlags_
-type PlotInfLinesFlags int
+type PlotInfLinesFlags int32
 
 const (
 	PlotInfLinesFlagsNone = 0
@@ -337,7 +337,7 @@ const (
 )
 
 // original name: ImPlotItemFlags_
-type PlotItemFlags int
+type PlotItemFlags int32
 
 const (
 	PlotItemFlagsNone = 0
@@ -348,7 +348,7 @@ const (
 )
 
 // original name: ImPlotLegendFlags_
-type PlotLegendFlags int
+type PlotLegendFlags int32
 
 const (
 	PlotLegendFlagsNone = 0
@@ -369,7 +369,7 @@ const (
 )
 
 // original name: ImPlotLineFlags_
-type PlotLineFlags int
+type PlotLineFlags int32
 
 const (
 	PlotLineFlagsNone = 0
@@ -386,7 +386,7 @@ const (
 )
 
 // original name: ImPlotLocation_
-type PlotLocation int
+type PlotLocation int32
 
 const (
 	PlotLocationCenter = 0
@@ -409,7 +409,7 @@ const (
 )
 
 // original name: ImPlotMarker_
-type PlotMarker int
+type PlotMarker int32
 
 const (
 	PlotMarkerNone = -1
@@ -438,7 +438,7 @@ const (
 )
 
 // original name: ImPlotMouseTextFlags_
-type PlotMouseTextFlags int
+type PlotMouseTextFlags int32
 
 const (
 	PlotMouseTextFlagsNone = 0
@@ -451,7 +451,7 @@ const (
 )
 
 // original name: ImPlotPieChartFlags_
-type PlotPieChartFlags int
+type PlotPieChartFlags int32
 
 const (
 	PlotPieChartFlagsNone = 0
@@ -460,7 +460,7 @@ const (
 )
 
 // original name: ImPlotScale_
-type PlotScale int
+type PlotScale int32
 
 const (
 	PlotScaleLinear = 0
@@ -473,7 +473,7 @@ const (
 )
 
 // original name: ImPlotScatterFlags_
-type PlotScatterFlags int
+type PlotScatterFlags int32
 
 const (
 	PlotScatterFlagsNone = 0
@@ -482,14 +482,14 @@ const (
 )
 
 // original name: ImPlotShadedFlags_
-type PlotShadedFlags int
+type PlotShadedFlags int32
 
 const (
 	PlotShadedFlagsNone = 0
 )
 
 // original name: ImPlotStairsFlags_
-type PlotStairsFlags int
+type PlotStairsFlags int32
 
 const (
 	PlotStairsFlagsNone = 0
@@ -500,7 +500,7 @@ const (
 )
 
 // original name: ImPlotStemsFlags_
-type PlotStemsFlags int
+type PlotStemsFlags int32
 
 const (
 	PlotStemsFlagsNone = 0
@@ -509,7 +509,7 @@ const (
 )
 
 // original name: ImPlotStyleVar_
-type PlotStyleVar int
+type PlotStyleVar int32
 
 const (
 	PlotStyleVarLineWeight = 0
@@ -570,7 +570,7 @@ const (
 )
 
 // original name: ImPlotSubplotFlags_
-type PlotSubplotFlags int
+type PlotSubplotFlags int32
 
 const (
 	PlotSubplotFlagsNone = 0
@@ -599,7 +599,7 @@ const (
 )
 
 // original name: ImPlotTextFlags_
-type PlotTextFlags int
+type PlotTextFlags int32
 
 const (
 	PlotTextFlagsNone = 0
@@ -608,7 +608,7 @@ const (
 )
 
 // original name: ImPlotTimeFmt_
-type PlotTimeFmt int
+type PlotTimeFmt int32
 
 const (
 	PlotTimeFmtNone = 0
@@ -633,7 +633,7 @@ const (
 )
 
 // original name: ImPlotTimeUnit_
-type PlotTimeUnit int
+type PlotTimeUnit int32
 
 const (
 	PlotTimeUnitUs = 0

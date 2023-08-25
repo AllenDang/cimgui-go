@@ -21,7 +21,7 @@ func generateGoEnums(prefix string, enums []EnumDef) []string {
 
 		sb.WriteString(fmt.Sprintf("%s\n", e.CommentAbove))
 		sb.WriteString(fmt.Sprintf("// original name: %s\n", originalName))
-		sb.WriteString(fmt.Sprintf("type %s int\n", renameGoIdentifier(eName)))
+		sb.WriteString(fmt.Sprintf("type %s int32\n", renameGoIdentifier(eName)))
 		sb.WriteString("const (\n")
 
 		for _, v := range e.Values {
