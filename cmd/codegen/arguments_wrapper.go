@@ -3,6 +3,7 @@ package main
 import "C"
 import (
 	"fmt"
+	"strings"
 )
 
 type ArgumentWrapperData struct {
@@ -22,7 +23,7 @@ type ArgumentWrapperData struct {
 
 type argumentWrapper func(arg ArgDef) ArgumentWrapperData
 
-func argWrapper(argType string) (wrapper argumentWrapper, err error) {
+func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames, enumNames map[string]bool) (argDeclaration string, data ArgumentWrapperData, err error) {
 	argWrapperMap := map[string]argumentWrapper{
 		"char":                     simpleW("rune", "C.char"),
 		"char[5]":                  simplePtrArrayW(5, "C.char", "rune"),
@@ -113,11 +114,106 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"ImPlotTime*":              wrappablePtrW("*PlotTime", "C.ImPlotTime"),
 	}
 
-	if wrapper, ok := argWrapperMap[argType]; ok {
-		return wrapper, nil
+	if a.Name == "type" || a.Name == "range" {
+		a.Name += "Arg"
 	}
 
-	return nil, fmt.Errorf("no wrapper for type %s", argType)
+	if makeFirstArgReceiver {
+		return "", ArgumentWrapperData{}, nil
+	}
+
+	if isGetter {
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(a.Type))
+		data = ArgumentWrapperData{
+			ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.handle()", a.Name),
+			VarName:   fmt.Sprintf("%sArg", a.Name),
+			Finalizer: fmt.Sprintf("%sFin()", a.Name),
+		}
+
+		return
+	}
+
+	if v, ok := argWrapperMap[a.Type]; ok {
+		arg := v(*a)
+		data = arg
+
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(arg.ArgType))
+
+		return argDeclaration, data, nil
+	}
+
+	if goEnumName := a.Type; isEnum(goEnumName, enumNames) {
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(goEnumName))
+		data = ArgumentWrapperData{
+			ArgType: renameEnum(a.Type),
+			VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
+		}
+
+		return
+	}
+
+	if strings.HasPrefix(a.Type, "ImVector_") &&
+		!(strings.HasSuffix(a.Type, "*") || strings.HasSuffix(a.Type, "]")) {
+		pureType := strings.TrimPrefix(a.Type, "ImVector_") + "*"
+		dataName := a.Name + "Data"
+		_, w, err := getArgWrapper(&ArgDef{
+			Name: dataName,
+			Type: pureType,
+		}, false, false, structNames, enumNames)
+
+		if err != nil {
+			return "", ArgumentWrapperData{}, fmt.Errorf("creating vector wrapper %w", err)
+		}
+
+		data = ArgumentWrapperData{
+			VarName: "*" + a.Name + "VecArg",
+			ArgType: fmt.Sprintf("Vector[%s]", w.ArgType),
+			ArgDef: fmt.Sprintf(`%[5]s := %[2]s.Data
+%[1]s
+%[2]sVecArg := new(C.%[3]s)
+%[2]sVecArg.Size = C.int(%[2]s.Size)
+%[2]sVecArg.Capacity = C.int(%[2]s.Capacity)
+%[2]sVecArg.Data = %[4]s
+`, w.ArgDef, a.Name, a.Type, w.VarName, dataName),
+			Finalizer: w.Finalizer,
+		}
+
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, data.ArgType)
+
+		return argDeclaration, data, nil
+	}
+
+	pureType := strings.TrimPrefix(a.Type, "const ")
+	isPointer := false
+	if strings.HasSuffix(a.Type, "*") {
+		pureType = strings.TrimSuffix(pureType, "*")
+		isPointer = true
+	}
+
+	if structNames[pureType] {
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType))
+		w := ArgumentWrapperData{
+			ArgType:   renameGoIdentifier(pureType),
+			VarName:   fmt.Sprintf("%sArg", a.Name),
+			Finalizer: fmt.Sprintf("%sFin()", a.Name),
+		}
+
+		fn := ""
+		if isPointer {
+			w.ArgType = "*" + w.ArgType
+			fn = "handle"
+		} else {
+			fn = "c"
+		}
+
+		w.ArgDef = fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.%[2]s()", a.Name, fn)
+
+		data = w
+
+		return
+	}
+
+	return "", ArgumentWrapperData{}, fmt.Errorf("unknown argument type \"%s\"", a.Type)
 }
 
 func constCharW(arg ArgDef) ArgumentWrapperData {
