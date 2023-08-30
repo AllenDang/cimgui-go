@@ -191,7 +191,6 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames, 
 	}
 
 	if structNames[pureType] {
-		argDeclaration = fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(pureType))
 		w := ArgumentWrapperData{
 			ArgType:   renameGoIdentifier(pureType),
 			VarName:   fmt.Sprintf("%sArg", a.Name),
@@ -209,6 +208,8 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames, 
 		w.ArgDef = fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.%[2]s()", a.Name, fn)
 
 		data = w
+
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, data.ArgType)
 
 		return
 	}
