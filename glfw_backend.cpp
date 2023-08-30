@@ -7,6 +7,7 @@
 #include "cimgui/cimgui.h"
 #include "cimgui/cimgui_impl.h"
 #include "thirdparty/glfw/include/GLFW/glfw3.h" // Will drag system OpenGL headers
+#include <cstdlib>
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to
 // maximize ease of testing and compatibility with old VS compilers. To link
@@ -295,6 +296,17 @@ void igGLFWWindow_SetTitle(GLFWwindow *window, const char *title) { glfwSetWindo
 
 void igGLFWWindow_SetSizeLimits(GLFWwindow *window, int minWidth, int minHeight, int maxWidth, int maxHeight) {
   glfwSetWindowSizeLimits(window, minWidth, minHeight, maxWidth, maxHeight);
+}
+
+void igGLFWWindow_SetIcon(GLFWwindow *window, int count, CImage *images) {
+    GLFWimage* glfwImages = (GLFWimage*)malloc(count * sizeof(GLFWimage));
+    for (int i = 0; i < count; i++) {
+        glfwImages[i].width = images[i].width;
+        glfwImages[i].height = images[i].height;
+        glfwImages[i].pixels = images[i].pixels;
+    }
+
+    glfwSetWindowIcon(window, count, glfwImages);
 }
 
 #endif

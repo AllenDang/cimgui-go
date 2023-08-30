@@ -11,6 +11,7 @@ package imgui
 // #cgo !gles2,darwin LDFLAGS: -framework OpenGL
 // #cgo gles2,darwin LDFLAGS: -lGLESv2
 // #cgo CPPFLAGS: -DCIMGUI_GO_USE_GLFW
+// #include <stdlib.h>
 // extern void loopCallback();
 // extern void beforeRender();
 // extern void afterRender();
@@ -22,6 +23,7 @@ import "C"
 
 import (
 	"image"
+	"image/draw"
 	"unsafe"
 )
 
@@ -210,4 +212,52 @@ func (b *GLFWBackend) SetCloseCallback(cbfun WindowCloseCallback) {
 	}
 
 	C.igGLFWWindow_SetCloseCallback(b.handle())
+}
+
+// SetIcons sets icons for the window.
+// THIS CODE COMES FROM https://github.com/go-gl/glfw (BSD-3 clause) - Copyright (c) 2012 The glfw3-go Authors. All rights reserved.
+func (b *GLFWBackend) SetIcons(images ...image.Image) {
+	count := len(images)
+	cimages := make([]C.CImage, count)
+	freePixels := make([]func(), count)
+
+	for i, img := range images {
+		var pixels []uint8
+		b := img.Bounds()
+
+		switch img := img.(type) {
+		case *image.NRGBA:
+			pixels = img.Pix
+		default:
+			m := image.NewNRGBA(image.Rect(0, 0, b.Dx(), b.Dy()))
+			draw.Draw(m, m.Bounds(), img, b.Min, draw.Src)
+			pixels = m.Pix
+		}
+
+		pix, free := func(origin []byte) (pointer *uint8, free func()) {
+			n := len(origin)
+			if n == 0 {
+				return nil, func() {}
+			}
+
+			ptr := C.CBytes(origin)
+			return (*uint8)(ptr), func() { C.free(ptr) }
+		}(pixels)
+
+		freePixels[i] = free
+
+		cimages[i].width = C.int(b.Dx())
+		cimages[i].height = C.int(b.Dy())
+		cimages[i].pixels = (*C.uchar)(pix)
+	}
+
+	var p *C.CImage
+	if count > 0 {
+		p = &cimages[0]
+	}
+	C.igGLFWWindow_SetIcon(b.handle(), C.int(count), p)
+
+	for _, v := range freePixels {
+		v()
+	}
 }
