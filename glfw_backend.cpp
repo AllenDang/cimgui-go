@@ -297,4 +297,8 @@ void igGLFWWindow_SetSizeLimits(GLFWwindow *window, int minWidth, int minHeight,
   glfwSetWindowSizeLimits(window, minWidth, minHeight, maxWidth, maxHeight);
 }
 
+void igGLFWWindow_SetIcon(GLFWwindow *window, int count, GLFWimage*images) {
+    glfwSetWindowIcon(window, count, images);
+}
+
 #endif
