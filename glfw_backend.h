@@ -41,6 +41,7 @@ extern void igGLFWWindow_SetCloseCallback(GLFWwindow *window);
 extern void igRefresh();
 extern ImTextureID igCreateTexture(unsigned char *pixels, int width, int height);
 extern void igDeleteTexture(ImTextureID id);
+extern void igWindowHint(int hint, int value);
 
 extern void dropCallback(int, char **);
 extern void closeCallback(GLFWwindow *window);
