@@ -11,6 +11,7 @@ package imgui
 // #cgo !gles2,darwin LDFLAGS: -framework OpenGL
 // #cgo gles2,darwin LDFLAGS: -lGLESv2
 // #cgo CPPFLAGS: -DCIMGUI_GO_USE_GLFW
+// #include <stdlib.h>
 // extern void loopCallback();
 // extern void beforeRender();
 // extern void afterRender();
@@ -22,6 +23,7 @@ import "C"
 
 import (
 	"image"
+	"image/draw"
 	"unsafe"
 )
 
@@ -210,4 +212,76 @@ func (b *GLFWBackend) SetCloseCallback(cbfun WindowCloseCallback) {
 	}
 
 	C.igGLFWWindow_SetCloseCallback(b.handle())
+}
+
+// SetIcons sets icons for the window.
+// THIS CODE COMES FROM https://github.com/go-gl/glfw (BSD-3 clause) - Copyright (c) 2012 The glfw3-go Authors. All rights reserved.
+func (b *GLFWBackend) SetIcons(images []image.Image) {
+	/*
+		cIcons := make([]C.GLFWimage, len(icons))
+		for _, i := range icons {
+			x, y := i.Bounds().Dx(), i.Bounds().Dy()
+			cIcon := C.GLFWimage{
+				width:  C.int(x),
+				height: C.int(y),
+			}
+
+			pixels := make([]C.uchar, x*y)
+			for imgY := 0; imgY < y; imgY++ {
+				for imgX := 0; imgX < x; imgX++ {
+					r, g, b, _ := i.At(imgX, imgY).RGBA()
+					pixels[imgY*x+imgX] = (r*6/256)*36 + (g*6/256)*6 + (b * 6 / 256)
+				}
+			}
+
+			cIcon.pixels = (*C.uchar)(unsafe.Pointer(&pixels[0]))
+			cIcons = append(cIcons, cIcon)
+		}
+
+		C.igGLFWWindow_SetIcon(b.handle(), C.int(len(cIcons)), &cIcons[0])
+	*/
+
+	count := len(images)
+	cimages := make([]C.CImage, count)
+	freePixels := make([]func(), count)
+
+	for i, img := range images {
+		var pixels []uint8
+		b := img.Bounds()
+
+		switch img := img.(type) {
+		case *image.NRGBA:
+			pixels = img.Pix
+		default:
+			m := image.NewNRGBA(image.Rect(0, 0, b.Dx(), b.Dy()))
+			draw.Draw(m, m.Bounds(), img, b.Min, draw.Src)
+			pixels = m.Pix
+		}
+
+		pix, free := func(origin []byte) (pointer *uint8, free func()) {
+			n := len(origin)
+			if n == 0 {
+				return nil, func() {}
+			}
+
+			ptr := C.CBytes(origin)
+			return (*uint8)(ptr), func() { C.free(ptr) }
+		}(pixels)
+
+		freePixels[i] = free
+
+		cimages[i].width = C.int(b.Dx())
+		cimages[i].height = C.int(b.Dy())
+		cimages[i].pixels = (*C.uchar)(pix)
+	}
+
+	var p *C.CImage
+	if count > 0 {
+		p = &cimages[0]
+	}
+	C.igGLFWWindow_SetIcon(b.handle(), C.int(count), p)
+
+	for _, v := range freePixels {
+		v()
+	}
 }

@@ -108,6 +108,7 @@ type Backend interface {
 	DeleteTexture(id TextureID)
 	SetDropCallback(DropCallback)
 	SetCloseCallback(WindowCloseCallback)
+	SetIcons(icons []image.Image)
 
 	// TODO: flags needs generic layer
 	CreateWindow(title string, width, height int, flags GLFWWindowFlags)
