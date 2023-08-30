@@ -298,6 +298,8 @@ void igGLFWWindow_SetSizeLimits(GLFWwindow *window, int minWidth, int minHeight,
   glfwSetWindowSizeLimits(window, minWidth, minHeight, maxWidth, maxHeight);
 }
 
+void igWindowHint(int hint, int value) { glfwWindowHint(hint, value); }
+
 void igGLFWWindow_SetIcon(GLFWwindow *window, int count, CImage *images) {
     GLFWimage* glfwImages = (GLFWimage*)malloc(count * sizeof(GLFWimage));
     for (int i = 0; i < count; i++) {

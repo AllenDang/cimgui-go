@@ -214,6 +214,12 @@ func (b *GLFWBackend) SetCloseCallback(cbfun WindowCloseCallback) {
 	C.igGLFWWindow_SetCloseCallback(b.handle())
 }
 
+// SetWindowHint applies to next CreateWindow call
+// so use it before CreateWindow call ;-)
+func (b *GLFWBackend) SetWindowHint(hint, value int) {
+	C.igWindowHint(C.int(hint), C.int(value))
+}
+
 // SetIcons sets icons for the window.
 // THIS CODE COMES FROM https://github.com/go-gl/glfw (BSD-3 clause) - Copyright (c) 2012 The glfw3-go Authors. All rights reserved.
 func (b *GLFWBackend) SetIcons(images ...image.Image) {

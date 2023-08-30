@@ -50,6 +50,7 @@ extern void igGLFWWindow_SetIcon(GLFWwindow *window, int count, CImage* images);
 extern void igRefresh();
 extern ImTextureID igCreateTexture(unsigned char *pixels, int width, int height);
 extern void igDeleteTexture(ImTextureID id);
+extern void igWindowHint(int hint, int value);
 
 extern void dropCallback(int, char **);
 extern void closeCallback(GLFWwindow *window);
