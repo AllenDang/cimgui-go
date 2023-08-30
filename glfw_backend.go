@@ -216,31 +216,7 @@ func (b *GLFWBackend) SetCloseCallback(cbfun WindowCloseCallback) {
 
 // SetIcons sets icons for the window.
 // THIS CODE COMES FROM https://github.com/go-gl/glfw (BSD-3 clause) - Copyright (c) 2012 The glfw3-go Authors. All rights reserved.
-func (b *GLFWBackend) SetIcons(images []image.Image) {
-	/*
-		cIcons := make([]C.GLFWimage, len(icons))
-		for _, i := range icons {
-			x, y := i.Bounds().Dx(), i.Bounds().Dy()
-			cIcon := C.GLFWimage{
-				width:  C.int(x),
-				height: C.int(y),
-			}
-
-			pixels := make([]C.uchar, x*y)
-			for imgY := 0; imgY < y; imgY++ {
-				for imgX := 0; imgX < x; imgX++ {
-					r, g, b, _ := i.At(imgX, imgY).RGBA()
-					pixels[imgY*x+imgX] = (r*6/256)*36 + (g*6/256)*6 + (b * 6 / 256)
-				}
-			}
-
-			cIcon.pixels = (*C.uchar)(unsafe.Pointer(&pixels[0]))
-			cIcons = append(cIcons, cIcon)
-		}
-
-		C.igGLFWWindow_SetIcon(b.handle(), C.int(len(cIcons)), &cIcons[0])
-	*/
-
+func (b *GLFWBackend) SetIcons(images ...image.Image) {
 	count := len(images)
 	cimages := make([]C.CImage, count)
 	freePixels := make([]func(), count)
