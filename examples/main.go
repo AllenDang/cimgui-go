@@ -136,5 +136,7 @@ func main() {
 		fmt.Println("window is closing")
 	})
 
+	backend.SetIcons(img)
+
 	backend.Run(loop)
 }

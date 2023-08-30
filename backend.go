@@ -112,6 +112,7 @@ type Backend interface {
 	// For list of hints check GLFW source code.
 	// TODO: this needs generic layer
 	SetWindowHint(hint, value int)
+	SetIcons(icons ...image.Image)
 
 	// TODO: flags needs generic layer
 	CreateWindow(title string, width, height int, flags GLFWWindowFlags)
