@@ -211,3 +211,9 @@ func (b *GLFWBackend) SetCloseCallback(cbfun WindowCloseCallback) {
 
 	C.igGLFWWindow_SetCloseCallback(b.handle())
 }
+
+// SetWindowHint applies to next CreateWindow call
+// so use it before CreateWindow call ;-)
+func (b *GLFWBackend) SetWindowHint(hint, value int) {
+	C.igWindowHint(C.int(hint), C.int(value))
+}

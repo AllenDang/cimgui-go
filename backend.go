@@ -108,6 +108,10 @@ type Backend interface {
 	DeleteTexture(id TextureID)
 	SetDropCallback(DropCallback)
 	SetCloseCallback(WindowCloseCallback)
+	// SetWindowHint selected hint to specified value.
+	// For list of hints check GLFW source code.
+	// TODO: this needs generic layer
+	SetWindowHint(hint, value int)
 
 	// TODO: flags needs generic layer
 	CreateWindow(title string, width, height int, flags GLFWWindowFlags)

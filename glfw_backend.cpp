@@ -297,4 +297,6 @@ void igGLFWWindow_SetSizeLimits(GLFWwindow *window, int minWidth, int minHeight,
   glfwSetWindowSizeLimits(window, minWidth, minHeight, maxWidth, maxHeight);
 }
 
+void igWindowHint(int hint, int value) { glfwWindowHint(hint, value); }
+
 #endif
