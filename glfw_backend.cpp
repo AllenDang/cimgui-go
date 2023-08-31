@@ -285,6 +285,8 @@ void igGLFWWindow_GetWindowPos(GLFWwindow *window, int *x, int *y) { glfwGetWind
 void igGLFWWindow_SetShouldClose(GLFWwindow *window, int value) { glfwSetWindowShouldClose(window, value); }
 
 void igGLFWWindow_SetDropCallbackCB(GLFWwindow *wnd) { glfwSetDropCallback(wnd, (GLFWdropfun)dropCallback); }
+void igGLFWWindow_SetKeyCallback(GLFWwindow *wnd) { glfwSetKeyCallback(wnd, (GLFWkeyfun)keyCallback); }
+void igGLFWWindow_SetSizeCallback(GLFWwindow *wnd) { glfwSetWindowSizeCallback(wnd, (GLFWwindowsizefun)sizeCallback); }
 
 void igGLFWWindow_SetCloseCallback(GLFWwindow *window) {
   glfwSetWindowCloseCallback(window, (GLFWwindowclosefun)closeCallback);

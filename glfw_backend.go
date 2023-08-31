@@ -281,7 +281,7 @@ func (b *GLFWBackend) keyCallback() KeyCallback {
 
 func (b *GLFWBackend) SetSizeChangeCallback(cbfun SizeChangeCallback) {
 	b.sizeCb = cbfun
-	C.igGLFWWindow_SetSizeChangeCallback(b.handle())
+	C.igGLFWWindow_SetSizeCallback(b.handle())
 }
 
 func (b *GLFWBackend) sizeCallback() SizeChangeCallback {
