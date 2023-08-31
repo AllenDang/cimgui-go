@@ -6,8 +6,8 @@ package imgui
 // extern void afterCreateContext();
 // extern void beforeDestoryContext();
 // extern void dropCallback(void*, int, char**);
-// extern void keyCallback(int, int, int, int);
-// extern void sizeCallback(int, int);
+// extern void keyCallback(void*, int, int, int, int);
+// extern void sizeCallback(void*, int, int);
 import "C"
 
 import (
@@ -63,7 +63,7 @@ func beforeDestoryContext() {
 }
 
 //export keyCallback
-func keyCallback(key, scanCode, action, mods C.int) {
+func keyCallback(_ unsafe.Pointer, key, scanCode, action, mods C.int) {
 	if currentBackend != nil {
 		if f := currentBackend.keyCallback(); f != nil {
 			f(int(key), int(scanCode), int(action), int(mods))
@@ -72,7 +72,7 @@ func keyCallback(key, scanCode, action, mods C.int) {
 }
 
 //export sizeCallback
-func sizeCallback(w, h C.int) {
+func sizeCallback(_ unsafe.Pointer, w, h C.int) {
 	if currentBackend != nil {
 		if f := currentBackend.sizeCallback(); f != nil {
 			f(int(w), int(h))
