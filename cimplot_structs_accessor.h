@@ -179,8 +179,6 @@ extern void wrap_ImPlotContext_SetAnnotations(ImPlotContext *ImPlotContextPtr, I
 extern ImPlotAnnotationCollection wrap_ImPlotContext_GetAnnotations(ImPlotContext *self);
 extern void wrap_ImPlotContext_SetTags(ImPlotContext *ImPlotContextPtr, ImPlotTagCollection v);
 extern ImPlotTagCollection wrap_ImPlotContext_GetTags(ImPlotContext *self);
-extern void wrap_ImPlotContext_SetChildWindowMade(ImPlotContext *ImPlotContextPtr, bool v);
-extern bool wrap_ImPlotContext_GetChildWindowMade(ImPlotContext *self);
 extern void wrap_ImPlotContext_SetStyle(ImPlotContext *ImPlotContextPtr, ImPlotStyle v);
 extern ImPlotStyle wrap_ImPlotContext_GetStyle(ImPlotContext *self);
 extern void wrap_ImPlotContext_SetColorModifiers(ImPlotContext *ImPlotContextPtr, ImVector_ImGuiColorMod v);
@@ -283,12 +281,16 @@ extern void wrap_ImPlotLegend_SetLocation(ImPlotLegend *ImPlotLegendPtr, ImPlotL
 extern ImPlotLocation wrap_ImPlotLegend_GetLocation(ImPlotLegend *self);
 extern void wrap_ImPlotLegend_SetPreviousLocation(ImPlotLegend *ImPlotLegendPtr, ImPlotLocation v);
 extern ImPlotLocation wrap_ImPlotLegend_GetPreviousLocation(ImPlotLegend *self);
+extern void wrap_ImPlotLegend_SetScroll(ImPlotLegend *ImPlotLegendPtr, ImVec2 v);
+extern ImVec2 wrap_ImPlotLegend_GetScroll(ImPlotLegend *self);
 extern void wrap_ImPlotLegend_SetIndices(ImPlotLegend *ImPlotLegendPtr, ImVector_int v);
 extern ImVector_int wrap_ImPlotLegend_GetIndices(ImPlotLegend *self);
 extern void wrap_ImPlotLegend_SetLabels(ImPlotLegend *ImPlotLegendPtr, ImGuiTextBuffer v);
 extern ImGuiTextBuffer wrap_ImPlotLegend_GetLabels(ImPlotLegend *self);
 extern void wrap_ImPlotLegend_SetRect(ImPlotLegend *ImPlotLegendPtr, ImRect v);
 extern ImRect wrap_ImPlotLegend_GetRect(ImPlotLegend *self);
+extern void wrap_ImPlotLegend_SetRectClamped(ImPlotLegend *ImPlotLegendPtr, ImRect v);
+extern ImRect wrap_ImPlotLegend_GetRectClamped(ImPlotLegend *self);
 extern void wrap_ImPlotLegend_SetHovered(ImPlotLegend *ImPlotLegendPtr, bool v);
 extern bool wrap_ImPlotLegend_GetHovered(ImPlotLegend *self);
 extern void wrap_ImPlotLegend_SetHeld(ImPlotLegend *ImPlotLegendPtr, bool v);

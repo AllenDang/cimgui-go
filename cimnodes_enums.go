@@ -4,7 +4,7 @@
 package imgui
 
 // original name: ImNodesAttributeFlags_
-type NodesAttributeFlags int
+type NodesAttributeFlags int32
 
 const (
 	NodesAttributeFlagsNone = 0
@@ -15,7 +15,7 @@ const (
 )
 
 // original name: ImNodesCol_
-type NodesCol int
+type NodesCol int32
 
 const (
 	NodesColNodeBackground = 0
@@ -80,7 +80,7 @@ const (
 )
 
 // original name: ImNodesMiniMapLocation_
-type NodesMiniMapLocation int
+type NodesMiniMapLocation int32
 
 const (
 	NodesMiniMapLocationBottomLeft = 0
@@ -93,7 +93,7 @@ const (
 )
 
 // original name: ImNodesPinShape_
-type NodesPinShape int
+type NodesPinShape int32
 
 const (
 	NodesPinShapeCircle = 0
@@ -110,7 +110,7 @@ const (
 )
 
 // original name: ImNodesStyleFlags_
-type NodesStyleFlags int
+type NodesStyleFlags int32
 
 const (
 	NodesStyleFlagsNone = 0
@@ -125,7 +125,7 @@ const (
 )
 
 // original name: ImNodesStyleVar_
-type NodesStyleVar int
+type NodesStyleVar int32
 
 const (
 	NodesStyleVarGridSpacing = 0

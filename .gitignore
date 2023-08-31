@@ -69,3 +69,6 @@ thirdparty/glfw/build
 
 # make update temporary directory
 tmp
+
+# make setup codegen build
+/codegen

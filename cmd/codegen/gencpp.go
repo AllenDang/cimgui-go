@@ -373,7 +373,7 @@ func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []S
 		"ImRect_GetMax":                 true,
 		"ImPlotPoint_Setx":              true,
 		"ImPlotPoint_Sety":              true,
-		"ImPlotColormapData_GetKeys":    true,
+		"ImPlotColormapData_SetKeys":    true,
 	}
 
 	// Add all valid function's name to skipFuncNames
@@ -436,6 +436,8 @@ extern "C" {
 			}
 			structAccessorFuncs = append(structAccessorFuncs, setterFuncDef)
 
+			sbHeader.WriteString(fmt.Sprintf("extern void %s(%s *%s, %s v);\n", setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type))
+
 			getterFuncName := fmt.Sprintf("%[1]s_Get%[2]s", s.Name, m.Name)
 			if skipFuncNames[getterFuncName] {
 				continue
@@ -446,7 +448,7 @@ extern "C" {
 				ArgsT: []ArgDef{
 					{
 						Name: "self",
-						Type: s.Name,
+						Type: s.Name + "*",
 					},
 				},
 				FuncName:         getterFuncName,
@@ -460,7 +462,6 @@ extern "C" {
 			}
 			structAccessorFuncs = append(structAccessorFuncs, getterFuncDef)
 
-			sbHeader.WriteString(fmt.Sprintf("extern void %s(%s *%s, %s v);\n", setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type))
 			sbHeader.WriteString(fmt.Sprintf("extern %s %s(%s *self);\n", m.Type, getterFuncDef.CWrapperFuncName, s.Name))
 
 			sbCpp.WriteString(fmt.Sprintf("void %s(%s *%s, %s v) { %s->%s = v; }\n",

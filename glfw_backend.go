@@ -11,6 +11,7 @@ package imgui
 // #cgo !gles2,darwin LDFLAGS: -framework OpenGL
 // #cgo gles2,darwin LDFLAGS: -lGLESv2
 // #cgo CPPFLAGS: -DCIMGUI_GO_USE_GLFW
+// #include <stdlib.h>
 // extern void loopCallback();
 // extern void beforeRender();
 // extern void afterRender();
@@ -22,6 +23,7 @@ import "C"
 
 import (
 	"image"
+	"image/draw"
 	"unsafe"
 )
 
@@ -46,6 +48,8 @@ type GLFWBackend struct {
 	beforeDestoryContext voidCallbackFunc
 	dropCB               DropCallback
 	closeCB              func(pointer unsafe.Pointer)
+	keyCb                KeyCallback
+	sizeCb               SizeChangeCallback
 	window               uintptr
 }
 
@@ -115,10 +119,10 @@ func (b *GLFWBackend) SetWindowPos(x, y int) {
 }
 
 func (b *GLFWBackend) GetWindowPos() (x, y int32) {
-	xArg, xFin := wrapNumberPtr[C.int, int32](&x)
+	xArg, xFin := WrapNumberPtr[C.int, int32](&x)
 	defer xFin()
 
-	yArg, yFin := wrapNumberPtr[C.int, int32](&y)
+	yArg, yFin := WrapNumberPtr[C.int, int32](&y)
 	defer yFin()
 
 	C.igGLFWWindow_GetWindowPos(b.handle(), xArg, yArg)
@@ -131,10 +135,10 @@ func (b *GLFWBackend) SetWindowSize(width, height int) {
 }
 
 func (b GLFWBackend) DisplaySize() (width int32, height int32) {
-	widthArg, widthFin := wrapNumberPtr[C.int, int32](&width)
+	widthArg, widthFin := WrapNumberPtr[C.int, int32](&width)
 	defer widthFin()
 
-	heightArg, heightFin := wrapNumberPtr[C.int, int32](&height)
+	heightArg, heightFin := WrapNumberPtr[C.int, int32](&height)
 	defer heightFin()
 
 	C.igGLFWWindow_GetDisplaySize(b.handle(), widthArg, heightArg)
@@ -143,7 +147,7 @@ func (b GLFWBackend) DisplaySize() (width int32, height int32) {
 }
 
 func (b *GLFWBackend) SetWindowTitle(title string) {
-	titleArg, titleFin := wrapString(title)
+	titleArg, titleFin := WrapString(title)
 	defer titleFin()
 
 	C.igGLFWWindow_SetTitle(b.handle(), titleArg)
@@ -157,11 +161,11 @@ func (b *GLFWBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeig
 }
 
 func (b GLFWBackend) SetShouldClose(value bool) {
-	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(castBool(value)))
+	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(CastBool(value)))
 }
 
 func (b *GLFWBackend) CreateWindow(title string, width, height int, flags GLFWWindowFlags) {
-	titleArg, titleFin := wrapString(title)
+	titleArg, titleFin := WrapString(title)
 	defer titleFin()
 
 	// b.window = uintptr(unsafe.Pointer(C.igCreateGLFWWindow(titleArg, C.int(width), C.int(height), C.GLFWWindowFlags(flags), C.VoidCallback(C.afterCreateContext))))
@@ -210,4 +214,76 @@ func (b *GLFWBackend) SetCloseCallback(cbfun WindowCloseCallback) {
 	}
 
 	C.igGLFWWindow_SetCloseCallback(b.handle())
+}
+
+// SetWindowHint applies to next CreateWindow call
+// so use it before CreateWindow call ;-)
+func (b *GLFWBackend) SetWindowHint(hint, value int) {
+	C.igWindowHint(C.int(hint), C.int(value))
+}
+
+// SetIcons sets icons for the window.
+// THIS CODE COMES FROM https://github.com/go-gl/glfw (BSD-3 clause) - Copyright (c) 2012 The glfw3-go Authors. All rights reserved.
+func (b *GLFWBackend) SetIcons(images ...image.Image) {
+	count := len(images)
+	cimages := make([]C.CImage, count)
+	freePixels := make([]func(), count)
+
+	for i, img := range images {
+		var pixels []uint8
+		b := img.Bounds()
+
+		switch img := img.(type) {
+		case *image.NRGBA:
+			pixels = img.Pix
+		default:
+			m := image.NewNRGBA(image.Rect(0, 0, b.Dx(), b.Dy()))
+			draw.Draw(m, m.Bounds(), img, b.Min, draw.Src)
+			pixels = m.Pix
+		}
+
+		pix, free := func(origin []byte) (pointer *uint8, free func()) {
+			n := len(origin)
+			if n == 0 {
+				return nil, func() {}
+			}
+
+			ptr := C.CBytes(origin)
+			return (*uint8)(ptr), func() { C.free(ptr) }
+		}(pixels)
+
+		freePixels[i] = free
+
+		cimages[i].width = C.int(b.Dx())
+		cimages[i].height = C.int(b.Dy())
+		cimages[i].pixels = (*C.uchar)(pix)
+	}
+
+	var p *C.CImage
+	if count > 0 {
+		p = &cimages[0]
+	}
+	C.igGLFWWindow_SetIcon(b.handle(), C.int(count), p)
+
+	for _, v := range freePixels {
+		v()
+	}
+}
+
+func (b *GLFWBackend) SetKeyCallback(cbfun KeyCallback) {
+	b.keyCb = cbfun
+	C.igGLFWWindow_SetKeyCallback(b.handle())
+}
+
+func (b *GLFWBackend) keyCallback() KeyCallback {
+	return b.keyCb
+}
+
+func (b *GLFWBackend) SetSizeChangeCallback(cbfun SizeChangeCallback) {
+	b.sizeCb = cbfun
+	C.igGLFWWindow_SetSizeCallback(b.handle())
+}
+
+func (b *GLFWBackend) sizeCallback() SizeChangeCallback {
+	return b.sizeCb
 }

@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func generateGoStructs(prefix string, structs []StructDef, enums []EnumDef) []string {
+func generateGoStructs(prefix string, structs []StructDef, enums []EnumDef, refEnums, refStructs []string) []string {
 	glg.Infof("Generating %d structs", len(structs))
 	var progress int
 
@@ -35,7 +35,7 @@ import "unsafe"
 		}
 
 		sb.WriteString(fmt.Sprintf("%s\n", s.CommentAbove))
-		if generateStruct(s, structs, enums, &sb) {
+		if generateStruct(s, structs, enums, refEnums, refStructs, &sb) {
 			progress++
 		}
 
@@ -60,7 +60,22 @@ import "unsafe"
 	return structNames
 }
 
-func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, sb *strings.Builder) (generationComplete bool) {
+func generateStruct(s StructDef, defs []StructDef, enumDefs []EnumDef, refEnums, refStructs []string, sb *strings.Builder) (generationComplete bool) {
+	structs, enums := make(map[string]bool), make(map[string]bool)
+	for _, s := range defs {
+		structs[s.Name] = true
+	}
+	for _, s := range refStructs {
+		structs[s] = true
+	}
+
+	for _, e := range enumDefs {
+		enums[renameEnum(e.Name)] = true
+	}
+	for _, e := range refEnums {
+		enums[e] = true
+	}
+
 	generationComplete = true
 
 	type wrapper struct {
@@ -76,69 +91,38 @@ func generateStruct(s StructDef, defs []StructDef, enums []EnumDef, sb *strings.
 
 	// Generate struct fields:
 	for i, field := range s.Members {
+		var typeName string
+
 		argDef := ArgDef{
 			Name: renameStructField(field.Name),
 			Type: field.Type,
 		}
 
-		typeName := ""
+		_, toC, toCErr := getArgWrapper(
+			&argDef,
+			false, false,
+			structs, enums,
+		)
 
-		// first of all check if the type isn't another stuct
-		var isOtherStruct bool
-		for _, otherS := range defs {
-			if otherS.Name == field.Type && !shouldSkipStruct(field.Type) {
-				isOtherStruct = true
-				break
-			}
-		}
+		fromC, fromCErr := getReturnWrapper(
+			field.Type,
+			structs, enums,
+		)
 
-		// and same for enums
-		var isEnum bool
-		for _, enum := range enums {
-			if enum.Name == field.Type && !shouldSkipStruct(field.Type) {
-				isEnum = true
-				break
-			}
-		}
-
-		toC, toCErr := argWrapper(field.Type)
-		fromC, fromCErr := getReturnTypeWrapperFunc(field.Type)
 		switch {
 		case toCErr == nil && fromCErr == nil:
+			if toC.ArgType != fromC.returnType { // <- this absolutly shouldn't happen
+				panic(fmt.Sprintf(`
+%s != %s
+%s
+`, toC.ArgType, fromC.returnType, field.Type))
+			}
 			wrappers[i] = wrapper{
-				toC:   toC(argDef),
+				toC:   toC,
 				fromC: fromC,
 			}
 
 			typeName = wrappers[i].toC.ArgType
-		case isOtherStruct:
-			wrappers[i] = wrapper{
-				fromC: returnWrapper{
-					returnType: field.Type,
-					returnStmt: fmt.Sprintf("new%sFromC(&%%s)", renameGoIdentifier(field.Type)),
-				},
-				toC: ArgumentWrapperData{
-					ArgType:   field.Type,
-					ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := %[2]s.c()", field.Name, renameStructField(field.Name)),
-					Finalizer: fmt.Sprintf("%sFin()", field.Name),
-					VarName:   fmt.Sprintf("%sArg", field.Name),
-				},
-			}
-
-			typeName = renameGoIdentifier(field.Type)
-		case isEnum:
-			wrappers[i] = wrapper{
-				fromC: returnWrapper{
-					returnType: field.Type,
-					returnStmt: fmt.Sprintf("%s(%%s)", renameGoIdentifier(field.Type)),
-				},
-				toC: ArgumentWrapperData{
-					ArgType: field.Type,
-					VarName: fmt.Sprintf("C.%s(%s)", field.Type, renameStructField(field.Name)),
-				},
-			}
-
-			typeName = renameGoIdentifier(field.Type)
 		default:
 			isTODO = true
 		}
@@ -190,19 +174,19 @@ data unsafe.Pointer
 
 	// handlers:
 	fmt.Fprintf(sb, `
-func (data %[1]s) handle() (result *C.%[2]s, releaseFn func()) {
+func (self %[1]s) handle() (result *C.%[2]s, releaseFn func()) {
 `, renameGoIdentifier(s.Name), s.Name)
 
 	if isTODO {
 		fmt.Fprintf(sb, `
-result = (*C.%s)(data.data)
+result = (*C.%s)(self.data)
 return result, func() {}
 `, s.Name)
 	} else {
 		fmt.Fprintf(sb, "result = new(C.%s)\n", s.Name)
 		for i, m := range s.Members {
 			fmt.Fprintf(sb,
-				"%[4]s := data.%[4]s\n%[1]s\nresult.%[2]s = %[3]s\n",
+				"%[4]s := self.%[4]s\n%[1]s\nresult.%[2]s = %[3]s\n",
 				wrappers[i].toC.ArgDef,
 				m.Name, wrappers[i].toC.VarName,
 				renameStructField(m.Name),
@@ -224,14 +208,14 @@ return result, func() {}
 	fmt.Fprintf(sb, "}\n")
 
 	fmt.Fprintf(sb, `
-	func (data %[1]s) c() (result C.%[2]s, fin func()) {
-		resultPtr, finFn := data.handle()
+	func (self %[1]s) c() (result C.%[2]s, fin func()) {
+		resultPtr, finFn := self.handle()
 		return *resultPtr, finFn
 	}
 `, renameGoIdentifier(s.Name), s.Name)
 
 	// new X FromC
-	fmt.Fprintf(sb, "func new%[1]sFromC(cvalue *C.%[2]s) %[1]s {\n", renameGoIdentifier(s.Name), s.Name)
+	fmt.Fprintf(sb, "func new%[1]sFromC(cvalue *C.%[2]s) *%[1]s {\n", renameGoIdentifier(s.Name), s.Name)
 
 	fmt.Fprintf(sb, "result := new(%s)\n", renameGoIdentifier(s.Name))
 	if isTODO {
@@ -239,19 +223,26 @@ return result, func() {}
 	} else {
 		for i, m := range s.Members {
 			w := wrappers[i].fromC
-			stmt := strings.TrimPrefix(w.returnStmt, "return")
-			stmt = fmt.Sprintf(stmt, fmt.Sprintf("cvalue.%s", m.Name))
+			stmt := fmt.Sprintf(w.returnStmt, fmt.Sprintf("cvalue.%s", m.Name))
 			fmt.Fprintf(sb, "result.%s = %s\n", renameStructField(m.Name), stmt)
 		}
 	}
 
-	fmt.Fprintf(sb, "return *result\n}\n")
+	fmt.Fprintf(sb, "return result\n}\n")
 
 	return
 }
 
 func renameStructField(original string) (result string) {
-	result = strings.TrimPrefix(original, "_")
-	result = "Field" + result
+	original = strings.TrimPrefix(original, "_")
+	if len(original) == 0 {
+		return ""
+	}
+
+	result = "Field" + strings.ToUpper(original[:1])
+	if len(original) > 1 {
+		result += original[1:]
+	}
+
 	return result
 }

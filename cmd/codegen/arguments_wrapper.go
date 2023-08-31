@@ -3,6 +3,7 @@ package main
 import "C"
 import (
 	"fmt"
+	"strings"
 )
 
 type ArgumentWrapperData struct {
@@ -22,7 +23,7 @@ type ArgumentWrapperData struct {
 
 type argumentWrapper func(arg ArgDef) ArgumentWrapperData
 
-func argWrapper(argType string) (wrapper argumentWrapper, err error) {
+func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames, enumNames map[string]bool) (argDeclaration string, data ArgumentWrapperData, err error) {
 	argWrapperMap := map[string]argumentWrapper{
 		"char":                     simpleW("rune", "C.char"),
 		"char[5]":                  simplePtrArrayW(5, "C.char", "rune"),
@@ -31,6 +32,7 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"const char**":             charPtrPtrW,
 		"const char* const[]":      charPtrPtrW,
 		"unsigned char":            simpleW("uint", "C.uchar"),
+		"unsigned char*":           simplePtrW("uint", "C.uchar"),
 		"unsigned char**":          uCharPtrW,
 		"size_t":                   simpleW("uint64", "C.xulong"),
 		"size_t*":                  sizeTPtrW,
@@ -38,23 +40,29 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"const float":              simpleW("float32", "C.float"),
 		"float*":                   floatPtrW,
 		"const float*":             floatArrayW,
-		"short":                    simpleW("int", "C.short"),
-		"unsigned short":           simpleW("uint", "C.ushort"),
-		"ImU8":                     simpleW("uint", "C.ImU8"),
+		"short":                    simpleW("int16", "C.short"),
+		"unsigned short":           simpleW("uint16", "C.ushort"),
+		"ImU8":                     simpleW("byte", "C.ImU8"),
 		"const ImU8*":              simplePtrSliceW("C.ImU8", "byte"),
-		"ImU16":                    simpleW("uint", "C.ImU16"),
+		"ImU16":                    simpleW("uint16", "C.ImU16"),
 		"const ImU16*":             simplePtrSliceW("C.ImU16", "uint16"),
 		"ImU32":                    simpleW("uint32", "C.ImU32"),
+		"ImU32*":                   simplePtrSliceW("C.ImU32", "uint32"),
 		"const ImU32*":             simplePtrSliceW("C.ImU32", "uint32"),
 		"ImU64":                    simpleW("uint64", "C.ImU64"),
+		"ImU64*":                   simplePtrSliceW("C.ImU64", "uint64"),
 		"const ImU64*":             uint64ArrayW,
 		"ImS8":                     simpleW("int", "C.ImS8"),
+		"ImS8*":                    simplePtrSliceW("C.ImS8", "int8"),
 		"const ImS8*":              simplePtrSliceW("C.ImS8", "int8"),
 		"ImS16":                    simpleW("int", "C.ImS16"),
+		"ImS16*":                   simplePtrSliceW("C.ImS16", "int"),
 		"const ImS16*":             simplePtrSliceW("C.ImS16", "int"),
 		"ImS32":                    simpleW("int", "C.ImS32"),
+		"ImS32*":                   simplePtrSliceW("C.ImS32", "int32"),
 		"const ImS32*":             simplePtrSliceW("C.ImS32", "int32"),
 		"ImS64":                    simpleW("int64", "C.ImS64"),
+		"ImS64*":                   simplePtrW("int64", "C.ImS64"),
 		"const ImS64*":             int64ArrayW,
 		"int":                      simpleW("int32", "C.int"),
 		"int*":                     simplePtrW("int32", "C.int"),
@@ -72,8 +80,9 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"float[3]":                 simplePtrArrayW(3, "C.float", "float32"),
 		"float[4]":                 simplePtrArrayW(4, "C.float", "float32"),
 		"ImWchar":                  simpleW("Wchar", "C.ImWchar"),
-		"const ImWchar*":           simpleW("*Wchar", "(*C.ImWchar)"),
-		"ImWchar15":                simpleW("uint16", "C.ImWchar16"),
+		"ImWchar*":                 simpleW("(*Wchar)", "(*C.ImWchar)"),
+		"const ImWchar*":           simpleW("(*Wchar)", "(*C.ImWchar)"),
+		"ImWchar16":                simpleW("uint16", "C.ImWchar16"),
 		"ImGuiID":                  simpleW("ID", "C.ImGuiID"),
 		"ImGuiID*":                 simplePtrW("ID", "C.ImGuiID"),
 		"ImTextureID":              simpleW("TextureID", "C.ImTextureID"),
@@ -100,22 +109,119 @@ func argWrapper(argType string) (wrapper argumentWrapper, err error) {
 		"ImPlotPoint":              wrappableW("PlotPoint"),
 		"const ImPlotPoint":        wrappableW("PlotPoint"),
 		"ImPlotPoint*":             wrappablePtrW("*PlotPoint", "C.ImPlotPoint"),
+		"ImPlotTime":               wrappableW("PlotTime"),
 		"const ImPlotTime":         wrappableW("PlotTime"),
 		"ImPlotTime*":              wrappablePtrW("*PlotTime", "C.ImPlotTime"),
 	}
 
-	if wrapper, ok := argWrapperMap[argType]; ok {
-		return wrapper, nil
+	if a.Name == "type" || a.Name == "range" {
+		a.Name += "Arg"
 	}
 
-	return nil, fmt.Errorf("no wrapper for type %s", argType)
+	if makeFirstArgReceiver {
+		return "", ArgumentWrapperData{}, nil
+	}
+
+	if isGetter {
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(a.Type))
+		data = ArgumentWrapperData{
+			ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.handle()", a.Name),
+			VarName:   fmt.Sprintf("%sArg", a.Name),
+			Finalizer: fmt.Sprintf("%sFin()", a.Name),
+		}
+
+		return
+	}
+
+	if v, ok := argWrapperMap[a.Type]; ok {
+		arg := v(*a)
+		data = arg
+
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(arg.ArgType))
+
+		return argDeclaration, data, nil
+	}
+
+	if goEnumName := a.Type; isEnum(goEnumName, enumNames) {
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, renameGoIdentifier(goEnumName))
+		data = ArgumentWrapperData{
+			ArgType: renameEnum(a.Type),
+			VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
+		}
+
+		return
+	}
+
+	if strings.HasPrefix(a.Type, "ImVector_") &&
+		!(strings.HasSuffix(a.Type, "*") || strings.HasSuffix(a.Type, "]")) {
+		pureType := strings.TrimPrefix(a.Type, "ImVector_") + "*"
+		dataName := a.Name + "Data"
+		_, w, err := getArgWrapper(&ArgDef{
+			Name: dataName,
+			Type: pureType,
+		}, false, false, structNames, enumNames)
+
+		if err != nil {
+			return "", ArgumentWrapperData{}, fmt.Errorf("creating vector wrapper %w", err)
+		}
+
+		data = ArgumentWrapperData{
+			VarName: "*" + a.Name + "VecArg",
+			ArgType: fmt.Sprintf("Vector[%s]", w.ArgType),
+			ArgDef: fmt.Sprintf(`%[5]s := %[2]s.Data
+%[1]s
+%[2]sVecArg := new(C.%[3]s)
+%[2]sVecArg.Size = C.int(%[2]s.Size)
+%[2]sVecArg.Capacity = C.int(%[2]s.Capacity)
+%[2]sVecArg.Data = %[4]s
+`, w.ArgDef, a.Name, a.Type, w.VarName, dataName),
+			Finalizer: w.Finalizer,
+		}
+
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, data.ArgType)
+
+		return argDeclaration, data, nil
+	}
+
+	pureType := strings.TrimPrefix(a.Type, "const ")
+	isPointer := false
+	if strings.HasSuffix(a.Type, "*") {
+		pureType = strings.TrimSuffix(pureType, "*")
+		isPointer = true
+	}
+
+	if structNames[pureType] {
+		w := ArgumentWrapperData{
+			ArgType:   renameGoIdentifier(pureType),
+			VarName:   fmt.Sprintf("%sArg", a.Name),
+			Finalizer: fmt.Sprintf("%sFin()", a.Name),
+		}
+
+		fn := ""
+		if isPointer {
+			w.ArgType = "*" + w.ArgType
+			fn = "handle"
+		} else {
+			fn = "c"
+		}
+
+		w.ArgDef = fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.%[2]s()", a.Name, fn)
+
+		data = w
+
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, data.ArgType)
+
+		return
+	}
+
+	return "", ArgumentWrapperData{}, fmt.Errorf("unknown argument type \"%s\"", a.Type)
 }
 
 func constCharW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType:   "string",
 		VarName:   fmt.Sprintf("%sArg", arg.Name),
-		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := wrapString(%[1]s)", arg.Name),
+		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := WrapString(%[1]s)", arg.Name),
 		Finalizer: fmt.Sprintf("%sFin()", arg.Name),
 	}
 }
@@ -124,7 +230,7 @@ func charPtrPtrW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType:   "[]string",
 		VarName:   fmt.Sprintf("%sArg", arg.Name),
-		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := wrapStringList(%[1]s)", arg.Name),
+		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := WrapStringList(%[1]s)", arg.Name),
 		Finalizer: fmt.Sprintf("%sFin()", arg.Name),
 	}
 }
@@ -158,7 +264,7 @@ func floatArrayW(arg ArgDef) ArgumentWrapperData {
 func boolPtrW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType:   "*bool",
-		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := wrapBool(%[1]s)", arg.Name),
+		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := WrapBool(%[1]s)", arg.Name),
 		Finalizer: fmt.Sprintf("%[1]sFin()", arg.Name),
 		VarName:   fmt.Sprintf("%sArg", arg.Name),
 	}
@@ -203,9 +309,19 @@ func simplePtrW(goType, cType string) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
 		return ArgumentWrapperData{
 			ArgType:   fmt.Sprintf("*%s", goType),
-			ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := wrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
+			ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := WrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
 			Finalizer: fmt.Sprintf("%[1]sFin()", arg.Name, cType, goType),
 			VarName:   fmt.Sprintf("%sArg", arg.Name),
+		}
+	}
+}
+
+func vectorW(baseGoType string) argumentWrapper {
+	return func(arg ArgDef) ArgumentWrapperData {
+		return ArgumentWrapperData{
+			ArgType: fmt.Sprintf("Vector[%s]", baseGoType),
+			ArgDef:  fmt.Sprintf(`%[1]sArg := newVectorFromC(%[1]s.Size, %[1]s.Capacity, new%[2]sFromC(%[1]s.Data))`, arg.Name, baseGoType),
+			VarName: fmt.Sprintf("%sArg", arg.Name),
 		}
 	}
 }

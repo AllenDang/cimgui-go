@@ -118,7 +118,9 @@ void wrap_igColumns() { igColumns(1,NULL,true); }
 bool wrap_igCombo_Str(const char* label,int* current_item,const char* items_separated_by_zeros) { return igCombo_Str(label,current_item,items_separated_by_zeros,-1); }
 bool wrap_igCombo_Str_arr(const char* label,int* current_item,const char* const items[],int items_count) { return igCombo_Str_arr(label,current_item,items,items_count,-1); }
 ImGuiContext* wrap_igCreateContext() { return igCreateContext(NULL); }
+void wrap_igDebugDrawCursorPos() { igDebugDrawCursorPos(4278190335); }
 void wrap_igDebugDrawItemRect() { igDebugDrawItemRect(4278190335); }
+void wrap_igDebugDrawLineExtents() { igDebugDrawLineExtents(4278190335); }
 void wrap_igDestroyContext() { igDestroyContext(NULL); }
 ImGuiID wrap_igDockBuilderAddNode() { return igDockBuilderAddNode(0,0); }
 void wrap_igDockBuilderRemoveNodeDockedWindows(ImGuiID node_id) { igDockBuilderRemoveNodeDockedWindows(node_id,true); }

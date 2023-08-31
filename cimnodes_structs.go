@@ -15,20 +15,20 @@ type EmulateThreeButtonMouse struct {
 	data unsafe.Pointer
 }
 
-func (data EmulateThreeButtonMouse) handle() (result *C.EmulateThreeButtonMouse, releaseFn func()) {
-	result = (*C.EmulateThreeButtonMouse)(data.data)
+func (self EmulateThreeButtonMouse) handle() (result *C.EmulateThreeButtonMouse, releaseFn func()) {
+	result = (*C.EmulateThreeButtonMouse)(self.data)
 	return result, func() {}
 }
 
-func (data EmulateThreeButtonMouse) c() (result C.EmulateThreeButtonMouse, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self EmulateThreeButtonMouse) c() (result C.EmulateThreeButtonMouse, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
-func newEmulateThreeButtonMouseFromC(cvalue *C.EmulateThreeButtonMouse) EmulateThreeButtonMouse {
+func newEmulateThreeButtonMouseFromC(cvalue *C.EmulateThreeButtonMouse) *EmulateThreeButtonMouse {
 	result := new(EmulateThreeButtonMouse)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type NodesIO struct {
@@ -39,44 +39,47 @@ type NodesIO struct {
 	FieldAutoPanningSpeed            float32
 }
 
-func (data NodesIO) handle() (result *C.ImNodesIO, releaseFn func()) {
+func (self NodesIO) handle() (result *C.ImNodesIO, releaseFn func()) {
 	result = new(C.ImNodesIO)
-	FieldEmulateThreeButtonMouse := data.FieldEmulateThreeButtonMouse
-	EmulateThreeButtonMouseArg, EmulateThreeButtonMouseFin := FieldEmulateThreeButtonMouse.c()
-	result.EmulateThreeButtonMouse = EmulateThreeButtonMouseArg
-	FieldLinkDetachWithModifierClick := data.FieldLinkDetachWithModifierClick
-	LinkDetachWithModifierClickArg, LinkDetachWithModifierClickFin := FieldLinkDetachWithModifierClick.c()
-	result.LinkDetachWithModifierClick = LinkDetachWithModifierClickArg
-	FieldMultipleSelectModifier := data.FieldMultipleSelectModifier
-	MultipleSelectModifierArg, MultipleSelectModifierFin := FieldMultipleSelectModifier.c()
-	result.MultipleSelectModifier = MultipleSelectModifierArg
-	FieldAltMouseButton := data.FieldAltMouseButton
+	FieldEmulateThreeButtonMouse := self.FieldEmulateThreeButtonMouse
+	FieldEmulateThreeButtonMouseArg, FieldEmulateThreeButtonMouseFin := FieldEmulateThreeButtonMouse.c()
+	result.EmulateThreeButtonMouse = FieldEmulateThreeButtonMouseArg
+	FieldLinkDetachWithModifierClick := self.FieldLinkDetachWithModifierClick
+	FieldLinkDetachWithModifierClickArg, FieldLinkDetachWithModifierClickFin := FieldLinkDetachWithModifierClick.c()
+	result.LinkDetachWithModifierClick = FieldLinkDetachWithModifierClickArg
+	FieldMultipleSelectModifier := self.FieldMultipleSelectModifier
+	FieldMultipleSelectModifierArg, FieldMultipleSelectModifierFin := FieldMultipleSelectModifier.c()
+	result.MultipleSelectModifier = FieldMultipleSelectModifierArg
+	FieldAltMouseButton := self.FieldAltMouseButton
 
 	result.AltMouseButton = C.int(FieldAltMouseButton)
-	FieldAutoPanningSpeed := data.FieldAutoPanningSpeed
+	FieldAutoPanningSpeed := self.FieldAutoPanningSpeed
 
 	result.AutoPanningSpeed = C.float(FieldAutoPanningSpeed)
 	releaseFn = func() {
-		EmulateThreeButtonMouseFin()
-		LinkDetachWithModifierClickFin()
-		MultipleSelectModifierFin()
+		FieldEmulateThreeButtonMouseFin()
+		FieldLinkDetachWithModifierClickFin()
+		FieldMultipleSelectModifierFin()
 	}
 	return result, releaseFn
 }
 
-func (data NodesIO) c() (result C.ImNodesIO, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self NodesIO) c() (result C.ImNodesIO, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
-func newNodesIOFromC(cvalue *C.ImNodesIO) NodesIO {
+func newNodesIOFromC(cvalue *C.ImNodesIO) *NodesIO {
 	result := new(NodesIO)
-	result.FieldEmulateThreeButtonMouse = newEmulateThreeButtonMouseFromC(&cvalue.EmulateThreeButtonMouse)
-	result.FieldLinkDetachWithModifierClick = newLinkDetachWithModifierClickFromC(&cvalue.LinkDetachWithModifierClick)
-	result.FieldMultipleSelectModifier = newMultipleSelectModifierFromC(&cvalue.MultipleSelectModifier)
+	result.FieldEmulateThreeButtonMouse = *newEmulateThreeButtonMouseFromC(func() *C.EmulateThreeButtonMouse { result := cvalue.EmulateThreeButtonMouse; return &result }())
+
+	result.FieldLinkDetachWithModifierClick = *newLinkDetachWithModifierClickFromC(func() *C.LinkDetachWithModifierClick { result := cvalue.LinkDetachWithModifierClick; return &result }())
+
+	result.FieldMultipleSelectModifier = *newMultipleSelectModifierFromC(func() *C.MultipleSelectModifier { result := cvalue.MultipleSelectModifier; return &result }())
+
 	result.FieldAltMouseButton = int32(cvalue.AltMouseButton)
 	result.FieldAutoPanningSpeed = float32(cvalue.AutoPanningSpeed)
-	return *result
+	return result
 }
 
 type NodesStyle struct {
@@ -84,20 +87,20 @@ type NodesStyle struct {
 	data unsafe.Pointer
 }
 
-func (data NodesStyle) handle() (result *C.ImNodesStyle, releaseFn func()) {
-	result = (*C.ImNodesStyle)(data.data)
+func (self NodesStyle) handle() (result *C.ImNodesStyle, releaseFn func()) {
+	result = (*C.ImNodesStyle)(self.data)
 	return result, func() {}
 }
 
-func (data NodesStyle) c() (result C.ImNodesStyle, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self NodesStyle) c() (result C.ImNodesStyle, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
-func newNodesStyleFromC(cvalue *C.ImNodesStyle) NodesStyle {
+func newNodesStyleFromC(cvalue *C.ImNodesStyle) *NodesStyle {
 	result := new(NodesStyle)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type LinkDetachWithModifierClick struct {
@@ -105,20 +108,20 @@ type LinkDetachWithModifierClick struct {
 	data unsafe.Pointer
 }
 
-func (data LinkDetachWithModifierClick) handle() (result *C.LinkDetachWithModifierClick, releaseFn func()) {
-	result = (*C.LinkDetachWithModifierClick)(data.data)
+func (self LinkDetachWithModifierClick) handle() (result *C.LinkDetachWithModifierClick, releaseFn func()) {
+	result = (*C.LinkDetachWithModifierClick)(self.data)
 	return result, func() {}
 }
 
-func (data LinkDetachWithModifierClick) c() (result C.LinkDetachWithModifierClick, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self LinkDetachWithModifierClick) c() (result C.LinkDetachWithModifierClick, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
-func newLinkDetachWithModifierClickFromC(cvalue *C.LinkDetachWithModifierClick) LinkDetachWithModifierClick {
+func newLinkDetachWithModifierClickFromC(cvalue *C.LinkDetachWithModifierClick) *LinkDetachWithModifierClick {
 	result := new(LinkDetachWithModifierClick)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }
 
 type MultipleSelectModifier struct {
@@ -126,18 +129,18 @@ type MultipleSelectModifier struct {
 	data unsafe.Pointer
 }
 
-func (data MultipleSelectModifier) handle() (result *C.MultipleSelectModifier, releaseFn func()) {
-	result = (*C.MultipleSelectModifier)(data.data)
+func (self MultipleSelectModifier) handle() (result *C.MultipleSelectModifier, releaseFn func()) {
+	result = (*C.MultipleSelectModifier)(self.data)
 	return result, func() {}
 }
 
-func (data MultipleSelectModifier) c() (result C.MultipleSelectModifier, fin func()) {
-	resultPtr, finFn := data.handle()
+func (self MultipleSelectModifier) c() (result C.MultipleSelectModifier, fin func()) {
+	resultPtr, finFn := self.handle()
 	return *resultPtr, finFn
 }
 
-func newMultipleSelectModifierFromC(cvalue *C.MultipleSelectModifier) MultipleSelectModifier {
+func newMultipleSelectModifierFromC(cvalue *C.MultipleSelectModifier) *MultipleSelectModifier {
 	result := new(MultipleSelectModifier)
 	result.data = unsafe.Pointer(cvalue)
-	return *result
+	return result
 }

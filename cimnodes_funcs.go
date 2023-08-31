@@ -8,55 +8,55 @@ package imgui
 // #include "cimnodes_wrapper.h"
 import "C"
 
-func NewEmulateThreeButtonMouse() EmulateThreeButtonMouse {
+func NewEmulateThreeButtonMouse() *EmulateThreeButtonMouse {
 	return newEmulateThreeButtonMouseFromC(C.EmulateThreeButtonMouse_EmulateThreeButtonMouse())
 }
 
-func (self EmulateThreeButtonMouse) Destroy() {
+func (self *EmulateThreeButtonMouse) Destroy() {
 	selfArg, selfFin := self.handle()
 	C.EmulateThreeButtonMouse_destroy(selfArg)
 
 	selfFin()
 }
 
-func NewNodesIO() NodesIO {
+func NewNodesIO() *NodesIO {
 	return newNodesIOFromC(C.ImNodesIO_ImNodesIO())
 }
 
-func (self NodesIO) Destroy() {
+func (self *NodesIO) Destroy() {
 	selfArg, selfFin := self.handle()
 	C.ImNodesIO_destroy(selfArg)
 
 	selfFin()
 }
 
-func NewNodesStyle() NodesStyle {
+func NewNodesStyle() *NodesStyle {
 	return newNodesStyleFromC(C.ImNodesStyle_ImNodesStyle())
 }
 
-func (self NodesStyle) Destroy() {
+func (self *NodesStyle) Destroy() {
 	selfArg, selfFin := self.handle()
 	C.ImNodesStyle_destroy(selfArg)
 
 	selfFin()
 }
 
-func NewLinkDetachWithModifierClick() LinkDetachWithModifierClick {
+func NewLinkDetachWithModifierClick() *LinkDetachWithModifierClick {
 	return newLinkDetachWithModifierClickFromC(C.LinkDetachWithModifierClick_LinkDetachWithModifierClick())
 }
 
-func (self LinkDetachWithModifierClick) Destroy() {
+func (self *LinkDetachWithModifierClick) Destroy() {
 	selfArg, selfFin := self.handle()
 	C.LinkDetachWithModifierClick_destroy(selfArg)
 
 	selfFin()
 }
 
-func NewMultipleSelectModifier() MultipleSelectModifier {
+func NewMultipleSelectModifier() *MultipleSelectModifier {
 	return newMultipleSelectModifierFromC(C.MultipleSelectModifier_MultipleSelectModifier())
 }
 
-func (self MultipleSelectModifier) Destroy() {
+func (self *MultipleSelectModifier) Destroy() {
 	selfArg, selfFin := self.handle()
 	C.MultipleSelectModifier_destroy(selfArg)
 
@@ -73,7 +73,7 @@ func (self NodesIO) SetEmulateThreeButtonMouse(v EmulateThreeButtonMouse) {
 	vFin()
 }
 
-func (self NodesIO) EmulateThreeButtonMouse() EmulateThreeButtonMouse {
+func (self *NodesIO) EmulateThreeButtonMouse() EmulateThreeButtonMouse {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -81,7 +81,7 @@ func (self NodesIO) EmulateThreeButtonMouse() EmulateThreeButtonMouse {
 	}()
 
 	result := C.wrap_ImNodesIO_GetEmulateThreeButtonMouse(selfArg)
-	return newEmulateThreeButtonMouseFromC(&result)
+	return *newEmulateThreeButtonMouseFromC(func() *C.EmulateThreeButtonMouse { result := result; return &result }())
 }
 
 func (self NodesIO) SetLinkDetachWithModifierClick(v LinkDetachWithModifierClick) {
@@ -94,7 +94,7 @@ func (self NodesIO) SetLinkDetachWithModifierClick(v LinkDetachWithModifierClick
 	vFin()
 }
 
-func (self NodesIO) LinkDetachWithModifierClick() LinkDetachWithModifierClick {
+func (self *NodesIO) LinkDetachWithModifierClick() LinkDetachWithModifierClick {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -102,7 +102,7 @@ func (self NodesIO) LinkDetachWithModifierClick() LinkDetachWithModifierClick {
 	}()
 
 	result := C.wrap_ImNodesIO_GetLinkDetachWithModifierClick(selfArg)
-	return newLinkDetachWithModifierClickFromC(&result)
+	return *newLinkDetachWithModifierClickFromC(func() *C.LinkDetachWithModifierClick { result := result; return &result }())
 }
 
 func (self NodesIO) SetMultipleSelectModifier(v MultipleSelectModifier) {
@@ -115,7 +115,7 @@ func (self NodesIO) SetMultipleSelectModifier(v MultipleSelectModifier) {
 	vFin()
 }
 
-func (self NodesIO) MultipleSelectModifier() MultipleSelectModifier {
+func (self *NodesIO) MultipleSelectModifier() MultipleSelectModifier {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -123,7 +123,7 @@ func (self NodesIO) MultipleSelectModifier() MultipleSelectModifier {
 	}()
 
 	result := C.wrap_ImNodesIO_GetMultipleSelectModifier(selfArg)
-	return newMultipleSelectModifierFromC(&result)
+	return *newMultipleSelectModifierFromC(func() *C.MultipleSelectModifier { result := result; return &result }())
 }
 
 func (self NodesIO) SetAltMouseButton(v int32) {
@@ -132,7 +132,7 @@ func (self NodesIO) SetAltMouseButton(v int32) {
 	C.wrap_ImNodesIO_SetAltMouseButton(selfArg, C.int(v))
 }
 
-func (self NodesIO) AltMouseButton() int32 {
+func (self *NodesIO) AltMouseButton() int32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -147,7 +147,7 @@ func (self NodesIO) SetAutoPanningSpeed(v float32) {
 	C.wrap_ImNodesIO_SetAutoPanningSpeed(selfArg, C.float(v))
 }
 
-func (self NodesIO) AutoPanningSpeed() float32 {
+func (self *NodesIO) AutoPanningSpeed() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -162,7 +162,7 @@ func (self NodesStyle) SetGridSpacing(v float32) {
 	C.wrap_ImNodesStyle_SetGridSpacing(selfArg, C.float(v))
 }
 
-func (self NodesStyle) GridSpacing() float32 {
+func (self *NodesStyle) GridSpacing() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -177,7 +177,7 @@ func (self NodesStyle) SetNodeCornerRounding(v float32) {
 	C.wrap_ImNodesStyle_SetNodeCornerRounding(selfArg, C.float(v))
 }
 
-func (self NodesStyle) NodeCornerRounding() float32 {
+func (self *NodesStyle) NodeCornerRounding() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -192,7 +192,7 @@ func (self NodesStyle) SetNodePadding(v Vec2) {
 	C.wrap_ImNodesStyle_SetNodePadding(selfArg, v.toC())
 }
 
-func (self NodesStyle) NodePadding() Vec2 {
+func (self *NodesStyle) NodePadding() Vec2 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -207,7 +207,7 @@ func (self NodesStyle) SetNodeBorderThickness(v float32) {
 	C.wrap_ImNodesStyle_SetNodeBorderThickness(selfArg, C.float(v))
 }
 
-func (self NodesStyle) NodeBorderThickness() float32 {
+func (self *NodesStyle) NodeBorderThickness() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -222,7 +222,7 @@ func (self NodesStyle) SetLinkThickness(v float32) {
 	C.wrap_ImNodesStyle_SetLinkThickness(selfArg, C.float(v))
 }
 
-func (self NodesStyle) LinkThickness() float32 {
+func (self *NodesStyle) LinkThickness() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -237,7 +237,7 @@ func (self NodesStyle) SetLinkLineSegmentsPerLength(v float32) {
 	C.wrap_ImNodesStyle_SetLinkLineSegmentsPerLength(selfArg, C.float(v))
 }
 
-func (self NodesStyle) LinkLineSegmentsPerLength() float32 {
+func (self *NodesStyle) LinkLineSegmentsPerLength() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -252,7 +252,7 @@ func (self NodesStyle) SetLinkHoverDistance(v float32) {
 	C.wrap_ImNodesStyle_SetLinkHoverDistance(selfArg, C.float(v))
 }
 
-func (self NodesStyle) LinkHoverDistance() float32 {
+func (self *NodesStyle) LinkHoverDistance() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -267,7 +267,7 @@ func (self NodesStyle) SetPinCircleRadius(v float32) {
 	C.wrap_ImNodesStyle_SetPinCircleRadius(selfArg, C.float(v))
 }
 
-func (self NodesStyle) PinCircleRadius() float32 {
+func (self *NodesStyle) PinCircleRadius() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -282,7 +282,7 @@ func (self NodesStyle) SetPinQuadSideLength(v float32) {
 	C.wrap_ImNodesStyle_SetPinQuadSideLength(selfArg, C.float(v))
 }
 
-func (self NodesStyle) PinQuadSideLength() float32 {
+func (self *NodesStyle) PinQuadSideLength() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -297,7 +297,7 @@ func (self NodesStyle) SetPinTriangleSideLength(v float32) {
 	C.wrap_ImNodesStyle_SetPinTriangleSideLength(selfArg, C.float(v))
 }
 
-func (self NodesStyle) PinTriangleSideLength() float32 {
+func (self *NodesStyle) PinTriangleSideLength() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -312,7 +312,7 @@ func (self NodesStyle) SetPinLineThickness(v float32) {
 	C.wrap_ImNodesStyle_SetPinLineThickness(selfArg, C.float(v))
 }
 
-func (self NodesStyle) PinLineThickness() float32 {
+func (self *NodesStyle) PinLineThickness() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -327,7 +327,7 @@ func (self NodesStyle) SetPinHoverRadius(v float32) {
 	C.wrap_ImNodesStyle_SetPinHoverRadius(selfArg, C.float(v))
 }
 
-func (self NodesStyle) PinHoverRadius() float32 {
+func (self *NodesStyle) PinHoverRadius() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -342,7 +342,7 @@ func (self NodesStyle) SetPinOffset(v float32) {
 	C.wrap_ImNodesStyle_SetPinOffset(selfArg, C.float(v))
 }
 
-func (self NodesStyle) PinOffset() float32 {
+func (self *NodesStyle) PinOffset() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -357,7 +357,7 @@ func (self NodesStyle) SetMiniMapPadding(v Vec2) {
 	C.wrap_ImNodesStyle_SetMiniMapPadding(selfArg, v.toC())
 }
 
-func (self NodesStyle) MiniMapPadding() Vec2 {
+func (self *NodesStyle) MiniMapPadding() Vec2 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -372,7 +372,7 @@ func (self NodesStyle) SetMiniMapOffset(v Vec2) {
 	C.wrap_ImNodesStyle_SetMiniMapOffset(selfArg, v.toC())
 }
 
-func (self NodesStyle) MiniMapOffset() Vec2 {
+func (self *NodesStyle) MiniMapOffset() Vec2 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -387,7 +387,7 @@ func (self NodesStyle) SetFlags(v NodesStyleFlags) {
 	C.wrap_ImNodesStyle_SetFlags(selfArg, C.ImNodesStyleFlags(v))
 }
 
-func (self NodesStyle) Flags() NodesStyleFlags {
+func (self *NodesStyle) Flags() NodesStyleFlags {
 	selfArg, selfFin := self.handle()
 
 	defer func() {

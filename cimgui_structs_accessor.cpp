@@ -715,8 +715,6 @@ void wrap_ImGuiContext_SetPlatformImeDataPrev(ImGuiContext *ImGuiContextPtr, ImG
 ImGuiPlatformImeData wrap_ImGuiContext_GetPlatformImeDataPrev(ImGuiContext *self) { return self->PlatformImeDataPrev; }
 void wrap_ImGuiContext_SetPlatformImeViewport(ImGuiContext *ImGuiContextPtr, ImGuiID v) { ImGuiContextPtr->PlatformImeViewport = v; }
 ImGuiID wrap_ImGuiContext_GetPlatformImeViewport(ImGuiContext *self) { return self->PlatformImeViewport; }
-void wrap_ImGuiContext_SetPlatformLocaleDecimalPoint(ImGuiContext *ImGuiContextPtr, char v) { ImGuiContextPtr->PlatformLocaleDecimalPoint = v; }
-char wrap_ImGuiContext_GetPlatformLocaleDecimalPoint(ImGuiContext *self) { return self->PlatformLocaleDecimalPoint; }
 void wrap_ImGuiContext_SetDockContext(ImGuiContext *ImGuiContextPtr, ImGuiDockContext v) { ImGuiContextPtr->DockContext = v; }
 ImGuiDockContext wrap_ImGuiContext_GetDockContext(ImGuiContext *self) { return self->DockContext; }
 void wrap_ImGuiContext_SetSettingsLoaded(ImGuiContext *ImGuiContextPtr, bool v) { ImGuiContextPtr->SettingsLoaded = v; }
@@ -1021,6 +1019,8 @@ void wrap_ImGuiIO_SetClipboardUserData(ImGuiIO *ImGuiIOPtr, void* v) { ImGuiIOPt
 void* wrap_ImGuiIO_GetClipboardUserData(ImGuiIO *self) { return self->ClipboardUserData; }
 void wrap_ImGuiIO_Set_UnusedPadding(ImGuiIO *ImGuiIOPtr, void* v) { ImGuiIOPtr->_UnusedPadding = v; }
 void* wrap_ImGuiIO_Get_UnusedPadding(ImGuiIO *self) { return self->_UnusedPadding; }
+void wrap_ImGuiIO_SetPlatformLocaleDecimalPoint(ImGuiIO *ImGuiIOPtr, ImWchar v) { ImGuiIOPtr->PlatformLocaleDecimalPoint = v; }
+ImWchar wrap_ImGuiIO_GetPlatformLocaleDecimalPoint(ImGuiIO *self) { return self->PlatformLocaleDecimalPoint; }
 void wrap_ImGuiIO_SetWantCaptureMouse(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->WantCaptureMouse = v; }
 bool wrap_ImGuiIO_GetWantCaptureMouse(ImGuiIO *self) { return self->WantCaptureMouse; }
 void wrap_ImGuiIO_SetWantCaptureKeyboard(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->WantCaptureKeyboard = v; }

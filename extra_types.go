@@ -70,12 +70,12 @@ func (i Vec4) toC() C.ImVec4 {
 var _ wrappableType[C.ImColor, *Color] = &Color{}
 
 type Color struct {
-	Value Vec4
+	FieldValue Vec4
 }
 
 func NewColor(r, g, b, a float32) Color {
 	return Color{
-		Value: Vec4{
+		FieldValue: Vec4{
 			X: r,
 			Y: g,
 			Z: b,
@@ -109,7 +109,7 @@ func (i *Color) fromC(col C.ImColor) *Color {
 }
 
 func (i Color) toC() C.ImColor {
-	return C.ImColor{Value: i.Value.toC()}
+	return C.ImColor{Value: i.FieldValue.toC()}
 }
 
 func colorComponent(v float32) uint8 {
@@ -124,18 +124,18 @@ func colorComponent(v float32) uint8 {
 }
 
 func (i Color) Pack() uint32 {
-	return uint32(colorComponent(i.Value.X))<<0 |
-		uint32(colorComponent(i.Value.Y))<<8 |
-		uint32(colorComponent(i.Value.Z))<<16 |
-		uint32(colorComponent(i.Value.W))<<24
+	return uint32(colorComponent(i.FieldValue.X))<<0 |
+		uint32(colorComponent(i.FieldValue.Y))<<8 |
+		uint32(colorComponent(i.FieldValue.Z))<<16 |
+		uint32(colorComponent(i.FieldValue.W))<<24
 }
 
 func (i Color) Color() color.Color {
 	return color.NRGBA{
-		R: colorComponent(i.Value.X),
-		G: colorComponent(i.Value.Y),
-		B: colorComponent(i.Value.Z),
-		A: colorComponent(i.Value.W),
+		R: colorComponent(i.FieldValue.X),
+		G: colorComponent(i.FieldValue.Y),
+		B: colorComponent(i.FieldValue.Z),
+		A: colorComponent(i.FieldValue.W),
 	}
 }
 
@@ -183,20 +183,20 @@ func (p PlotPoint) toC() C.ImPlotPoint {
 }
 
 type PlotTime struct {
-	S  int // second part
-	Us int // microsecond part
+	S       int // second part
+	FieldUs int // microsecond part
 }
 
 func NewPlotTime(t time.Time) PlotTime {
 	ts := t.UnixMicro()
 	return PlotTime{
-		S:  int(ts / 1e6),
-		Us: int(ts % 1e6),
+		S:       int(ts / 1e6),
+		FieldUs: int(ts % 1e6),
 	}
 }
 
 func (i PlotTime) Time() time.Time {
-	return time.Unix(int64(i.S), int64(i.Us)*int64(time.Microsecond))
+	return time.Unix(int64(i.S), int64(i.FieldUs)*int64(time.Microsecond))
 }
 
 func (i *PlotTime) fromC(p C.ImPlotTime) *PlotTime {
@@ -205,7 +205,17 @@ func (i *PlotTime) fromC(p C.ImPlotTime) *PlotTime {
 }
 
 func (p PlotTime) toC() C.ImPlotTime {
-	return C.ImPlotTime{S: C.xlong(p.S), Us: C.int(p.Us)}
+	return C.ImPlotTime{S: C.xlong(p.S), Us: C.int(p.FieldUs)}
+}
+
+type Vector[T any] struct {
+	Size     int
+	Capacity int
+	Data     T
+}
+
+func newVectorFromC[T any](size, capacity C.int, data T) Vector[T] {
+	return Vector[T]{Size: int(size), Capacity: int(capacity), Data: data}
 }
 
 // wrappableType represents a GO type that can be converted into a C value

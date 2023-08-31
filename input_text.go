@@ -16,12 +16,12 @@ import (
 type InputTextCallback func(data InputTextCallbackData) int
 
 type inputTextInternalState struct {
-	buf      *stringBuffer
+	buf      *StringBuffer
 	callback InputTextCallback
 }
 
 func (state *inputTextInternalState) release() {
-	state.buf.free()
+	state.buf.Free()
 }
 
 //export generalInputTextCallback
@@ -32,7 +32,7 @@ func generalInputTextCallback(cbData *C.ImGuiInputTextCallbackData) C.int {
 	statePtr := bufHandle.Value().(*inputTextInternalState)
 
 	if data.EventFlag() == InputTextFlagsCallbackResize {
-		statePtr.buf.resizeTo(int(data.BufSize()))
+		statePtr.buf.ResizeTo(int(data.BufSize()))
 		C.wrap_ImGuiInputTextCallbackData_SetBuf(cbData, (*C.char)(statePtr.buf.ptr))
 		data.SetBufSize(int32(statePtr.buf.size))
 		data.SetBufTextLen(int32(data.BufTextLen()))
@@ -40,26 +40,26 @@ func generalInputTextCallback(cbData *C.ImGuiInputTextCallbackData) C.int {
 	}
 
 	if statePtr.callback != nil {
-		return C.int(statePtr.callback(data))
+		return C.int(statePtr.callback(*data))
 	}
 
 	return 0
 }
 
 func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, callback InputTextCallback) bool {
-	labelArg, labelFin := wrapString(label)
+	labelArg, labelFin := WrapString(label)
 	defer labelFin()
 
-	hintArg, hintFin := wrapString(hint)
+	hintArg, hintFin := WrapString(hint)
 	defer hintFin()
 
 	state := &inputTextInternalState{
-		buf:      newStringBuffer(*buf),
+		buf:      NewStringBuffer(*buf),
 		callback: callback,
 	}
 
 	defer func() {
-		*buf = state.buf.toGo()
+		*buf = state.buf.ToGo()
 		state.release()
 	}()
 
@@ -80,16 +80,16 @@ func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, ca
 }
 
 func InputTextMultiline(label string, buf *string, size Vec2, flags InputTextFlags, callback InputTextCallback) bool {
-	labelArg, labelFin := wrapString(label)
+	labelArg, labelFin := WrapString(label)
 	defer labelFin()
 
 	state := &inputTextInternalState{
-		buf:      newStringBuffer(*buf),
+		buf:      NewStringBuffer(*buf),
 		callback: callback,
 	}
 
 	defer func() {
-		*buf = state.buf.toGo()
+		*buf = state.buf.ToGo()
 		state.release()
 	}()
 
