@@ -48,6 +48,8 @@ type GLFWBackend struct {
 	beforeDestoryContext voidCallbackFunc
 	dropCB               DropCallback
 	closeCB              func(pointer unsafe.Pointer)
+	keyCb                KeyCallback
+	sizeCb               SizeChangeCallback
 	window               uintptr
 }
 
@@ -266,4 +268,22 @@ func (b *GLFWBackend) SetIcons(images ...image.Image) {
 	for _, v := range freePixels {
 		v()
 	}
+}
+
+func (b *GLFWBackend) SetKeyCallback(cbfun KeyCallback) {
+	b.keyCb = cbfun
+	C.igGLFWWindow_SetKeyCallback(b.handle())
+}
+
+func (b *GLFWBackend) keyCallback() KeyCallback {
+	return b.keyCb
+}
+
+func (b *GLFWBackend) SetSizeChangeCallback(cbfun SizeChangeCallback) {
+	b.sizeCb = cbfun
+	C.igGLFWWindow_SetSizeCallback(b.handle())
+}
+
+func (b *GLFWBackend) sizeCallback() SizeChangeCallback {
+	return b.sizeCb
 }

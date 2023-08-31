@@ -46,6 +46,8 @@ extern void igGLFWWindow_SetSize(GLFWwindow *window, int width, int height);
 extern void igGLFWWindow_SetTitle(GLFWwindow *window, const char *title);
 extern void igGLFWWindow_SetSizeLimits(GLFWwindow *window, int minWidth, int minHeight, int maxWidth, int maxHeight);
 extern void igGLFWWindow_SetCloseCallback(GLFWwindow *window);
+extern void igGLFWWindow_SetKeyCallback(GLFWwindow *window);
+extern void igGLFWWindow_SetSizeCallback(GLFWwindow *window);
 extern void igGLFWWindow_SetIcon(GLFWwindow *window, int count, CImage* images);
 extern void igRefresh();
 extern ImTextureID igCreateTexture(unsigned char *pixels, int width, int height);
@@ -54,6 +56,8 @@ extern void igWindowHint(int hint, int value);
 
 extern void dropCallback(int, char **);
 extern void closeCallback(GLFWwindow *window);
+extern void keyCallback(int key, int scancode, int action, int mods);
+extern void sizeCallback(int width, int height);
 
 #ifdef __cplusplus
 }

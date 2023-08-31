@@ -6,6 +6,8 @@ package imgui
 // extern void afterCreateContext();
 // extern void beforeDestoryContext();
 // extern void dropCallback(void*, int, char**);
+// extern void keyCallback(void*, int, int, int, int);
+// extern void sizeCallback(void*, int, int);
 import "C"
 
 import (
@@ -60,7 +62,27 @@ func beforeDestoryContext() {
 	}
 }
 
+//export keyCallback
+func keyCallback(_ unsafe.Pointer, key, scanCode, action, mods C.int) {
+	if currentBackend != nil {
+		if f := currentBackend.keyCallback(); f != nil {
+			f(int(key), int(scanCode), int(action), int(mods))
+		}
+	}
+}
+
+//export sizeCallback
+func sizeCallback(_ unsafe.Pointer, w, h C.int) {
+	if currentBackend != nil {
+		if f := currentBackend.sizeCallback(); f != nil {
+			f(int(w), int(h))
+		}
+	}
+}
+
 type DropCallback func([]string)
+type KeyCallback func(key, scanCode, action, mods int)
+type SizeChangeCallback func(w, h int)
 
 type WindowCloseCallback func(b Backend)
 
@@ -108,6 +130,8 @@ type Backend interface {
 	DeleteTexture(id TextureID)
 	SetDropCallback(DropCallback)
 	SetCloseCallback(WindowCloseCallback)
+	SetKeyCallback(KeyCallback)
+	SetSizeChangeCallback(SizeChangeCallback)
 	// SetWindowHint selected hint to specified value.
 	// For list of hints check GLFW source code.
 	// TODO: this needs generic layer
@@ -134,6 +158,8 @@ type Backend interface {
 	beforeDestroyHook() func()
 	dropCallback() DropCallback
 	closeCallback() func(window unsafe.Pointer)
+	keyCallback() KeyCallback
+	sizeCallback() SizeChangeCallback
 }
 
 func CreateBackend(backend Backend) Backend {
