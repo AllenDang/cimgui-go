@@ -434,9 +434,11 @@ type PlotLegend struct {
 	FieldPreviousFlags    PlotLegendFlags
 	FieldLocation         PlotLocation
 	FieldPreviousLocation PlotLocation
+	FieldScroll           Vec2
 	FieldIndices          Vector[*int32]
 	FieldLabels           TextBuffer
 	FieldRect             Rect
+	FieldRectClamped      Rect
 	FieldHovered          bool
 	FieldHeld             bool
 	FieldCanGoInside      bool
@@ -456,6 +458,9 @@ func (self PlotLegend) handle() (result *C.ImPlotLegend, releaseFn func()) {
 	FieldPreviousLocation := self.FieldPreviousLocation
 
 	result.PreviousLocation = C.ImPlotLocation(FieldPreviousLocation)
+	FieldScroll := self.FieldScroll
+
+	result.Scroll = FieldScroll.toC()
 	FieldIndices := self.FieldIndices
 	FieldIndicesData := FieldIndices.Data
 	FieldIndicesDataArg, FieldIndicesDataFin := WrapNumberPtr[C.int, int32](FieldIndicesData)
@@ -471,6 +476,9 @@ func (self PlotLegend) handle() (result *C.ImPlotLegend, releaseFn func()) {
 	FieldRect := self.FieldRect
 
 	result.Rect = FieldRect.toC()
+	FieldRectClamped := self.FieldRectClamped
+
+	result.RectClamped = FieldRectClamped.toC()
 	FieldHovered := self.FieldHovered
 
 	result.Hovered = C.bool(FieldHovered)
@@ -498,10 +506,12 @@ func newPlotLegendFromC(cvalue *C.ImPlotLegend) *PlotLegend {
 	result.FieldPreviousFlags = PlotLegendFlags(cvalue.PreviousFlags)
 	result.FieldLocation = PlotLocation(cvalue.Location)
 	result.FieldPreviousLocation = PlotLocation(cvalue.PreviousLocation)
+	result.FieldScroll = *(&Vec2{}).fromC(cvalue.Scroll)
 	result.FieldIndices = newVectorFromC(cvalue.Indices.Size, cvalue.Indices.Capacity, (*int32)(cvalue.Indices.Data))
 	result.FieldLabels = *newTextBufferFromC(func() *C.ImGuiTextBuffer { result := cvalue.Labels; return &result }())
 
 	result.FieldRect = *(&Rect{}).fromC(cvalue.Rect)
+	result.FieldRectClamped = *(&Rect{}).fromC(cvalue.RectClamped)
 	result.FieldHovered = cvalue.Hovered == C.bool(true)
 	result.FieldHeld = cvalue.Held == C.bool(true)
 	result.FieldCanGoInside = cvalue.CanGoInside == C.bool(true)

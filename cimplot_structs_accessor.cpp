@@ -175,8 +175,6 @@ void wrap_ImPlotContext_SetAnnotations(ImPlotContext *ImPlotContextPtr, ImPlotAn
 ImPlotAnnotationCollection wrap_ImPlotContext_GetAnnotations(ImPlotContext *self) { return self->Annotations; }
 void wrap_ImPlotContext_SetTags(ImPlotContext *ImPlotContextPtr, ImPlotTagCollection v) { ImPlotContextPtr->Tags = v; }
 ImPlotTagCollection wrap_ImPlotContext_GetTags(ImPlotContext *self) { return self->Tags; }
-void wrap_ImPlotContext_SetChildWindowMade(ImPlotContext *ImPlotContextPtr, bool v) { ImPlotContextPtr->ChildWindowMade = v; }
-bool wrap_ImPlotContext_GetChildWindowMade(ImPlotContext *self) { return self->ChildWindowMade; }
 void wrap_ImPlotContext_SetStyle(ImPlotContext *ImPlotContextPtr, ImPlotStyle v) { ImPlotContextPtr->Style = v; }
 ImPlotStyle wrap_ImPlotContext_GetStyle(ImPlotContext *self) { return self->Style; }
 void wrap_ImPlotContext_SetColorModifiers(ImPlotContext *ImPlotContextPtr, ImVector_ImGuiColorMod v) { ImPlotContextPtr->ColorModifiers = v; }
@@ -279,12 +277,16 @@ void wrap_ImPlotLegend_SetLocation(ImPlotLegend *ImPlotLegendPtr, ImPlotLocation
 ImPlotLocation wrap_ImPlotLegend_GetLocation(ImPlotLegend *self) { return self->Location; }
 void wrap_ImPlotLegend_SetPreviousLocation(ImPlotLegend *ImPlotLegendPtr, ImPlotLocation v) { ImPlotLegendPtr->PreviousLocation = v; }
 ImPlotLocation wrap_ImPlotLegend_GetPreviousLocation(ImPlotLegend *self) { return self->PreviousLocation; }
+void wrap_ImPlotLegend_SetScroll(ImPlotLegend *ImPlotLegendPtr, ImVec2 v) { ImPlotLegendPtr->Scroll = v; }
+ImVec2 wrap_ImPlotLegend_GetScroll(ImPlotLegend *self) { return self->Scroll; }
 void wrap_ImPlotLegend_SetIndices(ImPlotLegend *ImPlotLegendPtr, ImVector_int v) { ImPlotLegendPtr->Indices = v; }
 ImVector_int wrap_ImPlotLegend_GetIndices(ImPlotLegend *self) { return self->Indices; }
 void wrap_ImPlotLegend_SetLabels(ImPlotLegend *ImPlotLegendPtr, ImGuiTextBuffer v) { ImPlotLegendPtr->Labels = v; }
 ImGuiTextBuffer wrap_ImPlotLegend_GetLabels(ImPlotLegend *self) { return self->Labels; }
 void wrap_ImPlotLegend_SetRect(ImPlotLegend *ImPlotLegendPtr, ImRect v) { ImPlotLegendPtr->Rect = v; }
 ImRect wrap_ImPlotLegend_GetRect(ImPlotLegend *self) { return self->Rect; }
+void wrap_ImPlotLegend_SetRectClamped(ImPlotLegend *ImPlotLegendPtr, ImRect v) { ImPlotLegendPtr->RectClamped = v; }
+ImRect wrap_ImPlotLegend_GetRectClamped(ImPlotLegend *self) { return self->RectClamped; }
 void wrap_ImPlotLegend_SetHovered(ImPlotLegend *ImPlotLegendPtr, bool v) { ImPlotLegendPtr->Hovered = v; }
 bool wrap_ImPlotLegend_GetHovered(ImPlotLegend *self) { return self->Hovered; }
 void wrap_ImPlotLegend_SetHeld(ImPlotLegend *ImPlotLegendPtr, bool v) { ImPlotLegendPtr->Held = v; }

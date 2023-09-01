@@ -1347,7 +1347,9 @@ const (
 
 	LocKeyDockingHideTabBar = 8
 
-	LocKeyCOUNT = 9
+	LocKeyDockingHoldShiftToDock = 9
+
+	LocKeyCOUNT = 10
 )
 
 // original name: ImGuiLogType
@@ -2171,7 +2173,7 @@ const (
 	TreeNodeFlagsOpenOnArrow = 128
 	// No collapsing, no arrow (use as a convenience for leaf nodes).
 	TreeNodeFlagsLeaf = 256
-	// Display a bullet instead of arrow
+	// Display a bullet instead of arrow. IMPORTANT: node can still be marked open/close if you don't set the _Leaf flag!
 	TreeNodeFlagsBullet = 512
 	// Use FramePadding (even for an unframed text node) to vertically align text baseline to regular widget height. Equivalent to calling AlignTextToFramePadding().
 	TreeNodeFlagsFramePadding = 1024

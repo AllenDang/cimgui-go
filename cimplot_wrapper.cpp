@@ -31,10 +31,10 @@ bool wrap_ImPlot_ColormapButton(const char* label) { return ImPlot_ColormapButto
 void wrap_ImPlot_ColormapScale(const char* label,double scale_min,double scale_max) { ImPlot_ColormapScale(label,scale_min,scale_max,(ImVec2){.x=0, .y=0},"%g",0,-1); }
 bool wrap_ImPlot_ColormapSlider(const char* label,float* t) { return ImPlot_ColormapSlider(label,t,nullptr,"",-1); }
 void wrap_ImPlot_DestroyContext() { ImPlot_DestroyContext(nullptr); }
-bool wrap_ImPlot_DragLineX(int id,double* x,const ImVec4 col) { return ImPlot_DragLineX(id,x,col,1,0); }
-bool wrap_ImPlot_DragLineY(int id,double* y,const ImVec4 col) { return ImPlot_DragLineY(id,y,col,1,0); }
-bool wrap_ImPlot_DragPoint(int id,double* x,double* y,const ImVec4 col) { return ImPlot_DragPoint(id,x,y,col,4,0); }
-bool wrap_ImPlot_DragRect(int id,double* x1,double* y1,double* x2,double* y2,const ImVec4 col) { return ImPlot_DragRect(id,x1,y1,x2,y2,col,0); }
+bool wrap_ImPlot_DragLineX(int id,double* x,const ImVec4 col) { return ImPlot_DragLineX(id,x,col,1,0,nullptr,nullptr,nullptr); }
+bool wrap_ImPlot_DragLineY(int id,double* y,const ImVec4 col) { return ImPlot_DragLineY(id,y,col,1,0,nullptr,nullptr,nullptr); }
+bool wrap_ImPlot_DragPoint(int id,double* x,double* y,const ImVec4 col) { return ImPlot_DragPoint(id,x,y,col,4,0,nullptr,nullptr,nullptr); }
+bool wrap_ImPlot_DragRect(int id,double* x1,double* y1,double* x2,double* y2,const ImVec4 col) { return ImPlot_DragRect(id,x1,y1,x2,y2,col,0,nullptr,nullptr,nullptr); }
 void wrap_ImPlot_GetColormapColor(ImVec4* pOut,int idx) { ImPlot_GetColormapColor(pOut,idx,-1); }
 int wrap_ImPlot_GetColormapSize() { return ImPlot_GetColormapSize(-1); }
 void wrap_ImPlot_GetLocationPos(ImVec2* pOut,const ImRect outer_rect,const ImVec2 inner_size,ImPlotLocation location) { ImPlot_GetLocationPos(pOut,outer_rect,inner_size,location,(ImVec2){.x=0, .y=0}); }

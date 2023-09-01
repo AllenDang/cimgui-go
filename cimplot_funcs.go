@@ -1663,6 +1663,15 @@ func PlotClampLabelPos(pos Vec2, size Vec2, Min Vec2, Max Vec2) Vec2 {
 	return *pOut
 }
 
+func PlotClampLegendRect(legend_rect *Rect, outer_rect Rect, pad Vec2) bool {
+	legend_rectArg, legend_rectFin := wrap[C.ImRect, *Rect](legend_rect)
+
+	defer func() {
+		legend_rectFin()
+	}()
+	return C.ImPlot_ClampLegendRect(legend_rectArg, outer_rect.toC(), pad.toC()) == C.bool(true)
+}
+
 // PlotColormapButtonV parameter default value hint:
 // size: ImVec2(0,0)
 // cmap: -1
@@ -1739,56 +1748,92 @@ func PlotDestroyContextV(ctx *PlotContext) {
 // PlotDragLineXV parameter default value hint:
 // thickness: 1
 // flags: 0
-func PlotDragLineXV(id int32, x *float64, col Vec4, thickness float32, flags PlotDragToolFlags) bool {
+// out_clicked: nullptr
+// out_hovered: nullptr
+// held: nullptr
+func PlotDragLineXV(id int32, x *float64, col Vec4, thickness float32, flags PlotDragToolFlags, out_clicked *bool, out_hovered *bool, held *bool) bool {
 	xArg, xFin := WrapNumberPtr[C.double, float64](x)
+	out_clickedArg, out_clickedFin := WrapBool(out_clicked)
+	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
+	heldArg, heldFin := WrapBool(held)
 
 	defer func() {
 		xFin()
+		out_clickedFin()
+		out_hoveredFin()
+		heldFin()
 	}()
-	return C.ImPlot_DragLineX(C.int(id), xArg, col.toC(), C.float(thickness), C.ImPlotDragToolFlags(flags)) == C.bool(true)
+	return C.ImPlot_DragLineX(C.int(id), xArg, col.toC(), C.float(thickness), C.ImPlotDragToolFlags(flags), out_clickedArg, out_hoveredArg, heldArg) == C.bool(true)
 }
 
 // PlotDragLineYV parameter default value hint:
 // thickness: 1
 // flags: 0
-func PlotDragLineYV(id int32, y *float64, col Vec4, thickness float32, flags PlotDragToolFlags) bool {
+// out_clicked: nullptr
+// out_hovered: nullptr
+// held: nullptr
+func PlotDragLineYV(id int32, y *float64, col Vec4, thickness float32, flags PlotDragToolFlags, out_clicked *bool, out_hovered *bool, held *bool) bool {
 	yArg, yFin := WrapNumberPtr[C.double, float64](y)
+	out_clickedArg, out_clickedFin := WrapBool(out_clicked)
+	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
+	heldArg, heldFin := WrapBool(held)
 
 	defer func() {
 		yFin()
+		out_clickedFin()
+		out_hoveredFin()
+		heldFin()
 	}()
-	return C.ImPlot_DragLineY(C.int(id), yArg, col.toC(), C.float(thickness), C.ImPlotDragToolFlags(flags)) == C.bool(true)
+	return C.ImPlot_DragLineY(C.int(id), yArg, col.toC(), C.float(thickness), C.ImPlotDragToolFlags(flags), out_clickedArg, out_hoveredArg, heldArg) == C.bool(true)
 }
 
 // PlotDragPointV parameter default value hint:
 // size: 4
 // flags: 0
-func PlotDragPointV(id int32, x *float64, y *float64, col Vec4, size float32, flags PlotDragToolFlags) bool {
+// out_clicked: nullptr
+// out_hovered: nullptr
+// held: nullptr
+func PlotDragPointV(id int32, x *float64, y *float64, col Vec4, size float32, flags PlotDragToolFlags, out_clicked *bool, out_hovered *bool, held *bool) bool {
 	xArg, xFin := WrapNumberPtr[C.double, float64](x)
 	yArg, yFin := WrapNumberPtr[C.double, float64](y)
+	out_clickedArg, out_clickedFin := WrapBool(out_clicked)
+	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
+	heldArg, heldFin := WrapBool(held)
 
 	defer func() {
 		xFin()
 		yFin()
+		out_clickedFin()
+		out_hoveredFin()
+		heldFin()
 	}()
-	return C.ImPlot_DragPoint(C.int(id), xArg, yArg, col.toC(), C.float(size), C.ImPlotDragToolFlags(flags)) == C.bool(true)
+	return C.ImPlot_DragPoint(C.int(id), xArg, yArg, col.toC(), C.float(size), C.ImPlotDragToolFlags(flags), out_clickedArg, out_hoveredArg, heldArg) == C.bool(true)
 }
 
 // PlotDragRectV parameter default value hint:
 // flags: 0
-func PlotDragRectV(id int32, x1 *float64, y1 *float64, x2 *float64, y2 *float64, col Vec4, flags PlotDragToolFlags) bool {
+// out_clicked: nullptr
+// out_hovered: nullptr
+// held: nullptr
+func PlotDragRectV(id int32, x1 *float64, y1 *float64, x2 *float64, y2 *float64, col Vec4, flags PlotDragToolFlags, out_clicked *bool, out_hovered *bool, held *bool) bool {
 	x1Arg, x1Fin := WrapNumberPtr[C.double, float64](x1)
 	y1Arg, y1Fin := WrapNumberPtr[C.double, float64](y1)
 	x2Arg, x2Fin := WrapNumberPtr[C.double, float64](x2)
 	y2Arg, y2Fin := WrapNumberPtr[C.double, float64](y2)
+	out_clickedArg, out_clickedFin := WrapBool(out_clicked)
+	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
+	heldArg, heldFin := WrapBool(held)
 
 	defer func() {
 		x1Fin()
 		y1Fin()
 		x2Fin()
 		y2Fin()
+		out_clickedFin()
+		out_hoveredFin()
+		heldFin()
 	}()
-	return C.ImPlot_DragRect(C.int(id), x1Arg, y1Arg, x2Arg, y2Arg, col.toC(), C.ImPlotDragToolFlags(flags)) == C.bool(true)
+	return C.ImPlot_DragRect(C.int(id), x1Arg, y1Arg, x2Arg, y2Arg, col.toC(), C.ImPlotDragToolFlags(flags), out_clickedArg, out_hoveredArg, heldArg) == C.bool(true)
 }
 
 func PlotEndAlignedPlots() {
@@ -14655,21 +14700,6 @@ func (self *PlotContext) Tags() PlotTagCollection {
 	return *newPlotTagCollectionFromC(func() *C.ImPlotTagCollection { result := result; return &result }())
 }
 
-func (self PlotContext) SetChildWindowMade(v bool) {
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImPlotContext_SetChildWindowMade(selfArg, C.bool(v))
-}
-
-func (self *PlotContext) ChildWindowMade() bool {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_ImPlotContext_GetChildWindowMade(selfArg) == C.bool(true)
-}
-
 func (self PlotContext) SetStyle(v PlotStyle) {
 	vArg, vFin := v.c()
 
@@ -15483,6 +15513,21 @@ func (self *PlotLegend) PreviousLocation() PlotLocation {
 	return PlotLocation(C.wrap_ImPlotLegend_GetPreviousLocation(selfArg))
 }
 
+func (self PlotLegend) SetScroll(v Vec2) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotLegend_SetScroll(selfArg, v.toC())
+}
+
+func (self *PlotLegend) Scroll() Vec2 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *(&Vec2{}).fromC(C.wrap_ImPlotLegend_GetScroll(selfArg))
+}
+
 func (self PlotLegend) SetIndices(v Vector[*int32]) {
 	vData := v.Data
 	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
@@ -15541,6 +15586,21 @@ func (self *PlotLegend) Rect() Rect {
 		selfFin()
 	}()
 	return *(&Rect{}).fromC(C.wrap_ImPlotLegend_GetRect(selfArg))
+}
+
+func (self PlotLegend) SetRectClamped(v Rect) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotLegend_SetRectClamped(selfArg, v.toC())
+}
+
+func (self *PlotLegend) RectClamped() Rect {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *(&Rect{}).fromC(C.wrap_ImPlotLegend_GetRectClamped(selfArg))
 }
 
 func (self PlotLegend) SetHovered(v bool) {

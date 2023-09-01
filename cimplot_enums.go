@@ -283,13 +283,11 @@ const (
 
 	PlotFlagsNoBoxSelect = 32
 
-	PlotFlagsNoChild = 64
+	PlotFlagsNoFrame = 64
 
-	PlotFlagsNoFrame = 128
+	PlotFlagsEqual = 128
 
-	PlotFlagsEqual = 256
-
-	PlotFlagsCrosshairs = 512
+	PlotFlagsCrosshairs = 256
 
 	PlotFlagsCanvasOnly = 55
 )

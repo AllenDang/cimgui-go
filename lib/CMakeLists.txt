@@ -22,6 +22,8 @@ file(GLOB IMGUI_SOURCES
     ../cimgui/implot/implot_items.cpp
     ../cimgui/implot/implot_demo.cpp
     ../cimgui/cimplot.cpp
+    ../cimgui/imnodes/imnodes.cpp
+    ../cimgui/cimnodes.cpp
 	${TABLES_SOURCE}
 )
 
@@ -29,6 +31,7 @@ set(CMAKE_BUILD_TYPE "Release")
 set(IMGUI_STATIC "on" CACHE STRING "Build as a static library")
 set(IMGUI_FREETYPE "no" CACHE STRING "Build with freetype library")
 set(IMGUI_LIBRARIES )
+add_definitions(-DIMNODES_NAMESPACE=imnodes)
 
 add_definitions(-DIMGUI_USE_WCHAR32)
 

@@ -1299,7 +1299,6 @@ func (self *ContextHook) Destroy() {
 // // Different to ensure initial submission
 //
 //	    PlatformImeViewport = 0;
-//	    PlatformLocaleDecimalPoint = '.';
 //
 //	    DockNodeWindowMenuHandler =                                    ((void *)0)                                       ;
 //
@@ -4105,10 +4104,22 @@ func DebugCheckVersionAndDataLayout(version_str string, sz_io uint64, sz_style u
 	return C.igDebugCheckVersionAndDataLayout(version_strArg, C.xulong(sz_io), C.xulong(sz_style), C.xulong(sz_vec2), C.xulong(sz_vec4), C.xulong(sz_drawvert), C.xulong(sz_drawidx)) == C.bool(true)
 }
 
+// InternalDebugDrawCursorPosV parameter default value hint:
+// col: 4278190335
+func InternalDebugDrawCursorPosV(col uint32) {
+	C.igDebugDrawCursorPos(C.ImU32(col))
+}
+
 // InternalDebugDrawItemRectV parameter default value hint:
 // col: 4278190335
 func InternalDebugDrawItemRectV(col uint32) {
 	C.igDebugDrawItemRect(C.ImU32(col))
+}
+
+// InternalDebugDrawLineExtentsV parameter default value hint:
+// col: 4278190335
+func InternalDebugDrawLineExtentsV(col uint32) {
+	C.igDebugDrawLineExtents(C.ImU32(col))
 }
 
 func InternalDebugHookIdInfo(id ID, data_type DataType, data_id unsafe.Pointer, data_id_end unsafe.Pointer) {
@@ -10669,8 +10680,16 @@ func CreateContext() *Context {
 	return newContextFromC(C.wrap_igCreateContext())
 }
 
+func InternalDebugDrawCursorPos() {
+	C.wrap_igDebugDrawCursorPos()
+}
+
 func InternalDebugDrawItemRect() {
 	C.wrap_igDebugDrawItemRect()
+}
+
+func InternalDebugDrawLineExtents() {
+	C.wrap_igDebugDrawLineExtents()
 }
 
 func DestroyContext() {
@@ -17481,21 +17500,6 @@ func (self *Context) PlatformImeViewport() ID {
 	return ID(C.wrap_ImGuiContext_GetPlatformImeViewport(selfArg))
 }
 
-func (self Context) SetPlatformLocaleDecimalPoint(v rune) {
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetPlatformLocaleDecimalPoint(selfArg, C.char(v))
-}
-
-func (self *Context) PlatformLocaleDecimalPoint() rune {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return rune(C.wrap_ImGuiContext_GetPlatformLocaleDecimalPoint(selfArg))
-}
-
 func (self Context) SetDockContext(v DockContext) {
 	vArg, vFin := v.c()
 
@@ -19834,6 +19838,21 @@ func (self *IO) UnusedPadding() unsafe.Pointer {
 		selfFin()
 	}()
 	return unsafe.Pointer(C.wrap_ImGuiIO_Get_UnusedPadding(selfArg))
+}
+
+func (self IO) SetPlatformLocaleDecimalPoint(v Wchar) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetPlatformLocaleDecimalPoint(selfArg, C.ImWchar(v))
+}
+
+func (self *IO) PlatformLocaleDecimalPoint() Wchar {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return Wchar(C.wrap_ImGuiIO_GetPlatformLocaleDecimalPoint(selfArg))
 }
 
 func (self IO) SetWantCaptureMouse(v bool) {

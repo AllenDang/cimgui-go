@@ -719,8 +719,6 @@ extern void wrap_ImGuiContext_SetPlatformImeDataPrev(ImGuiContext *ImGuiContextP
 extern ImGuiPlatformImeData wrap_ImGuiContext_GetPlatformImeDataPrev(ImGuiContext *self);
 extern void wrap_ImGuiContext_SetPlatformImeViewport(ImGuiContext *ImGuiContextPtr, ImGuiID v);
 extern ImGuiID wrap_ImGuiContext_GetPlatformImeViewport(ImGuiContext *self);
-extern void wrap_ImGuiContext_SetPlatformLocaleDecimalPoint(ImGuiContext *ImGuiContextPtr, char v);
-extern char wrap_ImGuiContext_GetPlatformLocaleDecimalPoint(ImGuiContext *self);
 extern void wrap_ImGuiContext_SetDockContext(ImGuiContext *ImGuiContextPtr, ImGuiDockContext v);
 extern ImGuiDockContext wrap_ImGuiContext_GetDockContext(ImGuiContext *self);
 extern void wrap_ImGuiContext_SetSettingsLoaded(ImGuiContext *ImGuiContextPtr, bool v);
@@ -1025,6 +1023,8 @@ extern void wrap_ImGuiIO_SetClipboardUserData(ImGuiIO *ImGuiIOPtr, void* v);
 extern void* wrap_ImGuiIO_GetClipboardUserData(ImGuiIO *self);
 extern void wrap_ImGuiIO_Set_UnusedPadding(ImGuiIO *ImGuiIOPtr, void* v);
 extern void* wrap_ImGuiIO_Get_UnusedPadding(ImGuiIO *self);
+extern void wrap_ImGuiIO_SetPlatformLocaleDecimalPoint(ImGuiIO *ImGuiIOPtr, ImWchar v);
+extern ImWchar wrap_ImGuiIO_GetPlatformLocaleDecimalPoint(ImGuiIO *self);
 extern void wrap_ImGuiIO_SetWantCaptureMouse(ImGuiIO *ImGuiIOPtr, bool v);
 extern bool wrap_ImGuiIO_GetWantCaptureMouse(ImGuiIO *self);
 extern void wrap_ImGuiIO_SetWantCaptureKeyboard(ImGuiIO *ImGuiIOPtr, bool v);
