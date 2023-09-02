@@ -114,8 +114,6 @@ GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height, GLFWWin
   // io.ConfigViewportsNoAutoMerge = true;
   // io.ConfigViewportsNoTaskBarIcon = true;
 
-//  io->IniFilename = "";
-
   // Setup Dear ImGui style
   igStyleColorsDark(0);
   // igStyleColorsLight();
