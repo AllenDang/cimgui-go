@@ -3201,6 +3201,24 @@ func PlotLabelAxisValueV(axis PlotAxis, value float64, buff string, size int32, 
 	buffFin()
 }
 
+// PlotMakeTimeV parameter default value hint:
+// month: 0
+// day: 1
+// hour: 0
+// min: 0
+// sec: 0
+// us: 0
+func PlotMakeTimeV(year int32, month int32, day int32, hour int32, min int32, sec int32, us int32) PlotTime {
+	pOut := new(PlotTime)
+	pOutArg, pOutFin := wrap[C.ImPlotTime, *PlotTime](pOut)
+
+	C.ImPlot_MakeTime(pOutArg, C.int(year), C.int(month), C.int(day), C.int(hour), C.int(min), C.int(sec), C.int(us))
+
+	pOutFin()
+
+	return *pOut
+}
+
 // PlotMapInputDefaultV parameter default value hint:
 // dst: nullptr
 func PlotMapInputDefaultV(dst *PlotInputMap) {
@@ -9270,6 +9288,17 @@ func PlotLabelAxisValue(axis PlotAxis, value float64, buff string, size int32) {
 
 	axisFin()
 	buffFin()
+}
+
+func PlotMakeTime(year int32) PlotTime {
+	pOut := new(PlotTime)
+	pOutArg, pOutFin := wrap[C.ImPlotTime, *PlotTime](pOut)
+
+	C.wrap_ImPlot_MakeTime(pOutArg, C.int(year))
+
+	pOutFin()
+
+	return *pOut
 }
 
 func PlotMapInputDefault() {

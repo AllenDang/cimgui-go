@@ -49,6 +49,7 @@ extern void wrap_ImPlot_GetPlotSelection(ImPlotRect* pOut);
 extern void wrap_ImPlot_HideNextItem();
 extern bool wrap_ImPlot_ImAlmostEqual(double v1,double v2);
 extern void wrap_ImPlot_LabelAxisValue(const ImPlotAxis axis,double value,char* buff,int size);
+extern void wrap_ImPlot_MakeTime(ImPlotTime* pOut,int year);
 extern void wrap_ImPlot_MapInputDefault();
 extern void wrap_ImPlot_MapInputReverse();
 extern void wrap_ImPlot_PixelsToPlot_Float(ImPlotPoint* pOut,float x,float y);
