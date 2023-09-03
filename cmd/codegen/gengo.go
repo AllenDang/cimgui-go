@@ -53,17 +53,16 @@ var replace = map[CIdentifier]GoIdentifier{
 	//"ImSetDrawCursor":         "SetCursor",
 }
 
-func trimImGuiPrefix(n CIdentifier) CIdentifier {
-	tmpName := string(n)
-	if strings.HasPrefix(tmpName, "ImGui") {
-		tmpName = strings.TrimPrefix(tmpName, "ImGui")
-	} else if strings.HasPrefix(tmpName, "Im") && len(n) > 2 && strings.ToUpper(string(n[2])) == string(n[2]) {
-		tmpName = strings.TrimPrefix(tmpName, "Im")
-	} else if strings.HasPrefix(tmpName, "ig") && len(n) > 2 && strings.ToUpper(string(n[2])) == string(n[2]) {
-		tmpName = strings.TrimPrefix(tmpName, "ig")
+func (n CIdentifier) trimImGuiPrefix() CIdentifier {
+	if HasPrefix(n, "ImGui") {
+		n = TrimPrefix(n, "ImGui")
+	} else if HasPrefix(n, "Im") && len(n) > 2 && strings.ToUpper(string(n[2])) == string(n[2]) {
+		n = TrimPrefix(n, "Im")
+	} else if HasPrefix(n, "ig") && len(n) > 2 && strings.ToUpper(string(n[2])) == string(n[2]) {
+		n = TrimPrefix(n, "ig")
 	}
 
-	return CIdentifier(tmpName)
+	return n
 }
 
 func (n CIdentifier) renameGoIdentifier() GoIdentifier {
@@ -71,24 +70,23 @@ func (n CIdentifier) renameGoIdentifier() GoIdentifier {
 		n = CIdentifier(r)
 	}
 
-	n = trimImGuiPrefix(n)
+	n = n.trimImGuiPrefix()
 	switch {
-	case strings.HasPrefix(string(n), "New"):
-		n = "New" + trimImGuiPrefix(n[3:])
-	case strings.HasPrefix(string(n), "new"):
-		n = "new" + trimImGuiPrefix(n[3:])
-	case strings.HasPrefix(string(n), "*"):
-		n = "*" + trimImGuiPrefix(n[1:])
+	case HasPrefix(n, "New"):
+		n = "New" + n[3:].trimImGuiPrefix()
+	case HasPrefix(n, "new"):
+		n = "new" + n[3:].trimImGuiPrefix()
+	case HasPrefix(n, "*"):
+		n = "*" + n[1:].trimImGuiPrefix()
 	}
 
-	n = CIdentifier(strings.TrimPrefix(string(n), "Get"))
+	n = TrimPrefix(n, "Get")
 	if n != "_" {
-		n = CIdentifier(strings.ReplaceAll(string(n), "_", ""))
+		n = ReplaceAll(n, "_", "")
 	}
 	return GoIdentifier(n)
 }
 
 func (e CIdentifier) renameEnum() GoIdentifier {
-	e = CIdentifier(strings.TrimSuffix(string(e), "_"))
-	return e.renameGoIdentifier()
+	return TrimSuffix(e, "_").renameGoIdentifier()
 }
