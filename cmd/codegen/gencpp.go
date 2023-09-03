@@ -54,8 +54,6 @@ extern "C" {
 		if HasPrefix(f.FuncName, "ImSpan") ||
 			HasPrefix(f.FuncName, "ImBitArray") ||
 			Contains(f.FuncName, "Storage") ||
-			Contains(f.FuncName, "TextRange") ||
-			Contains(f.FuncName, "ImVector") ||
 			Contains(f.FuncName, "Allocator") ||
 			Contains(f.FuncName, "MakeTime") {
 			shouldSkip = true
