@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strings"
 )
 
 const (
@@ -14,7 +13,7 @@ const (
 	cppFileHeader   = generatorInfo
 )
 
-func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []string, structNames []string, err error) {
+func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []GoIdentifier, structNames []CIdentifier, err error) {
 	enums, err := getEnumDefs(enumJsonBytes)
 	if err != nil {
 		return nil, nil, fmt.Errorf("cannot get enum definitions: %w", err)
@@ -26,9 +25,7 @@ func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []string, structName
 	}
 
 	for _, e := range enums {
-		goEnumName := strings.TrimSuffix(e.Name, "_")
-		goEnumName = renameGoIdentifier(goEnumName)
-		enumNames = append(enumNames, goEnumName)
+		enumNames = append(enumNames, e.Name.renameEnum())
 	}
 
 	for _, s := range structs {
@@ -100,7 +97,7 @@ func main() {
 		log.Panic(err)
 	}
 
-	var es, ss = make([]string, 0), make([]string, 0)
+	var es, ss = make([]GoIdentifier, 0), make([]CIdentifier, 0)
 	// generate reference only enum and struct names
 	if len(refEnumJsonBytes) > 0 {
 		es, ss, err = getEnumAndStructNames(refEnumJsonBytes)

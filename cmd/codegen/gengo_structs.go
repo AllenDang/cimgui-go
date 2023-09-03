@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func generateGoStructs(prefix string, structs []StructDef, enums []EnumDef, refEnums, refStructs []string) []string {
+func generateGoStructs(prefix string, structs []StructDef, enums []EnumDef, refEnums []GoIdentifier, refStructs []CIdentifier) []CIdentifier {
 	glg.Infof("Generating %d structs", len(structs))
 	var progress int
 
@@ -26,7 +26,7 @@ import "unsafe"
 `, prefix))
 
 	// Save all struct name into a map
-	var structNames []string
+	var structNames []CIdentifier
 
 	for _, s := range structs {
 		if shouldSkipStruct(s.Name) {
@@ -60,8 +60,8 @@ import "unsafe"
 	return structNames
 }
 
-func generateStruct(s StructDef, defs []StructDef, enumDefs []EnumDef, refEnums, refStructs []string, sb *strings.Builder) (generationComplete bool) {
-	structs, enums := make(map[string]bool), make(map[string]bool)
+func generateStruct(s StructDef, defs []StructDef, enumDefs []EnumDef, refEnums []GoIdentifier, refStructs []CIdentifier, sb *strings.Builder) (generationComplete bool) {
+	structs, enums := make(map[CIdentifier]bool), make(map[GoIdentifier]bool)
 	for _, s := range defs {
 		structs[s.Name] = true
 	}
@@ -70,7 +70,7 @@ func generateStruct(s StructDef, defs []StructDef, enumDefs []EnumDef, refEnums,
 	}
 
 	for _, e := range enumDefs {
-		enums[renameEnum(e.Name)] = true
+		enums[e.Name.renameEnum()] = true
 	}
 	for _, e := range refEnums {
 		enums[e] = true
@@ -87,14 +87,14 @@ func generateStruct(s StructDef, defs []StructDef, enumDefs []EnumDef, refEnums,
 	var isTODO bool // this will become true if some field is not implemented (e.g. union {...})
 	var structBody *strings.Builder = &strings.Builder{}
 
-	fmt.Fprintf(sb, "type %s struct {\n", renameGoIdentifier(s.Name))
+	fmt.Fprintf(sb, "type %s struct {\n", s.Name.renameGoIdentifier())
 
 	// Generate struct fields:
 	for i, field := range s.Members {
-		var typeName string
+		var typeName GoIdentifier
 
 		argDef := ArgDef{
-			Name: renameStructField(field.Name),
+			Name: CIdentifier(field.Name.renameStructField()),
 			Type: field.Type,
 		}
 
@@ -128,7 +128,7 @@ func generateStruct(s StructDef, defs []StructDef, enumDefs []EnumDef, refEnums,
 		}
 
 		if field.Name == "" || // <- this means that type is union or something like that.
-			strings.ContainsAny(field.Name, "[]") || // <- this means that it is an array; TODO
+			ContainsAny(field.Name, "[]") || // <- this means that it is an array; TODO
 			field.Bitfield != "" ||
 			isTODO {
 			generationComplete = false
@@ -163,7 +163,7 @@ data unsafe.Pointer
 
 		fmt.Fprintf(structBody, "%s%s %s %s\n",
 			field.Comment.Above,
-			renameStructField(field.Name), typeName,
+			field.Name.renameStructField(), typeName,
 			field.Comment.Sameline,
 		)
 	}
@@ -175,7 +175,7 @@ data unsafe.Pointer
 	// handlers:
 	fmt.Fprintf(sb, `
 func (self %[1]s) handle() (result *C.%[2]s, releaseFn func()) {
-`, renameGoIdentifier(s.Name), s.Name)
+`, s.Name.renameGoIdentifier(), s.Name)
 
 	if isTODO {
 		fmt.Fprintf(sb, `
@@ -189,7 +189,7 @@ return result, func() {}
 				"%[4]s := self.%[4]s\n%[1]s\nresult.%[2]s = %[3]s\n",
 				wrappers[i].toC.ArgDef,
 				m.Name, wrappers[i].toC.VarName,
-				renameStructField(m.Name),
+				m.Name.renameStructField(),
 			)
 		}
 
@@ -212,19 +212,19 @@ return result, func() {}
 		resultPtr, finFn := self.handle()
 		return *resultPtr, finFn
 	}
-`, renameGoIdentifier(s.Name), s.Name)
+`, s.Name.renameGoIdentifier(), s.Name)
 
 	// new X FromC
-	fmt.Fprintf(sb, "func new%[1]sFromC(cvalue *C.%[2]s) *%[1]s {\n", renameGoIdentifier(s.Name), s.Name)
+	fmt.Fprintf(sb, "func new%[1]sFromC(cvalue *C.%[2]s) *%[1]s {\n", s.Name.renameGoIdentifier(), s.Name)
 
-	fmt.Fprintf(sb, "result := new(%s)\n", renameGoIdentifier(s.Name))
+	fmt.Fprintf(sb, "result := new(%s)\n", s.Name.renameGoIdentifier())
 	if isTODO {
 		fmt.Fprintf(sb, "result.data = unsafe.Pointer(cvalue)\n")
 	} else {
 		for i, m := range s.Members {
 			w := wrappers[i].fromC
 			stmt := fmt.Sprintf(w.returnStmt, fmt.Sprintf("cvalue.%s", m.Name))
-			fmt.Fprintf(sb, "result.%s = %s\n", renameStructField(m.Name), stmt)
+			fmt.Fprintf(sb, "result.%s = %s\n", m.Name.renameStructField(), stmt)
 		}
 	}
 
@@ -233,16 +233,17 @@ return result, func() {}
 	return
 }
 
-func renameStructField(original string) (result string) {
-	original = strings.TrimPrefix(original, "_")
-	if len(original) == 0 {
+func (c CIdentifier) renameStructField() GoIdentifier {
+	tmp := string(c)
+	tmp = strings.TrimPrefix(tmp, "_")
+	if len(tmp) == 0 {
 		return ""
 	}
 
-	result = "Field" + strings.ToUpper(original[:1])
-	if len(original) > 1 {
-		result += original[1:]
+	result := "Field" + strings.ToUpper(tmp[:1])
+	if len(tmp) > 1 {
+		result += tmp[1:]
 	}
 
-	return result
+	return GoIdentifier(result)
 }
