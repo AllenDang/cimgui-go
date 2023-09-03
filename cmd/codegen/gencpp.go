@@ -52,10 +52,7 @@ extern "C" {
 
 		// Check func names
 		if HasPrefix(f.FuncName, "ImSpan") ||
-			HasPrefix(f.FuncName, "ImBitArray") ||
-			Contains(f.FuncName, "Storage") ||
-			Contains(f.FuncName, "Allocator") ||
-			Contains(f.FuncName, "MakeTime") {
+			HasPrefix(f.FuncName, "ImBitArray") {
 			shouldSkip = true
 			continue
 		}
