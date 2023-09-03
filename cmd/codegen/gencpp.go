@@ -57,8 +57,7 @@ extern "C" {
 			Contains(f.FuncName, "TextRange") ||
 			Contains(f.FuncName, "ImVector") ||
 			Contains(f.FuncName, "Allocator") ||
-			Contains(f.FuncName, "MakeTime") ||
-			Contains(f.FuncName, "__") {
+			Contains(f.FuncName, "MakeTime") {
 			shouldSkip = true
 			continue
 		}
