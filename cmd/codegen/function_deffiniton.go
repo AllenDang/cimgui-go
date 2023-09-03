@@ -9,9 +9,9 @@ import (
 // FuncDef represents a definition of a function in cimgui's json format
 type FuncDef struct {
 	// FuncName is a cimgui name of the function
-	FuncName string `json:"ov_cimguiname"`
+	FuncName CIdentifier `json:"ov_cimguiname"`
 	// FuncName is an original Dear ImGui's name of the function
-	OriginalFuncName string `json:"original_func_name"`
+	OriginalFuncName CIdentifier `json:"original_func_name"`
 	// Args represents a plain string list of function arguments
 	Args string `json:"args"`
 	// ArgsT represents a more accurate list of arg:type list
@@ -32,8 +32,8 @@ type FuncDef struct {
 	InvocationStmt string `json:"invocation_stmt"`
 
 	// Ret determines a type of returned value
-	Ret    string `json:"ret"`
-	StName string `json:"stname"`
+	Ret    CIdentifier `json:"ret"`
+	StName string      `json:"stname"`
 
 	// NonUDT is != 0 whenever the function has a pointer argument
 	// that could be considered as its result.
@@ -43,19 +43,19 @@ type FuncDef struct {
 
 	// The names could collide between cimgui and the function generated
 	// here, so we may need to add a prefix.
-	CWrapperFuncName string
+	CWrapperFuncName CIdentifier
 
 	// AllCallArgs is used to determine if a wrapper is needed: if the cimgui
 	// function takes the exact same arguments as the wrapper, the wrapper is
 	// not needed.
-	AllCallArgs string
+	AllCallArgs CIdentifier
 }
 
 // ArgDef represents a deffinition of function's argument
 type ArgDef struct {
-	Name       string `json:"name"`
-	Type       string `json:"type"`
-	CustomType string `json:"custom_type"`
+	Name       CIdentifier `json:"name"`
+	Type       CIdentifier `json:"type"`
+	CustomType CIdentifier `json:"custom_type"`
 }
 
 // getFunDefs takes a json file bytes as an argument and returns

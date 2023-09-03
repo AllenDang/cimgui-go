@@ -8,13 +8,13 @@ import (
 )
 
 // Returns if should export func
-func shouldExportFunc(funcName string) bool {
+func shouldExportFunc(funcName CIdentifier) bool {
 	switch {
 	case unicode.IsUpper(rune(funcName[0])):
 		return true
-	case strings.HasPrefix(funcName, "ig"):
+	case HasPrefix(funcName, "ig"):
 		return len(funcName) > 2 && unicode.IsUpper(rune(funcName[2]))
-	case strings.HasPrefix(funcName, "imnodes_") && unicode.IsUpper(rune(strings.TrimPrefix(funcName, "imnodes_")[0])):
+	case HasPrefix(funcName, "imnodes_") && unicode.IsUpper(rune(TrimPrefix(funcName, "imnodes_")[0])):
 		return true
 	}
 	return false
@@ -49,14 +49,14 @@ extern "C" {
 		shouldSkip := false
 
 		// Check func names
-		if strings.HasPrefix(f.FuncName, "ImSpan") ||
-			strings.HasPrefix(f.FuncName, "ImBitArray") ||
-			strings.Contains(f.FuncName, "Storage") ||
-			strings.Contains(f.FuncName, "TextRange") ||
-			strings.Contains(f.FuncName, "ImVector") ||
-			strings.Contains(f.FuncName, "Allocator") ||
-			strings.Contains(f.FuncName, "MakeTime") ||
-			strings.Contains(f.FuncName, "__") {
+		if HasPrefix(f.FuncName, "ImSpan") ||
+			HasPrefix(f.FuncName, "ImBitArray") ||
+			Contains(f.FuncName, "Storage") ||
+			Contains(f.FuncName, "TextRange") ||
+			Contains(f.FuncName, "ImVector") ||
+			Contains(f.FuncName, "Allocator") ||
+			Contains(f.FuncName, "MakeTime") ||
+			Contains(f.FuncName, "__") {
 			shouldSkip = true
 			continue
 		}
@@ -64,15 +64,15 @@ extern "C" {
 		// Process custom_type for arg
 		for i, a := range f.ArgsT {
 			if len(a.CustomType) > 0 {
-				f.Args = strings.Replace(f.Args, a.Type, a.CustomType, -1)
+				f.Args = Replace(f.Args, a.Type, a.CustomType, -1)
 				f.ArgsT[i].Type = a.CustomType
 			}
 		}
 
 		// Check args
 		for _, a := range f.ArgsT {
-			if strings.Contains(a.Type, "const T*") ||
-				strings.Contains(a.Type, "const T") ||
+			if Contains(a.Type, "const T*") ||
+				Contains(a.Type, "const T") ||
 				a.Type == "va_list" ||
 				(a.Name == "self" && a.Type == "ImVector*") {
 				shouldSkip = true
@@ -96,9 +96,9 @@ extern "C" {
 		}
 
 		// Check lower case member function
-		funcParts := strings.Split(funcName, "_")
+		funcParts := Split(funcName, "_")
 		if len(funcParts) == 2 && unicode.IsLower(rune(funcParts[1][0])) {
-			funcName = funcParts[0] + "_" + string(unicode.ToUpper(rune(funcParts[1][0]))) + funcParts[1][1:]
+			funcName = funcParts[0] + "_" + CIdentifier(unicode.ToUpper(rune(funcParts[1][0]))) + funcParts[1][1:]
 		}
 
 		// TODO: the majority of these wrappers, those without the V version,
@@ -114,7 +114,7 @@ extern "C" {
 		f.Args = strings.Replace(f.Args, ",const char* text_end", "", 1)
 
 		var argsT []ArgDef
-		var actualCallArgs []string
+		var actualCallArgs []CIdentifier
 
 		for _, a := range f.ArgsT {
 			f.AllCallArgs += a.Name + ","
@@ -129,7 +129,7 @@ extern "C" {
 				actualCallArgs = append(actualCallArgs, a.Name)
 			}
 		}
-		f.AllCallArgs = "(" + strings.TrimSuffix(f.AllCallArgs, ",") + ")"
+		f.AllCallArgs = "(" + TrimSuffix(f.AllCallArgs, ",") + ")"
 
 		f.ArgsT = argsT
 
@@ -137,21 +137,21 @@ extern "C" {
 		// Skip functions as function pointer arg
 		shouldSkip = false
 		for _, a := range f.ArgsT {
-			if strings.Contains(a.Type, "(") {
+			if Contains(a.Type, "(") {
 				shouldSkip = true
 			}
 		}
 
 		if len(f.Defaults) > 0 && !shouldSkip && !f.Constructor {
 			var newArgsT []ArgDef
-			var invocationArgs []string
+			var invocationArgs []CIdentifier
 
 			for _, a := range f.ArgsT {
 				invocationArgs = append(invocationArgs, a.Name)
 
 				shouldIgnore := false
 				for k := range f.Defaults {
-					if a.Name == k {
+					if string(a.Name) == k {
 						shouldIgnore = true
 						break
 					}
@@ -168,17 +168,17 @@ extern "C" {
 				n := a.Name
 
 				// Process array type
-				if strings.Contains(t, "[") {
-					parts := strings.Split(t, "[")
+				if Contains(t, "[") {
+					parts := Split(t, "[")
 					t = parts[0]
-					n = n + "[" + strings.Join(parts[1:], "")
+					n = n + "[" + Join(parts[1:], "")
 				}
 
 				newArgs = append(newArgs, fmt.Sprintf("%s %s", t, n))
 			}
 
 			// Generate invocation stmt
-			invocationStmt := fmt.Sprintf("(%s)", strings.Join(invocationArgs, ","))
+			invocationStmt := fmt.Sprintf("(%s)", Join(invocationArgs, ","))
 
 			for k, v := range f.Defaults {
 				if v == "ImVec2(0,0)" || v == "ImVec2(0.0f,0.0f)" {
@@ -265,7 +265,7 @@ extern "C" {
 			cWrapperFuncName += "V"
 		}
 
-		actualCallArgsStr := fmt.Sprintf("(%s)", strings.Join(actualCallArgs, ","))
+		actualCallArgsStr := fmt.Sprintf("(%s)", Join(actualCallArgs, ","))
 		if len(f.InvocationStmt) > 0 {
 			actualCallArgsStr = f.InvocationStmt
 		}
@@ -302,7 +302,7 @@ extern "C" {
 
 		// cppSb.WriteString(fmt.Sprintf("// %#v\n", f))
 
-		if f.AllCallArgs == actualCallArgsStr {
+		if string(f.AllCallArgs) == actualCallArgsStr {
 			cWrapperFuncName = f.FuncName
 		} else if f.Constructor {
 			headerSb.WriteString(fmt.Sprintf("extern %s* %s%s;\n", f.StName, cWrapperFuncName, f.Args))
@@ -360,7 +360,7 @@ extern "C" {
 func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []StructDef) ([]FuncDef, error) {
 	var structAccessorFuncs []FuncDef
 
-	skipFuncNames := map[string]bool{
+	skipFuncNames := map[CIdentifier]bool{
 		"ImGuiIO_SetAppAcceptingEvents": true,
 		"ImGuiDockNode_SetLocalFlags":   true,
 		"ImFontAtlas_SetTexID":          true,
@@ -406,11 +406,11 @@ extern "C" {
 
 	for _, s := range structs {
 		for _, m := range s.Members {
-			if strings.Contains(m.Name, "[") || strings.Contains(m.Type, "(") || strings.Contains(m.Type, "union") {
+			if Contains(m.Name, "[") || Contains(m.Type, "(") || Contains(m.Type, "union") {
 				continue
 			}
 
-			setterFuncName := fmt.Sprintf("%[1]s_Set%[2]s", s.Name, m.Name)
+			setterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Set%[2]s", s.Name, m.Name))
 			if skipFuncNames[setterFuncName] {
 				continue
 			}
@@ -440,7 +440,7 @@ extern "C" {
 
 			sbHeader.WriteString(fmt.Sprintf("extern void %s(%s *%s, %s v);\n", setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type))
 
-			getterFuncName := fmt.Sprintf("%[1]s_Get%[2]s", s.Name, m.Name)
+			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, m.Name))
 			if skipFuncNames[getterFuncName] {
 				continue
 			}
