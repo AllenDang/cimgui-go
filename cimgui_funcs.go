@@ -680,6 +680,78 @@ func (self *DrawList) PushTextureID(texture_id TextureID) {
 	selfFin()
 }
 
+func (self *DrawList) CalcCircleAutoSegmentCount(radius float32) int32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.ImDrawList__CalcCircleAutoSegmentCount(selfArg, C.float(radius)))
+}
+
+func (self *DrawList) ClearFreeMemory() {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__ClearFreeMemory(selfArg)
+
+	selfFin()
+}
+
+func (self *DrawList) OnChangedClipRect() {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__OnChangedClipRect(selfArg)
+
+	selfFin()
+}
+
+func (self *DrawList) OnChangedTextureID() {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__OnChangedTextureID(selfArg)
+
+	selfFin()
+}
+
+func (self *DrawList) OnChangedVtxOffset() {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__OnChangedVtxOffset(selfArg)
+
+	selfFin()
+}
+
+func (self *DrawList) PathArcToFastEx(center Vec2, radius float32, a_min_sample int32, a_max_sample int32, a_step int32) {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__PathArcToFastEx(selfArg, center.toC(), C.float(radius), C.int(a_min_sample), C.int(a_max_sample), C.int(a_step))
+
+	selfFin()
+}
+
+func (self *DrawList) PathArcToN(center Vec2, radius float32, a_min float32, a_max float32, num_segments int32) {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__PathArcToN(selfArg, center.toC(), C.float(radius), C.float(a_min), C.float(a_max), C.int(num_segments))
+
+	selfFin()
+}
+
+func (self *DrawList) PopUnusedDrawCmd() {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__PopUnusedDrawCmd(selfArg)
+
+	selfFin()
+}
+
+func (self *DrawList) ResetForNewFrame() {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__ResetForNewFrame(selfArg)
+
+	selfFin()
+}
+
+func (self *DrawList) TryMergeDrawCmds() {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__TryMergeDrawCmds(selfArg)
+
+	selfFin()
+}
+
 func (self *DrawList) Destroy() {
 	selfArg, selfFin := self.handle()
 	C.ImDrawList_destroy(selfArg)

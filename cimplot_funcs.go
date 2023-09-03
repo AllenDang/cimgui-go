@@ -535,6 +535,13 @@ func (self *PlotColormapData) SetKeyColor(cmap PlotColormap, idx int32, value ui
 	selfFin()
 }
 
+func (self *PlotColormapData) AppendTable(cmap PlotColormap) {
+	selfArg, selfFin := self.handle()
+	C.ImPlotColormapData__AppendTable(selfArg, C.ImPlotColormap(cmap))
+
+	selfFin()
+}
+
 func (self *PlotColormapData) Destroy() {
 	selfArg, selfFin := self.handle()
 	C.ImPlotColormapData_destroy(selfArg)
@@ -846,6 +853,15 @@ func (self *PlotPlot) XAxisNil(i int32) *PlotAxis {
 	return newPlotAxisFromC(C.ImPlotPlot_XAxis_Nil(selfArg, C.int(i)))
 }
 
+func (self *PlotPlot) XAxisconst(i int32) *PlotAxis {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newPlotAxisFromC(C.ImPlotPlot_XAxis__const(selfArg, C.int(i)))
+}
+
 func (self *PlotPlot) YAxisNil(i int32) *PlotAxis {
 	selfArg, selfFin := self.handle()
 
@@ -853,6 +869,15 @@ func (self *PlotPlot) YAxisNil(i int32) *PlotAxis {
 		selfFin()
 	}()
 	return newPlotAxisFromC(C.ImPlotPlot_YAxis_Nil(selfArg, C.int(i)))
+}
+
+func (self *PlotPlot) YAxisconst(i int32) *PlotAxis {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newPlotAxisFromC(C.ImPlotPlot_YAxis__const(selfArg, C.int(i)))
 }
 
 func (self *PlotPlot) Destroy() {
