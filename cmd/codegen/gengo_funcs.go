@@ -33,11 +33,11 @@ const (
 )
 
 // generateGoFuncs generates given list of functions and writes them to file
-func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, structNames []string) error {
+func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []GoIdentifier, structNames []CIdentifier) error {
 	generator := &goFuncsGenerator{
 		prefix:      prefix,
-		structNames: make(map[string]bool),
-		enumNames:   make(map[string]bool),
+		structNames: make(map[CIdentifier]bool),
+		enumNames:   make(map[GoIdentifier]bool),
 	}
 
 	for _, v := range structNames {
@@ -102,8 +102,9 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []string, st
 
 // goFuncsGenerator is an internal state of GO funcs' generator
 type goFuncsGenerator struct {
-	prefix                 string
-	structNames, enumNames map[string]bool
+	prefix      string
+	structNames map[CIdentifier]bool
+	enumNames   map[GoIdentifier]bool
 
 	sb                 strings.Builder
 	convertedFuncCount int
@@ -125,8 +126,10 @@ import "unsafe"
 `, g.prefix))
 }
 
-func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrappers []ArgumentWrapperData) (noErrors bool) {
-	var returnType, cfuncCall, receiver string
+func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argWrappers []ArgumentWrapperData) (noErrors bool) {
+	var cReturnType CIdentifier
+	var returnType, receiver GoIdentifier
+	var cfuncCall string
 	funcName := f.FuncName
 	shouldDefer := false
 
@@ -147,7 +150,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 		} else {
 			returnTypeType = returnTypeVoid
 		}
-	} else if strings.HasSuffix(f.Ret, "*") && (g.structNames[strings.TrimSuffix(f.Ret, "*")] || g.structNames[strings.TrimSuffix(strings.TrimPrefix(f.Ret, "const "), "*")]) {
+	} else if HasSuffix(f.Ret, "*") && (g.structNames[TrimSuffix(f.Ret, "*")] || g.structNames[TrimSuffix(TrimPrefix(f.Ret, "const "), "*")]) {
 		returnTypeType = returnTypeStructPtr
 	} else if f.StructGetter && g.structNames[f.Ret] {
 		returnTypeType = returnTypeStruct
@@ -161,7 +164,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 		// noop
 	case returnTypeNonUDT:
 		outArg := argWrappers[0]
-		returnType = strings.TrimPrefix(outArg.ArgType, "*")
+		returnType = TrimPrefix(outArg.ArgType, "*")
 
 		cfuncCall = fmt.Sprintf("*%s", f.ArgsT[0].Name)
 
@@ -170,40 +173,44 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []string, argWrapper
 		`, f.ArgsT[0].Name, returnType, outArg.ArgDef)
 		args = args[1:]
 	case returnTypeStructSetter:
-		funcParts := strings.Split(f.FuncName, "_")
-		funcName = strings.TrimPrefix(f.FuncName, funcParts[0]+"_")
-		if len(funcName) == 0 || !strings.HasPrefix(funcName, "Set") || skippedStructs[funcParts[0]] {
+		funcParts := Split(f.FuncName, "_")
+		funcName = TrimPrefix(f.FuncName, string(funcParts[0]+"_"))
+		if len(funcName) == 0 || !HasPrefix(funcName, "Set") || skippedStructs[funcParts[0]] {
 			return false
 		}
 
-		receiver = funcParts[0]
+		receiver = funcParts[0].renameGoIdentifier()
 	case returnTypeKnown:
 		shouldDefer = true
-		returnType = f.Ret
+		cReturnType = f.Ret
+		returnType = f.Ret.renameGoIdentifier()
 	case returnTypeStructPtr:
 		// return Im struct ptr
 		shouldDefer = true
-		returnType = strings.TrimPrefix(f.Ret, "const ")
+		cReturnType = TrimPrefix(f.Ret, "const ")
+		returnType = cReturnType.renameGoIdentifier()
 	case returnTypeStruct:
 		shouldDefer = true
-		returnType = f.Ret
+		cReturnType = f.Ret
+		returnType = cReturnType.renameGoIdentifier()
 	case returnTypeConstructor:
 		shouldDefer = true
-		parts := strings.Split(f.FuncName, "_")
-		returnType = parts[0] + "*"
+		parts := Split(f.FuncName, "_")
+		cReturnType = parts[0] + "*"
+		returnType = cReturnType.renameGoIdentifier()
 
 		suffix := ""
 		if len(parts) > 2 {
-			suffix = strings.Join(parts[2:], "")
+			suffix = string(Join(parts[2:], ""))
 		}
 
-		funcName = "New" + parts[0] + suffix
+		funcName = CIdentifier("New" + string(parts[0]) + suffix)
 	default:
 		glg.Debugf("Unknown return type \"%s\" in function %s", f.Ret, f.FuncName)
 		return false
 	}
 
-	rw, err := getReturnWrapper(returnType, g.structNames, g.enumNames)
+	rw, err := getReturnWrapper(cReturnType, g.structNames, g.enumNames)
 	if err != nil {
 		switch returnTypeType {
 		case returnTypeKnown, returnTypeStructPtr, returnTypeConstructor, returnTypeStruct:
@@ -271,8 +278,8 @@ result := C.%s(%s)
 // this method is responsible for createing a function declaration statement.
 // it takes function name, list of arguments and return type and returns go statement.
 // e.g.: func (self *ImGuiType) FuncName(arg1 type1, arg2 type2) returnType {
-func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName string, args []string, returnType string, f FuncDef) (functionDeclaration string) {
-	funcParts := strings.Split(funcName, "_")
+func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver GoIdentifier, funcName CIdentifier, args []GoIdentifier, returnType GoIdentifier, f FuncDef) (functionDeclaration string) {
+	funcParts := Split(funcName, "_")
 	typeName := funcParts[0]
 
 	// Generate default param value hint
@@ -289,16 +296,16 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 		commentSb.WriteString("// %s parameter default value hint:\n")
 
 		type defaultParam struct {
-			name  string
+			name  GoIdentifier
 			value string
 		}
 		defaults := make([]defaultParam, 0, len(f.Defaults))
 		// sort according to the order of the arguments
 		for _, arg := range args {
-			if idx := strings.Index(arg, " "); idx != -1 {
+			if idx := Index(arg, " "); idx != -1 {
 				arg = arg[:idx]
 			}
-			d, ok := f.Defaults[arg]
+			d, ok := f.Defaults[string(arg)]
 			if !ok {
 				continue
 			}
@@ -313,34 +320,34 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver string, funcName
 	// convert func(self *receiverType) into a method
 	if len(funcParts) > 1 &&
 		len(args) > 0 &&
-		strings.Contains(args[0], "self ") {
+		Contains(args[0], "self ") {
 
-		funcName = strings.TrimPrefix(funcName, typeName+"_")
-		receiver = strings.TrimPrefix(args[0], "self ")
+		funcName = TrimPrefix(funcName, string(typeName+"_"))
+		receiver = TrimPrefix(args[0], "self ")
 		args = args[1:]
 	}
 
 	if len(receiver) > 0 {
-		receiver = fmt.Sprintf("(self %s)", renameGoIdentifier(receiver))
+		receiver = GoIdentifier(fmt.Sprintf("(self %s)", receiver))
 	}
 
-	funcName = renameGoIdentifier(funcName)
+	goFuncName := funcName.renameGoIdentifier()
 
 	// if file comes from imgui_internal.h,prefix Internal is added.
 	// ref: https://github.com/AllenDang/cimgui-go/pull/118
 	if strings.Contains(f.Location, "imgui_internal") {
-		funcName = "Internal" + funcName
+		goFuncName = "Internal" + goFuncName
 	}
 
 	return fmt.Sprintf("%sfunc %s %s(%s) %s {\n",
-		strings.Replace(commentSb.String(), "%s", renameGoIdentifier(funcName), 1),
-		renameGoIdentifier(receiver),
-		funcName,
-		strings.Join(args, ","),
-		renameGoIdentifier(returnType))
+		Replace(commentSb.String(), "%s", goFuncName, 1),
+		receiver,
+		goFuncName,
+		Join(args, ","),
+		returnType)
 }
 
-func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappers []ArgumentWrapperData) {
+func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []GoIdentifier, argWrappers []ArgumentWrapperData) {
 	for i, a := range f.ArgsT {
 		g.shouldGenerate = false
 
@@ -359,7 +366,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []string, argWrappe
 
 		g.shouldGenerate = true
 		if len(decl) > 0 {
-			args = append(args, decl)
+			args = append(args, GoIdentifier(decl))
 			argWrappers = append(argWrappers, wrapper)
 		}
 	}
@@ -405,9 +412,9 @@ func (g *goFuncsGenerator) writeFinishers(shouldDefer bool, finishers []string) 
 }
 
 // isEnum returns true when given string is a valid enum type.
-func isEnum(argType string, enumNames map[string]bool) bool {
+func isEnum(argType CIdentifier, enumNames map[GoIdentifier]bool) bool {
 	for en := range enumNames {
-		if renameEnum(argType) == en {
+		if argType.renameEnum() == en {
 			return true
 		}
 	}

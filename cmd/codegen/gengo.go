@@ -4,9 +4,18 @@ import (
 	"strings"
 )
 
+type (
+	// CIdentifier is a string representing name of struct/func/enum in C
+	CIdentifier string
+	// GoIdentifier is a string representing name of struct/func/enum in Go
+	// ATTENTION: GoIdentifier indicates that the name represents a valid Go name.
+	// Should be created only by renameGoIdentifier
+	GoIdentifier string
+)
+
 // Skip functions
 // e.g. they are temporarily hard-coded
-var skippedFuncs = map[string]bool{
+var skippedFuncs = map[CIdentifier]bool{
 	"igInputText":                     true,
 	"igInputTextWithHint":             true,
 	"igInputTextMultiline":            true,
@@ -17,7 +26,7 @@ var skippedFuncs = map[string]bool{
 }
 
 // structures that's methods should be skipped
-var skippedStructs = map[string]bool{
+var skippedStructs = map[CIdentifier]bool{
 	"ImVec1":         true,
 	"ImVec2":         true,
 	"ImVec2ih":       true,
@@ -30,7 +39,7 @@ var skippedStructs = map[string]bool{
 	"StbTexteditRow": true,
 }
 
-var replace = map[string]string{
+var replace = map[CIdentifier]GoIdentifier{
 	"igGetDrawData":           "CurrentDrawData",
 	"igGetDrawListSharedData": "CurrentDrawListSharedData",
 	"igGetFont":               "CurrentFont",
@@ -44,40 +53,42 @@ var replace = map[string]string{
 	//"ImSetDrawCursor":         "SetCursor",
 }
 
-func trimImGuiPrefix(n string) string {
-	if strings.HasPrefix(n, "ImGui") {
-		n = strings.TrimPrefix(n, "ImGui")
-	} else if strings.HasPrefix(n, "Im") && len(n) > 2 && strings.ToUpper(string(n[2])) == string(n[2]) {
-		n = strings.TrimPrefix(n, "Im")
-	} else if strings.HasPrefix(n, "ig") && len(n) > 2 && strings.ToUpper(string(n[2])) == string(n[2]) {
-		n = strings.TrimPrefix(n, "ig")
+func trimImGuiPrefix(n CIdentifier) CIdentifier {
+	tmpName := string(n)
+	if strings.HasPrefix(tmpName, "ImGui") {
+		tmpName = strings.TrimPrefix(tmpName, "ImGui")
+	} else if strings.HasPrefix(tmpName, "Im") && len(n) > 2 && strings.ToUpper(string(n[2])) == string(n[2]) {
+		tmpName = strings.TrimPrefix(tmpName, "Im")
+	} else if strings.HasPrefix(tmpName, "ig") && len(n) > 2 && strings.ToUpper(string(n[2])) == string(n[2]) {
+		tmpName = strings.TrimPrefix(tmpName, "ig")
 	}
-	return n
+
+	return CIdentifier(tmpName)
 }
 
-func renameGoIdentifier(n string) string {
+func (n CIdentifier) renameGoIdentifier() GoIdentifier {
 	if r, ok := replace[n]; ok {
-		n = r
+		n = CIdentifier(r)
 	}
 
 	n = trimImGuiPrefix(n)
 	switch {
-	case strings.HasPrefix(n, "New"):
+	case strings.HasPrefix(string(n), "New"):
 		n = "New" + trimImGuiPrefix(n[3:])
-	case strings.HasPrefix(n, "new"):
+	case strings.HasPrefix(string(n), "new"):
 		n = "new" + trimImGuiPrefix(n[3:])
-	case strings.HasPrefix(n, "*"):
+	case strings.HasPrefix(string(n), "*"):
 		n = "*" + trimImGuiPrefix(n[1:])
 	}
 
-	n = strings.TrimPrefix(n, "Get")
+	n = CIdentifier(strings.TrimPrefix(string(n), "Get"))
 	if n != "_" {
-		n = strings.ReplaceAll(n, "_", "")
+		n = CIdentifier(strings.ReplaceAll(string(n), "_", ""))
 	}
-	return n
+	return GoIdentifier(n)
 }
 
-func renameEnum(e string) string {
-	e = strings.TrimSuffix(e, "_")
-	return renameGoIdentifier(e)
+func (e CIdentifier) renameEnum() GoIdentifier {
+	e = CIdentifier(strings.TrimSuffix(string(e), "_"))
+	return e.renameGoIdentifier()
 }

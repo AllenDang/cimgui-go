@@ -14,17 +14,17 @@ type StructSection struct {
 
 // StructDef represents a definition of an ImGui struct.
 type StructDef struct {
-	Name         string `json:"name"`
+	Name         CIdentifier `json:"name"`
 	CommentAbove string
 	Members      []StructMemberDef `json:"members"`
 }
 
 // StructMemberDef represents a definition of an ImGui struct member.
 type StructMemberDef struct {
-	Name         string `json:"name"`
-	TemplateType string `json:"template_type"`
-	Type         string `json:"type"`
-	Size         int    `json:"size"`
+	Name         CIdentifier `json:"name"`
+	TemplateType CIdentifier `json:"template_type"`
+	Type         CIdentifier `json:"type"`
+	Size         int         `json:"size"`
 	Comment      CommentDef
 	CommentData  json.RawMessage `json:"comment"`
 	Bitfield     string          `json:"bitfield"`
@@ -78,7 +78,7 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 		}
 
 		str := StructDef{
-			Name:    k,
+			Name:    CIdentifier(k),
 			Members: memberDefs,
 		}
 
@@ -103,8 +103,8 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 	return structs, nil
 }
 
-func shouldSkipStruct(name string) bool {
-	valueTypeStructs := map[string]bool{
+func shouldSkipStruct(name CIdentifier) bool {
+	valueTypeStructs := map[CIdentifier]bool{
 		"ImVec2ih":    true,
 		"ImVec2":      true,
 		"ImVec4":      true,
