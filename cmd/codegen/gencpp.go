@@ -37,15 +37,17 @@ extern "C" {
 
 `, includePath))
 
-	var cppSb strings.Builder
+	cppSb := &strings.Builder{}
 	cppSb.WriteString(cppFileHeader)
-	cppSb.WriteString(fmt.Sprintf(`#include "%s_wrapper.h"
+	fmt.Fprintf(cppSb, `#include "%s_wrapper.h"
 #include "%s"
 
-`, prefix, includePath))
+`, prefix, includePath)
 
+	// Note for future generations: can't replace with range, because we edit funcDefs later
 	for i := 0; i < len(funcDefs); i++ {
 		f := funcDefs[i]
+
 		shouldSkip := false
 
 		// Check func names
