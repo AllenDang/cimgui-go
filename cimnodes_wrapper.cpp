@@ -4,3 +4,17 @@
 #include "cimnodes_wrapper.h"
 #include "cimgui/cimnodes.h"
 
+void wrap_imnodes_BeginInputAttribute(int id) { imnodes_BeginInputAttribute(id,ImNodesPinShape_CircleFilled); }
+void wrap_imnodes_BeginOutputAttribute(int id) { imnodes_BeginOutputAttribute(id,ImNodesPinShape_CircleFilled); }
+void wrap_imnodes_DestroyContext() { imnodes_DestroyContext(NULL); }
+bool wrap_imnodes_IsAnyAttributeActive() { return imnodes_IsAnyAttributeActive(NULL); }
+bool wrap_imnodes_IsLinkCreated_BoolPtr(int* started_at_attribute_id,int* ended_at_attribute_id) { return imnodes_IsLinkCreated_BoolPtr(started_at_attribute_id,ended_at_attribute_id,NULL); }
+bool wrap_imnodes_IsLinkCreated_IntPtr(int* started_at_node_id,int* started_at_attribute_id,int* ended_at_node_id,int* ended_at_attribute_id) { return imnodes_IsLinkCreated_IntPtr(started_at_node_id,started_at_attribute_id,ended_at_node_id,ended_at_attribute_id,NULL); }
+bool wrap_imnodes_IsLinkDropped() { return imnodes_IsLinkDropped(NULL,true); }
+void wrap_imnodes_MiniMap() { imnodes_MiniMap(0.2f,ImNodesMiniMapLocation_TopLeft,NULL,NULL); }
+void wrap_imnodes_PopStyleVar() { imnodes_PopStyleVar(1); }
+const char* wrap_imnodes_SaveCurrentEditorStateToIniString() { return imnodes_SaveCurrentEditorStateToIniString(NULL); }
+const char* wrap_imnodes_SaveEditorStateToIniString(const ImNodesEditorContext* editor) { return imnodes_SaveEditorStateToIniString(editor,NULL); }
+void wrap_imnodes_StyleColorsClassic() { imnodes_StyleColorsClassic(NULL); }
+void wrap_imnodes_StyleColorsDark() { imnodes_StyleColorsDark(NULL); }
+void wrap_imnodes_StyleColorsLight() { imnodes_StyleColorsLight(NULL); }

@@ -9,11 +9,13 @@ import (
 
 // Returns if should export func
 func shouldExportFunc(funcName string) bool {
-	if unicode.IsUpper(rune(funcName[0])) {
+	switch {
+	case unicode.IsUpper(rune(funcName[0])):
 		return true
-	}
-	if strings.HasPrefix(funcName, "ig") {
+	case strings.HasPrefix(funcName, "ig"):
 		return len(funcName) > 2 && unicode.IsUpper(rune(funcName[2]))
+	case strings.HasPrefix(funcName, "imnodes_") && unicode.IsUpper(rune(strings.TrimPrefix(funcName, "imnodes_")[0])):
+		return true
 	}
 	return false
 }

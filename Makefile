@@ -51,7 +51,7 @@ endef
 
 ## cimnodes: generate imnodes binding
 .PHONY: cimnodes
-cimnodes:
+cimnodes: setup
 	$(call cimnodes)
 
 compile_cimgui_macos:
