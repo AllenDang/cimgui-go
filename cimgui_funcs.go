@@ -2669,6 +2669,37 @@ func (self *TextIndex) InternalSize() int32 {
 	return int32(C.ImGuiTextIndex_size(selfArg))
 }
 
+func NewTextRangeNil() *TextRange {
+	return newTextRangeFromC(C.ImGuiTextRange_ImGuiTextRange_Nil())
+}
+
+func NewTextRangeStr(_b string, _e string) *TextRange {
+	_bArg, _bFin := WrapString(_b)
+	_eArg, _eFin := WrapString(_e)
+
+	defer func() {
+		_bFin()
+		_eFin()
+	}()
+	return newTextRangeFromC(C.ImGuiTextRange_ImGuiTextRange_Str(_bArg, _eArg))
+}
+
+func (self *TextRange) Destroy() {
+	selfArg, selfFin := self.handle()
+	C.ImGuiTextRange_destroy(selfArg)
+
+	selfFin()
+}
+
+func (self *TextRange) Empty() bool {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.ImGuiTextRange_empty(selfArg) == C.bool(true)
+}
+
 func (self *ViewportP) InternalCalcWorkRectPos(off_min Vec2) Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
