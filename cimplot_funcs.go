@@ -13408,15 +13408,6 @@ func (self *FormatterTimeData) TimeDataGetSpec() PlotDateTimeSpec {
 	return *newPlotDateTimeSpecFromC(func() *C.ImPlotDateTimeSpec { result := result; return &result }())
 }
 
-func (self *FormatterTimeData) TimeDataGetUserFormatterData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_Formatter_Time_Data_GetUserFormatterData(selfArg))
-}
-
 func (self PlotAlignmentData) SetVertical(v bool) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -13847,15 +13838,6 @@ func (self PlotAxis) SetFormatterData(v unsafe.Pointer) {
 	C.wrap_ImPlotAxis_SetFormatterData(selfArg, (v))
 }
 
-func (self *PlotAxis) FormatterData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImPlotAxis_GetFormatterData(selfArg))
-}
-
 func (self PlotAxis) SetLinkedMin(v *float64) {
 	vArg, vFin := WrapNumberPtr[C.double, float64](v)
 
@@ -13943,15 +13925,6 @@ func (self PlotAxis) SetTransformData(v unsafe.Pointer) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotAxis_SetTransformData(selfArg, (v))
-}
-
-func (self *PlotAxis) TransformData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImPlotAxis_GetTransformData(selfArg))
 }
 
 func (self PlotAxis) SetPixelMin(v float32) {

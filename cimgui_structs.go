@@ -1124,71 +1124,13 @@ func newInputEventTextFromC(cvalue *C.ImGuiInputEventText) *InputEventText {
 // - ImGuiInputTextFlags_CallbackCharFilter:  Callback on character inputs to replace or discard them. Modify 'EventChar' to replace or discard, or return 1 in callback to discard.
 // - ImGuiInputTextFlags_CallbackResize:      Callback on buffer capacity changes request (beyond 'buf_size' parameter value), allowing the string to grow.
 type InputTextCallbackData struct {
-	FieldCtx       *Context       // Parent UI context
-	FieldEventFlag InputTextFlags // One ImGuiInputTextFlags_Callback*    // Read-only
-	FieldFlags     InputTextFlags // What user passed to InputText()      // Read-only
-	FieldUserData  unsafe.Pointer // What user passed to InputText()      // Read-only
-	// Arguments for the different callback events
-	// - To modify the text buffer in a callback, prefer using the InsertChars() / DeleteChars() function. InsertChars() will take care of calling the resize callback if necessary.
-	// - If you know your edits are not going to resize the underlying buffer allocation, you may modify the contents of 'Buf[]' directly. You need to update 'BufTextLen' accordingly (0 <= BufTextLen < BufSize) and set 'BufDirty'' to true so InputText can update its internal state.
-	FieldEventChar      Wchar  // Character input                      // Read-write   // [CharFilter] Replace character with another one, or set to zero to drop. return 1 is equivalent to setting EventChar=0;
-	FieldEventKey       Key    // Key pressed (Up/Down/TAB)            // Read-only    // [Completion,History]
-	FieldBuf            string // Text buffer                          // Read-write   // [Resize] Can replace pointer / [Completion,History,Always] Only write to pointed data, don't replace the actual pointer!
-	FieldBufTextLen     int32  // Text length (in bytes)               // Read-write   // [Resize,Completion,History,Always] Exclude zero-terminator storage. In C land: == strlen(some_text), in C++ land: string.length()
-	FieldBufSize        int32  // Buffer size (in bytes) = capacity+1  // Read-only    // [Resize,Completion,History,Always] Include zero-terminator storage. In C land == ARRAYSIZE(my_char_array), in C++ land: string.capacity()+1
-	FieldBufDirty       bool   // Set if you modify Buf/BufTextLen!    // Write        // [Completion,History,Always]
-	FieldCursorPos      int32  //                                      // Read-write   // [Completion,History,Always]
-	FieldSelectionStart int32  //                                      // Read-write   // [Completion,History,Always] == to SelectionEnd when no selection)
-	FieldSelectionEnd   int32  //                                      // Read-write   // [Completion,History,Always]
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
 func (self InputTextCallbackData) handle() (result *C.ImGuiInputTextCallbackData, releaseFn func()) {
-	result = new(C.ImGuiInputTextCallbackData)
-	FieldCtx := self.FieldCtx
-	FieldCtxArg, FieldCtxFin := FieldCtx.handle()
-	result.Ctx = FieldCtxArg
-	FieldEventFlag := self.FieldEventFlag
-
-	result.EventFlag = C.ImGuiInputTextFlags(FieldEventFlag)
-	FieldFlags := self.FieldFlags
-
-	result.Flags = C.ImGuiInputTextFlags(FieldFlags)
-	FieldUserData := self.FieldUserData
-
-	result.UserData = (FieldUserData)
-	FieldEventChar := self.FieldEventChar
-
-	result.EventChar = C.ImWchar(FieldEventChar)
-	FieldEventKey := self.FieldEventKey
-
-	result.EventKey = C.ImGuiKey(FieldEventKey)
-	FieldBuf := self.FieldBuf
-	FieldBufArg, FieldBufFin := WrapString(FieldBuf)
-	result.Buf = FieldBufArg
-	FieldBufTextLen := self.FieldBufTextLen
-
-	result.BufTextLen = C.int(FieldBufTextLen)
-	FieldBufSize := self.FieldBufSize
-
-	result.BufSize = C.int(FieldBufSize)
-	FieldBufDirty := self.FieldBufDirty
-
-	result.BufDirty = C.bool(FieldBufDirty)
-	FieldCursorPos := self.FieldCursorPos
-
-	result.CursorPos = C.int(FieldCursorPos)
-	FieldSelectionStart := self.FieldSelectionStart
-
-	result.SelectionStart = C.int(FieldSelectionStart)
-	FieldSelectionEnd := self.FieldSelectionEnd
-
-	result.SelectionEnd = C.int(FieldSelectionEnd)
-	releaseFn = func() {
-		FieldCtxFin()
-
-		FieldBufFin()
-	}
-	return result, releaseFn
+	result = (*C.ImGuiInputTextCallbackData)(self.data)
+	return result, func() {}
 }
 
 func (self InputTextCallbackData) c() (result C.ImGuiInputTextCallbackData, fin func()) {
@@ -1198,19 +1140,7 @@ func (self InputTextCallbackData) c() (result C.ImGuiInputTextCallbackData, fin 
 
 func newInputTextCallbackDataFromC(cvalue *C.ImGuiInputTextCallbackData) *InputTextCallbackData {
 	result := new(InputTextCallbackData)
-	result.FieldCtx = newContextFromC(cvalue.Ctx)
-	result.FieldEventFlag = InputTextFlags(cvalue.EventFlag)
-	result.FieldFlags = InputTextFlags(cvalue.Flags)
-	result.FieldUserData = unsafe.Pointer(cvalue.UserData)
-	result.FieldEventChar = Wchar(cvalue.EventChar)
-	result.FieldEventKey = Key(cvalue.EventKey)
-	result.FieldBuf = C.GoString(cvalue.Buf)
-	result.FieldBufTextLen = int32(cvalue.BufTextLen)
-	result.FieldBufSize = int32(cvalue.BufSize)
-	result.FieldBufDirty = cvalue.BufDirty == C.bool(true)
-	result.FieldCursorPos = int32(cvalue.CursorPos)
-	result.FieldSelectionStart = int32(cvalue.SelectionStart)
-	result.FieldSelectionEnd = int32(cvalue.SelectionEnd)
+	result.data = unsafe.Pointer(cvalue)
 	return result
 }
 
@@ -1584,42 +1514,13 @@ func newLastItemDataFromC(cvalue *C.ImGuiLastItemData) *LastItemData {
 // - User code submit visible elements.
 // - The clipper also handles various subtleties related to keyboard/gamepad navigation, wrapping etc.
 type ListClipper struct {
-	FieldCtx          *Context       // Parent UI context
-	FieldDisplayStart int32          // First item to display, updated by each call to Step()
-	FieldDisplayEnd   int32          // End of items to display (exclusive)
-	FieldItemsCount   int32          // [Internal] Number of items
-	FieldItemsHeight  float32        // [Internal] Height of item after a first step and item submission can calculate it
-	FieldStartPosY    float32        // [Internal] Cursor position at the time of Begin() or after table frozen rows are all processed
-	FieldTempData     unsafe.Pointer // [Internal] Internal data
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
 func (self ListClipper) handle() (result *C.ImGuiListClipper, releaseFn func()) {
-	result = new(C.ImGuiListClipper)
-	FieldCtx := self.FieldCtx
-	FieldCtxArg, FieldCtxFin := FieldCtx.handle()
-	result.Ctx = FieldCtxArg
-	FieldDisplayStart := self.FieldDisplayStart
-
-	result.DisplayStart = C.int(FieldDisplayStart)
-	FieldDisplayEnd := self.FieldDisplayEnd
-
-	result.DisplayEnd = C.int(FieldDisplayEnd)
-	FieldItemsCount := self.FieldItemsCount
-
-	result.ItemsCount = C.int(FieldItemsCount)
-	FieldItemsHeight := self.FieldItemsHeight
-
-	result.ItemsHeight = C.float(FieldItemsHeight)
-	FieldStartPosY := self.FieldStartPosY
-
-	result.StartPosY = C.float(FieldStartPosY)
-	FieldTempData := self.FieldTempData
-
-	result.TempData = (FieldTempData)
-	releaseFn = func() {
-		FieldCtxFin()
-	}
-	return result, releaseFn
+	result = (*C.ImGuiListClipper)(self.data)
+	return result, func() {}
 }
 
 func (self ListClipper) c() (result C.ImGuiListClipper, fin func()) {
@@ -1629,13 +1530,7 @@ func (self ListClipper) c() (result C.ImGuiListClipper, fin func()) {
 
 func newListClipperFromC(cvalue *C.ImGuiListClipper) *ListClipper {
 	result := new(ListClipper)
-	result.FieldCtx = newContextFromC(cvalue.Ctx)
-	result.FieldDisplayStart = int32(cvalue.DisplayStart)
-	result.FieldDisplayEnd = int32(cvalue.DisplayEnd)
-	result.FieldItemsCount = int32(cvalue.ItemsCount)
-	result.FieldItemsHeight = float32(cvalue.ItemsHeight)
-	result.FieldStartPosY = float32(cvalue.StartPosY)
-	result.FieldTempData = unsafe.Pointer(cvalue.TempData)
+	result.data = unsafe.Pointer(cvalue)
 	return result
 }
 
@@ -2303,37 +2198,13 @@ func newPlatformImeDataFromC(cvalue *C.ImGuiPlatformImeData) *PlatformImeData {
 // (Optional) This is required when enabling multi-viewport. Represent the bounds of each connected monitor/display and their DPI.
 // We use this information for multiple DPI support + clamping the position of popups and tooltips so they don't straddle multiple monitors.
 type PlatformMonitor struct {
-	FieldMainPos        Vec2           // Coordinates of the area displayed on this monitor (Min = upper left, Max = bottom right)
-	FieldMainSize       Vec2           // Coordinates of the area displayed on this monitor (Min = upper left, Max = bottom right)
-	FieldWorkPos        Vec2           // Coordinates without task bars / side bars / menu bars. Used to avoid positioning popups/tooltips inside this region. If you don't have this info, please copy the value for MainPos/MainSize.
-	FieldWorkSize       Vec2           // Coordinates without task bars / side bars / menu bars. Used to avoid positioning popups/tooltips inside this region. If you don't have this info, please copy the value for MainPos/MainSize.
-	FieldDpiScale       float32        // 1.0f = 96 DPI
-	FieldPlatformHandle unsafe.Pointer // Backend dependant data (e.g. HMONITOR, GLFWmonitor*, SDL Display Index, NSScreen*)
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
 func (self PlatformMonitor) handle() (result *C.ImGuiPlatformMonitor, releaseFn func()) {
-	result = new(C.ImGuiPlatformMonitor)
-	FieldMainPos := self.FieldMainPos
-
-	result.MainPos = FieldMainPos.toC()
-	FieldMainSize := self.FieldMainSize
-
-	result.MainSize = FieldMainSize.toC()
-	FieldWorkPos := self.FieldWorkPos
-
-	result.WorkPos = FieldWorkPos.toC()
-	FieldWorkSize := self.FieldWorkSize
-
-	result.WorkSize = FieldWorkSize.toC()
-	FieldDpiScale := self.FieldDpiScale
-
-	result.DpiScale = C.float(FieldDpiScale)
-	FieldPlatformHandle := self.FieldPlatformHandle
-
-	result.PlatformHandle = (FieldPlatformHandle)
-	releaseFn = func() {
-	}
-	return result, releaseFn
+	result = (*C.ImGuiPlatformMonitor)(self.data)
+	return result, func() {}
 }
 
 func (self PlatformMonitor) c() (result C.ImGuiPlatformMonitor, fin func()) {
@@ -2343,12 +2214,7 @@ func (self PlatformMonitor) c() (result C.ImGuiPlatformMonitor, fin func()) {
 
 func newPlatformMonitorFromC(cvalue *C.ImGuiPlatformMonitor) *PlatformMonitor {
 	result := new(PlatformMonitor)
-	result.FieldMainPos = *(&Vec2{}).fromC(cvalue.MainPos)
-	result.FieldMainSize = *(&Vec2{}).fromC(cvalue.MainSize)
-	result.FieldWorkPos = *(&Vec2{}).fromC(cvalue.WorkPos)
-	result.FieldWorkSize = *(&Vec2{}).fromC(cvalue.WorkSize)
-	result.FieldDpiScale = float32(cvalue.DpiScale)
-	result.FieldPlatformHandle = unsafe.Pointer(cvalue.PlatformHandle)
+	result.data = unsafe.Pointer(cvalue)
 	return result
 }
 
@@ -2416,21 +2282,13 @@ func newPopupDataFromC(cvalue *C.ImGuiPopupData) *PopupData {
 }
 
 type PtrOrIndex struct {
-	FieldPtr   unsafe.Pointer // Either field can be set, not both. e.g. Dock node tab bars are loose while BeginTabBar() ones are in a pool.
-	FieldIndex int32          // Usually index in a main pool.
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
 func (self PtrOrIndex) handle() (result *C.ImGuiPtrOrIndex, releaseFn func()) {
-	result = new(C.ImGuiPtrOrIndex)
-	FieldPtr := self.FieldPtr
-
-	result.Ptr = (FieldPtr)
-	FieldIndex := self.FieldIndex
-
-	result.Index = C.int(FieldIndex)
-	releaseFn = func() {
-	}
-	return result, releaseFn
+	result = (*C.ImGuiPtrOrIndex)(self.data)
+	return result, func() {}
 }
 
 func (self PtrOrIndex) c() (result C.ImGuiPtrOrIndex, fin func()) {
@@ -2440,8 +2298,7 @@ func (self PtrOrIndex) c() (result C.ImGuiPtrOrIndex, fin func()) {
 
 func newPtrOrIndexFromC(cvalue *C.ImGuiPtrOrIndex) *PtrOrIndex {
 	result := new(PtrOrIndex)
-	result.FieldPtr = unsafe.Pointer(cvalue.Ptr)
-	result.FieldIndex = int32(cvalue.Index)
+	result.data = unsafe.Pointer(cvalue)
 	return result
 }
 
@@ -2504,29 +2361,13 @@ func newShrinkWidthItemFromC(cvalue *C.ImGuiShrinkWidthItem) *ShrinkWidthItem {
 // Resizing callback data to apply custom constraint. As enabled by SetNextWindowSizeConstraints(). Callback is called during the next Begin().
 // NB: For basic min/max size constraint on each axis you don't need to use the callback! The SetNextWindowSizeConstraints() parameters are enough.
 type SizeCallbackData struct {
-	FieldUserData    unsafe.Pointer // Read-only.   What user passed to SetNextWindowSizeConstraints(). Generally store an integer or float in here (need reinterpret_cast<>).
-	FieldPos         Vec2           // Read-only.   Window position, for reference.
-	FieldCurrentSize Vec2           // Read-only.   Current window size.
-	FieldDesiredSize Vec2           // Read-write.  Desired size, based on user's mouse position. Write to this field to restrain resizing.
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
 func (self SizeCallbackData) handle() (result *C.ImGuiSizeCallbackData, releaseFn func()) {
-	result = new(C.ImGuiSizeCallbackData)
-	FieldUserData := self.FieldUserData
-
-	result.UserData = (FieldUserData)
-	FieldPos := self.FieldPos
-
-	result.Pos = FieldPos.toC()
-	FieldCurrentSize := self.FieldCurrentSize
-
-	result.CurrentSize = FieldCurrentSize.toC()
-	FieldDesiredSize := self.FieldDesiredSize
-
-	result.DesiredSize = FieldDesiredSize.toC()
-	releaseFn = func() {
-	}
-	return result, releaseFn
+	result = (*C.ImGuiSizeCallbackData)(self.data)
+	return result, func() {}
 }
 
 func (self SizeCallbackData) c() (result C.ImGuiSizeCallbackData, fin func()) {
@@ -2536,10 +2377,7 @@ func (self SizeCallbackData) c() (result C.ImGuiSizeCallbackData, fin func()) {
 
 func newSizeCallbackDataFromC(cvalue *C.ImGuiSizeCallbackData) *SizeCallbackData {
 	result := new(SizeCallbackData)
-	result.FieldUserData = unsafe.Pointer(cvalue.UserData)
-	result.FieldPos = *(&Vec2{}).fromC(cvalue.Pos)
-	result.FieldCurrentSize = *(&Vec2{}).fromC(cvalue.CurrentSize)
-	result.FieldDesiredSize = *(&Vec2{}).fromC(cvalue.DesiredSize)
+	result.data = unsafe.Pointer(cvalue)
 	return result
 }
 
@@ -3557,87 +3395,13 @@ func newTextRangeFromC(cvalue *C.ImGuiTextRange) *TextRange {
 //   - Work Area = entire viewport minus sections used by main menu bars (for platform windows), or by task bar (for platform monitor).
 //   - Windows are generally trying to stay within the Work Area of their host viewport.
 type Viewport struct {
-	FieldID               ID            // Unique identifier for the viewport
-	FieldFlags            ViewportFlags // See ImGuiViewportFlags_
-	FieldPos              Vec2          // Main Area: Position of the viewport (Dear ImGui coordinates are the same as OS desktop/native coordinates)
-	FieldSize             Vec2          // Main Area: Size of the viewport.
-	FieldWorkPos          Vec2          // Work Area: Position of the viewport minus task bars, menus bars, status bars (>= Pos)
-	FieldWorkSize         Vec2          // Work Area: Size of the viewport minus task bars, menu bars, status bars (<= Size)
-	FieldDpiScale         float32       // 1.0f = 96 DPI = No extra scale.
-	FieldParentViewportId ID            // (Advanced) 0: no parent. Instruct the platform backend to setup a parent/child relationship between platform windows.
-	FieldDrawData         *DrawData     // The ImDrawData corresponding to this viewport. Valid after Render() and until the next call to NewFrame().
-	// Platform/Backend Dependent Data
-	// Our design separate the Renderer and Platform backends to facilitate combining default backends with each others.
-	// When our create your own backend for a custom engine, it is possible that both Renderer and Platform will be handled
-	// by the same system and you may not need to use all the UserData/Handle fields.
-	// The library never uses those fields, they are merely storage to facilitate backend implementation.
-	FieldRendererUserData      unsafe.Pointer // void* to hold custom data structure for the renderer (e.g. swap chain, framebuffers etc.). generally set by your Renderer_CreateWindow function.
-	FieldPlatformUserData      unsafe.Pointer // void* to hold custom data structure for the OS / platform (e.g. windowing info, render context). generally set by your Platform_CreateWindow function.
-	FieldPlatformHandle        unsafe.Pointer // void* for FindViewportByPlatformHandle(). (e.g. suggested to use natural platform handle such as HWND, GLFWWindow*, SDL_Window*)
-	FieldPlatformHandleRaw     unsafe.Pointer // void* to hold lower-level, platform-native window handle (under Win32 this is expected to be a HWND, unused for other platforms), when using an abstraction layer like GLFW or SDL (where PlatformHandle would be a SDL_Window*)
-	FieldPlatformWindowCreated bool           // Platform window has been created (Platform_CreateWindow() has been called). This is false during the first frame where a viewport is being created.
-	FieldPlatformRequestMove   bool           // Platform window requested move (e.g. window was moved by the OS / host window manager, authoritative position will be OS window position)
-	FieldPlatformRequestResize bool           // Platform window requested resize (e.g. window was resized by the OS / host window manager, authoritative size will be OS window size)
-	FieldPlatformRequestClose  bool           // Platform window requested closure (e.g. window was moved by the OS / host window manager, e.g. pressing ALT-F4)
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
 func (self Viewport) handle() (result *C.ImGuiViewport, releaseFn func()) {
-	result = new(C.ImGuiViewport)
-	FieldID := self.FieldID
-
-	result.ID = C.ImGuiID(FieldID)
-	FieldFlags := self.FieldFlags
-
-	result.Flags = C.ImGuiViewportFlags(FieldFlags)
-	FieldPos := self.FieldPos
-
-	result.Pos = FieldPos.toC()
-	FieldSize := self.FieldSize
-
-	result.Size = FieldSize.toC()
-	FieldWorkPos := self.FieldWorkPos
-
-	result.WorkPos = FieldWorkPos.toC()
-	FieldWorkSize := self.FieldWorkSize
-
-	result.WorkSize = FieldWorkSize.toC()
-	FieldDpiScale := self.FieldDpiScale
-
-	result.DpiScale = C.float(FieldDpiScale)
-	FieldParentViewportId := self.FieldParentViewportId
-
-	result.ParentViewportId = C.ImGuiID(FieldParentViewportId)
-	FieldDrawData := self.FieldDrawData
-	FieldDrawDataArg, FieldDrawDataFin := FieldDrawData.handle()
-	result.DrawData = FieldDrawDataArg
-	FieldRendererUserData := self.FieldRendererUserData
-
-	result.RendererUserData = (FieldRendererUserData)
-	FieldPlatformUserData := self.FieldPlatformUserData
-
-	result.PlatformUserData = (FieldPlatformUserData)
-	FieldPlatformHandle := self.FieldPlatformHandle
-
-	result.PlatformHandle = (FieldPlatformHandle)
-	FieldPlatformHandleRaw := self.FieldPlatformHandleRaw
-
-	result.PlatformHandleRaw = (FieldPlatformHandleRaw)
-	FieldPlatformWindowCreated := self.FieldPlatformWindowCreated
-
-	result.PlatformWindowCreated = C.bool(FieldPlatformWindowCreated)
-	FieldPlatformRequestMove := self.FieldPlatformRequestMove
-
-	result.PlatformRequestMove = C.bool(FieldPlatformRequestMove)
-	FieldPlatformRequestResize := self.FieldPlatformRequestResize
-
-	result.PlatformRequestResize = C.bool(FieldPlatformRequestResize)
-	FieldPlatformRequestClose := self.FieldPlatformRequestClose
-
-	result.PlatformRequestClose = C.bool(FieldPlatformRequestClose)
-	releaseFn = func() {
-		FieldDrawDataFin()
-	}
-	return result, releaseFn
+	result = (*C.ImGuiViewport)(self.data)
+	return result, func() {}
 }
 
 func (self Viewport) c() (result C.ImGuiViewport, fin func()) {
@@ -3647,23 +3411,7 @@ func (self Viewport) c() (result C.ImGuiViewport, fin func()) {
 
 func newViewportFromC(cvalue *C.ImGuiViewport) *Viewport {
 	result := new(Viewport)
-	result.FieldID = ID(cvalue.ID)
-	result.FieldFlags = ViewportFlags(cvalue.Flags)
-	result.FieldPos = *(&Vec2{}).fromC(cvalue.Pos)
-	result.FieldSize = *(&Vec2{}).fromC(cvalue.Size)
-	result.FieldWorkPos = *(&Vec2{}).fromC(cvalue.WorkPos)
-	result.FieldWorkSize = *(&Vec2{}).fromC(cvalue.WorkSize)
-	result.FieldDpiScale = float32(cvalue.DpiScale)
-	result.FieldParentViewportId = ID(cvalue.ParentViewportId)
-	result.FieldDrawData = newDrawDataFromC(cvalue.DrawData)
-	result.FieldRendererUserData = unsafe.Pointer(cvalue.RendererUserData)
-	result.FieldPlatformUserData = unsafe.Pointer(cvalue.PlatformUserData)
-	result.FieldPlatformHandle = unsafe.Pointer(cvalue.PlatformHandle)
-	result.FieldPlatformHandleRaw = unsafe.Pointer(cvalue.PlatformHandleRaw)
-	result.FieldPlatformWindowCreated = cvalue.PlatformWindowCreated == C.bool(true)
-	result.FieldPlatformRequestMove = cvalue.PlatformRequestMove == C.bool(true)
-	result.FieldPlatformRequestResize = cvalue.PlatformRequestResize == C.bool(true)
-	result.FieldPlatformRequestClose = cvalue.PlatformRequestClose == C.bool(true)
+	result.data = unsafe.Pointer(cvalue)
 	return result
 }
 

@@ -1348,15 +1348,6 @@ func (self *Context) Destroy() {
 	selfFin()
 }
 
-func (self *DataVarInfo) InternalVarPtr(parent unsafe.Pointer) unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.ImGuiDataVarInfo_GetVarPtr(selfArg, (parent)))
-}
-
 func InternalNewDockContext() *DockContext {
 	return newDockContextFromC(C.ImGuiDockContext_ImGuiDockContext())
 }
@@ -6050,20 +6041,6 @@ func InternalImExponentialMovingAverage(avg float32, sample float32, n int32) fl
 	return float32(C.igImExponentialMovingAverage(C.float(avg), C.float(sample), C.int(n)))
 }
 
-// InternalImFileLoadToMemoryV parameter default value hint:
-// out_file_size: NULL
-// padding_bytes: 0
-func InternalImFileLoadToMemoryV(filename string, mode string, out_file_size *uint64, padding_bytes int32) unsafe.Pointer {
-	filenameArg, filenameFin := WrapString(filename)
-	modeArg, modeFin := WrapString(mode)
-
-	defer func() {
-		filenameFin()
-		modeFin()
-	}()
-	return unsafe.Pointer(C.igImFileLoadToMemory(filenameArg, modeArg, (*C.xulong)(out_file_size), C.int(padding_bytes)))
-}
-
 // Decent replacement for floorf()
 func InternalImFloorSignedFloat(f float32) float32 {
 	return float32(C.igImFloorSigned_Float(C.float(f)))
@@ -7424,10 +7401,6 @@ func InternalMarkIniSettingsDirtyWindowPtr(window *Window) {
 // Mark data associated to given item as "edited", used by IsItemDeactivatedAfterEdit() function.
 func InternalMarkItemEdited(id ID) {
 	C.igMarkItemEdited(C.ImGuiID(id))
-}
-
-func MemAlloc(size uint64) unsafe.Pointer {
-	return unsafe.Pointer(C.igMemAlloc(C.xulong(size)))
 }
 
 func MemFree(ptr unsafe.Pointer) {
@@ -10934,17 +10907,6 @@ func MouseDragDelta() Vec2 {
 	return *pOut
 }
 
-func InternalImFileLoadToMemory(filename string, mode string) unsafe.Pointer {
-	filenameArg, filenameFin := WrapString(filename)
-	modeArg, modeFin := WrapString(mode)
-
-	defer func() {
-		filenameFin()
-		modeFin()
-	}()
-	return unsafe.Pointer(C.wrap_igImFileLoadToMemory(filenameArg, modeArg))
-}
-
 func InternalImHashData(data unsafe.Pointer, data_size uint64) ID {
 	return ID(C.wrap_igImHashData((data), C.xulong(data_size)))
 }
@@ -12095,15 +12057,6 @@ func (self DrawCmd) SetUserCallbackData(v unsafe.Pointer) {
 	C.wrap_ImDrawCmd_SetUserCallbackData(selfArg, (v))
 }
 
-func (self *DrawCmd) UserCallbackData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImDrawCmd_GetUserCallbackData(selfArg))
-}
-
 func (self DrawCmdHeader) SetClipRect(v Vec4) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -13140,15 +13093,6 @@ func (self FontAtlas) SetUserData(v unsafe.Pointer) {
 	C.wrap_ImFontAtlas_SetUserData(selfArg, (v))
 }
 
-func (self *FontAtlas) UserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImFontAtlas_GetUserData(selfArg))
-}
-
 func (self FontAtlas) SetTexReady(v bool) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -13517,15 +13461,6 @@ func (self FontConfig) SetFontData(v unsafe.Pointer) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImFontConfig_SetFontData(selfArg, (v))
-}
-
-func (self *FontConfig) FontData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImFontConfig_GetFontData(selfArg))
 }
 
 func (self FontConfig) SetFontDataSize(v int32) {
@@ -14455,15 +14390,6 @@ func (self Context) SetTestEngine(v unsafe.Pointer) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetTestEngine(selfArg, (v))
-}
-
-func (self *Context) TestEngine() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiContext_GetTestEngine(selfArg))
 }
 
 func (self Context) SetInputEventsQueue(v Vector[*InputEvent]) {
@@ -18172,15 +18098,6 @@ func (self ContextHook) SetUserData(v unsafe.Pointer) {
 	C.wrap_ImGuiContextHook_SetUserData(selfArg, (v))
 }
 
-func (self *ContextHook) UserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiContextHook_GetUserData(selfArg))
-}
-
 func (self DataTypeInfo) SetSize(v uint64) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -19245,15 +19162,6 @@ func (self IO) SetUserData(v unsafe.Pointer) {
 	C.wrap_ImGuiIO_SetUserData(selfArg, (v))
 }
 
-func (self *IO) UserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiIO_GetUserData(selfArg))
-}
-
 func (self IO) SetFonts(v *FontAtlas) {
 	vArg, vFin := v.handle()
 
@@ -19771,28 +19679,10 @@ func (self IO) SetBackendPlatformUserData(v unsafe.Pointer) {
 	C.wrap_ImGuiIO_SetBackendPlatformUserData(selfArg, (v))
 }
 
-func (self *IO) BackendPlatformUserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiIO_GetBackendPlatformUserData(selfArg))
-}
-
 func (self IO) SetBackendRendererUserData(v unsafe.Pointer) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiIO_SetBackendRendererUserData(selfArg, (v))
-}
-
-func (self *IO) BackendRendererUserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiIO_GetBackendRendererUserData(selfArg))
 }
 
 func (self IO) SetBackendLanguageUserData(v unsafe.Pointer) {
@@ -19801,43 +19691,16 @@ func (self IO) SetBackendLanguageUserData(v unsafe.Pointer) {
 	C.wrap_ImGuiIO_SetBackendLanguageUserData(selfArg, (v))
 }
 
-func (self *IO) BackendLanguageUserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiIO_GetBackendLanguageUserData(selfArg))
-}
-
 func (self IO) SetClipboardUserData(v unsafe.Pointer) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiIO_SetClipboardUserData(selfArg, (v))
 }
 
-func (self *IO) ClipboardUserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiIO_GetClipboardUserData(selfArg))
-}
-
 func (self IO) SetUnusedPadding(v unsafe.Pointer) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiIO_Set_UnusedPadding(selfArg, (v))
-}
-
-func (self *IO) UnusedPadding() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiIO_Get_UnusedPadding(selfArg))
 }
 
 func (self IO) SetPlatformLocaleDecimalPoint(v Wchar) {
@@ -20705,15 +20568,6 @@ func (self InputTextCallbackData) SetUserData(v unsafe.Pointer) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiInputTextCallbackData_SetUserData(selfArg, (v))
-}
-
-func (self *InputTextCallbackData) UserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiInputTextCallbackData_GetUserData(selfArg))
 }
 
 func (self InputTextCallbackData) SetEventChar(v Wchar) {
@@ -21585,15 +21439,6 @@ func (self ListClipper) SetTempData(v unsafe.Pointer) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiListClipper_SetTempData(selfArg, (v))
-}
-
-func (self *ListClipper) TempData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiListClipper_GetTempData(selfArg))
 }
 
 func (self ListClipperData) SetListClipper(v *ListClipper) {
@@ -22523,15 +22368,6 @@ func (self NextWindowData) SetSizeCallbackUserData(v unsafe.Pointer) {
 	C.wrap_ImGuiNextWindowData_SetSizeCallbackUserData(selfArg, (v))
 }
 
-func (self *NextWindowData) SizeCallbackUserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiNextWindowData_GetSizeCallbackUserData(selfArg))
-}
-
 func (self NextWindowData) SetBgAlphaVal(v float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -22964,15 +22800,6 @@ func (self Payload) SetData(v unsafe.Pointer) {
 	C.wrap_ImGuiPayload_SetData(selfArg, (v))
 }
 
-func (self *Payload) Data() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiPayload_GetData(selfArg))
-}
-
 func (self Payload) SetDataSize(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -23213,15 +23040,6 @@ func (self PlatformMonitor) SetPlatformHandle(v unsafe.Pointer) {
 	C.wrap_ImGuiPlatformMonitor_SetPlatformHandle(selfArg, (v))
 }
 
-func (self *PlatformMonitor) PlatformHandle() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiPlatformMonitor_GetPlatformHandle(selfArg))
-}
-
 func (self PopupData) SetPopupId(v ID) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -23356,15 +23174,6 @@ func (self PtrOrIndex) SetPtr(v unsafe.Pointer) {
 	C.wrap_ImGuiPtrOrIndex_SetPtr(selfArg, (v))
 }
 
-func (self *PtrOrIndex) Ptr() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiPtrOrIndex_GetPtr(selfArg))
-}
-
 func (self PtrOrIndex) SetIndex(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -23420,15 +23229,6 @@ func (self SettingsHandler) SetUserData(v unsafe.Pointer) {
 	C.wrap_ImGuiSettingsHandler_SetUserData(selfArg, (v))
 }
 
-func (self *SettingsHandler) UserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiSettingsHandler_GetUserData(selfArg))
-}
-
 func (self ShrinkWidthItem) SetIndex(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -23478,15 +23278,6 @@ func (self SizeCallbackData) SetUserData(v unsafe.Pointer) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiSizeCallbackData_SetUserData(selfArg, (v))
-}
-
-func (self *SizeCallbackData) UserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiSizeCallbackData_GetUserData(selfArg))
 }
 
 func (self SizeCallbackData) SetPos(v Vec2) {
@@ -25330,15 +25121,6 @@ func (self Table) SetRawData(v unsafe.Pointer) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiTable_SetRawData(selfArg, (v))
-}
-
-func (self *Table) RawData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiTable_GetRawData(selfArg))
 }
 
 func (self Table) SetTempData(v *TableTempData) {
@@ -28355,28 +28137,10 @@ func (self Viewport) SetRendererUserData(v unsafe.Pointer) {
 	C.wrap_ImGuiViewport_SetRendererUserData(selfArg, (v))
 }
 
-func (self *Viewport) RendererUserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiViewport_GetRendererUserData(selfArg))
-}
-
 func (self Viewport) SetPlatformUserData(v unsafe.Pointer) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiViewport_SetPlatformUserData(selfArg, (v))
-}
-
-func (self *Viewport) PlatformUserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiViewport_GetPlatformUserData(selfArg))
 }
 
 func (self Viewport) SetPlatformHandle(v unsafe.Pointer) {
@@ -28385,28 +28149,10 @@ func (self Viewport) SetPlatformHandle(v unsafe.Pointer) {
 	C.wrap_ImGuiViewport_SetPlatformHandle(selfArg, (v))
 }
 
-func (self *Viewport) PlatformHandle() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiViewport_GetPlatformHandle(selfArg))
-}
-
 func (self Viewport) SetPlatformHandleRaw(v unsafe.Pointer) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiViewport_SetPlatformHandleRaw(selfArg, (v))
-}
-
-func (self *Viewport) PlatformHandleRaw() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImGuiViewport_GetPlatformHandleRaw(selfArg))
 }
 
 func (self Viewport) SetPlatformWindowCreated(v bool) {
