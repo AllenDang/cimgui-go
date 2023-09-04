@@ -357,21 +357,19 @@ func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []S
 	var structAccessorFuncs []FuncDef
 
 	skipFuncNames := map[CIdentifier]bool{
-		"ImGuiIO_SetAppAcceptingEvents": true,
-		"ImGuiDockNode_SetLocalFlags":   true,
-		"ImFontAtlas_SetTexID":          true,
-		"ImVec1_Getx":                   true,
-		"ImVec2_Getx":                   true,
-		"ImVec2_Gety":                   true,
-		"ImVec4_Getx":                   true,
-		"ImVec4_Gety":                   true,
-		"ImVec4_Getw":                   true,
-		"ImVec4_Getz":                   true,
-		"ImRect_GetMin":                 true,
-		"ImRect_GetMax":                 true,
-		"ImPlotPoint_Setx":              true,
-		"ImPlotPoint_Sety":              true,
-		"ImPlotColormapData_SetKeys":    true,
+		"ImFontAtlas_SetTexID":       true,
+		"ImVec1_Getx":                true,
+		"ImVec2_Getx":                true,
+		"ImVec2_Gety":                true,
+		"ImVec4_Getx":                true,
+		"ImVec4_Gety":                true,
+		"ImVec4_Getw":                true,
+		"ImVec4_Getz":                true,
+		"ImRect_GetMin":              true,
+		"ImRect_GetMax":              true,
+		"ImPlotPoint_Setx":           true,
+		"ImPlotPoint_Sety":           true,
+		"ImPlotColormapData_SetKeys": true,
 	}
 
 	// Add all valid function's name to skipFuncNames
@@ -402,11 +400,11 @@ extern "C" {
 
 	for _, s := range structs {
 		for _, m := range s.Members {
-			if Contains(m.Name, "[") || Contains(m.Type, "(") || Contains(m.Type, "union") {
+			if Contains(m.Type, "(") || Contains(m.Type, "union") {
 				continue
 			}
 
-			setterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Set%[2]s", s.Name, m.Name))
+			setterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Set%[2]s", s.Name, Split(m.Name, "[")[0]))
 			if skipFuncNames[setterFuncName] {
 				continue
 			}
@@ -436,7 +434,7 @@ extern "C" {
 
 			sbHeader.WriteString(fmt.Sprintf("extern void %s(%s *%s, %s v);\n", setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type))
 
-			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, m.Name))
+			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, Split(m.Name, "[")[0]))
 			if skipFuncNames[getterFuncName] {
 				continue
 			}

@@ -90,3 +90,18 @@ func (n CIdentifier) renameGoIdentifier() GoIdentifier {
 func (e CIdentifier) renameEnum() GoIdentifier {
 	return TrimSuffix(e, "_").renameGoIdentifier()
 }
+
+func moveArrayMarkToType(name, cType *CIdentifier) {
+	isPtr := HasSuffix(*cType, "*")
+	*cType = TrimSuffix(*cType, "*")
+
+	if HasSuffix(*name, "]") {
+		*name = TrimSuffix(*name, "]")
+		*cType = *cType + "[" + Join(Split(*name, "[")[1:], "")
+		*name = Split(*name, "[")[0]
+	}
+
+	if isPtr {
+		*cType = *cType + "*"
+	}
+}
