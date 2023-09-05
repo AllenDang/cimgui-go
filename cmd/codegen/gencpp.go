@@ -467,12 +467,12 @@ extern "C" {
 			fmt.Fprintf(
 				sbCpp,
 				"void %s(%s *%s, %s v) { %s->%s = v; }\n",
-				setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, s.Name+"Ptr", m.Name,
+				setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, s.Name+"Ptr", Split(m.Name, "[")[0],
 			)
 
 			fmt.Fprintf(sbCpp,
 				"%s %s(%s *self) { return self->%s; }\n",
-				m.Type, getterFuncDef.CWrapperFuncName, s.Name, m.Name,
+				m.Type, getterFuncDef.CWrapperFuncName, s.Name, Split(m.Name, "[")[0],
 			)
 		}
 	}
