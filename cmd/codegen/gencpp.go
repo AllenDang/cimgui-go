@@ -377,7 +377,7 @@ func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []S
 		skipFuncNames[f.FuncName] = true
 	}
 
-	var sbHeader, sbCpp strings.Builder
+	sbHeader, sbCpp := &strings.Builder{}, &strings.Builder{}
 
 	sbHeader.WriteString(cppFileHeader)
 	sbCpp.WriteString(cppFileHeader)
@@ -458,12 +458,22 @@ extern "C" {
 			}
 			structAccessorFuncs = append(structAccessorFuncs, getterFuncDef)
 
-			sbHeader.WriteString(fmt.Sprintf("extern %s %s(%s *self);\n", m.Type, getterFuncDef.CWrapperFuncName, s.Name))
+			fmt.Fprintf(
+				sbHeader,
+				"extern %s %s(%s *self);\n",
+				m.Type, getterFuncDef.CWrapperFuncName, s.Name,
+			)
 
-			sbCpp.WriteString(fmt.Sprintf("void %s(%s *%s, %s v) { %s->%s = v; }\n",
-				setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, s.Name+"Ptr", m.Name))
-			sbCpp.WriteString(fmt.Sprintf("%s %s(%s *self) { return self->%s; }\n",
-				m.Type, getterFuncDef.CWrapperFuncName, s.Name, m.Name))
+			fmt.Fprintf(
+				sbCpp,
+				"void %s(%s *%s, %s v) { %s->%s = v; }\n",
+				setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, s.Name+"Ptr", m.Name,
+			)
+
+			fmt.Fprintf(sbCpp,
+				"%s %s(%s *self) { return self->%s; }\n",
+				m.Type, getterFuncDef.CWrapperFuncName, s.Name, m.Name,
+			)
 		}
 	}
 
