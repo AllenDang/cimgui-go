@@ -28686,6 +28686,21 @@ func (self *ViewportP) PlatformMonitor() int16 {
 	return int16(C.wrap_ImGuiViewportP_GetPlatformMonitor(selfArg))
 }
 
+func (self ViewportP) SetBgFgDrawListsLastFrame(v *[2]int32) {
+	vArg := make([]C.int, len(v))
+	for i, vV := range v {
+		vArg[i] = C.int(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiViewportP_SetBgFgDrawListsLastFrame(selfArg, (*C.int)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = int32(vV)
+	}
+}
+
 func (self ViewportP) SetDrawDataP(v DrawData) {
 	vArg, vFin := v.c()
 
@@ -30382,6 +30397,24 @@ func (self *Window) NavLastChildNavWindow() *Window {
 		selfFin()
 	}()
 	return newWindowFromC(C.wrap_ImGuiWindow_GetNavLastChildNavWindow(selfArg))
+}
+
+func (self Window) SetNavPreferredScoringPosRel(v [2]*Vec2) {
+	vArg := make([]C.ImVec2, len(v))
+	vFin := make([]func(), len(v))
+	for i, vV := range v {
+		var tmp *C.ImVec2
+		tmp, vFin[i] = wrap[C.ImVec2, *Vec2](vV)
+		vArg[i] = *tmp
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiWindow_SetNavPreferredScoringPosRel(selfArg, (*C.ImVec2)(&vArg[0]))
+
+	for _, vV := range vFin {
+		vV()
+	}
 }
 
 func (self Window) SetNavRootFocusScopeId(v ID) {

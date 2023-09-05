@@ -17199,6 +17199,21 @@ func (self *PlotSubplot) ColLinkData() Vector[*PlotRange] {
 	return newVectorFromC(C.wrap_ImPlotSubplot_GetColLinkData(selfArg).Size, C.wrap_ImPlotSubplot_GetColLinkData(selfArg).Capacity, newPlotRangeFromC(C.wrap_ImPlotSubplot_GetColLinkData(selfArg).Data))
 }
 
+func (self PlotSubplot) SetTempSizes(v *[2]float32) {
+	vArg := make([]C.float, len(v))
+	for i, vV := range v {
+		vArg[i] = C.float(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotSubplot_SetTempSizes(selfArg, (*C.float)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = float32(vV)
+	}
+}
+
 func (self PlotSubplot) SetFrameHovered(v bool) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
