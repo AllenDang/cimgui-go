@@ -433,7 +433,7 @@ extern "C" {
 			}
 			structAccessorFuncs = append(structAccessorFuncs, setterFuncDef)
 
-			sbHeader.WriteString(fmt.Sprintf("extern void %s(%s *%s, %s v);\n", setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type))
+			sbHeader.WriteString(fmt.Sprintf("extern void %s(%s *%s, %s%s v);\n", setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, getPtrIfSize(m.Size)))
 
 			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, Split(m.Name, "[")[0]))
 			if skipFuncNames[getterFuncName] {
@@ -454,7 +454,7 @@ extern "C" {
 				Constructor:      false,
 				Destructor:       false,
 				StructSetter:     false, StructGetter: true,
-				Ret: m.Type,
+				Ret: m.Type + CIdentifier(getSizeArg(m.Size)),
 			}
 
 			structAccessorFuncs = append(structAccessorFuncs, getterFuncDef)
