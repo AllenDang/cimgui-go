@@ -393,6 +393,7 @@ extern "C" {
 `, prefix))
 
 	sbCpp.WriteString(fmt.Sprintf(`
+#include <string.h>
 #include "%[1]s_wrapper.h"
 #include "%[1]s_structs_accessor.h"
 
@@ -419,7 +420,7 @@ extern "C" {
 					},
 					{
 						Name: "v",
-						Type: m.Type,
+						Type: m.Type + CIdentifier(getSizeArg(m.Size)),
 					},
 				},
 				FuncName:         setterFuncName,
@@ -452,27 +453,42 @@ extern "C" {
 				Location:         "",
 				Constructor:      false,
 				Destructor:       false,
-				StructSetter:     false,
-				StructGetter:     true,
-				Ret:              m.Type,
+				StructSetter:     false, StructGetter: true,
+				Ret: m.Type,
 			}
+
 			structAccessorFuncs = append(structAccessorFuncs, getterFuncDef)
 
 			fmt.Fprintf(
 				sbHeader,
-				"extern %s %s(%s *self);\n",
-				m.Type, getterFuncDef.CWrapperFuncName, s.Name,
+				"extern %s%s %s(%s *self);\n",
+				m.Type, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name,
 			)
 
-			fmt.Fprintf(
-				sbCpp,
-				"void %s(%s *%s, %s v) { %s->%s = v; }\n",
-				setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, s.Name+"Ptr", Split(m.Name, "[")[0],
-			)
+			if m.Size > 0 {
+				fmt.Fprintf(
+					sbCpp,
+					"void %s(%s *%s, %s%s v) { memcpy(%s->%s, v, sizeof(%[4]s)*%[8]d); }\n",
+					setterFuncDef.CWrapperFuncName,
+					s.Name,
+					s.Name+"Ptr",
+					m.Type,
+					getPtrIfSize(m.Size),
+					s.Name+"Ptr",
+					Split(m.Name, "[")[0],
+					m.Size,
+				)
+			} else {
+				fmt.Fprintf(
+					sbCpp,
+					"void %s(%s *%s, %s%s v) { %s->%s = v; }\n",
+					setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, getPtrIfSize(m.Size), s.Name+"Ptr", Split(m.Name, "[")[0],
+				)
+			}
 
 			fmt.Fprintf(sbCpp,
-				"%s %s(%s *self) { return self->%s; }\n",
-				m.Type, getterFuncDef.CWrapperFuncName, s.Name, Split(m.Name, "[")[0],
+				"%s%s %s(%s *self) { return self->%s; }\n",
+				m.Type, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name, Split(m.Name, "[")[0],
 			)
 		}
 	}
@@ -510,4 +526,20 @@ extern "C" {
 	}
 
 	return structAccessorFuncs, nil
+}
+
+func getSizeArg(size int) string {
+	if size > 0 {
+		return fmt.Sprintf("[%d]", size)
+	}
+
+	return ""
+}
+
+func getPtrIfSize(size int) string {
+	if size > 0 {
+		return "*"
+	}
+
+	return ""
 }
