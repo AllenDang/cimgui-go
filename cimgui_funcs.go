@@ -680,6 +680,78 @@ func (self *DrawList) PushTextureID(texture_id TextureID) {
 	selfFin()
 }
 
+func (self *DrawList) CalcCircleAutoSegmentCount(radius float32) int32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.ImDrawList__CalcCircleAutoSegmentCount(selfArg, C.float(radius)))
+}
+
+func (self *DrawList) ClearFreeMemory() {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__ClearFreeMemory(selfArg)
+
+	selfFin()
+}
+
+func (self *DrawList) OnChangedClipRect() {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__OnChangedClipRect(selfArg)
+
+	selfFin()
+}
+
+func (self *DrawList) OnChangedTextureID() {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__OnChangedTextureID(selfArg)
+
+	selfFin()
+}
+
+func (self *DrawList) OnChangedVtxOffset() {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__OnChangedVtxOffset(selfArg)
+
+	selfFin()
+}
+
+func (self *DrawList) PathArcToFastEx(center Vec2, radius float32, a_min_sample int32, a_max_sample int32, a_step int32) {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__PathArcToFastEx(selfArg, center.toC(), C.float(radius), C.int(a_min_sample), C.int(a_max_sample), C.int(a_step))
+
+	selfFin()
+}
+
+func (self *DrawList) PathArcToN(center Vec2, radius float32, a_min float32, a_max float32, num_segments int32) {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__PathArcToN(selfArg, center.toC(), C.float(radius), C.float(a_min), C.float(a_max), C.int(num_segments))
+
+	selfFin()
+}
+
+func (self *DrawList) PopUnusedDrawCmd() {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__PopUnusedDrawCmd(selfArg)
+
+	selfFin()
+}
+
+func (self *DrawList) ResetForNewFrame() {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__ResetForNewFrame(selfArg)
+
+	selfFin()
+}
+
+func (self *DrawList) TryMergeDrawCmds() {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList__TryMergeDrawCmds(selfArg)
+
+	selfFin()
+}
+
 func (self *DrawList) Destroy() {
 	selfArg, selfFin := self.handle()
 	C.ImDrawList_destroy(selfArg)
@@ -2233,6 +2305,129 @@ func (self *StackTool) Destroy() {
 	selfFin()
 }
 
+func NewStoragePairFloat(_key ID, _val_f float32) *StoragePair {
+	return newStoragePairFromC(C.ImGuiStoragePair_ImGuiStoragePair_Float(C.ImGuiID(_key), C.float(_val_f)))
+}
+
+func NewStoragePairInt(_key ID, _val_i int32) *StoragePair {
+	return newStoragePairFromC(C.ImGuiStoragePair_ImGuiStoragePair_Int(C.ImGuiID(_key), C.int(_val_i)))
+}
+
+func NewStoragePairPtr(_key ID, _val_p unsafe.Pointer) *StoragePair {
+	return newStoragePairFromC(C.ImGuiStoragePair_ImGuiStoragePair_Ptr(C.ImGuiID(_key), (_val_p)))
+}
+
+func (self *StoragePair) Destroy() {
+	selfArg, selfFin := self.handle()
+	C.ImGuiStoragePair_destroy(selfArg)
+
+	selfFin()
+}
+
+func (self *Storage) BuildSortByKey() {
+	selfArg, selfFin := self.handle()
+	C.ImGuiStorage_BuildSortByKey(selfArg)
+
+	selfFin()
+}
+
+func (self *Storage) Clear() {
+	selfArg, selfFin := self.handle()
+	C.ImGuiStorage_Clear(selfArg)
+
+	selfFin()
+}
+
+// BoolV parameter default value hint:
+// default_val: false
+func (self *Storage) BoolV(key ID, default_val bool) bool {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.ImGuiStorage_GetBool(selfArg, C.ImGuiID(key), C.bool(default_val)) == C.bool(true)
+}
+
+// FloatV parameter default value hint:
+// default_val: 0.0f
+func (self *Storage) FloatV(key ID, default_val float32) float32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.ImGuiStorage_GetFloat(selfArg, C.ImGuiID(key), C.float(default_val)))
+}
+
+// FloatRefV parameter default value hint:
+// default_val: 0.0f
+func (self *Storage) FloatRefV(key ID, default_val float32) *float32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*float32)(C.ImGuiStorage_GetFloatRef(selfArg, C.ImGuiID(key), C.float(default_val)))
+}
+
+// IntV parameter default value hint:
+// default_val: 0
+func (self *Storage) IntV(key ID, default_val int32) int32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.ImGuiStorage_GetInt(selfArg, C.ImGuiID(key), C.int(default_val)))
+}
+
+// IntRefV parameter default value hint:
+// default_val: 0
+func (self *Storage) IntRefV(key ID, default_val int32) *int32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*int32)(C.ImGuiStorage_GetIntRef(selfArg, C.ImGuiID(key), C.int(default_val)))
+}
+
+func (self *Storage) SetAllInt(val int32) {
+	selfArg, selfFin := self.handle()
+	C.ImGuiStorage_SetAllInt(selfArg, C.int(val))
+
+	selfFin()
+}
+
+func (self *Storage) SetBool(key ID, val bool) {
+	selfArg, selfFin := self.handle()
+	C.ImGuiStorage_SetBool(selfArg, C.ImGuiID(key), C.bool(val))
+
+	selfFin()
+}
+
+func (self *Storage) SetFloat(key ID, val float32) {
+	selfArg, selfFin := self.handle()
+	C.ImGuiStorage_SetFloat(selfArg, C.ImGuiID(key), C.float(val))
+
+	selfFin()
+}
+
+func (self *Storage) SetInt(key ID, val int32) {
+	selfArg, selfFin := self.handle()
+	C.ImGuiStorage_SetInt(selfArg, C.ImGuiID(key), C.int(val))
+
+	selfFin()
+}
+
+func (self *Storage) SetVoidPtr(key ID, val unsafe.Pointer) {
+	selfArg, selfFin := self.handle()
+	C.ImGuiStorage_SetVoidPtr(selfArg, C.ImGuiID(key), (val))
+
+	selfFin()
+}
+
 func InternalNewStyleModFloat(idx StyleVar, v float32) *StyleMod {
 	return newStyleModFromC(C.ImGuiStyleMod_ImGuiStyleMod_Float(C.ImGuiStyleVar(idx), C.float(v)))
 }
@@ -2595,6 +2790,37 @@ func (self *TextIndex) InternalSize() int32 {
 		selfFin()
 	}()
 	return int32(C.ImGuiTextIndex_size(selfArg))
+}
+
+func NewTextRangeNil() *TextRange {
+	return newTextRangeFromC(C.ImGuiTextRange_ImGuiTextRange_Nil())
+}
+
+func NewTextRangeStr(_b string, _e string) *TextRange {
+	_bArg, _bFin := WrapString(_b)
+	_eArg, _eFin := WrapString(_e)
+
+	defer func() {
+		_bFin()
+		_eFin()
+	}()
+	return newTextRangeFromC(C.ImGuiTextRange_ImGuiTextRange_Str(_bArg, _eArg))
+}
+
+func (self *TextRange) Destroy() {
+	selfArg, selfFin := self.handle()
+	C.ImGuiTextRange_destroy(selfArg)
+
+	selfFin()
+}
+
+func (self *TextRange) Empty() bool {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.ImGuiTextRange_empty(selfArg) == C.bool(true)
 }
 
 func (self *ViewportP) InternalCalcWorkRectPos(off_min Vec2) Vec2 {
@@ -4201,6 +4427,15 @@ func InternalDebugNodeInputTextState(state *InputTextState) {
 	stateFin()
 }
 
+func InternalDebugNodeStorage(storage *Storage, label string) {
+	storageArg, storageFin := storage.handle()
+	labelArg, labelFin := WrapString(label)
+	C.igDebugNodeStorage(storageArg, labelArg)
+
+	storageFin()
+	labelFin()
+}
+
 func InternalDebugNodeTabBar(tab_bar *TabBar, label string) {
 	tab_barArg, tab_barFin := tab_bar.handle()
 	labelArg, labelFin := WrapString(label)
@@ -5685,6 +5920,10 @@ func InternalShortcutRoutingData(key_chord KeyChord) *KeyRoutingData {
 	return newKeyRoutingDataFromC(C.igGetShortcutRoutingData(C.ImGuiKeyChord(key_chord)))
 }
 
+func StateStorage() *Storage {
+	return newStorageFromC(C.igGetStateStorage())
+}
+
 // access the Style structure (colors, sizes). Always use PushStyleCol(), PushStyleVar() to modify style mid-frame!
 func CurrentStyle() *Style {
 	return newStyleFromC(C.igGetStyle())
@@ -5972,6 +6211,10 @@ func InternalImBitArrayClearBit(arr *[]uint32, n int32) {
 	for i, arrV := range arrArg {
 		(*arr)[i] = uint32(arrV)
 	}
+}
+
+func InternalImBitArrayGetStorageSizeInBytes(bitcount int32) uint64 {
+	return uint64(C.igImBitArrayGetStorageSizeInBytes(C.int(bitcount)))
 }
 
 func InternalImBitArraySetBit(arr *[]uint32, n int32) {
@@ -8429,6 +8672,14 @@ func InternalSetShortcutRoutingV(key_chord KeyChord, owner_id ID, flags InputFla
 	return C.igSetShortcutRouting(C.ImGuiKeyChord(key_chord), C.ImGuiID(owner_id), C.ImGuiInputFlags(flags)) == C.bool(true)
 }
 
+// replace current window storage with our own (if you want to manipulate it yourself, typically clear subsection of it)
+func SetStateStorage(storage *Storage) {
+	storageArg, storageFin := storage.handle()
+	C.igSetStateStorage(storageArg)
+
+	storageFin()
+}
+
 // notify TabBar or Docking system of a closed tab/window ahead (useful to reduce visual flicker on reorderable tab bars). For tab-bar: call after BeginTabBar() and before Tab submissions. Otherwise call with a window name.
 func SetTabItemClosed(tab_or_docked_window_label string) {
 	tab_or_docked_window_labelArg, tab_or_docked_window_labelFin := WrapString(tab_or_docked_window_label)
@@ -10269,6 +10520,51 @@ func (self *ListClipper) Begin(items_count int32) {
 	C.wrap_ImGuiListClipper_Begin(selfArg, C.int(items_count))
 
 	selfFin()
+}
+
+func (self *Storage) Bool(key ID) bool {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiStorage_GetBool(selfArg, C.ImGuiID(key)) == C.bool(true)
+}
+
+func (self *Storage) Float(key ID) float32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStorage_GetFloat(selfArg, C.ImGuiID(key)))
+}
+
+func (self *Storage) FloatRef(key ID) *float32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*float32)(C.wrap_ImGuiStorage_GetFloatRef(selfArg, C.ImGuiID(key)))
+}
+
+func (self *Storage) Int(key ID) int32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImGuiStorage_GetInt(selfArg, C.ImGuiID(key)))
+}
+
+func (self *Storage) IntRef(key ID) *int32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*int32)(C.wrap_ImGuiStorage_GetIntRef(selfArg, C.ImGuiID(key)))
 }
 
 func (self *TextBuffer) Append(str string) {
@@ -28390,6 +28686,21 @@ func (self *ViewportP) PlatformMonitor() int16 {
 	return int16(C.wrap_ImGuiViewportP_GetPlatformMonitor(selfArg))
 }
 
+func (self ViewportP) SetBgFgDrawListsLastFrame(v *[2]int32) {
+	vArg := make([]C.int, len(v))
+	for i, vV := range v {
+		vArg[i] = C.int(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiViewportP_SetBgFgDrawListsLastFrame(selfArg, (*C.int)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = int32(vV)
+	}
+}
+
 func (self ViewportP) SetDrawDataP(v DrawData) {
 	vArg, vFin := v.c()
 
@@ -30086,6 +30397,24 @@ func (self *Window) NavLastChildNavWindow() *Window {
 		selfFin()
 	}()
 	return newWindowFromC(C.wrap_ImGuiWindow_GetNavLastChildNavWindow(selfArg))
+}
+
+func (self Window) SetNavPreferredScoringPosRel(v [2]*Vec2) {
+	vArg := make([]C.ImVec2, len(v))
+	vFin := make([]func(), len(v))
+	for i, vV := range v {
+		var tmp *C.ImVec2
+		tmp, vFin[i] = wrap[C.ImVec2, *Vec2](vV)
+		vArg[i] = *tmp
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiWindow_SetNavPreferredScoringPosRel(selfArg, (*C.ImVec2)(&vArg[0]))
+
+	for _, vV := range vFin {
+		vV()
+	}
 }
 
 func (self Window) SetNavRootFocusScopeId(v ID) {

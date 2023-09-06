@@ -37,26 +37,22 @@ extern "C" {
 
 `, includePath))
 
-	var cppSb strings.Builder
+	cppSb := &strings.Builder{}
 	cppSb.WriteString(cppFileHeader)
-	cppSb.WriteString(fmt.Sprintf(`#include "%s_wrapper.h"
+	fmt.Fprintf(cppSb, `#include "%s_wrapper.h"
 #include "%s"
 
-`, prefix, includePath))
+`, prefix, includePath)
 
+	// Note for future generations: can't replace with range, because we edit funcDefs later
 	for i := 0; i < len(funcDefs); i++ {
 		f := funcDefs[i]
+
 		shouldSkip := false
 
 		// Check func names
 		if HasPrefix(f.FuncName, "ImSpan") ||
-			HasPrefix(f.FuncName, "ImBitArray") ||
-			Contains(f.FuncName, "Storage") ||
-			Contains(f.FuncName, "TextRange") ||
-			Contains(f.FuncName, "ImVector") ||
-			Contains(f.FuncName, "Allocator") ||
-			Contains(f.FuncName, "MakeTime") ||
-			Contains(f.FuncName, "__") {
+			HasPrefix(f.FuncName, "ImBitArray") {
 			shouldSkip = true
 			continue
 		}
@@ -361,21 +357,19 @@ func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []S
 	var structAccessorFuncs []FuncDef
 
 	skipFuncNames := map[CIdentifier]bool{
-		"ImGuiIO_SetAppAcceptingEvents": true,
-		"ImGuiDockNode_SetLocalFlags":   true,
-		"ImFontAtlas_SetTexID":          true,
-		"ImVec1_Getx":                   true,
-		"ImVec2_Getx":                   true,
-		"ImVec2_Gety":                   true,
-		"ImVec4_Getx":                   true,
-		"ImVec4_Gety":                   true,
-		"ImVec4_Getw":                   true,
-		"ImVec4_Getz":                   true,
-		"ImRect_GetMin":                 true,
-		"ImRect_GetMax":                 true,
-		"ImPlotPoint_Setx":              true,
-		"ImPlotPoint_Sety":              true,
-		"ImPlotColormapData_SetKeys":    true,
+		"ImFontAtlas_SetTexID":       true,
+		"ImVec1_Getx":                true,
+		"ImVec2_Getx":                true,
+		"ImVec2_Gety":                true,
+		"ImVec4_Getx":                true,
+		"ImVec4_Gety":                true,
+		"ImVec4_Getw":                true,
+		"ImVec4_Getz":                true,
+		"ImRect_GetMin":              true,
+		"ImRect_GetMax":              true,
+		"ImPlotPoint_Setx":           true,
+		"ImPlotPoint_Sety":           true,
+		"ImPlotColormapData_SetKeys": true,
 	}
 
 	// Add all valid function's name to skipFuncNames
@@ -383,7 +377,7 @@ func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []S
 		skipFuncNames[f.FuncName] = true
 	}
 
-	var sbHeader, sbCpp strings.Builder
+	sbHeader, sbCpp := &strings.Builder{}, &strings.Builder{}
 
 	sbHeader.WriteString(cppFileHeader)
 	sbCpp.WriteString(cppFileHeader)
@@ -399,6 +393,7 @@ extern "C" {
 `, prefix))
 
 	sbCpp.WriteString(fmt.Sprintf(`
+#include <string.h>
 #include "%[1]s_wrapper.h"
 #include "%[1]s_structs_accessor.h"
 
@@ -406,11 +401,11 @@ extern "C" {
 
 	for _, s := range structs {
 		for _, m := range s.Members {
-			if Contains(m.Name, "[") || Contains(m.Type, "(") || Contains(m.Type, "union") {
+			if Contains(m.Type, "(") || Contains(m.Type, "union") {
 				continue
 			}
 
-			setterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Set%[2]s", s.Name, m.Name))
+			setterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Set%[2]s", s.Name, Split(m.Name, "[")[0]))
 			if skipFuncNames[setterFuncName] {
 				continue
 			}
@@ -425,7 +420,7 @@ extern "C" {
 					},
 					{
 						Name: "v",
-						Type: m.Type,
+						Type: m.Type + CIdentifier(getSizeArg(m.Size)),
 					},
 				},
 				FuncName:         setterFuncName,
@@ -438,9 +433,9 @@ extern "C" {
 			}
 			structAccessorFuncs = append(structAccessorFuncs, setterFuncDef)
 
-			sbHeader.WriteString(fmt.Sprintf("extern void %s(%s *%s, %s v);\n", setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type))
+			sbHeader.WriteString(fmt.Sprintf("extern void %s(%s *%s, %s%s v);\n", setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, getPtrIfSize(m.Size)))
 
-			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, m.Name))
+			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, Split(m.Name, "[")[0]))
 			if skipFuncNames[getterFuncName] {
 				continue
 			}
@@ -458,18 +453,43 @@ extern "C" {
 				Location:         "",
 				Constructor:      false,
 				Destructor:       false,
-				StructSetter:     false,
-				StructGetter:     true,
-				Ret:              m.Type,
+				StructSetter:     false, StructGetter: true,
+				Ret: m.Type + CIdentifier(getSizeArg(m.Size)),
 			}
+
 			structAccessorFuncs = append(structAccessorFuncs, getterFuncDef)
 
-			sbHeader.WriteString(fmt.Sprintf("extern %s %s(%s *self);\n", m.Type, getterFuncDef.CWrapperFuncName, s.Name))
+			fmt.Fprintf(
+				sbHeader,
+				"extern %s%s %s(%s *self);\n",
+				m.Type, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name,
+			)
 
-			sbCpp.WriteString(fmt.Sprintf("void %s(%s *%s, %s v) { %s->%s = v; }\n",
-				setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, s.Name+"Ptr", m.Name))
-			sbCpp.WriteString(fmt.Sprintf("%s %s(%s *self) { return self->%s; }\n",
-				m.Type, getterFuncDef.CWrapperFuncName, s.Name, m.Name))
+			if m.Size > 0 {
+				fmt.Fprintf(
+					sbCpp,
+					"void %s(%s *%s, %s%s v) { memcpy(%s->%s, v, sizeof(%[4]s)*%[8]d); }\n",
+					setterFuncDef.CWrapperFuncName,
+					s.Name,
+					s.Name+"Ptr",
+					m.Type,
+					getPtrIfSize(m.Size),
+					s.Name+"Ptr",
+					Split(m.Name, "[")[0],
+					m.Size,
+				)
+			} else {
+				fmt.Fprintf(
+					sbCpp,
+					"void %s(%s *%s, %s%s v) { %s->%s = v; }\n",
+					setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, getPtrIfSize(m.Size), s.Name+"Ptr", Split(m.Name, "[")[0],
+				)
+			}
+
+			fmt.Fprintf(sbCpp,
+				"%s%s %s(%s *self) { return self->%s; }\n",
+				m.Type, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name, Split(m.Name, "[")[0],
+			)
 		}
 	}
 
@@ -506,4 +526,20 @@ extern "C" {
 	}
 
 	return structAccessorFuncs, nil
+}
+
+func getSizeArg(size int) string {
+	if size > 0 {
+		return fmt.Sprintf("[%d]", size)
+	}
+
+	return ""
+}
+
+func getPtrIfSize(size int) string {
+	if size > 0 {
+		return "*"
+	}
+
+	return ""
 }

@@ -53,6 +53,8 @@ extern void wrap_ImNodesStyle_SetMiniMapOffset(ImNodesStyle *ImNodesStylePtr, Im
 extern ImVec2 wrap_ImNodesStyle_GetMiniMapOffset(ImNodesStyle *self);
 extern void wrap_ImNodesStyle_SetFlags(ImNodesStyle *ImNodesStylePtr, ImNodesStyleFlags v);
 extern ImNodesStyleFlags wrap_ImNodesStyle_GetFlags(ImNodesStyle *self);
+extern void wrap_ImNodesStyle_SetColors(ImNodesStyle *ImNodesStylePtr, unsigned int* v);
+extern unsigned int* wrap_ImNodesStyle_GetColors(ImNodesStyle *self);
 extern void wrap_LinkDetachWithModifierClick_SetModifier(LinkDetachWithModifierClick *LinkDetachWithModifierClickPtr, const bool* v);
 extern const bool* wrap_LinkDetachWithModifierClick_GetModifier(LinkDetachWithModifierClick *self);
 extern void wrap_MultipleSelectModifier_SetModifier(MultipleSelectModifier *MultipleSelectModifierPtr, const bool* v);
