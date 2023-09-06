@@ -20,6 +20,8 @@ type ArgumentWrapperData struct {
 
 	// a name of variable of wrapped C type
 	VarName string
+
+	NoFin bool
 }
 
 type argumentWrapper func(arg ArgDef) ArgumentWrapperData
@@ -126,9 +128,11 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 	if isGetter {
 		argDeclaration = fmt.Sprintf("%s %s", a.Name, a.Type.renameGoIdentifier())
 		data = ArgumentWrapperData{
-			ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.handle()", a.Name),
-			VarName:   fmt.Sprintf("%sArg", a.Name),
-			Finalizer: fmt.Sprintf("%sFin()", a.Name),
+			ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.handle()", a.Name),
+			ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := %[1]s.handle()", a.Name),
+			VarName:     fmt.Sprintf("%sArg", a.Name),
+			Finalizer:   fmt.Sprintf("%sFin()", a.Name),
+			NoFin:       a.RemoveFinalizer,
 		}
 
 		return
@@ -137,6 +141,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 	if v, ok := argWrapperMap[a.Type]; ok {
 		arg := v(*a)
 		data = arg
+		data.NoFin = a.RemoveFinalizer
 
 		argDeclaration = fmt.Sprintf("%s %s", a.Name, arg.ArgType)
 
@@ -176,7 +181,15 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 %[2]sVecArg.Capacity = C.int(%[2]s.Capacity)
 %[2]sVecArg.Data = %[4]s
 `, w.ArgDef, a.Name, a.Type, w.VarName, dataName),
+			ArgDefNoFin: fmt.Sprintf(`%[5]s := %[2]s.Data
+%[1]s
+%[2]sVecArg := new(C.%[3]s)
+%[2]sVecArg.Size = C.int(%[2]s.Size)
+%[2]sVecArg.Capacity = C.int(%[2]s.Capacity)
+%[2]sVecArg.Data = %[4]s
+`, w.ArgDefNoFin, a.Name, a.Type, w.VarName, dataName),
 			Finalizer: w.Finalizer,
+			NoFin:     a.RemoveFinalizer,
 		}
 
 		argDeclaration = fmt.Sprintf("%s %s", a.Name, data.ArgType)
@@ -196,6 +209,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 			ArgType:   pureType.renameGoIdentifier(),
 			VarName:   fmt.Sprintf("%sArg", a.Name),
 			Finalizer: fmt.Sprintf("%sFin()", a.Name),
+			NoFin:     a.RemoveFinalizer,
 		}
 
 		fn := ""
@@ -207,6 +221,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 		}
 
 		w.ArgDef = fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.%[2]s()", a.Name, fn)
+		w.ArgDefNoFin = fmt.Sprintf("%[1]sArg, _ := %[1]s.%[2]s()", a.Name, fn)
 
 		data = w
 

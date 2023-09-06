@@ -56,6 +56,9 @@ type ArgDef struct {
 	Name       CIdentifier `json:"name"`
 	Type       CIdentifier `json:"type"`
 	CustomType CIdentifier `json:"custom_type"`
+
+	// this should be set to true if memory should not be freed by GO
+	RemoveFinalizer bool
 }
 
 // getFunDefs takes a json file bytes as an argument and returns
