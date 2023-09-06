@@ -10,6 +10,8 @@ type ArgumentWrapperData struct {
 	ArgType GoIdentifier
 	// argument deffinition (e.g. arg1, arg1Fin := ...\ndefer arg1Fin())
 	ArgDef string
+	// This is equivalent of above (VarName will be appropiate here), but it will not define Finalizer (use this if you're not going to use Finalizer)
+	ArgDefNoFin string
 	// one-line go statement that should be called after calling C function
 	// in order to update go value.
 	// It is intended to be run in defer statement (and it will be in most cases)
@@ -218,19 +220,21 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 
 func constCharW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
-		ArgType:   "string",
-		VarName:   fmt.Sprintf("%sArg", arg.Name),
-		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := WrapString(%[1]s)", arg.Name),
-		Finalizer: fmt.Sprintf("%sFin()", arg.Name),
+		ArgType:     "string",
+		VarName:     fmt.Sprintf("%sArg", arg.Name),
+		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapString(%[1]s)", arg.Name),
+		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapString(%[1]s)", arg.Name),
+		Finalizer:   fmt.Sprintf("%sFin()", arg.Name),
 	}
 }
 
 func charPtrPtrW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
-		ArgType:   "[]string",
-		VarName:   fmt.Sprintf("%sArg", arg.Name),
-		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := WrapStringList(%[1]s)", arg.Name),
-		Finalizer: fmt.Sprintf("%sFin()", arg.Name),
+		ArgType:     "[]string",
+		VarName:     fmt.Sprintf("%sArg", arg.Name),
+		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapStringList(%[1]s)", arg.Name),
+		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapStringList(%[1]s)", arg.Name),
+		Finalizer:   fmt.Sprintf("%sFin()", arg.Name),
 	}
 }
 
@@ -262,10 +266,11 @@ func floatArrayW(arg ArgDef) ArgumentWrapperData {
 
 func boolPtrW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
-		ArgType:   "*bool",
-		ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := WrapBool(%[1]s)", arg.Name),
-		Finalizer: fmt.Sprintf("%[1]sFin()", arg.Name),
-		VarName:   fmt.Sprintf("%sArg", arg.Name),
+		ArgType:     "*bool",
+		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapBool(%[1]s)", arg.Name),
+		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapBool(%[1]s)", arg.Name),
+		Finalizer:   fmt.Sprintf("%[1]sFin()", arg.Name),
+		VarName:     fmt.Sprintf("%sArg", arg.Name),
 	}
 }
 
@@ -307,10 +312,11 @@ func simpleW(goType GoIdentifier, cType CIdentifier) argumentWrapper {
 func simplePtrW(goType GoIdentifier, cType CIdentifier) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
 		return ArgumentWrapperData{
-			ArgType:   GoIdentifier(fmt.Sprintf("*%s", goType)),
-			ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := WrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
-			Finalizer: fmt.Sprintf("%[1]sFin()", arg.Name, cType, goType),
-			VarName:   fmt.Sprintf("%sArg", arg.Name),
+			ArgType:     GoIdentifier(fmt.Sprintf("*%s", goType)),
+			ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
+			ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
+			Finalizer:   fmt.Sprintf("%[1]sFin()", arg.Name, cType, goType),
+			VarName:     fmt.Sprintf("%sArg", arg.Name),
 		}
 	}
 }
@@ -318,14 +324,16 @@ func simplePtrW(goType GoIdentifier, cType CIdentifier) argumentWrapper {
 // C.int*, C.int[] as well as C.int[2] -> [2]*int32
 func simplePtrArrayW(size int, cArrayType CIdentifier, goArrayType GoIdentifier) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
-		return ArgumentWrapperData{
-			ArgType: GoIdentifier(fmt.Sprintf("*[%d]%s", size, goArrayType)),
-			ArgDef: fmt.Sprintf(`
+		def := fmt.Sprintf(`
 %[1]sArg := make([]%[2]s, len(%[1]s))
 for i, %[1]sV := range %[1]s {
   %[1]sArg[i] = %[2]s(%[1]sV)
-}`, arg.Name, cArrayType),
-			VarName: fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name),
+}`, arg.Name, cArrayType)
+		return ArgumentWrapperData{
+			ArgType:     GoIdentifier(fmt.Sprintf("*[%d]%s", size, goArrayType)),
+			ArgDef:      def,
+			ArgDefNoFin: def,
+			VarName:     fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name),
 			Finalizer: fmt.Sprintf(`
 for i, %[1]sV := range %[1]sArg {
 	(*%[1]s)[i] = %[3]s(%[1]sV)
@@ -339,13 +347,15 @@ for i, %[1]sV := range %[1]sArg {
 // C.int*, C.int[] -> *[]int32
 func simplePtrSliceW(cArrayType, goArrayType string) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
-		return ArgumentWrapperData{
-			ArgType: GoIdentifier(fmt.Sprintf("*[]%s", goArrayType)),
-			ArgDef: fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(*%[1]s))
+		def := fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(*%[1]s))
 for i, %[1]sV := range *%[1]s {
   %[1]sArg[i] = %[2]s(%[1]sV)
 }
-`, arg.Name, cArrayType, goArrayType),
+`, arg.Name, cArrayType, goArrayType)
+		return ArgumentWrapperData{
+			ArgType:     GoIdentifier(fmt.Sprintf("*[]%s", goArrayType)),
+			ArgDef:      def,
+			ArgDefNoFin: def,
 			Finalizer: fmt.Sprintf(`
   for i, %[1]sV := range %[1]sArg {
     (*%[1]s)[i] = %[3]s(%[1]sV)
@@ -370,26 +380,29 @@ func wrappableW(sType GoIdentifier) argumentWrapper {
 func wrappablePtrW(goType GoIdentifier, cType CIdentifier) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
 		return ArgumentWrapperData{
-			ArgType:   goType,
-			ArgDef:    fmt.Sprintf("%[1]sArg, %[1]sFin := wrap[%[3]s, %[2]s](%[1]s)", arg.Name, goType, cType),
-			Finalizer: fmt.Sprintf("%[1]sFin()", arg.Name, goType, cType),
-			VarName:   fmt.Sprintf("%sArg", arg.Name),
+			ArgType:     goType,
+			ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := wrap[%[3]s, %[2]s](%[1]s)", arg.Name, goType, cType),
+			ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := wrap[%[3]s, %[2]s](%[1]s)", arg.Name, goType, cType),
+			Finalizer:   fmt.Sprintf("%[1]sFin()", arg.Name, goType, cType),
+			VarName:     fmt.Sprintf("%sArg", arg.Name),
 		}
 	}
 }
 
 func wrappablePtrArrayW(size int, cArrayType CIdentifier, goArrayType GoIdentifier) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
-		return ArgumentWrapperData{
-			ArgType: GoIdentifier(fmt.Sprintf("[%d]*%s", size, goArrayType)),
-			ArgDef: fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(%[1]s))
+		def := fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(%[1]s))
 %[1]sFin := make([]func(), len(%[1]s))
 for i, %[1]sV := range %[1]s {
 	var tmp *%[2]s
   	tmp, %[1]sFin[i] = wrap[%[2]s, *%[3]s](%[1]sV)
   	%[1]sArg[i] = *tmp
 }
-`, arg.Name, cArrayType, goArrayType),
+`, arg.Name, cArrayType, goArrayType)
+		return ArgumentWrapperData{
+			ArgType:     GoIdentifier(fmt.Sprintf("[%d]*%s", size, goArrayType)),
+			ArgDef:      def,
+			ArgDefNoFin: def,
 			Finalizer: fmt.Sprintf(`
   for _, %[1]sV := range %[1]sFin {
     %[1]sV()
