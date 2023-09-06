@@ -495,13 +495,11 @@ func imnodesStyleColorsLight() {
 }
 
 func (self NodesIO) SetEmulateThreeButtonMouse(v EmulateThreeButtonMouse) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImNodesIO_SetEmulateThreeButtonMouse(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *NodesIO) EmulateThreeButtonMouse() EmulateThreeButtonMouse {
@@ -516,13 +514,11 @@ func (self *NodesIO) EmulateThreeButtonMouse() EmulateThreeButtonMouse {
 }
 
 func (self NodesIO) SetLinkDetachWithModifierClick(v LinkDetachWithModifierClick) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImNodesIO_SetLinkDetachWithModifierClick(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *NodesIO) LinkDetachWithModifierClick() LinkDetachWithModifierClick {
@@ -537,13 +533,11 @@ func (self *NodesIO) LinkDetachWithModifierClick() LinkDetachWithModifierClick {
 }
 
 func (self NodesIO) SetMultipleSelectModifier(v MultipleSelectModifier) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImNodesIO_SetMultipleSelectModifier(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *NodesIO) MultipleSelectModifier() MultipleSelectModifier {

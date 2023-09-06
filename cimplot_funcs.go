@@ -13629,7 +13629,7 @@ func (self *PlotAnnotation) Clamp() bool {
 
 func (self PlotAnnotationCollection) SetAnnotations(v Vector[*PlotAnnotation]) {
 	vData := v.Data
-	vDataArg, vDataFin := vData.handle()
+	vDataArg, _ := vData.handle()
 	vVecArg := new(C.ImVector_ImPlotAnnotation)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -13638,8 +13638,6 @@ func (self PlotAnnotationCollection) SetAnnotations(v Vector[*PlotAnnotation]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotAnnotationCollection_SetAnnotations(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotAnnotationCollection) Annotations() Vector[*PlotAnnotation] {
@@ -13652,13 +13650,11 @@ func (self *PlotAnnotationCollection) Annotations() Vector[*PlotAnnotation] {
 }
 
 func (self PlotAnnotationCollection) SetTextBuffer(v TextBuffer) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotAnnotationCollection_SetTextBuffer(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotAnnotationCollection) TextBuffer() TextBuffer {
@@ -13733,13 +13729,11 @@ func (self *PlotAxis) PreviousFlags() PlotAxisFlags {
 }
 
 func (self PlotAxis) SetRange(v PlotRange) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotAxis_SetRange(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotAxis) Range() PlotRange {
@@ -13784,13 +13778,11 @@ func (self *PlotAxis) Scale() PlotScale {
 }
 
 func (self PlotAxis) SetFitExtents(v PlotRange) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotAxis_SetFitExtents(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotAxis) FitExtents() PlotRange {
@@ -13805,13 +13797,11 @@ func (self *PlotAxis) FitExtents() PlotRange {
 }
 
 func (self PlotAxis) SetOrthoAxis(v *PlotAxis) {
-	vArg, vFin := v.handle()
+	vArg, _ := v.handle()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotAxis_SetOrthoAxis(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotAxis) OrthoAxis() *PlotAxis {
@@ -13824,13 +13814,11 @@ func (self *PlotAxis) OrthoAxis() *PlotAxis {
 }
 
 func (self PlotAxis) SetConstraintRange(v PlotRange) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotAxis_SetConstraintRange(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotAxis) ConstraintRange() PlotRange {
@@ -13845,13 +13833,11 @@ func (self *PlotAxis) ConstraintRange() PlotRange {
 }
 
 func (self PlotAxis) SetConstraintZoom(v PlotRange) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotAxis_SetConstraintZoom(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotAxis) ConstraintZoom() PlotRange {
@@ -13866,13 +13852,11 @@ func (self *PlotAxis) ConstraintZoom() PlotRange {
 }
 
 func (self PlotAxis) SetTicker(v PlotTicker) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotAxis_SetTicker(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotAxis) Ticker() PlotTicker {
@@ -13893,13 +13877,11 @@ func (self PlotAxis) SetFormatterData(v unsafe.Pointer) {
 }
 
 func (self PlotAxis) SetLinkedMin(v *float64) {
-	vArg, vFin := WrapNumberPtr[C.double, float64](v)
+	vArg, _ := WrapNumberPtr[C.double, float64](v)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotAxis_SetLinkedMin(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotAxis) LinkedMin() *float64 {
@@ -13912,13 +13894,11 @@ func (self *PlotAxis) LinkedMin() *float64 {
 }
 
 func (self PlotAxis) SetLinkedMax(v *float64) {
-	vArg, vFin := WrapNumberPtr[C.double, float64](v)
+	vArg, _ := WrapNumberPtr[C.double, float64](v)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotAxis_SetLinkedMax(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotAxis) LinkedMax() *float64 {
@@ -14358,7 +14338,7 @@ func (self *PlotAxis) Held() bool {
 
 func (self PlotColormapData) SetKeyCounts(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14367,8 +14347,6 @@ func (self PlotColormapData) SetKeyCounts(v Vector[*int32]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotColormapData_SetKeyCounts(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotColormapData) KeyCounts() Vector[*int32] {
@@ -14382,7 +14360,7 @@ func (self *PlotColormapData) KeyCounts() Vector[*int32] {
 
 func (self PlotColormapData) SetKeyOffsets(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14391,8 +14369,6 @@ func (self PlotColormapData) SetKeyOffsets(v Vector[*int32]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotColormapData_SetKeyOffsets(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotColormapData) KeyOffsets() Vector[*int32] {
@@ -14419,15 +14395,11 @@ func (self PlotColormapData) SetTables(v Vector[*[]uint32]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotColormapData_SetTables(selfArg, *vVecArg)
-
-	for i, vDataV := range vDataArg {
-		(*vData)[i] = uint32(vDataV)
-	}
 }
 
 func (self PlotColormapData) SetTableSizes(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14436,8 +14408,6 @@ func (self PlotColormapData) SetTableSizes(v Vector[*int32]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotColormapData_SetTableSizes(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotColormapData) TableSizes() Vector[*int32] {
@@ -14451,7 +14421,7 @@ func (self *PlotColormapData) TableSizes() Vector[*int32] {
 
 func (self PlotColormapData) SetTableOffsets(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14460,8 +14430,6 @@ func (self PlotColormapData) SetTableOffsets(v Vector[*int32]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotColormapData_SetTableOffsets(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotColormapData) TableOffsets() Vector[*int32] {
@@ -14474,13 +14442,11 @@ func (self *PlotColormapData) TableOffsets() Vector[*int32] {
 }
 
 func (self PlotColormapData) SetText(v TextBuffer) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotColormapData_SetText(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotColormapData) Text() TextBuffer {
@@ -14496,7 +14462,7 @@ func (self *PlotColormapData) Text() TextBuffer {
 
 func (self PlotColormapData) SetTextOffsets(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14505,8 +14471,6 @@ func (self PlotColormapData) SetTextOffsets(v Vector[*int32]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotColormapData_SetTextOffsets(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotColormapData) TextOffsets() Vector[*int32] {
@@ -14520,7 +14484,7 @@ func (self *PlotColormapData) TextOffsets() Vector[*int32] {
 
 func (self PlotColormapData) SetQuals(v Vector[*bool]) {
 	vData := v.Data
-	vDataArg, vDataFin := WrapBool(vData)
+	vDataArg, _ := WrapBool(vData)
 	vVecArg := new(C.ImVector_bool)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14529,18 +14493,14 @@ func (self PlotColormapData) SetQuals(v Vector[*bool]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotColormapData_SetQuals(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self PlotColormapData) SetMap(v Storage) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotColormapData_SetMap(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotColormapData) Map() Storage {
@@ -14570,13 +14530,11 @@ func (self *PlotColormapData) Count() int32 {
 }
 
 func (self PlotContext) SetCurrentPlot(v *PlotPlot) {
-	vArg, vFin := v.handle()
+	vArg, _ := v.handle()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetCurrentPlot(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) CurrentPlot() *PlotPlot {
@@ -14589,13 +14547,11 @@ func (self *PlotContext) CurrentPlot() *PlotPlot {
 }
 
 func (self PlotContext) SetCurrentSubplot(v *PlotSubplot) {
-	vArg, vFin := v.handle()
+	vArg, _ := v.handle()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetCurrentSubplot(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) CurrentSubplot() *PlotSubplot {
@@ -14608,13 +14564,11 @@ func (self *PlotContext) CurrentSubplot() *PlotSubplot {
 }
 
 func (self PlotContext) SetCurrentItems(v *PlotItemGroup) {
-	vArg, vFin := v.handle()
+	vArg, _ := v.handle()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetCurrentItems(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) CurrentItems() *PlotItemGroup {
@@ -14627,13 +14581,11 @@ func (self *PlotContext) CurrentItems() *PlotItemGroup {
 }
 
 func (self PlotContext) SetCurrentItem(v *PlotItem) {
-	vArg, vFin := v.handle()
+	vArg, _ := v.handle()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetCurrentItem(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) CurrentItem() *PlotItem {
@@ -14646,13 +14598,11 @@ func (self *PlotContext) CurrentItem() *PlotItem {
 }
 
 func (self PlotContext) SetPreviousItem(v *PlotItem) {
-	vArg, vFin := v.handle()
+	vArg, _ := v.handle()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetPreviousItem(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) PreviousItem() *PlotItem {
@@ -14665,13 +14615,11 @@ func (self *PlotContext) PreviousItem() *PlotItem {
 }
 
 func (self PlotContext) SetCTicker(v PlotTicker) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetCTicker(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) CTicker() PlotTicker {
@@ -14686,13 +14634,11 @@ func (self *PlotContext) CTicker() PlotTicker {
 }
 
 func (self PlotContext) SetAnnotations(v PlotAnnotationCollection) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetAnnotations(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) Annotations() PlotAnnotationCollection {
@@ -14707,13 +14653,11 @@ func (self *PlotContext) Annotations() PlotAnnotationCollection {
 }
 
 func (self PlotContext) SetTags(v PlotTagCollection) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetTags(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) Tags() PlotTagCollection {
@@ -14728,13 +14672,11 @@ func (self *PlotContext) Tags() PlotTagCollection {
 }
 
 func (self PlotContext) SetStyle(v PlotStyle) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetStyle(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) Style() PlotStyle {
@@ -14750,7 +14692,7 @@ func (self *PlotContext) Style() PlotStyle {
 
 func (self PlotContext) SetColorModifiers(v Vector[*ColorMod]) {
 	vData := v.Data
-	vDataArg, vDataFin := vData.handle()
+	vDataArg, _ := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiColorMod)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14759,8 +14701,6 @@ func (self PlotContext) SetColorModifiers(v Vector[*ColorMod]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetColorModifiers(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotContext) ColorModifiers() Vector[*ColorMod] {
@@ -14774,7 +14714,7 @@ func (self *PlotContext) ColorModifiers() Vector[*ColorMod] {
 
 func (self PlotContext) SetStyleModifiers(v Vector[*StyleMod]) {
 	vData := v.Data
-	vDataArg, vDataFin := vData.handle()
+	vDataArg, _ := vData.handle()
 	vVecArg := new(C.ImVector_ImGuiStyleMod)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14783,8 +14723,6 @@ func (self PlotContext) SetStyleModifiers(v Vector[*StyleMod]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetStyleModifiers(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotContext) StyleModifiers() Vector[*StyleMod] {
@@ -14797,13 +14735,11 @@ func (self *PlotContext) StyleModifiers() Vector[*StyleMod] {
 }
 
 func (self PlotContext) SetColormapData(v PlotColormapData) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetColormapData(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) ColormapData() PlotColormapData {
@@ -14828,7 +14764,7 @@ func (self *PlotContext) ColormapModifiers() Vector[*PlotColormap] {
 
 func (self PlotContext) SetTempDouble1(v Vector[*float64]) {
 	vData := v.Data
-	vDataArg, vDataFin := WrapNumberPtr[C.double, float64](vData)
+	vDataArg, _ := WrapNumberPtr[C.double, float64](vData)
 	vVecArg := new(C.ImVector_double)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14837,8 +14773,6 @@ func (self PlotContext) SetTempDouble1(v Vector[*float64]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetTempDouble1(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotContext) TempDouble1() Vector[*float64] {
@@ -14852,7 +14786,7 @@ func (self *PlotContext) TempDouble1() Vector[*float64] {
 
 func (self PlotContext) SetTempDouble2(v Vector[*float64]) {
 	vData := v.Data
-	vDataArg, vDataFin := WrapNumberPtr[C.double, float64](vData)
+	vDataArg, _ := WrapNumberPtr[C.double, float64](vData)
 	vVecArg := new(C.ImVector_double)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14861,8 +14795,6 @@ func (self PlotContext) SetTempDouble2(v Vector[*float64]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetTempDouble2(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotContext) TempDouble2() Vector[*float64] {
@@ -14876,7 +14808,7 @@ func (self *PlotContext) TempDouble2() Vector[*float64] {
 
 func (self PlotContext) SetTempInt1(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14885,8 +14817,6 @@ func (self PlotContext) SetTempInt1(v Vector[*int32]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetTempInt1(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotContext) TempInt1() Vector[*int32] {
@@ -14929,13 +14859,11 @@ func (self *PlotContext) DigitalPlotOffset() int32 {
 }
 
 func (self PlotContext) SetNextPlotData(v PlotNextPlotData) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetNextPlotData(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) NextPlotData() PlotNextPlotData {
@@ -14950,13 +14878,11 @@ func (self *PlotContext) NextPlotData() PlotNextPlotData {
 }
 
 func (self PlotContext) SetNextItemData(v PlotNextItemData) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetNextItemData(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) NextItemData() PlotNextItemData {
@@ -14971,13 +14897,11 @@ func (self *PlotContext) NextItemData() PlotNextItemData {
 }
 
 func (self PlotContext) SetInputMap(v PlotInputMap) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetInputMap(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) InputMap() PlotInputMap {
@@ -15007,13 +14931,11 @@ func (self *PlotContext) OpenContextThisFrame() bool {
 }
 
 func (self PlotContext) SetMousePosStringBuilder(v TextBuffer) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetMousePosStringBuilder(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) MousePosStringBuilder() TextBuffer {
@@ -15028,13 +14950,11 @@ func (self *PlotContext) MousePosStringBuilder() TextBuffer {
 }
 
 func (self PlotContext) SetSortItems(v *PlotItemGroup) {
-	vArg, vFin := v.handle()
+	vArg, _ := v.handle()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetSortItems(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) SortItems() *PlotItemGroup {
@@ -15047,13 +14967,11 @@ func (self *PlotContext) SortItems() *PlotItemGroup {
 }
 
 func (self PlotContext) SetCurrentAlignmentH(v *PlotAlignmentData) {
-	vArg, vFin := v.handle()
+	vArg, _ := v.handle()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetCurrentAlignmentH(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) CurrentAlignmentH() *PlotAlignmentData {
@@ -15066,13 +14984,11 @@ func (self *PlotContext) CurrentAlignmentH() *PlotAlignmentData {
 }
 
 func (self PlotContext) SetCurrentAlignmentV(v *PlotAlignmentData) {
-	vArg, vFin := v.handle()
+	vArg, _ := v.handle()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotContext_SetCurrentAlignmentV(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotContext) CurrentAlignmentV() *PlotAlignmentData {
@@ -15445,13 +15361,11 @@ func (self *PlotItemGroup) ID() ID {
 }
 
 func (self PlotItemGroup) SetLegend(v PlotLegend) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotItemGroup_SetLegend(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotItemGroup) Legend() PlotLegend {
@@ -15557,7 +15471,7 @@ func (self *PlotLegend) Scroll() Vec2 {
 
 func (self PlotLegend) SetIndices(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, vDataFin := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -15566,8 +15480,6 @@ func (self PlotLegend) SetIndices(v Vector[*int32]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotLegend_SetIndices(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotLegend) Indices() Vector[*int32] {
@@ -15580,13 +15492,11 @@ func (self *PlotLegend) Indices() Vector[*int32] {
 }
 
 func (self PlotLegend) SetLabels(v TextBuffer) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotLegend_SetLabels(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotLegend) Labels() TextBuffer {
@@ -15991,13 +15901,11 @@ func (self *PlotPlot) MouseTextFlags() PlotMouseTextFlags {
 }
 
 func (self PlotPlot) SetTextBuffer(v TextBuffer) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotPlot_SetTextBuffer(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotPlot) TextBuffer() TextBuffer {
@@ -16012,13 +15920,11 @@ func (self *PlotPlot) TextBuffer() TextBuffer {
 }
 
 func (self PlotPlot) SetItems(v PlotItemGroup) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotPlot_SetItems(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotPlot) Items() PlotItemGroup {
@@ -16393,13 +16299,11 @@ func (self *PlotRange) Max() float64 {
 }
 
 func (self PlotRect) SetX(v PlotRange) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotRect_SetX(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotRect) X() PlotRange {
@@ -16414,13 +16318,11 @@ func (self *PlotRect) X() PlotRange {
 }
 
 func (self PlotRect) SetY(v PlotRange) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotRect_SetY(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotRect) Y() PlotRange {
@@ -16945,13 +16847,11 @@ func (self *PlotSubplot) PreviousFlags() PlotSubplotFlags {
 }
 
 func (self PlotSubplot) SetItems(v PlotItemGroup) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotSubplot_SetItems(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotSubplot) Items() PlotItemGroup {
@@ -17057,7 +16957,7 @@ func (self *PlotSubplot) CellSize() Vec2 {
 
 func (self PlotSubplot) SetRowAlignmentData(v Vector[*PlotAlignmentData]) {
 	vData := v.Data
-	vDataArg, vDataFin := vData.handle()
+	vDataArg, _ := vData.handle()
 	vVecArg := new(C.ImVector_ImPlotAlignmentData)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -17066,8 +16966,6 @@ func (self PlotSubplot) SetRowAlignmentData(v Vector[*PlotAlignmentData]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotSubplot_SetRowAlignmentData(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotSubplot) RowAlignmentData() Vector[*PlotAlignmentData] {
@@ -17081,7 +16979,7 @@ func (self *PlotSubplot) RowAlignmentData() Vector[*PlotAlignmentData] {
 
 func (self PlotSubplot) SetColAlignmentData(v Vector[*PlotAlignmentData]) {
 	vData := v.Data
-	vDataArg, vDataFin := vData.handle()
+	vDataArg, _ := vData.handle()
 	vVecArg := new(C.ImVector_ImPlotAlignmentData)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -17090,8 +16988,6 @@ func (self PlotSubplot) SetColAlignmentData(v Vector[*PlotAlignmentData]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotSubplot_SetColAlignmentData(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotSubplot) ColAlignmentData() Vector[*PlotAlignmentData] {
@@ -17105,7 +17001,7 @@ func (self *PlotSubplot) ColAlignmentData() Vector[*PlotAlignmentData] {
 
 func (self PlotSubplot) SetRowRatios(v Vector[*float32]) {
 	vData := v.Data
-	vDataArg, vDataFin := WrapNumberPtr[C.float, float32](vData)
+	vDataArg, _ := WrapNumberPtr[C.float, float32](vData)
 	vVecArg := new(C.ImVector_float)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -17114,8 +17010,6 @@ func (self PlotSubplot) SetRowRatios(v Vector[*float32]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotSubplot_SetRowRatios(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotSubplot) RowRatios() Vector[*float32] {
@@ -17129,7 +17023,7 @@ func (self *PlotSubplot) RowRatios() Vector[*float32] {
 
 func (self PlotSubplot) SetColRatios(v Vector[*float32]) {
 	vData := v.Data
-	vDataArg, vDataFin := WrapNumberPtr[C.float, float32](vData)
+	vDataArg, _ := WrapNumberPtr[C.float, float32](vData)
 	vVecArg := new(C.ImVector_float)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -17138,8 +17032,6 @@ func (self PlotSubplot) SetColRatios(v Vector[*float32]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotSubplot_SetColRatios(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotSubplot) ColRatios() Vector[*float32] {
@@ -17153,7 +17045,7 @@ func (self *PlotSubplot) ColRatios() Vector[*float32] {
 
 func (self PlotSubplot) SetRowLinkData(v Vector[*PlotRange]) {
 	vData := v.Data
-	vDataArg, vDataFin := vData.handle()
+	vDataArg, _ := vData.handle()
 	vVecArg := new(C.ImVector_ImPlotRange)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -17162,8 +17054,6 @@ func (self PlotSubplot) SetRowLinkData(v Vector[*PlotRange]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotSubplot_SetRowLinkData(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotSubplot) RowLinkData() Vector[*PlotRange] {
@@ -17177,7 +17067,7 @@ func (self *PlotSubplot) RowLinkData() Vector[*PlotRange] {
 
 func (self PlotSubplot) SetColLinkData(v Vector[*PlotRange]) {
 	vData := v.Data
-	vDataArg, vDataFin := vData.handle()
+	vDataArg, _ := vData.handle()
 	vVecArg := new(C.ImVector_ImPlotRange)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -17186,8 +17076,6 @@ func (self PlotSubplot) SetColLinkData(v Vector[*PlotRange]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotSubplot_SetColLinkData(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotSubplot) ColLinkData() Vector[*PlotRange] {
@@ -17208,10 +17096,6 @@ func (self PlotSubplot) SetTempSizes(v *[2]float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotSubplot_SetTempSizes(selfArg, (*C.float)(&vArg[0]))
-
-	for i, vV := range vArg {
-		(*v)[i] = float32(vV)
-	}
 }
 
 func (self PlotSubplot) SetFrameHovered(v bool) {
@@ -17321,7 +17205,7 @@ func (self *PlotTag) TextOffset() int32 {
 
 func (self PlotTagCollection) SetTags(v Vector[*PlotTag]) {
 	vData := v.Data
-	vDataArg, vDataFin := vData.handle()
+	vDataArg, _ := vData.handle()
 	vVecArg := new(C.ImVector_ImPlotTag)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -17330,8 +17214,6 @@ func (self PlotTagCollection) SetTags(v Vector[*PlotTag]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotTagCollection_SetTags(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotTagCollection) Tags() Vector[*PlotTag] {
@@ -17344,13 +17226,11 @@ func (self *PlotTagCollection) Tags() Vector[*PlotTag] {
 }
 
 func (self PlotTagCollection) SetTextBuffer(v TextBuffer) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotTagCollection_SetTextBuffer(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotTagCollection) TextBuffer() TextBuffer {
@@ -17501,7 +17381,7 @@ func (self *PlotTick) Idx() int32 {
 
 func (self PlotTicker) SetTicks(v Vector[*PlotTick]) {
 	vData := v.Data
-	vDataArg, vDataFin := vData.handle()
+	vDataArg, _ := vData.handle()
 	vVecArg := new(C.ImVector_ImPlotTick)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -17510,8 +17390,6 @@ func (self PlotTicker) SetTicks(v Vector[*PlotTick]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotTicker_SetTicks(selfArg, *vVecArg)
-
-	vDataFin()
 }
 
 func (self *PlotTicker) Ticks() Vector[*PlotTick] {
@@ -17524,13 +17402,11 @@ func (self *PlotTicker) Ticks() Vector[*PlotTick] {
 }
 
 func (self PlotTicker) SetTextBuffer(v TextBuffer) {
-	vArg, vFin := v.c()
+	vArg, _ := v.c()
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotTicker_SetTextBuffer(selfArg, vArg)
-
-	vFin()
 }
 
 func (self *PlotTicker) TextBuffer() TextBuffer {
