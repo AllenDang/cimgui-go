@@ -82,6 +82,13 @@ extern void wrap_ImFont_RenderText(ImFont* self,ImDrawList* draw_list,float size
 extern void wrap_ImGuiIO_SetKeyEventNativeData(ImGuiIO* self,ImGuiKey key,int native_keycode,int native_scancode);
 extern void wrap_ImGuiInputTextCallbackData_InsertChars(ImGuiInputTextCallbackData* self,int pos,const char* text);
 extern void wrap_ImGuiListClipper_Begin(ImGuiListClipper* self,int items_count);
+extern bool wrap_ImGuiStorage_GetBool(ImGuiStorage* self,ImGuiID key);
+extern bool* wrap_ImGuiStorage_GetBoolRef(ImGuiStorage* self,ImGuiID key);
+extern float wrap_ImGuiStorage_GetFloat(ImGuiStorage* self,ImGuiID key);
+extern float* wrap_ImGuiStorage_GetFloatRef(ImGuiStorage* self,ImGuiID key);
+extern int wrap_ImGuiStorage_GetInt(ImGuiStorage* self,ImGuiID key);
+extern int* wrap_ImGuiStorage_GetIntRef(ImGuiStorage* self,ImGuiID key);
+extern void** wrap_ImGuiStorage_GetVoidPtrRef(ImGuiStorage* self,ImGuiID key);
 extern void wrap_ImGuiTextBuffer_Append(ImGuiTextBuffer* self,const char* str);
 extern bool wrap_ImGuiTextFilter_Draw(ImGuiTextFilter* self);
 extern bool wrap_ImGuiTextFilter_PassFilter(ImGuiTextFilter* self,const char* text);
@@ -232,6 +239,7 @@ extern void wrap_igScrollToRectEx(ImVec2* pOut,ImGuiWindow* window,const ImRect 
 extern bool wrap_igSelectable_Bool(const char* label);
 extern bool wrap_igSelectable_BoolPtr(const char* label,bool* p_selected);
 extern void wrap_igSeparatorEx(ImGuiSeparatorFlags flags);
+extern void wrap_igSetAllocatorFunctions(ImGuiMemAllocFunc alloc_func,ImGuiMemFreeFunc free_func);
 extern bool wrap_igSetDragDropPayload(const char* type,const void* data,size_t sz);
 extern void wrap_igSetItemKeyOwner(ImGuiKey key);
 extern void wrap_igSetKeyOwner(ImGuiKey key,ImGuiID owner_id);

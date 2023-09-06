@@ -77,6 +77,13 @@ void wrap_ImFont_RenderText(ImFont* self,ImDrawList* draw_list,float size,const 
 void wrap_ImGuiIO_SetKeyEventNativeData(ImGuiIO* self,ImGuiKey key,int native_keycode,int native_scancode) { ImGuiIO_SetKeyEventNativeData(self,key,native_keycode,native_scancode,-1); }
 void wrap_ImGuiInputTextCallbackData_InsertChars(ImGuiInputTextCallbackData* self,int pos,const char* text) { wrap_ImGuiInputTextCallbackData_InsertCharsV(self,pos,text); }
 void wrap_ImGuiListClipper_Begin(ImGuiListClipper* self,int items_count) { ImGuiListClipper_Begin(self,items_count,-1.0f); }
+bool wrap_ImGuiStorage_GetBool(ImGuiStorage* self,ImGuiID key) { return ImGuiStorage_GetBool(self,key,false); }
+bool* wrap_ImGuiStorage_GetBoolRef(ImGuiStorage* self,ImGuiID key) { return ImGuiStorage_GetBoolRef(self,key,false); }
+float wrap_ImGuiStorage_GetFloat(ImGuiStorage* self,ImGuiID key) { return ImGuiStorage_GetFloat(self,key,0.0f); }
+float* wrap_ImGuiStorage_GetFloatRef(ImGuiStorage* self,ImGuiID key) { return ImGuiStorage_GetFloatRef(self,key,0.0f); }
+int wrap_ImGuiStorage_GetInt(ImGuiStorage* self,ImGuiID key) { return ImGuiStorage_GetInt(self,key,0); }
+int* wrap_ImGuiStorage_GetIntRef(ImGuiStorage* self,ImGuiID key) { return ImGuiStorage_GetIntRef(self,key,0); }
+void** wrap_ImGuiStorage_GetVoidPtrRef(ImGuiStorage* self,ImGuiID key) { return ImGuiStorage_GetVoidPtrRef(self,key,NULL); }
 void wrap_ImGuiTextBuffer_Append(ImGuiTextBuffer* self,const char* str) { ImGuiTextBuffer_append(self,str,NULL); }
 bool wrap_ImGuiTextFilter_Draw(ImGuiTextFilter* self) { return ImGuiTextFilter_Draw(self,"Filter(inc,-exc)",0.0f); }
 bool wrap_ImGuiTextFilter_PassFilter(ImGuiTextFilter* self,const char* text) { return wrap_ImGuiTextFilter_PassFilterV(self,text); }
@@ -227,6 +234,7 @@ void wrap_igScrollToRectEx(ImVec2* pOut,ImGuiWindow* window,const ImRect rect) {
 bool wrap_igSelectable_Bool(const char* label) { return igSelectable_Bool(label,false,0,(ImVec2){.x=0, .y=0}); }
 bool wrap_igSelectable_BoolPtr(const char* label,bool* p_selected) { return igSelectable_BoolPtr(label,p_selected,0,(ImVec2){.x=0, .y=0}); }
 void wrap_igSeparatorEx(ImGuiSeparatorFlags flags) { igSeparatorEx(flags,1.0f); }
+void wrap_igSetAllocatorFunctions(ImGuiMemAllocFunc alloc_func,ImGuiMemFreeFunc free_func) { igSetAllocatorFunctions(alloc_func,free_func,NULL); }
 bool wrap_igSetDragDropPayload(const char* type,const void* data,size_t sz) { return igSetDragDropPayload(type,data,sz,0); }
 void wrap_igSetItemKeyOwner(ImGuiKey key) { igSetItemKeyOwner(key,0); }
 void wrap_igSetKeyOwner(ImGuiKey key,ImGuiID owner_id) { igSetKeyOwner(key,owner_id,0); }

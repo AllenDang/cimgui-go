@@ -44,6 +44,7 @@ void wrap_ImPlot_GetPlotSelection(ImPlotRect* pOut) { ImPlot_GetPlotSelection(pO
 void wrap_ImPlot_HideNextItem() { ImPlot_HideNextItem(true,ImPlotCond_Once); }
 bool wrap_ImPlot_ImAlmostEqual(double v1,double v2) { return ImPlot_ImAlmostEqual(v1,v2,2); }
 void wrap_ImPlot_LabelAxisValue(const ImPlotAxis axis,double value,char* buff,int size) { ImPlot_LabelAxisValue(axis,value,buff,size,false); }
+void wrap_ImPlot_MakeTime(ImPlotTime* pOut,int year) { ImPlot_MakeTime(pOut,year,0,1,0,0,0,0); }
 void wrap_ImPlot_MapInputDefault() { ImPlot_MapInputDefault(nullptr); }
 void wrap_ImPlot_MapInputReverse() { ImPlot_MapInputReverse(nullptr); }
 void wrap_ImPlot_PixelsToPlot_Float(ImPlotPoint* pOut,float x,float y) { ImPlot_PixelsToPlot_Float(pOut,x,y,-1,-1); }

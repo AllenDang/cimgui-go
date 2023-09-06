@@ -535,6 +535,13 @@ func (self *PlotColormapData) SetKeyColor(cmap PlotColormap, idx int32, value ui
 	selfFin()
 }
 
+func (self *PlotColormapData) AppendTable(cmap PlotColormap) {
+	selfArg, selfFin := self.handle()
+	C.ImPlotColormapData__AppendTable(selfArg, C.ImPlotColormap(cmap))
+
+	selfFin()
+}
+
 func (self *PlotColormapData) Destroy() {
 	selfArg, selfFin := self.handle()
 	C.ImPlotColormapData_destroy(selfArg)
@@ -846,6 +853,15 @@ func (self *PlotPlot) XAxisNil(i int32) *PlotAxis {
 	return newPlotAxisFromC(C.ImPlotPlot_XAxis_Nil(selfArg, C.int(i)))
 }
 
+func (self *PlotPlot) XAxisconst(i int32) *PlotAxis {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newPlotAxisFromC(C.ImPlotPlot_XAxis__const(selfArg, C.int(i)))
+}
+
 func (self *PlotPlot) YAxisNil(i int32) *PlotAxis {
 	selfArg, selfFin := self.handle()
 
@@ -853,6 +869,15 @@ func (self *PlotPlot) YAxisNil(i int32) *PlotAxis {
 		selfFin()
 	}()
 	return newPlotAxisFromC(C.ImPlotPlot_YAxis_Nil(selfArg, C.int(i)))
+}
+
+func (self *PlotPlot) YAxisconst(i int32) *PlotAxis {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newPlotAxisFromC(C.ImPlotPlot_YAxis__const(selfArg, C.int(i)))
 }
 
 func (self *PlotPlot) Destroy() {
@@ -3174,6 +3199,24 @@ func PlotLabelAxisValueV(axis PlotAxis, value float64, buff string, size int32, 
 
 	axisFin()
 	buffFin()
+}
+
+// PlotMakeTimeV parameter default value hint:
+// month: 0
+// day: 1
+// hour: 0
+// min: 0
+// sec: 0
+// us: 0
+func PlotMakeTimeV(year int32, month int32, day int32, hour int32, min int32, sec int32, us int32) PlotTime {
+	pOut := new(PlotTime)
+	pOutArg, pOutFin := wrap[C.ImPlotTime, *PlotTime](pOut)
+
+	C.ImPlot_MakeTime(pOutArg, C.int(year), C.int(month), C.int(day), C.int(hour), C.int(min), C.int(sec), C.int(us))
+
+	pOutFin()
+
+	return *pOut
 }
 
 // PlotMapInputDefaultV parameter default value hint:
@@ -9245,6 +9288,17 @@ func PlotLabelAxisValue(axis PlotAxis, value float64, buff string, size int32) {
 
 	axisFin()
 	buffFin()
+}
+
+func PlotMakeTime(year int32) PlotTime {
+	pOut := new(PlotTime)
+	pOutArg, pOutFin := wrap[C.ImPlotTime, *PlotTime](pOut)
+
+	C.wrap_ImPlot_MakeTime(pOutArg, C.int(year))
+
+	pOutFin()
+
+	return *pOut
 }
 
 func PlotMapInputDefault() {
@@ -17143,6 +17197,21 @@ func (self *PlotSubplot) ColLinkData() Vector[*PlotRange] {
 		selfFin()
 	}()
 	return newVectorFromC(C.wrap_ImPlotSubplot_GetColLinkData(selfArg).Size, C.wrap_ImPlotSubplot_GetColLinkData(selfArg).Capacity, newPlotRangeFromC(C.wrap_ImPlotSubplot_GetColLinkData(selfArg).Data))
+}
+
+func (self PlotSubplot) SetTempSizes(v *[2]float32) {
+	vArg := make([]C.float, len(v))
+	for i, vV := range v {
+		vArg[i] = C.float(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotSubplot_SetTempSizes(selfArg, (*C.float)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = float32(vV)
+	}
 }
 
 func (self PlotSubplot) SetFrameHovered(v bool) {
