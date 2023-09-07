@@ -207,31 +207,31 @@ void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender,
   // NULL, io.Fonts->GetGlyphRangesJapanese()); IM_ASSERT(font != NULL);
 
   // Main loop
-  double lasttime = glfwGetTime();
+//  double lasttime = glfwGetTime();
   while (!glfwWindowShouldClose(window)) {
     if (beforeRender != NULL) {
       beforeRender();
     }
-
+    glfwPollEvents();
     glfw_render(window, loop);
 
-    while (glfwGetTime() < lasttime + 1.0 / glfw_target_fps) {
-      // do nothing here
-    }
-    lasttime += 1.0 / glfw_target_fps;
-
-    if (extra_frame_count > 0) {
-      extra_frame_count--;
-    } else {
-      glfwWaitEvents();
-      extra_frame_count = MAX_EXTRA_FRAME_COUNT;
-    }
-
-    glfwPollEvents();
-
-    if (afterRender != NULL) {
-      afterRender();
-    }
+//    while (glfwGetTime() < lasttime + 1.0 / glfw_target_fps) {
+//      // do nothing here
+//    }
+//    lasttime += 1.0 / glfw_target_fps;
+//
+//    if (extra_frame_count > 0) {
+//      extra_frame_count--;
+//    } else {
+//      glfwWaitEvents();
+//      extra_frame_count = MAX_EXTRA_FRAME_COUNT;
+//    }
+//
+//    glfwPollEvents();
+//
+//    if (afterRender != NULL) {
+//      afterRender();
+//    }
   }
 
   // Cleanup
