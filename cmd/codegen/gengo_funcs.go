@@ -384,9 +384,16 @@ func (g *goFuncsGenerator) generateFuncBody(argWrappers []ArgumentWrapperData) (
 
 	for _, aw := range argWrappers {
 		invokeStmt = append(invokeStmt, aw.VarName)
-		if len(aw.ArgDef) > 0 {
-			declarations = append(declarations, aw.ArgDef)
-			if aw.Finalizer != "" {
+		var def string
+		if aw.NoFin {
+			def = aw.ArgDefNoFin
+		} else {
+			def = aw.ArgDef
+		}
+
+		if len(def) > 0 {
+			declarations = append(declarations, def)
+			if aw.Finalizer != "" && !aw.NoFin {
 				finishers = append(finishers, aw.Finalizer)
 			}
 		}

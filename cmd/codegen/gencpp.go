@@ -419,8 +419,9 @@ extern "C" {
 						Type: s.Name,
 					},
 					{
-						Name: "v",
-						Type: m.Type + CIdentifier(getSizeArg(m.Size)),
+						Name:            "v",
+						Type:            m.Type + CIdentifier(getSizeArg(m.Size)),
+						RemoveFinalizer: true,
 					},
 				},
 				FuncName:         setterFuncName,
