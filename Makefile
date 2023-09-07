@@ -105,3 +105,6 @@ update: setup
 	$(call cimplot)
 	$(call update,cimnodes,https://github.com/cimgui/cimnodes,imnodes,master)
 	$(call cimnodes)
+	for i in `find cimgui -type f \( -name "*.h" -o -name "*.cpp" \) -exec dirname {} \; | sort -u`; do \
+		cp templates/dummy.go.template $$i/dummy.go; \
+		done
