@@ -41,7 +41,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 		"size_t*":                  sizeTPtrW,
 		"float":                    simpleW("float32", "C.float"),
 		"const float":              simpleW("float32", "C.float"),
-		"float*":                   floatPtrW,
+		"float*":                   simplePtrW("float32", "C.float"),
 		"const float*":             floatArrayW,
 		"short":                    simpleW("int16", "C.short"),
 		"unsigned short":           simpleW("uint16", "C.ushort"),
@@ -265,11 +265,6 @@ func sizeTPtrW(arg ArgDef) ArgumentWrapperData {
 		ArgType: "*uint64",
 		VarName: fmt.Sprintf("(*C.xulong)(%s)", arg.Name),
 	}
-}
-
-// leave this for now because of https://github.com/AllenDang/cimgui-go/issues/31
-func floatPtrW(arg ArgDef) ArgumentWrapperData {
-	return simplePtrW("float32", "C.float")(arg)
 }
 
 func floatArrayW(arg ArgDef) ArgumentWrapperData {
