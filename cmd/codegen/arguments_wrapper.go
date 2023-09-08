@@ -90,6 +90,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 		"ImGuiID*":                 simplePtrW("ID", "C.ImGuiID"),
 		"ImTextureID":              simpleW("TextureID", "C.ImTextureID"),
 		"ImDrawIdx":                simpleW("DrawIdx", "C.ImDrawIdx"),
+		"ImDrawIdx*":               simplePtrW("DrawIdx", "C.ImDrawIdx"),
 		"ImGuiTableColumnIdx":      simpleW("TableColumnIdx", "C.ImGuiTableColumnIdx"),
 		"ImGuiTableDrawChannelIdx": simpleW("TableDrawChannelIdx", "C.ImGuiTableDrawChannelIdx"),
 		"ImGuiKeyChord":            simpleW("KeyChord", "C.ImGuiKeyChord"),
