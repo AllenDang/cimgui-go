@@ -13,13 +13,24 @@ import "unsafe"
 // Helper: ImBitVector
 // Store 1-bit per value.
 type BitVector struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldStorage Vector[*uint32]
 }
 
 func (self BitVector) handle() (result *C.ImBitVector, releaseFn func()) {
-	result = (*C.ImBitVector)(self.data)
-	return result, func() {}
+	result = new(C.ImBitVector)
+	FieldStorage := self.FieldStorage
+	FieldStorageData := FieldStorage.Data
+	FieldStorageDataArg, FieldStorageDataFin := WrapNumberPtr[C.ImU32, uint32](FieldStorageData)
+	FieldStorageVecArg := new(C.ImVector_ImU32)
+	FieldStorageVecArg.Size = C.int(FieldStorage.Size)
+	FieldStorageVecArg.Capacity = C.int(FieldStorage.Capacity)
+	FieldStorageVecArg.Data = FieldStorageDataArg
+
+	result.Storage = *FieldStorageVecArg
+	releaseFn = func() {
+		FieldStorageDataFin()
+	}
+	return result, releaseFn
 }
 
 func (self BitVector) c() (result C.ImBitVector, fin func()) {
@@ -29,7 +40,7 @@ func (self BitVector) c() (result C.ImBitVector, fin func()) {
 
 func newBitVectorFromC(cvalue *C.ImBitVector) *BitVector {
 	result := new(BitVector)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldStorage = newVectorFromC(cvalue.Storage.Size, cvalue.Storage.Capacity, (*uint32)(cvalue.Storage.Data))
 	return result
 }
 
@@ -488,13 +499,24 @@ func newFontGlyphFromC(cvalue *C.ImFontGlyph) *FontGlyph {
 // Helper to build glyph ranges from text/string data. Feed your application strings/characters to it then call BuildRanges().
 // This is essentially a tightly packed of vector of 64k booleans = 8KB storage.
 type FontGlyphRangesBuilder struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldUsedChars Vector[*uint32] // Store 1-bit per Unicode code point (0=unused, 1=used)
 }
 
 func (self FontGlyphRangesBuilder) handle() (result *C.ImFontGlyphRangesBuilder, releaseFn func()) {
-	result = (*C.ImFontGlyphRangesBuilder)(self.data)
-	return result, func() {}
+	result = new(C.ImFontGlyphRangesBuilder)
+	FieldUsedChars := self.FieldUsedChars
+	FieldUsedCharsData := FieldUsedChars.Data
+	FieldUsedCharsDataArg, FieldUsedCharsDataFin := WrapNumberPtr[C.ImU32, uint32](FieldUsedCharsData)
+	FieldUsedCharsVecArg := new(C.ImVector_ImU32)
+	FieldUsedCharsVecArg.Size = C.int(FieldUsedChars.Size)
+	FieldUsedCharsVecArg.Capacity = C.int(FieldUsedChars.Capacity)
+	FieldUsedCharsVecArg.Data = FieldUsedCharsDataArg
+
+	result.UsedChars = *FieldUsedCharsVecArg
+	releaseFn = func() {
+		FieldUsedCharsDataFin()
+	}
+	return result, releaseFn
 }
 
 func (self FontGlyphRangesBuilder) c() (result C.ImFontGlyphRangesBuilder, fin func()) {
@@ -504,7 +526,7 @@ func (self FontGlyphRangesBuilder) c() (result C.ImFontGlyphRangesBuilder, fin f
 
 func newFontGlyphRangesBuilderFromC(cvalue *C.ImFontGlyphRangesBuilder) *FontGlyphRangesBuilder {
 	result := new(FontGlyphRangesBuilder)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldUsedChars = newVectorFromC(cvalue.UsedChars.Size, cvalue.UsedChars.Capacity, (*uint32)(cvalue.UsedChars.Data))
 	return result
 }
 

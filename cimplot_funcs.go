@@ -2692,35 +2692,22 @@ func PlotImMinMaxArrayS8Ptr(values *[]int8, count int32, min_out *[]int8, max_ou
 	}
 }
 
-func PlotImMinMaxArrayU32Ptr(values *[]uint32, count int32, min_out *[]uint32, max_out *[]uint32) {
+func PlotImMinMaxArrayU32Ptr(values *[]uint32, count int32, min_out *uint32, max_out *uint32) {
 	valuesArg := make([]C.ImU32, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU32(valuesV)
 	}
 
-	min_outArg := make([]C.ImU32, len(*min_out))
-	for i, min_outV := range *min_out {
-		min_outArg[i] = C.ImU32(min_outV)
-	}
-
-	max_outArg := make([]C.ImU32, len(*max_out))
-	for i, max_outV := range *max_out {
-		max_outArg[i] = C.ImU32(max_outV)
-	}
-
-	C.ImPlot_ImMinMaxArray_U32Ptr((*C.ImU32)(&valuesArg[0]), C.int(count), (*C.ImU32)(&min_outArg[0]), (*C.ImU32)(&max_outArg[0]))
+	min_outArg, min_outFin := WrapNumberPtr[C.ImU32, uint32](min_out)
+	max_outArg, max_outFin := WrapNumberPtr[C.ImU32, uint32](max_out)
+	C.ImPlot_ImMinMaxArray_U32Ptr((*C.ImU32)(&valuesArg[0]), C.int(count), min_outArg, max_outArg)
 
 	for i, valuesV := range valuesArg {
 		(*values)[i] = uint32(valuesV)
 	}
 
-	for i, min_outV := range min_outArg {
-		(*min_out)[i] = uint32(min_outV)
-	}
-
-	for i, max_outV := range max_outArg {
-		(*max_out)[i] = uint32(max_outV)
-	}
+	min_outFin()
+	max_outFin()
 }
 
 func PlotImMinMaxArrayU64Ptr(values []uint64, count int32, min_out *[]uint64, max_out *[]uint64) {
@@ -14380,21 +14367,26 @@ func (self *PlotColormapData) KeyOffsets() Vector[*int32] {
 	return newVectorFromC(C.wrap_ImPlotColormapData_GetKeyOffsets(selfArg).Size, C.wrap_ImPlotColormapData_GetKeyOffsets(selfArg).Capacity, (*int32)(C.wrap_ImPlotColormapData_GetKeyOffsets(selfArg).Data))
 }
 
-func (self PlotColormapData) SetTables(v Vector[*[]uint32]) {
+func (self PlotColormapData) SetTables(v Vector[*uint32]) {
 	vData := v.Data
-	vDataArg := make([]C.ImU32, len(*vData))
-	for i, vDataV := range *vData {
-		vDataArg[i] = C.ImU32(vDataV)
-	}
-
+	vDataArg, _ := WrapNumberPtr[C.ImU32, uint32](vData)
 	vVecArg := new(C.ImVector_ImU32)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = (*C.ImU32)(&vDataArg[0])
+	vVecArg.Data = vDataArg
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotColormapData_SetTables(selfArg, *vVecArg)
+}
+
+func (self *PlotColormapData) Tables() Vector[*uint32] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImPlotColormapData_GetTables(selfArg).Size, C.wrap_ImPlotColormapData_GetTables(selfArg).Capacity, (*uint32)(C.wrap_ImPlotColormapData_GetTables(selfArg).Data))
 }
 
 func (self PlotColormapData) SetTableSizes(v Vector[*int32]) {
