@@ -12247,6 +12247,28 @@ func (self *DrawChannel) CmdBuffer() Vector[*DrawCmd] {
 	return newVectorFromC(C.wrap_ImDrawChannel_Get_CmdBuffer(selfArg).Size, C.wrap_ImDrawChannel_Get_CmdBuffer(selfArg).Capacity, newDrawCmdFromC(C.wrap_ImDrawChannel_Get_CmdBuffer(selfArg).Data))
 }
 
+func (self DrawChannel) SetIdxBuffer(v Vector[*DrawIdx]) {
+	vData := v.Data
+	vDataArg, _ := WrapNumberPtr[C.ImDrawIdx, DrawIdx](vData)
+	vVecArg := new(C.ImVector_ImDrawIdx)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImDrawChannel_Set_IdxBuffer(selfArg, *vVecArg)
+}
+
+func (self *DrawChannel) IdxBuffer() Vector[*DrawIdx] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImDrawChannel_Get_IdxBuffer(selfArg).Size, C.wrap_ImDrawChannel_Get_IdxBuffer(selfArg).Capacity, (*DrawIdx)(C.wrap_ImDrawChannel_Get_IdxBuffer(selfArg).Data))
+}
+
 func (self DrawCmd) SetClipRect(v Vec4) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -12517,6 +12539,28 @@ func (self *DrawList) CmdBuffer() Vector[*DrawCmd] {
 	return newVectorFromC(C.wrap_ImDrawList_GetCmdBuffer(selfArg).Size, C.wrap_ImDrawList_GetCmdBuffer(selfArg).Capacity, newDrawCmdFromC(C.wrap_ImDrawList_GetCmdBuffer(selfArg).Data))
 }
 
+func (self DrawList) SetIdxBuffer(v Vector[*DrawIdx]) {
+	vData := v.Data
+	vDataArg, _ := WrapNumberPtr[C.ImDrawIdx, DrawIdx](vData)
+	vVecArg := new(C.ImVector_ImDrawIdx)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImDrawList_SetIdxBuffer(selfArg, *vVecArg)
+}
+
+func (self *DrawList) IdxBuffer() Vector[*DrawIdx] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImDrawList_GetIdxBuffer(selfArg).Size, C.wrap_ImDrawList_GetIdxBuffer(selfArg).Capacity, (*DrawIdx)(C.wrap_ImDrawList_GetIdxBuffer(selfArg).Data))
+}
+
 func (self DrawList) SetVtxBuffer(v Vector[*DrawVert]) {
 	vData := v.Data
 	vDataArg, _ := vData.handle()
@@ -12618,6 +12662,23 @@ func (self *DrawList) VtxWritePtr() *DrawVert {
 		selfFin()
 	}()
 	return newDrawVertFromC(C.wrap_ImDrawList_Get_VtxWritePtr(selfArg))
+}
+
+func (self DrawList) SetIdxWritePtr(v *DrawIdx) {
+	vArg, _ := WrapNumberPtr[C.ImDrawIdx, DrawIdx](v)
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImDrawList_Set_IdxWritePtr(selfArg, vArg)
+}
+
+func (self *DrawList) IdxWritePtr() *DrawIdx {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*DrawIdx)(C.wrap_ImDrawList_Get_IdxWritePtr(selfArg))
 }
 
 func (self DrawList) SetClipRectStack(v Vector[*Vec4]) {

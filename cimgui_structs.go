@@ -46,13 +46,35 @@ func newBitVectorFromC(cvalue *C.ImBitVector) *BitVector {
 
 // [Internal] For use by ImDrawListSplitter
 type DrawChannel struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldCmdBuffer Vector[*DrawCmd]
+	FieldIdxBuffer Vector[*DrawIdx]
 }
 
 func (self DrawChannel) handle() (result *C.ImDrawChannel, releaseFn func()) {
-	result = (*C.ImDrawChannel)(self.data)
-	return result, func() {}
+	result = new(C.ImDrawChannel)
+	FieldCmdBuffer := self.FieldCmdBuffer
+	FieldCmdBufferData := FieldCmdBuffer.Data
+	FieldCmdBufferDataArg, FieldCmdBufferDataFin := FieldCmdBufferData.handle()
+	FieldCmdBufferVecArg := new(C.ImVector_ImDrawCmd)
+	FieldCmdBufferVecArg.Size = C.int(FieldCmdBuffer.Size)
+	FieldCmdBufferVecArg.Capacity = C.int(FieldCmdBuffer.Capacity)
+	FieldCmdBufferVecArg.Data = FieldCmdBufferDataArg
+
+	result._CmdBuffer = *FieldCmdBufferVecArg
+	FieldIdxBuffer := self.FieldIdxBuffer
+	FieldIdxBufferData := FieldIdxBuffer.Data
+	FieldIdxBufferDataArg, FieldIdxBufferDataFin := WrapNumberPtr[C.ImDrawIdx, DrawIdx](FieldIdxBufferData)
+	FieldIdxBufferVecArg := new(C.ImVector_ImDrawIdx)
+	FieldIdxBufferVecArg.Size = C.int(FieldIdxBuffer.Size)
+	FieldIdxBufferVecArg.Capacity = C.int(FieldIdxBuffer.Capacity)
+	FieldIdxBufferVecArg.Data = FieldIdxBufferDataArg
+
+	result._IdxBuffer = *FieldIdxBufferVecArg
+	releaseFn = func() {
+		FieldCmdBufferDataFin()
+		FieldIdxBufferDataFin()
+	}
+	return result, releaseFn
 }
 
 func (self DrawChannel) c() (result C.ImDrawChannel, fin func()) {
@@ -62,7 +84,8 @@ func (self DrawChannel) c() (result C.ImDrawChannel, fin func()) {
 
 func newDrawChannelFromC(cvalue *C.ImDrawChannel) *DrawChannel {
 	result := new(DrawChannel)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldCmdBuffer = newVectorFromC(cvalue._CmdBuffer.Size, cvalue._CmdBuffer.Capacity, newDrawCmdFromC(cvalue._CmdBuffer.Data))
+	result.FieldIdxBuffer = newVectorFromC(cvalue._IdxBuffer.Size, cvalue._IdxBuffer.Capacity, (*DrawIdx)(cvalue._IdxBuffer.Data))
 	return result
 }
 
