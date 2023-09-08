@@ -50,7 +50,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 		"ImU16":                    simpleW("uint16", "C.ImU16"),
 		"const ImU16*":             simplePtrSliceW("C.ImU16", "uint16"),
 		"ImU32":                    simpleW("uint32", "C.ImU32"),
-		"ImU32*":                   simplePtrSliceW("C.ImU32", "uint32"),
+		"ImU32*":                   simplePtrW("uint32", "C.ImU32"),
 		"const ImU32*":             simplePtrSliceW("C.ImU32", "uint32"),
 		"ImU64":                    simpleW("uint64", "C.ImU64"),
 		"ImU64*":                   simplePtrSliceW("C.ImU64", "uint64"),
