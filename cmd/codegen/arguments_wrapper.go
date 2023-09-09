@@ -79,6 +79,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 		"double*":                  simplePtrW("float64", "C.double"),
 		"const double*":            simplePtrSliceW("C.double", "float64"),
 		"bool":                     simpleW("bool", "C.bool"),
+		"const bool":               simpleW("bool", "C.bool"),
 		"bool*":                    boolPtrW,
 		"int[2]":                   simplePtrArrayW(2, "C.int", "int32"),
 		"int[3]":                   simplePtrArrayW(3, "C.int", "int32"),
