@@ -71,6 +71,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 		"ImS64*":                   simplePtrW("int64", "C.ImS64"),
 		"const ImS64*":             int64ArrayW,
 		"int":                      simpleW("int32", "C.int"),
+		"const int":                simpleW("int32", "C.int"),
 		"int*":                     simplePtrW("int32", "C.int"),
 		"unsigned int":             simpleW("uint32", "C.uint"),
 		"unsigned int*":            simplePtrW("uint32", "C.uint"),
