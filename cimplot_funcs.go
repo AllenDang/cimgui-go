@@ -8844,6 +8844,26 @@ func PlotShowColormapSelector(label string) bool {
 	return C.ImPlot_ShowColormapSelector(labelArg) == C.bool(true)
 }
 
+// PlotShowDatePickerV parameter default value hint:
+// t1: nullptr
+// t2: nullptr
+func PlotShowDatePickerV(id string, level *int32, t *PlotTime, t1 *PlotTime, t2 *PlotTime) bool {
+	idArg, idFin := WrapString(id)
+	levelArg, levelFin := WrapNumberPtr[C.int, int32](level)
+	tArg, tFin := wrap[C.ImPlotTime, *PlotTime](t)
+	t1Arg, t1Fin := wrap[C.ImPlotTime, *PlotTime](t1)
+	t2Arg, t2Fin := wrap[C.ImPlotTime, *PlotTime](t2)
+
+	defer func() {
+		idFin()
+		levelFin()
+		tFin()
+		t1Fin()
+		t2Fin()
+	}()
+	return C.ImPlot_ShowDatePicker(idArg, levelArg, tArg, t1Arg, t2Arg) == C.bool(true)
+}
+
 // PlotShowDemoWindowV parameter default value hint:
 // p_open: nullptr
 func PlotShowDemoWindowV(p_open *bool) {
@@ -13897,6 +13917,17 @@ func (self PlotAxis) SetFormatterData(v unsafe.Pointer) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotAxis_SetFormatterData(selfArg, (v))
+}
+
+func (self PlotAxis) SetFormatSpec(v *[16]rune) {
+	vArg := make([]C.char, len(v))
+	for i, vV := range v {
+		vArg[i] = C.char(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotAxis_SetFormatSpec(selfArg, (*C.char)(&vArg[0]))
 }
 
 func (self PlotAxis) SetLinkedMin(v *float64) {
