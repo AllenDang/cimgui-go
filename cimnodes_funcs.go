@@ -118,6 +118,10 @@ func imnodesEditorContextGetPanning() Vec2 {
 	return *pOut
 }
 
+func imnodesEditorContextMoveToNode(node_id int32) {
+	C.imnodes_EditorContextMoveToNode(C.int(node_id))
+}
+
 func imnodesEditorContextResetPanning(pos Vec2) {
 	C.imnodes_EditorContextResetPanning(pos.toC())
 }
@@ -155,6 +159,39 @@ func imnodesGetNodeDimensions(id int32) Vec2 {
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	C.imnodes_GetNodeDimensions(pOutArg, C.int(id))
+
+	pOutFin()
+
+	return *pOut
+}
+
+func imnodesGetNodeEditorSpacePos(node_id int32) Vec2 {
+	pOut := new(Vec2)
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+
+	C.imnodes_GetNodeEditorSpacePos(pOutArg, C.int(node_id))
+
+	pOutFin()
+
+	return *pOut
+}
+
+func imnodesGetNodeGridSpacePos(node_id int32) Vec2 {
+	pOut := new(Vec2)
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+
+	C.imnodes_GetNodeGridSpacePos(pOutArg, C.int(node_id))
+
+	pOutFin()
+
+	return *pOut
+}
+
+func imnodesGetNodeScreenSpacePos(node_id int32) Vec2 {
+	pOut := new(Vec2)
+	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+
+	C.imnodes_GetNodeScreenSpacePos(pOutArg, C.int(node_id))
 
 	pOutFin()
 
