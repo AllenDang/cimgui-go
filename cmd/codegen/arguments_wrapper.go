@@ -30,6 +30,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 	argWrapperMap := map[CIdentifier]argumentWrapper{
 		"char":                     simpleW("rune", "C.char"),
 		"char[5]":                  simplePtrArrayW(5, "C.char", "rune"),
+		"char[16]":                 simplePtrArrayW(16, "C.char", "rune"),
 		"char*":                    constCharW,
 		"const char*":              constCharW,
 		"const char**":             charPtrPtrW,
