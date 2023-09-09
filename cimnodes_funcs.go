@@ -418,6 +418,10 @@ func imnodesSetImGuiContext(ctx *Context) {
 	ctxFin()
 }
 
+func imnodesSetNodeDraggable(node_id int32, draggable bool) {
+	C.imnodes_SetNodeDraggable(C.int(node_id), C.bool(draggable))
+}
+
 func imnodesSetNodeEditorSpacePos(node_id int32, editor_space_pos Vec2) {
 	C.imnodes_SetNodeEditorSpacePos(C.int(node_id), editor_space_pos.toC())
 }
