@@ -21,21 +21,15 @@ const (
 	// AddRect(), AddRectFilled(), PathRect(): enable rounding bottom-right corner only (when rounding > 0.0f, we default to all corners). Wax 0x08.
 	DrawFlagsRoundCornersBottomRight = 128
 	// AddRect(), AddRectFilled(), PathRect(): disable rounding on all corners (when rounding > 0.0f). This is NOT zero, NOT an implicit flag!
-	DrawFlagsRoundCornersNone = 256
-
-	DrawFlagsRoundCornersTop = 48
-
+	DrawFlagsRoundCornersNone   = 256
+	DrawFlagsRoundCornersTop    = 48
 	DrawFlagsRoundCornersBottom = 192
-
-	DrawFlagsRoundCornersLeft = 80
-
-	DrawFlagsRoundCornersRight = 160
-
-	DrawFlagsRoundCornersAll = 240
+	DrawFlagsRoundCornersLeft   = 80
+	DrawFlagsRoundCornersRight  = 160
+	DrawFlagsRoundCornersAll    = 240
 	// Default to ALL corners if none of the _RoundCornersXX flags are specified.
 	DrawFlagsRoundCornersDefault = 240
-
-	DrawFlagsRoundCornersMask = 496
+	DrawFlagsRoundCornersMask    = 496
 )
 
 // Flags for ImDrawList instance. Those are set automatically by ImGui:: functions from ImGuiIO settings, and generally not manipulated directly.
@@ -88,10 +82,8 @@ type Axis int32
 
 const (
 	AxisNone = -1
-
-	AxisX = 0
-
-	AxisY = 1
+	AxisX    = 0
+	AxisY    = 1
 )
 
 // Backend capabilities flags stored in io.BackendFlags. Set by imgui_impl_xxx or custom backend.
@@ -154,10 +146,8 @@ const (
 	// don't set key/input owner on the initial click (note: mouse buttons are keys! often, the key in question will be ImGuiKey_MouseLeft!)
 	ButtonFlagsNoSetKeyOwner = 1048576
 	// don't test key/input owner when polling the key (note: mouse buttons are keys! often, the key in question will be ImGuiKey_MouseLeft!)
-	ButtonFlagsNoTestKeyOwner = 2097152
-
-	ButtonFlagsPressedOnMask = 1008
-
+	ButtonFlagsNoTestKeyOwner   = 2097152
+	ButtonFlagsPressedOnMask    = 1008
 	ButtonFlagsPressedOnDefault = 32
 )
 
@@ -172,10 +162,8 @@ const (
 	// React on right mouse button
 	ButtonFlagsMouseButtonRight = 2
 	// React on center mouse button
-	ButtonFlagsMouseButtonMiddle = 4
-
-	ButtonFlagsMouseButtonMask = 7
-
+	ButtonFlagsMouseButtonMiddle  = 4
+	ButtonFlagsMouseButtonMask    = 7
 	ButtonFlagsMouseButtonDefault = 1
 )
 
@@ -184,92 +172,58 @@ const (
 type Col int32
 
 const (
-	ColText = 0
-
+	ColText         = 0
 	ColTextDisabled = 1
 	// Background of normal windows
 	ColWindowBg = 2
 	// Background of child windows
 	ColChildBg = 3
 	// Background of popups, menus, tooltips windows
-	ColPopupBg = 4
-
-	ColBorder = 5
-
+	ColPopupBg      = 4
+	ColBorder       = 5
 	ColBorderShadow = 6
 	// Background of checkbox, radio button, plot, slider, text input
-	ColFrameBg = 7
-
-	ColFrameBgHovered = 8
-
-	ColFrameBgActive = 9
-
-	ColTitleBg = 10
-
-	ColTitleBgActive = 11
-
-	ColTitleBgCollapsed = 12
-
-	ColMenuBarBg = 13
-
-	ColScrollbarBg = 14
-
-	ColScrollbarGrab = 15
-
+	ColFrameBg              = 7
+	ColFrameBgHovered       = 8
+	ColFrameBgActive        = 9
+	ColTitleBg              = 10
+	ColTitleBgActive        = 11
+	ColTitleBgCollapsed     = 12
+	ColMenuBarBg            = 13
+	ColScrollbarBg          = 14
+	ColScrollbarGrab        = 15
 	ColScrollbarGrabHovered = 16
-
-	ColScrollbarGrabActive = 17
-
-	ColCheckMark = 18
-
-	ColSliderGrab = 19
-
-	ColSliderGrabActive = 20
-
-	ColButton = 21
-
-	ColButtonHovered = 22
-
-	ColButtonActive = 23
+	ColScrollbarGrabActive  = 17
+	ColCheckMark            = 18
+	ColSliderGrab           = 19
+	ColSliderGrabActive     = 20
+	ColButton               = 21
+	ColButtonHovered        = 22
+	ColButtonActive         = 23
 	// Header* colors are used for CollapsingHeader, TreeNode, Selectable, MenuItem
-	ColHeader = 24
-
-	ColHeaderHovered = 25
-
-	ColHeaderActive = 26
-
-	ColSeparator = 27
-
+	ColHeader           = 24
+	ColHeaderHovered    = 25
+	ColHeaderActive     = 26
+	ColSeparator        = 27
 	ColSeparatorHovered = 28
-
-	ColSeparatorActive = 29
+	ColSeparatorActive  = 29
 	// Resize grip in lower-right and lower-left corners of windows.
-	ColResizeGrip = 30
-
+	ColResizeGrip        = 30
 	ColResizeGripHovered = 31
-
-	ColResizeGripActive = 32
+	ColResizeGripActive  = 32
 	// TabItem in a TabBar
-	ColTab = 33
-
-	ColTabHovered = 34
-
-	ColTabActive = 35
-
-	ColTabUnfocused = 36
-
+	ColTab                = 33
+	ColTabHovered         = 34
+	ColTabActive          = 35
+	ColTabUnfocused       = 36
 	ColTabUnfocusedActive = 37
 	// Preview overlay color when about to docking something
 	ColDockingPreview = 38
 	// Background color for empty node (e.g. CentralNode with no window docked into it)
-	ColDockingEmptyBg = 39
-
-	ColPlotLines = 40
-
-	ColPlotLinesHovered = 41
-
-	ColPlotHistogram = 42
-
+	ColDockingEmptyBg       = 39
+	ColPlotLines            = 40
+	ColPlotLinesHovered     = 41
+	ColPlotHistogram        = 42
 	ColPlotHistogramHovered = 43
 	// Table header background
 	ColTableHeaderBg = 44
@@ -280,8 +234,7 @@ const (
 	// Table row background (even rows)
 	ColTableRowBg = 47
 	// Table row background (odd rows)
-	ColTableRowBgAlt = 48
-
+	ColTableRowBgAlt  = 48
 	ColTextSelectedBg = 49
 	// Rectangle highlighting a drop target
 	ColDragDropTarget = 50
@@ -293,8 +246,7 @@ const (
 	ColNavWindowingDimBg = 53
 	// Darken/colorize entire screen behind a modal window, when one is active
 	ColModalWindowDimBg = 54
-
-	ColCOUNT = 55
+	ColCOUNT            = 55
 )
 
 // Flags for ColorEdit3() / ColorEdit4() / ColorPicker3() / ColorPicker4() / ColorButton()
@@ -348,17 +300,12 @@ const (
 	// [Input]      // ColorEdit, ColorPicker: input and output data in RGB format.
 	ColorEditFlagsInputRGB = 134217728
 	// [Input]      // ColorEdit, ColorPicker: input and output data in HSV format.
-	ColorEditFlagsInputHSV = 268435456
-
+	ColorEditFlagsInputHSV       = 268435456
 	ColorEditFlagsDefaultOptions = 177209344
-
-	ColorEditFlagsDisplayMask = 7340032
-
-	ColorEditFlagsDataTypeMask = 25165824
-
-	ColorEditFlagsPickerMask = 100663296
-
-	ColorEditFlagsInputMask = 402653184
+	ColorEditFlagsDisplayMask    = 7340032
+	ColorEditFlagsDataTypeMask   = 25165824
+	ColorEditFlagsPickerMask     = 100663296
+	ColorEditFlagsInputMask      = 402653184
 )
 
 // Extend ImGuiComboFlags_
@@ -389,8 +336,7 @@ const (
 	// Display on the preview box without the square arrow button
 	ComboFlagsNoArrowButton = 32
 	// Display only a square arrow button
-	ComboFlagsNoPreview = 64
-
+	ComboFlagsNoPreview  = 64
 	ComboFlagsHeightMask = 30
 )
 
@@ -449,20 +395,13 @@ const (
 type ContextHookType int32
 
 const (
-	ContextHookTypeNewFramePre = 0
-
-	ContextHookTypeNewFramePost = 1
-
-	ContextHookTypeEndFramePre = 2
-
-	ContextHookTypeEndFramePost = 3
-
-	ContextHookTypeRenderPre = 4
-
-	ContextHookTypeRenderPost = 5
-
-	ContextHookTypeShutdown = 6
-
+	ContextHookTypeNewFramePre    = 0
+	ContextHookTypeNewFramePost   = 1
+	ContextHookTypeEndFramePre    = 2
+	ContextHookTypeEndFramePost   = 3
+	ContextHookTypeRenderPre      = 4
+	ContextHookTypeRenderPost     = 5
+	ContextHookTypeShutdown       = 6
 	ContextHookTypePendingRemoval = 7
 )
 
@@ -471,11 +410,9 @@ const (
 type DataAuthority int32
 
 const (
-	DataAuthorityAuto = 0
-
+	DataAuthorityAuto     = 0
 	DataAuthorityDockNode = 1
-
-	DataAuthorityWindow = 2
+	DataAuthorityWindow   = 2
 )
 
 // Extend ImGuiDataType_
@@ -483,11 +420,9 @@ const (
 type DataTypePrivate int32
 
 const (
-	DataTypeString = 11
-
+	DataTypeString  = 11
 	DataTypePointer = 12
-
-	DataTypeID = 13
+	DataTypeID      = 13
 )
 
 // A primary data type
@@ -515,35 +450,24 @@ const (
 	DataTypeFloat = 8
 	// double
 	DataTypeDouble = 9
-
-	DataTypeCOUNT = 10
+	DataTypeCOUNT  = 10
 )
 
 // original name: ImGuiDebugLogFlags_
 type DebugLogFlags int32
 
 const (
-	DebugLogFlagsNone = 0
-
-	DebugLogFlagsEventActiveId = 1
-
-	DebugLogFlagsEventFocus = 2
-
-	DebugLogFlagsEventPopup = 4
-
-	DebugLogFlagsEventNav = 8
-
-	DebugLogFlagsEventClipper = 16
-
+	DebugLogFlagsNone           = 0
+	DebugLogFlagsEventActiveId  = 1
+	DebugLogFlagsEventFocus     = 2
+	DebugLogFlagsEventPopup     = 4
+	DebugLogFlagsEventNav       = 8
+	DebugLogFlagsEventClipper   = 16
 	DebugLogFlagsEventSelection = 32
-
-	DebugLogFlagsEventIO = 64
-
-	DebugLogFlagsEventDocking = 128
-
-	DebugLogFlagsEventViewport = 256
-
-	DebugLogFlagsEventMask = 511
+	DebugLogFlagsEventIO        = 64
+	DebugLogFlagsEventDocking   = 128
+	DebugLogFlagsEventViewport  = 256
+	DebugLogFlagsEventMask      = 511
 	// Also send output to TTY
 	DebugLogFlagsOutputToTTY = 1024
 )
@@ -553,16 +477,11 @@ const (
 type Dir int32
 
 const (
-	DirNone = -1
-
-	DirLeft = 0
-
+	DirNone  = -1
+	DirLeft  = 0
 	DirRight = 1
-
-	DirUp = 2
-
-	DirDown = 3
-
+	DirUp    = 2
+	DirDown  = 3
 	DirCOUNT = 4
 )
 
@@ -598,17 +517,13 @@ const (
 	// [EXPERIMENTAL]
 	DockNodeFlagsNoResizeX = 4194304
 	// [EXPERIMENTAL]
-	DockNodeFlagsNoResizeY = 8388608
-
+	DockNodeFlagsNoResizeY              = 8388608
 	DockNodeFlagsSharedFlagsInheritMask = -1
-
-	DockNodeFlagsNoResizeFlagsMask = 12582944
-
-	DockNodeFlagsLocalFlagsMask = 12713072
+	DockNodeFlagsNoResizeFlagsMask      = 12582944
+	DockNodeFlagsLocalFlagsMask         = 12713072
 	// When splitting those flags are moved to the inheriting child, never duplicated
 	DockNodeFlagsLocalFlagsTransferMask = 12712048
-
-	DockNodeFlagsSavedFlagsMask = 12712992
+	DockNodeFlagsSavedFlagsMask         = 12712992
 )
 
 // Flags for ImGui::DockSpace(), shared/inherited by child nodes.
@@ -637,13 +552,10 @@ const (
 type DockNodeState int32
 
 const (
-	DockNodeStateUnknown = 0
-
-	DockNodeStateHostWindowHiddenBecauseSingleWindow = 1
-
+	DockNodeStateUnknown                                   = 0
+	DockNodeStateHostWindowHiddenBecauseSingleWindow       = 1
 	DockNodeStateHostWindowHiddenBecauseWindowsAreResizing = 2
-
-	DockNodeStateHostWindowVisible = 3
+	DockNodeStateHostWindowVisible                         = 3
 )
 
 // Flags for ImGui::BeginDragDropSource(), ImGui::AcceptDragDropPayload()
@@ -703,8 +615,7 @@ const (
 	// Do not consider popup hierarchy (do not treat popup emitter as parent of popup) (when used with _ChildWindows or _RootWindow)
 	FocusedFlagsNoPopupHierarchy = 8
 	// Consider docking hierarchy (treat dockspace host as parent of docked window) (when used with _ChildWindows or _RootWindow)
-	FocusedFlagsDockHierarchy = 16
-
+	FocusedFlagsDockHierarchy       = 16
 	FocusedFlagsRootAndChildWindows = 3
 )
 
@@ -713,11 +624,9 @@ const (
 type HoveredFlagsPrivate int32
 
 const (
-	HoveredFlagsDelayMask = 245760
-
+	HoveredFlagsDelayMask                     = 245760
 	HoveredFlagsAllowedMaskForIsWindowHovered = 12479
-
-	HoveredFlagsAllowedMaskForIsItemHovered = 262048
+	HoveredFlagsAllowedMaskForIsItemHovered   = 262048
 )
 
 // Flags for ImGui::IsItemHovered(), ImGui::IsWindowHovered()
@@ -750,12 +659,9 @@ const (
 	// IsItemHovered() only: Return true even if the item is disabled
 	HoveredFlagsAllowWhenDisabled = 1024
 	// IsItemHovered() only: Disable using gamepad/keyboard navigation state when active, always query mouse
-	HoveredFlagsNoNavOverride = 2048
-
+	HoveredFlagsNoNavOverride       = 2048
 	HoveredFlagsAllowWhenOverlapped = 768
-
-	HoveredFlagsRectOnly = 928
-
+	HoveredFlagsRectOnly            = 928
 	HoveredFlagsRootAndChildWindows = 3
 	// Shortcut for standard flags when using IsItemHovered() + SetTooltip() sequence.
 	HoveredFlagsForTooltip = 4096
@@ -777,23 +683,15 @@ const (
 type InputEventType int32
 
 const (
-	InputEventTypeNone = 0
-
-	InputEventTypeMousePos = 1
-
-	InputEventTypeMouseWheel = 2
-
-	InputEventTypeMouseButton = 3
-
+	InputEventTypeNone          = 0
+	InputEventTypeMousePos      = 1
+	InputEventTypeMouseWheel    = 2
+	InputEventTypeMouseButton   = 3
 	InputEventTypeMouseViewport = 4
-
-	InputEventTypeKey = 5
-
-	InputEventTypeText = 6
-
-	InputEventTypeFocus = 7
-
-	InputEventTypeCOUNT = 8
+	InputEventTypeKey           = 5
+	InputEventTypeText          = 6
+	InputEventTypeFocus         = 7
+	InputEventTypeCOUNT         = 8
 )
 
 // Flags for extended versions of IsKeyPressed(), IsMouseClicked(), Shortcut(), SetKeyOwner(), SetItemKeyOwner()
@@ -811,16 +709,13 @@ const (
 	InputFlagsRepeatRateNavMove = 4
 	// Repeat rate: Faster
 	InputFlagsRepeatRateNavTweak = 8
-
-	InputFlagsRepeatRateMask = 14
+	InputFlagsRepeatRateMask     = 14
 	// Only set if item is hovered (default to both)
 	InputFlagsCondHovered = 16
 	// Only set if item is active (default to both)
-	InputFlagsCondActive = 32
-
+	InputFlagsCondActive  = 32
 	InputFlagsCondDefault = 48
-
-	InputFlagsCondMask = 48
+	InputFlagsCondMask    = 48
 	// Access to key data will require EXPLICIT owner ID (ImGuiKeyOwner_Any/0 will NOT accepted for polling). Cleared at end of frame. This is useful to make input-owner-aware code steal keys from non-input-owner-aware code.
 	InputFlagsLockThisFrame = 64
 	// Access to key data will require EXPLICIT owner ID (ImGuiKeyOwner_Any/0 will NOT accepted for polling). Cleared when the key is released or at end of each frame if key is released. This is useful to make input-owner-aware code steal keys from non-input-owner-aware code.
@@ -838,16 +733,11 @@ const (
 	// Do not register route, poll keys directly.
 	InputFlagsRouteAlways = 4096
 	// Global routes will not be applied if underlying background/void is focused (== no Dear ImGui windows are focused). Useful for overlay applications.
-	InputFlagsRouteUnlessBgFocused = 8192
-
-	InputFlagsRouteExtraMask = 12288
-
-	InputFlagsSupportedByIsKeyPressed = 15
-
-	InputFlagsSupportedByShortcut = 16143
-
-	InputFlagsSupportedBySetKeyOwner = 192
-
+	InputFlagsRouteUnlessBgFocused       = 8192
+	InputFlagsRouteExtraMask             = 12288
+	InputFlagsSupportedByIsKeyPressed    = 15
+	InputFlagsSupportedByShortcut        = 16143
+	InputFlagsSupportedBySetKeyOwner     = 192
 	InputFlagsSupportedBySetItemKeyOwner = 240
 )
 
@@ -857,15 +747,12 @@ type InputSource int32
 const (
 	InputSourceNone = 0
 	// Note: may be Mouse or TouchScreen or Pen. See io.MouseSource to distinguish them.
-	InputSourceMouse = 1
-
+	InputSourceMouse    = 1
 	InputSourceKeyboard = 2
-
-	InputSourceGamepad = 3
+	InputSourceGamepad  = 3
 	// Currently only used by InputText()
 	InputSourceClipboard = 4
-
-	InputSourceCOUNT = 5
+	InputSourceCOUNT     = 5
 )
 
 // Extend ImGuiInputTextFlags_
@@ -1006,149 +893,78 @@ type Key int32
 const (
 	KeyNone = 0
 	// == ImGuiKey_NamedKey_BEGIN
-	KeyTab = 512
-
-	KeyLeftArrow = 513
-
+	KeyTab        = 512
+	KeyLeftArrow  = 513
 	KeyRightArrow = 514
-
-	KeyUpArrow = 515
-
-	KeyDownArrow = 516
-
-	KeyPageUp = 517
-
-	KeyPageDown = 518
-
-	KeyHome = 519
-
-	KeyEnd = 520
-
-	KeyInsert = 521
-
-	KeyDelete = 522
-
-	KeyBackspace = 523
-
-	KeySpace = 524
-
-	KeyEnter = 525
-
-	KeyEscape = 526
-
-	KeyLeftCtrl = 527
-
-	KeyLeftShift = 528
-
-	KeyLeftAlt = 529
-
-	KeyLeftSuper = 530
-
-	KeyRightCtrl = 531
-
+	KeyUpArrow    = 515
+	KeyDownArrow  = 516
+	KeyPageUp     = 517
+	KeyPageDown   = 518
+	KeyHome       = 519
+	KeyEnd        = 520
+	KeyInsert     = 521
+	KeyDelete     = 522
+	KeyBackspace  = 523
+	KeySpace      = 524
+	KeyEnter      = 525
+	KeyEscape     = 526
+	KeyLeftCtrl   = 527
+	KeyLeftShift  = 528
+	KeyLeftAlt    = 529
+	KeyLeftSuper  = 530
+	KeyRightCtrl  = 531
 	KeyRightShift = 532
-
-	KeyRightAlt = 533
-
+	KeyRightAlt   = 533
 	KeyRightSuper = 534
-
-	KeyMenu = 535
-
-	Key0 = 536
-
-	Key1 = 537
-
-	Key2 = 538
-
-	Key3 = 539
-
-	Key4 = 540
-
-	Key5 = 541
-
-	Key6 = 542
-
-	Key7 = 543
-
-	Key8 = 544
-
-	Key9 = 545
-
-	KeyA = 546
-
-	KeyB = 547
-
-	KeyC = 548
-
-	KeyD = 549
-
-	KeyE = 550
-
-	KeyF = 551
-
-	KeyG = 552
-
-	KeyH = 553
-
-	KeyI = 554
-
-	KeyJ = 555
-
-	KeyK = 556
-
-	KeyL = 557
-
-	KeyM = 558
-
-	KeyN = 559
-
-	KeyO = 560
-
-	KeyP = 561
-
-	KeyQ = 562
-
-	KeyR = 563
-
-	KeyS = 564
-
-	KeyT = 565
-
-	KeyU = 566
-
-	KeyV = 567
-
-	KeyW = 568
-
-	KeyX = 569
-
-	KeyY = 570
-
-	KeyZ = 571
-
-	KeyF1 = 572
-
-	KeyF2 = 573
-
-	KeyF3 = 574
-
-	KeyF4 = 575
-
-	KeyF5 = 576
-
-	KeyF6 = 577
-
-	KeyF7 = 578
-
-	KeyF8 = 579
-
-	KeyF9 = 580
-
-	KeyF10 = 581
-
-	KeyF11 = 582
-
-	KeyF12 = 583
+	KeyMenu       = 535
+	Key0          = 536
+	Key1          = 537
+	Key2          = 538
+	Key3          = 539
+	Key4          = 540
+	Key5          = 541
+	Key6          = 542
+	Key7          = 543
+	Key8          = 544
+	Key9          = 545
+	KeyA          = 546
+	KeyB          = 547
+	KeyC          = 548
+	KeyD          = 549
+	KeyE          = 550
+	KeyF          = 551
+	KeyG          = 552
+	KeyH          = 553
+	KeyI          = 554
+	KeyJ          = 555
+	KeyK          = 556
+	KeyL          = 557
+	KeyM          = 558
+	KeyN          = 559
+	KeyO          = 560
+	KeyP          = 561
+	KeyQ          = 562
+	KeyR          = 563
+	KeyS          = 564
+	KeyT          = 565
+	KeyU          = 566
+	KeyV          = 567
+	KeyW          = 568
+	KeyX          = 569
+	KeyY          = 570
+	KeyZ          = 571
+	KeyF1         = 572
+	KeyF2         = 573
+	KeyF3         = 574
+	KeyF4         = 575
+	KeyF5         = 576
+	KeyF6         = 577
+	KeyF7         = 578
+	KeyF8         = 579
+	KeyF9         = 580
+	KeyF10        = 581
+	KeyF11        = 582
+	KeyF12        = 583
 	// '
 	KeyApostrophe = 584
 	// ,
@@ -1170,51 +986,29 @@ const (
 	// ]
 	KeyRightBracket = 593
 	// `
-	KeyGraveAccent = 594
-
-	KeyCapsLock = 595
-
-	KeyScrollLock = 596
-
-	KeyNumLock = 597
-
-	KeyPrintScreen = 598
-
-	KeyPause = 599
-
-	KeyKeypad0 = 600
-
-	KeyKeypad1 = 601
-
-	KeyKeypad2 = 602
-
-	KeyKeypad3 = 603
-
-	KeyKeypad4 = 604
-
-	KeyKeypad5 = 605
-
-	KeyKeypad6 = 606
-
-	KeyKeypad7 = 607
-
-	KeyKeypad8 = 608
-
-	KeyKeypad9 = 609
-
-	KeyKeypadDecimal = 610
-
-	KeyKeypadDivide = 611
-
+	KeyGraveAccent    = 594
+	KeyCapsLock       = 595
+	KeyScrollLock     = 596
+	KeyNumLock        = 597
+	KeyPrintScreen    = 598
+	KeyPause          = 599
+	KeyKeypad0        = 600
+	KeyKeypad1        = 601
+	KeyKeypad2        = 602
+	KeyKeypad3        = 603
+	KeyKeypad4        = 604
+	KeyKeypad5        = 605
+	KeyKeypad6        = 606
+	KeyKeypad7        = 607
+	KeyKeypad8        = 608
+	KeyKeypad9        = 609
+	KeyKeypadDecimal  = 610
+	KeyKeypadDivide   = 611
 	KeyKeypadMultiply = 612
-
 	KeyKeypadSubtract = 613
-
-	KeyKeypadAdd = 614
-
-	KeyKeypadEnter = 615
-
-	KeyKeypadEqual = 616
+	KeyKeypadAdd      = 614
+	KeyKeypadEnter    = 615
+	KeyKeypadEqual    = 616
 	// Menu (Xbox)      + (Switch)   Start/Options (PS)
 	KeyGamepadStart = 617
 	// View (Xbox)      - (Switch)   Share (PS)
@@ -1262,33 +1056,20 @@ const (
 	// [Analog]
 	KeyGamepadRStickUp = 639
 	// [Analog]
-	KeyGamepadRStickDown = 640
-
-	KeyMouseLeft = 641
-
-	KeyMouseRight = 642
-
-	KeyMouseMiddle = 643
-
-	KeyMouseX1 = 644
-
-	KeyMouseX2 = 645
-
-	KeyMouseWheelX = 646
-
-	KeyMouseWheelY = 647
-
-	KeyReservedForModCtrl = 648
-
+	KeyGamepadRStickDown   = 640
+	KeyMouseLeft           = 641
+	KeyMouseRight          = 642
+	KeyMouseMiddle         = 643
+	KeyMouseX1             = 644
+	KeyMouseX2             = 645
+	KeyMouseWheelX         = 646
+	KeyMouseWheelY         = 647
+	KeyReservedForModCtrl  = 648
 	KeyReservedForModShift = 649
-
-	KeyReservedForModAlt = 650
-
+	KeyReservedForModAlt   = 650
 	KeyReservedForModSuper = 651
-
-	KeyCOUNT = 652
-
-	ModNone = 0
+	KeyCOUNT               = 652
+	ModNone                = 0
 	// Ctrl
 	ModCtrl = 4096
 	// Shift
@@ -1300,12 +1081,9 @@ const (
 	// Alias for Ctrl (non-macOS) _or_ Super (macOS).
 	ModShortcut = 2048
 	// 5-bits
-	ModMask = 63488
-
+	ModMask          = 63488
 	KeyNamedKeyBEGIN = 512
-
-	KeyNamedKeyEND = 652
-
+	KeyNamedKeyEND   = 652
 	KeyNamedKeyCOUNT = 140
 	// Size of KeysData[]: hold legacy 0..512 keycodes + named keys
 	KeyKeysDataSIZE = 652
@@ -1320,8 +1098,7 @@ type LayoutType int32
 
 const (
 	LayoutTypeHorizontal = 0
-
-	LayoutTypeVertical = 1
+	LayoutTypeVertical   = 1
 )
 
 // This is experimental and not officially supported, it'll probably fall short of features, if/when it does we may backtrack.
@@ -1329,41 +1106,27 @@ const (
 type LocKey int32
 
 const (
-	LocKeyVersionStr = 0
-
-	LocKeyTableSizeOne = 1
-
-	LocKeyTableSizeAllFit = 2
-
-	LocKeyTableSizeAllDefault = 3
-
-	LocKeyTableResetOrder = 4
-
-	LocKeyWindowingMainMenuBar = 5
-
-	LocKeyWindowingPopup = 6
-
-	LocKeyWindowingUntitled = 7
-
-	LocKeyDockingHideTabBar = 8
-
+	LocKeyVersionStr             = 0
+	LocKeyTableSizeOne           = 1
+	LocKeyTableSizeAllFit        = 2
+	LocKeyTableSizeAllDefault    = 3
+	LocKeyTableResetOrder        = 4
+	LocKeyWindowingMainMenuBar   = 5
+	LocKeyWindowingPopup         = 6
+	LocKeyWindowingUntitled      = 7
+	LocKeyDockingHideTabBar      = 8
 	LocKeyDockingHoldShiftToDock = 9
-
-	LocKeyCOUNT = 10
+	LocKeyCOUNT                  = 10
 )
 
 // original name: ImGuiLogType
 type LogType int32
 
 const (
-	LogTypeNone = 0
-
-	LogTypeTTY = 1
-
-	LogTypeFile = 2
-
-	LogTypeBuffer = 3
-
+	LogTypeNone      = 0
+	LogTypeTTY       = 1
+	LogTypeFile      = 2
+	LogTypeBuffer    = 3
 	LogTypeClipboard = 4
 )
 
@@ -1373,13 +1136,10 @@ const (
 type MouseButton int32
 
 const (
-	MouseButtonLeft = 0
-
-	MouseButtonRight = 1
-
+	MouseButtonLeft   = 0
+	MouseButtonRight  = 1
 	MouseButtonMiddle = 2
-
-	MouseButtonCOUNT = 5
+	MouseButtonCOUNT  = 5
 )
 
 // Enumeration for GetMouseCursor()
@@ -1388,8 +1148,7 @@ const (
 type MouseCursor int32
 
 const (
-	MouseCursorNone = -1
-
+	MouseCursorNone  = -1
 	MouseCursorArrow = 0
 	// When hovering over InputText, etc.
 	MouseCursorTextInput = 1
@@ -1407,8 +1166,7 @@ const (
 	MouseCursorHand = 7
 	// When hovering something with disallowed interaction. Usually a crossed circle.
 	MouseCursorNotAllowed = 8
-
-	MouseCursorCOUNT = 9
+	MouseCursorCOUNT      = 9
 )
 
 // Enumeration for AddMouseSourceEvent() actual source of Mouse Input data.
@@ -1424,8 +1182,7 @@ const (
 	// Input is coming from a touch screen (no hovering prior to initial press, less precise initial press aiming, dual-axis wheeling possible).
 	MouseSourceTouchScreen = 1
 	// Input is coming from a pressure/magnetic pen (often used in conjunction with high-sampling rates).
-	MouseSourcePen = 2
-
+	MouseSourcePen   = 2
 	MouseSourceCOUNT = 3
 )
 
@@ -1433,14 +1190,11 @@ const (
 type NavHighlightFlags int32
 
 const (
-	NavHighlightFlagsNone = 0
-
+	NavHighlightFlagsNone        = 0
 	NavHighlightFlagsTypeDefault = 1
-
-	NavHighlightFlagsTypeThin = 2
+	NavHighlightFlagsTypeThin    = 2
 	// Draw rectangular highlight if (g.NavId == id) _even_ when using the mouse.
 	NavHighlightFlagsAlwaysDraw = 4
-
 	NavHighlightFlagsNoRounding = 8
 )
 
@@ -1451,39 +1205,23 @@ const (
 type NavInput int32
 
 const (
-	NavInputActivate = 0
-
-	NavInputCancel = 1
-
-	NavInputInput = 2
-
-	NavInputMenu = 3
-
-	NavInputDpadLeft = 4
-
-	NavInputDpadRight = 5
-
-	NavInputDpadUp = 6
-
-	NavInputDpadDown = 7
-
-	NavInputLStickLeft = 8
-
+	NavInputActivate    = 0
+	NavInputCancel      = 1
+	NavInputInput       = 2
+	NavInputMenu        = 3
+	NavInputDpadLeft    = 4
+	NavInputDpadRight   = 5
+	NavInputDpadUp      = 6
+	NavInputDpadDown    = 7
+	NavInputLStickLeft  = 8
 	NavInputLStickRight = 9
-
-	NavInputLStickUp = 10
-
-	NavInputLStickDown = 11
-
-	NavInputFocusPrev = 12
-
-	NavInputFocusNext = 13
-
-	NavInputTweakSlow = 14
-
-	NavInputTweakFast = 15
-
-	NavInputCOUNT = 16
+	NavInputLStickUp    = 10
+	NavInputLStickDown  = 11
+	NavInputFocusPrev   = 12
+	NavInputFocusNext   = 13
+	NavInputTweakSlow   = 14
+	NavInputTweakFast   = 15
+	NavInputCOUNT       = 16
 )
 
 // original name: ImGuiNavLayer
@@ -1493,8 +1231,7 @@ const (
 	// Main scrolling layer
 	NavLayerMain = 0
 	// Menu layer (access with Alt)
-	NavLayerMenu = 1
-
+	NavLayerMenu  = 1
 	NavLayerCOUNT = 2
 )
 
@@ -1505,13 +1242,11 @@ const (
 	NavMoveFlagsNone = 0
 	// On failed request, restart from opposite side
 	NavMoveFlagsLoopX = 1
-
 	NavMoveFlagsLoopY = 2
 	// On failed request, request from opposite side one line down (when NavDir==right) or one line up (when NavDir==left)
 	NavMoveFlagsWrapX = 4
 	// This is not super useful but provided for completeness
-	NavMoveFlagsWrapY = 8
-
+	NavMoveFlagsWrapY    = 8
 	NavMoveFlagsWrapMask = 15
 	// Allow scoring and considering the current NavId as a move target candidate. This is used when the move source is offset (e.g. pressing PageDown actually needs to send a Up move request, if we are pressing PageDown from the bottom-most item we need to stay in place)
 	NavMoveFlagsAllowCurrentNavId = 16
@@ -1519,8 +1254,7 @@ const (
 	NavMoveFlagsAlsoScoreVisibleSet = 32
 	// Force scrolling to min/max (used by Home/End) // FIXME-NAV: Aim to remove or reword, probably unnecessary
 	NavMoveFlagsScrollToEdgeY = 64
-
-	NavMoveFlagsForwarded = 128
+	NavMoveFlagsForwarded     = 128
 	// Dummy scoring for debug purpose, don't apply result
 	NavMoveFlagsDebugNoResult = 256
 	// Requests from focus API can land/focus/activate items even if they are marked with _NoTabStop (see NavProcessItemForTabbingRequest() for details)
@@ -1541,40 +1275,27 @@ const (
 type NextItemDataFlags int32
 
 const (
-	NextItemDataFlagsNone = 0
-
+	NextItemDataFlagsNone     = 0
 	NextItemDataFlagsHasWidth = 1
-
-	NextItemDataFlagsHasOpen = 2
+	NextItemDataFlagsHasOpen  = 2
 )
 
 // original name: ImGuiNextWindowDataFlags_
 type NextWindowDataFlags int32
 
 const (
-	NextWindowDataFlagsNone = 0
-
-	NextWindowDataFlagsHasPos = 1
-
-	NextWindowDataFlagsHasSize = 2
-
-	NextWindowDataFlagsHasContentSize = 4
-
-	NextWindowDataFlagsHasCollapsed = 8
-
+	NextWindowDataFlagsNone              = 0
+	NextWindowDataFlagsHasPos            = 1
+	NextWindowDataFlagsHasSize           = 2
+	NextWindowDataFlagsHasContentSize    = 4
+	NextWindowDataFlagsHasCollapsed      = 8
 	NextWindowDataFlagsHasSizeConstraint = 16
-
-	NextWindowDataFlagsHasFocus = 32
-
-	NextWindowDataFlagsHasBgAlpha = 64
-
-	NextWindowDataFlagsHasScroll = 128
-
-	NextWindowDataFlagsHasViewport = 256
-
-	NextWindowDataFlagsHasDock = 512
-
-	NextWindowDataFlagsHasWindowClass = 1024
+	NextWindowDataFlagsHasFocus          = 32
+	NextWindowDataFlagsHasBgAlpha        = 64
+	NextWindowDataFlagsHasScroll         = 128
+	NextWindowDataFlagsHasViewport       = 256
+	NextWindowDataFlagsHasDock           = 512
+	NextWindowDataFlagsHasWindowClass    = 1024
 )
 
 // Flags for internal's BeginColumns(). Prefix using BeginTable() nowadays!
@@ -1599,8 +1320,7 @@ const (
 type PlotType int32
 
 const (
-	PlotTypeLines = 0
-
+	PlotTypeLines     = 0
 	PlotTypeHistogram = 1
 )
 
@@ -1623,10 +1343,8 @@ const (
 	// For BeginPopupContext*(): open on Right Mouse release. Guaranteed to always be == 1 (same as ImGuiMouseButton_Right)
 	PopupFlagsMouseButtonRight = 1
 	// For BeginPopupContext*(): open on Middle Mouse release. Guaranteed to always be == 2 (same as ImGuiMouseButton_Middle)
-	PopupFlagsMouseButtonMiddle = 2
-
-	PopupFlagsMouseButtonMask = 31
-
+	PopupFlagsMouseButtonMiddle  = 2
+	PopupFlagsMouseButtonMask    = 31
 	PopupFlagsMouseButtonDefault = 1
 	// For OpenPopup*(), BeginPopupContext*(): don't open if there's already a popup at the same level of the popup stack
 	PopupFlagsNoOpenOverExistingPopup = 32
@@ -1636,19 +1354,16 @@ const (
 	PopupFlagsAnyPopupId = 128
 	// For IsPopupOpen(): search/test at any level of the popup stack (default test in the current level)
 	PopupFlagsAnyPopupLevel = 256
-
-	PopupFlagsAnyPopup = 384
+	PopupFlagsAnyPopup      = 384
 )
 
 // original name: ImGuiPopupPositionPolicy
 type PopupPositionPolicy int32
 
 const (
-	PopupPositionPolicyDefault = 0
-
+	PopupPositionPolicyDefault  = 0
 	PopupPositionPolicyComboBox = 1
-
-	PopupPositionPolicyTooltip = 2
+	PopupPositionPolicyTooltip  = 2
 )
 
 // Early work-in-progress API for ScrollToItem()
@@ -1671,10 +1386,8 @@ const (
 	ScrollFlagsAlwaysCenterY = 32
 	// Disable forwarding scrolling to parent window if required to keep item/rect visible (only scroll window the function was applied to).
 	ScrollFlagsNoScrollParent = 64
-
-	ScrollFlagsMaskX = 21
-
-	ScrollFlagsMaskY = 42
+	ScrollFlagsMaskX          = 21
+	ScrollFlagsMaskY          = 42
 )
 
 // Extend ImGuiSelectableFlags_
@@ -1724,8 +1437,7 @@ const (
 	SeparatorFlagsNone = 0
 	// Axis default to current layout type, so generally Horizontal unless e.g. in a menu bar
 	SeparatorFlagsHorizontal = 1
-
-	SeparatorFlagsVertical = 2
+	SeparatorFlagsVertical   = 2
 	// Make separator cover all columns of a legacy Columns() set.
 	SeparatorFlagsSpanAllColumns = 4
 )
@@ -1737,7 +1449,6 @@ type SliderFlagsPrivate int32
 const (
 	// Should this slider be orientated vertically?
 	SliderFlagsVertical = 1048576
-
 	SliderFlagsReadOnly = 2097152
 )
 
@@ -1843,8 +1554,7 @@ const (
 	StyleVarSeparatorTextPadding = 27
 	// float     DockingSeparatorSize
 	StyleVarDockingSeparatorSize = 28
-
-	StyleVarCOUNT = 29
+	StyleVarCOUNT                = 29
 )
 
 // Extend ImGuiTabBarFlags_
@@ -1853,8 +1563,7 @@ type TabBarFlagsPrivate int32
 
 const (
 	// Part of a dock node [we don't use this in the master branch but it facilitate branch syncing to keep this around]
-	TabBarFlagsDockNode = 1048576
-
+	TabBarFlagsDockNode  = 1048576
 	TabBarFlagsIsFocused = 2097152
 	// FIXME: Settings are handled by the docking system, this only request the tab bar to mark settings dirty when reordering tabs
 	TabBarFlagsSaveSettings = 4194304
@@ -1881,10 +1590,8 @@ const (
 	// Resize tabs when they don't fit
 	TabBarFlagsFittingPolicyResizeDown = 64
 	// Add scroll buttons when tabs don't fit
-	TabBarFlagsFittingPolicyScroll = 128
-
-	TabBarFlagsFittingPolicyMask = 192
-
+	TabBarFlagsFittingPolicyScroll  = 128
+	TabBarFlagsFittingPolicyMask    = 192
 	TabBarFlagsFittingPolicyDefault = 64
 )
 
@@ -2000,12 +1707,9 @@ const (
 	// Status: is currently part of the sort specs
 	TableColumnFlagsIsSorted = 67108864
 	// Status: is hovered by mouse
-	TableColumnFlagsIsHovered = 134217728
-
-	TableColumnFlagsWidthMask = 24
-
+	TableColumnFlagsIsHovered  = 134217728
+	TableColumnFlagsWidthMask  = 24
 	TableColumnFlagsIndentMask = 196608
-
 	TableColumnFlagsStatusMask = 251658240
 	// [Internal] Disable user resizing this column directly (it may however we resized indirectly from its left edge)
 	TableColumnFlagsNoDirectResize = 1073741824
@@ -2107,8 +1811,7 @@ const (
 	TableFlagsSortMulti = 67108864
 	// Allow no sorting, disable default sorting. TableGetSortSpecs() may return specs where (SpecsCount == 0).
 	TableFlagsSortTristate = 134217728
-
-	TableFlagsSizingMask = 57344
+	TableFlagsSizingMask   = 57344
 )
 
 // Flags for ImGui::TableNextRow()
@@ -2125,8 +1828,7 @@ const (
 type TextFlags int32
 
 const (
-	TextFlagsNone = 0
-
+	TextFlagsNone                       = 0
 	TextFlagsNoWidthForLargeClippedText = 1
 )
 
@@ -2183,8 +1885,7 @@ const (
 	TreeNodeFlagsSpanFullWidth = 4096
 	// (WIP) Nav: left direction may move to this TreeNode() from any of its child (items submitted between TreeNode and TreePop)
 	TreeNodeFlagsNavLeftJumpsBackHere = 8192
-
-	TreeNodeFlagsCollapsingHeader = 26
+	TreeNodeFlagsCollapsingHeader     = 26
 )
 
 // Flags stored in ImGuiViewport::Flags, giving indications to the platform backends.
@@ -2231,19 +1932,13 @@ const (
 type WindowDockStyleCol int32
 
 const (
-	WindowDockStyleColText = 0
-
-	WindowDockStyleColTab = 1
-
-	WindowDockStyleColTabHovered = 2
-
-	WindowDockStyleColTabActive = 3
-
-	WindowDockStyleColTabUnfocused = 4
-
+	WindowDockStyleColText               = 0
+	WindowDockStyleColTab                = 1
+	WindowDockStyleColTabHovered         = 2
+	WindowDockStyleColTabActive          = 3
+	WindowDockStyleColTabUnfocused       = 4
 	WindowDockStyleColTabUnfocusedActive = 5
-
-	WindowDockStyleColCOUNT = 6
+	WindowDockStyleColCOUNT              = 6
 )
 
 // Flags for ImGui::Begin()
@@ -2294,13 +1989,10 @@ const (
 	// Display a dot next to the title. When used in a tab/docking context, tab is selected when clicking the X + closure is not assumed (will wait for user to stop submitting the tab). Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.
 	WindowFlagsUnsavedDocument = 1048576
 	// Disable docking of this window
-	WindowFlagsNoDocking = 2097152
-
-	WindowFlagsNoNav = 786432
-
+	WindowFlagsNoDocking    = 2097152
+	WindowFlagsNoNav        = 786432
 	WindowFlagsNoDecoration = 43
-
-	WindowFlagsNoInputs = 786944
+	WindowFlagsNoInputs     = 786944
 	// [BETA] On child window: allow gamepad/keyboard navigation to cross over parent border to this child or between sibling child windows.
 	WindowFlagsNavFlattened = 8388608
 	// Don't use! For internal use by BeginChild()
