@@ -27,13 +27,13 @@ func getReturnWrapper(
 		"ImWchar":                  simpleR("Wchar"),
 		"ImWchar16":                simpleR("uint16"),
 		"float":                    simpleR("float32"),
-		"float*":                   simplePtrR("*float32"),
+		"float*":                   simplePtrR("float32"),
 		"double":                   simpleR("float64"),
-		"double*":                  simplePtrR("*float64"),
+		"double*":                  simplePtrR("float64"),
 		"int":                      simpleR("int32"),
-		"int*":                     simplePtrR("*int32"),
+		"int*":                     simplePtrR("int32"),
 		"unsigned int":             simpleR("uint32"),
-		"unsigned int*":            simplePtrR("*uint32"),
+		"unsigned int*":            simplePtrR("uint32"),
 		"short":                    simpleR("int16"),
 		"unsigned short":           simpleR("uint16"),
 		"ImS8":                     simpleR("int"),
@@ -45,6 +45,7 @@ func getReturnWrapper(
 		"ImU16":                    simpleR("uint16"),
 		"ImU16*":                   simplePtrR("uint16"),
 		"ImU32":                    simpleR("uint32"),
+		"ImU32*":                   simplePtrR("uint32"),
 		"ImU64":                    simpleR("uint64"),
 		"ImU64*":                   simplePtrR("uint64"),
 		"ImVec4":                   wrappableR("Vec4"),
@@ -59,7 +60,9 @@ func getReturnWrapper(
 		"ImGuiTableColumnIdx":      simpleR("TableColumnIdx"),
 		"ImGuiTableDrawChannelIdx": simpleR("TableDrawChannelIdx"),
 		//"void*":                    simpleR("unsafe.Pointer"), // TODO: disabled due to https://github.com/AllenDang/cimgui-go/issues/184
-		"size_t": simpleR("uint64"),
+		"size_t":     simpleR("uint64"),
+		"ImDrawIdx":  simpleR("DrawIdx"),
+		"ImDrawIdx*": simplePtrR("DrawIdx"),
 	}
 
 	w, known := returnWrapperMap[t]
@@ -116,7 +119,10 @@ func simpleR(goType GoIdentifier) returnWrapper {
 }
 
 func simplePtrR(goType GoIdentifier) returnWrapper {
-	return returnWrapper{goType, fmt.Sprintf("(%s)(%s)", goType, "%s")}
+	return returnWrapper{
+		returnType: GoIdentifier(fmt.Sprintf("*%s", goType)),
+		returnStmt: fmt.Sprintf("(*%s)(%s)", goType, "%s"),
+	}
 }
 
 func wrappableR(goType GoIdentifier) returnWrapper {

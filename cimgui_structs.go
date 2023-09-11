@@ -13,13 +13,24 @@ import "unsafe"
 // Helper: ImBitVector
 // Store 1-bit per value.
 type BitVector struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldStorage Vector[*uint32]
 }
 
 func (self BitVector) handle() (result *C.ImBitVector, releaseFn func()) {
-	result = (*C.ImBitVector)(self.data)
-	return result, func() {}
+	result = new(C.ImBitVector)
+	FieldStorage := self.FieldStorage
+	FieldStorageData := FieldStorage.Data
+	FieldStorageDataArg, FieldStorageDataFin := WrapNumberPtr[C.ImU32, uint32](FieldStorageData)
+	FieldStorageVecArg := new(C.ImVector_ImU32)
+	FieldStorageVecArg.Size = C.int(FieldStorage.Size)
+	FieldStorageVecArg.Capacity = C.int(FieldStorage.Capacity)
+	FieldStorageVecArg.Data = FieldStorageDataArg
+
+	result.Storage = *FieldStorageVecArg
+	releaseFn = func() {
+		FieldStorageDataFin()
+	}
+	return result, releaseFn
 }
 
 func (self BitVector) c() (result C.ImBitVector, fin func()) {
@@ -29,19 +40,41 @@ func (self BitVector) c() (result C.ImBitVector, fin func()) {
 
 func newBitVectorFromC(cvalue *C.ImBitVector) *BitVector {
 	result := new(BitVector)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldStorage = newVectorFromC(cvalue.Storage.Size, cvalue.Storage.Capacity, (*uint32)(cvalue.Storage.Data))
 	return result
 }
 
 // [Internal] For use by ImDrawListSplitter
 type DrawChannel struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldCmdBuffer Vector[*DrawCmd]
+	FieldIdxBuffer Vector[*DrawIdx]
 }
 
 func (self DrawChannel) handle() (result *C.ImDrawChannel, releaseFn func()) {
-	result = (*C.ImDrawChannel)(self.data)
-	return result, func() {}
+	result = new(C.ImDrawChannel)
+	FieldCmdBuffer := self.FieldCmdBuffer
+	FieldCmdBufferData := FieldCmdBuffer.Data
+	FieldCmdBufferDataArg, FieldCmdBufferDataFin := FieldCmdBufferData.handle()
+	FieldCmdBufferVecArg := new(C.ImVector_ImDrawCmd)
+	FieldCmdBufferVecArg.Size = C.int(FieldCmdBuffer.Size)
+	FieldCmdBufferVecArg.Capacity = C.int(FieldCmdBuffer.Capacity)
+	FieldCmdBufferVecArg.Data = FieldCmdBufferDataArg
+
+	result._CmdBuffer = *FieldCmdBufferVecArg
+	FieldIdxBuffer := self.FieldIdxBuffer
+	FieldIdxBufferData := FieldIdxBuffer.Data
+	FieldIdxBufferDataArg, FieldIdxBufferDataFin := WrapNumberPtr[C.ImDrawIdx, DrawIdx](FieldIdxBufferData)
+	FieldIdxBufferVecArg := new(C.ImVector_ImDrawIdx)
+	FieldIdxBufferVecArg.Size = C.int(FieldIdxBuffer.Size)
+	FieldIdxBufferVecArg.Capacity = C.int(FieldIdxBuffer.Capacity)
+	FieldIdxBufferVecArg.Data = FieldIdxBufferDataArg
+
+	result._IdxBuffer = *FieldIdxBufferVecArg
+	releaseFn = func() {
+		FieldCmdBufferDataFin()
+		FieldIdxBufferDataFin()
+	}
+	return result, releaseFn
 }
 
 func (self DrawChannel) c() (result C.ImDrawChannel, fin func()) {
@@ -51,7 +84,8 @@ func (self DrawChannel) c() (result C.ImDrawChannel, fin func()) {
 
 func newDrawChannelFromC(cvalue *C.ImDrawChannel) *DrawChannel {
 	result := new(DrawChannel)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldCmdBuffer = newVectorFromC(cvalue._CmdBuffer.Size, cvalue._CmdBuffer.Capacity, newDrawCmdFromC(cvalue._CmdBuffer.Data))
+	result.FieldIdxBuffer = newVectorFromC(cvalue._IdxBuffer.Size, cvalue._IdxBuffer.Capacity, (*DrawIdx)(cvalue._IdxBuffer.Data))
 	return result
 }
 
@@ -488,13 +522,24 @@ func newFontGlyphFromC(cvalue *C.ImFontGlyph) *FontGlyph {
 // Helper to build glyph ranges from text/string data. Feed your application strings/characters to it then call BuildRanges().
 // This is essentially a tightly packed of vector of 64k booleans = 8KB storage.
 type FontGlyphRangesBuilder struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
+	FieldUsedChars Vector[*uint32] // Store 1-bit per Unicode code point (0=unused, 1=used)
 }
 
 func (self FontGlyphRangesBuilder) handle() (result *C.ImFontGlyphRangesBuilder, releaseFn func()) {
-	result = (*C.ImFontGlyphRangesBuilder)(self.data)
-	return result, func() {}
+	result = new(C.ImFontGlyphRangesBuilder)
+	FieldUsedChars := self.FieldUsedChars
+	FieldUsedCharsData := FieldUsedChars.Data
+	FieldUsedCharsDataArg, FieldUsedCharsDataFin := WrapNumberPtr[C.ImU32, uint32](FieldUsedCharsData)
+	FieldUsedCharsVecArg := new(C.ImVector_ImU32)
+	FieldUsedCharsVecArg.Size = C.int(FieldUsedChars.Size)
+	FieldUsedCharsVecArg.Capacity = C.int(FieldUsedChars.Capacity)
+	FieldUsedCharsVecArg.Data = FieldUsedCharsDataArg
+
+	result.UsedChars = *FieldUsedCharsVecArg
+	releaseFn = func() {
+		FieldUsedCharsDataFin()
+	}
+	return result, releaseFn
 }
 
 func (self FontGlyphRangesBuilder) c() (result C.ImFontGlyphRangesBuilder, fin func()) {
@@ -504,7 +549,7 @@ func (self FontGlyphRangesBuilder) c() (result C.ImFontGlyphRangesBuilder, fin f
 
 func newFontGlyphRangesBuilderFromC(cvalue *C.ImFontGlyphRangesBuilder) *FontGlyphRangesBuilder {
 	result := new(FontGlyphRangesBuilder)
-	result.data = unsafe.Pointer(cvalue)
+	result.FieldUsedChars = newVectorFromC(cvalue.UsedChars.Size, cvalue.UsedChars.Capacity, (*uint32)(cvalue.UsedChars.Data))
 	return result
 }
 

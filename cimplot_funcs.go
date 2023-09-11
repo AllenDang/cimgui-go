@@ -2692,35 +2692,40 @@ func PlotImMinMaxArrayS8Ptr(values *[]int8, count int32, min_out *[]int8, max_ou
 	}
 }
 
-func PlotImMinMaxArrayU32Ptr(values *[]uint32, count int32, min_out *[]uint32, max_out *[]uint32) {
+func PlotImMinMaxArrayU16Ptr(values *[]uint16, count int32, min_out *uint16, max_out *uint16) {
+	valuesArg := make([]C.ImU16, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU16(valuesV)
+	}
+
+	min_outArg, min_outFin := WrapNumberPtr[C.ImU16, uint16](min_out)
+	max_outArg, max_outFin := WrapNumberPtr[C.ImU16, uint16](max_out)
+	C.ImPlot_ImMinMaxArray_U16Ptr((*C.ImU16)(&valuesArg[0]), C.int(count), min_outArg, max_outArg)
+
+	for i, valuesV := range valuesArg {
+		(*values)[i] = uint16(valuesV)
+	}
+
+	min_outFin()
+	max_outFin()
+}
+
+func PlotImMinMaxArrayU32Ptr(values *[]uint32, count int32, min_out *uint32, max_out *uint32) {
 	valuesArg := make([]C.ImU32, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU32(valuesV)
 	}
 
-	min_outArg := make([]C.ImU32, len(*min_out))
-	for i, min_outV := range *min_out {
-		min_outArg[i] = C.ImU32(min_outV)
-	}
-
-	max_outArg := make([]C.ImU32, len(*max_out))
-	for i, max_outV := range *max_out {
-		max_outArg[i] = C.ImU32(max_outV)
-	}
-
-	C.ImPlot_ImMinMaxArray_U32Ptr((*C.ImU32)(&valuesArg[0]), C.int(count), (*C.ImU32)(&min_outArg[0]), (*C.ImU32)(&max_outArg[0]))
+	min_outArg, min_outFin := WrapNumberPtr[C.ImU32, uint32](min_out)
+	max_outArg, max_outFin := WrapNumberPtr[C.ImU32, uint32](max_out)
+	C.ImPlot_ImMinMaxArray_U32Ptr((*C.ImU32)(&valuesArg[0]), C.int(count), min_outArg, max_outArg)
 
 	for i, valuesV := range valuesArg {
 		(*values)[i] = uint32(valuesV)
 	}
 
-	for i, min_outV := range min_outArg {
-		(*min_out)[i] = uint32(min_outV)
-	}
-
-	for i, max_outV := range max_outArg {
-		(*max_out)[i] = uint32(max_outV)
-	}
+	min_outFin()
+	max_outFin()
 }
 
 func PlotImMinMaxArrayU64Ptr(values []uint64, count int32, min_out *[]uint64, max_out *[]uint64) {
@@ -2743,6 +2748,24 @@ func PlotImMinMaxArrayU64Ptr(values []uint64, count int32, min_out *[]uint64, ma
 	for i, max_outV := range max_outArg {
 		(*max_out)[i] = uint64(max_outV)
 	}
+}
+
+func PlotImMinMaxArrayU8Ptr(values *[]byte, count int32, min_out *byte, max_out *byte) {
+	valuesArg := make([]C.ImU8, len(*values))
+	for i, valuesV := range *values {
+		valuesArg[i] = C.ImU8(valuesV)
+	}
+
+	min_outArg, min_outFin := WrapNumberPtr[C.ImU8, byte](min_out)
+	max_outArg, max_outFin := WrapNumberPtr[C.ImU8, byte](max_out)
+	C.ImPlot_ImMinMaxArray_U8Ptr((*C.ImU8)(&valuesArg[0]), C.int(count), min_outArg, max_outArg)
+
+	for i, valuesV := range valuesArg {
+		(*values)[i] = byte(valuesV)
+	}
+
+	min_outFin()
+	max_outFin()
 }
 
 func PlotImMinMaxArraydoublePtr(values *[]float64, count int32, min_out *float64, max_out *float64) {
@@ -8821,6 +8844,26 @@ func PlotShowColormapSelector(label string) bool {
 	return C.ImPlot_ShowColormapSelector(labelArg) == C.bool(true)
 }
 
+// PlotShowDatePickerV parameter default value hint:
+// t1: nullptr
+// t2: nullptr
+func PlotShowDatePickerV(id string, level *int32, t *PlotTime, t1 *PlotTime, t2 *PlotTime) bool {
+	idArg, idFin := WrapString(id)
+	levelArg, levelFin := WrapNumberPtr[C.int, int32](level)
+	tArg, tFin := wrap[C.ImPlotTime, *PlotTime](t)
+	t1Arg, t1Fin := wrap[C.ImPlotTime, *PlotTime](t1)
+	t2Arg, t2Fin := wrap[C.ImPlotTime, *PlotTime](t2)
+
+	defer func() {
+		idFin()
+		levelFin()
+		tFin()
+		t1Fin()
+		t2Fin()
+	}()
+	return C.ImPlot_ShowDatePicker(idArg, levelArg, tArg, t1Arg, t2Arg) == C.bool(true)
+}
+
 // PlotShowDemoWindowV parameter default value hint:
 // p_open: nullptr
 func PlotShowDemoWindowV(p_open *bool) {
@@ -13876,6 +13919,17 @@ func (self PlotAxis) SetFormatterData(v unsafe.Pointer) {
 	C.wrap_ImPlotAxis_SetFormatterData(selfArg, (v))
 }
 
+func (self PlotAxis) SetFormatSpec(v *[16]rune) {
+	vArg := make([]C.char, len(v))
+	for i, vV := range v {
+		vArg[i] = C.char(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotAxis_SetFormatSpec(selfArg, (*C.char)(&vArg[0]))
+}
+
 func (self PlotAxis) SetLinkedMin(v *float64) {
 	vArg, _ := WrapNumberPtr[C.double, float64](v)
 
@@ -14380,21 +14434,26 @@ func (self *PlotColormapData) KeyOffsets() Vector[*int32] {
 	return newVectorFromC(C.wrap_ImPlotColormapData_GetKeyOffsets(selfArg).Size, C.wrap_ImPlotColormapData_GetKeyOffsets(selfArg).Capacity, (*int32)(C.wrap_ImPlotColormapData_GetKeyOffsets(selfArg).Data))
 }
 
-func (self PlotColormapData) SetTables(v Vector[*[]uint32]) {
+func (self PlotColormapData) SetTables(v Vector[*uint32]) {
 	vData := v.Data
-	vDataArg := make([]C.ImU32, len(*vData))
-	for i, vDataV := range *vData {
-		vDataArg[i] = C.ImU32(vDataV)
-	}
-
+	vDataArg, _ := WrapNumberPtr[C.ImU32, uint32](vData)
 	vVecArg := new(C.ImVector_ImU32)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = (*C.ImU32)(&vDataArg[0])
+	vVecArg.Data = vDataArg
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotColormapData_SetTables(selfArg, *vVecArg)
+}
+
+func (self *PlotColormapData) Tables() Vector[*uint32] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImPlotColormapData_GetTables(selfArg).Size, C.wrap_ImPlotColormapData_GetTables(selfArg).Capacity, (*uint32)(C.wrap_ImPlotColormapData_GetTables(selfArg).Data))
 }
 
 func (self PlotColormapData) SetTableSizes(v Vector[*int32]) {

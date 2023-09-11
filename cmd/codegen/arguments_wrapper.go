@@ -30,6 +30,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 	argWrapperMap := map[CIdentifier]argumentWrapper{
 		"char":                     simpleW("rune", "C.char"),
 		"char[5]":                  simplePtrArrayW(5, "C.char", "rune"),
+		"char[16]":                 simplePtrArrayW(16, "C.char", "rune"),
 		"char*":                    constCharW,
 		"const char*":              constCharW,
 		"const char**":             charPtrPtrW,
@@ -41,16 +42,18 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 		"size_t*":                  sizeTPtrW,
 		"float":                    simpleW("float32", "C.float"),
 		"const float":              simpleW("float32", "C.float"),
-		"float*":                   floatPtrW,
+		"float*":                   simplePtrW("float32", "C.float"),
 		"const float*":             floatArrayW,
 		"short":                    simpleW("int16", "C.short"),
 		"unsigned short":           simpleW("uint16", "C.ushort"),
 		"ImU8":                     simpleW("byte", "C.ImU8"),
+		"ImU8*":                    simplePtrW("byte", "C.ImU8"),
 		"const ImU8*":              simplePtrSliceW("C.ImU8", "byte"),
 		"ImU16":                    simpleW("uint16", "C.ImU16"),
+		"ImU16*":                   simplePtrW("uint16", "C.ImU16"),
 		"const ImU16*":             simplePtrSliceW("C.ImU16", "uint16"),
 		"ImU32":                    simpleW("uint32", "C.ImU32"),
-		"ImU32*":                   simplePtrSliceW("C.ImU32", "uint32"),
+		"ImU32*":                   simplePtrW("uint32", "C.ImU32"),
 		"const ImU32*":             simplePtrSliceW("C.ImU32", "uint32"),
 		"ImU64":                    simpleW("uint64", "C.ImU64"),
 		"ImU64*":                   simplePtrSliceW("C.ImU64", "uint64"),
@@ -68,6 +71,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 		"ImS64*":                   simplePtrW("int64", "C.ImS64"),
 		"const ImS64*":             int64ArrayW,
 		"int":                      simpleW("int32", "C.int"),
+		"const int":                simpleW("int32", "C.int"),
 		"int*":                     simplePtrW("int32", "C.int"),
 		"unsigned int":             simpleW("uint32", "C.uint"),
 		"unsigned int*":            simplePtrW("uint32", "C.uint"),
@@ -75,6 +79,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 		"double*":                  simplePtrW("float64", "C.double"),
 		"const double*":            simplePtrSliceW("C.double", "float64"),
 		"bool":                     simpleW("bool", "C.bool"),
+		"const bool":               simpleW("bool", "C.bool"),
 		"bool*":                    boolPtrW,
 		"int[2]":                   simplePtrArrayW(2, "C.int", "int32"),
 		"int[3]":                   simplePtrArrayW(3, "C.int", "int32"),
@@ -90,6 +95,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 		"ImGuiID*":                 simplePtrW("ID", "C.ImGuiID"),
 		"ImTextureID":              simpleW("TextureID", "C.ImTextureID"),
 		"ImDrawIdx":                simpleW("DrawIdx", "C.ImDrawIdx"),
+		"ImDrawIdx*":               simplePtrW("DrawIdx", "C.ImDrawIdx"),
 		"ImGuiTableColumnIdx":      simpleW("TableColumnIdx", "C.ImGuiTableColumnIdx"),
 		"ImGuiTableDrawChannelIdx": simpleW("TableDrawChannelIdx", "C.ImGuiTableDrawChannelIdx"),
 		"ImGuiKeyChord":            simpleW("KeyChord", "C.ImGuiKeyChord"),
@@ -115,6 +121,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 		"ImPlotTime":               wrappableW("PlotTime"),
 		"const ImPlotTime":         wrappableW("PlotTime"),
 		"ImPlotTime*":              wrappablePtrW("*PlotTime", "C.ImPlotTime"),
+		"const ImPlotTime*":        wrappablePtrW("*PlotTime", "C.ImPlotTime"),
 	}
 
 	if a.Name == "type" || a.Name == "range" {
@@ -265,11 +272,6 @@ func sizeTPtrW(arg ArgDef) ArgumentWrapperData {
 		ArgType: "*uint64",
 		VarName: fmt.Sprintf("(*C.xulong)(%s)", arg.Name),
 	}
-}
-
-// leave this for now because of https://github.com/AllenDang/cimgui-go/issues/31
-func floatPtrW(arg ArgDef) ArgumentWrapperData {
-	return simplePtrW("float32", "C.float")(arg)
 }
 
 func floatArrayW(arg ArgDef) ArgumentWrapperData {

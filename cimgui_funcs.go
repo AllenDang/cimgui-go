@@ -6187,60 +6187,36 @@ func InternalImBezierQuadraticCalc(p1 Vec2, p2 Vec2, p3 Vec2, t float32) Vec2 {
 	return *pOut
 }
 
-func InternalImBitArrayClearAllBits(arr *[]uint32, bitcount int32) {
-	arrArg := make([]C.ImU32, len(*arr))
-	for i, arrV := range *arr {
-		arrArg[i] = C.ImU32(arrV)
-	}
+func InternalImBitArrayClearAllBits(arr *uint32, bitcount int32) {
+	arrArg, arrFin := WrapNumberPtr[C.ImU32, uint32](arr)
+	C.igImBitArrayClearAllBits(arrArg, C.int(bitcount))
 
-	C.igImBitArrayClearAllBits((*C.ImU32)(&arrArg[0]), C.int(bitcount))
-
-	for i, arrV := range arrArg {
-		(*arr)[i] = uint32(arrV)
-	}
+	arrFin()
 }
 
-func InternalImBitArrayClearBit(arr *[]uint32, n int32) {
-	arrArg := make([]C.ImU32, len(*arr))
-	for i, arrV := range *arr {
-		arrArg[i] = C.ImU32(arrV)
-	}
+func InternalImBitArrayClearBit(arr *uint32, n int32) {
+	arrArg, arrFin := WrapNumberPtr[C.ImU32, uint32](arr)
+	C.igImBitArrayClearBit(arrArg, C.int(n))
 
-	C.igImBitArrayClearBit((*C.ImU32)(&arrArg[0]), C.int(n))
-
-	for i, arrV := range arrArg {
-		(*arr)[i] = uint32(arrV)
-	}
+	arrFin()
 }
 
 func InternalImBitArrayGetStorageSizeInBytes(bitcount int32) uint64 {
 	return uint64(C.igImBitArrayGetStorageSizeInBytes(C.int(bitcount)))
 }
 
-func InternalImBitArraySetBit(arr *[]uint32, n int32) {
-	arrArg := make([]C.ImU32, len(*arr))
-	for i, arrV := range *arr {
-		arrArg[i] = C.ImU32(arrV)
-	}
+func InternalImBitArraySetBit(arr *uint32, n int32) {
+	arrArg, arrFin := WrapNumberPtr[C.ImU32, uint32](arr)
+	C.igImBitArraySetBit(arrArg, C.int(n))
 
-	C.igImBitArraySetBit((*C.ImU32)(&arrArg[0]), C.int(n))
-
-	for i, arrV := range arrArg {
-		(*arr)[i] = uint32(arrV)
-	}
+	arrFin()
 }
 
-func InternalImBitArraySetBitRange(arr *[]uint32, n int32, n2 int32) {
-	arrArg := make([]C.ImU32, len(*arr))
-	for i, arrV := range *arr {
-		arrArg[i] = C.ImU32(arrV)
-	}
+func InternalImBitArraySetBitRange(arr *uint32, n int32, n2 int32) {
+	arrArg, arrFin := WrapNumberPtr[C.ImU32, uint32](arr)
+	C.igImBitArraySetBitRange(arrArg, C.int(n), C.int(n2))
 
-	C.igImBitArraySetBitRange((*C.ImU32)(&arrArg[0]), C.int(n), C.int(n2))
-
-	for i, arrV := range arrArg {
-		(*arr)[i] = uint32(arrV)
-	}
+	arrFin()
 }
 
 func InternalImBitArrayTestBit(arr *[]uint32, n int32) bool {
@@ -12218,21 +12194,26 @@ func ValueFloat(prefix string, v float32) {
 	prefixFin()
 }
 
-func (self BitVector) SetStorage(v Vector[*[]uint32]) {
+func (self BitVector) SetStorage(v Vector[*uint32]) {
 	vData := v.Data
-	vDataArg := make([]C.ImU32, len(*vData))
-	for i, vDataV := range *vData {
-		vDataArg[i] = C.ImU32(vDataV)
-	}
-
+	vDataArg, _ := WrapNumberPtr[C.ImU32, uint32](vData)
 	vVecArg := new(C.ImVector_ImU32)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = (*C.ImU32)(&vDataArg[0])
+	vVecArg.Data = vDataArg
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImBitVector_SetStorage(selfArg, *vVecArg)
+}
+
+func (self *BitVector) Storage() Vector[*uint32] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImBitVector_GetStorage(selfArg).Size, C.wrap_ImBitVector_GetStorage(selfArg).Capacity, (*uint32)(C.wrap_ImBitVector_GetStorage(selfArg).Data))
 }
 
 func (self *Color) Value() Vec4 {
@@ -12264,6 +12245,28 @@ func (self *DrawChannel) CmdBuffer() Vector[*DrawCmd] {
 		selfFin()
 	}()
 	return newVectorFromC(C.wrap_ImDrawChannel_Get_CmdBuffer(selfArg).Size, C.wrap_ImDrawChannel_Get_CmdBuffer(selfArg).Capacity, newDrawCmdFromC(C.wrap_ImDrawChannel_Get_CmdBuffer(selfArg).Data))
+}
+
+func (self DrawChannel) SetIdxBuffer(v Vector[*DrawIdx]) {
+	vData := v.Data
+	vDataArg, _ := WrapNumberPtr[C.ImDrawIdx, DrawIdx](vData)
+	vVecArg := new(C.ImVector_ImDrawIdx)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImDrawChannel_Set_IdxBuffer(selfArg, *vVecArg)
+}
+
+func (self *DrawChannel) IdxBuffer() Vector[*DrawIdx] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImDrawChannel_Get_IdxBuffer(selfArg).Size, C.wrap_ImDrawChannel_Get_IdxBuffer(selfArg).Capacity, (*DrawIdx)(C.wrap_ImDrawChannel_Get_IdxBuffer(selfArg).Data))
 }
 
 func (self DrawCmd) SetClipRect(v Vec4) {
@@ -12536,6 +12539,28 @@ func (self *DrawList) CmdBuffer() Vector[*DrawCmd] {
 	return newVectorFromC(C.wrap_ImDrawList_GetCmdBuffer(selfArg).Size, C.wrap_ImDrawList_GetCmdBuffer(selfArg).Capacity, newDrawCmdFromC(C.wrap_ImDrawList_GetCmdBuffer(selfArg).Data))
 }
 
+func (self DrawList) SetIdxBuffer(v Vector[*DrawIdx]) {
+	vData := v.Data
+	vDataArg, _ := WrapNumberPtr[C.ImDrawIdx, DrawIdx](vData)
+	vVecArg := new(C.ImVector_ImDrawIdx)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImDrawList_SetIdxBuffer(selfArg, *vVecArg)
+}
+
+func (self *DrawList) IdxBuffer() Vector[*DrawIdx] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImDrawList_GetIdxBuffer(selfArg).Size, C.wrap_ImDrawList_GetIdxBuffer(selfArg).Capacity, (*DrawIdx)(C.wrap_ImDrawList_GetIdxBuffer(selfArg).Data))
+}
+
 func (self DrawList) SetVtxBuffer(v Vector[*DrawVert]) {
 	vData := v.Data
 	vDataArg, _ := vData.handle()
@@ -12637,6 +12662,23 @@ func (self *DrawList) VtxWritePtr() *DrawVert {
 		selfFin()
 	}()
 	return newDrawVertFromC(C.wrap_ImDrawList_Get_VtxWritePtr(selfArg))
+}
+
+func (self DrawList) SetIdxWritePtr(v *DrawIdx) {
+	vArg, _ := WrapNumberPtr[C.ImDrawIdx, DrawIdx](v)
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImDrawList_Set_IdxWritePtr(selfArg, vArg)
+}
+
+func (self *DrawList) IdxWritePtr() *DrawIdx {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*DrawIdx)(C.wrap_ImDrawList_Get_IdxWritePtr(selfArg))
 }
 
 func (self DrawList) SetClipRectStack(v Vector[*Vec4]) {
@@ -14140,21 +14182,26 @@ func (self *FontGlyph) V1() float32 {
 	return float32(C.wrap_ImFontGlyph_GetV1(selfArg))
 }
 
-func (self FontGlyphRangesBuilder) SetUsedChars(v Vector[*[]uint32]) {
+func (self FontGlyphRangesBuilder) SetUsedChars(v Vector[*uint32]) {
 	vData := v.Data
-	vDataArg := make([]C.ImU32, len(*vData))
-	for i, vDataV := range *vData {
-		vDataArg[i] = C.ImU32(vDataV)
-	}
-
+	vDataArg, _ := WrapNumberPtr[C.ImU32, uint32](vData)
 	vVecArg := new(C.ImVector_ImU32)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = (*C.ImU32)(&vDataArg[0])
+	vVecArg.Data = vDataArg
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImFontGlyphRangesBuilder_SetUsedChars(selfArg, *vVecArg)
+}
+
+func (self *FontGlyphRangesBuilder) UsedChars() Vector[*uint32] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImFontGlyphRangesBuilder_GetUsedChars(selfArg).Size, C.wrap_ImFontGlyphRangesBuilder_GetUsedChars(selfArg).Capacity, (*uint32)(C.wrap_ImFontGlyphRangesBuilder_GetUsedChars(selfArg).Data))
 }
 
 func (self ColorMod) SetCol(v Col) {
