@@ -25,10 +25,12 @@ func (self BitVector) handle() (result *C.ImBitVector, releaseFn func()) {
 	FieldStorageVecArg.Size = C.int(FieldStorage.Size)
 	FieldStorageVecArg.Capacity = C.int(FieldStorage.Capacity)
 	FieldStorageVecArg.Data = FieldStorageDataArg
+	FieldStorage.pinner.Pin(FieldStorageVecArg.Data)
 
 	result.Storage = *FieldStorageVecArg
 	releaseFn = func() {
 		FieldStorageDataFin()
+		FieldStorage.pinner.Unpin()
 	}
 	return result, releaseFn
 }
@@ -59,6 +61,7 @@ func (self DrawChannel) handle() (result *C.ImDrawChannel, releaseFn func()) {
 	FieldCmdBufferVecArg.Size = C.int(FieldCmdBuffer.Size)
 	FieldCmdBufferVecArg.Capacity = C.int(FieldCmdBuffer.Capacity)
 	FieldCmdBufferVecArg.Data = FieldCmdBufferDataArg
+	FieldCmdBuffer.pinner.Pin(FieldCmdBufferVecArg.Data)
 
 	result._CmdBuffer = *FieldCmdBufferVecArg
 	FieldIdxBuffer := self.FieldIdxBuffer
@@ -68,11 +71,14 @@ func (self DrawChannel) handle() (result *C.ImDrawChannel, releaseFn func()) {
 	FieldIdxBufferVecArg.Size = C.int(FieldIdxBuffer.Size)
 	FieldIdxBufferVecArg.Capacity = C.int(FieldIdxBuffer.Capacity)
 	FieldIdxBufferVecArg.Data = FieldIdxBufferDataArg
+	FieldIdxBuffer.pinner.Pin(FieldIdxBufferVecArg.Data)
 
 	result._IdxBuffer = *FieldIdxBufferVecArg
 	releaseFn = func() {
 		FieldCmdBufferDataFin()
+		FieldCmdBuffer.pinner.Unpin()
 		FieldIdxBufferDataFin()
+		FieldIdxBuffer.pinner.Unpin()
 	}
 	return result, releaseFn
 }
@@ -272,10 +278,12 @@ func (self DrawListSplitter) handle() (result *C.ImDrawListSplitter, releaseFn f
 	FieldChannelsVecArg.Size = C.int(FieldChannels.Size)
 	FieldChannelsVecArg.Capacity = C.int(FieldChannels.Capacity)
 	FieldChannelsVecArg.Data = FieldChannelsDataArg
+	FieldChannels.pinner.Pin(FieldChannelsVecArg.Data)
 
 	result._Channels = *FieldChannelsVecArg
 	releaseFn = func() {
 		FieldChannelsDataFin()
+		FieldChannels.pinner.Unpin()
 	}
 	return result, releaseFn
 }
@@ -534,10 +542,12 @@ func (self FontGlyphRangesBuilder) handle() (result *C.ImFontGlyphRangesBuilder,
 	FieldUsedCharsVecArg.Size = C.int(FieldUsedChars.Size)
 	FieldUsedCharsVecArg.Capacity = C.int(FieldUsedChars.Capacity)
 	FieldUsedCharsVecArg.Data = FieldUsedCharsDataArg
+	FieldUsedChars.pinner.Pin(FieldUsedCharsVecArg.Data)
 
 	result.UsedChars = *FieldUsedCharsVecArg
 	releaseFn = func() {
 		FieldUsedCharsDataFin()
+		FieldUsedChars.pinner.Unpin()
 	}
 	return result, releaseFn
 }
@@ -1207,10 +1217,12 @@ func (self InputTextDeactivatedState) handle() (result *C.ImGuiInputTextDeactiva
 	FieldTextAVecArg.Size = C.int(FieldTextA.Size)
 	FieldTextAVecArg.Capacity = C.int(FieldTextA.Capacity)
 	FieldTextAVecArg.Data = FieldTextADataArg
+	FieldTextA.pinner.Pin(FieldTextAVecArg.Data)
 
 	result.TextA = *FieldTextAVecArg
 	releaseFn = func() {
 		FieldTextADataFin()
+		FieldTextA.pinner.Unpin()
 	}
 	return result, releaseFn
 }
@@ -1269,6 +1281,7 @@ func (self InputTextState) handle() (result *C.ImGuiInputTextState, releaseFn fu
 	FieldTextWVecArg.Size = C.int(FieldTextW.Size)
 	FieldTextWVecArg.Capacity = C.int(FieldTextW.Capacity)
 	FieldTextWVecArg.Data = (*C.ImWchar)(FieldTextWData)
+	FieldTextW.pinner.Pin(FieldTextWVecArg.Data)
 
 	result.TextW = *FieldTextWVecArg
 	FieldTextA := self.FieldTextA
@@ -1278,6 +1291,7 @@ func (self InputTextState) handle() (result *C.ImGuiInputTextState, releaseFn fu
 	FieldTextAVecArg.Size = C.int(FieldTextA.Size)
 	FieldTextAVecArg.Capacity = C.int(FieldTextA.Capacity)
 	FieldTextAVecArg.Data = FieldTextADataArg
+	FieldTextA.pinner.Pin(FieldTextAVecArg.Data)
 
 	result.TextA = *FieldTextAVecArg
 	FieldInitialTextA := self.FieldInitialTextA
@@ -1287,6 +1301,7 @@ func (self InputTextState) handle() (result *C.ImGuiInputTextState, releaseFn fu
 	FieldInitialTextAVecArg.Size = C.int(FieldInitialTextA.Size)
 	FieldInitialTextAVecArg.Capacity = C.int(FieldInitialTextA.Capacity)
 	FieldInitialTextAVecArg.Data = FieldInitialTextADataArg
+	FieldInitialTextA.pinner.Pin(FieldInitialTextAVecArg.Data)
 
 	result.InitialTextA = *FieldInitialTextAVecArg
 	FieldTextAIsValid := self.FieldTextAIsValid
@@ -1319,8 +1334,11 @@ func (self InputTextState) handle() (result *C.ImGuiInputTextState, releaseFn fu
 	releaseFn = func() {
 		FieldCtxFin()
 
+		FieldTextW.pinner.Unpin()
 		FieldTextADataFin()
+		FieldTextA.pinner.Unpin()
 		FieldInitialTextADataFin()
+		FieldInitialTextA.pinner.Unpin()
 
 		FieldStbFin()
 	}
@@ -1609,12 +1627,14 @@ func (self ListClipperData) handle() (result *C.ImGuiListClipperData, releaseFn 
 	FieldRangesVecArg.Size = C.int(FieldRanges.Size)
 	FieldRangesVecArg.Capacity = C.int(FieldRanges.Capacity)
 	FieldRangesVecArg.Data = FieldRangesDataArg
+	FieldRanges.pinner.Pin(FieldRangesVecArg.Data)
 
 	result.Ranges = *FieldRangesVecArg
 	releaseFn = func() {
 		FieldListClipperFin()
 
 		FieldRangesDataFin()
+		FieldRanges.pinner.Unpin()
 	}
 	return result, releaseFn
 }
@@ -2093,6 +2113,7 @@ func (self OldColumns) handle() (result *C.ImGuiOldColumns, releaseFn func()) {
 	FieldColumnsVecArg.Size = C.int(FieldColumns.Size)
 	FieldColumnsVecArg.Capacity = C.int(FieldColumns.Capacity)
 	FieldColumnsVecArg.Data = FieldColumnsDataArg
+	FieldColumns.pinner.Pin(FieldColumnsVecArg.Data)
 
 	result.Columns = *FieldColumnsVecArg
 	FieldSplitter := self.FieldSplitter
@@ -2100,6 +2121,7 @@ func (self OldColumns) handle() (result *C.ImGuiOldColumns, releaseFn func()) {
 	result.Splitter = FieldSplitterArg
 	releaseFn = func() {
 		FieldColumnsDataFin()
+		FieldColumns.pinner.Unpin()
 		FieldSplitterFin()
 	}
 	return result, releaseFn
@@ -2540,6 +2562,7 @@ func (self StackTool) handle() (result *C.ImGuiStackTool, releaseFn func()) {
 	FieldResultsVecArg.Size = C.int(FieldResults.Size)
 	FieldResultsVecArg.Capacity = C.int(FieldResults.Capacity)
 	FieldResultsVecArg.Data = FieldResultsDataArg
+	FieldResults.pinner.Pin(FieldResultsVecArg.Data)
 
 	result.Results = *FieldResultsVecArg
 	FieldCopyToClipboardOnCtrlC := self.FieldCopyToClipboardOnCtrlC
@@ -2550,6 +2573,7 @@ func (self StackTool) handle() (result *C.ImGuiStackTool, releaseFn func()) {
 	result.CopyToClipboardLastTime = C.float(FieldCopyToClipboardLastTime)
 	releaseFn = func() {
 		FieldResultsDataFin()
+		FieldResults.pinner.Unpin()
 	}
 	return result, releaseFn
 }
@@ -2591,10 +2615,12 @@ func (self Storage) handle() (result *C.ImGuiStorage, releaseFn func()) {
 	FieldDataVecArg.Size = C.int(FieldData.Size)
 	FieldDataVecArg.Capacity = C.int(FieldData.Capacity)
 	FieldDataVecArg.Data = FieldDataDataArg
+	FieldData.pinner.Pin(FieldDataVecArg.Data)
 
 	result.Data = *FieldDataVecArg
 	releaseFn = func() {
 		FieldDataDataFin()
+		FieldData.pinner.Unpin()
 	}
 	return result, releaseFn
 }
@@ -2719,6 +2745,7 @@ func (self TabBar) handle() (result *C.ImGuiTabBar, releaseFn func()) {
 	FieldTabsVecArg.Size = C.int(FieldTabs.Size)
 	FieldTabsVecArg.Capacity = C.int(FieldTabs.Capacity)
 	FieldTabsVecArg.Data = FieldTabsDataArg
+	FieldTabs.pinner.Pin(FieldTabsVecArg.Data)
 
 	result.Tabs = *FieldTabsVecArg
 	FieldFlags := self.FieldFlags
@@ -2813,6 +2840,7 @@ func (self TabBar) handle() (result *C.ImGuiTabBar, releaseFn func()) {
 	result.TabsNames = FieldTabsNamesArg
 	releaseFn = func() {
 		FieldTabsDataFin()
+		FieldTabs.pinner.Unpin()
 
 		FieldTabsNamesFin()
 	}
@@ -3319,10 +3347,12 @@ func (self TextBuffer) handle() (result *C.ImGuiTextBuffer, releaseFn func()) {
 	FieldBufVecArg.Size = C.int(FieldBuf.Size)
 	FieldBufVecArg.Capacity = C.int(FieldBuf.Capacity)
 	FieldBufVecArg.Data = FieldBufDataArg
+	FieldBuf.pinner.Pin(FieldBufVecArg.Data)
 
 	result.Buf = *FieldBufVecArg
 	releaseFn = func() {
 		FieldBufDataFin()
+		FieldBuf.pinner.Unpin()
 	}
 	return result, releaseFn
 }
@@ -3376,6 +3406,7 @@ func (self TextIndex) handle() (result *C.ImGuiTextIndex, releaseFn func()) {
 	FieldLineOffsetsVecArg.Size = C.int(FieldLineOffsets.Size)
 	FieldLineOffsetsVecArg.Capacity = C.int(FieldLineOffsets.Capacity)
 	FieldLineOffsetsVecArg.Data = FieldLineOffsetsDataArg
+	FieldLineOffsets.pinner.Pin(FieldLineOffsetsVecArg.Data)
 
 	result.LineOffsets = *FieldLineOffsetsVecArg
 	FieldEndOffset := self.FieldEndOffset
@@ -3383,6 +3414,7 @@ func (self TextIndex) handle() (result *C.ImGuiTextIndex, releaseFn func()) {
 	result.EndOffset = C.int(FieldEndOffset)
 	releaseFn = func() {
 		FieldLineOffsetsDataFin()
+		FieldLineOffsets.pinner.Unpin()
 	}
 	return result, releaseFn
 }
