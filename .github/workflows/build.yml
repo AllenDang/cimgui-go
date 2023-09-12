@@ -145,6 +145,7 @@ jobs:
           update: true
           install: >-
             make
+            git
           pacboy: >-
             toolchain:p
             cmake:p
