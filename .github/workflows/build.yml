@@ -25,7 +25,7 @@ jobs:
         working-directory: ./thirdparty/glfw
 
       - name: make glfw
-        run: make
+        run: make -j 4
         working-directory: ./thirdparty/glfw/build
 
       - name: copy glfw to lib
@@ -37,7 +37,7 @@ jobs:
         working-directory: ./lib
 
       - name: make cimgui
-        run: make
+        run: make -j 4
         working-directory: ./lib/build
 
       - name: copy cimgui to lib
@@ -66,7 +66,7 @@ jobs:
         working-directory: ./thirdparty/glfw
 
       - name: make glfw x84
-        run: make
+        run: make -j 4
         working-directory: ./thirdparty/glfw/build
 
       - name: copy glfw to lib
@@ -82,7 +82,7 @@ jobs:
         working-directory: ./thirdparty/glfw
 
       - name: make glfw arm64
-        run: make
+        run: make -j 4
         working-directory: ./thirdparty/glfw/build
 
       - name: copy glfw to lib
@@ -94,7 +94,7 @@ jobs:
         working-directory: ./lib
 
       - name: make cimgui for x64
-        run: make
+        run: make -j 4
         working-directory: ./lib/build
 
       - name: copy cimgui x64 to lib
@@ -111,7 +111,7 @@ jobs:
         working-directory: ./lib
 
       - name: make cimgui for arm64
-        run: make
+        run: make -j 4
         working-directory: ./lib/build
 
       - name: copy cimgui arm64 to lib
@@ -155,7 +155,7 @@ jobs:
         working-directory: ./thirdparty/glfw
 
       - name: make glfw
-        run: cmake --build build
+        run: cmake --build build -j 4
         working-directory: ./thirdparty/glfw
 
       - name: copy glfw to lib
@@ -166,7 +166,7 @@ jobs:
         working-directory: .\lib
 
       - name: make cimgui
-        run: cmake --build build
+        run: cmake --build build -j 4
         working-directory: .\lib
 
       - name: copy cimgui to lib
