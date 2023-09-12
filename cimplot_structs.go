@@ -141,6 +141,7 @@ func (self PlotAnnotationCollection) handle() (result *C.ImPlotAnnotationCollect
 	FieldAnnotationsVecArg.Size = C.int(FieldAnnotations.Size)
 	FieldAnnotationsVecArg.Capacity = C.int(FieldAnnotations.Capacity)
 	FieldAnnotationsVecArg.Data = FieldAnnotationsDataArg
+	FieldAnnotations.pinner.Pin(FieldAnnotationsVecArg.Data)
 
 	result.Annotations = *FieldAnnotationsVecArg
 	FieldTextBuffer := self.FieldTextBuffer
@@ -151,6 +152,7 @@ func (self PlotAnnotationCollection) handle() (result *C.ImPlotAnnotationCollect
 	result.Size = C.int(FieldSize)
 	releaseFn = func() {
 		FieldAnnotationsDataFin()
+		FieldAnnotations.pinner.Unpin()
 		FieldTextBufferFin()
 	}
 	return result, releaseFn
@@ -468,6 +470,7 @@ func (self PlotLegend) handle() (result *C.ImPlotLegend, releaseFn func()) {
 	FieldIndicesVecArg.Size = C.int(FieldIndices.Size)
 	FieldIndicesVecArg.Capacity = C.int(FieldIndices.Capacity)
 	FieldIndicesVecArg.Data = FieldIndicesDataArg
+	FieldIndices.pinner.Pin(FieldIndicesVecArg.Data)
 
 	result.Indices = *FieldIndicesVecArg
 	FieldLabels := self.FieldLabels
@@ -490,6 +493,7 @@ func (self PlotLegend) handle() (result *C.ImPlotLegend, releaseFn func()) {
 	result.CanGoInside = C.bool(FieldCanGoInside)
 	releaseFn = func() {
 		FieldIndicesDataFin()
+		FieldIndices.pinner.Unpin()
 		FieldLabelsFin()
 	}
 	return result, releaseFn
@@ -787,6 +791,7 @@ func (self PlotTagCollection) handle() (result *C.ImPlotTagCollection, releaseFn
 	FieldTagsVecArg.Size = C.int(FieldTags.Size)
 	FieldTagsVecArg.Capacity = C.int(FieldTags.Capacity)
 	FieldTagsVecArg.Data = FieldTagsDataArg
+	FieldTags.pinner.Pin(FieldTagsVecArg.Data)
 
 	result.Tags = *FieldTagsVecArg
 	FieldTextBuffer := self.FieldTextBuffer
@@ -797,6 +802,7 @@ func (self PlotTagCollection) handle() (result *C.ImPlotTagCollection, releaseFn
 	result.Size = C.int(FieldSize)
 	releaseFn = func() {
 		FieldTagsDataFin()
+		FieldTags.pinner.Unpin()
 		FieldTextBufferFin()
 	}
 	return result, releaseFn
@@ -893,6 +899,7 @@ func (self PlotTicker) handle() (result *C.ImPlotTicker, releaseFn func()) {
 	FieldTicksVecArg.Size = C.int(FieldTicks.Size)
 	FieldTicksVecArg.Capacity = C.int(FieldTicks.Capacity)
 	FieldTicksVecArg.Data = FieldTicksDataArg
+	FieldTicks.pinner.Pin(FieldTicksVecArg.Data)
 
 	result.Ticks = *FieldTicksVecArg
 	FieldTextBuffer := self.FieldTextBuffer
@@ -909,6 +916,7 @@ func (self PlotTicker) handle() (result *C.ImPlotTicker, releaseFn func()) {
 	result.Levels = C.int(FieldLevels)
 	releaseFn = func() {
 		FieldTicksDataFin()
+		FieldTicks.pinner.Unpin()
 		FieldTextBufferFin()
 	}
 	return result, releaseFn

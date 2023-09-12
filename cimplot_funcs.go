@@ -13677,6 +13677,7 @@ func (self PlotAnnotationCollection) SetAnnotations(v Vector[*PlotAnnotation]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14397,6 +14398,7 @@ func (self PlotColormapData) SetKeyCounts(v Vector[*int32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14419,6 +14421,7 @@ func (self PlotColormapData) SetKeyOffsets(v Vector[*int32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14441,6 +14444,7 @@ func (self PlotColormapData) SetTables(v Vector[*uint32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14463,6 +14467,7 @@ func (self PlotColormapData) SetTableSizes(v Vector[*int32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14485,6 +14490,7 @@ func (self PlotColormapData) SetTableOffsets(v Vector[*int32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14526,6 +14532,7 @@ func (self PlotColormapData) SetTextOffsets(v Vector[*int32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14548,6 +14555,7 @@ func (self PlotColormapData) SetQuals(v Vector[*bool]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14756,6 +14764,7 @@ func (self PlotContext) SetColorModifiers(v Vector[*ColorMod]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14778,6 +14787,7 @@ func (self PlotContext) SetStyleModifiers(v Vector[*StyleMod]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14828,6 +14838,7 @@ func (self PlotContext) SetTempDouble1(v Vector[*float64]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14850,6 +14861,7 @@ func (self PlotContext) SetTempDouble2(v Vector[*float64]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14872,6 +14884,7 @@ func (self PlotContext) SetTempInt1(v Vector[*int32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -15535,6 +15548,7 @@ func (self PlotLegend) SetIndices(v Vector[*int32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -17021,6 +17035,7 @@ func (self PlotSubplot) SetRowAlignmentData(v Vector[*PlotAlignmentData]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -17043,6 +17058,7 @@ func (self PlotSubplot) SetColAlignmentData(v Vector[*PlotAlignmentData]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -17065,6 +17081,7 @@ func (self PlotSubplot) SetRowRatios(v Vector[*float32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -17087,6 +17104,7 @@ func (self PlotSubplot) SetColRatios(v Vector[*float32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -17109,6 +17127,7 @@ func (self PlotSubplot) SetRowLinkData(v Vector[*PlotRange]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -17131,6 +17150,7 @@ func (self PlotSubplot) SetColLinkData(v Vector[*PlotRange]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -17269,6 +17289,7 @@ func (self PlotTagCollection) SetTags(v Vector[*PlotTag]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -17445,6 +17466,7 @@ func (self PlotTicker) SetTicks(v Vector[*PlotTick]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
