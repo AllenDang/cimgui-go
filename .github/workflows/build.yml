@@ -1,0 +1,179 @@
+name: Compile cimgui
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-linux-x64:
+    runs-on: ubuntu-latest
+
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
+    steps:
+      - uses: actions/checkout@main
+
+      - name: add libs for glfw
+        run: |
+          sudo apt-get -y update
+          sudo apt install xorg-dev
+
+      - name: configure glfw
+        run: cmake -S . -Bbuild
+        working-directory: ./thirdparty/glfw
+
+      - name: make glfw
+        run: make -j 4
+        working-directory: ./thirdparty/glfw/build
+
+      - name: copy glfw to lib
+        run: |
+          cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/linux/x64
+
+      - name: configure cimgui
+        run: cmake -Bbuild
+        working-directory: ./lib
+
+      - name: make cimgui
+        run: make -j 4
+        working-directory: ./lib/build
+
+      - name: copy cimgui to lib
+        run: |
+          mkdir -p ./lib/linux/x64
+          cp -f ./lib/build/cimgui.a ./lib/linux/x64/
+
+      - run: git pull --rebase --autostash
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update linux lib from ci
+  build-macos:
+    needs: build-linux-x64
+    runs-on: macos-latest
+
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
+    steps:
+      - uses: actions/checkout@main
+
+      - name: configure glfw for x64
+        run: cmake -S . -Bbuild -DCMAKE_OSX_ARCHITECTURES=x86_64
+        working-directory: ./thirdparty/glfw
+
+      - name: make glfw x84
+        run: make -j 4
+        working-directory: ./thirdparty/glfw/build
+
+      - name: copy glfw to lib
+        run: |
+          cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/macos/x64
+
+      - name: clean glfw
+        run: cmake --build ./build --target clean
+        working-directory: ./thirdparty/glfw
+
+      - name: configure glfw for arm64
+        run: cmake -S . -Bbuild -DCMAKE_OSX_ARCHITECTURES=arm64
+        working-directory: ./thirdparty/glfw
+
+      - name: make glfw arm64
+        run: make -j 4
+        working-directory: ./thirdparty/glfw/build
+
+      - name: copy glfw to lib
+        run: |
+          cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/macos/arm64
+
+      - name: configure cimgui for x64
+        run: cmake -Bbuild -DCMAKE_OSX_ARCHITECTURES=x86_64
+        working-directory: ./lib
+
+      - name: make cimgui for x64
+        run: make -j 4
+        working-directory: ./lib/build
+
+      - name: copy cimgui x64 to lib
+        run: |
+          mkdir -p ./lib/macos/x64
+          cp -f ./lib/build/cimgui.a ./lib/macos/x64/
+
+      - name: clean up
+        run: cmake --build ./build --target clean
+        working-directory: ./lib
+
+      - name: configure cimgui for arm64
+        run: cmake -Bbuild -DCMAKE_OSX_ARCHITECTURES=arm64
+        working-directory: ./lib
+
+      - name: make cimgui for arm64
+        run: make -j 4
+        working-directory: ./lib/build
+
+      - name: copy cimgui arm64 to lib
+        run: |
+          mkdir -p ./lib/macos/arm64
+          cp -f ./lib/build/cimgui.a ./lib/macos/arm64/
+
+      - run: git pull --rebase --autostash
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update macos lib from ci
+  build-windows-x64:
+    needs: build-macos
+    runs-on: windows-latest
+
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Install MinGW
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: >-
+            make
+            git
+          pacboy: >-
+            toolchain:p
+            cmake:p
+            ninja:p
+
+      - name: configure glfw
+        run: cmake -G Ninja -S . -B build -DCMAKE_BUILD_TYPE=Release
+        working-directory: ./thirdparty/glfw
+
+      - name: make glfw
+        run: cmake --build build -j 4
+        working-directory: ./thirdparty/glfw
+
+      - name: copy glfw to lib
+        run: cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/windows/x64
+
+      - name: configure cimgui
+        run: cmake -G Ninja -B build
+        working-directory: .\lib
+
+      - name: make cimgui
+        run: cmake --build build -j 4
+        working-directory: .\lib
+
+      - name: copy cimgui to lib
+        run: cp -f ./lib/build/cimgui.a ./lib/windows/x64/
+
+      - run: git pull --rebase --autostash
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update windows lib from ci
