@@ -45,7 +45,7 @@ jobs:
           mkdir -p ./lib/linux/x64
           cp -f ./lib/build/cimgui.a ./lib/linux/x64/
 
-      - run: git pull --rebase
+      - run: git pull --rebase --autostash
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update linux lib from ci
@@ -119,7 +119,7 @@ jobs:
           mkdir -p ./lib/macos/arm64
           cp -f ./lib/build/cimgui.a ./lib/macos/arm64/
 
-      - run: git pull --rebase
+      - run: git pull --rebase --autostash
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update macos lib from ci
@@ -173,7 +173,7 @@ jobs:
       - name: copy cimgui to lib
         run: cp -f ./lib/build/cimgui.a ./lib/windows/x64/
 
-      - run: git pull --rebase
+      - run: git pull --rebase --autostash
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update windows lib from ci
