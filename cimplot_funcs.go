@@ -1947,29 +1947,35 @@ func PlotFormatTime(t PlotTime, buffer string, size int32, fmt PlotTimeFmt, use_
 
 func PlotFormatterDefault(value float64, buff string, size int32, data unsafe.Pointer) int32 {
 	buffArg, buffFin := WrapString(buff)
+	dataArg, dataFin := WrapVoidPtr(data)
 
 	defer func() {
 		buffFin()
+		dataFin()
 	}()
-	return int32(C.ImPlot_Formatter_Default(C.double(value), buffArg, C.int(size), (data)))
+	return int32(C.ImPlot_Formatter_Default(C.double(value), buffArg, C.int(size), dataArg))
 }
 
 func PlotFormatterLogit(value float64, buff string, size int32, noname1 unsafe.Pointer) int32 {
 	buffArg, buffFin := WrapString(buff)
+	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
 
 	defer func() {
 		buffFin()
+		noname1Fin()
 	}()
-	return int32(C.ImPlot_Formatter_Logit(C.double(value), buffArg, C.int(size), (noname1)))
+	return int32(C.ImPlot_Formatter_Logit(C.double(value), buffArg, C.int(size), noname1Arg))
 }
 
 func PlotFormatterTime(noname1 float64, buff string, size int32, data unsafe.Pointer) int32 {
 	buffArg, buffFin := WrapString(buff)
+	dataArg, dataFin := WrapVoidPtr(data)
 
 	defer func() {
 		buffFin()
+		dataFin()
 	}()
-	return int32(C.ImPlot_Formatter_Time(C.double(noname1), buffArg, C.int(size), (data)))
+	return int32(C.ImPlot_Formatter_Time(C.double(noname1), buffArg, C.int(size), dataArg))
 }
 
 func PlotGetAutoColor(idx PlotCol) Vec4 {
@@ -9025,27 +9031,57 @@ func PlotTagYStr(y float64, col Vec4, fmt string) {
 }
 
 func PlotTransformForwardLog10(v float64, noname1 unsafe.Pointer) float64 {
-	return float64(C.ImPlot_TransformForward_Log10(C.double(v), (noname1)))
+	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
+
+	defer func() {
+		noname1Fin()
+	}()
+	return float64(C.ImPlot_TransformForward_Log10(C.double(v), noname1Arg))
 }
 
 func PlotTransformForwardLogit(v float64, noname1 unsafe.Pointer) float64 {
-	return float64(C.ImPlot_TransformForward_Logit(C.double(v), (noname1)))
+	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
+
+	defer func() {
+		noname1Fin()
+	}()
+	return float64(C.ImPlot_TransformForward_Logit(C.double(v), noname1Arg))
 }
 
 func PlotTransformForwardSymLog(v float64, noname1 unsafe.Pointer) float64 {
-	return float64(C.ImPlot_TransformForward_SymLog(C.double(v), (noname1)))
+	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
+
+	defer func() {
+		noname1Fin()
+	}()
+	return float64(C.ImPlot_TransformForward_SymLog(C.double(v), noname1Arg))
 }
 
 func PlotTransformInverseLog10(v float64, noname1 unsafe.Pointer) float64 {
-	return float64(C.ImPlot_TransformInverse_Log10(C.double(v), (noname1)))
+	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
+
+	defer func() {
+		noname1Fin()
+	}()
+	return float64(C.ImPlot_TransformInverse_Log10(C.double(v), noname1Arg))
 }
 
 func PlotTransformInverseLogit(v float64, noname1 unsafe.Pointer) float64 {
-	return float64(C.ImPlot_TransformInverse_Logit(C.double(v), (noname1)))
+	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
+
+	defer func() {
+		noname1Fin()
+	}()
+	return float64(C.ImPlot_TransformInverse_Logit(C.double(v), noname1Arg))
 }
 
 func PlotTransformInverseSymLog(v float64, noname1 unsafe.Pointer) float64 {
-	return float64(C.ImPlot_TransformInverse_SymLog(C.double(v), (noname1)))
+	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
+
+	defer func() {
+		noname1Fin()
+	}()
+	return float64(C.ImPlot_TransformInverse_SymLog(C.double(v), noname1Arg))
 }
 
 func (self *PlotAxis) SetMax(_max float64) bool {
@@ -13505,6 +13541,15 @@ func (self *FormatterTimeData) TimeDataGetSpec() PlotDateTimeSpec {
 	return *newPlotDateTimeSpecFromC(func() *C.ImPlotDateTimeSpec { result := result; return &result }())
 }
 
+func (self *FormatterTimeData) TimeDataGetUserFormatterData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_Formatter_Time_Data_GetUserFormatterData(selfArg))
+}
+
 func (self PlotAlignmentData) SetVertical(v bool) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -13915,9 +13960,20 @@ func (self *PlotAxis) Ticker() PlotTicker {
 }
 
 func (self PlotAxis) SetFormatterData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImPlotAxis_SetFormatterData(selfArg, (v))
+	C.wrap_ImPlotAxis_SetFormatterData(selfArg, vArg)
+}
+
+func (self *PlotAxis) FormatterData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImPlotAxis_GetFormatterData(selfArg))
 }
 
 func (self PlotAxis) SetFormatSpec(v *[16]rune) {
@@ -14011,9 +14067,20 @@ func (self *PlotAxis) PickerTimeMax() PlotTime {
 }
 
 func (self PlotAxis) SetTransformData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImPlotAxis_SetTransformData(selfArg, (v))
+	C.wrap_ImPlotAxis_SetTransformData(selfArg, vArg)
+}
+
+func (self *PlotAxis) TransformData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImPlotAxis_GetTransformData(selfArg))
 }
 
 func (self PlotAxis) SetPixelMin(v float32) {
