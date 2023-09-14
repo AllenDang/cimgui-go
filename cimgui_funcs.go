@@ -879,13 +879,15 @@ func (self *FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsa
 // glyph_ranges: NULL
 func (self *FontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_size int32, size_pixels float32, font_cfg *FontConfig, glyph_ranges *Wchar) *Font {
 	selfArg, selfFin := self.handle()
+	font_dataArg, font_dataFin := WrapVoidPtr(font_data)
 	font_cfgArg, font_cfgFin := font_cfg.handle()
 
 	defer func() {
 		selfFin()
+		font_dataFin()
 		font_cfgFin()
 	}()
-	return newFontFromC(C.ImFontAtlas_AddFontFromMemoryTTF(selfArg, (font_data), C.int(font_size), C.float(size_pixels), font_cfgArg, (*C.ImWchar)(glyph_ranges)))
+	return newFontFromC(C.ImFontAtlas_AddFontFromMemoryTTF(selfArg, font_dataArg, C.int(font_size), C.float(size_pixels), font_cfgArg, (*C.ImWchar)(glyph_ranges)))
 }
 
 // Build pixels data. This is called automatically for you by the GetTexData*** functions.
@@ -1418,6 +1420,17 @@ func (self *Context) Destroy() {
 	C.ImGuiContext_destroy(selfArg)
 
 	selfFin()
+}
+
+func (self *DataVarInfo) InternalVarPtr(parent unsafe.Pointer) unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+	parentArg, parentFin := WrapVoidPtr(parent)
+
+	defer func() {
+		selfFin()
+		parentFin()
+	}()
+	return unsafe.Pointer(C.ImGuiDataVarInfo_GetVarPtr(selfArg, parentArg))
 }
 
 func InternalNewDockContext() *DockContext {
@@ -2233,7 +2246,12 @@ func InternalNewPtrOrIndexInt(index int32) *PtrOrIndex {
 }
 
 func InternalNewPtrOrIndexPtr(ptr unsafe.Pointer) *PtrOrIndex {
-	return newPtrOrIndexFromC(C.ImGuiPtrOrIndex_ImGuiPtrOrIndex_Ptr((ptr)))
+	ptrArg, ptrFin := WrapVoidPtr(ptr)
+
+	defer func() {
+		ptrFin()
+	}()
+	return newPtrOrIndexFromC(C.ImGuiPtrOrIndex_ImGuiPtrOrIndex_Ptr(ptrArg))
 }
 
 func (self *PtrOrIndex) Destroy() {
@@ -2314,7 +2332,12 @@ func NewStoragePairInt(_key ID, _val_i int32) *StoragePair {
 }
 
 func NewStoragePairPtr(_key ID, _val_p unsafe.Pointer) *StoragePair {
-	return newStoragePairFromC(C.ImGuiStoragePair_ImGuiStoragePair_Ptr(C.ImGuiID(_key), (_val_p)))
+	_val_pArg, _val_pFin := WrapVoidPtr(_val_p)
+
+	defer func() {
+		_val_pFin()
+	}()
+	return newStoragePairFromC(C.ImGuiStoragePair_ImGuiStoragePair_Ptr(C.ImGuiID(_key), _val_pArg))
 }
 
 func (self *StoragePair) Destroy() {
@@ -2393,6 +2416,16 @@ func (self *Storage) IntRefV(key ID, default_val int32) *int32 {
 	return (*int32)(C.ImGuiStorage_GetIntRef(selfArg, C.ImGuiID(key), C.int(default_val)))
 }
 
+// default_val is NULL
+func (self *Storage) VoidPtr(key ID) unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.ImGuiStorage_GetVoidPtr(selfArg, C.ImGuiID(key)))
+}
+
 func (self *Storage) SetAllInt(val int32) {
 	selfArg, selfFin := self.handle()
 	C.ImGuiStorage_SetAllInt(selfArg, C.int(val))
@@ -2423,9 +2456,11 @@ func (self *Storage) SetInt(key ID, val int32) {
 
 func (self *Storage) SetVoidPtr(key ID, val unsafe.Pointer) {
 	selfArg, selfFin := self.handle()
-	C.ImGuiStorage_SetVoidPtr(selfArg, C.ImGuiID(key), (val))
+	valArg, valFin := WrapVoidPtr(val)
+	C.ImGuiStorage_SetVoidPtr(selfArg, C.ImGuiID(key), valArg)
 
 	selfFin()
+	valFin()
 }
 
 func InternalNewStyleModFloat(idx StyleVar, v float32) *StyleMod {
@@ -4275,21 +4310,31 @@ func InternalCreateNewWindowSettings(name string) *WindowSettings {
 
 func InternalDataTypeApplyFromText(buf string, data_type DataType, p_data unsafe.Pointer, format string) bool {
 	bufArg, bufFin := WrapString(buf)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
 		bufFin()
+		p_dataFin()
 		formatFin()
 	}()
-	return C.igDataTypeApplyFromText(bufArg, C.ImGuiDataType(data_type), (p_data), formatArg) == C.bool(true)
+	return C.igDataTypeApplyFromText(bufArg, C.ImGuiDataType(data_type), p_dataArg, formatArg) == C.bool(true)
 }
 
 func InternalDataTypeApplyOp(data_type DataType, op int32, output unsafe.Pointer, arg_1 unsafe.Pointer, arg_2 unsafe.Pointer) {
-	C.igDataTypeApplyOp(C.ImGuiDataType(data_type), C.int(op), (output), (arg_1), (arg_2))
+	outputArg, outputFin := WrapVoidPtr(output)
+	C.igDataTypeApplyOp(C.ImGuiDataType(data_type), C.int(op), outputArg, (arg_1), (arg_2))
+
+	outputFin()
 }
 
 func InternalDataTypeClamp(data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
-	return C.igDataTypeClamp(C.ImGuiDataType(data_type), (p_data), (p_min), (p_max)) == C.bool(true)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
+
+	defer func() {
+		p_dataFin()
+	}()
+	return C.igDataTypeClamp(C.ImGuiDataType(data_type), p_dataArg, (p_min), (p_max)) == C.bool(true)
 }
 
 func InternalDataTypeCompare(data_type DataType, arg_1 unsafe.Pointer, arg_2 unsafe.Pointer) int32 {
@@ -4829,12 +4874,14 @@ func DockSpaceOverViewportV(viewport *Viewport, flags DockNodeFlags, window_clas
 }
 
 func InternalDragBehavior(id ID, data_type DataType, p_v unsafe.Pointer, v_speed float32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
+	p_vArg, p_vFin := WrapVoidPtr(p_v)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
+		p_vFin()
 		formatFin()
 	}()
-	return C.igDragBehavior(C.ImGuiID(id), C.ImGuiDataType(data_type), (p_v), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragBehavior(C.ImGuiID(id), C.ImGuiDataType(data_type), p_vArg, C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // If v_min >= v_max we have no bound
@@ -5095,13 +5142,15 @@ func DragIntRange2V(label string, v_current_min *int32, v_current_max *int32, v_
 // flags: 0
 func DragScalarV(label string, data_type DataType, p_data unsafe.Pointer, v_speed float32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 		formatFin()
 	}()
-	return C.igDragScalar(labelArg, C.ImGuiDataType(data_type), (p_data), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragScalar(labelArg, C.ImGuiDataType(data_type), p_dataArg, C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // DragScalarNV parameter default value hint:
@@ -5112,13 +5161,15 @@ func DragScalarV(label string, data_type DataType, p_data unsafe.Pointer, v_spee
 // flags: 0
 func DragScalarNV(label string, data_type DataType, p_data unsafe.Pointer, components int32, v_speed float32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 		formatFin()
 	}()
-	return C.igDragScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragScalarN(labelArg, C.ImGuiDataType(data_type), p_dataArg, C.int(components), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // add a dummy item of given size. unlike InvisibleButton(), Dummy() won't take the mouse click or be navigable into.
@@ -5297,7 +5348,12 @@ func FindViewportByID(id ID) *Viewport {
 
 // this is a helper for backends. the type platform_handle is decided by the backend (e.g. HWND, MyWindow*, GLFWwindow* etc.)
 func FindViewportByPlatformHandle(platform_handle unsafe.Pointer) *Viewport {
-	return newViewportFromC(C.igFindViewportByPlatformHandle((platform_handle)))
+	platform_handleArg, platform_handleFin := WrapVoidPtr(platform_handle)
+
+	defer func() {
+		platform_handleFin()
+	}()
+	return newViewportFromC(C.igFindViewportByPlatformHandle(platform_handleArg))
 }
 
 func InternalFindWindowByID(id ID) *Window {
@@ -6260,6 +6316,20 @@ func InternalImExponentialMovingAverage(avg float32, sample float32, n int32) fl
 	return float32(C.igImExponentialMovingAverage(C.float(avg), C.float(sample), C.int(n)))
 }
 
+// InternalImFileLoadToMemoryV parameter default value hint:
+// out_file_size: NULL
+// padding_bytes: 0
+func InternalImFileLoadToMemoryV(filename string, mode string, out_file_size *uint64, padding_bytes int32) unsafe.Pointer {
+	filenameArg, filenameFin := WrapString(filename)
+	modeArg, modeFin := WrapString(mode)
+
+	defer func() {
+		filenameFin()
+		modeFin()
+	}()
+	return unsafe.Pointer(C.igImFileLoadToMemory(filenameArg, modeArg, (*C.xulong)(out_file_size), C.int(padding_bytes)))
+}
+
 // Decent replacement for floorf()
 func InternalImFloorSignedFloat(f float32) float32 {
 	return float32(C.igImFloorSigned_Float(C.float(f)))
@@ -6307,9 +6377,11 @@ func InternalImFontAtlasBuildInit(atlas *FontAtlas) {
 
 func InternalImFontAtlasBuildPackCustomRects(atlas *FontAtlas, stbrp_context_opaque unsafe.Pointer) {
 	atlasArg, atlasFin := atlas.handle()
-	C.igImFontAtlasBuildPackCustomRects(atlasArg, (stbrp_context_opaque))
+	stbrp_context_opaqueArg, stbrp_context_opaqueFin := WrapVoidPtr(stbrp_context_opaque)
+	C.igImFontAtlasBuildPackCustomRects(atlasArg, stbrp_context_opaqueArg)
 
 	atlasFin()
+	stbrp_context_opaqueFin()
 }
 
 func InternalImFontAtlasBuildRender32bppRectFromString(atlas *FontAtlas, x int32, y int32, w int32, h int32, in_str string, in_marker_char rune, in_marker_pixel_value uint32) {
@@ -7068,13 +7140,15 @@ func InputInt4V(label string, v *[4]int32, flags InputTextFlags) bool {
 // flags: 0
 func InputScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_step unsafe.Pointer, p_step_fast unsafe.Pointer, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 		formatFin()
 	}()
-	return C.igInputScalar(labelArg, C.ImGuiDataType(data_type), (p_data), (p_step), (p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputScalar(labelArg, C.ImGuiDataType(data_type), p_dataArg, (p_step), (p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // InputScalarNV parameter default value hint:
@@ -7084,13 +7158,15 @@ func InputScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_ste
 // flags: 0
 func InputScalarNV(label string, data_type DataType, p_data unsafe.Pointer, components int32, p_step unsafe.Pointer, p_step_fast unsafe.Pointer, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 		formatFin()
 	}()
-	return C.igInputScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), (p_step), (p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputScalarN(labelArg, C.ImGuiDataType(data_type), p_dataArg, C.int(components), (p_step), (p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 func InternalInputTextDeactivateHook(id ID) {
@@ -7622,8 +7698,15 @@ func InternalMarkItemEdited(id ID) {
 	C.igMarkItemEdited(C.ImGuiID(id))
 }
 
+func MemAlloc(size uint64) unsafe.Pointer {
+	return unsafe.Pointer(C.igMemAlloc(C.xulong(size)))
+}
+
 func MemFree(ptr unsafe.Pointer) {
-	C.igMemFree((ptr))
+	ptrArg, ptrFin := WrapVoidPtr(ptr)
+	C.igMemFree(ptrArg)
+
+	ptrFin()
 }
 
 // InternalMenuItemExV parameter default value hint:
@@ -8112,7 +8195,12 @@ func InternalRenderNavHighlightV(bb Rect, id ID, flags NavHighlightFlags) {
 // platform_render_arg: NULL
 // renderer_render_arg: NULL
 func RenderPlatformWindowsDefaultV(platform_render_arg unsafe.Pointer, renderer_render_arg unsafe.Pointer) {
-	C.igRenderPlatformWindowsDefault((platform_render_arg), (renderer_render_arg))
+	platform_render_argArg, platform_render_argFin := WrapVoidPtr(platform_render_arg)
+	renderer_render_argArg, renderer_render_argFin := WrapVoidPtr(renderer_render_arg)
+	C.igRenderPlatformWindowsDefault(platform_render_argArg, renderer_render_argArg)
+
+	platform_render_argFin()
+	renderer_render_argFin()
 }
 
 func InternalRenderRectFilledRangeH(draw_list *DrawList, rect Rect, col uint32, x_start_norm float32, x_end_norm float32, rounding float32) {
@@ -8947,14 +9035,16 @@ func SliderAngleV(label string, v_rad *float32, v_degrees_min float32, v_degrees
 }
 
 func InternalSliderBehavior(bb Rect, id ID, data_type DataType, p_v unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags, out_grab_bb *Rect) bool {
+	p_vArg, p_vFin := WrapVoidPtr(p_v)
 	formatArg, formatFin := WrapString(format)
 	out_grab_bbArg, out_grab_bbFin := wrap[C.ImRect, *Rect](out_grab_bb)
 
 	defer func() {
+		p_vFin()
 		formatFin()
 		out_grab_bbFin()
 	}()
-	return C.igSliderBehavior(bb.toC(), C.ImGuiID(id), C.ImGuiDataType(data_type), (p_v), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags), out_grab_bbArg) == C.bool(true)
+	return C.igSliderBehavior(bb.toC(), C.ImGuiID(id), C.ImGuiDataType(data_type), p_vArg, (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags), out_grab_bbArg) == C.bool(true)
 }
 
 // adjust format to decorate the value with a prefix or a suffix for in-slider labels or unit display.
@@ -9139,13 +9229,15 @@ func SliderInt4V(label string, v *[4]int32, v_min int32, v_max int32, format str
 // flags: 0
 func SliderScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 		formatFin()
 	}()
-	return C.igSliderScalar(labelArg, C.ImGuiDataType(data_type), (p_data), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderScalar(labelArg, C.ImGuiDataType(data_type), p_dataArg, (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // SliderScalarNV parameter default value hint:
@@ -9153,13 +9245,15 @@ func SliderScalarV(label string, data_type DataType, p_data unsafe.Pointer, p_mi
 // flags: 0
 func SliderScalarNV(label string, data_type DataType, p_data unsafe.Pointer, components int32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 		formatFin()
 	}()
-	return C.igSliderScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderScalarN(labelArg, C.ImGuiDataType(data_type), p_dataArg, C.int(components), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // button with FramePadding=(0,0) to easily embed within text
@@ -9856,13 +9950,15 @@ func InternalTempInputIsActive(id ID) bool {
 // p_clamp_max: NULL
 func InternalTempInputScalarV(bb Rect, id ID, label string, data_type DataType, p_data unsafe.Pointer, format string, p_clamp_min unsafe.Pointer, p_clamp_max unsafe.Pointer) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 		formatFin()
 	}()
-	return C.igTempInputScalar(bb.toC(), C.ImGuiID(id), labelArg, C.ImGuiDataType(data_type), (p_data), formatArg, (p_clamp_min), (p_clamp_max)) == C.bool(true)
+	return C.igTempInputScalar(bb.toC(), C.ImGuiID(id), labelArg, C.ImGuiDataType(data_type), p_dataArg, formatArg, (p_clamp_min), (p_clamp_max)) == C.bool(true)
 }
 
 func InternalTempInputText(bb Rect, id ID, label string, buf string, buf_size int32, flags InputTextFlags) bool {
@@ -10122,13 +10218,15 @@ func VSliderIntV(label string, size Vec2, v *int32, v_min int32, v_max int32, fo
 // flags: 0
 func VSliderScalarV(label string, size Vec2, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 		formatFin()
 	}()
-	return C.igVSliderScalar(labelArg, size.toC(), C.ImGuiDataType(data_type), (p_data), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igVSliderScalar(labelArg, size.toC(), C.ImGuiDataType(data_type), p_dataArg, (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 func ValueBool(prefix string, b bool) {
@@ -10426,11 +10524,13 @@ func (self *FontAtlas) AddFontFromMemoryCompressedTTF(compressed_font_data unsaf
 
 func (self *FontAtlas) AddFontFromMemoryTTF(font_data unsafe.Pointer, font_size int32, size_pixels float32) *Font {
 	selfArg, selfFin := self.handle()
+	font_dataArg, font_dataFin := WrapVoidPtr(font_data)
 
 	defer func() {
 		selfFin()
+		font_dataFin()
 	}()
-	return newFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryTTF(selfArg, (font_data), C.int(font_size), C.float(size_pixels)))
+	return newFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryTTF(selfArg, font_dataArg, C.int(font_size), C.float(size_pixels)))
 }
 
 func (self *FontGlyphRangesBuilder) AddText(text string) {
@@ -11124,20 +11224,24 @@ func DragIntRange2(label string, v_current_min *int32, v_current_max *int32) boo
 
 func DragScalar(label string, data_type DataType, p_data unsafe.Pointer) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 	}()
-	return C.wrap_igDragScalar(labelArg, C.ImGuiDataType(data_type), (p_data)) == C.bool(true)
+	return C.wrap_igDragScalar(labelArg, C.ImGuiDataType(data_type), p_dataArg) == C.bool(true)
 }
 
 func DragScalarN(label string, data_type DataType, p_data unsafe.Pointer, components int32) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 	}()
-	return C.wrap_igDragScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components)) == C.bool(true)
+	return C.wrap_igDragScalarN(labelArg, C.ImGuiDataType(data_type), p_dataArg, C.int(components)) == C.bool(true)
 }
 
 func InternalFindRenderedTextEnd(text string) string {
@@ -11177,6 +11281,17 @@ func MouseDragDelta() Vec2 {
 	pOutFin()
 
 	return *pOut
+}
+
+func InternalImFileLoadToMemory(filename string, mode string) unsafe.Pointer {
+	filenameArg, filenameFin := WrapString(filename)
+	modeArg, modeFin := WrapString(mode)
+
+	defer func() {
+		filenameFin()
+		modeFin()
+	}()
+	return unsafe.Pointer(C.wrap_igImFileLoadToMemory(filenameArg, modeArg))
 }
 
 func InternalImHashData(data unsafe.Pointer, data_size uint64) ID {
@@ -11367,20 +11482,24 @@ func InputInt4(label string, v *[4]int32) bool {
 
 func InputScalar(label string, data_type DataType, p_data unsafe.Pointer) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 	}()
-	return C.wrap_igInputScalar(labelArg, C.ImGuiDataType(data_type), (p_data)) == C.bool(true)
+	return C.wrap_igInputScalar(labelArg, C.ImGuiDataType(data_type), p_dataArg) == C.bool(true)
 }
 
 func InputScalarN(label string, data_type DataType, p_data unsafe.Pointer, components int32) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 	}()
-	return C.wrap_igInputScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components)) == C.bool(true)
+	return C.wrap_igInputScalarN(labelArg, C.ImGuiDataType(data_type), p_dataArg, C.int(components)) == C.bool(true)
 }
 
 func InternalInputTextEx(label string, hint string, buf string, buf_size int32, size_arg Vec2, flags InputTextFlags) bool {
@@ -12025,20 +12144,24 @@ func SliderInt4(label string, v *[4]int32, v_min int32, v_max int32) bool {
 
 func SliderScalar(label string, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 	}()
-	return C.wrap_igSliderScalar(labelArg, C.ImGuiDataType(data_type), (p_data), (p_min), (p_max)) == C.bool(true)
+	return C.wrap_igSliderScalar(labelArg, C.ImGuiDataType(data_type), p_dataArg, (p_min), (p_max)) == C.bool(true)
 }
 
 func SliderScalarN(label string, data_type DataType, p_data unsafe.Pointer, components int32, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 	}()
-	return C.wrap_igSliderScalarN(labelArg, C.ImGuiDataType(data_type), (p_data), C.int(components), (p_min), (p_max)) == C.bool(true)
+	return C.wrap_igSliderScalarN(labelArg, C.ImGuiDataType(data_type), p_dataArg, C.int(components), (p_min), (p_max)) == C.bool(true)
 }
 
 func InternalSplitterBehavior(bb Rect, id ID, axis Axis, size1 *float32, size2 *float32, min_size1 float32, min_size2 float32) bool {
@@ -12111,13 +12234,15 @@ func TableSetupColumn(label string) {
 
 func InternalTempInputScalar(bb Rect, id ID, label string, data_type DataType, p_data unsafe.Pointer, format string) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 		formatFin()
 	}()
-	return C.wrap_igTempInputScalar(bb.toC(), C.ImGuiID(id), labelArg, C.ImGuiDataType(data_type), (p_data), formatArg) == C.bool(true)
+	return C.wrap_igTempInputScalar(bb.toC(), C.ImGuiID(id), labelArg, C.ImGuiDataType(data_type), p_dataArg, formatArg) == C.bool(true)
 }
 
 func InternalTextEx(text string) {
@@ -12180,11 +12305,13 @@ func VSliderInt(label string, size Vec2, v *int32, v_min int32, v_max int32) boo
 
 func VSliderScalar(label string, size Vec2, data_type DataType, p_data unsafe.Pointer, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
 	labelArg, labelFin := WrapString(label)
+	p_dataArg, p_dataFin := WrapVoidPtr(p_data)
 
 	defer func() {
 		labelFin()
+		p_dataFin()
 	}()
-	return C.wrap_igVSliderScalar(labelArg, size.toC(), C.ImGuiDataType(data_type), (p_data), (p_min), (p_max)) == C.bool(true)
+	return C.wrap_igVSliderScalar(labelArg, size.toC(), C.ImGuiDataType(data_type), p_dataArg, (p_min), (p_max)) == C.bool(true)
 }
 
 func ValueFloat(prefix string, v float32) {
@@ -12348,9 +12475,20 @@ func (self *DrawCmd) ElemCount() uint32 {
 }
 
 func (self DrawCmd) SetUserCallbackData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImDrawCmd_SetUserCallbackData(selfArg, (v))
+	C.wrap_ImDrawCmd_SetUserCallbackData(selfArg, vArg)
+}
+
+func (self *DrawCmd) UserCallbackData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImDrawCmd_GetUserCallbackData(selfArg))
 }
 
 func (self DrawCmdHeader) SetClipRect(v Vec4) {
@@ -13395,9 +13533,20 @@ func (self *FontAtlas) Locked() bool {
 }
 
 func (self FontAtlas) SetUserData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImFontAtlas_SetUserData(selfArg, (v))
+	C.wrap_ImFontAtlas_SetUserData(selfArg, vArg)
+}
+
+func (self *FontAtlas) UserData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImFontAtlas_GetUserData(selfArg))
 }
 
 func (self FontAtlas) SetTexReady(v bool) {
@@ -13755,9 +13904,20 @@ func (self *FontAtlasCustomRect) Font() *Font {
 }
 
 func (self FontConfig) SetFontData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImFontConfig_SetFontData(selfArg, (v))
+	C.wrap_ImFontConfig_SetFontData(selfArg, vArg)
+}
+
+func (self *FontConfig) FontData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImFontConfig_GetFontData(selfArg))
 }
 
 func (self FontConfig) SetFontDataSize(v int32) {
@@ -14674,9 +14834,20 @@ func (self *Context) TestEngineHookItems() bool {
 }
 
 func (self Context) SetTestEngine(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetTestEngine(selfArg, (v))
+	C.wrap_ImGuiContext_SetTestEngine(selfArg, vArg)
+}
+
+func (self *Context) TestEngine() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiContext_GetTestEngine(selfArg))
 }
 
 func (self Context) SetInputEventsQueue(v Vector[*InputEvent]) {
@@ -18271,9 +18442,20 @@ func (self *ContextHook) Owner() ID {
 }
 
 func (self ContextHook) SetUserData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiContextHook_SetUserData(selfArg, (v))
+	C.wrap_ImGuiContextHook_SetUserData(selfArg, vArg)
+}
+
+func (self *ContextHook) UserData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiContextHook_GetUserData(selfArg))
 }
 
 func (self DataTypeInfo) SetSize(v uint64) {
@@ -19305,9 +19487,20 @@ func (self *IO) LogFilename() string {
 }
 
 func (self IO) SetUserData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiIO_SetUserData(selfArg, (v))
+	C.wrap_ImGuiIO_SetUserData(selfArg, vArg)
+}
+
+func (self *IO) UserData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiIO_GetUserData(selfArg))
 }
 
 func (self IO) SetFonts(v *FontAtlas) {
@@ -19814,33 +20007,88 @@ func (self *IO) BackendRendererName() string {
 }
 
 func (self IO) SetBackendPlatformUserData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiIO_SetBackendPlatformUserData(selfArg, (v))
+	C.wrap_ImGuiIO_SetBackendPlatformUserData(selfArg, vArg)
+}
+
+func (self *IO) BackendPlatformUserData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiIO_GetBackendPlatformUserData(selfArg))
 }
 
 func (self IO) SetBackendRendererUserData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiIO_SetBackendRendererUserData(selfArg, (v))
+	C.wrap_ImGuiIO_SetBackendRendererUserData(selfArg, vArg)
+}
+
+func (self *IO) BackendRendererUserData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiIO_GetBackendRendererUserData(selfArg))
 }
 
 func (self IO) SetBackendLanguageUserData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiIO_SetBackendLanguageUserData(selfArg, (v))
+	C.wrap_ImGuiIO_SetBackendLanguageUserData(selfArg, vArg)
+}
+
+func (self *IO) BackendLanguageUserData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiIO_GetBackendLanguageUserData(selfArg))
 }
 
 func (self IO) SetClipboardUserData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiIO_SetClipboardUserData(selfArg, (v))
+	C.wrap_ImGuiIO_SetClipboardUserData(selfArg, vArg)
+}
+
+func (self *IO) ClipboardUserData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiIO_GetClipboardUserData(selfArg))
 }
 
 func (self IO) SetUnusedPadding(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiIO_Set_UnusedPadding(selfArg, (v))
+	C.wrap_ImGuiIO_Set_UnusedPadding(selfArg, vArg)
+}
+
+func (self *IO) UnusedPadding() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiIO_Get_UnusedPadding(selfArg))
 }
 
 func (self IO) SetPlatformLocaleDecimalPoint(v Wchar) {
@@ -20702,9 +20950,20 @@ func (self *InputTextCallbackData) Flags() InputTextFlags {
 }
 
 func (self InputTextCallbackData) SetUserData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiInputTextCallbackData_SetUserData(selfArg, (v))
+	C.wrap_ImGuiInputTextCallbackData_SetUserData(selfArg, vArg)
+}
+
+func (self *InputTextCallbackData) UserData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiInputTextCallbackData_GetUserData(selfArg))
 }
 
 func (self InputTextCallbackData) SetEventChar(v Wchar) {
@@ -21561,9 +21820,20 @@ func (self *ListClipper) StartPosY() float32 {
 }
 
 func (self ListClipper) SetTempData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiListClipper_SetTempData(selfArg, (v))
+	C.wrap_ImGuiListClipper_SetTempData(selfArg, vArg)
+}
+
+func (self *ListClipper) TempData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiListClipper_GetTempData(selfArg))
 }
 
 func (self ListClipperData) SetListClipper(v *ListClipper) {
@@ -22481,9 +22751,20 @@ func (self *NextWindowData) SizeConstraintRect() Rect {
 }
 
 func (self NextWindowData) SetSizeCallbackUserData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiNextWindowData_SetSizeCallbackUserData(selfArg, (v))
+	C.wrap_ImGuiNextWindowData_SetSizeCallbackUserData(selfArg, vArg)
+}
+
+func (self *NextWindowData) SizeCallbackUserData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiNextWindowData_GetSizeCallbackUserData(selfArg))
 }
 
 func (self NextWindowData) SetBgAlphaVal(v float32) {
@@ -22908,9 +23189,20 @@ func (self *OnceUponAFrame) RefFrame() int32 {
 }
 
 func (self Payload) SetData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiPayload_SetData(selfArg, (v))
+	C.wrap_ImGuiPayload_SetData(selfArg, vArg)
+}
+
+func (self *Payload) Data() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiPayload_GetData(selfArg))
 }
 
 func (self Payload) SetDataSize(v int32) {
@@ -23147,9 +23439,20 @@ func (self *PlatformMonitor) DpiScale() float32 {
 }
 
 func (self PlatformMonitor) SetPlatformHandle(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiPlatformMonitor_SetPlatformHandle(selfArg, (v))
+	C.wrap_ImGuiPlatformMonitor_SetPlatformHandle(selfArg, vArg)
+}
+
+func (self *PlatformMonitor) PlatformHandle() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiPlatformMonitor_GetPlatformHandle(selfArg))
 }
 
 func (self PopupData) SetPopupId(v ID) {
@@ -23277,9 +23580,20 @@ func (self *PopupData) OpenMousePos() Vec2 {
 }
 
 func (self PtrOrIndex) SetPtr(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiPtrOrIndex_SetPtr(selfArg, (v))
+	C.wrap_ImGuiPtrOrIndex_SetPtr(selfArg, vArg)
+}
+
+func (self *PtrOrIndex) Ptr() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiPtrOrIndex_GetPtr(selfArg))
 }
 
 func (self PtrOrIndex) SetIndex(v int32) {
@@ -23330,9 +23644,20 @@ func (self *SettingsHandler) TypeHash() ID {
 }
 
 func (self SettingsHandler) SetUserData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiSettingsHandler_SetUserData(selfArg, (v))
+	C.wrap_ImGuiSettingsHandler_SetUserData(selfArg, vArg)
+}
+
+func (self *SettingsHandler) UserData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiSettingsHandler_GetUserData(selfArg))
 }
 
 func (self ShrinkWidthItem) SetIndex(v int32) {
@@ -23381,9 +23706,20 @@ func (self *ShrinkWidthItem) InitialWidth() float32 {
 }
 
 func (self SizeCallbackData) SetUserData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiSizeCallbackData_SetUserData(selfArg, (v))
+	C.wrap_ImGuiSizeCallbackData_SetUserData(selfArg, vArg)
+}
+
+func (self *SizeCallbackData) UserData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiSizeCallbackData_GetUserData(selfArg))
 }
 
 func (self SizeCallbackData) SetPos(v Vec2) {
@@ -25217,9 +25553,20 @@ func (self *Table) Flags() TableFlags {
 }
 
 func (self Table) SetRawData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiTable_SetRawData(selfArg, (v))
+	C.wrap_ImGuiTable_SetRawData(selfArg, vArg)
+}
+
+func (self *Table) RawData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiTable_GetRawData(selfArg))
 }
 
 func (self Table) SetTempData(v *TableTempData) {
@@ -28198,27 +28545,71 @@ func (self *Viewport) DrawData() *DrawData {
 }
 
 func (self Viewport) SetRendererUserData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiViewport_SetRendererUserData(selfArg, (v))
+	C.wrap_ImGuiViewport_SetRendererUserData(selfArg, vArg)
+}
+
+func (self *Viewport) RendererUserData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiViewport_GetRendererUserData(selfArg))
 }
 
 func (self Viewport) SetPlatformUserData(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiViewport_SetPlatformUserData(selfArg, (v))
+	C.wrap_ImGuiViewport_SetPlatformUserData(selfArg, vArg)
+}
+
+func (self *Viewport) PlatformUserData() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiViewport_GetPlatformUserData(selfArg))
 }
 
 func (self Viewport) SetPlatformHandle(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiViewport_SetPlatformHandle(selfArg, (v))
+	C.wrap_ImGuiViewport_SetPlatformHandle(selfArg, vArg)
+}
+
+func (self *Viewport) PlatformHandle() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiViewport_GetPlatformHandle(selfArg))
 }
 
 func (self Viewport) SetPlatformHandleRaw(v unsafe.Pointer) {
+	vArg, _ := WrapVoidPtr(v)
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiViewport_SetPlatformHandleRaw(selfArg, (v))
+	C.wrap_ImGuiViewport_SetPlatformHandleRaw(selfArg, vArg)
+}
+
+func (self *Viewport) PlatformHandleRaw() unsafe.Pointer {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return unsafe.Pointer(C.wrap_ImGuiViewport_GetPlatformHandleRaw(selfArg))
 }
 
 func (self Viewport) SetPlatformWindowCreated(v bool) {

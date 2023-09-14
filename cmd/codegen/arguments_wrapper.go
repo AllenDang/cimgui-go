@@ -99,7 +99,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 		"ImGuiTableColumnIdx":      simpleW("TableColumnIdx", "C.ImGuiTableColumnIdx"),
 		"ImGuiTableDrawChannelIdx": simpleW("TableDrawChannelIdx", "C.ImGuiTableDrawChannelIdx"),
 		"ImGuiKeyChord":            simpleW("KeyChord", "C.ImGuiKeyChord"),
-		"void*":                    simpleW("unsafe.Pointer", ""),
+		"void*":                    voidPtrW,
 		"const void*":              simpleW("unsafe.Pointer", ""),
 		"const ImVec2":             wrappableW("Vec2"),
 		"const ImVec2*":            wrappablePtrW("*Vec2", "C.ImVec2"),
@@ -304,6 +304,16 @@ func uint64ArrayW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType: "[]uint64",
 		VarName: fmt.Sprintf("(*C.ulonglong)(&(%s[0]))", arg.Name),
+	}
+}
+
+func voidPtrW(arg ArgDef) ArgumentWrapperData {
+	return ArgumentWrapperData{
+		ArgType:     "unsafe.Pointer",
+		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapVoidPtr(%[1]s)", arg.Name),
+		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapVoidPtr(%[1]s)", arg.Name),
+		VarName:     fmt.Sprintf("%sArg", arg.Name),
+		Finalizer:   fmt.Sprintf("%sFin()", arg.Name),
 	}
 }
 

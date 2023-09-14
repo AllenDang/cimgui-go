@@ -4,7 +4,10 @@ package imgui
 // #include <stdlib.h>
 // #include <stdbool.h>
 import "C"
-import "unsafe"
+import (
+	"runtime"
+	"unsafe"
+)
 
 func CastBool(value bool) (cast int) {
 	if value {
@@ -142,4 +145,25 @@ func (buf *StringBuffer) ToGo() string {
 	}
 	PtrToByteSlice(buf.ptr)[buf.size-1] = 0
 	return C.GoString((*C.char)(buf.ptr))
+}
+
+// WrapVoidPtr uses runtime.Pinner to pin value
+func WrapVoidPtr(value unsafe.Pointer) (wrapped unsafe.Pointer, finisher func()) {
+	p := &runtime.Pinner{}
+	tryPin(value, p)
+	return value, func() {
+		p.Unpin()
+	}
+}
+
+// TODO: this is workaround because of bug/feature request in GO.
+// It might be changed after 1.22 release
+func tryPin(value any, pinner *runtime.Pinner) {
+	defer func() {
+		if r := recover(); r != nil {
+			// nothing to do here hehe
+		}
+	}()
+
+	pinner.Pin(value)
 }
