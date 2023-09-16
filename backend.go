@@ -17,6 +17,9 @@ import (
 
 var currentBackend backendCExpose
 
+// TODO: Maybe we should get rid of it?
+var textureManager TextureManager
+
 //export loopCallback
 func loopCallback() {
 	if currentBackend != nil {
@@ -125,9 +128,6 @@ type Backend[BackendFlagsT ~int] interface {
 
 	SetTargetFPS(fps uint)
 
-	CreateTexture(pixels unsafe.Pointer, width, Height int) TextureID
-	CreateTextureRgba(img *image.RGBA, width, height int) TextureID
-	DeleteTexture(id TextureID)
 	SetDropCallback(DropCallback)
 	SetCloseCallback(WindowCloseCallback[BackendFlagsT])
 	SetKeyCallback(KeyCallback)
@@ -140,9 +140,21 @@ type Backend[BackendFlagsT ~int] interface {
 	CreateWindow(title string, width, height int)
 
 	backendCExpose
+	TextureManager
+}
+
+// TextureManager is a part of Backend.
+//
+// Why I separate it? Current impl of local texture.go needs to store this somewhere, and I don't want
+// to make Texture relate on BackendFlagsT.
+type TextureManager interface {
+	CreateTexture(pixels unsafe.Pointer, width, Height int) TextureID
+	CreateTextureRgba(img *image.RGBA, width, height int) TextureID
+	DeleteTexture(id TextureID)
 }
 
 type backendCExpose interface {
+
 	// for C callbacks
 	// What happens here is a bit tricky:
 	// - user sets these callbacks via Set* methods of the backend
@@ -162,4 +174,10 @@ type backendCExpose interface {
 	closeCallback() func(window unsafe.Pointer)
 	keyCallback() KeyCallback
 	sizeCallback() SizeChangeCallback
+}
+
+func CreateBackend[BackendFlagsT ~int](backend Backend[BackendFlagsT]) Backend[BackendFlagsT] {
+	currentBackend = backend
+	textureManager = backend
+	return backend
 }

@@ -21,7 +21,7 @@ type Texture struct {
 }
 
 func NewTextureFromRgba(rgba *image.RGBA) *Texture {
-	texID := currentBackend.CreateTextureRgba(rgba, rgba.Bounds().Dx(), rgba.Bounds().Dy())
+	texID := textureManager.CreateTextureRgba(rgba, rgba.Bounds().Dx(), rgba.Bounds().Dy())
 
 	if texID == nil {
 		return nil
@@ -40,7 +40,7 @@ func NewTextureFromRgba(rgba *image.RGBA) *Texture {
 }
 
 func (t *Texture) release() {
-	currentBackend.DeleteTexture(t.id)
+	textureManager.DeleteTexture(t.id)
 }
 
 func (t *Texture) ID() TextureID {
