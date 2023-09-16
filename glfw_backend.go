@@ -36,6 +36,10 @@ const (
 	GLFWWindowFlagsDecorated   = GLFWWindowFlags(C.GLFWWindowDecorated)
 	GLFWWindowFlagsTransparent = GLFWWindowFlags(C.GLFWWindowTransparentFramebuffer)
 	GLFWWindowFlagsVisible     = GLFWWindowFlags(C.GLFWWindowVisible)
+	GLFWWindowFlagsFloating    = GLFWWindowFlags(C.GLFWWindowFloating)
+	GLFWWindowFlagsFocused     = GLFWWindowFlags(C.GLFWWindowFocused)
+	GLFWWindowFlagsIconified   = GLFWWindowFlags(C.GLFWWindowIconified)
+	GLFWWindowFlagsAutoIconify = GLFWWindowFlags(C.GLFWWindowAutoIconify)
 )
 
 type voidCallbackFunc func()

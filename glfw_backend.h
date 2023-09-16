@@ -15,6 +15,10 @@ enum GLFWWindowFlags_ {
   GLFWWindowTransparentFramebuffer = GLFW_TRANSPARENT_FRAMEBUFFER,
   GLFWWindowDecorated= GLFW_DECORATED,
   GLFWWindowVisible = GLFW_VISIBLE,
+  GLFWWindowFloating = GLFW_FLOATING,
+  GLFWWindowFocused = GLFW_FOCUSED,
+  GLFWWindowIconified = GLFW_ICONIFIED,
+  GLFWWindowAutoIconify = GLFW_AUTO_ICONIFY,
 };
 
 typedef struct CImage {
