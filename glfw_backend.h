@@ -34,6 +34,7 @@ typedef void (*VoidCallback)();
 
 extern void igSetBgColor(ImVec4 color);
 extern void igSetTargetFPS(unsigned int fps);
+extern int igInitGLFW();
 extern GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height,
                                       VoidCallback afterCreateContext);
 extern void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,

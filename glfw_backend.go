@@ -56,7 +56,12 @@ type GLFWBackend struct {
 }
 
 func NewGLFWBackend() *GLFWBackend {
-	return &GLFWBackend{}
+	b := &GLFWBackend{}
+	if C.igInitGLFW() == 0 {
+		panic("Failed to initialize GLFW")
+	}
+
+	return b
 }
 
 func (b *GLFWBackend) handle() *C.GLFWwindow {

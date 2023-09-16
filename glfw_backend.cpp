@@ -41,13 +41,13 @@ void glfw_window_refresh_callback(GLFWwindow *window) {
   glfw_render(window, loopFunc);
 }
 
+int igInitGLFW() {
+    glfwSetErrorCallback(glfw_error_callback);
+    return glfwInit();
+}
+
 GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height,
                                VoidCallback afterCreateContext) {
-  // Setup window
-  glfwSetErrorCallback(glfw_error_callback);
-  if (!glfwInit())
-    return NULL;
-
     // Decide GL+GLSL versions
 #if defined(IMGUI_IMPL_OPENGL_ES2)
   // GL ES 2.0 + GLSL 100
