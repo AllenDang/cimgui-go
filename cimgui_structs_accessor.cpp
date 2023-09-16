@@ -2624,10 +2624,19 @@ void wrap_ImGuiWindowTempData_SetItemWidthStack(ImGuiWindowTempData *ImGuiWindow
 ImVector_float wrap_ImGuiWindowTempData_GetItemWidthStack(ImGuiWindowTempData *self) { return self->ItemWidthStack; }
 void wrap_ImGuiWindowTempData_SetTextWrapPosStack(ImGuiWindowTempData *ImGuiWindowTempDataPtr, ImVector_float v) { ImGuiWindowTempDataPtr->TextWrapPosStack = v; }
 ImVector_float wrap_ImGuiWindowTempData_GetTextWrapPosStack(ImGuiWindowTempData *self) { return self->TextWrapPosStack; }
+void wrap_ImRect_SetMin(ImRect *ImRectPtr, ImVec2 v) { ImRectPtr->Min = v; }
+void wrap_ImRect_SetMax(ImRect *ImRectPtr, ImVec2 v) { ImRectPtr->Max = v; }
+void wrap_ImVec1_Setx(ImVec1 *ImVec1Ptr, float v) { ImVec1Ptr->x = v; }
+void wrap_ImVec2_Setx(ImVec2 *ImVec2Ptr, float v) { ImVec2Ptr->x = v; }
+void wrap_ImVec2_Sety(ImVec2 *ImVec2Ptr, float v) { ImVec2Ptr->y = v; }
 void wrap_ImVec2ih_Setx(ImVec2ih *ImVec2ihPtr, short v) { ImVec2ihPtr->x = v; }
 short wrap_ImVec2ih_Getx(ImVec2ih *self) { return self->x; }
 void wrap_ImVec2ih_Sety(ImVec2ih *ImVec2ihPtr, short v) { ImVec2ihPtr->y = v; }
 short wrap_ImVec2ih_Gety(ImVec2ih *self) { return self->y; }
+void wrap_ImVec4_Setx(ImVec4 *ImVec4Ptr, float v) { ImVec4Ptr->x = v; }
+void wrap_ImVec4_Sety(ImVec4 *ImVec4Ptr, float v) { ImVec4Ptr->y = v; }
+void wrap_ImVec4_Setz(ImVec4 *ImVec4Ptr, float v) { ImVec4Ptr->z = v; }
+void wrap_ImVec4_Setw(ImVec4 *ImVec4Ptr, float v) { ImVec4Ptr->w = v; }
 void wrap_STB_TexteditState_Setcursor(STB_TexteditState *STB_TexteditStatePtr, int v) { STB_TexteditStatePtr->cursor = v; }
 int wrap_STB_TexteditState_Getcursor(STB_TexteditState *self) { return self->cursor; }
 void wrap_STB_TexteditState_Setselect_start(STB_TexteditState *STB_TexteditStatePtr, int v) { STB_TexteditStatePtr->select_start = v; }

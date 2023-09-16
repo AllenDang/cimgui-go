@@ -141,6 +141,7 @@ extern void wrap_ImPlotAxis_SetHovered(ImPlotAxis *ImPlotAxisPtr, bool v);
 extern bool wrap_ImPlotAxis_GetHovered(ImPlotAxis *self);
 extern void wrap_ImPlotAxis_SetHeld(ImPlotAxis *ImPlotAxisPtr, bool v);
 extern bool wrap_ImPlotAxis_GetHeld(ImPlotAxis *self);
+extern void wrap_ImPlotColormapData_SetKeys(ImPlotColormapData *ImPlotColormapDataPtr, ImVector_ImU32 v);
 extern void wrap_ImPlotColormapData_SetKeyCounts(ImPlotColormapData *ImPlotColormapDataPtr, ImVector_int v);
 extern ImVector_int wrap_ImPlotColormapData_GetKeyCounts(ImPlotColormapData *self);
 extern void wrap_ImPlotColormapData_SetKeyOffsets(ImPlotColormapData *ImPlotColormapDataPtr, ImVector_int v);
