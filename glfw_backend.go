@@ -30,15 +30,16 @@ import (
 type GLFWWindowFlags int
 
 const (
-	GLFWWindowFlagsNone         GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsNone)
-	GLFWWindowFlagsNotResizable GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsNotResizable)
-	GLFWWindowFlagsMaximized    GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsMaximized)
-	GLFWWindowFlagsFloating     GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsFloating)
-	GLFWWindowFlagsFrameless    GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsFrameless)
-	GLFWWindowFlagsTransparent  GLFWWindowFlags = GLFWWindowFlags(C.GLFWWindowFlagsTransparent)
+	GLFWWindowFlagsNone        = GLFWWindowFlags(C.GLFWWindowNone)
+	GLFWWindowFlagsResizable   = GLFWWindowFlags(C.GLFWWindowResizable)
+	GLFWWindowFlagsMaximized   = GLFWWindowFlags(C.GLFWWindowMaximized)
+	GLFWWindowFlagsDecorated   = GLFWWindowFlags(C.GLFWWindowDecorated)
+	GLFWWindowFlagsTransparent = GLFWWindowFlags(C.GLFWWindowTransparentFramebuffer)
 )
 
 type voidCallbackFunc func()
+
+var _ Backend[GLFWWindowFlags] = &GLFWBackend{}
 
 type GLFWBackend struct {
 	afterCreateContext   voidCallbackFunc
@@ -164,16 +165,14 @@ func (b GLFWBackend) SetShouldClose(value bool) {
 	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(CastBool(value)))
 }
 
-func (b *GLFWBackend) CreateWindow(title string, width, height int, flags GLFWWindowFlags) {
+func (b *GLFWBackend) CreateWindow(title string, width, height int) {
 	titleArg, titleFin := WrapString(title)
 	defer titleFin()
 
-	// b.window = uintptr(unsafe.Pointer(C.igCreateGLFWWindow(titleArg, C.int(width), C.int(height), C.GLFWWindowFlags(flags), C.VoidCallback(C.afterCreateContext))))
 	b.window = uintptr(unsafe.Pointer(C.igCreateGLFWWindow(
 		titleArg,
 		C.int(width),
 		C.int(height),
-		C.GLFWWindowFlags(flags),
 		C.VoidCallback(C.afterCreateContext),
 	)))
 	if b.window == 0 {
@@ -208,7 +207,7 @@ func (b *GLFWBackend) SetDropCallback(cbfun DropCallback) {
 	C.igGLFWWindow_SetDropCallbackCB(b.handle())
 }
 
-func (b *GLFWBackend) SetCloseCallback(cbfun WindowCloseCallback) {
+func (b *GLFWBackend) SetCloseCallback(cbfun WindowCloseCallback[GLFWWindowFlags]) {
 	b.closeCB = func(_ unsafe.Pointer) {
 		cbfun(b)
 	}
@@ -218,8 +217,8 @@ func (b *GLFWBackend) SetCloseCallback(cbfun WindowCloseCallback) {
 
 // SetWindowHint applies to next CreateWindow call
 // so use it before CreateWindow call ;-)
-func (b *GLFWBackend) SetWindowHint(hint, value int) {
-	C.igWindowHint(C.int(hint), C.int(value))
+func (b *GLFWBackend) SetWindowFlags(flag GLFWWindowFlags, value int) {
+	C.igWindowHint(C.GLFWWindowFlags(flag), C.int(value))
 }
 
 // SetIcons sets icons for the window.

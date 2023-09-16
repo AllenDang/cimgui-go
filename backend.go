@@ -15,7 +15,7 @@ import (
 	"unsafe"
 )
 
-var currentBackend Backend
+var currentBackend backendCExpose
 
 //export loopCallback
 func loopCallback() {
@@ -84,7 +84,7 @@ type DropCallback func([]string)
 type KeyCallback func(key, scanCode, action, mods int)
 type SizeChangeCallback func(w, h int)
 
-type WindowCloseCallback func(b Backend)
+type WindowCloseCallback[BackendFlagsT ~int] func(b Backend[BackendFlagsT])
 
 //export closeCallback
 func closeCallback(wnd unsafe.Pointer) {
@@ -105,7 +105,7 @@ func dropCallback(wnd unsafe.Pointer, count C.int, names **C.char) {
 
 // Backend is a special interface that implements all methods required
 // to render imgui application.
-type Backend interface {
+type Backend[BackendFlagsT ~int] interface {
 	SetAfterCreateContextHook(func())
 	SetBeforeDestroyContextHook(func())
 	SetBeforeRenderHook(func())
@@ -129,18 +129,20 @@ type Backend interface {
 	CreateTextureRgba(img *image.RGBA, width, height int) TextureID
 	DeleteTexture(id TextureID)
 	SetDropCallback(DropCallback)
-	SetCloseCallback(WindowCloseCallback)
+	SetCloseCallback(WindowCloseCallback[BackendFlagsT])
 	SetKeyCallback(KeyCallback)
 	SetSizeChangeCallback(SizeChangeCallback)
 	// SetWindowHint selected hint to specified value.
 	// For list of hints check GLFW source code.
-	// TODO: this needs generic layer
-	SetWindowHint(hint, value int)
+	SetWindowFlags(flag BackendFlagsT, value int)
 	SetIcons(icons ...image.Image)
 
-	// TODO: flags needs generic layer
-	CreateWindow(title string, width, height int, flags GLFWWindowFlags)
+	CreateWindow(title string, width, height int)
 
+	backendCExpose
+}
+
+type backendCExpose interface {
 	// for C callbacks
 	// What happens here is a bit tricky:
 	// - user sets these callbacks via Set* methods of the backend
@@ -160,13 +162,4 @@ type Backend interface {
 	closeCallback() func(window unsafe.Pointer)
 	keyCallback() KeyCallback
 	sizeCallback() SizeChangeCallback
-}
-
-func CreateBackend(backend Backend) Backend {
-	currentBackend = backend
-	return currentBackend
-}
-
-func GetBackend() Backend {
-	return currentBackend
 }

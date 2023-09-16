@@ -9,6 +9,7 @@
 #include "thirdparty/glfw/include/GLFW/glfw3.h" // Will drag system OpenGL headers
 #include <cstdlib>
 
+
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to
 // maximize ease of testing and compatibility with old VS compilers. To link
 // with VS2010-era libraries, VS2015+ requires linking with
@@ -40,7 +41,7 @@ void glfw_window_refresh_callback(GLFWwindow *window) {
   glfw_render(window, loopFunc);
 }
 
-GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height, GLFWWindowFlags flags,
+GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height,
                                VoidCallback afterCreateContext) {
   // Setup window
   glfwSetErrorCallback(glfw_error_callback);
@@ -69,26 +70,6 @@ GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height, GLFWWin
   // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+
   // only glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // 3.0+ only
 #endif
-
-  if ((flags & GLFWWindowFlagsNotResizable) != 0) {
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-  }
-
-  if ((flags & GLFWWindowFlagsMaximized) != 0) {
-    glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
-  }
-
-  if ((flags & GLFWWindowFlagsFloating) != 0) {
-    glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
-  }
-
-  if ((flags & GLFWWindowFlagsFrameless) != 0) {
-    glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
-  }
-
-  if ((flags & GLFWWindowFlagsTransparent) != 0) {
-    glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
-  }
 
   // Create window with graphics context
   GLFWwindow *window = glfwCreateWindow(width, height, title, NULL, NULL);
