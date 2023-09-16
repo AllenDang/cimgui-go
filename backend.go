@@ -15,7 +15,10 @@ import (
 	"unsafe"
 )
 
-var currentBackend Backend
+var currentBackend backendCExpose
+
+// TODO: Maybe we should get rid of it?
+var textureManager TextureManager
 
 //export loopCallback
 func loopCallback() {
@@ -84,7 +87,7 @@ type DropCallback func([]string)
 type KeyCallback func(key, scanCode, action, mods int)
 type SizeChangeCallback func(w, h int)
 
-type WindowCloseCallback func(b Backend)
+type WindowCloseCallback[BackendFlagsT ~int] func(b Backend[BackendFlagsT])
 
 //export closeCallback
 func closeCallback(wnd unsafe.Pointer) {
@@ -105,7 +108,7 @@ func dropCallback(wnd unsafe.Pointer, count C.int, names **C.char) {
 
 // Backend is a special interface that implements all methods required
 // to render imgui application.
-type Backend interface {
+type Backend[BackendFlagsT ~int] interface {
 	SetAfterCreateContextHook(func())
 	SetBeforeDestroyContextHook(func())
 	SetBeforeRenderHook(func())
@@ -125,21 +128,32 @@ type Backend interface {
 
 	SetTargetFPS(fps uint)
 
-	CreateTexture(pixels unsafe.Pointer, width, Height int) TextureID
-	CreateTextureRgba(img *image.RGBA, width, height int) TextureID
-	DeleteTexture(id TextureID)
 	SetDropCallback(DropCallback)
-	SetCloseCallback(WindowCloseCallback)
+	SetCloseCallback(WindowCloseCallback[BackendFlagsT])
 	SetKeyCallback(KeyCallback)
 	SetSizeChangeCallback(SizeChangeCallback)
 	// SetWindowHint selected hint to specified value.
 	// For list of hints check GLFW source code.
-	// TODO: this needs generic layer
-	SetWindowHint(hint, value int)
+	SetWindowFlags(flag BackendFlagsT, value int)
 	SetIcons(icons ...image.Image)
 
-	// TODO: flags needs generic layer
-	CreateWindow(title string, width, height int, flags GLFWWindowFlags)
+	CreateWindow(title string, width, height int)
+
+	backendCExpose
+	TextureManager
+}
+
+// TextureManager is a part of Backend.
+//
+// Why I separate it? Current impl of local texture.go needs to store this somewhere, and I don't want
+// to make Texture relate on BackendFlagsT.
+type TextureManager interface {
+	CreateTexture(pixels unsafe.Pointer, width, Height int) TextureID
+	CreateTextureRgba(img *image.RGBA, width, height int) TextureID
+	DeleteTexture(id TextureID)
+}
+
+type backendCExpose interface {
 
 	// for C callbacks
 	// What happens here is a bit tricky:
@@ -162,11 +176,8 @@ type Backend interface {
 	sizeCallback() SizeChangeCallback
 }
 
-func CreateBackend(backend Backend) Backend {
+func CreateBackend[BackendFlagsT ~int](backend Backend[BackendFlagsT]) Backend[BackendFlagsT] {
 	currentBackend = backend
-	return currentBackend
-}
-
-func GetBackend() Backend {
-	return currentBackend
+	textureManager = backend
+	return backend
 }

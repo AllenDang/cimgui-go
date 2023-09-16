@@ -1,6 +1,7 @@
 #pragma once
 
 #include "cimgui_wrapper.h"
+#include "thirdparty/glfw/include/GLFW/glfw3.h" // Will drag system OpenGL headers
 
 #ifdef __cplusplus
 extern "C" {
@@ -8,12 +9,16 @@ extern "C" {
 
 typedef int GLFWWindowFlags;
 enum GLFWWindowFlags_ {
-  GLFWWindowFlagsNone = 0,
-  GLFWWindowFlagsNotResizable = 1 << 0,
-  GLFWWindowFlagsMaximized = 1 << 1,
-  GLFWWindowFlagsFloating = 1 << 2,
-  GLFWWindowFlagsFrameless = 1 << 3,
-  GLFWWindowFlagsTransparent = 1 << 4,
+  GLFWWindowNone = 0,
+  GLFWWindowResizable = GLFW_RESIZABLE,
+  GLFWWindowMaximized = GLFW_MAXIMIZED,
+  GLFWWindowTransparentFramebuffer = GLFW_TRANSPARENT_FRAMEBUFFER,
+  GLFWWindowDecorated= GLFW_DECORATED,
+  GLFWWindowVisible = GLFW_VISIBLE,
+  GLFWWindowFloating = GLFW_FLOATING,
+  GLFWWindowFocused = GLFW_FOCUSED,
+  GLFWWindowIconified = GLFW_ICONIFIED,
+  GLFWWindowAutoIconify = GLFW_AUTO_ICONIFY,
 };
 
 typedef struct CImage {
@@ -33,7 +38,8 @@ typedef void (*VoidCallback)();
 
 extern void igSetBgColor(ImVec4 color);
 extern void igSetTargetFPS(unsigned int fps);
-extern GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height, GLFWWindowFlags flags,
+extern int igInitGLFW();
+extern GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height,
                                       VoidCallback afterCreateContext);
 extern void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
                       VoidCallback beforeDestroyContext);
@@ -52,7 +58,7 @@ extern void igGLFWWindow_SetIcon(GLFWwindow *window, int count, CImage* images);
 extern void igRefresh();
 extern ImTextureID igCreateTexture(unsigned char *pixels, int width, int height);
 extern void igDeleteTexture(ImTextureID id);
-extern void igWindowHint(int hint, int value);
+extern void igWindowHint(GLFWWindowFlags hint, int value);
 
 extern void dropCallback(int, char **);
 extern void closeCallback(GLFWwindow *window);
