@@ -27,16 +27,13 @@ var skippedFuncs = map[CIdentifier]bool{
 
 // structures that's methods should be skipped
 var skippedStructs = map[CIdentifier]bool{
-	"ImVec1":         true,
-	"ImVec2":         true,
-	"ImVec2ih":       true,
-	"ImVec4":         true,
-	"ImColor":        true,
-	"ImRect":         true,
-	"ImPlotTime":     true,
-	"StbUndoRecord":  true,
-	"StbUndoState":   true,
-	"StbTexteditRow": true,
+	"ImVec1":     true,
+	"ImVec2":     true,
+	"ImVec2ih":   true,
+	"ImVec4":     true,
+	"ImColor":    true,
+	"ImRect":     true,
+	"ImPlotTime": true,
 }
 
 var replace = map[CIdentifier]GoIdentifier{
@@ -49,59 +46,42 @@ var replace = map[CIdentifier]GoIdentifier{
 	"igGetMouseCursor":        "CurrentMouseCursor",
 	"ImAxis":                  "PlotAxisEnum",
 	"GetItem_ID":              "ItemByID",
-	//"ImGetDrawCursor":         "Cursor",
-	//"ImSetDrawCursor":         "SetCursor",
 }
 
-func (n CIdentifier) trimImGuiPrefix() CIdentifier {
-	if HasPrefix(n, "ImGui") {
-		n = TrimPrefix(n, "ImGui")
-	} else if HasPrefix(n, "Im") && len(n) > 2 && strings.ToUpper(string(n[2])) == string(n[2]) {
-		n = TrimPrefix(n, "Im")
-	} else if HasPrefix(n, "ig") && len(n) > 2 && strings.ToUpper(string(n[2])) == string(n[2]) {
-		n = TrimPrefix(n, "ig")
+func (c CIdentifier) trimImGuiPrefix() CIdentifier {
+	if HasPrefix(c, "ImGui") {
+		c = TrimPrefix(c, "ImGui")
+	} else if HasPrefix(c, "Im") && len(c) > 2 && strings.ToUpper(string(c[2])) == string(c[2]) {
+		c = TrimPrefix(c, "Im")
+	} else if HasPrefix(c, "ig") && len(c) > 2 && strings.ToUpper(string(c[2])) == string(c[2]) {
+		c = TrimPrefix(c, "ig")
 	}
 
-	return n
+	return c
 }
 
-func (n CIdentifier) renameGoIdentifier() GoIdentifier {
-	if r, ok := replace[n]; ok {
-		n = CIdentifier(r)
+func (c CIdentifier) renameGoIdentifier() GoIdentifier {
+	if r, ok := replace[c]; ok {
+		c = CIdentifier(r)
 	}
 
-	n = n.trimImGuiPrefix()
+	c = c.trimImGuiPrefix()
 	switch {
-	case HasPrefix(n, "New"):
-		n = "New" + n[3:].trimImGuiPrefix()
-	case HasPrefix(n, "new"):
-		n = "new" + n[3:].trimImGuiPrefix()
-	case HasPrefix(n, "*"):
-		n = "*" + n[1:].trimImGuiPrefix()
+	case HasPrefix(c, "New"):
+		c = "New" + c[3:].trimImGuiPrefix()
+	case HasPrefix(c, "new"):
+		c = "new" + c[3:].trimImGuiPrefix()
+	case HasPrefix(c, "*"):
+		c = "*" + c[1:].trimImGuiPrefix()
 	}
 
-	n = TrimPrefix(n, "Get")
-	if n != "_" {
-		n = ReplaceAll(n, "_", "")
+	c = TrimPrefix(c, "Get")
+	if c != "_" {
+		c = ReplaceAll(c, "_", "")
 	}
-	return GoIdentifier(n)
+	return GoIdentifier(c)
 }
 
-func (e CIdentifier) renameEnum() GoIdentifier {
-	return TrimSuffix(e, "_").renameGoIdentifier()
-}
-
-func moveArrayMarkToType(name, cType *CIdentifier) {
-	isPtr := HasSuffix(*cType, "*")
-	*cType = TrimSuffix(*cType, "*")
-
-	if HasSuffix(*name, "]") {
-		*name = TrimSuffix(*name, "]")
-		*cType = *cType + "[" + Join(Split(*name, "[")[1:], "")
-		*name = Split(*name, "[")[0]
-	}
-
-	if isPtr {
-		*cType = *cType + "*"
-	}
+func (c CIdentifier) renameEnum() GoIdentifier {
+	return TrimSuffix(c, "_").renameGoIdentifier()
 }
