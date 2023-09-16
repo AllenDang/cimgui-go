@@ -35,6 +35,7 @@ const (
 	GLFWWindowFlagsMaximized   = GLFWWindowFlags(C.GLFWWindowMaximized)
 	GLFWWindowFlagsDecorated   = GLFWWindowFlags(C.GLFWWindowDecorated)
 	GLFWWindowFlagsTransparent = GLFWWindowFlags(C.GLFWWindowTransparentFramebuffer)
+	GLFWWindowFlagsVisible     = GLFWWindowFlags(C.GLFWWindowVisible)
 )
 
 type voidCallbackFunc func()

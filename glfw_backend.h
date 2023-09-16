@@ -14,6 +14,7 @@ enum GLFWWindowFlags_ {
   GLFWWindowMaximized = GLFW_MAXIMIZED,
   GLFWWindowTransparentFramebuffer = GLFW_TRANSPARENT_FRAMEBUFFER,
   GLFWWindowDecorated= GLFW_DECORATED,
+  GLFWWindowVisible = GLFW_VISIBLE,
 };
 
 typedef struct CImage {
