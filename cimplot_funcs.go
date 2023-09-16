@@ -14458,6 +14458,20 @@ func (self *PlotAxis) Held() bool {
 	return C.wrap_ImPlotAxis_GetHeld(selfArg) == C.bool(true)
 }
 
+func (self PlotColormapData) SetKeys(v Vector[*uint32]) {
+	vData := v.Data
+	vDataArg, _ := WrapNumberPtr[C.ImU32, uint32](vData)
+	vVecArg := new(C.ImVector_ImU32)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotColormapData_SetKeys(selfArg, *vVecArg)
+}
+
 func (self PlotColormapData) SetKeyCounts(v Vector[*int32]) {
 	vData := v.Data
 	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)

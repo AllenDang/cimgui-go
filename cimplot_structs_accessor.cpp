@@ -138,6 +138,7 @@ void wrap_ImPlotAxis_SetHovered(ImPlotAxis *ImPlotAxisPtr, bool v) { ImPlotAxisP
 bool wrap_ImPlotAxis_GetHovered(ImPlotAxis *self) { return self->Hovered; }
 void wrap_ImPlotAxis_SetHeld(ImPlotAxis *ImPlotAxisPtr, bool v) { ImPlotAxisPtr->Held = v; }
 bool wrap_ImPlotAxis_GetHeld(ImPlotAxis *self) { return self->Held; }
+void wrap_ImPlotColormapData_SetKeys(ImPlotColormapData *ImPlotColormapDataPtr, ImVector_ImU32 v) { ImPlotColormapDataPtr->Keys = v; }
 void wrap_ImPlotColormapData_SetKeyCounts(ImPlotColormapData *ImPlotColormapDataPtr, ImVector_int v) { ImPlotColormapDataPtr->KeyCounts = v; }
 ImVector_int wrap_ImPlotColormapData_GetKeyCounts(ImPlotColormapData *self) { return self->KeyCounts; }
 void wrap_ImPlotColormapData_SetKeyOffsets(ImPlotColormapData *ImPlotColormapDataPtr, ImVector_int v) { ImPlotColormapDataPtr->KeyOffsets = v; }

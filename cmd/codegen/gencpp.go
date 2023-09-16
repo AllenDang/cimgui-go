@@ -357,19 +357,18 @@ func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []S
 	var structAccessorFuncs []FuncDef
 
 	skipFuncNames := map[CIdentifier]bool{
-		"ImFontAtlas_SetTexID":       true,
-		"ImVec1_Getx":                true,
-		"ImVec2_Getx":                true,
-		"ImVec2_Gety":                true,
-		"ImVec4_Getx":                true,
-		"ImVec4_Gety":                true,
-		"ImVec4_Getw":                true,
-		"ImVec4_Getz":                true,
-		"ImRect_GetMin":              true,
-		"ImRect_GetMax":              true,
-		"ImPlotPoint_Setx":           true,
-		"ImPlotPoint_Sety":           true,
-		"ImPlotColormapData_SetKeys": true,
+		"ImFontAtlas_SetTexID": true,
+		"ImVec1_Getx":          true,
+		"ImVec2_Getx":          true,
+		"ImVec2_Gety":          true,
+		"ImVec4_Getx":          true,
+		"ImVec4_Gety":          true,
+		"ImVec4_Getw":          true,
+		"ImVec4_Getz":          true,
+		"ImRect_GetMin":        true,
+		"ImRect_GetMax":        true,
+		"ImPlotPoint_Setx":     true,
+		"ImPlotPoint_Sety":     true,
 	}
 
 	// Add all valid function's name to skipFuncNames
@@ -435,6 +434,26 @@ extern "C" {
 			structAccessorFuncs = append(structAccessorFuncs, setterFuncDef)
 
 			sbHeader.WriteString(fmt.Sprintf("extern void %s(%s *%s, %s%s v);\n", setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, getPtrIfSize(m.Size)))
+			if m.Size > 0 {
+				fmt.Fprintf(
+					sbCpp,
+					"void %s(%s *%s, %s%s v) { memcpy(%s->%s, v, sizeof(%[4]s)*%[8]d); }\n",
+					setterFuncDef.CWrapperFuncName,
+					s.Name,
+					s.Name+"Ptr",
+					m.Type,
+					getPtrIfSize(m.Size),
+					s.Name+"Ptr",
+					Split(m.Name, "[")[0],
+					m.Size,
+				)
+			} else {
+				fmt.Fprintf(
+					sbCpp,
+					"void %s(%s *%s, %s%s v) { %s->%s = v; }\n",
+					setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, getPtrIfSize(m.Size), s.Name+"Ptr", Split(m.Name, "[")[0],
+				)
+			}
 
 			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, Split(m.Name, "[")[0]))
 			if skipFuncNames[getterFuncName] {
@@ -465,27 +484,6 @@ extern "C" {
 				"extern %s%s %s(%s *self);\n",
 				m.Type, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name,
 			)
-
-			if m.Size > 0 {
-				fmt.Fprintf(
-					sbCpp,
-					"void %s(%s *%s, %s%s v) { memcpy(%s->%s, v, sizeof(%[4]s)*%[8]d); }\n",
-					setterFuncDef.CWrapperFuncName,
-					s.Name,
-					s.Name+"Ptr",
-					m.Type,
-					getPtrIfSize(m.Size),
-					s.Name+"Ptr",
-					Split(m.Name, "[")[0],
-					m.Size,
-				)
-			} else {
-				fmt.Fprintf(
-					sbCpp,
-					"void %s(%s *%s, %s%s v) { %s->%s = v; }\n",
-					setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, getPtrIfSize(m.Size), s.Name+"Ptr", Split(m.Name, "[")[0],
-				)
-			}
 
 			fmt.Fprintf(sbCpp,
 				"%s%s %s(%s *self) { return self->%s; }\n",
