@@ -357,18 +357,17 @@ func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []S
 	var structAccessorFuncs []FuncDef
 
 	skipFuncNames := map[CIdentifier]bool{
-		"ImFontAtlas_SetTexID": true,
-		"ImVec1_Getx":          true,
-		"ImVec2_Getx":          true,
-		"ImVec2_Gety":          true,
-		"ImVec4_Getx":          true,
-		"ImVec4_Gety":          true,
-		"ImVec4_Getw":          true,
-		"ImVec4_Getz":          true,
-		"ImRect_GetMin":        true,
-		"ImRect_GetMax":        true,
-		"ImPlotPoint_Setx":     true,
-		"ImPlotPoint_Sety":     true,
+		"ImVec1_Getx":      true,
+		"ImVec2_Getx":      true,
+		"ImVec2_Gety":      true,
+		"ImVec4_Getx":      true,
+		"ImVec4_Gety":      true,
+		"ImVec4_Getw":      true,
+		"ImVec4_Getz":      true,
+		"ImRect_GetMin":    true,
+		"ImRect_GetMax":    true,
+		"ImPlotPoint_Setx": true,
+		"ImPlotPoint_Sety": true,
 	}
 
 	// Add all valid function's name to skipFuncNames

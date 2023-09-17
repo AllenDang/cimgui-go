@@ -31745,6 +31745,12 @@ func (self *STBTexteditState) TexteditStateGetundostate() StbUndoState {
 	return *newStbUndoStateFromC(func() *C.StbUndoState { result := result; return &result }())
 }
 
+func (self StbTexteditRow) Setx0(v float32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbTexteditRow_Setx0(selfArg, C.float(v))
+}
+
 func (self *StbTexteditRow) x0() float32 {
 	selfArg, selfFin := self.handle()
 
@@ -31752,6 +31758,12 @@ func (self *StbTexteditRow) x0() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_StbTexteditRow_Getx0(selfArg))
+}
+
+func (self StbTexteditRow) Setx1(v float32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbTexteditRow_Setx1(selfArg, C.float(v))
 }
 
 func (self *StbTexteditRow) x1() float32 {
@@ -31763,6 +31775,12 @@ func (self *StbTexteditRow) x1() float32 {
 	return float32(C.wrap_StbTexteditRow_Getx1(selfArg))
 }
 
+func (self StbTexteditRow) Setbaselineydelta(v float32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbTexteditRow_Setbaseline_y_delta(selfArg, C.float(v))
+}
+
 func (self *StbTexteditRow) baselineydelta() float32 {
 	selfArg, selfFin := self.handle()
 
@@ -31770,6 +31788,12 @@ func (self *StbTexteditRow) baselineydelta() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_StbTexteditRow_Getbaseline_y_delta(selfArg))
+}
+
+func (self StbTexteditRow) Setymin(v float32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbTexteditRow_Setymin(selfArg, C.float(v))
 }
 
 func (self *StbTexteditRow) ymin() float32 {
@@ -31781,6 +31805,12 @@ func (self *StbTexteditRow) ymin() float32 {
 	return float32(C.wrap_StbTexteditRow_Getymin(selfArg))
 }
 
+func (self StbTexteditRow) Setymax(v float32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbTexteditRow_Setymax(selfArg, C.float(v))
+}
+
 func (self *StbTexteditRow) ymax() float32 {
 	selfArg, selfFin := self.handle()
 
@@ -31788,6 +31818,12 @@ func (self *StbTexteditRow) ymax() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_StbTexteditRow_Getymax(selfArg))
+}
+
+func (self StbTexteditRow) Setnumchars(v int32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbTexteditRow_Setnum_chars(selfArg, C.int(v))
 }
 
 func (self *StbTexteditRow) numchars() int32 {
@@ -31799,6 +31835,12 @@ func (self *StbTexteditRow) numchars() int32 {
 	return int32(C.wrap_StbTexteditRow_Getnum_chars(selfArg))
 }
 
+func (self StbUndoRecord) Setwhere(v int32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbUndoRecord_Setwhere(selfArg, C.int(v))
+}
+
 func (self *StbUndoRecord) where() int32 {
 	selfArg, selfFin := self.handle()
 
@@ -31806,6 +31848,12 @@ func (self *StbUndoRecord) where() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_StbUndoRecord_Getwhere(selfArg))
+}
+
+func (self StbUndoRecord) Setinsertlength(v int32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbUndoRecord_Setinsert_length(selfArg, C.int(v))
 }
 
 func (self *StbUndoRecord) insertlength() int32 {
@@ -31817,6 +31865,12 @@ func (self *StbUndoRecord) insertlength() int32 {
 	return int32(C.wrap_StbUndoRecord_Getinsert_length(selfArg))
 }
 
+func (self StbUndoRecord) Setdeletelength(v int32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbUndoRecord_Setdelete_length(selfArg, C.int(v))
+}
+
 func (self *StbUndoRecord) deletelength() int32 {
 	selfArg, selfFin := self.handle()
 
@@ -31824,6 +31878,12 @@ func (self *StbUndoRecord) deletelength() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_StbUndoRecord_Getdelete_length(selfArg))
+}
+
+func (self StbUndoRecord) Setcharstorage(v int32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbUndoRecord_Setchar_storage(selfArg, C.int(v))
 }
 
 func (self *StbUndoRecord) charstorage() int32 {
@@ -31835,6 +31895,12 @@ func (self *StbUndoRecord) charstorage() int32 {
 	return int32(C.wrap_StbUndoRecord_Getchar_storage(selfArg))
 }
 
+func (self StbUndoState) Setundopoint(v int16) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbUndoState_Setundo_point(selfArg, C.short(v))
+}
+
 func (self *StbUndoState) undopoint() int16 {
 	selfArg, selfFin := self.handle()
 
@@ -31842,6 +31908,12 @@ func (self *StbUndoState) undopoint() int16 {
 		selfFin()
 	}()
 	return int16(C.wrap_StbUndoState_Getundo_point(selfArg))
+}
+
+func (self StbUndoState) Setredopoint(v int16) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbUndoState_Setredo_point(selfArg, C.short(v))
 }
 
 func (self *StbUndoState) redopoint() int16 {
@@ -31853,6 +31925,12 @@ func (self *StbUndoState) redopoint() int16 {
 	return int16(C.wrap_StbUndoState_Getredo_point(selfArg))
 }
 
+func (self StbUndoState) Setundocharpoint(v int32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbUndoState_Setundo_char_point(selfArg, C.int(v))
+}
+
 func (self *StbUndoState) undocharpoint() int32 {
 	selfArg, selfFin := self.handle()
 
@@ -31860,6 +31938,12 @@ func (self *StbUndoState) undocharpoint() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_StbUndoState_Getundo_char_point(selfArg))
+}
+
+func (self StbUndoState) Setredocharpoint(v int32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbUndoState_Setredo_char_point(selfArg, C.int(v))
 }
 
 func (self *StbUndoState) redocharpoint() int32 {
