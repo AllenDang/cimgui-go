@@ -44,6 +44,7 @@ extern GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height,
 extern void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
                       VoidCallback beforeDestroyContext);
 extern void igGLFWWindow_GetDisplaySize(GLFWwindow *window, int *width, int *height);
+extern void igGLFWWindow_GetContentScale(GLFWwindow *window, float *width, float *height);
 extern void igGLFWWindow_SetWindowPos(GLFWwindow *window, int x, int y);
 extern void igGLFWWindow_GetWindowPos(GLFWwindow *window, int *x, int *y);
 extern void igGLFWWindow_SetShouldClose(GLFWwindow *window, int value);
