@@ -259,6 +259,10 @@ void igGLFWWindow_GetDisplaySize(GLFWwindow *window, int *width, int *height) {
   glfwGetWindowSize(window, width, height);
 }
 
+void igGLFWWindow_GetContentScale(GLFWwindow *window, float *width, float *height) {
+  glfwGetWindowContentScale(window, width, height);
+}
+
 void igGLFWWindow_SetWindowPos(GLFWwindow *window, int x, int y) { glfwSetWindowPos(window, x, y); }
 
 void igGLFWWindow_GetWindowPos(GLFWwindow *window, int *x, int *y) { glfwGetWindowPos(window, x, y); }

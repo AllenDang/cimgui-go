@@ -125,6 +125,7 @@ type Backend[BackendFlagsT ~int] interface {
 	SetWindowTitle(title string)
 	DisplaySize() (width, height int32)
 	SetShouldClose(bool)
+	ContentScale() (xScale, yScale float32)
 
 	SetTargetFPS(fps uint)
 
@@ -132,8 +133,8 @@ type Backend[BackendFlagsT ~int] interface {
 	SetCloseCallback(WindowCloseCallback[BackendFlagsT])
 	SetKeyCallback(KeyCallback)
 	SetSizeChangeCallback(SizeChangeCallback)
-	// SetWindowHint selected hint to specified value.
-	// For list of hints check GLFW source code.
+	// SetWindowFlags selected hint to specified value.
+	// ATTENTION: This method is able to set only one flag per call.
 	SetWindowFlags(flag BackendFlagsT, value int)
 	SetIcons(icons ...image.Image)
 

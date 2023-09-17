@@ -157,6 +157,18 @@ func (b GLFWBackend) DisplaySize() (width int32, height int32) {
 	return
 }
 
+func (b GLFWBackend) ContentScale() (width, height float32) {
+	widthArg, widthFin := WrapNumberPtr[C.float, float32](&width)
+	defer widthFin()
+
+	heightArg, heightFin := WrapNumberPtr[C.float, float32](&height)
+	defer heightFin()
+
+	C.igGLFWWindow_GetContentScale(b.handle(), widthArg, heightArg)
+
+	return
+}
+
 func (b *GLFWBackend) SetWindowTitle(title string) {
 	titleArg, titleFin := WrapString(title)
 	defer titleFin()
