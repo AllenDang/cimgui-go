@@ -169,6 +169,17 @@ const (
 	GLFWKeyMenu         = GLFWKey(C.GLFWKeyMenu)
 )
 
+type GLFWModifierKey int
+
+const (
+	GLFWMod_shift   = GLFWModifierKey(C.GLFWMod_shift)
+	GLFWMod_control = GLFWModifierKey(C.GLFWMod_control)
+	GLFWMod_alt     = GLFWModifierKey(C.GLFWMod_alt)
+	GLFWMod_super   = GLFWModifierKey(C.GLFWMod_super)
+	GLFWModCapsLock = GLFWModifierKey(C.GLFWModCapsLock)
+	GLFWModNumLock  = GLFWModifierKey(C.GLFWModNumLock)
+)
+
 type voidCallbackFunc func()
 
 var _ Backend[GLFWWindowFlags] = &GLFWBackend{}
