@@ -135,10 +135,10 @@ enum GLFWKey_ {
 
 typedef int GLFWModifierKey;
 enum GLFWModifierKey_ {
-   GLFWMod_shift = GLFW_MOD_SHIFT,
-   GLFWMod_control = GLFW_MOD_CONTROL,
-   GLFWMod_alt = GLFW_MOD_ALT,
-   GLFWMod_super = GLFW_MOD_SUPER,
+   GLFWModShift = GLFW_MOD_SHIFT,
+   GLFWModControl = GLFW_MOD_CONTROL,
+   GLFWModAlt = GLFW_MOD_ALT,
+   GLFWModSuper = GLFW_MOD_SUPER,
    GLFWModCapsLock = GLFW_MOD_CAPS_LOCK,
    GLFWModNumLock = GLFW_MOD_NUM_LOCK,
 };
