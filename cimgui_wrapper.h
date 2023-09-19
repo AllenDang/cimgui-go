@@ -50,6 +50,8 @@ extern void wrap_ImDrawList_AddBezierCubic(ImDrawList* self,const ImVec2 p1,cons
 extern void wrap_ImDrawList_AddBezierQuadratic(ImDrawList* self,const ImVec2 p1,const ImVec2 p2,const ImVec2 p3,ImU32 col,float thickness);
 extern void wrap_ImDrawList_AddCircle(ImDrawList* self,const ImVec2 center,float radius,ImU32 col);
 extern void wrap_ImDrawList_AddCircleFilled(ImDrawList* self,const ImVec2 center,float radius,ImU32 col);
+extern void wrap_ImDrawList_AddEllipse(ImDrawList* self,const ImVec2 center,float radius_x,float radius_y,ImU32 col);
+extern void wrap_ImDrawList_AddEllipseFilled(ImDrawList* self,const ImVec2 center,float radius_x,float radius_y,ImU32 col);
 extern void wrap_ImDrawList_AddImage(ImDrawList* self,ImTextureID user_texture_id,const ImVec2 p_min,const ImVec2 p_max);
 extern void wrap_ImDrawList_AddImageQuad(ImDrawList* self,ImTextureID user_texture_id,const ImVec2 p1,const ImVec2 p2,const ImVec2 p3,const ImVec2 p4);
 extern void wrap_ImDrawList_AddImageRounded(ImDrawList* self,ImTextureID user_texture_id,const ImVec2 p_min,const ImVec2 p_max,const ImVec2 uv_min,const ImVec2 uv_max,ImU32 col,float rounding);
@@ -64,6 +66,7 @@ extern void wrap_ImDrawList_AddTriangle(ImDrawList* self,const ImVec2 p1,const I
 extern void wrap_ImDrawList_PathArcTo(ImDrawList* self,const ImVec2 center,float radius,float a_min,float a_max);
 extern void wrap_ImDrawList_PathBezierCubicCurveTo(ImDrawList* self,const ImVec2 p2,const ImVec2 p3,const ImVec2 p4);
 extern void wrap_ImDrawList_PathBezierQuadraticCurveTo(ImDrawList* self,const ImVec2 p2,const ImVec2 p3);
+extern void wrap_ImDrawList_PathEllipticalArcTo(ImDrawList* self,const ImVec2 center,float radius_x,float radius_y,float rot,float a_min,float a_max);
 extern void wrap_ImDrawList_PathRect(ImDrawList* self,const ImVec2 rect_min,const ImVec2 rect_max);
 extern void wrap_ImDrawList_PathStroke(ImDrawList* self,ImU32 col);
 extern void wrap_ImDrawList_PushClipRect(ImDrawList* self,const ImVec2 clip_rect_min,const ImVec2 clip_rect_max);
@@ -71,8 +74,8 @@ extern int wrap_ImFontAtlas_AddCustomRectFontGlyph(ImFontAtlas* self,ImFont* fon
 extern ImFont* wrap_ImFontAtlas_AddFontDefault(ImFontAtlas* self);
 extern ImFont* wrap_ImFontAtlas_AddFontFromFileTTF(ImFontAtlas* self,const char* filename,float size_pixels);
 extern ImFont* wrap_ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(ImFontAtlas* self,const char* compressed_font_data_base85,float size_pixels);
-extern ImFont* wrap_ImFontAtlas_AddFontFromMemoryCompressedTTF(ImFontAtlas* self,const void* compressed_font_data,int compressed_font_size,float size_pixels);
-extern ImFont* wrap_ImFontAtlas_AddFontFromMemoryTTF(ImFontAtlas* self,void* font_data,int font_size,float size_pixels);
+extern ImFont* wrap_ImFontAtlas_AddFontFromMemoryCompressedTTF(ImFontAtlas* self,const void* compressed_font_data,int compressed_font_data_size,float size_pixels);
+extern ImFont* wrap_ImFontAtlas_AddFontFromMemoryTTF(ImFontAtlas* self,void* font_data,int font_data_size,float size_pixels);
 extern void wrap_ImFontAtlas_GetTexDataAsAlpha8(ImFontAtlas* self,unsigned char** out_pixels,int* out_width,int* out_height);
 extern void wrap_ImFontAtlas_GetTexDataAsRGBA32(ImFontAtlas* self,unsigned char** out_pixels,int* out_width,int* out_height);
 extern void wrap_ImFontGlyphRangesBuilder_AddText(ImFontGlyphRangesBuilder* self,const char* text);
@@ -159,6 +162,7 @@ extern ImU32 wrap_igGetColorU32_Col(ImGuiCol idx);
 extern float wrap_igGetColumnOffset();
 extern float wrap_igGetColumnWidth();
 extern void wrap_igGetMouseDragDelta(ImVec2* pOut);
+extern ImGuiTypingSelectRequest* wrap_igGetTypingSelectRequest();
 extern void* wrap_igImFileLoadToMemory(const char* filename,const char* mode);
 extern ImGuiID wrap_igImHashData(const void* data,size_t data_size);
 extern ImGuiID wrap_igImHashStr(const char* data);

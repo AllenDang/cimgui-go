@@ -16,8 +16,11 @@
 
 // You can use unmodified imgui_impl_* files in your project. See examples/ folder for examples of using this.
 // Prefer including the entire imgui/ repository into your project (either as a copy or as a submodule), and only build the backends you need.
-// If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
-// Read online: https://github.com/ocornut/imgui/tree/master/docs
+// Learn about Dear ImGui:
+// - FAQ                  https://dearimgui.com/faq
+// - Getting Started      https://dearimgui.com/getting-started
+// - Documentation        https://dearimgui.com/docs (same as your local docs/ folder).
+// - Introduction, links and more at the top of imgui.cpp
 
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
@@ -703,6 +706,9 @@ void ImGui_ImplGlfw_Shutdown()
 
     if (bd->InstalledCallbacks)
         ImGui_ImplGlfw_RestoreCallbacks(bd->Window);
+#ifdef __EMSCRIPTEN__
+    emscripten_set_wheel_callback(EMSCRIPTEN_EVENT_TARGET_DOCUMENT, nullptr, false, nullptr);
+#endif
 
     for (ImGuiMouseCursor cursor_n = 0; cursor_n < ImGuiMouseCursor_COUNT; cursor_n++)
         glfwDestroyCursor(bd->MouseCursors[cursor_n]);

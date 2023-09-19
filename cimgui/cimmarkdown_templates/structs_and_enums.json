@@ -1,0 +1,316 @@
+{
+  "enums": {
+    "EmphasisState": [
+      {
+        "calc_value": 0,
+        "name": "NONE",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "LEFT",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "MIDDLE",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "RIGHT",
+        "value": "3"
+      }
+    ],
+    "LinkState": [
+      {
+        "calc_value": 0,
+        "name": "NO_LINK",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "HAS_SQUARE_BRACKET_OPEN",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "HAS_SQUARE_BRACKETS",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "HAS_SQUARE_BRACKETS_ROUND_BRACKET_OPEN",
+        "value": "3"
+      }
+    ],
+    "MarkdownFormatType": [
+      {
+        "calc_value": 0,
+        "name": "NORMAL_TEXT",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "HEADING",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "UNORDERED_LIST",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "LINK",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "name": "EMPHASIS",
+        "value": "4"
+      }
+    ]
+  },
+  "enumtypes": [],
+  "locations": {
+    "Emphasis": "imgui_markdown:447",
+    "EmphasisState": "imgui_markdown:448",
+    "Line": "imgui_markdown:411",
+    "Link": "imgui_markdown:433",
+    "LinkState": "imgui_markdown:434",
+    "MarkdownConfig": "imgui_markdown:315",
+    "MarkdownFormatInfo": "imgui_markdown:277",
+    "MarkdownFormatType": "imgui_markdown:268",
+    "MarkdownHeadingFormat": "imgui_markdown:305",
+    "MarkdownImageData": "imgui_markdown:256",
+    "MarkdownLinkCallbackData": "imgui_markdown:240",
+    "MarkdownTooltipCallbackData": "imgui_markdown:250",
+    "TextBlock": "imgui_markdown:424",
+    "TextRegion": "imgui_markdown:343"
+  },
+  "structs": {
+    "Emphasis": [
+      {
+        "name": "state",
+        "type": "EmphasisState"
+      },
+      {
+        "name": "text",
+        "type": "TextBlock"
+      },
+      {
+        "name": "sym",
+        "type": "char"
+      }
+    ],
+    "Line": [
+      {
+        "name": "isHeading",
+        "type": "bool"
+      },
+      {
+        "name": "isEmphasis",
+        "type": "bool"
+      },
+      {
+        "name": "isUnorderedListStart",
+        "type": "bool"
+      },
+      {
+        "name": "isLeadingSpace",
+        "type": "bool"
+      },
+      {
+        "name": "leadSpaceCount",
+        "type": "int"
+      },
+      {
+        "name": "headingCount",
+        "type": "int"
+      },
+      {
+        "name": "emphasisCount",
+        "type": "int"
+      },
+      {
+        "name": "lineStart",
+        "type": "int"
+      },
+      {
+        "name": "lineEnd",
+        "type": "int"
+      },
+      {
+        "name": "lastRenderPosition",
+        "type": "int"
+      }
+    ],
+    "Link": [
+      {
+        "name": "state",
+        "type": "LinkState"
+      },
+      {
+        "name": "text",
+        "type": "TextBlock"
+      },
+      {
+        "name": "url",
+        "type": "TextBlock"
+      },
+      {
+        "name": "isImage",
+        "type": "bool"
+      },
+      {
+        "name": "num_brackets_open",
+        "type": "int"
+      }
+    ],
+    "MarkdownConfig": [
+      {
+        "name": "linkCallback",
+        "type": "MarkdownLinkCallback*"
+      },
+      {
+        "name": "tooltipCallback",
+        "type": "MarkdownTooltipCallback*"
+      },
+      {
+        "name": "imageCallback",
+        "type": "MarkdownImageCallback*"
+      },
+      {
+        "name": "linkIcon",
+        "type": "const char*"
+      },
+      {
+        "name": "]",
+        "type": "MarkdownHeadingFormat headingFormats[ NUMHEADINGS"
+      },
+      {
+        "name": "userData",
+        "type": "void*"
+      },
+      {
+        "name": "formatCallback",
+        "type": "MarkdownFormalCallback*"
+      }
+    ],
+    "MarkdownFormatInfo": [
+      {
+        "name": "type",
+        "type": "MarkdownFormatType"
+      },
+      {
+        "name": "level",
+        "type": "int32_t"
+      },
+      {
+        "name": "itemHovered",
+        "type": "bool"
+      },
+      {
+        "name": "config",
+        "type": "const MarkdownConfig*"
+      }
+    ],
+    "MarkdownHeadingFormat": [
+      {
+        "name": "font",
+        "type": "ImFont*"
+      },
+      {
+        "name": "separator",
+        "type": "bool"
+      }
+    ],
+    "MarkdownImageData": [
+      {
+        "name": "isValid",
+        "type": "bool"
+      },
+      {
+        "name": "useLinkCallback",
+        "type": "bool"
+      },
+      {
+        "name": "user_texture_id",
+        "type": "ImTextureID"
+      },
+      {
+        "name": "size",
+        "type": "ImVec2"
+      },
+      {
+        "name": "uv0",
+        "type": "ImVec2"
+      },
+      {
+        "name": "uv1",
+        "type": "ImVec2"
+      },
+      {
+        "name": "tint_col",
+        "type": "ImVec4"
+      },
+      {
+        "name": "border_col",
+        "type": "ImVec4"
+      }
+    ],
+    "MarkdownLinkCallbackData": [
+      {
+        "name": "text",
+        "type": "const char*"
+      },
+      {
+        "name": "textLength",
+        "type": "int"
+      },
+      {
+        "name": "link",
+        "type": "const char*"
+      },
+      {
+        "name": "linkLength",
+        "type": "int"
+      },
+      {
+        "name": "userData",
+        "type": "void*"
+      },
+      {
+        "name": "isImage",
+        "type": "bool"
+      }
+    ],
+    "MarkdownTooltipCallbackData": [
+      {
+        "name": "linkData",
+        "type": "MarkdownLinkCallbackData"
+      },
+      {
+        "name": "linkIcon",
+        "type": "const char*"
+      }
+    ],
+    "TextBlock": [
+      {
+        "name": "start",
+        "type": "int"
+      },
+      {
+        "name": "stop",
+        "type": "int"
+      }
+    ],
+    "TextRegion": [
+      {
+        "name": "indentX",
+        "type": "private:float"
+      }
+    ]
+  }
+}

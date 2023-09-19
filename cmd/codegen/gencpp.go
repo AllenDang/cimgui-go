@@ -403,7 +403,7 @@ extern "C" {
 				continue
 			}
 
-			setterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Set%[2]s", s.Name, Split(m.Name, "[")[0]))
+			setterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Set%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
 			if skipFuncNames[setterFuncName] {
 				continue
 			}
@@ -454,7 +454,7 @@ extern "C" {
 				)
 			}
 
-			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, Split(m.Name, "[")[0]))
+			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
 			if skipFuncNames[getterFuncName] {
 				continue
 			}

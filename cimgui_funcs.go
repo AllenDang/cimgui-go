@@ -278,6 +278,27 @@ func (self *DrawList) AddDrawCmd() {
 	selfFin()
 }
 
+// AddEllipseV parameter default value hint:
+// rot: 0.0f
+// num_segments: 0
+// thickness: 1.0f
+func (self *DrawList) AddEllipseV(center Vec2, radius_x float32, radius_y float32, col uint32, rot float32, num_segments int32, thickness float32) {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList_AddEllipse(selfArg, center.toC(), C.float(radius_x), C.float(radius_y), C.ImU32(col), C.float(rot), C.int(num_segments), C.float(thickness))
+
+	selfFin()
+}
+
+// AddEllipseFilledV parameter default value hint:
+// rot: 0.0f
+// num_segments: 0
+func (self *DrawList) AddEllipseFilledV(center Vec2, radius_x float32, radius_y float32, col uint32, rot float32, num_segments int32) {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList_AddEllipseFilled(selfArg, center.toC(), C.float(radius_x), C.float(radius_y), C.ImU32(col), C.float(rot), C.int(num_segments))
+
+	selfFin()
+}
+
 // AddImageV parameter default value hint:
 // uv_min: ImVec2(0,0)
 // uv_max: ImVec2(1,1)
@@ -539,6 +560,16 @@ func (self *DrawList) PathBezierQuadraticCurveToV(p2 Vec2, p3 Vec2, num_segments
 func (self *DrawList) PathClear() {
 	selfArg, selfFin := self.handle()
 	C.ImDrawList_PathClear(selfArg)
+
+	selfFin()
+}
+
+// Ellipse
+// PathEllipticalArcToV parameter default value hint:
+// num_segments: 0
+func (self *DrawList) PathEllipticalArcToV(center Vec2, radius_x float32, radius_y float32, rot float32, a_min float32, a_max float32, num_segments int32) {
+	selfArg, selfFin := self.handle()
+	C.ImDrawList_PathEllipticalArcTo(selfArg, center.toC(), C.float(radius_x), C.float(radius_y), C.float(rot), C.float(a_min), C.float(a_max), C.int(num_segments))
 
 	selfFin()
 }
@@ -862,7 +893,7 @@ func (self *FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_dat
 // AddFontFromMemoryCompressedTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self *FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsafe.Pointer, compressed_font_size int32, size_pixels float32, font_cfg *FontConfig, glyph_ranges *Wchar) *Font {
+func (self *FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsafe.Pointer, compressed_font_data_size int32, size_pixels float32, font_cfg *FontConfig, glyph_ranges *Wchar) *Font {
 	selfArg, selfFin := self.handle()
 	font_cfgArg, font_cfgFin := font_cfg.handle()
 
@@ -870,14 +901,14 @@ func (self *FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsa
 		selfFin()
 		font_cfgFin()
 	}()
-	return newFontFromC(C.ImFontAtlas_AddFontFromMemoryCompressedTTF(selfArg, (compressed_font_data), C.int(compressed_font_size), C.float(size_pixels), font_cfgArg, (*C.ImWchar)(glyph_ranges)))
+	return newFontFromC(C.ImFontAtlas_AddFontFromMemoryCompressedTTF(selfArg, (compressed_font_data), C.int(compressed_font_data_size), C.float(size_pixels), font_cfgArg, (*C.ImWchar)(glyph_ranges)))
 }
 
 // Note: Transfer ownership of 'ttf_data' to ImFontAtlas! Will be deleted after destruction of the atlas. Set font_cfg->FontDataOwnedByAtlas=false to keep ownership of your data and it won't be freed.
 // AddFontFromMemoryTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self *FontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_size int32, size_pixels float32, font_cfg *FontConfig, glyph_ranges *Wchar) *Font {
+func (self *FontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_data_size int32, size_pixels float32, font_cfg *FontConfig, glyph_ranges *Wchar) *Font {
 	selfArg, selfFin := self.handle()
 	font_dataArg, font_dataFin := WrapVoidPtr(font_data)
 	font_cfgArg, font_cfgFin := font_cfg.handle()
@@ -887,7 +918,7 @@ func (self *FontAtlas) AddFontFromMemoryTTFV(font_data unsafe.Pointer, font_size
 		font_dataFin()
 		font_cfgFin()
 	}()
-	return newFontFromC(C.ImFontAtlas_AddFontFromMemoryTTF(selfArg, font_dataArg, C.int(font_size), C.float(size_pixels), font_cfgArg, (*C.ImWchar)(glyph_ranges)))
+	return newFontFromC(C.ImFontAtlas_AddFontFromMemoryTTF(selfArg, font_dataArg, C.int(font_data_size), C.float(size_pixels), font_cfgArg, (*C.ImWchar)(glyph_ranges)))
 }
 
 // Build pixels data. This is called automatically for you by the GetTexData*** functions.
@@ -2002,10 +2033,17 @@ func NewListClipper() *ListClipper {
 	return newListClipperFromC(C.ImGuiListClipper_ImGuiListClipper())
 }
 
-// item_end is exclusive e.g. use (42, 42+1) to make item 42 never clipped.
-func (self *ListClipper) IncludeRangeByIndices(item_begin int32, item_end int32) {
+func (self *ListClipper) IncludeItemByIndex(item_index int32) {
 	selfArg, selfFin := self.handle()
-	C.ImGuiListClipper_IncludeRangeByIndices(selfArg, C.int(item_begin), C.int(item_end))
+	C.ImGuiListClipper_IncludeItemByIndex(selfArg, C.int(item_index))
+
+	selfFin()
+}
+
+// item_end is exclusive e.g. use (42, 42+1) to make item 42 never clipped.
+func (self *ListClipper) IncludeItemsByIndex(item_begin int32, item_end int32) {
+	selfArg, selfFin := self.handle()
+	C.ImGuiListClipper_IncludeItemsByIndex(selfArg, C.int(item_begin), C.int(item_end))
 
 	selfFin()
 }
@@ -2856,6 +2894,25 @@ func (self *TextRange) Empty() bool {
 		selfFin()
 	}()
 	return C.ImGuiTextRange_empty(selfArg) == C.bool(true)
+}
+
+// We preserve remaining data for easier debugging
+func (self *TypingSelectState) InternalClear() {
+	selfArg, selfFin := self.handle()
+	C.ImGuiTypingSelectState_Clear(selfArg)
+
+	selfFin()
+}
+
+func InternalNewTypingSelectState() *TypingSelectState {
+	return newTypingSelectStateFromC(C.ImGuiTypingSelectState_ImGuiTypingSelectState())
+}
+
+func (self *TypingSelectState) Destroy() {
+	selfArg, selfFin := self.handle()
+	C.ImGuiTypingSelectState_destroy(selfArg)
+
+	selfFin()
 }
 
 func (self *ViewportP) InternalCalcWorkRectPos(off_min Vec2) Vec2 {
@@ -3736,15 +3793,13 @@ func BeginTabBarV(str_id string, flags TabBarFlags) bool {
 	return C.igBeginTabBar(str_idArg, C.ImGuiTabBarFlags(flags)) == C.bool(true)
 }
 
-func InternalBeginTabBarEx(tab_bar *TabBar, bb Rect, flags TabBarFlags, dock_node *DockNode) bool {
+func InternalBeginTabBarEx(tab_bar *TabBar, bb Rect, flags TabBarFlags) bool {
 	tab_barArg, tab_barFin := tab_bar.handle()
-	dock_nodeArg, dock_nodeFin := dock_node.handle()
 
 	defer func() {
 		tab_barFin()
-		dock_nodeFin()
 	}()
-	return C.igBeginTabBarEx(tab_barArg, bb.toC(), C.ImGuiTabBarFlags(flags), dock_nodeArg) == C.bool(true)
+	return C.igBeginTabBarEx(tab_barArg, bb.toC(), C.ImGuiTabBarFlags(flags)) == C.bool(true)
 }
 
 // create a Tab. Returns true if the Tab is selected.
@@ -4502,6 +4557,13 @@ func InternalDebugNodeTableSettings(settings *TableSettings) {
 	C.igDebugNodeTableSettings(settingsArg)
 
 	settingsFin()
+}
+
+func InternalDebugNodeTypingSelectState(state *TypingSelectState) {
+	stateArg, stateFin := state.handle()
+	C.igDebugNodeTypingSelectState(stateArg)
+
+	stateFin()
 }
 
 func InternalDebugNodeViewport(viewport *ViewportP) {
@@ -6036,6 +6098,12 @@ func InternalTypematicRepeatRate(flags InputFlags, repeat_delay *float32, repeat
 	repeat_rateFin()
 }
 
+// InternalTypingSelectRequestV parameter default value hint:
+// flags: ImGuiTypingSelectFlags_None
+func InternalTypingSelectRequestV(flags TypingSelectFlags) *TypingSelectRequest {
+	return newTypingSelectRequestFromC(C.igGetTypingSelectRequest(C.ImGuiTypingSelectFlags(flags)))
+}
+
 // get the compiled version string e.g. "1.80 WIP" (essentially the value for IMGUI_VERSION from the compiled version of imgui.cpp)
 func Version() string {
 	return C.GoString(C.igGetVersion())
@@ -6417,6 +6485,13 @@ func InternalImFontAtlasGetBuilderForStbTruetype() *FontBuilderIO {
 	return newFontBuilderIOFromC(C.igImFontAtlasGetBuilderForStbTruetype())
 }
 
+func InternalImFontAtlasUpdateConfigDataPointers(atlas *FontAtlas) {
+	atlasArg, atlasFin := atlas.handle()
+	C.igImFontAtlasUpdateConfigDataPointers(atlasArg)
+
+	atlasFin()
+}
+
 func InternalImFormatString(buf string, buf_size uint64, fmt string) int32 {
 	bufArg, bufFin := WrapString(buf)
 	fmtArg, fmtFin := WrapString(fmt)
@@ -6674,6 +6749,7 @@ func InternalImSignDouble(x float64) float64 {
 	return float64(C.igImSign_double(C.double(x)))
 }
 
+// Find first non-blank character.
 func InternalImStrSkipBlank(str string) string {
 	strArg, strFin := WrapString(str)
 
@@ -6683,6 +6759,7 @@ func InternalImStrSkipBlank(str string) string {
 	return C.GoString(C.igImStrSkipBlank(strArg))
 }
 
+// Remove leading and trailing blanks from a buffer.
 func InternalImStrTrimBlanks(str string) {
 	strArg, strFin := WrapString(str)
 	C.igImStrTrimBlanks(strArg)
@@ -6690,11 +6767,12 @@ func InternalImStrTrimBlanks(str string) {
 	strFin()
 }
 
-// Find beginning-of-line
+// Find beginning-of-line (ImWchar string)
 func InternalImStrbolW(buf_mid_line *Wchar, buf_begin *Wchar) *Wchar {
 	return (*Wchar)(C.igImStrbolW((*C.ImWchar)(buf_mid_line), (*C.ImWchar)(buf_begin)))
 }
 
+// Find first occurrence of 'c' in string range.
 func InternalImStrchrRange(str_begin string, str_end string, c rune) string {
 	str_beginArg, str_beginFin := WrapString(str_begin)
 	str_endArg, str_endFin := WrapString(str_end)
@@ -6706,6 +6784,7 @@ func InternalImStrchrRange(str_begin string, str_end string, c rune) string {
 	return C.GoString(C.igImStrchrRange(str_beginArg, str_endArg, C.char(c)))
 }
 
+// Duplicate a string.
 func InternalImStrdup(str string) string {
 	strArg, strFin := WrapString(str)
 
@@ -6715,6 +6794,7 @@ func InternalImStrdup(str string) string {
 	return C.GoString(C.igImStrdup(strArg))
 }
 
+// Copy in provided buffer, recreate buffer if needed.
 func InternalImStrdupcpy(dst string, p_dst_size *uint64, str string) string {
 	dstArg, dstFin := WrapString(dst)
 	strArg, strFin := WrapString(str)
@@ -6738,6 +6818,7 @@ func InternalImStreolRange(str string, str_end string) string {
 	return C.GoString(C.igImStreolRange(strArg, str_endArg))
 }
 
+// Case insensitive compare.
 func InternalImStricmp(str1 string, str2 string) int32 {
 	str1Arg, str1Fin := WrapString(str1)
 	str2Arg, str2Fin := WrapString(str2)
@@ -6749,6 +6830,7 @@ func InternalImStricmp(str1 string, str2 string) int32 {
 	return int32(C.igImStricmp(str1Arg, str2Arg))
 }
 
+// Find a substring in a string range.
 func InternalImStristr(haystack string, haystack_end string, needle string, needle_end string) string {
 	haystackArg, haystackFin := WrapString(haystack)
 	haystack_endArg, haystack_endFin := WrapString(haystack_end)
@@ -6764,10 +6846,12 @@ func InternalImStristr(haystack string, haystack_end string, needle string, need
 	return C.GoString(C.igImStristr(haystackArg, haystack_endArg, needleArg, needle_endArg))
 }
 
+// Computer string length (ImWchar string)
 func InternalImStrlenW(str *Wchar) int32 {
 	return int32(C.igImStrlenW((*C.ImWchar)(str)))
 }
 
+// Copy to a certain count and always zero terminate (strncpy doesn't).
 func InternalImStrncpy(dst string, src string, count uint64) {
 	dstArg, dstFin := WrapString(dst)
 	srcArg, srcFin := WrapString(src)
@@ -6777,6 +6861,7 @@ func InternalImStrncpy(dst string, src string, count uint64) {
 	srcFin()
 }
 
+// Case insensitive compare to a certain count.
 func InternalImStrnicmp(str1 string, str2 string, count uint64) int32 {
 	str1Arg, str1Fin := WrapString(str1)
 	str2Arg, str2Fin := WrapString(str2)
@@ -6844,6 +6929,18 @@ func InternalImTextCountUtf8BytesFromChar(in_text string, in_text_end string) in
 // return number of bytes to express string in UTF-8
 func InternalImTextCountUtf8BytesFromStr(in_text *Wchar, in_text_end *Wchar) int32 {
 	return int32(C.igImTextCountUtf8BytesFromStr((*C.ImWchar)(in_text), (*C.ImWchar)(in_text_end)))
+}
+
+// return previous UTF-8 code-point.
+func InternalImTextFindPreviousUtf8Codepoint(in_text_start string, in_text_curr string) string {
+	in_text_startArg, in_text_startFin := WrapString(in_text_start)
+	in_text_currArg, in_text_currFin := WrapString(in_text_curr)
+
+	defer func() {
+		in_text_startFin()
+		in_text_currFin()
+	}()
+	return C.GoString(C.igImTextFindPreviousUtf8Codepoint(in_text_startArg, in_text_currArg))
 }
 
 // return input UTF-8 bytes count
@@ -7818,6 +7915,10 @@ func InternalNavMoveRequestTryWrapping(window *Window, move_flags NavMoveFlags) 
 	C.igNavMoveRequestTryWrapping(windowArg, C.ImGuiNavMoveFlags(move_flags))
 
 	windowFin()
+}
+
+func InternalNavRestoreHighlightAfterMove() {
+	C.igNavRestoreHighlightAfterMove()
 }
 
 func InternalNavUpdateCurrentWindowIsScrollPushableX() {
@@ -10346,6 +10447,20 @@ func (self *DrawList) AddCircleFilled(center Vec2, radius float32, col uint32) {
 	selfFin()
 }
 
+func (self *DrawList) AddEllipse(center Vec2, radius_x float32, radius_y float32, col uint32) {
+	selfArg, selfFin := self.handle()
+	C.wrap_ImDrawList_AddEllipse(selfArg, center.toC(), C.float(radius_x), C.float(radius_y), C.ImU32(col))
+
+	selfFin()
+}
+
+func (self *DrawList) AddEllipseFilled(center Vec2, radius_x float32, radius_y float32, col uint32) {
+	selfArg, selfFin := self.handle()
+	C.wrap_ImDrawList_AddEllipseFilled(selfArg, center.toC(), C.float(radius_x), C.float(radius_y), C.ImU32(col))
+
+	selfFin()
+}
+
 func (self *DrawList) AddImage(user_texture_id TextureID, p_min Vec2, p_max Vec2) {
 	selfArg, selfFin := self.handle()
 	C.wrap_ImDrawList_AddImage(selfArg, C.ImTextureID(user_texture_id), p_min.toC(), p_max.toC())
@@ -10450,6 +10565,13 @@ func (self *DrawList) PathBezierQuadraticCurveTo(p2 Vec2, p3 Vec2) {
 	selfFin()
 }
 
+func (self *DrawList) PathEllipticalArcTo(center Vec2, radius_x float32, radius_y float32, rot float32, a_min float32, a_max float32) {
+	selfArg, selfFin := self.handle()
+	C.wrap_ImDrawList_PathEllipticalArcTo(selfArg, center.toC(), C.float(radius_x), C.float(radius_y), C.float(rot), C.float(a_min), C.float(a_max))
+
+	selfFin()
+}
+
 func (self *DrawList) PathRect(rect_min Vec2, rect_max Vec2) {
 	selfArg, selfFin := self.handle()
 	C.wrap_ImDrawList_PathRect(selfArg, rect_min.toC(), rect_max.toC())
@@ -10513,16 +10635,16 @@ func (self *FontAtlas) AddFontFromMemoryCompressedBase85TTF(compressed_font_data
 	return newFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(selfArg, compressed_font_data_base85Arg, C.float(size_pixels)))
 }
 
-func (self *FontAtlas) AddFontFromMemoryCompressedTTF(compressed_font_data unsafe.Pointer, compressed_font_size int32, size_pixels float32) *Font {
+func (self *FontAtlas) AddFontFromMemoryCompressedTTF(compressed_font_data unsafe.Pointer, compressed_font_data_size int32, size_pixels float32) *Font {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return newFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedTTF(selfArg, (compressed_font_data), C.int(compressed_font_size), C.float(size_pixels)))
+	return newFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedTTF(selfArg, (compressed_font_data), C.int(compressed_font_data_size), C.float(size_pixels)))
 }
 
-func (self *FontAtlas) AddFontFromMemoryTTF(font_data unsafe.Pointer, font_size int32, size_pixels float32) *Font {
+func (self *FontAtlas) AddFontFromMemoryTTF(font_data unsafe.Pointer, font_data_size int32, size_pixels float32) *Font {
 	selfArg, selfFin := self.handle()
 	font_dataArg, font_dataFin := WrapVoidPtr(font_data)
 
@@ -10530,7 +10652,7 @@ func (self *FontAtlas) AddFontFromMemoryTTF(font_data unsafe.Pointer, font_size 
 		selfFin()
 		font_dataFin()
 	}()
-	return newFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryTTF(selfArg, font_dataArg, C.int(font_size), C.float(size_pixels)))
+	return newFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryTTF(selfArg, font_dataArg, C.int(font_data_size), C.float(size_pixels)))
 }
 
 func (self *FontGlyphRangesBuilder) AddText(text string) {
@@ -11281,6 +11403,10 @@ func MouseDragDelta() Vec2 {
 	pOutFin()
 
 	return *pOut
+}
+
+func InternalTypingSelectRequest() *TypingSelectRequest {
+	return newTypingSelectRequestFromC(C.wrap_igGetTypingSelectRequest())
 }
 
 func InternalImFileLoadToMemory(filename string, mode string) unsafe.Pointer {
@@ -13112,49 +13238,49 @@ func (self *DrawListSplitter) Channels() Vector[*DrawChannel] {
 	return newVectorFromC(C.wrap_ImDrawListSplitter_Get_Channels(selfArg).Size, C.wrap_ImDrawListSplitter_Get_Channels(selfArg).Capacity, newDrawChannelFromC(C.wrap_ImDrawListSplitter_Get_Channels(selfArg).Data))
 }
 
-func (self DrawVert) Setpos(v Vec2) {
+func (self DrawVert) SetPos(v Vec2) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImDrawVert_Setpos(selfArg, v.toC())
+	C.wrap_ImDrawVert_SetPos(selfArg, v.toC())
 }
 
-func (self *DrawVert) pos() Vec2 {
+func (self *DrawVert) Pos() Vec2 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImDrawVert_Getpos(selfArg))
+	return *(&Vec2{}).fromC(C.wrap_ImDrawVert_GetPos(selfArg))
 }
 
-func (self DrawVert) Setuv(v Vec2) {
+func (self DrawVert) SetUv(v Vec2) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImDrawVert_Setuv(selfArg, v.toC())
+	C.wrap_ImDrawVert_SetUv(selfArg, v.toC())
 }
 
-func (self *DrawVert) uv() Vec2 {
+func (self *DrawVert) Uv() Vec2 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImDrawVert_Getuv(selfArg))
+	return *(&Vec2{}).fromC(C.wrap_ImDrawVert_GetUv(selfArg))
 }
 
-func (self DrawVert) Setcol(v uint32) {
+func (self DrawVert) SetCol(v uint32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImDrawVert_Setcol(selfArg, C.ImU32(v))
+	C.wrap_ImDrawVert_SetCol(selfArg, C.ImU32(v))
 }
 
-func (self *DrawVert) col() uint32 {
+func (self *DrawVert) Col() uint32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImDrawVert_Getcol(selfArg))
+	return uint32(C.wrap_ImDrawVert_GetCol(selfArg))
 }
 
 func (self Font) SetIndexAdvanceX(v Vector[*float32]) {
@@ -17693,6 +17819,21 @@ func (self *Context) DisabledStackSize() int16 {
 	return int16(C.wrap_ImGuiContext_GetDisabledStackSize(selfArg))
 }
 
+func (self Context) SetLockMarkEdited(v int16) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetLockMarkEdited(selfArg, C.short(v))
+}
+
+func (self *Context) LockMarkEdited() int16 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int16(C.wrap_ImGuiContext_GetLockMarkEdited(selfArg))
+}
+
 func (self Context) SetTooltipOverrideCount(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -17743,6 +17884,25 @@ func (self Context) SetMenusIdSubmittedThisFrame(v Vector[*ID]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetMenusIdSubmittedThisFrame(selfArg, *vVecArg)
+}
+
+func (self Context) SetTypingSelectState(v TypingSelectState) {
+	vArg, _ := v.c()
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetTypingSelectState(selfArg, vArg)
+}
+
+func (self *Context) TypingSelectState() TypingSelectState {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+
+	result := C.wrap_ImGuiContext_GetTypingSelectState(selfArg)
+	return *newTypingSelectStateFromC(func() *C.ImGuiTypingSelectState { result := result; return &result }())
 }
 
 func (self Context) SetPlatformImeData(v PlatformImeData) {
@@ -22510,21 +22670,6 @@ func (self *NextItemData) Width() float32 {
 	return float32(C.wrap_ImGuiNextItemData_GetWidth(selfArg))
 }
 
-func (self NextItemData) SetFocusScopeId(v ID) {
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiNextItemData_SetFocusScopeId(selfArg, C.ImGuiID(v))
-}
-
-func (self *NextItemData) FocusScopeId() ID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return ID(C.wrap_ImGuiNextItemData_GetFocusScopeId(selfArg))
-}
-
 func (self NextItemData) SetOpenCond(v Cond) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -24083,19 +24228,19 @@ func (self *Storage) Data() Vector[*StoragePair] {
 	return newVectorFromC(C.wrap_ImGuiStorage_GetData(selfArg).Size, C.wrap_ImGuiStorage_GetData(selfArg).Capacity, newStoragePairFromC(C.wrap_ImGuiStorage_GetData(selfArg).Data))
 }
 
-func (self StoragePair) Setkey(v ID) {
+func (self StoragePair) SetKey(v ID) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiStoragePair_Setkey(selfArg, C.ImGuiID(v))
+	C.wrap_ImGuiStoragePair_SetKey(selfArg, C.ImGuiID(v))
 }
 
-func (self *StoragePair) key() ID {
+func (self *StoragePair) Key() ID {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return ID(C.wrap_ImGuiStoragePair_Getkey(selfArg))
+	return ID(C.wrap_ImGuiStoragePair_GetKey(selfArg))
 }
 
 func (self Style) SetAlpha(v float32) {
@@ -24531,6 +24676,21 @@ func (self *Style) TabMinWidthForCloseButton() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiStyle_GetTabMinWidthForCloseButton(selfArg))
+}
+
+func (self Style) SetTabBarBorderSize(v float32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetTabBarBorderSize(selfArg, C.float(v))
+}
+
+func (self *Style) TabBarBorderSize() float32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_GetTabBarBorderSize(selfArg))
 }
 
 func (self Style) SetColorButtonPosition(v Dir) {
@@ -25139,6 +25299,36 @@ func (self *TabBar) ScrollingRectMaxX() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiTabBar_GetScrollingRectMaxX(selfArg))
+}
+
+func (self TabBar) SetSeparatorMinX(v float32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTabBar_SetSeparatorMinX(selfArg, C.float(v))
+}
+
+func (self *TabBar) SeparatorMinX() float32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiTabBar_GetSeparatorMinX(selfArg))
+}
+
+func (self TabBar) SetSeparatorMaxX(v float32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTabBar_SetSeparatorMaxX(selfArg, C.float(v))
+}
+
+func (self *TabBar) SeparatorMaxX() float32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiTabBar_GetSeparatorMaxX(selfArg))
 }
 
 func (self TabBar) SetReorderRequestTabId(v ID) {
@@ -25751,6 +25941,21 @@ func (self *Table) RowMinHeight() float32 {
 	return float32(C.wrap_ImGuiTable_GetRowMinHeight(selfArg))
 }
 
+func (self Table) SetRowCellPaddingY(v float32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetRowCellPaddingY(selfArg, C.float(v))
+}
+
+func (self *Table) RowCellPaddingY() float32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiTable_GetRowCellPaddingY(selfArg))
+}
+
 func (self Table) SetRowTextBaseline(v float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -25944,21 +26149,6 @@ func (self *Table) CellPaddingX() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiTable_GetCellPaddingX(selfArg))
-}
-
-func (self Table) SetCellPaddingY(v float32) {
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetCellPaddingY(selfArg, C.float(v))
-}
-
-func (self *Table) CellPaddingY() float32 {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImGuiTable_GetCellPaddingY(selfArg))
 }
 
 func (self Table) SetCellSpacingX1(v float32) {
@@ -28373,38 +28563,209 @@ func (self *TextIndex) EndOffset() int32 {
 	return int32(C.wrap_ImGuiTextIndex_GetEndOffset(selfArg))
 }
 
-func (self TextRange) Setb(v string) {
+func (self TextRange) SetB(v string) {
 	vArg, _ := WrapString(v)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiTextRange_Setb(selfArg, vArg)
+	C.wrap_ImGuiTextRange_SetB(selfArg, vArg)
 }
 
-func (self *TextRange) b() string {
+func (self *TextRange) B() string {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiTextRange_Getb(selfArg))
+	return C.GoString(C.wrap_ImGuiTextRange_GetB(selfArg))
 }
 
-func (self TextRange) Sete(v string) {
+func (self TextRange) SetE(v string) {
 	vArg, _ := WrapString(v)
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImGuiTextRange_Sete(selfArg, vArg)
+	C.wrap_ImGuiTextRange_SetE(selfArg, vArg)
 }
 
-func (self *TextRange) e() string {
+func (self *TextRange) E() string {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiTextRange_Gete(selfArg))
+	return C.GoString(C.wrap_ImGuiTextRange_GetE(selfArg))
+}
+
+func (self TypingSelectRequest) SetFlags(v TypingSelectFlags) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTypingSelectRequest_SetFlags(selfArg, C.ImGuiTypingSelectFlags(v))
+}
+
+func (self *TypingSelectRequest) Flags() TypingSelectFlags {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return TypingSelectFlags(C.wrap_ImGuiTypingSelectRequest_GetFlags(selfArg))
+}
+
+func (self TypingSelectRequest) SetSearchBufferLen(v int32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTypingSelectRequest_SetSearchBufferLen(selfArg, C.int(v))
+}
+
+func (self *TypingSelectRequest) SearchBufferLen() int32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImGuiTypingSelectRequest_GetSearchBufferLen(selfArg))
+}
+
+func (self TypingSelectRequest) SetSearchBuffer(v string) {
+	vArg, _ := WrapString(v)
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTypingSelectRequest_SetSearchBuffer(selfArg, vArg)
+}
+
+func (self *TypingSelectRequest) SearchBuffer() string {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.GoString(C.wrap_ImGuiTypingSelectRequest_GetSearchBuffer(selfArg))
+}
+
+func (self TypingSelectRequest) SetSelectRequest(v bool) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTypingSelectRequest_SetSelectRequest(selfArg, C.bool(v))
+}
+
+func (self *TypingSelectRequest) SelectRequest() bool {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiTypingSelectRequest_GetSelectRequest(selfArg) == C.bool(true)
+}
+
+func (self TypingSelectRequest) SetSingleCharMode(v bool) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTypingSelectRequest_SetSingleCharMode(selfArg, C.bool(v))
+}
+
+func (self *TypingSelectRequest) SingleCharMode() bool {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiTypingSelectRequest_GetSingleCharMode(selfArg) == C.bool(true)
+}
+
+func (self TypingSelectRequest) SetSingleCharSize(v int) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTypingSelectRequest_SetSingleCharSize(selfArg, C.ImS8(v))
+}
+
+func (self *TypingSelectRequest) SingleCharSize() int {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int(C.wrap_ImGuiTypingSelectRequest_GetSingleCharSize(selfArg))
+}
+
+func (self TypingSelectState) SetRequest(v TypingSelectRequest) {
+	vArg, _ := v.c()
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTypingSelectState_SetRequest(selfArg, vArg)
+}
+
+func (self *TypingSelectState) Request() TypingSelectRequest {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+
+	result := C.wrap_ImGuiTypingSelectState_GetRequest(selfArg)
+	return *newTypingSelectRequestFromC(func() *C.ImGuiTypingSelectRequest { result := result; return &result }())
+}
+
+func (self TypingSelectState) SetFocusScope(v ID) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTypingSelectState_SetFocusScope(selfArg, C.ImGuiID(v))
+}
+
+func (self *TypingSelectState) FocusScope() ID {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return ID(C.wrap_ImGuiTypingSelectState_GetFocusScope(selfArg))
+}
+
+func (self TypingSelectState) SetLastRequestFrame(v int32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTypingSelectState_SetLastRequestFrame(selfArg, C.int(v))
+}
+
+func (self *TypingSelectState) LastRequestFrame() int32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImGuiTypingSelectState_GetLastRequestFrame(selfArg))
+}
+
+func (self TypingSelectState) SetLastRequestTime(v float32) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTypingSelectState_SetLastRequestTime(selfArg, C.float(v))
+}
+
+func (self *TypingSelectState) LastRequestTime() float32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiTypingSelectState_GetLastRequestTime(selfArg))
+}
+
+func (self TypingSelectState) SetSingleCharModeLock(v bool) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTypingSelectState_SetSingleCharModeLock(selfArg, C.bool(v))
+}
+
+func (self *TypingSelectState) SingleCharModeLock() bool {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiTypingSelectState_GetSingleCharModeLock(selfArg) == C.bool(true)
 }
 
 func (self Viewport) SetID(v ID) {
@@ -31617,340 +31978,403 @@ func (self *WindowTempData) TextWrapPosStack() Vector[*float32] {
 	return newVectorFromC(C.wrap_ImGuiWindowTempData_GetTextWrapPosStack(selfArg).Size, C.wrap_ImGuiWindowTempData_GetTextWrapPosStack(selfArg).Capacity, (*float32)(C.wrap_ImGuiWindowTempData_GetTextWrapPosStack(selfArg).Data))
 }
 
-func (self *STBTexteditState) TexteditStateGetcursor() int32 {
+func (self *Vec1) X() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_STB_TexteditState_Getcursor(selfArg))
+	return float32(C.wrap_ImVec1_GetX(selfArg))
 }
 
-func (self *STBTexteditState) TexteditStateGetselectstart() int32 {
-	selfArg, selfFin := self.handle()
+func (self *Vec2) X() float32 {
+	selfArg, selfFin := wrap[C.ImVec2, *Vec2](self)
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_STB_TexteditState_Getselect_start(selfArg))
+	return float32(C.wrap_ImVec2_GetX(selfArg))
 }
 
-func (self *STBTexteditState) TexteditStateGetselectend() int32 {
-	selfArg, selfFin := self.handle()
+func (self *Vec2) Y() float32 {
+	selfArg, selfFin := wrap[C.ImVec2, *Vec2](self)
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_STB_TexteditState_Getselect_end(selfArg))
+	return float32(C.wrap_ImVec2_GetY(selfArg))
 }
 
-func (self *STBTexteditState) TexteditStateGetinsertmode() uint {
-	selfArg, selfFin := self.handle()
+func (self *Vec4) X() float32 {
+	selfArg, selfFin := wrap[C.ImVec4, *Vec4](self)
 
 	defer func() {
 		selfFin()
 	}()
-	return uint(C.wrap_STB_TexteditState_Getinsert_mode(selfArg))
+	return float32(C.wrap_ImVec4_GetX(selfArg))
 }
 
-func (self *STBTexteditState) TexteditStateGetrowcountperpage() int32 {
-	selfArg, selfFin := self.handle()
+func (self *Vec4) Y() float32 {
+	selfArg, selfFin := wrap[C.ImVec4, *Vec4](self)
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_STB_TexteditState_Getrow_count_per_page(selfArg))
+	return float32(C.wrap_ImVec4_GetY(selfArg))
 }
 
-func (self *STBTexteditState) TexteditStateGetcursoratendofline() uint {
-	selfArg, selfFin := self.handle()
+func (self *Vec4) Z() float32 {
+	selfArg, selfFin := wrap[C.ImVec4, *Vec4](self)
 
 	defer func() {
 		selfFin()
 	}()
-	return uint(C.wrap_STB_TexteditState_Getcursor_at_end_of_line(selfArg))
+	return float32(C.wrap_ImVec4_GetZ(selfArg))
 }
 
-func (self *STBTexteditState) TexteditStateGetinitialized() uint {
-	selfArg, selfFin := self.handle()
+func (self *Vec4) W() float32 {
+	selfArg, selfFin := wrap[C.ImVec4, *Vec4](self)
 
 	defer func() {
 		selfFin()
 	}()
-	return uint(C.wrap_STB_TexteditState_Getinitialized(selfArg))
+	return float32(C.wrap_ImVec4_GetW(selfArg))
 }
 
-func (self *STBTexteditState) TexteditStateGethaspreferredx() uint {
+func (self *STBTexteditState) TexteditStateGetCursor() int32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint(C.wrap_STB_TexteditState_Gethas_preferred_x(selfArg))
+	return int32(C.wrap_STB_TexteditState_GetCursor(selfArg))
 }
 
-func (self *STBTexteditState) TexteditStateGetsingleline() uint {
+func (self *STBTexteditState) TexteditStateGetSelectstart() int32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint(C.wrap_STB_TexteditState_Getsingle_line(selfArg))
+	return int32(C.wrap_STB_TexteditState_GetSelect_start(selfArg))
 }
 
-func (self *STBTexteditState) TexteditStateGetpadding1() uint {
+func (self *STBTexteditState) TexteditStateGetSelectend() int32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint(C.wrap_STB_TexteditState_Getpadding1(selfArg))
+	return int32(C.wrap_STB_TexteditState_GetSelect_end(selfArg))
 }
 
-func (self *STBTexteditState) TexteditStateGetpadding2() uint {
+func (self *STBTexteditState) TexteditStateGetInsertmode() uint {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint(C.wrap_STB_TexteditState_Getpadding2(selfArg))
+	return uint(C.wrap_STB_TexteditState_GetInsert_mode(selfArg))
 }
 
-func (self *STBTexteditState) TexteditStateGetpadding3() uint {
+func (self *STBTexteditState) TexteditStateGetRowcountperpage() int32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint(C.wrap_STB_TexteditState_Getpadding3(selfArg))
+	return int32(C.wrap_STB_TexteditState_GetRow_count_per_page(selfArg))
 }
 
-func (self *STBTexteditState) TexteditStateGetpreferredx() float32 {
+func (self *STBTexteditState) TexteditStateGetCursoratendofline() uint {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_STB_TexteditState_Getpreferred_x(selfArg))
+	return uint(C.wrap_STB_TexteditState_GetCursor_at_end_of_line(selfArg))
 }
 
-func (self *STBTexteditState) TexteditStateGetundostate() StbUndoState {
+func (self *STBTexteditState) TexteditStateGetInitialized() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_GetInitialized(selfArg))
+}
+
+func (self *STBTexteditState) TexteditStateGetHaspreferredx() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_GetHas_preferred_x(selfArg))
+}
+
+func (self *STBTexteditState) TexteditStateGetSingleline() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_GetSingle_line(selfArg))
+}
+
+func (self *STBTexteditState) TexteditStateGetPadding1() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_GetPadding1(selfArg))
+}
+
+func (self *STBTexteditState) TexteditStateGetPadding2() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_GetPadding2(selfArg))
+}
+
+func (self *STBTexteditState) TexteditStateGetPadding3() uint {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint(C.wrap_STB_TexteditState_GetPadding3(selfArg))
+}
+
+func (self *STBTexteditState) TexteditStateGetPreferredx() float32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_STB_TexteditState_GetPreferred_x(selfArg))
+}
+
+func (self *STBTexteditState) TexteditStateGetUndostate() StbUndoState {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
 
-	result := C.wrap_STB_TexteditState_Getundostate(selfArg)
+	result := C.wrap_STB_TexteditState_GetUndostate(selfArg)
 	return *newStbUndoStateFromC(func() *C.StbUndoState { result := result; return &result }())
 }
 
-func (self StbTexteditRow) Setx0(v float32) {
+func (self StbTexteditRow) SetX0(v float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_StbTexteditRow_Setx0(selfArg, C.float(v))
+	C.wrap_StbTexteditRow_SetX0(selfArg, C.float(v))
 }
 
-func (self *StbTexteditRow) x0() float32 {
+func (self *StbTexteditRow) X0() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_StbTexteditRow_Getx0(selfArg))
+	return float32(C.wrap_StbTexteditRow_GetX0(selfArg))
 }
 
-func (self StbTexteditRow) Setx1(v float32) {
+func (self StbTexteditRow) SetX1(v float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_StbTexteditRow_Setx1(selfArg, C.float(v))
+	C.wrap_StbTexteditRow_SetX1(selfArg, C.float(v))
 }
 
-func (self *StbTexteditRow) x1() float32 {
+func (self *StbTexteditRow) X1() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_StbTexteditRow_Getx1(selfArg))
+	return float32(C.wrap_StbTexteditRow_GetX1(selfArg))
 }
 
-func (self StbTexteditRow) Setbaselineydelta(v float32) {
+func (self StbTexteditRow) SetBaselineydelta(v float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_StbTexteditRow_Setbaseline_y_delta(selfArg, C.float(v))
+	C.wrap_StbTexteditRow_SetBaseline_y_delta(selfArg, C.float(v))
 }
 
-func (self *StbTexteditRow) baselineydelta() float32 {
+func (self *StbTexteditRow) Baselineydelta() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_StbTexteditRow_Getbaseline_y_delta(selfArg))
+	return float32(C.wrap_StbTexteditRow_GetBaseline_y_delta(selfArg))
 }
 
-func (self StbTexteditRow) Setymin(v float32) {
+func (self StbTexteditRow) SetYmin(v float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_StbTexteditRow_Setymin(selfArg, C.float(v))
+	C.wrap_StbTexteditRow_SetYmin(selfArg, C.float(v))
 }
 
-func (self *StbTexteditRow) ymin() float32 {
+func (self *StbTexteditRow) Ymin() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_StbTexteditRow_Getymin(selfArg))
+	return float32(C.wrap_StbTexteditRow_GetYmin(selfArg))
 }
 
-func (self StbTexteditRow) Setymax(v float32) {
+func (self StbTexteditRow) SetYmax(v float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_StbTexteditRow_Setymax(selfArg, C.float(v))
+	C.wrap_StbTexteditRow_SetYmax(selfArg, C.float(v))
 }
 
-func (self *StbTexteditRow) ymax() float32 {
+func (self *StbTexteditRow) Ymax() float32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_StbTexteditRow_Getymax(selfArg))
+	return float32(C.wrap_StbTexteditRow_GetYmax(selfArg))
 }
 
-func (self StbTexteditRow) Setnumchars(v int32) {
+func (self StbTexteditRow) SetNumchars(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_StbTexteditRow_Setnum_chars(selfArg, C.int(v))
+	C.wrap_StbTexteditRow_SetNum_chars(selfArg, C.int(v))
 }
 
-func (self *StbTexteditRow) numchars() int32 {
+func (self *StbTexteditRow) Numchars() int32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_StbTexteditRow_Getnum_chars(selfArg))
+	return int32(C.wrap_StbTexteditRow_GetNum_chars(selfArg))
 }
 
-func (self StbUndoRecord) Setwhere(v int32) {
+func (self StbUndoRecord) SetWhere(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_StbUndoRecord_Setwhere(selfArg, C.int(v))
+	C.wrap_StbUndoRecord_SetWhere(selfArg, C.int(v))
 }
 
-func (self *StbUndoRecord) where() int32 {
+func (self *StbUndoRecord) Where() int32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_StbUndoRecord_Getwhere(selfArg))
+	return int32(C.wrap_StbUndoRecord_GetWhere(selfArg))
 }
 
-func (self StbUndoRecord) Setinsertlength(v int32) {
+func (self StbUndoRecord) SetInsertlength(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_StbUndoRecord_Setinsert_length(selfArg, C.int(v))
+	C.wrap_StbUndoRecord_SetInsert_length(selfArg, C.int(v))
 }
 
-func (self *StbUndoRecord) insertlength() int32 {
+func (self *StbUndoRecord) Insertlength() int32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_StbUndoRecord_Getinsert_length(selfArg))
+	return int32(C.wrap_StbUndoRecord_GetInsert_length(selfArg))
 }
 
-func (self StbUndoRecord) Setdeletelength(v int32) {
+func (self StbUndoRecord) SetDeletelength(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_StbUndoRecord_Setdelete_length(selfArg, C.int(v))
+	C.wrap_StbUndoRecord_SetDelete_length(selfArg, C.int(v))
 }
 
-func (self *StbUndoRecord) deletelength() int32 {
+func (self *StbUndoRecord) Deletelength() int32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_StbUndoRecord_Getdelete_length(selfArg))
+	return int32(C.wrap_StbUndoRecord_GetDelete_length(selfArg))
 }
 
-func (self StbUndoRecord) Setcharstorage(v int32) {
+func (self StbUndoRecord) SetCharstorage(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_StbUndoRecord_Setchar_storage(selfArg, C.int(v))
+	C.wrap_StbUndoRecord_SetChar_storage(selfArg, C.int(v))
 }
 
-func (self *StbUndoRecord) charstorage() int32 {
+func (self *StbUndoRecord) Charstorage() int32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_StbUndoRecord_Getchar_storage(selfArg))
+	return int32(C.wrap_StbUndoRecord_GetChar_storage(selfArg))
 }
 
-func (self StbUndoState) Setundopoint(v int16) {
+func (self StbUndoState) SetUndopoint(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_StbUndoState_Setundo_point(selfArg, C.short(v))
+	C.wrap_StbUndoState_SetUndo_point(selfArg, C.short(v))
 }
 
-func (self *StbUndoState) undopoint() int16 {
+func (self *StbUndoState) Undopoint() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int16(C.wrap_StbUndoState_Getundo_point(selfArg))
+	return int16(C.wrap_StbUndoState_GetUndo_point(selfArg))
 }
 
-func (self StbUndoState) Setredopoint(v int16) {
+func (self StbUndoState) SetRedopoint(v int16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_StbUndoState_Setredo_point(selfArg, C.short(v))
+	C.wrap_StbUndoState_SetRedo_point(selfArg, C.short(v))
 }
 
-func (self *StbUndoState) redopoint() int16 {
+func (self *StbUndoState) Redopoint() int16 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int16(C.wrap_StbUndoState_Getredo_point(selfArg))
+	return int16(C.wrap_StbUndoState_GetRedo_point(selfArg))
 }
 
-func (self StbUndoState) Setundocharpoint(v int32) {
+func (self StbUndoState) SetUndocharpoint(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_StbUndoState_Setundo_char_point(selfArg, C.int(v))
+	C.wrap_StbUndoState_SetUndo_char_point(selfArg, C.int(v))
 }
 
-func (self *StbUndoState) undocharpoint() int32 {
+func (self *StbUndoState) Undocharpoint() int32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_StbUndoState_Getundo_char_point(selfArg))
+	return int32(C.wrap_StbUndoState_GetUndo_char_point(selfArg))
 }
 
-func (self StbUndoState) Setredocharpoint(v int32) {
+func (self StbUndoState) SetRedocharpoint(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_StbUndoState_Setredo_char_point(selfArg, C.int(v))
+	C.wrap_StbUndoState_SetRedo_char_point(selfArg, C.int(v))
 }
 
-func (self *StbUndoState) redocharpoint() int32 {
+func (self *StbUndoState) Redocharpoint() int32 {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_StbUndoState_Getredo_char_point(selfArg))
+	return int32(C.wrap_StbUndoState_GetRedo_char_point(selfArg))
 }

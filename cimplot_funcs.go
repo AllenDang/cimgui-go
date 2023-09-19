@@ -16362,6 +16362,36 @@ func (self *PlotPlot) ContextLocked() bool {
 	return C.wrap_ImPlotPlot_GetContextLocked(selfArg) == C.bool(true)
 }
 
+func (self PlotPoint) SetX(v float64) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotPoint_SetX(selfArg, C.double(v))
+}
+
+func (self *PlotPoint) X() float64 {
+	selfArg, selfFin := wrap[C.ImPlotPoint, *PlotPoint](self)
+
+	defer func() {
+		selfFin()
+	}()
+	return float64(C.wrap_ImPlotPoint_GetX(selfArg))
+}
+
+func (self PlotPoint) SetY(v float64) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotPoint_SetY(selfArg, C.double(v))
+}
+
+func (self *PlotPoint) Y() float64 {
+	selfArg, selfFin := wrap[C.ImPlotPoint, *PlotPoint](self)
+
+	defer func() {
+		selfFin()
+	}()
+	return float64(C.wrap_ImPlotPoint_GetY(selfArg))
+}
+
 func (self PlotPointError) SetX(v float64) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()

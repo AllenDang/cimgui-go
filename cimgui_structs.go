@@ -1938,46 +1938,13 @@ func newMetricsConfigFromC(cvalue *C.ImGuiMetricsConfig) *MetricsConfig {
 }
 
 type NavItemData struct {
-	FieldWindow       *Window   // Init,Move    // Best candidate window (result->ItemWindow->RootWindowForNav == request->Window)
-	FieldID           ID        // Init,Move    // Best candidate item ID
-	FieldFocusScopeId ID        // Init,Move    // Best candidate focus scope ID
-	FieldRectRel      Rect      // Init,Move    // Best candidate bounding box in window relative space
-	FieldInFlags      ItemFlags // ????,Move    // Best candidate item flags
-	FieldDistBox      float32   //      Move    // Best candidate box distance to current NavId
-	FieldDistCenter   float32   //      Move    // Best candidate center distance to current NavId
-	FieldDistAxial    float32   //      Move    // Best candidate axial distance to current NavId
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
 func (self NavItemData) handle() (result *C.ImGuiNavItemData, releaseFn func()) {
-	result = new(C.ImGuiNavItemData)
-	FieldWindow := self.FieldWindow
-	FieldWindowArg, FieldWindowFin := FieldWindow.handle()
-	result.Window = FieldWindowArg
-	FieldID := self.FieldID
-
-	result.ID = C.ImGuiID(FieldID)
-	FieldFocusScopeId := self.FieldFocusScopeId
-
-	result.FocusScopeId = C.ImGuiID(FieldFocusScopeId)
-	FieldRectRel := self.FieldRectRel
-
-	result.RectRel = FieldRectRel.toC()
-	FieldInFlags := self.FieldInFlags
-
-	result.InFlags = C.ImGuiItemFlags(FieldInFlags)
-	FieldDistBox := self.FieldDistBox
-
-	result.DistBox = C.float(FieldDistBox)
-	FieldDistCenter := self.FieldDistCenter
-
-	result.DistCenter = C.float(FieldDistCenter)
-	FieldDistAxial := self.FieldDistAxial
-
-	result.DistAxial = C.float(FieldDistAxial)
-	releaseFn = func() {
-		FieldWindowFin()
-	}
-	return result, releaseFn
+	result = (*C.ImGuiNavItemData)(self.data)
+	return result, func() {}
 }
 
 func (self NavItemData) c() (result C.ImGuiNavItemData, fin func()) {
@@ -1987,14 +1954,7 @@ func (self NavItemData) c() (result C.ImGuiNavItemData, fin func()) {
 
 func newNavItemDataFromC(cvalue *C.ImGuiNavItemData) *NavItemData {
 	result := new(NavItemData)
-	result.FieldWindow = newWindowFromC(cvalue.Window)
-	result.FieldID = ID(cvalue.ID)
-	result.FieldFocusScopeId = ID(cvalue.FocusScopeId)
-	result.FieldRectRel = *(&Rect{}).fromC(cvalue.RectRel)
-	result.FieldInFlags = ItemFlags(cvalue.InFlags)
-	result.FieldDistBox = float32(cvalue.DistBox)
-	result.FieldDistCenter = float32(cvalue.DistCenter)
-	result.FieldDistAxial = float32(cvalue.DistAxial)
+	result.data = unsafe.Pointer(cvalue)
 	return result
 }
 
@@ -2037,37 +1997,13 @@ func newNavTreeNodeDataFromC(cvalue *C.ImGuiNavTreeNodeData) *NavTreeNodeData {
 }
 
 type NextItemData struct {
-	FieldFlags        NextItemDataFlags
-	FieldItemFlags    ItemFlags // Currently only tested/used for ImGuiItemFlags_AllowOverlap.
-	FieldWidth        float32   // Set by SetNextItemWidth()
-	FieldFocusScopeId ID        // Set by SetNextItemMultiSelectData() (!= 0 signify value has been set, so it's an alternate version of HasSelectionData, we don't use Flags for this because they are cleared too early. This is mostly used for debugging)
-	FieldOpenCond     Cond
-	FieldOpenVal      bool // Set by SetNextItemOpen()
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
 func (self NextItemData) handle() (result *C.ImGuiNextItemData, releaseFn func()) {
-	result = new(C.ImGuiNextItemData)
-	FieldFlags := self.FieldFlags
-
-	result.Flags = C.ImGuiNextItemDataFlags(FieldFlags)
-	FieldItemFlags := self.FieldItemFlags
-
-	result.ItemFlags = C.ImGuiItemFlags(FieldItemFlags)
-	FieldWidth := self.FieldWidth
-
-	result.Width = C.float(FieldWidth)
-	FieldFocusScopeId := self.FieldFocusScopeId
-
-	result.FocusScopeId = C.ImGuiID(FieldFocusScopeId)
-	FieldOpenCond := self.FieldOpenCond
-
-	result.OpenCond = C.ImGuiCond(FieldOpenCond)
-	FieldOpenVal := self.FieldOpenVal
-
-	result.OpenVal = C.bool(FieldOpenVal)
-	releaseFn = func() {
-	}
-	return result, releaseFn
+	result = (*C.ImGuiNextItemData)(self.data)
+	return result, func() {}
 }
 
 func (self NextItemData) c() (result C.ImGuiNextItemData, fin func()) {
@@ -2077,12 +2013,7 @@ func (self NextItemData) c() (result C.ImGuiNextItemData, fin func()) {
 
 func newNextItemDataFromC(cvalue *C.ImGuiNextItemData) *NextItemData {
 	result := new(NextItemData)
-	result.FieldFlags = NextItemDataFlags(cvalue.Flags)
-	result.FieldItemFlags = ItemFlags(cvalue.ItemFlags)
-	result.FieldWidth = float32(cvalue.Width)
-	result.FieldFocusScopeId = ID(cvalue.FocusScopeId)
-	result.FieldOpenCond = Cond(cvalue.OpenCond)
-	result.FieldOpenVal = cvalue.OpenVal == C.bool(true)
+	result.data = unsafe.Pointer(cvalue)
 	return result
 }
 
@@ -2891,6 +2822,8 @@ type TabBar struct {
 	FieldScrollingSpeed                  float32
 	FieldScrollingRectMinX               float32
 	FieldScrollingRectMaxX               float32
+	FieldSeparatorMinX                   float32
+	FieldSeparatorMaxX                   float32
 	FieldReorderRequestTabId             ID
 	FieldReorderRequestOffset            int
 	FieldBeginCount                      int
@@ -2971,6 +2904,12 @@ func (self TabBar) handle() (result *C.ImGuiTabBar, releaseFn func()) {
 	FieldScrollingRectMaxX := self.FieldScrollingRectMaxX
 
 	result.ScrollingRectMaxX = C.float(FieldScrollingRectMaxX)
+	FieldSeparatorMinX := self.FieldSeparatorMinX
+
+	result.SeparatorMinX = C.float(FieldSeparatorMinX)
+	FieldSeparatorMaxX := self.FieldSeparatorMaxX
+
+	result.SeparatorMaxX = C.float(FieldSeparatorMaxX)
 	FieldReorderRequestTabId := self.FieldReorderRequestTabId
 
 	result.ReorderRequestTabId = C.ImGuiID(FieldReorderRequestTabId)
@@ -3042,6 +2981,8 @@ func newTabBarFromC(cvalue *C.ImGuiTabBar) *TabBar {
 	result.FieldScrollingSpeed = float32(cvalue.ScrollingSpeed)
 	result.FieldScrollingRectMinX = float32(cvalue.ScrollingRectMinX)
 	result.FieldScrollingRectMaxX = float32(cvalue.ScrollingRectMaxX)
+	result.FieldSeparatorMinX = float32(cvalue.SeparatorMinX)
+	result.FieldSeparatorMaxX = float32(cvalue.SeparatorMaxX)
 	result.FieldReorderRequestTabId = ID(cvalue.ReorderRequestTabId)
 	result.FieldReorderRequestOffset = int(cvalue.ReorderRequestOffset)
 	result.FieldBeginCount = int(cvalue.BeginCount)
@@ -3630,6 +3571,80 @@ func newTextRangeFromC(cvalue *C.ImGuiTextRange) *TextRange {
 	result := new(TextRange)
 	result.FieldB = C.GoString(cvalue.b)
 	result.FieldE = C.GoString(cvalue.e)
+	return result
+}
+
+// Returned by GetTypingSelectRequest(), designed to eventually be public.
+type TypingSelectRequest struct {
+	FieldFlags           TypingSelectFlags // Flags passed to GetTypingSelectRequest()
+	FieldSearchBufferLen int32
+	FieldSearchBuffer    string // Search buffer contents (use full string. unless SingleCharMode is set, in which case use SingleCharSize).
+	FieldSelectRequest   bool   // Set when buffer was modified this frame, requesting a selection.
+	FieldSingleCharMode  bool   // Notify when buffer contains same character repeated, to implement special mode. In this situation it preferred to not display any on-screen search indication.
+	FieldSingleCharSize  int    // Length in bytes of first letter codepoint (1 for ascii, 2-4 for UTF-8). If (SearchBufferLen==RepeatCharSize) only 1 letter has been input.
+}
+
+func (self TypingSelectRequest) handle() (result *C.ImGuiTypingSelectRequest, releaseFn func()) {
+	result = new(C.ImGuiTypingSelectRequest)
+	FieldFlags := self.FieldFlags
+
+	result.Flags = C.ImGuiTypingSelectFlags(FieldFlags)
+	FieldSearchBufferLen := self.FieldSearchBufferLen
+
+	result.SearchBufferLen = C.int(FieldSearchBufferLen)
+	FieldSearchBuffer := self.FieldSearchBuffer
+	FieldSearchBufferArg, FieldSearchBufferFin := WrapString(FieldSearchBuffer)
+	result.SearchBuffer = FieldSearchBufferArg
+	FieldSelectRequest := self.FieldSelectRequest
+
+	result.SelectRequest = C.bool(FieldSelectRequest)
+	FieldSingleCharMode := self.FieldSingleCharMode
+
+	result.SingleCharMode = C.bool(FieldSingleCharMode)
+	FieldSingleCharSize := self.FieldSingleCharSize
+
+	result.SingleCharSize = C.ImS8(FieldSingleCharSize)
+	releaseFn = func() {
+		FieldSearchBufferFin()
+	}
+	return result, releaseFn
+}
+
+func (self TypingSelectRequest) c() (result C.ImGuiTypingSelectRequest, fin func()) {
+	resultPtr, finFn := self.handle()
+	return *resultPtr, finFn
+}
+
+func newTypingSelectRequestFromC(cvalue *C.ImGuiTypingSelectRequest) *TypingSelectRequest {
+	result := new(TypingSelectRequest)
+	result.FieldFlags = TypingSelectFlags(cvalue.Flags)
+	result.FieldSearchBufferLen = int32(cvalue.SearchBufferLen)
+	result.FieldSearchBuffer = C.GoString(cvalue.SearchBuffer)
+	result.FieldSelectRequest = cvalue.SelectRequest == C.bool(true)
+	result.FieldSingleCharMode = cvalue.SingleCharMode == C.bool(true)
+	result.FieldSingleCharSize = int(cvalue.SingleCharSize)
+	return result
+}
+
+// Storage for GetTypingSelectRequest()
+type TypingSelectState struct {
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
+}
+
+func (self TypingSelectState) handle() (result *C.ImGuiTypingSelectState, releaseFn func()) {
+	result = (*C.ImGuiTypingSelectState)(self.data)
+	return result, func() {}
+}
+
+func (self TypingSelectState) c() (result C.ImGuiTypingSelectState, fin func()) {
+	resultPtr, finFn := self.handle()
+	return *resultPtr, finFn
+}
+
+func newTypingSelectStateFromC(cvalue *C.ImGuiTypingSelectState) *TypingSelectState {
+	result := new(TypingSelectState)
+	result.data = unsafe.Pointer(cvalue)
 	return result
 }
 

@@ -45,6 +45,8 @@ void wrap_ImDrawList_AddBezierCubic(ImDrawList* self,const ImVec2 p1,const ImVec
 void wrap_ImDrawList_AddBezierQuadratic(ImDrawList* self,const ImVec2 p1,const ImVec2 p2,const ImVec2 p3,ImU32 col,float thickness) { ImDrawList_AddBezierQuadratic(self,p1,p2,p3,col,thickness,0); }
 void wrap_ImDrawList_AddCircle(ImDrawList* self,const ImVec2 center,float radius,ImU32 col) { ImDrawList_AddCircle(self,center,radius,col,0,1.0f); }
 void wrap_ImDrawList_AddCircleFilled(ImDrawList* self,const ImVec2 center,float radius,ImU32 col) { ImDrawList_AddCircleFilled(self,center,radius,col,0); }
+void wrap_ImDrawList_AddEllipse(ImDrawList* self,const ImVec2 center,float radius_x,float radius_y,ImU32 col) { ImDrawList_AddEllipse(self,center,radius_x,radius_y,col,0.0f,0,1.0f); }
+void wrap_ImDrawList_AddEllipseFilled(ImDrawList* self,const ImVec2 center,float radius_x,float radius_y,ImU32 col) { ImDrawList_AddEllipseFilled(self,center,radius_x,radius_y,col,0.0f,0); }
 void wrap_ImDrawList_AddImage(ImDrawList* self,ImTextureID user_texture_id,const ImVec2 p_min,const ImVec2 p_max) { ImDrawList_AddImage(self,user_texture_id,p_min,p_max,(ImVec2){.x=0, .y=0},(ImVec2){.x=1, .y=1},4294967295); }
 void wrap_ImDrawList_AddImageQuad(ImDrawList* self,ImTextureID user_texture_id,const ImVec2 p1,const ImVec2 p2,const ImVec2 p3,const ImVec2 p4) { ImDrawList_AddImageQuad(self,user_texture_id,p1,p2,p3,p4,(ImVec2){.x=0, .y=0},(ImVec2){.x=1, .y=0},(ImVec2){.x=1, .y=1},(ImVec2){.x=0, .y=1},4294967295); }
 void wrap_ImDrawList_AddImageRounded(ImDrawList* self,ImTextureID user_texture_id,const ImVec2 p_min,const ImVec2 p_max,const ImVec2 uv_min,const ImVec2 uv_max,ImU32 col,float rounding) { ImDrawList_AddImageRounded(self,user_texture_id,p_min,p_max,uv_min,uv_max,col,rounding,0); }
@@ -59,6 +61,7 @@ void wrap_ImDrawList_AddTriangle(ImDrawList* self,const ImVec2 p1,const ImVec2 p
 void wrap_ImDrawList_PathArcTo(ImDrawList* self,const ImVec2 center,float radius,float a_min,float a_max) { ImDrawList_PathArcTo(self,center,radius,a_min,a_max,0); }
 void wrap_ImDrawList_PathBezierCubicCurveTo(ImDrawList* self,const ImVec2 p2,const ImVec2 p3,const ImVec2 p4) { ImDrawList_PathBezierCubicCurveTo(self,p2,p3,p4,0); }
 void wrap_ImDrawList_PathBezierQuadraticCurveTo(ImDrawList* self,const ImVec2 p2,const ImVec2 p3) { ImDrawList_PathBezierQuadraticCurveTo(self,p2,p3,0); }
+void wrap_ImDrawList_PathEllipticalArcTo(ImDrawList* self,const ImVec2 center,float radius_x,float radius_y,float rot,float a_min,float a_max) { ImDrawList_PathEllipticalArcTo(self,center,radius_x,radius_y,rot,a_min,a_max,0); }
 void wrap_ImDrawList_PathRect(ImDrawList* self,const ImVec2 rect_min,const ImVec2 rect_max) { ImDrawList_PathRect(self,rect_min,rect_max,0.0f,0); }
 void wrap_ImDrawList_PathStroke(ImDrawList* self,ImU32 col) { ImDrawList_PathStroke(self,col,0,1.0f); }
 void wrap_ImDrawList_PushClipRect(ImDrawList* self,const ImVec2 clip_rect_min,const ImVec2 clip_rect_max) { ImDrawList_PushClipRect(self,clip_rect_min,clip_rect_max,false); }
@@ -66,8 +69,8 @@ int wrap_ImFontAtlas_AddCustomRectFontGlyph(ImFontAtlas* self,ImFont* font,ImWch
 ImFont* wrap_ImFontAtlas_AddFontDefault(ImFontAtlas* self) { return ImFontAtlas_AddFontDefault(self,NULL); }
 ImFont* wrap_ImFontAtlas_AddFontFromFileTTF(ImFontAtlas* self,const char* filename,float size_pixels) { return ImFontAtlas_AddFontFromFileTTF(self,filename,size_pixels,NULL,NULL); }
 ImFont* wrap_ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(ImFontAtlas* self,const char* compressed_font_data_base85,float size_pixels) { return ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(self,compressed_font_data_base85,size_pixels,NULL,NULL); }
-ImFont* wrap_ImFontAtlas_AddFontFromMemoryCompressedTTF(ImFontAtlas* self,const void* compressed_font_data,int compressed_font_size,float size_pixels) { return ImFontAtlas_AddFontFromMemoryCompressedTTF(self,compressed_font_data,compressed_font_size,size_pixels,NULL,NULL); }
-ImFont* wrap_ImFontAtlas_AddFontFromMemoryTTF(ImFontAtlas* self,void* font_data,int font_size,float size_pixels) { return ImFontAtlas_AddFontFromMemoryTTF(self,font_data,font_size,size_pixels,NULL,NULL); }
+ImFont* wrap_ImFontAtlas_AddFontFromMemoryCompressedTTF(ImFontAtlas* self,const void* compressed_font_data,int compressed_font_data_size,float size_pixels) { return ImFontAtlas_AddFontFromMemoryCompressedTTF(self,compressed_font_data,compressed_font_data_size,size_pixels,NULL,NULL); }
+ImFont* wrap_ImFontAtlas_AddFontFromMemoryTTF(ImFontAtlas* self,void* font_data,int font_data_size,float size_pixels) { return ImFontAtlas_AddFontFromMemoryTTF(self,font_data,font_data_size,size_pixels,NULL,NULL); }
 void wrap_ImFontAtlas_GetTexDataAsAlpha8(ImFontAtlas* self,unsigned char** out_pixels,int* out_width,int* out_height) { ImFontAtlas_GetTexDataAsAlpha8(self,out_pixels,out_width,out_height,NULL); }
 void wrap_ImFontAtlas_GetTexDataAsRGBA32(ImFontAtlas* self,unsigned char** out_pixels,int* out_width,int* out_height) { ImFontAtlas_GetTexDataAsRGBA32(self,out_pixels,out_width,out_height,NULL); }
 void wrap_ImFontGlyphRangesBuilder_AddText(ImFontGlyphRangesBuilder* self,const char* text) { wrap_ImFontGlyphRangesBuilder_AddTextV(self,text); }
@@ -154,6 +157,7 @@ ImU32 wrap_igGetColorU32_Col(ImGuiCol idx) { return igGetColorU32_Col(idx,1.0f);
 float wrap_igGetColumnOffset() { return igGetColumnOffset(-1); }
 float wrap_igGetColumnWidth() { return igGetColumnWidth(-1); }
 void wrap_igGetMouseDragDelta(ImVec2* pOut) { igGetMouseDragDelta(pOut,0,-1.0f); }
+ImGuiTypingSelectRequest* wrap_igGetTypingSelectRequest() { return igGetTypingSelectRequest(ImGuiTypingSelectFlags_None); }
 void* wrap_igImFileLoadToMemory(const char* filename,const char* mode) { return igImFileLoadToMemory(filename,mode,NULL,0); }
 ImGuiID wrap_igImHashData(const void* data,size_t data_size) { return igImHashData(data,data_size,0); }
 ImGuiID wrap_igImHashStr(const char* data) { return igImHashStr(data,0,0); }

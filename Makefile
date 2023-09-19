@@ -54,6 +54,15 @@ endef
 cimnodes: setup
 	$(call cimnodes)
 
+define cimmarkdown
+	$(call generate,cimmarkdown,cimgui/cimmarkdown.h,cimgui/cimmarkdown_templates/definitions.json,cimgui/cimmarkdown_templates/structs_and_enums.json,-r cimgui/cimgui_templates/structs_and_enums.json)
+endef
+
+## cimmarkdown: generate immarkdown binding
+.PHONY: cimmarkdown
+cimmarkdown: setup
+	$(call cimmarkdown)
+
 compile_cimgui_macos:
 	rm -rf ./lib/build
 	cd ./lib; cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=arm64
@@ -62,7 +71,7 @@ compile_cimgui_macos:
 
 ## generate: generates both bindings (equal to `all`)
 .PHONY: generate
-generate: cimgui cimplot cimnodes
+generate: cimgui cimplot cimnodes cimmarkdown
 
 # update updates sub-repos (like cimplot or cimgui)
 # $1 - subrepo directory
@@ -87,7 +96,6 @@ define update
 	mkdir cimgui/$1_templates
 	cp -f tmp/$1/generator/output/*json cimgui/$1_templates
 	mkdir -p cimgui/$3
-	cp -f tmp/$1/$3/*cpp cimgui/$3
 	cp -rf tmp/$1/$3/* cimgui/$3
 	cd tmp/$1; \
 		echo "$1 ($2) HEAD is on: `git rev-parse HEAD`" >> ../../cimgui/VERSION.txt
@@ -105,6 +113,8 @@ update: setup
 	$(call cimplot)
 	$(call update,cimnodes,https://github.com/cimgui/cimnodes,imnodes,master)
 	$(call cimnodes)
+	$(call update,cimmarkdown,https://github.com/gucio321/cimmarkdown,imgui_markdown,main)
+	$(call cimmarkdown)
 	for i in `find cimgui -type f \( -name "*.h" -o -name "*.cpp" \) -exec dirname {} \; | sort -u`; do \
 		cp templates/dummy.go.template $$i/dummy.go; \
 		done
