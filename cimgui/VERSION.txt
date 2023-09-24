@@ -4,5 +4,5 @@ cimplot (https://github.com/cimgui/cimplot) HEAD is on: 82d498a5bf0d945b1db21c80
 cimplot/implot HEAD is on: 7b9171569bfe846aa1049a70bc599ad44ef0e5c1
 cimnodes (https://github.com/cimgui/cimnodes) HEAD is on: 987e75fef847e53ffdd627c4a0dcdcdaa1d3760d
 cimnodes/imnodes HEAD is on: 4f6ddd604558288bcc435398a177015dae923600
-cimmarkdown (https://github.com/gucio321/cimmarkdown) HEAD is on: 774f43cfe33afac591b89fe6365ebdd5f0c8a07f
+cimmarkdown (https://github.com/gucio321/cimmarkdown) HEAD is on: 75eac84e404a448e6cd1d07a054bf5aa34868422
 cimmarkdown/imgui_markdown HEAD is on: 49bb387f99bd9df295e97be9aff9048de3bfc226
