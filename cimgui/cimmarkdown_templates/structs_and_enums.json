@@ -74,20 +74,20 @@
   },
   "enumtypes": [],
   "locations": {
-    "Emphasis": "imgui_markdown:447",
-    "EmphasisState": "imgui_markdown:448",
-    "Line": "imgui_markdown:411",
-    "Link": "imgui_markdown:433",
-    "LinkState": "imgui_markdown:434",
-    "MarkdownConfig": "imgui_markdown:315",
-    "MarkdownFormatInfo": "imgui_markdown:277",
-    "MarkdownFormatType": "imgui_markdown:268",
-    "MarkdownHeadingFormat": "imgui_markdown:305",
-    "MarkdownImageData": "imgui_markdown:256",
-    "MarkdownLinkCallbackData": "imgui_markdown:240",
-    "MarkdownTooltipCallbackData": "imgui_markdown:250",
-    "TextBlock": "imgui_markdown:424",
-    "TextRegion": "imgui_markdown:343"
+    "Emphasis": "imgui_markdown:449",
+    "EmphasisState": "imgui_markdown:450",
+    "Line": "imgui_markdown:413",
+    "Link": "imgui_markdown:435",
+    "LinkState": "imgui_markdown:436",
+    "MarkdownConfig": "imgui_markdown:317",
+    "MarkdownFormatInfo": "imgui_markdown:279",
+    "MarkdownFormatType": "imgui_markdown:270",
+    "MarkdownHeadingFormat": "imgui_markdown:307",
+    "MarkdownImageData": "imgui_markdown:258",
+    "MarkdownLinkCallbackData": "imgui_markdown:242",
+    "MarkdownTooltipCallbackData": "imgui_markdown:252",
+    "TextBlock": "imgui_markdown:426",
+    "TextRegion": "imgui_markdown:345"
   },
   "structs": {
     "Emphasis": [
@@ -306,11 +306,6 @@
         "type": "int"
       }
     ],
-    "TextRegion": [
-      {
-        "name": "indentX",
-        "type": "private:float"
-      }
-    ]
+    "TextRegion": []
   }
 }

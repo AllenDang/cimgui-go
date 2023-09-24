@@ -104,5 +104,3 @@ void wrap_TextBlock_SetStart(TextBlock *TextBlockPtr, int v) { TextBlockPtr->sta
 int wrap_TextBlock_GetStart(TextBlock *self) { return self->start; }
 void wrap_TextBlock_SetStop(TextBlock *TextBlockPtr, int v) { TextBlockPtr->stop = v; }
 int wrap_TextBlock_GetStop(TextBlock *self) { return self->stop; }
-void wrap_TextRegion_SetIndentX(TextRegion *TextRegionPtr, private:float v) { TextRegionPtr->indentX = v; }
-private:float wrap_TextRegion_GetIndentX(TextRegion *self) { return self->indentX; }

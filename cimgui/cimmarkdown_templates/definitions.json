@@ -13,7 +13,7 @@
       "cimguiname": "IsCharInsideWord",
       "defaults": {},
       "funcname": "IsCharInsideWord",
-      "location": "imgui_markdown:867",
+      "location": "imgui_markdown:869",
       "namespace": "ImGui",
       "ov_cimguiname": "IsCharInsideWord",
       "ret": "bool",
@@ -43,7 +43,7 @@
       "cimguiname": "Markdown",
       "defaults": {},
       "funcname": "Markdown",
-      "location": "imgui_markdown:332",
+      "location": "imgui_markdown:334",
       "namespace": "ImGui",
       "ov_cimguiname": "Markdown_Nil",
       "ret": "void",
@@ -71,103 +71,11 @@
       "cimguiname": "Markdown",
       "defaults": {},
       "funcname": "Markdown",
-      "location": "imgui_markdown:525",
+      "location": "imgui_markdown:527",
       "namespace": "ImGui",
       "ov_cimguiname": "Markdown_Nil",
       "ret": "void",
       "signature": "(const char*,size_t,const MarkdownConfig)",
-      "stname": ""
-    }
-  ],
-  "MarkdownFormalCallback": [
-    {
-      "args": "(const MarkdownFormatInfo markdownFormatInfo_,bool start_)",
-      "argsT": [
-        {
-          "name": "markdownFormatInfo_",
-          "type": "const MarkdownFormatInfo"
-        },
-        {
-          "name": "start_",
-          "type": "bool"
-        }
-      ],
-      "argsoriginal": "(const MarkdownFormatInfo& markdownFormatInfo_,bool start_)",
-      "call_args": "(markdownFormatInfo_,start_)",
-      "cimguiname": "MarkdownFormalCallback",
-      "defaults": {},
-      "funcname": "MarkdownFormalCallback",
-      "location": "imgui_markdown:301",
-      "namespace": "ImGui",
-      "ov_cimguiname": "MarkdownFormalCallback",
-      "ret": "typedef void",
-      "signature": "(const MarkdownFormatInfo,bool)",
-      "stname": ""
-    }
-  ],
-  "MarkdownImageCallback": [
-    {
-      "args": "(MarkdownLinkCallbackData data)",
-      "argsT": [
-        {
-          "name": "data",
-          "type": "MarkdownLinkCallbackData"
-        }
-      ],
-      "argsoriginal": "(MarkdownLinkCallbackData data)",
-      "call_args": "(data)",
-      "cimguiname": "MarkdownImageCallback",
-      "defaults": {},
-      "funcname": "MarkdownImageCallback",
-      "location": "imgui_markdown:300",
-      "namespace": "ImGui",
-      "ov_cimguiname": "MarkdownImageCallback",
-      "ret": "typedef MarkdownImageData",
-      "signature": "(MarkdownLinkCallbackData)",
-      "stname": ""
-    }
-  ],
-  "MarkdownLinkCallback": [
-    {
-      "args": "(MarkdownLinkCallbackData data)",
-      "argsT": [
-        {
-          "name": "data",
-          "type": "MarkdownLinkCallbackData"
-        }
-      ],
-      "argsoriginal": "(MarkdownLinkCallbackData data)",
-      "call_args": "(data)",
-      "cimguiname": "MarkdownLinkCallback",
-      "defaults": {},
-      "funcname": "MarkdownLinkCallback",
-      "location": "imgui_markdown:285",
-      "namespace": "ImGui",
-      "ov_cimguiname": "MarkdownLinkCallback",
-      "ret": "typedef void",
-      "signature": "(MarkdownLinkCallbackData)",
-      "stname": ""
-    }
-  ],
-  "MarkdownTooltipCallback": [
-    {
-      "args": "(MarkdownTooltipCallbackData data)",
-      "argsT": [
-        {
-          "name": "data",
-          "type": "MarkdownTooltipCallbackData"
-        }
-      ],
-      "argsoriginal": "(MarkdownTooltipCallbackData data)",
-      "call_args": "(data)",
-      "cimguiname": "MarkdownTooltipCallback",
-      "defaults": {},
-      "funcname": "MarkdownTooltipCallback",
-      "location": "imgui_markdown:286",
-      "namespace": "ImGui",
-      "ov_cimguiname": "MarkdownTooltipCallback",
-      "ret": "typedef void",
-      "signature": "(MarkdownTooltipCallbackData)",
       "stname": ""
     }
   ],
@@ -199,7 +107,7 @@
       "cimguiname": "RenderLine",
       "defaults": {},
       "funcname": "RenderLine",
-      "location": "imgui_markdown:341",
+      "location": "imgui_markdown:343",
       "namespace": "ImGui",
       "ov_cimguiname": "RenderLine_Nil",
       "ret": "void",
@@ -233,7 +141,7 @@
       "cimguiname": "RenderLine",
       "defaults": {},
       "funcname": "RenderLine",
-      "location": "imgui_markdown:467",
+      "location": "imgui_markdown:469",
       "namespace": "ImGui",
       "ov_cimguiname": "RenderLine_Nil",
       "ret": "void",
@@ -279,7 +187,7 @@
       "cimguiname": "RenderLinkText",
       "defaults": {},
       "funcname": "RenderLinkText",
-      "location": "imgui_markdown:391",
+      "location": "imgui_markdown:393",
       "ov_cimguiname": "RenderLinkText",
       "ret": "bool",
       "signature": "(const char*,const char*,const Link,const char*,const MarkdownConfig,const char**)",
@@ -330,7 +238,7 @@
         "bIndentToHere_": "false"
       },
       "funcname": "RenderLinkTextWrapped",
-      "location": "imgui_markdown:394",
+      "location": "imgui_markdown:396",
       "ov_cimguiname": "RenderLinkTextWrapped",
       "ret": "void",
       "signature": "(const char*,const char*,const Link,const char*,const MarkdownConfig,const char**,bool)",
@@ -359,7 +267,7 @@
       "cimguiname": "RenderListTextWrapped",
       "defaults": {},
       "funcname": "RenderListTextWrapped",
-      "location": "imgui_markdown:384",
+      "location": "imgui_markdown:386",
       "ov_cimguiname": "RenderListTextWrapped",
       "ret": "void",
       "signature": "(const char*,const char*)",
@@ -394,7 +302,7 @@
         "bIndentToHere_": "false"
       },
       "funcname": "RenderTextWrapped",
-      "location": "imgui_markdown:355",
+      "location": "imgui_markdown:357",
       "ov_cimguiname": "RenderTextWrapped",
       "ret": "void",
       "signature": "(const char*,const char*,bool)",
@@ -415,7 +323,7 @@
       "cimguiname": "ResetIndent",
       "defaults": {},
       "funcname": "ResetIndent",
-      "location": "imgui_markdown:397",
+      "location": "imgui_markdown:399",
       "ov_cimguiname": "ResetIndent",
       "ret": "void",
       "signature": "()",
@@ -432,7 +340,7 @@
       "constructor": true,
       "defaults": {},
       "funcname": "TextRegion",
-      "location": "imgui_markdown:345",
+      "location": "imgui_markdown:347",
       "ov_cimguiname": "TextRegion",
       "signature": "()",
       "stname": "TextRegion"
@@ -451,7 +359,7 @@
       "cimguiname": "TextRegion_destroy",
       "defaults": {},
       "destructor": true,
-      "location": "imgui_markdown:348",
+      "location": "imgui_markdown:350",
       "ov_cimguiname": "TextRegion_destroy",
       "realdestructor": true,
       "ret": "void",
@@ -473,7 +381,7 @@
       "cimguiname": "UnderLine",
       "defaults": {},
       "funcname": "UnderLine",
-      "location": "imgui_markdown:340",
+      "location": "imgui_markdown:342",
       "namespace": "ImGui",
       "ov_cimguiname": "UnderLine_Nil",
       "ret": "void",
@@ -493,7 +401,7 @@
       "cimguiname": "UnderLine",
       "defaults": {},
       "funcname": "UnderLine",
-      "location": "imgui_markdown:459",
+      "location": "imgui_markdown:461",
       "namespace": "ImGui",
       "ov_cimguiname": "UnderLine_Nil",
       "ret": "void",
@@ -519,7 +427,7 @@
       "cimguiname": "defaultMarkdownFormatCallback",
       "defaults": {},
       "funcname": "defaultMarkdownFormatCallback",
-      "location": "imgui_markdown:303",
+      "location": "imgui_markdown:305",
       "namespace": "ImGui",
       "ov_cimguiname": "defaultMarkdownFormatCallback_Nil",
       "ret": "void",
@@ -543,7 +451,7 @@
       "cimguiname": "defaultMarkdownFormatCallback",
       "defaults": {},
       "funcname": "defaultMarkdownFormatCallback",
-      "location": "imgui_markdown:927",
+      "location": "imgui_markdown:929",
       "namespace": "ImGui",
       "ov_cimguiname": "defaultMarkdownFormatCallback_Nil",
       "ret": "void",
@@ -565,7 +473,7 @@
       "cimguiname": "defaultMarkdownTooltipCallback",
       "defaults": {},
       "funcname": "defaultMarkdownTooltipCallback",
-      "location": "imgui_markdown:288",
+      "location": "imgui_markdown:290",
       "namespace": "ImGui",
       "ov_cimguiname": "defaultMarkdownTooltipCallback",
       "ret": "void",
@@ -587,7 +495,7 @@
       "cimguiname": "size",
       "defaults": {},
       "funcname": "size",
-      "location": "imgui_markdown:427",
+      "location": "imgui_markdown:429",
       "ov_cimguiname": "size",
       "ret": "int",
       "signature": "()const",

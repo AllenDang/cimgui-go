@@ -417,14 +417,13 @@ func newTextBlockFromC(cvalue *C.TextBlock) *TextBlock {
 	return result
 }
 
-type TextRegion struct {
-	// TODO: contains unsupported fields
-	data unsafe.Pointer
-}
+type TextRegion struct{}
 
 func (self TextRegion) handle() (result *C.TextRegion, releaseFn func()) {
-	result = (*C.TextRegion)(self.data)
-	return result, func() {}
+	result = new(C.TextRegion)
+	releaseFn = func() {
+	}
+	return result, releaseFn
 }
 
 func (self TextRegion) c() (result C.TextRegion, fin func()) {
@@ -434,6 +433,5 @@ func (self TextRegion) c() (result C.TextRegion, fin func()) {
 
 func newTextRegionFromC(cvalue *C.TextRegion) *TextRegion {
 	result := new(TextRegion)
-	result.data = unsafe.Pointer(cvalue)
 	return result
 }

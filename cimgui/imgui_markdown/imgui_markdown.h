@@ -226,6 +226,8 @@ ___
 */
 
 
+#include "imgui.h"
+#include "imgui_internal.h"
 #include <stdint.h>
 
 namespace ImGui

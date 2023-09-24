@@ -4318,6 +4318,7 @@ CIMGUI_API void igGetKeyMagnitude2d(ImVec2 *pOut,ImGuiKey key_left,ImGuiKey key_
 CIMGUI_API float igGetNavTweakPressedAmount(ImGuiAxis axis);
 CIMGUI_API int igCalcTypematicRepeatAmount(float t0,float t1,float repeat_delay,float repeat_rate);
 CIMGUI_API void igGetTypematicRepeatRate(ImGuiInputFlags flags,float* repeat_delay,float* repeat_rate);
+CIMGUI_API void igTeleportMousePos(const ImVec2 pos);
 CIMGUI_API void igSetActiveIdUsingAllKeyboardKeys(void);
 CIMGUI_API bool igIsActiveIdUsingNavDir(ImGuiDir dir);
 CIMGUI_API ImGuiID igGetKeyOwner(ImGuiKey key);

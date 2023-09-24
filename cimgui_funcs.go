@@ -10042,6 +10042,10 @@ func InternalTableUpdateLayout(table *Table) {
 	tableFin()
 }
 
+func InternalTeleportMousePos(pos Vec2) {
+	C.igTeleportMousePos(pos.toC())
+}
+
 func InternalTempInputIsActive(id ID) bool {
 	return C.igTempInputIsActive(C.ImGuiID(id)) == C.bool(true)
 }

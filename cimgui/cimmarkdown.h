@@ -59,6 +59,10 @@ struct MarkdownFormatInfo
         bool itemHovered;
         const MarkdownConfig* config;
 };
+typedef void MarkdownLinkCallback( MarkdownLinkCallbackData data );
+typedef void MarkdownTooltipCallback( MarkdownTooltipCallbackData data );
+typedef MarkdownImageData MarkdownImageCallback( MarkdownLinkCallbackData data );
+typedef void MarkdownFormalCallback( const MarkdownFormatInfo markdownFormatInfo_, bool start_ );
 typedef struct MarkdownHeadingFormat MarkdownHeadingFormat;
 struct MarkdownHeadingFormat
 {
@@ -78,10 +82,7 @@ struct MarkdownConfig
     struct TextRegion;
     struct Line;
 struct TextRegion
-{
-    private:
-        float indentX;
-};
+{};
 struct Line
 {
         bool isHeading;
@@ -146,12 +147,8 @@ typedef ImGui::TextBlock TextBlock;
 typedef ImGui::TextRegion TextRegion;
 typedef ImGui::MarkdownFormatType MarkdownFormatType;
 #endif //CIMGUI_DEFINE_ENUMS_AND_STRUCTS
-CIMGUI_API typedef void MarkdownLinkCallback(MarkdownLinkCallbackData data);
-CIMGUI_API typedef void MarkdownTooltipCallback(MarkdownTooltipCallbackData data);
 CIMGUI_API void defaultMarkdownTooltipCallback(MarkdownTooltipCallbackData data_);
-CIMGUI_API typedef MarkdownImageData MarkdownImageCallback(MarkdownLinkCallbackData data);
-CIMGUI_API typedef void MarkdownFormalCallback(const MarkdownFormatInfo markdownFormatInfo_,bool start_);
-CIMGUI_API TextRegion* TextRegion(void);
+CIMGUI_API TextRegion* NewTextRegion(void);
 CIMGUI_API void TextRegion_destroy(TextRegion* self);
 CIMGUI_API void RenderTextWrapped(TextRegion* self,const char* text_,const char* text_end_,bool bIndentToHere_);
 CIMGUI_API void RenderListTextWrapped(TextRegion* self,const char* text_,const char* text_end_);

@@ -4451,6 +4451,10 @@ CIMGUI_API void igGetTypematicRepeatRate(ImGuiInputFlags flags,float* repeat_del
 {
     return ImGui::GetTypematicRepeatRate(flags,repeat_delay,repeat_rate);
 }
+CIMGUI_API void igTeleportMousePos(const ImVec2 pos)
+{
+    return ImGui::TeleportMousePos(pos);
+}
 CIMGUI_API void igSetActiveIdUsingAllKeyboardKeys()
 {
     return ImGui::SetActiveIdUsingAllKeyboardKeys();

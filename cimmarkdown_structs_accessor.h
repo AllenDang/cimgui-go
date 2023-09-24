@@ -107,8 +107,6 @@ extern void wrap_TextBlock_SetStart(TextBlock *TextBlockPtr, int v);
 extern int wrap_TextBlock_GetStart(TextBlock *self);
 extern void wrap_TextBlock_SetStop(TextBlock *TextBlockPtr, int v);
 extern int wrap_TextBlock_GetStop(TextBlock *self);
-extern void wrap_TextRegion_SetIndentX(TextRegion *TextRegionPtr, private:float v);
-extern private:float wrap_TextRegion_GetIndentX(TextRegion *self);
 
 #ifdef __cplusplus
 }
