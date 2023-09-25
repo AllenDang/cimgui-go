@@ -24,7 +24,7 @@ CIMGUI_API void RenderLine(const char* markdown_,Line* line_,TextRegion* textReg
 {
     return ImGui::RenderLine(markdown_,*line_,*textRegion_,mdConfig_);
 }
-CIMGUI_API TextRegion* NewTextRegion(void)
+CIMGUI_API TextRegion* TextRegion_TextRegion(void)
 {
     return IM_NEW(TextRegion)();
 }

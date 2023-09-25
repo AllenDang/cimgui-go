@@ -156,7 +156,7 @@ CIMGUI_API void defaultMarkdownFormatCallback(const MarkdownFormatInfo markdownF
 CIMGUI_API void Markdown(const char* markdown_,size_t markdownLength_,const MarkdownConfig mdConfig_);
 CIMGUI_API void UnderLine(ImColor col_);
 CIMGUI_API void RenderLine(const char* markdown_,Line* line_,TextRegion* textRegion_,const MarkdownConfig mdConfig_);
-CIMGUI_API TextRegion* NewTextRegion(void);
+CIMGUI_API TextRegion* TextRegion_TextRegion(void);
 CIMGUI_API void TextRegion_destroy(TextRegion* self);
 CIMGUI_API void RenderTextWrapped(TextRegion* self,const char* text_,const char* text_end_,bool bIndentToHere_);
 CIMGUI_API void RenderListTextWrapped(TextRegion* self,const char* text_,const char* text_end_);

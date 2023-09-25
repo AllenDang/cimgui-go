@@ -268,18 +268,18 @@
       "stname": "TextRegion"
     }
   ],
-  "TextRegion": [
+  "TextRegion_TextRegion": [
     {
       "args": "()",
       "argsT": [],
       "argsoriginal": "()",
       "call_args": "()",
-      "cimguiname": "TextRegion",
+      "cimguiname": "TextRegion_TextRegion",
       "constructor": true,
       "defaults": {},
       "funcname": "TextRegion",
       "location": "imgui_markdown:347",
-      "ov_cimguiname": "TextRegion",
+      "ov_cimguiname": "TextRegion_TextRegion",
       "signature": "()",
       "stname": "TextRegion"
     }

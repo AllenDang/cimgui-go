@@ -101,7 +101,7 @@ func ResetIndent(self *TextRegion) {
 }
 
 func NewTextRegion() *TextRegion {
-	return newTextRegionFromC(C.TextRegion())
+	return newTextRegionFromC(C.TextRegion_TextRegion())
 }
 
 func (self *TextRegion) Destroy() {
