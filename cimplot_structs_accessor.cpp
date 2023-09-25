@@ -395,10 +395,6 @@ void wrap_ImPlotPlot_SetSelected(ImPlotPlot *ImPlotPlotPtr, bool v) { ImPlotPlot
 bool wrap_ImPlotPlot_GetSelected(ImPlotPlot *self) { return self->Selected; }
 void wrap_ImPlotPlot_SetContextLocked(ImPlotPlot *ImPlotPlotPtr, bool v) { ImPlotPlotPtr->ContextLocked = v; }
 bool wrap_ImPlotPlot_GetContextLocked(ImPlotPlot *self) { return self->ContextLocked; }
-void wrap_ImPlotPoint_SetX(ImPlotPoint *ImPlotPointPtr, double v) { ImPlotPointPtr->x = v; }
-double wrap_ImPlotPoint_GetX(ImPlotPoint *self) { return self->x; }
-void wrap_ImPlotPoint_SetY(ImPlotPoint *ImPlotPointPtr, double v) { ImPlotPointPtr->y = v; }
-double wrap_ImPlotPoint_GetY(ImPlotPoint *self) { return self->y; }
 void wrap_ImPlotPointError_SetX(ImPlotPointError *ImPlotPointErrorPtr, double v) { ImPlotPointErrorPtr->X = v; }
 double wrap_ImPlotPointError_GetX(ImPlotPointError *self) { return self->X; }
 void wrap_ImPlotPointError_SetY(ImPlotPointError *ImPlotPointErrorPtr, double v) { ImPlotPointErrorPtr->Y = v; }

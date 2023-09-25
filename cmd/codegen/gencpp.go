@@ -367,8 +367,8 @@ func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []S
 		"ImVec4_GetZ":      true,
 		"ImRect_GetMin":    true,
 		"ImRect_GetMax":    true,
-		"ImPlotPoint_Setx": true,
-		"ImPlotPoint_Sety": true,
+		"ImPlotPoint_SetX": true,
+		"ImPlotPoint_SetY": true,
 	}
 
 	// Add all valid function's name to skipFuncNames
