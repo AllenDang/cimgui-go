@@ -13,43 +13,21 @@ func IsCharInsideWord(c_ rune) bool {
 	return C.IsCharInsideWord(C.char(c_)) == C.bool(true)
 }
 
-func MarkdownNil(markdown_ string, markdownLength_ uint64, mdConfig_ MarkdownConfig) {
+func Markdown(markdown_ string, markdownLength_ uint64, mdConfig_ MarkdownConfig) {
 	markdown_Arg, markdown_Fin := WrapString(markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.c()
-	C.Markdown_Nil(markdown_Arg, C.xulong(markdownLength_), mdConfig_Arg)
+	C.Markdown(markdown_Arg, C.xulong(markdownLength_), mdConfig_Arg)
 
 	markdown_Fin()
 	mdConfig_Fin()
 }
 
-func MarkdownNil(markdown_ string, markdownLength_ uint64, mdConfig_ MarkdownConfig) {
-	markdown_Arg, markdown_Fin := WrapString(markdown_)
-	mdConfig_Arg, mdConfig_Fin := mdConfig_.c()
-	C.Markdown_Nil(markdown_Arg, C.xulong(markdownLength_), mdConfig_Arg)
-
-	markdown_Fin()
-	mdConfig_Fin()
-}
-
-func RenderLineNil(markdown_ string, line_ *Line, textRegion_ *TextRegion, mdConfig_ MarkdownConfig) {
+func RenderLine(markdown_ string, line_ *Line, textRegion_ *TextRegion, mdConfig_ MarkdownConfig) {
 	markdown_Arg, markdown_Fin := WrapString(markdown_)
 	line_Arg, line_Fin := line_.handle()
 	textRegion_Arg, textRegion_Fin := textRegion_.handle()
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.c()
-	C.RenderLine_Nil(markdown_Arg, line_Arg, textRegion_Arg, mdConfig_Arg)
-
-	markdown_Fin()
-	line_Fin()
-	textRegion_Fin()
-	mdConfig_Fin()
-}
-
-func RenderLineNil(markdown_ string, line_ *Line, textRegion_ *TextRegion, mdConfig_ MarkdownConfig) {
-	markdown_Arg, markdown_Fin := WrapString(markdown_)
-	line_Arg, line_Fin := line_.handle()
-	textRegion_Arg, textRegion_Fin := textRegion_.handle()
-	mdConfig_Arg, mdConfig_Fin := mdConfig_.c()
-	C.RenderLine_Nil(markdown_Arg, line_Arg, textRegion_Arg, mdConfig_Arg)
+	C.RenderLine(markdown_Arg, line_Arg, textRegion_Arg, mdConfig_Arg)
 
 	markdown_Fin()
 	line_Fin()
