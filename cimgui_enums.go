@@ -470,6 +470,8 @@ const (
 	DebugLogFlagsEventMask      = 511
 	// Also send output to TTY
 	DebugLogFlagsOutputToTTY = 1024
+	// Also send output to Test Engine
+	DebugLogFlagsOutputToTestEngine = 2048
 )
 
 // A cardinal direction
@@ -490,40 +492,35 @@ const (
 type DockNodeFlagsPrivate int32
 
 const (
-	// Local, Saved  // A dockspace is a node that occupy space within an existing user window. Otherwise the node is floating and create its own window.
+	// Saved // A dockspace is a node that occupy space within an existing user window. Otherwise the node is floating and create its own window.
 	DockNodeFlagsDockSpace = 1024
-	// Local, Saved  // The central node has 2 main properties: stay visible when empty, only use "remaining" spaces from its neighbor.
+	// Saved // The central node has 2 main properties: stay visible when empty, only use "remaining" spaces from its neighbor.
 	DockNodeFlagsCentralNode = 2048
-	// Local, Saved  // Tab bar is completely unavailable. No triangle in the corner to enable it back.
+	// Saved // Tab bar is completely unavailable. No triangle in the corner to enable it back.
 	DockNodeFlagsNoTabBar = 4096
-	// Local, Saved  // Tab bar is hidden, with a triangle in the corner to show it again (NB: actual tab-bar instance may be destroyed as this is only used for single-window tab bar)
+	// Saved // Tab bar is hidden, with a triangle in the corner to show it again (NB: actual tab-bar instance may be destroyed as this is only used for single-window tab bar)
 	DockNodeFlagsHiddenTabBar = 8192
-	// Local, Saved  // Disable window/docking menu (that one that appears instead of the collapse button)
+	// Saved // Disable window/docking menu (that one that appears instead of the collapse button)
 	DockNodeFlagsNoWindowMenuButton = 16384
-	// Local, Saved  //
+	// Saved // Disable close button
 	DockNodeFlagsNoCloseButton = 32768
-	// Local, Saved  // Disable any form of docking in this dockspace or individual node. (On a whole dockspace, this pretty much defeat the purpose of using a dockspace at all). Note: when turned on, existing docked nodes will be preserved.
-	DockNodeFlagsNoDocking = 65536
-	// [EXPERIMENTAL] Prevent another window/node from splitting this node.
-	DockNodeFlagsNoDockingSplitMe = 131072
-	// [EXPERIMENTAL] Prevent this node from splitting another window/node.
-	DockNodeFlagsNoDockingSplitOther = 262144
-	// [EXPERIMENTAL] Prevent another window/node to be docked over this node.
-	DockNodeFlagsNoDockingOverMe = 524288
-	// [EXPERIMENTAL] Prevent this node to be docked over another window or non-empty node.
-	DockNodeFlagsNoDockingOverOther = 1048576
-	// [EXPERIMENTAL] Prevent this node to be docked over an empty node (e.g. DockSpace with no other windows)
-	DockNodeFlagsNoDockingOverEmpty = 2097152
-	// [EXPERIMENTAL]
-	DockNodeFlagsNoResizeX = 4194304
-	// [EXPERIMENTAL]
-	DockNodeFlagsNoResizeY              = 8388608
+	//       //
+	DockNodeFlagsNoResizeX = 65536
+	//       //
+	DockNodeFlagsNoResizeY = 131072
+	//       // Disable this node from splitting other windows/nodes.
+	DockNodeFlagsNoDockingSplitOther = 524288
+	//       // Disable other windows/nodes from being docked over this node.
+	DockNodeFlagsNoDockingOverMe = 1048576
+	//       // Disable this node from being docked over another window or non-empty node.
+	DockNodeFlagsNoDockingOverOther = 2097152
+	//       // Disable this node from being docked over an empty node (e.g. DockSpace with no other windows)
+	DockNodeFlagsNoDockingOverEmpty     = 4194304
+	DockNodeFlagsNoDocking              = 7864336
 	DockNodeFlagsSharedFlagsInheritMask = -1
-	DockNodeFlagsNoResizeFlagsMask      = 12582944
-	DockNodeFlagsLocalFlagsMask         = 12713072
-	// When splitting those flags are moved to the inheriting child, never duplicated
-	DockNodeFlagsLocalFlagsTransferMask = 12712048
-	DockNodeFlagsSavedFlagsMask         = 12712992
+	DockNodeFlagsNoResizeFlagsMask      = 196640
+	DockNodeFlagsLocalFlagsTransferMask = 260208
+	DockNodeFlagsSavedFlagsMask         = 261152
 )
 
 // Flags for ImGui::DockSpace(), shared/inherited by child nodes.
@@ -534,18 +531,20 @@ type DockNodeFlags int32
 
 const (
 	DockNodeFlagsNone = 0
-	// Shared       // Don't display the dockspace node but keep it alive. Windows docked into this dockspace node won't be undocked.
+	//       // Don't display the dockspace node but keep it alive. Windows docked into this dockspace node won't be undocked.
 	DockNodeFlagsKeepAliveOnly = 1
-	// Shared       // Disable docking inside the Central Node, which will be always kept empty.
-	DockNodeFlagsNoDockingInCentralNode = 4
-	// Shared       // Enable passthru dockspace: 1) DockSpace() will render a ImGuiCol_WindowBg background covering everything excepted the Central Node when empty. Meaning the host window should probably use SetNextWindowBgAlpha(0.0f) prior to Begin() when using this. 2) When Central Node is empty: let inputs pass-through + won't display a DockingEmptyBg background. See demo for details.
+	//       // Disable docking over the Central Node, which will be always kept empty.
+	DockNodeFlagsNoDockingOverCentralNode = 4
+	//       // Enable passthru dockspace: 1) DockSpace() will render a ImGuiCol_WindowBg background covering everything excepted the Central Node when empty. Meaning the host window should probably use SetNextWindowBgAlpha(0.0f) prior to Begin() when using this. 2) When Central Node is empty: let inputs pass-through + won't display a DockingEmptyBg background. See demo for details.
 	DockNodeFlagsPassthruCentralNode = 8
-	// Shared/Local // Disable splitting the node into smaller nodes. Useful e.g. when embedding dockspaces into a main root one (the root one may have splitting disabled to reduce confusion). Note: when turned off, existing splits will be preserved.
-	DockNodeFlagsNoSplit = 16
-	// Shared/Local // Disable resizing node using the splitter/separators. Useful with programmatically setup dockspaces.
+	//       // Disable other windows/nodes from splitting this node.
+	DockNodeFlagsNoDockingSplit = 16
+	// Saved // Disable resizing node using the splitter/separators. Useful with programmatically setup dockspaces.
 	DockNodeFlagsNoResize = 32
-	// Shared/Local // Tab bar will automatically hide when there is a single window in the dock node.
+	//       // Tab bar will automatically hide when there is a single window in the dock node.
 	DockNodeFlagsAutoHideTabBar = 64
+	//       // Disable undocking this node.
+	DockNodeFlagsNoUndocking = 128
 )
 
 // original name: ImGuiDockNodeState
@@ -851,6 +850,8 @@ const (
 	ItemFlagsAllowOverlap = 512
 	// false     // [WIP] Auto-activate input mode when tab focused. Currently only used and supported by a few items before it becomes a generic feature.
 	ItemFlagsInputable = 1024
+	// false     // Set by SetNextItemSelectionUserData()
+	ItemFlagsHasSelectionUserData = 2048
 )
 
 // Status flags for an already submitted item
@@ -1449,6 +1450,7 @@ type SliderFlagsPrivate int32
 const (
 	// Should this slider be orientated vertically?
 	SliderFlagsVertical = 1048576
+	// Consider using g.NextItemData.ItemFlags |= ImGuiItemFlags_ReadOnly instead.
 	SliderFlagsReadOnly = 2097152
 )
 
@@ -1542,19 +1544,21 @@ const (
 	StyleVarGrabRounding = 21
 	// float     TabRounding
 	StyleVarTabRounding = 22
+	// float     TabBarBorderSize
+	StyleVarTabBarBorderSize = 23
 	// ImVec2    ButtonTextAlign
-	StyleVarButtonTextAlign = 23
+	StyleVarButtonTextAlign = 24
 	// ImVec2    SelectableTextAlign
-	StyleVarSelectableTextAlign = 24
+	StyleVarSelectableTextAlign = 25
 	// float  SeparatorTextBorderSize
-	StyleVarSeparatorTextBorderSize = 25
+	StyleVarSeparatorTextBorderSize = 26
 	// ImVec2    SeparatorTextAlign
-	StyleVarSeparatorTextAlign = 26
+	StyleVarSeparatorTextAlign = 27
 	// ImVec2    SeparatorTextPadding
-	StyleVarSeparatorTextPadding = 27
+	StyleVarSeparatorTextPadding = 28
 	// float     DockingSeparatorSize
-	StyleVarDockingSeparatorSize = 28
-	StyleVarCOUNT                = 29
+	StyleVarDockingSeparatorSize = 29
+	StyleVarCOUNT                = 30
 )
 
 // Extend ImGuiTabBarFlags_
@@ -1607,8 +1611,6 @@ const (
 	TabItemFlagsButton = 2097152
 	// [Docking] Trailing tabs with the _Unsorted flag will be sorted based on the DockOrder of their Window.
 	TabItemFlagsUnsorted = 4194304
-	// [Docking] Display tab shape for docking preview (height is adjusted slightly to compensate for the yet missing tab bar)
-	TabItemFlagsPreview = 8388608
 )
 
 // Flags for ImGui::BeginTabItem()
@@ -1886,6 +1888,18 @@ const (
 	// (WIP) Nav: left direction may move to this TreeNode() from any of its child (items submitted between TreeNode and TreePop)
 	TreeNodeFlagsNavLeftJumpsBackHere = 8192
 	TreeNodeFlagsCollapsingHeader     = 26
+)
+
+// Flags for GetTypingSelectRequest()
+// original name: ImGuiTypingSelectFlags_
+type TypingSelectFlags int32
+
+const (
+	TypingSelectFlagsNone = 0
+	// Backspace to delete character inputs. If using: ensure GetTypingSelectRequest() is not called more than once per frame (filter by e.g. focus state)
+	TypingSelectFlagsAllowBackspace = 1
+	// Allow "single char" search mode which is activated when pressing the same character multiple times.
+	TypingSelectFlagsAllowSingleCharMode = 2
 )
 
 // Flags stored in ImGuiViewport::Flags, giving indications to the platform backends.

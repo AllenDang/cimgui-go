@@ -24,6 +24,8 @@ file(GLOB IMGUI_SOURCES
     ../cimgui/cimplot.cpp
     ../cimgui/imnodes/imnodes.cpp
     ../cimgui/cimnodes.cpp
+    ../cimgui/cimmarkdown.cpp
+    ../cimgui/imgui_markdown/imgui_markdown.h
 	${TABLES_SOURCE}
 )
 
@@ -32,6 +34,7 @@ set(IMGUI_STATIC "on" CACHE STRING "Build as a static library")
 set(IMGUI_FREETYPE "no" CACHE STRING "Build with freetype library")
 set(IMGUI_LIBRARIES )
 add_definitions(-DIMNODES_NAMESPACE=imnodes)
+add_definitions(-DIMGUI_MARKDOWN_NAMESPACE=ImMarkdown)
 
 add_definitions(-DIMGUI_USE_WCHAR32)
 

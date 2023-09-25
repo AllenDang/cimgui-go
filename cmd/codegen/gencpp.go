@@ -107,6 +107,7 @@ extern "C" {
 		// Remove all ... arg
 		f.Args = strings.Replace(f.Args, ",...", "", 1)
 		// Remove text_end arg
+		f.Args = strings.Replace(f.Args, ",const char* text_end_", "", 1) // sometimes happens in cimmarkdown
 		f.Args = strings.Replace(f.Args, ",const char* text_end", "", 1)
 
 		var argsT []ArgDef
@@ -117,7 +118,7 @@ extern "C" {
 			switch {
 			case a.Name == "...":
 				continue
-			case a.Name == "text_end":
+			case a.Name == "text_end", a.Name == "text_end_":
 				actualCallArgs = append(actualCallArgs, "0")
 				continue
 			default:
@@ -357,17 +358,17 @@ func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []S
 	var structAccessorFuncs []FuncDef
 
 	skipFuncNames := map[CIdentifier]bool{
-		"ImVec1_Getx":      true,
-		"ImVec2_Getx":      true,
-		"ImVec2_Gety":      true,
-		"ImVec4_Getx":      true,
-		"ImVec4_Gety":      true,
-		"ImVec4_Getw":      true,
-		"ImVec4_Getz":      true,
+		"ImVec1_GetX":      true,
+		"ImVec2_GetX":      true,
+		"ImVec2_GetY":      true,
+		"ImVec4_GetX":      true,
+		"ImVec4_GetY":      true,
+		"ImVec4_GetW":      true,
+		"ImVec4_GetZ":      true,
 		"ImRect_GetMin":    true,
 		"ImRect_GetMax":    true,
-		"ImPlotPoint_Setx": true,
-		"ImPlotPoint_Sety": true,
+		"ImPlotPoint_SetX": true,
+		"ImPlotPoint_SetY": true,
 	}
 
 	// Add all valid function's name to skipFuncNames
@@ -403,7 +404,7 @@ extern "C" {
 				continue
 			}
 
-			setterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Set%[2]s", s.Name, Split(m.Name, "[")[0]))
+			setterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Set%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
 			if skipFuncNames[setterFuncName] {
 				continue
 			}
@@ -454,7 +455,7 @@ extern "C" {
 				)
 			}
 
-			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, Split(m.Name, "[")[0]))
+			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
 			if skipFuncNames[getterFuncName] {
 				continue
 			}

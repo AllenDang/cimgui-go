@@ -54,3 +54,7 @@ func ContainsAny[s ~string](str s, chars string) bool {
 func Index[s ~string](str s, substr string) int {
 	return strings.Index(string(str), substr)
 }
+
+func Capitalize[s ~string](str s) s {
+	return s(strings.ToUpper(string(str[0]))) + str[1:]
+}

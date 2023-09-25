@@ -1,0 +1,17 @@
+{
+  "Emphasis": "struct Emphasis",
+  "Line": "struct Line",
+  "Link": "struct Link",
+  "MarkdownConfig": "struct MarkdownConfig",
+  "MarkdownFormalCallback": "void MarkdownFormalCallback(const MarkdownFormatInfo& markdownFormatInfo_,bool start_);",
+  "MarkdownFormatInfo": "struct MarkdownFormatInfo",
+  "MarkdownHeadingFormat": "struct MarkdownHeadingFormat",
+  "MarkdownImageCallback": "MarkdownImageData MarkdownImageCallback(MarkdownLinkCallbackData data);",
+  "MarkdownImageData": "struct MarkdownImageData",
+  "MarkdownLinkCallback": "void MarkdownLinkCallback(MarkdownLinkCallbackData data);",
+  "MarkdownLinkCallbackData": "struct MarkdownLinkCallbackData",
+  "MarkdownTooltipCallback": "void MarkdownTooltipCallback(MarkdownTooltipCallbackData data);",
+  "MarkdownTooltipCallbackData": "struct MarkdownTooltipCallbackData",
+  "TextBlock": "struct TextBlock",
+  "TextRegion": "struct TextRegion"
+}
