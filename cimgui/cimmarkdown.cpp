@@ -8,6 +8,22 @@ CIMGUI_API void defaultMarkdownTooltipCallback(MarkdownTooltipCallbackData data_
 {
     return ImGui::defaultMarkdownTooltipCallback(data_);
 }
+CIMGUI_API void defaultMarkdownFormatCallback(const MarkdownFormatInfo markdownFormatInfo_,bool start_)
+{
+    return ImGui::defaultMarkdownFormatCallback(markdownFormatInfo_,start_);
+}
+CIMGUI_API void Markdown(const char* markdown_,size_t markdownLength_,const MarkdownConfig mdConfig_)
+{
+    return ImGui::Markdown(markdown_,markdownLength_,mdConfig_);
+}
+CIMGUI_API void UnderLine(ImColor col_)
+{
+    return ImGui::UnderLine(col_);
+}
+CIMGUI_API void RenderLine(const char* markdown_,Line* line_,TextRegion* textRegion_,const MarkdownConfig mdConfig_)
+{
+    return ImGui::RenderLine(markdown_,*line_,*textRegion_,mdConfig_);
+}
 CIMGUI_API TextRegion* NewTextRegion(void)
 {
     return IM_NEW(TextRegion)();
@@ -40,24 +56,8 @@ CIMGUI_API int size(TextBlock* self)
 {
     return self->size();
 }
-CIMGUI_API void UnderLine_Nil(ImColor col_)
-{
-    return ImGui::UnderLine(col_);
-}
-CIMGUI_API void RenderLine_Nil(const char* markdown_,Line* line_,TextRegion* textRegion_,const MarkdownConfig mdConfig_)
-{
-    return ImGui::RenderLine(markdown_,*line_,*textRegion_,mdConfig_);
-}
-CIMGUI_API void Markdown_Nil(const char* markdown_,size_t markdownLength_,const MarkdownConfig mdConfig_)
-{
-    return ImGui::Markdown(markdown_,markdownLength_,mdConfig_);
-}
 CIMGUI_API bool IsCharInsideWord(char c_)
 {
     return ImGui::IsCharInsideWord(c_);
-}
-CIMGUI_API void defaultMarkdownFormatCallback_Nil(const MarkdownFormatInfo markdownFormatInfo_,bool start_)
-{
-    return ImGui::defaultMarkdownFormatCallback(markdownFormatInfo_,start_);
 }
 

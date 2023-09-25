@@ -152,6 +152,10 @@ typedef ImGui::TextRegion TextRegion;
 typedef ImGui::MarkdownFormatType MarkdownFormatType;
 #endif //CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 CIMGUI_API void defaultMarkdownTooltipCallback(MarkdownTooltipCallbackData data_);
+CIMGUI_API void defaultMarkdownFormatCallback(const MarkdownFormatInfo markdownFormatInfo_,bool start_);
+CIMGUI_API void Markdown(const char* markdown_,size_t markdownLength_,const MarkdownConfig mdConfig_);
+CIMGUI_API void UnderLine(ImColor col_);
+CIMGUI_API void RenderLine(const char* markdown_,Line* line_,TextRegion* textRegion_,const MarkdownConfig mdConfig_);
 CIMGUI_API TextRegion* NewTextRegion(void);
 CIMGUI_API void TextRegion_destroy(TextRegion* self);
 CIMGUI_API void RenderTextWrapped(TextRegion* self,const char* text_,const char* text_end_,bool bIndentToHere_);
@@ -160,11 +164,7 @@ CIMGUI_API bool RenderLinkText(TextRegion* self,const char* text_,const char* te
 CIMGUI_API void RenderLinkTextWrapped(TextRegion* self,const char* text_,const char* text_end_,const Link link_,const char* markdown_,const MarkdownConfig mdConfig_,const char** linkHoverStart_,bool bIndentToHere_);
 CIMGUI_API void ResetIndent(TextRegion* self);
 CIMGUI_API int size(TextBlock* self);
-CIMGUI_API void UnderLine_Nil(ImColor col_);
-CIMGUI_API void RenderLine_Nil(const char* markdown_,Line* line_,TextRegion* textRegion_,const MarkdownConfig mdConfig_);
-CIMGUI_API void Markdown_Nil(const char* markdown_,size_t markdownLength_,const MarkdownConfig mdConfig_);
 CIMGUI_API bool IsCharInsideWord(char c_);
-CIMGUI_API void defaultMarkdownFormatCallback_Nil(const MarkdownFormatInfo markdownFormatInfo_,bool start_);
 
 
 

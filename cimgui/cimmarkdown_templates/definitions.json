@@ -45,35 +45,7 @@
       "funcname": "Markdown",
       "location": "imgui_markdown:334",
       "namespace": "ImGui",
-      "ov_cimguiname": "Markdown_Nil",
-      "ret": "void",
-      "signature": "(const char*,size_t,const MarkdownConfig)",
-      "stname": ""
-    },
-    {
-      "args": "(const char* markdown_,size_t markdownLength_,const MarkdownConfig mdConfig_)",
-      "argsT": [
-        {
-          "name": "markdown_",
-          "type": "const char*"
-        },
-        {
-          "name": "markdownLength_",
-          "type": "size_t"
-        },
-        {
-          "name": "mdConfig_",
-          "type": "const MarkdownConfig"
-        }
-      ],
-      "argsoriginal": "(const char* markdown_,size_t markdownLength_,const MarkdownConfig& mdConfig_)",
-      "call_args": "(markdown_,markdownLength_,mdConfig_)",
-      "cimguiname": "Markdown",
-      "defaults": {},
-      "funcname": "Markdown",
-      "location": "imgui_markdown:527",
-      "namespace": "ImGui",
-      "ov_cimguiname": "Markdown_Nil",
+      "ov_cimguiname": "Markdown",
       "ret": "void",
       "signature": "(const char*,size_t,const MarkdownConfig)",
       "stname": ""
@@ -109,41 +81,7 @@
       "funcname": "RenderLine",
       "location": "imgui_markdown:343",
       "namespace": "ImGui",
-      "ov_cimguiname": "RenderLine_Nil",
-      "ret": "void",
-      "signature": "(const char*,Line*,TextRegion*,const MarkdownConfig)",
-      "stname": ""
-    },
-    {
-      "args": "(const char* markdown_,Line* line_,TextRegion* textRegion_,const MarkdownConfig mdConfig_)",
-      "argsT": [
-        {
-          "name": "markdown_",
-          "type": "const char*"
-        },
-        {
-          "name": "line_",
-          "reftoptr": true,
-          "type": "Line*"
-        },
-        {
-          "name": "textRegion_",
-          "reftoptr": true,
-          "type": "TextRegion*"
-        },
-        {
-          "name": "mdConfig_",
-          "type": "const MarkdownConfig"
-        }
-      ],
-      "argsoriginal": "(const char* markdown_,Line& line_,TextRegion& textRegion_,const MarkdownConfig& mdConfig_)",
-      "call_args": "(markdown_,*line_,*textRegion_,mdConfig_)",
-      "cimguiname": "RenderLine",
-      "defaults": {},
-      "funcname": "RenderLine",
-      "location": "imgui_markdown:469",
-      "namespace": "ImGui",
-      "ov_cimguiname": "RenderLine_Nil",
+      "ov_cimguiname": "RenderLine",
       "ret": "void",
       "signature": "(const char*,Line*,TextRegion*,const MarkdownConfig)",
       "stname": ""
@@ -383,27 +321,7 @@
       "funcname": "UnderLine",
       "location": "imgui_markdown:342",
       "namespace": "ImGui",
-      "ov_cimguiname": "UnderLine_Nil",
-      "ret": "void",
-      "signature": "(ImColor)",
-      "stname": ""
-    },
-    {
-      "args": "(ImColor col_)",
-      "argsT": [
-        {
-          "name": "col_",
-          "type": "ImColor"
-        }
-      ],
-      "argsoriginal": "(ImColor col_)",
-      "call_args": "(col_)",
-      "cimguiname": "UnderLine",
-      "defaults": {},
-      "funcname": "UnderLine",
-      "location": "imgui_markdown:461",
-      "namespace": "ImGui",
-      "ov_cimguiname": "UnderLine_Nil",
+      "ov_cimguiname": "UnderLine",
       "ret": "void",
       "signature": "(ImColor)",
       "stname": ""
@@ -429,31 +347,7 @@
       "funcname": "defaultMarkdownFormatCallback",
       "location": "imgui_markdown:305",
       "namespace": "ImGui",
-      "ov_cimguiname": "defaultMarkdownFormatCallback_Nil",
-      "ret": "void",
-      "signature": "(const MarkdownFormatInfo,bool)",
-      "stname": ""
-    },
-    {
-      "args": "(const MarkdownFormatInfo markdownFormatInfo_,bool start_)",
-      "argsT": [
-        {
-          "name": "markdownFormatInfo_",
-          "type": "const MarkdownFormatInfo"
-        },
-        {
-          "name": "start_",
-          "type": "bool"
-        }
-      ],
-      "argsoriginal": "(const MarkdownFormatInfo& markdownFormatInfo_,bool start_)",
-      "call_args": "(markdownFormatInfo_,start_)",
-      "cimguiname": "defaultMarkdownFormatCallback",
-      "defaults": {},
-      "funcname": "defaultMarkdownFormatCallback",
-      "location": "imgui_markdown:929",
-      "namespace": "ImGui",
-      "ov_cimguiname": "defaultMarkdownFormatCallback_Nil",
+      "ov_cimguiname": "defaultMarkdownFormatCallback",
       "ret": "void",
       "signature": "(const MarkdownFormatInfo,bool)",
       "stname": ""

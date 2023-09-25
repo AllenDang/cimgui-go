@@ -31982,69 +31982,6 @@ func (self *WindowTempData) TextWrapPosStack() Vector[*float32] {
 	return newVectorFromC(C.wrap_ImGuiWindowTempData_GetTextWrapPosStack(selfArg).Size, C.wrap_ImGuiWindowTempData_GetTextWrapPosStack(selfArg).Capacity, (*float32)(C.wrap_ImGuiWindowTempData_GetTextWrapPosStack(selfArg).Data))
 }
 
-func (self *Vec1) X() float32 {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImVec1_GetX(selfArg))
-}
-
-func (self *Vec2) X() float32 {
-	selfArg, selfFin := wrap[C.ImVec2, *Vec2](self)
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImVec2_GetX(selfArg))
-}
-
-func (self *Vec2) Y() float32 {
-	selfArg, selfFin := wrap[C.ImVec2, *Vec2](self)
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImVec2_GetY(selfArg))
-}
-
-func (self *Vec4) X() float32 {
-	selfArg, selfFin := wrap[C.ImVec4, *Vec4](self)
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImVec4_GetX(selfArg))
-}
-
-func (self *Vec4) Y() float32 {
-	selfArg, selfFin := wrap[C.ImVec4, *Vec4](self)
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImVec4_GetY(selfArg))
-}
-
-func (self *Vec4) Z() float32 {
-	selfArg, selfFin := wrap[C.ImVec4, *Vec4](self)
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImVec4_GetZ(selfArg))
-}
-
-func (self *Vec4) W() float32 {
-	selfArg, selfFin := wrap[C.ImVec4, *Vec4](self)
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImVec4_GetW(selfArg))
-}
-
 func (self *STBTexteditState) TexteditStateGetCursor() int32 {
 	selfArg, selfFin := self.handle()
 

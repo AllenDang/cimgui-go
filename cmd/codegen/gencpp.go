@@ -114,7 +114,6 @@ extern "C" {
 		var actualCallArgs []CIdentifier
 
 		for _, a := range f.ArgsT {
-			fmt.Println(a)
 			f.AllCallArgs += a.Name + ","
 			switch {
 			case a.Name == "...":
@@ -359,13 +358,13 @@ func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []S
 	var structAccessorFuncs []FuncDef
 
 	skipFuncNames := map[CIdentifier]bool{
-		"ImVec1_Getx":      true,
-		"ImVec2_Getx":      true,
-		"ImVec2_Gety":      true,
-		"ImVec4_Getx":      true,
-		"ImVec4_Gety":      true,
-		"ImVec4_Getw":      true,
-		"ImVec4_Getz":      true,
+		"ImVec1_GetX":      true,
+		"ImVec2_GetX":      true,
+		"ImVec2_GetY":      true,
+		"ImVec4_GetX":      true,
+		"ImVec4_GetY":      true,
+		"ImVec4_GetW":      true,
+		"ImVec4_GetZ":      true,
 		"ImRect_GetMin":    true,
 		"ImRect_GetMax":    true,
 		"ImPlotPoint_Setx": true,
