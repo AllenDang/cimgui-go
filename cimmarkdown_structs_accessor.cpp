@@ -50,8 +50,8 @@ void wrap_MarkdownConfig_SetImageCallback(MarkdownConfig *MarkdownConfigPtr, Mar
 MarkdownImageCallback* wrap_MarkdownConfig_GetImageCallback(MarkdownConfig *self) { return self->imageCallback; }
 void wrap_MarkdownConfig_SetLinkIcon(MarkdownConfig *MarkdownConfigPtr, const char* v) { MarkdownConfigPtr->linkIcon = v; }
 const char* wrap_MarkdownConfig_GetLinkIcon(MarkdownConfig *self) { return self->linkIcon; }
-void wrap_MarkdownConfig_Set](MarkdownConfig *MarkdownConfigPtr, MarkdownHeadingFormat headingFormats[ NUMHEADINGS v) { MarkdownConfigPtr->] = v; }
-MarkdownHeadingFormat headingFormats[ NUMHEADINGS wrap_MarkdownConfig_Get](MarkdownConfig *self) { return self->]; }
+void wrap_MarkdownConfig_SetHeadingFormats(MarkdownConfig *MarkdownConfigPtr, MarkdownHeadingFormat* v) { memcpy(MarkdownConfigPtr->headingFormats, v, sizeof(MarkdownHeadingFormat)*3); }
+MarkdownHeadingFormat* wrap_MarkdownConfig_GetHeadingFormats(MarkdownConfig *self) { return self->headingFormats; }
 void wrap_MarkdownConfig_SetUserData(MarkdownConfig *MarkdownConfigPtr, void* v) { MarkdownConfigPtr->userData = v; }
 void* wrap_MarkdownConfig_GetUserData(MarkdownConfig *self) { return self->userData; }
 void wrap_MarkdownConfig_SetFormatCallback(MarkdownConfig *MarkdownConfigPtr, MarkdownFormalCallback* v) { MarkdownConfigPtr->formatCallback = v; }

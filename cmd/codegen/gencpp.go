@@ -107,17 +107,19 @@ extern "C" {
 		// Remove all ... arg
 		f.Args = strings.Replace(f.Args, ",...", "", 1)
 		// Remove text_end arg
+		f.Args = strings.Replace(f.Args, ",const char* text_end_", "", 1) // sometimes happens in cimmarkdown
 		f.Args = strings.Replace(f.Args, ",const char* text_end", "", 1)
 
 		var argsT []ArgDef
 		var actualCallArgs []CIdentifier
 
 		for _, a := range f.ArgsT {
+			fmt.Println(a)
 			f.AllCallArgs += a.Name + ","
 			switch {
 			case a.Name == "...":
 				continue
-			case a.Name == "text_end":
+			case a.Name == "text_end", a.Name == "text_end_":
 				actualCallArgs = append(actualCallArgs, "0")
 				continue
 			default:

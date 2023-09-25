@@ -53,8 +53,8 @@ extern void wrap_MarkdownConfig_SetImageCallback(MarkdownConfig *MarkdownConfigP
 extern MarkdownImageCallback* wrap_MarkdownConfig_GetImageCallback(MarkdownConfig *self);
 extern void wrap_MarkdownConfig_SetLinkIcon(MarkdownConfig *MarkdownConfigPtr, const char* v);
 extern const char* wrap_MarkdownConfig_GetLinkIcon(MarkdownConfig *self);
-extern void wrap_MarkdownConfig_Set](MarkdownConfig *MarkdownConfigPtr, MarkdownHeadingFormat headingFormats[ NUMHEADINGS v);
-extern MarkdownHeadingFormat headingFormats[ NUMHEADINGS wrap_MarkdownConfig_Get](MarkdownConfig *self);
+extern void wrap_MarkdownConfig_SetHeadingFormats(MarkdownConfig *MarkdownConfigPtr, MarkdownHeadingFormat* v);
+extern MarkdownHeadingFormat* wrap_MarkdownConfig_GetHeadingFormats(MarkdownConfig *self);
 extern void wrap_MarkdownConfig_SetUserData(MarkdownConfig *MarkdownConfigPtr, void* v);
 extern void* wrap_MarkdownConfig_GetUserData(MarkdownConfig *self);
 extern void wrap_MarkdownConfig_SetFormatCallback(MarkdownConfig *MarkdownConfigPtr, MarkdownFormalCallback* v);

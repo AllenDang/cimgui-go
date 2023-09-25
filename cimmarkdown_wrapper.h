@@ -9,8 +9,12 @@
 extern "C" {
 #endif
 
-extern void wrap_RenderLinkTextWrapped(TextRegion* self,const char* text__,const Link link_,const char* markdown_,const MarkdownConfig mdConfig_,const char** linkHoverStart_);
-extern void wrap_RenderTextWrapped(TextRegion* self,const char* text__);
+extern bool wrap_RenderLinkText(TextRegion* self,const char* text_,const Link link_,const char* markdown_,const MarkdownConfig mdConfig_,const char** linkHoverStart_);
+extern void wrap_RenderLinkTextWrappedV(TextRegion* self,const char* text_,const Link link_,const char* markdown_,const MarkdownConfig mdConfig_,const char** linkHoverStart_,bool bIndentToHere_);
+extern void wrap_RenderListTextWrapped(TextRegion* self,const char* text_);
+extern void wrap_RenderTextWrappedV(TextRegion* self,const char* text_,bool bIndentToHere_);
+extern void wrap_RenderLinkTextWrapped(TextRegion* self,const char* text_,const Link link_,const char* markdown_,const MarkdownConfig mdConfig_,const char** linkHoverStart_);
+extern void wrap_RenderTextWrapped(TextRegion* self,const char* text_);
 
 #ifdef __cplusplus
 }

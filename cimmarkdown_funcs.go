@@ -57,10 +57,9 @@ func RenderLineNil(markdown_ string, line_ *Line, textRegion_ *TextRegion, mdCon
 	mdConfig_Fin()
 }
 
-func RenderLinkText(self *TextRegion, text_ string, text_end_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string) bool {
+func RenderLinkText(self *TextRegion, text_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string) bool {
 	selfArg, selfFin := self.handle()
 	text_Arg, text_Fin := WrapString(text_)
-	text_end_Arg, text_end_Fin := WrapString(text_end_)
 	link_Arg, link_Fin := link_.c()
 	markdown_Arg, markdown_Fin := WrapString(markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.c()
@@ -69,58 +68,51 @@ func RenderLinkText(self *TextRegion, text_ string, text_end_ string, link_ Link
 	defer func() {
 		selfFin()
 		text_Fin()
-		text_end_Fin()
 		link_Fin()
 		markdown_Fin()
 		mdConfig_Fin()
 		linkHoverStart_Fin()
 	}()
-	return C.RenderLinkText(selfArg, text_Arg, text_end_Arg, link_Arg, markdown_Arg, mdConfig_Arg, linkHoverStart_Arg) == C.bool(true)
+	return C.wrap_RenderLinkText(selfArg, text_Arg, link_Arg, markdown_Arg, mdConfig_Arg, linkHoverStart_Arg) == C.bool(true)
 }
 
 // RenderLinkTextWrappedV parameter default value hint:
 // bIndentToHere_: false
-func RenderLinkTextWrappedV(self *TextRegion, text_ string, text_end_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string, bIndentToHere_ bool) {
+func RenderLinkTextWrappedV(self *TextRegion, text_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string, bIndentToHere_ bool) {
 	selfArg, selfFin := self.handle()
 	text_Arg, text_Fin := WrapString(text_)
-	text_end_Arg, text_end_Fin := WrapString(text_end_)
 	link_Arg, link_Fin := link_.c()
 	markdown_Arg, markdown_Fin := WrapString(markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.c()
 	linkHoverStart_Arg, linkHoverStart_Fin := WrapStringList(linkHoverStart_)
-	C.RenderLinkTextWrapped(selfArg, text_Arg, text_end_Arg, link_Arg, markdown_Arg, mdConfig_Arg, linkHoverStart_Arg, C.bool(bIndentToHere_))
+	C.wrap_RenderLinkTextWrappedV(selfArg, text_Arg, link_Arg, markdown_Arg, mdConfig_Arg, linkHoverStart_Arg, C.bool(bIndentToHere_))
 
 	selfFin()
 	text_Fin()
-	text_end_Fin()
 	link_Fin()
 	markdown_Fin()
 	mdConfig_Fin()
 	linkHoverStart_Fin()
 }
 
-func RenderListTextWrapped(self *TextRegion, text_ string, text_end_ string) {
+func RenderListTextWrapped(self *TextRegion, text_ string) {
 	selfArg, selfFin := self.handle()
 	text_Arg, text_Fin := WrapString(text_)
-	text_end_Arg, text_end_Fin := WrapString(text_end_)
-	C.RenderListTextWrapped(selfArg, text_Arg, text_end_Arg)
+	C.wrap_RenderListTextWrapped(selfArg, text_Arg)
 
 	selfFin()
 	text_Fin()
-	text_end_Fin()
 }
 
 // RenderTextWrappedV parameter default value hint:
 // bIndentToHere_: false
-func RenderTextWrappedV(self *TextRegion, text_ string, text_end_ string, bIndentToHere_ bool) {
+func RenderTextWrappedV(self *TextRegion, text_ string, bIndentToHere_ bool) {
 	selfArg, selfFin := self.handle()
 	text_Arg, text_Fin := WrapString(text_)
-	text_end_Arg, text_end_Fin := WrapString(text_end_)
-	C.RenderTextWrapped(selfArg, text_Arg, text_end_Arg, C.bool(bIndentToHere_))
+	C.wrap_RenderTextWrappedV(selfArg, text_Arg, C.bool(bIndentToHere_))
 
 	selfFin()
 	text_Fin()
-	text_end_Fin()
 }
 
 func ResetIndent(self *TextRegion) {
@@ -141,34 +133,30 @@ func (self *TextRegion) Destroy() {
 	selfFin()
 }
 
-func RenderLinkTextWrapped(self *TextRegion, text_ string, text_end_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string) {
+func RenderLinkTextWrapped(self *TextRegion, text_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string) {
 	selfArg, selfFin := self.handle()
 	text_Arg, text_Fin := WrapString(text_)
-	text_end_Arg, text_end_Fin := WrapString(text_end_)
 	link_Arg, link_Fin := link_.c()
 	markdown_Arg, markdown_Fin := WrapString(markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.c()
 	linkHoverStart_Arg, linkHoverStart_Fin := WrapStringList(linkHoverStart_)
-	C.wrap_RenderLinkTextWrapped(selfArg, text_Arg, text_end_Arg, link_Arg, markdown_Arg, mdConfig_Arg, linkHoverStart_Arg)
+	C.wrap_RenderLinkTextWrapped(selfArg, text_Arg, link_Arg, markdown_Arg, mdConfig_Arg, linkHoverStart_Arg)
 
 	selfFin()
 	text_Fin()
-	text_end_Fin()
 	link_Fin()
 	markdown_Fin()
 	mdConfig_Fin()
 	linkHoverStart_Fin()
 }
 
-func RenderTextWrapped(self *TextRegion, text_ string, text_end_ string) {
+func RenderTextWrapped(self *TextRegion, text_ string) {
 	selfArg, selfFin := self.handle()
 	text_Arg, text_Fin := WrapString(text_)
-	text_end_Arg, text_end_Fin := WrapString(text_end_)
-	C.wrap_RenderTextWrapped(selfArg, text_Arg, text_end_Arg)
+	C.wrap_RenderTextWrapped(selfArg, text_Arg)
 
 	selfFin()
 	text_Fin()
-	text_end_Fin()
 }
 
 func (self Emphasis) SetState(v EmphasisState) {
