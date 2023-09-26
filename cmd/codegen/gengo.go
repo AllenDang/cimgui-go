@@ -1,6 +1,7 @@
 package main
 
 import (
+	"regexp"
 	"strings"
 )
 
@@ -84,4 +85,16 @@ func (c CIdentifier) renameGoIdentifier() GoIdentifier {
 
 func (c CIdentifier) renameEnum() GoIdentifier {
 	return TrimSuffix(c, "_").renameGoIdentifier()
+}
+
+// returns true if s is of form TypeName<*> <(>Name<*><)>(args)
+// (fragments in <> are optional)
+func IsCallbackTypedef(s string) bool {
+	pattern := `\w*\**\(*\w*\**\)*\(.*\);`
+	b, err := regexp.MatchString(pattern, s)
+	if err != nil {
+		panic(err)
+	}
+
+	return b
 }

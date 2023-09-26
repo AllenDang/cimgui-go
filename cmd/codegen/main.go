@@ -97,7 +97,8 @@ func main() {
 	if err != nil {
 		log.Panic(err.Error())
 	}
-	fmt.Println(typedefs)
+
+	_ = typedefs
 
 	structs, err := getStructDefs(enumJsonBytes)
 	if err != nil {
