@@ -40,6 +40,7 @@ func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []GoIdentifier, stru
 func main() {
 	defJsonPath := flag.String("d", "", "definitions json file path")
 	enumsJsonpath := flag.String("e", "", "structs and enums json file path")
+	typedefsJsonpath := flag.String("t", "", "typedefs dict json file path")
 	refEnumsJsonPath := flag.String("r", "", "reference structs and enums json file path")
 	prefix := flag.String("p", "", "prefix for the generated file")
 	include := flag.String("i", "", "include header file")
@@ -59,6 +60,11 @@ func main() {
 	}
 
 	defJsonBytes, err := os.ReadFile(*defJsonPath)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	typedefsJsonBytes, err := os.ReadFile(*typedefsJsonpath)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -86,6 +92,12 @@ func main() {
 	if err != nil {
 		log.Panic(err.Error())
 	}
+
+	typedefs, err := getTypedefs(typedefsJsonBytes)
+	if err != nil {
+		log.Panic(err.Error())
+	}
+	fmt.Println(typedefs)
 
 	structs, err := getStructDefs(enumJsonBytes)
 	if err != nil {
