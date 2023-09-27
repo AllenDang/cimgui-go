@@ -13839,9 +13839,7 @@ func (self *DrawVert) Col() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImDrawVert_GetCol(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImDrawVert_GetCol(selfArg))
 }
 
 func (self Font) SetIndexAdvanceX(v Vector[*float32]) {
@@ -15610,9 +15608,7 @@ func (self *Context) InputEventsNextEventId() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiContext_GetInputEventsNextEventId(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImGuiContext_GetInputEventsNextEventId(selfArg))
 }
 
 func (self Context) SetCurrentWindowStack(v Vector[*WindowStackData]) {
@@ -16300,9 +16296,7 @@ func (self *Context) ActiveIdUsingNavDirMask() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiContext_GetActiveIdUsingNavDirMask(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImGuiContext_GetActiveIdUsingNavDirMask(selfArg))
 }
 
 func (self Context) SetActiveIdUsingAllKeyboardKeys(v bool) {
@@ -16332,9 +16326,7 @@ func (self *Context) ActiveIdUsingNavInputMask() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiContext_GetActiveIdUsingNavInputMask(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImGuiContext_GetActiveIdUsingNavInputMask(selfArg))
 }
 
 func (self Context) SetCurrentFocusScopeId(v ID) {
@@ -18410,9 +18402,7 @@ func (self *Context) ColorEditSavedColor() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiContext_GetColorEditSavedColor(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImGuiContext_GetColorEditSavedColor(selfArg))
 }
 
 func (self Context) SetColorPickerRef(v Vec4) {
@@ -19092,9 +19082,7 @@ func (self *Context) DebugLogClipperAutoDisableFrames() byte {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiContext_GetDebugLogClipperAutoDisableFrames(selfArg)
-	return byte(result)
+	return byte(C.wrap_ImGuiContext_GetDebugLogClipperAutoDisableFrames(selfArg))
 }
 
 func (self Context) SetDebugLocateFrames(v byte) {
@@ -19109,9 +19097,7 @@ func (self *Context) DebugLocateFrames() byte {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiContext_GetDebugLocateFrames(selfArg)
-	return byte(result)
+	return byte(C.wrap_ImGuiContext_GetDebugLocateFrames(selfArg))
 }
 
 func (self Context) SetDebugBeginReturnValueCullDepth(v int) {
@@ -19156,9 +19142,7 @@ func (self *Context) DebugItemPickerMouseButton() byte {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiContext_GetDebugItemPickerMouseButton(selfArg)
-	return byte(result)
+	return byte(C.wrap_ImGuiContext_GetDebugItemPickerMouseButton(selfArg))
 }
 
 func (self Context) SetDebugItemPickerBreakId(v ID) {
@@ -19511,9 +19495,7 @@ func (self *DataVarInfo) Count() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiDataVarInfo_GetCount(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImGuiDataVarInfo_GetCount(selfArg))
 }
 
 func (self DataVarInfo) SetOffset(v uint32) {
@@ -19528,9 +19510,7 @@ func (self *DataVarInfo) Offset() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiDataVarInfo_GetOffset(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImGuiDataVarInfo_GetOffset(selfArg))
 }
 
 func (self DockContext) SetNodes(v Storage) {
@@ -19817,9 +19797,7 @@ func (self *DockNode) LastBgColor() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiDockNode_GetLastBgColor(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImGuiDockNode_GetLastBgColor(selfArg))
 }
 
 func (self DockNode) SetHostWindow(v *Window) {
@@ -21718,9 +21696,7 @@ func (self *InputEvent) EventId() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiInputEvent_GetEventId(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImGuiInputEvent_GetEventId(selfArg))
 }
 
 func (self InputEvent) SetAddedByTestEngine(v bool) {
@@ -22643,9 +22619,7 @@ func (self *KeyRoutingData) Mods() uint16 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiKeyRoutingData_GetMods(selfArg)
-	return uint16(result)
+	return uint16(C.wrap_ImGuiKeyRoutingData_GetMods(selfArg))
 }
 
 func (self KeyRoutingData) SetRoutingNextScore(v byte) {
@@ -22660,9 +22634,7 @@ func (self *KeyRoutingData) RoutingNextScore() byte {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiKeyRoutingData_GetRoutingNextScore(selfArg)
-	return byte(result)
+	return byte(C.wrap_ImGuiKeyRoutingData_GetRoutingNextScore(selfArg))
 }
 
 func (self KeyRoutingData) SetRoutingCurr(v ID) {
@@ -23156,9 +23128,7 @@ func (self *MenuColumns) TotalWidth() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiMenuColumns_GetTotalWidth(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImGuiMenuColumns_GetTotalWidth(selfArg))
 }
 
 func (self MenuColumns) SetNextTotalWidth(v uint32) {
@@ -23173,9 +23143,7 @@ func (self *MenuColumns) NextTotalWidth() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiMenuColumns_GetNextTotalWidth(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImGuiMenuColumns_GetNextTotalWidth(selfArg))
 }
 
 func (self MenuColumns) SetSpacing(v uint16) {
@@ -23190,9 +23158,7 @@ func (self *MenuColumns) Spacing() uint16 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiMenuColumns_GetSpacing(selfArg)
-	return uint16(result)
+	return uint16(C.wrap_ImGuiMenuColumns_GetSpacing(selfArg))
 }
 
 func (self MenuColumns) SetOffsetIcon(v uint16) {
@@ -23207,9 +23173,7 @@ func (self *MenuColumns) OffsetIcon() uint16 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiMenuColumns_GetOffsetIcon(selfArg)
-	return uint16(result)
+	return uint16(C.wrap_ImGuiMenuColumns_GetOffsetIcon(selfArg))
 }
 
 func (self MenuColumns) SetOffsetLabel(v uint16) {
@@ -23224,9 +23188,7 @@ func (self *MenuColumns) OffsetLabel() uint16 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiMenuColumns_GetOffsetLabel(selfArg)
-	return uint16(result)
+	return uint16(C.wrap_ImGuiMenuColumns_GetOffsetLabel(selfArg))
 }
 
 func (self MenuColumns) SetOffsetShortcut(v uint16) {
@@ -23241,9 +23203,7 @@ func (self *MenuColumns) OffsetShortcut() uint16 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiMenuColumns_GetOffsetShortcut(selfArg)
-	return uint16(result)
+	return uint16(C.wrap_ImGuiMenuColumns_GetOffsetShortcut(selfArg))
 }
 
 func (self MenuColumns) SetOffsetMark(v uint16) {
@@ -23258,9 +23218,7 @@ func (self *MenuColumns) OffsetMark() uint16 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiMenuColumns_GetOffsetMark(selfArg)
-	return uint16(result)
+	return uint16(C.wrap_ImGuiMenuColumns_GetOffsetMark(selfArg))
 }
 
 func (self MetricsConfig) SetShowDebugLog(v bool) {
@@ -27192,9 +27150,7 @@ func (self *Table) BorderColorStrong() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiTable_GetBorderColorStrong(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImGuiTable_GetBorderColorStrong(selfArg))
 }
 
 func (self Table) SetBorderColorLight(v uint32) {
@@ -27209,9 +27165,7 @@ func (self *Table) BorderColorLight() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiTable_GetBorderColorLight(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImGuiTable_GetBorderColorLight(selfArg))
 }
 
 func (self Table) SetBorderX1(v float32) {
@@ -28489,9 +28443,7 @@ func (self *TableCellData) BgColor() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiTableCellData_GetBgColor(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImGuiTableCellData_GetBgColor(selfArg))
 }
 
 func (self TableCellData) SetColumn(v TableColumnIdx) {
@@ -29086,9 +29038,7 @@ func (self *TableColumn) AutoFitQueue() byte {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiTableColumn_GetAutoFitQueue(selfArg)
-	return byte(result)
+	return byte(C.wrap_ImGuiTableColumn_GetAutoFitQueue(selfArg))
 }
 
 func (self TableColumn) SetCannotSkipItemsQueue(v byte) {
@@ -29103,9 +29053,7 @@ func (self *TableColumn) CannotSkipItemsQueue() byte {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiTableColumn_GetCannotSkipItemsQueue(selfArg)
-	return byte(result)
+	return byte(C.wrap_ImGuiTableColumn_GetCannotSkipItemsQueue(selfArg))
 }
 
 func (self TableColumn) SetSortDirection(v byte) {
@@ -29120,9 +29068,7 @@ func (self *TableColumn) SortDirection() byte {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiTableColumn_GetSortDirection(selfArg)
-	return byte(result)
+	return byte(C.wrap_ImGuiTableColumn_GetSortDirection(selfArg))
 }
 
 func (self TableColumn) SetSortDirectionsAvailCount(v byte) {
@@ -29137,9 +29083,7 @@ func (self *TableColumn) SortDirectionsAvailCount() byte {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiTableColumn_GetSortDirectionsAvailCount(selfArg)
-	return byte(result)
+	return byte(C.wrap_ImGuiTableColumn_GetSortDirectionsAvailCount(selfArg))
 }
 
 func (self TableColumn) SetSortDirectionsAvailMask(v byte) {
@@ -29154,9 +29098,7 @@ func (self *TableColumn) SortDirectionsAvailMask() byte {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiTableColumn_GetSortDirectionsAvailMask(selfArg)
-	return byte(result)
+	return byte(C.wrap_ImGuiTableColumn_GetSortDirectionsAvailMask(selfArg))
 }
 
 func (self TableColumn) SetSortDirectionsAvailList(v byte) {
@@ -29171,9 +29113,7 @@ func (self *TableColumn) SortDirectionsAvailList() byte {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiTableColumn_GetSortDirectionsAvailList(selfArg)
-	return byte(result)
+	return byte(C.wrap_ImGuiTableColumn_GetSortDirectionsAvailList(selfArg))
 }
 
 func (self TableColumnSettings) SetWidthOrWeight(v float32) {
@@ -29279,9 +29219,7 @@ func (self *TableColumnSettings) SortDirection() byte {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiTableColumnSettings_GetSortDirection(selfArg)
-	return byte(result)
+	return byte(C.wrap_ImGuiTableColumnSettings_GetSortDirection(selfArg))
 }
 
 func (self TableColumnSettings) SetIsEnabled(v byte) {
@@ -29296,9 +29234,7 @@ func (self *TableColumnSettings) IsEnabled() byte {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiTableColumnSettings_GetIsEnabled(selfArg)
-	return byte(result)
+	return byte(C.wrap_ImGuiTableColumnSettings_GetIsEnabled(selfArg))
 }
 
 func (self TableColumnSettings) SetIsStretch(v byte) {
@@ -29313,9 +29249,7 @@ func (self *TableColumnSettings) IsStretch() byte {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiTableColumnSettings_GetIsStretch(selfArg)
-	return byte(result)
+	return byte(C.wrap_ImGuiTableColumnSettings_GetIsStretch(selfArg))
 }
 
 func (self TableColumnSortSpecs) SetColumnUserID(v ID) {
@@ -33250,9 +33184,7 @@ func (self *WindowTempData) TreeJumpToParentOnPopMask() uint32 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiWindowTempData_GetTreeJumpToParentOnPopMask(selfArg)
-	return uint32(result)
+	return uint32(C.wrap_ImGuiWindowTempData_GetTreeJumpToParentOnPopMask(selfArg))
 }
 
 func (self WindowTempData) SetStateStorage(v *Storage) {

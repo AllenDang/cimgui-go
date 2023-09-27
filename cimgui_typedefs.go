@@ -226,51 +226,6 @@ func newTextureIDFromC(cvalue unsafe.Pointer) {
 	return unsafe.Pointer(cvalue)
 }
 
-type U16 uint16
-
-func (self U16) handle() (result *uint16, fin func()) {
-	return C.ushort(self), func() {}
-}
-
-func (self U16) c() (uint16, func()) {
-	result, fin := self.handle()
-	return *result, fin
-}
-
-func newU16FromC(cvalue C.ushort) {
-	return uint16(cvalue)
-}
-
-type U32 uint32
-
-func (self U32) handle() (result *uint32, fin func()) {
-	return C.uint(self), func() {}
-}
-
-func (self U32) c() (uint32, func()) {
-	result, fin := self.handle()
-	return *result, fin
-}
-
-func newU32FromC(cvalue C.uint) {
-	return uint32(cvalue)
-}
-
-type U8 uint
-
-func (self U8) handle() (result *uint, fin func()) {
-	return C.uchar(self), func() {}
-}
-
-func (self U8) c() (uint, func()) {
-	result, fin := self.handle()
-	return *result, fin
-}
-
-func newU8FromC(cvalue C.uchar) {
-	return uint(cvalue)
-}
-
 type Wchar16 uint16
 
 func (self Wchar16) handle() (result *uint16, fin func()) {

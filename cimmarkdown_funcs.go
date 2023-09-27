@@ -111,6 +111,13 @@ func (self *TextRegion) Destroy() {
 	selfFin()
 }
 
+func UnderLine(col_ Color) {
+	col_Arg, col_Fin := col_.c()
+	C.UnderLine(col_Arg)
+
+	col_Fin()
+}
+
 func RenderLinkTextWrapped(self *TextRegion, text_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string) {
 	selfArg, selfFin := self.handle()
 	text_Arg, text_Fin := WrapString(text_)
@@ -560,6 +567,14 @@ func (self *MarkdownImageData) UseLinkCallback() bool {
 		selfFin()
 	}()
 	return C.wrap_MarkdownImageData_GetUseLinkCallback(selfArg) == C.bool(true)
+}
+
+func (self MarkdownImageData) SetUsertextureid(v TextureID) {
+	vArg, _ := v.c()
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_MarkdownImageData_SetUser_texture_id(selfArg, vArg)
 }
 
 func (self MarkdownImageData) SetSize(v Vec2) {
