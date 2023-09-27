@@ -33,11 +33,12 @@ const (
 )
 
 // generateGoFuncs generates given list of functions and writes them to file
-func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []GoIdentifier, structNames []CIdentifier) error {
+func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []GoIdentifier, structNames []CIdentifier, refTypedefs map[CIdentifier]string) error {
 	generator := &goFuncsGenerator{
 		prefix:      prefix,
 		structNames: make(map[CIdentifier]bool),
 		enumNames:   make(map[GoIdentifier]bool),
+		refTypedefs: refTypedefs,
 	}
 
 	for _, v := range structNames {
@@ -105,6 +106,7 @@ type goFuncsGenerator struct {
 	prefix      string
 	structNames map[CIdentifier]bool
 	enumNames   map[GoIdentifier]bool
+	refTypedefs map[CIdentifier]string
 
 	sb                 strings.Builder
 	convertedFuncCount int
@@ -135,7 +137,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 
 	// determine kind of function:
 	returnTypeType := returnTypeUnknown
-	_, err := getReturnWrapper(f.Ret, g.structNames, g.enumNames) // TODO: we call this twice now
+	_, err := getReturnWrapper(f.Ret, g.structNames, g.enumNames, g.refTypedefs) // TODO: we call this twice now
 	if err == nil {
 		returnTypeType = returnTypeKnown
 	}
@@ -210,7 +212,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 		return false
 	}
 
-	rw, err := getReturnWrapper(cReturnType, g.structNames, g.enumNames)
+	rw, err := getReturnWrapper(cReturnType, g.structNames, g.enumNames, g.refTypedefs)
 	if err != nil {
 		switch returnTypeType {
 		case returnTypeKnown, returnTypeStructPtr, returnTypeConstructor, returnTypeStruct:
@@ -357,6 +359,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []GoIdentifier, arg
 			f.StructGetter && g.structNames[a.Type],
 			g.structNames,
 			g.enumNames,
+			g.refTypedefs,
 		)
 
 		if err != nil {

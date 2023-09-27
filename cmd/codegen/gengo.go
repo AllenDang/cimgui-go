@@ -37,6 +37,17 @@ var skippedStructs = map[CIdentifier]bool{
 	"ImPlotTime": true,
 }
 
+var skippedTypedefs = map[CIdentifier]bool{
+	"ImU8":  true,
+	"ImU16": true,
+	"ImU32": true,
+	"ImU64": true,
+	"ImS8":  true,
+	"ImS16": true,
+	"ImS32": true,
+	"ImS64": true,
+}
+
 var replace = map[CIdentifier]GoIdentifier{
 	"igGetDrawData":           "CurrentDrawData",
 	"igGetDrawListSharedData": "CurrentDrawListSharedData",

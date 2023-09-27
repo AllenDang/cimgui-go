@@ -39,7 +39,7 @@ cimgui: setup
 	$(call cimgui)
 
 define cimplot
-	$(call generate,cimplot,cimgui/cimplot.h,cimgui/cimplot_templates/definitions.json,cimgui/cimplot_templates/structs_and_enums.json,cimgui/cimplot_templates/typedefs_dict.json,-r cimgui/cimgui_templates/structs_and_enums.json)
+	$(call generate,cimplot,cimgui/cimplot.h,cimgui/cimplot_templates/definitions.json,cimgui/cimplot_templates/structs_and_enums.json,cimgui/cimplot_templates/typedefs_dict.json,-r cimgui/cimgui_templates/structs_and_enums.json -rt cimgui/cimgui_templates/typedefs_dict.json)
 endef
 
 ## cimplot: generate implot binding
@@ -48,7 +48,7 @@ cimplot: setup
 	$(call cimplot)
 
 define cimnodes
-	$(call generate,cimnodes,cimgui/cimnodes.h,cimgui/cimnodes_templates/definitions.json,cimgui/cimnodes_templates/structs_and_enums.json,cimgui/cimnodes_templates/typedefs_dict.json,-r cimgui/cimgui_templates/structs_and_enums.json)
+	$(call generate,cimnodes,cimgui/cimnodes.h,cimgui/cimnodes_templates/definitions.json,cimgui/cimnodes_templates/structs_and_enums.json,cimgui/cimnodes_templates/typedefs_dict.json,-r cimgui/cimgui_templates/structs_and_enums.json -rt cimgui/cimgui_templates/typedefs_dict.json)
 endef
 
 ## cimnodes: generate imnodes binding
@@ -57,7 +57,7 @@ cimnodes: setup
 	$(call cimnodes)
 
 define cimmarkdown
-	$(call generate,cimmarkdown,cimgui/cimmarkdown.h,cimgui/cimmarkdown_templates/definitions.json,cimgui/cimmarkdown_templates/structs_and_enums.json,cimgui/cimmarkdown_templates/typedefs_dict.json,-r cimgui/cimgui_templates/structs_and_enums.json)
+	$(call generate,cimmarkdown,cimgui/cimmarkdown.h,cimgui/cimmarkdown_templates/definitions.json,cimgui/cimmarkdown_templates/structs_and_enums.json,cimgui/cimmarkdown_templates/typedefs_dict.json,-r cimgui/cimgui_templates/structs_and_enums.json -rt cimgui/cimgui_templates/typedefs_dict.json)
 endef
 
 ## cimmarkdown: generate immarkdown binding

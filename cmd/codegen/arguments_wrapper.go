@@ -29,7 +29,13 @@ type ArgumentWrapperData struct {
 
 type argumentWrapper func(arg ArgDef) ArgumentWrapperData
 
-func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames map[CIdentifier]bool, enumNames map[GoIdentifier]bool) (argDeclaration string, data ArgumentWrapperData, err error) {
+func getArgWrapper(
+	a *ArgDef,
+	makeFirstArgReceiver, isGetter bool,
+	structNames map[CIdentifier]bool,
+	enumNames map[GoIdentifier]bool,
+	refTypedefs map[CIdentifier]string, // <- this may be empty map if generating cimgui and should be cimgui's typedefs_dict.json for other
+) (argDeclaration string, data ArgumentWrapperData, err error) {
 	argWrapperMap := map[CIdentifier]argumentWrapper{
 		"char":                simpleW("rune", "C.char"),
 		"char[5]":             simplePtrArrayW(5, "C.char", "rune"),
@@ -167,7 +173,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 		_, w, err := getArgWrapper(&ArgDef{
 			Name: dataName,
 			Type: pureType,
-		}, false, false, structNames, enumNames)
+		}, false, false, structNames, enumNames, refTypedefs)
 		if err != nil {
 			return "", ArgumentWrapperData{}, fmt.Errorf("creating vector wrapper %w", err)
 		}
@@ -207,7 +213,7 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 		isPointer = true
 	}
 
-	if structNames[pureType] {
+	if _, isRefTypedef := refTypedefs[pureType]; structNames[pureType] || isRefTypedef {
 		w := ArgumentWrapperData{
 			ArgType:   pureType.renameGoIdentifier(),
 			VarName:   fmt.Sprintf("%sArg", a.Name),

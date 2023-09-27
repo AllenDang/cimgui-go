@@ -42,6 +42,7 @@ func main() {
 	enumsJsonpath := flag.String("e", "", "structs and enums json file path")
 	typedefsJsonpath := flag.String("t", "", "typedefs dict json file path")
 	refEnumsJsonPath := flag.String("r", "", "reference structs and enums json file path")
+	refTypedefsJsonPath := flag.String("rt", "", "reference typedefs_dict.json file path")
 	prefix := flag.String("p", "", "prefix for the generated file")
 	include := flag.String("i", "", "include header file")
 
@@ -77,6 +78,14 @@ func main() {
 	var refEnumJsonBytes []byte
 	if len(*refEnumsJsonPath) > 0 {
 		refEnumJsonBytes, err = os.ReadFile(*refEnumsJsonPath)
+		if err != nil {
+			log.Panic(err)
+		}
+	}
+
+	var refTypedefsJsonBytes []byte
+	if len(*refTypedefsJsonPath) > 0 {
+		refTypedefsJsonBytes, err = os.ReadFile(*refTypedefsJsonPath)
 		if err != nil {
 			log.Panic(err)
 		}
@@ -119,9 +128,19 @@ func main() {
 		}
 	}
 
+	var refTypedefs = make(map[CIdentifier]string)
+	if len(refTypedefsJsonBytes) > 0 {
+		typedefs, err := getTypedefs(refTypedefsJsonBytes)
+		if err != nil {
+			log.Panic(err)
+		}
+
+		refTypedefs = typedefs.data
+	}
+
 	// generate code
 	enumNames := generateGoEnums(*prefix, enums)
-	structNames := generateGoStructs(*prefix, structs, enums, es, ss)
+	structNames := generateGoStructs(*prefix, structs, enums, es, ss, refTypedefs)
 
 	structAccessorFuncs, err := generateCppStructsAccessor(*prefix, validFuncs, structs)
 	if err != nil {
@@ -137,7 +156,7 @@ func main() {
 
 	structNames = append(structNames, callbacks...)
 
-	if err := generateGoFuncs(*prefix, validFuncs, enumNames, structNames); err != nil {
+	if err := generateGoFuncs(*prefix, validFuncs, enumNames, structNames, refTypedefs); err != nil {
 		log.Panic(err)
 	}
 }

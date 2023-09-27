@@ -36,6 +36,11 @@ import "unsafe"
 	SortStrings(keys)
 
 	for _, k := range keys {
+		if shouldSkip, ok := skippedTypedefs[k]; ok && shouldSkip {
+			glg.Infof("Arbitrarly skipping typedef %s", k)
+			continue
+		}
+
 		if shouldSkipStruct(k) {
 			glg.Infof("Arbitrarly skipping struct %s", k)
 			continue
@@ -55,6 +60,7 @@ import "unsafe"
 			CIdentifier(typedefs.data[k]),
 			map[CIdentifier]bool{},
 			map[GoIdentifier]bool{},
+			map[CIdentifier]string{},
 		)
 
 		_, knownArgType, argTypeErr := getArgWrapper(
@@ -65,6 +71,7 @@ import "unsafe"
 			false, false,
 			map[CIdentifier]bool{},
 			map[GoIdentifier]bool{},
+			map[CIdentifier]string{},
 		)
 
 		// check if k is a name of struct from structDefs

@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func generateGoStructs(prefix string, structs []StructDef, enums []EnumDef, refEnums []GoIdentifier, refStructs []CIdentifier) []CIdentifier {
+func generateGoStructs(prefix string, structs []StructDef, enums []EnumDef, refEnums []GoIdentifier, refStructs []CIdentifier, refTypedefs map[CIdentifier]string) []CIdentifier {
 	glg.Infof("Generating %d structs", len(structs))
 	var progress int
 
@@ -35,7 +35,7 @@ import "unsafe"
 		}
 
 		sb.WriteString(fmt.Sprintf("%s\n", s.CommentAbove))
-		if generateStruct(s, structs, enums, refEnums, refStructs, &sb) {
+		if generateStruct(s, structs, enums, refEnums, refStructs, refTypedefs, &sb) {
 			progress++
 		}
 
@@ -60,7 +60,7 @@ import "unsafe"
 	return structNames
 }
 
-func generateStruct(s StructDef, defs []StructDef, enumDefs []EnumDef, refEnums []GoIdentifier, refStructs []CIdentifier, sb *strings.Builder) (generationComplete bool) {
+func generateStruct(s StructDef, defs []StructDef, enumDefs []EnumDef, refEnums []GoIdentifier, refStructs []CIdentifier, refTypedefs map[CIdentifier]string, sb *strings.Builder) (generationComplete bool) {
 	structs, enums := make(map[CIdentifier]bool), make(map[GoIdentifier]bool)
 	for _, s := range defs {
 		structs[s.Name] = true
@@ -101,12 +101,12 @@ func generateStruct(s StructDef, defs []StructDef, enumDefs []EnumDef, refEnums 
 		_, toC, toCErr := getArgWrapper(
 			&argDef,
 			false, false,
-			structs, enums,
+			structs, enums, refTypedefs,
 		)
 
 		fromC, fromCErr := getReturnWrapper(
 			field.Type,
-			structs, enums,
+			structs, enums, refTypedefs,
 		)
 
 		switch {

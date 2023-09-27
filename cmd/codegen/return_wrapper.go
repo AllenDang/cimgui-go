@@ -14,6 +14,7 @@ func getReturnWrapper(
 	t CIdentifier,
 	structNames map[CIdentifier]bool,
 	enumNames map[GoIdentifier]bool,
+	refTypedefs map[CIdentifier]string,
 ) (returnWrapper, error) {
 	returnWrapperMap := map[CIdentifier]returnWrapper{
 		"bool":           {"bool", "%s == C.bool(true)"},
@@ -59,6 +60,11 @@ func getReturnWrapper(
 		"size_t":         simpleR("uint64"),
 	}
 
+	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")
+	// check if pureType is a declared type (struct or something else from typedefs)
+	_, isRefStruct := refTypedefs[pureType]
+	_, isStruct := structNames[pureType]
+	isStruct = isStruct || isRefStruct
 	w, known := returnWrapperMap[t]
 	switch {
 	case known:
@@ -77,7 +83,7 @@ func getReturnWrapper(
 	case HasPrefix(t, "ImVector_") &&
 		!(HasSuffix(t, "*") || HasSuffix(t, "]")):
 		pureType := CIdentifier(TrimPrefix(t, "ImVector_") + "*")
-		rw, err := getReturnWrapper(pureType, structNames, enumNames)
+		rw, err := getReturnWrapper(pureType, structNames, enumNames, refTypedefs)
 		if err != nil {
 			return returnWrapper{}, fmt.Errorf("creating vector wrapper %w", err)
 		}
@@ -85,15 +91,15 @@ func getReturnWrapper(
 			returnType: GoIdentifier(fmt.Sprintf("Vector[%s]", rw.returnType)),
 			returnStmt: fmt.Sprintf("newVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
 		}, nil
-	case HasSuffix(t, "*") && structNames[TrimPrefix(TrimSuffix(t, "*"), "const ")] && !shouldSkipStruct(TrimPrefix(TrimSuffix(t, "*"), "const ")):
-		return returnWrapper{
-			returnType: "*" + TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(),
-			returnStmt: fmt.Sprintf("new%sFromC(%%s)", TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier()),
-		}, nil
 	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), enumNames):
 		return returnWrapper{
 			returnType: "*" + TrimSuffix(t, "*").renameEnum(),
 			returnStmt: fmt.Sprintf("(*%s)(%%s)", TrimSuffix(t, "*").renameEnum()),
+		}, nil
+	case HasSuffix(t, "*") && isStruct && !shouldSkipStruct(pureType):
+		return returnWrapper{
+			returnType: "*" + TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(),
+			returnStmt: fmt.Sprintf("new%sFromC(%%s)", TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier()),
 		}, nil
 	default:
 		return returnWrapper{}, fmt.Errorf("unknown return type %s", t)
