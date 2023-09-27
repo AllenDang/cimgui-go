@@ -12,13 +12,7 @@ import (
 )
 
 type (
-	Wchar               C.uint
-	ID                  C.ImGuiID
-	TextureID           C.ImTextureID
-	DrawIdx             C.ImDrawIdx
-	TableColumnIdx      C.ImGuiTableColumnIdx
-	TableDrawChannelIdx C.ImGuiTableDrawChannelIdx
-	KeyChord            C.ImGuiKeyChord
+	Wchar C.uint
 )
 
 var _ wrappableType[C.ImVec2, *Vec2] = &Vec2{}
