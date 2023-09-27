@@ -596,17 +596,6 @@ func (self *PlotItemGroup) ItemCount() int32 {
 	return int32(C.ImPlotItemGroup_GetItemCount(selfArg))
 }
 
-func (self *PlotItemGroup) ItemID(label_id string) ID {
-	selfArg, selfFin := self.handle()
-	label_idArg, label_idFin := WrapString(label_id)
-
-	defer func() {
-		selfFin()
-		label_idFin()
-	}()
-	return ID(C.ImPlotItemGroup_GetItemID(selfArg, label_idArg))
-}
-
 func (self *PlotItemGroup) ItemIndex(item *PlotItem) int32 {
 	selfArg, selfFin := self.handle()
 	itemArg, itemFin := item.handle()
@@ -616,15 +605,6 @@ func (self *PlotItemGroup) ItemIndex(item *PlotItem) int32 {
 		itemFin()
 	}()
 	return int32(C.ImPlotItemGroup_GetItemIndex(selfArg, itemArg))
-}
-
-func (self *PlotItemGroup) ItemByID(id ID) *PlotItem {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return newPlotItemFromC(C.ImPlotItemGroup_GetItem_ID(selfArg, C.ImGuiID(id)))
 }
 
 func (self *PlotItemGroup) ItemStr(label_id string) *PlotItem {
@@ -663,15 +643,6 @@ func (self *PlotItemGroup) LegendLabel(i int32) string {
 		selfFin()
 	}()
 	return C.GoString(C.ImPlotItemGroup_GetLegendLabel(selfArg, C.int(i)))
-}
-
-func (self *PlotItemGroup) OrAddItem(id ID) *PlotItem {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return newPlotItemFromC(C.ImPlotItemGroup_GetOrAddItem(selfArg, C.ImGuiID(id)))
 }
 
 func NewPlotItemGroup() *PlotItemGroup {
@@ -5560,18 +5531,6 @@ func PlotPlotHistogramdoublePtrV(label_id string, values *[]float64, count int32
 		rangeArgFin()
 	}()
 	return float64(C.ImPlot_PlotHistogram_doublePtr(label_idArg, (*C.double)(&valuesArg[0]), C.int(count), C.int(bins), C.double(bar_scale), rangeArgArg, C.ImPlotHistogramFlags(flags)))
-}
-
-// PlotPlotImageV parameter default value hint:
-// uv0: ImVec2(0,0)
-// uv1: ImVec2(1,1)
-// tint_col: ImVec4(1,1,1,1)
-// flags: 0
-func PlotPlotImageV(label_id string, user_texture_id TextureID, bounds_min PlotPoint, bounds_max PlotPoint, uv0 Vec2, uv1 Vec2, tint_col Vec4, flags PlotImageFlags) {
-	label_idArg, label_idFin := WrapString(label_id)
-	C.ImPlot_PlotImage(label_idArg, C.ImTextureID(user_texture_id), bounds_min.toC(), bounds_max.toC(), uv0.toC(), uv1.toC(), tint_col.toC(), C.ImPlotImageFlags(flags))
-
-	label_idFin()
 }
 
 // PlotPlotInfLinesFloatPtrV parameter default value hint:
@@ -11144,13 +11103,6 @@ func PlotPlotHistogramdoublePtr(label_id string, values *[]float64, count int32)
 	return float64(C.wrap_ImPlot_PlotHistogram_doublePtr(label_idArg, (*C.double)(&valuesArg[0]), C.int(count)))
 }
 
-func PlotPlotImage(label_id string, user_texture_id TextureID, bounds_min PlotPoint, bounds_max PlotPoint) {
-	label_idArg, label_idFin := WrapString(label_id)
-	C.wrap_ImPlot_PlotImage(label_idArg, C.ImTextureID(user_texture_id), bounds_min.toC(), bounds_max.toC())
-
-	label_idFin()
-}
-
 func PlotPlotInfLinesFloatPtr(label_id string, values []float32, count int32) {
 	label_idArg, label_idFin := WrapString(label_id)
 	C.wrap_ImPlot_PlotInfLines_FloatPtr(label_idArg, (*C.float)(&(values[0])), C.int(count))
@@ -13772,21 +13724,6 @@ func (self *PlotAnnotationCollection) Size() int32 {
 	return int32(C.wrap_ImPlotAnnotationCollection_GetSize(selfArg))
 }
 
-func (self PlotAxis) SetID(v ID) {
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImPlotAxis_SetID(selfArg, C.ImGuiID(v))
-}
-
-func (self *PlotAxis) ID() ID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return ID(C.wrap_ImPlotAxis_GetID(selfArg))
-}
-
 func (self PlotAxis) SetFlags(v PlotAxisFlags) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -15393,21 +15330,6 @@ func (self *PlotInputMap) ZoomRate() float32 {
 	return float32(C.wrap_ImPlotInputMap_GetZoomRate(selfArg))
 }
 
-func (self PlotItem) SetID(v ID) {
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImPlotItem_SetID(selfArg, C.ImGuiID(v))
-}
-
-func (self *PlotItem) ID() ID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return ID(C.wrap_ImPlotItem_GetID(selfArg))
-}
-
 func (self PlotItem) SetColor(v uint32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -15496,21 +15418,6 @@ func (self *PlotItem) SeenThisFrame() bool {
 		selfFin()
 	}()
 	return C.wrap_ImPlotItem_GetSeenThisFrame(selfArg) == C.bool(true)
-}
-
-func (self PlotItemGroup) SetID(v ID) {
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImPlotItemGroup_SetID(selfArg, C.ImGuiID(v))
-}
-
-func (self *PlotItemGroup) ID() ID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return ID(C.wrap_ImPlotItemGroup_GetID(selfArg))
 }
 
 func (self PlotItemGroup) SetLegend(v PlotLegend) {
@@ -15977,21 +15884,6 @@ func (self *PlotNextItemData) HiddenCond() PlotCond {
 		selfFin()
 	}()
 	return PlotCond(C.wrap_ImPlotNextItemData_GetHiddenCond(selfArg))
-}
-
-func (self PlotPlot) SetID(v ID) {
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImPlotPlot_SetID(selfArg, C.ImGuiID(v))
-}
-
-func (self *PlotPlot) ID() ID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return ID(C.wrap_ImPlotPlot_GetID(selfArg))
 }
 
 func (self PlotPlot) SetFlags(v PlotFlags) {
@@ -16953,21 +16845,6 @@ func (self *PlotStyle) Use24HourClock() bool {
 		selfFin()
 	}()
 	return C.wrap_ImPlotStyle_GetUse24HourClock(selfArg) == C.bool(true)
-}
-
-func (self PlotSubplot) SetID(v ID) {
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImPlotSubplot_SetID(selfArg, C.ImGuiID(v))
-}
-
-func (self *PlotSubplot) ID() ID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return ID(C.wrap_ImPlotSubplot_GetID(selfArg))
 }
 
 func (self PlotSubplot) SetFlags(v PlotSubplotFlags) {

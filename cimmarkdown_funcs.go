@@ -562,21 +562,6 @@ func (self *MarkdownImageData) UseLinkCallback() bool {
 	return C.wrap_MarkdownImageData_GetUseLinkCallback(selfArg) == C.bool(true)
 }
 
-func (self MarkdownImageData) SetUsertextureid(v TextureID) {
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_MarkdownImageData_SetUser_texture_id(selfArg, C.ImTextureID(v))
-}
-
-func (self *MarkdownImageData) Usertextureid() TextureID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return TextureID(C.wrap_MarkdownImageData_GetUser_texture_id(selfArg))
-}
-
 func (self MarkdownImageData) SetSize(v Vec2) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()

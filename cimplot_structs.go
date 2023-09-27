@@ -356,41 +356,13 @@ func newPlotInputMapFromC(cvalue *C.ImPlotInputMap) *PlotInputMap {
 }
 
 type PlotItem struct {
-	FieldID              ID
-	FieldColor           uint32
-	FieldLegendHoverRect Rect
-	FieldNameOffset      int32
-	FieldShow            bool
-	FieldLegendHovered   bool
-	FieldSeenThisFrame   bool
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
 func (self PlotItem) handle() (result *C.ImPlotItem, releaseFn func()) {
-	result = new(C.ImPlotItem)
-	FieldID := self.FieldID
-
-	result.ID = C.ImGuiID(FieldID)
-	FieldColor := self.FieldColor
-
-	result.Color = C.ImU32(FieldColor)
-	FieldLegendHoverRect := self.FieldLegendHoverRect
-
-	result.LegendHoverRect = FieldLegendHoverRect.toC()
-	FieldNameOffset := self.FieldNameOffset
-
-	result.NameOffset = C.int(FieldNameOffset)
-	FieldShow := self.FieldShow
-
-	result.Show = C.bool(FieldShow)
-	FieldLegendHovered := self.FieldLegendHovered
-
-	result.LegendHovered = C.bool(FieldLegendHovered)
-	FieldSeenThisFrame := self.FieldSeenThisFrame
-
-	result.SeenThisFrame = C.bool(FieldSeenThisFrame)
-	releaseFn = func() {
-	}
-	return result, releaseFn
+	result = (*C.ImPlotItem)(self.data)
+	return result, func() {}
 }
 
 func (self PlotItem) c() (result C.ImPlotItem, fin func()) {
@@ -400,13 +372,7 @@ func (self PlotItem) c() (result C.ImPlotItem, fin func()) {
 
 func newPlotItemFromC(cvalue *C.ImPlotItem) *PlotItem {
 	result := new(PlotItem)
-	result.FieldID = ID(cvalue.ID)
-	result.FieldColor = uint32(cvalue.Color)
-	result.FieldLegendHoverRect = *(&Rect{}).fromC(cvalue.LegendHoverRect)
-	result.FieldNameOffset = int32(cvalue.NameOffset)
-	result.FieldShow = cvalue.Show == C.bool(true)
-	result.FieldLegendHovered = cvalue.LegendHovered == C.bool(true)
-	result.FieldSeenThisFrame = cvalue.SeenThisFrame == C.bool(true)
+	result.data = unsafe.Pointer(cvalue)
 	return result
 }
 

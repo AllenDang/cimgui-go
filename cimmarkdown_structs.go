@@ -240,45 +240,13 @@ func newMarkdownHeadingFormatFromC(cvalue *C.MarkdownHeadingFormat) *MarkdownHea
 }
 
 type MarkdownImageData struct {
-	FieldIsValid         bool
-	FieldUseLinkCallback bool
-	FieldUser_texture_id TextureID
-	FieldSize            Vec2
-	FieldUv0             Vec2
-	FieldUv1             Vec2
-	FieldTint_col        Vec4
-	FieldBorder_col      Vec4
+	// TODO: contains unsupported fields
+	data unsafe.Pointer
 }
 
 func (self MarkdownImageData) handle() (result *C.MarkdownImageData, releaseFn func()) {
-	result = new(C.MarkdownImageData)
-	FieldIsValid := self.FieldIsValid
-
-	result.isValid = C.bool(FieldIsValid)
-	FieldUseLinkCallback := self.FieldUseLinkCallback
-
-	result.useLinkCallback = C.bool(FieldUseLinkCallback)
-	FieldUser_texture_id := self.FieldUser_texture_id
-
-	result.user_texture_id = C.ImTextureID(FieldUser_texture_id)
-	FieldSize := self.FieldSize
-
-	result.size = FieldSize.toC()
-	FieldUv0 := self.FieldUv0
-
-	result.uv0 = FieldUv0.toC()
-	FieldUv1 := self.FieldUv1
-
-	result.uv1 = FieldUv1.toC()
-	FieldTint_col := self.FieldTint_col
-
-	result.tint_col = FieldTint_col.toC()
-	FieldBorder_col := self.FieldBorder_col
-
-	result.border_col = FieldBorder_col.toC()
-	releaseFn = func() {
-	}
-	return result, releaseFn
+	result = (*C.MarkdownImageData)(self.data)
+	return result, func() {}
 }
 
 func (self MarkdownImageData) c() (result C.MarkdownImageData, fin func()) {
@@ -288,14 +256,7 @@ func (self MarkdownImageData) c() (result C.MarkdownImageData, fin func()) {
 
 func newMarkdownImageDataFromC(cvalue *C.MarkdownImageData) *MarkdownImageData {
 	result := new(MarkdownImageData)
-	result.FieldIsValid = cvalue.isValid == C.bool(true)
-	result.FieldUseLinkCallback = cvalue.useLinkCallback == C.bool(true)
-	result.FieldUser_texture_id = TextureID(cvalue.user_texture_id)
-	result.FieldSize = *(&Vec2{}).fromC(cvalue.size)
-	result.FieldUv0 = *(&Vec2{}).fromC(cvalue.uv0)
-	result.FieldUv1 = *(&Vec2{}).fromC(cvalue.uv1)
-	result.FieldTint_col = *(&Vec4{}).fromC(cvalue.tint_col)
-	result.FieldBorder_col = *(&Vec4{}).fromC(cvalue.border_col)
+	result.data = unsafe.Pointer(cvalue)
 	return result
 }
 

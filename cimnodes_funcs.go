@@ -107,6 +107,30 @@ func imnodesClearNodeSelectionNil() {
 	C.imnodes_ClearNodeSelection_Nil()
 }
 
+func imnodesCreateContext() *NodesContext {
+	return newNodesContextFromC(C.imnodes_CreateContext())
+}
+
+// imnodesDestroyContextV parameter default value hint:
+// ctx: NULL
+func imnodesDestroyContextV(ctx *NodesContext) {
+	ctxArg, ctxFin := ctx.handle()
+	C.imnodes_DestroyContext(ctxArg)
+
+	ctxFin()
+}
+
+func imnodesEditorContextCreate() *NodesEditorContext {
+	return newNodesEditorContextFromC(C.imnodes_EditorContextCreate())
+}
+
+func imnodesEditorContextFree(noname1 *NodesEditorContext) {
+	noname1Arg, noname1Fin := noname1.handle()
+	C.imnodes_EditorContextFree(noname1Arg)
+
+	noname1Fin()
+}
+
 func imnodesEditorContextGetPanning() Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
@@ -124,6 +148,13 @@ func imnodesEditorContextMoveToNode(node_id int32) {
 
 func imnodesEditorContextResetPanning(pos Vec2) {
 	C.imnodes_EditorContextResetPanning(pos.toC())
+}
+
+func imnodesEditorContextSet(noname1 *NodesEditorContext) {
+	noname1Arg, noname1Fin := noname1.handle()
+	C.imnodes_EditorContextSet(noname1Arg)
+
+	noname1Fin()
 }
 
 func imnodesEndInputAttribute() {
@@ -148,6 +179,10 @@ func imnodesEndOutputAttribute() {
 
 func imnodesEndStaticAttribute() {
 	C.imnodes_EndStaticAttribute()
+}
+
+func imnodesGetCurrentContext() *NodesContext {
+	return newNodesContextFromC(C.imnodes_GetCurrentContext())
 }
 
 func imnodesGetIO() *NodesIO {
@@ -352,6 +387,24 @@ func imnodesLoadCurrentEditorStateFromIniString(data string, data_size uint64) {
 	dataFin()
 }
 
+func imnodesLoadEditorStateFromIniFile(editor *NodesEditorContext, file_name string) {
+	editorArg, editorFin := editor.handle()
+	file_nameArg, file_nameFin := WrapString(file_name)
+	C.imnodes_LoadEditorStateFromIniFile(editorArg, file_nameArg)
+
+	editorFin()
+	file_nameFin()
+}
+
+func imnodesLoadEditorStateFromIniString(editor *NodesEditorContext, data string, data_size uint64) {
+	editorArg, editorFin := editor.handle()
+	dataArg, dataFin := WrapString(data)
+	C.imnodes_LoadEditorStateFromIniString(editorArg, dataArg, C.xulong(data_size))
+
+	editorFin()
+	dataFin()
+}
+
 func imnodesNumSelectedLinks() int32 {
 	return int32(C.imnodes_NumSelectedLinks())
 }
@@ -403,12 +456,39 @@ func imnodesSaveCurrentEditorStateToIniStringV(data_size *uint64) string {
 	return C.GoString(C.imnodes_SaveCurrentEditorStateToIniString((*C.xulong)(data_size)))
 }
 
+func imnodesSaveEditorStateToIniFile(editor *NodesEditorContext, file_name string) {
+	editorArg, editorFin := editor.handle()
+	file_nameArg, file_nameFin := WrapString(file_name)
+	C.imnodes_SaveEditorStateToIniFile(editorArg, file_nameArg)
+
+	editorFin()
+	file_nameFin()
+}
+
+// imnodesSaveEditorStateToIniStringV parameter default value hint:
+// data_size: NULL
+func imnodesSaveEditorStateToIniStringV(editor *NodesEditorContext, data_size *uint64) string {
+	editorArg, editorFin := editor.handle()
+
+	defer func() {
+		editorFin()
+	}()
+	return C.GoString(C.imnodes_SaveEditorStateToIniString(editorArg, (*C.xulong)(data_size)))
+}
+
 func imnodesSelectLink(link_id int32) {
 	C.imnodes_SelectLink(C.int(link_id))
 }
 
 func imnodesSelectNode(node_id int32) {
 	C.imnodes_SelectNode(C.int(node_id))
+}
+
+func imnodesSetCurrentContext(ctx *NodesContext) {
+	ctxArg, ctxFin := ctx.handle()
+	C.imnodes_SetCurrentContext(ctxArg)
+
+	ctxFin()
 }
 
 func imnodesSetImGuiContext(ctx *Context) {
@@ -521,6 +601,15 @@ func imnodesPopStyleVar() {
 
 func imnodesSaveCurrentEditorStateToIniString() string {
 	return C.GoString(C.wrap_imnodes_SaveCurrentEditorStateToIniString())
+}
+
+func imnodesSaveEditorStateToIniString(editor *NodesEditorContext) string {
+	editorArg, editorFin := editor.handle()
+
+	defer func() {
+		editorFin()
+	}()
+	return C.GoString(C.wrap_imnodes_SaveEditorStateToIniString(editorArg))
 }
 
 func imnodesStyleColorsClassic() {
