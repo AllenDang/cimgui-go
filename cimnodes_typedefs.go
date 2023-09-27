@@ -10,22 +10,6 @@ package imgui
 import "C"
 import "unsafe"
 
-type Context C.ImGuiContext
-
-func (self Context) handle() (result *C.ImGuiContext, fin func()) {
-	result = (*C.ImGuiContext)(unsafe.Pointer(&self))
-	return result, func() {}
-}
-
-func (self Context) c() (C.ImGuiContext, func()) {
-	result, fin := self.handle()
-	return *result, fin
-}
-
-func newImGuiContextFromC(cvalue *C.ImGuiContext) *Context {
-	return (*Context)(cvalue)
-}
-
 type NodesContext C.ImNodesContext
 
 func (self NodesContext) handle() (result *C.ImNodesContext, fin func()) {
