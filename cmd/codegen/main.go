@@ -103,7 +103,7 @@ func main() {
 		log.Panic(err.Error())
 	}
 
-	callbacks, err := proceedTypedefs(typedefs, structs, enums)
+	callbacks, err := proceedTypedefs(*prefix, typedefs, structs, enums)
 
 	validFuncs, err := generateCppWrapper(*prefix, *include, funcs)
 	if err != nil {

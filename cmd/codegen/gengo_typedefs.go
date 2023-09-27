@@ -4,15 +4,26 @@ import "C"
 import (
 	"fmt"
 	"github.com/kpango/glg"
+	"os"
 	"strings"
 )
 
 // this function will proceed the following typedefs:
 // - all structs thatare not present in struct_and_enums.json (they are supposed to be epaque)
 // - everything that satisfies IsCallbackTypedef
-func proceedTypedefs(typedefs *Typedefs, structs []StructDef, enums []EnumDef) (validTypeNames []CIdentifier, err error) {
+func proceedTypedefs(prefix string, typedefs *Typedefs, structs []StructDef, enums []EnumDef) (validTypeNames []CIdentifier, err error) {
 	// we need FILES
 	callbacksGoSb := &strings.Builder{}
+	callbacksGoSb.WriteString(goPackageHeader)
+	fmt.Fprintf(callbacksGoSb,
+		`// #include <stdlib.h>
+// #include <memory.h>
+// #include "extra_types.h"
+// #include "%s_wrapper.h"
+import "C"
+import "unsafe"
+
+`, prefix)
 	//callbacksCSb := &strings.Builder{}
 
 	// because go ranges through maps as if it was drunken, we need to sort keys.
@@ -60,7 +71,7 @@ type %[1]s %[2]s
 
 func (self %[1]s) handle() (result *%[2]s, fin func()) {
     %[3]s
-    return %[4]s, %[5]s
+    return %[4]s, func() { %[5]s }
 }
 
 func (self %[1]s) c() (%[2]s, func()) {
@@ -84,6 +95,10 @@ func new%[1]sFromC(cvalue %[6]s) {
 	}
 
 	fmt.Println(callbacksGoSb.String())
+
+	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.go", prefix), []byte(callbacksGoSb.String()), 0644); err != nil {
+		return nil, fmt.Errorf("cannot write %s_typedefs.go: %w", prefix, err)
+	}
 
 	return validTypeNames, nil
 }
