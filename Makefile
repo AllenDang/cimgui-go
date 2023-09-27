@@ -38,7 +38,7 @@ cimgui: setup
 	$(call cimgui)
 
 define cimplot
-	$(call generate,cimplot,cimgui/cimplot.h,cimgui/cimplot_templates/definitions.json,cimgui/cimplot_templates/structs_and_enums.json,cimtui/cimplot_templates/typedefs_dict.json,-r cimgui/cimgui_templates/structs_and_enums.json)
+	$(call generate,cimplot,cimgui/cimplot.h,cimgui/cimplot_templates/definitions.json,cimgui/cimplot_templates/structs_and_enums.json,cimgui/cimplot_templates/typedefs_dict.json,-r cimgui/cimgui_templates/structs_and_enums.json)
 endef
 
 ## cimplot: generate implot binding

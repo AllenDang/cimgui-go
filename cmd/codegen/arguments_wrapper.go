@@ -22,6 +22,9 @@ type ArgumentWrapperData struct {
 	VarName string
 
 	NoFin bool
+
+	// CType is a valid type that will have VarName.
+	CType GoIdentifier
 }
 
 type argumentWrapper func(arg ArgDef) ArgumentWrapperData
@@ -173,7 +176,6 @@ func getArgWrapper(a *ArgDef, makeFirstArgReceiver, isGetter bool, structNames m
 			Name: dataName,
 			Type: pureType,
 		}, false, false, structNames, enumNames)
-
 		if err != nil {
 			return "", ArgumentWrapperData{}, fmt.Errorf("creating vector wrapper %w", err)
 		}

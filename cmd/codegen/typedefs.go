@@ -3,11 +3,11 @@ package main
 import "encoding/json"
 
 type Typedefs struct {
-	data map[string]string
+	data map[CIdentifier]string
 }
 
 func getTypedefs(data []byte) (*Typedefs, error) {
-	var ret map[string]string
+	var ret map[CIdentifier]string
 	if err := json.Unmarshal(data, &ret); err != nil {
 		return nil, err
 	}

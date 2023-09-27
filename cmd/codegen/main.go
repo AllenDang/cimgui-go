@@ -98,12 +98,12 @@ func main() {
 		log.Panic(err.Error())
 	}
 
-	_ = typedefs
-
 	structs, err := getStructDefs(enumJsonBytes)
 	if err != nil {
 		log.Panic(err.Error())
 	}
+
+	callbacks, err := proceedTypedefs(typedefs, structs, enums)
 
 	validFuncs, err := generateCppWrapper(*prefix, *include, funcs)
 	if err != nil {
@@ -134,6 +134,8 @@ func main() {
 		enumNames = append(enumNames, es...)
 		structNames = append(structNames, ss...)
 	}
+
+	structNames = append(structNames, callbacks...)
 
 	if err := generateGoFuncs(*prefix, validFuncs, enumNames, structNames); err != nil {
 		log.Panic(err)
