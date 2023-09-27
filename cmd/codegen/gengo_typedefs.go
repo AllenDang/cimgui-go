@@ -36,6 +36,10 @@ import "unsafe"
 	SortStrings(keys)
 
 	for _, k := range keys {
+		if shouldSkipStruct(k) {
+			glg.Infof("Arbitrarly skipping struct %s", k)
+		}
+
 		if IsEnumName(k, enums) || IsStructName(k, structs) {
 			glg.Infof("typedef %s has extended deffinition in structs_and_enums.json. Will generate later", k)
 			continue
