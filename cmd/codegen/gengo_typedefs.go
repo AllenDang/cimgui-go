@@ -11,7 +11,7 @@ import (
 // this function will proceed the following typedefs:
 // - all structs thatare not present in struct_and_enums.json (they are supposed to be epaque)
 // - everything that satisfies IsCallbackTypedef
-func proceedTypedefs(prefix string, typedefs *Typedefs, structs []StructDef, enums []EnumDef) (validTypeNames []CIdentifier, err error) {
+func proceedTypedefs(prefix string, typedefs *Typedefs, structs []StructDef, enums []EnumDef, refTypedefs map[CIdentifier]string) (validTypeNames []CIdentifier, err error) {
 	// we need FILES
 	callbacksGoSb := &strings.Builder{}
 	callbacksGoSb.WriteString(goPackageHeader)
@@ -38,6 +38,11 @@ import "unsafe"
 	for _, k := range keys {
 		if shouldSkip, ok := skippedTypedefs[k]; ok && shouldSkip {
 			glg.Infof("Arbitrarly skipping typedef %s", k)
+			continue
+		}
+
+		if _, exists := refTypedefs[k]; exists {
+			glg.Infof("Duplicate of %s in reference typedefs. Skipping.", k)
 			continue
 		}
 
@@ -105,8 +110,6 @@ func new%[1]sFromC(cvalue %[6]s) {
 			validTypeNames = append(validTypeNames, k)
 		}
 	}
-
-	fmt.Println(callbacksGoSb.String())
 
 	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.go", prefix), []byte(callbacksGoSb.String()), 0644); err != nil {
 		return nil, fmt.Errorf("cannot write %s_typedefs.go: %w", prefix, err)

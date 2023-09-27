@@ -112,8 +112,6 @@ func main() {
 		log.Panic(err.Error())
 	}
 
-	callbacks, err := proceedTypedefs(*prefix, typedefs, structs, enums)
-
 	validFuncs, err := generateCppWrapper(*prefix, *include, funcs)
 	if err != nil {
 		log.Panic(err)
@@ -137,6 +135,8 @@ func main() {
 
 		refTypedefs = typedefs.data
 	}
+
+	callbacks, err := proceedTypedefs(*prefix, typedefs, structs, enums, refTypedefs)
 
 	// generate code
 	enumNames := generateGoEnums(*prefix, enums)
