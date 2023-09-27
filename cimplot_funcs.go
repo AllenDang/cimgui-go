@@ -472,15 +472,6 @@ func (self *PlotColormapData) KeyCount(cmap PlotColormap) int32 {
 	return int32(C.ImPlotColormapData_GetKeyCount(selfArg, C.ImPlotColormap(cmap)))
 }
 
-func (self *PlotColormapData) Keys(cmap PlotColormap) *U32 {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return newU32FromC(C.ImPlotColormapData_GetKeys(selfArg, C.ImPlotColormap(cmap)))
-}
-
 func (self *PlotColormapData) Name(cmap PlotColormap) string {
 	selfArg, selfFin := self.handle()
 
@@ -488,15 +479,6 @@ func (self *PlotColormapData) Name(cmap PlotColormap) string {
 		selfFin()
 	}()
 	return C.GoString(C.ImPlotColormapData_GetName(selfArg, C.ImPlotColormap(cmap)))
-}
-
-func (self *PlotColormapData) Table(cmap PlotColormap) *U32 {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return newU32FromC(C.ImPlotColormapData_GetTable(selfArg, C.ImPlotColormap(cmap)))
 }
 
 func (self *PlotColormapData) TableColor(cmap PlotColormap, idx int32) uint32 {
