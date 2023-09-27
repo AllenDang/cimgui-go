@@ -213,7 +213,9 @@ func getArgWrapper(
 		isPointer = true
 	}
 
-	if _, isRefTypedef := refTypedefs[pureType]; structNames[pureType] || isRefTypedef {
+	_, isRefTypedef := refTypedefs[pureType]
+	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
+	if structNames[pureType] || (isRefTypedef && !shouldSkipRefTypedef) {
 		w := ArgumentWrapperData{
 			ArgType:   pureType.renameGoIdentifier(),
 			VarName:   fmt.Sprintf("%sArg", a.Name),

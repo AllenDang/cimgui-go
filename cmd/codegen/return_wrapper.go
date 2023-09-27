@@ -63,8 +63,9 @@ func getReturnWrapper(
 	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")
 	// check if pureType is a declared type (struct or something else from typedefs)
 	_, isRefStruct := refTypedefs[pureType]
+	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
 	_, isStruct := structNames[pureType]
-	isStruct = isStruct || isRefStruct
+	isStruct = isStruct || (isRefStruct && !shouldSkipRefTypedef)
 	w, known := returnWrapperMap[t]
 	switch {
 	case known:
