@@ -38,6 +38,7 @@ import "unsafe"
 	for _, k := range keys {
 		if shouldSkipStruct(k) {
 			glg.Infof("Arbitrarly skipping struct %s", k)
+			continue
 		}
 
 		if IsEnumName(k, enums) || IsStructName(k, structs) {
