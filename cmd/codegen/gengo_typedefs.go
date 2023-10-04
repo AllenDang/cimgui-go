@@ -141,7 +141,7 @@ func (self %[1]s) c() (C.%[2]s, func()) {
 	return *result, fin
 }
 
-func new%[2]sFromC(cvalue *C.%[2]s) *%[1]s {
+func new%[1]sFromC(cvalue *C.%[2]s) *%[1]s {
 	return (*%[1]s)(cvalue)
 }
 `, name.renameGoIdentifier(), name)
