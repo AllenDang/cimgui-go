@@ -63,6 +63,7 @@ import "unsafe"
 
 		if HasSuffix(typedefs.data[k], "*") {
 			glg.Infof("Typedef %v is a pointer. NotImplemented", k)
+			continue
 		}
 
 		knownReturnType, returnTypeErr := getReturnWrapper(
