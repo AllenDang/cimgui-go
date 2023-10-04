@@ -61,6 +61,10 @@ import "unsafe"
 			continue
 		}
 
+		if HasSuffix(typedefs.data[k], "*") {
+			glg.Infof("Typedef %v is a pointer. NotImplemented", k)
+		}
+
 		knownReturnType, returnTypeErr := getReturnWrapper(
 			CIdentifier(typedefs.data[k]),
 			map[CIdentifier]bool{},
