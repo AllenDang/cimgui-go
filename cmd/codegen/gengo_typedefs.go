@@ -86,20 +86,29 @@ import "unsafe"
 			fmt.Fprintf(callbacksGoSb, `
 type %[1]s %[2]s
 
-func (self %[1]s) handle() (result *%[2]s, fin func()) {
+func (self %[1]s) handle() (result *C.%[8]s, fin func()) {
     %[3]s
-    return %[4]s, func() { %[5]s }
+    return (*C.%[8]s)(%[4]s), func() { %[5]s }
 }
 
-func (self %[1]s) c() (%[2]s, func()) {
+func (self %[1]s) c() (C.%[8]s, func()) {
 	result, fin := self.handle()
 	return *result, fin
 }
 
-func new%[1]sFromC(cvalue %[6]s) {
+func new%[1]sFromC(cvalue *C.%[8]s) {
 	return %[7]s
 }
-`, k.renameGoIdentifier(), knownArgType.ArgType, knownArgType.ArgDef, knownArgType.VarName, knownArgType.Finalizer, knownArgType.CType, fmt.Sprintf(knownReturnType.returnStmt, "cvalue"))
+`,
+				k.renameGoIdentifier(),
+				knownArgType.ArgType,
+				knownArgType.ArgDef,
+				knownArgType.VarName,
+				knownArgType.Finalizer,
+				knownArgType.CType,
+				fmt.Sprintf(knownReturnType.returnStmt, "cvalue"),
+				k,
+			)
 
 			validTypeNames = append(validTypeNames, k)
 		case IsCallbackTypedef(typedefs.data[k]):
