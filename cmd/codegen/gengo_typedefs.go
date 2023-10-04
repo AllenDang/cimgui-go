@@ -96,7 +96,7 @@ func (self %[1]s) c() (C.%[8]s, func()) {
 	return *result, fin
 }
 
-func new%[1]sFromC(cvalue *C.%[8]s) %[1]s {
+func new%[1]sFromC(cvalue *C.%[8]s) *%[1]s {
 	return %[7]s
 }
 `,
