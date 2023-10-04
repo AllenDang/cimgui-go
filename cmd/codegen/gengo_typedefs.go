@@ -61,11 +61,6 @@ import "unsafe"
 			continue
 		}
 
-		if HasSuffix(typedefs.data[k], "*") {
-			glg.Infof("Typedef %v is a pointer. NotImplemented", k)
-			continue
-		}
-
 		knownReturnType, returnTypeErr := getReturnWrapper(
 			CIdentifier(typedefs.data[k]),
 			map[CIdentifier]bool{},
@@ -87,6 +82,11 @@ import "unsafe"
 		// check if k is a name of struct from structDefs
 		switch {
 		case returnTypeErr == nil && argTypeErr == nil:
+			if HasPrefix(knownReturnType.returnType, "*") {
+				glg.Infof("Typedef %v is a pointer. NotImplemented", k)
+				continue
+			}
+
 			glg.Infof("typedef %s is an alias typedef.", k)
 			fmt.Fprintf(callbacksGoSb, `
 type %[1]s %[2]s
