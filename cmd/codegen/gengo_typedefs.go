@@ -91,12 +91,12 @@ import "unsafe"
 			fmt.Fprintf(callbacksGoSb, `
 type %[1]s %[2]s
 
-func (self *%[1]s) handle() (result *C.%[8]s, fin func()) {
+func (self %[1]s) handle() (result *C.%[8]s, fin func()) {
     %[3]s
     return (*C.%[8]s)(%[4]s), func() { %[5]s }
 }
 
-func (self *%[1]s) c() (C.%[8]s, func()) {
+func (self %[1]s) c() (C.%[8]s, func()) {
 	result, fin := self.handle()
 	return *result, fin
 }
