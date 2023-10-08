@@ -122,8 +122,8 @@ func new%[1]sFromC(cvalue *C.%[8]s) *%[1]s {
 type %[1]s %[2]s
 
 func (self %[1]s) handle() (result *C.%[8]s, fin func()) {
-	result,fin = self.c()
-	return &result, fin
+	cResult, cFin := self.c()
+	return &cResult, cFin
 }
 
 func (self %[1]s) c() (C.%[8]s, func()) {
