@@ -10,34 +10,18 @@ package imgui
 import "C"
 import "unsafe"
 
-type BitArrayPtr *uint32
-
-func (self BitArrayPtr) handle() (result **uint32, fin func()) {
-	selfArg, selfFin := WrapNumberPtr[C.ImU32, uint32](self)
-	return selfArg, func() { selfFin() }
-}
-
-func (self BitArrayPtr) c() (*uint32, func()) {
-	result, fin := self.handle()
-	return *result, fin
-}
-
-func newBitArrayPtrFromC(cvalue *C.ImU32) {
-	return (*uint32)(cvalue)
-}
-
 type DrawIdx uint16
 
-func (self DrawIdx) handle() (result *uint16, fin func()) {
-	return C.ushort(self), func() {}
+func (self DrawIdx) handle() (result *C.ImDrawIdx, fin func()) {
+	return (*C.ImDrawIdx)(C.ushort(self)), func() {}
 }
 
-func (self DrawIdx) c() (uint16, func()) {
+func (self DrawIdx) c() (C.ImDrawIdx, func()) {
 	result, fin := self.handle()
 	return *result, fin
 }
 
-func newDrawIdxFromC(cvalue C.ushort) {
+func newDrawIdxFromC(cvalue *C.ImDrawIdx) *DrawIdx {
 	return uint16(cvalue)
 }
 
@@ -53,7 +37,7 @@ func (self DockNodeSettings) c() (C.ImGuiDockNodeSettings, func()) {
 	return *result, fin
 }
 
-func newImGuiDockNodeSettingsFromC(cvalue *C.ImGuiDockNodeSettings) *DockNodeSettings {
+func newDockNodeSettingsFromC(cvalue *C.ImGuiDockNodeSettings) *DockNodeSettings {
 	return (*DockNodeSettings)(cvalue)
 }
 
@@ -69,22 +53,22 @@ func (self DockRequest) c() (C.ImGuiDockRequest, func()) {
 	return *result, fin
 }
 
-func newImGuiDockRequestFromC(cvalue *C.ImGuiDockRequest) *DockRequest {
+func newDockRequestFromC(cvalue *C.ImGuiDockRequest) *DockRequest {
 	return (*DockRequest)(cvalue)
 }
 
 type ID uint32
 
-func (self ID) handle() (result *uint32, fin func()) {
-	return C.uint(self), func() {}
+func (self ID) handle() (result *C.ImGuiID, fin func()) {
+	return (*C.ImGuiID)(C.uint(self)), func() {}
 }
 
-func (self ID) c() (uint32, func()) {
+func (self ID) c() (C.ImGuiID, func()) {
 	result, fin := self.handle()
 	return *result, fin
 }
 
-func newIDFromC(cvalue C.uint) {
+func newIDFromC(cvalue *C.ImGuiID) *ID {
 	return uint32(cvalue)
 }
 
@@ -100,67 +84,67 @@ func (self InputTextDeactivateData) c() (C.ImGuiInputTextDeactivateData, func())
 	return *result, fin
 }
 
-func newImGuiInputTextDeactivateDataFromC(cvalue *C.ImGuiInputTextDeactivateData) *InputTextDeactivateData {
+func newInputTextDeactivateDataFromC(cvalue *C.ImGuiInputTextDeactivateData) *InputTextDeactivateData {
 	return (*InputTextDeactivateData)(cvalue)
 }
 
 type KeyChord int32
 
-func (self KeyChord) handle() (result *int32, fin func()) {
-	return C.int(self), func() {}
+func (self KeyChord) handle() (result *C.ImGuiKeyChord, fin func()) {
+	return (*C.ImGuiKeyChord)(C.int(self)), func() {}
 }
 
-func (self KeyChord) c() (int32, func()) {
+func (self KeyChord) c() (C.ImGuiKeyChord, func()) {
 	result, fin := self.handle()
 	return *result, fin
 }
 
-func newKeyChordFromC(cvalue C.int) {
+func newKeyChordFromC(cvalue *C.ImGuiKeyChord) *KeyChord {
 	return int32(cvalue)
 }
 
 type KeyRoutingIndex int
 
-func (self KeyRoutingIndex) handle() (result *int, fin func()) {
-	return C.ImS16(self), func() {}
+func (self KeyRoutingIndex) handle() (result *C.ImGuiKeyRoutingIndex, fin func()) {
+	return (*C.ImGuiKeyRoutingIndex)(C.ImS16(self)), func() {}
 }
 
-func (self KeyRoutingIndex) c() (int, func()) {
+func (self KeyRoutingIndex) c() (C.ImGuiKeyRoutingIndex, func()) {
 	result, fin := self.handle()
 	return *result, fin
 }
 
-func newKeyRoutingIndexFromC(cvalue C.ImS16) {
+func newKeyRoutingIndexFromC(cvalue *C.ImGuiKeyRoutingIndex) *KeyRoutingIndex {
 	return int(cvalue)
 }
 
 type SelectionUserData int64
 
-func (self SelectionUserData) handle() (result *int64, fin func()) {
-	return C.ImS64(self), func() {}
+func (self SelectionUserData) handle() (result *C.ImGuiSelectionUserData, fin func()) {
+	return (*C.ImGuiSelectionUserData)(C.ImS64(self)), func() {}
 }
 
-func (self SelectionUserData) c() (int64, func()) {
+func (self SelectionUserData) c() (C.ImGuiSelectionUserData, func()) {
 	result, fin := self.handle()
 	return *result, fin
 }
 
-func newSelectionUserDataFromC(cvalue C.ImS64) {
+func newSelectionUserDataFromC(cvalue *C.ImGuiSelectionUserData) *SelectionUserData {
 	return int64(cvalue)
 }
 
 type TableColumnIdx int
 
-func (self TableColumnIdx) handle() (result *int, fin func()) {
-	return C.ImS16(self), func() {}
+func (self TableColumnIdx) handle() (result *C.ImGuiTableColumnIdx, fin func()) {
+	return (*C.ImGuiTableColumnIdx)(C.ImS16(self)), func() {}
 }
 
-func (self TableColumnIdx) c() (int, func()) {
+func (self TableColumnIdx) c() (C.ImGuiTableColumnIdx, func()) {
 	result, fin := self.handle()
 	return *result, fin
 }
 
-func newTableColumnIdxFromC(cvalue C.ImS16) {
+func newTableColumnIdxFromC(cvalue *C.ImGuiTableColumnIdx) *TableColumnIdx {
 	return int(cvalue)
 }
 
@@ -176,82 +160,82 @@ func (self TableColumnsSettings) c() (C.ImGuiTableColumnsSettings, func()) {
 	return *result, fin
 }
 
-func newImGuiTableColumnsSettingsFromC(cvalue *C.ImGuiTableColumnsSettings) *TableColumnsSettings {
+func newTableColumnsSettingsFromC(cvalue *C.ImGuiTableColumnsSettings) *TableColumnsSettings {
 	return (*TableColumnsSettings)(cvalue)
 }
 
 type TableDrawChannelIdx uint16
 
-func (self TableDrawChannelIdx) handle() (result *uint16, fin func()) {
-	return C.ImU16(self), func() {}
+func (self TableDrawChannelIdx) handle() (result *C.ImGuiTableDrawChannelIdx, fin func()) {
+	return (*C.ImGuiTableDrawChannelIdx)(C.ImU16(self)), func() {}
 }
 
-func (self TableDrawChannelIdx) c() (uint16, func()) {
+func (self TableDrawChannelIdx) c() (C.ImGuiTableDrawChannelIdx, func()) {
 	result, fin := self.handle()
 	return *result, fin
 }
 
-func newTableDrawChannelIdxFromC(cvalue C.ImU16) {
+func newTableDrawChannelIdxFromC(cvalue *C.ImGuiTableDrawChannelIdx) *TableDrawChannelIdx {
 	return uint16(cvalue)
 }
 
 type PoolIdx int32
 
-func (self PoolIdx) handle() (result *int32, fin func()) {
-	return C.int(self), func() {}
+func (self PoolIdx) handle() (result *C.ImPoolIdx, fin func()) {
+	return (*C.ImPoolIdx)(C.int(self)), func() {}
 }
 
-func (self PoolIdx) c() (int32, func()) {
+func (self PoolIdx) c() (C.ImPoolIdx, func()) {
 	result, fin := self.handle()
 	return *result, fin
 }
 
-func newPoolIdxFromC(cvalue C.int) {
+func newPoolIdxFromC(cvalue *C.ImPoolIdx) *PoolIdx {
 	return int32(cvalue)
 }
 
 type TextureID unsafe.Pointer
 
-func (self TextureID) handle() (result *unsafe.Pointer, fin func()) {
+func (self TextureID) handle() (result *C.ImTextureID, fin func()) {
 	selfArg, selfFin := WrapVoidPtr(self)
-	return selfArg, func() { selfFin() }
+	return (*C.ImTextureID)(selfArg), func() { selfFin() }
 }
 
-func (self TextureID) c() (unsafe.Pointer, func()) {
+func (self TextureID) c() (C.ImTextureID, func()) {
 	result, fin := self.handle()
 	return *result, fin
 }
 
-func newTextureIDFromC(cvalue unsafe.Pointer) {
+func newTextureIDFromC(cvalue *C.ImTextureID) *TextureID {
 	return unsafe.Pointer(cvalue)
 }
 
 type Wchar16 uint16
 
-func (self Wchar16) handle() (result *uint16, fin func()) {
-	return C.ushort(self), func() {}
+func (self Wchar16) handle() (result *C.ImWchar16, fin func()) {
+	return (*C.ImWchar16)(C.ushort(self)), func() {}
 }
 
-func (self Wchar16) c() (uint16, func()) {
+func (self Wchar16) c() (C.ImWchar16, func()) {
 	result, fin := self.handle()
 	return *result, fin
 }
 
-func newWchar16FromC(cvalue C.ushort) {
+func newWchar16FromC(cvalue *C.ImWchar16) *Wchar16 {
 	return uint16(cvalue)
 }
 
 type Wchar32 uint32
 
-func (self Wchar32) handle() (result *uint32, fin func()) {
-	return C.uint(self), func() {}
+func (self Wchar32) handle() (result *C.ImWchar32, fin func()) {
+	return (*C.ImWchar32)(C.uint(self)), func() {}
 }
 
-func (self Wchar32) c() (uint32, func()) {
+func (self Wchar32) c() (C.ImWchar32, func()) {
 	result, fin := self.handle()
 	return *result, fin
 }
 
-func newWchar32FromC(cvalue C.uint) {
+func newWchar32FromC(cvalue *C.ImWchar32) *Wchar32 {
 	return uint32(cvalue)
 }

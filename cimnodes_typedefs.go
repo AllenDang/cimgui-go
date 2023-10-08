@@ -22,7 +22,7 @@ func (self NodesContext) c() (C.ImNodesContext, func()) {
 	return *result, fin
 }
 
-func newImNodesContextFromC(cvalue *C.ImNodesContext) *NodesContext {
+func newNodesContextFromC(cvalue *C.ImNodesContext) *NodesContext {
 	return (*NodesContext)(cvalue)
 }
 
@@ -38,22 +38,22 @@ func (self NodesEditorContext) c() (C.ImNodesEditorContext, func()) {
 	return *result, fin
 }
 
-func newImNodesEditorContextFromC(cvalue *C.ImNodesEditorContext) *NodesEditorContext {
+func newNodesEditorContextFromC(cvalue *C.ImNodesEditorContext) *NodesEditorContext {
 	return (*NodesEditorContext)(cvalue)
 }
 
 type NodesMiniMapNodeHoveringCallbackUserData unsafe.Pointer
 
-func (self NodesMiniMapNodeHoveringCallbackUserData) handle() (result *unsafe.Pointer, fin func()) {
+func (self NodesMiniMapNodeHoveringCallbackUserData) handle() (result *C.ImNodesMiniMapNodeHoveringCallbackUserData, fin func()) {
 	selfArg, selfFin := WrapVoidPtr(self)
-	return selfArg, func() { selfFin() }
+	return (*C.ImNodesMiniMapNodeHoveringCallbackUserData)(selfArg), func() { selfFin() }
 }
 
-func (self NodesMiniMapNodeHoveringCallbackUserData) c() (unsafe.Pointer, func()) {
+func (self NodesMiniMapNodeHoveringCallbackUserData) c() (C.ImNodesMiniMapNodeHoveringCallbackUserData, func()) {
 	result, fin := self.handle()
 	return *result, fin
 }
 
-func newNodesMiniMapNodeHoveringCallbackUserDataFromC(cvalue unsafe.Pointer) {
+func newNodesMiniMapNodeHoveringCallbackUserDataFromC(cvalue *C.ImNodesMiniMapNodeHoveringCallbackUserData) *NodesMiniMapNodeHoveringCallbackUserData {
 	return unsafe.Pointer(cvalue)
 }

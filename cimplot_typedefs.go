@@ -22,6 +22,6 @@ func (self PlotAxisColor) c() (C.ImPlotAxisColor, func()) {
 	return *result, fin
 }
 
-func newImPlotAxisColorFromC(cvalue *C.ImPlotAxisColor) *PlotAxisColor {
+func newPlotAxisColorFromC(cvalue *C.ImPlotAxisColor) *PlotAxisColor {
 	return (*PlotAxisColor)(cvalue)
 }

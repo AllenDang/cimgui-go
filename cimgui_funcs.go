@@ -26826,63 +26826,6 @@ func (self *Table) TempData() *TableTempData {
 	return newTableTempDataFromC(C.wrap_ImGuiTable_GetTempData(selfArg))
 }
 
-func (self Table) SetEnabledMaskByDisplayOrder(v BitArrayPtr) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetEnabledMaskByDisplayOrder(selfArg, vArg)
-}
-
-func (self *Table) EnabledMaskByDisplayOrder() BitArrayPtr {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetEnabledMaskByDisplayOrder(selfArg)
-	return *newBitArrayPtrFromC(func() *C.ImBitArrayPtr { result := result; return &result }())
-}
-
-func (self Table) SetEnabledMaskByIndex(v BitArrayPtr) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetEnabledMaskByIndex(selfArg, vArg)
-}
-
-func (self *Table) EnabledMaskByIndex() BitArrayPtr {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetEnabledMaskByIndex(selfArg)
-	return *newBitArrayPtrFromC(func() *C.ImBitArrayPtr { result := result; return &result }())
-}
-
-func (self Table) SetVisibleMaskByIndex(v BitArrayPtr) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetVisibleMaskByIndex(selfArg, vArg)
-}
-
-func (self *Table) VisibleMaskByIndex() BitArrayPtr {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetVisibleMaskByIndex(selfArg)
-	return *newBitArrayPtrFromC(func() *C.ImBitArrayPtr { result := result; return &result }())
-}
-
 func (self Table) SetSettingsLoadedFlags(v TableFlags) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
