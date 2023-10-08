@@ -61,6 +61,8 @@ import "unsafe"
 			continue
 		}
 
+		isPtr := HasSuffix(typedefs.data[k], "*")
+
 		knownReturnType, returnTypeErr := getReturnWrapper(
 			CIdentifier(typedefs.data[k]),
 			map[CIdentifier]bool{},
@@ -82,13 +84,14 @@ import "unsafe"
 		// check if k is a name of struct from structDefs
 		switch {
 		case returnTypeErr == nil && argTypeErr == nil:
-			if HasPrefix(knownReturnType.returnType, "*") {
+			if HasPrefix(knownReturnType.returnType, "*") { // this is because: Invalid receiver type (pointer or interface)
 				glg.Infof("Typedef %v is a pointer. NotImplemented", k)
 				continue
 			}
 
 			glg.Infof("typedef %s is an alias typedef.", k)
-			fmt.Fprintf(callbacksGoSb, `
+			if isPtr {
+				fmt.Fprintf(callbacksGoSb, `
 type %[1]s %[2]s
 
 func (self %[1]s) handle() (result *C.%[8]s, fin func()) {
@@ -105,15 +108,43 @@ func new%[1]sFromC(cvalue *C.%[8]s) *%[1]s {
 	return %[7]s
 }
 `,
-				k.renameGoIdentifier(),
-				knownArgType.ArgType,
-				knownArgType.ArgDef,
-				knownArgType.VarName,
-				knownArgType.Finalizer,
-				knownArgType.CType,
-				fmt.Sprintf(knownReturnType.returnStmt, "cvalue"),
-				k,
-			)
+					k.renameGoIdentifier(),
+					knownArgType.ArgType,
+					knownArgType.ArgDef,
+					knownArgType.VarName,
+					knownArgType.Finalizer,
+					knownArgType.CType,
+					fmt.Sprintf(knownReturnType.returnStmt, "cvalue"),
+					k,
+				)
+			} else {
+				fmt.Fprintf(callbacksGoSb, `
+type %[1]s %[2]s
+
+func (self %[1]s) handle() (result *C.%[8]s, fin func()) {
+	result,fin = self.c()
+	return &result, fin
+}
+
+func (self %[1]s) c() (C.%[8]s, func()) {
+    %[3]s
+    return (C.%[8]s)(%[4]s), func() { %[5]s }
+}
+
+func new%[1]sFromC(cvalue *C.%[8]s) *%[1]s {
+	return %[7]s
+}
+`,
+					k.renameGoIdentifier(),
+					knownArgType.ArgType,
+					knownArgType.ArgDef,
+					knownArgType.VarName,
+					knownArgType.Finalizer,
+					knownArgType.CType,
+					fmt.Sprintf(knownReturnType.returnStmt, "cvalue"),
+					k,
+				)
+			}
 
 			validTypeNames = append(validTypeNames, k)
 		case IsCallbackTypedef(typedefs.data[k]):
