@@ -51,7 +51,7 @@ import "unsafe"
 			continue
 		}
 
-		if IsEnumName(k, enums) || IsStructName(k, structs) {
+		if IsEnumName(k, enums) /*|| IsStructName(k, structs)*/ {
 			glg.Infof("typedef %s has extended deffinition in structs_and_enums.json. Will generate later", k)
 			continue
 		}
@@ -164,21 +164,23 @@ func new%[1]sFromC(cvalue *C.%[8]s) *%[1]s {
 }
 
 func writeOpaqueStruct(name CIdentifier, sb *strings.Builder) {
+	// we need to make it a struct, because we need to hide C type (otherwise it will duplicate methods)
 	fmt.Fprintf(sb, `
-type %[1]s C.%[2]s
+type %[1]s struct {
+	data *C.%[2]s
+}
 
-func (self %[1]s) handle() (result *C.%[2]s, fin func()) {
-	result = (*C.%[2]s)(unsafe.Pointer(&self))
-	return result, func() {}
+func (self *%[1]s) handle() (result *C.%[2]s, fin func()) {
+	return self.data, func() {}
 }
 
 func (self %[1]s) c() (C.%[2]s, func()) {
-	result, fin := self.handle()
-	return *result, fin
+	result, fn := self.handle()
+	return *result, fn
 }
 
 func new%[1]sFromC(cvalue *C.%[2]s) *%[1]s {
-	return (*%[1]s)(cvalue)
+	return &%[1]s{data: cvalue}
 }
 `, name.renameGoIdentifier(), name)
 }

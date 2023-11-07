@@ -140,7 +140,8 @@ func main() {
 
 	// generate code
 	enumNames := generateGoEnums(*prefix, enums)
-	structNames := generateGoStructs(*prefix, structs, enums, es, ss, refTypedefs)
+	//structNames := generateGoStructs(*prefix, structs, enums, es, ss, refTypedefs)
+	structNames := make([]CIdentifier, 0)
 
 	structAccessorFuncs, err := generateCppStructsAccessor(*prefix, validFuncs, structs)
 	if err != nil {
