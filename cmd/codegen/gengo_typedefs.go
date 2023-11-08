@@ -63,54 +63,56 @@ import "unsafe"
 
 		isPtr := HasSuffix(typedefs.data[k], "*")
 
-		var knownPtrReturnType returnWrapper
+		var knownReturnType, knownPtrReturnType returnWrapper
 		var knownArgType, knownPtrArgType ArgumentWrapperData
-		var argTypeErr, ptrArgTypeErr, ptrReturnTypeErr error
+		var argTypeErr, ptrArgTypeErr, returnTypeErr, ptrReturnTypeErr error
 
 		// Let's say our pureType is of form short
 		// the following code needs to handle two things:
 		// - int16 -> short (to know go type AND know how to proceed in c() func)
 		// - *int16 -> short* (for handle())
 		// - short* -> *int16 (for newXXXFromC)
-		if !isPtr {
-			knownPtrReturnType, ptrReturnTypeErr = getReturnWrapper(
-				CIdentifier(typedefs.data[k])+"*",
-				map[CIdentifier]bool{},
-				map[GoIdentifier]bool{},
-				map[CIdentifier]string{},
-			)
+		knownReturnType, returnTypeErr = getReturnWrapper(
+			CIdentifier(typedefs.data[k]),
+			map[CIdentifier]bool{},
+			map[GoIdentifier]bool{},
+			map[CIdentifier]string{},
+		)
 
-			_, knownArgType, argTypeErr = getArgWrapper(
-				&ArgDef{
-					Name: "self",
-					Type: CIdentifier(typedefs.data[k]),
-				},
-				false, false,
-				map[CIdentifier]bool{},
-				map[GoIdentifier]bool{},
-				map[CIdentifier]string{},
-			)
+		knownPtrReturnType, ptrReturnTypeErr = getReturnWrapper(
+			CIdentifier(typedefs.data[k])+"*",
+			map[CIdentifier]bool{},
+			map[GoIdentifier]bool{},
+			map[CIdentifier]string{},
+		)
 
-			_, knownPtrArgType, ptrArgTypeErr = getArgWrapper(
-				&ArgDef{
-					Name: "self",
-					Type: CIdentifier(typedefs.data[k]) + "*",
-				},
-				false, false,
-				map[CIdentifier]bool{},
-				map[GoIdentifier]bool{},
-				map[CIdentifier]string{},
-			)
-		}
+		_, knownArgType, argTypeErr = getArgWrapper(
+			&ArgDef{
+				Name: "self",
+				Type: CIdentifier(typedefs.data[k]),
+			},
+			false, false,
+			map[CIdentifier]bool{},
+			map[GoIdentifier]bool{},
+			map[CIdentifier]string{},
+		)
+
+		_, knownPtrArgType, ptrArgTypeErr = getArgWrapper(
+			&ArgDef{
+				Name: "self",
+				Type: CIdentifier(typedefs.data[k]) + "*",
+			},
+			false, false,
+			map[CIdentifier]bool{},
+			map[GoIdentifier]bool{},
+			map[CIdentifier]string{},
+		)
 
 		// check if k is a name of struct from structDefs
 		switch {
-		case ptrReturnTypeErr == nil && argTypeErr == nil && ptrArgTypeErr == nil:
+		case ptrReturnTypeErr == nil && argTypeErr == nil && ptrArgTypeErr == nil && !isPtr:
 			glg.Infof("typedef %s is an alias typedef.", k)
-			_ = knownPtrReturnType
-			_ = knownPtrArgType
-			if !isPtr {
-				fmt.Fprintf(callbacksGoSb, `
+			fmt.Fprintf(callbacksGoSb, `
 type %[1]s %[2]s
 
 func (self *%[1]s) handle() (result *C.%[6]s, fin func()) {
@@ -124,54 +126,61 @@ func (self %[1]s) c() (C.%[6]s, func()) {
 }
 
 func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
-	return %[7]s
+	return %[10]s
 }
 `,
-					k.renameGoIdentifier(),
-					knownArgType.ArgType,
+				k.renameGoIdentifier(),
+				knownArgType.ArgType,
 
-					knownPtrArgType.ArgDef,
-					knownPtrArgType.VarName,
-					knownPtrArgType.Finalizer,
+				knownPtrArgType.ArgDef,
+				knownPtrArgType.VarName,
+				knownPtrArgType.Finalizer,
 
-					k,
+				k,
 
-					knownArgType.ArgDef,
-					knownArgType.VarName,
-					knownArgType.Finalizer,
+				knownArgType.ArgDef,
+				knownArgType.VarName,
+				knownArgType.Finalizer,
 
-					fmt.Sprintf(knownPtrReturnType.returnStmt, "cvalue"),
-				)
-			} else {
-				//				fmt.Fprintf(callbacksGoSb, `
-				//type %[1]s %[2]s
-				//
-				//func (self %[1]s) handle() (result *C.%[8]s, fin func()) {
-				//	cResult, cFin := self.c()
-				//	return &cResult, cFin
-				//}
-				//
-				//func (self %[1]s) c() (C.%[8]s, func()) {
-				//    %[3]s
-				//    return (C.%[8]s)(%[4]s), func() { %[5]s }
-				//}
-				//
-				//func new%[1]sFromC(cvalue *C.%[8]s) *%[1]s {
-				//	return %[7]s
-				//}
-				//`,
-				//					k.renameGoIdentifier(),
-				//					knownArgType.ArgType,
-				//					knownArgType.ArgDef,
-				//					knownArgType.VarName,
-				//					knownArgType.Finalizer,
-				//					knownArgType.CType,
-				//					fmt.Sprintf(knownReturnType.returnStmt, "cvalue"),
-				//					k,
-				//				)
-				glg.Infof("Typedef %v is a pointer. NotImplemented", k)
-				continue
-			}
+				fmt.Sprintf(knownPtrReturnType.returnStmt, "cvalue"),
+			)
+			validTypeNames = append(validTypeNames, k)
+		case returnTypeErr == nil && argTypeErr == nil && isPtr:
+			// if it's a pointer type, I think we can proceed as above, but without handle() method...
+			// (handle proceeds pointer values and we don't want double pointers, really)
+			fmt.Fprintf(callbacksGoSb, `
+type %[1]s  struct {
+	Data %[2]s
+}
+
+func (self *%[1]s) handle() (*C.%[6]s, func()) {
+	result, fn := self.c()
+	return &result, fn
+}
+
+func (selfStruct *%[1]s) c() (result C.%[6]s, fin func()) {
+	self := selfStruct.Data
+    %[3]s
+    return (C.%[6]s)(%[4]s), func() { %[5]s }
+}
+
+func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
+	v := (%[8]s)(*cvalue)
+	return &%[1]s{Data: %[7]s}
+}
+`,
+				k.renameGoIdentifier(),
+				knownArgType.ArgType,
+
+				knownArgType.ArgDef,
+				knownArgType.VarName,
+				knownArgType.Finalizer,
+
+				k,
+
+				fmt.Sprintf(knownReturnType.returnStmt, "v"),
+				knownArgType.CType,
+			)
 
 			validTypeNames = append(validTypeNames, k)
 		case IsCallbackTypedef(typedefs.data[k]):
