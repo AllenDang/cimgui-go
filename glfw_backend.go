@@ -347,11 +347,13 @@ func (b *GLFWBackend) Refresh() {
 }
 
 func (b *GLFWBackend) CreateTexture(pixels unsafe.Pointer, width, height int) TextureID {
-	return *newTextureIDFromC(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
+	tex := C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height))
+	return *newTextureIDFromC(&tex)
 }
 
 func (b *GLFWBackend) CreateTextureRgba(img *image.RGBA, width, height int) TextureID {
-	return *newTextureIDFromC(C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height)))
+	tex := C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height))
+	return *newTextureIDFromC(&tex)
 }
 
 func (b *GLFWBackend) DeleteTexture(id TextureID) {
