@@ -115,7 +115,8 @@ import "unsafe"
 			fmt.Fprintf(callbacksGoSb, `
 type %[1]s %[2]s
 
-func (self *%[1]s) handle() (result *C.%[6]s, fin func()) {
+func (selfSrc *%[1]s) handle() (result *C.%[6]s, fin func()) {
+	self := (*%[2]s)(selfSrc)
     %[3]s
     return (*C.%[6]s)(%[4]s), func() { %[5]s }
 }
@@ -126,7 +127,7 @@ func (self %[1]s) c() (C.%[6]s, func()) {
 }
 
 func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
-	return %[10]s
+	return (*%[1]s)(%[10]s)
 }
 `,
 				k.renameGoIdentifier(),
