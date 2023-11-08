@@ -8,7 +8,6 @@ package imgui
 // #include "extra_types.h"
 // #include "cimmarkdown_wrapper.h"
 import "C"
-import "unsafe"
 
 type Emphasis struct {
 	data *C.Emphasis

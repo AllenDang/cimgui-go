@@ -26,6 +26,7 @@ define generate
 	go run mvdan.cc/gofumpt@latest -w $(1)_funcs.go
 	go run mvdan.cc/gofumpt@latest -w $(1)_typedefs.go
 	go run golang.org/x/tools/cmd/goimports@latest -w $(1)_funcs.go
+	go run golang.org/x/tools/cmd/goimports@latest -w $(1)_typedefs.go
 endef
 
 define cimgui

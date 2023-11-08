@@ -8,7 +8,6 @@ package imgui
 // #include "extra_types.h"
 // #include "cimplot_wrapper.h"
 import "C"
-import "unsafe"
 
 type FormatterTimeData struct {
 	data *C.Formatter_Time_Data
