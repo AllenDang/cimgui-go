@@ -525,7 +525,8 @@ func newGroupDataFromC(cvalue *C.ImGuiGroupData) *GroupData {
 
 type ID uint32
 
-func (self *ID) handle() (result *C.ImGuiID, fin func()) {
+func (selfSrc *ID) handle() (result *C.ImGuiID, fin func()) {
+	self := (*uint32)(selfSrc)
 	selfArg, selfFin := WrapNumberPtr[C.uint, uint32](self)
 	return (*C.ImGuiID)(selfArg), func() { selfFin() }
 }
@@ -535,7 +536,7 @@ func (self ID) c() (C.ImGuiID, func()) {
 }
 
 func newIDFromC(cvalue *C.ImGuiID) *ID {
-	return (*uint32)(cvalue)
+	return (*ID)((*uint32)(cvalue))
 }
 
 type IO struct {
@@ -761,7 +762,8 @@ func newInputTextStateFromC(cvalue *C.ImGuiInputTextState) *InputTextState {
 
 type KeyChord int32
 
-func (self *KeyChord) handle() (result *C.ImGuiKeyChord, fin func()) {
+func (selfSrc *KeyChord) handle() (result *C.ImGuiKeyChord, fin func()) {
+	self := (*int32)(selfSrc)
 	selfArg, selfFin := WrapNumberPtr[C.int, int32](self)
 	return (*C.ImGuiKeyChord)(selfArg), func() { selfFin() }
 }
@@ -771,7 +773,7 @@ func (self KeyChord) c() (C.ImGuiKeyChord, func()) {
 }
 
 func newKeyChordFromC(cvalue *C.ImGuiKeyChord) *KeyChord {
-	return (*int32)(cvalue)
+	return (*KeyChord)((*int32)(cvalue))
 }
 
 type KeyData struct {
@@ -1490,7 +1492,8 @@ func newTableColumnsSettingsFromC(cvalue *C.ImGuiTableColumnsSettings) *TableCol
 
 type TableDrawChannelIdx uint16
 
-func (self *TableDrawChannelIdx) handle() (result *C.ImGuiTableDrawChannelIdx, fin func()) {
+func (selfSrc *TableDrawChannelIdx) handle() (result *C.ImGuiTableDrawChannelIdx, fin func()) {
+	self := (*uint16)(selfSrc)
 	selfArg, selfFin := WrapNumberPtr[C.ImU16, uint16](self)
 	return (*C.ImGuiTableDrawChannelIdx)(selfArg), func() { selfFin() }
 }
@@ -1500,7 +1503,7 @@ func (self TableDrawChannelIdx) c() (C.ImGuiTableDrawChannelIdx, func()) {
 }
 
 func newTableDrawChannelIdxFromC(cvalue *C.ImGuiTableDrawChannelIdx) *TableDrawChannelIdx {
-	return (*uint16)(cvalue)
+	return (*TableDrawChannelIdx)((*uint16)(cvalue))
 }
 
 type TableInstanceData struct {
@@ -1811,7 +1814,8 @@ func newWindowTempDataFromC(cvalue *C.ImGuiWindowTempData) *WindowTempData {
 
 type PoolIdx int32
 
-func (self *PoolIdx) handle() (result *C.ImPoolIdx, fin func()) {
+func (selfSrc *PoolIdx) handle() (result *C.ImPoolIdx, fin func()) {
+	self := (*int32)(selfSrc)
 	selfArg, selfFin := WrapNumberPtr[C.int, int32](self)
 	return (*C.ImPoolIdx)(selfArg), func() { selfFin() }
 }
@@ -1821,7 +1825,7 @@ func (self PoolIdx) c() (C.ImPoolIdx, func()) {
 }
 
 func newPoolIdxFromC(cvalue *C.ImPoolIdx) *PoolIdx {
-	return (*int32)(cvalue)
+	return (*PoolIdx)((*int32)(cvalue))
 }
 
 type TextureID struct {
@@ -1863,7 +1867,8 @@ func newVec1FromC(cvalue *C.ImVec1) *Vec1 {
 
 type Wchar32 uint32
 
-func (self *Wchar32) handle() (result *C.ImWchar32, fin func()) {
+func (selfSrc *Wchar32) handle() (result *C.ImWchar32, fin func()) {
+	self := (*uint32)(selfSrc)
 	selfArg, selfFin := WrapNumberPtr[C.uint, uint32](self)
 	return (*C.ImWchar32)(selfArg), func() { selfFin() }
 }
@@ -1873,7 +1878,7 @@ func (self Wchar32) c() (C.ImWchar32, func()) {
 }
 
 func newWchar32FromC(cvalue *C.ImWchar32) *Wchar32 {
-	return (*uint32)(cvalue)
+	return (*Wchar32)((*uint32)(cvalue))
 }
 
 type STBTexteditState struct {
