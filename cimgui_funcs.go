@@ -75,15 +75,6 @@ func (self *Color) Destroy() {
 	selfFin()
 }
 
-func (self *DrawCmd) TexID() TextureID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return *newTextureIDFromC(func() *C.ImTextureID { result := C.ImDrawCmd_GetTexID(selfArg); return &result }())
-}
-
 // Also ensure our padding fields are zeroed
 func NewDrawCmd() *DrawCmd {
 	return newDrawCmdFromC(C.ImDrawCmd_ImDrawCmd())
@@ -297,45 +288,6 @@ func (self *DrawList) AddEllipseFilledV(center Vec2, radius_x float32, radius_y 
 	C.ImDrawList_AddEllipseFilled(selfArg, center.toC(), C.float(radius_x), C.float(radius_y), C.ImU32(col), C.float(rot), C.int(num_segments))
 
 	selfFin()
-}
-
-// AddImageV parameter default value hint:
-// uv_min: ImVec2(0,0)
-// uv_max: ImVec2(1,1)
-// col: 4294967295
-func (self *DrawList) AddImageV(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32) {
-	selfArg, selfFin := self.handle()
-	user_texture_idArg, user_texture_idFin := user_texture_id.c()
-	C.ImDrawList_AddImage(selfArg, user_texture_idArg, p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col))
-
-	selfFin()
-	user_texture_idFin()
-}
-
-// AddImageQuadV parameter default value hint:
-// uv1: ImVec2(0,0)
-// uv2: ImVec2(1,0)
-// uv3: ImVec2(1,1)
-// uv4: ImVec2(0,1)
-// col: 4294967295
-func (self *DrawList) AddImageQuadV(user_texture_id TextureID, p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, uv1 Vec2, uv2 Vec2, uv3 Vec2, uv4 Vec2, col uint32) {
-	selfArg, selfFin := self.handle()
-	user_texture_idArg, user_texture_idFin := user_texture_id.c()
-	C.ImDrawList_AddImageQuad(selfArg, user_texture_idArg, p1.toC(), p2.toC(), p3.toC(), p4.toC(), uv1.toC(), uv2.toC(), uv3.toC(), uv4.toC(), C.ImU32(col))
-
-	selfFin()
-	user_texture_idFin()
-}
-
-// AddImageRoundedV parameter default value hint:
-// flags: 0
-func (self *DrawList) AddImageRoundedV(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32, rounding float32, flags DrawFlags) {
-	selfArg, selfFin := self.handle()
-	user_texture_idArg, user_texture_idFin := user_texture_id.c()
-	C.ImDrawList_AddImageRounded(selfArg, user_texture_idArg, p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
-
-	selfFin()
-	user_texture_idFin()
 }
 
 // AddLineV parameter default value hint:
@@ -679,15 +631,6 @@ func (self *DrawList) PrimVtx(pos Vec2, uv Vec2, col uint32) {
 	selfFin()
 }
 
-func (self *DrawList) PrimWriteIdx(idx DrawIdx) {
-	selfArg, selfFin := self.handle()
-	idxArg, idxFin := idx.c()
-	C.ImDrawList_PrimWriteIdx(selfArg, idxArg)
-
-	selfFin()
-	idxFin()
-}
-
 func (self *DrawList) PrimWriteVtx(pos Vec2, uv Vec2, col uint32) {
 	selfArg, selfFin := self.handle()
 	C.ImDrawList_PrimWriteVtx(selfArg, pos.toC(), uv.toC(), C.ImU32(col))
@@ -710,15 +653,6 @@ func (self *DrawList) PushClipRectFullScreen() {
 	C.ImDrawList_PushClipRectFullScreen(selfArg)
 
 	selfFin()
-}
-
-func (self *DrawList) PushTextureID(texture_id TextureID) {
-	selfArg, selfFin := self.handle()
-	texture_idArg, texture_idFin := texture_id.c()
-	C.ImDrawList_PushTextureID(selfArg, texture_idArg)
-
-	selfFin()
-	texture_idFin()
 }
 
 func (self *DrawList) CalcCircleAutoSegmentCount(radius float32) int32 {
@@ -1133,15 +1067,6 @@ func (self *FontAtlas) IsBuilt() bool {
 		selfFin()
 	}()
 	return C.ImFontAtlas_IsBuilt(selfArg) == C.bool(true)
-}
-
-func (self *FontAtlas) SetTexID(id TextureID) {
-	selfArg, selfFin := self.handle()
-	idArg, idFin := id.c()
-	C.ImFontAtlas_SetTexID(selfArg, idArg)
-
-	selfFin()
-	idFin()
 }
 
 func (self *FontAtlas) Destroy() {
@@ -7220,47 +7145,6 @@ func InternalImUpperPowerOfTwo(v int32) int32 {
 	return int32(C.igImUpperPowerOfTwo(C.int(v)))
 }
 
-// ImageV parameter default value hint:
-// uv0: ImVec2(0,0)
-// uv1: ImVec2(1,1)
-// tint_col: ImVec4(1,1,1,1)
-// border_col: ImVec4(0,0,0,0)
-func ImageV(user_texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, tint_col Vec4, border_col Vec4) {
-	user_texture_idArg, user_texture_idFin := user_texture_id.c()
-	C.igImage(user_texture_idArg, size.toC(), uv0.toC(), uv1.toC(), tint_col.toC(), border_col.toC())
-
-	user_texture_idFin()
-}
-
-// ImageButtonV parameter default value hint:
-// uv0: ImVec2(0,0)
-// uv1: ImVec2(1,1)
-// bg_col: ImVec4(0,0,0,0)
-// tint_col: ImVec4(1,1,1,1)
-func ImageButtonV(str_id string, user_texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, bg_col Vec4, tint_col Vec4) bool {
-	str_idArg, str_idFin := WrapString(str_id)
-	user_texture_idArg, user_texture_idFin := user_texture_id.c()
-
-	defer func() {
-		str_idFin()
-		user_texture_idFin()
-	}()
-	return C.igImageButton(str_idArg, user_texture_idArg, size.toC(), uv0.toC(), uv1.toC(), bg_col.toC(), tint_col.toC()) == C.bool(true)
-}
-
-// InternalImageButtonExV parameter default value hint:
-// flags: 0
-func InternalImageButtonExV(id ID, texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, bg_col Vec4, tint_col Vec4, flags ButtonFlags) bool {
-	idArg, idFin := id.c()
-	texture_idArg, texture_idFin := texture_id.c()
-
-	defer func() {
-		idFin()
-		texture_idFin()
-	}()
-	return C.igImageButtonEx(idArg, texture_idArg, size.toC(), uv0.toC(), uv1.toC(), bg_col.toC(), tint_col.toC(), C.ImGuiButtonFlags(flags)) == C.bool(true)
-}
-
 // move content position toward the right, by indent_w, or style.IndentSpacing if indent_w <= 0
 // IndentV parameter default value hint:
 // indent_w: 0.0f
@@ -9020,13 +8904,6 @@ func SetNextItemAllowOverlap() {
 // cond: 0
 func SetNextItemOpenV(is_open bool, cond Cond) {
 	C.igSetNextItemOpen(C.bool(is_open), C.ImGuiCond(cond))
-}
-
-func InternalSetNextItemSelectionUserData(selection_user_data SelectionUserData) {
-	selection_user_dataArg, selection_user_dataFin := selection_user_data.c()
-	C.igSetNextItemSelectionUserData(selection_user_dataArg)
-
-	selection_user_dataFin()
 }
 
 // set width of the _next_ common large "item+label" widget. >0.0f: width in pixels, <0.0f align xx pixels to the right of window (so -FLT_MIN always align width to the right side)
@@ -10885,33 +10762,6 @@ func (self *DrawList) AddEllipseFilled(center Vec2, radius_x float32, radius_y f
 	selfFin()
 }
 
-func (self *DrawList) AddImage(user_texture_id TextureID, p_min Vec2, p_max Vec2) {
-	selfArg, selfFin := self.handle()
-	user_texture_idArg, user_texture_idFin := user_texture_id.c()
-	C.wrap_ImDrawList_AddImage(selfArg, user_texture_idArg, p_min.toC(), p_max.toC())
-
-	selfFin()
-	user_texture_idFin()
-}
-
-func (self *DrawList) AddImageQuad(user_texture_id TextureID, p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2) {
-	selfArg, selfFin := self.handle()
-	user_texture_idArg, user_texture_idFin := user_texture_id.c()
-	C.wrap_ImDrawList_AddImageQuad(selfArg, user_texture_idArg, p1.toC(), p2.toC(), p3.toC(), p4.toC())
-
-	selfFin()
-	user_texture_idFin()
-}
-
-func (self *DrawList) AddImageRounded(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32, rounding float32) {
-	selfArg, selfFin := self.handle()
-	user_texture_idArg, user_texture_idFin := user_texture_id.c()
-	C.wrap_ImDrawList_AddImageRounded(selfArg, user_texture_idArg, p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col), C.float(rounding))
-
-	selfFin()
-	user_texture_idFin()
-}
-
 func (self *DrawList) AddLine(p1 Vec2, p2 Vec2, col uint32) {
 	selfArg, selfFin := self.handle()
 	C.wrap_ImDrawList_AddLine(selfArg, p1.toC(), p2.toC(), C.ImU32(col))
@@ -11904,35 +11754,6 @@ func InternalImTextStrFromUtf8(out_buf *Wchar, out_buf_size int32, in_text strin
 		in_text_endFin()
 	}()
 	return int32(C.wrap_igImTextStrFromUtf8((*C.ImWchar)(out_buf), C.int(out_buf_size), in_textArg, in_text_endArg))
-}
-
-func Image(user_texture_id TextureID, size Vec2) {
-	user_texture_idArg, user_texture_idFin := user_texture_id.c()
-	C.wrap_igImage(user_texture_idArg, size.toC())
-
-	user_texture_idFin()
-}
-
-func ImageButton(str_id string, user_texture_id TextureID, size Vec2) bool {
-	str_idArg, str_idFin := WrapString(str_id)
-	user_texture_idArg, user_texture_idFin := user_texture_id.c()
-
-	defer func() {
-		str_idFin()
-		user_texture_idFin()
-	}()
-	return C.wrap_igImageButton(str_idArg, user_texture_idArg, size.toC()) == C.bool(true)
-}
-
-func InternalImageButtonEx(id ID, texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, bg_col Vec4, tint_col Vec4) bool {
-	idArg, idFin := id.c()
-	texture_idArg, texture_idFin := texture_id.c()
-
-	defer func() {
-		idFin()
-		texture_idFin()
-	}()
-	return C.wrap_igImageButtonEx(idArg, texture_idArg, size.toC(), uv0.toC(), uv1.toC(), bg_col.toC(), tint_col.toC()) == C.bool(true)
 }
 
 func Indent() {
@@ -13030,29 +12851,6 @@ func (self *DrawChannel) CmdBuffer() Vector[*DrawCmd] {
 	return newVectorFromC(C.wrap_ImDrawChannel_Get_CmdBuffer(selfArg).Size, C.wrap_ImDrawChannel_Get_CmdBuffer(selfArg).Capacity, newDrawCmdFromC(C.wrap_ImDrawChannel_Get_CmdBuffer(selfArg).Data))
 }
 
-func (self DrawChannel) SetIdxBuffer(v Vector[*DrawIdx]) {
-	vData := v.Data
-	vDataArg, _ := vData.handle()
-	vVecArg := new(C.ImVector_ImDrawIdx)
-	vVecArg.Size = C.int(v.Size)
-	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImDrawChannel_Set_IdxBuffer(selfArg, *vVecArg)
-}
-
-func (self *DrawChannel) IdxBuffer() Vector[*DrawIdx] {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return newVectorFromC(C.wrap_ImDrawChannel_Get_IdxBuffer(selfArg).Size, C.wrap_ImDrawChannel_Get_IdxBuffer(selfArg).Capacity, newDrawIdxFromC(C.wrap_ImDrawChannel_Get_IdxBuffer(selfArg).Data))
-}
-
 func (self DrawCmd) SetClipRect(v Vec4) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -13066,25 +12864,6 @@ func (self *DrawCmd) ClipRect() Vec4 {
 		selfFin()
 	}()
 	return *(&Vec4{}).fromC(C.wrap_ImDrawCmd_GetClipRect(selfArg))
-}
-
-func (self DrawCmd) SetTextureId(v TextureID) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImDrawCmd_SetTextureId(selfArg, vArg)
-}
-
-func (self *DrawCmd) TextureId() TextureID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImDrawCmd_GetTextureId(selfArg)
-	return *newTextureIDFromC(func() *C.ImTextureID { result := result; return &result }())
 }
 
 func (self DrawCmd) SetVtxOffset(v uint32) {
@@ -13162,25 +12941,6 @@ func (self *DrawCmdHeader) ClipRect() Vec4 {
 		selfFin()
 	}()
 	return *(&Vec4{}).fromC(C.wrap_ImDrawCmdHeader_GetClipRect(selfArg))
-}
-
-func (self DrawCmdHeader) SetTextureId(v TextureID) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImDrawCmdHeader_SetTextureId(selfArg, vArg)
-}
-
-func (self *DrawCmdHeader) TextureId() TextureID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImDrawCmdHeader_GetTextureId(selfArg)
-	return *newTextureIDFromC(func() *C.ImTextureID { result := result; return &result }())
 }
 
 func (self DrawCmdHeader) SetVtxOffset(v uint32) {
@@ -13343,29 +13103,6 @@ func (self *DrawList) CmdBuffer() Vector[*DrawCmd] {
 	return newVectorFromC(C.wrap_ImDrawList_GetCmdBuffer(selfArg).Size, C.wrap_ImDrawList_GetCmdBuffer(selfArg).Capacity, newDrawCmdFromC(C.wrap_ImDrawList_GetCmdBuffer(selfArg).Data))
 }
 
-func (self DrawList) SetIdxBuffer(v Vector[*DrawIdx]) {
-	vData := v.Data
-	vDataArg, _ := vData.handle()
-	vVecArg := new(C.ImVector_ImDrawIdx)
-	vVecArg.Size = C.int(v.Size)
-	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImDrawList_SetIdxBuffer(selfArg, *vVecArg)
-}
-
-func (self *DrawList) IdxBuffer() Vector[*DrawIdx] {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return newVectorFromC(C.wrap_ImDrawList_GetIdxBuffer(selfArg).Size, C.wrap_ImDrawList_GetIdxBuffer(selfArg).Capacity, newDrawIdxFromC(C.wrap_ImDrawList_GetIdxBuffer(selfArg).Data))
-}
-
 func (self DrawList) SetVtxBuffer(v Vector[*DrawVert]) {
 	vData := v.Data
 	vDataArg, _ := vData.handle()
@@ -13470,23 +13207,6 @@ func (self *DrawList) VtxWritePtr() *DrawVert {
 	return newDrawVertFromC(C.wrap_ImDrawList_Get_VtxWritePtr(selfArg))
 }
 
-func (self DrawList) SetIdxWritePtr(v *DrawIdx) {
-	vArg, _ := v.handle()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImDrawList_Set_IdxWritePtr(selfArg, vArg)
-}
-
-func (self *DrawList) IdxWritePtr() *DrawIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return newDrawIdxFromC(C.wrap_ImDrawList_Get_IdxWritePtr(selfArg))
-}
-
 func (self DrawList) SetClipRectStack(v Vector[*Vec4]) {
 	vData := v.Data
 	vDataArg, _ := wrap[C.ImVec4, *Vec4](vData)
@@ -13499,29 +13219,6 @@ func (self DrawList) SetClipRectStack(v Vector[*Vec4]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImDrawList_Set_ClipRectStack(selfArg, *vVecArg)
-}
-
-func (self DrawList) SetTextureIdStack(v Vector[*TextureID]) {
-	vData := v.Data
-	vDataArg, _ := vData.handle()
-	vVecArg := new(C.ImVector_ImTextureID)
-	vVecArg.Size = C.int(v.Size)
-	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImDrawList_Set_TextureIdStack(selfArg, *vVecArg)
-}
-
-func (self *DrawList) TextureIdStack() Vector[*TextureID] {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return newVectorFromC(C.wrap_ImDrawList_Get_TextureIdStack(selfArg).Size, C.wrap_ImDrawList_Get_TextureIdStack(selfArg).Capacity, newTextureIDFromC(C.wrap_ImDrawList_Get_TextureIdStack(selfArg).Data))
 }
 
 func (self DrawList) SetPath(v Vector[*Vec2]) {
@@ -17019,25 +16716,6 @@ func (self *Context) NavLayer() NavLayer {
 		selfFin()
 	}()
 	return NavLayer(C.wrap_ImGuiContext_GetNavLayer(selfArg))
-}
-
-func (self Context) SetNavLastValidSelectionUserData(v SelectionUserData) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetNavLastValidSelectionUserData(selfArg, vArg)
-}
-
-func (self *Context) NavLastValidSelectionUserData() SelectionUserData {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiContext_GetNavLastValidSelectionUserData(selfArg)
-	return *newSelectionUserDataFromC(func() *C.ImGuiSelectionUserData { result := result; return &result }())
 }
 
 func (self Context) SetNavIdIsAlive(v bool) {
@@ -21626,9 +21304,7 @@ func (self *IO) InputQueueSurrogate() uint16 {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImGuiIO_GetInputQueueSurrogate(selfArg)
-	return uint16(result)
+	return uint16(C.wrap_ImGuiIO_GetInputQueueSurrogate(selfArg))
 }
 
 func (self IO) SetInputQueueCharacters(v Vector[(*Wchar)]) {
@@ -22588,25 +22264,6 @@ func (self *KeyOwnerData) LockUntilRelease() bool {
 	return C.wrap_ImGuiKeyOwnerData_GetLockUntilRelease(selfArg) == C.bool(true)
 }
 
-func (self KeyRoutingData) SetNextEntryIndex(v KeyRoutingIndex) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiKeyRoutingData_SetNextEntryIndex(selfArg, vArg)
-}
-
-func (self *KeyRoutingData) NextEntryIndex() KeyRoutingIndex {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiKeyRoutingData_GetNextEntryIndex(selfArg)
-	return *newKeyRoutingIndexFromC(func() *C.ImGuiKeyRoutingIndex { result := result; return &result }())
-}
-
 func (self KeyRoutingData) SetMods(v uint16) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -23471,25 +23128,6 @@ func (self *NavItemData) InFlags() ItemFlags {
 	return ItemFlags(C.wrap_ImGuiNavItemData_GetInFlags(selfArg))
 }
 
-func (self NavItemData) SetSelectionUserData(v SelectionUserData) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiNavItemData_SetSelectionUserData(selfArg, vArg)
-}
-
-func (self *NavItemData) SelectionUserData() SelectionUserData {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiNavItemData_GetSelectionUserData(selfArg)
-	return *newSelectionUserDataFromC(func() *C.ImGuiSelectionUserData { result := result; return &result }())
-}
-
 func (self NavItemData) SetDistBox(v float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -23627,25 +23265,6 @@ func (self *NextItemData) Width() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiNextItemData_GetWidth(selfArg))
-}
-
-func (self NextItemData) SetSelectionUserData(v SelectionUserData) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiNextItemData_SetSelectionUserData(selfArg, vArg)
-}
-
-func (self *NextItemData) SelectionUserData() SelectionUserData {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiNextItemData_GetSelectionUserData(selfArg)
-	return *newSelectionUserDataFromC(func() *C.ImGuiSelectionUserData { result := result; return &result }())
 }
 
 func (self NextItemData) SetOpenCond(v Cond) {
@@ -27644,424 +27263,6 @@ func (self *Table) SortSpecs() TableSortSpecs {
 	return *newTableSortSpecsFromC(func() *C.ImGuiTableSortSpecs { result := result; return &result }())
 }
 
-func (self Table) SetSortSpecsCount(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetSortSpecsCount(selfArg, vArg)
-}
-
-func (self *Table) SortSpecsCount() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetSortSpecsCount(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetColumnsEnabledCount(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetColumnsEnabledCount(selfArg, vArg)
-}
-
-func (self *Table) ColumnsEnabledCount() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetColumnsEnabledCount(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetColumnsEnabledFixedCount(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetColumnsEnabledFixedCount(selfArg, vArg)
-}
-
-func (self *Table) ColumnsEnabledFixedCount() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetColumnsEnabledFixedCount(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetDeclColumnsCount(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetDeclColumnsCount(selfArg, vArg)
-}
-
-func (self *Table) DeclColumnsCount() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetDeclColumnsCount(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetHoveredColumnBody(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetHoveredColumnBody(selfArg, vArg)
-}
-
-func (self *Table) HoveredColumnBody() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetHoveredColumnBody(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetHoveredColumnBorder(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetHoveredColumnBorder(selfArg, vArg)
-}
-
-func (self *Table) HoveredColumnBorder() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetHoveredColumnBorder(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetAutoFitSingleColumn(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetAutoFitSingleColumn(selfArg, vArg)
-}
-
-func (self *Table) AutoFitSingleColumn() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetAutoFitSingleColumn(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetResizedColumn(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetResizedColumn(selfArg, vArg)
-}
-
-func (self *Table) ResizedColumn() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetResizedColumn(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetLastResizedColumn(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetLastResizedColumn(selfArg, vArg)
-}
-
-func (self *Table) LastResizedColumn() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetLastResizedColumn(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetHeldHeaderColumn(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetHeldHeaderColumn(selfArg, vArg)
-}
-
-func (self *Table) HeldHeaderColumn() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetHeldHeaderColumn(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetReorderColumn(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetReorderColumn(selfArg, vArg)
-}
-
-func (self *Table) ReorderColumn() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetReorderColumn(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetReorderColumnDir(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetReorderColumnDir(selfArg, vArg)
-}
-
-func (self *Table) ReorderColumnDir() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetReorderColumnDir(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetLeftMostEnabledColumn(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetLeftMostEnabledColumn(selfArg, vArg)
-}
-
-func (self *Table) LeftMostEnabledColumn() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetLeftMostEnabledColumn(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetRightMostEnabledColumn(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetRightMostEnabledColumn(selfArg, vArg)
-}
-
-func (self *Table) RightMostEnabledColumn() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetRightMostEnabledColumn(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetLeftMostStretchedColumn(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetLeftMostStretchedColumn(selfArg, vArg)
-}
-
-func (self *Table) LeftMostStretchedColumn() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetLeftMostStretchedColumn(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetRightMostStretchedColumn(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetRightMostStretchedColumn(selfArg, vArg)
-}
-
-func (self *Table) RightMostStretchedColumn() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetRightMostStretchedColumn(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetContextPopupColumn(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetContextPopupColumn(selfArg, vArg)
-}
-
-func (self *Table) ContextPopupColumn() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetContextPopupColumn(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetFreezeRowsRequest(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetFreezeRowsRequest(selfArg, vArg)
-}
-
-func (self *Table) FreezeRowsRequest() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetFreezeRowsRequest(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetFreezeRowsCount(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetFreezeRowsCount(selfArg, vArg)
-}
-
-func (self *Table) FreezeRowsCount() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetFreezeRowsCount(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetFreezeColumnsRequest(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetFreezeColumnsRequest(selfArg, vArg)
-}
-
-func (self *Table) FreezeColumnsRequest() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetFreezeColumnsRequest(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetFreezeColumnsCount(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetFreezeColumnsCount(selfArg, vArg)
-}
-
-func (self *Table) FreezeColumnsCount() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetFreezeColumnsCount(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self Table) SetRowCellDataCurrent(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTable_SetRowCellDataCurrent(selfArg, vArg)
-}
-
-func (self *Table) RowCellDataCurrent() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTable_GetRowCellDataCurrent(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
 func (self Table) SetDummyDrawChannel(v TableDrawChannelIdx) {
 	vArg, _ := v.c()
 
@@ -28389,25 +27590,6 @@ func (self *TableCellData) BgColor() uint32 {
 	return uint32(C.wrap_ImGuiTableCellData_GetBgColor(selfArg))
 }
 
-func (self TableCellData) SetColumn(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTableCellData_SetColumn(selfArg, vArg)
-}
-
-func (self *TableCellData) Column() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTableCellData_GetColumn(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
 func (self TableColumn) SetFlags(v TableColumnFlags) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -28680,101 +27862,6 @@ func (self *TableColumn) NameOffset() int {
 		selfFin()
 	}()
 	return int(C.wrap_ImGuiTableColumn_GetNameOffset(selfArg))
-}
-
-func (self TableColumn) SetDisplayOrder(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTableColumn_SetDisplayOrder(selfArg, vArg)
-}
-
-func (self *TableColumn) DisplayOrder() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTableColumn_GetDisplayOrder(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self TableColumn) SetIndexWithinEnabledSet(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTableColumn_SetIndexWithinEnabledSet(selfArg, vArg)
-}
-
-func (self *TableColumn) IndexWithinEnabledSet() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTableColumn_GetIndexWithinEnabledSet(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self TableColumn) SetPrevEnabledColumn(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTableColumn_SetPrevEnabledColumn(selfArg, vArg)
-}
-
-func (self *TableColumn) PrevEnabledColumn() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTableColumn_GetPrevEnabledColumn(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self TableColumn) SetNextEnabledColumn(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTableColumn_SetNextEnabledColumn(selfArg, vArg)
-}
-
-func (self *TableColumn) NextEnabledColumn() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTableColumn_GetNextEnabledColumn(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self TableColumn) SetSortOrder(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTableColumn_SetSortOrder(selfArg, vArg)
-}
-
-func (self *TableColumn) SortOrder() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTableColumn_GetSortOrder(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
 }
 
 func (self TableColumn) SetDrawChannelCurrent(v TableDrawChannelIdx) {
@@ -29093,63 +28180,6 @@ func (self *TableColumnSettings) UserID() ID {
 	return *newIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
-func (self TableColumnSettings) SetIndex(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTableColumnSettings_SetIndex(selfArg, vArg)
-}
-
-func (self *TableColumnSettings) Index() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTableColumnSettings_GetIndex(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self TableColumnSettings) SetDisplayOrder(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTableColumnSettings_SetDisplayOrder(selfArg, vArg)
-}
-
-func (self *TableColumnSettings) DisplayOrder() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTableColumnSettings_GetDisplayOrder(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self TableColumnSettings) SetSortOrder(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTableColumnSettings_SetSortOrder(selfArg, vArg)
-}
-
-func (self *TableColumnSettings) SortOrder() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTableColumnSettings_GetSortOrder(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
 func (self TableColumnSettings) SetSortDirection(v byte) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -29400,44 +28430,6 @@ func (self *TableSettings) RefScale() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiTableSettings_GetRefScale(selfArg))
-}
-
-func (self TableSettings) SetColumnsCount(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTableSettings_SetColumnsCount(selfArg, vArg)
-}
-
-func (self *TableSettings) ColumnsCount() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTableSettings_GetColumnsCount(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
-}
-
-func (self TableSettings) SetColumnsCountMax(v TableColumnIdx) {
-	vArg, _ := v.c()
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImGuiTableSettings_SetColumnsCountMax(selfArg, vArg)
-}
-
-func (self *TableSettings) ColumnsCountMax() TableColumnIdx {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImGuiTableSettings_GetColumnsCountMax(selfArg)
-	return *newTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
 }
 
 func (self TableSettings) SetWantApply(v bool) {

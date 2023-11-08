@@ -10,232 +10,1896 @@ package imgui
 import "C"
 import "unsafe"
 
-type DrawIdx uint16
-
-func (self DrawIdx) handle() (result *C.ImDrawIdx, fin func()) {
-	return (*C.ImDrawIdx)(C.ushort(self)), func() {}
+type BitVector struct {
+	data *C.ImBitVector
 }
 
-func (self DrawIdx) c() (C.ImDrawIdx, func()) {
-	result, fin := self.handle()
-	return *result, fin
+func (self *BitVector) handle() (result *C.ImBitVector, fin func()) {
+	return self.data, func() {}
 }
 
-func newDrawIdxFromC(cvalue *C.ImDrawIdx) *DrawIdx {
-	return uint16(cvalue)
+func (self BitVector) c() (C.ImBitVector, func()) {
+	result, fn := self.handle()
+	return *result, fn
 }
 
-type DockNodeSettings C.ImGuiDockNodeSettings
+func newBitVectorFromC(cvalue *C.ImBitVector) *BitVector {
+	return &BitVector{data: cvalue}
+}
 
-func (self DockNodeSettings) handle() (result *C.ImGuiDockNodeSettings, fin func()) {
-	result = (*C.ImGuiDockNodeSettings)(unsafe.Pointer(&self))
-	return result, func() {}
+type DrawChannel struct {
+	data *C.ImDrawChannel
+}
+
+func (self *DrawChannel) handle() (result *C.ImDrawChannel, fin func()) {
+	return self.data, func() {}
+}
+
+func (self DrawChannel) c() (C.ImDrawChannel, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDrawChannelFromC(cvalue *C.ImDrawChannel) *DrawChannel {
+	return &DrawChannel{data: cvalue}
+}
+
+type DrawCmd struct {
+	data *C.ImDrawCmd
+}
+
+func (self *DrawCmd) handle() (result *C.ImDrawCmd, fin func()) {
+	return self.data, func() {}
+}
+
+func (self DrawCmd) c() (C.ImDrawCmd, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDrawCmdFromC(cvalue *C.ImDrawCmd) *DrawCmd {
+	return &DrawCmd{data: cvalue}
+}
+
+type DrawCmdHeader struct {
+	data *C.ImDrawCmdHeader
+}
+
+func (self *DrawCmdHeader) handle() (result *C.ImDrawCmdHeader, fin func()) {
+	return self.data, func() {}
+}
+
+func (self DrawCmdHeader) c() (C.ImDrawCmdHeader, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDrawCmdHeaderFromC(cvalue *C.ImDrawCmdHeader) *DrawCmdHeader {
+	return &DrawCmdHeader{data: cvalue}
+}
+
+type DrawData struct {
+	data *C.ImDrawData
+}
+
+func (self *DrawData) handle() (result *C.ImDrawData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self DrawData) c() (C.ImDrawData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDrawDataFromC(cvalue *C.ImDrawData) *DrawData {
+	return &DrawData{data: cvalue}
+}
+
+type DrawDataBuilder struct {
+	data *C.ImDrawDataBuilder
+}
+
+func (self *DrawDataBuilder) handle() (result *C.ImDrawDataBuilder, fin func()) {
+	return self.data, func() {}
+}
+
+func (self DrawDataBuilder) c() (C.ImDrawDataBuilder, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDrawDataBuilderFromC(cvalue *C.ImDrawDataBuilder) *DrawDataBuilder {
+	return &DrawDataBuilder{data: cvalue}
+}
+
+type DrawList struct {
+	data *C.ImDrawList
+}
+
+func (self *DrawList) handle() (result *C.ImDrawList, fin func()) {
+	return self.data, func() {}
+}
+
+func (self DrawList) c() (C.ImDrawList, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDrawListFromC(cvalue *C.ImDrawList) *DrawList {
+	return &DrawList{data: cvalue}
+}
+
+type DrawListSharedData struct {
+	data *C.ImDrawListSharedData
+}
+
+func (self *DrawListSharedData) handle() (result *C.ImDrawListSharedData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self DrawListSharedData) c() (C.ImDrawListSharedData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDrawListSharedDataFromC(cvalue *C.ImDrawListSharedData) *DrawListSharedData {
+	return &DrawListSharedData{data: cvalue}
+}
+
+type DrawListSplitter struct {
+	data *C.ImDrawListSplitter
+}
+
+func (self *DrawListSplitter) handle() (result *C.ImDrawListSplitter, fin func()) {
+	return self.data, func() {}
+}
+
+func (self DrawListSplitter) c() (C.ImDrawListSplitter, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDrawListSplitterFromC(cvalue *C.ImDrawListSplitter) *DrawListSplitter {
+	return &DrawListSplitter{data: cvalue}
+}
+
+type DrawVert struct {
+	data *C.ImDrawVert
+}
+
+func (self *DrawVert) handle() (result *C.ImDrawVert, fin func()) {
+	return self.data, func() {}
+}
+
+func (self DrawVert) c() (C.ImDrawVert, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDrawVertFromC(cvalue *C.ImDrawVert) *DrawVert {
+	return &DrawVert{data: cvalue}
+}
+
+type Font struct {
+	data *C.ImFont
+}
+
+func (self *Font) handle() (result *C.ImFont, fin func()) {
+	return self.data, func() {}
+}
+
+func (self Font) c() (C.ImFont, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newFontFromC(cvalue *C.ImFont) *Font {
+	return &Font{data: cvalue}
+}
+
+type FontAtlas struct {
+	data *C.ImFontAtlas
+}
+
+func (self *FontAtlas) handle() (result *C.ImFontAtlas, fin func()) {
+	return self.data, func() {}
+}
+
+func (self FontAtlas) c() (C.ImFontAtlas, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newFontAtlasFromC(cvalue *C.ImFontAtlas) *FontAtlas {
+	return &FontAtlas{data: cvalue}
+}
+
+type FontAtlasCustomRect struct {
+	data *C.ImFontAtlasCustomRect
+}
+
+func (self *FontAtlasCustomRect) handle() (result *C.ImFontAtlasCustomRect, fin func()) {
+	return self.data, func() {}
+}
+
+func (self FontAtlasCustomRect) c() (C.ImFontAtlasCustomRect, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newFontAtlasCustomRectFromC(cvalue *C.ImFontAtlasCustomRect) *FontAtlasCustomRect {
+	return &FontAtlasCustomRect{data: cvalue}
+}
+
+type FontBuilderIO struct {
+	data *C.ImFontBuilderIO
+}
+
+func (self *FontBuilderIO) handle() (result *C.ImFontBuilderIO, fin func()) {
+	return self.data, func() {}
+}
+
+func (self FontBuilderIO) c() (C.ImFontBuilderIO, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newFontBuilderIOFromC(cvalue *C.ImFontBuilderIO) *FontBuilderIO {
+	return &FontBuilderIO{data: cvalue}
+}
+
+type FontConfig struct {
+	data *C.ImFontConfig
+}
+
+func (self *FontConfig) handle() (result *C.ImFontConfig, fin func()) {
+	return self.data, func() {}
+}
+
+func (self FontConfig) c() (C.ImFontConfig, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newFontConfigFromC(cvalue *C.ImFontConfig) *FontConfig {
+	return &FontConfig{data: cvalue}
+}
+
+type FontGlyph struct {
+	data *C.ImFontGlyph
+}
+
+func (self *FontGlyph) handle() (result *C.ImFontGlyph, fin func()) {
+	return self.data, func() {}
+}
+
+func (self FontGlyph) c() (C.ImFontGlyph, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newFontGlyphFromC(cvalue *C.ImFontGlyph) *FontGlyph {
+	return &FontGlyph{data: cvalue}
+}
+
+type FontGlyphRangesBuilder struct {
+	data *C.ImFontGlyphRangesBuilder
+}
+
+func (self *FontGlyphRangesBuilder) handle() (result *C.ImFontGlyphRangesBuilder, fin func()) {
+	return self.data, func() {}
+}
+
+func (self FontGlyphRangesBuilder) c() (C.ImFontGlyphRangesBuilder, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newFontGlyphRangesBuilderFromC(cvalue *C.ImFontGlyphRangesBuilder) *FontGlyphRangesBuilder {
+	return &FontGlyphRangesBuilder{data: cvalue}
+}
+
+type ColorMod struct {
+	data *C.ImGuiColorMod
+}
+
+func (self *ColorMod) handle() (result *C.ImGuiColorMod, fin func()) {
+	return self.data, func() {}
+}
+
+func (self ColorMod) c() (C.ImGuiColorMod, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newColorModFromC(cvalue *C.ImGuiColorMod) *ColorMod {
+	return &ColorMod{data: cvalue}
+}
+
+type ComboPreviewData struct {
+	data *C.ImGuiComboPreviewData
+}
+
+func (self *ComboPreviewData) handle() (result *C.ImGuiComboPreviewData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self ComboPreviewData) c() (C.ImGuiComboPreviewData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newComboPreviewDataFromC(cvalue *C.ImGuiComboPreviewData) *ComboPreviewData {
+	return &ComboPreviewData{data: cvalue}
+}
+
+type Context struct {
+	data *C.ImGuiContext
+}
+
+func (self *Context) handle() (result *C.ImGuiContext, fin func()) {
+	return self.data, func() {}
+}
+
+func (self Context) c() (C.ImGuiContext, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newContextFromC(cvalue *C.ImGuiContext) *Context {
+	return &Context{data: cvalue}
+}
+
+type ContextHook struct {
+	data *C.ImGuiContextHook
+}
+
+func (self *ContextHook) handle() (result *C.ImGuiContextHook, fin func()) {
+	return self.data, func() {}
+}
+
+func (self ContextHook) c() (C.ImGuiContextHook, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newContextHookFromC(cvalue *C.ImGuiContextHook) *ContextHook {
+	return &ContextHook{data: cvalue}
+}
+
+type DataTypeInfo struct {
+	data *C.ImGuiDataTypeInfo
+}
+
+func (self *DataTypeInfo) handle() (result *C.ImGuiDataTypeInfo, fin func()) {
+	return self.data, func() {}
+}
+
+func (self DataTypeInfo) c() (C.ImGuiDataTypeInfo, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDataTypeInfoFromC(cvalue *C.ImGuiDataTypeInfo) *DataTypeInfo {
+	return &DataTypeInfo{data: cvalue}
+}
+
+type DataTypeTempStorage struct {
+	data *C.ImGuiDataTypeTempStorage
+}
+
+func (self *DataTypeTempStorage) handle() (result *C.ImGuiDataTypeTempStorage, fin func()) {
+	return self.data, func() {}
+}
+
+func (self DataTypeTempStorage) c() (C.ImGuiDataTypeTempStorage, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDataTypeTempStorageFromC(cvalue *C.ImGuiDataTypeTempStorage) *DataTypeTempStorage {
+	return &DataTypeTempStorage{data: cvalue}
+}
+
+type DataVarInfo struct {
+	data *C.ImGuiDataVarInfo
+}
+
+func (self *DataVarInfo) handle() (result *C.ImGuiDataVarInfo, fin func()) {
+	return self.data, func() {}
+}
+
+func (self DataVarInfo) c() (C.ImGuiDataVarInfo, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDataVarInfoFromC(cvalue *C.ImGuiDataVarInfo) *DataVarInfo {
+	return &DataVarInfo{data: cvalue}
+}
+
+type DockContext struct {
+	data *C.ImGuiDockContext
+}
+
+func (self *DockContext) handle() (result *C.ImGuiDockContext, fin func()) {
+	return self.data, func() {}
+}
+
+func (self DockContext) c() (C.ImGuiDockContext, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDockContextFromC(cvalue *C.ImGuiDockContext) *DockContext {
+	return &DockContext{data: cvalue}
+}
+
+type DockNode struct {
+	data *C.ImGuiDockNode
+}
+
+func (self *DockNode) handle() (result *C.ImGuiDockNode, fin func()) {
+	return self.data, func() {}
+}
+
+func (self DockNode) c() (C.ImGuiDockNode, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDockNodeFromC(cvalue *C.ImGuiDockNode) *DockNode {
+	return &DockNode{data: cvalue}
+}
+
+type DockNodeSettings struct {
+	data *C.ImGuiDockNodeSettings
+}
+
+func (self *DockNodeSettings) handle() (result *C.ImGuiDockNodeSettings, fin func()) {
+	return self.data, func() {}
 }
 
 func (self DockNodeSettings) c() (C.ImGuiDockNodeSettings, func()) {
-	result, fin := self.handle()
-	return *result, fin
+	result, fn := self.handle()
+	return *result, fn
 }
 
 func newDockNodeSettingsFromC(cvalue *C.ImGuiDockNodeSettings) *DockNodeSettings {
-	return (*DockNodeSettings)(cvalue)
+	return &DockNodeSettings{data: cvalue}
 }
 
-type DockRequest C.ImGuiDockRequest
+type DockRequest struct {
+	data *C.ImGuiDockRequest
+}
 
-func (self DockRequest) handle() (result *C.ImGuiDockRequest, fin func()) {
-	result = (*C.ImGuiDockRequest)(unsafe.Pointer(&self))
-	return result, func() {}
+func (self *DockRequest) handle() (result *C.ImGuiDockRequest, fin func()) {
+	return self.data, func() {}
 }
 
 func (self DockRequest) c() (C.ImGuiDockRequest, func()) {
-	result, fin := self.handle()
-	return *result, fin
+	result, fn := self.handle()
+	return *result, fn
 }
 
 func newDockRequestFromC(cvalue *C.ImGuiDockRequest) *DockRequest {
-	return (*DockRequest)(cvalue)
+	return &DockRequest{data: cvalue}
+}
+
+type GroupData struct {
+	data *C.ImGuiGroupData
+}
+
+func (self *GroupData) handle() (result *C.ImGuiGroupData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self GroupData) c() (C.ImGuiGroupData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newGroupDataFromC(cvalue *C.ImGuiGroupData) *GroupData {
+	return &GroupData{data: cvalue}
 }
 
 type ID uint32
 
-func (self ID) handle() (result *C.ImGuiID, fin func()) {
-	return (*C.ImGuiID)(C.uint(self)), func() {}
+func (self *ID) handle() (result *C.ImGuiID, fin func()) {
+	selfArg, selfFin := WrapNumberPtr[C.uint, uint32](self)
+	return (*C.ImGuiID)(selfArg), func() { selfFin() }
 }
 
 func (self ID) c() (C.ImGuiID, func()) {
-	result, fin := self.handle()
-	return *result, fin
+	return (C.ImGuiID)(C.uint(self)), func() {}
 }
 
 func newIDFromC(cvalue *C.ImGuiID) *ID {
-	return uint32(cvalue)
+	return
 }
 
-type InputTextDeactivateData C.ImGuiInputTextDeactivateData
+type IO struct {
+	data *C.ImGuiIO
+}
 
-func (self InputTextDeactivateData) handle() (result *C.ImGuiInputTextDeactivateData, fin func()) {
-	result = (*C.ImGuiInputTextDeactivateData)(unsafe.Pointer(&self))
-	return result, func() {}
+func (self *IO) handle() (result *C.ImGuiIO, fin func()) {
+	return self.data, func() {}
+}
+
+func (self IO) c() (C.ImGuiIO, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newIOFromC(cvalue *C.ImGuiIO) *IO {
+	return &IO{data: cvalue}
+}
+
+type InputEvent struct {
+	data *C.ImGuiInputEvent
+}
+
+func (self *InputEvent) handle() (result *C.ImGuiInputEvent, fin func()) {
+	return self.data, func() {}
+}
+
+func (self InputEvent) c() (C.ImGuiInputEvent, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newInputEventFromC(cvalue *C.ImGuiInputEvent) *InputEvent {
+	return &InputEvent{data: cvalue}
+}
+
+type InputEventAppFocused struct {
+	data *C.ImGuiInputEventAppFocused
+}
+
+func (self *InputEventAppFocused) handle() (result *C.ImGuiInputEventAppFocused, fin func()) {
+	return self.data, func() {}
+}
+
+func (self InputEventAppFocused) c() (C.ImGuiInputEventAppFocused, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newInputEventAppFocusedFromC(cvalue *C.ImGuiInputEventAppFocused) *InputEventAppFocused {
+	return &InputEventAppFocused{data: cvalue}
+}
+
+type InputEventKey struct {
+	data *C.ImGuiInputEventKey
+}
+
+func (self *InputEventKey) handle() (result *C.ImGuiInputEventKey, fin func()) {
+	return self.data, func() {}
+}
+
+func (self InputEventKey) c() (C.ImGuiInputEventKey, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newInputEventKeyFromC(cvalue *C.ImGuiInputEventKey) *InputEventKey {
+	return &InputEventKey{data: cvalue}
+}
+
+type InputEventMouseButton struct {
+	data *C.ImGuiInputEventMouseButton
+}
+
+func (self *InputEventMouseButton) handle() (result *C.ImGuiInputEventMouseButton, fin func()) {
+	return self.data, func() {}
+}
+
+func (self InputEventMouseButton) c() (C.ImGuiInputEventMouseButton, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newInputEventMouseButtonFromC(cvalue *C.ImGuiInputEventMouseButton) *InputEventMouseButton {
+	return &InputEventMouseButton{data: cvalue}
+}
+
+type InputEventMousePos struct {
+	data *C.ImGuiInputEventMousePos
+}
+
+func (self *InputEventMousePos) handle() (result *C.ImGuiInputEventMousePos, fin func()) {
+	return self.data, func() {}
+}
+
+func (self InputEventMousePos) c() (C.ImGuiInputEventMousePos, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newInputEventMousePosFromC(cvalue *C.ImGuiInputEventMousePos) *InputEventMousePos {
+	return &InputEventMousePos{data: cvalue}
+}
+
+type InputEventMouseViewport struct {
+	data *C.ImGuiInputEventMouseViewport
+}
+
+func (self *InputEventMouseViewport) handle() (result *C.ImGuiInputEventMouseViewport, fin func()) {
+	return self.data, func() {}
+}
+
+func (self InputEventMouseViewport) c() (C.ImGuiInputEventMouseViewport, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newInputEventMouseViewportFromC(cvalue *C.ImGuiInputEventMouseViewport) *InputEventMouseViewport {
+	return &InputEventMouseViewport{data: cvalue}
+}
+
+type InputEventMouseWheel struct {
+	data *C.ImGuiInputEventMouseWheel
+}
+
+func (self *InputEventMouseWheel) handle() (result *C.ImGuiInputEventMouseWheel, fin func()) {
+	return self.data, func() {}
+}
+
+func (self InputEventMouseWheel) c() (C.ImGuiInputEventMouseWheel, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newInputEventMouseWheelFromC(cvalue *C.ImGuiInputEventMouseWheel) *InputEventMouseWheel {
+	return &InputEventMouseWheel{data: cvalue}
+}
+
+type InputEventText struct {
+	data *C.ImGuiInputEventText
+}
+
+func (self *InputEventText) handle() (result *C.ImGuiInputEventText, fin func()) {
+	return self.data, func() {}
+}
+
+func (self InputEventText) c() (C.ImGuiInputEventText, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newInputEventTextFromC(cvalue *C.ImGuiInputEventText) *InputEventText {
+	return &InputEventText{data: cvalue}
+}
+
+type InputTextCallbackData struct {
+	data *C.ImGuiInputTextCallbackData
+}
+
+func (self *InputTextCallbackData) handle() (result *C.ImGuiInputTextCallbackData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self InputTextCallbackData) c() (C.ImGuiInputTextCallbackData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newInputTextCallbackDataFromC(cvalue *C.ImGuiInputTextCallbackData) *InputTextCallbackData {
+	return &InputTextCallbackData{data: cvalue}
+}
+
+type InputTextDeactivateData struct {
+	data *C.ImGuiInputTextDeactivateData
+}
+
+func (self *InputTextDeactivateData) handle() (result *C.ImGuiInputTextDeactivateData, fin func()) {
+	return self.data, func() {}
 }
 
 func (self InputTextDeactivateData) c() (C.ImGuiInputTextDeactivateData, func()) {
-	result, fin := self.handle()
-	return *result, fin
+	result, fn := self.handle()
+	return *result, fn
 }
 
 func newInputTextDeactivateDataFromC(cvalue *C.ImGuiInputTextDeactivateData) *InputTextDeactivateData {
-	return (*InputTextDeactivateData)(cvalue)
+	return &InputTextDeactivateData{data: cvalue}
+}
+
+type InputTextDeactivatedState struct {
+	data *C.ImGuiInputTextDeactivatedState
+}
+
+func (self *InputTextDeactivatedState) handle() (result *C.ImGuiInputTextDeactivatedState, fin func()) {
+	return self.data, func() {}
+}
+
+func (self InputTextDeactivatedState) c() (C.ImGuiInputTextDeactivatedState, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newInputTextDeactivatedStateFromC(cvalue *C.ImGuiInputTextDeactivatedState) *InputTextDeactivatedState {
+	return &InputTextDeactivatedState{data: cvalue}
+}
+
+type InputTextState struct {
+	data *C.ImGuiInputTextState
+}
+
+func (self *InputTextState) handle() (result *C.ImGuiInputTextState, fin func()) {
+	return self.data, func() {}
+}
+
+func (self InputTextState) c() (C.ImGuiInputTextState, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newInputTextStateFromC(cvalue *C.ImGuiInputTextState) *InputTextState {
+	return &InputTextState{data: cvalue}
 }
 
 type KeyChord int32
 
-func (self KeyChord) handle() (result *C.ImGuiKeyChord, fin func()) {
-	return (*C.ImGuiKeyChord)(C.int(self)), func() {}
+func (self *KeyChord) handle() (result *C.ImGuiKeyChord, fin func()) {
+	selfArg, selfFin := WrapNumberPtr[C.int, int32](self)
+	return (*C.ImGuiKeyChord)(selfArg), func() { selfFin() }
 }
 
 func (self KeyChord) c() (C.ImGuiKeyChord, func()) {
-	result, fin := self.handle()
-	return *result, fin
+	return (C.ImGuiKeyChord)(C.int(self)), func() {}
 }
 
 func newKeyChordFromC(cvalue *C.ImGuiKeyChord) *KeyChord {
-	return int32(cvalue)
+	return
 }
 
-type KeyRoutingIndex int
-
-func (self KeyRoutingIndex) handle() (result *C.ImGuiKeyRoutingIndex, fin func()) {
-	return (*C.ImGuiKeyRoutingIndex)(C.ImS16(self)), func() {}
+type KeyData struct {
+	data *C.ImGuiKeyData
 }
 
-func (self KeyRoutingIndex) c() (C.ImGuiKeyRoutingIndex, func()) {
-	result, fin := self.handle()
-	return *result, fin
+func (self *KeyData) handle() (result *C.ImGuiKeyData, fin func()) {
+	return self.data, func() {}
 }
 
-func newKeyRoutingIndexFromC(cvalue *C.ImGuiKeyRoutingIndex) *KeyRoutingIndex {
-	return int(cvalue)
+func (self KeyData) c() (C.ImGuiKeyData, func()) {
+	result, fn := self.handle()
+	return *result, fn
 }
 
-type SelectionUserData int64
-
-func (self SelectionUserData) handle() (result *C.ImGuiSelectionUserData, fin func()) {
-	return (*C.ImGuiSelectionUserData)(C.ImS64(self)), func() {}
+func newKeyDataFromC(cvalue *C.ImGuiKeyData) *KeyData {
+	return &KeyData{data: cvalue}
 }
 
-func (self SelectionUserData) c() (C.ImGuiSelectionUserData, func()) {
-	result, fin := self.handle()
-	return *result, fin
+type KeyOwnerData struct {
+	data *C.ImGuiKeyOwnerData
 }
 
-func newSelectionUserDataFromC(cvalue *C.ImGuiSelectionUserData) *SelectionUserData {
-	return int64(cvalue)
+func (self *KeyOwnerData) handle() (result *C.ImGuiKeyOwnerData, fin func()) {
+	return self.data, func() {}
 }
 
-type TableColumnIdx int
-
-func (self TableColumnIdx) handle() (result *C.ImGuiTableColumnIdx, fin func()) {
-	return (*C.ImGuiTableColumnIdx)(C.ImS16(self)), func() {}
+func (self KeyOwnerData) c() (C.ImGuiKeyOwnerData, func()) {
+	result, fn := self.handle()
+	return *result, fn
 }
 
-func (self TableColumnIdx) c() (C.ImGuiTableColumnIdx, func()) {
-	result, fin := self.handle()
-	return *result, fin
+func newKeyOwnerDataFromC(cvalue *C.ImGuiKeyOwnerData) *KeyOwnerData {
+	return &KeyOwnerData{data: cvalue}
 }
 
-func newTableColumnIdxFromC(cvalue *C.ImGuiTableColumnIdx) *TableColumnIdx {
-	return int(cvalue)
+type KeyRoutingData struct {
+	data *C.ImGuiKeyRoutingData
 }
 
-type TableColumnsSettings C.ImGuiTableColumnsSettings
+func (self *KeyRoutingData) handle() (result *C.ImGuiKeyRoutingData, fin func()) {
+	return self.data, func() {}
+}
 
-func (self TableColumnsSettings) handle() (result *C.ImGuiTableColumnsSettings, fin func()) {
-	result = (*C.ImGuiTableColumnsSettings)(unsafe.Pointer(&self))
-	return result, func() {}
+func (self KeyRoutingData) c() (C.ImGuiKeyRoutingData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newKeyRoutingDataFromC(cvalue *C.ImGuiKeyRoutingData) *KeyRoutingData {
+	return &KeyRoutingData{data: cvalue}
+}
+
+type KeyRoutingTable struct {
+	data *C.ImGuiKeyRoutingTable
+}
+
+func (self *KeyRoutingTable) handle() (result *C.ImGuiKeyRoutingTable, fin func()) {
+	return self.data, func() {}
+}
+
+func (self KeyRoutingTable) c() (C.ImGuiKeyRoutingTable, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newKeyRoutingTableFromC(cvalue *C.ImGuiKeyRoutingTable) *KeyRoutingTable {
+	return &KeyRoutingTable{data: cvalue}
+}
+
+type LastItemData struct {
+	data *C.ImGuiLastItemData
+}
+
+func (self *LastItemData) handle() (result *C.ImGuiLastItemData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self LastItemData) c() (C.ImGuiLastItemData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newLastItemDataFromC(cvalue *C.ImGuiLastItemData) *LastItemData {
+	return &LastItemData{data: cvalue}
+}
+
+type ListClipper struct {
+	data *C.ImGuiListClipper
+}
+
+func (self *ListClipper) handle() (result *C.ImGuiListClipper, fin func()) {
+	return self.data, func() {}
+}
+
+func (self ListClipper) c() (C.ImGuiListClipper, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newListClipperFromC(cvalue *C.ImGuiListClipper) *ListClipper {
+	return &ListClipper{data: cvalue}
+}
+
+type ListClipperData struct {
+	data *C.ImGuiListClipperData
+}
+
+func (self *ListClipperData) handle() (result *C.ImGuiListClipperData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self ListClipperData) c() (C.ImGuiListClipperData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newListClipperDataFromC(cvalue *C.ImGuiListClipperData) *ListClipperData {
+	return &ListClipperData{data: cvalue}
+}
+
+type ListClipperRange struct {
+	data *C.ImGuiListClipperRange
+}
+
+func (self *ListClipperRange) handle() (result *C.ImGuiListClipperRange, fin func()) {
+	return self.data, func() {}
+}
+
+func (self ListClipperRange) c() (C.ImGuiListClipperRange, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newListClipperRangeFromC(cvalue *C.ImGuiListClipperRange) *ListClipperRange {
+	return &ListClipperRange{data: cvalue}
+}
+
+type LocEntry struct {
+	data *C.ImGuiLocEntry
+}
+
+func (self *LocEntry) handle() (result *C.ImGuiLocEntry, fin func()) {
+	return self.data, func() {}
+}
+
+func (self LocEntry) c() (C.ImGuiLocEntry, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newLocEntryFromC(cvalue *C.ImGuiLocEntry) *LocEntry {
+	return &LocEntry{data: cvalue}
+}
+
+type MenuColumns struct {
+	data *C.ImGuiMenuColumns
+}
+
+func (self *MenuColumns) handle() (result *C.ImGuiMenuColumns, fin func()) {
+	return self.data, func() {}
+}
+
+func (self MenuColumns) c() (C.ImGuiMenuColumns, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newMenuColumnsFromC(cvalue *C.ImGuiMenuColumns) *MenuColumns {
+	return &MenuColumns{data: cvalue}
+}
+
+type MetricsConfig struct {
+	data *C.ImGuiMetricsConfig
+}
+
+func (self *MetricsConfig) handle() (result *C.ImGuiMetricsConfig, fin func()) {
+	return self.data, func() {}
+}
+
+func (self MetricsConfig) c() (C.ImGuiMetricsConfig, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newMetricsConfigFromC(cvalue *C.ImGuiMetricsConfig) *MetricsConfig {
+	return &MetricsConfig{data: cvalue}
+}
+
+type NavItemData struct {
+	data *C.ImGuiNavItemData
+}
+
+func (self *NavItemData) handle() (result *C.ImGuiNavItemData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self NavItemData) c() (C.ImGuiNavItemData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newNavItemDataFromC(cvalue *C.ImGuiNavItemData) *NavItemData {
+	return &NavItemData{data: cvalue}
+}
+
+type NavTreeNodeData struct {
+	data *C.ImGuiNavTreeNodeData
+}
+
+func (self *NavTreeNodeData) handle() (result *C.ImGuiNavTreeNodeData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self NavTreeNodeData) c() (C.ImGuiNavTreeNodeData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newNavTreeNodeDataFromC(cvalue *C.ImGuiNavTreeNodeData) *NavTreeNodeData {
+	return &NavTreeNodeData{data: cvalue}
+}
+
+type NextItemData struct {
+	data *C.ImGuiNextItemData
+}
+
+func (self *NextItemData) handle() (result *C.ImGuiNextItemData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self NextItemData) c() (C.ImGuiNextItemData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newNextItemDataFromC(cvalue *C.ImGuiNextItemData) *NextItemData {
+	return &NextItemData{data: cvalue}
+}
+
+type NextWindowData struct {
+	data *C.ImGuiNextWindowData
+}
+
+func (self *NextWindowData) handle() (result *C.ImGuiNextWindowData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self NextWindowData) c() (C.ImGuiNextWindowData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newNextWindowDataFromC(cvalue *C.ImGuiNextWindowData) *NextWindowData {
+	return &NextWindowData{data: cvalue}
+}
+
+type OldColumnData struct {
+	data *C.ImGuiOldColumnData
+}
+
+func (self *OldColumnData) handle() (result *C.ImGuiOldColumnData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self OldColumnData) c() (C.ImGuiOldColumnData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newOldColumnDataFromC(cvalue *C.ImGuiOldColumnData) *OldColumnData {
+	return &OldColumnData{data: cvalue}
+}
+
+type OldColumns struct {
+	data *C.ImGuiOldColumns
+}
+
+func (self *OldColumns) handle() (result *C.ImGuiOldColumns, fin func()) {
+	return self.data, func() {}
+}
+
+func (self OldColumns) c() (C.ImGuiOldColumns, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newOldColumnsFromC(cvalue *C.ImGuiOldColumns) *OldColumns {
+	return &OldColumns{data: cvalue}
+}
+
+type OnceUponAFrame struct {
+	data *C.ImGuiOnceUponAFrame
+}
+
+func (self *OnceUponAFrame) handle() (result *C.ImGuiOnceUponAFrame, fin func()) {
+	return self.data, func() {}
+}
+
+func (self OnceUponAFrame) c() (C.ImGuiOnceUponAFrame, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newOnceUponAFrameFromC(cvalue *C.ImGuiOnceUponAFrame) *OnceUponAFrame {
+	return &OnceUponAFrame{data: cvalue}
+}
+
+type Payload struct {
+	data *C.ImGuiPayload
+}
+
+func (self *Payload) handle() (result *C.ImGuiPayload, fin func()) {
+	return self.data, func() {}
+}
+
+func (self Payload) c() (C.ImGuiPayload, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newPayloadFromC(cvalue *C.ImGuiPayload) *Payload {
+	return &Payload{data: cvalue}
+}
+
+type PlatformIO struct {
+	data *C.ImGuiPlatformIO
+}
+
+func (self *PlatformIO) handle() (result *C.ImGuiPlatformIO, fin func()) {
+	return self.data, func() {}
+}
+
+func (self PlatformIO) c() (C.ImGuiPlatformIO, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newPlatformIOFromC(cvalue *C.ImGuiPlatformIO) *PlatformIO {
+	return &PlatformIO{data: cvalue}
+}
+
+type PlatformImeData struct {
+	data *C.ImGuiPlatformImeData
+}
+
+func (self *PlatformImeData) handle() (result *C.ImGuiPlatformImeData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self PlatformImeData) c() (C.ImGuiPlatformImeData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newPlatformImeDataFromC(cvalue *C.ImGuiPlatformImeData) *PlatformImeData {
+	return &PlatformImeData{data: cvalue}
+}
+
+type PlatformMonitor struct {
+	data *C.ImGuiPlatformMonitor
+}
+
+func (self *PlatformMonitor) handle() (result *C.ImGuiPlatformMonitor, fin func()) {
+	return self.data, func() {}
+}
+
+func (self PlatformMonitor) c() (C.ImGuiPlatformMonitor, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newPlatformMonitorFromC(cvalue *C.ImGuiPlatformMonitor) *PlatformMonitor {
+	return &PlatformMonitor{data: cvalue}
+}
+
+type PopupData struct {
+	data *C.ImGuiPopupData
+}
+
+func (self *PopupData) handle() (result *C.ImGuiPopupData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self PopupData) c() (C.ImGuiPopupData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newPopupDataFromC(cvalue *C.ImGuiPopupData) *PopupData {
+	return &PopupData{data: cvalue}
+}
+
+type PtrOrIndex struct {
+	data *C.ImGuiPtrOrIndex
+}
+
+func (self *PtrOrIndex) handle() (result *C.ImGuiPtrOrIndex, fin func()) {
+	return self.data, func() {}
+}
+
+func (self PtrOrIndex) c() (C.ImGuiPtrOrIndex, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newPtrOrIndexFromC(cvalue *C.ImGuiPtrOrIndex) *PtrOrIndex {
+	return &PtrOrIndex{data: cvalue}
+}
+
+type SettingsHandler struct {
+	data *C.ImGuiSettingsHandler
+}
+
+func (self *SettingsHandler) handle() (result *C.ImGuiSettingsHandler, fin func()) {
+	return self.data, func() {}
+}
+
+func (self SettingsHandler) c() (C.ImGuiSettingsHandler, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newSettingsHandlerFromC(cvalue *C.ImGuiSettingsHandler) *SettingsHandler {
+	return &SettingsHandler{data: cvalue}
+}
+
+type ShrinkWidthItem struct {
+	data *C.ImGuiShrinkWidthItem
+}
+
+func (self *ShrinkWidthItem) handle() (result *C.ImGuiShrinkWidthItem, fin func()) {
+	return self.data, func() {}
+}
+
+func (self ShrinkWidthItem) c() (C.ImGuiShrinkWidthItem, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newShrinkWidthItemFromC(cvalue *C.ImGuiShrinkWidthItem) *ShrinkWidthItem {
+	return &ShrinkWidthItem{data: cvalue}
+}
+
+type SizeCallbackData struct {
+	data *C.ImGuiSizeCallbackData
+}
+
+func (self *SizeCallbackData) handle() (result *C.ImGuiSizeCallbackData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self SizeCallbackData) c() (C.ImGuiSizeCallbackData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newSizeCallbackDataFromC(cvalue *C.ImGuiSizeCallbackData) *SizeCallbackData {
+	return &SizeCallbackData{data: cvalue}
+}
+
+type StackLevelInfo struct {
+	data *C.ImGuiStackLevelInfo
+}
+
+func (self *StackLevelInfo) handle() (result *C.ImGuiStackLevelInfo, fin func()) {
+	return self.data, func() {}
+}
+
+func (self StackLevelInfo) c() (C.ImGuiStackLevelInfo, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newStackLevelInfoFromC(cvalue *C.ImGuiStackLevelInfo) *StackLevelInfo {
+	return &StackLevelInfo{data: cvalue}
+}
+
+type StackSizes struct {
+	data *C.ImGuiStackSizes
+}
+
+func (self *StackSizes) handle() (result *C.ImGuiStackSizes, fin func()) {
+	return self.data, func() {}
+}
+
+func (self StackSizes) c() (C.ImGuiStackSizes, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newStackSizesFromC(cvalue *C.ImGuiStackSizes) *StackSizes {
+	return &StackSizes{data: cvalue}
+}
+
+type StackTool struct {
+	data *C.ImGuiStackTool
+}
+
+func (self *StackTool) handle() (result *C.ImGuiStackTool, fin func()) {
+	return self.data, func() {}
+}
+
+func (self StackTool) c() (C.ImGuiStackTool, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newStackToolFromC(cvalue *C.ImGuiStackTool) *StackTool {
+	return &StackTool{data: cvalue}
+}
+
+type Storage struct {
+	data *C.ImGuiStorage
+}
+
+func (self *Storage) handle() (result *C.ImGuiStorage, fin func()) {
+	return self.data, func() {}
+}
+
+func (self Storage) c() (C.ImGuiStorage, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newStorageFromC(cvalue *C.ImGuiStorage) *Storage {
+	return &Storage{data: cvalue}
+}
+
+type StoragePair struct {
+	data *C.ImGuiStoragePair
+}
+
+func (self *StoragePair) handle() (result *C.ImGuiStoragePair, fin func()) {
+	return self.data, func() {}
+}
+
+func (self StoragePair) c() (C.ImGuiStoragePair, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newStoragePairFromC(cvalue *C.ImGuiStoragePair) *StoragePair {
+	return &StoragePair{data: cvalue}
+}
+
+type Style struct {
+	data *C.ImGuiStyle
+}
+
+func (self *Style) handle() (result *C.ImGuiStyle, fin func()) {
+	return self.data, func() {}
+}
+
+func (self Style) c() (C.ImGuiStyle, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newStyleFromC(cvalue *C.ImGuiStyle) *Style {
+	return &Style{data: cvalue}
+}
+
+type StyleMod struct {
+	data *C.ImGuiStyleMod
+}
+
+func (self *StyleMod) handle() (result *C.ImGuiStyleMod, fin func()) {
+	return self.data, func() {}
+}
+
+func (self StyleMod) c() (C.ImGuiStyleMod, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newStyleModFromC(cvalue *C.ImGuiStyleMod) *StyleMod {
+	return &StyleMod{data: cvalue}
+}
+
+type TabBar struct {
+	data *C.ImGuiTabBar
+}
+
+func (self *TabBar) handle() (result *C.ImGuiTabBar, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TabBar) c() (C.ImGuiTabBar, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTabBarFromC(cvalue *C.ImGuiTabBar) *TabBar {
+	return &TabBar{data: cvalue}
+}
+
+type TabItem struct {
+	data *C.ImGuiTabItem
+}
+
+func (self *TabItem) handle() (result *C.ImGuiTabItem, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TabItem) c() (C.ImGuiTabItem, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTabItemFromC(cvalue *C.ImGuiTabItem) *TabItem {
+	return &TabItem{data: cvalue}
+}
+
+type Table struct {
+	data *C.ImGuiTable
+}
+
+func (self *Table) handle() (result *C.ImGuiTable, fin func()) {
+	return self.data, func() {}
+}
+
+func (self Table) c() (C.ImGuiTable, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTableFromC(cvalue *C.ImGuiTable) *Table {
+	return &Table{data: cvalue}
+}
+
+type TableCellData struct {
+	data *C.ImGuiTableCellData
+}
+
+func (self *TableCellData) handle() (result *C.ImGuiTableCellData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TableCellData) c() (C.ImGuiTableCellData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTableCellDataFromC(cvalue *C.ImGuiTableCellData) *TableCellData {
+	return &TableCellData{data: cvalue}
+}
+
+type TableColumn struct {
+	data *C.ImGuiTableColumn
+}
+
+func (self *TableColumn) handle() (result *C.ImGuiTableColumn, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TableColumn) c() (C.ImGuiTableColumn, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTableColumnFromC(cvalue *C.ImGuiTableColumn) *TableColumn {
+	return &TableColumn{data: cvalue}
+}
+
+type TableColumnSettings struct {
+	data *C.ImGuiTableColumnSettings
+}
+
+func (self *TableColumnSettings) handle() (result *C.ImGuiTableColumnSettings, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TableColumnSettings) c() (C.ImGuiTableColumnSettings, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTableColumnSettingsFromC(cvalue *C.ImGuiTableColumnSettings) *TableColumnSettings {
+	return &TableColumnSettings{data: cvalue}
+}
+
+type TableColumnSortSpecs struct {
+	data *C.ImGuiTableColumnSortSpecs
+}
+
+func (self *TableColumnSortSpecs) handle() (result *C.ImGuiTableColumnSortSpecs, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TableColumnSortSpecs) c() (C.ImGuiTableColumnSortSpecs, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTableColumnSortSpecsFromC(cvalue *C.ImGuiTableColumnSortSpecs) *TableColumnSortSpecs {
+	return &TableColumnSortSpecs{data: cvalue}
+}
+
+type TableColumnsSettings struct {
+	data *C.ImGuiTableColumnsSettings
+}
+
+func (self *TableColumnsSettings) handle() (result *C.ImGuiTableColumnsSettings, fin func()) {
+	return self.data, func() {}
 }
 
 func (self TableColumnsSettings) c() (C.ImGuiTableColumnsSettings, func()) {
-	result, fin := self.handle()
-	return *result, fin
+	result, fn := self.handle()
+	return *result, fn
 }
 
 func newTableColumnsSettingsFromC(cvalue *C.ImGuiTableColumnsSettings) *TableColumnsSettings {
-	return (*TableColumnsSettings)(cvalue)
+	return &TableColumnsSettings{data: cvalue}
 }
 
 type TableDrawChannelIdx uint16
 
-func (self TableDrawChannelIdx) handle() (result *C.ImGuiTableDrawChannelIdx, fin func()) {
-	return (*C.ImGuiTableDrawChannelIdx)(C.ImU16(self)), func() {}
+func (self *TableDrawChannelIdx) handle() (result *C.ImGuiTableDrawChannelIdx, fin func()) {
+	selfArg, selfFin := WrapNumberPtr[C.ImU16, uint16](self)
+	return (*C.ImGuiTableDrawChannelIdx)(selfArg), func() { selfFin() }
 }
 
 func (self TableDrawChannelIdx) c() (C.ImGuiTableDrawChannelIdx, func()) {
-	result, fin := self.handle()
-	return *result, fin
+	return (C.ImGuiTableDrawChannelIdx)(C.ImU16(self)), func() {}
 }
 
 func newTableDrawChannelIdxFromC(cvalue *C.ImGuiTableDrawChannelIdx) *TableDrawChannelIdx {
-	return uint16(cvalue)
+	return
+}
+
+type TableInstanceData struct {
+	data *C.ImGuiTableInstanceData
+}
+
+func (self *TableInstanceData) handle() (result *C.ImGuiTableInstanceData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TableInstanceData) c() (C.ImGuiTableInstanceData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTableInstanceDataFromC(cvalue *C.ImGuiTableInstanceData) *TableInstanceData {
+	return &TableInstanceData{data: cvalue}
+}
+
+type TableSettings struct {
+	data *C.ImGuiTableSettings
+}
+
+func (self *TableSettings) handle() (result *C.ImGuiTableSettings, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TableSettings) c() (C.ImGuiTableSettings, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTableSettingsFromC(cvalue *C.ImGuiTableSettings) *TableSettings {
+	return &TableSettings{data: cvalue}
+}
+
+type TableSortSpecs struct {
+	data *C.ImGuiTableSortSpecs
+}
+
+func (self *TableSortSpecs) handle() (result *C.ImGuiTableSortSpecs, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TableSortSpecs) c() (C.ImGuiTableSortSpecs, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTableSortSpecsFromC(cvalue *C.ImGuiTableSortSpecs) *TableSortSpecs {
+	return &TableSortSpecs{data: cvalue}
+}
+
+type TableTempData struct {
+	data *C.ImGuiTableTempData
+}
+
+func (self *TableTempData) handle() (result *C.ImGuiTableTempData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TableTempData) c() (C.ImGuiTableTempData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTableTempDataFromC(cvalue *C.ImGuiTableTempData) *TableTempData {
+	return &TableTempData{data: cvalue}
+}
+
+type TextBuffer struct {
+	data *C.ImGuiTextBuffer
+}
+
+func (self *TextBuffer) handle() (result *C.ImGuiTextBuffer, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TextBuffer) c() (C.ImGuiTextBuffer, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTextBufferFromC(cvalue *C.ImGuiTextBuffer) *TextBuffer {
+	return &TextBuffer{data: cvalue}
+}
+
+type TextFilter struct {
+	data *C.ImGuiTextFilter
+}
+
+func (self *TextFilter) handle() (result *C.ImGuiTextFilter, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TextFilter) c() (C.ImGuiTextFilter, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTextFilterFromC(cvalue *C.ImGuiTextFilter) *TextFilter {
+	return &TextFilter{data: cvalue}
+}
+
+type TextIndex struct {
+	data *C.ImGuiTextIndex
+}
+
+func (self *TextIndex) handle() (result *C.ImGuiTextIndex, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TextIndex) c() (C.ImGuiTextIndex, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTextIndexFromC(cvalue *C.ImGuiTextIndex) *TextIndex {
+	return &TextIndex{data: cvalue}
+}
+
+type TextRange struct {
+	data *C.ImGuiTextRange
+}
+
+func (self *TextRange) handle() (result *C.ImGuiTextRange, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TextRange) c() (C.ImGuiTextRange, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTextRangeFromC(cvalue *C.ImGuiTextRange) *TextRange {
+	return &TextRange{data: cvalue}
+}
+
+type TypingSelectRequest struct {
+	data *C.ImGuiTypingSelectRequest
+}
+
+func (self *TypingSelectRequest) handle() (result *C.ImGuiTypingSelectRequest, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TypingSelectRequest) c() (C.ImGuiTypingSelectRequest, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTypingSelectRequestFromC(cvalue *C.ImGuiTypingSelectRequest) *TypingSelectRequest {
+	return &TypingSelectRequest{data: cvalue}
+}
+
+type TypingSelectState struct {
+	data *C.ImGuiTypingSelectState
+}
+
+func (self *TypingSelectState) handle() (result *C.ImGuiTypingSelectState, fin func()) {
+	return self.data, func() {}
+}
+
+func (self TypingSelectState) c() (C.ImGuiTypingSelectState, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTypingSelectStateFromC(cvalue *C.ImGuiTypingSelectState) *TypingSelectState {
+	return &TypingSelectState{data: cvalue}
+}
+
+type Viewport struct {
+	data *C.ImGuiViewport
+}
+
+func (self *Viewport) handle() (result *C.ImGuiViewport, fin func()) {
+	return self.data, func() {}
+}
+
+func (self Viewport) c() (C.ImGuiViewport, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newViewportFromC(cvalue *C.ImGuiViewport) *Viewport {
+	return &Viewport{data: cvalue}
+}
+
+type ViewportP struct {
+	data *C.ImGuiViewportP
+}
+
+func (self *ViewportP) handle() (result *C.ImGuiViewportP, fin func()) {
+	return self.data, func() {}
+}
+
+func (self ViewportP) c() (C.ImGuiViewportP, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newViewportPFromC(cvalue *C.ImGuiViewportP) *ViewportP {
+	return &ViewportP{data: cvalue}
+}
+
+type Window struct {
+	data *C.ImGuiWindow
+}
+
+func (self *Window) handle() (result *C.ImGuiWindow, fin func()) {
+	return self.data, func() {}
+}
+
+func (self Window) c() (C.ImGuiWindow, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newWindowFromC(cvalue *C.ImGuiWindow) *Window {
+	return &Window{data: cvalue}
+}
+
+type WindowClass struct {
+	data *C.ImGuiWindowClass
+}
+
+func (self *WindowClass) handle() (result *C.ImGuiWindowClass, fin func()) {
+	return self.data, func() {}
+}
+
+func (self WindowClass) c() (C.ImGuiWindowClass, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newWindowClassFromC(cvalue *C.ImGuiWindowClass) *WindowClass {
+	return &WindowClass{data: cvalue}
+}
+
+type WindowDockStyle struct {
+	data *C.ImGuiWindowDockStyle
+}
+
+func (self *WindowDockStyle) handle() (result *C.ImGuiWindowDockStyle, fin func()) {
+	return self.data, func() {}
+}
+
+func (self WindowDockStyle) c() (C.ImGuiWindowDockStyle, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newWindowDockStyleFromC(cvalue *C.ImGuiWindowDockStyle) *WindowDockStyle {
+	return &WindowDockStyle{data: cvalue}
+}
+
+type WindowSettings struct {
+	data *C.ImGuiWindowSettings
+}
+
+func (self *WindowSettings) handle() (result *C.ImGuiWindowSettings, fin func()) {
+	return self.data, func() {}
+}
+
+func (self WindowSettings) c() (C.ImGuiWindowSettings, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newWindowSettingsFromC(cvalue *C.ImGuiWindowSettings) *WindowSettings {
+	return &WindowSettings{data: cvalue}
+}
+
+type WindowStackData struct {
+	data *C.ImGuiWindowStackData
+}
+
+func (self *WindowStackData) handle() (result *C.ImGuiWindowStackData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self WindowStackData) c() (C.ImGuiWindowStackData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newWindowStackDataFromC(cvalue *C.ImGuiWindowStackData) *WindowStackData {
+	return &WindowStackData{data: cvalue}
+}
+
+type WindowTempData struct {
+	data *C.ImGuiWindowTempData
+}
+
+func (self *WindowTempData) handle() (result *C.ImGuiWindowTempData, fin func()) {
+	return self.data, func() {}
+}
+
+func (self WindowTempData) c() (C.ImGuiWindowTempData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newWindowTempDataFromC(cvalue *C.ImGuiWindowTempData) *WindowTempData {
+	return &WindowTempData{data: cvalue}
 }
 
 type PoolIdx int32
 
-func (self PoolIdx) handle() (result *C.ImPoolIdx, fin func()) {
-	return (*C.ImPoolIdx)(C.int(self)), func() {}
+func (self *PoolIdx) handle() (result *C.ImPoolIdx, fin func()) {
+	selfArg, selfFin := WrapNumberPtr[C.int, int32](self)
+	return (*C.ImPoolIdx)(selfArg), func() { selfFin() }
 }
 
 func (self PoolIdx) c() (C.ImPoolIdx, func()) {
-	result, fin := self.handle()
-	return *result, fin
+	return (C.ImPoolIdx)(C.int(self)), func() {}
 }
 
 func newPoolIdxFromC(cvalue *C.ImPoolIdx) *PoolIdx {
-	return int32(cvalue)
+	return
 }
 
-type TextureID unsafe.Pointer
-
-func (self TextureID) handle() (result *C.ImTextureID, fin func()) {
-	selfArg, selfFin := WrapVoidPtr(self)
-	return (*C.ImTextureID)(selfArg), func() { selfFin() }
+type Vec1 struct {
+	data *C.ImVec1
 }
 
-func (self TextureID) c() (C.ImTextureID, func()) {
-	result, fin := self.handle()
-	return *result, fin
+func (self *Vec1) handle() (result *C.ImVec1, fin func()) {
+	return self.data, func() {}
 }
 
-func newTextureIDFromC(cvalue *C.ImTextureID) *TextureID {
-	return unsafe.Pointer(cvalue)
+func (self Vec1) c() (C.ImVec1, func()) {
+	result, fn := self.handle()
+	return *result, fn
 }
 
-type Wchar16 uint16
-
-func (self Wchar16) handle() (result *C.ImWchar16, fin func()) {
-	return (*C.ImWchar16)(C.ushort(self)), func() {}
-}
-
-func (self Wchar16) c() (C.ImWchar16, func()) {
-	result, fin := self.handle()
-	return *result, fin
-}
-
-func newWchar16FromC(cvalue *C.ImWchar16) *Wchar16 {
-	return uint16(cvalue)
+func newVec1FromC(cvalue *C.ImVec1) *Vec1 {
+	return &Vec1{data: cvalue}
 }
 
 type Wchar32 uint32
 
-func (self Wchar32) handle() (result *C.ImWchar32, fin func()) {
-	return (*C.ImWchar32)(C.uint(self)), func() {}
+func (self *Wchar32) handle() (result *C.ImWchar32, fin func()) {
+	selfArg, selfFin := WrapNumberPtr[C.uint, uint32](self)
+	return (*C.ImWchar32)(selfArg), func() { selfFin() }
 }
 
 func (self Wchar32) c() (C.ImWchar32, func()) {
-	result, fin := self.handle()
-	return *result, fin
+	return (C.ImWchar32)(C.uint(self)), func() {}
 }
 
 func newWchar32FromC(cvalue *C.ImWchar32) *Wchar32 {
-	return uint32(cvalue)
+	return
+}
+
+type STBTexteditState struct {
+	data *C.STB_TexteditState
+}
+
+func (self *STBTexteditState) handle() (result *C.STB_TexteditState, fin func()) {
+	return self.data, func() {}
+}
+
+func (self STBTexteditState) c() (C.STB_TexteditState, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newSTBTexteditStateFromC(cvalue *C.STB_TexteditState) *STBTexteditState {
+	return &STBTexteditState{data: cvalue}
+}
+
+type StbTexteditRow struct {
+	data *C.StbTexteditRow
+}
+
+func (self *StbTexteditRow) handle() (result *C.StbTexteditRow, fin func()) {
+	return self.data, func() {}
+}
+
+func (self StbTexteditRow) c() (C.StbTexteditRow, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newStbTexteditRowFromC(cvalue *C.StbTexteditRow) *StbTexteditRow {
+	return &StbTexteditRow{data: cvalue}
+}
+
+type StbUndoRecord struct {
+	data *C.StbUndoRecord
+}
+
+func (self *StbUndoRecord) handle() (result *C.StbUndoRecord, fin func()) {
+	return self.data, func() {}
+}
+
+func (self StbUndoRecord) c() (C.StbUndoRecord, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newStbUndoRecordFromC(cvalue *C.StbUndoRecord) *StbUndoRecord {
+	return &StbUndoRecord{data: cvalue}
+}
+
+type StbUndoState struct {
+	data *C.StbUndoState
+}
+
+func (self *StbUndoState) handle() (result *C.StbUndoState, fin func()) {
+	return self.data, func() {}
+}
+
+func (self StbUndoState) c() (C.StbUndoState, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newStbUndoStateFromC(cvalue *C.StbUndoState) *StbUndoState {
+	return &StbUndoState{data: cvalue}
 }

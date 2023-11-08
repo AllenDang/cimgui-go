@@ -10,50 +10,121 @@ package imgui
 import "C"
 import "unsafe"
 
-type NodesContext C.ImNodesContext
+type EmulateThreeButtonMouse struct {
+	data *C.EmulateThreeButtonMouse
+}
 
-func (self NodesContext) handle() (result *C.ImNodesContext, fin func()) {
-	result = (*C.ImNodesContext)(unsafe.Pointer(&self))
-	return result, func() {}
+func (self *EmulateThreeButtonMouse) handle() (result *C.EmulateThreeButtonMouse, fin func()) {
+	return self.data, func() {}
+}
+
+func (self EmulateThreeButtonMouse) c() (C.EmulateThreeButtonMouse, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newEmulateThreeButtonMouseFromC(cvalue *C.EmulateThreeButtonMouse) *EmulateThreeButtonMouse {
+	return &EmulateThreeButtonMouse{data: cvalue}
+}
+
+type NodesContext struct {
+	data *C.ImNodesContext
+}
+
+func (self *NodesContext) handle() (result *C.ImNodesContext, fin func()) {
+	return self.data, func() {}
 }
 
 func (self NodesContext) c() (C.ImNodesContext, func()) {
-	result, fin := self.handle()
-	return *result, fin
+	result, fn := self.handle()
+	return *result, fn
 }
 
 func newNodesContextFromC(cvalue *C.ImNodesContext) *NodesContext {
-	return (*NodesContext)(cvalue)
+	return &NodesContext{data: cvalue}
 }
 
-type NodesEditorContext C.ImNodesEditorContext
+type NodesEditorContext struct {
+	data *C.ImNodesEditorContext
+}
 
-func (self NodesEditorContext) handle() (result *C.ImNodesEditorContext, fin func()) {
-	result = (*C.ImNodesEditorContext)(unsafe.Pointer(&self))
-	return result, func() {}
+func (self *NodesEditorContext) handle() (result *C.ImNodesEditorContext, fin func()) {
+	return self.data, func() {}
 }
 
 func (self NodesEditorContext) c() (C.ImNodesEditorContext, func()) {
-	result, fin := self.handle()
-	return *result, fin
+	result, fn := self.handle()
+	return *result, fn
 }
 
 func newNodesEditorContextFromC(cvalue *C.ImNodesEditorContext) *NodesEditorContext {
-	return (*NodesEditorContext)(cvalue)
+	return &NodesEditorContext{data: cvalue}
 }
 
-type NodesMiniMapNodeHoveringCallbackUserData unsafe.Pointer
-
-func (self NodesMiniMapNodeHoveringCallbackUserData) handle() (result *C.ImNodesMiniMapNodeHoveringCallbackUserData, fin func()) {
-	selfArg, selfFin := WrapVoidPtr(self)
-	return (*C.ImNodesMiniMapNodeHoveringCallbackUserData)(selfArg), func() { selfFin() }
+type NodesIO struct {
+	data *C.ImNodesIO
 }
 
-func (self NodesMiniMapNodeHoveringCallbackUserData) c() (C.ImNodesMiniMapNodeHoveringCallbackUserData, func()) {
-	result, fin := self.handle()
-	return *result, fin
+func (self *NodesIO) handle() (result *C.ImNodesIO, fin func()) {
+	return self.data, func() {}
 }
 
-func newNodesMiniMapNodeHoveringCallbackUserDataFromC(cvalue *C.ImNodesMiniMapNodeHoveringCallbackUserData) *NodesMiniMapNodeHoveringCallbackUserData {
-	return unsafe.Pointer(cvalue)
+func (self NodesIO) c() (C.ImNodesIO, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newNodesIOFromC(cvalue *C.ImNodesIO) *NodesIO {
+	return &NodesIO{data: cvalue}
+}
+
+type NodesStyle struct {
+	data *C.ImNodesStyle
+}
+
+func (self *NodesStyle) handle() (result *C.ImNodesStyle, fin func()) {
+	return self.data, func() {}
+}
+
+func (self NodesStyle) c() (C.ImNodesStyle, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newNodesStyleFromC(cvalue *C.ImNodesStyle) *NodesStyle {
+	return &NodesStyle{data: cvalue}
+}
+
+type LinkDetachWithModifierClick struct {
+	data *C.LinkDetachWithModifierClick
+}
+
+func (self *LinkDetachWithModifierClick) handle() (result *C.LinkDetachWithModifierClick, fin func()) {
+	return self.data, func() {}
+}
+
+func (self LinkDetachWithModifierClick) c() (C.LinkDetachWithModifierClick, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newLinkDetachWithModifierClickFromC(cvalue *C.LinkDetachWithModifierClick) *LinkDetachWithModifierClick {
+	return &LinkDetachWithModifierClick{data: cvalue}
+}
+
+type MultipleSelectModifier struct {
+	data *C.MultipleSelectModifier
+}
+
+func (self *MultipleSelectModifier) handle() (result *C.MultipleSelectModifier, fin func()) {
+	return self.data, func() {}
+}
+
+func (self MultipleSelectModifier) c() (C.MultipleSelectModifier, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newMultipleSelectModifierFromC(cvalue *C.MultipleSelectModifier) *MultipleSelectModifier {
+	return &MultipleSelectModifier{data: cvalue}
 }
