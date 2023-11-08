@@ -111,6 +111,7 @@ func getArgWrapper(
 		"const ImVec4*":       wrappablePtrW("*Vec4", "C.ImVec4"),
 		"ImVec4":              wrappableW("Vec4", "C.ImVec4"),
 		"ImVec4*":             wrappablePtrW("*Vec4", "C.ImVec4"),
+		"ImColor":             wrappableW("Color", "C.ImColor"),
 		"ImColor*":            wrappablePtrW("*Color", "C.ImColor"),
 		"ImRect":              wrappableW("Rect", "C.ImRect"),
 		"const ImRect":        wrappableW("Rect", "C.ImRect"),
