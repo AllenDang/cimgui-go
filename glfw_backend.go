@@ -347,15 +347,15 @@ func (b *GLFWBackend) Refresh() {
 }
 
 func (b *GLFWBackend) CreateTexture(pixels unsafe.Pointer, width, height int) TextureID {
-	return TextureID(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
+	return *newTextureIDFromC(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
 }
 
 func (b *GLFWBackend) CreateTextureRgba(img *image.RGBA, width, height int) TextureID {
-	return TextureID(C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height)))
+	return *newTextureIDFromC(C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height)))
 }
 
 func (b *GLFWBackend) DeleteTexture(id TextureID) {
-	C.igDeleteTexture(C.ImTextureID(id))
+	C.igDeleteTexture(C.ImTextureID(id.Data))
 }
 
 // SetDropCallback sets the drop callback which is called when an object
