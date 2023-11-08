@@ -63,87 +63,114 @@ import "unsafe"
 
 		isPtr := HasSuffix(typedefs.data[k], "*")
 
-		knownReturnType, returnTypeErr := getReturnWrapper(
-			CIdentifier(typedefs.data[k]),
-			map[CIdentifier]bool{},
-			map[GoIdentifier]bool{},
-			map[CIdentifier]string{},
-		)
+		var knownPtrReturnType returnWrapper
+		var knownArgType, knownPtrArgType ArgumentWrapperData
+		var argTypeErr, ptrArgTypeErr, ptrReturnTypeErr error
 
-		_, knownArgType, argTypeErr := getArgWrapper(
-			&ArgDef{
-				Name: "self",
-				Type: CIdentifier(typedefs.data[k]),
-			},
-			false, false,
-			map[CIdentifier]bool{},
-			map[GoIdentifier]bool{},
-			map[CIdentifier]string{},
-		)
+		// Let's say our pureType is of form short
+		// the following code needs to handle two things:
+		// - int16 -> short (to know go type AND know how to proceed in c() func)
+		// - *int16 -> short* (for handle())
+		// - short* -> *int16 (for newXXXFromC)
+		if !isPtr {
+			knownPtrReturnType, ptrReturnTypeErr = getReturnWrapper(
+				CIdentifier(typedefs.data[k])+"*",
+				map[CIdentifier]bool{},
+				map[GoIdentifier]bool{},
+				map[CIdentifier]string{},
+			)
+
+			_, knownArgType, argTypeErr = getArgWrapper(
+				&ArgDef{
+					Name: "self",
+					Type: CIdentifier(typedefs.data[k]),
+				},
+				false, false,
+				map[CIdentifier]bool{},
+				map[GoIdentifier]bool{},
+				map[CIdentifier]string{},
+			)
+
+			_, knownPtrArgType, ptrArgTypeErr = getArgWrapper(
+				&ArgDef{
+					Name: "self",
+					Type: CIdentifier(typedefs.data[k]) + "*",
+				},
+				false, false,
+				map[CIdentifier]bool{},
+				map[GoIdentifier]bool{},
+				map[CIdentifier]string{},
+			)
+		}
 
 		// check if k is a name of struct from structDefs
 		switch {
-		case returnTypeErr == nil && argTypeErr == nil:
-			if HasPrefix(knownReturnType.returnType, "*") { // this is because: Invalid receiver type (pointer or interface)
-				glg.Infof("Typedef %v is a pointer. NotImplemented", k)
-				continue
-			}
-
+		case ptrReturnTypeErr == nil && argTypeErr == nil && ptrArgTypeErr == nil:
 			glg.Infof("typedef %s is an alias typedef.", k)
-			if isPtr {
+			_ = knownPtrReturnType
+			_ = knownPtrArgType
+			if !isPtr {
 				fmt.Fprintf(callbacksGoSb, `
 type %[1]s %[2]s
 
-func (self %[1]s) handle() (result *C.%[8]s, fin func()) {
+func (self *%[1]s) handle() (result *C.%[6]s, fin func()) {
     %[3]s
-    return (*C.%[8]s)(%[4]s), func() { %[5]s }
+    return (*C.%[6]s)(%[4]s), func() { %[5]s }
 }
 
-func (self %[1]s) c() (C.%[8]s, func()) {
-	result, fin := self.handle()
-	return *result, fin
+func (self %[1]s) c() (C.%[6]s, func()) {
+    %[7]s
+    return (C.%[6]s)(%[8]s), func() { %[9]s }
 }
 
-func new%[1]sFromC(cvalue *C.%[8]s) *%[1]s {
+func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 	return %[7]s
 }
 `,
 					k.renameGoIdentifier(),
 					knownArgType.ArgType,
+
+					knownPtrArgType.ArgDef,
+					knownPtrArgType.VarName,
+					knownPtrArgType.Finalizer,
+
+					k,
+
 					knownArgType.ArgDef,
 					knownArgType.VarName,
 					knownArgType.Finalizer,
-					knownArgType.CType,
-					fmt.Sprintf(knownReturnType.returnStmt, "cvalue"),
-					k,
+
+					fmt.Sprintf(knownPtrReturnType.returnStmt, "cvalue"),
 				)
 			} else {
-				fmt.Fprintf(callbacksGoSb, `
-type %[1]s %[2]s
-
-func (self %[1]s) handle() (result *C.%[8]s, fin func()) {
-	cResult, cFin := self.c()
-	return &cResult, cFin
-}
-
-func (self %[1]s) c() (C.%[8]s, func()) {
-    %[3]s
-    return (C.%[8]s)(%[4]s), func() { %[5]s }
-}
-
-func new%[1]sFromC(cvalue *C.%[8]s) *%[1]s {
-	return %[7]s
-}
-`,
-					k.renameGoIdentifier(),
-					knownArgType.ArgType,
-					knownArgType.ArgDef,
-					knownArgType.VarName,
-					knownArgType.Finalizer,
-					knownArgType.CType,
-					fmt.Sprintf(knownReturnType.returnStmt, "cvalue"),
-					k,
-				)
+				//				fmt.Fprintf(callbacksGoSb, `
+				//type %[1]s %[2]s
+				//
+				//func (self %[1]s) handle() (result *C.%[8]s, fin func()) {
+				//	cResult, cFin := self.c()
+				//	return &cResult, cFin
+				//}
+				//
+				//func (self %[1]s) c() (C.%[8]s, func()) {
+				//    %[3]s
+				//    return (C.%[8]s)(%[4]s), func() { %[5]s }
+				//}
+				//
+				//func new%[1]sFromC(cvalue *C.%[8]s) *%[1]s {
+				//	return %[7]s
+				//}
+				//`,
+				//					k.renameGoIdentifier(),
+				//					knownArgType.ArgType,
+				//					knownArgType.ArgDef,
+				//					knownArgType.VarName,
+				//					knownArgType.Finalizer,
+				//					knownArgType.CType,
+				//					fmt.Sprintf(knownReturnType.returnStmt, "cvalue"),
+				//					k,
+				//				)
+				glg.Infof("Typedef %v is a pointer. NotImplemented", k)
+				continue
 			}
 
 			validTypeNames = append(validTypeNames, k)
