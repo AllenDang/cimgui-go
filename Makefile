@@ -23,7 +23,6 @@ define generate
 	@echo "Generating for $(1)"
 	./codegen -p $(1) -i $(2) -d $(3) -e $(4) -t $(5) $(6)
 	go run mvdan.cc/gofumpt@latest -w $(1)_enums.go
-	go run mvdan.cc/gofumpt@latest -w $(1)_structs.go
 	go run mvdan.cc/gofumpt@latest -w $(1)_funcs.go
 	go run mvdan.cc/gofumpt@latest -w $(1)_typedefs.go
 	go run golang.org/x/tools/cmd/goimports@latest -w $(1)_funcs.go

@@ -78,6 +78,26 @@ func newNodesIOFromC(cvalue *C.ImNodesIO) *NodesIO {
 	return &NodesIO{data: cvalue}
 }
 
+type NodesMiniMapNodeHoveringCallbackUserData struct {
+	Data unsafe.Pointer
+}
+
+func (self *NodesMiniMapNodeHoveringCallbackUserData) handle() (*C.ImNodesMiniMapNodeHoveringCallbackUserData, func()) {
+	result, fn := self.c()
+	return &result, fn
+}
+
+func (selfStruct *NodesMiniMapNodeHoveringCallbackUserData) c() (result C.ImNodesMiniMapNodeHoveringCallbackUserData, fin func()) {
+	self := selfStruct.Data
+	selfArg, selfFin := WrapVoidPtr(self)
+	return (C.ImNodesMiniMapNodeHoveringCallbackUserData)(selfArg), func() { selfFin() }
+}
+
+func newNodesMiniMapNodeHoveringCallbackUserDataFromC(cvalue *C.ImNodesMiniMapNodeHoveringCallbackUserData) *NodesMiniMapNodeHoveringCallbackUserData {
+	v := (unsafe.Pointer)(*cvalue)
+	return &NodesMiniMapNodeHoveringCallbackUserData{Data: unsafe.Pointer(v)}
+}
+
 type NodesStyle struct {
 	data *C.ImNodesStyle
 }

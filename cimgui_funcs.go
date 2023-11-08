@@ -75,6 +75,15 @@ func (self *Color) Destroy() {
 	selfFin()
 }
 
+func (self *DrawCmd) TexID() TextureID {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *newTextureIDFromC(func() *C.ImTextureID { result := C.ImDrawCmd_GetTexID(selfArg); return &result }())
+}
+
 // Also ensure our padding fields are zeroed
 func NewDrawCmd() *DrawCmd {
 	return newDrawCmdFromC(C.ImDrawCmd_ImDrawCmd())
@@ -288,6 +297,45 @@ func (self *DrawList) AddEllipseFilledV(center Vec2, radius_x float32, radius_y 
 	C.ImDrawList_AddEllipseFilled(selfArg, center.toC(), C.float(radius_x), C.float(radius_y), C.ImU32(col), C.float(rot), C.int(num_segments))
 
 	selfFin()
+}
+
+// AddImageV parameter default value hint:
+// uv_min: ImVec2(0,0)
+// uv_max: ImVec2(1,1)
+// col: 4294967295
+func (self *DrawList) AddImageV(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32) {
+	selfArg, selfFin := self.handle()
+	user_texture_idArg, user_texture_idFin := user_texture_id.c()
+	C.ImDrawList_AddImage(selfArg, user_texture_idArg, p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col))
+
+	selfFin()
+	user_texture_idFin()
+}
+
+// AddImageQuadV parameter default value hint:
+// uv1: ImVec2(0,0)
+// uv2: ImVec2(1,0)
+// uv3: ImVec2(1,1)
+// uv4: ImVec2(0,1)
+// col: 4294967295
+func (self *DrawList) AddImageQuadV(user_texture_id TextureID, p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, uv1 Vec2, uv2 Vec2, uv3 Vec2, uv4 Vec2, col uint32) {
+	selfArg, selfFin := self.handle()
+	user_texture_idArg, user_texture_idFin := user_texture_id.c()
+	C.ImDrawList_AddImageQuad(selfArg, user_texture_idArg, p1.toC(), p2.toC(), p3.toC(), p4.toC(), uv1.toC(), uv2.toC(), uv3.toC(), uv4.toC(), C.ImU32(col))
+
+	selfFin()
+	user_texture_idFin()
+}
+
+// AddImageRoundedV parameter default value hint:
+// flags: 0
+func (self *DrawList) AddImageRoundedV(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32, rounding float32, flags DrawFlags) {
+	selfArg, selfFin := self.handle()
+	user_texture_idArg, user_texture_idFin := user_texture_id.c()
+	C.ImDrawList_AddImageRounded(selfArg, user_texture_idArg, p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
+
+	selfFin()
+	user_texture_idFin()
 }
 
 // AddLineV parameter default value hint:
@@ -653,6 +701,15 @@ func (self *DrawList) PushClipRectFullScreen() {
 	C.ImDrawList_PushClipRectFullScreen(selfArg)
 
 	selfFin()
+}
+
+func (self *DrawList) PushTextureID(texture_id TextureID) {
+	selfArg, selfFin := self.handle()
+	texture_idArg, texture_idFin := texture_id.c()
+	C.ImDrawList_PushTextureID(selfArg, texture_idArg)
+
+	selfFin()
+	texture_idFin()
 }
 
 func (self *DrawList) CalcCircleAutoSegmentCount(radius float32) int32 {
@@ -1067,6 +1124,15 @@ func (self *FontAtlas) IsBuilt() bool {
 		selfFin()
 	}()
 	return C.ImFontAtlas_IsBuilt(selfArg) == C.bool(true)
+}
+
+func (self *FontAtlas) SetTexID(id TextureID) {
+	selfArg, selfFin := self.handle()
+	idArg, idFin := id.c()
+	C.ImFontAtlas_SetTexID(selfArg, idArg)
+
+	selfFin()
+	idFin()
 }
 
 func (self *FontAtlas) Destroy() {
@@ -7145,6 +7211,47 @@ func InternalImUpperPowerOfTwo(v int32) int32 {
 	return int32(C.igImUpperPowerOfTwo(C.int(v)))
 }
 
+// ImageV parameter default value hint:
+// uv0: ImVec2(0,0)
+// uv1: ImVec2(1,1)
+// tint_col: ImVec4(1,1,1,1)
+// border_col: ImVec4(0,0,0,0)
+func ImageV(user_texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, tint_col Vec4, border_col Vec4) {
+	user_texture_idArg, user_texture_idFin := user_texture_id.c()
+	C.igImage(user_texture_idArg, size.toC(), uv0.toC(), uv1.toC(), tint_col.toC(), border_col.toC())
+
+	user_texture_idFin()
+}
+
+// ImageButtonV parameter default value hint:
+// uv0: ImVec2(0,0)
+// uv1: ImVec2(1,1)
+// bg_col: ImVec4(0,0,0,0)
+// tint_col: ImVec4(1,1,1,1)
+func ImageButtonV(str_id string, user_texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, bg_col Vec4, tint_col Vec4) bool {
+	str_idArg, str_idFin := WrapString(str_id)
+	user_texture_idArg, user_texture_idFin := user_texture_id.c()
+
+	defer func() {
+		str_idFin()
+		user_texture_idFin()
+	}()
+	return C.igImageButton(str_idArg, user_texture_idArg, size.toC(), uv0.toC(), uv1.toC(), bg_col.toC(), tint_col.toC()) == C.bool(true)
+}
+
+// InternalImageButtonExV parameter default value hint:
+// flags: 0
+func InternalImageButtonExV(id ID, texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, bg_col Vec4, tint_col Vec4, flags ButtonFlags) bool {
+	idArg, idFin := id.c()
+	texture_idArg, texture_idFin := texture_id.c()
+
+	defer func() {
+		idFin()
+		texture_idFin()
+	}()
+	return C.igImageButtonEx(idArg, texture_idArg, size.toC(), uv0.toC(), uv1.toC(), bg_col.toC(), tint_col.toC(), C.ImGuiButtonFlags(flags)) == C.bool(true)
+}
+
 // move content position toward the right, by indent_w, or style.IndentSpacing if indent_w <= 0
 // IndentV parameter default value hint:
 // indent_w: 0.0f
@@ -10762,6 +10869,33 @@ func (self *DrawList) AddEllipseFilled(center Vec2, radius_x float32, radius_y f
 	selfFin()
 }
 
+func (self *DrawList) AddImage(user_texture_id TextureID, p_min Vec2, p_max Vec2) {
+	selfArg, selfFin := self.handle()
+	user_texture_idArg, user_texture_idFin := user_texture_id.c()
+	C.wrap_ImDrawList_AddImage(selfArg, user_texture_idArg, p_min.toC(), p_max.toC())
+
+	selfFin()
+	user_texture_idFin()
+}
+
+func (self *DrawList) AddImageQuad(user_texture_id TextureID, p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2) {
+	selfArg, selfFin := self.handle()
+	user_texture_idArg, user_texture_idFin := user_texture_id.c()
+	C.wrap_ImDrawList_AddImageQuad(selfArg, user_texture_idArg, p1.toC(), p2.toC(), p3.toC(), p4.toC())
+
+	selfFin()
+	user_texture_idFin()
+}
+
+func (self *DrawList) AddImageRounded(user_texture_id TextureID, p_min Vec2, p_max Vec2, uv_min Vec2, uv_max Vec2, col uint32, rounding float32) {
+	selfArg, selfFin := self.handle()
+	user_texture_idArg, user_texture_idFin := user_texture_id.c()
+	C.wrap_ImDrawList_AddImageRounded(selfArg, user_texture_idArg, p_min.toC(), p_max.toC(), uv_min.toC(), uv_max.toC(), C.ImU32(col), C.float(rounding))
+
+	selfFin()
+	user_texture_idFin()
+}
+
 func (self *DrawList) AddLine(p1 Vec2, p2 Vec2, col uint32) {
 	selfArg, selfFin := self.handle()
 	C.wrap_ImDrawList_AddLine(selfArg, p1.toC(), p2.toC(), C.ImU32(col))
@@ -11754,6 +11888,35 @@ func InternalImTextStrFromUtf8(out_buf *Wchar, out_buf_size int32, in_text strin
 		in_text_endFin()
 	}()
 	return int32(C.wrap_igImTextStrFromUtf8((*C.ImWchar)(out_buf), C.int(out_buf_size), in_textArg, in_text_endArg))
+}
+
+func Image(user_texture_id TextureID, size Vec2) {
+	user_texture_idArg, user_texture_idFin := user_texture_id.c()
+	C.wrap_igImage(user_texture_idArg, size.toC())
+
+	user_texture_idFin()
+}
+
+func ImageButton(str_id string, user_texture_id TextureID, size Vec2) bool {
+	str_idArg, str_idFin := WrapString(str_id)
+	user_texture_idArg, user_texture_idFin := user_texture_id.c()
+
+	defer func() {
+		str_idFin()
+		user_texture_idFin()
+	}()
+	return C.wrap_igImageButton(str_idArg, user_texture_idArg, size.toC()) == C.bool(true)
+}
+
+func InternalImageButtonEx(id ID, texture_id TextureID, size Vec2, uv0 Vec2, uv1 Vec2, bg_col Vec4, tint_col Vec4) bool {
+	idArg, idFin := id.c()
+	texture_idArg, texture_idFin := texture_id.c()
+
+	defer func() {
+		idFin()
+		texture_idFin()
+	}()
+	return C.wrap_igImageButtonEx(idArg, texture_idArg, size.toC(), uv0.toC(), uv1.toC(), bg_col.toC(), tint_col.toC()) == C.bool(true)
 }
 
 func Indent() {
@@ -12866,6 +13029,25 @@ func (self *DrawCmd) ClipRect() Vec4 {
 	return *(&Vec4{}).fromC(C.wrap_ImDrawCmd_GetClipRect(selfArg))
 }
 
+func (self DrawCmd) SetTextureId(v TextureID) {
+	vArg, _ := v.c()
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImDrawCmd_SetTextureId(selfArg, vArg)
+}
+
+func (self *DrawCmd) TextureId() TextureID {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+
+	result := C.wrap_ImDrawCmd_GetTextureId(selfArg)
+	return *newTextureIDFromC(func() *C.ImTextureID { result := result; return &result }())
+}
+
 func (self DrawCmd) SetVtxOffset(v uint32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -12941,6 +13123,25 @@ func (self *DrawCmdHeader) ClipRect() Vec4 {
 		selfFin()
 	}()
 	return *(&Vec4{}).fromC(C.wrap_ImDrawCmdHeader_GetClipRect(selfArg))
+}
+
+func (self DrawCmdHeader) SetTextureId(v TextureID) {
+	vArg, _ := v.c()
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImDrawCmdHeader_SetTextureId(selfArg, vArg)
+}
+
+func (self *DrawCmdHeader) TextureId() TextureID {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+
+	result := C.wrap_ImDrawCmdHeader_GetTextureId(selfArg)
+	return *newTextureIDFromC(func() *C.ImTextureID { result := result; return &result }())
 }
 
 func (self DrawCmdHeader) SetVtxOffset(v uint32) {
@@ -13219,6 +13420,29 @@ func (self DrawList) SetClipRectStack(v Vector[*Vec4]) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImDrawList_Set_ClipRectStack(selfArg, *vVecArg)
+}
+
+func (self DrawList) SetTextureIdStack(v Vector[*TextureID]) {
+	vData := v.Data
+	vDataArg, _ := vData.handle()
+	vVecArg := new(C.ImVector_ImTextureID)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImDrawList_Set_TextureIdStack(selfArg, *vVecArg)
+}
+
+func (self *DrawList) TextureIdStack() Vector[*TextureID] {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return newVectorFromC(C.wrap_ImDrawList_Get_TextureIdStack(selfArg).Size, C.wrap_ImDrawList_Get_TextureIdStack(selfArg).Capacity, newTextureIDFromC(C.wrap_ImDrawList_Get_TextureIdStack(selfArg).Data))
 }
 
 func (self DrawList) SetPath(v Vector[*Vec2]) {
@@ -26443,6 +26667,63 @@ func (self *Table) TempData() *TableTempData {
 		selfFin()
 	}()
 	return newTableTempDataFromC(C.wrap_ImGuiTable_GetTempData(selfArg))
+}
+
+func (self Table) SetEnabledMaskByDisplayOrder(v BitArrayPtr) {
+	vArg, _ := v.c()
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetEnabledMaskByDisplayOrder(selfArg, vArg)
+}
+
+func (self *Table) EnabledMaskByDisplayOrder() BitArrayPtr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+
+	result := C.wrap_ImGuiTable_GetEnabledMaskByDisplayOrder(selfArg)
+	return *newBitArrayPtrFromC(func() *C.ImBitArrayPtr { result := result; return &result }())
+}
+
+func (self Table) SetEnabledMaskByIndex(v BitArrayPtr) {
+	vArg, _ := v.c()
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetEnabledMaskByIndex(selfArg, vArg)
+}
+
+func (self *Table) EnabledMaskByIndex() BitArrayPtr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+
+	result := C.wrap_ImGuiTable_GetEnabledMaskByIndex(selfArg)
+	return *newBitArrayPtrFromC(func() *C.ImBitArrayPtr { result := result; return &result }())
+}
+
+func (self Table) SetVisibleMaskByIndex(v BitArrayPtr) {
+	vArg, _ := v.c()
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetVisibleMaskByIndex(selfArg, vArg)
+}
+
+func (self *Table) VisibleMaskByIndex() BitArrayPtr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+
+	result := C.wrap_ImGuiTable_GetVisibleMaskByIndex(selfArg)
+	return *newBitArrayPtrFromC(func() *C.ImBitArrayPtr { result := result; return &result }())
 }
 
 func (self Table) SetSettingsLoadedFlags(v TableFlags) {

@@ -10,6 +10,26 @@ package imgui
 import "C"
 import "unsafe"
 
+type BitArrayPtr struct {
+	Data *uint32
+}
+
+func (self *BitArrayPtr) handle() (*C.ImBitArrayPtr, func()) {
+	result, fn := self.c()
+	return &result, fn
+}
+
+func (selfStruct *BitArrayPtr) c() (result C.ImBitArrayPtr, fin func()) {
+	self := selfStruct.Data
+	selfArg, selfFin := WrapNumberPtr[C.ImU32, uint32](self)
+	return (C.ImBitArrayPtr)(selfArg), func() { selfFin() }
+}
+
+func newBitArrayPtrFromC(cvalue *C.ImBitArrayPtr) *BitArrayPtr {
+	v := (*C.ImU32)(*cvalue)
+	return &BitArrayPtr{Data: (*uint32)(v)}
+}
+
 type BitVector struct {
 	data *C.ImBitVector
 }
@@ -515,7 +535,7 @@ func (self ID) c() (C.ImGuiID, func()) {
 }
 
 func newIDFromC(cvalue *C.ImGuiID) *ID {
-	return
+	return (*uint32)(cvalue)
 }
 
 type IO struct {
@@ -751,7 +771,7 @@ func (self KeyChord) c() (C.ImGuiKeyChord, func()) {
 }
 
 func newKeyChordFromC(cvalue *C.ImGuiKeyChord) *KeyChord {
-	return
+	return (*int32)(cvalue)
 }
 
 type KeyData struct {
@@ -1480,7 +1500,7 @@ func (self TableDrawChannelIdx) c() (C.ImGuiTableDrawChannelIdx, func()) {
 }
 
 func newTableDrawChannelIdxFromC(cvalue *C.ImGuiTableDrawChannelIdx) *TableDrawChannelIdx {
-	return
+	return (*uint16)(cvalue)
 }
 
 type TableInstanceData struct {
@@ -1801,7 +1821,27 @@ func (self PoolIdx) c() (C.ImPoolIdx, func()) {
 }
 
 func newPoolIdxFromC(cvalue *C.ImPoolIdx) *PoolIdx {
-	return
+	return (*int32)(cvalue)
+}
+
+type TextureID struct {
+	Data unsafe.Pointer
+}
+
+func (self *TextureID) handle() (*C.ImTextureID, func()) {
+	result, fn := self.c()
+	return &result, fn
+}
+
+func (selfStruct *TextureID) c() (result C.ImTextureID, fin func()) {
+	self := selfStruct.Data
+	selfArg, selfFin := WrapVoidPtr(self)
+	return (C.ImTextureID)(selfArg), func() { selfFin() }
+}
+
+func newTextureIDFromC(cvalue *C.ImTextureID) *TextureID {
+	v := (unsafe.Pointer)(*cvalue)
+	return &TextureID{Data: unsafe.Pointer(v)}
 }
 
 type Vec1 struct {
@@ -1833,7 +1873,7 @@ func (self Wchar32) c() (C.ImWchar32, func()) {
 }
 
 func newWchar32FromC(cvalue *C.ImWchar32) *Wchar32 {
-	return
+	return (*uint32)(cvalue)
 }
 
 type STBTexteditState struct {
