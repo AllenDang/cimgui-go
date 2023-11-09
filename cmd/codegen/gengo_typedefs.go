@@ -187,8 +187,9 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 		case IsCallbackTypedef(typedefs.data[k]):
 			glg.Infof("typedef %s is a callback. Not implemented yet", k)
 		case HasPrefix(typedefs.data[k], "struct"):
-			glg.Infof("typedef %s is an opaque struct.", k)
-			writeOpaqueStruct(k, callbacksGoSb)
+			isOpaque := !IsStructName(k, structs)
+			glg.Infof("typedef %s is a struct (is opaque? %v).", k, isOpaque)
+			writeOpaqueStruct(k, isOpaque, callbacksGoSb)
 			validTypeNames = append(validTypeNames, k)
 		}
 	}
@@ -200,7 +201,18 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 	return validTypeNames, nil
 }
 
-func writeOpaqueStruct(name CIdentifier, sb *strings.Builder) {
+func writeOpaqueStruct(name CIdentifier, isOpaque bool, sb *strings.Builder) {
+	// this will be put only for structs that are NOT opaque (w can know the exact definition)
+	var toPlainValue string
+	if !isOpaque {
+		toPlainValue = fmt.Sprintf(`
+func (self %[1]s) c() (C.%[2]s, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+`, name.renameGoIdentifier(), name)
+	}
+
 	// we need to make it a struct, because we need to hide C type (otherwise it will duplicate methods)
 	fmt.Fprintf(sb, `
 type %[1]s struct {
@@ -211,15 +223,12 @@ func (self *%[1]s) handle() (result *C.%[2]s, fin func()) {
 	return self.data, func() {}
 }
 
-func (self %[1]s) c() (C.%[2]s, func()) {
-	result, fn := self.handle()
-	return *result, fn
-}
+%[3]s
 
 func new%[1]sFromC(cvalue *C.%[2]s) *%[1]s {
 	return &%[1]s{data: cvalue}
 }
-`, name.renameGoIdentifier(), name)
+`, name.renameGoIdentifier(), name, toPlainValue)
 }
 
 func IsStructName(name CIdentifier, structs []StructDef) bool {
