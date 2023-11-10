@@ -480,11 +480,6 @@ func (self *DockNodeSettings) handle() (result *C.ImGuiDockNodeSettings, fin fun
 	return self.data, func() {}
 }
 
-func (self DockNodeSettings) c() (C.ImGuiDockNodeSettings, func()) {
-	result, fn := self.handle()
-	return *result, fn
-}
-
 func newDockNodeSettingsFromC(cvalue *C.ImGuiDockNodeSettings) *DockNodeSettings {
 	return &DockNodeSettings{data: cvalue}
 }
@@ -495,11 +490,6 @@ type DockRequest struct {
 
 func (self *DockRequest) handle() (result *C.ImGuiDockRequest, fin func()) {
 	return self.data, func() {}
-}
-
-func (self DockRequest) c() (C.ImGuiDockRequest, func()) {
-	result, fn := self.handle()
-	return *result, fn
 }
 
 func newDockRequestFromC(cvalue *C.ImGuiDockRequest) *DockRequest {
@@ -715,11 +705,6 @@ type InputTextDeactivateData struct {
 
 func (self *InputTextDeactivateData) handle() (result *C.ImGuiInputTextDeactivateData, fin func()) {
 	return self.data, func() {}
-}
-
-func (self InputTextDeactivateData) c() (C.ImGuiInputTextDeactivateData, func()) {
-	result, fn := self.handle()
-	return *result, fn
 }
 
 func newInputTextDeactivateDataFromC(cvalue *C.ImGuiInputTextDeactivateData) *InputTextDeactivateData {
@@ -1479,11 +1464,6 @@ type TableColumnsSettings struct {
 
 func (self *TableColumnsSettings) handle() (result *C.ImGuiTableColumnsSettings, fin func()) {
 	return self.data, func() {}
-}
-
-func (self TableColumnsSettings) c() (C.ImGuiTableColumnsSettings, func()) {
-	result, fn := self.handle()
-	return *result, fn
 }
 
 func newTableColumnsSettingsFromC(cvalue *C.ImGuiTableColumnsSettings) *TableColumnsSettings {

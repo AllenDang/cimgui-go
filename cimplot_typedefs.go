@@ -102,11 +102,6 @@ func (self *PlotAxisColor) handle() (result *C.ImPlotAxisColor, fin func()) {
 	return self.data, func() {}
 }
 
-func (self PlotAxisColor) c() (C.ImPlotAxisColor, func()) {
-	result, fn := self.handle()
-	return *result, fn
-}
-
 func newPlotAxisColorFromC(cvalue *C.ImPlotAxisColor) *PlotAxisColor {
 	return &PlotAxisColor{data: cvalue}
 }

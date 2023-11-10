@@ -35,11 +35,6 @@ func (self *NodesContext) handle() (result *C.ImNodesContext, fin func()) {
 	return self.data, func() {}
 }
 
-func (self NodesContext) c() (C.ImNodesContext, func()) {
-	result, fn := self.handle()
-	return *result, fn
-}
-
 func newNodesContextFromC(cvalue *C.ImNodesContext) *NodesContext {
 	return &NodesContext{data: cvalue}
 }
@@ -50,11 +45,6 @@ type NodesEditorContext struct {
 
 func (self *NodesEditorContext) handle() (result *C.ImNodesEditorContext, fin func()) {
 	return self.data, func() {}
-}
-
-func (self NodesEditorContext) c() (C.ImNodesEditorContext, func()) {
-	result, fn := self.handle()
-	return *result, fn
 }
 
 func newNodesEditorContextFromC(cvalue *C.ImNodesEditorContext) *NodesEditorContext {

@@ -112,10 +112,7 @@ func (self *TextRegion) Destroy() {
 }
 
 func UnderLine(col_ Color) {
-	col_Arg, col_Fin := col_.c()
-	C.UnderLine(col_Arg)
-
-	col_Fin()
+	C.UnderLine(col_.toC())
 }
 
 func RenderLinkTextWrapped(self *TextRegion, text_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string) {
