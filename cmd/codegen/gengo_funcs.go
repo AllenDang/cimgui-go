@@ -361,7 +361,6 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []GoIdentifier, arg
 			g.enumNames,
 			g.refTypedefs,
 		)
-
 		if err != nil {
 			glg.Debugf("Unknown argument type \"%s\" in function %s", a.Type, f.FuncName)
 			break
