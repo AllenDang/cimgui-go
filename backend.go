@@ -15,6 +15,8 @@ import (
 	"unsafe"
 )
 
+type voidCallbackFunc func()
+
 var currentBackend backendCExpose
 
 // TODO: Maybe we should get rid of it?
