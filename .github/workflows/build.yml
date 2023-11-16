@@ -116,7 +116,7 @@ jobs:
 
       - name: copy sdl to lib
         run: |
-          cp -f ./thirdparty/SDL/build/src/libSDL2.a ./lib/macos/x64
+          cp -f ./thirdparty/SDL/build/libSDL2.a ./lib/macos/x64
 
       - name: clean sdl
         run: cmake --build ./build --target clean
@@ -132,7 +132,7 @@ jobs:
 
       - name: copy sdl to lib
         run: |
-          cp -f ./thirdparty/SDL/build/src/libSDL2.a ./lib/macos/arm64
+          cp -f ./thirdparty/SDL/build/libSDL2.a ./lib/macos/arm64
 
       # cimgui
       - name: configure cimgui for x64
@@ -218,8 +218,8 @@ jobs:
         run: cmake --build build -j 4
         working-directory: ./thirdparty/SDL
 
-      - name: copy glfw to lib
-        run: cp -f ./thirdparty/glfw/build/libSDL2.a ./lib/windows/x64
+      - name: copy sdl to lib
+        run: cp -f ./thirdparty/SDL/build/libSDL2.a ./lib/windows/x64
 
       # cimgui
       - name: configure cimgui
