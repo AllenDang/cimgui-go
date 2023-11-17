@@ -18,7 +18,7 @@ package imgui
 // extern void afterCreateContext();
 // extern void beforeDestoryContext();
 // #include <stdint.h>
-// #include "glfw_backend.h"
+// #include "sdl_backend.h"
 import "C"
 
 import (
@@ -201,15 +201,17 @@ type SDLBackend struct {
 
 func NewSDLBackend() *SDLBackend {
 	b := &SDLBackend{}
-	if C.igInitSDL() == 0 {
+	// \returns 0 on success or a negative error code on failure; call
+	// SDL_GetError() for more information.
+	if C.igInitSDL() != 0 {
 		panic("Failed to initialize SDL")
 	}
 
 	return b
 }
 
-func (b *SDLBackend) handle() *C.GLFWwindow {
-	return (*C.GLFWwindow)(unsafe.Pointer(b.window))
+func (b *SDLBackend) handle() *C.SDL_Window {
+	return (*C.SDL_Window)(unsafe.Pointer(b.window))
 }
 
 func (b *SDLBackend) SetAfterCreateContextHook(hook func()) {
@@ -250,7 +252,7 @@ func (b *SDLBackend) SetBgColor(color Vec4) {
 
 func (b *SDLBackend) Run(loop func()) {
 	b.loop = loop
-	C.igRunLoop(b.handle(), C.VoidCallback(C.loopCallback), C.VoidCallback(C.beforeRender), C.VoidCallback(C.afterRender), C.VoidCallback(C.beforeDestoryContext))
+	C.igSDLRunLoop(b.handle(), C.VoidCallback(C.loopCallback), C.VoidCallback(C.beforeRender), C.VoidCallback(C.afterRender), C.VoidCallback(C.beforeDestoryContext))
 }
 
 func (b *SDLBackend) loopFunc() func() {
@@ -266,7 +268,7 @@ func (b *SDLBackend) closeCallback() func(wnd unsafe.Pointer) {
 }
 
 func (b *SDLBackend) SetWindowPos(x, y int) {
-	C.igGLFWWindow_SetWindowPos(b.handle(), C.int(x), C.int(y))
+	C.igSDLWindow_SetWindowPos(b.handle(), C.int(x), C.int(y))
 }
 
 func (b *SDLBackend) GetWindowPos() (x, y int32) {
@@ -276,13 +278,13 @@ func (b *SDLBackend) GetWindowPos() (x, y int32) {
 	yArg, yFin := WrapNumberPtr[C.int, int32](&y)
 	defer yFin()
 
-	C.igGLFWWindow_GetWindowPos(b.handle(), xArg, yArg)
+	C.igSDLWindow_GetWindowPos(b.handle(), xArg, yArg)
 
 	return
 }
 
 func (b *SDLBackend) SetWindowSize(width, height int) {
-	C.igGLFWWindow_SetSize(b.handle(), C.int(width), C.int(height))
+	C.igSDLWindow_SetSize(b.handle(), C.int(width), C.int(height))
 }
 
 func (b *SDLBackend) DisplaySize() (width int32, height int32) {
@@ -292,7 +294,7 @@ func (b *SDLBackend) DisplaySize() (width int32, height int32) {
 	heightArg, heightFin := WrapNumberPtr[C.int, int32](&height)
 	defer heightFin()
 
-	C.igGLFWWindow_GetDisplaySize(b.handle(), widthArg, heightArg)
+	C.igSDLWindow_GetDisplaySize(b.handle(), widthArg, heightArg)
 
 	return
 }
@@ -304,7 +306,7 @@ func (b *SDLBackend) ContentScale() (width, height float32) {
 	heightArg, heightFin := WrapNumberPtr[C.float, float32](&height)
 	defer heightFin()
 
-	C.igGLFWWindow_GetContentScale(b.handle(), widthArg, heightArg)
+	C.igSDLWindow_GetContentScale(b.handle(), widthArg, heightArg)
 
 	return
 }
@@ -313,32 +315,33 @@ func (b *SDLBackend) SetWindowTitle(title string) {
 	titleArg, titleFin := WrapString(title)
 	defer titleFin()
 
-	C.igGLFWWindow_SetTitle(b.handle(), titleArg)
+	C.igSDLWindow_SetTitle(b.handle(), titleArg)
 }
 
 // The minimum and maximum size of the content area of a windowed mode window.
 // To specify only a minimum size or only a maximum one, set the other pair to -1
 // e.g. SetWindowSizeLimits(640, 480, -1, -1)
 func (b *SDLBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight int) {
-	C.igGLFWWindow_SetSizeLimits(b.handle(), C.int(minWidth), C.int(minHeight), C.int(maxWidth), C.int(maxHeight))
+	C.igSDLWindow_SetSizeLimits(b.handle(), C.int(minWidth), C.int(minHeight), C.int(maxWidth), C.int(maxHeight))
 }
 
 func (b *SDLBackend) SetShouldClose(value bool) {
-	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(CastBool(value)))
+	// TODO: not implemented
+	// C.igSDLWindow_SetShouldClose(b.handle(), C.int(CastBool(value)))
 }
 
 func (b *SDLBackend) CreateWindow(title string, width, height int) {
 	titleArg, titleFin := WrapString(title)
 	defer titleFin()
 
-	b.window = uintptr(unsafe.Pointer(C.igCreateGLFWWindow(
+	b.window = uintptr(unsafe.Pointer(C.igCreateSDLWindow(
 		titleArg,
 		C.int(width),
 		C.int(height),
 		C.VoidCallback(C.afterCreateContext),
 	)))
 	if b.window == 0 {
-		panic("Failed to create GLFW window")
+		panic("Failed to create SDL window")
 	}
 }
 
@@ -366,7 +369,8 @@ func (b *SDLBackend) DeleteTexture(id TextureID) {
 // is dropped over the window.
 func (b *SDLBackend) SetDropCallback(cbfun DropCallback) {
 	b.dropCB = cbfun
-	C.igGLFWWindow_SetDropCallbackCB(b.handle())
+	// TODO: not implemented
+	// C.igSDLWindow_SetDropCallbackCB(b.handle())
 }
 
 func (b *SDLBackend) SetCloseCallback(cbfun WindowCloseCallback[SDLWindowFlags]) {
@@ -374,13 +378,15 @@ func (b *SDLBackend) SetCloseCallback(cbfun WindowCloseCallback[SDLWindowFlags])
 		cbfun(b)
 	}
 
-	C.igGLFWWindow_SetCloseCallback(b.handle())
+	// TODO: not implemented
+	// C.igSDLWindow_SetCloseCallback(b.handle())
 }
 
 // SetWindowHint applies to next CreateWindow call
 // so use it before CreateWindow call ;-)
 func (b *SDLBackend) SetWindowFlags(flag SDLWindowFlags, value int) {
-	C.igWindowHint(C.GLFWWindowFlags(flag), C.int(value))
+	// TODO: cache these flags and use in CreateWindow
+	// C.igSDLWindowHint(C.SDL_WindowFlags(flag), C.int(value))
 }
 
 // SetIcons sets icons for the window.
@@ -424,7 +430,10 @@ func (b *SDLBackend) SetIcons(images ...image.Image) {
 	if count > 0 {
 		p = &cimages[0]
 	}
-	C.igGLFWWindow_SetIcon(b.handle(), C.int(count), p)
+
+	_ = p
+	// TODO: not implemented
+	// C.igSDLWindow_SetIcon(b.handle(), C.int(count), p)
 
 	for _, v := range freePixels {
 		v()
@@ -433,7 +442,8 @@ func (b *SDLBackend) SetIcons(images ...image.Image) {
 
 func (b *SDLBackend) SetKeyCallback(cbfun KeyCallback) {
 	b.keyCb = cbfun
-	C.igGLFWWindow_SetKeyCallback(b.handle())
+	// TODO: not implemented
+	// C.igSDLWindow_SetKeyCallback(b.handle())
 }
 
 func (b *SDLBackend) keyCallback() KeyCallback {
@@ -442,7 +452,8 @@ func (b *SDLBackend) keyCallback() KeyCallback {
 
 func (b *SDLBackend) SetSizeChangeCallback(cbfun SizeChangeCallback) {
 	b.sizeCb = cbfun
-	C.igGLFWWindow_SetSizeCallback(b.handle())
+	// TODO: notttt pimlemented
+	// C.igSDLWindow_SetSizeCallback(b.handle())
 }
 
 func (b *SDLBackend) sizeCallback() SizeChangeCallback {

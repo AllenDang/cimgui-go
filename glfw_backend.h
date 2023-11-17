@@ -2,6 +2,7 @@
 
 #include "cimgui_wrapper.h"
 #include "thirdparty/glfw/include/GLFW/glfw3.h" // Will drag system OpenGL headers
+#include "extra_types.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -170,14 +171,12 @@ struct GLFWwindow;
 struct GLFWmonitor;
 struct GLFWimage;
 
-typedef void (*VoidCallback)();
-
 extern void igSetBgColor(ImVec4 color);
 extern void igSetTargetFPS(unsigned int fps);
 extern int igInitGLFW();
 extern GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height,
                                       VoidCallback afterCreateContext);
-extern void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
+extern void igGLFWRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
                       VoidCallback beforeDestroyContext);
 extern void igGLFWWindow_GetDisplaySize(GLFWwindow *window, int *width, int *height);
 extern void igGLFWWindow_GetContentScale(GLFWwindow *window, float *width, float *height);

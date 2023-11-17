@@ -2,6 +2,7 @@
 
 #include "cimgui_wrapper.h"
 #include "thirdparty/SDL/include/SDL.h" // Will drag system OpenGL headers
+#include "extra_types.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -173,37 +174,36 @@ struct SDL_Window;
 //struct GLFWmonitor;
 //struct GLFWimage;
 
-typedef void (*VoidCallback)();
-
 extern void igSetBgColor(ImVec4 color);
 extern void igSetTargetFPS(unsigned int fps);
 extern int igInitSDL();
 extern SDL_Window *igCreateSDLWindow(const char *title, int width, int height,
                                       VoidCallback afterCreateContext);
-extern void igRunLoop(SDL_Window *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
+extern void igSDLRunLoop(SDL_Window *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
                       VoidCallback beforeDestroyContext);
-extern void igGLFWWindow_GetDisplaySize(SDL_Window *window, int *width, int *height);
-extern void igGLFWWindow_GetContentScale(SDL_Window *window, float *width, float *height);
-extern void igGLFWWindow_SetWindowPos(SDL_Window *window, int x, int y);
-extern void igGLFWWindow_GetWindowPos(SDL_Window *window, int *x, int *y);
-extern void igGLFWWindow_SetShouldClose(SDL_Window *window, int value);
-extern void igGLFWWindow_SetDropCallbackCB(SDL_Window *window);
-extern void igGLFWWindow_SetSize(SDL_Window *window, int width, int height);
-extern void igGLFWWindow_SetTitle(SDL_Window *window, const char *title);
-extern void igGLFWWindow_SetSizeLimits(SDL_Window *window, int minWidth, int minHeight, int maxWidth, int maxHeight);
-extern void igGLFWWindow_SetCloseCallback(SDL_Window *window);
-extern void igGLFWWindow_SetKeyCallback(SDL_Window *window);
-extern void igGLFWWindow_SetSizeCallback(SDL_Window *window);
-extern void igGLFWWindow_SetIcon(SDL_Window *window, int count, CImage* images);
+extern void igSDLWindow_GetDisplaySize(SDL_Window *window, int *width, int *height);
+extern void igSDLWindow_GetContentScale(SDL_Window *window, float *width, float *height);
+extern void igSDLWindow_SetWindowPos(SDL_Window *window, int x, int y);
+extern void igSDLWindow_GetWindowPos(SDL_Window *window, int *x, int *y);
+//extern void igSDLWindow_SetShouldClose(SDL_Window *window, int value);
+//extern void igSDLWindow_SetDropCallbackCB(SDL_Window *window);
+extern void igSDLWindow_SetSize(SDL_Window *window, int width, int height);
+extern void igSDLWindow_SetTitle(SDL_Window *window, const char *title);
+extern void igSDLWindow_SetSizeLimits(SDL_Window *window, int minWidth, int minHeight, int maxWidth, int maxHeight);
+//extern void igSDLWindow_SetCloseCallback(SDL_Window *window);
+//extern void igSDLWindow_SetKeyCallback(SDL_Window *window);
+//extern void igSDLWindow_SetSizeCallback(SDL_Window *window);
+//extern void igSDLWindow_SetIcon(SDL_Window *window, int count, CImage* images);
 extern void igRefresh();
 extern ImTextureID igCreateTexture(unsigned char *pixels, int width, int height);
 extern void igDeleteTexture(ImTextureID id);
-extern void igWindowHint(SDL_WindowFlags hint, int value);
+// TODO: I thnig SDL doesn't provide such a possibility
+//extern void igSDLWindowHint(SDL_WindowFlags hint, int value);
 
-extern void dropCallback(int, char **);
-extern void closeCallback(SDL_Window *window);
-extern void keyCallback(int key, int scancode, int action, int mods);
-extern void sizeCallback(int width, int height);
+//extern void dropCallback(int, char **);
+//extern void closeCallback(SDL_Window *window);
+//extern void keyCallback(int key, int scancode, int action, int mods);
+//extern void sizeCallback(int width, int height);
 
 #ifdef __cplusplus
 }

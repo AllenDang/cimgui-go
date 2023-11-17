@@ -161,7 +161,7 @@ void glfw_render(GLFWwindow *window, VoidCallback renderLoop) {
   glfwSwapBuffers(window);
 }
 
-void igRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
+void igGLFWRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
                VoidCallback beforeDestroyContext) {
   glfwMakeContextCurrent(window);
   ImGuiIO *io = igGetIO();

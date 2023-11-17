@@ -246,7 +246,7 @@ func (b *GLFWBackend) SetBgColor(color Vec4) {
 
 func (b *GLFWBackend) Run(loop func()) {
 	b.loop = loop
-	C.igRunLoop(b.handle(), C.VoidCallback(C.loopCallback), C.VoidCallback(C.beforeRender), C.VoidCallback(C.afterRender), C.VoidCallback(C.beforeDestoryContext))
+	C.igGLFWRunLoop(b.handle(), C.VoidCallback(C.loopCallback), C.VoidCallback(C.beforeRender), C.VoidCallback(C.afterRender), C.VoidCallback(C.beforeDestoryContext))
 }
 
 func (b *GLFWBackend) loopFunc() func() {
