@@ -214,7 +214,7 @@ func (b *GLFWBackend) SetAfterCreateContextHook(hook func()) {
 	b.afterCreateContext = hook
 }
 
-func (b *GLFWBackend) afterCreateHook() func() {
+func (b *GLFWBackend) AfterCreateHook() func() {
 	return b.afterCreateContext
 }
 
@@ -222,7 +222,7 @@ func (b *GLFWBackend) SetBeforeDestroyContextHook(hook func()) {
 	b.beforeDestoryContext = hook
 }
 
-func (b *GLFWBackend) beforeDestroyHook() func() {
+func (b *GLFWBackend) BeforeDestroyHook() func() {
 	return b.beforeDestoryContext
 }
 
@@ -230,7 +230,7 @@ func (b *GLFWBackend) SetBeforeRenderHook(hook func()) {
 	b.beforeRender = hook
 }
 
-func (b *GLFWBackend) beforeRenderHook() func() {
+func (b *GLFWBackend) BeforeRenderHook() func() {
 	return b.beforeRender
 }
 
@@ -238,7 +238,7 @@ func (b *GLFWBackend) SetAfterRenderHook(hook func()) {
 	b.afterRender = hook
 }
 
-func (b *GLFWBackend) afterRenderHook() func() {
+func (b *GLFWBackend) AfterRenderHook() func() {
 	return b.afterRender
 }
 
@@ -251,15 +251,15 @@ func (b *GLFWBackend) Run(loop func()) {
 	C.igGLFWRunLoop(b.handle(), C.VoidCallback(C.loopCallback), C.VoidCallback(C.beforeRender), C.VoidCallback(C.afterRender), C.VoidCallback(C.beforeDestoryContext))
 }
 
-func (b *GLFWBackend) loopFunc() func() {
+func (b *GLFWBackend) LoopFunc() func() {
 	return b.loop
 }
 
-func (b *GLFWBackend) dropCallback() imgui.DropCallback {
+func (b *GLFWBackend) DropCallback() imgui.DropCallback {
 	return b.dropCB
 }
 
-func (b *GLFWBackend) closeCallback() func(wnd unsafe.Pointer) {
+func (b *GLFWBackend) CloseCallback() func(wnd unsafe.Pointer) {
 	return b.closeCB
 }
 
@@ -434,7 +434,7 @@ func (b *GLFWBackend) SetKeyCallback(cbfun imgui.KeyCallback) {
 	C.igGLFWWindow_SetKeyCallback(b.handle())
 }
 
-func (b *GLFWBackend) keyCallback() imgui.KeyCallback {
+func (b *GLFWBackend) KeyCallback() imgui.KeyCallback {
 	return b.keyCb
 }
 
@@ -443,6 +443,6 @@ func (b *GLFWBackend) SetSizeChangeCallback(cbfun imgui.SizeChangeCallback) {
 	C.igGLFWWindow_SetSizeCallback(b.handle())
 }
 
-func (b *GLFWBackend) sizeCallback() imgui.SizeChangeCallback {
+func (b *GLFWBackend) SizeCallback() imgui.SizeChangeCallback {
 	return b.sizeCb
 }

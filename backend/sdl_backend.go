@@ -220,7 +220,7 @@ func (b *SDLBackend) SetAfterCreateContextHook(hook func()) {
 	b.afterCreateContext = hook
 }
 
-func (b *SDLBackend) afterCreateHook() func() {
+func (b *SDLBackend) AfterCreateHook() func() {
 	return b.afterCreateContext
 }
 
@@ -228,7 +228,7 @@ func (b *SDLBackend) SetBeforeDestroyContextHook(hook func()) {
 	b.beforeDestoryContext = hook
 }
 
-func (b *SDLBackend) beforeDestroyHook() func() {
+func (b *SDLBackend) BeforeDestroyHook() func() {
 	return b.beforeDestoryContext
 }
 
@@ -236,7 +236,7 @@ func (b *SDLBackend) SetBeforeRenderHook(hook func()) {
 	b.beforeRender = hook
 }
 
-func (b *SDLBackend) beforeRenderHook() func() {
+func (b *SDLBackend) BeforeRenderHook() func() {
 	return b.beforeRender
 }
 
@@ -244,7 +244,7 @@ func (b *SDLBackend) SetAfterRenderHook(hook func()) {
 	b.afterRender = hook
 }
 
-func (b *SDLBackend) afterRenderHook() func() {
+func (b *SDLBackend) AfterRenderHook() func() {
 	return b.afterRender
 }
 
@@ -257,15 +257,15 @@ func (b *SDLBackend) Run(loop func()) {
 	C.igSDLRunLoop(b.handle(), C.VoidCallback(C.loopCallback), C.VoidCallback(C.beforeRender), C.VoidCallback(C.afterRender), C.VoidCallback(C.beforeDestoryContext))
 }
 
-func (b *SDLBackend) loopFunc() func() {
+func (b *SDLBackend) LoopFunc() func() {
 	return b.loop
 }
 
-func (b *SDLBackend) dropCallback() imgui.DropCallback {
+func (b *SDLBackend) DropCallback() imgui.DropCallback {
 	return b.dropCB
 }
 
-func (b *SDLBackend) closeCallback() func(wnd unsafe.Pointer) {
+func (b *SDLBackend) CloseCallback() func(wnd unsafe.Pointer) {
 	return b.closeCB
 }
 
@@ -448,7 +448,7 @@ func (b *SDLBackend) SetKeyCallback(cbfun imgui.KeyCallback) {
 	// C.igSDLWindow_SetKeyCallback(b.handle())
 }
 
-func (b *SDLBackend) keyCallback() imgui.KeyCallback {
+func (b *SDLBackend) KeyCallback() imgui.KeyCallback {
 	return b.keyCb
 }
 
@@ -458,6 +458,6 @@ func (b *SDLBackend) SetSizeChangeCallback(cbfun imgui.SizeChangeCallback) {
 	// C.igSDLWindow_SetSizeCallback(b.handle())
 }
 
-func (b *SDLBackend) sizeCallback() imgui.SizeChangeCallback {
+func (b *SDLBackend) SizeCallback() imgui.SizeChangeCallback {
 	return b.sizeCb
 }
