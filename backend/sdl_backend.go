@@ -337,7 +337,7 @@ func (b *SDLBackend) CreateWindow(title string, width, height int) {
 	defer titleFin()
 
 	b.window = uintptr(unsafe.Pointer(C.igCreateSDLWindow(
-		titleArg,
+		(*C.char)(titleArg),
 		C.int(width),
 		C.int(height),
 		C.VoidCallback(C.afterCreateContext),

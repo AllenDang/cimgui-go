@@ -311,7 +311,7 @@ func (b *GLFWBackend) SetWindowTitle(title string) {
 	titleArg, titleFin := imgui.WrapString(title)
 	defer titleFin()
 
-	C.igGLFWWindow_SetTitle(b.handle(), titleArg)
+	C.igGLFWWindow_SetTitle(b.handle(), (*C.char)(titleArg))
 }
 
 // The minimum and maximum size of the content area of a windowed mode window.
@@ -330,7 +330,7 @@ func (b *GLFWBackend) CreateWindow(title string, width, height int) {
 	defer titleFin()
 
 	b.window = uintptr(unsafe.Pointer(C.igCreateGLFWWindow(
-		titleArg,
+		(*C.char)(titleArg),
 		C.int(width),
 		C.int(height),
 		C.VoidCallback(C.afterCreateContext),
