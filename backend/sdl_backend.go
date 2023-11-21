@@ -317,7 +317,7 @@ func (b *SDLBackend) SetWindowTitle(title string) {
 	titleArg, titleFin := imgui.WrapString(title)
 	defer titleFin()
 
-	C.igSDLWindow_SetTitle(b.handle(), titleArg)
+	C.igSDLWindow_SetTitle(b.handle(), (*C.char)(titleArg))
 }
 
 // The minimum and maximum size of the content area of a windowed mode window.
