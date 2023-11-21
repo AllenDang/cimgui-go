@@ -15,7 +15,7 @@ import (
 	"unsafe"
 )
 
-type voidCallbackFunc func()
+type VoidCallbackFunc func()
 
 var currentBackend backendCExpose
 
@@ -85,9 +85,11 @@ func sizeCallback(_ unsafe.Pointer, w, h C.int) {
 	}
 }
 
-type DropCallback func([]string)
-type KeyCallback func(key, scanCode, action, mods int)
-type SizeChangeCallback func(w, h int)
+type (
+	DropCallback       func([]string)
+	KeyCallback        func(key, scanCode, action, mods int)
+	SizeChangeCallback func(w, h int)
+)
 
 type WindowCloseCallback[BackendFlagsT ~int] func(b Backend[BackendFlagsT])
 
@@ -157,7 +159,6 @@ type TextureManager interface {
 }
 
 type backendCExpose interface {
-
 	// for C callbacks
 	// What happens here is a bit tricky:
 	// - user sets these callbacks via Set* methods of the backend

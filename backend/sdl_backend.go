@@ -189,15 +189,15 @@ const (
 var _ imgui.Backend[SDLWindowFlags] = &SDLBackend{}
 
 type SDLBackend struct {
-	afterCreateContext   voidCallbackFunc
-	loop                 voidCallbackFunc
-	beforeRender         voidCallbackFunc
-	afterRender          voidCallbackFunc
-	beforeDestoryContext voidCallbackFunc
-	dropCB               DropCallback
+	afterCreateContext   imgui.VoidCallbackFunc
+	loop                 imgui.VoidCallbackFunc
+	beforeRender         imgui.VoidCallbackFunc
+	afterRender          imgui.VoidCallbackFunc
+	beforeDestoryContext imgui.VoidCallbackFunc
+	dropCB               imgui.DropCallback
 	closeCB              func(pointer unsafe.Pointer)
-	keyCb                KeyCallback
-	sizeCb               SizeChangeCallback
+	keyCb                imgui.KeyCallback
+	sizeCb               imgui.SizeChangeCallback
 	window               uintptr
 }
 
@@ -248,7 +248,7 @@ func (b *SDLBackend) afterRenderHook() func() {
 	return b.afterRender
 }
 
-func (b *SDLBackend) SetBgColor(color Vec4) {
+func (b *SDLBackend) SetBgColor(color imgui.Vec4) {
 	C.igSetBgColor(color.toC())
 }
 
@@ -261,7 +261,7 @@ func (b *SDLBackend) loopFunc() func() {
 	return b.loop
 }
 
-func (b *SDLBackend) dropCallback() DropCallback {
+func (b *SDLBackend) dropCallback() imgui.DropCallback {
 	return b.dropCB
 }
 
@@ -274,10 +274,10 @@ func (b *SDLBackend) SetWindowPos(x, y int) {
 }
 
 func (b *SDLBackend) GetWindowPos() (x, y int32) {
-	xArg, xFin := WrapNumberPtr[C.int, int32](&x)
+	xArg, xFin := imgui.WrapNumberPtr[C.int, int32](&x)
 	defer xFin()
 
-	yArg, yFin := WrapNumberPtr[C.int, int32](&y)
+	yArg, yFin := imgui.WrapNumberPtr[C.int, int32](&y)
 	defer yFin()
 
 	C.igSDLWindow_GetWindowPos(b.handle(), xArg, yArg)
@@ -290,10 +290,10 @@ func (b *SDLBackend) SetWindowSize(width, height int) {
 }
 
 func (b *SDLBackend) DisplaySize() (width int32, height int32) {
-	widthArg, widthFin := WrapNumberPtr[C.int, int32](&width)
+	widthArg, widthFin := imgui.WrapNumberPtr[C.int, int32](&width)
 	defer widthFin()
 
-	heightArg, heightFin := WrapNumberPtr[C.int, int32](&height)
+	heightArg, heightFin := imgui.WrapNumberPtr[C.int, int32](&height)
 	defer heightFin()
 
 	C.igSDLWindow_GetDisplaySize(b.handle(), widthArg, heightArg)
@@ -302,10 +302,10 @@ func (b *SDLBackend) DisplaySize() (width int32, height int32) {
 }
 
 func (b *SDLBackend) ContentScale() (width, height float32) {
-	widthArg, widthFin := WrapNumberPtr[C.float, float32](&width)
+	widthArg, widthFin := imgui.WrapNumberPtr[C.float, float32](&width)
 	defer widthFin()
 
-	heightArg, heightFin := WrapNumberPtr[C.float, float32](&height)
+	heightArg, heightFin := imgui.WrapNumberPtr[C.float, float32](&height)
 	defer heightFin()
 
 	C.igSDLWindow_GetContentScale(b.handle(), widthArg, heightArg)
@@ -314,7 +314,7 @@ func (b *SDLBackend) ContentScale() (width, height float32) {
 }
 
 func (b *SDLBackend) SetWindowTitle(title string) {
-	titleArg, titleFin := WrapString(title)
+	titleArg, titleFin := imgui.WrapString(title)
 	defer titleFin()
 
 	C.igSDLWindow_SetTitle(b.handle(), titleArg)
@@ -333,7 +333,7 @@ func (b *SDLBackend) SetShouldClose(value bool) {
 }
 
 func (b *SDLBackend) CreateWindow(title string, width, height int) {
-	titleArg, titleFin := WrapString(title)
+	titleArg, titleFin := imgui.WrapString(title)
 	defer titleFin()
 
 	b.window = uintptr(unsafe.Pointer(C.igCreateSDLWindow(
@@ -355,27 +355,27 @@ func (b *SDLBackend) Refresh() {
 	C.igRefresh()
 }
 
-func (b *SDLBackend) CreateTexture(pixels unsafe.Pointer, width, height int) TextureID {
-	return TextureID(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
+func (b *SDLBackend) CreateTexture(pixels unsafe.Pointer, width, height int) imgui.TextureID {
+	return imgui.TextureID(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
 }
 
-func (b *SDLBackend) CreateTextureRgba(img *image.RGBA, width, height int) TextureID {
-	return TextureID(C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height)))
+func (b *SDLBackend) CreateTextureRgba(img *image.RGBA, width, height int) imgui.TextureID {
+	return imgui.TextureID(C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height)))
 }
 
-func (b *SDLBackend) DeleteTexture(id TextureID) {
+func (b *SDLBackend) DeleteTexture(id imgui.TextureID) {
 	C.igDeleteTexture(C.ImTextureID(id))
 }
 
 // SetDropCallback sets the drop callback which is called when an object
 // is dropped over the window.
-func (b *SDLBackend) SetDropCallback(cbfun DropCallback) {
+func (b *SDLBackend) SetDropCallback(cbfun imgui.DropCallback) {
 	b.dropCB = cbfun
 	// TODO: not implemented
 	// C.igSDLWindow_SetDropCallbackCB(b.handle())
 }
 
-func (b *SDLBackend) SetCloseCallback(cbfun WindowCloseCallback[SDLWindowFlags]) {
+func (b *SDLBackend) SetCloseCallback(cbfun imgui.WindowCloseCallback[SDLWindowFlags]) {
 	b.closeCB = func(_ unsafe.Pointer) {
 		cbfun(b)
 	}
@@ -442,22 +442,22 @@ func (b *SDLBackend) SetIcons(images ...image.Image) {
 	}
 }
 
-func (b *SDLBackend) SetKeyCallback(cbfun KeyCallback) {
+func (b *SDLBackend) SetKeyCallback(cbfun imgui.KeyCallback) {
 	b.keyCb = cbfun
 	// TODO: not implemented
 	// C.igSDLWindow_SetKeyCallback(b.handle())
 }
 
-func (b *SDLBackend) keyCallback() KeyCallback {
+func (b *SDLBackend) keyCallback() imgui.KeyCallback {
 	return b.keyCb
 }
 
-func (b *SDLBackend) SetSizeChangeCallback(cbfun SizeChangeCallback) {
+func (b *SDLBackend) SetSizeChangeCallback(cbfun imgui.SizeChangeCallback) {
 	b.sizeCb = cbfun
 	// TODO: notttt pimlemented
 	// C.igSDLWindow_SetSizeCallback(b.handle())
 }
 
-func (b *SDLBackend) sizeCallback() SizeChangeCallback {
+func (b *SDLBackend) sizeCallback() imgui.SizeChangeCallback {
 	return b.sizeCb
 }
