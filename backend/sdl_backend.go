@@ -3,11 +3,11 @@
 
 package backend
 
-// #cgo amd64,linux LDFLAGS: ${SRCDIR}/lib/linux/x64/libSDL2.a -ldl -lGL -lX11
-// #cgo amd64,windows LDFLAGS: -L${SRCDIR}/lib/windows/x64 -l:libSDL2.a -lgdi32 -lopengl32 -limm32
+// #cgo amd64,linux LDFLAGS: ${SRCDIR}/../lib/linux/x64/libSDL2.a -ldl -lGL -lX11
+// #cgo amd64,windows LDFLAGS: -L${SRCDIR}/../lib/windows/x64 -l:libSDL2.a -lgdi32 -lopengl32 -limm32
 // #cgo darwin LDFLAGS: -framework Cocoa -framework IOKit -framework CoreVideo
-// #cgo amd64,darwin LDFLAGS: ${SRCDIR}/lib/macos/x64/libSDL.a
-// #cgo arm64,darwin LDFLAGS: ${SRCDIR}/lib/macos/arm64/libSDL2.a
+// #cgo amd64,darwin LDFLAGS: ${SRCDIR}/../lib/macos/x64/libSDL.a
+// #cgo arm64,darwin LDFLAGS: ${SRCDIR}/../lib/macos/arm64/libSDL2.a
 // #cgo !gles2,darwin LDFLAGS: -framework OpenGL
 // #cgo gles2,darwin LDFLAGS: -lGLESv2
 // #cgo CPPFLAGS: -DCIMGUI_GO_USE_SDL2
@@ -249,7 +249,8 @@ func (b *SDLBackend) AfterRenderHook() func() {
 }
 
 func (b *SDLBackend) SetBgColor(color imgui.Vec4) {
-	C.igSetBgColor(color.toC())
+	c := color.ToC()
+	C.igSetBgColor(*(*C.ImVec4)(unsafe.Pointer(&c)))
 }
 
 func (b *SDLBackend) Run(loop func()) {

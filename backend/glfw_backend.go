@@ -3,11 +3,11 @@
 
 package backend
 
-// #cgo amd64,linux LDFLAGS: ${SRCDIR}/lib/linux/x64/libglfw3.a -ldl -lGL -lX11
-// #cgo amd64,windows LDFLAGS: -L${SRCDIR}/lib/windows/x64 -l:libglfw3.a -lgdi32 -lopengl32 -limm32
+// #cgo amd64,linux LDFLAGS: ${SRCDIR}/../lib/linux/x64/libglfw3.a -ldl -lGL -lX11
+// #cgo amd64,windows LDFLAGS: -L${SRCDIR}/../lib/windows/x64 -l:libglfw3.a -lgdi32 -lopengl32 -limm32
 // #cgo darwin LDFLAGS: -framework Cocoa -framework IOKit -framework CoreVideo
-// #cgo amd64,darwin LDFLAGS: ${SRCDIR}/lib/macos/x64/libglfw3.a
-// #cgo arm64,darwin LDFLAGS: ${SRCDIR}/lib/macos/arm64/libglfw3.a
+// #cgo amd64,darwin LDFLAGS: ${SRCDIR}/../lib/macos/x64/libglfw3.a
+// #cgo arm64,darwin LDFLAGS: ${SRCDIR}/../lib/macos/arm64/libglfw3.a
 // #cgo !gles2,darwin LDFLAGS: -framework OpenGL
 // #cgo gles2,darwin LDFLAGS: -lGLESv2
 // #cgo CPPFLAGS: -DCIMGUI_GO_USE_GLFW
@@ -243,7 +243,9 @@ func (b *GLFWBackend) AfterRenderHook() func() {
 }
 
 func (b *GLFWBackend) SetBgColor(color imgui.Vec4) {
-	C.igSetBgColor(color.toC())
+	// Terrible hack - I can't convert imgui._Ctype_struct_ImVec4 to C.ImVec4 directly
+	c := color.ToC()
+	C.igSetBgColor(*(*C.ImVec4)(unsafe.Pointer(&c)))
 }
 
 func (b *GLFWBackend) Run(loop func()) {
