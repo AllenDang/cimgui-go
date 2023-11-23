@@ -21,7 +21,7 @@ var (
 	a              float32
 	color4         [4]float32 = [4]float32{r, g, b, a}
 	selected       bool
-	backend        imgui.Backend[backends.SDLWindowFlags]
+	backend        imgui.Backend[backends.GLFWWindowFlags]
 	img            *image.RGBA
 	texture        *imgui.Texture
 	barValues      []int64
@@ -121,7 +121,7 @@ func main() {
 		barValues = append(barValues, int64(i+1))
 	}
 
-	backend = imgui.CreateBackend(backends.NewSDLBackend())
+	backend = imgui.CreateBackend(backends.NewGLFWBackend())
 	backend.SetAfterCreateContextHook(afterCreateContext)
 	backend.SetBeforeDestroyContextHook(beforeDestroyContext)
 
@@ -133,11 +133,9 @@ func main() {
 		fmt.Printf("drop triggered: %v", p)
 	})
 
-	/*
-		backend.SetCloseCallback(func(b imgui.Backend[imgui.GLFWWindowFlags]) {
-			fmt.Println("window is closing")
-		})
-	*/
+	backend.SetCloseCallback(func(b imgui.Backend[backends.GLFWWindowFlags]) {
+		fmt.Println("window is closing")
+	})
 
 	backend.SetIcons(img)
 
