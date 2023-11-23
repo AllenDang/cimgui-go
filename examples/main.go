@@ -21,7 +21,7 @@ var (
 	a              float32
 	color4         [4]float32 = [4]float32{r, g, b, a}
 	selected       bool
-	backend        backends.Backend[backends.SDLWindowFlags]
+	backend        imgui.Backend[backends.SDLWindowFlags]
 	img            *image.RGBA
 	texture        *imgui.Texture
 	barValues      []int64
