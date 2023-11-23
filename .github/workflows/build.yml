@@ -20,6 +20,7 @@ jobs:
           sudo apt-get -y update
           sudo apt install xorg-dev
 
+      # for GLFW
       - name: configure glfw
         run: cmake -S . -Bbuild
         working-directory: ./thirdparty/glfw
@@ -32,6 +33,20 @@ jobs:
         run: |
           cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/linux/x64
 
+      # for SDL2
+      - name: configure sdl
+        run: cmake -S . -Bbuild
+        working-directory: ./thirdparty/SDL
+
+      - name: make sdl
+        run: make -j 4
+        working-directory: ./thirdparty/SDL/build
+
+      - name: copy sdl to lib
+        run: |
+          cp -f ./thirdparty/SDL/build//libSDL2.a ./lib/linux/x64
+
+      # for cimgui
       - name: configure cimgui
         run: cmake -Bbuild
         working-directory: ./lib
@@ -61,6 +76,7 @@ jobs:
     steps:
       - uses: actions/checkout@main
 
+      # glfw
       - name: configure glfw for x64
         run: cmake -S . -Bbuild -DCMAKE_OSX_ARCHITECTURES=x86_64
         working-directory: ./thirdparty/glfw
@@ -89,6 +105,36 @@ jobs:
         run: |
           cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/macos/arm64
 
+      # sdl
+      - name: configure sdl for x64
+        run: cmake -S . -Bbuild -DCMAKE_OSX_ARCHITECTURES=x86_64
+        working-directory: ./thirdparty/SDL
+
+      - name: make sdl x84
+        run: make -j 4
+        working-directory: ./thirdparty/SDL/build
+
+      - name: copy sdl to lib
+        run: |
+          cp -f ./thirdparty/SDL/build/libSDL2.a ./lib/macos/x64
+
+      - name: clean sdl
+        run: cmake --build ./build --target clean
+        working-directory: ./thirdparty/SDL
+
+      - name: configure sdl for arm64
+        run: cmake -S . -Bbuild -DCMAKE_OSX_ARCHITECTURES=arm64
+        working-directory: ./thirdparty/SDL
+
+      - name: make sdl arm64
+        run: make -j 4
+        working-directory: ./thirdparty/SDL/build
+
+      - name: copy sdl to lib
+        run: |
+          cp -f ./thirdparty/SDL/build/libSDL2.a ./lib/macos/arm64
+
+      # cimgui
       - name: configure cimgui for x64
         run: cmake -Bbuild -DCMAKE_OSX_ARCHITECTURES=x86_64
         working-directory: ./lib
@@ -151,6 +197,7 @@ jobs:
             cmake:p
             ninja:p
 
+      # glfw
       - name: configure glfw
         run: cmake -G Ninja -S . -B build -DCMAKE_BUILD_TYPE=Release
         working-directory: ./thirdparty/glfw
@@ -162,6 +209,19 @@ jobs:
       - name: copy glfw to lib
         run: cp -f ./thirdparty/glfw/build/src/libglfw3.a ./lib/windows/x64
 
+      # sdl
+      - name: configure sdl
+        run: cmake -G Ninja -S . -B build -DCMAKE_BUILD_TYPE=Release
+        working-directory: ./thirdparty/SDL
+
+      - name: make sdl
+        run: cmake --build build -j 4
+        working-directory: ./thirdparty/SDL
+
+      - name: copy sdl to lib
+        run: cp -f ./thirdparty/SDL/build/libSDL2.a ./lib/windows/x64
+
+      # cimgui
       - name: configure cimgui
         run: cmake -G Ninja -B build
         working-directory: .\lib

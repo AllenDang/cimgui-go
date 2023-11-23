@@ -1,5 +1,7 @@
 #pragma once
 
+typedef void (*VoidCallback)();
+
 #ifdef __WIN32
 typedef unsigned long long xulong;
 typedef long long xlong;

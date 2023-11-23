@@ -44,6 +44,12 @@ set(GLFW3_INCLUDE_DIR ${GLFW3_PREFIX}/include)
 list(APPEND IMGUI_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../cimgui/imgui/backends/imgui_impl_glfw.cpp)
 list(APPEND IMGUI_LIBRARIES glfw)
 
+#SDL
+set(SDL2_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/SDL)
+set(SDL2_INCLUDE_DIR ${SDL2_PREFIX}/include)
+list(APPEND IMGUI_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../cimgui/imgui/backends/imgui_impl_sdl2.cpp)
+list(APPEND IMGUI_LIBRARIES sdl2)
+
 #opengl3
 list(APPEND IMGUI_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../cimgui/imgui/backends/imgui_impl_opengl3.cpp)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../cimgui/imgui/examples/libs/gl3w)
@@ -77,6 +83,7 @@ target_compile_definitions(cimgui PUBLIC IMGUI_IMPL_API=extern\t\"C\"\t)
 target_include_directories(cimgui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../cimgui/)
 target_include_directories(cimgui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../cimgui/imgui)
 target_include_directories(cimgui PUBLIC ${GLFW3_INCLUDE_DIR})
+target_include_directories(cimgui PUBLIC ${SDL2_INCLUDE_DIR})
 set_target_properties(cimgui PROPERTIES PREFIX "")
 target_link_libraries(cimgui ${IMGUI_LIBRARIES})
 
