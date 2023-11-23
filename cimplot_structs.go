@@ -89,10 +89,10 @@ func (self PlotAnnotation) handle() (result *C.ImPlotAnnotation, releaseFn func(
 	result = new(C.ImPlotAnnotation)
 	FieldPos := self.FieldPos
 
-	result.Pos = FieldPos.toC()
+	result.Pos = FieldPos.ToC()
 	FieldOffset := self.FieldOffset
 
-	result.Offset = FieldOffset.toC()
+	result.Offset = FieldOffset.ToC()
 	FieldColorBg := self.FieldColorBg
 
 	result.ColorBg = C.ImU32(FieldColorBg)
@@ -117,8 +117,8 @@ func (self PlotAnnotation) c() (result C.ImPlotAnnotation, fin func()) {
 
 func newPlotAnnotationFromC(cvalue *C.ImPlotAnnotation) *PlotAnnotation {
 	result := new(PlotAnnotation)
-	result.FieldPos = *(&Vec2{}).fromC(cvalue.Pos)
-	result.FieldOffset = *(&Vec2{}).fromC(cvalue.Offset)
+	result.FieldPos = *(&Vec2{}).FromC(cvalue.Pos)
+	result.FieldOffset = *(&Vec2{}).FromC(cvalue.Offset)
 	result.FieldColorBg = uint32(cvalue.ColorBg)
 	result.FieldColorFg = uint32(cvalue.ColorFg)
 	result.FieldTextOffset = int32(cvalue.TextOffset)
@@ -375,7 +375,7 @@ func (self PlotItem) handle() (result *C.ImPlotItem, releaseFn func()) {
 	result.Color = C.ImU32(FieldColor)
 	FieldLegendHoverRect := self.FieldLegendHoverRect
 
-	result.LegendHoverRect = FieldLegendHoverRect.toC()
+	result.LegendHoverRect = FieldLegendHoverRect.ToC()
 	FieldNameOffset := self.FieldNameOffset
 
 	result.NameOffset = C.int(FieldNameOffset)
@@ -402,7 +402,7 @@ func newPlotItemFromC(cvalue *C.ImPlotItem) *PlotItem {
 	result := new(PlotItem)
 	result.FieldID = ID(cvalue.ID)
 	result.FieldColor = uint32(cvalue.Color)
-	result.FieldLegendHoverRect = *(&Rect{}).fromC(cvalue.LegendHoverRect)
+	result.FieldLegendHoverRect = *(&Rect{}).FromC(cvalue.LegendHoverRect)
 	result.FieldNameOffset = int32(cvalue.NameOffset)
 	result.FieldShow = cvalue.Show == C.bool(true)
 	result.FieldLegendHovered = cvalue.LegendHovered == C.bool(true)
@@ -462,7 +462,7 @@ func (self PlotLegend) handle() (result *C.ImPlotLegend, releaseFn func()) {
 	result.PreviousLocation = C.ImPlotLocation(FieldPreviousLocation)
 	FieldScroll := self.FieldScroll
 
-	result.Scroll = FieldScroll.toC()
+	result.Scroll = FieldScroll.ToC()
 	FieldIndices := self.FieldIndices
 	FieldIndicesData := FieldIndices.Data
 	FieldIndicesDataArg, FieldIndicesDataFin := WrapNumberPtr[C.int, int32](FieldIndicesData)
@@ -478,10 +478,10 @@ func (self PlotLegend) handle() (result *C.ImPlotLegend, releaseFn func()) {
 	result.Labels = FieldLabelsArg
 	FieldRect := self.FieldRect
 
-	result.Rect = FieldRect.toC()
+	result.Rect = FieldRect.ToC()
 	FieldRectClamped := self.FieldRectClamped
 
-	result.RectClamped = FieldRectClamped.toC()
+	result.RectClamped = FieldRectClamped.ToC()
 	FieldHovered := self.FieldHovered
 
 	result.Hovered = C.bool(FieldHovered)
@@ -510,12 +510,12 @@ func newPlotLegendFromC(cvalue *C.ImPlotLegend) *PlotLegend {
 	result.FieldPreviousFlags = PlotLegendFlags(cvalue.PreviousFlags)
 	result.FieldLocation = PlotLocation(cvalue.Location)
 	result.FieldPreviousLocation = PlotLocation(cvalue.PreviousLocation)
-	result.FieldScroll = *(&Vec2{}).fromC(cvalue.Scroll)
+	result.FieldScroll = *(&Vec2{}).FromC(cvalue.Scroll)
 	result.FieldIndices = newVectorFromC(cvalue.Indices.Size, cvalue.Indices.Capacity, (*int32)(cvalue.Indices.Data))
 	result.FieldLabels = *newTextBufferFromC(func() *C.ImGuiTextBuffer { result := cvalue.Labels; return &result }())
 
-	result.FieldRect = *(&Rect{}).fromC(cvalue.Rect)
-	result.FieldRectClamped = *(&Rect{}).fromC(cvalue.RectClamped)
+	result.FieldRect = *(&Rect{}).FromC(cvalue.Rect)
+	result.FieldRectClamped = *(&Rect{}).FromC(cvalue.RectClamped)
 	result.FieldHovered = cvalue.Hovered == C.bool(true)
 	result.FieldHeld = cvalue.Held == C.bool(true)
 	result.FieldCanGoInside = cvalue.CanGoInside == C.bool(true)
@@ -843,7 +843,7 @@ func (self PlotTick) handle() (result *C.ImPlotTick, releaseFn func()) {
 	result.PixelPos = C.float(FieldPixelPos)
 	FieldLabelSize := self.FieldLabelSize
 
-	result.LabelSize = FieldLabelSize.toC()
+	result.LabelSize = FieldLabelSize.ToC()
 	FieldTextOffset := self.FieldTextOffset
 
 	result.TextOffset = C.int(FieldTextOffset)
@@ -873,7 +873,7 @@ func newPlotTickFromC(cvalue *C.ImPlotTick) *PlotTick {
 	result := new(PlotTick)
 	result.FieldPlotPos = float64(cvalue.PlotPos)
 	result.FieldPixelPos = float32(cvalue.PixelPos)
-	result.FieldLabelSize = *(&Vec2{}).fromC(cvalue.LabelSize)
+	result.FieldLabelSize = *(&Vec2{}).FromC(cvalue.LabelSize)
 	result.FieldTextOffset = int32(cvalue.TextOffset)
 	result.FieldMajor = cvalue.Major == C.bool(true)
 	result.FieldShowLabel = cvalue.ShowLabel == C.bool(true)
@@ -907,10 +907,10 @@ func (self PlotTicker) handle() (result *C.ImPlotTicker, releaseFn func()) {
 	result.TextBuffer = FieldTextBufferArg
 	FieldMaxSize := self.FieldMaxSize
 
-	result.MaxSize = FieldMaxSize.toC()
+	result.MaxSize = FieldMaxSize.ToC()
 	FieldLateSize := self.FieldLateSize
 
-	result.LateSize = FieldLateSize.toC()
+	result.LateSize = FieldLateSize.ToC()
 	FieldLevels := self.FieldLevels
 
 	result.Levels = C.int(FieldLevels)
@@ -932,8 +932,8 @@ func newPlotTickerFromC(cvalue *C.ImPlotTicker) *PlotTicker {
 	result.FieldTicks = newVectorFromC(cvalue.Ticks.Size, cvalue.Ticks.Capacity, newPlotTickFromC(cvalue.Ticks.Data))
 	result.FieldTextBuffer = *newTextBufferFromC(func() *C.ImGuiTextBuffer { result := cvalue.TextBuffer; return &result }())
 
-	result.FieldMaxSize = *(&Vec2{}).fromC(cvalue.MaxSize)
-	result.FieldLateSize = *(&Vec2{}).fromC(cvalue.LateSize)
+	result.FieldMaxSize = *(&Vec2{}).FromC(cvalue.MaxSize)
+	result.FieldLateSize = *(&Vec2{}).FromC(cvalue.LateSize)
 	result.FieldLevels = int32(cvalue.Levels)
 	return result
 }

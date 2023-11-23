@@ -15,7 +15,7 @@ import (
 	"unsafe"
 )
 
-type voidCallbackFunc func()
+type VoidCallbackFunc func()
 
 var currentBackend backendCExpose
 
@@ -25,7 +25,7 @@ var textureManager TextureManager
 //export loopCallback
 func loopCallback() {
 	if currentBackend != nil {
-		if f := currentBackend.loopFunc(); f != nil {
+		if f := currentBackend.LoopFunc(); f != nil {
 			f()
 		}
 	}
@@ -34,7 +34,7 @@ func loopCallback() {
 //export beforeRender
 func beforeRender() {
 	if currentBackend != nil {
-		if f := currentBackend.beforeRenderHook(); f != nil {
+		if f := currentBackend.BeforeRenderHook(); f != nil {
 			f()
 		}
 	}
@@ -43,7 +43,7 @@ func beforeRender() {
 //export afterRender
 func afterRender() {
 	if currentBackend != nil {
-		if f := currentBackend.afterRenderHook(); f != nil {
+		if f := currentBackend.AfterRenderHook(); f != nil {
 			f()
 		}
 	}
@@ -52,7 +52,7 @@ func afterRender() {
 //export afterCreateContext
 func afterCreateContext() {
 	if currentBackend != nil {
-		if f := currentBackend.afterCreateHook(); f != nil {
+		if f := currentBackend.AfterCreateHook(); f != nil {
 			f()
 		}
 	}
@@ -61,7 +61,7 @@ func afterCreateContext() {
 //export beforeDestoryContext
 func beforeDestoryContext() {
 	if currentBackend != nil {
-		if f := currentBackend.beforeDestroyHook(); f != nil {
+		if f := currentBackend.BeforeDestroyHook(); f != nil {
 			f()
 		}
 	}
@@ -70,7 +70,7 @@ func beforeDestoryContext() {
 //export keyCallback
 func keyCallback(_ unsafe.Pointer, key, scanCode, action, mods C.int) {
 	if currentBackend != nil {
-		if f := currentBackend.keyCallback(); f != nil {
+		if f := currentBackend.KeyCallback(); f != nil {
 			f(int(key), int(scanCode), int(action), int(mods))
 		}
 	}
@@ -79,21 +79,23 @@ func keyCallback(_ unsafe.Pointer, key, scanCode, action, mods C.int) {
 //export sizeCallback
 func sizeCallback(_ unsafe.Pointer, w, h C.int) {
 	if currentBackend != nil {
-		if f := currentBackend.sizeCallback(); f != nil {
+		if f := currentBackend.SizeCallback(); f != nil {
 			f(int(w), int(h))
 		}
 	}
 }
 
-type DropCallback func([]string)
-type KeyCallback func(key, scanCode, action, mods int)
-type SizeChangeCallback func(w, h int)
+type (
+	DropCallback       func([]string)
+	KeyCallback        func(key, scanCode, action, mods int)
+	SizeChangeCallback func(w, h int)
+)
 
 type WindowCloseCallback[BackendFlagsT ~int] func(b Backend[BackendFlagsT])
 
 //export closeCallback
 func closeCallback(wnd unsafe.Pointer) {
-	currentBackend.closeCallback()(wnd)
+	currentBackend.CloseCallback()(wnd)
 }
 
 //export dropCallback
@@ -105,7 +107,7 @@ func dropCallback(wnd unsafe.Pointer, count C.int, names **C.char) {
 		namesSlice[i] = C.GoString(*p)
 	}
 
-	currentBackend.dropCallback()(namesSlice)
+	currentBackend.DropCallback()(namesSlice)
 }
 
 // Backend is a special interface that implements all methods required
@@ -157,7 +159,6 @@ type TextureManager interface {
 }
 
 type backendCExpose interface {
-
 	// for C callbacks
 	// What happens here is a bit tricky:
 	// - user sets these callbacks via Set* methods of the backend
@@ -168,15 +169,15 @@ type backendCExpose interface {
 	// - backend implementation uses C references to Go callbacks to share them (again ;-) )
 	//   into backend code.
 	// As you can see this is all to convert Go callback int C callback
-	afterCreateHook() func()
-	beforeRenderHook() func()
-	loopFunc() func()
-	afterRenderHook() func()
-	beforeDestroyHook() func()
-	dropCallback() DropCallback
-	closeCallback() func(window unsafe.Pointer)
-	keyCallback() KeyCallback
-	sizeCallback() SizeChangeCallback
+	AfterCreateHook() func()
+	BeforeRenderHook() func()
+	LoopFunc() func()
+	AfterRenderHook() func()
+	BeforeDestroyHook() func()
+	DropCallback() DropCallback
+	CloseCallback() func(window unsafe.Pointer)
+	KeyCallback() KeyCallback
+	SizeCallback() SizeChangeCallback
 }
 
 func CreateBackend[BackendFlagsT ~int](backend Backend[BackendFlagsT]) Backend[BackendFlagsT] {

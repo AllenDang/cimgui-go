@@ -1,16 +1,15 @@
-//go:build !exclude_cimgui_glfw
-// +build !exclude_cimgui_glfw
+//go:build !exclude_cimgui_sdli && !darwin
 
-package imgui
+package backend
 
-// #cgo amd64,linux LDFLAGS: ${SRCDIR}/lib/linux/x64/libglfw3.a -ldl -lGL -lX11
-// #cgo amd64,windows LDFLAGS: -L${SRCDIR}/lib/windows/x64 -l:libglfw3.a -lgdi32 -lopengl32 -limm32
+// #cgo amd64,linux LDFLAGS: ${SRCDIR}/../lib/linux/x64/libSDL2.a -ldl -lGL -lX11
+// #cgo amd64,windows LDFLAGS: -L${SRCDIR}/../lib/windows/x64 -l:libSDL2.a -lgdi32 -lopengl32 -limm32
 // #cgo darwin LDFLAGS: -framework Cocoa -framework IOKit -framework CoreVideo
-// #cgo amd64,darwin LDFLAGS: ${SRCDIR}/lib/macos/x64/libglfw3.a
-// #cgo arm64,darwin LDFLAGS: ${SRCDIR}/lib/macos/arm64/libglfw3.a
+// #cgo amd64,darwin LDFLAGS: ${SRCDIR}/../lib/macos/x64/libSDL2.a
+// #cgo arm64,darwin LDFLAGS: ${SRCDIR}/../lib/macos/arm64/libSDL2.a
 // #cgo !gles2,darwin LDFLAGS: -framework OpenGL
 // #cgo gles2,darwin LDFLAGS: -lGLESv2
-// #cgo CPPFLAGS: -DCIMGUI_GO_USE_GLFW
+// #cgo CPPFLAGS: -DCIMGUI_GO_USE_SDL2
 // #include <stdlib.h>
 // extern void loopCallback();
 // extern void beforeRender();
@@ -18,17 +17,20 @@ package imgui
 // extern void afterCreateContext();
 // extern void beforeDestoryContext();
 // #include <stdint.h>
-// #include "glfw_backend.h"
+// #include "sdl_backend.h"
 import "C"
 
 import (
 	"image"
 	"image/draw"
 	"unsafe"
+
+	imgui "github.com/AllenDang/cimgui-go"
 )
 
-type GLFWWindowFlags int
+type SDLWindowFlags int
 
+/*
 const (
 	GLFWWindowFlagsNone        = GLFWWindowFlags(C.GLFWWindowNone)
 	GLFWWindowFlagsResizable   = GLFWWindowFlags(C.GLFWWindowResizable)
@@ -41,7 +43,9 @@ const (
 	GLFWWindowFlagsIconified   = GLFWWindowFlags(C.GLFWWindowIconified)
 	GLFWWindowFlagsAutoIconify = GLFWWindowFlags(C.GLFWWindowAutoIconify)
 )
+*/
 
+/*
 type GLFWKey int
 
 const (
@@ -96,7 +100,7 @@ const (
 	GLFWKeyWorld1       = GLFWKey(C.GLFWKeyWorld1)
 	GLFWKeyWorld2       = GLFWKey(C.GLFWKeyWorld2)
 
-	/* Function keys */
+	// Function keys
 	GLFWKeyEscape       = GLFWKey(C.GLFWKeyEscape)
 	GLFWKeyEnter        = GLFWKey(C.GLFWKeyEnter)
 	GLFWKeyTab          = GLFWKey(C.GLFWKeyTab)
@@ -179,209 +183,217 @@ const (
 	GLFWModCapsLock = GLFWModifierKey(C.GLFWModCapsLock)
 	GLFWModNumLock  = GLFWModifierKey(C.GLFWModNumLock)
 )
+*/
 
-var _ Backend[GLFWWindowFlags] = &GLFWBackend{}
+var _ imgui.Backend[SDLWindowFlags] = &SDLBackend{}
 
-type GLFWBackend struct {
-	afterCreateContext   voidCallbackFunc
-	loop                 voidCallbackFunc
-	beforeRender         voidCallbackFunc
-	afterRender          voidCallbackFunc
-	beforeDestoryContext voidCallbackFunc
-	dropCB               DropCallback
+type SDLBackend struct {
+	afterCreateContext   imgui.VoidCallbackFunc
+	loop                 imgui.VoidCallbackFunc
+	beforeRender         imgui.VoidCallbackFunc
+	afterRender          imgui.VoidCallbackFunc
+	beforeDestoryContext imgui.VoidCallbackFunc
+	dropCB               imgui.DropCallback
 	closeCB              func(pointer unsafe.Pointer)
-	keyCb                KeyCallback
-	sizeCb               SizeChangeCallback
+	keyCb                imgui.KeyCallback
+	sizeCb               imgui.SizeChangeCallback
 	window               uintptr
 }
 
-func NewGLFWBackend() *GLFWBackend {
-	b := &GLFWBackend{}
-	if C.igInitGLFW() == 0 {
-		panic("Failed to initialize GLFW")
+func NewSDLBackend() *SDLBackend {
+	b := &SDLBackend{}
+	// \returns 0 on success or a negative error code on failure; call
+	// SDL_GetError() for more information.
+	if C.igInitSDL() != 0 {
+		panic("Failed to initialize SDL")
 	}
 
 	return b
 }
 
-func (b *GLFWBackend) handle() *C.GLFWwindow {
-	return (*C.GLFWwindow)(unsafe.Pointer(b.window))
+func (b *SDLBackend) handle() *C.SDL_Window {
+	return (*C.SDL_Window)(unsafe.Pointer(b.window))
 }
 
-func (b *GLFWBackend) SetAfterCreateContextHook(hook func()) {
+func (b *SDLBackend) SetAfterCreateContextHook(hook func()) {
 	b.afterCreateContext = hook
 }
 
-func (b *GLFWBackend) afterCreateHook() func() {
+func (b *SDLBackend) AfterCreateHook() func() {
 	return b.afterCreateContext
 }
 
-func (b *GLFWBackend) SetBeforeDestroyContextHook(hook func()) {
+func (b *SDLBackend) SetBeforeDestroyContextHook(hook func()) {
 	b.beforeDestoryContext = hook
 }
 
-func (b *GLFWBackend) beforeDestroyHook() func() {
+func (b *SDLBackend) BeforeDestroyHook() func() {
 	return b.beforeDestoryContext
 }
 
-func (b *GLFWBackend) SetBeforeRenderHook(hook func()) {
+func (b *SDLBackend) SetBeforeRenderHook(hook func()) {
 	b.beforeRender = hook
 }
 
-func (b *GLFWBackend) beforeRenderHook() func() {
+func (b *SDLBackend) BeforeRenderHook() func() {
 	return b.beforeRender
 }
 
-func (b *GLFWBackend) SetAfterRenderHook(hook func()) {
+func (b *SDLBackend) SetAfterRenderHook(hook func()) {
 	b.afterRender = hook
 }
 
-func (b *GLFWBackend) afterRenderHook() func() {
+func (b *SDLBackend) AfterRenderHook() func() {
 	return b.afterRender
 }
 
-func (b *GLFWBackend) SetBgColor(color Vec4) {
-	C.igSetBgColor(color.toC())
+func (b *SDLBackend) SetBgColor(color imgui.Vec4) {
+	c := color.ToC()
+	C.igSetBgColor(*(*C.ImVec4)(unsafe.Pointer(&c)))
 }
 
-func (b *GLFWBackend) Run(loop func()) {
+func (b *SDLBackend) Run(loop func()) {
 	b.loop = loop
-	C.igGLFWRunLoop(b.handle(), C.VoidCallback(C.loopCallback), C.VoidCallback(C.beforeRender), C.VoidCallback(C.afterRender), C.VoidCallback(C.beforeDestoryContext))
+	C.igSDLRunLoop(b.handle(), C.VoidCallback(C.loopCallback), C.VoidCallback(C.beforeRender), C.VoidCallback(C.afterRender), C.VoidCallback(C.beforeDestoryContext))
 }
 
-func (b *GLFWBackend) loopFunc() func() {
+func (b *SDLBackend) LoopFunc() func() {
 	return b.loop
 }
 
-func (b *GLFWBackend) dropCallback() DropCallback {
+func (b *SDLBackend) DropCallback() imgui.DropCallback {
 	return b.dropCB
 }
 
-func (b *GLFWBackend) closeCallback() func(wnd unsafe.Pointer) {
+func (b *SDLBackend) CloseCallback() func(wnd unsafe.Pointer) {
 	return b.closeCB
 }
 
-func (b *GLFWBackend) SetWindowPos(x, y int) {
-	C.igGLFWWindow_SetWindowPos(b.handle(), C.int(x), C.int(y))
+func (b *SDLBackend) SetWindowPos(x, y int) {
+	C.igSDLWindow_SetWindowPos(b.handle(), C.int(x), C.int(y))
 }
 
-func (b *GLFWBackend) GetWindowPos() (x, y int32) {
-	xArg, xFin := WrapNumberPtr[C.int, int32](&x)
+func (b *SDLBackend) GetWindowPos() (x, y int32) {
+	xArg, xFin := imgui.WrapNumberPtr[C.int, int32](&x)
 	defer xFin()
 
-	yArg, yFin := WrapNumberPtr[C.int, int32](&y)
+	yArg, yFin := imgui.WrapNumberPtr[C.int, int32](&y)
 	defer yFin()
 
-	C.igGLFWWindow_GetWindowPos(b.handle(), xArg, yArg)
+	C.igSDLWindow_GetWindowPos(b.handle(), xArg, yArg)
 
 	return
 }
 
-func (b *GLFWBackend) SetWindowSize(width, height int) {
-	C.igGLFWWindow_SetSize(b.handle(), C.int(width), C.int(height))
+func (b *SDLBackend) SetWindowSize(width, height int) {
+	C.igSDLWindow_SetSize(b.handle(), C.int(width), C.int(height))
 }
 
-func (b GLFWBackend) DisplaySize() (width int32, height int32) {
-	widthArg, widthFin := WrapNumberPtr[C.int, int32](&width)
+func (b *SDLBackend) DisplaySize() (width int32, height int32) {
+	widthArg, widthFin := imgui.WrapNumberPtr[C.int, int32](&width)
 	defer widthFin()
 
-	heightArg, heightFin := WrapNumberPtr[C.int, int32](&height)
+	heightArg, heightFin := imgui.WrapNumberPtr[C.int, int32](&height)
 	defer heightFin()
 
-	C.igGLFWWindow_GetDisplaySize(b.handle(), widthArg, heightArg)
+	C.igSDLWindow_GetDisplaySize(b.handle(), widthArg, heightArg)
 
 	return
 }
 
-func (b GLFWBackend) ContentScale() (width, height float32) {
-	widthArg, widthFin := WrapNumberPtr[C.float, float32](&width)
+func (b *SDLBackend) ContentScale() (width, height float32) {
+	widthArg, widthFin := imgui.WrapNumberPtr[C.float, float32](&width)
 	defer widthFin()
 
-	heightArg, heightFin := WrapNumberPtr[C.float, float32](&height)
+	heightArg, heightFin := imgui.WrapNumberPtr[C.float, float32](&height)
 	defer heightFin()
 
-	C.igGLFWWindow_GetContentScale(b.handle(), widthArg, heightArg)
+	C.igSDLWindow_GetContentScale(b.handle(), widthArg, heightArg)
 
 	return
 }
 
-func (b *GLFWBackend) SetWindowTitle(title string) {
-	titleArg, titleFin := WrapString(title)
+func (b *SDLBackend) SetWindowTitle(title string) {
+	titleArg, titleFin := imgui.WrapString(title)
 	defer titleFin()
 
-	C.igGLFWWindow_SetTitle(b.handle(), titleArg)
+	C.igSDLWindow_SetTitle(b.handle(), (*C.char)(titleArg))
 }
 
 // The minimum and maximum size of the content area of a windowed mode window.
 // To specify only a minimum size or only a maximum one, set the other pair to -1
 // e.g. SetWindowSizeLimits(640, 480, -1, -1)
-func (b *GLFWBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight int) {
-	C.igGLFWWindow_SetSizeLimits(b.handle(), C.int(minWidth), C.int(minHeight), C.int(maxWidth), C.int(maxHeight))
+func (b *SDLBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight int) {
+	C.igSDLWindow_SetSizeLimits(b.handle(), C.int(minWidth), C.int(minHeight), C.int(maxWidth), C.int(maxHeight))
 }
 
-func (b GLFWBackend) SetShouldClose(value bool) {
-	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(CastBool(value)))
+func (b *SDLBackend) SetShouldClose(value bool) {
+	// TODO: not implemented
+	// C.igSDLWindow_SetShouldClose(b.handle(), C.int(CastBool(value)))
 }
 
-func (b *GLFWBackend) CreateWindow(title string, width, height int) {
-	titleArg, titleFin := WrapString(title)
+func (b *SDLBackend) CreateWindow(title string, width, height int) {
+	titleArg, titleFin := imgui.WrapString(title)
 	defer titleFin()
 
-	b.window = uintptr(unsafe.Pointer(C.igCreateGLFWWindow(
-		titleArg,
+	b.window = uintptr(unsafe.Pointer(C.igCreateSDLWindow(
+		(*C.char)(titleArg),
 		C.int(width),
 		C.int(height),
 		C.VoidCallback(C.afterCreateContext),
 	)))
 	if b.window == 0 {
-		panic("Failed to create GLFW window")
+		panic("Failed to create SDL window")
 	}
 }
 
-func (b *GLFWBackend) SetTargetFPS(fps uint) {
+func (b *SDLBackend) SetTargetFPS(fps uint) {
 	C.igSetTargetFPS(C.uint(fps))
 }
 
-func (b *GLFWBackend) Refresh() {
+func (b *SDLBackend) Refresh() {
 	C.igRefresh()
 }
 
-func (b *GLFWBackend) CreateTexture(pixels unsafe.Pointer, width, height int) TextureID {
-	return TextureID(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
+func (b *SDLBackend) CreateTexture(pixels unsafe.Pointer, width, height int) imgui.TextureID {
+	return imgui.TextureID(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
 }
 
-func (b *GLFWBackend) CreateTextureRgba(img *image.RGBA, width, height int) TextureID {
-	return TextureID(C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height)))
+func (b *SDLBackend) CreateTextureRgba(img *image.RGBA, width, height int) imgui.TextureID {
+	return imgui.TextureID(C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height)))
 }
 
-func (b *GLFWBackend) DeleteTexture(id TextureID) {
+func (b *SDLBackend) DeleteTexture(id imgui.TextureID) {
 	C.igDeleteTexture(C.ImTextureID(id))
 }
 
 // SetDropCallback sets the drop callback which is called when an object
 // is dropped over the window.
-func (b *GLFWBackend) SetDropCallback(cbfun DropCallback) {
+func (b *SDLBackend) SetDropCallback(cbfun imgui.DropCallback) {
 	b.dropCB = cbfun
-	C.igGLFWWindow_SetDropCallbackCB(b.handle())
+	// TODO: not implemented
+	// C.igSDLWindow_SetDropCallbackCB(b.handle())
 }
 
-func (b *GLFWBackend) SetCloseCallback(cbfun WindowCloseCallback[GLFWWindowFlags]) {
+func (b *SDLBackend) SetCloseCallback(cbfun imgui.WindowCloseCallback[SDLWindowFlags]) {
 	b.closeCB = func(_ unsafe.Pointer) {
 		cbfun(b)
 	}
 
-	C.igGLFWWindow_SetCloseCallback(b.handle())
+	// TODO: not implemented
+	// C.igSDLWindow_SetCloseCallback(b.handle())
 }
 
 // SetWindowHint applies to next CreateWindow call
 // so use it before CreateWindow call ;-)
-func (b *GLFWBackend) SetWindowFlags(flag GLFWWindowFlags, value int) {
-	C.igWindowHint(C.GLFWWindowFlags(flag), C.int(value))
+func (b *SDLBackend) SetWindowFlags(flag SDLWindowFlags, value int) {
+	// TODO: cache these flags and use in CreateWindow
+	// C.igSDLWindowHint(C.SDL_WindowFlags(flag), C.int(value))
 }
 
 // SetIcons sets icons for the window.
 // THIS CODE COMES FROM https://github.com/go-gl/glfw (BSD-3 clause) - Copyright (c) 2012 The glfw3-go Authors. All rights reserved.
-func (b *GLFWBackend) SetIcons(images ...image.Image) {
+func (b *SDLBackend) SetIcons(images ...image.Image) {
 	count := len(images)
 	cimages := make([]C.CImage, count)
 	freePixels := make([]func(), count)
@@ -420,27 +432,32 @@ func (b *GLFWBackend) SetIcons(images ...image.Image) {
 	if count > 0 {
 		p = &cimages[0]
 	}
-	C.igGLFWWindow_SetIcon(b.handle(), C.int(count), p)
+
+	_ = p
+	// TODO: not implemented
+	// C.igSDLWindow_SetIcon(b.handle(), C.int(count), p)
 
 	for _, v := range freePixels {
 		v()
 	}
 }
 
-func (b *GLFWBackend) SetKeyCallback(cbfun KeyCallback) {
+func (b *SDLBackend) SetKeyCallback(cbfun imgui.KeyCallback) {
 	b.keyCb = cbfun
-	C.igGLFWWindow_SetKeyCallback(b.handle())
+	// TODO: not implemented
+	// C.igSDLWindow_SetKeyCallback(b.handle())
 }
 
-func (b *GLFWBackend) keyCallback() KeyCallback {
+func (b *SDLBackend) KeyCallback() imgui.KeyCallback {
 	return b.keyCb
 }
 
-func (b *GLFWBackend) SetSizeChangeCallback(cbfun SizeChangeCallback) {
+func (b *SDLBackend) SetSizeChangeCallback(cbfun imgui.SizeChangeCallback) {
 	b.sizeCb = cbfun
-	C.igGLFWWindow_SetSizeCallback(b.handle())
+	// TODO: notttt pimlemented
+	// C.igSDLWindow_SetSizeCallback(b.handle())
 }
 
-func (b *GLFWBackend) sizeCallback() SizeChangeCallback {
+func (b *SDLBackend) SizeCallback() imgui.SizeChangeCallback {
 	return b.sizeCb
 }

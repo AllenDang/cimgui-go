@@ -263,19 +263,19 @@ func (self MarkdownImageData) handle() (result *C.MarkdownImageData, releaseFn f
 	result.user_texture_id = C.ImTextureID(FieldUser_texture_id)
 	FieldSize := self.FieldSize
 
-	result.size = FieldSize.toC()
+	result.size = FieldSize.ToC()
 	FieldUv0 := self.FieldUv0
 
-	result.uv0 = FieldUv0.toC()
+	result.uv0 = FieldUv0.ToC()
 	FieldUv1 := self.FieldUv1
 
-	result.uv1 = FieldUv1.toC()
+	result.uv1 = FieldUv1.ToC()
 	FieldTint_col := self.FieldTint_col
 
-	result.tint_col = FieldTint_col.toC()
+	result.tint_col = FieldTint_col.ToC()
 	FieldBorder_col := self.FieldBorder_col
 
-	result.border_col = FieldBorder_col.toC()
+	result.border_col = FieldBorder_col.ToC()
 	releaseFn = func() {
 	}
 	return result, releaseFn
@@ -291,11 +291,11 @@ func newMarkdownImageDataFromC(cvalue *C.MarkdownImageData) *MarkdownImageData {
 	result.FieldIsValid = cvalue.isValid == C.bool(true)
 	result.FieldUseLinkCallback = cvalue.useLinkCallback == C.bool(true)
 	result.FieldUser_texture_id = TextureID(cvalue.user_texture_id)
-	result.FieldSize = *(&Vec2{}).fromC(cvalue.size)
-	result.FieldUv0 = *(&Vec2{}).fromC(cvalue.uv0)
-	result.FieldUv1 = *(&Vec2{}).fromC(cvalue.uv1)
-	result.FieldTint_col = *(&Vec4{}).fromC(cvalue.tint_col)
-	result.FieldBorder_col = *(&Vec4{}).fromC(cvalue.border_col)
+	result.FieldSize = *(&Vec2{}).FromC(cvalue.size)
+	result.FieldUv0 = *(&Vec2{}).FromC(cvalue.uv0)
+	result.FieldUv1 = *(&Vec2{}).FromC(cvalue.uv1)
+	result.FieldTint_col = *(&Vec4{}).FromC(cvalue.tint_col)
+	result.FieldBorder_col = *(&Vec4{}).FromC(cvalue.border_col)
 	return result
 }
 

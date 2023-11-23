@@ -109,7 +109,7 @@ func imnodesClearNodeSelectionNil() {
 
 func imnodesEditorContextGetPanning() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := Wrap[C.ImVec2, *Vec2](pOut)
 
 	C.imnodes_EditorContextGetPanning(pOutArg)
 
@@ -123,7 +123,7 @@ func imnodesEditorContextMoveToNode(node_id int32) {
 }
 
 func imnodesEditorContextResetPanning(pos Vec2) {
-	C.imnodes_EditorContextResetPanning(pos.toC())
+	C.imnodes_EditorContextResetPanning(pos.ToC())
 }
 
 func imnodesEndInputAttribute() {
@@ -156,7 +156,7 @@ func imnodesGetIO() *NodesIO {
 
 func imnodesGetNodeDimensions(id int32) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := Wrap[C.ImVec2, *Vec2](pOut)
 
 	C.imnodes_GetNodeDimensions(pOutArg, C.int(id))
 
@@ -167,7 +167,7 @@ func imnodesGetNodeDimensions(id int32) Vec2 {
 
 func imnodesGetNodeEditorSpacePos(node_id int32) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := Wrap[C.ImVec2, *Vec2](pOut)
 
 	C.imnodes_GetNodeEditorSpacePos(pOutArg, C.int(node_id))
 
@@ -178,7 +178,7 @@ func imnodesGetNodeEditorSpacePos(node_id int32) Vec2 {
 
 func imnodesGetNodeGridSpacePos(node_id int32) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := Wrap[C.ImVec2, *Vec2](pOut)
 
 	C.imnodes_GetNodeGridSpacePos(pOutArg, C.int(node_id))
 
@@ -189,7 +189,7 @@ func imnodesGetNodeGridSpacePos(node_id int32) Vec2 {
 
 func imnodesGetNodeScreenSpacePos(node_id int32) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := Wrap[C.ImVec2, *Vec2](pOut)
 
 	C.imnodes_GetNodeScreenSpacePos(pOutArg, C.int(node_id))
 
@@ -387,7 +387,7 @@ func imnodesPushStyleVarFloat(style_item NodesStyleVar, value float32) {
 }
 
 func imnodesPushStyleVarVec2(style_item NodesStyleVar, value Vec2) {
-	C.imnodes_PushStyleVar_Vec2(C.ImNodesStyleVar(style_item), value.toC())
+	C.imnodes_PushStyleVar_Vec2(C.ImNodesStyleVar(style_item), value.ToC())
 }
 
 func imnodesSaveCurrentEditorStateToIniFile(file_name string) {
@@ -423,15 +423,15 @@ func imnodesSetNodeDraggable(node_id int32, draggable bool) {
 }
 
 func imnodesSetNodeEditorSpacePos(node_id int32, editor_space_pos Vec2) {
-	C.imnodes_SetNodeEditorSpacePos(C.int(node_id), editor_space_pos.toC())
+	C.imnodes_SetNodeEditorSpacePos(C.int(node_id), editor_space_pos.ToC())
 }
 
 func imnodesSetNodeGridSpacePos(node_id int32, grid_pos Vec2) {
-	C.imnodes_SetNodeGridSpacePos(C.int(node_id), grid_pos.toC())
+	C.imnodes_SetNodeGridSpacePos(C.int(node_id), grid_pos.ToC())
 }
 
 func imnodesSetNodeScreenSpacePos(node_id int32, screen_space_pos Vec2) {
-	C.imnodes_SetNodeScreenSpacePos(C.int(node_id), screen_space_pos.toC())
+	C.imnodes_SetNodeScreenSpacePos(C.int(node_id), screen_space_pos.ToC())
 }
 
 func imnodesSnapNodeToGrid(node_id int32) {
@@ -655,7 +655,7 @@ func (self *NodesStyle) NodeCornerRounding() float32 {
 func (self NodesStyle) SetNodePadding(v Vec2) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImNodesStyle_SetNodePadding(selfArg, v.toC())
+	C.wrap_ImNodesStyle_SetNodePadding(selfArg, v.ToC())
 }
 
 func (self *NodesStyle) NodePadding() Vec2 {
@@ -664,7 +664,7 @@ func (self *NodesStyle) NodePadding() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImNodesStyle_GetNodePadding(selfArg))
+	return *(&Vec2{}).FromC(C.wrap_ImNodesStyle_GetNodePadding(selfArg))
 }
 
 func (self NodesStyle) SetNodeBorderThickness(v float32) {
@@ -820,7 +820,7 @@ func (self *NodesStyle) PinOffset() float32 {
 func (self NodesStyle) SetMiniMapPadding(v Vec2) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImNodesStyle_SetMiniMapPadding(selfArg, v.toC())
+	C.wrap_ImNodesStyle_SetMiniMapPadding(selfArg, v.ToC())
 }
 
 func (self *NodesStyle) MiniMapPadding() Vec2 {
@@ -829,13 +829,13 @@ func (self *NodesStyle) MiniMapPadding() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImNodesStyle_GetMiniMapPadding(selfArg))
+	return *(&Vec2{}).FromC(C.wrap_ImNodesStyle_GetMiniMapPadding(selfArg))
 }
 
 func (self NodesStyle) SetMiniMapOffset(v Vec2) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImNodesStyle_SetMiniMapOffset(selfArg, v.toC())
+	C.wrap_ImNodesStyle_SetMiniMapOffset(selfArg, v.ToC())
 }
 
 func (self *NodesStyle) MiniMapOffset() Vec2 {
@@ -844,7 +844,7 @@ func (self *NodesStyle) MiniMapOffset() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImNodesStyle_GetMiniMapOffset(selfArg))
+	return *(&Vec2{}).FromC(C.wrap_ImNodesStyle_GetMiniMapOffset(selfArg))
 }
 
 func (self NodesStyle) SetFlags(v NodesStyleFlags) {
