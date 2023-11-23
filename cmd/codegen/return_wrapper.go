@@ -110,7 +110,7 @@ func imVec4PtrReturnW() returnWrapper {
 	// TODO: verify if it wraps correctly
 	return returnWrapper{
 		returnType: "*Vec4",
-		returnStmt: "(&Vec4{}).fromC(*%s)",
+		returnStmt: "(&Vec4{}).FromC(*%s)",
 	}
 }
 
@@ -128,6 +128,6 @@ func simplePtrR(goType GoIdentifier) returnWrapper {
 func wrappableR(goType GoIdentifier) returnWrapper {
 	return returnWrapper{
 		returnType: goType,
-		returnStmt: fmt.Sprintf("*(&%s{}).fromC(%s)", goType, "%s"),
+		returnStmt: fmt.Sprintf("*(&%s{}).FromC(%s)", goType, "%s"),
 	}
 }
