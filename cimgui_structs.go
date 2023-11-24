@@ -132,7 +132,7 @@ func (self DrawCmdHeader) handle() (result *C.ImDrawCmdHeader, releaseFn func())
 	result = new(C.ImDrawCmdHeader)
 	FieldClipRect := self.FieldClipRect
 
-	result.ClipRect = FieldClipRect.ToC()
+	result.ClipRect = FieldClipRect.toC()
 	FieldTextureId := self.FieldTextureId
 
 	result.TextureId = C.ImTextureID(FieldTextureId)
@@ -151,7 +151,7 @@ func (self DrawCmdHeader) c() (result C.ImDrawCmdHeader, fin func()) {
 
 func newDrawCmdHeaderFromC(cvalue *C.ImDrawCmdHeader) *DrawCmdHeader {
 	result := new(DrawCmdHeader)
-	result.FieldClipRect = *(&Vec4{}).FromC(cvalue.ClipRect)
+	result.FieldClipRect = *(&Vec4{}).fromC(cvalue.ClipRect)
 	result.FieldTextureId = TextureID(cvalue.TextureId)
 	result.FieldVtxOffset = uint32(cvalue.VtxOffset)
 	return result
@@ -311,10 +311,10 @@ func (self DrawVert) handle() (result *C.ImDrawVert, releaseFn func()) {
 	result = new(C.ImDrawVert)
 	FieldPos := self.FieldPos
 
-	result.pos = FieldPos.ToC()
+	result.pos = FieldPos.toC()
 	FieldUv := self.FieldUv
 
-	result.uv = FieldUv.ToC()
+	result.uv = FieldUv.toC()
 	FieldCol := self.FieldCol
 
 	result.col = C.ImU32(FieldCol)
@@ -330,8 +330,8 @@ func (self DrawVert) c() (result C.ImDrawVert, fin func()) {
 
 func newDrawVertFromC(cvalue *C.ImDrawVert) *DrawVert {
 	result := new(DrawVert)
-	result.FieldPos = *(&Vec2{}).FromC(cvalue.pos)
-	result.FieldUv = *(&Vec2{}).FromC(cvalue.uv)
+	result.FieldPos = *(&Vec2{}).fromC(cvalue.pos)
+	result.FieldUv = *(&Vec2{}).fromC(cvalue.uv)
 	result.FieldCol = uint32(cvalue.col)
 	return result
 }
@@ -433,7 +433,7 @@ func (self FontAtlasCustomRect) handle() (result *C.ImFontAtlasCustomRect, relea
 	result.GlyphAdvanceX = C.float(FieldGlyphAdvanceX)
 	FieldGlyphOffset := self.FieldGlyphOffset
 
-	result.GlyphOffset = FieldGlyphOffset.ToC()
+	result.GlyphOffset = FieldGlyphOffset.toC()
 	FieldFont := self.FieldFont
 	FieldFontArg, FieldFontFin := FieldFont.handle()
 	result.Font = FieldFontArg
@@ -456,7 +456,7 @@ func newFontAtlasCustomRectFromC(cvalue *C.ImFontAtlasCustomRect) *FontAtlasCust
 	result.FieldY = uint16(cvalue.Y)
 	result.FieldGlyphID = uint32(cvalue.GlyphID)
 	result.FieldGlyphAdvanceX = float32(cvalue.GlyphAdvanceX)
-	result.FieldGlyphOffset = *(&Vec2{}).FromC(cvalue.GlyphOffset)
+	result.FieldGlyphOffset = *(&Vec2{}).fromC(cvalue.GlyphOffset)
 	result.FieldFont = newFontFromC(cvalue.Font)
 	return result
 }
@@ -576,7 +576,7 @@ func (self ColorMod) handle() (result *C.ImGuiColorMod, releaseFn func()) {
 	result.Col = C.ImGuiCol(FieldCol)
 	FieldBackupValue := self.FieldBackupValue
 
-	result.BackupValue = FieldBackupValue.ToC()
+	result.BackupValue = FieldBackupValue.toC()
 	releaseFn = func() {
 	}
 	return result, releaseFn
@@ -590,7 +590,7 @@ func (self ColorMod) c() (result C.ImGuiColorMod, fin func()) {
 func newColorModFromC(cvalue *C.ImGuiColorMod) *ColorMod {
 	result := new(ColorMod)
 	result.FieldCol = Col(cvalue.Col)
-	result.FieldBackupValue = *(&Vec4{}).FromC(cvalue.BackupValue)
+	result.FieldBackupValue = *(&Vec4{}).fromC(cvalue.BackupValue)
 	return result
 }
 
@@ -608,16 +608,16 @@ func (self ComboPreviewData) handle() (result *C.ImGuiComboPreviewData, releaseF
 	result = new(C.ImGuiComboPreviewData)
 	FieldPreviewRect := self.FieldPreviewRect
 
-	result.PreviewRect = FieldPreviewRect.ToC()
+	result.PreviewRect = FieldPreviewRect.toC()
 	FieldBackupCursorPos := self.FieldBackupCursorPos
 
-	result.BackupCursorPos = FieldBackupCursorPos.ToC()
+	result.BackupCursorPos = FieldBackupCursorPos.toC()
 	FieldBackupCursorMaxPos := self.FieldBackupCursorMaxPos
 
-	result.BackupCursorMaxPos = FieldBackupCursorMaxPos.ToC()
+	result.BackupCursorMaxPos = FieldBackupCursorMaxPos.toC()
 	FieldBackupCursorPosPrevLine := self.FieldBackupCursorPosPrevLine
 
-	result.BackupCursorPosPrevLine = FieldBackupCursorPosPrevLine.ToC()
+	result.BackupCursorPosPrevLine = FieldBackupCursorPosPrevLine.toC()
 	FieldBackupPrevLineTextBaseOffset := self.FieldBackupPrevLineTextBaseOffset
 
 	result.BackupPrevLineTextBaseOffset = C.float(FieldBackupPrevLineTextBaseOffset)
@@ -636,10 +636,10 @@ func (self ComboPreviewData) c() (result C.ImGuiComboPreviewData, fin func()) {
 
 func newComboPreviewDataFromC(cvalue *C.ImGuiComboPreviewData) *ComboPreviewData {
 	result := new(ComboPreviewData)
-	result.FieldPreviewRect = *(&Rect{}).FromC(cvalue.PreviewRect)
-	result.FieldBackupCursorPos = *(&Vec2{}).FromC(cvalue.BackupCursorPos)
-	result.FieldBackupCursorMaxPos = *(&Vec2{}).FromC(cvalue.BackupCursorMaxPos)
-	result.FieldBackupCursorPosPrevLine = *(&Vec2{}).FromC(cvalue.BackupCursorPosPrevLine)
+	result.FieldPreviewRect = *(&Rect{}).fromC(cvalue.PreviewRect)
+	result.FieldBackupCursorPos = *(&Vec2{}).fromC(cvalue.BackupCursorPos)
+	result.FieldBackupCursorMaxPos = *(&Vec2{}).fromC(cvalue.BackupCursorMaxPos)
+	result.FieldBackupCursorPosPrevLine = *(&Vec2{}).fromC(cvalue.BackupCursorPosPrevLine)
 	result.FieldBackupPrevLineTextBaseOffset = float32(cvalue.BackupPrevLineTextBaseOffset)
 	result.FieldBackupLayout = LayoutType(cvalue.BackupLayout)
 	return result
@@ -852,10 +852,10 @@ func (self GroupData) handle() (result *C.ImGuiGroupData, releaseFn func()) {
 	result.WindowID = C.ImGuiID(FieldWindowID)
 	FieldBackupCursorPos := self.FieldBackupCursorPos
 
-	result.BackupCursorPos = FieldBackupCursorPos.ToC()
+	result.BackupCursorPos = FieldBackupCursorPos.toC()
 	FieldBackupCursorMaxPos := self.FieldBackupCursorMaxPos
 
-	result.BackupCursorMaxPos = FieldBackupCursorMaxPos.ToC()
+	result.BackupCursorMaxPos = FieldBackupCursorMaxPos.toC()
 	FieldBackupIndent := self.FieldBackupIndent
 	FieldBackupIndentArg, FieldBackupIndentFin := FieldBackupIndent.c()
 	result.BackupIndent = FieldBackupIndentArg
@@ -864,7 +864,7 @@ func (self GroupData) handle() (result *C.ImGuiGroupData, releaseFn func()) {
 	result.BackupGroupOffset = FieldBackupGroupOffsetArg
 	FieldBackupCurrLineSize := self.FieldBackupCurrLineSize
 
-	result.BackupCurrLineSize = FieldBackupCurrLineSize.ToC()
+	result.BackupCurrLineSize = FieldBackupCurrLineSize.toC()
 	FieldBackupCurrLineTextBaseOffset := self.FieldBackupCurrLineTextBaseOffset
 
 	result.BackupCurrLineTextBaseOffset = C.float(FieldBackupCurrLineTextBaseOffset)
@@ -895,13 +895,13 @@ func (self GroupData) c() (result C.ImGuiGroupData, fin func()) {
 func newGroupDataFromC(cvalue *C.ImGuiGroupData) *GroupData {
 	result := new(GroupData)
 	result.FieldWindowID = ID(cvalue.WindowID)
-	result.FieldBackupCursorPos = *(&Vec2{}).FromC(cvalue.BackupCursorPos)
-	result.FieldBackupCursorMaxPos = *(&Vec2{}).FromC(cvalue.BackupCursorMaxPos)
+	result.FieldBackupCursorPos = *(&Vec2{}).fromC(cvalue.BackupCursorPos)
+	result.FieldBackupCursorMaxPos = *(&Vec2{}).fromC(cvalue.BackupCursorMaxPos)
 	result.FieldBackupIndent = *newVec1FromC(func() *C.ImVec1 { result := cvalue.BackupIndent; return &result }())
 
 	result.FieldBackupGroupOffset = *newVec1FromC(func() *C.ImVec1 { result := cvalue.BackupGroupOffset; return &result }())
 
-	result.FieldBackupCurrLineSize = *(&Vec2{}).FromC(cvalue.BackupCurrLineSize)
+	result.FieldBackupCurrLineSize = *(&Vec2{}).fromC(cvalue.BackupCurrLineSize)
 	result.FieldBackupCurrLineTextBaseOffset = float32(cvalue.BackupCurrLineTextBaseOffset)
 	result.FieldBackupActiveIdIsAlive = ID(cvalue.BackupActiveIdIsAlive)
 	result.FieldBackupActiveIdPreviousFrameIsAlive = cvalue.BackupActiveIdPreviousFrameIsAlive == C.bool(true)
@@ -1596,13 +1596,13 @@ func (self LastItemData) handle() (result *C.ImGuiLastItemData, releaseFn func()
 	result.StatusFlags = C.ImGuiItemStatusFlags(FieldStatusFlags)
 	FieldRect := self.FieldRect
 
-	result.Rect = FieldRect.ToC()
+	result.Rect = FieldRect.toC()
 	FieldNavRect := self.FieldNavRect
 
-	result.NavRect = FieldNavRect.ToC()
+	result.NavRect = FieldNavRect.toC()
 	FieldDisplayRect := self.FieldDisplayRect
 
-	result.DisplayRect = FieldDisplayRect.ToC()
+	result.DisplayRect = FieldDisplayRect.toC()
 	releaseFn = func() {
 	}
 	return result, releaseFn
@@ -1618,9 +1618,9 @@ func newLastItemDataFromC(cvalue *C.ImGuiLastItemData) *LastItemData {
 	result.FieldID = ID(cvalue.ID)
 	result.FieldInFlags = ItemFlags(cvalue.InFlags)
 	result.FieldStatusFlags = ItemStatusFlags(cvalue.StatusFlags)
-	result.FieldRect = *(&Rect{}).FromC(cvalue.Rect)
-	result.FieldNavRect = *(&Rect{}).FromC(cvalue.NavRect)
-	result.FieldDisplayRect = *(&Rect{}).FromC(cvalue.DisplayRect)
+	result.FieldRect = *(&Rect{}).fromC(cvalue.Rect)
+	result.FieldNavRect = *(&Rect{}).fromC(cvalue.NavRect)
+	result.FieldDisplayRect = *(&Rect{}).fromC(cvalue.DisplayRect)
 	return result
 }
 
@@ -1977,7 +1977,7 @@ func (self NavTreeNodeData) handle() (result *C.ImGuiNavTreeNodeData, releaseFn 
 	result.InFlags = C.ImGuiItemFlags(FieldInFlags)
 	FieldNavRect := self.FieldNavRect
 
-	result.NavRect = FieldNavRect.ToC()
+	result.NavRect = FieldNavRect.toC()
 	releaseFn = func() {
 	}
 	return result, releaseFn
@@ -1992,7 +1992,7 @@ func newNavTreeNodeDataFromC(cvalue *C.ImGuiNavTreeNodeData) *NavTreeNodeData {
 	result := new(NavTreeNodeData)
 	result.FieldID = ID(cvalue.ID)
 	result.FieldInFlags = ItemFlags(cvalue.InFlags)
-	result.FieldNavRect = *(&Rect{}).FromC(cvalue.NavRect)
+	result.FieldNavRect = *(&Rect{}).fromC(cvalue.NavRect)
 	return result
 }
 
@@ -2059,7 +2059,7 @@ func (self OldColumnData) handle() (result *C.ImGuiOldColumnData, releaseFn func
 	result.Flags = C.ImGuiOldColumnFlags(FieldFlags)
 	FieldClipRect := self.FieldClipRect
 
-	result.ClipRect = FieldClipRect.ToC()
+	result.ClipRect = FieldClipRect.toC()
 	releaseFn = func() {
 	}
 	return result, releaseFn
@@ -2075,7 +2075,7 @@ func newOldColumnDataFromC(cvalue *C.ImGuiOldColumnData) *OldColumnData {
 	result.FieldOffsetNorm = float32(cvalue.OffsetNorm)
 	result.FieldOffsetNormBeforeResize = float32(cvalue.OffsetNormBeforeResize)
 	result.FieldFlags = OldColumnFlags(cvalue.Flags)
-	result.FieldClipRect = *(&Rect{}).FromC(cvalue.ClipRect)
+	result.FieldClipRect = *(&Rect{}).fromC(cvalue.ClipRect)
 	return result
 }
 
@@ -2139,13 +2139,13 @@ func (self OldColumns) handle() (result *C.ImGuiOldColumns, releaseFn func()) {
 	result.HostCursorMaxPosX = C.float(FieldHostCursorMaxPosX)
 	FieldHostInitialClipRect := self.FieldHostInitialClipRect
 
-	result.HostInitialClipRect = FieldHostInitialClipRect.ToC()
+	result.HostInitialClipRect = FieldHostInitialClipRect.toC()
 	FieldHostBackupClipRect := self.FieldHostBackupClipRect
 
-	result.HostBackupClipRect = FieldHostBackupClipRect.ToC()
+	result.HostBackupClipRect = FieldHostBackupClipRect.toC()
 	FieldHostBackupParentWorkRect := self.FieldHostBackupParentWorkRect
 
-	result.HostBackupParentWorkRect = FieldHostBackupParentWorkRect.ToC()
+	result.HostBackupParentWorkRect = FieldHostBackupParentWorkRect.toC()
 	FieldColumns := self.FieldColumns
 	FieldColumnsData := FieldColumns.Data
 	FieldColumnsDataArg, FieldColumnsDataFin := FieldColumnsData.handle()
@@ -2186,9 +2186,9 @@ func newOldColumnsFromC(cvalue *C.ImGuiOldColumns) *OldColumns {
 	result.FieldLineMaxY = float32(cvalue.LineMaxY)
 	result.FieldHostCursorPosY = float32(cvalue.HostCursorPosY)
 	result.FieldHostCursorMaxPosX = float32(cvalue.HostCursorMaxPosX)
-	result.FieldHostInitialClipRect = *(&Rect{}).FromC(cvalue.HostInitialClipRect)
-	result.FieldHostBackupClipRect = *(&Rect{}).FromC(cvalue.HostBackupClipRect)
-	result.FieldHostBackupParentWorkRect = *(&Rect{}).FromC(cvalue.HostBackupParentWorkRect)
+	result.FieldHostInitialClipRect = *(&Rect{}).fromC(cvalue.HostInitialClipRect)
+	result.FieldHostBackupClipRect = *(&Rect{}).fromC(cvalue.HostBackupClipRect)
+	result.FieldHostBackupParentWorkRect = *(&Rect{}).fromC(cvalue.HostBackupParentWorkRect)
 	result.FieldColumns = newVectorFromC(cvalue.Columns.Size, cvalue.Columns.Capacity, newOldColumnDataFromC(cvalue.Columns.Data))
 	result.FieldSplitter = *newDrawListSplitterFromC(func() *C.ImDrawListSplitter { result := cvalue.Splitter; return &result }())
 
@@ -2280,7 +2280,7 @@ func (self PlatformImeData) handle() (result *C.ImGuiPlatformImeData, releaseFn 
 	result.WantVisible = C.bool(FieldWantVisible)
 	FieldInputPos := self.FieldInputPos
 
-	result.InputPos = FieldInputPos.ToC()
+	result.InputPos = FieldInputPos.toC()
 	FieldInputLineHeight := self.FieldInputLineHeight
 
 	result.InputLineHeight = C.float(FieldInputLineHeight)
@@ -2297,7 +2297,7 @@ func (self PlatformImeData) c() (result C.ImGuiPlatformImeData, fin func()) {
 func newPlatformImeDataFromC(cvalue *C.ImGuiPlatformImeData) *PlatformImeData {
 	result := new(PlatformImeData)
 	result.FieldWantVisible = cvalue.WantVisible == C.bool(true)
-	result.FieldInputPos = *(&Vec2{}).FromC(cvalue.InputPos)
+	result.FieldInputPos = *(&Vec2{}).fromC(cvalue.InputPos)
 	result.FieldInputLineHeight = float32(cvalue.InputLineHeight)
 	return result
 }
@@ -2317,16 +2317,16 @@ func (self PlatformMonitor) handle() (result *C.ImGuiPlatformMonitor, releaseFn 
 	result = new(C.ImGuiPlatformMonitor)
 	FieldMainPos := self.FieldMainPos
 
-	result.MainPos = FieldMainPos.ToC()
+	result.MainPos = FieldMainPos.toC()
 	FieldMainSize := self.FieldMainSize
 
-	result.MainSize = FieldMainSize.ToC()
+	result.MainSize = FieldMainSize.toC()
 	FieldWorkPos := self.FieldWorkPos
 
-	result.WorkPos = FieldWorkPos.ToC()
+	result.WorkPos = FieldWorkPos.toC()
 	FieldWorkSize := self.FieldWorkSize
 
-	result.WorkSize = FieldWorkSize.ToC()
+	result.WorkSize = FieldWorkSize.toC()
 	FieldDpiScale := self.FieldDpiScale
 
 	result.DpiScale = C.float(FieldDpiScale)
@@ -2346,10 +2346,10 @@ func (self PlatformMonitor) c() (result C.ImGuiPlatformMonitor, fin func()) {
 
 func newPlatformMonitorFromC(cvalue *C.ImGuiPlatformMonitor) *PlatformMonitor {
 	result := new(PlatformMonitor)
-	result.FieldMainPos = *(&Vec2{}).FromC(cvalue.MainPos)
-	result.FieldMainSize = *(&Vec2{}).FromC(cvalue.MainSize)
-	result.FieldWorkPos = *(&Vec2{}).FromC(cvalue.WorkPos)
-	result.FieldWorkSize = *(&Vec2{}).FromC(cvalue.WorkSize)
+	result.FieldMainPos = *(&Vec2{}).fromC(cvalue.MainPos)
+	result.FieldMainSize = *(&Vec2{}).fromC(cvalue.MainSize)
+	result.FieldWorkPos = *(&Vec2{}).fromC(cvalue.WorkPos)
+	result.FieldWorkSize = *(&Vec2{}).fromC(cvalue.WorkSize)
 	result.FieldDpiScale = float32(cvalue.DpiScale)
 	result.FieldPlatformHandle = unsafe.Pointer(cvalue.PlatformHandle)
 	return result
@@ -2389,10 +2389,10 @@ func (self PopupData) handle() (result *C.ImGuiPopupData, releaseFn func()) {
 	result.OpenParentId = C.ImGuiID(FieldOpenParentId)
 	FieldOpenPopupPos := self.FieldOpenPopupPos
 
-	result.OpenPopupPos = FieldOpenPopupPos.ToC()
+	result.OpenPopupPos = FieldOpenPopupPos.toC()
 	FieldOpenMousePos := self.FieldOpenMousePos
 
-	result.OpenMousePos = FieldOpenMousePos.ToC()
+	result.OpenMousePos = FieldOpenMousePos.toC()
 	releaseFn = func() {
 		FieldWindowFin()
 		FieldBackupNavWindowFin()
@@ -2413,8 +2413,8 @@ func newPopupDataFromC(cvalue *C.ImGuiPopupData) *PopupData {
 	result.FieldParentNavLayer = int32(cvalue.ParentNavLayer)
 	result.FieldOpenFrameCount = int32(cvalue.OpenFrameCount)
 	result.FieldOpenParentId = ID(cvalue.OpenParentId)
-	result.FieldOpenPopupPos = *(&Vec2{}).FromC(cvalue.OpenPopupPos)
-	result.FieldOpenMousePos = *(&Vec2{}).FromC(cvalue.OpenMousePos)
+	result.FieldOpenPopupPos = *(&Vec2{}).fromC(cvalue.OpenPopupPos)
+	result.FieldOpenMousePos = *(&Vec2{}).fromC(cvalue.OpenMousePos)
 	return result
 }
 
@@ -2521,13 +2521,13 @@ func (self SizeCallbackData) handle() (result *C.ImGuiSizeCallbackData, releaseF
 	result.UserData = FieldUserDataArg
 	FieldPos := self.FieldPos
 
-	result.Pos = FieldPos.ToC()
+	result.Pos = FieldPos.toC()
 	FieldCurrentSize := self.FieldCurrentSize
 
-	result.CurrentSize = FieldCurrentSize.ToC()
+	result.CurrentSize = FieldCurrentSize.toC()
 	FieldDesiredSize := self.FieldDesiredSize
 
-	result.DesiredSize = FieldDesiredSize.ToC()
+	result.DesiredSize = FieldDesiredSize.toC()
 	releaseFn = func() {
 		FieldUserDataFin()
 	}
@@ -2542,9 +2542,9 @@ func (self SizeCallbackData) c() (result C.ImGuiSizeCallbackData, fin func()) {
 func newSizeCallbackDataFromC(cvalue *C.ImGuiSizeCallbackData) *SizeCallbackData {
 	result := new(SizeCallbackData)
 	result.FieldUserData = unsafe.Pointer(cvalue.UserData)
-	result.FieldPos = *(&Vec2{}).FromC(cvalue.Pos)
-	result.FieldCurrentSize = *(&Vec2{}).FromC(cvalue.CurrentSize)
-	result.FieldDesiredSize = *(&Vec2{}).FromC(cvalue.DesiredSize)
+	result.FieldPos = *(&Vec2{}).fromC(cvalue.Pos)
+	result.FieldCurrentSize = *(&Vec2{}).fromC(cvalue.CurrentSize)
+	result.FieldDesiredSize = *(&Vec2{}).fromC(cvalue.DesiredSize)
 	return result
 }
 
@@ -2873,7 +2873,7 @@ func (self TabBar) handle() (result *C.ImGuiTabBar, releaseFn func()) {
 	result.PrevFrameVisible = C.int(FieldPrevFrameVisible)
 	FieldBarRect := self.FieldBarRect
 
-	result.BarRect = FieldBarRect.ToC()
+	result.BarRect = FieldBarRect.toC()
 	FieldCurrTabsContentsHeight := self.FieldCurrTabsContentsHeight
 
 	result.CurrTabsContentsHeight = C.float(FieldCurrTabsContentsHeight)
@@ -2939,10 +2939,10 @@ func (self TabBar) handle() (result *C.ImGuiTabBar, releaseFn func()) {
 	result.ItemSpacingY = C.float(FieldItemSpacingY)
 	FieldFramePadding := self.FieldFramePadding
 
-	result.FramePadding = FieldFramePadding.ToC()
+	result.FramePadding = FieldFramePadding.toC()
 	FieldBackupCursorPos := self.FieldBackupCursorPos
 
-	result.BackupCursorPos = FieldBackupCursorPos.ToC()
+	result.BackupCursorPos = FieldBackupCursorPos.toC()
 	FieldTabsNames := self.FieldTabsNames
 	FieldTabsNamesArg, FieldTabsNamesFin := FieldTabsNames.c()
 	result.TabsNames = FieldTabsNamesArg
@@ -2970,7 +2970,7 @@ func newTabBarFromC(cvalue *C.ImGuiTabBar) *TabBar {
 	result.FieldVisibleTabId = ID(cvalue.VisibleTabId)
 	result.FieldCurrFrameVisible = int32(cvalue.CurrFrameVisible)
 	result.FieldPrevFrameVisible = int32(cvalue.PrevFrameVisible)
-	result.FieldBarRect = *(&Rect{}).FromC(cvalue.BarRect)
+	result.FieldBarRect = *(&Rect{}).fromC(cvalue.BarRect)
 	result.FieldCurrTabsContentsHeight = float32(cvalue.CurrTabsContentsHeight)
 	result.FieldPrevTabsContentsHeight = float32(cvalue.PrevTabsContentsHeight)
 	result.FieldWidthAllTabs = float32(cvalue.WidthAllTabs)
@@ -2992,8 +2992,8 @@ func newTabBarFromC(cvalue *C.ImGuiTabBar) *TabBar {
 	result.FieldTabsActiveCount = int(cvalue.TabsActiveCount)
 	result.FieldLastTabItemIdx = int(cvalue.LastTabItemIdx)
 	result.FieldItemSpacingY = float32(cvalue.ItemSpacingY)
-	result.FieldFramePadding = *(&Vec2{}).FromC(cvalue.FramePadding)
-	result.FieldBackupCursorPos = *(&Vec2{}).FromC(cvalue.BackupCursorPos)
+	result.FieldFramePadding = *(&Vec2{}).fromC(cvalue.FramePadding)
+	result.FieldBackupCursorPos = *(&Vec2{}).fromC(cvalue.BackupCursorPos)
 	result.FieldTabsNames = *newTextBufferFromC(func() *C.ImGuiTextBuffer { result := cvalue.TabsNames; return &result }())
 
 	return result
@@ -3382,25 +3382,25 @@ func (self TableTempData) handle() (result *C.ImGuiTableTempData, releaseFn func
 	result.LastTimeActive = C.float(FieldLastTimeActive)
 	FieldUserOuterSize := self.FieldUserOuterSize
 
-	result.UserOuterSize = FieldUserOuterSize.ToC()
+	result.UserOuterSize = FieldUserOuterSize.toC()
 	FieldDrawSplitter := self.FieldDrawSplitter
 	FieldDrawSplitterArg, FieldDrawSplitterFin := FieldDrawSplitter.c()
 	result.DrawSplitter = FieldDrawSplitterArg
 	FieldHostBackupWorkRect := self.FieldHostBackupWorkRect
 
-	result.HostBackupWorkRect = FieldHostBackupWorkRect.ToC()
+	result.HostBackupWorkRect = FieldHostBackupWorkRect.toC()
 	FieldHostBackupParentWorkRect := self.FieldHostBackupParentWorkRect
 
-	result.HostBackupParentWorkRect = FieldHostBackupParentWorkRect.ToC()
+	result.HostBackupParentWorkRect = FieldHostBackupParentWorkRect.toC()
 	FieldHostBackupPrevLineSize := self.FieldHostBackupPrevLineSize
 
-	result.HostBackupPrevLineSize = FieldHostBackupPrevLineSize.ToC()
+	result.HostBackupPrevLineSize = FieldHostBackupPrevLineSize.toC()
 	FieldHostBackupCurrLineSize := self.FieldHostBackupCurrLineSize
 
-	result.HostBackupCurrLineSize = FieldHostBackupCurrLineSize.ToC()
+	result.HostBackupCurrLineSize = FieldHostBackupCurrLineSize.toC()
 	FieldHostBackupCursorMaxPos := self.FieldHostBackupCursorMaxPos
 
-	result.HostBackupCursorMaxPos = FieldHostBackupCursorMaxPos.ToC()
+	result.HostBackupCursorMaxPos = FieldHostBackupCursorMaxPos.toC()
 	FieldHostBackupColumnsOffset := self.FieldHostBackupColumnsOffset
 	FieldHostBackupColumnsOffsetArg, FieldHostBackupColumnsOffsetFin := FieldHostBackupColumnsOffset.c()
 	result.HostBackupColumnsOffset = FieldHostBackupColumnsOffsetArg
@@ -3427,14 +3427,14 @@ func newTableTempDataFromC(cvalue *C.ImGuiTableTempData) *TableTempData {
 	result := new(TableTempData)
 	result.FieldTableIndex = int32(cvalue.TableIndex)
 	result.FieldLastTimeActive = float32(cvalue.LastTimeActive)
-	result.FieldUserOuterSize = *(&Vec2{}).FromC(cvalue.UserOuterSize)
+	result.FieldUserOuterSize = *(&Vec2{}).fromC(cvalue.UserOuterSize)
 	result.FieldDrawSplitter = *newDrawListSplitterFromC(func() *C.ImDrawListSplitter { result := cvalue.DrawSplitter; return &result }())
 
-	result.FieldHostBackupWorkRect = *(&Rect{}).FromC(cvalue.HostBackupWorkRect)
-	result.FieldHostBackupParentWorkRect = *(&Rect{}).FromC(cvalue.HostBackupParentWorkRect)
-	result.FieldHostBackupPrevLineSize = *(&Vec2{}).FromC(cvalue.HostBackupPrevLineSize)
-	result.FieldHostBackupCurrLineSize = *(&Vec2{}).FromC(cvalue.HostBackupCurrLineSize)
-	result.FieldHostBackupCursorMaxPos = *(&Vec2{}).FromC(cvalue.HostBackupCursorMaxPos)
+	result.FieldHostBackupWorkRect = *(&Rect{}).fromC(cvalue.HostBackupWorkRect)
+	result.FieldHostBackupParentWorkRect = *(&Rect{}).fromC(cvalue.HostBackupParentWorkRect)
+	result.FieldHostBackupPrevLineSize = *(&Vec2{}).fromC(cvalue.HostBackupPrevLineSize)
+	result.FieldHostBackupCurrLineSize = *(&Vec2{}).fromC(cvalue.HostBackupCurrLineSize)
+	result.FieldHostBackupCursorMaxPos = *(&Vec2{}).fromC(cvalue.HostBackupCursorMaxPos)
 	result.FieldHostBackupColumnsOffset = *newVec1FromC(func() *C.ImVec1 { result := cvalue.HostBackupColumnsOffset; return &result }())
 
 	result.FieldHostBackupItemWidth = float32(cvalue.HostBackupItemWidth)
@@ -3690,16 +3690,16 @@ func (self Viewport) handle() (result *C.ImGuiViewport, releaseFn func()) {
 	result.Flags = C.ImGuiViewportFlags(FieldFlags)
 	FieldPos := self.FieldPos
 
-	result.Pos = FieldPos.ToC()
+	result.Pos = FieldPos.toC()
 	FieldSize := self.FieldSize
 
-	result.Size = FieldSize.ToC()
+	result.Size = FieldSize.toC()
 	FieldWorkPos := self.FieldWorkPos
 
-	result.WorkPos = FieldWorkPos.ToC()
+	result.WorkPos = FieldWorkPos.toC()
 	FieldWorkSize := self.FieldWorkSize
 
-	result.WorkSize = FieldWorkSize.ToC()
+	result.WorkSize = FieldWorkSize.toC()
 	FieldDpiScale := self.FieldDpiScale
 
 	result.DpiScale = C.float(FieldDpiScale)
@@ -3752,10 +3752,10 @@ func newViewportFromC(cvalue *C.ImGuiViewport) *Viewport {
 	result := new(Viewport)
 	result.FieldID = ID(cvalue.ID)
 	result.FieldFlags = ViewportFlags(cvalue.Flags)
-	result.FieldPos = *(&Vec2{}).FromC(cvalue.Pos)
-	result.FieldSize = *(&Vec2{}).FromC(cvalue.Size)
-	result.FieldWorkPos = *(&Vec2{}).FromC(cvalue.WorkPos)
-	result.FieldWorkSize = *(&Vec2{}).FromC(cvalue.WorkSize)
+	result.FieldPos = *(&Vec2{}).fromC(cvalue.Pos)
+	result.FieldSize = *(&Vec2{}).fromC(cvalue.Size)
+	result.FieldWorkPos = *(&Vec2{}).fromC(cvalue.WorkPos)
+	result.FieldWorkSize = *(&Vec2{}).fromC(cvalue.WorkSize)
 	result.FieldDpiScale = float32(cvalue.DpiScale)
 	result.FieldParentViewportId = ID(cvalue.ParentViewportId)
 	result.FieldDrawData = newDrawDataFromC(cvalue.DrawData)
