@@ -580,7 +580,7 @@ func (self *MarkdownImageData) Usertextureid() TextureID {
 func (self MarkdownImageData) SetSize(v Vec2) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetSize(selfArg, v.ToC())
+	C.wrap_MarkdownImageData_SetSize(selfArg, v.toC())
 }
 
 func (self *MarkdownImageData) Size() Vec2 {
@@ -589,13 +589,13 @@ func (self *MarkdownImageData) Size() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_MarkdownImageData_GetSize(selfArg))
+	return *(&Vec2{}).fromC(C.wrap_MarkdownImageData_GetSize(selfArg))
 }
 
 func (self MarkdownImageData) SetUv0(v Vec2) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetUv0(selfArg, v.ToC())
+	C.wrap_MarkdownImageData_SetUv0(selfArg, v.toC())
 }
 
 func (self *MarkdownImageData) Uv0() Vec2 {
@@ -604,13 +604,13 @@ func (self *MarkdownImageData) Uv0() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_MarkdownImageData_GetUv0(selfArg))
+	return *(&Vec2{}).fromC(C.wrap_MarkdownImageData_GetUv0(selfArg))
 }
 
 func (self MarkdownImageData) SetUv1(v Vec2) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetUv1(selfArg, v.ToC())
+	C.wrap_MarkdownImageData_SetUv1(selfArg, v.toC())
 }
 
 func (self *MarkdownImageData) Uv1() Vec2 {
@@ -619,13 +619,13 @@ func (self *MarkdownImageData) Uv1() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_MarkdownImageData_GetUv1(selfArg))
+	return *(&Vec2{}).fromC(C.wrap_MarkdownImageData_GetUv1(selfArg))
 }
 
 func (self MarkdownImageData) SetTintcol(v Vec4) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetTint_col(selfArg, v.ToC())
+	C.wrap_MarkdownImageData_SetTint_col(selfArg, v.toC())
 }
 
 func (self *MarkdownImageData) Tintcol() Vec4 {
@@ -634,13 +634,13 @@ func (self *MarkdownImageData) Tintcol() Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec4{}).FromC(C.wrap_MarkdownImageData_GetTint_col(selfArg))
+	return *(&Vec4{}).fromC(C.wrap_MarkdownImageData_GetTint_col(selfArg))
 }
 
 func (self MarkdownImageData) SetBordercol(v Vec4) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetBorder_col(selfArg, v.ToC())
+	C.wrap_MarkdownImageData_SetBorder_col(selfArg, v.toC())
 }
 
 func (self *MarkdownImageData) Bordercol() Vec4 {
@@ -649,7 +649,7 @@ func (self *MarkdownImageData) Bordercol() Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec4{}).FromC(C.wrap_MarkdownImageData_GetBorder_col(selfArg))
+	return *(&Vec4{}).fromC(C.wrap_MarkdownImageData_GetBorder_col(selfArg))
 }
 
 func (self MarkdownLinkCallbackData) SetText(v string) {

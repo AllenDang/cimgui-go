@@ -400,7 +400,7 @@ func wrappableW(sType GoIdentifier) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
 		return ArgumentWrapperData{
 			ArgType: sType,
-			VarName: fmt.Sprintf("%s.ToC()", arg.Name),
+			VarName: fmt.Sprintf("%s.toC()", arg.Name),
 		}
 	}
 }
@@ -410,8 +410,8 @@ func wrappablePtrW(goType GoIdentifier, cType CIdentifier) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
 		return ArgumentWrapperData{
 			ArgType:     goType,
-			ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := Wrap[%[3]s, %[2]s](%[1]s)", arg.Name, goType, cType),
-			ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := Wrap[%[3]s, %[2]s](%[1]s)", arg.Name, goType, cType),
+			ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := wrap[%[3]s, %[2]s](%[1]s)", arg.Name, goType, cType),
+			ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := wrap[%[3]s, %[2]s](%[1]s)", arg.Name, goType, cType),
 			Finalizer:   fmt.Sprintf("%[1]sFin()", arg.Name, goType, cType),
 			VarName:     fmt.Sprintf("%sArg", arg.Name),
 		}
@@ -424,7 +424,7 @@ func wrappablePtrArrayW(size int, cArrayType CIdentifier, goArrayType GoIdentifi
 %[1]sFin := make([]func(), len(%[1]s))
 for i, %[1]sV := range %[1]s {
 	var tmp *%[2]s
-  	tmp, %[1]sFin[i] = Wrap[%[2]s, *%[3]s](%[1]sV)
+  	tmp, %[1]sFin[i] = wrap[%[2]s, *%[3]s](%[1]sV)
   	%[1]sArg[i] = *tmp
 }
 `, arg.Name, cArrayType, goArrayType)
