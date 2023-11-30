@@ -101,7 +101,7 @@ func getArgWrapper(
 		"const ImWchar*":      simpleW("(*Wchar)", "(*C.ImWchar)"),
 		"ImWchar16":           simpleW("uint16", "C.ImWchar16"),
 		"void*":               simpleW("uintptr", "unsafe.Pointer"),
-		"const void*":         simpleW("unsafe.Pointer", ""),
+		"const void*":         simpleW("uintptr", "unsafe.Pointer"),
 		"const ImVec2":        wrappableW("Vec2", "C.ImVec2"),
 		"const ImVec2*":       wrappablePtrW("*Vec2", "C.ImVec2"),
 		"ImVec2":              wrappableW("Vec2", "C.ImVec2"),

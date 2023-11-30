@@ -216,17 +216,17 @@ func (self %[1]s) c() (C.%[2]s, func()) {
 	// we need to make it a struct, because we need to hide C type (otherwise it will duplicate methods)
 	fmt.Fprintf(sb, `
 type %[1]s struct {
-	data *C.%[2]s
+	CData *C.%[2]s
 }
 
 func (self *%[1]s) handle() (result *C.%[2]s, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 %[3]s
 
 func new%[1]sFromC(cvalue *C.%[2]s) *%[1]s {
-	return &%[1]s{data: cvalue}
+	return &%[1]s{CData: cvalue}
 }
 `, name.renameGoIdentifier(), name, toPlainValue)
 }
