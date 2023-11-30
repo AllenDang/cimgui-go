@@ -100,7 +100,7 @@ func getArgWrapper(
 		"ImWchar*":            simpleW("(*Wchar)", "(*C.ImWchar)"),
 		"const ImWchar*":      simpleW("(*Wchar)", "(*C.ImWchar)"),
 		"ImWchar16":           simpleW("uint16", "C.ImWchar16"),
-		"void*":               voidPtrW,
+		"void*":               simpleW("uintptr", "unsafe.Pointer"),
 		"const void*":         simpleW("unsafe.Pointer", ""),
 		"const ImVec2":        wrappableW("Vec2", "C.ImVec2"),
 		"const ImVec2*":       wrappablePtrW("*Vec2", "C.ImVec2"),
@@ -318,16 +318,16 @@ func uint64ArrayW(arg ArgDef) ArgumentWrapperData {
 	}
 }
 
-func voidPtrW(arg ArgDef) ArgumentWrapperData {
-	return ArgumentWrapperData{
-		ArgType:     "unsafe.Pointer",
-		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapVoidPtr(%[1]s)", arg.Name),
-		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapVoidPtr(%[1]s)", arg.Name),
-		VarName:     fmt.Sprintf("%sArg", arg.Name),
-		Finalizer:   fmt.Sprintf("%sFin()", arg.Name),
-		CType:       "unsafe.Pointer",
-	}
-}
+//func voidPtrW(arg ArgDef) ArgumentWrapperData {
+//	return ArgumentWrapperData{
+//		ArgType:     "unsafe.Pointer",
+//		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapVoidPtr(%[1]s)", arg.Name),
+//		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapVoidPtr(%[1]s)", arg.Name),
+//		VarName:     fmt.Sprintf("%sArg", arg.Name),
+//		Finalizer:   fmt.Sprintf("%sFin()", arg.Name),
+//		CType:       "unsafe.Pointer",
+//	}
+//}
 
 // generic wrappers:
 

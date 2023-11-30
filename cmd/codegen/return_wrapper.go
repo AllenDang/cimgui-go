@@ -56,7 +56,7 @@ func getReturnWrapper(
 		"ImPlotPoint":    wrappableR("PlotPoint"),
 		"ImRect":         wrappableR("Rect"),
 		"ImPlotTime":     wrappableR("PlotTime"),
-		"void*":          simpleR("unsafe.Pointer"), // TODO: disabled due to https://github.com/AllenDang/cimgui-go/issues/184
+		"void*":          simpleR("uintptr"),
 		"size_t":         simpleR("uint64"),
 	}
 
