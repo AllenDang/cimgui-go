@@ -10,11 +10,11 @@ package imgui
 import "C"
 
 type Emphasis struct {
-	data *C.Emphasis
+	CData *C.Emphasis
 }
 
 func (self *Emphasis) handle() (result *C.Emphasis, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self Emphasis) c() (C.Emphasis, func()) {
@@ -23,15 +23,15 @@ func (self Emphasis) c() (C.Emphasis, func()) {
 }
 
 func newEmphasisFromC(cvalue *C.Emphasis) *Emphasis {
-	return &Emphasis{data: cvalue}
+	return &Emphasis{CData: cvalue}
 }
 
 type Line struct {
-	data *C.Line
+	CData *C.Line
 }
 
 func (self *Line) handle() (result *C.Line, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self Line) c() (C.Line, func()) {
@@ -40,15 +40,15 @@ func (self Line) c() (C.Line, func()) {
 }
 
 func newLineFromC(cvalue *C.Line) *Line {
-	return &Line{data: cvalue}
+	return &Line{CData: cvalue}
 }
 
 type Link struct {
-	data *C.Link
+	CData *C.Link
 }
 
 func (self *Link) handle() (result *C.Link, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self Link) c() (C.Link, func()) {
@@ -57,15 +57,15 @@ func (self Link) c() (C.Link, func()) {
 }
 
 func newLinkFromC(cvalue *C.Link) *Link {
-	return &Link{data: cvalue}
+	return &Link{CData: cvalue}
 }
 
 type MarkdownConfig struct {
-	data *C.MarkdownConfig
+	CData *C.MarkdownConfig
 }
 
 func (self *MarkdownConfig) handle() (result *C.MarkdownConfig, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self MarkdownConfig) c() (C.MarkdownConfig, func()) {
@@ -74,15 +74,15 @@ func (self MarkdownConfig) c() (C.MarkdownConfig, func()) {
 }
 
 func newMarkdownConfigFromC(cvalue *C.MarkdownConfig) *MarkdownConfig {
-	return &MarkdownConfig{data: cvalue}
+	return &MarkdownConfig{CData: cvalue}
 }
 
 type MarkdownFormatInfo struct {
-	data *C.MarkdownFormatInfo
+	CData *C.MarkdownFormatInfo
 }
 
 func (self *MarkdownFormatInfo) handle() (result *C.MarkdownFormatInfo, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self MarkdownFormatInfo) c() (C.MarkdownFormatInfo, func()) {
@@ -91,15 +91,15 @@ func (self MarkdownFormatInfo) c() (C.MarkdownFormatInfo, func()) {
 }
 
 func newMarkdownFormatInfoFromC(cvalue *C.MarkdownFormatInfo) *MarkdownFormatInfo {
-	return &MarkdownFormatInfo{data: cvalue}
+	return &MarkdownFormatInfo{CData: cvalue}
 }
 
 type MarkdownHeadingFormat struct {
-	data *C.MarkdownHeadingFormat
+	CData *C.MarkdownHeadingFormat
 }
 
 func (self *MarkdownHeadingFormat) handle() (result *C.MarkdownHeadingFormat, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self MarkdownHeadingFormat) c() (C.MarkdownHeadingFormat, func()) {
@@ -108,15 +108,15 @@ func (self MarkdownHeadingFormat) c() (C.MarkdownHeadingFormat, func()) {
 }
 
 func newMarkdownHeadingFormatFromC(cvalue *C.MarkdownHeadingFormat) *MarkdownHeadingFormat {
-	return &MarkdownHeadingFormat{data: cvalue}
+	return &MarkdownHeadingFormat{CData: cvalue}
 }
 
 type MarkdownImageData struct {
-	data *C.MarkdownImageData
+	CData *C.MarkdownImageData
 }
 
 func (self *MarkdownImageData) handle() (result *C.MarkdownImageData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self MarkdownImageData) c() (C.MarkdownImageData, func()) {
@@ -125,15 +125,15 @@ func (self MarkdownImageData) c() (C.MarkdownImageData, func()) {
 }
 
 func newMarkdownImageDataFromC(cvalue *C.MarkdownImageData) *MarkdownImageData {
-	return &MarkdownImageData{data: cvalue}
+	return &MarkdownImageData{CData: cvalue}
 }
 
 type MarkdownLinkCallbackData struct {
-	data *C.MarkdownLinkCallbackData
+	CData *C.MarkdownLinkCallbackData
 }
 
 func (self *MarkdownLinkCallbackData) handle() (result *C.MarkdownLinkCallbackData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self MarkdownLinkCallbackData) c() (C.MarkdownLinkCallbackData, func()) {
@@ -142,15 +142,15 @@ func (self MarkdownLinkCallbackData) c() (C.MarkdownLinkCallbackData, func()) {
 }
 
 func newMarkdownLinkCallbackDataFromC(cvalue *C.MarkdownLinkCallbackData) *MarkdownLinkCallbackData {
-	return &MarkdownLinkCallbackData{data: cvalue}
+	return &MarkdownLinkCallbackData{CData: cvalue}
 }
 
 type MarkdownTooltipCallbackData struct {
-	data *C.MarkdownTooltipCallbackData
+	CData *C.MarkdownTooltipCallbackData
 }
 
 func (self *MarkdownTooltipCallbackData) handle() (result *C.MarkdownTooltipCallbackData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self MarkdownTooltipCallbackData) c() (C.MarkdownTooltipCallbackData, func()) {
@@ -159,15 +159,15 @@ func (self MarkdownTooltipCallbackData) c() (C.MarkdownTooltipCallbackData, func
 }
 
 func newMarkdownTooltipCallbackDataFromC(cvalue *C.MarkdownTooltipCallbackData) *MarkdownTooltipCallbackData {
-	return &MarkdownTooltipCallbackData{data: cvalue}
+	return &MarkdownTooltipCallbackData{CData: cvalue}
 }
 
 type TextBlock struct {
-	data *C.TextBlock
+	CData *C.TextBlock
 }
 
 func (self *TextBlock) handle() (result *C.TextBlock, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TextBlock) c() (C.TextBlock, func()) {
@@ -176,15 +176,15 @@ func (self TextBlock) c() (C.TextBlock, func()) {
 }
 
 func newTextBlockFromC(cvalue *C.TextBlock) *TextBlock {
-	return &TextBlock{data: cvalue}
+	return &TextBlock{CData: cvalue}
 }
 
 type TextRegion struct {
-	data *C.TextRegion
+	CData *C.TextRegion
 }
 
 func (self *TextRegion) handle() (result *C.TextRegion, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TextRegion) c() (C.TextRegion, func()) {
@@ -193,5 +193,5 @@ func (self TextRegion) c() (C.TextRegion, func()) {
 }
 
 func newTextRegionFromC(cvalue *C.TextRegion) *TextRegion {
-	return &TextRegion{data: cvalue}
+	return &TextRegion{CData: cvalue}
 }

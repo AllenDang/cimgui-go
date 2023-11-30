@@ -11,11 +11,11 @@ import "C"
 import "unsafe"
 
 type EmulateThreeButtonMouse struct {
-	data *C.EmulateThreeButtonMouse
+	CData *C.EmulateThreeButtonMouse
 }
 
 func (self *EmulateThreeButtonMouse) handle() (result *C.EmulateThreeButtonMouse, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self EmulateThreeButtonMouse) c() (C.EmulateThreeButtonMouse, func()) {
@@ -24,39 +24,39 @@ func (self EmulateThreeButtonMouse) c() (C.EmulateThreeButtonMouse, func()) {
 }
 
 func newEmulateThreeButtonMouseFromC(cvalue *C.EmulateThreeButtonMouse) *EmulateThreeButtonMouse {
-	return &EmulateThreeButtonMouse{data: cvalue}
+	return &EmulateThreeButtonMouse{CData: cvalue}
 }
 
 type NodesContext struct {
-	data *C.ImNodesContext
+	CData *C.ImNodesContext
 }
 
 func (self *NodesContext) handle() (result *C.ImNodesContext, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func newNodesContextFromC(cvalue *C.ImNodesContext) *NodesContext {
-	return &NodesContext{data: cvalue}
+	return &NodesContext{CData: cvalue}
 }
 
 type NodesEditorContext struct {
-	data *C.ImNodesEditorContext
+	CData *C.ImNodesEditorContext
 }
 
 func (self *NodesEditorContext) handle() (result *C.ImNodesEditorContext, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func newNodesEditorContextFromC(cvalue *C.ImNodesEditorContext) *NodesEditorContext {
-	return &NodesEditorContext{data: cvalue}
+	return &NodesEditorContext{CData: cvalue}
 }
 
 type NodesIO struct {
-	data *C.ImNodesIO
+	CData *C.ImNodesIO
 }
 
 func (self *NodesIO) handle() (result *C.ImNodesIO, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self NodesIO) c() (C.ImNodesIO, func()) {
@@ -65,7 +65,7 @@ func (self NodesIO) c() (C.ImNodesIO, func()) {
 }
 
 func newNodesIOFromC(cvalue *C.ImNodesIO) *NodesIO {
-	return &NodesIO{data: cvalue}
+	return &NodesIO{CData: cvalue}
 }
 
 type NodesMiniMapNodeHoveringCallbackUserData struct {
@@ -89,11 +89,11 @@ func newNodesMiniMapNodeHoveringCallbackUserDataFromC(cvalue *C.ImNodesMiniMapNo
 }
 
 type NodesStyle struct {
-	data *C.ImNodesStyle
+	CData *C.ImNodesStyle
 }
 
 func (self *NodesStyle) handle() (result *C.ImNodesStyle, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self NodesStyle) c() (C.ImNodesStyle, func()) {
@@ -102,15 +102,15 @@ func (self NodesStyle) c() (C.ImNodesStyle, func()) {
 }
 
 func newNodesStyleFromC(cvalue *C.ImNodesStyle) *NodesStyle {
-	return &NodesStyle{data: cvalue}
+	return &NodesStyle{CData: cvalue}
 }
 
 type LinkDetachWithModifierClick struct {
-	data *C.LinkDetachWithModifierClick
+	CData *C.LinkDetachWithModifierClick
 }
 
 func (self *LinkDetachWithModifierClick) handle() (result *C.LinkDetachWithModifierClick, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self LinkDetachWithModifierClick) c() (C.LinkDetachWithModifierClick, func()) {
@@ -119,15 +119,15 @@ func (self LinkDetachWithModifierClick) c() (C.LinkDetachWithModifierClick, func
 }
 
 func newLinkDetachWithModifierClickFromC(cvalue *C.LinkDetachWithModifierClick) *LinkDetachWithModifierClick {
-	return &LinkDetachWithModifierClick{data: cvalue}
+	return &LinkDetachWithModifierClick{CData: cvalue}
 }
 
 type MultipleSelectModifier struct {
-	data *C.MultipleSelectModifier
+	CData *C.MultipleSelectModifier
 }
 
 func (self *MultipleSelectModifier) handle() (result *C.MultipleSelectModifier, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self MultipleSelectModifier) c() (C.MultipleSelectModifier, func()) {
@@ -136,5 +136,5 @@ func (self MultipleSelectModifier) c() (C.MultipleSelectModifier, func()) {
 }
 
 func newMultipleSelectModifierFromC(cvalue *C.MultipleSelectModifier) *MultipleSelectModifier {
-	return &MultipleSelectModifier{data: cvalue}
+	return &MultipleSelectModifier{CData: cvalue}
 }

@@ -894,7 +894,7 @@ func (self *FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_dat
 // AddFontFromMemoryCompressedTTFV parameter default value hint:
 // font_cfg: NULL
 // glyph_ranges: NULL
-func (self *FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsafe.Pointer, compressed_font_data_size int32, size_pixels float32, font_cfg *FontConfig, glyph_ranges *Wchar) *Font {
+func (self *FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data uintptr, compressed_font_data_size int32, size_pixels float32, font_cfg *FontConfig, glyph_ranges *Wchar) *Font {
 	selfArg, selfFin := self.handle()
 	font_cfgArg, font_cfgFin := font_cfg.handle()
 
@@ -902,7 +902,7 @@ func (self *FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data unsa
 		selfFin()
 		font_cfgFin()
 	}()
-	return newFontFromC(C.ImFontAtlas_AddFontFromMemoryCompressedTTF(selfArg, (compressed_font_data), C.int(compressed_font_data_size), C.float(size_pixels), font_cfgArg, (*C.ImWchar)(glyph_ranges)))
+	return newFontFromC(C.ImFontAtlas_AddFontFromMemoryCompressedTTF(selfArg, unsafe.Pointer(compressed_font_data), C.int(compressed_font_data_size), C.float(size_pixels), font_cfgArg, (*C.ImWchar)(glyph_ranges)))
 }
 
 // Note: Transfer ownership of 'ttf_data' to ImFontAtlas! Will be deleted after destruction of the atlas. Set font_cfg->FontDataOwnedByAtlas=false to keep ownership of your data and it won't be freed.
@@ -3130,13 +3130,13 @@ func (self *Window) InternalIDInt(n int32) ID {
 	return *newIDFromC(func() *C.ImGuiID { result := C.ImGuiWindow_GetID_Int(selfArg, C.int(n)); return &result }())
 }
 
-func (self *Window) InternalIDPtr(ptr unsafe.Pointer) ID {
+func (self *Window) InternalIDPtr(ptr uintptr) ID {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *newIDFromC(func() *C.ImGuiID { result := C.ImGuiWindow_GetID_Ptr(selfArg, (ptr)); return &result }())
+	return *newIDFromC(func() *C.ImGuiID { result := C.ImGuiWindow_GetID_Ptr(selfArg, unsafe.Pointer(ptr)); return &result }())
 }
 
 // InternalIDStrV parameter default value hint:
@@ -4453,19 +4453,19 @@ func InternalDataTypeApplyFromText(buf string, data_type DataType, p_data uintpt
 	return C.igDataTypeApplyFromText(bufArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), formatArg) == C.bool(true)
 }
 
-func InternalDataTypeApplyOp(data_type DataType, op int32, output uintptr, arg_1 unsafe.Pointer, arg_2 unsafe.Pointer) {
-	C.igDataTypeApplyOp(C.ImGuiDataType(data_type), C.int(op), unsafe.Pointer(output), (arg_1), (arg_2))
+func InternalDataTypeApplyOp(data_type DataType, op int32, output uintptr, arg_1 uintptr, arg_2 uintptr) {
+	C.igDataTypeApplyOp(C.ImGuiDataType(data_type), C.int(op), unsafe.Pointer(output), unsafe.Pointer(arg_1), unsafe.Pointer(arg_2))
 }
 
-func InternalDataTypeClamp(data_type DataType, p_data uintptr, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
-	return C.igDataTypeClamp(C.ImGuiDataType(data_type), unsafe.Pointer(p_data), (p_min), (p_max)) == C.bool(true)
+func InternalDataTypeClamp(data_type DataType, p_data uintptr, p_min uintptr, p_max uintptr) bool {
+	return C.igDataTypeClamp(C.ImGuiDataType(data_type), unsafe.Pointer(p_data), unsafe.Pointer(p_min), unsafe.Pointer(p_max)) == C.bool(true)
 }
 
-func InternalDataTypeCompare(data_type DataType, arg_1 unsafe.Pointer, arg_2 unsafe.Pointer) int32 {
-	return int32(C.igDataTypeCompare(C.ImGuiDataType(data_type), (arg_1), (arg_2)))
+func InternalDataTypeCompare(data_type DataType, arg_1 uintptr, arg_2 uintptr) int32 {
+	return int32(C.igDataTypeCompare(C.ImGuiDataType(data_type), unsafe.Pointer(arg_1), unsafe.Pointer(arg_2)))
 }
 
-func InternalDataTypeFormatString(buf string, buf_size int32, data_type DataType, p_data unsafe.Pointer, format string) int32 {
+func InternalDataTypeFormatString(buf string, buf_size int32, data_type DataType, p_data uintptr, format string) int32 {
 	bufArg, bufFin := WrapString(buf)
 	formatArg, formatFin := WrapString(format)
 
@@ -4473,7 +4473,7 @@ func InternalDataTypeFormatString(buf string, buf_size int32, data_type DataType
 		bufFin()
 		formatFin()
 	}()
-	return int32(C.igDataTypeFormatString(bufArg, C.int(buf_size), C.ImGuiDataType(data_type), (p_data), formatArg))
+	return int32(C.igDataTypeFormatString(bufArg, C.int(buf_size), C.ImGuiDataType(data_type), unsafe.Pointer(p_data), formatArg))
 }
 
 func InternalDataTypeGetInfo(data_type DataType) *DataTypeInfo {
@@ -4508,9 +4508,9 @@ func InternalDebugDrawLineExtentsV(col uint32) {
 	C.igDebugDrawLineExtents(C.ImU32(col))
 }
 
-func InternalDebugHookIdInfo(id ID, data_type DataType, data_id unsafe.Pointer, data_id_end unsafe.Pointer) {
+func InternalDebugHookIdInfo(id ID, data_type DataType, data_id uintptr, data_id_end uintptr) {
 	idArg, idFin := id.c()
-	C.igDebugHookIdInfo(idArg, C.ImGuiDataType(data_type), (data_id), (data_id_end))
+	C.igDebugHookIdInfo(idArg, C.ImGuiDataType(data_type), unsafe.Pointer(data_id), unsafe.Pointer(data_id_end))
 
 	idFin()
 }
@@ -5068,7 +5068,7 @@ func DockSpaceOverViewportV(viewport *Viewport, flags DockNodeFlags, window_clas
 	}())
 }
 
-func InternalDragBehavior(id ID, data_type DataType, p_v uintptr, v_speed float32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
+func InternalDragBehavior(id ID, data_type DataType, p_v uintptr, v_speed float32, p_min uintptr, p_max uintptr, format string, flags SliderFlags) bool {
 	idArg, idFin := id.c()
 	formatArg, formatFin := WrapString(format)
 
@@ -5076,7 +5076,7 @@ func InternalDragBehavior(id ID, data_type DataType, p_v uintptr, v_speed float3
 		idFin()
 		formatFin()
 	}()
-	return C.igDragBehavior(idArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_v), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragBehavior(idArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_v), C.float(v_speed), unsafe.Pointer(p_min), unsafe.Pointer(p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // If v_min >= v_max we have no bound
@@ -5335,7 +5335,7 @@ func DragIntRange2V(label string, v_current_min *int32, v_current_max *int32, v_
 // p_max: NULL
 // format: NULL
 // flags: 0
-func DragScalarV(label string, data_type DataType, p_data uintptr, v_speed float32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
+func DragScalarV(label string, data_type DataType, p_data uintptr, v_speed float32, p_min uintptr, p_max uintptr, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
 	formatArg, formatFin := WrapString(format)
 
@@ -5343,7 +5343,7 @@ func DragScalarV(label string, data_type DataType, p_data uintptr, v_speed float
 		labelFin()
 		formatFin()
 	}()
-	return C.igDragScalar(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragScalar(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), C.float(v_speed), unsafe.Pointer(p_min), unsafe.Pointer(p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // DragScalarNV parameter default value hint:
@@ -5352,7 +5352,7 @@ func DragScalarV(label string, data_type DataType, p_data uintptr, v_speed float
 // p_max: NULL
 // format: NULL
 // flags: 0
-func DragScalarNV(label string, data_type DataType, p_data uintptr, components int32, v_speed float32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
+func DragScalarNV(label string, data_type DataType, p_data uintptr, components int32, v_speed float32, p_min uintptr, p_max uintptr, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
 	formatArg, formatFin := WrapString(format)
 
@@ -5360,7 +5360,7 @@ func DragScalarNV(label string, data_type DataType, p_data uintptr, components i
 		labelFin()
 		formatFin()
 	}()
-	return C.igDragScalarN(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), C.int(components), C.float(v_speed), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igDragScalarN(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), C.int(components), C.float(v_speed), unsafe.Pointer(p_min), unsafe.Pointer(p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // add a dummy item of given size. unlike InvisibleButton(), Dummy() won't take the mouse click or be navigable into.
@@ -5946,8 +5946,8 @@ func InternalIDWithSeedStr(str_id_begin string, str_id_end string, seed ID) ID {
 	}())
 }
 
-func IDPtr(ptr_id unsafe.Pointer) ID {
-	return *newIDFromC(func() *C.ImGuiID { result := C.igGetID_Ptr((ptr_id)); return &result }())
+func IDPtr(ptr_id uintptr) ID {
+	return *newIDFromC(func() *C.ImGuiID { result := C.igGetID_Ptr(unsafe.Pointer(ptr_id)); return &result }())
 }
 
 // calculate unique ID (hash of whole ID stack + given parameter). e.g. if you want to query into ImGuiStorage yourself
@@ -6677,13 +6677,16 @@ func InternalImFormatStringToTempBuffer(out_buf []string, out_buf_end []string, 
 
 // InternalImHashDataV parameter default value hint:
 // seed: 0
-func InternalImHashDataV(data unsafe.Pointer, data_size uint64, seed ID) ID {
+func InternalImHashDataV(data uintptr, data_size uint64, seed ID) ID {
 	seedArg, seedFin := seed.c()
 
 	defer func() {
 		seedFin()
 	}()
-	return *newIDFromC(func() *C.ImGuiID { result := C.igImHashData((data), C.xulong(data_size), seedArg); return &result }())
+	return *newIDFromC(func() *C.ImGuiID {
+		result := C.igImHashData(unsafe.Pointer(data), C.xulong(data_size), seedArg)
+		return &result
+	}())
 }
 
 // InternalImHashStrV parameter default value hint:
@@ -7415,7 +7418,7 @@ func InputInt4V(label string, v *[4]int32, flags InputTextFlags) bool {
 // p_step_fast: NULL
 // format: NULL
 // flags: 0
-func InputScalarV(label string, data_type DataType, p_data uintptr, p_step unsafe.Pointer, p_step_fast unsafe.Pointer, format string, flags InputTextFlags) bool {
+func InputScalarV(label string, data_type DataType, p_data uintptr, p_step uintptr, p_step_fast uintptr, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := WrapString(label)
 	formatArg, formatFin := WrapString(format)
 
@@ -7423,7 +7426,7 @@ func InputScalarV(label string, data_type DataType, p_data uintptr, p_step unsaf
 		labelFin()
 		formatFin()
 	}()
-	return C.igInputScalar(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), (p_step), (p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputScalar(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), unsafe.Pointer(p_step), unsafe.Pointer(p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // InputScalarNV parameter default value hint:
@@ -7431,7 +7434,7 @@ func InputScalarV(label string, data_type DataType, p_data uintptr, p_step unsaf
 // p_step_fast: NULL
 // format: NULL
 // flags: 0
-func InputScalarNV(label string, data_type DataType, p_data uintptr, components int32, p_step unsafe.Pointer, p_step_fast unsafe.Pointer, format string, flags InputTextFlags) bool {
+func InputScalarNV(label string, data_type DataType, p_data uintptr, components int32, p_step uintptr, p_step_fast uintptr, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := WrapString(label)
 	formatArg, formatFin := WrapString(format)
 
@@ -7439,7 +7442,7 @@ func InputScalarNV(label string, data_type DataType, p_data uintptr, components 
 		labelFin()
 		formatFin()
 	}()
-	return C.igInputScalarN(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), C.int(components), (p_step), (p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igInputScalarN(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), C.int(components), unsafe.Pointer(p_step), unsafe.Pointer(p_step_fast), formatArg, C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 func InternalInputTextDeactivateHook(id ID) {
@@ -8342,8 +8345,8 @@ func PushIDInt(int_id int32) {
 }
 
 // push pointer into the ID stack (will hash pointer).
-func PushIDPtr(ptr_id unsafe.Pointer) {
-	C.igPushID_Ptr((ptr_id))
+func PushIDPtr(ptr_id uintptr) {
+	C.igPushID_Ptr(unsafe.Pointer(ptr_id))
 }
 
 // push string into the ID stack (will hash string).
@@ -8843,13 +8846,13 @@ func SetCursorScreenPos(pos Vec2) {
 // type is a user defined string of maximum 32 characters. Strings starting with '_' are reserved for dear imgui internal types. Data is copied and held by imgui. Return true when payload has been accepted.
 // SetDragDropPayloadV parameter default value hint:
 // cond: 0
-func SetDragDropPayloadV(typeArg string, data unsafe.Pointer, sz uint64, cond Cond) bool {
+func SetDragDropPayloadV(typeArg string, data uintptr, sz uint64, cond Cond) bool {
 	typeArgArg, typeArgFin := WrapString(typeArg)
 
 	defer func() {
 		typeArgFin()
 	}()
-	return C.igSetDragDropPayload(typeArgArg, (data), C.xulong(sz), C.ImGuiCond(cond)) == C.bool(true)
+	return C.igSetDragDropPayload(typeArgArg, unsafe.Pointer(data), C.xulong(sz), C.ImGuiCond(cond)) == C.bool(true)
 }
 
 func InternalSetFocusID(id ID, window *Window) {
@@ -9425,7 +9428,7 @@ func SliderAngleV(label string, v_rad *float32, v_degrees_min float32, v_degrees
 	return C.igSliderAngle(labelArg, v_radArg, C.float(v_degrees_min), C.float(v_degrees_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
-func InternalSliderBehavior(bb Rect, id ID, data_type DataType, p_v uintptr, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags, out_grab_bb *Rect) bool {
+func InternalSliderBehavior(bb Rect, id ID, data_type DataType, p_v uintptr, p_min uintptr, p_max uintptr, format string, flags SliderFlags, out_grab_bb *Rect) bool {
 	idArg, idFin := id.c()
 	formatArg, formatFin := WrapString(format)
 	out_grab_bbArg, out_grab_bbFin := wrap[C.ImRect, *Rect](out_grab_bb)
@@ -9435,7 +9438,7 @@ func InternalSliderBehavior(bb Rect, id ID, data_type DataType, p_v uintptr, p_m
 		formatFin()
 		out_grab_bbFin()
 	}()
-	return C.igSliderBehavior(bb.toC(), idArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_v), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags), out_grab_bbArg) == C.bool(true)
+	return C.igSliderBehavior(bb.toC(), idArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_v), unsafe.Pointer(p_min), unsafe.Pointer(p_max), formatArg, C.ImGuiSliderFlags(flags), out_grab_bbArg) == C.bool(true)
 }
 
 // adjust format to decorate the value with a prefix or a suffix for in-slider labels or unit display.
@@ -9618,7 +9621,7 @@ func SliderInt4V(label string, v *[4]int32, v_min int32, v_max int32, format str
 // SliderScalarV parameter default value hint:
 // format: NULL
 // flags: 0
-func SliderScalarV(label string, data_type DataType, p_data uintptr, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
+func SliderScalarV(label string, data_type DataType, p_data uintptr, p_min uintptr, p_max uintptr, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
 	formatArg, formatFin := WrapString(format)
 
@@ -9626,13 +9629,13 @@ func SliderScalarV(label string, data_type DataType, p_data uintptr, p_min unsaf
 		labelFin()
 		formatFin()
 	}()
-	return C.igSliderScalar(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderScalar(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), unsafe.Pointer(p_min), unsafe.Pointer(p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // SliderScalarNV parameter default value hint:
 // format: NULL
 // flags: 0
-func SliderScalarNV(label string, data_type DataType, p_data uintptr, components int32, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
+func SliderScalarNV(label string, data_type DataType, p_data uintptr, components int32, p_min uintptr, p_max uintptr, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
 	formatArg, formatFin := WrapString(format)
 
@@ -9640,7 +9643,7 @@ func SliderScalarNV(label string, data_type DataType, p_data uintptr, components
 		labelFin()
 		formatFin()
 	}()
-	return C.igSliderScalarN(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), C.int(components), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igSliderScalarN(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), C.int(components), unsafe.Pointer(p_min), unsafe.Pointer(p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // button with FramePadding=(0,0) to easily embed within text
@@ -10374,7 +10377,7 @@ func InternalTempInputIsActive(id ID) bool {
 // InternalTempInputScalarV parameter default value hint:
 // p_clamp_min: NULL
 // p_clamp_max: NULL
-func InternalTempInputScalarV(bb Rect, id ID, label string, data_type DataType, p_data uintptr, format string, p_clamp_min unsafe.Pointer, p_clamp_max unsafe.Pointer) bool {
+func InternalTempInputScalarV(bb Rect, id ID, label string, data_type DataType, p_data uintptr, format string, p_clamp_min uintptr, p_clamp_max uintptr) bool {
 	idArg, idFin := id.c()
 	labelArg, labelFin := WrapString(label)
 	formatArg, formatFin := WrapString(format)
@@ -10384,7 +10387,7 @@ func InternalTempInputScalarV(bb Rect, id ID, label string, data_type DataType, 
 		labelFin()
 		formatFin()
 	}()
-	return C.igTempInputScalar(bb.toC(), idArg, labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), formatArg, (p_clamp_min), (p_clamp_max)) == C.bool(true)
+	return C.igTempInputScalar(bb.toC(), idArg, labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), formatArg, unsafe.Pointer(p_clamp_min), unsafe.Pointer(p_clamp_max)) == C.bool(true)
 }
 
 func InternalTempInputText(bb Rect, id ID, label string, buf string, buf_size int32, flags InputTextFlags) bool {
@@ -10493,13 +10496,13 @@ func InternalTreeNodeBehaviorV(id ID, flags TreeNodeFlags, label string, label_e
 	return C.igTreeNodeBehavior(idArg, C.ImGuiTreeNodeFlags(flags), labelArg, label_endArg) == C.bool(true)
 }
 
-func TreeNodeExPtr(ptr_id unsafe.Pointer, flags TreeNodeFlags, fmt string) bool {
+func TreeNodeExPtr(ptr_id uintptr, flags TreeNodeFlags, fmt string) bool {
 	fmtArg, fmtFin := WrapString(fmt)
 
 	defer func() {
 		fmtFin()
 	}()
-	return C.wrap_igTreeNodeEx_Ptr((ptr_id), C.ImGuiTreeNodeFlags(flags), fmtArg) == C.bool(true)
+	return C.wrap_igTreeNodeEx_Ptr(unsafe.Pointer(ptr_id), C.ImGuiTreeNodeFlags(flags), fmtArg) == C.bool(true)
 }
 
 // TreeNodeExStrV parameter default value hint:
@@ -10542,13 +10545,13 @@ func InternalTreeNodeUpdateNextOpen(id ID, flags TreeNodeFlags) bool {
 }
 
 // "
-func TreeNodePtr(ptr_id unsafe.Pointer, fmt string) bool {
+func TreeNodePtr(ptr_id uintptr, fmt string) bool {
 	fmtArg, fmtFin := WrapString(fmt)
 
 	defer func() {
 		fmtFin()
 	}()
-	return C.wrap_igTreeNode_Ptr((ptr_id), fmtArg) == C.bool(true)
+	return C.wrap_igTreeNode_Ptr(unsafe.Pointer(ptr_id), fmtArg) == C.bool(true)
 }
 
 func TreeNodeStr(label string) bool {
@@ -10585,8 +10588,8 @@ func InternalTreePushOverrideID(id ID) {
 }
 
 // "
-func TreePushPtr(ptr_id unsafe.Pointer) {
-	C.igTreePush_Ptr((ptr_id))
+func TreePushPtr(ptr_id uintptr) {
+	C.igTreePush_Ptr(unsafe.Pointer(ptr_id))
 }
 
 // ~ Indent()+PushId(). Already called by TreeNode() when returning true, but you can call TreePush/TreePop yourself if desired.
@@ -10669,7 +10672,7 @@ func VSliderIntV(label string, size Vec2, v *int32, v_min int32, v_max int32, fo
 // VSliderScalarV parameter default value hint:
 // format: NULL
 // flags: 0
-func VSliderScalarV(label string, size Vec2, data_type DataType, p_data uintptr, p_min unsafe.Pointer, p_max unsafe.Pointer, format string, flags SliderFlags) bool {
+func VSliderScalarV(label string, size Vec2, data_type DataType, p_data uintptr, p_min uintptr, p_max uintptr, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
 	formatArg, formatFin := WrapString(format)
 
@@ -10677,7 +10680,7 @@ func VSliderScalarV(label string, size Vec2, data_type DataType, p_data uintptr,
 		labelFin()
 		formatFin()
 	}()
-	return C.igVSliderScalar(labelArg, size.toC(), C.ImGuiDataType(data_type), unsafe.Pointer(p_data), (p_min), (p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igVSliderScalar(labelArg, size.toC(), C.ImGuiDataType(data_type), unsafe.Pointer(p_data), unsafe.Pointer(p_min), unsafe.Pointer(p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 func ValueBool(prefix string, b bool) {
@@ -10991,13 +10994,13 @@ func (self *FontAtlas) AddFontFromMemoryCompressedBase85TTF(compressed_font_data
 	return newFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(selfArg, compressed_font_data_base85Arg, C.float(size_pixels)))
 }
 
-func (self *FontAtlas) AddFontFromMemoryCompressedTTF(compressed_font_data unsafe.Pointer, compressed_font_data_size int32, size_pixels float32) *Font {
+func (self *FontAtlas) AddFontFromMemoryCompressedTTF(compressed_font_data uintptr, compressed_font_data_size int32, size_pixels float32) *Font {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return newFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedTTF(selfArg, (compressed_font_data), C.int(compressed_font_data_size), C.float(size_pixels)))
+	return newFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedTTF(selfArg, unsafe.Pointer(compressed_font_data), C.int(compressed_font_data_size), C.float(size_pixels)))
 }
 
 func (self *FontAtlas) AddFontFromMemoryTTF(font_data uintptr, font_data_size int32, size_pixels float32) *Font {
@@ -11802,8 +11805,11 @@ func InternalImFileLoadToMemory(filename string, mode string) uintptr {
 	return uintptr(C.wrap_igImFileLoadToMemory(filenameArg, modeArg))
 }
 
-func InternalImHashData(data unsafe.Pointer, data_size uint64) ID {
-	return *newIDFromC(func() *C.ImGuiID { result := C.wrap_igImHashData((data), C.xulong(data_size)); return &result }())
+func InternalImHashData(data uintptr, data_size uint64) ID {
+	return *newIDFromC(func() *C.ImGuiID {
+		result := C.wrap_igImHashData(unsafe.Pointer(data), C.xulong(data_size))
+		return &result
+	}())
 }
 
 func InternalImHashStr(data string) ID {
@@ -12390,13 +12396,13 @@ func InternalSeparatorEx(flags SeparatorFlags) {
 	C.wrap_igSeparatorEx(C.ImGuiSeparatorFlags(flags))
 }
 
-func SetDragDropPayload(typeArg string, data unsafe.Pointer, sz uint64) bool {
+func SetDragDropPayload(typeArg string, data uintptr, sz uint64) bool {
 	typeArgArg, typeArgFin := WrapString(typeArg)
 
 	defer func() {
 		typeArgFin()
 	}()
-	return C.wrap_igSetDragDropPayload(typeArgArg, (data), C.xulong(sz)) == C.bool(true)
+	return C.wrap_igSetDragDropPayload(typeArgArg, unsafe.Pointer(data), C.xulong(sz)) == C.bool(true)
 }
 
 func InternalSetItemKeyOwner(key Key) {
@@ -12703,22 +12709,22 @@ func SliderInt4(label string, v *[4]int32, v_min int32, v_max int32) bool {
 	return C.wrap_igSliderInt4(labelArg, (*C.int)(&vArg[0]), C.int(v_min), C.int(v_max)) == C.bool(true)
 }
 
-func SliderScalar(label string, data_type DataType, p_data uintptr, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
+func SliderScalar(label string, data_type DataType, p_data uintptr, p_min uintptr, p_max uintptr) bool {
 	labelArg, labelFin := WrapString(label)
 
 	defer func() {
 		labelFin()
 	}()
-	return C.wrap_igSliderScalar(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), (p_min), (p_max)) == C.bool(true)
+	return C.wrap_igSliderScalar(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), unsafe.Pointer(p_min), unsafe.Pointer(p_max)) == C.bool(true)
 }
 
-func SliderScalarN(label string, data_type DataType, p_data uintptr, components int32, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
+func SliderScalarN(label string, data_type DataType, p_data uintptr, components int32, p_min uintptr, p_max uintptr) bool {
 	labelArg, labelFin := WrapString(label)
 
 	defer func() {
 		labelFin()
 	}()
-	return C.wrap_igSliderScalarN(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), C.int(components), (p_min), (p_max)) == C.bool(true)
+	return C.wrap_igSliderScalarN(labelArg, C.ImGuiDataType(data_type), unsafe.Pointer(p_data), C.int(components), unsafe.Pointer(p_min), unsafe.Pointer(p_max)) == C.bool(true)
 }
 
 func InternalSplitterBehavior(bb Rect, id ID, axis Axis, size1 *float32, size2 *float32, min_size1 float32, min_size2 float32) bool {
@@ -12867,13 +12873,13 @@ func VSliderInt(label string, size Vec2, v *int32, v_min int32, v_max int32) boo
 	return C.wrap_igVSliderInt(labelArg, size.toC(), vArg, C.int(v_min), C.int(v_max)) == C.bool(true)
 }
 
-func VSliderScalar(label string, size Vec2, data_type DataType, p_data uintptr, p_min unsafe.Pointer, p_max unsafe.Pointer) bool {
+func VSliderScalar(label string, size Vec2, data_type DataType, p_data uintptr, p_min uintptr, p_max uintptr) bool {
 	labelArg, labelFin := WrapString(label)
 
 	defer func() {
 		labelFin()
 	}()
-	return C.wrap_igVSliderScalar(labelArg, size.toC(), C.ImGuiDataType(data_type), unsafe.Pointer(p_data), (p_min), (p_max)) == C.bool(true)
+	return C.wrap_igVSliderScalar(labelArg, size.toC(), C.ImGuiDataType(data_type), unsafe.Pointer(p_data), unsafe.Pointer(p_min), unsafe.Pointer(p_max)) == C.bool(true)
 }
 
 func ValueFloat(prefix string, v float32) {

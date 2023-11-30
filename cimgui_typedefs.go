@@ -31,11 +31,11 @@ func newBitArrayPtrFromC(cvalue *C.ImBitArrayPtr) *BitArrayPtr {
 }
 
 type BitVector struct {
-	data *C.ImBitVector
+	CData *C.ImBitVector
 }
 
 func (self *BitVector) handle() (result *C.ImBitVector, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self BitVector) c() (C.ImBitVector, func()) {
@@ -44,15 +44,15 @@ func (self BitVector) c() (C.ImBitVector, func()) {
 }
 
 func newBitVectorFromC(cvalue *C.ImBitVector) *BitVector {
-	return &BitVector{data: cvalue}
+	return &BitVector{CData: cvalue}
 }
 
 type DrawChannel struct {
-	data *C.ImDrawChannel
+	CData *C.ImDrawChannel
 }
 
 func (self *DrawChannel) handle() (result *C.ImDrawChannel, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self DrawChannel) c() (C.ImDrawChannel, func()) {
@@ -61,15 +61,15 @@ func (self DrawChannel) c() (C.ImDrawChannel, func()) {
 }
 
 func newDrawChannelFromC(cvalue *C.ImDrawChannel) *DrawChannel {
-	return &DrawChannel{data: cvalue}
+	return &DrawChannel{CData: cvalue}
 }
 
 type DrawCmd struct {
-	data *C.ImDrawCmd
+	CData *C.ImDrawCmd
 }
 
 func (self *DrawCmd) handle() (result *C.ImDrawCmd, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self DrawCmd) c() (C.ImDrawCmd, func()) {
@@ -78,15 +78,15 @@ func (self DrawCmd) c() (C.ImDrawCmd, func()) {
 }
 
 func newDrawCmdFromC(cvalue *C.ImDrawCmd) *DrawCmd {
-	return &DrawCmd{data: cvalue}
+	return &DrawCmd{CData: cvalue}
 }
 
 type DrawCmdHeader struct {
-	data *C.ImDrawCmdHeader
+	CData *C.ImDrawCmdHeader
 }
 
 func (self *DrawCmdHeader) handle() (result *C.ImDrawCmdHeader, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self DrawCmdHeader) c() (C.ImDrawCmdHeader, func()) {
@@ -95,15 +95,15 @@ func (self DrawCmdHeader) c() (C.ImDrawCmdHeader, func()) {
 }
 
 func newDrawCmdHeaderFromC(cvalue *C.ImDrawCmdHeader) *DrawCmdHeader {
-	return &DrawCmdHeader{data: cvalue}
+	return &DrawCmdHeader{CData: cvalue}
 }
 
 type DrawData struct {
-	data *C.ImDrawData
+	CData *C.ImDrawData
 }
 
 func (self *DrawData) handle() (result *C.ImDrawData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self DrawData) c() (C.ImDrawData, func()) {
@@ -112,15 +112,15 @@ func (self DrawData) c() (C.ImDrawData, func()) {
 }
 
 func newDrawDataFromC(cvalue *C.ImDrawData) *DrawData {
-	return &DrawData{data: cvalue}
+	return &DrawData{CData: cvalue}
 }
 
 type DrawDataBuilder struct {
-	data *C.ImDrawDataBuilder
+	CData *C.ImDrawDataBuilder
 }
 
 func (self *DrawDataBuilder) handle() (result *C.ImDrawDataBuilder, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self DrawDataBuilder) c() (C.ImDrawDataBuilder, func()) {
@@ -129,15 +129,15 @@ func (self DrawDataBuilder) c() (C.ImDrawDataBuilder, func()) {
 }
 
 func newDrawDataBuilderFromC(cvalue *C.ImDrawDataBuilder) *DrawDataBuilder {
-	return &DrawDataBuilder{data: cvalue}
+	return &DrawDataBuilder{CData: cvalue}
 }
 
 type DrawList struct {
-	data *C.ImDrawList
+	CData *C.ImDrawList
 }
 
 func (self *DrawList) handle() (result *C.ImDrawList, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self DrawList) c() (C.ImDrawList, func()) {
@@ -146,15 +146,15 @@ func (self DrawList) c() (C.ImDrawList, func()) {
 }
 
 func newDrawListFromC(cvalue *C.ImDrawList) *DrawList {
-	return &DrawList{data: cvalue}
+	return &DrawList{CData: cvalue}
 }
 
 type DrawListSharedData struct {
-	data *C.ImDrawListSharedData
+	CData *C.ImDrawListSharedData
 }
 
 func (self *DrawListSharedData) handle() (result *C.ImDrawListSharedData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self DrawListSharedData) c() (C.ImDrawListSharedData, func()) {
@@ -163,15 +163,15 @@ func (self DrawListSharedData) c() (C.ImDrawListSharedData, func()) {
 }
 
 func newDrawListSharedDataFromC(cvalue *C.ImDrawListSharedData) *DrawListSharedData {
-	return &DrawListSharedData{data: cvalue}
+	return &DrawListSharedData{CData: cvalue}
 }
 
 type DrawListSplitter struct {
-	data *C.ImDrawListSplitter
+	CData *C.ImDrawListSplitter
 }
 
 func (self *DrawListSplitter) handle() (result *C.ImDrawListSplitter, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self DrawListSplitter) c() (C.ImDrawListSplitter, func()) {
@@ -180,15 +180,15 @@ func (self DrawListSplitter) c() (C.ImDrawListSplitter, func()) {
 }
 
 func newDrawListSplitterFromC(cvalue *C.ImDrawListSplitter) *DrawListSplitter {
-	return &DrawListSplitter{data: cvalue}
+	return &DrawListSplitter{CData: cvalue}
 }
 
 type DrawVert struct {
-	data *C.ImDrawVert
+	CData *C.ImDrawVert
 }
 
 func (self *DrawVert) handle() (result *C.ImDrawVert, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self DrawVert) c() (C.ImDrawVert, func()) {
@@ -197,15 +197,15 @@ func (self DrawVert) c() (C.ImDrawVert, func()) {
 }
 
 func newDrawVertFromC(cvalue *C.ImDrawVert) *DrawVert {
-	return &DrawVert{data: cvalue}
+	return &DrawVert{CData: cvalue}
 }
 
 type Font struct {
-	data *C.ImFont
+	CData *C.ImFont
 }
 
 func (self *Font) handle() (result *C.ImFont, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self Font) c() (C.ImFont, func()) {
@@ -214,15 +214,15 @@ func (self Font) c() (C.ImFont, func()) {
 }
 
 func newFontFromC(cvalue *C.ImFont) *Font {
-	return &Font{data: cvalue}
+	return &Font{CData: cvalue}
 }
 
 type FontAtlas struct {
-	data *C.ImFontAtlas
+	CData *C.ImFontAtlas
 }
 
 func (self *FontAtlas) handle() (result *C.ImFontAtlas, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self FontAtlas) c() (C.ImFontAtlas, func()) {
@@ -231,15 +231,15 @@ func (self FontAtlas) c() (C.ImFontAtlas, func()) {
 }
 
 func newFontAtlasFromC(cvalue *C.ImFontAtlas) *FontAtlas {
-	return &FontAtlas{data: cvalue}
+	return &FontAtlas{CData: cvalue}
 }
 
 type FontAtlasCustomRect struct {
-	data *C.ImFontAtlasCustomRect
+	CData *C.ImFontAtlasCustomRect
 }
 
 func (self *FontAtlasCustomRect) handle() (result *C.ImFontAtlasCustomRect, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self FontAtlasCustomRect) c() (C.ImFontAtlasCustomRect, func()) {
@@ -248,15 +248,15 @@ func (self FontAtlasCustomRect) c() (C.ImFontAtlasCustomRect, func()) {
 }
 
 func newFontAtlasCustomRectFromC(cvalue *C.ImFontAtlasCustomRect) *FontAtlasCustomRect {
-	return &FontAtlasCustomRect{data: cvalue}
+	return &FontAtlasCustomRect{CData: cvalue}
 }
 
 type FontBuilderIO struct {
-	data *C.ImFontBuilderIO
+	CData *C.ImFontBuilderIO
 }
 
 func (self *FontBuilderIO) handle() (result *C.ImFontBuilderIO, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self FontBuilderIO) c() (C.ImFontBuilderIO, func()) {
@@ -265,15 +265,15 @@ func (self FontBuilderIO) c() (C.ImFontBuilderIO, func()) {
 }
 
 func newFontBuilderIOFromC(cvalue *C.ImFontBuilderIO) *FontBuilderIO {
-	return &FontBuilderIO{data: cvalue}
+	return &FontBuilderIO{CData: cvalue}
 }
 
 type FontConfig struct {
-	data *C.ImFontConfig
+	CData *C.ImFontConfig
 }
 
 func (self *FontConfig) handle() (result *C.ImFontConfig, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self FontConfig) c() (C.ImFontConfig, func()) {
@@ -282,15 +282,15 @@ func (self FontConfig) c() (C.ImFontConfig, func()) {
 }
 
 func newFontConfigFromC(cvalue *C.ImFontConfig) *FontConfig {
-	return &FontConfig{data: cvalue}
+	return &FontConfig{CData: cvalue}
 }
 
 type FontGlyph struct {
-	data *C.ImFontGlyph
+	CData *C.ImFontGlyph
 }
 
 func (self *FontGlyph) handle() (result *C.ImFontGlyph, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self FontGlyph) c() (C.ImFontGlyph, func()) {
@@ -299,15 +299,15 @@ func (self FontGlyph) c() (C.ImFontGlyph, func()) {
 }
 
 func newFontGlyphFromC(cvalue *C.ImFontGlyph) *FontGlyph {
-	return &FontGlyph{data: cvalue}
+	return &FontGlyph{CData: cvalue}
 }
 
 type FontGlyphRangesBuilder struct {
-	data *C.ImFontGlyphRangesBuilder
+	CData *C.ImFontGlyphRangesBuilder
 }
 
 func (self *FontGlyphRangesBuilder) handle() (result *C.ImFontGlyphRangesBuilder, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self FontGlyphRangesBuilder) c() (C.ImFontGlyphRangesBuilder, func()) {
@@ -316,15 +316,15 @@ func (self FontGlyphRangesBuilder) c() (C.ImFontGlyphRangesBuilder, func()) {
 }
 
 func newFontGlyphRangesBuilderFromC(cvalue *C.ImFontGlyphRangesBuilder) *FontGlyphRangesBuilder {
-	return &FontGlyphRangesBuilder{data: cvalue}
+	return &FontGlyphRangesBuilder{CData: cvalue}
 }
 
 type ColorMod struct {
-	data *C.ImGuiColorMod
+	CData *C.ImGuiColorMod
 }
 
 func (self *ColorMod) handle() (result *C.ImGuiColorMod, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self ColorMod) c() (C.ImGuiColorMod, func()) {
@@ -333,15 +333,15 @@ func (self ColorMod) c() (C.ImGuiColorMod, func()) {
 }
 
 func newColorModFromC(cvalue *C.ImGuiColorMod) *ColorMod {
-	return &ColorMod{data: cvalue}
+	return &ColorMod{CData: cvalue}
 }
 
 type ComboPreviewData struct {
-	data *C.ImGuiComboPreviewData
+	CData *C.ImGuiComboPreviewData
 }
 
 func (self *ComboPreviewData) handle() (result *C.ImGuiComboPreviewData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self ComboPreviewData) c() (C.ImGuiComboPreviewData, func()) {
@@ -350,15 +350,15 @@ func (self ComboPreviewData) c() (C.ImGuiComboPreviewData, func()) {
 }
 
 func newComboPreviewDataFromC(cvalue *C.ImGuiComboPreviewData) *ComboPreviewData {
-	return &ComboPreviewData{data: cvalue}
+	return &ComboPreviewData{CData: cvalue}
 }
 
 type Context struct {
-	data *C.ImGuiContext
+	CData *C.ImGuiContext
 }
 
 func (self *Context) handle() (result *C.ImGuiContext, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self Context) c() (C.ImGuiContext, func()) {
@@ -367,15 +367,15 @@ func (self Context) c() (C.ImGuiContext, func()) {
 }
 
 func newContextFromC(cvalue *C.ImGuiContext) *Context {
-	return &Context{data: cvalue}
+	return &Context{CData: cvalue}
 }
 
 type ContextHook struct {
-	data *C.ImGuiContextHook
+	CData *C.ImGuiContextHook
 }
 
 func (self *ContextHook) handle() (result *C.ImGuiContextHook, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self ContextHook) c() (C.ImGuiContextHook, func()) {
@@ -384,15 +384,15 @@ func (self ContextHook) c() (C.ImGuiContextHook, func()) {
 }
 
 func newContextHookFromC(cvalue *C.ImGuiContextHook) *ContextHook {
-	return &ContextHook{data: cvalue}
+	return &ContextHook{CData: cvalue}
 }
 
 type DataTypeInfo struct {
-	data *C.ImGuiDataTypeInfo
+	CData *C.ImGuiDataTypeInfo
 }
 
 func (self *DataTypeInfo) handle() (result *C.ImGuiDataTypeInfo, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self DataTypeInfo) c() (C.ImGuiDataTypeInfo, func()) {
@@ -401,15 +401,15 @@ func (self DataTypeInfo) c() (C.ImGuiDataTypeInfo, func()) {
 }
 
 func newDataTypeInfoFromC(cvalue *C.ImGuiDataTypeInfo) *DataTypeInfo {
-	return &DataTypeInfo{data: cvalue}
+	return &DataTypeInfo{CData: cvalue}
 }
 
 type DataTypeTempStorage struct {
-	data *C.ImGuiDataTypeTempStorage
+	CData *C.ImGuiDataTypeTempStorage
 }
 
 func (self *DataTypeTempStorage) handle() (result *C.ImGuiDataTypeTempStorage, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self DataTypeTempStorage) c() (C.ImGuiDataTypeTempStorage, func()) {
@@ -418,15 +418,15 @@ func (self DataTypeTempStorage) c() (C.ImGuiDataTypeTempStorage, func()) {
 }
 
 func newDataTypeTempStorageFromC(cvalue *C.ImGuiDataTypeTempStorage) *DataTypeTempStorage {
-	return &DataTypeTempStorage{data: cvalue}
+	return &DataTypeTempStorage{CData: cvalue}
 }
 
 type DataVarInfo struct {
-	data *C.ImGuiDataVarInfo
+	CData *C.ImGuiDataVarInfo
 }
 
 func (self *DataVarInfo) handle() (result *C.ImGuiDataVarInfo, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self DataVarInfo) c() (C.ImGuiDataVarInfo, func()) {
@@ -435,15 +435,15 @@ func (self DataVarInfo) c() (C.ImGuiDataVarInfo, func()) {
 }
 
 func newDataVarInfoFromC(cvalue *C.ImGuiDataVarInfo) *DataVarInfo {
-	return &DataVarInfo{data: cvalue}
+	return &DataVarInfo{CData: cvalue}
 }
 
 type DockContext struct {
-	data *C.ImGuiDockContext
+	CData *C.ImGuiDockContext
 }
 
 func (self *DockContext) handle() (result *C.ImGuiDockContext, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self DockContext) c() (C.ImGuiDockContext, func()) {
@@ -452,15 +452,15 @@ func (self DockContext) c() (C.ImGuiDockContext, func()) {
 }
 
 func newDockContextFromC(cvalue *C.ImGuiDockContext) *DockContext {
-	return &DockContext{data: cvalue}
+	return &DockContext{CData: cvalue}
 }
 
 type DockNode struct {
-	data *C.ImGuiDockNode
+	CData *C.ImGuiDockNode
 }
 
 func (self *DockNode) handle() (result *C.ImGuiDockNode, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self DockNode) c() (C.ImGuiDockNode, func()) {
@@ -469,39 +469,39 @@ func (self DockNode) c() (C.ImGuiDockNode, func()) {
 }
 
 func newDockNodeFromC(cvalue *C.ImGuiDockNode) *DockNode {
-	return &DockNode{data: cvalue}
+	return &DockNode{CData: cvalue}
 }
 
 type DockNodeSettings struct {
-	data *C.ImGuiDockNodeSettings
+	CData *C.ImGuiDockNodeSettings
 }
 
 func (self *DockNodeSettings) handle() (result *C.ImGuiDockNodeSettings, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func newDockNodeSettingsFromC(cvalue *C.ImGuiDockNodeSettings) *DockNodeSettings {
-	return &DockNodeSettings{data: cvalue}
+	return &DockNodeSettings{CData: cvalue}
 }
 
 type DockRequest struct {
-	data *C.ImGuiDockRequest
+	CData *C.ImGuiDockRequest
 }
 
 func (self *DockRequest) handle() (result *C.ImGuiDockRequest, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func newDockRequestFromC(cvalue *C.ImGuiDockRequest) *DockRequest {
-	return &DockRequest{data: cvalue}
+	return &DockRequest{CData: cvalue}
 }
 
 type GroupData struct {
-	data *C.ImGuiGroupData
+	CData *C.ImGuiGroupData
 }
 
 func (self *GroupData) handle() (result *C.ImGuiGroupData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self GroupData) c() (C.ImGuiGroupData, func()) {
@@ -510,7 +510,7 @@ func (self GroupData) c() (C.ImGuiGroupData, func()) {
 }
 
 func newGroupDataFromC(cvalue *C.ImGuiGroupData) *GroupData {
-	return &GroupData{data: cvalue}
+	return &GroupData{CData: cvalue}
 }
 
 type ID uint32
@@ -530,11 +530,11 @@ func newIDFromC(cvalue *C.ImGuiID) *ID {
 }
 
 type IO struct {
-	data *C.ImGuiIO
+	CData *C.ImGuiIO
 }
 
 func (self *IO) handle() (result *C.ImGuiIO, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self IO) c() (C.ImGuiIO, func()) {
@@ -543,15 +543,15 @@ func (self IO) c() (C.ImGuiIO, func()) {
 }
 
 func newIOFromC(cvalue *C.ImGuiIO) *IO {
-	return &IO{data: cvalue}
+	return &IO{CData: cvalue}
 }
 
 type InputEvent struct {
-	data *C.ImGuiInputEvent
+	CData *C.ImGuiInputEvent
 }
 
 func (self *InputEvent) handle() (result *C.ImGuiInputEvent, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self InputEvent) c() (C.ImGuiInputEvent, func()) {
@@ -560,15 +560,15 @@ func (self InputEvent) c() (C.ImGuiInputEvent, func()) {
 }
 
 func newInputEventFromC(cvalue *C.ImGuiInputEvent) *InputEvent {
-	return &InputEvent{data: cvalue}
+	return &InputEvent{CData: cvalue}
 }
 
 type InputEventAppFocused struct {
-	data *C.ImGuiInputEventAppFocused
+	CData *C.ImGuiInputEventAppFocused
 }
 
 func (self *InputEventAppFocused) handle() (result *C.ImGuiInputEventAppFocused, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self InputEventAppFocused) c() (C.ImGuiInputEventAppFocused, func()) {
@@ -577,15 +577,15 @@ func (self InputEventAppFocused) c() (C.ImGuiInputEventAppFocused, func()) {
 }
 
 func newInputEventAppFocusedFromC(cvalue *C.ImGuiInputEventAppFocused) *InputEventAppFocused {
-	return &InputEventAppFocused{data: cvalue}
+	return &InputEventAppFocused{CData: cvalue}
 }
 
 type InputEventKey struct {
-	data *C.ImGuiInputEventKey
+	CData *C.ImGuiInputEventKey
 }
 
 func (self *InputEventKey) handle() (result *C.ImGuiInputEventKey, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self InputEventKey) c() (C.ImGuiInputEventKey, func()) {
@@ -594,15 +594,15 @@ func (self InputEventKey) c() (C.ImGuiInputEventKey, func()) {
 }
 
 func newInputEventKeyFromC(cvalue *C.ImGuiInputEventKey) *InputEventKey {
-	return &InputEventKey{data: cvalue}
+	return &InputEventKey{CData: cvalue}
 }
 
 type InputEventMouseButton struct {
-	data *C.ImGuiInputEventMouseButton
+	CData *C.ImGuiInputEventMouseButton
 }
 
 func (self *InputEventMouseButton) handle() (result *C.ImGuiInputEventMouseButton, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self InputEventMouseButton) c() (C.ImGuiInputEventMouseButton, func()) {
@@ -611,15 +611,15 @@ func (self InputEventMouseButton) c() (C.ImGuiInputEventMouseButton, func()) {
 }
 
 func newInputEventMouseButtonFromC(cvalue *C.ImGuiInputEventMouseButton) *InputEventMouseButton {
-	return &InputEventMouseButton{data: cvalue}
+	return &InputEventMouseButton{CData: cvalue}
 }
 
 type InputEventMousePos struct {
-	data *C.ImGuiInputEventMousePos
+	CData *C.ImGuiInputEventMousePos
 }
 
 func (self *InputEventMousePos) handle() (result *C.ImGuiInputEventMousePos, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self InputEventMousePos) c() (C.ImGuiInputEventMousePos, func()) {
@@ -628,15 +628,15 @@ func (self InputEventMousePos) c() (C.ImGuiInputEventMousePos, func()) {
 }
 
 func newInputEventMousePosFromC(cvalue *C.ImGuiInputEventMousePos) *InputEventMousePos {
-	return &InputEventMousePos{data: cvalue}
+	return &InputEventMousePos{CData: cvalue}
 }
 
 type InputEventMouseViewport struct {
-	data *C.ImGuiInputEventMouseViewport
+	CData *C.ImGuiInputEventMouseViewport
 }
 
 func (self *InputEventMouseViewport) handle() (result *C.ImGuiInputEventMouseViewport, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self InputEventMouseViewport) c() (C.ImGuiInputEventMouseViewport, func()) {
@@ -645,15 +645,15 @@ func (self InputEventMouseViewport) c() (C.ImGuiInputEventMouseViewport, func())
 }
 
 func newInputEventMouseViewportFromC(cvalue *C.ImGuiInputEventMouseViewport) *InputEventMouseViewport {
-	return &InputEventMouseViewport{data: cvalue}
+	return &InputEventMouseViewport{CData: cvalue}
 }
 
 type InputEventMouseWheel struct {
-	data *C.ImGuiInputEventMouseWheel
+	CData *C.ImGuiInputEventMouseWheel
 }
 
 func (self *InputEventMouseWheel) handle() (result *C.ImGuiInputEventMouseWheel, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self InputEventMouseWheel) c() (C.ImGuiInputEventMouseWheel, func()) {
@@ -662,15 +662,15 @@ func (self InputEventMouseWheel) c() (C.ImGuiInputEventMouseWheel, func()) {
 }
 
 func newInputEventMouseWheelFromC(cvalue *C.ImGuiInputEventMouseWheel) *InputEventMouseWheel {
-	return &InputEventMouseWheel{data: cvalue}
+	return &InputEventMouseWheel{CData: cvalue}
 }
 
 type InputEventText struct {
-	data *C.ImGuiInputEventText
+	CData *C.ImGuiInputEventText
 }
 
 func (self *InputEventText) handle() (result *C.ImGuiInputEventText, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self InputEventText) c() (C.ImGuiInputEventText, func()) {
@@ -679,15 +679,15 @@ func (self InputEventText) c() (C.ImGuiInputEventText, func()) {
 }
 
 func newInputEventTextFromC(cvalue *C.ImGuiInputEventText) *InputEventText {
-	return &InputEventText{data: cvalue}
+	return &InputEventText{CData: cvalue}
 }
 
 type InputTextCallbackData struct {
-	data *C.ImGuiInputTextCallbackData
+	CData *C.ImGuiInputTextCallbackData
 }
 
 func (self *InputTextCallbackData) handle() (result *C.ImGuiInputTextCallbackData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self InputTextCallbackData) c() (C.ImGuiInputTextCallbackData, func()) {
@@ -696,27 +696,27 @@ func (self InputTextCallbackData) c() (C.ImGuiInputTextCallbackData, func()) {
 }
 
 func newInputTextCallbackDataFromC(cvalue *C.ImGuiInputTextCallbackData) *InputTextCallbackData {
-	return &InputTextCallbackData{data: cvalue}
+	return &InputTextCallbackData{CData: cvalue}
 }
 
 type InputTextDeactivateData struct {
-	data *C.ImGuiInputTextDeactivateData
+	CData *C.ImGuiInputTextDeactivateData
 }
 
 func (self *InputTextDeactivateData) handle() (result *C.ImGuiInputTextDeactivateData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func newInputTextDeactivateDataFromC(cvalue *C.ImGuiInputTextDeactivateData) *InputTextDeactivateData {
-	return &InputTextDeactivateData{data: cvalue}
+	return &InputTextDeactivateData{CData: cvalue}
 }
 
 type InputTextDeactivatedState struct {
-	data *C.ImGuiInputTextDeactivatedState
+	CData *C.ImGuiInputTextDeactivatedState
 }
 
 func (self *InputTextDeactivatedState) handle() (result *C.ImGuiInputTextDeactivatedState, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self InputTextDeactivatedState) c() (C.ImGuiInputTextDeactivatedState, func()) {
@@ -725,15 +725,15 @@ func (self InputTextDeactivatedState) c() (C.ImGuiInputTextDeactivatedState, fun
 }
 
 func newInputTextDeactivatedStateFromC(cvalue *C.ImGuiInputTextDeactivatedState) *InputTextDeactivatedState {
-	return &InputTextDeactivatedState{data: cvalue}
+	return &InputTextDeactivatedState{CData: cvalue}
 }
 
 type InputTextState struct {
-	data *C.ImGuiInputTextState
+	CData *C.ImGuiInputTextState
 }
 
 func (self *InputTextState) handle() (result *C.ImGuiInputTextState, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self InputTextState) c() (C.ImGuiInputTextState, func()) {
@@ -742,7 +742,7 @@ func (self InputTextState) c() (C.ImGuiInputTextState, func()) {
 }
 
 func newInputTextStateFromC(cvalue *C.ImGuiInputTextState) *InputTextState {
-	return &InputTextState{data: cvalue}
+	return &InputTextState{CData: cvalue}
 }
 
 type KeyChord int32
@@ -762,11 +762,11 @@ func newKeyChordFromC(cvalue *C.ImGuiKeyChord) *KeyChord {
 }
 
 type KeyData struct {
-	data *C.ImGuiKeyData
+	CData *C.ImGuiKeyData
 }
 
 func (self *KeyData) handle() (result *C.ImGuiKeyData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self KeyData) c() (C.ImGuiKeyData, func()) {
@@ -775,15 +775,15 @@ func (self KeyData) c() (C.ImGuiKeyData, func()) {
 }
 
 func newKeyDataFromC(cvalue *C.ImGuiKeyData) *KeyData {
-	return &KeyData{data: cvalue}
+	return &KeyData{CData: cvalue}
 }
 
 type KeyOwnerData struct {
-	data *C.ImGuiKeyOwnerData
+	CData *C.ImGuiKeyOwnerData
 }
 
 func (self *KeyOwnerData) handle() (result *C.ImGuiKeyOwnerData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self KeyOwnerData) c() (C.ImGuiKeyOwnerData, func()) {
@@ -792,15 +792,15 @@ func (self KeyOwnerData) c() (C.ImGuiKeyOwnerData, func()) {
 }
 
 func newKeyOwnerDataFromC(cvalue *C.ImGuiKeyOwnerData) *KeyOwnerData {
-	return &KeyOwnerData{data: cvalue}
+	return &KeyOwnerData{CData: cvalue}
 }
 
 type KeyRoutingData struct {
-	data *C.ImGuiKeyRoutingData
+	CData *C.ImGuiKeyRoutingData
 }
 
 func (self *KeyRoutingData) handle() (result *C.ImGuiKeyRoutingData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self KeyRoutingData) c() (C.ImGuiKeyRoutingData, func()) {
@@ -809,15 +809,15 @@ func (self KeyRoutingData) c() (C.ImGuiKeyRoutingData, func()) {
 }
 
 func newKeyRoutingDataFromC(cvalue *C.ImGuiKeyRoutingData) *KeyRoutingData {
-	return &KeyRoutingData{data: cvalue}
+	return &KeyRoutingData{CData: cvalue}
 }
 
 type KeyRoutingTable struct {
-	data *C.ImGuiKeyRoutingTable
+	CData *C.ImGuiKeyRoutingTable
 }
 
 func (self *KeyRoutingTable) handle() (result *C.ImGuiKeyRoutingTable, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self KeyRoutingTable) c() (C.ImGuiKeyRoutingTable, func()) {
@@ -826,15 +826,15 @@ func (self KeyRoutingTable) c() (C.ImGuiKeyRoutingTable, func()) {
 }
 
 func newKeyRoutingTableFromC(cvalue *C.ImGuiKeyRoutingTable) *KeyRoutingTable {
-	return &KeyRoutingTable{data: cvalue}
+	return &KeyRoutingTable{CData: cvalue}
 }
 
 type LastItemData struct {
-	data *C.ImGuiLastItemData
+	CData *C.ImGuiLastItemData
 }
 
 func (self *LastItemData) handle() (result *C.ImGuiLastItemData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self LastItemData) c() (C.ImGuiLastItemData, func()) {
@@ -843,15 +843,15 @@ func (self LastItemData) c() (C.ImGuiLastItemData, func()) {
 }
 
 func newLastItemDataFromC(cvalue *C.ImGuiLastItemData) *LastItemData {
-	return &LastItemData{data: cvalue}
+	return &LastItemData{CData: cvalue}
 }
 
 type ListClipper struct {
-	data *C.ImGuiListClipper
+	CData *C.ImGuiListClipper
 }
 
 func (self *ListClipper) handle() (result *C.ImGuiListClipper, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self ListClipper) c() (C.ImGuiListClipper, func()) {
@@ -860,15 +860,15 @@ func (self ListClipper) c() (C.ImGuiListClipper, func()) {
 }
 
 func newListClipperFromC(cvalue *C.ImGuiListClipper) *ListClipper {
-	return &ListClipper{data: cvalue}
+	return &ListClipper{CData: cvalue}
 }
 
 type ListClipperData struct {
-	data *C.ImGuiListClipperData
+	CData *C.ImGuiListClipperData
 }
 
 func (self *ListClipperData) handle() (result *C.ImGuiListClipperData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self ListClipperData) c() (C.ImGuiListClipperData, func()) {
@@ -877,15 +877,15 @@ func (self ListClipperData) c() (C.ImGuiListClipperData, func()) {
 }
 
 func newListClipperDataFromC(cvalue *C.ImGuiListClipperData) *ListClipperData {
-	return &ListClipperData{data: cvalue}
+	return &ListClipperData{CData: cvalue}
 }
 
 type ListClipperRange struct {
-	data *C.ImGuiListClipperRange
+	CData *C.ImGuiListClipperRange
 }
 
 func (self *ListClipperRange) handle() (result *C.ImGuiListClipperRange, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self ListClipperRange) c() (C.ImGuiListClipperRange, func()) {
@@ -894,15 +894,15 @@ func (self ListClipperRange) c() (C.ImGuiListClipperRange, func()) {
 }
 
 func newListClipperRangeFromC(cvalue *C.ImGuiListClipperRange) *ListClipperRange {
-	return &ListClipperRange{data: cvalue}
+	return &ListClipperRange{CData: cvalue}
 }
 
 type LocEntry struct {
-	data *C.ImGuiLocEntry
+	CData *C.ImGuiLocEntry
 }
 
 func (self *LocEntry) handle() (result *C.ImGuiLocEntry, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self LocEntry) c() (C.ImGuiLocEntry, func()) {
@@ -911,15 +911,15 @@ func (self LocEntry) c() (C.ImGuiLocEntry, func()) {
 }
 
 func newLocEntryFromC(cvalue *C.ImGuiLocEntry) *LocEntry {
-	return &LocEntry{data: cvalue}
+	return &LocEntry{CData: cvalue}
 }
 
 type MenuColumns struct {
-	data *C.ImGuiMenuColumns
+	CData *C.ImGuiMenuColumns
 }
 
 func (self *MenuColumns) handle() (result *C.ImGuiMenuColumns, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self MenuColumns) c() (C.ImGuiMenuColumns, func()) {
@@ -928,15 +928,15 @@ func (self MenuColumns) c() (C.ImGuiMenuColumns, func()) {
 }
 
 func newMenuColumnsFromC(cvalue *C.ImGuiMenuColumns) *MenuColumns {
-	return &MenuColumns{data: cvalue}
+	return &MenuColumns{CData: cvalue}
 }
 
 type MetricsConfig struct {
-	data *C.ImGuiMetricsConfig
+	CData *C.ImGuiMetricsConfig
 }
 
 func (self *MetricsConfig) handle() (result *C.ImGuiMetricsConfig, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self MetricsConfig) c() (C.ImGuiMetricsConfig, func()) {
@@ -945,15 +945,15 @@ func (self MetricsConfig) c() (C.ImGuiMetricsConfig, func()) {
 }
 
 func newMetricsConfigFromC(cvalue *C.ImGuiMetricsConfig) *MetricsConfig {
-	return &MetricsConfig{data: cvalue}
+	return &MetricsConfig{CData: cvalue}
 }
 
 type NavItemData struct {
-	data *C.ImGuiNavItemData
+	CData *C.ImGuiNavItemData
 }
 
 func (self *NavItemData) handle() (result *C.ImGuiNavItemData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self NavItemData) c() (C.ImGuiNavItemData, func()) {
@@ -962,15 +962,15 @@ func (self NavItemData) c() (C.ImGuiNavItemData, func()) {
 }
 
 func newNavItemDataFromC(cvalue *C.ImGuiNavItemData) *NavItemData {
-	return &NavItemData{data: cvalue}
+	return &NavItemData{CData: cvalue}
 }
 
 type NavTreeNodeData struct {
-	data *C.ImGuiNavTreeNodeData
+	CData *C.ImGuiNavTreeNodeData
 }
 
 func (self *NavTreeNodeData) handle() (result *C.ImGuiNavTreeNodeData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self NavTreeNodeData) c() (C.ImGuiNavTreeNodeData, func()) {
@@ -979,15 +979,15 @@ func (self NavTreeNodeData) c() (C.ImGuiNavTreeNodeData, func()) {
 }
 
 func newNavTreeNodeDataFromC(cvalue *C.ImGuiNavTreeNodeData) *NavTreeNodeData {
-	return &NavTreeNodeData{data: cvalue}
+	return &NavTreeNodeData{CData: cvalue}
 }
 
 type NextItemData struct {
-	data *C.ImGuiNextItemData
+	CData *C.ImGuiNextItemData
 }
 
 func (self *NextItemData) handle() (result *C.ImGuiNextItemData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self NextItemData) c() (C.ImGuiNextItemData, func()) {
@@ -996,15 +996,15 @@ func (self NextItemData) c() (C.ImGuiNextItemData, func()) {
 }
 
 func newNextItemDataFromC(cvalue *C.ImGuiNextItemData) *NextItemData {
-	return &NextItemData{data: cvalue}
+	return &NextItemData{CData: cvalue}
 }
 
 type NextWindowData struct {
-	data *C.ImGuiNextWindowData
+	CData *C.ImGuiNextWindowData
 }
 
 func (self *NextWindowData) handle() (result *C.ImGuiNextWindowData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self NextWindowData) c() (C.ImGuiNextWindowData, func()) {
@@ -1013,15 +1013,15 @@ func (self NextWindowData) c() (C.ImGuiNextWindowData, func()) {
 }
 
 func newNextWindowDataFromC(cvalue *C.ImGuiNextWindowData) *NextWindowData {
-	return &NextWindowData{data: cvalue}
+	return &NextWindowData{CData: cvalue}
 }
 
 type OldColumnData struct {
-	data *C.ImGuiOldColumnData
+	CData *C.ImGuiOldColumnData
 }
 
 func (self *OldColumnData) handle() (result *C.ImGuiOldColumnData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self OldColumnData) c() (C.ImGuiOldColumnData, func()) {
@@ -1030,15 +1030,15 @@ func (self OldColumnData) c() (C.ImGuiOldColumnData, func()) {
 }
 
 func newOldColumnDataFromC(cvalue *C.ImGuiOldColumnData) *OldColumnData {
-	return &OldColumnData{data: cvalue}
+	return &OldColumnData{CData: cvalue}
 }
 
 type OldColumns struct {
-	data *C.ImGuiOldColumns
+	CData *C.ImGuiOldColumns
 }
 
 func (self *OldColumns) handle() (result *C.ImGuiOldColumns, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self OldColumns) c() (C.ImGuiOldColumns, func()) {
@@ -1047,15 +1047,15 @@ func (self OldColumns) c() (C.ImGuiOldColumns, func()) {
 }
 
 func newOldColumnsFromC(cvalue *C.ImGuiOldColumns) *OldColumns {
-	return &OldColumns{data: cvalue}
+	return &OldColumns{CData: cvalue}
 }
 
 type OnceUponAFrame struct {
-	data *C.ImGuiOnceUponAFrame
+	CData *C.ImGuiOnceUponAFrame
 }
 
 func (self *OnceUponAFrame) handle() (result *C.ImGuiOnceUponAFrame, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self OnceUponAFrame) c() (C.ImGuiOnceUponAFrame, func()) {
@@ -1064,15 +1064,15 @@ func (self OnceUponAFrame) c() (C.ImGuiOnceUponAFrame, func()) {
 }
 
 func newOnceUponAFrameFromC(cvalue *C.ImGuiOnceUponAFrame) *OnceUponAFrame {
-	return &OnceUponAFrame{data: cvalue}
+	return &OnceUponAFrame{CData: cvalue}
 }
 
 type Payload struct {
-	data *C.ImGuiPayload
+	CData *C.ImGuiPayload
 }
 
 func (self *Payload) handle() (result *C.ImGuiPayload, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self Payload) c() (C.ImGuiPayload, func()) {
@@ -1081,15 +1081,15 @@ func (self Payload) c() (C.ImGuiPayload, func()) {
 }
 
 func newPayloadFromC(cvalue *C.ImGuiPayload) *Payload {
-	return &Payload{data: cvalue}
+	return &Payload{CData: cvalue}
 }
 
 type PlatformIO struct {
-	data *C.ImGuiPlatformIO
+	CData *C.ImGuiPlatformIO
 }
 
 func (self *PlatformIO) handle() (result *C.ImGuiPlatformIO, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self PlatformIO) c() (C.ImGuiPlatformIO, func()) {
@@ -1098,15 +1098,15 @@ func (self PlatformIO) c() (C.ImGuiPlatformIO, func()) {
 }
 
 func newPlatformIOFromC(cvalue *C.ImGuiPlatformIO) *PlatformIO {
-	return &PlatformIO{data: cvalue}
+	return &PlatformIO{CData: cvalue}
 }
 
 type PlatformImeData struct {
-	data *C.ImGuiPlatformImeData
+	CData *C.ImGuiPlatformImeData
 }
 
 func (self *PlatformImeData) handle() (result *C.ImGuiPlatformImeData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self PlatformImeData) c() (C.ImGuiPlatformImeData, func()) {
@@ -1115,15 +1115,15 @@ func (self PlatformImeData) c() (C.ImGuiPlatformImeData, func()) {
 }
 
 func newPlatformImeDataFromC(cvalue *C.ImGuiPlatformImeData) *PlatformImeData {
-	return &PlatformImeData{data: cvalue}
+	return &PlatformImeData{CData: cvalue}
 }
 
 type PlatformMonitor struct {
-	data *C.ImGuiPlatformMonitor
+	CData *C.ImGuiPlatformMonitor
 }
 
 func (self *PlatformMonitor) handle() (result *C.ImGuiPlatformMonitor, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self PlatformMonitor) c() (C.ImGuiPlatformMonitor, func()) {
@@ -1132,15 +1132,15 @@ func (self PlatformMonitor) c() (C.ImGuiPlatformMonitor, func()) {
 }
 
 func newPlatformMonitorFromC(cvalue *C.ImGuiPlatformMonitor) *PlatformMonitor {
-	return &PlatformMonitor{data: cvalue}
+	return &PlatformMonitor{CData: cvalue}
 }
 
 type PopupData struct {
-	data *C.ImGuiPopupData
+	CData *C.ImGuiPopupData
 }
 
 func (self *PopupData) handle() (result *C.ImGuiPopupData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self PopupData) c() (C.ImGuiPopupData, func()) {
@@ -1149,15 +1149,15 @@ func (self PopupData) c() (C.ImGuiPopupData, func()) {
 }
 
 func newPopupDataFromC(cvalue *C.ImGuiPopupData) *PopupData {
-	return &PopupData{data: cvalue}
+	return &PopupData{CData: cvalue}
 }
 
 type PtrOrIndex struct {
-	data *C.ImGuiPtrOrIndex
+	CData *C.ImGuiPtrOrIndex
 }
 
 func (self *PtrOrIndex) handle() (result *C.ImGuiPtrOrIndex, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self PtrOrIndex) c() (C.ImGuiPtrOrIndex, func()) {
@@ -1166,15 +1166,15 @@ func (self PtrOrIndex) c() (C.ImGuiPtrOrIndex, func()) {
 }
 
 func newPtrOrIndexFromC(cvalue *C.ImGuiPtrOrIndex) *PtrOrIndex {
-	return &PtrOrIndex{data: cvalue}
+	return &PtrOrIndex{CData: cvalue}
 }
 
 type SettingsHandler struct {
-	data *C.ImGuiSettingsHandler
+	CData *C.ImGuiSettingsHandler
 }
 
 func (self *SettingsHandler) handle() (result *C.ImGuiSettingsHandler, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self SettingsHandler) c() (C.ImGuiSettingsHandler, func()) {
@@ -1183,15 +1183,15 @@ func (self SettingsHandler) c() (C.ImGuiSettingsHandler, func()) {
 }
 
 func newSettingsHandlerFromC(cvalue *C.ImGuiSettingsHandler) *SettingsHandler {
-	return &SettingsHandler{data: cvalue}
+	return &SettingsHandler{CData: cvalue}
 }
 
 type ShrinkWidthItem struct {
-	data *C.ImGuiShrinkWidthItem
+	CData *C.ImGuiShrinkWidthItem
 }
 
 func (self *ShrinkWidthItem) handle() (result *C.ImGuiShrinkWidthItem, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self ShrinkWidthItem) c() (C.ImGuiShrinkWidthItem, func()) {
@@ -1200,15 +1200,15 @@ func (self ShrinkWidthItem) c() (C.ImGuiShrinkWidthItem, func()) {
 }
 
 func newShrinkWidthItemFromC(cvalue *C.ImGuiShrinkWidthItem) *ShrinkWidthItem {
-	return &ShrinkWidthItem{data: cvalue}
+	return &ShrinkWidthItem{CData: cvalue}
 }
 
 type SizeCallbackData struct {
-	data *C.ImGuiSizeCallbackData
+	CData *C.ImGuiSizeCallbackData
 }
 
 func (self *SizeCallbackData) handle() (result *C.ImGuiSizeCallbackData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self SizeCallbackData) c() (C.ImGuiSizeCallbackData, func()) {
@@ -1217,15 +1217,15 @@ func (self SizeCallbackData) c() (C.ImGuiSizeCallbackData, func()) {
 }
 
 func newSizeCallbackDataFromC(cvalue *C.ImGuiSizeCallbackData) *SizeCallbackData {
-	return &SizeCallbackData{data: cvalue}
+	return &SizeCallbackData{CData: cvalue}
 }
 
 type StackLevelInfo struct {
-	data *C.ImGuiStackLevelInfo
+	CData *C.ImGuiStackLevelInfo
 }
 
 func (self *StackLevelInfo) handle() (result *C.ImGuiStackLevelInfo, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self StackLevelInfo) c() (C.ImGuiStackLevelInfo, func()) {
@@ -1234,15 +1234,15 @@ func (self StackLevelInfo) c() (C.ImGuiStackLevelInfo, func()) {
 }
 
 func newStackLevelInfoFromC(cvalue *C.ImGuiStackLevelInfo) *StackLevelInfo {
-	return &StackLevelInfo{data: cvalue}
+	return &StackLevelInfo{CData: cvalue}
 }
 
 type StackSizes struct {
-	data *C.ImGuiStackSizes
+	CData *C.ImGuiStackSizes
 }
 
 func (self *StackSizes) handle() (result *C.ImGuiStackSizes, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self StackSizes) c() (C.ImGuiStackSizes, func()) {
@@ -1251,15 +1251,15 @@ func (self StackSizes) c() (C.ImGuiStackSizes, func()) {
 }
 
 func newStackSizesFromC(cvalue *C.ImGuiStackSizes) *StackSizes {
-	return &StackSizes{data: cvalue}
+	return &StackSizes{CData: cvalue}
 }
 
 type StackTool struct {
-	data *C.ImGuiStackTool
+	CData *C.ImGuiStackTool
 }
 
 func (self *StackTool) handle() (result *C.ImGuiStackTool, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self StackTool) c() (C.ImGuiStackTool, func()) {
@@ -1268,15 +1268,15 @@ func (self StackTool) c() (C.ImGuiStackTool, func()) {
 }
 
 func newStackToolFromC(cvalue *C.ImGuiStackTool) *StackTool {
-	return &StackTool{data: cvalue}
+	return &StackTool{CData: cvalue}
 }
 
 type Storage struct {
-	data *C.ImGuiStorage
+	CData *C.ImGuiStorage
 }
 
 func (self *Storage) handle() (result *C.ImGuiStorage, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self Storage) c() (C.ImGuiStorage, func()) {
@@ -1285,15 +1285,15 @@ func (self Storage) c() (C.ImGuiStorage, func()) {
 }
 
 func newStorageFromC(cvalue *C.ImGuiStorage) *Storage {
-	return &Storage{data: cvalue}
+	return &Storage{CData: cvalue}
 }
 
 type StoragePair struct {
-	data *C.ImGuiStoragePair
+	CData *C.ImGuiStoragePair
 }
 
 func (self *StoragePair) handle() (result *C.ImGuiStoragePair, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self StoragePair) c() (C.ImGuiStoragePair, func()) {
@@ -1302,15 +1302,15 @@ func (self StoragePair) c() (C.ImGuiStoragePair, func()) {
 }
 
 func newStoragePairFromC(cvalue *C.ImGuiStoragePair) *StoragePair {
-	return &StoragePair{data: cvalue}
+	return &StoragePair{CData: cvalue}
 }
 
 type Style struct {
-	data *C.ImGuiStyle
+	CData *C.ImGuiStyle
 }
 
 func (self *Style) handle() (result *C.ImGuiStyle, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self Style) c() (C.ImGuiStyle, func()) {
@@ -1319,15 +1319,15 @@ func (self Style) c() (C.ImGuiStyle, func()) {
 }
 
 func newStyleFromC(cvalue *C.ImGuiStyle) *Style {
-	return &Style{data: cvalue}
+	return &Style{CData: cvalue}
 }
 
 type StyleMod struct {
-	data *C.ImGuiStyleMod
+	CData *C.ImGuiStyleMod
 }
 
 func (self *StyleMod) handle() (result *C.ImGuiStyleMod, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self StyleMod) c() (C.ImGuiStyleMod, func()) {
@@ -1336,15 +1336,15 @@ func (self StyleMod) c() (C.ImGuiStyleMod, func()) {
 }
 
 func newStyleModFromC(cvalue *C.ImGuiStyleMod) *StyleMod {
-	return &StyleMod{data: cvalue}
+	return &StyleMod{CData: cvalue}
 }
 
 type TabBar struct {
-	data *C.ImGuiTabBar
+	CData *C.ImGuiTabBar
 }
 
 func (self *TabBar) handle() (result *C.ImGuiTabBar, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TabBar) c() (C.ImGuiTabBar, func()) {
@@ -1353,15 +1353,15 @@ func (self TabBar) c() (C.ImGuiTabBar, func()) {
 }
 
 func newTabBarFromC(cvalue *C.ImGuiTabBar) *TabBar {
-	return &TabBar{data: cvalue}
+	return &TabBar{CData: cvalue}
 }
 
 type TabItem struct {
-	data *C.ImGuiTabItem
+	CData *C.ImGuiTabItem
 }
 
 func (self *TabItem) handle() (result *C.ImGuiTabItem, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TabItem) c() (C.ImGuiTabItem, func()) {
@@ -1370,15 +1370,15 @@ func (self TabItem) c() (C.ImGuiTabItem, func()) {
 }
 
 func newTabItemFromC(cvalue *C.ImGuiTabItem) *TabItem {
-	return &TabItem{data: cvalue}
+	return &TabItem{CData: cvalue}
 }
 
 type Table struct {
-	data *C.ImGuiTable
+	CData *C.ImGuiTable
 }
 
 func (self *Table) handle() (result *C.ImGuiTable, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self Table) c() (C.ImGuiTable, func()) {
@@ -1387,15 +1387,15 @@ func (self Table) c() (C.ImGuiTable, func()) {
 }
 
 func newTableFromC(cvalue *C.ImGuiTable) *Table {
-	return &Table{data: cvalue}
+	return &Table{CData: cvalue}
 }
 
 type TableCellData struct {
-	data *C.ImGuiTableCellData
+	CData *C.ImGuiTableCellData
 }
 
 func (self *TableCellData) handle() (result *C.ImGuiTableCellData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TableCellData) c() (C.ImGuiTableCellData, func()) {
@@ -1404,15 +1404,15 @@ func (self TableCellData) c() (C.ImGuiTableCellData, func()) {
 }
 
 func newTableCellDataFromC(cvalue *C.ImGuiTableCellData) *TableCellData {
-	return &TableCellData{data: cvalue}
+	return &TableCellData{CData: cvalue}
 }
 
 type TableColumn struct {
-	data *C.ImGuiTableColumn
+	CData *C.ImGuiTableColumn
 }
 
 func (self *TableColumn) handle() (result *C.ImGuiTableColumn, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TableColumn) c() (C.ImGuiTableColumn, func()) {
@@ -1421,15 +1421,15 @@ func (self TableColumn) c() (C.ImGuiTableColumn, func()) {
 }
 
 func newTableColumnFromC(cvalue *C.ImGuiTableColumn) *TableColumn {
-	return &TableColumn{data: cvalue}
+	return &TableColumn{CData: cvalue}
 }
 
 type TableColumnSettings struct {
-	data *C.ImGuiTableColumnSettings
+	CData *C.ImGuiTableColumnSettings
 }
 
 func (self *TableColumnSettings) handle() (result *C.ImGuiTableColumnSettings, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TableColumnSettings) c() (C.ImGuiTableColumnSettings, func()) {
@@ -1438,15 +1438,15 @@ func (self TableColumnSettings) c() (C.ImGuiTableColumnSettings, func()) {
 }
 
 func newTableColumnSettingsFromC(cvalue *C.ImGuiTableColumnSettings) *TableColumnSettings {
-	return &TableColumnSettings{data: cvalue}
+	return &TableColumnSettings{CData: cvalue}
 }
 
 type TableColumnSortSpecs struct {
-	data *C.ImGuiTableColumnSortSpecs
+	CData *C.ImGuiTableColumnSortSpecs
 }
 
 func (self *TableColumnSortSpecs) handle() (result *C.ImGuiTableColumnSortSpecs, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TableColumnSortSpecs) c() (C.ImGuiTableColumnSortSpecs, func()) {
@@ -1455,19 +1455,19 @@ func (self TableColumnSortSpecs) c() (C.ImGuiTableColumnSortSpecs, func()) {
 }
 
 func newTableColumnSortSpecsFromC(cvalue *C.ImGuiTableColumnSortSpecs) *TableColumnSortSpecs {
-	return &TableColumnSortSpecs{data: cvalue}
+	return &TableColumnSortSpecs{CData: cvalue}
 }
 
 type TableColumnsSettings struct {
-	data *C.ImGuiTableColumnsSettings
+	CData *C.ImGuiTableColumnsSettings
 }
 
 func (self *TableColumnsSettings) handle() (result *C.ImGuiTableColumnsSettings, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func newTableColumnsSettingsFromC(cvalue *C.ImGuiTableColumnsSettings) *TableColumnsSettings {
-	return &TableColumnsSettings{data: cvalue}
+	return &TableColumnsSettings{CData: cvalue}
 }
 
 type TableDrawChannelIdx uint16
@@ -1487,11 +1487,11 @@ func newTableDrawChannelIdxFromC(cvalue *C.ImGuiTableDrawChannelIdx) *TableDrawC
 }
 
 type TableInstanceData struct {
-	data *C.ImGuiTableInstanceData
+	CData *C.ImGuiTableInstanceData
 }
 
 func (self *TableInstanceData) handle() (result *C.ImGuiTableInstanceData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TableInstanceData) c() (C.ImGuiTableInstanceData, func()) {
@@ -1500,15 +1500,15 @@ func (self TableInstanceData) c() (C.ImGuiTableInstanceData, func()) {
 }
 
 func newTableInstanceDataFromC(cvalue *C.ImGuiTableInstanceData) *TableInstanceData {
-	return &TableInstanceData{data: cvalue}
+	return &TableInstanceData{CData: cvalue}
 }
 
 type TableSettings struct {
-	data *C.ImGuiTableSettings
+	CData *C.ImGuiTableSettings
 }
 
 func (self *TableSettings) handle() (result *C.ImGuiTableSettings, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TableSettings) c() (C.ImGuiTableSettings, func()) {
@@ -1517,15 +1517,15 @@ func (self TableSettings) c() (C.ImGuiTableSettings, func()) {
 }
 
 func newTableSettingsFromC(cvalue *C.ImGuiTableSettings) *TableSettings {
-	return &TableSettings{data: cvalue}
+	return &TableSettings{CData: cvalue}
 }
 
 type TableSortSpecs struct {
-	data *C.ImGuiTableSortSpecs
+	CData *C.ImGuiTableSortSpecs
 }
 
 func (self *TableSortSpecs) handle() (result *C.ImGuiTableSortSpecs, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TableSortSpecs) c() (C.ImGuiTableSortSpecs, func()) {
@@ -1534,15 +1534,15 @@ func (self TableSortSpecs) c() (C.ImGuiTableSortSpecs, func()) {
 }
 
 func newTableSortSpecsFromC(cvalue *C.ImGuiTableSortSpecs) *TableSortSpecs {
-	return &TableSortSpecs{data: cvalue}
+	return &TableSortSpecs{CData: cvalue}
 }
 
 type TableTempData struct {
-	data *C.ImGuiTableTempData
+	CData *C.ImGuiTableTempData
 }
 
 func (self *TableTempData) handle() (result *C.ImGuiTableTempData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TableTempData) c() (C.ImGuiTableTempData, func()) {
@@ -1551,15 +1551,15 @@ func (self TableTempData) c() (C.ImGuiTableTempData, func()) {
 }
 
 func newTableTempDataFromC(cvalue *C.ImGuiTableTempData) *TableTempData {
-	return &TableTempData{data: cvalue}
+	return &TableTempData{CData: cvalue}
 }
 
 type TextBuffer struct {
-	data *C.ImGuiTextBuffer
+	CData *C.ImGuiTextBuffer
 }
 
 func (self *TextBuffer) handle() (result *C.ImGuiTextBuffer, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TextBuffer) c() (C.ImGuiTextBuffer, func()) {
@@ -1568,15 +1568,15 @@ func (self TextBuffer) c() (C.ImGuiTextBuffer, func()) {
 }
 
 func newTextBufferFromC(cvalue *C.ImGuiTextBuffer) *TextBuffer {
-	return &TextBuffer{data: cvalue}
+	return &TextBuffer{CData: cvalue}
 }
 
 type TextFilter struct {
-	data *C.ImGuiTextFilter
+	CData *C.ImGuiTextFilter
 }
 
 func (self *TextFilter) handle() (result *C.ImGuiTextFilter, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TextFilter) c() (C.ImGuiTextFilter, func()) {
@@ -1585,15 +1585,15 @@ func (self TextFilter) c() (C.ImGuiTextFilter, func()) {
 }
 
 func newTextFilterFromC(cvalue *C.ImGuiTextFilter) *TextFilter {
-	return &TextFilter{data: cvalue}
+	return &TextFilter{CData: cvalue}
 }
 
 type TextIndex struct {
-	data *C.ImGuiTextIndex
+	CData *C.ImGuiTextIndex
 }
 
 func (self *TextIndex) handle() (result *C.ImGuiTextIndex, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TextIndex) c() (C.ImGuiTextIndex, func()) {
@@ -1602,15 +1602,15 @@ func (self TextIndex) c() (C.ImGuiTextIndex, func()) {
 }
 
 func newTextIndexFromC(cvalue *C.ImGuiTextIndex) *TextIndex {
-	return &TextIndex{data: cvalue}
+	return &TextIndex{CData: cvalue}
 }
 
 type TextRange struct {
-	data *C.ImGuiTextRange
+	CData *C.ImGuiTextRange
 }
 
 func (self *TextRange) handle() (result *C.ImGuiTextRange, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TextRange) c() (C.ImGuiTextRange, func()) {
@@ -1619,15 +1619,15 @@ func (self TextRange) c() (C.ImGuiTextRange, func()) {
 }
 
 func newTextRangeFromC(cvalue *C.ImGuiTextRange) *TextRange {
-	return &TextRange{data: cvalue}
+	return &TextRange{CData: cvalue}
 }
 
 type TypingSelectRequest struct {
-	data *C.ImGuiTypingSelectRequest
+	CData *C.ImGuiTypingSelectRequest
 }
 
 func (self *TypingSelectRequest) handle() (result *C.ImGuiTypingSelectRequest, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TypingSelectRequest) c() (C.ImGuiTypingSelectRequest, func()) {
@@ -1636,15 +1636,15 @@ func (self TypingSelectRequest) c() (C.ImGuiTypingSelectRequest, func()) {
 }
 
 func newTypingSelectRequestFromC(cvalue *C.ImGuiTypingSelectRequest) *TypingSelectRequest {
-	return &TypingSelectRequest{data: cvalue}
+	return &TypingSelectRequest{CData: cvalue}
 }
 
 type TypingSelectState struct {
-	data *C.ImGuiTypingSelectState
+	CData *C.ImGuiTypingSelectState
 }
 
 func (self *TypingSelectState) handle() (result *C.ImGuiTypingSelectState, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self TypingSelectState) c() (C.ImGuiTypingSelectState, func()) {
@@ -1653,15 +1653,15 @@ func (self TypingSelectState) c() (C.ImGuiTypingSelectState, func()) {
 }
 
 func newTypingSelectStateFromC(cvalue *C.ImGuiTypingSelectState) *TypingSelectState {
-	return &TypingSelectState{data: cvalue}
+	return &TypingSelectState{CData: cvalue}
 }
 
 type Viewport struct {
-	data *C.ImGuiViewport
+	CData *C.ImGuiViewport
 }
 
 func (self *Viewport) handle() (result *C.ImGuiViewport, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self Viewport) c() (C.ImGuiViewport, func()) {
@@ -1670,15 +1670,15 @@ func (self Viewport) c() (C.ImGuiViewport, func()) {
 }
 
 func newViewportFromC(cvalue *C.ImGuiViewport) *Viewport {
-	return &Viewport{data: cvalue}
+	return &Viewport{CData: cvalue}
 }
 
 type ViewportP struct {
-	data *C.ImGuiViewportP
+	CData *C.ImGuiViewportP
 }
 
 func (self *ViewportP) handle() (result *C.ImGuiViewportP, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self ViewportP) c() (C.ImGuiViewportP, func()) {
@@ -1687,15 +1687,15 @@ func (self ViewportP) c() (C.ImGuiViewportP, func()) {
 }
 
 func newViewportPFromC(cvalue *C.ImGuiViewportP) *ViewportP {
-	return &ViewportP{data: cvalue}
+	return &ViewportP{CData: cvalue}
 }
 
 type Window struct {
-	data *C.ImGuiWindow
+	CData *C.ImGuiWindow
 }
 
 func (self *Window) handle() (result *C.ImGuiWindow, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self Window) c() (C.ImGuiWindow, func()) {
@@ -1704,15 +1704,15 @@ func (self Window) c() (C.ImGuiWindow, func()) {
 }
 
 func newWindowFromC(cvalue *C.ImGuiWindow) *Window {
-	return &Window{data: cvalue}
+	return &Window{CData: cvalue}
 }
 
 type WindowClass struct {
-	data *C.ImGuiWindowClass
+	CData *C.ImGuiWindowClass
 }
 
 func (self *WindowClass) handle() (result *C.ImGuiWindowClass, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self WindowClass) c() (C.ImGuiWindowClass, func()) {
@@ -1721,15 +1721,15 @@ func (self WindowClass) c() (C.ImGuiWindowClass, func()) {
 }
 
 func newWindowClassFromC(cvalue *C.ImGuiWindowClass) *WindowClass {
-	return &WindowClass{data: cvalue}
+	return &WindowClass{CData: cvalue}
 }
 
 type WindowDockStyle struct {
-	data *C.ImGuiWindowDockStyle
+	CData *C.ImGuiWindowDockStyle
 }
 
 func (self *WindowDockStyle) handle() (result *C.ImGuiWindowDockStyle, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self WindowDockStyle) c() (C.ImGuiWindowDockStyle, func()) {
@@ -1738,15 +1738,15 @@ func (self WindowDockStyle) c() (C.ImGuiWindowDockStyle, func()) {
 }
 
 func newWindowDockStyleFromC(cvalue *C.ImGuiWindowDockStyle) *WindowDockStyle {
-	return &WindowDockStyle{data: cvalue}
+	return &WindowDockStyle{CData: cvalue}
 }
 
 type WindowSettings struct {
-	data *C.ImGuiWindowSettings
+	CData *C.ImGuiWindowSettings
 }
 
 func (self *WindowSettings) handle() (result *C.ImGuiWindowSettings, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self WindowSettings) c() (C.ImGuiWindowSettings, func()) {
@@ -1755,15 +1755,15 @@ func (self WindowSettings) c() (C.ImGuiWindowSettings, func()) {
 }
 
 func newWindowSettingsFromC(cvalue *C.ImGuiWindowSettings) *WindowSettings {
-	return &WindowSettings{data: cvalue}
+	return &WindowSettings{CData: cvalue}
 }
 
 type WindowStackData struct {
-	data *C.ImGuiWindowStackData
+	CData *C.ImGuiWindowStackData
 }
 
 func (self *WindowStackData) handle() (result *C.ImGuiWindowStackData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self WindowStackData) c() (C.ImGuiWindowStackData, func()) {
@@ -1772,15 +1772,15 @@ func (self WindowStackData) c() (C.ImGuiWindowStackData, func()) {
 }
 
 func newWindowStackDataFromC(cvalue *C.ImGuiWindowStackData) *WindowStackData {
-	return &WindowStackData{data: cvalue}
+	return &WindowStackData{CData: cvalue}
 }
 
 type WindowTempData struct {
-	data *C.ImGuiWindowTempData
+	CData *C.ImGuiWindowTempData
 }
 
 func (self *WindowTempData) handle() (result *C.ImGuiWindowTempData, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self WindowTempData) c() (C.ImGuiWindowTempData, func()) {
@@ -1789,7 +1789,7 @@ func (self WindowTempData) c() (C.ImGuiWindowTempData, func()) {
 }
 
 func newWindowTempDataFromC(cvalue *C.ImGuiWindowTempData) *WindowTempData {
-	return &WindowTempData{data: cvalue}
+	return &WindowTempData{CData: cvalue}
 }
 
 type PoolIdx int32
@@ -1829,11 +1829,11 @@ func newTextureIDFromC(cvalue *C.ImTextureID) *TextureID {
 }
 
 type Vec1 struct {
-	data *C.ImVec1
+	CData *C.ImVec1
 }
 
 func (self *Vec1) handle() (result *C.ImVec1, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self Vec1) c() (C.ImVec1, func()) {
@@ -1842,7 +1842,7 @@ func (self Vec1) c() (C.ImVec1, func()) {
 }
 
 func newVec1FromC(cvalue *C.ImVec1) *Vec1 {
-	return &Vec1{data: cvalue}
+	return &Vec1{CData: cvalue}
 }
 
 type Wchar32 uint32
@@ -1862,11 +1862,11 @@ func newWchar32FromC(cvalue *C.ImWchar32) *Wchar32 {
 }
 
 type STBTexteditState struct {
-	data *C.STB_TexteditState
+	CData *C.STB_TexteditState
 }
 
 func (self *STBTexteditState) handle() (result *C.STB_TexteditState, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self STBTexteditState) c() (C.STB_TexteditState, func()) {
@@ -1875,15 +1875,15 @@ func (self STBTexteditState) c() (C.STB_TexteditState, func()) {
 }
 
 func newSTBTexteditStateFromC(cvalue *C.STB_TexteditState) *STBTexteditState {
-	return &STBTexteditState{data: cvalue}
+	return &STBTexteditState{CData: cvalue}
 }
 
 type StbTexteditRow struct {
-	data *C.StbTexteditRow
+	CData *C.StbTexteditRow
 }
 
 func (self *StbTexteditRow) handle() (result *C.StbTexteditRow, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self StbTexteditRow) c() (C.StbTexteditRow, func()) {
@@ -1892,15 +1892,15 @@ func (self StbTexteditRow) c() (C.StbTexteditRow, func()) {
 }
 
 func newStbTexteditRowFromC(cvalue *C.StbTexteditRow) *StbTexteditRow {
-	return &StbTexteditRow{data: cvalue}
+	return &StbTexteditRow{CData: cvalue}
 }
 
 type StbUndoRecord struct {
-	data *C.StbUndoRecord
+	CData *C.StbUndoRecord
 }
 
 func (self *StbUndoRecord) handle() (result *C.StbUndoRecord, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self StbUndoRecord) c() (C.StbUndoRecord, func()) {
@@ -1909,15 +1909,15 @@ func (self StbUndoRecord) c() (C.StbUndoRecord, func()) {
 }
 
 func newStbUndoRecordFromC(cvalue *C.StbUndoRecord) *StbUndoRecord {
-	return &StbUndoRecord{data: cvalue}
+	return &StbUndoRecord{CData: cvalue}
 }
 
 type StbUndoState struct {
-	data *C.StbUndoState
+	CData *C.StbUndoState
 }
 
 func (self *StbUndoState) handle() (result *C.StbUndoState, fin func()) {
-	return self.data, func() {}
+	return self.CData, func() {}
 }
 
 func (self StbUndoState) c() (C.StbUndoState, func()) {
@@ -1926,5 +1926,5 @@ func (self StbUndoState) c() (C.StbUndoState, func()) {
 }
 
 func newStbUndoStateFromC(cvalue *C.StbUndoState) *StbUndoState {
-	return &StbUndoState{data: cvalue}
+	return &StbUndoState{CData: cvalue}
 }
