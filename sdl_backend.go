@@ -3,7 +3,7 @@
 package imgui
 
 // #cgo amd64,linux LDFLAGS: ${SRCDIR}/lib/linux/x64/libSDL2.a -ldl -lGL -lX11
-// #cgo amd64,windows LDFLAGS: -L${SRCDIR}/lib/windows/x64 -l:libSDL2.a -lgdi32 -lopengl32 -limm32
+// #cgo amd64,windows LDFLAGS: -L${SRCDIR}/lib/windows/x64  -Wl,-Bstatic -lmingw32 -lSDL2main -lSDL2 -mwindows -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion -luuid -Wl,-Bdynamic
 // #cgo darwin LDFLAGS: -framework Cocoa -framework IOKit -framework CoreVideo
 // #cgo amd64,darwin LDFLAGS: ${SRCDIR}/lib/macos/x64/libSDL2.a
 // #cgo arm64,darwin LDFLAGS: ${SRCDIR}/lib/macos/arm64/libSDL2.a
@@ -353,15 +353,17 @@ func (b *SDLBackend) Refresh() {
 }
 
 func (b *SDLBackend) CreateTexture(pixels unsafe.Pointer, width, height int) TextureID {
-	return TextureID(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
+	tex := C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height))
+	return *newTextureIDFromC(&tex)
 }
 
 func (b *SDLBackend) CreateTextureRgba(img *image.RGBA, width, height int) TextureID {
-	return TextureID(C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height)))
+	tex := C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height))
+	return *newTextureIDFromC(&tex)
 }
 
 func (b *SDLBackend) DeleteTexture(id TextureID) {
-	C.igDeleteTexture(C.ImTextureID(id))
+	C.igDeleteTexture(C.ImTextureID(id.Data))
 }
 
 // SetDropCallback sets the drop callback which is called when an object
