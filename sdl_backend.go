@@ -353,17 +353,15 @@ func (b *SDLBackend) Refresh() {
 }
 
 func (b *SDLBackend) CreateTexture(pixels unsafe.Pointer, width, height int) TextureID {
-	tex := C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height))
-	return *newTextureIDFromC(&tex)
+	return TextureID(C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height)))
 }
 
 func (b *SDLBackend) CreateTextureRgba(img *image.RGBA, width, height int) TextureID {
-	tex := C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height))
-	return *newTextureIDFromC(&tex)
+	return TextureID(C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height)))
 }
 
 func (b *SDLBackend) DeleteTexture(id TextureID) {
-	C.igDeleteTexture(C.ImTextureID(id.Data))
+	C.igDeleteTexture(C.ImTextureID(id))
 }
 
 // SetDropCallback sets the drop callback which is called when an object
