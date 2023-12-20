@@ -1938,37 +1938,31 @@ func PlotFormatTime(t PlotTime, buffer string, size int32, fmt PlotTimeFmt, use_
 	return int32(C.ImPlot_FormatTime(t.toC(), bufferArg, C.int(size), C.ImPlotTimeFmt(fmt), C.bool(use_24_hr_clk)))
 }
 
-func PlotFormatterDefault(value float64, buff string, size int32, data unsafe.Pointer) int32 {
+func PlotFormatterDefault(value float64, buff string, size int32, data uintptr) int32 {
 	buffArg, buffFin := WrapString(buff)
-	dataArg, dataFin := WrapVoidPtr(data)
 
 	defer func() {
 		buffFin()
-		dataFin()
 	}()
-	return int32(C.ImPlot_Formatter_Default(C.double(value), buffArg, C.int(size), dataArg))
+	return int32(C.ImPlot_Formatter_Default(C.double(value), buffArg, C.int(size), unsafe.Pointer(data)))
 }
 
-func PlotFormatterLogit(value float64, buff string, size int32, noname1 unsafe.Pointer) int32 {
+func PlotFormatterLogit(value float64, buff string, size int32, noname1 uintptr) int32 {
 	buffArg, buffFin := WrapString(buff)
-	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
 
 	defer func() {
 		buffFin()
-		noname1Fin()
 	}()
-	return int32(C.ImPlot_Formatter_Logit(C.double(value), buffArg, C.int(size), noname1Arg))
+	return int32(C.ImPlot_Formatter_Logit(C.double(value), buffArg, C.int(size), unsafe.Pointer(noname1)))
 }
 
-func PlotFormatterTime(noname1 float64, buff string, size int32, data unsafe.Pointer) int32 {
+func PlotFormatterTime(noname1 float64, buff string, size int32, data uintptr) int32 {
 	buffArg, buffFin := WrapString(buff)
-	dataArg, dataFin := WrapVoidPtr(data)
 
 	defer func() {
 		buffFin()
-		dataFin()
 	}()
-	return int32(C.ImPlot_Formatter_Time(C.double(noname1), buffArg, C.int(size), dataArg))
+	return int32(C.ImPlot_Formatter_Time(C.double(noname1), buffArg, C.int(size), unsafe.Pointer(data)))
 }
 
 func PlotGetAutoColor(idx PlotCol) Vec4 {
@@ -9025,58 +9019,28 @@ func PlotTagYStr(y float64, col Vec4, fmt string) {
 	fmtFin()
 }
 
-func PlotTransformForwardLog10(v float64, noname1 unsafe.Pointer) float64 {
-	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
-
-	defer func() {
-		noname1Fin()
-	}()
-	return float64(C.ImPlot_TransformForward_Log10(C.double(v), noname1Arg))
+func PlotTransformForwardLog10(v float64, noname1 uintptr) float64 {
+	return float64(C.ImPlot_TransformForward_Log10(C.double(v), unsafe.Pointer(noname1)))
 }
 
-func PlotTransformForwardLogit(v float64, noname1 unsafe.Pointer) float64 {
-	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
-
-	defer func() {
-		noname1Fin()
-	}()
-	return float64(C.ImPlot_TransformForward_Logit(C.double(v), noname1Arg))
+func PlotTransformForwardLogit(v float64, noname1 uintptr) float64 {
+	return float64(C.ImPlot_TransformForward_Logit(C.double(v), unsafe.Pointer(noname1)))
 }
 
-func PlotTransformForwardSymLog(v float64, noname1 unsafe.Pointer) float64 {
-	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
-
-	defer func() {
-		noname1Fin()
-	}()
-	return float64(C.ImPlot_TransformForward_SymLog(C.double(v), noname1Arg))
+func PlotTransformForwardSymLog(v float64, noname1 uintptr) float64 {
+	return float64(C.ImPlot_TransformForward_SymLog(C.double(v), unsafe.Pointer(noname1)))
 }
 
-func PlotTransformInverseLog10(v float64, noname1 unsafe.Pointer) float64 {
-	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
-
-	defer func() {
-		noname1Fin()
-	}()
-	return float64(C.ImPlot_TransformInverse_Log10(C.double(v), noname1Arg))
+func PlotTransformInverseLog10(v float64, noname1 uintptr) float64 {
+	return float64(C.ImPlot_TransformInverse_Log10(C.double(v), unsafe.Pointer(noname1)))
 }
 
-func PlotTransformInverseLogit(v float64, noname1 unsafe.Pointer) float64 {
-	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
-
-	defer func() {
-		noname1Fin()
-	}()
-	return float64(C.ImPlot_TransformInverse_Logit(C.double(v), noname1Arg))
+func PlotTransformInverseLogit(v float64, noname1 uintptr) float64 {
+	return float64(C.ImPlot_TransformInverse_Logit(C.double(v), unsafe.Pointer(noname1)))
 }
 
-func PlotTransformInverseSymLog(v float64, noname1 unsafe.Pointer) float64 {
-	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
-
-	defer func() {
-		noname1Fin()
-	}()
-	return float64(C.ImPlot_TransformInverse_SymLog(C.double(v), noname1Arg))
+func PlotTransformInverseSymLog(v float64, noname1 uintptr) float64 {
+	return float64(C.ImPlot_TransformInverse_SymLog(C.double(v), unsafe.Pointer(noname1)))
 }
 
 func (self *PlotAxis) SetMax(_max float64) bool {
@@ -13538,13 +13502,13 @@ func (self *FormatterTimeData) TimeDataGetSpec() PlotDateTimeSpec {
 	return *newPlotDateTimeSpecFromC(func() *C.ImPlotDateTimeSpec { result := result; return &result }())
 }
 
-func (self *FormatterTimeData) TimeDataGetUserFormatterData() unsafe.Pointer {
+func (self *FormatterTimeData) TimeDataGetUserFormatterData() uintptr {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return unsafe.Pointer(C.wrap_Formatter_Time_Data_GetUserFormatterData(selfArg))
+	return uintptr(C.wrap_Formatter_Time_Data_GetUserFormatterData(selfArg))
 }
 
 func (self PlotAlignmentData) SetVertical(v bool) {
@@ -13949,21 +13913,19 @@ func (self *PlotAxis) Ticker() PlotTicker {
 	return *newPlotTickerFromC(func() *C.ImPlotTicker { result := result; return &result }())
 }
 
-func (self PlotAxis) SetFormatterData(v unsafe.Pointer) {
-	vArg, _ := WrapVoidPtr(v)
-
+func (self PlotAxis) SetFormatterData(v uintptr) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImPlotAxis_SetFormatterData(selfArg, vArg)
+	C.wrap_ImPlotAxis_SetFormatterData(selfArg, unsafe.Pointer(v))
 }
 
-func (self *PlotAxis) FormatterData() unsafe.Pointer {
+func (self *PlotAxis) FormatterData() uintptr {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return unsafe.Pointer(C.wrap_ImPlotAxis_GetFormatterData(selfArg))
+	return uintptr(C.wrap_ImPlotAxis_GetFormatterData(selfArg))
 }
 
 func (self PlotAxis) SetFormatSpec(v *[16]rune) {
@@ -14056,21 +14018,19 @@ func (self *PlotAxis) PickerTimeMax() PlotTime {
 	return *(&PlotTime{}).fromC(C.wrap_ImPlotAxis_GetPickerTimeMax(selfArg))
 }
 
-func (self PlotAxis) SetTransformData(v unsafe.Pointer) {
-	vArg, _ := WrapVoidPtr(v)
-
+func (self PlotAxis) SetTransformData(v uintptr) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImPlotAxis_SetTransformData(selfArg, vArg)
+	C.wrap_ImPlotAxis_SetTransformData(selfArg, unsafe.Pointer(v))
 }
 
-func (self *PlotAxis) TransformData() unsafe.Pointer {
+func (self *PlotAxis) TransformData() uintptr {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return unsafe.Pointer(C.wrap_ImPlotAxis_GetTransformData(selfArg))
+	return uintptr(C.wrap_ImPlotAxis_GetTransformData(selfArg))
 }
 
 func (self PlotAxis) SetPixelMin(v float32) {

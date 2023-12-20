@@ -1809,7 +1809,7 @@ func newPoolIdxFromC(cvalue *C.ImPoolIdx) *PoolIdx {
 }
 
 type TextureID struct {
-	Data unsafe.Pointer
+	Data uintptr
 }
 
 func (self *TextureID) handle() (*C.ImTextureID, func()) {
@@ -1819,13 +1819,13 @@ func (self *TextureID) handle() (*C.ImTextureID, func()) {
 
 func (selfStruct *TextureID) c() (result C.ImTextureID, fin func()) {
 	self := selfStruct.Data
-	selfArg, selfFin := WrapVoidPtr(self)
-	return (C.ImTextureID)(selfArg), func() { selfFin() }
+
+	return (C.ImTextureID)(unsafe.Pointer(self)), func() {}
 }
 
 func newTextureIDFromC(cvalue *C.ImTextureID) *TextureID {
 	v := (unsafe.Pointer)(*cvalue)
-	return &TextureID{Data: unsafe.Pointer(v)}
+	return &TextureID{Data: uintptr(v)}
 }
 
 type Vec1 struct {
