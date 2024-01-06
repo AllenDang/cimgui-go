@@ -56,7 +56,7 @@ func getReturnWrapper(
 		"ImPlotPoint":    wrappableR("PlotPoint"),
 		"ImRect":         wrappableR("Rect"),
 		"ImPlotTime":     wrappableR("PlotTime"),
-		"void*":          simpleR("uintptr"),
+		"uintptr_t":      simpleR("uintptr"),
 		"size_t":         simpleR("uint64"),
 	}
 

@@ -67,6 +67,10 @@ import "unsafe"
 		var knownArgType, knownPtrArgType ArgumentWrapperData
 		var argTypeErr, ptrArgTypeErr, returnTypeErr, ptrReturnTypeErr error
 
+		if typedefs.data[k] == "void*" {
+			typedefs.data[k] = "uintptr_t"
+		}
+
 		// Let's say our pureType is of form short
 		// the following code needs to handle two things:
 		// - int16 -> short (to know go type AND know how to proceed in c() func)

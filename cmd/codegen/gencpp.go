@@ -109,6 +109,7 @@ extern "C" {
 		// Remove text_end arg
 		f.Args = strings.Replace(f.Args, ",const char* text_end_", "", 1) // sometimes happens in cimmarkdown
 		f.Args = strings.Replace(f.Args, ",const char* text_end", "", 1)
+		f.Ret = ReplaceAll(f.Ret, "void*", "uintptr_t")
 
 		var argsT []ArgDef
 		var actualCallArgs []CIdentifier
@@ -121,6 +122,13 @@ extern "C" {
 			case a.Name == "text_end", a.Name == "text_end_":
 				actualCallArgs = append(actualCallArgs, "0")
 				continue
+			// this is here, because of a BUG in GO that throws a fatal panic
+			// when we attempt to print unsafe.Pointer which is valid for C but is not present
+			// on the GO stack. See https://go.dev/play/p/d09eyqUlVV0
+			// see:https://github.com/golang/go/issues/64467
+			case Contains(a.Type, "void*"):
+				a.Type = ReplaceAll(a.Type, "void*", "uintptr_t")
+				fallthrough
 			default:
 				argsT = append(argsT, a)
 				actualCallArgs = append(actualCallArgs, a.Name)
