@@ -7,6 +7,11 @@ import (
 	"unicode"
 )
 
+// Name of argument in cpp/go files.
+// It is used by functions that has text and text_end arguments.
+// In this case text_end is replaced by this argument (of type int)
+const textLenRegisteredName = "text_len"
+
 // Returns if should export func
 func shouldExportFunc(funcName CIdentifier) bool {
 	switch {
@@ -107,8 +112,8 @@ extern "C" {
 		// Remove all ... arg
 		f.Args = strings.Replace(f.Args, ",...", "", 1)
 		// Remove text_end arg
-		f.Args = strings.Replace(f.Args, ",const char* text_end_", ",const int text_len", 1) // sometimes happens in cimmarkdown
-		f.Args = strings.Replace(f.Args, ",const char* text_end", ",const int text_len", 1)
+		f.Args = strings.Replace(f.Args, ",const char* text_end_", fmt.Sprintf(",const int %s", textLenRegisteredName), 1) // sometimes happens in cimmarkdown
+		f.Args = strings.Replace(f.Args, ",const char* text_end", fmt.Sprintf(",const int %s", textLenRegisteredName), 1)
 
 		var argsT []ArgDef
 		var actualCallArgs []CIdentifier

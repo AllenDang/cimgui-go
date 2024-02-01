@@ -351,6 +351,15 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []GoIdentifier, arg
 	for i, a := range f.ArgsT {
 		g.shouldGenerate = false
 
+		if a.Name == textLenRegisteredName {
+			g.shouldGenerate = true
+			argWrappers = append(argWrappers, ArgumentWrapperData{
+				VarName: "C.int(len(text))",
+			})
+
+			continue
+		}
+
 		decl, wrapper, err := getArgWrapper(
 			&a,
 			i == 0 && f.StructSetter,
