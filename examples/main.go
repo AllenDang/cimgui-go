@@ -42,7 +42,7 @@ func showWidgetsDemo() {
 		w, h := backend.DisplaySize()
 		fmt.Println(w, h)
 	}
-	imgui.TextUnformatted("Unformatted text")
+	imgui.TextUnformatted("Unformatted text", 0)
 	imgui.Checkbox("Show demo window", &showDemoWindow)
 	if imgui.BeginCombo("Combo", "Combo preview") {
 		imgui.SelectableBoolPtr("Item 1", &selected)
