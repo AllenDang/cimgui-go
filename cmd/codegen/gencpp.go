@@ -50,7 +50,7 @@ extern "C" {
 
 		shouldSkip := false
 
-		// Check func names
+		// Check func names (some of them are arbitrarly skipped)
 		if HasPrefix(f.FuncName, "ImSpan") ||
 			HasPrefix(f.FuncName, "ImBitArray") {
 			shouldSkip = true
@@ -60,12 +60,12 @@ extern "C" {
 		// Process custom_type for arg
 		for i, a := range f.ArgsT {
 			if len(a.CustomType) > 0 {
-				f.Args = Replace(f.Args, a.Type, a.CustomType, -1)
+				f.Args = ReplaceAll(f.Args, a.Type, a.CustomType)
 				f.ArgsT[i].Type = a.CustomType
 			}
 		}
 
-		// Check args
+		// Check args (some arg formats are skipped)
 		for _, a := range f.ArgsT {
 			if Contains(a.Type, "const T*") ||
 				Contains(a.Type, "const T") ||
@@ -76,20 +76,21 @@ extern "C" {
 			}
 		}
 
+		// check if func name is valid
 		if len(f.FuncName) == 0 {
 			shouldSkip = true
 		}
 
-		funcName := f.FuncName
-
 		// Check lower case for function
-		if !shouldExportFunc(funcName) {
+		if !shouldExportFunc(f.FuncName) {
 			shouldSkip = true
 		}
 
 		if shouldSkip {
 			continue
 		}
+
+		funcName := f.FuncName
 
 		// Check lower case member function
 		funcParts := Split(funcName, "_")
@@ -109,7 +110,9 @@ extern "C" {
 		// Remove text_end arg
 		f.Args = strings.Replace(f.Args, ",const char* text_end_", "", 1) // sometimes happens in cimmarkdown
 		f.Args = strings.Replace(f.Args, ",const char* text_end", "", 1)
-		f.Ret = ReplaceAll(f.Ret, "void*", "uintptr_t")
+		if f.Ret == "void*" {
+			f.Ret = "uintptr_t"
+		}
 
 		var argsT []ArgDef
 		var actualCallArgs []CIdentifier
@@ -126,17 +129,33 @@ extern "C" {
 			// when we attempt to print unsafe.Pointer which is valid for C but is not present
 			// on the GO stack. See https://go.dev/play/p/d09eyqUlVV0
 			// see:https://github.com/golang/go/issues/64467
-			case Contains(a.Type, "void*"):
-				a.Type = ReplaceAll(a.Type, "void*", "uintptr_t")
-				fallthrough
+			//case Contains(a.Type, "void*"):
+			case a.Type == "void*" || a.Type == "const void*":
+				actualCallArgs = append(actualCallArgs, CIdentifier(fmt.Sprintf("(%s)(uintptr_t)%s", a.Type, a.Name)))
+				f.AllCallArgs = Join(actualCallArgs, ",")
+				a.Type = "uintptr_t"
+				f.Args = Replace(f.Args, fmt.Sprintf("void* %s", a.Name), fmt.Sprintf("uintptr_t %s", a.Name), 1)
+				fmt.Println(a)
+				fmt.Println(f.Args)
+				fmt.Println(actualCallArgs)
+				fmt.Println(f.AllCallArgs)
+				fmt.Println(f.InvocationStmt)
+				argsT = append(argsT, a)
 			default:
 				argsT = append(argsT, a)
 				actualCallArgs = append(actualCallArgs, a.Name)
 			}
 		}
+
 		f.AllCallArgs = "(" + TrimSuffix(f.AllCallArgs, ",") + ")"
 
 		f.ArgsT = argsT
+		//f.Args = "("
+		//for _, a := range argsT {
+		//	f.Args += fmt.Sprintf("%s %s,", a.Type, a.Name)
+		//}
+		//f.Args = TrimSuffix(f.Args, ",")
+		//f.Args += ")"
 
 		// Generate shotter function which omits the default args
 		// Skip functions as function pointer arg

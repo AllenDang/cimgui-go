@@ -21,8 +21,8 @@ func TrimSuffix[s ~string](str s, suffix string) s {
 	return s(strings.TrimSuffix(string(str), suffix))
 }
 
-func ReplaceAll[s ~string](str s, old, new string) s {
-	return s(strings.ReplaceAll(string(str), old, new))
+func ReplaceAll[s, t, u ~string](str s, old t, new u) s {
+	return s(strings.ReplaceAll(string(str), string(old), string(new)))
 }
 
 func Contains[s ~string](str s, substr string) bool {
