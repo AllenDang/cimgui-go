@@ -1171,7 +1171,7 @@ func (self *FontGlyphRangesBuilder) AddRanges(ranges *Wchar) {
 func (self *FontGlyphRangesBuilder) AddTextV(text string) {
 	selfArg, selfFin := self.handle()
 	textArg, textFin := WrapString(text)
-	C.wrap_ImFontGlyphRangesBuilder_AddTextV(selfArg, textArg)
+	C.wrap_ImFontGlyphRangesBuilder_AddTextV(selfArg, textArg, C.int(len(text)))
 
 	selfFin()
 	textFin()
@@ -1267,7 +1267,7 @@ func (self *Font) CalcWordWrapPositionA(scale float32, text string, wrap_width f
 		selfFin()
 		textFin()
 	}()
-	return C.GoString(C.wrap_ImFont_CalcWordWrapPositionA(selfArg, C.float(scale), textArg, C.float(wrap_width)))
+	return C.GoString(C.wrap_ImFont_CalcWordWrapPositionA(selfArg, C.float(scale), textArg, C.int(len(text)), C.float(wrap_width)))
 }
 
 func (self *Font) ClearOutputData() {
@@ -1773,7 +1773,7 @@ func NewInputTextCallbackData() *InputTextCallbackData {
 func (self *InputTextCallbackData) InsertCharsV(pos int32, text string) {
 	selfArg, selfFin := self.handle()
 	textArg, textFin := WrapString(text)
-	C.wrap_ImGuiInputTextCallbackData_InsertCharsV(selfArg, C.int(pos), textArg)
+	C.wrap_ImGuiInputTextCallbackData_InsertCharsV(selfArg, C.int(pos), textArg, C.int(len(text)))
 
 	selfFin()
 	textFin()
@@ -2808,7 +2808,7 @@ func (self *TextFilter) PassFilterV(text string) bool {
 		selfFin()
 		textFin()
 	}()
-	return C.wrap_ImGuiTextFilter_PassFilterV(selfArg, textArg) == C.bool(true)
+	return C.wrap_ImGuiTextFilter_PassFilterV(selfArg, textArg, C.int(len(text))) == C.bool(true)
 }
 
 func (self *TextFilter) Destroy() {
@@ -3971,7 +3971,7 @@ func CalcTextSizeV(text string, hide_text_after_double_hash bool, wrap_width flo
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	textArg, textFin := WrapString(text)
-	C.wrap_igCalcTextSizeV(pOutArg, textArg, C.bool(hide_text_after_double_hash), C.float(wrap_width))
+	C.wrap_igCalcTextSizeV(pOutArg, textArg, C.int(len(text)), C.bool(hide_text_after_double_hash), C.float(wrap_width))
 
 	pOutFin()
 	textFin()
@@ -5391,7 +5391,7 @@ func InternalFindRenderedTextEndV(text string) string {
 	defer func() {
 		textFin()
 	}()
-	return C.GoString(C.wrap_igFindRenderedTextEndV(textArg))
+	return C.GoString(C.wrap_igFindRenderedTextEndV(textArg, C.int(len(text))))
 }
 
 func InternalFindSettingsHandler(type_name string) *SettingsHandler {
@@ -7724,7 +7724,7 @@ func LogFinish() {
 func InternalLogRenderedTextV(ref_pos *Vec2, text string) {
 	ref_posArg, ref_posFin := wrap[C.ImVec2, *Vec2](ref_pos)
 	textArg, textFin := WrapString(text)
-	C.wrap_igLogRenderedTextV(ref_posArg, textArg)
+	C.wrap_igLogRenderedTextV(ref_posArg, textArg, C.int(len(text)))
 
 	ref_posFin()
 	textFin()
@@ -8322,7 +8322,7 @@ func InternalRenderRectFilledWithHole(draw_list *DrawList, outer Rect, inner Rec
 // hide_text_after_hash: true
 func InternalRenderTextV(pos Vec2, text string, hide_text_after_hash bool) {
 	textArg, textFin := WrapString(text)
-	C.wrap_igRenderTextV(pos.toC(), textArg, C.bool(hide_text_after_hash))
+	C.wrap_igRenderTextV(pos.toC(), textArg, C.int(len(text)), C.bool(hide_text_after_hash))
 
 	textFin()
 }
@@ -8334,7 +8334,7 @@ func InternalRenderTextClippedV(pos_min Vec2, pos_max Vec2, text string, text_si
 	textArg, textFin := WrapString(text)
 	text_size_if_knownArg, text_size_if_knownFin := wrap[C.ImVec2, *Vec2](text_size_if_known)
 	clip_rectArg, clip_rectFin := wrap[C.ImRect, *Rect](clip_rect)
-	C.wrap_igRenderTextClippedV(pos_min.toC(), pos_max.toC(), textArg, text_size_if_knownArg, align.toC(), clip_rectArg)
+	C.wrap_igRenderTextClippedV(pos_min.toC(), pos_max.toC(), textArg, C.int(len(text)), text_size_if_knownArg, align.toC(), clip_rectArg)
 
 	textFin()
 	text_size_if_knownFin()
@@ -8349,7 +8349,7 @@ func InternalRenderTextClippedExV(draw_list *DrawList, pos_min Vec2, pos_max Vec
 	textArg, textFin := WrapString(text)
 	text_size_if_knownArg, text_size_if_knownFin := wrap[C.ImVec2, *Vec2](text_size_if_known)
 	clip_rectArg, clip_rectFin := wrap[C.ImRect, *Rect](clip_rect)
-	C.wrap_igRenderTextClippedExV(draw_listArg, pos_min.toC(), pos_max.toC(), textArg, text_size_if_knownArg, align.toC(), clip_rectArg)
+	C.wrap_igRenderTextClippedExV(draw_listArg, pos_min.toC(), pos_max.toC(), textArg, C.int(len(text)), text_size_if_knownArg, align.toC(), clip_rectArg)
 
 	draw_listFin()
 	textFin()
@@ -8361,7 +8361,7 @@ func InternalRenderTextEllipsis(draw_list *DrawList, pos_min Vec2, pos_max Vec2,
 	draw_listArg, draw_listFin := draw_list.handle()
 	textArg, textFin := WrapString(text)
 	text_size_if_knownArg, text_size_if_knownFin := wrap[C.ImVec2, *Vec2](text_size_if_known)
-	C.wrap_igRenderTextEllipsis(draw_listArg, pos_min.toC(), pos_max.toC(), C.float(clip_max_x), C.float(ellipsis_max_x), textArg, text_size_if_knownArg)
+	C.wrap_igRenderTextEllipsis(draw_listArg, pos_min.toC(), pos_max.toC(), C.float(clip_max_x), C.float(ellipsis_max_x), textArg, C.int(len(text)), text_size_if_knownArg)
 
 	draw_listFin()
 	textFin()
@@ -8370,7 +8370,7 @@ func InternalRenderTextEllipsis(draw_list *DrawList, pos_min Vec2, pos_max Vec2,
 
 func InternalRenderTextWrapped(pos Vec2, text string, wrap_width float32) {
 	textArg, textFin := WrapString(text)
-	C.wrap_igRenderTextWrapped(pos.toC(), textArg, C.float(wrap_width))
+	C.wrap_igRenderTextWrapped(pos.toC(), textArg, C.int(len(text)), C.float(wrap_width))
 
 	textFin()
 }
@@ -10114,7 +10114,7 @@ func TextDisabled(fmt string) {
 // flags: 0
 func InternalTextExV(text string, flags TextFlags) {
 	textArg, textFin := WrapString(text)
-	C.wrap_igTextExV(textArg, C.ImGuiTextFlags(flags))
+	C.wrap_igTextExV(textArg, C.int(len(text)), C.ImGuiTextFlags(flags))
 
 	textFin()
 }
@@ -10123,7 +10123,7 @@ func InternalTextExV(text string, flags TextFlags) {
 // %s parameter default value hint:
 func TextUnformattedV(text string) {
 	textArg, textFin := WrapString(text)
-	C.wrap_igTextUnformattedV(textArg)
+	C.wrap_igTextUnformattedV(textArg, C.int(len(text)))
 
 	textFin()
 }
@@ -10662,7 +10662,7 @@ func (self *FontAtlas) AddFontFromMemoryTTF(font_data unsafe.Pointer, font_data_
 func (self *FontGlyphRangesBuilder) AddText(text string) {
 	selfArg, selfFin := self.handle()
 	textArg, textFin := WrapString(text)
-	C.wrap_ImFontGlyphRangesBuilder_AddText(selfArg, textArg)
+	C.wrap_ImFontGlyphRangesBuilder_AddText(selfArg, textArg, C.int(len(text)))
 
 	selfFin()
 	textFin()
@@ -10711,7 +10711,7 @@ func (self *IO) SetKeyEventNativeData(key Key, native_keycode int32, native_scan
 func (self *InputTextCallbackData) InsertChars(pos int32, text string) {
 	selfArg, selfFin := self.handle()
 	textArg, textFin := WrapString(text)
-	C.wrap_ImGuiInputTextCallbackData_InsertChars(selfArg, C.int(pos), textArg)
+	C.wrap_ImGuiInputTextCallbackData_InsertChars(selfArg, C.int(pos), textArg, C.int(len(text)))
 
 	selfFin()
 	textFin()
@@ -10795,7 +10795,7 @@ func (self *TextFilter) PassFilter(text string) bool {
 		selfFin()
 		textFin()
 	}()
-	return C.wrap_ImGuiTextFilter_PassFilter(selfArg, textArg) == C.bool(true)
+	return C.wrap_ImGuiTextFilter_PassFilter(selfArg, textArg, C.int(len(text))) == C.bool(true)
 }
 
 func (self *Window) InternalIDStr(str string) ID {
@@ -11008,7 +11008,7 @@ func CalcTextSize(text string) Vec2 {
 	pOutArg, pOutFin := wrap[C.ImVec2, *Vec2](pOut)
 
 	textArg, textFin := WrapString(text)
-	C.wrap_igCalcTextSize(pOutArg, textArg)
+	C.wrap_igCalcTextSize(pOutArg, textArg, C.int(len(text)))
 
 	pOutFin()
 	textFin()
@@ -11376,7 +11376,7 @@ func InternalFindRenderedTextEnd(text string) string {
 	defer func() {
 		textFin()
 	}()
-	return C.GoString(C.wrap_igFindRenderedTextEnd(textArg))
+	return C.GoString(C.wrap_igFindRenderedTextEnd(textArg, C.int(len(text))))
 }
 
 func InternalFocusWindow(window *Window) {
@@ -11759,7 +11759,7 @@ func LoadIniSettingsFromMemory(ini_data string) {
 func InternalLogRenderedText(ref_pos *Vec2, text string) {
 	ref_posArg, ref_posFin := wrap[C.ImVec2, *Vec2](ref_pos)
 	textArg, textFin := WrapString(text)
-	C.wrap_igLogRenderedText(ref_posArg, textArg)
+	C.wrap_igLogRenderedText(ref_posArg, textArg, C.int(len(text)))
 
 	ref_posFin()
 	textFin()
@@ -11895,7 +11895,7 @@ func RenderPlatformWindowsDefault() {
 
 func InternalRenderText(pos Vec2, text string) {
 	textArg, textFin := WrapString(text)
-	C.wrap_igRenderText(pos.toC(), textArg)
+	C.wrap_igRenderText(pos.toC(), textArg, C.int(len(text)))
 
 	textFin()
 }
@@ -11903,7 +11903,7 @@ func InternalRenderText(pos Vec2, text string) {
 func InternalRenderTextClipped(pos_min Vec2, pos_max Vec2, text string, text_size_if_known *Vec2) {
 	textArg, textFin := WrapString(text)
 	text_size_if_knownArg, text_size_if_knownFin := wrap[C.ImVec2, *Vec2](text_size_if_known)
-	C.wrap_igRenderTextClipped(pos_min.toC(), pos_max.toC(), textArg, text_size_if_knownArg)
+	C.wrap_igRenderTextClipped(pos_min.toC(), pos_max.toC(), textArg, C.int(len(text)), text_size_if_knownArg)
 
 	textFin()
 	text_size_if_knownFin()
@@ -11913,7 +11913,7 @@ func InternalRenderTextClippedEx(draw_list *DrawList, pos_min Vec2, pos_max Vec2
 	draw_listArg, draw_listFin := draw_list.handle()
 	textArg, textFin := WrapString(text)
 	text_size_if_knownArg, text_size_if_knownFin := wrap[C.ImVec2, *Vec2](text_size_if_known)
-	C.wrap_igRenderTextClippedEx(draw_listArg, pos_min.toC(), pos_max.toC(), textArg, text_size_if_knownArg)
+	C.wrap_igRenderTextClippedEx(draw_listArg, pos_min.toC(), pos_max.toC(), textArg, C.int(len(text)), text_size_if_knownArg)
 
 	draw_listFin()
 	textFin()
@@ -12377,14 +12377,14 @@ func InternalTempInputScalar(bb Rect, id ID, label string, data_type DataType, p
 
 func InternalTextEx(text string) {
 	textArg, textFin := WrapString(text)
-	C.wrap_igTextEx(textArg)
+	C.wrap_igTextEx(textArg, C.int(len(text)))
 
 	textFin()
 }
 
 func TextUnformatted(text string) {
 	textArg, textFin := WrapString(text)
-	C.wrap_igTextUnformatted(textArg)
+	C.wrap_igTextUnformatted(textArg, C.int(len(text)))
 
 	textFin()
 }

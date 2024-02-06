@@ -7,6 +7,11 @@ import (
 	"unicode"
 )
 
+// Name of argument in cpp/go files.
+// It is used by functions that has text and text_end arguments.
+// In this case text_end is replaced by this argument (of type int)
+const textLenRegisteredName = "text_len"
+
 // Returns if should export func
 func shouldExportFunc(funcName CIdentifier) bool {
 	switch {
@@ -107,8 +112,8 @@ extern "C" {
 		// Remove all ... arg
 		f.Args = strings.Replace(f.Args, ",...", "", 1)
 		// Remove text_end arg
-		f.Args = strings.Replace(f.Args, ",const char* text_end_", "", 1) // sometimes happens in cimmarkdown
-		f.Args = strings.Replace(f.Args, ",const char* text_end", "", 1)
+		f.Args = strings.Replace(f.Args, ",const char* text_end_", fmt.Sprintf(",const int %s", textLenRegisteredName), 1) // sometimes happens in cimmarkdown
+		f.Args = strings.Replace(f.Args, ",const char* text_end", fmt.Sprintf(",const int %s", textLenRegisteredName), 1)
 
 		var argsT []ArgDef
 		var actualCallArgs []CIdentifier
@@ -119,8 +124,25 @@ extern "C" {
 			case a.Name == "...":
 				continue
 			case a.Name == "text_end", a.Name == "text_end_":
-				actualCallArgs = append(actualCallArgs, "0")
-				continue
+				//chck if there is `text` argument
+				var found bool
+				for _, aa := range f.ArgsT {
+					if aa.Name == "text" {
+						found = true
+						break
+					}
+				}
+				if found {
+					argsT = append(argsT, ArgDef{
+						Name: "text_len",
+						Type: "const int",
+					})
+					actualCallArgs = append(actualCallArgs, "(text_len > 0) ? text + text_len*sizeof(char)-1 : 0")
+				} else {
+					f.Args = strings.Replace(f.Args, ",const int text_len", "", 1)
+					actualCallArgs = append(actualCallArgs, "0")
+					continue
+				}
 			default:
 				argsT = append(argsT, a)
 				actualCallArgs = append(actualCallArgs, a.Name)
@@ -228,6 +250,10 @@ extern "C" {
 
 				if v == "((void*)0)" {
 					v = "NULL"
+				}
+
+				if k == "text_end" || k == "text_end_" {
+					v = "0"
 				}
 
 				if strings.Contains(invocationStmt, ","+k) {
