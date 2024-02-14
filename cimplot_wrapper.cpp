@@ -6,17 +6,33 @@
 
 void wrap_ImPlotAnnotationCollection_Append(ImPlotAnnotationCollection* self,const ImVec2 pos,const ImVec2 off,ImU32 bg,ImU32 fg,bool clamp,const char* fmt) { ImPlotAnnotationCollection_Append(self,pos,off,bg,fg,clamp,fmt); }
 void wrap_ImPlotTagCollection_Append(ImPlotTagCollection* self,ImAxis axis,double value,ImU32 bg,ImU32 fg,const char* fmt) { ImPlotTagCollection_Append(self,axis,value,bg,fg,fmt); }
+ImPlotTick* wrap_ImPlotTicker_AddTick_doublePlotFormatter(ImPlotTicker* self,double value,bool major,int level,bool show_label,ImPlotFormatter formatter,uintptr_t data) { return ImPlotTicker_AddTick_doublePlotFormatter(self,value,major,level,show_label,formatter,(void*)(uintptr_t)data); }
 void wrap_ImPlot_AddTextCenteredV(ImDrawList* DrawList,ImVec2 top_center,ImU32 col,const char* text_begin) { ImPlot_AddTextCentered(DrawList,top_center,col,text_begin,0); }
 void wrap_ImPlot_AddTextVerticalV(ImDrawList* DrawList,ImVec2 pos,ImU32 col,const char* text_begin) { ImPlot_AddTextVertical(DrawList,pos,col,text_begin,0); }
 void wrap_ImPlot_Annotation_Str(double x,double y,const ImVec4 col,const ImVec2 pix_offset,bool clamp,const char* fmt) { ImPlot_Annotation_Str(x,y,col,pix_offset,clamp,fmt); }
+int wrap_ImPlot_Formatter_Default(double value,char* buff,int size,uintptr_t data) { return ImPlot_Formatter_Default(value,buff,size,(void*)(uintptr_t)data); }
+int wrap_ImPlot_Formatter_Logit(double value,char* buff,int size,uintptr_t noname1) { return ImPlot_Formatter_Logit(value,buff,size,(void*)(uintptr_t)noname1); }
+int wrap_ImPlot_Formatter_Time(double noname1,char* buff,int size,uintptr_t data) { return ImPlot_Formatter_Time(noname1,buff,size,(void*)(uintptr_t)data); }
+void wrap_ImPlot_Locator_Default(ImPlotTicker* ticker,const ImPlotRange range,float pixels,bool vertical,ImPlotFormatter formatter,uintptr_t formatter_data) { ImPlot_Locator_Default(ticker,range,pixels,vertical,formatter,(void*)(uintptr_t)formatter_data); }
+void wrap_ImPlot_Locator_Log10(ImPlotTicker* ticker,const ImPlotRange range,float pixels,bool vertical,ImPlotFormatter formatter,uintptr_t formatter_data) { ImPlot_Locator_Log10(ticker,range,pixels,vertical,formatter,(void*)(uintptr_t)formatter_data); }
+void wrap_ImPlot_Locator_SymLog(ImPlotTicker* ticker,const ImPlotRange range,float pixels,bool vertical,ImPlotFormatter formatter,uintptr_t formatter_data) { ImPlot_Locator_SymLog(ticker,range,pixels,vertical,formatter,(void*)(uintptr_t)formatter_data); }
+void wrap_ImPlot_Locator_Time(ImPlotTicker* ticker,const ImPlotRange range,float pixels,bool vertical,ImPlotFormatter formatter,uintptr_t formatter_data) { ImPlot_Locator_Time(ticker,range,pixels,vertical,formatter,(void*)(uintptr_t)formatter_data); }
 void wrap_ImPlot_PlotBarsGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,double bar_size,ImPlotBarsFlags flags) { ImPlot_PlotBarsG(label_id,getter,(void*)(uintptr_t)data,count,bar_size,flags); }
 void wrap_ImPlot_PlotDigitalGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,ImPlotDigitalFlags flags) { ImPlot_PlotDigitalG(label_id,getter,(void*)(uintptr_t)data,count,flags); }
 void wrap_ImPlot_PlotLineGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,ImPlotLineFlags flags) { ImPlot_PlotLineG(label_id,getter,(void*)(uintptr_t)data,count,flags); }
 void wrap_ImPlot_PlotScatterGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,ImPlotScatterFlags flags) { ImPlot_PlotScatterG(label_id,getter,(void*)(uintptr_t)data,count,flags); }
 void wrap_ImPlot_PlotShadedGV(const char* label_id,ImPlotPoint_getter getter1,uintptr_t data1,ImPlotPoint_getter getter2,uintptr_t data2,int count,ImPlotShadedFlags flags) { ImPlot_PlotShadedG(label_id,getter1,(void*)(uintptr_t)data1,getter2,(void*)(uintptr_t)data2,count,flags); }
 void wrap_ImPlot_PlotStairsGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,ImPlotStairsFlags flags) { ImPlot_PlotStairsG(label_id,getter,(void*)(uintptr_t)data,count,flags); }
+void wrap_ImPlot_SetupAxisFormat_PlotFormatterV(ImAxis axis,ImPlotFormatter formatter,uintptr_t data) { ImPlot_SetupAxisFormat_PlotFormatter(axis,formatter,(void*)(uintptr_t)data); }
+void wrap_ImPlot_SetupAxisScale_PlotTransformV(ImAxis axis,ImPlotTransform forward,ImPlotTransform inverse,uintptr_t data) { ImPlot_SetupAxisScale_PlotTransform(axis,forward,inverse,(void*)(uintptr_t)data); }
 void wrap_ImPlot_TagX_Str(double x,const ImVec4 col,const char* fmt) { ImPlot_TagX_Str(x,col,fmt); }
 void wrap_ImPlot_TagY_Str(double y,const ImVec4 col,const char* fmt) { ImPlot_TagY_Str(y,col,fmt); }
+double wrap_ImPlot_TransformForward_Log10(double v,uintptr_t noname1) { return ImPlot_TransformForward_Log10(v,(void*)(uintptr_t)noname1); }
+double wrap_ImPlot_TransformForward_Logit(double v,uintptr_t noname1) { return ImPlot_TransformForward_Logit(v,(void*)(uintptr_t)noname1); }
+double wrap_ImPlot_TransformForward_SymLog(double v,uintptr_t noname1) { return ImPlot_TransformForward_SymLog(v,(void*)(uintptr_t)noname1); }
+double wrap_ImPlot_TransformInverse_Log10(double v,uintptr_t noname1) { return ImPlot_TransformInverse_Log10(v,(void*)(uintptr_t)noname1); }
+double wrap_ImPlot_TransformInverse_Logit(double v,uintptr_t noname1) { return ImPlot_TransformInverse_Logit(v,(void*)(uintptr_t)noname1); }
+double wrap_ImPlot_TransformInverse_SymLog(double v,uintptr_t noname1) { return ImPlot_TransformInverse_SymLog(v,(void*)(uintptr_t)noname1); }
 bool wrap_ImPlotAxis_SetMax(ImPlotAxis* self,double _max) { return ImPlotAxis_SetMax(self,_max,false); }
 bool wrap_ImPlotAxis_SetMin(ImPlotAxis* self,double _min) { return ImPlotAxis_SetMin(self,_min,false); }
 ImPlotColormap wrap_ImPlot_AddColormap_U32Ptr(const char* name,const ImU32* cols,int size) { return ImPlot_AddColormap_U32Ptr(name,cols,size,true); }
@@ -301,9 +317,9 @@ void wrap_ImPlot_SetNextMarkerStyle() { ImPlot_SetNextMarkerStyle(-1,-1,(ImVec4)
 void wrap_ImPlot_SetupAxes(const char* x_label,const char* y_label) { ImPlot_SetupAxes(x_label,y_label,0,0); }
 void wrap_ImPlot_SetupAxesLimits(double x_min,double x_max,double y_min,double y_max) { ImPlot_SetupAxesLimits(x_min,x_max,y_min,y_max,ImPlotCond_Once); }
 void wrap_ImPlot_SetupAxis(ImAxis axis) { ImPlot_SetupAxis(axis,nullptr,0); }
-void wrap_ImPlot_SetupAxisFormat_PlotFormatter(ImAxis axis,ImPlotFormatter formatter) { ImPlot_SetupAxisFormat_PlotFormatter(axis,formatter,nullptr); }
+void wrap_ImPlot_SetupAxisFormat_PlotFormatter(ImAxis axis,ImPlotFormatter formatter) { wrap_ImPlot_SetupAxisFormat_PlotFormatterV(axis,formatter,nullptr); }
 void wrap_ImPlot_SetupAxisLimits(ImAxis axis,double v_min,double v_max) { ImPlot_SetupAxisLimits(axis,v_min,v_max,ImPlotCond_Once); }
-void wrap_ImPlot_SetupAxisScale_PlotTransform(ImAxis axis,ImPlotTransform forward,ImPlotTransform inverse) { ImPlot_SetupAxisScale_PlotTransform(axis,forward,inverse,nullptr); }
+void wrap_ImPlot_SetupAxisScale_PlotTransform(ImAxis axis,ImPlotTransform forward,ImPlotTransform inverse) { wrap_ImPlot_SetupAxisScale_PlotTransformV(axis,forward,inverse,nullptr); }
 void wrap_ImPlot_SetupAxisTicks_double(ImAxis axis,double v_min,double v_max,int n_ticks) { ImPlot_SetupAxisTicks_double(axis,v_min,v_max,n_ticks,nullptr,false); }
 void wrap_ImPlot_SetupAxisTicks_doublePtr(ImAxis axis,const double* values,int n_ticks) { ImPlot_SetupAxisTicks_doublePtr(axis,values,n_ticks,nullptr,false); }
 void wrap_ImPlot_SetupLegend(ImPlotLocation location) { ImPlot_SetupLegend(location,0); }

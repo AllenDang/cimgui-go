@@ -1460,7 +1460,7 @@ func (self *DataVarInfo) InternalVarPtr(parent uintptr) uintptr {
 	defer func() {
 		selfFin()
 	}()
-	return uintptr(C.ImGuiDataVarInfo_GetVarPtr(selfArg, C.uintptr_t(parent)))
+	return uintptr(C.wrap_ImGuiDataVarInfo_GetVarPtr(selfArg, C.uintptr_t(parent)))
 }
 
 func InternalNewDockContext() *DockContext {
@@ -2290,7 +2290,7 @@ func InternalNewPtrOrIndexInt(index int32) *PtrOrIndex {
 }
 
 func InternalNewPtrOrIndexPtr(ptr uintptr) *PtrOrIndex {
-	return newPtrOrIndexFromC(C.ImGuiPtrOrIndex_ImGuiPtrOrIndex_Ptr(C.uintptr_t(ptr)))
+	return newPtrOrIndexFromC(C.wrap_ImGuiPtrOrIndex_ImGuiPtrOrIndex_Ptr(C.uintptr_t(ptr)))
 }
 
 func (self *PtrOrIndex) Destroy() {
@@ -2386,7 +2386,7 @@ func NewStoragePairPtr(_key ID, _val_p uintptr) *StoragePair {
 	defer func() {
 		_keyFin()
 	}()
-	return newStoragePairFromC(C.ImGuiStoragePair_ImGuiStoragePair_Ptr(_keyArg, C.uintptr_t(_val_p)))
+	return newStoragePairFromC(C.wrap_ImGuiStoragePair_ImGuiStoragePair_Ptr(_keyArg, C.uintptr_t(_val_p)))
 }
 
 func (self *StoragePair) Destroy() {
@@ -2524,7 +2524,7 @@ func (self *Storage) SetInt(key ID, val int32) {
 func (self *Storage) SetVoidPtr(key ID, val uintptr) {
 	selfArg, selfFin := self.handle()
 	keyArg, keyFin := key.c()
-	C.ImGuiStorage_SetVoidPtr(selfArg, keyArg, C.uintptr_t(val))
+	C.wrap_ImGuiStorage_SetVoidPtr(selfArg, keyArg, C.uintptr_t(val))
 
 	selfFin()
 	keyFin()
@@ -3136,7 +3136,7 @@ func (self *Window) InternalIDPtr(ptr uintptr) ID {
 	defer func() {
 		selfFin()
 	}()
-	return *newIDFromC(func() *C.ImGuiID { result := C.ImGuiWindow_GetID_Ptr(selfArg, C.uintptr_t(ptr)); return &result }())
+	return *newIDFromC(func() *C.ImGuiID { result := C.wrap_ImGuiWindow_GetID_Ptr(selfArg, C.uintptr_t(ptr)); return &result }())
 }
 
 // InternalIDStrV parameter default value hint:
@@ -4454,15 +4454,15 @@ func InternalDataTypeApplyFromText(buf string, data_type DataType, p_data uintpt
 }
 
 func InternalDataTypeApplyOp(data_type DataType, op int32, output uintptr, arg_1 uintptr, arg_2 uintptr) {
-	C.igDataTypeApplyOp(C.ImGuiDataType(data_type), C.int(op), C.uintptr_t(output), C.uintptr_t(arg_1), C.uintptr_t(arg_2))
+	C.wrap_igDataTypeApplyOp(C.ImGuiDataType(data_type), C.int(op), C.uintptr_t(output), C.uintptr_t(arg_1), C.uintptr_t(arg_2))
 }
 
 func InternalDataTypeClamp(data_type DataType, p_data uintptr, p_min uintptr, p_max uintptr) bool {
-	return C.igDataTypeClamp(C.ImGuiDataType(data_type), C.uintptr_t(p_data), C.uintptr_t(p_min), C.uintptr_t(p_max)) == C.bool(true)
+	return C.wrap_igDataTypeClamp(C.ImGuiDataType(data_type), C.uintptr_t(p_data), C.uintptr_t(p_min), C.uintptr_t(p_max)) == C.bool(true)
 }
 
 func InternalDataTypeCompare(data_type DataType, arg_1 uintptr, arg_2 uintptr) int32 {
-	return int32(C.igDataTypeCompare(C.ImGuiDataType(data_type), C.uintptr_t(arg_1), C.uintptr_t(arg_2)))
+	return int32(C.wrap_igDataTypeCompare(C.ImGuiDataType(data_type), C.uintptr_t(arg_1), C.uintptr_t(arg_2)))
 }
 
 func InternalDataTypeFormatString(buf string, buf_size int32, data_type DataType, p_data uintptr, format string) int32 {
@@ -4510,7 +4510,7 @@ func InternalDebugDrawLineExtentsV(col uint32) {
 
 func InternalDebugHookIdInfo(id ID, data_type DataType, data_id uintptr, data_id_end uintptr) {
 	idArg, idFin := id.c()
-	C.igDebugHookIdInfo(idArg, C.ImGuiDataType(data_type), C.uintptr_t(data_id), C.uintptr_t(data_id_end))
+	C.wrap_igDebugHookIdInfo(idArg, C.ImGuiDataType(data_type), C.uintptr_t(data_id), C.uintptr_t(data_id_end))
 
 	idFin()
 }
@@ -5546,7 +5546,7 @@ func FindViewportByID(id ID) *Viewport {
 
 // this is a helper for backends. the type platform_handle is decided by the backend (e.g. HWND, MyWindow*, GLFWwindow* etc.)
 func FindViewportByPlatformHandle(platform_handle uintptr) *Viewport {
-	return newViewportFromC(C.igFindViewportByPlatformHandle(C.uintptr_t(platform_handle)))
+	return newViewportFromC(C.wrap_igFindViewportByPlatformHandle(C.uintptr_t(platform_handle)))
 }
 
 func InternalFindWindowByID(id ID) *Window {
@@ -5947,7 +5947,7 @@ func InternalIDWithSeedStr(str_id_begin string, str_id_end string, seed ID) ID {
 }
 
 func IDPtr(ptr_id uintptr) ID {
-	return *newIDFromC(func() *C.ImGuiID { result := C.igGetID_Ptr(C.uintptr_t(ptr_id)); return &result }())
+	return *newIDFromC(func() *C.ImGuiID { result := C.wrap_igGetID_Ptr(C.uintptr_t(ptr_id)); return &result }())
 }
 
 // calculate unique ID (hash of whole ID stack + given parameter). e.g. if you want to query into ImGuiStorage yourself
@@ -6608,7 +6608,7 @@ func InternalImFontAtlasBuildInit(atlas *FontAtlas) {
 
 func InternalImFontAtlasBuildPackCustomRects(atlas *FontAtlas, stbrp_context_opaque uintptr) {
 	atlasArg, atlasFin := atlas.handle()
-	C.igImFontAtlasBuildPackCustomRects(atlasArg, C.uintptr_t(stbrp_context_opaque))
+	C.wrap_igImFontAtlasBuildPackCustomRects(atlasArg, C.uintptr_t(stbrp_context_opaque))
 
 	atlasFin()
 }
@@ -8035,7 +8035,7 @@ func MemAlloc(size uint64) uintptr {
 }
 
 func MemFree(ptr uintptr) {
-	C.igMemFree(C.uintptr_t(ptr))
+	C.wrap_igMemFree(C.uintptr_t(ptr))
 }
 
 // InternalMenuItemExV parameter default value hint:
@@ -8346,7 +8346,7 @@ func PushIDInt(int_id int32) {
 
 // push pointer into the ID stack (will hash pointer).
 func PushIDPtr(ptr_id uintptr) {
-	C.igPushID_Ptr(C.uintptr_t(ptr_id))
+	C.wrap_igPushID_Ptr(C.uintptr_t(ptr_id))
 }
 
 // push string into the ID stack (will hash string).
@@ -8545,7 +8545,7 @@ func InternalRenderNavHighlightV(bb Rect, id ID, flags NavHighlightFlags) {
 // platform_render_arg: NULL
 // renderer_render_arg: NULL
 func RenderPlatformWindowsDefaultV(platform_render_arg uintptr, renderer_render_arg uintptr) {
-	C.igRenderPlatformWindowsDefault(C.uintptr_t(platform_render_arg), C.uintptr_t(renderer_render_arg))
+	C.wrap_igRenderPlatformWindowsDefaultV(C.uintptr_t(platform_render_arg), C.uintptr_t(renderer_render_arg))
 }
 
 func InternalRenderRectFilledRangeH(draw_list *DrawList, rect Rect, col uint32, x_start_norm float32, x_end_norm float32, rounding float32) {
@@ -10387,7 +10387,7 @@ func InternalTempInputScalarV(bb Rect, id ID, label string, data_type DataType, 
 		labelFin()
 		formatFin()
 	}()
-	return C.igTempInputScalar(bb.toC(), idArg, labelArg, C.ImGuiDataType(data_type), C.uintptr_t(p_data), formatArg, C.uintptr_t(p_clamp_min), C.uintptr_t(p_clamp_max)) == C.bool(true)
+	return C.wrap_igTempInputScalarV(bb.toC(), idArg, labelArg, C.ImGuiDataType(data_type), C.uintptr_t(p_data), formatArg, C.uintptr_t(p_clamp_min), C.uintptr_t(p_clamp_max)) == C.bool(true)
 }
 
 func InternalTempInputText(bb Rect, id ID, label string, buf string, buf_size int32, flags InputTextFlags) bool {
@@ -10589,7 +10589,7 @@ func InternalTreePushOverrideID(id ID) {
 
 // "
 func TreePushPtr(ptr_id uintptr) {
-	C.igTreePush_Ptr(C.uintptr_t(ptr_id))
+	C.wrap_igTreePush_Ptr(C.uintptr_t(ptr_id))
 }
 
 // ~ Indent()+PushId(). Already called by TreeNode() when returning true, but you can call TreePush/TreePop yourself if desired.

@@ -1943,7 +1943,7 @@ func PlotFormatterDefault(value float64, buff string, size int32, data uintptr) 
 	defer func() {
 		buffFin()
 	}()
-	return int32(C.ImPlot_Formatter_Default(C.double(value), buffArg, C.int(size), C.uintptr_t(data)))
+	return int32(C.wrap_ImPlot_Formatter_Default(C.double(value), buffArg, C.int(size), C.uintptr_t(data)))
 }
 
 func PlotFormatterLogit(value float64, buff string, size int32, noname1 uintptr) int32 {
@@ -1952,7 +1952,7 @@ func PlotFormatterLogit(value float64, buff string, size int32, noname1 uintptr)
 	defer func() {
 		buffFin()
 	}()
-	return int32(C.ImPlot_Formatter_Logit(C.double(value), buffArg, C.int(size), C.uintptr_t(noname1)))
+	return int32(C.wrap_ImPlot_Formatter_Logit(C.double(value), buffArg, C.int(size), C.uintptr_t(noname1)))
 }
 
 func PlotFormatterTime(noname1 float64, buff string, size int32, data uintptr) int32 {
@@ -1961,7 +1961,7 @@ func PlotFormatterTime(noname1 float64, buff string, size int32, data uintptr) i
 	defer func() {
 		buffFin()
 	}()
-	return int32(C.ImPlot_Formatter_Time(C.double(noname1), buffArg, C.int(size), C.uintptr_t(data)))
+	return int32(C.wrap_ImPlot_Formatter_Time(C.double(noname1), buffArg, C.int(size), C.uintptr_t(data)))
 }
 
 func PlotGetAutoColor(idx PlotCol) Vec4 {
@@ -9019,27 +9019,27 @@ func PlotTagYStr(y float64, col Vec4, fmt string) {
 }
 
 func PlotTransformForwardLog10(v float64, noname1 uintptr) float64 {
-	return float64(C.ImPlot_TransformForward_Log10(C.double(v), C.uintptr_t(noname1)))
+	return float64(C.wrap_ImPlot_TransformForward_Log10(C.double(v), C.uintptr_t(noname1)))
 }
 
 func PlotTransformForwardLogit(v float64, noname1 uintptr) float64 {
-	return float64(C.ImPlot_TransformForward_Logit(C.double(v), C.uintptr_t(noname1)))
+	return float64(C.wrap_ImPlot_TransformForward_Logit(C.double(v), C.uintptr_t(noname1)))
 }
 
 func PlotTransformForwardSymLog(v float64, noname1 uintptr) float64 {
-	return float64(C.ImPlot_TransformForward_SymLog(C.double(v), C.uintptr_t(noname1)))
+	return float64(C.wrap_ImPlot_TransformForward_SymLog(C.double(v), C.uintptr_t(noname1)))
 }
 
 func PlotTransformInverseLog10(v float64, noname1 uintptr) float64 {
-	return float64(C.ImPlot_TransformInverse_Log10(C.double(v), C.uintptr_t(noname1)))
+	return float64(C.wrap_ImPlot_TransformInverse_Log10(C.double(v), C.uintptr_t(noname1)))
 }
 
 func PlotTransformInverseLogit(v float64, noname1 uintptr) float64 {
-	return float64(C.ImPlot_TransformInverse_Logit(C.double(v), C.uintptr_t(noname1)))
+	return float64(C.wrap_ImPlot_TransformInverse_Logit(C.double(v), C.uintptr_t(noname1)))
 }
 
 func PlotTransformInverseSymLog(v float64, noname1 uintptr) float64 {
-	return float64(C.ImPlot_TransformInverse_SymLog(C.double(v), C.uintptr_t(noname1)))
+	return float64(C.wrap_ImPlot_TransformInverse_SymLog(C.double(v), C.uintptr_t(noname1)))
 }
 
 func (self *PlotAxis) SetMax(_max float64) bool {
