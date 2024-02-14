@@ -154,7 +154,6 @@ extern "C" {
 			// case Contains(a.Type, "void*"):
 			case a.Type == "void*" || a.Type == "const void*":
 				actualCallArgs = append(actualCallArgs, CIdentifier(fmt.Sprintf("(%s)(uintptr_t)%s", a.Type, a.Name)))
-				f.AllCallArgs = Join(actualCallArgs, ",")
 				a.Type = "uintptr_t"
 				f.Args = Replace(f.Args, fmt.Sprintf("void* %s", a.Name), fmt.Sprintf("uintptr_t %s", a.Name), 1)
 				argsT = append(argsT, a)
@@ -165,8 +164,8 @@ extern "C" {
 		}
 
 		f.AllCallArgs = "(" + TrimSuffix(f.AllCallArgs, ",") + ")"
-
 		f.ArgsT = argsT
+
 		//f.Args = "("
 		//for _, a := range argsT {
 		//	f.Args += fmt.Sprintf("%s %s,", a.Type, a.Name)
@@ -174,7 +173,7 @@ extern "C" {
 		//f.Args = TrimSuffix(f.Args, ",")
 		//f.Args += ")"
 
-		// Generate shotter function which omits the default args
+		// Generate shorter function which omits the default args
 		// Skip functions as function pointer arg
 		shouldSkip = false
 		for _, a := range f.ArgsT {
@@ -347,6 +346,7 @@ extern "C" {
 
 		// cppSb.WriteString(fmt.Sprintf("// %#v\n", f))
 
+		// if needed, write extra stuff to cpp headers
 		if string(f.AllCallArgs) == actualCallArgsStr {
 			cWrapperFuncName = f.FuncName
 		} else if f.Constructor {
