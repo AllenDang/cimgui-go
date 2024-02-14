@@ -8,7 +8,6 @@ package imgui
 // #include "extra_types.h"
 // #include "cimnodes_wrapper.h"
 import "C"
-import "unsafe"
 
 type EmulateThreeButtonMouse struct {
 	CData *C.EmulateThreeButtonMouse
@@ -80,11 +79,11 @@ func (self *NodesMiniMapNodeHoveringCallbackUserData) handle() (*C.ImNodesMiniMa
 func (selfStruct *NodesMiniMapNodeHoveringCallbackUserData) c() (result C.ImNodesMiniMapNodeHoveringCallbackUserData, fin func()) {
 	self := selfStruct.Data
 
-	return (C.ImNodesMiniMapNodeHoveringCallbackUserData)(unsafe.Pointer(self)), func() {}
+	return (C.ImNodesMiniMapNodeHoveringCallbackUserData)(C.uintptr_t(self)), func() {}
 }
 
 func newNodesMiniMapNodeHoveringCallbackUserDataFromC(cvalue *C.ImNodesMiniMapNodeHoveringCallbackUserData) *NodesMiniMapNodeHoveringCallbackUserData {
-	v := (unsafe.Pointer)(*cvalue)
+	v := (C.uintptr_t)(*cvalue)
 	return &NodesMiniMapNodeHoveringCallbackUserData{Data: uintptr(v)}
 }
 

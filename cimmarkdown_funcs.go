@@ -7,7 +7,6 @@ package imgui
 // #include "cimmarkdown_structs_accessor.h"
 // #include "cimmarkdown_wrapper.h"
 import "C"
-import "unsafe"
 
 func IsCharInsideWord(c_ rune) bool {
 	return C.IsCharInsideWord(C.char(c_)) == C.bool(true)
@@ -440,21 +439,6 @@ func (self *MarkdownConfig) LinkIcon() string {
 	return C.GoString(C.wrap_MarkdownConfig_GetLinkIcon(selfArg))
 }
 
-func (self MarkdownConfig) SetUserData(v uintptr) {
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_MarkdownConfig_SetUserData(selfArg, unsafe.Pointer(v))
-}
-
-func (self *MarkdownConfig) UserData() uintptr {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return uintptr(C.wrap_MarkdownConfig_GetUserData(selfArg))
-}
-
 func (self MarkdownFormatInfo) SetType(v MarkdownFormatType) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -709,21 +693,6 @@ func (self *MarkdownLinkCallbackData) LinkLength() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_MarkdownLinkCallbackData_GetLinkLength(selfArg))
-}
-
-func (self MarkdownLinkCallbackData) SetUserData(v uintptr) {
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_MarkdownLinkCallbackData_SetUserData(selfArg, unsafe.Pointer(v))
-}
-
-func (self *MarkdownLinkCallbackData) UserData() uintptr {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return uintptr(C.wrap_MarkdownLinkCallbackData_GetUserData(selfArg))
 }
 
 func (self MarkdownLinkCallbackData) SetIsImage(v bool) {

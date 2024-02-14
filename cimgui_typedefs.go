@@ -8,7 +8,6 @@ package imgui
 // #include "extra_types.h"
 // #include "cimgui_wrapper.h"
 import "C"
-import "unsafe"
 
 type BitArrayPtr struct {
 	Data *uint32
@@ -1820,11 +1819,11 @@ func (self *TextureID) handle() (*C.ImTextureID, func()) {
 func (selfStruct *TextureID) c() (result C.ImTextureID, fin func()) {
 	self := selfStruct.Data
 
-	return (C.ImTextureID)(unsafe.Pointer(self)), func() {}
+	return (C.ImTextureID)(C.uintptr_t(self)), func() {}
 }
 
 func newTextureIDFromC(cvalue *C.ImTextureID) *TextureID {
-	v := (unsafe.Pointer)(*cvalue)
+	v := (C.uintptr_t)(*cvalue)
 	return &TextureID{Data: uintptr(v)}
 }
 

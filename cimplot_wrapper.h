@@ -14,6 +14,12 @@ extern void wrap_ImPlotTagCollection_Append(ImPlotTagCollection* self,ImAxis axi
 extern void wrap_ImPlot_AddTextCenteredV(ImDrawList* DrawList,ImVec2 top_center,ImU32 col,const char* text_begin);
 extern void wrap_ImPlot_AddTextVerticalV(ImDrawList* DrawList,ImVec2 pos,ImU32 col,const char* text_begin);
 extern void wrap_ImPlot_Annotation_Str(double x,double y,const ImVec4 col,const ImVec2 pix_offset,bool clamp,const char* fmt);
+extern void wrap_ImPlot_PlotBarsGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,double bar_size,ImPlotBarsFlags flags);
+extern void wrap_ImPlot_PlotDigitalGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,ImPlotDigitalFlags flags);
+extern void wrap_ImPlot_PlotLineGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,ImPlotLineFlags flags);
+extern void wrap_ImPlot_PlotScatterGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,ImPlotScatterFlags flags);
+extern void wrap_ImPlot_PlotShadedGV(const char* label_id,ImPlotPoint_getter getter1,uintptr_t data1,ImPlotPoint_getter getter2,uintptr_t data2,int count,ImPlotShadedFlags flags);
+extern void wrap_ImPlot_PlotStairsGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,ImPlotStairsFlags flags);
 extern void wrap_ImPlot_TagX_Str(double x,const ImVec4 col,const char* fmt);
 extern void wrap_ImPlot_TagY_Str(double y,const ImVec4 col,const char* fmt);
 extern bool wrap_ImPlotAxis_SetMax(ImPlotAxis* self,double _max);
@@ -64,7 +70,7 @@ extern void wrap_ImPlot_PlotBarGroups_U32Ptr(const char* const label_ids[],const
 extern void wrap_ImPlot_PlotBarGroups_U64Ptr(const char* const label_ids[],const ImU64* values,int item_count,int group_count);
 extern void wrap_ImPlot_PlotBarGroups_U8Ptr(const char* const label_ids[],const ImU8* values,int item_count,int group_count);
 extern void wrap_ImPlot_PlotBarGroups_doublePtr(const char* const label_ids[],const double* values,int item_count,int group_count);
-extern void wrap_ImPlot_PlotBarsG(const char* label_id,ImPlotPoint_getter getter,void* data,int count,double bar_size);
+extern void wrap_ImPlot_PlotBarsG(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,double bar_size);
 extern void wrap_ImPlot_PlotBars_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count,double bar_size);
 extern void wrap_ImPlot_PlotBars_FloatPtrInt(const char* label_id,const float* values,int count);
 extern void wrap_ImPlot_PlotBars_S16PtrInt(const char* label_id,const ImS16* values,int count);
@@ -85,7 +91,7 @@ extern void wrap_ImPlot_PlotBars_U8PtrInt(const char* label_id,const ImU8* value
 extern void wrap_ImPlot_PlotBars_U8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,double bar_size);
 extern void wrap_ImPlot_PlotBars_doublePtrInt(const char* label_id,const double* values,int count);
 extern void wrap_ImPlot_PlotBars_doublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,int count,double bar_size);
-extern void wrap_ImPlot_PlotDigitalG(const char* label_id,ImPlotPoint_getter getter,void* data,int count);
+extern void wrap_ImPlot_PlotDigitalG(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count);
 extern void wrap_ImPlot_PlotDigital_FloatPtr(const char* label_id,const float* xs,const float* ys,int count);
 extern void wrap_ImPlot_PlotDigital_S16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count);
 extern void wrap_ImPlot_PlotDigital_S32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count);
@@ -158,7 +164,7 @@ extern void wrap_ImPlot_PlotInfLines_U32Ptr(const char* label_id,const ImU32* va
 extern void wrap_ImPlot_PlotInfLines_U64Ptr(const char* label_id,const ImU64* values,int count);
 extern void wrap_ImPlot_PlotInfLines_U8Ptr(const char* label_id,const ImU8* values,int count);
 extern void wrap_ImPlot_PlotInfLines_doublePtr(const char* label_id,const double* values,int count);
-extern void wrap_ImPlot_PlotLineG(const char* label_id,ImPlotPoint_getter getter,void* data,int count);
+extern void wrap_ImPlot_PlotLineG(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count);
 extern void wrap_ImPlot_PlotLine_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count);
 extern void wrap_ImPlot_PlotLine_FloatPtrInt(const char* label_id,const float* values,int count);
 extern void wrap_ImPlot_PlotLine_S16PtrInt(const char* label_id,const ImS16* values,int count);
@@ -189,7 +195,7 @@ extern void wrap_ImPlot_PlotPieChart_U32Ptr(const char* const label_ids[],const 
 extern void wrap_ImPlot_PlotPieChart_U64Ptr(const char* const label_ids[],const ImU64* values,int count,double x,double y,double radius);
 extern void wrap_ImPlot_PlotPieChart_U8Ptr(const char* const label_ids[],const ImU8* values,int count,double x,double y,double radius);
 extern void wrap_ImPlot_PlotPieChart_doublePtr(const char* const label_ids[],const double* values,int count,double x,double y,double radius);
-extern void wrap_ImPlot_PlotScatterG(const char* label_id,ImPlotPoint_getter getter,void* data,int count);
+extern void wrap_ImPlot_PlotScatterG(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count);
 extern void wrap_ImPlot_PlotScatter_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count);
 extern void wrap_ImPlot_PlotScatter_FloatPtrInt(const char* label_id,const float* values,int count);
 extern void wrap_ImPlot_PlotScatter_S16PtrInt(const char* label_id,const ImS16* values,int count);
@@ -210,7 +216,7 @@ extern void wrap_ImPlot_PlotScatter_U8PtrInt(const char* label_id,const ImU8* va
 extern void wrap_ImPlot_PlotScatter_U8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count);
 extern void wrap_ImPlot_PlotScatter_doublePtrInt(const char* label_id,const double* values,int count);
 extern void wrap_ImPlot_PlotScatter_doublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,int count);
-extern void wrap_ImPlot_PlotShadedG(const char* label_id,ImPlotPoint_getter getter1,void* data1,ImPlotPoint_getter getter2,void* data2,int count);
+extern void wrap_ImPlot_PlotShadedG(const char* label_id,ImPlotPoint_getter getter1,uintptr_t data1,ImPlotPoint_getter getter2,uintptr_t data2,int count);
 extern void wrap_ImPlot_PlotShaded_FloatPtrFloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys1,const float* ys2,int count);
 extern void wrap_ImPlot_PlotShaded_FloatPtrFloatPtrInt(const char* label_id,const float* xs,const float* ys,int count);
 extern void wrap_ImPlot_PlotShaded_FloatPtrInt(const char* label_id,const float* values,int count);
@@ -241,7 +247,7 @@ extern void wrap_ImPlot_PlotShaded_U8PtrU8PtrU8Ptr(const char* label_id,const Im
 extern void wrap_ImPlot_PlotShaded_doublePtrInt(const char* label_id,const double* values,int count);
 extern void wrap_ImPlot_PlotShaded_doublePtrdoublePtrInt(const char* label_id,const double* xs,const double* ys,int count);
 extern void wrap_ImPlot_PlotShaded_doublePtrdoublePtrdoublePtr(const char* label_id,const double* xs,const double* ys1,const double* ys2,int count);
-extern void wrap_ImPlot_PlotStairsG(const char* label_id,ImPlotPoint_getter getter,void* data,int count);
+extern void wrap_ImPlot_PlotStairsG(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count);
 extern void wrap_ImPlot_PlotStairs_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count);
 extern void wrap_ImPlot_PlotStairs_FloatPtrInt(const char* label_id,const float* values,int count);
 extern void wrap_ImPlot_PlotStairs_S16PtrInt(const char* label_id,const ImS16* values,int count);

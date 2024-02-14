@@ -7,6 +7,11 @@ import (
 	"unicode"
 )
 
+// Name of argument in cpp/go files.
+// It is used by functions that has text and text_end arguments.
+// In this case text_end is replaced by this argument (of type int)
+const textLenRegisteredName = "text_len"
+
 // Returns if should export func
 func shouldExportFunc(funcName CIdentifier) bool {
 	switch {
@@ -108,8 +113,8 @@ extern "C" {
 		// Remove all ... arg
 		f.Args = strings.Replace(f.Args, ",...", "", 1)
 		// Remove text_end arg
-		f.Args = strings.Replace(f.Args, ",const char* text_end_", "", 1) // sometimes happens in cimmarkdown
-		f.Args = strings.Replace(f.Args, ",const char* text_end", "", 1)
+		f.Args = strings.Replace(f.Args, ",const char* text_end_", fmt.Sprintf(",const int %s", textLenRegisteredName), 1) // sometimes happens in cimmarkdown
+		f.Args = strings.Replace(f.Args, ",const char* text_end", fmt.Sprintf(",const int %s", textLenRegisteredName), 1)
 		if f.Ret == "void*" {
 			f.Ret = "uintptr_t"
 		}
@@ -123,23 +128,35 @@ extern "C" {
 			case a.Name == "...":
 				continue
 			case a.Name == "text_end", a.Name == "text_end_":
-				actualCallArgs = append(actualCallArgs, "0")
-				continue
+				// chck if there is `text` argument
+				var found bool
+				for _, aa := range f.ArgsT {
+					if aa.Name == "text" {
+						found = true
+						break
+					}
+				}
+				if found {
+					argsT = append(argsT, ArgDef{
+						Name: "text_len",
+						Type: "const int",
+					})
+					actualCallArgs = append(actualCallArgs, "(text_len > 0) ? text + text_len*sizeof(char)-1 : 0")
+				} else {
+					f.Args = strings.Replace(f.Args, ",const int text_len", "", 1)
+					actualCallArgs = append(actualCallArgs, "0")
+					continue
+				}
 			// this is here, because of a BUG in GO that throws a fatal panic
 			// when we attempt to print unsafe.Pointer which is valid for C but is not present
 			// on the GO stack. See https://go.dev/play/p/d09eyqUlVV0
 			// see:https://github.com/golang/go/issues/64467
-			//case Contains(a.Type, "void*"):
+			// case Contains(a.Type, "void*"):
 			case a.Type == "void*" || a.Type == "const void*":
 				actualCallArgs = append(actualCallArgs, CIdentifier(fmt.Sprintf("(%s)(uintptr_t)%s", a.Type, a.Name)))
 				f.AllCallArgs = Join(actualCallArgs, ",")
 				a.Type = "uintptr_t"
 				f.Args = Replace(f.Args, fmt.Sprintf("void* %s", a.Name), fmt.Sprintf("uintptr_t %s", a.Name), 1)
-				fmt.Println(a)
-				fmt.Println(f.Args)
-				fmt.Println(actualCallArgs)
-				fmt.Println(f.AllCallArgs)
-				fmt.Println(f.InvocationStmt)
 				argsT = append(argsT, a)
 			default:
 				argsT = append(argsT, a)
@@ -255,6 +272,10 @@ extern "C" {
 
 				if v == "((void*)0)" {
 					v = "NULL"
+				}
+
+				if k == "text_end" || k == "text_end_" {
+					v = "0"
 				}
 
 				if strings.Contains(invocationStmt, ","+k) {

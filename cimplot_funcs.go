@@ -7,7 +7,6 @@ package imgui
 // #include "cimplot_structs_accessor.h"
 // #include "cimplot_wrapper.h"
 import "C"
-import "unsafe"
 
 func (self *PlotAlignmentData) Begin() {
 	selfArg, selfFin := self.handle()
@@ -1944,7 +1943,7 @@ func PlotFormatterDefault(value float64, buff string, size int32, data uintptr) 
 	defer func() {
 		buffFin()
 	}()
-	return int32(C.ImPlot_Formatter_Default(C.double(value), buffArg, C.int(size), unsafe.Pointer(data)))
+	return int32(C.ImPlot_Formatter_Default(C.double(value), buffArg, C.int(size), C.uintptr_t(data)))
 }
 
 func PlotFormatterLogit(value float64, buff string, size int32, noname1 uintptr) int32 {
@@ -1953,7 +1952,7 @@ func PlotFormatterLogit(value float64, buff string, size int32, noname1 uintptr)
 	defer func() {
 		buffFin()
 	}()
-	return int32(C.ImPlot_Formatter_Logit(C.double(value), buffArg, C.int(size), unsafe.Pointer(noname1)))
+	return int32(C.ImPlot_Formatter_Logit(C.double(value), buffArg, C.int(size), C.uintptr_t(noname1)))
 }
 
 func PlotFormatterTime(noname1 float64, buff string, size int32, data uintptr) int32 {
@@ -1962,7 +1961,7 @@ func PlotFormatterTime(noname1 float64, buff string, size int32, data uintptr) i
 	defer func() {
 		buffFin()
 	}()
-	return int32(C.ImPlot_Formatter_Time(C.double(noname1), buffArg, C.int(size), unsafe.Pointer(data)))
+	return int32(C.ImPlot_Formatter_Time(C.double(noname1), buffArg, C.int(size), C.uintptr_t(data)))
 }
 
 func PlotGetAutoColor(idx PlotCol) Vec4 {
@@ -9020,27 +9019,27 @@ func PlotTagYStr(y float64, col Vec4, fmt string) {
 }
 
 func PlotTransformForwardLog10(v float64, noname1 uintptr) float64 {
-	return float64(C.ImPlot_TransformForward_Log10(C.double(v), unsafe.Pointer(noname1)))
+	return float64(C.ImPlot_TransformForward_Log10(C.double(v), C.uintptr_t(noname1)))
 }
 
 func PlotTransformForwardLogit(v float64, noname1 uintptr) float64 {
-	return float64(C.ImPlot_TransformForward_Logit(C.double(v), unsafe.Pointer(noname1)))
+	return float64(C.ImPlot_TransformForward_Logit(C.double(v), C.uintptr_t(noname1)))
 }
 
 func PlotTransformForwardSymLog(v float64, noname1 uintptr) float64 {
-	return float64(C.ImPlot_TransformForward_SymLog(C.double(v), unsafe.Pointer(noname1)))
+	return float64(C.ImPlot_TransformForward_SymLog(C.double(v), C.uintptr_t(noname1)))
 }
 
 func PlotTransformInverseLog10(v float64, noname1 uintptr) float64 {
-	return float64(C.ImPlot_TransformInverse_Log10(C.double(v), unsafe.Pointer(noname1)))
+	return float64(C.ImPlot_TransformInverse_Log10(C.double(v), C.uintptr_t(noname1)))
 }
 
 func PlotTransformInverseLogit(v float64, noname1 uintptr) float64 {
-	return float64(C.ImPlot_TransformInverse_Logit(C.double(v), unsafe.Pointer(noname1)))
+	return float64(C.ImPlot_TransformInverse_Logit(C.double(v), C.uintptr_t(noname1)))
 }
 
 func PlotTransformInverseSymLog(v float64, noname1 uintptr) float64 {
-	return float64(C.ImPlot_TransformInverse_SymLog(C.double(v), unsafe.Pointer(noname1)))
+	return float64(C.ImPlot_TransformInverse_SymLog(C.double(v), C.uintptr_t(noname1)))
 }
 
 func (self *PlotAxis) SetMax(_max float64) bool {
@@ -13502,15 +13501,6 @@ func (self *FormatterTimeData) TimeDataGetSpec() PlotDateTimeSpec {
 	return *newPlotDateTimeSpecFromC(func() *C.ImPlotDateTimeSpec { result := result; return &result }())
 }
 
-func (self *FormatterTimeData) TimeDataGetUserFormatterData() uintptr {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return uintptr(C.wrap_Formatter_Time_Data_GetUserFormatterData(selfArg))
-}
-
 func (self PlotAlignmentData) SetVertical(v bool) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -13913,21 +13903,6 @@ func (self *PlotAxis) Ticker() PlotTicker {
 	return *newPlotTickerFromC(func() *C.ImPlotTicker { result := result; return &result }())
 }
 
-func (self PlotAxis) SetFormatterData(v uintptr) {
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImPlotAxis_SetFormatterData(selfArg, unsafe.Pointer(v))
-}
-
-func (self *PlotAxis) FormatterData() uintptr {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return uintptr(C.wrap_ImPlotAxis_GetFormatterData(selfArg))
-}
-
 func (self PlotAxis) SetFormatSpec(v *[16]rune) {
 	vArg := make([]C.char, len(v))
 	for i, vV := range v {
@@ -14016,21 +13991,6 @@ func (self *PlotAxis) PickerTimeMax() PlotTime {
 		selfFin()
 	}()
 	return *(&PlotTime{}).fromC(C.wrap_ImPlotAxis_GetPickerTimeMax(selfArg))
-}
-
-func (self PlotAxis) SetTransformData(v uintptr) {
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImPlotAxis_SetTransformData(selfArg, unsafe.Pointer(v))
-}
-
-func (self *PlotAxis) TransformData() uintptr {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return uintptr(C.wrap_ImPlotAxis_GetTransformData(selfArg))
 }
 
 func (self PlotAxis) SetPixelMin(v float32) {
