@@ -7,6 +7,7 @@ package imgui
 // #include <memory.h>
 // #include "extra_types.h"
 // #include "cimmarkdown_wrapper.h"
+// #include "cimmarkdown_typedefs.h"
 import "C"
 
 type Emphasis struct {

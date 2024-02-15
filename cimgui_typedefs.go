@@ -7,6 +7,7 @@ package imgui
 // #include <memory.h>
 // #include "extra_types.h"
 // #include "cimgui_wrapper.h"
+// #include "cimgui_typedefs.h"
 import "C"
 
 type BitArrayPtr struct {
@@ -1811,20 +1812,17 @@ type TextureID struct {
 	Data uintptr
 }
 
-func (self *TextureID) handle() (*C.ImTextureID, func()) {
-	result, fn := self.c()
-	return &result, fn
+func (self *TextureID) handle() (result *C.ImTextureID, fin func()) {
+	r, f := self.c()
+	return &r, f
 }
 
-func (selfStruct *TextureID) c() (result C.ImTextureID, fin func()) {
-	self := selfStruct.Data
-
-	return (C.ImTextureID)(C.uintptr_t(self)), func() {}
+func (self TextureID) c() (C.ImTextureID, func()) {
+	return (C.ImTextureID)(C.ImTextureID_fromUintptr(C.uintptr_t(self.Data))), func() {}
 }
 
 func newTextureIDFromC(cvalue *C.ImTextureID) *TextureID {
-	v := (C.uintptr_t)(*cvalue)
-	return &TextureID{Data: uintptr(v)}
+	return &TextureID{Data: (uintptr)(C.ImTextureID_toUintptr(*cvalue))}
 }
 
 type Vec1 struct {

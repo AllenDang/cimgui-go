@@ -7,6 +7,7 @@ package imgui
 // #include <memory.h>
 // #include "extra_types.h"
 // #include "cimnodes_wrapper.h"
+// #include "cimnodes_typedefs.h"
 import "C"
 
 type EmulateThreeButtonMouse struct {
@@ -71,20 +72,17 @@ type NodesMiniMapNodeHoveringCallbackUserData struct {
 	Data uintptr
 }
 
-func (self *NodesMiniMapNodeHoveringCallbackUserData) handle() (*C.ImNodesMiniMapNodeHoveringCallbackUserData, func()) {
-	result, fn := self.c()
-	return &result, fn
+func (self *NodesMiniMapNodeHoveringCallbackUserData) handle() (result *C.ImNodesMiniMapNodeHoveringCallbackUserData, fin func()) {
+	r, f := self.c()
+	return &r, f
 }
 
-func (selfStruct *NodesMiniMapNodeHoveringCallbackUserData) c() (result C.ImNodesMiniMapNodeHoveringCallbackUserData, fin func()) {
-	self := selfStruct.Data
-
-	return (C.ImNodesMiniMapNodeHoveringCallbackUserData)(C.uintptr_t(self)), func() {}
+func (self NodesMiniMapNodeHoveringCallbackUserData) c() (C.ImNodesMiniMapNodeHoveringCallbackUserData, func()) {
+	return (C.ImNodesMiniMapNodeHoveringCallbackUserData)(C.ImNodesMiniMapNodeHoveringCallbackUserData_fromUintptr(C.uintptr_t(self.Data))), func() {}
 }
 
 func newNodesMiniMapNodeHoveringCallbackUserDataFromC(cvalue *C.ImNodesMiniMapNodeHoveringCallbackUserData) *NodesMiniMapNodeHoveringCallbackUserData {
-	v := (C.uintptr_t)(*cvalue)
-	return &NodesMiniMapNodeHoveringCallbackUserData{Data: uintptr(v)}
+	return &NodesMiniMapNodeHoveringCallbackUserData{Data: (uintptr)(C.ImNodesMiniMapNodeHoveringCallbackUserData_toUintptr(*cvalue))}
 }
 
 type NodesStyle struct {
