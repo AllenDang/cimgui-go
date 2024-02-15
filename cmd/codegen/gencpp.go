@@ -273,6 +273,10 @@ extern "C" {
 					v = "NULL"
 				}
 
+				if v == "nullptr" {
+					v = "NULL"
+				}
+
 				if k == "text_end" || k == "text_end_" {
 					v = "0"
 				}

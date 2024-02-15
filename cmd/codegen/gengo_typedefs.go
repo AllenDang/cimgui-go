@@ -19,12 +19,32 @@ func proceedTypedefs(prefix string, typedefs *Typedefs, structs []StructDef, enu
 		`// #include <stdlib.h>
 // #include <memory.h>
 // #include "extra_types.h"
-// #include "%s_wrapper.h"
+// #include "%[1]s_wrapper.h"
+// #include "%[1]s_typedefs.h"
 import "C"
 import "unsafe"
 
 `, prefix)
-	//callbacksCSb := &strings.Builder{}
+
+	typedefsHeaderSb := &strings.Builder{}
+	typedefsHeaderSb.WriteString(cppFileHeader)
+	fmt.Fprintf(typedefsHeaderSb,
+		`
+#pragma once
+
+#include "cimgui/%s.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+`, prefix)
+	typedefsCppSb := &strings.Builder{}
+	typedefsCppSb.WriteString(cppFileHeader)
+	fmt.Fprintf(typedefsCppSb,
+		`
+#include "%[1]s_typedefs.h"
+#include "cimgui/%[1]s.h"
+`, prefix)
 
 	// because go ranges through maps as if it was drunken, we need to sort keys.
 	keys := make([]CIdentifier, 0, len(typedefs.data))
@@ -36,6 +56,7 @@ import "unsafe"
 	SortStrings(keys)
 
 	for _, k := range keys {
+		typedef := typedefs.data[k]
 		if shouldSkip, ok := skippedTypedefs[k]; ok && shouldSkip {
 			glg.Infof("Arbitrarly skipping typedef %s", k)
 			continue
@@ -56,19 +77,19 @@ import "unsafe"
 			continue
 		}
 
-		if IsTemplateTypedef(typedefs.data[k]) {
+		if IsTemplateTypedef(typedef) {
 			glg.Infof("typedef %s is a template. not implemented yet", k)
 			continue
 		}
 
-		isPtr := HasSuffix(typedefs.data[k], "*")
+		isPtr := HasSuffix(typedef, "*")
 
 		var knownReturnType, knownPtrReturnType returnWrapper
 		var knownArgType, knownPtrArgType ArgumentWrapperData
 		var argTypeErr, ptrArgTypeErr, returnTypeErr, ptrReturnTypeErr error
 
-		if typedefs.data[k] == "void*" {
-			typedefs.data[k] = "uintptr_t"
+		if typedef == "void*" {
+			typedef = "uintptr_t"
 		}
 
 		// Let's say our pureType is of form short
@@ -77,14 +98,14 @@ import "unsafe"
 		// - *int16 -> short* (for handle())
 		// - short* -> *int16 (for newXXXFromC)
 		knownReturnType, returnTypeErr = getReturnWrapper(
-			CIdentifier(typedefs.data[k]),
+			CIdentifier(typedef),
 			map[CIdentifier]bool{},
 			map[GoIdentifier]bool{},
 			map[CIdentifier]string{},
 		)
 
 		knownPtrReturnType, ptrReturnTypeErr = getReturnWrapper(
-			CIdentifier(typedefs.data[k])+"*",
+			CIdentifier(typedef)+"*",
 			map[CIdentifier]bool{},
 			map[GoIdentifier]bool{},
 			map[CIdentifier]string{},
@@ -93,7 +114,7 @@ import "unsafe"
 		_, knownArgType, argTypeErr = getArgWrapper(
 			&ArgDef{
 				Name: "self",
-				Type: CIdentifier(typedefs.data[k]),
+				Type: CIdentifier(typedef),
 			},
 			false, false,
 			map[CIdentifier]bool{},
@@ -104,7 +125,7 @@ import "unsafe"
 		_, knownPtrArgType, ptrArgTypeErr = getArgWrapper(
 			&ArgDef{
 				Name: "self",
-				Type: CIdentifier(typedefs.data[k]) + "*",
+				Type: CIdentifier(typedef) + "*",
 			},
 			false, false,
 			map[CIdentifier]bool{},
@@ -114,8 +135,61 @@ import "unsafe"
 
 		// check if k is a name of struct from structDefs
 		switch {
+		case typedefs.data[k] == "void*":
+			glg.Infof("typedef %s is an alias to void*.", k)
+			fmt.Fprintf(typedefsCppSb,
+				`
+uintptr_t %[1]s_toUintptr(%[1]s ptr) {
+	return (uintptr_t)ptr;
+}
+
+%[1]s %[1]s_fromUintptr(uintptr_t ptr) {
+	return (%[1]s)ptr;
+}
+`, k)
+			fmt.Fprintf(typedefsHeaderSb, `extern uintptr_t %[1]s_toUintptr(%[1]s ptr);
+extern %[1]s %[1]s_fromUintptr(uintptr_t ptr);`, k)
+
+			// NOTE: in case of problems e.g. with Textures, here might be potential issue:
+			// handle() is incomplete - it doesn't have right finalizer (for now I think this will not affect code)
+			fmt.Fprintf(callbacksGoSb, `
+type %[1]s struct {
+	Data uintptr
+}
+
+func (self *%[1]s) handle() (result *C.%[6]s, fin func()) {
+	r, f := self.c()
+    return &r, f
+}
+
+func (self %[1]s) c() (C.%[6]s, func()) {
+    return (C.%[6]s)(C.%[6]s_fromUintptr(C.uintptr_t(self.Data))), func() { }
+}
+
+func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
+	return &%[1]s{Data: (uintptr)(C.%[6]s_toUintptr(*cvalue))}
+}
+`,
+				k.renameGoIdentifier(),
+				knownArgType.ArgType,
+
+				knownPtrArgType.ArgDef,
+				knownPtrArgType.VarName,
+				knownPtrArgType.Finalizer,
+
+				k,
+
+				knownArgType.ArgDef,
+				knownArgType.VarName,
+				knownArgType.Finalizer,
+
+				fmt.Sprintf(knownPtrReturnType.returnStmt, "cvalue"),
+			)
+
+			validTypeNames = append(validTypeNames, k)
 		case ptrReturnTypeErr == nil && argTypeErr == nil && ptrArgTypeErr == nil && !isPtr:
 			glg.Infof("typedef %s is an alias typedef.", k)
+
 			fmt.Fprintf(callbacksGoSb, `
 type %[1]s %[2]s
 
@@ -198,8 +272,22 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 		}
 	}
 
+	fmt.Fprint(typedefsHeaderSb,
+		`
+#ifdef __cplusplus
+}
+#endif`)
+
 	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.go", prefix), []byte(callbacksGoSb.String()), 0644); err != nil {
 		return nil, fmt.Errorf("cannot write %s_typedefs.go: %w", prefix, err)
+	}
+
+	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.cpp", prefix), []byte(typedefsCppSb.String()), 0644); err != nil {
+		return nil, fmt.Errorf("cannot write %s_typedefs.cpp: %w", prefix, err)
+	}
+
+	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.h", prefix), []byte(typedefsHeaderSb.String()), 0644); err != nil {
+		return nil, fmt.Errorf("cannot write %s_typedefs.h: %w", prefix, err)
 	}
 
 	return validTypeNames, nil
