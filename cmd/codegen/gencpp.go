@@ -156,7 +156,24 @@ extern "C" {
 			case a.Type == "void*" || a.Type == "const void*":
 				actualCallArgs = append(actualCallArgs, CIdentifier(fmt.Sprintf("(%s)(uintptr_t)%s", a.Type, a.Name)))
 				a.Type = "uintptr_t"
-				f.Args = Replace(f.Args, fmt.Sprintf("void* %s", a.Name), fmt.Sprintf("uintptr_t %s", a.Name), 1)
+				// do some trick: we can't replace void* in a.Args immediaely by using replace, because sometimes
+				// args are of form (void* user_data, (void* user_data)(int something))
+				// we need to replace only "plain" arguments (not function-types)
+				// we will split Args by "," and check each argument to be equal to ("void* ", a.Name)
+				newArgs := TrimPrefix(f.Args, "(")
+				newArgs = TrimSuffix(newArgs, ")")
+				newArgsList := Split(newArgs, ",")
+				for i, arg := range newArgsList {
+					switch arg {
+					case fmt.Sprintf("void* %s", a.Name):
+						newArgsList[i] = fmt.Sprintf("uintptr_t %s", a.Name)
+					case fmt.Sprintf("const void* %s", a.Name):
+						newArgsList[i] = fmt.Sprintf("const uintptr_t %s", a.Name)
+					}
+				}
+
+				f.Args = fmt.Sprintf("(%s)", Join(newArgsList, ","))
+
 				argsT = append(argsT, a)
 			default:
 				argsT = append(argsT, a)
