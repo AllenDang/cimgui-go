@@ -115,8 +115,9 @@ extern "C" {
 		// Remove text_end arg
 		f.Args = strings.Replace(f.Args, ",const char* text_end_", fmt.Sprintf(",const int %s", textLenRegisteredName), 1) // sometimes happens in cimmarkdown
 		f.Args = strings.Replace(f.Args, ",const char* text_end", fmt.Sprintf(",const int %s", textLenRegisteredName), 1)
-		if f.Ret == "void*" {
-			f.Ret = "uintptr_t"
+		ret := f.Ret
+		if ret == "void*" {
+			ret = "uintptr_t"
 		}
 
 		var argsT []ArgDef
@@ -301,7 +302,7 @@ extern "C" {
 				Destructor:       f.Destructor,
 				StructSetter:     false,
 				StructGetter:     false,
-				Ret:              f.Ret,
+				Ret:              ret,
 				StName:           f.StName,
 				NonUDT:           f.NonUDT,
 				CWrapperFuncName: cWrapperFuncName + "V",
@@ -329,7 +330,7 @@ extern "C" {
 				Constructor:      f.Constructor,
 				Destructor:       f.Destructor,
 				InvocationStmt:   f.InvocationStmt,
-				Ret:              f.Ret,
+				Ret:              ret,
 				StName:           f.StName,
 				NonUDT:           f.NonUDT,
 				CWrapperFuncName: cWrapperFuncName,
@@ -362,9 +363,12 @@ extern "C" {
 		} else {
 			headerSb.WriteString(fmt.Sprintf("extern %s %s%s;\n", f.Ret, cWrapperFuncName, f.Args))
 
-			if f.Ret == "void" {
+			switch f.Ret {
+			case "void":
 				cppSb.WriteString(fmt.Sprintf("%s %s%s { %s%s; }\n", f.Ret, cWrapperFuncName, f.Args, invokeFunctionName, actualCallArgsStr))
-			} else {
+			case "void*":
+				cppSb.WriteString(fmt.Sprintf("uintptr_t %s%s { return (uintptr_t)%s%s; }\n", cWrapperFuncName, f.Args, invokeFunctionName, actualCallArgsStr))
+			default:
 				cppSb.WriteString(fmt.Sprintf("%s %s%s { return %s%s; }\n", f.Ret, cWrapperFuncName, f.Args, invokeFunctionName, actualCallArgsStr))
 			}
 		}
