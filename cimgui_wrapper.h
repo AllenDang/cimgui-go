@@ -29,7 +29,7 @@ extern bool wrap_ImGuiTextFilter_PassFilterV(ImGuiTextFilter* self,const char* t
 extern ImGuiID wrap_ImGuiWindow_GetID_Ptr(ImGuiWindow* self,const uintptr_t ptr);
 extern void wrap_igBulletText(const char* fmt);
 extern void wrap_igCalcTextSizeV(ImVec2 *pOut,const char* text,const int text_len,bool hide_text_after_double_hash,float wrap_width);
-extern bool wrap_igCombo_FnStrPtr(const char* label,int* current_item,const char*(*getter)(uintptr_t user_data,int idx),void* user_data,int items_count,int popup_max_height_in_items);
+extern bool wrap_igCombo_FnStrPtr(const char* label,int* current_item,const char*(*getter)(void* user_data,int idx),uintptr_t user_data,int items_count,int popup_max_height_in_items);
 extern bool wrap_igDataTypeApplyFromText(const char* buf,ImGuiDataType data_type,uintptr_t p_data,const char* format);
 extern void wrap_igDataTypeApplyOp(ImGuiDataType data_type,int op,uintptr_t output,const uintptr_t arg_1,const uintptr_t arg_2);
 extern bool wrap_igDataTypeClamp(ImGuiDataType data_type,uintptr_t p_data,const uintptr_t p_min,const uintptr_t p_max);
@@ -59,13 +59,13 @@ extern bool wrap_igInputTextExV(const char* label,const char* hint,char* buf,int
 extern bool wrap_igInputTextMultilineV(const char* label,char* buf,size_t buf_size,const ImVec2 size,ImGuiInputTextFlags flags,ImGuiInputTextCallback callback,uintptr_t user_data);
 extern bool wrap_igInputTextWithHintV(const char* label,const char* hint,char* buf,size_t buf_size,ImGuiInputTextFlags flags,ImGuiInputTextCallback callback,uintptr_t user_data);
 extern void wrap_igLabelText(const char* label,const char* fmt);
-extern bool wrap_igListBox_FnStrPtr(const char* label,int* current_item,const char*(*getter)(uintptr_t user_data,int idx),void* user_data,int items_count,int height_in_items);
+extern bool wrap_igListBox_FnStrPtr(const char* label,int* current_item,const char*(*getter)(void* user_data,int idx),uintptr_t user_data,int items_count,int height_in_items);
 extern void wrap_igLogRenderedTextV(const ImVec2* ref_pos,const char* text,const int text_len);
 extern void wrap_igLogText(const char* fmt);
 extern void wrap_igMemFree(uintptr_t ptr);
-extern int wrap_igPlotEx(ImGuiPlotType plot_type,const char* label,float(*values_getter)(uintptr_t data,int idx),void* data,int values_count,int values_offset,const char* overlay_text,float scale_min,float scale_max,const ImVec2 size_arg);
-extern void wrap_igPlotHistogram_FnFloatPtr(const char* label,float(*values_getter)(uintptr_t data,int idx),void* data,int values_count,int values_offset,const char* overlay_text,float scale_min,float scale_max,ImVec2 graph_size);
-extern void wrap_igPlotLines_FnFloatPtr(const char* label,float(*values_getter)(uintptr_t data,int idx),void* data,int values_count,int values_offset,const char* overlay_text,float scale_min,float scale_max,ImVec2 graph_size);
+extern int wrap_igPlotEx(ImGuiPlotType plot_type,const char* label,float(*values_getter)(void* data,int idx),uintptr_t data,int values_count,int values_offset,const char* overlay_text,float scale_min,float scale_max,const ImVec2 size_arg);
+extern void wrap_igPlotHistogram_FnFloatPtr(const char* label,float(*values_getter)(void* data,int idx),uintptr_t data,int values_count,int values_offset,const char* overlay_text,float scale_min,float scale_max,ImVec2 graph_size);
+extern void wrap_igPlotLines_FnFloatPtr(const char* label,float(*values_getter)(void* data,int idx),uintptr_t data,int values_count,int values_offset,const char* overlay_text,float scale_min,float scale_max,ImVec2 graph_size);
 extern void wrap_igPushID_Ptr(const uintptr_t ptr_id);
 extern void wrap_igRenderPlatformWindowsDefaultV(uintptr_t platform_render_arg,uintptr_t renderer_render_arg);
 extern void wrap_igRenderTextV(ImVec2 pos,const char* text,const int text_len,bool hide_text_after_hash);
