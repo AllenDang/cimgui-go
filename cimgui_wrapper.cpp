@@ -13,7 +13,7 @@ void wrap_ImFontGlyphRangesBuilder_AddTextV(ImFontGlyphRangesBuilder* self,const
 void wrap_ImFont_CalcTextSizeAV(ImVec2 *pOut,ImFont* self,float size,float max_width,float wrap_width,const char* text_begin,const char** remaining) { ImFont_CalcTextSizeA(pOut,self,size,max_width,wrap_width,text_begin,0,remaining); }
 const char* wrap_ImFont_CalcWordWrapPositionA(ImFont* self,float scale,const char* text,const int text_len,float wrap_width) { return ImFont_CalcWordWrapPositionA(self,scale,text,(text_len > 0) ? text + text_len*sizeof(char)-1 : 0,wrap_width); }
 void wrap_ImFont_RenderTextV(ImFont* self,ImDrawList* draw_list,float size,const ImVec2 pos,ImU32 col,const ImVec4 clip_rect,const char* text_begin,float wrap_width,bool cpu_fine_clip) { ImFont_RenderText(self,draw_list,size,pos,col,clip_rect,text_begin,0,wrap_width,cpu_fine_clip); }
-uintptr_t wrap_ImGuiDataVarInfo_GetVarPtr(ImGuiDataVarInfo* self,uintptr_t parent) { return ImGuiDataVarInfo_GetVarPtr(self,(void*)(uintptr_t)parent); }
+uintptr_t wrap_ImGuiDataVarInfo_GetVarPtr(ImGuiDataVarInfo* self,uintptr_t parent) { return (uintptr_t)ImGuiDataVarInfo_GetVarPtr(self,(void*)(uintptr_t)parent); }
 void wrap_ImGuiInputTextCallbackData_InsertCharsV(ImGuiInputTextCallbackData* self,int pos,const char* text,const int text_len) { ImGuiInputTextCallbackData_InsertChars(self,pos,text,(text_len > 0) ? text + text_len*sizeof(char)-1 : 0); }
 ImGuiPtrOrIndex* wrap_ImGuiPtrOrIndex_ImGuiPtrOrIndex_Ptr(uintptr_t ptr) { return ImGuiPtrOrIndex_ImGuiPtrOrIndex_Ptr((void*)(uintptr_t)ptr); }
 ImGuiStoragePair* wrap_ImGuiStoragePair_ImGuiStoragePair_Ptr(ImGuiID _key,uintptr_t _val_p) { return ImGuiStoragePair_ImGuiStoragePair_Ptr(_key,(void*)(uintptr_t)_val_p); }
