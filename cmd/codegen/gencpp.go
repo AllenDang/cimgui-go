@@ -369,7 +369,7 @@ extern "C" {
 		// cppSb.WriteString(fmt.Sprintf("// %#v\n", f))
 
 		// if needed, write extra stuff to cpp headers
-		if string(f.AllCallArgs) == actualCallArgsStr {
+		if string(f.AllCallArgs) == actualCallArgsStr && ret == f.Ret {
 			cWrapperFuncName = f.FuncName
 		} else if f.Constructor {
 			headerSb.WriteString(fmt.Sprintf("extern %s* %s%s;\n", f.StName, cWrapperFuncName, f.Args))
