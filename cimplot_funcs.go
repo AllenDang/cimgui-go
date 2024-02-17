@@ -7,7 +7,6 @@ package imgui
 // #include "cimplot_structs_accessor.h"
 // #include "cimplot_wrapper.h"
 import "C"
-import "unsafe"
 
 func (self *PlotAlignmentData) Begin() {
 	selfArg, selfFin := self.handle()
@@ -596,17 +595,6 @@ func (self *PlotItemGroup) ItemCount() int32 {
 	return int32(C.ImPlotItemGroup_GetItemCount(selfArg))
 }
 
-func (self *PlotItemGroup) ItemID(label_id string) ID {
-	selfArg, selfFin := self.handle()
-	label_idArg, label_idFin := WrapString(label_id)
-
-	defer func() {
-		selfFin()
-		label_idFin()
-	}()
-	return ID(C.ImPlotItemGroup_GetItemID(selfArg, label_idArg))
-}
-
 func (self *PlotItemGroup) ItemIndex(item *PlotItem) int32 {
 	selfArg, selfFin := self.handle()
 	itemArg, itemFin := item.handle()
@@ -620,11 +608,13 @@ func (self *PlotItemGroup) ItemIndex(item *PlotItem) int32 {
 
 func (self *PlotItemGroup) ItemByID(id ID) *PlotItem {
 	selfArg, selfFin := self.handle()
+	idArg, idFin := id.c()
 
 	defer func() {
 		selfFin()
+		idFin()
 	}()
-	return newPlotItemFromC(C.ImPlotItemGroup_GetItem_ID(selfArg, C.ImGuiID(id)))
+	return newPlotItemFromC(C.ImPlotItemGroup_GetItem_ID(selfArg, idArg))
 }
 
 func (self *PlotItemGroup) ItemStr(label_id string) *PlotItem {
@@ -667,11 +657,13 @@ func (self *PlotItemGroup) LegendLabel(i int32) string {
 
 func (self *PlotItemGroup) OrAddItem(id ID) *PlotItem {
 	selfArg, selfFin := self.handle()
+	idArg, idFin := id.c()
 
 	defer func() {
 		selfFin()
+		idFin()
 	}()
-	return newPlotItemFromC(C.ImPlotItemGroup_GetOrAddItem(selfArg, C.ImGuiID(id)))
+	return newPlotItemFromC(C.ImPlotItemGroup_GetOrAddItem(selfArg, idArg))
 }
 
 func NewPlotItemGroup() *PlotItemGroup {
@@ -1945,37 +1937,31 @@ func PlotFormatTime(t PlotTime, buffer string, size int32, fmt PlotTimeFmt, use_
 	return int32(C.ImPlot_FormatTime(t.toC(), bufferArg, C.int(size), C.ImPlotTimeFmt(fmt), C.bool(use_24_hr_clk)))
 }
 
-func PlotFormatterDefault(value float64, buff string, size int32, data unsafe.Pointer) int32 {
+func PlotFormatterDefault(value float64, buff string, size int32, data uintptr) int32 {
 	buffArg, buffFin := WrapString(buff)
-	dataArg, dataFin := WrapVoidPtr(data)
 
 	defer func() {
 		buffFin()
-		dataFin()
 	}()
-	return int32(C.ImPlot_Formatter_Default(C.double(value), buffArg, C.int(size), dataArg))
+	return int32(C.wrap_ImPlot_Formatter_Default(C.double(value), buffArg, C.int(size), C.uintptr_t(data)))
 }
 
-func PlotFormatterLogit(value float64, buff string, size int32, noname1 unsafe.Pointer) int32 {
+func PlotFormatterLogit(value float64, buff string, size int32, noname1 uintptr) int32 {
 	buffArg, buffFin := WrapString(buff)
-	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
 
 	defer func() {
 		buffFin()
-		noname1Fin()
 	}()
-	return int32(C.ImPlot_Formatter_Logit(C.double(value), buffArg, C.int(size), noname1Arg))
+	return int32(C.wrap_ImPlot_Formatter_Logit(C.double(value), buffArg, C.int(size), C.uintptr_t(noname1)))
 }
 
-func PlotFormatterTime(noname1 float64, buff string, size int32, data unsafe.Pointer) int32 {
+func PlotFormatterTime(noname1 float64, buff string, size int32, data uintptr) int32 {
 	buffArg, buffFin := WrapString(buff)
-	dataArg, dataFin := WrapVoidPtr(data)
 
 	defer func() {
 		buffFin()
-		dataFin()
 	}()
-	return int32(C.ImPlot_Formatter_Time(C.double(noname1), buffArg, C.int(size), dataArg))
+	return int32(C.wrap_ImPlot_Formatter_Time(C.double(noname1), buffArg, C.int(size), C.uintptr_t(data)))
 }
 
 func PlotGetAutoColor(idx PlotCol) Vec4 {
@@ -5569,9 +5555,11 @@ func PlotPlotHistogramdoublePtrV(label_id string, values *[]float64, count int32
 // flags: 0
 func PlotPlotImageV(label_id string, user_texture_id TextureID, bounds_min PlotPoint, bounds_max PlotPoint, uv0 Vec2, uv1 Vec2, tint_col Vec4, flags PlotImageFlags) {
 	label_idArg, label_idFin := WrapString(label_id)
-	C.ImPlot_PlotImage(label_idArg, C.ImTextureID(user_texture_id), bounds_min.toC(), bounds_max.toC(), uv0.toC(), uv1.toC(), tint_col.toC(), C.ImPlotImageFlags(flags))
+	user_texture_idArg, user_texture_idFin := user_texture_id.c()
+	C.ImPlot_PlotImage(label_idArg, user_texture_idArg, bounds_min.toC(), bounds_max.toC(), uv0.toC(), uv1.toC(), tint_col.toC(), C.ImPlotImageFlags(flags))
 
 	label_idFin()
+	user_texture_idFin()
 }
 
 // PlotPlotInfLinesFloatPtrV parameter default value hint:
@@ -9030,58 +9018,28 @@ func PlotTagYStr(y float64, col Vec4, fmt string) {
 	fmtFin()
 }
 
-func PlotTransformForwardLog10(v float64, noname1 unsafe.Pointer) float64 {
-	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
-
-	defer func() {
-		noname1Fin()
-	}()
-	return float64(C.ImPlot_TransformForward_Log10(C.double(v), noname1Arg))
+func PlotTransformForwardLog10(v float64, noname1 uintptr) float64 {
+	return float64(C.wrap_ImPlot_TransformForward_Log10(C.double(v), C.uintptr_t(noname1)))
 }
 
-func PlotTransformForwardLogit(v float64, noname1 unsafe.Pointer) float64 {
-	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
-
-	defer func() {
-		noname1Fin()
-	}()
-	return float64(C.ImPlot_TransformForward_Logit(C.double(v), noname1Arg))
+func PlotTransformForwardLogit(v float64, noname1 uintptr) float64 {
+	return float64(C.wrap_ImPlot_TransformForward_Logit(C.double(v), C.uintptr_t(noname1)))
 }
 
-func PlotTransformForwardSymLog(v float64, noname1 unsafe.Pointer) float64 {
-	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
-
-	defer func() {
-		noname1Fin()
-	}()
-	return float64(C.ImPlot_TransformForward_SymLog(C.double(v), noname1Arg))
+func PlotTransformForwardSymLog(v float64, noname1 uintptr) float64 {
+	return float64(C.wrap_ImPlot_TransformForward_SymLog(C.double(v), C.uintptr_t(noname1)))
 }
 
-func PlotTransformInverseLog10(v float64, noname1 unsafe.Pointer) float64 {
-	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
-
-	defer func() {
-		noname1Fin()
-	}()
-	return float64(C.ImPlot_TransformInverse_Log10(C.double(v), noname1Arg))
+func PlotTransformInverseLog10(v float64, noname1 uintptr) float64 {
+	return float64(C.wrap_ImPlot_TransformInverse_Log10(C.double(v), C.uintptr_t(noname1)))
 }
 
-func PlotTransformInverseLogit(v float64, noname1 unsafe.Pointer) float64 {
-	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
-
-	defer func() {
-		noname1Fin()
-	}()
-	return float64(C.ImPlot_TransformInverse_Logit(C.double(v), noname1Arg))
+func PlotTransformInverseLogit(v float64, noname1 uintptr) float64 {
+	return float64(C.wrap_ImPlot_TransformInverse_Logit(C.double(v), C.uintptr_t(noname1)))
 }
 
-func PlotTransformInverseSymLog(v float64, noname1 unsafe.Pointer) float64 {
-	noname1Arg, noname1Fin := WrapVoidPtr(noname1)
-
-	defer func() {
-		noname1Fin()
-	}()
-	return float64(C.ImPlot_TransformInverse_SymLog(C.double(v), noname1Arg))
+func PlotTransformInverseSymLog(v float64, noname1 uintptr) float64 {
+	return float64(C.wrap_ImPlot_TransformInverse_SymLog(C.double(v), C.uintptr_t(noname1)))
 }
 
 func (self *PlotAxis) SetMax(_max float64) bool {
@@ -11146,9 +11104,11 @@ func PlotPlotHistogramdoublePtr(label_id string, values *[]float64, count int32)
 
 func PlotPlotImage(label_id string, user_texture_id TextureID, bounds_min PlotPoint, bounds_max PlotPoint) {
 	label_idArg, label_idFin := WrapString(label_id)
-	C.wrap_ImPlot_PlotImage(label_idArg, C.ImTextureID(user_texture_id), bounds_min.toC(), bounds_max.toC())
+	user_texture_idArg, user_texture_idFin := user_texture_id.c()
+	C.wrap_ImPlot_PlotImage(label_idArg, user_texture_idArg, bounds_min.toC(), bounds_max.toC())
 
 	label_idFin()
+	user_texture_idFin()
 }
 
 func PlotPlotInfLinesFloatPtr(label_id string, values []float32, count int32) {
@@ -13541,15 +13501,6 @@ func (self *FormatterTimeData) TimeDataGetSpec() PlotDateTimeSpec {
 	return *newPlotDateTimeSpecFromC(func() *C.ImPlotDateTimeSpec { result := result; return &result }())
 }
 
-func (self *FormatterTimeData) TimeDataGetUserFormatterData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_Formatter_Time_Data_GetUserFormatterData(selfArg))
-}
-
 func (self PlotAlignmentData) SetVertical(v bool) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -13773,18 +13724,11 @@ func (self *PlotAnnotationCollection) Size() int32 {
 }
 
 func (self PlotAxis) SetID(v ID) {
+	vArg, _ := v.c()
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImPlotAxis_SetID(selfArg, C.ImGuiID(v))
-}
-
-func (self *PlotAxis) ID() ID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return ID(C.wrap_ImPlotAxis_GetID(selfArg))
+	C.wrap_ImPlotAxis_SetID(selfArg, vArg)
 }
 
 func (self PlotAxis) SetFlags(v PlotAxisFlags) {
@@ -13959,23 +13903,6 @@ func (self *PlotAxis) Ticker() PlotTicker {
 	return *newPlotTickerFromC(func() *C.ImPlotTicker { result := result; return &result }())
 }
 
-func (self PlotAxis) SetFormatterData(v unsafe.Pointer) {
-	vArg, _ := WrapVoidPtr(v)
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImPlotAxis_SetFormatterData(selfArg, vArg)
-}
-
-func (self *PlotAxis) FormatterData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImPlotAxis_GetFormatterData(selfArg))
-}
-
 func (self PlotAxis) SetFormatSpec(v *[16]rune) {
 	vArg := make([]C.char, len(v))
 	for i, vV := range v {
@@ -14064,23 +13991,6 @@ func (self *PlotAxis) PickerTimeMax() PlotTime {
 		selfFin()
 	}()
 	return *(&PlotTime{}).fromC(C.wrap_ImPlotAxis_GetPickerTimeMax(selfArg))
-}
-
-func (self PlotAxis) SetTransformData(v unsafe.Pointer) {
-	vArg, _ := WrapVoidPtr(v)
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_ImPlotAxis_SetTransformData(selfArg, vArg)
-}
-
-func (self *PlotAxis) TransformData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_ImPlotAxis_GetTransformData(selfArg))
 }
 
 func (self PlotAxis) SetPixelMin(v float32) {
@@ -15394,18 +15304,11 @@ func (self *PlotInputMap) ZoomRate() float32 {
 }
 
 func (self PlotItem) SetID(v ID) {
+	vArg, _ := v.c()
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImPlotItem_SetID(selfArg, C.ImGuiID(v))
-}
-
-func (self *PlotItem) ID() ID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return ID(C.wrap_ImPlotItem_GetID(selfArg))
+	C.wrap_ImPlotItem_SetID(selfArg, vArg)
 }
 
 func (self PlotItem) SetColor(v uint32) {
@@ -15499,18 +15402,11 @@ func (self *PlotItem) SeenThisFrame() bool {
 }
 
 func (self PlotItemGroup) SetID(v ID) {
+	vArg, _ := v.c()
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImPlotItemGroup_SetID(selfArg, C.ImGuiID(v))
-}
-
-func (self *PlotItemGroup) ID() ID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return ID(C.wrap_ImPlotItemGroup_GetID(selfArg))
+	C.wrap_ImPlotItemGroup_SetID(selfArg, vArg)
 }
 
 func (self PlotItemGroup) SetLegend(v PlotLegend) {
@@ -15980,18 +15876,11 @@ func (self *PlotNextItemData) HiddenCond() PlotCond {
 }
 
 func (self PlotPlot) SetID(v ID) {
+	vArg, _ := v.c()
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImPlotPlot_SetID(selfArg, C.ImGuiID(v))
-}
-
-func (self *PlotPlot) ID() ID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return ID(C.wrap_ImPlotPlot_GetID(selfArg))
+	C.wrap_ImPlotPlot_SetID(selfArg, vArg)
 }
 
 func (self PlotPlot) SetFlags(v PlotFlags) {
@@ -16956,18 +16845,11 @@ func (self *PlotStyle) Use24HourClock() bool {
 }
 
 func (self PlotSubplot) SetID(v ID) {
+	vArg, _ := v.c()
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImPlotSubplot_SetID(selfArg, C.ImGuiID(v))
-}
-
-func (self *PlotSubplot) ID() ID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return ID(C.wrap_ImPlotSubplot_GetID(selfArg))
+	C.wrap_ImPlotSubplot_SetID(selfArg, vArg)
 }
 
 func (self PlotSubplot) SetFlags(v PlotSubplotFlags) {

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"regexp"
 	"strings"
 )
 
@@ -34,6 +35,17 @@ var skippedStructs = map[CIdentifier]bool{
 	"ImColor":    true,
 	"ImRect":     true,
 	"ImPlotTime": true,
+}
+
+var skippedTypedefs = map[CIdentifier]bool{
+	"ImU8":  true,
+	"ImU16": true,
+	"ImU32": true,
+	"ImU64": true,
+	"ImS8":  true,
+	"ImS16": true,
+	"ImS32": true,
+	"ImS64": true,
 }
 
 var replace = map[CIdentifier]GoIdentifier{
@@ -73,6 +85,8 @@ func (c CIdentifier) renameGoIdentifier() GoIdentifier {
 		c = "new" + c[3:].trimImGuiPrefix()
 	case HasPrefix(c, "*"):
 		c = "*" + c[1:].trimImGuiPrefix()
+	case HasPrefix(c, "imnodes"):
+		c = Replace(c, "imnodes", "ImNodes", 1)
 	}
 
 	c = TrimPrefix(c, "Get")
@@ -84,4 +98,16 @@ func (c CIdentifier) renameGoIdentifier() GoIdentifier {
 
 func (c CIdentifier) renameEnum() GoIdentifier {
 	return TrimSuffix(c, "_").renameGoIdentifier()
+}
+
+// returns true if s is of form TypeName<*> <(>Name<*><)>(args)
+// (fragments in <> are optional)
+func IsCallbackTypedef(s string) bool {
+	pattern := `\w*\**\(*\w*\**\)*\(.*\);`
+	b, err := regexp.MatchString(pattern, s)
+	if err != nil {
+		panic(err)
+	}
+
+	return b
 }

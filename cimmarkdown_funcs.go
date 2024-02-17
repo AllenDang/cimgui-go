@@ -7,7 +7,6 @@ package imgui
 // #include "cimmarkdown_structs_accessor.h"
 // #include "cimmarkdown_wrapper.h"
 import "C"
-import "unsafe"
 
 func IsCharInsideWord(c_ rune) bool {
 	return C.IsCharInsideWord(C.char(c_)) == C.bool(true)
@@ -109,6 +108,10 @@ func (self *TextRegion) Destroy() {
 	C.TextRegion_destroy(selfArg)
 
 	selfFin()
+}
+
+func UnderLine(col_ Color) {
+	C.UnderLine(col_.toC())
 }
 
 func RenderLinkTextWrapped(self *TextRegion, text_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string) {
@@ -436,23 +439,6 @@ func (self *MarkdownConfig) LinkIcon() string {
 	return C.GoString(C.wrap_MarkdownConfig_GetLinkIcon(selfArg))
 }
 
-func (self MarkdownConfig) SetUserData(v unsafe.Pointer) {
-	vArg, _ := WrapVoidPtr(v)
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_MarkdownConfig_SetUserData(selfArg, vArg)
-}
-
-func (self *MarkdownConfig) UserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_MarkdownConfig_GetUserData(selfArg))
-}
-
 func (self MarkdownFormatInfo) SetType(v MarkdownFormatType) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -563,18 +549,11 @@ func (self *MarkdownImageData) UseLinkCallback() bool {
 }
 
 func (self MarkdownImageData) SetUsertextureid(v TextureID) {
+	vArg, _ := v.c()
+
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetUser_texture_id(selfArg, C.ImTextureID(v))
-}
-
-func (self *MarkdownImageData) Usertextureid() TextureID {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return TextureID(C.wrap_MarkdownImageData_GetUser_texture_id(selfArg))
+	C.wrap_MarkdownImageData_SetUser_texture_id(selfArg, vArg)
 }
 
 func (self MarkdownImageData) SetSize(v Vec2) {
@@ -714,23 +693,6 @@ func (self *MarkdownLinkCallbackData) LinkLength() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_MarkdownLinkCallbackData_GetLinkLength(selfArg))
-}
-
-func (self MarkdownLinkCallbackData) SetUserData(v unsafe.Pointer) {
-	vArg, _ := WrapVoidPtr(v)
-
-	selfArg, selfFin := self.handle()
-	defer selfFin()
-	C.wrap_MarkdownLinkCallbackData_SetUserData(selfArg, vArg)
-}
-
-func (self *MarkdownLinkCallbackData) UserData() unsafe.Pointer {
-	selfArg, selfFin := self.handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return unsafe.Pointer(C.wrap_MarkdownLinkCallbackData_GetUserData(selfArg))
 }
 
 func (self MarkdownLinkCallbackData) SetIsImage(v bool) {

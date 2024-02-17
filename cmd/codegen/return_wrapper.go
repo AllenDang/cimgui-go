@@ -14,57 +14,58 @@ func getReturnWrapper(
 	t CIdentifier,
 	structNames map[CIdentifier]bool,
 	enumNames map[GoIdentifier]bool,
+	refTypedefs map[CIdentifier]string,
 ) (returnWrapper, error) {
 	returnWrapperMap := map[CIdentifier]returnWrapper{
-		"bool":                     {"bool", "%s == C.bool(true)"},
-		"char":                     simpleR("rune"),
-		"unsigned char":            simpleR("uint"),
-		"unsigned char*":           {"*uint", "(*uint)(unsafe.Pointer(%s))"}, // NOTE: This should work but I'm not 100% sure
-		"char*":                    {"string", "C.GoString(%s)"},
-		"const char*":              {"string", "C.GoString(%s)"},
-		"const ImWchar*":           simpleR("(*Wchar)"),
-		"ImWchar*":                 simpleR("(*Wchar)"),
-		"ImWchar":                  simpleR("Wchar"),
-		"ImWchar16":                simpleR("uint16"),
-		"float":                    simpleR("float32"),
-		"float*":                   simplePtrR("float32"),
-		"double":                   simpleR("float64"),
-		"double*":                  simplePtrR("float64"),
-		"int":                      simpleR("int32"),
-		"int*":                     simplePtrR("int32"),
-		"unsigned int":             simpleR("uint32"),
-		"unsigned int*":            simplePtrR("uint32"),
-		"short":                    simpleR("int16"),
-		"unsigned short":           simpleR("uint16"),
-		"ImS8":                     simpleR("int"),
-		"ImS16":                    simpleR("int"),
-		"ImS32":                    simpleR("int"),
-		"ImS64":                    simpleR("int64"),
-		"ImU8":                     simpleR("byte"),
-		"ImU8*":                    simplePtrR("byte"),
-		"ImU16":                    simpleR("uint16"),
-		"ImU16*":                   simplePtrR("uint16"),
-		"ImU32":                    simpleR("uint32"),
-		"ImU32*":                   simplePtrR("uint32"),
-		"ImU64":                    simpleR("uint64"),
-		"ImU64*":                   simplePtrR("uint64"),
-		"ImVec4":                   wrappableR("Vec4"),
-		"const ImVec4*":            imVec4PtrReturnW(),
-		"ImGuiID":                  simpleR("ID"),
-		"ImTextureID":              simpleR("TextureID"),
-		"ImVec2":                   wrappableR("Vec2"),
-		"ImColor":                  wrappableR("Color"),
-		"ImPlotPoint":              wrappableR("PlotPoint"),
-		"ImRect":                   wrappableR("Rect"),
-		"ImPlotTime":               wrappableR("PlotTime"),
-		"ImGuiTableColumnIdx":      simpleR("TableColumnIdx"),
-		"ImGuiTableDrawChannelIdx": simpleR("TableDrawChannelIdx"),
-		"void*":                    simpleR("unsafe.Pointer"), // TODO: disabled due to https://github.com/AllenDang/cimgui-go/issues/184
-		"size_t":                   simpleR("uint64"),
-		"ImDrawIdx":                simpleR("DrawIdx"),
-		"ImDrawIdx*":               simplePtrR("DrawIdx"),
+		"bool":           {"bool", "%s == C.bool(true)"},
+		"char":           simpleR("rune"),
+		"unsigned char":  simpleR("uint"),
+		"unsigned char*": {"*uint", "(*uint)(unsafe.Pointer(%s))"}, // NOTE: This should work but I'm not 100% sure
+		"char*":          {"string", "C.GoString(%s)"},
+		"const char*":    {"string", "C.GoString(%s)"},
+		"const ImWchar*": simpleR("(*Wchar)"),
+		"ImWchar*":       simpleR("(*Wchar)"),
+		"ImWchar":        simpleR("Wchar"),
+		"ImWchar16":      simpleR("uint16"),
+		"float":          simpleR("float32"),
+		"float*":         simplePtrR("float32"),
+		"double":         simpleR("float64"),
+		"double*":        simplePtrR("float64"),
+		"int":            simpleR("int32"),
+		"int*":           simplePtrR("int32"),
+		"unsigned int":   simpleR("uint32"),
+		"unsigned int*":  simplePtrR("uint32"),
+		"short":          simpleR("int16"),
+		"unsigned short": simpleR("uint16"),
+		"ImS8":           simpleR("int"),
+		"ImS16":          simpleR("int"),
+		"ImS32":          simpleR("int"),
+		"ImS64":          simpleR("int64"),
+		"ImU8":           simpleR("byte"),
+		"ImU8*":          simplePtrR("byte"),
+		"ImU16":          simpleR("uint16"),
+		"ImU16*":         simplePtrR("uint16"),
+		"ImU32":          simpleR("uint32"),
+		"ImU32*":         simplePtrR("uint32"),
+		"ImU64":          simpleR("uint64"),
+		"ImU64*":         simplePtrR("uint64"),
+		"ImVec4":         wrappableR("Vec4"),
+		"const ImVec4*":  imVec4PtrReturnW(),
+		"ImVec2":         wrappableR("Vec2"),
+		"ImColor":        wrappableR("Color"),
+		"ImPlotPoint":    wrappableR("PlotPoint"),
+		"ImRect":         wrappableR("Rect"),
+		"ImPlotTime":     wrappableR("PlotTime"),
+		"uintptr_t":      simpleR("uintptr"),
+		"size_t":         simpleR("uint64"),
 	}
 
+	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")
+	// check if pureType is a declared type (struct or something else from typedefs)
+	_, isRefStruct := refTypedefs[pureType]
+	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
+	_, isStruct := structNames[pureType]
+	isStruct = isStruct || (isRefStruct && !shouldSkipRefTypedef)
 	w, known := returnWrapperMap[t]
 	switch {
 	case known:
@@ -83,7 +84,7 @@ func getReturnWrapper(
 	case HasPrefix(t, "ImVector_") &&
 		!(HasSuffix(t, "*") || HasSuffix(t, "]")):
 		pureType := CIdentifier(TrimPrefix(t, "ImVector_") + "*")
-		rw, err := getReturnWrapper(pureType, structNames, enumNames)
+		rw, err := getReturnWrapper(pureType, structNames, enumNames, refTypedefs)
 		if err != nil {
 			return returnWrapper{}, fmt.Errorf("creating vector wrapper %w", err)
 		}
@@ -91,15 +92,15 @@ func getReturnWrapper(
 			returnType: GoIdentifier(fmt.Sprintf("Vector[%s]", rw.returnType)),
 			returnStmt: fmt.Sprintf("newVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
 		}, nil
-	case HasSuffix(t, "*") && structNames[TrimPrefix(TrimSuffix(t, "*"), "const ")] && !shouldSkipStruct(TrimPrefix(TrimSuffix(t, "*"), "const ")):
-		return returnWrapper{
-			returnType: "*" + TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(),
-			returnStmt: fmt.Sprintf("new%sFromC(%%s)", TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier()),
-		}, nil
 	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), enumNames):
 		return returnWrapper{
 			returnType: "*" + TrimSuffix(t, "*").renameEnum(),
 			returnStmt: fmt.Sprintf("(*%s)(%%s)", TrimSuffix(t, "*").renameEnum()),
+		}, nil
+	case HasSuffix(t, "*") && isStruct && !shouldSkipStruct(pureType):
+		return returnWrapper{
+			returnType: "*" + TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(),
+			returnStmt: fmt.Sprintf("new%sFromC(%%s)", TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier()),
 		}, nil
 	default:
 		return returnWrapper{}, fmt.Errorf("unknown return type %s", t)

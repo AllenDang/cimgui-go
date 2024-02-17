@@ -55,7 +55,7 @@ extern "C" {
 
 		shouldSkip := false
 
-		// Check func names
+		// Check func names (some of them are arbitrarly skipped)
 		if HasPrefix(f.FuncName, "ImSpan") ||
 			HasPrefix(f.FuncName, "ImBitArray") {
 			shouldSkip = true
@@ -65,12 +65,12 @@ extern "C" {
 		// Process custom_type for arg
 		for i, a := range f.ArgsT {
 			if len(a.CustomType) > 0 {
-				f.Args = Replace(f.Args, a.Type, a.CustomType, -1)
+				f.Args = ReplaceAll(f.Args, a.Type, a.CustomType)
 				f.ArgsT[i].Type = a.CustomType
 			}
 		}
 
-		// Check args
+		// Check args (some arg formats are skipped)
 		for _, a := range f.ArgsT {
 			if Contains(a.Type, "const T*") ||
 				Contains(a.Type, "const T") ||
@@ -81,20 +81,21 @@ extern "C" {
 			}
 		}
 
+		// check if func name is valid
 		if len(f.FuncName) == 0 {
 			shouldSkip = true
 		}
 
-		funcName := f.FuncName
-
 		// Check lower case for function
-		if !shouldExportFunc(funcName) {
+		if !shouldExportFunc(f.FuncName) {
 			shouldSkip = true
 		}
 
 		if shouldSkip {
 			continue
 		}
+
+		funcName := f.FuncName
 
 		// Check lower case member function
 		funcParts := Split(funcName, "_")
@@ -114,6 +115,10 @@ extern "C" {
 		// Remove text_end arg
 		f.Args = strings.Replace(f.Args, ",const char* text_end_", fmt.Sprintf(",const int %s", textLenRegisteredName), 1) // sometimes happens in cimmarkdown
 		f.Args = strings.Replace(f.Args, ",const char* text_end", fmt.Sprintf(",const int %s", textLenRegisteredName), 1)
+		ret := f.Ret
+		if ret == "void*" {
+			ret = "uintptr_t"
+		}
 
 		var argsT []ArgDef
 		var actualCallArgs []CIdentifier
@@ -124,7 +129,7 @@ extern "C" {
 			case a.Name == "...":
 				continue
 			case a.Name == "text_end", a.Name == "text_end_":
-				//chck if there is `text` argument
+				// chck if there is `text` argument
 				var found bool
 				for _, aa := range f.ArgsT {
 					if aa.Name == "text" {
@@ -143,16 +148,50 @@ extern "C" {
 					actualCallArgs = append(actualCallArgs, "0")
 					continue
 				}
+			// this is here, because of a BUG in GO that throws a fatal panic
+			// when we attempt to print unsafe.Pointer which is valid for C but is not present
+			// on the GO stack. See https://go.dev/play/p/d09eyqUlVV0
+			// see:https://github.com/golang/go/issues/64467
+			// case Contains(a.Type, "void*"):
+			case a.Type == "void*" || a.Type == "const void*":
+				actualCallArgs = append(actualCallArgs, CIdentifier(fmt.Sprintf("(%s)(uintptr_t)%s", a.Type, a.Name)))
+				a.Type = "uintptr_t"
+				// do some trick: we can't replace void* in a.Args immediaely by using replace, because sometimes
+				// args are of form (void* user_data, (void* user_data)(int something))
+				// we need to replace only "plain" arguments (not function-types)
+				// we will split Args by "," and check each argument to be equal to ("void* ", a.Name)
+				newArgs := TrimPrefix(f.Args, "(")
+				newArgs = TrimSuffix(newArgs, ")")
+				newArgsList := Split(newArgs, ",")
+				for i, arg := range newArgsList {
+					switch arg {
+					case fmt.Sprintf("void* %s", a.Name):
+						newArgsList[i] = fmt.Sprintf("uintptr_t %s", a.Name)
+					case fmt.Sprintf("const void* %s", a.Name):
+						newArgsList[i] = fmt.Sprintf("const uintptr_t %s", a.Name)
+					}
+				}
+
+				f.Args = fmt.Sprintf("(%s)", Join(newArgsList, ","))
+
+				argsT = append(argsT, a)
 			default:
 				argsT = append(argsT, a)
 				actualCallArgs = append(actualCallArgs, a.Name)
 			}
 		}
-		f.AllCallArgs = "(" + TrimSuffix(f.AllCallArgs, ",") + ")"
 
+		f.AllCallArgs = "(" + TrimSuffix(f.AllCallArgs, ",") + ")"
 		f.ArgsT = argsT
 
-		// Generate shotter function which omits the default args
+		//f.Args = "("
+		//for _, a := range argsT {
+		//	f.Args += fmt.Sprintf("%s %s,", a.Type, a.Name)
+		//}
+		//f.Args = TrimSuffix(f.Args, ",")
+		//f.Args += ")"
+
+		// Generate shorter function which omits the default args
 		// Skip functions as function pointer arg
 		shouldSkip = false
 		for _, a := range f.ArgsT {
@@ -252,6 +291,10 @@ extern "C" {
 					v = "NULL"
 				}
 
+				if v == "nullptr" || v == "NULL" {
+					v = "0"
+				}
+
 				if k == "text_end" || k == "text_end_" {
 					v = "0"
 				}
@@ -276,7 +319,7 @@ extern "C" {
 				Destructor:       f.Destructor,
 				StructSetter:     false,
 				StructGetter:     false,
-				Ret:              f.Ret,
+				Ret:              ret,
 				StName:           f.StName,
 				NonUDT:           f.NonUDT,
 				CWrapperFuncName: cWrapperFuncName + "V",
@@ -304,7 +347,7 @@ extern "C" {
 				Constructor:      f.Constructor,
 				Destructor:       f.Destructor,
 				InvocationStmt:   f.InvocationStmt,
-				Ret:              f.Ret,
+				Ret:              ret,
 				StName:           f.StName,
 				NonUDT:           f.NonUDT,
 				CWrapperFuncName: cWrapperFuncName,
@@ -325,7 +368,8 @@ extern "C" {
 
 		// cppSb.WriteString(fmt.Sprintf("// %#v\n", f))
 
-		if string(f.AllCallArgs) == actualCallArgsStr {
+		// if needed, write extra stuff to cpp headers
+		if string(f.AllCallArgs) == actualCallArgsStr && ret == f.Ret {
 			cWrapperFuncName = f.FuncName
 		} else if f.Constructor {
 			headerSb.WriteString(fmt.Sprintf("extern %s* %s%s;\n", f.StName, cWrapperFuncName, f.Args))
@@ -334,11 +378,14 @@ extern "C" {
 			headerSb.WriteString(fmt.Sprintf("extern void %s%s;\n", cWrapperFuncName, f.Args))
 			cppSb.WriteString(fmt.Sprintf("void %s%s { %s%s; }\n", cWrapperFuncName, f.Args, invokeFunctionName, actualCallArgsStr))
 		} else {
-			headerSb.WriteString(fmt.Sprintf("extern %s %s%s;\n", f.Ret, cWrapperFuncName, f.Args))
+			headerSb.WriteString(fmt.Sprintf("extern %s %s%s;\n", ret, cWrapperFuncName, f.Args))
 
-			if f.Ret == "void" {
+			switch f.Ret {
+			case "void":
 				cppSb.WriteString(fmt.Sprintf("%s %s%s { %s%s; }\n", f.Ret, cWrapperFuncName, f.Args, invokeFunctionName, actualCallArgsStr))
-			} else {
+			case "void*":
+				cppSb.WriteString(fmt.Sprintf("uintptr_t %s%s { return (uintptr_t)%s%s; }\n", cWrapperFuncName, f.Args, invokeFunctionName, actualCallArgsStr))
+			default:
 				cppSb.WriteString(fmt.Sprintf("%s %s%s { return %s%s; }\n", f.Ret, cWrapperFuncName, f.Args, invokeFunctionName, actualCallArgsStr))
 			}
 		}

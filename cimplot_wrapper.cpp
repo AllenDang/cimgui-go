@@ -6,11 +6,33 @@
 
 void wrap_ImPlotAnnotationCollection_Append(ImPlotAnnotationCollection* self,const ImVec2 pos,const ImVec2 off,ImU32 bg,ImU32 fg,bool clamp,const char* fmt) { ImPlotAnnotationCollection_Append(self,pos,off,bg,fg,clamp,fmt); }
 void wrap_ImPlotTagCollection_Append(ImPlotTagCollection* self,ImAxis axis,double value,ImU32 bg,ImU32 fg,const char* fmt) { ImPlotTagCollection_Append(self,axis,value,bg,fg,fmt); }
+ImPlotTick* wrap_ImPlotTicker_AddTick_doublePlotFormatter(ImPlotTicker* self,double value,bool major,int level,bool show_label,ImPlotFormatter formatter,uintptr_t data) { return ImPlotTicker_AddTick_doublePlotFormatter(self,value,major,level,show_label,formatter,(void*)(uintptr_t)data); }
 void wrap_ImPlot_AddTextCenteredV(ImDrawList* DrawList,ImVec2 top_center,ImU32 col,const char* text_begin) { ImPlot_AddTextCentered(DrawList,top_center,col,text_begin,0); }
 void wrap_ImPlot_AddTextVerticalV(ImDrawList* DrawList,ImVec2 pos,ImU32 col,const char* text_begin) { ImPlot_AddTextVertical(DrawList,pos,col,text_begin,0); }
 void wrap_ImPlot_Annotation_Str(double x,double y,const ImVec4 col,const ImVec2 pix_offset,bool clamp,const char* fmt) { ImPlot_Annotation_Str(x,y,col,pix_offset,clamp,fmt); }
+int wrap_ImPlot_Formatter_Default(double value,char* buff,int size,uintptr_t data) { return ImPlot_Formatter_Default(value,buff,size,(void*)(uintptr_t)data); }
+int wrap_ImPlot_Formatter_Logit(double value,char* buff,int size,uintptr_t noname1) { return ImPlot_Formatter_Logit(value,buff,size,(void*)(uintptr_t)noname1); }
+int wrap_ImPlot_Formatter_Time(double noname1,char* buff,int size,uintptr_t data) { return ImPlot_Formatter_Time(noname1,buff,size,(void*)(uintptr_t)data); }
+void wrap_ImPlot_Locator_Default(ImPlotTicker* ticker,const ImPlotRange range,float pixels,bool vertical,ImPlotFormatter formatter,uintptr_t formatter_data) { ImPlot_Locator_Default(ticker,range,pixels,vertical,formatter,(void*)(uintptr_t)formatter_data); }
+void wrap_ImPlot_Locator_Log10(ImPlotTicker* ticker,const ImPlotRange range,float pixels,bool vertical,ImPlotFormatter formatter,uintptr_t formatter_data) { ImPlot_Locator_Log10(ticker,range,pixels,vertical,formatter,(void*)(uintptr_t)formatter_data); }
+void wrap_ImPlot_Locator_SymLog(ImPlotTicker* ticker,const ImPlotRange range,float pixels,bool vertical,ImPlotFormatter formatter,uintptr_t formatter_data) { ImPlot_Locator_SymLog(ticker,range,pixels,vertical,formatter,(void*)(uintptr_t)formatter_data); }
+void wrap_ImPlot_Locator_Time(ImPlotTicker* ticker,const ImPlotRange range,float pixels,bool vertical,ImPlotFormatter formatter,uintptr_t formatter_data) { ImPlot_Locator_Time(ticker,range,pixels,vertical,formatter,(void*)(uintptr_t)formatter_data); }
+void wrap_ImPlot_PlotBarsGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,double bar_size,ImPlotBarsFlags flags) { ImPlot_PlotBarsG(label_id,getter,(void*)(uintptr_t)data,count,bar_size,flags); }
+void wrap_ImPlot_PlotDigitalGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,ImPlotDigitalFlags flags) { ImPlot_PlotDigitalG(label_id,getter,(void*)(uintptr_t)data,count,flags); }
+void wrap_ImPlot_PlotLineGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,ImPlotLineFlags flags) { ImPlot_PlotLineG(label_id,getter,(void*)(uintptr_t)data,count,flags); }
+void wrap_ImPlot_PlotScatterGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,ImPlotScatterFlags flags) { ImPlot_PlotScatterG(label_id,getter,(void*)(uintptr_t)data,count,flags); }
+void wrap_ImPlot_PlotShadedGV(const char* label_id,ImPlotPoint_getter getter1,uintptr_t data1,ImPlotPoint_getter getter2,uintptr_t data2,int count,ImPlotShadedFlags flags) { ImPlot_PlotShadedG(label_id,getter1,(void*)(uintptr_t)data1,getter2,(void*)(uintptr_t)data2,count,flags); }
+void wrap_ImPlot_PlotStairsGV(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,ImPlotStairsFlags flags) { ImPlot_PlotStairsG(label_id,getter,(void*)(uintptr_t)data,count,flags); }
+void wrap_ImPlot_SetupAxisFormat_PlotFormatterV(ImAxis axis,ImPlotFormatter formatter,uintptr_t data) { ImPlot_SetupAxisFormat_PlotFormatter(axis,formatter,(void*)(uintptr_t)data); }
+void wrap_ImPlot_SetupAxisScale_PlotTransformV(ImAxis axis,ImPlotTransform forward,ImPlotTransform inverse,uintptr_t data) { ImPlot_SetupAxisScale_PlotTransform(axis,forward,inverse,(void*)(uintptr_t)data); }
 void wrap_ImPlot_TagX_Str(double x,const ImVec4 col,const char* fmt) { ImPlot_TagX_Str(x,col,fmt); }
 void wrap_ImPlot_TagY_Str(double y,const ImVec4 col,const char* fmt) { ImPlot_TagY_Str(y,col,fmt); }
+double wrap_ImPlot_TransformForward_Log10(double v,uintptr_t noname1) { return ImPlot_TransformForward_Log10(v,(void*)(uintptr_t)noname1); }
+double wrap_ImPlot_TransformForward_Logit(double v,uintptr_t noname1) { return ImPlot_TransformForward_Logit(v,(void*)(uintptr_t)noname1); }
+double wrap_ImPlot_TransformForward_SymLog(double v,uintptr_t noname1) { return ImPlot_TransformForward_SymLog(v,(void*)(uintptr_t)noname1); }
+double wrap_ImPlot_TransformInverse_Log10(double v,uintptr_t noname1) { return ImPlot_TransformInverse_Log10(v,(void*)(uintptr_t)noname1); }
+double wrap_ImPlot_TransformInverse_Logit(double v,uintptr_t noname1) { return ImPlot_TransformInverse_Logit(v,(void*)(uintptr_t)noname1); }
+double wrap_ImPlot_TransformInverse_SymLog(double v,uintptr_t noname1) { return ImPlot_TransformInverse_SymLog(v,(void*)(uintptr_t)noname1); }
 bool wrap_ImPlotAxis_SetMax(ImPlotAxis* self,double _max) { return ImPlotAxis_SetMax(self,_max,false); }
 bool wrap_ImPlotAxis_SetMin(ImPlotAxis* self,double _min) { return ImPlotAxis_SetMin(self,_min,false); }
 ImPlotColormap wrap_ImPlot_AddColormap_U32Ptr(const char* name,const ImU32* cols,int size) { return ImPlot_AddColormap_U32Ptr(name,cols,size,true); }
@@ -25,16 +47,16 @@ bool wrap_ImPlot_BeginDragDropSourcePlot() { return ImPlot_BeginDragDropSourcePl
 bool wrap_ImPlot_BeginItem(const char* label_id) { return ImPlot_BeginItem(label_id,0,-1); }
 bool wrap_ImPlot_BeginLegendPopup(const char* label_id) { return ImPlot_BeginLegendPopup(label_id,1); }
 bool wrap_ImPlot_BeginPlot(const char* title_id) { return ImPlot_BeginPlot(title_id,(ImVec2){.x=-1, .y=0},0); }
-bool wrap_ImPlot_BeginSubplots(const char* title_id,int rows,int cols,const ImVec2 size) { return ImPlot_BeginSubplots(title_id,rows,cols,size,0,nullptr,nullptr); }
-void wrap_ImPlot_BustColorCache() { ImPlot_BustColorCache(nullptr); }
+bool wrap_ImPlot_BeginSubplots(const char* title_id,int rows,int cols,const ImVec2 size) { return ImPlot_BeginSubplots(title_id,rows,cols,size,0,0,0); }
+void wrap_ImPlot_BustColorCache() { ImPlot_BustColorCache(0); }
 bool wrap_ImPlot_ColormapButton(const char* label) { return ImPlot_ColormapButton(label,(ImVec2){.x=0, .y=0},-1); }
 void wrap_ImPlot_ColormapScale(const char* label,double scale_min,double scale_max) { ImPlot_ColormapScale(label,scale_min,scale_max,(ImVec2){.x=0, .y=0},"%g",0,-1); }
-bool wrap_ImPlot_ColormapSlider(const char* label,float* t) { return ImPlot_ColormapSlider(label,t,nullptr,"",-1); }
-void wrap_ImPlot_DestroyContext() { ImPlot_DestroyContext(nullptr); }
-bool wrap_ImPlot_DragLineX(int id,double* x,const ImVec4 col) { return ImPlot_DragLineX(id,x,col,1,0,nullptr,nullptr,nullptr); }
-bool wrap_ImPlot_DragLineY(int id,double* y,const ImVec4 col) { return ImPlot_DragLineY(id,y,col,1,0,nullptr,nullptr,nullptr); }
-bool wrap_ImPlot_DragPoint(int id,double* x,double* y,const ImVec4 col) { return ImPlot_DragPoint(id,x,y,col,4,0,nullptr,nullptr,nullptr); }
-bool wrap_ImPlot_DragRect(int id,double* x1,double* y1,double* x2,double* y2,const ImVec4 col) { return ImPlot_DragRect(id,x1,y1,x2,y2,col,0,nullptr,nullptr,nullptr); }
+bool wrap_ImPlot_ColormapSlider(const char* label,float* t) { return ImPlot_ColormapSlider(label,t,0,"",-1); }
+void wrap_ImPlot_DestroyContext() { ImPlot_DestroyContext(0); }
+bool wrap_ImPlot_DragLineX(int id,double* x,const ImVec4 col) { return ImPlot_DragLineX(id,x,col,1,0,0,0,0); }
+bool wrap_ImPlot_DragLineY(int id,double* y,const ImVec4 col) { return ImPlot_DragLineY(id,y,col,1,0,0,0,0); }
+bool wrap_ImPlot_DragPoint(int id,double* x,double* y,const ImVec4 col) { return ImPlot_DragPoint(id,x,y,col,4,0,0,0,0); }
+bool wrap_ImPlot_DragRect(int id,double* x1,double* y1,double* x2,double* y2,const ImVec4 col) { return ImPlot_DragRect(id,x1,y1,x2,y2,col,0,0,0,0); }
 void wrap_ImPlot_GetColormapColor(ImVec4* pOut,int idx) { ImPlot_GetColormapColor(pOut,idx,-1); }
 int wrap_ImPlot_GetColormapSize() { return ImPlot_GetColormapSize(-1); }
 void wrap_ImPlot_GetLocationPos(ImVec2* pOut,const ImRect outer_rect,const ImVec2 inner_size,ImPlotLocation location) { ImPlot_GetLocationPos(pOut,outer_rect,inner_size,location,(ImVec2){.x=0, .y=0}); }
@@ -45,8 +67,8 @@ void wrap_ImPlot_HideNextItem() { ImPlot_HideNextItem(true,ImPlotCond_Once); }
 bool wrap_ImPlot_ImAlmostEqual(double v1,double v2) { return ImPlot_ImAlmostEqual(v1,v2,2); }
 void wrap_ImPlot_LabelAxisValue(const ImPlotAxis axis,double value,char* buff,int size) { ImPlot_LabelAxisValue(axis,value,buff,size,false); }
 void wrap_ImPlot_MakeTime(ImPlotTime* pOut,int year) { ImPlot_MakeTime(pOut,year,0,1,0,0,0,0); }
-void wrap_ImPlot_MapInputDefault() { ImPlot_MapInputDefault(nullptr); }
-void wrap_ImPlot_MapInputReverse() { ImPlot_MapInputReverse(nullptr); }
+void wrap_ImPlot_MapInputDefault() { ImPlot_MapInputDefault(0); }
+void wrap_ImPlot_MapInputReverse() { ImPlot_MapInputReverse(0); }
 void wrap_ImPlot_PixelsToPlot_Float(ImPlotPoint* pOut,float x,float y) { ImPlot_PixelsToPlot_Float(pOut,x,y,-1,-1); }
 void wrap_ImPlot_PixelsToPlot_Vec2(ImPlotPoint* pOut,const ImVec2 pix) { ImPlot_PixelsToPlot_Vec2(pOut,pix,-1,-1); }
 void wrap_ImPlot_PlotBarGroups_FloatPtr(const char* const label_ids[],const float* values,int item_count,int group_count) { ImPlot_PlotBarGroups_FloatPtr(label_ids,values,item_count,group_count,0.67,0,0); }
@@ -59,7 +81,7 @@ void wrap_ImPlot_PlotBarGroups_U32Ptr(const char* const label_ids[],const ImU32*
 void wrap_ImPlot_PlotBarGroups_U64Ptr(const char* const label_ids[],const ImU64* values,int item_count,int group_count) { ImPlot_PlotBarGroups_U64Ptr(label_ids,values,item_count,group_count,0.67,0,0); }
 void wrap_ImPlot_PlotBarGroups_U8Ptr(const char* const label_ids[],const ImU8* values,int item_count,int group_count) { ImPlot_PlotBarGroups_U8Ptr(label_ids,values,item_count,group_count,0.67,0,0); }
 void wrap_ImPlot_PlotBarGroups_doublePtr(const char* const label_ids[],const double* values,int item_count,int group_count) { ImPlot_PlotBarGroups_doublePtr(label_ids,values,item_count,group_count,0.67,0,0); }
-void wrap_ImPlot_PlotBarsG(const char* label_id,ImPlotPoint_getter getter,void* data,int count,double bar_size) { ImPlot_PlotBarsG(label_id,getter,data,count,bar_size,0); }
+void wrap_ImPlot_PlotBarsG(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count,double bar_size) { wrap_ImPlot_PlotBarsGV(label_id,getter,data,count,bar_size,0); }
 void wrap_ImPlot_PlotBars_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count,double bar_size) { ImPlot_PlotBars_FloatPtrFloatPtr(label_id,xs,ys,count,bar_size,0,0,sizeof(float)); }
 void wrap_ImPlot_PlotBars_FloatPtrInt(const char* label_id,const float* values,int count) { ImPlot_PlotBars_FloatPtrInt(label_id,values,count,0.67,0,0,0,sizeof(float)); }
 void wrap_ImPlot_PlotBars_S16PtrInt(const char* label_id,const ImS16* values,int count) { ImPlot_PlotBars_S16PtrInt(label_id,values,count,0.67,0,0,0,sizeof(ImS16)); }
@@ -80,7 +102,7 @@ void wrap_ImPlot_PlotBars_U8PtrInt(const char* label_id,const ImU8* values,int c
 void wrap_ImPlot_PlotBars_U8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,double bar_size) { ImPlot_PlotBars_U8PtrU8Ptr(label_id,xs,ys,count,bar_size,0,0,sizeof(ImU8)); }
 void wrap_ImPlot_PlotBars_doublePtrInt(const char* label_id,const double* values,int count) { ImPlot_PlotBars_doublePtrInt(label_id,values,count,0.67,0,0,0,sizeof(double)); }
 void wrap_ImPlot_PlotBars_doublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,int count,double bar_size) { ImPlot_PlotBars_doublePtrdoublePtr(label_id,xs,ys,count,bar_size,0,0,sizeof(double)); }
-void wrap_ImPlot_PlotDigitalG(const char* label_id,ImPlotPoint_getter getter,void* data,int count) { ImPlot_PlotDigitalG(label_id,getter,data,count,0); }
+void wrap_ImPlot_PlotDigitalG(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count) { wrap_ImPlot_PlotDigitalGV(label_id,getter,data,count,0); }
 void wrap_ImPlot_PlotDigital_FloatPtr(const char* label_id,const float* xs,const float* ys,int count) { ImPlot_PlotDigital_FloatPtr(label_id,xs,ys,count,0,0,sizeof(float)); }
 void wrap_ImPlot_PlotDigital_S16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count) { ImPlot_PlotDigital_S16Ptr(label_id,xs,ys,count,0,0,sizeof(ImS16)); }
 void wrap_ImPlot_PlotDigital_S32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count) { ImPlot_PlotDigital_S32Ptr(label_id,xs,ys,count,0,0,sizeof(ImS32)); }
@@ -153,7 +175,7 @@ void wrap_ImPlot_PlotInfLines_U32Ptr(const char* label_id,const ImU32* values,in
 void wrap_ImPlot_PlotInfLines_U64Ptr(const char* label_id,const ImU64* values,int count) { ImPlot_PlotInfLines_U64Ptr(label_id,values,count,0,0,sizeof(ImU64)); }
 void wrap_ImPlot_PlotInfLines_U8Ptr(const char* label_id,const ImU8* values,int count) { ImPlot_PlotInfLines_U8Ptr(label_id,values,count,0,0,sizeof(ImU8)); }
 void wrap_ImPlot_PlotInfLines_doublePtr(const char* label_id,const double* values,int count) { ImPlot_PlotInfLines_doublePtr(label_id,values,count,0,0,sizeof(double)); }
-void wrap_ImPlot_PlotLineG(const char* label_id,ImPlotPoint_getter getter,void* data,int count) { ImPlot_PlotLineG(label_id,getter,data,count,0); }
+void wrap_ImPlot_PlotLineG(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count) { wrap_ImPlot_PlotLineGV(label_id,getter,data,count,0); }
 void wrap_ImPlot_PlotLine_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count) { ImPlot_PlotLine_FloatPtrFloatPtr(label_id,xs,ys,count,0,0,sizeof(float)); }
 void wrap_ImPlot_PlotLine_FloatPtrInt(const char* label_id,const float* values,int count) { ImPlot_PlotLine_FloatPtrInt(label_id,values,count,1,0,0,0,sizeof(float)); }
 void wrap_ImPlot_PlotLine_S16PtrInt(const char* label_id,const ImS16* values,int count) { ImPlot_PlotLine_S16PtrInt(label_id,values,count,1,0,0,0,sizeof(ImS16)); }
@@ -184,7 +206,7 @@ void wrap_ImPlot_PlotPieChart_U32Ptr(const char* const label_ids[],const ImU32* 
 void wrap_ImPlot_PlotPieChart_U64Ptr(const char* const label_ids[],const ImU64* values,int count,double x,double y,double radius) { ImPlot_PlotPieChart_U64Ptr(label_ids,values,count,x,y,radius,"%.1f",90,0); }
 void wrap_ImPlot_PlotPieChart_U8Ptr(const char* const label_ids[],const ImU8* values,int count,double x,double y,double radius) { ImPlot_PlotPieChart_U8Ptr(label_ids,values,count,x,y,radius,"%.1f",90,0); }
 void wrap_ImPlot_PlotPieChart_doublePtr(const char* const label_ids[],const double* values,int count,double x,double y,double radius) { ImPlot_PlotPieChart_doublePtr(label_ids,values,count,x,y,radius,"%.1f",90,0); }
-void wrap_ImPlot_PlotScatterG(const char* label_id,ImPlotPoint_getter getter,void* data,int count) { ImPlot_PlotScatterG(label_id,getter,data,count,0); }
+void wrap_ImPlot_PlotScatterG(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count) { wrap_ImPlot_PlotScatterGV(label_id,getter,data,count,0); }
 void wrap_ImPlot_PlotScatter_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count) { ImPlot_PlotScatter_FloatPtrFloatPtr(label_id,xs,ys,count,0,0,sizeof(float)); }
 void wrap_ImPlot_PlotScatter_FloatPtrInt(const char* label_id,const float* values,int count) { ImPlot_PlotScatter_FloatPtrInt(label_id,values,count,1,0,0,0,sizeof(float)); }
 void wrap_ImPlot_PlotScatter_S16PtrInt(const char* label_id,const ImS16* values,int count) { ImPlot_PlotScatter_S16PtrInt(label_id,values,count,1,0,0,0,sizeof(ImS16)); }
@@ -205,7 +227,7 @@ void wrap_ImPlot_PlotScatter_U8PtrInt(const char* label_id,const ImU8* values,in
 void wrap_ImPlot_PlotScatter_U8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count) { ImPlot_PlotScatter_U8PtrU8Ptr(label_id,xs,ys,count,0,0,sizeof(ImU8)); }
 void wrap_ImPlot_PlotScatter_doublePtrInt(const char* label_id,const double* values,int count) { ImPlot_PlotScatter_doublePtrInt(label_id,values,count,1,0,0,0,sizeof(double)); }
 void wrap_ImPlot_PlotScatter_doublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,int count) { ImPlot_PlotScatter_doublePtrdoublePtr(label_id,xs,ys,count,0,0,sizeof(double)); }
-void wrap_ImPlot_PlotShadedG(const char* label_id,ImPlotPoint_getter getter1,void* data1,ImPlotPoint_getter getter2,void* data2,int count) { ImPlot_PlotShadedG(label_id,getter1,data1,getter2,data2,count,0); }
+void wrap_ImPlot_PlotShadedG(const char* label_id,ImPlotPoint_getter getter1,uintptr_t data1,ImPlotPoint_getter getter2,uintptr_t data2,int count) { wrap_ImPlot_PlotShadedGV(label_id,getter1,data1,getter2,data2,count,0); }
 void wrap_ImPlot_PlotShaded_FloatPtrFloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys1,const float* ys2,int count) { ImPlot_PlotShaded_FloatPtrFloatPtrFloatPtr(label_id,xs,ys1,ys2,count,0,0,sizeof(float)); }
 void wrap_ImPlot_PlotShaded_FloatPtrFloatPtrInt(const char* label_id,const float* xs,const float* ys,int count) { ImPlot_PlotShaded_FloatPtrFloatPtrInt(label_id,xs,ys,count,0,0,0,sizeof(float)); }
 void wrap_ImPlot_PlotShaded_FloatPtrInt(const char* label_id,const float* values,int count) { ImPlot_PlotShaded_FloatPtrInt(label_id,values,count,0,1,0,0,0,sizeof(float)); }
@@ -236,7 +258,7 @@ void wrap_ImPlot_PlotShaded_U8PtrU8PtrU8Ptr(const char* label_id,const ImU8* xs,
 void wrap_ImPlot_PlotShaded_doublePtrInt(const char* label_id,const double* values,int count) { ImPlot_PlotShaded_doublePtrInt(label_id,values,count,0,1,0,0,0,sizeof(double)); }
 void wrap_ImPlot_PlotShaded_doublePtrdoublePtrInt(const char* label_id,const double* xs,const double* ys,int count) { ImPlot_PlotShaded_doublePtrdoublePtrInt(label_id,xs,ys,count,0,0,0,sizeof(double)); }
 void wrap_ImPlot_PlotShaded_doublePtrdoublePtrdoublePtr(const char* label_id,const double* xs,const double* ys1,const double* ys2,int count) { ImPlot_PlotShaded_doublePtrdoublePtrdoublePtr(label_id,xs,ys1,ys2,count,0,0,sizeof(double)); }
-void wrap_ImPlot_PlotStairsG(const char* label_id,ImPlotPoint_getter getter,void* data,int count) { ImPlot_PlotStairsG(label_id,getter,data,count,0); }
+void wrap_ImPlot_PlotStairsG(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count) { wrap_ImPlot_PlotStairsGV(label_id,getter,data,count,0); }
 void wrap_ImPlot_PlotStairs_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count) { ImPlot_PlotStairs_FloatPtrFloatPtr(label_id,xs,ys,count,0,0,sizeof(float)); }
 void wrap_ImPlot_PlotStairs_FloatPtrInt(const char* label_id,const float* values,int count) { ImPlot_PlotStairs_FloatPtrInt(label_id,values,count,1,0,0,0,sizeof(float)); }
 void wrap_ImPlot_PlotStairs_S16PtrInt(const char* label_id,const ImS16* values,int count) { ImPlot_PlotStairs_S16PtrInt(label_id,values,count,1,0,0,0,sizeof(ImS16)); }
@@ -284,7 +306,7 @@ void wrap_ImPlot_PopColormap() { ImPlot_PopColormap(1); }
 void wrap_ImPlot_PopStyleColor() { ImPlot_PopStyleColor(1); }
 void wrap_ImPlot_PopStyleVar() { ImPlot_PopStyleVar(1); }
 void wrap_ImPlot_PushPlotClipRect() { ImPlot_PushPlotClipRect(0); }
-ImPlotItem* wrap_ImPlot_RegisterOrGetItem(const char* label_id,ImPlotItemFlags flags) { return ImPlot_RegisterOrGetItem(label_id,flags,nullptr); }
+ImPlotItem* wrap_ImPlot_RegisterOrGetItem(const char* label_id,ImPlotItemFlags flags) { return ImPlot_RegisterOrGetItem(label_id,flags,0); }
 void wrap_ImPlot_SampleColormap(ImVec4* pOut,float t) { ImPlot_SampleColormap(pOut,t,-1); }
 void wrap_ImPlot_SetNextAxesLimits(double x_min,double x_max,double y_min,double y_max) { ImPlot_SetNextAxesLimits(x_min,x_max,y_min,y_max,ImPlotCond_Once); }
 void wrap_ImPlot_SetNextAxisLimits(ImAxis axis,double v_min,double v_max) { ImPlot_SetNextAxisLimits(axis,v_min,v_max,ImPlotCond_Once); }
@@ -294,23 +316,23 @@ void wrap_ImPlot_SetNextLineStyle() { ImPlot_SetNextLineStyle((ImVec4){.x=0, .y=
 void wrap_ImPlot_SetNextMarkerStyle() { ImPlot_SetNextMarkerStyle(-1,-1,(ImVec4){.x=0, .y=0, .z=0, .w=-1},-1,(ImVec4){.x=0, .y=0, .z=0, .w=-1}); }
 void wrap_ImPlot_SetupAxes(const char* x_label,const char* y_label) { ImPlot_SetupAxes(x_label,y_label,0,0); }
 void wrap_ImPlot_SetupAxesLimits(double x_min,double x_max,double y_min,double y_max) { ImPlot_SetupAxesLimits(x_min,x_max,y_min,y_max,ImPlotCond_Once); }
-void wrap_ImPlot_SetupAxis(ImAxis axis) { ImPlot_SetupAxis(axis,nullptr,0); }
-void wrap_ImPlot_SetupAxisFormat_PlotFormatter(ImAxis axis,ImPlotFormatter formatter) { ImPlot_SetupAxisFormat_PlotFormatter(axis,formatter,nullptr); }
+void wrap_ImPlot_SetupAxis(ImAxis axis) { ImPlot_SetupAxis(axis,0,0); }
+void wrap_ImPlot_SetupAxisFormat_PlotFormatter(ImAxis axis,ImPlotFormatter formatter) { wrap_ImPlot_SetupAxisFormat_PlotFormatterV(axis,formatter,0); }
 void wrap_ImPlot_SetupAxisLimits(ImAxis axis,double v_min,double v_max) { ImPlot_SetupAxisLimits(axis,v_min,v_max,ImPlotCond_Once); }
-void wrap_ImPlot_SetupAxisScale_PlotTransform(ImAxis axis,ImPlotTransform forward,ImPlotTransform inverse) { ImPlot_SetupAxisScale_PlotTransform(axis,forward,inverse,nullptr); }
-void wrap_ImPlot_SetupAxisTicks_double(ImAxis axis,double v_min,double v_max,int n_ticks) { ImPlot_SetupAxisTicks_double(axis,v_min,v_max,n_ticks,nullptr,false); }
-void wrap_ImPlot_SetupAxisTicks_doublePtr(ImAxis axis,const double* values,int n_ticks) { ImPlot_SetupAxisTicks_doublePtr(axis,values,n_ticks,nullptr,false); }
+void wrap_ImPlot_SetupAxisScale_PlotTransform(ImAxis axis,ImPlotTransform forward,ImPlotTransform inverse) { wrap_ImPlot_SetupAxisScale_PlotTransformV(axis,forward,inverse,0); }
+void wrap_ImPlot_SetupAxisTicks_double(ImAxis axis,double v_min,double v_max,int n_ticks) { ImPlot_SetupAxisTicks_double(axis,v_min,v_max,n_ticks,0,false); }
+void wrap_ImPlot_SetupAxisTicks_doublePtr(ImAxis axis,const double* values,int n_ticks) { ImPlot_SetupAxisTicks_doublePtr(axis,values,n_ticks,0,false); }
 void wrap_ImPlot_SetupLegend(ImPlotLocation location) { ImPlot_SetupLegend(location,0); }
 void wrap_ImPlot_SetupMouseText(ImPlotLocation location) { ImPlot_SetupMouseText(location,0); }
 void wrap_ImPlot_ShowAltLegend(const char* title_id) { ImPlot_ShowAltLegend(title_id,true,(ImVec2){.x=0, .y=0},true); }
 void wrap_ImPlot_ShowAxisContextMenu(ImPlotAxis* axis,ImPlotAxis* equal_axis) { ImPlot_ShowAxisContextMenu(axis,equal_axis,false); }
-bool wrap_ImPlot_ShowDatePicker(const char* id,int* level,ImPlotTime* t) { return ImPlot_ShowDatePicker(id,level,t,nullptr,nullptr); }
-void wrap_ImPlot_ShowDemoWindow() { ImPlot_ShowDemoWindow(nullptr); }
-void wrap_ImPlot_ShowMetricsWindow() { ImPlot_ShowMetricsWindow(nullptr); }
-void wrap_ImPlot_ShowStyleEditor() { ImPlot_ShowStyleEditor(nullptr); }
-void wrap_ImPlot_StyleColorsAuto() { ImPlot_StyleColorsAuto(nullptr); }
-void wrap_ImPlot_StyleColorsClassic() { ImPlot_StyleColorsClassic(nullptr); }
-void wrap_ImPlot_StyleColorsDark() { ImPlot_StyleColorsDark(nullptr); }
-void wrap_ImPlot_StyleColorsLight() { ImPlot_StyleColorsLight(nullptr); }
+bool wrap_ImPlot_ShowDatePicker(const char* id,int* level,ImPlotTime* t) { return ImPlot_ShowDatePicker(id,level,t,0,0); }
+void wrap_ImPlot_ShowDemoWindow() { ImPlot_ShowDemoWindow(0); }
+void wrap_ImPlot_ShowMetricsWindow() { ImPlot_ShowMetricsWindow(0); }
+void wrap_ImPlot_ShowStyleEditor() { ImPlot_ShowStyleEditor(0); }
+void wrap_ImPlot_StyleColorsAuto() { ImPlot_StyleColorsAuto(0); }
+void wrap_ImPlot_StyleColorsClassic() { ImPlot_StyleColorsClassic(0); }
+void wrap_ImPlot_StyleColorsDark() { ImPlot_StyleColorsDark(0); }
+void wrap_ImPlot_StyleColorsLight() { ImPlot_StyleColorsLight(0); }
 void wrap_ImPlot_TagX_Bool(double x,const ImVec4 col) { ImPlot_TagX_Bool(x,col,false); }
 void wrap_ImPlot_TagY_Bool(double y,const ImVec4 col) { ImPlot_TagY_Bool(y,col,false); }

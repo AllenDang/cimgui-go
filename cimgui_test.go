@@ -9,7 +9,7 @@ func TestSetIOConfigFlags(t *testing.T) {
 	defer DestroyContext()
 
 	io := CurrentIO()
-	if io.data == nil {
+	if io.CData == nil {
 		t.Error("get io failed")
 	}
 

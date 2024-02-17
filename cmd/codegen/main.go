@@ -40,7 +40,9 @@ func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []GoIdentifier, stru
 func main() {
 	defJsonPath := flag.String("d", "", "definitions json file path")
 	enumsJsonpath := flag.String("e", "", "structs and enums json file path")
+	typedefsJsonpath := flag.String("t", "", "typedefs dict json file path")
 	refEnumsJsonPath := flag.String("r", "", "reference structs and enums json file path")
+	refTypedefsJsonPath := flag.String("rt", "", "reference typedefs_dict.json file path")
 	prefix := flag.String("p", "", "prefix for the generated file")
 	include := flag.String("i", "", "include header file")
 
@@ -63,6 +65,11 @@ func main() {
 		log.Panic(err)
 	}
 
+	typedefsJsonBytes, err := os.ReadFile(*typedefsJsonpath)
+	if err != nil {
+		log.Panic(err)
+	}
+
 	enumJsonBytes, err := os.ReadFile(*enumsJsonpath)
 	if err != nil {
 		log.Panic(err)
@@ -76,6 +83,14 @@ func main() {
 		}
 	}
 
+	var refTypedefsJsonBytes []byte
+	if len(*refTypedefsJsonPath) > 0 {
+		refTypedefsJsonBytes, err = os.ReadFile(*refTypedefsJsonPath)
+		if err != nil {
+			log.Panic(err)
+		}
+	}
+
 	// get definitions from json file
 	funcs, err := getFunDefs(defJsonBytes)
 	if err != nil {
@@ -83,6 +98,11 @@ func main() {
 	}
 
 	enums, err := getEnumDefs(enumJsonBytes)
+	if err != nil {
+		log.Panic(err.Error())
+	}
+
+	typedefs, err := getTypedefs(typedefsJsonBytes)
 	if err != nil {
 		log.Panic(err.Error())
 	}
@@ -106,9 +126,22 @@ func main() {
 		}
 	}
 
+	var refTypedefs = make(map[CIdentifier]string)
+	if len(refTypedefsJsonBytes) > 0 {
+		typedefs, err := getTypedefs(refTypedefsJsonBytes)
+		if err != nil {
+			log.Panic(err)
+		}
+
+		refTypedefs = typedefs.data
+	}
+
+	callbacks, err := proceedTypedefs(*prefix, typedefs, structs, enums, refTypedefs)
+
 	// generate code
 	enumNames := generateGoEnums(*prefix, enums)
-	structNames := generateGoStructs(*prefix, structs, enums, es, ss)
+	//structNames := generateGoStructs(*prefix, structs, enums, es, ss, refTypedefs)
+	structNames := make([]CIdentifier, 0)
 
 	structAccessorFuncs, err := generateCppStructsAccessor(*prefix, validFuncs, structs)
 	if err != nil {
@@ -122,7 +155,9 @@ func main() {
 		structNames = append(structNames, ss...)
 	}
 
-	if err := generateGoFuncs(*prefix, validFuncs, enumNames, structNames); err != nil {
+	structNames = append(structNames, callbacks...)
+
+	if err := generateGoFuncs(*prefix, validFuncs, enumNames, structNames, refTypedefs); err != nil {
 		log.Panic(err)
 	}
 }

@@ -1,6 +1,9 @@
 package main
 
-import "strings"
+import (
+	"sort"
+	"strings"
+)
 
 func HasPrefix[s ~string](str s, prefix string) bool {
 	return strings.HasPrefix(string(str), prefix)
@@ -18,8 +21,8 @@ func TrimSuffix[s ~string](str s, suffix string) s {
 	return s(strings.TrimSuffix(string(str), suffix))
 }
 
-func ReplaceAll[s ~string](str s, old, new string) s {
-	return s(strings.ReplaceAll(string(str), old, new))
+func ReplaceAll[s, t, u ~string](str s, old t, new u) s {
+	return s(strings.ReplaceAll(string(str), string(old), string(new)))
 }
 
 func Contains[s ~string](str s, substr string) bool {
@@ -57,4 +60,10 @@ func Index[s ~string](str s, substr string) int {
 
 func Capitalize[s ~string](str s) s {
 	return s(strings.ToUpper(string(str[0]))) + str[1:]
+}
+
+func SortStrings[s ~string](str []s) {
+	sort.Slice(str, func(i, j int) bool {
+		return str[i] < str[j]
+	})
 }
