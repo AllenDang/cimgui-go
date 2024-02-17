@@ -2484,7 +2484,7 @@ func (self *Storage) VoidPtr(key ID) uintptr {
 		selfFin()
 		keyFin()
 	}()
-	return uintptr(C.ImGuiStorage_GetVoidPtr(selfArg, keyArg))
+	return uintptr(C.wrap_ImGuiStorage_GetVoidPtr(selfArg, keyArg))
 }
 
 func (self *Storage) SetAllInt(val int32) {
@@ -6558,7 +6558,7 @@ func InternalImFileLoadToMemoryV(filename string, mode string, out_file_size *ui
 		filenameFin()
 		modeFin()
 	}()
-	return uintptr(C.igImFileLoadToMemory(filenameArg, modeArg, (*C.xulong)(out_file_size), C.int(padding_bytes)))
+	return uintptr(C.wrap_igImFileLoadToMemoryV(filenameArg, modeArg, (*C.xulong)(out_file_size), C.int(padding_bytes)))
 }
 
 // Decent replacement for floorf()
@@ -8031,7 +8031,7 @@ func InternalMarkItemEdited(id ID) {
 }
 
 func MemAlloc(size uint64) uintptr {
-	return uintptr(C.igMemAlloc(C.xulong(size)))
+	return uintptr(C.wrap_igMemAlloc(C.xulong(size)))
 }
 
 func MemFree(ptr uintptr) {

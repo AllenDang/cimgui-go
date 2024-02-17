@@ -378,7 +378,7 @@ extern "C" {
 			headerSb.WriteString(fmt.Sprintf("extern void %s%s;\n", cWrapperFuncName, f.Args))
 			cppSb.WriteString(fmt.Sprintf("void %s%s { %s%s; }\n", cWrapperFuncName, f.Args, invokeFunctionName, actualCallArgsStr))
 		} else {
-			headerSb.WriteString(fmt.Sprintf("extern %s %s%s;\n", f.Ret, cWrapperFuncName, f.Args))
+			headerSb.WriteString(fmt.Sprintf("extern %s %s%s;\n", ret, cWrapperFuncName, f.Args))
 
 			switch f.Ret {
 			case "void":

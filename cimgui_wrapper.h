@@ -22,6 +22,7 @@ extern void* wrap_ImGuiDataVarInfo_GetVarPtr(ImGuiDataVarInfo* self,uintptr_t pa
 extern void wrap_ImGuiInputTextCallbackData_InsertCharsV(ImGuiInputTextCallbackData* self,int pos,const char* text,const int text_len);
 extern ImGuiPtrOrIndex* wrap_ImGuiPtrOrIndex_ImGuiPtrOrIndex_Ptr(uintptr_t ptr);
 extern ImGuiStoragePair* wrap_ImGuiStoragePair_ImGuiStoragePair_Ptr(ImGuiID _key,uintptr_t _val_p);
+extern void* wrap_ImGuiStorage_GetVoidPtr(ImGuiStorage* self,ImGuiID key);
 extern void** wrap_ImGuiStorage_GetVoidPtrRefV(ImGuiStorage* self,ImGuiID key,uintptr_t default_val);
 extern void wrap_ImGuiStorage_SetVoidPtr(ImGuiStorage* self,ImGuiID key,uintptr_t val);
 extern void wrap_ImGuiTextBuffer_Appendf(ImGuiTextBuffer* self,const char* fmt);
@@ -45,6 +46,7 @@ extern void wrap_igErrorCheckEndWindowRecoverV(ImGuiErrorLogCallback log_callbac
 extern const char* wrap_igFindRenderedTextEndV(const char* text,const int text_len);
 extern ImGuiViewport* wrap_igFindViewportByPlatformHandle(uintptr_t platform_handle);
 extern ImGuiID wrap_igGetID_Ptr(const uintptr_t ptr_id);
+extern void* wrap_igImFileLoadToMemoryV(const char* filename,const char* mode,size_t* out_file_size,int padding_bytes);
 extern ImU64 wrap_igImFileRead(uintptr_t data,ImU64 size,ImU64 count,ImFileHandle file);
 extern ImU64 wrap_igImFileWrite(const uintptr_t data,ImU64 size,ImU64 count,ImFileHandle file);
 extern void wrap_igImFontAtlasBuildPackCustomRects(ImFontAtlas* atlas,uintptr_t stbrp_context_opaque);
@@ -62,6 +64,7 @@ extern void wrap_igLabelText(const char* label,const char* fmt);
 extern bool wrap_igListBox_FnStrPtr(const char* label,int* current_item,const char*(*getter)(void* user_data,int idx),uintptr_t user_data,int items_count,int height_in_items);
 extern void wrap_igLogRenderedTextV(const ImVec2* ref_pos,const char* text,const int text_len);
 extern void wrap_igLogText(const char* fmt);
+extern void* wrap_igMemAlloc(size_t size);
 extern void wrap_igMemFree(uintptr_t ptr);
 extern int wrap_igPlotEx(ImGuiPlotType plot_type,const char* label,float(*values_getter)(void* data,int idx),uintptr_t data,int values_count,int values_offset,const char* overlay_text,float scale_min,float scale_max,const ImVec2 size_arg);
 extern void wrap_igPlotHistogram_FnFloatPtr(const char* label,float(*values_getter)(void* data,int idx),uintptr_t data,int values_count,int values_offset,const char* overlay_text,float scale_min,float scale_max,ImVec2 graph_size);
