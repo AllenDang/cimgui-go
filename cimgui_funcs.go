@@ -13023,6 +13023,21 @@ func (self *DrawCmd) ElemCount() uint32 {
 	return uint32(C.wrap_ImDrawCmd_GetElemCount(selfArg))
 }
 
+func (self DrawCmd) SetUserCallbackData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImDrawCmd_SetUserCallbackData(selfArg, C.uintptr_t(v))
+}
+
+func (self *DrawCmd) UserCallbackData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImDrawCmd_GetUserCallbackData(selfArg))
+}
+
 func (self DrawCmdHeader) SetClipRect(v Vec4) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14051,6 +14066,21 @@ func (self *FontAtlas) Locked() bool {
 	return C.wrap_ImFontAtlas_GetLocked(selfArg) == C.bool(true)
 }
 
+func (self FontAtlas) SetUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImFontAtlas_SetUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *FontAtlas) UserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImFontAtlas_GetUserData(selfArg))
+}
+
 func (self FontAtlas) SetTexReady(v bool) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14403,6 +14433,21 @@ func (self *FontAtlasCustomRect) Font() *Font {
 		selfFin()
 	}()
 	return newFontFromC(C.wrap_ImFontAtlasCustomRect_GetFont(selfArg))
+}
+
+func (self FontConfig) SetFontData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImFontConfig_SetFontData(selfArg, C.uintptr_t(v))
+}
+
+func (self *FontConfig) FontData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImFontConfig_GetFontData(selfArg))
 }
 
 func (self FontConfig) SetFontDataSize(v int32) {
@@ -15316,6 +15361,21 @@ func (self *Context) TestEngineHookItems() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiContext_GetTestEngineHookItems(selfArg) == C.bool(true)
+}
+
+func (self Context) SetTestEngine(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetTestEngine(selfArg, C.uintptr_t(v))
+}
+
+func (self *Context) TestEngine() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiContext_GetTestEngine(selfArg))
 }
 
 func (self Context) SetInputEventsQueue(v Vector[*InputEvent]) {
@@ -19149,6 +19209,21 @@ func (self *ContextHook) Owner() ID {
 	return *newIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
+func (self ContextHook) SetUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiContextHook_SetUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *ContextHook) UserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiContextHook_GetUserData(selfArg))
+}
+
 func (self DataTypeInfo) SetSize(v uint64) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -20251,6 +20326,21 @@ func (self *IO) LogFilename() string {
 	return C.GoString(C.wrap_ImGuiIO_GetLogFilename(selfArg))
 }
 
+func (self IO) SetUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *IO) UserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiIO_GetUserData(selfArg))
+}
+
 func (self IO) SetFonts(v *FontAtlas) {
 	vArg, _ := v.handle()
 
@@ -20752,6 +20842,81 @@ func (self *IO) BackendRendererName() string {
 		selfFin()
 	}()
 	return C.GoString(C.wrap_ImGuiIO_GetBackendRendererName(selfArg))
+}
+
+func (self IO) SetBackendPlatformUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetBackendPlatformUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *IO) BackendPlatformUserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiIO_GetBackendPlatformUserData(selfArg))
+}
+
+func (self IO) SetBackendRendererUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetBackendRendererUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *IO) BackendRendererUserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiIO_GetBackendRendererUserData(selfArg))
+}
+
+func (self IO) SetBackendLanguageUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetBackendLanguageUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *IO) BackendLanguageUserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiIO_GetBackendLanguageUserData(selfArg))
+}
+
+func (self IO) SetClipboardUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetClipboardUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *IO) ClipboardUserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiIO_GetClipboardUserData(selfArg))
+}
+
+func (self IO) SetUnusedPadding(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_Set_UnusedPadding(selfArg, C.uintptr_t(v))
+}
+
+func (self *IO) UnusedPadding() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiIO_Get_UnusedPadding(selfArg))
 }
 
 func (self IO) SetPlatformLocaleDecimalPoint(v Wchar) {
@@ -21633,6 +21798,21 @@ func (self *InputTextCallbackData) Flags() InputTextFlags {
 	return InputTextFlags(C.wrap_ImGuiInputTextCallbackData_GetFlags(selfArg))
 }
 
+func (self InputTextCallbackData) SetUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiInputTextCallbackData_SetUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *InputTextCallbackData) UserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiInputTextCallbackData_GetUserData(selfArg))
+}
+
 func (self InputTextCallbackData) SetEventChar(v Wchar) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -22512,6 +22692,21 @@ func (self *ListClipper) StartPosY() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiListClipper_GetStartPosY(selfArg))
+}
+
+func (self ListClipper) SetTempData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiListClipper_SetTempData(selfArg, C.uintptr_t(v))
+}
+
+func (self *ListClipper) TempData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiListClipper_GetTempData(selfArg))
 }
 
 func (self ListClipperData) SetListClipper(v *ListClipper) {
@@ -23425,6 +23620,21 @@ func (self *NextWindowData) SizeConstraintRect() Rect {
 	return *(&Rect{}).fromC(C.wrap_ImGuiNextWindowData_GetSizeConstraintRect(selfArg))
 }
 
+func (self NextWindowData) SetSizeCallbackUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiNextWindowData_SetSizeCallbackUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *NextWindowData) SizeCallbackUserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiNextWindowData_GetSizeCallbackUserData(selfArg))
+}
+
 func (self NextWindowData) SetBgAlphaVal(v float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -23858,6 +24068,21 @@ func (self *OnceUponAFrame) RefFrame() int32 {
 	return int32(C.wrap_ImGuiOnceUponAFrame_GetRefFrame(selfArg))
 }
 
+func (self Payload) SetData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiPayload_SetData(selfArg, C.uintptr_t(v))
+}
+
+func (self *Payload) Data() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiPayload_GetData(selfArg))
+}
+
 func (self Payload) SetDataSize(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -24099,6 +24324,21 @@ func (self *PlatformMonitor) DpiScale() float32 {
 	return float32(C.wrap_ImGuiPlatformMonitor_GetDpiScale(selfArg))
 }
 
+func (self PlatformMonitor) SetPlatformHandle(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiPlatformMonitor_SetPlatformHandle(selfArg, C.uintptr_t(v))
+}
+
+func (self *PlatformMonitor) PlatformHandle() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiPlatformMonitor_GetPlatformHandle(selfArg))
+}
+
 func (self PopupData) SetPopupId(v ID) {
 	vArg, _ := v.c()
 
@@ -24231,6 +24471,21 @@ func (self *PopupData) OpenMousePos() Vec2 {
 	return *(&Vec2{}).fromC(C.wrap_ImGuiPopupData_GetOpenMousePos(selfArg))
 }
 
+func (self PtrOrIndex) SetPtr(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiPtrOrIndex_SetPtr(selfArg, C.uintptr_t(v))
+}
+
+func (self *PtrOrIndex) Ptr() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiPtrOrIndex_GetPtr(selfArg))
+}
+
 func (self PtrOrIndex) SetIndex(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -24282,6 +24537,21 @@ func (self *SettingsHandler) TypeHash() ID {
 	return *newIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
+func (self SettingsHandler) SetUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiSettingsHandler_SetUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *SettingsHandler) UserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiSettingsHandler_GetUserData(selfArg))
+}
+
 func (self ShrinkWidthItem) SetIndex(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -24325,6 +24595,21 @@ func (self *ShrinkWidthItem) InitialWidth() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiShrinkWidthItem_GetInitialWidth(selfArg))
+}
+
+func (self SizeCallbackData) SetUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiSizeCallbackData_SetUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *SizeCallbackData) UserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiSizeCallbackData_GetUserData(selfArg))
 }
 
 func (self SizeCallbackData) SetPos(v Vec2) {
@@ -26240,6 +26525,21 @@ func (self *Table) Flags() TableFlags {
 		selfFin()
 	}()
 	return TableFlags(C.wrap_ImGuiTable_GetFlags(selfArg))
+}
+
+func (self Table) SetRawData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetRawData(selfArg, C.uintptr_t(v))
+}
+
+func (self *Table) RawData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiTable_GetRawData(selfArg))
 }
 
 func (self Table) SetTempData(v *TableTempData) {
@@ -29004,6 +29304,66 @@ func (self *Viewport) DrawData() *DrawData {
 		selfFin()
 	}()
 	return newDrawDataFromC(C.wrap_ImGuiViewport_GetDrawData(selfArg))
+}
+
+func (self Viewport) SetRendererUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiViewport_SetRendererUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *Viewport) RendererUserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiViewport_GetRendererUserData(selfArg))
+}
+
+func (self Viewport) SetPlatformUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiViewport_SetPlatformUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *Viewport) PlatformUserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiViewport_GetPlatformUserData(selfArg))
+}
+
+func (self Viewport) SetPlatformHandle(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiViewport_SetPlatformHandle(selfArg, C.uintptr_t(v))
+}
+
+func (self *Viewport) PlatformHandle() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiViewport_GetPlatformHandle(selfArg))
+}
+
+func (self Viewport) SetPlatformHandleRaw(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiViewport_SetPlatformHandleRaw(selfArg, C.uintptr_t(v))
+}
+
+func (self *Viewport) PlatformHandleRaw() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImGuiViewport_GetPlatformHandleRaw(selfArg))
 }
 
 func (self Viewport) SetPlatformWindowCreated(v bool) {

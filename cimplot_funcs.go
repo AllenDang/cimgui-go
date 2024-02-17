@@ -13501,6 +13501,15 @@ func (self *FormatterTimeData) TimeDataGetSpec() PlotDateTimeSpec {
 	return *newPlotDateTimeSpecFromC(func() *C.ImPlotDateTimeSpec { result := result; return &result }())
 }
 
+func (self *FormatterTimeData) TimeDataGetUserFormatterData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_Formatter_Time_Data_GetUserFormatterData(selfArg))
+}
+
 func (self PlotAlignmentData) SetVertical(v bool) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -13903,6 +13912,21 @@ func (self *PlotAxis) Ticker() PlotTicker {
 	return *newPlotTickerFromC(func() *C.ImPlotTicker { result := result; return &result }())
 }
 
+func (self PlotAxis) SetFormatterData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotAxis_SetFormatterData(selfArg, C.uintptr_t(v))
+}
+
+func (self *PlotAxis) FormatterData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImPlotAxis_GetFormatterData(selfArg))
+}
+
 func (self PlotAxis) SetFormatSpec(v *[16]rune) {
 	vArg := make([]C.char, len(v))
 	for i, vV := range v {
@@ -13991,6 +14015,21 @@ func (self *PlotAxis) PickerTimeMax() PlotTime {
 		selfFin()
 	}()
 	return *(&PlotTime{}).fromC(C.wrap_ImPlotAxis_GetPickerTimeMax(selfArg))
+}
+
+func (self PlotAxis) SetTransformData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImPlotAxis_SetTransformData(selfArg, C.uintptr_t(v))
+}
+
+func (self *PlotAxis) TransformData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImPlotAxis_GetTransformData(selfArg))
 }
 
 func (self PlotAxis) SetPixelMin(v float32) {

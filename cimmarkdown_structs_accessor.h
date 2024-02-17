@@ -55,8 +55,8 @@ extern void wrap_MarkdownConfig_SetLinkIcon(MarkdownConfig *MarkdownConfigPtr, c
 extern const char* wrap_MarkdownConfig_GetLinkIcon(MarkdownConfig *self);
 extern void wrap_MarkdownConfig_SetHeadingFormats(MarkdownConfig *MarkdownConfigPtr, MarkdownHeadingFormat* v);
 extern MarkdownHeadingFormat* wrap_MarkdownConfig_GetHeadingFormats(MarkdownConfig *self);
-extern void wrap_MarkdownConfig_SetUserData(MarkdownConfig *MarkdownConfigPtr, void* v);
-extern void* wrap_MarkdownConfig_GetUserData(MarkdownConfig *self);
+extern void wrap_MarkdownConfig_SetUserData(MarkdownConfig *MarkdownConfigPtr, uintptr_t v);
+extern uintptr_t wrap_MarkdownConfig_GetUserData(MarkdownConfig *self);
 extern void wrap_MarkdownConfig_SetFormatCallback(MarkdownConfig *MarkdownConfigPtr, MarkdownFormalCallback* v);
 extern MarkdownFormalCallback* wrap_MarkdownConfig_GetFormatCallback(MarkdownConfig *self);
 extern void wrap_MarkdownFormatInfo_SetType(MarkdownFormatInfo *MarkdownFormatInfoPtr, MarkdownFormatType v);
@@ -95,8 +95,8 @@ extern void wrap_MarkdownLinkCallbackData_SetLink(MarkdownLinkCallbackData *Mark
 extern const char* wrap_MarkdownLinkCallbackData_GetLink(MarkdownLinkCallbackData *self);
 extern void wrap_MarkdownLinkCallbackData_SetLinkLength(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, int v);
 extern int wrap_MarkdownLinkCallbackData_GetLinkLength(MarkdownLinkCallbackData *self);
-extern void wrap_MarkdownLinkCallbackData_SetUserData(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, void* v);
-extern void* wrap_MarkdownLinkCallbackData_GetUserData(MarkdownLinkCallbackData *self);
+extern void wrap_MarkdownLinkCallbackData_SetUserData(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, uintptr_t v);
+extern uintptr_t wrap_MarkdownLinkCallbackData_GetUserData(MarkdownLinkCallbackData *self);
 extern void wrap_MarkdownLinkCallbackData_SetIsImage(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, bool v);
 extern bool wrap_MarkdownLinkCallbackData_GetIsImage(MarkdownLinkCallbackData *self);
 extern void wrap_MarkdownTooltipCallbackData_SetLinkData(MarkdownTooltipCallbackData *MarkdownTooltipCallbackDataPtr, MarkdownLinkCallbackData v);
