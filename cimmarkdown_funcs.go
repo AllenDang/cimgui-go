@@ -439,6 +439,21 @@ func (self *MarkdownConfig) LinkIcon() string {
 	return C.GoString(C.wrap_MarkdownConfig_GetLinkIcon(selfArg))
 }
 
+func (self MarkdownConfig) SetUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_MarkdownConfig_SetUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *MarkdownConfig) UserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_MarkdownConfig_GetUserData(selfArg))
+}
+
 func (self MarkdownFormatInfo) SetType(v MarkdownFormatType) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -693,6 +708,21 @@ func (self *MarkdownLinkCallbackData) LinkLength() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_MarkdownLinkCallbackData_GetLinkLength(selfArg))
+}
+
+func (self MarkdownLinkCallbackData) SetUserData(v uintptr) {
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_MarkdownLinkCallbackData_SetUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *MarkdownLinkCallbackData) UserData() uintptr {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_MarkdownLinkCallbackData_GetUserData(selfArg))
 }
 
 func (self MarkdownLinkCallbackData) SetIsImage(v bool) {

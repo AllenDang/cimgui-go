@@ -15,8 +15,8 @@ extern void wrap_Formatter_Time_Data_SetSpec(Formatter_Time_Data *Formatter_Time
 extern ImPlotDateTimeSpec wrap_Formatter_Time_Data_GetSpec(Formatter_Time_Data *self);
 extern void wrap_Formatter_Time_Data_SetUserFormatter(Formatter_Time_Data *Formatter_Time_DataPtr, ImPlotFormatter v);
 extern ImPlotFormatter wrap_Formatter_Time_Data_GetUserFormatter(Formatter_Time_Data *self);
-extern void wrap_Formatter_Time_Data_SetUserFormatterData(Formatter_Time_Data *Formatter_Time_DataPtr, void* v);
-extern void* wrap_Formatter_Time_Data_GetUserFormatterData(Formatter_Time_Data *self);
+extern void wrap_Formatter_Time_Data_SetUserFormatterData(Formatter_Time_Data *Formatter_Time_DataPtr, uintptr_t v);
+extern uintptr_t wrap_Formatter_Time_Data_GetUserFormatterData(Formatter_Time_Data *self);
 extern void wrap_ImPlotAlignmentData_SetVertical(ImPlotAlignmentData *ImPlotAlignmentDataPtr, bool v);
 extern bool wrap_ImPlotAlignmentData_GetVertical(ImPlotAlignmentData *self);
 extern void wrap_ImPlotAlignmentData_SetPadA(ImPlotAlignmentData *ImPlotAlignmentDataPtr, float v);
@@ -69,8 +69,8 @@ extern void wrap_ImPlotAxis_SetTicker(ImPlotAxis *ImPlotAxisPtr, ImPlotTicker v)
 extern ImPlotTicker wrap_ImPlotAxis_GetTicker(ImPlotAxis *self);
 extern void wrap_ImPlotAxis_SetFormatter(ImPlotAxis *ImPlotAxisPtr, ImPlotFormatter v);
 extern ImPlotFormatter wrap_ImPlotAxis_GetFormatter(ImPlotAxis *self);
-extern void wrap_ImPlotAxis_SetFormatterData(ImPlotAxis *ImPlotAxisPtr, void* v);
-extern void* wrap_ImPlotAxis_GetFormatterData(ImPlotAxis *self);
+extern void wrap_ImPlotAxis_SetFormatterData(ImPlotAxis *ImPlotAxisPtr, uintptr_t v);
+extern uintptr_t wrap_ImPlotAxis_GetFormatterData(ImPlotAxis *self);
 extern void wrap_ImPlotAxis_SetFormatSpec(ImPlotAxis *ImPlotAxisPtr, char* v);
 extern char* wrap_ImPlotAxis_GetFormatSpec(ImPlotAxis *self);
 extern void wrap_ImPlotAxis_SetLocator(ImPlotAxis *ImPlotAxisPtr, ImPlotLocator v);
@@ -89,8 +89,8 @@ extern void wrap_ImPlotAxis_SetTransformForward(ImPlotAxis *ImPlotAxisPtr, ImPlo
 extern ImPlotTransform wrap_ImPlotAxis_GetTransformForward(ImPlotAxis *self);
 extern void wrap_ImPlotAxis_SetTransformInverse(ImPlotAxis *ImPlotAxisPtr, ImPlotTransform v);
 extern ImPlotTransform wrap_ImPlotAxis_GetTransformInverse(ImPlotAxis *self);
-extern void wrap_ImPlotAxis_SetTransformData(ImPlotAxis *ImPlotAxisPtr, void* v);
-extern void* wrap_ImPlotAxis_GetTransformData(ImPlotAxis *self);
+extern void wrap_ImPlotAxis_SetTransformData(ImPlotAxis *ImPlotAxisPtr, uintptr_t v);
+extern uintptr_t wrap_ImPlotAxis_GetTransformData(ImPlotAxis *self);
 extern void wrap_ImPlotAxis_SetPixelMin(ImPlotAxis *ImPlotAxisPtr, float v);
 extern float wrap_ImPlotAxis_GetPixelMin(ImPlotAxis *self);
 extern void wrap_ImPlotAxis_SetPixelMax(ImPlotAxis *ImPlotAxisPtr, float v);

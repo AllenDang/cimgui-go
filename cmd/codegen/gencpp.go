@@ -482,6 +482,11 @@ extern "C" {
 				continue
 			}
 
+			memberType := m.Type
+			if memberType == "void*" {
+				memberType = "uintptr_t"
+			}
+
 			// Generate setter function
 			setterFuncDef := FuncDef{
 				Args: fmt.Sprintf("(%[1]s *%[2]s, %[3]s v)", s.Name, s.Name+"Ptr", m.Type),
@@ -492,7 +497,7 @@ extern "C" {
 					},
 					{
 						Name:            "v",
-						Type:            m.Type + CIdentifier(getSizeArg(m.Size)),
+						Type:            memberType + CIdentifier(getSizeArg(m.Size)),
 						RemoveFinalizer: true,
 					},
 				},
@@ -506,7 +511,8 @@ extern "C" {
 			}
 			structAccessorFuncs = append(structAccessorFuncs, setterFuncDef)
 
-			sbHeader.WriteString(fmt.Sprintf("extern void %s(%s *%s, %s%s v);\n", setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, getPtrIfSize(m.Size)))
+			sbHeader.WriteString(fmt.Sprintf("extern void %s(%s *%s, %s%s v);\n", setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", memberType, getPtrIfSize(m.Size)))
+
 			if m.Size > 0 {
 				fmt.Fprintf(
 					sbCpp,
@@ -521,11 +527,19 @@ extern "C" {
 					m.Size,
 				)
 			} else {
-				fmt.Fprintf(
-					sbCpp,
-					"void %s(%s *%s, %s%s v) { %s->%s = v; }\n",
-					setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, getPtrIfSize(m.Size), s.Name+"Ptr", Split(m.Name, "[")[0],
-				)
+				if m.Type == "void*" {
+					fmt.Fprintf(
+						sbCpp,
+						"void %s(%s *%s, %s%s v) { %s->%s = (void*)v; }\n",
+						setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", memberType, getPtrIfSize(m.Size), s.Name+"Ptr", Split(m.Name, "[")[0],
+					)
+				} else {
+					fmt.Fprintf(
+						sbCpp,
+						"void %s(%s *%s, %s%s v) { %s->%s = v; }\n",
+						setterFuncDef.CWrapperFuncName, s.Name, s.Name+"Ptr", m.Type, getPtrIfSize(m.Size), s.Name+"Ptr", Split(m.Name, "[")[0],
+					)
+				}
 			}
 
 			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
@@ -547,7 +561,7 @@ extern "C" {
 				Constructor:      false,
 				Destructor:       false,
 				StructSetter:     false, StructGetter: true,
-				Ret: m.Type + CIdentifier(getSizeArg(m.Size)),
+				Ret: memberType + CIdentifier(getSizeArg(m.Size)),
 			}
 
 			structAccessorFuncs = append(structAccessorFuncs, getterFuncDef)
@@ -555,13 +569,20 @@ extern "C" {
 			fmt.Fprintf(
 				sbHeader,
 				"extern %s%s %s(%s *self);\n",
-				m.Type, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name,
+				memberType, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name,
 			)
 
-			fmt.Fprintf(sbCpp,
-				"%s%s %s(%s *self) { return self->%s; }\n",
-				m.Type, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name, Split(m.Name, "[")[0],
-			)
+			if m.Type == "void*" {
+				fmt.Fprintf(sbCpp,
+					"%s%s %s(%s *self) { return (uintptr_t)self->%s; }\n",
+					memberType, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name, Split(m.Name, "[")[0],
+				)
+			} else {
+				fmt.Fprintf(sbCpp,
+					"%s%s %s(%s *self) { return self->%s; }\n",
+					memberType, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name, Split(m.Name, "[")[0],
+				)
+			}
 		}
 	}
 

@@ -52,8 +52,8 @@ void wrap_MarkdownConfig_SetLinkIcon(MarkdownConfig *MarkdownConfigPtr, const ch
 const char* wrap_MarkdownConfig_GetLinkIcon(MarkdownConfig *self) { return self->linkIcon; }
 void wrap_MarkdownConfig_SetHeadingFormats(MarkdownConfig *MarkdownConfigPtr, MarkdownHeadingFormat* v) { memcpy(MarkdownConfigPtr->headingFormats, v, sizeof(MarkdownHeadingFormat)*3); }
 MarkdownHeadingFormat* wrap_MarkdownConfig_GetHeadingFormats(MarkdownConfig *self) { return self->headingFormats; }
-void wrap_MarkdownConfig_SetUserData(MarkdownConfig *MarkdownConfigPtr, void* v) { MarkdownConfigPtr->userData = v; }
-void* wrap_MarkdownConfig_GetUserData(MarkdownConfig *self) { return self->userData; }
+void wrap_MarkdownConfig_SetUserData(MarkdownConfig *MarkdownConfigPtr, uintptr_t v) { MarkdownConfigPtr->userData = (void*)v; }
+uintptr_t wrap_MarkdownConfig_GetUserData(MarkdownConfig *self) { return (uintptr_t)self->userData; }
 void wrap_MarkdownConfig_SetFormatCallback(MarkdownConfig *MarkdownConfigPtr, MarkdownFormalCallback* v) { MarkdownConfigPtr->formatCallback = v; }
 MarkdownFormalCallback* wrap_MarkdownConfig_GetFormatCallback(MarkdownConfig *self) { return self->formatCallback; }
 void wrap_MarkdownFormatInfo_SetType(MarkdownFormatInfo *MarkdownFormatInfoPtr, MarkdownFormatType v) { MarkdownFormatInfoPtr->type = v; }
@@ -92,8 +92,8 @@ void wrap_MarkdownLinkCallbackData_SetLink(MarkdownLinkCallbackData *MarkdownLin
 const char* wrap_MarkdownLinkCallbackData_GetLink(MarkdownLinkCallbackData *self) { return self->link; }
 void wrap_MarkdownLinkCallbackData_SetLinkLength(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, int v) { MarkdownLinkCallbackDataPtr->linkLength = v; }
 int wrap_MarkdownLinkCallbackData_GetLinkLength(MarkdownLinkCallbackData *self) { return self->linkLength; }
-void wrap_MarkdownLinkCallbackData_SetUserData(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, void* v) { MarkdownLinkCallbackDataPtr->userData = v; }
-void* wrap_MarkdownLinkCallbackData_GetUserData(MarkdownLinkCallbackData *self) { return self->userData; }
+void wrap_MarkdownLinkCallbackData_SetUserData(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, uintptr_t v) { MarkdownLinkCallbackDataPtr->userData = (void*)v; }
+uintptr_t wrap_MarkdownLinkCallbackData_GetUserData(MarkdownLinkCallbackData *self) { return (uintptr_t)self->userData; }
 void wrap_MarkdownLinkCallbackData_SetIsImage(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, bool v) { MarkdownLinkCallbackDataPtr->isImage = v; }
 bool wrap_MarkdownLinkCallbackData_GetIsImage(MarkdownLinkCallbackData *self) { return self->isImage; }
 void wrap_MarkdownTooltipCallbackData_SetLinkData(MarkdownTooltipCallbackData *MarkdownTooltipCallbackDataPtr, MarkdownLinkCallbackData v) { MarkdownTooltipCallbackDataPtr->linkData = v; }

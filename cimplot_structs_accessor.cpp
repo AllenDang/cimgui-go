@@ -12,8 +12,8 @@ void wrap_Formatter_Time_Data_SetSpec(Formatter_Time_Data *Formatter_Time_DataPt
 ImPlotDateTimeSpec wrap_Formatter_Time_Data_GetSpec(Formatter_Time_Data *self) { return self->Spec; }
 void wrap_Formatter_Time_Data_SetUserFormatter(Formatter_Time_Data *Formatter_Time_DataPtr, ImPlotFormatter v) { Formatter_Time_DataPtr->UserFormatter = v; }
 ImPlotFormatter wrap_Formatter_Time_Data_GetUserFormatter(Formatter_Time_Data *self) { return self->UserFormatter; }
-void wrap_Formatter_Time_Data_SetUserFormatterData(Formatter_Time_Data *Formatter_Time_DataPtr, void* v) { Formatter_Time_DataPtr->UserFormatterData = v; }
-void* wrap_Formatter_Time_Data_GetUserFormatterData(Formatter_Time_Data *self) { return self->UserFormatterData; }
+void wrap_Formatter_Time_Data_SetUserFormatterData(Formatter_Time_Data *Formatter_Time_DataPtr, uintptr_t v) { Formatter_Time_DataPtr->UserFormatterData = (void*)v; }
+uintptr_t wrap_Formatter_Time_Data_GetUserFormatterData(Formatter_Time_Data *self) { return (uintptr_t)self->UserFormatterData; }
 void wrap_ImPlotAlignmentData_SetVertical(ImPlotAlignmentData *ImPlotAlignmentDataPtr, bool v) { ImPlotAlignmentDataPtr->Vertical = v; }
 bool wrap_ImPlotAlignmentData_GetVertical(ImPlotAlignmentData *self) { return self->Vertical; }
 void wrap_ImPlotAlignmentData_SetPadA(ImPlotAlignmentData *ImPlotAlignmentDataPtr, float v) { ImPlotAlignmentDataPtr->PadA = v; }
@@ -66,8 +66,8 @@ void wrap_ImPlotAxis_SetTicker(ImPlotAxis *ImPlotAxisPtr, ImPlotTicker v) { ImPl
 ImPlotTicker wrap_ImPlotAxis_GetTicker(ImPlotAxis *self) { return self->Ticker; }
 void wrap_ImPlotAxis_SetFormatter(ImPlotAxis *ImPlotAxisPtr, ImPlotFormatter v) { ImPlotAxisPtr->Formatter = v; }
 ImPlotFormatter wrap_ImPlotAxis_GetFormatter(ImPlotAxis *self) { return self->Formatter; }
-void wrap_ImPlotAxis_SetFormatterData(ImPlotAxis *ImPlotAxisPtr, void* v) { ImPlotAxisPtr->FormatterData = v; }
-void* wrap_ImPlotAxis_GetFormatterData(ImPlotAxis *self) { return self->FormatterData; }
+void wrap_ImPlotAxis_SetFormatterData(ImPlotAxis *ImPlotAxisPtr, uintptr_t v) { ImPlotAxisPtr->FormatterData = (void*)v; }
+uintptr_t wrap_ImPlotAxis_GetFormatterData(ImPlotAxis *self) { return (uintptr_t)self->FormatterData; }
 void wrap_ImPlotAxis_SetFormatSpec(ImPlotAxis *ImPlotAxisPtr, char* v) { memcpy(ImPlotAxisPtr->FormatSpec, v, sizeof(char)*16); }
 char* wrap_ImPlotAxis_GetFormatSpec(ImPlotAxis *self) { return self->FormatSpec; }
 void wrap_ImPlotAxis_SetLocator(ImPlotAxis *ImPlotAxisPtr, ImPlotLocator v) { ImPlotAxisPtr->Locator = v; }
@@ -86,8 +86,8 @@ void wrap_ImPlotAxis_SetTransformForward(ImPlotAxis *ImPlotAxisPtr, ImPlotTransf
 ImPlotTransform wrap_ImPlotAxis_GetTransformForward(ImPlotAxis *self) { return self->TransformForward; }
 void wrap_ImPlotAxis_SetTransformInverse(ImPlotAxis *ImPlotAxisPtr, ImPlotTransform v) { ImPlotAxisPtr->TransformInverse = v; }
 ImPlotTransform wrap_ImPlotAxis_GetTransformInverse(ImPlotAxis *self) { return self->TransformInverse; }
-void wrap_ImPlotAxis_SetTransformData(ImPlotAxis *ImPlotAxisPtr, void* v) { ImPlotAxisPtr->TransformData = v; }
-void* wrap_ImPlotAxis_GetTransformData(ImPlotAxis *self) { return self->TransformData; }
+void wrap_ImPlotAxis_SetTransformData(ImPlotAxis *ImPlotAxisPtr, uintptr_t v) { ImPlotAxisPtr->TransformData = (void*)v; }
+uintptr_t wrap_ImPlotAxis_GetTransformData(ImPlotAxis *self) { return (uintptr_t)self->TransformData; }
 void wrap_ImPlotAxis_SetPixelMin(ImPlotAxis *ImPlotAxisPtr, float v) { ImPlotAxisPtr->PixelMin = v; }
 float wrap_ImPlotAxis_GetPixelMin(ImPlotAxis *self) { return self->PixelMin; }
 void wrap_ImPlotAxis_SetPixelMax(ImPlotAxis *ImPlotAxisPtr, float v) { ImPlotAxisPtr->PixelMax = v; }
