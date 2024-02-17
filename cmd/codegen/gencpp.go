@@ -291,8 +291,8 @@ extern "C" {
 					v = "NULL"
 				}
 
-				if v == "nullptr" {
-					v = "NULL"
+				if v == "nullptr" || v == "NULL" {
+					v = "0"
 				}
 
 				if k == "text_end" || k == "text_end_" {
