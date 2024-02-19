@@ -1,4 +1,4 @@
-# cimgui-go
+# cimgui-go [![GoDoc](https://pkg.go.dev/badge/github.com/AllenDang/cimgui-go?utm_source=godoc)](https://pkg.go.dev/mod/github.com/AllenDang/cimgui-go)
 
 This project aims to generate go wrapper for Dear ImGui.
 
