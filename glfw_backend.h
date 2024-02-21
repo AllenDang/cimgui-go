@@ -195,6 +195,7 @@ extern void igRefresh();
 extern ImTextureID igCreateTexture(unsigned char *pixels, int width, int height);
 extern void igDeleteTexture(ImTextureID id);
 extern void igWindowHint(GLFWWindowFlags hint, int value);
+extern void iggImplGlfw_KeyCallback(GLFWwindow* w, int k,int s,int a,int m);
 
 extern void dropCallback(int, char **);
 extern void closeCallback(GLFWwindow *window);
