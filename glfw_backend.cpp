@@ -298,4 +298,6 @@ void igGLFWWindow_SetIcon(GLFWwindow *window, int count, CImage *images) {
     glfwSetWindowIcon(window, count, glfwImages);
 }
 
+void iggImplGlfw_KeyCallback(GLFWwindow* w, int k,int s,int a,int m) { ImGui_ImplGlfw_KeyCallback(w,k,s,a,m); }
+
 #endif

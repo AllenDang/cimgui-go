@@ -430,7 +430,10 @@ func (b *GLFWBackend) SetIcons(images ...image.Image) {
 }
 
 func (b *GLFWBackend) SetKeyCallback(cbfun KeyCallback) {
-	b.keyCb = cbfun
+	b.keyCb = func(k, s, a, m int) {
+		C.iggImplGlfw_KeyCallback(b.handle(), C.int(k), C.int(s), C.int(a), C.int(m))
+		cbfun(k, s, a, m)
+	}
 	C.igGLFWWindow_SetKeyCallback(b.handle())
 }
 
