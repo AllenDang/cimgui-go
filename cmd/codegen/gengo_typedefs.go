@@ -12,6 +12,10 @@ import (
 // - all structs thatare not present in struct_and_enums.json (they are supposed to be epaque)
 // - everything that satisfies IsCallbackTypedef
 func proceedTypedefs(prefix string, typedefs *Typedefs, structs []StructDef, enums []EnumDef, refTypedefs map[CIdentifier]string) (validTypeNames []CIdentifier, err error) {
+	// quick counter for coverage control
+	generatedTypedefs := 0
+	maxTypedefs := len(typedefs.data)
+
 	// we need FILES
 	callbacksGoSb := &strings.Builder{}
 	callbacksGoSb.WriteString(goPackageHeader)
@@ -59,21 +63,25 @@ extern "C" {
 		typedef := typedefs.data[k]
 		if shouldSkip, ok := skippedTypedefs[k]; ok && shouldSkip {
 			glg.Infof("Arbitrarly skipping typedef %s", k)
+			maxTypedefs--
 			continue
 		}
 
 		if _, exists := refTypedefs[k]; exists {
 			glg.Infof("Duplicate of %s in reference typedefs. Skipping.", k)
+			maxTypedefs--
 			continue
 		}
 
 		if shouldSkipStruct(k) {
 			glg.Infof("Arbitrarly skipping struct %s", k)
+			maxTypedefs--
 			continue
 		}
 
 		if IsEnumName(k, enums) /*|| IsStructName(k, structs)*/ {
 			glg.Infof("typedef %s has extended deffinition in structs_and_enums.json. Will generate later", k)
+			maxTypedefs--
 			continue
 		}
 
@@ -186,6 +194,7 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 				fmt.Sprintf(knownPtrReturnType.returnStmt, "cvalue"),
 			)
 
+			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		case ptrReturnTypeErr == nil && argTypeErr == nil && ptrArgTypeErr == nil && !isPtr:
 			glg.Infof("typedef %s is an alias typedef.", k)
@@ -223,6 +232,8 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 
 				fmt.Sprintf(knownPtrReturnType.returnStmt, "cvalue"),
 			)
+
+			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		case returnTypeErr == nil && argTypeErr == nil && isPtr:
 			// if it's a pointer type, I think we can proceed as above, but without handle() method...
@@ -261,6 +272,7 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 				knownArgType.CType,
 			)
 
+			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		case IsCallbackTypedef(typedefs.data[k]):
 			glg.Infof("typedef %s is a callback. Not implemented yet", k)
@@ -268,6 +280,7 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 			isOpaque := !IsStructName(k, structs)
 			glg.Infof("typedef %s is a struct (is opaque? %v).", k, isOpaque)
 			writeOpaqueStruct(k, isOpaque, callbacksGoSb)
+			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		}
 	}
@@ -290,6 +303,7 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 		return nil, fmt.Errorf("cannot write %s_typedefs.h: %w", prefix, err)
 	}
 
+	glg.Infof("Typedefs generation complete. Generated %d/%d (%.2f%%) typedefs.", generatedTypedefs, maxTypedefs, float32(generatedTypedefs*100)/float32(maxTypedefs))
 	return validTypeNames, nil
 }
 
