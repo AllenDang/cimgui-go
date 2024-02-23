@@ -53,7 +53,7 @@ All loaded fonts glyphs are rendered into a single texture atlas ahead of time. 
 This is often of byproduct of point 3. If you have large number of glyphs or multiple fonts, the texture may become too big for your graphics API. **The typical result of failing to upload a texture is if every glyph or everything appears as empty black or white rectangle.** Mind the fact that some graphics drivers have texture size limitation. If you are building a PC application, mind the fact that your users may use hardware with lower limitations than yours.
 
 Some solutions:
-- You may reduce oversampling, e.g. `font_config.OversampleH = 1`, this will half your texture size for a quality looss.
+- You may reduce oversampling, e.g. `font_config.OversampleH = 1`, this will half your texture size for a quality loss.
   Note that while OversampleH = 2 looks visibly very close to 3 in most situations, with OversampleH = 1 the quality drop will be noticeable. Read about oversampling [here](https://github.com/nothings/stb/blob/master/tests/oversample).
 - Reduce glyphs ranges by calculating them from source localization data.
   You can use the `ImFontGlyphRangesBuilder` for this purpose and rebuilding your atlas between frames when new characters are needed. This will be the biggest win!
@@ -404,16 +404,12 @@ ImGui::Text(u8"こんにちは");   // this will always be encoded as UTF-8
 ImGui::Text("こんにちは");     // the encoding of this is depending on compiler settings/flags and may be incorrect.
 ```
 
-Since C++20, because the C++ committee hate its users, they decided to change the `u8""` syntax to not return `const char*` but a new type `const char_t*` which doesn't cast to `const char*`.
+Since C++20, because the C++ committee hate its users, they decided to change the `u8""` syntax to not return `const char*` but a new type `const char8_t*` which doesn't cast to `const char*`.
 Because of type usage of `u8""` in C++20 is a little more tedious:
 ```cpp
 ImGui::Text((const char*)u8"こんにちは");
 ```
-We suggest using a macro in your codebase:
-```cpp
-#define U8(_S)    (const char*)u8##_S
-ImGui::Text(U8("こんにちは"));
-```
+However, you can disable this behavior completely using the compiler option [`/Zc:char8_t-`](https://learn.microsoft.com/en-us/cpp/build/reference/zc-char8-t?view=msvc-170) for MSVC and [`-fno-char8_t`](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1423r3.html) for Clang and GCC.
 ##### [Return to Index](#index)
 
 ---------------------------------------
@@ -486,7 +482,7 @@ Some fonts files are available in the `misc/fonts/` folder:
 #### MONOSPACE FONTS
 
 Pixel Perfect:
-- Proggy Fonts, by Tristan Grimmer http://www.proggyfonts.net or http://upperbounds.net
+- Proggy Fonts, by Tristan Grimmer http://www.proggyfonts.net or http://upperboundsinteractive.com/fonts.php
 - Sweet16, Sweet16 Mono, by Martin Sedlak (Latin + Supplemental + Extended A) https://github.com/kmar/Sweet16Font (also include an .inl file to use directly in dear imgui.)
 
 Regular:

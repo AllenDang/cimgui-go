@@ -16,7 +16,7 @@
 
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
-//  2023-XX-XX: Metal: Added support for multiple windows via the ImGuiPlatformIO interface.
+//  2024-XX-XX: Metal: Added support for multiple windows via the ImGuiPlatformIO interface.
 //  2022-08-23: Metal: Update deprecated property 'sampleCount'->'rasterSampleCount'.
 //  2022-07-05: Metal: Add dispatch synchronization.
 //  2022-06-30: Metal: Use __bridge for ARC based systems.
@@ -707,13 +707,13 @@ static void ImGui_ImplMetal_InvalidateDeviceObjectsForPlatformWindows()
     }
 
     MTLVertexDescriptor* vertexDescriptor = [MTLVertexDescriptor vertexDescriptor];
-    vertexDescriptor.attributes[0].offset = IM_OFFSETOF(ImDrawVert, pos);
+    vertexDescriptor.attributes[0].offset = offsetof(ImDrawVert, pos);
     vertexDescriptor.attributes[0].format = MTLVertexFormatFloat2; // position
     vertexDescriptor.attributes[0].bufferIndex = 0;
-    vertexDescriptor.attributes[1].offset = IM_OFFSETOF(ImDrawVert, uv);
+    vertexDescriptor.attributes[1].offset = offsetof(ImDrawVert, uv);
     vertexDescriptor.attributes[1].format = MTLVertexFormatFloat2; // texCoords
     vertexDescriptor.attributes[1].bufferIndex = 0;
-    vertexDescriptor.attributes[2].offset = IM_OFFSETOF(ImDrawVert, col);
+    vertexDescriptor.attributes[2].offset = offsetof(ImDrawVert, col);
     vertexDescriptor.attributes[2].format = MTLVertexFormatUChar4; // color
     vertexDescriptor.attributes[2].bufferIndex = 0;
     vertexDescriptor.layouts[0].stepRate = 1;

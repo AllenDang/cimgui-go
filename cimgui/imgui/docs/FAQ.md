@@ -125,12 +125,7 @@ void MyLowLevelMouseButtonHandler(int button, bool down)
 }
 ```
 
-
 **Note:** The `io.WantCaptureMouse` is more correct that any manual attempt to "check if the mouse is hovering a window" (don't do that!). It handles mouse dragging correctly (both dragging that started over your application or over a Dear ImGui window) and handle e.g. popup and modal windows blocking inputs.
-
-**Note:** Those flags are updated by `ImGui::NewFrame()`. However it is generally more correct and easier that you poll flags from the previous frame, then submit your inputs, then call `NewFrame()`. If you attempt to do the opposite (which is generally harder) you are likely going to submit your inputs after `NewFrame()`, and therefore too late.
-
-**Note:** If you are using a touch device, you may find use for an early call to `UpdateHoveredWindowAndCaptureFlags()` to correctly dispatch your initial touch. We will work on better out-of-the-box touch support in the future.
 
 **Note:** Text input widget releases focus on the "KeyDown" event of the Return key, so the subsequent "KeyUp" event that your application receive will typically have `io.WantCaptureKeyboard == false`. Depending on your application logic it may or not be inconvenient to receive that KeyUp event. You might want to track which key-downs were targeted for Dear ImGui, e.g. with an array of bool, and filter out the corresponding key-ups.)
 
@@ -217,7 +212,7 @@ Interactive widgets (such as calls to Button buttons) need a unique ID.
 **Unique IDs are used internally to track active widgets and occasionally associate state to widgets.<BR>
 Unique IDs are implicitly built from the hash of multiple elements that identify the "path" to the UI element.**
 
-Since Dear ImGui 1.85, you can use `Demo>Tools>Stack Tool` or call `ImGui::ShowStackToolWindow()`. The tool display intermediate values leading to the creation of a unique ID, making things easier to debug and understand.
+Since Dear ImGui 1.85, you can use `Demo>Tools>ID Stack Tool` or call `ImGui::ShowIDStackToolWindow()`. The tool display intermediate values leading to the creation of a unique ID, making things easier to debug and understand.
 
 ![Stack tool](https://user-images.githubusercontent.com/8225057/136235657-a0ea5665-dcd1-423f-9be6-dc3f8ced8f12.png)
 
@@ -431,7 +426,7 @@ Finally, you may call `ImGui::ShowMetricsWindow()` to explore/visualize/understa
 
 ### Q: How can I use maths operators with ImVec2?
 
-We do not export maths operators by default in imgui.h in order to not conflict with the use of your own maths types and maths operators. As a convenience, you may use `#defne IMGUI_DEFINE_MATH_OPERATORS` + `#include "imgui.h"` to access our basic maths operators.
+We do not export maths operators by default in imgui.h in order to not conflict with the use of your own maths types and maths operators. As a convenience, you may use `#define IMGUI_DEFINE_MATH_OPERATORS` + `#include "imgui.h"` to access our basic maths operators.
 
 ##### [Return to Index](#index)
 
@@ -627,7 +622,7 @@ You may take a look at:
 - [Quotes](https://github.com/ocornut/imgui/wiki/Quotes)
 - [Software using Dear ImGui](https://github.com/ocornut/imgui/wiki/Software-using-dear-imgui)
 - [Sponsors](https://github.com/ocornut/imgui/wiki/Sponsors)
-- [Gallery](https://github.com/ocornut/imgui/issues/6478)
+- [Gallery](https://github.com/ocornut/imgui/issues/6897)
 
 ##### [Return to Index](#index)
 
@@ -673,7 +668,7 @@ There is an auto-generated [c-api for Dear ImGui (cimgui)](https://github.com/ci
 - Individuals: you can support continued maintenance and development via PayPal donations. See [README](https://github.com/ocornut/imgui/blob/master/docs/README.md).
 - If you are experienced with Dear ImGui and C++, look at [GitHub Issues](https://github.com/ocornut/imgui/issues), [GitHub Discussions](https://github.com/ocornut/imgui/discussions), the [Wiki](https://github.com/ocornut/imgui/wiki), read [docs/TODO.txt](https://github.com/ocornut/imgui/blob/master/docs/TODO.txt), and see how you want to help and can help!
 - Disclose your usage of Dear ImGui via a dev blog post, a tweet, a screenshot, a mention somewhere, etc.
-You may post screenshots or links in the [gallery threads](https://github.com/ocornut/imgui/issues/6478). Visuals are ideal as they inspire other programmers. Disclosing your use of Dear ImGui helps the library grow credibility, and helps other teams and programmers with taking decisions.
+You may post screenshots or links in the [gallery threads](https://github.com/ocornut/imgui/issues/6897). Visuals are ideal as they inspire other programmers. Disclosing your use of Dear ImGui helps the library grow credibility, and helps other teams and programmers with taking decisions.
 - If you have issues or if you need to hack into the library, even if you don't expect any support it is useful that you share your issues or sometimes incomplete PR.
 
 ##### [Return to Index](#index)

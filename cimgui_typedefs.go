@@ -438,6 +438,40 @@ func newDataVarInfoFromC(cvalue *C.ImGuiDataVarInfo) *DataVarInfo {
 	return &DataVarInfo{CData: cvalue}
 }
 
+type DebugAllocEntry struct {
+	CData *C.ImGuiDebugAllocEntry
+}
+
+func (self *DebugAllocEntry) handle() (result *C.ImGuiDebugAllocEntry, fin func()) {
+	return self.CData, func() {}
+}
+
+func (self DebugAllocEntry) c() (C.ImGuiDebugAllocEntry, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDebugAllocEntryFromC(cvalue *C.ImGuiDebugAllocEntry) *DebugAllocEntry {
+	return &DebugAllocEntry{CData: cvalue}
+}
+
+type DebugAllocInfo struct {
+	CData *C.ImGuiDebugAllocInfo
+}
+
+func (self *DebugAllocInfo) handle() (result *C.ImGuiDebugAllocInfo, fin func()) {
+	return self.CData, func() {}
+}
+
+func (self DebugAllocInfo) c() (C.ImGuiDebugAllocInfo, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newDebugAllocInfoFromC(cvalue *C.ImGuiDebugAllocInfo) *DebugAllocInfo {
+	return &DebugAllocInfo{CData: cvalue}
+}
+
 type DockContext struct {
 	CData *C.ImGuiDockContext
 }
@@ -496,6 +530,23 @@ func newDockRequestFromC(cvalue *C.ImGuiDockRequest) *DockRequest {
 	return &DockRequest{CData: cvalue}
 }
 
+type FocusScopeData struct {
+	CData *C.ImGuiFocusScopeData
+}
+
+func (self *FocusScopeData) handle() (result *C.ImGuiFocusScopeData, fin func()) {
+	return self.CData, func() {}
+}
+
+func (self FocusScopeData) c() (C.ImGuiFocusScopeData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newFocusScopeDataFromC(cvalue *C.ImGuiFocusScopeData) *FocusScopeData {
+	return &FocusScopeData{CData: cvalue}
+}
+
 type GroupData struct {
 	CData *C.ImGuiGroupData
 }
@@ -527,6 +578,23 @@ func (self ID) c() (C.ImGuiID, func()) {
 
 func newIDFromC(cvalue *C.ImGuiID) *ID {
 	return (*ID)((*uint32)(cvalue))
+}
+
+type IDStackTool struct {
+	CData *C.ImGuiIDStackTool
+}
+
+func (self *IDStackTool) handle() (result *C.ImGuiIDStackTool, fin func()) {
+	return self.CData, func() {}
+}
+
+func (self IDStackTool) c() (C.ImGuiIDStackTool, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newIDStackToolFromC(cvalue *C.ImGuiIDStackTool) *IDStackTool {
+	return &IDStackTool{CData: cvalue}
 }
 
 type IO struct {
@@ -1252,23 +1320,6 @@ func (self StackSizes) c() (C.ImGuiStackSizes, func()) {
 
 func newStackSizesFromC(cvalue *C.ImGuiStackSizes) *StackSizes {
 	return &StackSizes{CData: cvalue}
-}
-
-type StackTool struct {
-	CData *C.ImGuiStackTool
-}
-
-func (self *StackTool) handle() (result *C.ImGuiStackTool, fin func()) {
-	return self.CData, func() {}
-}
-
-func (self StackTool) c() (C.ImGuiStackTool, func()) {
-	result, fn := self.handle()
-	return *result, fn
-}
-
-func newStackToolFromC(cvalue *C.ImGuiStackTool) *StackTool {
-	return &StackTool{CData: cvalue}
 }
 
 type Storage struct {

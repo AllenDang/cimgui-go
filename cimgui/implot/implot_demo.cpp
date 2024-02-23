@@ -610,10 +610,8 @@ void Demo_PieCharts() {
     static ImPlotPieChartFlags flags = 0;
     ImGui::SetNextItemWidth(250);
     ImGui::DragFloat4("Values", data1, 0.01f, 0, 1);
-    if ((data1[0] + data1[1] + data1[2] + data1[3]) < 1) {
-        ImGui::SameLine();
-        CHECKBOX_FLAG(flags,ImPlotPieChartFlags_Normalize);
-    }
+    CHECKBOX_FLAG(flags, ImPlotPieChartFlags_Normalize);
+    CHECKBOX_FLAG(flags, ImPlotPieChartFlags_IgnoreHidden);
 
     if (ImPlot::BeginPlot("##Pie1", ImVec2(250,250), ImPlotFlags_Equal | ImPlotFlags_NoMouseText)) {
         ImPlot::SetupAxes(nullptr, nullptr, ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations);
@@ -1388,7 +1386,7 @@ void Demo_LegendOptions() {
 
     static int num_dummy_items = 25;
     ImGui::SliderInt("Num Dummy Items (Demo Scrolling)", &num_dummy_items, 0, 100);
-    
+
     if (ImPlot::BeginPlot("##Legend",ImVec2(-1,0))) {
         ImPlot::SetupLegend(loc, flags);
         static MyImPlot::WaveData data1(0.001, 0.2, 4, 0.2);
@@ -1407,11 +1405,11 @@ void Demo_LegendOptions() {
             char label[16];
             snprintf(label, sizeof(label), "Item %03d", i+4);
             ImPlot::PlotDummy(label);
-        }        
+        }
         ImPlot::EndPlot();
     }
-} 
-    
+}
+
 //-----------------------------------------------------------------------------
 
 void Demo_DragPoints() {

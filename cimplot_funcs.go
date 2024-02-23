@@ -6164,24 +6164,24 @@ func PlotPlotLinedoublePtrdoublePtrV(label_id string, xs *[]float64, ys *[]float
 	}
 }
 
-// PlotPlotPieChartFloatPtrV parameter default value hint:
+// PlotPlotPieChartFloatPtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
 // flags: 0
-func PlotPlotPieChartFloatPtrV(label_ids []string, values []float32, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+func PlotPlotPieChartFloatPtrStrV(label_ids []string, values []float32, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	label_fmtArg, label_fmtFin := WrapString(label_fmt)
-	C.ImPlot_PlotPieChart_FloatPtr(label_idsArg, (*C.float)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+	C.ImPlot_PlotPieChart_FloatPtrStr(label_idsArg, (*C.float)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 
 	label_idsFin()
 	label_fmtFin()
 }
 
-// PlotPlotPieChartS16PtrV parameter default value hint:
+// PlotPlotPieChartS16PtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
 // flags: 0
-func PlotPlotPieChartS16PtrV(label_ids []string, values *[]int, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+func PlotPlotPieChartS16PtrStrV(label_ids []string, values *[]int, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	valuesArg := make([]C.ImS16, len(*values))
 	for i, valuesV := range *values {
@@ -6189,7 +6189,7 @@ func PlotPlotPieChartS16PtrV(label_ids []string, values *[]int, count int32, x f
 	}
 
 	label_fmtArg, label_fmtFin := WrapString(label_fmt)
-	C.ImPlot_PlotPieChart_S16Ptr(label_idsArg, (*C.ImS16)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+	C.ImPlot_PlotPieChart_S16PtrStr(label_idsArg, (*C.ImS16)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 
 	label_idsFin()
 
@@ -6200,11 +6200,11 @@ func PlotPlotPieChartS16PtrV(label_ids []string, values *[]int, count int32, x f
 	label_fmtFin()
 }
 
-// PlotPlotPieChartS32PtrV parameter default value hint:
+// PlotPlotPieChartS32PtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
 // flags: 0
-func PlotPlotPieChartS32PtrV(label_ids []string, values *[]int32, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+func PlotPlotPieChartS32PtrStrV(label_ids []string, values *[]int32, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	valuesArg := make([]C.ImS32, len(*values))
 	for i, valuesV := range *values {
@@ -6212,7 +6212,7 @@ func PlotPlotPieChartS32PtrV(label_ids []string, values *[]int32, count int32, x
 	}
 
 	label_fmtArg, label_fmtFin := WrapString(label_fmt)
-	C.ImPlot_PlotPieChart_S32Ptr(label_idsArg, (*C.ImS32)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+	C.ImPlot_PlotPieChart_S32PtrStr(label_idsArg, (*C.ImS32)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 
 	label_idsFin()
 
@@ -6223,24 +6223,24 @@ func PlotPlotPieChartS32PtrV(label_ids []string, values *[]int32, count int32, x
 	label_fmtFin()
 }
 
-// PlotPlotPieChartS64PtrV parameter default value hint:
+// PlotPlotPieChartS64PtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
 // flags: 0
-func PlotPlotPieChartS64PtrV(label_ids []string, values []int64, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+func PlotPlotPieChartS64PtrStrV(label_ids []string, values []int64, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	label_fmtArg, label_fmtFin := WrapString(label_fmt)
-	C.ImPlot_PlotPieChart_S64Ptr(label_idsArg, (*C.longlong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+	C.ImPlot_PlotPieChart_S64PtrStr(label_idsArg, (*C.longlong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 
 	label_idsFin()
 	label_fmtFin()
 }
 
-// PlotPlotPieChartS8PtrV parameter default value hint:
+// PlotPlotPieChartS8PtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
 // flags: 0
-func PlotPlotPieChartS8PtrV(label_ids []string, values *[]int8, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+func PlotPlotPieChartS8PtrStrV(label_ids []string, values *[]int8, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	valuesArg := make([]C.ImS8, len(*values))
 	for i, valuesV := range *values {
@@ -6248,7 +6248,7 @@ func PlotPlotPieChartS8PtrV(label_ids []string, values *[]int8, count int32, x f
 	}
 
 	label_fmtArg, label_fmtFin := WrapString(label_fmt)
-	C.ImPlot_PlotPieChart_S8Ptr(label_idsArg, (*C.ImS8)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+	C.ImPlot_PlotPieChart_S8PtrStr(label_idsArg, (*C.ImS8)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 
 	label_idsFin()
 
@@ -6259,11 +6259,11 @@ func PlotPlotPieChartS8PtrV(label_ids []string, values *[]int8, count int32, x f
 	label_fmtFin()
 }
 
-// PlotPlotPieChartU16PtrV parameter default value hint:
+// PlotPlotPieChartU16PtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
 // flags: 0
-func PlotPlotPieChartU16PtrV(label_ids []string, values *[]uint16, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+func PlotPlotPieChartU16PtrStrV(label_ids []string, values *[]uint16, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	valuesArg := make([]C.ImU16, len(*values))
 	for i, valuesV := range *values {
@@ -6271,7 +6271,7 @@ func PlotPlotPieChartU16PtrV(label_ids []string, values *[]uint16, count int32, 
 	}
 
 	label_fmtArg, label_fmtFin := WrapString(label_fmt)
-	C.ImPlot_PlotPieChart_U16Ptr(label_idsArg, (*C.ImU16)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+	C.ImPlot_PlotPieChart_U16PtrStr(label_idsArg, (*C.ImU16)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 
 	label_idsFin()
 
@@ -6282,11 +6282,11 @@ func PlotPlotPieChartU16PtrV(label_ids []string, values *[]uint16, count int32, 
 	label_fmtFin()
 }
 
-// PlotPlotPieChartU32PtrV parameter default value hint:
+// PlotPlotPieChartU32PtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
 // flags: 0
-func PlotPlotPieChartU32PtrV(label_ids []string, values *[]uint32, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+func PlotPlotPieChartU32PtrStrV(label_ids []string, values *[]uint32, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	valuesArg := make([]C.ImU32, len(*values))
 	for i, valuesV := range *values {
@@ -6294,7 +6294,7 @@ func PlotPlotPieChartU32PtrV(label_ids []string, values *[]uint32, count int32, 
 	}
 
 	label_fmtArg, label_fmtFin := WrapString(label_fmt)
-	C.ImPlot_PlotPieChart_U32Ptr(label_idsArg, (*C.ImU32)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+	C.ImPlot_PlotPieChart_U32PtrStr(label_idsArg, (*C.ImU32)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 
 	label_idsFin()
 
@@ -6305,24 +6305,24 @@ func PlotPlotPieChartU32PtrV(label_ids []string, values *[]uint32, count int32, 
 	label_fmtFin()
 }
 
-// PlotPlotPieChartU64PtrV parameter default value hint:
+// PlotPlotPieChartU64PtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
 // flags: 0
-func PlotPlotPieChartU64PtrV(label_ids []string, values []uint64, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+func PlotPlotPieChartU64PtrStrV(label_ids []string, values []uint64, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	label_fmtArg, label_fmtFin := WrapString(label_fmt)
-	C.ImPlot_PlotPieChart_U64Ptr(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+	C.ImPlot_PlotPieChart_U64PtrStr(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 
 	label_idsFin()
 	label_fmtFin()
 }
 
-// PlotPlotPieChartU8PtrV parameter default value hint:
+// PlotPlotPieChartU8PtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
 // flags: 0
-func PlotPlotPieChartU8PtrV(label_ids []string, values *[]byte, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+func PlotPlotPieChartU8PtrStrV(label_ids []string, values *[]byte, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	valuesArg := make([]C.ImU8, len(*values))
 	for i, valuesV := range *values {
@@ -6330,7 +6330,7 @@ func PlotPlotPieChartU8PtrV(label_ids []string, values *[]byte, count int32, x f
 	}
 
 	label_fmtArg, label_fmtFin := WrapString(label_fmt)
-	C.ImPlot_PlotPieChart_U8Ptr(label_idsArg, (*C.ImU8)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+	C.ImPlot_PlotPieChart_U8PtrStr(label_idsArg, (*C.ImU8)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 
 	label_idsFin()
 
@@ -6341,11 +6341,11 @@ func PlotPlotPieChartU8PtrV(label_ids []string, values *[]byte, count int32, x f
 	label_fmtFin()
 }
 
-// PlotPlotPieChartdoublePtrV parameter default value hint:
+// PlotPlotPieChartdoublePtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
 // flags: 0
-func PlotPlotPieChartdoublePtrV(label_ids []string, values *[]float64, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
+func PlotPlotPieChartdoublePtrStrV(label_ids []string, values *[]float64, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	valuesArg := make([]C.double, len(*values))
 	for i, valuesV := range *values {
@@ -6353,7 +6353,7 @@ func PlotPlotPieChartdoublePtrV(label_ids []string, values *[]float64, count int
 	}
 
 	label_fmtArg, label_fmtFin := WrapString(label_fmt)
-	C.ImPlot_PlotPieChart_doublePtr(label_idsArg, (*C.double)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
+	C.ImPlot_PlotPieChart_doublePtrStr(label_idsArg, (*C.double)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 
 	label_idsFin()
 
@@ -11573,21 +11573,21 @@ func PlotPlotLinedoublePtrdoublePtr(label_id string, xs *[]float64, ys *[]float6
 	}
 }
 
-func PlotPlotPieChartFloatPtr(label_ids []string, values []float32, count int32, x float64, y float64, radius float64) {
+func PlotPlotPieChartFloatPtrStr(label_ids []string, values []float32, count int32, x float64, y float64, radius float64) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
-	C.wrap_ImPlot_PlotPieChart_FloatPtr(label_idsArg, (*C.float)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
+	C.wrap_ImPlot_PlotPieChart_FloatPtrStr(label_idsArg, (*C.float)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
 
 	label_idsFin()
 }
 
-func PlotPlotPieChartS16Ptr(label_ids []string, values *[]int, count int32, x float64, y float64, radius float64) {
+func PlotPlotPieChartS16PtrStr(label_ids []string, values *[]int, count int32, x float64, y float64, radius float64) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	valuesArg := make([]C.ImS16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS16(valuesV)
 	}
 
-	C.wrap_ImPlot_PlotPieChart_S16Ptr(label_idsArg, (*C.ImS16)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
+	C.wrap_ImPlot_PlotPieChart_S16PtrStr(label_idsArg, (*C.ImS16)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
 
 	label_idsFin()
 
@@ -11596,14 +11596,14 @@ func PlotPlotPieChartS16Ptr(label_ids []string, values *[]int, count int32, x fl
 	}
 }
 
-func PlotPlotPieChartS32Ptr(label_ids []string, values *[]int32, count int32, x float64, y float64, radius float64) {
+func PlotPlotPieChartS32PtrStr(label_ids []string, values *[]int32, count int32, x float64, y float64, radius float64) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	valuesArg := make([]C.ImS32, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS32(valuesV)
 	}
 
-	C.wrap_ImPlot_PlotPieChart_S32Ptr(label_idsArg, (*C.ImS32)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
+	C.wrap_ImPlot_PlotPieChart_S32PtrStr(label_idsArg, (*C.ImS32)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
 
 	label_idsFin()
 
@@ -11612,21 +11612,21 @@ func PlotPlotPieChartS32Ptr(label_ids []string, values *[]int32, count int32, x 
 	}
 }
 
-func PlotPlotPieChartS64Ptr(label_ids []string, values []int64, count int32, x float64, y float64, radius float64) {
+func PlotPlotPieChartS64PtrStr(label_ids []string, values []int64, count int32, x float64, y float64, radius float64) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
-	C.wrap_ImPlot_PlotPieChart_S64Ptr(label_idsArg, (*C.longlong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
+	C.wrap_ImPlot_PlotPieChart_S64PtrStr(label_idsArg, (*C.longlong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
 
 	label_idsFin()
 }
 
-func PlotPlotPieChartS8Ptr(label_ids []string, values *[]int8, count int32, x float64, y float64, radius float64) {
+func PlotPlotPieChartS8PtrStr(label_ids []string, values *[]int8, count int32, x float64, y float64, radius float64) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	valuesArg := make([]C.ImS8, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS8(valuesV)
 	}
 
-	C.wrap_ImPlot_PlotPieChart_S8Ptr(label_idsArg, (*C.ImS8)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
+	C.wrap_ImPlot_PlotPieChart_S8PtrStr(label_idsArg, (*C.ImS8)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
 
 	label_idsFin()
 
@@ -11635,14 +11635,14 @@ func PlotPlotPieChartS8Ptr(label_ids []string, values *[]int8, count int32, x fl
 	}
 }
 
-func PlotPlotPieChartU16Ptr(label_ids []string, values *[]uint16, count int32, x float64, y float64, radius float64) {
+func PlotPlotPieChartU16PtrStr(label_ids []string, values *[]uint16, count int32, x float64, y float64, radius float64) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	valuesArg := make([]C.ImU16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU16(valuesV)
 	}
 
-	C.wrap_ImPlot_PlotPieChart_U16Ptr(label_idsArg, (*C.ImU16)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
+	C.wrap_ImPlot_PlotPieChart_U16PtrStr(label_idsArg, (*C.ImU16)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
 
 	label_idsFin()
 
@@ -11651,14 +11651,14 @@ func PlotPlotPieChartU16Ptr(label_ids []string, values *[]uint16, count int32, x
 	}
 }
 
-func PlotPlotPieChartU32Ptr(label_ids []string, values *[]uint32, count int32, x float64, y float64, radius float64) {
+func PlotPlotPieChartU32PtrStr(label_ids []string, values *[]uint32, count int32, x float64, y float64, radius float64) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	valuesArg := make([]C.ImU32, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU32(valuesV)
 	}
 
-	C.wrap_ImPlot_PlotPieChart_U32Ptr(label_idsArg, (*C.ImU32)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
+	C.wrap_ImPlot_PlotPieChart_U32PtrStr(label_idsArg, (*C.ImU32)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
 
 	label_idsFin()
 
@@ -11667,21 +11667,21 @@ func PlotPlotPieChartU32Ptr(label_ids []string, values *[]uint32, count int32, x
 	}
 }
 
-func PlotPlotPieChartU64Ptr(label_ids []string, values []uint64, count int32, x float64, y float64, radius float64) {
+func PlotPlotPieChartU64PtrStr(label_ids []string, values []uint64, count int32, x float64, y float64, radius float64) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
-	C.wrap_ImPlot_PlotPieChart_U64Ptr(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
+	C.wrap_ImPlot_PlotPieChart_U64PtrStr(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
 
 	label_idsFin()
 }
 
-func PlotPlotPieChartU8Ptr(label_ids []string, values *[]byte, count int32, x float64, y float64, radius float64) {
+func PlotPlotPieChartU8PtrStr(label_ids []string, values *[]byte, count int32, x float64, y float64, radius float64) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	valuesArg := make([]C.ImU8, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU8(valuesV)
 	}
 
-	C.wrap_ImPlot_PlotPieChart_U8Ptr(label_idsArg, (*C.ImU8)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
+	C.wrap_ImPlot_PlotPieChart_U8PtrStr(label_idsArg, (*C.ImU8)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
 
 	label_idsFin()
 
@@ -11690,14 +11690,14 @@ func PlotPlotPieChartU8Ptr(label_ids []string, values *[]byte, count int32, x fl
 	}
 }
 
-func PlotPlotPieChartdoublePtr(label_ids []string, values *[]float64, count int32, x float64, y float64, radius float64) {
+func PlotPlotPieChartdoublePtrStr(label_ids []string, values *[]float64, count int32, x float64, y float64, radius float64) {
 	label_idsArg, label_idsFin := WrapStringList(label_ids)
 	valuesArg := make([]C.double, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.double(valuesV)
 	}
 
-	C.wrap_ImPlot_PlotPieChart_doublePtr(label_idsArg, (*C.double)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
+	C.wrap_ImPlot_PlotPieChart_doublePtrStr(label_idsArg, (*C.double)(&valuesArg[0]), C.int(count), C.double(x), C.double(y), C.double(radius))
 
 	label_idsFin()
 

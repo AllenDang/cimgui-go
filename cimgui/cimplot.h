@@ -203,7 +203,8 @@ typedef enum {
 }ImPlotInfLinesFlags_;
 typedef enum {
     ImPlotPieChartFlags_None = 0,
-    ImPlotPieChartFlags_Normalize = 1 << 10
+    ImPlotPieChartFlags_Normalize = 1 << 10,
+    ImPlotPieChartFlags_IgnoreHidden = 1 << 11
 }ImPlotPieChartFlags_;
 typedef enum {
     ImPlotHeatmapFlags_None = 0,
@@ -1041,16 +1042,26 @@ CIMGUI_API void ImPlot_PlotInfLines_S32Ptr(const char* label_id,const ImS32* val
 CIMGUI_API void ImPlot_PlotInfLines_U32Ptr(const char* label_id,const ImU32* values,int count,ImPlotInfLinesFlags flags,int offset,int stride);
 CIMGUI_API void ImPlot_PlotInfLines_S64Ptr(const char* label_id,const ImS64* values,int count,ImPlotInfLinesFlags flags,int offset,int stride);
 CIMGUI_API void ImPlot_PlotInfLines_U64Ptr(const char* label_id,const ImU64* values,int count,ImPlotInfLinesFlags flags,int offset,int stride);
-CIMGUI_API void ImPlot_PlotPieChart_FloatPtr(const char* const label_ids[],const float* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
-CIMGUI_API void ImPlot_PlotPieChart_doublePtr(const char* const label_ids[],const double* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
-CIMGUI_API void ImPlot_PlotPieChart_S8Ptr(const char* const label_ids[],const ImS8* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
-CIMGUI_API void ImPlot_PlotPieChart_U8Ptr(const char* const label_ids[],const ImU8* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
-CIMGUI_API void ImPlot_PlotPieChart_S16Ptr(const char* const label_ids[],const ImS16* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
-CIMGUI_API void ImPlot_PlotPieChart_U16Ptr(const char* const label_ids[],const ImU16* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
-CIMGUI_API void ImPlot_PlotPieChart_S32Ptr(const char* const label_ids[],const ImS32* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
-CIMGUI_API void ImPlot_PlotPieChart_U32Ptr(const char* const label_ids[],const ImU32* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
-CIMGUI_API void ImPlot_PlotPieChart_S64Ptr(const char* const label_ids[],const ImS64* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
-CIMGUI_API void ImPlot_PlotPieChart_U64Ptr(const char* const label_ids[],const ImU64* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_FloatPtrPlotFormatter(const char* const label_ids[],const float* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_doublePtrPlotFormatter(const char* const label_ids[],const double* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_S8PtrPlotFormatter(const char* const label_ids[],const ImS8* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_U8PtrPlotFormatter(const char* const label_ids[],const ImU8* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_S16PtrPlotFormatter(const char* const label_ids[],const ImS16* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_U16PtrPlotFormatter(const char* const label_ids[],const ImU16* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_S32PtrPlotFormatter(const char* const label_ids[],const ImS32* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_U32PtrPlotFormatter(const char* const label_ids[],const ImU32* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_S64PtrPlotFormatter(const char* const label_ids[],const ImS64* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_U64PtrPlotFormatter(const char* const label_ids[],const ImU64* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_FloatPtrStr(const char* const label_ids[],const float* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_doublePtrStr(const char* const label_ids[],const double* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_S8PtrStr(const char* const label_ids[],const ImS8* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_U8PtrStr(const char* const label_ids[],const ImU8* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_S16PtrStr(const char* const label_ids[],const ImS16* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_U16PtrStr(const char* const label_ids[],const ImU16* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_S32PtrStr(const char* const label_ids[],const ImS32* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_U32PtrStr(const char* const label_ids[],const ImU32* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_S64PtrStr(const char* const label_ids[],const ImS64* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
+CIMGUI_API void ImPlot_PlotPieChart_U64PtrStr(const char* const label_ids[],const ImU64* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags);
 CIMGUI_API void ImPlot_PlotHeatmap_FloatPtr(const char* label_id,const float* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max,ImPlotHeatmapFlags flags);
 CIMGUI_API void ImPlot_PlotHeatmap_doublePtr(const char* label_id,const double* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max,ImPlotHeatmapFlags flags);
 CIMGUI_API void ImPlot_PlotHeatmap_S8Ptr(const char* label_id,const ImS8* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max,ImPlotHeatmapFlags flags);

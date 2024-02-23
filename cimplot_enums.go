@@ -317,8 +317,9 @@ const (
 type PlotPieChartFlags int32
 
 const (
-	PlotPieChartFlagsNone      = 0
-	PlotPieChartFlagsNormalize = 1024
+	PlotPieChartFlagsNone         = 0
+	PlotPieChartFlagsNormalize    = 1024
+	PlotPieChartFlagsIgnoreHidden = 2048
 )
 
 // original name: ImPlotScale_

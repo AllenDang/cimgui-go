@@ -74,6 +74,10 @@ const (
 	ActivateFlagsPreferTweak = 2
 	// Request widget to preserve state if it can (e.g. InputText will try to preserve cursor/selection)
 	ActivateFlagsTryToPreserveState = 4
+	// Activation requested by a tabbing request
+	ActivateFlagsFromTabbing = 8
+	// Activation requested by an item shortcut via SetNextItemShortcut() function.
+	ActivateFlagsFromShortcut = 16
 )
 
 // X/Y enums are fixed to 0/1 so they may be used to index ImVec2
@@ -167,6 +171,39 @@ const (
 	ButtonFlagsMouseButtonDefault = 1
 )
 
+// Flags for ImGui::BeginChild()
+// (Legacy: bit 0 must always correspond to ImGuiChildFlags_Border to be backward compatible with old API using 'bool border = false'.
+// About using AutoResizeX/AutoResizeY flags:
+// - May be combined with SetNextWindowSizeConstraints() to set a min/max size for each axis (see "Demo->Child->Auto-resize with Constraints").
+// - Size measurement for a given axis is only performed when the child window is within visible boundaries, or is just appearing.
+//   - This allows BeginChild() to return false when not within boundaries (e.g. when scrolling), which is more optimal. BUT it won't update its auto-size while clipped.
+//     While not perfect, it is a better default behavior as the always-on performance gain is more valuable than the occasional "resizing after becoming visible again" glitch.
+//   - You may also use ImGuiChildFlags_AlwaysAutoResize to force an update even when child window is not in view.
+//     HOWEVER PLEASE UNDERSTAND THAT DOING SO WILL PREVENT BeginChild() FROM EVER RETURNING FALSE, disabling benefits of coarse clipping.
+//
+// original name: ImGuiChildFlags_
+type ChildFlags int32
+
+const (
+	ChildFlagsNone = 0
+	// Show an outer border and enable WindowPadding. (IMPORTANT: this is always == 1 == true for legacy reason)
+	ChildFlagsBorder = 1
+	// Pad with style.WindowPadding even if no border are drawn (no padding by default for non-bordered child windows because it makes more sense)
+	ChildFlagsAlwaysUseWindowPadding = 2
+	// Allow resize from right border (layout direction). Enable .ini saving (unless ImGuiWindowFlags_NoSavedSettings passed to window flags)
+	ChildFlagsResizeX = 4
+	// Allow resize from bottom border (layout direction). "
+	ChildFlagsResizeY = 8
+	// Enable auto-resizing width. Read "IMPORTANT: Size measurement" details above.
+	ChildFlagsAutoResizeX = 16
+	// Enable auto-resizing height. Read "IMPORTANT: Size measurement" details above.
+	ChildFlagsAutoResizeY = 32
+	// Combined with AutoResizeX/AutoResizeY. Always measure size even when child is hidden, always return true, always disable clipping optimization! NOT RECOMMENDED.
+	ChildFlagsAlwaysAutoResize = 64
+	// Style the child window like a framed item: use FrameBg, FrameRounding, FrameBorderSize, FramePadding instead of ChildBg, ChildRounding, ChildBorderSize, WindowPadding.
+	ChildFlagsFrameStyle = 128
+)
+
 // Enumeration for PushStyleColor() / PopStyleColor()
 // original name: ImGuiCol_
 type Col int32
@@ -183,23 +220,27 @@ const (
 	ColBorder       = 5
 	ColBorderShadow = 6
 	// Background of checkbox, radio button, plot, slider, text input
-	ColFrameBg              = 7
-	ColFrameBgHovered       = 8
-	ColFrameBgActive        = 9
-	ColTitleBg              = 10
-	ColTitleBgActive        = 11
+	ColFrameBg        = 7
+	ColFrameBgHovered = 8
+	ColFrameBgActive  = 9
+	// Title bar
+	ColTitleBg = 10
+	// Title bar when focused
+	ColTitleBgActive = 11
+	// Title bar when collapsed
 	ColTitleBgCollapsed     = 12
 	ColMenuBarBg            = 13
 	ColScrollbarBg          = 14
 	ColScrollbarGrab        = 15
 	ColScrollbarGrabHovered = 16
 	ColScrollbarGrabActive  = 17
-	ColCheckMark            = 18
-	ColSliderGrab           = 19
-	ColSliderGrabActive     = 20
-	ColButton               = 21
-	ColButtonHovered        = 22
-	ColButtonActive         = 23
+	// Checkbox tick and RadioButton circle
+	ColCheckMark        = 18
+	ColSliderGrab       = 19
+	ColSliderGrabActive = 20
+	ColButton           = 21
+	ColButtonHovered    = 22
+	ColButtonActive     = 23
 	// Header* colors are used for CollapsingHeader, TreeNode, Selectable, MenuItem
 	ColHeader           = 24
 	ColHeaderHovered    = 25
@@ -336,11 +377,13 @@ const (
 	// Display on the preview box without the square arrow button
 	ComboFlagsNoArrowButton = 32
 	// Display only a square arrow button
-	ComboFlagsNoPreview  = 64
-	ComboFlagsHeightMask = 30
+	ComboFlagsNoPreview = 64
+	// Width dynamically calculated from preview contents
+	ComboFlagsWidthFitPreview = 128
+	ComboFlagsHeightMask      = 30
 )
 
-// Enumeration for ImGui::SetWindow***(), SetNextWindow***(), SetNextItem***() functions
+// Enumeration for ImGui::SetNextWindow***(), SetWindow***(), SetNextItem***() functions
 // Represent a condition.
 // Important: Treat as a regular enum! Do NOT combine multiple values using binary operators! All the functions above treat 0 as a shortcut to ImGuiCond_Always.
 // original name: ImGuiCond_
@@ -457,21 +500,22 @@ const (
 type DebugLogFlags int32
 
 const (
-	DebugLogFlagsNone           = 0
-	DebugLogFlagsEventActiveId  = 1
-	DebugLogFlagsEventFocus     = 2
-	DebugLogFlagsEventPopup     = 4
-	DebugLogFlagsEventNav       = 8
-	DebugLogFlagsEventClipper   = 16
-	DebugLogFlagsEventSelection = 32
-	DebugLogFlagsEventIO        = 64
-	DebugLogFlagsEventDocking   = 128
-	DebugLogFlagsEventViewport  = 256
-	DebugLogFlagsEventMask      = 511
+	DebugLogFlagsNone              = 0
+	DebugLogFlagsEventActiveId     = 1
+	DebugLogFlagsEventFocus        = 2
+	DebugLogFlagsEventPopup        = 4
+	DebugLogFlagsEventNav          = 8
+	DebugLogFlagsEventClipper      = 16
+	DebugLogFlagsEventSelection    = 32
+	DebugLogFlagsEventIO           = 64
+	DebugLogFlagsEventInputRouting = 128
+	DebugLogFlagsEventDocking      = 256
+	DebugLogFlagsEventViewport     = 512
+	DebugLogFlagsEventMask         = 1023
 	// Also send output to TTY
-	DebugLogFlagsOutputToTTY = 1024
+	DebugLogFlagsOutputToTTY = 1048576
 	// Also send output to Test Engine
-	DebugLogFlagsOutputToTestEngine = 2048
+	DebugLogFlagsOutputToTestEngine = 2097152
 )
 
 // A cardinal direction
@@ -508,6 +552,8 @@ const (
 	DockNodeFlagsNoResizeX = 65536
 	//       //
 	DockNodeFlagsNoResizeY = 131072
+	//       // Any docked window will be automatically be focus-route chained (window->ParentWindowForFocusRoute set to this) so Shortcut() in this window can run when any docked window is focused.
+	DockNodeFlagsDockedWindowsInFocusRoute = 262144
 	//       // Disable this node from splitting other windows/nodes.
 	DockNodeFlagsNoDockingSplitOther = 524288
 	//       // Disable other windows/nodes from being docked over this node.
@@ -694,13 +740,13 @@ const (
 )
 
 // Flags for extended versions of IsKeyPressed(), IsMouseClicked(), Shortcut(), SetKeyOwner(), SetItemKeyOwner()
-// Don't mistake with ImGuiInputTextFlags! (for ImGui::InputText() function)
+// Don't mistake with ImGuiInputTextFlags! (which is for ImGui::InputText() function)
 // original name: ImGuiInputFlags_
 type InputFlags int32
 
 const (
 	InputFlagsNone = 0
-	// Return true on successive repeats. Default for legacy IsKeyPressed(). NOT Default for legacy IsMouseClicked(). MUST BE == 1.
+	// Enable repeat. Return true on successive repeats. Default for legacy IsKeyPressed(). NOT Default for legacy IsMouseClicked(). MUST BE == 1.
 	InputFlagsRepeat = 1
 	// Repeat rate: Regular (default)
 	InputFlagsRepeatRateDefault = 2
@@ -708,36 +754,46 @@ const (
 	InputFlagsRepeatRateNavMove = 4
 	// Repeat rate: Faster
 	InputFlagsRepeatRateNavTweak = 8
-	InputFlagsRepeatRateMask     = 14
+	// Stop repeating when released (default for all functions except Shortcut). This only exists to allow overriding Shortcut() default behavior.
+	InputFlagsRepeatUntilRelease = 16
+	// Stop repeating when released OR if keyboard mods are changed (default for Shortcut)
+	InputFlagsRepeatUntilKeyModsChange = 32
+	// Stop repeating when released OR if keyboard mods are leaving the None state. Allows going from Mod+Key to Key by releasing Mod.
+	InputFlagsRepeatUntilKeyModsChangeFromNone = 64
+	// Stop repeating when released OR if any other keyboard key is pressed during the repeat
+	InputFlagsRepeatUntilOtherKeyPress = 128
 	// Only set if item is hovered (default to both)
-	InputFlagsCondHovered = 16
+	InputFlagsCondHovered = 256
 	// Only set if item is active (default to both)
-	InputFlagsCondActive  = 32
-	InputFlagsCondDefault = 48
-	InputFlagsCondMask    = 48
-	// Access to key data will require EXPLICIT owner ID (ImGuiKeyOwner_Any/0 will NOT accepted for polling). Cleared at end of frame. This is useful to make input-owner-aware code steal keys from non-input-owner-aware code.
-	InputFlagsLockThisFrame = 64
-	// Access to key data will require EXPLICIT owner ID (ImGuiKeyOwner_Any/0 will NOT accepted for polling). Cleared when the key is released or at end of each frame if key is released. This is useful to make input-owner-aware code steal keys from non-input-owner-aware code.
-	InputFlagsLockUntilRelease = 128
-	// (Default) Register focused route: Accept inputs if window is in focus stack. Deep-most focused window takes inputs. ActiveId takes inputs over deep-most focused window.
-	InputFlagsRouteFocused = 256
-	// Register route globally (lowest priority: unless a focused window or active item registered the route) -> recommended Global priority.
-	InputFlagsRouteGlobalLow = 512
-	// Register route globally (medium priority: unless an active item registered the route, e.g. CTRL+A registered by InputText).
-	InputFlagsRouteGlobal = 1024
-	// Register route globally (highest priority: unlikely you need to use that: will interfere with every active items)
-	InputFlagsRouteGlobalHigh = 2048
-	// _Always not part of this!
-	InputFlagsRouteMask = 3840
+	InputFlagsCondActive  = 512
+	InputFlagsCondDefault = 768
+	// Further accesses to key data will require EXPLICIT owner ID (ImGuiKeyOwner_Any/0 will NOT accepted for polling). Cleared at end of frame.
+	InputFlagsLockThisFrame = 1024
+	// Further accesses to key data will require EXPLICIT owner ID (ImGuiKeyOwner_Any/0 will NOT accepted for polling). Cleared when the key is released or at end of each frame if key is released.
+	InputFlagsLockUntilRelease = 2048
+	// (Default) Honor focus route: Accept inputs if window is in focus stack. Deep-most focused window takes inputs. ActiveId takes inputs over deep-most focused window.
+	InputFlagsRouteFocused = 4096
+	// Register route globally (lowest priority: unless a focused window or active item registered the route) -> recommended Global priority IF you need a Global priority.
+	InputFlagsRouteGlobalLow = 8192
+	// Register route globally (medium priority: unless an active item registered the route, e.g. CTRL+A registered by InputText will take priority over this).
+	InputFlagsRouteGlobal = 16384
+	// Register route globally (higher priority: unlikely you need to use that: will interfere with every active items, e.g. CTRL+A registered by InputText will be overriden by this)
+	InputFlagsRouteGlobalHigh = 32768
 	// Do not register route, poll keys directly.
-	InputFlagsRouteAlways = 4096
+	InputFlagsRouteAlways = 65536
 	// Global routes will not be applied if underlying background/void is focused (== no Dear ImGui windows are focused). Useful for overlay applications.
-	InputFlagsRouteUnlessBgFocused       = 8192
-	InputFlagsRouteExtraMask             = 12288
-	InputFlagsSupportedByIsKeyPressed    = 15
-	InputFlagsSupportedByShortcut        = 16143
-	InputFlagsSupportedBySetKeyOwner     = 192
-	InputFlagsSupportedBySetItemKeyOwner = 240
+	InputFlagsRouteUnlessBgFocused = 131072
+	InputFlagsRepeatRateMask       = 14
+	InputFlagsRepeatUntilMask      = 240
+	InputFlagsRepeatMask           = 255
+	InputFlagsCondMask             = 768
+	// _Always not part of this!
+	InputFlagsRouteMask                  = 61440
+	InputFlagsSupportedByIsKeyPressed    = 255
+	InputFlagsSupportedByIsMouseClicked  = 1
+	InputFlagsSupportedByShortcut        = 258303
+	InputFlagsSupportedBySetKeyOwner     = 3072
+	InputFlagsSupportedBySetItemKeyOwner = 3840
 )
 
 // original name: ImGuiInputSource
@@ -877,10 +933,10 @@ const (
 	ItemStatusFlagsDeactivated = 64
 	// Override the HoveredWindow test to allow cross-window hover testing.
 	ItemStatusFlagsHoveredWindow = 128
-	// Set when the Focusable item just got focused by Tabbing (FIXME: to be removed soon)
-	ItemStatusFlagsFocusedByTabbing = 256
 	// [WIP] Set when item is overlapping the current clipping rectangle (Used internally. Please don't use yet: API/system will change as we refactor Itemadd()).
-	ItemStatusFlagsVisible = 512
+	ItemStatusFlagsVisible = 256
+	// g.LastItemData.ClipRect is valid
+	ItemStatusFlagsHasClipRect = 512
 )
 
 // A key identifier (ImGuiKey_XXX or ImGuiMod_XXX value): can represent Keyboard, Mouse and Gamepad values.
@@ -888,6 +944,7 @@ const (
 // Since >= 1.89 we increased typing (went from int to enum), some legacy code may need a cast to ImGuiKey.
 // Read details about the 1.87 and 1.89 transition : https://github.com/ocornut/imgui/issues/4921
 // Note that "Keys" related to physical keys and are not the same concept as input "Characters", the later are submitted via io.AddInputCharacter().
+// The keyboard key enum values are named after the keys on a standard US keyboard, and on other keyboard types the keys reported may not match the keycaps.
 // original name: ImGuiKey
 type Key int32
 
@@ -966,110 +1023,125 @@ const (
 	KeyF10        = 581
 	KeyF11        = 582
 	KeyF12        = 583
+	KeyF13        = 584
+	KeyF14        = 585
+	KeyF15        = 586
+	KeyF16        = 587
+	KeyF17        = 588
+	KeyF18        = 589
+	KeyF19        = 590
+	KeyF20        = 591
+	KeyF21        = 592
+	KeyF22        = 593
+	KeyF23        = 594
+	KeyF24        = 595
 	// '
-	KeyApostrophe = 584
+	KeyApostrophe = 596
 	// ,
-	KeyComma = 585
+	KeyComma = 597
 	// -
-	KeyMinus = 586
+	KeyMinus = 598
 	// .
-	KeyPeriod = 587
+	KeyPeriod = 599
 	// /
-	KeySlash = 588
+	KeySlash = 600
 	// ;
-	KeySemicolon = 589
+	KeySemicolon = 601
 	// =
-	KeyEqual = 590
+	KeyEqual = 602
 	// [
-	KeyLeftBracket = 591
+	KeyLeftBracket = 603
 	// \ (this text inhibit multiline comment caused by backslash)
-	KeyBackslash = 592
+	KeyBackslash = 604
 	// ]
-	KeyRightBracket = 593
+	KeyRightBracket = 605
 	// `
-	KeyGraveAccent    = 594
-	KeyCapsLock       = 595
-	KeyScrollLock     = 596
-	KeyNumLock        = 597
-	KeyPrintScreen    = 598
-	KeyPause          = 599
-	KeyKeypad0        = 600
-	KeyKeypad1        = 601
-	KeyKeypad2        = 602
-	KeyKeypad3        = 603
-	KeyKeypad4        = 604
-	KeyKeypad5        = 605
-	KeyKeypad6        = 606
-	KeyKeypad7        = 607
-	KeyKeypad8        = 608
-	KeyKeypad9        = 609
-	KeyKeypadDecimal  = 610
-	KeyKeypadDivide   = 611
-	KeyKeypadMultiply = 612
-	KeyKeypadSubtract = 613
-	KeyKeypadAdd      = 614
-	KeyKeypadEnter    = 615
-	KeyKeypadEqual    = 616
+	KeyGraveAccent    = 606
+	KeyCapsLock       = 607
+	KeyScrollLock     = 608
+	KeyNumLock        = 609
+	KeyPrintScreen    = 610
+	KeyPause          = 611
+	KeyKeypad0        = 612
+	KeyKeypad1        = 613
+	KeyKeypad2        = 614
+	KeyKeypad3        = 615
+	KeyKeypad4        = 616
+	KeyKeypad5        = 617
+	KeyKeypad6        = 618
+	KeyKeypad7        = 619
+	KeyKeypad8        = 620
+	KeyKeypad9        = 621
+	KeyKeypadDecimal  = 622
+	KeyKeypadDivide   = 623
+	KeyKeypadMultiply = 624
+	KeyKeypadSubtract = 625
+	KeyKeypadAdd      = 626
+	KeyKeypadEnter    = 627
+	KeyKeypadEqual    = 628
+	// Available on some keyboard/mouses. Often referred as "Browser Back"
+	KeyAppBack    = 629
+	KeyAppForward = 630
 	// Menu (Xbox)      + (Switch)   Start/Options (PS)
-	KeyGamepadStart = 617
+	KeyGamepadStart = 631
 	// View (Xbox)      - (Switch)   Share (PS)
-	KeyGamepadBack = 618
+	KeyGamepadBack = 632
 	// X (Xbox)         Y (Switch)   Square (PS)        // Tap: Toggle Menu. Hold: Windowing mode (Focus/Move/Resize windows)
-	KeyGamepadFaceLeft = 619
+	KeyGamepadFaceLeft = 633
 	// B (Xbox)         A (Switch)   Circle (PS)        // Cancel / Close / Exit
-	KeyGamepadFaceRight = 620
+	KeyGamepadFaceRight = 634
 	// Y (Xbox)         X (Switch)   Triangle (PS)      // Text Input / On-screen Keyboard
-	KeyGamepadFaceUp = 621
+	KeyGamepadFaceUp = 635
 	// A (Xbox)         B (Switch)   Cross (PS)         // Activate / Open / Toggle / Tweak
-	KeyGamepadFaceDown = 622
+	KeyGamepadFaceDown = 636
 	// D-pad Left                                       // Move / Tweak / Resize Window (in Windowing mode)
-	KeyGamepadDpadLeft = 623
+	KeyGamepadDpadLeft = 637
 	// D-pad Right                                      // Move / Tweak / Resize Window (in Windowing mode)
-	KeyGamepadDpadRight = 624
+	KeyGamepadDpadRight = 638
 	// D-pad Up                                         // Move / Tweak / Resize Window (in Windowing mode)
-	KeyGamepadDpadUp = 625
+	KeyGamepadDpadUp = 639
 	// D-pad Down                                       // Move / Tweak / Resize Window (in Windowing mode)
-	KeyGamepadDpadDown = 626
+	KeyGamepadDpadDown = 640
 	// L Bumper (Xbox)  L (Switch)   L1 (PS)            // Tweak Slower / Focus Previous (in Windowing mode)
-	KeyGamepadL1 = 627
+	KeyGamepadL1 = 641
 	// R Bumper (Xbox)  R (Switch)   R1 (PS)            // Tweak Faster / Focus Next (in Windowing mode)
-	KeyGamepadR1 = 628
+	KeyGamepadR1 = 642
 	// L Trig. (Xbox)   ZL (Switch)  L2 (PS) [Analog]
-	KeyGamepadL2 = 629
+	KeyGamepadL2 = 643
 	// R Trig. (Xbox)   ZR (Switch)  R2 (PS) [Analog]
-	KeyGamepadR2 = 630
+	KeyGamepadR2 = 644
 	// L Stick (Xbox)   L3 (Switch)  L3 (PS)
-	KeyGamepadL3 = 631
+	KeyGamepadL3 = 645
 	// R Stick (Xbox)   R3 (Switch)  R3 (PS)
-	KeyGamepadR3 = 632
+	KeyGamepadR3 = 646
 	// [Analog]                                         // Move Window (in Windowing mode)
-	KeyGamepadLStickLeft = 633
+	KeyGamepadLStickLeft = 647
 	// [Analog]                                         // Move Window (in Windowing mode)
-	KeyGamepadLStickRight = 634
+	KeyGamepadLStickRight = 648
 	// [Analog]                                         // Move Window (in Windowing mode)
-	KeyGamepadLStickUp = 635
+	KeyGamepadLStickUp = 649
 	// [Analog]                                         // Move Window (in Windowing mode)
-	KeyGamepadLStickDown = 636
+	KeyGamepadLStickDown = 650
 	// [Analog]
-	KeyGamepadRStickLeft = 637
+	KeyGamepadRStickLeft = 651
 	// [Analog]
-	KeyGamepadRStickRight = 638
+	KeyGamepadRStickRight = 652
 	// [Analog]
-	KeyGamepadRStickUp = 639
+	KeyGamepadRStickUp = 653
 	// [Analog]
-	KeyGamepadRStickDown   = 640
-	KeyMouseLeft           = 641
-	KeyMouseRight          = 642
-	KeyMouseMiddle         = 643
-	KeyMouseX1             = 644
-	KeyMouseX2             = 645
-	KeyMouseWheelX         = 646
-	KeyMouseWheelY         = 647
-	KeyReservedForModCtrl  = 648
-	KeyReservedForModShift = 649
-	KeyReservedForModAlt   = 650
-	KeyReservedForModSuper = 651
-	KeyCOUNT               = 652
+	KeyGamepadRStickDown   = 654
+	KeyMouseLeft           = 655
+	KeyMouseRight          = 656
+	KeyMouseMiddle         = 657
+	KeyMouseX1             = 658
+	KeyMouseX2             = 659
+	KeyMouseWheelX         = 660
+	KeyMouseWheelY         = 661
+	KeyReservedForModCtrl  = 662
+	KeyReservedForModShift = 663
+	KeyReservedForModAlt   = 664
+	KeyReservedForModSuper = 665
+	KeyCOUNT               = 666
 	ModNone                = 0
 	// Ctrl
 	ModCtrl = 4096
@@ -1084,12 +1156,12 @@ const (
 	// 5-bits
 	ModMask          = 63488
 	KeyNamedKeyBEGIN = 512
-	KeyNamedKeyEND   = 652
-	KeyNamedKeyCOUNT = 140
-	// Size of KeysData[]: hold legacy 0..512 keycodes + named keys
-	KeyKeysDataSIZE = 652
+	KeyNamedKeyEND   = 666
+	KeyNamedKeyCOUNT = 154
+	// Size of KeysData[]: only hold named keys
+	KeyKeysDataSIZE = 154
 	// Accesses to io.KeysData[] must use (key - ImGuiKey_KeysData_OFFSET) index.
-	KeyKeysDataOFFSET = 0
+	KeyKeysDataOFFSET = 512
 )
 
 // FIXME: this is in development, not exposed/functional as a generic feature yet.
@@ -1107,17 +1179,18 @@ const (
 type LocKey int32
 
 const (
-	LocKeyVersionStr             = 0
-	LocKeyTableSizeOne           = 1
-	LocKeyTableSizeAllFit        = 2
-	LocKeyTableSizeAllDefault    = 3
-	LocKeyTableResetOrder        = 4
-	LocKeyWindowingMainMenuBar   = 5
-	LocKeyWindowingPopup         = 6
-	LocKeyWindowingUntitled      = 7
-	LocKeyDockingHideTabBar      = 8
-	LocKeyDockingHoldShiftToDock = 9
-	LocKeyCOUNT                  = 10
+	LocKeyVersionStr                    = 0
+	LocKeyTableSizeOne                  = 1
+	LocKeyTableSizeAllFit               = 2
+	LocKeyTableSizeAllDefault           = 3
+	LocKeyTableResetOrder               = 4
+	LocKeyWindowingMainMenuBar          = 5
+	LocKeyWindowingPopup                = 6
+	LocKeyWindowingUntitled             = 7
+	LocKeyDockingHideTabBar             = 8
+	LocKeyDockingHoldShiftToDock        = 9
+	LocKeyDockingDragToUndockOrMoveNode = 10
+	LocKeyCOUNT                         = 11
 )
 
 // original name: ImGuiLogType
@@ -1191,38 +1264,12 @@ const (
 type NavHighlightFlags int32
 
 const (
-	NavHighlightFlagsNone        = 0
-	NavHighlightFlagsTypeDefault = 1
-	NavHighlightFlagsTypeThin    = 2
+	NavHighlightFlagsNone = 0
+	// Compact highlight, no padding
+	NavHighlightFlagsCompact = 2
 	// Draw rectangular highlight if (g.NavId == id) _even_ when using the mouse.
 	NavHighlightFlagsAlwaysDraw = 4
 	NavHighlightFlagsNoRounding = 8
-)
-
-// OBSOLETED in 1.88 (from July 2022): ImGuiNavInput and io.NavInputs[].
-// Official backends between 1.60 and 1.86: will keep working and feed gamepad inputs as long as IMGUI_DISABLE_OBSOLETE_KEYIO is not set.
-// Custom backends: feed gamepad inputs via io.AddKeyEvent() and ImGuiKey_GamepadXXX enums.
-// original name: ImGuiNavInput
-type NavInput int32
-
-const (
-	NavInputActivate    = 0
-	NavInputCancel      = 1
-	NavInputInput       = 2
-	NavInputMenu        = 3
-	NavInputDpadLeft    = 4
-	NavInputDpadRight   = 5
-	NavInputDpadUp      = 6
-	NavInputDpadDown    = 7
-	NavInputLStickLeft  = 8
-	NavInputLStickRight = 9
-	NavInputLStickUp    = 10
-	NavInputLStickDown  = 11
-	NavInputFocusPrev   = 12
-	NavInputFocusNext   = 13
-	NavInputTweakSlow   = 14
-	NavInputTweakFast   = 15
-	NavInputCOUNT       = 16
 )
 
 // original name: ImGuiNavLayer
@@ -1276,9 +1323,10 @@ const (
 type NextItemDataFlags int32
 
 const (
-	NextItemDataFlagsNone     = 0
-	NextItemDataFlagsHasWidth = 1
-	NextItemDataFlagsHasOpen  = 2
+	NextItemDataFlagsNone        = 0
+	NextItemDataFlagsHasWidth    = 1
+	NextItemDataFlagsHasOpen     = 2
+	NextItemDataFlagsHasShortcut = 4
 )
 
 // original name: ImGuiNextWindowDataFlags_
@@ -1294,12 +1342,13 @@ const (
 	NextWindowDataFlagsHasFocus          = 32
 	NextWindowDataFlagsHasBgAlpha        = 64
 	NextWindowDataFlagsHasScroll         = 128
-	NextWindowDataFlagsHasViewport       = 256
-	NextWindowDataFlagsHasDock           = 512
-	NextWindowDataFlagsHasWindowClass    = 1024
+	NextWindowDataFlagsHasChildFlags     = 256
+	NextWindowDataFlagsHasViewport       = 512
+	NextWindowDataFlagsHasDock           = 1024
+	NextWindowDataFlagsHasWindowClass    = 2048
 )
 
-// Flags for internal's BeginColumns(). Prefix using BeginTable() nowadays!
+// Flags for internal's BeginColumns(). This is an obsolete API. Prefer using BeginTable() nowadays!
 // original name: ImGuiOldColumnFlags_
 type OldColumnFlags int32
 
@@ -1313,7 +1362,7 @@ const (
 	OldColumnFlagsNoPreserveWidths = 4
 	// Disable forcing columns to fit within window
 	OldColumnFlagsNoForceWithinWindow = 8
-	// (WIP) Restore pre-1.51 behavior of extending the parent window contents size but _without affecting the columns width at all_. Will eventually remove.
+	// Restore pre-1.51 behavior of extending the parent window contents size but _without affecting the columns width at all_. Will eventually remove.
 	OldColumnFlagsGrowParentContentsSize = 16
 )
 
@@ -1326,8 +1375,8 @@ const (
 )
 
 // Flags for OpenPopup*(), BeginPopupContext*(), IsPopupOpen() functions.
-//   - To be backward compatible with older API which took an 'int mouse_button = 1' argument, we need to treat
-//     small flags values as a mouse button index, so we encode the mouse button in the first few bits of the flags.
+//   - To be backward compatible with older API which took an 'int mouse_button = 1' argument instead of 'ImGuiPopupFlags flags',
+//     we need to treat small flags values as a mouse button index, so we encode the mouse button in the first few bits of the flags.
 //     It is therefore guaranteed to be legal to pass a mouse button index in ImGuiPopupFlags.
 //   - For the same reason, we exceptionally default the ImGuiPopupFlags argument of BeginPopupContextXXX functions to 1 instead of 0.
 //     IMPORTANT: because the default parameter is 1 (==ImGuiPopupFlags_MouseButtonRight), if you rely on the default parameter
@@ -1347,15 +1396,17 @@ const (
 	PopupFlagsMouseButtonMiddle  = 2
 	PopupFlagsMouseButtonMask    = 31
 	PopupFlagsMouseButtonDefault = 1
+	// For OpenPopup*(), BeginPopupContext*(): don't reopen same popup if already open (won't reposition, won't reinitialize navigation)
+	PopupFlagsNoReopen = 32
 	// For OpenPopup*(), BeginPopupContext*(): don't open if there's already a popup at the same level of the popup stack
-	PopupFlagsNoOpenOverExistingPopup = 32
+	PopupFlagsNoOpenOverExistingPopup = 128
 	// For BeginPopupContextWindow(): don't return true when hovering items, only when hovering empty space
-	PopupFlagsNoOpenOverItems = 64
+	PopupFlagsNoOpenOverItems = 256
 	// For IsPopupOpen(): ignore the ImGuiID parameter and test for any popup.
-	PopupFlagsAnyPopupId = 128
+	PopupFlagsAnyPopupId = 1024
 	// For IsPopupOpen(): search/test at any level of the popup stack (default test in the current level)
-	PopupFlagsAnyPopupLevel = 256
-	PopupFlagsAnyPopup      = 384
+	PopupFlagsAnyPopupLevel = 2048
+	PopupFlagsAnyPopup      = 3072
 )
 
 // original name: ImGuiPopupPositionPolicy
@@ -1421,7 +1472,7 @@ const (
 	SelectableFlagsNone = 0
 	// Clicking this doesn't close parent popup window
 	SelectableFlagsDontClosePopups = 1
-	// Selectable frame can span all columns (text will still fit in current column)
+	// Frame will span all columns of its container table (text will still fit in current column)
 	SelectableFlagsSpanAllColumns = 2
 	// Generate press events on double clicks too
 	SelectableFlagsAllowDoubleClick = 4
@@ -1585,7 +1636,7 @@ const (
 	TabBarFlagsAutoSelectNewTabs = 2
 	// Disable buttons to open the tab list popup
 	TabBarFlagsTabListPopupButton = 4
-	// Disable behavior of closing tabs (that are submitted with p_open != NULL) with middle mouse button. You can still repro this behavior on user's side with if (IsItemHovered() && IsMouseClicked(2)) *p_open = false.
+	// Disable behavior of closing tabs (that are submitted with p_open != NULL) with middle mouse button. You may handle this behavior manually on user's side with if (IsItemHovered() && IsMouseClicked(2)) *p_open = false.
 	TabBarFlagsNoCloseWithMiddleMouseButton = 8
 	// Disable scrolling buttons (apply when fitting policy is ImGuiTabBarFlags_FittingPolicyScroll)
 	TabBarFlagsNoTabListScrollingButtons = 16
@@ -1619,13 +1670,13 @@ type TabItemFlags int32
 
 const (
 	TabItemFlagsNone = 0
-	// Display a dot next to the title + tab is selected when clicking the X + closure is not assumed (will wait for user to stop submitting the tab). Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.
+	// Display a dot next to the title + set ImGuiTabItemFlags_NoAssumedClosure.
 	TabItemFlagsUnsavedDocument = 1
 	// Trigger flag to programmatically make the tab selected when calling BeginTabItem()
 	TabItemFlagsSetSelected = 2
-	// Disable behavior of closing tabs (that are submitted with p_open != NULL) with middle mouse button. You can still repro this behavior on user's side with if (IsItemHovered() && IsMouseClicked(2)) *p_open = false.
+	// Disable behavior of closing tabs (that are submitted with p_open != NULL) with middle mouse button. You may handle this behavior manually on user's side with if (IsItemHovered() && IsMouseClicked(2)) *p_open = false.
 	TabItemFlagsNoCloseWithMiddleMouseButton = 4
-	// Don't call PushID(tab->ID)/PopID() on BeginTabItem()/EndTabItem()
+	// Don't call PushID()/PopID() on BeginTabItem()/EndTabItem()
 	TabItemFlagsNoPushId = 8
 	// Disable tooltip for the given tab
 	TabItemFlagsNoTooltip = 16
@@ -1635,6 +1686,8 @@ const (
 	TabItemFlagsLeading = 64
 	// Enforce the tab position to the right of the tab bar (before the scrolling buttons)
 	TabItemFlagsTrailing = 128
+	// Tab is selected when trying to close + closure is not immediately assumed (will wait for user to stop submitting the tab). Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.
+	TabItemFlagsNoAssumedClosure = 256
 )
 
 // Enum for ImGui::TableSetBgColor()
@@ -1690,7 +1743,7 @@ const (
 	TableColumnFlagsNoSortAscending = 1024
 	// Disable ability to sort in the descending direction.
 	TableColumnFlagsNoSortDescending = 2048
-	// TableHeadersRow() will not submit label for this column. Convenient for some small columns. Name will still appear in context menu.
+	// TableHeadersRow() will not submit horizontal label for this column. Convenient for some small columns. Name will still appear in context menu or in angled headers.
 	TableColumnFlagsNoHeaderLabel = 4096
 	// Disable header text width contribution to automatic column width.
 	TableColumnFlagsNoHeaderWidth = 8192
@@ -1702,6 +1755,8 @@ const (
 	TableColumnFlagsIndentEnable = 65536
 	// Ignore current Indent value when entering cell (default for columns > 0). Indentation changes _within_ the cell will still be honored.
 	TableColumnFlagsIndentDisable = 131072
+	// TableHeadersRow() will submit an angled header row for this column. Note this will add an extra row.
+	TableColumnFlagsAngledHeader = 262144
 	// Status: is enabled == not hidden by user/api (referred to as "Hide" in _DefaultHide and _NoHide) flags.
 	TableColumnFlagsIsEnabled = 16777216
 	// Status: is visible == is enabled AND not clipped by scrolling.
@@ -1813,7 +1868,9 @@ const (
 	TableFlagsSortMulti = 67108864
 	// Allow no sorting, disable default sorting. TableGetSortSpecs() may return specs where (SpecsCount == 0).
 	TableFlagsSortTristate = 134217728
-	TableFlagsSizingMask   = 57344
+	// Highlight column headers when hovered (may evolve into a fuller highlight)
+	TableFlagsHighlightHoveredColumn = 268435456
+	TableFlagsSizingMask             = 57344
 )
 
 // Flags for ImGui::TableNextRow()
@@ -1885,8 +1942,10 @@ const (
 	TreeNodeFlagsSpanAvailWidth = 2048
 	// Extend hit box to the left-most and right-most edges (bypass the indented area).
 	TreeNodeFlagsSpanFullWidth = 4096
+	// Frame will span all columns of its container table (text will still fit in current column)
+	TreeNodeFlagsSpanAllColumns = 8192
 	// (WIP) Nav: left direction may move to this TreeNode() from any of its child (items submitted between TreeNode and TreePop)
-	TreeNodeFlagsNavLeftJumpsBackHere = 8192
+	TreeNodeFlagsNavLeftJumpsBackHere = 16384
 	TreeNodeFlagsCollapsingHeader     = 26
 )
 
@@ -1994,20 +2053,18 @@ const (
 	WindowFlagsAlwaysVerticalScrollbar = 16384
 	// Always show horizontal scrollbar (even if ContentSize.x < Size.x)
 	WindowFlagsAlwaysHorizontalScrollbar = 32768
-	// Ensure child windows without border uses style.WindowPadding (ignored by default for non-bordered child windows, because more convenient)
-	WindowFlagsAlwaysUseWindowPadding = 65536
 	// No gamepad/keyboard navigation within the window
-	WindowFlagsNoNavInputs = 262144
+	WindowFlagsNoNavInputs = 65536
 	// No focusing toward this window with gamepad/keyboard navigation (e.g. skipped by CTRL+TAB)
-	WindowFlagsNoNavFocus = 524288
+	WindowFlagsNoNavFocus = 131072
 	// Display a dot next to the title. When used in a tab/docking context, tab is selected when clicking the X + closure is not assumed (will wait for user to stop submitting the tab). Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.
-	WindowFlagsUnsavedDocument = 1048576
+	WindowFlagsUnsavedDocument = 262144
 	// Disable docking of this window
-	WindowFlagsNoDocking    = 2097152
-	WindowFlagsNoNav        = 786432
+	WindowFlagsNoDocking    = 524288
+	WindowFlagsNoNav        = 196608
 	WindowFlagsNoDecoration = 43
-	WindowFlagsNoInputs     = 786944
-	// [BETA] On child window: allow gamepad/keyboard navigation to cross over parent border to this child or between sibling child windows.
+	WindowFlagsNoInputs     = 197120
+	// [BETA] On child window: share focus scope, allow gamepad/keyboard navigation to cross over parent border to this child or between sibling child windows.
 	WindowFlagsNavFlattened = 8388608
 	// Don't use! For internal use by BeginChild()
 	WindowFlagsChildWindow = 16777216
