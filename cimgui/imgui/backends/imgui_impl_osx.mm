@@ -10,7 +10,8 @@
 //  [X] Platform: OSX clipboard is supported within core Dear ImGui (no specific code in this backend).
 //  [X] Platform: Gamepad support. Enabled with 'io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad'.
 //  [X] Platform: IME support.
-//  [X] Platform: Multi-viewport / platform windows.
+//  [x] Platform: Multi-viewport / platform windows.
+//  - [ ] Window size not correctly reported when enabling io.ConfigViewportsNoDecoration
 
 // You can use unmodified imgui_impl_* files in your project. See examples/ folder for examples of using this.
 // Prefer including the entire imgui/ repository into your project (either as a copy or as a submodule), and only build the backends you need.
@@ -30,7 +31,8 @@
 
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
-//  2023-XX-XX: Added support for multiple windows via the ImGuiPlatformIO interface.
+//  2024-XX-XX: Added support for multiple windows via the ImGuiPlatformIO interface.
+//  2023-10-05: Inputs: Added support for extra ImGuiKey values: F13 to F20 function keys. Stopped mapping F13 into PrintScreen.
 //  2023-04-09: Inputs: Added support for io.AddMouseSourceEvent() to discriminate ImGuiMouseSource_Mouse/ImGuiMouseSource_Pen.
 //  2023-02-01: Fixed scroll wheel scaling for devices emitting events with hasPreciseScrollingDeltas==false (e.g. non-Apple mices).
 //  2022-11-02: Fixed mouse coordinates before clicking the host window.
@@ -139,12 +141,28 @@ static bool ImGui_ImplOSX_HandleEvent(NSEvent* event, NSView* view);
 
 - (void)updateImePosWithView:(NSView *)view
 {
-    NSWindow *window = view.window;
+    NSWindow* window = view.window;
     if (!window)
         return;
-    NSRect contentRect = [window contentRectForFrameRect:window.frame];
-    NSRect rect = NSMakeRect(_posX, contentRect.size.height - _posY, 0, 0);
-    _imeRect = [window convertRectToScreen:rect];
+
+    ImGuiIO& io = ImGui::GetIO();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        NSRect frame = window.frame;
+        NSRect contentRect = window.contentLayoutRect;
+        if (window.styleMask & NSWindowStyleMaskFullSizeContentView) // No title bar windows should be considered.
+            contentRect = frame;
+
+        NSRect firstScreenFrame = NSScreen.screens[0].frame;
+        _imeRect = NSMakeRect(_posX, _posY, 0, 0);
+        _imeRect.origin.y = firstScreenFrame.size.height - _imeRect.size.height - _imeRect.origin.y; // Opposite of ConvertNSRect()
+    }
+    else
+    {
+        NSRect contentRect = [window contentRectForFrameRect:window.frame];
+        NSRect rect = NSMakeRect(_posX, contentRect.size.height - _posY, 0, 0);
+        _imeRect = [window convertRectToScreen:rect];
+    }
 }
 
 - (void)viewDidMoveToWindow
@@ -349,36 +367,36 @@ static ImGuiKey ImGui_ImplOSX_KeyCodeToImGuiKey(int key_code)
         case kVK_RightOption: return ImGuiKey_RightAlt;
         case kVK_RightCommand: return ImGuiKey_RightSuper;
 //      case kVK_Function: return ImGuiKey_;
-//      case kVK_F17: return ImGuiKey_;
 //      case kVK_VolumeUp: return ImGuiKey_;
 //      case kVK_VolumeDown: return ImGuiKey_;
 //      case kVK_Mute: return ImGuiKey_;
-//      case kVK_F18: return ImGuiKey_;
-//      case kVK_F19: return ImGuiKey_;
-//      case kVK_F20: return ImGuiKey_;
+        case kVK_F1: return ImGuiKey_F1;
+        case kVK_F2: return ImGuiKey_F2;
+        case kVK_F3: return ImGuiKey_F3;
+        case kVK_F4: return ImGuiKey_F4;
         case kVK_F5: return ImGuiKey_F5;
         case kVK_F6: return ImGuiKey_F6;
         case kVK_F7: return ImGuiKey_F7;
-        case kVK_F3: return ImGuiKey_F3;
         case kVK_F8: return ImGuiKey_F8;
         case kVK_F9: return ImGuiKey_F9;
-        case kVK_F11: return ImGuiKey_F11;
-        case kVK_F13: return ImGuiKey_PrintScreen;
-//      case kVK_F16: return ImGuiKey_;
-//      case kVK_F14: return ImGuiKey_;
         case kVK_F10: return ImGuiKey_F10;
-        case 0x6E: return ImGuiKey_Menu;
+        case kVK_F11: return ImGuiKey_F11;
         case kVK_F12: return ImGuiKey_F12;
-//      case kVK_F15: return ImGuiKey_;
+        case kVK_F13: return ImGuiKey_F13;
+        case kVK_F14: return ImGuiKey_F14;
+        case kVK_F15: return ImGuiKey_F15;
+        case kVK_F16: return ImGuiKey_F16;
+        case kVK_F17: return ImGuiKey_F17;
+        case kVK_F18: return ImGuiKey_F18;
+        case kVK_F19: return ImGuiKey_F19;
+        case kVK_F20: return ImGuiKey_F20;
+        case 0x6E: return ImGuiKey_Menu;
         case kVK_Help: return ImGuiKey_Insert;
         case kVK_Home: return ImGuiKey_Home;
         case kVK_PageUp: return ImGuiKey_PageUp;
         case kVK_ForwardDelete: return ImGuiKey_Delete;
-        case kVK_F4: return ImGuiKey_F4;
         case kVK_End: return ImGuiKey_End;
-        case kVK_F2: return ImGuiKey_F2;
         case kVK_PageDown: return ImGuiKey_PageDown;
-        case kVK_F1: return ImGuiKey_F1;
         case kVK_LeftArrow: return ImGuiKey_LeftArrow;
         case kVK_RightArrow: return ImGuiKey_RightArrow;
         case kVK_DownArrow: return ImGuiKey_DownArrow;
@@ -417,6 +435,7 @@ bool ImGui_ImplOSX_Init(NSView* view)
     bd->Window = view.window ?: NSApp.orderedWindows.firstObject;
     ImGuiViewport* main_viewport = ImGui::GetMainViewport();
     main_viewport->PlatformHandle = main_viewport->PlatformHandleRaw = (__bridge_retained void*)bd->Window;
+    ImGui_ImplOSX_UpdateMonitors();
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         ImGui_ImplOSX_InitPlatformInterface();
 
@@ -552,7 +571,6 @@ static void ImGui_ImplOSX_UpdateMouseCursor()
 static void ImGui_ImplOSX_UpdateGamepads()
 {
     ImGuiIO& io = ImGui::GetIO();
-    memset(io.NavInputs, 0, sizeof(io.NavInputs));
     if ((io.ConfigFlags & ImGuiConfigFlags_NavEnableGamepad) == 0) // FIXME: Technically feeding gamepad shouldn't depend on this now that they are regular inputs.
         return;
 
@@ -861,9 +879,11 @@ struct ImGuiViewportDataOSX
 
 @end
 
-static void ConvertNSRect(NSScreen* screen, NSRect* r)
+static void ConvertNSRect(NSRect* r)
 {
-    r->origin.y = screen.frame.size.height - r->origin.y - r->size.height;
+    NSRect firstScreenFrame = NSScreen.screens[0].frame;
+    IM_ASSERT(firstScreenFrame.origin.x == 0 && firstScreenFrame.origin.y == 0);
+    r->origin.y = firstScreenFrame.size.height - r->origin.y - r->size.height;
 }
 
 static void ImGui_ImplOSX_CreateWindow(ImGuiViewport* viewport)
@@ -874,7 +894,7 @@ static void ImGui_ImplOSX_CreateWindow(ImGuiViewport* viewport)
 
     NSScreen* screen = bd->Window.screen;
     NSRect rect = NSMakeRect(viewport->Pos.x, viewport->Pos.y, viewport->Size.x, viewport->Size.y);
-    ConvertNSRect(screen, &rect);
+    ConvertNSRect(&rect);
 
     NSWindowStyleMask styleMask = 0;
     if (viewport->Flags & ImGuiViewportFlags_NoDecoration)
@@ -944,11 +964,13 @@ static ImVec2 ImGui_ImplOSX_GetWindowPos(ImGuiViewport* viewport)
     IM_ASSERT(data->Window != 0);
 
     NSWindow* window = data->Window;
-    NSScreen* screen = window.screen;
-    NSSize size = screen.frame.size;
     NSRect frame = window.frame;
-    NSRect rect = window.contentLayoutRect;
-    return ImVec2(frame.origin.x, size.height - frame.origin.y - rect.size.height);
+    NSRect contentRect = window.contentLayoutRect;
+    if (window.styleMask & NSWindowStyleMaskFullSizeContentView) // No title bar windows should be considered.
+        contentRect = frame;
+
+    NSRect firstScreenFrame = NSScreen.screens[0].frame;
+    return ImVec2(frame.origin.x, firstScreenFrame.size.height - frame.origin.y - contentRect.size.height);
 }
 
 static void ImGui_ImplOSX_SetWindowPos(ImGuiViewport* viewport, ImVec2 pos)
@@ -960,7 +982,7 @@ static void ImGui_ImplOSX_SetWindowPos(ImGuiViewport* viewport, ImVec2 pos)
     NSSize size = window.frame.size;
 
     NSRect r = NSMakeRect(pos.x, pos.y, size.width, size.height);
-    ConvertNSRect(window.screen, &r);
+    ConvertNSRect(&r);
     [window setFrameOrigin:r.origin];
 }
 
@@ -1041,10 +1063,15 @@ static void ImGui_ImplOSX_UpdateMonitors()
     ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
     platform_io.Monitors.resize(0);
 
+    NSRect firstScreenFrame = NSScreen.screens[0].frame;
+    IM_ASSERT(firstScreenFrame.origin.x == 0 && firstScreenFrame.origin.y == 0);
+
     for (NSScreen* screen in NSScreen.screens)
     {
         NSRect frame = screen.frame;
         NSRect visibleFrame = screen.visibleFrame;
+        ConvertNSRect(&frame);
+        ConvertNSRect(&visibleFrame);
 
         ImGuiPlatformMonitor imgui_monitor;
         imgui_monitor.MainPos = ImVec2(frame.origin.x, frame.origin.y);
@@ -1061,7 +1088,6 @@ static void ImGui_ImplOSX_UpdateMonitors()
 static void ImGui_ImplOSX_InitPlatformInterface()
 {
     ImGui_ImplOSX_Data* bd = ImGui_ImplOSX_GetBackendData();
-    ImGui_ImplOSX_UpdateMonitors();
 
     // Register platform interface (will be coupled with a renderer interface)
     ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();

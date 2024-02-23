@@ -21,6 +21,9 @@
     "ImGuiButtonFlags_": {
       "above": "// Flags for InvisibleButton() [extended in imgui_internal.h]"
     },
+    "ImGuiChildFlags_": {
+      "above": "// Flags for ImGui::BeginChild()\n// (Legacy: bit 0 must always correspond to ImGuiChildFlags_Border to be backward compatible with old API using 'bool border = false'.\n// About using AutoResizeX/AutoResizeY flags:\n// - May be combined with SetNextWindowSizeConstraints() to set a min/max size for each axis (see \"Demo->Child->Auto-resize with Constraints\").\n// - Size measurement for a given axis is only performed when the child window is within visible boundaries, or is just appearing.\n//   - This allows BeginChild() to return false when not within boundaries (e.g. when scrolling), which is more optimal. BUT it won't update its auto-size while clipped.\n//     While not perfect, it is a better default behavior as the always-on performance gain is more valuable than the occasional \"resizing after becoming visible again\" glitch.\n//   - You may also use ImGuiChildFlags_AlwaysAutoResize to force an update even when child window is not in view.\n//     HOWEVER PLEASE UNDERSTAND THAT DOING SO WILL PREVENT BeginChild() FROM EVER RETURNING FALSE, disabling benefits of coarse clipping."
+    },
     "ImGuiCol_": {
       "above": "// Enumeration for PushStyleColor() / PopStyleColor()"
     },
@@ -34,10 +37,10 @@
       "above": "// Flags for ImGui::BeginCombo()"
     },
     "ImGuiCond_": {
-      "above": "// Enumeration for ImGui::SetWindow***(), SetNextWindow***(), SetNextItem***() functions\n// Represent a condition.\n// Important: Treat as a regular enum! Do NOT combine multiple values using binary operators! All the functions above treat 0 as a shortcut to ImGuiCond_Always."
+      "above": "// Enumeration for ImGui::SetNextWindow***(), SetWindow***(), SetNextItem***() functions\n// Represent a condition.\n// Important: Treat as a regular enum! Do NOT combine multiple values using binary operators! All the functions above treat 0 as a shortcut to ImGuiCond_Always."
     },
     "ImGuiConfigFlags_": {
-      "above": "// Configuration flags stored in io.ConfigFlags. Set by user/application."
+      "above": "\n// Configuration flags stored in io.ConfigFlags. Set by user/application."
     },
     "ImGuiDataAuthority_": {
       "above": "// Store the source authority (dock node vs window) of a field"
@@ -76,7 +79,7 @@
       "above": "// [Internal] Key ranges\n// [Internal] Named shortcuts for Navigation"
     },
     "ImGuiInputFlags_": {
-      "above": "// Flags for extended versions of IsKeyPressed(), IsMouseClicked(), Shortcut(), SetKeyOwner(), SetItemKeyOwner()\n// Don't mistake with ImGuiInputTextFlags! (for ImGui::InputText() function)"
+      "above": "// Flags for extended versions of IsKeyPressed(), IsMouseClicked(), Shortcut(), SetKeyOwner(), SetItemKeyOwner()\n// Don't mistake with ImGuiInputTextFlags! (which is for ImGui::InputText() function)"
     },
     "ImGuiInputTextFlagsPrivate_": {
       "above": "// Extend ImGuiInputTextFlags_"
@@ -91,7 +94,7 @@
       "above": "// Status flags for an already submitted item\n// - output: stored in g.LastItemData.StatusFlags"
     },
     "ImGuiKey": {
-      "above": "// A key identifier (ImGuiKey_XXX or ImGuiMod_XXX value): can represent Keyboard, Mouse and Gamepad values.\n// All our named keys are >= 512. Keys value 0 to 511 are left unused as legacy native/opaque key values (< 1.87).\n// Since >= 1.89 we increased typing (went from int to enum), some legacy code may need a cast to ImGuiKey.\n// Read details about the 1.87 and 1.89 transition : https://github.com/ocornut/imgui/issues/4921\n// Note that \"Keys\" related to physical keys and are not the same concept as input \"Characters\", the later are submitted via io.AddInputCharacter()."
+      "above": "// A key identifier (ImGuiKey_XXX or ImGuiMod_XXX value): can represent Keyboard, Mouse and Gamepad values.\n// All our named keys are >= 512. Keys value 0 to 511 are left unused as legacy native/opaque key values (< 1.87).\n// Since >= 1.89 we increased typing (went from int to enum), some legacy code may need a cast to ImGuiKey.\n// Read details about the 1.87 and 1.89 transition : https://github.com/ocornut/imgui/issues/4921\n// Note that \"Keys\" related to physical keys and are not the same concept as input \"Characters\", the later are submitted via io.AddInputCharacter().\n// The keyboard key enum values are named after the keys on a standard US keyboard, and on other keyboard types the keys reported may not match the keycaps."
     },
     "ImGuiLayoutType_": {
       "above": "// FIXME: this is in development, not exposed/functional as a generic feature yet.\n// Horizontal/Vertical enums are fixed to 0/1 so they may be used to index ImVec2"
@@ -108,14 +111,11 @@
     "ImGuiMouseSource": {
       "above": "// Enumeration for AddMouseSourceEvent() actual source of Mouse Input data.\n// Historically we use \"Mouse\" terminology everywhere to indicate pointer data, e.g. MousePos, IsMousePressed(), io.AddMousePosEvent()\n// But that \"Mouse\" data can come from different source which occasionally may be useful for application to know about.\n// You can submit a change of pointer type using io.AddMouseSourceEvent()."
     },
-    "ImGuiNavInput": {
-      "above": "// OBSOLETED in 1.88 (from July 2022): ImGuiNavInput and io.NavInputs[].\n// Official backends between 1.60 and 1.86: will keep working and feed gamepad inputs as long as IMGUI_DISABLE_OBSOLETE_KEYIO is not set.\n// Custom backends: feed gamepad inputs via io.AddKeyEvent() and ImGuiKey_GamepadXXX enums."
-    },
     "ImGuiOldColumnFlags_": {
-      "above": "// Flags for internal's BeginColumns(). Prefix using BeginTable() nowadays!"
+      "above": "// Flags for internal's BeginColumns(). This is an obsolete API. Prefer using BeginTable() nowadays!"
     },
     "ImGuiPopupFlags_": {
-      "above": "// Flags for OpenPopup*(), BeginPopupContext*(), IsPopupOpen() functions.\n// - To be backward compatible with older API which took an 'int mouse_button = 1' argument, we need to treat\n//   small flags values as a mouse button index, so we encode the mouse button in the first few bits of the flags.\n//   It is therefore guaranteed to be legal to pass a mouse button index in ImGuiPopupFlags.\n// - For the same reason, we exceptionally default the ImGuiPopupFlags argument of BeginPopupContextXXX functions to 1 instead of 0.\n//   IMPORTANT: because the default parameter is 1 (==ImGuiPopupFlags_MouseButtonRight), if you rely on the default parameter\n//   and want to use another flag, you need to pass in the ImGuiPopupFlags_MouseButtonRight flag explicitly.\n// - Multiple buttons currently cannot be combined/or-ed in those functions (we could allow it later)."
+      "above": "// Flags for OpenPopup*(), BeginPopupContext*(), IsPopupOpen() functions.\n// - To be backward compatible with older API which took an 'int mouse_button = 1' argument instead of 'ImGuiPopupFlags flags',\n//   we need to treat small flags values as a mouse button index, so we encode the mouse button in the first few bits of the flags.\n//   It is therefore guaranteed to be legal to pass a mouse button index in ImGuiPopupFlags.\n// - For the same reason, we exceptionally default the ImGuiPopupFlags argument of BeginPopupContextXXX functions to 1 instead of 0.\n//   IMPORTANT: because the default parameter is 1 (==ImGuiPopupFlags_MouseButtonRight), if you rely on the default parameter\n//   and want to use another flag, you need to pass in the ImGuiPopupFlags_MouseButtonRight flag explicitly.\n// - Multiple buttons currently cannot be combined/or-ed in those functions (we could allow it later)."
     },
     "ImGuiScrollFlags_": {
       "above": "// Early work-in-progress API for ScrollToItem()"
@@ -340,6 +340,18 @@
         "comment": "// Request widget to preserve state if it can (e.g. InputText will try to preserve cursor/selection)",
         "name": "ImGuiActivateFlags_TryToPreserveState",
         "value": "1 << 2"
+      },
+      {
+        "calc_value": 8,
+        "comment": "// Activation requested by a tabbing request",
+        "name": "ImGuiActivateFlags_FromTabbing",
+        "value": "1 << 3"
+      },
+      {
+        "calc_value": 16,
+        "comment": "// Activation requested by an item shortcut via SetNextItemShortcut() function.",
+        "name": "ImGuiActivateFlags_FromShortcut",
+        "value": "1 << 4"
       }
     ],
     "ImGuiAxis": [
@@ -557,6 +569,61 @@
         "value": "ImGuiButtonFlags_MouseButtonLeft"
       }
     ],
+    "ImGuiChildFlags_": [
+      {
+        "calc_value": 0,
+        "name": "ImGuiChildFlags_None",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "comment": "// Show an outer border and enable WindowPadding. (IMPORTANT: this is always == 1 == true for legacy reason)",
+        "name": "ImGuiChildFlags_Border",
+        "value": "1 << 0"
+      },
+      {
+        "calc_value": 2,
+        "comment": "// Pad with style.WindowPadding even if no border are drawn (no padding by default for non-bordered child windows because it makes more sense)",
+        "name": "ImGuiChildFlags_AlwaysUseWindowPadding",
+        "value": "1 << 1"
+      },
+      {
+        "calc_value": 4,
+        "comment": "// Allow resize from right border (layout direction). Enable .ini saving (unless ImGuiWindowFlags_NoSavedSettings passed to window flags)",
+        "name": "ImGuiChildFlags_ResizeX",
+        "value": "1 << 2"
+      },
+      {
+        "calc_value": 8,
+        "comment": "// Allow resize from bottom border (layout direction). \"",
+        "name": "ImGuiChildFlags_ResizeY",
+        "value": "1 << 3"
+      },
+      {
+        "calc_value": 16,
+        "comment": "// Enable auto-resizing width. Read \"IMPORTANT: Size measurement\" details above.",
+        "name": "ImGuiChildFlags_AutoResizeX",
+        "value": "1 << 4"
+      },
+      {
+        "calc_value": 32,
+        "comment": "// Enable auto-resizing height. Read \"IMPORTANT: Size measurement\" details above.",
+        "name": "ImGuiChildFlags_AutoResizeY",
+        "value": "1 << 5"
+      },
+      {
+        "calc_value": 64,
+        "comment": "// Combined with AutoResizeX/AutoResizeY. Always measure size even when child is hidden, always return true, always disable clipping optimization! NOT RECOMMENDED.",
+        "name": "ImGuiChildFlags_AlwaysAutoResize",
+        "value": "1 << 6"
+      },
+      {
+        "calc_value": 128,
+        "comment": "// Style the child window like a framed item: use FrameBg, FrameRounding, FrameBorderSize, FramePadding instead of ChildBg, ChildRounding, ChildBorderSize, WindowPadding.",
+        "name": "ImGuiChildFlags_FrameStyle",
+        "value": "1 << 7"
+      }
+    ],
     "ImGuiCol_": [
       {
         "calc_value": 0,
@@ -614,16 +681,19 @@
       },
       {
         "calc_value": 10,
+        "comment": "// Title bar",
         "name": "ImGuiCol_TitleBg",
         "value": "10"
       },
       {
         "calc_value": 11,
+        "comment": "// Title bar when focused",
         "name": "ImGuiCol_TitleBgActive",
         "value": "11"
       },
       {
         "calc_value": 12,
+        "comment": "// Title bar when collapsed",
         "name": "ImGuiCol_TitleBgCollapsed",
         "value": "12"
       },
@@ -654,6 +724,7 @@
       },
       {
         "calc_value": 18,
+        "comment": "// Checkbox tick and RadioButton circle",
         "name": "ImGuiCol_CheckMark",
         "value": "18"
       },
@@ -1085,6 +1156,12 @@
         "value": "1 << 6"
       },
       {
+        "calc_value": 128,
+        "comment": "// Width dynamically calculated from preview contents",
+        "name": "ImGuiComboFlags_WidthFitPreview",
+        "value": "1 << 7"
+      },
+      {
         "calc_value": 30,
         "name": "ImGuiComboFlags_HeightMask_",
         "value": "ImGuiComboFlags_HeightSmall | ImGuiComboFlags_HeightRegular | ImGuiComboFlags_HeightLarge | ImGuiComboFlags_HeightLargest"
@@ -1387,30 +1464,35 @@
       },
       {
         "calc_value": 128,
-        "name": "ImGuiDebugLogFlags_EventDocking",
+        "name": "ImGuiDebugLogFlags_EventInputRouting",
         "value": "1 << 7"
       },
       {
         "calc_value": 256,
-        "name": "ImGuiDebugLogFlags_EventViewport",
+        "name": "ImGuiDebugLogFlags_EventDocking",
         "value": "1 << 8"
       },
       {
-        "calc_value": 511,
-        "name": "ImGuiDebugLogFlags_EventMask_",
-        "value": "ImGuiDebugLogFlags_EventActiveId | ImGuiDebugLogFlags_EventFocus | ImGuiDebugLogFlags_EventPopup | ImGuiDebugLogFlags_EventNav | ImGuiDebugLogFlags_EventClipper | ImGuiDebugLogFlags_EventSelection | ImGuiDebugLogFlags_EventIO | ImGuiDebugLogFlags_EventDocking | ImGuiDebugLogFlags_EventViewport"
+        "calc_value": 512,
+        "name": "ImGuiDebugLogFlags_EventViewport",
+        "value": "1 << 9"
       },
       {
-        "calc_value": 1024,
+        "calc_value": 1023,
+        "name": "ImGuiDebugLogFlags_EventMask_",
+        "value": "ImGuiDebugLogFlags_EventActiveId | ImGuiDebugLogFlags_EventFocus | ImGuiDebugLogFlags_EventPopup | ImGuiDebugLogFlags_EventNav | ImGuiDebugLogFlags_EventClipper | ImGuiDebugLogFlags_EventSelection | ImGuiDebugLogFlags_EventIO | ImGuiDebugLogFlags_EventInputRouting | ImGuiDebugLogFlags_EventDocking | ImGuiDebugLogFlags_EventViewport"
+      },
+      {
+        "calc_value": 1048576,
         "comment": "// Also send output to TTY",
         "name": "ImGuiDebugLogFlags_OutputToTTY",
-        "value": "1 << 10"
+        "value": "1 << 20"
       },
       {
-        "calc_value": 2048,
+        "calc_value": 2097152,
         "comment": "// Also send output to Test Engine",
         "name": "ImGuiDebugLogFlags_OutputToTestEngine",
-        "value": "1 << 11"
+        "value": "1 << 21"
       }
     ],
     "ImGuiDir_": [
@@ -1493,6 +1575,12 @@
         "comment": "//       //",
         "name": "ImGuiDockNodeFlags_NoResizeY",
         "value": "1 << 17"
+      },
+      {
+        "calc_value": 262144,
+        "comment": "//       // Any docked window will be automatically be focus-route chained (window->ParentWindowForFocusRoute set to this) so Shortcut() in this window can run when any docked window is focused.",
+        "name": "ImGuiDockNodeFlags_DockedWindowsInFocusRoute",
+        "value": "1 << 18"
       },
       {
         "calc_value": 524288,
@@ -1940,7 +2028,7 @@
       },
       {
         "calc_value": 1,
-        "comment": "// Return true on successive repeats. Default for legacy IsKeyPressed(). NOT Default for legacy IsMouseClicked(). MUST BE == 1.",
+        "comment": "// Enable repeat. Return true on successive repeats. Default for legacy IsKeyPressed(). NOT Default for legacy IsMouseClicked(). MUST BE == 1.",
         "name": "ImGuiInputFlags_Repeat",
         "value": "1 << 0"
       },
@@ -1963,108 +2051,142 @@
         "value": "1 << 3"
       },
       {
+        "calc_value": 16,
+        "comment": "// Stop repeating when released (default for all functions except Shortcut). This only exists to allow overriding Shortcut() default behavior.",
+        "name": "ImGuiInputFlags_RepeatUntilRelease",
+        "value": "1 << 4"
+      },
+      {
+        "calc_value": 32,
+        "comment": "// Stop repeating when released OR if keyboard mods are changed (default for Shortcut)",
+        "name": "ImGuiInputFlags_RepeatUntilKeyModsChange",
+        "value": "1 << 5"
+      },
+      {
+        "calc_value": 64,
+        "comment": "// Stop repeating when released OR if keyboard mods are leaving the None state. Allows going from Mod+Key to Key by releasing Mod.",
+        "name": "ImGuiInputFlags_RepeatUntilKeyModsChangeFromNone",
+        "value": "1 << 6"
+      },
+      {
+        "calc_value": 128,
+        "comment": "// Stop repeating when released OR if any other keyboard key is pressed during the repeat",
+        "name": "ImGuiInputFlags_RepeatUntilOtherKeyPress",
+        "value": "1 << 7"
+      },
+      {
+        "calc_value": 256,
+        "comment": "// Only set if item is hovered (default to both)",
+        "name": "ImGuiInputFlags_CondHovered",
+        "value": "1 << 8"
+      },
+      {
+        "calc_value": 512,
+        "comment": "// Only set if item is active (default to both)",
+        "name": "ImGuiInputFlags_CondActive",
+        "value": "1 << 9"
+      },
+      {
+        "calc_value": 768,
+        "name": "ImGuiInputFlags_CondDefault_",
+        "value": "ImGuiInputFlags_CondHovered | ImGuiInputFlags_CondActive"
+      },
+      {
+        "calc_value": 1024,
+        "comment": "// Further accesses to key data will require EXPLICIT owner ID (ImGuiKeyOwner_Any/0 will NOT accepted for polling). Cleared at end of frame.",
+        "name": "ImGuiInputFlags_LockThisFrame",
+        "value": "1 << 10"
+      },
+      {
+        "calc_value": 2048,
+        "comment": "// Further accesses to key data will require EXPLICIT owner ID (ImGuiKeyOwner_Any/0 will NOT accepted for polling). Cleared when the key is released or at end of each frame if key is released.",
+        "name": "ImGuiInputFlags_LockUntilRelease",
+        "value": "1 << 11"
+      },
+      {
+        "calc_value": 4096,
+        "comment": "// (Default) Honor focus route: Accept inputs if window is in focus stack. Deep-most focused window takes inputs. ActiveId takes inputs over deep-most focused window.",
+        "name": "ImGuiInputFlags_RouteFocused",
+        "value": "1 << 12"
+      },
+      {
+        "calc_value": 8192,
+        "comment": "// Register route globally (lowest priority: unless a focused window or active item registered the route) -> recommended Global priority IF you need a Global priority.",
+        "name": "ImGuiInputFlags_RouteGlobalLow",
+        "value": "1 << 13"
+      },
+      {
+        "calc_value": 16384,
+        "comment": "// Register route globally (medium priority: unless an active item registered the route, e.g. CTRL+A registered by InputText will take priority over this).",
+        "name": "ImGuiInputFlags_RouteGlobal",
+        "value": "1 << 14"
+      },
+      {
+        "calc_value": 32768,
+        "comment": "// Register route globally (higher priority: unlikely you need to use that: will interfere with every active items, e.g. CTRL+A registered by InputText will be overriden by this)",
+        "name": "ImGuiInputFlags_RouteGlobalHigh",
+        "value": "1 << 15"
+      },
+      {
+        "calc_value": 65536,
+        "comment": "// Do not register route, poll keys directly.",
+        "name": "ImGuiInputFlags_RouteAlways",
+        "value": "1 << 16"
+      },
+      {
+        "calc_value": 131072,
+        "comment": "// Global routes will not be applied if underlying background/void is focused (== no Dear ImGui windows are focused). Useful for overlay applications.",
+        "name": "ImGuiInputFlags_RouteUnlessBgFocused",
+        "value": "1 << 17"
+      },
+      {
         "calc_value": 14,
         "name": "ImGuiInputFlags_RepeatRateMask_",
         "value": "ImGuiInputFlags_RepeatRateDefault | ImGuiInputFlags_RepeatRateNavMove | ImGuiInputFlags_RepeatRateNavTweak"
       },
       {
-        "calc_value": 16,
-        "comment": "// Only set if item is hovered (default to both)",
-        "name": "ImGuiInputFlags_CondHovered",
-        "value": "1 << 4"
+        "calc_value": 240,
+        "name": "ImGuiInputFlags_RepeatUntilMask_",
+        "value": "ImGuiInputFlags_RepeatUntilRelease | ImGuiInputFlags_RepeatUntilKeyModsChange | ImGuiInputFlags_RepeatUntilKeyModsChangeFromNone | ImGuiInputFlags_RepeatUntilOtherKeyPress"
       },
       {
-        "calc_value": 32,
-        "comment": "// Only set if item is active (default to both)",
-        "name": "ImGuiInputFlags_CondActive",
-        "value": "1 << 5"
+        "calc_value": 255,
+        "name": "ImGuiInputFlags_RepeatMask_",
+        "value": "ImGuiInputFlags_Repeat | ImGuiInputFlags_RepeatRateMask_ | ImGuiInputFlags_RepeatUntilMask_"
       },
       {
-        "calc_value": 48,
-        "name": "ImGuiInputFlags_CondDefault_",
-        "value": "ImGuiInputFlags_CondHovered | ImGuiInputFlags_CondActive"
-      },
-      {
-        "calc_value": 48,
+        "calc_value": 768,
         "name": "ImGuiInputFlags_CondMask_",
         "value": "ImGuiInputFlags_CondHovered | ImGuiInputFlags_CondActive"
       },
       {
-        "calc_value": 64,
-        "comment": "// Access to key data will require EXPLICIT owner ID (ImGuiKeyOwner_Any/0 will NOT accepted for polling). Cleared at end of frame. This is useful to make input-owner-aware code steal keys from non-input-owner-aware code.",
-        "name": "ImGuiInputFlags_LockThisFrame",
-        "value": "1 << 6"
-      },
-      {
-        "calc_value": 128,
-        "comment": "// Access to key data will require EXPLICIT owner ID (ImGuiKeyOwner_Any/0 will NOT accepted for polling). Cleared when the key is released or at end of each frame if key is released. This is useful to make input-owner-aware code steal keys from non-input-owner-aware code.",
-        "name": "ImGuiInputFlags_LockUntilRelease",
-        "value": "1 << 7"
-      },
-      {
-        "calc_value": 256,
-        "comment": "// (Default) Register focused route: Accept inputs if window is in focus stack. Deep-most focused window takes inputs. ActiveId takes inputs over deep-most focused window.",
-        "name": "ImGuiInputFlags_RouteFocused",
-        "value": "1 << 8"
-      },
-      {
-        "calc_value": 512,
-        "comment": "// Register route globally (lowest priority: unless a focused window or active item registered the route) -> recommended Global priority.",
-        "name": "ImGuiInputFlags_RouteGlobalLow",
-        "value": "1 << 9"
-      },
-      {
-        "calc_value": 1024,
-        "comment": "// Register route globally (medium priority: unless an active item registered the route, e.g. CTRL+A registered by InputText).",
-        "name": "ImGuiInputFlags_RouteGlobal",
-        "value": "1 << 10"
-      },
-      {
-        "calc_value": 2048,
-        "comment": "// Register route globally (highest priority: unlikely you need to use that: will interfere with every active items)",
-        "name": "ImGuiInputFlags_RouteGlobalHigh",
-        "value": "1 << 11"
-      },
-      {
-        "calc_value": 3840,
+        "calc_value": 61440,
         "comment": "// _Always not part of this!",
         "name": "ImGuiInputFlags_RouteMask_",
         "value": "ImGuiInputFlags_RouteFocused | ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteGlobalLow | ImGuiInputFlags_RouteGlobalHigh"
       },
       {
-        "calc_value": 4096,
-        "comment": "// Do not register route, poll keys directly.",
-        "name": "ImGuiInputFlags_RouteAlways",
-        "value": "1 << 12"
-      },
-      {
-        "calc_value": 8192,
-        "comment": "// Global routes will not be applied if underlying background/void is focused (== no Dear ImGui windows are focused). Useful for overlay applications.",
-        "name": "ImGuiInputFlags_RouteUnlessBgFocused",
-        "value": "1 << 13"
-      },
-      {
-        "calc_value": 12288,
-        "name": "ImGuiInputFlags_RouteExtraMask_",
-        "value": "ImGuiInputFlags_RouteAlways | ImGuiInputFlags_RouteUnlessBgFocused"
-      },
-      {
-        "calc_value": 15,
+        "calc_value": 255,
         "name": "ImGuiInputFlags_SupportedByIsKeyPressed",
-        "value": "ImGuiInputFlags_Repeat | ImGuiInputFlags_RepeatRateMask_"
+        "value": "ImGuiInputFlags_RepeatMask_"
       },
       {
-        "calc_value": 16143,
+        "calc_value": 1,
+        "name": "ImGuiInputFlags_SupportedByIsMouseClicked",
+        "value": "ImGuiInputFlags_Repeat"
+      },
+      {
+        "calc_value": 258303,
         "name": "ImGuiInputFlags_SupportedByShortcut",
-        "value": "ImGuiInputFlags_Repeat | ImGuiInputFlags_RepeatRateMask_ | ImGuiInputFlags_RouteMask_ | ImGuiInputFlags_RouteExtraMask_"
+        "value": "ImGuiInputFlags_RepeatMask_ | ImGuiInputFlags_RouteMask_ | ImGuiInputFlags_RouteAlways | ImGuiInputFlags_RouteUnlessBgFocused"
       },
       {
-        "calc_value": 192,
+        "calc_value": 3072,
         "name": "ImGuiInputFlags_SupportedBySetKeyOwner",
         "value": "ImGuiInputFlags_LockThisFrame | ImGuiInputFlags_LockUntilRelease"
       },
       {
-        "calc_value": 240,
+        "calc_value": 3840,
         "name": "ImGuiInputFlags_SupportedBySetItemKeyOwner",
         "value": "ImGuiInputFlags_SupportedBySetKeyOwner | ImGuiInputFlags_CondMask_"
       }
@@ -2391,14 +2513,14 @@
       },
       {
         "calc_value": 256,
-        "comment": "// Set when the Focusable item just got focused by Tabbing (FIXME: to be removed soon)",
-        "name": "ImGuiItemStatusFlags_FocusedByTabbing",
+        "comment": "// [WIP] Set when item is overlapping the current clipping rectangle (Used internally. Please don't use yet: API/system will change as we refactor Itemadd()).",
+        "name": "ImGuiItemStatusFlags_Visible",
         "value": "1 << 8"
       },
       {
         "calc_value": 512,
-        "comment": "// [WIP] Set when item is overlapping the current clipping rectangle (Used internally. Please don't use yet: API/system will change as we refactor Itemadd()).",
-        "name": "ImGuiItemStatusFlags_Visible",
+        "comment": "// g.LastItemData.ClipRect is valid",
+        "name": "ImGuiItemStatusFlags_HasClipRect",
         "value": "1 << 9"
       }
     ],
@@ -2771,383 +2893,454 @@
       },
       {
         "calc_value": 584,
-        "comment": "// '",
-        "name": "ImGuiKey_Apostrophe",
+        "name": "ImGuiKey_F13",
         "value": "584"
       },
       {
         "calc_value": 585,
-        "comment": "// ,",
-        "name": "ImGuiKey_Comma",
+        "name": "ImGuiKey_F14",
         "value": "585"
       },
       {
         "calc_value": 586,
-        "comment": "// -",
-        "name": "ImGuiKey_Minus",
+        "name": "ImGuiKey_F15",
         "value": "586"
       },
       {
         "calc_value": 587,
-        "comment": "// .",
-        "name": "ImGuiKey_Period",
+        "name": "ImGuiKey_F16",
         "value": "587"
       },
       {
         "calc_value": 588,
-        "comment": "// /",
-        "name": "ImGuiKey_Slash",
+        "name": "ImGuiKey_F17",
         "value": "588"
       },
       {
         "calc_value": 589,
-        "comment": "// ;",
-        "name": "ImGuiKey_Semicolon",
+        "name": "ImGuiKey_F18",
         "value": "589"
       },
       {
         "calc_value": 590,
-        "comment": "// =",
-        "name": "ImGuiKey_Equal",
+        "name": "ImGuiKey_F19",
         "value": "590"
       },
       {
         "calc_value": 591,
-        "comment": "// [",
-        "name": "ImGuiKey_LeftBracket",
+        "name": "ImGuiKey_F20",
         "value": "591"
       },
       {
         "calc_value": 592,
-        "comment": "// \\ (this text inhibit multiline comment caused by backslash)",
-        "name": "ImGuiKey_Backslash",
+        "name": "ImGuiKey_F21",
         "value": "592"
       },
       {
         "calc_value": 593,
-        "comment": "// ]",
-        "name": "ImGuiKey_RightBracket",
+        "name": "ImGuiKey_F22",
         "value": "593"
       },
       {
         "calc_value": 594,
-        "comment": "// `",
-        "name": "ImGuiKey_GraveAccent",
+        "name": "ImGuiKey_F23",
         "value": "594"
       },
       {
         "calc_value": 595,
-        "name": "ImGuiKey_CapsLock",
+        "name": "ImGuiKey_F24",
         "value": "595"
       },
       {
         "calc_value": 596,
-        "name": "ImGuiKey_ScrollLock",
+        "comment": "// '",
+        "name": "ImGuiKey_Apostrophe",
         "value": "596"
       },
       {
         "calc_value": 597,
-        "name": "ImGuiKey_NumLock",
+        "comment": "// ,",
+        "name": "ImGuiKey_Comma",
         "value": "597"
       },
       {
         "calc_value": 598,
-        "name": "ImGuiKey_PrintScreen",
+        "comment": "// -",
+        "name": "ImGuiKey_Minus",
         "value": "598"
       },
       {
         "calc_value": 599,
-        "name": "ImGuiKey_Pause",
+        "comment": "// .",
+        "name": "ImGuiKey_Period",
         "value": "599"
       },
       {
         "calc_value": 600,
-        "name": "ImGuiKey_Keypad0",
+        "comment": "// /",
+        "name": "ImGuiKey_Slash",
         "value": "600"
       },
       {
         "calc_value": 601,
-        "name": "ImGuiKey_Keypad1",
+        "comment": "// ;",
+        "name": "ImGuiKey_Semicolon",
         "value": "601"
       },
       {
         "calc_value": 602,
-        "name": "ImGuiKey_Keypad2",
+        "comment": "// =",
+        "name": "ImGuiKey_Equal",
         "value": "602"
       },
       {
         "calc_value": 603,
-        "name": "ImGuiKey_Keypad3",
+        "comment": "// [",
+        "name": "ImGuiKey_LeftBracket",
         "value": "603"
       },
       {
         "calc_value": 604,
-        "name": "ImGuiKey_Keypad4",
+        "comment": "// \\ (this text inhibit multiline comment caused by backslash)",
+        "name": "ImGuiKey_Backslash",
         "value": "604"
       },
       {
         "calc_value": 605,
-        "name": "ImGuiKey_Keypad5",
+        "comment": "// ]",
+        "name": "ImGuiKey_RightBracket",
         "value": "605"
       },
       {
         "calc_value": 606,
-        "name": "ImGuiKey_Keypad6",
+        "comment": "// `",
+        "name": "ImGuiKey_GraveAccent",
         "value": "606"
       },
       {
         "calc_value": 607,
-        "name": "ImGuiKey_Keypad7",
+        "name": "ImGuiKey_CapsLock",
         "value": "607"
       },
       {
         "calc_value": 608,
-        "name": "ImGuiKey_Keypad8",
+        "name": "ImGuiKey_ScrollLock",
         "value": "608"
       },
       {
         "calc_value": 609,
-        "name": "ImGuiKey_Keypad9",
+        "name": "ImGuiKey_NumLock",
         "value": "609"
       },
       {
         "calc_value": 610,
-        "name": "ImGuiKey_KeypadDecimal",
+        "name": "ImGuiKey_PrintScreen",
         "value": "610"
       },
       {
         "calc_value": 611,
-        "name": "ImGuiKey_KeypadDivide",
+        "name": "ImGuiKey_Pause",
         "value": "611"
       },
       {
         "calc_value": 612,
-        "name": "ImGuiKey_KeypadMultiply",
+        "name": "ImGuiKey_Keypad0",
         "value": "612"
       },
       {
         "calc_value": 613,
-        "name": "ImGuiKey_KeypadSubtract",
+        "name": "ImGuiKey_Keypad1",
         "value": "613"
       },
       {
         "calc_value": 614,
-        "name": "ImGuiKey_KeypadAdd",
+        "name": "ImGuiKey_Keypad2",
         "value": "614"
       },
       {
         "calc_value": 615,
-        "name": "ImGuiKey_KeypadEnter",
+        "name": "ImGuiKey_Keypad3",
         "value": "615"
       },
       {
         "calc_value": 616,
-        "name": "ImGuiKey_KeypadEqual",
+        "name": "ImGuiKey_Keypad4",
         "value": "616"
       },
       {
         "calc_value": 617,
-        "comment": "// Menu (Xbox)      + (Switch)   Start/Options (PS)",
-        "name": "ImGuiKey_GamepadStart",
+        "name": "ImGuiKey_Keypad5",
         "value": "617"
       },
       {
         "calc_value": 618,
-        "comment": "// View (Xbox)      - (Switch)   Share (PS)",
-        "name": "ImGuiKey_GamepadBack",
+        "name": "ImGuiKey_Keypad6",
         "value": "618"
       },
       {
         "calc_value": 619,
-        "comment": "// X (Xbox)         Y (Switch)   Square (PS)        // Tap: Toggle Menu. Hold: Windowing mode (Focus/Move/Resize windows)",
-        "name": "ImGuiKey_GamepadFaceLeft",
+        "name": "ImGuiKey_Keypad7",
         "value": "619"
       },
       {
         "calc_value": 620,
-        "comment": "// B (Xbox)         A (Switch)   Circle (PS)        // Cancel / Close / Exit",
-        "name": "ImGuiKey_GamepadFaceRight",
+        "name": "ImGuiKey_Keypad8",
         "value": "620"
       },
       {
         "calc_value": 621,
-        "comment": "// Y (Xbox)         X (Switch)   Triangle (PS)      // Text Input / On-screen Keyboard",
-        "name": "ImGuiKey_GamepadFaceUp",
+        "name": "ImGuiKey_Keypad9",
         "value": "621"
       },
       {
         "calc_value": 622,
-        "comment": "// A (Xbox)         B (Switch)   Cross (PS)         // Activate / Open / Toggle / Tweak",
-        "name": "ImGuiKey_GamepadFaceDown",
+        "name": "ImGuiKey_KeypadDecimal",
         "value": "622"
       },
       {
         "calc_value": 623,
-        "comment": "// D-pad Left                                       // Move / Tweak / Resize Window (in Windowing mode)",
-        "name": "ImGuiKey_GamepadDpadLeft",
+        "name": "ImGuiKey_KeypadDivide",
         "value": "623"
       },
       {
         "calc_value": 624,
-        "comment": "// D-pad Right                                      // Move / Tweak / Resize Window (in Windowing mode)",
-        "name": "ImGuiKey_GamepadDpadRight",
+        "name": "ImGuiKey_KeypadMultiply",
         "value": "624"
       },
       {
         "calc_value": 625,
-        "comment": "// D-pad Up                                         // Move / Tweak / Resize Window (in Windowing mode)",
-        "name": "ImGuiKey_GamepadDpadUp",
+        "name": "ImGuiKey_KeypadSubtract",
         "value": "625"
       },
       {
         "calc_value": 626,
-        "comment": "// D-pad Down                                       // Move / Tweak / Resize Window (in Windowing mode)",
-        "name": "ImGuiKey_GamepadDpadDown",
+        "name": "ImGuiKey_KeypadAdd",
         "value": "626"
       },
       {
         "calc_value": 627,
-        "comment": "// L Bumper (Xbox)  L (Switch)   L1 (PS)            // Tweak Slower / Focus Previous (in Windowing mode)",
-        "name": "ImGuiKey_GamepadL1",
+        "name": "ImGuiKey_KeypadEnter",
         "value": "627"
       },
       {
         "calc_value": 628,
-        "comment": "// R Bumper (Xbox)  R (Switch)   R1 (PS)            // Tweak Faster / Focus Next (in Windowing mode)",
-        "name": "ImGuiKey_GamepadR1",
+        "name": "ImGuiKey_KeypadEqual",
         "value": "628"
       },
       {
         "calc_value": 629,
-        "comment": "// L Trig. (Xbox)   ZL (Switch)  L2 (PS) [Analog]",
-        "name": "ImGuiKey_GamepadL2",
+        "comment": "// Available on some keyboard/mouses. Often referred as \"Browser Back\"",
+        "name": "ImGuiKey_AppBack",
         "value": "629"
       },
       {
         "calc_value": 630,
-        "comment": "// R Trig. (Xbox)   ZR (Switch)  R2 (PS) [Analog]",
-        "name": "ImGuiKey_GamepadR2",
+        "name": "ImGuiKey_AppForward",
         "value": "630"
       },
       {
         "calc_value": 631,
-        "comment": "// L Stick (Xbox)   L3 (Switch)  L3 (PS)",
-        "name": "ImGuiKey_GamepadL3",
+        "comment": "// Menu (Xbox)      + (Switch)   Start/Options (PS)",
+        "name": "ImGuiKey_GamepadStart",
         "value": "631"
       },
       {
         "calc_value": 632,
-        "comment": "// R Stick (Xbox)   R3 (Switch)  R3 (PS)",
-        "name": "ImGuiKey_GamepadR3",
+        "comment": "// View (Xbox)      - (Switch)   Share (PS)",
+        "name": "ImGuiKey_GamepadBack",
         "value": "632"
       },
       {
         "calc_value": 633,
-        "comment": "// [Analog]                                         // Move Window (in Windowing mode)",
-        "name": "ImGuiKey_GamepadLStickLeft",
+        "comment": "// X (Xbox)         Y (Switch)   Square (PS)        // Tap: Toggle Menu. Hold: Windowing mode (Focus/Move/Resize windows)",
+        "name": "ImGuiKey_GamepadFaceLeft",
         "value": "633"
       },
       {
         "calc_value": 634,
-        "comment": "// [Analog]                                         // Move Window (in Windowing mode)",
-        "name": "ImGuiKey_GamepadLStickRight",
+        "comment": "// B (Xbox)         A (Switch)   Circle (PS)        // Cancel / Close / Exit",
+        "name": "ImGuiKey_GamepadFaceRight",
         "value": "634"
       },
       {
         "calc_value": 635,
-        "comment": "// [Analog]                                         // Move Window (in Windowing mode)",
-        "name": "ImGuiKey_GamepadLStickUp",
+        "comment": "// Y (Xbox)         X (Switch)   Triangle (PS)      // Text Input / On-screen Keyboard",
+        "name": "ImGuiKey_GamepadFaceUp",
         "value": "635"
       },
       {
         "calc_value": 636,
-        "comment": "// [Analog]                                         // Move Window (in Windowing mode)",
-        "name": "ImGuiKey_GamepadLStickDown",
+        "comment": "// A (Xbox)         B (Switch)   Cross (PS)         // Activate / Open / Toggle / Tweak",
+        "name": "ImGuiKey_GamepadFaceDown",
         "value": "636"
       },
       {
         "calc_value": 637,
-        "comment": "// [Analog]",
-        "name": "ImGuiKey_GamepadRStickLeft",
+        "comment": "// D-pad Left                                       // Move / Tweak / Resize Window (in Windowing mode)",
+        "name": "ImGuiKey_GamepadDpadLeft",
         "value": "637"
       },
       {
         "calc_value": 638,
-        "comment": "// [Analog]",
-        "name": "ImGuiKey_GamepadRStickRight",
+        "comment": "// D-pad Right                                      // Move / Tweak / Resize Window (in Windowing mode)",
+        "name": "ImGuiKey_GamepadDpadRight",
         "value": "638"
       },
       {
         "calc_value": 639,
-        "comment": "// [Analog]",
-        "name": "ImGuiKey_GamepadRStickUp",
+        "comment": "// D-pad Up                                         // Move / Tweak / Resize Window (in Windowing mode)",
+        "name": "ImGuiKey_GamepadDpadUp",
         "value": "639"
       },
       {
         "calc_value": 640,
-        "comment": "// [Analog]",
-        "name": "ImGuiKey_GamepadRStickDown",
+        "comment": "// D-pad Down                                       // Move / Tweak / Resize Window (in Windowing mode)",
+        "name": "ImGuiKey_GamepadDpadDown",
         "value": "640"
       },
       {
         "calc_value": 641,
-        "name": "ImGuiKey_MouseLeft",
+        "comment": "// L Bumper (Xbox)  L (Switch)   L1 (PS)            // Tweak Slower / Focus Previous (in Windowing mode)",
+        "name": "ImGuiKey_GamepadL1",
         "value": "641"
       },
       {
         "calc_value": 642,
-        "name": "ImGuiKey_MouseRight",
+        "comment": "// R Bumper (Xbox)  R (Switch)   R1 (PS)            // Tweak Faster / Focus Next (in Windowing mode)",
+        "name": "ImGuiKey_GamepadR1",
         "value": "642"
       },
       {
         "calc_value": 643,
-        "name": "ImGuiKey_MouseMiddle",
+        "comment": "// L Trig. (Xbox)   ZL (Switch)  L2 (PS) [Analog]",
+        "name": "ImGuiKey_GamepadL2",
         "value": "643"
       },
       {
         "calc_value": 644,
-        "name": "ImGuiKey_MouseX1",
+        "comment": "// R Trig. (Xbox)   ZR (Switch)  R2 (PS) [Analog]",
+        "name": "ImGuiKey_GamepadR2",
         "value": "644"
       },
       {
         "calc_value": 645,
-        "name": "ImGuiKey_MouseX2",
+        "comment": "// L Stick (Xbox)   L3 (Switch)  L3 (PS)",
+        "name": "ImGuiKey_GamepadL3",
         "value": "645"
       },
       {
         "calc_value": 646,
-        "name": "ImGuiKey_MouseWheelX",
+        "comment": "// R Stick (Xbox)   R3 (Switch)  R3 (PS)",
+        "name": "ImGuiKey_GamepadR3",
         "value": "646"
       },
       {
         "calc_value": 647,
-        "name": "ImGuiKey_MouseWheelY",
+        "comment": "// [Analog]                                         // Move Window (in Windowing mode)",
+        "name": "ImGuiKey_GamepadLStickLeft",
         "value": "647"
       },
       {
         "calc_value": 648,
-        "name": "ImGuiKey_ReservedForModCtrl",
+        "comment": "// [Analog]                                         // Move Window (in Windowing mode)",
+        "name": "ImGuiKey_GamepadLStickRight",
         "value": "648"
       },
       {
         "calc_value": 649,
-        "name": "ImGuiKey_ReservedForModShift",
+        "comment": "// [Analog]                                         // Move Window (in Windowing mode)",
+        "name": "ImGuiKey_GamepadLStickUp",
         "value": "649"
       },
       {
         "calc_value": 650,
-        "name": "ImGuiKey_ReservedForModAlt",
+        "comment": "// [Analog]                                         // Move Window (in Windowing mode)",
+        "name": "ImGuiKey_GamepadLStickDown",
         "value": "650"
       },
       {
         "calc_value": 651,
-        "name": "ImGuiKey_ReservedForModSuper",
+        "comment": "// [Analog]",
+        "name": "ImGuiKey_GamepadRStickLeft",
         "value": "651"
       },
       {
         "calc_value": 652,
-        "name": "ImGuiKey_COUNT",
+        "comment": "// [Analog]",
+        "name": "ImGuiKey_GamepadRStickRight",
         "value": "652"
+      },
+      {
+        "calc_value": 653,
+        "comment": "// [Analog]",
+        "name": "ImGuiKey_GamepadRStickUp",
+        "value": "653"
+      },
+      {
+        "calc_value": 654,
+        "comment": "// [Analog]",
+        "name": "ImGuiKey_GamepadRStickDown",
+        "value": "654"
+      },
+      {
+        "calc_value": 655,
+        "name": "ImGuiKey_MouseLeft",
+        "value": "655"
+      },
+      {
+        "calc_value": 656,
+        "name": "ImGuiKey_MouseRight",
+        "value": "656"
+      },
+      {
+        "calc_value": 657,
+        "name": "ImGuiKey_MouseMiddle",
+        "value": "657"
+      },
+      {
+        "calc_value": 658,
+        "name": "ImGuiKey_MouseX1",
+        "value": "658"
+      },
+      {
+        "calc_value": 659,
+        "name": "ImGuiKey_MouseX2",
+        "value": "659"
+      },
+      {
+        "calc_value": 660,
+        "name": "ImGuiKey_MouseWheelX",
+        "value": "660"
+      },
+      {
+        "calc_value": 661,
+        "name": "ImGuiKey_MouseWheelY",
+        "value": "661"
+      },
+      {
+        "calc_value": 662,
+        "name": "ImGuiKey_ReservedForModCtrl",
+        "value": "662"
+      },
+      {
+        "calc_value": 663,
+        "name": "ImGuiKey_ReservedForModShift",
+        "value": "663"
+      },
+      {
+        "calc_value": 664,
+        "name": "ImGuiKey_ReservedForModAlt",
+        "value": "664"
+      },
+      {
+        "calc_value": 665,
+        "name": "ImGuiKey_ReservedForModSuper",
+        "value": "665"
+      },
+      {
+        "calc_value": 666,
+        "name": "ImGuiKey_COUNT",
+        "value": "666"
       },
       {
         "calc_value": 0,
@@ -3196,26 +3389,26 @@
         "value": "512"
       },
       {
-        "calc_value": 652,
+        "calc_value": 666,
         "name": "ImGuiKey_NamedKey_END",
         "value": "ImGuiKey_COUNT"
       },
       {
-        "calc_value": 140,
+        "calc_value": 154,
         "name": "ImGuiKey_NamedKey_COUNT",
         "value": "ImGuiKey_NamedKey_END - ImGuiKey_NamedKey_BEGIN"
       },
       {
-        "calc_value": 652,
-        "comment": "// Size of KeysData[]: hold legacy 0..512 keycodes + named keys",
+        "calc_value": 154,
+        "comment": "// Size of KeysData[]: only hold named keys",
         "name": "ImGuiKey_KeysData_SIZE",
-        "value": "ImGuiKey_COUNT"
+        "value": "ImGuiKey_NamedKey_COUNT"
       },
       {
-        "calc_value": 0,
+        "calc_value": 512,
         "comment": "// Accesses to io.KeysData[] must use (key - ImGuiKey_KeysData_OFFSET) index.",
         "name": "ImGuiKey_KeysData_OFFSET",
-        "value": "0"
+        "value": "ImGuiKey_NamedKey_BEGIN"
       }
     ],
     "ImGuiLayoutType_": [
@@ -3283,8 +3476,13 @@
       },
       {
         "calc_value": 10,
-        "name": "ImGuiLocKey_COUNT",
+        "name": "ImGuiLocKey_DockingDragToUndockOrMoveNode",
         "value": "10"
+      },
+      {
+        "calc_value": 11,
+        "name": "ImGuiLocKey_COUNT",
+        "value": "11"
       }
     ],
     "ImGuiLogType": [
@@ -3433,13 +3631,9 @@
         "value": "0"
       },
       {
-        "calc_value": 1,
-        "name": "ImGuiNavHighlightFlags_TypeDefault",
-        "value": "1 << 0"
-      },
-      {
         "calc_value": 2,
-        "name": "ImGuiNavHighlightFlags_TypeThin",
+        "comment": "// Compact highlight, no padding",
+        "name": "ImGuiNavHighlightFlags_Compact",
         "value": "1 << 1"
       },
       {
@@ -3452,93 +3646,6 @@
         "calc_value": 8,
         "name": "ImGuiNavHighlightFlags_NoRounding",
         "value": "1 << 3"
-      }
-    ],
-    "ImGuiNavInput": [
-      {
-        "calc_value": 0,
-        "name": "ImGuiNavInput_Activate",
-        "value": "0"
-      },
-      {
-        "calc_value": 1,
-        "name": "ImGuiNavInput_Cancel",
-        "value": "1"
-      },
-      {
-        "calc_value": 2,
-        "name": "ImGuiNavInput_Input",
-        "value": "2"
-      },
-      {
-        "calc_value": 3,
-        "name": "ImGuiNavInput_Menu",
-        "value": "3"
-      },
-      {
-        "calc_value": 4,
-        "name": "ImGuiNavInput_DpadLeft",
-        "value": "4"
-      },
-      {
-        "calc_value": 5,
-        "name": "ImGuiNavInput_DpadRight",
-        "value": "5"
-      },
-      {
-        "calc_value": 6,
-        "name": "ImGuiNavInput_DpadUp",
-        "value": "6"
-      },
-      {
-        "calc_value": 7,
-        "name": "ImGuiNavInput_DpadDown",
-        "value": "7"
-      },
-      {
-        "calc_value": 8,
-        "name": "ImGuiNavInput_LStickLeft",
-        "value": "8"
-      },
-      {
-        "calc_value": 9,
-        "name": "ImGuiNavInput_LStickRight",
-        "value": "9"
-      },
-      {
-        "calc_value": 10,
-        "name": "ImGuiNavInput_LStickUp",
-        "value": "10"
-      },
-      {
-        "calc_value": 11,
-        "name": "ImGuiNavInput_LStickDown",
-        "value": "11"
-      },
-      {
-        "calc_value": 12,
-        "name": "ImGuiNavInput_FocusPrev",
-        "value": "12"
-      },
-      {
-        "calc_value": 13,
-        "name": "ImGuiNavInput_FocusNext",
-        "value": "13"
-      },
-      {
-        "calc_value": 14,
-        "name": "ImGuiNavInput_TweakSlow",
-        "value": "14"
-      },
-      {
-        "calc_value": 15,
-        "name": "ImGuiNavInput_TweakFast",
-        "value": "15"
-      },
-      {
-        "calc_value": 16,
-        "name": "ImGuiNavInput_COUNT",
-        "value": "16"
       }
     ],
     "ImGuiNavLayer": [
@@ -3675,6 +3782,11 @@
         "calc_value": 2,
         "name": "ImGuiNextItemDataFlags_HasOpen",
         "value": "1 << 1"
+      },
+      {
+        "calc_value": 4,
+        "name": "ImGuiNextItemDataFlags_HasShortcut",
+        "value": "1 << 2"
       }
     ],
     "ImGuiNextWindowDataFlags_": [
@@ -3725,18 +3837,23 @@
       },
       {
         "calc_value": 256,
-        "name": "ImGuiNextWindowDataFlags_HasViewport",
+        "name": "ImGuiNextWindowDataFlags_HasChildFlags",
         "value": "1 << 8"
       },
       {
         "calc_value": 512,
-        "name": "ImGuiNextWindowDataFlags_HasDock",
+        "name": "ImGuiNextWindowDataFlags_HasViewport",
         "value": "1 << 9"
       },
       {
         "calc_value": 1024,
-        "name": "ImGuiNextWindowDataFlags_HasWindowClass",
+        "name": "ImGuiNextWindowDataFlags_HasDock",
         "value": "1 << 10"
+      },
+      {
+        "calc_value": 2048,
+        "name": "ImGuiNextWindowDataFlags_HasWindowClass",
+        "value": "1 << 11"
       }
     ],
     "ImGuiOldColumnFlags_": [
@@ -3771,7 +3888,7 @@
       },
       {
         "calc_value": 16,
-        "comment": "// (WIP) Restore pre-1.51 behavior of extending the parent window contents size but _without affecting the columns width at all_. Will eventually remove.",
+        "comment": "// Restore pre-1.51 behavior of extending the parent window contents size but _without affecting the columns width at all_. Will eventually remove.",
         "name": "ImGuiOldColumnFlags_GrowParentContentsSize",
         "value": "1 << 4"
       }
@@ -3824,30 +3941,36 @@
       },
       {
         "calc_value": 32,
-        "comment": "// For OpenPopup*(), BeginPopupContext*(): don't open if there's already a popup at the same level of the popup stack",
-        "name": "ImGuiPopupFlags_NoOpenOverExistingPopup",
+        "comment": "// For OpenPopup*(), BeginPopupContext*(): don't reopen same popup if already open (won't reposition, won't reinitialize navigation)",
+        "name": "ImGuiPopupFlags_NoReopen",
         "value": "1 << 5"
       },
       {
-        "calc_value": 64,
-        "comment": "// For BeginPopupContextWindow(): don't return true when hovering items, only when hovering empty space",
-        "name": "ImGuiPopupFlags_NoOpenOverItems",
-        "value": "1 << 6"
-      },
-      {
         "calc_value": 128,
-        "comment": "// For IsPopupOpen(): ignore the ImGuiID parameter and test for any popup.",
-        "name": "ImGuiPopupFlags_AnyPopupId",
+        "comment": "// For OpenPopup*(), BeginPopupContext*(): don't open if there's already a popup at the same level of the popup stack",
+        "name": "ImGuiPopupFlags_NoOpenOverExistingPopup",
         "value": "1 << 7"
       },
       {
         "calc_value": 256,
-        "comment": "// For IsPopupOpen(): search/test at any level of the popup stack (default test in the current level)",
-        "name": "ImGuiPopupFlags_AnyPopupLevel",
+        "comment": "// For BeginPopupContextWindow(): don't return true when hovering items, only when hovering empty space",
+        "name": "ImGuiPopupFlags_NoOpenOverItems",
         "value": "1 << 8"
       },
       {
-        "calc_value": 384,
+        "calc_value": 1024,
+        "comment": "// For IsPopupOpen(): ignore the ImGuiID parameter and test for any popup.",
+        "name": "ImGuiPopupFlags_AnyPopupId",
+        "value": "1 << 10"
+      },
+      {
+        "calc_value": 2048,
+        "comment": "// For IsPopupOpen(): search/test at any level of the popup stack (default test in the current level)",
+        "name": "ImGuiPopupFlags_AnyPopupLevel",
+        "value": "1 << 11"
+      },
+      {
+        "calc_value": 3072,
         "name": "ImGuiPopupFlags_AnyPopup",
         "value": "ImGuiPopupFlags_AnyPopupId | ImGuiPopupFlags_AnyPopupLevel"
       }
@@ -3991,7 +4114,7 @@
       },
       {
         "calc_value": 2,
-        "comment": "// Selectable frame can span all columns (text will still fit in current column)",
+        "comment": "// Frame will span all columns of its container table (text will still fit in current column)",
         "name": "ImGuiSelectableFlags_SpanAllColumns",
         "value": "1 << 1"
       },
@@ -4340,7 +4463,7 @@
       },
       {
         "calc_value": 8,
-        "comment": "// Disable behavior of closing tabs (that are submitted with p_open != NULL) with middle mouse button. You can still repro this behavior on user's side with if (IsItemHovered() && IsMouseClicked(2)) *p_open = false.",
+        "comment": "// Disable behavior of closing tabs (that are submitted with p_open != NULL) with middle mouse button. You may handle this behavior manually on user's side with if (IsItemHovered() && IsMouseClicked(2)) *p_open = false.",
         "name": "ImGuiTabBarFlags_NoCloseWithMiddleMouseButton",
         "value": "1 << 3"
       },
@@ -4412,7 +4535,7 @@
       },
       {
         "calc_value": 1,
-        "comment": "// Display a dot next to the title + tab is selected when clicking the X + closure is not assumed (will wait for user to stop submitting the tab). Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.",
+        "comment": "// Display a dot next to the title + set ImGuiTabItemFlags_NoAssumedClosure.",
         "name": "ImGuiTabItemFlags_UnsavedDocument",
         "value": "1 << 0"
       },
@@ -4424,13 +4547,13 @@
       },
       {
         "calc_value": 4,
-        "comment": "// Disable behavior of closing tabs (that are submitted with p_open != NULL) with middle mouse button. You can still repro this behavior on user's side with if (IsItemHovered() && IsMouseClicked(2)) *p_open = false.",
+        "comment": "// Disable behavior of closing tabs (that are submitted with p_open != NULL) with middle mouse button. You may handle this behavior manually on user's side with if (IsItemHovered() && IsMouseClicked(2)) *p_open = false.",
         "name": "ImGuiTabItemFlags_NoCloseWithMiddleMouseButton",
         "value": "1 << 2"
       },
       {
         "calc_value": 8,
-        "comment": "// Don't call PushID(tab->ID)/PopID() on BeginTabItem()/EndTabItem()",
+        "comment": "// Don't call PushID()/PopID() on BeginTabItem()/EndTabItem()",
         "name": "ImGuiTabItemFlags_NoPushId",
         "value": "1 << 3"
       },
@@ -4457,6 +4580,12 @@
         "comment": "// Enforce the tab position to the right of the tab bar (before the scrolling buttons)",
         "name": "ImGuiTabItemFlags_Trailing",
         "value": "1 << 7"
+      },
+      {
+        "calc_value": 256,
+        "comment": "// Tab is selected when trying to close + closure is not immediately assumed (will wait for user to stop submitting the tab). Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.",
+        "name": "ImGuiTabItemFlags_NoAssumedClosure",
+        "value": "1 << 8"
       }
     ],
     "ImGuiTableBgTarget_": [
@@ -4564,7 +4693,7 @@
       },
       {
         "calc_value": 4096,
-        "comment": "// TableHeadersRow() will not submit label for this column. Convenient for some small columns. Name will still appear in context menu.",
+        "comment": "// TableHeadersRow() will not submit horizontal label for this column. Convenient for some small columns. Name will still appear in context menu or in angled headers.",
         "name": "ImGuiTableColumnFlags_NoHeaderLabel",
         "value": "1 << 12"
       },
@@ -4597,6 +4726,12 @@
         "comment": "// Ignore current Indent value when entering cell (default for columns > 0). Indentation changes _within_ the cell will still be honored.",
         "name": "ImGuiTableColumnFlags_IndentDisable",
         "value": "1 << 17"
+      },
+      {
+        "calc_value": 262144,
+        "comment": "// TableHeadersRow() will submit an angled header row for this column. Note this will add an extra row.",
+        "name": "ImGuiTableColumnFlags_AngledHeader",
+        "value": "1 << 18"
       },
       {
         "calc_value": 16777216,
@@ -4855,6 +4990,12 @@
         "value": "1 << 27"
       },
       {
+        "calc_value": 268435456,
+        "comment": "// Highlight column headers when hovered (may evolve into a fuller highlight)",
+        "name": "ImGuiTableFlags_HighlightHoveredColumn",
+        "value": "1 << 28"
+      },
+      {
         "calc_value": 57344,
         "name": "ImGuiTableFlags_SizingMask_",
         "value": "ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_SizingFixedSame | ImGuiTableFlags_SizingStretchProp | ImGuiTableFlags_SizingStretchSame"
@@ -4997,9 +5138,15 @@
       },
       {
         "calc_value": 8192,
+        "comment": "// Frame will span all columns of its container table (text will still fit in current column)",
+        "name": "ImGuiTreeNodeFlags_SpanAllColumns",
+        "value": "1 << 13"
+      },
+      {
+        "calc_value": 16384,
         "comment": "// (WIP) Nav: left direction may move to this TreeNode() from any of its child (items submitted between TreeNode and TreePop)",
         "name": "ImGuiTreeNodeFlags_NavLeftJumpsBackHere",
-        "value": "1 << 13"
+        "value": "1 << 14"
       },
       {
         "calc_value": 26,
@@ -5258,36 +5405,30 @@
       },
       {
         "calc_value": 65536,
-        "comment": "// Ensure child windows without border uses style.WindowPadding (ignored by default for non-bordered child windows, because more convenient)",
-        "name": "ImGuiWindowFlags_AlwaysUseWindowPadding",
+        "comment": "// No gamepad/keyboard navigation within the window",
+        "name": "ImGuiWindowFlags_NoNavInputs",
         "value": "1 << 16"
       },
       {
+        "calc_value": 131072,
+        "comment": "// No focusing toward this window with gamepad/keyboard navigation (e.g. skipped by CTRL+TAB)",
+        "name": "ImGuiWindowFlags_NoNavFocus",
+        "value": "1 << 17"
+      },
+      {
         "calc_value": 262144,
-        "comment": "// No gamepad/keyboard navigation within the window",
-        "name": "ImGuiWindowFlags_NoNavInputs",
+        "comment": "// Display a dot next to the title. When used in a tab/docking context, tab is selected when clicking the X + closure is not assumed (will wait for user to stop submitting the tab). Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.",
+        "name": "ImGuiWindowFlags_UnsavedDocument",
         "value": "1 << 18"
       },
       {
         "calc_value": 524288,
-        "comment": "// No focusing toward this window with gamepad/keyboard navigation (e.g. skipped by CTRL+TAB)",
-        "name": "ImGuiWindowFlags_NoNavFocus",
+        "comment": "// Disable docking of this window",
+        "name": "ImGuiWindowFlags_NoDocking",
         "value": "1 << 19"
       },
       {
-        "calc_value": 1048576,
-        "comment": "// Display a dot next to the title. When used in a tab/docking context, tab is selected when clicking the X + closure is not assumed (will wait for user to stop submitting the tab). Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.",
-        "name": "ImGuiWindowFlags_UnsavedDocument",
-        "value": "1 << 20"
-      },
-      {
-        "calc_value": 2097152,
-        "comment": "// Disable docking of this window",
-        "name": "ImGuiWindowFlags_NoDocking",
-        "value": "1 << 21"
-      },
-      {
-        "calc_value": 786432,
+        "calc_value": 196608,
         "name": "ImGuiWindowFlags_NoNav",
         "value": "ImGuiWindowFlags_NoNavInputs | ImGuiWindowFlags_NoNavFocus"
       },
@@ -5297,13 +5438,13 @@
         "value": "ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoCollapse"
       },
       {
-        "calc_value": 786944,
+        "calc_value": 197120,
         "name": "ImGuiWindowFlags_NoInputs",
         "value": "ImGuiWindowFlags_NoMouseInputs | ImGuiWindowFlags_NoNavInputs | ImGuiWindowFlags_NoNavFocus"
       },
       {
         "calc_value": 8388608,
-        "comment": "// [BETA] On child window: allow gamepad/keyboard navigation to cross over parent border to this child or between sibling child windows.",
+        "comment": "// [BETA] On child window: share focus scope, allow gamepad/keyboard navigation to cross over parent border to this child or between sibling child windows.",
         "name": "ImGuiWindowFlags_NavFlattened",
         "value": "1 << 23"
       },
@@ -5351,190 +5492,193 @@
     "ImGuiMouseSource": "int"
   },
   "locations": {
-    "ImBitVector": "imgui_internal:611",
-    "ImColor": "imgui:2592",
-    "ImDrawChannel": "imgui:2682",
-    "ImDrawCmd": "imgui:2641",
-    "ImDrawCmdHeader": "imgui:2674",
-    "ImDrawData": "imgui:2876",
-    "ImDrawDataBuilder": "imgui_internal:801",
-    "ImDrawFlags_": "imgui:2708",
-    "ImDrawList": "imgui:2746",
-    "ImDrawListFlags_": "imgui:2728",
-    "ImDrawListSharedData": "imgui_internal:778",
-    "ImDrawListSplitter": "imgui:2691",
-    "ImDrawVert": "imgui:2659",
-    "ImFont": "imgui:3098",
-    "ImFontAtlas": "imgui:2994",
-    "ImFontAtlasCustomRect": "imgui:2956",
-    "ImFontAtlasFlags_": "imgui:2969",
-    "ImFontBuilderIO": "imgui_internal:3689",
-    "ImFontConfig": "imgui:2900",
-    "ImFontGlyph": "imgui:2929",
-    "ImFontGlyphRangesBuilder": "imgui:2941",
-    "ImGuiActivateFlags_": "imgui_internal:1503",
-    "ImGuiAxis": "imgui_internal:988",
-    "ImGuiBackendFlags_": "imgui:1621",
-    "ImGuiButtonFlagsPrivate_": "imgui_internal:882",
-    "ImGuiButtonFlags_": "imgui:1740",
-    "ImGuiCol_": "imgui:1636",
-    "ImGuiColorEditFlags_": "imgui:1753",
-    "ImGuiColorMod": "imgui_internal:1039",
-    "ImGuiComboFlagsPrivate_": "imgui_internal:907",
-    "ImGuiComboFlags_": "imgui:1147",
-    "ImGuiComboPreviewData": "imgui_internal:1056",
-    "ImGuiCond_": "imgui:1854",
-    "ImGuiConfigFlags_": "imgui:1596",
-    "ImGuiContext": "imgui_internal:2026",
-    "ImGuiContextHook": "imgui_internal:2011",
-    "ImGuiContextHookType": "imgui_internal:2009",
-    "ImGuiDataAuthority_": "imgui_internal:1721",
-    "ImGuiDataTypeInfo": "imgui_internal:1022",
-    "ImGuiDataTypePrivate_": "imgui_internal:1031",
-    "ImGuiDataTypeTempStorage": "imgui_internal:1016",
-    "ImGuiDataType_": "imgui:1419",
-    "ImGuiDataVarInfo": "imgui_internal:1008",
-    "ImGuiDebugLogFlags_": "imgui_internal:1947",
-    "ImGuiDir_": "imgui:1435",
-    "ImGuiDockContext": "imgui_internal:1820",
-    "ImGuiDockNode": "imgui_internal:1737",
-    "ImGuiDockNodeFlagsPrivate_": "imgui_internal:1693",
-    "ImGuiDockNodeFlags_": "imgui:1378",
-    "ImGuiDockNodeState": "imgui_internal:1728",
-    "ImGuiDragDropFlags_": "imgui:1397",
-    "ImGuiFocusRequestFlags_": "imgui_internal:951",
-    "ImGuiFocusedFlags_": "imgui:1324",
-    "ImGuiGroupData": "imgui_internal:1069",
-    "ImGuiHoveredFlagsPrivate_": "imgui_internal:865",
-    "ImGuiHoveredFlags_": "imgui:1338",
-    "ImGuiIO": "imgui:2045",
-    "ImGuiInputEvent": "imgui_internal:1359",
-    "ImGuiInputEventAppFocused": "imgui_internal:1357",
-    "ImGuiInputEventKey": "imgui_internal:1355",
-    "ImGuiInputEventMouseButton": "imgui_internal:1353",
-    "ImGuiInputEventMousePos": "imgui_internal:1351",
-    "ImGuiInputEventMouseViewport": "imgui_internal:1354",
-    "ImGuiInputEventMouseWheel": "imgui_internal:1352",
-    "ImGuiInputEventText": "imgui_internal:1356",
-    "ImGuiInputEventType": "imgui_internal:1326",
-    "ImGuiInputFlags_": "imgui_internal:1423",
-    "ImGuiInputSource": "imgui_internal:1339",
-    "ImGuiInputTextCallbackData": "imgui:2264",
-    "ImGuiInputTextDeactivatedState": "imgui_internal:1103",
-    "ImGuiInputTextFlagsPrivate_": "imgui_internal:873",
-    "ImGuiInputTextFlags_": "imgui:1053",
-    "ImGuiInputTextState": "imgui_internal:1113",
-    "ImGuiItemFlags_": "imgui_internal:818",
-    "ImGuiItemStatusFlags_": "imgui_internal:840",
-    "ImGuiKey": "imgui:1458",
-    "ImGuiKeyData": "imgui:2037",
-    "ImGuiKeyOwnerData": "imgui_internal:1411",
-    "ImGuiKeyRoutingData": "imgui_internal:1386",
-    "ImGuiKeyRoutingTable": "imgui_internal:1399",
-    "ImGuiLastItemData": "imgui_internal:1234",
-    "ImGuiLayoutType_": "imgui_internal:972",
-    "ImGuiListClipper": "imgui:2510",
-    "ImGuiListClipperData": "imgui_internal:1487",
-    "ImGuiListClipperRange": "imgui_internal:1474",
-    "ImGuiLocEntry": "imgui_internal:1936",
-    "ImGuiLocKey": "imgui_internal:1921",
-    "ImGuiLogType": "imgui_internal:978",
-    "ImGuiMenuColumns": "imgui_internal:1085",
-    "ImGuiMetricsConfig": "imgui_internal:1965",
-    "ImGuiMouseButton_": "imgui:1814",
-    "ImGuiMouseCursor_": "imgui:1824",
-    "ImGuiMouseSource": "imgui:1843",
-    "ImGuiNavHighlightFlags_": "imgui_internal:1526",
-    "ImGuiNavInput": "imgui:1587",
-    "ImGuiNavItemData": "imgui_internal:1563",
-    "ImGuiNavLayer": "imgui_internal:1556",
-    "ImGuiNavMoveFlags_": "imgui_internal:1535",
-    "ImGuiNavTreeNodeData": "imgui_internal:1249",
-    "ImGuiNextItemData": "imgui_internal:1219",
-    "ImGuiNextItemDataFlags_": "imgui_internal:1212",
-    "ImGuiNextWindowData": "imgui_internal:1181",
-    "ImGuiNextWindowDataFlags_": "imgui_internal:1164",
-    "ImGuiOldColumnData": "imgui_internal:1641",
-    "ImGuiOldColumnFlags_": "imgui_internal:1621",
-    "ImGuiOldColumns": "imgui_internal:1651",
-    "ImGuiOnceUponAFrame": "imgui:2385",
-    "ImGuiPayload": "imgui:2326",
-    "ImGuiPlatformIO": "imgui:3268",
-    "ImGuiPlatformImeData": "imgui:3341",
-    "ImGuiPlatformMonitor": "imgui:3331",
-    "ImGuiPlotType": "imgui_internal:995",
-    "ImGuiPopupData": "imgui_internal:1150",
-    "ImGuiPopupFlags_": "imgui:1116",
-    "ImGuiPopupPositionPolicy": "imgui_internal:1001",
-    "ImGuiPtrOrIndex": "imgui_internal:1288",
-    "ImGuiScrollFlags_": "imgui_internal:1512",
-    "ImGuiSelectableFlagsPrivate_": "imgui_internal:920",
-    "ImGuiSelectableFlags_": "imgui:1132",
-    "ImGuiSeparatorFlags_": "imgui_internal:940",
-    "ImGuiSettingsHandler": "imgui_internal:1901",
-    "ImGuiShrinkWidthItem": "imgui_internal:1281",
-    "ImGuiSizeCallbackData": "imgui:2296",
-    "ImGuiSliderFlagsPrivate_": "imgui_internal:913",
-    "ImGuiSliderFlags_": "imgui:1799",
-    "ImGuiSortDirection_": "imgui:1446",
-    "ImGuiStackLevelInfo": "imgui_internal:1980",
-    "ImGuiStackSizes": "imgui_internal:1256",
-    "ImGuiStackTool": "imgui_internal:1992",
-    "ImGuiStorage": "imgui:2447",
-    "ImGuiStoragePair": "imgui:2450",
-    "ImGuiStyle": "imgui:1967",
-    "ImGuiStyleMod": "imgui_internal:1046",
-    "ImGuiStyleVar_": "imgui:1703",
-    "ImGuiTabBar": "imgui_internal:2775",
-    "ImGuiTabBarFlagsPrivate_": "imgui_internal:2738",
-    "ImGuiTabBarFlags_": "imgui:1161",
-    "ImGuiTabItem": "imgui_internal:2755",
-    "ImGuiTabItemFlagsPrivate_": "imgui_internal:2746",
-    "ImGuiTabItemFlags_": "imgui:1177",
-    "ImGuiTable": "imgui_internal:2909",
-    "ImGuiTableBgTarget_": "imgui:1315",
-    "ImGuiTableCellData": "imgui_internal:2888",
-    "ImGuiTableColumn": "imgui_internal:2829",
-    "ImGuiTableColumnFlags_": "imgui:1263",
-    "ImGuiTableColumnSettings": "imgui_internal:3046",
-    "ImGuiTableColumnSortSpecs": "imgui:2348",
-    "ImGuiTableFlags_": "imgui:1212",
-    "ImGuiTableInstanceData": "imgui_internal:2895",
-    "ImGuiTableRowFlags_": "imgui:1300",
-    "ImGuiTableSettings": "imgui_internal:3070",
-    "ImGuiTableSortSpecs": "imgui:2362",
-    "ImGuiTableTempData": "imgui_internal:3025",
-    "ImGuiTextBuffer": "imgui:2420",
-    "ImGuiTextFilter": "imgui:2393",
-    "ImGuiTextFlags_": "imgui_internal:958",
-    "ImGuiTextIndex": "imgui_internal:735",
-    "ImGuiTextRange": "imgui:2403",
-    "ImGuiTooltipFlags_": "imgui_internal:964",
-    "ImGuiTreeNodeFlagsPrivate_": "imgui_internal:934",
-    "ImGuiTreeNodeFlags_": "imgui:1083",
-    "ImGuiTypingSelectFlags_": "imgui_internal:1584",
-    "ImGuiTypingSelectRequest": "imgui_internal:1592",
-    "ImGuiTypingSelectState": "imgui_internal:1603",
-    "ImGuiViewport": "imgui:3184",
-    "ImGuiViewportFlags_": "imgui:3156",
-    "ImGuiViewportP": "imgui_internal:1837",
-    "ImGuiWindow": "imgui_internal:2589",
-    "ImGuiWindowClass": "imgui:2311",
-    "ImGuiWindowDockStyle": "imgui_internal:1815",
-    "ImGuiWindowDockStyleCol": "imgui_internal:1804",
-    "ImGuiWindowFlags_": "imgui:1012",
-    "ImGuiWindowSettings": "imgui_internal:1883",
-    "ImGuiWindowStackData": "imgui_internal:1274",
-    "ImGuiWindowTempData": "imgui_internal:2540",
+    "ImBitVector": "imgui_internal:612",
+    "ImColor": "imgui:2664",
+    "ImDrawChannel": "imgui:2754",
+    "ImDrawCmd": "imgui:2713",
+    "ImDrawCmdHeader": "imgui:2746",
+    "ImDrawData": "imgui:2949",
+    "ImDrawDataBuilder": "imgui_internal:798",
+    "ImDrawFlags_": "imgui:2780",
+    "ImDrawList": "imgui:2818",
+    "ImDrawListFlags_": "imgui:2800",
+    "ImDrawListSharedData": "imgui_internal:775",
+    "ImDrawListSplitter": "imgui:2763",
+    "ImDrawVert": "imgui:2731",
+    "ImFont": "imgui:3172",
+    "ImFontAtlas": "imgui:3068",
+    "ImFontAtlasCustomRect": "imgui:3030",
+    "ImFontAtlasFlags_": "imgui:3043",
+    "ImFontBuilderIO": "imgui_internal:3842",
+    "ImFontConfig": "imgui:2973",
+    "ImFontGlyph": "imgui:3003",
+    "ImFontGlyphRangesBuilder": "imgui:3015",
+    "ImGuiActivateFlags_": "imgui_internal:1550",
+    "ImGuiAxis": "imgui_internal:985",
+    "ImGuiBackendFlags_": "imgui:1547",
+    "ImGuiButtonFlagsPrivate_": "imgui_internal:879",
+    "ImGuiButtonFlags_": "imgui:1666",
+    "ImGuiChildFlags_": "imgui:1082",
+    "ImGuiCol_": "imgui:1562",
+    "ImGuiColorEditFlags_": "imgui:1679",
+    "ImGuiColorMod": "imgui_internal:999",
+    "ImGuiComboFlagsPrivate_": "imgui_internal:904",
+    "ImGuiComboFlags_": "imgui:1194",
+    "ImGuiComboPreviewData": "imgui_internal:1016",
+    "ImGuiCond_": "imgui:1780",
+    "ImGuiConfigFlags_": "imgui:1522",
+    "ImGuiContext": "imgui_internal:2105",
+    "ImGuiContextHook": "imgui_internal:2090",
+    "ImGuiContextHookType": "imgui_internal:2088",
+    "ImGuiDataAuthority_": "imgui_internal:1776",
+    "ImGuiDataTypeInfo": "imgui_internal:1281",
+    "ImGuiDataTypePrivate_": "imgui_internal:1290",
+    "ImGuiDataTypeTempStorage": "imgui_internal:1275",
+    "ImGuiDataType_": "imgui:1335",
+    "ImGuiDataVarInfo": "imgui_internal:1267",
+    "ImGuiDebugAllocEntry": "imgui_internal:2024",
+    "ImGuiDebugAllocInfo": "imgui_internal:2031",
+    "ImGuiDebugLogFlags_": "imgui_internal:2004",
+    "ImGuiDir_": "imgui:1351",
+    "ImGuiDockContext": "imgui_internal:1875",
+    "ImGuiDockNode": "imgui_internal:1792",
+    "ImGuiDockNodeFlagsPrivate_": "imgui_internal:1747",
+    "ImGuiDockNodeFlags_": "imgui:1294",
+    "ImGuiDockNodeState": "imgui_internal:1783",
+    "ImGuiDragDropFlags_": "imgui:1313",
+    "ImGuiFocusRequestFlags_": "imgui_internal:948",
+    "ImGuiFocusScopeData": "imgui_internal:1627",
+    "ImGuiFocusedFlags_": "imgui:1240",
+    "ImGuiGroupData": "imgui_internal:1029",
+    "ImGuiHoveredFlagsPrivate_": "imgui_internal:862",
+    "ImGuiHoveredFlags_": "imgui:1254",
+    "ImGuiIDStackTool": "imgui_internal:2071",
+    "ImGuiIO": "imgui:2136",
+    "ImGuiInputEvent": "imgui_internal:1385",
+    "ImGuiInputEventAppFocused": "imgui_internal:1383",
+    "ImGuiInputEventKey": "imgui_internal:1381",
+    "ImGuiInputEventMouseButton": "imgui_internal:1379",
+    "ImGuiInputEventMousePos": "imgui_internal:1377",
+    "ImGuiInputEventMouseViewport": "imgui_internal:1380",
+    "ImGuiInputEventMouseWheel": "imgui_internal:1378",
+    "ImGuiInputEventText": "imgui_internal:1382",
+    "ImGuiInputEventType": "imgui_internal:1352",
+    "ImGuiInputFlags_": "imgui_internal:1450",
+    "ImGuiInputSource": "imgui_internal:1365",
+    "ImGuiInputTextCallbackData": "imgui:2356",
+    "ImGuiInputTextDeactivatedState": "imgui_internal:1065",
+    "ImGuiInputTextFlagsPrivate_": "imgui_internal:870",
+    "ImGuiInputTextFlags_": "imgui:1097",
+    "ImGuiInputTextState": "imgui_internal:1075",
+    "ImGuiItemFlags_": "imgui_internal:815",
+    "ImGuiItemStatusFlags_": "imgui_internal:837",
+    "ImGuiKey": "imgui:1380",
+    "ImGuiKeyData": "imgui:2128",
+    "ImGuiKeyOwnerData": "imgui_internal:1438",
+    "ImGuiKeyRoutingData": "imgui_internal:1412",
+    "ImGuiKeyRoutingTable": "imgui_internal:1426",
+    "ImGuiLastItemData": "imgui_internal:1198",
+    "ImGuiLayoutType_": "imgui_internal:969",
+    "ImGuiListClipper": "imgui:2578",
+    "ImGuiListClipperData": "imgui_internal:1534",
+    "ImGuiListClipperRange": "imgui_internal:1521",
+    "ImGuiLocEntry": "imgui_internal:1993",
+    "ImGuiLocKey": "imgui_internal:1977",
+    "ImGuiLogType": "imgui_internal:975",
+    "ImGuiMenuColumns": "imgui_internal:1047",
+    "ImGuiMetricsConfig": "imgui_internal:2041",
+    "ImGuiMouseButton_": "imgui:1740",
+    "ImGuiMouseCursor_": "imgui:1750",
+    "ImGuiMouseSource": "imgui:1769",
+    "ImGuiNavHighlightFlags_": "imgui_internal:1575",
+    "ImGuiNavItemData": "imgui_internal:1611",
+    "ImGuiNavLayer": "imgui_internal:1604",
+    "ImGuiNavMoveFlags_": "imgui_internal:1583",
+    "ImGuiNavTreeNodeData": "imgui_internal:1215",
+    "ImGuiNextItemData": "imgui_internal:1182",
+    "ImGuiNextItemDataFlags_": "imgui_internal:1174",
+    "ImGuiNextWindowData": "imgui_internal:1142",
+    "ImGuiNextWindowDataFlags_": "imgui_internal:1124",
+    "ImGuiOldColumnData": "imgui_internal:1695",
+    "ImGuiOldColumnFlags_": "imgui_internal:1675",
+    "ImGuiOldColumns": "imgui_internal:1705",
+    "ImGuiOnceUponAFrame": "imgui:2454",
+    "ImGuiPayload": "imgui:2419",
+    "ImGuiPlatformIO": "imgui:3342",
+    "ImGuiPlatformImeData": "imgui:3415",
+    "ImGuiPlatformMonitor": "imgui:3405",
+    "ImGuiPlotType": "imgui_internal:992",
+    "ImGuiPopupData": "imgui_internal:1309",
+    "ImGuiPopupFlags_": "imgui:1161",
+    "ImGuiPopupPositionPolicy": "imgui_internal:1301",
+    "ImGuiPtrOrIndex": "imgui_internal:1254",
+    "ImGuiScrollFlags_": "imgui_internal:1561",
+    "ImGuiSelectableFlagsPrivate_": "imgui_internal:917",
+    "ImGuiSelectableFlags_": "imgui:1179",
+    "ImGuiSeparatorFlags_": "imgui_internal:937",
+    "ImGuiSettingsHandler": "imgui_internal:1957",
+    "ImGuiShrinkWidthItem": "imgui_internal:1247",
+    "ImGuiSizeCallbackData": "imgui:2388",
+    "ImGuiSliderFlagsPrivate_": "imgui_internal:910",
+    "ImGuiSliderFlags_": "imgui:1725",
+    "ImGuiSortDirection_": "imgui:1362",
+    "ImGuiStackLevelInfo": "imgui_internal:2059",
+    "ImGuiStackSizes": "imgui_internal:1222",
+    "ImGuiStorage": "imgui:2516",
+    "ImGuiStoragePair": "imgui:2519",
+    "ImGuiStyle": "imgui:2057",
+    "ImGuiStyleMod": "imgui_internal:1006",
+    "ImGuiStyleVar_": "imgui:1629",
+    "ImGuiTabBar": "imgui_internal:2903",
+    "ImGuiTabBarFlagsPrivate_": "imgui_internal:2866",
+    "ImGuiTabBarFlags_": "imgui:1209",
+    "ImGuiTabItem": "imgui_internal:2883",
+    "ImGuiTabItemFlagsPrivate_": "imgui_internal:2874",
+    "ImGuiTabItemFlags_": "imgui:1225",
+    "ImGuiTable": "imgui_internal:3038",
+    "ImGuiTableBgTarget_": "imgui:1921",
+    "ImGuiTableCellData": "imgui_internal:3016",
+    "ImGuiTableColumn": "imgui_internal:2957",
+    "ImGuiTableColumnFlags_": "imgui:1868",
+    "ImGuiTableColumnSettings": "imgui_internal:3183",
+    "ImGuiTableColumnSortSpecs": "imgui:1943",
+    "ImGuiTableFlags_": "imgui:1815",
+    "ImGuiTableInstanceData": "imgui_internal:3024",
+    "ImGuiTableRowFlags_": "imgui:1906",
+    "ImGuiTableSettings": "imgui_internal:3207",
+    "ImGuiTableSortSpecs": "imgui:1933",
+    "ImGuiTableTempData": "imgui_internal:3161",
+    "ImGuiTextBuffer": "imgui:2489",
+    "ImGuiTextFilter": "imgui:2462",
+    "ImGuiTextFlags_": "imgui_internal:955",
+    "ImGuiTextIndex": "imgui_internal:732",
+    "ImGuiTextRange": "imgui:2472",
+    "ImGuiTooltipFlags_": "imgui_internal:961",
+    "ImGuiTreeNodeFlagsPrivate_": "imgui_internal:931",
+    "ImGuiTreeNodeFlags_": "imgui:1127",
+    "ImGuiTypingSelectFlags_": "imgui_internal:1638",
+    "ImGuiTypingSelectRequest": "imgui_internal:1646",
+    "ImGuiTypingSelectState": "imgui_internal:1657",
+    "ImGuiViewport": "imgui:3258",
+    "ImGuiViewportFlags_": "imgui:3230",
+    "ImGuiViewportP": "imgui_internal:1892",
+    "ImGuiWindow": "imgui_internal:2715",
+    "ImGuiWindowClass": "imgui:2403",
+    "ImGuiWindowDockStyle": "imgui_internal:1870",
+    "ImGuiWindowDockStyleCol": "imgui_internal:1859",
+    "ImGuiWindowFlags_": "imgui:1031",
+    "ImGuiWindowSettings": "imgui_internal:1938",
+    "ImGuiWindowStackData": "imgui_internal:1240",
+    "ImGuiWindowTempData": "imgui_internal:2665",
     "ImRect": "imgui_internal:534",
     "ImVec1": "imgui_internal:516",
-    "ImVec2": "imgui:264",
+    "ImVec2": "imgui:269",
     "ImVec2ih": "imgui_internal:524",
-    "ImVec4": "imgui:277",
-    "STB_TexteditState": "imstb_textedit:320",
-    "StbTexteditRow": "imstb_textedit:367",
-    "StbUndoRecord": "imstb_textedit:302",
-    "StbUndoState": "imstb_textedit:311"
+    "ImVec4": "imgui:282",
+    "STB_TexteditState": "imstb_textedit:321",
+    "StbTexteditRow": "imstb_textedit:368",
+    "StbUndoRecord": "imstb_textedit:303",
+    "StbUndoState": "imstb_textedit:312"
   },
   "struct_comments": {
     "ImBitVector": {
@@ -5597,6 +5741,9 @@
     "ImGuiGroupData": {
       "above": "// Stacked storage data for BeginGroup()/EndGroup()"
     },
+    "ImGuiIDStackTool": {
+      "above": "// State for ID Stack tool queries"
+    },
     "ImGuiInputEventMousePos": {
       "above": "// FIXME: Structures in the union below need to be declared as anonymous unions appears to be an extension?\n// Using ImVec2() would fail on Clang 'union member 'MousePos' has a non-trivial default constructor'"
     },
@@ -5658,13 +5805,10 @@
       "above": "// (Optional) This is required when enabling multi-viewport. Represent the bounds of each connected monitor/display and their DPI.\n// We use this information for multiple DPI support + clamping the position of popups and tooltips so they don't straddle multiple monitors."
     },
     "ImGuiPopupData": {
-      "above": "// Storage for current popup stack"
+      "above": "// Storage for popup stacks (g.OpenPopupStack and g.BeginPopupStack)"
     },
     "ImGuiSizeCallbackData": {
       "above": "// Resizing callback data to apply custom constraint. As enabled by SetNextWindowSizeConstraints(). Callback is called during the next Begin().\n// NB: For basic min/max size constraint on each axis you don't need to use the callback! The SetNextWindowSizeConstraints() parameters are enough."
-    },
-    "ImGuiStackTool": {
-      "above": "// State for Stack tool queries"
     },
     "ImGuiStorage": {
       "above": "// Helper: Key->Value storage\n// Typically you don't have to worry about this since a storage is held within each Window.\n// We use it to e.g. store collapse state for a tree (Int 0/1)\n// This is optimized for efficient lookup (dichotomy into a contiguous buffer) and rare insertion (typically tied to user interactions aka max once a frame)\n// You can use it as custom user storage for temporary values. Declare your own storage if, for example:\n// - You want to manipulate the open/close state of a particular sub-tree in your interface (tree node uses Int 0/1 to store their state).\n// - You want to store custom debug data easily without adding or editing structures in your code (probably not efficient, but convenient)\n// Types are NOT stored, so it is up to you to make sure your Key don't collide with different types."
@@ -5697,7 +5841,7 @@
       "above": "// Sorting specification for one column of a table (sizeof == 12 bytes)"
     },
     "ImGuiTableInstanceData": {
-      "above": "// Per-instance data that needs preserving across frames (seemingly most others do not need to be preserved aside from debug needs. Does that means they could be moved to ImGuiTableTempData?)"
+      "above": "// Per-instance data that needs preserving across frames (seemingly most others do not need to be preserved aside from debug needs. Does that means they could be moved to ImGuiTableTempData?)\n// sizeof() ~ 24 bytes"
     },
     "ImGuiTableSettings": {
       "above": "// This is designed to be stored in a single ImChunkStream (1 header followed by N ImGuiTableColumnSettings, etc.)"
@@ -5706,7 +5850,7 @@
       "above": "// Sorting specifications for a table (often handling sort specs for a single column, occasionally more)\n// Obtained by calling TableGetSortSpecs().\n// When 'SpecsDirty == true' you can sort your data. It will be true with sorting specs have changed since last call, or the first time.\n// Make sure to set 'SpecsDirty = false' after sorting, else you may wastefully sort your data every frame!"
     },
     "ImGuiTableTempData": {
-      "above": "// Transient data that are only needed between BeginTable() and EndTable(), those buffers are shared (1 per level of stacked table).\n// - Accessing those requires chasing an extra pointer so for very frequently used data we leave them in the main table structure.\n// - We also leave out of this structure data that tend to be particularly useful for debugging/metrics.\n// sizeof() ~ 112 bytes."
+      "above": "// Transient data that are only needed between BeginTable() and EndTable(), those buffers are shared (1 per level of stacked table).\n// - Accessing those requires chasing an extra pointer so for very frequently used data we leave them in the main table structure.\n// - We also leave out of this structure data that tend to be particularly useful for debugging/metrics.\n// sizeof() ~ 120 bytes."
     },
     "ImGuiTextBuffer": {
       "above": "// Helper: Growable text buffer for logging/accumulating text\n// (this could be called 'ImGuiTextBuilder' / 'ImGuiStringBuilder')"
@@ -6663,9 +6807,16 @@
       },
       {
         "comment": {
-          "sameline": "// 1.0f     // Brighten (>1.0f) or darken (<1.0f) font output. Brightening small fonts may be a good workaround to make them more readable."
+          "sameline": "// 1.0f     // Linearly brighten (>1.0f) or darken (<1.0f) font output. Brightening small fonts may be a good workaround to make them more readable. This is a silly thing we may remove in the future."
         },
         "name": "RasterizerMultiply",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "sameline": "// 1.0f     // DPI scale for rasterization, not altering other font metrics: make it easy to swap between e.g. a 100% and a 400% fonts for a zooming display. IMPORTANT: If you increase this it is expected that you increase font scale accordingly, otherwise quality may look lowered."
+        },
+        "name": "RasterizerDensity",
         "type": "float"
       },
       {
@@ -7024,6 +7175,13 @@
       },
       {
         "comment": {
+          "sameline": "// Set to break in Begin() call."
+        },
+        "name": "DebugBreakInWindow",
+        "type": "ImGuiID"
+      },
+      {
+        "comment": {
           "sameline": "// Window being drawn into"
         },
         "name": "CurrentWindow",
@@ -7069,6 +7227,10 @@
         "type": "int"
       },
       {
+        "name": "WheelingWindowScrolledFrame",
+        "type": "int"
+      },
+      {
         "name": "WheelingWindowReleaseTimer",
         "type": "float"
       },
@@ -7083,7 +7245,7 @@
       {
         "comment": {
           "above": "    // Item/widgets state and tracking information",
-          "sameline": "// Will call core hooks: DebugHookIdInfo() from GetID functions, used by Stack Tool [next HoveredId/ActiveId to not pull in an extra cache-line]"
+          "sameline": "// Will call core hooks: DebugHookIdInfo() from GetID functions, used by ID Stack Tool [next HoveredId/ActiveId to not pull in an extra cache-line]"
         },
         "name": "DebugHookIdInfo",
         "type": "ImGuiID"
@@ -7182,6 +7344,15 @@
         "type": "bool"
       },
       {
+        "name": "ActiveIdFromShortcut",
+        "type": "bool"
+      },
+      {
+        "bitfield": "8",
+        "name": "ActiveIdMouseButton",
+        "type": "int"
+      },
+      {
         "comment": {
           "sameline": "// Clicked offset from upper-left corner, if applicable (currently only set by ButtonBehavior)"
         },
@@ -7198,10 +7369,6 @@
         },
         "name": "ActiveIdSource",
         "type": "ImGuiInputSource"
-      },
-      {
-        "name": "ActiveIdMouseButton",
-        "type": "int"
       },
       {
         "name": "ActiveIdPreviousFrame",
@@ -7235,10 +7402,36 @@
       },
       {
         "comment": {
-          "above": "    // [EXPERIMENTAL] Key/Input Ownership + Shortcut Routing system\n    // - The idea is that instead of \"eating\" a given key, we can link to an owner.\n    // - Input query can then read input by specifying ImGuiKeyOwner_Any (== 0), ImGuiKeyOwner_None (== -1) or a custom ID.\n    // - Routing is requested ahead of time for a given chord (Key + Mods) and granted in NewFrame()."
+          "above": "    // [EXPERIMENTAL] Key/Input Ownership + Shortcut Routing system\n    // - The idea is that instead of \"eating\" a given key, we can link to an owner.\n    // - Input query can then read input by specifying ImGuiKeyOwner_Any (== 0), ImGuiKeyOwner_None (== -1) or a custom ID.\n    // - Routing is requested ahead of time for a given chord (Key + Mods) and granted in NewFrame().",
+          "sameline": "// Record the last time key mods changed (affect repeat delay when using shortcut logic)"
         },
+        "name": "LastKeyModsChangeTime",
+        "type": "double"
+      },
+      {
+        "comment": {
+          "sameline": "// Record the last time key mods changed away from being 0 (affect repeat delay when using shortcut logic)"
+        },
+        "name": "LastKeyModsChangeFromNoneTime",
+        "type": "double"
+      },
+      {
+        "comment": {
+          "sameline": "// Record the last time a keyboard key (ignore mouse/gamepad ones) was pressed."
+        },
+        "name": "LastKeyboardKeyPressTime",
+        "type": "double"
+      },
+      {
+        "comment": {
+          "sameline": "// Lookup to tell if a key can emit char input, see IsKeyChordPotentiallyCharInput(). sizeof() = 20 bytes"
+        },
+        "name": "KeysMayBeCharInput",
+        "type": "ImBitArrayForNamedKeys"
+      },
+      {
         "name": "KeysOwnerData[ImGuiKey_NamedKey_COUNT]",
-        "size": 140,
+        "size": 154,
         "type": "ImGuiKeyOwnerData"
       },
       {
@@ -7261,22 +7454,22 @@
       },
       {
         "comment": {
-          "sameline": "// If you used this. Since (IMGUI_VERSION_NUM >= 18804) : 'g.ActiveIdUsingNavInputMask |= (1 << ImGuiNavInput_Cancel);' becomes 'SetKeyOwner(ImGuiKey_Escape, g.ActiveId) and/or SetKeyOwner(ImGuiKey_NavGamepadCancel, g.ActiveId);'"
+          "sameline": "// Set to break in SetShortcutRouting()/Shortcut() calls."
         },
-        "name": "ActiveIdUsingNavInputMask",
-        "type": "ImU32"
+        "name": "DebugBreakInShortcutRouting",
+        "type": "ImGuiKeyChord"
       },
       {
         "comment": {
           "above": "    // Next window/item data",
-          "sameline": "// == g.FocusScopeStack.back()"
+          "sameline": "// Value for currently appending items == g.FocusScopeStack.back(). Not to be mistaken with g.NavFocusScopeId."
         },
         "name": "CurrentFocusScopeId",
         "type": "ImGuiID"
       },
       {
         "comment": {
-          "sameline": "// == g.ItemFlagsStack.back()"
+          "sameline": "// Value for currently appending items == g.ItemFlagsStack.back()"
         },
         "name": "CurrentItemFlags",
         "type": "ImGuiItemFlags"
@@ -7310,8 +7503,19 @@
         "type": "ImGuiNextWindowData"
       },
       {
+        "name": "DebugShowGroupRects",
+        "type": "bool"
+      },
+      {
         "comment": {
           "above": "    // Shared stacks",
+          "sameline": "// (Keep close to ColorStack to share cache line)"
+        },
+        "name": "DebugFlashStyleColorIdx",
+        "type": "ImGuiCol"
+      },
+      {
+        "comment": {
           "sameline": "// Stack for PushStyleColor()/PopStyleColor() - inherited by Begin()"
         },
         "name": "ColorStack",
@@ -7339,8 +7543,8 @@
           "sameline": "// Stack for PushFocusScope()/PopFocusScope() - inherited by BeginChild(), pushed into by Begin()"
         },
         "name": "FocusScopeStack",
-        "template_type": "ImGuiID",
-        "type": "ImVector_ImGuiID"
+        "template_type": "ImGuiFocusScopeData",
+        "type": "ImVector_ImGuiFocusScopeData"
       },
       {
         "comment": {
@@ -7381,10 +7585,6 @@
         "name": "NavTreeNodeStack",
         "template_type": "ImGuiNavTreeNodeData",
         "type": "ImVector_ImGuiNavTreeNodeData"
-      },
-      {
-        "name": "BeginMenuCount",
-        "type": "int"
       },
       {
         "comment": {
@@ -7433,6 +7633,13 @@
       },
       {
         "comment": {
+          "sameline": "// Bounding box of all platform monitors"
+        },
+        "name": "PlatformMonitorsFullWorkRect",
+        "type": "ImRect"
+      },
+      {
+        "comment": {
           "sameline": "// Unique sequential creation counter (mostly for testing/debugging)"
         },
         "name": "ViewportCreatedCount",
@@ -7469,10 +7676,18 @@
       },
       {
         "comment": {
-          "sameline": "// Identify a selection scope (selection code often wants to \"clear other items\" when landing on an item of the selection set)"
+          "sameline": "// Focused focus scope (e.g. selection code often wants to \"clear other items\" when landing on an item of the same scope)"
         },
         "name": "NavFocusScopeId",
         "type": "ImGuiID"
+      },
+      {
+        "comment": {
+          "sameline": "// Reversed copy focus scope stack for NavId (should contains NavFocusScopeId). This essentially follow the window->ParentWindowForFocusRoute chain."
+        },
+        "name": "NavFocusRoute",
+        "template_type": "ImGuiFocusScopeData",
+        "type": "ImVector_ImGuiFocusScopeData"
       },
       {
         "comment": {
@@ -7498,6 +7713,14 @@
       {
         "name": "NavActivateFlags",
         "type": "ImGuiActivateFlags"
+      },
+      {
+        "name": "NavHighlightActivatedId",
+        "type": "ImGuiID"
+      },
+      {
+        "name": "NavHighlightActivatedTimer",
+        "type": "float"
       },
       {
         "comment": {
@@ -7763,6 +7986,10 @@
         "type": "bool"
       },
       {
+        "name": "NavWindowingToggleKey",
+        "type": "ImGuiKey"
+      },
+      {
         "name": "NavWindowingAccumDeltaPos",
         "type": "ImVec2"
       },
@@ -7820,6 +8047,13 @@
           "sameline": "// Store rectangle of current target candidate (we favor small targets when overlapping)"
         },
         "name": "DragDropTargetRect",
+        "type": "ImRect"
+      },
+      {
+        "comment": {
+          "sameline": "// Store ClipRect at the time of item's drawing"
+        },
+        "name": "DragDropTargetClipRect",
         "type": "ImRect"
       },
       {
@@ -7899,6 +8133,13 @@
         },
         "name": "CurrentTable",
         "type": "ImGuiTable*"
+      },
+      {
+        "comment": {
+          "sameline": "// Set to break in BeginTable() call."
+        },
+        "name": "DebugBreakInTable",
+        "type": "ImGuiID"
       },
       {
         "comment": {
@@ -8038,6 +8279,14 @@
         "type": "ImGuiID"
       },
       {
+        "name": "BeginMenuDepth",
+        "type": "int"
+      },
+      {
+        "name": "BeginComboDepth",
+        "type": "int"
+      },
+      {
         "comment": {
           "sameline": "// Store user options for color edit widgets"
         },
@@ -8089,6 +8338,17 @@
       {
         "name": "ComboPreviewData",
         "type": "ImGuiComboPreviewData"
+      },
+      {
+        "comment": {
+          "sameline": "// Expected border rect, switch to relative edit if moving"
+        },
+        "name": "WindowResizeBorderExpectedRect",
+        "type": "ImRect"
+      },
+      {
+        "name": "WindowResizeRelativeMode",
+        "type": "bool"
       },
       {
         "name": "SliderGrabClickOffset",
@@ -8270,7 +8530,7 @@
           "above": "    // Localization"
         },
         "name": "LocalizationTable[ImGuiLocKey_COUNT]",
-        "size": 10,
+        "size": 11,
         "type": "const char*"
       },
       {
@@ -8335,7 +8595,7 @@
       },
       {
         "comment": {
-          "above": "    // Debug Tools"
+          "above": "    // Debug Tools\n    // (some of the highly frequently used data are interleaved in other structures above: DebugBreakXXX fields, DebugHookIdInfo, DebugLocateId etc.)"
         },
         "name": "DebugLogFlags",
         "type": "ImGuiDebugLogFlags"
@@ -8349,7 +8609,11 @@
         "type": "ImGuiTextIndex"
       },
       {
-        "name": "DebugLogClipperAutoDisableFrames",
+        "name": "DebugLogAutoDisableFlags",
+        "type": "ImGuiDebugLogFlags"
+      },
+      {
+        "name": "DebugLogAutoDisableFrames",
         "type": "ImU8"
       },
       {
@@ -8358,6 +8622,20 @@
         },
         "name": "DebugLocateFrames",
         "type": "ImU8"
+      },
+      {
+        "comment": {
+          "sameline": "// Debug break in ItemAdd() call for g.DebugLocateId."
+        },
+        "name": "DebugBreakInLocateId",
+        "type": "bool"
+      },
+      {
+        "comment": {
+          "sameline": "// = ImGuiKey_Pause"
+        },
+        "name": "DebugBreakKeyChord",
+        "type": "ImGuiKeyChord"
       },
       {
         "comment": {
@@ -8385,12 +8663,24 @@
         "type": "ImGuiID"
       },
       {
+        "name": "DebugFlashStyleColorTime",
+        "type": "float"
+      },
+      {
+        "name": "DebugFlashStyleColorBackup",
+        "type": "ImVec4"
+      },
+      {
         "name": "DebugMetricsConfig",
         "type": "ImGuiMetricsConfig"
       },
       {
-        "name": "DebugStackTool",
-        "type": "ImGuiStackTool"
+        "name": "DebugIDStackTool",
+        "type": "ImGuiIDStackTool"
+      },
+      {
+        "name": "DebugAllocInfo",
+        "type": "ImGuiDebugAllocInfo"
       },
       {
         "comment": {
@@ -8445,6 +8735,11 @@
         "name": "TempBuffer",
         "template_type": "char",
         "type": "ImVector_char"
+      },
+      {
+        "name": "TempKeychordName[64]",
+        "size": 64,
+        "type": "char"
       }
     ],
     "ImGuiContextHook": [
@@ -8530,6 +8825,48 @@
         },
         "name": "Offset",
         "type": "ImU32"
+      }
+    ],
+    "ImGuiDebugAllocEntry": [
+      {
+        "name": "FrameCount",
+        "type": "int"
+      },
+      {
+        "name": "AllocCount",
+        "type": "ImS16"
+      },
+      {
+        "name": "FreeCount",
+        "type": "ImS16"
+      }
+    ],
+    "ImGuiDebugAllocInfo": [
+      {
+        "comment": {
+          "sameline": "// Number of call to MemAlloc()."
+        },
+        "name": "TotalAllocCount",
+        "type": "int"
+      },
+      {
+        "name": "TotalFreeCount",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// Current index in buffer"
+        },
+        "name": "LastEntriesIdx",
+        "type": "ImS16"
+      },
+      {
+        "comment": {
+          "sameline": "// Track last 6 frames that had allocations"
+        },
+        "name": "LastEntriesBuf[6]",
+        "size": 6,
+        "type": "ImGuiDebugAllocEntry"
       }
     ],
     "ImGuiDockContext": [
@@ -8819,6 +9156,16 @@
         "type": "bool"
       }
     ],
+    "ImGuiFocusScopeData": [
+      {
+        "name": "ID",
+        "type": "ImGuiID"
+      },
+      {
+        "name": "WindowID",
+        "type": "ImGuiID"
+      }
+    ],
     "ImGuiGroupData": [
       {
         "name": "WindowID",
@@ -8830,6 +9177,10 @@
       },
       {
         "name": "BackupCursorMaxPos",
+        "type": "ImVec2"
+      },
+      {
+        "name": "BackupCursorPosPrevLine",
         "type": "ImVec2"
       },
       {
@@ -8861,8 +9212,45 @@
         "type": "bool"
       },
       {
+        "name": "BackupIsSameLine",
+        "type": "bool"
+      },
+      {
         "name": "EmitItem",
         "type": "bool"
+      }
+    ],
+    "ImGuiIDStackTool": [
+      {
+        "name": "LastActiveFrame",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// -1: query stack and resize Results, >= 0: individual stack level"
+        },
+        "name": "StackLevel",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// ID to query details for"
+        },
+        "name": "QueryId",
+        "type": "ImGuiID"
+      },
+      {
+        "name": "Results",
+        "template_type": "ImGuiStackLevelInfo",
+        "type": "ImVector_ImGuiStackLevelInfo"
+      },
+      {
+        "name": "CopyToClipboardOnCtrlC",
+        "type": "bool"
+      },
+      {
+        "name": "CopyToClipboardLastTime",
+        "type": "float"
       }
     ],
     "ImGuiIO": [
@@ -9117,7 +9505,15 @@
       },
       {
         "comment": {
-          "above": "    // Tools to test correct Begin/End and BeginChild/EndChild behaviors.\n    // Presently Begin()/End() and BeginChild()/EndChild() needs to ALWAYS be called in tandem, regardless of return value of BeginXXX()\n    // This is inconsistent with other BeginXXX functions and create confusion for many users.\n    // We expect to update the API eventually. In the meanwhile we provide tools to facilitate checking user-code behavior.",
+          "above": "    // Option to enable various debug tools showing buttons that will call the IM_DEBUG_BREAK() macro.\n    // - The Item Picker tool will be available regardless of this being enabled, in order to maximize its discoverability.\n    // - Requires a debugger being attached, otherwise IM_DEBUG_BREAK() options will appear to crash your application.\n    //   e.g. io.ConfigDebugIsDebuggerPresent = ::IsDebuggerPresent() on Win32, or refer to ImOsIsDebuggerPresent() imgui_test_engine/imgui_te_utils.cpp for a Unix compatible version).",
+          "sameline": "// = false          // Enable various tools calling IM_DEBUG_BREAK()."
+        },
+        "name": "ConfigDebugIsDebuggerPresent",
+        "type": "bool"
+      },
+      {
+        "comment": {
+          "above": "    // Tools to test correct Begin/End and BeginChild/EndChild behaviors.\n    // - Presently Begin()/End() and BeginChild()/EndChild() needs to ALWAYS be called in tandem, regardless of return value of BeginXXX()\n    // - This is inconsistent with other BeginXXX functions and create confusion for many users.\n    // - We expect to update the API eventually. In the meanwhile we provide tools to facilitate checking user-code behavior.",
           "sameline": "// = false          // First-time calls to Begin()/BeginChild() will return false. NEEDS TO BE SET AT APPLICATION BOOT TIME if you don't want to miss windows."
         },
         "name": "ConfigDebugBeginReturnValueOnce",
@@ -9132,7 +9528,7 @@
       },
       {
         "comment": {
-          "above": "    // Option to deactivate io.AddFocusEvent(false) handling. May facilitate interactions with a debugger when focus loss leads to clearing inputs data.\n    // Backends may have other side-effects on focus loss, so this will reduce side-effects but not necessary remove all of them.\n    // Consider using e.g. Win32's IsDebuggerPresent() as an additional filter (or see ImOsIsDebuggerPresent() in imgui_test_engine/imgui_te_utils.cpp for a Unix compatible version).",
+          "above": "    // Option to deactivate io.AddFocusEvent(false) handling.\n    // - May facilitate interactions with a debugger when focus loss leads to clearing inputs data.\n    // - Backends may have other side-effects on focus loss, so this will reduce side-effects but not necessary remove all of them.",
           "sameline": "// = false          // Ignore io.AddFocusEvent(false), consequently not calling io.ClearInputKeys() in input processing."
         },
         "name": "ConfigDebugIgnoreFocusLoss",
@@ -9203,13 +9599,6 @@
         },
         "name": "SetPlatformImeDataFn",
         "type": "void(*)(ImGuiViewport* viewport,ImGuiPlatformImeData* data)"
-      },
-      {
-        "comment": {
-          "sameline": "// Unused field to keep data structure the same size."
-        },
-        "name": "_UnusedPadding",
-        "type": "void*"
       },
       {
         "comment": {
@@ -9305,41 +9694,10 @@
       },
       {
         "comment": {
-          "sameline": "// Number of active allocations, updated by MemAlloc/MemFree based on current context. May be off if you have multiple imgui contexts."
-        },
-        "name": "MetricsActiveAllocations",
-        "type": "int"
-      },
-      {
-        "comment": {
           "sameline": "// Mouse delta. Note that this is zero if either current or previous position are invalid (-FLT_MAX,-FLT_MAX), so a disappearing/reappearing mouse won't have a huge delta."
         },
         "name": "MouseDelta",
         "type": "ImVec2"
-      },
-      {
-        "comment": {
-          "sameline": "// [LEGACY] Input: map of indices into the KeysDown[512] entries array which represent your \"native\" keyboard state. The first 512 are now unused and should be kept zero. Legacy backend will write into KeyMap[] using ImGuiKey_ indices which are always >512."
-        },
-        "name": "KeyMap[ImGuiKey_COUNT]",
-        "size": 652,
-        "type": "int"
-      },
-      {
-        "comment": {
-          "sameline": "// [LEGACY] Input: Keyboard keys that are pressed (ideally left in the \"native\" order your engine has access to keyboard keys, so you can use your own defines/enums for keys). This used to be [512] sized. It is now ImGuiKey_COUNT to allow legacy io.KeysDown[GetKeyIndex(...)] to work without an overflow."
-        },
-        "name": "KeysDown[ImGuiKey_COUNT]",
-        "size": 652,
-        "type": "bool"
-      },
-      {
-        "comment": {
-          "sameline": "// [LEGACY] Since 1.88, NavInputs[] was removed. Backends from 1.60 to 1.86 won't build. Feed gamepad inputs via io.AddKeyEvent() and ImGuiKey_GamepadXXX enums."
-        },
-        "name": "NavInputs[ImGuiNavInput_COUNT]",
-        "size": 16,
-        "type": "float"
       },
       {
         "comment": {
@@ -9433,7 +9791,7 @@
           "sameline": "// Key state for all known keys. Use IsKeyXXX() functions to access this."
         },
         "name": "KeysData[ImGuiKey_KeysData_SIZE]",
-        "size": 652,
+        "size": 154,
         "type": "ImGuiKeyData"
       },
       {
@@ -9872,7 +10230,7 @@
       },
       {
         "comment": {
-          "sameline": "// backup of end-user buffer at the time of focus (in UTF-8, unaltered)"
+          "sameline": "// value to revert to when pressing Escape = backup of end-user buffer at the time of focus (in UTF-8, unaltered)"
         },
         "name": "InitialTextA",
         "template_type": "char",
@@ -9940,6 +10298,24 @@
         },
         "name": "Flags",
         "type": "ImGuiInputTextFlags"
+      },
+      {
+        "comment": {
+          "sameline": "// force a reload of user buf so it may be modified externally. may be automatic in future version."
+        },
+        "name": "ReloadUserBuf",
+        "type": "bool"
+      },
+      {
+        "comment": {
+          "sameline": "// POSITIONS ARE IN IMWCHAR units *NOT* UTF-8 this is why this is not exposed yet."
+        },
+        "name": "ReloadSelectionStart",
+        "type": "int"
+      },
+      {
+        "name": "ReloadSelectionEnd",
+        "type": "int"
       }
     ],
     "ImGuiKeyData": [
@@ -10010,6 +10386,13 @@
       },
       {
         "comment": {
+          "sameline": "// [DEBUG] For debug display"
+        },
+        "name": "RoutingCurrScore",
+        "type": "ImU8"
+      },
+      {
+        "comment": {
           "sameline": "// Lower is better (0: perfect score)"
         },
         "name": "RoutingNextScore",
@@ -10030,7 +10413,7 @@
           "sameline": "// Index of first entry in Entries[]"
         },
         "name": "Index[ImGuiKey_NamedKey_COUNT]",
-        "size": 140,
+        "size": 154,
         "type": "ImGuiKeyRoutingIndex"
       },
       {
@@ -10082,9 +10465,17 @@
       },
       {
         "comment": {
-          "sameline": "// Display rectangle (only if ImGuiItemStatusFlags_HasDisplayRect is set)"
+          "above": "\n    // Rarely used fields are not explicitly cleared, only valid when the corresponding ImGuiItemStatusFlags is set.",
+          "sameline": "// Display rectangle (ONLY VALID IF ImGuiItemStatusFlags_HasDisplayRect is set)"
         },
         "name": "DisplayRect",
+        "type": "ImRect"
+      },
+      {
+        "comment": {
+          "sameline": "// Clip rectangle at the time of submitting item (ONLY VALID IF ImGuiItemStatusFlags_HasClipRect is set)"
+        },
+        "name": "ClipRect",
         "type": "ImRect"
       }
     ],
@@ -10253,7 +10644,7 @@
         "type": "bool"
       },
       {
-        "name": "ShowStackTool",
+        "name": "ShowIDStackTool",
         "type": "bool"
       },
       {
@@ -10277,6 +10668,10 @@
         "type": "bool"
       },
       {
+        "name": "ShowTextEncodingViewer",
+        "type": "bool"
+      },
+      {
         "name": "ShowAtlasTintedWithTextColor",
         "type": "bool"
       },
@@ -10291,6 +10686,14 @@
       {
         "name": "ShowTablesRectsType",
         "type": "int"
+      },
+      {
+        "name": "HighlightMonitorIdx",
+        "type": "int"
+      },
+      {
+        "name": "HighlightViewportID",
+        "type": "ImGuiID"
       }
     ],
     "ImGuiNavItemData": [
@@ -10387,6 +10790,13 @@
       {
         "comment": {
           "above": "\n    // Non-flags members are NOT cleared by ItemAdd() meaning they are still valid during NavProcessItem()",
+          "sameline": "// Set by SetNextItemSelectionUserData() (note that NULL/0 is a valid value, we use -1 == ImGuiSelectionUserData_Invalid to mark invalid values)"
+        },
+        "name": "SelectionUserData",
+        "type": "ImGuiSelectionUserData"
+      },
+      {
+        "comment": {
           "sameline": "// Set by SetNextItemWidth()"
         },
         "name": "Width",
@@ -10394,14 +10804,10 @@
       },
       {
         "comment": {
-          "sameline": "// Set by SetNextItemSelectionUserData() (note that NULL/0 is a valid value, we use -1 == ImGuiSelectionUserData_Invalid to mark invalid values)"
+          "sameline": "// Set by SetNextItemShortcut()"
         },
-        "name": "SelectionUserData",
-        "type": "ImGuiSelectionUserData"
-      },
-      {
-        "name": "OpenCond",
-        "type": "ImGuiCond"
+        "name": "Shortcut",
+        "type": "ImGuiKeyChord"
       },
       {
         "comment": {
@@ -10409,6 +10815,11 @@
         },
         "name": "OpenVal",
         "type": "bool"
+      },
+      {
+        "bitfield": "8",
+        "name": "OpenCond",
+        "type": "ImGuiCond"
       }
     ],
     "ImGuiNextWindowData": [
@@ -10451,6 +10862,10 @@
       {
         "name": "ScrollVal",
         "type": "ImVec2"
+      },
+      {
+        "name": "ChildFlags",
+        "type": "ImGuiChildFlags"
       },
       {
         "name": "PosUndock",
@@ -11182,39 +11597,6 @@
         "type": "short"
       }
     ],
-    "ImGuiStackTool": [
-      {
-        "name": "LastActiveFrame",
-        "type": "int"
-      },
-      {
-        "comment": {
-          "sameline": "// -1: query stack and resize Results, >= 0: individual stack level"
-        },
-        "name": "StackLevel",
-        "type": "int"
-      },
-      {
-        "comment": {
-          "sameline": "// ID to query details for"
-        },
-        "name": "QueryId",
-        "type": "ImGuiID"
-      },
-      {
-        "name": "Results",
-        "template_type": "ImGuiStackLevelInfo",
-        "type": "ImVector_ImGuiStackLevelInfo"
-      },
-      {
-        "name": "CopyToClipboardOnCtrlC",
-        "type": "bool"
-      },
-      {
-        "name": "CopyToClipboardLastTime",
-        "type": "float"
-      }
-    ],
     "ImGuiStorage": [
       {
         "name": "Data",
@@ -11441,6 +11823,13 @@
           "sameline": "// Thickness of tab-bar separator, which takes on the tab active color to denote focus."
         },
         "name": "TabBarBorderSize",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "sameline": "// Angle of angled headers (supported values range from -50.0f degrees to +50.0f degrees)."
+        },
+        "name": "TableAngledHeadersAngle",
         "type": "float"
       },
       {
@@ -12122,6 +12511,20 @@
       },
       {
         "comment": {
+          "sameline": "// Set by TableAngledHeadersRow(), used in TableUpdateLayout()"
+        },
+        "name": "AngledHeadersHeight",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "sameline": "// Set by TableAngledHeadersRow(), used in TableUpdateLayout()"
+        },
+        "name": "AngledHeadersSlope",
+        "type": "float"
+      },
+      {
+        "comment": {
           "sameline": "// Note: for non-scrolling table, OuterRect.Max.y is often FLT_MAX until EndTable(), unless a height has been specified in BeginTable()."
         },
         "name": "OuterRect",
@@ -12263,6 +12666,13 @@
       },
       {
         "comment": {
+          "sameline": "// Count columns with angled headers"
+        },
+        "name": "AngledHeadersCount",
+        "type": "ImGuiTableColumnIdx"
+      },
+      {
+        "comment": {
           "sameline": "// Index of column whose visible region is being hovered. Important: == ColumnsCount when hovering empty region after the right-most column!"
         },
         "name": "HoveredColumnBody",
@@ -12273,6 +12683,13 @@
           "sameline": "// Index of column whose right-border is being hovered (for resizing)."
         },
         "name": "HoveredColumnBorder",
+        "type": "ImGuiTableColumnIdx"
+      },
+      {
+        "comment": {
+          "sameline": "// Index of column which should be highlighted."
+        },
+        "name": "HighlightColumnHeader",
         "type": "ImGuiTableColumnIdx"
       },
       {
@@ -12442,6 +12859,13 @@
         "type": "bool"
       },
       {
+        "comment": {
+          "sameline": "// Disable default context menu contents. You may submit your own using TableBeginContextMenuPopup()/EndPopup()"
+        },
+        "name": "DisableDefaultContextMenu",
+        "type": "bool"
+      },
+      {
         "name": "IsSettingsRequestLoad",
         "type": "bool"
       },
@@ -12479,6 +12903,14 @@
           "sameline": "// Set if user didn't explicitly set a sizing policy in BeginTable()"
         },
         "name": "IsDefaultSizingPolicy",
+        "type": "bool"
+      },
+      {
+        "name": "IsActiveIdAliveBeforeTable",
+        "type": "bool"
+      },
+      {
+        "name": "IsActiveIdInTable",
         "type": "bool"
       },
       {
@@ -12882,9 +13314,9 @@
       },
       {
         "comment": {
-          "sameline": "// Height of first row from last frame (FIXME: this is used as \"header height\" and may be reworked)"
+          "sameline": "// Height of first consecutive header rows from last frame (FIXME: this is used assuming consecutive headers are in same frozen set)"
         },
-        "name": "LastFirstRowHeight",
+        "name": "LastTopHeadersRowHeight",
         "type": "float"
       },
       {
@@ -12986,6 +13418,13 @@
           "sameline": "// Last timestamp this structure was used"
         },
         "name": "LastTimeActive",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "sameline": "// Used in EndTable()"
+        },
+        "name": "AngledHeadersExtraWidth",
         "type": "float"
       },
       {
@@ -13468,6 +13907,13 @@
       },
       {
         "comment": {
+          "sameline": "// Set when window is a child window. See enum ImGuiChildFlags_"
+        },
+        "name": "ChildFlags",
+        "type": "ImGuiChildFlags"
+      },
+      {
+        "comment": {
           "sameline": "// Advanced users only. Set with SetNextWindowClass()"
         },
         "name": "WindowClass",
@@ -13758,6 +14204,13 @@
       },
       {
         "comment": {
+          "sameline": "// Current border being hovered for resize (-1: none, otherwise 0-3)"
+        },
+        "name": "ResizeBorderHovered",
+        "type": "signed char"
+      },
+      {
+        "comment": {
           "sameline": "// Current border being held for resize (-1: none, otherwise 0-3)"
         },
         "name": "ResizeBorderHeld",
@@ -13811,10 +14264,6 @@
       },
       {
         "name": "AutoFitFramesY",
-        "type": "ImS8"
-      },
-      {
-        "name": "AutoFitChildAxises",
         "type": "ImS8"
       },
       {
@@ -14086,6 +14535,13 @@
       },
       {
         "comment": {
+          "sameline": "// Set to manual link a window to its logical parent so that Shortcut() chain are honoerd (e.g. Tool linked to Document)"
+        },
+        "name": "ParentWindowForFocusRoute",
+        "type": "ImGuiWindow*"
+      },
+      {
+        "comment": {
           "sameline": "// When going to the menu bar, we remember the child window we came from. (This could probably be made implicit if we kept g.Windows sorted by last focused including child window.)"
         },
         "name": "NavLastChildNavWindow",
@@ -14225,6 +14681,13 @@
       },
       {
         "comment": {
+          "sameline": "// ID of parent window for shortcut focus route evaluation, e.g. Shortcut() call from Parent Window will succeed when this window is focused."
+        },
+        "name": "FocusRouteParentWindowId",
+        "type": "ImGuiID"
+      },
+      {
+        "comment": {
           "sameline": "// Viewport flags to set when a window of this class owns a viewport. This allows you to enforce OS decoration or task bar icon, override the defaults on a per-window basis."
         },
         "name": "ViewportFlagsOverrideSet",
@@ -14320,6 +14783,10 @@
       },
       {
         "name": "Collapsed",
+        "type": "bool"
+      },
+      {
+        "name": "IsChild",
         "type": "bool"
       },
       {
@@ -14552,6 +15019,10 @@
         },
         "name": "ParentLayoutType",
         "type": "ImGuiLayoutType"
+      },
+      {
+        "name": "ModalDimBgColor",
+        "type": "ImU32"
       },
       {
         "comment": {
@@ -14929,6 +15400,7 @@
       "ImGuiContextHook": true,
       "ImGuiDockNodeSettings": true,
       "ImGuiDockRequest": true,
+      "ImGuiFocusScopeData": true,
       "ImGuiGroupData": true,
       "ImGuiID": true,
       "ImGuiInputEvent": true,
