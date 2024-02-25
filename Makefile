@@ -120,6 +120,6 @@ update: setup
 	echo -e "// +build rquired\n\npackage cimgui\n\nimport (\n" > dummy.go
 	for i in `find cimgui -type f \( -name "*.h" -o -name "*.cpp" \) -exec dirname {} \; | sort -u`; do \
 		cp templates/dummy.go.template $$i/dummy.go; \
-		echo -e "\t\"github.com/AllenDang/cimgui-go/$$i/\"" >> dummy.go; \
+		echo -e "\t\"github.com/AllenDang/cimgui-go/$$i\"" >> dummy.go; \
 		done
 	echo ")" >> dummy.go
