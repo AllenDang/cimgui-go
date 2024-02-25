@@ -1,39 +1,23 @@
-vcpkg_from_github(ARCHIVE
+vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO pyomeca/ezc3d
-    REF Release_1.4.6
-    SHA512 f63da7e715c09c6a757fe923fd397c09e1cbd0a58a78b1d8fa52bd1a41230ecab2cbb17ecc3d4f66656f3234bfe4c8588164f1d4964dcce729da091e99daab2d
+    REF "Release_${VERSION}"
+    SHA512 8e3a03c2d588ac1f8ed3d0988b90f7560f2c0b36c05f5bf9b6f029a5f4c6e4ab49d7153ef7a9bbbdb018c719a92d1da08a6af259ba95972bf8fd60766d4a480e
     HEAD_REF dev
 )
 
-if(WIN32)
-    vcpkg_cmake_configure(
-        SOURCE_PATH "${SOURCE_PATH}"
-        OPTIONS
-            -DBUILD_EXAMPLE=OFF
-            -Dezc3d_LIB_FOLDER="lib"
-            -Dezc3d_BIN_FOLDER="bin"
-    )
-else()
-    vcpkg_cmake_configure(
-        SOURCE_PATH "${SOURCE_PATH}"
-        OPTIONS
-            -DBUILD_EXAMPLE=OFF
-    )
-endif()
-
+vcpkg_cmake_configure(
+    SOURCE_PATH "${SOURCE_PATH}"
+    OPTIONS
+        "-Dezc3d_BIN_FOLDER=bin"
+        "-Dezc3d_LIB_FOLDER=lib"
+        -DBUILD_EXAMPLE=OFF
+)
 vcpkg_cmake_install()
+vcpkg_copy_pdbs()
 
-if(WIN32)
-    vcpkg_cmake_config_fixup(CONFIG_PATH "CMake")
-else()
-    vcpkg_cmake_config_fixup(CONFIG_PATH "lib/cmake")
-endif()
+vcpkg_cmake_config_fixup(CONFIG_PATH "lib/cmake/ezc3d")
 
-# # Handle copyright
-file(INSTALL ${SOURCE_PATH}/LICENSE DESTINATION ${CURRENT_PACKAGES_DIR}/share/${PORT} RENAME copyright)
-
-# # Remove duplicated include directory
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 
-vcpkg_copy_pdbs()
+file(INSTALL "${SOURCE_PATH}/LICENSE" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}" RENAME copyright)

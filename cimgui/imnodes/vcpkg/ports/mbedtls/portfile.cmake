@@ -3,9 +3,9 @@ set(VCPKG_LIBRARY_LINKAGE static)
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO ARMmbed/mbedtls
-    REF 523f0554b6cdc7ace5d360885c3f5bbcc73ec0e8 # mbedtls-2.24.0
-    SHA512 1ce78f34e8d87c2ce0454e0a08f4c6e5b3129d4b24cfa44162af21c2e8b5dc7feabf849e4fa547ce3781b5ce11aaf675cfed47412bae40091fbdd87bbcdbee07
-    HEAD_REF master
+    REF "v${VERSION}"
+    SHA512 b61dd319606c88c834b3a8e8f9f85e68a22b6b21ca177b340a972dfabe9efee984b8a9f6ed5d3b1829f229c689394e9f393b94efb38d82bda3a1e53d1e7a2861
+    HEAD_REF mbedtls-2.28
     PATCHES
         enable-pthread.patch
 )
@@ -13,12 +13,11 @@ vcpkg_from_github(
 vcpkg_check_features(
     OUT_FEATURE_OPTIONS FEATURE_OPTIONS
     FEATURES
-    pthreads ENABLE_PTHREAD
+        pthreads ENABLE_PTHREAD
 )
 
-vcpkg_configure_cmake(
+vcpkg_cmake_configure(
     SOURCE_PATH ${SOURCE_PATH}
-    PREFER_NINJA
     OPTIONS
         ${FEATURE_OPTIONS}
         -DENABLE_TESTING=OFF
@@ -26,7 +25,7 @@ vcpkg_configure_cmake(
         -DMBEDTLS_FATAL_WARNINGS=FALSE
 )
 
-vcpkg_install_cmake()
+vcpkg_cmake_install()
 
 file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/debug/include)
 

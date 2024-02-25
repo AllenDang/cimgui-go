@@ -3,30 +3,32 @@ vcpkg_check_linkage(ONLY_STATIC_LIBRARY)
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO libcpr/cpr
-    REF 1.7.2
-    SHA512 b2af6ab13a5dab435cc298c74ba79c365569c1e5ccfaffeea9dab0ad28cd918a198f83446761ac2e2101abb4be3a2f669f991e854e541851c1d250f34e16c414
+    REF ${VERSION}
+    SHA512 5e2fe69d5b4dfaa67f636098c8da904b43a22b21cc78bc52446e572ea47f492ce1de0f47fdc2cf34207729ccf007449278f218d8cdeef21f0b98356bca2e5e49
     HEAD_REF master
     PATCHES
         001-cpr-config.patch
+        disable_werror.patch
+)
+
+vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
+    FEATURES
+        ssl CPR_ENABLE_SSL
 )
 
 vcpkg_cmake_configure(
     SOURCE_PATH "${SOURCE_PATH}"
-    OPTIONS 
+    OPTIONS
         -DCPR_BUILD_TESTS=OFF
         -DCPR_FORCE_USE_SYSTEM_CURL=ON
+        ${FEATURE_OPTIONS}
     OPTIONS_DEBUG
         -DDISABLE_INSTALL_HEADERS=ON
 )
 
 vcpkg_cmake_install()
-
-
 vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/cpr)
-
-vcpkg_copy_pdbs()
 
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 
-# Handle copyright
-file(INSTALL "${SOURCE_PATH}/LICENSE" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}" RENAME copyright)
+vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE")

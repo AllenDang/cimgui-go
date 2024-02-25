@@ -1,14 +1,11 @@
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO eyalz800/zpp_bits
-    REF v4.3.3
-    SHA512 6534711a75d62e4244125329db436ca27bf6b8c31aa9ecb92473f4e5687aa390d9d197d1cb91ed3452363af1537ffdef4a13fe6a1c3049616576a475ba69a548
+    REF "v${VERSION}"
+    SHA512 55757e4a02b680b8eae9e72073bd5612ba7e167bb82c40e89a3e27e3be520b1cd6db11dbb89bfaa4b046ba5b0dab11e02f481cbf93faebc96afc34ab49cd737a
     HEAD_REF master
 )
 
-file(
-    COPY "${SOURCE_PATH}/zpp_bits.h"
-    DESTINATION "${CURRENT_PACKAGES_DIR}/include"
-)
+file(INSTALL "${SOURCE_PATH}/zpp_bits.h" DESTINATION "${CURRENT_PACKAGES_DIR}/include")
 
-file(INSTALL "${SOURCE_PATH}/LICENSE" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}" RENAME copyright)
+vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE")

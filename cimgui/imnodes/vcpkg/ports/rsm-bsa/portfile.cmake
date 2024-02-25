@@ -2,8 +2,8 @@ vcpkg_check_linkage(ONLY_STATIC_LIBRARY)
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO Ryan-rsm-McKenzie/bsa
-    REF 4.0.2
-    SHA512 075a8c3ec9cdd74d9346defa0d9f96cd776f945816cdff2dd39d3964623d68899afe2d73664aa1990fc7f97d756f813cf7ef29aba568cdc235b8d76172df49ca
+    REF 4.1.0
+    SHA512 c488a4f7cffa59064baafd429cf118a8f8a7b5594a0bd49a0ed468572b37af2e7428a83ad83cc7b13b556744a444cb7b8a4591c7018e49cadb1c5d42ae780f51
     HEAD_REF master
 )
 

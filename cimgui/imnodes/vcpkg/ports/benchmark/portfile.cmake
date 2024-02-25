@@ -1,17 +1,19 @@
-vcpkg_check_linkage(ONLY_STATIC_LIBRARY)
-
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO google/benchmark
-    REF f91b6b42b1b9854772a90ae9501464a161707d1e # v1.6.0
-    SHA512 5e3db75fcaa86b766d33e368f58cec5c5b2b9ba7fde658d13868d577679c13069756e68e86323b972daccc4f7d5e392d24d2d42e5308c1ae7e9955e651d45866
-    HEAD_REF master
+    REF "v${VERSION}"
+    SHA512 4e12114251c79a426873cfba6e27270b69fc980cef9a68e9cb3170f8e2e203f77dee19ab1e65cad51cd67e60991d3bbfdd52553f22522ce5e6c611b5aa07602c
+    HEAD_REF main
+    PATCHES
+        fix_qnx.patch
 )
 
 vcpkg_cmake_configure(
     SOURCE_PATH ${SOURCE_PATH}
     OPTIONS
         -DBENCHMARK_ENABLE_TESTING=OFF
+        -DBENCHMARK_INSTALL_DOCS=OFF
+        -Werror=old-style-cast
 )
 
 vcpkg_cmake_install()

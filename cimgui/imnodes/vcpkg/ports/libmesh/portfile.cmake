@@ -16,41 +16,32 @@ endif()
 # but there are a lot more which need to be checked/fixed
 # So this port can only be considered a Work In Progress
 vcpkg_configure_make(
-    SOURCE_PATH ${SOURCE_PATH}
+    SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS ${OPTIONS}
+    OPTIONS_DEBUG --with-methods=dbg
+    OPTIONS_RELEASE --with-methods=opt
 )
 
 vcpkg_install_make()
 
-if (EXISTS ${CURRENT_PACKAGES_DIR}/contrib/bin/libtool)
-    file(COPY ${CURRENT_PACKAGES_DIR}/contrib/bin/libtool DESTINATION ${CURRENT_PACKAGES_DIR}/tools)
-    file(REMOVE ${CURRENT_PACKAGES_DIR}/contrib/bin/libtool)
-endif()
-file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/contrib ${CURRENT_PACKAGES_DIR}/debug/contrib)
-
-file(GLOB ${CURRENT_PACKAGES_DIR}/bin LIBMESH_TOOLS)
-foreach (LIBMESH_TOOL ${LIBMESH_TOOLS})
-    file(COPY ${LIBMESH_TOOL} DESTINATION ${CURRENT_PACKAGES_DIR}/tools)
-    file(REMOVE ${LIBMESH_TOOL})
-endforeach()
-
-file(GLOB LIBMESH_TOOLS ${CURRENT_PACKAGES_DIR}/examples/*)
-foreach (LIBMESH_TOOL ${LIBMESH_TOOLS})
-    file(COPY ${LIBMESH_TOOL} DESTINATION ${CURRENT_PACKAGES_DIR}/tools)
-    file(REMOVE ${LIBMESH_TOOL})
-endforeach()
+file(RENAME "${CURRENT_PACKAGES_DIR}/examples" "${CURRENT_PACKAGES_DIR}/share/${PORT}/examples")
 
 if (VCPKG_LIBRARY_LINKAGE STREQUAL static)
-    file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/bin ${CURRENT_PACKAGES_DIR}/debug/bin)
+    file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/bin" "${CURRENT_PACKAGES_DIR}/debug/bin")
 endif()
 
 # Remove tools and debug include directories
-file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/debug/contrib ${CURRENT_PACKAGES_DIR}/debug/etc
-                    ${CURRENT_PACKAGES_DIR}/debug/examples ${CURRENT_PACKAGES_DIR}/debug/include
-                    ${CURRENT_PACKAGES_DIR}/debug/share
-                    ${CURRENT_PACKAGES_DIR}/Make.common ${CURRENT_PACKAGES_DIR}/debug/Make.common)
+file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/contrib" "${CURRENT_PACKAGES_DIR}/debug/contrib"
+                    "${CURRENT_PACKAGES_DIR}/etc" "${CURRENT_PACKAGES_DIR}/debug/etc"
+                    "${CURRENT_PACKAGES_DIR}/debug/examples" "${CURRENT_PACKAGES_DIR}/debug/include"
+                    "${CURRENT_PACKAGES_DIR}/debug/share" "${CURRENT_PACKAGES_DIR}/tools/libmesh/debug"
+                    "${CURRENT_PACKAGES_DIR}/Make.common" "${CURRENT_PACKAGES_DIR}/debug/Make.common")
+
+file(GLOB config_files "${CURRENT_PACKAGES_DIR}/bin/*-config" "${CURRENT_PACKAGES_DIR}/debug/bin/*-config" "${CURRENT_PACKAGES_DIR}/tools/${PORT}/bin/*-config")
+file(REMOVE_RECURSE ${config_files})
 
 vcpkg_copy_pdbs()
+vcpkg_fixup_pkgconfig()
+vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/include/libmesh/libmesh_config.h" "${CURRENT_INSTALLED_DIR}" "")
 
-file(INSTALL ${CURRENT_PORT_DIR}/copyright DESTINATION ${CURRENT_PACKAGES_DIR}/share/${PORT})
-
+vcpkg_install_copyright(FILE_LIST "${CURRENT_PORT_DIR}/copyright")
