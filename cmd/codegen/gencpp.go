@@ -142,7 +142,7 @@ extern "C" {
 						Name: "text_len",
 						Type: "const int",
 					})
-					actualCallArgs = append(actualCallArgs, "(text_len > 0) ? text + text_len*sizeof(char)-1 : 0")
+					actualCallArgs = append(actualCallArgs, "(text_len > 0) ? text + text_len*sizeof(char) : 0")
 				} else {
 					f.Args = strings.Replace(f.Args, ",const int text_len", "", 1)
 					actualCallArgs = append(actualCallArgs, "0")
