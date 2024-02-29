@@ -1,11 +1,12 @@
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO microsoft/mimalloc
-    REF v2.0.5
-    SHA512 d164392ace523a3fa0aa00fc58d8a9e8fbe913f07957e19ca977675b389e6d2a2eaf4772e72cae0d87aabb960f3fd6ea3923a066ece4ba4fdaa0c6860cfa414d
+    REF "v${VERSION}"
+    SHA512 927b046e67783b325a6e41e3a9a6d3d78306fa1c82255defd1f3a7a60a27fd809a601f65b1b27fa38f2064e124f29856d7c0e5ccc33c54c2e4b6ebb9816d74b1
     HEAD_REF master
     PATCHES
         fix-cmake.patch
+        template-param-types.diff
 )
 
 vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
@@ -24,15 +25,13 @@ vcpkg_cmake_configure(
     OPTIONS_RELEASE
         -DMI_DEBUG_FULL=OFF
     OPTIONS
-        -DMI_INTERPOSE=ON
-        -DMI_USE_CXX=OFF
+        -DMI_USE_CXX=ON
         -DMI_BUILD_TESTS=OFF
+        -DMI_BUILD_OBJECT=OFF
         ${FEATURE_OPTIONS}
         -DMI_BUILD_STATIC=${MI_BUILD_STATIC}
         -DMI_BUILD_SHARED=${MI_BUILD_SHARED}
         -DMI_INSTALL_TOPLEVEL=ON
-    MAYBE_UNUSED_VARIABLES
-        MI_INTERPOSE
 )
 
 vcpkg_cmake_install()
@@ -41,6 +40,7 @@ vcpkg_copy_pdbs()
 
 file(COPY
     "${CMAKE_CURRENT_LIST_DIR}/vcpkg-cmake-wrapper.cmake"
+    "${CMAKE_CURRENT_LIST_DIR}/usage"
     DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}"
 )
 vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/mimalloc)
@@ -55,4 +55,6 @@ endif()
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/share")
 
-file(INSTALL "${SOURCE_PATH}/LICENSE" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}" RENAME copyright)
+vcpkg_fixup_pkgconfig()
+
+vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE")

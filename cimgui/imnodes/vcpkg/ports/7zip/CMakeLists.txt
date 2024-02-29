@@ -1,4 +1,3 @@
-
 cmake_minimum_required(VERSION 3.19)
 
 project(7zip LANGUAGES C CXX)
@@ -11,6 +10,7 @@ endif()
 
 add_library(7zip)
 
+# Check makefile in srcdir/CPP/7zip/Archive/7z/makefile
 target_sources(7zip PRIVATE
     CPP/7zip/Compress/Bcj2Coder.cpp
     CPP/7zip/Compress/Bcj2Register.cpp
@@ -24,6 +24,7 @@ target_sources(7zip PRIVATE
     CPP/7zip/Compress/BZip2Decoder.cpp
     CPP/7zip/Compress/BZip2Encoder.cpp
     CPP/7zip/Compress/BZip2Register.cpp
+    CPP/7zip/Compress/CodecExports.cpp
     CPP/7zip/Compress/CopyCoder.cpp
     CPP/7zip/Compress/CopyRegister.cpp
     CPP/7zip/Compress/Deflate64Register.cpp
@@ -31,7 +32,10 @@ target_sources(7zip PRIVATE
     CPP/7zip/Compress/DeflateEncoder.cpp
     CPP/7zip/Compress/DeflateRegister.cpp
     CPP/7zip/Compress/DeltaFilter.cpp
+    #CPP/7zip/Compress/DllExports2Compress.cpp
+    #CPP/7zip/Compress/DllExportsCompress.cpp
     CPP/7zip/Compress/ImplodeDecoder.cpp
+    CPP/7zip/Compress/ImplodeHuffmanDecoder.cpp
     CPP/7zip/Compress/LzfseDecoder.cpp
     CPP/7zip/Compress/LzhDecoder.cpp
     CPP/7zip/Compress/Lzma2Decoder.cpp
@@ -58,10 +62,10 @@ target_sources(7zip PRIVATE
     CPP/7zip/Compress/XpressDecoder.cpp
     CPP/7zip/Compress/XzDecoder.cpp
     CPP/7zip/Compress/XzEncoder.cpp
+    CPP/7zip/Compress/ZDecoder.cpp
     CPP/7zip/Compress/ZlibDecoder.cpp
     CPP/7zip/Compress/ZlibEncoder.cpp
-    CPP/7zip/Compress/ZDecoder.cpp
-    CPP/7zip/Compress/CodecExports.cpp
+
     CPP/7zip/Crypto/7zAes.cpp
     CPP/7zip/Crypto/7zAesRegister.cpp
     CPP/7zip/Crypto/HmacSha1.cpp
@@ -95,14 +99,13 @@ target_sources(7zip PRIVATE
     C/Lzma2Dec.c
     C/Lzma2DecMt.c
     C/Lzma2Enc.c
-    C/LzmaDec.c
     C/LzmaEnc.c
     C/LzmaLib.c
     C/MtCoder.c
     C/MtDec.c
     C/Ppmd7.c
+    C/Ppmd7aDec.c
     C/Ppmd7Dec.c
-    C/Ppmd7aDec.c 
     C/Ppmd7Enc.c
     C/Ppmd8.c
     C/Ppmd8Dec.c
@@ -110,6 +113,7 @@ target_sources(7zip PRIVATE
     C/Sha1.c
     C/Sha256.c
     C/Sort.c
+    C/SwapBytes.c
     C/Threads.c
     C/Xz.c
     C/XzDec.c
@@ -130,7 +134,9 @@ target_sources(7zip PRIVATE
     CPP/Common/MyWindows.cpp
     CPP/Common/MyXml.cpp
     CPP/Common/NewHandler.cpp
+    CPP/Common/Sha1Prepare.cpp
     CPP/Common/Sha1Reg.cpp
+    CPP/Common/Sha256Prepare.cpp
     CPP/Common/Sha256Reg.cpp
     CPP/Common/StringConvert.cpp
     CPP/Common/StringToInt.cpp
@@ -174,8 +180,8 @@ target_sources(7zip PRIVATE
     CPP/7zip/Archive/ApmHandler.cpp
     CPP/7zip/Archive/ArHandler.cpp
     CPP/7zip/Archive/ArjHandler.cpp
-    CPP/7zip/Archive/Bz2Handler.cpp
     CPP/7zip/Archive/Base64Handler.cpp
+    CPP/7zip/Archive/Bz2Handler.cpp
     CPP/7zip/Archive/ComHandler.cpp
     CPP/7zip/Archive/CpioHandler.cpp
     CPP/7zip/Archive/CramfsHandler.cpp
@@ -291,36 +297,40 @@ target_sources(7zip PRIVATE
     C/Util/LzmaLib/LzmaLib.def
 )
 
-# 7zCrcOpt # AesOpt # Sha1Opt # Sha256Opt # XzCrc64Opt # LzFindOpt
-set(WINDOWS_PRIVATE_HEADERS
-    Asm/x86/7zCrcOpt.asm
-    Asm/x86/AesOpt.asm
-    Asm/x86/Sha1Opt.asm
-    Asm/x86/Sha256Opt.asm
-    Asm/x86/XzCrc64Opt.asm
-    Asm/x86/LzFindOpt.asm
-)
-set(WINDOWS_PRIVATE_SOURCE_FILES
-    C/7zCrcOpt.c
-    C/AesOpt.c
-    C/Sha1Opt.c
-    C/Sha256Opt.c
-    C/XzCrc64Opt.c
-    C/LzFindOpt.c
-)
-
+# 7zCrcOpt
 if(VCPKG_TARGET_IS_WINDOWS)
     if(VCPKG_TARGET_ARCHITECTURE STREQUAL "x86" OR VCPKG_TARGET_ARCHITECTURE STREQUAL "x64")
-        target_sources(7zip PRIVATE ${WINDOWS_PRIVATE_HEADERS})
-        set_source_files_properties(${WINDOWS_PRIVATE_HEADERS} PROPERTIES LANGUAGE ASM_MASM)
-    elseif(VCPKG_TARGET_ARCHITECTURE STREQUAL "arm")
-        #target_sources(7zip PRIVATE Asm/arm/7zCrcOpt.asm)
-        target_sources(7zip PRIVATE C/7zCrcOpt.c)
+        target_sources(7zip PRIVATE Asm/x86/7zCrcOpt.asm)
+        set_source_files_properties(Asm/x86/7zCrcOpt.asm PROPERTIES LANGUAGE ASM_MASM)
     else()
-        target_sources(7zip PRIVATE ${WINDOWS_PRIVATE_SOURCE_FILES})
+        target_sources(7zip PRIVATE C/7zCrcOpt.c)
     endif()
 else()
-    target_sources(7zip PRIVATE ${WINDOWS_PRIVATE_SOURCE_FILES})
+    target_sources(7zip PRIVATE C/7zCrcOpt.c)
+endif()
+
+# AesOpt
+if(VCPKG_TARGET_IS_WINDOWS)
+    if(VCPKG_TARGET_ARCHITECTURE STREQUAL "x86" OR VCPKG_TARGET_ARCHITECTURE STREQUAL "x64")
+        target_sources(7zip PRIVATE Asm/x86/AesOpt.asm)
+        set_source_files_properties(Asm/x86/AesOpt.asm PROPERTIES LANGUAGE ASM_MASM)
+    else()
+        target_sources(7zip PRIVATE C/AesOpt.c)
+    endif()
+else()
+    target_sources(7zip PRIVATE C/AesOpt.c)
+endif()
+
+# LzFindOpt
+if(VCPKG_TARGET_IS_WINDOWS)
+    if(VCPKG_TARGET_ARCHITECTURE STREQUAL "x64")
+        target_sources(7zip PRIVATE Asm/x86/LzFindOpt.asm)
+        set_source_files_properties(Asm/x86/LzFindOpt.asm PROPERTIES LANGUAGE ASM_MASM)
+    else()
+        target_sources(7zip PRIVATE C/LzFindOpt.c)
+    endif()
+else()
+    target_sources(7zip PRIVATE C/LzFindOpt.c)
 endif()
 
 # LzmaDecOpt
@@ -334,11 +344,47 @@ if((VCPKG_TARGET_IS_WINDOWS AND VCPKG_TARGET_ARCHITECTURE STREQUAL "x64") OR
     elseif(VCPKG_TARGET_IS_LINUX AND VCPKG_TARGET_ARCHITECTURE STREQUAL "arm64")
         target_sources(7zip PRIVATE Asm/arm64/LzmaDecOpt.S)
         set_source_files_properties(Asm/x86/LzmaDecOpt.asm PROPERTIES LANGUAGE ASM)
-    endif()	
+    endif()
 
     get_source_file_property(defs C/LzmaDec.c COMPILE_DEFINITIONS)
     list(APPEND defs "_LZMA_DEC_OPT")
     set_source_files_properties(C/LzmaDec.c PROPERTIES COMPILE_DEFINITIONS "${defs}")
+endif()
+
+# Sha1Opt
+if(VCPKG_TARGET_IS_WINDOWS)
+    if(VCPKG_TARGET_ARCHITECTURE STREQUAL "x86" OR VCPKG_TARGET_ARCHITECTURE STREQUAL "x64")
+        target_sources(7zip PRIVATE Asm/x86/Sha1Opt.asm)
+        set_source_files_properties(Asm/x86/Sha1Opt.asm PROPERTIES LANGUAGE ASM_MASM)
+    else()
+        target_sources(7zip PRIVATE C/Sha1Opt.c)
+    endif()
+else()
+    target_sources(7zip PRIVATE C/Sha1Opt.c)
+endif()
+
+# Sha256Opt
+if(VCPKG_TARGET_IS_WINDOWS)
+    if(VCPKG_TARGET_ARCHITECTURE STREQUAL "x86" OR VCPKG_TARGET_ARCHITECTURE STREQUAL "x64")
+        target_sources(7zip PRIVATE Asm/x86/Sha256Opt.asm)
+        set_source_files_properties(Asm/x86/Sha256Opt.asm PROPERTIES LANGUAGE ASM_MASM)
+    else()
+        target_sources(7zip PRIVATE C/Sha256Opt.c)
+    endif()
+else()
+    target_sources(7zip PRIVATE C/Sha256Opt.c)
+endif()
+
+# XzCrc64Opt
+if(VCPKG_TARGET_IS_WINDOWS)
+    if(VCPKG_TARGET_ARCHITECTURE STREQUAL "x86" OR VCPKG_TARGET_ARCHITECTURE STREQUAL "x64")
+        target_sources(7zip PRIVATE Asm/x86/XzCrc64Opt.asm)
+        set_source_files_properties(Asm/x86/XzCrc64Opt.asm PROPERTIES LANGUAGE ASM_MASM)
+    else()
+        target_sources(7zip PRIVATE C/XzCrc64Opt.c)
+    endif()
+else()
+    target_sources(7zip PRIVATE C/XzCrc64Opt.c)
 endif()
 
 target_compile_definitions(7zip
@@ -355,29 +401,7 @@ target_compile_definitions(7zip
 target_include_directories(7zip
     INTERFACE
         $<INSTALL_INTERFACE:include>/7zip/CPP
-)
-
-set(PUBLIC_HEADERS
-    C/7zTypes.h
-    C/Alloc.h
-    C/LzFind.h
-    C/LzFindMt.h
-    C/LzHash.h
-    C/LzmaDec.h
-    C/LzmaEnc.h
-    C/LzmaLib.h
-    C/Threads.h
-    CPP/7zip/Archive/IArchive.h
-    CPP/7zip/ICoder.h
-    CPP/7zip/IDecl.h
-    CPP/7zip/IPassword.h
-    CPP/7zip/IProgress.h
-    CPP/7zip/IStream.h
-    CPP/7zip/PropID.h
-    CPP/Common/Defs.h
-    CPP/Common/MyTypes.h
-    CPP/Common/MyUnknown.h
-    CPP/Common/MyWindows.h
+        $<INSTALL_INTERFACE:include>/7zip/C
 )
 
 install(
@@ -389,14 +413,29 @@ install(
 )
 
 # Headers makes relative includes so directory structure must be kept
-foreach(HEADER ${PUBLIC_HEADERS})
-    get_filename_component(HEADER_DIR ${HEADER} DIRECTORY)
-    install(
-        FILES ${HEADER}
-        CONFIGURATIONS Release
-        DESTINATION include/7zip/${HEADER_DIR}
-    )
-endforeach()
+
+file(GLOB HEADERS "${CMAKE_CURRENT_LIST_DIR}/C/*.h")
+install(FILES ${HEADERS} DESTINATION "include/7zip/C")
+
+file(GLOB HEADERS "${CMAKE_CURRENT_LIST_DIR}/CPP/Common/*.h")
+install(FILES ${HEADERS} DESTINATION "include/7zip/CPP/Common")
+
+file(GLOB HEADERS "${CMAKE_CURRENT_LIST_DIR}/CPP/7zip/*.h")
+install(FILES ${HEADERS} DESTINATION "include/7zip/CPP/7zip")
+
+file(GLOB HEADERS "${CMAKE_CURRENT_LIST_DIR}/CPP/7zip/Archive/*.h")
+install (FILES ${HEADERS} DESTINATION "include/7zip/CPP/7zip/Archive")
+
+include(CMakePackageConfigHelpers)
+configure_package_config_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/7zip-config.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/7zip-config.cmake"
+  INSTALL_DESTINATION "share/7zip"
+)
+install(
+  FILES "${CMAKE_CURRENT_BINARY_DIR}/7zip-config.cmake"
+  DESTINATION "share/7zip"
+)
 
 install(
     EXPORT 7zip-targets

@@ -1,10 +1,11 @@
 {
   "name": "python3",
-  "version-semver": "3.10.2",
+  "version": "3.11.5",
+  "port-version": 4,
   "description": "The Python programming language",
   "homepage": "https://github.com/python/cpython",
   "license": "Python-2.0",
-  "supports": "!uwp",
+  "supports": "!uwp & !mingw",
   "dependencies": [
     {
       "name": "bzip2",
@@ -28,6 +29,10 @@
       "platform": "!(windows & static)"
     },
     {
+      "name": "libuuid",
+      "platform": "!osx & !windows"
+    },
+    {
       "name": "openssl",
       "platform": "!(windows & static)"
     },
@@ -38,6 +43,11 @@
     {
       "name": "sqlite3",
       "platform": "!(windows & static)"
+    },
+    {
+      "name": "vcpkg-msbuild",
+      "host": true,
+      "platform": "windows"
     },
     "zlib"
   ],

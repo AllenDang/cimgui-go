@@ -4,22 +4,22 @@ vcpkg_check_linkage(ONLY_STATIC_LIBRARY)
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO zeux/volk
-    REF 5a605f5d6997bd929b666700a36ca3d9bd1d7a47
-    SHA512 ed6faf13828f3e47c4f12f8d19952c94589420539e98405bf2a4b7959518357dcc2f210746f3683d3862ac8c80821f3c863d49f4625e2dac85d2a680567e4f00
+    REF "vulkan-sdk-${VERSION}"
+    SHA512 5c61448c93171917c55a9fc50f102a2d52165a150eb0c3cfd31e41a32e38c673b597888b82685f3bb1e23883f7218e8ae6326f08c4c257ebddd42b0492bdf466
     HEAD_REF master
 )
 
-vcpkg_configure_cmake(
-    SOURCE_PATH ${SOURCE_PATH}
-    PREFER_NINJA
-    OPTIONS -DVOLK_INSTALL=ON
+vcpkg_cmake_configure(
+    SOURCE_PATH "${SOURCE_PATH}"
+    OPTIONS
+        -DVOLK_INSTALL=ON
+        -DVULKAN_HEADERS_INSTALL_DIR=${CURRENT_INSTALLED_DIR}
 )
-vcpkg_install_cmake()
+vcpkg_cmake_install()
 vcpkg_copy_pdbs()
-vcpkg_fixup_cmake_targets(CONFIG_PATH lib/cmake/volk)
+vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/volk)
 
-file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/debug/include)
+file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 
-# Put the file containing the license where vcpkg expects it
-file(COPY ${SOURCE_PATH}/README.md DESTINATION ${CURRENT_PACKAGES_DIR}/share/volk/)
-file(RENAME ${CURRENT_PACKAGES_DIR}/share/volk/README.md ${CURRENT_PACKAGES_DIR}/share/volk/copyright)
+vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE.md")
+file(INSTALL "${CMAKE_CURRENT_LIST_DIR}/usage" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}")

@@ -1,9 +1,11 @@
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO libsndfile/libsndfile
-    REF 1.0.31
-    SHA512 5767ced306f2d300aa2014d383c22f3ee9a4fe1ffb2c463405bc26209ede09a9cfb95e1c08256db36e986d2b30151c38dbe635a3cae0b7138d7de485e2084891
+    REF 1.2.2
+    SHA512 fb8b4d367240a8ac9d55be6f053cb19419890691c56a8552d1600d666257992b6e8e41a413a444c9f2d6c5d71406013222c92a3bfa67228944a26475444240a1
     HEAD_REF master
+    PATCHES
+        001-avoid-installing-find-modules.patch
 )
 
 if(VCPKG_LIBRARY_LINKAGE STREQUAL dynamic)
@@ -11,38 +13,47 @@ if(VCPKG_LIBRARY_LINKAGE STREQUAL dynamic)
 endif()
 
 vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
-    FEATURES external-libs ENABLE_EXTERNAL_LIBS
+    FEATURES
+        external-libs ENABLE_EXTERNAL_LIBS
+        mpeg ENABLE_MPEG
+        regtest BUILD_REGTEST
 )
 
-vcpkg_configure_cmake(
-    SOURCE_PATH ${SOURCE_PATH}
-    PREFER_NINJA
+if(VCPKG_TARGET_IS_UWP)
+    set(VCPKG_C_FLAGS "/sdl- ${VCPKG_C_FLAGS}")
+    set(VCPKG_CXX_FLAGS "/sdl- ${VCPKG_CXX_FLAGS}")
+endif()
+
+vcpkg_cmake_configure(
+    SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS
         -DBUILD_EXAMPLES=OFF
-        -DBUILD_REGTEST=OFF
         -DBUILD_TESTING=OFF
         -DENABLE_BOW_DOCS=OFF
         -DBUILD_PROGRAMS=OFF
+        -DBUILD_REGTEST=OFF
         -DCMAKE_FIND_PACKAGE_PREFER_CONFIG=ON
         -DPYTHON_EXECUTABLE=${PYTHON3}
         ${FEATURE_OPTIONS}
+    MAYBE_UNUSED_VARIABLES
+        PYTHON_EXECUTABLE
 )
 
-vcpkg_install_cmake()
+vcpkg_cmake_install()
 
-if(WIN32 AND (NOT MINGW) AND (NOT CYGWIN))
+if(EXISTS "${CURRENT_PACKAGES_DIR}/cmake")
     set(CONFIG_PATH cmake)
 else()
     set(CONFIG_PATH lib/cmake/SndFile)
 endif()
 
-vcpkg_fixup_cmake_targets(CONFIG_PATH ${CONFIG_PATH} TARGET_PATH share/SndFile)
+vcpkg_cmake_config_fixup(PACKAGE_NAME SndFile CONFIG_PATH "${CONFIG_PATH}")
 vcpkg_fixup_pkgconfig(SYSTEM_LIBRARIES m)
 
 vcpkg_copy_pdbs()
 
-file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/debug/share)
-file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/debug/include)
+file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/share")
+file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
+file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/share/doc")
 
-# Handle copyright
-file(INSTALL ${SOURCE_PATH}/COPYING DESTINATION ${CURRENT_PACKAGES_DIR}/share/${PORT} RENAME copyright)
+file(INSTALL "${SOURCE_PATH}/COPYING" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}" RENAME copyright)

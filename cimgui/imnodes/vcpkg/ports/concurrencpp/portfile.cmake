@@ -1,8 +1,8 @@
 vcpkg_from_github(
   OUT_SOURCE_PATH SOURCE_PATH
   REPO David-Haim/concurrencpp
-  REF v.0.1.3
-  SHA512 2f4530ba93d768a7a1ae14c532c8ef443745e48cceeca8a0e9da9f91633876ae4971caad70eeff9e18c7a45e8cf7c0b7bb79720a62026850244fb2377ad10df7
+  REF "v.${VERSION}"
+  SHA512 b87a6bd0593d6a7d35f911a0a9835e1afe416aa25d06e4d448789617c94ec2faeb5df07d68d5ccc7e986009f09016f90ef57016b1aabe567996d3ad9816add4c
   HEAD_REF master
   PATCHES
     fix-include-path.patch
@@ -16,6 +16,6 @@ vcpkg_cmake_install()
 
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 
-vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/concurrencpp-0.1.3)
+vcpkg_cmake_config_fixup(CONFIG_PATH "lib/cmake/concurrencpp-${VERSION}")
 
-file(INSTALL ${SOURCE_PATH}/LICENSE.txt DESTINATION ${CURRENT_PACKAGES_DIR}/share/concurrencpp RENAME copyright)
+vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE.txt")

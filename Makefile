@@ -117,6 +117,9 @@ update: setup
 	$(call cimnodes)
 	$(call update,cimmarkdown,https://github.com/gucio321/cimmarkdown,imgui_markdown,main)
 	$(call cimmarkdown)
+	echo -e "// +build rquired\n\npackage imgui\n\nimport (\n" > dummy.go
 	for i in `find cimgui -type f \( -name "*.h" -o -name "*.cpp" \) -exec dirname {} \; | sort -u`; do \
 		cp templates/dummy.go.template $$i/dummy.go; \
+		echo -e "\t\"github.com/AllenDang/cimgui-go/$$i\"" >> dummy.go; \
 		done
+	echo ")" >> dummy.go
