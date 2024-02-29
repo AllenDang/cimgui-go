@@ -95,7 +95,7 @@ func ImNodesClearLinkSelectionInt(link_id int32) {
 	C.imnodes_ClearLinkSelection_Int(C.int(link_id))
 }
 
-func ImNodesClearLinkSelectionNil() {
+func ImNodesClearLinkSelection() {
 	C.imnodes_ClearLinkSelection_Nil()
 }
 
@@ -103,7 +103,7 @@ func ImNodesClearNodeSelectionInt(node_id int32) {
 	C.imnodes_ClearNodeSelection_Int(C.int(node_id))
 }
 
-func ImNodesClearNodeSelectionNil() {
+func ImNodesClearNodeSelection() {
 	C.imnodes_ClearNodeSelection_Nil()
 }
 

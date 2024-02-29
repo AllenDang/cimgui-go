@@ -836,7 +836,7 @@ func (self *PlotPlot) SetTitle(title string) {
 	titleFin()
 }
 
-func (self *PlotPlot) XAxisNil(i int32) *PlotAxis {
+func (self *PlotPlot) XAxis(i int32) *PlotAxis {
 	selfArg, selfFin := self.handle()
 
 	defer func() {
@@ -854,7 +854,7 @@ func (self *PlotPlot) XAxisconst(i int32) *PlotAxis {
 	return newPlotAxisFromC(C.ImPlotPlot_XAxis__const(selfArg, C.int(i)))
 }
 
-func (self *PlotPlot) YAxisNil(i int32) *PlotAxis {
+func (self *PlotPlot) YAxis(i int32) *PlotAxis {
 	selfArg, selfFin := self.handle()
 
 	defer func() {

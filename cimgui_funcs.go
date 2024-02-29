@@ -5717,7 +5717,7 @@ func InternalActiveID() ID {
 }
 
 // get background draw list for the viewport associated to the current window. this draw list will be the first rendering one. Useful to quickly draw shapes/text behind dear imgui contents.
-func BackgroundDrawListNil() *DrawList {
+func BackgroundDrawList() *DrawList {
 	return newDrawListFromC(C.igGetBackgroundDrawList_Nil())
 }
 
@@ -5956,7 +5956,7 @@ func FontTexUvWhitePixel() Vec2 {
 }
 
 // get foreground draw list for the viewport associated to the current window. this draw list will be the last rendered one. Useful to quickly draw shapes/text over dear imgui contents.
-func ForegroundDrawListNil() *DrawList {
+func ForegroundDrawList() *DrawList {
 	return newDrawListFromC(C.igGetForegroundDrawList_Nil())
 }
 
@@ -7662,7 +7662,7 @@ func InternalIsKeyChordPressedIDV(key_chord KeyChord, owner_id ID, flags InputFl
 }
 
 // was key chord (mods + key) pressed, e.g. you can pass 'ImGuiMod_Ctrl | ImGuiKey_S' as a key-chord. This doesn't do any routing or focus check, please consider using Shortcut() function instead.
-func IsKeyChordPressedNil(key_chord KeyChord) bool {
+func IsKeyChordPressed(key_chord KeyChord) bool {
 	key_chordArg, key_chordFin := key_chord.c()
 
 	defer func() {
@@ -7681,7 +7681,7 @@ func InternalIsKeyDownID(key Key, owner_id ID) bool {
 }
 
 // is key being held.
-func IsKeyDownNil(key Key) bool {
+func IsKeyDown(key Key) bool {
 	return C.igIsKeyDown_Nil(C.ImGuiKey(key)) == C.bool(true)
 }
 
@@ -7714,7 +7714,7 @@ func InternalIsKeyReleasedID(key Key, owner_id ID) bool {
 }
 
 // was key released (went from Down to !Down)?
-func IsKeyReleasedNil(key Key) bool {
+func IsKeyReleased(key Key) bool {
 	return C.igIsKeyReleased_Nil(C.ImGuiKey(key)) == C.bool(true)
 }
 
@@ -7758,7 +7758,7 @@ func InternalIsMouseDoubleClickedID(button MouseButton, owner_id ID) bool {
 }
 
 // did mouse button double-clicked? Same as GetMouseClickedCount() == 2. (note that a double-click will also report IsMouseClicked() == true)
-func IsMouseDoubleClickedNil(button MouseButton) bool {
+func IsMouseDoubleClicked(button MouseButton) bool {
 	return C.igIsMouseDoubleClicked_Nil(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
@@ -7772,7 +7772,7 @@ func InternalIsMouseDownID(button MouseButton, owner_id ID) bool {
 }
 
 // is mouse button held?
-func IsMouseDownNil(button MouseButton) bool {
+func IsMouseDown(button MouseButton) bool {
 	return C.igIsMouseDown_Nil(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
@@ -7822,7 +7822,7 @@ func InternalIsMouseReleasedID(button MouseButton, owner_id ID) bool {
 }
 
 // did mouse button released? (went from Down to !Down)
-func IsMouseReleasedNil(button MouseButton) bool {
+func IsMouseReleased(button MouseButton) bool {
 	return C.igIsMouseReleased_Nil(C.ImGuiMouseButton(button)) == C.bool(true)
 }
 
@@ -7856,7 +7856,7 @@ func IsPopupOpenStrV(str_id string, flags PopupFlags) bool {
 }
 
 // test if rectangle (of given size, starting from cursor position) is visible / not clipped.
-func IsRectVisibleNil(size Vec2) bool {
+func IsRectVisible(size Vec2) bool {
 	return C.igIsRectVisible_Nil(size.toC()) == C.bool(true)
 }
 
@@ -8116,7 +8116,7 @@ func LogToTTYV(auto_open_depth int32) {
 	C.igLogToTTY(C.int(auto_open_depth))
 }
 
-func InternalMarkIniSettingsDirtyNil() {
+func InternalMarkIniSettingsDirty() {
 	C.igMarkIniSettingsDirty_Nil()
 }
 
@@ -9315,7 +9315,7 @@ func InternalSetWindowDock(window *Window, dock_id ID, cond Cond) {
 }
 
 // (not recommended) set current window to be focused / top-most. prefer using SetNextWindowFocus().
-func SetWindowFocusNil() {
+func SetWindowFocus() {
 	C.igSetWindowFocus_Nil()
 }
 

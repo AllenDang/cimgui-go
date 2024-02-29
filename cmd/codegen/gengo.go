@@ -77,6 +77,8 @@ func (c CIdentifier) renameGoIdentifier() GoIdentifier {
 		c = CIdentifier(r)
 	}
 
+	c = TrimSuffix(c, "_Nil")
+
 	c = c.trimImGuiPrefix()
 	switch {
 	case HasPrefix(c, "New"):
@@ -93,6 +95,7 @@ func (c CIdentifier) renameGoIdentifier() GoIdentifier {
 	if c != "_" {
 		c = ReplaceAll(c, "_", "")
 	}
+
 	return GoIdentifier(c)
 }
 
