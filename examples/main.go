@@ -120,7 +120,7 @@ func main() {
 		barValues = append(barValues, int64(i+1))
 	}
 
-	backend = imgui.CreateBackend(imgui.NewGLFWBackend())
+	backend, _ = imgui.CreateBackend(imgui.NewGLFWBackend())
 	backend.SetAfterCreateContextHook(afterCreateContext)
 	backend.SetBeforeDestroyContextHook(beforeDestroyContext)
 
