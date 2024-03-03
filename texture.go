@@ -12,7 +12,7 @@ import (
 )
 
 type Texture struct {
-	id     TextureID
+	ID     TextureID
 	Width  int
 	Height int
 }
@@ -25,7 +25,7 @@ func NewTextureFromRgba(rgba *image.RGBA) *Texture {
 	}
 
 	texture := Texture{
-		id:     texID,
+		ID:     texID,
 		Width:  rgba.Bounds().Dx(),
 		Height: rgba.Bounds().Dy(),
 	}
@@ -37,11 +37,7 @@ func NewTextureFromRgba(rgba *image.RGBA) *Texture {
 }
 
 func (t *Texture) release() {
-	textureManager.DeleteTexture(t.id)
-}
-
-func (t *Texture) ID() TextureID {
-	return t.id
+	textureManager.DeleteTexture(t.ID)
 }
 
 // ImageToRgba converts image.Image to *image.RGBA.
