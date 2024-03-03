@@ -76,8 +76,8 @@ func showPictureLoadingDemo() {
 	basePos := imgui.MainViewport().Pos()
 	imgui.SetNextWindowPosV(imgui.NewVec2(basePos.X+60, 600), imgui.CondOnce, imgui.NewVec2(0, 0))
 	imgui.Begin("Image")
-	imgui.Text(fmt.Sprintf("pointer = %v", texture.ID()))
-	imgui.ImageV(texture.ID(), imgui.NewVec2(float32(texture.Width), float32(texture.Height)), imgui.NewVec2(0, 0), imgui.NewVec2(1, 1), imgui.NewVec4(1, 1, 1, 1), imgui.NewVec4(0, 0, 0, 0))
+	imgui.Text(fmt.Sprintf("pointer = %v", texture.ID))
+	imgui.ImageV(texture.ID, imgui.NewVec2(float32(texture.Width), float32(texture.Height)), imgui.NewVec2(0, 0), imgui.NewVec2(1, 1), imgui.NewVec4(1, 1, 1, 1), imgui.NewVec4(0, 0, 0, 0))
 	imgui.End()
 }
 
