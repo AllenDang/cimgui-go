@@ -20,10 +20,6 @@ type Texture struct {
 func NewTextureFromRgba(rgba *image.RGBA) *Texture {
 	texID := textureManager.CreateTextureRgba(rgba, rgba.Bounds().Dx(), rgba.Bounds().Dy())
 
-	if texID.Data == 0 {
-		return nil
-	}
-
 	texture := Texture{
 		ID:     texID,
 		Width:  rgba.Bounds().Dx(),
