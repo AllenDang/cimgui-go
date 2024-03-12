@@ -6667,6 +6667,18 @@ func InternalImFontAtlasBuildInit(atlas *FontAtlas) {
 	atlasFin()
 }
 
+func InternalImFontAtlasBuildMultiplyCalcLookupTable(out_table *[256]uint, in_multiply_factor float32) {
+	out_tableArg := make([]uint, len(out_table))
+	for i, out_tableV := range out_table {
+		out_tableArg[i] = C.uchar(out_tableV)
+	}
+	C.igImFontAtlasBuildMultiplyCalcLookupTable((*C.uchar)(&out_tableArg[0]), C.float(in_multiply_factor))
+
+	for i, out_tableV := range out_tableArg {
+		(*out_table)[i] = uint(out_tableV)
+	}
+}
+
 func InternalImFontAtlasBuildPackCustomRects(atlas *FontAtlas, stbrp_context_opaque uintptr) {
 	atlasArg, atlasFin := atlas.handle()
 	C.wrap_igImFontAtlasBuildPackCustomRects(atlasArg, C.uintptr_t(stbrp_context_opaque))
@@ -13728,6 +13740,21 @@ func (self DrawListSharedData) SetTempBuffer(v Vector[*Vec2]) {
 	C.wrap_ImDrawListSharedData_SetTempBuffer(selfArg, *vVecArg)
 }
 
+func (self DrawListSharedData) SetArcFastVtx(v *[48]Vec2) {
+	vArg := make([]Vec2, len(v))
+	for i, vV := range v {
+		vArg[i] = vV.toC()
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImDrawListSharedData_SetArcFastVtx(selfArg, (*C.ImVec2)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = *(&Vec2{}).fromC(vV)
+	}
+}
+
 func (self DrawListSharedData) SetArcFastRadiusCutoff(v float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -13741,6 +13768,21 @@ func (self *DrawListSharedData) ArcFastRadiusCutoff() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImDrawListSharedData_GetArcFastRadiusCutoff(selfArg))
+}
+
+func (self DrawListSharedData) SetCircleSegmentCounts(v *[64]byte) {
+	vArg := make([]byte, len(v))
+	for i, vV := range v {
+		vArg[i] = C.ImU8(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImDrawListSharedData_SetCircleSegmentCounts(selfArg, (*C.ImU8)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = byte(vV)
+	}
 }
 
 func (self DrawListSharedData) SetTexUvLines(v *Vec4) {
@@ -14173,6 +14215,21 @@ func (self *Font) MetricsTotalSurface() int32 {
 	return int32(C.wrap_ImFont_GetMetricsTotalSurface(selfArg))
 }
 
+func (self Font) SetUsed4kPagesMap(v *[34]byte) {
+	vArg := make([]byte, len(v))
+	for i, vV := range v {
+		vArg[i] = C.ImU8(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImFont_SetUsed4kPagesMap(selfArg, (*C.ImU8)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = byte(vV)
+	}
+}
+
 func (self FontAtlas) SetFlags(v FontAtlasFlags) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -14416,6 +14473,21 @@ func (self *FontAtlas) ConfigData() Vector[*FontConfig] {
 		selfFin()
 	}()
 	return newVectorFromC(C.wrap_ImFontAtlas_GetConfigData(selfArg).Size, C.wrap_ImFontAtlas_GetConfigData(selfArg).Capacity, newFontConfigFromC(C.wrap_ImFontAtlas_GetConfigData(selfArg).Data))
+}
+
+func (self FontAtlas) SetTexUvLines(v *[64]Vec4) {
+	vArg := make([]Vec4, len(v))
+	for i, vV := range v {
+		vArg[i] = vV.toC()
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImFontAtlas_SetTexUvLines(selfArg, (*C.ImVec4)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = *(&Vec4{}).fromC(vV)
+	}
 }
 
 func (self FontAtlas) SetFontBuilderIO(v *FontBuilderIO) {
@@ -14870,6 +14942,21 @@ func (self *FontConfig) EllipsisChar() Wchar {
 		selfFin()
 	}()
 	return Wchar(C.wrap_ImFontConfig_GetEllipsisChar(selfArg))
+}
+
+func (self FontConfig) SetName(v *[40]rune) {
+	vArg := make([]rune, len(v))
+	for i, vV := range v {
+		vArg[i] = C.char(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImFontConfig_SetName(selfArg, (*C.char)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = rune(vV)
+	}
 }
 
 func (self FontConfig) SetDstFont(v *Font) {
@@ -16382,6 +16469,22 @@ func (self *Context) LastKeyboardKeyPressTime() float64 {
 		selfFin()
 	}()
 	return float64(C.wrap_ImGuiContext_GetLastKeyboardKeyPressTime(selfArg))
+}
+
+func (self Context) SetKeysOwnerData(v *[154]KeyOwnerData) {
+	vArg := make([]KeyOwnerData, len(v))
+	for i, vV := range v {
+		vVArg, vVFin := vV.c()
+		vArg[i] = vVArg
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetKeysOwnerData(selfArg, (**C.ImGuiKeyOwnerData)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = *newKeyOwnerDataFromC(func() *C.ImGuiKeyOwnerData { result := vV; return &result }())
+	}
 }
 
 func (self Context) SetKeysRoutingTable(v KeyRoutingTable) {
@@ -18099,6 +18202,21 @@ func (self *Context) DragDropHoldJustPressedId() ID {
 	return *newIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
+func (self Context) SetDragDropPayloadBufLocal(v *[16]uint) {
+	vArg := make([]uint, len(v))
+	for i, vV := range v {
+		vArg[i] = C.uchar(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetDragDropPayloadBufLocal(selfArg, (*C.uchar)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = uint(vV)
+	}
+}
+
 func (self Context) SetClipperTempDataStacked(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -19159,6 +19277,22 @@ func (self *Context) HookIdNext() ID {
 	return *newIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
+func (self Context) SetLocalizationTable(v *[11]string) {
+	vArg := make([]string, len(v))
+	for i, vV := range v {
+		vVArg, vVFin := WrapString(vV)
+		vArg[i] = vVArg
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetLocalizationTable(selfArg, (**C.char)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = C.GoString(vV)
+	}
+}
+
 func (self Context) SetLogEnabled(v bool) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -19617,6 +19751,21 @@ func (self *Context) DebugHoveredDockNode() *DockNode {
 	return newDockNodeFromC(C.wrap_ImGuiContext_GetDebugHoveredDockNode(selfArg))
 }
 
+func (self Context) SetFramerateSecPerFrame(v *[60]float32) {
+	vArg := make([]float32, len(v))
+	for i, vV := range v {
+		vArg[i] = C.float(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetFramerateSecPerFrame(selfArg, (*C.float)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = float32(vV)
+	}
+}
+
 func (self Context) SetFramerateSecPerFrameIdx(v int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -19728,6 +19877,21 @@ func (self *Context) TempBuffer() Vector[string] {
 		selfFin()
 	}()
 	return newVectorFromC(C.wrap_ImGuiContext_GetTempBuffer(selfArg).Size, C.wrap_ImGuiContext_GetTempBuffer(selfArg).Capacity, C.GoString(C.wrap_ImGuiContext_GetTempBuffer(selfArg).Data))
+}
+
+func (self Context) SetTempKeychordName(v *[64]rune) {
+	vArg := make([]rune, len(v))
+	for i, vV := range v {
+		vArg[i] = C.char(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetTempKeychordName(selfArg, (*C.char)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = rune(vV)
+	}
 }
 
 func (self ContextHook) SetHookId(v ID) {
@@ -19864,6 +20028,21 @@ func (self *DataTypeInfo) ScanFmt() string {
 	return C.GoString(C.wrap_ImGuiDataTypeInfo_GetScanFmt(selfArg))
 }
 
+func (self DataTypeTempStorage) SetData(v *[8]byte) {
+	vArg := make([]byte, len(v))
+	for i, vV := range v {
+		vArg[i] = C.ImU8(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiDataTypeTempStorage_SetData(selfArg, (*C.ImU8)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = byte(vV)
+	}
+}
+
 func (self DataVarInfo) SetType(v DataType) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -19997,6 +20176,22 @@ func (self *DebugAllocInfo) LastEntriesIdx() int {
 		selfFin()
 	}()
 	return int(C.wrap_ImGuiDebugAllocInfo_GetLastEntriesIdx(selfArg))
+}
+
+func (self DebugAllocInfo) SetLastEntriesBuf(v *[6]DebugAllocEntry) {
+	vArg := make([]DebugAllocEntry, len(v))
+	for i, vV := range v {
+		vVArg, vVFin := vV.c()
+		vArg[i] = vVArg
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiDebugAllocInfo_SetLastEntriesBuf(selfArg, (**C.ImGuiDebugAllocEntry)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = *newDebugAllocEntryFromC(func() *C.ImGuiDebugAllocEntry { result := vV; return &result }())
+	}
 }
 
 func (self DockContext) SetNodes(v Storage) {
@@ -20173,6 +20368,22 @@ func (self *DockNode) ParentNode() *DockNode {
 		selfFin()
 	}()
 	return newDockNodeFromC(C.wrap_ImGuiDockNode_GetParentNode(selfArg))
+}
+
+func (self DockNode) SetChildNodes(v *[2]*DockNode) {
+	vArg := make([]*DockNode, len(v))
+	for i, vV := range v {
+		vVArg, vVFin := vV.handle()
+		vArg[i] = vVArg
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiDockNode_SetChildNodes(selfArg, (**C.ImGuiDockNode)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = newDockNodeFromC(vV)
+	}
 }
 
 func (self DockNode) SetTabBar(v *TabBar) {
@@ -21995,6 +22206,21 @@ func (self *IO) MousePos() Vec2 {
 	return *(&Vec2{}).fromC(C.wrap_ImGuiIO_GetMousePos(selfArg))
 }
 
+func (self IO) SetMouseDown(v *[5]bool) {
+	vArg := make([]bool, len(v))
+	for i, vV := range v {
+		vArg[i] = C.bool(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetMouseDown(selfArg, (*C.bool)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = vV == C.bool(true)
+	}
+}
+
 func (self IO) SetMouseWheel(v float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -22138,6 +22364,22 @@ func (self *IO) KeyMods() KeyChord {
 	return *newKeyChordFromC(func() *C.ImGuiKeyChord { result := result; return &result }())
 }
 
+func (self IO) SetKeysData(v *[154]KeyData) {
+	vArg := make([]KeyData, len(v))
+	for i, vV := range v {
+		vVArg, vVFin := vV.c()
+		vArg[i] = vVArg
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetKeysData(selfArg, (**C.ImGuiKeyData)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = *newKeyDataFromC(func() *C.ImGuiKeyData { result := vV; return &result }())
+	}
+}
+
 func (self IO) SetWantCaptureMouseUnlessPopupClose(v bool) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -22168,6 +22410,141 @@ func (self *IO) MousePosPrev() Vec2 {
 	return *(&Vec2{}).fromC(C.wrap_ImGuiIO_GetMousePosPrev(selfArg))
 }
 
+func (self IO) SetMouseClickedPos(v *[5]Vec2) {
+	vArg := make([]Vec2, len(v))
+	for i, vV := range v {
+		vArg[i] = vV.toC()
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetMouseClickedPos(selfArg, (*C.ImVec2)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = *(&Vec2{}).fromC(vV)
+	}
+}
+
+func (self IO) SetMouseClickedTime(v *[5]float64) {
+	vArg := make([]float64, len(v))
+	for i, vV := range v {
+		vArg[i] = C.double(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetMouseClickedTime(selfArg, (*C.double)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = float64(vV)
+	}
+}
+
+func (self IO) SetMouseClicked(v *[5]bool) {
+	vArg := make([]bool, len(v))
+	for i, vV := range v {
+		vArg[i] = C.bool(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetMouseClicked(selfArg, (*C.bool)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = vV == C.bool(true)
+	}
+}
+
+func (self IO) SetMouseDoubleClicked(v *[5]bool) {
+	vArg := make([]bool, len(v))
+	for i, vV := range v {
+		vArg[i] = C.bool(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetMouseDoubleClicked(selfArg, (*C.bool)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = vV == C.bool(true)
+	}
+}
+
+func (self IO) SetMouseClickedCount(v *[5]uint16) {
+	vArg := make([]uint16, len(v))
+	for i, vV := range v {
+		vArg[i] = C.ImU16(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetMouseClickedCount(selfArg, (*C.ImU16)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = uint16(vV)
+	}
+}
+
+func (self IO) SetMouseClickedLastCount(v *[5]uint16) {
+	vArg := make([]uint16, len(v))
+	for i, vV := range v {
+		vArg[i] = C.ImU16(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetMouseClickedLastCount(selfArg, (*C.ImU16)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = uint16(vV)
+	}
+}
+
+func (self IO) SetMouseReleased(v *[5]bool) {
+	vArg := make([]bool, len(v))
+	for i, vV := range v {
+		vArg[i] = C.bool(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetMouseReleased(selfArg, (*C.bool)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = vV == C.bool(true)
+	}
+}
+
+func (self IO) SetMouseDownOwned(v *[5]bool) {
+	vArg := make([]bool, len(v))
+	for i, vV := range v {
+		vArg[i] = C.bool(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetMouseDownOwned(selfArg, (*C.bool)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = vV == C.bool(true)
+	}
+}
+
+func (self IO) SetMouseDownOwnedUnlessPopupClose(v *[5]bool) {
+	vArg := make([]bool, len(v))
+	for i, vV := range v {
+		vArg[i] = C.bool(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetMouseDownOwnedUnlessPopupClose(selfArg, (*C.bool)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = vV == C.bool(true)
+	}
+}
+
 func (self IO) SetMouseWheelRequestAxisSwap(v bool) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -22181,6 +22558,66 @@ func (self *IO) MouseWheelRequestAxisSwap() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiIO_GetMouseWheelRequestAxisSwap(selfArg) == C.bool(true)
+}
+
+func (self IO) SetMouseDownDuration(v *[5]float32) {
+	vArg := make([]float32, len(v))
+	for i, vV := range v {
+		vArg[i] = C.float(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetMouseDownDuration(selfArg, (*C.float)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = float32(vV)
+	}
+}
+
+func (self IO) SetMouseDownDurationPrev(v *[5]float32) {
+	vArg := make([]float32, len(v))
+	for i, vV := range v {
+		vArg[i] = C.float(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetMouseDownDurationPrev(selfArg, (*C.float)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = float32(vV)
+	}
+}
+
+func (self IO) SetMouseDragMaxDistanceAbs(v *[5]Vec2) {
+	vArg := make([]Vec2, len(v))
+	for i, vV := range v {
+		vArg[i] = vV.toC()
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetMouseDragMaxDistanceAbs(selfArg, (*C.ImVec2)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = *(&Vec2{}).fromC(vV)
+	}
+}
+
+func (self IO) SetMouseDragMaxDistanceSqr(v *[5]float32) {
+	vArg := make([]float32, len(v))
+	for i, vV := range v {
+		vArg[i] = C.float(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetMouseDragMaxDistanceSqr(selfArg, (*C.float)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = float32(vV)
+	}
 }
 
 func (self IO) SetPenPressure(v float32) {
@@ -23900,6 +24337,21 @@ func (self *MenuColumns) OffsetMark() uint16 {
 	return uint16(C.wrap_ImGuiMenuColumns_GetOffsetMark(selfArg))
 }
 
+func (self MenuColumns) SetWidths(v *[4]uint16) {
+	vArg := make([]uint16, len(v))
+	for i, vV := range v {
+		vArg[i] = C.ImU16(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiMenuColumns_SetWidths(selfArg, (*C.ImU16)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = uint16(vV)
+	}
+}
+
 func (self MetricsConfig) SetShowDebugLog(v bool) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -25128,6 +25580,21 @@ func (self *Payload) DataFrameCount() int32 {
 	return int32(C.wrap_ImGuiPayload_GetDataFrameCount(selfArg))
 }
 
+func (self Payload) SetDataType(v *[33]rune) {
+	vArg := make([]rune, len(v))
+	for i, vV := range v {
+		vArg[i] = C.char(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiPayload_SetDataType(selfArg, (*C.char)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = rune(vV)
+	}
+}
+
 func (self Payload) SetPreview(v bool) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -25696,6 +26163,21 @@ func (self *StackLevelInfo) DataType() DataType {
 		selfFin()
 	}()
 	return DataType(C.wrap_ImGuiStackLevelInfo_GetDataType(selfArg))
+}
+
+func (self StackLevelInfo) SetDesc(v *[57]rune) {
+	vArg := make([]rune, len(v))
+	for i, vV := range v {
+		vArg[i] = C.char(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiStackLevelInfo_SetDesc(selfArg, (*C.char)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = rune(vV)
+	}
 }
 
 func (self StackSizes) SetSizeOfIDStack(v int16) {
@@ -26563,6 +27045,21 @@ func (self *Style) CircleTessellationMaxError() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiStyle_GetCircleTessellationMaxError(selfArg))
+}
+
+func (self Style) SetColors(v *[55]Vec4) {
+	vArg := make([]Vec4, len(v))
+	for i, vV := range v {
+		vArg[i] = vV.toC()
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetColors(selfArg, (*C.ImVec4)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = *(&Vec4{}).fromC(vV)
+	}
 }
 
 func (self Style) SetHoverStationaryDelay(v float32) {
@@ -27759,6 +28256,21 @@ func (self *Table) RowBgColorCounter() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImGuiTable_GetRowBgColorCounter(selfArg))
+}
+
+func (self Table) SetRowBgColor(v *[2]uint32) {
+	vArg := make([]uint32, len(v))
+	for i, vV := range v {
+		vArg[i] = C.ImU32(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetRowBgColor(selfArg, (*C.ImU32)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = uint32(vV)
+	}
 }
 
 func (self Table) SetBorderColorStrong(v uint32) {
@@ -29856,6 +30368,21 @@ func (self *TextBuffer) Buf() Vector[string] {
 	return newVectorFromC(C.wrap_ImGuiTextBuffer_GetBuf(selfArg).Size, C.wrap_ImGuiTextBuffer_GetBuf(selfArg).Capacity, C.GoString(C.wrap_ImGuiTextBuffer_GetBuf(selfArg).Data))
 }
 
+func (self TextFilter) SetInputBuf(v *[256]rune) {
+	vArg := make([]rune, len(v))
+	for i, vV := range v {
+		vArg[i] = C.char(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTextFilter_SetInputBuf(selfArg, (*C.char)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = rune(vV)
+	}
+}
+
 func (self TextFilter) SetFilters(v Vector[*TextRange]) {
 	vData := v.Data
 	vDataArg, _ := vData.handle()
@@ -30075,6 +30602,21 @@ func (self *TypingSelectState) Request() TypingSelectRequest {
 
 	result := C.wrap_ImGuiTypingSelectState_GetRequest(selfArg)
 	return *newTypingSelectRequestFromC(func() *C.ImGuiTypingSelectRequest { result := result; return &result }())
+}
+
+func (self TypingSelectState) SetSearchBuffer(v *[64]rune) {
+	vArg := make([]rune, len(v))
+	for i, vV := range v {
+		vArg[i] = C.char(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiTypingSelectState_SetSearchBuffer(selfArg, (*C.char)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = rune(vV)
+	}
 }
 
 func (self TypingSelectState) SetFocusScope(v ID) {
@@ -30590,6 +31132,22 @@ func (self ViewportP) SetBgFgDrawListsLastFrame(v *[2]int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiViewportP_SetBgFgDrawListsLastFrame(selfArg, (*C.int)(&vArg[0]))
+}
+
+func (self ViewportP) SetBgFgDrawLists(v *[2]*DrawList) {
+	vArg := make([]*DrawList, len(v))
+	for i, vV := range v {
+		vVArg, vVFin := vV.handle()
+		vArg[i] = vVArg
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiViewportP_SetBgFgDrawLists(selfArg, (**C.ImDrawList)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = newDrawListFromC(vV)
+	}
 }
 
 func (self ViewportP) SetDrawDataP(v DrawData) {
@@ -32302,6 +32860,37 @@ func (self *Window) NavLastChildNavWindow() *Window {
 	return newWindowFromC(C.wrap_ImGuiWindow_GetNavLastChildNavWindow(selfArg))
 }
 
+func (self Window) SetNavLastIds(v *[2]ID) {
+	vArg := make([]ID, len(v))
+	for i, vV := range v {
+		vVArg, vVFin := vV.c()
+		vArg[i] = vVArg
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiWindow_SetNavLastIds(selfArg, (**C.ImGuiID)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = *newIDFromC(func() *C.ImGuiID { result := vV; return &result }())
+	}
+}
+
+func (self Window) SetNavRectRel(v *[2]Rect) {
+	vArg := make([]Rect, len(v))
+	for i, vV := range v {
+		vArg[i] = vV.toC()
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiWindow_SetNavRectRel(selfArg, (*C.ImRect)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = *(&Rect{}).fromC(vV)
+	}
+}
+
 func (self Window) SetNavPreferredScoringPosRel(v [2]*Vec2) {
 	vArg := make([]C.ImVec2, len(v))
 	vFin := make([]func(), len(v))
@@ -32702,6 +33291,21 @@ func (self *WindowClass) DockingAllowUnclassed() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiWindowClass_GetDockingAllowUnclassed(selfArg) == C.bool(true)
+}
+
+func (self WindowDockStyle) SetColors(v *[6]uint32) {
+	vArg := make([]uint32, len(v))
+	for i, vV := range v {
+		vArg[i] = C.ImU32(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImGuiWindowDockStyle_SetColors(selfArg, (*C.ImU32)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = uint32(vV)
+	}
 }
 
 func (self WindowSettings) SetID(v ID) {
@@ -33762,6 +34366,37 @@ func (self *StbUndoRecord) Charstorage() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_StbUndoRecord_GetChar_storage(selfArg))
+}
+
+func (self StbUndoState) SetUndorec(v *[99]StbUndoRecord) {
+	vArg := make([]StbUndoRecord, len(v))
+	for i, vV := range v {
+		vVArg, vVFin := vV.c()
+		vArg[i] = vVArg
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbUndoState_SetUndo_rec(selfArg, (**C.StbUndoRecord)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = *newStbUndoRecordFromC(func() *C.StbUndoRecord { result := vV; return &result }())
+	}
+}
+
+func (self StbUndoState) SetUndochar(v *[999]Wchar) {
+	vArg := make([]Wchar, len(v))
+	for i, vV := range v {
+		vArg[i] = C.ImWchar(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_StbUndoState_SetUndo_char(selfArg, (*C.ImWchar)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = Wchar(vV)
+	}
 }
 
 func (self StbUndoState) SetUndopoint(v int16) {
