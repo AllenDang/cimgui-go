@@ -950,3 +950,18 @@ func (self *NodesStyle) Flags() NodesStyleFlags {
 	}()
 	return NodesStyleFlags(C.wrap_ImNodesStyle_GetFlags(selfArg))
 }
+
+func (self NodesStyle) SetColors(v *[29]uint32) {
+	vArg := make([]C.uint, len(v))
+	for i, vV := range v {
+		vArg[i] = C.uint(vV)
+	}
+
+	selfArg, selfFin := self.handle()
+	defer selfFin()
+	C.wrap_ImNodesStyle_SetColors(selfArg, (*C.uint)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = uint32(vV)
+	}
+}

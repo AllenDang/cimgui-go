@@ -3,6 +3,8 @@ package main
 import "C"
 import (
 	"fmt"
+	"regexp"
+	"strconv"
 )
 
 type ArgumentWrapperData struct {
@@ -38,8 +40,6 @@ func getArgWrapper(
 ) (argDeclaration string, data ArgumentWrapperData, err error) {
 	argWrapperMap := map[CIdentifier]argumentWrapper{
 		"char":                simpleW("rune", "C.char"),
-		"char[5]":             simplePtrArrayW(5, "C.char", "rune"),
-		"char[16]":            simplePtrArrayW(16, "C.char", "rune"),
 		"char*":               constCharW,
 		"const char*":         constCharW,
 		"const char**":        charPtrPtrW,
@@ -90,12 +90,6 @@ func getArgWrapper(
 		"bool":                simpleW("bool", "C.bool"),
 		"const bool":          simpleW("bool", "C.bool"),
 		"bool*":               boolPtrW,
-		"int[2]":              simplePtrArrayW(2, "C.int", "int32"),
-		"int[3]":              simplePtrArrayW(3, "C.int", "int32"),
-		"int[4]":              simplePtrArrayW(4, "C.int", "int32"),
-		"float[2]":            simplePtrArrayW(2, "C.float", "float32"),
-		"float[3]":            simplePtrArrayW(3, "C.float", "float32"),
-		"float[4]":            simplePtrArrayW(4, "C.float", "float32"),
 		"ImWchar":             simpleW("Wchar", "C.ImWchar"),
 		"ImWchar*":            simpleW("(*Wchar)", "(*C.ImWchar)"),
 		"const ImWchar*":      simpleW("(*Wchar)", "(*C.ImWchar)"),
@@ -162,6 +156,7 @@ func getArgWrapper(
 		data = ArgumentWrapperData{
 			ArgType: a.Type.renameEnum(),
 			VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
+			CType:   GoIdentifier(fmt.Sprintf("C.%s", a.Type)),
 		}
 
 		return
@@ -207,6 +202,60 @@ func getArgWrapper(
 		return argDeclaration, data, nil
 	}
 
+	// consider array of form type[number] (check with regex)
+	r, err := regexp.Compile(`\w*\[\d+\]`)
+	if err != nil {
+		return "", ArgumentWrapperData{}, fmt.Errorf("cannot compile regex: %w", err)
+	}
+
+	if r.MatchString(string(a.Type)) {
+		// split out count and type name ("pureType")
+		parts := Split(a.Type, "[")
+		countStr := TrimSuffix(parts[1], "]")
+		count, err := strconv.Atoi(string(countStr))
+		if err != nil {
+			return "", ArgumentWrapperData{}, fmt.Errorf("cannot convert count to int: %w", err)
+		}
+		pureType := parts[0]
+		// decode pureType
+		singleDefName := a.Name + "V"
+		_, w, err := getArgWrapper(&ArgDef{
+			Name: singleDefName,
+			Type: pureType,
+		}, false, false, structNames, enumNames, refTypedefs)
+		if err != nil {
+			return "", ArgumentWrapperData{}, fmt.Errorf("creating array wrapper %w", err)
+		}
+		// we also need to be able to convert this back
+		fromC, err := getReturnWrapper(pureType, structNames, enumNames, refTypedefs)
+		if err != nil {
+			return "", ArgumentWrapperData{}, fmt.Errorf("creating array wrapper %w", err)
+		}
+		def := fmt.Sprintf(`
+%[1]sArg := make([]%[5]s, len(%[1]s))
+for i, %[3]s := range %[1]s {
+%[2]s
+%[1]sArg[i] = %[4]s
+}`, a.Name, w.ArgDefNoFin, singleDefName, w.VarName, w.CType)
+		data := ArgumentWrapperData{
+			ArgType:     GoIdentifier(fmt.Sprintf("*[%d]%s", count, w.ArgType)),
+			ArgDef:      def,
+			ArgDefNoFin: def,
+			VarName:     fmt.Sprintf("(*%s)(&%sArg[0])", w.CType, a.Name),
+			Finalizer: fmt.Sprintf(`
+for i, %[1]sV := range %[1]sArg {
+	(*%[1]s)[i] = %[2]s
+}
+		
+		`, a.Name, fmt.Sprintf(fromC.returnStmt, fmt.Sprintf("%sV", a.Name))),
+			CType: "*" + w.CType,
+		}
+
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, data.ArgType)
+
+		return argDeclaration, data, nil
+	}
+
 	pureType := TrimPrefix(a.Type, "const ")
 	isPointer := false
 	if HasSuffix(a.Type, "*") {
@@ -222,11 +271,13 @@ func getArgWrapper(
 			VarName:   fmt.Sprintf("%sArg", a.Name),
 			Finalizer: fmt.Sprintf("%sFin()", a.Name),
 			NoFin:     a.RemoveFinalizer,
+			CType:     GoIdentifier(fmt.Sprintf("C.%s", pureType)),
 		}
 
 		fn := ""
 		if isPointer {
 			w.ArgType = "*" + w.ArgType
+			w.CType = GoIdentifier(fmt.Sprintf("*C.%s", pureType))
 			fn = "handle"
 		} else {
 			fn = "c"
