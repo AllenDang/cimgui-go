@@ -244,7 +244,7 @@ func getArgWrapper(
 for i, %[3]s := range %[1]s {
 %[2]s
 %[1]sArg[i] = %[4]s
-}`, a.Name, w.ArgDef, singleDefName, w.VarName, w.ArgType)
+}`, a.Name, w.ArgDefNoFin, singleDefName, w.VarName, w.CType)
 		data := ArgumentWrapperData{
 			ArgType:     GoIdentifier(fmt.Sprintf("*[%d]%s", count, w.ArgType)),
 			ArgDef:      def,
@@ -279,7 +279,7 @@ for i, %[1]sV := range %[1]sArg {
 			VarName:   fmt.Sprintf("%sArg", a.Name),
 			Finalizer: fmt.Sprintf("%sFin()", a.Name),
 			NoFin:     a.RemoveFinalizer,
-			CType:     GoIdentifier(fmt.Sprintf("*C.%s", pureType)),
+			CType:     GoIdentifier(fmt.Sprintf("C.%s", pureType)),
 		}
 
 		fn := ""
