@@ -13936,6 +13936,10 @@ func (self PlotAxis) SetFormatSpec(v *[16]rune) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotAxis_SetFormatSpec(selfArg, (*C.char)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = rune(vV)
+	}
 }
 
 func (self PlotAxis) SetLinkedMin(v *float64) {
@@ -17316,6 +17320,10 @@ func (self PlotSubplot) SetTempSizes(v *[2]float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImPlotSubplot_SetTempSizes(selfArg, (*C.float)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = float32(vV)
+	}
 }
 
 func (self PlotSubplot) SetFrameHovered(v bool) {

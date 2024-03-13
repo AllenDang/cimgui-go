@@ -31132,6 +31132,10 @@ func (self ViewportP) SetBgFgDrawListsLastFrame(v *[2]int32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
 	C.wrap_ImGuiViewportP_SetBgFgDrawListsLastFrame(selfArg, (*C.int)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = int32(vV)
+	}
 }
 
 func (self ViewportP) SetBgFgDrawLists(v *[2]*DrawList) {
