@@ -40,8 +40,6 @@ func getArgWrapper(
 ) (argDeclaration string, data ArgumentWrapperData, err error) {
 	argWrapperMap := map[CIdentifier]argumentWrapper{
 		"char":                simpleW("rune", "C.char"),
-		"char[5]":             simplePtrArrayW(5, "C.char", "rune"),
-		"char[16]":            simplePtrArrayW(16, "C.char", "rune"),
 		"char*":               constCharW,
 		"const char*":         constCharW,
 		"const char**":        charPtrPtrW,
@@ -92,12 +90,6 @@ func getArgWrapper(
 		"bool":                simpleW("bool", "C.bool"),
 		"const bool":          simpleW("bool", "C.bool"),
 		"bool*":               boolPtrW,
-		"int[2]":              simplePtrArrayW(2, "C.int", "int32"),
-		"int[3]":              simplePtrArrayW(3, "C.int", "int32"),
-		"int[4]":              simplePtrArrayW(4, "C.int", "int32"),
-		"float[2]":            simplePtrArrayW(2, "C.float", "float32"),
-		"float[3]":            simplePtrArrayW(3, "C.float", "float32"),
-		"float[4]":            simplePtrArrayW(4, "C.float", "float32"),
 		"ImWchar":             simpleW("Wchar", "C.ImWchar"),
 		"ImWchar*":            simpleW("(*Wchar)", "(*C.ImWchar)"),
 		"const ImWchar*":      simpleW("(*Wchar)", "(*C.ImWchar)"),
