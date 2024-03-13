@@ -952,7 +952,7 @@ func (self *NodesStyle) Flags() NodesStyleFlags {
 }
 
 func (self NodesStyle) SetColors(v *[29]uint32) {
-	vArg := make([]uint32, len(v))
+	vArg := make([]C.uint, len(v))
 	for i, vV := range v {
 		vArg[i] = C.uint(vV)
 	}

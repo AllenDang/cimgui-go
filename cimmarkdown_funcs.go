@@ -440,15 +440,15 @@ func (self *MarkdownConfig) LinkIcon() string {
 }
 
 func (self MarkdownConfig) SetHeadingFormats(v *[3]MarkdownHeadingFormat) {
-	vArg := make([]MarkdownHeadingFormat, len(v))
+	vArg := make([]C.MarkdownHeadingFormat, len(v))
 	for i, vV := range v {
-		vVArg, vVFin := vV.c()
+		vVArg, _ := vV.c()
 		vArg[i] = vVArg
 	}
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_MarkdownConfig_SetHeadingFormats(selfArg, (**C.MarkdownHeadingFormat)(&vArg[0]))
+	C.wrap_MarkdownConfig_SetHeadingFormats(selfArg, (*C.MarkdownHeadingFormat)(&vArg[0]))
 
 	for i, vV := range vArg {
 		(*v)[i] = *newMarkdownHeadingFormatFromC(func() *C.MarkdownHeadingFormat { result := vV; return &result }())

@@ -15675,7 +15675,7 @@ func (self *PlotLegend) CanGoInside() bool {
 }
 
 func (self PlotNextItemData) SetColors(v *[5]Vec4) {
-	vArg := make([]Vec4, len(v))
+	vArg := make([]C.ImVec4, len(v))
 	for i, vV := range v {
 		vArg[i] = vV.toC()
 	}
@@ -15930,7 +15930,7 @@ func (self *PlotNextItemData) HiddenCond() PlotCond {
 }
 
 func (self PlotNextPlotData) SetRangeCond(v *[6]PlotCond) {
-	vArg := make([]PlotCond, len(v))
+	vArg := make([]C.ImPlotCond, len(v))
 	for i, vV := range v {
 		vArg[i] = C.ImPlotCond(vV)
 	}
@@ -15945,15 +15945,15 @@ func (self PlotNextPlotData) SetRangeCond(v *[6]PlotCond) {
 }
 
 func (self PlotNextPlotData) SetRange(v *[6]PlotRange) {
-	vArg := make([]PlotRange, len(v))
+	vArg := make([]C.ImPlotRange, len(v))
 	for i, vV := range v {
-		vVArg, vVFin := vV.c()
+		vVArg, _ := vV.c()
 		vArg[i] = vVArg
 	}
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImPlotNextPlotData_SetRange(selfArg, (**C.ImPlotRange)(&vArg[0]))
+	C.wrap_ImPlotNextPlotData_SetRange(selfArg, (*C.ImPlotRange)(&vArg[0]))
 
 	for i, vV := range vArg {
 		(*v)[i] = *newPlotRangeFromC(func() *C.ImPlotRange { result := vV; return &result }())
@@ -15961,7 +15961,7 @@ func (self PlotNextPlotData) SetRange(v *[6]PlotRange) {
 }
 
 func (self PlotNextPlotData) SetHasRange(v *[6]bool) {
-	vArg := make([]bool, len(v))
+	vArg := make([]C.bool, len(v))
 	for i, vV := range v {
 		vArg[i] = C.bool(vV)
 	}
@@ -15976,7 +15976,7 @@ func (self PlotNextPlotData) SetHasRange(v *[6]bool) {
 }
 
 func (self PlotNextPlotData) SetFit(v *[6]bool) {
-	vArg := make([]bool, len(v))
+	vArg := make([]C.bool, len(v))
 	for i, vV := range v {
 		vArg[i] = C.bool(vV)
 	}
@@ -15991,9 +15991,9 @@ func (self PlotNextPlotData) SetFit(v *[6]bool) {
 }
 
 func (self PlotNextPlotData) SetLinkedMin(v *[6]*float64) {
-	vArg := make([]*float64, len(v))
+	vArg := make([]*C.double, len(v))
 	for i, vV := range v {
-		vVArg, vVFin := WrapNumberPtr[C.double, float64](vV)
+		vVArg, _ := WrapNumberPtr[C.double, float64](vV)
 		vArg[i] = vVArg
 	}
 
@@ -16007,9 +16007,9 @@ func (self PlotNextPlotData) SetLinkedMin(v *[6]*float64) {
 }
 
 func (self PlotNextPlotData) SetLinkedMax(v *[6]*float64) {
-	vArg := make([]*float64, len(v))
+	vArg := make([]*C.double, len(v))
 	for i, vV := range v {
-		vVArg, vVFin := WrapNumberPtr[C.double, float64](vV)
+		vVArg, _ := WrapNumberPtr[C.double, float64](vV)
 		vArg[i] = vVArg
 	}
 
@@ -16091,15 +16091,15 @@ func (self *PlotPlot) MouseTextFlags() PlotMouseTextFlags {
 }
 
 func (self PlotPlot) SetAxes(v *[6]PlotAxis) {
-	vArg := make([]PlotAxis, len(v))
+	vArg := make([]C.ImPlotAxis, len(v))
 	for i, vV := range v {
-		vVArg, vVFin := vV.c()
+		vVArg, _ := vV.c()
 		vArg[i] = vVArg
 	}
 
 	selfArg, selfFin := self.handle()
 	defer selfFin()
-	C.wrap_ImPlotPlot_SetAxes(selfArg, (**C.ImPlotAxis)(&vArg[0]))
+	C.wrap_ImPlotPlot_SetAxes(selfArg, (*C.ImPlotAxis)(&vArg[0]))
 
 	for i, vV := range vArg {
 		(*v)[i] = *newPlotAxisFromC(func() *C.ImPlotAxis { result := vV; return &result }())
@@ -16948,7 +16948,7 @@ func (self *PlotStyle) PlotMinSize() Vec2 {
 }
 
 func (self PlotStyle) SetColors(v *[21]Vec4) {
-	vArg := make([]Vec4, len(v))
+	vArg := make([]C.ImVec4, len(v))
 	for i, vV := range v {
 		vArg[i] = vV.toC()
 	}
