@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/kpango/glg"
+	"regexp"
+	"strconv"
 )
 
 // Wrapper for return value
@@ -67,6 +70,12 @@ func getReturnWrapper(
 	_, isStruct := structNames[pureType]
 	isStruct = isStruct || (isRefStruct && !shouldSkipRefTypedef)
 	w, known := returnWrapperMap[t]
+	// check if is array (match regex)
+	isArray, err := regexp.Match(".*\\[\\d+\\]", []byte(t))
+	if err != nil {
+		glg.Fatalf("Error in regex: %s", err)
+	}
+
 	switch {
 	case known:
 		return w, nil
@@ -102,6 +111,33 @@ func getReturnWrapper(
 			returnType: "*" + TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(),
 			returnStmt: fmt.Sprintf("new%sFromC(%%s)", TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier()),
 		}, nil
+	case isArray:
+		typeCount := Split(t, "[")
+		count, err := strconv.Atoi(string(TrimSuffix(typeCount[1], "]")))
+		if err != nil {
+			return returnWrapper{}, fmt.Errorf("parsing array len: %w", err)
+		}
+
+		typeName := typeCount[0]
+		rw, err := getReturnWrapper(typeName, structNames, enumNames, refTypedefs)
+		if err != nil {
+			return returnWrapper{}, fmt.Errorf("creating array wrapper %w", err)
+		}
+
+		result := returnWrapper{
+			returnType: GoIdentifier(fmt.Sprintf("[%d]%s", count, rw.returnType)),
+			returnStmt: fmt.Sprintf(`func() [%[1]d]%[2]s {
+result := [%[1]d]%[2]s{}
+	resultMirr := %%s
+	for i := range result {
+		result[i] = %[3]s
+	}
+
+	return result
+}()`, count, rw.returnType, fmt.Sprintf(rw.returnStmt, "resultMirr[i]")),
+		}
+
+		return result, nil
 	default:
 		return returnWrapper{}, fmt.Errorf("unknown return type %s", t)
 	}
