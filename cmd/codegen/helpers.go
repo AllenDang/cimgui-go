@@ -75,3 +75,22 @@ func SliceToMap[T comparable](s []T) map[T]bool {
 	}
 	return m
 }
+
+func MergeMaps[T comparable](maps ...map[T]bool) map[T]bool {
+	result := make(map[T]bool)
+	for _, m := range maps {
+		for k, v := range m {
+			result[k] = v
+		}
+	}
+	return result
+}
+
+func RemoveMapValues[T comparable, S any](m map[T]S) map[T]bool {
+	result := make(map[T]bool)
+	for k := range m {
+		result[k] = true
+	}
+
+	return result
+}

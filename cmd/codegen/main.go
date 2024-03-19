@@ -109,7 +109,9 @@ type objectsDats struct {
 	structs     []StructDef
 	enums       []EnumDef
 	typedefs    *Typedefs
-	refTypedefs map[CIdentifier]string
+	refTypedefs map[CIdentifier]bool
+	refStructs  map[CIdentifier]bool
+	refEnums    map[GoIdentifier]bool
 }
 
 func parseJson(jsonData *jsonData) (*objectsDats, error) {
@@ -138,14 +140,26 @@ func parseJson(jsonData *jsonData) (*objectsDats, error) {
 		return nil, fmt.Errorf("cannot get struct definitions: %w", err)
 	}
 
-	result.refTypedefs = make(map[CIdentifier]string)
+	result.refTypedefs = make(map[CIdentifier]bool)
 	if len(jsonData.refTypedefs) > 0 {
 		typedefs, err := getTypedefs(jsonData.refTypedefs)
 		if err != nil {
 			return nil, fmt.Errorf("cannot get reference typedefs: %w", err)
 		}
 
-		result.refTypedefs = typedefs.data
+		result.refTypedefs = RemoveMapValues(typedefs.data)
+	}
+
+	result.refEnums = make(map[GoIdentifier]bool)
+	result.refStructs = make(map[CIdentifier]bool)
+	if len(jsonData.refStructAndEnums) > 0 {
+		refEnums, refStructs, err := getEnumAndStructNames(jsonData.refStructAndEnums)
+		if err != nil {
+			return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
+		}
+
+		result.refEnums = SliceToMap(refEnums)
+		result.refStructs = SliceToMap(refStructs)
 	}
 
 	return result, nil
@@ -181,53 +195,35 @@ func main() {
 	}
 
 	// 1. Generate code
-	// 1.1. Generate Go typedefs
+	// 1.1. Generate Go Enums
+	// generate reference only enum and struct names
+	enumNames := generateGoEnums(flags.prefix, objectsData.enums)
+	data.enumNames = SliceToMap(enumNames)
+	// 1.1.1 If appliable, add ref enums
+	data.enumNames = MergeMaps(data.enumNames, objectsData.refEnums)
+
+	// 1.2. Generate Go typedefs
 	callbacks, err := proceedTypedefs(flags.prefix, objectsData.typedefs, objectsData.structs, objectsData.enums, objectsData.refTypedefs)
 	data.typedefsNames = SliceToMap(callbacks)
 
-	// 1.2. Generate C wrapper
+	data.typedefsNames = MergeMaps(SliceToMap(callbacks), objectsData.refTypedefs)
+
+	// 1.3. Generate C wrapper
 	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, objectsData.funcs)
 	if err != nil {
 		log.Panic(err)
 	}
 
-	var es, ss = make([]GoIdentifier, 0), make([]CIdentifier, 0)
-	// generate reference only enum and struct names
-	if len(jsonData.refStructAndEnums) > 0 {
-		es, ss, err = getEnumAndStructNames(jsonData.refStructAndEnums)
-		if err != nil {
-			log.Panic(err)
-		}
-	}
-
-	enumNames := generateGoEnums(flags.prefix, objectsData.enums)
-
-	structNames := make([]CIdentifier, 0)
+	// 1.3.1. Generate Struct accessors in C
 	structAccessorFuncs, err := generateCppStructsAccessor(flags.prefix, validFuncs, objectsData.structs)
 	if err != nil {
 		log.Panic(err)
 	}
 
+	// This variable stores funcs that needs to be written to GO now.
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
-	if len(jsonData.refStructAndEnums) > 0 {
-		enumNames = append(enumNames, es...)
-		structNames = append(structNames, ss...)
-	}
-
-	structNames = append(structNames, callbacks...)
-
-	if err := generateGoFuncs(flags.prefix, validFuncs, enumNames, structNames, objectsData.refTypedefs); err != nil {
+	if err := generateGoFuncs(flags.prefix, validFuncs, enumNames, data.typedefsNames, objectsData.refTypedefs); err != nil {
 		log.Panic(err)
 	}
-}
-
-func MergeMaps[T comparable](maps ...map[T]bool) map[T]bool {
-	result := make(map[T]bool)
-	for _, m := range maps {
-		for k, v := range m {
-			result[k] = v
-		}
-	}
-	return result
 }
