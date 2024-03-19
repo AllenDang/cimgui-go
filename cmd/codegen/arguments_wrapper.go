@@ -34,9 +34,7 @@ type argumentWrapper func(arg ArgDef) ArgumentWrapperData
 func getArgWrapper(
 	a *ArgDef,
 	makeFirstArgReceiver, isGetter bool,
-	structNames map[CIdentifier]bool,
-	enumNames map[GoIdentifier]bool,
-	refTypedefs map[CIdentifier]bool, // <- this may be empty map if generating cimgui and should be cimgui's typedefs_dict.json for other
+	context *DataPack,
 ) (argDeclaration string, data ArgumentWrapperData, err error) {
 	argWrapperMap := map[CIdentifier]argumentWrapper{
 		"char":                simpleW("rune", "C.char"),
@@ -151,7 +149,7 @@ func getArgWrapper(
 		return argDeclaration, data, nil
 	}
 
-	if goEnumName := a.Type; isEnum(goEnumName, enumNames) {
+	if goEnumName := a.Type; isEnum(goEnumName, context.enumNames) {
 		argDeclaration = fmt.Sprintf("%s %s", a.Name, goEnumName.renameGoIdentifier())
 		data = ArgumentWrapperData{
 			ArgType: a.Type.renameEnum(),
@@ -169,7 +167,7 @@ func getArgWrapper(
 		_, w, err := getArgWrapper(&ArgDef{
 			Name: dataName,
 			Type: pureType,
-		}, false, false, structNames, enumNames, refTypedefs)
+		}, false, false, context)
 		if err != nil {
 			return "", ArgumentWrapperData{}, fmt.Errorf("creating vector wrapper %w", err)
 		}
@@ -222,12 +220,12 @@ func getArgWrapper(
 		_, w, err := getArgWrapper(&ArgDef{
 			Name: singleDefName,
 			Type: pureType,
-		}, false, false, structNames, enumNames, refTypedefs)
+		}, false, false, context)
 		if err != nil {
 			return "", ArgumentWrapperData{}, fmt.Errorf("creating array wrapper %w", err)
 		}
 		// we also need to be able to convert this back
-		fromC, err := getReturnWrapper(pureType, structNames, enumNames, refTypedefs)
+		fromC, err := getReturnWrapper(pureType, context)
 		if err != nil {
 			return "", ArgumentWrapperData{}, fmt.Errorf("creating array wrapper %w", err)
 		}
@@ -263,9 +261,9 @@ for i, %[1]sV := range %[1]sArg {
 		isPointer = true
 	}
 
-	_, isRefTypedef := refTypedefs[pureType]
+	_, isRefTypedef := context.refTypedefs[pureType]
 	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
-	if structNames[pureType] || (isRefTypedef && !shouldSkipRefTypedef) {
+	if context.structNames[pureType] || (isRefTypedef && !shouldSkipRefTypedef) {
 		w := ArgumentWrapperData{
 			ArgType:   pureType.renameGoIdentifier(),
 			VarName:   fmt.Sprintf("%sArg", a.Name),

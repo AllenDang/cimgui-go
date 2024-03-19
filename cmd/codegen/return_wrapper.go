@@ -68,13 +68,13 @@ func getReturnWrapper(
 	switch {
 	case known:
 		return w, nil
-	case (structNames[t] || refTypedefs[t]) && !shouldSkipStruct(t):
+	case (data.structNames[t] || data.refStructNames[t]) && !shouldSkipStruct(t):
 		return returnWrapper{
 			returnType: t.renameGoIdentifier(),
 			returnStmt: fmt.Sprintf(`*new%sFromC(func() *C.%s {result := %%s; return &result}())
 `, t.renameGoIdentifier(), t),
 		}, nil
-	case isEnum(t, enumNames):
+	case isEnum(t, data.enumNames):
 		return returnWrapper{
 			returnType: t.renameEnum(),
 			returnStmt: fmt.Sprintf("%s(%%s)", t.renameEnum()),
@@ -82,7 +82,7 @@ func getReturnWrapper(
 	case HasPrefix(t, "ImVector_") &&
 		!(HasSuffix(t, "*") || HasSuffix(t, "]")):
 		pureType := CIdentifier(TrimPrefix(t, "ImVector_") + "*")
-		rw, err := getReturnWrapper(pureType, structNames, enumNames, refTypedefs)
+		rw, err := getReturnWrapper(pureType, data)
 		if err != nil {
 			return returnWrapper{}, fmt.Errorf("creating vector wrapper %w", err)
 		}
@@ -90,7 +90,7 @@ func getReturnWrapper(
 			returnType: GoIdentifier(fmt.Sprintf("Vector[%s]", rw.returnType)),
 			returnStmt: fmt.Sprintf("newVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
 		}, nil
-	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), enumNames):
+	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), data.enumNames):
 		return returnWrapper{
 			returnType: "*" + TrimSuffix(t, "*").renameEnum(),
 			returnStmt: fmt.Sprintf("(*%s)(%%s)", TrimSuffix(t, "*").renameEnum()),

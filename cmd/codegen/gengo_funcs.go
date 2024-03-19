@@ -41,6 +41,7 @@ func generateGoFuncs(
 		structNames: data.typedefsNames,
 		enumNames:   data.enumNames,
 		refTypedefs: data.refTypedefs,
+		context:     data,
 	}
 
 	generator.writeFuncsFileHeader()
@@ -104,8 +105,9 @@ type goFuncsGenerator struct {
 
 	sb                 strings.Builder
 	convertedFuncCount int
+	shouldGenerate     bool
 
-	shouldGenerate bool
+	context *DataPack
 }
 
 // writeFuncsFileHeader writes a header of the generated file
@@ -131,7 +133,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 
 	// determine kind of function:
 	returnTypeType := returnTypeUnknown
-	_, err := getReturnWrapper(f.Ret, g.structNames, g.enumNames, g.refTypedefs) // TODO: we call this twice now
+	_, err := getReturnWrapper(f.Ret, g.context) // TODO: we call this twice now
 	if err == nil {
 		returnTypeType = returnTypeKnown
 	}
@@ -206,7 +208,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 		return false
 	}
 
-	rw, err := getReturnWrapper(cReturnType, g.structNames, g.enumNames, g.refTypedefs)
+	rw, err := getReturnWrapper(cReturnType, g.context)
 	if err != nil {
 		switch returnTypeType {
 		case returnTypeKnown, returnTypeStructPtr, returnTypeConstructor, returnTypeStruct:
@@ -360,9 +362,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []GoIdentifier, arg
 			&a,
 			i == 0 && f.StructSetter,
 			f.StructGetter && g.structNames[a.Type],
-			g.structNames,
-			g.enumNames,
-			g.refTypedefs,
+			g.context,
 		)
 		if err != nil {
 			glg.Debugf("Unknown argument type \"%s\" in function %s", a.Type, f.FuncName)

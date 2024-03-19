@@ -176,15 +176,16 @@ func parseJson(jsonData *jsonData) (*objectsDats, error) {
 type DataPack struct {
 	prefix string
 
-	funcNames    map[CIdentifier]bool
-	enumNames    map[GoIdentifier]bool
-	refEnumNames map[GoIdentifier]bool
+	funcNames map[CIdentifier]bool
+	enumNames map[GoIdentifier]bool
 
-	structNames    map[CIdentifier]bool
-	refStructNames map[CIdentifier]bool
+	structNames map[CIdentifier]bool
 
 	typedefsNames map[CIdentifier]bool
-	refTypedefs   map[CIdentifier]bool
+
+	refStructNames map[CIdentifier]bool
+	refEnumNames   map[GoIdentifier]bool
+	refTypedefs    map[CIdentifier]bool
 
 	// TODO: might want to remove this
 	flags *flags
@@ -205,10 +206,12 @@ func main() {
 	}
 
 	data := &DataPack{
-		prefix:      flags.prefix,
-		flags:       flags,
-		structNames: objectsData.structNames,
-		refTypedefs: objectsData.refTypedefs,
+		prefix: flags.prefix,
+		flags:  flags,
+
+		refStructNames: objectsData.refStructs,
+		refEnumNames:   objectsData.refEnums,
+		refTypedefs:    objectsData.refTypedefs,
 	}
 
 	// 1. Generate code
@@ -222,7 +225,7 @@ func main() {
 		log.Panic(err)
 	}
 
-	data.typedefsNames = SliceToMap(callbacks)
+	data.structNames = SliceToMap(callbacks)
 
 	// 1.3. Generate C wrapper
 	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, objectsData.funcs)

@@ -109,16 +109,12 @@ extern "C" {
 		// - short* -> *int16 (for newXXXFromC)
 		knownReturnType, returnTypeErr = getReturnWrapper(
 			CIdentifier(typedef),
-			map[CIdentifier]bool{},
-			map[GoIdentifier]bool{},
-			map[CIdentifier]bool{},
+			data, // TODO: this might be empty
 		)
 
 		knownPtrReturnType, ptrReturnTypeErr = getReturnWrapper(
 			CIdentifier(typedef)+"*",
-			map[CIdentifier]bool{},
-			map[GoIdentifier]bool{},
-			map[CIdentifier]bool{},
+			data, // TODO: this might be empty
 		)
 
 		_, knownArgType, argTypeErr = getArgWrapper(
@@ -127,9 +123,7 @@ extern "C" {
 				Type: CIdentifier(typedef),
 			},
 			false, false,
-			map[CIdentifier]bool{},
-			map[GoIdentifier]bool{},
-			map[CIdentifier]bool{},
+			data, // TODO: this might be empty
 		)
 
 		_, knownPtrArgType, ptrArgTypeErr = getArgWrapper(
@@ -138,9 +132,7 @@ extern "C" {
 				Type: CIdentifier(typedef) + "*",
 			},
 			false, false,
-			map[CIdentifier]bool{},
-			map[GoIdentifier]bool{},
-			map[CIdentifier]bool{},
+			data, // TODO: this might be empty
 		)
 
 		// check if k is a name of struct from structDefs
