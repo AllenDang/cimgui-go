@@ -143,10 +143,12 @@ func main() {
 	//structNames := generateGoStructs(*prefix, structs, enums, es, ss, refTypedefs)
 	structNames := make([]CIdentifier, 0)
 
-	structAccessorFuncs, err := generateCppStructsAccessor(*prefix, validFuncs, structs)
+	structAccessorFuncs, arrayIndexers, err := generateCppStructsAccessor(*prefix, validFuncs, structs)
 	if err != nil {
 		log.Panic(err)
 	}
+
+	fmt.Println(arrayIndexers) // TODO
 
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 

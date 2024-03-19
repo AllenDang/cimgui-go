@@ -427,9 +427,12 @@ extern "C" {
 	return validFuncs, nil
 }
 
-func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []StructDef) ([]FuncDef, error) {
+func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []StructDef) (accessors []FuncDef, arrayIndexer map[CIdentifier]CIdentifier, err error) {
 	var structAccessorFuncs []FuncDef
 
+	arrayIndexer = make(map[CIdentifier]CIdentifier)
+
+	// TODO: extrac this to some separated function, maybe on top of this file
 	skipFuncNames := map[CIdentifier]bool{
 		"ImVec1_GetX":      true,
 		"ImVec2_GetX":      true,
@@ -569,9 +572,10 @@ extern "C" {
 			fmt.Fprintf(
 				sbHeader,
 				"extern %s%s %s(%s *self);\n",
-				memberType, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name,
+				memberType, getSizeIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name,
 			)
 
+			// here we change void* to uintptr_t for .go handling
 			if m.Type == "void*" {
 				fmt.Fprintf(sbCpp,
 					"%s%s %s(%s *self) { return (uintptr_t)self->%s; }\n",
@@ -581,6 +585,23 @@ extern "C" {
 				fmt.Fprintf(sbCpp,
 					"%s%s %s(%s *self) { return self->%s; }\n",
 					memberType, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name, Split(m.Name, "[")[0],
+				)
+			}
+
+			// if is array type, need to add a special method to get certain index of array
+			if _, ok := arrayIndexer[m.Type]; m.Size > 0 && !ok {
+				getterFuncName = CIdentifier(prefix) + "_" + ReplaceAll(ReplaceAll(m.Type, " ", "_"), "*", "Ptr") + "_GetAtIdx"
+				arrayIndexer[m.Type] = getterFuncName
+
+				fmt.Fprintf(
+					sbHeader,
+					"extern %[1]s %[2]s(%[1]s *self, int index);\n",
+					memberType, getterFuncName,
+				)
+
+				fmt.Fprintf(sbCpp,
+					"%[1]s %[2]s(%[1]s *self, int index) { return self[index]; }\n",
+					memberType, getterFuncName, s.Name,
 				)
 			}
 		}
@@ -595,30 +616,30 @@ extern "C" {
 	headerPath := fmt.Sprintf("%s_structs_accessor.h", prefix)
 	headerFile, err := os.Create(headerPath)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create cpp file %v: %v", headerPath, err)
+		return nil, nil, fmt.Errorf("failed to create cpp file %v: %v", headerPath, err)
 	}
 
 	defer headerFile.Close()
 
 	_, err = headerFile.WriteString(sbHeader.String())
 	if err != nil {
-		return nil, fmt.Errorf("failed to write to file %v: %v", headerPath, err)
+		return nil, nil, fmt.Errorf("failed to write to file %v: %v", headerPath, err)
 	}
 
 	cppPath := fmt.Sprintf("%s_structs_accessor.cpp", prefix)
 	cppFile, err := os.Create(cppPath)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create cpp file %v: %v", cppPath, err)
+		return nil, nil, fmt.Errorf("failed to create cpp file %v: %v", cppPath, err)
 	}
 
 	defer cppFile.Close()
 
 	_, err = cppFile.WriteString(sbCpp.String())
 	if err != nil {
-		return nil, fmt.Errorf("failed to write to file %v: %v", cppPath, err)
+		return nil, nil, fmt.Errorf("failed to write to file %v: %v", cppPath, err)
 	}
 
-	return structAccessorFuncs, nil
+	return structAccessorFuncs, arrayIndexer, nil
 }
 
 func getSizeArg(size int) string {
@@ -632,6 +653,14 @@ func getSizeArg(size int) string {
 func getPtrIfSize(size int) string {
 	if size > 0 {
 		return "*"
+	}
+
+	return ""
+}
+
+func getSizeIfSize(size int) string {
+	if size > 0 {
+		return fmt.Sprintf("[%d]", size)
 	}
 
 	return ""
