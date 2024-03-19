@@ -105,10 +105,11 @@ func loadData(f *flags) (*jsonData, error) {
 // this will store json data processed by appropiate pre-rocessors
 // (parsed json)
 type objectsDats struct {
-	funcs                 []FuncDef
-	structs               []StructDef
-	enums                 []EnumDef
-	typedefs, refTypedefs *Typedefs
+	funcs       []FuncDef
+	structs     []StructDef
+	enums       []EnumDef
+	typedefs    *Typedefs
+	refTypedefs map[CIdentifier]string
 }
 
 func parseJson(jsonData *jsonData) (*objectsDats, error) {
@@ -146,18 +147,21 @@ func parseJson(jsonData *jsonData) (*objectsDats, error) {
 
 		result.refTypedefs = typedefs.data
 	}
+
+	return result, nil
 }
 
 // DataPack struct stores internal data of our generator
 type DataPack struct {
-	prefix     string
-	validFuncs map[CIdentifier]bool
+	prefix        string
+	funcNames     map[CIdentifier]bool
+	typedefsNames map[CIdentifier]bool
+	enumNames     map[GoIdentifier]bool // TODO: why this is GoIdentifier?
 	// TODO: might want to remove this
 	flags *flags
 }
 
 func main() {
-	data := new(DataPack)
 	flags := parse()
 	validateFiles(flags)
 
@@ -171,13 +175,21 @@ func main() {
 		glg.Fatalf("cannot parse json: %v", err)
 	}
 
-	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, funcs)
+	data := &DataPack{
+		prefix: flags.prefix,
+		flags:  flags,
+	}
+
+	// 1. Generate code
+	// 1.1. Generate Go typedefs
+	callbacks, err := proceedTypedefs(flags.prefix, objectsData.typedefs, objectsData.structs, objectsData.enums, objectsData.refTypedefs)
+	data.typedefsNames = SliceToMap(callbacks)
+
+	// 1.2. Generate C wrapper
+	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, objectsData.funcs)
 	if err != nil {
 		log.Panic(err)
 	}
-
-	data.prefix = flags.prefix
-	data.flags = flags
 
 	var es, ss = make([]GoIdentifier, 0), make([]CIdentifier, 0)
 	// generate reference only enum and struct names
@@ -188,14 +200,10 @@ func main() {
 		}
 	}
 
-	callbacks, err := proceedTypedefs(flags.prefix, typedefs, structs, enums, refTypedefs)
+	enumNames := generateGoEnums(flags.prefix, objectsData.enums)
 
-	// generate code
-	enumNames := generateGoEnums(flags.prefix, enums)
-	//structNames := generateGoStructs(*prefix, structs, enums, es, ss, refTypedefs)
 	structNames := make([]CIdentifier, 0)
-
-	structAccessorFuncs, err := generateCppStructsAccessor(flags.prefix, validFuncs, structs)
+	structAccessorFuncs, err := generateCppStructsAccessor(flags.prefix, validFuncs, objectsData.structs)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -209,7 +217,17 @@ func main() {
 
 	structNames = append(structNames, callbacks...)
 
-	if err := generateGoFuncs(flags.prefix, validFuncs, enumNames, structNames, refTypedefs); err != nil {
+	if err := generateGoFuncs(flags.prefix, validFuncs, enumNames, structNames, objectsData.refTypedefs); err != nil {
 		log.Panic(err)
 	}
+}
+
+func MergeMaps[T comparable](maps ...map[T]bool) map[T]bool {
+	result := make(map[T]bool)
+	for _, m := range maps {
+		for k, v := range m {
+			result[k] = v
+		}
+	}
+	return result
 }

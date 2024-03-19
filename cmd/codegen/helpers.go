@@ -67,3 +67,11 @@ func SortStrings[s ~string](str []s) {
 		return str[i] < str[j]
 	})
 }
+
+func SliceToMap[T comparable](s []T) map[T]bool {
+	m := make(map[T]bool, len(s))
+	for _, v := range s {
+		m[v] = true
+	}
+	return m
+}
