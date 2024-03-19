@@ -1,8 +1,8 @@
 package main
 
 import (
-	"flag"
 	"fmt"
+	"github.com/kpango/glg"
 	"log"
 	"os"
 )
@@ -13,6 +13,7 @@ const (
 	cppFileHeader   = generatorInfo
 )
 
+// this cextracts enums and structs names from json file.
 func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []GoIdentifier, structNames []CIdentifier, err error) {
 	enums, err := getEnumDefs(enumJsonBytes)
 	if err != nil {
@@ -37,28 +38,26 @@ func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []GoIdentifier, stru
 	return
 }
 
+func validateFiles(f *flags) {
+	stat, err := os.Stat(f.defJsonPath)
+	if err != nil || stat.IsDir() {
+		glg.Fatal("Invalid definitions json file path")
+	}
+
+	stat, err = os.Stat(f.enumsJsonpath)
+	if err != nil || stat.IsDir() {
+		glg.Fatal("Invalid enum json file path")
+	}
+
+	stat, err = os.Stat(f.typedefsJsonpath)
+	if err != nil || stat.IsDir() {
+		glg.Fatal("Invalid typedefs json file path")
+	}
+}
+
 func main() {
-	defJsonPath := flag.String("d", "", "definitions json file path")
-	enumsJsonpath := flag.String("e", "", "structs and enums json file path")
-	typedefsJsonpath := flag.String("t", "", "typedefs dict json file path")
-	refEnumsJsonPath := flag.String("r", "", "reference structs and enums json file path")
-	refTypedefsJsonPath := flag.String("rt", "", "reference typedefs_dict.json file path")
-	prefix := flag.String("p", "", "prefix for the generated file")
-	include := flag.String("i", "", "include header file")
-
-	parse()
-
-	flag.Parse()
-
-	stat, err := os.Stat(*defJsonPath)
-	if err != nil || stat.IsDir() {
-		log.Panic("Invalid definitions json file path")
-	}
-
-	stat, err = os.Stat(*enumsJsonpath)
-	if err != nil || stat.IsDir() {
-		log.Panic("Invalid enum json file path")
-	}
+	flags := parse()
+	validateFiles(flags)
 
 	defJsonBytes, err := os.ReadFile(*defJsonPath)
 	if err != nil {
