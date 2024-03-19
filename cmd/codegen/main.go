@@ -55,39 +55,59 @@ func validateFiles(f *flags) {
 	}
 }
 
+type jsonData struct {
+	structAndEnums,
+	typedefs,
+	defs,
+
+	refStructAndEnums,
+	refTypedefs []byte
+}
+
+func loadData(f *flags) (*jsonData, error) {
+	var err error
+
+	result := &jsonData{}
+
+	result.defs, err = os.ReadFile(f.defJsonPath)
+	if err != nil {
+		return nil, fmt.Errorf("cannot read definitions json file: %w", err)
+	}
+
+	result.typedefs, err = os.ReadFile(f.typedefsJsonpath)
+	if err != nil {
+		return nil, fmt.Errorf("cannot read typedefs json file: %w", err)
+	}
+
+	result.structAndEnums, err = os.ReadFile(f.enumsJsonpath)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	if len(f.refEnumsJsonPath) > 0 {
+		result.refStructAndEnums, err = os.ReadFile(f.refEnumsJsonPath)
+		if err != nil {
+			return nil, fmt.Errorf("cannot read reference struct and enums json file: %w", err)
+		}
+	}
+
+	if len(f.refTypedefsJsonPath) > 0 {
+		result.refTypedefs, err = os.ReadFile(f.refTypedefsJsonPath)
+		if err != nil {
+			return nil, fmt.Errorf("cannot read reference typedefs json file: %w", err)
+		}
+	}
+
+	return result, nil
+}
+
 func main() {
 	flags := parse()
 	validateFiles(flags)
 
-	defJsonBytes, err := os.ReadFile(*defJsonPath)
+	fileData, err := loadData(flags)
 	if err != nil {
-		log.Panic(err)
-	}
-
-	typedefsJsonBytes, err := os.ReadFile(*typedefsJsonpath)
-	if err != nil {
-		log.Panic(err)
-	}
-
-	enumJsonBytes, err := os.ReadFile(*enumsJsonpath)
-	if err != nil {
-		log.Panic(err)
-	}
-
-	var refEnumJsonBytes []byte
-	if len(*refEnumsJsonPath) > 0 {
-		refEnumJsonBytes, err = os.ReadFile(*refEnumsJsonPath)
-		if err != nil {
-			log.Panic(err)
-		}
-	}
-
-	var refTypedefsJsonBytes []byte
-	if len(*refTypedefsJsonPath) > 0 {
-		refTypedefsJsonBytes, err = os.ReadFile(*refTypedefsJsonPath)
-		if err != nil {
-			log.Panic(err)
-		}
+		glg.Fatalf("cannot load data: %v", err)
 	}
 
 	// get definitions from json file
