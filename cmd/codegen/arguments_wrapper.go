@@ -36,7 +36,7 @@ func getArgWrapper(
 	makeFirstArgReceiver, isGetter bool,
 	structNames map[CIdentifier]bool,
 	enumNames map[GoIdentifier]bool,
-	refTypedefs map[CIdentifier]string, // <- this may be empty map if generating cimgui and should be cimgui's typedefs_dict.json for other
+	refTypedefs map[CIdentifier]bool, // <- this may be empty map if generating cimgui and should be cimgui's typedefs_dict.json for other
 ) (argDeclaration string, data ArgumentWrapperData, err error) {
 	argWrapperMap := map[CIdentifier]argumentWrapper{
 		"char":                simpleW("rune", "C.char"),

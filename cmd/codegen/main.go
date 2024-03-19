@@ -151,7 +151,8 @@ func parseJson(jsonData *jsonData) (*objectsDats, error) {
 		result.refTypedefs = RemoveMapValues(typedefs.data)
 	}
 
-	_, result.structs, err = getEnumAndStructNames(jsonData.structAndEnums)
+	_, structs, err := getEnumAndStructNames(jsonData.structAndEnums)
+	result.structNames = SliceToMap(structs)
 	if err != nil {
 		return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
 	}
@@ -175,9 +176,13 @@ func parseJson(jsonData *jsonData) (*objectsDats, error) {
 type DataPack struct {
 	prefix string
 
-	funcNames     map[CIdentifier]bool
-	enumNames     map[GoIdentifier]bool // TODO: why this is GoIdentifier?
-	structNames   map[CIdentifier]bool
+	funcNames    map[CIdentifier]bool
+	enumNames    map[GoIdentifier]bool
+	refEnumNames map[GoIdentifier]bool
+
+	structNames    map[CIdentifier]bool
+	refStructNames map[CIdentifier]bool
+
 	typedefsNames map[CIdentifier]bool
 	refTypedefs   map[CIdentifier]bool
 
@@ -212,12 +217,12 @@ func main() {
 	data.enumNames = MergeMaps(SliceToMap(enumNames), objectsData.refEnums)
 
 	// 1.2. Generate Go typedefs
-	callbacks, err := proceedTypedefs(objectsData.typedefs, data, objectsData.refTypedefs)
+	callbacks, err := proceedTypedefs(objectsData.typedefs, data)
 	if err != nil {
 		log.Panic(err)
 	}
 
-	data.typedefsNames = MergeMaps(SliceToMap(callbacks), objectsData.refTypedefs)
+	data.typedefsNames = SliceToMap(callbacks)
 
 	// 1.3. Generate C wrapper
 	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, objectsData.funcs)
@@ -234,7 +239,7 @@ func main() {
 	// This variable stores funcs that needs to be written to GO now.
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
-	if err := generateGoFuncs(flags.prefix, validFuncs, enumNames, data.typedefsNames, objectsData.refTypedefs); err != nil {
+	if err := generateGoFuncs(validFuncs, data); err != nil {
 		log.Panic(err)
 	}
 }

@@ -111,14 +111,14 @@ extern "C" {
 			CIdentifier(typedef),
 			map[CIdentifier]bool{},
 			map[GoIdentifier]bool{},
-			map[CIdentifier]string{},
+			map[CIdentifier]bool{},
 		)
 
 		knownPtrReturnType, ptrReturnTypeErr = getReturnWrapper(
 			CIdentifier(typedef)+"*",
 			map[CIdentifier]bool{},
 			map[GoIdentifier]bool{},
-			map[CIdentifier]string{},
+			map[CIdentifier]bool{},
 		)
 
 		_, knownArgType, argTypeErr = getArgWrapper(
@@ -129,7 +129,7 @@ extern "C" {
 			false, false,
 			map[CIdentifier]bool{},
 			map[GoIdentifier]bool{},
-			map[CIdentifier]string{},
+			map[CIdentifier]bool{},
 		)
 
 		_, knownPtrArgType, ptrArgTypeErr = getArgWrapper(
@@ -140,7 +140,7 @@ extern "C" {
 			false, false,
 			map[CIdentifier]bool{},
 			map[GoIdentifier]bool{},
-			map[CIdentifier]string{},
+			map[CIdentifier]bool{},
 		)
 
 		// check if k is a name of struct from structDefs

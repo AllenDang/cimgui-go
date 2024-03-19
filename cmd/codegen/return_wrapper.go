@@ -12,9 +12,7 @@ type returnWrapper struct {
 
 func getReturnWrapper(
 	t CIdentifier,
-	structNames map[CIdentifier]bool,
-	enumNames map[GoIdentifier]bool,
-	refTypedefs map[CIdentifier]string,
+	data *DataPack,
 ) (returnWrapper, error) {
 	returnWrapperMap := map[CIdentifier]returnWrapper{
 		"bool":           {"bool", "%s == C.bool(true)"},
@@ -62,15 +60,15 @@ func getReturnWrapper(
 
 	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")
 	// check if pureType is a declared type (struct or something else from typedefs)
-	_, isRefStruct := refTypedefs[pureType]
+	_, isRefStruct := data.refStructNames[pureType]
 	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
-	_, isStruct := structNames[pureType]
+	_, isStruct := data.structNames[pureType]
 	isStruct = isStruct || (isRefStruct && !shouldSkipRefTypedef)
 	w, known := returnWrapperMap[t]
 	switch {
 	case known:
 		return w, nil
-	case structNames[t] && !shouldSkipStruct(t):
+	case (structNames[t] || refTypedefs[t]) && !shouldSkipStruct(t):
 		return returnWrapper{
 			returnType: t.renameGoIdentifier(),
 			returnStmt: fmt.Sprintf(`*new%sFromC(func() *C.%s {result := %%s; return &result}())

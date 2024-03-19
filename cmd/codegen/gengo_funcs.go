@@ -33,20 +33,14 @@ const (
 )
 
 // generateGoFuncs generates given list of functions and writes them to file
-func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []GoIdentifier, structNames []CIdentifier, refTypedefs map[CIdentifier]string) error {
+func generateGoFuncs(
+	validFuncs []FuncDef,
+	data *DataPack) error {
 	generator := &goFuncsGenerator{
-		prefix:      prefix,
-		structNames: make(map[CIdentifier]bool),
-		enumNames:   make(map[GoIdentifier]bool),
-		refTypedefs: refTypedefs,
-	}
-
-	for _, v := range structNames {
-		generator.structNames[v] = true
-	}
-
-	for _, v := range enumNames {
-		generator.enumNames[v] = true
+		prefix:      data.prefix,
+		structNames: data.typedefsNames,
+		enumNames:   data.enumNames,
+		refTypedefs: data.refTypedefs,
 	}
 
 	generator.writeFuncsFileHeader()
@@ -65,12 +59,12 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []GoIdentifi
 
 		// stop, when the function should not be generated
 		if !generator.shouldGenerate {
-			if flags.showNotGenerated {
+			if data.flags.showNotGenerated {
 				glg.Failf("not generated: %s%s", f.FuncName, f.Args)
 			}
 			continue
 		} else {
-			if flags.showGenerated {
+			if data.flags.showGenerated {
 				glg.Successf("generated: %s%s", f.FuncName, f.Args)
 			}
 		}
@@ -86,7 +80,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []GoIdentifi
 		100*float32(generator.convertedFuncCount)/float32(len(validFuncs)),
 	)
 
-	goFile, err := os.Create(fmt.Sprintf("%s_funcs.go", prefix))
+	goFile, err := os.Create(fmt.Sprintf("%s_funcs.go", data.prefix))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -106,7 +100,7 @@ type goFuncsGenerator struct {
 	prefix      string
 	structNames map[CIdentifier]bool
 	enumNames   map[GoIdentifier]bool
-	refTypedefs map[CIdentifier]string
+	refTypedefs map[CIdentifier]bool
 
 	sb                 strings.Builder
 	convertedFuncCount int
