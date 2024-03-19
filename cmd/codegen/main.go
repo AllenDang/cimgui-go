@@ -55,6 +55,7 @@ func validateFiles(f *flags) {
 	}
 }
 
+// this stores file bytes of our json files
 type jsonData struct {
 	structAndEnums,
 	typedefs,
@@ -101,53 +102,57 @@ func loadData(f *flags) (*jsonData, error) {
 	return result, nil
 }
 
+// DataPack struct stores internal data of our generator
+type DataPack struct {
+}
+
 func main() {
 	flags := parse()
 	validateFiles(flags)
 
-	fileData, err := loadData(flags)
+	jsonData, err := loadData(flags)
 	if err != nil {
 		glg.Fatalf("cannot load data: %v", err)
 	}
 
 	// get definitions from json file
-	funcs, err := getFunDefs(defJsonBytes)
+	funcs, err := getFunDefs(jsonData.defs)
 	if err != nil {
 		log.Panic(err.Error())
 	}
 
-	enums, err := getEnumDefs(enumJsonBytes)
+	enums, err := getEnumDefs(jsonData.structAndEnums)
 	if err != nil {
 		log.Panic(err.Error())
 	}
 
-	typedefs, err := getTypedefs(typedefsJsonBytes)
+	typedefs, err := getTypedefs(jsonData.typedefs)
 	if err != nil {
 		log.Panic(err.Error())
 	}
 
-	structs, err := getStructDefs(enumJsonBytes)
+	structs, err := getStructDefs(jsonData.structAndEnums)
 	if err != nil {
 		log.Panic(err.Error())
 	}
 
-	validFuncs, err := generateCppWrapper(*prefix, *include, funcs)
+	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, funcs)
 	if err != nil {
 		log.Panic(err)
 	}
 
 	var es, ss = make([]GoIdentifier, 0), make([]CIdentifier, 0)
 	// generate reference only enum and struct names
-	if len(refEnumJsonBytes) > 0 {
-		es, ss, err = getEnumAndStructNames(refEnumJsonBytes)
+	if len(jsonData.refStructAndEnums) > 0 {
+		es, ss, err = getEnumAndStructNames(jsonData.refStructAndEnums)
 		if err != nil {
 			log.Panic(err)
 		}
 	}
 
 	var refTypedefs = make(map[CIdentifier]string)
-	if len(refTypedefsJsonBytes) > 0 {
-		typedefs, err := getTypedefs(refTypedefsJsonBytes)
+	if len(jsonData.refTypedefs) > 0 {
+		typedefs, err := getTypedefs(jsonData.refTypedefs)
 		if err != nil {
 			log.Panic(err)
 		}
@@ -155,28 +160,28 @@ func main() {
 		refTypedefs = typedefs.data
 	}
 
-	callbacks, err := proceedTypedefs(*prefix, typedefs, structs, enums, refTypedefs)
+	callbacks, err := proceedTypedefs(flags.prefix, typedefs, structs, enums, refTypedefs)
 
 	// generate code
-	enumNames := generateGoEnums(*prefix, enums)
+	enumNames := generateGoEnums(flags.prefix, enums)
 	//structNames := generateGoStructs(*prefix, structs, enums, es, ss, refTypedefs)
 	structNames := make([]CIdentifier, 0)
 
-	structAccessorFuncs, err := generateCppStructsAccessor(*prefix, validFuncs, structs)
+	structAccessorFuncs, err := generateCppStructsAccessor(flags.prefix, validFuncs, structs)
 	if err != nil {
 		log.Panic(err)
 	}
 
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
-	if len(refEnumJsonBytes) > 0 {
+	if len(jsonData.refStructAndEnums) > 0 {
 		enumNames = append(enumNames, es...)
 		structNames = append(structNames, ss...)
 	}
 
 	structNames = append(structNames, callbacks...)
 
-	if err := generateGoFuncs(*prefix, validFuncs, enumNames, structNames, refTypedefs); err != nil {
+	if err := generateGoFuncs(flags.prefix, validFuncs, enumNames, structNames, refTypedefs); err != nil {
 		log.Panic(err)
 	}
 }
