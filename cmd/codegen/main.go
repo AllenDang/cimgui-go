@@ -102,11 +102,62 @@ func loadData(f *flags) (*jsonData, error) {
 	return result, nil
 }
 
+// this will store json data processed by appropiate pre-rocessors
+// (parsed json)
+type objectsDats struct {
+	funcs                 []FuncDef
+	structs               []StructDef
+	enums                 []EnumDef
+	typedefs, refTypedefs *Typedefs
+}
+
+func parseJson(jsonData *jsonData) (*objectsDats, error) {
+	var err error
+
+	result := &objectsDats{}
+
+	// get definitions from json file
+	result.funcs, err = getFunDefs(jsonData.defs)
+	if err != nil {
+		return nil, fmt.Errorf("cannot get function definitions: %w", err)
+	}
+
+	result.enums, err = getEnumDefs(jsonData.structAndEnums)
+	if err != nil {
+		return nil, fmt.Errorf("cannot get enum definitions: %w", err)
+	}
+
+	result.typedefs, err = getTypedefs(jsonData.typedefs)
+	if err != nil {
+		return nil, fmt.Errorf("cannot get typedefs: %w", err)
+	}
+
+	result.structs, err = getStructDefs(jsonData.structAndEnums)
+	if err != nil {
+		return nil, fmt.Errorf("cannot get struct definitions: %w", err)
+	}
+
+	result.refTypedefs = make(map[CIdentifier]string)
+	if len(jsonData.refTypedefs) > 0 {
+		typedefs, err := getTypedefs(jsonData.refTypedefs)
+		if err != nil {
+			return nil, fmt.Errorf("cannot get reference typedefs: %w", err)
+		}
+
+		result.refTypedefs = typedefs.data
+	}
+}
+
 // DataPack struct stores internal data of our generator
 type DataPack struct {
+	prefix     string
+	validFuncs map[CIdentifier]bool
+	// TODO: might want to remove this
+	flags *flags
 }
 
 func main() {
+	data := new(DataPack)
 	flags := parse()
 	validateFiles(flags)
 
@@ -115,31 +166,18 @@ func main() {
 		glg.Fatalf("cannot load data: %v", err)
 	}
 
-	// get definitions from json file
-	funcs, err := getFunDefs(jsonData.defs)
+	objectsData, err := parseJson(jsonData)
 	if err != nil {
-		log.Panic(err.Error())
-	}
-
-	enums, err := getEnumDefs(jsonData.structAndEnums)
-	if err != nil {
-		log.Panic(err.Error())
-	}
-
-	typedefs, err := getTypedefs(jsonData.typedefs)
-	if err != nil {
-		log.Panic(err.Error())
-	}
-
-	structs, err := getStructDefs(jsonData.structAndEnums)
-	if err != nil {
-		log.Panic(err.Error())
+		glg.Fatalf("cannot parse json: %v", err)
 	}
 
 	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, funcs)
 	if err != nil {
 		log.Panic(err)
 	}
+
+	data.prefix = flags.prefix
+	data.flags = flags
 
 	var es, ss = make([]GoIdentifier, 0), make([]CIdentifier, 0)
 	// generate reference only enum and struct names
@@ -148,16 +186,6 @@ func main() {
 		if err != nil {
 			log.Panic(err)
 		}
-	}
-
-	var refTypedefs = make(map[CIdentifier]string)
-	if len(jsonData.refTypedefs) > 0 {
-		typedefs, err := getTypedefs(jsonData.refTypedefs)
-		if err != nil {
-			log.Panic(err)
-		}
-
-		refTypedefs = typedefs.data
 	}
 
 	callbacks, err := proceedTypedefs(flags.prefix, typedefs, structs, enums, refTypedefs)
