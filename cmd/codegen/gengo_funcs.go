@@ -35,13 +35,13 @@ const (
 // generateGoFuncs generates given list of functions and writes them to file
 func generateGoFuncs(
 	validFuncs []FuncDef,
-	data *DataPack) error {
+	context *Context) error {
 	generator := &goFuncsGenerator{
-		prefix:      data.prefix,
-		structNames: data.typedefsNames,
-		enumNames:   data.enumNames,
-		refTypedefs: data.refTypedefs,
-		context:     data,
+		prefix:      context.prefix,
+		structNames: context.typedefsNames,
+		enumNames:   context.enumNames,
+		refTypedefs: context.refTypedefs,
+		context:     context,
 	}
 
 	generator.writeFuncsFileHeader()
@@ -60,12 +60,12 @@ func generateGoFuncs(
 
 		// stop, when the function should not be generated
 		if !generator.shouldGenerate {
-			if data.flags.showNotGenerated {
+			if context.flags.showNotGenerated {
 				glg.Failf("not generated: %s%s", f.FuncName, f.Args)
 			}
 			continue
 		} else {
-			if data.flags.showGenerated {
+			if context.flags.showGenerated {
 				glg.Successf("generated: %s%s", f.FuncName, f.Args)
 			}
 		}
@@ -81,7 +81,7 @@ func generateGoFuncs(
 		100*float32(generator.convertedFuncCount)/float32(len(validFuncs)),
 	)
 
-	goFile, err := os.Create(fmt.Sprintf("%s_funcs.go", data.prefix))
+	goFile, err := os.Create(fmt.Sprintf("%s_funcs.go", context.prefix))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -107,7 +107,7 @@ type goFuncsGenerator struct {
 	convertedFuncCount int
 	shouldGenerate     bool
 
-	context *DataPack
+	context *Context
 }
 
 // writeFuncsFileHeader writes a header of the generated file

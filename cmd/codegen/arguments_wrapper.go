@@ -34,7 +34,7 @@ type argumentWrapper func(arg ArgDef) ArgumentWrapperData
 func getArgWrapper(
 	a *ArgDef,
 	makeFirstArgReceiver, isGetter bool,
-	context *DataPack,
+	context *Context,
 ) (argDeclaration string, data ArgumentWrapperData, err error) {
 	argWrapperMap := map[CIdentifier]argumentWrapper{
 		"char":                simpleW("rune", "C.char"),

@@ -12,7 +12,7 @@ type returnWrapper struct {
 
 func getReturnWrapper(
 	t CIdentifier,
-	data *DataPack,
+	data *Context,
 ) (returnWrapper, error) {
 	returnWrapperMap := map[CIdentifier]returnWrapper{
 		"bool":           {"bool", "%s == C.bool(true)"},

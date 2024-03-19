@@ -103,22 +103,33 @@ func loadData(f *flags) (*jsonData, error) {
 }
 
 // this will store json data processed by appropiate pre-rocessors
-// (parsed json)
-type objectsDats struct {
-	funcs       []FuncDef
-	structs     []StructDef
+type Context struct {
+	funcs    []FuncDef
+	structs  []StructDef
+	enums    []EnumDef
+	typedefs *Typedefs
+
+	prefix string
+
+	funcNames map[CIdentifier]bool
+	enumNames map[GoIdentifier]bool
+
 	structNames map[CIdentifier]bool
-	enums       []EnumDef
-	typedefs    *Typedefs
-	refTypedefs map[CIdentifier]bool
-	refStructs  map[CIdentifier]bool
-	refEnums    map[GoIdentifier]bool
+
+	typedefsNames map[CIdentifier]bool
+
+	refStructNames map[CIdentifier]bool
+	refEnumNames   map[GoIdentifier]bool
+	refTypedefs    map[CIdentifier]bool
+
+	// TODO: might want to remove this
+	flags *flags
 }
 
-func parseJson(jsonData *jsonData) (*objectsDats, error) {
+func parseJson(jsonData *jsonData) (*Context, error) {
 	var err error
 
-	result := &objectsDats{}
+	result := &Context{}
 
 	// get definitions from json file
 	result.funcs, err = getFunDefs(jsonData.defs)
@@ -157,38 +168,19 @@ func parseJson(jsonData *jsonData) (*objectsDats, error) {
 		return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
 	}
 
-	result.refEnums = make(map[GoIdentifier]bool)
-	result.refStructs = make(map[CIdentifier]bool)
+	result.refEnumNames = make(map[GoIdentifier]bool)
+	result.refStructNames = make(map[CIdentifier]bool)
 	if len(jsonData.refStructAndEnums) > 0 {
 		refEnums, refStructs, err := getEnumAndStructNames(jsonData.refStructAndEnums)
 		if err != nil {
 			return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
 		}
 
-		result.refEnums = SliceToMap(refEnums)
-		result.refStructs = SliceToMap(refStructs)
+		result.refEnumNames = SliceToMap(refEnums)
+		result.refStructNames = SliceToMap(refStructs)
 	}
 
 	return result, nil
-}
-
-// DataPack struct stores internal data of our generator
-type DataPack struct {
-	prefix string
-
-	funcNames map[CIdentifier]bool
-	enumNames map[GoIdentifier]bool
-
-	structNames map[CIdentifier]bool
-
-	typedefsNames map[CIdentifier]bool
-
-	refStructNames map[CIdentifier]bool
-	refEnumNames   map[GoIdentifier]bool
-	refTypedefs    map[CIdentifier]bool
-
-	// TODO: might want to remove this
-	flags *flags
 }
 
 func main() {
@@ -200,41 +192,35 @@ func main() {
 		glg.Fatalf("cannot load data: %v", err)
 	}
 
-	objectsData, err := parseJson(jsonData)
+	context, err := parseJson(jsonData)
 	if err != nil {
 		glg.Fatalf("cannot parse json: %v", err)
 	}
 
-	data := &DataPack{
-		prefix: flags.prefix,
-		flags:  flags,
-
-		refStructNames: objectsData.refStructs,
-		refEnumNames:   objectsData.refEnums,
-		refTypedefs:    objectsData.refTypedefs,
-	}
+	context.prefix = flags.prefix
+	context.flags = flags
 
 	// 1. Generate code
 	// 1.1. Generate Go Enums
-	enumNames := generateGoEnums(flags.prefix, objectsData.enums)
-	data.enumNames = MergeMaps(SliceToMap(enumNames), objectsData.refEnums)
+	enumNames := generateGoEnums(flags.prefix, context.enums)
+	context.enumNames = MergeMaps(SliceToMap(enumNames), context.refEnumNames)
 
 	// 1.2. Generate Go typedefs
-	callbacks, err := proceedTypedefs(objectsData.typedefs, objectsData.structs, data)
+	callbacks, err := proceedTypedefs(context.typedefs, context.structs, context)
 	if err != nil {
 		log.Panic(err)
 	}
 
-	data.structNames = SliceToMap(callbacks)
+	context.structNames = SliceToMap(callbacks)
 
 	// 1.3. Generate C wrapper
-	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, objectsData.funcs)
+	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, context.funcs)
 	if err != nil {
 		log.Panic(err)
 	}
 
 	// 1.3.1. Generate Struct accessors in C
-	structAccessorFuncs, err := generateCppStructsAccessor(flags.prefix, validFuncs, objectsData.structs)
+	structAccessorFuncs, err := generateCppStructsAccessor(flags.prefix, validFuncs, context.structs)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -242,7 +228,7 @@ func main() {
 	// This variable stores funcs that needs to be written to GO now.
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
-	if err := generateGoFuncs(validFuncs, data); err != nil {
+	if err := generateGoFuncs(validFuncs, context); err != nil {
 		log.Panic(err)
 	}
 }

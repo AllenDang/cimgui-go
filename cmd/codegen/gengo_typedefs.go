@@ -14,7 +14,7 @@ import (
 func proceedTypedefs(
 	typedefs *Typedefs,
 	structs []StructDef,
-	data *DataPack) (validTypeNames []CIdentifier, err error) {
+	data *Context) (validTypeNames []CIdentifier, err error) {
 	// quick counter for coverage control
 	generatedTypedefs := 0
 	maxTypedefs := len(typedefs.data)
