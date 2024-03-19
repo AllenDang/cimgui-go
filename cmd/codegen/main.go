@@ -107,6 +107,7 @@ func loadData(f *flags) (*jsonData, error) {
 type objectsDats struct {
 	funcs       []FuncDef
 	structs     []StructDef
+	structNames map[CIdentifier]bool
 	enums       []EnumDef
 	typedefs    *Typedefs
 	refTypedefs map[CIdentifier]bool
@@ -150,6 +151,11 @@ func parseJson(jsonData *jsonData) (*objectsDats, error) {
 		result.refTypedefs = RemoveMapValues(typedefs.data)
 	}
 
+	_, result.structs, err = getEnumAndStructNames(jsonData.structAndEnums)
+	if err != nil {
+		return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
+	}
+
 	result.refEnums = make(map[GoIdentifier]bool)
 	result.refStructs = make(map[CIdentifier]bool)
 	if len(jsonData.refStructAndEnums) > 0 {
@@ -167,10 +173,14 @@ func parseJson(jsonData *jsonData) (*objectsDats, error) {
 
 // DataPack struct stores internal data of our generator
 type DataPack struct {
-	prefix        string
+	prefix string
+
 	funcNames     map[CIdentifier]bool
-	typedefsNames map[CIdentifier]bool
 	enumNames     map[GoIdentifier]bool // TODO: why this is GoIdentifier?
+	structNames   map[CIdentifier]bool
+	typedefsNames map[CIdentifier]bool
+	refTypedefs   map[CIdentifier]bool
+
 	// TODO: might want to remove this
 	flags *flags
 }
@@ -190,21 +200,22 @@ func main() {
 	}
 
 	data := &DataPack{
-		prefix: flags.prefix,
-		flags:  flags,
+		prefix:      flags.prefix,
+		flags:       flags,
+		structNames: objectsData.structNames,
+		refTypedefs: objectsData.refTypedefs,
 	}
 
 	// 1. Generate code
 	// 1.1. Generate Go Enums
-	// generate reference only enum and struct names
 	enumNames := generateGoEnums(flags.prefix, objectsData.enums)
-	data.enumNames = SliceToMap(enumNames)
-	// 1.1.1 If appliable, add ref enums
-	data.enumNames = MergeMaps(data.enumNames, objectsData.refEnums)
+	data.enumNames = MergeMaps(SliceToMap(enumNames), objectsData.refEnums)
 
 	// 1.2. Generate Go typedefs
-	callbacks, err := proceedTypedefs(flags.prefix, objectsData.typedefs, objectsData.structs, objectsData.enums, objectsData.refTypedefs)
-	data.typedefsNames = SliceToMap(callbacks)
+	callbacks, err := proceedTypedefs(objectsData.typedefs, data, objectsData.refTypedefs)
+	if err != nil {
+		log.Panic(err)
+	}
 
 	data.typedefsNames = MergeMaps(SliceToMap(callbacks), objectsData.refTypedefs)
 
