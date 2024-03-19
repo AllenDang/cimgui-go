@@ -169,9 +169,7 @@ func (self *Emphasis) Text() TextBlock {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_Emphasis_GetText(selfArg)
-	return *newTextBlockFromC(func() *C.TextBlock { result := result; return &result }())
+	return *newTextBlockFromC(func() *C.TextBlock { result := C.wrap_Emphasis_GetText(selfArg); return &result }())
 }
 
 func (self Emphasis) SetSym(v rune) {
@@ -368,9 +366,7 @@ func (self *Link) Text() TextBlock {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_Link_GetText(selfArg)
-	return *newTextBlockFromC(func() *C.TextBlock { result := result; return &result }())
+	return *newTextBlockFromC(func() *C.TextBlock { result := C.wrap_Link_GetText(selfArg); return &result }())
 }
 
 func (self Link) SetUrl(v TextBlock) {
@@ -387,9 +383,7 @@ func (self *Link) Url() TextBlock {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_Link_GetUrl(selfArg)
-	return *newTextBlockFromC(func() *C.TextBlock { result := result; return &result }())
+	return *newTextBlockFromC(func() *C.TextBlock { result := C.wrap_Link_GetUrl(selfArg); return &result }())
 }
 
 func (self Link) SetIsImage(v bool) {
@@ -770,9 +764,10 @@ func (self *MarkdownTooltipCallbackData) LinkData() MarkdownLinkCallbackData {
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_MarkdownTooltipCallbackData_GetLinkData(selfArg)
-	return *newMarkdownLinkCallbackDataFromC(func() *C.MarkdownLinkCallbackData { result := result; return &result }())
+	return *newMarkdownLinkCallbackDataFromC(func() *C.MarkdownLinkCallbackData {
+		result := C.wrap_MarkdownTooltipCallbackData_GetLinkData(selfArg)
+		return &result
+	}())
 }
 
 func (self MarkdownTooltipCallbackData) SetLinkIcon(v string) {
