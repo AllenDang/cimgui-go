@@ -13,10 +13,16 @@ import (
 // - everything that satisfies IsCallbackTypedef
 func proceedTypedefs(
 	typedefs *Typedefs,
+	structs []StructDef,
 	data *DataPack) (validTypeNames []CIdentifier, err error) {
 	// quick counter for coverage control
 	generatedTypedefs := 0
 	maxTypedefs := len(typedefs.data)
+
+	structsMap := make(map[CIdentifier]StructDef)
+	for _, s := range structs {
+		structsMap[s.Name] = s
+	}
 
 	// we need FILES
 	callbacksGoSb := &strings.Builder{}
@@ -271,7 +277,7 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 		case IsCallbackTypedef(typedefs.data[k]):
 			glg.Infof("typedef %s is a callback. Not implemented yet", k)
 		case HasPrefix(typedefs.data[k], "struct"):
-			isOpaque := !IsStructName(k, data.structNames)
+			isOpaque := !IsStructName(k, structsMap)
 			glg.Infof("typedef %s is a struct (is opaque? %v).", k, isOpaque)
 			writeOpaqueStruct(k, isOpaque, callbacksGoSb)
 			generatedTypedefs++
@@ -331,7 +337,7 @@ func new%[1]sFromC(cvalue *C.%[2]s) *%[1]s {
 `, name.renameGoIdentifier(), name, toPlainValue)
 }
 
-func IsStructName(name CIdentifier, structs map[CIdentifier]bool) bool {
+func IsStructName[T any](name CIdentifier, structs map[CIdentifier]T) bool {
 	_, ok := structs[name]
 	return ok
 }

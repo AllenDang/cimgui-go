@@ -220,7 +220,7 @@ func main() {
 	data.enumNames = MergeMaps(SliceToMap(enumNames), objectsData.refEnums)
 
 	// 1.2. Generate Go typedefs
-	callbacks, err := proceedTypedefs(objectsData.typedefs, data)
+	callbacks, err := proceedTypedefs(objectsData.typedefs, objectsData.structs, data)
 	if err != nil {
 		log.Panic(err)
 	}
