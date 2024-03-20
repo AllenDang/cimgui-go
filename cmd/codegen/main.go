@@ -1,10 +1,11 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"log"
 	"os"
+
+	"github.com/kpango/glg"
 )
 
 const (
@@ -13,6 +14,7 @@ const (
 	cppFileHeader   = generatorInfo
 )
 
+// this cextracts enums and structs names from json file.
 func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []GoIdentifier, structNames []CIdentifier, err error) {
 	enums, err := getEnumDefs(enumJsonBytes)
 	if err != nil {
@@ -37,129 +39,197 @@ func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []GoIdentifier, stru
 	return
 }
 
-func main() {
-	defJsonPath := flag.String("d", "", "definitions json file path")
-	enumsJsonpath := flag.String("e", "", "structs and enums json file path")
-	typedefsJsonpath := flag.String("t", "", "typedefs dict json file path")
-	refEnumsJsonPath := flag.String("r", "", "reference structs and enums json file path")
-	refTypedefsJsonPath := flag.String("rt", "", "reference typedefs_dict.json file path")
-	prefix := flag.String("p", "", "prefix for the generated file")
-	include := flag.String("i", "", "include header file")
-
-	parse()
-
-	flag.Parse()
-
-	stat, err := os.Stat(*defJsonPath)
+func validateFiles(f *flags) {
+	stat, err := os.Stat(f.defJsonPath)
 	if err != nil || stat.IsDir() {
-		log.Panic("Invalid definitions json file path")
+		glg.Fatal("Invalid definitions json file path")
 	}
 
-	stat, err = os.Stat(*enumsJsonpath)
+	stat, err = os.Stat(f.enumsJsonpath)
 	if err != nil || stat.IsDir() {
-		log.Panic("Invalid enum json file path")
+		glg.Fatal("Invalid enum json file path")
 	}
 
-	defJsonBytes, err := os.ReadFile(*defJsonPath)
+	stat, err = os.Stat(f.typedefsJsonpath)
+	if err != nil || stat.IsDir() {
+		glg.Fatal("Invalid typedefs json file path")
+	}
+}
+
+// this stores file bytes of our json files
+type jsonData struct {
+	structAndEnums,
+	typedefs,
+	defs,
+
+	refStructAndEnums,
+	refTypedefs []byte
+}
+
+func loadData(f *flags) (*jsonData, error) {
+	var err error
+
+	result := &jsonData{}
+
+	result.defs, err = os.ReadFile(f.defJsonPath)
+	if err != nil {
+		return nil, fmt.Errorf("cannot read definitions json file: %w", err)
+	}
+
+	result.typedefs, err = os.ReadFile(f.typedefsJsonpath)
+	if err != nil {
+		return nil, fmt.Errorf("cannot read typedefs json file: %w", err)
+	}
+
+	result.structAndEnums, err = os.ReadFile(f.enumsJsonpath)
 	if err != nil {
 		log.Panic(err)
 	}
 
-	typedefsJsonBytes, err := os.ReadFile(*typedefsJsonpath)
-	if err != nil {
-		log.Panic(err)
-	}
-
-	enumJsonBytes, err := os.ReadFile(*enumsJsonpath)
-	if err != nil {
-		log.Panic(err)
-	}
-
-	var refEnumJsonBytes []byte
-	if len(*refEnumsJsonPath) > 0 {
-		refEnumJsonBytes, err = os.ReadFile(*refEnumsJsonPath)
+	if len(f.refEnumsJsonPath) > 0 {
+		result.refStructAndEnums, err = os.ReadFile(f.refEnumsJsonPath)
 		if err != nil {
-			log.Panic(err)
+			return nil, fmt.Errorf("cannot read reference struct and enums json file: %w", err)
 		}
 	}
 
-	var refTypedefsJsonBytes []byte
-	if len(*refTypedefsJsonPath) > 0 {
-		refTypedefsJsonBytes, err = os.ReadFile(*refTypedefsJsonPath)
+	if len(f.refTypedefsJsonPath) > 0 {
+		result.refTypedefs, err = os.ReadFile(f.refTypedefsJsonPath)
 		if err != nil {
-			log.Panic(err)
+			return nil, fmt.Errorf("cannot read reference typedefs json file: %w", err)
 		}
 	}
+
+	return result, nil
+}
+
+// this will store json data processed by appropiate pre-rocessors
+type Context struct {
+	funcs    []FuncDef
+	structs  []StructDef
+	enums    []EnumDef
+	typedefs *Typedefs
+
+	prefix string
+
+	funcNames map[CIdentifier]bool
+	enumNames map[GoIdentifier]bool
+
+	structNames map[CIdentifier]bool
+
+	typedefsNames map[CIdentifier]bool
+
+	refStructNames map[CIdentifier]bool
+	refEnumNames   map[GoIdentifier]bool
+	refTypedefs    map[CIdentifier]bool
+
+	// TODO: might want to remove this
+	flags *flags
+}
+
+func parseJson(jsonData *jsonData) (*Context, error) {
+	var err error
+
+	result := &Context{}
 
 	// get definitions from json file
-	funcs, err := getFunDefs(defJsonBytes)
+	result.funcs, err = getFunDefs(jsonData.defs)
 	if err != nil {
-		log.Panic(err.Error())
+		return nil, fmt.Errorf("cannot get function definitions: %w", err)
 	}
 
-	enums, err := getEnumDefs(enumJsonBytes)
+	result.enums, err = getEnumDefs(jsonData.structAndEnums)
 	if err != nil {
-		log.Panic(err.Error())
+		return nil, fmt.Errorf("cannot get enum definitions: %w", err)
 	}
 
-	typedefs, err := getTypedefs(typedefsJsonBytes)
+	result.typedefs, err = getTypedefs(jsonData.typedefs)
 	if err != nil {
-		log.Panic(err.Error())
+		return nil, fmt.Errorf("cannot get typedefs: %w", err)
 	}
 
-	structs, err := getStructDefs(enumJsonBytes)
+	result.structs, err = getStructDefs(jsonData.structAndEnums)
 	if err != nil {
-		log.Panic(err.Error())
+		return nil, fmt.Errorf("cannot get struct definitions: %w", err)
 	}
 
-	validFuncs, err := generateCppWrapper(*prefix, *include, funcs)
+	result.refTypedefs = make(map[CIdentifier]bool)
+	if len(jsonData.refTypedefs) > 0 {
+		typedefs, err := getTypedefs(jsonData.refTypedefs)
+		if err != nil {
+			return nil, fmt.Errorf("cannot get reference typedefs: %w", err)
+		}
+
+		result.refTypedefs = RemoveMapValues(typedefs.data)
+	}
+
+	_, structs, err := getEnumAndStructNames(jsonData.structAndEnums)
+	result.structNames = SliceToMap(structs)
+	if err != nil {
+		return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
+	}
+
+	result.refEnumNames = make(map[GoIdentifier]bool)
+	result.refStructNames = make(map[CIdentifier]bool)
+	if len(jsonData.refStructAndEnums) > 0 {
+		refEnums, refStructs, err := getEnumAndStructNames(jsonData.refStructAndEnums)
+		if err != nil {
+			return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
+		}
+
+		result.refEnumNames = SliceToMap(refEnums)
+		result.refStructNames = SliceToMap(refStructs)
+	}
+
+	return result, nil
+}
+
+func main() {
+	flags := parse()
+	validateFiles(flags)
+
+	jsonData, err := loadData(flags)
+	if err != nil {
+		glg.Fatalf("cannot load data: %v", err)
+	}
+
+	context, err := parseJson(jsonData)
+	if err != nil {
+		glg.Fatalf("cannot parse json: %v", err)
+	}
+
+	context.prefix = flags.prefix
+	context.flags = flags
+
+	// 1. Generate code
+	// 1.1. Generate Go Enums
+	enumNames := generateGoEnums(flags.prefix, context.enums)
+	context.enumNames = MergeMaps(SliceToMap(enumNames), context.refEnumNames)
+
+	// 1.2. Generate Go typedefs
+	callbacks, err := proceedTypedefs(context.typedefs, context.structs, context)
 	if err != nil {
 		log.Panic(err)
 	}
 
-	var es, ss = make([]GoIdentifier, 0), make([]CIdentifier, 0)
-	// generate reference only enum and struct names
-	if len(refEnumJsonBytes) > 0 {
-		es, ss, err = getEnumAndStructNames(refEnumJsonBytes)
-		if err != nil {
-			log.Panic(err)
-		}
-	}
+	context.structNames = SliceToMap(callbacks)
 
-	var refTypedefs = make(map[CIdentifier]string)
-	if len(refTypedefsJsonBytes) > 0 {
-		typedefs, err := getTypedefs(refTypedefsJsonBytes)
-		if err != nil {
-			log.Panic(err)
-		}
-
-		refTypedefs = typedefs.data
-	}
-
-	callbacks, err := proceedTypedefs(*prefix, typedefs, structs, enums, refTypedefs)
-
-	// generate code
-	enumNames := generateGoEnums(*prefix, enums)
-	//structNames := generateGoStructs(*prefix, structs, enums, es, ss, refTypedefs)
-	structNames := make([]CIdentifier, 0)
-
-	structAccessorFuncs, arrayIndexers, err := generateCppStructsAccessor(*prefix, validFuncs, structs)
+	// 1.3. Generate C wrapper
+	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, context.funcs)
 	if err != nil {
 		log.Panic(err)
 	}
 
-	fmt.Println(arrayIndexers) // TODO
+	// 1.3.1. Generate Struct accessors in C
+	structAccessorFuncs, _, err := generateCppStructsAccessor(flags.prefix, validFuncs, context.structs)
+	if err != nil {
+		log.Panic(err)
+	}
 
+	// This variable stores funcs that needs to be written to GO now.
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
-	if len(refEnumJsonBytes) > 0 {
-		enumNames = append(enumNames, es...)
-		structNames = append(structNames, ss...)
-	}
-
-	structNames = append(structNames, callbacks...)
-
-	if err := generateGoFuncs(*prefix, validFuncs, enumNames, structNames, refTypedefs); err != nil {
+	if err := generateGoFuncs(validFuncs, context); err != nil {
 		log.Panic(err)
 	}
 }

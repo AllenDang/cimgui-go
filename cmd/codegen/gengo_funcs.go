@@ -33,20 +33,15 @@ const (
 )
 
 // generateGoFuncs generates given list of functions and writes them to file
-func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []GoIdentifier, structNames []CIdentifier, refTypedefs map[CIdentifier]string) error {
+func generateGoFuncs(
+	validFuncs []FuncDef,
+	context *Context) error {
 	generator := &goFuncsGenerator{
-		prefix:      prefix,
-		structNames: make(map[CIdentifier]bool),
-		enumNames:   make(map[GoIdentifier]bool),
-		refTypedefs: refTypedefs,
-	}
-
-	for _, v := range structNames {
-		generator.structNames[v] = true
-	}
-
-	for _, v := range enumNames {
-		generator.enumNames[v] = true
+		prefix:      context.prefix,
+		structNames: context.typedefsNames,
+		enumNames:   context.enumNames,
+		refTypedefs: context.refTypedefs,
+		context:     context,
 	}
 
 	generator.writeFuncsFileHeader()
@@ -65,12 +60,12 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []GoIdentifi
 
 		// stop, when the function should not be generated
 		if !generator.shouldGenerate {
-			if flags.showNotGenerated {
+			if context.flags.showNotGenerated {
 				glg.Failf("not generated: %s%s", f.FuncName, f.Args)
 			}
 			continue
 		} else {
-			if flags.showGenerated {
+			if context.flags.showGenerated {
 				glg.Successf("generated: %s%s", f.FuncName, f.Args)
 			}
 		}
@@ -86,7 +81,7 @@ func generateGoFuncs(prefix string, validFuncs []FuncDef, enumNames []GoIdentifi
 		100*float32(generator.convertedFuncCount)/float32(len(validFuncs)),
 	)
 
-	goFile, err := os.Create(fmt.Sprintf("%s_funcs.go", prefix))
+	goFile, err := os.Create(fmt.Sprintf("%s_funcs.go", context.prefix))
 	if err != nil {
 		panic(err.Error())
 	}
@@ -106,12 +101,13 @@ type goFuncsGenerator struct {
 	prefix      string
 	structNames map[CIdentifier]bool
 	enumNames   map[GoIdentifier]bool
-	refTypedefs map[CIdentifier]string
+	refTypedefs map[CIdentifier]bool
 
 	sb                 strings.Builder
 	convertedFuncCount int
+	shouldGenerate     bool
 
-	shouldGenerate bool
+	context *Context
 }
 
 // writeFuncsFileHeader writes a header of the generated file
@@ -137,7 +133,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 
 	// determine kind of function:
 	returnTypeType := returnTypeUnknown
-	_, err := getReturnWrapper(f.Ret, g.structNames, g.enumNames, g.refTypedefs) // TODO: we call this twice now
+	_, err := getReturnWrapper(f.Ret, g.context) // TODO: we call this twice now
 	if err == nil {
 		returnTypeType = returnTypeKnown
 	}
@@ -212,7 +208,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 		return false
 	}
 
-	rw, err := getReturnWrapper(cReturnType, g.structNames, g.enumNames, g.refTypedefs)
+	rw, err := getReturnWrapper(cReturnType, g.context)
 	if err != nil {
 		switch returnTypeType {
 		case returnTypeKnown, returnTypeStructPtr, returnTypeConstructor, returnTypeStruct:
@@ -366,9 +362,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []GoIdentifier, arg
 			&a,
 			i == 0 && f.StructSetter,
 			f.StructGetter && g.structNames[a.Type],
-			g.structNames,
-			g.enumNames,
-			g.refTypedefs,
+			g.context,
 		)
 		if err != nil {
 			glg.Debugf("Unknown argument type \"%s\" in function %s", a.Type, f.FuncName)

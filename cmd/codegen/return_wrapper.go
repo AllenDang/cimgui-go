@@ -15,9 +15,7 @@ type returnWrapper struct {
 
 func getReturnWrapper(
 	t CIdentifier,
-	structNames map[CIdentifier]bool,
-	enumNames map[GoIdentifier]bool,
-	refTypedefs map[CIdentifier]string,
+	data *Context,
 ) (returnWrapper, error) {
 	returnWrapperMap := map[CIdentifier]returnWrapper{
 		"bool":           {"bool", "%s == C.bool(true)"},
@@ -65,9 +63,9 @@ func getReturnWrapper(
 
 	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")
 	// check if pureType is a declared type (struct or something else from typedefs)
-	_, isRefStruct := refTypedefs[pureType]
+	_, isRefStruct := data.refStructNames[pureType]
 	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
-	_, isStruct := structNames[pureType]
+	_, isStruct := data.structNames[pureType]
 	isStruct = isStruct || (isRefStruct && !shouldSkipRefTypedef)
 	w, known := returnWrapperMap[t]
 	// check if is array (match regex)
@@ -79,13 +77,13 @@ func getReturnWrapper(
 	switch {
 	case known:
 		return w, nil
-	case structNames[t] && !shouldSkipStruct(t):
+	case (data.structNames[t] || data.refStructNames[t]) && !shouldSkipStruct(t):
 		return returnWrapper{
 			returnType: t.renameGoIdentifier(),
 			returnStmt: fmt.Sprintf(`*new%sFromC(func() *C.%s {result := %%s; return &result}())
 `, t.renameGoIdentifier(), t),
 		}, nil
-	case isEnum(t, enumNames):
+	case isEnum(t, data.enumNames):
 		return returnWrapper{
 			returnType: t.renameEnum(),
 			returnStmt: fmt.Sprintf("%s(%%s)", t.renameEnum()),
@@ -93,7 +91,7 @@ func getReturnWrapper(
 	case HasPrefix(t, "ImVector_") &&
 		!(HasSuffix(t, "*") || HasSuffix(t, "]")):
 		pureType := CIdentifier(TrimPrefix(t, "ImVector_") + "*")
-		rw, err := getReturnWrapper(pureType, structNames, enumNames, refTypedefs)
+		rw, err := getReturnWrapper(pureType, data)
 		if err != nil {
 			return returnWrapper{}, fmt.Errorf("creating vector wrapper %w", err)
 		}
@@ -101,7 +99,7 @@ func getReturnWrapper(
 			returnType: GoIdentifier(fmt.Sprintf("Vector[%s]", rw.returnType)),
 			returnStmt: fmt.Sprintf("newVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
 		}, nil
-	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), enumNames):
+	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), data.enumNames):
 		return returnWrapper{
 			returnType: "*" + TrimSuffix(t, "*").renameEnum(),
 			returnStmt: fmt.Sprintf("(*%s)(%%s)", TrimSuffix(t, "*").renameEnum()),

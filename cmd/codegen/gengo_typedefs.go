@@ -11,10 +11,18 @@ import (
 // this function will proceed the following typedefs:
 // - all structs thatare not present in struct_and_enums.json (they are supposed to be epaque)
 // - everything that satisfies IsCallbackTypedef
-func proceedTypedefs(prefix string, typedefs *Typedefs, structs []StructDef, enums []EnumDef, refTypedefs map[CIdentifier]string) (validTypeNames []CIdentifier, err error) {
+func proceedTypedefs(
+	typedefs *Typedefs,
+	structs []StructDef,
+	data *Context) (validTypeNames []CIdentifier, err error) {
 	// quick counter for coverage control
 	generatedTypedefs := 0
 	maxTypedefs := len(typedefs.data)
+
+	structsMap := make(map[CIdentifier]StructDef)
+	for _, s := range structs {
+		structsMap[s.Name] = s
+	}
 
 	// we need FILES
 	callbacksGoSb := &strings.Builder{}
@@ -28,7 +36,7 @@ func proceedTypedefs(prefix string, typedefs *Typedefs, structs []StructDef, enu
 import "C"
 import "unsafe"
 
-`, prefix)
+`, data.prefix)
 
 	typedefsHeaderSb := &strings.Builder{}
 	typedefsHeaderSb.WriteString(cppFileHeader)
@@ -41,14 +49,14 @@ import "unsafe"
 #ifdef __cplusplus
 extern "C" {
 #endif
-`, prefix)
+`, data.prefix)
 	typedefsCppSb := &strings.Builder{}
 	typedefsCppSb.WriteString(cppFileHeader)
 	fmt.Fprintf(typedefsCppSb,
 		`
 #include "%[1]s_typedefs.h"
 #include "cimgui/%[1]s.h"
-`, prefix)
+`, data.prefix)
 
 	// because go ranges through maps as if it was drunken, we need to sort keys.
 	keys := make([]CIdentifier, 0, len(typedefs.data))
@@ -67,7 +75,7 @@ extern "C" {
 			continue
 		}
 
-		if _, exists := refTypedefs[k]; exists {
+		if _, exists := data.refTypedefs[k]; exists {
 			glg.Infof("Duplicate of %s in reference typedefs. Skipping.", k)
 			maxTypedefs--
 			continue
@@ -79,7 +87,7 @@ extern "C" {
 			continue
 		}
 
-		if IsEnumName(k, enums) /*|| IsStructName(k, structs)*/ {
+		if IsEnumName(k, data.enumNames) /*|| IsStructName(k, structs)*/ {
 			glg.Infof("typedef %s has extended deffinition in structs_and_enums.json. Will generate later", k)
 			maxTypedefs--
 			continue
@@ -107,16 +115,12 @@ extern "C" {
 		// - short* -> *int16 (for newXXXFromC)
 		knownReturnType, returnTypeErr = getReturnWrapper(
 			CIdentifier(typedef),
-			map[CIdentifier]bool{},
-			map[GoIdentifier]bool{},
-			map[CIdentifier]string{},
+			data, // TODO: this might be empty
 		)
 
 		knownPtrReturnType, ptrReturnTypeErr = getReturnWrapper(
 			CIdentifier(typedef)+"*",
-			map[CIdentifier]bool{},
-			map[GoIdentifier]bool{},
-			map[CIdentifier]string{},
+			data, // TODO: this might be empty
 		)
 
 		_, knownArgType, argTypeErr = getArgWrapper(
@@ -125,9 +129,7 @@ extern "C" {
 				Type: CIdentifier(typedef),
 			},
 			false, false,
-			map[CIdentifier]bool{},
-			map[GoIdentifier]bool{},
-			map[CIdentifier]string{},
+			data, // TODO: this might be empty
 		)
 
 		_, knownPtrArgType, ptrArgTypeErr = getArgWrapper(
@@ -136,9 +138,7 @@ extern "C" {
 				Type: CIdentifier(typedef) + "*",
 			},
 			false, false,
-			map[CIdentifier]bool{},
-			map[GoIdentifier]bool{},
-			map[CIdentifier]string{},
+			data, // TODO: this might be empty
 		)
 
 		// check if k is a name of struct from structDefs
@@ -277,7 +277,7 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 		case IsCallbackTypedef(typedefs.data[k]):
 			glg.Infof("typedef %s is a callback. Not implemented yet", k)
 		case HasPrefix(typedefs.data[k], "struct"):
-			isOpaque := !IsStructName(k, structs)
+			isOpaque := !IsStructName(k, structsMap)
 			glg.Infof("typedef %s is a struct (is opaque? %v).", k, isOpaque)
 			writeOpaqueStruct(k, isOpaque, callbacksGoSb)
 			generatedTypedefs++
@@ -291,16 +291,16 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 }
 #endif`)
 
-	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.go", prefix), []byte(callbacksGoSb.String()), 0644); err != nil {
-		return nil, fmt.Errorf("cannot write %s_typedefs.go: %w", prefix, err)
+	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.go", data.prefix), []byte(callbacksGoSb.String()), 0644); err != nil {
+		return nil, fmt.Errorf("cannot write %s_typedefs.go: %w", data.prefix, err)
 	}
 
-	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.cpp", prefix), []byte(typedefsCppSb.String()), 0644); err != nil {
-		return nil, fmt.Errorf("cannot write %s_typedefs.cpp: %w", prefix, err)
+	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.cpp", data.prefix), []byte(typedefsCppSb.String()), 0644); err != nil {
+		return nil, fmt.Errorf("cannot write %s_typedefs.cpp: %w", data.prefix, err)
 	}
 
-	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.h", prefix), []byte(typedefsHeaderSb.String()), 0644); err != nil {
-		return nil, fmt.Errorf("cannot write %s_typedefs.h: %w", prefix, err)
+	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.h", data.prefix), []byte(typedefsHeaderSb.String()), 0644); err != nil {
+		return nil, fmt.Errorf("cannot write %s_typedefs.h: %w", data.prefix, err)
 	}
 
 	glg.Infof("Typedefs generation complete. Generated %d/%d (%.2f%%) typedefs.", generatedTypedefs, maxTypedefs, float32(generatedTypedefs*100)/float32(maxTypedefs))
@@ -337,24 +337,14 @@ func new%[1]sFromC(cvalue *C.%[2]s) *%[1]s {
 `, name.renameGoIdentifier(), name, toPlainValue)
 }
 
-func IsStructName(name CIdentifier, structs []StructDef) bool {
-	for _, s := range structs {
-		if s.Name == name {
-			return true
-		}
-	}
-
-	return false
+func IsStructName[T any](name CIdentifier, structs map[CIdentifier]T) bool {
+	_, ok := structs[name]
+	return ok
 }
 
-func IsEnumName(name CIdentifier, enums []EnumDef) bool {
-	for _, e := range enums {
-		if e.Name.renameEnum() == name.renameEnum() { // compare GO equivalents because C names has _ at their end
-			return true
-		}
-	}
-
-	return false
+func IsEnumName(name CIdentifier, enums map[GoIdentifier]bool) bool {
+	_, ok := enums[name.renameEnum()]
+	return ok
 }
 
 func IsTemplateTypedef(s string) bool {
