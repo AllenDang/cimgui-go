@@ -119,6 +119,8 @@ type Context struct {
 
 	typedefsNames map[CIdentifier]bool
 
+	arrayIndexGetters map[CIdentifier]CIdentifier
+
 	refStructNames map[CIdentifier]bool
 	refEnumNames   map[GoIdentifier]bool
 	refTypedefs    map[CIdentifier]bool
@@ -130,7 +132,9 @@ type Context struct {
 func parseJson(jsonData *jsonData) (*Context, error) {
 	var err error
 
-	result := &Context{}
+	result := &Context{
+		arrayIndexGetters: make(map[CIdentifier]CIdentifier),
+	}
 
 	// get definitions from json file
 	result.funcs, err = getFunDefs(jsonData.defs)
@@ -221,7 +225,7 @@ func main() {
 	}
 
 	// 1.3.1. Generate Struct accessors in C
-	structAccessorFuncs, _, err := generateCppStructsAccessor(flags.prefix, validFuncs, context.structs)
+	structAccessorFuncs, err := generateCppStructsAccessor(flags.prefix, validFuncs, context.structs, context)
 	if err != nil {
 		log.Panic(err)
 	}

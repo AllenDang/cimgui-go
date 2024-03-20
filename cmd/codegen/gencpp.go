@@ -427,10 +427,8 @@ extern "C" {
 	return validFuncs, nil
 }
 
-func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []StructDef) (accessors []FuncDef, arrayIndexer map[CIdentifier]CIdentifier, err error) {
+func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []StructDef, context *Context) (accessors []FuncDef, err error) {
 	var structAccessorFuncs []FuncDef
-
-	arrayIndexer = make(map[CIdentifier]CIdentifier)
 
 	// TODO: extrac this to some separated function, maybe on top of this file
 	skipFuncNames := map[CIdentifier]bool{
@@ -572,7 +570,7 @@ extern "C" {
 			fmt.Fprintf(
 				sbHeader,
 				"extern %s%s %s(%s *self);\n",
-				memberType, getSizeIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name,
+				memberType, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name,
 			)
 
 			// here we change void* to uintptr_t for .go handling
@@ -589,20 +587,8 @@ extern "C" {
 			}
 
 			// if is array type, need to add a special method to get certain index of array
-			if _, ok := arrayIndexer[m.Type]; m.Size > 0 && !ok {
-				getterFuncName = CIdentifier(prefix) + "_" + ReplaceAll(ReplaceAll(m.Type, " ", "_"), "*", "Ptr") + "_GetAtIdx"
-				arrayIndexer[m.Type] = getterFuncName
-
-				fmt.Fprintf(
-					sbHeader,
-					"extern %[1]s %[2]s(%[1]s *self, int index);\n",
-					memberType, getterFuncName,
-				)
-
-				fmt.Fprintf(sbCpp,
-					"%[1]s %[2]s(%[1]s *self, int index) { return self[index]; }\n",
-					memberType, getterFuncName, s.Name,
-				)
+			if _, ok := context.arrayIndexGetters[m.Type]; m.Size > 0 && !ok {
+				AddArrayIndexGetter(m.Type, sbHeader, sbCpp, context)
 			}
 		}
 	}
@@ -616,30 +602,30 @@ extern "C" {
 	headerPath := fmt.Sprintf("%s_structs_accessor.h", prefix)
 	headerFile, err := os.Create(headerPath)
 	if err != nil {
-		return nil, nil, fmt.Errorf("failed to create cpp file %v: %v", headerPath, err)
+		return nil, fmt.Errorf("failed to create cpp file %v: %v", headerPath, err)
 	}
 
 	defer headerFile.Close()
 
 	_, err = headerFile.WriteString(sbHeader.String())
 	if err != nil {
-		return nil, nil, fmt.Errorf("failed to write to file %v: %v", headerPath, err)
+		return nil, fmt.Errorf("failed to write to file %v: %v", headerPath, err)
 	}
 
 	cppPath := fmt.Sprintf("%s_structs_accessor.cpp", prefix)
 	cppFile, err := os.Create(cppPath)
 	if err != nil {
-		return nil, nil, fmt.Errorf("failed to create cpp file %v: %v", cppPath, err)
+		return nil, fmt.Errorf("failed to create cpp file %v: %v", cppPath, err)
 	}
 
 	defer cppFile.Close()
 
 	_, err = cppFile.WriteString(sbCpp.String())
 	if err != nil {
-		return nil, nil, fmt.Errorf("failed to write to file %v: %v", cppPath, err)
+		return nil, fmt.Errorf("failed to write to file %v: %v", cppPath, err)
 	}
 
-	return structAccessorFuncs, arrayIndexer, nil
+	return structAccessorFuncs, nil
 }
 
 func getSizeArg(size int) string {
@@ -658,10 +644,19 @@ func getPtrIfSize(size int) string {
 	return ""
 }
 
-func getSizeIfSize(size int) string {
-	if size > 0 {
-		return fmt.Sprintf("[%d]", size)
-	}
+func AddArrayIndexGetter(t CIdentifier, sbHeader, sbCpp *strings.Builder, context *Context) {
+	tStr := ReplaceAll(ReplaceAll(t, " ", "_"), "*", "Ptr")
+	getterFuncName := CIdentifier(context.prefix) + "_" + tStr + "_GetAtIdx"
+	context.arrayIndexGetters[t] = getterFuncName
 
-	return ""
+	fmt.Fprintf(
+		sbHeader,
+		"extern %[1]s %[2]s(%[1]s *self, int index);\n",
+		Split(t, "[")[0], getterFuncName,
+	)
+
+	fmt.Fprintf(sbCpp,
+		"%[1]s %[2]s(%[1]s *self, int index) { return self[index]; }\n",
+		t, getterFuncName,
+	)
 }
