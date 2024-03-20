@@ -13941,7 +13941,7 @@ func (self *PlotAxis) FormatSpec() [16]rune {
 		result := [16]rune{}
 		resultMirr := C.wrap_ImPlotAxis_GetFormatSpec(selfArg)
 		for i := range result {
-			result[i] = rune(resultMirr[i])
+			result[i] = rune(C.cimplot_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -15689,7 +15689,7 @@ func (self *PlotNextItemData) Colors() [5]Vec4 {
 		result := [5]Vec4{}
 		resultMirr := C.wrap_ImPlotNextItemData_GetColors(selfArg)
 		for i := range result {
-			result[i] = *(&Vec4{}).fromC(resultMirr[i])
+			result[i] = *(&Vec4{}).fromC(C.cimplot_ImVec4_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -15961,7 +15961,7 @@ func (self *PlotNextPlotData) RangeCond() [6]PlotCond {
 		result := [6]PlotCond{}
 		resultMirr := C.wrap_ImPlotNextPlotData_GetRangeCond(selfArg)
 		for i := range result {
-			result[i] = PlotCond(resultMirr[i])
+			result[i] = PlotCond(C.cimplot_ImPlotCond_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -15994,7 +15994,7 @@ func (self *PlotNextPlotData) Range() [6]PlotRange {
 		result := [6]PlotRange{}
 		resultMirr := C.wrap_ImPlotNextPlotData_GetRange(selfArg)
 		for i := range result {
-			result[i] = *newPlotRangeFromC(func() *C.ImPlotRange { result := resultMirr[i]; return &result }())
+			result[i] = *newPlotRangeFromC(func() *C.ImPlotRange { result := C.cimplot_ImPlotRange_GetAtIdx(resultMirr, C.int(i)); return &result }())
 		}
 
 		return result
@@ -16026,7 +16026,7 @@ func (self *PlotNextPlotData) HasRange() [6]bool {
 		result := [6]bool{}
 		resultMirr := C.wrap_ImPlotNextPlotData_GetHasRange(selfArg)
 		for i := range result {
-			result[i] = resultMirr[i] == C.bool(true)
+			result[i] = C.cimplot_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -16058,7 +16058,7 @@ func (self *PlotNextPlotData) Fit() [6]bool {
 		result := [6]bool{}
 		resultMirr := C.wrap_ImPlotNextPlotData_GetFit(selfArg)
 		for i := range result {
-			result[i] = resultMirr[i] == C.bool(true)
+			result[i] = C.cimplot_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -16091,7 +16091,7 @@ func (self *PlotNextPlotData) LinkedMin() [6]*float64 {
 		result := [6]*float64{}
 		resultMirr := C.wrap_ImPlotNextPlotData_GetLinkedMin(selfArg)
 		for i := range result {
-			result[i] = (*float64)(resultMirr[i])
+			result[i] = (*float64)(C.cimplot_doublePtr_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -16124,7 +16124,7 @@ func (self *PlotNextPlotData) LinkedMax() [6]*float64 {
 		result := [6]*float64{}
 		resultMirr := C.wrap_ImPlotNextPlotData_GetLinkedMax(selfArg)
 		for i := range result {
-			result[i] = (*float64)(resultMirr[i])
+			result[i] = (*float64)(C.cimplot_doublePtr_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -16225,7 +16225,7 @@ func (self *PlotPlot) Axes() [6]PlotAxis {
 		result := [6]PlotAxis{}
 		resultMirr := C.wrap_ImPlotPlot_GetAxes(selfArg)
 		for i := range result {
-			result[i] = *newPlotAxisFromC(func() *C.ImPlotAxis { result := resultMirr[i]; return &result }())
+			result[i] = *newPlotAxisFromC(func() *C.ImPlotAxis { result := C.cimplot_ImPlotAxis_GetAtIdx(resultMirr, C.int(i)); return &result }())
 		}
 
 		return result
@@ -17090,7 +17090,7 @@ func (self *PlotStyle) Colors() [21]Vec4 {
 		result := [21]Vec4{}
 		resultMirr := C.wrap_ImPlotStyle_GetColors(selfArg)
 		for i := range result {
-			result[i] = *(&Vec4{}).fromC(resultMirr[i])
+			result[i] = *(&Vec4{}).fromC(C.cimplot_ImVec4_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -17465,7 +17465,7 @@ func (self *PlotSubplot) TempSizes() [2]float32 {
 		result := [2]float32{}
 		resultMirr := C.wrap_ImPlotSubplot_GetTempSizes(selfArg)
 		for i := range result {
-			result[i] = float32(resultMirr[i])
+			result[i] = float32(C.cimplot_float_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result

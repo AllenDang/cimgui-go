@@ -979,7 +979,7 @@ func (self *NodesStyle) Colors() [29]uint32 {
 		result := [29]uint32{}
 		resultMirr := C.wrap_ImNodesStyle_GetColors(selfArg)
 		for i := range result {
-			result[i] = uint32(resultMirr[i])
+			result[i] = uint32(C.cimnodes_unsigned_int_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result

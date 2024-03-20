@@ -13757,7 +13757,7 @@ func (self *DrawListSharedData) ArcFastVtx() [48]Vec2 {
 		result := [48]Vec2{}
 		resultMirr := C.wrap_ImDrawListSharedData_GetArcFastVtx(selfArg)
 		for i := range result {
-			result[i] = *(&Vec2{}).fromC(resultMirr[i])
+			result[i] = *(&Vec2{}).fromC(C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -13804,7 +13804,7 @@ func (self *DrawListSharedData) CircleSegmentCounts() [64]byte {
 		result := [64]byte{}
 		resultMirr := C.wrap_ImDrawListSharedData_GetCircleSegmentCounts(selfArg)
 		for i := range result {
-			result[i] = byte(resultMirr[i])
+			result[i] = byte(C.cimgui_ImU8_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -14266,7 +14266,7 @@ func (self *Font) Used4kPagesMap() [34]byte {
 		result := [34]byte{}
 		resultMirr := C.wrap_ImFont_GetUsed4kPagesMap(selfArg)
 		for i := range result {
-			result[i] = byte(resultMirr[i])
+			result[i] = byte(C.cimgui_ImU8_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -14543,7 +14543,7 @@ func (self *FontAtlas) TexUvLines() [64]Vec4 {
 		result := [64]Vec4{}
 		resultMirr := C.wrap_ImFontAtlas_GetTexUvLines(selfArg)
 		for i := range result {
-			result[i] = *(&Vec4{}).fromC(resultMirr[i])
+			result[i] = *(&Vec4{}).fromC(C.cimgui_ImVec4_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -15029,7 +15029,7 @@ func (self *FontConfig) Name() [40]rune {
 		result := [40]rune{}
 		resultMirr := C.wrap_ImFontConfig_GetName(selfArg)
 		for i := range result {
-			result[i] = rune(resultMirr[i])
+			result[i] = rune(C.cimgui_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -16551,7 +16551,10 @@ func (self *Context) KeysOwnerData() [154]KeyOwnerData {
 		result := [154]KeyOwnerData{}
 		resultMirr := C.wrap_ImGuiContext_GetKeysOwnerData(selfArg)
 		for i := range result {
-			result[i] = *newKeyOwnerDataFromC(func() *C.ImGuiKeyOwnerData { result := resultMirr[i]; return &result }())
+			result[i] = *newKeyOwnerDataFromC(func() *C.ImGuiKeyOwnerData {
+				result := C.cimgui_ImGuiKeyOwnerData_GetAtIdx(resultMirr, C.int(i))
+				return &result
+			}())
 		}
 
 		return result
@@ -18273,7 +18276,7 @@ func (self *Context) DragDropPayloadBufLocal() [16]uint {
 		result := [16]uint{}
 		resultMirr := C.wrap_ImGuiContext_GetDragDropPayloadBufLocal(selfArg)
 		for i := range result {
-			result[i] = uint(resultMirr[i])
+			result[i] = uint(C.cimgui_unsigned_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -19355,7 +19358,7 @@ func (self *Context) LocalizationTable() [11]string {
 		result := [11]string{}
 		resultMirr := C.wrap_ImGuiContext_GetLocalizationTable(selfArg)
 		for i := range result {
-			result[i] = C.GoString(resultMirr[i])
+			result[i] = C.GoString(C.cimgui_const_charPtr_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -19835,7 +19838,7 @@ func (self *Context) FramerateSecPerFrame() [60]float32 {
 		result := [60]float32{}
 		resultMirr := C.wrap_ImGuiContext_GetFramerateSecPerFrame(selfArg)
 		for i := range result {
-			result[i] = float32(resultMirr[i])
+			result[i] = float32(C.cimgui_float_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -19980,7 +19983,7 @@ func (self *Context) TempKeychordName() [64]rune {
 		result := [64]rune{}
 		resultMirr := C.wrap_ImGuiContext_GetTempKeychordName(selfArg)
 		for i := range result {
-			result[i] = rune(resultMirr[i])
+			result[i] = rune(C.cimgui_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -20142,7 +20145,7 @@ func (self *DataTypeTempStorage) Data() [8]byte {
 		result := [8]byte{}
 		resultMirr := C.wrap_ImGuiDataTypeTempStorage_GetData(selfArg)
 		for i := range result {
-			result[i] = byte(resultMirr[i])
+			result[i] = byte(C.cimgui_ImU8_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -20310,7 +20313,10 @@ func (self *DebugAllocInfo) LastEntriesBuf() [6]DebugAllocEntry {
 		result := [6]DebugAllocEntry{}
 		resultMirr := C.wrap_ImGuiDebugAllocInfo_GetLastEntriesBuf(selfArg)
 		for i := range result {
-			result[i] = *newDebugAllocEntryFromC(func() *C.ImGuiDebugAllocEntry { result := resultMirr[i]; return &result }())
+			result[i] = *newDebugAllocEntryFromC(func() *C.ImGuiDebugAllocEntry {
+				result := C.cimgui_ImGuiDebugAllocEntry_GetAtIdx(resultMirr, C.int(i))
+				return &result
+			}())
 		}
 
 		return result
@@ -20515,7 +20521,7 @@ func (self *DockNode) ChildNodes() [2]*DockNode {
 		result := [2]*DockNode{}
 		resultMirr := C.wrap_ImGuiDockNode_GetChildNodes(selfArg)
 		for i := range result {
-			result[i] = newDockNodeFromC(resultMirr[i])
+			result[i] = newDockNodeFromC(C.cimgui_ImGuiDockNodePtr_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -22343,7 +22349,7 @@ func (self *IO) MouseDown() [5]bool {
 		result := [5]bool{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDown(selfArg)
 		for i := range result {
-			result[i] = resultMirr[i] == C.bool(true)
+			result[i] = C.cimgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -22515,7 +22521,7 @@ func (self *IO) KeysData() [154]KeyData {
 		result := [154]KeyData{}
 		resultMirr := C.wrap_ImGuiIO_GetKeysData(selfArg)
 		for i := range result {
-			result[i] = *newKeyDataFromC(func() *C.ImGuiKeyData { result := resultMirr[i]; return &result }())
+			result[i] = *newKeyDataFromC(func() *C.ImGuiKeyData { result := C.cimgui_ImGuiKeyData_GetAtIdx(resultMirr, C.int(i)); return &result }())
 		}
 
 		return result
@@ -22577,7 +22583,7 @@ func (self *IO) MouseClickedPos() [5]Vec2 {
 		result := [5]Vec2{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseClickedPos(selfArg)
 		for i := range result {
-			result[i] = *(&Vec2{}).fromC(resultMirr[i])
+			result[i] = *(&Vec2{}).fromC(C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -22609,7 +22615,7 @@ func (self *IO) MouseClickedTime() [5]float64 {
 		result := [5]float64{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseClickedTime(selfArg)
 		for i := range result {
-			result[i] = float64(resultMirr[i])
+			result[i] = float64(C.cimgui_double_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -22641,7 +22647,7 @@ func (self *IO) MouseClicked() [5]bool {
 		result := [5]bool{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseClicked(selfArg)
 		for i := range result {
-			result[i] = resultMirr[i] == C.bool(true)
+			result[i] = C.cimgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -22673,7 +22679,7 @@ func (self *IO) MouseDoubleClicked() [5]bool {
 		result := [5]bool{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDoubleClicked(selfArg)
 		for i := range result {
-			result[i] = resultMirr[i] == C.bool(true)
+			result[i] = C.cimgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -22705,7 +22711,7 @@ func (self *IO) MouseClickedCount() [5]uint16 {
 		result := [5]uint16{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseClickedCount(selfArg)
 		for i := range result {
-			result[i] = uint16(resultMirr[i])
+			result[i] = uint16(C.cimgui_ImU16_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -22737,7 +22743,7 @@ func (self *IO) MouseClickedLastCount() [5]uint16 {
 		result := [5]uint16{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseClickedLastCount(selfArg)
 		for i := range result {
-			result[i] = uint16(resultMirr[i])
+			result[i] = uint16(C.cimgui_ImU16_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -22769,7 +22775,7 @@ func (self *IO) MouseReleased() [5]bool {
 		result := [5]bool{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseReleased(selfArg)
 		for i := range result {
-			result[i] = resultMirr[i] == C.bool(true)
+			result[i] = C.cimgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -22801,7 +22807,7 @@ func (self *IO) MouseDownOwned() [5]bool {
 		result := [5]bool{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDownOwned(selfArg)
 		for i := range result {
-			result[i] = resultMirr[i] == C.bool(true)
+			result[i] = C.cimgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -22833,7 +22839,7 @@ func (self *IO) MouseDownOwnedUnlessPopupClose() [5]bool {
 		result := [5]bool{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDownOwnedUnlessPopupClose(selfArg)
 		for i := range result {
-			result[i] = resultMirr[i] == C.bool(true)
+			result[i] = C.cimgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -22880,7 +22886,7 @@ func (self *IO) MouseDownDuration() [5]float32 {
 		result := [5]float32{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDownDuration(selfArg)
 		for i := range result {
-			result[i] = float32(resultMirr[i])
+			result[i] = float32(C.cimgui_float_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -22912,7 +22918,7 @@ func (self *IO) MouseDownDurationPrev() [5]float32 {
 		result := [5]float32{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDownDurationPrev(selfArg)
 		for i := range result {
-			result[i] = float32(resultMirr[i])
+			result[i] = float32(C.cimgui_float_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -22944,7 +22950,7 @@ func (self *IO) MouseDragMaxDistanceAbs() [5]Vec2 {
 		result := [5]Vec2{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDragMaxDistanceAbs(selfArg)
 		for i := range result {
-			result[i] = *(&Vec2{}).fromC(resultMirr[i])
+			result[i] = *(&Vec2{}).fromC(C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -22976,7 +22982,7 @@ func (self *IO) MouseDragMaxDistanceSqr() [5]float32 {
 		result := [5]float32{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDragMaxDistanceSqr(selfArg)
 		for i := range result {
-			result[i] = float32(resultMirr[i])
+			result[i] = float32(C.cimgui_float_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -24710,7 +24716,7 @@ func (self *MenuColumns) Widths() [4]uint16 {
 		result := [4]uint16{}
 		resultMirr := C.wrap_ImGuiMenuColumns_GetWidths(selfArg)
 		for i := range result {
-			result[i] = uint16(resultMirr[i])
+			result[i] = uint16(C.cimgui_ImU16_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -25949,7 +25955,7 @@ func (self *Payload) DataType() [33]rune {
 		result := [33]rune{}
 		resultMirr := C.wrap_ImGuiPayload_GetDataType(selfArg)
 		for i := range result {
-			result[i] = rune(resultMirr[i])
+			result[i] = rune(C.cimgui_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -26543,7 +26549,7 @@ func (self *StackLevelInfo) Desc() [57]rune {
 		result := [57]rune{}
 		resultMirr := C.wrap_ImGuiStackLevelInfo_GetDesc(selfArg)
 		for i := range result {
-			result[i] = rune(resultMirr[i])
+			result[i] = rune(C.cimgui_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -27440,7 +27446,7 @@ func (self *Style) Colors() [55]Vec4 {
 		result := [55]Vec4{}
 		resultMirr := C.wrap_ImGuiStyle_GetColors(selfArg)
 		for i := range result {
-			result[i] = *(&Vec4{}).fromC(resultMirr[i])
+			result[i] = *(&Vec4{}).fromC(C.cimgui_ImVec4_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -28649,7 +28655,7 @@ func (self *Table) RowBgColor() [2]uint32 {
 		result := [2]uint32{}
 		resultMirr := C.wrap_ImGuiTable_GetRowBgColor(selfArg)
 		for i := range result {
-			result[i] = uint32(resultMirr[i])
+			result[i] = uint32(C.cimgui_ImU32_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -30772,7 +30778,7 @@ func (self *TextFilter) InputBuf() [256]rune {
 		result := [256]rune{}
 		resultMirr := C.wrap_ImGuiTextFilter_GetInputBuf(selfArg)
 		for i := range result {
-			result[i] = rune(resultMirr[i])
+			result[i] = rune(C.cimgui_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -31026,7 +31032,7 @@ func (self *TypingSelectState) SearchBuffer() [64]rune {
 		result := [64]rune{}
 		resultMirr := C.wrap_ImGuiTypingSelectState_GetSearchBuffer(selfArg)
 		for i := range result {
-			result[i] = rune(resultMirr[i])
+			result[i] = rune(C.cimgui_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -31552,7 +31558,7 @@ func (self *ViewportP) BgFgDrawListsLastFrame() [2]int32 {
 		result := [2]int32{}
 		resultMirr := C.wrap_ImGuiViewportP_GetBgFgDrawListsLastFrame(selfArg)
 		for i := range result {
-			result[i] = int32(resultMirr[i])
+			result[i] = int32(C.cimgui_int_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -31585,7 +31591,7 @@ func (self *ViewportP) BgFgDrawLists() [2]*DrawList {
 		result := [2]*DrawList{}
 		resultMirr := C.wrap_ImGuiViewportP_GetBgFgDrawLists(selfArg)
 		for i := range result {
-			result[i] = newDrawListFromC(resultMirr[i])
+			result[i] = newDrawListFromC(C.cimgui_ImDrawListPtr_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -33307,7 +33313,7 @@ func (self *Window) NavLastIds() [2]ID {
 		result := [2]ID{}
 		resultMirr := C.wrap_ImGuiWindow_GetNavLastIds(selfArg)
 		for i := range result {
-			result[i] = *newIDFromC(func() *C.ImGuiID { result := resultMirr[i]; return &result }())
+			result[i] = *newIDFromC(func() *C.ImGuiID { result := C.cimgui_ImGuiID_GetAtIdx(resultMirr, C.int(i)); return &result }())
 		}
 
 		return result
@@ -33339,7 +33345,7 @@ func (self *Window) NavRectRel() [2]Rect {
 		result := [2]Rect{}
 		resultMirr := C.wrap_ImGuiWindow_GetNavRectRel(selfArg)
 		for i := range result {
-			result[i] = *(&Rect{}).fromC(resultMirr[i])
+			result[i] = *(&Rect{}).fromC(C.cimgui_ImRect_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -33370,7 +33376,7 @@ func (self *Window) NavPreferredScoringPosRel() [2]Vec2 {
 		result := [2]Vec2{}
 		resultMirr := C.wrap_ImGuiWindow_GetNavPreferredScoringPosRel(selfArg)
 		for i := range result {
-			result[i] = *(&Vec2{}).fromC(resultMirr[i])
+			result[i] = *(&Vec2{}).fromC(C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -33781,7 +33787,7 @@ func (self *WindowDockStyle) Colors() [6]uint32 {
 		result := [6]uint32{}
 		resultMirr := C.wrap_ImGuiWindowDockStyle_GetColors(selfArg)
 		for i := range result {
-			result[i] = uint32(resultMirr[i])
+			result[i] = uint32(C.cimgui_ImU32_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -34861,7 +34867,10 @@ func (self *StbUndoState) Undorec() [99]StbUndoRecord {
 		result := [99]StbUndoRecord{}
 		resultMirr := C.wrap_StbUndoState_GetUndo_rec(selfArg)
 		for i := range result {
-			result[i] = *newStbUndoRecordFromC(func() *C.StbUndoRecord { result := resultMirr[i]; return &result }())
+			result[i] = *newStbUndoRecordFromC(func() *C.StbUndoRecord {
+				result := C.cimgui_StbUndoRecord_GetAtIdx(resultMirr, C.int(i))
+				return &result
+			}())
 		}
 
 		return result
@@ -34893,7 +34902,7 @@ func (self *StbUndoState) Undochar() [999]Wchar {
 		result := [999]Wchar{}
 		resultMirr := C.wrap_StbUndoState_GetUndo_char(selfArg)
 		for i := range result {
-			result[i] = Wchar(resultMirr[i])
+			result[i] = Wchar(C.cimgui_ImWchar_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result

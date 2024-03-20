@@ -459,7 +459,10 @@ func (self *MarkdownConfig) HeadingFormats() [3]MarkdownHeadingFormat {
 		result := [3]MarkdownHeadingFormat{}
 		resultMirr := C.wrap_MarkdownConfig_GetHeadingFormats(selfArg)
 		for i := range result {
-			result[i] = *newMarkdownHeadingFormatFromC(func() *C.MarkdownHeadingFormat { result := resultMirr[i]; return &result }())
+			result[i] = *newMarkdownHeadingFormatFromC(func() *C.MarkdownHeadingFormat {
+				result := C.cimmarkdown_MarkdownHeadingFormat_GetAtIdx(resultMirr, C.int(i))
+				return &result
+			}())
 		}
 
 		return result
