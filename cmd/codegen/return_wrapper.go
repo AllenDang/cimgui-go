@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/kpango/glg"
+	"regexp"
+	"strconv"
 )
 
 // Wrapper for return value
@@ -12,7 +15,7 @@ type returnWrapper struct {
 
 func getReturnWrapper(
 	t CIdentifier,
-	data *Context,
+	context *Context,
 ) (returnWrapper, error) {
 	returnWrapperMap := map[CIdentifier]returnWrapper{
 		"bool":           {"bool", "%s == C.bool(true)"},
@@ -60,21 +63,26 @@ func getReturnWrapper(
 
 	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")
 	// check if pureType is a declared type (struct or something else from typedefs)
-	_, isRefStruct := data.refStructNames[pureType]
+	_, isRefStruct := context.refStructNames[pureType]
 	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
-	_, isStruct := data.structNames[pureType]
+	_, isStruct := context.structNames[pureType]
 	isStruct = isStruct || (isRefStruct && !shouldSkipRefTypedef)
 	w, known := returnWrapperMap[t]
+	// check if is array (match regex)
+	isArray, err := regexp.Match(".*\\[\\d+\\]", []byte(t))
+	if err != nil {
+		glg.Fatalf("Error in regex: %s", err)
+	}
+
 	switch {
 	case known:
 		return w, nil
-	case (data.structNames[t] || data.refStructNames[t]) && !shouldSkipStruct(t):
+	case (context.structNames[t] || context.refStructNames[t]) && !shouldSkipStruct(t):
 		return returnWrapper{
 			returnType: t.renameGoIdentifier(),
-			returnStmt: fmt.Sprintf(`*new%sFromC(func() *C.%s {result := %%s; return &result}())
-`, t.renameGoIdentifier(), t),
+			returnStmt: fmt.Sprintf(`*new%sFromC(func() *C.%s {result := %%s; return &result}())`, t.renameGoIdentifier(), t),
 		}, nil
-	case isEnum(t, data.enumNames):
+	case isEnum(t, context.enumNames):
 		return returnWrapper{
 			returnType: t.renameEnum(),
 			returnStmt: fmt.Sprintf("%s(%%s)", t.renameEnum()),
@@ -82,7 +90,7 @@ func getReturnWrapper(
 	case HasPrefix(t, "ImVector_") &&
 		!(HasSuffix(t, "*") || HasSuffix(t, "]")):
 		pureType := CIdentifier(TrimPrefix(t, "ImVector_") + "*")
-		rw, err := getReturnWrapper(pureType, data)
+		rw, err := getReturnWrapper(pureType, context)
 		if err != nil {
 			return returnWrapper{}, fmt.Errorf("creating vector wrapper %w", err)
 		}
@@ -90,7 +98,7 @@ func getReturnWrapper(
 			returnType: GoIdentifier(fmt.Sprintf("Vector[%s]", rw.returnType)),
 			returnStmt: fmt.Sprintf("newVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
 		}, nil
-	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), data.enumNames):
+	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), context.enumNames):
 		return returnWrapper{
 			returnType: "*" + TrimSuffix(t, "*").renameEnum(),
 			returnStmt: fmt.Sprintf("(*%s)(%%s)", TrimSuffix(t, "*").renameEnum()),
@@ -100,6 +108,39 @@ func getReturnWrapper(
 			returnType: "*" + TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(),
 			returnStmt: fmt.Sprintf("new%sFromC(%%s)", TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier()),
 		}, nil
+	case isArray:
+		typeCount := Split(t, "[")
+		count, err := strconv.Atoi(string(TrimSuffix(typeCount[1], "]")))
+		if err != nil {
+			return returnWrapper{}, fmt.Errorf("parsing array len: %w", err)
+		}
+
+		typeName := typeCount[0]
+		// check if array index getter exists
+		getterName, ok := context.arrayIndexGetters[typeName]
+		if !ok {
+			return returnWrapper{}, fmt.Errorf("no array index getter for %s", typeName)
+		}
+
+		rw, err := getReturnWrapper(typeName, context)
+		if err != nil {
+			return returnWrapper{}, fmt.Errorf("creating array wrapper %w", err)
+		}
+
+		result := returnWrapper{
+			returnType: GoIdentifier(fmt.Sprintf("[%d]%s", count, rw.returnType)),
+			returnStmt: fmt.Sprintf(`func() [%[1]d]%[2]s {
+result := [%[1]d]%[2]s{}
+	resultMirr := %%s
+	for i := range result {
+		result[i] = %[3]s
+	}
+
+	return result
+}()`, count, rw.returnType, fmt.Sprintf(rw.returnStmt, fmt.Sprintf("C.%s(resultMirr, C.int(i))", getterName))),
+		}
+
+		return result, nil
 	default:
 		return returnWrapper{}, fmt.Errorf("unknown return type %s", t)
 	}

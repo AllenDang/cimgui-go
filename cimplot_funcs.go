@@ -13931,6 +13931,23 @@ func (self PlotAxis) SetFormatSpec(v *[16]rune) {
 	}
 }
 
+func (self *PlotAxis) FormatSpec() [16]rune {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [16]rune {
+		result := [16]rune{}
+		resultMirr := C.wrap_ImPlotAxis_GetFormatSpec(selfArg)
+		for i := range result {
+			result[i] = rune(C.cimplot_char_GetAtIdx(resultMirr, C.int(i)))
+		}
+
+		return result
+	}()
+}
+
 func (self PlotAxis) SetLinkedMin(v *float64) {
 	vArg, _ := WrapNumberPtr[C.double, float64](v)
 
@@ -15662,6 +15679,23 @@ func (self PlotNextItemData) SetColors(v *[5]Vec4) {
 	}
 }
 
+func (self *PlotNextItemData) Colors() [5]Vec4 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [5]Vec4 {
+		result := [5]Vec4{}
+		resultMirr := C.wrap_ImPlotNextItemData_GetColors(selfArg)
+		for i := range result {
+			result[i] = *(&Vec4{}).fromC(C.cimplot_ImVec4_GetAtIdx(resultMirr, C.int(i)))
+		}
+
+		return result
+	}()
+}
+
 func (self PlotNextItemData) SetLineWeight(v float32) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -15917,6 +15951,23 @@ func (self PlotNextPlotData) SetRangeCond(v *[6]PlotCond) {
 	}
 }
 
+func (self *PlotNextPlotData) RangeCond() [6]PlotCond {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [6]PlotCond {
+		result := [6]PlotCond{}
+		resultMirr := C.wrap_ImPlotNextPlotData_GetRangeCond(selfArg)
+		for i := range result {
+			result[i] = PlotCond(C.cimplot_ImPlotCond_GetAtIdx(resultMirr, C.int(i)))
+		}
+
+		return result
+	}()
+}
+
 func (self PlotNextPlotData) SetRange(v *[6]PlotRange) {
 	vArg := make([]C.ImPlotRange, len(v))
 	for i, vV := range v {
@@ -15931,6 +15982,23 @@ func (self PlotNextPlotData) SetRange(v *[6]PlotRange) {
 	for i, vV := range vArg {
 		(*v)[i] = *newPlotRangeFromC(func() *C.ImPlotRange { result := vV; return &result }())
 	}
+}
+
+func (self *PlotNextPlotData) Range() [6]PlotRange {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [6]PlotRange {
+		result := [6]PlotRange{}
+		resultMirr := C.wrap_ImPlotNextPlotData_GetRange(selfArg)
+		for i := range result {
+			result[i] = *newPlotRangeFromC(func() *C.ImPlotRange { result := C.cimplot_ImPlotRange_GetAtIdx(resultMirr, C.int(i)); return &result }())
+		}
+
+		return result
+	}()
 }
 
 func (self PlotNextPlotData) SetHasRange(v *[6]bool) {
@@ -15948,6 +16016,23 @@ func (self PlotNextPlotData) SetHasRange(v *[6]bool) {
 	}
 }
 
+func (self *PlotNextPlotData) HasRange() [6]bool {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [6]bool {
+		result := [6]bool{}
+		resultMirr := C.wrap_ImPlotNextPlotData_GetHasRange(selfArg)
+		for i := range result {
+			result[i] = C.cimplot_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
+		}
+
+		return result
+	}()
+}
+
 func (self PlotNextPlotData) SetFit(v *[6]bool) {
 	vArg := make([]C.bool, len(v))
 	for i, vV := range v {
@@ -15961,6 +16046,23 @@ func (self PlotNextPlotData) SetFit(v *[6]bool) {
 	for i, vV := range vArg {
 		(*v)[i] = vV == C.bool(true)
 	}
+}
+
+func (self *PlotNextPlotData) Fit() [6]bool {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [6]bool {
+		result := [6]bool{}
+		resultMirr := C.wrap_ImPlotNextPlotData_GetFit(selfArg)
+		for i := range result {
+			result[i] = C.cimplot_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
+		}
+
+		return result
+	}()
 }
 
 func (self PlotNextPlotData) SetLinkedMin(v *[6]*float64) {
@@ -15979,6 +16081,23 @@ func (self PlotNextPlotData) SetLinkedMin(v *[6]*float64) {
 	}
 }
 
+func (self *PlotNextPlotData) LinkedMin() [6]*float64 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [6]*float64 {
+		result := [6]*float64{}
+		resultMirr := C.wrap_ImPlotNextPlotData_GetLinkedMin(selfArg)
+		for i := range result {
+			result[i] = (*float64)(C.cimplot_doublePtr_GetAtIdx(resultMirr, C.int(i)))
+		}
+
+		return result
+	}()
+}
+
 func (self PlotNextPlotData) SetLinkedMax(v *[6]*float64) {
 	vArg := make([]*C.double, len(v))
 	for i, vV := range v {
@@ -15993,6 +16112,23 @@ func (self PlotNextPlotData) SetLinkedMax(v *[6]*float64) {
 	for i, vV := range vArg {
 		(*v)[i] = (*float64)(vV)
 	}
+}
+
+func (self *PlotNextPlotData) LinkedMax() [6]*float64 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [6]*float64 {
+		result := [6]*float64{}
+		resultMirr := C.wrap_ImPlotNextPlotData_GetLinkedMax(selfArg)
+		for i := range result {
+			result[i] = (*float64)(C.cimplot_doublePtr_GetAtIdx(resultMirr, C.int(i)))
+		}
+
+		return result
+	}()
 }
 
 func (self PlotPlot) SetID(v ID) {
@@ -16077,6 +16213,23 @@ func (self PlotPlot) SetAxes(v *[6]PlotAxis) {
 	for i, vV := range vArg {
 		(*v)[i] = *newPlotAxisFromC(func() *C.ImPlotAxis { result := vV; return &result }())
 	}
+}
+
+func (self *PlotPlot) Axes() [6]PlotAxis {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [6]PlotAxis {
+		result := [6]PlotAxis{}
+		resultMirr := C.wrap_ImPlotPlot_GetAxes(selfArg)
+		for i := range result {
+			result[i] = *newPlotAxisFromC(func() *C.ImPlotAxis { result := C.cimplot_ImPlotAxis_GetAtIdx(resultMirr, C.int(i)); return &result }())
+		}
+
+		return result
+	}()
 }
 
 func (self PlotPlot) SetTextBuffer(v TextBuffer) {
@@ -16927,6 +17080,23 @@ func (self PlotStyle) SetColors(v *[21]Vec4) {
 	}
 }
 
+func (self *PlotStyle) Colors() [21]Vec4 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [21]Vec4 {
+		result := [21]Vec4{}
+		resultMirr := C.wrap_ImPlotStyle_GetColors(selfArg)
+		for i := range result {
+			result[i] = *(&Vec4{}).fromC(C.cimplot_ImVec4_GetAtIdx(resultMirr, C.int(i)))
+		}
+
+		return result
+	}()
+}
+
 func (self PlotStyle) SetColormap(v PlotColormap) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()
@@ -17283,6 +17453,23 @@ func (self PlotSubplot) SetTempSizes(v *[2]float32) {
 	for i, vV := range vArg {
 		(*v)[i] = float32(vV)
 	}
+}
+
+func (self *PlotSubplot) TempSizes() [2]float32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [2]float32 {
+		result := [2]float32{}
+		resultMirr := C.wrap_ImPlotSubplot_GetTempSizes(selfArg)
+		for i := range result {
+			result[i] = float32(C.cimplot_float_GetAtIdx(resultMirr, C.int(i)))
+		}
+
+		return result
+	}()
 }
 
 func (self PlotSubplot) SetFrameHovered(v bool) {

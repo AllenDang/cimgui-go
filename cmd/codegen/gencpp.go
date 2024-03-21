@@ -427,9 +427,10 @@ extern "C" {
 	return validFuncs, nil
 }
 
-func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []StructDef) ([]FuncDef, error) {
+func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []StructDef, context *Context) (accessors []FuncDef, err error) {
 	var structAccessorFuncs []FuncDef
 
+	// TODO: extrac this to some separated function, maybe on top of this file
 	skipFuncNames := map[CIdentifier]bool{
 		"ImVec1_GetX":      true,
 		"ImVec2_GetX":      true,
@@ -572,6 +573,7 @@ extern "C" {
 				memberType, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name,
 			)
 
+			// here we change void* to uintptr_t for .go handling
 			if m.Type == "void*" {
 				fmt.Fprintf(sbCpp,
 					"%s%s %s(%s *self) { return (uintptr_t)self->%s; }\n",
@@ -582,6 +584,11 @@ extern "C" {
 					"%s%s %s(%s *self) { return self->%s; }\n",
 					memberType, getPtrIfSize(m.Size), getterFuncDef.CWrapperFuncName, s.Name, Split(m.Name, "[")[0],
 				)
+			}
+
+			// if is array type, need to add a special method to get certain index of array
+			if _, ok := context.arrayIndexGetters[m.Type]; m.Size > 0 && !ok {
+				AddArrayIndexGetter(m.Type, sbHeader, sbCpp, context)
 			}
 		}
 	}
@@ -635,4 +642,21 @@ func getPtrIfSize(size int) string {
 	}
 
 	return ""
+}
+
+func AddArrayIndexGetter(t CIdentifier, sbHeader, sbCpp *strings.Builder, context *Context) {
+	tStr := ReplaceAll(ReplaceAll(t, " ", "_"), "*", "Ptr")
+	getterFuncName := CIdentifier(context.prefix) + "_" + tStr + "_GetAtIdx"
+	context.arrayIndexGetters[t] = getterFuncName
+
+	fmt.Fprintf(
+		sbHeader,
+		"extern %[1]s %[2]s(%[1]s *self, int index);\n",
+		Split(t, "[")[0], getterFuncName,
+	)
+
+	fmt.Fprintf(sbCpp,
+		"%[1]s %[2]s(%[1]s *self, int index) { return self[index]; }\n",
+		t, getterFuncName,
+	)
 }

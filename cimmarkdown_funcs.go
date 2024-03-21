@@ -449,6 +449,26 @@ func (self MarkdownConfig) SetHeadingFormats(v *[3]MarkdownHeadingFormat) {
 	}
 }
 
+func (self *MarkdownConfig) HeadingFormats() [3]MarkdownHeadingFormat {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [3]MarkdownHeadingFormat {
+		result := [3]MarkdownHeadingFormat{}
+		resultMirr := C.wrap_MarkdownConfig_GetHeadingFormats(selfArg)
+		for i := range result {
+			result[i] = *newMarkdownHeadingFormatFromC(func() *C.MarkdownHeadingFormat {
+				result := C.cimmarkdown_MarkdownHeadingFormat_GetAtIdx(resultMirr, C.int(i))
+				return &result
+			}())
+		}
+
+		return result
+	}()
+}
+
 func (self MarkdownConfig) SetUserData(v uintptr) {
 	selfArg, selfFin := self.handle()
 	defer selfFin()

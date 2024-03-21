@@ -70,6 +70,7 @@ void wrap_ImPlotAxis_SetFormatterData(ImPlotAxis *ImPlotAxisPtr, uintptr_t v) { 
 uintptr_t wrap_ImPlotAxis_GetFormatterData(ImPlotAxis *self) { return (uintptr_t)self->FormatterData; }
 void wrap_ImPlotAxis_SetFormatSpec(ImPlotAxis *ImPlotAxisPtr, char* v) { memcpy(ImPlotAxisPtr->FormatSpec, v, sizeof(char)*16); }
 char* wrap_ImPlotAxis_GetFormatSpec(ImPlotAxis *self) { return self->FormatSpec; }
+char cimplot_char_GetAtIdx(char *self, int index) { return self[index]; }
 void wrap_ImPlotAxis_SetLocator(ImPlotAxis *ImPlotAxisPtr, ImPlotLocator v) { ImPlotAxisPtr->Locator = v; }
 ImPlotLocator wrap_ImPlotAxis_GetLocator(ImPlotAxis *self) { return self->Locator; }
 void wrap_ImPlotAxis_SetLinkedMin(ImPlotAxis *ImPlotAxisPtr, double* v) { ImPlotAxisPtr->LinkedMin = v; }
@@ -299,6 +300,7 @@ void wrap_ImPlotLegend_SetCanGoInside(ImPlotLegend *ImPlotLegendPtr, bool v) { I
 bool wrap_ImPlotLegend_GetCanGoInside(ImPlotLegend *self) { return self->CanGoInside; }
 void wrap_ImPlotNextItemData_SetColors(ImPlotNextItemData *ImPlotNextItemDataPtr, ImVec4* v) { memcpy(ImPlotNextItemDataPtr->Colors, v, sizeof(ImVec4)*5); }
 ImVec4* wrap_ImPlotNextItemData_GetColors(ImPlotNextItemData *self) { return self->Colors; }
+ImVec4 cimplot_ImVec4_GetAtIdx(ImVec4 *self, int index) { return self[index]; }
 void wrap_ImPlotNextItemData_SetLineWeight(ImPlotNextItemData *ImPlotNextItemDataPtr, float v) { ImPlotNextItemDataPtr->LineWeight = v; }
 float wrap_ImPlotNextItemData_GetLineWeight(ImPlotNextItemData *self) { return self->LineWeight; }
 void wrap_ImPlotNextItemData_SetMarker(ImPlotNextItemData *ImPlotNextItemDataPtr, ImPlotMarker v) { ImPlotNextItemDataPtr->Marker = v; }
@@ -333,14 +335,18 @@ void wrap_ImPlotNextItemData_SetHiddenCond(ImPlotNextItemData *ImPlotNextItemDat
 ImPlotCond wrap_ImPlotNextItemData_GetHiddenCond(ImPlotNextItemData *self) { return self->HiddenCond; }
 void wrap_ImPlotNextPlotData_SetRangeCond(ImPlotNextPlotData *ImPlotNextPlotDataPtr, ImPlotCond* v) { memcpy(ImPlotNextPlotDataPtr->RangeCond, v, sizeof(ImPlotCond)*6); }
 ImPlotCond* wrap_ImPlotNextPlotData_GetRangeCond(ImPlotNextPlotData *self) { return self->RangeCond; }
+ImPlotCond cimplot_ImPlotCond_GetAtIdx(ImPlotCond *self, int index) { return self[index]; }
 void wrap_ImPlotNextPlotData_SetRange(ImPlotNextPlotData *ImPlotNextPlotDataPtr, ImPlotRange* v) { memcpy(ImPlotNextPlotDataPtr->Range, v, sizeof(ImPlotRange)*6); }
 ImPlotRange* wrap_ImPlotNextPlotData_GetRange(ImPlotNextPlotData *self) { return self->Range; }
+ImPlotRange cimplot_ImPlotRange_GetAtIdx(ImPlotRange *self, int index) { return self[index]; }
 void wrap_ImPlotNextPlotData_SetHasRange(ImPlotNextPlotData *ImPlotNextPlotDataPtr, bool* v) { memcpy(ImPlotNextPlotDataPtr->HasRange, v, sizeof(bool)*6); }
 bool* wrap_ImPlotNextPlotData_GetHasRange(ImPlotNextPlotData *self) { return self->HasRange; }
+bool cimplot_bool_GetAtIdx(bool *self, int index) { return self[index]; }
 void wrap_ImPlotNextPlotData_SetFit(ImPlotNextPlotData *ImPlotNextPlotDataPtr, bool* v) { memcpy(ImPlotNextPlotDataPtr->Fit, v, sizeof(bool)*6); }
 bool* wrap_ImPlotNextPlotData_GetFit(ImPlotNextPlotData *self) { return self->Fit; }
 void wrap_ImPlotNextPlotData_SetLinkedMin(ImPlotNextPlotData *ImPlotNextPlotDataPtr, double** v) { memcpy(ImPlotNextPlotDataPtr->LinkedMin, v, sizeof(double*)*6); }
 double** wrap_ImPlotNextPlotData_GetLinkedMin(ImPlotNextPlotData *self) { return self->LinkedMin; }
+double* cimplot_doublePtr_GetAtIdx(double* *self, int index) { return self[index]; }
 void wrap_ImPlotNextPlotData_SetLinkedMax(ImPlotNextPlotData *ImPlotNextPlotDataPtr, double** v) { memcpy(ImPlotNextPlotDataPtr->LinkedMax, v, sizeof(double*)*6); }
 double** wrap_ImPlotNextPlotData_GetLinkedMax(ImPlotNextPlotData *self) { return self->LinkedMax; }
 void wrap_ImPlotPlot_SetID(ImPlotPlot *ImPlotPlotPtr, ImGuiID v) { ImPlotPlotPtr->ID = v; }
@@ -355,6 +361,7 @@ void wrap_ImPlotPlot_SetMouseTextFlags(ImPlotPlot *ImPlotPlotPtr, ImPlotMouseTex
 ImPlotMouseTextFlags wrap_ImPlotPlot_GetMouseTextFlags(ImPlotPlot *self) { return self->MouseTextFlags; }
 void wrap_ImPlotPlot_SetAxes(ImPlotPlot *ImPlotPlotPtr, ImPlotAxis* v) { memcpy(ImPlotPlotPtr->Axes, v, sizeof(ImPlotAxis)*6); }
 ImPlotAxis* wrap_ImPlotPlot_GetAxes(ImPlotPlot *self) { return self->Axes; }
+ImPlotAxis cimplot_ImPlotAxis_GetAtIdx(ImPlotAxis *self, int index) { return self[index]; }
 void wrap_ImPlotPlot_SetTextBuffer(ImPlotPlot *ImPlotPlotPtr, ImGuiTextBuffer v) { ImPlotPlotPtr->TextBuffer = v; }
 ImGuiTextBuffer wrap_ImPlotPlot_GetTextBuffer(ImPlotPlot *self) { return self->TextBuffer; }
 void wrap_ImPlotPlot_SetItems(ImPlotPlot *ImPlotPlotPtr, ImPlotItemGroup v) { ImPlotPlotPtr->Items = v; }
@@ -509,6 +516,7 @@ void wrap_ImPlotSubplot_SetColLinkData(ImPlotSubplot *ImPlotSubplotPtr, ImVector
 ImVector_ImPlotRange wrap_ImPlotSubplot_GetColLinkData(ImPlotSubplot *self) { return self->ColLinkData; }
 void wrap_ImPlotSubplot_SetTempSizes(ImPlotSubplot *ImPlotSubplotPtr, float* v) { memcpy(ImPlotSubplotPtr->TempSizes, v, sizeof(float)*2); }
 float* wrap_ImPlotSubplot_GetTempSizes(ImPlotSubplot *self) { return self->TempSizes; }
+float cimplot_float_GetAtIdx(float *self, int index) { return self[index]; }
 void wrap_ImPlotSubplot_SetFrameHovered(ImPlotSubplot *ImPlotSubplotPtr, bool v) { ImPlotSubplotPtr->FrameHovered = v; }
 bool wrap_ImPlotSubplot_GetFrameHovered(ImPlotSubplot *self) { return self->FrameHovered; }
 void wrap_ImPlotSubplot_SetHasTitle(ImPlotSubplot *ImPlotSubplotPtr, bool v) { ImPlotSubplotPtr->HasTitle = v; }

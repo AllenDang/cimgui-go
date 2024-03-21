@@ -73,6 +73,7 @@ extern void wrap_ImPlotAxis_SetFormatterData(ImPlotAxis *ImPlotAxisPtr, uintptr_
 extern uintptr_t wrap_ImPlotAxis_GetFormatterData(ImPlotAxis *self);
 extern void wrap_ImPlotAxis_SetFormatSpec(ImPlotAxis *ImPlotAxisPtr, char* v);
 extern char* wrap_ImPlotAxis_GetFormatSpec(ImPlotAxis *self);
+extern char cimplot_char_GetAtIdx(char *self, int index);
 extern void wrap_ImPlotAxis_SetLocator(ImPlotAxis *ImPlotAxisPtr, ImPlotLocator v);
 extern ImPlotLocator wrap_ImPlotAxis_GetLocator(ImPlotAxis *self);
 extern void wrap_ImPlotAxis_SetLinkedMin(ImPlotAxis *ImPlotAxisPtr, double* v);
@@ -302,6 +303,7 @@ extern void wrap_ImPlotLegend_SetCanGoInside(ImPlotLegend *ImPlotLegendPtr, bool
 extern bool wrap_ImPlotLegend_GetCanGoInside(ImPlotLegend *self);
 extern void wrap_ImPlotNextItemData_SetColors(ImPlotNextItemData *ImPlotNextItemDataPtr, ImVec4* v);
 extern ImVec4* wrap_ImPlotNextItemData_GetColors(ImPlotNextItemData *self);
+extern ImVec4 cimplot_ImVec4_GetAtIdx(ImVec4 *self, int index);
 extern void wrap_ImPlotNextItemData_SetLineWeight(ImPlotNextItemData *ImPlotNextItemDataPtr, float v);
 extern float wrap_ImPlotNextItemData_GetLineWeight(ImPlotNextItemData *self);
 extern void wrap_ImPlotNextItemData_SetMarker(ImPlotNextItemData *ImPlotNextItemDataPtr, ImPlotMarker v);
@@ -336,14 +338,18 @@ extern void wrap_ImPlotNextItemData_SetHiddenCond(ImPlotNextItemData *ImPlotNext
 extern ImPlotCond wrap_ImPlotNextItemData_GetHiddenCond(ImPlotNextItemData *self);
 extern void wrap_ImPlotNextPlotData_SetRangeCond(ImPlotNextPlotData *ImPlotNextPlotDataPtr, ImPlotCond* v);
 extern ImPlotCond* wrap_ImPlotNextPlotData_GetRangeCond(ImPlotNextPlotData *self);
+extern ImPlotCond cimplot_ImPlotCond_GetAtIdx(ImPlotCond *self, int index);
 extern void wrap_ImPlotNextPlotData_SetRange(ImPlotNextPlotData *ImPlotNextPlotDataPtr, ImPlotRange* v);
 extern ImPlotRange* wrap_ImPlotNextPlotData_GetRange(ImPlotNextPlotData *self);
+extern ImPlotRange cimplot_ImPlotRange_GetAtIdx(ImPlotRange *self, int index);
 extern void wrap_ImPlotNextPlotData_SetHasRange(ImPlotNextPlotData *ImPlotNextPlotDataPtr, bool* v);
 extern bool* wrap_ImPlotNextPlotData_GetHasRange(ImPlotNextPlotData *self);
+extern bool cimplot_bool_GetAtIdx(bool *self, int index);
 extern void wrap_ImPlotNextPlotData_SetFit(ImPlotNextPlotData *ImPlotNextPlotDataPtr, bool* v);
 extern bool* wrap_ImPlotNextPlotData_GetFit(ImPlotNextPlotData *self);
 extern void wrap_ImPlotNextPlotData_SetLinkedMin(ImPlotNextPlotData *ImPlotNextPlotDataPtr, double** v);
 extern double** wrap_ImPlotNextPlotData_GetLinkedMin(ImPlotNextPlotData *self);
+extern double* cimplot_doublePtr_GetAtIdx(double* *self, int index);
 extern void wrap_ImPlotNextPlotData_SetLinkedMax(ImPlotNextPlotData *ImPlotNextPlotDataPtr, double** v);
 extern double** wrap_ImPlotNextPlotData_GetLinkedMax(ImPlotNextPlotData *self);
 extern void wrap_ImPlotPlot_SetID(ImPlotPlot *ImPlotPlotPtr, ImGuiID v);
@@ -358,6 +364,7 @@ extern void wrap_ImPlotPlot_SetMouseTextFlags(ImPlotPlot *ImPlotPlotPtr, ImPlotM
 extern ImPlotMouseTextFlags wrap_ImPlotPlot_GetMouseTextFlags(ImPlotPlot *self);
 extern void wrap_ImPlotPlot_SetAxes(ImPlotPlot *ImPlotPlotPtr, ImPlotAxis* v);
 extern ImPlotAxis* wrap_ImPlotPlot_GetAxes(ImPlotPlot *self);
+extern ImPlotAxis cimplot_ImPlotAxis_GetAtIdx(ImPlotAxis *self, int index);
 extern void wrap_ImPlotPlot_SetTextBuffer(ImPlotPlot *ImPlotPlotPtr, ImGuiTextBuffer v);
 extern ImGuiTextBuffer wrap_ImPlotPlot_GetTextBuffer(ImPlotPlot *self);
 extern void wrap_ImPlotPlot_SetItems(ImPlotPlot *ImPlotPlotPtr, ImPlotItemGroup v);
@@ -512,6 +519,7 @@ extern void wrap_ImPlotSubplot_SetColLinkData(ImPlotSubplot *ImPlotSubplotPtr, I
 extern ImVector_ImPlotRange wrap_ImPlotSubplot_GetColLinkData(ImPlotSubplot *self);
 extern void wrap_ImPlotSubplot_SetTempSizes(ImPlotSubplot *ImPlotSubplotPtr, float* v);
 extern float* wrap_ImPlotSubplot_GetTempSizes(ImPlotSubplot *self);
+extern float cimplot_float_GetAtIdx(float *self, int index);
 extern void wrap_ImPlotSubplot_SetFrameHovered(ImPlotSubplot *ImPlotSubplotPtr, bool v);
 extern bool wrap_ImPlotSubplot_GetFrameHovered(ImPlotSubplot *self);
 extern void wrap_ImPlotSubplot_SetHasTitle(ImPlotSubplot *ImPlotSubplotPtr, bool v);

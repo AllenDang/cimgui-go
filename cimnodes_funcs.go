@@ -968,3 +968,20 @@ func (self NodesStyle) SetColors(v *[29]uint32) {
 		(*v)[i] = uint32(vV)
 	}
 }
+
+func (self *NodesStyle) Colors() [29]uint32 {
+	selfArg, selfFin := self.handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [29]uint32 {
+		result := [29]uint32{}
+		resultMirr := C.wrap_ImNodesStyle_GetColors(selfArg)
+		for i := range result {
+			result[i] = uint32(C.cimnodes_unsigned_int_GetAtIdx(resultMirr, C.int(i)))
+		}
+
+		return result
+	}()
+}
