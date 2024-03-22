@@ -10628,8 +10628,8 @@ func InternalTextExV(text string, flags TextFlags) {
 	textFin()
 }
 
-// raw text without formatting. Roughly equivalent to Text("TextUnformattedV", text) but: A) doesn't require null terminated string if 'text_end' is specified, B) it's faster, no memory copy is done, no buffer size limits, recommended for long chunks of text.
-// %s parameter default value hint:
+// raw text without formatting. Roughly equivalent to Text("%s", text) but: A) doesn't require null terminated string if 'text_end' is specified, B) it's faster, no memory copy is done, no buffer size limits, recommended for long chunks of text.
+// TextUnformattedV parameter default value hint:
 func TextUnformattedV(text string) {
 	textArg, textFin := WrapString(text)
 	C.wrap_igTextUnformattedV(textArg, C.int(len(text)))
