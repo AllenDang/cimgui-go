@@ -277,43 +277,9 @@ result := C.%s(%s)
 // it takes function name, list of arguments and return type and returns go statement.
 // e.g.: func (self *ImGuiType) FuncName(arg1 type1, arg2 type2) returnType {
 func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver GoIdentifier, funcName CIdentifier, args []GoIdentifier, returnType GoIdentifier, f FuncDef) (functionDeclaration string) {
+
 	funcParts := Split(funcName, "_")
 	typeName := funcParts[0]
-
-	// Generate default param value hint
-	var commentSb strings.Builder
-	comments := strings.Split(f.Comment, "\n")
-	for i, comment := range comments {
-		if !strings.HasPrefix(comment, "//") {
-			comments[i] = "// " + comments[i]
-		}
-	}
-
-	commentSb.WriteString(fmt.Sprintf("%s\n", strings.Join(comments, "\n")))
-	if len(f.Defaults) > 0 {
-		commentSb.WriteString("// %s parameter default value hint:\n")
-
-		type defaultParam struct {
-			name  GoIdentifier
-			value string
-		}
-		defaults := make([]defaultParam, 0, len(f.Defaults))
-		// sort according to the order of the arguments
-		for _, arg := range args {
-			if idx := Index(arg, " "); idx != -1 {
-				arg = arg[:idx]
-			}
-			d, ok := f.Defaults[string(arg)]
-			if !ok {
-				continue
-			}
-			defaults = append(defaults, defaultParam{name: arg, value: d})
-		}
-
-		for _, p := range defaults {
-			commentSb.WriteString(fmt.Sprintf("// %s: %s\n", p.name, p.value))
-		}
-	}
 
 	// convert func(self *receiverType) into a method
 	if len(funcParts) > 1 &&
@@ -337,8 +303,44 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver GoIdentifier, fu
 		goFuncName = "Internal" + goFuncName
 	}
 
+	// Generate default param value hint
+	commentSb := &strings.Builder{}
+	comments := strings.Split(f.Comment, "\n")
+	for i, comment := range comments {
+		if !strings.HasPrefix(comment, "//") {
+			comments[i] = "// " + comments[i]
+		}
+	}
+
+	commentSb.WriteString(fmt.Sprintf("%s\n", strings.Join(comments, "\n")))
+	if len(f.Defaults) > 0 {
+		fmt.Fprintf(commentSb, "// %s parameter default value hint:\n", goFuncName)
+
+		type defaultParam struct {
+			name  GoIdentifier
+			value string
+		}
+		defaults := make([]defaultParam, 0, len(f.Defaults))
+		// sort according to the order of the arguments
+		for _, arg := range args {
+			if idx := Index(arg, " "); idx != -1 {
+				arg = arg[:idx]
+			}
+			d, ok := f.Defaults[string(arg)]
+			if !ok {
+				continue
+			}
+
+			defaults = append(defaults, defaultParam{name: arg, value: d})
+		}
+
+		for _, p := range defaults {
+			commentSb.WriteString(fmt.Sprintf("// %s: %s\n", p.name, p.value))
+		}
+	}
+
 	return fmt.Sprintf("%sfunc %s %s(%s) %s {\n",
-		Replace(commentSb.String(), "%s", goFuncName, 1),
+		commentSb.String(),
 		receiver,
 		goFuncName,
 		Join(args, ","),
