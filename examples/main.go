@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"image"
+	"runtime"
 
 	imgui "github.com/AllenDang/cimgui-go"
 )
@@ -107,6 +108,10 @@ func loop() {
 
 func beforeDestroyContext() {
 	imgui.PlotDestroyContext()
+}
+
+func init() {
+	runtime.LockOSThread()
 }
 
 func main() {
