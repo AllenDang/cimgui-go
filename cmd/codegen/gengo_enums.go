@@ -29,7 +29,7 @@ func generateGoEnums(prefix string, enums []EnumDef) []GoIdentifier {
 			if v.Comment != "" {
 				sb.WriteString(fmt.Sprintf("%s\n", v.Comment))
 			}
-			sb.WriteString(fmt.Sprintf("\t%s = %d\n", vName.renameGoIdentifier(), v.Value))
+			sb.WriteString(fmt.Sprintf("\t%s %s = %d\n", vName.renameGoIdentifier(), eName, v.Value))
 		}
 
 		sb.WriteString(")\n\n")
