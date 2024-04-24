@@ -7,29 +7,29 @@ package imgui
 type EmphasisState int32
 
 const (
-	NONE   = 0
-	LEFT   = 1
-	MIDDLE = 2
-	RIGHT  = 3
+	NONE   EmphasisState = 0
+	LEFT   EmphasisState = 1
+	MIDDLE EmphasisState = 2
+	RIGHT  EmphasisState = 3
 )
 
 // original name: LinkState
 type LinkState int32
 
 const (
-	NOLINK                            = 0
-	HASSQUAREBRACKETOPEN              = 1
-	HASSQUAREBRACKETS                 = 2
-	HASSQUAREBRACKETSROUNDBRACKETOPEN = 3
+	NOLINK                            LinkState = 0
+	HASSQUAREBRACKETOPEN              LinkState = 1
+	HASSQUAREBRACKETS                 LinkState = 2
+	HASSQUAREBRACKETSROUNDBRACKETOPEN LinkState = 3
 )
 
 // original name: MarkdownFormatType
 type MarkdownFormatType int32
 
 const (
-	NORMALTEXT    = 0
-	HEADING       = 1
-	UNORDEREDLIST = 2
-	LINK          = 3
-	EMPHASIS      = 4
+	NORMALTEXT    MarkdownFormatType = 0
+	HEADING       MarkdownFormatType = 1
+	UNORDEREDLIST MarkdownFormatType = 2
+	LINK          MarkdownFormatType = 3
+	EMPHASIS      MarkdownFormatType = 4
 )
