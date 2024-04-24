@@ -252,7 +252,7 @@ ImTextureID igCreateTexture(unsigned char *pixels, int width, int height) {
 
 void igDeleteTexture(ImTextureID id) {
   glBindTexture(GL_TEXTURE_2D, 0);
-  glDeleteTextures(1, (GLuint *)id);
+  glDeleteTextures(1, (GLuint *)(&id));
 }
 
 void igGLFWWindow_GetDisplaySize(GLFWwindow *window, int *width, int *height) {
