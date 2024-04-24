@@ -7,98 +7,98 @@ package imgui
 type NodesAttributeFlags int32
 
 const (
-	NodesAttributeFlagsNone                          = 0
-	NodesAttributeFlagsEnableLinkDetachWithDragClick = 1
-	NodesAttributeFlagsEnableLinkCreationOnSnap      = 2
+	NodesAttributeFlagsNone                          NodesAttributeFlags = 0
+	NodesAttributeFlagsEnableLinkDetachWithDragClick NodesAttributeFlags = 1
+	NodesAttributeFlagsEnableLinkCreationOnSnap      NodesAttributeFlags = 2
 )
 
 // original name: ImNodesCol_
 type NodesCol int32
 
 const (
-	NodesColNodeBackground                = 0
-	NodesColNodeBackgroundHovered         = 1
-	NodesColNodeBackgroundSelected        = 2
-	NodesColNodeOutline                   = 3
-	NodesColTitleBar                      = 4
-	NodesColTitleBarHovered               = 5
-	NodesColTitleBarSelected              = 6
-	NodesColLink                          = 7
-	NodesColLinkHovered                   = 8
-	NodesColLinkSelected                  = 9
-	NodesColPin                           = 10
-	NodesColPinHovered                    = 11
-	NodesColBoxSelector                   = 12
-	NodesColBoxSelectorOutline            = 13
-	NodesColGridBackground                = 14
-	NodesColGridLine                      = 15
-	NodesColGridLinePrimary               = 16
-	NodesColMiniMapBackground             = 17
-	NodesColMiniMapBackgroundHovered      = 18
-	NodesColMiniMapOutline                = 19
-	NodesColMiniMapOutlineHovered         = 20
-	NodesColMiniMapNodeBackground         = 21
-	NodesColMiniMapNodeBackgroundHovered  = 22
-	NodesColMiniMapNodeBackgroundSelected = 23
-	NodesColMiniMapNodeOutline            = 24
-	NodesColMiniMapLink                   = 25
-	NodesColMiniMapLinkSelected           = 26
-	NodesColMiniMapCanvas                 = 27
-	NodesColMiniMapCanvasOutline          = 28
-	NodesColCOUNT                         = 29
+	NodesColNodeBackground                NodesCol = 0
+	NodesColNodeBackgroundHovered         NodesCol = 1
+	NodesColNodeBackgroundSelected        NodesCol = 2
+	NodesColNodeOutline                   NodesCol = 3
+	NodesColTitleBar                      NodesCol = 4
+	NodesColTitleBarHovered               NodesCol = 5
+	NodesColTitleBarSelected              NodesCol = 6
+	NodesColLink                          NodesCol = 7
+	NodesColLinkHovered                   NodesCol = 8
+	NodesColLinkSelected                  NodesCol = 9
+	NodesColPin                           NodesCol = 10
+	NodesColPinHovered                    NodesCol = 11
+	NodesColBoxSelector                   NodesCol = 12
+	NodesColBoxSelectorOutline            NodesCol = 13
+	NodesColGridBackground                NodesCol = 14
+	NodesColGridLine                      NodesCol = 15
+	NodesColGridLinePrimary               NodesCol = 16
+	NodesColMiniMapBackground             NodesCol = 17
+	NodesColMiniMapBackgroundHovered      NodesCol = 18
+	NodesColMiniMapOutline                NodesCol = 19
+	NodesColMiniMapOutlineHovered         NodesCol = 20
+	NodesColMiniMapNodeBackground         NodesCol = 21
+	NodesColMiniMapNodeBackgroundHovered  NodesCol = 22
+	NodesColMiniMapNodeBackgroundSelected NodesCol = 23
+	NodesColMiniMapNodeOutline            NodesCol = 24
+	NodesColMiniMapLink                   NodesCol = 25
+	NodesColMiniMapLinkSelected           NodesCol = 26
+	NodesColMiniMapCanvas                 NodesCol = 27
+	NodesColMiniMapCanvasOutline          NodesCol = 28
+	NodesColCOUNT                         NodesCol = 29
 )
 
 // original name: ImNodesMiniMapLocation_
 type NodesMiniMapLocation int32
 
 const (
-	NodesMiniMapLocationBottomLeft  = 0
-	NodesMiniMapLocationBottomRight = 1
-	NodesMiniMapLocationTopLeft     = 2
-	NodesMiniMapLocationTopRight    = 3
+	NodesMiniMapLocationBottomLeft  NodesMiniMapLocation = 0
+	NodesMiniMapLocationBottomRight NodesMiniMapLocation = 1
+	NodesMiniMapLocationTopLeft     NodesMiniMapLocation = 2
+	NodesMiniMapLocationTopRight    NodesMiniMapLocation = 3
 )
 
 // original name: ImNodesPinShape_
 type NodesPinShape int32
 
 const (
-	NodesPinShapeCircle         = 0
-	NodesPinShapeCircleFilled   = 1
-	NodesPinShapeTriangle       = 2
-	NodesPinShapeTriangleFilled = 3
-	NodesPinShapeQuad           = 4
-	NodesPinShapeQuadFilled     = 5
+	NodesPinShapeCircle         NodesPinShape = 0
+	NodesPinShapeCircleFilled   NodesPinShape = 1
+	NodesPinShapeTriangle       NodesPinShape = 2
+	NodesPinShapeTriangleFilled NodesPinShape = 3
+	NodesPinShapeQuad           NodesPinShape = 4
+	NodesPinShapeQuadFilled     NodesPinShape = 5
 )
 
 // original name: ImNodesStyleFlags_
 type NodesStyleFlags int32
 
 const (
-	NodesStyleFlagsNone             = 0
-	NodesStyleFlagsNodeOutline      = 1
-	NodesStyleFlagsGridLines        = 4
-	NodesStyleFlagsGridLinesPrimary = 8
-	NodesStyleFlagsGridSnapping     = 16
+	NodesStyleFlagsNone             NodesStyleFlags = 0
+	NodesStyleFlagsNodeOutline      NodesStyleFlags = 1
+	NodesStyleFlagsGridLines        NodesStyleFlags = 4
+	NodesStyleFlagsGridLinesPrimary NodesStyleFlags = 8
+	NodesStyleFlagsGridSnapping     NodesStyleFlags = 16
 )
 
 // original name: ImNodesStyleVar_
 type NodesStyleVar int32
 
 const (
-	NodesStyleVarGridSpacing               = 0
-	NodesStyleVarNodeCornerRounding        = 1
-	NodesStyleVarNodePadding               = 2
-	NodesStyleVarNodeBorderThickness       = 3
-	NodesStyleVarLinkThickness             = 4
-	NodesStyleVarLinkLineSegmentsPerLength = 5
-	NodesStyleVarLinkHoverDistance         = 6
-	NodesStyleVarPinCircleRadius           = 7
-	NodesStyleVarPinQuadSideLength         = 8
-	NodesStyleVarPinTriangleSideLength     = 9
-	NodesStyleVarPinLineThickness          = 10
-	NodesStyleVarPinHoverRadius            = 11
-	NodesStyleVarPinOffset                 = 12
-	NodesStyleVarMiniMapPadding            = 13
-	NodesStyleVarMiniMapOffset             = 14
-	NodesStyleVarCOUNT                     = 15
+	NodesStyleVarGridSpacing               NodesStyleVar = 0
+	NodesStyleVarNodeCornerRounding        NodesStyleVar = 1
+	NodesStyleVarNodePadding               NodesStyleVar = 2
+	NodesStyleVarNodeBorderThickness       NodesStyleVar = 3
+	NodesStyleVarLinkThickness             NodesStyleVar = 4
+	NodesStyleVarLinkLineSegmentsPerLength NodesStyleVar = 5
+	NodesStyleVarLinkHoverDistance         NodesStyleVar = 6
+	NodesStyleVarPinCircleRadius           NodesStyleVar = 7
+	NodesStyleVarPinQuadSideLength         NodesStyleVar = 8
+	NodesStyleVarPinTriangleSideLength     NodesStyleVar = 9
+	NodesStyleVarPinLineThickness          NodesStyleVar = 10
+	NodesStyleVarPinHoverRadius            NodesStyleVar = 11
+	NodesStyleVarPinOffset                 NodesStyleVar = 12
+	NodesStyleVarMiniMapPadding            NodesStyleVar = 13
+	NodesStyleVarMiniMapOffset             NodesStyleVar = 14
+	NodesStyleVarCOUNT                     NodesStyleVar = 15
 )
