@@ -385,9 +385,9 @@ func (b *SDLBackend) SetCloseCallback(cbfun WindowCloseCallback[SDLWindowFlags])
 
 // SetWindowHint applies to next CreateWindow call
 // so use it before CreateWindow call ;-)
+// set flag if value is 1, clear flag if value is 0
 func (b *SDLBackend) SetWindowFlags(flag SDLWindowFlags, value int) {
-	// TODO: cache these flags and use in CreateWindow
-	// C.igSDLWindowHint(C.SDL_WindowFlags(flag), C.int(value))
+	C.igSDLWindowHint(C.SDL_WindowFlags(flag), C.int(value))
 }
 
 // SetIcons sets icons for the window.
