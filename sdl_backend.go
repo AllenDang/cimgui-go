@@ -28,20 +28,32 @@ import (
 
 type SDLWindowFlags int
 
-/*
 const (
-	GLFWWindowFlagsNone        = GLFWWindowFlags(C.GLFWWindowNone)
-	GLFWWindowFlagsResizable   = GLFWWindowFlags(C.GLFWWindowResizable)
-	GLFWWindowFlagsMaximized   = GLFWWindowFlags(C.GLFWWindowMaximized)
-	GLFWWindowFlagsDecorated   = GLFWWindowFlags(C.GLFWWindowDecorated)
-	GLFWWindowFlagsTransparent = GLFWWindowFlags(C.GLFWWindowTransparentFramebuffer)
-	GLFWWindowFlagsVisible     = GLFWWindowFlags(C.GLFWWindowVisible)
-	GLFWWindowFlagsFloating    = GLFWWindowFlags(C.GLFWWindowFloating)
-	GLFWWindowFlagsFocused     = GLFWWindowFlags(C.GLFWWindowFocused)
-	GLFWWindowFlagsIconified   = GLFWWindowFlags(C.GLFWWindowIconified)
-	GLFWWindowFlagsAutoIconify = GLFWWindowFlags(C.GLFWWindowAutoIconify)
+	SDLWindowFlagsNone              = SDLWindowFlags(0) // Clear all flags
+	SDLWindowFlagsFullScreen        = SDLWindowFlags(C.SDL_WINDOW_FULLSCREEN)
+	SDLWindowFlagsOpengl            = SDLWindowFlags(C.SDL_WINDOW_OPENGL)
+	SDLWindowFlagsDecorated         = SDLWindowFlags(C.SDL_WINDOW_SHOWN)
+	SDLWindowFlagsTransparent       = SDLWindowFlags(C.SDL_WINDOW_HIDDEN)
+	SDLWindowFlagsVisible           = SDLWindowFlags(C.SDL_WINDOW_BORDERLESS)
+	SDLWindowFlagsResizable         = SDLWindowFlags(C.SDL_WINDOW_RESIZABLE)
+	SDLWindowFlagsMinimized         = SDLWindowFlags(C.SDL_WINDOW_MINIMIZED)
+	SDLWindowFlagsMaximized         = SDLWindowFlags(C.SDL_WINDOW_MAXIMIZED)
+	SDLWindowFlagsMouseGrabbed      = SDLWindowFlags(C.SDL_WINDOW_MOUSE_GRABBED)
+	SDLWindowFlagsInputFocus        = SDLWindowFlags(C.SDL_WINDOW_INPUT_FOCUS)
+	SDLWindowFlagsMouseFocus        = SDLWindowFlags(C.SDL_WINDOW_MOUSE_FOCUS)
+	SDLWindowFlagsFullscreenDesktop = SDLWindowFlags(C.SDL_WINDOW_FULLSCREEN_DESKTOP)
+	SDLWindowFlagsWindowForeign     = SDLWindowFlags(C.SDL_WINDOW_FOREIGN)
+	SDLWindowFlagsAllowHighDPI      = SDLWindowFlags(C.SDL_WINDOW_ALLOW_HIGHDPI)
+	SDLWindowFlagsMouseCapture      = SDLWindowFlags(C.SDL_WINDOW_MOUSE_CAPTURE)
+	SDLWindowFlagsAlwaysOnTop       = SDLWindowFlags(C.SDL_WINDOW_ALWAYS_ON_TOP)
+	SDLWindowFlagsSkipTaskbar       = SDLWindowFlags(C.SDL_WINDOW_SKIP_TASKBAR)
+	SDLWindowFlagsUtility           = SDLWindowFlags(C.SDL_WINDOW_UTILITY)
+	SDLWindowFlagsTooltip           = SDLWindowFlags(C.SDL_WINDOW_TOOLTIP)
+	SDLWindowFlagsPopupMenu         = SDLWindowFlags(C.SDL_WINDOW_POPUP_MENU)
+	SDLWindowFlagsKeyboardGrabbed   = SDLWindowFlags(C.SDL_WINDOW_KEYBOARD_GRABBED)
+	SDLWindowFlagsWindowVulkan      = SDLWindowFlags(C.SDL_WINDOW_VULKAN)
+	SDLWindowFlagsWindowMetal       = SDLWindowFlags(C.SDL_WINDOW_METAL)
 )
-*/
 
 /*
 type GLFWKey int
@@ -385,6 +397,7 @@ func (b *SDLBackend) SetCloseCallback(cbfun WindowCloseCallback[SDLWindowFlags])
 
 // SetWindowHint applies to next CreateWindow call
 // so use it before CreateWindow call ;-)
+// default applied flags: SDLWindowFlagsOpengl | SDLWindowFlagsResizable | SDLWindowFlagsAllowHighDPI
 // set flag if value is 1, clear flag if value is 0
 func (b *SDLBackend) SetWindowFlags(flag SDLWindowFlags, value int) {
 	C.igSDLWindowHint(C.SDL_WindowFlags(flag), C.int(value))

@@ -246,6 +246,9 @@ void igSDLWindowHint(SDL_WindowFlags hint, int value) {
     } else {
         sdl_flags &= ~hint;
     }
+    if (hint == 0) {
+        sdl_flags = 0;
+    }
 }
 
 #endif // CIMGUI_GO_USE_SDL2
