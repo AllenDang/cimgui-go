@@ -31,6 +31,8 @@
 
 ImVec4 sdl_clear_color = *ImVec4_ImVec4_Float(0.45, 0.55, 0.6, 1.0);
 
+SDL_WindowFlags sdl_flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI;
+
 // Setup SDL
 int igInitSDL() {
     return SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
@@ -73,8 +75,8 @@ SDL_Window* igCreateSDLWindow(const char* title, int width, int height,VoidCallb
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-    SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
-    SDL_Window* window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, window_flags);
+    SDL_Window* window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, sdl_flags);
+    sdl_flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI; // reset default flags
     SDL_GLContext gl_context = SDL_GL_CreateContext(window);
     SDL_GL_MakeCurrent(window, gl_context);
     SDL_GL_SetSwapInterval(1); // Enable vsync
@@ -235,6 +237,18 @@ void igSDLWindow_SetTitle(SDL_Window *window, const char *title) { SDL_SetWindow
 void igSDLWindow_SetSizeLimits(SDL_Window *window, int minWidth, int minHeight, int maxWidth, int maxHeight) {
   SDL_SetWindowMinimumSize(window, minWidth, minHeight);
   SDL_SetWindowMaximumSize(window, maxWidth, maxHeight);
+}
+
+// set flag if value is 1, clear flag if value is 0
+void igSDLWindowHint(SDL_WindowFlags hint, int value) {
+    if (value == 1) {
+        sdl_flags |= hint;
+    } else {
+        sdl_flags &= ~hint;
+    }
+    if (hint == 0) {
+        sdl_flags = 0;
+    }
 }
 
 #endif // CIMGUI_GO_USE_SDL2
