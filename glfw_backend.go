@@ -42,6 +42,11 @@ const (
 	GLFWWindowFlagsAutoIconify = GLFWWindowFlags(C.GLFWWindowAutoIconify)
 )
 
+const (
+	GLFWSwapIntervalImmediate = 0
+	GLFWSwapIntervalVsync     = 1
+)
+
 type GLFWKey int
 
 const (
@@ -281,7 +286,7 @@ func (b *GLFWBackend) SetWindowSize(width, height int) {
 	C.igGLFWWindow_SetSize(b.handle(), C.int(width), C.int(height))
 }
 
-func (b GLFWBackend) DisplaySize() (width int32, height int32) {
+func (b *GLFWBackend) DisplaySize() (width int32, height int32) {
 	widthArg, widthFin := WrapNumberPtr[C.int, int32](&width)
 	defer widthFin()
 
@@ -293,7 +298,7 @@ func (b GLFWBackend) DisplaySize() (width int32, height int32) {
 	return
 }
 
-func (b GLFWBackend) ContentScale() (width, height float32) {
+func (b *GLFWBackend) ContentScale() (width, height float32) {
 	widthArg, widthFin := WrapNumberPtr[C.float, float32](&width)
 	defer widthFin()
 
@@ -319,7 +324,7 @@ func (b *GLFWBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeig
 	C.igGLFWWindow_SetSizeLimits(b.handle(), C.int(minWidth), C.int(minHeight), C.int(maxWidth), C.int(maxHeight))
 }
 
-func (b GLFWBackend) SetShouldClose(value bool) {
+func (b *GLFWBackend) SetShouldClose(value bool) {
 	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(CastBool(value)))
 }
 
@@ -448,4 +453,9 @@ func (b *GLFWBackend) SetSizeChangeCallback(cbfun SizeChangeCallback) {
 
 func (b *GLFWBackend) sizeCallback() SizeChangeCallback {
 	return b.sizeCb
+}
+
+func (b *GLFWBackend) SetSwapInterval(interval GLFWWindowFlags) error {
+	C.glfwSwapInterval(C.int(interval))
+	return nil
 }

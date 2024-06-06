@@ -21,6 +21,7 @@ package imgui
 import "C"
 
 import (
+	"errors"
 	"image"
 	"image/draw"
 	"unsafe"
@@ -53,6 +54,12 @@ const (
 	SDLWindowFlagsKeyboardGrabbed   = SDLWindowFlags(C.SDL_WINDOW_KEYBOARD_GRABBED)
 	SDLWindowFlagsWindowVulkan      = SDLWindowFlags(C.SDL_WINDOW_VULKAN)
 	SDLWindowFlagsWindowMetal       = SDLWindowFlags(C.SDL_WINDOW_METAL)
+)
+
+const (
+	SDLSwapIntervalImmediate    = SDLWindowFlags(0)
+	SDLSwapIntervalVsync        = SDLWindowFlags(1)
+	SDLSwapIntervalAdaptiveSync = SDLWindowFlags(-1)
 )
 
 /*
@@ -210,12 +217,16 @@ type SDLBackend struct {
 	window               uintptr
 }
 
+func SDLGetError() string {
+	return C.GoString(C.SDL_GetError())
+}
+
 func NewSDLBackend() *SDLBackend {
 	b := &SDLBackend{}
 	// \returns 0 on success or a negative error code on failure; call
 	// SDL_GetError() for more information.
 	if C.igInitSDL() != 0 {
-		panic("Failed to initialize SDL")
+		panic(SDLGetError())
 	}
 
 	return b
@@ -472,4 +483,11 @@ func (b *SDLBackend) SetSizeChangeCallback(cbfun SizeChangeCallback) {
 
 func (b *SDLBackend) sizeCallback() SizeChangeCallback {
 	return b.sizeCb
+}
+
+func (b *SDLBackend) SetSwapInterval(interval SDLWindowFlags) error {
+	if C.SDL_GL_SetSwapInterval(C.int(interval)) != 0 {
+		return errors.New(SDLGetError())
+	}
+	return nil
 }
