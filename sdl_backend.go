@@ -29,6 +29,13 @@ import (
 
 type SDLWindowFlags int
 
+// SDL bool values
+const (
+	SDLTrue  = SDLWindowFlags(1)
+	SDLFalse = SDLWindowFlags(0)
+)
+
+// Window flags
 const (
 	SDLWindowFlagsNone              = SDLWindowFlags(0) // Clear all flags
 	SDLWindowFlagsFullScreen        = SDLWindowFlags(C.SDL_WINDOW_FULLSCREEN)
@@ -56,10 +63,17 @@ const (
 	SDLWindowFlagsWindowMetal       = SDLWindowFlags(C.SDL_WINDOW_METAL)
 )
 
+// Swap interval flags
 const (
 	SDLSwapIntervalImmediate    = SDLWindowFlags(0)
 	SDLSwapIntervalVsync        = SDLWindowFlags(1)
 	SDLSwapIntervalAdaptiveSync = SDLWindowFlags(-1)
+)
+
+// Input mode flags
+const (
+	SDLInputModeRelativeMouse = SDLWindowFlags(iota)
+	SDLInputModeGrab
 )
 
 /*
@@ -490,4 +504,17 @@ func (b *SDLBackend) SetSwapInterval(interval SDLWindowFlags) error {
 		return errors.New(SDLGetError())
 	}
 	return nil
+}
+
+func (b *SDLBackend) SetCursorPos(x, y float64) {
+	C.SDL_WarpMouseInWindow(b.handle(), C.int(x), C.int(y))
+}
+
+func (b *SDLBackend) SetInputMode(mode SDLWindowFlags, value SDLWindowFlags) {
+	switch mode {
+	case SDLInputModeRelativeMouse:
+		C.SDL_SetRelativeMouseMode(C.SDL_bool(value))
+	case SDLInputModeGrab:
+		C.SDL_SetWindowGrab(b.handle(), C.SDL_bool(value))
+	}
 }

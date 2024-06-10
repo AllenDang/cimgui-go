@@ -144,6 +144,8 @@ type Backend[BackendFlagsT ~int] interface {
 	SetWindowFlags(flag BackendFlagsT, value int)
 	SetIcons(icons ...image.Image)
 	SetSwapInterval(interval BackendFlagsT) error
+	SetCursorPos(x, y float64)
+	SetInputMode(mode BackendFlagsT, value BackendFlagsT)
 
 	CreateWindow(title string, width, height int)
 
