@@ -29,6 +29,7 @@ import (
 
 type GLFWWindowFlags int
 
+// Window flags
 const (
 	GLFWWindowFlagsNone        = GLFWWindowFlags(C.GLFWWindowNone)
 	GLFWWindowFlagsResizable   = GLFWWindowFlags(C.GLFWWindowResizable)
@@ -42,9 +43,19 @@ const (
 	GLFWWindowFlagsAutoIconify = GLFWWindowFlags(C.GLFWWindowAutoIconify)
 )
 
+// SwapInterval values
 const (
-	GLFWSwapIntervalImmediate = 0
-	GLFWSwapIntervalVsync     = 1
+	GLFWSwapIntervalImmediate = GLFWWindowFlags(0)
+	GLFWSwapIntervalVsync     = GLFWWindowFlags(1)
+)
+
+// Input modes
+const (
+	GLFWInputModeCursor         = GLFWWindowFlags(C.GLFW_CURSOR)
+	GLFWInputModeCursorNormal   = GLFWWindowFlags(C.GLFW_CURSOR_NORMAL)
+	GLFWInputModeCursorHidden   = GLFWWindowFlags(C.GLFW_CURSOR_HIDDEN)
+	GLFWInputModeCursorDisabled = GLFWWindowFlags(C.GLFW_CURSOR_DISABLED)
+	GLFWInputModeRawMouseMotion = GLFWWindowFlags(C.GLFW_RAW_MOUSE_MOTION)
 )
 
 type GLFWKey int
@@ -458,4 +469,12 @@ func (b *GLFWBackend) sizeCallback() SizeChangeCallback {
 func (b *GLFWBackend) SetSwapInterval(interval GLFWWindowFlags) error {
 	C.glfwSwapInterval(C.int(interval))
 	return nil
+}
+
+func (b *GLFWBackend) SetCursorPos(x, y float64) {
+	C.glfwSetCursorPos(b.handle(), C.double(x), C.double(y))
+}
+
+func (b *GLFWBackend) SetInputMode(mode GLFWWindowFlags, value GLFWWindowFlags) {
+	C.glfwSetInputMode(b.handle(), C.int(mode), C.int(value))
 }
