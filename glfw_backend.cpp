@@ -198,19 +198,17 @@ void igGLFWRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRen
 
     glfw_render(window, loop);
 
-    while (glfwGetTime() < lasttime + 1.0 / glfw_target_fps) {
-      // do nothing here
-    }
-    lasttime += 1.0 / glfw_target_fps;
+    double frameTime = 1.0 / glfw_target_fps;
+    double targetTime = lasttime + frameTime;
 
-    if (extra_frame_count > 0) {
-      extra_frame_count--;
+    double waitTime = targetTime - glfwGetTime();
+    if (waitTime > 0.0) {
+      glfwWaitEventsTimeout(waitTime);
     } else {
-      glfwWaitEvents();
-      extra_frame_count = MAX_EXTRA_FRAME_COUNT;
+      glfwPollEvents();
     }
 
-    glfwPollEvents();
+    lasttime += frameTime;
 
     if (afterRender != NULL) {
       afterRender();
