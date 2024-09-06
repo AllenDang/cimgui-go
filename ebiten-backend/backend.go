@@ -19,52 +19,92 @@ var (
 )
 
 type EbitenBackend struct {
-	loop           func()
-	showDemoWindow bool
-	dscale         float64
-	retina         bool
-	w, h           int
+	afterCreateContext,
+	beforeRender,
+	afterRender,
+	beforeDestroy, // TODO This is called nowhere
+	loop func()
+	closeCb imgui.WindowCloseCallback[EbitenBackendFlags]
+	dscale  float64
+	retina  bool
+	w, h    int
 }
 
 func NewEbitenBackend() *EbitenBackend {
 	return &EbitenBackend{}
 }
 
-func (b *EbitenBackend) SetAfterCreateContextHook(func())   {}
-func (b *EbitenBackend) SetBeforeDestroyContextHook(func()) {}
-func (b *EbitenBackend) SetBeforeRenderHook(func())         {}
-func (b *EbitenBackend) SetAfterRenderHook(func())          {}
+func (b *EbitenBackend) SetAfterCreateContextHook(fn func()) {
+	b.afterCreateContext = fn
+}
+
+func (b *EbitenBackend) SetBeforeDestroyContextHook(fn func()) {
+	b.beforeDestroy = fn
+}
+
+func (b *EbitenBackend) SetBeforeRenderHook(fn func()) {
+	b.beforeRender = fn
+}
+
+func (b *EbitenBackend) SetAfterRenderHook(fn func()) {
+	b.afterRender = fn
+}
 
 func (b *EbitenBackend) SetBgColor(color imgui.Vec4) {}
+
 func (b *EbitenBackend) Run(loop func()) {
 	b.loop = loop
 	b.dscale = ebiten.DeviceScaleFactor()
-	b.showDemoWindow = true
+
+	if b.afterCreateContext != nil {
+		b.afterCreateContext()
+	}
 
 	ebiten.RunGame(b)
 }
+
 func (b *EbitenBackend) Refresh() {}
 
-func (b *EbitenBackend) SetWindowPos(x, y int)                                            {}
-func (b *EbitenBackend) GetWindowPos() (x, y int32)                                       { return 0, 0 }
-func (b *EbitenBackend) SetWindowSize(width, height int)                                  {}
+func (b *EbitenBackend) SetWindowPos(x, y int) {
+	ebiten.SetWindowPosition(x, y)
+}
+
+func (b *EbitenBackend) GetWindowPos() (x, y int32) {
+	xInt, yInt := ebiten.WindowPosition()
+	return int32(xInt), int32(yInt)
+}
+
+func (b *EbitenBackend) SetWindowSize(width, height int) {
+	ebiten.SetWindowSize(width, height)
+	b.w = width
+	b.h = height
+}
+
 func (b *EbitenBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight int) {}
-func (b *EbitenBackend) SetWindowTitle(title string)                                      {}
-func (b *EbitenBackend) DisplaySize() (width, height int32)                               { return 0, 0 }
-func (b *EbitenBackend) SetShouldClose(bool)                                              {}
-func (b *EbitenBackend) ContentScale() (xScale, yScale float32)                           { return 1, 1 }
+
+func (b *EbitenBackend) SetWindowTitle(title string) {
+	ebiten.SetWindowTitle(title)
+}
+
+func (b *EbitenBackend) DisplaySize() (width, height int32)     { return 0, 0 }
+func (b *EbitenBackend) SetShouldClose(bool)                    {}
+func (b *EbitenBackend) ContentScale() (xScale, yScale float32) { return 1, 1 }
 
 func (b *EbitenBackend) SetTargetFPS(fps uint) {}
 
-func (b *EbitenBackend) SetDropCallback(imgui.DropCallback)                             {}
-func (b *EbitenBackend) SetCloseCallback(imgui.WindowCloseCallback[EbitenBackendFlags]) {}
-func (b *EbitenBackend) SetKeyCallback(imgui.KeyCallback)                               {}
-func (b *EbitenBackend) SetSizeChangeCallback(imgui.SizeChangeCallback)                 {}
-func (b *EbitenBackend) SetWindowFlags(flag EbitenBackendFlags, value int)              {}
-func (b *EbitenBackend) SetIcons(icons ...image.Image)                                  {}
-func (b *EbitenBackend) SetSwapInterval(interval EbitenBackendFlags) error              { return nil }
-func (b *EbitenBackend) SetCursorPos(x, y float64)                                      {}
-func (b *EbitenBackend) SetInputMode(mode, value EbitenBackendFlags)                    {}
+func (b *EbitenBackend) SetDropCallback(imgui.DropCallback) {}
+
+func (b *EbitenBackend) SetCloseCallback(cb imgui.WindowCloseCallback[EbitenBackendFlags]) {
+	b.closeCb = cb
+}
+
+func (b *EbitenBackend) SetKeyCallback(imgui.KeyCallback)                  {}
+func (b *EbitenBackend) SetSizeChangeCallback(imgui.SizeChangeCallback)    {}
+func (b *EbitenBackend) SetWindowFlags(flag EbitenBackendFlags, value int) {}
+func (b *EbitenBackend) SetIcons(icons ...image.Image)                     {}
+func (b *EbitenBackend) SetSwapInterval(interval EbitenBackendFlags) error { return nil }
+func (b *EbitenBackend) SetCursorPos(x, y float64)                         {}
+func (b *EbitenBackend) SetInputMode(mode, value EbitenBackendFlags)       {}
 
 func (b *EbitenBackend) CreateWindow(title string, width, height int) {}
 
@@ -85,6 +125,14 @@ func (g *EbitenBackend) Draw(screen *ebiten.Image) {
 }
 
 func (g *EbitenBackend) Update() error {
+	if ebiten.IsWindowBeingClosed() {
+		g.closeCb(g)
+	}
+
+	if g.beforeRender != nil {
+		g.beforeRender()
+	}
+
 	Update(1.0 / 60.0)
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyC) {
@@ -95,6 +143,12 @@ func (g *EbitenBackend) Update() error {
 	defer EndFrame()
 
 	g.loop()
+
+	defer func() {
+		if g.afterRender != nil {
+			g.afterRender()
+		}
+	}()
 
 	return nil
 }
