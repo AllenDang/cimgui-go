@@ -22,7 +22,7 @@ var (
 	a              float32
 	color4         [4]float32 = [4]float32{r, g, b, a}
 	selected       bool
-	backend        imgui.Backend[imgui.GLFWWindowFlags]
+	backend        imgui.Backend[ebitenbackend.EbitenBackendFlags]
 	img            *image.RGBA
 	texture        *imgui.Texture
 	barValues      []int64
@@ -138,7 +138,7 @@ func main() {
 		fmt.Printf("drop triggered: %v", p)
 	})
 
-	backend.SetCloseCallback(func(b imgui.Backend[imgui.GLFWWindowFlags]) {
+	backend.SetCloseCallback(func(b imgui.Backend[ebitenbackend.EbitenBackendFlags]) {
 		fmt.Println("window is closing")
 	})
 
