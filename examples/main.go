@@ -103,8 +103,10 @@ func afterCreateContext() {
 
 func loop() {
 	showWidgetsDemo()
-	showPictureLoadingDemo()
-	showImPlotDemo()
+	/*
+		showPictureLoadingDemo()
+		showImPlotDemo()
+	*/
 }
 
 func beforeDestroyContext() {
