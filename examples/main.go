@@ -6,6 +6,7 @@ import (
 	"runtime"
 
 	imgui "github.com/AllenDang/cimgui-go"
+	ebitenbackend "github.com/AllenDang/cimgui-go/ebiten-backend"
 )
 
 var (
@@ -125,7 +126,7 @@ func main() {
 		barValues = append(barValues, int64(i+1))
 	}
 
-	backend, _ = imgui.CreateBackend(imgui.NewGLFWBackend())
+	backend, _ = imgui.CreateBackend(ebitenbackend.NewEbitenBackend())
 	backend.SetAfterCreateContextHook(afterCreateContext)
 	backend.SetBeforeDestroyContextHook(beforeDestroyContext)
 
