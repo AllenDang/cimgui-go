@@ -104,12 +104,19 @@ func (b *EbitenBackend) SetCloseCallback(cb imgui.WindowCloseCallback[EbitenBack
 func (b *EbitenBackend) SetKeyCallback(imgui.KeyCallback)                  {}
 func (b *EbitenBackend) SetSizeChangeCallback(imgui.SizeChangeCallback)    {}
 func (b *EbitenBackend) SetWindowFlags(flag EbitenBackendFlags, value int) {}
-func (b *EbitenBackend) SetIcons(icons ...image.Image)                     {}
+
+func (b *EbitenBackend) SetIcons(icons ...image.Image) {
+	ebiten.SetWindowIcon(icons)
+}
+
 func (b *EbitenBackend) SetSwapInterval(interval EbitenBackendFlags) error { return nil }
 func (b *EbitenBackend) SetCursorPos(x, y float64)                         {}
 func (b *EbitenBackend) SetInputMode(mode, value EbitenBackendFlags)       {}
 
-func (b *EbitenBackend) CreateWindow(title string, width, height int) {}
+func (e *EbitenBackend) CreateWindow(title string, width, height int) {
+	e.SetWindowTitle(title)
+	e.SetWindowSize(width, height)
+}
 
 func (e *EbitenBackend) CreateTexture(pixels unsafe.Pointer, width, height int) imgui.TextureID {
 	eimg := ebiten.NewImage(width, height)
