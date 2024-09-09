@@ -38,6 +38,7 @@ func premultiplyPixels(pixels unsafe.Pointer, width, height int) []uint8 {
 		pix[4*i+2] = uint8((uint16(srcPix[4*i+2])*alpha + 127) / 255)
 		pix[4*i+3] = uint8(alpha)
 	}
+
 	return pix
 }
 

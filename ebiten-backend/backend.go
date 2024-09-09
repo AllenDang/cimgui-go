@@ -122,7 +122,7 @@ func (e *EbitenBackend) CreateTexture(pixels unsafe.Pointer, width, height int) 
 
 func (b *EbitenBackend) CreateTextureRgba(img *image.RGBA, width, height int) imgui.TextureID {
 	pix := img.Pix
-	return b.CreateTexture(unsafe.Pointer(&pix), width, height)
+	return b.CreateTexture(unsafe.Pointer(&pix[0]), width, height)
 }
 
 func (e *EbitenBackend) DeleteTexture(id imgui.TextureID) {
