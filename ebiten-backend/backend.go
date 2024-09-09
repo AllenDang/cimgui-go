@@ -29,11 +29,13 @@ type EbitenBackend struct {
 	retina  bool
 	w, h    int
 	manager *Manager
+	fps     uint
 }
 
 func NewEbitenBackend() *EbitenBackend {
 	return &EbitenBackend{
 		manager: NewManager(nil),
+		fps:     60,
 	}
 }
 
@@ -93,7 +95,9 @@ func (b *EbitenBackend) DisplaySize() (width, height int32)     { return 0, 0 }
 func (b *EbitenBackend) SetShouldClose(bool)                    {}
 func (b *EbitenBackend) ContentScale() (xScale, yScale float32) { return 1, 1 }
 
-func (b *EbitenBackend) SetTargetFPS(fps uint) {}
+func (e *EbitenBackend) SetTargetFPS(fps uint) {
+	e.fps = fps
+}
 
 func (b *EbitenBackend) SetDropCallback(imgui.DropCallback) {}
 
@@ -157,7 +161,7 @@ func (e *EbitenBackend) Update() error {
 		e.beforeRender()
 	}
 
-	e.manager.Update(1.0 / 60.0)
+	e.manager.Update(1.0 / float32(e.fps))
 
 	// TODO: what is that?
 	if inpututil.IsKeyJustPressed(ebiten.KeyC) {
