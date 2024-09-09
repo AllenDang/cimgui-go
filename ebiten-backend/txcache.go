@@ -49,12 +49,15 @@ func (c *textureCache) SetFontAtlasTextureID(id imgui.TextureID) {
 }
 
 func (c *textureCache) GetTexture(id imgui.TextureID) *ebiten.Image {
-	if id != c.fontAtlasID {
-		if im, ok := c.cache[id]; ok {
-			return im
-		}
+	if id == c.fontAtlasID {
+		return c.getFontAtlas()
 	}
-	return c.getFontAtlas()
+
+	if im, ok := c.cache[id]; ok {
+		return im
+	}
+
+	panic("Texture not found in cache. Cannot obtain ebiten Image")
 }
 
 func (c *textureCache) SetTexture(id imgui.TextureID, img *ebiten.Image) {

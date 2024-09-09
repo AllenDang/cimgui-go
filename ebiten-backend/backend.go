@@ -24,16 +24,16 @@ type EbitenBackend struct {
 	afterRender,
 	beforeDestroy, // TODO This is called nowhere
 	loop func()
-	closeCb      imgui.WindowCloseCallback[EbitenBackendFlags]
-	dscale       float64
-	retina       bool
-	w, h         int
-	textureCache TextureCache
+	closeCb imgui.WindowCloseCallback[EbitenBackendFlags]
+	dscale  float64
+	retina  bool
+	w, h    int
+	manager *Manager
 }
 
 func NewEbitenBackend() *EbitenBackend {
 	return &EbitenBackend{
-		textureCache: NewCache(),
+		manager: NewManager(nil),
 	}
 }
 
@@ -111,12 +111,12 @@ func (b *EbitenBackend) SetInputMode(mode, value EbitenBackendFlags)       {}
 
 func (b *EbitenBackend) CreateWindow(title string, width, height int) {}
 
-func (b *EbitenBackend) CreateTexture(pixels unsafe.Pointer, width, height int) imgui.TextureID {
+func (e *EbitenBackend) CreateTexture(pixels unsafe.Pointer, width, height int) imgui.TextureID {
 	eimg := ebiten.NewImage(width, height)
 	eimg.WritePixels(premultiplyPixels(pixels, width, height))
 
-	tid := imgui.TextureID{Data: uintptr(b.textureCache.NextId())}
-	b.textureCache.SetTexture(tid, eimg)
+	tid := imgui.TextureID{Data: uintptr(e.manager.Cache.NextId())}
+	e.manager.Cache.SetTexture(tid, eimg)
 	return tid
 }
 
@@ -125,56 +125,63 @@ func (b *EbitenBackend) CreateTextureRgba(img *image.RGBA, width, height int) im
 	return b.CreateTexture(unsafe.Pointer(&pix), width, height)
 }
 
-func (b *EbitenBackend) DeleteTexture(id imgui.TextureID) {
-	b.textureCache.RemoveTexture(id)
+func (e *EbitenBackend) DeleteTexture(id imgui.TextureID) {
+	e.manager.Cache.RemoveTexture(id)
 }
 
 // ebiten
-func (g *EbitenBackend) Draw(screen *ebiten.Image) {
-	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("TPS: %.2f\nFPS: %.2f\n[C]lipMask: %t", ebiten.ActualTPS(), ebiten.ActualFPS(), ClipMask()), 10, 2)
-	Draw(screen)
+
+// Draw draws the generated imgui frame to the screen.
+// This is usually called inside the game's Draw() function.
+func (e *EbitenBackend) Draw(screen *ebiten.Image) {
+	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("TPS: %.2f\nFPS: %.2f\n[C]lipMask: %t", ebiten.ActualTPS(), ebiten.ActualFPS(), e.ClipMask()), 10, 2)
+	e.manager.Draw(screen)
 }
 
-func (g *EbitenBackend) Update() error {
+// Update needs to be called on every frame, before cimgui-go calls.
+// This is usually called inside the game's Update() function.
+// delta is the time in seconds since the last frame.
+func (e *EbitenBackend) Update() error {
 	if ebiten.IsWindowBeingClosed() {
-		g.closeCb(g)
+		e.closeCb(e)
 	}
 
-	if g.beforeRender != nil {
-		g.beforeRender()
+	if e.beforeRender != nil {
+		e.beforeRender()
 	}
 
-	Update(1.0 / 60.0)
+	e.manager.Update(1.0 / 60.0)
 
+	// TODO: what is that?
 	if inpututil.IsKeyJustPressed(ebiten.KeyC) {
-		SetClipMask(!ClipMask())
+		e.SetClipMask(!e.ClipMask())
 	}
 
-	BeginFrame()
-	defer EndFrame()
+	e.BeginFrame()
+	defer e.EndFrame()
 
-	g.loop()
+	e.loop()
 
 	defer func() {
-		if g.afterRender != nil {
-			g.afterRender()
+		if e.afterRender != nil {
+			e.afterRender()
 		}
 	}()
 
 	return nil
 }
 
-func (g *EbitenBackend) Layout(outsideWidth, outsideHeight int) (int, int) {
-	if g.retina {
+func (e *EbitenBackend) Layout(outsideWidth, outsideHeight int) (int, int) {
+	if e.retina {
 		m := ebiten.DeviceScaleFactor()
-		g.w = int(float64(outsideWidth) * m)
-		g.h = int(float64(outsideHeight) * m)
+		e.w = int(float64(outsideWidth) * m)
+		e.h = int(float64(outsideHeight) * m)
 	} else {
-		g.w = outsideWidth
-		g.h = outsideHeight
+		e.w = outsideWidth
+		e.h = outsideHeight
 	}
 
-	SetDisplaySize(float32(g.w), float32(g.h))
+	e.SetDisplaySize(float32(e.w), float32(e.h))
 
-	return g.w, g.h
+	return e.w, e.h
 }
