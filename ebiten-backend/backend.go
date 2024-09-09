@@ -3,6 +3,7 @@ package ebitenbackend
 import (
 	"fmt"
 	"image"
+	"slices"
 	"unsafe"
 
 	imgui "github.com/AllenDang/cimgui-go"
@@ -51,6 +52,7 @@ type EbitenBackend struct {
 	w, h    int
 	manager *Manager
 	fps     uint
+	bgColor imgui.Vec4
 }
 
 func NewEbitenBackend() *EbitenBackend {
@@ -76,7 +78,9 @@ func (b *EbitenBackend) SetAfterRenderHook(fn func()) {
 	b.afterRender = fn
 }
 
-func (b *EbitenBackend) SetBgColor(color imgui.Vec4) {}
+func (b *EbitenBackend) SetBgColor(color imgui.Vec4) {
+	b.bgColor = color
+}
 
 func (b *EbitenBackend) Run(loop func()) {
 	b.loop = loop
@@ -200,6 +204,13 @@ func (e *EbitenBackend) DeleteTexture(id imgui.TextureID) {
 // Draw draws the generated imgui frame to the screen.
 // This is usually called inside the game's Draw() function.
 func (e *EbitenBackend) Draw(screen *ebiten.Image) {
+	bgRect := slices.Repeat([]byte{
+		byte(e.bgColor.X * 255),
+		byte(e.bgColor.Y * 255),
+		byte(e.bgColor.Z * 255),
+		byte(e.bgColor.W * 255),
+	}, e.w*e.h)
+	screen.WritePixels(bgRect)
 	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("TPS: %.2f\nFPS: %.2f\n[C]lipMask: %t", ebiten.ActualTPS(), ebiten.ActualFPS(), e.ClipMask()), 10, 2)
 	e.manager.Draw(screen)
 }

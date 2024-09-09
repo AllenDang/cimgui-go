@@ -8,7 +8,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-// var nextTextureID int32
 type GetCursorFn func() (x, y float32)
 
 type Manager struct {
