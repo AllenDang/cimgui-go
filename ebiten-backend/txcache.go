@@ -1,8 +1,6 @@
 package ebitenbackend
 
 import (
-	"unsafe"
-
 	imgui "github.com/AllenDang/cimgui-go"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -14,9 +12,11 @@ type TextureCache interface {
 	SetTexture(id imgui.TextureID, img *ebiten.Image)
 	RemoveTexture(id imgui.TextureID)
 	ResetFontAtlasCache(filter ebiten.Filter)
+	NextId() int
 }
 
 type textureCache struct {
+	startIndex     int
 	fontAtlasID    imgui.TextureID
 	fontAtlasImage *ebiten.Image
 	cache          map[imgui.TextureID]*ebiten.Image
@@ -25,11 +25,18 @@ type textureCache struct {
 
 var _ TextureCache = (*textureCache)(nil)
 
+func (c *textureCache) NextId() int {
+	return len(c.cache) + c.startIndex
+}
+
 func (c *textureCache) getFontAtlas() *ebiten.Image {
 	if c.fontAtlasImage == nil {
-		pixels, width, height, outBytesPerPixel := imgui.CurrentIO().Fonts().GetTextureDataAsRGBA32() // call this to force imgui to build the font atlas cache
-		c.fontAtlasImage = getTexture(pixels, width, height, outBytesPerPixel)
+		pixels, width, height, _ := imgui.CurrentIO().Fonts().GetTextureDataAsRGBA32()
+		c.fontAtlasImage = getTexture(pixels, width, height)
+		c.SetTexture(c.fontAtlasID, c.fontAtlasImage)
+		imgui.CurrentIO().Fonts().SetTexID(c.fontAtlasID)
 	}
+
 	return c.fontAtlasImage
 }
 
@@ -39,7 +46,6 @@ func (c *textureCache) FontAtlasTextureID() imgui.TextureID {
 
 func (c *textureCache) SetFontAtlasTextureID(id imgui.TextureID) {
 	c.fontAtlasID = id
-	// c.fontAtlasImage = nil
 }
 
 func (c *textureCache) GetTexture(id imgui.TextureID) *ebiten.Image {
@@ -65,12 +71,9 @@ func (c *textureCache) ResetFontAtlasCache(filter ebiten.Filter) {
 }
 
 func NewCache() TextureCache {
-	texID := imgui.TextureID{
-		Data: uintptr(unsafe.Pointer(&id1)),
-	}
-
 	return &textureCache{
-		fontAtlasID:    texID,
+		startIndex:     2,
+		fontAtlasID:    imgui.TextureID{Data: uintptr(1)},
 		cache:          make(map[imgui.TextureID]*ebiten.Image),
 		fontAtlasImage: nil,
 	}

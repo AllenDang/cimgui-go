@@ -24,14 +24,17 @@ type EbitenBackend struct {
 	afterRender,
 	beforeDestroy, // TODO This is called nowhere
 	loop func()
-	closeCb imgui.WindowCloseCallback[EbitenBackendFlags]
-	dscale  float64
-	retina  bool
-	w, h    int
+	closeCb      imgui.WindowCloseCallback[EbitenBackendFlags]
+	dscale       float64
+	retina       bool
+	w, h         int
+	textureCache TextureCache
 }
 
 func NewEbitenBackend() *EbitenBackend {
-	return &EbitenBackend{}
+	return &EbitenBackend{
+		textureCache: NewCache(),
+	}
 }
 
 func (b *EbitenBackend) SetAfterCreateContextHook(fn func()) {
@@ -108,15 +111,23 @@ func (b *EbitenBackend) SetInputMode(mode, value EbitenBackendFlags)       {}
 
 func (b *EbitenBackend) CreateWindow(title string, width, height int) {}
 
-func (b *EbitenBackend) CreateTexture(pixels unsafe.Pointer, width, Height int) imgui.TextureID {
-	return imgui.TextureID{}
+func (b *EbitenBackend) CreateTexture(pixels unsafe.Pointer, width, height int) imgui.TextureID {
+	eimg := ebiten.NewImage(width, height)
+	eimg.WritePixels(premultiplyPixels(pixels, width, height))
+
+	tid := imgui.TextureID{Data: uintptr(b.textureCache.NextId())}
+	b.textureCache.SetTexture(tid, eimg)
+	return tid
 }
 
 func (b *EbitenBackend) CreateTextureRgba(img *image.RGBA, width, height int) imgui.TextureID {
-	return imgui.TextureID{}
+	pix := img.Pix
+	return b.CreateTexture(unsafe.Pointer(&pix), width, height)
 }
 
-func (b *EbitenBackend) DeleteTexture(texture imgui.TextureID) {}
+func (b *EbitenBackend) DeleteTexture(id imgui.TextureID) {
+	b.textureCache.RemoveTexture(id)
+}
 
 // ebiten
 func (g *EbitenBackend) Draw(screen *ebiten.Image) {
@@ -162,6 +173,8 @@ func (g *EbitenBackend) Layout(outsideWidth, outsideHeight int) (int, int) {
 		g.w = outsideWidth
 		g.h = outsideHeight
 	}
+
 	SetDisplaySize(float32(g.w), float32(g.h))
+
 	return g.w, g.h
 }
