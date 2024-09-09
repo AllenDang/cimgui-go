@@ -6,28 +6,30 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
-var keys = map[imgui.Key]int{
-	imgui.KeyTab:        int(ebiten.KeyTab),
-	imgui.KeyLeftArrow:  int(ebiten.KeyLeft),
-	imgui.KeyRightArrow: int(ebiten.KeyRight),
-	imgui.KeyUpArrow:    int(ebiten.KeyUp),
-	imgui.KeyDownArrow:  int(ebiten.KeyDown),
-	imgui.KeyPageUp:     int(ebiten.KeyPageUp),
-	imgui.KeyPageDown:   int(ebiten.KeyPageDown),
-	imgui.KeyHome:       int(ebiten.KeyHome),
-	imgui.KeyEnd:        int(ebiten.KeyEnd),
-	imgui.KeyInsert:     int(ebiten.KeyInsert),
-	imgui.KeyDelete:     int(ebiten.KeyDelete),
-	imgui.KeyBackspace:  int(ebiten.KeyBackspace),
-	imgui.KeySpace:      int(ebiten.KeySpace),
-	imgui.KeyEnter:      int(ebiten.KeyEnter),
-	imgui.KeyEscape:     int(ebiten.KeyEscape),
-	imgui.KeyA:          int(ebiten.KeyA),
-	imgui.KeyC:          int(ebiten.KeyC),
-	imgui.KeyV:          int(ebiten.KeyV),
-	imgui.KeyX:          int(ebiten.KeyX),
-	imgui.KeyY:          int(ebiten.KeyY),
-	imgui.KeyZ:          int(ebiten.KeyZ),
+func keysMap() map[imgui.Key]int {
+	return map[imgui.Key]int{
+		imgui.KeyTab:        int(ebiten.KeyTab),
+		imgui.KeyLeftArrow:  int(ebiten.KeyLeft),
+		imgui.KeyRightArrow: int(ebiten.KeyRight),
+		imgui.KeyUpArrow:    int(ebiten.KeyUp),
+		imgui.KeyDownArrow:  int(ebiten.KeyDown),
+		imgui.KeyPageUp:     int(ebiten.KeyPageUp),
+		imgui.KeyPageDown:   int(ebiten.KeyPageDown),
+		imgui.KeyHome:       int(ebiten.KeyHome),
+		imgui.KeyEnd:        int(ebiten.KeyEnd),
+		imgui.KeyInsert:     int(ebiten.KeyInsert),
+		imgui.KeyDelete:     int(ebiten.KeyDelete),
+		imgui.KeyBackspace:  int(ebiten.KeyBackspace),
+		imgui.KeySpace:      int(ebiten.KeySpace),
+		imgui.KeyEnter:      int(ebiten.KeyEnter),
+		imgui.KeyEscape:     int(ebiten.KeyEscape),
+		imgui.KeyA:          int(ebiten.KeyA),
+		imgui.KeyC:          int(ebiten.KeyC),
+		imgui.KeyV:          int(ebiten.KeyV),
+		imgui.KeyX:          int(ebiten.KeyX),
+		imgui.KeyY:          int(ebiten.KeyY),
+		imgui.KeyZ:          int(ebiten.KeyZ),
+	}
 }
 
 func sendInput(io *imgui.IO, inputChars []rune) []rune {
@@ -54,7 +56,7 @@ func sendInput(io *imgui.IO, inputChars []rune) []rune {
 		io.AddInputCharactersUTF8(string(inputChars))
 		inputChars = inputChars[:0]
 	}
-	for ik, iv := range keys {
+	for ik, iv := range keysMap() {
 		if inpututil.IsKeyJustPressed(ebiten.Key(iv)) {
 			io.AddKeyEvent(ik, true)
 		}

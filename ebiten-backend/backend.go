@@ -131,33 +131,33 @@ func (b *EbitenBackend) SetSizeChangeCallback(imgui.SizeChangeCallback) {}
 
 func (b *EbitenBackend) SetWindowFlags(flag EbitenBackendFlags, value int) {
 	switch flag {
-	case EbitenWindowFlagsCursorMode:
+	case EbitenBackendFlagsCursorMode:
 		ebiten.SetCursorMode(ebiten.CursorModeType(value))
-	case EbitenWindowFlagsCursorShape:
+	case EbitenBackendFlagsCursorShape:
 		ebiten.SetCursorShape(ebiten.CursorShapeType(value))
-	case EbitenWindowFlagsFPSMode:
+	case EbitenBackendFlagsFPSMode:
 		ebiten.SetVsyncEnabled(value == 0)
-	case EbitenWindowFlagsResizingMode:
+	case EbitenBackendFlagsResizingMode:
 		ebiten.SetWindowResizingMode(ebiten.WindowResizingModeType(value))
-	case EbitenWindowFlagsDecorated:
+	case EbitenBackendFlagsDecorated:
 		ebiten.SetWindowDecorated(value != 0)
-	case EbitenWindowFlagsFloating:
+	case EbitenBackendFlagsFloating:
 		ebiten.SetWindowFloating(value != 0)
-	case EbitenWindowFlagsMaximized:
+	case EbitenBackendFlagsMaximized:
 		if value != 0 {
 			ebiten.MaximizeWindow()
 		} else {
 			ebiten.RestoreWindow()
 		}
-	case EbitenWindowFlagsMinimized:
+	case EbitenBackendFlagsMinimized:
 		if value != 0 {
 			ebiten.MinimizeWindow()
 		} else {
 			ebiten.RestoreWindow()
 		}
-	case EbitenWindowFlagsClosingHandled:
+	case EbitenBackendFlagsClosingHandled:
 		ebiten.SetWindowClosingHandled(value != 0)
-	case EbitenWindowFlagsMousePassthrough:
+	case EbitenBackendFlagsMousePassthrough:
 		ebiten.SetWindowMousePassthrough(value != 0)
 	default:
 		panic("Invalid flag for SetWindowFlags.")
