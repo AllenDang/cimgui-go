@@ -70,6 +70,16 @@ endef
 cimmarkdown: setup
 	$(call cimmarkdown)
 
+define cimguizmo
+	$(call generate,cimguizmo,cimgui/cimguizmo.h,cimgui/cimguizmo_templates/definitions.json,cimgui/cimguizmo_templates/structs_and_enums.json, cimgui/cimguizmo_templates/typedefs_dict.json)
+endef
+
+## cimgui: generate cimgui binding
+.PHONY: cimguizmo
+cimgui: setup
+	$(call cimguizmo)
+
+
 compile_cimgui_macos:
 	rm -rf ./lib/build
 	cd ./lib; cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=arm64
@@ -122,6 +132,8 @@ update: setup
 	$(call cimnodes)
 	$(call update,cimmarkdown,https://github.com/gucio321/cimmarkdown,imgui_markdown,main)
 	$(call cimmarkdown)
+	$(call update,cimguizmo,https://github.com/gucio321/cimguizmo,imguizmo,master)
+	$(call cimguizmo)
 	$(call dummy)
 
 # dummy creates dummy.go files to baypass GO vendor policy that excludes everything that has no .go files (including our C source).
