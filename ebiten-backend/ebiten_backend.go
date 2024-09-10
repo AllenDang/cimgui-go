@@ -2,7 +2,6 @@ package ebitenbackend
 
 import (
 	"runtime"
-	"unsafe"
 
 	imgui "github.com/AllenDang/cimgui-go"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -14,6 +13,9 @@ var (
 )
 
 type EbitenBackend struct {
+	customFontAtlas *imgui.FontAtlas
+	customCtx       *imgui.Context
+
 	// cimgui-go backend specific:
 	afterCreateContext,
 	beforeRender,
@@ -50,18 +52,8 @@ var id1 = 1
 
 // NewEbitenBackend creates a new Ebiten backend.
 // it takes font atlas which could be nil
-// - TODO: make font atlas a factory method and move some stuff to CreateWindow
-func NewEbitenBackend(fontAtlas *imgui.FontAtlas) *EbitenBackend {
-	var imctx *imgui.Context
-
-	if fontAtlas != nil {
-		imctx = imgui.CreateContextV(fontAtlas)
-	} else {
-		imctx = imgui.CreateContext()
-	}
-
+func NewEbitenBackend() *EbitenBackend {
 	result := &EbitenBackend{
-		ctx:                imctx,
 		cache:              NewCache(),
 		manager:            NewManager(nil),
 		fps:                60,
@@ -71,19 +63,19 @@ func NewEbitenBackend(fontAtlas *imgui.FontAtlas) *EbitenBackend {
 		controlCursorShape: true,
 	}
 
-	// Build texture atlas
-	fonts := imgui.CurrentIO().Fonts()
-	_, _, _, _ = fonts.GetTextureDataAsRGBA32() // call this to force imgui to build the font atlas cache
-
-	texID := imgui.TextureID{}
-	texID.Data = uintptr(unsafe.Pointer(&id1)) // TODO: this shit will cause -race issues
-	fonts.SetTexID(texID)
-
-	result.cache.SetFontAtlasTextureID(texID)
-
 	runtime.SetFinalizer(result, (*EbitenBackend).onfinalize)
 
 	result.setKeyMapping()
 
 	return result
+}
+
+func (e *EbitenBackend) SetFontAtlas(fa *imgui.FontAtlas) *EbitenBackend {
+	e.customFontAtlas = fa
+	return e
+}
+
+func (e *EbitenBackend) SetContext(ctx *imgui.Context) *EbitenBackend {
+	e.customCtx = ctx
+	return e
 }

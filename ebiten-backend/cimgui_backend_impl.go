@@ -125,6 +125,31 @@ func (b *EbitenBackend) SetCursorPos(x, y float64)                         {}   
 func (b *EbitenBackend) SetInputMode(mode, value EbitenBackendFlags)       {}             // TODO
 
 func (e *EbitenBackend) CreateWindow(title string, width, height int) {
+	// create context
+	var imctx *imgui.Context
+
+	switch {
+	case e.customCtx != nil:
+		imctx = e.customCtx
+	case e.customFontAtlas != nil:
+		imctx = imgui.CreateContextV(e.customFontAtlas)
+	default:
+		imctx = imgui.CreateContext()
+	}
+
+	e.ctx = imctx
+
+	// Build texture atlas
+	fonts := imgui.CurrentIO().Fonts()
+	_, _, _, _ = fonts.GetTextureDataAsRGBA32() // call this to force imgui to build the font atlas cache
+
+	texID := imgui.TextureID{}
+	texID.Data = uintptr(unsafe.Pointer(&id1)) // TODO: this shit will cause -race issues
+	fonts.SetTexID(texID)
+
+	e.cache.SetFontAtlasTextureID(texID)
+
+	// initialize ebiten stuff
 	e.SetWindowTitle(title)
 	e.SetWindowSize(width, height)
 }
