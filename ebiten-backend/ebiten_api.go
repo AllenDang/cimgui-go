@@ -74,8 +74,8 @@ func (e *EbitenBackend) Update() error {
 
 	io.SetDeltaTime(1.0 / float32(e.fps))
 	if e.syncCursor {
-		if e.manager.GetCursor != nil {
-			x, y := e.manager.GetCursor()
+		if e.getCursor != nil {
+			x, y := e.getCursor()
 			io.SetMousePos(imgui.Vec2{X: x, Y: y})
 		} else {
 			mx, my := ebiten.CursorPosition()
@@ -93,7 +93,7 @@ func (e *EbitenBackend) Update() error {
 		if e.syncInputsFn != nil {
 			e.syncInputsFn()
 		} else {
-			e.manager.inputChars = sendInput(imgui.CurrentIO(), e.manager.inputChars)
+			e.inputChars = sendInput(imgui.CurrentIO(), e.inputChars)
 		}
 	}
 

@@ -39,6 +39,9 @@ type EbitenBackend struct {
 	syncInputsFn       func()
 	syncCursor         bool
 	controlCursorShape bool
+	getCursor          GetCursorFn
+	cliptxt            string
+	inputChars         []rune
 
 	cache TextureCache
 	ctx   *imgui.Context // imgui context
@@ -55,12 +58,13 @@ var id1 = 1
 func NewEbitenBackend() *EbitenBackend {
 	result := &EbitenBackend{
 		cache:              NewCache(),
-		manager:            NewManager(nil),
+		manager:            new(Manager),
 		fps:                60,
 		clipMask:           true,
 		syncInputs:         true,
 		syncCursor:         true,
 		controlCursorShape: true,
+		inputChars:         make([]rune, 0, 256),
 	}
 
 	runtime.SetFinalizer(result, (*EbitenBackend).onfinalize)
