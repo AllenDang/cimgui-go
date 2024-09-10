@@ -3,6 +3,7 @@ package ebitenbackend
 import (
 	"fmt"
 	"image"
+	"runtime"
 	"slices"
 	"unsafe"
 
@@ -44,7 +45,7 @@ type EbitenBackend struct {
 	afterCreateContext,
 	beforeRender,
 	afterRender,
-	beforeDestroy, // TODO This is called nowhere
+	beforeDestroy,
 	loop func()
 
 	// callbacks
@@ -59,14 +60,27 @@ type EbitenBackend struct {
 	bgColor imgui.Vec4
 
 	cache TextureCache
+	ctx   *imgui.Context
 }
 
 // this is "pointer" to the first texture used for font atlas texture.
 // it needs to be a var and cannot be more private because of CGO stuff.
 var id1 = 1
 
-func NewEbitenBackend() *EbitenBackend {
+// NewEbitenBackend creates a new Ebiten backend.
+// it takes font atlas which could be nil
+// - TODO: make font atlas a factory method and move some stuff to CreateWindow
+func NewEbitenBackend(fontAtlas *imgui.FontAtlas) *EbitenBackend {
+	var imctx *imgui.Context
+
+	if fontAtlas != nil {
+		imctx = imgui.CreateContextV(fontAtlas)
+	} else {
+		imctx = imgui.CreateContext()
+	}
+
 	result := &EbitenBackend{
+		ctx:     imctx,
 		cache:   NewCache(),
 		manager: NewManager(nil),
 		fps:     60,
@@ -81,6 +95,8 @@ func NewEbitenBackend() *EbitenBackend {
 	fonts.SetTexID(texID)
 
 	result.cache.SetFontAtlasTextureID(texID)
+
+	runtime.SetFinalizer(result, (*EbitenBackend).onfinalize)
 
 	return result
 }
@@ -345,4 +361,13 @@ func (e *EbitenBackend) Text() (string, error) {
 // SetText implements imgui clipboard
 func (e *EbitenBackend) SetText(text string) {
 	e.manager.cliptxt = text
+}
+
+func (e *EbitenBackend) onfinalize() {
+	if e.beforeDestroy != nil {
+		e.beforeDestroy()
+	}
+
+	runtime.SetFinalizer(e, nil)
+	e.ctx.Destroy()
 }

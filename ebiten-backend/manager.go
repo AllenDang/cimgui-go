@@ -1,8 +1,6 @@
 package ebitenbackend
 
 import (
-	"runtime"
-
 	imgui "github.com/AllenDang/cimgui-go"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -11,7 +9,6 @@ type GetCursorFn func() (x, y float32)
 
 type Manager struct {
 	Filter             ebiten.Filter
-	ctx                *imgui.Context
 	cliptxt            string
 	GetCursor          GetCursorFn
 	SyncInputsFn       func()
@@ -30,24 +27,13 @@ type Manager struct {
 }
 
 func NewManager(fontAtlas *imgui.FontAtlas) *Manager {
-	var imctx *imgui.Context
-
-	if fontAtlas != nil {
-		imctx = imgui.CreateContextV(fontAtlas)
-	} else {
-		imctx = imgui.CreateContext()
-	}
-
 	m := &Manager{
-		ctx:                imctx,
 		SyncCursor:         true,
 		SyncInputs:         true,
 		ClipMask:           true,
 		ControlCursorShape: true,
 		inputChars:         make([]rune, 0, 256),
 	}
-
-	runtime.SetFinalizer(m, (*Manager).onfinalize)
 
 	m.setKeyMapping()
 
@@ -56,7 +42,6 @@ func NewManager(fontAtlas *imgui.FontAtlas) *Manager {
 
 func NewManagerWithContext(ctx *imgui.Context) *Manager {
 	m := &Manager{
-		ctx:                ctx,
 		SyncCursor:         true,
 		SyncInputs:         true,
 		ClipMask:           true,
@@ -89,11 +74,6 @@ func (m *Manager) controlCursorShape() {
 	default:
 		ebiten.SetCursorShape(ebiten.CursorShapeDefault)
 	}
-}
-
-func (m *Manager) onfinalize() {
-	runtime.SetFinalizer(m, nil)
-	m.ctx.Destroy()
 }
 
 func (m *Manager) setKeyMapping() {
