@@ -23,10 +23,10 @@ func (e *EbitenBackend) SetDisplaySize(width, height float32) {
 
 // SetClipMask sets if clipmask is enabled or not. This is usually called for debugging purposes.
 func (e *EbitenBackend) SetClipMask(value bool) {
-	e.manager.ClipMask = value
+	e.clipMask = value
 }
 
 // ClipMask returns if clipmask is enabled or not.
 func (e *EbitenBackend) ClipMask() bool {
-	return e.manager.ClipMask
+	return e.clipMask
 }

@@ -1,16 +1,12 @@
 package ebitenbackend
 
 import (
-	"fmt"
 	"image"
 	"runtime"
-	"slices"
 	"unsafe"
 
 	imgui "github.com/AllenDang/cimgui-go"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 type EbitenBackendFlags int
@@ -34,6 +30,9 @@ const (
 	EbitenBackendFlagsMinimized
 	EbitenBackendFlagsClosingHandled
 	EbitenBackendFlagsMousePassthrough
+	// EbitenBackendFlagsDebug is a flag to enable debug mode. It will show FPS, TPS, ClipMask and enable ClipMask shortcut.
+	// 0 (default) disabled, 1 (or anything else) enabled
+	EbitenBackendFlagsDebug
 )
 
 var (
@@ -42,25 +41,34 @@ var (
 )
 
 type EbitenBackend struct {
+	// cimgui-go backend specific:
 	afterCreateContext,
 	beforeRender,
 	afterRender,
 	beforeDestroy,
 	loop func()
-
-	// callbacks
 	closeCb imgui.WindowCloseCallback[EbitenBackendFlags]
 
 	// ebiten stuff
-	dscale  float64
-	retina  bool
-	w, h    int
-	manager *Manager
-	fps     uint
-	bgColor imgui.Vec4
+	filter   ebiten.Filter
+	dscale   float64
+	retina   bool
+	w, h     int
+	fps      uint // target FPS
+	bgColor  imgui.Vec4
+	debug    bool // if true render some extra debug info
+	clipMask bool // https://github.com/ocornut/imgui/issues/7372
+	lmask    *ebiten.Image
+
+	syncInputs         bool
+	syncInputsFn       func()
+	syncCursor         bool
+	controlCursorShape bool
 
 	cache TextureCache
-	ctx   *imgui.Context
+	ctx   *imgui.Context // imgui context
+
+	manager *Manager // TODO: remove this entirely
 }
 
 // this is "pointer" to the first texture used for font atlas texture.
@@ -80,10 +88,14 @@ func NewEbitenBackend(fontAtlas *imgui.FontAtlas) *EbitenBackend {
 	}
 
 	result := &EbitenBackend{
-		ctx:     imctx,
-		cache:   NewCache(),
-		manager: NewManager(nil),
-		fps:     60,
+		ctx:                imctx,
+		cache:              NewCache(),
+		manager:            NewManager(nil),
+		fps:                60,
+		clipMask:           true,
+		syncInputs:         true,
+		syncCursor:         true,
+		controlCursorShape: true,
 	}
 
 	// Build texture atlas
@@ -97,6 +109,8 @@ func NewEbitenBackend(fontAtlas *imgui.FontAtlas) *EbitenBackend {
 	result.cache.SetFontAtlasTextureID(texID)
 
 	runtime.SetFinalizer(result, (*EbitenBackend).onfinalize)
+
+	result.setKeyMapping()
 
 	return result
 }
@@ -202,6 +216,8 @@ func (b *EbitenBackend) SetWindowFlags(flag EbitenBackendFlags, value int) {
 		ebiten.SetWindowClosingHandled(value != 0)
 	case EbitenBackendFlagsMousePassthrough:
 		ebiten.SetWindowMousePassthrough(value != 0)
+	case EbitenBackendFlagsDebug:
+		b.debug = value != 0
 	default:
 		panic("Invalid flag for SetWindowFlags.")
 	}
@@ -236,138 +252,4 @@ func (b *EbitenBackend) CreateTextureRgba(img *image.RGBA, width, height int) im
 
 func (e *EbitenBackend) DeleteTexture(id imgui.TextureID) {
 	e.cache.RemoveTexture(id)
-}
-
-// ebiten
-
-// Draw draws the generated imgui frame to the screen.
-// This is usually called inside the game's Draw() function.
-func (e *EbitenBackend) Draw(screen *ebiten.Image) {
-	// add background color
-	bgRect := slices.Repeat([]byte{
-		byte(e.bgColor.X * 255),
-		byte(e.bgColor.Y * 255),
-		byte(e.bgColor.Z * 255),
-		byte(e.bgColor.W * 255),
-	}, e.w*e.h)
-	screen.WritePixels(bgRect)
-
-	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("TPS: %.2f\nFPS: %.2f\n[C]lipMask: %t", ebiten.ActualTPS(), ebiten.ActualFPS(), e.ClipMask()), 10, 2)
-
-	e.manager.screenWidth = screen.Bounds().Dx()
-	e.manager.screenHeight = screen.Bounds().Dy()
-	imgui.Render()
-	if e.manager.ClipMask {
-		if e.manager.lmask == nil {
-			w, h := screen.Size()
-			e.manager.lmask = ebiten.NewImage(w, h)
-		} else {
-			w1, h1 := screen.Size()
-			w2, h2 := e.manager.lmask.Size()
-			if w1 != w2 || h1 != h2 {
-				e.manager.lmask.Dispose()
-				e.manager.lmask = ebiten.NewImage(w1, h1)
-			}
-		}
-		RenderMasked(screen, e.manager.lmask, imgui.CurrentDrawData(), e.cache, e.manager.Filter)
-	} else {
-		Render(screen, imgui.CurrentDrawData(), e.cache, e.manager.Filter)
-	}
-}
-
-// Update needs to be called on every frame, before cimgui-go calls.
-// This is usually called inside the game's Update() function.
-// delta is the time in seconds since the last frame.
-func (e *EbitenBackend) Update() error {
-	if ebiten.IsWindowBeingClosed() {
-		e.closeCb(e)
-	}
-
-	if e.beforeRender != nil {
-		e.beforeRender()
-	}
-
-	io := imgui.CurrentIO()
-	if e.manager.width > 0 || e.manager.height > 0 {
-		io.SetDisplaySize(imgui.Vec2{X: e.manager.width, Y: e.manager.height})
-	} else if e.manager.screenWidth > 0 || e.manager.screenHeight > 0 {
-		io.SetDisplaySize(imgui.Vec2{X: float32(e.manager.screenWidth), Y: float32(e.manager.screenHeight)})
-	}
-
-	io.SetDeltaTime(1.0 / float32(e.fps))
-	if e.manager.SyncCursor {
-		if e.manager.GetCursor != nil {
-			x, y := e.manager.GetCursor()
-			io.SetMousePos(imgui.Vec2{X: x, Y: y})
-		} else {
-			mx, my := ebiten.CursorPosition()
-			io.SetMousePos(imgui.Vec2{X: float32(mx), Y: float32(my)})
-		}
-		io.SetMouseButtonDown(0, ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft))
-		io.SetMouseButtonDown(1, ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight))
-		io.SetMouseButtonDown(2, ebiten.IsMouseButtonPressed(ebiten.MouseButtonMiddle))
-		xoff, yoff := ebiten.Wheel()
-		io.AddMouseWheelDelta(float32(xoff), float32(yoff))
-		e.manager.controlCursorShape()
-	}
-
-	if e.manager.SyncInputs {
-		if e.manager.SyncInputsFn != nil {
-			e.manager.SyncInputsFn()
-		} else {
-			e.manager.inputChars = sendInput(imgui.CurrentIO(), e.manager.inputChars)
-		}
-	}
-
-	// TODO: what is that?
-	if inpututil.IsKeyJustPressed(ebiten.KeyC) {
-		e.SetClipMask(!e.ClipMask())
-	}
-
-	e.BeginFrame()
-	defer e.EndFrame()
-
-	e.loop()
-
-	defer func() {
-		if e.afterRender != nil {
-			e.afterRender()
-		}
-	}()
-
-	return nil
-}
-
-func (e *EbitenBackend) Layout(outsideWidth, outsideHeight int) (int, int) {
-	if e.retina {
-		m := ebiten.DeviceScaleFactor()
-		e.w = int(float64(outsideWidth) * m)
-		e.h = int(float64(outsideHeight) * m)
-	} else {
-		e.w = outsideWidth
-		e.h = outsideHeight
-	}
-
-	e.SetDisplaySize(float32(e.w), float32(e.h))
-
-	return e.w, e.h
-}
-
-// Text implements imgui clipboard
-func (e *EbitenBackend) Text() (string, error) {
-	return e.manager.cliptxt, nil
-}
-
-// SetText implements imgui clipboard
-func (e *EbitenBackend) SetText(text string) {
-	e.manager.cliptxt = text
-}
-
-func (e *EbitenBackend) onfinalize() {
-	if e.beforeDestroy != nil {
-		e.beforeDestroy()
-	}
-
-	runtime.SetFinalizer(e, nil)
-	e.ctx.Destroy()
 }

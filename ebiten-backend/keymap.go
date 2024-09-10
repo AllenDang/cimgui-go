@@ -161,3 +161,13 @@ func sendInput(io *imgui.IO, inputChars []rune) []rune {
 	}
 	return inputChars
 }
+
+func (e *EbitenBackend) setKeyMapping() {
+	// Keyboard mapping. ImGui will use those indices to peek into the io.KeysDown[] array.
+	/*
+		io := cimgui.GetIO()
+		for imguiKey, nativeKey := range keys {
+			// io.KeyMap(int(imguiKey), nativeKey)
+		}
+	*/
+}
