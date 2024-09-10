@@ -46,20 +46,43 @@ type EbitenBackend struct {
 	afterRender,
 	beforeDestroy, // TODO This is called nowhere
 	loop func()
+
+	// callbacks
 	closeCb imgui.WindowCloseCallback[EbitenBackendFlags]
+
+	// ebiten stuff
 	dscale  float64
 	retina  bool
 	w, h    int
 	manager *Manager
 	fps     uint
 	bgColor imgui.Vec4
+
+	cache TextureCache
 }
 
+// this is "pointer" to the first texture used for font atlas texture.
+// it needs to be a var and cannot be more private because of CGO stuff.
+var id1 = 1
+
 func NewEbitenBackend() *EbitenBackend {
-	return &EbitenBackend{
+	result := &EbitenBackend{
+		cache:   NewCache(),
 		manager: NewManager(nil),
 		fps:     60,
 	}
+
+	// Build texture atlas
+	fonts := imgui.CurrentIO().Fonts()
+	_, _, _, _ = fonts.GetTextureDataAsRGBA32() // call this to force imgui to build the font atlas cache
+
+	texID := imgui.TextureID{}
+	texID.Data = uintptr(unsafe.Pointer(&id1)) // TODO: this shit will cause -race issues
+	fonts.SetTexID(texID)
+
+	result.cache.SetFontAtlasTextureID(texID)
+
+	return result
 }
 
 func (b *EbitenBackend) SetAfterCreateContextHook(fn func()) {
@@ -185,8 +208,8 @@ func (e *EbitenBackend) CreateTexture(pixels unsafe.Pointer, width, height int) 
 	eimg := ebiten.NewImage(width, height)
 	eimg.WritePixels(premultiplyPixels(pixels, width, height))
 
-	tid := imgui.TextureID{Data: uintptr(e.manager.Cache.NextId())}
-	e.manager.Cache.SetTexture(tid, eimg)
+	tid := imgui.TextureID{Data: uintptr(e.cache.NextId())}
+	e.cache.SetTexture(tid, eimg)
 	return tid
 }
 
@@ -196,7 +219,7 @@ func (b *EbitenBackend) CreateTextureRgba(img *image.RGBA, width, height int) im
 }
 
 func (e *EbitenBackend) DeleteTexture(id imgui.TextureID) {
-	e.manager.Cache.RemoveTexture(id)
+	e.cache.RemoveTexture(id)
 }
 
 // ebiten
@@ -204,6 +227,7 @@ func (e *EbitenBackend) DeleteTexture(id imgui.TextureID) {
 // Draw draws the generated imgui frame to the screen.
 // This is usually called inside the game's Draw() function.
 func (e *EbitenBackend) Draw(screen *ebiten.Image) {
+	// add background color
 	bgRect := slices.Repeat([]byte{
 		byte(e.bgColor.X * 255),
 		byte(e.bgColor.Y * 255),
@@ -211,8 +235,28 @@ func (e *EbitenBackend) Draw(screen *ebiten.Image) {
 		byte(e.bgColor.W * 255),
 	}, e.w*e.h)
 	screen.WritePixels(bgRect)
+
 	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("TPS: %.2f\nFPS: %.2f\n[C]lipMask: %t", ebiten.ActualTPS(), ebiten.ActualFPS(), e.ClipMask()), 10, 2)
-	e.manager.Draw(screen)
+
+	e.manager.screenWidth = screen.Bounds().Dx()
+	e.manager.screenHeight = screen.Bounds().Dy()
+	imgui.Render()
+	if e.manager.ClipMask {
+		if e.manager.lmask == nil {
+			w, h := screen.Size()
+			e.manager.lmask = ebiten.NewImage(w, h)
+		} else {
+			w1, h1 := screen.Size()
+			w2, h2 := e.manager.lmask.Size()
+			if w1 != w2 || h1 != h2 {
+				e.manager.lmask.Dispose()
+				e.manager.lmask = ebiten.NewImage(w1, h1)
+			}
+		}
+		RenderMasked(screen, e.manager.lmask, imgui.CurrentDrawData(), e.cache, e.manager.Filter)
+	} else {
+		Render(screen, imgui.CurrentDrawData(), e.cache, e.manager.Filter)
+	}
 }
 
 // Update needs to be called on every frame, before cimgui-go calls.
@@ -227,7 +271,37 @@ func (e *EbitenBackend) Update() error {
 		e.beforeRender()
 	}
 
-	e.manager.Update(1.0 / float32(e.fps))
+	io := imgui.CurrentIO()
+	if e.manager.width > 0 || e.manager.height > 0 {
+		io.SetDisplaySize(imgui.Vec2{X: e.manager.width, Y: e.manager.height})
+	} else if e.manager.screenWidth > 0 || e.manager.screenHeight > 0 {
+		io.SetDisplaySize(imgui.Vec2{X: float32(e.manager.screenWidth), Y: float32(e.manager.screenHeight)})
+	}
+
+	io.SetDeltaTime(1.0 / float32(e.fps))
+	if e.manager.SyncCursor {
+		if e.manager.GetCursor != nil {
+			x, y := e.manager.GetCursor()
+			io.SetMousePos(imgui.Vec2{X: x, Y: y})
+		} else {
+			mx, my := ebiten.CursorPosition()
+			io.SetMousePos(imgui.Vec2{X: float32(mx), Y: float32(my)})
+		}
+		io.SetMouseButtonDown(0, ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft))
+		io.SetMouseButtonDown(1, ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight))
+		io.SetMouseButtonDown(2, ebiten.IsMouseButtonPressed(ebiten.MouseButtonMiddle))
+		xoff, yoff := ebiten.Wheel()
+		io.AddMouseWheelDelta(float32(xoff), float32(yoff))
+		e.manager.controlCursorShape()
+	}
+
+	if e.manager.SyncInputs {
+		if e.manager.SyncInputsFn != nil {
+			e.manager.SyncInputsFn()
+		} else {
+			e.manager.inputChars = sendInput(imgui.CurrentIO(), e.manager.inputChars)
+		}
+	}
 
 	// TODO: what is that?
 	if inpututil.IsKeyJustPressed(ebiten.KeyC) {
@@ -261,4 +335,14 @@ func (e *EbitenBackend) Layout(outsideWidth, outsideHeight int) (int, int) {
 	e.SetDisplaySize(float32(e.w), float32(e.h))
 
 	return e.w, e.h
+}
+
+// Text implements imgui clipboard
+func (e *EbitenBackend) Text() (string, error) {
+	return e.manager.cliptxt, nil
+}
+
+// SetText implements imgui clipboard
+func (e *EbitenBackend) SetText(text string) {
+	e.manager.cliptxt = text
 }
