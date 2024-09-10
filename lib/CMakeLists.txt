@@ -13,6 +13,7 @@ endif()
 
 #general settings
 file(GLOB IMGUI_SOURCES
+<<<<<<< HEAD
     ../cwrappers/cimgui.cpp
     ../cwrappers/imgui/imgui.cpp
     ../cwrappers/imgui/imgui_draw.cpp
@@ -26,6 +27,7 @@ file(GLOB IMGUI_SOURCES
     ../cwrappers/cimnodes.cpp
     ../cwrappers/cimmarkdown.cpp
     ../cwrappers/imgui_markdown/imgui_markdown.h
+    ../cwrappers/imguizmo/ImGuizmo.h
 	${TABLES_SOURCE}
 )
 
