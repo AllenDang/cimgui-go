@@ -117,7 +117,7 @@ func init() {
 
 func main() {
 	var err error
-	img, err = imgui.LoadImage("./test.jpeg")
+	img, err = imgui.LoadImage("../assets/test.jpeg")
 	if err != nil {
 		panic("Failed to load test.jpeg")
 	}
@@ -134,9 +134,12 @@ func main() {
 
 	backend.CreateWindow("Hello from cimgui-go", 1200, 900)
 
-	backend.SetDropCallback(func(p []string) {
-		fmt.Printf("drop triggered: %v", p)
-	})
+	// TODO: not implemented
+	/*
+		backend.SetDropCallback(func(p []string) {
+			fmt.Printf("drop triggered: %v", p)
+		})
+	*/
 
 	backend.SetCloseCallback(func(b imgui.Backend[ebitenbackend.EbitenBackendFlags]) {
 		fmt.Println("window is closing")
