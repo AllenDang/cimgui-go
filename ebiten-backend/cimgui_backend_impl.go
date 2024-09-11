@@ -39,7 +39,10 @@ func (b *EbitenBackend) Run(loop func()) {
 	ebiten.RunGame(b)
 }
 
-func (b *EbitenBackend) Refresh() {} // TODO: implement
+// TODO: Not implemented
+func (b *EbitenBackend) Refresh() {
+	panic("Refresh is not implemented for Ebiten backend yet.")
+}
 
 func (b *EbitenBackend) SetWindowPos(x, y int) {
 	ebiten.SetWindowPosition(x, y)
@@ -64,8 +67,16 @@ func (b *EbitenBackend) SetWindowTitle(title string) {
 	ebiten.SetWindowTitle(title)
 }
 
-func (b *EbitenBackend) DisplaySize() (width, height int32) { return 0, 0 } // TODO
-func (b *EbitenBackend) SetShouldClose(bool)                {}              // TODO
+// TODO: Not implemented
+func (b *EbitenBackend) DisplaySize() (width, height int32) {
+	panic("SetShouldClose is not implemented for Ebiten backend yet.")
+	return 0, 0
+}
+
+// TODO: Not implemented
+func (b *EbitenBackend) SetShouldClose(bool) {
+	panic("SetShouldClose is not implemented for Ebiten backend yet.")
+}
 
 func (b *EbitenBackend) ContentScale() (xScale, yScale float32) {
 	scale := ebiten.DeviceScaleFactor()
@@ -76,7 +87,10 @@ func (e *EbitenBackend) SetTargetFPS(fps uint) {
 	e.fps = fps
 }
 
-func (b *EbitenBackend) SetDropCallback(imgui.DropCallback) {} // TODO
+// TODO: Not implemented
+func (b *EbitenBackend) SetDropCallback(imgui.DropCallback) {
+	panic("SetDropCallback is not implemented for Ebiten backend yet.")
+}
 
 func (b *EbitenBackend) SetCloseCallback(cb imgui.WindowCloseCallback[EbitenBackendFlags]) {
 	b.closeCb = cb
@@ -126,9 +140,21 @@ func (b *EbitenBackend) SetIcons(icons ...image.Image) {
 	ebiten.SetWindowIcon(icons)
 }
 
-func (b *EbitenBackend) SetSwapInterval(interval EbitenBackendFlags) error { return nil } // TODO
-func (b *EbitenBackend) SetCursorPos(x, y float64)                         {}             // TODO
-func (b *EbitenBackend) SetInputMode(mode, value EbitenBackendFlags)       {}             // TODO
+// TODO: Not implemented
+func (b *EbitenBackend) SetSwapInterval(interval EbitenBackendFlags) error {
+	panic("SetSwapInterval is not implemented for Ebiten backend yet.")
+	return nil
+}
+
+// TODO: Not implemented
+func (b *EbitenBackend) SetCursorPos(x, y float64) {
+	panic("SetCursorPos is not implemented for Ebiten backend yet.")
+}
+
+// TODO: Not implemented
+func (b *EbitenBackend) SetInputMode(mode, value EbitenBackendFlags) {
+	panic("SetInputMode is not implemented for Ebiten backend yet.")
+}
 
 func (e *EbitenBackend) CreateWindow(title string, width, height int) {
 	// create context
