@@ -64,9 +64,13 @@ func (b *EbitenBackend) SetWindowTitle(title string) {
 	ebiten.SetWindowTitle(title)
 }
 
-func (b *EbitenBackend) DisplaySize() (width, height int32)     { return 0, 0 } // TODO
-func (b *EbitenBackend) SetShouldClose(bool)                    {}              // TODO
-func (b *EbitenBackend) ContentScale() (xScale, yScale float32) { return 1, 1 } // TODO
+func (b *EbitenBackend) DisplaySize() (width, height int32) { return 0, 0 } // TODO
+func (b *EbitenBackend) SetShouldClose(bool)                {}              // TODO
+
+func (b *EbitenBackend) ContentScale() (xScale, yScale float32) {
+	scale := ebiten.DeviceScaleFactor()
+	return float32(scale), float32(scale)
+}
 
 func (e *EbitenBackend) SetTargetFPS(fps uint) {
 	e.fps = fps
