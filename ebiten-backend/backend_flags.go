@@ -13,6 +13,8 @@ const (
 	// CursorShapeEWResize, CursorShapeNSResize, CursorShapeNESWResize, CursorShapeNWSEResize,
 	// CursorShapeMove, CursorShapeNotAllowed CursorShapeType, EbitenBackendFlagsCursorShape
 	EbitenBackendFlagsCursorShape
+	// EbitenBackendFlagsResizingMode sets the resizing mode.
+	// Possible values: WindowResizingModeDisabled, WindowResizingModeOnlyFullscreenEnabled, WindowResizingModeEnabled
 	EbitenBackendFlagsResizingMode
 	EbitenBackendFlagsFPSMode
 	EbitenBackendFlagsDecorated

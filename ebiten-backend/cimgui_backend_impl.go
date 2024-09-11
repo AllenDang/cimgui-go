@@ -52,8 +52,10 @@ func (b *EbitenBackend) GetWindowPos() (x, y int32) {
 
 func (b *EbitenBackend) SetWindowSize(width, height int) {
 	ebiten.SetWindowSize(width, height)
-	b.w = width
-	b.h = height
+	/*
+		b.width = float32(width)
+		b.height = float32(height)
+	*/
 }
 
 func (b *EbitenBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight int) {} // TODO

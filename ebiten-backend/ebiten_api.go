@@ -20,7 +20,7 @@ func (e *EbitenBackend) Draw(screen *ebiten.Image) {
 		byte(e.bgColor.Y * 255),
 		byte(e.bgColor.Z * 255),
 		byte(e.bgColor.W * 255),
-	}, e.w*e.h)
+	}, e.currentWidth*e.currentHeight)
 	screen.WritePixels(bgRect)
 
 	if e.debug {
@@ -32,8 +32,6 @@ func (e *EbitenBackend) Draw(screen *ebiten.Image) {
 		)
 	}
 
-	e.manager.screenWidth = screen.Bounds().Dx()
-	e.manager.screenHeight = screen.Bounds().Dy()
 	imgui.Render()
 	if e.clipMask {
 		if e.lmask == nil {
@@ -66,11 +64,7 @@ func (e *EbitenBackend) Update() error {
 	}
 
 	io := imgui.CurrentIO()
-	if e.manager.width > 0 || e.manager.height > 0 {
-		io.SetDisplaySize(imgui.Vec2{X: e.manager.width, Y: e.manager.height})
-	} else if e.manager.screenWidth > 0 || e.manager.screenHeight > 0 {
-		io.SetDisplaySize(imgui.Vec2{X: float32(e.manager.screenWidth), Y: float32(e.manager.screenHeight)})
-	}
+	io.SetDisplaySize(imgui.Vec2{X: float32(e.currentWidth), Y: float32(e.currentHeight)})
 
 	io.SetDeltaTime(1.0 / float32(e.fps))
 	if e.syncCursor {
@@ -132,16 +126,14 @@ func (e *EbitenBackend) Update() error {
 func (e *EbitenBackend) Layout(outsideWidth, outsideHeight int) (int, int) {
 	if e.retina {
 		m := ebiten.DeviceScaleFactor()
-		e.w = int(float64(outsideWidth) * m)
-		e.h = int(float64(outsideHeight) * m)
+		e.currentWidth = int(float64(outsideWidth) * m)
+		e.currentHeight = int(float64(outsideHeight) * m)
 	} else {
-		e.w = outsideWidth
-		e.h = outsideHeight
+		e.currentWidth = outsideWidth
+		e.currentHeight = outsideHeight
 	}
 
-	e.SetDisplaySize(float32(e.w), float32(e.h))
-
-	return e.w, e.h
+	return e.currentWidth, e.currentHeight
 }
 
 func (e *EbitenBackend) onfinalize() {

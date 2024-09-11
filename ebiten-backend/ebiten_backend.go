@@ -25,15 +25,15 @@ type EbitenBackend struct {
 	closeCb imgui.WindowCloseCallback[EbitenBackendFlags]
 
 	// ebiten stuff
-	filter   ebiten.Filter
-	dscale   float64
-	retina   bool
-	w, h     int
-	fps      uint // target FPS
-	bgColor  imgui.Vec4
-	debug    bool // if true render some extra debug info
-	clipMask bool // https://github.com/ocornut/imgui/issues/7372
-	lmask    *ebiten.Image
+	filter                      ebiten.Filter
+	dscale                      float64
+	retina                      bool
+	currentWidth, currentHeight int
+	fps                         uint // target FPS
+	bgColor                     imgui.Vec4
+	debug                       bool // if true render some extra debug info
+	clipMask                    bool // https://github.com/ocornut/imgui/issues/7372
+	lmask                       *ebiten.Image
 
 	syncInputs         bool
 	syncInputsFn       func()
