@@ -7,7 +7,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type GetCursorFn func() (x, y float32)
+type getCursorFn func() (x, y float32)
 
 var (
 	_ imgui.Backend[EbitenBackendFlags] = &EbitenBackend{}
@@ -43,7 +43,7 @@ type EbitenBackend struct {
 	syncInputsFn       func()
 	syncCursor         bool
 	controlCursorShape bool
-	getCursor          GetCursorFn
+	getCursor          getCursorFn
 	cliptxt            string
 	inputChars         []rune
 
