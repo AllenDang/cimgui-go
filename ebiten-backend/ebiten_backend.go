@@ -7,11 +7,15 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
+type GetCursorFn func() (x, y float32)
+
 var (
 	_ imgui.Backend[EbitenBackendFlags] = &EbitenBackend{}
 	_ ebiten.Game                       = &EbitenBackend{}
 )
 
+// EbitenBackend implements imgui.Backend and ebiten.Game.
+// It allows to render imgui UI using ebitengine (https://github.com/hajimehoshi/ebiten).
 type EbitenBackend struct {
 	customFontAtlas *imgui.FontAtlas
 	customCtx       *imgui.Context
@@ -45,8 +49,6 @@ type EbitenBackend struct {
 
 	cache TextureCache
 	ctx   *imgui.Context // imgui context
-
-	manager *Manager // TODO: remove this entirely
 }
 
 // this is "pointer" to the first texture used for font atlas texture.
@@ -58,7 +60,6 @@ var id1 = 1
 func NewEbitenBackend() *EbitenBackend {
 	result := &EbitenBackend{
 		cache:              NewCache(),
-		manager:            new(Manager),
 		fps:                60,
 		clipMask:           true,
 		syncInputs:         true,
@@ -74,12 +75,38 @@ func NewEbitenBackend() *EbitenBackend {
 	return result
 }
 
+// SetFontAtlas sets custom font atlas
+// * do not use SetContext along with this
+// * if not called, CreateWindow will create new context with nil font atlas
 func (e *EbitenBackend) SetFontAtlas(fa *imgui.FontAtlas) *EbitenBackend {
 	e.customFontAtlas = fa
 	return e
 }
 
+// SetContext sets imgui.Context (if not set, CreateWindow will create one)
 func (e *EbitenBackend) SetContext(ctx *imgui.Context) *EbitenBackend {
 	e.customCtx = ctx
 	return e
+}
+
+// BeginFrame needs to be called on every frame, before cimgui-go calls.
+// This is usually called inside the game's Update() function.
+func (e *EbitenBackend) BeginFrame() {
+	imgui.NewFrame()
+}
+
+// EndFrame needs to be called on every frame, after cimgui-go calls.
+// This is usually called inside the game's Update() function.
+func (e *EbitenBackend) EndFrame() {
+	imgui.EndFrame()
+}
+
+// SetClipMask sets if clipmask is enabled or not. This is usually called for debugging purposes.
+func (e *EbitenBackend) SetClipMask(value bool) {
+	e.clipMask = value
+}
+
+// ClipMask returns if clipmask is enabled or not.
+func (e *EbitenBackend) ClipMask() bool {
+	return e.clipMask
 }
