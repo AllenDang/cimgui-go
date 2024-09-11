@@ -1,4 +1,4 @@
-//go:build !exclude_cimgui_sdl && !darwin
+//go:build !exclude_cimgui_sdl && !darwin && !ebiten
 
 package imgui
 

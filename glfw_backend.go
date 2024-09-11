@@ -1,5 +1,5 @@
-//go:build !exclude_cimgui_glfw
-// +build !exclude_cimgui_glfw
+//go:build !exclude_cimgui_glfw && !ebiten
+// +build !exclude_cimgui_glfw,!ebiten
 
 package imgui
 
