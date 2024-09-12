@@ -1,13 +1,14 @@
 #pragma once
 
-#include "cimgui_wrapper.h"
-#include "thirdparty/glfw/include/GLFW/glfw3.h" // Will drag system OpenGL headers
-#include "extra_types.h"
+#include "../cimgui_wrapper.h"
+#include "../thirdparty/SDL/include/SDL.h" // Will drag system OpenGL headers
+#include "../extra_types.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/*
 typedef int GLFWKey;
 enum GLFWKey_ {
    GLFWKeySpace = GLFW_KEY_SPACE,
@@ -61,7 +62,7 @@ enum GLFWKey_ {
    GLFWKeyWorld1 = GLFW_KEY_WORLD_1,
    GLFWKeyWorld2 = GLFW_KEY_WORLD_2,
 
-   /* Function keys */
+   // Function keys
    GLFWKeyEscape = GLFW_KEY_ESCAPE,
    GLFWKeyEnter = GLFW_KEY_ENTER,
    GLFWKeyTab = GLFW_KEY_TAB,
@@ -143,8 +144,9 @@ enum GLFWModifierKey_ {
    GLFWModCapsLock = GLFW_MOD_CAPS_LOCK,
    GLFWModNumLock = GLFW_MOD_NUM_LOCK,
 };
+*/
 
-typedef int GLFWWindowFlags;
+/*
 enum GLFWWindowFlags_ {
   GLFWWindowNone = 0,
   GLFWWindowResizable = GLFW_RESIZABLE,
@@ -157,6 +159,7 @@ enum GLFWWindowFlags_ {
   GLFWWindowIconified = GLFW_ICONIFIED,
   GLFWWindowAutoIconify = GLFW_AUTO_ICONIFY,
 };
+*/
 
 typedef struct CImage {
 int width;
@@ -164,43 +167,42 @@ int height;
 unsigned char* pixels;
 }CImage ;
 
-typedef struct GLFWwindow GLFWwindow;
-typedef struct GLFWmonitor GLFWmonitor;
-typedef struct GLFWimage GLFWimage;
-struct GLFWwindow;
-struct GLFWmonitor;
-struct GLFWimage;
+typedef struct SDL_Window SDL_Window;
+//typedef struct GLFWmonitor GLFWmonitor;
+//typedef struct GLFWimage GLFWimage;
+struct SDL_Window;
+//struct GLFWmonitor;
+//struct GLFWimage;
 
 extern void igSetBgColor(ImVec4 color);
 extern void igSetTargetFPS(unsigned int fps);
-extern int igInitGLFW();
-extern GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height,
+extern int igInitSDL();
+extern SDL_Window *igCreateSDLWindow(const char *title, int width, int height,
                                       VoidCallback afterCreateContext);
-extern void igGLFWRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
+extern void igSDLRunLoop(SDL_Window *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
                       VoidCallback beforeDestroyContext);
-extern void igGLFWWindow_GetDisplaySize(GLFWwindow *window, int *width, int *height);
-extern void igGLFWWindow_GetContentScale(GLFWwindow *window, float *width, float *height);
-extern void igGLFWWindow_SetWindowPos(GLFWwindow *window, int x, int y);
-extern void igGLFWWindow_GetWindowPos(GLFWwindow *window, int *x, int *y);
-extern void igGLFWWindow_SetShouldClose(GLFWwindow *window, int value);
-extern void igGLFWWindow_SetDropCallbackCB(GLFWwindow *window);
-extern void igGLFWWindow_SetSize(GLFWwindow *window, int width, int height);
-extern void igGLFWWindow_SetTitle(GLFWwindow *window, const char *title);
-extern void igGLFWWindow_SetSizeLimits(GLFWwindow *window, int minWidth, int minHeight, int maxWidth, int maxHeight);
-extern void igGLFWWindow_SetCloseCallback(GLFWwindow *window);
-extern void igGLFWWindow_SetKeyCallback(GLFWwindow *window);
-extern void igGLFWWindow_SetSizeCallback(GLFWwindow *window);
-extern void igGLFWWindow_SetIcon(GLFWwindow *window, int count, CImage* images);
+extern void igSDLWindow_GetDisplaySize(SDL_Window *window, int *width, int *height);
+extern void igSDLWindow_GetContentScale(SDL_Window *window, float *width, float *height);
+extern void igSDLWindow_SetWindowPos(SDL_Window *window, int x, int y);
+extern void igSDLWindow_GetWindowPos(SDL_Window *window, int *x, int *y);
+//extern void igSDLWindow_SetShouldClose(SDL_Window *window, int value);
+//extern void igSDLWindow_SetDropCallbackCB(SDL_Window *window);
+extern void igSDLWindow_SetSize(SDL_Window *window, int width, int height);
+extern void igSDLWindow_SetTitle(SDL_Window *window, const char *title);
+extern void igSDLWindow_SetSizeLimits(SDL_Window *window, int minWidth, int minHeight, int maxWidth, int maxHeight);
+//extern void igSDLWindow_SetCloseCallback(SDL_Window *window);
+//extern void igSDLWindow_SetKeyCallback(SDL_Window *window);
+//extern void igSDLWindow_SetSizeCallback(SDL_Window *window);
+//extern void igSDLWindow_SetIcon(SDL_Window *window, int count, CImage* images);
 extern void igRefresh();
 extern ImTextureID igCreateTexture(unsigned char *pixels, int width, int height);
 extern void igDeleteTexture(ImTextureID id);
-extern void igWindowHint(GLFWWindowFlags hint, int value);
-extern void iggImplGlfw_KeyCallback(GLFWwindow* w, int k,int s,int a,int m);
+extern void igSDLWindowHint(SDL_WindowFlags hint, int value);
 
-extern void dropCallback(int, char **);
-extern void closeCallback(GLFWwindow *window);
-extern void keyCallback(int key, int scancode, int action, int mods);
-extern void sizeCallback(int width, int height);
+//extern void dropCallback(int, char **);
+//extern void closeCallback(SDL_Window *window);
+//extern void keyCallback(int key, int scancode, int action, int mods);
+//extern void sizeCallback(int width, int height);
 
 #ifdef __cplusplus
 }

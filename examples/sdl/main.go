@@ -8,6 +8,7 @@ import (
 	"runtime"
 
 	imgui "github.com/AllenDang/cimgui-go"
+	"github.com/AllenDang/cimgui-go/sdlbackend"
 )
 
 var (
@@ -23,7 +24,7 @@ var (
 	a              float32
 	color4         [4]float32 = [4]float32{r, g, b, a}
 	selected       bool
-	backend        imgui.Backend[imgui.SDLWindowFlags]
+	backend        imgui.Backend[sdlbackend.SDLWindowFlags]
 	img            *image.RGBA
 	texture        *imgui.Texture
 	barValues      []int64
@@ -127,7 +128,7 @@ func main() {
 		barValues = append(barValues, int64(i+1))
 	}
 
-	backend, _ = imgui.CreateBackend(imgui.NewSDLBackend())
+	backend, _ = imgui.CreateBackend(sdlbackend.NewSDLBackend())
 	backend.SetAfterCreateContextHook(afterCreateContext)
 	backend.SetBeforeDestroyContextHook(beforeDestroyContext)
 
@@ -139,7 +140,7 @@ func main() {
 		fmt.Printf("drop triggered: %v", p)
 	})
 
-	backend.SetCloseCallback(func(b imgui.Backend[imgui.SDLWindowFlags]) {
+	backend.SetCloseCallback(func(b imgui.Backend[sdlbackend.SDLWindowFlags]) {
 		fmt.Println("window is closing")
 	})
 
