@@ -1,7 +1,7 @@
 all: run
 
 build:
-	go build -v -tags include_cimgui_sdl -o example-sdl .
+	go build -v -o example-sdl .
 
 run: build
 	./example-sdl
