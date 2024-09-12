@@ -9,8 +9,21 @@ It works on macOS(arm64/x86), windows(x64), Arch Linux/KDE and Fedora Workstatio
 ## Current solution is:
 1. Use cimgui's lua generator to generate function and struct definition as json.
 2. Generate proper go code from the definition (via manual crafted go program `/cmd/codegen`).
-3. Use the backend implementation from imgui (currently glfw and opengl3).
+3. Use the backend implementation from imgui.
 4. Use github workflow to compile cimgui and glfw to static lib and place them in /lib folder for further link. 
+
+## Supported Backends
+
+In order to make it easy in use, cimgui-go implemented a few imgui backends.
+To see more details about using a specific backend, take a look at the [examples](./examples).
+
+We support the following backends:
+- [GLFW](./examples/glfw). **Note:**: It is disabled by default, use `enable_cimgui_glfw` go build tag to enable it.
+- [SDL2](./examples/sdl). **Note:**: It is disabled by default, use `enable_cimgui_sdl2` go build tag to enable it.
+- [Ebitengine](./examples/ebiten) (`import "github.com/AllenDang/cimgui-go/ebitenbackend"`).
+
+**Important**: Remember that various solution use different C libraries that can conflict with each other.
+It is recommended to not enable e.g. GLFW and SDL backends at the same time as it may result in linker crash.
 
 ## Naming convention
 
@@ -29,7 +42,7 @@ Install [GNU make](https://www.gnu.org/software/make/manual/make.html) and run `
 
 To update to the latest version of dependencies, run `make update`.
 After doing this, commit changes and navigate to GitHub.
-In Actions tab, manually trigger workflows for each platform.
+In Actions tab, manually trigger `Compile cimgui` workflows.
 
 ## How does it work?
 

@@ -30,8 +30,11 @@
 #endif
 
 ImVec4 sdl_clear_color = *ImVec4_ImVec4_Float(0.45, 0.55, 0.6, 1.0);
+unsigned int sdl_target_fps = 30;
 
 SDL_WindowFlags sdl_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
+
+ImVec4 clear_color = *ImVec4_ImVec4_Float(0.45, 0.55, 0.6, 1.0);
 
 // Setup SDL
 int igInitSDL() {
@@ -130,6 +133,13 @@ SDL_Window* igCreateSDLWindow(const char* title, int width, int height,VoidCallb
     //IM_ASSERT(font != nullptr);
 
     return window;
+}
+
+void igRefresh() {
+        SDL_Event redrawEvent;
+        redrawEvent.type = SDL_WINDOWEVENT;
+        redrawEvent.window.event = SDL_WINDOWEVENT_EXPOSED;
+        SDL_PushEvent(&redrawEvent);
 }
 
 void igSDLRunLoop(SDL_Window *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
@@ -250,5 +260,31 @@ void igSDLWindowHint(SDL_WindowFlags hint, int value) {
         sdl_flags = (SDL_WindowFlags)(0);
     }
 }
+
+ImTextureID igCreateTexture(unsigned char *pixels, int width, int height) {
+  GLint last_texture;
+  GLuint texId;
+
+  glGetIntegerv(GL_TEXTURE_BINDING_2D, &last_texture);
+  glGenTextures(1, &texId);
+  glBindTexture(GL_TEXTURE_2D, texId);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+
+  // Restore state
+  glBindTexture(GL_TEXTURE_2D, last_texture);
+
+  return ImTextureID((intptr_t(texId)));
+}
+
+void igDeleteTexture(ImTextureID id) {
+  glBindTexture(GL_TEXTURE_2D, 0);
+  glDeleteTextures(1, (GLuint *)(&id));
+}
+
+void igSetBgColor(ImVec4 color) { sdl_clear_color = color; }
+
+void igSetTargetFPS(unsigned int fps) { sdl_target_fps = fps; }
 
 #endif // CIMGUI_GO_USE_SDL2

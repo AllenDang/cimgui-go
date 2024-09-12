@@ -9,15 +9,8 @@ then it was cloned and modified here by [@gucio321](https://github.com/gucio321)
 As ebiten is not (thankfully) a C library, we can make it a
 separated package :tada:.
 
-You can use it as another backend for cimgui-go.
+You can use it as another backends for cimgui-go.
 
 ```go
         backend, _ = imgui.CreateBackend(ebitenbackend.NewEbitenBackend())
-```
-
-But when building your application, you (sadly) need to exclude the
-other backends, as they will conflict with ebiten.
-
-```bash
-go build -tags ebiten
 ```
