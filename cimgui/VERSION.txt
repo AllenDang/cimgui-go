@@ -1,8 +1,10 @@
-cimgui (https://github.com/cimgui/cimgui) HEAD is on: 4486dace2a560c179be549b8137392c49cb8eab2
-cimgui/imgui HEAD is on: c6aa051629753f0ef0d26bf775a8b6a92aa213b2
+cimgui (https://github.com/cimgui/cimgui) HEAD is on: 51197f420a0f848ebcf5e8f67fe0eade8336cbcb
+cimgui/imgui HEAD is on: 68aa9a86ec933510073932980a0940742ecc833c
 cimplot (https://github.com/cimgui/cimplot) HEAD is on: 439f705b1cfae0e9fbe42c13ab5b45becc47d404
 cimplot/implot HEAD is on: f156599faefe316f7dd20fe6c783bf87c8bb6fd9
 cimnodes (https://github.com/cimgui/cimnodes) HEAD is on: f20c83c3cab8e99828d85c66ed3acd087f632c21
-cimnodes/imnodes HEAD is on: e9bb6cadc0382e8288be70a524ccb557f9e8c422
-cimmarkdown (https://github.com/gucio321/cimmarkdown) HEAD is on: c418b67e4893b690816c2d7b6ad05f104beb14e8
-cimmarkdown/imgui_markdown HEAD is on: 49bb387f99bd9df295e97be9aff9048de3bfc226
+cimnodes/imnodes HEAD is on: 8563e1655bd9bb1f249e6552cc6274d506ee788b
+cimmarkdown (https://github.com/gucio321/cimmarkdown) HEAD is on: 6e921ffc2b57a9969b98bf8f5aeed912bfb497f6
+cimmarkdown/imgui_markdown HEAD is on: 4eb198f68090c9a1622bb9c78ee61f65b6ddc898
+cimguizmo (https://github.com/cimgui/cimguizmo) HEAD is on: ade2e4c1be4fa54c7bfa78f3a645deb5af7397db
+cimguizmo/ImGuizmo HEAD is on: 99358b3afc8cdfff5c264f97ab1718b2d8089319

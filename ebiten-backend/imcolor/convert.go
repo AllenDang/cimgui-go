@@ -4,7 +4,7 @@ package imcolor
 import (
 	"image/color"
 
-	imgui "github.com/gabstv/cimgui-go"
+	imgui "github.com/AllenDang/cimgui-go"
 )
 
 func ToVec4(c color.Color) imgui.Vec4 {

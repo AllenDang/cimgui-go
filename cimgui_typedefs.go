@@ -319,6 +319,23 @@ func newFontGlyphRangesBuilderFromC(cvalue *C.ImFontGlyphRangesBuilder) *FontGly
 	return &FontGlyphRangesBuilder{CData: cvalue}
 }
 
+type BoxSelectState struct {
+	CData *C.ImGuiBoxSelectState
+}
+
+func (self *BoxSelectState) handle() (result *C.ImGuiBoxSelectState, fin func()) {
+	return self.CData, func() {}
+}
+
+func (self BoxSelectState) c() (C.ImGuiBoxSelectState, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newBoxSelectStateFromC(cvalue *C.ImGuiBoxSelectState) *BoxSelectState {
+	return &BoxSelectState{CData: cvalue}
+}
+
 type ColorMod struct {
 	CData *C.ImGuiColorMod
 }
@@ -404,21 +421,21 @@ func newDataTypeInfoFromC(cvalue *C.ImGuiDataTypeInfo) *DataTypeInfo {
 	return &DataTypeInfo{CData: cvalue}
 }
 
-type DataTypeTempStorage struct {
-	CData *C.ImGuiDataTypeTempStorage
+type DataTypeStorage struct {
+	CData *C.ImGuiDataTypeStorage
 }
 
-func (self *DataTypeTempStorage) handle() (result *C.ImGuiDataTypeTempStorage, fin func()) {
+func (self *DataTypeStorage) handle() (result *C.ImGuiDataTypeStorage, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DataTypeTempStorage) c() (C.ImGuiDataTypeTempStorage, func()) {
+func (self DataTypeStorage) c() (C.ImGuiDataTypeStorage, func()) {
 	result, fn := self.handle()
 	return *result, fn
 }
 
-func newDataTypeTempStorageFromC(cvalue *C.ImGuiDataTypeTempStorage) *DataTypeTempStorage {
-	return &DataTypeTempStorage{CData: cvalue}
+func newDataTypeStorageFromC(cvalue *C.ImGuiDataTypeStorage) *DataTypeStorage {
+	return &DataTypeStorage{CData: cvalue}
 }
 
 type DataVarInfo struct {
@@ -1016,6 +1033,57 @@ func newMetricsConfigFromC(cvalue *C.ImGuiMetricsConfig) *MetricsConfig {
 	return &MetricsConfig{CData: cvalue}
 }
 
+type MultiSelectIO struct {
+	CData *C.ImGuiMultiSelectIO
+}
+
+func (self *MultiSelectIO) handle() (result *C.ImGuiMultiSelectIO, fin func()) {
+	return self.CData, func() {}
+}
+
+func (self MultiSelectIO) c() (C.ImGuiMultiSelectIO, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newMultiSelectIOFromC(cvalue *C.ImGuiMultiSelectIO) *MultiSelectIO {
+	return &MultiSelectIO{CData: cvalue}
+}
+
+type MultiSelectState struct {
+	CData *C.ImGuiMultiSelectState
+}
+
+func (self *MultiSelectState) handle() (result *C.ImGuiMultiSelectState, fin func()) {
+	return self.CData, func() {}
+}
+
+func (self MultiSelectState) c() (C.ImGuiMultiSelectState, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newMultiSelectStateFromC(cvalue *C.ImGuiMultiSelectState) *MultiSelectState {
+	return &MultiSelectState{CData: cvalue}
+}
+
+type MultiSelectTempData struct {
+	CData *C.ImGuiMultiSelectTempData
+}
+
+func (self *MultiSelectTempData) handle() (result *C.ImGuiMultiSelectTempData, fin func()) {
+	return self.CData, func() {}
+}
+
+func (self MultiSelectTempData) c() (C.ImGuiMultiSelectTempData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newMultiSelectTempDataFromC(cvalue *C.ImGuiMultiSelectTempData) *MultiSelectTempData {
+	return &MultiSelectTempData{CData: cvalue}
+}
+
 type NavItemData struct {
 	CData *C.ImGuiNavItemData
 }
@@ -1031,23 +1099,6 @@ func (self NavItemData) c() (C.ImGuiNavItemData, func()) {
 
 func newNavItemDataFromC(cvalue *C.ImGuiNavItemData) *NavItemData {
 	return &NavItemData{CData: cvalue}
-}
-
-type NavTreeNodeData struct {
-	CData *C.ImGuiNavTreeNodeData
-}
-
-func (self *NavTreeNodeData) handle() (result *C.ImGuiNavTreeNodeData, fin func()) {
-	return self.CData, func() {}
-}
-
-func (self NavTreeNodeData) c() (C.ImGuiNavTreeNodeData, func()) {
-	result, fn := self.handle()
-	return *result, fn
-}
-
-func newNavTreeNodeDataFromC(cvalue *C.ImGuiNavTreeNodeData) *NavTreeNodeData {
-	return &NavTreeNodeData{CData: cvalue}
 }
 
 type NextItemData struct {
@@ -1235,6 +1286,57 @@ func (self PtrOrIndex) c() (C.ImGuiPtrOrIndex, func()) {
 
 func newPtrOrIndexFromC(cvalue *C.ImGuiPtrOrIndex) *PtrOrIndex {
 	return &PtrOrIndex{CData: cvalue}
+}
+
+type SelectionBasicStorage struct {
+	CData *C.ImGuiSelectionBasicStorage
+}
+
+func (self *SelectionBasicStorage) handle() (result *C.ImGuiSelectionBasicStorage, fin func()) {
+	return self.CData, func() {}
+}
+
+func (self SelectionBasicStorage) c() (C.ImGuiSelectionBasicStorage, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newSelectionBasicStorageFromC(cvalue *C.ImGuiSelectionBasicStorage) *SelectionBasicStorage {
+	return &SelectionBasicStorage{CData: cvalue}
+}
+
+type SelectionExternalStorage struct {
+	CData *C.ImGuiSelectionExternalStorage
+}
+
+func (self *SelectionExternalStorage) handle() (result *C.ImGuiSelectionExternalStorage, fin func()) {
+	return self.CData, func() {}
+}
+
+func (self SelectionExternalStorage) c() (C.ImGuiSelectionExternalStorage, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newSelectionExternalStorageFromC(cvalue *C.ImGuiSelectionExternalStorage) *SelectionExternalStorage {
+	return &SelectionExternalStorage{CData: cvalue}
+}
+
+type SelectionRequest struct {
+	CData *C.ImGuiSelectionRequest
+}
+
+func (self *SelectionRequest) handle() (result *C.ImGuiSelectionRequest, fin func()) {
+	return self.CData, func() {}
+}
+
+func (self SelectionRequest) c() (C.ImGuiSelectionRequest, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newSelectionRequestFromC(cvalue *C.ImGuiSelectionRequest) *SelectionRequest {
+	return &SelectionRequest{CData: cvalue}
 }
 
 type SettingsHandler struct {
@@ -1537,6 +1639,23 @@ func newTableDrawChannelIdxFromC(cvalue *C.ImGuiTableDrawChannelIdx) *TableDrawC
 	return (*TableDrawChannelIdx)((*uint16)(cvalue))
 }
 
+type TableHeaderData struct {
+	CData *C.ImGuiTableHeaderData
+}
+
+func (self *TableHeaderData) handle() (result *C.ImGuiTableHeaderData, fin func()) {
+	return self.CData, func() {}
+}
+
+func (self TableHeaderData) c() (C.ImGuiTableHeaderData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTableHeaderDataFromC(cvalue *C.ImGuiTableHeaderData) *TableHeaderData {
+	return &TableHeaderData{CData: cvalue}
+}
+
 type TableInstanceData struct {
 	CData *C.ImGuiTableInstanceData
 }
@@ -1671,6 +1790,23 @@ func (self TextRange) c() (C.ImGuiTextRange, func()) {
 
 func newTextRangeFromC(cvalue *C.ImGuiTextRange) *TextRange {
 	return &TextRange{CData: cvalue}
+}
+
+type TreeNodeStackData struct {
+	CData *C.ImGuiTreeNodeStackData
+}
+
+func (self *TreeNodeStackData) handle() (result *C.ImGuiTreeNodeStackData, fin func()) {
+	return self.CData, func() {}
+}
+
+func (self TreeNodeStackData) c() (C.ImGuiTreeNodeStackData, func()) {
+	result, fn := self.handle()
+	return *result, fn
+}
+
+func newTreeNodeStackDataFromC(cvalue *C.ImGuiTreeNodeStackData) *TreeNodeStackData {
+	return &TreeNodeStackData{CData: cvalue}
 }
 
 type TypingSelectRequest struct {
@@ -1917,62 +2053,6 @@ func (self *STBTexteditState) handle() (result *C.STB_TexteditState, fin func())
 	return self.CData, func() {}
 }
 
-func (self STBTexteditState) c() (C.STB_TexteditState, func()) {
-	result, fn := self.handle()
-	return *result, fn
-}
-
 func newSTBTexteditStateFromC(cvalue *C.STB_TexteditState) *STBTexteditState {
 	return &STBTexteditState{CData: cvalue}
-}
-
-type StbTexteditRow struct {
-	CData *C.StbTexteditRow
-}
-
-func (self *StbTexteditRow) handle() (result *C.StbTexteditRow, fin func()) {
-	return self.CData, func() {}
-}
-
-func (self StbTexteditRow) c() (C.StbTexteditRow, func()) {
-	result, fn := self.handle()
-	return *result, fn
-}
-
-func newStbTexteditRowFromC(cvalue *C.StbTexteditRow) *StbTexteditRow {
-	return &StbTexteditRow{CData: cvalue}
-}
-
-type StbUndoRecord struct {
-	CData *C.StbUndoRecord
-}
-
-func (self *StbUndoRecord) handle() (result *C.StbUndoRecord, fin func()) {
-	return self.CData, func() {}
-}
-
-func (self StbUndoRecord) c() (C.StbUndoRecord, func()) {
-	result, fn := self.handle()
-	return *result, fn
-}
-
-func newStbUndoRecordFromC(cvalue *C.StbUndoRecord) *StbUndoRecord {
-	return &StbUndoRecord{CData: cvalue}
-}
-
-type StbUndoState struct {
-	CData *C.StbUndoState
-}
-
-func (self *StbUndoState) handle() (result *C.StbUndoState, fin func()) {
-	return self.CData, func() {}
-}
-
-func (self StbUndoState) c() (C.StbUndoState, func()) {
-	result, fn := self.handle()
-	return *result, fn
-}
-
-func newStbUndoStateFromC(cvalue *C.StbUndoState) *StbUndoState {
-	return &StbUndoState{CData: cvalue}
 }

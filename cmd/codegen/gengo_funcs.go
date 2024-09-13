@@ -35,7 +35,8 @@ const (
 // generateGoFuncs generates given list of functions and writes them to file
 func generateGoFuncs(
 	validFuncs []FuncDef,
-	context *Context) error {
+	context *Context,
+) error {
 	generator := &goFuncsGenerator{
 		prefix:      context.prefix,
 		structNames: context.typedefsNames,
@@ -177,25 +178,25 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 			return false
 		}
 
-		receiver = funcParts[0].renameGoIdentifier()
+		receiver = funcParts[0].renameGoIdentifier(g.context)
 	case returnTypeKnown:
 		shouldDefer = true
 		cReturnType = f.Ret
-		returnType = f.Ret.renameGoIdentifier()
+		returnType = f.Ret.renameGoIdentifier(g.context)
 	case returnTypeStructPtr:
 		// return Im struct ptr
 		shouldDefer = true
 		cReturnType = TrimPrefix(f.Ret, "const ")
-		returnType = cReturnType.renameGoIdentifier()
+		returnType = cReturnType.renameGoIdentifier(g.context)
 	case returnTypeStruct:
 		shouldDefer = true
 		cReturnType = f.Ret
-		returnType = cReturnType.renameGoIdentifier()
+		returnType = cReturnType.renameGoIdentifier(g.context)
 	case returnTypeConstructor:
 		shouldDefer = true
 		parts := Split(f.FuncName, "_")
 		cReturnType = parts[0] + "*"
-		returnType = cReturnType.renameGoIdentifier()
+		returnType = cReturnType.renameGoIdentifier(g.context)
 
 		suffix := ""
 		if len(parts) > 2 {
@@ -277,7 +278,6 @@ result := C.%s(%s)
 // it takes function name, list of arguments and return type and returns go statement.
 // e.g.: func (self *ImGuiType) FuncName(arg1 type1, arg2 type2) returnType {
 func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver GoIdentifier, funcName CIdentifier, args []GoIdentifier, returnType GoIdentifier, f FuncDef) (functionDeclaration string) {
-
 	funcParts := Split(funcName, "_")
 	typeName := funcParts[0]
 
@@ -295,7 +295,7 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver GoIdentifier, fu
 		receiver = GoIdentifier(fmt.Sprintf("(self %s)", receiver))
 	}
 
-	goFuncName := funcName.renameGoIdentifier()
+	goFuncName := funcName.renameFunc(g.context)
 
 	// if file comes from imgui_internal.h,prefix Internal is added.
 	// ref: https://github.com/AllenDang/cimgui-go/pull/118
@@ -426,9 +426,9 @@ func (g *goFuncsGenerator) writeFinishers(shouldDefer bool, finishers []string) 
 }
 
 // isEnum returns true when given string is a valid enum type.
-func isEnum(argType CIdentifier, enumNames map[GoIdentifier]bool) bool {
+func isEnum(argType CIdentifier, enumNames map[GoIdentifier]bool, ctx *Context) bool {
 	for en := range enumNames {
-		if argType.renameEnum() == en {
+		if argType.renameEnum(ctx) == en {
 			return true
 		}
 	}

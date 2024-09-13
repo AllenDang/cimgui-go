@@ -11,7 +11,9 @@
 //  [X] Platform: Gamepad support. Enabled with 'io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad'.
 //  [X] Platform: IME support.
 //  [x] Platform: Multi-viewport / platform windows.
-//  - [ ] Window size not correctly reported when enabling io.ConfigViewportsNoDecoration
+// Issues:
+//  [ ] Platform: Multi-viewport: Window size not correctly reported when enabling io.ConfigViewportsNoDecoration
+//  [ ] Platform: Multi-viewport: ParentViewportID not honored, and so io.ConfigViewportsNoDefaultParent has no effect (minor).
 
 // You can use unmodified imgui_impl_* files in your project. See examples/ folder for examples of using this.
 // Prefer including the entire imgui/ repository into your project (either as a copy or as a submodule), and only build the backends you need.
@@ -29,6 +31,7 @@
 @class NSEvent;
 @class NSView;
 
+// Follow "Getting Started" link and check examples/ folder to learn about using backends!
 IMGUI_IMPL_API bool     ImGui_ImplOSX_Init(NSView* _Nonnull view);
 IMGUI_IMPL_API void     ImGui_ImplOSX_Shutdown();
 IMGUI_IMPL_API void     ImGui_ImplOSX_NewFrame(NSView* _Nullable view);
@@ -43,6 +46,7 @@ IMGUI_IMPL_API void     ImGui_ImplOSX_NewFrame(NSView* _Nullable view);
 // #include <AppKit/AppKit.hpp>
 #ifndef __OBJC__
 
+// Follow "Getting Started" link and check examples/ folder to learn about using backends!
 IMGUI_IMPL_API bool     ImGui_ImplOSX_Init(void* _Nonnull view);
 IMGUI_IMPL_API void     ImGui_ImplOSX_Shutdown();
 IMGUI_IMPL_API void     ImGui_ImplOSX_NewFrame(void* _Nullable view);

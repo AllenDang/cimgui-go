@@ -72,7 +72,7 @@ func (c CIdentifier) trimImGuiPrefix() CIdentifier {
 	return c
 }
 
-func (c CIdentifier) renameGoIdentifier() GoIdentifier {
+func (c CIdentifier) renameGoIdentifier(ctx *Context) GoIdentifier {
 	if r, ok := replace[c]; ok {
 		c = CIdentifier(r)
 	}
@@ -92,15 +92,32 @@ func (c CIdentifier) renameGoIdentifier() GoIdentifier {
 	}
 
 	c = TrimPrefix(c, "Get")
+
+	c = TrimPrefix(c, "Get")
 	if c != "_" {
 		c = ReplaceAll(c, "_", "")
 	}
 
+	c = CIdentifier(ctx.codePrefix) + c
+
 	return GoIdentifier(c)
 }
 
-func (c CIdentifier) renameEnum() GoIdentifier {
-	return TrimSuffix(c, "_").renameGoIdentifier()
+func (c CIdentifier) renameEnum(ctx *Context) GoIdentifier {
+	return TrimSuffix(c, "_").renameGoIdentifier(ctx)
+}
+
+func (c CIdentifier) renameFunc(ctx *Context) GoIdentifier {
+	renamedFuncs := map[GoIdentifier]GoIdentifier{
+		"GizmoStyle": "GizmoGetStyle", // ImGuizmo has Style struct overload
+	}
+
+	g := c.renameGoIdentifier(ctx)
+	if r, ok := renamedFuncs[g]; ok {
+		g = r
+	}
+
+	return g
 }
 
 // returns true if s is of form TypeName<*> <(>Name<*><)>(args)

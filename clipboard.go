@@ -6,6 +6,7 @@ package imgui
 // extern char* get_clipboard_callback(void* user_data);
 // extern void set_clipboard_callback(void* user_data, char *text);
 import "C"
+
 import (
 	"runtime/cgo"
 	"unsafe"
@@ -54,12 +55,12 @@ type ClipboardHandler interface {
 	SetClipboard(s string)
 }
 
-func (io IO) SetClipboardHandler(handler ClipboardHandler) {
+func (io PlatformIO) SetClipboardHandler(handler ClipboardHandler) {
 	rawIO, rawIOFin := io.handle()
 	defer rawIOFin()
 
-	rawIO.GetClipboardTextFn = (C.get_clipboard_cb)(C.get_clipboard_callback)
-	rawIO.SetClipboardTextFn = (C.set_clipboard_cb)(C.set_clipboard_callback)
+	rawIO.Platform_GetClipboardTextFn = (C.get_clipboard_cb)(C.get_clipboard_callback)
+	rawIO.Platform_SetClipboardTextFn = (C.set_clipboard_cb)(C.set_clipboard_callback)
 
 	/*
 		TODO: Turns out the ClipboardUserData isn't guaranteed to be nil for a fresh IO struct,
@@ -78,5 +79,5 @@ func (io IO) SetClipboardHandler(handler ClipboardHandler) {
 	}
 
 	userData := cgo.NewHandle(helper)
-	rawIO.ClipboardUserData = unsafe.Pointer(userData)
+	rawIO.Platform_ClipboardUserData = unsafe.Pointer(userData)
 }

@@ -1,0 +1,243 @@
+{
+  "enums": {
+    "COLOR": [
+      {
+        "calc_value": 0,
+        "name": "DIRECTION_X",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "DIRECTION_Y",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "DIRECTION_Z",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "PLANE_X",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "name": "PLANE_Y",
+        "value": "4"
+      },
+      {
+        "calc_value": 5,
+        "name": "PLANE_Z",
+        "value": "5"
+      },
+      {
+        "calc_value": 6,
+        "name": "SELECTION",
+        "value": "6"
+      },
+      {
+        "calc_value": 7,
+        "name": "INACTIVE",
+        "value": "7"
+      },
+      {
+        "calc_value": 8,
+        "name": "TRANSLATION_LINE",
+        "value": "8"
+      },
+      {
+        "calc_value": 9,
+        "name": "SCALE_LINE",
+        "value": "9"
+      },
+      {
+        "calc_value": 10,
+        "name": "ROTATION_USING_BORDER",
+        "value": "10"
+      },
+      {
+        "calc_value": 11,
+        "name": "ROTATION_USING_FILL",
+        "value": "11"
+      },
+      {
+        "calc_value": 12,
+        "name": "HATCHED_AXIS_LINES",
+        "value": "12"
+      },
+      {
+        "calc_value": 13,
+        "name": "TEXT",
+        "value": "13"
+      },
+      {
+        "calc_value": 14,
+        "name": "TEXT_SHADOW",
+        "value": "14"
+      },
+      {
+        "calc_value": 15,
+        "name": "COUNT",
+        "value": "15"
+      }
+    ],
+    "MODE": [
+      {
+        "calc_value": 0,
+        "name": "LOCAL",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "WORLD",
+        "value": "1"
+      }
+    ],
+    "OPERATION": [
+      {
+        "calc_value": 1,
+        "name": "TRANSLATE_X",
+        "value": "(1u << 0)"
+      },
+      {
+        "calc_value": 2,
+        "name": "TRANSLATE_Y",
+        "value": "(1u << 1)"
+      },
+      {
+        "calc_value": 4,
+        "name": "TRANSLATE_Z",
+        "value": "(1u << 2)"
+      },
+      {
+        "calc_value": 8,
+        "name": "ROTATE_X",
+        "value": "(1u << 3)"
+      },
+      {
+        "calc_value": 16,
+        "name": "ROTATE_Y",
+        "value": "(1u << 4)"
+      },
+      {
+        "calc_value": 32,
+        "name": "ROTATE_Z",
+        "value": "(1u << 5)"
+      },
+      {
+        "calc_value": 64,
+        "name": "ROTATE_SCREEN",
+        "value": "(1u << 6)"
+      },
+      {
+        "calc_value": 128,
+        "name": "SCALE_X",
+        "value": "(1u << 7)"
+      },
+      {
+        "calc_value": 256,
+        "name": "SCALE_Y",
+        "value": "(1u << 8)"
+      },
+      {
+        "calc_value": 512,
+        "name": "SCALE_Z",
+        "value": "(1u << 9)"
+      },
+      {
+        "calc_value": 1024,
+        "name": "BOUNDS",
+        "value": "(1u << 10)"
+      },
+      {
+        "calc_value": 2048,
+        "name": "SCALE_XU",
+        "value": "(1u << 11)"
+      },
+      {
+        "calc_value": 4096,
+        "name": "SCALE_YU",
+        "value": "(1u << 12)"
+      },
+      {
+        "calc_value": 8192,
+        "name": "SCALE_ZU",
+        "value": "(1u << 13)"
+      },
+      {
+        "calc_value": 7,
+        "name": "TRANSLATE",
+        "value": "TRANSLATE_X | TRANSLATE_Y | TRANSLATE_Z"
+      },
+      {
+        "calc_value": 120,
+        "name": "ROTATE",
+        "value": "ROTATE_X | ROTATE_Y | ROTATE_Z | ROTATE_SCREEN"
+      },
+      {
+        "calc_value": 896,
+        "name": "SCALE",
+        "value": "SCALE_X | SCALE_Y | SCALE_Z"
+      },
+      {
+        "calc_value": 14336,
+        "name": "SCALEU",
+        "value": "SCALE_XU | SCALE_YU | SCALE_ZU"
+      },
+      {
+        "calc_value": 14463,
+        "name": "UNIVERSAL",
+        "value": "TRANSLATE | ROTATE | SCALEU"
+      }
+    ]
+  },
+  "enumtypes": [],
+  "locations": {
+    "COLOR": "ImGuizmo:235",
+    "MODE": "ImGuizmo:202",
+    "OPERATION": "ImGuizmo:173",
+    "Style": "ImGuizmo:255"
+  },
+  "structs": {
+    "Style": [
+      {
+        "name": "TranslationLineThickness",
+        "type": "float"
+      },
+      {
+        "name": "TranslationLineArrowSize",
+        "type": "float"
+      },
+      {
+        "name": "RotationLineThickness",
+        "type": "float"
+      },
+      {
+        "name": "RotationOuterLineThickness",
+        "type": "float"
+      },
+      {
+        "name": "ScaleLineThickness",
+        "type": "float"
+      },
+      {
+        "name": "ScaleLineCircleSize",
+        "type": "float"
+      },
+      {
+        "name": "HatchedAxisLineThickness",
+        "type": "float"
+      },
+      {
+        "name": "CenterCircleSize",
+        "type": "float"
+      },
+      {
+        "name": "Colors[COUNT]",
+        "size": 15,
+        "type": "ImVec4"
+      }
+    ]
+  }
+}

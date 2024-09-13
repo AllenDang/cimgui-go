@@ -3,9 +3,10 @@ package main
 import "C"
 import (
 	"fmt"
-	"github.com/kpango/glg"
 	"os"
 	"strings"
+
+	"github.com/kpango/glg"
 )
 
 // this function will proceed the following typedefs:
@@ -14,7 +15,8 @@ import (
 func proceedTypedefs(
 	typedefs *Typedefs,
 	structs []StructDef,
-	data *Context) (validTypeNames []CIdentifier, err error) {
+	data *Context,
+) (validTypeNames []CIdentifier, err error) {
 	// quick counter for coverage control
 	generatedTypedefs := 0
 	maxTypedefs := len(typedefs.data)
@@ -87,7 +89,7 @@ extern "C" {
 			continue
 		}
 
-		if IsEnumName(k, data.enumNames) /*|| IsStructName(k, structs)*/ {
+		if IsEnumName(k, data.enumNames, data) /*|| IsStructName(k, structs)*/ {
 			glg.Infof("typedef %s has extended deffinition in structs_and_enums.json. Will generate later", k)
 			maxTypedefs--
 			continue
@@ -178,7 +180,7 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 	return &%[1]s{Data: (uintptr)(C.%[6]s_toUintptr(*cvalue))}
 }
 `,
-				k.renameGoIdentifier(),
+				k.renameGoIdentifier(data),
 				knownArgType.ArgType,
 
 				knownPtrArgType.ArgDef,
@@ -217,7 +219,7 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 	return (*%[1]s)(%[10]s)
 }
 `,
-				k.renameGoIdentifier(),
+				k.renameGoIdentifier(data),
 				knownArgType.ArgType,
 
 				knownPtrArgType.ArgDef,
@@ -259,7 +261,7 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 	return &%[1]s{Data: %[7]s}
 }
 `,
-				k.renameGoIdentifier(),
+				k.renameGoIdentifier(data),
 				knownArgType.ArgType,
 
 				knownArgType.ArgDef,
@@ -279,7 +281,7 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 		case HasPrefix(typedefs.data[k], "struct"):
 			isOpaque := !IsStructName(k, structsMap)
 			glg.Infof("typedef %s is a struct (is opaque? %v).", k, isOpaque)
-			writeOpaqueStruct(k, isOpaque, callbacksGoSb)
+			writeOpaqueStruct(k, isOpaque, callbacksGoSb, data)
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		}
@@ -307,7 +309,7 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 	return validTypeNames, nil
 }
 
-func writeOpaqueStruct(name CIdentifier, isOpaque bool, sb *strings.Builder) {
+func writeOpaqueStruct(name CIdentifier, isOpaque bool, sb *strings.Builder, ctx *Context) {
 	// this will be put only for structs that are NOT opaque (w can know the exact definition)
 	var toPlainValue string
 	if !isOpaque {
@@ -316,7 +318,7 @@ func (self %[1]s) c() (C.%[2]s, func()) {
 	result, fn := self.handle()
 	return *result, fn
 }
-`, name.renameGoIdentifier(), name)
+`, name.renameGoIdentifier(ctx), name)
 	}
 
 	// we need to make it a struct, because we need to hide C type (otherwise it will duplicate methods)
@@ -334,7 +336,7 @@ func (self *%[1]s) handle() (result *C.%[2]s, fin func()) {
 func new%[1]sFromC(cvalue *C.%[2]s) *%[1]s {
 	return &%[1]s{CData: cvalue}
 }
-`, name.renameGoIdentifier(), name, toPlainValue)
+`, name.renameGoIdentifier(ctx), name, toPlainValue)
 }
 
 func IsStructName[T any](name CIdentifier, structs map[CIdentifier]T) bool {
@@ -342,8 +344,8 @@ func IsStructName[T any](name CIdentifier, structs map[CIdentifier]T) bool {
 	return ok
 }
 
-func IsEnumName(name CIdentifier, enums map[GoIdentifier]bool) bool {
-	_, ok := enums[name.renameEnum()]
+func IsEnumName(name CIdentifier, enums map[GoIdentifier]bool, ctx *Context) bool {
+	_, ok := enums[name.renameEnum(ctx)]
 	return ok
 }
 

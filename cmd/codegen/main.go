@@ -15,7 +15,7 @@ const (
 )
 
 // this cextracts enums and structs names from json file.
-func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []GoIdentifier, structNames []CIdentifier, err error) {
+func getEnumAndStructNames(enumJsonBytes []byte, ctx *Context) (enumNames []GoIdentifier, structNames []CIdentifier, err error) {
 	enums, err := getEnumDefs(enumJsonBytes)
 	if err != nil {
 		return nil, nil, fmt.Errorf("cannot get enum definitions: %w", err)
@@ -27,7 +27,7 @@ func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []GoIdentifier, stru
 	}
 
 	for _, e := range enums {
-		enumNames = append(enumNames, e.Name.renameEnum())
+		enumNames = append(enumNames, e.Name.renameEnum(ctx))
 	}
 
 	for _, s := range structs {
@@ -110,7 +110,8 @@ type Context struct {
 	enums    []EnumDef
 	typedefs *Typedefs
 
-	prefix string
+	prefix     string
+	codePrefix string
 
 	funcNames map[CIdentifier]bool
 	enumNames map[GoIdentifier]bool
@@ -167,7 +168,7 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 		result.refTypedefs = RemoveMapValues(typedefs.data)
 	}
 
-	_, structs, err := getEnumAndStructNames(jsonData.structAndEnums)
+	_, structs, err := getEnumAndStructNames(jsonData.structAndEnums, result)
 	result.structNames = SliceToMap(structs)
 	if err != nil {
 		return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
@@ -176,7 +177,7 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 	result.refEnumNames = make(map[GoIdentifier]bool)
 	result.refStructNames = make(map[CIdentifier]bool)
 	if len(jsonData.refStructAndEnums) > 0 {
-		refEnums, refStructs, err := getEnumAndStructNames(jsonData.refStructAndEnums)
+		refEnums, refStructs, err := getEnumAndStructNames(jsonData.refStructAndEnums, result)
 		if err != nil {
 			return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
 		}
@@ -203,11 +204,12 @@ func main() {
 	}
 
 	context.prefix = flags.prefix
+	context.codePrefix = flags.codePrefix
 	context.flags = flags
 
 	// 1. Generate code
 	// 1.1. Generate Go Enums
-	enumNames := generateGoEnums(flags.prefix, context.enums)
+	enumNames := generateGoEnums(flags.prefix, context.enums, context)
 	context.enumNames = MergeMaps(SliceToMap(enumNames), context.refEnumNames)
 
 	// 1.2. Generate Go typedefs

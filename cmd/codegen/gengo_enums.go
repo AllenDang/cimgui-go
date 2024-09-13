@@ -7,7 +7,7 @@ import (
 )
 
 // Generate enums and return enum type names
-func generateGoEnums(prefix string, enums []EnumDef) []GoIdentifier {
+func generateGoEnums(prefix string, enums []EnumDef, ctx *Context) []GoIdentifier {
 	var sb strings.Builder
 
 	sb.WriteString(goPackageHeader)
@@ -15,7 +15,7 @@ func generateGoEnums(prefix string, enums []EnumDef) []GoIdentifier {
 	var enumNames []GoIdentifier
 	for _, e := range enums {
 		originalName := e.Name
-		eName := e.Name.renameEnum()
+		eName := e.Name.renameEnum(ctx)
 
 		enumNames = append(enumNames, eName)
 
@@ -29,7 +29,7 @@ func generateGoEnums(prefix string, enums []EnumDef) []GoIdentifier {
 			if v.Comment != "" {
 				sb.WriteString(fmt.Sprintf("%s\n", v.Comment))
 			}
-			sb.WriteString(fmt.Sprintf("\t%s %s = %d\n", vName.renameGoIdentifier(), eName, v.Value))
+			sb.WriteString(fmt.Sprintf("\t%s %s = %d\n", vName.renameGoIdentifier(ctx), eName, v.Value))
 		}
 
 		sb.WriteString(")\n\n")

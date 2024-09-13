@@ -65,6 +65,16 @@ endef
 cimmarkdown: setup
 	$(call cimmarkdown)
 
+define cimguizmo
+	$(call generate,cimguizmo,cimgui/cimguizmo.h,cimgui/cimguizmo_templates/definitions.json,cimgui/cimguizmo_templates/structs_and_enums.json, cimgui/cimguizmo_templates/typedefs_dict.json, -cp Gizmo)
+endef
+
+## cimgui: generate cimgui binding
+.PHONY: cimguizmo
+cimguizmo: setup
+	$(call cimguizmo)
+
+
 compile_cimgui_macos:
 	rm -rf ./lib/build
 	cd ./lib; cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=arm64
@@ -73,7 +83,7 @@ compile_cimgui_macos:
 
 ## generate: generates both bindings (equal to `all`)
 .PHONY: generate
-generate: cimgui cimplot cimnodes cimmarkdown
+generate: cimgui cimplot cimnodes cimmarkdown cimguizmo
 
 # update updates sub-repos (like cimplot or cimgui)
 # $1 - subrepo directory
@@ -117,6 +127,8 @@ update: setup
 	$(call cimnodes)
 	$(call update,cimmarkdown,https://github.com/gucio321/cimmarkdown,imgui_markdown,main)
 	$(call cimmarkdown)
+	$(call update,cimguizmo,https://github.com/cimgui/cimguizmo,ImGuizmo,master)
+	$(call cimguizmo)
 	echo -e "// +build rquired\n\npackage imgui\n\nimport (\n" > dummy.go
 	for i in `find cimgui -type f \( -name "*.h" -o -name "*.cpp" \) -exec dirname {} \; | sort -u`; do \
 		cp templates/dummy.go.template $$i/dummy.go; \

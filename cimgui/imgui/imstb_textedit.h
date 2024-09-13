@@ -3,6 +3,7 @@
 // Those changes would need to be pushed into nothings/stb:
 // - Fix in stb_textedit_discard_redo (see https://github.com/nothings/stb/issues/321)
 // - Fix in stb_textedit_find_charpos to handle last line (see https://github.com/ocornut/imgui/issues/6000 + #6783)
+// - Added name to struct or it may be forward declared in our code.
 // Grep for [DEAR IMGUI] to find the changes.
 // - Also renamed macros used or defined outside of IMSTB_TEXTEDIT_IMPLEMENTATION block from STB_TEXTEDIT_* to IMSTB_TEXTEDIT_*
 
@@ -41,7 +42,7 @@
 //   1.13 (2019-02-07) fix bug in undo size management
 //   1.12 (2018-01-29) user can change STB_TEXTEDIT_KEYTYPE, fix redo to avoid crash
 //   1.11 (2017-03-03) fix HOME on last line, dragging off single-line textfield
-//   1.10 (2016-10-25) supress warnings about casting away const with -Wcast-qual
+//   1.10 (2016-10-25) suppress warnings about casting away const with -Wcast-qual
 //   1.9  (2016-08-27) customizable move-by-word
 //   1.8  (2016-04-02) better keyboard handling when mouse button is down
 //   1.7  (2015-09-13) change y range handling in case baseline is non-0
@@ -318,7 +319,7 @@ typedef struct
    int undo_char_point, redo_char_point;
 } StbUndoState;
 
-typedef struct
+typedef struct STB_TexteditState
 {
    /////////////////////
    //

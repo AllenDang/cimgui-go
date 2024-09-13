@@ -14,6 +14,7 @@ type flags struct {
 	refEnumsJsonPath,
 	refTypedefsJsonPath,
 	prefix,
+	codePrefix,
 	include string
 }
 
@@ -29,6 +30,7 @@ func parse() *flags {
 	flag.StringVar(&flags.refTypedefsJsonPath, "rt", "", "reference typedefs_dict.json file path")
 	flag.StringVar(&flags.prefix, "p", "", "prefix for the generated file")
 	flag.StringVar(&flags.include, "i", "", "include header file")
+	flag.StringVar(&flags.codePrefix, "cp", "", "Add this to evereyhing what is generated")
 	flag.Parse()
 
 	return flags

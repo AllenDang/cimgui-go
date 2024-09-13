@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/kpango/glg"
 	"regexp"
 	"strconv"
+
+	"github.com/kpango/glg"
 )
 
 // Wrapper for return value
@@ -79,13 +80,13 @@ func getReturnWrapper(
 		return w, nil
 	case (context.structNames[t] || context.refStructNames[t]) && !shouldSkipStruct(t):
 		return returnWrapper{
-			returnType: t.renameGoIdentifier(),
-			returnStmt: fmt.Sprintf(`*new%sFromC(func() *C.%s {result := %%s; return &result}())`, t.renameGoIdentifier(), t),
+			returnType: t.renameGoIdentifier(context),
+			returnStmt: fmt.Sprintf(`*new%sFromC(func() *C.%s {result := %%s; return &result}())`, t.renameGoIdentifier(context), t),
 		}, nil
-	case isEnum(t, context.enumNames):
+	case isEnum(t, context.enumNames, context):
 		return returnWrapper{
-			returnType: t.renameEnum(),
-			returnStmt: fmt.Sprintf("%s(%%s)", t.renameEnum()),
+			returnType: t.renameEnum(context),
+			returnStmt: fmt.Sprintf("%s(%%s)", t.renameEnum(context)),
 		}, nil
 	case HasPrefix(t, "ImVector_") &&
 		!(HasSuffix(t, "*") || HasSuffix(t, "]")):
@@ -98,15 +99,15 @@ func getReturnWrapper(
 			returnType: GoIdentifier(fmt.Sprintf("Vector[%s]", rw.returnType)),
 			returnStmt: fmt.Sprintf("newVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
 		}, nil
-	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), context.enumNames):
+	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), context.enumNames, context):
 		return returnWrapper{
-			returnType: "*" + TrimSuffix(t, "*").renameEnum(),
-			returnStmt: fmt.Sprintf("(*%s)(%%s)", TrimSuffix(t, "*").renameEnum()),
+			returnType: "*" + TrimSuffix(t, "*").renameEnum(context),
+			returnStmt: fmt.Sprintf("(*%s)(%%s)", TrimSuffix(t, "*").renameEnum(context)),
 		}, nil
 	case HasSuffix(t, "*") && isStruct && !shouldSkipStruct(pureType):
 		return returnWrapper{
-			returnType: "*" + TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(),
-			returnStmt: fmt.Sprintf("new%sFromC(%%s)", TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier()),
+			returnType: "*" + TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(context),
+			returnStmt: fmt.Sprintf("new%sFromC(%%s)", TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(context)),
 		}, nil
 	case isArray:
 		typeCount := Split(t, "[")
