@@ -8,7 +8,7 @@ all: generate
 ## setup: prepare some dependencies
 .PHONY: setup
 setup:
-	go get mvdan.cc/gofumpt@latest
+	go install mvdan.cc/gofumpt@latest
 	cd cmd/codegen; \
 		go build -o ../../codegen .
 
