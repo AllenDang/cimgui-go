@@ -13,7 +13,7 @@ import (
 // make sure your types are identical C types before using it.
 // THIS IS HIGHLY UNSAFE AND NOT RECOMMENDED TO USE OUTSIDE CIMGUI.
 // It just forces pointer/type reinterpretation with unsafe.Pointer.
-func ConvertCTypes[SRC, RET any](src SRC) RET {
+func ConvertCTypes[RET, SRC any](src SRC) RET {
 	return *(*RET)(unsafe.Pointer(&src))
 }
 
