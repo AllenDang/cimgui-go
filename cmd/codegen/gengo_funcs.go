@@ -35,7 +35,8 @@ const (
 // generateGoFuncs generates given list of functions and writes them to file
 func generateGoFuncs(
 	validFuncs []FuncDef,
-	context *Context) error {
+	context *Context,
+) error {
 	generator := &goFuncsGenerator{
 		prefix:      context.prefix,
 		structNames: context.typedefsNames,
@@ -237,7 +238,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeStructSetter:
 		g.sb.WriteString(fmt.Sprintf(`
-selfArg, selfFin := self.handle()
+selfArg, selfFin := self.Handle()
 defer selfFin()
 C.%s(selfArg, %s)
 `, f.CWrapperFuncName, argInvokeStmt))
@@ -277,7 +278,6 @@ result := C.%s(%s)
 // it takes function name, list of arguments and return type and returns go statement.
 // e.g.: func (self *ImGuiType) FuncName(arg1 type1, arg2 type2) returnType {
 func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver GoIdentifier, funcName CIdentifier, args []GoIdentifier, returnType GoIdentifier, f FuncDef) (functionDeclaration string) {
-
 	funcParts := Split(funcName, "_")
 	typeName := funcParts[0]
 
