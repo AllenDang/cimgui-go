@@ -1,10 +1,10 @@
 package glfwbackend
 
-// #cgo amd64,linux LDFLAGS: ${SRCDIR}/../lib/linux/x64/libglfw3.a -ldl -lGL -lX11
-// #cgo amd64,windows LDFLAGS: -L${SRCDIR}/../lib/windows/x64 -l:libglfw3.a -lgdi32 -lopengl32 -limm32
+// #cgo amd64,linux LDFLAGS: ${SRCDIR}/../../lib/linux/x64/libglfw3.a -ldl -lGL -lX11
+// #cgo amd64,windows LDFLAGS: -L${SRCDIR}/../../lib/windows/x64 -l:libglfw3.a -lgdi32 -lopengl32 -limm32
 // #cgo darwin LDFLAGS: -framework Cocoa -framework IOKit -framework CoreVideo
-// #cgo amd64,darwin LDFLAGS: ${SRCDIR}/../lib/macos/x64/libglfw3.a
-// #cgo arm64,darwin LDFLAGS: ${SRCDIR}/../lib/macos/arm64/libglfw3.a
+// #cgo amd64,darwin LDFLAGS: ${SRCDIR}/../../lib/macos/x64/libglfw3.a
+// #cgo arm64,darwin LDFLAGS: ${SRCDIR}/../../lib/macos/arm64/libglfw3.a
 // #cgo !gles2,darwin LDFLAGS: -framework OpenGL
 // #cgo gles2,darwin LDFLAGS: -lGLESv2
 // #cgo CPPFLAGS: -DCIMGUI_GO_USE_GLFW
@@ -19,6 +19,7 @@ import (
 	"unsafe"
 
 	imgui "github.com/AllenDang/cimgui-go"
+	"github.com/AllenDang/cimgui-go/backend"
 )
 
 type voidCallbackFunc func()
@@ -192,7 +193,7 @@ const (
 	GLFWModNumLock  = GLFWModifierKey(C.GLFWModNumLock)
 )
 
-var _ imgui.Backend[GLFWWindowFlags] = &GLFWBackend{}
+var _ backend.Backend[GLFWWindowFlags] = &GLFWBackend{}
 
 type GLFWBackend struct {
 	afterCreateContext   voidCallbackFunc
@@ -200,10 +201,10 @@ type GLFWBackend struct {
 	beforeRender         voidCallbackFunc
 	afterRender          voidCallbackFunc
 	beforeDestoryContext voidCallbackFunc
-	dropCB               imgui.DropCallback
+	dropCB               backend.DropCallback
 	closeCB              func(pointer unsafe.Pointer)
-	keyCb                imgui.KeyCallback
-	sizeCb               imgui.SizeChangeCallback
+	keyCb                backend.KeyCallback
+	sizeCb               backend.SizeChangeCallback
 	window               uintptr
 }
 
@@ -259,14 +260,14 @@ func (b *GLFWBackend) SetBgColor(color imgui.Vec4) {
 
 func (b *GLFWBackend) Run(loop func()) {
 	b.loop = loop
-	C.igGLFWRunLoop(b.handle(), C.VoidCallback(imgui.LoopCallback()), C.VoidCallback(imgui.BeforeRender()), C.VoidCallback(imgui.AfterRender()), C.VoidCallback(imgui.BeforeDestroyContext()))
+	C.igGLFWRunLoop(b.handle(), C.VoidCallback(backend.LoopCallback()), C.VoidCallback(backend.BeforeRender()), C.VoidCallback(backend.AfterRender()), C.VoidCallback(backend.BeforeDestroyContext()))
 }
 
 func (b *GLFWBackend) LoopFunc() func() {
 	return b.loop
 }
 
-func (b *GLFWBackend) DropCallback() imgui.DropCallback {
+func (b *GLFWBackend) DropCallback() backend.DropCallback {
 	return b.dropCB
 }
 
@@ -344,7 +345,7 @@ func (b *GLFWBackend) CreateWindow(title string, width, height int) {
 		(*C.char)(titleArg),
 		C.int(width),
 		C.int(height),
-		C.VoidCallback(imgui.AfterCreateContext()),
+		C.VoidCallback(backend.AfterCreateContext()),
 	)))
 	if b.window == 0 {
 		panic("Failed to create GLFW window")
@@ -375,12 +376,12 @@ func (b *GLFWBackend) DeleteTexture(id imgui.TextureID) {
 
 // SetDropCallback sets the drop callback which is called when an object
 // is dropped over the window.
-func (b *GLFWBackend) SetDropCallback(cbfun imgui.DropCallback) {
+func (b *GLFWBackend) SetDropCallback(cbfun backend.DropCallback) {
 	b.dropCB = cbfun
 	C.igGLFWWindow_SetDropCallbackCB(b.handle())
 }
 
-func (b *GLFWBackend) SetCloseCallback(cbfun imgui.WindowCloseCallback[GLFWWindowFlags]) {
+func (b *GLFWBackend) SetCloseCallback(cbfun backend.WindowCloseCallback[GLFWWindowFlags]) {
 	b.closeCB = func(_ unsafe.Pointer) {
 		cbfun(b)
 	}
@@ -442,7 +443,7 @@ func (b *GLFWBackend) SetIcons(images ...image.Image) {
 	}
 }
 
-func (b *GLFWBackend) SetKeyCallback(cbfun imgui.KeyCallback) {
+func (b *GLFWBackend) SetKeyCallback(cbfun backend.KeyCallback) {
 	b.keyCb = func(k, s, a, m int) {
 		C.iggImplGlfw_KeyCallback(b.handle(), C.int(k), C.int(s), C.int(a), C.int(m))
 		cbfun(k, s, a, m)
@@ -450,16 +451,16 @@ func (b *GLFWBackend) SetKeyCallback(cbfun imgui.KeyCallback) {
 	C.igGLFWWindow_SetKeyCallback(b.handle())
 }
 
-func (b *GLFWBackend) KeyCallback() imgui.KeyCallback {
+func (b *GLFWBackend) KeyCallback() backend.KeyCallback {
 	return b.keyCb
 }
 
-func (b *GLFWBackend) SetSizeChangeCallback(cbfun imgui.SizeChangeCallback) {
+func (b *GLFWBackend) SetSizeChangeCallback(cbfun backend.SizeChangeCallback) {
 	b.sizeCb = cbfun
 	C.igGLFWWindow_SetSizeCallback(b.handle())
 }
 
-func (b *GLFWBackend) SizeCallback() imgui.SizeChangeCallback {
+func (b *GLFWBackend) SizeCallback() backend.SizeChangeCallback {
 	return b.sizeCb
 }
 

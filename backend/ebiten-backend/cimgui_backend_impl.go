@@ -5,6 +5,7 @@ import (
 	"unsafe"
 
 	imgui "github.com/AllenDang/cimgui-go"
+	"github.com/AllenDang/cimgui-go/backend"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -88,16 +89,16 @@ func (e *EbitenBackend) SetTargetFPS(fps uint) {
 }
 
 // TODO: Not implemented
-func (b *EbitenBackend) SetDropCallback(imgui.DropCallback) {
+func (b *EbitenBackend) SetDropCallback(backend.DropCallback) {
 	panic("SetDropCallback is not implemented for Ebiten backend yet.")
 }
 
-func (b *EbitenBackend) SetCloseCallback(cb imgui.WindowCloseCallback[EbitenBackendFlags]) {
+func (b *EbitenBackend) SetCloseCallback(cb backend.WindowCloseCallback[EbitenBackendFlags]) {
 	b.closeCb = cb
 }
 
-func (b *EbitenBackend) SetKeyCallback(imgui.KeyCallback)               {} // TODO
-func (b *EbitenBackend) SetSizeChangeCallback(imgui.SizeChangeCallback) {} // TODO
+func (b *EbitenBackend) SetKeyCallback(backend.KeyCallback)               {} // TODO
+func (b *EbitenBackend) SetSizeChangeCallback(backend.SizeChangeCallback) {} // TODO
 
 func (b *EbitenBackend) SetWindowFlags(flag EbitenBackendFlags, value int) {
 	switch flag {

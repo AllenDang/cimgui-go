@@ -1,4 +1,4 @@
-package sdlbackend
+package backend
 
 // #cgo CPPFLAGS: -DCIMGUI_DEFINE_ENUMS_AND_STRUCTS
 // #cgo CXXFLAGS: --std=c++11

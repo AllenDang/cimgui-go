@@ -6,7 +6,7 @@ import (
 	"unsafe"
 
 	imgui "github.com/AllenDang/cimgui-go"
-	"github.com/AllenDang/cimgui-go/ebiten-backend/internal/native"
+	"github.com/AllenDang/cimgui-go/backend/ebiten-backend/internal/native"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 

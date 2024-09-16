@@ -8,7 +8,8 @@ import (
 	"runtime"
 
 	imgui "github.com/AllenDang/cimgui-go"
-	"github.com/AllenDang/cimgui-go/sdlbackend"
+	"github.com/AllenDang/cimgui-go/backend"
+	"github.com/AllenDang/cimgui-go/backend/sdlbackend"
 )
 
 var (
@@ -24,9 +25,9 @@ var (
 	a              float32
 	color4         [4]float32 = [4]float32{r, g, b, a}
 	selected       bool
-	backend        imgui.Backend[sdlbackend.SDLWindowFlags]
+	currentBackend backend.Backend[sdlbackend.SDLWindowFlags]
 	img            *image.RGBA
-	texture        *imgui.Texture
+	texture        *backend.Texture
 	barValues      []int64
 )
 
@@ -43,7 +44,7 @@ func showWidgetsDemo() {
 	imgui.SetNextWindowSizeV(imgui.NewVec2(300, 300), imgui.CondOnce)
 	imgui.Begin("Window 1")
 	if imgui.ButtonV("Click Me", imgui.NewVec2(80, 20)) {
-		w, h := backend.DisplaySize()
+		w, h := currentBackend.DisplaySize()
 		fmt.Println(w, h)
 	}
 	imgui.TextUnformatted("Unformatted text")
@@ -99,7 +100,7 @@ func showImPlotDemo() {
 }
 
 func afterCreateContext() {
-	texture = imgui.NewTextureFromRgba(img)
+	texture = backend.NewTextureFromRgba(img)
 	imgui.PlotCreateContext()
 }
 
@@ -119,7 +120,7 @@ func init() {
 
 func main() {
 	var err error
-	img, err = imgui.LoadImage("../assets/test.jpeg")
+	img, err = backend.LoadImage("../assets/test.jpeg")
 	if err != nil {
 		panic("Failed to load test.jpeg")
 	}
@@ -128,23 +129,23 @@ func main() {
 		barValues = append(barValues, int64(i+1))
 	}
 
-	backend, _ = imgui.CreateBackend(sdlbackend.NewSDLBackend())
-	backend.SetAfterCreateContextHook(afterCreateContext)
-	backend.SetBeforeDestroyContextHook(beforeDestroyContext)
+	currentBackend, _ = backend.CreateBackend(sdlbackend.NewSDLBackend())
+	currentBackend.SetAfterCreateContextHook(afterCreateContext)
+	currentBackend.SetBeforeDestroyContextHook(beforeDestroyContext)
 
-	backend.SetBgColor(imgui.NewVec4(0.45, 0.55, 0.6, 1.0))
+	currentBackend.SetBgColor(imgui.NewVec4(0.45, 0.55, 0.6, 1.0))
 
-	backend.CreateWindow("Hello from cimgui-go", 1200, 900)
+	currentBackend.CreateWindow("Hello from cimgui-go", 1200, 900)
 
-	backend.SetDropCallback(func(p []string) {
+	currentBackend.SetDropCallback(func(p []string) {
 		fmt.Printf("drop triggered: %v", p)
 	})
 
-	backend.SetCloseCallback(func(b imgui.Backend[sdlbackend.SDLWindowFlags]) {
+	currentBackend.SetCloseCallback(func(b backend.Backend[sdlbackend.SDLWindowFlags]) {
 		fmt.Println("window is closing")
 	})
 
-	backend.SetIcons(img)
+	currentBackend.SetIcons(img)
 
-	backend.Run(loop)
+	currentBackend.Run(loop)
 }

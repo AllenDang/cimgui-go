@@ -6,7 +6,8 @@ import (
 	"runtime"
 
 	imgui "github.com/AllenDang/cimgui-go"
-	ebitenbackend "github.com/AllenDang/cimgui-go/ebiten-backend"
+	"github.com/AllenDang/cimgui-go/backend"
+	ebitenbackend "github.com/AllenDang/cimgui-go/backend/ebiten-backend"
 )
 
 var (
@@ -22,9 +23,9 @@ var (
 	a              float32
 	color4         [4]float32 = [4]float32{r, g, b, a}
 	selected       bool
-	backend        imgui.Backend[ebitenbackend.EbitenBackendFlags]
+	currentBackend backend.Backend[ebitenbackend.EbitenBackendFlags]
 	img            *image.RGBA
-	texture        *imgui.Texture
+	texture        *backend.Texture
 	barValues      []int64
 )
 
@@ -41,7 +42,7 @@ func showWidgetsDemo() {
 	imgui.SetNextWindowSizeV(imgui.NewVec2(300, 300), imgui.CondOnce)
 	imgui.Begin("Window 1")
 	if imgui.ButtonV("Click Me", imgui.NewVec2(80, 20)) {
-		w, h := backend.DisplaySize()
+		w, h := currentBackend.DisplaySize()
 		fmt.Println(w, h)
 	}
 	imgui.TextUnformatted("Unformatted text")
@@ -97,7 +98,7 @@ func showImPlotDemo() {
 }
 
 func afterCreateContext() {
-	texture = imgui.NewTextureFromRgba(img)
+	texture = backend.NewTextureFromRgba(img)
 	imgui.PlotCreateContext()
 }
 
@@ -117,7 +118,7 @@ func init() {
 
 func main() {
 	var err error
-	img, err = imgui.LoadImage("../assets/test.jpeg")
+	img, err = backend.LoadImage("../assets/test.jpeg")
 	if err != nil {
 		panic("Failed to load test.jpeg")
 	}
@@ -126,13 +127,13 @@ func main() {
 		barValues = append(barValues, int64(i+1))
 	}
 
-	backend, _ = imgui.CreateBackend(ebitenbackend.NewEbitenBackend())
-	backend.SetAfterCreateContextHook(afterCreateContext)
-	backend.SetBeforeDestroyContextHook(beforeDestroyContext)
+	currentBackend, _ = backend.CreateBackend(ebitenbackend.NewEbitenBackend())
+	currentBackend.SetAfterCreateContextHook(afterCreateContext)
+	currentBackend.SetBeforeDestroyContextHook(beforeDestroyContext)
 
-	backend.SetBgColor(imgui.NewVec4(0.45, 0.55, 0.6, 1.0))
+	currentBackend.SetBgColor(imgui.NewVec4(0.45, 0.55, 0.6, 1.0))
 
-	backend.CreateWindow("Hello from cimgui-go", 1200, 900)
+	currentBackend.CreateWindow("Hello from cimgui-go", 1200, 900)
 
 	// TODO: not implemented
 	/*
@@ -141,11 +142,11 @@ func main() {
 		})
 	*/
 
-	backend.SetCloseCallback(func(b imgui.Backend[ebitenbackend.EbitenBackendFlags]) {
+	currentBackend.SetCloseCallback(func(b backend.Backend[ebitenbackend.EbitenBackendFlags]) {
 		fmt.Println("window is closing")
 	})
 
-	backend.SetIcons(img)
+	currentBackend.SetIcons(img)
 
-	backend.Run(loop)
+	currentBackend.Run(loop)
 }

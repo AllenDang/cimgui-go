@@ -12,21 +12,21 @@
 // - Introduction, links and more at the top of imgui.cpp
 
 #include "sdl_backend.h"
-#include "../cimgui/cimgui.h"
-#include "../cimgui/cimgui_impl.h"
+#include "../../cimgui/cimgui.h"
+#include "../../cimgui/cimgui_impl.h"
 
 #include <cstdlib>
 #include <stdio.h>
-#include "../thirdparty/SDL/include/SDL.h"
+#include "../../thirdparty/SDL/include/SDL.h"
 #if defined(IMGUI_IMPL_OPENGL_ES2)
-#include "../thirdparty/SDL/include/SDL_opengles2.h"
+#include "../../thirdparty/SDL/include/SDL_opengles2.h"
 #else
-#include "../thirdparty/SDL/include/SDL_opengl.h"
+#include "../../thirdparty/SDL/include/SDL_opengl.h"
 #endif
 
 // This example can also compile and run with Emscripten! See 'Makefile.emscripten' for details.
 #ifdef __EMSCRIPTEN__
-#include "../libs/emscripten/emscripten_mainloop_stub.h"
+#include "../../libs/emscripten/emscripten_mainloop_stub.h"
 #endif
 
 ImVec4 sdl_clear_color = *ImVec4_ImVec4_Float(0.45, 0.55, 0.6, 1.0);

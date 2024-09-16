@@ -1,10 +1,10 @@
 package sdlbackend
 
-// #cgo amd64,linux LDFLAGS: ${SRCDIR}/../lib/linux/x64/libSDL2.a -ldl -lGL -lX11
-// #cgo amd64,windows LDFLAGS: -L${SRCDIR}/../lib/windows/x64 -l:libSDL2.a -lgdi32 -lopengl32 -limm32         -mwindows  -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion -luuid
+// #cgo amd64,linux LDFLAGS: ${SRCDIR}/../../lib/linux/x64/libSDL2.a -ldl -lGL -lX11
+// #cgo amd64,windows LDFLAGS: -L${SRCDIR}/../../lib/windows/x64 -l:libSDL2.a -lgdi32 -lopengl32 -limm32         -mwindows  -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion -luuid
 // #cgo darwin LDFLAGS: -framework Cocoa -framework IOKit -framework CoreVideo
-// #cgo amd64,darwin LDFLAGS: ${SRCDIR}/../lib/macos/x64/libSDL2.a
-// #cgo arm64,darwin LDFLAGS: ${SRCDIR}/../lib/macos/arm64/libSDL2.a
+// #cgo amd64,darwin LDFLAGS: ${SRCDIR}/../../lib/macos/x64/libSDL2.a
+// #cgo arm64,darwin LDFLAGS: ${SRCDIR}/../../lib/macos/arm64/libSDL2.a
 // #cgo !gles2,darwin LDFLAGS: -framework OpenGL
 // #cgo gles2,darwin LDFLAGS: -lGLESv2
 // #cgo CPPFLAGS: -DCIMGUI_GO_USE_SDL2
@@ -20,6 +20,7 @@ import (
 	"unsafe"
 
 	imgui "github.com/AllenDang/cimgui-go"
+	"github.com/AllenDang/cimgui-go/backend"
 )
 
 type voidCallbackFunc func()
@@ -213,7 +214,7 @@ const (
 )
 */
 
-var _ imgui.Backend[SDLWindowFlags] = &SDLBackend{}
+var _ backend.Backend[SDLWindowFlags] = &SDLBackend{}
 
 type SDLBackend struct {
 	afterCreateContext   voidCallbackFunc
@@ -221,10 +222,10 @@ type SDLBackend struct {
 	beforeRender         voidCallbackFunc
 	afterRender          voidCallbackFunc
 	beforeDestoryContext voidCallbackFunc
-	dropCB               imgui.DropCallback
+	dropCB               backend.DropCallback
 	closeCB              func(pointer unsafe.Pointer)
-	keyCb                imgui.KeyCallback
-	sizeCb               imgui.SizeChangeCallback
+	keyCb                backend.KeyCallback
+	sizeCb               backend.SizeChangeCallback
 	window               uintptr
 }
 
@@ -286,14 +287,14 @@ func (b *SDLBackend) SetBgColor(color imgui.Vec4) {
 
 func (b *SDLBackend) Run(loop func()) {
 	b.loop = loop
-	C.igSDLRunLoop(b.handle(), C.VoidCallback(imgui.LoopCallback()), C.VoidCallback(imgui.BeforeRender()), C.VoidCallback(imgui.AfterRender()), C.VoidCallback(imgui.BeforeDestroyContext()))
+	C.igSDLRunLoop(b.handle(), C.VoidCallback(backend.LoopCallback()), C.VoidCallback(backend.BeforeRender()), C.VoidCallback(backend.AfterRender()), C.VoidCallback(backend.BeforeDestroyContext()))
 }
 
 func (b *SDLBackend) LoopFunc() func() {
 	return b.loop
 }
 
-func (b *SDLBackend) DropCallback() imgui.DropCallback {
+func (b *SDLBackend) DropCallback() backend.DropCallback {
 	return b.dropCB
 }
 
@@ -372,7 +373,7 @@ func (b *SDLBackend) CreateWindow(title string, width, height int) {
 		(*C.char)(titleArg),
 		C.int(width),
 		C.int(height),
-		C.VoidCallback(imgui.AfterCreateContext()),
+		C.VoidCallback(backend.AfterCreateContext()),
 	)))
 	if b.window == 0 {
 		panic("Failed to create SDL window")
@@ -403,13 +404,13 @@ func (b *SDLBackend) DeleteTexture(id imgui.TextureID) {
 
 // SetDropCallback sets the drop callback which is called when an object
 // is dropped over the window.
-func (b *SDLBackend) SetDropCallback(cbfun imgui.DropCallback) {
+func (b *SDLBackend) SetDropCallback(cbfun backend.DropCallback) {
 	b.dropCB = cbfun
 	// TODO: not implemented
 	// C.igSDLWindow_SetDropCallbackCB(b.handle())
 }
 
-func (b *SDLBackend) SetCloseCallback(cbfun imgui.WindowCloseCallback[SDLWindowFlags]) {
+func (b *SDLBackend) SetCloseCallback(cbfun backend.WindowCloseCallback[SDLWindowFlags]) {
 	b.closeCB = func(_ unsafe.Pointer) {
 		cbfun(b)
 	}
@@ -477,23 +478,23 @@ func (b *SDLBackend) SetIcons(images ...image.Image) {
 	}
 }
 
-func (b *SDLBackend) SetKeyCallback(cbfun imgui.KeyCallback) {
+func (b *SDLBackend) SetKeyCallback(cbfun backend.KeyCallback) {
 	b.keyCb = cbfun
 	// TODO: not implemented
 	// C.igSDLWindow_SetKeyCallback(b.handle())
 }
 
-func (b *SDLBackend) KeyCallback() imgui.KeyCallback {
+func (b *SDLBackend) KeyCallback() backend.KeyCallback {
 	return b.keyCb
 }
 
-func (b *SDLBackend) SetSizeChangeCallback(cbfun imgui.SizeChangeCallback) {
+func (b *SDLBackend) SetSizeChangeCallback(cbfun backend.SizeChangeCallback) {
 	b.sizeCb = cbfun
 	// TODO: notttt pimlemented
 	// C.igSDLWindow_SetSizeCallback(b.handle())
 }
 
-func (b *SDLBackend) SizeCallback() imgui.SizeChangeCallback {
+func (b *SDLBackend) SizeCallback() backend.SizeChangeCallback {
 	return b.sizeCb
 }
 
