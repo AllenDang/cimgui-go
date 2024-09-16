@@ -3,7 +3,7 @@
 
 
 #include "cimgui_typedefs.h"
-#include "cimgui/cimgui.h"
+#include "cwrappers/cimgui.h"
 
 uintptr_t ImTextureID_toUintptr(ImTextureID ptr) {
 	return (uintptr_t)ptr;
