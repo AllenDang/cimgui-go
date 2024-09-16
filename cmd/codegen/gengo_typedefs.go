@@ -46,7 +46,7 @@ import "unsafe"
 		`
 #pragma once
 
-#include "cimgui/%s.h"
+#include "cwrappers/%s.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -57,7 +57,7 @@ extern "C" {
 	fmt.Fprintf(typedefsCppSb,
 		`
 #include "%[1]s_typedefs.h"
-#include "cimgui/%[1]s.h"
+#include "cwrappers/%[1]s.h"
 `, data.prefix)
 
 	// because go ranges through maps as if it was drunken, we need to sort keys.
