@@ -62,6 +62,11 @@ func (i Vec4) toC() C.ImVec4 {
 	return C.ImVec4{x: C.float(i.X), y: C.float(i.Y), z: C.float(i.Z), w: C.float(i.W)}
 }
 
+// TODO: remove this
+func (i Vec4) ToC() C.ImVec4 {
+	return i.toC()
+}
+
 var _ wrappableType[C.ImColor, *Color] = &Color{}
 
 type Color struct {

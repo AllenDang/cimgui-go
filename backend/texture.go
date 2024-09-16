@@ -1,4 +1,4 @@
-package imgui
+package backend
 
 import (
 	"fmt"
@@ -9,10 +9,12 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+
+	imgui "github.com/AllenDang/cimgui-go"
 )
 
 type Texture struct {
-	ID     TextureID
+	ID     imgui.TextureID
 	Width  int
 	Height int
 }

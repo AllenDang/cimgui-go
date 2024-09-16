@@ -4,14 +4,15 @@ import (
 	"runtime"
 
 	imgui "github.com/AllenDang/cimgui-go"
+	"github.com/AllenDang/cimgui-go/backend"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type getCursorFn func() (x, y float32)
 
 var (
-	_ imgui.Backend[EbitenBackendFlags] = &EbitenBackend{}
-	_ ebiten.Game                       = &EbitenBackend{}
+	_ backend.Backend[EbitenBackendFlags] = &EbitenBackend{}
+	_ ebiten.Game                         = &EbitenBackend{}
 )
 
 // EbitenBackend implements imgui.Backend and ebiten.Game.
@@ -26,7 +27,7 @@ type EbitenBackend struct {
 	afterRender,
 	beforeDestroy,
 	loop func()
-	closeCb imgui.WindowCloseCallback[EbitenBackendFlags]
+	closeCb backend.WindowCloseCallback[EbitenBackendFlags]
 
 	// ebiten stuff
 	filter                      ebiten.Filter

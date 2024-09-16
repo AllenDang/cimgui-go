@@ -1,4 +1,4 @@
-package imgui
+package backend
 
 // extern void loopCallback();
 // extern void beforeRender();
@@ -8,9 +8,9 @@ package imgui
 // extern void dropCallback(void*, int, char**);
 // extern void keyCallback(void*, int, int, int, int);
 // extern void sizeCallback(void*, int, int);
-// #include "extra_types.h"
-// #include "cimgui_wrapper.h"
-// #include "cimgui_typedefs.h"
+// #include "../extra_types.h"
+// #include "../cimgui_wrapper.h"
+// #include "../cimgui_typedefs.h"
 import "C"
 
 import (
@@ -18,6 +18,8 @@ import (
 	"fmt"
 	"image"
 	"unsafe"
+
+	imgui "github.com/AllenDang/cimgui-go"
 )
 
 type voidCallbackFunc func()
@@ -143,7 +145,7 @@ type Backend[BackendFlagsT ~int] interface {
 	SetBeforeRenderHook(func())
 	SetAfterRenderHook(func())
 
-	SetBgColor(color Vec4)
+	SetBgColor(color imgui.Vec4)
 	Run(func())
 	Refresh()
 
@@ -180,9 +182,9 @@ type Backend[BackendFlagsT ~int] interface {
 // Why I separate it? Current impl of local texture.go needs to store this somewhere, and I don't want
 // to make Texture relate on BackendFlagsT.
 type TextureManager interface {
-	CreateTexture(pixels unsafe.Pointer, width, Height int) TextureID
-	CreateTextureRgba(img *image.RGBA, width, height int) TextureID
-	DeleteTexture(id TextureID)
+	CreateTexture(pixels unsafe.Pointer, width, Height int) imgui.TextureID
+	CreateTextureRgba(img *image.RGBA, width, height int) imgui.TextureID
+	DeleteTexture(id imgui.TextureID)
 }
 
 type backendCExpose interface {
@@ -227,10 +229,4 @@ func CreateBackend[BackendFlagsT ~int](backend Backend[BackendFlagsT]) (sameBack
 
 	textureManager = backend
 	return backend, err
-}
-
-// Export some methods that are necessary for externally packaged backends
-
-func (i Vec4) ToC() C.ImVec4 {
-	return i.toC()
 }
