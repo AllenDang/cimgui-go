@@ -3,9 +3,10 @@ package main
 import "C"
 import (
 	"fmt"
-	"github.com/kpango/glg"
 	"os"
 	"strings"
+
+	"github.com/kpango/glg"
 )
 
 // this function will proceed the following typedefs:
@@ -14,7 +15,8 @@ import (
 func proceedTypedefs(
 	typedefs *Typedefs,
 	structs []StructDef,
-	data *Context) (validTypeNames []CIdentifier, err error) {
+	data *Context,
+) (validTypeNames []CIdentifier, err error) {
 	// quick counter for coverage control
 	generatedTypedefs := 0
 	maxTypedefs := len(typedefs.data)
@@ -111,8 +113,8 @@ extern "C" {
 		// Let's say our pureType is of form short
 		// the following code needs to handle two things:
 		// - int16 -> short (to know go type AND know how to proceed in c() func)
-		// - *int16 -> short* (for handle())
-		// - short* -> *int16 (for newXXXFromC)
+		// - *int16 -> short* (for Handle())
+		// - short* -> *int16 (for NewXXXFromC)
 		knownReturnType, returnTypeErr = getReturnWrapper(
 			CIdentifier(typedef),
 			data, // TODO: this might be empty
@@ -159,23 +161,27 @@ uintptr_t %[1]s_toUintptr(%[1]s ptr) {
 extern %[1]s %[1]s_fromUintptr(uintptr_t ptr);`, k)
 
 			// NOTE: in case of problems e.g. with Textures, here might be potential issue:
-			// handle() is incomplete - it doesn't have right finalizer (for now I think this will not affect code)
+			// Handle() is incomplete - it doesn't have right finalizer (for now I think this will not affect code)
 			fmt.Fprintf(callbacksGoSb, `
 type %[1]s struct {
 	Data uintptr
 }
 
-func (self *%[1]s) handle() (result *C.%[6]s, fin func()) {
-	r, f := self.c()
+// Handle returns C version of %[1]s and its finalizer func.
+func (self *%[1]s) Handle() (result *C.%[6]s, fin func()) {
+	r, f := self.C()
     return &r, f
 }
 
-func (self %[1]s) c() (C.%[6]s, func()) {
+// C is like Handle but returns plain type instead of pointer.
+func (self %[1]s) C() (C.%[6]s, func()) {
     return (C.%[6]s)(C.%[6]s_fromUintptr(C.uintptr_t(self.Data))), func() { }
 }
 
-func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
-	return &%[1]s{Data: (uintptr)(C.%[6]s_toUintptr(*cvalue))}
+// New%[1]sFromC creates %[1]s from its C pointer.
+// SRC ~= *C.%[6]s
+func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
+	return &%[1]s{Data: (uintptr)(C.%[6]s_toUintptr(*ConvertCTypes[*C.%[6]s](cvalue)))}
 }
 `,
 				k.renameGoIdentifier(),
@@ -202,18 +208,22 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 			fmt.Fprintf(callbacksGoSb, `
 type %[1]s %[2]s
 
-func (selfSrc *%[1]s) handle() (result *C.%[6]s, fin func()) {
+// Handle returns C version of %[1]s and its finalizer func.
+func (selfSrc *%[1]s) Handle() (result *C.%[6]s, fin func()) {
 	self := (*%[2]s)(selfSrc)
     %[3]s
     return (*C.%[6]s)(%[4]s), func() { %[5]s }
 }
 
-func (self %[1]s) c() (C.%[6]s, func()) {
+// C is like Handle but returns plain type instead of pointer.
+func (self %[1]s) C() (C.%[6]s, func()) {
     %[7]s
     return (C.%[6]s)(%[8]s), func() { %[9]s }
 }
 
-func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
+// New%[1]sFromC creates %[1]s from its C pointer.
+// SRC ~= *C.%[6]s
+func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 	return (*%[1]s)(%[10]s)
 }
 `,
@@ -230,32 +240,36 @@ func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 				knownArgType.VarName,
 				knownArgType.Finalizer,
 
-				fmt.Sprintf(knownPtrReturnType.returnStmt, "cvalue"),
+				fmt.Sprintf(knownPtrReturnType.returnStmt, fmt.Sprintf("ConvertCTypes[*C.%s](cvalue)", k)),
 			)
 
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		case returnTypeErr == nil && argTypeErr == nil && isPtr:
-			// if it's a pointer type, I think we can proceed as above, but without handle() method...
+			// if it's a pointer type, I think we can proceed as above, but without Handle() method...
 			// (handle proceeds pointer values and we don't want double pointers, really)
 			fmt.Fprintf(callbacksGoSb, `
 type %[1]s  struct {
 	Data %[2]s
 }
 
-func (self *%[1]s) handle() (*C.%[6]s, func()) {
-	result, fn := self.c()
+// Handle returns C version of %[1]s and its finalizer func.
+func (self *%[1]s) Handle() (*C.%[6]s, func()) {
+	result, fn := self.C()
 	return &result, fn
 }
 
-func (selfStruct *%[1]s) c() (result C.%[6]s, fin func()) {
+// C is like Handle but returns plain type instead of pointer.
+func (selfStruct *%[1]s) C() (result C.%[6]s, fin func()) {
 	self := selfStruct.Data
     %[3]s
     return (C.%[6]s)(%[4]s), func() { %[5]s }
 }
 
-func new%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
-	v := (%[8]s)(*cvalue)
+// New%[1]sFromC creates %[1]s from its C pointer.
+// SRC ~= *C.%[6]s
+func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
+	v := (%[8]s)(*ConvertCTypes[*C.%[6]s](cvalue))
 	return &%[1]s{Data: %[7]s}
 }
 `,
@@ -312,8 +326,9 @@ func writeOpaqueStruct(name CIdentifier, isOpaque bool, sb *strings.Builder) {
 	var toPlainValue string
 	if !isOpaque {
 		toPlainValue = fmt.Sprintf(`
-func (self %[1]s) c() (C.%[2]s, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self %[1]s) C() (C.%[2]s, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 `, name.renameGoIdentifier(), name)
@@ -325,14 +340,17 @@ type %[1]s struct {
 	CData *C.%[2]s
 }
 
-func (self *%[1]s) handle() (result *C.%[2]s, fin func()) {
+// Handle returns C version of %[1]s and its finalizer func.
+func (self *%[1]s) Handle() (result *C.%[2]s, fin func()) {
 	return self.CData, func() {}
 }
 
 %[3]s
 
-func new%[1]sFromC(cvalue *C.%[2]s) *%[1]s {
-	return &%[1]s{CData: cvalue}
+// New%[1]sFromC creates %[1]s from its C pointer.
+// SRC ~= *C.%[2]s
+func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
+	return &%[1]s{CData: ConvertCTypes[*C.%[2]s](cvalue)}
 }
 `, name.renameGoIdentifier(), name, toPlainValue)
 }

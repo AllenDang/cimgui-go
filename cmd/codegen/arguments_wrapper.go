@@ -129,8 +129,8 @@ func getArgWrapper(
 	if isGetter {
 		argDeclaration = fmt.Sprintf("%s %s", a.Name, a.Type.renameGoIdentifier())
 		data = ArgumentWrapperData{
-			ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.handle()", a.Name),
-			ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := %[1]s.handle()", a.Name),
+			ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.Handle()", a.Name),
+			ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := %[1]s.Handle()", a.Name),
 			VarName:     fmt.Sprintf("%sArg", a.Name),
 			Finalizer:   fmt.Sprintf("%sFin()", a.Name),
 			NoFin:       a.RemoveFinalizer,
@@ -276,9 +276,9 @@ for i, %[1]sV := range %[1]sArg {
 		if isPointer {
 			w.ArgType = "*" + w.ArgType
 			w.CType = GoIdentifier(fmt.Sprintf("*C.%s", pureType))
-			fn = "handle"
+			fn = "Handle"
 		} else {
-			fn = "c"
+			fn = "C"
 		}
 
 		w.ArgDef = fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.%[2]s()", a.Name, fn)

@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/kpango/glg"
 	"regexp"
 	"strconv"
+
+	"github.com/kpango/glg"
 )
 
 // Wrapper for return value
@@ -80,7 +81,7 @@ func getReturnWrapper(
 	case (context.structNames[t] || context.refStructNames[t]) && !shouldSkipStruct(t):
 		return returnWrapper{
 			returnType: t.renameGoIdentifier(),
-			returnStmt: fmt.Sprintf(`*new%sFromC(func() *C.%s {result := %%s; return &result}())`, t.renameGoIdentifier(), t),
+			returnStmt: fmt.Sprintf(`*New%sFromC(func() *C.%s {result := %%s; return &result}())`, t.renameGoIdentifier(), t),
 		}, nil
 	case isEnum(t, context.enumNames):
 		return returnWrapper{
@@ -96,7 +97,7 @@ func getReturnWrapper(
 		}
 		return returnWrapper{
 			returnType: GoIdentifier(fmt.Sprintf("Vector[%s]", rw.returnType)),
-			returnStmt: fmt.Sprintf("newVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
+			returnStmt: fmt.Sprintf("NewVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
 		}, nil
 	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), context.enumNames):
 		return returnWrapper{
@@ -106,7 +107,7 @@ func getReturnWrapper(
 	case HasSuffix(t, "*") && isStruct && !shouldSkipStruct(pureType):
 		return returnWrapper{
 			returnType: "*" + TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(),
-			returnStmt: fmt.Sprintf("new%sFromC(%%s)", TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier()),
+			returnStmt: fmt.Sprintf("New%sFromC(%%s)", TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier()),
 		}, nil
 	case isArray:
 		typeCount := Split(t, "[")

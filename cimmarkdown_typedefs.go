@@ -14,185 +14,229 @@ type Emphasis struct {
 	CData *C.Emphasis
 }
 
-func (self *Emphasis) handle() (result *C.Emphasis, fin func()) {
+// Handle returns C version of Emphasis and its finalizer func.
+func (self *Emphasis) Handle() (result *C.Emphasis, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self Emphasis) c() (C.Emphasis, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self Emphasis) C() (C.Emphasis, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newEmphasisFromC(cvalue *C.Emphasis) *Emphasis {
-	return &Emphasis{CData: cvalue}
+// NewEmphasisFromC creates Emphasis from its C pointer.
+// SRC ~= *C.Emphasis
+func NewEmphasisFromC[SRC any](cvalue SRC) *Emphasis {
+	return &Emphasis{CData: ConvertCTypes[*C.Emphasis](cvalue)}
 }
 
 type Line struct {
 	CData *C.Line
 }
 
-func (self *Line) handle() (result *C.Line, fin func()) {
+// Handle returns C version of Line and its finalizer func.
+func (self *Line) Handle() (result *C.Line, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self Line) c() (C.Line, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self Line) C() (C.Line, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newLineFromC(cvalue *C.Line) *Line {
-	return &Line{CData: cvalue}
+// NewLineFromC creates Line from its C pointer.
+// SRC ~= *C.Line
+func NewLineFromC[SRC any](cvalue SRC) *Line {
+	return &Line{CData: ConvertCTypes[*C.Line](cvalue)}
 }
 
 type Link struct {
 	CData *C.Link
 }
 
-func (self *Link) handle() (result *C.Link, fin func()) {
+// Handle returns C version of Link and its finalizer func.
+func (self *Link) Handle() (result *C.Link, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self Link) c() (C.Link, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self Link) C() (C.Link, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newLinkFromC(cvalue *C.Link) *Link {
-	return &Link{CData: cvalue}
+// NewLinkFromC creates Link from its C pointer.
+// SRC ~= *C.Link
+func NewLinkFromC[SRC any](cvalue SRC) *Link {
+	return &Link{CData: ConvertCTypes[*C.Link](cvalue)}
 }
 
 type MarkdownConfig struct {
 	CData *C.MarkdownConfig
 }
 
-func (self *MarkdownConfig) handle() (result *C.MarkdownConfig, fin func()) {
+// Handle returns C version of MarkdownConfig and its finalizer func.
+func (self *MarkdownConfig) Handle() (result *C.MarkdownConfig, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self MarkdownConfig) c() (C.MarkdownConfig, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self MarkdownConfig) C() (C.MarkdownConfig, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newMarkdownConfigFromC(cvalue *C.MarkdownConfig) *MarkdownConfig {
-	return &MarkdownConfig{CData: cvalue}
+// NewMarkdownConfigFromC creates MarkdownConfig from its C pointer.
+// SRC ~= *C.MarkdownConfig
+func NewMarkdownConfigFromC[SRC any](cvalue SRC) *MarkdownConfig {
+	return &MarkdownConfig{CData: ConvertCTypes[*C.MarkdownConfig](cvalue)}
 }
 
 type MarkdownFormatInfo struct {
 	CData *C.MarkdownFormatInfo
 }
 
-func (self *MarkdownFormatInfo) handle() (result *C.MarkdownFormatInfo, fin func()) {
+// Handle returns C version of MarkdownFormatInfo and its finalizer func.
+func (self *MarkdownFormatInfo) Handle() (result *C.MarkdownFormatInfo, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self MarkdownFormatInfo) c() (C.MarkdownFormatInfo, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self MarkdownFormatInfo) C() (C.MarkdownFormatInfo, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newMarkdownFormatInfoFromC(cvalue *C.MarkdownFormatInfo) *MarkdownFormatInfo {
-	return &MarkdownFormatInfo{CData: cvalue}
+// NewMarkdownFormatInfoFromC creates MarkdownFormatInfo from its C pointer.
+// SRC ~= *C.MarkdownFormatInfo
+func NewMarkdownFormatInfoFromC[SRC any](cvalue SRC) *MarkdownFormatInfo {
+	return &MarkdownFormatInfo{CData: ConvertCTypes[*C.MarkdownFormatInfo](cvalue)}
 }
 
 type MarkdownHeadingFormat struct {
 	CData *C.MarkdownHeadingFormat
 }
 
-func (self *MarkdownHeadingFormat) handle() (result *C.MarkdownHeadingFormat, fin func()) {
+// Handle returns C version of MarkdownHeadingFormat and its finalizer func.
+func (self *MarkdownHeadingFormat) Handle() (result *C.MarkdownHeadingFormat, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self MarkdownHeadingFormat) c() (C.MarkdownHeadingFormat, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self MarkdownHeadingFormat) C() (C.MarkdownHeadingFormat, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newMarkdownHeadingFormatFromC(cvalue *C.MarkdownHeadingFormat) *MarkdownHeadingFormat {
-	return &MarkdownHeadingFormat{CData: cvalue}
+// NewMarkdownHeadingFormatFromC creates MarkdownHeadingFormat from its C pointer.
+// SRC ~= *C.MarkdownHeadingFormat
+func NewMarkdownHeadingFormatFromC[SRC any](cvalue SRC) *MarkdownHeadingFormat {
+	return &MarkdownHeadingFormat{CData: ConvertCTypes[*C.MarkdownHeadingFormat](cvalue)}
 }
 
 type MarkdownImageData struct {
 	CData *C.MarkdownImageData
 }
 
-func (self *MarkdownImageData) handle() (result *C.MarkdownImageData, fin func()) {
+// Handle returns C version of MarkdownImageData and its finalizer func.
+func (self *MarkdownImageData) Handle() (result *C.MarkdownImageData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self MarkdownImageData) c() (C.MarkdownImageData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self MarkdownImageData) C() (C.MarkdownImageData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newMarkdownImageDataFromC(cvalue *C.MarkdownImageData) *MarkdownImageData {
-	return &MarkdownImageData{CData: cvalue}
+// NewMarkdownImageDataFromC creates MarkdownImageData from its C pointer.
+// SRC ~= *C.MarkdownImageData
+func NewMarkdownImageDataFromC[SRC any](cvalue SRC) *MarkdownImageData {
+	return &MarkdownImageData{CData: ConvertCTypes[*C.MarkdownImageData](cvalue)}
 }
 
 type MarkdownLinkCallbackData struct {
 	CData *C.MarkdownLinkCallbackData
 }
 
-func (self *MarkdownLinkCallbackData) handle() (result *C.MarkdownLinkCallbackData, fin func()) {
+// Handle returns C version of MarkdownLinkCallbackData and its finalizer func.
+func (self *MarkdownLinkCallbackData) Handle() (result *C.MarkdownLinkCallbackData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self MarkdownLinkCallbackData) c() (C.MarkdownLinkCallbackData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self MarkdownLinkCallbackData) C() (C.MarkdownLinkCallbackData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newMarkdownLinkCallbackDataFromC(cvalue *C.MarkdownLinkCallbackData) *MarkdownLinkCallbackData {
-	return &MarkdownLinkCallbackData{CData: cvalue}
+// NewMarkdownLinkCallbackDataFromC creates MarkdownLinkCallbackData from its C pointer.
+// SRC ~= *C.MarkdownLinkCallbackData
+func NewMarkdownLinkCallbackDataFromC[SRC any](cvalue SRC) *MarkdownLinkCallbackData {
+	return &MarkdownLinkCallbackData{CData: ConvertCTypes[*C.MarkdownLinkCallbackData](cvalue)}
 }
 
 type MarkdownTooltipCallbackData struct {
 	CData *C.MarkdownTooltipCallbackData
 }
 
-func (self *MarkdownTooltipCallbackData) handle() (result *C.MarkdownTooltipCallbackData, fin func()) {
+// Handle returns C version of MarkdownTooltipCallbackData and its finalizer func.
+func (self *MarkdownTooltipCallbackData) Handle() (result *C.MarkdownTooltipCallbackData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self MarkdownTooltipCallbackData) c() (C.MarkdownTooltipCallbackData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self MarkdownTooltipCallbackData) C() (C.MarkdownTooltipCallbackData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newMarkdownTooltipCallbackDataFromC(cvalue *C.MarkdownTooltipCallbackData) *MarkdownTooltipCallbackData {
-	return &MarkdownTooltipCallbackData{CData: cvalue}
+// NewMarkdownTooltipCallbackDataFromC creates MarkdownTooltipCallbackData from its C pointer.
+// SRC ~= *C.MarkdownTooltipCallbackData
+func NewMarkdownTooltipCallbackDataFromC[SRC any](cvalue SRC) *MarkdownTooltipCallbackData {
+	return &MarkdownTooltipCallbackData{CData: ConvertCTypes[*C.MarkdownTooltipCallbackData](cvalue)}
 }
 
 type TextBlock struct {
 	CData *C.TextBlock
 }
 
-func (self *TextBlock) handle() (result *C.TextBlock, fin func()) {
+// Handle returns C version of TextBlock and its finalizer func.
+func (self *TextBlock) Handle() (result *C.TextBlock, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TextBlock) c() (C.TextBlock, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TextBlock) C() (C.TextBlock, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTextBlockFromC(cvalue *C.TextBlock) *TextBlock {
-	return &TextBlock{CData: cvalue}
+// NewTextBlockFromC creates TextBlock from its C pointer.
+// SRC ~= *C.TextBlock
+func NewTextBlockFromC[SRC any](cvalue SRC) *TextBlock {
+	return &TextBlock{CData: ConvertCTypes[*C.TextBlock](cvalue)}
 }
 
 type TextRegion struct {
 	CData *C.TextRegion
 }
 
-func (self *TextRegion) handle() (result *C.TextRegion, fin func()) {
+// Handle returns C version of TextRegion and its finalizer func.
+func (self *TextRegion) Handle() (result *C.TextRegion, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TextRegion) c() (C.TextRegion, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TextRegion) C() (C.TextRegion, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTextRegionFromC(cvalue *C.TextRegion) *TextRegion {
-	return &TextRegion{CData: cvalue}
+// NewTextRegionFromC creates TextRegion from its C pointer.
+// SRC ~= *C.TextRegion
+func NewTextRegionFromC[SRC any](cvalue SRC) *TextRegion {
+	return &TextRegion{CData: ConvertCTypes[*C.TextRegion](cvalue)}
 }

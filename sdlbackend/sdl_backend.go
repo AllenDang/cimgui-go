@@ -389,12 +389,12 @@ func (b *SDLBackend) Refresh() {
 
 func (b *SDLBackend) CreateTexture(pixels unsafe.Pointer, width, height int) imgui.TextureID {
 	tex := C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height))
-	return *imgui.NewTextureIDFromC((*imgui.CImTextureID)(&tex))
+	return *imgui.NewTextureIDFromC(&tex)
 }
 
 func (b *SDLBackend) CreateTextureRgba(img *image.RGBA, width, height int) imgui.TextureID {
 	tex := C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height))
-	return *imgui.NewTextureIDFromC((*imgui.CImTextureID)(&tex))
+	return *imgui.NewTextureIDFromC(&tex)
 }
 
 func (b *SDLBackend) DeleteTexture(id imgui.TextureID) {

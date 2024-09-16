@@ -6,6 +6,7 @@ package imgui
 // extern char* get_clipboard_callback(void* user_data);
 // extern void set_clipboard_callback(void* user_data, char *text);
 import "C"
+
 import (
 	"runtime/cgo"
 	"unsafe"
@@ -55,7 +56,7 @@ type ClipboardHandler interface {
 }
 
 func (io IO) SetClipboardHandler(handler ClipboardHandler) {
-	rawIO, rawIOFin := io.handle()
+	rawIO, rawIOFin := io.Handle()
 	defer rawIOFin()
 
 	rawIO.GetClipboardTextFn = (C.get_clipboard_cb)(C.get_clipboard_callback)
