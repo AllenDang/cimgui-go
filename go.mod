@@ -6,7 +6,7 @@ toolchain go1.23.1
 
 require (
 	github.com/gabstv/cimgui-go v0.0.0-20231031221758-68bd718f94cc
-	github.com/hajimehoshi/ebiten/v2 v2.7.8
+	github.com/hajimehoshi/ebiten/v2 v2.7.10
 )
 
 require (
