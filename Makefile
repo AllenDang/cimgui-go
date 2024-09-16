@@ -30,7 +30,7 @@ define generate
 endef
 
 define cimgui
-	$(call generate,cimgui,cimgui/cimgui.h,cimgui/cimgui_templates/definitions.json,cimgui/cimgui_templates/structs_and_enums.json, cimgui/cimgui_templates/typedefs_dict.json)
+	$(call generate,cimgui,cwrappers/cimgui.h,cwrappers/cimgui_templates/definitions.json,cwrappers/cimgui_templates/structs_and_enums.json, cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
 ## cimgui: generate cimgui binding
@@ -39,7 +39,7 @@ cimgui: setup
 	$(call cimgui)
 
 define cimplot
-	$(call generate,cimplot,cimgui/cimplot.h,cimgui/cimplot_templates/definitions.json,cimgui/cimplot_templates/structs_and_enums.json,cimgui/cimplot_templates/typedefs_dict.json,-r cimgui/cimgui_templates/structs_and_enums.json -rt cimgui/cimgui_templates/typedefs_dict.json)
+	$(call generate,cimplot,cwrappers/cimplot.h,cwrappers/cimplot_templates/definitions.json,cwrappers/cimplot_templates/structs_and_enums.json,cwrappers/cimplot_templates/typedefs_dict.json,-r cwrappers/cimgui_templates/structs_and_enums.json -rt cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
 ## cimplot: generate implot binding
@@ -48,7 +48,7 @@ cimplot: setup
 	$(call cimplot)
 
 define cimnodes
-	$(call generate,cimnodes,cimgui/cimnodes.h,cimgui/cimnodes_templates/definitions.json,cimgui/cimnodes_templates/structs_and_enums.json,cimgui/cimnodes_templates/typedefs_dict.json,-r cimgui/cimgui_templates/structs_and_enums.json -rt cimgui/cimgui_templates/typedefs_dict.json)
+	$(call generate,cimnodes,cwrappers/cimnodes.h,cwrappers/cimnodes_templates/definitions.json,cwrappers/cimnodes_templates/structs_and_enums.json,cwrappers/cimnodes_templates/typedefs_dict.json,-r cwrappers/cimgui_templates/structs_and_enums.json -rt cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
 ## cimnodes: generate imnodes binding
@@ -57,7 +57,7 @@ cimnodes: setup
 	$(call cimnodes)
 
 define cimmarkdown
-	$(call generate,cimmarkdown,cimgui/cimmarkdown.h,cimgui/cimmarkdown_templates/definitions.json,cimgui/cimmarkdown_templates/structs_and_enums.json,cimgui/cimmarkdown_templates/typedefs_dict.json,-r cimgui/cimgui_templates/structs_and_enums.json -rt cimgui/cimgui_templates/typedefs_dict.json)
+	$(call generate,cimmarkdown,cwrappers/cimmarkdown.h,cwrappers/cimmarkdown_templates/definitions.json,cwrappers/cimmarkdown_templates/structs_and_enums.json,cwrappers/cimmarkdown_templates/typedefs_dict.json,-r cwrappers/cimgui_templates/structs_and_enums.json -rt cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
 ## cimmarkdown: generate immarkdown binding
@@ -91,23 +91,23 @@ define update
 		git checkout $4
 	cd tmp/$1/generator; \
 		bash generator.sh --target "internal noimstrv comments" --cflags "glfw opengl3 opengl2 sdl2 -DIMGUI_USE_WCHAR32"
-	cp -f tmp/$1/$1* cimgui/
+	cp -f tmp/$1/$1* cwrappers/
 	if test -e tmp/$1/generator/output/$1*; then \
-		cp -f tmp/$1/generator/output/$1* cimgui/; \
+		cp -f tmp/$1/generator/output/$1* cwrappers/; \
 	fi
-	mkdir cimgui/$1_templates
-	cp -f tmp/$1/generator/output/*json cimgui/$1_templates
-	mkdir -p cimgui/$3
-	cp -rf tmp/$1/$3/* cimgui/$3
+	mkdir cwrappers/$1_templates
+	cp -f tmp/$1/generator/output/*json cwrappers/$1_templates
+	mkdir -p cwrappers/$3
+	cp -rf tmp/$1/$3/* cwrappers/$3
 	cd tmp/$1; \
-		echo "$1 ($2) HEAD is on: `git rev-parse HEAD`" >> ../../cimgui/VERSION.txt
+		echo "$1 ($2) HEAD is on: `git rev-parse HEAD`" >> ../../cwrappers/VERSION.txt
 	cd tmp/$1/$3; \
-		echo "$1/$3 HEAD is on: `git rev-parse HEAD`" >> ../../../cimgui/VERSION.txt
+		echo "$1/$3 HEAD is on: `git rev-parse HEAD`" >> ../../../cwrappers/VERSION.txt
 endef
 
 .PHONY: update
 update: setup
-	rm -rf cimgui/*
+	rm -rf cwrappers/*
 	$(call update,cimgui,https://github.com/cimgui/cimgui,imgui,docking)
 	cat templates/assert.h >> cimgui/imgui/imconfig.h
 	$(call cimgui)
@@ -118,7 +118,7 @@ update: setup
 	$(call update,cimmarkdown,https://github.com/gucio321/cimmarkdown,imgui_markdown,main)
 	$(call cimmarkdown)
 	echo -e "// +build rquired\n\npackage imgui\n\nimport (\n" > dummy.go
-	for i in `find cimgui -type f \( -name "*.h" -o -name "*.cpp" \) -exec dirname {} \; | sort -u`; do \
+	for i in `find cwrappers -type f \( -name "*.h" -o -name "*.cpp" \) -exec dirname {} \; | sort -u`; do \
 		cp templates/dummy.go.template $$i/dummy.go; \
 		echo -e "\t\"github.com/AllenDang/cimgui-go/$$i\"" >> dummy.go; \
 		done
