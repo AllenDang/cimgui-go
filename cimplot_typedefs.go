@@ -14,418 +14,517 @@ type FormatterTimeData struct {
 	CData *C.Formatter_Time_Data
 }
 
-func (self *FormatterTimeData) handle() (result *C.Formatter_Time_Data, fin func()) {
+// Handle returns C version of FormatterTimeData and its finalizer func.
+func (self *FormatterTimeData) Handle() (result *C.Formatter_Time_Data, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self FormatterTimeData) c() (C.Formatter_Time_Data, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self FormatterTimeData) C() (C.Formatter_Time_Data, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newFormatterTimeDataFromC(cvalue *C.Formatter_Time_Data) *FormatterTimeData {
-	return &FormatterTimeData{CData: cvalue}
+// NewFormatterTimeDataFromC creates FormatterTimeData from its C pointer.
+// SRC ~= *C.Formatter_Time_Data
+func NewFormatterTimeDataFromC[SRC any](cvalue SRC) *FormatterTimeData {
+	return &FormatterTimeData{CData: ConvertCTypes[*C.Formatter_Time_Data](cvalue)}
 }
 
 type PlotAlignmentData struct {
 	CData *C.ImPlotAlignmentData
 }
 
-func (self *PlotAlignmentData) handle() (result *C.ImPlotAlignmentData, fin func()) {
+// Handle returns C version of PlotAlignmentData and its finalizer func.
+func (self *PlotAlignmentData) Handle() (result *C.ImPlotAlignmentData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotAlignmentData) c() (C.ImPlotAlignmentData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotAlignmentData) C() (C.ImPlotAlignmentData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotAlignmentDataFromC(cvalue *C.ImPlotAlignmentData) *PlotAlignmentData {
-	return &PlotAlignmentData{CData: cvalue}
+// NewPlotAlignmentDataFromC creates PlotAlignmentData from its C pointer.
+// SRC ~= *C.ImPlotAlignmentData
+func NewPlotAlignmentDataFromC[SRC any](cvalue SRC) *PlotAlignmentData {
+	return &PlotAlignmentData{CData: ConvertCTypes[*C.ImPlotAlignmentData](cvalue)}
 }
 
 type PlotAnnotation struct {
 	CData *C.ImPlotAnnotation
 }
 
-func (self *PlotAnnotation) handle() (result *C.ImPlotAnnotation, fin func()) {
+// Handle returns C version of PlotAnnotation and its finalizer func.
+func (self *PlotAnnotation) Handle() (result *C.ImPlotAnnotation, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotAnnotation) c() (C.ImPlotAnnotation, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotAnnotation) C() (C.ImPlotAnnotation, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotAnnotationFromC(cvalue *C.ImPlotAnnotation) *PlotAnnotation {
-	return &PlotAnnotation{CData: cvalue}
+// NewPlotAnnotationFromC creates PlotAnnotation from its C pointer.
+// SRC ~= *C.ImPlotAnnotation
+func NewPlotAnnotationFromC[SRC any](cvalue SRC) *PlotAnnotation {
+	return &PlotAnnotation{CData: ConvertCTypes[*C.ImPlotAnnotation](cvalue)}
 }
 
 type PlotAnnotationCollection struct {
 	CData *C.ImPlotAnnotationCollection
 }
 
-func (self *PlotAnnotationCollection) handle() (result *C.ImPlotAnnotationCollection, fin func()) {
+// Handle returns C version of PlotAnnotationCollection and its finalizer func.
+func (self *PlotAnnotationCollection) Handle() (result *C.ImPlotAnnotationCollection, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotAnnotationCollection) c() (C.ImPlotAnnotationCollection, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotAnnotationCollection) C() (C.ImPlotAnnotationCollection, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotAnnotationCollectionFromC(cvalue *C.ImPlotAnnotationCollection) *PlotAnnotationCollection {
-	return &PlotAnnotationCollection{CData: cvalue}
+// NewPlotAnnotationCollectionFromC creates PlotAnnotationCollection from its C pointer.
+// SRC ~= *C.ImPlotAnnotationCollection
+func NewPlotAnnotationCollectionFromC[SRC any](cvalue SRC) *PlotAnnotationCollection {
+	return &PlotAnnotationCollection{CData: ConvertCTypes[*C.ImPlotAnnotationCollection](cvalue)}
 }
 
 type PlotAxis struct {
 	CData *C.ImPlotAxis
 }
 
-func (self *PlotAxis) handle() (result *C.ImPlotAxis, fin func()) {
+// Handle returns C version of PlotAxis and its finalizer func.
+func (self *PlotAxis) Handle() (result *C.ImPlotAxis, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotAxis) c() (C.ImPlotAxis, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotAxis) C() (C.ImPlotAxis, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotAxisFromC(cvalue *C.ImPlotAxis) *PlotAxis {
-	return &PlotAxis{CData: cvalue}
+// NewPlotAxisFromC creates PlotAxis from its C pointer.
+// SRC ~= *C.ImPlotAxis
+func NewPlotAxisFromC[SRC any](cvalue SRC) *PlotAxis {
+	return &PlotAxis{CData: ConvertCTypes[*C.ImPlotAxis](cvalue)}
 }
 
 type PlotAxisColor struct {
 	CData *C.ImPlotAxisColor
 }
 
-func (self *PlotAxisColor) handle() (result *C.ImPlotAxisColor, fin func()) {
+// Handle returns C version of PlotAxisColor and its finalizer func.
+func (self *PlotAxisColor) Handle() (result *C.ImPlotAxisColor, fin func()) {
 	return self.CData, func() {}
 }
 
-func newPlotAxisColorFromC(cvalue *C.ImPlotAxisColor) *PlotAxisColor {
-	return &PlotAxisColor{CData: cvalue}
+// NewPlotAxisColorFromC creates PlotAxisColor from its C pointer.
+// SRC ~= *C.ImPlotAxisColor
+func NewPlotAxisColorFromC[SRC any](cvalue SRC) *PlotAxisColor {
+	return &PlotAxisColor{CData: ConvertCTypes[*C.ImPlotAxisColor](cvalue)}
 }
 
 type PlotColormapData struct {
 	CData *C.ImPlotColormapData
 }
 
-func (self *PlotColormapData) handle() (result *C.ImPlotColormapData, fin func()) {
+// Handle returns C version of PlotColormapData and its finalizer func.
+func (self *PlotColormapData) Handle() (result *C.ImPlotColormapData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotColormapData) c() (C.ImPlotColormapData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotColormapData) C() (C.ImPlotColormapData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotColormapDataFromC(cvalue *C.ImPlotColormapData) *PlotColormapData {
-	return &PlotColormapData{CData: cvalue}
+// NewPlotColormapDataFromC creates PlotColormapData from its C pointer.
+// SRC ~= *C.ImPlotColormapData
+func NewPlotColormapDataFromC[SRC any](cvalue SRC) *PlotColormapData {
+	return &PlotColormapData{CData: ConvertCTypes[*C.ImPlotColormapData](cvalue)}
 }
 
 type PlotContext struct {
 	CData *C.ImPlotContext
 }
 
-func (self *PlotContext) handle() (result *C.ImPlotContext, fin func()) {
+// Handle returns C version of PlotContext and its finalizer func.
+func (self *PlotContext) Handle() (result *C.ImPlotContext, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotContext) c() (C.ImPlotContext, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotContext) C() (C.ImPlotContext, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotContextFromC(cvalue *C.ImPlotContext) *PlotContext {
-	return &PlotContext{CData: cvalue}
+// NewPlotContextFromC creates PlotContext from its C pointer.
+// SRC ~= *C.ImPlotContext
+func NewPlotContextFromC[SRC any](cvalue SRC) *PlotContext {
+	return &PlotContext{CData: ConvertCTypes[*C.ImPlotContext](cvalue)}
 }
 
 type PlotDateTimeSpec struct {
 	CData *C.ImPlotDateTimeSpec
 }
 
-func (self *PlotDateTimeSpec) handle() (result *C.ImPlotDateTimeSpec, fin func()) {
+// Handle returns C version of PlotDateTimeSpec and its finalizer func.
+func (self *PlotDateTimeSpec) Handle() (result *C.ImPlotDateTimeSpec, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotDateTimeSpec) c() (C.ImPlotDateTimeSpec, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotDateTimeSpec) C() (C.ImPlotDateTimeSpec, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotDateTimeSpecFromC(cvalue *C.ImPlotDateTimeSpec) *PlotDateTimeSpec {
-	return &PlotDateTimeSpec{CData: cvalue}
+// NewPlotDateTimeSpecFromC creates PlotDateTimeSpec from its C pointer.
+// SRC ~= *C.ImPlotDateTimeSpec
+func NewPlotDateTimeSpecFromC[SRC any](cvalue SRC) *PlotDateTimeSpec {
+	return &PlotDateTimeSpec{CData: ConvertCTypes[*C.ImPlotDateTimeSpec](cvalue)}
 }
 
 type PlotInputMap struct {
 	CData *C.ImPlotInputMap
 }
 
-func (self *PlotInputMap) handle() (result *C.ImPlotInputMap, fin func()) {
+// Handle returns C version of PlotInputMap and its finalizer func.
+func (self *PlotInputMap) Handle() (result *C.ImPlotInputMap, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotInputMap) c() (C.ImPlotInputMap, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotInputMap) C() (C.ImPlotInputMap, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotInputMapFromC(cvalue *C.ImPlotInputMap) *PlotInputMap {
-	return &PlotInputMap{CData: cvalue}
+// NewPlotInputMapFromC creates PlotInputMap from its C pointer.
+// SRC ~= *C.ImPlotInputMap
+func NewPlotInputMapFromC[SRC any](cvalue SRC) *PlotInputMap {
+	return &PlotInputMap{CData: ConvertCTypes[*C.ImPlotInputMap](cvalue)}
 }
 
 type PlotItem struct {
 	CData *C.ImPlotItem
 }
 
-func (self *PlotItem) handle() (result *C.ImPlotItem, fin func()) {
+// Handle returns C version of PlotItem and its finalizer func.
+func (self *PlotItem) Handle() (result *C.ImPlotItem, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotItem) c() (C.ImPlotItem, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotItem) C() (C.ImPlotItem, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotItemFromC(cvalue *C.ImPlotItem) *PlotItem {
-	return &PlotItem{CData: cvalue}
+// NewPlotItemFromC creates PlotItem from its C pointer.
+// SRC ~= *C.ImPlotItem
+func NewPlotItemFromC[SRC any](cvalue SRC) *PlotItem {
+	return &PlotItem{CData: ConvertCTypes[*C.ImPlotItem](cvalue)}
 }
 
 type PlotItemGroup struct {
 	CData *C.ImPlotItemGroup
 }
 
-func (self *PlotItemGroup) handle() (result *C.ImPlotItemGroup, fin func()) {
+// Handle returns C version of PlotItemGroup and its finalizer func.
+func (self *PlotItemGroup) Handle() (result *C.ImPlotItemGroup, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotItemGroup) c() (C.ImPlotItemGroup, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotItemGroup) C() (C.ImPlotItemGroup, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotItemGroupFromC(cvalue *C.ImPlotItemGroup) *PlotItemGroup {
-	return &PlotItemGroup{CData: cvalue}
+// NewPlotItemGroupFromC creates PlotItemGroup from its C pointer.
+// SRC ~= *C.ImPlotItemGroup
+func NewPlotItemGroupFromC[SRC any](cvalue SRC) *PlotItemGroup {
+	return &PlotItemGroup{CData: ConvertCTypes[*C.ImPlotItemGroup](cvalue)}
 }
 
 type PlotLegend struct {
 	CData *C.ImPlotLegend
 }
 
-func (self *PlotLegend) handle() (result *C.ImPlotLegend, fin func()) {
+// Handle returns C version of PlotLegend and its finalizer func.
+func (self *PlotLegend) Handle() (result *C.ImPlotLegend, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotLegend) c() (C.ImPlotLegend, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotLegend) C() (C.ImPlotLegend, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotLegendFromC(cvalue *C.ImPlotLegend) *PlotLegend {
-	return &PlotLegend{CData: cvalue}
+// NewPlotLegendFromC creates PlotLegend from its C pointer.
+// SRC ~= *C.ImPlotLegend
+func NewPlotLegendFromC[SRC any](cvalue SRC) *PlotLegend {
+	return &PlotLegend{CData: ConvertCTypes[*C.ImPlotLegend](cvalue)}
 }
 
 type PlotNextItemData struct {
 	CData *C.ImPlotNextItemData
 }
 
-func (self *PlotNextItemData) handle() (result *C.ImPlotNextItemData, fin func()) {
+// Handle returns C version of PlotNextItemData and its finalizer func.
+func (self *PlotNextItemData) Handle() (result *C.ImPlotNextItemData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotNextItemData) c() (C.ImPlotNextItemData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotNextItemData) C() (C.ImPlotNextItemData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotNextItemDataFromC(cvalue *C.ImPlotNextItemData) *PlotNextItemData {
-	return &PlotNextItemData{CData: cvalue}
+// NewPlotNextItemDataFromC creates PlotNextItemData from its C pointer.
+// SRC ~= *C.ImPlotNextItemData
+func NewPlotNextItemDataFromC[SRC any](cvalue SRC) *PlotNextItemData {
+	return &PlotNextItemData{CData: ConvertCTypes[*C.ImPlotNextItemData](cvalue)}
 }
 
 type PlotNextPlotData struct {
 	CData *C.ImPlotNextPlotData
 }
 
-func (self *PlotNextPlotData) handle() (result *C.ImPlotNextPlotData, fin func()) {
+// Handle returns C version of PlotNextPlotData and its finalizer func.
+func (self *PlotNextPlotData) Handle() (result *C.ImPlotNextPlotData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotNextPlotData) c() (C.ImPlotNextPlotData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotNextPlotData) C() (C.ImPlotNextPlotData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotNextPlotDataFromC(cvalue *C.ImPlotNextPlotData) *PlotNextPlotData {
-	return &PlotNextPlotData{CData: cvalue}
+// NewPlotNextPlotDataFromC creates PlotNextPlotData from its C pointer.
+// SRC ~= *C.ImPlotNextPlotData
+func NewPlotNextPlotDataFromC[SRC any](cvalue SRC) *PlotNextPlotData {
+	return &PlotNextPlotData{CData: ConvertCTypes[*C.ImPlotNextPlotData](cvalue)}
 }
 
 type PlotPlot struct {
 	CData *C.ImPlotPlot
 }
 
-func (self *PlotPlot) handle() (result *C.ImPlotPlot, fin func()) {
+// Handle returns C version of PlotPlot and its finalizer func.
+func (self *PlotPlot) Handle() (result *C.ImPlotPlot, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotPlot) c() (C.ImPlotPlot, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotPlot) C() (C.ImPlotPlot, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotPlotFromC(cvalue *C.ImPlotPlot) *PlotPlot {
-	return &PlotPlot{CData: cvalue}
+// NewPlotPlotFromC creates PlotPlot from its C pointer.
+// SRC ~= *C.ImPlotPlot
+func NewPlotPlotFromC[SRC any](cvalue SRC) *PlotPlot {
+	return &PlotPlot{CData: ConvertCTypes[*C.ImPlotPlot](cvalue)}
 }
 
 type PlotPointError struct {
 	CData *C.ImPlotPointError
 }
 
-func (self *PlotPointError) handle() (result *C.ImPlotPointError, fin func()) {
+// Handle returns C version of PlotPointError and its finalizer func.
+func (self *PlotPointError) Handle() (result *C.ImPlotPointError, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotPointError) c() (C.ImPlotPointError, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotPointError) C() (C.ImPlotPointError, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotPointErrorFromC(cvalue *C.ImPlotPointError) *PlotPointError {
-	return &PlotPointError{CData: cvalue}
+// NewPlotPointErrorFromC creates PlotPointError from its C pointer.
+// SRC ~= *C.ImPlotPointError
+func NewPlotPointErrorFromC[SRC any](cvalue SRC) *PlotPointError {
+	return &PlotPointError{CData: ConvertCTypes[*C.ImPlotPointError](cvalue)}
 }
 
 type PlotRange struct {
 	CData *C.ImPlotRange
 }
 
-func (self *PlotRange) handle() (result *C.ImPlotRange, fin func()) {
+// Handle returns C version of PlotRange and its finalizer func.
+func (self *PlotRange) Handle() (result *C.ImPlotRange, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotRange) c() (C.ImPlotRange, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotRange) C() (C.ImPlotRange, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotRangeFromC(cvalue *C.ImPlotRange) *PlotRange {
-	return &PlotRange{CData: cvalue}
+// NewPlotRangeFromC creates PlotRange from its C pointer.
+// SRC ~= *C.ImPlotRange
+func NewPlotRangeFromC[SRC any](cvalue SRC) *PlotRange {
+	return &PlotRange{CData: ConvertCTypes[*C.ImPlotRange](cvalue)}
 }
 
 type PlotRect struct {
 	CData *C.ImPlotRect
 }
 
-func (self *PlotRect) handle() (result *C.ImPlotRect, fin func()) {
+// Handle returns C version of PlotRect and its finalizer func.
+func (self *PlotRect) Handle() (result *C.ImPlotRect, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotRect) c() (C.ImPlotRect, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotRect) C() (C.ImPlotRect, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotRectFromC(cvalue *C.ImPlotRect) *PlotRect {
-	return &PlotRect{CData: cvalue}
+// NewPlotRectFromC creates PlotRect from its C pointer.
+// SRC ~= *C.ImPlotRect
+func NewPlotRectFromC[SRC any](cvalue SRC) *PlotRect {
+	return &PlotRect{CData: ConvertCTypes[*C.ImPlotRect](cvalue)}
 }
 
 type PlotStyle struct {
 	CData *C.ImPlotStyle
 }
 
-func (self *PlotStyle) handle() (result *C.ImPlotStyle, fin func()) {
+// Handle returns C version of PlotStyle and its finalizer func.
+func (self *PlotStyle) Handle() (result *C.ImPlotStyle, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotStyle) c() (C.ImPlotStyle, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotStyle) C() (C.ImPlotStyle, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotStyleFromC(cvalue *C.ImPlotStyle) *PlotStyle {
-	return &PlotStyle{CData: cvalue}
+// NewPlotStyleFromC creates PlotStyle from its C pointer.
+// SRC ~= *C.ImPlotStyle
+func NewPlotStyleFromC[SRC any](cvalue SRC) *PlotStyle {
+	return &PlotStyle{CData: ConvertCTypes[*C.ImPlotStyle](cvalue)}
 }
 
 type PlotSubplot struct {
 	CData *C.ImPlotSubplot
 }
 
-func (self *PlotSubplot) handle() (result *C.ImPlotSubplot, fin func()) {
+// Handle returns C version of PlotSubplot and its finalizer func.
+func (self *PlotSubplot) Handle() (result *C.ImPlotSubplot, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotSubplot) c() (C.ImPlotSubplot, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotSubplot) C() (C.ImPlotSubplot, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotSubplotFromC(cvalue *C.ImPlotSubplot) *PlotSubplot {
-	return &PlotSubplot{CData: cvalue}
+// NewPlotSubplotFromC creates PlotSubplot from its C pointer.
+// SRC ~= *C.ImPlotSubplot
+func NewPlotSubplotFromC[SRC any](cvalue SRC) *PlotSubplot {
+	return &PlotSubplot{CData: ConvertCTypes[*C.ImPlotSubplot](cvalue)}
 }
 
 type PlotTag struct {
 	CData *C.ImPlotTag
 }
 
-func (self *PlotTag) handle() (result *C.ImPlotTag, fin func()) {
+// Handle returns C version of PlotTag and its finalizer func.
+func (self *PlotTag) Handle() (result *C.ImPlotTag, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotTag) c() (C.ImPlotTag, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotTag) C() (C.ImPlotTag, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotTagFromC(cvalue *C.ImPlotTag) *PlotTag {
-	return &PlotTag{CData: cvalue}
+// NewPlotTagFromC creates PlotTag from its C pointer.
+// SRC ~= *C.ImPlotTag
+func NewPlotTagFromC[SRC any](cvalue SRC) *PlotTag {
+	return &PlotTag{CData: ConvertCTypes[*C.ImPlotTag](cvalue)}
 }
 
 type PlotTagCollection struct {
 	CData *C.ImPlotTagCollection
 }
 
-func (self *PlotTagCollection) handle() (result *C.ImPlotTagCollection, fin func()) {
+// Handle returns C version of PlotTagCollection and its finalizer func.
+func (self *PlotTagCollection) Handle() (result *C.ImPlotTagCollection, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotTagCollection) c() (C.ImPlotTagCollection, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotTagCollection) C() (C.ImPlotTagCollection, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotTagCollectionFromC(cvalue *C.ImPlotTagCollection) *PlotTagCollection {
-	return &PlotTagCollection{CData: cvalue}
+// NewPlotTagCollectionFromC creates PlotTagCollection from its C pointer.
+// SRC ~= *C.ImPlotTagCollection
+func NewPlotTagCollectionFromC[SRC any](cvalue SRC) *PlotTagCollection {
+	return &PlotTagCollection{CData: ConvertCTypes[*C.ImPlotTagCollection](cvalue)}
 }
 
 type PlotTick struct {
 	CData *C.ImPlotTick
 }
 
-func (self *PlotTick) handle() (result *C.ImPlotTick, fin func()) {
+// Handle returns C version of PlotTick and its finalizer func.
+func (self *PlotTick) Handle() (result *C.ImPlotTick, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotTick) c() (C.ImPlotTick, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotTick) C() (C.ImPlotTick, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotTickFromC(cvalue *C.ImPlotTick) *PlotTick {
-	return &PlotTick{CData: cvalue}
+// NewPlotTickFromC creates PlotTick from its C pointer.
+// SRC ~= *C.ImPlotTick
+func NewPlotTickFromC[SRC any](cvalue SRC) *PlotTick {
+	return &PlotTick{CData: ConvertCTypes[*C.ImPlotTick](cvalue)}
 }
 
 type PlotTicker struct {
 	CData *C.ImPlotTicker
 }
 
-func (self *PlotTicker) handle() (result *C.ImPlotTicker, fin func()) {
+// Handle returns C version of PlotTicker and its finalizer func.
+func (self *PlotTicker) Handle() (result *C.ImPlotTicker, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlotTicker) c() (C.ImPlotTicker, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlotTicker) C() (C.ImPlotTicker, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlotTickerFromC(cvalue *C.ImPlotTicker) *PlotTicker {
-	return &PlotTicker{CData: cvalue}
+// NewPlotTickerFromC creates PlotTicker from its C pointer.
+// SRC ~= *C.ImPlotTicker
+func NewPlotTickerFromC[SRC any](cvalue SRC) *PlotTicker {
+	return &PlotTicker{CData: ConvertCTypes[*C.ImPlotTicker](cvalue)}
 }

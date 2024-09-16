@@ -14,19 +14,23 @@ type BitArrayPtr struct {
 	Data *uint32
 }
 
-func (self *BitArrayPtr) handle() (*C.ImBitArrayPtr, func()) {
-	result, fn := self.c()
+// Handle returns C version of BitArrayPtr and its finalizer func.
+func (self *BitArrayPtr) Handle() (*C.ImBitArrayPtr, func()) {
+	result, fn := self.C()
 	return &result, fn
 }
 
-func (selfStruct *BitArrayPtr) c() (result C.ImBitArrayPtr, fin func()) {
+// C is like Handle but returns plain type instead of pointer.
+func (selfStruct *BitArrayPtr) C() (result C.ImBitArrayPtr, fin func()) {
 	self := selfStruct.Data
 	selfArg, selfFin := WrapNumberPtr[C.ImU32, uint32](self)
 	return (C.ImBitArrayPtr)(selfArg), func() { selfFin() }
 }
 
-func newBitArrayPtrFromC(cvalue *C.ImBitArrayPtr) *BitArrayPtr {
-	v := (*C.ImU32)(*cvalue)
+// NewBitArrayPtrFromC creates BitArrayPtr from its C pointer.
+// SRC ~= *C.ImBitArrayPtr
+func NewBitArrayPtrFromC[SRC any](cvalue SRC) *BitArrayPtr {
+	v := (*C.ImU32)(*ConvertCTypes[*C.ImBitArrayPtr](cvalue))
 	return &BitArrayPtr{Data: (*uint32)(v)}
 }
 
@@ -34,1945 +38,2405 @@ type BitVector struct {
 	CData *C.ImBitVector
 }
 
-func (self *BitVector) handle() (result *C.ImBitVector, fin func()) {
+// Handle returns C version of BitVector and its finalizer func.
+func (self *BitVector) Handle() (result *C.ImBitVector, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self BitVector) c() (C.ImBitVector, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self BitVector) C() (C.ImBitVector, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newBitVectorFromC(cvalue *C.ImBitVector) *BitVector {
-	return &BitVector{CData: cvalue}
+// NewBitVectorFromC creates BitVector from its C pointer.
+// SRC ~= *C.ImBitVector
+func NewBitVectorFromC[SRC any](cvalue SRC) *BitVector {
+	return &BitVector{CData: ConvertCTypes[*C.ImBitVector](cvalue)}
 }
 
 type DrawChannel struct {
 	CData *C.ImDrawChannel
 }
 
-func (self *DrawChannel) handle() (result *C.ImDrawChannel, fin func()) {
+// Handle returns C version of DrawChannel and its finalizer func.
+func (self *DrawChannel) Handle() (result *C.ImDrawChannel, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DrawChannel) c() (C.ImDrawChannel, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DrawChannel) C() (C.ImDrawChannel, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDrawChannelFromC(cvalue *C.ImDrawChannel) *DrawChannel {
-	return &DrawChannel{CData: cvalue}
+// NewDrawChannelFromC creates DrawChannel from its C pointer.
+// SRC ~= *C.ImDrawChannel
+func NewDrawChannelFromC[SRC any](cvalue SRC) *DrawChannel {
+	return &DrawChannel{CData: ConvertCTypes[*C.ImDrawChannel](cvalue)}
 }
 
 type DrawCmd struct {
 	CData *C.ImDrawCmd
 }
 
-func (self *DrawCmd) handle() (result *C.ImDrawCmd, fin func()) {
+// Handle returns C version of DrawCmd and its finalizer func.
+func (self *DrawCmd) Handle() (result *C.ImDrawCmd, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DrawCmd) c() (C.ImDrawCmd, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DrawCmd) C() (C.ImDrawCmd, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDrawCmdFromC(cvalue *C.ImDrawCmd) *DrawCmd {
-	return &DrawCmd{CData: cvalue}
+// NewDrawCmdFromC creates DrawCmd from its C pointer.
+// SRC ~= *C.ImDrawCmd
+func NewDrawCmdFromC[SRC any](cvalue SRC) *DrawCmd {
+	return &DrawCmd{CData: ConvertCTypes[*C.ImDrawCmd](cvalue)}
 }
 
 type DrawCmdHeader struct {
 	CData *C.ImDrawCmdHeader
 }
 
-func (self *DrawCmdHeader) handle() (result *C.ImDrawCmdHeader, fin func()) {
+// Handle returns C version of DrawCmdHeader and its finalizer func.
+func (self *DrawCmdHeader) Handle() (result *C.ImDrawCmdHeader, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DrawCmdHeader) c() (C.ImDrawCmdHeader, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DrawCmdHeader) C() (C.ImDrawCmdHeader, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDrawCmdHeaderFromC(cvalue *C.ImDrawCmdHeader) *DrawCmdHeader {
-	return &DrawCmdHeader{CData: cvalue}
+// NewDrawCmdHeaderFromC creates DrawCmdHeader from its C pointer.
+// SRC ~= *C.ImDrawCmdHeader
+func NewDrawCmdHeaderFromC[SRC any](cvalue SRC) *DrawCmdHeader {
+	return &DrawCmdHeader{CData: ConvertCTypes[*C.ImDrawCmdHeader](cvalue)}
 }
 
 type DrawData struct {
 	CData *C.ImDrawData
 }
 
-func (self *DrawData) handle() (result *C.ImDrawData, fin func()) {
+// Handle returns C version of DrawData and its finalizer func.
+func (self *DrawData) Handle() (result *C.ImDrawData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DrawData) c() (C.ImDrawData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DrawData) C() (C.ImDrawData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDrawDataFromC(cvalue *C.ImDrawData) *DrawData {
-	return &DrawData{CData: cvalue}
+// NewDrawDataFromC creates DrawData from its C pointer.
+// SRC ~= *C.ImDrawData
+func NewDrawDataFromC[SRC any](cvalue SRC) *DrawData {
+	return &DrawData{CData: ConvertCTypes[*C.ImDrawData](cvalue)}
 }
 
 type DrawDataBuilder struct {
 	CData *C.ImDrawDataBuilder
 }
 
-func (self *DrawDataBuilder) handle() (result *C.ImDrawDataBuilder, fin func()) {
+// Handle returns C version of DrawDataBuilder and its finalizer func.
+func (self *DrawDataBuilder) Handle() (result *C.ImDrawDataBuilder, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DrawDataBuilder) c() (C.ImDrawDataBuilder, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DrawDataBuilder) C() (C.ImDrawDataBuilder, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDrawDataBuilderFromC(cvalue *C.ImDrawDataBuilder) *DrawDataBuilder {
-	return &DrawDataBuilder{CData: cvalue}
+// NewDrawDataBuilderFromC creates DrawDataBuilder from its C pointer.
+// SRC ~= *C.ImDrawDataBuilder
+func NewDrawDataBuilderFromC[SRC any](cvalue SRC) *DrawDataBuilder {
+	return &DrawDataBuilder{CData: ConvertCTypes[*C.ImDrawDataBuilder](cvalue)}
 }
 
 type DrawList struct {
 	CData *C.ImDrawList
 }
 
-func (self *DrawList) handle() (result *C.ImDrawList, fin func()) {
+// Handle returns C version of DrawList and its finalizer func.
+func (self *DrawList) Handle() (result *C.ImDrawList, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DrawList) c() (C.ImDrawList, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DrawList) C() (C.ImDrawList, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDrawListFromC(cvalue *C.ImDrawList) *DrawList {
-	return &DrawList{CData: cvalue}
+// NewDrawListFromC creates DrawList from its C pointer.
+// SRC ~= *C.ImDrawList
+func NewDrawListFromC[SRC any](cvalue SRC) *DrawList {
+	return &DrawList{CData: ConvertCTypes[*C.ImDrawList](cvalue)}
 }
 
 type DrawListSharedData struct {
 	CData *C.ImDrawListSharedData
 }
 
-func (self *DrawListSharedData) handle() (result *C.ImDrawListSharedData, fin func()) {
+// Handle returns C version of DrawListSharedData and its finalizer func.
+func (self *DrawListSharedData) Handle() (result *C.ImDrawListSharedData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DrawListSharedData) c() (C.ImDrawListSharedData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DrawListSharedData) C() (C.ImDrawListSharedData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDrawListSharedDataFromC(cvalue *C.ImDrawListSharedData) *DrawListSharedData {
-	return &DrawListSharedData{CData: cvalue}
+// NewDrawListSharedDataFromC creates DrawListSharedData from its C pointer.
+// SRC ~= *C.ImDrawListSharedData
+func NewDrawListSharedDataFromC[SRC any](cvalue SRC) *DrawListSharedData {
+	return &DrawListSharedData{CData: ConvertCTypes[*C.ImDrawListSharedData](cvalue)}
 }
 
 type DrawListSplitter struct {
 	CData *C.ImDrawListSplitter
 }
 
-func (self *DrawListSplitter) handle() (result *C.ImDrawListSplitter, fin func()) {
+// Handle returns C version of DrawListSplitter and its finalizer func.
+func (self *DrawListSplitter) Handle() (result *C.ImDrawListSplitter, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DrawListSplitter) c() (C.ImDrawListSplitter, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DrawListSplitter) C() (C.ImDrawListSplitter, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDrawListSplitterFromC(cvalue *C.ImDrawListSplitter) *DrawListSplitter {
-	return &DrawListSplitter{CData: cvalue}
+// NewDrawListSplitterFromC creates DrawListSplitter from its C pointer.
+// SRC ~= *C.ImDrawListSplitter
+func NewDrawListSplitterFromC[SRC any](cvalue SRC) *DrawListSplitter {
+	return &DrawListSplitter{CData: ConvertCTypes[*C.ImDrawListSplitter](cvalue)}
 }
 
 type DrawVert struct {
 	CData *C.ImDrawVert
 }
 
-func (self *DrawVert) handle() (result *C.ImDrawVert, fin func()) {
+// Handle returns C version of DrawVert and its finalizer func.
+func (self *DrawVert) Handle() (result *C.ImDrawVert, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DrawVert) c() (C.ImDrawVert, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DrawVert) C() (C.ImDrawVert, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDrawVertFromC(cvalue *C.ImDrawVert) *DrawVert {
-	return &DrawVert{CData: cvalue}
+// NewDrawVertFromC creates DrawVert from its C pointer.
+// SRC ~= *C.ImDrawVert
+func NewDrawVertFromC[SRC any](cvalue SRC) *DrawVert {
+	return &DrawVert{CData: ConvertCTypes[*C.ImDrawVert](cvalue)}
 }
 
 type Font struct {
 	CData *C.ImFont
 }
 
-func (self *Font) handle() (result *C.ImFont, fin func()) {
+// Handle returns C version of Font and its finalizer func.
+func (self *Font) Handle() (result *C.ImFont, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self Font) c() (C.ImFont, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self Font) C() (C.ImFont, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newFontFromC(cvalue *C.ImFont) *Font {
-	return &Font{CData: cvalue}
+// NewFontFromC creates Font from its C pointer.
+// SRC ~= *C.ImFont
+func NewFontFromC[SRC any](cvalue SRC) *Font {
+	return &Font{CData: ConvertCTypes[*C.ImFont](cvalue)}
 }
 
 type FontAtlas struct {
 	CData *C.ImFontAtlas
 }
 
-func (self *FontAtlas) handle() (result *C.ImFontAtlas, fin func()) {
+// Handle returns C version of FontAtlas and its finalizer func.
+func (self *FontAtlas) Handle() (result *C.ImFontAtlas, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self FontAtlas) c() (C.ImFontAtlas, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self FontAtlas) C() (C.ImFontAtlas, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newFontAtlasFromC(cvalue *C.ImFontAtlas) *FontAtlas {
-	return &FontAtlas{CData: cvalue}
+// NewFontAtlasFromC creates FontAtlas from its C pointer.
+// SRC ~= *C.ImFontAtlas
+func NewFontAtlasFromC[SRC any](cvalue SRC) *FontAtlas {
+	return &FontAtlas{CData: ConvertCTypes[*C.ImFontAtlas](cvalue)}
 }
 
 type FontAtlasCustomRect struct {
 	CData *C.ImFontAtlasCustomRect
 }
 
-func (self *FontAtlasCustomRect) handle() (result *C.ImFontAtlasCustomRect, fin func()) {
+// Handle returns C version of FontAtlasCustomRect and its finalizer func.
+func (self *FontAtlasCustomRect) Handle() (result *C.ImFontAtlasCustomRect, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self FontAtlasCustomRect) c() (C.ImFontAtlasCustomRect, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self FontAtlasCustomRect) C() (C.ImFontAtlasCustomRect, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newFontAtlasCustomRectFromC(cvalue *C.ImFontAtlasCustomRect) *FontAtlasCustomRect {
-	return &FontAtlasCustomRect{CData: cvalue}
+// NewFontAtlasCustomRectFromC creates FontAtlasCustomRect from its C pointer.
+// SRC ~= *C.ImFontAtlasCustomRect
+func NewFontAtlasCustomRectFromC[SRC any](cvalue SRC) *FontAtlasCustomRect {
+	return &FontAtlasCustomRect{CData: ConvertCTypes[*C.ImFontAtlasCustomRect](cvalue)}
 }
 
 type FontBuilderIO struct {
 	CData *C.ImFontBuilderIO
 }
 
-func (self *FontBuilderIO) handle() (result *C.ImFontBuilderIO, fin func()) {
+// Handle returns C version of FontBuilderIO and its finalizer func.
+func (self *FontBuilderIO) Handle() (result *C.ImFontBuilderIO, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self FontBuilderIO) c() (C.ImFontBuilderIO, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self FontBuilderIO) C() (C.ImFontBuilderIO, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newFontBuilderIOFromC(cvalue *C.ImFontBuilderIO) *FontBuilderIO {
-	return &FontBuilderIO{CData: cvalue}
+// NewFontBuilderIOFromC creates FontBuilderIO from its C pointer.
+// SRC ~= *C.ImFontBuilderIO
+func NewFontBuilderIOFromC[SRC any](cvalue SRC) *FontBuilderIO {
+	return &FontBuilderIO{CData: ConvertCTypes[*C.ImFontBuilderIO](cvalue)}
 }
 
 type FontConfig struct {
 	CData *C.ImFontConfig
 }
 
-func (self *FontConfig) handle() (result *C.ImFontConfig, fin func()) {
+// Handle returns C version of FontConfig and its finalizer func.
+func (self *FontConfig) Handle() (result *C.ImFontConfig, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self FontConfig) c() (C.ImFontConfig, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self FontConfig) C() (C.ImFontConfig, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newFontConfigFromC(cvalue *C.ImFontConfig) *FontConfig {
-	return &FontConfig{CData: cvalue}
+// NewFontConfigFromC creates FontConfig from its C pointer.
+// SRC ~= *C.ImFontConfig
+func NewFontConfigFromC[SRC any](cvalue SRC) *FontConfig {
+	return &FontConfig{CData: ConvertCTypes[*C.ImFontConfig](cvalue)}
 }
 
 type FontGlyph struct {
 	CData *C.ImFontGlyph
 }
 
-func (self *FontGlyph) handle() (result *C.ImFontGlyph, fin func()) {
+// Handle returns C version of FontGlyph and its finalizer func.
+func (self *FontGlyph) Handle() (result *C.ImFontGlyph, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self FontGlyph) c() (C.ImFontGlyph, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self FontGlyph) C() (C.ImFontGlyph, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newFontGlyphFromC(cvalue *C.ImFontGlyph) *FontGlyph {
-	return &FontGlyph{CData: cvalue}
+// NewFontGlyphFromC creates FontGlyph from its C pointer.
+// SRC ~= *C.ImFontGlyph
+func NewFontGlyphFromC[SRC any](cvalue SRC) *FontGlyph {
+	return &FontGlyph{CData: ConvertCTypes[*C.ImFontGlyph](cvalue)}
 }
 
 type FontGlyphRangesBuilder struct {
 	CData *C.ImFontGlyphRangesBuilder
 }
 
-func (self *FontGlyphRangesBuilder) handle() (result *C.ImFontGlyphRangesBuilder, fin func()) {
+// Handle returns C version of FontGlyphRangesBuilder and its finalizer func.
+func (self *FontGlyphRangesBuilder) Handle() (result *C.ImFontGlyphRangesBuilder, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self FontGlyphRangesBuilder) c() (C.ImFontGlyphRangesBuilder, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self FontGlyphRangesBuilder) C() (C.ImFontGlyphRangesBuilder, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newFontGlyphRangesBuilderFromC(cvalue *C.ImFontGlyphRangesBuilder) *FontGlyphRangesBuilder {
-	return &FontGlyphRangesBuilder{CData: cvalue}
+// NewFontGlyphRangesBuilderFromC creates FontGlyphRangesBuilder from its C pointer.
+// SRC ~= *C.ImFontGlyphRangesBuilder
+func NewFontGlyphRangesBuilderFromC[SRC any](cvalue SRC) *FontGlyphRangesBuilder {
+	return &FontGlyphRangesBuilder{CData: ConvertCTypes[*C.ImFontGlyphRangesBuilder](cvalue)}
 }
 
 type ColorMod struct {
 	CData *C.ImGuiColorMod
 }
 
-func (self *ColorMod) handle() (result *C.ImGuiColorMod, fin func()) {
+// Handle returns C version of ColorMod and its finalizer func.
+func (self *ColorMod) Handle() (result *C.ImGuiColorMod, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self ColorMod) c() (C.ImGuiColorMod, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self ColorMod) C() (C.ImGuiColorMod, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newColorModFromC(cvalue *C.ImGuiColorMod) *ColorMod {
-	return &ColorMod{CData: cvalue}
+// NewColorModFromC creates ColorMod from its C pointer.
+// SRC ~= *C.ImGuiColorMod
+func NewColorModFromC[SRC any](cvalue SRC) *ColorMod {
+	return &ColorMod{CData: ConvertCTypes[*C.ImGuiColorMod](cvalue)}
 }
 
 type ComboPreviewData struct {
 	CData *C.ImGuiComboPreviewData
 }
 
-func (self *ComboPreviewData) handle() (result *C.ImGuiComboPreviewData, fin func()) {
+// Handle returns C version of ComboPreviewData and its finalizer func.
+func (self *ComboPreviewData) Handle() (result *C.ImGuiComboPreviewData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self ComboPreviewData) c() (C.ImGuiComboPreviewData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self ComboPreviewData) C() (C.ImGuiComboPreviewData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newComboPreviewDataFromC(cvalue *C.ImGuiComboPreviewData) *ComboPreviewData {
-	return &ComboPreviewData{CData: cvalue}
+// NewComboPreviewDataFromC creates ComboPreviewData from its C pointer.
+// SRC ~= *C.ImGuiComboPreviewData
+func NewComboPreviewDataFromC[SRC any](cvalue SRC) *ComboPreviewData {
+	return &ComboPreviewData{CData: ConvertCTypes[*C.ImGuiComboPreviewData](cvalue)}
 }
 
 type Context struct {
 	CData *C.ImGuiContext
 }
 
-func (self *Context) handle() (result *C.ImGuiContext, fin func()) {
+// Handle returns C version of Context and its finalizer func.
+func (self *Context) Handle() (result *C.ImGuiContext, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self Context) c() (C.ImGuiContext, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self Context) C() (C.ImGuiContext, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newContextFromC(cvalue *C.ImGuiContext) *Context {
-	return &Context{CData: cvalue}
+// NewContextFromC creates Context from its C pointer.
+// SRC ~= *C.ImGuiContext
+func NewContextFromC[SRC any](cvalue SRC) *Context {
+	return &Context{CData: ConvertCTypes[*C.ImGuiContext](cvalue)}
 }
 
 type ContextHook struct {
 	CData *C.ImGuiContextHook
 }
 
-func (self *ContextHook) handle() (result *C.ImGuiContextHook, fin func()) {
+// Handle returns C version of ContextHook and its finalizer func.
+func (self *ContextHook) Handle() (result *C.ImGuiContextHook, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self ContextHook) c() (C.ImGuiContextHook, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self ContextHook) C() (C.ImGuiContextHook, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newContextHookFromC(cvalue *C.ImGuiContextHook) *ContextHook {
-	return &ContextHook{CData: cvalue}
+// NewContextHookFromC creates ContextHook from its C pointer.
+// SRC ~= *C.ImGuiContextHook
+func NewContextHookFromC[SRC any](cvalue SRC) *ContextHook {
+	return &ContextHook{CData: ConvertCTypes[*C.ImGuiContextHook](cvalue)}
 }
 
 type DataTypeInfo struct {
 	CData *C.ImGuiDataTypeInfo
 }
 
-func (self *DataTypeInfo) handle() (result *C.ImGuiDataTypeInfo, fin func()) {
+// Handle returns C version of DataTypeInfo and its finalizer func.
+func (self *DataTypeInfo) Handle() (result *C.ImGuiDataTypeInfo, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DataTypeInfo) c() (C.ImGuiDataTypeInfo, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DataTypeInfo) C() (C.ImGuiDataTypeInfo, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDataTypeInfoFromC(cvalue *C.ImGuiDataTypeInfo) *DataTypeInfo {
-	return &DataTypeInfo{CData: cvalue}
+// NewDataTypeInfoFromC creates DataTypeInfo from its C pointer.
+// SRC ~= *C.ImGuiDataTypeInfo
+func NewDataTypeInfoFromC[SRC any](cvalue SRC) *DataTypeInfo {
+	return &DataTypeInfo{CData: ConvertCTypes[*C.ImGuiDataTypeInfo](cvalue)}
 }
 
 type DataTypeTempStorage struct {
 	CData *C.ImGuiDataTypeTempStorage
 }
 
-func (self *DataTypeTempStorage) handle() (result *C.ImGuiDataTypeTempStorage, fin func()) {
+// Handle returns C version of DataTypeTempStorage and its finalizer func.
+func (self *DataTypeTempStorage) Handle() (result *C.ImGuiDataTypeTempStorage, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DataTypeTempStorage) c() (C.ImGuiDataTypeTempStorage, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DataTypeTempStorage) C() (C.ImGuiDataTypeTempStorage, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDataTypeTempStorageFromC(cvalue *C.ImGuiDataTypeTempStorage) *DataTypeTempStorage {
-	return &DataTypeTempStorage{CData: cvalue}
+// NewDataTypeTempStorageFromC creates DataTypeTempStorage from its C pointer.
+// SRC ~= *C.ImGuiDataTypeTempStorage
+func NewDataTypeTempStorageFromC[SRC any](cvalue SRC) *DataTypeTempStorage {
+	return &DataTypeTempStorage{CData: ConvertCTypes[*C.ImGuiDataTypeTempStorage](cvalue)}
 }
 
 type DataVarInfo struct {
 	CData *C.ImGuiDataVarInfo
 }
 
-func (self *DataVarInfo) handle() (result *C.ImGuiDataVarInfo, fin func()) {
+// Handle returns C version of DataVarInfo and its finalizer func.
+func (self *DataVarInfo) Handle() (result *C.ImGuiDataVarInfo, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DataVarInfo) c() (C.ImGuiDataVarInfo, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DataVarInfo) C() (C.ImGuiDataVarInfo, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDataVarInfoFromC(cvalue *C.ImGuiDataVarInfo) *DataVarInfo {
-	return &DataVarInfo{CData: cvalue}
+// NewDataVarInfoFromC creates DataVarInfo from its C pointer.
+// SRC ~= *C.ImGuiDataVarInfo
+func NewDataVarInfoFromC[SRC any](cvalue SRC) *DataVarInfo {
+	return &DataVarInfo{CData: ConvertCTypes[*C.ImGuiDataVarInfo](cvalue)}
 }
 
 type DebugAllocEntry struct {
 	CData *C.ImGuiDebugAllocEntry
 }
 
-func (self *DebugAllocEntry) handle() (result *C.ImGuiDebugAllocEntry, fin func()) {
+// Handle returns C version of DebugAllocEntry and its finalizer func.
+func (self *DebugAllocEntry) Handle() (result *C.ImGuiDebugAllocEntry, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DebugAllocEntry) c() (C.ImGuiDebugAllocEntry, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DebugAllocEntry) C() (C.ImGuiDebugAllocEntry, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDebugAllocEntryFromC(cvalue *C.ImGuiDebugAllocEntry) *DebugAllocEntry {
-	return &DebugAllocEntry{CData: cvalue}
+// NewDebugAllocEntryFromC creates DebugAllocEntry from its C pointer.
+// SRC ~= *C.ImGuiDebugAllocEntry
+func NewDebugAllocEntryFromC[SRC any](cvalue SRC) *DebugAllocEntry {
+	return &DebugAllocEntry{CData: ConvertCTypes[*C.ImGuiDebugAllocEntry](cvalue)}
 }
 
 type DebugAllocInfo struct {
 	CData *C.ImGuiDebugAllocInfo
 }
 
-func (self *DebugAllocInfo) handle() (result *C.ImGuiDebugAllocInfo, fin func()) {
+// Handle returns C version of DebugAllocInfo and its finalizer func.
+func (self *DebugAllocInfo) Handle() (result *C.ImGuiDebugAllocInfo, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DebugAllocInfo) c() (C.ImGuiDebugAllocInfo, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DebugAllocInfo) C() (C.ImGuiDebugAllocInfo, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDebugAllocInfoFromC(cvalue *C.ImGuiDebugAllocInfo) *DebugAllocInfo {
-	return &DebugAllocInfo{CData: cvalue}
+// NewDebugAllocInfoFromC creates DebugAllocInfo from its C pointer.
+// SRC ~= *C.ImGuiDebugAllocInfo
+func NewDebugAllocInfoFromC[SRC any](cvalue SRC) *DebugAllocInfo {
+	return &DebugAllocInfo{CData: ConvertCTypes[*C.ImGuiDebugAllocInfo](cvalue)}
 }
 
 type DockContext struct {
 	CData *C.ImGuiDockContext
 }
 
-func (self *DockContext) handle() (result *C.ImGuiDockContext, fin func()) {
+// Handle returns C version of DockContext and its finalizer func.
+func (self *DockContext) Handle() (result *C.ImGuiDockContext, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DockContext) c() (C.ImGuiDockContext, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DockContext) C() (C.ImGuiDockContext, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDockContextFromC(cvalue *C.ImGuiDockContext) *DockContext {
-	return &DockContext{CData: cvalue}
+// NewDockContextFromC creates DockContext from its C pointer.
+// SRC ~= *C.ImGuiDockContext
+func NewDockContextFromC[SRC any](cvalue SRC) *DockContext {
+	return &DockContext{CData: ConvertCTypes[*C.ImGuiDockContext](cvalue)}
 }
 
 type DockNode struct {
 	CData *C.ImGuiDockNode
 }
 
-func (self *DockNode) handle() (result *C.ImGuiDockNode, fin func()) {
+// Handle returns C version of DockNode and its finalizer func.
+func (self *DockNode) Handle() (result *C.ImGuiDockNode, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self DockNode) c() (C.ImGuiDockNode, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self DockNode) C() (C.ImGuiDockNode, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newDockNodeFromC(cvalue *C.ImGuiDockNode) *DockNode {
-	return &DockNode{CData: cvalue}
+// NewDockNodeFromC creates DockNode from its C pointer.
+// SRC ~= *C.ImGuiDockNode
+func NewDockNodeFromC[SRC any](cvalue SRC) *DockNode {
+	return &DockNode{CData: ConvertCTypes[*C.ImGuiDockNode](cvalue)}
 }
 
 type DockNodeSettings struct {
 	CData *C.ImGuiDockNodeSettings
 }
 
-func (self *DockNodeSettings) handle() (result *C.ImGuiDockNodeSettings, fin func()) {
+// Handle returns C version of DockNodeSettings and its finalizer func.
+func (self *DockNodeSettings) Handle() (result *C.ImGuiDockNodeSettings, fin func()) {
 	return self.CData, func() {}
 }
 
-func newDockNodeSettingsFromC(cvalue *C.ImGuiDockNodeSettings) *DockNodeSettings {
-	return &DockNodeSettings{CData: cvalue}
+// NewDockNodeSettingsFromC creates DockNodeSettings from its C pointer.
+// SRC ~= *C.ImGuiDockNodeSettings
+func NewDockNodeSettingsFromC[SRC any](cvalue SRC) *DockNodeSettings {
+	return &DockNodeSettings{CData: ConvertCTypes[*C.ImGuiDockNodeSettings](cvalue)}
 }
 
 type DockRequest struct {
 	CData *C.ImGuiDockRequest
 }
 
-func (self *DockRequest) handle() (result *C.ImGuiDockRequest, fin func()) {
+// Handle returns C version of DockRequest and its finalizer func.
+func (self *DockRequest) Handle() (result *C.ImGuiDockRequest, fin func()) {
 	return self.CData, func() {}
 }
 
-func newDockRequestFromC(cvalue *C.ImGuiDockRequest) *DockRequest {
-	return &DockRequest{CData: cvalue}
+// NewDockRequestFromC creates DockRequest from its C pointer.
+// SRC ~= *C.ImGuiDockRequest
+func NewDockRequestFromC[SRC any](cvalue SRC) *DockRequest {
+	return &DockRequest{CData: ConvertCTypes[*C.ImGuiDockRequest](cvalue)}
 }
 
 type FocusScopeData struct {
 	CData *C.ImGuiFocusScopeData
 }
 
-func (self *FocusScopeData) handle() (result *C.ImGuiFocusScopeData, fin func()) {
+// Handle returns C version of FocusScopeData and its finalizer func.
+func (self *FocusScopeData) Handle() (result *C.ImGuiFocusScopeData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self FocusScopeData) c() (C.ImGuiFocusScopeData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self FocusScopeData) C() (C.ImGuiFocusScopeData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newFocusScopeDataFromC(cvalue *C.ImGuiFocusScopeData) *FocusScopeData {
-	return &FocusScopeData{CData: cvalue}
+// NewFocusScopeDataFromC creates FocusScopeData from its C pointer.
+// SRC ~= *C.ImGuiFocusScopeData
+func NewFocusScopeDataFromC[SRC any](cvalue SRC) *FocusScopeData {
+	return &FocusScopeData{CData: ConvertCTypes[*C.ImGuiFocusScopeData](cvalue)}
 }
 
 type GroupData struct {
 	CData *C.ImGuiGroupData
 }
 
-func (self *GroupData) handle() (result *C.ImGuiGroupData, fin func()) {
+// Handle returns C version of GroupData and its finalizer func.
+func (self *GroupData) Handle() (result *C.ImGuiGroupData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self GroupData) c() (C.ImGuiGroupData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self GroupData) C() (C.ImGuiGroupData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newGroupDataFromC(cvalue *C.ImGuiGroupData) *GroupData {
-	return &GroupData{CData: cvalue}
+// NewGroupDataFromC creates GroupData from its C pointer.
+// SRC ~= *C.ImGuiGroupData
+func NewGroupDataFromC[SRC any](cvalue SRC) *GroupData {
+	return &GroupData{CData: ConvertCTypes[*C.ImGuiGroupData](cvalue)}
 }
 
 type ID uint32
 
-func (selfSrc *ID) handle() (result *C.ImGuiID, fin func()) {
+// Handle returns C version of ID and its finalizer func.
+func (selfSrc *ID) Handle() (result *C.ImGuiID, fin func()) {
 	self := (*uint32)(selfSrc)
 	selfArg, selfFin := WrapNumberPtr[C.uint, uint32](self)
 	return (*C.ImGuiID)(selfArg), func() { selfFin() }
 }
 
-func (self ID) c() (C.ImGuiID, func()) {
+// C is like Handle but returns plain type instead of pointer.
+func (self ID) C() (C.ImGuiID, func()) {
 	return (C.ImGuiID)(C.uint(self)), func() {}
 }
 
-func newIDFromC(cvalue *C.ImGuiID) *ID {
-	return (*ID)((*uint32)(cvalue))
+// NewIDFromC creates ID from its C pointer.
+// SRC ~= *C.ImGuiID
+func NewIDFromC[SRC any](cvalue SRC) *ID {
+	return (*ID)((*uint32)(ConvertCTypes[*C.ImGuiID](cvalue)))
 }
 
 type IDStackTool struct {
 	CData *C.ImGuiIDStackTool
 }
 
-func (self *IDStackTool) handle() (result *C.ImGuiIDStackTool, fin func()) {
+// Handle returns C version of IDStackTool and its finalizer func.
+func (self *IDStackTool) Handle() (result *C.ImGuiIDStackTool, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self IDStackTool) c() (C.ImGuiIDStackTool, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self IDStackTool) C() (C.ImGuiIDStackTool, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newIDStackToolFromC(cvalue *C.ImGuiIDStackTool) *IDStackTool {
-	return &IDStackTool{CData: cvalue}
+// NewIDStackToolFromC creates IDStackTool from its C pointer.
+// SRC ~= *C.ImGuiIDStackTool
+func NewIDStackToolFromC[SRC any](cvalue SRC) *IDStackTool {
+	return &IDStackTool{CData: ConvertCTypes[*C.ImGuiIDStackTool](cvalue)}
 }
 
 type IO struct {
 	CData *C.ImGuiIO
 }
 
-func (self *IO) handle() (result *C.ImGuiIO, fin func()) {
+// Handle returns C version of IO and its finalizer func.
+func (self *IO) Handle() (result *C.ImGuiIO, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self IO) c() (C.ImGuiIO, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self IO) C() (C.ImGuiIO, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newIOFromC(cvalue *C.ImGuiIO) *IO {
-	return &IO{CData: cvalue}
+// NewIOFromC creates IO from its C pointer.
+// SRC ~= *C.ImGuiIO
+func NewIOFromC[SRC any](cvalue SRC) *IO {
+	return &IO{CData: ConvertCTypes[*C.ImGuiIO](cvalue)}
 }
 
 type InputEvent struct {
 	CData *C.ImGuiInputEvent
 }
 
-func (self *InputEvent) handle() (result *C.ImGuiInputEvent, fin func()) {
+// Handle returns C version of InputEvent and its finalizer func.
+func (self *InputEvent) Handle() (result *C.ImGuiInputEvent, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self InputEvent) c() (C.ImGuiInputEvent, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self InputEvent) C() (C.ImGuiInputEvent, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newInputEventFromC(cvalue *C.ImGuiInputEvent) *InputEvent {
-	return &InputEvent{CData: cvalue}
+// NewInputEventFromC creates InputEvent from its C pointer.
+// SRC ~= *C.ImGuiInputEvent
+func NewInputEventFromC[SRC any](cvalue SRC) *InputEvent {
+	return &InputEvent{CData: ConvertCTypes[*C.ImGuiInputEvent](cvalue)}
 }
 
 type InputEventAppFocused struct {
 	CData *C.ImGuiInputEventAppFocused
 }
 
-func (self *InputEventAppFocused) handle() (result *C.ImGuiInputEventAppFocused, fin func()) {
+// Handle returns C version of InputEventAppFocused and its finalizer func.
+func (self *InputEventAppFocused) Handle() (result *C.ImGuiInputEventAppFocused, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self InputEventAppFocused) c() (C.ImGuiInputEventAppFocused, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self InputEventAppFocused) C() (C.ImGuiInputEventAppFocused, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newInputEventAppFocusedFromC(cvalue *C.ImGuiInputEventAppFocused) *InputEventAppFocused {
-	return &InputEventAppFocused{CData: cvalue}
+// NewInputEventAppFocusedFromC creates InputEventAppFocused from its C pointer.
+// SRC ~= *C.ImGuiInputEventAppFocused
+func NewInputEventAppFocusedFromC[SRC any](cvalue SRC) *InputEventAppFocused {
+	return &InputEventAppFocused{CData: ConvertCTypes[*C.ImGuiInputEventAppFocused](cvalue)}
 }
 
 type InputEventKey struct {
 	CData *C.ImGuiInputEventKey
 }
 
-func (self *InputEventKey) handle() (result *C.ImGuiInputEventKey, fin func()) {
+// Handle returns C version of InputEventKey and its finalizer func.
+func (self *InputEventKey) Handle() (result *C.ImGuiInputEventKey, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self InputEventKey) c() (C.ImGuiInputEventKey, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self InputEventKey) C() (C.ImGuiInputEventKey, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newInputEventKeyFromC(cvalue *C.ImGuiInputEventKey) *InputEventKey {
-	return &InputEventKey{CData: cvalue}
+// NewInputEventKeyFromC creates InputEventKey from its C pointer.
+// SRC ~= *C.ImGuiInputEventKey
+func NewInputEventKeyFromC[SRC any](cvalue SRC) *InputEventKey {
+	return &InputEventKey{CData: ConvertCTypes[*C.ImGuiInputEventKey](cvalue)}
 }
 
 type InputEventMouseButton struct {
 	CData *C.ImGuiInputEventMouseButton
 }
 
-func (self *InputEventMouseButton) handle() (result *C.ImGuiInputEventMouseButton, fin func()) {
+// Handle returns C version of InputEventMouseButton and its finalizer func.
+func (self *InputEventMouseButton) Handle() (result *C.ImGuiInputEventMouseButton, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self InputEventMouseButton) c() (C.ImGuiInputEventMouseButton, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self InputEventMouseButton) C() (C.ImGuiInputEventMouseButton, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newInputEventMouseButtonFromC(cvalue *C.ImGuiInputEventMouseButton) *InputEventMouseButton {
-	return &InputEventMouseButton{CData: cvalue}
+// NewInputEventMouseButtonFromC creates InputEventMouseButton from its C pointer.
+// SRC ~= *C.ImGuiInputEventMouseButton
+func NewInputEventMouseButtonFromC[SRC any](cvalue SRC) *InputEventMouseButton {
+	return &InputEventMouseButton{CData: ConvertCTypes[*C.ImGuiInputEventMouseButton](cvalue)}
 }
 
 type InputEventMousePos struct {
 	CData *C.ImGuiInputEventMousePos
 }
 
-func (self *InputEventMousePos) handle() (result *C.ImGuiInputEventMousePos, fin func()) {
+// Handle returns C version of InputEventMousePos and its finalizer func.
+func (self *InputEventMousePos) Handle() (result *C.ImGuiInputEventMousePos, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self InputEventMousePos) c() (C.ImGuiInputEventMousePos, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self InputEventMousePos) C() (C.ImGuiInputEventMousePos, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newInputEventMousePosFromC(cvalue *C.ImGuiInputEventMousePos) *InputEventMousePos {
-	return &InputEventMousePos{CData: cvalue}
+// NewInputEventMousePosFromC creates InputEventMousePos from its C pointer.
+// SRC ~= *C.ImGuiInputEventMousePos
+func NewInputEventMousePosFromC[SRC any](cvalue SRC) *InputEventMousePos {
+	return &InputEventMousePos{CData: ConvertCTypes[*C.ImGuiInputEventMousePos](cvalue)}
 }
 
 type InputEventMouseViewport struct {
 	CData *C.ImGuiInputEventMouseViewport
 }
 
-func (self *InputEventMouseViewport) handle() (result *C.ImGuiInputEventMouseViewport, fin func()) {
+// Handle returns C version of InputEventMouseViewport and its finalizer func.
+func (self *InputEventMouseViewport) Handle() (result *C.ImGuiInputEventMouseViewport, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self InputEventMouseViewport) c() (C.ImGuiInputEventMouseViewport, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self InputEventMouseViewport) C() (C.ImGuiInputEventMouseViewport, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newInputEventMouseViewportFromC(cvalue *C.ImGuiInputEventMouseViewport) *InputEventMouseViewport {
-	return &InputEventMouseViewport{CData: cvalue}
+// NewInputEventMouseViewportFromC creates InputEventMouseViewport from its C pointer.
+// SRC ~= *C.ImGuiInputEventMouseViewport
+func NewInputEventMouseViewportFromC[SRC any](cvalue SRC) *InputEventMouseViewport {
+	return &InputEventMouseViewport{CData: ConvertCTypes[*C.ImGuiInputEventMouseViewport](cvalue)}
 }
 
 type InputEventMouseWheel struct {
 	CData *C.ImGuiInputEventMouseWheel
 }
 
-func (self *InputEventMouseWheel) handle() (result *C.ImGuiInputEventMouseWheel, fin func()) {
+// Handle returns C version of InputEventMouseWheel and its finalizer func.
+func (self *InputEventMouseWheel) Handle() (result *C.ImGuiInputEventMouseWheel, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self InputEventMouseWheel) c() (C.ImGuiInputEventMouseWheel, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self InputEventMouseWheel) C() (C.ImGuiInputEventMouseWheel, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newInputEventMouseWheelFromC(cvalue *C.ImGuiInputEventMouseWheel) *InputEventMouseWheel {
-	return &InputEventMouseWheel{CData: cvalue}
+// NewInputEventMouseWheelFromC creates InputEventMouseWheel from its C pointer.
+// SRC ~= *C.ImGuiInputEventMouseWheel
+func NewInputEventMouseWheelFromC[SRC any](cvalue SRC) *InputEventMouseWheel {
+	return &InputEventMouseWheel{CData: ConvertCTypes[*C.ImGuiInputEventMouseWheel](cvalue)}
 }
 
 type InputEventText struct {
 	CData *C.ImGuiInputEventText
 }
 
-func (self *InputEventText) handle() (result *C.ImGuiInputEventText, fin func()) {
+// Handle returns C version of InputEventText and its finalizer func.
+func (self *InputEventText) Handle() (result *C.ImGuiInputEventText, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self InputEventText) c() (C.ImGuiInputEventText, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self InputEventText) C() (C.ImGuiInputEventText, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newInputEventTextFromC(cvalue *C.ImGuiInputEventText) *InputEventText {
-	return &InputEventText{CData: cvalue}
+// NewInputEventTextFromC creates InputEventText from its C pointer.
+// SRC ~= *C.ImGuiInputEventText
+func NewInputEventTextFromC[SRC any](cvalue SRC) *InputEventText {
+	return &InputEventText{CData: ConvertCTypes[*C.ImGuiInputEventText](cvalue)}
 }
 
 type InputTextCallbackData struct {
 	CData *C.ImGuiInputTextCallbackData
 }
 
-func (self *InputTextCallbackData) handle() (result *C.ImGuiInputTextCallbackData, fin func()) {
+// Handle returns C version of InputTextCallbackData and its finalizer func.
+func (self *InputTextCallbackData) Handle() (result *C.ImGuiInputTextCallbackData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self InputTextCallbackData) c() (C.ImGuiInputTextCallbackData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self InputTextCallbackData) C() (C.ImGuiInputTextCallbackData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newInputTextCallbackDataFromC(cvalue *C.ImGuiInputTextCallbackData) *InputTextCallbackData {
-	return &InputTextCallbackData{CData: cvalue}
+// NewInputTextCallbackDataFromC creates InputTextCallbackData from its C pointer.
+// SRC ~= *C.ImGuiInputTextCallbackData
+func NewInputTextCallbackDataFromC[SRC any](cvalue SRC) *InputTextCallbackData {
+	return &InputTextCallbackData{CData: ConvertCTypes[*C.ImGuiInputTextCallbackData](cvalue)}
 }
 
 type InputTextDeactivateData struct {
 	CData *C.ImGuiInputTextDeactivateData
 }
 
-func (self *InputTextDeactivateData) handle() (result *C.ImGuiInputTextDeactivateData, fin func()) {
+// Handle returns C version of InputTextDeactivateData and its finalizer func.
+func (self *InputTextDeactivateData) Handle() (result *C.ImGuiInputTextDeactivateData, fin func()) {
 	return self.CData, func() {}
 }
 
-func newInputTextDeactivateDataFromC(cvalue *C.ImGuiInputTextDeactivateData) *InputTextDeactivateData {
-	return &InputTextDeactivateData{CData: cvalue}
+// NewInputTextDeactivateDataFromC creates InputTextDeactivateData from its C pointer.
+// SRC ~= *C.ImGuiInputTextDeactivateData
+func NewInputTextDeactivateDataFromC[SRC any](cvalue SRC) *InputTextDeactivateData {
+	return &InputTextDeactivateData{CData: ConvertCTypes[*C.ImGuiInputTextDeactivateData](cvalue)}
 }
 
 type InputTextDeactivatedState struct {
 	CData *C.ImGuiInputTextDeactivatedState
 }
 
-func (self *InputTextDeactivatedState) handle() (result *C.ImGuiInputTextDeactivatedState, fin func()) {
+// Handle returns C version of InputTextDeactivatedState and its finalizer func.
+func (self *InputTextDeactivatedState) Handle() (result *C.ImGuiInputTextDeactivatedState, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self InputTextDeactivatedState) c() (C.ImGuiInputTextDeactivatedState, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self InputTextDeactivatedState) C() (C.ImGuiInputTextDeactivatedState, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newInputTextDeactivatedStateFromC(cvalue *C.ImGuiInputTextDeactivatedState) *InputTextDeactivatedState {
-	return &InputTextDeactivatedState{CData: cvalue}
+// NewInputTextDeactivatedStateFromC creates InputTextDeactivatedState from its C pointer.
+// SRC ~= *C.ImGuiInputTextDeactivatedState
+func NewInputTextDeactivatedStateFromC[SRC any](cvalue SRC) *InputTextDeactivatedState {
+	return &InputTextDeactivatedState{CData: ConvertCTypes[*C.ImGuiInputTextDeactivatedState](cvalue)}
 }
 
 type InputTextState struct {
 	CData *C.ImGuiInputTextState
 }
 
-func (self *InputTextState) handle() (result *C.ImGuiInputTextState, fin func()) {
+// Handle returns C version of InputTextState and its finalizer func.
+func (self *InputTextState) Handle() (result *C.ImGuiInputTextState, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self InputTextState) c() (C.ImGuiInputTextState, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self InputTextState) C() (C.ImGuiInputTextState, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newInputTextStateFromC(cvalue *C.ImGuiInputTextState) *InputTextState {
-	return &InputTextState{CData: cvalue}
+// NewInputTextStateFromC creates InputTextState from its C pointer.
+// SRC ~= *C.ImGuiInputTextState
+func NewInputTextStateFromC[SRC any](cvalue SRC) *InputTextState {
+	return &InputTextState{CData: ConvertCTypes[*C.ImGuiInputTextState](cvalue)}
 }
 
 type KeyChord int32
 
-func (selfSrc *KeyChord) handle() (result *C.ImGuiKeyChord, fin func()) {
+// Handle returns C version of KeyChord and its finalizer func.
+func (selfSrc *KeyChord) Handle() (result *C.ImGuiKeyChord, fin func()) {
 	self := (*int32)(selfSrc)
 	selfArg, selfFin := WrapNumberPtr[C.int, int32](self)
 	return (*C.ImGuiKeyChord)(selfArg), func() { selfFin() }
 }
 
-func (self KeyChord) c() (C.ImGuiKeyChord, func()) {
+// C is like Handle but returns plain type instead of pointer.
+func (self KeyChord) C() (C.ImGuiKeyChord, func()) {
 	return (C.ImGuiKeyChord)(C.int(self)), func() {}
 }
 
-func newKeyChordFromC(cvalue *C.ImGuiKeyChord) *KeyChord {
-	return (*KeyChord)((*int32)(cvalue))
+// NewKeyChordFromC creates KeyChord from its C pointer.
+// SRC ~= *C.ImGuiKeyChord
+func NewKeyChordFromC[SRC any](cvalue SRC) *KeyChord {
+	return (*KeyChord)((*int32)(ConvertCTypes[*C.ImGuiKeyChord](cvalue)))
 }
 
 type KeyData struct {
 	CData *C.ImGuiKeyData
 }
 
-func (self *KeyData) handle() (result *C.ImGuiKeyData, fin func()) {
+// Handle returns C version of KeyData and its finalizer func.
+func (self *KeyData) Handle() (result *C.ImGuiKeyData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self KeyData) c() (C.ImGuiKeyData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self KeyData) C() (C.ImGuiKeyData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newKeyDataFromC(cvalue *C.ImGuiKeyData) *KeyData {
-	return &KeyData{CData: cvalue}
+// NewKeyDataFromC creates KeyData from its C pointer.
+// SRC ~= *C.ImGuiKeyData
+func NewKeyDataFromC[SRC any](cvalue SRC) *KeyData {
+	return &KeyData{CData: ConvertCTypes[*C.ImGuiKeyData](cvalue)}
 }
 
 type KeyOwnerData struct {
 	CData *C.ImGuiKeyOwnerData
 }
 
-func (self *KeyOwnerData) handle() (result *C.ImGuiKeyOwnerData, fin func()) {
+// Handle returns C version of KeyOwnerData and its finalizer func.
+func (self *KeyOwnerData) Handle() (result *C.ImGuiKeyOwnerData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self KeyOwnerData) c() (C.ImGuiKeyOwnerData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self KeyOwnerData) C() (C.ImGuiKeyOwnerData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newKeyOwnerDataFromC(cvalue *C.ImGuiKeyOwnerData) *KeyOwnerData {
-	return &KeyOwnerData{CData: cvalue}
+// NewKeyOwnerDataFromC creates KeyOwnerData from its C pointer.
+// SRC ~= *C.ImGuiKeyOwnerData
+func NewKeyOwnerDataFromC[SRC any](cvalue SRC) *KeyOwnerData {
+	return &KeyOwnerData{CData: ConvertCTypes[*C.ImGuiKeyOwnerData](cvalue)}
 }
 
 type KeyRoutingData struct {
 	CData *C.ImGuiKeyRoutingData
 }
 
-func (self *KeyRoutingData) handle() (result *C.ImGuiKeyRoutingData, fin func()) {
+// Handle returns C version of KeyRoutingData and its finalizer func.
+func (self *KeyRoutingData) Handle() (result *C.ImGuiKeyRoutingData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self KeyRoutingData) c() (C.ImGuiKeyRoutingData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self KeyRoutingData) C() (C.ImGuiKeyRoutingData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newKeyRoutingDataFromC(cvalue *C.ImGuiKeyRoutingData) *KeyRoutingData {
-	return &KeyRoutingData{CData: cvalue}
+// NewKeyRoutingDataFromC creates KeyRoutingData from its C pointer.
+// SRC ~= *C.ImGuiKeyRoutingData
+func NewKeyRoutingDataFromC[SRC any](cvalue SRC) *KeyRoutingData {
+	return &KeyRoutingData{CData: ConvertCTypes[*C.ImGuiKeyRoutingData](cvalue)}
 }
 
 type KeyRoutingTable struct {
 	CData *C.ImGuiKeyRoutingTable
 }
 
-func (self *KeyRoutingTable) handle() (result *C.ImGuiKeyRoutingTable, fin func()) {
+// Handle returns C version of KeyRoutingTable and its finalizer func.
+func (self *KeyRoutingTable) Handle() (result *C.ImGuiKeyRoutingTable, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self KeyRoutingTable) c() (C.ImGuiKeyRoutingTable, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self KeyRoutingTable) C() (C.ImGuiKeyRoutingTable, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newKeyRoutingTableFromC(cvalue *C.ImGuiKeyRoutingTable) *KeyRoutingTable {
-	return &KeyRoutingTable{CData: cvalue}
+// NewKeyRoutingTableFromC creates KeyRoutingTable from its C pointer.
+// SRC ~= *C.ImGuiKeyRoutingTable
+func NewKeyRoutingTableFromC[SRC any](cvalue SRC) *KeyRoutingTable {
+	return &KeyRoutingTable{CData: ConvertCTypes[*C.ImGuiKeyRoutingTable](cvalue)}
 }
 
 type LastItemData struct {
 	CData *C.ImGuiLastItemData
 }
 
-func (self *LastItemData) handle() (result *C.ImGuiLastItemData, fin func()) {
+// Handle returns C version of LastItemData and its finalizer func.
+func (self *LastItemData) Handle() (result *C.ImGuiLastItemData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self LastItemData) c() (C.ImGuiLastItemData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self LastItemData) C() (C.ImGuiLastItemData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newLastItemDataFromC(cvalue *C.ImGuiLastItemData) *LastItemData {
-	return &LastItemData{CData: cvalue}
+// NewLastItemDataFromC creates LastItemData from its C pointer.
+// SRC ~= *C.ImGuiLastItemData
+func NewLastItemDataFromC[SRC any](cvalue SRC) *LastItemData {
+	return &LastItemData{CData: ConvertCTypes[*C.ImGuiLastItemData](cvalue)}
 }
 
 type ListClipper struct {
 	CData *C.ImGuiListClipper
 }
 
-func (self *ListClipper) handle() (result *C.ImGuiListClipper, fin func()) {
+// Handle returns C version of ListClipper and its finalizer func.
+func (self *ListClipper) Handle() (result *C.ImGuiListClipper, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self ListClipper) c() (C.ImGuiListClipper, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self ListClipper) C() (C.ImGuiListClipper, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newListClipperFromC(cvalue *C.ImGuiListClipper) *ListClipper {
-	return &ListClipper{CData: cvalue}
+// NewListClipperFromC creates ListClipper from its C pointer.
+// SRC ~= *C.ImGuiListClipper
+func NewListClipperFromC[SRC any](cvalue SRC) *ListClipper {
+	return &ListClipper{CData: ConvertCTypes[*C.ImGuiListClipper](cvalue)}
 }
 
 type ListClipperData struct {
 	CData *C.ImGuiListClipperData
 }
 
-func (self *ListClipperData) handle() (result *C.ImGuiListClipperData, fin func()) {
+// Handle returns C version of ListClipperData and its finalizer func.
+func (self *ListClipperData) Handle() (result *C.ImGuiListClipperData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self ListClipperData) c() (C.ImGuiListClipperData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self ListClipperData) C() (C.ImGuiListClipperData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newListClipperDataFromC(cvalue *C.ImGuiListClipperData) *ListClipperData {
-	return &ListClipperData{CData: cvalue}
+// NewListClipperDataFromC creates ListClipperData from its C pointer.
+// SRC ~= *C.ImGuiListClipperData
+func NewListClipperDataFromC[SRC any](cvalue SRC) *ListClipperData {
+	return &ListClipperData{CData: ConvertCTypes[*C.ImGuiListClipperData](cvalue)}
 }
 
 type ListClipperRange struct {
 	CData *C.ImGuiListClipperRange
 }
 
-func (self *ListClipperRange) handle() (result *C.ImGuiListClipperRange, fin func()) {
+// Handle returns C version of ListClipperRange and its finalizer func.
+func (self *ListClipperRange) Handle() (result *C.ImGuiListClipperRange, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self ListClipperRange) c() (C.ImGuiListClipperRange, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self ListClipperRange) C() (C.ImGuiListClipperRange, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newListClipperRangeFromC(cvalue *C.ImGuiListClipperRange) *ListClipperRange {
-	return &ListClipperRange{CData: cvalue}
+// NewListClipperRangeFromC creates ListClipperRange from its C pointer.
+// SRC ~= *C.ImGuiListClipperRange
+func NewListClipperRangeFromC[SRC any](cvalue SRC) *ListClipperRange {
+	return &ListClipperRange{CData: ConvertCTypes[*C.ImGuiListClipperRange](cvalue)}
 }
 
 type LocEntry struct {
 	CData *C.ImGuiLocEntry
 }
 
-func (self *LocEntry) handle() (result *C.ImGuiLocEntry, fin func()) {
+// Handle returns C version of LocEntry and its finalizer func.
+func (self *LocEntry) Handle() (result *C.ImGuiLocEntry, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self LocEntry) c() (C.ImGuiLocEntry, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self LocEntry) C() (C.ImGuiLocEntry, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newLocEntryFromC(cvalue *C.ImGuiLocEntry) *LocEntry {
-	return &LocEntry{CData: cvalue}
+// NewLocEntryFromC creates LocEntry from its C pointer.
+// SRC ~= *C.ImGuiLocEntry
+func NewLocEntryFromC[SRC any](cvalue SRC) *LocEntry {
+	return &LocEntry{CData: ConvertCTypes[*C.ImGuiLocEntry](cvalue)}
 }
 
 type MenuColumns struct {
 	CData *C.ImGuiMenuColumns
 }
 
-func (self *MenuColumns) handle() (result *C.ImGuiMenuColumns, fin func()) {
+// Handle returns C version of MenuColumns and its finalizer func.
+func (self *MenuColumns) Handle() (result *C.ImGuiMenuColumns, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self MenuColumns) c() (C.ImGuiMenuColumns, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self MenuColumns) C() (C.ImGuiMenuColumns, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newMenuColumnsFromC(cvalue *C.ImGuiMenuColumns) *MenuColumns {
-	return &MenuColumns{CData: cvalue}
+// NewMenuColumnsFromC creates MenuColumns from its C pointer.
+// SRC ~= *C.ImGuiMenuColumns
+func NewMenuColumnsFromC[SRC any](cvalue SRC) *MenuColumns {
+	return &MenuColumns{CData: ConvertCTypes[*C.ImGuiMenuColumns](cvalue)}
 }
 
 type MetricsConfig struct {
 	CData *C.ImGuiMetricsConfig
 }
 
-func (self *MetricsConfig) handle() (result *C.ImGuiMetricsConfig, fin func()) {
+// Handle returns C version of MetricsConfig and its finalizer func.
+func (self *MetricsConfig) Handle() (result *C.ImGuiMetricsConfig, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self MetricsConfig) c() (C.ImGuiMetricsConfig, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self MetricsConfig) C() (C.ImGuiMetricsConfig, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newMetricsConfigFromC(cvalue *C.ImGuiMetricsConfig) *MetricsConfig {
-	return &MetricsConfig{CData: cvalue}
+// NewMetricsConfigFromC creates MetricsConfig from its C pointer.
+// SRC ~= *C.ImGuiMetricsConfig
+func NewMetricsConfigFromC[SRC any](cvalue SRC) *MetricsConfig {
+	return &MetricsConfig{CData: ConvertCTypes[*C.ImGuiMetricsConfig](cvalue)}
 }
 
 type NavItemData struct {
 	CData *C.ImGuiNavItemData
 }
 
-func (self *NavItemData) handle() (result *C.ImGuiNavItemData, fin func()) {
+// Handle returns C version of NavItemData and its finalizer func.
+func (self *NavItemData) Handle() (result *C.ImGuiNavItemData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self NavItemData) c() (C.ImGuiNavItemData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self NavItemData) C() (C.ImGuiNavItemData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newNavItemDataFromC(cvalue *C.ImGuiNavItemData) *NavItemData {
-	return &NavItemData{CData: cvalue}
+// NewNavItemDataFromC creates NavItemData from its C pointer.
+// SRC ~= *C.ImGuiNavItemData
+func NewNavItemDataFromC[SRC any](cvalue SRC) *NavItemData {
+	return &NavItemData{CData: ConvertCTypes[*C.ImGuiNavItemData](cvalue)}
 }
 
 type NavTreeNodeData struct {
 	CData *C.ImGuiNavTreeNodeData
 }
 
-func (self *NavTreeNodeData) handle() (result *C.ImGuiNavTreeNodeData, fin func()) {
+// Handle returns C version of NavTreeNodeData and its finalizer func.
+func (self *NavTreeNodeData) Handle() (result *C.ImGuiNavTreeNodeData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self NavTreeNodeData) c() (C.ImGuiNavTreeNodeData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self NavTreeNodeData) C() (C.ImGuiNavTreeNodeData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newNavTreeNodeDataFromC(cvalue *C.ImGuiNavTreeNodeData) *NavTreeNodeData {
-	return &NavTreeNodeData{CData: cvalue}
+// NewNavTreeNodeDataFromC creates NavTreeNodeData from its C pointer.
+// SRC ~= *C.ImGuiNavTreeNodeData
+func NewNavTreeNodeDataFromC[SRC any](cvalue SRC) *NavTreeNodeData {
+	return &NavTreeNodeData{CData: ConvertCTypes[*C.ImGuiNavTreeNodeData](cvalue)}
 }
 
 type NextItemData struct {
 	CData *C.ImGuiNextItemData
 }
 
-func (self *NextItemData) handle() (result *C.ImGuiNextItemData, fin func()) {
+// Handle returns C version of NextItemData and its finalizer func.
+func (self *NextItemData) Handle() (result *C.ImGuiNextItemData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self NextItemData) c() (C.ImGuiNextItemData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self NextItemData) C() (C.ImGuiNextItemData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newNextItemDataFromC(cvalue *C.ImGuiNextItemData) *NextItemData {
-	return &NextItemData{CData: cvalue}
+// NewNextItemDataFromC creates NextItemData from its C pointer.
+// SRC ~= *C.ImGuiNextItemData
+func NewNextItemDataFromC[SRC any](cvalue SRC) *NextItemData {
+	return &NextItemData{CData: ConvertCTypes[*C.ImGuiNextItemData](cvalue)}
 }
 
 type NextWindowData struct {
 	CData *C.ImGuiNextWindowData
 }
 
-func (self *NextWindowData) handle() (result *C.ImGuiNextWindowData, fin func()) {
+// Handle returns C version of NextWindowData and its finalizer func.
+func (self *NextWindowData) Handle() (result *C.ImGuiNextWindowData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self NextWindowData) c() (C.ImGuiNextWindowData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self NextWindowData) C() (C.ImGuiNextWindowData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newNextWindowDataFromC(cvalue *C.ImGuiNextWindowData) *NextWindowData {
-	return &NextWindowData{CData: cvalue}
+// NewNextWindowDataFromC creates NextWindowData from its C pointer.
+// SRC ~= *C.ImGuiNextWindowData
+func NewNextWindowDataFromC[SRC any](cvalue SRC) *NextWindowData {
+	return &NextWindowData{CData: ConvertCTypes[*C.ImGuiNextWindowData](cvalue)}
 }
 
 type OldColumnData struct {
 	CData *C.ImGuiOldColumnData
 }
 
-func (self *OldColumnData) handle() (result *C.ImGuiOldColumnData, fin func()) {
+// Handle returns C version of OldColumnData and its finalizer func.
+func (self *OldColumnData) Handle() (result *C.ImGuiOldColumnData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self OldColumnData) c() (C.ImGuiOldColumnData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self OldColumnData) C() (C.ImGuiOldColumnData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newOldColumnDataFromC(cvalue *C.ImGuiOldColumnData) *OldColumnData {
-	return &OldColumnData{CData: cvalue}
+// NewOldColumnDataFromC creates OldColumnData from its C pointer.
+// SRC ~= *C.ImGuiOldColumnData
+func NewOldColumnDataFromC[SRC any](cvalue SRC) *OldColumnData {
+	return &OldColumnData{CData: ConvertCTypes[*C.ImGuiOldColumnData](cvalue)}
 }
 
 type OldColumns struct {
 	CData *C.ImGuiOldColumns
 }
 
-func (self *OldColumns) handle() (result *C.ImGuiOldColumns, fin func()) {
+// Handle returns C version of OldColumns and its finalizer func.
+func (self *OldColumns) Handle() (result *C.ImGuiOldColumns, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self OldColumns) c() (C.ImGuiOldColumns, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self OldColumns) C() (C.ImGuiOldColumns, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newOldColumnsFromC(cvalue *C.ImGuiOldColumns) *OldColumns {
-	return &OldColumns{CData: cvalue}
+// NewOldColumnsFromC creates OldColumns from its C pointer.
+// SRC ~= *C.ImGuiOldColumns
+func NewOldColumnsFromC[SRC any](cvalue SRC) *OldColumns {
+	return &OldColumns{CData: ConvertCTypes[*C.ImGuiOldColumns](cvalue)}
 }
 
 type OnceUponAFrame struct {
 	CData *C.ImGuiOnceUponAFrame
 }
 
-func (self *OnceUponAFrame) handle() (result *C.ImGuiOnceUponAFrame, fin func()) {
+// Handle returns C version of OnceUponAFrame and its finalizer func.
+func (self *OnceUponAFrame) Handle() (result *C.ImGuiOnceUponAFrame, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self OnceUponAFrame) c() (C.ImGuiOnceUponAFrame, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self OnceUponAFrame) C() (C.ImGuiOnceUponAFrame, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newOnceUponAFrameFromC(cvalue *C.ImGuiOnceUponAFrame) *OnceUponAFrame {
-	return &OnceUponAFrame{CData: cvalue}
+// NewOnceUponAFrameFromC creates OnceUponAFrame from its C pointer.
+// SRC ~= *C.ImGuiOnceUponAFrame
+func NewOnceUponAFrameFromC[SRC any](cvalue SRC) *OnceUponAFrame {
+	return &OnceUponAFrame{CData: ConvertCTypes[*C.ImGuiOnceUponAFrame](cvalue)}
 }
 
 type Payload struct {
 	CData *C.ImGuiPayload
 }
 
-func (self *Payload) handle() (result *C.ImGuiPayload, fin func()) {
+// Handle returns C version of Payload and its finalizer func.
+func (self *Payload) Handle() (result *C.ImGuiPayload, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self Payload) c() (C.ImGuiPayload, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self Payload) C() (C.ImGuiPayload, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPayloadFromC(cvalue *C.ImGuiPayload) *Payload {
-	return &Payload{CData: cvalue}
+// NewPayloadFromC creates Payload from its C pointer.
+// SRC ~= *C.ImGuiPayload
+func NewPayloadFromC[SRC any](cvalue SRC) *Payload {
+	return &Payload{CData: ConvertCTypes[*C.ImGuiPayload](cvalue)}
 }
 
 type PlatformIO struct {
 	CData *C.ImGuiPlatformIO
 }
 
-func (self *PlatformIO) handle() (result *C.ImGuiPlatformIO, fin func()) {
+// Handle returns C version of PlatformIO and its finalizer func.
+func (self *PlatformIO) Handle() (result *C.ImGuiPlatformIO, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlatformIO) c() (C.ImGuiPlatformIO, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlatformIO) C() (C.ImGuiPlatformIO, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlatformIOFromC(cvalue *C.ImGuiPlatformIO) *PlatformIO {
-	return &PlatformIO{CData: cvalue}
+// NewPlatformIOFromC creates PlatformIO from its C pointer.
+// SRC ~= *C.ImGuiPlatformIO
+func NewPlatformIOFromC[SRC any](cvalue SRC) *PlatformIO {
+	return &PlatformIO{CData: ConvertCTypes[*C.ImGuiPlatformIO](cvalue)}
 }
 
 type PlatformImeData struct {
 	CData *C.ImGuiPlatformImeData
 }
 
-func (self *PlatformImeData) handle() (result *C.ImGuiPlatformImeData, fin func()) {
+// Handle returns C version of PlatformImeData and its finalizer func.
+func (self *PlatformImeData) Handle() (result *C.ImGuiPlatformImeData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlatformImeData) c() (C.ImGuiPlatformImeData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlatformImeData) C() (C.ImGuiPlatformImeData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlatformImeDataFromC(cvalue *C.ImGuiPlatformImeData) *PlatformImeData {
-	return &PlatformImeData{CData: cvalue}
+// NewPlatformImeDataFromC creates PlatformImeData from its C pointer.
+// SRC ~= *C.ImGuiPlatformImeData
+func NewPlatformImeDataFromC[SRC any](cvalue SRC) *PlatformImeData {
+	return &PlatformImeData{CData: ConvertCTypes[*C.ImGuiPlatformImeData](cvalue)}
 }
 
 type PlatformMonitor struct {
 	CData *C.ImGuiPlatformMonitor
 }
 
-func (self *PlatformMonitor) handle() (result *C.ImGuiPlatformMonitor, fin func()) {
+// Handle returns C version of PlatformMonitor and its finalizer func.
+func (self *PlatformMonitor) Handle() (result *C.ImGuiPlatformMonitor, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PlatformMonitor) c() (C.ImGuiPlatformMonitor, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PlatformMonitor) C() (C.ImGuiPlatformMonitor, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPlatformMonitorFromC(cvalue *C.ImGuiPlatformMonitor) *PlatformMonitor {
-	return &PlatformMonitor{CData: cvalue}
+// NewPlatformMonitorFromC creates PlatformMonitor from its C pointer.
+// SRC ~= *C.ImGuiPlatformMonitor
+func NewPlatformMonitorFromC[SRC any](cvalue SRC) *PlatformMonitor {
+	return &PlatformMonitor{CData: ConvertCTypes[*C.ImGuiPlatformMonitor](cvalue)}
 }
 
 type PopupData struct {
 	CData *C.ImGuiPopupData
 }
 
-func (self *PopupData) handle() (result *C.ImGuiPopupData, fin func()) {
+// Handle returns C version of PopupData and its finalizer func.
+func (self *PopupData) Handle() (result *C.ImGuiPopupData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PopupData) c() (C.ImGuiPopupData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PopupData) C() (C.ImGuiPopupData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPopupDataFromC(cvalue *C.ImGuiPopupData) *PopupData {
-	return &PopupData{CData: cvalue}
+// NewPopupDataFromC creates PopupData from its C pointer.
+// SRC ~= *C.ImGuiPopupData
+func NewPopupDataFromC[SRC any](cvalue SRC) *PopupData {
+	return &PopupData{CData: ConvertCTypes[*C.ImGuiPopupData](cvalue)}
 }
 
 type PtrOrIndex struct {
 	CData *C.ImGuiPtrOrIndex
 }
 
-func (self *PtrOrIndex) handle() (result *C.ImGuiPtrOrIndex, fin func()) {
+// Handle returns C version of PtrOrIndex and its finalizer func.
+func (self *PtrOrIndex) Handle() (result *C.ImGuiPtrOrIndex, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self PtrOrIndex) c() (C.ImGuiPtrOrIndex, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self PtrOrIndex) C() (C.ImGuiPtrOrIndex, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newPtrOrIndexFromC(cvalue *C.ImGuiPtrOrIndex) *PtrOrIndex {
-	return &PtrOrIndex{CData: cvalue}
+// NewPtrOrIndexFromC creates PtrOrIndex from its C pointer.
+// SRC ~= *C.ImGuiPtrOrIndex
+func NewPtrOrIndexFromC[SRC any](cvalue SRC) *PtrOrIndex {
+	return &PtrOrIndex{CData: ConvertCTypes[*C.ImGuiPtrOrIndex](cvalue)}
 }
 
 type SettingsHandler struct {
 	CData *C.ImGuiSettingsHandler
 }
 
-func (self *SettingsHandler) handle() (result *C.ImGuiSettingsHandler, fin func()) {
+// Handle returns C version of SettingsHandler and its finalizer func.
+func (self *SettingsHandler) Handle() (result *C.ImGuiSettingsHandler, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self SettingsHandler) c() (C.ImGuiSettingsHandler, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self SettingsHandler) C() (C.ImGuiSettingsHandler, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newSettingsHandlerFromC(cvalue *C.ImGuiSettingsHandler) *SettingsHandler {
-	return &SettingsHandler{CData: cvalue}
+// NewSettingsHandlerFromC creates SettingsHandler from its C pointer.
+// SRC ~= *C.ImGuiSettingsHandler
+func NewSettingsHandlerFromC[SRC any](cvalue SRC) *SettingsHandler {
+	return &SettingsHandler{CData: ConvertCTypes[*C.ImGuiSettingsHandler](cvalue)}
 }
 
 type ShrinkWidthItem struct {
 	CData *C.ImGuiShrinkWidthItem
 }
 
-func (self *ShrinkWidthItem) handle() (result *C.ImGuiShrinkWidthItem, fin func()) {
+// Handle returns C version of ShrinkWidthItem and its finalizer func.
+func (self *ShrinkWidthItem) Handle() (result *C.ImGuiShrinkWidthItem, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self ShrinkWidthItem) c() (C.ImGuiShrinkWidthItem, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self ShrinkWidthItem) C() (C.ImGuiShrinkWidthItem, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newShrinkWidthItemFromC(cvalue *C.ImGuiShrinkWidthItem) *ShrinkWidthItem {
-	return &ShrinkWidthItem{CData: cvalue}
+// NewShrinkWidthItemFromC creates ShrinkWidthItem from its C pointer.
+// SRC ~= *C.ImGuiShrinkWidthItem
+func NewShrinkWidthItemFromC[SRC any](cvalue SRC) *ShrinkWidthItem {
+	return &ShrinkWidthItem{CData: ConvertCTypes[*C.ImGuiShrinkWidthItem](cvalue)}
 }
 
 type SizeCallbackData struct {
 	CData *C.ImGuiSizeCallbackData
 }
 
-func (self *SizeCallbackData) handle() (result *C.ImGuiSizeCallbackData, fin func()) {
+// Handle returns C version of SizeCallbackData and its finalizer func.
+func (self *SizeCallbackData) Handle() (result *C.ImGuiSizeCallbackData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self SizeCallbackData) c() (C.ImGuiSizeCallbackData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self SizeCallbackData) C() (C.ImGuiSizeCallbackData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newSizeCallbackDataFromC(cvalue *C.ImGuiSizeCallbackData) *SizeCallbackData {
-	return &SizeCallbackData{CData: cvalue}
+// NewSizeCallbackDataFromC creates SizeCallbackData from its C pointer.
+// SRC ~= *C.ImGuiSizeCallbackData
+func NewSizeCallbackDataFromC[SRC any](cvalue SRC) *SizeCallbackData {
+	return &SizeCallbackData{CData: ConvertCTypes[*C.ImGuiSizeCallbackData](cvalue)}
 }
 
 type StackLevelInfo struct {
 	CData *C.ImGuiStackLevelInfo
 }
 
-func (self *StackLevelInfo) handle() (result *C.ImGuiStackLevelInfo, fin func()) {
+// Handle returns C version of StackLevelInfo and its finalizer func.
+func (self *StackLevelInfo) Handle() (result *C.ImGuiStackLevelInfo, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self StackLevelInfo) c() (C.ImGuiStackLevelInfo, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self StackLevelInfo) C() (C.ImGuiStackLevelInfo, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newStackLevelInfoFromC(cvalue *C.ImGuiStackLevelInfo) *StackLevelInfo {
-	return &StackLevelInfo{CData: cvalue}
+// NewStackLevelInfoFromC creates StackLevelInfo from its C pointer.
+// SRC ~= *C.ImGuiStackLevelInfo
+func NewStackLevelInfoFromC[SRC any](cvalue SRC) *StackLevelInfo {
+	return &StackLevelInfo{CData: ConvertCTypes[*C.ImGuiStackLevelInfo](cvalue)}
 }
 
 type StackSizes struct {
 	CData *C.ImGuiStackSizes
 }
 
-func (self *StackSizes) handle() (result *C.ImGuiStackSizes, fin func()) {
+// Handle returns C version of StackSizes and its finalizer func.
+func (self *StackSizes) Handle() (result *C.ImGuiStackSizes, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self StackSizes) c() (C.ImGuiStackSizes, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self StackSizes) C() (C.ImGuiStackSizes, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newStackSizesFromC(cvalue *C.ImGuiStackSizes) *StackSizes {
-	return &StackSizes{CData: cvalue}
+// NewStackSizesFromC creates StackSizes from its C pointer.
+// SRC ~= *C.ImGuiStackSizes
+func NewStackSizesFromC[SRC any](cvalue SRC) *StackSizes {
+	return &StackSizes{CData: ConvertCTypes[*C.ImGuiStackSizes](cvalue)}
 }
 
 type Storage struct {
 	CData *C.ImGuiStorage
 }
 
-func (self *Storage) handle() (result *C.ImGuiStorage, fin func()) {
+// Handle returns C version of Storage and its finalizer func.
+func (self *Storage) Handle() (result *C.ImGuiStorage, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self Storage) c() (C.ImGuiStorage, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self Storage) C() (C.ImGuiStorage, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newStorageFromC(cvalue *C.ImGuiStorage) *Storage {
-	return &Storage{CData: cvalue}
+// NewStorageFromC creates Storage from its C pointer.
+// SRC ~= *C.ImGuiStorage
+func NewStorageFromC[SRC any](cvalue SRC) *Storage {
+	return &Storage{CData: ConvertCTypes[*C.ImGuiStorage](cvalue)}
 }
 
 type StoragePair struct {
 	CData *C.ImGuiStoragePair
 }
 
-func (self *StoragePair) handle() (result *C.ImGuiStoragePair, fin func()) {
+// Handle returns C version of StoragePair and its finalizer func.
+func (self *StoragePair) Handle() (result *C.ImGuiStoragePair, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self StoragePair) c() (C.ImGuiStoragePair, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self StoragePair) C() (C.ImGuiStoragePair, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newStoragePairFromC(cvalue *C.ImGuiStoragePair) *StoragePair {
-	return &StoragePair{CData: cvalue}
+// NewStoragePairFromC creates StoragePair from its C pointer.
+// SRC ~= *C.ImGuiStoragePair
+func NewStoragePairFromC[SRC any](cvalue SRC) *StoragePair {
+	return &StoragePair{CData: ConvertCTypes[*C.ImGuiStoragePair](cvalue)}
 }
 
 type Style struct {
 	CData *C.ImGuiStyle
 }
 
-func (self *Style) handle() (result *C.ImGuiStyle, fin func()) {
+// Handle returns C version of Style and its finalizer func.
+func (self *Style) Handle() (result *C.ImGuiStyle, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self Style) c() (C.ImGuiStyle, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self Style) C() (C.ImGuiStyle, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newStyleFromC(cvalue *C.ImGuiStyle) *Style {
-	return &Style{CData: cvalue}
+// NewStyleFromC creates Style from its C pointer.
+// SRC ~= *C.ImGuiStyle
+func NewStyleFromC[SRC any](cvalue SRC) *Style {
+	return &Style{CData: ConvertCTypes[*C.ImGuiStyle](cvalue)}
 }
 
 type StyleMod struct {
 	CData *C.ImGuiStyleMod
 }
 
-func (self *StyleMod) handle() (result *C.ImGuiStyleMod, fin func()) {
+// Handle returns C version of StyleMod and its finalizer func.
+func (self *StyleMod) Handle() (result *C.ImGuiStyleMod, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self StyleMod) c() (C.ImGuiStyleMod, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self StyleMod) C() (C.ImGuiStyleMod, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newStyleModFromC(cvalue *C.ImGuiStyleMod) *StyleMod {
-	return &StyleMod{CData: cvalue}
+// NewStyleModFromC creates StyleMod from its C pointer.
+// SRC ~= *C.ImGuiStyleMod
+func NewStyleModFromC[SRC any](cvalue SRC) *StyleMod {
+	return &StyleMod{CData: ConvertCTypes[*C.ImGuiStyleMod](cvalue)}
 }
 
 type TabBar struct {
 	CData *C.ImGuiTabBar
 }
 
-func (self *TabBar) handle() (result *C.ImGuiTabBar, fin func()) {
+// Handle returns C version of TabBar and its finalizer func.
+func (self *TabBar) Handle() (result *C.ImGuiTabBar, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TabBar) c() (C.ImGuiTabBar, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TabBar) C() (C.ImGuiTabBar, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTabBarFromC(cvalue *C.ImGuiTabBar) *TabBar {
-	return &TabBar{CData: cvalue}
+// NewTabBarFromC creates TabBar from its C pointer.
+// SRC ~= *C.ImGuiTabBar
+func NewTabBarFromC[SRC any](cvalue SRC) *TabBar {
+	return &TabBar{CData: ConvertCTypes[*C.ImGuiTabBar](cvalue)}
 }
 
 type TabItem struct {
 	CData *C.ImGuiTabItem
 }
 
-func (self *TabItem) handle() (result *C.ImGuiTabItem, fin func()) {
+// Handle returns C version of TabItem and its finalizer func.
+func (self *TabItem) Handle() (result *C.ImGuiTabItem, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TabItem) c() (C.ImGuiTabItem, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TabItem) C() (C.ImGuiTabItem, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTabItemFromC(cvalue *C.ImGuiTabItem) *TabItem {
-	return &TabItem{CData: cvalue}
+// NewTabItemFromC creates TabItem from its C pointer.
+// SRC ~= *C.ImGuiTabItem
+func NewTabItemFromC[SRC any](cvalue SRC) *TabItem {
+	return &TabItem{CData: ConvertCTypes[*C.ImGuiTabItem](cvalue)}
 }
 
 type Table struct {
 	CData *C.ImGuiTable
 }
 
-func (self *Table) handle() (result *C.ImGuiTable, fin func()) {
+// Handle returns C version of Table and its finalizer func.
+func (self *Table) Handle() (result *C.ImGuiTable, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self Table) c() (C.ImGuiTable, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self Table) C() (C.ImGuiTable, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTableFromC(cvalue *C.ImGuiTable) *Table {
-	return &Table{CData: cvalue}
+// NewTableFromC creates Table from its C pointer.
+// SRC ~= *C.ImGuiTable
+func NewTableFromC[SRC any](cvalue SRC) *Table {
+	return &Table{CData: ConvertCTypes[*C.ImGuiTable](cvalue)}
 }
 
 type TableCellData struct {
 	CData *C.ImGuiTableCellData
 }
 
-func (self *TableCellData) handle() (result *C.ImGuiTableCellData, fin func()) {
+// Handle returns C version of TableCellData and its finalizer func.
+func (self *TableCellData) Handle() (result *C.ImGuiTableCellData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TableCellData) c() (C.ImGuiTableCellData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TableCellData) C() (C.ImGuiTableCellData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTableCellDataFromC(cvalue *C.ImGuiTableCellData) *TableCellData {
-	return &TableCellData{CData: cvalue}
+// NewTableCellDataFromC creates TableCellData from its C pointer.
+// SRC ~= *C.ImGuiTableCellData
+func NewTableCellDataFromC[SRC any](cvalue SRC) *TableCellData {
+	return &TableCellData{CData: ConvertCTypes[*C.ImGuiTableCellData](cvalue)}
 }
 
 type TableColumn struct {
 	CData *C.ImGuiTableColumn
 }
 
-func (self *TableColumn) handle() (result *C.ImGuiTableColumn, fin func()) {
+// Handle returns C version of TableColumn and its finalizer func.
+func (self *TableColumn) Handle() (result *C.ImGuiTableColumn, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TableColumn) c() (C.ImGuiTableColumn, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TableColumn) C() (C.ImGuiTableColumn, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTableColumnFromC(cvalue *C.ImGuiTableColumn) *TableColumn {
-	return &TableColumn{CData: cvalue}
+// NewTableColumnFromC creates TableColumn from its C pointer.
+// SRC ~= *C.ImGuiTableColumn
+func NewTableColumnFromC[SRC any](cvalue SRC) *TableColumn {
+	return &TableColumn{CData: ConvertCTypes[*C.ImGuiTableColumn](cvalue)}
 }
 
 type TableColumnSettings struct {
 	CData *C.ImGuiTableColumnSettings
 }
 
-func (self *TableColumnSettings) handle() (result *C.ImGuiTableColumnSettings, fin func()) {
+// Handle returns C version of TableColumnSettings and its finalizer func.
+func (self *TableColumnSettings) Handle() (result *C.ImGuiTableColumnSettings, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TableColumnSettings) c() (C.ImGuiTableColumnSettings, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TableColumnSettings) C() (C.ImGuiTableColumnSettings, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTableColumnSettingsFromC(cvalue *C.ImGuiTableColumnSettings) *TableColumnSettings {
-	return &TableColumnSettings{CData: cvalue}
+// NewTableColumnSettingsFromC creates TableColumnSettings from its C pointer.
+// SRC ~= *C.ImGuiTableColumnSettings
+func NewTableColumnSettingsFromC[SRC any](cvalue SRC) *TableColumnSettings {
+	return &TableColumnSettings{CData: ConvertCTypes[*C.ImGuiTableColumnSettings](cvalue)}
 }
 
 type TableColumnSortSpecs struct {
 	CData *C.ImGuiTableColumnSortSpecs
 }
 
-func (self *TableColumnSortSpecs) handle() (result *C.ImGuiTableColumnSortSpecs, fin func()) {
+// Handle returns C version of TableColumnSortSpecs and its finalizer func.
+func (self *TableColumnSortSpecs) Handle() (result *C.ImGuiTableColumnSortSpecs, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TableColumnSortSpecs) c() (C.ImGuiTableColumnSortSpecs, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TableColumnSortSpecs) C() (C.ImGuiTableColumnSortSpecs, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTableColumnSortSpecsFromC(cvalue *C.ImGuiTableColumnSortSpecs) *TableColumnSortSpecs {
-	return &TableColumnSortSpecs{CData: cvalue}
+// NewTableColumnSortSpecsFromC creates TableColumnSortSpecs from its C pointer.
+// SRC ~= *C.ImGuiTableColumnSortSpecs
+func NewTableColumnSortSpecsFromC[SRC any](cvalue SRC) *TableColumnSortSpecs {
+	return &TableColumnSortSpecs{CData: ConvertCTypes[*C.ImGuiTableColumnSortSpecs](cvalue)}
 }
 
 type TableColumnsSettings struct {
 	CData *C.ImGuiTableColumnsSettings
 }
 
-func (self *TableColumnsSettings) handle() (result *C.ImGuiTableColumnsSettings, fin func()) {
+// Handle returns C version of TableColumnsSettings and its finalizer func.
+func (self *TableColumnsSettings) Handle() (result *C.ImGuiTableColumnsSettings, fin func()) {
 	return self.CData, func() {}
 }
 
-func newTableColumnsSettingsFromC(cvalue *C.ImGuiTableColumnsSettings) *TableColumnsSettings {
-	return &TableColumnsSettings{CData: cvalue}
+// NewTableColumnsSettingsFromC creates TableColumnsSettings from its C pointer.
+// SRC ~= *C.ImGuiTableColumnsSettings
+func NewTableColumnsSettingsFromC[SRC any](cvalue SRC) *TableColumnsSettings {
+	return &TableColumnsSettings{CData: ConvertCTypes[*C.ImGuiTableColumnsSettings](cvalue)}
 }
 
 type TableDrawChannelIdx uint16
 
-func (selfSrc *TableDrawChannelIdx) handle() (result *C.ImGuiTableDrawChannelIdx, fin func()) {
+// Handle returns C version of TableDrawChannelIdx and its finalizer func.
+func (selfSrc *TableDrawChannelIdx) Handle() (result *C.ImGuiTableDrawChannelIdx, fin func()) {
 	self := (*uint16)(selfSrc)
 	selfArg, selfFin := WrapNumberPtr[C.ImU16, uint16](self)
 	return (*C.ImGuiTableDrawChannelIdx)(selfArg), func() { selfFin() }
 }
 
-func (self TableDrawChannelIdx) c() (C.ImGuiTableDrawChannelIdx, func()) {
+// C is like Handle but returns plain type instead of pointer.
+func (self TableDrawChannelIdx) C() (C.ImGuiTableDrawChannelIdx, func()) {
 	return (C.ImGuiTableDrawChannelIdx)(C.ImU16(self)), func() {}
 }
 
-func newTableDrawChannelIdxFromC(cvalue *C.ImGuiTableDrawChannelIdx) *TableDrawChannelIdx {
-	return (*TableDrawChannelIdx)((*uint16)(cvalue))
+// NewTableDrawChannelIdxFromC creates TableDrawChannelIdx from its C pointer.
+// SRC ~= *C.ImGuiTableDrawChannelIdx
+func NewTableDrawChannelIdxFromC[SRC any](cvalue SRC) *TableDrawChannelIdx {
+	return (*TableDrawChannelIdx)((*uint16)(ConvertCTypes[*C.ImGuiTableDrawChannelIdx](cvalue)))
 }
 
 type TableInstanceData struct {
 	CData *C.ImGuiTableInstanceData
 }
 
-func (self *TableInstanceData) handle() (result *C.ImGuiTableInstanceData, fin func()) {
+// Handle returns C version of TableInstanceData and its finalizer func.
+func (self *TableInstanceData) Handle() (result *C.ImGuiTableInstanceData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TableInstanceData) c() (C.ImGuiTableInstanceData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TableInstanceData) C() (C.ImGuiTableInstanceData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTableInstanceDataFromC(cvalue *C.ImGuiTableInstanceData) *TableInstanceData {
-	return &TableInstanceData{CData: cvalue}
+// NewTableInstanceDataFromC creates TableInstanceData from its C pointer.
+// SRC ~= *C.ImGuiTableInstanceData
+func NewTableInstanceDataFromC[SRC any](cvalue SRC) *TableInstanceData {
+	return &TableInstanceData{CData: ConvertCTypes[*C.ImGuiTableInstanceData](cvalue)}
 }
 
 type TableSettings struct {
 	CData *C.ImGuiTableSettings
 }
 
-func (self *TableSettings) handle() (result *C.ImGuiTableSettings, fin func()) {
+// Handle returns C version of TableSettings and its finalizer func.
+func (self *TableSettings) Handle() (result *C.ImGuiTableSettings, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TableSettings) c() (C.ImGuiTableSettings, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TableSettings) C() (C.ImGuiTableSettings, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTableSettingsFromC(cvalue *C.ImGuiTableSettings) *TableSettings {
-	return &TableSettings{CData: cvalue}
+// NewTableSettingsFromC creates TableSettings from its C pointer.
+// SRC ~= *C.ImGuiTableSettings
+func NewTableSettingsFromC[SRC any](cvalue SRC) *TableSettings {
+	return &TableSettings{CData: ConvertCTypes[*C.ImGuiTableSettings](cvalue)}
 }
 
 type TableSortSpecs struct {
 	CData *C.ImGuiTableSortSpecs
 }
 
-func (self *TableSortSpecs) handle() (result *C.ImGuiTableSortSpecs, fin func()) {
+// Handle returns C version of TableSortSpecs and its finalizer func.
+func (self *TableSortSpecs) Handle() (result *C.ImGuiTableSortSpecs, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TableSortSpecs) c() (C.ImGuiTableSortSpecs, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TableSortSpecs) C() (C.ImGuiTableSortSpecs, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTableSortSpecsFromC(cvalue *C.ImGuiTableSortSpecs) *TableSortSpecs {
-	return &TableSortSpecs{CData: cvalue}
+// NewTableSortSpecsFromC creates TableSortSpecs from its C pointer.
+// SRC ~= *C.ImGuiTableSortSpecs
+func NewTableSortSpecsFromC[SRC any](cvalue SRC) *TableSortSpecs {
+	return &TableSortSpecs{CData: ConvertCTypes[*C.ImGuiTableSortSpecs](cvalue)}
 }
 
 type TableTempData struct {
 	CData *C.ImGuiTableTempData
 }
 
-func (self *TableTempData) handle() (result *C.ImGuiTableTempData, fin func()) {
+// Handle returns C version of TableTempData and its finalizer func.
+func (self *TableTempData) Handle() (result *C.ImGuiTableTempData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TableTempData) c() (C.ImGuiTableTempData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TableTempData) C() (C.ImGuiTableTempData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTableTempDataFromC(cvalue *C.ImGuiTableTempData) *TableTempData {
-	return &TableTempData{CData: cvalue}
+// NewTableTempDataFromC creates TableTempData from its C pointer.
+// SRC ~= *C.ImGuiTableTempData
+func NewTableTempDataFromC[SRC any](cvalue SRC) *TableTempData {
+	return &TableTempData{CData: ConvertCTypes[*C.ImGuiTableTempData](cvalue)}
 }
 
 type TextBuffer struct {
 	CData *C.ImGuiTextBuffer
 }
 
-func (self *TextBuffer) handle() (result *C.ImGuiTextBuffer, fin func()) {
+// Handle returns C version of TextBuffer and its finalizer func.
+func (self *TextBuffer) Handle() (result *C.ImGuiTextBuffer, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TextBuffer) c() (C.ImGuiTextBuffer, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TextBuffer) C() (C.ImGuiTextBuffer, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTextBufferFromC(cvalue *C.ImGuiTextBuffer) *TextBuffer {
-	return &TextBuffer{CData: cvalue}
+// NewTextBufferFromC creates TextBuffer from its C pointer.
+// SRC ~= *C.ImGuiTextBuffer
+func NewTextBufferFromC[SRC any](cvalue SRC) *TextBuffer {
+	return &TextBuffer{CData: ConvertCTypes[*C.ImGuiTextBuffer](cvalue)}
 }
 
 type TextFilter struct {
 	CData *C.ImGuiTextFilter
 }
 
-func (self *TextFilter) handle() (result *C.ImGuiTextFilter, fin func()) {
+// Handle returns C version of TextFilter and its finalizer func.
+func (self *TextFilter) Handle() (result *C.ImGuiTextFilter, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TextFilter) c() (C.ImGuiTextFilter, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TextFilter) C() (C.ImGuiTextFilter, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTextFilterFromC(cvalue *C.ImGuiTextFilter) *TextFilter {
-	return &TextFilter{CData: cvalue}
+// NewTextFilterFromC creates TextFilter from its C pointer.
+// SRC ~= *C.ImGuiTextFilter
+func NewTextFilterFromC[SRC any](cvalue SRC) *TextFilter {
+	return &TextFilter{CData: ConvertCTypes[*C.ImGuiTextFilter](cvalue)}
 }
 
 type TextIndex struct {
 	CData *C.ImGuiTextIndex
 }
 
-func (self *TextIndex) handle() (result *C.ImGuiTextIndex, fin func()) {
+// Handle returns C version of TextIndex and its finalizer func.
+func (self *TextIndex) Handle() (result *C.ImGuiTextIndex, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TextIndex) c() (C.ImGuiTextIndex, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TextIndex) C() (C.ImGuiTextIndex, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTextIndexFromC(cvalue *C.ImGuiTextIndex) *TextIndex {
-	return &TextIndex{CData: cvalue}
+// NewTextIndexFromC creates TextIndex from its C pointer.
+// SRC ~= *C.ImGuiTextIndex
+func NewTextIndexFromC[SRC any](cvalue SRC) *TextIndex {
+	return &TextIndex{CData: ConvertCTypes[*C.ImGuiTextIndex](cvalue)}
 }
 
 type TextRange struct {
 	CData *C.ImGuiTextRange
 }
 
-func (self *TextRange) handle() (result *C.ImGuiTextRange, fin func()) {
+// Handle returns C version of TextRange and its finalizer func.
+func (self *TextRange) Handle() (result *C.ImGuiTextRange, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TextRange) c() (C.ImGuiTextRange, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TextRange) C() (C.ImGuiTextRange, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTextRangeFromC(cvalue *C.ImGuiTextRange) *TextRange {
-	return &TextRange{CData: cvalue}
+// NewTextRangeFromC creates TextRange from its C pointer.
+// SRC ~= *C.ImGuiTextRange
+func NewTextRangeFromC[SRC any](cvalue SRC) *TextRange {
+	return &TextRange{CData: ConvertCTypes[*C.ImGuiTextRange](cvalue)}
 }
 
 type TypingSelectRequest struct {
 	CData *C.ImGuiTypingSelectRequest
 }
 
-func (self *TypingSelectRequest) handle() (result *C.ImGuiTypingSelectRequest, fin func()) {
+// Handle returns C version of TypingSelectRequest and its finalizer func.
+func (self *TypingSelectRequest) Handle() (result *C.ImGuiTypingSelectRequest, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TypingSelectRequest) c() (C.ImGuiTypingSelectRequest, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TypingSelectRequest) C() (C.ImGuiTypingSelectRequest, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTypingSelectRequestFromC(cvalue *C.ImGuiTypingSelectRequest) *TypingSelectRequest {
-	return &TypingSelectRequest{CData: cvalue}
+// NewTypingSelectRequestFromC creates TypingSelectRequest from its C pointer.
+// SRC ~= *C.ImGuiTypingSelectRequest
+func NewTypingSelectRequestFromC[SRC any](cvalue SRC) *TypingSelectRequest {
+	return &TypingSelectRequest{CData: ConvertCTypes[*C.ImGuiTypingSelectRequest](cvalue)}
 }
 
 type TypingSelectState struct {
 	CData *C.ImGuiTypingSelectState
 }
 
-func (self *TypingSelectState) handle() (result *C.ImGuiTypingSelectState, fin func()) {
+// Handle returns C version of TypingSelectState and its finalizer func.
+func (self *TypingSelectState) Handle() (result *C.ImGuiTypingSelectState, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self TypingSelectState) c() (C.ImGuiTypingSelectState, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self TypingSelectState) C() (C.ImGuiTypingSelectState, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newTypingSelectStateFromC(cvalue *C.ImGuiTypingSelectState) *TypingSelectState {
-	return &TypingSelectState{CData: cvalue}
+// NewTypingSelectStateFromC creates TypingSelectState from its C pointer.
+// SRC ~= *C.ImGuiTypingSelectState
+func NewTypingSelectStateFromC[SRC any](cvalue SRC) *TypingSelectState {
+	return &TypingSelectState{CData: ConvertCTypes[*C.ImGuiTypingSelectState](cvalue)}
 }
 
 type Viewport struct {
 	CData *C.ImGuiViewport
 }
 
-func (self *Viewport) handle() (result *C.ImGuiViewport, fin func()) {
+// Handle returns C version of Viewport and its finalizer func.
+func (self *Viewport) Handle() (result *C.ImGuiViewport, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self Viewport) c() (C.ImGuiViewport, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self Viewport) C() (C.ImGuiViewport, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newViewportFromC(cvalue *C.ImGuiViewport) *Viewport {
-	return &Viewport{CData: cvalue}
+// NewViewportFromC creates Viewport from its C pointer.
+// SRC ~= *C.ImGuiViewport
+func NewViewportFromC[SRC any](cvalue SRC) *Viewport {
+	return &Viewport{CData: ConvertCTypes[*C.ImGuiViewport](cvalue)}
 }
 
 type ViewportP struct {
 	CData *C.ImGuiViewportP
 }
 
-func (self *ViewportP) handle() (result *C.ImGuiViewportP, fin func()) {
+// Handle returns C version of ViewportP and its finalizer func.
+func (self *ViewportP) Handle() (result *C.ImGuiViewportP, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self ViewportP) c() (C.ImGuiViewportP, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self ViewportP) C() (C.ImGuiViewportP, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newViewportPFromC(cvalue *C.ImGuiViewportP) *ViewportP {
-	return &ViewportP{CData: cvalue}
+// NewViewportPFromC creates ViewportP from its C pointer.
+// SRC ~= *C.ImGuiViewportP
+func NewViewportPFromC[SRC any](cvalue SRC) *ViewportP {
+	return &ViewportP{CData: ConvertCTypes[*C.ImGuiViewportP](cvalue)}
 }
 
 type Window struct {
 	CData *C.ImGuiWindow
 }
 
-func (self *Window) handle() (result *C.ImGuiWindow, fin func()) {
+// Handle returns C version of Window and its finalizer func.
+func (self *Window) Handle() (result *C.ImGuiWindow, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self Window) c() (C.ImGuiWindow, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self Window) C() (C.ImGuiWindow, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newWindowFromC(cvalue *C.ImGuiWindow) *Window {
-	return &Window{CData: cvalue}
+// NewWindowFromC creates Window from its C pointer.
+// SRC ~= *C.ImGuiWindow
+func NewWindowFromC[SRC any](cvalue SRC) *Window {
+	return &Window{CData: ConvertCTypes[*C.ImGuiWindow](cvalue)}
 }
 
 type WindowClass struct {
 	CData *C.ImGuiWindowClass
 }
 
-func (self *WindowClass) handle() (result *C.ImGuiWindowClass, fin func()) {
+// Handle returns C version of WindowClass and its finalizer func.
+func (self *WindowClass) Handle() (result *C.ImGuiWindowClass, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self WindowClass) c() (C.ImGuiWindowClass, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self WindowClass) C() (C.ImGuiWindowClass, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newWindowClassFromC(cvalue *C.ImGuiWindowClass) *WindowClass {
-	return &WindowClass{CData: cvalue}
+// NewWindowClassFromC creates WindowClass from its C pointer.
+// SRC ~= *C.ImGuiWindowClass
+func NewWindowClassFromC[SRC any](cvalue SRC) *WindowClass {
+	return &WindowClass{CData: ConvertCTypes[*C.ImGuiWindowClass](cvalue)}
 }
 
 type WindowDockStyle struct {
 	CData *C.ImGuiWindowDockStyle
 }
 
-func (self *WindowDockStyle) handle() (result *C.ImGuiWindowDockStyle, fin func()) {
+// Handle returns C version of WindowDockStyle and its finalizer func.
+func (self *WindowDockStyle) Handle() (result *C.ImGuiWindowDockStyle, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self WindowDockStyle) c() (C.ImGuiWindowDockStyle, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self WindowDockStyle) C() (C.ImGuiWindowDockStyle, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newWindowDockStyleFromC(cvalue *C.ImGuiWindowDockStyle) *WindowDockStyle {
-	return &WindowDockStyle{CData: cvalue}
+// NewWindowDockStyleFromC creates WindowDockStyle from its C pointer.
+// SRC ~= *C.ImGuiWindowDockStyle
+func NewWindowDockStyleFromC[SRC any](cvalue SRC) *WindowDockStyle {
+	return &WindowDockStyle{CData: ConvertCTypes[*C.ImGuiWindowDockStyle](cvalue)}
 }
 
 type WindowSettings struct {
 	CData *C.ImGuiWindowSettings
 }
 
-func (self *WindowSettings) handle() (result *C.ImGuiWindowSettings, fin func()) {
+// Handle returns C version of WindowSettings and its finalizer func.
+func (self *WindowSettings) Handle() (result *C.ImGuiWindowSettings, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self WindowSettings) c() (C.ImGuiWindowSettings, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self WindowSettings) C() (C.ImGuiWindowSettings, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newWindowSettingsFromC(cvalue *C.ImGuiWindowSettings) *WindowSettings {
-	return &WindowSettings{CData: cvalue}
+// NewWindowSettingsFromC creates WindowSettings from its C pointer.
+// SRC ~= *C.ImGuiWindowSettings
+func NewWindowSettingsFromC[SRC any](cvalue SRC) *WindowSettings {
+	return &WindowSettings{CData: ConvertCTypes[*C.ImGuiWindowSettings](cvalue)}
 }
 
 type WindowStackData struct {
 	CData *C.ImGuiWindowStackData
 }
 
-func (self *WindowStackData) handle() (result *C.ImGuiWindowStackData, fin func()) {
+// Handle returns C version of WindowStackData and its finalizer func.
+func (self *WindowStackData) Handle() (result *C.ImGuiWindowStackData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self WindowStackData) c() (C.ImGuiWindowStackData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self WindowStackData) C() (C.ImGuiWindowStackData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newWindowStackDataFromC(cvalue *C.ImGuiWindowStackData) *WindowStackData {
-	return &WindowStackData{CData: cvalue}
+// NewWindowStackDataFromC creates WindowStackData from its C pointer.
+// SRC ~= *C.ImGuiWindowStackData
+func NewWindowStackDataFromC[SRC any](cvalue SRC) *WindowStackData {
+	return &WindowStackData{CData: ConvertCTypes[*C.ImGuiWindowStackData](cvalue)}
 }
 
 type WindowTempData struct {
 	CData *C.ImGuiWindowTempData
 }
 
-func (self *WindowTempData) handle() (result *C.ImGuiWindowTempData, fin func()) {
+// Handle returns C version of WindowTempData and its finalizer func.
+func (self *WindowTempData) Handle() (result *C.ImGuiWindowTempData, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self WindowTempData) c() (C.ImGuiWindowTempData, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self WindowTempData) C() (C.ImGuiWindowTempData, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newWindowTempDataFromC(cvalue *C.ImGuiWindowTempData) *WindowTempData {
-	return &WindowTempData{CData: cvalue}
+// NewWindowTempDataFromC creates WindowTempData from its C pointer.
+// SRC ~= *C.ImGuiWindowTempData
+func NewWindowTempDataFromC[SRC any](cvalue SRC) *WindowTempData {
+	return &WindowTempData{CData: ConvertCTypes[*C.ImGuiWindowTempData](cvalue)}
 }
 
 type PoolIdx int32
 
-func (selfSrc *PoolIdx) handle() (result *C.ImPoolIdx, fin func()) {
+// Handle returns C version of PoolIdx and its finalizer func.
+func (selfSrc *PoolIdx) Handle() (result *C.ImPoolIdx, fin func()) {
 	self := (*int32)(selfSrc)
 	selfArg, selfFin := WrapNumberPtr[C.int, int32](self)
 	return (*C.ImPoolIdx)(selfArg), func() { selfFin() }
 }
 
-func (self PoolIdx) c() (C.ImPoolIdx, func()) {
+// C is like Handle but returns plain type instead of pointer.
+func (self PoolIdx) C() (C.ImPoolIdx, func()) {
 	return (C.ImPoolIdx)(C.int(self)), func() {}
 }
 
-func newPoolIdxFromC(cvalue *C.ImPoolIdx) *PoolIdx {
-	return (*PoolIdx)((*int32)(cvalue))
+// NewPoolIdxFromC creates PoolIdx from its C pointer.
+// SRC ~= *C.ImPoolIdx
+func NewPoolIdxFromC[SRC any](cvalue SRC) *PoolIdx {
+	return (*PoolIdx)((*int32)(ConvertCTypes[*C.ImPoolIdx](cvalue)))
 }
 
 type TextureID struct {
 	Data uintptr
 }
 
-func (self *TextureID) handle() (result *C.ImTextureID, fin func()) {
-	r, f := self.c()
+// Handle returns C version of TextureID and its finalizer func.
+func (self *TextureID) Handle() (result *C.ImTextureID, fin func()) {
+	r, f := self.C()
 	return &r, f
 }
 
-func (self TextureID) c() (C.ImTextureID, func()) {
+// C is like Handle but returns plain type instead of pointer.
+func (self TextureID) C() (C.ImTextureID, func()) {
 	return (C.ImTextureID)(C.ImTextureID_fromUintptr(C.uintptr_t(self.Data))), func() {}
 }
 
-func newTextureIDFromC(cvalue *C.ImTextureID) *TextureID {
-	return &TextureID{Data: (uintptr)(C.ImTextureID_toUintptr(*cvalue))}
+// NewTextureIDFromC creates TextureID from its C pointer.
+// SRC ~= *C.ImTextureID
+func NewTextureIDFromC[SRC any](cvalue SRC) *TextureID {
+	return &TextureID{Data: (uintptr)(C.ImTextureID_toUintptr(*ConvertCTypes[*C.ImTextureID](cvalue)))}
 }
 
 type Vec1 struct {
 	CData *C.ImVec1
 }
 
-func (self *Vec1) handle() (result *C.ImVec1, fin func()) {
+// Handle returns C version of Vec1 and its finalizer func.
+func (self *Vec1) Handle() (result *C.ImVec1, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self Vec1) c() (C.ImVec1, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self Vec1) C() (C.ImVec1, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newVec1FromC(cvalue *C.ImVec1) *Vec1 {
-	return &Vec1{CData: cvalue}
+// NewVec1FromC creates Vec1 from its C pointer.
+// SRC ~= *C.ImVec1
+func NewVec1FromC[SRC any](cvalue SRC) *Vec1 {
+	return &Vec1{CData: ConvertCTypes[*C.ImVec1](cvalue)}
 }
 
 type Wchar32 uint32
 
-func (selfSrc *Wchar32) handle() (result *C.ImWchar32, fin func()) {
+// Handle returns C version of Wchar32 and its finalizer func.
+func (selfSrc *Wchar32) Handle() (result *C.ImWchar32, fin func()) {
 	self := (*uint32)(selfSrc)
 	selfArg, selfFin := WrapNumberPtr[C.uint, uint32](self)
 	return (*C.ImWchar32)(selfArg), func() { selfFin() }
 }
 
-func (self Wchar32) c() (C.ImWchar32, func()) {
+// C is like Handle but returns plain type instead of pointer.
+func (self Wchar32) C() (C.ImWchar32, func()) {
 	return (C.ImWchar32)(C.uint(self)), func() {}
 }
 
-func newWchar32FromC(cvalue *C.ImWchar32) *Wchar32 {
-	return (*Wchar32)((*uint32)(cvalue))
+// NewWchar32FromC creates Wchar32 from its C pointer.
+// SRC ~= *C.ImWchar32
+func NewWchar32FromC[SRC any](cvalue SRC) *Wchar32 {
+	return (*Wchar32)((*uint32)(ConvertCTypes[*C.ImWchar32](cvalue)))
 }
 
 type STBTexteditState struct {
 	CData *C.STB_TexteditState
 }
 
-func (self *STBTexteditState) handle() (result *C.STB_TexteditState, fin func()) {
+// Handle returns C version of STBTexteditState and its finalizer func.
+func (self *STBTexteditState) Handle() (result *C.STB_TexteditState, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self STBTexteditState) c() (C.STB_TexteditState, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self STBTexteditState) C() (C.STB_TexteditState, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newSTBTexteditStateFromC(cvalue *C.STB_TexteditState) *STBTexteditState {
-	return &STBTexteditState{CData: cvalue}
+// NewSTBTexteditStateFromC creates STBTexteditState from its C pointer.
+// SRC ~= *C.STB_TexteditState
+func NewSTBTexteditStateFromC[SRC any](cvalue SRC) *STBTexteditState {
+	return &STBTexteditState{CData: ConvertCTypes[*C.STB_TexteditState](cvalue)}
 }
 
 type StbTexteditRow struct {
 	CData *C.StbTexteditRow
 }
 
-func (self *StbTexteditRow) handle() (result *C.StbTexteditRow, fin func()) {
+// Handle returns C version of StbTexteditRow and its finalizer func.
+func (self *StbTexteditRow) Handle() (result *C.StbTexteditRow, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self StbTexteditRow) c() (C.StbTexteditRow, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self StbTexteditRow) C() (C.StbTexteditRow, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newStbTexteditRowFromC(cvalue *C.StbTexteditRow) *StbTexteditRow {
-	return &StbTexteditRow{CData: cvalue}
+// NewStbTexteditRowFromC creates StbTexteditRow from its C pointer.
+// SRC ~= *C.StbTexteditRow
+func NewStbTexteditRowFromC[SRC any](cvalue SRC) *StbTexteditRow {
+	return &StbTexteditRow{CData: ConvertCTypes[*C.StbTexteditRow](cvalue)}
 }
 
 type StbUndoRecord struct {
 	CData *C.StbUndoRecord
 }
 
-func (self *StbUndoRecord) handle() (result *C.StbUndoRecord, fin func()) {
+// Handle returns C version of StbUndoRecord and its finalizer func.
+func (self *StbUndoRecord) Handle() (result *C.StbUndoRecord, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self StbUndoRecord) c() (C.StbUndoRecord, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self StbUndoRecord) C() (C.StbUndoRecord, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newStbUndoRecordFromC(cvalue *C.StbUndoRecord) *StbUndoRecord {
-	return &StbUndoRecord{CData: cvalue}
+// NewStbUndoRecordFromC creates StbUndoRecord from its C pointer.
+// SRC ~= *C.StbUndoRecord
+func NewStbUndoRecordFromC[SRC any](cvalue SRC) *StbUndoRecord {
+	return &StbUndoRecord{CData: ConvertCTypes[*C.StbUndoRecord](cvalue)}
 }
 
 type StbUndoState struct {
 	CData *C.StbUndoState
 }
 
-func (self *StbUndoState) handle() (result *C.StbUndoState, fin func()) {
+// Handle returns C version of StbUndoState and its finalizer func.
+func (self *StbUndoState) Handle() (result *C.StbUndoState, fin func()) {
 	return self.CData, func() {}
 }
 
-func (self StbUndoState) c() (C.StbUndoState, func()) {
-	result, fn := self.handle()
+// C is like Handle but returns plain type instead of pointer.
+func (self StbUndoState) C() (C.StbUndoState, func()) {
+	result, fn := self.Handle()
 	return *result, fn
 }
 
-func newStbUndoStateFromC(cvalue *C.StbUndoState) *StbUndoState {
-	return &StbUndoState{CData: cvalue}
+// NewStbUndoStateFromC creates StbUndoState from its C pointer.
+// SRC ~= *C.StbUndoState
+func NewStbUndoStateFromC[SRC any](cvalue SRC) *StbUndoState {
+	return &StbUndoState{CData: ConvertCTypes[*C.StbUndoState](cvalue)}
 }
