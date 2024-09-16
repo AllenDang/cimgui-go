@@ -179,8 +179,9 @@ func (self %[1]s) C() (C.%[6]s, func()) {
 }
 
 // New%[1]sFromC creates %[1]s from its C pointer.
-func New%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
-	return &%[1]s{Data: (uintptr)(C.%[6]s_toUintptr(*cvalue))}
+// SRC ~= *C.%[6]s
+func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
+	return &%[1]s{Data: (uintptr)(C.%[6]s_toUintptr(*ConvertCTypes[*C.%[6]s](cvalue)))}
 }
 `,
 				k.renameGoIdentifier(),
@@ -221,7 +222,8 @@ func (self %[1]s) C() (C.%[6]s, func()) {
 }
 
 // New%[1]sFromC creates %[1]s from its C pointer.
-func New%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
+// SRC ~= *C.%[6]s
+func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 	return (*%[1]s)(%[10]s)
 }
 `,
@@ -238,7 +240,7 @@ func New%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 				knownArgType.VarName,
 				knownArgType.Finalizer,
 
-				fmt.Sprintf(knownPtrReturnType.returnStmt, "cvalue"),
+				fmt.Sprintf(knownPtrReturnType.returnStmt, fmt.Sprintf("ConvertCTypes[*C.%s](cvalue)", k)),
 			)
 
 			generatedTypedefs++
@@ -265,8 +267,9 @@ func (selfStruct *%[1]s) C() (result C.%[6]s, fin func()) {
 }
 
 // New%[1]sFromC creates %[1]s from its C pointer.
-func New%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
-	v := (%[8]s)(*cvalue)
+// SRC ~= *C.%[6]s
+func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
+	v := (%[8]s)(*ConvertCTypes[*C.%[6]s](cvalue))
 	return &%[1]s{Data: %[7]s}
 }
 `,
@@ -345,8 +348,9 @@ func (self *%[1]s) Handle() (result *C.%[2]s, fin func()) {
 %[3]s
 
 // New%[1]sFromC creates %[1]s from its C pointer.
-func New%[1]sFromC(cvalue *C.%[2]s) *%[1]s {
-	return &%[1]s{CData: cvalue}
+// SRC ~= *C.%[2]s
+func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
+	return &%[1]s{CData: ConvertCTypes[*C.%[2]s](cvalue)}
 }
 `, name.renameGoIdentifier(), name, toPlainValue)
 }
