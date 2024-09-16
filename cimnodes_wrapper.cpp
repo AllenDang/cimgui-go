@@ -2,7 +2,7 @@
 // DO NOT EDIT.
 
 #include "cimnodes_wrapper.h"
-#include "cimgui/cimnodes.h"
+#include "cwrappers/cimnodes.h"
 
 void wrap_imnodes_BeginInputAttribute(int id) { imnodes_BeginInputAttribute(id,ImNodesPinShape_CircleFilled); }
 void wrap_imnodes_BeginOutputAttribute(int id) { imnodes_BeginOutputAttribute(id,ImNodesPinShape_CircleFilled); }

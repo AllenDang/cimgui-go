@@ -2,7 +2,7 @@
 // DO NOT EDIT.
 
 #include "cimplot_wrapper.h"
-#include "cimgui/cimplot.h"
+#include "cwrappers/cimplot.h"
 
 void wrap_ImPlotAnnotationCollection_Append(ImPlotAnnotationCollection* self,const ImVec2 pos,const ImVec2 off,ImU32 bg,ImU32 fg,bool clamp,const char* fmt) { ImPlotAnnotationCollection_Append(self,pos,off,bg,fg,clamp,fmt); }
 void wrap_ImPlotTagCollection_Append(ImPlotTagCollection* self,ImAxis axis,double value,ImU32 bg,ImU32 fg,const char* fmt) { ImPlotTagCollection_Append(self,axis,value,bg,fg,fmt); }
