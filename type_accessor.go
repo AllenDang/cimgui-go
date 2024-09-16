@@ -6,7 +6,7 @@ import "C"
 import "unsafe"
 
 func (io IO) SetMouseButtonDown(i int, down bool) {
-	rawIO, rawIOFin := io.handle()
+	rawIO, rawIOFin := io.Handle()
 	defer rawIOFin()
 
 	C.wrap_ImGuiIO_SetMouseButtonDown(rawIO, C.int(i), C.bool(down))
@@ -31,14 +31,14 @@ func (d DrawData) CommandLists() []DrawList {
 }
 
 func (d DrawData) getDrawListAt(idx int32) DrawList {
-	drawDataArg, drawDataFin := d.handle()
+	drawDataArg, drawDataFin := d.Handle()
 	defer drawDataFin()
-	return *newDrawListFromC(C.wrap_DrawData_GetDrawListAt(drawDataArg, C.int(idx)))
+	return *NewDrawListFromC(C.wrap_DrawData_GetDrawListAt(drawDataArg, C.int(idx)))
 }
 
 func (d DrawList) GetVertexBuffer() (unsafe.Pointer, int) {
 	// TODO: it is possible that this field will become available on go-side after implementing more field types
-	dataArg, dataFin := d.c()
+	dataArg, dataFin := d.C()
 	defer dataFin()
 	buffer := dataArg.VtxBuffer.Data
 	bufferSize := C.sizeof_ImDrawVert * dataArg.VtxBuffer.Size
@@ -47,7 +47,7 @@ func (d DrawList) GetVertexBuffer() (unsafe.Pointer, int) {
 
 func (d DrawList) GetIndexBuffer() (unsafe.Pointer, int) {
 	// TODO: it is possible that this field will become available on go-side after implementing more field types
-	dataArg, dataFin := d.c()
+	dataArg, dataFin := d.C()
 	defer dataFin()
 	buffer := dataArg.IdxBuffer.Data
 	bufferSize := C.sizeof_ImDrawIdx * dataArg.IdxBuffer.Size
@@ -55,15 +55,15 @@ func (d DrawList) GetIndexBuffer() (unsafe.Pointer, int) {
 }
 
 func (d DrawList) getDrawCmdAt(idx int) DrawCmd {
-	dataArg, dataFin := d.handle()
+	dataArg, dataFin := d.Handle()
 	defer dataFin()
 
-	return *newDrawCmdFromC(C.wrap_DrawList_GetDrawCmdAt(dataArg, C.int(idx)))
+	return *NewDrawCmdFromC(C.wrap_DrawList_GetDrawCmdAt(dataArg, C.int(idx)))
 }
 
 func (d DrawList) Commands() []DrawCmd {
 	// TODO: it is possible that this field will become available on go-side after implementing more field types
-	dataArg, dataFin := d.c()
+	dataArg, dataFin := d.C()
 	defer dataFin()
 
 	count := int(dataArg.CmdBuffer.Size)
@@ -75,25 +75,25 @@ func (d DrawList) Commands() []DrawCmd {
 }
 
 func (d DrawCmd) HasUserCallback() bool {
-	dataArg, dataFin := d.handle()
+	dataArg, dataFin := d.Handle()
 	defer dataFin()
 
 	return dataArg.UserCallback != nil
 }
 
 func (d DrawCmd) CallUserCallback(list DrawList) {
-	dataArg, dataFin := d.handle()
+	dataArg, dataFin := d.Handle()
 	defer dataFin()
 
-	listArg, listFin := list.handle()
+	listArg, listFin := list.Handle()
 	defer listFin()
 
 	C.wrap_DrawCmd_CallUserCallback(listArg, dataArg)
 }
 
 func (fa FontGlyphRangesBuilder) BuildRanges(ranges GlyphRange) {
-	selfArg, selfFin := fa.handle()
+	selfArg, selfFin := fa.Handle()
 	defer selfFin()
 
-	C.ImFontGlyphRangesBuilder_BuildRanges(selfArg, ranges.handle())
+	C.ImFontGlyphRangesBuilder_BuildRanges(selfArg, ranges.Handle())
 }

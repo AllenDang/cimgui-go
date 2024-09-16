@@ -231,12 +231,6 @@ func CreateBackend[BackendFlagsT ~int](backend Backend[BackendFlagsT]) (sameBack
 
 // Export some methods that are necessary for externally packaged backends
 
-type CImTextureID C.ImTextureID
-
-func NewTextureIDFromC(cvalue *CImTextureID) *TextureID {
-	return newTextureIDFromC((*C.ImTextureID)(cvalue))
-}
-
 func (i Vec4) ToC() C.ImVec4 {
 	return i.toC()
 }
