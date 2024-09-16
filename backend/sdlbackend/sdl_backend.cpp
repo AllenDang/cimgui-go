@@ -12,8 +12,8 @@
 // - Introduction, links and more at the top of imgui.cpp
 
 #include "sdl_backend.h"
-#include "../../cimgui/cimgui.h"
-#include "../../cimgui/cimgui_impl.h"
+#include "../../cwrappers/cimgui.h"
+#include "../../cwrappers/cimgui_impl.h"
 
 #include <cstdlib>
 #include <stdio.h>
