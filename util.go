@@ -9,6 +9,14 @@ import (
 	"unsafe"
 )
 
+// ConvertCTypes intendedd use is to convert packageA.C.MyType to packageB.C.MyType.
+// make sure your types are identical C types before using it.
+// THIS IS HIGHLY UNSAFE AND NOT RECOMMENDED TO USE OUTSIDE CIMGUI.
+// It just forces pointer/type reinterpretation with unsafe.Pointer.
+func ConvertCTypes[SRC, RET any](src SRC) RET {
+	return *(*RET)(unsafe.Pointer(&src))
+}
+
 // VertexBufferLayout returns the byte sizes necessary to select fields in a vertex buffer of a DrawList.
 func VertexBufferLayout() (entrySize int, posOffset int, uvOffset int, colOffset int) {
 	var entrySizeArg C.size_t
@@ -37,20 +45,20 @@ func NewGlyphRange() GlyphRange {
 	return GlyphRange(unsafe.Pointer(C.wrap_NewGlyphRange()))
 }
 
-func (gr GlyphRange) handle() *C.ImVector_ImWchar {
+func (gr GlyphRange) Handle() *C.ImVector_ImWchar {
 	return (*C.ImVector_ImWchar)(unsafe.Pointer(gr))
 }
 
 func (gr GlyphRange) Destroy() {
-	C.wrap_DestroyGlyphRange(gr.handle())
+	C.wrap_DestroyGlyphRange(gr.Handle())
 }
 
 func (gr GlyphRange) Data() *Wchar {
-	return (*Wchar)(C.wrap_GlyphRange_GetData(gr.handle()))
+	return (*Wchar)(C.wrap_GlyphRange_GetData(gr.Handle()))
 }
 
 func (fa FontAtlas) FontCount() int {
-	selfArg, selfFin := fa.handle()
+	selfArg, selfFin := fa.Handle()
 	defer selfFin()
 
 	return int(C.wrap_ImFontAtlas_GetFontCount(selfArg))
@@ -62,7 +70,7 @@ func (self FontAtlas) TextureDataAsAlpha8() (pixels unsafe.Pointer, width int32,
 	var h C.int
 	var bp C.int
 
-	selfArg, selfFin := self.handle()
+	selfArg, selfFin := self.Handle()
 	defer selfFin()
 
 	C.ImFontAtlas_GetTexDataAsAlpha8(selfArg, &p, &w, &h, &bp)
@@ -81,7 +89,7 @@ func (self FontAtlas) GetTextureDataAsRGBA32() (pixels unsafe.Pointer, width int
 	var h C.int
 	var bp C.int
 
-	selfArg, selfFin := self.handle()
+	selfArg, selfFin := self.Handle()
 	defer selfFin()
 
 	C.ImFontAtlas_GetTexDataAsRGBA32(selfArg, &p, &w, &h, &bp)
