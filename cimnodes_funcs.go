@@ -279,7 +279,7 @@ func ImNodesIsEditorHovered() bool {
 func ImNodesIsLinkCreatedBoolPtrV(started_at_attribute_id *int32, ended_at_attribute_id *int32, created_from_snap *bool) bool {
 	started_at_attribute_idArg, started_at_attribute_idFin := datautils.WrapNumberPtr[C.int, int32](started_at_attribute_id)
 	ended_at_attribute_idArg, ended_at_attribute_idFin := datautils.WrapNumberPtr[C.int, int32](ended_at_attribute_id)
-	created_from_snapArg, created_from_snapFin := WrapBool(created_from_snap)
+	created_from_snapArg, created_from_snapFin := datautils.WrapBool[C.bool](created_from_snap)
 
 	defer func() {
 		started_at_attribute_idFin()
@@ -296,7 +296,7 @@ func ImNodesIsLinkCreatedIntPtrV(started_at_node_id *int32, started_at_attribute
 	started_at_attribute_idArg, started_at_attribute_idFin := datautils.WrapNumberPtr[C.int, int32](started_at_attribute_id)
 	ended_at_node_idArg, ended_at_node_idFin := datautils.WrapNumberPtr[C.int, int32](ended_at_node_id)
 	ended_at_attribute_idArg, ended_at_attribute_idFin := datautils.WrapNumberPtr[C.int, int32](ended_at_attribute_id)
-	created_from_snapArg, created_from_snapFin := WrapBool(created_from_snap)
+	created_from_snapArg, created_from_snapFin := datautils.WrapBool[C.bool](created_from_snap)
 
 	defer func() {
 		started_at_node_idFin()

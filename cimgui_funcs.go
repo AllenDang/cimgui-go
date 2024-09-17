@@ -3840,7 +3840,7 @@ func InternalArrowButtonExV(str_id string, dir Dir, size_arg Vec2, flags ButtonF
 // flags: 0
 func BeginV(name string, p_open *bool, flags WindowFlags) bool {
 	nameArg, nameFin := WrapString(name)
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := datautils.WrapBool[C.bool](p_open)
 
 	defer func() {
 		nameFin()
@@ -3959,7 +3959,7 @@ func InternalBeginDockableDragDropTarget(window *Window) {
 
 func InternalBeginDocked(window *Window, p_open *bool) {
 	windowArg, windowFin := window.Handle()
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := datautils.WrapBool[C.bool](p_open)
 	C.igBeginDocked(windowArg, p_openArg)
 
 	windowFin()
@@ -4117,7 +4117,7 @@ func InternalBeginPopupEx(id ID, extra_window_flags WindowFlags) bool {
 // flags: 0
 func BeginPopupModalV(name string, p_open *bool, flags WindowFlags) bool {
 	nameArg, nameFin := WrapString(name)
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := datautils.WrapBool[C.bool](p_open)
 
 	defer func() {
 		nameFin()
@@ -4153,7 +4153,7 @@ func InternalBeginTabBarEx(tab_bar *TabBar, bb Rect, flags TabBarFlags) bool {
 // flags: 0
 func BeginTabItemV(label string, p_open *bool, flags TabItemFlags) bool {
 	labelArg, labelFin := WrapString(label)
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := datautils.WrapBool[C.bool](p_open)
 
 	defer func() {
 		labelFin()
@@ -4273,8 +4273,8 @@ func ButtonV(label string, size Vec2) bool {
 // flags: 0
 func InternalButtonBehaviorV(bb Rect, id ID, out_hovered *bool, out_held *bool, flags ButtonFlags) bool {
 	idArg, idFin := id.C()
-	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
-	out_heldArg, out_heldFin := WrapBool(out_held)
+	out_hoveredArg, out_hoveredFin := datautils.WrapBool[C.bool](out_hovered)
+	out_heldArg, out_heldFin := datautils.WrapBool[C.bool](out_held)
 
 	defer func() {
 		idFin()
@@ -4362,7 +4362,7 @@ func InternalCallContextHooks(context *Context, typeArg ContextHookType) {
 
 func Checkbox(label string, v *bool) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapBool(v)
+	vArg, vFin := datautils.WrapBool[C.bool](v)
 
 	defer func() {
 		labelFin()
@@ -4485,7 +4485,7 @@ func InternalCollapseButton(id ID, pos Vec2, dock_node *DockNode) bool {
 // flags: 0
 func CollapsingHeaderBoolPtrV(label string, p_visible *bool, flags TreeNodeFlags) bool {
 	labelArg, labelFin := WrapString(label)
-	p_visibleArg, p_visibleFin := WrapBool(p_visible)
+	p_visibleArg, p_visibleFin := datautils.WrapBool[C.bool](p_visible)
 
 	defer func() {
 		labelFin()
@@ -8485,7 +8485,7 @@ func MenuItemBoolV(label string, shortcut string, selected bool, enabled bool) b
 func MenuItemBoolPtrV(label string, shortcut string, p_selected *bool, enabled bool) bool {
 	labelArg, labelFin := WrapString(label)
 	shortcutArg, shortcutFin := WrapString(shortcut)
-	p_selectedArg, p_selectedFin := WrapBool(p_selected)
+	p_selectedArg, p_selectedFin := datautils.WrapBool[C.bool](p_selected)
 
 	defer func() {
 		labelFin()
@@ -8508,8 +8508,8 @@ func InternalMultiSelectAddSetAll(ms *MultiSelectTempData, selected bool) {
 
 func InternalMultiSelectItemFooter(id ID, p_selected *bool, p_pressed *bool) {
 	idArg, idFin := id.C()
-	p_selectedArg, p_selectedFin := WrapBool(p_selected)
-	p_pressedArg, p_pressedFin := WrapBool(p_pressed)
+	p_selectedArg, p_selectedFin := datautils.WrapBool[C.bool](p_selected)
+	p_pressedArg, p_pressedFin := datautils.WrapBool[C.bool](p_pressed)
 	C.igMultiSelectItemFooter(idArg, p_selectedArg, p_pressedArg)
 
 	idFin()
@@ -9153,7 +9153,7 @@ func SelectableBoolV(label string, selected bool, flags SelectableFlags, size Ve
 // size: ImVec2(0,0)
 func SelectableBoolPtrV(label string, p_selected *bool, flags SelectableFlags, size Vec2) bool {
 	labelArg, labelFin := WrapString(label)
-	p_selectedArg, p_selectedFin := WrapBool(p_selected)
+	p_selectedArg, p_selectedFin := datautils.WrapBool[C.bool](p_selected)
 
 	defer func() {
 		labelFin()
@@ -9797,7 +9797,7 @@ func ShortcutNilV(key_chord KeyChord, flags InputFlags) bool {
 // ShowAboutWindowV parameter default value hint:
 // p_open: NULL
 func ShowAboutWindowV(p_open *bool) {
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := datautils.WrapBool[C.bool](p_open)
 	C.igShowAboutWindow(p_openArg)
 
 	p_openFin()
@@ -9807,7 +9807,7 @@ func ShowAboutWindowV(p_open *bool) {
 // ShowDebugLogWindowV parameter default value hint:
 // p_open: NULL
 func ShowDebugLogWindowV(p_open *bool) {
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := datautils.WrapBool[C.bool](p_open)
 	C.igShowDebugLogWindow(p_openArg)
 
 	p_openFin()
@@ -9817,7 +9817,7 @@ func ShowDebugLogWindowV(p_open *bool) {
 // ShowDemoWindowV parameter default value hint:
 // p_open: NULL
 func ShowDemoWindowV(p_open *bool) {
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := datautils.WrapBool[C.bool](p_open)
 	C.igShowDemoWindow(p_openArg)
 
 	p_openFin()
@@ -9842,7 +9842,7 @@ func ShowFontSelector(label string) {
 // ShowIDStackToolWindowV parameter default value hint:
 // p_open: NULL
 func ShowIDStackToolWindowV(p_open *bool) {
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := datautils.WrapBool[C.bool](p_open)
 	C.igShowIDStackToolWindow(p_openArg)
 
 	p_openFin()
@@ -9852,7 +9852,7 @@ func ShowIDStackToolWindowV(p_open *bool) {
 // ShowMetricsWindowV parameter default value hint:
 // p_open: NULL
 func ShowMetricsWindowV(p_open *bool) {
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := datautils.WrapBool[C.bool](p_open)
 	C.igShowMetricsWindow(p_openArg)
 
 	p_openFin()
@@ -10380,7 +10380,7 @@ func InternalTabItemCalcSizeWindowPtr(window *Window) Vec2 {
 func InternalTabItemEx(tab_bar *TabBar, label string, p_open *bool, flags TabItemFlags, docked_window *Window) bool {
 	tab_barArg, tab_barFin := tab_bar.Handle()
 	labelArg, labelFin := WrapString(label)
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := datautils.WrapBool[C.bool](p_open)
 	docked_windowArg, docked_windowFin := docked_window.Handle()
 
 	defer func() {
@@ -10397,8 +10397,8 @@ func InternalTabItemLabelAndCloseButton(draw_list *DrawList, bb Rect, flags TabI
 	labelArg, labelFin := WrapString(label)
 	tab_idArg, tab_idFin := tab_id.C()
 	close_button_idArg, close_button_idFin := close_button_id.C()
-	out_just_closedArg, out_just_closedFin := WrapBool(out_just_closed)
-	out_text_clippedArg, out_text_clippedFin := WrapBool(out_text_clipped)
+	out_just_closedArg, out_just_closedFin := datautils.WrapBool[C.bool](out_just_closed)
+	out_text_clippedArg, out_text_clippedFin := datautils.WrapBool[C.bool](out_text_clipped)
 	C.igTabItemLabelAndCloseButton(draw_listArg, bb.toC(), C.ImGuiTabItemFlags(flags), frame_padding.toC(), labelArg, tab_idArg, close_button_idArg, C.bool(is_contents_visible), out_just_closedArg, out_text_clippedArg)
 
 	draw_listFin()
@@ -11909,8 +11909,8 @@ func Button(label string) bool {
 
 func InternalButtonBehavior(bb Rect, id ID, out_hovered *bool, out_held *bool) bool {
 	idArg, idFin := id.C()
-	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
-	out_heldArg, out_heldFin := WrapBool(out_held)
+	out_hoveredArg, out_hoveredFin := datautils.WrapBool[C.bool](out_hovered)
+	out_heldArg, out_heldFin := datautils.WrapBool[C.bool](out_held)
 
 	defer func() {
 		idFin()
@@ -11944,7 +11944,7 @@ func CalcTextSize(text string) Vec2 {
 
 func CollapsingHeaderBoolPtr(label string, p_visible *bool) bool {
 	labelArg, labelFin := WrapString(label)
-	p_visibleArg, p_visibleFin := WrapBool(p_visible)
+	p_visibleArg, p_visibleFin := datautils.WrapBool[C.bool](p_visible)
 
 	defer func() {
 		labelFin()
@@ -12778,7 +12778,7 @@ func MenuItemBool(label string) bool {
 func MenuItemBoolPtr(label string, shortcut string, p_selected *bool) bool {
 	labelArg, labelFin := WrapString(label)
 	shortcutArg, shortcutFin := WrapString(shortcut)
-	p_selectedArg, p_selectedFin := WrapBool(p_selected)
+	p_selectedArg, p_selectedFin := datautils.WrapBool[C.bool](p_selected)
 
 	defer func() {
 		labelFin()
@@ -12950,7 +12950,7 @@ func SelectableBool(label string) bool {
 
 func SelectableBoolPtr(label string, p_selected *bool) bool {
 	labelArg, labelFin := WrapString(label)
-	p_selectedArg, p_selectedFin := WrapBool(p_selected)
+	p_selectedArg, p_selectedFin := datautils.WrapBool[C.bool](p_selected)
 
 	defer func() {
 		labelFin()

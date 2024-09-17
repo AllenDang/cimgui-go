@@ -1774,9 +1774,9 @@ func PlotDestroyContextV(ctx *PlotContext) {
 // held: nullptr
 func PlotDragLineXV(id int32, x *float64, col Vec4, thickness float32, flags PlotDragToolFlags, out_clicked *bool, out_hovered *bool, held *bool) bool {
 	xArg, xFin := datautils.WrapNumberPtr[C.double, float64](x)
-	out_clickedArg, out_clickedFin := WrapBool(out_clicked)
-	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
-	heldArg, heldFin := WrapBool(held)
+	out_clickedArg, out_clickedFin := datautils.WrapBool[C.bool](out_clicked)
+	out_hoveredArg, out_hoveredFin := datautils.WrapBool[C.bool](out_hovered)
+	heldArg, heldFin := datautils.WrapBool[C.bool](held)
 
 	defer func() {
 		xFin()
@@ -1795,9 +1795,9 @@ func PlotDragLineXV(id int32, x *float64, col Vec4, thickness float32, flags Plo
 // held: nullptr
 func PlotDragLineYV(id int32, y *float64, col Vec4, thickness float32, flags PlotDragToolFlags, out_clicked *bool, out_hovered *bool, held *bool) bool {
 	yArg, yFin := datautils.WrapNumberPtr[C.double, float64](y)
-	out_clickedArg, out_clickedFin := WrapBool(out_clicked)
-	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
-	heldArg, heldFin := WrapBool(held)
+	out_clickedArg, out_clickedFin := datautils.WrapBool[C.bool](out_clicked)
+	out_hoveredArg, out_hoveredFin := datautils.WrapBool[C.bool](out_hovered)
+	heldArg, heldFin := datautils.WrapBool[C.bool](held)
 
 	defer func() {
 		yFin()
@@ -1817,9 +1817,9 @@ func PlotDragLineYV(id int32, y *float64, col Vec4, thickness float32, flags Plo
 func PlotDragPointV(id int32, x *float64, y *float64, col Vec4, size float32, flags PlotDragToolFlags, out_clicked *bool, out_hovered *bool, held *bool) bool {
 	xArg, xFin := datautils.WrapNumberPtr[C.double, float64](x)
 	yArg, yFin := datautils.WrapNumberPtr[C.double, float64](y)
-	out_clickedArg, out_clickedFin := WrapBool(out_clicked)
-	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
-	heldArg, heldFin := WrapBool(held)
+	out_clickedArg, out_clickedFin := datautils.WrapBool[C.bool](out_clicked)
+	out_hoveredArg, out_hoveredFin := datautils.WrapBool[C.bool](out_hovered)
+	heldArg, heldFin := datautils.WrapBool[C.bool](held)
 
 	defer func() {
 		xFin()
@@ -1841,9 +1841,9 @@ func PlotDragRectV(id int32, x1 *float64, y1 *float64, x2 *float64, y2 *float64,
 	y1Arg, y1Fin := datautils.WrapNumberPtr[C.double, float64](y1)
 	x2Arg, x2Fin := datautils.WrapNumberPtr[C.double, float64](x2)
 	y2Arg, y2Fin := datautils.WrapNumberPtr[C.double, float64](y2)
-	out_clickedArg, out_clickedFin := WrapBool(out_clicked)
-	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
-	heldArg, heldFin := WrapBool(held)
+	out_clickedArg, out_clickedFin := datautils.WrapBool[C.bool](out_clicked)
+	out_hoveredArg, out_hoveredFin := datautils.WrapBool[C.bool](out_hovered)
+	heldArg, heldFin := datautils.WrapBool[C.bool](held)
 
 	defer func() {
 		x1Fin()
@@ -8539,7 +8539,7 @@ func PlotRangesOverlap(r1 PlotRange, r2 PlotRange) bool {
 // just_created: nullptr
 func PlotRegisterOrGetItemV(label_id string, flags PlotItemFlags, just_created *bool) *PlotItem {
 	label_idArg, label_idFin := WrapString(label_id)
-	just_createdArg, just_createdFin := WrapBool(just_created)
+	just_createdArg, just_createdFin := datautils.WrapBool[C.bool](just_created)
 
 	defer func() {
 		label_idFin()
@@ -8865,7 +8865,7 @@ func PlotShowDatePickerV(id string, level *int32, t *PlotTime, t1 *PlotTime, t2 
 // PlotShowDemoWindowV parameter default value hint:
 // p_open: nullptr
 func PlotShowDemoWindowV(p_open *bool) {
-	p_openArg, p_openFin := WrapBool(p_open)
+	p_openArg, p_openFin := datautils.WrapBool[C.bool](p_open)
 	C.ImPlot_ShowDemoWindow(p_openArg)
 
 	p_openFin()
@@ -8903,7 +8903,7 @@ func PlotShowLegendEntries(items *PlotItemGroup, legend_bb Rect, interactable bo
 // PlotShowMetricsWindowV parameter default value hint:
 // p_popen: nullptr
 func PlotShowMetricsWindowV(p_popen *bool) {
-	p_popenArg, p_popenFin := WrapBool(p_popen)
+	p_popenArg, p_popenFin := datautils.WrapBool[C.bool](p_popen)
 	C.ImPlot_ShowMetricsWindow(p_popenArg)
 
 	p_popenFin()
@@ -14592,7 +14592,7 @@ func (self *PlotColormapData) TextOffsets() Vector[*int32] {
 
 func (self PlotColormapData) SetQuals(v Vector[*bool]) {
 	vData := v.Data
-	vDataArg, _ := WrapBool(vData)
+	vDataArg, _ := datautils.WrapBool[C.bool](vData)
 	vVecArg := new(C.ImVector_bool)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
