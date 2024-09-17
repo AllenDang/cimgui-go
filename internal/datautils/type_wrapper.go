@@ -174,20 +174,8 @@ func (buf *StringBuffer) Size() int {
 // WrapVoidPtr uses runtime.Pinner to pin value
 func WrapVoidPtr(value unsafe.Pointer) (wrapped unsafe.Pointer, finisher func()) {
 	p := &runtime.Pinner{}
-	tryPin(value, p)
+	p.Pin(value)
 	return value, func() {
 		p.Unpin()
 	}
-}
-
-// TODO: this is workaround because of bug/feature request in GO.
-// It might be changed after 1.22 release
-func tryPin(value any, pinner *runtime.Pinner) {
-	defer func() {
-		if r := recover(); r != nil {
-			// nothing to do here hehe
-		}
-	}()
-
-	pinner.Pin(value)
 }
