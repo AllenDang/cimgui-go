@@ -163,6 +163,14 @@ func (buf *StringBuffer) ToGo() string {
 	return C.GoString((*C.char)(buf.ptr))
 }
 
+func (buf *StringBuffer) Ptr() unsafe.Pointer {
+	return buf.ptr
+}
+
+func (buf *StringBuffer) Size() int {
+	return buf.size
+}
+
 // WrapVoidPtr uses runtime.Pinner to pin value
 func WrapVoidPtr(value unsafe.Pointer) (wrapped unsafe.Pointer, finisher func()) {
 	p := &runtime.Pinner{}
