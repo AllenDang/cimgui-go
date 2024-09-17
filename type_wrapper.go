@@ -26,27 +26,6 @@ type Number interface {
 		~float32 | ~float64
 }
 
-func WrapStringList(value []string) (wrapped **C.char, finisher func()) {
-	if len(value) == 0 {
-		return nil, func() {}
-	}
-
-	wrappedList := make([]*C.char, len(value))
-	for i, v := range value {
-		wrappedList[i] = C.CString(v)
-	}
-
-	wrapped = (**C.char)(unsafe.Pointer(&wrappedList[0]))
-
-	finisher = func() {
-		for _, v := range wrappedList {
-			C.free(unsafe.Pointer(v))
-		}
-	}
-
-	return
-}
-
 // unrealisticLargePointer is used to cast an arbitrary native pointer to a slice.
 // Its value is chosen to fit into a 32bit architecture, and still be large
 // enough to cover "any" data blob. Note that this value is in bytes.
