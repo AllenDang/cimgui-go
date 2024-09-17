@@ -398,8 +398,8 @@ func simplePtrW(goType GoIdentifier, cType GoIdentifier) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
 		return ArgumentWrapperData{
 			ArgType:     GoIdentifier(fmt.Sprintf("*%s", goType)),
-			ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
-			ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
+			ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := datautils.WrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
+			ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := datautils.WrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
 			Finalizer:   fmt.Sprintf("%[1]sFin()", arg.Name, cType, goType),
 			VarName:     fmt.Sprintf("%sArg", arg.Name),
 			CType:       "*" + cType,
