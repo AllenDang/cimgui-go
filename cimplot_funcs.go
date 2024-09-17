@@ -3316,7 +3316,7 @@ func PlotPixelsToPlotVec2V(pix Vec2, x_axis PlotAxisEnum, y_axis PlotAxisEnum) P
 // shift: 0
 // flags: 0
 func PlotPlotBarGroupsFloatPtrV(label_ids []string, values []float32, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	C.ImPlot_PlotBarGroups_FloatPtr(label_idsArg, (*C.float)(&(values[0])), C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
 
 	label_idsFin()
@@ -3327,7 +3327,7 @@ func PlotPlotBarGroupsFloatPtrV(label_ids []string, values []float32, item_count
 // shift: 0
 // flags: 0
 func PlotPlotBarGroupsS16PtrV(label_ids []string, values *[]int, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImS16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS16(valuesV)
@@ -3347,7 +3347,7 @@ func PlotPlotBarGroupsS16PtrV(label_ids []string, values *[]int, item_count int3
 // shift: 0
 // flags: 0
 func PlotPlotBarGroupsS32PtrV(label_ids []string, values *[]int32, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImS32, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS32(valuesV)
@@ -3367,7 +3367,7 @@ func PlotPlotBarGroupsS32PtrV(label_ids []string, values *[]int32, item_count in
 // shift: 0
 // flags: 0
 func PlotPlotBarGroupsS64PtrV(label_ids []string, values []int64, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	C.ImPlot_PlotBarGroups_S64Ptr(label_idsArg, (*C.longlong)(&(values[0])), C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
 
 	label_idsFin()
@@ -3378,7 +3378,7 @@ func PlotPlotBarGroupsS64PtrV(label_ids []string, values []int64, item_count int
 // shift: 0
 // flags: 0
 func PlotPlotBarGroupsS8PtrV(label_ids []string, values *[]int8, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImS8, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS8(valuesV)
@@ -3398,7 +3398,7 @@ func PlotPlotBarGroupsS8PtrV(label_ids []string, values *[]int8, item_count int3
 // shift: 0
 // flags: 0
 func PlotPlotBarGroupsU16PtrV(label_ids []string, values *[]uint16, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImU16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU16(valuesV)
@@ -3418,7 +3418,7 @@ func PlotPlotBarGroupsU16PtrV(label_ids []string, values *[]uint16, item_count i
 // shift: 0
 // flags: 0
 func PlotPlotBarGroupsU32PtrV(label_ids []string, values *[]uint32, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImU32, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU32(valuesV)
@@ -3438,7 +3438,7 @@ func PlotPlotBarGroupsU32PtrV(label_ids []string, values *[]uint32, item_count i
 // shift: 0
 // flags: 0
 func PlotPlotBarGroupsU64PtrV(label_ids []string, values []uint64, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	C.ImPlot_PlotBarGroups_U64Ptr(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(item_count), C.int(group_count), C.double(group_size), C.double(shift), C.ImPlotBarGroupsFlags(flags))
 
 	label_idsFin()
@@ -3449,7 +3449,7 @@ func PlotPlotBarGroupsU64PtrV(label_ids []string, values []uint64, item_count in
 // shift: 0
 // flags: 0
 func PlotPlotBarGroupsU8PtrV(label_ids []string, values *[]byte, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImU8, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU8(valuesV)
@@ -3469,7 +3469,7 @@ func PlotPlotBarGroupsU8PtrV(label_ids []string, values *[]byte, item_count int3
 // shift: 0
 // flags: 0
 func PlotPlotBarGroupsdoublePtrV(label_ids []string, values *[]float64, item_count int32, group_count int32, group_size float64, shift float64, flags PlotBarGroupsFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.double, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.double(valuesV)
@@ -6173,7 +6173,7 @@ func PlotPlotLinedoublePtrdoublePtrV(label_id string, xs *[]float64, ys *[]float
 // angle0: 90
 // flags: 0
 func PlotPlotPieChartFloatPtrStrV(label_ids []string, values []float32, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	label_fmtArg, label_fmtFin := datautils.WrapString[C.char](label_fmt)
 	C.ImPlot_PlotPieChart_FloatPtrStr(label_idsArg, (*C.float)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 
@@ -6186,7 +6186,7 @@ func PlotPlotPieChartFloatPtrStrV(label_ids []string, values []float32, count in
 // angle0: 90
 // flags: 0
 func PlotPlotPieChartS16PtrStrV(label_ids []string, values *[]int, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImS16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS16(valuesV)
@@ -6209,7 +6209,7 @@ func PlotPlotPieChartS16PtrStrV(label_ids []string, values *[]int, count int32, 
 // angle0: 90
 // flags: 0
 func PlotPlotPieChartS32PtrStrV(label_ids []string, values *[]int32, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImS32, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS32(valuesV)
@@ -6232,7 +6232,7 @@ func PlotPlotPieChartS32PtrStrV(label_ids []string, values *[]int32, count int32
 // angle0: 90
 // flags: 0
 func PlotPlotPieChartS64PtrStrV(label_ids []string, values []int64, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	label_fmtArg, label_fmtFin := datautils.WrapString[C.char](label_fmt)
 	C.ImPlot_PlotPieChart_S64PtrStr(label_idsArg, (*C.longlong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 
@@ -6245,7 +6245,7 @@ func PlotPlotPieChartS64PtrStrV(label_ids []string, values []int64, count int32,
 // angle0: 90
 // flags: 0
 func PlotPlotPieChartS8PtrStrV(label_ids []string, values *[]int8, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImS8, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS8(valuesV)
@@ -6268,7 +6268,7 @@ func PlotPlotPieChartS8PtrStrV(label_ids []string, values *[]int8, count int32, 
 // angle0: 90
 // flags: 0
 func PlotPlotPieChartU16PtrStrV(label_ids []string, values *[]uint16, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImU16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU16(valuesV)
@@ -6291,7 +6291,7 @@ func PlotPlotPieChartU16PtrStrV(label_ids []string, values *[]uint16, count int3
 // angle0: 90
 // flags: 0
 func PlotPlotPieChartU32PtrStrV(label_ids []string, values *[]uint32, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImU32, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU32(valuesV)
@@ -6314,7 +6314,7 @@ func PlotPlotPieChartU32PtrStrV(label_ids []string, values *[]uint32, count int3
 // angle0: 90
 // flags: 0
 func PlotPlotPieChartU64PtrStrV(label_ids []string, values []uint64, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	label_fmtArg, label_fmtFin := datautils.WrapString[C.char](label_fmt)
 	C.ImPlot_PlotPieChart_U64PtrStr(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius), label_fmtArg, C.double(angle0), C.ImPlotPieChartFlags(flags))
 
@@ -6327,7 +6327,7 @@ func PlotPlotPieChartU64PtrStrV(label_ids []string, values []uint64, count int32
 // angle0: 90
 // flags: 0
 func PlotPlotPieChartU8PtrStrV(label_ids []string, values *[]byte, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImU8, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU8(valuesV)
@@ -6350,7 +6350,7 @@ func PlotPlotPieChartU8PtrStrV(label_ids []string, values *[]byte, count int32, 
 // angle0: 90
 // flags: 0
 func PlotPlotPieChartdoublePtrStrV(label_ids []string, values *[]float64, count int32, x float64, y float64, radius float64, label_fmt string, angle0 float64, flags PlotPieChartFlags) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.double, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.double(valuesV)
@@ -8762,7 +8762,7 @@ func PlotSetupAxisScalePlotScale(axis PlotAxisEnum, scale PlotScale) {
 // labels: nullptr
 // keep_default: false
 func PlotSetupAxisTicksdoubleV(axis PlotAxisEnum, v_min float64, v_max float64, n_ticks int32, labels []string, keep_default bool) {
-	labelsArg, labelsFin := WrapStringList(labels)
+	labelsArg, labelsFin := datautils.WrapStringList[C.char](labels)
 	C.ImPlot_SetupAxisTicks_double(C.ImAxis(axis), C.double(v_min), C.double(v_max), C.int(n_ticks), labelsArg, C.bool(keep_default))
 
 	labelsFin()
@@ -8777,7 +8777,7 @@ func PlotSetupAxisTicksdoublePtrV(axis PlotAxisEnum, values *[]float64, n_ticks 
 		valuesArg[i] = C.double(valuesV)
 	}
 
-	labelsArg, labelsFin := WrapStringList(labels)
+	labelsArg, labelsFin := datautils.WrapStringList[C.char](labels)
 	C.ImPlot_SetupAxisTicks_doublePtr(C.ImAxis(axis), (*C.double)(&valuesArg[0]), C.int(n_ticks), labelsArg, C.bool(keep_default))
 
 	for i, valuesV := range valuesArg {
@@ -9373,14 +9373,14 @@ func PlotPixelsToPlotVec2(pix Vec2) PlotPoint {
 }
 
 func PlotPlotBarGroupsFloatPtr(label_ids []string, values []float32, item_count int32, group_count int32) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	C.wrap_ImPlot_PlotBarGroups_FloatPtr(label_idsArg, (*C.float)(&(values[0])), C.int(item_count), C.int(group_count))
 
 	label_idsFin()
 }
 
 func PlotPlotBarGroupsS16Ptr(label_ids []string, values *[]int, item_count int32, group_count int32) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImS16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS16(valuesV)
@@ -9396,7 +9396,7 @@ func PlotPlotBarGroupsS16Ptr(label_ids []string, values *[]int, item_count int32
 }
 
 func PlotPlotBarGroupsS32Ptr(label_ids []string, values *[]int32, item_count int32, group_count int32) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImS32, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS32(valuesV)
@@ -9412,14 +9412,14 @@ func PlotPlotBarGroupsS32Ptr(label_ids []string, values *[]int32, item_count int
 }
 
 func PlotPlotBarGroupsS64Ptr(label_ids []string, values []int64, item_count int32, group_count int32) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	C.wrap_ImPlot_PlotBarGroups_S64Ptr(label_idsArg, (*C.longlong)(&(values[0])), C.int(item_count), C.int(group_count))
 
 	label_idsFin()
 }
 
 func PlotPlotBarGroupsS8Ptr(label_ids []string, values *[]int8, item_count int32, group_count int32) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImS8, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS8(valuesV)
@@ -9435,7 +9435,7 @@ func PlotPlotBarGroupsS8Ptr(label_ids []string, values *[]int8, item_count int32
 }
 
 func PlotPlotBarGroupsU16Ptr(label_ids []string, values *[]uint16, item_count int32, group_count int32) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImU16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU16(valuesV)
@@ -9451,7 +9451,7 @@ func PlotPlotBarGroupsU16Ptr(label_ids []string, values *[]uint16, item_count in
 }
 
 func PlotPlotBarGroupsU32Ptr(label_ids []string, values *[]uint32, item_count int32, group_count int32) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImU32, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU32(valuesV)
@@ -9467,14 +9467,14 @@ func PlotPlotBarGroupsU32Ptr(label_ids []string, values *[]uint32, item_count in
 }
 
 func PlotPlotBarGroupsU64Ptr(label_ids []string, values []uint64, item_count int32, group_count int32) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	C.wrap_ImPlot_PlotBarGroups_U64Ptr(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(item_count), C.int(group_count))
 
 	label_idsFin()
 }
 
 func PlotPlotBarGroupsU8Ptr(label_ids []string, values *[]byte, item_count int32, group_count int32) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImU8, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU8(valuesV)
@@ -9490,7 +9490,7 @@ func PlotPlotBarGroupsU8Ptr(label_ids []string, values *[]byte, item_count int32
 }
 
 func PlotPlotBarGroupsdoublePtr(label_ids []string, values *[]float64, item_count int32, group_count int32) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.double, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.double(valuesV)
@@ -11578,14 +11578,14 @@ func PlotPlotLinedoublePtrdoublePtr(label_id string, xs *[]float64, ys *[]float6
 }
 
 func PlotPlotPieChartFloatPtrStr(label_ids []string, values []float32, count int32, x float64, y float64, radius float64) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	C.wrap_ImPlot_PlotPieChart_FloatPtrStr(label_idsArg, (*C.float)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
 
 	label_idsFin()
 }
 
 func PlotPlotPieChartS16PtrStr(label_ids []string, values *[]int, count int32, x float64, y float64, radius float64) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImS16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS16(valuesV)
@@ -11601,7 +11601,7 @@ func PlotPlotPieChartS16PtrStr(label_ids []string, values *[]int, count int32, x
 }
 
 func PlotPlotPieChartS32PtrStr(label_ids []string, values *[]int32, count int32, x float64, y float64, radius float64) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImS32, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS32(valuesV)
@@ -11617,14 +11617,14 @@ func PlotPlotPieChartS32PtrStr(label_ids []string, values *[]int32, count int32,
 }
 
 func PlotPlotPieChartS64PtrStr(label_ids []string, values []int64, count int32, x float64, y float64, radius float64) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	C.wrap_ImPlot_PlotPieChart_S64PtrStr(label_idsArg, (*C.longlong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
 
 	label_idsFin()
 }
 
 func PlotPlotPieChartS8PtrStr(label_ids []string, values *[]int8, count int32, x float64, y float64, radius float64) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImS8, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS8(valuesV)
@@ -11640,7 +11640,7 @@ func PlotPlotPieChartS8PtrStr(label_ids []string, values *[]int8, count int32, x
 }
 
 func PlotPlotPieChartU16PtrStr(label_ids []string, values *[]uint16, count int32, x float64, y float64, radius float64) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImU16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU16(valuesV)
@@ -11656,7 +11656,7 @@ func PlotPlotPieChartU16PtrStr(label_ids []string, values *[]uint16, count int32
 }
 
 func PlotPlotPieChartU32PtrStr(label_ids []string, values *[]uint32, count int32, x float64, y float64, radius float64) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImU32, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU32(valuesV)
@@ -11672,14 +11672,14 @@ func PlotPlotPieChartU32PtrStr(label_ids []string, values *[]uint32, count int32
 }
 
 func PlotPlotPieChartU64PtrStr(label_ids []string, values []uint64, count int32, x float64, y float64, radius float64) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	C.wrap_ImPlot_PlotPieChart_U64PtrStr(label_idsArg, (*C.ulonglong)(&(values[0])), C.int(count), C.double(x), C.double(y), C.double(radius))
 
 	label_idsFin()
 }
 
 func PlotPlotPieChartU8PtrStr(label_ids []string, values *[]byte, count int32, x float64, y float64, radius float64) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.ImU8, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImU8(valuesV)
@@ -11695,7 +11695,7 @@ func PlotPlotPieChartU8PtrStr(label_ids []string, values *[]byte, count int32, x
 }
 
 func PlotPlotPieChartdoublePtrStr(label_ids []string, values *[]float64, count int32, x float64, y float64, radius float64) {
-	label_idsArg, label_idsFin := WrapStringList(label_ids)
+	label_idsArg, label_idsFin := datautils.WrapStringList[C.char](label_ids)
 	valuesArg := make([]C.double, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.double(valuesV)

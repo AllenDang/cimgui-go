@@ -44,7 +44,7 @@ func RenderLinkText(self *TextRegion, text_ string, link_ Link, markdown_ string
 	link_Arg, link_Fin := link_.C()
 	markdown_Arg, markdown_Fin := datautils.WrapString[C.char](markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.C()
-	linkHoverStart_Arg, linkHoverStart_Fin := WrapStringList(linkHoverStart_)
+	linkHoverStart_Arg, linkHoverStart_Fin := datautils.WrapStringList[C.char](linkHoverStart_)
 
 	defer func() {
 		selfFin()
@@ -65,7 +65,7 @@ func RenderLinkTextWrappedV(self *TextRegion, text_ string, link_ Link, markdown
 	link_Arg, link_Fin := link_.C()
 	markdown_Arg, markdown_Fin := datautils.WrapString[C.char](markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.C()
-	linkHoverStart_Arg, linkHoverStart_Fin := WrapStringList(linkHoverStart_)
+	linkHoverStart_Arg, linkHoverStart_Fin := datautils.WrapStringList[C.char](linkHoverStart_)
 	C.wrap_RenderLinkTextWrappedV(selfArg, text_Arg, link_Arg, markdown_Arg, mdConfig_Arg, linkHoverStart_Arg, C.bool(bIndentToHere_))
 
 	selfFin()
@@ -124,7 +124,7 @@ func RenderLinkTextWrapped(self *TextRegion, text_ string, link_ Link, markdown_
 	link_Arg, link_Fin := link_.C()
 	markdown_Arg, markdown_Fin := datautils.WrapString[C.char](markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.C()
-	linkHoverStart_Arg, linkHoverStart_Fin := WrapStringList(linkHoverStart_)
+	linkHoverStart_Arg, linkHoverStart_Fin := datautils.WrapStringList[C.char](linkHoverStart_)
 	C.wrap_RenderLinkTextWrapped(selfArg, text_Arg, link_Arg, markdown_Arg, mdConfig_Arg, linkHoverStart_Arg)
 
 	selfFin()

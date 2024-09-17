@@ -1279,7 +1279,7 @@ func (self *Font) CalcTextSizeAV(size float32, max_width float32, wrap_width flo
 
 	selfArg, selfFin := self.Handle()
 	text_beginArg, text_beginFin := datautils.WrapString[C.char](text_begin)
-	remainingArg, remainingFin := WrapStringList(remaining)
+	remainingArg, remainingFin := datautils.WrapStringList[C.char](remaining)
 	C.wrap_ImFont_CalcTextSizeAV(pOutArg, selfArg, C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, remainingArg)
 
 	pOutFin()
@@ -4684,7 +4684,7 @@ func ComboStrV(label string, current_item *int32, items_separated_by_zeros strin
 func ComboStrarrV(label string, current_item *int32, items []string, items_count int32, popup_max_height_in_items int32) bool {
 	labelArg, labelFin := datautils.WrapString[C.char](label)
 	current_itemArg, current_itemFin := datautils.WrapNumberPtr[C.int, int32](current_item)
-	itemsArg, itemsFin := WrapStringList(items)
+	itemsArg, itemsFin := datautils.WrapStringList[C.char](items)
 
 	defer func() {
 		labelFin()
@@ -6989,8 +6989,8 @@ func InternalImFormatString(buf string, buf_size uint64, fmt string) int32 {
 }
 
 func InternalImFormatStringToTempBuffer(out_buf []string, out_buf_end []string, fmt string) {
-	out_bufArg, out_bufFin := WrapStringList(out_buf)
-	out_buf_endArg, out_buf_endFin := WrapStringList(out_buf_end)
+	out_bufArg, out_bufFin := datautils.WrapStringList[C.char](out_buf)
+	out_buf_endArg, out_buf_endFin := datautils.WrapStringList[C.char](out_buf_end)
 	fmtArg, fmtFin := datautils.WrapString[C.char](fmt)
 	C.wrap_igImFormatStringToTempBuffer(out_bufArg, out_buf_endArg, fmtArg)
 
@@ -7480,7 +7480,7 @@ func InternalImTextFindPreviousUtf8Codepoint(in_text_start string, in_text_curr 
 func InternalImTextStrFromUtf8V(out_buf *Wchar, out_buf_size int32, in_text string, in_text_end string, in_remaining []string) int32 {
 	in_textArg, in_textFin := datautils.WrapString[C.char](in_text)
 	in_text_endArg, in_text_endFin := datautils.WrapString[C.char](in_text_end)
-	in_remainingArg, in_remainingFin := WrapStringList(in_remaining)
+	in_remainingArg, in_remainingFin := datautils.WrapStringList[C.char](in_remaining)
 
 	defer func() {
 		in_textFin()
@@ -8306,7 +8306,7 @@ func LabelText(label string, fmt string) {
 func ListBoxStrarrV(label string, current_item *int32, items []string, items_count int32, height_in_items int32) bool {
 	labelArg, labelFin := datautils.WrapString[C.char](label)
 	current_itemArg, current_itemFin := datautils.WrapNumberPtr[C.int, int32](current_item)
-	itemsArg, itemsFin := WrapStringList(items)
+	itemsArg, itemsFin := datautils.WrapStringList[C.char](items)
 
 	defer func() {
 		labelFin()
@@ -12063,7 +12063,7 @@ func ComboStr(label string, current_item *int32, items_separated_by_zeros string
 func ComboStrarr(label string, current_item *int32, items []string, items_count int32) bool {
 	labelArg, labelFin := datautils.WrapString[C.char](label)
 	current_itemArg, current_itemFin := datautils.WrapNumberPtr[C.int, int32](current_item)
-	itemsArg, itemsFin := WrapStringList(items)
+	itemsArg, itemsFin := datautils.WrapStringList[C.char](items)
 
 	defer func() {
 		labelFin()
@@ -12713,7 +12713,7 @@ func InternalItemSizeVec2(size Vec2) {
 func ListBoxStrarr(label string, current_item *int32, items []string, items_count int32) bool {
 	labelArg, labelFin := datautils.WrapString[C.char](label)
 	current_itemArg, current_itemFin := datautils.WrapNumberPtr[C.int, int32](current_item)
-	itemsArg, itemsFin := WrapStringList(items)
+	itemsArg, itemsFin := datautils.WrapStringList[C.char](items)
 
 	defer func() {
 		labelFin()
