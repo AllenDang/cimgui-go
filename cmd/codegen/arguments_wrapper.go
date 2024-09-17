@@ -298,8 +298,8 @@ func constCharW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType:     "string",
 		VarName:     fmt.Sprintf("%sArg", arg.Name),
-		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapString(%[1]s)", arg.Name),
-		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapString(%[1]s)", arg.Name),
+		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := datautils.WrapString[C.char](%[1]s)", arg.Name),
+		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := datautils.WrapString[C.char](%[1]s)", arg.Name),
 		Finalizer:   fmt.Sprintf("%sFin()", arg.Name),
 		CType:       "*C.char",
 	}
@@ -309,8 +309,8 @@ func charPtrPtrW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType:     "[]string",
 		VarName:     fmt.Sprintf("%sArg", arg.Name),
-		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapStringList(%[1]s)", arg.Name),
-		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapStringList(%[1]s)", arg.Name),
+		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := datautils.WrapStringList[C.char](%[1]s)", arg.Name),
+		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := datautils.WrapStringList[C.char](%[1]s)", arg.Name),
 		Finalizer:   fmt.Sprintf("%sFin()", arg.Name),
 		CType:       "**C.char",
 	}
@@ -343,8 +343,8 @@ func floatArrayW(arg ArgDef) ArgumentWrapperData {
 func boolPtrW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType:     "*bool",
-		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapBool(%[1]s)", arg.Name),
-		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapBool(%[1]s)", arg.Name),
+		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := datautils.WrapBool[C.bool](%[1]s)", arg.Name),
+		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := datautils.WrapBool[C.bool](%[1]s)", arg.Name),
 		Finalizer:   fmt.Sprintf("%[1]sFin()", arg.Name),
 		VarName:     fmt.Sprintf("%sArg", arg.Name),
 		CType:       "*C.bool",
@@ -398,8 +398,8 @@ func simplePtrW(goType GoIdentifier, cType GoIdentifier) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
 		return ArgumentWrapperData{
 			ArgType:     GoIdentifier(fmt.Sprintf("*%s", goType)),
-			ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
-			ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
+			ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := datautils.WrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
+			ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := datautils.WrapNumberPtr[%[2]s, %[3]s](%[1]s)", arg.Name, cType, goType),
 			Finalizer:   fmt.Sprintf("%[1]sFin()", arg.Name, cType, goType),
 			VarName:     fmt.Sprintf("%sArg", arg.Name),
 			CType:       "*" + cType,

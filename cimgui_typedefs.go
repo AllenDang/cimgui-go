@@ -3,6 +3,10 @@
 
 package imgui
 
+import (
+	"github.com/AllenDang/cimgui-go/internal/datautils"
+)
+
 // #include <stdlib.h>
 // #include <memory.h>
 // #include "extra_types.h"
@@ -23,7 +27,7 @@ func (self *BitArrayPtr) Handle() (*C.ImBitArrayPtr, func()) {
 // C is like Handle but returns plain type instead of pointer.
 func (selfStruct *BitArrayPtr) C() (result C.ImBitArrayPtr, fin func()) {
 	self := selfStruct.Data
-	selfArg, selfFin := WrapNumberPtr[C.ImU32, uint32](self)
+	selfArg, selfFin := datautils.WrapNumberPtr[C.ImU32, uint32](self)
 	return (C.ImBitArrayPtr)(selfArg), func() { selfFin() }
 }
 
@@ -720,7 +724,7 @@ type ID uint32
 // Handle returns C version of ID and its finalizer func.
 func (selfSrc *ID) Handle() (result *C.ImGuiID, fin func()) {
 	self := (*uint32)(selfSrc)
-	selfArg, selfFin := WrapNumberPtr[C.uint, uint32](self)
+	selfArg, selfFin := datautils.WrapNumberPtr[C.uint, uint32](self)
 	return (*C.ImGuiID)(selfArg), func() { selfFin() }
 }
 
@@ -1028,7 +1032,7 @@ type KeyChord int32
 // Handle returns C version of KeyChord and its finalizer func.
 func (selfSrc *KeyChord) Handle() (result *C.ImGuiKeyChord, fin func()) {
 	self := (*int32)(selfSrc)
-	selfArg, selfFin := WrapNumberPtr[C.int, int32](self)
+	selfArg, selfFin := datautils.WrapNumberPtr[C.int, int32](self)
 	return (*C.ImGuiKeyChord)(selfArg), func() { selfFin() }
 }
 
@@ -2008,7 +2012,7 @@ type TableDrawChannelIdx uint16
 // Handle returns C version of TableDrawChannelIdx and its finalizer func.
 func (selfSrc *TableDrawChannelIdx) Handle() (result *C.ImGuiTableDrawChannelIdx, fin func()) {
 	self := (*uint16)(selfSrc)
-	selfArg, selfFin := WrapNumberPtr[C.ImU16, uint16](self)
+	selfArg, selfFin := datautils.WrapNumberPtr[C.ImU16, uint16](self)
 	return (*C.ImGuiTableDrawChannelIdx)(selfArg), func() { selfFin() }
 }
 
@@ -2448,7 +2452,7 @@ type PoolIdx int32
 // Handle returns C version of PoolIdx and its finalizer func.
 func (selfSrc *PoolIdx) Handle() (result *C.ImPoolIdx, fin func()) {
 	self := (*int32)(selfSrc)
-	selfArg, selfFin := WrapNumberPtr[C.int, int32](self)
+	selfArg, selfFin := datautils.WrapNumberPtr[C.int, int32](self)
 	return (*C.ImPoolIdx)(selfArg), func() { selfFin() }
 }
 
@@ -2510,7 +2514,7 @@ type Wchar32 uint32
 // Handle returns C version of Wchar32 and its finalizer func.
 func (selfSrc *Wchar32) Handle() (result *C.ImWchar32, fin func()) {
 	self := (*uint32)(selfSrc)
-	selfArg, selfFin := WrapNumberPtr[C.uint, uint32](self)
+	selfArg, selfFin := datautils.WrapNumberPtr[C.uint, uint32](self)
 	return (*C.ImWchar32)(selfArg), func() { selfFin() }
 }
 

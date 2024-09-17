@@ -20,6 +20,7 @@ import (
 
 	imgui "github.com/AllenDang/cimgui-go"
 	"github.com/AllenDang/cimgui-go/backend"
+	"github.com/AllenDang/cimgui-go/internal/datautils"
 )
 
 type voidCallbackFunc func()
@@ -280,10 +281,10 @@ func (b *GLFWBackend) SetWindowPos(x, y int) {
 }
 
 func (b *GLFWBackend) GetWindowPos() (x, y int32) {
-	xArg, xFin := imgui.WrapNumberPtr[C.int, int32](&x)
+	xArg, xFin := datautils.WrapNumberPtr[C.int, int32](&x)
 	defer xFin()
 
-	yArg, yFin := imgui.WrapNumberPtr[C.int, int32](&y)
+	yArg, yFin := datautils.WrapNumberPtr[C.int, int32](&y)
 	defer yFin()
 
 	C.igGLFWWindow_GetWindowPos(b.handle(), xArg, yArg)
@@ -296,10 +297,10 @@ func (b *GLFWBackend) SetWindowSize(width, height int) {
 }
 
 func (b *GLFWBackend) DisplaySize() (width int32, height int32) {
-	widthArg, widthFin := imgui.WrapNumberPtr[C.int, int32](&width)
+	widthArg, widthFin := datautils.WrapNumberPtr[C.int, int32](&width)
 	defer widthFin()
 
-	heightArg, heightFin := imgui.WrapNumberPtr[C.int, int32](&height)
+	heightArg, heightFin := datautils.WrapNumberPtr[C.int, int32](&height)
 	defer heightFin()
 
 	C.igGLFWWindow_GetDisplaySize(b.handle(), widthArg, heightArg)
@@ -308,10 +309,10 @@ func (b *GLFWBackend) DisplaySize() (width int32, height int32) {
 }
 
 func (b *GLFWBackend) ContentScale() (width, height float32) {
-	widthArg, widthFin := imgui.WrapNumberPtr[C.float, float32](&width)
+	widthArg, widthFin := datautils.WrapNumberPtr[C.float, float32](&width)
 	defer widthFin()
 
-	heightArg, heightFin := imgui.WrapNumberPtr[C.float, float32](&height)
+	heightArg, heightFin := datautils.WrapNumberPtr[C.float, float32](&height)
 	defer heightFin()
 
 	C.igGLFWWindow_GetContentScale(b.handle(), widthArg, heightArg)
@@ -320,7 +321,7 @@ func (b *GLFWBackend) ContentScale() (width, height float32) {
 }
 
 func (b *GLFWBackend) SetWindowTitle(title string) {
-	titleArg, titleFin := imgui.WrapString(title)
+	titleArg, titleFin := datautils.WrapString[C.char](title)
 	defer titleFin()
 
 	C.igGLFWWindow_SetTitle(b.handle(), (*C.char)(titleArg))
@@ -334,11 +335,11 @@ func (b *GLFWBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeig
 }
 
 func (b *GLFWBackend) SetShouldClose(value bool) {
-	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(imgui.CastBool(value)))
+	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(datautils.CastBool(value)))
 }
 
 func (b *GLFWBackend) CreateWindow(title string, width, height int) {
-	titleArg, titleFin := imgui.WrapString(title)
+	titleArg, titleFin := datautils.WrapString[C.char](title)
 	defer titleFin()
 
 	b.window = uintptr(unsafe.Pointer(C.igCreateGLFWWindow(
