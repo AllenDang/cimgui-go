@@ -321,7 +321,7 @@ func (b *GLFWBackend) ContentScale() (width, height float32) {
 }
 
 func (b *GLFWBackend) SetWindowTitle(title string) {
-	titleArg, titleFin := datautils.WrapString(title)
+	titleArg, titleFin := datautils.WrapString[C.char](title)
 	defer titleFin()
 
 	C.igGLFWWindow_SetTitle(b.handle(), (*C.char)(titleArg))
@@ -339,7 +339,7 @@ func (b *GLFWBackend) SetShouldClose(value bool) {
 }
 
 func (b *GLFWBackend) CreateWindow(title string, width, height int) {
-	titleArg, titleFin := datautils.WrapString(title)
+	titleArg, titleFin := datautils.WrapString[C.char](title)
 	defer titleFin()
 
 	b.window = uintptr(unsafe.Pointer(C.igCreateGLFWWindow(

@@ -348,7 +348,7 @@ func (b *SDLBackend) ContentScale() (width, height float32) {
 }
 
 func (b *SDLBackend) SetWindowTitle(title string) {
-	titleArg, titleFin := datautils.WrapString(title)
+	titleArg, titleFin := datautils.WrapString[C.char](title)
 	defer titleFin()
 
 	C.igSDLWindow_SetTitle(b.handle(), (*C.char)(titleArg))
@@ -367,7 +367,7 @@ func (b *SDLBackend) SetShouldClose(value bool) {
 }
 
 func (b *SDLBackend) CreateWindow(title string, width, height int) {
-	titleArg, titleFin := datautils.WrapString(title)
+	titleArg, titleFin := datautils.WrapString[C.char](title)
 	defer titleFin()
 
 	b.window = uintptr(unsafe.Pointer(C.igCreateSDLWindow(
