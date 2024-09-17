@@ -4,8 +4,6 @@ package imgui
 import "C"
 
 import (
-	"fmt"
-	"reflect"
 	"unsafe"
 )
 
