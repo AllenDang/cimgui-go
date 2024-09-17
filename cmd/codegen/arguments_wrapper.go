@@ -343,8 +343,8 @@ func floatArrayW(arg ArgDef) ArgumentWrapperData {
 func boolPtrW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType:     "*bool",
-		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapBool(%[1]s)", arg.Name),
-		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapBool(%[1]s)", arg.Name),
+		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := datautils.WrapBool[C.bool](%[1]s)", arg.Name),
+		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := datautils.WrapBool[C.bool](%[1]s)", arg.Name),
 		Finalizer:   fmt.Sprintf("%[1]sFin()", arg.Name),
 		VarName:     fmt.Sprintf("%sArg", arg.Name),
 		CType:       "*C.bool",
