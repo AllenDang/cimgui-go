@@ -335,7 +335,7 @@ func (b *GLFWBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeig
 }
 
 func (b *GLFWBackend) SetShouldClose(value bool) {
-	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(imgui.CastBool(value)))
+	C.igGLFWWindow_SetShouldClose(b.handle(), C.int(datautils.CastBool(value)))
 }
 
 func (b *GLFWBackend) CreateWindow(title string, width, height int) {
