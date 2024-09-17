@@ -19,6 +19,7 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt install xorg-dev
+          sudo apt-get -y install libwayland-dev
 
       # for GLFW
       - name: configure glfw
