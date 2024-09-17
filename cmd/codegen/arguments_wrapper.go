@@ -309,8 +309,8 @@ func charPtrPtrW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType:     "[]string",
 		VarName:     fmt.Sprintf("%sArg", arg.Name),
-		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapStringList(%[1]s)", arg.Name),
-		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapStringList(%[1]s)", arg.Name),
+		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := datautils.WrapStringList[C.char](%[1]s)", arg.Name),
+		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := datautils.WrapStringList[C.char](%[1]s)", arg.Name),
 		Finalizer:   fmt.Sprintf("%sFin()", arg.Name),
 		CType:       "**C.char",
 	}
