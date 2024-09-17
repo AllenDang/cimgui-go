@@ -378,14 +378,14 @@ func ImNodesLink(id int32, start_attribute_id int32, end_attribute_id int32) {
 }
 
 func ImNodesLoadCurrentEditorStateFromIniFile(file_name string) {
-	file_nameArg, file_nameFin := WrapString(file_name)
+	file_nameArg, file_nameFin := datautils.WrapString[C.char](file_name)
 	C.imnodes_LoadCurrentEditorStateFromIniFile(file_nameArg)
 
 	file_nameFin()
 }
 
 func ImNodesLoadCurrentEditorStateFromIniString(data string, data_size uint64) {
-	dataArg, dataFin := WrapString(data)
+	dataArg, dataFin := datautils.WrapString[C.char](data)
 	C.imnodes_LoadCurrentEditorStateFromIniString(dataArg, C.xulong(data_size))
 
 	dataFin()
@@ -393,7 +393,7 @@ func ImNodesLoadCurrentEditorStateFromIniString(data string, data_size uint64) {
 
 func ImNodesLoadEditorStateFromIniFile(editor *NodesEditorContext, file_name string) {
 	editorArg, editorFin := editor.Handle()
-	file_nameArg, file_nameFin := WrapString(file_name)
+	file_nameArg, file_nameFin := datautils.WrapString[C.char](file_name)
 	C.imnodes_LoadEditorStateFromIniFile(editorArg, file_nameArg)
 
 	editorFin()
@@ -402,7 +402,7 @@ func ImNodesLoadEditorStateFromIniFile(editor *NodesEditorContext, file_name str
 
 func ImNodesLoadEditorStateFromIniString(editor *NodesEditorContext, data string, data_size uint64) {
 	editorArg, editorFin := editor.Handle()
-	dataArg, dataFin := WrapString(data)
+	dataArg, dataFin := datautils.WrapString[C.char](data)
 	C.imnodes_LoadEditorStateFromIniString(editorArg, dataArg, C.xulong(data_size))
 
 	editorFin()
@@ -448,7 +448,7 @@ func ImNodesPushStyleVarVec2(style_item NodesStyleVar, value Vec2) {
 }
 
 func ImNodesSaveCurrentEditorStateToIniFile(file_name string) {
-	file_nameArg, file_nameFin := WrapString(file_name)
+	file_nameArg, file_nameFin := datautils.WrapString[C.char](file_name)
 	C.imnodes_SaveCurrentEditorStateToIniFile(file_nameArg)
 
 	file_nameFin()
@@ -462,7 +462,7 @@ func ImNodesSaveCurrentEditorStateToIniStringV(data_size *uint64) string {
 
 func ImNodesSaveEditorStateToIniFile(editor *NodesEditorContext, file_name string) {
 	editorArg, editorFin := editor.Handle()
-	file_nameArg, file_nameFin := WrapString(file_name)
+	file_nameArg, file_nameFin := datautils.WrapString[C.char](file_name)
 	C.imnodes_SaveEditorStateToIniFile(editorArg, file_nameArg)
 
 	editorFin()

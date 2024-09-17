@@ -3,6 +3,10 @@
 
 package imgui
 
+import (
+	"github.com/AllenDang/cimgui-go/internal/datautils"
+)
+
 // #include "extra_types.h"
 // #include "cimmarkdown_structs_accessor.h"
 // #include "cimmarkdown_wrapper.h"
@@ -13,7 +17,7 @@ func IsCharInsideWord(c_ rune) bool {
 }
 
 func Markdown(markdown_ string, markdownLength_ uint64, mdConfig_ MarkdownConfig) {
-	markdown_Arg, markdown_Fin := WrapString(markdown_)
+	markdown_Arg, markdown_Fin := datautils.WrapString[C.char](markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.C()
 	C.Markdown(markdown_Arg, C.xulong(markdownLength_), mdConfig_Arg)
 
@@ -22,7 +26,7 @@ func Markdown(markdown_ string, markdownLength_ uint64, mdConfig_ MarkdownConfig
 }
 
 func RenderLine(markdown_ string, line_ *Line, textRegion_ *TextRegion, mdConfig_ MarkdownConfig) {
-	markdown_Arg, markdown_Fin := WrapString(markdown_)
+	markdown_Arg, markdown_Fin := datautils.WrapString[C.char](markdown_)
 	line_Arg, line_Fin := line_.Handle()
 	textRegion_Arg, textRegion_Fin := textRegion_.Handle()
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.C()
@@ -36,9 +40,9 @@ func RenderLine(markdown_ string, line_ *Line, textRegion_ *TextRegion, mdConfig
 
 func RenderLinkText(self *TextRegion, text_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string) bool {
 	selfArg, selfFin := self.Handle()
-	text_Arg, text_Fin := WrapString(text_)
+	text_Arg, text_Fin := datautils.WrapString[C.char](text_)
 	link_Arg, link_Fin := link_.C()
-	markdown_Arg, markdown_Fin := WrapString(markdown_)
+	markdown_Arg, markdown_Fin := datautils.WrapString[C.char](markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.C()
 	linkHoverStart_Arg, linkHoverStart_Fin := WrapStringList(linkHoverStart_)
 
@@ -57,9 +61,9 @@ func RenderLinkText(self *TextRegion, text_ string, link_ Link, markdown_ string
 // bIndentToHere_: false
 func RenderLinkTextWrappedV(self *TextRegion, text_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string, bIndentToHere_ bool) {
 	selfArg, selfFin := self.Handle()
-	text_Arg, text_Fin := WrapString(text_)
+	text_Arg, text_Fin := datautils.WrapString[C.char](text_)
 	link_Arg, link_Fin := link_.C()
-	markdown_Arg, markdown_Fin := WrapString(markdown_)
+	markdown_Arg, markdown_Fin := datautils.WrapString[C.char](markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.C()
 	linkHoverStart_Arg, linkHoverStart_Fin := WrapStringList(linkHoverStart_)
 	C.wrap_RenderLinkTextWrappedV(selfArg, text_Arg, link_Arg, markdown_Arg, mdConfig_Arg, linkHoverStart_Arg, C.bool(bIndentToHere_))
@@ -74,7 +78,7 @@ func RenderLinkTextWrappedV(self *TextRegion, text_ string, link_ Link, markdown
 
 func RenderListTextWrapped(self *TextRegion, text_ string) {
 	selfArg, selfFin := self.Handle()
-	text_Arg, text_Fin := WrapString(text_)
+	text_Arg, text_Fin := datautils.WrapString[C.char](text_)
 	C.wrap_RenderListTextWrapped(selfArg, text_Arg)
 
 	selfFin()
@@ -85,7 +89,7 @@ func RenderListTextWrapped(self *TextRegion, text_ string) {
 // bIndentToHere_: false
 func RenderTextWrappedV(self *TextRegion, text_ string, bIndentToHere_ bool) {
 	selfArg, selfFin := self.Handle()
-	text_Arg, text_Fin := WrapString(text_)
+	text_Arg, text_Fin := datautils.WrapString[C.char](text_)
 	C.wrap_RenderTextWrappedV(selfArg, text_Arg, C.bool(bIndentToHere_))
 
 	selfFin()
@@ -116,9 +120,9 @@ func UnderLine(col_ Color) {
 
 func RenderLinkTextWrapped(self *TextRegion, text_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string) {
 	selfArg, selfFin := self.Handle()
-	text_Arg, text_Fin := WrapString(text_)
+	text_Arg, text_Fin := datautils.WrapString[C.char](text_)
 	link_Arg, link_Fin := link_.C()
-	markdown_Arg, markdown_Fin := WrapString(markdown_)
+	markdown_Arg, markdown_Fin := datautils.WrapString[C.char](markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.C()
 	linkHoverStart_Arg, linkHoverStart_Fin := WrapStringList(linkHoverStart_)
 	C.wrap_RenderLinkTextWrapped(selfArg, text_Arg, link_Arg, markdown_Arg, mdConfig_Arg, linkHoverStart_Arg)
@@ -133,7 +137,7 @@ func RenderLinkTextWrapped(self *TextRegion, text_ string, link_ Link, markdown_
 
 func RenderTextWrapped(self *TextRegion, text_ string) {
 	selfArg, selfFin := self.Handle()
-	text_Arg, text_Fin := WrapString(text_)
+	text_Arg, text_Fin := datautils.WrapString[C.char](text_)
 	C.wrap_RenderTextWrapped(selfArg, text_Arg)
 
 	selfFin()
@@ -417,7 +421,7 @@ func (self *Link) Numbracketsopen() int32 {
 }
 
 func (self MarkdownConfig) SetLinkIcon(v string) {
-	vArg, _ := WrapString(v)
+	vArg, _ := datautils.WrapString[C.char](v)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -677,7 +681,7 @@ func (self *MarkdownImageData) Bordercol() Vec4 {
 }
 
 func (self MarkdownLinkCallbackData) SetText(v string) {
-	vArg, _ := WrapString(v)
+	vArg, _ := datautils.WrapString[C.char](v)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -709,7 +713,7 @@ func (self *MarkdownLinkCallbackData) TextLength() int32 {
 }
 
 func (self MarkdownLinkCallbackData) SetLink(v string) {
-	vArg, _ := WrapString(v)
+	vArg, _ := datautils.WrapString[C.char](v)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -791,7 +795,7 @@ func (self *MarkdownTooltipCallbackData) LinkData() MarkdownLinkCallbackData {
 }
 
 func (self MarkdownTooltipCallbackData) SetLinkIcon(v string) {
-	vArg, _ := WrapString(v)
+	vArg, _ := datautils.WrapString[C.char](v)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
