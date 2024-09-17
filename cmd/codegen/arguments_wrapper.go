@@ -298,8 +298,8 @@ func constCharW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType:     "string",
 		VarName:     fmt.Sprintf("%sArg", arg.Name),
-		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := WrapString(%[1]s)", arg.Name),
-		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := WrapString(%[1]s)", arg.Name),
+		ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := datautils.WrapString[C.char](%[1]s)", arg.Name),
+		ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := datautils.WrapString[C.char](%[1]s)", arg.Name),
 		Finalizer:   fmt.Sprintf("%sFin()", arg.Name),
 		CType:       "*C.char",
 	}
