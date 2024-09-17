@@ -4,6 +4,7 @@ package imgui
 // #include <stdlib.h>
 // #include <stdbool.h>
 import "C"
+
 import (
 	"runtime"
 	"unsafe"
@@ -16,22 +17,6 @@ func CastBool(value bool) (cast int) {
 	return
 }
 
-func WrapBool(goValue *bool) (wrapped *C.bool, finisher func()) {
-	if goValue != nil {
-		var cValue C.bool
-		if *goValue {
-			cValue = C.bool(true)
-		}
-		wrapped = &cValue
-		finisher = func() {
-			*goValue = cValue == C.bool(true)
-		}
-	} else {
-		finisher = func() {}
-	}
-	return
-}
-
 // Number is a generic type for Go/C types that can be used as a number.
 // It could be anything that you can convert to that type (e.g. C.int is a Number,
 // because it can be directly converted to int)
@@ -39,21 +24,6 @@ type Number interface {
 	~int | ~int8 | ~int16 | ~int32 | ~int64 |
 		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 |
 		~float32 | ~float64
-}
-
-// WrapNumberPtr is a generic method to convert GOTYPE (int32/float32 e.t.c.) into CTYPE (c_int/c_float e.t.c.)
-func WrapNumberPtr[CTYPE Number, GOTYPE Number](goValue *GOTYPE) (wrapped *CTYPE, finisher func()) {
-	if goValue != nil {
-		cValue := CTYPE(*goValue)
-		wrapped = &cValue
-		finisher = func() {
-			*goValue = GOTYPE(cValue)
-		}
-	} else {
-		finisher = func() {}
-	}
-
-	return
 }
 
 func WrapString(value string) (wrapped *C.char, finisher func()) {
