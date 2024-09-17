@@ -3,11 +3,16 @@
 
 package imgui
 
+import (
+	"unsafe"
+
+	"github.com/AllenDang/cimgui-go/internal/datautils"
+)
+
 // #include "extra_types.h"
 // #include "cimgui_structs_accessor.h"
 // #include "cimgui_wrapper.h"
 import "C"
-import "unsafe"
 
 func (self *BitVector) InternalClear() {
 	selfArg, selfFin := self.Handle()
@@ -4368,7 +4373,7 @@ func Checkbox(label string, v *bool) bool {
 
 func CheckboxFlagsIntPtr(label string, flags *int32, flags_value int32) bool {
 	labelArg, labelFin := WrapString(label)
-	flagsArg, flagsFin := WrapNumberPtr[C.int, int32](flags)
+	flagsArg, flagsFin := datautils.WrapNumberPtr[C.int, int32](flags)
 
 	defer func() {
 		labelFin()
@@ -4379,7 +4384,7 @@ func CheckboxFlagsIntPtr(label string, flags *int32, flags_value int32) bool {
 
 func InternalCheckboxFlagsS64Ptr(label string, flags *int64, flags_value int64) bool {
 	labelArg, labelFin := WrapString(label)
-	flagsArg, flagsFin := WrapNumberPtr[C.ImS64, int64](flags)
+	flagsArg, flagsFin := datautils.WrapNumberPtr[C.ImS64, int64](flags)
 
 	defer func() {
 		labelFin()
@@ -4407,7 +4412,7 @@ func InternalCheckboxFlagsU64Ptr(label string, flags *[]uint64, flags_value uint
 
 func CheckboxFlagsUintPtr(label string, flags *uint32, flags_value uint32) bool {
 	labelArg, labelFin := WrapString(label)
-	flagsArg, flagsFin := WrapNumberPtr[C.uint, uint32](flags)
+	flagsArg, flagsFin := datautils.WrapNumberPtr[C.uint, uint32](flags)
 
 	defer func() {
 		labelFin()
@@ -4519,9 +4524,9 @@ func ColorConvertFloat4ToU32(in Vec4) uint32 {
 }
 
 func ColorConvertHSVtoRGB(h float32, s float32, v float32, out_r *float32, out_g *float32, out_b *float32) {
-	out_rArg, out_rFin := WrapNumberPtr[C.float, float32](out_r)
-	out_gArg, out_gFin := WrapNumberPtr[C.float, float32](out_g)
-	out_bArg, out_bFin := WrapNumberPtr[C.float, float32](out_b)
+	out_rArg, out_rFin := datautils.WrapNumberPtr[C.float, float32](out_r)
+	out_gArg, out_gFin := datautils.WrapNumberPtr[C.float, float32](out_g)
+	out_bArg, out_bFin := datautils.WrapNumberPtr[C.float, float32](out_b)
 	C.igColorConvertHSVtoRGB(C.float(h), C.float(s), C.float(v), out_rArg, out_gArg, out_bArg)
 
 	out_rFin()
@@ -4530,9 +4535,9 @@ func ColorConvertHSVtoRGB(h float32, s float32, v float32, out_r *float32, out_g
 }
 
 func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s *float32, out_v *float32) {
-	out_hArg, out_hFin := WrapNumberPtr[C.float, float32](out_h)
-	out_sArg, out_sFin := WrapNumberPtr[C.float, float32](out_s)
-	out_vArg, out_vFin := WrapNumberPtr[C.float, float32](out_v)
+	out_hArg, out_hFin := datautils.WrapNumberPtr[C.float, float32](out_h)
+	out_sArg, out_sFin := datautils.WrapNumberPtr[C.float, float32](out_s)
+	out_vArg, out_vFin := datautils.WrapNumberPtr[C.float, float32](out_v)
 	C.igColorConvertRGBtoHSV(C.float(r), C.float(g), C.float(b), out_hArg, out_sArg, out_vArg)
 
 	out_hFin()
@@ -4663,7 +4668,7 @@ func ColumnsV(count int32, id string, borders bool) {
 // popup_max_height_in_items: -1
 func ComboStrV(label string, current_item *int32, items_separated_by_zeros string, popup_max_height_in_items int32) bool {
 	labelArg, labelFin := WrapString(label)
-	current_itemArg, current_itemFin := WrapNumberPtr[C.int, int32](current_item)
+	current_itemArg, current_itemFin := datautils.WrapNumberPtr[C.int, int32](current_item)
 	items_separated_by_zerosArg, items_separated_by_zerosFin := WrapString(items_separated_by_zeros)
 
 	defer func() {
@@ -4678,7 +4683,7 @@ func ComboStrV(label string, current_item *int32, items_separated_by_zeros strin
 // popup_max_height_in_items: -1
 func ComboStrarrV(label string, current_item *int32, items []string, items_count int32, popup_max_height_in_items int32) bool {
 	labelArg, labelFin := WrapString(label)
-	current_itemArg, current_itemFin := WrapNumberPtr[C.int, int32](current_item)
+	current_itemArg, current_itemFin := datautils.WrapNumberPtr[C.int, int32](current_item)
 	itemsArg, itemsFin := WrapStringList(items)
 
 	defer func() {
@@ -5424,7 +5429,7 @@ func InternalDragBehavior(id ID, data_type DataType, p_v uintptr, v_speed float3
 // flags: 0
 func DragFloatV(label string, v *float32, v_speed float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.float, float32](v)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
@@ -5525,8 +5530,8 @@ func DragFloat4V(label string, v *[4]float32, v_speed float32, v_min float32, v_
 // flags: 0
 func DragFloatRange2V(label string, v_current_min *float32, v_current_max *float32, v_speed float32, v_min float32, v_max float32, format string, format_max string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
-	v_current_minArg, v_current_minFin := WrapNumberPtr[C.float, float32](v_current_min)
-	v_current_maxArg, v_current_maxFin := WrapNumberPtr[C.float, float32](v_current_max)
+	v_current_minArg, v_current_minFin := datautils.WrapNumberPtr[C.float, float32](v_current_min)
+	v_current_maxArg, v_current_maxFin := datautils.WrapNumberPtr[C.float, float32](v_current_max)
 	formatArg, formatFin := WrapString(format)
 	format_maxArg, format_maxFin := WrapString(format_max)
 
@@ -5549,7 +5554,7 @@ func DragFloatRange2V(label string, v_current_min *float32, v_current_max *float
 // flags: 0
 func DragIntV(label string, v *int32, v_speed float32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.int, int32](v)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
@@ -5650,8 +5655,8 @@ func DragInt4V(label string, v *[4]int32, v_speed float32, v_min int32, v_max in
 // flags: 0
 func DragIntRange2V(label string, v_current_min *int32, v_current_max *int32, v_speed float32, v_min int32, v_max int32, format string, format_max string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
-	v_current_minArg, v_current_minFin := WrapNumberPtr[C.int, int32](v_current_min)
-	v_current_maxArg, v_current_maxFin := WrapNumberPtr[C.int, int32](v_current_max)
+	v_current_minArg, v_current_minFin := datautils.WrapNumberPtr[C.int, int32](v_current_min)
+	v_current_maxArg, v_current_maxFin := datautils.WrapNumberPtr[C.int, int32](v_current_max)
 	formatArg, formatFin := WrapString(format)
 	format_maxArg, format_maxFin := WrapString(format_max)
 
@@ -6595,8 +6600,8 @@ func TreeNodeToLabelSpacing() float32 {
 }
 
 func InternalTypematicRepeatRate(flags InputFlags, repeat_delay *float32, repeat_rate *float32) {
-	repeat_delayArg, repeat_delayFin := WrapNumberPtr[C.float, float32](repeat_delay)
-	repeat_rateArg, repeat_rateFin := WrapNumberPtr[C.float, float32](repeat_rate)
+	repeat_delayArg, repeat_delayFin := datautils.WrapNumberPtr[C.float, float32](repeat_delay)
+	repeat_rateArg, repeat_rateFin := datautils.WrapNumberPtr[C.float, float32](repeat_rate)
 	C.igGetTypematicRepeatRate(C.ImGuiInputFlags(flags), repeat_delayArg, repeat_rateArg)
 
 	repeat_delayFin()
@@ -6793,14 +6798,14 @@ func InternalImBezierQuadraticCalc(p1 Vec2, p2 Vec2, p3 Vec2, t float32) Vec2 {
 }
 
 func InternalImBitArrayClearAllBits(arr *uint32, bitcount int32) {
-	arrArg, arrFin := WrapNumberPtr[C.ImU32, uint32](arr)
+	arrArg, arrFin := datautils.WrapNumberPtr[C.ImU32, uint32](arr)
 	C.igImBitArrayClearAllBits(arrArg, C.int(bitcount))
 
 	arrFin()
 }
 
 func InternalImBitArrayClearBit(arr *uint32, n int32) {
-	arrArg, arrFin := WrapNumberPtr[C.ImU32, uint32](arr)
+	arrArg, arrFin := datautils.WrapNumberPtr[C.ImU32, uint32](arr)
 	C.igImBitArrayClearBit(arrArg, C.int(n))
 
 	arrFin()
@@ -6811,14 +6816,14 @@ func InternalImBitArrayGetStorageSizeInBytes(bitcount int32) uint64 {
 }
 
 func InternalImBitArraySetBit(arr *uint32, n int32) {
-	arrArg, arrFin := WrapNumberPtr[C.ImU32, uint32](arr)
+	arrArg, arrFin := datautils.WrapNumberPtr[C.ImU32, uint32](arr)
 	C.igImBitArraySetBit(arrArg, C.int(n))
 
 	arrFin()
 }
 
 func InternalImBitArraySetBitRange(arr *uint32, n int32, n2 int32) {
-	arrArg, arrFin := WrapNumberPtr[C.ImU32, uint32](arr)
+	arrArg, arrFin := datautils.WrapNumberPtr[C.ImU32, uint32](arr)
 	C.igImBitArraySetBitRange(arrArg, C.int(n), C.int(n2))
 
 	arrFin()
@@ -7389,7 +7394,7 @@ func InternalImStrnicmp(str1 string, str2 string, count uint64) int32 {
 
 // read one character. return input UTF-8 bytes count
 func InternalImTextCharFromUtf8(out_char *uint32, in_text string, in_text_end string) int32 {
-	out_charArg, out_charFin := WrapNumberPtr[C.uint, uint32](out_char)
+	out_charArg, out_charFin := datautils.WrapNumberPtr[C.uint, uint32](out_char)
 	in_textArg, in_textFin := WrapString(in_text)
 	in_text_endArg, in_text_endFin := WrapString(in_text_end)
 
@@ -7504,9 +7509,9 @@ func InternalImTriangleArea(a Vec2, b Vec2, c Vec2) float32 {
 }
 
 func InternalImTriangleBarycentricCoords(a Vec2, b Vec2, c Vec2, p Vec2, out_u *float32, out_v *float32, out_w *float32) {
-	out_uArg, out_uFin := WrapNumberPtr[C.float, float32](out_u)
-	out_vArg, out_vFin := WrapNumberPtr[C.float, float32](out_v)
-	out_wArg, out_wFin := WrapNumberPtr[C.float, float32](out_w)
+	out_uArg, out_uFin := datautils.WrapNumberPtr[C.float, float32](out_u)
+	out_vArg, out_vFin := datautils.WrapNumberPtr[C.float, float32](out_v)
+	out_wArg, out_wFin := datautils.WrapNumberPtr[C.float, float32](out_w)
 	C.igImTriangleBarycentricCoords(a.toC(), b.toC(), c.toC(), p.toC(), out_uArg, out_vArg, out_wArg)
 
 	out_uFin()
@@ -7611,7 +7616,7 @@ func InternalInitialize() {
 // flags: 0
 func InputDoubleV(label string, v *float64, step float64, step_fast float64, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.double, float64](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.double, float64](v)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
@@ -7629,7 +7634,7 @@ func InputDoubleV(label string, v *float64, step float64, step_fast float64, for
 // flags: 0
 func InputFloatV(label string, v *float32, step float32, step_fast float32, format string, flags InputTextFlags) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.float, float32](v)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
@@ -7718,7 +7723,7 @@ func InputFloat4V(label string, v *[4]float32, format string, flags InputTextFla
 // flags: 0
 func InputIntV(label string, v *int32, step int32, step_fast int32, flags InputTextFlags) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.int, int32](v)
 
 	defer func() {
 		labelFin()
@@ -8300,7 +8305,7 @@ func LabelText(label string, fmt string) {
 // height_in_items: -1
 func ListBoxStrarrV(label string, current_item *int32, items []string, items_count int32, height_in_items int32) bool {
 	labelArg, labelFin := WrapString(label)
-	current_itemArg, current_itemFin := WrapNumberPtr[C.int, int32](current_item)
+	current_itemArg, current_itemFin := datautils.WrapNumberPtr[C.int, int32](current_item)
 	itemsArg, itemsFin := WrapStringList(items)
 
 	defer func() {
@@ -8853,7 +8858,7 @@ func RadioButtonBool(label string, active bool) bool {
 // shortcut to handle the above pattern when value is an integer
 func RadioButtonIntPtr(label string, v *int32, v_button int32) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.int, int32](v)
 
 	defer func() {
 		labelFin()
@@ -9119,7 +9124,7 @@ func InternalScrollbar(axis Axis) {
 
 func InternalScrollbarEx(bb Rect, id ID, axis Axis, p_scroll_v *int64, avail_v int64, contents_v int64, flags DrawFlags) bool {
 	idArg, idFin := id.C()
-	p_scroll_vArg, p_scroll_vFin := WrapNumberPtr[C.ImS64, int64](p_scroll_v)
+	p_scroll_vArg, p_scroll_vFin := datautils.WrapNumberPtr[C.ImS64, int64](p_scroll_v)
 
 	defer func() {
 		idFin()
@@ -9897,7 +9902,7 @@ func InternalShutdown() {
 // flags: 0
 func SliderAngleV(label string, v_rad *float32, v_degrees_min float32, v_degrees_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
-	v_radArg, v_radFin := WrapNumberPtr[C.float, float32](v_rad)
+	v_radArg, v_radFin := datautils.WrapNumberPtr[C.float, float32](v_rad)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
@@ -9927,7 +9932,7 @@ func InternalSliderBehavior(bb Rect, id ID, data_type DataType, p_v uintptr, p_m
 // flags: 0
 func SliderFloatV(label string, v *float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.float, float32](v)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
@@ -10015,7 +10020,7 @@ func SliderFloat4V(label string, v *[4]float32, v_min float32, v_max float32, fo
 // flags: 0
 func SliderIntV(label string, v *int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.int, int32](v)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
@@ -10147,8 +10152,8 @@ func Spacing() {
 // bg_col: 0
 func InternalSplitterBehaviorV(bb Rect, id ID, axis Axis, size1 *float32, size2 *float32, min_size1 float32, min_size2 float32, hover_extend float32, hover_visibility_delay float32, bg_col uint32) bool {
 	idArg, idFin := id.C()
-	size1Arg, size1Fin := WrapNumberPtr[C.float, float32](size1)
-	size2Arg, size2Fin := WrapNumberPtr[C.float, float32](size2)
+	size1Arg, size1Fin := datautils.WrapNumberPtr[C.float, float32](size1)
+	size2Arg, size2Fin := datautils.WrapNumberPtr[C.float, float32](size2)
 
 	defer func() {
 		idFin()
@@ -11178,7 +11183,7 @@ func InternalUpdateWindowSkipRefresh(window *Window) {
 // flags: 0
 func VSliderFloatV(label string, size Vec2, v *float32, v_min float32, v_max float32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.float, float32](v)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
@@ -11194,7 +11199,7 @@ func VSliderFloatV(label string, size Vec2, v *float32, v_min float32, v_max flo
 // flags: 0
 func VSliderIntV(label string, size Vec2, v *int32, v_min int32, v_max int32, format string, flags SliderFlags) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.int, int32](v)
 	formatArg, formatFin := WrapString(format)
 
 	defer func() {
@@ -12044,7 +12049,7 @@ func Columns() {
 
 func ComboStr(label string, current_item *int32, items_separated_by_zeros string) bool {
 	labelArg, labelFin := WrapString(label)
-	current_itemArg, current_itemFin := WrapNumberPtr[C.int, int32](current_item)
+	current_itemArg, current_itemFin := datautils.WrapNumberPtr[C.int, int32](current_item)
 	items_separated_by_zerosArg, items_separated_by_zerosFin := WrapString(items_separated_by_zeros)
 
 	defer func() {
@@ -12057,7 +12062,7 @@ func ComboStr(label string, current_item *int32, items_separated_by_zeros string
 
 func ComboStrarr(label string, current_item *int32, items []string, items_count int32) bool {
 	labelArg, labelFin := WrapString(label)
-	current_itemArg, current_itemFin := WrapNumberPtr[C.int, int32](current_item)
+	current_itemArg, current_itemFin := datautils.WrapNumberPtr[C.int, int32](current_item)
 	itemsArg, itemsFin := WrapStringList(items)
 
 	defer func() {
@@ -12134,7 +12139,7 @@ func DockSpaceOverViewport() ID {
 
 func DragFloat(label string, v *float32) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.float, float32](v)
 
 	defer func() {
 		labelFin()
@@ -12199,8 +12204,8 @@ func DragFloat4(label string, v *[4]float32) bool {
 
 func DragFloatRange2(label string, v_current_min *float32, v_current_max *float32) bool {
 	labelArg, labelFin := WrapString(label)
-	v_current_minArg, v_current_minFin := WrapNumberPtr[C.float, float32](v_current_min)
-	v_current_maxArg, v_current_maxFin := WrapNumberPtr[C.float, float32](v_current_max)
+	v_current_minArg, v_current_minFin := datautils.WrapNumberPtr[C.float, float32](v_current_min)
+	v_current_maxArg, v_current_maxFin := datautils.WrapNumberPtr[C.float, float32](v_current_max)
 
 	defer func() {
 		labelFin()
@@ -12212,7 +12217,7 @@ func DragFloatRange2(label string, v_current_min *float32, v_current_max *float3
 
 func DragInt(label string, v *int32) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.int, int32](v)
 
 	defer func() {
 		labelFin()
@@ -12277,8 +12282,8 @@ func DragInt4(label string, v *[4]int32) bool {
 
 func DragIntRange2(label string, v_current_min *int32, v_current_max *int32) bool {
 	labelArg, labelFin := WrapString(label)
-	v_current_minArg, v_current_minFin := WrapNumberPtr[C.int, int32](v_current_min)
-	v_current_maxArg, v_current_maxFin := WrapNumberPtr[C.int, int32](v_current_max)
+	v_current_minArg, v_current_minFin := datautils.WrapNumberPtr[C.int, int32](v_current_min)
+	v_current_maxArg, v_current_maxFin := datautils.WrapNumberPtr[C.int, int32](v_current_max)
 
 	defer func() {
 		labelFin()
@@ -12434,7 +12439,7 @@ func Indent() {
 
 func InputDouble(label string, v *float64) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.double, float64](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.double, float64](v)
 
 	defer func() {
 		labelFin()
@@ -12445,7 +12450,7 @@ func InputDouble(label string, v *float64) bool {
 
 func InputFloat(label string, v *float32) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.float, float32](v)
 
 	defer func() {
 		labelFin()
@@ -12510,7 +12515,7 @@ func InputFloat4(label string, v *[4]float32) bool {
 
 func InputInt(label string, v *int32) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.int, int32](v)
 
 	defer func() {
 		labelFin()
@@ -12707,7 +12712,7 @@ func InternalItemSizeVec2(size Vec2) {
 
 func ListBoxStrarr(label string, current_item *int32, items []string, items_count int32) bool {
 	labelArg, labelFin := WrapString(label)
-	current_itemArg, current_itemFin := WrapNumberPtr[C.int, int32](current_item)
+	current_itemArg, current_itemFin := datautils.WrapNumberPtr[C.int, int32](current_item)
 	itemsArg, itemsFin := WrapStringList(items)
 
 	defer func() {
@@ -13126,7 +13131,7 @@ func ShowStyleEditor() {
 
 func SliderAngle(label string, v_rad *float32) bool {
 	labelArg, labelFin := WrapString(label)
-	v_radArg, v_radFin := WrapNumberPtr[C.float, float32](v_rad)
+	v_radArg, v_radFin := datautils.WrapNumberPtr[C.float, float32](v_rad)
 
 	defer func() {
 		labelFin()
@@ -13137,7 +13142,7 @@ func SliderAngle(label string, v_rad *float32) bool {
 
 func SliderFloat(label string, v *float32, v_min float32, v_max float32) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.float, float32](v)
 
 	defer func() {
 		labelFin()
@@ -13202,7 +13207,7 @@ func SliderFloat4(label string, v *[4]float32, v_min float32, v_max float32) boo
 
 func SliderInt(label string, v *int32, v_min int32, v_max int32) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.int, int32](v)
 
 	defer func() {
 		labelFin()
@@ -13285,8 +13290,8 @@ func SliderScalarN(label string, data_type DataType, p_data uintptr, components 
 
 func InternalSplitterBehavior(bb Rect, id ID, axis Axis, size1 *float32, size2 *float32, min_size1 float32, min_size2 float32) bool {
 	idArg, idFin := id.C()
-	size1Arg, size1Fin := WrapNumberPtr[C.float, float32](size1)
-	size2Arg, size2Fin := WrapNumberPtr[C.float, float32](size2)
+	size1Arg, size1Fin := datautils.WrapNumberPtr[C.float, float32](size1)
+	size2Arg, size2Fin := datautils.WrapNumberPtr[C.float, float32](size2)
 
 	defer func() {
 		idFin()
@@ -13416,7 +13421,7 @@ func Unindent() {
 
 func VSliderFloat(label string, size Vec2, v *float32, v_min float32, v_max float32) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.float, float32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.float, float32](v)
 
 	defer func() {
 		labelFin()
@@ -13427,7 +13432,7 @@ func VSliderFloat(label string, size Vec2, v *float32, v_min float32, v_max floa
 
 func VSliderInt(label string, size Vec2, v *int32, v_min int32, v_max int32) bool {
 	labelArg, labelFin := WrapString(label)
-	vArg, vFin := WrapNumberPtr[C.int, int32](v)
+	vArg, vFin := datautils.WrapNumberPtr[C.int, int32](v)
 
 	defer func() {
 		labelFin()
@@ -13454,7 +13459,7 @@ func ValueFloat(prefix string, v float32) {
 
 func (self BitVector) SetStorage(v Vector[*uint32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.ImU32, uint32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.ImU32, uint32](vData)
 	vVecArg := new(C.ImVector_ImU32)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14327,7 +14332,7 @@ func (self *DrawVert) Col() uint32 {
 
 func (self Font) SetIndexAdvanceX(v Vector[*float32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.float, float32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.float, float32](vData)
 	vVecArg := new(C.ImVector_float)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14778,7 +14783,7 @@ func (self *FontAtlas) TexPixelsUseColors() bool {
 }
 
 func (self FontAtlas) SetTexPixelsAlpha8(v *uint) {
-	vArg, _ := WrapNumberPtr[C.uchar, uint](v)
+	vArg, _ := datautils.WrapNumberPtr[C.uchar, uint](v)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -14795,7 +14800,7 @@ func (self *FontAtlas) TexPixelsAlpha8() *uint {
 }
 
 func (self FontAtlas) SetTexPixelsRGBA32(v *uint32) {
-	vArg, _ := WrapNumberPtr[C.uint, uint32](v)
+	vArg, _ := datautils.WrapNumberPtr[C.uint, uint32](v)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -15634,7 +15639,7 @@ func (self *FontGlyph) V1() float32 {
 
 func (self FontGlyphRangesBuilder) SetUsedChars(v Vector[*uint32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.ImU32, uint32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.ImU32, uint32](vData)
 	vVecArg := new(C.ImVector_ImU32)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -19186,7 +19191,7 @@ func (self *Context) TablesTempData() Vector[*TableTempData] {
 
 func (self Context) SetTablesLastTimeActive(v Vector[*float32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.float, float32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.float, float32](vData)
 	vVecArg := new(C.ImVector_float)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -32470,7 +32475,7 @@ func (self *TextFilter) CountGrep() int32 {
 
 func (self TextIndex) SetLineOffsets(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -36303,7 +36308,7 @@ func (self *WindowTempData) TextWrapPos() float32 {
 
 func (self WindowTempData) SetItemWidthStack(v Vector[*float32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.float, float32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.float, float32](vData)
 	vVecArg := new(C.ImVector_float)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -36326,7 +36331,7 @@ func (self *WindowTempData) ItemWidthStack() Vector[*float32] {
 
 func (self WindowTempData) SetTextWrapPosStack(v Vector[*float32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.float, float32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.float, float32](vData)
 	vVecArg := new(C.ImVector_float)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)

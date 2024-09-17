@@ -3,6 +3,10 @@
 
 package imgui
 
+import (
+	"github.com/AllenDang/cimgui-go/internal/datautils"
+)
+
 // #include "extra_types.h"
 // #include "cimnodes_structs_accessor.h"
 // #include "cimnodes_wrapper.h"
@@ -234,14 +238,14 @@ func ImNodesGetNodeScreenSpacePos(node_id int32) Vec2 {
 }
 
 func ImNodesGetSelectedLinks(link_ids *int32) {
-	link_idsArg, link_idsFin := WrapNumberPtr[C.int, int32](link_ids)
+	link_idsArg, link_idsFin := datautils.WrapNumberPtr[C.int, int32](link_ids)
 	C.imnodes_GetSelectedLinks(link_idsArg)
 
 	link_idsFin()
 }
 
 func ImNodesGetSelectedNodes(node_ids *int32) {
-	node_idsArg, node_idsFin := WrapNumberPtr[C.int, int32](node_ids)
+	node_idsArg, node_idsFin := datautils.WrapNumberPtr[C.int, int32](node_ids)
 	C.imnodes_GetSelectedNodes(node_idsArg)
 
 	node_idsFin()
@@ -254,7 +258,7 @@ func ImNodesGetStyle() *NodesStyle {
 // ImNodesIsAnyAttributeActiveV parameter default value hint:
 // attribute_id: NULL
 func ImNodesIsAnyAttributeActiveV(attribute_id *int32) bool {
-	attribute_idArg, attribute_idFin := WrapNumberPtr[C.int, int32](attribute_id)
+	attribute_idArg, attribute_idFin := datautils.WrapNumberPtr[C.int, int32](attribute_id)
 
 	defer func() {
 		attribute_idFin()
@@ -273,8 +277,8 @@ func ImNodesIsEditorHovered() bool {
 // ImNodesIsLinkCreatedBoolPtrV parameter default value hint:
 // created_from_snap: NULL
 func ImNodesIsLinkCreatedBoolPtrV(started_at_attribute_id *int32, ended_at_attribute_id *int32, created_from_snap *bool) bool {
-	started_at_attribute_idArg, started_at_attribute_idFin := WrapNumberPtr[C.int, int32](started_at_attribute_id)
-	ended_at_attribute_idArg, ended_at_attribute_idFin := WrapNumberPtr[C.int, int32](ended_at_attribute_id)
+	started_at_attribute_idArg, started_at_attribute_idFin := datautils.WrapNumberPtr[C.int, int32](started_at_attribute_id)
+	ended_at_attribute_idArg, ended_at_attribute_idFin := datautils.WrapNumberPtr[C.int, int32](ended_at_attribute_id)
 	created_from_snapArg, created_from_snapFin := WrapBool(created_from_snap)
 
 	defer func() {
@@ -288,10 +292,10 @@ func ImNodesIsLinkCreatedBoolPtrV(started_at_attribute_id *int32, ended_at_attri
 // ImNodesIsLinkCreatedIntPtrV parameter default value hint:
 // created_from_snap: NULL
 func ImNodesIsLinkCreatedIntPtrV(started_at_node_id *int32, started_at_attribute_id *int32, ended_at_node_id *int32, ended_at_attribute_id *int32, created_from_snap *bool) bool {
-	started_at_node_idArg, started_at_node_idFin := WrapNumberPtr[C.int, int32](started_at_node_id)
-	started_at_attribute_idArg, started_at_attribute_idFin := WrapNumberPtr[C.int, int32](started_at_attribute_id)
-	ended_at_node_idArg, ended_at_node_idFin := WrapNumberPtr[C.int, int32](ended_at_node_id)
-	ended_at_attribute_idArg, ended_at_attribute_idFin := WrapNumberPtr[C.int, int32](ended_at_attribute_id)
+	started_at_node_idArg, started_at_node_idFin := datautils.WrapNumberPtr[C.int, int32](started_at_node_id)
+	started_at_attribute_idArg, started_at_attribute_idFin := datautils.WrapNumberPtr[C.int, int32](started_at_attribute_id)
+	ended_at_node_idArg, ended_at_node_idFin := datautils.WrapNumberPtr[C.int, int32](ended_at_node_id)
+	ended_at_attribute_idArg, ended_at_attribute_idFin := datautils.WrapNumberPtr[C.int, int32](ended_at_attribute_id)
 	created_from_snapArg, created_from_snapFin := WrapBool(created_from_snap)
 
 	defer func() {
@@ -305,7 +309,7 @@ func ImNodesIsLinkCreatedIntPtrV(started_at_node_id *int32, started_at_attribute
 }
 
 func ImNodesIsLinkDestroyed(link_id *int32) bool {
-	link_idArg, link_idFin := WrapNumberPtr[C.int, int32](link_id)
+	link_idArg, link_idFin := datautils.WrapNumberPtr[C.int, int32](link_id)
 
 	defer func() {
 		link_idFin()
@@ -317,7 +321,7 @@ func ImNodesIsLinkDestroyed(link_id *int32) bool {
 // started_at_attribute_id: NULL
 // including_detached_links: true
 func ImNodesIsLinkDroppedV(started_at_attribute_id *int32, including_detached_links bool) bool {
-	started_at_attribute_idArg, started_at_attribute_idFin := WrapNumberPtr[C.int, int32](started_at_attribute_id)
+	started_at_attribute_idArg, started_at_attribute_idFin := datautils.WrapNumberPtr[C.int, int32](started_at_attribute_id)
 
 	defer func() {
 		started_at_attribute_idFin()
@@ -326,7 +330,7 @@ func ImNodesIsLinkDroppedV(started_at_attribute_id *int32, including_detached_li
 }
 
 func ImNodesIsLinkHovered(link_id *int32) bool {
-	link_idArg, link_idFin := WrapNumberPtr[C.int, int32](link_id)
+	link_idArg, link_idFin := datautils.WrapNumberPtr[C.int, int32](link_id)
 
 	defer func() {
 		link_idFin()
@@ -339,7 +343,7 @@ func ImNodesIsLinkSelected(link_id int32) bool {
 }
 
 func ImNodesIsLinkStarted(started_at_attribute_id *int32) bool {
-	started_at_attribute_idArg, started_at_attribute_idFin := WrapNumberPtr[C.int, int32](started_at_attribute_id)
+	started_at_attribute_idArg, started_at_attribute_idFin := datautils.WrapNumberPtr[C.int, int32](started_at_attribute_id)
 
 	defer func() {
 		started_at_attribute_idFin()
@@ -348,7 +352,7 @@ func ImNodesIsLinkStarted(started_at_attribute_id *int32) bool {
 }
 
 func ImNodesIsNodeHovered(node_id *int32) bool {
-	node_idArg, node_idFin := WrapNumberPtr[C.int, int32](node_id)
+	node_idArg, node_idFin := datautils.WrapNumberPtr[C.int, int32](node_id)
 
 	defer func() {
 		node_idFin()
@@ -361,7 +365,7 @@ func ImNodesIsNodeSelected(node_id int32) bool {
 }
 
 func ImNodesIsPinHovered(attribute_id *int32) bool {
-	attribute_idArg, attribute_idFin := WrapNumberPtr[C.int, int32](attribute_id)
+	attribute_idArg, attribute_idFin := datautils.WrapNumberPtr[C.int, int32](attribute_id)
 
 	defer func() {
 		attribute_idFin()
@@ -562,8 +566,8 @@ func ImNodesIsAnyAttributeActive() bool {
 }
 
 func ImNodesIsLinkCreatedBoolPtr(started_at_attribute_id *int32, ended_at_attribute_id *int32) bool {
-	started_at_attribute_idArg, started_at_attribute_idFin := WrapNumberPtr[C.int, int32](started_at_attribute_id)
-	ended_at_attribute_idArg, ended_at_attribute_idFin := WrapNumberPtr[C.int, int32](ended_at_attribute_id)
+	started_at_attribute_idArg, started_at_attribute_idFin := datautils.WrapNumberPtr[C.int, int32](started_at_attribute_id)
+	ended_at_attribute_idArg, ended_at_attribute_idFin := datautils.WrapNumberPtr[C.int, int32](ended_at_attribute_id)
 
 	defer func() {
 		started_at_attribute_idFin()
@@ -573,10 +577,10 @@ func ImNodesIsLinkCreatedBoolPtr(started_at_attribute_id *int32, ended_at_attrib
 }
 
 func ImNodesIsLinkCreatedIntPtr(started_at_node_id *int32, started_at_attribute_id *int32, ended_at_node_id *int32, ended_at_attribute_id *int32) bool {
-	started_at_node_idArg, started_at_node_idFin := WrapNumberPtr[C.int, int32](started_at_node_id)
-	started_at_attribute_idArg, started_at_attribute_idFin := WrapNumberPtr[C.int, int32](started_at_attribute_id)
-	ended_at_node_idArg, ended_at_node_idFin := WrapNumberPtr[C.int, int32](ended_at_node_id)
-	ended_at_attribute_idArg, ended_at_attribute_idFin := WrapNumberPtr[C.int, int32](ended_at_attribute_id)
+	started_at_node_idArg, started_at_node_idFin := datautils.WrapNumberPtr[C.int, int32](started_at_node_id)
+	started_at_attribute_idArg, started_at_attribute_idFin := datautils.WrapNumberPtr[C.int, int32](started_at_attribute_id)
+	ended_at_node_idArg, ended_at_node_idFin := datautils.WrapNumberPtr[C.int, int32](ended_at_node_id)
+	ended_at_attribute_idArg, ended_at_attribute_idFin := datautils.WrapNumberPtr[C.int, int32](ended_at_attribute_id)
 
 	defer func() {
 		started_at_node_idFin()

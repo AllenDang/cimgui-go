@@ -3,6 +3,10 @@
 
 package imgui
 
+import (
+	"github.com/AllenDang/cimgui-go/internal/datautils"
+)
+
 // #include "extra_types.h"
 // #include "cimplot_structs_accessor.h"
 // #include "cimplot_wrapper.h"
@@ -35,10 +39,10 @@ func (self *PlotAlignmentData) Reset() {
 
 func (self *PlotAlignmentData) Update(pad_a *float32, pad_b *float32, delta_a *float32, delta_b *float32) {
 	selfArg, selfFin := self.Handle()
-	pad_aArg, pad_aFin := WrapNumberPtr[C.float, float32](pad_a)
-	pad_bArg, pad_bFin := WrapNumberPtr[C.float, float32](pad_b)
-	delta_aArg, delta_aFin := WrapNumberPtr[C.float, float32](delta_a)
-	delta_bArg, delta_bFin := WrapNumberPtr[C.float, float32](delta_b)
+	pad_aArg, pad_aFin := datautils.WrapNumberPtr[C.float, float32](pad_a)
+	pad_bArg, pad_bFin := datautils.WrapNumberPtr[C.float, float32](pad_b)
+	delta_aArg, delta_aFin := datautils.WrapNumberPtr[C.float, float32](delta_a)
+	delta_bArg, delta_bFin := datautils.WrapNumberPtr[C.float, float32](delta_b)
 	C.ImPlotAlignmentData_Update(selfArg, pad_aArg, pad_bArg, delta_aArg, delta_bArg)
 
 	selfFin()
@@ -1415,8 +1419,8 @@ func PlotBeginPlotV(title_id string, size Vec2, flags PlotFlags) bool {
 // col_ratios: nullptr
 func PlotBeginSubplotsV(title_id string, rows int32, cols int32, size Vec2, flags PlotSubplotFlags, row_ratios *float32, col_ratios *float32) bool {
 	title_idArg, title_idFin := WrapString(title_id)
-	row_ratiosArg, row_ratiosFin := WrapNumberPtr[C.float, float32](row_ratios)
-	col_ratiosArg, col_ratiosFin := WrapNumberPtr[C.float, float32](col_ratios)
+	row_ratiosArg, row_ratiosFin := datautils.WrapNumberPtr[C.float, float32](row_ratios)
+	col_ratiosArg, col_ratiosFin := datautils.WrapNumberPtr[C.float, float32](col_ratios)
 
 	defer func() {
 		title_idFin()
@@ -1483,8 +1487,8 @@ func PlotCalcTextSizeVertical(text string) Vec2 {
 
 func PlotCalculateBinsFloatPtr(values []float32, count int32, meth PlotBin, rangeArg PlotRange, bins_out *int32, width_out *float64) {
 	rangeArgArg, rangeArgFin := rangeArg.C()
-	bins_outArg, bins_outFin := WrapNumberPtr[C.int, int32](bins_out)
-	width_outArg, width_outFin := WrapNumberPtr[C.double, float64](width_out)
+	bins_outArg, bins_outFin := datautils.WrapNumberPtr[C.int, int32](bins_out)
+	width_outArg, width_outFin := datautils.WrapNumberPtr[C.double, float64](width_out)
 	C.ImPlot_CalculateBins_FloatPtr((*C.float)(&(values[0])), C.int(count), C.ImPlotBin(meth), rangeArgArg, bins_outArg, width_outArg)
 
 	rangeArgFin()
@@ -1499,8 +1503,8 @@ func PlotCalculateBinsS16Ptr(values *[]int, count int32, meth PlotBin, rangeArg 
 	}
 
 	rangeArgArg, rangeArgFin := rangeArg.C()
-	bins_outArg, bins_outFin := WrapNumberPtr[C.int, int32](bins_out)
-	width_outArg, width_outFin := WrapNumberPtr[C.double, float64](width_out)
+	bins_outArg, bins_outFin := datautils.WrapNumberPtr[C.int, int32](bins_out)
+	width_outArg, width_outFin := datautils.WrapNumberPtr[C.double, float64](width_out)
 	C.ImPlot_CalculateBins_S16Ptr((*C.ImS16)(&valuesArg[0]), C.int(count), C.ImPlotBin(meth), rangeArgArg, bins_outArg, width_outArg)
 
 	for i, valuesV := range valuesArg {
@@ -1519,8 +1523,8 @@ func PlotCalculateBinsS32Ptr(values *[]int32, count int32, meth PlotBin, rangeAr
 	}
 
 	rangeArgArg, rangeArgFin := rangeArg.C()
-	bins_outArg, bins_outFin := WrapNumberPtr[C.int, int32](bins_out)
-	width_outArg, width_outFin := WrapNumberPtr[C.double, float64](width_out)
+	bins_outArg, bins_outFin := datautils.WrapNumberPtr[C.int, int32](bins_out)
+	width_outArg, width_outFin := datautils.WrapNumberPtr[C.double, float64](width_out)
 	C.ImPlot_CalculateBins_S32Ptr((*C.ImS32)(&valuesArg[0]), C.int(count), C.ImPlotBin(meth), rangeArgArg, bins_outArg, width_outArg)
 
 	for i, valuesV := range valuesArg {
@@ -1534,8 +1538,8 @@ func PlotCalculateBinsS32Ptr(values *[]int32, count int32, meth PlotBin, rangeAr
 
 func PlotCalculateBinsS64Ptr(values []int64, count int32, meth PlotBin, rangeArg PlotRange, bins_out *int32, width_out *float64) {
 	rangeArgArg, rangeArgFin := rangeArg.C()
-	bins_outArg, bins_outFin := WrapNumberPtr[C.int, int32](bins_out)
-	width_outArg, width_outFin := WrapNumberPtr[C.double, float64](width_out)
+	bins_outArg, bins_outFin := datautils.WrapNumberPtr[C.int, int32](bins_out)
+	width_outArg, width_outFin := datautils.WrapNumberPtr[C.double, float64](width_out)
 	C.ImPlot_CalculateBins_S64Ptr((*C.longlong)(&(values[0])), C.int(count), C.ImPlotBin(meth), rangeArgArg, bins_outArg, width_outArg)
 
 	rangeArgFin()
@@ -1550,8 +1554,8 @@ func PlotCalculateBinsS8Ptr(values *[]int8, count int32, meth PlotBin, rangeArg 
 	}
 
 	rangeArgArg, rangeArgFin := rangeArg.C()
-	bins_outArg, bins_outFin := WrapNumberPtr[C.int, int32](bins_out)
-	width_outArg, width_outFin := WrapNumberPtr[C.double, float64](width_out)
+	bins_outArg, bins_outFin := datautils.WrapNumberPtr[C.int, int32](bins_out)
+	width_outArg, width_outFin := datautils.WrapNumberPtr[C.double, float64](width_out)
 	C.ImPlot_CalculateBins_S8Ptr((*C.ImS8)(&valuesArg[0]), C.int(count), C.ImPlotBin(meth), rangeArgArg, bins_outArg, width_outArg)
 
 	for i, valuesV := range valuesArg {
@@ -1570,8 +1574,8 @@ func PlotCalculateBinsU16Ptr(values *[]uint16, count int32, meth PlotBin, rangeA
 	}
 
 	rangeArgArg, rangeArgFin := rangeArg.C()
-	bins_outArg, bins_outFin := WrapNumberPtr[C.int, int32](bins_out)
-	width_outArg, width_outFin := WrapNumberPtr[C.double, float64](width_out)
+	bins_outArg, bins_outFin := datautils.WrapNumberPtr[C.int, int32](bins_out)
+	width_outArg, width_outFin := datautils.WrapNumberPtr[C.double, float64](width_out)
 	C.ImPlot_CalculateBins_U16Ptr((*C.ImU16)(&valuesArg[0]), C.int(count), C.ImPlotBin(meth), rangeArgArg, bins_outArg, width_outArg)
 
 	for i, valuesV := range valuesArg {
@@ -1590,8 +1594,8 @@ func PlotCalculateBinsU32Ptr(values *[]uint32, count int32, meth PlotBin, rangeA
 	}
 
 	rangeArgArg, rangeArgFin := rangeArg.C()
-	bins_outArg, bins_outFin := WrapNumberPtr[C.int, int32](bins_out)
-	width_outArg, width_outFin := WrapNumberPtr[C.double, float64](width_out)
+	bins_outArg, bins_outFin := datautils.WrapNumberPtr[C.int, int32](bins_out)
+	width_outArg, width_outFin := datautils.WrapNumberPtr[C.double, float64](width_out)
 	C.ImPlot_CalculateBins_U32Ptr((*C.ImU32)(&valuesArg[0]), C.int(count), C.ImPlotBin(meth), rangeArgArg, bins_outArg, width_outArg)
 
 	for i, valuesV := range valuesArg {
@@ -1605,8 +1609,8 @@ func PlotCalculateBinsU32Ptr(values *[]uint32, count int32, meth PlotBin, rangeA
 
 func PlotCalculateBinsU64Ptr(values []uint64, count int32, meth PlotBin, rangeArg PlotRange, bins_out *int32, width_out *float64) {
 	rangeArgArg, rangeArgFin := rangeArg.C()
-	bins_outArg, bins_outFin := WrapNumberPtr[C.int, int32](bins_out)
-	width_outArg, width_outFin := WrapNumberPtr[C.double, float64](width_out)
+	bins_outArg, bins_outFin := datautils.WrapNumberPtr[C.int, int32](bins_out)
+	width_outArg, width_outFin := datautils.WrapNumberPtr[C.double, float64](width_out)
 	C.ImPlot_CalculateBins_U64Ptr((*C.ulonglong)(&(values[0])), C.int(count), C.ImPlotBin(meth), rangeArgArg, bins_outArg, width_outArg)
 
 	rangeArgFin()
@@ -1621,8 +1625,8 @@ func PlotCalculateBinsU8Ptr(values *[]byte, count int32, meth PlotBin, rangeArg 
 	}
 
 	rangeArgArg, rangeArgFin := rangeArg.C()
-	bins_outArg, bins_outFin := WrapNumberPtr[C.int, int32](bins_out)
-	width_outArg, width_outFin := WrapNumberPtr[C.double, float64](width_out)
+	bins_outArg, bins_outFin := datautils.WrapNumberPtr[C.int, int32](bins_out)
+	width_outArg, width_outFin := datautils.WrapNumberPtr[C.double, float64](width_out)
 	C.ImPlot_CalculateBins_U8Ptr((*C.ImU8)(&valuesArg[0]), C.int(count), C.ImPlotBin(meth), rangeArgArg, bins_outArg, width_outArg)
 
 	for i, valuesV := range valuesArg {
@@ -1641,8 +1645,8 @@ func PlotCalculateBinsdoublePtr(values *[]float64, count int32, meth PlotBin, ra
 	}
 
 	rangeArgArg, rangeArgFin := rangeArg.C()
-	bins_outArg, bins_outFin := WrapNumberPtr[C.int, int32](bins_out)
-	width_outArg, width_outFin := WrapNumberPtr[C.double, float64](width_out)
+	bins_outArg, bins_outFin := datautils.WrapNumberPtr[C.int, int32](bins_out)
+	width_outArg, width_outFin := datautils.WrapNumberPtr[C.double, float64](width_out)
 	C.ImPlot_CalculateBins_doublePtr((*C.double)(&valuesArg[0]), C.int(count), C.ImPlotBin(meth), rangeArgArg, bins_outArg, width_outArg)
 
 	for i, valuesV := range valuesArg {
@@ -1725,7 +1729,7 @@ func PlotColormapScaleV(label string, scale_min float64, scale_max float64, size
 // cmap: -1
 func PlotColormapSliderV(label string, t *float32, out *Vec4, format string, cmap PlotColormap) bool {
 	labelArg, labelFin := WrapString(label)
-	tArg, tFin := WrapNumberPtr[C.float, float32](t)
+	tArg, tFin := datautils.WrapNumberPtr[C.float, float32](t)
 	outArg, outFin := wrap[C.ImVec4, *Vec4](out)
 	formatArg, formatFin := WrapString(format)
 
@@ -1769,7 +1773,7 @@ func PlotDestroyContextV(ctx *PlotContext) {
 // out_hovered: nullptr
 // held: nullptr
 func PlotDragLineXV(id int32, x *float64, col Vec4, thickness float32, flags PlotDragToolFlags, out_clicked *bool, out_hovered *bool, held *bool) bool {
-	xArg, xFin := WrapNumberPtr[C.double, float64](x)
+	xArg, xFin := datautils.WrapNumberPtr[C.double, float64](x)
 	out_clickedArg, out_clickedFin := WrapBool(out_clicked)
 	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
 	heldArg, heldFin := WrapBool(held)
@@ -1790,7 +1794,7 @@ func PlotDragLineXV(id int32, x *float64, col Vec4, thickness float32, flags Plo
 // out_hovered: nullptr
 // held: nullptr
 func PlotDragLineYV(id int32, y *float64, col Vec4, thickness float32, flags PlotDragToolFlags, out_clicked *bool, out_hovered *bool, held *bool) bool {
-	yArg, yFin := WrapNumberPtr[C.double, float64](y)
+	yArg, yFin := datautils.WrapNumberPtr[C.double, float64](y)
 	out_clickedArg, out_clickedFin := WrapBool(out_clicked)
 	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
 	heldArg, heldFin := WrapBool(held)
@@ -1811,8 +1815,8 @@ func PlotDragLineYV(id int32, y *float64, col Vec4, thickness float32, flags Plo
 // out_hovered: nullptr
 // held: nullptr
 func PlotDragPointV(id int32, x *float64, y *float64, col Vec4, size float32, flags PlotDragToolFlags, out_clicked *bool, out_hovered *bool, held *bool) bool {
-	xArg, xFin := WrapNumberPtr[C.double, float64](x)
-	yArg, yFin := WrapNumberPtr[C.double, float64](y)
+	xArg, xFin := datautils.WrapNumberPtr[C.double, float64](x)
+	yArg, yFin := datautils.WrapNumberPtr[C.double, float64](y)
 	out_clickedArg, out_clickedFin := WrapBool(out_clicked)
 	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
 	heldArg, heldFin := WrapBool(held)
@@ -1833,10 +1837,10 @@ func PlotDragPointV(id int32, x *float64, y *float64, col Vec4, size float32, fl
 // out_hovered: nullptr
 // held: nullptr
 func PlotDragRectV(id int32, x1 *float64, y1 *float64, x2 *float64, y2 *float64, col Vec4, flags PlotDragToolFlags, out_clicked *bool, out_hovered *bool, held *bool) bool {
-	x1Arg, x1Fin := WrapNumberPtr[C.double, float64](x1)
-	y1Arg, y1Fin := WrapNumberPtr[C.double, float64](y1)
-	x2Arg, x2Fin := WrapNumberPtr[C.double, float64](x2)
-	y2Arg, y2Fin := WrapNumberPtr[C.double, float64](y2)
+	x1Arg, x1Fin := datautils.WrapNumberPtr[C.double, float64](x1)
+	y1Arg, y1Fin := datautils.WrapNumberPtr[C.double, float64](y1)
+	x2Arg, x2Fin := datautils.WrapNumberPtr[C.double, float64](x2)
+	y2Arg, y2Fin := datautils.WrapNumberPtr[C.double, float64](y2)
 	out_clickedArg, out_clickedFin := WrapBool(out_clicked)
 	out_hoveredArg, out_hoveredFin := WrapBool(out_hovered)
 	heldArg, heldFin := WrapBool(held)
@@ -2574,8 +2578,8 @@ func PlotImMinArraydoublePtr(values *[]float64, count int32) float64 {
 }
 
 func PlotImMinMaxArrayFloatPtr(values []float32, count int32, min_out *float32, max_out *float32) {
-	min_outArg, min_outFin := WrapNumberPtr[C.float, float32](min_out)
-	max_outArg, max_outFin := WrapNumberPtr[C.float, float32](max_out)
+	min_outArg, min_outFin := datautils.WrapNumberPtr[C.float, float32](min_out)
+	max_outArg, max_outFin := datautils.WrapNumberPtr[C.float, float32](max_out)
 	C.ImPlot_ImMinMaxArray_FloatPtr((*C.float)(&(values[0])), C.int(count), min_outArg, max_outArg)
 
 	min_outFin()
@@ -2645,8 +2649,8 @@ func PlotImMinMaxArrayS32Ptr(values *[]int32, count int32, min_out *[]int32, max
 }
 
 func PlotImMinMaxArrayS64Ptr(values []int64, count int32, min_out *int64, max_out *int64) {
-	min_outArg, min_outFin := WrapNumberPtr[C.ImS64, int64](min_out)
-	max_outArg, max_outFin := WrapNumberPtr[C.ImS64, int64](max_out)
+	min_outArg, min_outFin := datautils.WrapNumberPtr[C.ImS64, int64](min_out)
+	max_outArg, max_outFin := datautils.WrapNumberPtr[C.ImS64, int64](max_out)
 	C.ImPlot_ImMinMaxArray_S64Ptr((*C.longlong)(&(values[0])), C.int(count), min_outArg, max_outArg)
 
 	min_outFin()
@@ -2690,8 +2694,8 @@ func PlotImMinMaxArrayU16Ptr(values *[]uint16, count int32, min_out *uint16, max
 		valuesArg[i] = C.ImU16(valuesV)
 	}
 
-	min_outArg, min_outFin := WrapNumberPtr[C.ImU16, uint16](min_out)
-	max_outArg, max_outFin := WrapNumberPtr[C.ImU16, uint16](max_out)
+	min_outArg, min_outFin := datautils.WrapNumberPtr[C.ImU16, uint16](min_out)
+	max_outArg, max_outFin := datautils.WrapNumberPtr[C.ImU16, uint16](max_out)
 	C.ImPlot_ImMinMaxArray_U16Ptr((*C.ImU16)(&valuesArg[0]), C.int(count), min_outArg, max_outArg)
 
 	for i, valuesV := range valuesArg {
@@ -2708,8 +2712,8 @@ func PlotImMinMaxArrayU32Ptr(values *[]uint32, count int32, min_out *uint32, max
 		valuesArg[i] = C.ImU32(valuesV)
 	}
 
-	min_outArg, min_outFin := WrapNumberPtr[C.ImU32, uint32](min_out)
-	max_outArg, max_outFin := WrapNumberPtr[C.ImU32, uint32](max_out)
+	min_outArg, min_outFin := datautils.WrapNumberPtr[C.ImU32, uint32](min_out)
+	max_outArg, max_outFin := datautils.WrapNumberPtr[C.ImU32, uint32](max_out)
 	C.ImPlot_ImMinMaxArray_U32Ptr((*C.ImU32)(&valuesArg[0]), C.int(count), min_outArg, max_outArg)
 
 	for i, valuesV := range valuesArg {
@@ -2748,8 +2752,8 @@ func PlotImMinMaxArrayU8Ptr(values *[]byte, count int32, min_out *byte, max_out 
 		valuesArg[i] = C.ImU8(valuesV)
 	}
 
-	min_outArg, min_outFin := WrapNumberPtr[C.ImU8, byte](min_out)
-	max_outArg, max_outFin := WrapNumberPtr[C.ImU8, byte](max_out)
+	min_outArg, min_outFin := datautils.WrapNumberPtr[C.ImU8, byte](min_out)
+	max_outArg, max_outFin := datautils.WrapNumberPtr[C.ImU8, byte](max_out)
 	C.ImPlot_ImMinMaxArray_U8Ptr((*C.ImU8)(&valuesArg[0]), C.int(count), min_outArg, max_outArg)
 
 	for i, valuesV := range valuesArg {
@@ -2766,8 +2770,8 @@ func PlotImMinMaxArraydoublePtr(values *[]float64, count int32, min_out *float64
 		valuesArg[i] = C.double(valuesV)
 	}
 
-	min_outArg, min_outFin := WrapNumberPtr[C.double, float64](min_out)
-	max_outArg, max_outFin := WrapNumberPtr[C.double, float64](max_out)
+	min_outArg, min_outFin := datautils.WrapNumberPtr[C.double, float64](min_out)
+	max_outArg, max_outFin := datautils.WrapNumberPtr[C.double, float64](max_out)
 	C.ImPlot_ImMinMaxArray_doublePtr((*C.double)(&valuesArg[0]), C.int(count), min_outArg, max_outArg)
 
 	for i, valuesV := range valuesArg {
@@ -8652,8 +8656,8 @@ func PlotSetNextAxisLimitsV(axis PlotAxisEnum, v_min float64, v_max float64, con
 }
 
 func PlotSetNextAxisLinks(axis PlotAxisEnum, link_min *float64, link_max *float64) {
-	link_minArg, link_minFin := WrapNumberPtr[C.double, float64](link_min)
-	link_maxArg, link_maxFin := WrapNumberPtr[C.double, float64](link_max)
+	link_minArg, link_minFin := datautils.WrapNumberPtr[C.double, float64](link_min)
+	link_maxArg, link_maxFin := datautils.WrapNumberPtr[C.double, float64](link_max)
 	C.ImPlot_SetNextAxisLinks(C.ImAxis(axis), link_minArg, link_maxArg)
 
 	link_minFin()
@@ -8742,8 +8746,8 @@ func PlotSetupAxisLimitsConstraints(axis PlotAxisEnum, v_min float64, v_max floa
 }
 
 func PlotSetupAxisLinks(axis PlotAxisEnum, link_min *float64, link_max *float64) {
-	link_minArg, link_minFin := WrapNumberPtr[C.double, float64](link_min)
-	link_maxArg, link_maxFin := WrapNumberPtr[C.double, float64](link_max)
+	link_minArg, link_minFin := datautils.WrapNumberPtr[C.double, float64](link_min)
+	link_maxArg, link_maxFin := datautils.WrapNumberPtr[C.double, float64](link_max)
 	C.ImPlot_SetupAxisLinks(C.ImAxis(axis), link_minArg, link_maxArg)
 
 	link_minFin()
@@ -8843,7 +8847,7 @@ func PlotShowColormapSelector(label string) bool {
 // t2: nullptr
 func PlotShowDatePickerV(id string, level *int32, t *PlotTime, t1 *PlotTime, t2 *PlotTime) bool {
 	idArg, idFin := WrapString(id)
-	levelArg, levelFin := WrapNumberPtr[C.int, int32](level)
+	levelArg, levelFin := datautils.WrapNumberPtr[C.int, int32](level)
 	tArg, tFin := wrap[C.ImPlotTime, *PlotTime](t)
 	t1Arg, t1Fin := wrap[C.ImPlotTime, *PlotTime](t1)
 	t2Arg, t2Fin := wrap[C.ImPlotTime, *PlotTime](t2)
@@ -9194,7 +9198,7 @@ func PlotColormapScale(label string, scale_min float64, scale_max float64) {
 
 func PlotColormapSlider(label string, t *float32) bool {
 	labelArg, labelFin := WrapString(label)
-	tArg, tFin := WrapNumberPtr[C.float, float32](t)
+	tArg, tFin := datautils.WrapNumberPtr[C.float, float32](t)
 
 	defer func() {
 		labelFin()
@@ -9208,7 +9212,7 @@ func PlotDestroyContext() {
 }
 
 func PlotDragLineX(id int32, x *float64, col Vec4) bool {
-	xArg, xFin := WrapNumberPtr[C.double, float64](x)
+	xArg, xFin := datautils.WrapNumberPtr[C.double, float64](x)
 
 	defer func() {
 		xFin()
@@ -9217,7 +9221,7 @@ func PlotDragLineX(id int32, x *float64, col Vec4) bool {
 }
 
 func PlotDragLineY(id int32, y *float64, col Vec4) bool {
-	yArg, yFin := WrapNumberPtr[C.double, float64](y)
+	yArg, yFin := datautils.WrapNumberPtr[C.double, float64](y)
 
 	defer func() {
 		yFin()
@@ -9226,8 +9230,8 @@ func PlotDragLineY(id int32, y *float64, col Vec4) bool {
 }
 
 func PlotDragPoint(id int32, x *float64, y *float64, col Vec4) bool {
-	xArg, xFin := WrapNumberPtr[C.double, float64](x)
-	yArg, yFin := WrapNumberPtr[C.double, float64](y)
+	xArg, xFin := datautils.WrapNumberPtr[C.double, float64](x)
+	yArg, yFin := datautils.WrapNumberPtr[C.double, float64](y)
 
 	defer func() {
 		xFin()
@@ -9237,10 +9241,10 @@ func PlotDragPoint(id int32, x *float64, y *float64, col Vec4) bool {
 }
 
 func PlotDragRect(id int32, x1 *float64, y1 *float64, x2 *float64, y2 *float64, col Vec4) bool {
-	x1Arg, x1Fin := WrapNumberPtr[C.double, float64](x1)
-	y1Arg, y1Fin := WrapNumberPtr[C.double, float64](y1)
-	x2Arg, x2Fin := WrapNumberPtr[C.double, float64](x2)
-	y2Arg, y2Fin := WrapNumberPtr[C.double, float64](y2)
+	x1Arg, x1Fin := datautils.WrapNumberPtr[C.double, float64](x1)
+	y1Arg, y1Fin := datautils.WrapNumberPtr[C.double, float64](y1)
+	x2Arg, x2Fin := datautils.WrapNumberPtr[C.double, float64](x2)
+	y2Arg, y2Fin := datautils.WrapNumberPtr[C.double, float64](y2)
 
 	defer func() {
 		x1Fin()
@@ -13434,7 +13438,7 @@ func PlotShowAxisContextMenu(axis *PlotAxis, equal_axis *PlotAxis) {
 
 func PlotShowDatePicker(id string, level *int32, t *PlotTime) bool {
 	idArg, idFin := WrapString(id)
-	levelArg, levelFin := WrapNumberPtr[C.int, int32](level)
+	levelArg, levelFin := datautils.WrapNumberPtr[C.int, int32](level)
 	tArg, tFin := wrap[C.ImPlotTime, *PlotTime](t)
 
 	defer func() {
@@ -13949,7 +13953,7 @@ func (self *PlotAxis) FormatSpec() [16]rune {
 }
 
 func (self PlotAxis) SetLinkedMin(v *float64) {
-	vArg, _ := WrapNumberPtr[C.double, float64](v)
+	vArg, _ := datautils.WrapNumberPtr[C.double, float64](v)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -13966,7 +13970,7 @@ func (self *PlotAxis) LinkedMin() *float64 {
 }
 
 func (self PlotAxis) SetLinkedMax(v *float64) {
-	vArg, _ := WrapNumberPtr[C.double, float64](v)
+	vArg, _ := datautils.WrapNumberPtr[C.double, float64](v)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -14419,7 +14423,7 @@ func (self *PlotAxis) Held() bool {
 
 func (self PlotColormapData) SetKeys(v Vector[*uint32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.ImU32, uint32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.ImU32, uint32](vData)
 	vVecArg := new(C.ImVector_ImU32)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14433,7 +14437,7 @@ func (self PlotColormapData) SetKeys(v Vector[*uint32]) {
 
 func (self PlotColormapData) SetKeyCounts(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14456,7 +14460,7 @@ func (self *PlotColormapData) KeyCounts() Vector[*int32] {
 
 func (self PlotColormapData) SetKeyOffsets(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14479,7 +14483,7 @@ func (self *PlotColormapData) KeyOffsets() Vector[*int32] {
 
 func (self PlotColormapData) SetTables(v Vector[*uint32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.ImU32, uint32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.ImU32, uint32](vData)
 	vVecArg := new(C.ImVector_ImU32)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14502,7 +14506,7 @@ func (self *PlotColormapData) Tables() Vector[*uint32] {
 
 func (self PlotColormapData) SetTableSizes(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14525,7 +14529,7 @@ func (self *PlotColormapData) TableSizes() Vector[*int32] {
 
 func (self PlotColormapData) SetTableOffsets(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14565,7 +14569,7 @@ func (self *PlotColormapData) Text() TextBuffer {
 
 func (self PlotColormapData) SetTextOffsets(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14862,7 +14866,7 @@ func (self *PlotContext) ColormapModifiers() Vector[*PlotColormap] {
 
 func (self PlotContext) SetTempDouble1(v Vector[*float64]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.double, float64](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.double, float64](vData)
 	vVecArg := new(C.ImVector_double)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14885,7 +14889,7 @@ func (self *PlotContext) TempDouble1() Vector[*float64] {
 
 func (self PlotContext) SetTempDouble2(v Vector[*float64]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.double, float64](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.double, float64](vData)
 	vVecArg := new(C.ImVector_double)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -14908,7 +14912,7 @@ func (self *PlotContext) TempDouble2() Vector[*float64] {
 
 func (self PlotContext) SetTempInt1(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -15551,7 +15555,7 @@ func (self *PlotLegend) Scroll() Vec2 {
 
 func (self PlotLegend) SetIndices(v Vector[*int32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.int, int32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -16068,7 +16072,7 @@ func (self *PlotNextPlotData) Fit() [6]bool {
 func (self PlotNextPlotData) SetLinkedMin(v *[6]*float64) {
 	vArg := make([]*C.double, len(v))
 	for i, vV := range v {
-		vVArg, _ := WrapNumberPtr[C.double, float64](vV)
+		vVArg, _ := datautils.WrapNumberPtr[C.double, float64](vV)
 		vArg[i] = vVArg
 	}
 
@@ -16101,7 +16105,7 @@ func (self *PlotNextPlotData) LinkedMin() [6]*float64 {
 func (self PlotNextPlotData) SetLinkedMax(v *[6]*float64) {
 	vArg := make([]*C.double, len(v))
 	for i, vV := range v {
-		vVArg, _ := WrapNumberPtr[C.double, float64](vV)
+		vVArg, _ := datautils.WrapNumberPtr[C.double, float64](vV)
 		vArg[i] = vVArg
 	}
 
@@ -17350,7 +17354,7 @@ func (self *PlotSubplot) ColAlignmentData() Vector[*PlotAlignmentData] {
 
 func (self PlotSubplot) SetRowRatios(v Vector[*float32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.float, float32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.float, float32](vData)
 	vVecArg := new(C.ImVector_float)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -17373,7 +17377,7 @@ func (self *PlotSubplot) RowRatios() Vector[*float32] {
 
 func (self PlotSubplot) SetColRatios(v Vector[*float32]) {
 	vData := v.Data
-	vDataArg, _ := WrapNumberPtr[C.float, float32](vData)
+	vDataArg, _ := datautils.WrapNumberPtr[C.float, float32](vData)
 	vVecArg := new(C.ImVector_float)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
