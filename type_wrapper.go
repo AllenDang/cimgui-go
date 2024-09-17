@@ -26,12 +26,6 @@ type Number interface {
 		~float32 | ~float64
 }
 
-func WrapString(value string) (wrapped *C.char, finisher func()) {
-	wrapped = C.CString(value)
-	finisher = func() { C.free(unsafe.Pointer(wrapped)) } // nolint: gas
-	return
-}
-
 func WrapStringList(value []string) (wrapped **C.char, finisher func()) {
 	if len(value) == 0 {
 		return nil, func() {}

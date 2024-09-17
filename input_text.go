@@ -11,6 +11,8 @@ import "C"
 import (
 	"runtime/cgo"
 	"unsafe"
+
+	"github.com/AllenDang/cimgui-go/internal/datautils"
 )
 
 type InputTextCallback func(data InputTextCallbackData) int
@@ -47,10 +49,10 @@ func generalInputTextCallback(cbData *C.ImGuiInputTextCallbackData) C.int {
 }
 
 func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, callback InputTextCallback) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := datautils.WrapString(label)
 	defer labelFin()
 
-	hintArg, hintFin := WrapString(hint)
+	hintArg, hintFin := datautils.WrapString(hint)
 	defer hintFin()
 
 	state := &inputTextInternalState{
@@ -80,7 +82,7 @@ func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, ca
 }
 
 func InputTextMultiline(label string, buf *string, size Vec2, flags InputTextFlags, callback InputTextCallback) bool {
-	labelArg, labelFin := WrapString(label)
+	labelArg, labelFin := datautils.WrapString(label)
 	defer labelFin()
 
 	state := &inputTextInternalState{
