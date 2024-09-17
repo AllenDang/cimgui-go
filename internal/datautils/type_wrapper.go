@@ -10,6 +10,14 @@ import (
 	"unsafe"
 )
 
+// ConvertCTypes intendedd use is to convert packageA.C.MyType to packageB.C.MyType.
+// make sure your types are identical C types before using it.
+// THIS IS HIGHLY UNSAFE AND NOT RECOMMENDED TO USE OUTSIDE CIMGUI.
+// It just forces pointer/type reinterpretation with unsafe.Pointer.
+func ConvertCTypes[RET, SRC any](src SRC) RET {
+	return *(*RET)(unsafe.Pointer(&src))
+}
+
 func CastBool(value bool) (cast int) {
 	if value {
 		cast = 1
@@ -17,19 +25,22 @@ func CastBool(value bool) (cast int) {
 	return
 }
 
-func WrapBool[RESULT ~C.bool](goValue *bool) (wrapped *C.bool, finisher func()) {
+// WrapBool converts a Go bool pointer to a C bool pointer.
+// Default value of RESULT should be C.bool
+func WrapBool[RESULT ~bool](goValue *bool) (wrapped *RESULT, finisher func()) {
 	if goValue != nil {
-		var cValue C.bool
+		var cValue RESULT
 		if *goValue {
-			cValue = C.bool(true)
+			cValue = RESULT(true)
 		}
 		wrapped = &cValue
 		finisher = func() {
-			*goValue = cValue == C.bool(true)
+			*goValue = cValue == RESULT(true)
 		}
 	} else {
 		finisher = func() {}
 	}
+
 	return
 }
 
@@ -57,13 +68,17 @@ func WrapNumberPtr[CTYPE Number, GOTYPE Number](goValue *GOTYPE) (wrapped *CTYPE
 	return
 }
 
-func WrapString[RET ~C.char](value string) (wrapped *RET, finisher func()) {
-	wrapped = C.CString(value)
+// WrapString converts Go string to C char*
+// Default value of RET is C.char
+func WrapString[RET ~int8](value string) (wrapped *RET, finisher func()) {
+	wrapped = ConvertCTypes[*RET](C.CString(value))
 	finisher = func() { C.free(unsafe.Pointer(wrapped)) } // nolint: gas
 	return
 }
 
-func WrapStringList[RET ~C.char](value []string) (wrapped **RET, finisher func()) {
+// WrapStringList converts Go string slice to C char**
+// Default value of RET is C.char
+func WrapStringList[RET ~int8](value []string) (wrapped **RET, finisher func()) {
 	if len(value) == 0 {
 		return nil, func() {}
 	}
@@ -73,7 +88,7 @@ func WrapStringList[RET ~C.char](value []string) (wrapped **RET, finisher func()
 		wrappedList[i] = C.CString(v)
 	}
 
-	wrapped = (**C.char)(unsafe.Pointer(&wrappedList[0]))
+	wrapped = (**RET)(unsafe.Pointer(&wrappedList[0]))
 
 	finisher = func() {
 		for _, v := range wrappedList {
