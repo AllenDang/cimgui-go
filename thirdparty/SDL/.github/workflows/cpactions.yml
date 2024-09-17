@@ -8,12 +8,12 @@ jobs:
     name: FreeBSD
     timeout-minutes: 30
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Build
-      uses: cross-platform-actions/action@v0.19.1
+      uses: cross-platform-actions/action@v0.24.0
       with:
         operating_system: freebsd
-        version: '13.2'
+        version: '13.3'
         shell: bash
         run: |
           sudo pkg update

@@ -86,8 +86,8 @@ endif()
 
 # See docs/release_checklist.md
 set(SDL_MAJOR_VERSION 2)
-set(SDL_MINOR_VERSION 28)
-set(SDL_MICRO_VERSION 5)
+set(SDL_MINOR_VERSION 30)
+set(SDL_MICRO_VERSION 7)
 set(SDL_VERSION "${SDL_MAJOR_VERSION}.${SDL_MINOR_VERSION}.${SDL_MICRO_VERSION}")
 
 # Set defaults preventing destination file conflicts
@@ -240,6 +240,11 @@ endif()
 # Default option knobs
 if(UNIX OR MINGW OR MSYS OR (USE_CLANG AND NOT WINDOWS) OR VITA OR PSP OR PS2 OR N3DS)
   set(OPT_DEF_LIBC ON)
+endif()
+if(WINDOWS OR DARWIN OR MACOSX OR IOS OR TVOS)
+  set(SDL_SYSTEM_ICONV_DEFAULT OFF)
+else()
+  set(SDL_SYSTEM_ICONV_DEFAULT ON)
 endif()
 
 if(NOT ("$ENV{CFLAGS}" STREQUAL ""))
@@ -420,7 +425,8 @@ set_option(SDL_DIRECTFB            "Use DirectFB video driver" OFF)
 dep_option(SDL_DIRECTFB_SHARED     "Dynamically load directfb support" ON "SDL_DIRECTFB" OFF)
 set_option(SDL_DUMMYVIDEO          "Use dummy video driver" ON)
 dep_option(SDL_IBUS                "Enable IBus support" ON ${UNIX_SYS} OFF)
-set_option(SDL_SYSTEM_ICONV        "Use iconv() from system-installed libraries" ON)
+set_option(SDL_SYSTEM_ICONV        "Use iconv() from system-installed libraries" ${SDL_SYSTEM_ICONV_DEFAULT})
+set_option(SDL_LIBICONV            "Prefer iconv() from libiconv, if available, over libc version" OFF)
 set_option(SDL_OPENGL              "Include OpenGL support" ON)
 set_option(SDL_OPENGLES            "Include OpenGL ES support" ON)
 set_option(SDL_PTHREADS            "Use POSIX threads for multi-threading" ${SDL_PTHREADS_ENABLED_BY_DEFAULT})
@@ -585,9 +591,48 @@ if(USE_GCC OR USE_CLANG OR USE_INTELCC OR USE_QCC)
     endif()
   endif()
 
+  check_c_compiler_flag(-Wundef HAVE_GCC_WUNDEF)
+  if(HAVE_GCC_WUNDEF)
+    list(APPEND EXTRA_CFLAGS "-Wundef")
+  endif()
+
   check_c_compiler_flag(-fno-strict-aliasing HAVE_GCC_NO_STRICT_ALIASING)
   if(HAVE_GCC_NO_STRICT_ALIASING)
     list(APPEND EXTRA_CFLAGS "-fno-strict-aliasing")
+  endif()
+
+  check_c_compiler_flag(-Wdocumentation HAVE_GCC_WDOCUMENTATION)
+  if(HAVE_GCC_WDOCUMENTATION)
+    if(SDL_WERROR)
+      check_c_compiler_flag(-Werror=documentation HAVE_GCC_WERROR_DOCUMENTATION)
+      if(HAVE_GCC_WERROR_DOCUMENTATION)
+        list(APPEND EXTRA_CFLAGS "-Werror=documentation")
+      endif()
+    endif()
+     list(APPEND EXTRA_CFLAGS "-Wdocumentation")
+  endif()
+
+  check_c_compiler_flag(-Wdocumentation-unknown-command HAVE_GCC_WDOCUMENTATION_UNKNOWN_COMMAND)
+  if(HAVE_GCC_WDOCUMENTATION_UNKNOWN_COMMAND)
+    if(SDL_WERROR)
+      check_c_compiler_flag(-Werror=documentation-unknown-command HAVE_GCC_WERROR_DOCUMENTATION_UNKNOWN_COMMAND)
+      if(HAVE_GCC_WERROR_DOCUMENTATION_UNKNOWN_COMMAND)
+        list(APPEND EXTRA_CFLAGS "-Werror=documentation-unknown-command")
+      endif()
+    endif()
+    list(APPEND EXTRA_CFLAGS "-Wdocumentation-unknown-command")
+  endif()
+
+  check_c_compiler_flag(-fcomment-block-commands=threadsafety HAVE_GCC_COMMENT_BLOCK_COMMANDS)
+  if(HAVE_GCC_COMMENT_BLOCK_COMMANDS)
+    list(APPEND EXTRA_CFLAGS "-fcomment-block-commands=threadsafety")
+    list(APPEND EXTRA_CFLAGS "-fcomment-block-commands=deprecated")
+  else()
+    check_c_compiler_flag(/clang:-fcomment-block-commands=threadsafety HAVE_CLANG_COMMENT_BLOCK_COMMANDS)
+    if(HAVE_CLANG_COMMENT_BLOCK_COMMANDS)
+      list(APPEND EXTRA_CFLAGS "/clang:-fcomment-block-commands=threadsafety")
+      list(APPEND EXTRA_CFLAGS "/clang:-fcomment-block-commands=deprecated")
+    endif()
   endif()
 
   check_c_compiler_flag(-Wdeclaration-after-statement HAVE_GCC_WDECLARATION_AFTER_STATEMENT)
@@ -866,7 +911,7 @@ if(SDL_ASSEMBLY)
 
     if(SDL_LSX)
       cmake_push_check_state()
-      list(APPEND CMAKE_REQUIRED_FLAGS "-mlsx")
+      set(CMAKE_REQUIRED_FLAGS "-mlsx")
       check_c_source_compiles("
           #ifndef __loongarch_sx
           #error Assembler CPP flag not enabled
@@ -878,22 +923,6 @@ if(SDL_ASSEMBLY)
       if(CPU_SUPPORTS_LSX AND HAVE_LSXINTRIN_H)
         list(APPEND EXTRA_CFLAGS "-mlsx")
         set(HAVE_LSX TRUE)
-      endif()
-    endif()
-
-    if(SDL_LASX)
-      cmake_push_check_state()
-      list(APPEND CMAKE_REQUIRED_FLAGS "-mlasx")
-      check_c_source_compiles("
-          #ifndef __loongarch_asx
-          #error Assembler CPP flag not enabled
-          #endif
-          int main(int argc, char **argv) { return 0; }" CPU_SUPPORTS_LASX)
-      check_include_file("lasxintrin.h" HAVE_LASXINTRIN_H)
-      cmake_pop_check_state()
-      if(CPU_SUPPORTS_LASX AND HAVE_LASXINTRIN_H)
-        list(APPEND EXTRA_CFLAGS "-mlasx")
-        set(HAVE_LASX TRUE)
       endif()
     endif()
 
@@ -1026,15 +1055,11 @@ if(SDL_LIBC)
         sys/types.h
         wchar.h
     )
-    if(NOT EMSCRIPTEN)
-      list(APPEND headers_to_check libunwind.h)
-    endif()
     foreach(_HEADER ${headers_to_check})
       string(TOUPPER "HAVE_${_HEADER}" _UPPER)
       string(REGEX REPLACE "[./]" "_" _HAVE_H ${_UPPER})
       check_include_file("${_HEADER}" ${_HAVE_H})
     endforeach()
-    check_include_file(linux/input.h HAVE_LINUX_INPUT_H)
 
     set(STDC_HEADER_NAMES "stddef.h;stdarg.h;stdlib.h;string.h;stdio.h;wchar.h;float.h")
     check_include_files("${STDC_HEADER_NAMES}" STDC_HEADERS)
@@ -1066,6 +1091,8 @@ if(SDL_LIBC)
     check_symbol_exists(getauxval "sys/auxv.h" HAVE_GETAUXVAL)
     check_symbol_exists(elf_aux_info "sys/auxv.h" HAVE_ELF_AUX_INFO)
     check_symbol_exists(poll "poll.h" HAVE_POLL)
+    check_symbol_exists(memfd_create "sys/mman.h" HAVE_MEMFD_CREATE)
+    check_symbol_exists(posix_fallocate "fcntl.h" HAVE_POSIX_FALLOCATE)
 
     check_library_exists(m pow "" HAVE_LIBM)
     if(HAVE_LIBM)
@@ -1088,16 +1115,31 @@ if(SDL_LIBC)
     endif()
 
     if(SDL_SYSTEM_ICONV)
-      check_library_exists(iconv iconv_open "" HAVE_LIBICONV)
-      if(HAVE_LIBICONV)
-        list(APPEND EXTRA_LIBS iconv)
+      check_c_source_compiles("
+        #define LIBICONV_PLUG 1 /* in case libiconv header is in include path */
+        #include <stddef.h>
+        #include <iconv.h>
+        int main(int argc, char **argv) {
+            return !iconv_open(NULL,NULL);
+        }" ICONV_IN_LIBC)
+
+      cmake_push_check_state()
+      list(APPEND CMAKE_REQUIRED_LIBRARIES iconv)
+      check_c_source_compiles("
+        #include <stddef.h>
+        #include <iconv.h>
+        int main(int argc, char **argv) {
+            return !iconv_open(NULL,NULL);
+        }" ICONV_IN_LIBICONV)
+      cmake_pop_check_state()
+
+      if(ICONV_IN_LIBC OR ICONV_IN_LIBICONV)
         set(HAVE_ICONV 1)
         set(HAVE_SYSTEM_ICONV TRUE)
-      else()
-        check_library_exists(c iconv_open "" HAVE_BUILTIN_ICONV)
-        if(HAVE_BUILTIN_ICONV)
-          set(HAVE_ICONV 1)
-          set(HAVE_SYSTEM_ICONV TRUE)
+        if(ICONV_IN_LIBICONV AND (SDL_LIBICONV OR (NOT ICONV_IN_LIBC)))
+          set(SDL_USE_LIBICONV 1)
+          set(HAVE_LIBICONV TRUE)
+          list(APPEND EXTRA_LIBS iconv)
         endif()
       endif()
     endif()
@@ -1408,10 +1450,7 @@ elseif(EMSCRIPTEN)
   endif()
 
   CheckPTHREAD()
-
-  if(HAVE_LIBUNWIND_H)
-    list(APPEND EXTRA_TEST_LIBS unwind)
-  endif()
+  CheckLibUnwind()
 
 elseif(UNIX AND NOT APPLE AND NOT RISCOS AND NOT HAIKU)
   if(SDL_AUDIO)
@@ -1479,7 +1518,7 @@ elseif(UNIX AND NOT APPLE AND NOT RISCOS AND NOT HAIKU)
         #ifndef EVIOCGNAME
         #error EVIOCGNAME() ioctl not available
         #endif
-        int main(int argc, char** argv) { return 0; }" HAVE_INPUT_EVENTS)
+        int main(int argc, char** argv) { return 0; }" HAVE_LINUX_INPUT_H)
 
     if(LINUX)
       check_c_source_compiles("
@@ -1515,11 +1554,11 @@ elseif(UNIX AND NOT APPLE AND NOT RISCOS AND NOT HAIKU)
           }" HAVE_INPUT_WSCONS)
     endif()
 
-    if(HAVE_INPUT_EVENTS)
+    if(HAVE_LINUX_INPUT_H)
       set(SDL_INPUT_LINUXEV 1)
     endif()
 
-    if(SDL_HAPTIC AND HAVE_INPUT_EVENTS)
+    if(SDL_HAPTIC AND HAVE_LINUX_INPUT_H)
       set(SDL_HAPTIC_LINUX 1)
       file(GLOB HAPTIC_SOURCES ${SDL2_SOURCE_DIR}/src/haptic/linux/*.c)
       list(APPEND SOURCE_FILES ${HAPTIC_SOURCES})
@@ -1582,15 +1621,8 @@ elseif(UNIX AND NOT APPLE AND NOT RISCOS AND NOT HAIKU)
         endif()
       endif()
 
-      if(HAVE_LIBUNWIND_H)
-        # We've already found the header, so link the lib if present.
-        # NB: This .pc file is not present on FreeBSD where the implicitly
-        # linked base system libgcc_s includes all libunwind ABI.
-        pkg_search_module(UNWIND libunwind)
-        pkg_search_module(UNWIND_GENERIC libunwind-generic)
-        list(APPEND EXTRA_TEST_LIBS ${UNWIND_LIBRARIES} ${UNWIND_GENERIC_LIBRARIES})
-      endif()
     endif()
+    CheckLibUnwind()
 
     if(HAVE_DBUS_DBUS_H)
       list(APPEND SOURCE_FILES "${SDL2_SOURCE_DIR}/src/core/linux/SDL_dbus.c")
@@ -1612,13 +1644,18 @@ elseif(UNIX AND NOT APPLE AND NOT RISCOS AND NOT HAIKU)
       list(APPEND SOURCE_FILES "${SDL2_SOURCE_DIR}/src/core/linux/SDL_udev.c")
     endif()
 
-    if(HAVE_INPUT_EVENTS)
+    if(HAVE_LINUX_INPUT_H)
       list(APPEND SOURCE_FILES "${SDL2_SOURCE_DIR}/src/core/linux/SDL_evdev.c")
       list(APPEND SOURCE_FILES "${SDL2_SOURCE_DIR}/src/core/linux/SDL_evdev_kbd.c")
     endif()
 
     if(HAVE_INPUT_KBIO)
       list(APPEND SOURCE_FILES "${SDL2_SOURCE_DIR}/src/core/freebsd/SDL_evdev_kbd_freebsd.c")
+    endif()
+
+    if(HAVE_INPUT_WSCONS)
+      list(APPEND SOURCE_FILES "${SDL2_SOURCE_DIR}/src/core/openbsd/SDL_wscons_kbd.c")
+      list(APPEND SOURCE_FILES "${SDL2_SOURCE_DIR}/src/core/openbsd/SDL_wscons_mouse.c")
     endif()
 
     # Always compiled for Linux, unconditionally:
@@ -1637,7 +1674,7 @@ elseif(UNIX AND NOT APPLE AND NOT RISCOS AND NOT HAIKU)
     if(FREEBSD OR NETBSD OR OPENBSD OR BSDI)
       CheckUSBHID()
     endif()
-    if(LINUX AND HAVE_LINUX_INPUT_H AND NOT ANDROID)
+    if((LINUX OR FREEBSD) AND HAVE_LINUX_INPUT_H AND NOT ANDROID)
       set(SDL_JOYSTICK_LINUX 1)
       file(GLOB JOYSTICK_SOURCES ${SDL2_SOURCE_DIR}/src/joystick/linux/*.c ${SDL2_SOURCE_DIR}/src/joystick/steam/*.c)
       list(APPEND SOURCE_FILES ${JOYSTICK_SOURCES})
@@ -1740,14 +1777,6 @@ elseif(WINDOWS)
     list(APPEND SOURCE_FILES ${WINRT_SOURCE_FILES})
   endif()
 
-  if(MSVC AND NOT SDL_LIBC)
-    # Prevent codegen that would use the VC runtime libraries.
-    set_property(DIRECTORY . APPEND PROPERTY COMPILE_OPTIONS "/GS-;/Gs1048576")
-    if(NOT ARCH_64 AND NOT CMAKE_GENERATOR_PLATFORM STREQUAL "ARM")
-      set_property(DIRECTORY . APPEND PROPERTY COMPILE_OPTIONS "/arch:SSE")
-    endif()
-  endif()
-
   if(SDL_MISC)
     if(WINDOWS_STORE)
       file(GLOB MISC_SOURCES ${SDL2_SOURCE_DIR}/src/misc/winrt/*.cpp)
@@ -1773,13 +1802,11 @@ elseif(WINDOWS)
     check_include_file(d3d9.h HAVE_D3D_H)
     check_include_file(d3d11_1.h HAVE_D3D11_H)
     check_c_source_compiles("
-      #include <winsdkver.h>
-      #include <sdkddkver.h>
       #include <d3d12.h>
+      #include <d3d12sdklayers.h>
       ID3D12Device1 *device;
-      #if WDK_NTDDI_VERSION > 0x0A000008
-      int main(int argc, char **argv) { return 0; }
-      #endif" HAVE_D3D12_H)
+      int main(int argc, char **argv) {return 0; }
+      " HAVE_D3D12_H)
     check_include_file(ddraw.h HAVE_DDRAW_H)
     check_include_file(dsound.h HAVE_DSOUND_H)
     check_include_file(dinput.h HAVE_DINPUT_H)
@@ -1804,16 +1831,6 @@ elseif(WINDOWS)
       #include <windows.h>
       #include <xinput.h>
       int main(int argc, char **argv) { return 0; }" HAVE_XINPUT_H)
-    check_c_source_compiles("
-      #include <windows.h>
-      #include <xinput.h>
-      XINPUT_GAMEPAD_EX x1;
-      int main(int argc, char **argv) { return 0; }" HAVE_XINPUT_GAMEPAD_EX)
-    check_c_source_compiles("
-      #include <windows.h>
-      #include <xinput.h>
-      XINPUT_STATE_EX s1;
-      int main(int argc, char **argv) { return 0; }" HAVE_XINPUT_STATE_EX)
     check_c_source_compiles("
       #define COBJMACROS
       #include <windows.gaming.input.h>
@@ -2489,7 +2506,7 @@ elseif(VITA)
       ${SDL2_SOURCE_DIR}/src/thread/vita/SDL_sysmutex.c
       ${SDL2_SOURCE_DIR}/src/thread/vita/SDL_syssem.c
       ${SDL2_SOURCE_DIR}/src/thread/vita/SDL_systhread.c
-      ${SDL2_SOURCE_DIR}/src/thread/vita/SDL_syscond.c
+      ${SDL2_SOURCE_DIR}/src/thread/generic/SDL_syscond.c
       ${SDL2_SOURCE_DIR}/src/thread/generic/SDL_systls.c)
     set(HAVE_SDL_THREADS TRUE)
   endif()
@@ -2641,7 +2658,10 @@ elseif(PSP)
   endif()
   if(SDL_THREADS)
     set(SDL_THREAD_PSP 1)
-    file(GLOB PSP_THREAD_SOURCES ${SDL2_SOURCE_DIR}/src/thread/generic/SDL_systls.c ${SDL2_SOURCE_DIR}/src/thread/psp/*.c)
+    file(GLOB PSP_THREAD_SOURCES
+      ${SDL2_SOURCE_DIR}/src/thread/generic/SDL_systls.c
+      ${SDL2_SOURCE_DIR}/src/thread/generic/SDL_syscond.c
+      ${SDL2_SOURCE_DIR}/src/thread/psp/*.c)
     list(APPEND SOURCE_FILES ${PSP_THREAD_SOURCES})
     set(HAVE_SDL_THREADS TRUE)
   endif()
@@ -2702,7 +2722,11 @@ elseif(PS2)
   endif()
   if(SDL_THREADS)
     set(SDL_THREAD_PS2 1)
-    file(GLOB PS2_THREAD_SOURCES ${SDL2_SOURCE_DIR}/src/thread/generic/SDL_systls.c ${SDL2_SOURCE_DIR}/src/thread/generic/SDL_sysmutex.c ${SDL2_SOURCE_DIR}/src/thread/ps2/*.c)
+    file(GLOB PS2_THREAD_SOURCES
+      ${SDL2_SOURCE_DIR}/src/thread/generic/SDL_systls.c
+      ${SDL2_SOURCE_DIR}/src/thread/generic/SDL_sysmutex.c
+      ${SDL2_SOURCE_DIR}/src/thread/generic/SDL_syscond.c
+      ${SDL2_SOURCE_DIR}/src/thread/ps2/*.c)
     list(APPEND SOURCE_FILES ${PS2_THREAD_SOURCES})
     set(HAVE_SDL_THREADS TRUE)
   endif()
@@ -2833,7 +2857,9 @@ elseif(N3DS)
   if(SDL_THREADS)
     set(SDL_THREAD_N3DS 1)
     file(GLOB N3DS_THREAD_SOURCES ${SDL2_SOURCE_DIR}/src/thread/n3ds/*.c)
-    list(APPEND SOURCE_FILES ${N3DS_THREAD_SOURCES} ${SDL2_SOURCE_DIR}/src/thread/generic/SDL_systls.c)
+    list(APPEND SOURCE_FILES ${N3DS_THREAD_SOURCES}
+      ${SDL2_SOURCE_DIR}/src/thread/generic/SDL_systls.c
+      ${SDL2_SOURCE_DIR}/src/thread/generic/SDL_syscond.c)
     set(HAVE_SDL_THREADS TRUE)
   endif()
 
@@ -3020,6 +3046,10 @@ if(EXTRA_CFLAGS)
 endif()
 listtostr(EXTRA_CFLAGS _EXTRA_CFLAGS)
 set(EXTRA_CFLAGS ${_EXTRA_CFLAGS})
+
+if(USE_GCC OR USE_CLANG)
+  string(REGEX REPLACE "(^| )-I" "\\1 -isystem" EXTRA_CFLAGS "${EXTRA_CFLAGS}")
+endif()
 
 # Compat helpers for the configuration files
 
@@ -3484,8 +3514,26 @@ if(SDL_TEST)
       "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
       "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/SDL2>")
   target_link_libraries(SDL2_test PRIVATE ${EXTRA_TEST_LIBS})
+  target_include_directories(SDL2_test PRIVATE ${EXTRA_TEST_INCLUDES})
   set_property(TARGET SDL2_test APPEND PROPERTY COMPATIBLE_INTERFACE_STRING "SDL_VERSION")
   set_property(TARGET SDL2_test PROPERTY INTERFACE_SDL_VERSION "SDL2")
+endif()
+
+if(MSVC AND NOT SDL_LIBC)
+  set(targets )
+  if(TARGET SDL2)
+    list(APPEND targets SDL2)
+  endif()
+  if(TARGET SDL2-static)
+    list(APPEND targets SDL2-static)
+  endif()
+  if(TARGET SDL2_test)
+    list(APPEND targets SDL2_test)
+  endif()
+  set_property(TARGET ${targets} APPEND PROPERTY COMPILE_OPTIONS "/GS-;/Gs1048576")
+  if(NOT ARCH_64 AND NOT CMAKE_GENERATOR_PLATFORM STREQUAL "ARM")
+    set_property(TARGET ${targets} APPEND PROPERTY COMPILE_OPTIONS "/arch:SSE")
+  endif()
 endif()
 
 ##### Installation targets #####
@@ -3495,6 +3543,9 @@ if(NOT SDL2_DISABLE_INSTALL)
       LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
       ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
       RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
+    if(MSVC)
+      SDL_install_pdb(SDL2 "${CMAKE_INSTALL_BINDIR}")
+    endif()
   endif()
 
   if(NOT WINDOWS_STORE AND NOT SDL2_DISABLE_SDL2MAIN)
@@ -3502,6 +3553,9 @@ if(NOT SDL2_DISABLE_INSTALL)
       LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
       ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
       RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
+    if(MSVC)
+      SDL_install_pdb(SDL2main "${CMAKE_INSTALL_LIBDIR}")
+    endif()
   endif()
 
   if(SDL_STATIC)
@@ -3509,6 +3563,9 @@ if(NOT SDL2_DISABLE_INSTALL)
       LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
       ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
       RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
+    if(MSVC)
+      SDL_install_pdb(SDL2-static "${CMAKE_INSTALL_LIBDIR}")
+    endif()
   endif()
 
   if(SDL_TEST)
@@ -3516,6 +3573,9 @@ if(NOT SDL2_DISABLE_INSTALL)
       LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
       ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
       RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
+    if(MSVC)
+      SDL_install_pdb(SDL2_test "${CMAKE_INSTALL_LIBDIR}")
+    endif()
   endif()
 
   ##### Export files #####
