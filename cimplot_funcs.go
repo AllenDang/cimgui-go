@@ -2586,14 +2586,14 @@ func PlotImMinMaxArrayFloatPtr(values []float32, count int32, min_out *float32, 
 	max_outFin()
 }
 
-func PlotImMinMaxArrayS16Ptr(values *[]int, count int32, min_out *C.ImS16, max_out *C.ImS16) {
+func PlotImMinMaxArrayS16Ptr(values *[]int, count int32, min_out *int16, max_out *int16) {
 	valuesArg := make([]C.ImS16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS16(valuesV)
 	}
 
-	min_outArg, min_outFin := datautils.WrapNumberPtr[int, C.ImS16](min_out)
-	max_outArg, max_outFin := datautils.WrapNumberPtr[int, C.ImS16](max_out)
+	min_outArg, min_outFin := datautils.WrapNumberPtr[C.ImS16, int16](min_out)
+	max_outArg, max_outFin := datautils.WrapNumberPtr[C.ImS16, int16](max_out)
 	C.ImPlot_ImMinMaxArray_S16Ptr((*C.ImS16)(&valuesArg[0]), C.int(count), min_outArg, max_outArg)
 
 	for i, valuesV := range valuesArg {

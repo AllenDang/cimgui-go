@@ -1135,7 +1135,7 @@ type KeyRoutingIndex int
 // Handle returns C version of KeyRoutingIndex and its finalizer func.
 func (selfSrc *KeyRoutingIndex) Handle() (result *C.ImGuiKeyRoutingIndex, fin func()) {
 	self := (*int)(selfSrc)
-	selfArg, selfFin := datautils.WrapNumberPtr[int, C.ImS16](self)
+	selfArg, selfFin := datautils.WrapNumberPtr[C.ImS16, int16](self)
 	return (*C.ImGuiKeyRoutingIndex)(selfArg), func() { selfFin() }
 }
 
@@ -2015,7 +2015,7 @@ type TableColumnIdx int
 // Handle returns C version of TableColumnIdx and its finalizer func.
 func (selfSrc *TableColumnIdx) Handle() (result *C.ImGuiTableColumnIdx, fin func()) {
 	self := (*int)(selfSrc)
-	selfArg, selfFin := datautils.WrapNumberPtr[int, C.ImS16](self)
+	selfArg, selfFin := datautils.WrapNumberPtr[C.ImS16, int16](self)
 	return (*C.ImGuiTableColumnIdx)(selfArg), func() { selfFin() }
 }
 
