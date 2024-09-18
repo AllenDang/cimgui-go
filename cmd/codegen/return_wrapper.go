@@ -42,6 +42,7 @@ func getReturnWrapper(
 		"unsigned short*": simplePtrR("uint16"),
 		"ImS8":            simpleR("int"),
 		"ImS16":           simpleR("int"),
+		"ImS16*":          simplePtrR("int16"),
 		"ImS32":           simpleR("int"),
 		"ImS64":           simpleR("int64"),
 		"ImS64*":          simplePtrR("int64"),
