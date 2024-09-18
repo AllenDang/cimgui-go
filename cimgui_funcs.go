@@ -700,6 +700,15 @@ func (self *DrawList) PrimVtx(pos Vec2, uv Vec2, col uint32) {
 	selfFin()
 }
 
+func (self *DrawList) PrimWriteIdx(idx DrawIdx) {
+	selfArg, selfFin := self.Handle()
+	idxArg, idxFin := idx.C()
+	C.ImDrawList_PrimWriteIdx(selfArg, idxArg)
+
+	selfFin()
+	idxFin()
+}
+
 func (self *DrawList) PrimWriteVtx(pos Vec2, uv Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
 	C.ImDrawList_PrimWriteVtx(selfArg, pos.toC(), uv.toC(), C.ImU32(col))
@@ -8506,6 +8515,17 @@ func InternalMultiSelectAddSetAll(ms *MultiSelectTempData, selected bool) {
 	msFin()
 }
 
+func InternalMultiSelectAddSetRange(ms *MultiSelectTempData, selected bool, range_dir int32, first_item SelectionUserData, last_item SelectionUserData) {
+	msArg, msFin := ms.Handle()
+	first_itemArg, first_itemFin := first_item.C()
+	last_itemArg, last_itemFin := last_item.C()
+	C.igMultiSelectAddSetRange(msArg, C.bool(selected), C.int(range_dir), first_itemArg, last_itemArg)
+
+	msFin()
+	first_itemFin()
+	last_itemFin()
+}
+
 func InternalMultiSelectItemFooter(id ID, p_selected *bool, p_pressed *bool) {
 	idArg, idFin := id.C()
 	p_selectedArg, p_selectedFin := datautils.WrapBool[C.bool](p_selected)
@@ -9407,6 +9427,13 @@ func SetNextItemOpenV(is_open bool, cond Cond) {
 
 func InternalSetNextItemRefVal(data_type DataType, p_data uintptr) {
 	C.wrap_igSetNextItemRefVal(C.ImGuiDataType(data_type), C.uintptr_t(p_data))
+}
+
+func SetNextItemSelectionUserData(selection_user_data SelectionUserData) {
+	selection_user_dataArg, selection_user_dataFin := selection_user_data.C()
+	C.igSetNextItemSelectionUserData(selection_user_dataArg)
+
+	selection_user_dataFin()
 }
 
 // SetNextItemShortcutV parameter default value hint:
@@ -13512,6 +13539,29 @@ func (self *DrawChannel) CmdBuffer() Vector[*DrawCmd] {
 	return NewVectorFromC(C.wrap_ImDrawChannel_Get_CmdBuffer(selfArg).Size, C.wrap_ImDrawChannel_Get_CmdBuffer(selfArg).Capacity, NewDrawCmdFromC(C.wrap_ImDrawChannel_Get_CmdBuffer(selfArg).Data))
 }
 
+func (self DrawChannel) SetIdxBuffer(v Vector[*DrawIdx]) {
+	vData := v.Data
+	vDataArg, _ := vData.Handle()
+	vVecArg := new(C.ImVector_ImDrawIdx)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImDrawChannel_Set_IdxBuffer(selfArg, *vVecArg)
+}
+
+func (self *DrawChannel) IdxBuffer() Vector[*DrawIdx] {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewVectorFromC(C.wrap_ImDrawChannel_Get_IdxBuffer(selfArg).Size, C.wrap_ImDrawChannel_Get_IdxBuffer(selfArg).Capacity, NewDrawIdxFromC(C.wrap_ImDrawChannel_Get_IdxBuffer(selfArg).Data))
+}
+
 func (self DrawCmd) SetClipRect(v Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -13796,6 +13846,29 @@ func (self *DrawList) CmdBuffer() Vector[*DrawCmd] {
 	return NewVectorFromC(C.wrap_ImDrawList_GetCmdBuffer(selfArg).Size, C.wrap_ImDrawList_GetCmdBuffer(selfArg).Capacity, NewDrawCmdFromC(C.wrap_ImDrawList_GetCmdBuffer(selfArg).Data))
 }
 
+func (self DrawList) SetIdxBuffer(v Vector[*DrawIdx]) {
+	vData := v.Data
+	vDataArg, _ := vData.Handle()
+	vVecArg := new(C.ImVector_ImDrawIdx)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImDrawList_SetIdxBuffer(selfArg, *vVecArg)
+}
+
+func (self *DrawList) IdxBuffer() Vector[*DrawIdx] {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewVectorFromC(C.wrap_ImDrawList_GetIdxBuffer(selfArg).Size, C.wrap_ImDrawList_GetIdxBuffer(selfArg).Capacity, NewDrawIdxFromC(C.wrap_ImDrawList_GetIdxBuffer(selfArg).Data))
+}
+
 func (self DrawList) SetVtxBuffer(v Vector[*DrawVert]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
@@ -13881,6 +13954,23 @@ func (self *DrawList) VtxWritePtr() *DrawVert {
 		selfFin()
 	}()
 	return NewDrawVertFromC(C.wrap_ImDrawList_Get_VtxWritePtr(selfArg))
+}
+
+func (self DrawList) SetIdxWritePtr(v *DrawIdx) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImDrawList_Set_IdxWritePtr(selfArg, vArg)
+}
+
+func (self *DrawList) IdxWritePtr() *DrawIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewDrawIdxFromC(C.wrap_ImDrawList_Get_IdxWritePtr(selfArg))
 }
 
 func (self DrawList) SetPath(v Vector[*Vec2]) {
@@ -18078,6 +18168,26 @@ func (self *Context) NavInputSource() InputSource {
 		selfFin()
 	}()
 	return InputSource(C.wrap_ImGuiContext_GetNavInputSource(selfArg))
+}
+
+func (self Context) SetNavLastValidSelectionUserData(v SelectionUserData) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetNavLastValidSelectionUserData(selfArg, vArg)
+}
+
+func (self *Context) NavLastValidSelectionUserData() SelectionUserData {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewSelectionUserDataFromC(func() *C.ImGuiSelectionUserData {
+		result := C.wrap_ImGuiContext_GetNavLastValidSelectionUserData(selfArg)
+		return &result
+	}())
 }
 
 func (self Context) SetNavIdIsAlive(v bool) {
@@ -24929,6 +25039,26 @@ func (self *KeyOwnerData) LockUntilRelease() bool {
 	return C.wrap_ImGuiKeyOwnerData_GetLockUntilRelease(selfArg) == C.bool(true)
 }
 
+func (self KeyRoutingData) SetNextEntryIndex(v KeyRoutingIndex) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiKeyRoutingData_SetNextEntryIndex(selfArg, vArg)
+}
+
+func (self *KeyRoutingData) NextEntryIndex() KeyRoutingIndex {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewKeyRoutingIndexFromC(func() *C.ImGuiKeyRoutingIndex {
+		result := C.wrap_ImGuiKeyRoutingData_GetNextEntryIndex(selfArg)
+		return &result
+	}())
+}
+
 func (self KeyRoutingData) SetMods(v uint16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -25006,6 +25136,42 @@ func (self *KeyRoutingData) RoutingNext() ID {
 		selfFin()
 	}()
 	return *NewIDFromC(func() *C.ImGuiID { result := C.wrap_ImGuiKeyRoutingData_GetRoutingNext(selfArg); return &result }())
+}
+
+func (self KeyRoutingTable) SetIndex(v *[154]KeyRoutingIndex) {
+	vArg := make([]C.ImGuiKeyRoutingIndex, len(v))
+	for i, vV := range v {
+		vVArg, _ := vV.C()
+		vArg[i] = vVArg
+	}
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiKeyRoutingTable_SetIndex(selfArg, (*C.ImGuiKeyRoutingIndex)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = *NewKeyRoutingIndexFromC(func() *C.ImGuiKeyRoutingIndex { result := vV; return &result }())
+	}
+}
+
+func (self *KeyRoutingTable) Index() [154]KeyRoutingIndex {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [154]KeyRoutingIndex {
+		result := [154]KeyRoutingIndex{}
+		resultMirr := C.wrap_ImGuiKeyRoutingTable_GetIndex(selfArg)
+		for i := range result {
+			result[i] = *NewKeyRoutingIndexFromC(func() *C.ImGuiKeyRoutingIndex {
+				result := C.cimgui_ImGuiKeyRoutingIndex_GetAtIdx(resultMirr, C.int(i))
+				return &result
+			}())
+		}
+
+		return result
+	}()
 }
 
 func (self KeyRoutingTable) SetEntries(v Vector[*KeyRoutingData]) {
@@ -25864,6 +26030,46 @@ func (self *MultiSelectIO) Requests() Vector[*SelectionRequest] {
 	return NewVectorFromC(C.wrap_ImGuiMultiSelectIO_GetRequests(selfArg).Size, C.wrap_ImGuiMultiSelectIO_GetRequests(selfArg).Capacity, NewSelectionRequestFromC(C.wrap_ImGuiMultiSelectIO_GetRequests(selfArg).Data))
 }
 
+func (self MultiSelectIO) SetRangeSrcItem(v SelectionUserData) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiMultiSelectIO_SetRangeSrcItem(selfArg, vArg)
+}
+
+func (self *MultiSelectIO) RangeSrcItem() SelectionUserData {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewSelectionUserDataFromC(func() *C.ImGuiSelectionUserData {
+		result := C.wrap_ImGuiMultiSelectIO_GetRangeSrcItem(selfArg)
+		return &result
+	}())
+}
+
+func (self MultiSelectIO) SetNavIdItem(v SelectionUserData) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiMultiSelectIO_SetNavIdItem(selfArg, vArg)
+}
+
+func (self *MultiSelectIO) NavIdItem() SelectionUserData {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewSelectionUserDataFromC(func() *C.ImGuiSelectionUserData {
+		result := C.wrap_ImGuiMultiSelectIO_GetNavIdItem(selfArg)
+		return &result
+	}())
+}
+
 func (self MultiSelectIO) SetNavIdSelected(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -26003,6 +26209,46 @@ func (self *MultiSelectState) NavIdSelected() int {
 	return int(C.wrap_ImGuiMultiSelectState_GetNavIdSelected(selfArg))
 }
 
+func (self MultiSelectState) SetRangeSrcItem(v SelectionUserData) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiMultiSelectState_SetRangeSrcItem(selfArg, vArg)
+}
+
+func (self *MultiSelectState) RangeSrcItem() SelectionUserData {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewSelectionUserDataFromC(func() *C.ImGuiSelectionUserData {
+		result := C.wrap_ImGuiMultiSelectState_GetRangeSrcItem(selfArg)
+		return &result
+	}())
+}
+
+func (self MultiSelectState) SetNavIdItem(v SelectionUserData) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiMultiSelectState_SetNavIdItem(selfArg, vArg)
+}
+
+func (self *MultiSelectState) NavIdItem() SelectionUserData {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewSelectionUserDataFromC(func() *C.ImGuiSelectionUserData {
+		result := C.wrap_ImGuiMultiSelectState_GetNavIdItem(selfArg)
+		return &result
+	}())
+}
+
 func (self MultiSelectTempData) SetIO(v MultiSelectIO) {
 	vArg, _ := v.C()
 
@@ -26097,6 +26343,26 @@ func (self *MultiSelectTempData) BackupCursorMaxPos() Vec2 {
 		selfFin()
 	}()
 	return *(&Vec2{}).fromC(C.wrap_ImGuiMultiSelectTempData_GetBackupCursorMaxPos(selfArg))
+}
+
+func (self MultiSelectTempData) SetLastSubmittedItem(v SelectionUserData) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiMultiSelectTempData_SetLastSubmittedItem(selfArg, vArg)
+}
+
+func (self *MultiSelectTempData) LastSubmittedItem() SelectionUserData {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewSelectionUserDataFromC(func() *C.ImGuiSelectionUserData {
+		result := C.wrap_ImGuiMultiSelectTempData_GetLastSubmittedItem(selfArg)
+		return &result
+	}())
 }
 
 func (self MultiSelectTempData) SetBoxSelectId(v ID) {
@@ -26364,6 +26630,26 @@ func (self *NavItemData) DistAxial() float32 {
 	return float32(C.wrap_ImGuiNavItemData_GetDistAxial(selfArg))
 }
 
+func (self NavItemData) SetSelectionUserData(v SelectionUserData) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiNavItemData_SetSelectionUserData(selfArg, vArg)
+}
+
+func (self *NavItemData) SelectionUserData() SelectionUserData {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewSelectionUserDataFromC(func() *C.ImGuiSelectionUserData {
+		result := C.wrap_ImGuiNavItemData_GetSelectionUserData(selfArg)
+		return &result
+	}())
+}
+
 func (self NextItemData) SetFlags(v NextItemDataFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -26409,6 +26695,26 @@ func (self *NextItemData) FocusScopeId() ID {
 		selfFin()
 	}()
 	return *NewIDFromC(func() *C.ImGuiID { result := C.wrap_ImGuiNextItemData_GetFocusScopeId(selfArg); return &result }())
+}
+
+func (self NextItemData) SetSelectionUserData(v SelectionUserData) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiNextItemData_SetSelectionUserData(selfArg, vArg)
+}
+
+func (self *NextItemData) SelectionUserData() SelectionUserData {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewSelectionUserDataFromC(func() *C.ImGuiSelectionUserData {
+		result := C.wrap_ImGuiNextItemData_GetSelectionUserData(selfArg)
+		return &result
+	}())
 }
 
 func (self NextItemData) SetWidth(v float32) {
@@ -27843,6 +28149,46 @@ func (self *SelectionRequest) RangeDirection() int {
 		selfFin()
 	}()
 	return int(C.wrap_ImGuiSelectionRequest_GetRangeDirection(selfArg))
+}
+
+func (self SelectionRequest) SetRangeFirstItem(v SelectionUserData) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiSelectionRequest_SetRangeFirstItem(selfArg, vArg)
+}
+
+func (self *SelectionRequest) RangeFirstItem() SelectionUserData {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewSelectionUserDataFromC(func() *C.ImGuiSelectionUserData {
+		result := C.wrap_ImGuiSelectionRequest_GetRangeFirstItem(selfArg)
+		return &result
+	}())
+}
+
+func (self SelectionRequest) SetRangeLastItem(v SelectionUserData) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiSelectionRequest_SetRangeLastItem(selfArg, vArg)
+}
+
+func (self *SelectionRequest) RangeLastItem() SelectionUserData {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewSelectionUserDataFromC(func() *C.ImGuiSelectionUserData {
+		result := C.wrap_ImGuiSelectionRequest_GetRangeLastItem(selfArg)
+		return &result
+	}())
 }
 
 func (self SettingsHandler) SetTypeName(v string) {
@@ -30820,6 +31166,474 @@ func (self *Table) SortSpecs() TableSortSpecs {
 	return *NewTableSortSpecsFromC(func() *C.ImGuiTableSortSpecs { result := C.wrap_ImGuiTable_GetSortSpecs(selfArg); return &result }())
 }
 
+func (self Table) SetSortSpecsCount(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetSortSpecsCount(selfArg, vArg)
+}
+
+func (self *Table) SortSpecsCount() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := C.wrap_ImGuiTable_GetSortSpecsCount(selfArg); return &result }())
+}
+
+func (self Table) SetColumnsEnabledCount(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetColumnsEnabledCount(selfArg, vArg)
+}
+
+func (self *Table) ColumnsEnabledCount() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetColumnsEnabledCount(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetColumnsEnabledFixedCount(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetColumnsEnabledFixedCount(selfArg, vArg)
+}
+
+func (self *Table) ColumnsEnabledFixedCount() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetColumnsEnabledFixedCount(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetDeclColumnsCount(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetDeclColumnsCount(selfArg, vArg)
+}
+
+func (self *Table) DeclColumnsCount() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetDeclColumnsCount(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetAngledHeadersCount(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetAngledHeadersCount(selfArg, vArg)
+}
+
+func (self *Table) AngledHeadersCount() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetAngledHeadersCount(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetHoveredColumnBody(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetHoveredColumnBody(selfArg, vArg)
+}
+
+func (self *Table) HoveredColumnBody() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetHoveredColumnBody(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetHoveredColumnBorder(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetHoveredColumnBorder(selfArg, vArg)
+}
+
+func (self *Table) HoveredColumnBorder() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetHoveredColumnBorder(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetHighlightColumnHeader(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetHighlightColumnHeader(selfArg, vArg)
+}
+
+func (self *Table) HighlightColumnHeader() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetHighlightColumnHeader(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetAutoFitSingleColumn(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetAutoFitSingleColumn(selfArg, vArg)
+}
+
+func (self *Table) AutoFitSingleColumn() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetAutoFitSingleColumn(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetResizedColumn(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetResizedColumn(selfArg, vArg)
+}
+
+func (self *Table) ResizedColumn() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := C.wrap_ImGuiTable_GetResizedColumn(selfArg); return &result }())
+}
+
+func (self Table) SetLastResizedColumn(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetLastResizedColumn(selfArg, vArg)
+}
+
+func (self *Table) LastResizedColumn() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetLastResizedColumn(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetHeldHeaderColumn(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetHeldHeaderColumn(selfArg, vArg)
+}
+
+func (self *Table) HeldHeaderColumn() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetHeldHeaderColumn(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetReorderColumn(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetReorderColumn(selfArg, vArg)
+}
+
+func (self *Table) ReorderColumn() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := C.wrap_ImGuiTable_GetReorderColumn(selfArg); return &result }())
+}
+
+func (self Table) SetReorderColumnDir(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetReorderColumnDir(selfArg, vArg)
+}
+
+func (self *Table) ReorderColumnDir() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetReorderColumnDir(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetLeftMostEnabledColumn(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetLeftMostEnabledColumn(selfArg, vArg)
+}
+
+func (self *Table) LeftMostEnabledColumn() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetLeftMostEnabledColumn(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetRightMostEnabledColumn(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetRightMostEnabledColumn(selfArg, vArg)
+}
+
+func (self *Table) RightMostEnabledColumn() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetRightMostEnabledColumn(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetLeftMostStretchedColumn(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetLeftMostStretchedColumn(selfArg, vArg)
+}
+
+func (self *Table) LeftMostStretchedColumn() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetLeftMostStretchedColumn(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetRightMostStretchedColumn(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetRightMostStretchedColumn(selfArg, vArg)
+}
+
+func (self *Table) RightMostStretchedColumn() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetRightMostStretchedColumn(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetContextPopupColumn(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetContextPopupColumn(selfArg, vArg)
+}
+
+func (self *Table) ContextPopupColumn() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetContextPopupColumn(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetFreezeRowsRequest(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetFreezeRowsRequest(selfArg, vArg)
+}
+
+func (self *Table) FreezeRowsRequest() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetFreezeRowsRequest(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetFreezeRowsCount(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetFreezeRowsCount(selfArg, vArg)
+}
+
+func (self *Table) FreezeRowsCount() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := C.wrap_ImGuiTable_GetFreezeRowsCount(selfArg); return &result }())
+}
+
+func (self Table) SetFreezeColumnsRequest(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetFreezeColumnsRequest(selfArg, vArg)
+}
+
+func (self *Table) FreezeColumnsRequest() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetFreezeColumnsRequest(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetFreezeColumnsCount(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetFreezeColumnsCount(selfArg, vArg)
+}
+
+func (self *Table) FreezeColumnsCount() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetFreezeColumnsCount(selfArg)
+		return &result
+	}())
+}
+
+func (self Table) SetRowCellDataCurrent(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTable_SetRowCellDataCurrent(selfArg, vArg)
+}
+
+func (self *Table) RowCellDataCurrent() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTable_GetRowCellDataCurrent(selfArg)
+		return &result
+	}())
+}
+
 func (self Table) SetDummyDrawChannel(v TableDrawChannelIdx) {
 	vArg, _ := v.C()
 
@@ -31195,6 +32009,23 @@ func (self *TableCellData) BgColor() uint32 {
 	return uint32(C.wrap_ImGuiTableCellData_GetBgColor(selfArg))
 }
 
+func (self TableCellData) SetColumn(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTableCellData_SetColumn(selfArg, vArg)
+}
+
+func (self *TableCellData) Column() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := C.wrap_ImGuiTableCellData_GetColumn(selfArg); return &result }())
+}
+
 func (self TableColumn) SetFlags(v TableColumnFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -31480,6 +32311,103 @@ func (self *TableColumn) NameOffset() int {
 		selfFin()
 	}()
 	return int(C.wrap_ImGuiTableColumn_GetNameOffset(selfArg))
+}
+
+func (self TableColumn) SetDisplayOrder(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTableColumn_SetDisplayOrder(selfArg, vArg)
+}
+
+func (self *TableColumn) DisplayOrder() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTableColumn_GetDisplayOrder(selfArg)
+		return &result
+	}())
+}
+
+func (self TableColumn) SetIndexWithinEnabledSet(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTableColumn_SetIndexWithinEnabledSet(selfArg, vArg)
+}
+
+func (self *TableColumn) IndexWithinEnabledSet() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTableColumn_GetIndexWithinEnabledSet(selfArg)
+		return &result
+	}())
+}
+
+func (self TableColumn) SetPrevEnabledColumn(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTableColumn_SetPrevEnabledColumn(selfArg, vArg)
+}
+
+func (self *TableColumn) PrevEnabledColumn() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTableColumn_GetPrevEnabledColumn(selfArg)
+		return &result
+	}())
+}
+
+func (self TableColumn) SetNextEnabledColumn(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTableColumn_SetNextEnabledColumn(selfArg, vArg)
+}
+
+func (self *TableColumn) NextEnabledColumn() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTableColumn_GetNextEnabledColumn(selfArg)
+		return &result
+	}())
+}
+
+func (self TableColumn) SetSortOrder(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTableColumn_SetSortOrder(selfArg, vArg)
+}
+
+func (self *TableColumn) SortOrder() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := C.wrap_ImGuiTableColumn_GetSortOrder(selfArg); return &result }())
 }
 
 func (self TableColumn) SetDrawChannelCurrent(v TableDrawChannelIdx) {
@@ -31799,6 +32727,66 @@ func (self *TableColumnSettings) UserID() ID {
 	return *NewIDFromC(func() *C.ImGuiID { result := C.wrap_ImGuiTableColumnSettings_GetUserID(selfArg); return &result }())
 }
 
+func (self TableColumnSettings) SetIndex(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTableColumnSettings_SetIndex(selfArg, vArg)
+}
+
+func (self *TableColumnSettings) Index() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTableColumnSettings_GetIndex(selfArg)
+		return &result
+	}())
+}
+
+func (self TableColumnSettings) SetDisplayOrder(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTableColumnSettings_SetDisplayOrder(selfArg, vArg)
+}
+
+func (self *TableColumnSettings) DisplayOrder() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTableColumnSettings_GetDisplayOrder(selfArg)
+		return &result
+	}())
+}
+
+func (self TableColumnSettings) SetSortOrder(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTableColumnSettings_SetSortOrder(selfArg, vArg)
+}
+
+func (self *TableColumnSettings) SortOrder() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTableColumnSettings_GetSortOrder(selfArg)
+		return &result
+	}())
+}
+
 func (self TableColumnSettings) SetSortDirection(v byte) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -31904,6 +32892,23 @@ func (self *TableColumnSortSpecs) SortDirection() SortDirection {
 		selfFin()
 	}()
 	return SortDirection(C.wrap_ImGuiTableColumnSortSpecs_GetSortDirection(selfArg))
+}
+
+func (self TableHeaderData) SetIndex(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTableHeaderData_SetIndex(selfArg, vArg)
+}
+
+func (self *TableHeaderData) Index() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := C.wrap_ImGuiTableHeaderData_GetIndex(selfArg); return &result }())
 }
 
 func (self TableHeaderData) SetTextColor(v uint32) {
@@ -32088,6 +33093,46 @@ func (self *TableSettings) RefScale() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiTableSettings_GetRefScale(selfArg))
+}
+
+func (self TableSettings) SetColumnsCount(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTableSettings_SetColumnsCount(selfArg, vArg)
+}
+
+func (self *TableSettings) ColumnsCount() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTableSettings_GetColumnsCount(selfArg)
+		return &result
+	}())
+}
+
+func (self TableSettings) SetColumnsCountMax(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTableSettings_SetColumnsCountMax(selfArg, vArg)
+}
+
+func (self *TableSettings) ColumnsCountMax() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx {
+		result := C.wrap_ImGuiTableSettings_GetColumnsCountMax(selfArg)
+		return &result
+	}())
 }
 
 func (self TableSettings) SetWantApply(v bool) {
