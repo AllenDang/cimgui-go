@@ -1130,11 +1130,11 @@ func NewKeyRoutingDataFromC[SRC any](cvalue SRC) *KeyRoutingData {
 	return &KeyRoutingData{CData: ConvertCTypes[*C.ImGuiKeyRoutingData](cvalue)}
 }
 
-type KeyRoutingIndex int
+type KeyRoutingIndex int16
 
 // Handle returns C version of KeyRoutingIndex and its finalizer func.
 func (selfSrc *KeyRoutingIndex) Handle() (result *C.ImGuiKeyRoutingIndex, fin func()) {
-	self := (*int)(selfSrc)
+	self := (*int16)(selfSrc)
 	selfArg, selfFin := datautils.WrapNumberPtr[C.ImS16, int16](self)
 	return (*C.ImGuiKeyRoutingIndex)(selfArg), func() { selfFin() }
 }
@@ -2010,11 +2010,11 @@ func NewTableColumnFromC[SRC any](cvalue SRC) *TableColumn {
 	return &TableColumn{CData: ConvertCTypes[*C.ImGuiTableColumn](cvalue)}
 }
 
-type TableColumnIdx int
+type TableColumnIdx int16
 
 // Handle returns C version of TableColumnIdx and its finalizer func.
 func (selfSrc *TableColumnIdx) Handle() (result *C.ImGuiTableColumnIdx, fin func()) {
-	self := (*int)(selfSrc)
+	self := (*int16)(selfSrc)
 	selfArg, selfFin := datautils.WrapNumberPtr[C.ImS16, int16](self)
 	return (*C.ImGuiTableColumnIdx)(selfArg), func() { selfFin() }
 }

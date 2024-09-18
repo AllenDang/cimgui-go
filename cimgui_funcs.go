@@ -21228,34 +21228,34 @@ func (self *DebugAllocEntry) FrameCount() int32 {
 	return int32(C.wrap_ImGuiDebugAllocEntry_GetFrameCount(selfArg))
 }
 
-func (self DebugAllocEntry) SetAllocCount(v int) {
+func (self DebugAllocEntry) SetAllocCount(v int16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiDebugAllocEntry_SetAllocCount(selfArg, C.ImS16(v))
 }
 
-func (self *DebugAllocEntry) AllocCount() int {
+func (self *DebugAllocEntry) AllocCount() int16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiDebugAllocEntry_GetAllocCount(selfArg))
+	return int16(C.wrap_ImGuiDebugAllocEntry_GetAllocCount(selfArg))
 }
 
-func (self DebugAllocEntry) SetFreeCount(v int) {
+func (self DebugAllocEntry) SetFreeCount(v int16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiDebugAllocEntry_SetFreeCount(selfArg, C.ImS16(v))
 }
 
-func (self *DebugAllocEntry) FreeCount() int {
+func (self *DebugAllocEntry) FreeCount() int16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiDebugAllocEntry_GetFreeCount(selfArg))
+	return int16(C.wrap_ImGuiDebugAllocEntry_GetFreeCount(selfArg))
 }
 
 func (self DebugAllocInfo) SetTotalAllocCount(v int32) {
@@ -21288,19 +21288,19 @@ func (self *DebugAllocInfo) TotalFreeCount() int32 {
 	return int32(C.wrap_ImGuiDebugAllocInfo_GetTotalFreeCount(selfArg))
 }
 
-func (self DebugAllocInfo) SetLastEntriesIdx(v int) {
+func (self DebugAllocInfo) SetLastEntriesIdx(v int16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiDebugAllocInfo_SetLastEntriesIdx(selfArg, C.ImS16(v))
 }
 
-func (self *DebugAllocInfo) LastEntriesIdx() int {
+func (self *DebugAllocInfo) LastEntriesIdx() int16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiDebugAllocInfo_GetLastEntriesIdx(selfArg))
+	return int16(C.wrap_ImGuiDebugAllocInfo_GetLastEntriesIdx(selfArg))
 }
 
 func (self DebugAllocInfo) SetLastEntriesBuf(v *[6]DebugAllocEntry) {
@@ -29804,19 +29804,19 @@ func (self *TabBar) ReorderRequestTabId() ID {
 	return *NewIDFromC(func() *C.ImGuiID { result := C.wrap_ImGuiTabBar_GetReorderRequestTabId(selfArg); return &result }())
 }
 
-func (self TabBar) SetReorderRequestOffset(v int) {
+func (self TabBar) SetReorderRequestOffset(v int16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiTabBar_SetReorderRequestOffset(selfArg, C.ImS16(v))
 }
 
-func (self *TabBar) ReorderRequestOffset() int {
+func (self *TabBar) ReorderRequestOffset() int16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiTabBar_GetReorderRequestOffset(selfArg))
+	return int16(C.wrap_ImGuiTabBar_GetReorderRequestOffset(selfArg))
 }
 
 func (self TabBar) SetBeginCount(v int) {
@@ -29879,34 +29879,34 @@ func (self *TabBar) TabsAddedNew() bool {
 	return C.wrap_ImGuiTabBar_GetTabsAddedNew(selfArg) == C.bool(true)
 }
 
-func (self TabBar) SetTabsActiveCount(v int) {
+func (self TabBar) SetTabsActiveCount(v int16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiTabBar_SetTabsActiveCount(selfArg, C.ImS16(v))
 }
 
-func (self *TabBar) TabsActiveCount() int {
+func (self *TabBar) TabsActiveCount() int16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiTabBar_GetTabsActiveCount(selfArg))
+	return int16(C.wrap_ImGuiTabBar_GetTabsActiveCount(selfArg))
 }
 
-func (self TabBar) SetLastTabItemIdx(v int) {
+func (self TabBar) SetLastTabItemIdx(v int16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiTabBar_SetLastTabItemIdx(selfArg, C.ImS16(v))
 }
 
-func (self *TabBar) LastTabItemIdx() int {
+func (self *TabBar) LastTabItemIdx() int16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiTabBar_GetLastTabItemIdx(selfArg))
+	return int16(C.wrap_ImGuiTabBar_GetLastTabItemIdx(selfArg))
 }
 
 func (self TabBar) SetItemSpacingY(v float32) {
@@ -30125,34 +30125,34 @@ func (self *TabItem) NameOffset() int {
 	return int(C.wrap_ImGuiTabItem_GetNameOffset(selfArg))
 }
 
-func (self TabItem) SetBeginOrder(v int) {
+func (self TabItem) SetBeginOrder(v int16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiTabItem_SetBeginOrder(selfArg, C.ImS16(v))
 }
 
-func (self *TabItem) BeginOrder() int {
+func (self *TabItem) BeginOrder() int16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiTabItem_GetBeginOrder(selfArg))
+	return int16(C.wrap_ImGuiTabItem_GetBeginOrder(selfArg))
 }
 
-func (self TabItem) SetIndexDuringLayout(v int) {
+func (self TabItem) SetIndexDuringLayout(v int16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiTabItem_SetIndexDuringLayout(selfArg, C.ImS16(v))
 }
 
-func (self *TabItem) IndexDuringLayout() int {
+func (self *TabItem) IndexDuringLayout() int16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiTabItem_GetIndexDuringLayout(selfArg))
+	return int16(C.wrap_ImGuiTabItem_GetIndexDuringLayout(selfArg))
 }
 
 func (self TabItem) SetWantClose(v bool) {
@@ -30378,34 +30378,34 @@ func (self *Table) CurrentColumn() int32 {
 	return int32(C.wrap_ImGuiTable_GetCurrentColumn(selfArg))
 }
 
-func (self Table) SetInstanceCurrent(v int) {
+func (self Table) SetInstanceCurrent(v int16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiTable_SetInstanceCurrent(selfArg, C.ImS16(v))
 }
 
-func (self *Table) InstanceCurrent() int {
+func (self *Table) InstanceCurrent() int16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiTable_GetInstanceCurrent(selfArg))
+	return int16(C.wrap_ImGuiTable_GetInstanceCurrent(selfArg))
 }
 
-func (self Table) SetInstanceInteracted(v int) {
+func (self Table) SetInstanceInteracted(v int16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiTable_SetInstanceInteracted(selfArg, C.ImS16(v))
 }
 
-func (self *Table) InstanceInteracted() int {
+func (self *Table) InstanceInteracted() int16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiTable_GetInstanceInteracted(selfArg))
+	return int16(C.wrap_ImGuiTable_GetInstanceInteracted(selfArg))
 }
 
 func (self Table) SetRowPosY1(v float32) {
@@ -32298,19 +32298,19 @@ func (self *TableColumn) ContentMaxXHeadersIdeal() float32 {
 	return float32(C.wrap_ImGuiTableColumn_GetContentMaxXHeadersIdeal(selfArg))
 }
 
-func (self TableColumn) SetNameOffset(v int) {
+func (self TableColumn) SetNameOffset(v int16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiTableColumn_SetNameOffset(selfArg, C.ImS16(v))
 }
 
-func (self *TableColumn) NameOffset() int {
+func (self *TableColumn) NameOffset() int16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiTableColumn_GetNameOffset(selfArg))
+	return int16(C.wrap_ImGuiTableColumn_GetNameOffset(selfArg))
 }
 
 func (self TableColumn) SetDisplayOrder(v TableColumnIdx) {
@@ -32849,34 +32849,34 @@ func (self *TableColumnSortSpecs) ColumnUserID() ID {
 	return *NewIDFromC(func() *C.ImGuiID { result := C.wrap_ImGuiTableColumnSortSpecs_GetColumnUserID(selfArg); return &result }())
 }
 
-func (self TableColumnSortSpecs) SetColumnIndex(v int) {
+func (self TableColumnSortSpecs) SetColumnIndex(v int16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiTableColumnSortSpecs_SetColumnIndex(selfArg, C.ImS16(v))
 }
 
-func (self *TableColumnSortSpecs) ColumnIndex() int {
+func (self *TableColumnSortSpecs) ColumnIndex() int16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiTableColumnSortSpecs_GetColumnIndex(selfArg))
+	return int16(C.wrap_ImGuiTableColumnSortSpecs_GetColumnIndex(selfArg))
 }
 
-func (self TableColumnSortSpecs) SetSortOrder(v int) {
+func (self TableColumnSortSpecs) SetSortOrder(v int16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiTableColumnSortSpecs_SetSortOrder(selfArg, C.ImS16(v))
 }
 
-func (self *TableColumnSortSpecs) SortOrder() int {
+func (self *TableColumnSortSpecs) SortOrder() int16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int(C.wrap_ImGuiTableColumnSortSpecs_GetSortOrder(selfArg))
+	return int16(C.wrap_ImGuiTableColumnSortSpecs_GetSortOrder(selfArg))
 }
 
 func (self TableColumnSortSpecs) SetSortDirection(v SortDirection) {

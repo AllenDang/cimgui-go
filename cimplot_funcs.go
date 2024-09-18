@@ -2251,7 +2251,7 @@ func PlotImMaxArrayFloatPtr(values []float32, count int32) float32 {
 	return float32(C.ImPlot_ImMaxArray_FloatPtr((*C.float)(&(values[0])), C.int(count)))
 }
 
-func PlotImMaxArrayS16Ptr(values *[]int, count int32) int {
+func PlotImMaxArrayS16Ptr(values *[]int, count int32) int16 {
 	valuesArg := make([]C.ImS16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS16(valuesV)
@@ -2262,7 +2262,7 @@ func PlotImMaxArrayS16Ptr(values *[]int, count int32) int {
 			(*values)[i] = int(valuesV)
 		}
 	}()
-	return int(C.ImPlot_ImMaxArray_S16Ptr((*C.ImS16)(&valuesArg[0]), C.int(count)))
+	return int16(C.ImPlot_ImMaxArray_S16Ptr((*C.ImS16)(&valuesArg[0]), C.int(count)))
 }
 
 func PlotImMaxArrayS32Ptr(values *[]int32, count int32) int {
@@ -2471,7 +2471,7 @@ func PlotImMinArrayFloatPtr(values []float32, count int32) float32 {
 	return float32(C.ImPlot_ImMinArray_FloatPtr((*C.float)(&(values[0])), C.int(count)))
 }
 
-func PlotImMinArrayS16Ptr(values *[]int, count int32) int {
+func PlotImMinArrayS16Ptr(values *[]int, count int32) int16 {
 	valuesArg := make([]C.ImS16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS16(valuesV)
@@ -2482,7 +2482,7 @@ func PlotImMinArrayS16Ptr(values *[]int, count int32) int {
 			(*values)[i] = int(valuesV)
 		}
 	}()
-	return int(C.ImPlot_ImMinArray_S16Ptr((*C.ImS16)(&valuesArg[0]), C.int(count)))
+	return int16(C.ImPlot_ImMinArray_S16Ptr((*C.ImS16)(&valuesArg[0]), C.int(count)))
 }
 
 func PlotImMinArrayS32Ptr(values *[]int32, count int32) int {
@@ -2759,7 +2759,7 @@ func PlotImOverlapsFloat(min_a float32, max_a float32, min_b float32, max_b floa
 	return C.ImPlot_ImOverlaps_Float(C.float(min_a), C.float(max_a), C.float(min_b), C.float(max_b)) == C.bool(true)
 }
 
-func PlotImOverlapsS16(min_a int, max_a int, min_b int, max_b int) bool {
+func PlotImOverlapsS16(min_a int16, max_a int16, min_b int16, max_b int16) bool {
 	return C.ImPlot_ImOverlaps_S16(C.ImS16(min_a), C.ImS16(max_a), C.ImS16(min_b), C.ImS16(max_b)) == C.bool(true)
 }
 
@@ -2803,8 +2803,8 @@ func PlotImRemap01Float(x float32, x0 float32, x1 float32) float32 {
 	return float32(C.ImPlot_ImRemap01_Float(C.float(x), C.float(x0), C.float(x1)))
 }
 
-func PlotImRemap01S16(x int, x0 int, x1 int) int {
-	return int(C.ImPlot_ImRemap01_S16(C.ImS16(x), C.ImS16(x0), C.ImS16(x1)))
+func PlotImRemap01S16(x int16, x0 int16, x1 int16) int16 {
+	return int16(C.ImPlot_ImRemap01_S16(C.ImS16(x), C.ImS16(x0), C.ImS16(x1)))
 }
 
 func PlotImRemap01S32(x int, x0 int, x1 int) int {
@@ -2843,8 +2843,8 @@ func PlotImRemapFloat(x float32, x0 float32, x1 float32, y0 float32, y1 float32)
 	return float32(C.ImPlot_ImRemap_Float(C.float(x), C.float(x0), C.float(x1), C.float(y0), C.float(y1)))
 }
 
-func PlotImRemapS16(x int, x0 int, x1 int, y0 int, y1 int) int {
-	return int(C.ImPlot_ImRemap_S16(C.ImS16(x), C.ImS16(x0), C.ImS16(x1), C.ImS16(y0), C.ImS16(y1)))
+func PlotImRemapS16(x int16, x0 int16, x1 int16, y0 int16, y1 int16) int16 {
+	return int16(C.ImPlot_ImRemap_S16(C.ImS16(x), C.ImS16(x0), C.ImS16(x1), C.ImS16(y0), C.ImS16(y1)))
 }
 
 func PlotImRemapS32(x int, x0 int, x1 int, y0 int, y1 int) int {
@@ -3001,7 +3001,7 @@ func PlotImSumFloatPtr(values []float32, count int32) float32 {
 	return float32(C.ImPlot_ImSum_FloatPtr((*C.float)(&(values[0])), C.int(count)))
 }
 
-func PlotImSumS16Ptr(values *[]int, count int32) int {
+func PlotImSumS16Ptr(values *[]int, count int32) int16 {
 	valuesArg := make([]C.ImS16, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS16(valuesV)
@@ -3012,7 +3012,7 @@ func PlotImSumS16Ptr(values *[]int, count int32) int {
 			(*values)[i] = int(valuesV)
 		}
 	}()
-	return int(C.ImPlot_ImSum_S16Ptr((*C.ImS16)(&valuesArg[0]), C.int(count)))
+	return int16(C.ImPlot_ImSum_S16Ptr((*C.ImS16)(&valuesArg[0]), C.int(count)))
 }
 
 func PlotImSumS32Ptr(values *[]int32, count int32) int {
