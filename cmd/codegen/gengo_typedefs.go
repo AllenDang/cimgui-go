@@ -72,31 +72,46 @@ extern "C" {
 	for _, k := range keys {
 		typedef := typedefs.data[k]
 		if shouldSkip, ok := skippedTypedefs[k]; ok && shouldSkip {
-			glg.Infof("Arbitrarly skipping typedef %s", k)
+			if data.flags.showNotGenerated {
+				glg.Infof("Arbitrarly skipping typedef %s", k)
+			}
+
 			maxTypedefs--
 			continue
 		}
 
 		if _, exists := data.refTypedefs[k]; exists {
-			glg.Infof("Duplicate of %s in reference typedefs. Skipping.", k)
+			if data.flags.showNotGenerated {
+				glg.Infof("Duplicate of %s in reference typedefs. Skipping.", k)
+			}
+
 			maxTypedefs--
 			continue
 		}
 
 		if shouldSkipStruct(k) {
-			glg.Infof("Arbitrarly skipping struct %s", k)
+			if data.flags.showNotGenerated {
+				glg.Infof("Arbitrarly skipping struct %s", k)
+			}
+
 			maxTypedefs--
 			continue
 		}
 
 		if IsEnumName(k, data.enumNames) /*|| IsStructName(k, structs)*/ {
-			glg.Infof("typedef %s has extended deffinition in structs_and_enums.json. Will generate later", k)
+			if data.flags.showGenerated {
+				glg.Infof("typedef %s has extended deffinition in structs_and_enums.json. Will generate later", k)
+			}
+
 			maxTypedefs--
 			continue
 		}
 
 		if IsTemplateTypedef(typedef) {
-			glg.Infof("typedef %s is a template. not implemented yet", k)
+			if data.flags.showNotGenerated {
+				glg.Failf("typedef %s is a template. not implemented yet", k)
+			}
+
 			continue
 		}
 
@@ -146,7 +161,10 @@ extern "C" {
 		// check if k is a name of struct from structDefs
 		switch {
 		case typedefs.data[k] == "void*":
-			glg.Infof("typedef %s is an alias to void*.", k)
+			if data.flags.showGenerated {
+				glg.Successf("typedef %s is an alias to void*.", k)
+			}
+
 			fmt.Fprintf(typedefsCppSb,
 				`
 uintptr_t %[1]s_toUintptr(%[1]s ptr) {
@@ -203,7 +221,9 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		case ptrReturnTypeErr == nil && argTypeErr == nil && ptrArgTypeErr == nil && !isPtr:
-			glg.Infof("typedef %s is an alias typedef.", k)
+			if data.flags.showGenerated {
+				glg.Successf("typedef %s is an alias typedef.", k)
+			}
 
 			fmt.Fprintf(callbacksGoSb, `
 type %[1]s %[2]s
@@ -289,13 +309,22 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		case IsCallbackTypedef(typedefs.data[k]):
-			glg.Infof("typedef %s is a callback. Not implemented yet", k)
+			if data.flags.showNotGenerated {
+				glg.Failf("typedef %s is a callback. Not implemented yet", k)
+			}
 		case HasPrefix(typedefs.data[k], "struct"):
 			isOpaque := !IsStructName(k, structsMap)
-			glg.Infof("typedef %s is a struct (is opaque? %v).", k, isOpaque)
+			if data.flags.showGenerated {
+				glg.Successf("typedef %s is a struct (is opaque? %v).", k, isOpaque)
+			}
+
 			writeOpaqueStruct(k, isOpaque, callbacksGoSb)
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
+		default:
+			if data.flags.showNotGenerated {
+				glg.Failf("unknown situation happened for type %s; not implemented.", k)
+			}
 		}
 	}
 
