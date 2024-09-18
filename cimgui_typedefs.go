@@ -1135,16 +1135,8 @@ type KeyRoutingIndex int
 // Handle returns C version of KeyRoutingIndex and its finalizer func.
 func (selfSrc *KeyRoutingIndex) Handle() (result *C.ImGuiKeyRoutingIndex, fin func()) {
 	self := (*int)(selfSrc)
-	selfArg := make([]C.ImS16, len(*self))
-	for i, selfV := range *self {
-		selfArg[i] = C.ImS16(selfV)
-	}
-
-	return (*C.ImGuiKeyRoutingIndex)((*C.ImS16)(&selfArg[0])), func() {
-		for i, selfV := range selfArg {
-			(*self)[i] = int(selfV)
-		}
-	}
+	selfArg, selfFin := datautils.WrapNumberPtr[int, C.ImS16](self)
+	return (*C.ImGuiKeyRoutingIndex)(selfArg), func() { selfFin() }
 }
 
 // C is like Handle but returns plain type instead of pointer.
@@ -2023,16 +2015,8 @@ type TableColumnIdx int
 // Handle returns C version of TableColumnIdx and its finalizer func.
 func (selfSrc *TableColumnIdx) Handle() (result *C.ImGuiTableColumnIdx, fin func()) {
 	self := (*int)(selfSrc)
-	selfArg := make([]C.ImS16, len(*self))
-	for i, selfV := range *self {
-		selfArg[i] = C.ImS16(selfV)
-	}
-
-	return (*C.ImGuiTableColumnIdx)((*C.ImS16)(&selfArg[0])), func() {
-		for i, selfV := range selfArg {
-			(*self)[i] = int(selfV)
-		}
-	}
+	selfArg, selfFin := datautils.WrapNumberPtr[int, C.ImS16](self)
+	return (*C.ImGuiTableColumnIdx)(selfArg), func() { selfFin() }
 }
 
 // C is like Handle but returns plain type instead of pointer.
