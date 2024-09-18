@@ -323,7 +323,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			validTypeNames = append(validTypeNames, k)
 		default:
 			if data.flags.showNotGenerated {
-				glg.Failf("unknown situation happened for type %s; not implemented.", k)
+				glg.Failf("unknown situation happened for type %s; not implemented. Probably unknown Arg (err: %v), Ret (err; %v) PtrArg (err: %v) or PtrRet (err: %v) type wrappers for isPointer: %v for %s. Check out source code for more details", k, argTypeErr, returnTypeErr, ptrArgTypeErr, ptrReturnTypeErr, isPtr, typedefs.data[k])
 			}
 		}
 	}

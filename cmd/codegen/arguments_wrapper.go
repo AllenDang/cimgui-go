@@ -53,6 +53,7 @@ func getArgWrapper(
 		"const float*":        floatArrayW,
 		"short":               simpleW("int16", "C.short"),
 		"unsigned short":      simpleW("uint16", "C.ushort"),
+		"unsigned short*":     simplePtrW("uint16", "C.ushort"),
 		"ImU8":                simpleW("byte", "C.ImU8"),
 		"ImU8*":               simplePtrW("byte", "C.ImU8"),
 		"const ImU8*":         simplePtrSliceW("C.ImU8", "byte"),
