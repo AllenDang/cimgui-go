@@ -2631,14 +2631,14 @@ func PlotImMinMaxArrayS64Ptr(values []int64, count int32, min_out *int64, max_ou
 	max_outFin()
 }
 
-func PlotImMinMaxArrayS8Ptr(values *[]int8, count int32, min_out *C.ImS8, max_out *C.ImS8) {
+func PlotImMinMaxArrayS8Ptr(values *[]int8, count int32, min_out *int8, max_out *int8) {
 	valuesArg := make([]C.ImS8, len(*values))
 	for i, valuesV := range *values {
 		valuesArg[i] = C.ImS8(valuesV)
 	}
 
-	min_outArg, min_outFin := datautils.WrapNumberPtr[int8, C.ImS8](min_out)
-	max_outArg, max_outFin := datautils.WrapNumberPtr[int8, C.ImS8](max_out)
+	min_outArg, min_outFin := datautils.WrapNumberPtr[C.ImS8, int8](min_out)
+	max_outArg, max_outFin := datautils.WrapNumberPtr[C.ImS8, int8](max_out)
 	C.ImPlot_ImMinMaxArray_S8Ptr((*C.ImS8)(&valuesArg[0]), C.int(count), min_outArg, max_outArg)
 
 	for i, valuesV := range valuesArg {
