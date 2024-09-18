@@ -44,6 +44,7 @@ func getReturnWrapper(
 		"ImS16":           simpleR("int"),
 		"ImS32":           simpleR("int"),
 		"ImS64":           simpleR("int64"),
+		"ImS64*":          simplePtrR("int64"),
 		"ImU8":            simpleR("byte"),
 		"ImU8*":           simplePtrR("byte"),
 		"ImU16":           simpleR("uint16"),
