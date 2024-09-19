@@ -113,7 +113,7 @@ type goFuncsGenerator struct {
 
 // writeFuncsFileHeader writes a header of the generated file
 func (g *goFuncsGenerator) writeFuncsFileHeader() {
-	g.sb.WriteString(goPackageHeader)
+	g.sb.WriteString(getGoPackageHeader(g.context))
 
 	g.sb.WriteString(fmt.Sprintf(
 		`// #include "extra_types.h"

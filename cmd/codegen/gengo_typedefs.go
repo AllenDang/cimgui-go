@@ -28,7 +28,7 @@ func proceedTypedefs(
 
 	// we need FILES
 	callbacksGoSb := &strings.Builder{}
-	callbacksGoSb.WriteString(goPackageHeader)
+	callbacksGoSb.WriteString(getGoPackageHeader(data))
 	fmt.Fprintf(callbacksGoSb,
 		`// #include <stdlib.h>
 // #include <memory.h>
