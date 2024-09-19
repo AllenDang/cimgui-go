@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	imgui "github.com/AllenDang/cimgui-go"
+	"github.com/AllenDang/cimgui-go/imgui"
 )
 
 type Texture struct {

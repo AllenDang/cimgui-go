@@ -19,7 +19,7 @@ import (
 	"image"
 	"unsafe"
 
-	imgui "github.com/AllenDang/cimgui-go"
+	"github.com/AllenDang/cimgui-go/imgui"
 )
 
 type voidCallbackFunc func()

@@ -18,8 +18,8 @@ import (
 	"image/draw"
 	"unsafe"
 
-	imgui "github.com/AllenDang/cimgui-go"
 	"github.com/AllenDang/cimgui-go/backend"
+	"github.com/AllenDang/cimgui-go/imgui"
 	"github.com/AllenDang/cimgui-go/internal/datautils"
 )
 
