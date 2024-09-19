@@ -5,9 +5,10 @@ import (
 	"image"
 	"runtime"
 
-	imgui "github.com/AllenDang/cimgui-go"
 	"github.com/AllenDang/cimgui-go/backend"
 	"github.com/AllenDang/cimgui-go/backend/glfwbackend"
+	"github.com/AllenDang/cimgui-go/imgui"
+	"github.com/AllenDang/cimgui-go/implot"
 )
 
 var (
@@ -89,7 +90,7 @@ func showImPlotDemo() {
 	imgui.SetNextWindowPosV(imgui.NewVec2(basePos.X+400, basePos.Y+60), imgui.CondOnce, imgui.NewVec2(0, 0))
 	imgui.SetNextWindowSizeV(imgui.NewVec2(500, 300), imgui.CondOnce)
 	imgui.Begin("Plot window")
-	if imgui.PlotBeginPlotV("Plot", imgui.NewVec2(-1, -1), 0) {
+	if implot.PlotBeginPlotV("Plot", imgui.NewVec2(-1, -1), 0) {
 		imgui.PlotPlotBarsS64PtrInt("Bar", barValues, int32(len(barValues)))
 		imgui.PlotPlotLineS64PtrInt("Line", barValues, int32(len(barValues)))
 		imgui.PlotEndPlot()
