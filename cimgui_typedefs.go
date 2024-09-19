@@ -164,6 +164,26 @@ func NewDrawDataBuilderFromC[SRC any](cvalue SRC) *DrawDataBuilder {
 	return &DrawDataBuilder{CData: ConvertCTypes[*C.ImDrawDataBuilder](cvalue)}
 }
 
+type DrawIdx uint16
+
+// Handle returns C version of DrawIdx and its finalizer func.
+func (selfSrc *DrawIdx) Handle() (result *C.ImDrawIdx, fin func()) {
+	self := (*uint16)(selfSrc)
+	selfArg, selfFin := datautils.WrapNumberPtr[C.ushort, uint16](self)
+	return (*C.ImDrawIdx)(selfArg), func() { selfFin() }
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self DrawIdx) C() (C.ImDrawIdx, func()) {
+	return (C.ImDrawIdx)(C.ushort(self)), func() {}
+}
+
+// NewDrawIdxFromC creates DrawIdx from its C pointer.
+// SRC ~= *C.ImDrawIdx
+func NewDrawIdxFromC[SRC any](cvalue SRC) *DrawIdx {
+	return (*DrawIdx)((*uint16)(ConvertCTypes[*C.ImDrawIdx](cvalue)))
+}
+
 type DrawList struct {
 	CData *C.ImDrawList
 }
@@ -1110,6 +1130,26 @@ func NewKeyRoutingDataFromC[SRC any](cvalue SRC) *KeyRoutingData {
 	return &KeyRoutingData{CData: ConvertCTypes[*C.ImGuiKeyRoutingData](cvalue)}
 }
 
+type KeyRoutingIndex int16
+
+// Handle returns C version of KeyRoutingIndex and its finalizer func.
+func (selfSrc *KeyRoutingIndex) Handle() (result *C.ImGuiKeyRoutingIndex, fin func()) {
+	self := (*int16)(selfSrc)
+	selfArg, selfFin := datautils.WrapNumberPtr[C.ImS16, int16](self)
+	return (*C.ImGuiKeyRoutingIndex)(selfArg), func() { selfFin() }
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self KeyRoutingIndex) C() (C.ImGuiKeyRoutingIndex, func()) {
+	return (C.ImGuiKeyRoutingIndex)(C.ImS16(self)), func() {}
+}
+
+// NewKeyRoutingIndexFromC creates KeyRoutingIndex from its C pointer.
+// SRC ~= *C.ImGuiKeyRoutingIndex
+func NewKeyRoutingIndexFromC[SRC any](cvalue SRC) *KeyRoutingIndex {
+	return (*KeyRoutingIndex)((*int16)(ConvertCTypes[*C.ImGuiKeyRoutingIndex](cvalue)))
+}
+
 type KeyRoutingTable struct {
 	CData *C.ImGuiKeyRoutingTable
 }
@@ -1656,6 +1696,26 @@ func NewSelectionRequestFromC[SRC any](cvalue SRC) *SelectionRequest {
 	return &SelectionRequest{CData: ConvertCTypes[*C.ImGuiSelectionRequest](cvalue)}
 }
 
+type SelectionUserData int64
+
+// Handle returns C version of SelectionUserData and its finalizer func.
+func (selfSrc *SelectionUserData) Handle() (result *C.ImGuiSelectionUserData, fin func()) {
+	self := (*int64)(selfSrc)
+	selfArg, selfFin := datautils.WrapNumberPtr[C.ImS64, int64](self)
+	return (*C.ImGuiSelectionUserData)(selfArg), func() { selfFin() }
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self SelectionUserData) C() (C.ImGuiSelectionUserData, func()) {
+	return (C.ImGuiSelectionUserData)(C.ImS64(self)), func() {}
+}
+
+// NewSelectionUserDataFromC creates SelectionUserData from its C pointer.
+// SRC ~= *C.ImGuiSelectionUserData
+func NewSelectionUserDataFromC[SRC any](cvalue SRC) *SelectionUserData {
+	return (*SelectionUserData)((*int64)(ConvertCTypes[*C.ImGuiSelectionUserData](cvalue)))
+}
+
 type SettingsHandler struct {
 	CData *C.ImGuiSettingsHandler
 }
@@ -1948,6 +2008,26 @@ func (self TableColumn) C() (C.ImGuiTableColumn, func()) {
 // SRC ~= *C.ImGuiTableColumn
 func NewTableColumnFromC[SRC any](cvalue SRC) *TableColumn {
 	return &TableColumn{CData: ConvertCTypes[*C.ImGuiTableColumn](cvalue)}
+}
+
+type TableColumnIdx int16
+
+// Handle returns C version of TableColumnIdx and its finalizer func.
+func (selfSrc *TableColumnIdx) Handle() (result *C.ImGuiTableColumnIdx, fin func()) {
+	self := (*int16)(selfSrc)
+	selfArg, selfFin := datautils.WrapNumberPtr[C.ImS16, int16](self)
+	return (*C.ImGuiTableColumnIdx)(selfArg), func() { selfFin() }
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self TableColumnIdx) C() (C.ImGuiTableColumnIdx, func()) {
+	return (C.ImGuiTableColumnIdx)(C.ImS16(self)), func() {}
+}
+
+// NewTableColumnIdxFromC creates TableColumnIdx from its C pointer.
+// SRC ~= *C.ImGuiTableColumnIdx
+func NewTableColumnIdxFromC[SRC any](cvalue SRC) *TableColumnIdx {
+	return (*TableColumnIdx)((*int16)(ConvertCTypes[*C.ImGuiTableColumnIdx](cvalue)))
 }
 
 type TableColumnSettings struct {
@@ -2507,6 +2587,26 @@ func (self Vec1) C() (C.ImVec1, func()) {
 // SRC ~= *C.ImVec1
 func NewVec1FromC[SRC any](cvalue SRC) *Vec1 {
 	return &Vec1{CData: ConvertCTypes[*C.ImVec1](cvalue)}
+}
+
+type Wchar16 uint16
+
+// Handle returns C version of Wchar16 and its finalizer func.
+func (selfSrc *Wchar16) Handle() (result *C.ImWchar16, fin func()) {
+	self := (*uint16)(selfSrc)
+	selfArg, selfFin := datautils.WrapNumberPtr[C.ushort, uint16](self)
+	return (*C.ImWchar16)(selfArg), func() { selfFin() }
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self Wchar16) C() (C.ImWchar16, func()) {
+	return (C.ImWchar16)(C.ushort(self)), func() {}
+}
+
+// NewWchar16FromC creates Wchar16 from its C pointer.
+// SRC ~= *C.ImWchar16
+func NewWchar16FromC[SRC any](cvalue SRC) *Wchar16 {
+	return (*Wchar16)((*uint16)(ConvertCTypes[*C.ImWchar16](cvalue)))
 }
 
 type Wchar32 uint32

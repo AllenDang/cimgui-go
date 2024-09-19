@@ -3,9 +3,7 @@ package main
 import "flag"
 
 type flags struct {
-	// TODO
-	showGenerated bool
-	// TODO
+	showGenerated    bool
 	showNotGenerated bool
 
 	defJsonPath,
