@@ -13555,13 +13555,13 @@ func (self PlotAnnotation) SetPos(v imgui.Vec2) {
 	C.wrap_ImPlotAnnotation_SetPos(selfArg, v.toC())
 }
 
-func (self *PlotAnnotation) Pos() Vec2 {
+func (self *PlotAnnotation) Pos() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotAnnotation_GetPos(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotAnnotation_GetPos(selfArg))
 }
 
 func (self PlotAnnotation) SetOffset(v imgui.Vec2) {
@@ -13570,13 +13570,13 @@ func (self PlotAnnotation) SetOffset(v imgui.Vec2) {
 	C.wrap_ImPlotAnnotation_SetOffset(selfArg, v.toC())
 }
 
-func (self *PlotAnnotation) Offset() Vec2 {
+func (self *PlotAnnotation) Offset() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotAnnotation_GetOffset(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotAnnotation_GetOffset(selfArg))
 }
 
 func (self PlotAnnotation) SetColorBg(v uint32) {
@@ -13670,13 +13670,13 @@ func (self PlotAnnotationCollection) SetTextBuffer(v imgui.TextBuffer) {
 	C.wrap_ImPlotAnnotationCollection_SetTextBuffer(selfArg, vArg)
 }
 
-func (self *PlotAnnotationCollection) TextBuffer() TextBuffer {
+func (self *PlotAnnotationCollection) TextBuffer() imgui.TextBuffer {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextBufferFromC(func() *C.ImGuiTextBuffer {
+	return *imgui.NewTextBufferFromC(func() *C.ImGuiTextBuffer {
 		result := C.wrap_ImPlotAnnotationCollection_GetTextBuffer(selfArg)
 		return &result
 	}())
@@ -14119,13 +14119,13 @@ func (self PlotAxis) SetHoverRect(v imgui.Rect) {
 	C.wrap_ImPlotAxis_SetHoverRect(selfArg, v.toC())
 }
 
-func (self *PlotAxis) HoverRect() Rect {
+func (self *PlotAxis) HoverRect() imgui.Rect {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).fromC(C.wrap_ImPlotAxis_GetHoverRect(selfArg))
+	return *(&imgui.Rect{}).fromC(C.wrap_ImPlotAxis_GetHoverRect(selfArg))
 }
 
 func (self PlotAxis) SetLabelOffset(v int32) {
@@ -14520,13 +14520,13 @@ func (self PlotColormapData) SetText(v imgui.TextBuffer) {
 	C.wrap_ImPlotColormapData_SetText(selfArg, vArg)
 }
 
-func (self *PlotColormapData) Text() TextBuffer {
+func (self *PlotColormapData) Text() imgui.TextBuffer {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := C.wrap_ImPlotColormapData_GetText(selfArg); return &result }())
+	return *imgui.NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := C.wrap_ImPlotColormapData_GetText(selfArg); return &result }())
 }
 
 func (self PlotColormapData) SetTextOffsets(v Vector[*int32]) {
@@ -14574,13 +14574,13 @@ func (self PlotColormapData) SetMap(v imgui.Storage) {
 	C.wrap_ImPlotColormapData_SetMap(selfArg, vArg)
 }
 
-func (self *PlotColormapData) Map() Storage {
+func (self *PlotColormapData) Map() imgui.Storage {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *NewStorageFromC(func() *C.ImGuiStorage { result := C.wrap_ImPlotColormapData_GetMap(selfArg); return &result }())
+	return *imgui.NewStorageFromC(func() *C.ImGuiStorage { result := C.wrap_ImPlotColormapData_GetMap(selfArg); return &result }())
 }
 
 func (self PlotColormapData) SetCount(v int32) {
@@ -14999,13 +14999,13 @@ func (self PlotContext) SetMousePosStringBuilder(v imgui.TextBuffer) {
 	C.wrap_ImPlotContext_SetMousePosStringBuilder(selfArg, vArg)
 }
 
-func (self *PlotContext) MousePosStringBuilder() TextBuffer {
+func (self *PlotContext) MousePosStringBuilder() imgui.TextBuffer {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextBufferFromC(func() *C.ImGuiTextBuffer {
+	return *imgui.NewTextBufferFromC(func() *C.ImGuiTextBuffer {
 		result := C.wrap_ImPlotContext_GetMousePosStringBuilder(selfArg)
 		return &result
 	}())
@@ -15331,13 +15331,13 @@ func (self PlotItem) SetLegendHoverRect(v imgui.Rect) {
 	C.wrap_ImPlotItem_SetLegendHoverRect(selfArg, v.toC())
 }
 
-func (self *PlotItem) LegendHoverRect() Rect {
+func (self *PlotItem) LegendHoverRect() imgui.Rect {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).fromC(C.wrap_ImPlotItem_GetLegendHoverRect(selfArg))
+	return *(&imgui.Rect{}).fromC(C.wrap_ImPlotItem_GetLegendHoverRect(selfArg))
 }
 
 func (self PlotItem) SetNameOffset(v int32) {
@@ -15506,13 +15506,13 @@ func (self PlotLegend) SetScroll(v imgui.Vec2) {
 	C.wrap_ImPlotLegend_SetScroll(selfArg, v.toC())
 }
 
-func (self *PlotLegend) Scroll() Vec2 {
+func (self *PlotLegend) Scroll() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotLegend_GetScroll(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotLegend_GetScroll(selfArg))
 }
 
 func (self PlotLegend) SetIndices(v Vector[*int32]) {
@@ -15546,13 +15546,13 @@ func (self PlotLegend) SetLabels(v imgui.TextBuffer) {
 	C.wrap_ImPlotLegend_SetLabels(selfArg, vArg)
 }
 
-func (self *PlotLegend) Labels() TextBuffer {
+func (self *PlotLegend) Labels() imgui.TextBuffer {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := C.wrap_ImPlotLegend_GetLabels(selfArg); return &result }())
+	return *imgui.NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := C.wrap_ImPlotLegend_GetLabels(selfArg); return &result }())
 }
 
 func (self PlotLegend) SetRect(v imgui.Rect) {
@@ -15561,13 +15561,13 @@ func (self PlotLegend) SetRect(v imgui.Rect) {
 	C.wrap_ImPlotLegend_SetRect(selfArg, v.toC())
 }
 
-func (self *PlotLegend) Rect() Rect {
+func (self *PlotLegend) Rect() imgui.Rect {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).fromC(C.wrap_ImPlotLegend_GetRect(selfArg))
+	return *(&imgui.Rect{}).fromC(C.wrap_ImPlotLegend_GetRect(selfArg))
 }
 
 func (self PlotLegend) SetRectClamped(v imgui.Rect) {
@@ -15576,13 +15576,13 @@ func (self PlotLegend) SetRectClamped(v imgui.Rect) {
 	C.wrap_ImPlotLegend_SetRectClamped(selfArg, v.toC())
 }
 
-func (self *PlotLegend) RectClamped() Rect {
+func (self *PlotLegend) RectClamped() imgui.Rect {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).fromC(C.wrap_ImPlotLegend_GetRectClamped(selfArg))
+	return *(&imgui.Rect{}).fromC(C.wrap_ImPlotLegend_GetRectClamped(selfArg))
 }
 
 func (self PlotLegend) SetHovered(v bool) {
@@ -15641,21 +15641,21 @@ func (self PlotNextItemData) SetColors(v *[5]imgui.Vec4) {
 	C.wrap_ImPlotNextItemData_SetColors(selfArg, (*C.ImVec4)(&vArg[0]))
 
 	for i, vV := range vArg {
-		(*v)[i] = *(&Vec4{}).fromC(vV)
+		(*v)[i] = *(&imgui.Vec4{}).fromC(vV)
 	}
 }
 
-func (self *PlotNextItemData) Colors() [5]Vec4 {
+func (self *PlotNextItemData) Colors() [5]imgui.Vec4 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return func() [5]Vec4 {
-		result := [5]Vec4{}
+	return func() [5]imgui.Vec4 {
+		result := [5]imgui.Vec4{}
 		resultMirr := C.wrap_ImPlotNextItemData_GetColors(selfArg)
 		for i := range result {
-			result[i] = *(&Vec4{}).fromC(C.cimplot_ImVec4_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = *(&imgui.Vec4{}).fromC(C.cimplot_ImVec4_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -16206,13 +16206,13 @@ func (self PlotPlot) SetTextBuffer(v imgui.TextBuffer) {
 	C.wrap_ImPlotPlot_SetTextBuffer(selfArg, vArg)
 }
 
-func (self *PlotPlot) TextBuffer() TextBuffer {
+func (self *PlotPlot) TextBuffer() imgui.TextBuffer {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := C.wrap_ImPlotPlot_GetTextBuffer(selfArg); return &result }())
+	return *imgui.NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := C.wrap_ImPlotPlot_GetTextBuffer(selfArg); return &result }())
 }
 
 func (self PlotPlot) SetItems(v PlotItemGroup) {
@@ -16268,13 +16268,13 @@ func (self PlotPlot) SetFrameRect(v imgui.Rect) {
 	C.wrap_ImPlotPlot_SetFrameRect(selfArg, v.toC())
 }
 
-func (self *PlotPlot) FrameRect() Rect {
+func (self *PlotPlot) FrameRect() imgui.Rect {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).fromC(C.wrap_ImPlotPlot_GetFrameRect(selfArg))
+	return *(&imgui.Rect{}).fromC(C.wrap_ImPlotPlot_GetFrameRect(selfArg))
 }
 
 func (self PlotPlot) SetCanvasRect(v imgui.Rect) {
@@ -16283,13 +16283,13 @@ func (self PlotPlot) SetCanvasRect(v imgui.Rect) {
 	C.wrap_ImPlotPlot_SetCanvasRect(selfArg, v.toC())
 }
 
-func (self *PlotPlot) CanvasRect() Rect {
+func (self *PlotPlot) CanvasRect() imgui.Rect {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).fromC(C.wrap_ImPlotPlot_GetCanvasRect(selfArg))
+	return *(&imgui.Rect{}).fromC(C.wrap_ImPlotPlot_GetCanvasRect(selfArg))
 }
 
 func (self PlotPlot) SetPlotRect(v imgui.Rect) {
@@ -16298,13 +16298,13 @@ func (self PlotPlot) SetPlotRect(v imgui.Rect) {
 	C.wrap_ImPlotPlot_SetPlotRect(selfArg, v.toC())
 }
 
-func (self *PlotPlot) PlotRect() Rect {
+func (self *PlotPlot) PlotRect() imgui.Rect {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).fromC(C.wrap_ImPlotPlot_GetPlotRect(selfArg))
+	return *(&imgui.Rect{}).fromC(C.wrap_ImPlotPlot_GetPlotRect(selfArg))
 }
 
 func (self PlotPlot) SetAxesRect(v imgui.Rect) {
@@ -16313,13 +16313,13 @@ func (self PlotPlot) SetAxesRect(v imgui.Rect) {
 	C.wrap_ImPlotPlot_SetAxesRect(selfArg, v.toC())
 }
 
-func (self *PlotPlot) AxesRect() Rect {
+func (self *PlotPlot) AxesRect() imgui.Rect {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).fromC(C.wrap_ImPlotPlot_GetAxesRect(selfArg))
+	return *(&imgui.Rect{}).fromC(C.wrap_ImPlotPlot_GetAxesRect(selfArg))
 }
 
 func (self PlotPlot) SetSelectRect(v imgui.Rect) {
@@ -16328,13 +16328,13 @@ func (self PlotPlot) SetSelectRect(v imgui.Rect) {
 	C.wrap_ImPlotPlot_SetSelectRect(selfArg, v.toC())
 }
 
-func (self *PlotPlot) SelectRect() Rect {
+func (self *PlotPlot) SelectRect() imgui.Rect {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).fromC(C.wrap_ImPlotPlot_GetSelectRect(selfArg))
+	return *(&imgui.Rect{}).fromC(C.wrap_ImPlotPlot_GetSelectRect(selfArg))
 }
 
 func (self PlotPlot) SetSelectStart(v imgui.Vec2) {
@@ -16343,13 +16343,13 @@ func (self PlotPlot) SetSelectStart(v imgui.Vec2) {
 	C.wrap_ImPlotPlot_SetSelectStart(selfArg, v.toC())
 }
 
-func (self *PlotPlot) SelectStart() Vec2 {
+func (self *PlotPlot) SelectStart() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotPlot_GetSelectStart(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotPlot_GetSelectStart(selfArg))
 }
 
 func (self PlotPlot) SetTitleOffset(v int32) {
@@ -16797,13 +16797,13 @@ func (self PlotStyle) SetMajorTickLen(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetMajorTickLen(selfArg, v.toC())
 }
 
-func (self *PlotStyle) MajorTickLen() Vec2 {
+func (self *PlotStyle) MajorTickLen() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetMajorTickLen(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetMajorTickLen(selfArg))
 }
 
 func (self PlotStyle) SetMinorTickLen(v imgui.Vec2) {
@@ -16812,13 +16812,13 @@ func (self PlotStyle) SetMinorTickLen(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetMinorTickLen(selfArg, v.toC())
 }
 
-func (self *PlotStyle) MinorTickLen() Vec2 {
+func (self *PlotStyle) MinorTickLen() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetMinorTickLen(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetMinorTickLen(selfArg))
 }
 
 func (self PlotStyle) SetMajorTickSize(v imgui.Vec2) {
@@ -16827,13 +16827,13 @@ func (self PlotStyle) SetMajorTickSize(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetMajorTickSize(selfArg, v.toC())
 }
 
-func (self *PlotStyle) MajorTickSize() Vec2 {
+func (self *PlotStyle) MajorTickSize() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetMajorTickSize(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetMajorTickSize(selfArg))
 }
 
 func (self PlotStyle) SetMinorTickSize(v imgui.Vec2) {
@@ -16842,13 +16842,13 @@ func (self PlotStyle) SetMinorTickSize(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetMinorTickSize(selfArg, v.toC())
 }
 
-func (self *PlotStyle) MinorTickSize() Vec2 {
+func (self *PlotStyle) MinorTickSize() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetMinorTickSize(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetMinorTickSize(selfArg))
 }
 
 func (self PlotStyle) SetMajorGridSize(v imgui.Vec2) {
@@ -16857,13 +16857,13 @@ func (self PlotStyle) SetMajorGridSize(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetMajorGridSize(selfArg, v.toC())
 }
 
-func (self *PlotStyle) MajorGridSize() Vec2 {
+func (self *PlotStyle) MajorGridSize() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetMajorGridSize(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetMajorGridSize(selfArg))
 }
 
 func (self PlotStyle) SetMinorGridSize(v imgui.Vec2) {
@@ -16872,13 +16872,13 @@ func (self PlotStyle) SetMinorGridSize(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetMinorGridSize(selfArg, v.toC())
 }
 
-func (self *PlotStyle) MinorGridSize() Vec2 {
+func (self *PlotStyle) MinorGridSize() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetMinorGridSize(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetMinorGridSize(selfArg))
 }
 
 func (self PlotStyle) SetPlotPadding(v imgui.Vec2) {
@@ -16887,13 +16887,13 @@ func (self PlotStyle) SetPlotPadding(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetPlotPadding(selfArg, v.toC())
 }
 
-func (self *PlotStyle) PlotPadding() Vec2 {
+func (self *PlotStyle) PlotPadding() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetPlotPadding(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetPlotPadding(selfArg))
 }
 
 func (self PlotStyle) SetLabelPadding(v imgui.Vec2) {
@@ -16902,13 +16902,13 @@ func (self PlotStyle) SetLabelPadding(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetLabelPadding(selfArg, v.toC())
 }
 
-func (self *PlotStyle) LabelPadding() Vec2 {
+func (self *PlotStyle) LabelPadding() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetLabelPadding(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetLabelPadding(selfArg))
 }
 
 func (self PlotStyle) SetLegendPadding(v imgui.Vec2) {
@@ -16917,13 +16917,13 @@ func (self PlotStyle) SetLegendPadding(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetLegendPadding(selfArg, v.toC())
 }
 
-func (self *PlotStyle) LegendPadding() Vec2 {
+func (self *PlotStyle) LegendPadding() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetLegendPadding(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetLegendPadding(selfArg))
 }
 
 func (self PlotStyle) SetLegendInnerPadding(v imgui.Vec2) {
@@ -16932,13 +16932,13 @@ func (self PlotStyle) SetLegendInnerPadding(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetLegendInnerPadding(selfArg, v.toC())
 }
 
-func (self *PlotStyle) LegendInnerPadding() Vec2 {
+func (self *PlotStyle) LegendInnerPadding() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetLegendInnerPadding(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetLegendInnerPadding(selfArg))
 }
 
 func (self PlotStyle) SetLegendSpacing(v imgui.Vec2) {
@@ -16947,13 +16947,13 @@ func (self PlotStyle) SetLegendSpacing(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetLegendSpacing(selfArg, v.toC())
 }
 
-func (self *PlotStyle) LegendSpacing() Vec2 {
+func (self *PlotStyle) LegendSpacing() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetLegendSpacing(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetLegendSpacing(selfArg))
 }
 
 func (self PlotStyle) SetMousePosPadding(v imgui.Vec2) {
@@ -16962,13 +16962,13 @@ func (self PlotStyle) SetMousePosPadding(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetMousePosPadding(selfArg, v.toC())
 }
 
-func (self *PlotStyle) MousePosPadding() Vec2 {
+func (self *PlotStyle) MousePosPadding() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetMousePosPadding(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetMousePosPadding(selfArg))
 }
 
 func (self PlotStyle) SetAnnotationPadding(v imgui.Vec2) {
@@ -16977,13 +16977,13 @@ func (self PlotStyle) SetAnnotationPadding(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetAnnotationPadding(selfArg, v.toC())
 }
 
-func (self *PlotStyle) AnnotationPadding() Vec2 {
+func (self *PlotStyle) AnnotationPadding() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetAnnotationPadding(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetAnnotationPadding(selfArg))
 }
 
 func (self PlotStyle) SetFitPadding(v imgui.Vec2) {
@@ -16992,13 +16992,13 @@ func (self PlotStyle) SetFitPadding(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetFitPadding(selfArg, v.toC())
 }
 
-func (self *PlotStyle) FitPadding() Vec2 {
+func (self *PlotStyle) FitPadding() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetFitPadding(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetFitPadding(selfArg))
 }
 
 func (self PlotStyle) SetPlotDefaultSize(v imgui.Vec2) {
@@ -17007,13 +17007,13 @@ func (self PlotStyle) SetPlotDefaultSize(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetPlotDefaultSize(selfArg, v.toC())
 }
 
-func (self *PlotStyle) PlotDefaultSize() Vec2 {
+func (self *PlotStyle) PlotDefaultSize() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetPlotDefaultSize(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetPlotDefaultSize(selfArg))
 }
 
 func (self PlotStyle) SetPlotMinSize(v imgui.Vec2) {
@@ -17022,13 +17022,13 @@ func (self PlotStyle) SetPlotMinSize(v imgui.Vec2) {
 	C.wrap_ImPlotStyle_SetPlotMinSize(selfArg, v.toC())
 }
 
-func (self *PlotStyle) PlotMinSize() Vec2 {
+func (self *PlotStyle) PlotMinSize() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotStyle_GetPlotMinSize(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotStyle_GetPlotMinSize(selfArg))
 }
 
 func (self PlotStyle) SetColors(v *[21]imgui.Vec4) {
@@ -17042,21 +17042,21 @@ func (self PlotStyle) SetColors(v *[21]imgui.Vec4) {
 	C.wrap_ImPlotStyle_SetColors(selfArg, (*C.ImVec4)(&vArg[0]))
 
 	for i, vV := range vArg {
-		(*v)[i] = *(&Vec4{}).fromC(vV)
+		(*v)[i] = *(&imgui.Vec4{}).fromC(vV)
 	}
 }
 
-func (self *PlotStyle) Colors() [21]Vec4 {
+func (self *PlotStyle) Colors() [21]imgui.Vec4 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return func() [21]Vec4 {
-		result := [21]Vec4{}
+	return func() [21]imgui.Vec4 {
+		result := [21]imgui.Vec4{}
 		resultMirr := C.wrap_ImPlotStyle_GetColors(selfArg)
 		for i := range result {
-			result[i] = *(&Vec4{}).fromC(C.cimplot_ImVec4_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = *(&imgui.Vec4{}).fromC(C.cimplot_ImVec4_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -17229,13 +17229,13 @@ func (self PlotSubplot) SetFrameRect(v imgui.Rect) {
 	C.wrap_ImPlotSubplot_SetFrameRect(selfArg, v.toC())
 }
 
-func (self *PlotSubplot) FrameRect() Rect {
+func (self *PlotSubplot) FrameRect() imgui.Rect {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).fromC(C.wrap_ImPlotSubplot_GetFrameRect(selfArg))
+	return *(&imgui.Rect{}).fromC(C.wrap_ImPlotSubplot_GetFrameRect(selfArg))
 }
 
 func (self PlotSubplot) SetGridRect(v imgui.Rect) {
@@ -17244,13 +17244,13 @@ func (self PlotSubplot) SetGridRect(v imgui.Rect) {
 	C.wrap_ImPlotSubplot_SetGridRect(selfArg, v.toC())
 }
 
-func (self *PlotSubplot) GridRect() Rect {
+func (self *PlotSubplot) GridRect() imgui.Rect {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).fromC(C.wrap_ImPlotSubplot_GetGridRect(selfArg))
+	return *(&imgui.Rect{}).fromC(C.wrap_ImPlotSubplot_GetGridRect(selfArg))
 }
 
 func (self PlotSubplot) SetCellSize(v imgui.Vec2) {
@@ -17259,13 +17259,13 @@ func (self PlotSubplot) SetCellSize(v imgui.Vec2) {
 	C.wrap_ImPlotSubplot_SetCellSize(selfArg, v.toC())
 }
 
-func (self *PlotSubplot) CellSize() Vec2 {
+func (self *PlotSubplot) CellSize() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotSubplot_GetCellSize(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotSubplot_GetCellSize(selfArg))
 }
 
 func (self PlotSubplot) SetRowAlignmentData(v Vector[*PlotAlignmentData]) {
@@ -17574,13 +17574,13 @@ func (self PlotTagCollection) SetTextBuffer(v imgui.TextBuffer) {
 	C.wrap_ImPlotTagCollection_SetTextBuffer(selfArg, vArg)
 }
 
-func (self *PlotTagCollection) TextBuffer() TextBuffer {
+func (self *PlotTagCollection) TextBuffer() imgui.TextBuffer {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := C.wrap_ImPlotTagCollection_GetTextBuffer(selfArg); return &result }())
+	return *imgui.NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := C.wrap_ImPlotTagCollection_GetTextBuffer(selfArg); return &result }())
 }
 
 func (self PlotTagCollection) SetSize(v int32) {
@@ -17634,13 +17634,13 @@ func (self PlotTick) SetLabelSize(v imgui.Vec2) {
 	C.wrap_ImPlotTick_SetLabelSize(selfArg, v.toC())
 }
 
-func (self *PlotTick) LabelSize() Vec2 {
+func (self *PlotTick) LabelSize() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotTick_GetLabelSize(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotTick_GetLabelSize(selfArg))
 }
 
 func (self PlotTick) SetTextOffset(v int32) {
@@ -17749,13 +17749,13 @@ func (self PlotTicker) SetTextBuffer(v imgui.TextBuffer) {
 	C.wrap_ImPlotTicker_SetTextBuffer(selfArg, vArg)
 }
 
-func (self *PlotTicker) TextBuffer() TextBuffer {
+func (self *PlotTicker) TextBuffer() imgui.TextBuffer {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := C.wrap_ImPlotTicker_GetTextBuffer(selfArg); return &result }())
+	return *imgui.NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := C.wrap_ImPlotTicker_GetTextBuffer(selfArg); return &result }())
 }
 
 func (self PlotTicker) SetMaxSize(v imgui.Vec2) {
@@ -17764,13 +17764,13 @@ func (self PlotTicker) SetMaxSize(v imgui.Vec2) {
 	C.wrap_ImPlotTicker_SetMaxSize(selfArg, v.toC())
 }
 
-func (self *PlotTicker) MaxSize() Vec2 {
+func (self *PlotTicker) MaxSize() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotTicker_GetMaxSize(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotTicker_GetMaxSize(selfArg))
 }
 
 func (self PlotTicker) SetLateSize(v imgui.Vec2) {
@@ -17779,13 +17779,13 @@ func (self PlotTicker) SetLateSize(v imgui.Vec2) {
 	C.wrap_ImPlotTicker_SetLateSize(selfArg, v.toC())
 }
 
-func (self *PlotTicker) LateSize() Vec2 {
+func (self *PlotTicker) LateSize() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImPlotTicker_GetLateSize(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImPlotTicker_GetLateSize(selfArg))
 }
 
 func (self PlotTicker) SetLevels(v int32) {

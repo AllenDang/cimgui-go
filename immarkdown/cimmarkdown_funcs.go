@@ -612,13 +612,13 @@ func (self MarkdownImageData) SetSize(v imgui.Vec2) {
 	C.wrap_MarkdownImageData_SetSize(selfArg, v.toC())
 }
 
-func (self *MarkdownImageData) Size() Vec2 {
+func (self *MarkdownImageData) Size() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_MarkdownImageData_GetSize(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_MarkdownImageData_GetSize(selfArg))
 }
 
 func (self MarkdownImageData) SetUv0(v imgui.Vec2) {
@@ -627,13 +627,13 @@ func (self MarkdownImageData) SetUv0(v imgui.Vec2) {
 	C.wrap_MarkdownImageData_SetUv0(selfArg, v.toC())
 }
 
-func (self *MarkdownImageData) Uv0() Vec2 {
+func (self *MarkdownImageData) Uv0() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_MarkdownImageData_GetUv0(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_MarkdownImageData_GetUv0(selfArg))
 }
 
 func (self MarkdownImageData) SetUv1(v imgui.Vec2) {
@@ -642,13 +642,13 @@ func (self MarkdownImageData) SetUv1(v imgui.Vec2) {
 	C.wrap_MarkdownImageData_SetUv1(selfArg, v.toC())
 }
 
-func (self *MarkdownImageData) Uv1() Vec2 {
+func (self *MarkdownImageData) Uv1() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_MarkdownImageData_GetUv1(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_MarkdownImageData_GetUv1(selfArg))
 }
 
 func (self MarkdownImageData) SetTintcol(v imgui.Vec4) {
@@ -657,13 +657,13 @@ func (self MarkdownImageData) SetTintcol(v imgui.Vec4) {
 	C.wrap_MarkdownImageData_SetTint_col(selfArg, v.toC())
 }
 
-func (self *MarkdownImageData) Tintcol() Vec4 {
+func (self *MarkdownImageData) Tintcol() imgui.Vec4 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec4{}).fromC(C.wrap_MarkdownImageData_GetTint_col(selfArg))
+	return *(&imgui.Vec4{}).fromC(C.wrap_MarkdownImageData_GetTint_col(selfArg))
 }
 
 func (self MarkdownImageData) SetBordercol(v imgui.Vec4) {
@@ -672,13 +672,13 @@ func (self MarkdownImageData) SetBordercol(v imgui.Vec4) {
 	C.wrap_MarkdownImageData_SetBorder_col(selfArg, v.toC())
 }
 
-func (self *MarkdownImageData) Bordercol() Vec4 {
+func (self *MarkdownImageData) Bordercol() imgui.Vec4 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec4{}).fromC(C.wrap_MarkdownImageData_GetBorder_col(selfArg))
+	return *(&imgui.Vec4{}).fromC(C.wrap_MarkdownImageData_GetBorder_col(selfArg))
 }
 
 func (self MarkdownLinkCallbackData) SetText(v string) {

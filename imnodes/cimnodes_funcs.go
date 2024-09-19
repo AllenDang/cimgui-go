@@ -755,13 +755,13 @@ func (self NodesStyle) SetNodePadding(v imgui.Vec2) {
 	C.wrap_ImNodesStyle_SetNodePadding(selfArg, v.toC())
 }
 
-func (self *NodesStyle) NodePadding() Vec2 {
+func (self *NodesStyle) NodePadding() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImNodesStyle_GetNodePadding(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImNodesStyle_GetNodePadding(selfArg))
 }
 
 func (self NodesStyle) SetNodeBorderThickness(v float32) {
@@ -920,13 +920,13 @@ func (self NodesStyle) SetMiniMapPadding(v imgui.Vec2) {
 	C.wrap_ImNodesStyle_SetMiniMapPadding(selfArg, v.toC())
 }
 
-func (self *NodesStyle) MiniMapPadding() Vec2 {
+func (self *NodesStyle) MiniMapPadding() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImNodesStyle_GetMiniMapPadding(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImNodesStyle_GetMiniMapPadding(selfArg))
 }
 
 func (self NodesStyle) SetMiniMapOffset(v imgui.Vec2) {
@@ -935,13 +935,13 @@ func (self NodesStyle) SetMiniMapOffset(v imgui.Vec2) {
 	C.wrap_ImNodesStyle_SetMiniMapOffset(selfArg, v.toC())
 }
 
-func (self *NodesStyle) MiniMapOffset() Vec2 {
+func (self *NodesStyle) MiniMapOffset() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).fromC(C.wrap_ImNodesStyle_GetMiniMapOffset(selfArg))
+	return *(&imgui.Vec2{}).fromC(C.wrap_ImNodesStyle_GetMiniMapOffset(selfArg))
 }
 
 func (self NodesStyle) SetFlags(v NodesStyleFlags) {
