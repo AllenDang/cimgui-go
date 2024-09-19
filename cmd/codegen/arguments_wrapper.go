@@ -150,10 +150,20 @@ func getArgWrapper(
 		return argDeclaration, data, nil
 	}
 
+	pureType := TrimPrefix(a.Type, "const ")
+	_, isRefTypedef := context.refTypedefs[pureType]
+
 	if goEnumName := a.Type; isEnum(goEnumName, context.enumNames) {
-		argDeclaration = fmt.Sprintf("%s %s", a.Name, goEnumName.renameGoIdentifier())
+		srcPkg := context.flags.packageName
+		if isRefTypedef {
+			srcPkg = context.flags.refPackageName
+		}
+
+		goType := prefixGoPackage(goEnumName.renameGoIdentifier(), GoIdentifier(srcPkg), context)
+
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, goType)
 		data = ArgumentWrapperData{
-			ArgType: a.Type.renameEnum(),
+			ArgType: goType,
 			VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
 			CType:   GoIdentifier(fmt.Sprintf("C.%s", a.Type)),
 		}
@@ -255,18 +265,23 @@ for i, %[1]sV := range %[1]sArg {
 		return argDeclaration, data, nil
 	}
 
-	pureType := TrimPrefix(a.Type, "const ")
 	isPointer := false
 	if HasSuffix(a.Type, "*") {
 		pureType = TrimSuffix(pureType, "*")
 		isPointer = true
 	}
 
-	_, isRefTypedef := context.refTypedefs[pureType]
 	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
 	if context.structNames[pureType] || (isRefTypedef && !shouldSkipRefTypedef) {
+		srcPkg := context.flags.packageName
+		if isRefTypedef {
+			srcPkg = context.flags.refPackageName
+		}
+
+		goType := prefixGoPackage(pureType.renameGoIdentifier(), GoIdentifier(srcPkg), context)
+
 		w := ArgumentWrapperData{
-			ArgType:   pureType.renameGoIdentifier(),
+			ArgType:   goType,
 			VarName:   fmt.Sprintf("%sArg", a.Name),
 			Finalizer: fmt.Sprintf("%sFin()", a.Name),
 			NoFin:     a.RemoveFinalizer,
