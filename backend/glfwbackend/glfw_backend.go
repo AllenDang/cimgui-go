@@ -201,7 +201,7 @@ type GLFWBackend struct {
 	loop                 voidCallbackFunc
 	beforeRender         voidCallbackFunc
 	afterRender          voidCallbackFunc
-	beforeDestoryContext voidCallbackFunc
+	beforeDestroyContext voidCallbackFunc
 	dropCB               backend.DropCallback
 	closeCB              func(pointer unsafe.Pointer)
 	keyCb                backend.KeyCallback
@@ -231,11 +231,11 @@ func (b *GLFWBackend) AfterCreateHook() func() {
 }
 
 func (b *GLFWBackend) SetBeforeDestroyContextHook(hook func()) {
-	b.beforeDestoryContext = hook
+	b.beforeDestroyContext = hook
 }
 
 func (b *GLFWBackend) BeforeDestroyHook() func() {
-	return b.beforeDestoryContext
+	return b.beforeDestroyContext
 }
 
 func (b *GLFWBackend) SetBeforeRenderHook(hook func()) {

@@ -222,7 +222,7 @@ type SDLBackend struct {
 	loop                 voidCallbackFunc
 	beforeRender         voidCallbackFunc
 	afterRender          voidCallbackFunc
-	beforeDestoryContext voidCallbackFunc
+	beforeDestroyContext voidCallbackFunc
 	dropCB               backend.DropCallback
 	closeCB              func(pointer unsafe.Pointer)
 	keyCb                backend.KeyCallback
@@ -258,11 +258,11 @@ func (b *SDLBackend) AfterCreateHook() func() {
 }
 
 func (b *SDLBackend) SetBeforeDestroyContextHook(hook func()) {
-	b.beforeDestoryContext = hook
+	b.beforeDestroyContext = hook
 }
 
 func (b *SDLBackend) BeforeDestroyHook() func() {
-	return b.beforeDestoryContext
+	return b.beforeDestroyContext
 }
 
 func (b *SDLBackend) SetBeforeRenderHook(hook func()) {
