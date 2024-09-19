@@ -54,13 +54,13 @@ func getReturnWrapper(
 		"ImU32*":          simplePtrR("uint32"),
 		"ImU64":           simpleR("uint64"),
 		"ImU64*":          simplePtrR("uint64"),
-		"ImVec4":          wrappableR("Vec4"),
-		"const ImVec4*":   imVec4PtrReturnW(),
-		"ImVec2":          wrappableR("Vec2"),
-		"ImColor":         wrappableR("Color"),
-		"ImPlotPoint":     wrappableR("PlotPoint"),
-		"ImRect":          wrappableR("Rect"),
-		"ImPlotTime":      wrappableR("PlotTime"),
+		"ImVec4":          wrappableR(prefixGoPackage("Vec4", "imgui", context)),
+		"const ImVec4*":   imVec4PtrReturnW(context),
+		"ImVec2":          wrappableR(prefixGoPackage("Vec2", "imgui", context)),
+		"ImColor":         wrappableR(prefixGoPackage("Color", "imgui", context)),
+		"ImPlotPoint":     wrappableR(prefixGoPackage("PlotPoint", "implot", context)),
+		"ImRect":          wrappableR(prefixGoPackage("Rect", "imgui", context)),
+		"ImPlotTime":      wrappableR(prefixGoPackage("PlotTime", "implot", context)),
 		"uintptr_t":       simpleR("uintptr"),
 		"size_t":          simpleR("uint64"),
 	}
@@ -68,6 +68,7 @@ func getReturnWrapper(
 	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")
 	// check if pureType is a declared type (struct or something else from typedefs)
 	_, isRefStruct := context.refStructNames[pureType]
+	_, isRefTypedef := context.refTypedefs[pureType]
 	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
 	_, isStruct := context.structNames[pureType]
 	isStruct = isStruct || (isRefStruct && !shouldSkipRefTypedef)
@@ -82,9 +83,15 @@ func getReturnWrapper(
 	case known:
 		return w, nil
 	case (context.structNames[t] || context.refStructNames[t]) && !shouldSkipStruct(t):
+		srcPackage := GoIdentifier(context.flags.packageName)
+		if isRefTypedef {
+			srcPackage = GoIdentifier(context.flags.refPackageName)
+		}
+
 		return returnWrapper{
-			returnType: t.renameGoIdentifier(),
-			returnStmt: fmt.Sprintf(`*New%sFromC(func() *C.%s {result := %%s; return &result}())`, t.renameGoIdentifier(), t),
+			returnType: prefixGoPackage(t.renameGoIdentifier(), srcPackage, context),
+			// this is a small trick as using prefixGoPackage isn't in fact intended to be used in such a way, but it should treat the whole string as a "type" and prefix it correctly
+			returnStmt: string(prefixGoPackage(GoIdentifier(fmt.Sprintf("*New%sFromC(func() *C.%s {result := %%s; return &result}())", t.renameGoIdentifier(), t)), srcPackage, context)),
 		}, nil
 	case isEnum(t, context.enumNames):
 		return returnWrapper{
@@ -150,11 +157,12 @@ result := [%[1]d]%[2]s{}
 	}
 }
 
-func imVec4PtrReturnW() returnWrapper {
+func imVec4PtrReturnW(ctx *Context) returnWrapper {
 	// TODO: verify if it wraps correctly
+	goType := prefixGoPackage("Vec4", "imgui", ctx)
 	return returnWrapper{
-		returnType: "*Vec4",
-		returnStmt: "(&Vec4{}).fromC(*%s)",
+		returnType: "*" + goType,
+		returnStmt: "(&" + string(goType) + "{}).fromC(*%s)",
 	}
 }
 
