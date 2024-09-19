@@ -9,7 +9,7 @@ import (
 
 // #include <stdlib.h>
 // #include <memory.h>
-// #include "extra_types.h"
+// #include "../imgui/extra_types.h"
 // #include "cimnodes_wrapper.h"
 // #include "cimnodes_typedefs.h"
 import "C"

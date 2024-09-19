@@ -3,4 +3,4 @@
 
 
 #include "cimmarkdown_typedefs.h"
-#include "cwrappers/cimmarkdown.h"
+#include "../cwrappers/cimmarkdown.h"

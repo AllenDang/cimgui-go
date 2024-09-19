@@ -7,7 +7,7 @@ import (
 	"github.com/AllenDang/cimgui-go/internal/datautils"
 )
 
-// #include "extra_types.h"
+// #include "../imgui/extra_types.h"
 // #include "cimplot_structs_accessor.h"
 // #include "cimplot_wrapper.h"
 import "C"

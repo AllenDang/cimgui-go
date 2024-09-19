@@ -9,7 +9,7 @@ import (
 	"github.com/AllenDang/cimgui-go/internal/datautils"
 )
 
-// #include "extra_types.h"
+// #include "../imgui/extra_types.h"
 // #include "cimgui_structs_accessor.h"
 // #include "cimgui_wrapper.h"
 import "C"
