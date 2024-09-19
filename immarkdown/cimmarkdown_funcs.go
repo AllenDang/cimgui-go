@@ -536,14 +536,6 @@ func (self *MarkdownFormatInfo) Config() *MarkdownConfig {
 	return NewMarkdownConfigFromC(C.wrap_MarkdownFormatInfo_GetConfig(selfArg))
 }
 
-func (self MarkdownHeadingFormat) SetFont(v *Font) {
-	vArg, _ := v.Handle()
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_MarkdownHeadingFormat_SetFont(selfArg, vArg)
-}
-
 func (self *MarkdownHeadingFormat) Font() *Font {
 	selfArg, selfFin := self.Handle()
 
@@ -598,7 +590,7 @@ func (self *MarkdownImageData) UseLinkCallback() bool {
 	return C.wrap_MarkdownImageData_GetUseLinkCallback(selfArg) == C.bool(true)
 }
 
-func (self MarkdownImageData) SetUsertextureid(v TextureID) {
+func (self MarkdownImageData) SetUsertextureid(v imgui.TextureID) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()

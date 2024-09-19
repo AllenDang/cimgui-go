@@ -496,13 +496,6 @@ func ImNodesSetCurrentContext(ctx *NodesContext) {
 	ctxFin()
 }
 
-func ImNodesSetImGuiContext(ctx *Context) {
-	ctxArg, ctxFin := ctx.Handle()
-	C.imnodes_SetImGuiContext(ctxArg)
-
-	ctxFin()
-}
-
 func ImNodesSetNodeDraggable(node_id int32, draggable bool) {
 	C.imnodes_SetNodeDraggable(C.int(node_id), C.bool(draggable))
 }

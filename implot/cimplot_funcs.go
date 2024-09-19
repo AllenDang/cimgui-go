@@ -611,7 +611,7 @@ func (self *PlotItemGroup) ItemIndex(item *PlotItem) int32 {
 	return int32(C.ImPlotItemGroup_GetItemIndex(selfArg, itemArg))
 }
 
-func (self *PlotItemGroup) ItemByID(id ID) *PlotItem {
+func (self *PlotItemGroup) ItemByID(id imgui.ID) *PlotItem {
 	selfArg, selfFin := self.Handle()
 	idArg, idFin := id.C()
 
@@ -660,7 +660,7 @@ func (self *PlotItemGroup) LegendLabel(i int32) string {
 	return C.GoString(C.ImPlotItemGroup_GetLegendLabel(selfArg, C.int(i)))
 }
 
-func (self *PlotItemGroup) OrAddItem(id ID) *PlotItem {
+func (self *PlotItemGroup) OrAddItem(id imgui.ID) *PlotItem {
 	selfArg, selfFin := self.Handle()
 	idArg, idFin := id.C()
 
@@ -1253,26 +1253,6 @@ func PlotAddColormapVec4PtrV(name string, cols *imgui.Vec4, size int32, qual boo
 	return PlotColormap(C.ImPlot_AddColormap_Vec4Ptr(nameArg, colsArg, C.int(size), C.bool(qual)))
 }
 
-// PlotAddTextCenteredV parameter default value hint:
-func PlotAddTextCenteredV(DrawList *DrawList, top_center imgui.Vec2, col uint32, text_begin string) {
-	DrawListArg, DrawListFin := DrawList.Handle()
-	text_beginArg, text_beginFin := datautils.WrapString[C.char](text_begin)
-	C.wrap_ImPlot_AddTextCenteredV(DrawListArg, top_center.toC(), C.ImU32(col), text_beginArg)
-
-	DrawListFin()
-	text_beginFin()
-}
-
-// PlotAddTextVerticalV parameter default value hint:
-func PlotAddTextVerticalV(DrawList *DrawList, pos imgui.Vec2, col uint32, text_begin string) {
-	DrawListArg, DrawListFin := DrawList.Handle()
-	text_beginArg, text_beginFin := datautils.WrapString[C.char](text_begin)
-	C.wrap_ImPlot_AddTextVerticalV(DrawListArg, pos.toC(), C.ImU32(col), text_beginArg)
-
-	DrawListFin()
-	text_beginFin()
-}
-
 func PlotAddTime(t PlotTime, unit PlotTimeUnit, count int32) PlotTime {
 	pOut := new(PlotTime)
 	pOutArg, pOutFin := wrap[C.ImPlotTime, *PlotTime](pOut)
@@ -1346,13 +1326,13 @@ func PlotBeginAlignedPlotsV(group_id string, vertical bool) bool {
 
 // PlotBeginDragDropSourceAxisV parameter default value hint:
 // flags: 0
-func PlotBeginDragDropSourceAxisV(axis PlotAxisEnum, flags DragDropFlags) bool {
+func PlotBeginDragDropSourceAxisV(axis PlotAxisEnum, flags imgui.DragDropFlags) bool {
 	return C.ImPlot_BeginDragDropSourceAxis(C.ImAxis(axis), C.ImGuiDragDropFlags(flags)) == C.bool(true)
 }
 
 // PlotBeginDragDropSourceItemV parameter default value hint:
 // flags: 0
-func PlotBeginDragDropSourceItemV(label_id string, flags DragDropFlags) bool {
+func PlotBeginDragDropSourceItemV(label_id string, flags imgui.DragDropFlags) bool {
 	label_idArg, label_idFin := datautils.WrapString[C.char](label_id)
 
 	defer func() {
@@ -1363,7 +1343,7 @@ func PlotBeginDragDropSourceItemV(label_id string, flags DragDropFlags) bool {
 
 // PlotBeginDragDropSourcePlotV parameter default value hint:
 // flags: 0
-func PlotBeginDragDropSourcePlotV(flags DragDropFlags) bool {
+func PlotBeginDragDropSourcePlotV(flags imgui.DragDropFlags) bool {
 	return C.ImPlot_BeginDragDropSourcePlot(C.ImGuiDragDropFlags(flags)) == C.bool(true)
 }
 
@@ -1393,7 +1373,7 @@ func PlotBeginItemV(label_id string, flags PlotItemFlags, recolor_from PlotCol) 
 
 // PlotBeginLegendPopupV parameter default value hint:
 // mouse_button: 1
-func PlotBeginLegendPopupV(label_id string, mouse_button MouseButton) bool {
+func PlotBeginLegendPopupV(label_id string, mouse_button imgui.MouseButton) bool {
 	label_idArg, label_idFin := datautils.WrapString[C.char](label_id)
 
 	defer func() {
@@ -5519,7 +5499,7 @@ func PlotPlotHistogramdoublePtrV(label_id string, values *[]float64, count int32
 // uv1: ImVec2(1,1)
 // tint_col: ImVec4(1,1,1,1)
 // flags: 0
-func PlotPlotImageV(label_id string, user_texture_id TextureID, bounds_min PlotPoint, bounds_max PlotPoint, uv0 imgui.Vec2, uv1 imgui.Vec2, tint_col imgui.Vec4, flags PlotImageFlags) {
+func PlotPlotImageV(label_id string, user_texture_id imgui.TextureID, bounds_min PlotPoint, bounds_max PlotPoint, uv0 imgui.Vec2, uv1 imgui.Vec2, tint_col imgui.Vec4, flags PlotImageFlags) {
 	label_idArg, label_idFin := datautils.WrapString[C.char](label_id)
 	user_texture_idArg, user_texture_idFin := user_texture_id.C()
 	C.ImPlot_PlotImage(label_idArg, user_texture_idArg, bounds_min.toC(), bounds_max.toC(), uv0.toC(), uv1.toC(), tint_col.toC(), C.ImPlotImageFlags(flags))
@@ -8510,22 +8490,6 @@ func PlotRegisterOrGetItemV(label_id string, flags PlotItemFlags, just_created *
 	return NewPlotItemFromC(C.ImPlot_RegisterOrGetItem(label_idArg, C.ImPlotItemFlags(flags), just_createdArg))
 }
 
-func PlotRenderColorBar(colors *[]uint32, size int32, DrawList *DrawList, bounds imgui.Rect, vert bool, reversed bool, continuous bool) {
-	colorsArg := make([]C.ImU32, len(*colors))
-	for i, colorsV := range *colors {
-		colorsArg[i] = C.ImU32(colorsV)
-	}
-
-	DrawListArg, DrawListFin := DrawList.Handle()
-	C.ImPlot_RenderColorBar((*C.ImU32)(&colorsArg[0]), C.int(size), DrawListArg, bounds.toC(), C.bool(vert), C.bool(reversed), C.bool(continuous))
-
-	for i, colorsV := range colorsArg {
-		(*colors)[i] = uint32(colorsV)
-	}
-
-	DrawListFin()
-}
-
 func PlotResetCtxForNextAlignedPlots(ctx *PlotContext) {
 	ctxArg, ctxFin := ctx.Handle()
 	C.ImPlot_ResetCtxForNextAlignedPlots(ctxArg)
@@ -8590,13 +8554,6 @@ func PlotSetAxis(axis PlotAxisEnum) {
 func PlotSetCurrentContext(ctx *PlotContext) {
 	ctxArg, ctxFin := ctx.Handle()
 	C.ImPlot_SetCurrentContext(ctxArg)
-
-	ctxFin()
-}
-
-func PlotSetImGuiContext(ctx *Context) {
-	ctxArg, ctxFin := ctx.Handle()
-	C.ImPlot_SetImGuiContext(ctxArg)
 
 	ctxFin()
 }
@@ -8851,17 +8808,6 @@ func PlotShowLegendContextMenu(legend *PlotLegend, visible bool) bool {
 	return C.ImPlot_ShowLegendContextMenu(legendArg, C.bool(visible)) == C.bool(true)
 }
 
-func PlotShowLegendEntries(items *PlotItemGroup, legend_bb imgui.Rect, interactable bool, pad imgui.Vec2, spacing imgui.Vec2, vertical bool, DrawList *DrawList) bool {
-	itemsArg, itemsFin := items.Handle()
-	DrawListArg, DrawListFin := DrawList.Handle()
-
-	defer func() {
-		itemsFin()
-		DrawListFin()
-	}()
-	return C.ImPlot_ShowLegendEntries(itemsArg, legend_bb.toC(), C.bool(interactable), pad.toC(), spacing.toC(), C.bool(vertical), DrawListArg) == C.bool(true)
-}
-
 // PlotShowMetricsWindowV parameter default value hint:
 // p_popen: nullptr
 func PlotShowMetricsWindowV(p_popen *bool) {
@@ -9052,24 +8998,6 @@ func PlotAddColormapVec4Ptr(name string, cols *imgui.Vec4, size int32) PlotColor
 		colsFin()
 	}()
 	return PlotColormap(C.wrap_ImPlot_AddColormap_Vec4Ptr(nameArg, colsArg, C.int(size)))
-}
-
-func PlotAddTextCentered(DrawList *DrawList, top_center imgui.Vec2, col uint32, text_begin string) {
-	DrawListArg, DrawListFin := DrawList.Handle()
-	text_beginArg, text_beginFin := datautils.WrapString[C.char](text_begin)
-	C.wrap_ImPlot_AddTextCentered(DrawListArg, top_center.toC(), C.ImU32(col), text_beginArg)
-
-	DrawListFin()
-	text_beginFin()
-}
-
-func PlotAddTextVertical(DrawList *DrawList, pos imgui.Vec2, col uint32, text_begin string) {
-	DrawListArg, DrawListFin := DrawList.Handle()
-	text_beginArg, text_beginFin := datautils.WrapString[C.char](text_begin)
-	C.wrap_ImPlot_AddTextVertical(DrawListArg, pos.toC(), C.ImU32(col), text_beginArg)
-
-	DrawListFin()
-	text_beginFin()
 }
 
 func PlotAnnotationBool(x float64, y float64, col imgui.Vec4, pix_offset imgui.Vec2, clamp bool) {
@@ -11068,7 +10996,7 @@ func PlotPlotHistogramdoublePtr(label_id string, values *[]float64, count int32)
 	return float64(C.wrap_ImPlot_PlotHistogram_doublePtr(label_idArg, (*C.double)(&valuesArg[0]), C.int(count)))
 }
 
-func PlotPlotImage(label_id string, user_texture_id TextureID, bounds_min PlotPoint, bounds_max PlotPoint) {
+func PlotPlotImage(label_id string, user_texture_id imgui.TextureID, bounds_min PlotPoint, bounds_max PlotPoint) {
 	label_idArg, label_idFin := datautils.WrapString[C.char](label_id)
 	user_texture_idArg, user_texture_idFin := user_texture_id.C()
 	C.wrap_ImPlot_PlotImage(label_idArg, user_texture_idArg, bounds_min.toC(), bounds_max.toC())
@@ -13662,7 +13590,7 @@ func (self *PlotAnnotationCollection) Annotations() Vector[*PlotAnnotation] {
 	return NewVectorFromC(C.wrap_ImPlotAnnotationCollection_GetAnnotations(selfArg).Size, C.wrap_ImPlotAnnotationCollection_GetAnnotations(selfArg).Capacity, NewPlotAnnotationFromC(C.wrap_ImPlotAnnotationCollection_GetAnnotations(selfArg).Data))
 }
 
-func (self PlotAnnotationCollection) SetTextBuffer(v TextBuffer) {
+func (self PlotAnnotationCollection) SetTextBuffer(v imgui.TextBuffer) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -13697,7 +13625,7 @@ func (self *PlotAnnotationCollection) Size() int32 {
 	return int32(C.wrap_ImPlotAnnotationCollection_GetSize(selfArg))
 }
 
-func (self PlotAxis) SetID(v ID) {
+func (self PlotAxis) SetID(v imgui.ID) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -14512,7 +14440,7 @@ func (self *PlotColormapData) TableOffsets() Vector[*int32] {
 	return NewVectorFromC(C.wrap_ImPlotColormapData_GetTableOffsets(selfArg).Size, C.wrap_ImPlotColormapData_GetTableOffsets(selfArg).Capacity, (*int32)(C.wrap_ImPlotColormapData_GetTableOffsets(selfArg).Data))
 }
 
-func (self PlotColormapData) SetText(v TextBuffer) {
+func (self PlotColormapData) SetText(v imgui.TextBuffer) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -14566,7 +14494,7 @@ func (self PlotColormapData) SetQuals(v Vector[*bool]) {
 	C.wrap_ImPlotColormapData_SetQuals(selfArg, *vVecArg)
 }
 
-func (self PlotColormapData) SetMap(v Storage) {
+func (self PlotColormapData) SetMap(v imgui.Storage) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -14754,20 +14682,6 @@ func (self *PlotContext) Style() PlotStyle {
 	return *NewPlotStyleFromC(func() *C.ImPlotStyle { result := C.wrap_ImPlotContext_GetStyle(selfArg); return &result }())
 }
 
-func (self PlotContext) SetColorModifiers(v Vector[*ColorMod]) {
-	vData := v.Data
-	vDataArg, _ := vData.Handle()
-	vVecArg := new(C.ImVector_ImGuiColorMod)
-	vVecArg.Size = C.int(v.Size)
-	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImPlotContext_SetColorModifiers(selfArg, *vVecArg)
-}
-
 func (self *PlotContext) ColorModifiers() Vector[*ColorMod] {
 	selfArg, selfFin := self.Handle()
 
@@ -14775,20 +14689,6 @@ func (self *PlotContext) ColorModifiers() Vector[*ColorMod] {
 		selfFin()
 	}()
 	return NewVectorFromC(C.wrap_ImPlotContext_GetColorModifiers(selfArg).Size, C.wrap_ImPlotContext_GetColorModifiers(selfArg).Capacity, NewColorModFromC(C.wrap_ImPlotContext_GetColorModifiers(selfArg).Data))
-}
-
-func (self PlotContext) SetStyleModifiers(v Vector[*StyleMod]) {
-	vData := v.Data
-	vDataArg, _ := vData.Handle()
-	vVecArg := new(C.ImVector_ImGuiStyleMod)
-	vVecArg.Size = C.int(v.Size)
-	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImPlotContext_SetStyleModifiers(selfArg, *vVecArg)
 }
 
 func (self *PlotContext) StyleModifiers() Vector[*StyleMod] {
@@ -14991,7 +14891,7 @@ func (self *PlotContext) OpenContextThisFrame() bool {
 	return C.wrap_ImPlotContext_GetOpenContextThisFrame(selfArg) == C.bool(true)
 }
 
-func (self PlotContext) SetMousePosStringBuilder(v TextBuffer) {
+func (self PlotContext) SetMousePosStringBuilder(v imgui.TextBuffer) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -15122,7 +15022,7 @@ func (self *PlotDateTimeSpec) Use24HourClock() bool {
 	return C.wrap_ImPlotDateTimeSpec_GetUse24HourClock(selfArg) == C.bool(true)
 }
 
-func (self PlotInputMap) SetPan(v MouseButton) {
+func (self PlotInputMap) SetPan(v imgui.MouseButton) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotInputMap_SetPan(selfArg, C.ImGuiMouseButton(v))
@@ -15152,7 +15052,7 @@ func (self *PlotInputMap) PanMod() int32 {
 	return int32(C.wrap_ImPlotInputMap_GetPanMod(selfArg))
 }
 
-func (self PlotInputMap) SetFit(v MouseButton) {
+func (self PlotInputMap) SetFit(v imgui.MouseButton) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotInputMap_SetFit(selfArg, C.ImGuiMouseButton(v))
@@ -15167,7 +15067,7 @@ func (self *PlotInputMap) Fit() MouseButton {
 	return MouseButton(C.wrap_ImPlotInputMap_GetFit(selfArg))
 }
 
-func (self PlotInputMap) SetSelect(v MouseButton) {
+func (self PlotInputMap) SetSelect(v imgui.MouseButton) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotInputMap_SetSelect(selfArg, C.ImGuiMouseButton(v))
@@ -15182,7 +15082,7 @@ func (self *PlotInputMap) Select() MouseButton {
 	return MouseButton(C.wrap_ImPlotInputMap_GetSelect(selfArg))
 }
 
-func (self PlotInputMap) SetSelectCancel(v MouseButton) {
+func (self PlotInputMap) SetSelectCancel(v imgui.MouseButton) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotInputMap_SetSelectCancel(selfArg, C.ImGuiMouseButton(v))
@@ -15242,7 +15142,7 @@ func (self *PlotInputMap) SelectVertMod() int32 {
 	return int32(C.wrap_ImPlotInputMap_GetSelectVertMod(selfArg))
 }
 
-func (self PlotInputMap) SetMenu(v MouseButton) {
+func (self PlotInputMap) SetMenu(v imgui.MouseButton) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotInputMap_SetMenu(selfArg, C.ImGuiMouseButton(v))
@@ -15302,7 +15202,7 @@ func (self *PlotInputMap) ZoomRate() float32 {
 	return float32(C.wrap_ImPlotInputMap_GetZoomRate(selfArg))
 }
 
-func (self PlotItem) SetID(v ID) {
+func (self PlotItem) SetID(v imgui.ID) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -15400,7 +15300,7 @@ func (self *PlotItem) SeenThisFrame() bool {
 	return C.wrap_ImPlotItem_GetSeenThisFrame(selfArg) == C.bool(true)
 }
 
-func (self PlotItemGroup) SetID(v ID) {
+func (self PlotItemGroup) SetID(v imgui.ID) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -15538,7 +15438,7 @@ func (self *PlotLegend) Indices() Vector[*int32] {
 	return NewVectorFromC(C.wrap_ImPlotLegend_GetIndices(selfArg).Size, C.wrap_ImPlotLegend_GetIndices(selfArg).Capacity, (*int32)(C.wrap_ImPlotLegend_GetIndices(selfArg).Data))
 }
 
-func (self PlotLegend) SetLabels(v TextBuffer) {
+func (self PlotLegend) SetLabels(v imgui.TextBuffer) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -16097,7 +15997,7 @@ func (self *PlotNextPlotData) LinkedMax() [6]*float64 {
 	}()
 }
 
-func (self PlotPlot) SetID(v ID) {
+func (self PlotPlot) SetID(v imgui.ID) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -16198,7 +16098,7 @@ func (self *PlotPlot) Axes() [6]PlotAxis {
 	}()
 }
 
-func (self PlotPlot) SetTextBuffer(v TextBuffer) {
+func (self PlotPlot) SetTextBuffer(v imgui.TextBuffer) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -17123,7 +17023,7 @@ func (self *PlotStyle) Use24HourClock() bool {
 	return C.wrap_ImPlotStyle_GetUse24HourClock(selfArg) == C.bool(true)
 }
 
-func (self PlotSubplot) SetID(v ID) {
+func (self PlotSubplot) SetID(v imgui.ID) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -17566,7 +17466,7 @@ func (self *PlotTagCollection) Tags() Vector[*PlotTag] {
 	return NewVectorFromC(C.wrap_ImPlotTagCollection_GetTags(selfArg).Size, C.wrap_ImPlotTagCollection_GetTags(selfArg).Capacity, NewPlotTagFromC(C.wrap_ImPlotTagCollection_GetTags(selfArg).Data))
 }
 
-func (self PlotTagCollection) SetTextBuffer(v TextBuffer) {
+func (self PlotTagCollection) SetTextBuffer(v imgui.TextBuffer) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -17741,7 +17641,7 @@ func (self *PlotTicker) Ticks() Vector[*PlotTick] {
 	return NewVectorFromC(C.wrap_ImPlotTicker_GetTicks(selfArg).Size, C.wrap_ImPlotTicker_GetTicks(selfArg).Capacity, NewPlotTickFromC(C.wrap_ImPlotTicker_GetTicks(selfArg).Data))
 }
 
-func (self PlotTicker) SetTextBuffer(v TextBuffer) {
+func (self PlotTicker) SetTextBuffer(v imgui.TextBuffer) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
