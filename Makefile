@@ -23,6 +23,7 @@ setup:
 define generate
 	@echo "Generating for $(1)"
 	mkdir -p $(2)
+	cat templates/cflags.go |sed -e "s/^package.*/package $(2)/g" > $(2)/cflags.go
 	cd $(2); \
 		../codegen -p $(1) -pkg $(2) -i ../$(3) -d ../$(4) -e ../$(5) -t ../$(6) $(7)
 	go run mvdan.cc/gofumpt@latest -w $(2)/$(1)_enums.go
