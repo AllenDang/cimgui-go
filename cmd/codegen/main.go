@@ -242,3 +242,19 @@ func main() {
 func getGoPackageHeader(ctx *Context) string {
 	return fmt.Sprintf(goPackageHeader, ctx.flags.packageName, ctx.flags.refPackageName)
 }
+
+func prefixGoPackage(t, sourcePackage GoIdentifier, ctx *Context) GoIdentifier {
+	if sourcePackage == GoIdentifier(ctx.flags.packageName) || sourcePackage == "" {
+		return t
+	}
+
+	isPtr := HasPrefix(t, "*")
+	t = TrimPrefix(t, "*")
+	t = sourcePackage + "." + t
+
+	if isPtr {
+		t = "*" + t
+	}
+
+	return t
+}
