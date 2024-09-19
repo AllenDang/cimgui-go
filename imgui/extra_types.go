@@ -7,7 +7,6 @@ import "C"
 import (
 	"image/color"
 	"runtime"
-	"time"
 )
 
 type (
