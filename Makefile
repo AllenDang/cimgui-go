@@ -14,24 +14,27 @@ setup:
 
 # Parameters:
 # $1: prefix
-# $2: include path (of header file)
-# $3: definitions.json filepath
-# $4: structs_and_enums.json filepath
-# $5: typedefs_dict.json filepath
-# $6: additional agruments to codegen call (e.g. -r option)
+# $2: go package name
+# $3: include path (of header file)
+# $4: definitions.json filepath
+# $5: structs_and_enums.json filepath
+# $6: typedefs_dict.json filepath
+# $7: additional agruments to codegen call (e.g. -r option)
 define generate
 	@echo "Generating for $(1)"
-	./codegen -p $(1) -i $(2) -d $(3) -e $(4) -t $(5) $(6)
-	go run mvdan.cc/gofumpt@latest -w $(1)_enums.go
-	go run mvdan.cc/gofumpt@latest -w $(1)_funcs.go
-	go run mvdan.cc/gofumpt@latest -w $(1)_typedefs.go
-	go run golang.org/x/tools/cmd/goimports@latest -w $(1)_funcs.go
-	go run golang.org/x/tools/cmd/goimports@latest -w $(1)_typedefs.go
-	go run golang.org/x/tools/cmd/goimports@latest -w $(1)_enums.go
+	mkdir -p $(2)
+	cd $(2); \
+		../codegen -p $(1) -pkg $(2) -i ../$(3) -d ../$(4) -e ../$(5) -t ../$(6) $(7)
+	go run mvdan.cc/gofumpt@latest -w $(2)/$(1)_enums.go
+	go run mvdan.cc/gofumpt@latest -w $(2)/$(1)_funcs.go
+	go run mvdan.cc/gofumpt@latest -w $(2)/$(1)_typedefs.go
+	go run golang.org/x/tools/cmd/goimports@latest -w $(2)/$(1)_funcs.go
+	go run golang.org/x/tools/cmd/goimports@latest -w $(2)/$(1)_typedefs.go
+	go run golang.org/x/tools/cmd/goimports@latest -w $(2)/$(1)_enums.go
 endef
 
 define cimgui
-	$(call generate,cimgui,cwrappers/cimgui.h,cwrappers/cimgui_templates/definitions.json,cwrappers/cimgui_templates/structs_and_enums.json, cwrappers/cimgui_templates/typedefs_dict.json)
+	$(call generate,cimgui,imgui,cwrappers/cimgui.h,cwrappers/cimgui_templates/definitions.json,cwrappers/cimgui_templates/structs_and_enums.json,cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
 ## cimgui: generate cimgui binding
@@ -40,7 +43,7 @@ cimgui: setup
 	$(call cimgui)
 
 define cimplot
-	$(call generate,cimplot,cwrappers/cimplot.h,cwrappers/cimplot_templates/definitions.json,cwrappers/cimplot_templates/structs_and_enums.json,cwrappers/cimplot_templates/typedefs_dict.json,-r cwrappers/cimgui_templates/structs_and_enums.json -rt cwrappers/cimgui_templates/typedefs_dict.json)
+	$(call generate,cimplot,implot,cwrappers/cimplot.h,cwrappers/cimplot_templates/definitions.json,cwrappers/cimplot_templates/structs_and_enums.json,cwrappers/cimplot_templates/typedefs_dict.json,-r ../cwrappers/cimgui_templates/structs_and_enums.json -rt ../cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
 ## cimplot: generate implot binding
@@ -49,7 +52,7 @@ cimplot: setup
 	$(call cimplot)
 
 define cimnodes
-	$(call generate,cimnodes,cwrappers/cimnodes.h,cwrappers/cimnodes_templates/definitions.json,cwrappers/cimnodes_templates/structs_and_enums.json,cwrappers/cimnodes_templates/typedefs_dict.json,-r cwrappers/cimgui_templates/structs_and_enums.json -rt cwrappers/cimgui_templates/typedefs_dict.json)
+	$(call generate,cimnodes,imgui,cwrappers/cimnodes.h,cwrappers/cimnodes_templates/definitions.json,cwrappers/cimnodes_templates/structs_and_enums.json,cwrappers/cimnodes_templates/typedefs_dict.json,-r ../cwrappers/cimgui_templates/structs_and_enums.json -rt ../cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
 ## cimnodes: generate imnodes binding
@@ -58,7 +61,7 @@ cimnodes: setup
 	$(call cimnodes)
 
 define cimmarkdown
-	$(call generate,cimmarkdown,cwrappers/cimmarkdown.h,cwrappers/cimmarkdown_templates/definitions.json,cwrappers/cimmarkdown_templates/structs_and_enums.json,cwrappers/cimmarkdown_templates/typedefs_dict.json,-r cwrappers/cimgui_templates/structs_and_enums.json -rt cwrappers/cimgui_templates/typedefs_dict.json)
+	$(call generate,cimmarkdown,imgui,cwrappers/cimmarkdown.h,cwrappers/cimmarkdown_templates/definitions.json,cwrappers/cimmarkdown_templates/structs_and_enums.json,cwrappers/cimmarkdown_templates/typedefs_dict.json,-r ../cwrappers/cimgui_templates/structs_and_enums.json -rt ../cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
 ## cimmarkdown: generate immarkdown binding
