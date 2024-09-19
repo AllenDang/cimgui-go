@@ -151,6 +151,11 @@ func getArgWrapper(
 	}
 
 	pureType := TrimPrefix(a.Type, "const ")
+	isPointer := false
+	if HasSuffix(a.Type, "*") {
+		pureType = TrimSuffix(pureType, "*")
+		isPointer = true
+	}
 	_, isRefTypedef := context.refTypedefs[pureType]
 
 	if goEnumName := a.Type; isEnum(goEnumName, context.enumNames) {
@@ -263,12 +268,6 @@ for i, %[1]sV := range %[1]sArg {
 		argDeclaration = fmt.Sprintf("%s %s", a.Name, data.ArgType)
 
 		return argDeclaration, data, nil
-	}
-
-	isPointer := false
-	if HasSuffix(a.Type, "*") {
-		pureType = TrimSuffix(pureType, "*")
-		isPointer = true
 	}
 
 	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
