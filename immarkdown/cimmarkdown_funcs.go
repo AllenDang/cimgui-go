@@ -4,6 +4,7 @@
 package immarkdown
 
 import (
+	"github.com/AllenDang/cimgui-go/imgui"
 	"github.com/AllenDang/cimgui-go/internal/datautils"
 )
 
@@ -114,7 +115,7 @@ func (self *TextRegion) Destroy() {
 	selfFin()
 }
 
-func UnderLine(col_ Color) {
+func UnderLine(col_ imgui.Color) {
 	C.UnderLine(col_.toC())
 }
 
@@ -605,7 +606,7 @@ func (self MarkdownImageData) SetUsertextureid(v TextureID) {
 	C.wrap_MarkdownImageData_SetUser_texture_id(selfArg, vArg)
 }
 
-func (self MarkdownImageData) SetSize(v Vec2) {
+func (self MarkdownImageData) SetSize(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_MarkdownImageData_SetSize(selfArg, v.toC())
@@ -620,7 +621,7 @@ func (self *MarkdownImageData) Size() Vec2 {
 	return *(&Vec2{}).fromC(C.wrap_MarkdownImageData_GetSize(selfArg))
 }
 
-func (self MarkdownImageData) SetUv0(v Vec2) {
+func (self MarkdownImageData) SetUv0(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_MarkdownImageData_SetUv0(selfArg, v.toC())
@@ -635,7 +636,7 @@ func (self *MarkdownImageData) Uv0() Vec2 {
 	return *(&Vec2{}).fromC(C.wrap_MarkdownImageData_GetUv0(selfArg))
 }
 
-func (self MarkdownImageData) SetUv1(v Vec2) {
+func (self MarkdownImageData) SetUv1(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_MarkdownImageData_SetUv1(selfArg, v.toC())
@@ -650,7 +651,7 @@ func (self *MarkdownImageData) Uv1() Vec2 {
 	return *(&Vec2{}).fromC(C.wrap_MarkdownImageData_GetUv1(selfArg))
 }
 
-func (self MarkdownImageData) SetTintcol(v Vec4) {
+func (self MarkdownImageData) SetTintcol(v imgui.Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_MarkdownImageData_SetTint_col(selfArg, v.toC())
@@ -665,7 +666,7 @@ func (self *MarkdownImageData) Tintcol() Vec4 {
 	return *(&Vec4{}).fromC(C.wrap_MarkdownImageData_GetTint_col(selfArg))
 }
 
-func (self MarkdownImageData) SetBordercol(v Vec4) {
+func (self MarkdownImageData) SetBordercol(v imgui.Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_MarkdownImageData_SetBorder_col(selfArg, v.toC())
