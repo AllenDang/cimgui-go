@@ -1253,6 +1253,26 @@ func PlotAddColormapVec4PtrV(name string, cols *imgui.Vec4, size int32, qual boo
 	return PlotColormap(C.ImPlot_AddColormap_Vec4Ptr(nameArg, colsArg, C.int(size), C.bool(qual)))
 }
 
+// PlotAddTextCenteredV parameter default value hint:
+func PlotAddTextCenteredV(DrawList *imgui.DrawList, top_center imgui.Vec2, col uint32, text_begin string) {
+	DrawListArg, DrawListFin := DrawList.Handle()
+	text_beginArg, text_beginFin := datautils.WrapString[C.char](text_begin)
+	C.wrap_ImPlot_AddTextCenteredV(DrawListArg, top_center.toC(), C.ImU32(col), text_beginArg)
+
+	DrawListFin()
+	text_beginFin()
+}
+
+// PlotAddTextVerticalV parameter default value hint:
+func PlotAddTextVerticalV(DrawList *imgui.DrawList, pos imgui.Vec2, col uint32, text_begin string) {
+	DrawListArg, DrawListFin := DrawList.Handle()
+	text_beginArg, text_beginFin := datautils.WrapString[C.char](text_begin)
+	C.wrap_ImPlot_AddTextVerticalV(DrawListArg, pos.toC(), C.ImU32(col), text_beginArg)
+
+	DrawListFin()
+	text_beginFin()
+}
+
 func PlotAddTime(t PlotTime, unit PlotTimeUnit, count int32) PlotTime {
 	pOut := new(PlotTime)
 	pOutArg, pOutFin := wrap[C.ImPlotTime, *PlotTime](pOut)
@@ -8490,6 +8510,22 @@ func PlotRegisterOrGetItemV(label_id string, flags PlotItemFlags, just_created *
 	return NewPlotItemFromC(C.ImPlot_RegisterOrGetItem(label_idArg, C.ImPlotItemFlags(flags), just_createdArg))
 }
 
+func PlotRenderColorBar(colors *[]uint32, size int32, DrawList *imgui.DrawList, bounds imgui.Rect, vert bool, reversed bool, continuous bool) {
+	colorsArg := make([]C.ImU32, len(*colors))
+	for i, colorsV := range *colors {
+		colorsArg[i] = C.ImU32(colorsV)
+	}
+
+	DrawListArg, DrawListFin := DrawList.Handle()
+	C.ImPlot_RenderColorBar((*C.ImU32)(&colorsArg[0]), C.int(size), DrawListArg, bounds.toC(), C.bool(vert), C.bool(reversed), C.bool(continuous))
+
+	for i, colorsV := range colorsArg {
+		(*colors)[i] = uint32(colorsV)
+	}
+
+	DrawListFin()
+}
+
 func PlotResetCtxForNextAlignedPlots(ctx *PlotContext) {
 	ctxArg, ctxFin := ctx.Handle()
 	C.ImPlot_ResetCtxForNextAlignedPlots(ctxArg)
@@ -8554,6 +8590,13 @@ func PlotSetAxis(axis PlotAxisEnum) {
 func PlotSetCurrentContext(ctx *PlotContext) {
 	ctxArg, ctxFin := ctx.Handle()
 	C.ImPlot_SetCurrentContext(ctxArg)
+
+	ctxFin()
+}
+
+func PlotSetImGuiContext(ctx *imgui.Context) {
+	ctxArg, ctxFin := ctx.Handle()
+	C.ImPlot_SetImGuiContext(ctxArg)
 
 	ctxFin()
 }
@@ -8808,6 +8851,17 @@ func PlotShowLegendContextMenu(legend *PlotLegend, visible bool) bool {
 	return C.ImPlot_ShowLegendContextMenu(legendArg, C.bool(visible)) == C.bool(true)
 }
 
+func PlotShowLegendEntries(items *PlotItemGroup, legend_bb imgui.Rect, interactable bool, pad imgui.Vec2, spacing imgui.Vec2, vertical bool, DrawList *imgui.DrawList) bool {
+	itemsArg, itemsFin := items.Handle()
+	DrawListArg, DrawListFin := DrawList.Handle()
+
+	defer func() {
+		itemsFin()
+		DrawListFin()
+	}()
+	return C.ImPlot_ShowLegendEntries(itemsArg, legend_bb.toC(), C.bool(interactable), pad.toC(), spacing.toC(), C.bool(vertical), DrawListArg) == C.bool(true)
+}
+
 // PlotShowMetricsWindowV parameter default value hint:
 // p_popen: nullptr
 func PlotShowMetricsWindowV(p_popen *bool) {
@@ -8998,6 +9052,24 @@ func PlotAddColormapVec4Ptr(name string, cols *imgui.Vec4, size int32) PlotColor
 		colsFin()
 	}()
 	return PlotColormap(C.wrap_ImPlot_AddColormap_Vec4Ptr(nameArg, colsArg, C.int(size)))
+}
+
+func PlotAddTextCentered(DrawList *imgui.DrawList, top_center imgui.Vec2, col uint32, text_begin string) {
+	DrawListArg, DrawListFin := DrawList.Handle()
+	text_beginArg, text_beginFin := datautils.WrapString[C.char](text_begin)
+	C.wrap_ImPlot_AddTextCentered(DrawListArg, top_center.toC(), C.ImU32(col), text_beginArg)
+
+	DrawListFin()
+	text_beginFin()
+}
+
+func PlotAddTextVertical(DrawList *imgui.DrawList, pos imgui.Vec2, col uint32, text_begin string) {
+	DrawListArg, DrawListFin := DrawList.Handle()
+	text_beginArg, text_beginFin := datautils.WrapString[C.char](text_begin)
+	C.wrap_ImPlot_AddTextVertical(DrawListArg, pos.toC(), C.ImU32(col), text_beginArg)
+
+	DrawListFin()
+	text_beginFin()
 }
 
 func PlotAnnotationBool(x float64, y float64, col imgui.Vec4, pix_offset imgui.Vec2, clamp bool) {
@@ -14682,6 +14754,20 @@ func (self *PlotContext) Style() PlotStyle {
 	return *NewPlotStyleFromC(func() *C.ImPlotStyle { result := C.wrap_ImPlotContext_GetStyle(selfArg); return &result }())
 }
 
+func (self PlotContext) SetColorModifiers(v Vector[*imgui.ColorMod]) {
+	vData := v.Data
+	vDataArg, _ := vData.Handle()
+	vVecArg := new(C.ImVector_ImGuiColorMod)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotContext_SetColorModifiers(selfArg, *vVecArg)
+}
+
 func (self *PlotContext) ColorModifiers() Vector[*ColorMod] {
 	selfArg, selfFin := self.Handle()
 
@@ -14689,6 +14775,20 @@ func (self *PlotContext) ColorModifiers() Vector[*ColorMod] {
 		selfFin()
 	}()
 	return NewVectorFromC(C.wrap_ImPlotContext_GetColorModifiers(selfArg).Size, C.wrap_ImPlotContext_GetColorModifiers(selfArg).Capacity, NewColorModFromC(C.wrap_ImPlotContext_GetColorModifiers(selfArg).Data))
+}
+
+func (self PlotContext) SetStyleModifiers(v Vector[*imgui.StyleMod]) {
+	vData := v.Data
+	vDataArg, _ := vData.Handle()
+	vVecArg := new(C.ImVector_ImGuiStyleMod)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+	v.pinner.Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotContext_SetStyleModifiers(selfArg, *vVecArg)
 }
 
 func (self *PlotContext) StyleModifiers() Vector[*StyleMod] {
