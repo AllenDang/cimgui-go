@@ -34,7 +34,7 @@ func (selfStruct *BitArrayPtr) C() (result C.ImBitArrayPtr, fin func()) {
 // NewBitArrayPtrFromC creates BitArrayPtr from its C pointer.
 // SRC ~= *C.ImBitArrayPtr
 func NewBitArrayPtrFromC[SRC any](cvalue SRC) *BitArrayPtr {
-	v := (*C.ImU32)(*ConvertCTypes[*C.ImBitArrayPtr](cvalue))
+	v := (*C.ImU32)(*datautils.ConvertCTypes[*C.ImBitArrayPtr](cvalue))
 	return &BitArrayPtr{Data: (*uint32)(v)}
 }
 
@@ -56,7 +56,7 @@ func (self BitVector) C() (C.ImBitVector, func()) {
 // NewBitVectorFromC creates BitVector from its C pointer.
 // SRC ~= *C.ImBitVector
 func NewBitVectorFromC[SRC any](cvalue SRC) *BitVector {
-	return &BitVector{CData: ConvertCTypes[*C.ImBitVector](cvalue)}
+	return &BitVector{CData: datautils.ConvertCTypes[*C.ImBitVector](cvalue)}
 }
 
 type DrawChannel struct {
@@ -77,7 +77,7 @@ func (self DrawChannel) C() (C.ImDrawChannel, func()) {
 // NewDrawChannelFromC creates DrawChannel from its C pointer.
 // SRC ~= *C.ImDrawChannel
 func NewDrawChannelFromC[SRC any](cvalue SRC) *DrawChannel {
-	return &DrawChannel{CData: ConvertCTypes[*C.ImDrawChannel](cvalue)}
+	return &DrawChannel{CData: datautils.ConvertCTypes[*C.ImDrawChannel](cvalue)}
 }
 
 type DrawCmd struct {
@@ -98,7 +98,7 @@ func (self DrawCmd) C() (C.ImDrawCmd, func()) {
 // NewDrawCmdFromC creates DrawCmd from its C pointer.
 // SRC ~= *C.ImDrawCmd
 func NewDrawCmdFromC[SRC any](cvalue SRC) *DrawCmd {
-	return &DrawCmd{CData: ConvertCTypes[*C.ImDrawCmd](cvalue)}
+	return &DrawCmd{CData: datautils.ConvertCTypes[*C.ImDrawCmd](cvalue)}
 }
 
 type DrawCmdHeader struct {
@@ -119,7 +119,7 @@ func (self DrawCmdHeader) C() (C.ImDrawCmdHeader, func()) {
 // NewDrawCmdHeaderFromC creates DrawCmdHeader from its C pointer.
 // SRC ~= *C.ImDrawCmdHeader
 func NewDrawCmdHeaderFromC[SRC any](cvalue SRC) *DrawCmdHeader {
-	return &DrawCmdHeader{CData: ConvertCTypes[*C.ImDrawCmdHeader](cvalue)}
+	return &DrawCmdHeader{CData: datautils.ConvertCTypes[*C.ImDrawCmdHeader](cvalue)}
 }
 
 type DrawData struct {
@@ -140,7 +140,7 @@ func (self DrawData) C() (C.ImDrawData, func()) {
 // NewDrawDataFromC creates DrawData from its C pointer.
 // SRC ~= *C.ImDrawData
 func NewDrawDataFromC[SRC any](cvalue SRC) *DrawData {
-	return &DrawData{CData: ConvertCTypes[*C.ImDrawData](cvalue)}
+	return &DrawData{CData: datautils.ConvertCTypes[*C.ImDrawData](cvalue)}
 }
 
 type DrawDataBuilder struct {
@@ -161,7 +161,7 @@ func (self DrawDataBuilder) C() (C.ImDrawDataBuilder, func()) {
 // NewDrawDataBuilderFromC creates DrawDataBuilder from its C pointer.
 // SRC ~= *C.ImDrawDataBuilder
 func NewDrawDataBuilderFromC[SRC any](cvalue SRC) *DrawDataBuilder {
-	return &DrawDataBuilder{CData: ConvertCTypes[*C.ImDrawDataBuilder](cvalue)}
+	return &DrawDataBuilder{CData: datautils.ConvertCTypes[*C.ImDrawDataBuilder](cvalue)}
 }
 
 type DrawIdx uint16
@@ -181,7 +181,7 @@ func (self DrawIdx) C() (C.ImDrawIdx, func()) {
 // NewDrawIdxFromC creates DrawIdx from its C pointer.
 // SRC ~= *C.ImDrawIdx
 func NewDrawIdxFromC[SRC any](cvalue SRC) *DrawIdx {
-	return (*DrawIdx)((*uint16)(ConvertCTypes[*C.ImDrawIdx](cvalue)))
+	return (*DrawIdx)((*uint16)(datautils.ConvertCTypes[*C.ImDrawIdx](cvalue)))
 }
 
 type DrawList struct {
@@ -202,7 +202,7 @@ func (self DrawList) C() (C.ImDrawList, func()) {
 // NewDrawListFromC creates DrawList from its C pointer.
 // SRC ~= *C.ImDrawList
 func NewDrawListFromC[SRC any](cvalue SRC) *DrawList {
-	return &DrawList{CData: ConvertCTypes[*C.ImDrawList](cvalue)}
+	return &DrawList{CData: datautils.ConvertCTypes[*C.ImDrawList](cvalue)}
 }
 
 type DrawListSharedData struct {
@@ -223,7 +223,7 @@ func (self DrawListSharedData) C() (C.ImDrawListSharedData, func()) {
 // NewDrawListSharedDataFromC creates DrawListSharedData from its C pointer.
 // SRC ~= *C.ImDrawListSharedData
 func NewDrawListSharedDataFromC[SRC any](cvalue SRC) *DrawListSharedData {
-	return &DrawListSharedData{CData: ConvertCTypes[*C.ImDrawListSharedData](cvalue)}
+	return &DrawListSharedData{CData: datautils.ConvertCTypes[*C.ImDrawListSharedData](cvalue)}
 }
 
 type DrawListSplitter struct {
@@ -244,7 +244,7 @@ func (self DrawListSplitter) C() (C.ImDrawListSplitter, func()) {
 // NewDrawListSplitterFromC creates DrawListSplitter from its C pointer.
 // SRC ~= *C.ImDrawListSplitter
 func NewDrawListSplitterFromC[SRC any](cvalue SRC) *DrawListSplitter {
-	return &DrawListSplitter{CData: ConvertCTypes[*C.ImDrawListSplitter](cvalue)}
+	return &DrawListSplitter{CData: datautils.ConvertCTypes[*C.ImDrawListSplitter](cvalue)}
 }
 
 type DrawVert struct {
@@ -265,7 +265,7 @@ func (self DrawVert) C() (C.ImDrawVert, func()) {
 // NewDrawVertFromC creates DrawVert from its C pointer.
 // SRC ~= *C.ImDrawVert
 func NewDrawVertFromC[SRC any](cvalue SRC) *DrawVert {
-	return &DrawVert{CData: ConvertCTypes[*C.ImDrawVert](cvalue)}
+	return &DrawVert{CData: datautils.ConvertCTypes[*C.ImDrawVert](cvalue)}
 }
 
 type Font struct {
@@ -286,7 +286,7 @@ func (self Font) C() (C.ImFont, func()) {
 // NewFontFromC creates Font from its C pointer.
 // SRC ~= *C.ImFont
 func NewFontFromC[SRC any](cvalue SRC) *Font {
-	return &Font{CData: ConvertCTypes[*C.ImFont](cvalue)}
+	return &Font{CData: datautils.ConvertCTypes[*C.ImFont](cvalue)}
 }
 
 type FontAtlas struct {
@@ -307,7 +307,7 @@ func (self FontAtlas) C() (C.ImFontAtlas, func()) {
 // NewFontAtlasFromC creates FontAtlas from its C pointer.
 // SRC ~= *C.ImFontAtlas
 func NewFontAtlasFromC[SRC any](cvalue SRC) *FontAtlas {
-	return &FontAtlas{CData: ConvertCTypes[*C.ImFontAtlas](cvalue)}
+	return &FontAtlas{CData: datautils.ConvertCTypes[*C.ImFontAtlas](cvalue)}
 }
 
 type FontAtlasCustomRect struct {
@@ -328,7 +328,7 @@ func (self FontAtlasCustomRect) C() (C.ImFontAtlasCustomRect, func()) {
 // NewFontAtlasCustomRectFromC creates FontAtlasCustomRect from its C pointer.
 // SRC ~= *C.ImFontAtlasCustomRect
 func NewFontAtlasCustomRectFromC[SRC any](cvalue SRC) *FontAtlasCustomRect {
-	return &FontAtlasCustomRect{CData: ConvertCTypes[*C.ImFontAtlasCustomRect](cvalue)}
+	return &FontAtlasCustomRect{CData: datautils.ConvertCTypes[*C.ImFontAtlasCustomRect](cvalue)}
 }
 
 type FontBuilderIO struct {
@@ -349,7 +349,7 @@ func (self FontBuilderIO) C() (C.ImFontBuilderIO, func()) {
 // NewFontBuilderIOFromC creates FontBuilderIO from its C pointer.
 // SRC ~= *C.ImFontBuilderIO
 func NewFontBuilderIOFromC[SRC any](cvalue SRC) *FontBuilderIO {
-	return &FontBuilderIO{CData: ConvertCTypes[*C.ImFontBuilderIO](cvalue)}
+	return &FontBuilderIO{CData: datautils.ConvertCTypes[*C.ImFontBuilderIO](cvalue)}
 }
 
 type FontConfig struct {
@@ -370,7 +370,7 @@ func (self FontConfig) C() (C.ImFontConfig, func()) {
 // NewFontConfigFromC creates FontConfig from its C pointer.
 // SRC ~= *C.ImFontConfig
 func NewFontConfigFromC[SRC any](cvalue SRC) *FontConfig {
-	return &FontConfig{CData: ConvertCTypes[*C.ImFontConfig](cvalue)}
+	return &FontConfig{CData: datautils.ConvertCTypes[*C.ImFontConfig](cvalue)}
 }
 
 type FontGlyph struct {
@@ -391,7 +391,7 @@ func (self FontGlyph) C() (C.ImFontGlyph, func()) {
 // NewFontGlyphFromC creates FontGlyph from its C pointer.
 // SRC ~= *C.ImFontGlyph
 func NewFontGlyphFromC[SRC any](cvalue SRC) *FontGlyph {
-	return &FontGlyph{CData: ConvertCTypes[*C.ImFontGlyph](cvalue)}
+	return &FontGlyph{CData: datautils.ConvertCTypes[*C.ImFontGlyph](cvalue)}
 }
 
 type FontGlyphRangesBuilder struct {
@@ -412,7 +412,7 @@ func (self FontGlyphRangesBuilder) C() (C.ImFontGlyphRangesBuilder, func()) {
 // NewFontGlyphRangesBuilderFromC creates FontGlyphRangesBuilder from its C pointer.
 // SRC ~= *C.ImFontGlyphRangesBuilder
 func NewFontGlyphRangesBuilderFromC[SRC any](cvalue SRC) *FontGlyphRangesBuilder {
-	return &FontGlyphRangesBuilder{CData: ConvertCTypes[*C.ImFontGlyphRangesBuilder](cvalue)}
+	return &FontGlyphRangesBuilder{CData: datautils.ConvertCTypes[*C.ImFontGlyphRangesBuilder](cvalue)}
 }
 
 type BoxSelectState struct {
@@ -433,7 +433,7 @@ func (self BoxSelectState) C() (C.ImGuiBoxSelectState, func()) {
 // NewBoxSelectStateFromC creates BoxSelectState from its C pointer.
 // SRC ~= *C.ImGuiBoxSelectState
 func NewBoxSelectStateFromC[SRC any](cvalue SRC) *BoxSelectState {
-	return &BoxSelectState{CData: ConvertCTypes[*C.ImGuiBoxSelectState](cvalue)}
+	return &BoxSelectState{CData: datautils.ConvertCTypes[*C.ImGuiBoxSelectState](cvalue)}
 }
 
 type ColorMod struct {
@@ -454,7 +454,7 @@ func (self ColorMod) C() (C.ImGuiColorMod, func()) {
 // NewColorModFromC creates ColorMod from its C pointer.
 // SRC ~= *C.ImGuiColorMod
 func NewColorModFromC[SRC any](cvalue SRC) *ColorMod {
-	return &ColorMod{CData: ConvertCTypes[*C.ImGuiColorMod](cvalue)}
+	return &ColorMod{CData: datautils.ConvertCTypes[*C.ImGuiColorMod](cvalue)}
 }
 
 type ComboPreviewData struct {
@@ -475,7 +475,7 @@ func (self ComboPreviewData) C() (C.ImGuiComboPreviewData, func()) {
 // NewComboPreviewDataFromC creates ComboPreviewData from its C pointer.
 // SRC ~= *C.ImGuiComboPreviewData
 func NewComboPreviewDataFromC[SRC any](cvalue SRC) *ComboPreviewData {
-	return &ComboPreviewData{CData: ConvertCTypes[*C.ImGuiComboPreviewData](cvalue)}
+	return &ComboPreviewData{CData: datautils.ConvertCTypes[*C.ImGuiComboPreviewData](cvalue)}
 }
 
 type Context struct {
@@ -496,7 +496,7 @@ func (self Context) C() (C.ImGuiContext, func()) {
 // NewContextFromC creates Context from its C pointer.
 // SRC ~= *C.ImGuiContext
 func NewContextFromC[SRC any](cvalue SRC) *Context {
-	return &Context{CData: ConvertCTypes[*C.ImGuiContext](cvalue)}
+	return &Context{CData: datautils.ConvertCTypes[*C.ImGuiContext](cvalue)}
 }
 
 type ContextHook struct {
@@ -517,7 +517,7 @@ func (self ContextHook) C() (C.ImGuiContextHook, func()) {
 // NewContextHookFromC creates ContextHook from its C pointer.
 // SRC ~= *C.ImGuiContextHook
 func NewContextHookFromC[SRC any](cvalue SRC) *ContextHook {
-	return &ContextHook{CData: ConvertCTypes[*C.ImGuiContextHook](cvalue)}
+	return &ContextHook{CData: datautils.ConvertCTypes[*C.ImGuiContextHook](cvalue)}
 }
 
 type DataTypeInfo struct {
@@ -538,7 +538,7 @@ func (self DataTypeInfo) C() (C.ImGuiDataTypeInfo, func()) {
 // NewDataTypeInfoFromC creates DataTypeInfo from its C pointer.
 // SRC ~= *C.ImGuiDataTypeInfo
 func NewDataTypeInfoFromC[SRC any](cvalue SRC) *DataTypeInfo {
-	return &DataTypeInfo{CData: ConvertCTypes[*C.ImGuiDataTypeInfo](cvalue)}
+	return &DataTypeInfo{CData: datautils.ConvertCTypes[*C.ImGuiDataTypeInfo](cvalue)}
 }
 
 type DataTypeStorage struct {
@@ -559,7 +559,7 @@ func (self DataTypeStorage) C() (C.ImGuiDataTypeStorage, func()) {
 // NewDataTypeStorageFromC creates DataTypeStorage from its C pointer.
 // SRC ~= *C.ImGuiDataTypeStorage
 func NewDataTypeStorageFromC[SRC any](cvalue SRC) *DataTypeStorage {
-	return &DataTypeStorage{CData: ConvertCTypes[*C.ImGuiDataTypeStorage](cvalue)}
+	return &DataTypeStorage{CData: datautils.ConvertCTypes[*C.ImGuiDataTypeStorage](cvalue)}
 }
 
 type DataVarInfo struct {
@@ -580,7 +580,7 @@ func (self DataVarInfo) C() (C.ImGuiDataVarInfo, func()) {
 // NewDataVarInfoFromC creates DataVarInfo from its C pointer.
 // SRC ~= *C.ImGuiDataVarInfo
 func NewDataVarInfoFromC[SRC any](cvalue SRC) *DataVarInfo {
-	return &DataVarInfo{CData: ConvertCTypes[*C.ImGuiDataVarInfo](cvalue)}
+	return &DataVarInfo{CData: datautils.ConvertCTypes[*C.ImGuiDataVarInfo](cvalue)}
 }
 
 type DebugAllocEntry struct {
@@ -601,7 +601,7 @@ func (self DebugAllocEntry) C() (C.ImGuiDebugAllocEntry, func()) {
 // NewDebugAllocEntryFromC creates DebugAllocEntry from its C pointer.
 // SRC ~= *C.ImGuiDebugAllocEntry
 func NewDebugAllocEntryFromC[SRC any](cvalue SRC) *DebugAllocEntry {
-	return &DebugAllocEntry{CData: ConvertCTypes[*C.ImGuiDebugAllocEntry](cvalue)}
+	return &DebugAllocEntry{CData: datautils.ConvertCTypes[*C.ImGuiDebugAllocEntry](cvalue)}
 }
 
 type DebugAllocInfo struct {
@@ -622,7 +622,7 @@ func (self DebugAllocInfo) C() (C.ImGuiDebugAllocInfo, func()) {
 // NewDebugAllocInfoFromC creates DebugAllocInfo from its C pointer.
 // SRC ~= *C.ImGuiDebugAllocInfo
 func NewDebugAllocInfoFromC[SRC any](cvalue SRC) *DebugAllocInfo {
-	return &DebugAllocInfo{CData: ConvertCTypes[*C.ImGuiDebugAllocInfo](cvalue)}
+	return &DebugAllocInfo{CData: datautils.ConvertCTypes[*C.ImGuiDebugAllocInfo](cvalue)}
 }
 
 type DockContext struct {
@@ -643,7 +643,7 @@ func (self DockContext) C() (C.ImGuiDockContext, func()) {
 // NewDockContextFromC creates DockContext from its C pointer.
 // SRC ~= *C.ImGuiDockContext
 func NewDockContextFromC[SRC any](cvalue SRC) *DockContext {
-	return &DockContext{CData: ConvertCTypes[*C.ImGuiDockContext](cvalue)}
+	return &DockContext{CData: datautils.ConvertCTypes[*C.ImGuiDockContext](cvalue)}
 }
 
 type DockNode struct {
@@ -664,7 +664,7 @@ func (self DockNode) C() (C.ImGuiDockNode, func()) {
 // NewDockNodeFromC creates DockNode from its C pointer.
 // SRC ~= *C.ImGuiDockNode
 func NewDockNodeFromC[SRC any](cvalue SRC) *DockNode {
-	return &DockNode{CData: ConvertCTypes[*C.ImGuiDockNode](cvalue)}
+	return &DockNode{CData: datautils.ConvertCTypes[*C.ImGuiDockNode](cvalue)}
 }
 
 type DockNodeSettings struct {
@@ -679,7 +679,7 @@ func (self *DockNodeSettings) Handle() (result *C.ImGuiDockNodeSettings, fin fun
 // NewDockNodeSettingsFromC creates DockNodeSettings from its C pointer.
 // SRC ~= *C.ImGuiDockNodeSettings
 func NewDockNodeSettingsFromC[SRC any](cvalue SRC) *DockNodeSettings {
-	return &DockNodeSettings{CData: ConvertCTypes[*C.ImGuiDockNodeSettings](cvalue)}
+	return &DockNodeSettings{CData: datautils.ConvertCTypes[*C.ImGuiDockNodeSettings](cvalue)}
 }
 
 type DockRequest struct {
@@ -694,7 +694,7 @@ func (self *DockRequest) Handle() (result *C.ImGuiDockRequest, fin func()) {
 // NewDockRequestFromC creates DockRequest from its C pointer.
 // SRC ~= *C.ImGuiDockRequest
 func NewDockRequestFromC[SRC any](cvalue SRC) *DockRequest {
-	return &DockRequest{CData: ConvertCTypes[*C.ImGuiDockRequest](cvalue)}
+	return &DockRequest{CData: datautils.ConvertCTypes[*C.ImGuiDockRequest](cvalue)}
 }
 
 type FocusScopeData struct {
@@ -715,7 +715,7 @@ func (self FocusScopeData) C() (C.ImGuiFocusScopeData, func()) {
 // NewFocusScopeDataFromC creates FocusScopeData from its C pointer.
 // SRC ~= *C.ImGuiFocusScopeData
 func NewFocusScopeDataFromC[SRC any](cvalue SRC) *FocusScopeData {
-	return &FocusScopeData{CData: ConvertCTypes[*C.ImGuiFocusScopeData](cvalue)}
+	return &FocusScopeData{CData: datautils.ConvertCTypes[*C.ImGuiFocusScopeData](cvalue)}
 }
 
 type GroupData struct {
@@ -736,7 +736,7 @@ func (self GroupData) C() (C.ImGuiGroupData, func()) {
 // NewGroupDataFromC creates GroupData from its C pointer.
 // SRC ~= *C.ImGuiGroupData
 func NewGroupDataFromC[SRC any](cvalue SRC) *GroupData {
-	return &GroupData{CData: ConvertCTypes[*C.ImGuiGroupData](cvalue)}
+	return &GroupData{CData: datautils.ConvertCTypes[*C.ImGuiGroupData](cvalue)}
 }
 
 type ID uint32
@@ -756,7 +756,7 @@ func (self ID) C() (C.ImGuiID, func()) {
 // NewIDFromC creates ID from its C pointer.
 // SRC ~= *C.ImGuiID
 func NewIDFromC[SRC any](cvalue SRC) *ID {
-	return (*ID)((*uint32)(ConvertCTypes[*C.ImGuiID](cvalue)))
+	return (*ID)((*uint32)(datautils.ConvertCTypes[*C.ImGuiID](cvalue)))
 }
 
 type IDStackTool struct {
@@ -777,7 +777,7 @@ func (self IDStackTool) C() (C.ImGuiIDStackTool, func()) {
 // NewIDStackToolFromC creates IDStackTool from its C pointer.
 // SRC ~= *C.ImGuiIDStackTool
 func NewIDStackToolFromC[SRC any](cvalue SRC) *IDStackTool {
-	return &IDStackTool{CData: ConvertCTypes[*C.ImGuiIDStackTool](cvalue)}
+	return &IDStackTool{CData: datautils.ConvertCTypes[*C.ImGuiIDStackTool](cvalue)}
 }
 
 type IO struct {
@@ -798,7 +798,7 @@ func (self IO) C() (C.ImGuiIO, func()) {
 // NewIOFromC creates IO from its C pointer.
 // SRC ~= *C.ImGuiIO
 func NewIOFromC[SRC any](cvalue SRC) *IO {
-	return &IO{CData: ConvertCTypes[*C.ImGuiIO](cvalue)}
+	return &IO{CData: datautils.ConvertCTypes[*C.ImGuiIO](cvalue)}
 }
 
 type InputEvent struct {
@@ -819,7 +819,7 @@ func (self InputEvent) C() (C.ImGuiInputEvent, func()) {
 // NewInputEventFromC creates InputEvent from its C pointer.
 // SRC ~= *C.ImGuiInputEvent
 func NewInputEventFromC[SRC any](cvalue SRC) *InputEvent {
-	return &InputEvent{CData: ConvertCTypes[*C.ImGuiInputEvent](cvalue)}
+	return &InputEvent{CData: datautils.ConvertCTypes[*C.ImGuiInputEvent](cvalue)}
 }
 
 type InputEventAppFocused struct {
@@ -840,7 +840,7 @@ func (self InputEventAppFocused) C() (C.ImGuiInputEventAppFocused, func()) {
 // NewInputEventAppFocusedFromC creates InputEventAppFocused from its C pointer.
 // SRC ~= *C.ImGuiInputEventAppFocused
 func NewInputEventAppFocusedFromC[SRC any](cvalue SRC) *InputEventAppFocused {
-	return &InputEventAppFocused{CData: ConvertCTypes[*C.ImGuiInputEventAppFocused](cvalue)}
+	return &InputEventAppFocused{CData: datautils.ConvertCTypes[*C.ImGuiInputEventAppFocused](cvalue)}
 }
 
 type InputEventKey struct {
@@ -861,7 +861,7 @@ func (self InputEventKey) C() (C.ImGuiInputEventKey, func()) {
 // NewInputEventKeyFromC creates InputEventKey from its C pointer.
 // SRC ~= *C.ImGuiInputEventKey
 func NewInputEventKeyFromC[SRC any](cvalue SRC) *InputEventKey {
-	return &InputEventKey{CData: ConvertCTypes[*C.ImGuiInputEventKey](cvalue)}
+	return &InputEventKey{CData: datautils.ConvertCTypes[*C.ImGuiInputEventKey](cvalue)}
 }
 
 type InputEventMouseButton struct {
@@ -882,7 +882,7 @@ func (self InputEventMouseButton) C() (C.ImGuiInputEventMouseButton, func()) {
 // NewInputEventMouseButtonFromC creates InputEventMouseButton from its C pointer.
 // SRC ~= *C.ImGuiInputEventMouseButton
 func NewInputEventMouseButtonFromC[SRC any](cvalue SRC) *InputEventMouseButton {
-	return &InputEventMouseButton{CData: ConvertCTypes[*C.ImGuiInputEventMouseButton](cvalue)}
+	return &InputEventMouseButton{CData: datautils.ConvertCTypes[*C.ImGuiInputEventMouseButton](cvalue)}
 }
 
 type InputEventMousePos struct {
@@ -903,7 +903,7 @@ func (self InputEventMousePos) C() (C.ImGuiInputEventMousePos, func()) {
 // NewInputEventMousePosFromC creates InputEventMousePos from its C pointer.
 // SRC ~= *C.ImGuiInputEventMousePos
 func NewInputEventMousePosFromC[SRC any](cvalue SRC) *InputEventMousePos {
-	return &InputEventMousePos{CData: ConvertCTypes[*C.ImGuiInputEventMousePos](cvalue)}
+	return &InputEventMousePos{CData: datautils.ConvertCTypes[*C.ImGuiInputEventMousePos](cvalue)}
 }
 
 type InputEventMouseViewport struct {
@@ -924,7 +924,7 @@ func (self InputEventMouseViewport) C() (C.ImGuiInputEventMouseViewport, func())
 // NewInputEventMouseViewportFromC creates InputEventMouseViewport from its C pointer.
 // SRC ~= *C.ImGuiInputEventMouseViewport
 func NewInputEventMouseViewportFromC[SRC any](cvalue SRC) *InputEventMouseViewport {
-	return &InputEventMouseViewport{CData: ConvertCTypes[*C.ImGuiInputEventMouseViewport](cvalue)}
+	return &InputEventMouseViewport{CData: datautils.ConvertCTypes[*C.ImGuiInputEventMouseViewport](cvalue)}
 }
 
 type InputEventMouseWheel struct {
@@ -945,7 +945,7 @@ func (self InputEventMouseWheel) C() (C.ImGuiInputEventMouseWheel, func()) {
 // NewInputEventMouseWheelFromC creates InputEventMouseWheel from its C pointer.
 // SRC ~= *C.ImGuiInputEventMouseWheel
 func NewInputEventMouseWheelFromC[SRC any](cvalue SRC) *InputEventMouseWheel {
-	return &InputEventMouseWheel{CData: ConvertCTypes[*C.ImGuiInputEventMouseWheel](cvalue)}
+	return &InputEventMouseWheel{CData: datautils.ConvertCTypes[*C.ImGuiInputEventMouseWheel](cvalue)}
 }
 
 type InputEventText struct {
@@ -966,7 +966,7 @@ func (self InputEventText) C() (C.ImGuiInputEventText, func()) {
 // NewInputEventTextFromC creates InputEventText from its C pointer.
 // SRC ~= *C.ImGuiInputEventText
 func NewInputEventTextFromC[SRC any](cvalue SRC) *InputEventText {
-	return &InputEventText{CData: ConvertCTypes[*C.ImGuiInputEventText](cvalue)}
+	return &InputEventText{CData: datautils.ConvertCTypes[*C.ImGuiInputEventText](cvalue)}
 }
 
 type InputTextCallbackData struct {
@@ -987,7 +987,7 @@ func (self InputTextCallbackData) C() (C.ImGuiInputTextCallbackData, func()) {
 // NewInputTextCallbackDataFromC creates InputTextCallbackData from its C pointer.
 // SRC ~= *C.ImGuiInputTextCallbackData
 func NewInputTextCallbackDataFromC[SRC any](cvalue SRC) *InputTextCallbackData {
-	return &InputTextCallbackData{CData: ConvertCTypes[*C.ImGuiInputTextCallbackData](cvalue)}
+	return &InputTextCallbackData{CData: datautils.ConvertCTypes[*C.ImGuiInputTextCallbackData](cvalue)}
 }
 
 type InputTextDeactivateData struct {
@@ -1002,7 +1002,7 @@ func (self *InputTextDeactivateData) Handle() (result *C.ImGuiInputTextDeactivat
 // NewInputTextDeactivateDataFromC creates InputTextDeactivateData from its C pointer.
 // SRC ~= *C.ImGuiInputTextDeactivateData
 func NewInputTextDeactivateDataFromC[SRC any](cvalue SRC) *InputTextDeactivateData {
-	return &InputTextDeactivateData{CData: ConvertCTypes[*C.ImGuiInputTextDeactivateData](cvalue)}
+	return &InputTextDeactivateData{CData: datautils.ConvertCTypes[*C.ImGuiInputTextDeactivateData](cvalue)}
 }
 
 type InputTextDeactivatedState struct {
@@ -1023,7 +1023,7 @@ func (self InputTextDeactivatedState) C() (C.ImGuiInputTextDeactivatedState, fun
 // NewInputTextDeactivatedStateFromC creates InputTextDeactivatedState from its C pointer.
 // SRC ~= *C.ImGuiInputTextDeactivatedState
 func NewInputTextDeactivatedStateFromC[SRC any](cvalue SRC) *InputTextDeactivatedState {
-	return &InputTextDeactivatedState{CData: ConvertCTypes[*C.ImGuiInputTextDeactivatedState](cvalue)}
+	return &InputTextDeactivatedState{CData: datautils.ConvertCTypes[*C.ImGuiInputTextDeactivatedState](cvalue)}
 }
 
 type InputTextState struct {
@@ -1044,7 +1044,7 @@ func (self InputTextState) C() (C.ImGuiInputTextState, func()) {
 // NewInputTextStateFromC creates InputTextState from its C pointer.
 // SRC ~= *C.ImGuiInputTextState
 func NewInputTextStateFromC[SRC any](cvalue SRC) *InputTextState {
-	return &InputTextState{CData: ConvertCTypes[*C.ImGuiInputTextState](cvalue)}
+	return &InputTextState{CData: datautils.ConvertCTypes[*C.ImGuiInputTextState](cvalue)}
 }
 
 type KeyChord int32
@@ -1064,7 +1064,7 @@ func (self KeyChord) C() (C.ImGuiKeyChord, func()) {
 // NewKeyChordFromC creates KeyChord from its C pointer.
 // SRC ~= *C.ImGuiKeyChord
 func NewKeyChordFromC[SRC any](cvalue SRC) *KeyChord {
-	return (*KeyChord)((*int32)(ConvertCTypes[*C.ImGuiKeyChord](cvalue)))
+	return (*KeyChord)((*int32)(datautils.ConvertCTypes[*C.ImGuiKeyChord](cvalue)))
 }
 
 type KeyData struct {
@@ -1085,7 +1085,7 @@ func (self KeyData) C() (C.ImGuiKeyData, func()) {
 // NewKeyDataFromC creates KeyData from its C pointer.
 // SRC ~= *C.ImGuiKeyData
 func NewKeyDataFromC[SRC any](cvalue SRC) *KeyData {
-	return &KeyData{CData: ConvertCTypes[*C.ImGuiKeyData](cvalue)}
+	return &KeyData{CData: datautils.ConvertCTypes[*C.ImGuiKeyData](cvalue)}
 }
 
 type KeyOwnerData struct {
@@ -1106,7 +1106,7 @@ func (self KeyOwnerData) C() (C.ImGuiKeyOwnerData, func()) {
 // NewKeyOwnerDataFromC creates KeyOwnerData from its C pointer.
 // SRC ~= *C.ImGuiKeyOwnerData
 func NewKeyOwnerDataFromC[SRC any](cvalue SRC) *KeyOwnerData {
-	return &KeyOwnerData{CData: ConvertCTypes[*C.ImGuiKeyOwnerData](cvalue)}
+	return &KeyOwnerData{CData: datautils.ConvertCTypes[*C.ImGuiKeyOwnerData](cvalue)}
 }
 
 type KeyRoutingData struct {
@@ -1127,7 +1127,7 @@ func (self KeyRoutingData) C() (C.ImGuiKeyRoutingData, func()) {
 // NewKeyRoutingDataFromC creates KeyRoutingData from its C pointer.
 // SRC ~= *C.ImGuiKeyRoutingData
 func NewKeyRoutingDataFromC[SRC any](cvalue SRC) *KeyRoutingData {
-	return &KeyRoutingData{CData: ConvertCTypes[*C.ImGuiKeyRoutingData](cvalue)}
+	return &KeyRoutingData{CData: datautils.ConvertCTypes[*C.ImGuiKeyRoutingData](cvalue)}
 }
 
 type KeyRoutingIndex int16
@@ -1147,7 +1147,7 @@ func (self KeyRoutingIndex) C() (C.ImGuiKeyRoutingIndex, func()) {
 // NewKeyRoutingIndexFromC creates KeyRoutingIndex from its C pointer.
 // SRC ~= *C.ImGuiKeyRoutingIndex
 func NewKeyRoutingIndexFromC[SRC any](cvalue SRC) *KeyRoutingIndex {
-	return (*KeyRoutingIndex)((*int16)(ConvertCTypes[*C.ImGuiKeyRoutingIndex](cvalue)))
+	return (*KeyRoutingIndex)((*int16)(datautils.ConvertCTypes[*C.ImGuiKeyRoutingIndex](cvalue)))
 }
 
 type KeyRoutingTable struct {
@@ -1168,7 +1168,7 @@ func (self KeyRoutingTable) C() (C.ImGuiKeyRoutingTable, func()) {
 // NewKeyRoutingTableFromC creates KeyRoutingTable from its C pointer.
 // SRC ~= *C.ImGuiKeyRoutingTable
 func NewKeyRoutingTableFromC[SRC any](cvalue SRC) *KeyRoutingTable {
-	return &KeyRoutingTable{CData: ConvertCTypes[*C.ImGuiKeyRoutingTable](cvalue)}
+	return &KeyRoutingTable{CData: datautils.ConvertCTypes[*C.ImGuiKeyRoutingTable](cvalue)}
 }
 
 type LastItemData struct {
@@ -1189,7 +1189,7 @@ func (self LastItemData) C() (C.ImGuiLastItemData, func()) {
 // NewLastItemDataFromC creates LastItemData from its C pointer.
 // SRC ~= *C.ImGuiLastItemData
 func NewLastItemDataFromC[SRC any](cvalue SRC) *LastItemData {
-	return &LastItemData{CData: ConvertCTypes[*C.ImGuiLastItemData](cvalue)}
+	return &LastItemData{CData: datautils.ConvertCTypes[*C.ImGuiLastItemData](cvalue)}
 }
 
 type ListClipper struct {
@@ -1210,7 +1210,7 @@ func (self ListClipper) C() (C.ImGuiListClipper, func()) {
 // NewListClipperFromC creates ListClipper from its C pointer.
 // SRC ~= *C.ImGuiListClipper
 func NewListClipperFromC[SRC any](cvalue SRC) *ListClipper {
-	return &ListClipper{CData: ConvertCTypes[*C.ImGuiListClipper](cvalue)}
+	return &ListClipper{CData: datautils.ConvertCTypes[*C.ImGuiListClipper](cvalue)}
 }
 
 type ListClipperData struct {
@@ -1231,7 +1231,7 @@ func (self ListClipperData) C() (C.ImGuiListClipperData, func()) {
 // NewListClipperDataFromC creates ListClipperData from its C pointer.
 // SRC ~= *C.ImGuiListClipperData
 func NewListClipperDataFromC[SRC any](cvalue SRC) *ListClipperData {
-	return &ListClipperData{CData: ConvertCTypes[*C.ImGuiListClipperData](cvalue)}
+	return &ListClipperData{CData: datautils.ConvertCTypes[*C.ImGuiListClipperData](cvalue)}
 }
 
 type ListClipperRange struct {
@@ -1252,7 +1252,7 @@ func (self ListClipperRange) C() (C.ImGuiListClipperRange, func()) {
 // NewListClipperRangeFromC creates ListClipperRange from its C pointer.
 // SRC ~= *C.ImGuiListClipperRange
 func NewListClipperRangeFromC[SRC any](cvalue SRC) *ListClipperRange {
-	return &ListClipperRange{CData: ConvertCTypes[*C.ImGuiListClipperRange](cvalue)}
+	return &ListClipperRange{CData: datautils.ConvertCTypes[*C.ImGuiListClipperRange](cvalue)}
 }
 
 type LocEntry struct {
@@ -1273,7 +1273,7 @@ func (self LocEntry) C() (C.ImGuiLocEntry, func()) {
 // NewLocEntryFromC creates LocEntry from its C pointer.
 // SRC ~= *C.ImGuiLocEntry
 func NewLocEntryFromC[SRC any](cvalue SRC) *LocEntry {
-	return &LocEntry{CData: ConvertCTypes[*C.ImGuiLocEntry](cvalue)}
+	return &LocEntry{CData: datautils.ConvertCTypes[*C.ImGuiLocEntry](cvalue)}
 }
 
 type MenuColumns struct {
@@ -1294,7 +1294,7 @@ func (self MenuColumns) C() (C.ImGuiMenuColumns, func()) {
 // NewMenuColumnsFromC creates MenuColumns from its C pointer.
 // SRC ~= *C.ImGuiMenuColumns
 func NewMenuColumnsFromC[SRC any](cvalue SRC) *MenuColumns {
-	return &MenuColumns{CData: ConvertCTypes[*C.ImGuiMenuColumns](cvalue)}
+	return &MenuColumns{CData: datautils.ConvertCTypes[*C.ImGuiMenuColumns](cvalue)}
 }
 
 type MetricsConfig struct {
@@ -1315,7 +1315,7 @@ func (self MetricsConfig) C() (C.ImGuiMetricsConfig, func()) {
 // NewMetricsConfigFromC creates MetricsConfig from its C pointer.
 // SRC ~= *C.ImGuiMetricsConfig
 func NewMetricsConfigFromC[SRC any](cvalue SRC) *MetricsConfig {
-	return &MetricsConfig{CData: ConvertCTypes[*C.ImGuiMetricsConfig](cvalue)}
+	return &MetricsConfig{CData: datautils.ConvertCTypes[*C.ImGuiMetricsConfig](cvalue)}
 }
 
 type MultiSelectIO struct {
@@ -1336,7 +1336,7 @@ func (self MultiSelectIO) C() (C.ImGuiMultiSelectIO, func()) {
 // NewMultiSelectIOFromC creates MultiSelectIO from its C pointer.
 // SRC ~= *C.ImGuiMultiSelectIO
 func NewMultiSelectIOFromC[SRC any](cvalue SRC) *MultiSelectIO {
-	return &MultiSelectIO{CData: ConvertCTypes[*C.ImGuiMultiSelectIO](cvalue)}
+	return &MultiSelectIO{CData: datautils.ConvertCTypes[*C.ImGuiMultiSelectIO](cvalue)}
 }
 
 type MultiSelectState struct {
@@ -1357,7 +1357,7 @@ func (self MultiSelectState) C() (C.ImGuiMultiSelectState, func()) {
 // NewMultiSelectStateFromC creates MultiSelectState from its C pointer.
 // SRC ~= *C.ImGuiMultiSelectState
 func NewMultiSelectStateFromC[SRC any](cvalue SRC) *MultiSelectState {
-	return &MultiSelectState{CData: ConvertCTypes[*C.ImGuiMultiSelectState](cvalue)}
+	return &MultiSelectState{CData: datautils.ConvertCTypes[*C.ImGuiMultiSelectState](cvalue)}
 }
 
 type MultiSelectTempData struct {
@@ -1378,7 +1378,7 @@ func (self MultiSelectTempData) C() (C.ImGuiMultiSelectTempData, func()) {
 // NewMultiSelectTempDataFromC creates MultiSelectTempData from its C pointer.
 // SRC ~= *C.ImGuiMultiSelectTempData
 func NewMultiSelectTempDataFromC[SRC any](cvalue SRC) *MultiSelectTempData {
-	return &MultiSelectTempData{CData: ConvertCTypes[*C.ImGuiMultiSelectTempData](cvalue)}
+	return &MultiSelectTempData{CData: datautils.ConvertCTypes[*C.ImGuiMultiSelectTempData](cvalue)}
 }
 
 type NavItemData struct {
@@ -1399,7 +1399,7 @@ func (self NavItemData) C() (C.ImGuiNavItemData, func()) {
 // NewNavItemDataFromC creates NavItemData from its C pointer.
 // SRC ~= *C.ImGuiNavItemData
 func NewNavItemDataFromC[SRC any](cvalue SRC) *NavItemData {
-	return &NavItemData{CData: ConvertCTypes[*C.ImGuiNavItemData](cvalue)}
+	return &NavItemData{CData: datautils.ConvertCTypes[*C.ImGuiNavItemData](cvalue)}
 }
 
 type NextItemData struct {
@@ -1420,7 +1420,7 @@ func (self NextItemData) C() (C.ImGuiNextItemData, func()) {
 // NewNextItemDataFromC creates NextItemData from its C pointer.
 // SRC ~= *C.ImGuiNextItemData
 func NewNextItemDataFromC[SRC any](cvalue SRC) *NextItemData {
-	return &NextItemData{CData: ConvertCTypes[*C.ImGuiNextItemData](cvalue)}
+	return &NextItemData{CData: datautils.ConvertCTypes[*C.ImGuiNextItemData](cvalue)}
 }
 
 type NextWindowData struct {
@@ -1441,7 +1441,7 @@ func (self NextWindowData) C() (C.ImGuiNextWindowData, func()) {
 // NewNextWindowDataFromC creates NextWindowData from its C pointer.
 // SRC ~= *C.ImGuiNextWindowData
 func NewNextWindowDataFromC[SRC any](cvalue SRC) *NextWindowData {
-	return &NextWindowData{CData: ConvertCTypes[*C.ImGuiNextWindowData](cvalue)}
+	return &NextWindowData{CData: datautils.ConvertCTypes[*C.ImGuiNextWindowData](cvalue)}
 }
 
 type OldColumnData struct {
@@ -1462,7 +1462,7 @@ func (self OldColumnData) C() (C.ImGuiOldColumnData, func()) {
 // NewOldColumnDataFromC creates OldColumnData from its C pointer.
 // SRC ~= *C.ImGuiOldColumnData
 func NewOldColumnDataFromC[SRC any](cvalue SRC) *OldColumnData {
-	return &OldColumnData{CData: ConvertCTypes[*C.ImGuiOldColumnData](cvalue)}
+	return &OldColumnData{CData: datautils.ConvertCTypes[*C.ImGuiOldColumnData](cvalue)}
 }
 
 type OldColumns struct {
@@ -1483,7 +1483,7 @@ func (self OldColumns) C() (C.ImGuiOldColumns, func()) {
 // NewOldColumnsFromC creates OldColumns from its C pointer.
 // SRC ~= *C.ImGuiOldColumns
 func NewOldColumnsFromC[SRC any](cvalue SRC) *OldColumns {
-	return &OldColumns{CData: ConvertCTypes[*C.ImGuiOldColumns](cvalue)}
+	return &OldColumns{CData: datautils.ConvertCTypes[*C.ImGuiOldColumns](cvalue)}
 }
 
 type OnceUponAFrame struct {
@@ -1504,7 +1504,7 @@ func (self OnceUponAFrame) C() (C.ImGuiOnceUponAFrame, func()) {
 // NewOnceUponAFrameFromC creates OnceUponAFrame from its C pointer.
 // SRC ~= *C.ImGuiOnceUponAFrame
 func NewOnceUponAFrameFromC[SRC any](cvalue SRC) *OnceUponAFrame {
-	return &OnceUponAFrame{CData: ConvertCTypes[*C.ImGuiOnceUponAFrame](cvalue)}
+	return &OnceUponAFrame{CData: datautils.ConvertCTypes[*C.ImGuiOnceUponAFrame](cvalue)}
 }
 
 type Payload struct {
@@ -1525,7 +1525,7 @@ func (self Payload) C() (C.ImGuiPayload, func()) {
 // NewPayloadFromC creates Payload from its C pointer.
 // SRC ~= *C.ImGuiPayload
 func NewPayloadFromC[SRC any](cvalue SRC) *Payload {
-	return &Payload{CData: ConvertCTypes[*C.ImGuiPayload](cvalue)}
+	return &Payload{CData: datautils.ConvertCTypes[*C.ImGuiPayload](cvalue)}
 }
 
 type PlatformIO struct {
@@ -1546,7 +1546,7 @@ func (self PlatformIO) C() (C.ImGuiPlatformIO, func()) {
 // NewPlatformIOFromC creates PlatformIO from its C pointer.
 // SRC ~= *C.ImGuiPlatformIO
 func NewPlatformIOFromC[SRC any](cvalue SRC) *PlatformIO {
-	return &PlatformIO{CData: ConvertCTypes[*C.ImGuiPlatformIO](cvalue)}
+	return &PlatformIO{CData: datautils.ConvertCTypes[*C.ImGuiPlatformIO](cvalue)}
 }
 
 type PlatformImeData struct {
@@ -1567,7 +1567,7 @@ func (self PlatformImeData) C() (C.ImGuiPlatformImeData, func()) {
 // NewPlatformImeDataFromC creates PlatformImeData from its C pointer.
 // SRC ~= *C.ImGuiPlatformImeData
 func NewPlatformImeDataFromC[SRC any](cvalue SRC) *PlatformImeData {
-	return &PlatformImeData{CData: ConvertCTypes[*C.ImGuiPlatformImeData](cvalue)}
+	return &PlatformImeData{CData: datautils.ConvertCTypes[*C.ImGuiPlatformImeData](cvalue)}
 }
 
 type PlatformMonitor struct {
@@ -1588,7 +1588,7 @@ func (self PlatformMonitor) C() (C.ImGuiPlatformMonitor, func()) {
 // NewPlatformMonitorFromC creates PlatformMonitor from its C pointer.
 // SRC ~= *C.ImGuiPlatformMonitor
 func NewPlatformMonitorFromC[SRC any](cvalue SRC) *PlatformMonitor {
-	return &PlatformMonitor{CData: ConvertCTypes[*C.ImGuiPlatformMonitor](cvalue)}
+	return &PlatformMonitor{CData: datautils.ConvertCTypes[*C.ImGuiPlatformMonitor](cvalue)}
 }
 
 type PopupData struct {
@@ -1609,7 +1609,7 @@ func (self PopupData) C() (C.ImGuiPopupData, func()) {
 // NewPopupDataFromC creates PopupData from its C pointer.
 // SRC ~= *C.ImGuiPopupData
 func NewPopupDataFromC[SRC any](cvalue SRC) *PopupData {
-	return &PopupData{CData: ConvertCTypes[*C.ImGuiPopupData](cvalue)}
+	return &PopupData{CData: datautils.ConvertCTypes[*C.ImGuiPopupData](cvalue)}
 }
 
 type PtrOrIndex struct {
@@ -1630,7 +1630,7 @@ func (self PtrOrIndex) C() (C.ImGuiPtrOrIndex, func()) {
 // NewPtrOrIndexFromC creates PtrOrIndex from its C pointer.
 // SRC ~= *C.ImGuiPtrOrIndex
 func NewPtrOrIndexFromC[SRC any](cvalue SRC) *PtrOrIndex {
-	return &PtrOrIndex{CData: ConvertCTypes[*C.ImGuiPtrOrIndex](cvalue)}
+	return &PtrOrIndex{CData: datautils.ConvertCTypes[*C.ImGuiPtrOrIndex](cvalue)}
 }
 
 type SelectionBasicStorage struct {
@@ -1651,7 +1651,7 @@ func (self SelectionBasicStorage) C() (C.ImGuiSelectionBasicStorage, func()) {
 // NewSelectionBasicStorageFromC creates SelectionBasicStorage from its C pointer.
 // SRC ~= *C.ImGuiSelectionBasicStorage
 func NewSelectionBasicStorageFromC[SRC any](cvalue SRC) *SelectionBasicStorage {
-	return &SelectionBasicStorage{CData: ConvertCTypes[*C.ImGuiSelectionBasicStorage](cvalue)}
+	return &SelectionBasicStorage{CData: datautils.ConvertCTypes[*C.ImGuiSelectionBasicStorage](cvalue)}
 }
 
 type SelectionExternalStorage struct {
@@ -1672,7 +1672,7 @@ func (self SelectionExternalStorage) C() (C.ImGuiSelectionExternalStorage, func(
 // NewSelectionExternalStorageFromC creates SelectionExternalStorage from its C pointer.
 // SRC ~= *C.ImGuiSelectionExternalStorage
 func NewSelectionExternalStorageFromC[SRC any](cvalue SRC) *SelectionExternalStorage {
-	return &SelectionExternalStorage{CData: ConvertCTypes[*C.ImGuiSelectionExternalStorage](cvalue)}
+	return &SelectionExternalStorage{CData: datautils.ConvertCTypes[*C.ImGuiSelectionExternalStorage](cvalue)}
 }
 
 type SelectionRequest struct {
@@ -1693,7 +1693,7 @@ func (self SelectionRequest) C() (C.ImGuiSelectionRequest, func()) {
 // NewSelectionRequestFromC creates SelectionRequest from its C pointer.
 // SRC ~= *C.ImGuiSelectionRequest
 func NewSelectionRequestFromC[SRC any](cvalue SRC) *SelectionRequest {
-	return &SelectionRequest{CData: ConvertCTypes[*C.ImGuiSelectionRequest](cvalue)}
+	return &SelectionRequest{CData: datautils.ConvertCTypes[*C.ImGuiSelectionRequest](cvalue)}
 }
 
 type SelectionUserData int64
@@ -1713,7 +1713,7 @@ func (self SelectionUserData) C() (C.ImGuiSelectionUserData, func()) {
 // NewSelectionUserDataFromC creates SelectionUserData from its C pointer.
 // SRC ~= *C.ImGuiSelectionUserData
 func NewSelectionUserDataFromC[SRC any](cvalue SRC) *SelectionUserData {
-	return (*SelectionUserData)((*int64)(ConvertCTypes[*C.ImGuiSelectionUserData](cvalue)))
+	return (*SelectionUserData)((*int64)(datautils.ConvertCTypes[*C.ImGuiSelectionUserData](cvalue)))
 }
 
 type SettingsHandler struct {
@@ -1734,7 +1734,7 @@ func (self SettingsHandler) C() (C.ImGuiSettingsHandler, func()) {
 // NewSettingsHandlerFromC creates SettingsHandler from its C pointer.
 // SRC ~= *C.ImGuiSettingsHandler
 func NewSettingsHandlerFromC[SRC any](cvalue SRC) *SettingsHandler {
-	return &SettingsHandler{CData: ConvertCTypes[*C.ImGuiSettingsHandler](cvalue)}
+	return &SettingsHandler{CData: datautils.ConvertCTypes[*C.ImGuiSettingsHandler](cvalue)}
 }
 
 type ShrinkWidthItem struct {
@@ -1755,7 +1755,7 @@ func (self ShrinkWidthItem) C() (C.ImGuiShrinkWidthItem, func()) {
 // NewShrinkWidthItemFromC creates ShrinkWidthItem from its C pointer.
 // SRC ~= *C.ImGuiShrinkWidthItem
 func NewShrinkWidthItemFromC[SRC any](cvalue SRC) *ShrinkWidthItem {
-	return &ShrinkWidthItem{CData: ConvertCTypes[*C.ImGuiShrinkWidthItem](cvalue)}
+	return &ShrinkWidthItem{CData: datautils.ConvertCTypes[*C.ImGuiShrinkWidthItem](cvalue)}
 }
 
 type SizeCallbackData struct {
@@ -1776,7 +1776,7 @@ func (self SizeCallbackData) C() (C.ImGuiSizeCallbackData, func()) {
 // NewSizeCallbackDataFromC creates SizeCallbackData from its C pointer.
 // SRC ~= *C.ImGuiSizeCallbackData
 func NewSizeCallbackDataFromC[SRC any](cvalue SRC) *SizeCallbackData {
-	return &SizeCallbackData{CData: ConvertCTypes[*C.ImGuiSizeCallbackData](cvalue)}
+	return &SizeCallbackData{CData: datautils.ConvertCTypes[*C.ImGuiSizeCallbackData](cvalue)}
 }
 
 type StackLevelInfo struct {
@@ -1797,7 +1797,7 @@ func (self StackLevelInfo) C() (C.ImGuiStackLevelInfo, func()) {
 // NewStackLevelInfoFromC creates StackLevelInfo from its C pointer.
 // SRC ~= *C.ImGuiStackLevelInfo
 func NewStackLevelInfoFromC[SRC any](cvalue SRC) *StackLevelInfo {
-	return &StackLevelInfo{CData: ConvertCTypes[*C.ImGuiStackLevelInfo](cvalue)}
+	return &StackLevelInfo{CData: datautils.ConvertCTypes[*C.ImGuiStackLevelInfo](cvalue)}
 }
 
 type StackSizes struct {
@@ -1818,7 +1818,7 @@ func (self StackSizes) C() (C.ImGuiStackSizes, func()) {
 // NewStackSizesFromC creates StackSizes from its C pointer.
 // SRC ~= *C.ImGuiStackSizes
 func NewStackSizesFromC[SRC any](cvalue SRC) *StackSizes {
-	return &StackSizes{CData: ConvertCTypes[*C.ImGuiStackSizes](cvalue)}
+	return &StackSizes{CData: datautils.ConvertCTypes[*C.ImGuiStackSizes](cvalue)}
 }
 
 type Storage struct {
@@ -1839,7 +1839,7 @@ func (self Storage) C() (C.ImGuiStorage, func()) {
 // NewStorageFromC creates Storage from its C pointer.
 // SRC ~= *C.ImGuiStorage
 func NewStorageFromC[SRC any](cvalue SRC) *Storage {
-	return &Storage{CData: ConvertCTypes[*C.ImGuiStorage](cvalue)}
+	return &Storage{CData: datautils.ConvertCTypes[*C.ImGuiStorage](cvalue)}
 }
 
 type StoragePair struct {
@@ -1860,7 +1860,7 @@ func (self StoragePair) C() (C.ImGuiStoragePair, func()) {
 // NewStoragePairFromC creates StoragePair from its C pointer.
 // SRC ~= *C.ImGuiStoragePair
 func NewStoragePairFromC[SRC any](cvalue SRC) *StoragePair {
-	return &StoragePair{CData: ConvertCTypes[*C.ImGuiStoragePair](cvalue)}
+	return &StoragePair{CData: datautils.ConvertCTypes[*C.ImGuiStoragePair](cvalue)}
 }
 
 type Style struct {
@@ -1881,7 +1881,7 @@ func (self Style) C() (C.ImGuiStyle, func()) {
 // NewStyleFromC creates Style from its C pointer.
 // SRC ~= *C.ImGuiStyle
 func NewStyleFromC[SRC any](cvalue SRC) *Style {
-	return &Style{CData: ConvertCTypes[*C.ImGuiStyle](cvalue)}
+	return &Style{CData: datautils.ConvertCTypes[*C.ImGuiStyle](cvalue)}
 }
 
 type StyleMod struct {
@@ -1902,7 +1902,7 @@ func (self StyleMod) C() (C.ImGuiStyleMod, func()) {
 // NewStyleModFromC creates StyleMod from its C pointer.
 // SRC ~= *C.ImGuiStyleMod
 func NewStyleModFromC[SRC any](cvalue SRC) *StyleMod {
-	return &StyleMod{CData: ConvertCTypes[*C.ImGuiStyleMod](cvalue)}
+	return &StyleMod{CData: datautils.ConvertCTypes[*C.ImGuiStyleMod](cvalue)}
 }
 
 type TabBar struct {
@@ -1923,7 +1923,7 @@ func (self TabBar) C() (C.ImGuiTabBar, func()) {
 // NewTabBarFromC creates TabBar from its C pointer.
 // SRC ~= *C.ImGuiTabBar
 func NewTabBarFromC[SRC any](cvalue SRC) *TabBar {
-	return &TabBar{CData: ConvertCTypes[*C.ImGuiTabBar](cvalue)}
+	return &TabBar{CData: datautils.ConvertCTypes[*C.ImGuiTabBar](cvalue)}
 }
 
 type TabItem struct {
@@ -1944,7 +1944,7 @@ func (self TabItem) C() (C.ImGuiTabItem, func()) {
 // NewTabItemFromC creates TabItem from its C pointer.
 // SRC ~= *C.ImGuiTabItem
 func NewTabItemFromC[SRC any](cvalue SRC) *TabItem {
-	return &TabItem{CData: ConvertCTypes[*C.ImGuiTabItem](cvalue)}
+	return &TabItem{CData: datautils.ConvertCTypes[*C.ImGuiTabItem](cvalue)}
 }
 
 type Table struct {
@@ -1965,7 +1965,7 @@ func (self Table) C() (C.ImGuiTable, func()) {
 // NewTableFromC creates Table from its C pointer.
 // SRC ~= *C.ImGuiTable
 func NewTableFromC[SRC any](cvalue SRC) *Table {
-	return &Table{CData: ConvertCTypes[*C.ImGuiTable](cvalue)}
+	return &Table{CData: datautils.ConvertCTypes[*C.ImGuiTable](cvalue)}
 }
 
 type TableCellData struct {
@@ -1986,7 +1986,7 @@ func (self TableCellData) C() (C.ImGuiTableCellData, func()) {
 // NewTableCellDataFromC creates TableCellData from its C pointer.
 // SRC ~= *C.ImGuiTableCellData
 func NewTableCellDataFromC[SRC any](cvalue SRC) *TableCellData {
-	return &TableCellData{CData: ConvertCTypes[*C.ImGuiTableCellData](cvalue)}
+	return &TableCellData{CData: datautils.ConvertCTypes[*C.ImGuiTableCellData](cvalue)}
 }
 
 type TableColumn struct {
@@ -2007,7 +2007,7 @@ func (self TableColumn) C() (C.ImGuiTableColumn, func()) {
 // NewTableColumnFromC creates TableColumn from its C pointer.
 // SRC ~= *C.ImGuiTableColumn
 func NewTableColumnFromC[SRC any](cvalue SRC) *TableColumn {
-	return &TableColumn{CData: ConvertCTypes[*C.ImGuiTableColumn](cvalue)}
+	return &TableColumn{CData: datautils.ConvertCTypes[*C.ImGuiTableColumn](cvalue)}
 }
 
 type TableColumnIdx int16
@@ -2027,7 +2027,7 @@ func (self TableColumnIdx) C() (C.ImGuiTableColumnIdx, func()) {
 // NewTableColumnIdxFromC creates TableColumnIdx from its C pointer.
 // SRC ~= *C.ImGuiTableColumnIdx
 func NewTableColumnIdxFromC[SRC any](cvalue SRC) *TableColumnIdx {
-	return (*TableColumnIdx)((*int16)(ConvertCTypes[*C.ImGuiTableColumnIdx](cvalue)))
+	return (*TableColumnIdx)((*int16)(datautils.ConvertCTypes[*C.ImGuiTableColumnIdx](cvalue)))
 }
 
 type TableColumnSettings struct {
@@ -2048,7 +2048,7 @@ func (self TableColumnSettings) C() (C.ImGuiTableColumnSettings, func()) {
 // NewTableColumnSettingsFromC creates TableColumnSettings from its C pointer.
 // SRC ~= *C.ImGuiTableColumnSettings
 func NewTableColumnSettingsFromC[SRC any](cvalue SRC) *TableColumnSettings {
-	return &TableColumnSettings{CData: ConvertCTypes[*C.ImGuiTableColumnSettings](cvalue)}
+	return &TableColumnSettings{CData: datautils.ConvertCTypes[*C.ImGuiTableColumnSettings](cvalue)}
 }
 
 type TableColumnSortSpecs struct {
@@ -2069,7 +2069,7 @@ func (self TableColumnSortSpecs) C() (C.ImGuiTableColumnSortSpecs, func()) {
 // NewTableColumnSortSpecsFromC creates TableColumnSortSpecs from its C pointer.
 // SRC ~= *C.ImGuiTableColumnSortSpecs
 func NewTableColumnSortSpecsFromC[SRC any](cvalue SRC) *TableColumnSortSpecs {
-	return &TableColumnSortSpecs{CData: ConvertCTypes[*C.ImGuiTableColumnSortSpecs](cvalue)}
+	return &TableColumnSortSpecs{CData: datautils.ConvertCTypes[*C.ImGuiTableColumnSortSpecs](cvalue)}
 }
 
 type TableColumnsSettings struct {
@@ -2084,7 +2084,7 @@ func (self *TableColumnsSettings) Handle() (result *C.ImGuiTableColumnsSettings,
 // NewTableColumnsSettingsFromC creates TableColumnsSettings from its C pointer.
 // SRC ~= *C.ImGuiTableColumnsSettings
 func NewTableColumnsSettingsFromC[SRC any](cvalue SRC) *TableColumnsSettings {
-	return &TableColumnsSettings{CData: ConvertCTypes[*C.ImGuiTableColumnsSettings](cvalue)}
+	return &TableColumnsSettings{CData: datautils.ConvertCTypes[*C.ImGuiTableColumnsSettings](cvalue)}
 }
 
 type TableDrawChannelIdx uint16
@@ -2104,7 +2104,7 @@ func (self TableDrawChannelIdx) C() (C.ImGuiTableDrawChannelIdx, func()) {
 // NewTableDrawChannelIdxFromC creates TableDrawChannelIdx from its C pointer.
 // SRC ~= *C.ImGuiTableDrawChannelIdx
 func NewTableDrawChannelIdxFromC[SRC any](cvalue SRC) *TableDrawChannelIdx {
-	return (*TableDrawChannelIdx)((*uint16)(ConvertCTypes[*C.ImGuiTableDrawChannelIdx](cvalue)))
+	return (*TableDrawChannelIdx)((*uint16)(datautils.ConvertCTypes[*C.ImGuiTableDrawChannelIdx](cvalue)))
 }
 
 type TableHeaderData struct {
@@ -2125,7 +2125,7 @@ func (self TableHeaderData) C() (C.ImGuiTableHeaderData, func()) {
 // NewTableHeaderDataFromC creates TableHeaderData from its C pointer.
 // SRC ~= *C.ImGuiTableHeaderData
 func NewTableHeaderDataFromC[SRC any](cvalue SRC) *TableHeaderData {
-	return &TableHeaderData{CData: ConvertCTypes[*C.ImGuiTableHeaderData](cvalue)}
+	return &TableHeaderData{CData: datautils.ConvertCTypes[*C.ImGuiTableHeaderData](cvalue)}
 }
 
 type TableInstanceData struct {
@@ -2146,7 +2146,7 @@ func (self TableInstanceData) C() (C.ImGuiTableInstanceData, func()) {
 // NewTableInstanceDataFromC creates TableInstanceData from its C pointer.
 // SRC ~= *C.ImGuiTableInstanceData
 func NewTableInstanceDataFromC[SRC any](cvalue SRC) *TableInstanceData {
-	return &TableInstanceData{CData: ConvertCTypes[*C.ImGuiTableInstanceData](cvalue)}
+	return &TableInstanceData{CData: datautils.ConvertCTypes[*C.ImGuiTableInstanceData](cvalue)}
 }
 
 type TableSettings struct {
@@ -2167,7 +2167,7 @@ func (self TableSettings) C() (C.ImGuiTableSettings, func()) {
 // NewTableSettingsFromC creates TableSettings from its C pointer.
 // SRC ~= *C.ImGuiTableSettings
 func NewTableSettingsFromC[SRC any](cvalue SRC) *TableSettings {
-	return &TableSettings{CData: ConvertCTypes[*C.ImGuiTableSettings](cvalue)}
+	return &TableSettings{CData: datautils.ConvertCTypes[*C.ImGuiTableSettings](cvalue)}
 }
 
 type TableSortSpecs struct {
@@ -2188,7 +2188,7 @@ func (self TableSortSpecs) C() (C.ImGuiTableSortSpecs, func()) {
 // NewTableSortSpecsFromC creates TableSortSpecs from its C pointer.
 // SRC ~= *C.ImGuiTableSortSpecs
 func NewTableSortSpecsFromC[SRC any](cvalue SRC) *TableSortSpecs {
-	return &TableSortSpecs{CData: ConvertCTypes[*C.ImGuiTableSortSpecs](cvalue)}
+	return &TableSortSpecs{CData: datautils.ConvertCTypes[*C.ImGuiTableSortSpecs](cvalue)}
 }
 
 type TableTempData struct {
@@ -2209,7 +2209,7 @@ func (self TableTempData) C() (C.ImGuiTableTempData, func()) {
 // NewTableTempDataFromC creates TableTempData from its C pointer.
 // SRC ~= *C.ImGuiTableTempData
 func NewTableTempDataFromC[SRC any](cvalue SRC) *TableTempData {
-	return &TableTempData{CData: ConvertCTypes[*C.ImGuiTableTempData](cvalue)}
+	return &TableTempData{CData: datautils.ConvertCTypes[*C.ImGuiTableTempData](cvalue)}
 }
 
 type TextBuffer struct {
@@ -2230,7 +2230,7 @@ func (self TextBuffer) C() (C.ImGuiTextBuffer, func()) {
 // NewTextBufferFromC creates TextBuffer from its C pointer.
 // SRC ~= *C.ImGuiTextBuffer
 func NewTextBufferFromC[SRC any](cvalue SRC) *TextBuffer {
-	return &TextBuffer{CData: ConvertCTypes[*C.ImGuiTextBuffer](cvalue)}
+	return &TextBuffer{CData: datautils.ConvertCTypes[*C.ImGuiTextBuffer](cvalue)}
 }
 
 type TextFilter struct {
@@ -2251,7 +2251,7 @@ func (self TextFilter) C() (C.ImGuiTextFilter, func()) {
 // NewTextFilterFromC creates TextFilter from its C pointer.
 // SRC ~= *C.ImGuiTextFilter
 func NewTextFilterFromC[SRC any](cvalue SRC) *TextFilter {
-	return &TextFilter{CData: ConvertCTypes[*C.ImGuiTextFilter](cvalue)}
+	return &TextFilter{CData: datautils.ConvertCTypes[*C.ImGuiTextFilter](cvalue)}
 }
 
 type TextIndex struct {
@@ -2272,7 +2272,7 @@ func (self TextIndex) C() (C.ImGuiTextIndex, func()) {
 // NewTextIndexFromC creates TextIndex from its C pointer.
 // SRC ~= *C.ImGuiTextIndex
 func NewTextIndexFromC[SRC any](cvalue SRC) *TextIndex {
-	return &TextIndex{CData: ConvertCTypes[*C.ImGuiTextIndex](cvalue)}
+	return &TextIndex{CData: datautils.ConvertCTypes[*C.ImGuiTextIndex](cvalue)}
 }
 
 type TextRange struct {
@@ -2293,7 +2293,7 @@ func (self TextRange) C() (C.ImGuiTextRange, func()) {
 // NewTextRangeFromC creates TextRange from its C pointer.
 // SRC ~= *C.ImGuiTextRange
 func NewTextRangeFromC[SRC any](cvalue SRC) *TextRange {
-	return &TextRange{CData: ConvertCTypes[*C.ImGuiTextRange](cvalue)}
+	return &TextRange{CData: datautils.ConvertCTypes[*C.ImGuiTextRange](cvalue)}
 }
 
 type TreeNodeStackData struct {
@@ -2314,7 +2314,7 @@ func (self TreeNodeStackData) C() (C.ImGuiTreeNodeStackData, func()) {
 // NewTreeNodeStackDataFromC creates TreeNodeStackData from its C pointer.
 // SRC ~= *C.ImGuiTreeNodeStackData
 func NewTreeNodeStackDataFromC[SRC any](cvalue SRC) *TreeNodeStackData {
-	return &TreeNodeStackData{CData: ConvertCTypes[*C.ImGuiTreeNodeStackData](cvalue)}
+	return &TreeNodeStackData{CData: datautils.ConvertCTypes[*C.ImGuiTreeNodeStackData](cvalue)}
 }
 
 type TypingSelectRequest struct {
@@ -2335,7 +2335,7 @@ func (self TypingSelectRequest) C() (C.ImGuiTypingSelectRequest, func()) {
 // NewTypingSelectRequestFromC creates TypingSelectRequest from its C pointer.
 // SRC ~= *C.ImGuiTypingSelectRequest
 func NewTypingSelectRequestFromC[SRC any](cvalue SRC) *TypingSelectRequest {
-	return &TypingSelectRequest{CData: ConvertCTypes[*C.ImGuiTypingSelectRequest](cvalue)}
+	return &TypingSelectRequest{CData: datautils.ConvertCTypes[*C.ImGuiTypingSelectRequest](cvalue)}
 }
 
 type TypingSelectState struct {
@@ -2356,7 +2356,7 @@ func (self TypingSelectState) C() (C.ImGuiTypingSelectState, func()) {
 // NewTypingSelectStateFromC creates TypingSelectState from its C pointer.
 // SRC ~= *C.ImGuiTypingSelectState
 func NewTypingSelectStateFromC[SRC any](cvalue SRC) *TypingSelectState {
-	return &TypingSelectState{CData: ConvertCTypes[*C.ImGuiTypingSelectState](cvalue)}
+	return &TypingSelectState{CData: datautils.ConvertCTypes[*C.ImGuiTypingSelectState](cvalue)}
 }
 
 type Viewport struct {
@@ -2377,7 +2377,7 @@ func (self Viewport) C() (C.ImGuiViewport, func()) {
 // NewViewportFromC creates Viewport from its C pointer.
 // SRC ~= *C.ImGuiViewport
 func NewViewportFromC[SRC any](cvalue SRC) *Viewport {
-	return &Viewport{CData: ConvertCTypes[*C.ImGuiViewport](cvalue)}
+	return &Viewport{CData: datautils.ConvertCTypes[*C.ImGuiViewport](cvalue)}
 }
 
 type ViewportP struct {
@@ -2398,7 +2398,7 @@ func (self ViewportP) C() (C.ImGuiViewportP, func()) {
 // NewViewportPFromC creates ViewportP from its C pointer.
 // SRC ~= *C.ImGuiViewportP
 func NewViewportPFromC[SRC any](cvalue SRC) *ViewportP {
-	return &ViewportP{CData: ConvertCTypes[*C.ImGuiViewportP](cvalue)}
+	return &ViewportP{CData: datautils.ConvertCTypes[*C.ImGuiViewportP](cvalue)}
 }
 
 type Window struct {
@@ -2419,7 +2419,7 @@ func (self Window) C() (C.ImGuiWindow, func()) {
 // NewWindowFromC creates Window from its C pointer.
 // SRC ~= *C.ImGuiWindow
 func NewWindowFromC[SRC any](cvalue SRC) *Window {
-	return &Window{CData: ConvertCTypes[*C.ImGuiWindow](cvalue)}
+	return &Window{CData: datautils.ConvertCTypes[*C.ImGuiWindow](cvalue)}
 }
 
 type WindowClass struct {
@@ -2440,7 +2440,7 @@ func (self WindowClass) C() (C.ImGuiWindowClass, func()) {
 // NewWindowClassFromC creates WindowClass from its C pointer.
 // SRC ~= *C.ImGuiWindowClass
 func NewWindowClassFromC[SRC any](cvalue SRC) *WindowClass {
-	return &WindowClass{CData: ConvertCTypes[*C.ImGuiWindowClass](cvalue)}
+	return &WindowClass{CData: datautils.ConvertCTypes[*C.ImGuiWindowClass](cvalue)}
 }
 
 type WindowDockStyle struct {
@@ -2461,7 +2461,7 @@ func (self WindowDockStyle) C() (C.ImGuiWindowDockStyle, func()) {
 // NewWindowDockStyleFromC creates WindowDockStyle from its C pointer.
 // SRC ~= *C.ImGuiWindowDockStyle
 func NewWindowDockStyleFromC[SRC any](cvalue SRC) *WindowDockStyle {
-	return &WindowDockStyle{CData: ConvertCTypes[*C.ImGuiWindowDockStyle](cvalue)}
+	return &WindowDockStyle{CData: datautils.ConvertCTypes[*C.ImGuiWindowDockStyle](cvalue)}
 }
 
 type WindowSettings struct {
@@ -2482,7 +2482,7 @@ func (self WindowSettings) C() (C.ImGuiWindowSettings, func()) {
 // NewWindowSettingsFromC creates WindowSettings from its C pointer.
 // SRC ~= *C.ImGuiWindowSettings
 func NewWindowSettingsFromC[SRC any](cvalue SRC) *WindowSettings {
-	return &WindowSettings{CData: ConvertCTypes[*C.ImGuiWindowSettings](cvalue)}
+	return &WindowSettings{CData: datautils.ConvertCTypes[*C.ImGuiWindowSettings](cvalue)}
 }
 
 type WindowStackData struct {
@@ -2503,7 +2503,7 @@ func (self WindowStackData) C() (C.ImGuiWindowStackData, func()) {
 // NewWindowStackDataFromC creates WindowStackData from its C pointer.
 // SRC ~= *C.ImGuiWindowStackData
 func NewWindowStackDataFromC[SRC any](cvalue SRC) *WindowStackData {
-	return &WindowStackData{CData: ConvertCTypes[*C.ImGuiWindowStackData](cvalue)}
+	return &WindowStackData{CData: datautils.ConvertCTypes[*C.ImGuiWindowStackData](cvalue)}
 }
 
 type WindowTempData struct {
@@ -2524,7 +2524,7 @@ func (self WindowTempData) C() (C.ImGuiWindowTempData, func()) {
 // NewWindowTempDataFromC creates WindowTempData from its C pointer.
 // SRC ~= *C.ImGuiWindowTempData
 func NewWindowTempDataFromC[SRC any](cvalue SRC) *WindowTempData {
-	return &WindowTempData{CData: ConvertCTypes[*C.ImGuiWindowTempData](cvalue)}
+	return &WindowTempData{CData: datautils.ConvertCTypes[*C.ImGuiWindowTempData](cvalue)}
 }
 
 type PoolIdx int32
@@ -2544,7 +2544,7 @@ func (self PoolIdx) C() (C.ImPoolIdx, func()) {
 // NewPoolIdxFromC creates PoolIdx from its C pointer.
 // SRC ~= *C.ImPoolIdx
 func NewPoolIdxFromC[SRC any](cvalue SRC) *PoolIdx {
-	return (*PoolIdx)((*int32)(ConvertCTypes[*C.ImPoolIdx](cvalue)))
+	return (*PoolIdx)((*int32)(datautils.ConvertCTypes[*C.ImPoolIdx](cvalue)))
 }
 
 type TextureID struct {
@@ -2565,7 +2565,7 @@ func (self TextureID) C() (C.ImTextureID, func()) {
 // NewTextureIDFromC creates TextureID from its C pointer.
 // SRC ~= *C.ImTextureID
 func NewTextureIDFromC[SRC any](cvalue SRC) *TextureID {
-	return &TextureID{Data: (uintptr)(C.ImTextureID_toUintptr(*ConvertCTypes[*C.ImTextureID](cvalue)))}
+	return &TextureID{Data: (uintptr)(C.ImTextureID_toUintptr(*datautils.ConvertCTypes[*C.ImTextureID](cvalue)))}
 }
 
 type Vec1 struct {
@@ -2586,7 +2586,7 @@ func (self Vec1) C() (C.ImVec1, func()) {
 // NewVec1FromC creates Vec1 from its C pointer.
 // SRC ~= *C.ImVec1
 func NewVec1FromC[SRC any](cvalue SRC) *Vec1 {
-	return &Vec1{CData: ConvertCTypes[*C.ImVec1](cvalue)}
+	return &Vec1{CData: datautils.ConvertCTypes[*C.ImVec1](cvalue)}
 }
 
 type Wchar16 uint16
@@ -2606,7 +2606,7 @@ func (self Wchar16) C() (C.ImWchar16, func()) {
 // NewWchar16FromC creates Wchar16 from its C pointer.
 // SRC ~= *C.ImWchar16
 func NewWchar16FromC[SRC any](cvalue SRC) *Wchar16 {
-	return (*Wchar16)((*uint16)(ConvertCTypes[*C.ImWchar16](cvalue)))
+	return (*Wchar16)((*uint16)(datautils.ConvertCTypes[*C.ImWchar16](cvalue)))
 }
 
 type Wchar32 uint32
@@ -2626,7 +2626,7 @@ func (self Wchar32) C() (C.ImWchar32, func()) {
 // NewWchar32FromC creates Wchar32 from its C pointer.
 // SRC ~= *C.ImWchar32
 func NewWchar32FromC[SRC any](cvalue SRC) *Wchar32 {
-	return (*Wchar32)((*uint32)(ConvertCTypes[*C.ImWchar32](cvalue)))
+	return (*Wchar32)((*uint32)(datautils.ConvertCTypes[*C.ImWchar32](cvalue)))
 }
 
 type STBTexteditState struct {
@@ -2641,5 +2641,5 @@ func (self *STBTexteditState) Handle() (result *C.STB_TexteditState, fin func())
 // NewSTBTexteditStateFromC creates STBTexteditState from its C pointer.
 // SRC ~= *C.STB_TexteditState
 func NewSTBTexteditStateFromC[SRC any](cvalue SRC) *STBTexteditState {
-	return &STBTexteditState{CData: ConvertCTypes[*C.STB_TexteditState](cvalue)}
+	return &STBTexteditState{CData: datautils.ConvertCTypes[*C.STB_TexteditState](cvalue)}
 }

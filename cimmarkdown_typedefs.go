@@ -3,6 +3,10 @@
 
 package imgui
 
+import (
+	"github.com/AllenDang/cimgui-go/internal/datautils"
+)
+
 // #include <stdlib.h>
 // #include <memory.h>
 // #include "extra_types.h"
@@ -28,7 +32,7 @@ func (self Emphasis) C() (C.Emphasis, func()) {
 // NewEmphasisFromC creates Emphasis from its C pointer.
 // SRC ~= *C.Emphasis
 func NewEmphasisFromC[SRC any](cvalue SRC) *Emphasis {
-	return &Emphasis{CData: ConvertCTypes[*C.Emphasis](cvalue)}
+	return &Emphasis{CData: datautils.ConvertCTypes[*C.Emphasis](cvalue)}
 }
 
 type Line struct {
@@ -49,7 +53,7 @@ func (self Line) C() (C.Line, func()) {
 // NewLineFromC creates Line from its C pointer.
 // SRC ~= *C.Line
 func NewLineFromC[SRC any](cvalue SRC) *Line {
-	return &Line{CData: ConvertCTypes[*C.Line](cvalue)}
+	return &Line{CData: datautils.ConvertCTypes[*C.Line](cvalue)}
 }
 
 type Link struct {
@@ -70,7 +74,7 @@ func (self Link) C() (C.Link, func()) {
 // NewLinkFromC creates Link from its C pointer.
 // SRC ~= *C.Link
 func NewLinkFromC[SRC any](cvalue SRC) *Link {
-	return &Link{CData: ConvertCTypes[*C.Link](cvalue)}
+	return &Link{CData: datautils.ConvertCTypes[*C.Link](cvalue)}
 }
 
 type MarkdownConfig struct {
@@ -91,7 +95,7 @@ func (self MarkdownConfig) C() (C.MarkdownConfig, func()) {
 // NewMarkdownConfigFromC creates MarkdownConfig from its C pointer.
 // SRC ~= *C.MarkdownConfig
 func NewMarkdownConfigFromC[SRC any](cvalue SRC) *MarkdownConfig {
-	return &MarkdownConfig{CData: ConvertCTypes[*C.MarkdownConfig](cvalue)}
+	return &MarkdownConfig{CData: datautils.ConvertCTypes[*C.MarkdownConfig](cvalue)}
 }
 
 type MarkdownFormatInfo struct {
@@ -112,7 +116,7 @@ func (self MarkdownFormatInfo) C() (C.MarkdownFormatInfo, func()) {
 // NewMarkdownFormatInfoFromC creates MarkdownFormatInfo from its C pointer.
 // SRC ~= *C.MarkdownFormatInfo
 func NewMarkdownFormatInfoFromC[SRC any](cvalue SRC) *MarkdownFormatInfo {
-	return &MarkdownFormatInfo{CData: ConvertCTypes[*C.MarkdownFormatInfo](cvalue)}
+	return &MarkdownFormatInfo{CData: datautils.ConvertCTypes[*C.MarkdownFormatInfo](cvalue)}
 }
 
 type MarkdownHeadingFormat struct {
@@ -133,7 +137,7 @@ func (self MarkdownHeadingFormat) C() (C.MarkdownHeadingFormat, func()) {
 // NewMarkdownHeadingFormatFromC creates MarkdownHeadingFormat from its C pointer.
 // SRC ~= *C.MarkdownHeadingFormat
 func NewMarkdownHeadingFormatFromC[SRC any](cvalue SRC) *MarkdownHeadingFormat {
-	return &MarkdownHeadingFormat{CData: ConvertCTypes[*C.MarkdownHeadingFormat](cvalue)}
+	return &MarkdownHeadingFormat{CData: datautils.ConvertCTypes[*C.MarkdownHeadingFormat](cvalue)}
 }
 
 type MarkdownImageData struct {
@@ -154,7 +158,7 @@ func (self MarkdownImageData) C() (C.MarkdownImageData, func()) {
 // NewMarkdownImageDataFromC creates MarkdownImageData from its C pointer.
 // SRC ~= *C.MarkdownImageData
 func NewMarkdownImageDataFromC[SRC any](cvalue SRC) *MarkdownImageData {
-	return &MarkdownImageData{CData: ConvertCTypes[*C.MarkdownImageData](cvalue)}
+	return &MarkdownImageData{CData: datautils.ConvertCTypes[*C.MarkdownImageData](cvalue)}
 }
 
 type MarkdownLinkCallbackData struct {
@@ -175,7 +179,7 @@ func (self MarkdownLinkCallbackData) C() (C.MarkdownLinkCallbackData, func()) {
 // NewMarkdownLinkCallbackDataFromC creates MarkdownLinkCallbackData from its C pointer.
 // SRC ~= *C.MarkdownLinkCallbackData
 func NewMarkdownLinkCallbackDataFromC[SRC any](cvalue SRC) *MarkdownLinkCallbackData {
-	return &MarkdownLinkCallbackData{CData: ConvertCTypes[*C.MarkdownLinkCallbackData](cvalue)}
+	return &MarkdownLinkCallbackData{CData: datautils.ConvertCTypes[*C.MarkdownLinkCallbackData](cvalue)}
 }
 
 type MarkdownTooltipCallbackData struct {
@@ -196,7 +200,7 @@ func (self MarkdownTooltipCallbackData) C() (C.MarkdownTooltipCallbackData, func
 // NewMarkdownTooltipCallbackDataFromC creates MarkdownTooltipCallbackData from its C pointer.
 // SRC ~= *C.MarkdownTooltipCallbackData
 func NewMarkdownTooltipCallbackDataFromC[SRC any](cvalue SRC) *MarkdownTooltipCallbackData {
-	return &MarkdownTooltipCallbackData{CData: ConvertCTypes[*C.MarkdownTooltipCallbackData](cvalue)}
+	return &MarkdownTooltipCallbackData{CData: datautils.ConvertCTypes[*C.MarkdownTooltipCallbackData](cvalue)}
 }
 
 type TextBlock struct {
@@ -217,7 +221,7 @@ func (self TextBlock) C() (C.TextBlock, func()) {
 // NewTextBlockFromC creates TextBlock from its C pointer.
 // SRC ~= *C.TextBlock
 func NewTextBlockFromC[SRC any](cvalue SRC) *TextBlock {
-	return &TextBlock{CData: ConvertCTypes[*C.TextBlock](cvalue)}
+	return &TextBlock{CData: datautils.ConvertCTypes[*C.TextBlock](cvalue)}
 }
 
 type TextRegion struct {
@@ -238,5 +242,5 @@ func (self TextRegion) C() (C.TextRegion, func()) {
 // NewTextRegionFromC creates TextRegion from its C pointer.
 // SRC ~= *C.TextRegion
 func NewTextRegionFromC[SRC any](cvalue SRC) *TextRegion {
-	return &TextRegion{CData: ConvertCTypes[*C.TextRegion](cvalue)}
+	return &TextRegion{CData: datautils.ConvertCTypes[*C.TextRegion](cvalue)}
 }

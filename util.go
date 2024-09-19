@@ -7,14 +7,6 @@ import (
 	"unsafe"
 )
 
-// ConvertCTypes intendedd use is to convert packageA.C.MyType to packageB.C.MyType.
-// make sure your types are identical C types before using it.
-// THIS IS HIGHLY UNSAFE AND NOT RECOMMENDED TO USE OUTSIDE CIMGUI.
-// It just forces pointer/type reinterpretation with unsafe.Pointer.
-func ConvertCTypes[RET, SRC any](src SRC) RET {
-	return *(*RET)(unsafe.Pointer(&src))
-}
-
 // VertexBufferLayout returns the byte sizes necessary to select fields in a vertex buffer of a DrawList.
 func VertexBufferLayout() (entrySize int, posOffset int, uvOffset int, colOffset int) {
 	var entrySizeArg C.size_t

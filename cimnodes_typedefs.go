@@ -3,6 +3,10 @@
 
 package imgui
 
+import (
+	"github.com/AllenDang/cimgui-go/internal/datautils"
+)
+
 // #include <stdlib.h>
 // #include <memory.h>
 // #include "extra_types.h"
@@ -28,7 +32,7 @@ func (self EmulateThreeButtonMouse) C() (C.EmulateThreeButtonMouse, func()) {
 // NewEmulateThreeButtonMouseFromC creates EmulateThreeButtonMouse from its C pointer.
 // SRC ~= *C.EmulateThreeButtonMouse
 func NewEmulateThreeButtonMouseFromC[SRC any](cvalue SRC) *EmulateThreeButtonMouse {
-	return &EmulateThreeButtonMouse{CData: ConvertCTypes[*C.EmulateThreeButtonMouse](cvalue)}
+	return &EmulateThreeButtonMouse{CData: datautils.ConvertCTypes[*C.EmulateThreeButtonMouse](cvalue)}
 }
 
 type NodesContext struct {
@@ -43,7 +47,7 @@ func (self *NodesContext) Handle() (result *C.ImNodesContext, fin func()) {
 // NewNodesContextFromC creates NodesContext from its C pointer.
 // SRC ~= *C.ImNodesContext
 func NewNodesContextFromC[SRC any](cvalue SRC) *NodesContext {
-	return &NodesContext{CData: ConvertCTypes[*C.ImNodesContext](cvalue)}
+	return &NodesContext{CData: datautils.ConvertCTypes[*C.ImNodesContext](cvalue)}
 }
 
 type NodesEditorContext struct {
@@ -58,7 +62,7 @@ func (self *NodesEditorContext) Handle() (result *C.ImNodesEditorContext, fin fu
 // NewNodesEditorContextFromC creates NodesEditorContext from its C pointer.
 // SRC ~= *C.ImNodesEditorContext
 func NewNodesEditorContextFromC[SRC any](cvalue SRC) *NodesEditorContext {
-	return &NodesEditorContext{CData: ConvertCTypes[*C.ImNodesEditorContext](cvalue)}
+	return &NodesEditorContext{CData: datautils.ConvertCTypes[*C.ImNodesEditorContext](cvalue)}
 }
 
 type NodesIO struct {
@@ -79,7 +83,7 @@ func (self NodesIO) C() (C.ImNodesIO, func()) {
 // NewNodesIOFromC creates NodesIO from its C pointer.
 // SRC ~= *C.ImNodesIO
 func NewNodesIOFromC[SRC any](cvalue SRC) *NodesIO {
-	return &NodesIO{CData: ConvertCTypes[*C.ImNodesIO](cvalue)}
+	return &NodesIO{CData: datautils.ConvertCTypes[*C.ImNodesIO](cvalue)}
 }
 
 type NodesMiniMapNodeHoveringCallbackUserData struct {
@@ -100,7 +104,7 @@ func (self NodesMiniMapNodeHoveringCallbackUserData) C() (C.ImNodesMiniMapNodeHo
 // NewNodesMiniMapNodeHoveringCallbackUserDataFromC creates NodesMiniMapNodeHoveringCallbackUserData from its C pointer.
 // SRC ~= *C.ImNodesMiniMapNodeHoveringCallbackUserData
 func NewNodesMiniMapNodeHoveringCallbackUserDataFromC[SRC any](cvalue SRC) *NodesMiniMapNodeHoveringCallbackUserData {
-	return &NodesMiniMapNodeHoveringCallbackUserData{Data: (uintptr)(C.ImNodesMiniMapNodeHoveringCallbackUserData_toUintptr(*ConvertCTypes[*C.ImNodesMiniMapNodeHoveringCallbackUserData](cvalue)))}
+	return &NodesMiniMapNodeHoveringCallbackUserData{Data: (uintptr)(C.ImNodesMiniMapNodeHoveringCallbackUserData_toUintptr(*datautils.ConvertCTypes[*C.ImNodesMiniMapNodeHoveringCallbackUserData](cvalue)))}
 }
 
 type NodesStyle struct {
@@ -121,7 +125,7 @@ func (self NodesStyle) C() (C.ImNodesStyle, func()) {
 // NewNodesStyleFromC creates NodesStyle from its C pointer.
 // SRC ~= *C.ImNodesStyle
 func NewNodesStyleFromC[SRC any](cvalue SRC) *NodesStyle {
-	return &NodesStyle{CData: ConvertCTypes[*C.ImNodesStyle](cvalue)}
+	return &NodesStyle{CData: datautils.ConvertCTypes[*C.ImNodesStyle](cvalue)}
 }
 
 type LinkDetachWithModifierClick struct {
@@ -142,7 +146,7 @@ func (self LinkDetachWithModifierClick) C() (C.LinkDetachWithModifierClick, func
 // NewLinkDetachWithModifierClickFromC creates LinkDetachWithModifierClick from its C pointer.
 // SRC ~= *C.LinkDetachWithModifierClick
 func NewLinkDetachWithModifierClickFromC[SRC any](cvalue SRC) *LinkDetachWithModifierClick {
-	return &LinkDetachWithModifierClick{CData: ConvertCTypes[*C.LinkDetachWithModifierClick](cvalue)}
+	return &LinkDetachWithModifierClick{CData: datautils.ConvertCTypes[*C.LinkDetachWithModifierClick](cvalue)}
 }
 
 type MultipleSelectModifier struct {
@@ -163,5 +167,5 @@ func (self MultipleSelectModifier) C() (C.MultipleSelectModifier, func()) {
 // NewMultipleSelectModifierFromC creates MultipleSelectModifier from its C pointer.
 // SRC ~= *C.MultipleSelectModifier
 func NewMultipleSelectModifierFromC[SRC any](cvalue SRC) *MultipleSelectModifier {
-	return &MultipleSelectModifier{CData: ConvertCTypes[*C.MultipleSelectModifier](cvalue)}
+	return &MultipleSelectModifier{CData: datautils.ConvertCTypes[*C.MultipleSelectModifier](cvalue)}
 }
