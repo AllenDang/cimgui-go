@@ -4,7 +4,7 @@ package backend
 // extern void beforeRender();
 // extern void afterRender();
 // extern void afterCreateContext();
-// extern void beforeDestoryContext();
+// extern void beforeDestroyContext();
 // extern void dropCallback(void*, int, char**);
 // extern void keyCallback(void*, int, int, int, int);
 // extern void sizeCallback(void*, int, int);
@@ -81,8 +81,8 @@ func AfterCreateContext() unsafe.Pointer {
 	return C.afterCreateContext
 }
 
-//export beforeDestoryContext
-func beforeDestoryContext() {
+//export beforeDestroyContext
+func beforeDestroyContext() {
 	if currentBackend != nil {
 		if f := currentBackend.BeforeDestroyHook(); f != nil {
 			f()
@@ -91,7 +91,7 @@ func beforeDestoryContext() {
 }
 
 func BeforeDestroyContext() unsafe.Pointer {
-	return C.beforeDestoryContext
+	return C.beforeDestroyContext
 }
 
 //export keyCallback
