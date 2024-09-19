@@ -1,6 +1,7 @@
-package imgui
+package implot
 
 // #include "cimplot_wrapper.h"
+// #include "../imgui/extra_types.h"
 import "C"
 
 import (
