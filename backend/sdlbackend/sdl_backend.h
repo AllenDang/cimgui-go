@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../cimgui_wrapper.h"
+#include "../../imgui/cimgui_wrapper.h"
 #include "../../thirdparty/SDL/include/SDL.h" // Will drag system OpenGL headers
-#include "../../extra_types.h"
+#include "../../imgui/extra_types.h"
 
 #ifdef __cplusplus
 extern "C" {
