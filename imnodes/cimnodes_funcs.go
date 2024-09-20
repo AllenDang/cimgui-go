@@ -138,9 +138,9 @@ func ImNodesEditorContextFree(noname1 *NodesEditorContext) {
 
 func ImNodesEditorContextGetPanning() imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.imnodes_EditorContextGetPanning(pOutArg)
+	C.imnodes_EditorContextGetPanning(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -196,9 +196,9 @@ func ImNodesGetIO() *NodesIO {
 
 func ImNodesGetNodeDimensions(id int32) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.imnodes_GetNodeDimensions(pOutArg, C.int(id))
+	C.imnodes_GetNodeDimensions(datautils.ConvertCTypes[*C.ImVec2](pOutArg), C.int(id))
 
 	pOutFin()
 
@@ -207,9 +207,9 @@ func ImNodesGetNodeDimensions(id int32) imgui.Vec2 {
 
 func ImNodesGetNodeEditorSpacePos(node_id int32) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.imnodes_GetNodeEditorSpacePos(pOutArg, C.int(node_id))
+	C.imnodes_GetNodeEditorSpacePos(datautils.ConvertCTypes[*C.ImVec2](pOutArg), C.int(node_id))
 
 	pOutFin()
 
@@ -218,9 +218,9 @@ func ImNodesGetNodeEditorSpacePos(node_id int32) imgui.Vec2 {
 
 func ImNodesGetNodeGridSpacePos(node_id int32) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.imnodes_GetNodeGridSpacePos(pOutArg, C.int(node_id))
+	C.imnodes_GetNodeGridSpacePos(datautils.ConvertCTypes[*C.ImVec2](pOutArg), C.int(node_id))
 
 	pOutFin()
 
@@ -229,9 +229,9 @@ func ImNodesGetNodeGridSpacePos(node_id int32) imgui.Vec2 {
 
 func ImNodesGetNodeScreenSpacePos(node_id int32) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.imnodes_GetNodeScreenSpacePos(pOutArg, C.int(node_id))
+	C.imnodes_GetNodeScreenSpacePos(datautils.ConvertCTypes[*C.ImVec2](pOutArg), C.int(node_id))
 
 	pOutFin()
 

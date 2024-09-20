@@ -896,8 +896,8 @@ func (self *PlotPointError) Destroy() {
 }
 
 func (self *PlotPoint) Destroy() {
-	selfArg, selfFin := datautils.Wrap[C.ImPlotPoint, *PlotPoint](self)
-	C.ImPlotPoint_destroy(selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImPlotPoint_destroy(datautils.ConvertCTypes[*C.ImPlotPoint](selfArg))
 
 	selfFin()
 }
@@ -946,10 +946,10 @@ func (self *PlotRange) Destroy() {
 
 func (self *PlotRect) ClampPlotPoInt(p PlotPoint) PlotPoint {
 	pOut := new(PlotPoint)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotPoint, *PlotPoint](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImPlotRect_Clamp_PlotPoInt(pOutArg, datautils.ConvertCTypes[*C.ImPlotRect](selfArg), datautils.ConvertCTypes[C.ImPlotPoint](p.ToC()))
+	C.ImPlotRect_Clamp_PlotPoInt(datautils.ConvertCTypes[*C.ImPlotPoint](pOutArg), datautils.ConvertCTypes[*C.ImPlotRect](selfArg), datautils.ConvertCTypes[C.ImPlotPoint](p.ToC()))
 
 	pOutFin()
 	selfFin()
@@ -959,10 +959,10 @@ func (self *PlotRect) ClampPlotPoInt(p PlotPoint) PlotPoint {
 
 func (self *PlotRect) Clampdouble(x float64, y float64) PlotPoint {
 	pOut := new(PlotPoint)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotPoint, *PlotPoint](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImPlotRect_Clamp_double(pOutArg, datautils.ConvertCTypes[*C.ImPlotRect](selfArg), C.double(x), C.double(y))
+	C.ImPlotRect_Clamp_double(datautils.ConvertCTypes[*C.ImPlotPoint](pOutArg), datautils.ConvertCTypes[*C.ImPlotRect](selfArg), C.double(x), C.double(y))
 
 	pOutFin()
 	selfFin()
@@ -998,10 +998,10 @@ func NewPlotRectdouble(x_min float64, x_max float64, y_min float64, y_max float6
 
 func (self *PlotRect) Max() PlotPoint {
 	pOut := new(PlotPoint)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotPoint, *PlotPoint](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImPlotRect_Max(pOutArg, datautils.ConvertCTypes[*C.ImPlotRect](selfArg))
+	C.ImPlotRect_Max(datautils.ConvertCTypes[*C.ImPlotPoint](pOutArg), datautils.ConvertCTypes[*C.ImPlotRect](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -1011,10 +1011,10 @@ func (self *PlotRect) Max() PlotPoint {
 
 func (self *PlotRect) Min() PlotPoint {
 	pOut := new(PlotPoint)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotPoint, *PlotPoint](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImPlotRect_Min(pOutArg, datautils.ConvertCTypes[*C.ImPlotRect](selfArg))
+	C.ImPlotRect_Min(datautils.ConvertCTypes[*C.ImPlotPoint](pOutArg), datautils.ConvertCTypes[*C.ImPlotRect](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -1024,10 +1024,10 @@ func (self *PlotRect) Min() PlotPoint {
 
 func (self *PlotRect) Size() PlotPoint {
 	pOut := new(PlotPoint)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotPoint, *PlotPoint](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImPlotRect_Size(pOutArg, datautils.ConvertCTypes[*C.ImPlotRect](selfArg))
+	C.ImPlotRect_Size(datautils.ConvertCTypes[*C.ImPlotPoint](pOutArg), datautils.ConvertCTypes[*C.ImPlotRect](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -1189,9 +1189,9 @@ func (self *PlotTicker) Destroy() {
 
 func PlotTimeFromDouble(t float64) PlotTime {
 	pOut := new(PlotTime)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotTime, *PlotTime](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlotTime_FromDouble(pOutArg, C.double(t))
+	C.ImPlotTime_FromDouble(datautils.ConvertCTypes[*C.ImPlotTime](pOutArg), C.double(t))
 
 	pOutFin()
 
@@ -1199,24 +1199,24 @@ func PlotTimeFromDouble(t float64) PlotTime {
 }
 
 func (self *PlotTime) RollOver() {
-	selfArg, selfFin := datautils.Wrap[C.ImPlotTime, *PlotTime](self)
-	C.ImPlotTime_RollOver(selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImPlotTime_RollOver(datautils.ConvertCTypes[*C.ImPlotTime](selfArg))
 
 	selfFin()
 }
 
 func (self *PlotTime) ToDouble() float64 {
-	selfArg, selfFin := datautils.Wrap[C.ImPlotTime, *PlotTime](self)
+	selfArg, selfFin := datautils.Wrap(self)
 
 	defer func() {
 		selfFin()
 	}()
-	return float64(C.ImPlotTime_ToDouble(selfArg))
+	return float64(C.ImPlotTime_ToDouble(datautils.ConvertCTypes[*C.ImPlotTime](selfArg)))
 }
 
 func (self *PlotTime) Destroy() {
-	selfArg, selfFin := datautils.Wrap[C.ImPlotTime, *PlotTime](self)
-	C.ImPlotTime_destroy(selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImPlotTime_destroy(datautils.ConvertCTypes[*C.ImPlotTime](selfArg))
 
 	selfFin()
 }
@@ -1250,7 +1250,7 @@ func PlotAddColormapVec4PtrV(name string, cols *imgui.Vec4, size int32, qual boo
 		nameFin()
 		colsFin()
 	}()
-	return PlotColormap(C.ImPlot_AddColormap_Vec4Ptr(nameArg, colsArg, C.int(size), C.bool(qual)))
+	return PlotColormap(C.ImPlot_AddColormap_Vec4Ptr(nameArg, datautils.ConvertCTypes[*C.ImVec4](colsArg), C.int(size), C.bool(qual)))
 }
 
 // PlotAddTextCenteredV parameter default value hint:
@@ -1275,9 +1275,9 @@ func PlotAddTextVerticalV(DrawList *imgui.DrawList, pos imgui.Vec2, col uint32, 
 
 func PlotAddTime(t PlotTime, unit PlotTimeUnit, count int32) PlotTime {
 	pOut := new(PlotTime)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotTime, *PlotTime](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_AddTime(pOutArg, datautils.ConvertCTypes[C.ImPlotTime](t.ToC()), C.ImPlotTimeUnit(unit), C.int(count))
+	C.ImPlot_AddTime(datautils.ConvertCTypes[*C.ImPlotTime](pOutArg), datautils.ConvertCTypes[C.ImPlotTime](t.ToC()), C.ImPlotTimeUnit(unit), C.int(count))
 
 	pOutFin()
 
@@ -1454,10 +1454,10 @@ func PlotCalcHoverColor(col uint32) uint32 {
 
 func PlotCalcLegendSize(items *PlotItemGroup, pad imgui.Vec2, spacing imgui.Vec2, vertical bool) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	itemsArg, itemsFin := items.Handle()
-	C.ImPlot_CalcLegendSize(pOutArg, datautils.ConvertCTypes[*C.ImPlotItemGroup](itemsArg), datautils.ConvertCTypes[C.ImVec2](pad.ToC()), datautils.ConvertCTypes[C.ImVec2](spacing.ToC()), C.bool(vertical))
+	C.ImPlot_CalcLegendSize(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImPlotItemGroup](itemsArg), datautils.ConvertCTypes[C.ImVec2](pad.ToC()), datautils.ConvertCTypes[C.ImVec2](spacing.ToC()), C.bool(vertical))
 
 	pOutFin()
 	itemsFin()
@@ -1475,10 +1475,10 @@ func PlotCalcTextColorVec4(bg imgui.Vec4) uint32 {
 
 func PlotCalcTextSizeVertical(text string) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	textArg, textFin := datautils.WrapString[C.char](text)
-	C.ImPlot_CalcTextSizeVertical(pOutArg, textArg)
+	C.ImPlot_CalcTextSizeVertical(datautils.ConvertCTypes[*C.ImVec2](pOutArg), textArg)
 
 	pOutFin()
 	textFin()
@@ -1665,9 +1665,9 @@ func PlotCancelPlotSelection() {
 
 func PlotCeilTime(t PlotTime, unit PlotTimeUnit) PlotTime {
 	pOut := new(PlotTime)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotTime, *PlotTime](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_CeilTime(pOutArg, datautils.ConvertCTypes[C.ImPlotTime](t.ToC()), C.ImPlotTimeUnit(unit))
+	C.ImPlot_CeilTime(datautils.ConvertCTypes[*C.ImPlotTime](pOutArg), datautils.ConvertCTypes[C.ImPlotTime](t.ToC()), C.ImPlotTimeUnit(unit))
 
 	pOutFin()
 
@@ -1676,9 +1676,9 @@ func PlotCeilTime(t PlotTime, unit PlotTimeUnit) PlotTime {
 
 func PlotClampLabelPos(pos imgui.Vec2, size imgui.Vec2, Min imgui.Vec2, Max imgui.Vec2) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_ClampLabelPos(pOutArg, datautils.ConvertCTypes[C.ImVec2](pos.ToC()), datautils.ConvertCTypes[C.ImVec2](size.ToC()), datautils.ConvertCTypes[C.ImVec2](Min.ToC()), datautils.ConvertCTypes[C.ImVec2](Max.ToC()))
+	C.ImPlot_ClampLabelPos(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](pos.ToC()), datautils.ConvertCTypes[C.ImVec2](size.ToC()), datautils.ConvertCTypes[C.ImVec2](Min.ToC()), datautils.ConvertCTypes[C.ImVec2](Max.ToC()))
 
 	pOutFin()
 
@@ -1686,12 +1686,12 @@ func PlotClampLabelPos(pos imgui.Vec2, size imgui.Vec2, Min imgui.Vec2, Max imgu
 }
 
 func PlotClampLegendRect(legend_rect *imgui.Rect, outer_rect imgui.Rect, pad imgui.Vec2) bool {
-	legend_rectArg, legend_rectFin := datautils.Wrap[C.ImRect, *imgui.Rect](legend_rect)
+	legend_rectArg, legend_rectFin := datautils.Wrap(legend_rect)
 
 	defer func() {
 		legend_rectFin()
 	}()
-	return C.ImPlot_ClampLegendRect(legend_rectArg, datautils.ConvertCTypes[C.ImRect](outer_rect.ToC()), datautils.ConvertCTypes[C.ImVec2](pad.ToC())) == C.bool(true)
+	return C.ImPlot_ClampLegendRect(datautils.ConvertCTypes[*C.ImRect](legend_rectArg), datautils.ConvertCTypes[C.ImRect](outer_rect.ToC()), datautils.ConvertCTypes[C.ImVec2](pad.ToC())) == C.bool(true)
 }
 
 // PlotColormapButtonV parameter default value hint:
@@ -1731,7 +1731,7 @@ func PlotColormapScaleV(label string, scale_min float64, scale_max float64, size
 func PlotColormapSliderV(label string, t *float32, out *imgui.Vec4, format string, cmap PlotColormap) bool {
 	labelArg, labelFin := datautils.WrapString[C.char](label)
 	tArg, tFin := datautils.WrapNumberPtr[C.float, float32](t)
-	outArg, outFin := datautils.Wrap[C.ImVec4, *imgui.Vec4](out)
+	outArg, outFin := datautils.Wrap(out)
 	formatArg, formatFin := datautils.WrapString[C.char](format)
 
 	defer func() {
@@ -1740,14 +1740,14 @@ func PlotColormapSliderV(label string, t *float32, out *imgui.Vec4, format strin
 		outFin()
 		formatFin()
 	}()
-	return C.ImPlot_ColormapSlider(labelArg, tArg, outArg, formatArg, C.ImPlotColormap(cmap)) == C.bool(true)
+	return C.ImPlot_ColormapSlider(labelArg, tArg, datautils.ConvertCTypes[*C.ImVec4](outArg), formatArg, C.ImPlotColormap(cmap)) == C.bool(true)
 }
 
 func PlotCombineDateTime(date_part PlotTime, time_part PlotTime) PlotTime {
 	pOut := new(PlotTime)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotTime, *PlotTime](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_CombineDateTime(pOutArg, datautils.ConvertCTypes[C.ImPlotTime](date_part.ToC()), datautils.ConvertCTypes[C.ImPlotTime](time_part.ToC()))
+	C.ImPlot_CombineDateTime(datautils.ConvertCTypes[*C.ImPlotTime](pOutArg), datautils.ConvertCTypes[C.ImPlotTime](date_part.ToC()), datautils.ConvertCTypes[C.ImPlotTime](time_part.ToC()))
 
 	pOutFin()
 
@@ -1904,9 +1904,9 @@ func PlotFitThisFrame() bool {
 
 func PlotFloorTime(t PlotTime, unit PlotTimeUnit) PlotTime {
 	pOut := new(PlotTime)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotTime, *PlotTime](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_FloorTime(pOutArg, datautils.ConvertCTypes[C.ImPlotTime](t.ToC()), C.ImPlotTimeUnit(unit))
+	C.ImPlot_FloorTime(datautils.ConvertCTypes[*C.ImPlotTime](pOutArg), datautils.ConvertCTypes[C.ImPlotTime](t.ToC()), C.ImPlotTimeUnit(unit))
 
 	pOutFin()
 
@@ -1971,9 +1971,9 @@ func PlotFormatterTime(noname1 float64, buff string, size int32, data uintptr) i
 
 func PlotGetAutoColor(idx PlotCol) imgui.Vec4 {
 	pOut := new(imgui.Vec4)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec4, *imgui.Vec4](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_GetAutoColor(pOutArg, C.ImPlotCol(idx))
+	C.ImPlot_GetAutoColor(datautils.ConvertCTypes[*C.ImVec4](pOutArg), C.ImPlotCol(idx))
 
 	pOutFin()
 
@@ -1984,9 +1984,9 @@ func PlotGetAutoColor(idx PlotCol) imgui.Vec4 {
 // cmap: -1
 func PlotGetColormapColorV(idx int32, cmap PlotColormap) imgui.Vec4 {
 	pOut := new(imgui.Vec4)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec4, *imgui.Vec4](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_GetColormapColor(pOutArg, C.int(idx), C.ImPlotColormap(cmap))
+	C.ImPlot_GetColormapColor(datautils.ConvertCTypes[*C.ImVec4](pOutArg), C.int(idx), C.ImPlotColormap(cmap))
 
 	pOutFin()
 
@@ -2055,9 +2055,9 @@ func PlotGetItemData() *PlotNextItemData {
 
 func PlotGetLastItemColor() imgui.Vec4 {
 	pOut := new(imgui.Vec4)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec4, *imgui.Vec4](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_GetLastItemColor(pOutArg)
+	C.ImPlot_GetLastItemColor(datautils.ConvertCTypes[*C.ImVec4](pOutArg))
 
 	pOutFin()
 
@@ -2068,9 +2068,9 @@ func PlotGetLastItemColor() imgui.Vec4 {
 // pad: ImVec2(0,0)
 func PlotGetLocationPosV(outer_rect imgui.Rect, inner_size imgui.Vec2, location PlotLocation, pad imgui.Vec2) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_GetLocationPos(pOutArg, datautils.ConvertCTypes[C.ImRect](outer_rect.ToC()), datautils.ConvertCTypes[C.ImVec2](inner_size.ToC()), C.ImPlotLocation(location), datautils.ConvertCTypes[C.ImVec2](pad.ToC()))
+	C.ImPlot_GetLocationPos(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImRect](outer_rect.ToC()), datautils.ConvertCTypes[C.ImVec2](inner_size.ToC()), C.ImPlotLocation(location), datautils.ConvertCTypes[C.ImVec2](pad.ToC()))
 
 	pOutFin()
 
@@ -2113,9 +2113,9 @@ func PlotGetPlotLimitsV(x_axis PlotAxisEnum, y_axis PlotAxisEnum) PlotRect {
 // y_axis: -1
 func PlotGetPlotMousePosV(x_axis PlotAxisEnum, y_axis PlotAxisEnum) PlotPoint {
 	pOut := new(PlotPoint)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotPoint, *PlotPoint](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_GetPlotMousePos(pOutArg, C.ImAxis(x_axis), C.ImAxis(y_axis))
+	C.ImPlot_GetPlotMousePos(datautils.ConvertCTypes[*C.ImPlotPoint](pOutArg), C.ImAxis(x_axis), C.ImAxis(y_axis))
 
 	pOutFin()
 
@@ -2124,9 +2124,9 @@ func PlotGetPlotMousePosV(x_axis PlotAxisEnum, y_axis PlotAxisEnum) PlotPoint {
 
 func PlotGetPlotPos() imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_GetPlotPos(pOutArg)
+	C.ImPlot_GetPlotPos(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -2149,9 +2149,9 @@ func PlotGetPlotSelectionV(x_axis PlotAxisEnum, y_axis PlotAxisEnum) PlotRect {
 
 func PlotGetPlotSize() imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_GetPlotSize(pOutArg)
+	C.ImPlot_GetPlotSize(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -2172,9 +2172,9 @@ func PlotGetStyleColorU32(idx PlotCol) uint32 {
 
 func PlotGetStyleColorVec4(idx PlotCol) imgui.Vec4 {
 	pOut := new(imgui.Vec4)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec4, *imgui.Vec4](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_GetStyleColorVec4(pOutArg, C.ImPlotCol(idx))
+	C.ImPlot_GetStyleColorVec4(datautils.ConvertCTypes[*C.ImVec4](pOutArg), C.ImPlotCol(idx))
 
 	pOutFin()
 
@@ -3117,9 +3117,9 @@ func PlotInitialize(ctx *PlotContext) {
 
 func PlotIntersection(a1 imgui.Vec2, a2 imgui.Vec2, b1 imgui.Vec2, b2 imgui.Vec2) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_Intersection(pOutArg, datautils.ConvertCTypes[C.ImVec2](a1.ToC()), datautils.ConvertCTypes[C.ImVec2](a2.ToC()), datautils.ConvertCTypes[C.ImVec2](b1.ToC()), datautils.ConvertCTypes[C.ImVec2](b2.ToC()))
+	C.ImPlot_Intersection(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](a1.ToC()), datautils.ConvertCTypes[C.ImVec2](a2.ToC()), datautils.ConvertCTypes[C.ImVec2](b1.ToC()), datautils.ConvertCTypes[C.ImVec2](b2.ToC()))
 
 	pOutFin()
 
@@ -3191,9 +3191,9 @@ func PlotLabelAxisValueV(axis PlotAxis, value float64, buff string, size int32, 
 // us: 0
 func PlotMakeTimeV(year int32, month int32, day int32, hour int32, min int32, sec int32, us int32) PlotTime {
 	pOut := new(PlotTime)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotTime, *PlotTime](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_MakeTime(pOutArg, C.int(year), C.int(month), C.int(day), C.int(hour), C.int(min), C.int(sec), C.int(us))
+	C.ImPlot_MakeTime(datautils.ConvertCTypes[*C.ImPlotTime](pOutArg), C.int(year), C.int(month), C.int(day), C.int(hour), C.int(min), C.int(sec), C.int(us))
 
 	pOutFin()
 
@@ -3220,9 +3220,9 @@ func PlotMapInputReverseV(dst *PlotInputMap) {
 
 func PlotNextColormapColor() imgui.Vec4 {
 	pOut := new(imgui.Vec4)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec4, *imgui.Vec4](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_NextColormapColor(pOutArg)
+	C.ImPlot_NextColormapColor(datautils.ConvertCTypes[*C.ImVec4](pOutArg))
 
 	pOutFin()
 
@@ -3250,9 +3250,9 @@ func PlotOrderToPrecision(order int32) int32 {
 // y_axis: -1
 func PlotPixelsToPlotFloatV(x float32, y float32, x_axis PlotAxisEnum, y_axis PlotAxisEnum) PlotPoint {
 	pOut := new(PlotPoint)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotPoint, *PlotPoint](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_PixelsToPlot_Float(pOutArg, C.float(x), C.float(y), C.ImAxis(x_axis), C.ImAxis(y_axis))
+	C.ImPlot_PixelsToPlot_Float(datautils.ConvertCTypes[*C.ImPlotPoint](pOutArg), C.float(x), C.float(y), C.ImAxis(x_axis), C.ImAxis(y_axis))
 
 	pOutFin()
 
@@ -3264,9 +3264,9 @@ func PlotPixelsToPlotFloatV(x float32, y float32, x_axis PlotAxisEnum, y_axis Pl
 // y_axis: -1
 func PlotPixelsToPlotVec2V(pix imgui.Vec2, x_axis PlotAxisEnum, y_axis PlotAxisEnum) PlotPoint {
 	pOut := new(PlotPoint)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotPoint, *PlotPoint](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_PixelsToPlot_Vec2(pOutArg, datautils.ConvertCTypes[C.ImVec2](pix.ToC()), C.ImAxis(x_axis), C.ImAxis(y_axis))
+	C.ImPlot_PixelsToPlot_Vec2(datautils.ConvertCTypes[*C.ImPlotPoint](pOutArg), datautils.ConvertCTypes[C.ImVec2](pix.ToC()), C.ImAxis(x_axis), C.ImAxis(y_axis))
 
 	pOutFin()
 
@@ -8400,9 +8400,9 @@ func PlotPlotTextV(text string, x float64, y float64, pix_offset imgui.Vec2, fla
 // y_axis: -1
 func PlotPlotToPixelsPlotPoIntV(plt PlotPoint, x_axis PlotAxisEnum, y_axis PlotAxisEnum) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_PlotToPixels_PlotPoInt(pOutArg, datautils.ConvertCTypes[C.ImPlotPoint](plt.ToC()), C.ImAxis(x_axis), C.ImAxis(y_axis))
+	C.ImPlot_PlotToPixels_PlotPoInt(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImPlotPoint](plt.ToC()), C.ImAxis(x_axis), C.ImAxis(y_axis))
 
 	pOutFin()
 
@@ -8414,9 +8414,9 @@ func PlotPlotToPixelsPlotPoIntV(plt PlotPoint, x_axis PlotAxisEnum, y_axis PlotA
 // y_axis: -1
 func PlotPlotToPixelsdoubleV(x float64, y float64, x_axis PlotAxisEnum, y_axis PlotAxisEnum) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_PlotToPixels_double(pOutArg, C.double(x), C.double(y), C.ImAxis(x_axis), C.ImAxis(y_axis))
+	C.ImPlot_PlotToPixels_double(datautils.ConvertCTypes[*C.ImVec2](pOutArg), C.double(x), C.double(y), C.ImAxis(x_axis), C.ImAxis(y_axis))
 
 	pOutFin()
 
@@ -8549,9 +8549,9 @@ func PlotResetCtxForNextSubplot(ctx *PlotContext) {
 
 func PlotRoundTime(t PlotTime, unit PlotTimeUnit) PlotTime {
 	pOut := new(PlotTime)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotTime, *PlotTime](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_RoundTime(pOutArg, datautils.ConvertCTypes[C.ImPlotTime](t.ToC()), C.ImPlotTimeUnit(unit))
+	C.ImPlot_RoundTime(datautils.ConvertCTypes[*C.ImPlotTime](pOutArg), datautils.ConvertCTypes[C.ImPlotTime](t.ToC()), C.ImPlotTimeUnit(unit))
 
 	pOutFin()
 
@@ -8566,9 +8566,9 @@ func PlotRoundTo(val float64, prec int32) float64 {
 // cmap: -1
 func PlotSampleColormapV(t float32, cmap PlotColormap) imgui.Vec4 {
 	pOut := new(imgui.Vec4)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec4, *imgui.Vec4](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImPlot_SampleColormap(pOutArg, C.float(t), C.ImPlotColormap(cmap))
+	C.ImPlot_SampleColormap(datautils.ConvertCTypes[*C.ImVec4](pOutArg), C.float(t), C.ImPlotColormap(cmap))
 
 	pOutFin()
 
@@ -8810,9 +8810,9 @@ func PlotShowColormapSelector(label string) bool {
 func PlotShowDatePickerV(id string, level *int32, t *PlotTime, t1 *PlotTime, t2 *PlotTime) bool {
 	idArg, idFin := datautils.WrapString[C.char](id)
 	levelArg, levelFin := datautils.WrapNumberPtr[C.int, int32](level)
-	tArg, tFin := datautils.Wrap[C.ImPlotTime, *PlotTime](t)
-	t1Arg, t1Fin := datautils.Wrap[C.ImPlotTime, *PlotTime](t1)
-	t2Arg, t2Fin := datautils.Wrap[C.ImPlotTime, *PlotTime](t2)
+	tArg, tFin := datautils.Wrap(t)
+	t1Arg, t1Fin := datautils.Wrap(t1)
+	t2Arg, t2Fin := datautils.Wrap(t2)
 
 	defer func() {
 		idFin()
@@ -8821,7 +8821,7 @@ func PlotShowDatePickerV(id string, level *int32, t *PlotTime, t1 *PlotTime, t2 
 		t1Fin()
 		t2Fin()
 	}()
-	return C.ImPlot_ShowDatePicker(idArg, levelArg, tArg, t1Arg, t2Arg) == C.bool(true)
+	return C.ImPlot_ShowDatePicker(idArg, levelArg, datautils.ConvertCTypes[*C.ImPlotTime](tArg), datautils.ConvertCTypes[*C.ImPlotTime](t1Arg), datautils.ConvertCTypes[*C.ImPlotTime](t2Arg)) == C.bool(true)
 }
 
 // PlotShowDemoWindowV parameter default value hint:
@@ -8905,13 +8905,13 @@ func PlotShowSubplotsContextMenu(subplot *PlotSubplot) {
 
 func PlotShowTimePicker(id string, t *PlotTime) bool {
 	idArg, idFin := datautils.WrapString[C.char](id)
-	tArg, tFin := datautils.Wrap[C.ImPlotTime, *PlotTime](t)
+	tArg, tFin := datautils.Wrap(t)
 
 	defer func() {
 		idFin()
 		tFin()
 	}()
-	return C.ImPlot_ShowTimePicker(idArg, tArg) == C.bool(true)
+	return C.ImPlot_ShowTimePicker(idArg, datautils.ConvertCTypes[*C.ImPlotTime](tArg)) == C.bool(true)
 }
 
 func PlotShowUserGuide() {
@@ -9045,13 +9045,13 @@ func PlotAddColormapU32Ptr(name string, cols *[]uint32, size int32) PlotColormap
 
 func PlotAddColormapVec4Ptr(name string, cols *imgui.Vec4, size int32) PlotColormap {
 	nameArg, nameFin := datautils.WrapString[C.char](name)
-	colsArg, colsFin := datautils.Wrap[C.ImVec4, *imgui.Vec4](cols)
+	colsArg, colsFin := datautils.Wrap(cols)
 
 	defer func() {
 		nameFin()
 		colsFin()
 	}()
-	return PlotColormap(C.wrap_ImPlot_AddColormap_Vec4Ptr(nameArg, colsArg, C.int(size)))
+	return PlotColormap(C.wrap_ImPlot_AddColormap_Vec4Ptr(nameArg, datautils.ConvertCTypes[*C.ImVec4](colsArg), C.int(size)))
 }
 
 func PlotAddTextCentered(DrawList *imgui.DrawList, top_center imgui.Vec2, col uint32, text_begin string) {
@@ -9219,9 +9219,9 @@ func PlotDragRect(id int32, x1 *float64, y1 *float64, x2 *float64, y2 *float64, 
 
 func PlotGetColormapColor(idx int32) imgui.Vec4 {
 	pOut := new(imgui.Vec4)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec4, *imgui.Vec4](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.wrap_ImPlot_GetColormapColor(pOutArg, C.int(idx))
+	C.wrap_ImPlot_GetColormapColor(datautils.ConvertCTypes[*C.ImVec4](pOutArg), C.int(idx))
 
 	pOutFin()
 
@@ -9234,9 +9234,9 @@ func PlotGetColormapSize() int32 {
 
 func PlotGetLocationPos(outer_rect imgui.Rect, inner_size imgui.Vec2, location PlotLocation) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.wrap_ImPlot_GetLocationPos(pOutArg, datautils.ConvertCTypes[C.ImRect](outer_rect.ToC()), datautils.ConvertCTypes[C.ImVec2](inner_size.ToC()), C.ImPlotLocation(location))
+	C.wrap_ImPlot_GetLocationPos(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImRect](outer_rect.ToC()), datautils.ConvertCTypes[C.ImVec2](inner_size.ToC()), C.ImPlotLocation(location))
 
 	pOutFin()
 
@@ -9256,9 +9256,9 @@ func PlotGetPlotLimits() PlotRect {
 
 func PlotGetPlotMousePos() PlotPoint {
 	pOut := new(PlotPoint)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotPoint, *PlotPoint](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.wrap_ImPlot_GetPlotMousePos(pOutArg)
+	C.wrap_ImPlot_GetPlotMousePos(datautils.ConvertCTypes[*C.ImPlotPoint](pOutArg))
 
 	pOutFin()
 
@@ -9295,9 +9295,9 @@ func PlotLabelAxisValue(axis PlotAxis, value float64, buff string, size int32) {
 
 func PlotMakeTime(year int32) PlotTime {
 	pOut := new(PlotTime)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotTime, *PlotTime](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.wrap_ImPlot_MakeTime(pOutArg, C.int(year))
+	C.wrap_ImPlot_MakeTime(datautils.ConvertCTypes[*C.ImPlotTime](pOutArg), C.int(year))
 
 	pOutFin()
 
@@ -9314,9 +9314,9 @@ func PlotMapInputReverse() {
 
 func PlotPixelsToPlotFloat(x float32, y float32) PlotPoint {
 	pOut := new(PlotPoint)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotPoint, *PlotPoint](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.wrap_ImPlot_PixelsToPlot_Float(pOutArg, C.float(x), C.float(y))
+	C.wrap_ImPlot_PixelsToPlot_Float(datautils.ConvertCTypes[*C.ImPlotPoint](pOutArg), C.float(x), C.float(y))
 
 	pOutFin()
 
@@ -9325,9 +9325,9 @@ func PlotPixelsToPlotFloat(x float32, y float32) PlotPoint {
 
 func PlotPixelsToPlotVec2(pix imgui.Vec2) PlotPoint {
 	pOut := new(PlotPoint)
-	pOutArg, pOutFin := datautils.Wrap[C.ImPlotPoint, *PlotPoint](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.wrap_ImPlot_PixelsToPlot_Vec2(pOutArg, datautils.ConvertCTypes[C.ImVec2](pix.ToC()))
+	C.wrap_ImPlot_PixelsToPlot_Vec2(datautils.ConvertCTypes[*C.ImPlotPoint](pOutArg), datautils.ConvertCTypes[C.ImVec2](pix.ToC()))
 
 	pOutFin()
 
@@ -13256,9 +13256,9 @@ func PlotPlotText(text string, x float64, y float64) {
 
 func PlotPlotToPixelsPlotPoInt(plt PlotPoint) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.wrap_ImPlot_PlotToPixels_PlotPoInt(pOutArg, datautils.ConvertCTypes[C.ImPlotPoint](plt.ToC()))
+	C.wrap_ImPlot_PlotToPixels_PlotPoInt(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImPlotPoint](plt.ToC()))
 
 	pOutFin()
 
@@ -13267,9 +13267,9 @@ func PlotPlotToPixelsPlotPoInt(plt PlotPoint) imgui.Vec2 {
 
 func PlotPlotToPixelsdouble(x float64, y float64) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.wrap_ImPlot_PlotToPixels_double(pOutArg, C.double(x), C.double(y))
+	C.wrap_ImPlot_PlotToPixels_double(datautils.ConvertCTypes[*C.ImVec2](pOutArg), C.double(x), C.double(y))
 
 	pOutFin()
 
@@ -13303,9 +13303,9 @@ func PlotRegisterOrGetItem(label_id string, flags PlotItemFlags) *PlotItem {
 
 func PlotSampleColormap(t float32) imgui.Vec4 {
 	pOut := new(imgui.Vec4)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec4, *imgui.Vec4](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.wrap_ImPlot_SampleColormap(pOutArg, C.float(t))
+	C.wrap_ImPlot_SampleColormap(datautils.ConvertCTypes[*C.ImVec4](pOutArg), C.float(t))
 
 	pOutFin()
 
@@ -13401,14 +13401,14 @@ func PlotShowAxisContextMenu(axis *PlotAxis, equal_axis *PlotAxis) {
 func PlotShowDatePicker(id string, level *int32, t *PlotTime) bool {
 	idArg, idFin := datautils.WrapString[C.char](id)
 	levelArg, levelFin := datautils.WrapNumberPtr[C.int, int32](level)
-	tArg, tFin := datautils.Wrap[C.ImPlotTime, *PlotTime](t)
+	tArg, tFin := datautils.Wrap(t)
 
 	defer func() {
 		idFin()
 		levelFin()
 		tFin()
 	}()
-	return C.wrap_ImPlot_ShowDatePicker(idArg, levelArg, tArg) == C.bool(true)
+	return C.wrap_ImPlot_ShowDatePicker(idArg, levelArg, datautils.ConvertCTypes[*C.ImPlotTime](tArg)) == C.bool(true)
 }
 
 func PlotShowDemoWindow() {
@@ -17876,10 +17876,10 @@ func (self *PlotTicker) Levels() int32 {
 }
 
 func (self *PlotTime) Us() int32 {
-	selfArg, selfFin := datautils.Wrap[C.ImPlotTime, *PlotTime](self)
+	selfArg, selfFin := datautils.Wrap(self)
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_ImPlotTime_GetUs(selfArg))
+	return int32(C.wrap_ImPlotTime_GetUs(datautils.ConvertCTypes[*C.ImPlotTime](selfArg)))
 }

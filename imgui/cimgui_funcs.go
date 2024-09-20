@@ -55,9 +55,9 @@ func (self *BitVector) InternalTestBit(n int32) bool {
 // a: 1.0f
 func ColorHSVV(h float32, s float32, v float32, a float32) Color {
 	pOut := new(Color)
-	pOutArg, pOutFin := datautils.Wrap[C.ImColor, *Color](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.ImColor_HSV(pOutArg, C.float(h), C.float(s), C.float(v), C.float(a))
+	C.ImColor_HSV(datautils.ConvertCTypes[*C.ImColor](pOutArg), C.float(h), C.float(s), C.float(v), C.float(a))
 
 	pOutFin()
 
@@ -67,15 +67,15 @@ func ColorHSVV(h float32, s float32, v float32, a float32) Color {
 // SetHSVV parameter default value hint:
 // a: 1.0f
 func (self *Color) SetHSVV(h float32, s float32, v float32, a float32) {
-	selfArg, selfFin := datautils.Wrap[C.ImColor, *Color](self)
-	C.ImColor_SetHSV(selfArg, C.float(h), C.float(s), C.float(v), C.float(a))
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImColor_SetHSV(datautils.ConvertCTypes[*C.ImColor](selfArg), C.float(h), C.float(s), C.float(v), C.float(a))
 
 	selfFin()
 }
 
 func (self *Color) Destroy() {
-	selfArg, selfFin := datautils.Wrap[C.ImColor, *Color](self)
-	C.ImColor_destroy(selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImColor_destroy(datautils.ConvertCTypes[*C.ImColor](selfArg))
 
 	selfFin()
 }
@@ -271,8 +271,8 @@ func (self *DrawList) AddCircleFilledV(center Vec2, radius float32, col uint32, 
 
 func (self *DrawList) AddConcavePolyFilled(points *Vec2, num_points int32, col uint32) {
 	selfArg, selfFin := self.Handle()
-	pointsArg, pointsFin := datautils.Wrap[C.ImVec2, *Vec2](points)
-	C.ImDrawList_AddConcavePolyFilled(datautils.ConvertCTypes[*C.ImDrawList](selfArg), pointsArg, C.int(num_points), C.ImU32(col))
+	pointsArg, pointsFin := datautils.Wrap(points)
+	C.ImDrawList_AddConcavePolyFilled(datautils.ConvertCTypes[*C.ImDrawList](selfArg), datautils.ConvertCTypes[*C.ImVec2](pointsArg), C.int(num_points), C.ImU32(col))
 
 	selfFin()
 	pointsFin()
@@ -280,8 +280,8 @@ func (self *DrawList) AddConcavePolyFilled(points *Vec2, num_points int32, col u
 
 func (self *DrawList) AddConvexPolyFilled(points *Vec2, num_points int32, col uint32) {
 	selfArg, selfFin := self.Handle()
-	pointsArg, pointsFin := datautils.Wrap[C.ImVec2, *Vec2](points)
-	C.ImDrawList_AddConvexPolyFilled(datautils.ConvertCTypes[*C.ImDrawList](selfArg), pointsArg, C.int(num_points), C.ImU32(col))
+	pointsArg, pointsFin := datautils.Wrap(points)
+	C.ImDrawList_AddConvexPolyFilled(datautils.ConvertCTypes[*C.ImDrawList](selfArg), datautils.ConvertCTypes[*C.ImVec2](pointsArg), C.int(num_points), C.ImU32(col))
 
 	selfFin()
 	pointsFin()
@@ -382,8 +382,8 @@ func (self *DrawList) AddNgonFilled(center Vec2, radius float32, col uint32, num
 
 func (self *DrawList) AddPolyline(points *Vec2, num_points int32, col uint32, flags DrawFlags, thickness float32) {
 	selfArg, selfFin := self.Handle()
-	pointsArg, pointsFin := datautils.Wrap[C.ImVec2, *Vec2](points)
-	C.ImDrawList_AddPolyline(datautils.ConvertCTypes[*C.ImDrawList](selfArg), pointsArg, C.int(num_points), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
+	pointsArg, pointsFin := datautils.Wrap(points)
+	C.ImDrawList_AddPolyline(datautils.ConvertCTypes[*C.ImDrawList](selfArg), datautils.ConvertCTypes[*C.ImVec2](pointsArg), C.int(num_points), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
 
 	selfFin()
 	pointsFin()
@@ -442,8 +442,8 @@ func (self *DrawList) AddTextFontPtrV(font *Font, font_size float32, pos Vec2, c
 	selfArg, selfFin := self.Handle()
 	fontArg, fontFin := font.Handle()
 	text_beginArg, text_beginFin := datautils.WrapString[C.char](text_begin)
-	cpu_fine_clip_rectArg, cpu_fine_clip_rectFin := datautils.Wrap[C.ImVec4, *Vec4](cpu_fine_clip_rect)
-	C.wrap_ImDrawList_AddText_FontPtrV(datautils.ConvertCTypes[*C.ImDrawList](selfArg), datautils.ConvertCTypes[*C.ImFont](fontArg), C.float(font_size), datautils.ConvertCTypes[C.ImVec2](pos.ToC()), C.ImU32(col), text_beginArg, C.float(wrap_width), cpu_fine_clip_rectArg)
+	cpu_fine_clip_rectArg, cpu_fine_clip_rectFin := datautils.Wrap(cpu_fine_clip_rect)
+	C.wrap_ImDrawList_AddText_FontPtrV(datautils.ConvertCTypes[*C.ImDrawList](selfArg), datautils.ConvertCTypes[*C.ImFont](fontArg), C.float(font_size), datautils.ConvertCTypes[C.ImVec2](pos.ToC()), C.ImU32(col), text_beginArg, C.float(wrap_width), datautils.ConvertCTypes[*C.ImVec4](cpu_fine_clip_rectArg))
 
 	selfFin()
 	fontFin()
@@ -510,10 +510,10 @@ func (self *DrawList) CloneOutput() *DrawList {
 
 func (self *DrawList) ClipRectMax() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_GetClipRectMax(pOutArg, datautils.ConvertCTypes[*C.ImDrawList](selfArg))
+	C.ImDrawList_GetClipRectMax(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImDrawList](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -523,10 +523,10 @@ func (self *DrawList) ClipRectMax() Vec2 {
 
 func (self *DrawList) ClipRectMin() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_GetClipRectMin(pOutArg, datautils.ConvertCTypes[*C.ImDrawList](selfArg))
+	C.ImDrawList_GetClipRectMin(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImDrawList](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -975,9 +975,9 @@ func (self *FontAtlas) Build() bool {
 func (self *FontAtlas) CalcCustomRectUV(rect *FontAtlasCustomRect, out_uv_min *Vec2, out_uv_max *Vec2) {
 	selfArg, selfFin := self.Handle()
 	rectArg, rectFin := rect.Handle()
-	out_uv_minArg, out_uv_minFin := datautils.Wrap[C.ImVec2, *Vec2](out_uv_min)
-	out_uv_maxArg, out_uv_maxFin := datautils.Wrap[C.ImVec2, *Vec2](out_uv_max)
-	C.ImFontAtlas_CalcCustomRectUV(datautils.ConvertCTypes[*C.ImFontAtlas](selfArg), datautils.ConvertCTypes[*C.ImFontAtlasCustomRect](rectArg), out_uv_minArg, out_uv_maxArg)
+	out_uv_minArg, out_uv_minFin := datautils.Wrap(out_uv_min)
+	out_uv_maxArg, out_uv_maxFin := datautils.Wrap(out_uv_max)
+	C.ImFontAtlas_CalcCustomRectUV(datautils.ConvertCTypes[*C.ImFontAtlas](selfArg), datautils.ConvertCTypes[*C.ImFontAtlasCustomRect](rectArg), datautils.ConvertCTypes[*C.ImVec2](out_uv_minArg), datautils.ConvertCTypes[*C.ImVec2](out_uv_maxArg))
 
 	selfFin()
 	rectFin()
@@ -1118,13 +1118,13 @@ func (self *FontAtlas) GlyphRangesVietnamese() *Wchar {
 
 func (self *FontAtlas) MouseCursorTexData(cursor MouseCursor, out_offset *Vec2, out_size *Vec2, out_uv_border [2]*Vec2, out_uv_fill [2]*Vec2) bool {
 	selfArg, selfFin := self.Handle()
-	out_offsetArg, out_offsetFin := datautils.Wrap[C.ImVec2, *Vec2](out_offset)
-	out_sizeArg, out_sizeFin := datautils.Wrap[C.ImVec2, *Vec2](out_size)
+	out_offsetArg, out_offsetFin := datautils.Wrap(out_offset)
+	out_sizeArg, out_sizeFin := datautils.Wrap(out_size)
 	out_uv_borderArg := make([]C.ImVec2, len(out_uv_border))
 	out_uv_borderFin := make([]func(), len(out_uv_border))
 	for i, out_uv_borderV := range out_uv_border {
 		var tmp *C.ImVec2
-		tmp, out_uv_borderFin[i] = datautils.Wrap[C.ImVec2, *Vec2](out_uv_borderV)
+		tmp, out_uv_borderFin[i] = datautils.Wrap(out_uv_borderV)
 		out_uv_borderArg[i] = *tmp
 	}
 
@@ -1132,7 +1132,7 @@ func (self *FontAtlas) MouseCursorTexData(cursor MouseCursor, out_offset *Vec2, 
 	out_uv_fillFin := make([]func(), len(out_uv_fill))
 	for i, out_uv_fillV := range out_uv_fill {
 		var tmp *C.ImVec2
-		tmp, out_uv_fillFin[i] = datautils.Wrap[C.ImVec2, *Vec2](out_uv_fillV)
+		tmp, out_uv_fillFin[i] = datautils.Wrap(out_uv_fillV)
 		out_uv_fillArg[i] = *tmp
 	}
 
@@ -1149,7 +1149,7 @@ func (self *FontAtlas) MouseCursorTexData(cursor MouseCursor, out_offset *Vec2, 
 			out_uv_fillV()
 		}
 	}()
-	return C.ImFontAtlas_GetMouseCursorTexData(datautils.ConvertCTypes[*C.ImFontAtlas](selfArg), C.ImGuiMouseCursor(cursor), out_offsetArg, out_sizeArg, (*C.ImVec2)(&out_uv_borderArg[0]), (*C.ImVec2)(&out_uv_fillArg[0])) == C.bool(true)
+	return C.ImFontAtlas_GetMouseCursorTexData(datautils.ConvertCTypes[*C.ImFontAtlas](selfArg), C.ImGuiMouseCursor(cursor), datautils.ConvertCTypes[*C.ImVec2](out_offsetArg), datautils.ConvertCTypes[*C.ImVec2](out_sizeArg), (*C.ImVec2)(&out_uv_borderArg[0]), (*C.ImVec2)(&out_uv_fillArg[0])) == C.bool(true)
 }
 
 func NewFontAtlas() *FontAtlas {
@@ -1287,12 +1287,12 @@ func (self *Font) BuildLookupTable() {
 // remaining: NULL
 func (self *Font) CalcTextSizeAV(size float32, max_width float32, wrap_width float32, text_begin string, remaining []string) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
 	text_beginArg, text_beginFin := datautils.WrapString[C.char](text_begin)
 	remainingArg, remainingFin := datautils.WrapStringList[C.char](remaining)
-	C.wrap_ImFont_CalcTextSizeAV(pOutArg, datautils.ConvertCTypes[*C.ImFont](selfArg), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, remainingArg)
+	C.wrap_ImFont_CalcTextSizeAV(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImFont](selfArg), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, remainingArg)
 
 	pOutFin()
 	selfFin()
@@ -1701,10 +1701,10 @@ func (self *DockNode) InternalIsSplitNode() bool {
 
 func (self *DockNode) InternalRect() Rect {
 	pOut := new(Rect)
-	pOutArg, pOutFin := datautils.Wrap[C.ImRect, *Rect](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImGuiDockNode_Rect(pOutArg, datautils.ConvertCTypes[*C.ImGuiDockNode](selfArg))
+	C.ImGuiDockNode_Rect(datautils.ConvertCTypes[*C.ImRect](pOutArg), datautils.ConvertCTypes[*C.ImGuiDockNode](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3234,10 +3234,10 @@ func (self *TypingSelectState) Destroy() {
 
 func (self *ViewportP) InternalCalcWorkRectPos(inset_min Vec2) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImGuiViewportP_CalcWorkRectPos(pOutArg, datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg), datautils.ConvertCTypes[C.ImVec2](inset_min.ToC()))
+	C.ImGuiViewportP_CalcWorkRectPos(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg), datautils.ConvertCTypes[C.ImVec2](inset_min.ToC()))
 
 	pOutFin()
 	selfFin()
@@ -3247,10 +3247,10 @@ func (self *ViewportP) InternalCalcWorkRectPos(inset_min Vec2) Vec2 {
 
 func (self *ViewportP) InternalCalcWorkRectSize(inset_min Vec2, inset_max Vec2) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImGuiViewportP_CalcWorkRectSize(pOutArg, datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg), datautils.ConvertCTypes[C.ImVec2](inset_min.ToC()), datautils.ConvertCTypes[C.ImVec2](inset_max.ToC()))
+	C.ImGuiViewportP_CalcWorkRectSize(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg), datautils.ConvertCTypes[C.ImVec2](inset_min.ToC()), datautils.ConvertCTypes[C.ImVec2](inset_max.ToC()))
 
 	pOutFin()
 	selfFin()
@@ -3267,10 +3267,10 @@ func (self *ViewportP) InternalClearRequestFlags() {
 
 func (self *ViewportP) InternalBuildWorkRect() Rect {
 	pOut := new(Rect)
-	pOutArg, pOutFin := datautils.Wrap[C.ImRect, *Rect](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImGuiViewportP_GetBuildWorkRect(pOutArg, datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
+	C.ImGuiViewportP_GetBuildWorkRect(datautils.ConvertCTypes[*C.ImRect](pOutArg), datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3280,10 +3280,10 @@ func (self *ViewportP) InternalBuildWorkRect() Rect {
 
 func (self *ViewportP) InternalMainRect() Rect {
 	pOut := new(Rect)
-	pOutArg, pOutFin := datautils.Wrap[C.ImRect, *Rect](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImGuiViewportP_GetMainRect(pOutArg, datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
+	C.ImGuiViewportP_GetMainRect(datautils.ConvertCTypes[*C.ImRect](pOutArg), datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3293,10 +3293,10 @@ func (self *ViewportP) InternalMainRect() Rect {
 
 func (self *ViewportP) InternalWorkRect() Rect {
 	pOut := new(Rect)
-	pOutArg, pOutFin := datautils.Wrap[C.ImRect, *Rect](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImGuiViewportP_GetWorkRect(pOutArg, datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
+	C.ImGuiViewportP_GetWorkRect(datautils.ConvertCTypes[*C.ImRect](pOutArg), datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3325,10 +3325,10 @@ func (self *ViewportP) InternalDestroy() {
 
 func (self *Viewport) Center() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImGuiViewport_GetCenter(pOutArg, datautils.ConvertCTypes[*C.ImGuiViewport](selfArg))
+	C.ImGuiViewport_GetCenter(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImGuiViewport](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3338,10 +3338,10 @@ func (self *Viewport) Center() Vec2 {
 
 func (self *Viewport) WorkCenter() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImGuiViewport_GetWorkCenter(pOutArg, datautils.ConvertCTypes[*C.ImGuiViewport](selfArg))
+	C.ImGuiViewport_GetWorkCenter(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImGuiViewport](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3479,10 +3479,10 @@ func InternalNewWindow(context *Context, name string) *Window {
 
 func (self *Window) InternalMenuBarRect() Rect {
 	pOut := new(Rect)
-	pOutArg, pOutFin := datautils.Wrap[C.ImRect, *Rect](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImGuiWindow_MenuBarRect(pOutArg, datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+	C.ImGuiWindow_MenuBarRect(datautils.ConvertCTypes[*C.ImRect](pOutArg), datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3492,10 +3492,10 @@ func (self *Window) InternalMenuBarRect() Rect {
 
 func (self *Window) InternalRect() Rect {
 	pOut := new(Rect)
-	pOutArg, pOutFin := datautils.Wrap[C.ImRect, *Rect](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImGuiWindow_Rect(pOutArg, datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+	C.ImGuiWindow_Rect(datautils.ConvertCTypes[*C.ImRect](pOutArg), datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3505,10 +3505,10 @@ func (self *Window) InternalRect() Rect {
 
 func (self *Window) InternalTitleBarRect() Rect {
 	pOut := new(Rect)
-	pOutArg, pOutFin := datautils.Wrap[C.ImRect, *Rect](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
-	C.ImGuiWindow_TitleBarRect(pOutArg, datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+	C.ImGuiWindow_TitleBarRect(datautils.ConvertCTypes[*C.ImRect](pOutArg), datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3524,99 +3524,99 @@ func (self *Window) InternalDestroy() {
 }
 
 func (self *Rect) InternalAddRect(r Rect) {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_Add_Rect(selfArg, datautils.ConvertCTypes[C.ImRect](r.ToC()))
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_Add_Rect(datautils.ConvertCTypes[*C.ImRect](selfArg), datautils.ConvertCTypes[C.ImRect](r.ToC()))
 
 	selfFin()
 }
 
 func (self *Rect) InternalAddVec2(p Vec2) {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_Add_Vec2(selfArg, datautils.ConvertCTypes[C.ImVec2](p.ToC()))
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_Add_Vec2(datautils.ConvertCTypes[*C.ImRect](selfArg), datautils.ConvertCTypes[C.ImVec2](p.ToC()))
 
 	selfFin()
 }
 
 // Simple version, may lead to an inverted rectangle, which is fine for Contains/Overlaps test but not for display.
 func (self *Rect) InternalClipWith(r Rect) {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_ClipWith(selfArg, datautils.ConvertCTypes[C.ImRect](r.ToC()))
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_ClipWith(datautils.ConvertCTypes[*C.ImRect](selfArg), datautils.ConvertCTypes[C.ImRect](r.ToC()))
 
 	selfFin()
 }
 
 // Full version, ensure both points are fully clipped.
 func (self *Rect) InternalClipWithFull(r Rect) {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_ClipWithFull(selfArg, datautils.ConvertCTypes[C.ImRect](r.ToC()))
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_ClipWithFull(datautils.ConvertCTypes[*C.ImRect](selfArg), datautils.ConvertCTypes[C.ImRect](r.ToC()))
 
 	selfFin()
 }
 
 func (self *Rect) InternalContainsWithPad(p Vec2, pad Vec2) bool {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
+	selfArg, selfFin := datautils.Wrap(self)
 
 	defer func() {
 		selfFin()
 	}()
-	return C.ImRect_ContainsWithPad(selfArg, datautils.ConvertCTypes[C.ImVec2](p.ToC()), datautils.ConvertCTypes[C.ImVec2](pad.ToC())) == C.bool(true)
+	return C.ImRect_ContainsWithPad(datautils.ConvertCTypes[*C.ImRect](selfArg), datautils.ConvertCTypes[C.ImVec2](p.ToC()), datautils.ConvertCTypes[C.ImVec2](pad.ToC())) == C.bool(true)
 }
 
 func (self *Rect) InternalContainsRect(r Rect) bool {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
+	selfArg, selfFin := datautils.Wrap(self)
 
 	defer func() {
 		selfFin()
 	}()
-	return C.ImRect_Contains_Rect(selfArg, datautils.ConvertCTypes[C.ImRect](r.ToC())) == C.bool(true)
+	return C.ImRect_Contains_Rect(datautils.ConvertCTypes[*C.ImRect](selfArg), datautils.ConvertCTypes[C.ImRect](r.ToC())) == C.bool(true)
 }
 
 func (self *Rect) InternalContainsVec2(p Vec2) bool {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
+	selfArg, selfFin := datautils.Wrap(self)
 
 	defer func() {
 		selfFin()
 	}()
-	return C.ImRect_Contains_Vec2(selfArg, datautils.ConvertCTypes[C.ImVec2](p.ToC())) == C.bool(true)
+	return C.ImRect_Contains_Vec2(datautils.ConvertCTypes[*C.ImRect](selfArg), datautils.ConvertCTypes[C.ImVec2](p.ToC())) == C.bool(true)
 }
 
 func (self *Rect) InternalExpandFloat(amount float32) {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_Expand_Float(selfArg, C.float(amount))
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_Expand_Float(datautils.ConvertCTypes[*C.ImRect](selfArg), C.float(amount))
 
 	selfFin()
 }
 
 func (self *Rect) InternalExpandVec2(amount Vec2) {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_Expand_Vec2(selfArg, datautils.ConvertCTypes[C.ImVec2](amount.ToC()))
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_Expand_Vec2(datautils.ConvertCTypes[*C.ImRect](selfArg), datautils.ConvertCTypes[C.ImVec2](amount.ToC()))
 
 	selfFin()
 }
 
 func (self *Rect) InternalFloor() {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_Floor(selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_Floor(datautils.ConvertCTypes[*C.ImRect](selfArg))
 
 	selfFin()
 }
 
 func (self *Rect) InternalArea() float32 {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
+	selfArg, selfFin := datautils.Wrap(self)
 
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.ImRect_GetArea(selfArg))
+	return float32(C.ImRect_GetArea(datautils.ConvertCTypes[*C.ImRect](selfArg)))
 }
 
 // Bottom-left
 func (self *Rect) InternalBL() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_GetBL(pOutArg, selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_GetBL(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImRect](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3627,10 +3627,10 @@ func (self *Rect) InternalBL() Vec2 {
 // Bottom-right
 func (self *Rect) InternalBR() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_GetBR(pOutArg, selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_GetBR(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImRect](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3640,10 +3640,10 @@ func (self *Rect) InternalBR() Vec2 {
 
 func (self *Rect) InternalCenter() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_GetCenter(pOutArg, selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_GetCenter(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImRect](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3652,20 +3652,20 @@ func (self *Rect) InternalCenter() Vec2 {
 }
 
 func (self *Rect) InternalHeight() float32 {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
+	selfArg, selfFin := datautils.Wrap(self)
 
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.ImRect_GetHeight(selfArg))
+	return float32(C.ImRect_GetHeight(datautils.ConvertCTypes[*C.ImRect](selfArg)))
 }
 
 func (self *Rect) InternalSize() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_GetSize(pOutArg, selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_GetSize(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImRect](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3676,10 +3676,10 @@ func (self *Rect) InternalSize() Vec2 {
 // Top-left
 func (self *Rect) InternalTL() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_GetTL(pOutArg, selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_GetTL(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImRect](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3690,10 +3690,10 @@ func (self *Rect) InternalTL() Vec2 {
 // Top-right
 func (self *Rect) InternalTR() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_GetTR(pOutArg, selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_GetTR(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImRect](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3702,38 +3702,38 @@ func (self *Rect) InternalTR() Vec2 {
 }
 
 func (self *Rect) InternalWidth() float32 {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
+	selfArg, selfFin := datautils.Wrap(self)
 
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.ImRect_GetWidth(selfArg))
+	return float32(C.ImRect_GetWidth(datautils.ConvertCTypes[*C.ImRect](selfArg)))
 }
 
 func (self *Rect) InternalIsInverted() bool {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
+	selfArg, selfFin := datautils.Wrap(self)
 
 	defer func() {
 		selfFin()
 	}()
-	return C.ImRect_IsInverted(selfArg) == C.bool(true)
+	return C.ImRect_IsInverted(datautils.ConvertCTypes[*C.ImRect](selfArg)) == C.bool(true)
 }
 
 func (self *Rect) InternalOverlaps(r Rect) bool {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
+	selfArg, selfFin := datautils.Wrap(self)
 
 	defer func() {
 		selfFin()
 	}()
-	return C.ImRect_Overlaps(selfArg, datautils.ConvertCTypes[C.ImRect](r.ToC())) == C.bool(true)
+	return C.ImRect_Overlaps(datautils.ConvertCTypes[*C.ImRect](selfArg), datautils.ConvertCTypes[C.ImRect](r.ToC())) == C.bool(true)
 }
 
 func (self *Rect) InternalToVec4() Vec4 {
 	pOut := new(Vec4)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec4, *Vec4](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_ToVec4(pOutArg, selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_ToVec4(datautils.ConvertCTypes[*C.ImVec4](pOutArg), datautils.ConvertCTypes[*C.ImRect](selfArg))
 
 	pOutFin()
 	selfFin()
@@ -3742,29 +3742,29 @@ func (self *Rect) InternalToVec4() Vec4 {
 }
 
 func (self *Rect) InternalTranslate(d Vec2) {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_Translate(selfArg, datautils.ConvertCTypes[C.ImVec2](d.ToC()))
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_Translate(datautils.ConvertCTypes[*C.ImRect](selfArg), datautils.ConvertCTypes[C.ImVec2](d.ToC()))
 
 	selfFin()
 }
 
 func (self *Rect) InternalTranslateX(dx float32) {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_TranslateX(selfArg, C.float(dx))
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_TranslateX(datautils.ConvertCTypes[*C.ImRect](selfArg), C.float(dx))
 
 	selfFin()
 }
 
 func (self *Rect) InternalTranslateY(dy float32) {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_TranslateY(selfArg, C.float(dy))
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_TranslateY(datautils.ConvertCTypes[*C.ImRect](selfArg), C.float(dy))
 
 	selfFin()
 }
 
 func (self *Rect) Destroy() {
-	selfArg, selfFin := datautils.Wrap[C.ImRect, *Rect](self)
-	C.ImRect_destroy(selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImRect_destroy(datautils.ConvertCTypes[*C.ImRect](selfArg))
 
 	selfFin()
 }
@@ -3785,15 +3785,15 @@ func (self *Vec1) Destroy() {
 }
 
 func (self *Vec2) Destroy() {
-	selfArg, selfFin := datautils.Wrap[C.ImVec2, *Vec2](self)
-	C.ImVec2_destroy(selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImVec2_destroy(datautils.ConvertCTypes[*C.ImVec2](selfArg))
 
 	selfFin()
 }
 
 func (self *Vec4) Destroy() {
-	selfArg, selfFin := datautils.Wrap[C.ImVec4, *Vec4](self)
-	C.ImVec4_destroy(selfArg)
+	selfArg, selfFin := datautils.Wrap(self)
+	C.ImVec4_destroy(datautils.ConvertCTypes[*C.ImVec4](selfArg))
 
 	selfFin()
 }
@@ -4328,9 +4328,9 @@ func InternalButtonExV(label string, size_arg Vec2, flags ButtonFlags) bool {
 
 func InternalCalcItemSize(size Vec2, default_w float32, default_h float32) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igCalcItemSize(pOutArg, datautils.ConvertCTypes[C.ImVec2](size.ToC()), C.float(default_w), C.float(default_h))
+	C.igCalcItemSize(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](size.ToC()), C.float(default_w), C.float(default_h))
 
 	pOutFin()
 
@@ -4351,10 +4351,10 @@ func InternalCalcRoundingFlagsForRectInRect(r_in Rect, r_outer Rect, threshold f
 // wrap_width: -1.0f
 func CalcTextSizeV(text string, hide_text_after_double_hash bool, wrap_width float32) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	textArg, textFin := datautils.WrapString[C.char](text)
-	C.wrap_igCalcTextSizeV(pOutArg, textArg, C.int(len(text)), C.bool(hide_text_after_double_hash), C.float(wrap_width))
+	C.wrap_igCalcTextSizeV(datautils.ConvertCTypes[*C.ImVec2](pOutArg), textArg, C.int(len(text)), C.bool(hide_text_after_double_hash), C.float(wrap_width))
 
 	pOutFin()
 	textFin()
@@ -4368,10 +4368,10 @@ func InternalCalcTypematicRepeatAmount(t0 float32, t1 float32, repeat_delay floa
 
 func InternalCalcWindowNextAutoFitSize(window *Window) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	windowArg, windowFin := window.Handle()
-	C.igCalcWindowNextAutoFitSize(pOutArg, datautils.ConvertCTypes[*C.ImGuiWindow](windowArg))
+	C.igCalcWindowNextAutoFitSize(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImGuiWindow](windowArg))
 
 	pOutFin()
 	windowFin()
@@ -4577,9 +4577,9 @@ func ColorConvertRGBtoHSV(r float32, g float32, b float32, out_h *float32, out_s
 
 func ColorConvertU32ToFloat4(in uint32) Vec4 {
 	pOut := new(Vec4)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec4, *Vec4](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igColorConvertU32ToFloat4(pOutArg, C.ImU32(in))
+	C.igColorConvertU32ToFloat4(datautils.ConvertCTypes[*C.ImVec4](pOutArg), C.ImU32(in))
 
 	pOutFin()
 
@@ -5203,7 +5203,7 @@ func InternalDockContextCalcDropPosForDocking(target *Window, target_node *DockN
 	target_nodeArg, target_nodeFin := target_node.Handle()
 	payload_windowArg, payload_windowFin := payload_window.Handle()
 	payload_nodeArg, payload_nodeFin := payload_node.Handle()
-	out_posArg, out_posFin := datautils.Wrap[C.ImVec2, *Vec2](out_pos)
+	out_posArg, out_posFin := datautils.Wrap(out_pos)
 
 	defer func() {
 		targetFin()
@@ -5212,7 +5212,7 @@ func InternalDockContextCalcDropPosForDocking(target *Window, target_node *DockN
 		payload_nodeFin()
 		out_posFin()
 	}()
-	return C.igDockContextCalcDropPosForDocking(datautils.ConvertCTypes[*C.ImGuiWindow](targetArg), datautils.ConvertCTypes[*C.ImGuiDockNode](target_nodeArg), datautils.ConvertCTypes[*C.ImGuiWindow](payload_windowArg), datautils.ConvertCTypes[*C.ImGuiDockNode](payload_nodeArg), C.ImGuiDir(split_dir), C.bool(split_outer), out_posArg) == C.bool(true)
+	return C.igDockContextCalcDropPosForDocking(datautils.ConvertCTypes[*C.ImGuiWindow](targetArg), datautils.ConvertCTypes[*C.ImGuiDockNode](target_nodeArg), datautils.ConvertCTypes[*C.ImGuiWindow](payload_windowArg), datautils.ConvertCTypes[*C.ImGuiDockNode](payload_nodeArg), C.ImGuiDir(split_dir), C.bool(split_outer), datautils.ConvertCTypes[*C.ImVec2](out_posArg)) == C.bool(true)
 }
 
 // Use root_id==0 to clear all
@@ -5854,10 +5854,10 @@ func InternalErrorCheckUsingSetCursorPosToExtendParentBoundaries() {
 
 func InternalFindBestWindowPosForPopup(window *Window) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	windowArg, windowFin := window.Handle()
-	C.igFindBestWindowPosForPopup(pOutArg, datautils.ConvertCTypes[*C.ImGuiWindow](windowArg))
+	C.igFindBestWindowPosForPopup(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImGuiWindow](windowArg))
 
 	pOutFin()
 	windowFin()
@@ -6134,9 +6134,9 @@ func InternalColumnsID(str_id string, count int32) ID {
 // available space from current position. THIS IS YOUR BEST FRIEND.
 func ContentRegionAvail() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igGetContentRegionAvail(pOutArg)
+	C.igGetContentRegionAvail(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -6171,9 +6171,9 @@ func InternalCurrentWindowRead() *Window {
 // [window-local] cursor position in window-local coordinates. This is not your best friend.
 func CursorPos() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igGetCursorPos(pOutArg)
+	C.igGetCursorPos(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -6193,9 +6193,9 @@ func CursorPosY() float32 {
 // cursor position, absolute coordinates. THIS IS YOUR BEST FRIEND (prefer using this rather than GetCursorPos(), also more useful to work with ImDrawList API).
 func CursorScreenPos() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igGetCursorScreenPos(pOutArg)
+	C.igGetCursorScreenPos(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -6205,9 +6205,9 @@ func CursorScreenPos() Vec2 {
 // [window-local] initial cursor position, in window-local coordinates. Call GetCursorScreenPos() after Begin() to get the absolute coordinates version.
 func CursorStartPos() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igGetCursorStartPos(pOutArg)
+	C.igGetCursorStartPos(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -6250,9 +6250,9 @@ func FontSize() float32 {
 // get UV coordinate for a white pixel, useful to draw custom shapes via the ImDrawList API
 func FontTexUvWhitePixel() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igGetFontTexUvWhitePixel(pOutArg)
+	C.igGetFontTexUvWhitePixel(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -6383,9 +6383,9 @@ func ItemID() ID {
 // get lower-right bounding rectangle of the last item (screen space)
 func ItemRectMax() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igGetItemRectMax(pOutArg)
+	C.igGetItemRectMax(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -6395,9 +6395,9 @@ func ItemRectMax() Vec2 {
 // get upper-left bounding rectangle of the last item (screen space)
 func ItemRectMin() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igGetItemRectMin(pOutArg)
+	C.igGetItemRectMin(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -6407,9 +6407,9 @@ func ItemRectMin() Vec2 {
 // get size of last item
 func ItemRectSize() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igGetItemRectSize(pOutArg)
+	C.igGetItemRectSize(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -6444,9 +6444,9 @@ func InternalKeyDataKey(key Key) *KeyData {
 
 func InternalKeyMagnitude2d(key_left Key, key_right Key, key_up Key, key_down Key) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igGetKeyMagnitude2d(pOutArg, C.ImGuiKey(key_left), C.ImGuiKey(key_right), C.ImGuiKey(key_up), C.ImGuiKey(key_down))
+	C.igGetKeyMagnitude2d(datautils.ConvertCTypes[*C.ImVec2](pOutArg), C.ImGuiKey(key_left), C.ImGuiKey(key_right), C.ImGuiKey(key_up), C.ImGuiKey(key_down))
 
 	pOutFin()
 
@@ -6497,9 +6497,9 @@ func CurrentMouseCursor() MouseCursor {
 // lock_threshold: -1.0f
 func MouseDragDeltaV(button MouseButton, lock_threshold float32) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igGetMouseDragDelta(pOutArg, C.ImGuiMouseButton(button), C.float(lock_threshold))
+	C.igGetMouseDragDelta(datautils.ConvertCTypes[*C.ImVec2](pOutArg), C.ImGuiMouseButton(button), C.float(lock_threshold))
 
 	pOutFin()
 
@@ -6509,9 +6509,9 @@ func MouseDragDeltaV(button MouseButton, lock_threshold float32) Vec2 {
 // shortcut to ImGui::GetIO().MousePos provided by user, to be consistent with other calls
 func MousePos() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igGetMousePos(pOutArg)
+	C.igGetMousePos(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -6521,9 +6521,9 @@ func MousePos() Vec2 {
 // retrieve mouse position at the time of opening popup we have BeginPopup() into (helper to avoid user backing that value themselves)
 func MousePosOnOpeningCurrentPopup() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igGetMousePosOnOpeningCurrentPopup(pOutArg)
+	C.igGetMousePosOnOpeningCurrentPopup(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -6550,10 +6550,10 @@ func CurrentPlatformIO() *PlatformIO {
 
 func InternalPopupAllowedExtentRect(window *Window) Rect {
 	pOut := new(Rect)
-	pOutArg, pOutFin := datautils.Wrap[C.ImRect, *Rect](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	windowArg, windowFin := window.Handle()
-	C.igGetPopupAllowedExtentRect(pOutArg, datautils.ConvertCTypes[*C.ImGuiWindow](windowArg))
+	C.igGetPopupAllowedExtentRect(datautils.ConvertCTypes[*C.ImRect](pOutArg), datautils.ConvertCTypes[*C.ImGuiWindow](windowArg))
 
 	pOutFin()
 	windowFin()
@@ -6705,9 +6705,9 @@ func WindowHeight() float32 {
 // get current window position in screen space (IT IS UNLIKELY YOU EVER NEED TO USE THIS. Consider always using GetCursorScreenPos() and GetContentRegionAvail() instead)
 func WindowPos() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igGetWindowPos(pOutArg)
+	C.igGetWindowPos(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -6753,10 +6753,10 @@ func InternalWindowScrollbarID(window *Window, axis Axis) ID {
 
 func InternalWindowScrollbarRect(window *Window, axis Axis) Rect {
 	pOut := new(Rect)
-	pOutArg, pOutFin := datautils.Wrap[C.ImRect, *Rect](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	windowArg, windowFin := window.Handle()
-	C.igGetWindowScrollbarRect(pOutArg, datautils.ConvertCTypes[*C.ImGuiWindow](windowArg), C.ImGuiAxis(axis))
+	C.igGetWindowScrollbarRect(datautils.ConvertCTypes[*C.ImRect](pOutArg), datautils.ConvertCTypes[*C.ImGuiWindow](windowArg), C.ImGuiAxis(axis))
 
 	pOutFin()
 	windowFin()
@@ -6767,9 +6767,9 @@ func InternalWindowScrollbarRect(window *Window, axis Axis) Rect {
 // get current window size (IT IS UNLIKELY YOU EVER NEED TO USE THIS. Consider always using GetCursorScreenPos() and GetContentRegionAvail() instead)
 func WindowSize() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igGetWindowSize(pOutArg)
+	C.igGetWindowSize(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -6804,9 +6804,9 @@ func InternalImAlphaBlendColors(col_a uint32, col_b uint32) uint32 {
 
 func InternalImBezierCubicCalc(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, t float32) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImBezierCubicCalc(pOutArg, datautils.ConvertCTypes[C.ImVec2](p1.ToC()), datautils.ConvertCTypes[C.ImVec2](p2.ToC()), datautils.ConvertCTypes[C.ImVec2](p3.ToC()), datautils.ConvertCTypes[C.ImVec2](p4.ToC()), C.float(t))
+	C.igImBezierCubicCalc(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](p1.ToC()), datautils.ConvertCTypes[C.ImVec2](p2.ToC()), datautils.ConvertCTypes[C.ImVec2](p3.ToC()), datautils.ConvertCTypes[C.ImVec2](p4.ToC()), C.float(t))
 
 	pOutFin()
 
@@ -6816,9 +6816,9 @@ func InternalImBezierCubicCalc(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, t float32) Ve
 // For curves with explicit number of segments
 func InternalImBezierCubicClosestPoint(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, p Vec2, num_segments int32) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImBezierCubicClosestPoint(pOutArg, datautils.ConvertCTypes[C.ImVec2](p1.ToC()), datautils.ConvertCTypes[C.ImVec2](p2.ToC()), datautils.ConvertCTypes[C.ImVec2](p3.ToC()), datautils.ConvertCTypes[C.ImVec2](p4.ToC()), datautils.ConvertCTypes[C.ImVec2](p.ToC()), C.int(num_segments))
+	C.igImBezierCubicClosestPoint(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](p1.ToC()), datautils.ConvertCTypes[C.ImVec2](p2.ToC()), datautils.ConvertCTypes[C.ImVec2](p3.ToC()), datautils.ConvertCTypes[C.ImVec2](p4.ToC()), datautils.ConvertCTypes[C.ImVec2](p.ToC()), C.int(num_segments))
 
 	pOutFin()
 
@@ -6828,9 +6828,9 @@ func InternalImBezierCubicClosestPoint(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, p Vec
 // For auto-tessellated curves you can use tess_tol = style.CurveTessellationTol
 func InternalImBezierCubicClosestPointCasteljau(p1 Vec2, p2 Vec2, p3 Vec2, p4 Vec2, p Vec2, tess_tol float32) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImBezierCubicClosestPointCasteljau(pOutArg, datautils.ConvertCTypes[C.ImVec2](p1.ToC()), datautils.ConvertCTypes[C.ImVec2](p2.ToC()), datautils.ConvertCTypes[C.ImVec2](p3.ToC()), datautils.ConvertCTypes[C.ImVec2](p4.ToC()), datautils.ConvertCTypes[C.ImVec2](p.ToC()), C.float(tess_tol))
+	C.igImBezierCubicClosestPointCasteljau(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](p1.ToC()), datautils.ConvertCTypes[C.ImVec2](p2.ToC()), datautils.ConvertCTypes[C.ImVec2](p3.ToC()), datautils.ConvertCTypes[C.ImVec2](p4.ToC()), datautils.ConvertCTypes[C.ImVec2](p.ToC()), C.float(tess_tol))
 
 	pOutFin()
 
@@ -6839,9 +6839,9 @@ func InternalImBezierCubicClosestPointCasteljau(p1 Vec2, p2 Vec2, p3 Vec2, p4 Ve
 
 func InternalImBezierQuadraticCalc(p1 Vec2, p2 Vec2, p3 Vec2, t float32) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImBezierQuadraticCalc(pOutArg, datautils.ConvertCTypes[C.ImVec2](p1.ToC()), datautils.ConvertCTypes[C.ImVec2](p2.ToC()), datautils.ConvertCTypes[C.ImVec2](p3.ToC()), C.float(t))
+	C.igImBezierQuadraticCalc(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](p1.ToC()), datautils.ConvertCTypes[C.ImVec2](p2.ToC()), datautils.ConvertCTypes[C.ImVec2](p3.ToC()), C.float(t))
 
 	pOutFin()
 
@@ -6908,9 +6908,9 @@ func InternalImCharIsXdigitA(c rune) bool {
 
 func InternalImClamp(v Vec2, mn Vec2, mx Vec2) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImClamp(pOutArg, datautils.ConvertCTypes[C.ImVec2](v.ToC()), datautils.ConvertCTypes[C.ImVec2](mn.ToC()), datautils.ConvertCTypes[C.ImVec2](mx.ToC()))
+	C.igImClamp(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](v.ToC()), datautils.ConvertCTypes[C.ImVec2](mn.ToC()), datautils.ConvertCTypes[C.ImVec2](mx.ToC()))
 
 	pOutFin()
 
@@ -6946,9 +6946,9 @@ func InternalImFloorFloat(f float32) float32 {
 
 func InternalImFloorVec2(v Vec2) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImFloor_Vec2(pOutArg, datautils.ConvertCTypes[C.ImVec2](v.ToC()))
+	C.igImFloor_Vec2(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](v.ToC()))
 
 	pOutFin()
 
@@ -7107,9 +7107,9 @@ func InternalImLengthSqrVec4(lhs Vec4) float32 {
 
 func InternalImLerpVec2Float(a Vec2, b Vec2, t float32) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImLerp_Vec2Float(pOutArg, datautils.ConvertCTypes[C.ImVec2](a.ToC()), datautils.ConvertCTypes[C.ImVec2](b.ToC()), C.float(t))
+	C.igImLerp_Vec2Float(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](a.ToC()), datautils.ConvertCTypes[C.ImVec2](b.ToC()), C.float(t))
 
 	pOutFin()
 
@@ -7118,9 +7118,9 @@ func InternalImLerpVec2Float(a Vec2, b Vec2, t float32) Vec2 {
 
 func InternalImLerpVec2Vec2(a Vec2, b Vec2, t Vec2) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImLerp_Vec2Vec2(pOutArg, datautils.ConvertCTypes[C.ImVec2](a.ToC()), datautils.ConvertCTypes[C.ImVec2](b.ToC()), datautils.ConvertCTypes[C.ImVec2](t.ToC()))
+	C.igImLerp_Vec2Vec2(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](a.ToC()), datautils.ConvertCTypes[C.ImVec2](b.ToC()), datautils.ConvertCTypes[C.ImVec2](t.ToC()))
 
 	pOutFin()
 
@@ -7129,9 +7129,9 @@ func InternalImLerpVec2Vec2(a Vec2, b Vec2, t Vec2) Vec2 {
 
 func InternalImLerpVec4(a Vec4, b Vec4, t float32) Vec4 {
 	pOut := new(Vec4)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec4, *Vec4](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImLerp_Vec4(pOutArg, datautils.ConvertCTypes[C.ImVec4](a.ToC()), datautils.ConvertCTypes[C.ImVec4](b.ToC()), C.float(t))
+	C.igImLerp_Vec4(datautils.ConvertCTypes[*C.ImVec4](pOutArg), datautils.ConvertCTypes[C.ImVec4](a.ToC()), datautils.ConvertCTypes[C.ImVec4](b.ToC()), C.float(t))
 
 	pOutFin()
 
@@ -7140,9 +7140,9 @@ func InternalImLerpVec4(a Vec4, b Vec4, t float32) Vec4 {
 
 func InternalImLineClosestPoint(a Vec2, b Vec2, p Vec2) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImLineClosestPoint(pOutArg, datautils.ConvertCTypes[C.ImVec2](a.ToC()), datautils.ConvertCTypes[C.ImVec2](b.ToC()), datautils.ConvertCTypes[C.ImVec2](p.ToC()))
+	C.igImLineClosestPoint(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](a.ToC()), datautils.ConvertCTypes[C.ImVec2](b.ToC()), datautils.ConvertCTypes[C.ImVec2](p.ToC()))
 
 	pOutFin()
 
@@ -7181,9 +7181,9 @@ func InternalImLowerBound(in_begin *StoragePair, in_end *StoragePair, key ID) *S
 
 func InternalImMax(lhs Vec2, rhs Vec2) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImMax(pOutArg, datautils.ConvertCTypes[C.ImVec2](lhs.ToC()), datautils.ConvertCTypes[C.ImVec2](rhs.ToC()))
+	C.igImMax(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](lhs.ToC()), datautils.ConvertCTypes[C.ImVec2](rhs.ToC()))
 
 	pOutFin()
 
@@ -7192,9 +7192,9 @@ func InternalImMax(lhs Vec2, rhs Vec2) Vec2 {
 
 func InternalImMin(lhs Vec2, rhs Vec2) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImMin(pOutArg, datautils.ConvertCTypes[C.ImVec2](lhs.ToC()), datautils.ConvertCTypes[C.ImVec2](rhs.ToC()))
+	C.igImMin(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](lhs.ToC()), datautils.ConvertCTypes[C.ImVec2](rhs.ToC()))
 
 	pOutFin()
 
@@ -7207,9 +7207,9 @@ func InternalImModPositive(a int32, b int32) int32 {
 
 func InternalImMul(lhs Vec2, rhs Vec2) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImMul(pOutArg, datautils.ConvertCTypes[C.ImVec2](lhs.ToC()), datautils.ConvertCTypes[C.ImVec2](rhs.ToC()))
+	C.igImMul(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](lhs.ToC()), datautils.ConvertCTypes[C.ImVec2](rhs.ToC()))
 
 	pOutFin()
 
@@ -7285,9 +7285,9 @@ func InternalImPowDouble(x float64, y float64) float64 {
 
 func InternalImRotate(v Vec2, cos_a float32, sin_a float32) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImRotate(pOutArg, datautils.ConvertCTypes[C.ImVec2](v.ToC()), C.float(cos_a), C.float(sin_a))
+	C.igImRotate(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](v.ToC()), C.float(cos_a), C.float(sin_a))
 
 	pOutFin()
 
@@ -7575,9 +7575,9 @@ func InternalImTriangleBarycentricCoords(a Vec2, b Vec2, c Vec2, p Vec2, out_u *
 
 func InternalImTriangleClosestPoint(a Vec2, b Vec2, c Vec2, p Vec2) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImTriangleClosestPoint(pOutArg, datautils.ConvertCTypes[C.ImVec2](a.ToC()), datautils.ConvertCTypes[C.ImVec2](b.ToC()), datautils.ConvertCTypes[C.ImVec2](c.ToC()), datautils.ConvertCTypes[C.ImVec2](p.ToC()))
+	C.igImTriangleClosestPoint(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](a.ToC()), datautils.ConvertCTypes[C.ImVec2](b.ToC()), datautils.ConvertCTypes[C.ImVec2](c.ToC()), datautils.ConvertCTypes[C.ImVec2](p.ToC()))
 
 	pOutFin()
 
@@ -7598,9 +7598,9 @@ func InternalImTruncFloat(f float32) float32 {
 
 func InternalImTruncVec2(v Vec2) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.igImTrunc_Vec2(pOutArg, datautils.ConvertCTypes[C.ImVec2](v.ToC()))
+	C.igImTrunc_Vec2(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[C.ImVec2](v.ToC()))
 
 	pOutFin()
 
@@ -8161,12 +8161,12 @@ func InternalIsMouseKey(key Key) bool {
 // IsMousePosValidV parameter default value hint:
 // mouse_pos: NULL
 func IsMousePosValidV(mouse_pos *Vec2) bool {
-	mouse_posArg, mouse_posFin := datautils.Wrap[C.ImVec2, *Vec2](mouse_pos)
+	mouse_posArg, mouse_posFin := datautils.Wrap(mouse_pos)
 
 	defer func() {
 		mouse_posFin()
 	}()
-	return C.igIsMousePosValid(mouse_posArg) == C.bool(true)
+	return C.igIsMousePosValid(datautils.ConvertCTypes[*C.ImVec2](mouse_posArg)) == C.bool(true)
 }
 
 func InternalIsMouseReleasedID(button MouseButton, owner_id ID) bool {
@@ -8307,13 +8307,13 @@ func InternalIsWindowWithinBeginStackOf(window *Window, potential_parent *Window
 // extra_flags: 0
 func InternalItemAddV(bb Rect, id ID, nav_bb *Rect, extra_flags ItemFlags) bool {
 	idArg, idFin := id.C()
-	nav_bbArg, nav_bbFin := datautils.Wrap[C.ImRect, *Rect](nav_bb)
+	nav_bbArg, nav_bbFin := datautils.Wrap(nav_bb)
 
 	defer func() {
 		idFin()
 		nav_bbFin()
 	}()
-	return C.igItemAdd(datautils.ConvertCTypes[C.ImRect](bb.ToC()), datautils.ConvertCTypes[C.ImGuiID](idArg), nav_bbArg, C.ImGuiItemFlags(extra_flags)) == C.bool(true)
+	return C.igItemAdd(datautils.ConvertCTypes[C.ImRect](bb.ToC()), datautils.ConvertCTypes[C.ImGuiID](idArg), datautils.ConvertCTypes[*C.ImRect](nav_bbArg), C.ImGuiItemFlags(extra_flags)) == C.bool(true)
 }
 
 func InternalItemHoverable(bb Rect, id ID, item_flags ItemFlags) bool {
@@ -8416,9 +8416,9 @@ func LogFinish() {
 
 // InternalLogRenderedTextV parameter default value hint:
 func InternalLogRenderedTextV(ref_pos *Vec2, text string) {
-	ref_posArg, ref_posFin := datautils.Wrap[C.ImVec2, *Vec2](ref_pos)
+	ref_posArg, ref_posFin := datautils.Wrap(ref_pos)
 	textArg, textFin := datautils.WrapString[C.char](text)
-	C.wrap_igLogRenderedTextV(ref_posArg, textArg, C.int(len(text)))
+	C.wrap_igLogRenderedTextV(datautils.ConvertCTypes[*C.ImVec2](ref_posArg), textArg, C.int(len(text)))
 
 	ref_posFin()
 	textFin()
@@ -9067,9 +9067,9 @@ func InternalRenderTextV(pos Vec2, text string, hide_text_after_hash bool) {
 // clip_rect: NULL
 func InternalRenderTextClippedV(pos_min Vec2, pos_max Vec2, text string, text_size_if_known *Vec2, align Vec2, clip_rect *Rect) {
 	textArg, textFin := datautils.WrapString[C.char](text)
-	text_size_if_knownArg, text_size_if_knownFin := datautils.Wrap[C.ImVec2, *Vec2](text_size_if_known)
-	clip_rectArg, clip_rectFin := datautils.Wrap[C.ImRect, *Rect](clip_rect)
-	C.wrap_igRenderTextClippedV(datautils.ConvertCTypes[C.ImVec2](pos_min.ToC()), datautils.ConvertCTypes[C.ImVec2](pos_max.ToC()), textArg, C.int(len(text)), text_size_if_knownArg, datautils.ConvertCTypes[C.ImVec2](align.ToC()), clip_rectArg)
+	text_size_if_knownArg, text_size_if_knownFin := datautils.Wrap(text_size_if_known)
+	clip_rectArg, clip_rectFin := datautils.Wrap(clip_rect)
+	C.wrap_igRenderTextClippedV(datautils.ConvertCTypes[C.ImVec2](pos_min.ToC()), datautils.ConvertCTypes[C.ImVec2](pos_max.ToC()), textArg, C.int(len(text)), datautils.ConvertCTypes[*C.ImVec2](text_size_if_knownArg), datautils.ConvertCTypes[C.ImVec2](align.ToC()), datautils.ConvertCTypes[*C.ImRect](clip_rectArg))
 
 	textFin()
 	text_size_if_knownFin()
@@ -9082,9 +9082,9 @@ func InternalRenderTextClippedV(pos_min Vec2, pos_max Vec2, text string, text_si
 func InternalRenderTextClippedExV(draw_list *DrawList, pos_min Vec2, pos_max Vec2, text string, text_size_if_known *Vec2, align Vec2, clip_rect *Rect) {
 	draw_listArg, draw_listFin := draw_list.Handle()
 	textArg, textFin := datautils.WrapString[C.char](text)
-	text_size_if_knownArg, text_size_if_knownFin := datautils.Wrap[C.ImVec2, *Vec2](text_size_if_known)
-	clip_rectArg, clip_rectFin := datautils.Wrap[C.ImRect, *Rect](clip_rect)
-	C.wrap_igRenderTextClippedExV(datautils.ConvertCTypes[*C.ImDrawList](draw_listArg), datautils.ConvertCTypes[C.ImVec2](pos_min.ToC()), datautils.ConvertCTypes[C.ImVec2](pos_max.ToC()), textArg, C.int(len(text)), text_size_if_knownArg, datautils.ConvertCTypes[C.ImVec2](align.ToC()), clip_rectArg)
+	text_size_if_knownArg, text_size_if_knownFin := datautils.Wrap(text_size_if_known)
+	clip_rectArg, clip_rectFin := datautils.Wrap(clip_rect)
+	C.wrap_igRenderTextClippedExV(datautils.ConvertCTypes[*C.ImDrawList](draw_listArg), datautils.ConvertCTypes[C.ImVec2](pos_min.ToC()), datautils.ConvertCTypes[C.ImVec2](pos_max.ToC()), textArg, C.int(len(text)), datautils.ConvertCTypes[*C.ImVec2](text_size_if_knownArg), datautils.ConvertCTypes[C.ImVec2](align.ToC()), datautils.ConvertCTypes[*C.ImRect](clip_rectArg))
 
 	draw_listFin()
 	textFin()
@@ -9095,8 +9095,8 @@ func InternalRenderTextClippedExV(draw_list *DrawList, pos_min Vec2, pos_max Vec
 func InternalRenderTextEllipsis(draw_list *DrawList, pos_min Vec2, pos_max Vec2, clip_max_x float32, ellipsis_max_x float32, text string, text_size_if_known *Vec2) {
 	draw_listArg, draw_listFin := draw_list.Handle()
 	textArg, textFin := datautils.WrapString[C.char](text)
-	text_size_if_knownArg, text_size_if_knownFin := datautils.Wrap[C.ImVec2, *Vec2](text_size_if_known)
-	C.wrap_igRenderTextEllipsis(datautils.ConvertCTypes[*C.ImDrawList](draw_listArg), datautils.ConvertCTypes[C.ImVec2](pos_min.ToC()), datautils.ConvertCTypes[C.ImVec2](pos_max.ToC()), C.float(clip_max_x), C.float(ellipsis_max_x), textArg, C.int(len(text)), text_size_if_knownArg)
+	text_size_if_knownArg, text_size_if_knownFin := datautils.Wrap(text_size_if_known)
+	C.wrap_igRenderTextEllipsis(datautils.ConvertCTypes[*C.ImDrawList](draw_listArg), datautils.ConvertCTypes[C.ImVec2](pos_min.ToC()), datautils.ConvertCTypes[C.ImVec2](pos_max.ToC()), C.float(clip_max_x), C.float(ellipsis_max_x), textArg, C.int(len(text)), datautils.ConvertCTypes[*C.ImVec2](text_size_if_knownArg))
 
 	draw_listFin()
 	textFin()
@@ -9172,10 +9172,10 @@ func InternalScrollToRectV(window *Window, rect Rect, flags ScrollFlags) {
 // flags: 0
 func InternalScrollToRectExV(window *Window, rect Rect, flags ScrollFlags) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	windowArg, windowFin := window.Handle()
-	C.igScrollToRectEx(pOutArg, datautils.ConvertCTypes[*C.ImGuiWindow](windowArg), datautils.ConvertCTypes[C.ImRect](rect.ToC()), C.ImGuiScrollFlags(flags))
+	C.igScrollToRectEx(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImGuiWindow](windowArg), datautils.ConvertCTypes[C.ImRect](rect.ToC()), C.ImGuiScrollFlags(flags))
 
 	pOutFin()
 	windowFin()
@@ -9988,14 +9988,14 @@ func SliderAngleV(label string, v_rad *float32, v_degrees_min float32, v_degrees
 func InternalSliderBehavior(bb Rect, id ID, data_type DataType, p_v uintptr, p_min uintptr, p_max uintptr, format string, flags SliderFlags, out_grab_bb *Rect) bool {
 	idArg, idFin := id.C()
 	formatArg, formatFin := datautils.WrapString[C.char](format)
-	out_grab_bbArg, out_grab_bbFin := datautils.Wrap[C.ImRect, *Rect](out_grab_bb)
+	out_grab_bbArg, out_grab_bbFin := datautils.Wrap(out_grab_bb)
 
 	defer func() {
 		idFin()
 		formatFin()
 		out_grab_bbFin()
 	}()
-	return C.wrap_igSliderBehavior(datautils.ConvertCTypes[C.ImRect](bb.ToC()), datautils.ConvertCTypes[C.ImGuiID](idArg), C.ImGuiDataType(data_type), C.uintptr_t(p_v), C.uintptr_t(p_min), C.uintptr_t(p_max), formatArg, C.ImGuiSliderFlags(flags), out_grab_bbArg) == C.bool(true)
+	return C.wrap_igSliderBehavior(datautils.ConvertCTypes[C.ImRect](bb.ToC()), datautils.ConvertCTypes[C.ImGuiID](idArg), C.ImGuiDataType(data_type), C.uintptr_t(p_v), C.uintptr_t(p_min), C.uintptr_t(p_max), formatArg, C.ImGuiSliderFlags(flags), datautils.ConvertCTypes[*C.ImRect](out_grab_bbArg)) == C.bool(true)
 }
 
 // adjust format to decorate the value with a prefix or a suffix for in-slider labels or unit display.
@@ -10425,10 +10425,10 @@ func TabItemButtonV(label string, flags TabItemFlags) bool {
 
 func InternalTabItemCalcSizeStr(label string, has_close_button_or_unsaved_marker bool) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	labelArg, labelFin := datautils.WrapString[C.char](label)
-	C.igTabItemCalcSize_Str(pOutArg, labelArg, C.bool(has_close_button_or_unsaved_marker))
+	C.igTabItemCalcSize_Str(datautils.ConvertCTypes[*C.ImVec2](pOutArg), labelArg, C.bool(has_close_button_or_unsaved_marker))
 
 	pOutFin()
 	labelFin()
@@ -10438,10 +10438,10 @@ func InternalTabItemCalcSizeStr(label string, has_close_button_or_unsaved_marker
 
 func InternalTabItemCalcSizeWindowPtr(window *Window) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	windowArg, windowFin := window.Handle()
-	C.igTabItemCalcSize_WindowPtr(pOutArg, datautils.ConvertCTypes[*C.ImGuiWindow](windowArg))
+	C.igTabItemCalcSize_WindowPtr(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImGuiWindow](windowArg))
 
 	pOutFin()
 	windowFin()
@@ -10616,10 +10616,10 @@ func InternalTableGetBoundSettings(table *Table) *TableSettings {
 
 func InternalTableGetCellBgRect(table *Table, column_n int32) Rect {
 	pOut := new(Rect)
-	pOutArg, pOutFin := datautils.Wrap[C.ImRect, *Rect](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	tableArg, tableFin := table.Handle()
-	C.igTableGetCellBgRect(pOutArg, datautils.ConvertCTypes[*C.ImGuiTable](tableArg), C.int(column_n))
+	C.igTableGetCellBgRect(datautils.ConvertCTypes[*C.ImRect](pOutArg), datautils.ConvertCTypes[*C.ImGuiTable](tableArg), C.int(column_n))
 
 	pOutFin()
 	tableFin()
@@ -11333,10 +11333,10 @@ func ValueUint(prefix string, v uint32) {
 
 func InternalWindowPosAbsToRel(window *Window, p Vec2) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	windowArg, windowFin := window.Handle()
-	C.igWindowPosAbsToRel(pOutArg, datautils.ConvertCTypes[*C.ImGuiWindow](windowArg), datautils.ConvertCTypes[C.ImVec2](p.ToC()))
+	C.igWindowPosAbsToRel(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImGuiWindow](windowArg), datautils.ConvertCTypes[C.ImVec2](p.ToC()))
 
 	pOutFin()
 	windowFin()
@@ -11346,10 +11346,10 @@ func InternalWindowPosAbsToRel(window *Window, p Vec2) Vec2 {
 
 func InternalWindowPosRelToAbs(window *Window, p Vec2) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	windowArg, windowFin := window.Handle()
-	C.igWindowPosRelToAbs(pOutArg, datautils.ConvertCTypes[*C.ImGuiWindow](windowArg), datautils.ConvertCTypes[C.ImVec2](p.ToC()))
+	C.igWindowPosRelToAbs(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImGuiWindow](windowArg), datautils.ConvertCTypes[C.ImVec2](p.ToC()))
 
 	pOutFin()
 	windowFin()
@@ -11359,10 +11359,10 @@ func InternalWindowPosRelToAbs(window *Window, p Vec2) Vec2 {
 
 func InternalWindowRectAbsToRel(window *Window, r Rect) Rect {
 	pOut := new(Rect)
-	pOutArg, pOutFin := datautils.Wrap[C.ImRect, *Rect](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	windowArg, windowFin := window.Handle()
-	C.igWindowRectAbsToRel(pOutArg, datautils.ConvertCTypes[*C.ImGuiWindow](windowArg), datautils.ConvertCTypes[C.ImRect](r.ToC()))
+	C.igWindowRectAbsToRel(datautils.ConvertCTypes[*C.ImRect](pOutArg), datautils.ConvertCTypes[*C.ImGuiWindow](windowArg), datautils.ConvertCTypes[C.ImRect](r.ToC()))
 
 	pOutFin()
 	windowFin()
@@ -11372,10 +11372,10 @@ func InternalWindowRectAbsToRel(window *Window, r Rect) Rect {
 
 func InternalWindowRectRelToAbs(window *Window, r Rect) Rect {
 	pOut := new(Rect)
-	pOutArg, pOutFin := datautils.Wrap[C.ImRect, *Rect](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	windowArg, windowFin := window.Handle()
-	C.igWindowRectRelToAbs(pOutArg, datautils.ConvertCTypes[*C.ImGuiWindow](windowArg), datautils.ConvertCTypes[C.ImRect](r.ToC()))
+	C.igWindowRectRelToAbs(datautils.ConvertCTypes[*C.ImRect](pOutArg), datautils.ConvertCTypes[*C.ImGuiWindow](windowArg), datautils.ConvertCTypes[C.ImRect](r.ToC()))
 
 	pOutFin()
 	windowFin()
@@ -11385,9 +11385,9 @@ func InternalWindowRectRelToAbs(window *Window, r Rect) Rect {
 
 func ColorHSV(h float32, s float32, v float32) Color {
 	pOut := new(Color)
-	pOutArg, pOutFin := datautils.Wrap[C.ImColor, *Color](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.wrap_ImColor_HSV(pOutArg, C.float(h), C.float(s), C.float(v))
+	C.wrap_ImColor_HSV(datautils.ConvertCTypes[*C.ImColor](pOutArg), C.float(h), C.float(s), C.float(v))
 
 	pOutFin()
 
@@ -11395,8 +11395,8 @@ func ColorHSV(h float32, s float32, v float32) Color {
 }
 
 func (self *Color) SetHSV(h float32, s float32, v float32) {
-	selfArg, selfFin := datautils.Wrap[C.ImColor, *Color](self)
-	C.wrap_ImColor_SetHSV(selfArg, C.float(h), C.float(s), C.float(v))
+	selfArg, selfFin := datautils.Wrap(self)
+	C.wrap_ImColor_SetHSV(datautils.ConvertCTypes[*C.ImColor](selfArg), C.float(h), C.float(s), C.float(v))
 
 	selfFin()
 }
@@ -11659,11 +11659,11 @@ func (self *Font) AddRemapChar(dst Wchar, src Wchar) {
 
 func (self *Font) CalcTextSizeA(size float32, max_width float32, wrap_width float32, text_begin string) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
 	text_beginArg, text_beginFin := datautils.WrapString[C.char](text_begin)
-	C.wrap_ImFont_CalcTextSizeA(pOutArg, datautils.ConvertCTypes[*C.ImFont](selfArg), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg)
+	C.wrap_ImFont_CalcTextSizeA(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImFont](selfArg), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg)
 
 	pOutFin()
 	selfFin()
@@ -12009,10 +12009,10 @@ func InternalButtonEx(label string) bool {
 
 func CalcTextSize(text string) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	textArg, textFin := datautils.WrapString[C.char](text)
-	C.wrap_igCalcTextSize(pOutArg, textArg, C.int(len(text)))
+	C.wrap_igCalcTextSize(datautils.ConvertCTypes[*C.ImVec2](pOutArg), textArg, C.int(len(text)))
 
 	pOutFin()
 	textFin()
@@ -12434,9 +12434,9 @@ func ForegroundDrawListViewportPtr() *DrawList {
 
 func MouseDragDelta() Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
-	C.wrap_igGetMouseDragDelta(pOutArg)
+	C.wrap_igGetMouseDragDelta(datautils.ConvertCTypes[*C.ImVec2](pOutArg))
 
 	pOutFin()
 
@@ -12812,9 +12812,9 @@ func LoadIniSettingsFromMemory(ini_data string) {
 }
 
 func InternalLogRenderedText(ref_pos *Vec2, text string) {
-	ref_posArg, ref_posFin := datautils.Wrap[C.ImVec2, *Vec2](ref_pos)
+	ref_posArg, ref_posFin := datautils.Wrap(ref_pos)
 	textArg, textFin := datautils.WrapString[C.char](text)
-	C.wrap_igLogRenderedText(ref_posArg, textArg, C.int(len(text)))
+	C.wrap_igLogRenderedText(datautils.ConvertCTypes[*C.ImVec2](ref_posArg), textArg, C.int(len(text)))
 
 	ref_posFin()
 	textFin()
@@ -12966,8 +12966,8 @@ func InternalRenderText(pos Vec2, text string) {
 
 func InternalRenderTextClipped(pos_min Vec2, pos_max Vec2, text string, text_size_if_known *Vec2) {
 	textArg, textFin := datautils.WrapString[C.char](text)
-	text_size_if_knownArg, text_size_if_knownFin := datautils.Wrap[C.ImVec2, *Vec2](text_size_if_known)
-	C.wrap_igRenderTextClipped(datautils.ConvertCTypes[C.ImVec2](pos_min.ToC()), datautils.ConvertCTypes[C.ImVec2](pos_max.ToC()), textArg, C.int(len(text)), text_size_if_knownArg)
+	text_size_if_knownArg, text_size_if_knownFin := datautils.Wrap(text_size_if_known)
+	C.wrap_igRenderTextClipped(datautils.ConvertCTypes[C.ImVec2](pos_min.ToC()), datautils.ConvertCTypes[C.ImVec2](pos_max.ToC()), textArg, C.int(len(text)), datautils.ConvertCTypes[*C.ImVec2](text_size_if_knownArg))
 
 	textFin()
 	text_size_if_knownFin()
@@ -12976,8 +12976,8 @@ func InternalRenderTextClipped(pos_min Vec2, pos_max Vec2, text string, text_siz
 func InternalRenderTextClippedEx(draw_list *DrawList, pos_min Vec2, pos_max Vec2, text string, text_size_if_known *Vec2) {
 	draw_listArg, draw_listFin := draw_list.Handle()
 	textArg, textFin := datautils.WrapString[C.char](text)
-	text_size_if_knownArg, text_size_if_knownFin := datautils.Wrap[C.ImVec2, *Vec2](text_size_if_known)
-	C.wrap_igRenderTextClippedEx(datautils.ConvertCTypes[*C.ImDrawList](draw_listArg), datautils.ConvertCTypes[C.ImVec2](pos_min.ToC()), datautils.ConvertCTypes[C.ImVec2](pos_max.ToC()), textArg, C.int(len(text)), text_size_if_knownArg)
+	text_size_if_knownArg, text_size_if_knownFin := datautils.Wrap(text_size_if_known)
+	C.wrap_igRenderTextClippedEx(datautils.ConvertCTypes[*C.ImDrawList](draw_listArg), datautils.ConvertCTypes[C.ImVec2](pos_min.ToC()), datautils.ConvertCTypes[C.ImVec2](pos_max.ToC()), textArg, C.int(len(text)), datautils.ConvertCTypes[*C.ImVec2](text_size_if_knownArg))
 
 	draw_listFin()
 	textFin()
@@ -13009,10 +13009,10 @@ func InternalScrollToRect(window *Window, rect Rect) {
 
 func InternalScrollToRectEx(window *Window, rect Rect) Vec2 {
 	pOut := new(Vec2)
-	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap(pOut)
 
 	windowArg, windowFin := window.Handle()
-	C.wrap_igScrollToRectEx(pOutArg, datautils.ConvertCTypes[*C.ImGuiWindow](windowArg), datautils.ConvertCTypes[C.ImRect](rect.ToC()))
+	C.wrap_igScrollToRectEx(datautils.ConvertCTypes[*C.ImVec2](pOutArg), datautils.ConvertCTypes[*C.ImGuiWindow](windowArg), datautils.ConvertCTypes[C.ImRect](rect.ToC()))
 
 	pOutFin()
 	windowFin()
@@ -13562,12 +13562,12 @@ func (self *BitVector) Storage() datautils.Vector[*uint32] {
 }
 
 func (self *Color) Value() Vec4 {
-	selfArg, selfFin := datautils.Wrap[C.ImColor, *Color](self)
+	selfArg, selfFin := datautils.Wrap(self)
 
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec4{}).FromC(C.wrap_ImColor_GetValue(selfArg))
+	return *(&Vec4{}).FromC(C.wrap_ImColor_GetValue(datautils.ConvertCTypes[*C.ImColor](selfArg)))
 }
 
 func (self DrawChannel) SetCmdBuffer(v datautils.Vector[*DrawCmd]) {
@@ -14035,11 +14035,11 @@ func (self *DrawList) IdxWritePtr() *DrawIdx {
 
 func (self DrawList) SetPath(v datautils.Vector[*Vec2]) {
 	vData := v.Data
-	vDataArg, _ := datautils.Wrap[C.ImVec2, *Vec2](vData)
+	vDataArg, _ := datautils.Wrap(vData)
 	vVecArg := new(C.ImVector_ImVec2)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = vDataArg
+	vVecArg.Data = datautils.ConvertCTypes[*C.ImVec2](vDataArg)
 	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
@@ -14089,11 +14089,11 @@ func (self *DrawList) Splitter() DrawListSplitter {
 
 func (self DrawList) SetClipRectStack(v datautils.Vector[*Vec4]) {
 	vData := v.Data
-	vDataArg, _ := datautils.Wrap[C.ImVec4, *Vec4](vData)
+	vDataArg, _ := datautils.Wrap(vData)
 	vVecArg := new(C.ImVector_ImVec4)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = vDataArg
+	vVecArg.Data = datautils.ConvertCTypes[*C.ImVec4](vDataArg)
 	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
@@ -14280,11 +14280,11 @@ func (self *DrawListSharedData) InitialFlags() DrawListFlags {
 
 func (self DrawListSharedData) SetTempBuffer(v datautils.Vector[*Vec2]) {
 	vData := v.Data
-	vDataArg, _ := datautils.Wrap[C.ImVec2, *Vec2](vData)
+	vDataArg, _ := datautils.Wrap(vData)
 	vVecArg := new(C.ImVector_ImVec2)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = vDataArg
+	vVecArg.Data = datautils.ConvertCTypes[*C.ImVec2](vDataArg)
 	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
@@ -14372,11 +14372,11 @@ func (self *DrawListSharedData) CircleSegmentCounts() [64]byte {
 }
 
 func (self DrawListSharedData) SetTexUvLines(v *Vec4) {
-	vArg, _ := datautils.Wrap[C.ImVec4, *Vec4](v)
+	vArg, _ := datautils.Wrap(v)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawListSharedData_SetTexUvLines(selfArg, vArg)
+	C.wrap_ImDrawListSharedData_SetTexUvLines(selfArg, datautils.ConvertCTypes[*C.ImVec4](vArg))
 }
 
 func (self *DrawListSharedData) TexUvLines() *Vec4 {
@@ -36660,7 +36660,7 @@ func (self Window) SetNavPreferredScoringPosRel(v [2]*Vec2) {
 	vFin := make([]func(), len(v))
 	for i, vV := range v {
 		var tmp *C.ImVec2
-		tmp, vFin[i] = datautils.Wrap[C.ImVec2, *Vec2](vV)
+		tmp, vFin[i] = datautils.Wrap(vV)
 		vArg[i] = *tmp
 	}
 
