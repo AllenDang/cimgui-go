@@ -104,7 +104,7 @@ func InputTextMultiline(label string, buf *string, size Vec2, flags InputTextFla
 		labelArg,
 		datautils.ConvertCTypes[*C.char](state.buf.Ptr()),
 		C.xulong(len(*buf)+1),
-		size.toC(),
+		size.ToC(),
 		C.ImGuiInputTextFlags(flags),
 		C.ImGuiInputTextCallback(C.generalInputTextCallback),
 		unsafe.Pointer(&stateHandle),

@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-var _ wrappableType[C.ImPlotPoint, *PlotPoint] = &PlotPoint{}
+var _ imgui.WrappableType[C.ImPlotPoint, *PlotPoint] = &PlotPoint{}
 
 type PlotPoint struct {
 	X float64
@@ -21,12 +21,12 @@ func NewPlotPoint(x, y float64) PlotPoint {
 	return PlotPoint{X: x, Y: y}
 }
 
-func (i *PlotPoint) fromC(p C.ImPlotPoint) *PlotPoint {
+func (i *PlotPoint) FromC(p C.ImPlotPoint) *PlotPoint {
 	*i = NewPlotPoint(float64(p.x), float64(p.y))
 	return i
 }
 
-func (p PlotPoint) toC() C.ImPlotPoint {
+func (p PlotPoint) ToC() C.ImPlotPoint {
 	return C.ImPlotPoint{x: C.double(p.X), y: C.double(p.Y)}
 }
 
@@ -47,11 +47,11 @@ func (i PlotTime) Time() time.Time {
 	return time.Unix(int64(i.S), int64(i.FieldUs)*int64(time.Microsecond))
 }
 
-func (i *PlotTime) fromC(p C.ImPlotTime) *PlotTime {
+func (i *PlotTime) FromC(p C.ImPlotTime) *PlotTime {
 	*i = PlotTime{int(p.S), int(p.Us)}
 	return i
 }
 
-func (p PlotTime) toC() C.ImPlotTime {
+func (p PlotTime) ToC() C.ImPlotTime {
 	return C.ImPlotTime{S: C.xlong(p.S), Us: C.int(p.FieldUs)}
 }

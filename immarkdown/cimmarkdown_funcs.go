@@ -116,7 +116,7 @@ func (self *TextRegion) Destroy() {
 }
 
 func UnderLine(col_ imgui.Color) {
-	C.UnderLine(col_.toC())
+	C.UnderLine(col_.ToC())
 }
 
 func RenderLinkTextWrapped(self *TextRegion, text_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string) {
@@ -609,7 +609,7 @@ func (self MarkdownImageData) SetUsertextureid(v imgui.TextureID) {
 func (self MarkdownImageData) SetSize(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetSize(selfArg, v.toC())
+	C.wrap_MarkdownImageData_SetSize(selfArg, v.ToC())
 }
 
 func (self *MarkdownImageData) Size() imgui.Vec2 {
@@ -618,13 +618,13 @@ func (self *MarkdownImageData) Size() imgui.Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec2{}).fromC(C.wrap_MarkdownImageData_GetSize(selfArg))
+	return *(&imgui.Vec2{}).FromC(C.wrap_MarkdownImageData_GetSize(selfArg))
 }
 
 func (self MarkdownImageData) SetUv0(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetUv0(selfArg, v.toC())
+	C.wrap_MarkdownImageData_SetUv0(selfArg, v.ToC())
 }
 
 func (self *MarkdownImageData) Uv0() imgui.Vec2 {
@@ -633,13 +633,13 @@ func (self *MarkdownImageData) Uv0() imgui.Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec2{}).fromC(C.wrap_MarkdownImageData_GetUv0(selfArg))
+	return *(&imgui.Vec2{}).FromC(C.wrap_MarkdownImageData_GetUv0(selfArg))
 }
 
 func (self MarkdownImageData) SetUv1(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetUv1(selfArg, v.toC())
+	C.wrap_MarkdownImageData_SetUv1(selfArg, v.ToC())
 }
 
 func (self *MarkdownImageData) Uv1() imgui.Vec2 {
@@ -648,13 +648,13 @@ func (self *MarkdownImageData) Uv1() imgui.Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec2{}).fromC(C.wrap_MarkdownImageData_GetUv1(selfArg))
+	return *(&imgui.Vec2{}).FromC(C.wrap_MarkdownImageData_GetUv1(selfArg))
 }
 
 func (self MarkdownImageData) SetTintcol(v imgui.Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetTint_col(selfArg, v.toC())
+	C.wrap_MarkdownImageData_SetTint_col(selfArg, v.ToC())
 }
 
 func (self *MarkdownImageData) Tintcol() imgui.Vec4 {
@@ -663,13 +663,13 @@ func (self *MarkdownImageData) Tintcol() imgui.Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec4{}).fromC(C.wrap_MarkdownImageData_GetTint_col(selfArg))
+	return *(&imgui.Vec4{}).FromC(C.wrap_MarkdownImageData_GetTint_col(selfArg))
 }
 
 func (self MarkdownImageData) SetBordercol(v imgui.Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetBorder_col(selfArg, v.toC())
+	C.wrap_MarkdownImageData_SetBorder_col(selfArg, v.ToC())
 }
 
 func (self *MarkdownImageData) Bordercol() imgui.Vec4 {
@@ -678,7 +678,7 @@ func (self *MarkdownImageData) Bordercol() imgui.Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec4{}).fromC(C.wrap_MarkdownImageData_GetBorder_col(selfArg))
+	return *(&imgui.Vec4{}).FromC(C.wrap_MarkdownImageData_GetBorder_col(selfArg))
 }
 
 func (self MarkdownLinkCallbackData) SetText(v string) {

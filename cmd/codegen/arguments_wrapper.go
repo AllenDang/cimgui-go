@@ -474,7 +474,7 @@ func wrappableW(goType, cType GoIdentifier) argumentWrapper {
 	return func(arg ArgDef) ArgumentWrapperData {
 		return ArgumentWrapperData{
 			ArgType: goType,
-			VarName: fmt.Sprintf("%s.toC()", arg.Name),
+			VarName: fmt.Sprintf("%s.ToC()", arg.Name),
 			CType:   cType,
 		}
 	}
