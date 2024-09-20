@@ -19,7 +19,7 @@ func NewEmulateThreeButtonMouse() *EmulateThreeButtonMouse {
 
 func (self *EmulateThreeButtonMouse) Destroy() {
 	selfArg, selfFin := self.Handle()
-	C.EmulateThreeButtonMouse_destroy(selfArg)
+	C.EmulateThreeButtonMouse_destroy(datautils.ConvertCTypes[*C.EmulateThreeButtonMouse](selfArg))
 
 	selfFin()
 }
@@ -30,7 +30,7 @@ func NewNodesIO() *NodesIO {
 
 func (self *NodesIO) Destroy() {
 	selfArg, selfFin := self.Handle()
-	C.ImNodesIO_destroy(selfArg)
+	C.ImNodesIO_destroy(datautils.ConvertCTypes[*C.ImNodesIO](selfArg))
 
 	selfFin()
 }
@@ -41,7 +41,7 @@ func NewNodesStyle() *NodesStyle {
 
 func (self *NodesStyle) Destroy() {
 	selfArg, selfFin := self.Handle()
-	C.ImNodesStyle_destroy(selfArg)
+	C.ImNodesStyle_destroy(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg))
 
 	selfFin()
 }
@@ -52,7 +52,7 @@ func NewLinkDetachWithModifierClick() *LinkDetachWithModifierClick {
 
 func (self *LinkDetachWithModifierClick) Destroy() {
 	selfArg, selfFin := self.Handle()
-	C.LinkDetachWithModifierClick_destroy(selfArg)
+	C.LinkDetachWithModifierClick_destroy(datautils.ConvertCTypes[*C.LinkDetachWithModifierClick](selfArg))
 
 	selfFin()
 }
@@ -63,7 +63,7 @@ func NewMultipleSelectModifier() *MultipleSelectModifier {
 
 func (self *MultipleSelectModifier) Destroy() {
 	selfArg, selfFin := self.Handle()
-	C.MultipleSelectModifier_destroy(selfArg)
+	C.MultipleSelectModifier_destroy(datautils.ConvertCTypes[*C.MultipleSelectModifier](selfArg))
 
 	selfFin()
 }
@@ -120,7 +120,7 @@ func ImNodesCreateContext() *NodesContext {
 // ctx: NULL
 func ImNodesDestroyContextV(ctx *NodesContext) {
 	ctxArg, ctxFin := ctx.Handle()
-	C.imnodes_DestroyContext(ctxArg)
+	C.imnodes_DestroyContext(datautils.ConvertCTypes[*C.ImNodesContext](ctxArg))
 
 	ctxFin()
 }
@@ -131,14 +131,14 @@ func ImNodesEditorContextCreate() *NodesEditorContext {
 
 func ImNodesEditorContextFree(noname1 *NodesEditorContext) {
 	noname1Arg, noname1Fin := noname1.Handle()
-	C.imnodes_EditorContextFree(noname1Arg)
+	C.imnodes_EditorContextFree(datautils.ConvertCTypes[*C.ImNodesEditorContext](noname1Arg))
 
 	noname1Fin()
 }
 
 func ImNodesEditorContextGetPanning() imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
 
 	C.imnodes_EditorContextGetPanning(pOutArg)
 
@@ -152,12 +152,12 @@ func ImNodesEditorContextMoveToNode(node_id int32) {
 }
 
 func ImNodesEditorContextResetPanning(pos imgui.Vec2) {
-	C.imnodes_EditorContextResetPanning(pos.ToC())
+	C.imnodes_EditorContextResetPanning(datautils.ConvertCTypes[C.ImVec2](pos.ToC()))
 }
 
 func ImNodesEditorContextSet(noname1 *NodesEditorContext) {
 	noname1Arg, noname1Fin := noname1.Handle()
-	C.imnodes_EditorContextSet(noname1Arg)
+	C.imnodes_EditorContextSet(datautils.ConvertCTypes[*C.ImNodesEditorContext](noname1Arg))
 
 	noname1Fin()
 }
@@ -196,7 +196,7 @@ func ImNodesGetIO() *NodesIO {
 
 func ImNodesGetNodeDimensions(id int32) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
 
 	C.imnodes_GetNodeDimensions(pOutArg, C.int(id))
 
@@ -207,7 +207,7 @@ func ImNodesGetNodeDimensions(id int32) imgui.Vec2 {
 
 func ImNodesGetNodeEditorSpacePos(node_id int32) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
 
 	C.imnodes_GetNodeEditorSpacePos(pOutArg, C.int(node_id))
 
@@ -218,7 +218,7 @@ func ImNodesGetNodeEditorSpacePos(node_id int32) imgui.Vec2 {
 
 func ImNodesGetNodeGridSpacePos(node_id int32) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
 
 	C.imnodes_GetNodeGridSpacePos(pOutArg, C.int(node_id))
 
@@ -229,7 +229,7 @@ func ImNodesGetNodeGridSpacePos(node_id int32) imgui.Vec2 {
 
 func ImNodesGetNodeScreenSpacePos(node_id int32) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
-	pOutArg, pOutFin := wrap[C.ImVec2, *imgui.Vec2](pOut)
+	pOutArg, pOutFin := datautils.Wrap[C.ImVec2, *imgui.Vec2](pOut)
 
 	C.imnodes_GetNodeScreenSpacePos(pOutArg, C.int(node_id))
 
@@ -395,7 +395,7 @@ func ImNodesLoadCurrentEditorStateFromIniString(data string, data_size uint64) {
 func ImNodesLoadEditorStateFromIniFile(editor *NodesEditorContext, file_name string) {
 	editorArg, editorFin := editor.Handle()
 	file_nameArg, file_nameFin := datautils.WrapString[C.char](file_name)
-	C.imnodes_LoadEditorStateFromIniFile(editorArg, file_nameArg)
+	C.imnodes_LoadEditorStateFromIniFile(datautils.ConvertCTypes[*C.ImNodesEditorContext](editorArg), file_nameArg)
 
 	editorFin()
 	file_nameFin()
@@ -404,7 +404,7 @@ func ImNodesLoadEditorStateFromIniFile(editor *NodesEditorContext, file_name str
 func ImNodesLoadEditorStateFromIniString(editor *NodesEditorContext, data string, data_size uint64) {
 	editorArg, editorFin := editor.Handle()
 	dataArg, dataFin := datautils.WrapString[C.char](data)
-	C.imnodes_LoadEditorStateFromIniString(editorArg, dataArg, C.xulong(data_size))
+	C.imnodes_LoadEditorStateFromIniString(datautils.ConvertCTypes[*C.ImNodesEditorContext](editorArg), dataArg, C.xulong(data_size))
 
 	editorFin()
 	dataFin()
@@ -445,7 +445,7 @@ func ImNodesPushStyleVarFloat(style_item NodesStyleVar, value float32) {
 }
 
 func ImNodesPushStyleVarVec2(style_item NodesStyleVar, value imgui.Vec2) {
-	C.imnodes_PushStyleVar_Vec2(C.ImNodesStyleVar(style_item), value.ToC())
+	C.imnodes_PushStyleVar_Vec2(C.ImNodesStyleVar(style_item), datautils.ConvertCTypes[C.ImVec2](value.ToC()))
 }
 
 func ImNodesSaveCurrentEditorStateToIniFile(file_name string) {
@@ -464,7 +464,7 @@ func ImNodesSaveCurrentEditorStateToIniStringV(data_size *uint64) string {
 func ImNodesSaveEditorStateToIniFile(editor *NodesEditorContext, file_name string) {
 	editorArg, editorFin := editor.Handle()
 	file_nameArg, file_nameFin := datautils.WrapString[C.char](file_name)
-	C.imnodes_SaveEditorStateToIniFile(editorArg, file_nameArg)
+	C.imnodes_SaveEditorStateToIniFile(datautils.ConvertCTypes[*C.ImNodesEditorContext](editorArg), file_nameArg)
 
 	editorFin()
 	file_nameFin()
@@ -478,7 +478,7 @@ func ImNodesSaveEditorStateToIniStringV(editor *NodesEditorContext, data_size *u
 	defer func() {
 		editorFin()
 	}()
-	return C.GoString(C.imnodes_SaveEditorStateToIniString(editorArg, (*C.xulong)(data_size)))
+	return C.GoString(C.imnodes_SaveEditorStateToIniString(datautils.ConvertCTypes[*C.ImNodesEditorContext](editorArg), (*C.xulong)(data_size)))
 }
 
 func ImNodesSelectLink(link_id int32) {
@@ -491,14 +491,14 @@ func ImNodesSelectNode(node_id int32) {
 
 func ImNodesSetCurrentContext(ctx *NodesContext) {
 	ctxArg, ctxFin := ctx.Handle()
-	C.imnodes_SetCurrentContext(ctxArg)
+	C.imnodes_SetCurrentContext(datautils.ConvertCTypes[*C.ImNodesContext](ctxArg))
 
 	ctxFin()
 }
 
 func ImNodesSetImGuiContext(ctx *imgui.Context) {
 	ctxArg, ctxFin := ctx.Handle()
-	C.imnodes_SetImGuiContext(ctxArg)
+	C.imnodes_SetImGuiContext(datautils.ConvertCTypes[*C.ImGuiContext](ctxArg))
 
 	ctxFin()
 }
@@ -508,15 +508,15 @@ func ImNodesSetNodeDraggable(node_id int32, draggable bool) {
 }
 
 func ImNodesSetNodeEditorSpacePos(node_id int32, editor_space_pos imgui.Vec2) {
-	C.imnodes_SetNodeEditorSpacePos(C.int(node_id), editor_space_pos.ToC())
+	C.imnodes_SetNodeEditorSpacePos(C.int(node_id), datautils.ConvertCTypes[C.ImVec2](editor_space_pos.ToC()))
 }
 
 func ImNodesSetNodeGridSpacePos(node_id int32, grid_pos imgui.Vec2) {
-	C.imnodes_SetNodeGridSpacePos(C.int(node_id), grid_pos.ToC())
+	C.imnodes_SetNodeGridSpacePos(C.int(node_id), datautils.ConvertCTypes[C.ImVec2](grid_pos.ToC()))
 }
 
 func ImNodesSetNodeScreenSpacePos(node_id int32, screen_space_pos imgui.Vec2) {
-	C.imnodes_SetNodeScreenSpacePos(C.int(node_id), screen_space_pos.ToC())
+	C.imnodes_SetNodeScreenSpacePos(C.int(node_id), datautils.ConvertCTypes[C.ImVec2](screen_space_pos.ToC()))
 }
 
 func ImNodesSnapNodeToGrid(node_id int32) {
@@ -527,7 +527,7 @@ func ImNodesSnapNodeToGrid(node_id int32) {
 // dest: NULL
 func ImNodesStyleColorsClassicV(dest *NodesStyle) {
 	destArg, destFin := dest.Handle()
-	C.imnodes_StyleColorsClassic(destArg)
+	C.imnodes_StyleColorsClassic(datautils.ConvertCTypes[*C.ImNodesStyle](destArg))
 
 	destFin()
 }
@@ -536,7 +536,7 @@ func ImNodesStyleColorsClassicV(dest *NodesStyle) {
 // dest: NULL
 func ImNodesStyleColorsDarkV(dest *NodesStyle) {
 	destArg, destFin := dest.Handle()
-	C.imnodes_StyleColorsDark(destArg)
+	C.imnodes_StyleColorsDark(datautils.ConvertCTypes[*C.ImNodesStyle](destArg))
 
 	destFin()
 }
@@ -545,7 +545,7 @@ func ImNodesStyleColorsDarkV(dest *NodesStyle) {
 // dest: NULL
 func ImNodesStyleColorsLightV(dest *NodesStyle) {
 	destArg, destFin := dest.Handle()
-	C.imnodes_StyleColorsLight(destArg)
+	C.imnodes_StyleColorsLight(datautils.ConvertCTypes[*C.ImNodesStyle](destArg))
 
 	destFin()
 }
@@ -614,7 +614,7 @@ func ImNodesSaveEditorStateToIniString(editor *NodesEditorContext) string {
 	defer func() {
 		editorFin()
 	}()
-	return C.GoString(C.wrap_imnodes_SaveEditorStateToIniString(editorArg))
+	return C.GoString(C.wrap_imnodes_SaveEditorStateToIniString(datautils.ConvertCTypes[*C.ImNodesEditorContext](editorArg)))
 }
 
 func ImNodesStyleColorsClassic() {
@@ -634,7 +634,7 @@ func (self NodesIO) SetEmulateThreeButtonMouse(v EmulateThreeButtonMouse) {
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImNodesIO_SetEmulateThreeButtonMouse(selfArg, vArg)
+	C.wrap_ImNodesIO_SetEmulateThreeButtonMouse(selfArg, datautils.ConvertCTypes[C.EmulateThreeButtonMouse](vArg))
 }
 
 func (self *NodesIO) EmulateThreeButtonMouse() EmulateThreeButtonMouse {
@@ -644,7 +644,7 @@ func (self *NodesIO) EmulateThreeButtonMouse() EmulateThreeButtonMouse {
 		selfFin()
 	}()
 	return *NewEmulateThreeButtonMouseFromC(func() *C.EmulateThreeButtonMouse {
-		result := C.wrap_ImNodesIO_GetEmulateThreeButtonMouse(selfArg)
+		result := C.wrap_ImNodesIO_GetEmulateThreeButtonMouse(datautils.ConvertCTypes[*C.ImNodesIO](selfArg))
 		return &result
 	}())
 }
@@ -654,7 +654,7 @@ func (self NodesIO) SetLinkDetachWithModifierClick(v LinkDetachWithModifierClick
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImNodesIO_SetLinkDetachWithModifierClick(selfArg, vArg)
+	C.wrap_ImNodesIO_SetLinkDetachWithModifierClick(selfArg, datautils.ConvertCTypes[C.LinkDetachWithModifierClick](vArg))
 }
 
 func (self *NodesIO) LinkDetachWithModifierClick() LinkDetachWithModifierClick {
@@ -664,7 +664,7 @@ func (self *NodesIO) LinkDetachWithModifierClick() LinkDetachWithModifierClick {
 		selfFin()
 	}()
 	return *NewLinkDetachWithModifierClickFromC(func() *C.LinkDetachWithModifierClick {
-		result := C.wrap_ImNodesIO_GetLinkDetachWithModifierClick(selfArg)
+		result := C.wrap_ImNodesIO_GetLinkDetachWithModifierClick(datautils.ConvertCTypes[*C.ImNodesIO](selfArg))
 		return &result
 	}())
 }
@@ -674,7 +674,7 @@ func (self NodesIO) SetMultipleSelectModifier(v MultipleSelectModifier) {
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImNodesIO_SetMultipleSelectModifier(selfArg, vArg)
+	C.wrap_ImNodesIO_SetMultipleSelectModifier(selfArg, datautils.ConvertCTypes[C.MultipleSelectModifier](vArg))
 }
 
 func (self *NodesIO) MultipleSelectModifier() MultipleSelectModifier {
@@ -684,7 +684,7 @@ func (self *NodesIO) MultipleSelectModifier() MultipleSelectModifier {
 		selfFin()
 	}()
 	return *NewMultipleSelectModifierFromC(func() *C.MultipleSelectModifier {
-		result := C.wrap_ImNodesIO_GetMultipleSelectModifier(selfArg)
+		result := C.wrap_ImNodesIO_GetMultipleSelectModifier(datautils.ConvertCTypes[*C.ImNodesIO](selfArg))
 		return &result
 	}())
 }
@@ -701,7 +701,7 @@ func (self *NodesIO) AltMouseButton() int32 {
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_ImNodesIO_GetAltMouseButton(selfArg))
+	return int32(C.wrap_ImNodesIO_GetAltMouseButton(datautils.ConvertCTypes[*C.ImNodesIO](selfArg)))
 }
 
 func (self NodesIO) SetAutoPanningSpeed(v float32) {
@@ -716,7 +716,7 @@ func (self *NodesIO) AutoPanningSpeed() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImNodesIO_GetAutoPanningSpeed(selfArg))
+	return float32(C.wrap_ImNodesIO_GetAutoPanningSpeed(datautils.ConvertCTypes[*C.ImNodesIO](selfArg)))
 }
 
 func (self NodesStyle) SetGridSpacing(v float32) {
@@ -731,7 +731,7 @@ func (self *NodesStyle) GridSpacing() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImNodesStyle_GetGridSpacing(selfArg))
+	return float32(C.wrap_ImNodesStyle_GetGridSpacing(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetNodeCornerRounding(v float32) {
@@ -746,13 +746,13 @@ func (self *NodesStyle) NodeCornerRounding() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImNodesStyle_GetNodeCornerRounding(selfArg))
+	return float32(C.wrap_ImNodesStyle_GetNodeCornerRounding(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetNodePadding(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImNodesStyle_SetNodePadding(selfArg, v.ToC())
+	C.wrap_ImNodesStyle_SetNodePadding(selfArg, datautils.ConvertCTypes[C.ImVec2](v.ToC()))
 }
 
 func (self *NodesStyle) NodePadding() imgui.Vec2 {
@@ -761,7 +761,7 @@ func (self *NodesStyle) NodePadding() imgui.Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec2{}).FromC(C.wrap_ImNodesStyle_GetNodePadding(selfArg))
+	return *(&imgui.Vec2{}).FromC(C.wrap_ImNodesStyle_GetNodePadding(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetNodeBorderThickness(v float32) {
@@ -776,7 +776,7 @@ func (self *NodesStyle) NodeBorderThickness() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImNodesStyle_GetNodeBorderThickness(selfArg))
+	return float32(C.wrap_ImNodesStyle_GetNodeBorderThickness(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetLinkThickness(v float32) {
@@ -791,7 +791,7 @@ func (self *NodesStyle) LinkThickness() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImNodesStyle_GetLinkThickness(selfArg))
+	return float32(C.wrap_ImNodesStyle_GetLinkThickness(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetLinkLineSegmentsPerLength(v float32) {
@@ -806,7 +806,7 @@ func (self *NodesStyle) LinkLineSegmentsPerLength() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImNodesStyle_GetLinkLineSegmentsPerLength(selfArg))
+	return float32(C.wrap_ImNodesStyle_GetLinkLineSegmentsPerLength(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetLinkHoverDistance(v float32) {
@@ -821,7 +821,7 @@ func (self *NodesStyle) LinkHoverDistance() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImNodesStyle_GetLinkHoverDistance(selfArg))
+	return float32(C.wrap_ImNodesStyle_GetLinkHoverDistance(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetPinCircleRadius(v float32) {
@@ -836,7 +836,7 @@ func (self *NodesStyle) PinCircleRadius() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImNodesStyle_GetPinCircleRadius(selfArg))
+	return float32(C.wrap_ImNodesStyle_GetPinCircleRadius(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetPinQuadSideLength(v float32) {
@@ -851,7 +851,7 @@ func (self *NodesStyle) PinQuadSideLength() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImNodesStyle_GetPinQuadSideLength(selfArg))
+	return float32(C.wrap_ImNodesStyle_GetPinQuadSideLength(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetPinTriangleSideLength(v float32) {
@@ -866,7 +866,7 @@ func (self *NodesStyle) PinTriangleSideLength() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImNodesStyle_GetPinTriangleSideLength(selfArg))
+	return float32(C.wrap_ImNodesStyle_GetPinTriangleSideLength(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetPinLineThickness(v float32) {
@@ -881,7 +881,7 @@ func (self *NodesStyle) PinLineThickness() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImNodesStyle_GetPinLineThickness(selfArg))
+	return float32(C.wrap_ImNodesStyle_GetPinLineThickness(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetPinHoverRadius(v float32) {
@@ -896,7 +896,7 @@ func (self *NodesStyle) PinHoverRadius() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImNodesStyle_GetPinHoverRadius(selfArg))
+	return float32(C.wrap_ImNodesStyle_GetPinHoverRadius(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetPinOffset(v float32) {
@@ -911,13 +911,13 @@ func (self *NodesStyle) PinOffset() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImNodesStyle_GetPinOffset(selfArg))
+	return float32(C.wrap_ImNodesStyle_GetPinOffset(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetMiniMapPadding(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImNodesStyle_SetMiniMapPadding(selfArg, v.ToC())
+	C.wrap_ImNodesStyle_SetMiniMapPadding(selfArg, datautils.ConvertCTypes[C.ImVec2](v.ToC()))
 }
 
 func (self *NodesStyle) MiniMapPadding() imgui.Vec2 {
@@ -926,13 +926,13 @@ func (self *NodesStyle) MiniMapPadding() imgui.Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec2{}).FromC(C.wrap_ImNodesStyle_GetMiniMapPadding(selfArg))
+	return *(&imgui.Vec2{}).FromC(C.wrap_ImNodesStyle_GetMiniMapPadding(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetMiniMapOffset(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImNodesStyle_SetMiniMapOffset(selfArg, v.ToC())
+	C.wrap_ImNodesStyle_SetMiniMapOffset(selfArg, datautils.ConvertCTypes[C.ImVec2](v.ToC()))
 }
 
 func (self *NodesStyle) MiniMapOffset() imgui.Vec2 {
@@ -941,7 +941,7 @@ func (self *NodesStyle) MiniMapOffset() imgui.Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec2{}).FromC(C.wrap_ImNodesStyle_GetMiniMapOffset(selfArg))
+	return *(&imgui.Vec2{}).FromC(C.wrap_ImNodesStyle_GetMiniMapOffset(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetFlags(v NodesStyleFlags) {
@@ -956,7 +956,7 @@ func (self *NodesStyle) Flags() NodesStyleFlags {
 	defer func() {
 		selfFin()
 	}()
-	return NodesStyleFlags(C.wrap_ImNodesStyle_GetFlags(selfArg))
+	return NodesStyleFlags(C.wrap_ImNodesStyle_GetFlags(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
 }
 
 func (self NodesStyle) SetColors(v *[29]uint32) {
@@ -982,7 +982,7 @@ func (self *NodesStyle) Colors() [29]uint32 {
 	}()
 	return func() [29]uint32 {
 		result := [29]uint32{}
-		resultMirr := C.wrap_ImNodesStyle_GetColors(selfArg)
+		resultMirr := C.wrap_ImNodesStyle_GetColors(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg))
 		for i := range result {
 			result[i] = uint32(C.cimnodes_unsigned_int_GetAtIdx(resultMirr, C.int(i)))
 		}

@@ -5,12 +5,12 @@ package implot
 import "C"
 
 import (
-	"image/color"
-	"runtime"
 	"time"
+
+	"github.com/AllenDang/cimgui-go/datautils"
 )
 
-var _ imgui.WrappableType[C.ImPlotPoint, *PlotPoint] = &PlotPoint{}
+var _ datautils.WrappableType[C.ImPlotPoint, *PlotPoint] = &PlotPoint{}
 
 type PlotPoint struct {
 	X float64
@@ -21,7 +21,9 @@ func NewPlotPoint(x, y float64) PlotPoint {
 	return PlotPoint{X: x, Y: y}
 }
 
-func (i *PlotPoint) FromC(p C.ImPlotPoint) *PlotPoint {
+// pAny is ~C.ImPlotPoint and will be free converted!
+func (i *PlotPoint) FromC(pAny any) *PlotPoint {
+	p := datautils.ConvertCTypes[C.ImPlotPoint](pAny)
 	*i = NewPlotPoint(float64(p.x), float64(p.y))
 	return i
 }
@@ -47,7 +49,9 @@ func (i PlotTime) Time() time.Time {
 	return time.Unix(int64(i.S), int64(i.FieldUs)*int64(time.Microsecond))
 }
 
-func (i *PlotTime) FromC(p C.ImPlotTime) *PlotTime {
+// pAny is ~C.ImPlotTime and will be free converted!
+func (i *PlotTime) FromC(pAny any) *PlotTime {
+	p := datautils.ConvertCTypes[C.ImPlotTime](pAny)
 	*i = PlotTime{int(p.S), int(p.Us)}
 	return i
 }
