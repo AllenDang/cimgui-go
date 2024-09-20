@@ -2090,8 +2090,8 @@ func PlotGetPlot(title string) *PlotPlot {
 	return NewPlotPlotFromC(C.ImPlot_GetPlot(titleArg))
 }
 
-func PlotGetPlotDrawList() *DrawList {
-	return NewDrawListFromC(C.ImPlot_GetPlotDrawList())
+func PlotGetPlotDrawList() *imgui.DrawList {
+	return imgui.NewDrawListFromC(C.ImPlot_GetPlotDrawList())
 }
 
 // PlotGetPlotLimitsV parameter default value hint:
@@ -14768,13 +14768,13 @@ func (self PlotContext) SetColorModifiers(v datautils.Vector[*imgui.ColorMod]) {
 	C.wrap_ImPlotContext_SetColorModifiers(selfArg, *vVecArg)
 }
 
-func (self *PlotContext) ColorModifiers() datautils.Vector[*ColorMod] {
+func (self *PlotContext) ColorModifiers() datautils.Vector[*imgui.ColorMod] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return datautils.NewVectorFromC(C.wrap_ImPlotContext_GetColorModifiers(selfArg).Size, C.wrap_ImPlotContext_GetColorModifiers(selfArg).Capacity, NewColorModFromC(C.wrap_ImPlotContext_GetColorModifiers(selfArg).Data))
+	return datautils.NewVectorFromC(C.wrap_ImPlotContext_GetColorModifiers(selfArg).Size, C.wrap_ImPlotContext_GetColorModifiers(selfArg).Capacity, imgui.NewColorModFromC(C.wrap_ImPlotContext_GetColorModifiers(selfArg).Data))
 }
 
 func (self PlotContext) SetStyleModifiers(v datautils.Vector[*imgui.StyleMod]) {
@@ -14791,13 +14791,13 @@ func (self PlotContext) SetStyleModifiers(v datautils.Vector[*imgui.StyleMod]) {
 	C.wrap_ImPlotContext_SetStyleModifiers(selfArg, *vVecArg)
 }
 
-func (self *PlotContext) StyleModifiers() datautils.Vector[*StyleMod] {
+func (self *PlotContext) StyleModifiers() datautils.Vector[*imgui.StyleMod] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return datautils.NewVectorFromC(C.wrap_ImPlotContext_GetStyleModifiers(selfArg).Size, C.wrap_ImPlotContext_GetStyleModifiers(selfArg).Capacity, NewStyleModFromC(C.wrap_ImPlotContext_GetStyleModifiers(selfArg).Data))
+	return datautils.NewVectorFromC(C.wrap_ImPlotContext_GetStyleModifiers(selfArg).Size, C.wrap_ImPlotContext_GetStyleModifiers(selfArg).Capacity, imgui.NewStyleModFromC(C.wrap_ImPlotContext_GetStyleModifiers(selfArg).Data))
 }
 
 func (self PlotContext) SetColormapData(v PlotColormapData) {
@@ -15128,13 +15128,13 @@ func (self PlotInputMap) SetPan(v imgui.MouseButton) {
 	C.wrap_ImPlotInputMap_SetPan(selfArg, C.ImGuiMouseButton(v))
 }
 
-func (self *PlotInputMap) Pan() MouseButton {
+func (self *PlotInputMap) Pan() imgui.MouseButton {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return MouseButton(C.wrap_ImPlotInputMap_GetPan(selfArg))
+	return imgui.MouseButton(C.wrap_ImPlotInputMap_GetPan(selfArg))
 }
 
 func (self PlotInputMap) SetPanMod(v int32) {
@@ -15158,13 +15158,13 @@ func (self PlotInputMap) SetFit(v imgui.MouseButton) {
 	C.wrap_ImPlotInputMap_SetFit(selfArg, C.ImGuiMouseButton(v))
 }
 
-func (self *PlotInputMap) Fit() MouseButton {
+func (self *PlotInputMap) Fit() imgui.MouseButton {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return MouseButton(C.wrap_ImPlotInputMap_GetFit(selfArg))
+	return imgui.MouseButton(C.wrap_ImPlotInputMap_GetFit(selfArg))
 }
 
 func (self PlotInputMap) SetSelect(v imgui.MouseButton) {
@@ -15173,13 +15173,13 @@ func (self PlotInputMap) SetSelect(v imgui.MouseButton) {
 	C.wrap_ImPlotInputMap_SetSelect(selfArg, C.ImGuiMouseButton(v))
 }
 
-func (self *PlotInputMap) Select() MouseButton {
+func (self *PlotInputMap) Select() imgui.MouseButton {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return MouseButton(C.wrap_ImPlotInputMap_GetSelect(selfArg))
+	return imgui.MouseButton(C.wrap_ImPlotInputMap_GetSelect(selfArg))
 }
 
 func (self PlotInputMap) SetSelectCancel(v imgui.MouseButton) {
@@ -15188,13 +15188,13 @@ func (self PlotInputMap) SetSelectCancel(v imgui.MouseButton) {
 	C.wrap_ImPlotInputMap_SetSelectCancel(selfArg, C.ImGuiMouseButton(v))
 }
 
-func (self *PlotInputMap) SelectCancel() MouseButton {
+func (self *PlotInputMap) SelectCancel() imgui.MouseButton {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return MouseButton(C.wrap_ImPlotInputMap_GetSelectCancel(selfArg))
+	return imgui.MouseButton(C.wrap_ImPlotInputMap_GetSelectCancel(selfArg))
 }
 
 func (self PlotInputMap) SetSelectMod(v int32) {
@@ -15248,13 +15248,13 @@ func (self PlotInputMap) SetMenu(v imgui.MouseButton) {
 	C.wrap_ImPlotInputMap_SetMenu(selfArg, C.ImGuiMouseButton(v))
 }
 
-func (self *PlotInputMap) Menu() MouseButton {
+func (self *PlotInputMap) Menu() imgui.MouseButton {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return MouseButton(C.wrap_ImPlotInputMap_GetMenu(selfArg))
+	return imgui.MouseButton(C.wrap_ImPlotInputMap_GetMenu(selfArg))
 }
 
 func (self PlotInputMap) SetOverrideMod(v int32) {

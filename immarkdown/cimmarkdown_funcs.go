@@ -544,13 +544,13 @@ func (self MarkdownHeadingFormat) SetFont(v *imgui.Font) {
 	C.wrap_MarkdownHeadingFormat_SetFont(selfArg, vArg)
 }
 
-func (self *MarkdownHeadingFormat) Font() *Font {
+func (self *MarkdownHeadingFormat) Font() *imgui.Font {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return NewFontFromC(C.wrap_MarkdownHeadingFormat_GetFont(selfArg))
+	return imgui.NewFontFromC(C.wrap_MarkdownHeadingFormat_GetFont(selfArg))
 }
 
 func (self MarkdownHeadingFormat) SetSeparator(v bool) {
