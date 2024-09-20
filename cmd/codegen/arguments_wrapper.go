@@ -190,7 +190,7 @@ func getArgWrapper(
 
 		data = ArgumentWrapperData{
 			VarName: string("*" + a.Name + "VecArg"),
-			ArgType: GoIdentifier(fmt.Sprintf("Vector[%s]", w.ArgType)),
+			ArgType: GoIdentifier(fmt.Sprintf("datautils.Vector[%s]", w.ArgType)),
 			ArgDef: fmt.Sprintf(`%[5]s := %[2]s.Data
 %[1]s
 %[2]sVecArg := new(C.%[3]s)
