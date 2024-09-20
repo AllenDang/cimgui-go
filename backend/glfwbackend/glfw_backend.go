@@ -19,8 +19,8 @@ import (
 	"unsafe"
 
 	"github.com/AllenDang/cimgui-go/backend"
+	"github.com/AllenDang/cimgui-go/datautils"
 	"github.com/AllenDang/cimgui-go/imgui"
-	"github.com/AllenDang/cimgui-go/internal/datautils"
 )
 
 type voidCallbackFunc func()

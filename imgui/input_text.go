@@ -12,7 +12,7 @@ import (
 	"runtime/cgo"
 	"unsafe"
 
-	"github.com/AllenDang/cimgui-go/internal/datautils"
+	"github.com/AllenDang/cimgui-go/datautils"
 )
 
 type InputTextCallback func(data InputTextCallbackData) int
