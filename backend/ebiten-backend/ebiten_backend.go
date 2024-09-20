@@ -3,8 +3,8 @@ package ebitenbackend
 import (
 	"runtime"
 
-	imgui "github.com/AllenDang/cimgui-go"
 	"github.com/AllenDang/cimgui-go/backend"
+	"github.com/AllenDang/cimgui-go/imgui"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
