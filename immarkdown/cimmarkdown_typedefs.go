@@ -4,7 +4,7 @@
 package immarkdown
 
 import (
-	"github.com/AllenDang/cimgui-go/internal/datautils"
+	"github.com/AllenDang/cimgui-go/datautils"
 )
 
 // #include <stdlib.h>

@@ -4,8 +4,8 @@
 package imnodes
 
 import (
+	"github.com/AllenDang/cimgui-go/datautils"
 	"github.com/AllenDang/cimgui-go/imgui"
-	"github.com/AllenDang/cimgui-go/internal/datautils"
 )
 
 // #include "../imgui/extra_types.h"
