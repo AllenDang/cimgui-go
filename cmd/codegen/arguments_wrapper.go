@@ -197,7 +197,7 @@ func getArgWrapper(
 %[2]sVecArg.Size = C.int(%[2]s.Size)
 %[2]sVecArg.Capacity = C.int(%[2]s.Capacity)
 %[2]sVecArg.Data = %[4]s
-%[2]s.pinner.Pin(%[2]sVecArg.Data)
+%[2]s.Pinner().Pin(%[2]sVecArg.Data)
 `, w.ArgDef, a.Name, a.Type, w.VarName, dataName),
 			ArgDefNoFin: fmt.Sprintf(`%[5]s := %[2]s.Data
 %[1]s
@@ -205,9 +205,9 @@ func getArgWrapper(
 %[2]sVecArg.Size = C.int(%[2]s.Size)
 %[2]sVecArg.Capacity = C.int(%[2]s.Capacity)
 %[2]sVecArg.Data = %[4]s
-%[2]s.pinner.Pin(%[2]sVecArg.Data)
+%[2]s.Pinner().Pin(%[2]sVecArg.Data)
 `, w.ArgDefNoFin, a.Name, a.Type, w.VarName, dataName),
-			Finalizer: fmt.Sprintf("%s\n%s.pinner.Unpin()", w.Finalizer, a.Name),
+			Finalizer: fmt.Sprintf("%s\n%s.Pinner().Unpin()", w.Finalizer, a.Name),
 			NoFin:     a.RemoveFinalizer,
 		}
 
