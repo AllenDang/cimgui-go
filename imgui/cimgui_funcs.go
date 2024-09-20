@@ -13491,7 +13491,7 @@ func (self BitVector) SetStorage(v datautils.Vector[*uint32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -13523,7 +13523,7 @@ func (self DrawChannel) SetCmdBuffer(v datautils.Vector[*DrawCmd]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -13546,7 +13546,7 @@ func (self DrawChannel) SetIdxBuffer(v datautils.Vector[*DrawIdx]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -13830,7 +13830,7 @@ func (self DrawList) SetCmdBuffer(v datautils.Vector[*DrawCmd]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -13853,7 +13853,7 @@ func (self DrawList) SetIdxBuffer(v datautils.Vector[*DrawIdx]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -13876,7 +13876,7 @@ func (self DrawList) SetVtxBuffer(v datautils.Vector[*DrawVert]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -13980,7 +13980,7 @@ func (self DrawList) SetPath(v datautils.Vector[*Vec2]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -14028,7 +14028,7 @@ func (self DrawList) SetClipRectStack(v datautils.Vector[*Vec4]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -14042,7 +14042,7 @@ func (self DrawList) SetTextureIdStack(v datautils.Vector[*TextureID]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -14219,7 +14219,7 @@ func (self DrawListSharedData) SetTempBuffer(v datautils.Vector[*Vec2]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -14359,7 +14359,7 @@ func (self DrawListSplitter) SetChannels(v datautils.Vector[*DrawChannel]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -14427,7 +14427,7 @@ func (self Font) SetIndexAdvanceX(v datautils.Vector[*float32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -14480,7 +14480,7 @@ func (self Font) SetIndexLookup(v datautils.Vector[(*Wchar)]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = (*C.ImWchar)(vData)
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -14503,7 +14503,7 @@ func (self Font) SetGlyphs(v datautils.Vector[*FontGlyph]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -14973,7 +14973,7 @@ func (self FontAtlas) SetCustomRects(v datautils.Vector[*FontAtlasCustomRect]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -14996,7 +14996,7 @@ func (self FontAtlas) SetConfigData(v datautils.Vector[*FontConfig]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -15734,7 +15734,7 @@ func (self FontGlyphRangesBuilder) SetUsedChars(v datautils.Vector[*uint32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -16513,7 +16513,7 @@ func (self Context) SetInputEventsQueue(v datautils.Vector[*InputEvent]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -16536,7 +16536,7 @@ func (self Context) SetInputEventsTrail(v datautils.Vector[*InputEvent]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -16589,7 +16589,7 @@ func (self Context) SetCurrentWindowStack(v datautils.Vector[*WindowStackData]) 
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -17622,7 +17622,7 @@ func (self Context) SetColorStack(v datautils.Vector[*ColorMod]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -17645,7 +17645,7 @@ func (self Context) SetStyleVarStack(v datautils.Vector[*StyleMod]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -17668,7 +17668,7 @@ func (self Context) SetFocusScopeStack(v datautils.Vector[*FocusScopeData]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -17700,7 +17700,7 @@ func (self Context) SetGroupStack(v datautils.Vector[*GroupData]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -17723,7 +17723,7 @@ func (self Context) SetOpenPopupStack(v datautils.Vector[*PopupData]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -17746,7 +17746,7 @@ func (self Context) SetBeginPopupStack(v datautils.Vector[*PopupData]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -17769,7 +17769,7 @@ func (self Context) SetTreeNodeStack(v datautils.Vector[*TreeNodeStackData]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -18075,7 +18075,7 @@ func (self Context) SetNavFocusRoute(v datautils.Vector[*FocusScopeData]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -19211,7 +19211,7 @@ func (self Context) SetClipperTempData(v datautils.Vector[*ListClipperData]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -19283,7 +19283,7 @@ func (self Context) SetTablesTempData(v datautils.Vector[*TableTempData]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -19306,7 +19306,7 @@ func (self Context) SetTablesLastTimeActive(v datautils.Vector[*float32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -19329,7 +19329,7 @@ func (self Context) SetDrawChannelsTempMergeBuffer(v datautils.Vector[*DrawChann
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -19369,7 +19369,7 @@ func (self Context) SetCurrentTabBarStack(v datautils.Vector[*PtrOrIndex]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -19392,7 +19392,7 @@ func (self Context) SetShrinkWidthBuffer(v datautils.Vector[*ShrinkWidthItem]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -19467,7 +19467,7 @@ func (self Context) SetMultiSelectTempData(v datautils.Vector[*MultiSelectTempDa
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -20105,7 +20105,7 @@ func (self Context) SetClipboardHandlerData(v datautils.Vector[string]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -20128,7 +20128,7 @@ func (self Context) SetMenusIdSubmittedThisFrame(v datautils.Vector[*ID]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -20292,7 +20292,7 @@ func (self Context) SetSettingsHandlers(v datautils.Vector[*SettingsHandler]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -20315,7 +20315,7 @@ func (self Context) SetHooks(v datautils.Vector[*ContextHook]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -20958,7 +20958,7 @@ func (self Context) SetTempBuffer(v datautils.Vector[string]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -21363,7 +21363,7 @@ func (self DockContext) SetRequests(v datautils.Vector[*DockRequest]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -21386,7 +21386,7 @@ func (self DockContext) SetNodesSettings(v datautils.Vector[*DockNodeSettings]) 
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -22350,7 +22350,7 @@ func (self IDStackTool) SetResults(v datautils.Vector[*StackLevelInfo]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -24102,7 +24102,7 @@ func (self IO) SetInputQueueCharacters(v datautils.Vector[(*Wchar)]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = (*C.ImWchar)(vData)
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -24631,7 +24631,7 @@ func (self InputTextDeactivatedState) SetTextA(v datautils.Vector[string]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -24703,7 +24703,7 @@ func (self InputTextState) SetTextA(v datautils.Vector[string]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -24726,7 +24726,7 @@ func (self InputTextState) SetInitialTextA(v datautils.Vector[string]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -24749,7 +24749,7 @@ func (self InputTextState) SetCallbackTextBackup(v datautils.Vector[string]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -25181,7 +25181,7 @@ func (self KeyRoutingTable) SetEntries(v datautils.Vector[*KeyRoutingData]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -25204,7 +25204,7 @@ func (self KeyRoutingTable) SetEntriesNext(v datautils.Vector[*KeyRoutingData]) 
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -25535,7 +25535,7 @@ func (self ListClipperData) SetRanges(v datautils.Vector[*ListClipperRange]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -26014,7 +26014,7 @@ func (self MultiSelectIO) SetRequests(v datautils.Vector[*SelectionRequest]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -27446,7 +27446,7 @@ func (self OldColumns) SetColumns(v datautils.Vector[*OldColumnData]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -27702,7 +27702,7 @@ func (self PlatformIO) SetMonitors(v datautils.Vector[*PlatformMonitor]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -28581,7 +28581,7 @@ func (self Storage) SetData(v datautils.Vector[*StoragePair]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -29463,7 +29463,7 @@ func (self TabBar) SetTabs(v datautils.Vector[*TabItem]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -31090,7 +31090,7 @@ func (self Table) SetInstanceDataExtra(v datautils.Vector[*TableInstanceData]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -31133,7 +31133,7 @@ func (self Table) SetSortSpecsMulti(v datautils.Vector[*TableColumnSortSpecs]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -33249,7 +33249,7 @@ func (self TableTempData) SetAngledHeadersRequests(v datautils.Vector[*TableHead
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -33432,7 +33432,7 @@ func (self TextBuffer) SetBuf(v datautils.Vector[string]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -33487,7 +33487,7 @@ func (self TextFilter) SetFilters(v datautils.Vector[*TextRange]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -33525,7 +33525,7 @@ func (self TextIndex) SetLineOffsets(v datautils.Vector[*int32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -35634,7 +35634,7 @@ func (self Window) SetIDStack(v datautils.Vector[*ID]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -35856,7 +35856,7 @@ func (self Window) SetColumnsStorage(v datautils.Vector[*OldColumns]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -37358,7 +37358,7 @@ func (self WindowTempData) SetItemWidthStack(v datautils.Vector[*float32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -37381,7 +37381,7 @@ func (self WindowTempData) SetTextWrapPosStack(v datautils.Vector[*float32]) {
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
 	vVecArg.Data = vDataArg
-	v.pinner.Pin(vVecArg.Data)
+	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
