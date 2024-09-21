@@ -1,5 +1,7 @@
 package datautils
 
+import "unsafe"
+
 // WrappableType represents a GO type that can be converted into a C value
 // and back - into a GO value.
 // CTYPE represents the equivalent C type of self.
@@ -12,7 +14,7 @@ type WrappableType[CTYPE any, self any] interface {
 	ToC() CTYPE
 	// FromC force-converts taken any to CTYPE, converts it into self,
 	// applies to receiver and returns it.
-	FromC(any) self
+	FromC(unsafe.Pointer) self
 }
 
 // Wrap takes a variable of one of the types defined in this file
@@ -25,7 +27,7 @@ func Wrap[CTYPE any, self any](in WrappableType[CTYPE, self]) (cPtr *CTYPE, fini
 		cPtr = &c
 
 		finisher = func() {
-			in.FromC(*cPtr)
+			in.FromC(unsafe.Pointer(cPtr))
 		}
 	} else {
 		finisher = func() {}

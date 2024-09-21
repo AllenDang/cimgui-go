@@ -166,7 +166,7 @@ func imVec4PtrReturnW(ctx *Context) returnWrapper {
 	goType := prefixGoPackage("Vec4", "imgui", ctx)
 	return returnWrapper{
 		returnType: "*" + goType,
-		returnStmt: "(&" + string(goType) + "{}).FromC(*%s)",
+		returnStmt: "(&" + string(goType) + "{}).FromC(unsafe.Pointer(%s))",
 	}
 }
 
@@ -184,6 +184,6 @@ func simplePtrR(goType GoIdentifier) returnWrapper {
 func wrappableR(goType GoIdentifier) returnWrapper {
 	return returnWrapper{
 		returnType: goType,
-		returnStmt: fmt.Sprintf("*(&%s{}).FromC(%s)", goType, "%s"),
+		returnStmt: fmt.Sprintf("func() %[1]s {out := %%s ; return *(&%[1]s{}).FromC(unsafe.Pointer(&out))}()", goType),
 	}
 }

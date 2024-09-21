@@ -6,6 +6,7 @@ import "C"
 
 import (
 	"time"
+	"unsafe"
 
 	"github.com/AllenDang/cimgui-go/datautils"
 )
@@ -22,8 +23,8 @@ func NewPlotPoint(x, y float64) PlotPoint {
 }
 
 // pAny is ~C.ImPlotPoint and will be free converted!
-func (i *PlotPoint) FromC(pAny any) *PlotPoint {
-	p := datautils.ConvertCTypes[C.ImPlotPoint](pAny)
+func (i *PlotPoint) FromC(pAny unsafe.Pointer) *PlotPoint {
+	p := *(*C.ImPlotPoint)(pAny)
 	*i = NewPlotPoint(float64(p.x), float64(p.y))
 	return i
 }
@@ -50,8 +51,8 @@ func (i PlotTime) Time() time.Time {
 }
 
 // pAny is ~C.ImPlotTime and will be free converted!
-func (i *PlotTime) FromC(pAny any) *PlotTime {
-	p := datautils.ConvertCTypes[C.ImPlotTime](pAny)
+func (i *PlotTime) FromC(pAny unsafe.Pointer) *PlotTime {
+	p := *(*C.ImPlotTime)(pAny)
 	*i = PlotTime{int(p.S), int(p.Us)}
 	return i
 }

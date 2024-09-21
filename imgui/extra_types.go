@@ -6,6 +6,7 @@ import "C"
 
 import (
 	"image/color"
+	"unsafe"
 
 	"github.com/AllenDang/cimgui-go/datautils"
 )
@@ -26,8 +27,8 @@ func NewVec2(x, y float32) Vec2 {
 }
 
 // vec2Any is ~C.ImVec2 and will be force coerted!
-func (i *Vec2) FromC(vec2Any any) *Vec2 {
-	vec2 := datautils.ConvertCTypes[C.ImVec2](vec2Any)
+func (i *Vec2) FromC(vec2Any unsafe.Pointer) *Vec2 {
+	vec2 := *(*C.ImVec2)(vec2Any)
 	*i = NewVec2(float32(vec2.x), float32(vec2.y))
 	return i
 }
@@ -55,8 +56,8 @@ func NewVec4(r, g, b, a float32) Vec4 {
 }
 
 // vec4Any is ~C.ImVec4 and will be force coerted!
-func (i *Vec4) FromC(vec4Any any) *Vec4 {
-	vec4 := datautils.ConvertCTypes[C.ImVec4](vec4Any)
+func (i *Vec4) FromC(vec4Any unsafe.Pointer) *Vec4 {
+	vec4 := *(*C.ImVec4)(vec4Any)
 	*i = NewVec4(float32(vec4.x), float32(vec4.y), float32(vec4.z), float32(vec4.w))
 	return i
 }
@@ -102,8 +103,8 @@ func NewColorFromColor(c color.Color) Color {
 }
 
 // colAny i ~C.ImColor and will be force coerted!
-func (i *Color) FromC(colAny any) *Color {
-	col := datautils.ConvertCTypes[C.ImColor](colAny)
+func (i *Color) FromC(colAny unsafe.Pointer) *Color {
+	col := *(*C.ImColor)(colAny)
 	*i = NewColor(float32(col.Value.x), float32(col.Value.y), float32(col.Value.z), float32(col.Value.w))
 	return i
 }
@@ -147,14 +148,14 @@ type Rect struct {
 }
 
 // rectAny is ~C.ImRect and will be force coerted!
-func (i *Rect) FromC(rectAny any) *Rect {
-	rect := datautils.ConvertCTypes[C.ImRect](rectAny)
+func (i *Rect) FromC(rectAny unsafe.Pointer) *Rect {
+	rect := *(*C.ImRect)(rectAny)
 	out := &Vec2{}
-	out.FromC(rect.Min)
+	out.FromC(unsafe.Pointer(&rect.Min))
 	i.Min = *out
 
 	out = &Vec2{}
-	out.FromC(rect.Max)
+	out.FromC(unsafe.Pointer(&rect.Max))
 	i.Max = *out
 
 	return i
