@@ -6606,7 +6606,7 @@ func StyleColorName(idx Col) string {
 
 // retrieve style color as stored in ImGuiStyle structure. use to feed back into PushStyleColor(), otherwise use GetColorU32() to get style color with style alpha baked in.
 func StyleColorVec4(idx Col) *Vec4 {
-	return (&Vec4{}).FromC(*C.igGetStyleColorVec4(C.ImGuiCol(idx)))
+	return (&Vec4{}).FromC(unsafe.Pointer(C.igGetStyleColorVec4(C.ImGuiCol(idx))))
 }
 
 func InternalStyleVarInfo(idx StyleVar) *DataVarInfo {
@@ -13567,7 +13567,10 @@ func (self *Color) Value() Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec4{}).FromC(C.wrap_ImColor_GetValue(datautils.ConvertCTypes[*C.ImColor](selfArg)))
+	return func() Vec4 {
+		out := C.wrap_ImColor_GetValue(datautils.ConvertCTypes[*C.ImColor](selfArg))
+		return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self DrawChannel) SetCmdBuffer(v datautils.Vector[*DrawCmd]) {
@@ -13628,7 +13631,10 @@ func (self *DrawCmd) ClipRect() Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec4{}).FromC(C.wrap_ImDrawCmd_GetClipRect(datautils.ConvertCTypes[*C.ImDrawCmd](selfArg)))
+	return func() Vec4 {
+		out := C.wrap_ImDrawCmd_GetClipRect(datautils.ConvertCTypes[*C.ImDrawCmd](selfArg))
+		return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self DrawCmd) SetTextureId(v TextureID) {
@@ -13723,7 +13729,10 @@ func (self *DrawCmdHeader) ClipRect() Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec4{}).FromC(C.wrap_ImDrawCmdHeader_GetClipRect(datautils.ConvertCTypes[*C.ImDrawCmdHeader](selfArg)))
+	return func() Vec4 {
+		out := C.wrap_ImDrawCmdHeader_GetClipRect(datautils.ConvertCTypes[*C.ImDrawCmdHeader](selfArg))
+		return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self DrawCmdHeader) SetTextureId(v TextureID) {
@@ -13833,7 +13842,10 @@ func (self *DrawData) DisplayPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImDrawData_GetDisplayPos(datautils.ConvertCTypes[*C.ImDrawData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImDrawData_GetDisplayPos(datautils.ConvertCTypes[*C.ImDrawData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self DrawData) SetDisplaySize(v Vec2) {
@@ -13848,7 +13860,10 @@ func (self *DrawData) DisplaySize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImDrawData_GetDisplaySize(datautils.ConvertCTypes[*C.ImDrawData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImDrawData_GetDisplaySize(datautils.ConvertCTypes[*C.ImDrawData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self DrawData) SetFramebufferScale(v Vec2) {
@@ -13863,7 +13878,10 @@ func (self *DrawData) FramebufferScale() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImDrawData_GetFramebufferScale(datautils.ConvertCTypes[*C.ImDrawData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImDrawData_GetFramebufferScale(datautils.ConvertCTypes[*C.ImDrawData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self DrawData) SetOwnerViewport(v *Viewport) {
@@ -14168,7 +14186,10 @@ func (self *DrawListSharedData) TexUvWhitePixel() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImDrawListSharedData_GetTexUvWhitePixel(datautils.ConvertCTypes[*C.ImDrawListSharedData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImDrawListSharedData_GetTexUvWhitePixel(datautils.ConvertCTypes[*C.ImDrawListSharedData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self DrawListSharedData) SetFont(v *Font) {
@@ -14260,7 +14281,10 @@ func (self *DrawListSharedData) ClipRectFullscreen() Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec4{}).FromC(C.wrap_ImDrawListSharedData_GetClipRectFullscreen(datautils.ConvertCTypes[*C.ImDrawListSharedData](selfArg)))
+	return func() Vec4 {
+		out := C.wrap_ImDrawListSharedData_GetClipRectFullscreen(datautils.ConvertCTypes[*C.ImDrawListSharedData](selfArg))
+		return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self DrawListSharedData) SetInitialFlags(v DrawListFlags) {
@@ -14303,7 +14327,7 @@ func (self DrawListSharedData) SetArcFastVtx(v *[48]Vec2) {
 	C.wrap_ImDrawListSharedData_SetArcFastVtx(selfArg, (*C.ImVec2)(&vArg[0]))
 
 	for i, vV := range vArg {
-		(*v)[i] = *(&Vec2{}).FromC(vV)
+		(*v)[i] = func() Vec2 { out := vV; return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 	}
 }
 
@@ -14317,7 +14341,10 @@ func (self *DrawListSharedData) ArcFastVtx() [48]Vec2 {
 		result := [48]Vec2{}
 		resultMirr := C.wrap_ImDrawListSharedData_GetArcFastVtx(datautils.ConvertCTypes[*C.ImDrawListSharedData](selfArg))
 		for i := range result {
-			result[i] = *(&Vec2{}).FromC(C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = func() Vec2 {
+				out := C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
+				return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+			}()
 		}
 
 		return result
@@ -14385,7 +14412,7 @@ func (self *DrawListSharedData) TexUvLines() *Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return (&Vec4{}).FromC(*C.wrap_ImDrawListSharedData_GetTexUvLines(datautils.ConvertCTypes[*C.ImDrawListSharedData](selfArg)))
+	return (&Vec4{}).FromC(unsafe.Pointer(C.wrap_ImDrawListSharedData_GetTexUvLines(datautils.ConvertCTypes[*C.ImDrawListSharedData](selfArg))))
 }
 
 func (self DrawListSplitter) SetCurrent(v int32) {
@@ -14453,7 +14480,10 @@ func (self *DrawVert) Pos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImDrawVert_GetPos(datautils.ConvertCTypes[*C.ImDrawVert](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImDrawVert_GetPos(datautils.ConvertCTypes[*C.ImDrawVert](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self DrawVert) SetUv(v Vec2) {
@@ -14468,7 +14498,10 @@ func (self *DrawVert) Uv() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImDrawVert_GetUv(datautils.ConvertCTypes[*C.ImDrawVert](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImDrawVert_GetUv(datautils.ConvertCTypes[*C.ImDrawVert](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self DrawVert) SetCol(v uint32) {
@@ -15014,7 +15047,10 @@ func (self *FontAtlas) TexUvScale() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImFontAtlas_GetTexUvScale(datautils.ConvertCTypes[*C.ImFontAtlas](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImFontAtlas_GetTexUvScale(datautils.ConvertCTypes[*C.ImFontAtlas](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self FontAtlas) SetTexUvWhitePixel(v Vec2) {
@@ -15029,7 +15065,10 @@ func (self *FontAtlas) TexUvWhitePixel() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImFontAtlas_GetTexUvWhitePixel(datautils.ConvertCTypes[*C.ImFontAtlas](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImFontAtlas_GetTexUvWhitePixel(datautils.ConvertCTypes[*C.ImFontAtlas](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self FontAtlas) SetCustomRects(v datautils.Vector[*FontAtlasCustomRect]) {
@@ -15089,7 +15128,7 @@ func (self FontAtlas) SetTexUvLines(v *[64]Vec4) {
 	C.wrap_ImFontAtlas_SetTexUvLines(selfArg, (*C.ImVec4)(&vArg[0]))
 
 	for i, vV := range vArg {
-		(*v)[i] = *(&Vec4{}).FromC(vV)
+		(*v)[i] = func() Vec4 { out := vV; return *(&Vec4{}).FromC(unsafe.Pointer(&out)) }()
 	}
 }
 
@@ -15103,7 +15142,10 @@ func (self *FontAtlas) TexUvLines() [64]Vec4 {
 		result := [64]Vec4{}
 		resultMirr := C.wrap_ImFontAtlas_GetTexUvLines(datautils.ConvertCTypes[*C.ImFontAtlas](selfArg))
 		for i := range result {
-			result[i] = *(&Vec4{}).FromC(C.cimgui_ImVec4_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = func() Vec4 {
+				out := C.cimgui_ImVec4_GetAtIdx(resultMirr, C.int(i))
+				return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+			}()
 		}
 
 		return result
@@ -15274,7 +15316,10 @@ func (self *FontAtlasCustomRect) GlyphOffset() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImFontAtlasCustomRect_GetGlyphOffset(datautils.ConvertCTypes[*C.ImFontAtlasCustomRect](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImFontAtlasCustomRect_GetGlyphOffset(datautils.ConvertCTypes[*C.ImFontAtlasCustomRect](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self FontAtlasCustomRect) SetFont(v *Font) {
@@ -15426,7 +15471,10 @@ func (self *FontConfig) GlyphExtraSpacing() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImFontConfig_GetGlyphExtraSpacing(datautils.ConvertCTypes[*C.ImFontConfig](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImFontConfig_GetGlyphExtraSpacing(datautils.ConvertCTypes[*C.ImFontConfig](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self FontConfig) SetGlyphOffset(v Vec2) {
@@ -15441,7 +15489,10 @@ func (self *FontConfig) GlyphOffset() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImFontConfig_GetGlyphOffset(datautils.ConvertCTypes[*C.ImFontConfig](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImFontConfig_GetGlyphOffset(datautils.ConvertCTypes[*C.ImFontConfig](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self FontConfig) SetGlyphRanges(v *Wchar) {
@@ -15943,7 +15994,10 @@ func (self *BoxSelectState) StartPosRel() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiBoxSelectState_GetStartPosRel(datautils.ConvertCTypes[*C.ImGuiBoxSelectState](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiBoxSelectState_GetStartPosRel(datautils.ConvertCTypes[*C.ImGuiBoxSelectState](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self BoxSelectState) SetEndPosRel(v Vec2) {
@@ -15958,7 +16012,10 @@ func (self *BoxSelectState) EndPosRel() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiBoxSelectState_GetEndPosRel(datautils.ConvertCTypes[*C.ImGuiBoxSelectState](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiBoxSelectState_GetEndPosRel(datautils.ConvertCTypes[*C.ImGuiBoxSelectState](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self BoxSelectState) SetScrollAccum(v Vec2) {
@@ -15973,7 +16030,10 @@ func (self *BoxSelectState) ScrollAccum() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiBoxSelectState_GetScrollAccum(datautils.ConvertCTypes[*C.ImGuiBoxSelectState](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiBoxSelectState_GetScrollAccum(datautils.ConvertCTypes[*C.ImGuiBoxSelectState](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self BoxSelectState) SetWindow(v *Window) {
@@ -16020,7 +16080,10 @@ func (self *BoxSelectState) UnclipRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiBoxSelectState_GetUnclipRect(datautils.ConvertCTypes[*C.ImGuiBoxSelectState](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiBoxSelectState_GetUnclipRect(datautils.ConvertCTypes[*C.ImGuiBoxSelectState](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self BoxSelectState) SetBoxSelectRectPrev(v Rect) {
@@ -16035,7 +16098,10 @@ func (self *BoxSelectState) BoxSelectRectPrev() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiBoxSelectState_GetBoxSelectRectPrev(datautils.ConvertCTypes[*C.ImGuiBoxSelectState](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiBoxSelectState_GetBoxSelectRectPrev(datautils.ConvertCTypes[*C.ImGuiBoxSelectState](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self BoxSelectState) SetBoxSelectRectCurr(v Rect) {
@@ -16050,7 +16116,10 @@ func (self *BoxSelectState) BoxSelectRectCurr() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiBoxSelectState_GetBoxSelectRectCurr(datautils.ConvertCTypes[*C.ImGuiBoxSelectState](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiBoxSelectState_GetBoxSelectRectCurr(datautils.ConvertCTypes[*C.ImGuiBoxSelectState](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self ColorMod) SetCol(v Col) {
@@ -16080,7 +16149,10 @@ func (self *ColorMod) BackupValue() Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec4{}).FromC(C.wrap_ImGuiColorMod_GetBackupValue(datautils.ConvertCTypes[*C.ImGuiColorMod](selfArg)))
+	return func() Vec4 {
+		out := C.wrap_ImGuiColorMod_GetBackupValue(datautils.ConvertCTypes[*C.ImGuiColorMod](selfArg))
+		return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self ComboPreviewData) SetPreviewRect(v Rect) {
@@ -16095,7 +16167,10 @@ func (self *ComboPreviewData) PreviewRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiComboPreviewData_GetPreviewRect(datautils.ConvertCTypes[*C.ImGuiComboPreviewData](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiComboPreviewData_GetPreviewRect(datautils.ConvertCTypes[*C.ImGuiComboPreviewData](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self ComboPreviewData) SetBackupCursorPos(v Vec2) {
@@ -16110,7 +16185,10 @@ func (self *ComboPreviewData) BackupCursorPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiComboPreviewData_GetBackupCursorPos(datautils.ConvertCTypes[*C.ImGuiComboPreviewData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiComboPreviewData_GetBackupCursorPos(datautils.ConvertCTypes[*C.ImGuiComboPreviewData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self ComboPreviewData) SetBackupCursorMaxPos(v Vec2) {
@@ -16125,7 +16203,10 @@ func (self *ComboPreviewData) BackupCursorMaxPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiComboPreviewData_GetBackupCursorMaxPos(datautils.ConvertCTypes[*C.ImGuiComboPreviewData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiComboPreviewData_GetBackupCursorMaxPos(datautils.ConvertCTypes[*C.ImGuiComboPreviewData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self ComboPreviewData) SetBackupCursorPosPrevLine(v Vec2) {
@@ -16140,7 +16221,10 @@ func (self *ComboPreviewData) BackupCursorPosPrevLine() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiComboPreviewData_GetBackupCursorPosPrevLine(datautils.ConvertCTypes[*C.ImGuiComboPreviewData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiComboPreviewData_GetBackupCursorPosPrevLine(datautils.ConvertCTypes[*C.ImGuiComboPreviewData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self ComboPreviewData) SetBackupPrevLineTextBaseOffset(v float32) {
@@ -16733,7 +16817,10 @@ func (self *Context) WindowsHoverPadding() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiContext_GetWindowsHoverPadding(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiContext_GetWindowsHoverPadding(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetDebugBreakInWindow(v ID) {
@@ -16870,7 +16957,10 @@ func (self *Context) WheelingWindowRefMousePos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiContext_GetWheelingWindowRefMousePos(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiContext_GetWheelingWindowRefMousePos(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetWheelingWindowStartFrame(v int32) {
@@ -16930,7 +17020,10 @@ func (self *Context) WheelingWindowWheelRemainder() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiContext_GetWheelingWindowWheelRemainder(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiContext_GetWheelingWindowWheelRemainder(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetWheelingAxisAvg(v Vec2) {
@@ -16945,7 +17038,10 @@ func (self *Context) WheelingAxisAvg() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiContext_GetWheelingAxisAvg(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiContext_GetWheelingAxisAvg(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetDebugDrawIdConflicts(v ID) {
@@ -17305,7 +17401,10 @@ func (self *Context) ActiveIdClickOffset() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiContext_GetActiveIdClickOffset(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiContext_GetActiveIdClickOffset(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetActiveIdWindow(v *Window) {
@@ -18011,7 +18110,10 @@ func (self *Context) PlatformMonitorsFullWorkRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiContext_GetPlatformMonitorsFullWorkRect(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiContext_GetPlatformMonitorsFullWorkRect(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetViewportCreatedCount(v int32) {
@@ -18611,7 +18713,10 @@ func (self *Context) NavScoringRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiContext_GetNavScoringRect(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiContext_GetNavScoringRect(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetNavScoringNoClipRect(v Rect) {
@@ -18626,7 +18731,10 @@ func (self *Context) NavScoringNoClipRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiContext_GetNavScoringNoClipRect(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiContext_GetNavScoringNoClipRect(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetNavScoringDebugCount(v int32) {
@@ -19027,7 +19135,10 @@ func (self *Context) NavWindowingAccumDeltaPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiContext_GetNavWindowingAccumDeltaPos(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiContext_GetNavWindowingAccumDeltaPos(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetNavWindowingAccumDeltaSize(v Vec2) {
@@ -19042,7 +19153,10 @@ func (self *Context) NavWindowingAccumDeltaSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiContext_GetNavWindowingAccumDeltaSize(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiContext_GetNavWindowingAccumDeltaSize(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetDimBgRatio(v float32) {
@@ -19182,7 +19296,10 @@ func (self *Context) DragDropTargetRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiContext_GetDragDropTargetRect(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiContext_GetDragDropTargetRect(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetDragDropTargetClipRect(v Rect) {
@@ -19197,7 +19314,10 @@ func (self *Context) DragDropTargetClipRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiContext_GetDragDropTargetClipRect(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiContext_GetDragDropTargetClipRect(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetDragDropTargetId(v ID) {
@@ -19806,7 +19926,10 @@ func (self *Context) MouseLastValidPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiContext_GetMouseLastValidPos(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiContext_GetMouseLastValidPos(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetInputTextState(v InputTextState) {
@@ -20051,7 +20174,10 @@ func (self *Context) ColorPickerRef() Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec4{}).FromC(C.wrap_ImGuiContext_GetColorPickerRef(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Vec4 {
+		out := C.wrap_ImGuiContext_GetColorPickerRef(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetComboPreviewData(v ComboPreviewData) {
@@ -20086,7 +20212,10 @@ func (self *Context) WindowResizeBorderExpectedRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiContext_GetWindowResizeBorderExpectedRect(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiContext_GetWindowResizeBorderExpectedRect(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetWindowResizeRelativeMode(v bool) {
@@ -20965,7 +21094,10 @@ func (self *Context) DebugFlashStyleColorBackup() Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec4{}).FromC(C.wrap_ImGuiContext_GetDebugFlashStyleColorBackup(datautils.ConvertCTypes[*C.ImGuiContext](selfArg)))
+	return func() Vec4 {
+		out := C.wrap_ImGuiContext_GetDebugFlashStyleColorBackup(datautils.ConvertCTypes[*C.ImGuiContext](selfArg))
+		return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Context) SetDebugMetricsConfig(v MetricsConfig) {
@@ -21801,7 +21933,10 @@ func (self *DockNode) Pos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiDockNode_GetPos(datautils.ConvertCTypes[*C.ImGuiDockNode](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiDockNode_GetPos(datautils.ConvertCTypes[*C.ImGuiDockNode](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self DockNode) SetSize(v Vec2) {
@@ -21816,7 +21951,10 @@ func (self *DockNode) Size() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiDockNode_GetSize(datautils.ConvertCTypes[*C.ImGuiDockNode](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiDockNode_GetSize(datautils.ConvertCTypes[*C.ImGuiDockNode](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self DockNode) SetSizeRef(v Vec2) {
@@ -21831,7 +21969,10 @@ func (self *DockNode) SizeRef() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiDockNode_GetSizeRef(datautils.ConvertCTypes[*C.ImGuiDockNode](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiDockNode_GetSizeRef(datautils.ConvertCTypes[*C.ImGuiDockNode](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self DockNode) SetSplitAxis(v Axis) {
@@ -22374,7 +22515,10 @@ func (self *GroupData) BackupCursorPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiGroupData_GetBackupCursorPos(datautils.ConvertCTypes[*C.ImGuiGroupData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiGroupData_GetBackupCursorPos(datautils.ConvertCTypes[*C.ImGuiGroupData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self GroupData) SetBackupCursorMaxPos(v Vec2) {
@@ -22389,7 +22533,10 @@ func (self *GroupData) BackupCursorMaxPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiGroupData_GetBackupCursorMaxPos(datautils.ConvertCTypes[*C.ImGuiGroupData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiGroupData_GetBackupCursorMaxPos(datautils.ConvertCTypes[*C.ImGuiGroupData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self GroupData) SetBackupCursorPosPrevLine(v Vec2) {
@@ -22404,7 +22551,10 @@ func (self *GroupData) BackupCursorPosPrevLine() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiGroupData_GetBackupCursorPosPrevLine(datautils.ConvertCTypes[*C.ImGuiGroupData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiGroupData_GetBackupCursorPosPrevLine(datautils.ConvertCTypes[*C.ImGuiGroupData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self GroupData) SetBackupIndent(v Vec1) {
@@ -22459,7 +22609,10 @@ func (self *GroupData) BackupCurrLineSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiGroupData_GetBackupCurrLineSize(datautils.ConvertCTypes[*C.ImGuiGroupData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiGroupData_GetBackupCurrLineSize(datautils.ConvertCTypes[*C.ImGuiGroupData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self GroupData) SetBackupCurrLineTextBaseOffset(v float32) {
@@ -22702,7 +22855,10 @@ func (self *IO) DisplaySize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiIO_GetDisplaySize(datautils.ConvertCTypes[*C.ImGuiIO](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiIO_GetDisplaySize(datautils.ConvertCTypes[*C.ImGuiIO](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self IO) SetDeltaTime(v float32) {
@@ -22860,7 +23016,10 @@ func (self *IO) DisplayFramebufferScale() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiIO_GetDisplayFramebufferScale(datautils.ConvertCTypes[*C.ImGuiIO](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiIO_GetDisplayFramebufferScale(datautils.ConvertCTypes[*C.ImGuiIO](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self IO) SetConfigDockingNoSplit(v bool) {
@@ -23569,7 +23728,10 @@ func (self *IO) MouseDelta() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiIO_GetMouseDelta(datautils.ConvertCTypes[*C.ImGuiIO](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiIO_GetMouseDelta(datautils.ConvertCTypes[*C.ImGuiIO](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self IO) SetCtx(v *Context) {
@@ -23601,7 +23763,10 @@ func (self *IO) MousePos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiIO_GetMousePos(datautils.ConvertCTypes[*C.ImGuiIO](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiIO_GetMousePos(datautils.ConvertCTypes[*C.ImGuiIO](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self IO) SetMouseDown(v *[5]bool) {
@@ -23841,7 +24006,10 @@ func (self *IO) MousePosPrev() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiIO_GetMousePosPrev(datautils.ConvertCTypes[*C.ImGuiIO](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiIO_GetMousePosPrev(datautils.ConvertCTypes[*C.ImGuiIO](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self IO) SetMouseClickedPos(v *[5]Vec2) {
@@ -23855,7 +24023,7 @@ func (self IO) SetMouseClickedPos(v *[5]Vec2) {
 	C.wrap_ImGuiIO_SetMouseClickedPos(selfArg, (*C.ImVec2)(&vArg[0]))
 
 	for i, vV := range vArg {
-		(*v)[i] = *(&Vec2{}).FromC(vV)
+		(*v)[i] = func() Vec2 { out := vV; return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 	}
 }
 
@@ -23869,7 +24037,10 @@ func (self *IO) MouseClickedPos() [5]Vec2 {
 		result := [5]Vec2{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseClickedPos(datautils.ConvertCTypes[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = *(&Vec2{}).FromC(C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = func() Vec2 {
+				out := C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
+				return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+			}()
 		}
 
 		return result
@@ -24237,7 +24408,7 @@ func (self IO) SetMouseDragMaxDistanceAbs(v *[5]Vec2) {
 	C.wrap_ImGuiIO_SetMouseDragMaxDistanceAbs(selfArg, (*C.ImVec2)(&vArg[0]))
 
 	for i, vV := range vArg {
-		(*v)[i] = *(&Vec2{}).FromC(vV)
+		(*v)[i] = func() Vec2 { out := vV; return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 	}
 }
 
@@ -24251,7 +24422,10 @@ func (self *IO) MouseDragMaxDistanceAbs() [5]Vec2 {
 		result := [5]Vec2{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDragMaxDistanceAbs(datautils.ConvertCTypes[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = *(&Vec2{}).FromC(C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = func() Vec2 {
+				out := C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
+				return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+			}()
 		}
 
 		return result
@@ -25068,7 +25242,10 @@ func (self *InputTextState) Scroll() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiInputTextState_GetScroll(datautils.ConvertCTypes[*C.ImGuiInputTextState](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiInputTextState_GetScroll(datautils.ConvertCTypes[*C.ImGuiInputTextState](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self InputTextState) SetCursorAnim(v float32) {
@@ -25570,7 +25747,10 @@ func (self *LastItemData) Rect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiLastItemData_GetRect(datautils.ConvertCTypes[*C.ImGuiLastItemData](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiLastItemData_GetRect(datautils.ConvertCTypes[*C.ImGuiLastItemData](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self LastItemData) SetNavRect(v Rect) {
@@ -25585,7 +25765,10 @@ func (self *LastItemData) NavRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiLastItemData_GetNavRect(datautils.ConvertCTypes[*C.ImGuiLastItemData](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiLastItemData_GetNavRect(datautils.ConvertCTypes[*C.ImGuiLastItemData](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self LastItemData) SetDisplayRect(v Rect) {
@@ -25600,7 +25783,10 @@ func (self *LastItemData) DisplayRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiLastItemData_GetDisplayRect(datautils.ConvertCTypes[*C.ImGuiLastItemData](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiLastItemData_GetDisplayRect(datautils.ConvertCTypes[*C.ImGuiLastItemData](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self LastItemData) SetClipRect(v Rect) {
@@ -25615,7 +25801,10 @@ func (self *LastItemData) ClipRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiLastItemData_GetClipRect(datautils.ConvertCTypes[*C.ImGuiLastItemData](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiLastItemData_GetClipRect(datautils.ConvertCTypes[*C.ImGuiLastItemData](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self LastItemData) SetShortcut(v KeyChord) {
@@ -26633,7 +26822,10 @@ func (self *MultiSelectTempData) ScopeRectMin() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiMultiSelectTempData_GetScopeRectMin(datautils.ConvertCTypes[*C.ImGuiMultiSelectTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiMultiSelectTempData_GetScopeRectMin(datautils.ConvertCTypes[*C.ImGuiMultiSelectTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self MultiSelectTempData) SetBackupCursorMaxPos(v Vec2) {
@@ -26648,7 +26840,10 @@ func (self *MultiSelectTempData) BackupCursorMaxPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiMultiSelectTempData_GetBackupCursorMaxPos(datautils.ConvertCTypes[*C.ImGuiMultiSelectTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiMultiSelectTempData_GetBackupCursorMaxPos(datautils.ConvertCTypes[*C.ImGuiMultiSelectTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self MultiSelectTempData) SetLastSubmittedItem(v SelectionUserData) {
@@ -26885,7 +27080,10 @@ func (self *NavItemData) RectRel() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiNavItemData_GetRectRel(datautils.ConvertCTypes[*C.ImGuiNavItemData](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiNavItemData_GetRectRel(datautils.ConvertCTypes[*C.ImGuiNavItemData](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self NavItemData) SetInFlags(v ItemFlags) {
@@ -27245,7 +27443,10 @@ func (self *NextWindowData) PosVal() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiNextWindowData_GetPosVal(datautils.ConvertCTypes[*C.ImGuiNextWindowData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiNextWindowData_GetPosVal(datautils.ConvertCTypes[*C.ImGuiNextWindowData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self NextWindowData) SetPosPivotVal(v Vec2) {
@@ -27260,7 +27461,10 @@ func (self *NextWindowData) PosPivotVal() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiNextWindowData_GetPosPivotVal(datautils.ConvertCTypes[*C.ImGuiNextWindowData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiNextWindowData_GetPosPivotVal(datautils.ConvertCTypes[*C.ImGuiNextWindowData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self NextWindowData) SetSizeVal(v Vec2) {
@@ -27275,7 +27479,10 @@ func (self *NextWindowData) SizeVal() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiNextWindowData_GetSizeVal(datautils.ConvertCTypes[*C.ImGuiNextWindowData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiNextWindowData_GetSizeVal(datautils.ConvertCTypes[*C.ImGuiNextWindowData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self NextWindowData) SetContentSizeVal(v Vec2) {
@@ -27290,7 +27497,10 @@ func (self *NextWindowData) ContentSizeVal() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiNextWindowData_GetContentSizeVal(datautils.ConvertCTypes[*C.ImGuiNextWindowData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiNextWindowData_GetContentSizeVal(datautils.ConvertCTypes[*C.ImGuiNextWindowData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self NextWindowData) SetScrollVal(v Vec2) {
@@ -27305,7 +27515,10 @@ func (self *NextWindowData) ScrollVal() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiNextWindowData_GetScrollVal(datautils.ConvertCTypes[*C.ImGuiNextWindowData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiNextWindowData_GetScrollVal(datautils.ConvertCTypes[*C.ImGuiNextWindowData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self NextWindowData) SetChildFlags(v ChildFlags) {
@@ -27365,7 +27578,10 @@ func (self *NextWindowData) SizeConstraintRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiNextWindowData_GetSizeConstraintRect(datautils.ConvertCTypes[*C.ImGuiNextWindowData](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiNextWindowData_GetSizeConstraintRect(datautils.ConvertCTypes[*C.ImGuiNextWindowData](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self NextWindowData) SetSizeCallbackUserData(v uintptr) {
@@ -27470,7 +27686,10 @@ func (self *NextWindowData) MenuBarOffsetMinVal() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiNextWindowData_GetMenuBarOffsetMinVal(datautils.ConvertCTypes[*C.ImGuiNextWindowData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiNextWindowData_GetMenuBarOffsetMinVal(datautils.ConvertCTypes[*C.ImGuiNextWindowData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self NextWindowData) SetRefreshFlagsVal(v WindowRefreshFlags) {
@@ -27545,7 +27764,10 @@ func (self *OldColumnData) ClipRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiOldColumnData_GetClipRect(datautils.ConvertCTypes[*C.ImGuiOldColumnData](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiOldColumnData_GetClipRect(datautils.ConvertCTypes[*C.ImGuiOldColumnData](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self OldColumns) SetID(v ID) {
@@ -27745,7 +27967,10 @@ func (self *OldColumns) HostInitialClipRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiOldColumns_GetHostInitialClipRect(datautils.ConvertCTypes[*C.ImGuiOldColumns](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiOldColumns_GetHostInitialClipRect(datautils.ConvertCTypes[*C.ImGuiOldColumns](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self OldColumns) SetHostBackupClipRect(v Rect) {
@@ -27760,7 +27985,10 @@ func (self *OldColumns) HostBackupClipRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiOldColumns_GetHostBackupClipRect(datautils.ConvertCTypes[*C.ImGuiOldColumns](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiOldColumns_GetHostBackupClipRect(datautils.ConvertCTypes[*C.ImGuiOldColumns](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self OldColumns) SetHostBackupParentWorkRect(v Rect) {
@@ -27775,7 +28003,10 @@ func (self *OldColumns) HostBackupParentWorkRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiOldColumns_GetHostBackupParentWorkRect(datautils.ConvertCTypes[*C.ImGuiOldColumns](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiOldColumns_GetHostBackupParentWorkRect(datautils.ConvertCTypes[*C.ImGuiOldColumns](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self OldColumns) SetColumns(v datautils.Vector[*OldColumnData]) {
@@ -28093,7 +28324,10 @@ func (self *PlatformImeData) InputPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiPlatformImeData_GetInputPos(datautils.ConvertCTypes[*C.ImGuiPlatformImeData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiPlatformImeData_GetInputPos(datautils.ConvertCTypes[*C.ImGuiPlatformImeData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self PlatformImeData) SetInputLineHeight(v float32) {
@@ -28123,7 +28357,10 @@ func (self *PlatformMonitor) MainPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiPlatformMonitor_GetMainPos(datautils.ConvertCTypes[*C.ImGuiPlatformMonitor](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiPlatformMonitor_GetMainPos(datautils.ConvertCTypes[*C.ImGuiPlatformMonitor](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self PlatformMonitor) SetMainSize(v Vec2) {
@@ -28138,7 +28375,10 @@ func (self *PlatformMonitor) MainSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiPlatformMonitor_GetMainSize(datautils.ConvertCTypes[*C.ImGuiPlatformMonitor](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiPlatformMonitor_GetMainSize(datautils.ConvertCTypes[*C.ImGuiPlatformMonitor](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self PlatformMonitor) SetWorkPos(v Vec2) {
@@ -28153,7 +28393,10 @@ func (self *PlatformMonitor) WorkPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiPlatformMonitor_GetWorkPos(datautils.ConvertCTypes[*C.ImGuiPlatformMonitor](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiPlatformMonitor_GetWorkPos(datautils.ConvertCTypes[*C.ImGuiPlatformMonitor](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self PlatformMonitor) SetWorkSize(v Vec2) {
@@ -28168,7 +28411,10 @@ func (self *PlatformMonitor) WorkSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiPlatformMonitor_GetWorkSize(datautils.ConvertCTypes[*C.ImGuiPlatformMonitor](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiPlatformMonitor_GetWorkSize(datautils.ConvertCTypes[*C.ImGuiPlatformMonitor](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self PlatformMonitor) SetDpiScale(v float32) {
@@ -28317,7 +28563,10 @@ func (self *PopupData) OpenPopupPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiPopupData_GetOpenPopupPos(datautils.ConvertCTypes[*C.ImGuiPopupData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiPopupData_GetOpenPopupPos(datautils.ConvertCTypes[*C.ImGuiPopupData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self PopupData) SetOpenMousePos(v Vec2) {
@@ -28332,7 +28581,10 @@ func (self *PopupData) OpenMousePos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiPopupData_GetOpenMousePos(datautils.ConvertCTypes[*C.ImGuiPopupData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiPopupData_GetOpenMousePos(datautils.ConvertCTypes[*C.ImGuiPopupData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self PtrOrIndex) SetPtr(v uintptr) {
@@ -28669,7 +28921,10 @@ func (self *SizeCallbackData) Pos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiSizeCallbackData_GetPos(datautils.ConvertCTypes[*C.ImGuiSizeCallbackData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiSizeCallbackData_GetPos(datautils.ConvertCTypes[*C.ImGuiSizeCallbackData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self SizeCallbackData) SetCurrentSize(v Vec2) {
@@ -28684,7 +28939,10 @@ func (self *SizeCallbackData) CurrentSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiSizeCallbackData_GetCurrentSize(datautils.ConvertCTypes[*C.ImGuiSizeCallbackData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiSizeCallbackData_GetCurrentSize(datautils.ConvertCTypes[*C.ImGuiSizeCallbackData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self SizeCallbackData) SetDesiredSize(v Vec2) {
@@ -28699,7 +28957,10 @@ func (self *SizeCallbackData) DesiredSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiSizeCallbackData_GetDesiredSize(datautils.ConvertCTypes[*C.ImGuiSizeCallbackData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiSizeCallbackData_GetDesiredSize(datautils.ConvertCTypes[*C.ImGuiSizeCallbackData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self StackLevelInfo) SetID(v ID) {
@@ -29019,7 +29280,10 @@ func (self *Style) WindowPadding() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetWindowPadding(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetWindowPadding(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetWindowRounding(v float32) {
@@ -29064,7 +29328,10 @@ func (self *Style) WindowMinSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetWindowMinSize(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetWindowMinSize(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetWindowTitleAlign(v Vec2) {
@@ -29079,7 +29346,10 @@ func (self *Style) WindowTitleAlign() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetWindowTitleAlign(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetWindowTitleAlign(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetWindowMenuButtonPosition(v Dir) {
@@ -29169,7 +29439,10 @@ func (self *Style) FramePadding() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetFramePadding(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetFramePadding(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetFrameRounding(v float32) {
@@ -29214,7 +29487,10 @@ func (self *Style) ItemSpacing() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetItemSpacing(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetItemSpacing(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetItemInnerSpacing(v Vec2) {
@@ -29229,7 +29505,10 @@ func (self *Style) ItemInnerSpacing() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetItemInnerSpacing(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetItemInnerSpacing(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetCellPadding(v Vec2) {
@@ -29244,7 +29523,10 @@ func (self *Style) CellPadding() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetCellPadding(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetCellPadding(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetTouchExtraPadding(v Vec2) {
@@ -29259,7 +29541,10 @@ func (self *Style) TouchExtraPadding() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetTouchExtraPadding(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetTouchExtraPadding(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetIndentSpacing(v float32) {
@@ -29469,7 +29754,10 @@ func (self *Style) TableAngledHeadersTextAlign() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetTableAngledHeadersTextAlign(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetTableAngledHeadersTextAlign(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetColorButtonPosition(v Dir) {
@@ -29499,7 +29787,10 @@ func (self *Style) ButtonTextAlign() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetButtonTextAlign(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetButtonTextAlign(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetSelectableTextAlign(v Vec2) {
@@ -29514,7 +29805,10 @@ func (self *Style) SelectableTextAlign() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetSelectableTextAlign(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetSelectableTextAlign(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetSeparatorTextBorderSize(v float32) {
@@ -29544,7 +29838,10 @@ func (self *Style) SeparatorTextAlign() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetSeparatorTextAlign(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetSeparatorTextAlign(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetSeparatorTextPadding(v Vec2) {
@@ -29559,7 +29856,10 @@ func (self *Style) SeparatorTextPadding() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetSeparatorTextPadding(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetSeparatorTextPadding(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetDisplayWindowPadding(v Vec2) {
@@ -29574,7 +29874,10 @@ func (self *Style) DisplayWindowPadding() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetDisplayWindowPadding(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetDisplayWindowPadding(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetDisplaySafeAreaPadding(v Vec2) {
@@ -29589,7 +29892,10 @@ func (self *Style) DisplaySafeAreaPadding() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiStyle_GetDisplaySafeAreaPadding(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiStyle_GetDisplaySafeAreaPadding(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Style) SetDockingSeparatorSize(v float32) {
@@ -29708,7 +30014,7 @@ func (self Style) SetColors(v *[58]Vec4) {
 	C.wrap_ImGuiStyle_SetColors(selfArg, (*C.ImVec4)(&vArg[0]))
 
 	for i, vV := range vArg {
-		(*v)[i] = *(&Vec4{}).FromC(vV)
+		(*v)[i] = func() Vec4 { out := vV; return *(&Vec4{}).FromC(unsafe.Pointer(&out)) }()
 	}
 }
 
@@ -29722,7 +30028,10 @@ func (self *Style) Colors() [58]Vec4 {
 		result := [58]Vec4{}
 		resultMirr := C.wrap_ImGuiStyle_GetColors(datautils.ConvertCTypes[*C.ImGuiStyle](selfArg))
 		for i := range result {
-			result[i] = *(&Vec4{}).FromC(C.cimgui_ImVec4_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = func() Vec4 {
+				out := C.cimgui_ImVec4_GetAtIdx(resultMirr, C.int(i))
+				return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+			}()
 		}
 
 		return result
@@ -29979,7 +30288,10 @@ func (self *TabBar) BarRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiTabBar_GetBarRect(datautils.ConvertCTypes[*C.ImGuiTabBar](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiTabBar_GetBarRect(datautils.ConvertCTypes[*C.ImGuiTabBar](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self TabBar) SetCurrTabsContentsHeight(v float32) {
@@ -30314,7 +30626,10 @@ func (self *TabBar) FramePadding() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiTabBar_GetFramePadding(datautils.ConvertCTypes[*C.ImGuiTabBar](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiTabBar_GetFramePadding(datautils.ConvertCTypes[*C.ImGuiTabBar](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self TabBar) SetBackupCursorPos(v Vec2) {
@@ -30329,7 +30644,10 @@ func (self *TabBar) BackupCursorPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiTabBar_GetBackupCursorPos(datautils.ConvertCTypes[*C.ImGuiTabBar](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiTabBar_GetBackupCursorPos(datautils.ConvertCTypes[*C.ImGuiTabBar](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self TabBar) SetTabsNames(v TextBuffer) {
@@ -31265,7 +31583,10 @@ func (self *Table) OuterRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiTable_GetOuterRect(datautils.ConvertCTypes[*C.ImGuiTable](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiTable_GetOuterRect(datautils.ConvertCTypes[*C.ImGuiTable](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Table) SetInnerRect(v Rect) {
@@ -31280,7 +31601,10 @@ func (self *Table) InnerRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiTable_GetInnerRect(datautils.ConvertCTypes[*C.ImGuiTable](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiTable_GetInnerRect(datautils.ConvertCTypes[*C.ImGuiTable](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Table) SetWorkRect(v Rect) {
@@ -31295,7 +31619,10 @@ func (self *Table) WorkRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiTable_GetWorkRect(datautils.ConvertCTypes[*C.ImGuiTable](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiTable_GetWorkRect(datautils.ConvertCTypes[*C.ImGuiTable](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Table) SetInnerClipRect(v Rect) {
@@ -31310,7 +31637,10 @@ func (self *Table) InnerClipRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiTable_GetInnerClipRect(datautils.ConvertCTypes[*C.ImGuiTable](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiTable_GetInnerClipRect(datautils.ConvertCTypes[*C.ImGuiTable](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Table) SetBgClipRect(v Rect) {
@@ -31325,7 +31655,10 @@ func (self *Table) BgClipRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiTable_GetBgClipRect(datautils.ConvertCTypes[*C.ImGuiTable](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiTable_GetBgClipRect(datautils.ConvertCTypes[*C.ImGuiTable](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Table) SetBg0ClipRectForDrawCmd(v Rect) {
@@ -31340,7 +31673,10 @@ func (self *Table) Bg0ClipRectForDrawCmd() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiTable_GetBg0ClipRectForDrawCmd(datautils.ConvertCTypes[*C.ImGuiTable](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiTable_GetBg0ClipRectForDrawCmd(datautils.ConvertCTypes[*C.ImGuiTable](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Table) SetBg2ClipRectForDrawCmd(v Rect) {
@@ -31355,7 +31691,10 @@ func (self *Table) Bg2ClipRectForDrawCmd() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiTable_GetBg2ClipRectForDrawCmd(datautils.ConvertCTypes[*C.ImGuiTable](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiTable_GetBg2ClipRectForDrawCmd(datautils.ConvertCTypes[*C.ImGuiTable](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Table) SetHostClipRect(v Rect) {
@@ -31370,7 +31709,10 @@ func (self *Table) HostClipRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiTable_GetHostClipRect(datautils.ConvertCTypes[*C.ImGuiTable](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiTable_GetHostClipRect(datautils.ConvertCTypes[*C.ImGuiTable](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Table) SetHostBackupInnerClipRect(v Rect) {
@@ -31385,7 +31727,10 @@ func (self *Table) HostBackupInnerClipRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiTable_GetHostBackupInnerClipRect(datautils.ConvertCTypes[*C.ImGuiTable](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiTable_GetHostBackupInnerClipRect(datautils.ConvertCTypes[*C.ImGuiTable](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Table) SetOuterWindow(v *Window) {
@@ -32587,7 +32932,10 @@ func (self *TableColumn) ClipRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiTableColumn_GetClipRect(datautils.ConvertCTypes[*C.ImGuiTableColumn](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiTableColumn_GetClipRect(datautils.ConvertCTypes[*C.ImGuiTableColumn](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self TableColumn) SetUserID(v ID) {
@@ -33712,7 +34060,10 @@ func (self *TableTempData) UserOuterSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiTableTempData_GetUserOuterSize(datautils.ConvertCTypes[*C.ImGuiTableTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiTableTempData_GetUserOuterSize(datautils.ConvertCTypes[*C.ImGuiTableTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self TableTempData) SetDrawSplitter(v DrawListSplitter) {
@@ -33747,7 +34098,10 @@ func (self *TableTempData) HostBackupWorkRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiTableTempData_GetHostBackupWorkRect(datautils.ConvertCTypes[*C.ImGuiTableTempData](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiTableTempData_GetHostBackupWorkRect(datautils.ConvertCTypes[*C.ImGuiTableTempData](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self TableTempData) SetHostBackupParentWorkRect(v Rect) {
@@ -33762,7 +34116,10 @@ func (self *TableTempData) HostBackupParentWorkRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiTableTempData_GetHostBackupParentWorkRect(datautils.ConvertCTypes[*C.ImGuiTableTempData](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiTableTempData_GetHostBackupParentWorkRect(datautils.ConvertCTypes[*C.ImGuiTableTempData](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self TableTempData) SetHostBackupPrevLineSize(v Vec2) {
@@ -33777,7 +34134,10 @@ func (self *TableTempData) HostBackupPrevLineSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiTableTempData_GetHostBackupPrevLineSize(datautils.ConvertCTypes[*C.ImGuiTableTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiTableTempData_GetHostBackupPrevLineSize(datautils.ConvertCTypes[*C.ImGuiTableTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self TableTempData) SetHostBackupCurrLineSize(v Vec2) {
@@ -33792,7 +34152,10 @@ func (self *TableTempData) HostBackupCurrLineSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiTableTempData_GetHostBackupCurrLineSize(datautils.ConvertCTypes[*C.ImGuiTableTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiTableTempData_GetHostBackupCurrLineSize(datautils.ConvertCTypes[*C.ImGuiTableTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self TableTempData) SetHostBackupCursorMaxPos(v Vec2) {
@@ -33807,7 +34170,10 @@ func (self *TableTempData) HostBackupCursorMaxPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiTableTempData_GetHostBackupCursorMaxPos(datautils.ConvertCTypes[*C.ImGuiTableTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiTableTempData_GetHostBackupCursorMaxPos(datautils.ConvertCTypes[*C.ImGuiTableTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self TableTempData) SetHostBackupColumnsOffset(v Vec1) {
@@ -34087,7 +34453,10 @@ func (self *TreeNodeStackData) NavRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiTreeNodeStackData_GetNavRect(datautils.ConvertCTypes[*C.ImGuiTreeNodeStackData](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiTreeNodeStackData_GetNavRect(datautils.ConvertCTypes[*C.ImGuiTreeNodeStackData](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self TypingSelectRequest) SetFlags(v TypingSelectFlags) {
@@ -34346,7 +34715,10 @@ func (self *Viewport) Pos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiViewport_GetPos(datautils.ConvertCTypes[*C.ImGuiViewport](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiViewport_GetPos(datautils.ConvertCTypes[*C.ImGuiViewport](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Viewport) SetSize(v Vec2) {
@@ -34361,7 +34733,10 @@ func (self *Viewport) Size() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiViewport_GetSize(datautils.ConvertCTypes[*C.ImGuiViewport](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiViewport_GetSize(datautils.ConvertCTypes[*C.ImGuiViewport](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Viewport) SetWorkPos(v Vec2) {
@@ -34376,7 +34751,10 @@ func (self *Viewport) WorkPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiViewport_GetWorkPos(datautils.ConvertCTypes[*C.ImGuiViewport](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiViewport_GetWorkPos(datautils.ConvertCTypes[*C.ImGuiViewport](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Viewport) SetWorkSize(v Vec2) {
@@ -34391,7 +34769,10 @@ func (self *Viewport) WorkSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiViewport_GetWorkSize(datautils.ConvertCTypes[*C.ImGuiViewport](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiViewport_GetWorkSize(datautils.ConvertCTypes[*C.ImGuiViewport](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Viewport) SetDpiScale(v float32) {
@@ -34680,7 +35061,10 @@ func (self *ViewportP) LastPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiViewportP_GetLastPos(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiViewportP_GetLastPos(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self ViewportP) SetLastSize(v Vec2) {
@@ -34695,7 +35079,10 @@ func (self *ViewportP) LastSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiViewportP_GetLastSize(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiViewportP_GetLastSize(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self ViewportP) SetAlpha(v float32) {
@@ -34875,7 +35262,10 @@ func (self *ViewportP) LastPlatformPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiViewportP_GetLastPlatformPos(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiViewportP_GetLastPlatformPos(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self ViewportP) SetLastPlatformSize(v Vec2) {
@@ -34890,7 +35280,10 @@ func (self *ViewportP) LastPlatformSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiViewportP_GetLastPlatformSize(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiViewportP_GetLastPlatformSize(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self ViewportP) SetLastRendererSize(v Vec2) {
@@ -34905,7 +35298,10 @@ func (self *ViewportP) LastRendererSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiViewportP_GetLastRendererSize(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiViewportP_GetLastRendererSize(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self ViewportP) SetWorkInsetMin(v Vec2) {
@@ -34920,7 +35316,10 @@ func (self *ViewportP) WorkInsetMin() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiViewportP_GetWorkInsetMin(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiViewportP_GetWorkInsetMin(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self ViewportP) SetWorkInsetMax(v Vec2) {
@@ -34935,7 +35334,10 @@ func (self *ViewportP) WorkInsetMax() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiViewportP_GetWorkInsetMax(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiViewportP_GetWorkInsetMax(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self ViewportP) SetBuildWorkInsetMin(v Vec2) {
@@ -34950,7 +35352,10 @@ func (self *ViewportP) BuildWorkInsetMin() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiViewportP_GetBuildWorkInsetMin(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiViewportP_GetBuildWorkInsetMin(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self ViewportP) SetBuildWorkInsetMax(v Vec2) {
@@ -34965,7 +35370,10 @@ func (self *ViewportP) BuildWorkInsetMax() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiViewportP_GetBuildWorkInsetMax(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiViewportP_GetBuildWorkInsetMax(datautils.ConvertCTypes[*C.ImGuiViewportP](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetCtx(v *Context) {
@@ -35136,7 +35544,10 @@ func (self *Window) ViewportPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetViewportPos(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetViewportPos(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetViewportAllowPlatformMonitorExtend(v int32) {
@@ -35166,7 +35577,10 @@ func (self *Window) Pos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetPos(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetPos(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetSize(v Vec2) {
@@ -35181,7 +35595,10 @@ func (self *Window) Size() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetSize(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetSize(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetSizeFull(v Vec2) {
@@ -35196,7 +35613,10 @@ func (self *Window) SizeFull() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetSizeFull(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetSizeFull(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetContentSize(v Vec2) {
@@ -35211,7 +35631,10 @@ func (self *Window) ContentSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetContentSize(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetContentSize(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetContentSizeIdeal(v Vec2) {
@@ -35226,7 +35649,10 @@ func (self *Window) ContentSizeIdeal() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetContentSizeIdeal(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetContentSizeIdeal(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetContentSizeExplicit(v Vec2) {
@@ -35241,7 +35667,10 @@ func (self *Window) ContentSizeExplicit() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetContentSizeExplicit(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetContentSizeExplicit(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetWindowPadding(v Vec2) {
@@ -35256,7 +35685,10 @@ func (self *Window) WindowPadding() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetWindowPadding(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetWindowPadding(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetWindowRounding(v float32) {
@@ -35516,7 +35948,10 @@ func (self *Window) Scroll() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetScroll(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetScroll(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetScrollMax(v Vec2) {
@@ -35531,7 +35966,10 @@ func (self *Window) ScrollMax() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetScrollMax(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetScrollMax(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetScrollTarget(v Vec2) {
@@ -35546,7 +35984,10 @@ func (self *Window) ScrollTarget() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetScrollTarget(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetScrollTarget(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetScrollTargetCenterRatio(v Vec2) {
@@ -35561,7 +36002,10 @@ func (self *Window) ScrollTargetCenterRatio() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetScrollTargetCenterRatio(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetScrollTargetCenterRatio(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetScrollTargetEdgeSnapDist(v Vec2) {
@@ -35576,7 +36020,10 @@ func (self *Window) ScrollTargetEdgeSnapDist() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetScrollTargetEdgeSnapDist(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetScrollTargetEdgeSnapDist(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetScrollbarSizes(v Vec2) {
@@ -35591,7 +36038,10 @@ func (self *Window) ScrollbarSizes() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetScrollbarSizes(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetScrollbarSizes(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetScrollbarX(v bool) {
@@ -36086,7 +36536,10 @@ func (self *Window) SetWindowPosVal() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetSetWindowPosVal(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetSetWindowPosVal(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetSetWindowPosPivot(v Vec2) {
@@ -36101,7 +36554,10 @@ func (self *Window) SetWindowPosPivot() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindow_GetSetWindowPosPivot(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindow_GetSetWindowPosPivot(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetIDStack(v datautils.Vector[*ID]) {
@@ -36159,7 +36615,10 @@ func (self *Window) OuterRectClipped() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiWindow_GetOuterRectClipped(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiWindow_GetOuterRectClipped(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetInnerRect(v Rect) {
@@ -36174,7 +36633,10 @@ func (self *Window) InnerRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiWindow_GetInnerRect(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiWindow_GetInnerRect(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetInnerClipRect(v Rect) {
@@ -36189,7 +36651,10 @@ func (self *Window) InnerClipRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiWindow_GetInnerClipRect(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiWindow_GetInnerClipRect(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetWorkRect(v Rect) {
@@ -36204,7 +36669,10 @@ func (self *Window) WorkRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiWindow_GetWorkRect(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiWindow_GetWorkRect(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetParentWorkRect(v Rect) {
@@ -36219,7 +36687,10 @@ func (self *Window) ParentWorkRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiWindow_GetParentWorkRect(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiWindow_GetParentWorkRect(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetClipRect(v Rect) {
@@ -36234,7 +36705,10 @@ func (self *Window) ClipRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiWindow_GetClipRect(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiWindow_GetClipRect(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetContentRegionRect(v Rect) {
@@ -36249,7 +36723,10 @@ func (self *Window) ContentRegionRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiWindow_GetContentRegionRect(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiWindow_GetContentRegionRect(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self Window) SetLastFrameActive(v int32) {
@@ -36634,7 +37111,7 @@ func (self Window) SetNavRectRel(v *[2]Rect) {
 	C.wrap_ImGuiWindow_SetNavRectRel(selfArg, (*C.ImRect)(&vArg[0]))
 
 	for i, vV := range vArg {
-		(*v)[i] = *(&Rect{}).FromC(vV)
+		(*v)[i] = func() Rect { out := vV; return *(&Rect{}).FromC(unsafe.Pointer(&out)) }()
 	}
 }
 
@@ -36648,7 +37125,10 @@ func (self *Window) NavRectRel() [2]Rect {
 		result := [2]Rect{}
 		resultMirr := C.wrap_ImGuiWindow_GetNavRectRel(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
 		for i := range result {
-			result[i] = *(&Rect{}).FromC(C.cimgui_ImRect_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = func() Rect {
+				out := C.cimgui_ImRect_GetAtIdx(resultMirr, C.int(i))
+				return *(&Rect{}).FromC(unsafe.Pointer(&out))
+			}()
 		}
 
 		return result
@@ -36679,7 +37159,10 @@ func (self *Window) NavPreferredScoringPosRel() [2]Vec2 {
 		result := [2]Vec2{}
 		resultMirr := C.wrap_ImGuiWindow_GetNavPreferredScoringPosRel(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
 		for i := range result {
-			result[i] = *(&Vec2{}).FromC(C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = func() Vec2 {
+				out := C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
+				return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+			}()
 		}
 
 		return result
@@ -36927,7 +37410,10 @@ func (self *Window) DockTabItemRect() Rect {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Rect{}).FromC(C.wrap_ImGuiWindow_GetDockTabItemRect(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg)))
+	return func() Rect {
+		out := C.wrap_ImGuiWindow_GetDockTabItemRect(datautils.ConvertCTypes[*C.ImGuiWindow](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self WindowClass) SetClassId(v ID) {
@@ -37351,7 +37837,10 @@ func (self *WindowTempData) CursorPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindowTempData_GetCursorPos(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindowTempData_GetCursorPos(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self WindowTempData) SetCursorPosPrevLine(v Vec2) {
@@ -37366,7 +37855,10 @@ func (self *WindowTempData) CursorPosPrevLine() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindowTempData_GetCursorPosPrevLine(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindowTempData_GetCursorPosPrevLine(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self WindowTempData) SetCursorStartPos(v Vec2) {
@@ -37381,7 +37873,10 @@ func (self *WindowTempData) CursorStartPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindowTempData_GetCursorStartPos(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindowTempData_GetCursorStartPos(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self WindowTempData) SetCursorMaxPos(v Vec2) {
@@ -37396,7 +37891,10 @@ func (self *WindowTempData) CursorMaxPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindowTempData_GetCursorMaxPos(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindowTempData_GetCursorMaxPos(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self WindowTempData) SetIdealMaxPos(v Vec2) {
@@ -37411,7 +37909,10 @@ func (self *WindowTempData) IdealMaxPos() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindowTempData_GetIdealMaxPos(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindowTempData_GetIdealMaxPos(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self WindowTempData) SetCurrLineSize(v Vec2) {
@@ -37426,7 +37927,10 @@ func (self *WindowTempData) CurrLineSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindowTempData_GetCurrLineSize(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindowTempData_GetCurrLineSize(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self WindowTempData) SetPrevLineSize(v Vec2) {
@@ -37441,7 +37945,10 @@ func (self *WindowTempData) PrevLineSize() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindowTempData_GetPrevLineSize(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindowTempData_GetPrevLineSize(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self WindowTempData) SetCurrLineTextBaseOffset(v float32) {
@@ -37576,7 +38083,10 @@ func (self *WindowTempData) CursorStartPosLossyness() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindowTempData_GetCursorStartPosLossyness(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindowTempData_GetCursorStartPosLossyness(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self WindowTempData) SetNavLayerCurrent(v NavLayer) {
@@ -37696,7 +38206,10 @@ func (self *WindowTempData) MenuBarOffset() Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&Vec2{}).FromC(C.wrap_ImGuiWindowTempData_GetMenuBarOffset(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImGuiWindowTempData_GetMenuBarOffset(datautils.ConvertCTypes[*C.ImGuiWindowTempData](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self WindowTempData) SetMenuColumns(v MenuColumns) {

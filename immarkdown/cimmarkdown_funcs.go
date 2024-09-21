@@ -4,6 +4,8 @@
 package immarkdown
 
 import (
+	"unsafe"
+
 	"github.com/AllenDang/cimgui-go/datautils"
 	"github.com/AllenDang/cimgui-go/imgui"
 )
@@ -627,7 +629,10 @@ func (self *MarkdownImageData) Size() imgui.Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec2{}).FromC(C.wrap_MarkdownImageData_GetSize(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg)))
+	return func() imgui.Vec2 {
+		out := C.wrap_MarkdownImageData_GetSize(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg))
+		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self MarkdownImageData) SetUv0(v imgui.Vec2) {
@@ -642,7 +647,10 @@ func (self *MarkdownImageData) Uv0() imgui.Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec2{}).FromC(C.wrap_MarkdownImageData_GetUv0(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg)))
+	return func() imgui.Vec2 {
+		out := C.wrap_MarkdownImageData_GetUv0(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg))
+		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self MarkdownImageData) SetUv1(v imgui.Vec2) {
@@ -657,7 +665,10 @@ func (self *MarkdownImageData) Uv1() imgui.Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec2{}).FromC(C.wrap_MarkdownImageData_GetUv1(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg)))
+	return func() imgui.Vec2 {
+		out := C.wrap_MarkdownImageData_GetUv1(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg))
+		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self MarkdownImageData) SetTintcol(v imgui.Vec4) {
@@ -672,7 +683,10 @@ func (self *MarkdownImageData) Tintcol() imgui.Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec4{}).FromC(C.wrap_MarkdownImageData_GetTint_col(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg)))
+	return func() imgui.Vec4 {
+		out := C.wrap_MarkdownImageData_GetTint_col(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg))
+		return *(&imgui.Vec4{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self MarkdownImageData) SetBordercol(v imgui.Vec4) {
@@ -687,7 +701,10 @@ func (self *MarkdownImageData) Bordercol() imgui.Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec4{}).FromC(C.wrap_MarkdownImageData_GetBorder_col(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg)))
+	return func() imgui.Vec4 {
+		out := C.wrap_MarkdownImageData_GetBorder_col(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg))
+		return *(&imgui.Vec4{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self MarkdownLinkCallbackData) SetText(v string) {

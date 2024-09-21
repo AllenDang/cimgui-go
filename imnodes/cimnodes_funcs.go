@@ -4,6 +4,8 @@
 package imnodes
 
 import (
+	"unsafe"
+
 	"github.com/AllenDang/cimgui-go/datautils"
 	"github.com/AllenDang/cimgui-go/imgui"
 )
@@ -761,7 +763,10 @@ func (self *NodesStyle) NodePadding() imgui.Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec2{}).FromC(C.wrap_ImNodesStyle_GetNodePadding(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
+	return func() imgui.Vec2 {
+		out := C.wrap_ImNodesStyle_GetNodePadding(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg))
+		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self NodesStyle) SetNodeBorderThickness(v float32) {
@@ -926,7 +931,10 @@ func (self *NodesStyle) MiniMapPadding() imgui.Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec2{}).FromC(C.wrap_ImNodesStyle_GetMiniMapPadding(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
+	return func() imgui.Vec2 {
+		out := C.wrap_ImNodesStyle_GetMiniMapPadding(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg))
+		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self NodesStyle) SetMiniMapOffset(v imgui.Vec2) {
@@ -941,7 +949,10 @@ func (self *NodesStyle) MiniMapOffset() imgui.Vec2 {
 	defer func() {
 		selfFin()
 	}()
-	return *(&imgui.Vec2{}).FromC(C.wrap_ImNodesStyle_GetMiniMapOffset(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg)))
+	return func() imgui.Vec2 {
+		out := C.wrap_ImNodesStyle_GetMiniMapOffset(datautils.ConvertCTypes[*C.ImNodesStyle](selfArg))
+		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self NodesStyle) SetFlags(v NodesStyleFlags) {
