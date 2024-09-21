@@ -2,7 +2,10 @@ package sdlbackend
 
 // #cgo amd64,linux LDFLAGS: ${SRCDIR}/../../lib/linux/x64/libSDL2.a -ldl -lGL -lX11
 // #cgo amd64,windows LDFLAGS: -L${SRCDIR}/../../lib/windows/x64 -l:libSDL2.a -lgdi32 -lopengl32 -limm32         -mwindows  -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion -luuid
-// #cgo darwin LDFLAGS: -framework Cocoa -framework IOKit -framework CoreVideo
+// #cgo darwin LDFLAGS: -framework Cocoa -framework IOKit -framework CoreVideo -framework CoreAudio
+// #cgo darwin LDFLAGS: -framework AudioToolbox -framework GameController -liconv
+// #cgo darwin LDFLAGS: -framework Carbon -framework CoreFoundation -framework CoreGraphics -framework Metal
+// #cgo darwin LDFLAGS: -framework CoreHaptics -framework ForceFeedback
 // #cgo amd64,darwin LDFLAGS: ${SRCDIR}/../../lib/macos/x64/libSDL2.a
 // #cgo arm64,darwin LDFLAGS: ${SRCDIR}/../../lib/macos/arm64/libSDL2.a
 // #cgo !gles2,darwin LDFLAGS: -framework OpenGL
