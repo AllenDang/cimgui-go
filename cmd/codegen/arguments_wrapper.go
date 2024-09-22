@@ -91,6 +91,7 @@ func getArgWrapper(
 		"bool":                simpleW("bool", "C.bool"),
 		"const bool":          simpleW("bool", "C.bool"),
 		"bool*":               boolPtrW,
+		"const bool*":         boolPtrW,
 		"ImWchar":             simpleW(prefixGoPackage("Wchar", "imgui", context), "C.ImWchar"),
 		"ImWchar*":            simpleW("("+prefixGoPackage("*Wchar", "imgui", context)+")", "(*C.ImWchar)"),
 		"const ImWchar*":      simpleW("("+prefixGoPackage("*Wchar", "imgui", context)+")", "(*C.ImWchar)"),

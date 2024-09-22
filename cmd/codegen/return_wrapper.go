@@ -20,6 +20,8 @@ func getReturnWrapper(
 ) (returnWrapper, error) {
 	returnWrapperMap := map[CIdentifier]returnWrapper{
 		"bool":            {"bool", "%s == C.bool(true)"},
+		"bool*":           simplePtrR("bool"),
+		"const bool*":     simplePtrR("bool"),
 		"char":            simpleR("rune"),
 		"unsigned char":   simpleR("uint"),
 		"unsigned char*":  {"*uint", "(*uint)(unsafe.Pointer(%s))"}, // NOTE: This should work but I'm not 100% sure
