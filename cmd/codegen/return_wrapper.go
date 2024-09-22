@@ -76,7 +76,7 @@ func getReturnWrapper(
 	_, isRefTypedef := context.refTypedefs[pureType]
 	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
 	_, isStruct := context.structNames[pureType]
-	isStruct = isStruct || (isRefStruct && !shouldSkipRefTypedef)
+	isStruct = isStruct || ((isRefStruct || (isRefTypedef && !isEnum(pureType, context.refEnumNames))) && !shouldSkipRefTypedef)
 	w, known := returnWrapperMap[t]
 	// check if is array (match regex)
 	isArray, err := regexp.Match(".*\\[\\d+\\]", []byte(t))
@@ -92,7 +92,8 @@ func getReturnWrapper(
 	switch {
 	case known:
 		return w, nil
-	case (context.structNames[t] || context.refStructNames[t]) && !shouldSkipStruct(t):
+		// case (context.structNames[t] || context.refStructNames[t]) && !shouldSkipStruct(t):
+	case !HasSuffix(t, "*") && isStruct && !shouldSkipStruct(pureType):
 		return returnWrapper{
 			returnType: prefixGoPackage(t.renameGoIdentifier(), srcPackage, context),
 			// this is a small trick as using prefixGoPackage isn't in fact intended to be used in such a way, but it should treat the whole string as a "type" and prefix it correctly
