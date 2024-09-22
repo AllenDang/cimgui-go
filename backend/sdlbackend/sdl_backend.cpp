@@ -156,10 +156,6 @@ void igSDLRunLoop(SDL_Window *window, VoidCallback loop, VoidCallback beforeRend
     while (!done)
 #endif
     {
-        if (beforeRender != NULL) {
-            beforeRender();
-        }
-
         // Poll and handle events (inputs, window resize, etc.)
         // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
         // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application, or clear/overwrite your copy of the mouse data.
@@ -190,7 +186,18 @@ void igSDLRunLoop(SDL_Window *window, VoidCallback loop, VoidCallback beforeRend
         glViewport(0, 0, (int)io->DisplaySize.x, (int)io->DisplaySize.y);
         glClearColor(sdl_clear_color.x * sdl_clear_color.w, sdl_clear_color.y * sdl_clear_color.w, sdl_clear_color.z * sdl_clear_color.w, sdl_clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        if (beforeRender != NULL)
+        {
+            beforeRender();
+        }
+
         ImGui_ImplOpenGL3_RenderDrawData(igGetDrawData());
+
+        if (afterRender != NULL)
+        {
+            afterRender();
+        }
 
         // Update and Render additional Platform Windows
         // (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
