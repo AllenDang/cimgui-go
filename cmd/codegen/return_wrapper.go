@@ -34,6 +34,7 @@ func getReturnWrapper(
 		"double":          simpleR("float64"),
 		"double*":         simplePtrR("float64"),
 		"int":             simpleR("int32"),
+		"int32_t":         simpleR("int32"),
 		"int*":            simplePtrR("int32"),
 		"unsigned int":    simpleR("uint32"),
 		"unsigned int*":   simplePtrR("uint32"),

@@ -74,6 +74,7 @@ func getArgWrapper(
 		"const ImS16*":        simplePtrSliceW("C.ImS16", "int"),
 		"ImS32":               simpleW("int", "C.ImS32"),
 		"ImS32*":              simplePtrW("int32", "C.ImS32"),
+		"int32_t":             simpleW("int32", "C.int32_t"),
 		"const ImS32*":        simplePtrSliceW("C.ImS32", "int32"),
 		"ImS64":               simpleW("int64", "C.ImS64"),
 		"ImS64*":              simplePtrW("int64", "C.ImS64"),
