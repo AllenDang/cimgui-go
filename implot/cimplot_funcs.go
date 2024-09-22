@@ -14935,6 +14935,24 @@ func (self *PlotContext) ColormapModifiers() datautils.Vector[*PlotColormap] {
 	return datautils.NewVectorFromC(C.wrap_ImPlotContext_GetColormapModifiers(datautils.ConvertCTypes[*C.ImPlotContext](selfArg)).Size, C.wrap_ImPlotContext_GetColormapModifiers(datautils.ConvertCTypes[*C.ImPlotContext](selfArg)).Capacity, (*PlotColormap)(C.wrap_ImPlotContext_GetColormapModifiers(datautils.ConvertCTypes[*C.ImPlotContext](selfArg)).Data))
 }
 
+func (self PlotContext) SetTm(v Tm) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotContext_SetTm(selfArg, datautils.ConvertCTypes[C.struct_tm](v.ToC()))
+}
+
+func (self *PlotContext) Tm() Tm {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() Tm {
+		out := C.wrap_ImPlotContext_GetTm(datautils.ConvertCTypes[*C.ImPlotContext](selfArg))
+		return *(&Tm{}).FromC(unsafe.Pointer(&out))
+	}()
+}
+
 func (self PlotContext) SetTempDouble1(v datautils.Vector[*float64]) {
 	vData := v.Data
 	vDataArg, _ := datautils.WrapNumberPtr[C.double, float64](vData)
