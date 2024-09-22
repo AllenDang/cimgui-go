@@ -53,6 +53,7 @@ func getReturnWrapper(
 		"ImU16*":          simplePtrR("uint16"),
 		"ImU32":           simpleR("uint32"),
 		"ImU32*":          simplePtrR("uint32"),
+		"const ImU32*":    simplePtrR("uint32"),
 		"ImU64":           simpleR("uint64"),
 		"ImU64*":          simplePtrR("uint64"),
 		"ImVec4":          wrappableR(prefixGoPackage("Vec4", "imgui", context)),
