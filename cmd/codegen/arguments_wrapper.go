@@ -120,6 +120,10 @@ func getArgWrapper(
 		"const ImPlotTime":    wrappableW(prefixGoPackage("PlotTime", "implot", context), "C.ImPlotTime"),
 		"ImPlotTime*":         wrappablePtrW(prefixGoPackage("*PlotTime", "implot", context), "C.ImPlotTime"),
 		"const ImPlotTime*":   wrappablePtrW(prefixGoPackage("*PlotTime", "implot", context), "C.ImPlotTime"),
+		"tm":                  wrappableW(prefixGoPackage("Tm", "implot", context), "C.struct_tm"),
+		"const tm":            wrappableW(prefixGoPackage("Tm", "implot", context), "C.struct_tm"),
+		"tm*":                 wrappablePtrW(prefixGoPackage("*Tm", "imgui", context), "C.struct_tm"),
+		"const tm*":           wrappablePtrW(prefixGoPackage("*Tm", "imgui", context), "C.struct_tm"),
 	}
 
 	if a.Name == "type" || a.Name == "range" {

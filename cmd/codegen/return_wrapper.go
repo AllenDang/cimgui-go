@@ -65,6 +65,8 @@ func getReturnWrapper(
 		"ImPlotPoint":     wrappableR(prefixGoPackage("PlotPoint", "implot", context)),
 		"ImRect":          wrappableR(prefixGoPackage("Rect", "imgui", context)),
 		"ImPlotTime":      wrappableR(prefixGoPackage("PlotTime", "implot", context)),
+		"tm":              wrappableR(prefixGoPackage("Tm", "implot", context)),
+		"const tm":        wrappableR(prefixGoPackage("Tm", "implot", context)),
 		"uintptr_t":       simpleR("uintptr"),
 		"size_t":          simpleR("uint64"),
 		"time_t":          simpleR("uint64"),
