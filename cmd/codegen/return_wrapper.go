@@ -64,6 +64,7 @@ func getReturnWrapper(
 		"ImPlotTime":      wrappableR(prefixGoPackage("PlotTime", "implot", context)),
 		"uintptr_t":       simpleR("uintptr"),
 		"size_t":          simpleR("uint64"),
+		"time_t":          simpleR("uint64"),
 	}
 
 	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")

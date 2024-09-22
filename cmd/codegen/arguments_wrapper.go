@@ -46,6 +46,7 @@ func getArgWrapper(
 		"unsigned char*":      simplePtrW("uint", "C.uchar"),
 		"unsigned char**":     uCharPtrW,
 		"size_t":              simpleW("uint64", "C.xulong"),
+		"time_t":              simpleW("uint64", "C.xulong"),
 		"size_t*":             sizeTPtrW,
 		"float":               simpleW("float32", "C.float"),
 		"const float":         simpleW("float32", "C.float"),
