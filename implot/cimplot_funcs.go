@@ -478,6 +478,15 @@ func (self *PlotColormapData) KeyCount(cmap PlotColormap) int32 {
 	return int32(C.ImPlotColormapData_GetKeyCount(datautils.ConvertCTypes[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap)))
 }
 
+func (self *PlotColormapData) Keys(cmap PlotColormap) *uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*uint32)(C.ImPlotColormapData_GetKeys(datautils.ConvertCTypes[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap)))
+}
+
 func (self *PlotColormapData) Name(cmap PlotColormap) string {
 	selfArg, selfFin := self.Handle()
 
@@ -485,6 +494,15 @@ func (self *PlotColormapData) Name(cmap PlotColormap) string {
 		selfFin()
 	}()
 	return C.GoString(C.ImPlotColormapData_GetName(datautils.ConvertCTypes[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap)))
+}
+
+func (self *PlotColormapData) Table(cmap PlotColormap) *uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*uint32)(C.ImPlotColormapData_GetTable(datautils.ConvertCTypes[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap)))
 }
 
 func (self *PlotColormapData) TableColor(cmap PlotColormap, idx int32) uint32 {
@@ -14607,6 +14625,15 @@ func (self PlotColormapData) SetQuals(v datautils.Vector[*bool]) {
 	C.wrap_ImPlotColormapData_SetQuals(selfArg, *vVecArg)
 }
 
+func (self *PlotColormapData) Quals() datautils.Vector[*bool] {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return datautils.NewVectorFromC(C.wrap_ImPlotColormapData_GetQuals(datautils.ConvertCTypes[*C.ImPlotColormapData](selfArg)).Size, C.wrap_ImPlotColormapData_GetQuals(datautils.ConvertCTypes[*C.ImPlotColormapData](selfArg)).Capacity, (*bool)(C.wrap_ImPlotColormapData_GetQuals(datautils.ConvertCTypes[*C.ImPlotColormapData](selfArg)).Data))
+}
+
 func (self PlotColormapData) SetMap(v imgui.Storage) {
 	vArg, _ := v.C()
 
@@ -17995,6 +18022,15 @@ func (self *PlotTicker) Levels() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImPlotTicker_GetLevels(datautils.ConvertCTypes[*C.ImPlotTicker](selfArg)))
+}
+
+func (self *PlotTime) S() uint64 {
+	selfArg, selfFin := datautils.Wrap(self)
+
+	defer func() {
+		selfFin()
+	}()
+	return uint64(C.wrap_ImPlotTime_GetS(datautils.ConvertCTypes[*C.ImPlotTime](selfArg)))
 }
 
 func (self *PlotTime) Us() int32 {
