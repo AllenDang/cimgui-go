@@ -632,6 +632,18 @@ func (self MarkdownImageData) SetUsertextureid(v imgui.TextureID) {
 	C.wrap_MarkdownImageData_SetUser_texture_id(selfArg, datautils.ConvertCTypes[C.ImTextureID](vArg))
 }
 
+func (self *MarkdownImageData) Usertextureid() imgui.TextureID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *imgui.NewTextureIDFromC(func() *C.ImTextureID {
+		result := C.wrap_MarkdownImageData_GetUser_texture_id(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg))
+		return &result
+	}())
+}
+
 func (self MarkdownImageData) SetSize(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()

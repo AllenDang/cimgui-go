@@ -620,6 +620,20 @@ func (self *PlotItemGroup) ItemCount() int32 {
 	return int32(C.ImPlotItemGroup_GetItemCount(datautils.ConvertCTypes[*C.ImPlotItemGroup](selfArg)))
 }
 
+func (self *PlotItemGroup) ItemID(label_id string) imgui.ID {
+	selfArg, selfFin := self.Handle()
+	label_idArg, label_idFin := datautils.WrapString[C.char](label_id)
+
+	defer func() {
+		selfFin()
+		label_idFin()
+	}()
+	return *imgui.NewIDFromC(func() *C.ImGuiID {
+		result := C.ImPlotItemGroup_GetItemID(datautils.ConvertCTypes[*C.ImPlotItemGroup](selfArg), label_idArg)
+		return &result
+	}())
+}
+
 func (self *PlotItemGroup) ItemIndex(item *PlotItem) int32 {
 	selfArg, selfFin := self.Handle()
 	itemArg, itemFin := item.Handle()
@@ -13737,6 +13751,18 @@ func (self PlotAxis) SetID(v imgui.ID) {
 	C.wrap_ImPlotAxis_SetID(selfArg, datautils.ConvertCTypes[C.ImGuiID](vArg))
 }
 
+func (self *PlotAxis) ID() imgui.ID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *imgui.NewIDFromC(func() *C.ImGuiID {
+		result := C.wrap_ImPlotAxis_GetID(datautils.ConvertCTypes[*C.ImPlotAxis](selfArg))
+		return &result
+	}())
+}
+
 func (self PlotAxis) SetFlags(v PlotAxisFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -15402,6 +15428,18 @@ func (self PlotItem) SetID(v imgui.ID) {
 	C.wrap_ImPlotItem_SetID(selfArg, datautils.ConvertCTypes[C.ImGuiID](vArg))
 }
 
+func (self *PlotItem) ID() imgui.ID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *imgui.NewIDFromC(func() *C.ImGuiID {
+		result := C.wrap_ImPlotItem_GetID(datautils.ConvertCTypes[*C.ImPlotItem](selfArg))
+		return &result
+	}())
+}
+
 func (self PlotItem) SetColor(v uint32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -15501,6 +15539,18 @@ func (self PlotItemGroup) SetID(v imgui.ID) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotItemGroup_SetID(selfArg, datautils.ConvertCTypes[C.ImGuiID](vArg))
+}
+
+func (self *PlotItemGroup) ID() imgui.ID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *imgui.NewIDFromC(func() *C.ImGuiID {
+		result := C.wrap_ImPlotItemGroup_GetID(datautils.ConvertCTypes[*C.ImPlotItemGroup](selfArg))
+		return &result
+	}())
 }
 
 func (self PlotItemGroup) SetLegend(v PlotLegend) {
@@ -16216,6 +16266,18 @@ func (self PlotPlot) SetID(v imgui.ID) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotPlot_SetID(selfArg, datautils.ConvertCTypes[C.ImGuiID](vArg))
+}
+
+func (self *PlotPlot) ID() imgui.ID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *imgui.NewIDFromC(func() *C.ImGuiID {
+		result := C.wrap_ImPlotPlot_GetID(datautils.ConvertCTypes[*C.ImPlotPlot](selfArg))
+		return &result
+	}())
 }
 
 func (self PlotPlot) SetFlags(v PlotFlags) {
@@ -17323,6 +17385,18 @@ func (self PlotSubplot) SetID(v imgui.ID) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotSubplot_SetID(selfArg, datautils.ConvertCTypes[C.ImGuiID](vArg))
+}
+
+func (self *PlotSubplot) ID() imgui.ID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *imgui.NewIDFromC(func() *C.ImGuiID {
+		result := C.wrap_ImPlotSubplot_GetID(datautils.ConvertCTypes[*C.ImPlotSubplot](selfArg))
+		return &result
+	}())
 }
 
 func (self PlotSubplot) SetFlags(v PlotSubplotFlags) {
