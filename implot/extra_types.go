@@ -34,20 +34,20 @@ func (p PlotPoint) ToC() C.ImPlotPoint {
 }
 
 type PlotTime struct {
-	S       int // second part
+	Seconds int // second part
 	FieldUs int // microsecond part
 }
 
 func NewPlotTime(t time.Time) PlotTime {
 	ts := t.UnixMicro()
 	return PlotTime{
-		S:       int(ts / 1e6),
+		Seconds: int(ts / 1e6),
 		FieldUs: int(ts % 1e6),
 	}
 }
 
 func (i PlotTime) Time() time.Time {
-	return time.Unix(int64(i.S), int64(i.FieldUs)*int64(time.Microsecond))
+	return time.Unix(int64(i.Seconds), int64(i.FieldUs)*int64(time.Microsecond))
 }
 
 // pAny is ~C.ImPlotTime and will be free converted!
@@ -58,5 +58,5 @@ func (i *PlotTime) FromC(pAny unsafe.Pointer) *PlotTime {
 }
 
 func (p PlotTime) ToC() C.ImPlotTime {
-	return C.ImPlotTime{S: C.xlong(p.S), Us: C.int(p.FieldUs)}
+	return C.ImPlotTime{S: C.xlong(p.Seconds), Us: C.int(p.FieldUs)}
 }
