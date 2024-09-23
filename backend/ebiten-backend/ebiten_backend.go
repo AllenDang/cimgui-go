@@ -6,6 +6,7 @@ import (
 	imgui "github.com/AllenDang/cimgui-go"
 	"github.com/AllenDang/cimgui-go/backend"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 type getCursorFn func() (x, y float32)
@@ -93,6 +94,60 @@ func (e *EbitenBackend) SetContext(ctx *imgui.Context) *EbitenBackend {
 // BeginFrame needs to be called on every frame, before cimgui-go calls.
 // This is usually called inside the game's Update() function.
 func (e *EbitenBackend) BeginFrame() {
+	if ebiten.IsWindowBeingClosed() && e.closeCb != nil {
+		e.closeCb(e)
+	}
+
+	if e.beforeRender != nil {
+		e.beforeRender()
+	}
+
+	io := imgui.CurrentIO()
+	io.SetDisplaySize(imgui.Vec2{X: float32(e.currentWidth), Y: float32(e.currentHeight)})
+
+	io.SetDeltaTime(1.0 / float32(e.fps))
+	if e.syncCursor {
+		if e.getCursor != nil {
+			x, y := e.getCursor()
+			io.SetMousePos(imgui.Vec2{X: x, Y: y})
+		} else {
+			mx, my := ebiten.CursorPosition()
+			io.SetMousePos(imgui.Vec2{X: float32(mx), Y: float32(my)})
+		}
+		io.SetMouseButtonDown(0, ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft))
+		io.SetMouseButtonDown(1, ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight))
+		io.SetMouseButtonDown(2, ebiten.IsMouseButtonPressed(ebiten.MouseButtonMiddle))
+		xoff, yoff := ebiten.Wheel()
+		io.AddMouseWheelDelta(float32(xoff), float32(yoff))
+		e.controlCursorShapeFn()
+	}
+
+	if e.syncInputs {
+		if e.syncInputsFn != nil {
+			e.syncInputsFn()
+		} else {
+			e.inputChars = sendInput(imgui.CurrentIO(), e.inputChars)
+		}
+	}
+
+	if e.debug { // add ClipMask switch
+		if inpututil.IsKeyJustPressed(ebiten.KeyC) {
+			e.SetClipMask(!e.ClipMask())
+		}
+
+		if inpututil.IsKeyJustPressed(ebiten.KeyI) {
+			e.syncInputs = !e.syncInputs
+		}
+
+		if inpututil.IsKeyJustPressed(ebiten.KeyU) {
+			e.syncCursor = !e.syncCursor
+		}
+
+		if inpututil.IsKeyJustPressed(ebiten.KeyS) {
+			e.controlCursorShape = !e.controlCursorShape
+		}
+	}
+
 	imgui.NewFrame()
 }
 
@@ -100,6 +155,9 @@ func (e *EbitenBackend) BeginFrame() {
 // This is usually called inside the game's Update() function.
 func (e *EbitenBackend) EndFrame() {
 	imgui.EndFrame()
+	if e.afterRender != nil {
+		e.afterRender()
+	}
 }
 
 // SetClipMask sets if clipmask is enabled or not. This is usually called for debugging purposes.
