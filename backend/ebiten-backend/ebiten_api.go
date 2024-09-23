@@ -2,6 +2,7 @@ package ebitenbackend
 
 import (
 	"fmt"
+	"image/color"
 	"runtime"
 
 	imgui "github.com/AllenDang/cimgui-go"
@@ -13,15 +14,14 @@ import (
 // This is usually called inside the game's Draw() function.
 func (e *EbitenBackend) Draw(screen *ebiten.Image) {
 	// add background color
-	/*
-		bgRect := slices.Repeat([]byte{
+	if e.bgColor.W == 255 {
+		screen.Fill(color.RGBA{
 			byte(e.bgColor.X * 255),
 			byte(e.bgColor.Y * 255),
 			byte(e.bgColor.Z * 255),
 			byte(e.bgColor.W * 255),
-		}, e.currentWidth*e.currentHeight)
-		screen.WritePixels(bgRect)
-	*/
+		})
+	}
 
 	if e.debug {
 		ebitenutil.DebugPrintAt(
