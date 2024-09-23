@@ -28,17 +28,6 @@ func (e *EbitenBackend) Draw(screen *ebiten.Image) {
 	e.bgColorMagic.pkgFillVertices[3].DstY = maxY
 	target.DrawTriangles(e.bgColorMagic.pkgFillVertices, e.bgColorMagic.pkgFillVertIndices, e.bgColorMagic.pkgMask1x1, &e.bgColorMagic.pkgFillTrianglesOpts)
 
-	/*
-		if e.bgColor.W == 1 {
-			screen.Fill(color.RGBA{
-				byte(e.bgColor.X * 255),
-				byte(e.bgColor.Y * 255),
-				byte(e.bgColor.Z * 255),
-				byte(e.bgColor.W * 255),
-			})
-		}
-	*/
-
 	if e.debug {
 		ebitenutil.DebugPrintAt(
 			screen,
