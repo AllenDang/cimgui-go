@@ -197,6 +197,7 @@ func main() {
 	defer beforeDestroyContext()
 
 	game.cimgui.CreateWindow("Hello, world!", 800, 600)
+	game.cimgui.SetBgColor(imgui.Vec4{0, 0, 0, 0})
 
 	if err := ebiten.RunGame(game); err != nil {
 		log.Fatal(err)
