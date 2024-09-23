@@ -124,7 +124,6 @@ func showImPlotDemo() {
 }
 
 func afterCreateContext() {
-	imgui.CreateContextV(imgui.NewFontAtlas())
 	texture = backend.NewTextureFromRgba(img)
 	imgui.PlotCreateContext()
 }
@@ -193,11 +192,6 @@ func main() {
 	for i := 0; i < 10; i++ {
 		barValues = append(barValues, int64(i+1))
 	}
-
-	/*
-		game.cimgui.SetAfterCreateContextHook(afterCreateContext)
-		game.cimgui.SetBeforeDestroyContextHook(beforeDestroyContext)
-	*/
 
 	afterCreateContext()
 	defer beforeDestroyContext()
