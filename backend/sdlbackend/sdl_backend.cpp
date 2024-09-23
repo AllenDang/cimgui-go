@@ -205,6 +205,10 @@ void igSDLRunLoop(SDL_Window *window, VoidCallback loop, VoidCallback beforeRend
         }
 
         SDL_GL_SwapWindow(window);
+
+        if (afterRender != NULL) {
+            afterRender();
+        }
     }
 #ifdef __EMSCRIPTEN__
     EMSCRIPTEN_MAINLOOP_END;
