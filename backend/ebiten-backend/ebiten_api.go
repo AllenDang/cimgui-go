@@ -14,7 +14,7 @@ import (
 // This is usually called inside the game's Draw() function.
 func (e *EbitenBackend) Draw(screen *ebiten.Image) {
 	// add background color
-	if e.bgColor.W == 255 {
+	if e.bgColor.W == 1 {
 		screen.Fill(color.RGBA{
 			byte(e.bgColor.X * 255),
 			byte(e.bgColor.Y * 255),
