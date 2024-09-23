@@ -13,8 +13,7 @@ import (
 // This is usually called inside the game's Draw() function.
 func (e *EbitenBackend) Draw(screen *ebiten.Image) {
 	// add background color
-	target := screen
-	bounds := target.Bounds()
+	bounds := screen.Bounds()
 
 	minX, minY := float32(bounds.Min.X), float32(bounds.Min.Y)
 	maxX, maxY := float32(bounds.Max.X), float32(bounds.Max.Y)
@@ -26,7 +25,7 @@ func (e *EbitenBackend) Draw(screen *ebiten.Image) {
 	e.bgColorMagic.pkgFillVertices[2].DstY = maxY
 	e.bgColorMagic.pkgFillVertices[3].DstX = minX
 	e.bgColorMagic.pkgFillVertices[3].DstY = maxY
-	target.DrawTriangles(e.bgColorMagic.pkgFillVertices, e.bgColorMagic.pkgFillVertIndices, e.bgColorMagic.pkgMask1x1, &e.bgColorMagic.pkgFillTrianglesOpts)
+	screen.DrawTriangles(e.bgColorMagic.pkgFillVertices, e.bgColorMagic.pkgFillVertIndices, e.bgColorMagic.pkgMask1x1, &e.bgColorMagic.pkgFillTrianglesOpts)
 
 	if e.debug {
 		ebitenutil.DebugPrintAt(
