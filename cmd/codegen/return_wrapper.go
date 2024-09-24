@@ -20,6 +20,8 @@ func getReturnWrapper(
 ) (returnWrapper, error) {
 	returnWrapperMap := map[CIdentifier]returnWrapper{
 		"bool":            {"bool", "%s == C.bool(true)"},
+		"bool*":           simplePtrR("bool"),
+		"const bool*":     simplePtrR("bool"),
 		"char":            simpleR("rune"),
 		"unsigned char":   simpleR("uint"),
 		"unsigned char*":  {"*uint", "(*uint)(unsafe.Pointer(%s))"}, // NOTE: This should work but I'm not 100% sure
@@ -34,6 +36,7 @@ func getReturnWrapper(
 		"double":          simpleR("float64"),
 		"double*":         simplePtrR("float64"),
 		"int":             simpleR("int32"),
+		"int32_t":         simpleR("int32"),
 		"int*":            simplePtrR("int32"),
 		"unsigned int":    simpleR("uint32"),
 		"unsigned int*":   simplePtrR("uint32"),
@@ -52,6 +55,7 @@ func getReturnWrapper(
 		"ImU16*":          simplePtrR("uint16"),
 		"ImU32":           simpleR("uint32"),
 		"ImU32*":          simplePtrR("uint32"),
+		"const ImU32*":    simplePtrR("uint32"),
 		"ImU64":           simpleR("uint64"),
 		"ImU64*":          simplePtrR("uint64"),
 		"ImVec4":          wrappableR(prefixGoPackage("Vec4", "imgui", context)),
@@ -61,8 +65,11 @@ func getReturnWrapper(
 		"ImPlotPoint":     wrappableR(prefixGoPackage("PlotPoint", "implot", context)),
 		"ImRect":          wrappableR(prefixGoPackage("Rect", "imgui", context)),
 		"ImPlotTime":      wrappableR(prefixGoPackage("PlotTime", "implot", context)),
+		"tm":              wrappableR(prefixGoPackage("Tm", "implot", context)),
+		"const tm":        wrappableR(prefixGoPackage("Tm", "implot", context)),
 		"uintptr_t":       simpleR("uintptr"),
 		"size_t":          simpleR("uint64"),
+		"time_t":          simpleR("uint64"),
 	}
 
 	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")
@@ -71,7 +78,7 @@ func getReturnWrapper(
 	_, isRefTypedef := context.refTypedefs[pureType]
 	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
 	_, isStruct := context.structNames[pureType]
-	isStruct = isStruct || (isRefStruct && !shouldSkipRefTypedef)
+	isStruct = isStruct || ((isRefStruct || (isRefTypedef && !isEnum(pureType, context.refEnumNames))) && !shouldSkipRefTypedef)
 	w, known := returnWrapperMap[t]
 	// check if is array (match regex)
 	isArray, err := regexp.Match(".*\\[\\d+\\]", []byte(t))
@@ -87,7 +94,8 @@ func getReturnWrapper(
 	switch {
 	case known:
 		return w, nil
-	case (context.structNames[t] || context.refStructNames[t]) && !shouldSkipStruct(t):
+		// case (context.structNames[t] || context.refStructNames[t]) && !shouldSkipStruct(t):
+	case !HasSuffix(t, "*") && isStruct && !shouldSkipStruct(pureType):
 		return returnWrapper{
 			returnType: prefixGoPackage(t.renameGoIdentifier(), srcPackage, context),
 			// this is a small trick as using prefixGoPackage isn't in fact intended to be used in such a way, but it should treat the whole string as a "type" and prefix it correctly

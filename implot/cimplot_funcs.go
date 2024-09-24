@@ -478,6 +478,15 @@ func (self *PlotColormapData) KeyCount(cmap PlotColormap) int32 {
 	return int32(C.ImPlotColormapData_GetKeyCount(datautils.ConvertCTypes[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap)))
 }
 
+func (self *PlotColormapData) Keys(cmap PlotColormap) *uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*uint32)(C.ImPlotColormapData_GetKeys(datautils.ConvertCTypes[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap)))
+}
+
 func (self *PlotColormapData) Name(cmap PlotColormap) string {
 	selfArg, selfFin := self.Handle()
 
@@ -485,6 +494,15 @@ func (self *PlotColormapData) Name(cmap PlotColormap) string {
 		selfFin()
 	}()
 	return C.GoString(C.ImPlotColormapData_GetName(datautils.ConvertCTypes[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap)))
+}
+
+func (self *PlotColormapData) Table(cmap PlotColormap) *uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*uint32)(C.ImPlotColormapData_GetTable(datautils.ConvertCTypes[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap)))
 }
 
 func (self *PlotColormapData) TableColor(cmap PlotColormap, idx int32) uint32 {
@@ -600,6 +618,20 @@ func (self *PlotItemGroup) ItemCount() int32 {
 		selfFin()
 	}()
 	return int32(C.ImPlotItemGroup_GetItemCount(datautils.ConvertCTypes[*C.ImPlotItemGroup](selfArg)))
+}
+
+func (self *PlotItemGroup) ItemID(label_id string) imgui.ID {
+	selfArg, selfFin := self.Handle()
+	label_idArg, label_idFin := datautils.WrapString[C.char](label_id)
+
+	defer func() {
+		selfFin()
+		label_idFin()
+	}()
+	return *imgui.NewIDFromC(func() *C.ImGuiID {
+		result := C.ImPlotItemGroup_GetItemID(datautils.ConvertCTypes[*C.ImPlotItemGroup](selfArg), label_idArg)
+		return &result
+	}())
 }
 
 func (self *PlotItemGroup) ItemIndex(item *PlotItem) int32 {
@@ -13719,6 +13751,18 @@ func (self PlotAxis) SetID(v imgui.ID) {
 	C.wrap_ImPlotAxis_SetID(selfArg, datautils.ConvertCTypes[C.ImGuiID](vArg))
 }
 
+func (self *PlotAxis) ID() imgui.ID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *imgui.NewIDFromC(func() *C.ImGuiID {
+		result := C.wrap_ImPlotAxis_GetID(datautils.ConvertCTypes[*C.ImPlotAxis](selfArg))
+		return &result
+	}())
+}
+
 func (self PlotAxis) SetFlags(v PlotAxisFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -14607,6 +14651,15 @@ func (self PlotColormapData) SetQuals(v datautils.Vector[*bool]) {
 	C.wrap_ImPlotColormapData_SetQuals(selfArg, *vVecArg)
 }
 
+func (self *PlotColormapData) Quals() datautils.Vector[*bool] {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return datautils.NewVectorFromC(C.wrap_ImPlotColormapData_GetQuals(datautils.ConvertCTypes[*C.ImPlotColormapData](selfArg)).Size, C.wrap_ImPlotColormapData_GetQuals(datautils.ConvertCTypes[*C.ImPlotColormapData](selfArg)).Capacity, (*bool)(C.wrap_ImPlotColormapData_GetQuals(datautils.ConvertCTypes[*C.ImPlotColormapData](selfArg)).Data))
+}
+
 func (self PlotColormapData) SetMap(v imgui.Storage) {
 	vArg, _ := v.C()
 
@@ -14880,6 +14933,24 @@ func (self *PlotContext) ColormapModifiers() datautils.Vector[*PlotColormap] {
 		selfFin()
 	}()
 	return datautils.NewVectorFromC(C.wrap_ImPlotContext_GetColormapModifiers(datautils.ConvertCTypes[*C.ImPlotContext](selfArg)).Size, C.wrap_ImPlotContext_GetColormapModifiers(datautils.ConvertCTypes[*C.ImPlotContext](selfArg)).Capacity, (*PlotColormap)(C.wrap_ImPlotContext_GetColormapModifiers(datautils.ConvertCTypes[*C.ImPlotContext](selfArg)).Data))
+}
+
+func (self PlotContext) SetTm(v Tm) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotContext_SetTm(selfArg, datautils.ConvertCTypes[C.struct_tm](v.ToC()))
+}
+
+func (self *PlotContext) Tm() Tm {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() Tm {
+		out := C.wrap_ImPlotContext_GetTm(datautils.ConvertCTypes[*C.ImPlotContext](selfArg))
+		return *(&Tm{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self PlotContext) SetTempDouble1(v datautils.Vector[*float64]) {
@@ -15375,6 +15446,18 @@ func (self PlotItem) SetID(v imgui.ID) {
 	C.wrap_ImPlotItem_SetID(selfArg, datautils.ConvertCTypes[C.ImGuiID](vArg))
 }
 
+func (self *PlotItem) ID() imgui.ID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *imgui.NewIDFromC(func() *C.ImGuiID {
+		result := C.wrap_ImPlotItem_GetID(datautils.ConvertCTypes[*C.ImPlotItem](selfArg))
+		return &result
+	}())
+}
+
 func (self PlotItem) SetColor(v uint32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -15474,6 +15557,18 @@ func (self PlotItemGroup) SetID(v imgui.ID) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotItemGroup_SetID(selfArg, datautils.ConvertCTypes[C.ImGuiID](vArg))
+}
+
+func (self *PlotItemGroup) ID() imgui.ID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *imgui.NewIDFromC(func() *C.ImGuiID {
+		result := C.wrap_ImPlotItemGroup_GetID(datautils.ConvertCTypes[*C.ImPlotItemGroup](selfArg))
+		return &result
+	}())
 }
 
 func (self PlotItemGroup) SetLegend(v PlotLegend) {
@@ -16189,6 +16284,18 @@ func (self PlotPlot) SetID(v imgui.ID) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotPlot_SetID(selfArg, datautils.ConvertCTypes[C.ImGuiID](vArg))
+}
+
+func (self *PlotPlot) ID() imgui.ID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *imgui.NewIDFromC(func() *C.ImGuiID {
+		result := C.wrap_ImPlotPlot_GetID(datautils.ConvertCTypes[*C.ImPlotPlot](selfArg))
+		return &result
+	}())
 }
 
 func (self PlotPlot) SetFlags(v PlotFlags) {
@@ -17298,6 +17405,18 @@ func (self PlotSubplot) SetID(v imgui.ID) {
 	C.wrap_ImPlotSubplot_SetID(selfArg, datautils.ConvertCTypes[C.ImGuiID](vArg))
 }
 
+func (self *PlotSubplot) ID() imgui.ID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *imgui.NewIDFromC(func() *C.ImGuiID {
+		result := C.wrap_ImPlotSubplot_GetID(datautils.ConvertCTypes[*C.ImPlotSubplot](selfArg))
+		return &result
+	}())
+}
+
 func (self PlotSubplot) SetFlags(v PlotSubplotFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -17995,6 +18114,15 @@ func (self *PlotTicker) Levels() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImPlotTicker_GetLevels(datautils.ConvertCTypes[*C.ImPlotTicker](selfArg)))
+}
+
+func (self *PlotTime) S() uint64 {
+	selfArg, selfFin := datautils.Wrap(self)
+
+	defer func() {
+		selfFin()
+	}()
+	return uint64(C.wrap_ImPlotTime_GetS(datautils.ConvertCTypes[*C.ImPlotTime](selfArg)))
 }
 
 func (self *PlotTime) Us() int32 {

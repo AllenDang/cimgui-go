@@ -631,6 +631,23 @@ func ImNodesStyleColorsLight() {
 	C.wrap_imnodes_StyleColorsLight()
 }
 
+func (self EmulateThreeButtonMouse) SetModifier(v *bool) {
+	vArg, _ := datautils.WrapBool[C.bool](v)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_EmulateThreeButtonMouse_SetModifier(selfArg, vArg)
+}
+
+func (self *EmulateThreeButtonMouse) Modifier() *bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*bool)(C.wrap_EmulateThreeButtonMouse_GetModifier(datautils.ConvertCTypes[*C.EmulateThreeButtonMouse](selfArg)))
+}
+
 func (self NodesIO) SetEmulateThreeButtonMouse(v EmulateThreeButtonMouse) {
 	vArg, _ := v.C()
 
@@ -1000,4 +1017,38 @@ func (self *NodesStyle) Colors() [29]uint32 {
 
 		return result
 	}()
+}
+
+func (self LinkDetachWithModifierClick) SetModifier(v *bool) {
+	vArg, _ := datautils.WrapBool[C.bool](v)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_LinkDetachWithModifierClick_SetModifier(selfArg, vArg)
+}
+
+func (self *LinkDetachWithModifierClick) Modifier() *bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*bool)(C.wrap_LinkDetachWithModifierClick_GetModifier(datautils.ConvertCTypes[*C.LinkDetachWithModifierClick](selfArg)))
+}
+
+func (self MultipleSelectModifier) SetModifier(v *bool) {
+	vArg, _ := datautils.WrapBool[C.bool](v)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_MultipleSelectModifier_SetModifier(selfArg, vArg)
+}
+
+func (self *MultipleSelectModifier) Modifier() *bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*bool)(C.wrap_MultipleSelectModifier_GetModifier(datautils.ConvertCTypes[*C.MultipleSelectModifier](selfArg)))
 }

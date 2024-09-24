@@ -515,6 +515,21 @@ func (self *MarkdownFormatInfo) Type() MarkdownFormatType {
 	return MarkdownFormatType(C.wrap_MarkdownFormatInfo_GetType(datautils.ConvertCTypes[*C.MarkdownFormatInfo](selfArg)))
 }
 
+func (self MarkdownFormatInfo) SetLevel(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_MarkdownFormatInfo_SetLevel(selfArg, C.int32_t(v))
+}
+
+func (self *MarkdownFormatInfo) Level() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_MarkdownFormatInfo_GetLevel(datautils.ConvertCTypes[*C.MarkdownFormatInfo](selfArg)))
+}
+
 func (self MarkdownFormatInfo) SetItemHovered(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -615,6 +630,18 @@ func (self MarkdownImageData) SetUsertextureid(v imgui.TextureID) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_MarkdownImageData_SetUser_texture_id(selfArg, datautils.ConvertCTypes[C.ImTextureID](vArg))
+}
+
+func (self *MarkdownImageData) Usertextureid() imgui.TextureID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *imgui.NewTextureIDFromC(func() *C.ImTextureID {
+		result := C.wrap_MarkdownImageData_GetUser_texture_id(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg))
+		return &result
+	}())
 }
 
 func (self MarkdownImageData) SetSize(v imgui.Vec2) {

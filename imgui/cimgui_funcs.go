@@ -2711,6 +2711,19 @@ func (self *Storage) BoolV(key ID, default_val bool) bool {
 	return C.ImGuiStorage_GetBool(datautils.ConvertCTypes[*C.ImGuiStorage](selfArg), datautils.ConvertCTypes[C.ImGuiID](keyArg), C.bool(default_val)) == C.bool(true)
 }
 
+// BoolRefV parameter default value hint:
+// default_val: false
+func (self *Storage) BoolRefV(key ID, default_val bool) *bool {
+	selfArg, selfFin := self.Handle()
+	keyArg, keyFin := key.C()
+
+	defer func() {
+		selfFin()
+		keyFin()
+	}()
+	return (*bool)(C.ImGuiStorage_GetBoolRef(datautils.ConvertCTypes[*C.ImGuiStorage](selfArg), datautils.ConvertCTypes[C.ImGuiID](keyArg), C.bool(default_val)))
+}
+
 // FloatV parameter default value hint:
 // default_val: 0.0f
 func (self *Storage) FloatV(key ID, default_val float32) float32 {
@@ -11715,6 +11728,17 @@ func (self *Storage) Bool(key ID) bool {
 		keyFin()
 	}()
 	return C.wrap_ImGuiStorage_GetBool(datautils.ConvertCTypes[*C.ImGuiStorage](selfArg), datautils.ConvertCTypes[C.ImGuiID](keyArg)) == C.bool(true)
+}
+
+func (self *Storage) BoolRef(key ID) *bool {
+	selfArg, selfFin := self.Handle()
+	keyArg, keyFin := key.C()
+
+	defer func() {
+		selfFin()
+		keyFin()
+	}()
+	return (*bool)(C.wrap_ImGuiStorage_GetBoolRef(datautils.ConvertCTypes[*C.ImGuiStorage](selfArg), datautils.ConvertCTypes[C.ImGuiID](keyArg)))
 }
 
 func (self *Storage) Float(key ID) float32 {

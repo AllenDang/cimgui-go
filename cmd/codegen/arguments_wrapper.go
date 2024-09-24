@@ -46,6 +46,7 @@ func getArgWrapper(
 		"unsigned char*":      simplePtrW("uint", "C.uchar"),
 		"unsigned char**":     uCharPtrW,
 		"size_t":              simpleW("uint64", "C.xulong"),
+		"time_t":              simpleW("uint64", "C.xulong"),
 		"size_t*":             sizeTPtrW,
 		"float":               simpleW("float32", "C.float"),
 		"const float":         simpleW("float32", "C.float"),
@@ -74,6 +75,7 @@ func getArgWrapper(
 		"const ImS16*":        simplePtrSliceW("C.ImS16", "int"),
 		"ImS32":               simpleW("int", "C.ImS32"),
 		"ImS32*":              simplePtrW("int32", "C.ImS32"),
+		"int32_t":             simpleW("int32", "C.int32_t"),
 		"const ImS32*":        simplePtrSliceW("C.ImS32", "int32"),
 		"ImS64":               simpleW("int64", "C.ImS64"),
 		"ImS64*":              simplePtrW("int64", "C.ImS64"),
@@ -89,6 +91,7 @@ func getArgWrapper(
 		"bool":                simpleW("bool", "C.bool"),
 		"const bool":          simpleW("bool", "C.bool"),
 		"bool*":               boolPtrW,
+		"const bool*":         boolPtrW,
 		"ImWchar":             simpleW(prefixGoPackage("Wchar", "imgui", context), "C.ImWchar"),
 		"ImWchar*":            simpleW("("+prefixGoPackage("*Wchar", "imgui", context)+")", "(*C.ImWchar)"),
 		"const ImWchar*":      simpleW("("+prefixGoPackage("*Wchar", "imgui", context)+")", "(*C.ImWchar)"),
@@ -117,6 +120,10 @@ func getArgWrapper(
 		"const ImPlotTime":    wrappableW(prefixGoPackage("PlotTime", "implot", context), "C.ImPlotTime"),
 		"ImPlotTime*":         wrappablePtrW(prefixGoPackage("*PlotTime", "implot", context), "C.ImPlotTime"),
 		"const ImPlotTime*":   wrappablePtrW(prefixGoPackage("*PlotTime", "implot", context), "C.ImPlotTime"),
+		"tm":                  wrappableW(prefixGoPackage("Tm", "implot", context), "C.struct_tm"),
+		"const tm":            wrappableW(prefixGoPackage("Tm", "implot", context), "C.struct_tm"),
+		"tm*":                 wrappablePtrW(prefixGoPackage("*Tm", "imgui", context), "C.struct_tm"),
+		"const tm*":           wrappablePtrW(prefixGoPackage("*Tm", "imgui", context), "C.struct_tm"),
 	}
 
 	if a.Name == "type" || a.Name == "range" {
