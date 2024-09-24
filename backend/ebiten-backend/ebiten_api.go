@@ -3,25 +3,29 @@ package ebitenbackend
 import (
 	"fmt"
 	"runtime"
-	"slices"
 
 	"github.com/AllenDang/cimgui-go/imgui"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 // Draw draws the generated imgui frame to the screen.
 // This is usually called inside the game's Draw() function.
 func (e *EbitenBackend) Draw(screen *ebiten.Image) {
 	// add background color
-	bgRect := slices.Repeat([]byte{
-		byte(e.bgColor.X * 255),
-		byte(e.bgColor.Y * 255),
-		byte(e.bgColor.Z * 255),
-		byte(e.bgColor.W * 255),
-	}, e.currentWidth*e.currentHeight)
-	screen.WritePixels(bgRect)
+	bounds := screen.Bounds()
+
+	minX, minY := float32(bounds.Min.X), float32(bounds.Min.Y)
+	maxX, maxY := float32(bounds.Max.X), float32(bounds.Max.Y)
+	e.bgColorMagic.pkgFillVertices[0].DstX = minX
+	e.bgColorMagic.pkgFillVertices[0].DstY = minY
+	e.bgColorMagic.pkgFillVertices[1].DstX = maxX
+	e.bgColorMagic.pkgFillVertices[1].DstY = minY
+	e.bgColorMagic.pkgFillVertices[2].DstX = maxX
+	e.bgColorMagic.pkgFillVertices[2].DstY = maxY
+	e.bgColorMagic.pkgFillVertices[3].DstX = minX
+	e.bgColorMagic.pkgFillVertices[3].DstY = maxY
+	screen.DrawTriangles(e.bgColorMagic.pkgFillVertices, e.bgColorMagic.pkgFillVertIndices, e.bgColorMagic.pkgMask1x1, &e.bgColorMagic.pkgFillTrianglesOpts)
 
 	if e.debug {
 		ebitenutil.DebugPrintAt(
@@ -55,70 +59,9 @@ func (e *EbitenBackend) Draw(screen *ebiten.Image) {
 // This is usually called inside the game's Update() function.
 // delta is the time in seconds since the last frame.
 func (e *EbitenBackend) Update() error {
-	if ebiten.IsWindowBeingClosed() {
-		e.closeCb(e)
-	}
-
-	if e.beforeRender != nil {
-		e.beforeRender()
-	}
-
-	io := imgui.CurrentIO()
-	io.SetDisplaySize(imgui.Vec2{X: float32(e.currentWidth), Y: float32(e.currentHeight)})
-
-	io.SetDeltaTime(1.0 / float32(e.fps))
-	if e.syncCursor {
-		if e.getCursor != nil {
-			x, y := e.getCursor()
-			io.SetMousePos(imgui.Vec2{X: x, Y: y})
-		} else {
-			mx, my := ebiten.CursorPosition()
-			io.SetMousePos(imgui.Vec2{X: float32(mx), Y: float32(my)})
-		}
-		io.SetMouseButtonDown(0, ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft))
-		io.SetMouseButtonDown(1, ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight))
-		io.SetMouseButtonDown(2, ebiten.IsMouseButtonPressed(ebiten.MouseButtonMiddle))
-		xoff, yoff := ebiten.Wheel()
-		io.AddMouseWheelDelta(float32(xoff), float32(yoff))
-		e.controlCursorShapeFn()
-	}
-
-	if e.syncInputs {
-		if e.syncInputsFn != nil {
-			e.syncInputsFn()
-		} else {
-			e.inputChars = sendInput(imgui.CurrentIO(), e.inputChars)
-		}
-	}
-
-	if e.debug { // add ClipMask switch
-		if inpututil.IsKeyJustPressed(ebiten.KeyC) {
-			e.SetClipMask(!e.ClipMask())
-		}
-
-		if inpututil.IsKeyJustPressed(ebiten.KeyI) {
-			e.syncInputs = !e.syncInputs
-		}
-
-		if inpututil.IsKeyJustPressed(ebiten.KeyU) {
-			e.syncCursor = !e.syncCursor
-		}
-
-		if inpututil.IsKeyJustPressed(ebiten.KeyS) {
-			e.controlCursorShape = !e.controlCursorShape
-		}
-	}
-
 	e.BeginFrame()
-	defer e.EndFrame()
-
 	e.loop()
-
-	defer func() {
-		if e.afterRender != nil {
-			e.afterRender()
-		}
-	}()
+	e.EndFrame()
 
 	return nil
 }
