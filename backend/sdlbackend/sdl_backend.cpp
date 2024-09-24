@@ -1,4 +1,4 @@
-#if defined(CIMGUI_GO_USE_SDL2)
+#if 1 //defined(CIMGUI_GO_USE_SDL2)
 #define CIMGUI_USE_SDL2
 #define CIMGUI_USE_OPENGL3
 
@@ -180,6 +180,10 @@ void igSDLRunLoop(SDL_Window *window, VoidCallback loop, VoidCallback beforeRend
         ImGui_ImplSDL2_NewFrame();
         igNewFrame();
 
+        glViewport(0, 0, (int)io->DisplaySize.x, (int)io->DisplaySize.y);
+        glClearColor(sdl_clear_color.x * sdl_clear_color.w, sdl_clear_color.y * sdl_clear_color.w, sdl_clear_color.z * sdl_clear_color.w, sdl_clear_color.w);
+        glClear(GL_COLOR_BUFFER_BIT);
+
         // rendering
         if (loop != NULL) {
             loop();
@@ -187,9 +191,6 @@ void igSDLRunLoop(SDL_Window *window, VoidCallback loop, VoidCallback beforeRend
 
         // Rendering
         igRender();
-        glViewport(0, 0, (int)io->DisplaySize.x, (int)io->DisplaySize.y);
-        glClearColor(sdl_clear_color.x * sdl_clear_color.w, sdl_clear_color.y * sdl_clear_color.w, sdl_clear_color.z * sdl_clear_color.w, sdl_clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(igGetDrawData());
 
         // Update and Render additional Platform Windows
