@@ -7,10 +7,10 @@ import (
 )
 
 // Generate enums and return enum type names
-func generateGoEnums(prefix string, enums []EnumDef) []GoIdentifier {
+func generateGoEnums(prefix string, enums []EnumDef, ctx *Context) []GoIdentifier {
 	var sb strings.Builder
 
-	sb.WriteString(goPackageHeader)
+	sb.WriteString(getGoPackageHeader(ctx))
 
 	var enumNames []GoIdentifier
 	for _, e := range enums {

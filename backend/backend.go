@@ -8,9 +8,9 @@ package backend
 // extern void dropCallback(void*, int, char**);
 // extern void keyCallback(void*, int, int, int, int);
 // extern void sizeCallback(void*, int, int);
-// #include "../extra_types.h"
-// #include "../cimgui_wrapper.h"
-// #include "../cimgui_typedefs.h"
+// #include "../imgui/extra_types.h"
+// #include "../imgui/cimgui_wrapper.h"
+// #include "../imgui/cimgui_typedefs.h"
 import "C"
 
 import (
@@ -19,7 +19,7 @@ import (
 	"image"
 	"unsafe"
 
-	imgui "github.com/AllenDang/cimgui-go"
+	"github.com/AllenDang/cimgui-go/imgui"
 )
 
 type voidCallbackFunc func()

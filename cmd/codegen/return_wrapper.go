@@ -54,13 +54,13 @@ func getReturnWrapper(
 		"ImU32*":          simplePtrR("uint32"),
 		"ImU64":           simpleR("uint64"),
 		"ImU64*":          simplePtrR("uint64"),
-		"ImVec4":          wrappableR("Vec4"),
-		"const ImVec4*":   imVec4PtrReturnW(),
-		"ImVec2":          wrappableR("Vec2"),
-		"ImColor":         wrappableR("Color"),
-		"ImPlotPoint":     wrappableR("PlotPoint"),
-		"ImRect":          wrappableR("Rect"),
-		"ImPlotTime":      wrappableR("PlotTime"),
+		"ImVec4":          wrappableR(prefixGoPackage("Vec4", "imgui", context)),
+		"const ImVec4*":   imVec4PtrReturnW(context),
+		"ImVec2":          wrappableR(prefixGoPackage("Vec2", "imgui", context)),
+		"ImColor":         wrappableR(prefixGoPackage("Color", "imgui", context)),
+		"ImPlotPoint":     wrappableR(prefixGoPackage("PlotPoint", "implot", context)),
+		"ImRect":          wrappableR(prefixGoPackage("Rect", "imgui", context)),
+		"ImPlotTime":      wrappableR(prefixGoPackage("PlotTime", "implot", context)),
 		"uintptr_t":       simpleR("uintptr"),
 		"size_t":          simpleR("uint64"),
 	}
@@ -68,6 +68,7 @@ func getReturnWrapper(
 	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")
 	// check if pureType is a declared type (struct or something else from typedefs)
 	_, isRefStruct := context.refStructNames[pureType]
+	_, isRefTypedef := context.refTypedefs[pureType]
 	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
 	_, isStruct := context.structNames[pureType]
 	isStruct = isStruct || (isRefStruct && !shouldSkipRefTypedef)
@@ -78,18 +79,25 @@ func getReturnWrapper(
 		glg.Fatalf("Error in regex: %s", err)
 	}
 
+	srcPackage := GoIdentifier(context.flags.packageName)
+	if isRefTypedef {
+		srcPackage = GoIdentifier(context.flags.refPackageName)
+	}
+
 	switch {
 	case known:
 		return w, nil
 	case (context.structNames[t] || context.refStructNames[t]) && !shouldSkipStruct(t):
 		return returnWrapper{
-			returnType: t.renameGoIdentifier(),
-			returnStmt: fmt.Sprintf(`*New%sFromC(func() *C.%s {result := %%s; return &result}())`, t.renameGoIdentifier(), t),
+			returnType: prefixGoPackage(t.renameGoIdentifier(), srcPackage, context),
+			// this is a small trick as using prefixGoPackage isn't in fact intended to be used in such a way, but it should treat the whole string as a "type" and prefix it correctly
+			returnStmt: string(prefixGoPackage(GoIdentifier(fmt.Sprintf("*New%sFromC(func() *C.%s {result := %%s; return &result}())", t.renameGoIdentifier(), t)), srcPackage, context)),
 		}, nil
 	case isEnum(t, context.enumNames):
+		goType := prefixGoPackage(t.renameEnum(), srcPackage, context)
 		return returnWrapper{
-			returnType: t.renameEnum(),
-			returnStmt: fmt.Sprintf("%s(%%s)", t.renameEnum()),
+			returnType: goType,
+			returnStmt: fmt.Sprintf("%s(%%s)", goType),
 		}, nil
 	case HasPrefix(t, "ImVector_") &&
 		!(HasSuffix(t, "*") || HasSuffix(t, "]")):
@@ -98,19 +106,22 @@ func getReturnWrapper(
 		if err != nil {
 			return returnWrapper{}, fmt.Errorf("creating vector wrapper %w", err)
 		}
+
 		return returnWrapper{
-			returnType: GoIdentifier(fmt.Sprintf("Vector[%s]", rw.returnType)),
-			returnStmt: fmt.Sprintf("NewVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
+			returnType: GoIdentifier(fmt.Sprintf("datautils.Vector[%s]", rw.returnType)),
+			returnStmt: fmt.Sprintf("datautils.NewVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
 		}, nil
 	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), context.enumNames):
+		goType := prefixGoPackage("*"+TrimSuffix(t, "*").renameEnum(), srcPackage, context)
 		return returnWrapper{
-			returnType: "*" + TrimSuffix(t, "*").renameEnum(),
-			returnStmt: fmt.Sprintf("(*%s)(%%s)", TrimSuffix(t, "*").renameEnum()),
+			returnType: goType,
+			returnStmt: fmt.Sprintf("(%s)(%%s)", goType),
 		}, nil
 	case HasSuffix(t, "*") && isStruct && !shouldSkipStruct(pureType):
+		goType := prefixGoPackage("*"+TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(), srcPackage, context)
 		return returnWrapper{
-			returnType: "*" + TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(),
-			returnStmt: fmt.Sprintf("New%sFromC(%%s)", TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier()),
+			returnType: goType,
+			returnStmt: string(prefixGoPackage(GoIdentifier(fmt.Sprintf("New%sFromC(%%s)", TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier())), srcPackage, context)),
 		}, nil
 	case isArray:
 		typeCount := Split(t, "[")
@@ -150,11 +161,12 @@ result := [%[1]d]%[2]s{}
 	}
 }
 
-func imVec4PtrReturnW() returnWrapper {
+func imVec4PtrReturnW(ctx *Context) returnWrapper {
 	// TODO: verify if it wraps correctly
+	goType := prefixGoPackage("Vec4", "imgui", ctx)
 	return returnWrapper{
-		returnType: "*Vec4",
-		returnStmt: "(&Vec4{}).fromC(*%s)",
+		returnType: "*" + goType,
+		returnStmt: "(&" + string(goType) + "{}).FromC(unsafe.Pointer(%s))",
 	}
 }
 
@@ -172,6 +184,6 @@ func simplePtrR(goType GoIdentifier) returnWrapper {
 func wrappableR(goType GoIdentifier) returnWrapper {
 	return returnWrapper{
 		returnType: goType,
-		returnStmt: fmt.Sprintf("*(&%s{}).fromC(%s)", goType, "%s"),
+		returnStmt: fmt.Sprintf("func() %[1]s {out := %%s ; return *(&%[1]s{}).FromC(unsafe.Pointer(&out))}()", goType),
 	}
 }

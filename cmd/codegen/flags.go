@@ -11,6 +11,8 @@ type flags struct {
 	typedefsJsonpath,
 	refEnumsJsonPath,
 	refTypedefsJsonPath,
+	refPackageName, // name for refTypedefs (default: imgui)
+	packageName, // name for current package (e.g. imgui, implot)
 	prefix,
 	include string
 }
@@ -25,6 +27,8 @@ func parse() *flags {
 	flag.StringVar(&flags.typedefsJsonpath, "t", "", "typedefs dict json file path")
 	flag.StringVar(&flags.refEnumsJsonPath, "r", "", "reference structs and enums json file path")
 	flag.StringVar(&flags.refTypedefsJsonPath, "rt", "", "reference typedefs_dict.json file path")
+	flag.StringVar(&flags.refPackageName, "refPkg", "imgui", "name for refTypedefs package name")
+	flag.StringVar(&flags.packageName, "pkg", "", "name for current package")
 	flag.StringVar(&flags.prefix, "p", "", "prefix for the generated file")
 	flag.StringVar(&flags.include, "i", "", "include header file")
 	flag.Parse()
