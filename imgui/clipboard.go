@@ -1,10 +1,12 @@
 package imgui
 
 // #include <stdlib.h>
-// typedef char* (*get_clipboard_cb)(void* );
-// typedef void (*set_clipboard_cb)(void*, char* );
-// extern char* get_clipboard_callback(void* user_data);
-// extern void set_clipboard_callback(void* user_data, char *text);
+// #include "cimgui_wrapper.h"
+// #include "cimgui_typedefs.h"
+// typedef char* (*get_clipboard_cb)(ImGuiContext* );
+// typedef void (*set_clipboard_cb)(ImGuiContext*, char* );
+// extern char* get_clipboard_callback(ImGuiContext* user_data);
+// extern void set_clipboard_callback(ImGuiContext* user_data, char *text);
 import "C"
 
 import (
@@ -13,8 +15,8 @@ import (
 )
 
 //export get_clipboard_callback
-func get_clipboard_callback(userData unsafe.Pointer) *C.char {
-	h := (cgo.Handle)(userData)
+func get_clipboard_callback(ctx *C.ImGuiContext) *C.char {
+	h := (cgo.Handle)(ctx.PlatformIO.Platform_ClipboardUserData)
 	helper := h.Value().(*clipboardHelper)
 	handler := helper.handler
 	str := handler.GetClipboard()
@@ -32,8 +34,8 @@ func get_clipboard_callback(userData unsafe.Pointer) *C.char {
 }
 
 //export set_clipboard_callback
-func set_clipboard_callback(userData unsafe.Pointer, text *C.char) {
-	h := (cgo.Handle)(userData)
+func set_clipboard_callback(ctx *C.ImGuiContext, text *C.char) {
+	h := (cgo.Handle)(ctx.PlatformIO.Platform_ClipboardUserData)
 	helper := h.Value().(*clipboardHelper)
 	handler := helper.handler
 
