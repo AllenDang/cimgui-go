@@ -25,9 +25,10 @@ import (
 	"image/color"
 	"log"
 
-	imgui "github.com/AllenDang/cimgui-go"
 	"github.com/AllenDang/cimgui-go/backend"
 	ebitenbackend "github.com/AllenDang/cimgui-go/backend/ebiten-backend"
+	"github.com/AllenDang/cimgui-go/imgui"
+	"github.com/AllenDang/cimgui-go/implot"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -117,17 +118,17 @@ func showImPlotDemo() {
 	imgui.SetNextWindowPosV(imgui.NewVec2(basePos.X+400, basePos.Y+60), imgui.CondOnce, imgui.NewVec2(0, 0))
 	imgui.SetNextWindowSizeV(imgui.NewVec2(500, 300), imgui.CondOnce)
 	imgui.Begin("Plot window")
-	if imgui.PlotBeginPlotV("Plot", imgui.NewVec2(-1, -1), 0) {
-		imgui.PlotPlotBarsS64PtrInt("Bar", barValues, int32(len(barValues)))
-		imgui.PlotPlotLineS64PtrInt("Line", barValues, int32(len(barValues)))
-		imgui.PlotEndPlot()
+	if implot.PlotBeginPlotV("Plot", imgui.NewVec2(-1, -1), 0) {
+		implot.PlotPlotBarsS64PtrInt("Bar", barValues, int32(len(barValues)))
+		implot.PlotPlotLineS64PtrInt("Line", barValues, int32(len(barValues)))
+		implot.PlotEndPlot()
 	}
 	imgui.End()
 }
 
 func afterCreateContext() {
 	texture = backend.NewTextureFromRgba(img)
-	imgui.PlotCreateContext()
+	implot.PlotCreateContext()
 }
 
 func loop() {
@@ -137,7 +138,7 @@ func loop() {
 }
 
 func beforeDestroyContext() {
-	imgui.PlotDestroyContext()
+	implot.PlotDestroyContext()
 }
 
 type Game struct {
