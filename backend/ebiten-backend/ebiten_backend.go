@@ -1,6 +1,7 @@
 package ebitenbackend
 
 import (
+	"image/color"
 	"runtime"
 
 	"github.com/AllenDang/cimgui-go/backend"
@@ -37,9 +38,15 @@ type EbitenBackend struct {
 	currentWidth, currentHeight int
 	fps                         uint // target FPS
 	bgColor                     imgui.Vec4
-	debug                       bool // if true render some extra debug info
-	clipMask                    bool // https://github.com/ocornut/imgui/issues/7372
-	lmask                       *ebiten.Image
+	bgColorMagic                struct { // this is code from https://github.com/tinne26/mipix/blob/main/internal/utils.go#L113, thank you @tinne26
+		pkgMask1x1           *ebiten.Image
+		pkgFillVertices      []ebiten.Vertex
+		pkgFillVertIndices   []uint16
+		pkgFillTrianglesOpts ebiten.DrawTrianglesOptions
+	}
+	debug    bool // if true render some extra debug info
+	clipMask bool // https://github.com/ocornut/imgui/issues/7372
+	lmask    *ebiten.Image
 
 	syncInputs         bool
 	syncInputsFn       func()
@@ -69,6 +76,16 @@ func NewEbitenBackend() *EbitenBackend {
 		controlCursorShape: true,
 		inputChars:         make([]rune, 0, 256),
 	}
+
+	result.bgColorMagic.pkgMask1x1 = ebiten.NewImage(1, 1)
+	result.bgColorMagic.pkgFillVertices = make([]ebiten.Vertex, 4)
+	result.bgColorMagic.pkgFillVertIndices = []uint16{0, 1, 3, 3, 1, 2}
+	for i := range 4 {
+		result.bgColorMagic.pkgFillVertices[i].SrcX = 0.5
+		result.bgColorMagic.pkgFillVertices[i].SrcY = 0.5
+	}
+
+	result.bgColorMagic.pkgMask1x1.Fill(color.White)
 
 	runtime.SetFinalizer(result, (*EbitenBackend).onfinalize)
 

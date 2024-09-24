@@ -2,7 +2,6 @@ package ebitenbackend
 
 import (
 	"fmt"
-	"image/color"
 	"runtime"
 
 	"github.com/AllenDang/cimgui-go/imgui"
@@ -14,14 +13,19 @@ import (
 // This is usually called inside the game's Draw() function.
 func (e *EbitenBackend) Draw(screen *ebiten.Image) {
 	// add background color
-	if e.bgColor.W == 1 {
-		screen.Fill(color.RGBA{
-			byte(e.bgColor.X * 255),
-			byte(e.bgColor.Y * 255),
-			byte(e.bgColor.Z * 255),
-			byte(e.bgColor.W * 255),
-		})
-	}
+	bounds := screen.Bounds()
+
+	minX, minY := float32(bounds.Min.X), float32(bounds.Min.Y)
+	maxX, maxY := float32(bounds.Max.X), float32(bounds.Max.Y)
+	e.bgColorMagic.pkgFillVertices[0].DstX = minX
+	e.bgColorMagic.pkgFillVertices[0].DstY = minY
+	e.bgColorMagic.pkgFillVertices[1].DstX = maxX
+	e.bgColorMagic.pkgFillVertices[1].DstY = minY
+	e.bgColorMagic.pkgFillVertices[2].DstX = maxX
+	e.bgColorMagic.pkgFillVertices[2].DstY = maxY
+	e.bgColorMagic.pkgFillVertices[3].DstX = minX
+	e.bgColorMagic.pkgFillVertices[3].DstY = maxY
+	screen.DrawTriangles(e.bgColorMagic.pkgFillVertices, e.bgColorMagic.pkgFillVertIndices, e.bgColorMagic.pkgMask1x1, &e.bgColorMagic.pkgFillTrianglesOpts)
 
 	if e.debug {
 		ebitenutil.DebugPrintAt(

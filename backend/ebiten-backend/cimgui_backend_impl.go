@@ -2,6 +2,7 @@ package ebitenbackend
 
 import (
 	"image"
+	"image/color"
 	"unsafe"
 
 	"github.com/AllenDang/cimgui-go/backend"
@@ -25,8 +26,28 @@ func (b *EbitenBackend) SetAfterRenderHook(fn func()) {
 	b.afterRender = fn
 }
 
-func (b *EbitenBackend) SetBgColor(color imgui.Vec4) {
-	b.bgColor = color
+func (b *EbitenBackend) SetBgColor(col imgui.Vec4) {
+	b.bgColor = col
+
+	fillColor := color.RGBA{
+		byte(b.bgColor.X * 255),
+		byte(b.bgColor.Y * 255),
+		byte(b.bgColor.Z * 255),
+		byte(b.bgColor.W * 255),
+	}
+
+	toRGBAf32 := func(clr color.Color) (r, g, b, a float32) {
+		r16, g16, b16, a16 := clr.RGBA()
+		return float32(r16) / 65535.0, float32(g16) / 65535.0, float32(b16) / 65535.0, float32(a16) / 65535.0
+	}
+
+	r, g, bC, a := toRGBAf32(fillColor)
+	for i := range 4 {
+		b.bgColorMagic.pkgFillVertices[i].ColorR = r
+		b.bgColorMagic.pkgFillVertices[i].ColorG = g
+		b.bgColorMagic.pkgFillVertices[i].ColorB = bC
+		b.bgColorMagic.pkgFillVertices[i].ColorA = a
+	}
 }
 
 func (b *EbitenBackend) Run(loop func()) {
