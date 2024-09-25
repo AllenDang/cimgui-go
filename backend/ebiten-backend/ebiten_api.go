@@ -53,6 +53,12 @@ func (e *EbitenBackend) Draw(screen *ebiten.Image) {
 	} else {
 		Render(screen, imgui.CurrentDrawData(), e.cache, e.filter)
 	}
+
+	// render texture cache game textures
+	e.cache.ForEachGame(func(is imgui.TextureID, game ebiten.Game, target *ebiten.Image) {
+		target.Clear()
+		game.Draw(target)
+	})
 }
 
 // Update needs to be called on every frame, before cimgui-go calls.
@@ -62,6 +68,11 @@ func (e *EbitenBackend) Update() error {
 	e.BeginFrame()
 	e.loop()
 	e.EndFrame()
+
+	// render texture cache game textures
+	e.cache.ForEachGame(func(_ imgui.TextureID, game ebiten.Game, _ *ebiten.Image) {
+		game.Update()
+	})
 
 	return nil
 }
