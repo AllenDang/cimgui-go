@@ -9,7 +9,10 @@ type TextureCache interface {
 	FontAtlasTextureID() imgui.TextureID
 	SetFontAtlasTextureID(id imgui.TextureID)
 	GetTexture(id imgui.TextureID) *ebiten.Image
+	GetGameTexture(id imgui.TextureID) (ebiten.Game, bool)
+	ForEachGame(f func(id imgui.TextureID, game ebiten.Game, target *ebiten.Image))
 	SetTexture(id imgui.TextureID, img *ebiten.Image)
+	SetGameTexture(id imgui.TextureID, img ebiten.Game)
 	RemoveTexture(id imgui.TextureID)
 	ResetFontAtlasCache(filter ebiten.Filter)
 	NextId() int
@@ -20,6 +23,7 @@ type textureCache struct {
 	fontAtlasID    imgui.TextureID
 	fontAtlasImage *ebiten.Image
 	cache          map[imgui.TextureID]*ebiten.Image
+	cacheGame      map[imgui.TextureID]ebiten.Game
 	dfilter        ebiten.Filter
 }
 
@@ -60,8 +64,27 @@ func (c *textureCache) GetTexture(id imgui.TextureID) *ebiten.Image {
 	panic("Texture not found in cache. Cannot obtain ebiten Image")
 }
 
+func (c *textureCache) GetGameTexture(id imgui.TextureID) (res ebiten.Game, isGame bool) {
+	if im, ok := c.cacheGame[id]; ok {
+		return im, true
+	}
+
+	return nil, false
+}
+
 func (c *textureCache) SetTexture(id imgui.TextureID, img *ebiten.Image) {
 	c.cache[id] = img
+}
+
+func (c *textureCache) SetGameTexture(id imgui.TextureID, img ebiten.Game) {
+	c.cacheGame[id] = img
+}
+
+func (c *textureCache) ForEachGame(f func(id imgui.TextureID, game ebiten.Game, target *ebiten.Image)) {
+	for id, game := range c.cacheGame {
+		target := c.GetTexture(id)
+		f(id, game, target)
+	}
 }
 
 func (c *textureCache) RemoveTexture(id imgui.TextureID) {
@@ -78,6 +101,7 @@ func NewCache() TextureCache {
 		startIndex:     2,
 		fontAtlasID:    imgui.TextureID{Data: uintptr(1)},
 		cache:          make(map[imgui.TextureID]*ebiten.Image),
+		cacheGame:      make(map[imgui.TextureID]ebiten.Game),
 		fontAtlasImage: nil,
 	}
 }

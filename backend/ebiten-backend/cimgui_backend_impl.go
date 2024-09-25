@@ -208,6 +208,15 @@ func (e *EbitenBackend) CreateWindow(title string, width, height int) {
 	e.SetWindowSize(width, height)
 }
 
+func (e *EbitenBackend) CreateTextureFromGame(game ebiten.Game, width, height int) imgui.TextureID {
+	eimg := ebiten.NewImage(width, height)
+
+	tid := imgui.TextureID{Data: uintptr(e.cache.NextId())}
+	e.cache.SetTexture(tid, eimg)
+	e.cache.SetGameTexture(tid, game)
+	return tid
+}
+
 func (e *EbitenBackend) CreateTexture(pixels unsafe.Pointer, width, height int) imgui.TextureID {
 	eimg := ebiten.NewImage(width, height)
 	eimg.WritePixels(premultiplyPixels(pixels, width, height))
