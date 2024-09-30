@@ -4,10 +4,7 @@ go 1.22
 
 toolchain go1.23.1
 
-require (
-	github.com/gabstv/cimgui-go v0.0.0-20231031221758-68bd718f94cc
-	github.com/hajimehoshi/ebiten/v2 v2.7.10
-)
+require github.com/hajimehoshi/ebiten/v2 v2.7.10
 
 require (
 	github.com/ebitengine/gomobile v0.0.0-20240518074828-e86332849895 // indirect
