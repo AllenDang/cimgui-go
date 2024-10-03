@@ -126,10 +126,10 @@ update: setup
 
 # dummy creates dummy.go files to baypass GO vendor policy that excludes everything that has no .go files (including our C source).
 define dummy
-	echo -e "// +build rquired\n\npackage imgui\n\nimport (\n" > dummy.go
+	echo -e "//go:build required\n// +build rquired\n\npackage imgui\n\nimport (\n" > dummy.go
 	for i in `find cwrappers -type f \( -name "*.h" -o -name "*.cpp" \) -exec dirname {} \; | sort -u`; do \
 		cp templates/dummy.go.template $$i/dummy.go; \
-		echo -e "\t\"github.com/AllenDang/cimgui-go/$$i\"" >> dummy.go; \
+		echo -e "\t_ \"github.com/AllenDang/cimgui-go/$$i\"" >> dummy.go; \
 		done
 	echo ")" >> dummy.go
 endef
