@@ -115,7 +115,7 @@ GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height,
 
   // Install extra callback
   glfwSetWindowRefreshCallback(window, glfw_window_refresh_callback);
-  glfwMakeContextCurrent(NULL);
+  // glfwMakeContextCurrent(NULL);
   return window;
 }
 
