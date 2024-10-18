@@ -81,6 +81,11 @@ SDL_Window* igCreateSDLWindow(const char* title, int width, int height,VoidCallb
     SDL_Window* window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, sdl_flags);
     sdl_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI); // reset default flags
     SDL_GLContext gl_context = SDL_GL_CreateContext(window);
+    if (!gl_context)
+    {
+        printf("Error creating SDL context %s\n", SDL_GetError());
+        exit(1);
+    }
     SDL_GL_MakeCurrent(window, gl_context);
     SDL_GL_SetSwapInterval(1); // Enable vsync
 
