@@ -509,8 +509,10 @@ func (b *SDLBackend) SetSwapInterval(interval SDLWindowFlags) error {
 	return nil
 }
 
+// the SDL backend gives mouse positions in global coordinates, so to make it possible to
+// "lock" the mouse in one place, SetCursorPos will set the mouse in global coordinates
 func (b *SDLBackend) SetCursorPos(x, y float64) {
-	C.SDL_WarpMouseInWindow(b.handle(), C.int(x), C.int(y))
+	C.SDL_WarpMouseGlobal(C.int(x), C.int(y))
 }
 
 func (b *SDLBackend) SetInputMode(mode SDLWindowFlags, value SDLWindowFlags) {
