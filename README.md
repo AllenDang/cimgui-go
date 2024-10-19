@@ -51,6 +51,6 @@ In Actions tab, manually trigger `Compile cimgui` workflows.
 
 ## How does it work?
 
-- `cimgui/` directory holds C binding for C++ Dear ImGui libraries
-- generator bases on `cimgui/{package_name}_templates` and generates all necessary GO/C code
-- `libs/` contains pre-built shared libraries. `cimgui.go` includes and uses to decrease building time.
+- `cwrappers/` directory holds C binding for C++ Dear ImGui libraries
+- generator bases on `cwrappers/{package_name}_templates` and generates all necessary GO/C code placing it in `{pkgname}/` directories in the root of cimgui-go
+- `libs/` contains pre-built shared libraries. `cflags.go` includes and uses to decrease building time.
