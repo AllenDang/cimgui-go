@@ -8,11 +8,14 @@ import (
 	_ "image/png"
 	"os"
 	"path/filepath"
-	"runtime"
 
 	"github.com/AllenDang/cimgui-go/imgui"
 )
 
+// Texture implements a simple texture loader. It wraps backend's methods to allow creating textures easily.
+// IMPORTANT: as the texture is mainly handled by C OpenGL, it is not covered by Garbae Collector (GC).
+//
+//	Remember to call (*Texture).Release when you no longer need it.
 type Texture struct {
 	ID     imgui.TextureID
 	Width  int
@@ -28,13 +31,16 @@ func NewTextureFromRgba(rgba *image.RGBA) *Texture {
 		Height: rgba.Bounds().Dy(),
 	}
 
-	// Set finalizer
-	runtime.SetFinalizer(&texture, (*Texture).release)
+	// I leav it for documentation here:
+	// GC runs in a separated thread so this may not work correctly (will crash opengl)
+	// runtime.SetFinalizer(&texture, (*Texture).release)
 
 	return &texture
 }
 
-func (t *Texture) release() {
+// Release tells OpenGL that this texture is no longer needed.
+// ATTENTION: This will not be automatically handled by GC so remember to do it manually if you have many textures!
+func (t *Texture) Release() {
 	textureManager.DeleteTexture(t.ID)
 }
 
