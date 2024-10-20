@@ -12,6 +12,10 @@ import (
 	"github.com/AllenDang/cimgui-go/imgui"
 )
 
+// Texture implements a simple texture loader. It wraps backend's methods to allow creating textures easily.
+// IMPORTANT: as the texture is mainly handled by C OpenGL, it is not covered by Garbae Collector (GC).
+//
+//	Remember to call (*Texture).Release when you no longer need it.
 type Texture struct {
 	ID     imgui.TextureID
 	Width  int
