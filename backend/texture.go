@@ -8,7 +8,6 @@ import (
 	_ "image/png"
 	"os"
 	"path/filepath"
-	"runtime"
 
 	"github.com/AllenDang/cimgui-go/imgui"
 )
@@ -28,13 +27,16 @@ func NewTextureFromRgba(rgba *image.RGBA) *Texture {
 		Height: rgba.Bounds().Dy(),
 	}
 
-	// Set finalizer
-	runtime.SetFinalizer(&texture, (*Texture).release)
+	// I leav it for documentation here:
+	// GC runs in a separated thread so this may not work correctly (will crash opengl)
+	// runtime.SetFinalizer(&texture, (*Texture).release)
 
 	return &texture
 }
 
-func (t *Texture) release() {
+// Release tells OpenGL that this texture is no longer needed.
+// ATTENTION: This will not be automatically handled by GC so remember to do it manually if you have many textures!
+func (t *Texture) Release() {
 	textureManager.DeleteTexture(t.ID)
 }
 
