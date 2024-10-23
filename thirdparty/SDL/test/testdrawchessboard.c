@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
+   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
 
    This software is provided 'as-is', without any express or implied
    warranty.  In no event will the authors be held liable for any damages
@@ -28,7 +28,7 @@ SDL_Renderer *renderer;
 SDL_Surface *surface;
 int done;
 
-void DrawChessBoard()
+void DrawChessBoard(void)
 {
     int row = 0, column = 0, x = 0;
     SDL_Rect rect, darea;
@@ -50,9 +50,10 @@ void DrawChessBoard()
             SDL_RenderFillRect(renderer, &rect);
         }
     }
+    SDL_RenderPresent(renderer);
 }
 
-void loop()
+void loop(void)
 {
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
@@ -106,13 +107,13 @@ int main(int argc, char *argv[])
 
     /* Create window and renderer for given surface */
     window = SDL_CreateWindow("Chess Board", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_RESIZABLE);
-    if (window == NULL) {
+    if (!window) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Window creation fail : %s\n", SDL_GetError());
         return 1;
     }
     surface = SDL_GetWindowSurface(window);
     renderer = SDL_CreateSoftwareRenderer(surface);
-    if (renderer == NULL) {
+    if (!renderer) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Render creation for surface fail : %s\n", SDL_GetError());
         return 1;
     }

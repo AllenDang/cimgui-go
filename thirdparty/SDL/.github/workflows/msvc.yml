@@ -23,7 +23,7 @@ jobs:
             project: VisualC-WinRT/SDL-UWP.sln, projectflags: '/p:Platform=x64 /p:WindowsTargetPlatformVersion=10.0.17763.0' }
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Create CMake project using SDL as a subproject
       shell: python
       run: |
@@ -34,8 +34,14 @@ jobs:
         os.makedirs(builddir)
         with open(f"{ builddir }/CMakeLists.txt", "w") as f:
           f.write(textwrap.dedent(f"""\
-            cmake_minimum_required(VERSION 3.0...3.5)
+            # Always build .PDB symbol file
+            set(CMAKE_POLICY_DEFAULT_CMP0141 "NEW" CACHE STRING "MSVC debug information format flags are selected by an abstraction")
+            set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "ProgramDatabase" CACHE STRING "MSVC debug information format")
+            set(CMAKE_EXE_LINKER_FLAGS "-DEBUG" CACHE STRING "Linker flags for executables")
+            set(CMAKE_SHARED_LINKER_FLAGS "-DEBUG" CACHE STRING "Linker flag for shared libraries")
+            cmake_minimum_required(VERSION 3.0...3.25)
             project(sdl_user)
+            enable_testing()
             add_subdirectory("{ srcdir }" SDL)
           """))
     - name: Configure (CMake)
@@ -68,7 +74,7 @@ jobs:
 
     - name: Add msbuild to PATH
       if: ${{ matrix.platform.project != '' }}
-      uses: microsoft/setup-msbuild@v1.1.3
+      uses: microsoft/setup-msbuild@v2
     - name: Build msbuild
       if: ${{ matrix.platform.project != '' }}
       run: msbuild ${{ matrix.platform.project }} /m /p:BuildInParallel=true /p:Configuration=Release ${{ matrix.platform.projectflags }}
