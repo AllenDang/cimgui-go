@@ -1,9 +1,10 @@
 //go:build required
-// +build required
+// +build rquired
 
 package imgui
 
 import (
+
 	_ "github.com/AllenDang/cimgui-go/cwrappers"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/backends"
@@ -22,6 +23,7 @@ import (
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/example_sdl2_vulkan"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/example_sdl3_opengl3"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/example_sdl3_sdlrenderer3"
+	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/example_sdl3_vulkan"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/example_win32_directx10"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/example_win32_directx11"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/example_win32_directx12"
@@ -30,11 +32,11 @@ import (
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/libs/emscripten"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/libs/glfw/include/GLFW"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/libs/usynergy"
+	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui_markdown"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/misc/cpp"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/misc/fonts"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/misc/freetype"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/misc/single_file"
-	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui_markdown"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imnodes"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imnodes/example"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imnodes/vcpkg/ports/b64"

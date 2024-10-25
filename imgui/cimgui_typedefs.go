@@ -2552,16 +2552,8 @@ type TextureID uint64
 // Handle returns C version of TextureID and its finalizer func.
 func (selfSrc *TextureID) Handle() (result *C.ImTextureID, fin func()) {
 	self := (*uint64)(selfSrc)
-	selfArg := make([]C.ImU64, len(*self))
-	for i, selfV := range *self {
-		selfArg[i] = C.ImU64(selfV)
-	}
-
-	return (*C.ImTextureID)((*C.ImU64)(&selfArg[0])), func() {
-		for i, selfV := range selfArg {
-			(*self)[i] = uint64(selfV)
-		}
-	}
+	selfArg, selfFin := datautils.WrapNumberPtr[C.ImU64, uint64](self)
+	return (*C.ImTextureID)(selfArg), func() { selfFin() }
 }
 
 // C is like Handle but returns plain type instead of pointer.
