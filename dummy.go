@@ -1,10 +1,9 @@
 //go:build required
-// +build rquired
+// +build required
 
 package imgui
 
 import (
-
 	_ "github.com/AllenDang/cimgui-go/cwrappers"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/backends"
@@ -32,11 +31,11 @@ import (
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/libs/emscripten"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/libs/glfw/include/GLFW"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/libs/usynergy"
-	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui_markdown"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/misc/cpp"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/misc/fonts"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/misc/freetype"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/misc/single_file"
+	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui_markdown"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imnodes"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imnodes/example"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imnodes/vcpkg/ports/b64"
