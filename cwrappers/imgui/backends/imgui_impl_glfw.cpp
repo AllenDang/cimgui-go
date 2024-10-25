@@ -211,13 +211,17 @@ static ImGui_ImplGlfw_Data* ImGui_ImplGlfw_GetBackendData()
 
 // Forward Declarations
 static void ImGui_ImplGlfw_UpdateMonitors();
-static void ImGui_ImplGlfw_InitPlatformInterface();
-static void ImGui_ImplGlfw_ShutdownPlatformInterface();
+static void ImGui_ImplGlfw_InitMultiViewportSupport();
+static void ImGui_ImplGlfw_ShutdownMultiViewportSupport();
 
 // Functions
-static ImGuiKey ImGui_ImplGlfw_KeyToImGuiKey(int key)
+
+// Not static to allow third-party code to use that if they want to (but undocumented)
+ImGuiKey ImGui_ImplGlfw_KeyToImGuiKey(int keycode, int scancode);
+ImGuiKey ImGui_ImplGlfw_KeyToImGuiKey(int keycode, int scancode)
 {
-    switch (key)
+    IM_UNUSED(scancode);
+    switch (keycode)
     {
         case GLFW_KEY_TAB: return ImGuiKey_Tab;
         case GLFW_KEY_LEFT: return ImGuiKey_LeftArrow;
@@ -385,6 +389,7 @@ void ImGui_ImplGlfw_ScrollCallback(GLFWwindow* window, double xoffset, double yo
     io.AddMouseWheelEvent((float)xoffset, (float)yoffset);
 }
 
+// FIXME: should this be baked into ImGui_ImplGlfw_KeyToImGuiKey()? then what about the values passed to io.SetKeyEventNativeData()?
 static int ImGui_ImplGlfw_TranslateUntranslatedKey(int key, int scancode)
 {
 #if GLFW_HAS_GETKEYNAME && !defined(EMSCRIPTEN_USE_EMBEDDED_GLFW3)
@@ -435,7 +440,7 @@ void ImGui_ImplGlfw_KeyCallback(GLFWwindow* window, int keycode, int scancode, i
     keycode = ImGui_ImplGlfw_TranslateUntranslatedKey(keycode, scancode);
 
     ImGuiIO& io = ImGui::GetIO();
-    ImGuiKey imgui_key = ImGui_ImplGlfw_KeyToImGuiKey(keycode);
+    ImGuiKey imgui_key = ImGui_ImplGlfw_KeyToImGuiKey(keycode, scancode);
     io.AddKeyEvent(imgui_key, (action == GLFW_PRESS));
     io.SetKeyEventNativeData(imgui_key, keycode, scancode); // To support legacy indexing (<1.87 user code)
 }
@@ -649,7 +654,8 @@ static bool ImGui_ImplGlfw_Init(GLFWwindow* window, bool install_callbacks, Glfw
     if (install_callbacks)
         ImGui_ImplGlfw_InstallCallbacks(window);
 
-    // Update monitors the first time (note: monitor callback are broken in GLFW 3.2 and earlier, see github.com/glfw/glfw/issues/784)
+    // Update monitor a first time during init
+    // (note: monitor callback are broken in GLFW 3.2 and earlier, see github.com/glfw/glfw/issues/784)
     ImGui_ImplGlfw_UpdateMonitors();
     glfwSetMonitorCallback(ImGui_ImplGlfw_MonitorCallback);
 
@@ -663,8 +669,7 @@ static bool ImGui_ImplGlfw_Init(GLFWwindow* window, bool install_callbacks, Glfw
 #else
     IM_UNUSED(main_viewport);
 #endif
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        ImGui_ImplGlfw_InitPlatformInterface();
+    ImGui_ImplGlfw_InitMultiViewportSupport();
 
     // Windows: register a WndProc hook so we can intercept some messages.
 #ifdef _WIN32
@@ -715,7 +720,7 @@ void ImGui_ImplGlfw_Shutdown()
     IM_ASSERT(bd != nullptr && "No platform backend to shutdown, or already shutdown?");
     ImGuiIO& io = ImGui::GetIO();
 
-    ImGui_ImplGlfw_ShutdownPlatformInterface();
+    ImGui_ImplGlfw_ShutdownMultiViewportSupport();
 
     if (bd->InstalledCallbacks)
         ImGui_ImplGlfw_RestoreCallbacks(bd->Window);
@@ -760,7 +765,7 @@ static void ImGui_ImplGlfw_UpdateMouseData()
 #endif
         if (is_window_focused)
         {
-            // (Optional) Set OS mouse position from Dear ImGui if requested (rarely used, only when ImGuiConfigFlags_NavEnableSetMousePos is enabled by user)
+            // (Optional) Set OS mouse position from Dear ImGui if requested (rarely used, only when io.ConfigNavMoveSetMousePos is enabled by user)
             // When multi-viewports are enabled, all Dear ImGui positions are same as OS positions.
             if (io.WantSetMousePos)
                 glfwSetCursorPos(window, (double)(mouse_pos_prev.x - viewport->Pos.x), (double)(mouse_pos_prev.y - viewport->Pos.y));
@@ -1329,7 +1334,7 @@ static int ImGui_ImplGlfw_CreateVkSurface(ImGuiViewport* viewport, ImU64 vk_inst
 }
 #endif // GLFW_HAS_VULKAN
 
-static void ImGui_ImplGlfw_InitPlatformInterface()
+static void ImGui_ImplGlfw_InitMultiViewportSupport()
 {
     // Register platform interface (will be coupled with a renderer interface)
     ImGui_ImplGlfw_Data* bd = ImGui_ImplGlfw_GetBackendData();
@@ -1364,7 +1369,7 @@ static void ImGui_ImplGlfw_InitPlatformInterface()
     main_viewport->PlatformHandle = (void*)bd->Window;
 }
 
-static void ImGui_ImplGlfw_ShutdownPlatformInterface()
+static void ImGui_ImplGlfw_ShutdownMultiViewportSupport()
 {
     ImGui::DestroyPlatformWindows();
 }

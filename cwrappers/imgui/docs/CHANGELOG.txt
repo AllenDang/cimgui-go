@@ -36,10 +36,195 @@ HOW TO UPDATE?
 - Please report any issue!
 
 -----------------------------------------------------------------------
- VERSION 1.91.2 WIP (In Progress)
+ VERSION 1.91.5 WIP (In Progress)
 -----------------------------------------------------------------------
 
 Breaking changes:
+
+Other changes:
+
+- Backends: DX12: Unmap() call specify written range. The range is informational and
+  may be used by debug tools.
+- Backends: SDL2: Replace SDL_Vulkan_GetDrawableSize() forward declaration with the 
+  actual include. (#8095, #7967, #3190) [@sev-] 
+- Backends: SDL2, SDL3: SDL_EVENT_MOUSE_WHEEL event doesn't require dividing 
+  by 100.0f on Emscripten target. (#4019, #6096, #1463)
+- Examples: Added SDL3+Vulkan example. (#8084, #8085)
+
+-----------------------------------------------------------------------
+ VERSION 1.91.4 (Released 2024-10-18)
+-----------------------------------------------------------------------
+
+Breaking changes:
+
+- Style: renamed ImGuiCol_NavHighlight to ImGuiCol_NavCursor, for consistency with 
+  newly exposed and reworked features. Kept inline redirection enum (will obsolete).
+- The typedef for ImTextureID now defaults to ImU64 instead of void*. (#1641)
+  - This removes the requirement to redefine it for backends which are e.g. storing
+    descriptor sets or other 64-bits structures when building on 32-bits archs
+    (namely our DX12 and Vulkan backends). It therefore simplify various building scripts/helpers.
+  - You may have compile-time warnings if you were casting to 'void*' instead of 'ImTextureID'
+    when passing your types to functions taking ImTextureID values, e.g. ImGui::Image().
+    In doubt it is almost always better to do an intermediate intptr_t cast, since it
+    allows casting any pointer/integer type without warning:
+    - May warn:     ImGui::Image((void*)MyTextureData, ...);
+    - May warn:     ImGui::Image((void*)(intptr_t)MyTextureData, ...);
+    - Won't warn:   ImGui::Image((ImTextureID)(intptr_t)MyTextureData), ...);
+  - Note that you can always define ImTextureID to be your own high-level structures
+    (with dedicated constructors and extra render parameters) if you like.
+- IO: moved ImGuiConfigFlags_NavEnableSetMousePos to standalone io.ConfigNavMoveSetMousePos bool.
+- IO: moved ImGuiConfigFlags_NavNoCaptureKeyboard to standalone io.ConfigNavCaptureKeyboard bool 
+  (note the inverted value!). (#2517, #2009)
+  Kept legacy names (will obsolete) + code that copies settings once the first time. 
+  Dynamically changing the old value won't work. Switch to using the new value!
+
+Other changes:
+
+- IO: added 'void* platform_io.Renderer_RenderState' which is set during the
+  ImGui_ImplXXXX_RenderDrawData() of standard backends to expose selected render
+  states to your draw callbacks. (#6969, #5834, #7468, #3590)
+- IO: io.WantCaptureKeyboard is never set when ImGuiConfigFlags_NoKeyboard is enabled. (#4921)
+- Error Handling: turned a few more functions into recoverable errors. (#1651)
+- Nav (Keyboard/Gamepad navigation):
+  - Nav: added io.ConfigNavCursorVisibleAuto and io.ConfigNavCursorVisibleAlways to configure
+    visibility of navigation cursor. (#1074, #2048, #7237, #8059, #3200, #787)
+     - Set io.ConfigNavCursorVisibleAuto = true (default) to enable automatic toggling
+       of cursor visibility (mouse click hide the cursor, arrow keys makes it visible).
+     - Set io.ConfigNavCursorVisibleAlways to keep cursor always visible.
+  - Nav: added NavSetCursorVisible(bool visible) function to manipulate visibility of 
+    navigation cursor (e.g. set default state, or after some actions). (#1074, #2048, #7237, #8059)
+  - Nav: added io.ConfigNavEscapeClearFocusItem and io.ConfigNavEscapeClearFocusWindow to change
+    how pressing Escape affects navigation. (#8059, #2048, #1074, #3200)
+    - Set io.ConfigNavEscapeClearFocusItem = true (default) to clear focused item and highlight.
+    - Set io.ConfigNavEscapeClearFocusItem = false for Escape to not have an effect.
+    - Set io.ConfigNavEscapeClearFocusWindow = true to completely unfocus the dear imgui window,
+      is for some reason your app relies on imgui focus to take other decisions.  
+  - Nav: pressing escape to hide the navigation cursor doesn't clear location, so it may be
+    restored when Ctrl+Tabbing back into the same window later.
+  - Nav: fixed Ctrl+Tab initiated with no focused window from skipping the top-most window. (#3200)
+  - Nav: navigation cursor is not rendered for items with `ImGuiItemFlags_NoNav`. Can be relevant 
+    when e.g activating a _NoNav item with mouse, then Ctrl+Tabbing back and forth.
+- Disabled: clicking a disabled item focuses parent window. (#8064) 
+- InvisibleButton, Nav: fixed an issue when InvisibleButton() would be navigable into but
+  not display navigation highlight. Properly navigation on it by default. (#8057)
+- InvisibleButton: added ImGuiButtonFlags_EnableNav to enable navigation. (#8057)
+- Tooltips: fixed incorrect tooltip positioning when using keyboard/gamepad navigation 
+  (1.91.3 regression). (#8036)
+- DrawList: AddCallback() added an optional size parameter allowing to copy and
+  store any amount of user data for usage by callbacks: (#6969, #4770, #7665)
+  - If userdata_size == 0: we copy/store the 'userdata' argument as-is (existing behavior).
+    It will be available unmodified in ImDrawCmd::UserCallbackData during render.
+  - If userdata_size > 0, we copy/store 'userdata_size' bytes pointed to by 'userdata' (new behavior).
+    We store them in a buffer stored inside the drawlist. ImDrawCmd::UserCallbackData 
+    will point inside that buffer so you have to retrieve data from there. Your callback
+    may need to use ImDrawCmd::UserCallbackDataSize if you expect dynamically-sized data.
+  - Note that we use a raw type-less copy.
+- Tables: fixed initial auto-sizing issue with synced-instances. (#8045, #7218)
+- InputText: fixed an issue with not declaring ownership of Delete/Backspace/Arrow keys,
+  preventing use of external shortcuts that are not guarded by an ActiveId check. (#8048) 
+  [@geertbleyen]
+- InputText: ensure mouse cursor shape is set regardless of whether keyboard mode is 
+  enabled or not. (#6417)
+- InputScalar: added an assert to clarify that ImGuiInputTextFlags_EnterReturnsTrue is not
+  supported by InputFloat, InputInt, InputScalar etc. widgets. It actually never was. (#8065, #3946)
+- imgui_freetype: Added support for plutosvg (as an alternative to lunasvg) to render 
+  OpenType SVG fonts. Requires defining IMGUI_ENABLE_FREETYPE_PLUTOSVG along with IMGUI_ENABLE_FREETYPE.
+  Providing headers/librairies for plutosvg + plutovg is up to you (see #7927 for help).
+  (#7927, #7187, #6591, #6607) [@pthom]
+- Backends: DX11, DX12, SDLRenderer2/3. Vulkan, WGPU: expose selected state in
+  ImGui_ImplXXXX_RenderState structures during render loop user draw callbacks. 
+  (#6969, #5834, #7468, #3590)
+- Backends: DX9, DX10, DX11, DX12, OpenGL, Vulkan, WGPU: Changed default texture sampler
+  to Clamp instead of Repeat/Wrap. (#7468, #7511, #5999, #5502, #7230)
+
+Docking+Viewports Branch:
+
+- Backends: changed all backends to allow enabling ImGuiConfigFlags_ViewportsEnable
+  after initialization. (#5371)
+
+
+-----------------------------------------------------------------------
+ VERSION 1.91.3 (Released 2024-10-04)
+-----------------------------------------------------------------------
+
+Decorated log and release notes: https://github.com/ocornut/imgui/releases/tag/v1.91.3
+
+Breaking changes:
+
+- Drags: treat v_min==v_max as a valid clamping range when != 0.0f. Zero is still a special
+  value due to legacy reasons, unless using ImGuiSliderFlags_ClampZeroRange. (#7968, #3361, #76)
+- Drags: extended behavior of ImGuiSliderFlags_AlwaysClamp to include _ClampZeroRange.
+  It considers v_min==v_max==0.0f as a valid clamping range (aka edits not allowed).
+  Although unlikely, it you wish to only clamp on text input but want v_min==v_max==0.0f
+  to mean unclamped drags, you can use _ClampOnInput instead of _AlwaysClamp. (#7968, #3361, #76)
+
+Other changes:
+
+- Error Handling: Enabled/improved error recovery systems. (#1651, #5654)
+  - Error recovery is provided as a way to facilitate:
+    - Recovery after a programming error. Native code or scripting language (the later
+      tends to facilitate iterating on code while running).
+    - Recovery after running an exception handler or any error processing which may skip code
+      after an error has been detected.
+  - Error recovery is not perfect nor guaranteed! It is a feature to ease development.
+    You not are not supposed to rely on it in the course of a normal application run.
+  - Functions that support error recovery are using IM_ASSERT_USER_ERROR() instead of IM_ASSERT().
+  - By design, we do not allow error recovery to be 100% silent. One of the options needs to be enabled!
+  - Possible usage: facilitate recovery from errors triggered from a scripting language or
+    after specific exceptions handlers. Surface errors to programmers in less aggressive ways.
+  - Always ensure that on programmers seats you have at minimum Asserts or Tooltips enabled
+    when making direct imgui API calls! Otherwise it would severely hinder your ability to
+    catch and correct mistakes!
+  - Added io.ConfigErrorRecovery to enable error recovery support.
+  - Added io.ConfigErrorRecoveryEnableAssert to assert on recoverable errors.
+  - Added io.ConfigErrorRecoveryEnableDebugLog to output to debug log on recoverable errors.
+  - Added io.ConfigErrorRecoveryEnableTooltip to enable displaying an error tooltip on recoverable errors.
+    The tooltip include a way to enable asserts if they were disabled.
+  - All options are enabled by default.
+  - Read https://github.com/ocornut/imgui/wiki/Error-Handling for a bit more details.
+- Windows: BeginChild(): made it possible to call SetNextWindowSize() on a child window
+  using ImGuiChildFlags_ResizeX,ImGuiChildFlags_ResizeY in order to override its current
+  size. (#1710, #8020)
+- Scrollbar: Shift+Click scroll to clicked location (pre-1.90.8 default). (#8002, #7328)
+- Scrollbar: added io.ConfigScrollbarScrollByPage setting (default to true). (#8002, #7328)
+  Set io.ConfigScrollbarScrollByPage=false to enforce always scrolling to clicked location.
+- Drags: split ImGuiSliderFlags_AlwaysClamp into two distinct flags: (#7968, #3361, #76)
+  - ImGuiSliderFlags_AlwaysClamp = ImGuiSliderFlags_ClampOnInput + ImGuiSliderFlags_ClampZeroRange.
+  - Previously _AlwaysClamp only did the equivalent of _ClampOnInput.
+  - Added ImGuiSliderFlags_ClampOnInput which is now a subset of AlwaysClamp.
+    (note that it was the old name of AlwaysClamp, but we are reintroducing that name).
+  - Added ImGuiSliderFlags_ClampZeroRange to enforce clamping even when v_min==v_max==0.0f
+    in drag functions. Sliders are not affected.
+- Tooltips, Drag and Drop: Fixed an issue where the fallback drag and drop payload tooltip
+  appeared during drag and drop release.
+- Tooltips, Drag and Drop: Stabilized name of drag and drop tooltip window so that
+  transitioning from an item tooltip to a drag tooltip doesn't leak window auto-sizing
+  info from one to the other. (#8036)
+- Tooltips: Tooltips triggered from touch inputs are positioned above the item. (#8036)
+- Backends: SDL3: Update for API changes: SDL_bool removal. SDL_INIT_TIMER removal.
+- Backends: WebGPU: Fixed DAWN api change using WGPUStringView in WGPUShaderSourceWGSL.
+  (#8009, #8010) [@blitz-research]
+
+Docking+Viewports Branch:
+
+- Backends: SDL2, SDL3: Fixed building for UWP platforms. (#8008)
+- Backends: Win32: Use ResisterClassW()/CreateWindowExW() for secondary viewports, to
+  ensure correct IME input even if the backend was compiled in MBCS mode. (#7979, #5725)
+
+
+-----------------------------------------------------------------------
+ VERSION 1.91.2 (Released 2024-09-19)
+-----------------------------------------------------------------------
+
+Decorated log and release notes: https://github.com/ocornut/imgui/releases/tag/v1.91.2
+
+Breaking changes:
+
+ - Internals: using multiple overlayed ButtonBehavior() with same ID will now have the
+   io.ConfigDebugHighlightIdConflicts=true feature emit a warning. (#8030)
+   It was one of the rare case where using same ID is legal. Workarounds:
+   - use single ButtonBehavior() call with multiple _MouseButton flags
+   - or surround the calls with PushItemFlag(ImGuiItemFlags_AllowDuplicateId, true); ... PopItemFlag()
 
 Other changes:
 
@@ -54,7 +239,7 @@ Other changes:
   - I've been wanting to add this tool for a long time, but was stalled by finding a way to
     not make it spammy + make it practically zero cost. After @pthom made various proposals to
     solve the same problem (thanks for pushing me!), I decided it was time to finish it.
-  - Added ImGuiItemFlags_AllowDuplicateId to use with PushItemFlag/PopItemFlag() if for some
+  - Added ImGuiItemFlags_AllowDuplicateId to use with PushItemFlag()/PopItemFlag() if for some
     reason you intend to have duplicate identifiers.
   - (#74, #96, #480, #501, #647, #654, #719, #843, #894, #1057, #1173, #1390, #1414, #1556, #1768,
      #2041, #2116, #2330, #2475, #2562, #2667, #2807, #2885, #3102, #3375, #3526, #3964, #4008,
@@ -65,27 +250,39 @@ Other changes:
 - Nav: pressing any keyboard key while holding Alt disable toggling nav layer on Alt release. (#4439)
 - MultiSelect+Tables: fixed an issue where box-select would skip items while drag-scrolling
   in a table with outer borders. (#7970, #7821).
+- Inputs: SetNextItemShortcut() with ImGuiInputFlags_Tooltip doesn't show tooltip when item is active.
 - InputText: internal refactoring to simplify and optimize the code. The ImWchar buffer has been
   removed. Simplifications allowed to implement new optimizations for handling very large text buffers
   (e.g. in our testing, handling of a 1 MB text buffer is now 3 times faster in VS2022 Debug build).
-  This is the first step toward more refactorig. (#7925) [@alektron, @ocornut]
+  This is the first step toward more refactoring. (#7925) [@alektron, @ocornut]
 - InputText: added CJK double-width punctuation to list of separators considered for CTRL+Arrow.
+- Tables: fixed auto-width columns when using synced-instances of same table. The previous fix
+  done in v1.90.5 was incomplete. (#7218)
+- Tables: fixed assertion related to inconsistent outer clipping when sizes are not rounded. (#7957) [@eclbtownsend]
+- Tables: fixed assertion with tables with borders when clipped by parent. (#6765, #3752, #7428)
+- Windows: fixed an issue where double-click to collapse could be triggered even while another
+  item is active, if the item didn't use the left mouse button. (#7841)
+- Misc: Made it accepted to call SetMouseCursor() with any out-of-bound value, as a way to allow
+  hacking in custom cursors if desirable.
 - Fonts: fixed ellipsis "..." rendering width miscalculation bug introduced in 1.91.0. (#7976) [@DDeimos]
 - TextLinkOpenURL(): modified tooltip to display a verb "Open 'xxxx'". (#7885, #7660)
 - Backends: SDL2: use SDL_Vulkan_GetDrawableSize() when available. (#7967, #3190) [@scribam]
 - Backends: GLFW+Emscripten: use OSX behaviors automatically when using contrib glfw port. (#7965, #7915)
   [@ypujante]
+- Backends: WebGPU: Added support for optional IMGUI_IMPL_WEBGPU_BACKEND_DAWN / IMGUI_IMPL_WEBGPU_BACKEND_WGPU
+  defines to handle ever-changing native implementations. (#7977, #7969, #6602, #6188, #7523) [@acgaudette]
 
 Docking+Viewports Branch:
 
 - Viewports: fixed an issue where a window manually constrained to the main viewport while crossing
   over main viewport bounds isn't translated properly. (#7985)
+- Backends: SDL2, SDL3, Win32: ensure that ImGuiPlatformMonitor list is available after backend Init call. (#7995)
 - Backends: Win32: fixed direct calls to platform_io.Platform_SetWindowPos()/Platform_SetWindowSize()
   on windows created by application (typically main viewport).
 - Backends: Win32: fixed an issue where a viewport destroyed while clicking would hog
   mouse tracking and temporary lead to incorrect update of HoveredWindow. (#7971)
 - Backends: SDL3: added support for viewport->ParentViewportId field to support parenting
-  windows at OS level. (#7973) [@RT2code]
+  windows at OS level. (#7973, #7989) [@RT2code]
 
 -----------------------------------------------------------------------
  VERSION 1.91.1 (Released 2024-09-04)
@@ -388,6 +585,7 @@ Other changes:
   which was pressed over void/underlying app, which is consistent/needed to allow the
   mouse up event of a drag over void/underlying app to catch release. (#1392) [@Moka42]
 - IO: Added io.ClearInputMouse() to clear mouse state. (#4921)
+- IO: Added ImGuiConfigFlags_NoKeyboard for consistency and convenience. (#4921)
 - Windows: BeginChild(): fixed a glitch when during a resize of a child window which is
   tightly close to the boundaries of its parent (e.g. with zero WindowPadding), the child
   position could have temporarily be moved around by erroneous padding application. (#7706)

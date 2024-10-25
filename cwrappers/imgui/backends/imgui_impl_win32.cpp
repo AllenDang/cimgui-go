@@ -107,8 +107,8 @@ typedef DWORD(WINAPI* PFN_XInputGetState)(DWORD, XINPUT_STATE*);
 #endif
 
 // Forward Declarations
-static void ImGui_ImplWin32_InitPlatformInterface(bool platform_has_own_dc);
-static void ImGui_ImplWin32_ShutdownPlatformInterface();
+static void ImGui_ImplWin32_InitMultiViewportSupport(bool platform_has_own_dc);
+static void ImGui_ImplWin32_ShutdownMultiViewportSupport();
 static void ImGui_ImplWin32_UpdateMonitors();
 
 struct ImGui_ImplWin32_Data
@@ -176,17 +176,18 @@ static bool ImGui_ImplWin32_InitEx(void* hwnd, bool platform_has_own_dc)
     io.BackendFlags |= ImGuiBackendFlags_HasMouseHoveredViewport; // We can call io.AddMouseViewportEvent() with correct data (optional)
 
     bd->hWnd = (HWND)hwnd;
-    bd->WantUpdateMonitors = true;
     bd->TicksPerSecond = perf_frequency;
     bd->Time = perf_counter;
     bd->LastMouseCursor = ImGuiMouseCursor_COUNT;
     ImGui_ImplWin32_UpdateKeyboardCodePage();
 
+    // Update monitor a first time during init
+    ImGui_ImplWin32_UpdateMonitors();
+
     // Our mouse update function expect PlatformHandle to be filled for the main viewport
     ImGuiViewport* main_viewport = ImGui::GetMainViewport();
     main_viewport->PlatformHandle = main_viewport->PlatformHandleRaw = (void*)bd->hWnd;
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        ImGui_ImplWin32_InitPlatformInterface(platform_has_own_dc);
+    ImGui_ImplWin32_InitMultiViewportSupport(platform_has_own_dc);
 
     // Dynamically load XInput library
 #ifndef IMGUI_IMPL_WIN32_DISABLE_GAMEPAD
@@ -229,7 +230,7 @@ void    ImGui_ImplWin32_Shutdown()
     IM_ASSERT(bd != nullptr && "No platform backend to shutdown, or already shutdown?");
     ImGuiIO& io = ImGui::GetIO();
 
-    ImGui_ImplWin32_ShutdownPlatformInterface();
+    ImGui_ImplWin32_ShutdownMultiViewportSupport();
 
     // Unload XInput library
 #ifndef IMGUI_IMPL_WIN32_DISABLE_GAMEPAD
@@ -328,7 +329,7 @@ static void ImGui_ImplWin32_UpdateMouseData()
     const bool is_app_focused = (focused_window && (focused_window == bd->hWnd || ::IsChild(focused_window, bd->hWnd) || ImGui::FindViewportByPlatformHandle((void*)focused_window)));
     if (is_app_focused)
     {
-        // (Optional) Set OS mouse position from Dear ImGui if requested (rarely used, only when ImGuiConfigFlags_NavEnableSetMousePos is enabled by user)
+        // (Optional) Set OS mouse position from Dear ImGui if requested (rarely used, only when io.ConfigNavMoveSetMousePos is enabled by user)
         // When multi-viewports are enabled, all Dear ImGui positions are same as OS positions.
         if (io.WantSetMousePos)
         {
@@ -493,12 +494,15 @@ void    ImGui_ImplWin32_NewFrame()
     ImGui_ImplWin32_UpdateGamepads();
 }
 
-// There is no distinct VK_xxx for keypad enter, instead it is VK_RETURN + KF_EXTENDED, we assign it an arbitrary value to make code more readable (VK_ codes go up to 255)
-#define IM_VK_KEYPAD_ENTER      (VK_RETURN + 256)
-
 // Map VK_xxx to ImGuiKey_xxx.
-static ImGuiKey ImGui_ImplWin32_VirtualKeyToImGuiKey(WPARAM wParam)
+// Not static to allow third-party code to use that if they want to (but undocumented)
+ImGuiKey ImGui_ImplWin32_KeyEventToImGuiKey(WPARAM wParam, LPARAM lParam);
+ImGuiKey ImGui_ImplWin32_KeyEventToImGuiKey(WPARAM wParam, LPARAM lParam)
 {
+    // There is no distinct VK_xxx for keypad enter, instead it is VK_RETURN + KF_EXTENDED.
+    if ((wParam == VK_RETURN) && (HIWORD(lParam) & KF_EXTENDED))
+        return ImGuiKey_KeypadEnter;
+
     switch (wParam)
     {
         case VK_TAB: return ImGuiKey_Tab;
@@ -547,7 +551,6 @@ static ImGuiKey ImGui_ImplWin32_VirtualKeyToImGuiKey(WPARAM wParam)
         case VK_MULTIPLY: return ImGuiKey_KeypadMultiply;
         case VK_SUBTRACT: return ImGuiKey_KeypadSubtract;
         case VK_ADD: return ImGuiKey_KeypadAdd;
-        case IM_VK_KEYPAD_ENTER: return ImGuiKey_KeypadEnter;
         case VK_LSHIFT: return ImGuiKey_LeftShift;
         case VK_LCONTROL: return ImGuiKey_LeftCtrl;
         case VK_LMENU: return ImGuiKey_LeftAlt;
@@ -769,12 +772,9 @@ IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARA
             // Submit modifiers
             ImGui_ImplWin32_UpdateKeyModifiers();
 
-            // Obtain virtual key code
-            // (keypad enter doesn't have its own... VK_RETURN with KF_EXTENDED flag means keypad enter, see IM_VK_KEYPAD_ENTER definition for details, it is mapped to ImGuiKey_KeyPadEnter.)
-            int vk = (int)wParam;
-            if ((wParam == VK_RETURN) && (HIWORD(lParam) & KF_EXTENDED))
-                vk = IM_VK_KEYPAD_ENTER;
-            const ImGuiKey key = ImGui_ImplWin32_VirtualKeyToImGuiKey(vk);
+            // Obtain virtual key code and convert to ImGuiKey
+            const ImGuiKey key = ImGui_ImplWin32_KeyEventToImGuiKey(wParam, lParam);
+            const int vk = (int)wParam;
             const int scancode = (int)LOBYTE(HIWORD(lParam));
 
             // Special behavior for VK_SNAPSHOT / ImGuiKey_PrintScreen as Windows doesn't emit the key down event.
@@ -1062,8 +1062,8 @@ static void ImGui_ImplWin32_CreateWindow(ImGuiViewport* viewport)
     // Create window
     RECT rect = { (LONG)viewport->Pos.x, (LONG)viewport->Pos.y, (LONG)(viewport->Pos.x + viewport->Size.x), (LONG)(viewport->Pos.y + viewport->Size.y) };
     ::AdjustWindowRectEx(&rect, vd->DwStyle, FALSE, vd->DwExStyle);
-    vd->Hwnd = ::CreateWindowEx(
-        vd->DwExStyle, _T("ImGui Platform"), _T("Untitled"), vd->DwStyle,       // Style, class name, window name
+    vd->Hwnd = ::CreateWindowExW(
+        vd->DwExStyle, L"ImGui Platform", L"Untitled", vd->DwStyle,       // Style, class name, window name
         rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,    // Window area
         vd->HwndParent, nullptr, ::GetModuleHandle(nullptr), nullptr);          // Owner window, Menu, Instance, Param
     vd->HwndOwned = true;
@@ -1328,10 +1328,10 @@ static LRESULT CALLBACK ImGui_ImplWin32_WndProcHandler_PlatformWindow(HWND hWnd,
     return result;
 }
 
-static void ImGui_ImplWin32_InitPlatformInterface(bool platform_has_own_dc)
+static void ImGui_ImplWin32_InitMultiViewportSupport(bool platform_has_own_dc)
 {
-    WNDCLASSEX wcex;
-    wcex.cbSize = sizeof(WNDCLASSEX);
+    WNDCLASSEXW wcex;
+    wcex.cbSize = sizeof(WNDCLASSEXW);
     wcex.style = CS_HREDRAW | CS_VREDRAW | (platform_has_own_dc ? CS_OWNDC : 0);
     wcex.lpfnWndProc = ImGui_ImplWin32_WndProcHandler_PlatformWindow;
     wcex.cbClsExtra = 0;
@@ -1341,9 +1341,9 @@ static void ImGui_ImplWin32_InitPlatformInterface(bool platform_has_own_dc)
     wcex.hCursor = nullptr;
     wcex.hbrBackground = (HBRUSH)(COLOR_BACKGROUND + 1);
     wcex.lpszMenuName = nullptr;
-    wcex.lpszClassName = _T("ImGui Platform");
+    wcex.lpszClassName = L"ImGui Platform";
     wcex.hIconSm = nullptr;
-    ::RegisterClassEx(&wcex);
+    ::RegisterClassExW(&wcex);
 
     ImGui_ImplWin32_UpdateMonitors();
 
@@ -1373,10 +1373,9 @@ static void ImGui_ImplWin32_InitPlatformInterface(bool platform_has_own_dc)
     vd->Hwnd = bd->hWnd;
     vd->HwndOwned = false;
     main_viewport->PlatformUserData = vd;
-    main_viewport->PlatformHandle = (void*)bd->hWnd;
 }
 
-static void ImGui_ImplWin32_ShutdownPlatformInterface()
+static void ImGui_ImplWin32_ShutdownMultiViewportSupport()
 {
     ::UnregisterClass(_T("ImGui Platform"), ::GetModuleHandle(nullptr));
     ImGui::DestroyPlatformWindows();

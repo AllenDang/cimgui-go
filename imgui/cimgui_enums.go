@@ -100,7 +100,7 @@ const (
 	BackendFlagsHasGamepad BackendFlags = 1
 	// Backend Platform supports honoring GetMouseCursor() value to change the OS cursor shape.
 	BackendFlagsHasMouseCursors BackendFlags = 2
-	// Backend Platform supports io.WantSetMousePos requests to reposition the OS mouse position (only used if ImGuiConfigFlags_NavEnableSetMousePos is set).
+	// Backend Platform supports io.WantSetMousePos requests to reposition the OS mouse position (only used if io.ConfigNavMoveSetMousePos is set).
 	BackendFlagsHasSetMousePos BackendFlags = 4
 	// Backend Renderer supports ImDrawCmd::VtxOffset. This enables output of large meshes (64K+ vertices) while still using 16-bit indices.
 	BackendFlagsRendererHasVtxOffset BackendFlags = 8
@@ -129,21 +129,17 @@ const (
 	ButtonFlagsPressedOnDoubleClick ButtonFlagsPrivate = 256
 	// return true when held into while we are drag and dropping another item (used by e.g. tree nodes, collapsing headers)
 	ButtonFlagsPressedOnDragDropHold ButtonFlagsPrivate = 512
-	// hold to repeat
-	ButtonFlagsRepeat ButtonFlagsPrivate = 1024
 	// allow interactions even if a child window is overlapping
 	ButtonFlagsFlattenChildren ButtonFlagsPrivate = 2048
 	// require previous frame HoveredId to either match id or be null before being usable.
 	ButtonFlagsAllowOverlap ButtonFlagsPrivate = 4096
-	// disable automatically closing parent popup on press // [UNUSED]
-	ButtonFlagsDontClosePopups ButtonFlagsPrivate = 8192
 	// vertically align button to match text baseline - ButtonEx() only // FIXME: Should be removed and handled by SmallButton(), not possible currently because of DC.CursorPosPrevLine
 	ButtonFlagsAlignTextBaseLine ButtonFlagsPrivate = 32768
 	// disable mouse interaction if a key modifier is held
-	ButtonFlagsNoKeyModifiers ButtonFlagsPrivate = 65536
+	ButtonFlagsNoKeyModsAllowed ButtonFlagsPrivate = 65536
 	// don't set ActiveId while holding the mouse (ImGuiButtonFlags_PressedOnClick only)
 	ButtonFlagsNoHoldingActiveId ButtonFlagsPrivate = 131072
-	// don't override navigation focus when activated (FIXME: this is essentially used every time an item uses ImGuiItemFlags_NoNav, but because legacy specs don't requires LastItemData to be set ButtonBehavior(), we can't poll g.LastItemData.InFlags)
+	// don't override navigation focus when activated (FIXME: this is essentially used every time an item uses ImGuiItemFlags_NoNav, but because legacy specs don't requires LastItemData to be set ButtonBehavior(), we can't poll g.LastItemData.ItemFlags)
 	ButtonFlagsNoNavFocus ButtonFlagsPrivate = 262144
 	// don't report as hovered when nav focus is on this item
 	ButtonFlagsNoHoveredOnFocus ButtonFlagsPrivate = 524288
@@ -169,6 +165,8 @@ const (
 	ButtonFlagsMouseButtonMiddle ButtonFlags = 4
 	// [Internal]
 	ButtonFlagsMouseButtonMask ButtonFlags = 7
+	// InvisibleButton(): do not disable navigation/tabbing. Otherwise disabled by default.
+	ButtonFlagsEnableNav ButtonFlags = 8
 )
 
 // Flags for ImGui::BeginChild()
@@ -202,7 +200,7 @@ const (
 	ChildFlagsAlwaysAutoResize ChildFlags = 64
 	// Style the child window like a framed item: use FrameBg, FrameRounding, FrameBorderSize, FramePadding instead of ChildBg, ChildRounding, ChildBorderSize, WindowPadding.
 	ChildFlagsFrameStyle ChildFlags = 128
-	// [BETA] Share focus scope, allow gamepad/keyboard navigation to cross over parent border to this child or between sibling child windows.
+	// [BETA] Share focus scope, allow keyboard/gamepad navigation to cross over parent border to this child or between sibling child windows.
 	ChildFlagsNavFlattened ChildFlags = 256
 )
 
@@ -291,8 +289,8 @@ const (
 	ColTextSelectedBg Col = 52
 	// Rectangle highlighting a drop target
 	ColDragDropTarget Col = 53
-	// Gamepad/keyboard: current highlighted item
-	ColNavHighlight Col = 54
+	// Color of keyboard/gamepad navigation cursor/rectangle, when visible
+	ColNavCursor Col = 54
 	// Highlight window when using CTRL+TAB
 	ColNavWindowingHighlight Col = 55
 	// Darken/colorize entire screen behind the CTRL+TAB window list, when active
@@ -424,10 +422,6 @@ const (
 	ConfigFlagsNavEnableKeyboard ConfigFlags = 1
 	// Master gamepad navigation enable flag. Backend also needs to set ImGuiBackendFlags_HasGamepad.
 	ConfigFlagsNavEnableGamepad ConfigFlags = 2
-	// Instruct navigation to move the mouse cursor. May be useful on TV/console systems where moving a virtual mouse is awkward. Will update io.MousePos and set io.WantSetMousePos=true. If enabled you MUST honor io.WantSetMousePos requests in your backend, otherwise ImGui will react as if the mouse is jumping around back and forth.
-	ConfigFlagsNavEnableSetMousePos ConfigFlags = 4
-	// Instruct navigation to not set the io.WantCaptureKeyboard flag when io.NavActive is set.
-	ConfigFlagsNavNoCaptureKeyboard ConfigFlags = 8
 	// Instruct dear imgui to disable mouse inputs and interactions.
 	ConfigFlagsNoMouse ConfigFlags = 16
 	// Instruct backend to not alter mouse cursor shape and visibility. Use if the backend cursor changes are interfering with yours and you don't want to use SetMouseCursor() to change mouse cursor. You may want to honor requests from imgui by reading GetMouseCursor() yourself instead.
@@ -516,18 +510,20 @@ const (
 type DebugLogFlags int32
 
 const (
-	DebugLogFlagsNone              DebugLogFlags = 0
-	DebugLogFlagsEventActiveId     DebugLogFlags = 1
-	DebugLogFlagsEventFocus        DebugLogFlags = 2
-	DebugLogFlagsEventPopup        DebugLogFlags = 4
-	DebugLogFlagsEventNav          DebugLogFlags = 8
-	DebugLogFlagsEventClipper      DebugLogFlags = 16
-	DebugLogFlagsEventSelection    DebugLogFlags = 32
-	DebugLogFlagsEventIO           DebugLogFlags = 64
-	DebugLogFlagsEventInputRouting DebugLogFlags = 128
-	DebugLogFlagsEventDocking      DebugLogFlags = 256
-	DebugLogFlagsEventViewport     DebugLogFlags = 512
-	DebugLogFlagsEventMask         DebugLogFlags = 1023
+	DebugLogFlagsNone DebugLogFlags = 0
+	// Error submitted by IM_ASSERT_USER_ERROR()
+	DebugLogFlagsEventError        DebugLogFlags = 1
+	DebugLogFlagsEventActiveId     DebugLogFlags = 2
+	DebugLogFlagsEventFocus        DebugLogFlags = 4
+	DebugLogFlagsEventPopup        DebugLogFlags = 8
+	DebugLogFlagsEventNav          DebugLogFlags = 16
+	DebugLogFlagsEventClipper      DebugLogFlags = 32
+	DebugLogFlagsEventSelection    DebugLogFlags = 64
+	DebugLogFlagsEventIO           DebugLogFlags = 128
+	DebugLogFlagsEventInputRouting DebugLogFlags = 256
+	DebugLogFlagsEventDocking      DebugLogFlags = 512
+	DebugLogFlagsEventViewport     DebugLogFlags = 1024
+	DebugLogFlagsEventMask         DebugLogFlags = 2047
 	// Also send output to TTY
 	DebugLogFlagsOutputToTTY DebugLogFlags = 1048576
 	// Also send output to Test Engine
@@ -723,7 +719,7 @@ const (
 	HoveredFlagsAllowWhenOverlappedByWindow HoveredFlags = 512
 	// IsItemHovered() only: Return true even if the item is disabled
 	HoveredFlagsAllowWhenDisabled HoveredFlags = 1024
-	// IsItemHovered() only: Disable using gamepad/keyboard navigation state when active, always query mouse
+	// IsItemHovered() only: Disable using keyboard/gamepad navigation state when active, always query mouse
 	HoveredFlagsNoNavOverride       HoveredFlags = 2048
 	HoveredFlagsAllowWhenOverlapped HoveredFlags = 768
 	HoveredFlagsRectOnly            HoveredFlags = 928
@@ -852,12 +848,10 @@ type InputTextFlagsPrivate int32
 const (
 	// For internal use by InputTextMultiline()
 	InputTextFlagsMultiline InputTextFlagsPrivate = 67108864
-	// For internal use by functions using InputText() before reformatting data
-	InputTextFlagsNoMarkEdited InputTextFlagsPrivate = 134217728
 	// For internal use by TempInputText(), will skip calling ItemAdd(). Require bounding-box to strictly match.
-	InputTextFlagsMergedItem InputTextFlagsPrivate = 268435456
+	InputTextFlagsMergedItem InputTextFlagsPrivate = 134217728
 	// For internal use by InputScalar() and TempInputScalar()
-	InputTextFlagsLocalizeDecimalPoint InputTextFlagsPrivate = 536870912
+	InputTextFlagsLocalizeDecimalPoint InputTextFlagsPrivate = 268435456
 )
 
 // Flags for ImGui::InputText()
@@ -879,7 +873,7 @@ const (
 	InputTextFlagsCharsNoBlank InputTextFlags = 16
 	// Pressing TAB input a '\t' character into the text field
 	InputTextFlagsAllowTabInput InputTextFlags = 32
-	// Return 'true' when Enter is pressed (as opposed to every time the value was modified). Consider looking at the IsItemDeactivatedAfterEdit() function.
+	// Return 'true' when Enter is pressed (as opposed to every time the value was modified). Consider using IsItemDeactivatedAfterEdit() instead!
 	InputTextFlagsEnterReturnsTrue InputTextFlags = 64
 	// Escape key clears content if not empty, and deactivate otherwise (contrast to default behavior of Escape to revert)
 	InputTextFlagsEscapeClearsAll InputTextFlags = 128
@@ -916,13 +910,13 @@ const (
 )
 
 // Extend ImGuiItemFlags
-// - input: PushItemFlag() manipulates g.CurrentItemFlags, ItemAdd() calls may add extra flags.
-// - output: stored in g.LastItemData.InFlags
+// - input: PushItemFlag() manipulates g.CurrentItemFlags, g.NextItemData.ItemFlags, ItemAdd() calls may add extra flags too.
+// - output: stored in g.LastItemData.ItemFlags
 // original name: ImGuiItemFlagsPrivate_
 type ItemFlagsPrivate int32
 
 const (
-	// false     // Disable interactions (DOES NOT affect visuals, see BeginDisabled()/EndDisabled() for full disable feature, and github #211).
+	// false     // Disable interactions (DOES NOT affect visuals. DO NOT mix direct use of this with BeginDisabled(). See BeginDisabled()/EndDisabled() for full disable feature, and github #211).
 	ItemFlagsDisabled ItemFlagsPrivate = 1024
 	// false     // [ALPHA] Allow hovering interactions but underlying value is not changed.
 	ItemFlagsReadOnly ItemFlagsPrivate = 2048
@@ -932,6 +926,10 @@ const (
 	ItemFlagsNoWindowHoverableCheck ItemFlagsPrivate = 8192
 	// false     // Allow being overlapped by another widget. Not-hovered to Hovered transition deferred by a frame.
 	ItemFlagsAllowOverlap ItemFlagsPrivate = 16384
+	// false     // Nav keyboard/gamepad mode doesn't disable hover highlight (behave as if NavHighlightItemUnderNav==false).
+	ItemFlagsNoNavDisableMouseHover ItemFlagsPrivate = 32768
+	// false     // Skip calling MarkItemEdited()
+	ItemFlagsNoMarkEdited ItemFlagsPrivate = 65536
 	// false     // [WIP] Auto-activate input mode when tab focused. Currently only used and supported by a few items before it becomes a generic feature.
 	ItemFlagsInputable ItemFlagsPrivate = 1048576
 	// false     // Set by SetNextItemSelectionUserData()
@@ -1356,18 +1354,6 @@ const (
 	MultiSelectFlagsNavWrapX MultiSelectFlags = 65536
 )
 
-// original name: ImGuiNavHighlightFlags_
-type NavHighlightFlags int32
-
-const (
-	NavHighlightFlagsNone NavHighlightFlags = 0
-	// Compact highlight, no padding
-	NavHighlightFlagsCompact NavHighlightFlags = 2
-	// Draw rectangular highlight if (g.NavId == id) _even_ when using the mouse.
-	NavHighlightFlagsAlwaysDraw NavHighlightFlags = 4
-	NavHighlightFlagsNoRounding NavHighlightFlags = 8
-)
-
 // original name: ImGuiNavLayer
 type NavLayer int32
 
@@ -1411,10 +1397,22 @@ const (
 	NavMoveFlagsActivate NavMoveFlags = 4096
 	// Don't trigger selection by not setting g.NavJustMovedTo
 	NavMoveFlagsNoSelect NavMoveFlags = 8192
-	// Do not alter the visible state of keyboard vs mouse nav highlight
-	NavMoveFlagsNoSetNavHighlight NavMoveFlags = 16384
+	// Do not alter the nav cursor visible state
+	NavMoveFlagsNoSetNavCursorVisible NavMoveFlags = 16384
 	// (Experimental) Do not clear active id when applying move result
 	NavMoveFlagsNoClearActiveId NavMoveFlags = 32768
+)
+
+// original name: ImGuiNavRenderCursorFlags_
+type NavRenderCursorFlags int32
+
+const (
+	NavRenderCursorFlagsNone NavRenderCursorFlags = 0
+	// Compact highlight, no padding/distance from focused item
+	NavRenderCursorFlagsCompact NavRenderCursorFlags = 2
+	// Draw rectangular highlight if (g.NavId == id) even when g.NavCursorVisible == false, aka even when using the mouse.
+	NavRenderCursorFlagsAlwaysDraw NavRenderCursorFlags = 4
+	NavRenderCursorFlagsNoRounding NavRenderCursorFlags = 8
 )
 
 // original name: ImGuiNextItemDataFlags_
@@ -1622,22 +1620,25 @@ const (
 
 // Flags for DragFloat(), DragInt(), SliderFloat(), SliderInt() etc.
 // We use the same sets of flags for DragXXX() and SliderXXX() functions as the features are the same and it makes it easier to swap them.
-// (Those are per-item flags. There are shared flags in ImGuiIO: io.ConfigDragClickToInputText)
+// (Those are per-item flags. There is shared behavior flag too: ImGuiIO: io.ConfigDragClickToInputText)
 // original name: ImGuiSliderFlags_
 type SliderFlags int32
 
 const (
 	SliderFlagsNone SliderFlags = 0
-	// Clamp value to min/max bounds when input manually with CTRL+Click. By default CTRL+Click allows going out of bounds.
-	SliderFlagsAlwaysClamp SliderFlags = 16
 	// Make the widget logarithmic (linear otherwise). Consider using ImGuiSliderFlags_NoRoundToFormat with this if using a format-string with small amount of digits.
 	SliderFlagsLogarithmic SliderFlags = 32
 	// Disable rounding underlying value to match precision of the display format string (e.g. %.3f values are rounded to those 3 digits).
 	SliderFlagsNoRoundToFormat SliderFlags = 64
 	// Disable CTRL+Click or Enter key allowing to input text directly into the widget.
 	SliderFlagsNoInput SliderFlags = 128
-	// Enable wrapping around from max to min and from min to max (only supported by DragXXX() functions for now.
+	// Enable wrapping around from max to min and from min to max. Only supported by DragXXX() functions for now.
 	SliderFlagsWrapAround SliderFlags = 256
+	// Clamp value to min/max bounds when input manually with CTRL+Click. By default CTRL+Click allows going out of bounds.
+	SliderFlagsClampOnInput SliderFlags = 512
+	// Clamp even if min==max==0.0f. Otherwise due to legacy reason DragXXX functions don't clamp with those values. When your clamping limits are dynamic you almost always want to use it.
+	SliderFlagsClampZeroRange SliderFlags = 1024
+	SliderFlagsAlwaysClamp    SliderFlags = 1536
 	// [Internal] We treat using those bits as being potentially a 'float power' argument from the previous API that has got miscast to this enum, and will trigger an assert if needed.
 	SliderFlagsInvalidMask SliderFlags = 1879048207
 )
@@ -2035,7 +2036,7 @@ type TreeNodeFlagsPrivate int32
 const (
 	// FIXME-WIP: Hard-coded for CollapsingHeader()
 	TreeNodeFlagsClipLabelForTrailingButton TreeNodeFlagsPrivate = 268435456
-	// FIXME-WIP: Turn Down arrow into an Up arrow, but reversed trees (#6517)
+	// FIXME-WIP: Turn Down arrow into an Up arrow, for reversed trees (#6517)
 	TreeNodeFlagsUpsideDownArrow TreeNodeFlagsPrivate = 536870912
 	TreeNodeFlagsOpenOnMask      TreeNodeFlagsPrivate = 192
 )
@@ -2187,9 +2188,9 @@ const (
 	WindowFlagsAlwaysVerticalScrollbar WindowFlags = 16384
 	// Always show horizontal scrollbar (even if ContentSize.x < Size.x)
 	WindowFlagsAlwaysHorizontalScrollbar WindowFlags = 32768
-	// No gamepad/keyboard navigation within the window
+	// No keyboard/gamepad navigation within the window
 	WindowFlagsNoNavInputs WindowFlags = 65536
-	// No focusing toward this window with gamepad/keyboard navigation (e.g. skipped by CTRL+TAB)
+	// No focusing toward this window with keyboard/gamepad navigation (e.g. skipped by CTRL+TAB)
 	WindowFlagsNoNavFocus WindowFlags = 131072
 	// Display a dot next to the title. When used in a tab/docking context, tab is selected when clicking the X + closure is not assumed (will wait for user to stop submitting the tab). Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.
 	WindowFlagsUnsavedDocument WindowFlags = 262144

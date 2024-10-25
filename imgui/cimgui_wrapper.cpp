@@ -4,7 +4,7 @@
 #include "cimgui_wrapper.h"
 #include "../cwrappers/cimgui.h"
 
-void wrap_ImDrawList_AddCallback(ImDrawList* self,ImDrawCallback callback,uintptr_t callback_data) { ImDrawList_AddCallback(self,callback,(void*)(uintptr_t)callback_data); }
+void wrap_ImDrawList_AddCallbackV(ImDrawList* self,ImDrawCallback callback,uintptr_t userdata,size_t userdata_size) { ImDrawList_AddCallback(self,callback,(void*)(uintptr_t)userdata,userdata_size); }
 void wrap_ImDrawList_AddText_FontPtrV(ImDrawList* self,const ImFont* font,float font_size,const ImVec2 pos,ImU32 col,const char* text_begin,float wrap_width,const ImVec4* cpu_fine_clip_rect) { ImDrawList_AddText_FontPtr(self,font,font_size,pos,col,text_begin,0,wrap_width,cpu_fine_clip_rect); }
 void wrap_ImDrawList_AddText_Vec2V(ImDrawList* self,const ImVec2 pos,ImU32 col,const char* text_begin) { ImDrawList_AddText_Vec2(self,pos,col,text_begin,0); }
 ImFont* wrap_ImFontAtlas_AddFontFromMemoryCompressedTTFV(ImFontAtlas* self,const uintptr_t compressed_font_data,int compressed_font_data_size,float size_pixels,const ImFontConfig* font_cfg,const ImWchar* glyph_ranges) { return ImFontAtlas_AddFontFromMemoryCompressedTTF(self,(const void*)(uintptr_t)compressed_font_data,compressed_font_data_size,size_pixels,font_cfg,glyph_ranges); }
@@ -31,14 +31,13 @@ void wrap_igDataTypeApplyOp(ImGuiDataType data_type,int op,uintptr_t output,cons
 bool wrap_igDataTypeClamp(ImGuiDataType data_type,uintptr_t p_data,const uintptr_t p_min,const uintptr_t p_max) { return igDataTypeClamp(data_type,(void*)(uintptr_t)p_data,(const void*)(uintptr_t)p_min,(const void*)(uintptr_t)p_max); }
 int wrap_igDataTypeCompare(ImGuiDataType data_type,const uintptr_t arg_1,const uintptr_t arg_2) { return igDataTypeCompare(data_type,(const void*)(uintptr_t)arg_1,(const void*)(uintptr_t)arg_2); }
 int wrap_igDataTypeFormatString(char* buf,int buf_size,ImGuiDataType data_type,const uintptr_t p_data,const char* format) { return igDataTypeFormatString(buf,buf_size,data_type,(const void*)(uintptr_t)p_data,format); }
+bool wrap_igDataTypeIsZero(ImGuiDataType data_type,const uintptr_t p_data) { return igDataTypeIsZero(data_type,(const void*)(uintptr_t)p_data); }
 void wrap_igDebugAllocHook(ImGuiDebugAllocInfo* info,int frame_count,uintptr_t ptr,size_t size) { igDebugAllocHook(info,frame_count,(void*)(uintptr_t)ptr,size); }
 void wrap_igDebugHookIdInfo(ImGuiID id,ImGuiDataType data_type,const uintptr_t data_id,const uintptr_t data_id_end) { igDebugHookIdInfo(id,data_type,(const void*)(uintptr_t)data_id,(const void*)(uintptr_t)data_id_end); }
 void wrap_igDebugLog(const char* fmt) { igDebugLog(fmt); }
 bool wrap_igDragBehavior(ImGuiID id,ImGuiDataType data_type,uintptr_t p_v,float v_speed,const uintptr_t p_min,const uintptr_t p_max,const char* format,ImGuiSliderFlags flags) { return igDragBehavior(id,data_type,(void*)(uintptr_t)p_v,v_speed,(const void*)(uintptr_t)p_min,(const void*)(uintptr_t)p_max,format,flags); }
 bool wrap_igDragScalarV(const char* label,ImGuiDataType data_type,uintptr_t p_data,float v_speed,const uintptr_t p_min,const uintptr_t p_max,const char* format,ImGuiSliderFlags flags) { return igDragScalar(label,data_type,(void*)(uintptr_t)p_data,v_speed,(const void*)(uintptr_t)p_min,(const void*)(uintptr_t)p_max,format,flags); }
 bool wrap_igDragScalarNV(const char* label,ImGuiDataType data_type,uintptr_t p_data,int components,float v_speed,const uintptr_t p_min,const uintptr_t p_max,const char* format,ImGuiSliderFlags flags) { return igDragScalarN(label,data_type,(void*)(uintptr_t)p_data,components,v_speed,(const void*)(uintptr_t)p_min,(const void*)(uintptr_t)p_max,format,flags); }
-void wrap_igErrorCheckEndFrameRecoverV(ImGuiErrorLogCallback log_callback,uintptr_t user_data) { igErrorCheckEndFrameRecover(log_callback,(void*)(uintptr_t)user_data); }
-void wrap_igErrorCheckEndWindowRecoverV(ImGuiErrorLogCallback log_callback,uintptr_t user_data) { igErrorCheckEndWindowRecover(log_callback,(void*)(uintptr_t)user_data); }
 const char* wrap_igFindRenderedTextEndV(const char* text,const int text_len) { return igFindRenderedTextEnd(text,(text_len > 0) ? text + text_len*sizeof(char) : 0); }
 ImGuiViewport* wrap_igFindViewportByPlatformHandle(uintptr_t platform_handle) { return igFindViewportByPlatformHandle((void*)(uintptr_t)platform_handle); }
 ImGuiID wrap_igGetID_Ptr(const uintptr_t ptr_id) { return igGetID_Ptr((const void*)(uintptr_t)ptr_id); }
@@ -101,6 +100,7 @@ void wrap_ImColor_HSV(ImColor* pOut,float h,float s,float v) { ImColor_HSV(pOut,
 void wrap_ImColor_SetHSV(ImColor* self,float h,float s,float v) { ImColor_SetHSV(self,h,s,v,1.0f); }
 void wrap_ImDrawList_AddBezierCubic(ImDrawList* self,const ImVec2 p1,const ImVec2 p2,const ImVec2 p3,const ImVec2 p4,ImU32 col,float thickness) { ImDrawList_AddBezierCubic(self,p1,p2,p3,p4,col,thickness,0); }
 void wrap_ImDrawList_AddBezierQuadratic(ImDrawList* self,const ImVec2 p1,const ImVec2 p2,const ImVec2 p3,ImU32 col,float thickness) { ImDrawList_AddBezierQuadratic(self,p1,p2,p3,col,thickness,0); }
+void wrap_ImDrawList_AddCallback(ImDrawList* self,ImDrawCallback callback,uintptr_t userdata) { wrap_ImDrawList_AddCallbackV(self,callback,userdata,0); }
 void wrap_ImDrawList_AddCircle(ImDrawList* self,const ImVec2 center,float radius,ImU32 col) { ImDrawList_AddCircle(self,center,radius,col,0,1.0f); }
 void wrap_ImDrawList_AddCircleFilled(ImDrawList* self,const ImVec2 center,float radius,ImU32 col) { ImDrawList_AddCircleFilled(self,center,radius,col,0); }
 void wrap_ImDrawList_AddEllipse(ImDrawList* self,const ImVec2 center,const ImVec2 radius,ImU32 col) { ImDrawList_AddEllipse(self,center,radius,col,0.0f,0,1.0f); }
@@ -208,8 +208,6 @@ bool wrap_igDragInt4(const char* label,int v[4]) { return igDragInt4(label,v,1.0
 bool wrap_igDragIntRange2(const char* label,int* v_current_min,int* v_current_max) { return igDragIntRange2(label,v_current_min,v_current_max,1.0f,0,0,"%d",0,0); }
 bool wrap_igDragScalar(const char* label,ImGuiDataType data_type,uintptr_t p_data) { return wrap_igDragScalarV(label,data_type,p_data,1.0f,0,0,0,0); }
 bool wrap_igDragScalarN(const char* label,ImGuiDataType data_type,uintptr_t p_data,int components) { return wrap_igDragScalarNV(label,data_type,p_data,components,1.0f,0,0,0,0); }
-void wrap_igErrorCheckEndFrameRecover(ImGuiErrorLogCallback log_callback) { wrap_igErrorCheckEndFrameRecoverV(log_callback,0); }
-void wrap_igErrorCheckEndWindowRecover(ImGuiErrorLogCallback log_callback) { wrap_igErrorCheckEndWindowRecoverV(log_callback,0); }
 const char* wrap_igFindRenderedTextEnd(const char* text,const int text_len) { return wrap_igFindRenderedTextEndV(text,text_len); }
 void wrap_igFocusWindow(ImGuiWindow* window) { igFocusWindow(window,0); }
 ImDrawList* wrap_igGetBackgroundDrawList() { return igGetBackgroundDrawList(0); }
@@ -286,7 +284,7 @@ void wrap_igRenderArrow(ImDrawList* draw_list,ImVec2 pos,ImU32 col,ImGuiDir dir)
 void wrap_igRenderColorRectWithAlphaCheckerboard(ImDrawList* draw_list,ImVec2 p_min,ImVec2 p_max,ImU32 fill_col,float grid_step,ImVec2 grid_off) { igRenderColorRectWithAlphaCheckerboard(draw_list,p_min,p_max,fill_col,grid_step,grid_off,0.0f,0); }
 void wrap_igRenderFrame(ImVec2 p_min,ImVec2 p_max,ImU32 fill_col) { igRenderFrame(p_min,p_max,fill_col,true,0.0f); }
 void wrap_igRenderFrameBorder(ImVec2 p_min,ImVec2 p_max) { igRenderFrameBorder(p_min,p_max,0.0f); }
-void wrap_igRenderNavHighlight(const ImRect bb,ImGuiID id) { igRenderNavHighlight(bb,id,ImGuiNavHighlightFlags_None); }
+void wrap_igRenderNavCursor(const ImRect bb,ImGuiID id) { igRenderNavCursor(bb,id,ImGuiNavRenderCursorFlags_None); }
 void wrap_igRenderPlatformWindowsDefault() { wrap_igRenderPlatformWindowsDefaultV(0,0); }
 void wrap_igRenderText(ImVec2 pos,const char* text,const int text_len) { wrap_igRenderTextV(pos,text,text_len,true); }
 void wrap_igRenderTextClipped(const ImVec2 pos_min,const ImVec2 pos_max,const char* text,const int text_len,const ImVec2* text_size_if_known) { wrap_igRenderTextClippedV(pos_min,pos_max,text,text_len,text_size_if_known,(ImVec2){.x=0, .y=0},0); }
