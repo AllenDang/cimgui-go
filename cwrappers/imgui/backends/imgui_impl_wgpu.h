@@ -2,9 +2,17 @@
 // This needs to be used along with a Platform Binding (e.g. GLFW)
 // (Please note that WebGPU is currently experimental, will not run on non-beta browsers, and may break.)
 
+// Important note to dawn and/or wgpu users: when targeting native platforms (i.e. NOT emscripten),
+// one of IMGUI_IMPL_WEBGPU_BACKEND_DAWN or IMGUI_IMPL_WEBGPU_BACKEND_WGPU must be provided.
+// Add #define to your imconfig.h file, or as a compilation flag in your build system.
+// This requirement will be removed once WebGPU stabilizes and backends converge on a unified interface.
+//#define IMGUI_IMPL_WEBGPU_BACKEND_DAWN
+//#define IMGUI_IMPL_WEBGPU_BACKEND_WGPU
+
 // Implemented features:
 //  [X] Renderer: User texture binding. Use 'WGPUTextureView' as ImTextureID. Read the FAQ about ImTextureID!
 //  [X] Renderer: Large meshes support (64k+ vertices) with 16-bit indices.
+//  [X] Renderer: Expose selected render state for draw callbacks to use. Access in '(ImGui_ImplXXXX_RenderState*)GetPlatformIO().Renderer_RenderState'.
 // Missing features:
 //  [ ] Renderer: Multi-viewport support (multiple windows). Not meaningful on the web.
 
@@ -48,5 +56,14 @@ IMGUI_IMPL_API void ImGui_ImplWGPU_RenderDrawData(ImDrawData* draw_data, WGPURen
 // Use if you want to reset your rendering device without losing Dear ImGui state.
 IMGUI_IMPL_API void ImGui_ImplWGPU_InvalidateDeviceObjects();
 IMGUI_IMPL_API bool ImGui_ImplWGPU_CreateDeviceObjects();
+
+// [BETA] Selected render state data shared with callbacks.
+// This is temporarily stored in GetPlatformIO().Renderer_RenderState during the ImGui_ImplWGPU_RenderDrawData() call.
+// (Please open an issue if you feel you need access to more data)
+struct ImGui_ImplWGPU_RenderState
+{
+    WGPUDevice                  Device;
+    WGPURenderPassEncoder       RenderPassEncoder;
+};
 
 #endif // #ifndef IMGUI_DISABLE

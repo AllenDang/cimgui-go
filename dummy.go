@@ -22,6 +22,7 @@ import (
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/example_sdl2_vulkan"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/example_sdl3_opengl3"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/example_sdl3_sdlrenderer3"
+	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/example_sdl3_vulkan"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/example_win32_directx10"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/example_win32_directx11"
 	_ "github.com/AllenDang/cimgui-go/cwrappers/imgui/examples/example_win32_directx12"

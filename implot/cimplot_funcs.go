@@ -2720,26 +2720,13 @@ func PlotImMinMaxArrayU32Ptr(values *[]uint32, count int32, min_out *uint32, max
 	max_outFin()
 }
 
-func PlotImMinMaxArrayU64Ptr(values []uint64, count int32, min_out *[]uint64, max_out *[]uint64) {
-	min_outArg := make([]C.ImU64, len(*min_out))
-	for i, min_outV := range *min_out {
-		min_outArg[i] = C.ImU64(min_outV)
-	}
+func PlotImMinMaxArrayU64Ptr(values []uint64, count int32, min_out *uint64, max_out *uint64) {
+	min_outArg, min_outFin := datautils.WrapNumberPtr[C.ImU64, uint64](min_out)
+	max_outArg, max_outFin := datautils.WrapNumberPtr[C.ImU64, uint64](max_out)
+	C.ImPlot_ImMinMaxArray_U64Ptr((*C.ulonglong)(&(values[0])), C.int(count), min_outArg, max_outArg)
 
-	max_outArg := make([]C.ImU64, len(*max_out))
-	for i, max_outV := range *max_out {
-		max_outArg[i] = C.ImU64(max_outV)
-	}
-
-	C.ImPlot_ImMinMaxArray_U64Ptr((*C.ulonglong)(&(values[0])), C.int(count), (*C.ImU64)(&min_outArg[0]), (*C.ImU64)(&max_outArg[0]))
-
-	for i, min_outV := range min_outArg {
-		(*min_out)[i] = uint64(min_outV)
-	}
-
-	for i, max_outV := range max_outArg {
-		(*max_out)[i] = uint64(max_outV)
-	}
+	min_outFin()
+	max_outFin()
 }
 
 func PlotImMinMaxArrayU8Ptr(values *[]byte, count int32, min_out *byte, max_out *byte) {

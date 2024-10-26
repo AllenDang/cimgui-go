@@ -697,6 +697,27 @@ func NewDockRequestFromC[SRC any](cvalue SRC) *DockRequest {
 	return &DockRequest{CData: datautils.ConvertCTypes[*C.ImGuiDockRequest](cvalue)}
 }
 
+type ErrorRecoveryState struct {
+	CData *C.ImGuiErrorRecoveryState
+}
+
+// Handle returns C version of ErrorRecoveryState and its finalizer func.
+func (self *ErrorRecoveryState) Handle() (result *C.ImGuiErrorRecoveryState, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self ErrorRecoveryState) C() (C.ImGuiErrorRecoveryState, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewErrorRecoveryStateFromC creates ErrorRecoveryState from its C pointer.
+// SRC ~= *C.ImGuiErrorRecoveryState
+func NewErrorRecoveryStateFromC[SRC any](cvalue SRC) *ErrorRecoveryState {
+	return &ErrorRecoveryState{CData: datautils.ConvertCTypes[*C.ImGuiErrorRecoveryState](cvalue)}
+}
+
 type FocusScopeData struct {
 	CData *C.ImGuiFocusScopeData
 }
@@ -1800,27 +1821,6 @@ func NewStackLevelInfoFromC[SRC any](cvalue SRC) *StackLevelInfo {
 	return &StackLevelInfo{CData: datautils.ConvertCTypes[*C.ImGuiStackLevelInfo](cvalue)}
 }
 
-type StackSizes struct {
-	CData *C.ImGuiStackSizes
-}
-
-// Handle returns C version of StackSizes and its finalizer func.
-func (self *StackSizes) Handle() (result *C.ImGuiStackSizes, fin func()) {
-	return self.CData, func() {}
-}
-
-// C is like Handle but returns plain type instead of pointer.
-func (self StackSizes) C() (C.ImGuiStackSizes, func()) {
-	result, fn := self.Handle()
-	return *result, fn
-}
-
-// NewStackSizesFromC creates StackSizes from its C pointer.
-// SRC ~= *C.ImGuiStackSizes
-func NewStackSizesFromC[SRC any](cvalue SRC) *StackSizes {
-	return &StackSizes{CData: datautils.ConvertCTypes[*C.ImGuiStackSizes](cvalue)}
-}
-
 type Storage struct {
 	CData *C.ImGuiStorage
 }
@@ -2547,25 +2547,24 @@ func NewPoolIdxFromC[SRC any](cvalue SRC) *PoolIdx {
 	return (*PoolIdx)((*int32)(datautils.ConvertCTypes[*C.ImPoolIdx](cvalue)))
 }
 
-type TextureID struct {
-	Data uintptr
-}
+type TextureID uint64
 
 // Handle returns C version of TextureID and its finalizer func.
-func (self *TextureID) Handle() (result *C.ImTextureID, fin func()) {
-	r, f := self.C()
-	return &r, f
+func (selfSrc *TextureID) Handle() (result *C.ImTextureID, fin func()) {
+	self := (*uint64)(selfSrc)
+	selfArg, selfFin := datautils.WrapNumberPtr[C.ImU64, uint64](self)
+	return (*C.ImTextureID)(selfArg), func() { selfFin() }
 }
 
 // C is like Handle but returns plain type instead of pointer.
 func (self TextureID) C() (C.ImTextureID, func()) {
-	return (C.ImTextureID)(C.ImTextureID_fromUintptr(C.uintptr_t(self.Data))), func() {}
+	return (C.ImTextureID)(C.ImU64(self)), func() {}
 }
 
 // NewTextureIDFromC creates TextureID from its C pointer.
 // SRC ~= *C.ImTextureID
 func NewTextureIDFromC[SRC any](cvalue SRC) *TextureID {
-	return &TextureID{Data: (uintptr)(C.ImTextureID_toUintptr(*datautils.ConvertCTypes[*C.ImTextureID](cvalue)))}
+	return (*TextureID)((*uint64)(datautils.ConvertCTypes[*C.ImTextureID](cvalue)))
 }
 
 type Vec1 struct {

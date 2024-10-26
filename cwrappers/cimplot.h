@@ -32,8 +32,6 @@ typedef struct ImVector_ImU16 {int Size;int Capacity;ImU16* Data;} ImVector_ImU1
 
 typedef struct ImVector_ImU64 {int Size;int Capacity;ImU64* Data;} ImVector_ImU64;
 
-typedef struct ImVector_ImU8 {int Size;int Capacity;ImU8* Data;} ImVector_ImU8;
-
 struct ImPlotContext;
 typedef int ImAxis;
 typedef int ImPlotFlags;

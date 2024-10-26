@@ -196,12 +196,9 @@ func (e *EbitenBackend) CreateWindow(title string, width, height int) {
 	// Build texture atlas
 	fonts := imgui.CurrentIO().Fonts()
 	_, _, _, _ = fonts.GetTextureDataAsRGBA32() // call this to force imgui to build the font atlas cache
+	fonts.SetTexID(id1)
 
-	texID := imgui.TextureID{}
-	texID.Data = uintptr(unsafe.Pointer(&id1)) // TODO: this shit will cause -race issues
-	fonts.SetTexID(texID)
-
-	e.cache.SetFontAtlasTextureID(texID)
+	e.cache.SetFontAtlasTextureID(id1)
 
 	// initialize ebiten stuff
 	e.SetWindowTitle(title)
@@ -211,7 +208,7 @@ func (e *EbitenBackend) CreateWindow(title string, width, height int) {
 func (e *EbitenBackend) CreateTextureFromGame(game ebiten.Game, width, height int) imgui.TextureID {
 	eimg := ebiten.NewImage(width, height)
 
-	tid := imgui.TextureID{Data: uintptr(e.cache.NextId())}
+	tid := imgui.TextureID(e.cache.NextId())
 	e.cache.SetTexture(tid, eimg)
 	e.cache.SetGameTexture(tid, game)
 	return tid
@@ -221,7 +218,7 @@ func (e *EbitenBackend) CreateTexture(pixels unsafe.Pointer, width, height int) 
 	eimg := ebiten.NewImage(width, height)
 	eimg.WritePixels(premultiplyPixels(pixels, width, height))
 
-	tid := imgui.TextureID{Data: uintptr(e.cache.NextId())}
+	tid := imgui.TextureID(e.cache.NextId())
 	e.cache.SetTexture(tid, eimg)
 	return tid
 }

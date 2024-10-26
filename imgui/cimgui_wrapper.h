@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-extern void wrap_ImDrawList_AddCallback(ImDrawList* self,ImDrawCallback callback,uintptr_t callback_data);
+extern void wrap_ImDrawList_AddCallbackV(ImDrawList* self,ImDrawCallback callback,uintptr_t userdata,size_t userdata_size);
 extern void wrap_ImDrawList_AddText_FontPtrV(ImDrawList* self,const ImFont* font,float font_size,const ImVec2 pos,ImU32 col,const char* text_begin,float wrap_width,const ImVec4* cpu_fine_clip_rect);
 extern void wrap_ImDrawList_AddText_Vec2V(ImDrawList* self,const ImVec2 pos,ImU32 col,const char* text_begin);
 extern ImFont* wrap_ImFontAtlas_AddFontFromMemoryCompressedTTFV(ImFontAtlas* self,const uintptr_t compressed_font_data,int compressed_font_data_size,float size_pixels,const ImFontConfig* font_cfg,const ImWchar* glyph_ranges);
@@ -36,14 +36,13 @@ extern void wrap_igDataTypeApplyOp(ImGuiDataType data_type,int op,uintptr_t outp
 extern bool wrap_igDataTypeClamp(ImGuiDataType data_type,uintptr_t p_data,const uintptr_t p_min,const uintptr_t p_max);
 extern int wrap_igDataTypeCompare(ImGuiDataType data_type,const uintptr_t arg_1,const uintptr_t arg_2);
 extern int wrap_igDataTypeFormatString(char* buf,int buf_size,ImGuiDataType data_type,const uintptr_t p_data,const char* format);
+extern bool wrap_igDataTypeIsZero(ImGuiDataType data_type,const uintptr_t p_data);
 extern void wrap_igDebugAllocHook(ImGuiDebugAllocInfo* info,int frame_count,uintptr_t ptr,size_t size);
 extern void wrap_igDebugHookIdInfo(ImGuiID id,ImGuiDataType data_type,const uintptr_t data_id,const uintptr_t data_id_end);
 extern void wrap_igDebugLog(const char* fmt);
 extern bool wrap_igDragBehavior(ImGuiID id,ImGuiDataType data_type,uintptr_t p_v,float v_speed,const uintptr_t p_min,const uintptr_t p_max,const char* format,ImGuiSliderFlags flags);
 extern bool wrap_igDragScalarV(const char* label,ImGuiDataType data_type,uintptr_t p_data,float v_speed,const uintptr_t p_min,const uintptr_t p_max,const char* format,ImGuiSliderFlags flags);
 extern bool wrap_igDragScalarNV(const char* label,ImGuiDataType data_type,uintptr_t p_data,int components,float v_speed,const uintptr_t p_min,const uintptr_t p_max,const char* format,ImGuiSliderFlags flags);
-extern void wrap_igErrorCheckEndFrameRecoverV(ImGuiErrorLogCallback log_callback,uintptr_t user_data);
-extern void wrap_igErrorCheckEndWindowRecoverV(ImGuiErrorLogCallback log_callback,uintptr_t user_data);
 extern const char* wrap_igFindRenderedTextEndV(const char* text,const int text_len);
 extern ImGuiViewport* wrap_igFindViewportByPlatformHandle(uintptr_t platform_handle);
 extern ImGuiID wrap_igGetID_Ptr(const uintptr_t ptr_id);
@@ -106,6 +105,7 @@ extern void wrap_ImColor_HSV(ImColor* pOut,float h,float s,float v);
 extern void wrap_ImColor_SetHSV(ImColor* self,float h,float s,float v);
 extern void wrap_ImDrawList_AddBezierCubic(ImDrawList* self,const ImVec2 p1,const ImVec2 p2,const ImVec2 p3,const ImVec2 p4,ImU32 col,float thickness);
 extern void wrap_ImDrawList_AddBezierQuadratic(ImDrawList* self,const ImVec2 p1,const ImVec2 p2,const ImVec2 p3,ImU32 col,float thickness);
+extern void wrap_ImDrawList_AddCallback(ImDrawList* self,ImDrawCallback callback,uintptr_t userdata);
 extern void wrap_ImDrawList_AddCircle(ImDrawList* self,const ImVec2 center,float radius,ImU32 col);
 extern void wrap_ImDrawList_AddCircleFilled(ImDrawList* self,const ImVec2 center,float radius,ImU32 col);
 extern void wrap_ImDrawList_AddEllipse(ImDrawList* self,const ImVec2 center,const ImVec2 radius,ImU32 col);
@@ -213,8 +213,6 @@ extern bool wrap_igDragInt4(const char* label,int v[4]);
 extern bool wrap_igDragIntRange2(const char* label,int* v_current_min,int* v_current_max);
 extern bool wrap_igDragScalar(const char* label,ImGuiDataType data_type,uintptr_t p_data);
 extern bool wrap_igDragScalarN(const char* label,ImGuiDataType data_type,uintptr_t p_data,int components);
-extern void wrap_igErrorCheckEndFrameRecover(ImGuiErrorLogCallback log_callback);
-extern void wrap_igErrorCheckEndWindowRecover(ImGuiErrorLogCallback log_callback);
 extern const char* wrap_igFindRenderedTextEnd(const char* text,const int text_len);
 extern void wrap_igFocusWindow(ImGuiWindow* window);
 extern ImDrawList* wrap_igGetBackgroundDrawList();
@@ -291,7 +289,7 @@ extern void wrap_igRenderArrow(ImDrawList* draw_list,ImVec2 pos,ImU32 col,ImGuiD
 extern void wrap_igRenderColorRectWithAlphaCheckerboard(ImDrawList* draw_list,ImVec2 p_min,ImVec2 p_max,ImU32 fill_col,float grid_step,ImVec2 grid_off);
 extern void wrap_igRenderFrame(ImVec2 p_min,ImVec2 p_max,ImU32 fill_col);
 extern void wrap_igRenderFrameBorder(ImVec2 p_min,ImVec2 p_max);
-extern void wrap_igRenderNavHighlight(const ImRect bb,ImGuiID id);
+extern void wrap_igRenderNavCursor(const ImRect bb,ImGuiID id);
 extern void wrap_igRenderPlatformWindowsDefault();
 extern void wrap_igRenderText(ImVec2 pos,const char* text,const int text_len);
 extern void wrap_igRenderTextClipped(const ImVec2 pos_min,const ImVec2 pos_max,const char* text,const int text_len,const ImVec2* text_size_if_known);

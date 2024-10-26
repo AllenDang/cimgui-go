@@ -372,7 +372,7 @@ func (b *GLFWBackend) CreateTextureRgba(img *image.RGBA, width, height int) imgu
 }
 
 func (b *GLFWBackend) DeleteTexture(id imgui.TextureID) {
-	C.igDeleteTexture(C.ImTextureID(id.Data))
+	C.igDeleteTexture(C.ImTextureID(id))
 }
 
 // SetDropCallback sets the drop callback which is called when an object

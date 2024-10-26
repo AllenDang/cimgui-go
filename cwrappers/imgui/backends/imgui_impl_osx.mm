@@ -101,8 +101,8 @@ static void                     ImGui_ImplOSX_DestroyBackendData()  { IM_DELETE(
 static inline CFTimeInterval    GetMachAbsoluteTimeInSeconds()      { return (CFTimeInterval)(double)(clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1e9); }
 
 // Forward Declarations
-static void ImGui_ImplOSX_InitPlatformInterface();
-static void ImGui_ImplOSX_ShutdownPlatformInterface();
+static void ImGui_ImplOSX_InitMultiViewportSupport();
+static void ImGui_ImplOSX_ShutdownMultiViewportSupport();
 static void ImGui_ImplOSX_UpdateMonitors();
 static void ImGui_ImplOSX_AddTrackingArea(NSView* _Nonnull view);
 static bool ImGui_ImplOSX_HandleEvent(NSEvent* event, NSView* view);
@@ -289,7 +289,10 @@ static bool ImGui_ImplOSX_HandleEvent(NSEvent* event, NSView* view);
 @end
 
 // Functions
-static ImGuiKey ImGui_ImplOSX_KeyCodeToImGuiKey(int key_code)
+
+// Not static to allow third-party code to use that if they want to (but undocumented)
+ImGuiKey ImGui_ImplOSX_KeyCodeToImGuiKey(int key_code);
+ImGuiKey ImGui_ImplOSX_KeyCodeToImGuiKey(int key_code)
 {
     switch (key_code)
     {
@@ -445,8 +448,7 @@ bool ImGui_ImplOSX_Init(NSView* view)
     ImGuiViewport* main_viewport = ImGui::GetMainViewport();
     main_viewport->PlatformHandle = main_viewport->PlatformHandleRaw = (__bridge_retained void*)bd->Window;
     ImGui_ImplOSX_UpdateMonitors();
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        ImGui_ImplOSX_InitPlatformInterface();
+    ImGui_ImplOSX_InitMultiViewportSupport();
 
     // Load cursors. Some of them are undocumented.
     bd->MouseCursorHidden = false;
@@ -536,7 +538,7 @@ void ImGui_ImplOSX_Shutdown()
         bd->Monitor = nullptr;
     }
 
-    ImGui_ImplOSX_ShutdownPlatformInterface();
+    ImGui_ImplOSX_ShutdownMultiViewportSupport();
     ImGui_ImplOSX_DestroyBackendData();
     ImGuiIO& io = ImGui::GetIO();
     io.BackendPlatformName = nullptr;
@@ -1095,7 +1097,7 @@ static void ImGui_ImplOSX_UpdateMonitors()
     }
 }
 
-static void ImGui_ImplOSX_InitPlatformInterface()
+static void ImGui_ImplOSX_InitMultiViewportSupport()
 {
     ImGui_ImplOSX_Data* bd = ImGui_ImplOSX_GetBackendData();
 
@@ -1129,7 +1131,7 @@ static void ImGui_ImplOSX_InitPlatformInterface()
                                              object:nil];
 }
 
-static void ImGui_ImplOSX_ShutdownPlatformInterface()
+static void ImGui_ImplOSX_ShutdownMultiViewportSupport()
 {
     ImGui_ImplOSX_Data* bd = ImGui_ImplOSX_GetBackendData();
     [NSNotificationCenter.defaultCenter removeObserver:bd->Observer

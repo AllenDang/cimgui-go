@@ -99,7 +99,7 @@ func (c *textureCache) ResetFontAtlasCache(filter ebiten.Filter) {
 func NewCache() TextureCache {
 	return &textureCache{
 		startIndex:     2,
-		fontAtlasID:    imgui.TextureID{Data: uintptr(1)},
+		fontAtlasID:    imgui.TextureID(1),
 		cache:          make(map[imgui.TextureID]*ebiten.Image),
 		cacheGame:      make(map[imgui.TextureID]ebiten.Game),
 		fontAtlasImage: nil,

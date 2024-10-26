@@ -62,7 +62,7 @@ type EbitenBackend struct {
 
 // this is "pointer" to the first texture used for font atlas texture.
 // it needs to be a var and cannot be more private because of CGO stuff.
-var id1 = 1
+var id1 imgui.TextureID = 1
 
 // NewEbitenBackend creates a new Ebiten backend.
 // it takes font atlas which could be nil

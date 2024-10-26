@@ -9,8 +9,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-extern uintptr_t ImTextureID_toUintptr(ImTextureID ptr);
-extern ImTextureID ImTextureID_fromUintptr(uintptr_t ptr);
+
 #ifdef __cplusplus
 }
 #endif
