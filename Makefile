@@ -132,7 +132,7 @@ update: setup
 	$(call cimnodes)
 	$(call update,cimmarkdown,https://github.com/gucio321/cimmarkdown,imgui_markdown,main)
 	$(call cimmarkdown)
-	$(call update,cimguizmo,https://github.com/cimgui/cimguizmo,imguizmo,master)
+	$(call update,cimguizmo,https://github.com/cimgui/cimguizmo,ImGuizmo,master)
 	$(call cimguizmo)
 	$(call dummy)
 
