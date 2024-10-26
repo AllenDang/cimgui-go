@@ -53,7 +53,7 @@ func validateFiles(f *flags) {
 
 	stat, err = os.Stat(f.typedefsJsonpath)
 	if err != nil || stat.IsDir() {
-		glg.Fatal("Invalid typedefs json file path")
+		glg.Fatalf("Invalid typedefs json file path: %s", f.typedefsJsonpath)
 	}
 }
 
