@@ -71,12 +71,12 @@ cimmarkdown: setup
 	$(call cimmarkdown)
 
 define cimguizmo
-	$(call generate,cimguizmo,cimgui/cimguizmo.h,cimgui/cimguizmo_templates/definitions.json,cimgui/cimguizmo_templates/structs_and_enums.json, cimgui/cimguizmo_templates/typedefs_dict.json)
+	$(call generate,cimguizmo,imguizmo,cwrappers/cimguizmo.h,cwrappers/cimguizmo_templates/definitions.json,cwrappers/cimguizmo_templates/structs_and_enums.json,cwrappers/cimguizmo_templates/typedefs_dict.json,-r ../cwrappers/cimgui_templates/structs_and_enums.json -rt ../cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
 ## cimgui: generate cimgui binding
 .PHONY: cimguizmo
-cimgui: setup
+cimguizmo: setup
 	$(call cimguizmo)
 
 
@@ -132,7 +132,7 @@ update: setup
 	$(call cimnodes)
 	$(call update,cimmarkdown,https://github.com/gucio321/cimmarkdown,imgui_markdown,main)
 	$(call cimmarkdown)
-	$(call update,cimguizmo,https://github.com/gucio321/cimguizmo,imguizmo,master)
+	$(call update,cimguizmo,https://github.com/cimgui/cimguizmo,imguizmo,master)
 	$(call cimguizmo)
 	$(call dummy)
 
