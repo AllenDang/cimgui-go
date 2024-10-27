@@ -42,6 +42,13 @@ It is recommended to not enable e.g. GLFW and SDL backends at the same time as i
 - `Get` prefix is also removed.
 - If function comes from `imgui_internal.h`, `Internal` prefix is added.
 
+## Pointers and Slices
+
+Unfortunately, in C there is no way to ditinguish between a pointer and a slice.
+We had to bring this unpleasantness to Go as well.
+Our code defaults to pointers, but you can easily convert your slice to a pointer by simply `&(slice[0])`.
+You can also use `imgui.SliceToPtr`.
+
 ## Function coverage
 Currently most of the functions are generated, except memory related stuff (eg. memory allocator, storage management, etc...).
 If you find any function is missing, report an issue.
