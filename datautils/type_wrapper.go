@@ -55,17 +55,7 @@ type Number interface {
 
 // WrapNumberPtr is a generic method to convert GOTYPE (int32/float32 e.t.c.) into CTYPE (c_int/c_float e.t.c.)
 func WrapNumberPtr[CTYPE Number, GOTYPE Number](goValue *GOTYPE) (wrapped *CTYPE, finisher func()) {
-	if goValue != nil {
-		cValue := CTYPE(*goValue)
-		wrapped = &cValue
-		finisher = func() {
-			*goValue = GOTYPE(cValue)
-		}
-	} else {
-		finisher = func() {}
-	}
-
-	return
+	return ConvertCTypes[*CTYPE](goValue), func() {}
 }
 
 // WrapString converts Go string to C char*
