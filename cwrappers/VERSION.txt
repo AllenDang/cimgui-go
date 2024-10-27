@@ -6,5 +6,5 @@ cimnodes (https://github.com/cimgui/cimnodes) HEAD is on: f20c83c3cab8e99828d85c
 cimnodes/imnodes HEAD is on: 8563e1655bd9bb1f249e6552cc6274d506ee788b
 cimmarkdown (https://github.com/gucio321/cimmarkdown) HEAD is on: 6e921ffc2b57a9969b98bf8f5aeed912bfb497f6
 cimmarkdown/imgui_markdown HEAD is on: 4eb198f68090c9a1622bb9c78ee61f65b6ddc898
-cimguizmo (https://github.com/cimgui/cimguizmo) HEAD is on: 459350a2f87354b09810c5691050031fb1d9946c
+cimguizmo (https://github.com/cimgui/cimguizmo) HEAD is on: 7a0b8b6fe0d772f76325530c8aa87c8aabce529e
 cimguizmo/ImGuizmo HEAD is on: 6d588209f99b1324a608783d1f52faa518886c29

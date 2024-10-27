@@ -182,6 +182,10 @@ func zmoSetGizmoSizeClipSpace(value float32) {
 	C.ImGuizmo_SetGizmoSizeClipSpace(C.float(value))
 }
 
+func zmoSetID(id int32) {
+	C.ImGuizmo_SetID(C.int(id))
+}
+
 func zmoSetImGuiContext(ctx *imgui.Context) {
 	ctxArg, ctxFin := ctx.Handle()
 	C.ImGuizmo_SetImGuiContext(datautils.ConvertCTypes[*C.ImGuiContext](ctxArg))

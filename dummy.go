@@ -1,5 +1,5 @@
 //go:build required
-// +build rquired
+// +build required
 
 package imgui
 

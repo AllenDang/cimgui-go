@@ -79,9 +79,9 @@ CIMGUI_API void ImGuizmo_SetAlternativeWindow(ImGuiWindow* window)
 {
     return ImGuizmo::SetAlternativeWindow(window);
 }
-CIMGUI_API ]] void ImGuizmo_deprecated("Use PushID/PopID instead.")
+CIMGUI_API void ImGuizmo_SetID(int id)
 {
-    return ImGuizmo::deprecated(instead.");
+    return ImGuizmo::SetID(id);
 }
 CIMGUI_API void ImGuizmo_PushID_Str(const char* str_id)
 {

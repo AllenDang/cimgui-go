@@ -674,6 +674,28 @@
       "stname": ""
     }
   ],
+  "ImGuizmo_SetID": [
+    {
+      "args": "(int id)",
+      "argsT": [
+        {
+          "name": "id",
+          "type": "int"
+        }
+      ],
+      "argsoriginal": "(int id)",
+      "call_args": "(id)",
+      "cimguiname": "ImGuizmo_SetID",
+      "defaults": {},
+      "funcname": "SetID",
+      "location": "ImGuizmo:227",
+      "namespace": "ImGuizmo",
+      "ov_cimguiname": "ImGuizmo_SetID",
+      "ret": "void",
+      "signature": "(int)",
+      "stname": ""
+    }
+  ],
   "ImGuizmo_SetImGuiContext": [
     {
       "args": "(ImGuiContext* ctx)",
@@ -861,28 +883,6 @@
       "ov_cimguiname": "ImGuizmo_ViewManipulate_FloatPtr",
       "ret": "void",
       "signature": "(float*,const float*,OPERATION,MODE,float*,float,ImVec2,ImVec2,ImU32)",
-      "stname": ""
-    }
-  ],
-  "ImGuizmo_deprecated": [
-    {
-      "args": "(\"Use PushID/PopID instead.\")",
-      "argsT": [
-        {
-          "name": "instead.\"",
-          "type": "\"Use PushID/PopID"
-        }
-      ],
-      "argsoriginal": "(\"Use PushID/PopID instead.\")",
-      "call_args": "(instead.\")",
-      "cimguiname": "ImGuizmo_deprecated",
-      "defaults": {},
-      "funcname": "deprecated",
-      "location": "ImGuizmo:226",
-      "namespace": "ImGuizmo",
-      "ov_cimguiname": "ImGuizmo_deprecated",
-      "ret": "]] void",
-      "signature": "(\"Use PushID/PopID)",
       "stname": ""
     }
   ],
