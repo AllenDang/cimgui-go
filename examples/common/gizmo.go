@@ -2,15 +2,11 @@
 package common
 
 import (
-	"github.com/AllenDang/cimgui-go/backend"
-	"github.com/AllenDang/cimgui-go/backend/glfwbackend"
 	"github.com/AllenDang/cimgui-go/imgui"
 	"github.com/AllenDang/cimgui-go/imguizmo"
 )
 
 var (
-	currentBackend backend.Backend[glfwbackend.GLFWWindowFlags]
-
 	// here are some 4x4 matries. Generally IDK what are they doing - figure it yourself :-)
 	// Well, This one is parsed in an editor below.
 	View = []float32{
