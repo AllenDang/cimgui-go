@@ -51,32 +51,32 @@ func getArgWrapper(
 		"float":               simpleW("float32", "C.float"),
 		"const float":         simpleW("float32", "C.float"),
 		"float*":              simplePtrW("float32", "C.float"),
-		"const float*":        floatArrayW,
+		"const float*":        simplePtrW("float32", "C.float"),
 		"short":               simpleW("int16", "C.short"),
 		"unsigned short":      simpleW("uint16", "C.ushort"),
 		"unsigned short*":     simplePtrW("uint16", "C.ushort"),
 		"ImU8":                simpleW("byte", "C.ImU8"),
 		"ImU8*":               simplePtrW("byte", "C.ImU8"),
-		"const ImU8*":         simplePtrSliceW("C.ImU8", "byte"),
+		"const ImU8*":         simplePtrW("byte", "C.ImU8"),
 		"ImU16":               simpleW("uint16", "C.ImU16"),
 		"ImU16*":              simplePtrW("uint16", "C.ImU16"),
-		"const ImU16*":        simplePtrSliceW("C.ImU16", "uint16"),
+		"const ImU16*":        simplePtrW("uint16", "C.ImU16"),
 		"ImU32":               simpleW("uint32", "C.ImU32"),
 		"ImU32*":              simplePtrW("uint32", "C.ImU32"),
-		"const ImU32*":        simplePtrSliceW("C.ImU32", "uint32"),
+		"const ImU32*":        simplePtrW("uint32", "C.ImU32"),
 		"ImU64":               simpleW("uint64", "C.ImU64"),
 		"ImU64*":              simplePtrW("uint64", "C.ImU64"),
 		"const ImU64*":        uint64ArrayW,
 		"ImS8":                simpleW("int", "C.ImS8"),
 		"ImS8*":               simplePtrW("int8", "C.ImS8"),
-		"const ImS8*":         simplePtrSliceW("C.ImS8", "int8"),
+		"const ImS8*":         simplePtrW("int8", "C.ImS8"),
 		"ImS16":               simpleW("int16", "C.ImS16"),
 		"ImS16*":              simplePtrW("int16", "C.ImS16"),
-		"const ImS16*":        simplePtrSliceW("C.ImS16", "int"),
+		"const ImS16*":        simplePtrW("int16", "C.ImS16"),
 		"ImS32":               simpleW("int", "C.ImS32"),
 		"ImS32*":              simplePtrW("int32", "C.ImS32"),
+		"const ImS32*":        simplePtrW("int32", "C.ImS32"),
 		"int32_t":             simpleW("int32", "C.int32_t"),
-		"const ImS32*":        simplePtrSliceW("C.ImS32", "int32"),
 		"ImS64":               simpleW("int64", "C.ImS64"),
 		"ImS64*":              simplePtrW("int64", "C.ImS64"),
 		"const ImS64*":        int64ArrayW,
@@ -87,7 +87,7 @@ func getArgWrapper(
 		"unsigned int*":       simplePtrW("uint32", "C.uint"),
 		"double":              simpleW("float64", "C.double"),
 		"double*":             simplePtrW("float64", "C.double"),
-		"const double*":       simplePtrSliceW("C.double", "float64"),
+		"const double*":       simplePtrW("float64", "C.double"),
 		"bool":                simpleW("bool", "C.bool"),
 		"const bool":          simpleW("bool", "C.bool"),
 		"bool*":               boolPtrW,
@@ -355,14 +355,6 @@ func sizeTPtrW(arg ArgDef) ArgumentWrapperData {
 	}
 }
 
-func floatArrayW(arg ArgDef) ArgumentWrapperData {
-	return ArgumentWrapperData{
-		ArgType: "[]float32",
-		VarName: fmt.Sprintf("(*C.float)(&(%s[0]))", arg.Name),
-		CType:   "*C.float",
-	}
-}
-
 func boolPtrW(arg ArgDef) ArgumentWrapperData {
 	return ArgumentWrapperData{
 		ArgType:     "*bool",
@@ -450,29 +442,6 @@ for i, %[1]sV := range %[1]sArg {
 
 `, arg.Name, cArrayType, goArrayType),
 			CType: "*" + cArrayType,
-		}
-	}
-}
-
-// C.int*, C.int[] -> *[]int32
-func simplePtrSliceW(cArrayType, goArrayType GoIdentifier) argumentWrapper {
-	return func(arg ArgDef) ArgumentWrapperData {
-		def := fmt.Sprintf(`%[1]sArg := make([]%[2]s, len(*%[1]s))
-for i, %[1]sV := range *%[1]s {
-  %[1]sArg[i] = %[2]s(%[1]sV)
-}
-`, arg.Name, cArrayType, goArrayType)
-		return ArgumentWrapperData{
-			ArgType:     GoIdentifier(fmt.Sprintf("*[]%s", goArrayType)),
-			ArgDef:      def,
-			ArgDefNoFin: def,
-			Finalizer: fmt.Sprintf(`
-  for i, %[1]sV := range %[1]sArg {
-    (*%[1]s)[i] = %[3]s(%[1]sV)
-  }
-`, arg.Name, cArrayType, goArrayType),
-			VarName: fmt.Sprintf("(*%s)(&%sArg[0])", cArrayType, arg.Name),
-			CType:   "*" + cArrayType,
 		}
 	}
 }
