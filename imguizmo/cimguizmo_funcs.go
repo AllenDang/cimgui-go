@@ -15,15 +15,15 @@ import (
 // #include "cimguizmo_wrapper.h"
 import "C"
 
-func zmoAllowAxisFlip(value bool) {
+func AllowAxisFlip(value bool) {
 	C.ImGuizmo_AllowAxisFlip(C.bool(value))
 }
 
-func zmoBeginFrame() {
+func BeginFrame() {
 	C.ImGuizmo_BeginFrame()
 }
 
-func zmoDecomposeMatrixToComponents(matrix []float32, translation *float32, rotation *float32, scale *float32) {
+func DecomposeMatrixToComponents(matrix []float32, translation *float32, rotation *float32, scale *float32) {
 	translationArg, translationFin := datautils.WrapNumberPtr[C.float, float32](translation)
 	rotationArg, rotationFin := datautils.WrapNumberPtr[C.float, float32](rotation)
 	scaleArg, scaleFin := datautils.WrapNumberPtr[C.float, float32](scale)
@@ -34,23 +34,23 @@ func zmoDecomposeMatrixToComponents(matrix []float32, translation *float32, rota
 	scaleFin()
 }
 
-func zmoDrawCubes(view []float32, projection []float32, matrices []float32, matrixCount int32) {
+func DrawCubes(view []float32, projection []float32, matrices []float32, matrixCount int32) {
 	C.ImGuizmo_DrawCubes((*C.float)(&(view[0])), (*C.float)(&(projection[0])), (*C.float)(&(matrices[0])), C.int(matrixCount))
 }
 
-func zmoDrawGrid(view []float32, projection []float32, matrix []float32, gridSize float32) {
+func DrawGrid(view []float32, projection []float32, matrix []float32, gridSize float32) {
 	C.ImGuizmo_DrawGrid((*C.float)(&(view[0])), (*C.float)(&(projection[0])), (*C.float)(&(matrix[0])), C.float(gridSize))
 }
 
-func zmoEnable(enable bool) {
+func Enable(enable bool) {
 	C.ImGuizmo_Enable(C.bool(enable))
 }
 
-func zmoGetIDPtr(ptr_id uintptr) imgui.ID {
+func GetIDPtr(ptr_id uintptr) imgui.ID {
 	return *imgui.NewIDFromC(func() *C.ImGuiID { result := C.wrap_ImGuizmo_GetID_Ptr(C.uintptr_t(ptr_id)); return &result }())
 }
 
-func zmoGetIDStr(str_id string) imgui.ID {
+func GetIDStr(str_id string) imgui.ID {
 	str_idArg, str_idFin := datautils.WrapString[C.char](str_id)
 
 	defer func() {
@@ -59,7 +59,7 @@ func zmoGetIDStr(str_id string) imgui.ID {
 	return *imgui.NewIDFromC(func() *C.ImGuiID { result := C.ImGuizmo_GetID_Str(str_idArg); return &result }())
 }
 
-func zmoGetIDStrStr(str_id_begin string, str_id_end string) imgui.ID {
+func GetIDStrStr(str_id_begin string, str_id_end string) imgui.ID {
 	str_id_beginArg, str_id_beginFin := datautils.WrapString[C.char](str_id_begin)
 	str_id_endArg, str_id_endFin := datautils.WrapString[C.char](str_id_end)
 
@@ -70,11 +70,11 @@ func zmoGetIDStrStr(str_id_begin string, str_id_end string) imgui.ID {
 	return *imgui.NewIDFromC(func() *C.ImGuiID { result := C.ImGuizmo_GetID_StrStr(str_id_beginArg, str_id_endArg); return &result }())
 }
 
-func zmoGetStyle() *Style {
+func GetStyle() *Style {
 	return NewStyleFromC(C.ImGuizmo_GetStyle())
 }
 
-func zmoIsOverFloatPtr(position *float32, pixelRadius float32) bool {
+func IsOverFloatPtr(position *float32, pixelRadius float32) bool {
 	positionArg, positionFin := datautils.WrapNumberPtr[C.float, float32](position)
 
 	defer func() {
@@ -83,32 +83,32 @@ func zmoIsOverFloatPtr(position *float32, pixelRadius float32) bool {
 	return C.ImGuizmo_IsOver_FloatPtr(positionArg, C.float(pixelRadius)) == C.bool(true)
 }
 
-func zmoIsOver() bool {
+func IsOver() bool {
 	return C.ImGuizmo_IsOver_Nil() == C.bool(true)
 }
 
-func zmoIsOverOPERATION(op OPERATION) bool {
+func IsOverOPERATION(op OPERATION) bool {
 	return C.ImGuizmo_IsOver_OPERATION(C.OPERATION(op)) == C.bool(true)
 }
 
-func zmoIsUsing() bool {
+func IsUsing() bool {
 	return C.ImGuizmo_IsUsing() == C.bool(true)
 }
 
-func zmoIsUsingAny() bool {
+func IsUsingAny() bool {
 	return C.ImGuizmo_IsUsingAny() == C.bool(true)
 }
 
-func zmoIsUsingViewManipulate() bool {
+func IsUsingViewManipulate() bool {
 	return C.ImGuizmo_IsUsingViewManipulate() == C.bool(true)
 }
 
-// zmoManipulateV parameter default value hint:
+// ManipulateV parameter default value hint:
 // deltaMatrix: NULL
 // snap: NULL
 // localBounds: NULL
 // boundsSnap: NULL
-func zmoManipulateV(view []float32, projection []float32, operation OPERATION, mode MODE, matrix *float32, deltaMatrix *float32, snap []float32, localBounds []float32, boundsSnap []float32) bool {
+func ManipulateV(view []float32, projection []float32, operation OPERATION, mode MODE, matrix *float32, deltaMatrix *float32, snap []float32, localBounds []float32, boundsSnap []float32) bool {
 	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
 	deltaMatrixArg, deltaMatrixFin := datautils.WrapNumberPtr[C.float, float32](deltaMatrix)
 
@@ -119,26 +119,26 @@ func zmoManipulateV(view []float32, projection []float32, operation OPERATION, m
 	return C.ImGuizmo_Manipulate((*C.float)(&(view[0])), (*C.float)(&(projection[0])), C.OPERATION(operation), C.MODE(mode), matrixArg, deltaMatrixArg, (*C.float)(&(snap[0])), (*C.float)(&(localBounds[0])), (*C.float)(&(boundsSnap[0]))) == C.bool(true)
 }
 
-func zmoPopID() {
+func PopID() {
 	C.ImGuizmo_PopID()
 }
 
-func zmoPushIDInt(int_id int32) {
+func PushIDInt(int_id int32) {
 	C.ImGuizmo_PushID_Int(C.int(int_id))
 }
 
-func zmoPushIDPtr(ptr_id uintptr) {
+func PushIDPtr(ptr_id uintptr) {
 	C.wrap_ImGuizmo_PushID_Ptr(C.uintptr_t(ptr_id))
 }
 
-func zmoPushIDStr(str_id string) {
+func PushIDStr(str_id string) {
 	str_idArg, str_idFin := datautils.WrapString[C.char](str_id)
 	C.ImGuizmo_PushID_Str(str_idArg)
 
 	str_idFin()
 }
 
-func zmoPushIDStrStr(str_id_begin string, str_id_end string) {
+func PushIDStrStr(str_id_begin string, str_id_end string) {
 	str_id_beginArg, str_id_beginFin := datautils.WrapString[C.char](str_id_begin)
 	str_id_endArg, str_id_endFin := datautils.WrapString[C.char](str_id_end)
 	C.ImGuizmo_PushID_StrStr(str_id_beginArg, str_id_endArg)
@@ -147,72 +147,72 @@ func zmoPushIDStrStr(str_id_begin string, str_id_end string) {
 	str_id_endFin()
 }
 
-func zmoRecomposeMatrixFromComponents(translation []float32, rotation []float32, scale []float32, matrix *float32) {
+func RecomposeMatrixFromComponents(translation []float32, rotation []float32, scale []float32, matrix *float32) {
 	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
 	C.ImGuizmo_RecomposeMatrixFromComponents((*C.float)(&(translation[0])), (*C.float)(&(rotation[0])), (*C.float)(&(scale[0])), matrixArg)
 
 	matrixFin()
 }
 
-func zmoSetAlternativeWindow(window *imgui.Window) {
+func SetAlternativeWindow(window *imgui.Window) {
 	windowArg, windowFin := window.Handle()
 	C.ImGuizmo_SetAlternativeWindow(datautils.ConvertCTypes[*C.ImGuiWindow](windowArg))
 
 	windowFin()
 }
 
-func zmoSetAxisLimit(value float32) {
+func SetAxisLimit(value float32) {
 	C.ImGuizmo_SetAxisLimit(C.float(value))
 }
 
-func zmoSetAxisMask(x bool, y bool, z bool) {
+func SetAxisMask(x bool, y bool, z bool) {
 	C.ImGuizmo_SetAxisMask(C.bool(x), C.bool(y), C.bool(z))
 }
 
-// zmoSetDrawlistV parameter default value hint:
+// SetDrawlistV parameter default value hint:
 // drawlist: nullptr
-func zmoSetDrawlistV(drawlist *imgui.DrawList) {
+func SetDrawlistV(drawlist *imgui.DrawList) {
 	drawlistArg, drawlistFin := drawlist.Handle()
 	C.ImGuizmo_SetDrawlist(datautils.ConvertCTypes[*C.ImDrawList](drawlistArg))
 
 	drawlistFin()
 }
 
-func zmoSetGizmoSizeClipSpace(value float32) {
+func SetGizmoSizeClipSpace(value float32) {
 	C.ImGuizmo_SetGizmoSizeClipSpace(C.float(value))
 }
 
-func zmoSetID(id int32) {
+func SetID(id int32) {
 	C.ImGuizmo_SetID(C.int(id))
 }
 
-func zmoSetImGuiContext(ctx *imgui.Context) {
+func SetImGuiContext(ctx *imgui.Context) {
 	ctxArg, ctxFin := ctx.Handle()
 	C.ImGuizmo_SetImGuiContext(datautils.ConvertCTypes[*C.ImGuiContext](ctxArg))
 
 	ctxFin()
 }
 
-func zmoSetOrthographic(isOrthographic bool) {
+func SetOrthographic(isOrthographic bool) {
 	C.ImGuizmo_SetOrthographic(C.bool(isOrthographic))
 }
 
-func zmoSetPlaneLimit(value float32) {
+func SetPlaneLimit(value float32) {
 	C.ImGuizmo_SetPlaneLimit(C.float(value))
 }
 
-func zmoSetRect(x float32, y float32, width float32, height float32) {
+func SetRect(x float32, y float32, width float32, height float32) {
 	C.ImGuizmo_SetRect(C.float(x), C.float(y), C.float(width), C.float(height))
 }
 
-func zmoViewManipulateFloat(view *float32, length float32, position imgui.Vec2, size imgui.Vec2, backgroundColor uint32) {
+func ViewManipulateFloat(view *float32, length float32, position imgui.Vec2, size imgui.Vec2, backgroundColor uint32) {
 	viewArg, viewFin := datautils.WrapNumberPtr[C.float, float32](view)
 	C.ImGuizmo_ViewManipulate_Float(viewArg, C.float(length), datautils.ConvertCTypes[C.ImVec2](position.ToC()), datautils.ConvertCTypes[C.ImVec2](size.ToC()), C.ImU32(backgroundColor))
 
 	viewFin()
 }
 
-func zmoViewManipulateFloatPtr(view *float32, projection []float32, operation OPERATION, mode MODE, matrix *float32, length float32, position imgui.Vec2, size imgui.Vec2, backgroundColor uint32) {
+func ViewManipulateFloatPtr(view *float32, projection []float32, operation OPERATION, mode MODE, matrix *float32, length float32, position imgui.Vec2, size imgui.Vec2, backgroundColor uint32) {
 	viewArg, viewFin := datautils.WrapNumberPtr[C.float, float32](view)
 	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
 	C.ImGuizmo_ViewManipulate_FloatPtr(viewArg, (*C.float)(&(projection[0])), C.OPERATION(operation), C.MODE(mode), matrixArg, C.float(length), datautils.ConvertCTypes[C.ImVec2](position.ToC()), datautils.ConvertCTypes[C.ImVec2](size.ToC()), C.ImU32(backgroundColor))
@@ -232,7 +232,7 @@ func (self *Style) Destroy() {
 	selfFin()
 }
 
-func zmoManipulate(view []float32, projection []float32, operation OPERATION, mode MODE, matrix *float32) bool {
+func Manipulate(view []float32, projection []float32, operation OPERATION, mode MODE, matrix *float32) bool {
 	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
 
 	defer func() {
@@ -241,7 +241,7 @@ func zmoManipulate(view []float32, projection []float32, operation OPERATION, mo
 	return C.wrap_ImGuizmo_Manipulate((*C.float)(&(view[0])), (*C.float)(&(projection[0])), C.OPERATION(operation), C.MODE(mode), matrixArg) == C.bool(true)
 }
 
-func zmoSetDrawlist() {
+func SetDrawlist() {
 	C.wrap_ImGuizmo_SetDrawlist()
 }
 
