@@ -9,6 +9,7 @@ import (
 
 	"github.com/AllenDang/cimgui-go/backend"
 	"github.com/AllenDang/cimgui-go/imgui"
+	_ "github.com/AllenDang/cimgui-go/imguizmo"
 	_ "github.com/AllenDang/cimgui-go/immarkdown"
 	_ "github.com/AllenDang/cimgui-go/imnodes"
 	"github.com/AllenDang/cimgui-go/implot"

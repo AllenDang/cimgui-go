@@ -70,6 +70,16 @@ endef
 cimmarkdown: setup
 	$(call cimmarkdown)
 
+define cimguizmo
+	$(call generate,cimguizmo,imguizmo,cwrappers/cimguizmo.h,cwrappers/cimguizmo_templates/definitions.json,cwrappers/cimguizmo_templates/structs_and_enums.json,cwrappers/cimguizmo_templates/typedefs_dict.json,-r ../cwrappers/cimgui_templates/structs_and_enums.json -rt ../cwrappers/cimgui_templates/typedefs_dict.json)
+endef
+
+## cimgui: generate cimgui binding
+.PHONY: cimguizmo
+cimguizmo: setup
+	$(call cimguizmo)
+
+
 compile_cimgui_macos:
 	rm -rf ./lib/build
 	cd ./lib; cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=arm64
@@ -78,7 +88,7 @@ compile_cimgui_macos:
 
 ## generate: generates both bindings (equal to `all`)
 .PHONY: generate
-generate: cimgui cimplot cimnodes cimmarkdown
+generate: cimgui cimplot cimnodes cimmarkdown cimguizmo
 
 # update updates sub-repos (like cimplot or cimgui)
 # $1 - subrepo directory
@@ -122,6 +132,8 @@ update: setup
 	$(call cimnodes)
 	$(call update,cimmarkdown,https://github.com/gucio321/cimmarkdown,imgui_markdown,main)
 	$(call cimmarkdown)
+	$(call update,cimguizmo,https://github.com/cimgui/cimguizmo,ImGuizmo,master)
+	$(call cimguizmo)
 	$(call dummy)
 
 # dummy creates dummy.go files to baypass GO vendor policy that excludes everything that has no .go files (including our C source).

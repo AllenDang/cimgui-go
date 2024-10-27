@@ -26,6 +26,8 @@ file(GLOB IMGUI_SOURCES
     ../cwrappers/cimnodes.cpp
     ../cwrappers/cimmarkdown.cpp
     ../cwrappers/imgui_markdown/imgui_markdown.h
+    ../cwrappers/ImGuizmo/ImGuizmo.cpp
+    ../cwrappers/cimguizmo.cpp
 	${TABLES_SOURCE}
 )
 

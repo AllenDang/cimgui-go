@@ -61,12 +61,20 @@ var replace = map[CIdentifier]GoIdentifier{
 }
 
 func (c CIdentifier) trimImGuiPrefix() CIdentifier {
-	if HasPrefix(c, "ImGui") {
-		c = TrimPrefix(c, "ImGui")
-	} else if HasPrefix(c, "Im") && len(c) > 2 && strings.ToUpper(string(c[2])) == string(c[2]) {
-		c = TrimPrefix(c, "Im")
-	} else if HasPrefix(c, "ig") && len(c) > 2 && strings.ToUpper(string(c[2])) == string(c[2]) {
-		c = TrimPrefix(c, "ig")
+	// order sensitive!
+	prefixes := []string{
+		"ImGuizmo",
+		"ImGui",
+		"Im",
+		"ig",
+	}
+
+	for _, prefix := range prefixes {
+		if HasPrefix(c, prefix) &&
+			len(c) > len(prefix) && // check if removing it will not result in an empty string
+			strings.ToUpper(string(c[len(prefix)])) == string(c[len(prefix)]) { // check if the method will still be exported
+			c = TrimPrefix(c, prefix)
+		}
 	}
 
 	return c
