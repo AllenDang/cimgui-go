@@ -9,6 +9,7 @@ import (
 
 	"github.com/AllenDang/cimgui-go/backend"
 	"github.com/AllenDang/cimgui-go/imgui"
+	"github.com/AllenDang/cimgui-go/imguizmo"
 	_ "github.com/AllenDang/cimgui-go/imguizmo"
 	_ "github.com/AllenDang/cimgui-go/immarkdown"
 	_ "github.com/AllenDang/cimgui-go/imnodes"
@@ -60,9 +61,11 @@ func BeforeDestroyContext() {
 }
 
 func Loop() {
+	imguizmo.BeginFrame()
 	ShowWidgetsDemo()
 	ShowPictureLoadingDemo()
 	ShowImPlotDemo()
+	ShowGizmoDemo()
 }
 
 func ShowWidgetsDemo() {
