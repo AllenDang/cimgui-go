@@ -23,23 +23,39 @@ func BeginFrame() {
 	C.ImGuizmo_BeginFrame()
 }
 
-func DecomposeMatrixToComponents(matrix []float32, translation *float32, rotation *float32, scale *float32) {
+func DecomposeMatrixToComponents(matrix *float32, translation *float32, rotation *float32, scale *float32) {
+	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
 	translationArg, translationFin := datautils.WrapNumberPtr[C.float, float32](translation)
 	rotationArg, rotationFin := datautils.WrapNumberPtr[C.float, float32](rotation)
 	scaleArg, scaleFin := datautils.WrapNumberPtr[C.float, float32](scale)
-	C.ImGuizmo_DecomposeMatrixToComponents((*C.float)(&(matrix[0])), translationArg, rotationArg, scaleArg)
+	C.ImGuizmo_DecomposeMatrixToComponents(matrixArg, translationArg, rotationArg, scaleArg)
 
+	matrixFin()
 	translationFin()
 	rotationFin()
 	scaleFin()
 }
 
-func DrawCubes(view []float32, projection []float32, matrices []float32, matrixCount int32) {
-	C.ImGuizmo_DrawCubes((*C.float)(&(view[0])), (*C.float)(&(projection[0])), (*C.float)(&(matrices[0])), C.int(matrixCount))
+func DrawCubes(view *float32, projection *float32, matrices *float32, matrixCount int32) {
+	viewArg, viewFin := datautils.WrapNumberPtr[C.float, float32](view)
+	projectionArg, projectionFin := datautils.WrapNumberPtr[C.float, float32](projection)
+	matricesArg, matricesFin := datautils.WrapNumberPtr[C.float, float32](matrices)
+	C.ImGuizmo_DrawCubes(viewArg, projectionArg, matricesArg, C.int(matrixCount))
+
+	viewFin()
+	projectionFin()
+	matricesFin()
 }
 
-func DrawGrid(view []float32, projection []float32, matrix []float32, gridSize float32) {
-	C.ImGuizmo_DrawGrid((*C.float)(&(view[0])), (*C.float)(&(projection[0])), (*C.float)(&(matrix[0])), C.float(gridSize))
+func DrawGrid(view *float32, projection *float32, matrix *float32, gridSize float32) {
+	viewArg, viewFin := datautils.WrapNumberPtr[C.float, float32](view)
+	projectionArg, projectionFin := datautils.WrapNumberPtr[C.float, float32](projection)
+	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
+	C.ImGuizmo_DrawGrid(viewArg, projectionArg, matrixArg, C.float(gridSize))
+
+	viewFin()
+	projectionFin()
+	matrixFin()
 }
 
 func Enable(enable bool) {
@@ -108,15 +124,25 @@ func IsUsingViewManipulate() bool {
 // snap: NULL
 // localBounds: NULL
 // boundsSnap: NULL
-func ManipulateV(view []float32, projection []float32, operation OPERATION, mode MODE, matrix *float32, deltaMatrix *float32, snap []float32, localBounds []float32, boundsSnap []float32) bool {
+func ManipulateV(view *float32, projection *float32, operation OPERATION, mode MODE, matrix *float32, deltaMatrix *float32, snap *float32, localBounds *float32, boundsSnap *float32) bool {
+	viewArg, viewFin := datautils.WrapNumberPtr[C.float, float32](view)
+	projectionArg, projectionFin := datautils.WrapNumberPtr[C.float, float32](projection)
 	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
 	deltaMatrixArg, deltaMatrixFin := datautils.WrapNumberPtr[C.float, float32](deltaMatrix)
+	snapArg, snapFin := datautils.WrapNumberPtr[C.float, float32](snap)
+	localBoundsArg, localBoundsFin := datautils.WrapNumberPtr[C.float, float32](localBounds)
+	boundsSnapArg, boundsSnapFin := datautils.WrapNumberPtr[C.float, float32](boundsSnap)
 
 	defer func() {
+		viewFin()
+		projectionFin()
 		matrixFin()
 		deltaMatrixFin()
+		snapFin()
+		localBoundsFin()
+		boundsSnapFin()
 	}()
-	return C.ImGuizmo_Manipulate((*C.float)(&(view[0])), (*C.float)(&(projection[0])), C.OPERATION(operation), C.MODE(mode), matrixArg, deltaMatrixArg, (*C.float)(&(snap[0])), (*C.float)(&(localBounds[0])), (*C.float)(&(boundsSnap[0]))) == C.bool(true)
+	return C.ImGuizmo_Manipulate(viewArg, projectionArg, C.OPERATION(operation), C.MODE(mode), matrixArg, deltaMatrixArg, snapArg, localBoundsArg, boundsSnapArg) == C.bool(true)
 }
 
 func PopID() {
@@ -147,10 +173,16 @@ func PushIDStrStr(str_id_begin string, str_id_end string) {
 	str_id_endFin()
 }
 
-func RecomposeMatrixFromComponents(translation []float32, rotation []float32, scale []float32, matrix *float32) {
+func RecomposeMatrixFromComponents(translation *float32, rotation *float32, scale *float32, matrix *float32) {
+	translationArg, translationFin := datautils.WrapNumberPtr[C.float, float32](translation)
+	rotationArg, rotationFin := datautils.WrapNumberPtr[C.float, float32](rotation)
+	scaleArg, scaleFin := datautils.WrapNumberPtr[C.float, float32](scale)
 	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
-	C.ImGuizmo_RecomposeMatrixFromComponents((*C.float)(&(translation[0])), (*C.float)(&(rotation[0])), (*C.float)(&(scale[0])), matrixArg)
+	C.ImGuizmo_RecomposeMatrixFromComponents(translationArg, rotationArg, scaleArg, matrixArg)
 
+	translationFin()
+	rotationFin()
+	scaleFin()
 	matrixFin()
 }
 
@@ -212,12 +244,14 @@ func ViewManipulateFloat(view *float32, length float32, position imgui.Vec2, siz
 	viewFin()
 }
 
-func ViewManipulateFloatPtr(view *float32, projection []float32, operation OPERATION, mode MODE, matrix *float32, length float32, position imgui.Vec2, size imgui.Vec2, backgroundColor uint32) {
+func ViewManipulateFloatPtr(view *float32, projection *float32, operation OPERATION, mode MODE, matrix *float32, length float32, position imgui.Vec2, size imgui.Vec2, backgroundColor uint32) {
 	viewArg, viewFin := datautils.WrapNumberPtr[C.float, float32](view)
+	projectionArg, projectionFin := datautils.WrapNumberPtr[C.float, float32](projection)
 	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
-	C.ImGuizmo_ViewManipulate_FloatPtr(viewArg, (*C.float)(&(projection[0])), C.OPERATION(operation), C.MODE(mode), matrixArg, C.float(length), datautils.ConvertCTypes[C.ImVec2](position.ToC()), datautils.ConvertCTypes[C.ImVec2](size.ToC()), C.ImU32(backgroundColor))
+	C.ImGuizmo_ViewManipulate_FloatPtr(viewArg, projectionArg, C.OPERATION(operation), C.MODE(mode), matrixArg, C.float(length), datautils.ConvertCTypes[C.ImVec2](position.ToC()), datautils.ConvertCTypes[C.ImVec2](size.ToC()), C.ImU32(backgroundColor))
 
 	viewFin()
+	projectionFin()
 	matrixFin()
 }
 
@@ -232,13 +266,17 @@ func (self *Style) Destroy() {
 	selfFin()
 }
 
-func Manipulate(view []float32, projection []float32, operation OPERATION, mode MODE, matrix *float32) bool {
+func Manipulate(view *float32, projection *float32, operation OPERATION, mode MODE, matrix *float32) bool {
+	viewArg, viewFin := datautils.WrapNumberPtr[C.float, float32](view)
+	projectionArg, projectionFin := datautils.WrapNumberPtr[C.float, float32](projection)
 	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
 
 	defer func() {
+		viewFin()
+		projectionFin()
 		matrixFin()
 	}()
-	return C.wrap_ImGuizmo_Manipulate((*C.float)(&(view[0])), (*C.float)(&(projection[0])), C.OPERATION(operation), C.MODE(mode), matrixArg) == C.bool(true)
+	return C.wrap_ImGuizmo_Manipulate(viewArg, projectionArg, C.OPERATION(operation), C.MODE(mode), matrixArg) == C.bool(true)
 }
 
 func SetDrawlist() {

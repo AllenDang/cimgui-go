@@ -4514,8 +4514,11 @@ func ColorEdit4V(label string, col *[4]float32, flags ColorEditFlags) bool {
 	return C.igColorEdit4(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags)) == C.bool(true)
 }
 
-func InternalColorEditOptionsPopup(col []float32, flags ColorEditFlags) {
-	C.igColorEditOptionsPopup((*C.float)(&(col[0])), C.ImGuiColorEditFlags(flags))
+func InternalColorEditOptionsPopup(col *float32, flags ColorEditFlags) {
+	colArg, colFin := datautils.WrapNumberPtr[C.float, float32](col)
+	C.igColorEditOptionsPopup(colArg, C.ImGuiColorEditFlags(flags))
+
+	colFin()
 }
 
 // ColorPicker3V parameter default value hint:
@@ -4541,13 +4544,14 @@ func ColorPicker3V(label string, col *[3]float32, flags ColorEditFlags) bool {
 // ColorPicker4V parameter default value hint:
 // flags: 0
 // ref_col: NULL
-func ColorPicker4V(label string, col *[4]float32, flags ColorEditFlags, ref_col []float32) bool {
+func ColorPicker4V(label string, col *[4]float32, flags ColorEditFlags, ref_col *float32) bool {
 	labelArg, labelFin := datautils.WrapString[C.char](label)
 
 	colArg := make([]C.float, len(col))
 	for i, colV := range col {
 		colArg[i] = C.float(colV)
 	}
+	ref_colArg, ref_colFin := datautils.WrapNumberPtr[C.float, float32](ref_col)
 
 	defer func() {
 		labelFin()
@@ -4555,19 +4559,26 @@ func ColorPicker4V(label string, col *[4]float32, flags ColorEditFlags, ref_col 
 		for i, colV := range colArg {
 			(*col)[i] = float32(colV)
 		}
+
+		ref_colFin()
 	}()
-	return C.igColorPicker4(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags), (*C.float)(&(ref_col[0]))) == C.bool(true)
+	return C.igColorPicker4(labelArg, (*C.float)(&colArg[0]), C.ImGuiColorEditFlags(flags), ref_colArg) == C.bool(true)
 }
 
-func InternalColorPickerOptionsPopup(ref_col []float32, flags ColorEditFlags) {
-	C.igColorPickerOptionsPopup((*C.float)(&(ref_col[0])), C.ImGuiColorEditFlags(flags))
+func InternalColorPickerOptionsPopup(ref_col *float32, flags ColorEditFlags) {
+	ref_colArg, ref_colFin := datautils.WrapNumberPtr[C.float, float32](ref_col)
+	C.igColorPickerOptionsPopup(ref_colArg, C.ImGuiColorEditFlags(flags))
+
+	ref_colFin()
 }
 
-func InternalColorTooltip(text string, col []float32, flags ColorEditFlags) {
+func InternalColorTooltip(text string, col *float32, flags ColorEditFlags) {
 	textArg, textFin := datautils.WrapString[C.char](text)
-	C.igColorTooltip(textArg, (*C.float)(&(col[0])), C.ImGuiColorEditFlags(flags))
+	colArg, colFin := datautils.WrapNumberPtr[C.float, float32](col)
+	C.igColorTooltip(textArg, colArg, C.ImGuiColorEditFlags(flags))
 
 	textFin()
+	colFin()
 }
 
 // ColumnsV parameter default value hint:
@@ -6810,18 +6821,13 @@ func InternalImBitArraySetBitRange(arr *uint32, n int32, n2 int32) {
 	arrFin()
 }
 
-func InternalImBitArrayTestBit(arr *[]uint32, n int32) bool {
-	arrArg := make([]C.ImU32, len(*arr))
-	for i, arrV := range *arr {
-		arrArg[i] = C.ImU32(arrV)
-	}
+func InternalImBitArrayTestBit(arr *uint32, n int32) bool {
+	arrArg, arrFin := datautils.WrapNumberPtr[C.ImU32, uint32](arr)
 
 	defer func() {
-		for i, arrV := range arrArg {
-			(*arr)[i] = uint32(arrV)
-		}
+		arrFin()
 	}()
-	return C.igImBitArrayTestBit((*C.ImU32)(&arrArg[0]), C.int(n)) == C.bool(true)
+	return C.igImBitArrayTestBit(arrArg, C.int(n)) == C.bool(true)
 }
 
 func InternalImCharIsBlankA(c rune) bool {
@@ -8643,12 +8649,14 @@ func OpenPopupStrV(str_id string, popup_flags PopupFlags) {
 // scale_max: FLT_MAX
 // graph_size: ImVec2(0,0)
 // stride: sizeof(float)
-func PlotHistogramFloatPtrV(label string, values []float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2, stride int32) {
+func PlotHistogramFloatPtrV(label string, values *float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2, stride int32) {
 	labelArg, labelFin := datautils.WrapString[C.char](label)
+	valuesArg, valuesFin := datautils.WrapNumberPtr[C.float, float32](values)
 	overlay_textArg, overlay_textFin := datautils.WrapString[C.char](overlay_text)
-	C.igPlotHistogram_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), datautils.ConvertCTypes[C.ImVec2](graph_size.ToC()), C.int(stride))
+	C.igPlotHistogram_FloatPtr(labelArg, valuesArg, C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), datautils.ConvertCTypes[C.ImVec2](graph_size.ToC()), C.int(stride))
 
 	labelFin()
+	valuesFin()
 	overlay_textFin()
 }
 
@@ -8659,12 +8667,14 @@ func PlotHistogramFloatPtrV(label string, values []float32, values_count int32, 
 // scale_max: FLT_MAX
 // graph_size: ImVec2(0,0)
 // stride: sizeof(float)
-func PlotLinesFloatPtrV(label string, values []float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2, stride int32) {
+func PlotLinesFloatPtrV(label string, values *float32, values_count int32, values_offset int32, overlay_text string, scale_min float32, scale_max float32, graph_size Vec2, stride int32) {
 	labelArg, labelFin := datautils.WrapString[C.char](label)
+	valuesArg, valuesFin := datautils.WrapNumberPtr[C.float, float32](values)
 	overlay_textArg, overlay_textFin := datautils.WrapString[C.char](overlay_text)
-	C.igPlotLines_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), datautils.ConvertCTypes[C.ImVec2](graph_size.ToC()), C.int(stride))
+	C.igPlotLines_FloatPtr(labelArg, valuesArg, C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), datautils.ConvertCTypes[C.ImVec2](graph_size.ToC()), C.int(stride))
 
 	labelFin()
+	valuesFin()
 	overlay_textFin()
 }
 
@@ -12849,18 +12859,22 @@ func OpenPopupStr(str_id string) {
 	str_idFin()
 }
 
-func PlotHistogramFloatPtr(label string, values []float32, values_count int32) {
+func PlotHistogramFloatPtr(label string, values *float32, values_count int32) {
 	labelArg, labelFin := datautils.WrapString[C.char](label)
-	C.wrap_igPlotHistogram_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count))
+	valuesArg, valuesFin := datautils.WrapNumberPtr[C.float, float32](values)
+	C.wrap_igPlotHistogram_FloatPtr(labelArg, valuesArg, C.int(values_count))
 
 	labelFin()
+	valuesFin()
 }
 
-func PlotLinesFloatPtr(label string, values []float32, values_count int32) {
+func PlotLinesFloatPtr(label string, values *float32, values_count int32) {
 	labelArg, labelFin := datautils.WrapString[C.char](label)
-	C.wrap_igPlotLines_FloatPtr(labelArg, (*C.float)(&(values[0])), C.int(values_count))
+	valuesArg, valuesFin := datautils.WrapNumberPtr[C.float, float32](values)
+	C.wrap_igPlotLines_FloatPtr(labelArg, valuesArg, C.int(values_count))
 
 	labelFin()
+	valuesFin()
 }
 
 func PopStyleColor() {
