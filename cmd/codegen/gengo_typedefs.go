@@ -199,7 +199,7 @@ func (self %[1]s) C() (C.%[6]s, func()) {
 // New%[1]sFromC creates %[1]s from its C pointer.
 // SRC ~= *C.%[6]s
 func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
-	return &%[1]s{Data: (uintptr)(C.%[6]s_toUintptr(*datautils.ConvertCTypes[*C.%[6]s](cvalue)))}
+	return &%[1]s{Data: (uintptr)(C.%[6]s_toUintptr(*internal.ReinterpretCast[*C.%[6]s](cvalue)))}
 }
 `,
 				k.renameGoIdentifier(),
@@ -260,7 +260,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 				knownArgType.VarName,
 				knownArgType.Finalizer,
 
-				fmt.Sprintf(knownPtrReturnType.returnStmt, fmt.Sprintf("datautils.ConvertCTypes[*C.%s](cvalue)", k)),
+				fmt.Sprintf(knownPtrReturnType.returnStmt, fmt.Sprintf("internal.ReinterpretCast[*C.%s](cvalue)", k)),
 			)
 
 			generatedTypedefs++
@@ -289,7 +289,7 @@ func (selfStruct *%[1]s) C() (result C.%[6]s, fin func()) {
 // New%[1]sFromC creates %[1]s from its C pointer.
 // SRC ~= *C.%[6]s
 func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
-	v := (%[8]s)(*datautils.ConvertCTypes[*C.%[6]s](cvalue))
+	v := (%[8]s)(*internal.ReinterpretCast[*C.%[6]s](cvalue))
 	return &%[1]s{Data: %[7]s}
 }
 `,
@@ -379,7 +379,7 @@ func (self *%[1]s) Handle() (result *C.%[2]s, fin func()) {
 // New%[1]sFromC creates %[1]s from its C pointer.
 // SRC ~= *C.%[2]s
 func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
-	return &%[1]s{CData: datautils.ConvertCTypes[*C.%[2]s](cvalue)}
+	return &%[1]s{CData: internal.ReinterpretCast[*C.%[2]s](cvalue)}
 }
 `, name.renameGoIdentifier(), name, toPlainValue)
 }
