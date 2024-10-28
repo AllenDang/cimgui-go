@@ -1,4 +1,4 @@
-package datautils
+package internal
 
 // #include <memory.h>
 // #include <stdlib.h>
@@ -6,42 +6,16 @@ package datautils
 import "C"
 
 import (
-	"runtime"
 	"unsafe"
 )
 
-// ConvertCTypes intendedd use is to convert packageA.C.MyType to packageB.C.MyType.
+// ReinterpretCast acts exactly like C++'s reinterpret_cast.
+// Intendedd use is to convert packageA.C.MyType to packageB.C.MyType.
 // make sure your types are identical C types before using it.
-// THIS IS HIGHLY UNSAFE AND NOT RECOMMENDED TO USE OUTSIDE CIMGUI.
+// THIS IS HIGHLY UNSAFE (even more than Go's unsafe package) AND NOT RECOMMENDED TO USE OUTSIDE CIMGUI.
 // It just forces pointer/type reinterpretation with unsafe.Pointer.
-func ConvertCTypes[RET, SRC any](src SRC) RET {
+func ReinterpretCast[RET, SRC any](src SRC) RET {
 	return *(*RET)(unsafe.Pointer(&src))
-}
-
-func CastBool(value bool) (cast int) {
-	if value {
-		cast = 1
-	}
-	return
-}
-
-// WrapBool converts a Go bool pointer to a C bool pointer.
-// Default value of RESULT should be C.bool
-func WrapBool[RESULT ~bool](goValue *bool) (wrapped *RESULT, finisher func()) {
-	if goValue != nil {
-		var cValue RESULT
-		if *goValue {
-			cValue = RESULT(true)
-		}
-		wrapped = &cValue
-		finisher = func() {
-			*goValue = cValue == RESULT(true)
-		}
-	} else {
-		finisher = func() {}
-	}
-
-	return
 }
 
 // Number is a generic type for Go/C types that can be used as a number.
@@ -50,18 +24,19 @@ func WrapBool[RESULT ~bool](goValue *bool) (wrapped *RESULT, finisher func()) {
 type Number interface {
 	~int | ~int8 | ~int16 | ~int32 | ~int64 |
 		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 |
-		~float32 | ~float64
+		~float32 | ~float64 |
+		~bool // in C bool is technically a number
 }
 
 // WrapNumberPtr is a generic method to convert GOTYPE (int32/float32 e.t.c.) into CTYPE (c_int/c_float e.t.c.)
 func WrapNumberPtr[CTYPE Number, GOTYPE Number](goValue *GOTYPE) (wrapped *CTYPE, finisher func()) {
-	return ConvertCTypes[*CTYPE](goValue), func() {}
+	return ReinterpretCast[*CTYPE](goValue), func() {}
 }
 
 // WrapString converts Go string to C char*
 // Default value of RET is C.char
 func WrapString[RET ~int8](value string) (wrapped *RET, finisher func()) {
-	wrapped = ConvertCTypes[*RET](C.CString(value))
+	wrapped = ReinterpretCast[*RET](C.CString(value))
 	finisher = func() { C.free(unsafe.Pointer(wrapped)) } // nolint: gas
 	return
 }
@@ -159,13 +134,4 @@ func (buf *StringBuffer) Ptr() unsafe.Pointer {
 
 func (buf *StringBuffer) Size() int {
 	return buf.size
-}
-
-// WrapVoidPtr uses runtime.Pinner to pin value
-func WrapVoidPtr(value unsafe.Pointer) (wrapped unsafe.Pointer, finisher func()) {
-	p := &runtime.Pinner{}
-	p.Pin(value)
-	return value, func() {
-		p.Unpin()
-	}
 }

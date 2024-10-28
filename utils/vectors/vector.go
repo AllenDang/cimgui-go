@@ -1,4 +1,4 @@
-package datautils
+package vectors
 
 import "C"
 import "runtime"
