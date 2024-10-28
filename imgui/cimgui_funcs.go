@@ -6308,7 +6308,7 @@ func InternalIOEx(ctx *Context) *IO {
 	defer func() {
 		ctxFin()
 	}()
-	return NewIOFromC(C.igGetIOEx(datautils.ConvertCTypes[*C.ImGuiContext](ctxArg)))
+	return NewIOFromC(C.igGetIOEx(internal.ReinterpretCast[*C.ImGuiContext](ctxArg)))
 }
 
 // Get input text state if active
