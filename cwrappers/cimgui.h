@@ -4570,6 +4570,7 @@ CIMGUI_API void ImGuiTableColumnSettings_destroy(ImGuiTableColumnSettings* self)
 CIMGUI_API ImGuiTableSettings* ImGuiTableSettings_ImGuiTableSettings(void);
 CIMGUI_API void ImGuiTableSettings_destroy(ImGuiTableSettings* self);
 CIMGUI_API ImGuiTableColumnSettings* ImGuiTableSettings_GetColumnSettings(ImGuiTableSettings* self);
+CIMGUI_API ImGuiIO* igGetIOEx(ImGuiContext* ctx);
 CIMGUI_API ImGuiWindow* igGetCurrentWindowRead(void);
 CIMGUI_API ImGuiWindow* igGetCurrentWindow(void);
 CIMGUI_API ImGuiWindow* igFindWindowByID(ImGuiID id);

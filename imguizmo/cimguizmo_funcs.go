@@ -66,6 +66,7 @@ func GetIDPtr(ptr_id uintptr) imgui.ID {
 	return *imgui.NewIDFromC(func() *C.ImGuiID { result := C.wrap_ImGuizmo_GetID_Ptr(C.uintptr_t(ptr_id)); return &result }())
 }
 
+// calculate unique ID (hash of whole ID stack + given parameter). e.g. if you want to query into ImGuiStorage yourself
 func GetIDStr(str_id string) imgui.ID {
 	str_idArg, str_idFin := internal.WrapString[C.char](str_id)
 
@@ -145,18 +146,22 @@ func ManipulateV(view *float32, projection *float32, operation OPERATION, mode M
 	return C.ImGuizmo_Manipulate(viewArg, projectionArg, C.OPERATION(operation), C.MODE(mode), matrixArg, deltaMatrixArg, snapArg, localBoundsArg, boundsSnapArg) == C.bool(true)
 }
 
+// pop from the ID stack.
 func PopID() {
 	C.ImGuizmo_PopID()
 }
 
+// push integer into the ID stack (will hash integer).
 func PushIDInt(int_id int32) {
 	C.ImGuizmo_PushID_Int(C.int(int_id))
 }
 
+// push pointer into the ID stack (will hash pointer).
 func PushIDPtr(ptr_id uintptr) {
 	C.wrap_ImGuizmo_PushID_Ptr(C.uintptr_t(ptr_id))
 }
 
+// push string into the ID stack (will hash string).
 func PushIDStr(str_id string) {
 	str_idArg, str_idFin := internal.WrapString[C.char](str_id)
 	C.ImGuizmo_PushID_Str(str_idArg)
@@ -164,6 +169,7 @@ func PushIDStr(str_id string) {
 	str_idFin()
 }
 
+// push string into the ID stack (will hash string).
 func PushIDStrStr(str_id_begin string, str_id_end string) {
 	str_id_beginArg, str_id_beginFin := internal.WrapString[C.char](str_id_begin)
 	str_id_endArg, str_id_endFin := internal.WrapString[C.char](str_id_end)

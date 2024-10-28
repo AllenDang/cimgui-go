@@ -5874,7 +5874,7 @@
     "ImFontAtlas": "imgui:3455",
     "ImFontAtlasCustomRect": "imgui:3417",
     "ImFontAtlasFlags_": "imgui:3430",
-    "ImFontBuilderIO": "imgui_internal:3815",
+    "ImFontBuilderIO": "imgui_internal:3816",
     "ImFontConfig": "imgui:3360",
     "ImFontGlyph": "imgui:3390",
     "ImFontGlyphRangesBuilder": "imgui:3402",

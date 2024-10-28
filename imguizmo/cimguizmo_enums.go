@@ -7,14 +7,23 @@ package imguizmo
 type COLOR int32
 
 const (
-	DIRECTIONX          COLOR = 0
-	DIRECTIONY          COLOR = 1
-	DIRECTIONZ          COLOR = 2
-	PLANEX              COLOR = 3
-	PLANEY              COLOR = 4
-	PLANEZ              COLOR = 5
-	SELECTION           COLOR = 6
-	INACTIVE            COLOR = 7
+	// directionColor[0]
+	DIRECTIONX COLOR = 0
+	// directionColor[1]
+	DIRECTIONY COLOR = 1
+	// directionColor[2]
+	DIRECTIONZ COLOR = 2
+	// planeColor[0]
+	PLANEX COLOR = 3
+	// planeColor[1]
+	PLANEY COLOR = 4
+	// planeColor[2]
+	PLANEZ COLOR = 5
+	// selectionColor
+	SELECTION COLOR = 6
+	// inactiveColor
+	INACTIVE COLOR = 7
+	// translationLineColor
 	TRANSLATIONLINE     COLOR = 8
 	SCALELINE           COLOR = 9
 	ROTATIONUSINGBORDER COLOR = 10
@@ -33,6 +42,10 @@ const (
 	WORLD MODE = 1
 )
 
+// call it when you want a gizmo
+// Needs view and projection matrices.
+// matrix parameter is the source matrix (where will be gizmo be drawn) and might be transformed by the function. Return deltaMatrix is optional
+// translation is applied in world space
 // original name: OPERATION
 type OPERATION int32
 
@@ -54,6 +67,7 @@ const (
 	TRANSLATE    OPERATION = 7
 	ROTATE       OPERATION = 120
 	SCALE        OPERATION = 896
-	SCALEU       OPERATION = 14336
-	UNIVERSAL    OPERATION = 14463
+	// universal
+	SCALEU    OPERATION = 14336
+	UNIVERSAL OPERATION = 14463
 )

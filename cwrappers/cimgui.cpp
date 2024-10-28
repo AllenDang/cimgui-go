@@ -3998,6 +3998,10 @@ CIMGUI_API ImGuiTableColumnSettings* ImGuiTableSettings_GetColumnSettings(ImGuiT
 {
     return self->GetColumnSettings();
 }
+CIMGUI_API ImGuiIO* igGetIOEx(ImGuiContext* ctx)
+{
+    return &ImGui::GetIOEx(ctx);
+}
 CIMGUI_API ImGuiWindow* igGetCurrentWindowRead()
 {
     return ImGui::GetCurrentWindowRead();
