@@ -23,8 +23,8 @@ import (
 	"unsafe"
 
 	"github.com/AllenDang/cimgui-go/backend"
-	"github.com/AllenDang/cimgui-go/datautils"
 	"github.com/AllenDang/cimgui-go/imgui"
+	"github.com/AllenDang/cimgui-go/internal"
 )
 
 type voidCallbackFunc func()
@@ -311,10 +311,10 @@ func (b *SDLBackend) SetWindowPos(x, y int) {
 }
 
 func (b *SDLBackend) GetWindowPos() (x, y int32) {
-	xArg, xFin := datautils.WrapNumberPtr[C.int, int32](&x)
+	xArg, xFin := internal.WrapNumberPtr[C.int, int32](&x)
 	defer xFin()
 
-	yArg, yFin := datautils.WrapNumberPtr[C.int, int32](&y)
+	yArg, yFin := internal.WrapNumberPtr[C.int, int32](&y)
 	defer yFin()
 
 	C.igSDLWindow_GetWindowPos(b.handle(), xArg, yArg)
@@ -327,10 +327,10 @@ func (b *SDLBackend) SetWindowSize(width, height int) {
 }
 
 func (b *SDLBackend) DisplaySize() (width int32, height int32) {
-	widthArg, widthFin := datautils.WrapNumberPtr[C.int, int32](&width)
+	widthArg, widthFin := internal.WrapNumberPtr[C.int, int32](&width)
 	defer widthFin()
 
-	heightArg, heightFin := datautils.WrapNumberPtr[C.int, int32](&height)
+	heightArg, heightFin := internal.WrapNumberPtr[C.int, int32](&height)
 	defer heightFin()
 
 	C.igSDLWindow_GetDisplaySize(b.handle(), widthArg, heightArg)
@@ -339,10 +339,10 @@ func (b *SDLBackend) DisplaySize() (width int32, height int32) {
 }
 
 func (b *SDLBackend) ContentScale() (width, height float32) {
-	widthArg, widthFin := datautils.WrapNumberPtr[C.float, float32](&width)
+	widthArg, widthFin := internal.WrapNumberPtr[C.float, float32](&width)
 	defer widthFin()
 
-	heightArg, heightFin := datautils.WrapNumberPtr[C.float, float32](&height)
+	heightArg, heightFin := internal.WrapNumberPtr[C.float, float32](&height)
 	defer heightFin()
 
 	C.igSDLWindow_GetContentScale(b.handle(), widthArg, heightArg)
@@ -351,7 +351,7 @@ func (b *SDLBackend) ContentScale() (width, height float32) {
 }
 
 func (b *SDLBackend) SetWindowTitle(title string) {
-	titleArg, titleFin := datautils.WrapString[C.char](title)
+	titleArg, titleFin := internal.WrapString[C.char](title)
 	defer titleFin()
 
 	C.igSDLWindow_SetTitle(b.handle(), (*C.char)(titleArg))
@@ -370,7 +370,7 @@ func (b *SDLBackend) SetShouldClose(value bool) {
 }
 
 func (b *SDLBackend) CreateWindow(title string, width, height int) {
-	titleArg, titleFin := datautils.WrapString[C.char](title)
+	titleArg, titleFin := internal.WrapString[C.char](title)
 	defer titleFin()
 
 	b.window = uintptr(unsafe.Pointer(C.igCreateSDLWindow(

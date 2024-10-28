@@ -3,16 +3,13 @@
 
 package imguizmo
 
-import (
-	"github.com/AllenDang/cimgui-go/datautils"
-)
-
 // #include <stdlib.h>
 // #include <memory.h>
 // #include "../imgui/extra_types.h"
 // #include "cimguizmo_wrapper.h"
 // #include "cimguizmo_typedefs.h"
 import "C"
+import "github.com/AllenDang/cimgui-go/internal"
 
 type Style struct {
 	CData *C.Style
@@ -32,5 +29,5 @@ func (self Style) C() (C.Style, func()) {
 // NewStyleFromC creates Style from its C pointer.
 // SRC ~= *C.Style
 func NewStyleFromC[SRC any](cvalue SRC) *Style {
-	return &Style{CData: datautils.ConvertCTypes[*C.Style](cvalue)}
+	return &Style{CData: internal.ReinterpretCast[*C.Style](cvalue)}
 }

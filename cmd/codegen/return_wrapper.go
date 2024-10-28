@@ -116,8 +116,8 @@ func getReturnWrapper(
 		}
 
 		return returnWrapper{
-			returnType: GoIdentifier(fmt.Sprintf("datautils.Vector[%s]", rw.returnType)),
-			returnStmt: fmt.Sprintf("datautils.NewVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
+			returnType: GoIdentifier(fmt.Sprintf("vectors.Vector[%s]", rw.returnType)),
+			returnStmt: fmt.Sprintf("vectors.NewVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
 		}, nil
 	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), context.enumNames):
 		goType := prefixGoPackage("*"+TrimSuffix(t, "*").renameEnum(), srcPackage, context)

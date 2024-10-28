@@ -6,8 +6,8 @@ package immarkdown
 import (
 	"unsafe"
 
-	"github.com/AllenDang/cimgui-go/datautils"
 	"github.com/AllenDang/cimgui-go/imgui"
+	"github.com/AllenDang/cimgui-go/internal"
 )
 
 // #include "../imgui/extra_types.h"
@@ -20,20 +20,20 @@ func IsCharInsideWord(c_ rune) bool {
 }
 
 func Markdown(markdown_ string, markdownLength_ uint64, mdConfig_ MarkdownConfig) {
-	markdown_Arg, markdown_Fin := datautils.WrapString[C.char](markdown_)
+	markdown_Arg, markdown_Fin := internal.WrapString[C.char](markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.C()
-	C.Markdown(markdown_Arg, C.xulong(markdownLength_), datautils.ConvertCTypes[C.MarkdownConfig](mdConfig_Arg))
+	C.Markdown(markdown_Arg, C.xulong(markdownLength_), internal.ReinterpretCast[C.MarkdownConfig](mdConfig_Arg))
 
 	markdown_Fin()
 	mdConfig_Fin()
 }
 
 func RenderLine(markdown_ string, line_ *Line, textRegion_ *TextRegion, mdConfig_ MarkdownConfig) {
-	markdown_Arg, markdown_Fin := datautils.WrapString[C.char](markdown_)
+	markdown_Arg, markdown_Fin := internal.WrapString[C.char](markdown_)
 	line_Arg, line_Fin := line_.Handle()
 	textRegion_Arg, textRegion_Fin := textRegion_.Handle()
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.C()
-	C.RenderLine(markdown_Arg, datautils.ConvertCTypes[*C.Line](line_Arg), datautils.ConvertCTypes[*C.TextRegion](textRegion_Arg), datautils.ConvertCTypes[C.MarkdownConfig](mdConfig_Arg))
+	C.RenderLine(markdown_Arg, internal.ReinterpretCast[*C.Line](line_Arg), internal.ReinterpretCast[*C.TextRegion](textRegion_Arg), internal.ReinterpretCast[C.MarkdownConfig](mdConfig_Arg))
 
 	markdown_Fin()
 	line_Fin()
@@ -43,11 +43,11 @@ func RenderLine(markdown_ string, line_ *Line, textRegion_ *TextRegion, mdConfig
 
 func RenderLinkText(self *TextRegion, text_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string) bool {
 	selfArg, selfFin := self.Handle()
-	text_Arg, text_Fin := datautils.WrapString[C.char](text_)
+	text_Arg, text_Fin := internal.WrapString[C.char](text_)
 	link_Arg, link_Fin := link_.C()
-	markdown_Arg, markdown_Fin := datautils.WrapString[C.char](markdown_)
+	markdown_Arg, markdown_Fin := internal.WrapString[C.char](markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.C()
-	linkHoverStart_Arg, linkHoverStart_Fin := datautils.WrapStringList[C.char](linkHoverStart_)
+	linkHoverStart_Arg, linkHoverStart_Fin := internal.WrapStringList[C.char](linkHoverStart_)
 
 	defer func() {
 		selfFin()
@@ -57,19 +57,19 @@ func RenderLinkText(self *TextRegion, text_ string, link_ Link, markdown_ string
 		mdConfig_Fin()
 		linkHoverStart_Fin()
 	}()
-	return C.wrap_RenderLinkText(datautils.ConvertCTypes[*C.TextRegion](selfArg), text_Arg, datautils.ConvertCTypes[C.Link](link_Arg), markdown_Arg, datautils.ConvertCTypes[C.MarkdownConfig](mdConfig_Arg), linkHoverStart_Arg) == C.bool(true)
+	return C.wrap_RenderLinkText(internal.ReinterpretCast[*C.TextRegion](selfArg), text_Arg, internal.ReinterpretCast[C.Link](link_Arg), markdown_Arg, internal.ReinterpretCast[C.MarkdownConfig](mdConfig_Arg), linkHoverStart_Arg) == C.bool(true)
 }
 
 // RenderLinkTextWrappedV parameter default value hint:
 // bIndentToHere_: false
 func RenderLinkTextWrappedV(self *TextRegion, text_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string, bIndentToHere_ bool) {
 	selfArg, selfFin := self.Handle()
-	text_Arg, text_Fin := datautils.WrapString[C.char](text_)
+	text_Arg, text_Fin := internal.WrapString[C.char](text_)
 	link_Arg, link_Fin := link_.C()
-	markdown_Arg, markdown_Fin := datautils.WrapString[C.char](markdown_)
+	markdown_Arg, markdown_Fin := internal.WrapString[C.char](markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.C()
-	linkHoverStart_Arg, linkHoverStart_Fin := datautils.WrapStringList[C.char](linkHoverStart_)
-	C.wrap_RenderLinkTextWrappedV(datautils.ConvertCTypes[*C.TextRegion](selfArg), text_Arg, datautils.ConvertCTypes[C.Link](link_Arg), markdown_Arg, datautils.ConvertCTypes[C.MarkdownConfig](mdConfig_Arg), linkHoverStart_Arg, C.bool(bIndentToHere_))
+	linkHoverStart_Arg, linkHoverStart_Fin := internal.WrapStringList[C.char](linkHoverStart_)
+	C.wrap_RenderLinkTextWrappedV(internal.ReinterpretCast[*C.TextRegion](selfArg), text_Arg, internal.ReinterpretCast[C.Link](link_Arg), markdown_Arg, internal.ReinterpretCast[C.MarkdownConfig](mdConfig_Arg), linkHoverStart_Arg, C.bool(bIndentToHere_))
 
 	selfFin()
 	text_Fin()
@@ -81,8 +81,8 @@ func RenderLinkTextWrappedV(self *TextRegion, text_ string, link_ Link, markdown
 
 func RenderListTextWrapped(self *TextRegion, text_ string) {
 	selfArg, selfFin := self.Handle()
-	text_Arg, text_Fin := datautils.WrapString[C.char](text_)
-	C.wrap_RenderListTextWrapped(datautils.ConvertCTypes[*C.TextRegion](selfArg), text_Arg)
+	text_Arg, text_Fin := internal.WrapString[C.char](text_)
+	C.wrap_RenderListTextWrapped(internal.ReinterpretCast[*C.TextRegion](selfArg), text_Arg)
 
 	selfFin()
 	text_Fin()
@@ -92,8 +92,8 @@ func RenderListTextWrapped(self *TextRegion, text_ string) {
 // bIndentToHere_: false
 func RenderTextWrappedV(self *TextRegion, text_ string, bIndentToHere_ bool) {
 	selfArg, selfFin := self.Handle()
-	text_Arg, text_Fin := datautils.WrapString[C.char](text_)
-	C.wrap_RenderTextWrappedV(datautils.ConvertCTypes[*C.TextRegion](selfArg), text_Arg, C.bool(bIndentToHere_))
+	text_Arg, text_Fin := internal.WrapString[C.char](text_)
+	C.wrap_RenderTextWrappedV(internal.ReinterpretCast[*C.TextRegion](selfArg), text_Arg, C.bool(bIndentToHere_))
 
 	selfFin()
 	text_Fin()
@@ -101,7 +101,7 @@ func RenderTextWrappedV(self *TextRegion, text_ string, bIndentToHere_ bool) {
 
 func ResetIndent(self *TextRegion) {
 	selfArg, selfFin := self.Handle()
-	C.ResetIndent(datautils.ConvertCTypes[*C.TextRegion](selfArg))
+	C.ResetIndent(internal.ReinterpretCast[*C.TextRegion](selfArg))
 
 	selfFin()
 }
@@ -112,23 +112,23 @@ func NewTextRegion() *TextRegion {
 
 func (self *TextRegion) Destroy() {
 	selfArg, selfFin := self.Handle()
-	C.TextRegion_destroy(datautils.ConvertCTypes[*C.TextRegion](selfArg))
+	C.TextRegion_destroy(internal.ReinterpretCast[*C.TextRegion](selfArg))
 
 	selfFin()
 }
 
 func UnderLine(col_ imgui.Color) {
-	C.UnderLine(datautils.ConvertCTypes[C.ImColor](col_.ToC()))
+	C.UnderLine(internal.ReinterpretCast[C.ImColor](col_.ToC()))
 }
 
 func RenderLinkTextWrapped(self *TextRegion, text_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string) {
 	selfArg, selfFin := self.Handle()
-	text_Arg, text_Fin := datautils.WrapString[C.char](text_)
+	text_Arg, text_Fin := internal.WrapString[C.char](text_)
 	link_Arg, link_Fin := link_.C()
-	markdown_Arg, markdown_Fin := datautils.WrapString[C.char](markdown_)
+	markdown_Arg, markdown_Fin := internal.WrapString[C.char](markdown_)
 	mdConfig_Arg, mdConfig_Fin := mdConfig_.C()
-	linkHoverStart_Arg, linkHoverStart_Fin := datautils.WrapStringList[C.char](linkHoverStart_)
-	C.wrap_RenderLinkTextWrapped(datautils.ConvertCTypes[*C.TextRegion](selfArg), text_Arg, datautils.ConvertCTypes[C.Link](link_Arg), markdown_Arg, datautils.ConvertCTypes[C.MarkdownConfig](mdConfig_Arg), linkHoverStart_Arg)
+	linkHoverStart_Arg, linkHoverStart_Fin := internal.WrapStringList[C.char](linkHoverStart_)
+	C.wrap_RenderLinkTextWrapped(internal.ReinterpretCast[*C.TextRegion](selfArg), text_Arg, internal.ReinterpretCast[C.Link](link_Arg), markdown_Arg, internal.ReinterpretCast[C.MarkdownConfig](mdConfig_Arg), linkHoverStart_Arg)
 
 	selfFin()
 	text_Fin()
@@ -140,8 +140,8 @@ func RenderLinkTextWrapped(self *TextRegion, text_ string, link_ Link, markdown_
 
 func RenderTextWrapped(self *TextRegion, text_ string) {
 	selfArg, selfFin := self.Handle()
-	text_Arg, text_Fin := datautils.WrapString[C.char](text_)
-	C.wrap_RenderTextWrapped(datautils.ConvertCTypes[*C.TextRegion](selfArg), text_Arg)
+	text_Arg, text_Fin := internal.WrapString[C.char](text_)
+	C.wrap_RenderTextWrapped(internal.ReinterpretCast[*C.TextRegion](selfArg), text_Arg)
 
 	selfFin()
 	text_Fin()
@@ -159,7 +159,7 @@ func (self *Emphasis) State() EmphasisState {
 	defer func() {
 		selfFin()
 	}()
-	return EmphasisState(C.wrap_Emphasis_GetState(datautils.ConvertCTypes[*C.Emphasis](selfArg)))
+	return EmphasisState(C.wrap_Emphasis_GetState(internal.ReinterpretCast[*C.Emphasis](selfArg)))
 }
 
 func (self Emphasis) SetText(v TextBlock) {
@@ -167,7 +167,7 @@ func (self Emphasis) SetText(v TextBlock) {
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_Emphasis_SetText(selfArg, datautils.ConvertCTypes[C.TextBlock](vArg))
+	C.wrap_Emphasis_SetText(selfArg, internal.ReinterpretCast[C.TextBlock](vArg))
 }
 
 func (self *Emphasis) Text() TextBlock {
@@ -177,7 +177,7 @@ func (self *Emphasis) Text() TextBlock {
 		selfFin()
 	}()
 	return *NewTextBlockFromC(func() *C.TextBlock {
-		result := C.wrap_Emphasis_GetText(datautils.ConvertCTypes[*C.Emphasis](selfArg))
+		result := C.wrap_Emphasis_GetText(internal.ReinterpretCast[*C.Emphasis](selfArg))
 		return &result
 	}())
 }
@@ -194,7 +194,7 @@ func (self *Emphasis) Sym() rune {
 	defer func() {
 		selfFin()
 	}()
-	return rune(C.wrap_Emphasis_GetSym(datautils.ConvertCTypes[*C.Emphasis](selfArg)))
+	return rune(C.wrap_Emphasis_GetSym(internal.ReinterpretCast[*C.Emphasis](selfArg)))
 }
 
 func (self Line) SetIsHeading(v bool) {
@@ -209,7 +209,7 @@ func (self *Line) IsHeading() bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.wrap_Line_GetIsHeading(datautils.ConvertCTypes[*C.Line](selfArg)) == C.bool(true)
+	return C.wrap_Line_GetIsHeading(internal.ReinterpretCast[*C.Line](selfArg)) == C.bool(true)
 }
 
 func (self Line) SetIsEmphasis(v bool) {
@@ -224,7 +224,7 @@ func (self *Line) IsEmphasis() bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.wrap_Line_GetIsEmphasis(datautils.ConvertCTypes[*C.Line](selfArg)) == C.bool(true)
+	return C.wrap_Line_GetIsEmphasis(internal.ReinterpretCast[*C.Line](selfArg)) == C.bool(true)
 }
 
 func (self Line) SetIsUnorderedListStart(v bool) {
@@ -239,7 +239,7 @@ func (self *Line) IsUnorderedListStart() bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.wrap_Line_GetIsUnorderedListStart(datautils.ConvertCTypes[*C.Line](selfArg)) == C.bool(true)
+	return C.wrap_Line_GetIsUnorderedListStart(internal.ReinterpretCast[*C.Line](selfArg)) == C.bool(true)
 }
 
 func (self Line) SetIsLeadingSpace(v bool) {
@@ -254,7 +254,7 @@ func (self *Line) IsLeadingSpace() bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.wrap_Line_GetIsLeadingSpace(datautils.ConvertCTypes[*C.Line](selfArg)) == C.bool(true)
+	return C.wrap_Line_GetIsLeadingSpace(internal.ReinterpretCast[*C.Line](selfArg)) == C.bool(true)
 }
 
 func (self Line) SetLeadSpaceCount(v int32) {
@@ -269,7 +269,7 @@ func (self *Line) LeadSpaceCount() int32 {
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_Line_GetLeadSpaceCount(datautils.ConvertCTypes[*C.Line](selfArg)))
+	return int32(C.wrap_Line_GetLeadSpaceCount(internal.ReinterpretCast[*C.Line](selfArg)))
 }
 
 func (self Line) SetHeadingCount(v int32) {
@@ -284,7 +284,7 @@ func (self *Line) HeadingCount() int32 {
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_Line_GetHeadingCount(datautils.ConvertCTypes[*C.Line](selfArg)))
+	return int32(C.wrap_Line_GetHeadingCount(internal.ReinterpretCast[*C.Line](selfArg)))
 }
 
 func (self Line) SetEmphasisCount(v int32) {
@@ -299,7 +299,7 @@ func (self *Line) EmphasisCount() int32 {
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_Line_GetEmphasisCount(datautils.ConvertCTypes[*C.Line](selfArg)))
+	return int32(C.wrap_Line_GetEmphasisCount(internal.ReinterpretCast[*C.Line](selfArg)))
 }
 
 func (self Line) SetLineStart(v int32) {
@@ -314,7 +314,7 @@ func (self *Line) LineStart() int32 {
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_Line_GetLineStart(datautils.ConvertCTypes[*C.Line](selfArg)))
+	return int32(C.wrap_Line_GetLineStart(internal.ReinterpretCast[*C.Line](selfArg)))
 }
 
 func (self Line) SetLineEnd(v int32) {
@@ -329,7 +329,7 @@ func (self *Line) LineEnd() int32 {
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_Line_GetLineEnd(datautils.ConvertCTypes[*C.Line](selfArg)))
+	return int32(C.wrap_Line_GetLineEnd(internal.ReinterpretCast[*C.Line](selfArg)))
 }
 
 func (self Line) SetLastRenderPosition(v int32) {
@@ -344,7 +344,7 @@ func (self *Line) LastRenderPosition() int32 {
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_Line_GetLastRenderPosition(datautils.ConvertCTypes[*C.Line](selfArg)))
+	return int32(C.wrap_Line_GetLastRenderPosition(internal.ReinterpretCast[*C.Line](selfArg)))
 }
 
 func (self Link) SetState(v LinkState) {
@@ -359,7 +359,7 @@ func (self *Link) State() LinkState {
 	defer func() {
 		selfFin()
 	}()
-	return LinkState(C.wrap_Link_GetState(datautils.ConvertCTypes[*C.Link](selfArg)))
+	return LinkState(C.wrap_Link_GetState(internal.ReinterpretCast[*C.Link](selfArg)))
 }
 
 func (self Link) SetText(v TextBlock) {
@@ -367,7 +367,7 @@ func (self Link) SetText(v TextBlock) {
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_Link_SetText(selfArg, datautils.ConvertCTypes[C.TextBlock](vArg))
+	C.wrap_Link_SetText(selfArg, internal.ReinterpretCast[C.TextBlock](vArg))
 }
 
 func (self *Link) Text() TextBlock {
@@ -377,7 +377,7 @@ func (self *Link) Text() TextBlock {
 		selfFin()
 	}()
 	return *NewTextBlockFromC(func() *C.TextBlock {
-		result := C.wrap_Link_GetText(datautils.ConvertCTypes[*C.Link](selfArg))
+		result := C.wrap_Link_GetText(internal.ReinterpretCast[*C.Link](selfArg))
 		return &result
 	}())
 }
@@ -387,7 +387,7 @@ func (self Link) SetUrl(v TextBlock) {
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_Link_SetUrl(selfArg, datautils.ConvertCTypes[C.TextBlock](vArg))
+	C.wrap_Link_SetUrl(selfArg, internal.ReinterpretCast[C.TextBlock](vArg))
 }
 
 func (self *Link) Url() TextBlock {
@@ -397,7 +397,7 @@ func (self *Link) Url() TextBlock {
 		selfFin()
 	}()
 	return *NewTextBlockFromC(func() *C.TextBlock {
-		result := C.wrap_Link_GetUrl(datautils.ConvertCTypes[*C.Link](selfArg))
+		result := C.wrap_Link_GetUrl(internal.ReinterpretCast[*C.Link](selfArg))
 		return &result
 	}())
 }
@@ -414,7 +414,7 @@ func (self *Link) IsImage() bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.wrap_Link_GetIsImage(datautils.ConvertCTypes[*C.Link](selfArg)) == C.bool(true)
+	return C.wrap_Link_GetIsImage(internal.ReinterpretCast[*C.Link](selfArg)) == C.bool(true)
 }
 
 func (self Link) SetNumbracketsopen(v int32) {
@@ -429,11 +429,11 @@ func (self *Link) Numbracketsopen() int32 {
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_Link_GetNum_brackets_open(datautils.ConvertCTypes[*C.Link](selfArg)))
+	return int32(C.wrap_Link_GetNum_brackets_open(internal.ReinterpretCast[*C.Link](selfArg)))
 }
 
 func (self MarkdownConfig) SetLinkIcon(v string) {
-	vArg, _ := datautils.WrapString[C.char](v)
+	vArg, _ := internal.WrapString[C.char](v)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -446,14 +446,14 @@ func (self *MarkdownConfig) LinkIcon() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_MarkdownConfig_GetLinkIcon(datautils.ConvertCTypes[*C.MarkdownConfig](selfArg)))
+	return C.GoString(C.wrap_MarkdownConfig_GetLinkIcon(internal.ReinterpretCast[*C.MarkdownConfig](selfArg)))
 }
 
 func (self MarkdownConfig) SetHeadingFormats(v *[3]MarkdownHeadingFormat) {
 	vArg := make([]C.MarkdownHeadingFormat, len(v))
 	for i, vV := range v {
 		vVArg, _ := vV.C()
-		vArg[i] = datautils.ConvertCTypes[C.MarkdownHeadingFormat](vVArg)
+		vArg[i] = internal.ReinterpretCast[C.MarkdownHeadingFormat](vVArg)
 	}
 
 	selfArg, selfFin := self.Handle()
@@ -473,7 +473,7 @@ func (self *MarkdownConfig) HeadingFormats() [3]MarkdownHeadingFormat {
 	}()
 	return func() [3]MarkdownHeadingFormat {
 		result := [3]MarkdownHeadingFormat{}
-		resultMirr := C.wrap_MarkdownConfig_GetHeadingFormats(datautils.ConvertCTypes[*C.MarkdownConfig](selfArg))
+		resultMirr := C.wrap_MarkdownConfig_GetHeadingFormats(internal.ReinterpretCast[*C.MarkdownConfig](selfArg))
 		for i := range result {
 			result[i] = *NewMarkdownHeadingFormatFromC(func() *C.MarkdownHeadingFormat {
 				result := C.cimmarkdown_MarkdownHeadingFormat_GetAtIdx(resultMirr, C.int(i))
@@ -497,7 +497,7 @@ func (self *MarkdownConfig) UserData() uintptr {
 	defer func() {
 		selfFin()
 	}()
-	return uintptr(C.wrap_MarkdownConfig_GetUserData(datautils.ConvertCTypes[*C.MarkdownConfig](selfArg)))
+	return uintptr(C.wrap_MarkdownConfig_GetUserData(internal.ReinterpretCast[*C.MarkdownConfig](selfArg)))
 }
 
 func (self MarkdownFormatInfo) SetType(v MarkdownFormatType) {
@@ -512,7 +512,7 @@ func (self *MarkdownFormatInfo) Type() MarkdownFormatType {
 	defer func() {
 		selfFin()
 	}()
-	return MarkdownFormatType(C.wrap_MarkdownFormatInfo_GetType(datautils.ConvertCTypes[*C.MarkdownFormatInfo](selfArg)))
+	return MarkdownFormatType(C.wrap_MarkdownFormatInfo_GetType(internal.ReinterpretCast[*C.MarkdownFormatInfo](selfArg)))
 }
 
 func (self MarkdownFormatInfo) SetLevel(v int32) {
@@ -527,7 +527,7 @@ func (self *MarkdownFormatInfo) Level() int32 {
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_MarkdownFormatInfo_GetLevel(datautils.ConvertCTypes[*C.MarkdownFormatInfo](selfArg)))
+	return int32(C.wrap_MarkdownFormatInfo_GetLevel(internal.ReinterpretCast[*C.MarkdownFormatInfo](selfArg)))
 }
 
 func (self MarkdownFormatInfo) SetItemHovered(v bool) {
@@ -542,7 +542,7 @@ func (self *MarkdownFormatInfo) ItemHovered() bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.wrap_MarkdownFormatInfo_GetItemHovered(datautils.ConvertCTypes[*C.MarkdownFormatInfo](selfArg)) == C.bool(true)
+	return C.wrap_MarkdownFormatInfo_GetItemHovered(internal.ReinterpretCast[*C.MarkdownFormatInfo](selfArg)) == C.bool(true)
 }
 
 func (self MarkdownFormatInfo) SetConfig(v *MarkdownConfig) {
@@ -550,7 +550,7 @@ func (self MarkdownFormatInfo) SetConfig(v *MarkdownConfig) {
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownFormatInfo_SetConfig(selfArg, datautils.ConvertCTypes[*C.MarkdownConfig](vArg))
+	C.wrap_MarkdownFormatInfo_SetConfig(selfArg, internal.ReinterpretCast[*C.MarkdownConfig](vArg))
 }
 
 func (self *MarkdownFormatInfo) Config() *MarkdownConfig {
@@ -559,7 +559,7 @@ func (self *MarkdownFormatInfo) Config() *MarkdownConfig {
 	defer func() {
 		selfFin()
 	}()
-	return NewMarkdownConfigFromC(C.wrap_MarkdownFormatInfo_GetConfig(datautils.ConvertCTypes[*C.MarkdownFormatInfo](selfArg)))
+	return NewMarkdownConfigFromC(C.wrap_MarkdownFormatInfo_GetConfig(internal.ReinterpretCast[*C.MarkdownFormatInfo](selfArg)))
 }
 
 func (self MarkdownHeadingFormat) SetFont(v *imgui.Font) {
@@ -567,7 +567,7 @@ func (self MarkdownHeadingFormat) SetFont(v *imgui.Font) {
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownHeadingFormat_SetFont(selfArg, datautils.ConvertCTypes[*C.ImFont](vArg))
+	C.wrap_MarkdownHeadingFormat_SetFont(selfArg, internal.ReinterpretCast[*C.ImFont](vArg))
 }
 
 func (self *MarkdownHeadingFormat) Font() *imgui.Font {
@@ -576,7 +576,7 @@ func (self *MarkdownHeadingFormat) Font() *imgui.Font {
 	defer func() {
 		selfFin()
 	}()
-	return imgui.NewFontFromC(C.wrap_MarkdownHeadingFormat_GetFont(datautils.ConvertCTypes[*C.MarkdownHeadingFormat](selfArg)))
+	return imgui.NewFontFromC(C.wrap_MarkdownHeadingFormat_GetFont(internal.ReinterpretCast[*C.MarkdownHeadingFormat](selfArg)))
 }
 
 func (self MarkdownHeadingFormat) SetSeparator(v bool) {
@@ -591,7 +591,7 @@ func (self *MarkdownHeadingFormat) Separator() bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.wrap_MarkdownHeadingFormat_GetSeparator(datautils.ConvertCTypes[*C.MarkdownHeadingFormat](selfArg)) == C.bool(true)
+	return C.wrap_MarkdownHeadingFormat_GetSeparator(internal.ReinterpretCast[*C.MarkdownHeadingFormat](selfArg)) == C.bool(true)
 }
 
 func (self MarkdownImageData) SetIsValid(v bool) {
@@ -606,7 +606,7 @@ func (self *MarkdownImageData) IsValid() bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.wrap_MarkdownImageData_GetIsValid(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg)) == C.bool(true)
+	return C.wrap_MarkdownImageData_GetIsValid(internal.ReinterpretCast[*C.MarkdownImageData](selfArg)) == C.bool(true)
 }
 
 func (self MarkdownImageData) SetUseLinkCallback(v bool) {
@@ -621,7 +621,7 @@ func (self *MarkdownImageData) UseLinkCallback() bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.wrap_MarkdownImageData_GetUseLinkCallback(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg)) == C.bool(true)
+	return C.wrap_MarkdownImageData_GetUseLinkCallback(internal.ReinterpretCast[*C.MarkdownImageData](selfArg)) == C.bool(true)
 }
 
 func (self MarkdownImageData) SetUsertextureid(v imgui.TextureID) {
@@ -629,7 +629,7 @@ func (self MarkdownImageData) SetUsertextureid(v imgui.TextureID) {
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetUser_texture_id(selfArg, datautils.ConvertCTypes[C.ImTextureID](vArg))
+	C.wrap_MarkdownImageData_SetUser_texture_id(selfArg, internal.ReinterpretCast[C.ImTextureID](vArg))
 }
 
 func (self *MarkdownImageData) Usertextureid() imgui.TextureID {
@@ -639,7 +639,7 @@ func (self *MarkdownImageData) Usertextureid() imgui.TextureID {
 		selfFin()
 	}()
 	return *imgui.NewTextureIDFromC(func() *C.ImTextureID {
-		result := C.wrap_MarkdownImageData_GetUser_texture_id(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg))
+		result := C.wrap_MarkdownImageData_GetUser_texture_id(internal.ReinterpretCast[*C.MarkdownImageData](selfArg))
 		return &result
 	}())
 }
@@ -647,7 +647,7 @@ func (self *MarkdownImageData) Usertextureid() imgui.TextureID {
 func (self MarkdownImageData) SetSize(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetSize(selfArg, datautils.ConvertCTypes[C.ImVec2](v.ToC()))
+	C.wrap_MarkdownImageData_SetSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
 }
 
 func (self *MarkdownImageData) Size() imgui.Vec2 {
@@ -657,7 +657,7 @@ func (self *MarkdownImageData) Size() imgui.Vec2 {
 		selfFin()
 	}()
 	return func() imgui.Vec2 {
-		out := C.wrap_MarkdownImageData_GetSize(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg))
+		out := C.wrap_MarkdownImageData_GetSize(internal.ReinterpretCast[*C.MarkdownImageData](selfArg))
 		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
 	}()
 }
@@ -665,7 +665,7 @@ func (self *MarkdownImageData) Size() imgui.Vec2 {
 func (self MarkdownImageData) SetUv0(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetUv0(selfArg, datautils.ConvertCTypes[C.ImVec2](v.ToC()))
+	C.wrap_MarkdownImageData_SetUv0(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
 }
 
 func (self *MarkdownImageData) Uv0() imgui.Vec2 {
@@ -675,7 +675,7 @@ func (self *MarkdownImageData) Uv0() imgui.Vec2 {
 		selfFin()
 	}()
 	return func() imgui.Vec2 {
-		out := C.wrap_MarkdownImageData_GetUv0(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg))
+		out := C.wrap_MarkdownImageData_GetUv0(internal.ReinterpretCast[*C.MarkdownImageData](selfArg))
 		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
 	}()
 }
@@ -683,7 +683,7 @@ func (self *MarkdownImageData) Uv0() imgui.Vec2 {
 func (self MarkdownImageData) SetUv1(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetUv1(selfArg, datautils.ConvertCTypes[C.ImVec2](v.ToC()))
+	C.wrap_MarkdownImageData_SetUv1(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
 }
 
 func (self *MarkdownImageData) Uv1() imgui.Vec2 {
@@ -693,7 +693,7 @@ func (self *MarkdownImageData) Uv1() imgui.Vec2 {
 		selfFin()
 	}()
 	return func() imgui.Vec2 {
-		out := C.wrap_MarkdownImageData_GetUv1(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg))
+		out := C.wrap_MarkdownImageData_GetUv1(internal.ReinterpretCast[*C.MarkdownImageData](selfArg))
 		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
 	}()
 }
@@ -701,7 +701,7 @@ func (self *MarkdownImageData) Uv1() imgui.Vec2 {
 func (self MarkdownImageData) SetTintcol(v imgui.Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetTint_col(selfArg, datautils.ConvertCTypes[C.ImVec4](v.ToC()))
+	C.wrap_MarkdownImageData_SetTint_col(selfArg, internal.ReinterpretCast[C.ImVec4](v.ToC()))
 }
 
 func (self *MarkdownImageData) Tintcol() imgui.Vec4 {
@@ -711,7 +711,7 @@ func (self *MarkdownImageData) Tintcol() imgui.Vec4 {
 		selfFin()
 	}()
 	return func() imgui.Vec4 {
-		out := C.wrap_MarkdownImageData_GetTint_col(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg))
+		out := C.wrap_MarkdownImageData_GetTint_col(internal.ReinterpretCast[*C.MarkdownImageData](selfArg))
 		return *(&imgui.Vec4{}).FromC(unsafe.Pointer(&out))
 	}()
 }
@@ -719,7 +719,7 @@ func (self *MarkdownImageData) Tintcol() imgui.Vec4 {
 func (self MarkdownImageData) SetBordercol(v imgui.Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetBorder_col(selfArg, datautils.ConvertCTypes[C.ImVec4](v.ToC()))
+	C.wrap_MarkdownImageData_SetBorder_col(selfArg, internal.ReinterpretCast[C.ImVec4](v.ToC()))
 }
 
 func (self *MarkdownImageData) Bordercol() imgui.Vec4 {
@@ -729,13 +729,13 @@ func (self *MarkdownImageData) Bordercol() imgui.Vec4 {
 		selfFin()
 	}()
 	return func() imgui.Vec4 {
-		out := C.wrap_MarkdownImageData_GetBorder_col(datautils.ConvertCTypes[*C.MarkdownImageData](selfArg))
+		out := C.wrap_MarkdownImageData_GetBorder_col(internal.ReinterpretCast[*C.MarkdownImageData](selfArg))
 		return *(&imgui.Vec4{}).FromC(unsafe.Pointer(&out))
 	}()
 }
 
 func (self MarkdownLinkCallbackData) SetText(v string) {
-	vArg, _ := datautils.WrapString[C.char](v)
+	vArg, _ := internal.WrapString[C.char](v)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -748,7 +748,7 @@ func (self *MarkdownLinkCallbackData) Text() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_MarkdownLinkCallbackData_GetText(datautils.ConvertCTypes[*C.MarkdownLinkCallbackData](selfArg)))
+	return C.GoString(C.wrap_MarkdownLinkCallbackData_GetText(internal.ReinterpretCast[*C.MarkdownLinkCallbackData](selfArg)))
 }
 
 func (self MarkdownLinkCallbackData) SetTextLength(v int32) {
@@ -763,11 +763,11 @@ func (self *MarkdownLinkCallbackData) TextLength() int32 {
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_MarkdownLinkCallbackData_GetTextLength(datautils.ConvertCTypes[*C.MarkdownLinkCallbackData](selfArg)))
+	return int32(C.wrap_MarkdownLinkCallbackData_GetTextLength(internal.ReinterpretCast[*C.MarkdownLinkCallbackData](selfArg)))
 }
 
 func (self MarkdownLinkCallbackData) SetLink(v string) {
-	vArg, _ := datautils.WrapString[C.char](v)
+	vArg, _ := internal.WrapString[C.char](v)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -780,7 +780,7 @@ func (self *MarkdownLinkCallbackData) Link() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_MarkdownLinkCallbackData_GetLink(datautils.ConvertCTypes[*C.MarkdownLinkCallbackData](selfArg)))
+	return C.GoString(C.wrap_MarkdownLinkCallbackData_GetLink(internal.ReinterpretCast[*C.MarkdownLinkCallbackData](selfArg)))
 }
 
 func (self MarkdownLinkCallbackData) SetLinkLength(v int32) {
@@ -795,7 +795,7 @@ func (self *MarkdownLinkCallbackData) LinkLength() int32 {
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_MarkdownLinkCallbackData_GetLinkLength(datautils.ConvertCTypes[*C.MarkdownLinkCallbackData](selfArg)))
+	return int32(C.wrap_MarkdownLinkCallbackData_GetLinkLength(internal.ReinterpretCast[*C.MarkdownLinkCallbackData](selfArg)))
 }
 
 func (self MarkdownLinkCallbackData) SetUserData(v uintptr) {
@@ -810,7 +810,7 @@ func (self *MarkdownLinkCallbackData) UserData() uintptr {
 	defer func() {
 		selfFin()
 	}()
-	return uintptr(C.wrap_MarkdownLinkCallbackData_GetUserData(datautils.ConvertCTypes[*C.MarkdownLinkCallbackData](selfArg)))
+	return uintptr(C.wrap_MarkdownLinkCallbackData_GetUserData(internal.ReinterpretCast[*C.MarkdownLinkCallbackData](selfArg)))
 }
 
 func (self MarkdownLinkCallbackData) SetIsImage(v bool) {
@@ -825,7 +825,7 @@ func (self *MarkdownLinkCallbackData) IsImage() bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.wrap_MarkdownLinkCallbackData_GetIsImage(datautils.ConvertCTypes[*C.MarkdownLinkCallbackData](selfArg)) == C.bool(true)
+	return C.wrap_MarkdownLinkCallbackData_GetIsImage(internal.ReinterpretCast[*C.MarkdownLinkCallbackData](selfArg)) == C.bool(true)
 }
 
 func (self MarkdownTooltipCallbackData) SetLinkData(v MarkdownLinkCallbackData) {
@@ -833,7 +833,7 @@ func (self MarkdownTooltipCallbackData) SetLinkData(v MarkdownLinkCallbackData) 
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownTooltipCallbackData_SetLinkData(selfArg, datautils.ConvertCTypes[C.MarkdownLinkCallbackData](vArg))
+	C.wrap_MarkdownTooltipCallbackData_SetLinkData(selfArg, internal.ReinterpretCast[C.MarkdownLinkCallbackData](vArg))
 }
 
 func (self *MarkdownTooltipCallbackData) LinkData() MarkdownLinkCallbackData {
@@ -843,13 +843,13 @@ func (self *MarkdownTooltipCallbackData) LinkData() MarkdownLinkCallbackData {
 		selfFin()
 	}()
 	return *NewMarkdownLinkCallbackDataFromC(func() *C.MarkdownLinkCallbackData {
-		result := C.wrap_MarkdownTooltipCallbackData_GetLinkData(datautils.ConvertCTypes[*C.MarkdownTooltipCallbackData](selfArg))
+		result := C.wrap_MarkdownTooltipCallbackData_GetLinkData(internal.ReinterpretCast[*C.MarkdownTooltipCallbackData](selfArg))
 		return &result
 	}())
 }
 
 func (self MarkdownTooltipCallbackData) SetLinkIcon(v string) {
-	vArg, _ := datautils.WrapString[C.char](v)
+	vArg, _ := internal.WrapString[C.char](v)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -862,7 +862,7 @@ func (self *MarkdownTooltipCallbackData) LinkIcon() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_MarkdownTooltipCallbackData_GetLinkIcon(datautils.ConvertCTypes[*C.MarkdownTooltipCallbackData](selfArg)))
+	return C.GoString(C.wrap_MarkdownTooltipCallbackData_GetLinkIcon(internal.ReinterpretCast[*C.MarkdownTooltipCallbackData](selfArg)))
 }
 
 func (self TextBlock) SetStart(v int32) {
@@ -877,7 +877,7 @@ func (self *TextBlock) Start() int32 {
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_TextBlock_GetStart(datautils.ConvertCTypes[*C.TextBlock](selfArg)))
+	return int32(C.wrap_TextBlock_GetStart(internal.ReinterpretCast[*C.TextBlock](selfArg)))
 }
 
 func (self TextBlock) SetStop(v int32) {
@@ -892,5 +892,5 @@ func (self *TextBlock) Stop() int32 {
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_TextBlock_GetStop(datautils.ConvertCTypes[*C.TextBlock](selfArg)))
+	return int32(C.wrap_TextBlock_GetStop(internal.ReinterpretCast[*C.TextBlock](selfArg)))
 }

@@ -1,4 +1,4 @@
-package datautils
+package internal
 
 import "unsafe"
 

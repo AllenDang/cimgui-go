@@ -8,14 +8,14 @@ import (
 	"image/color"
 	"unsafe"
 
-	"github.com/AllenDang/cimgui-go/datautils"
+	"github.com/AllenDang/cimgui-go/internal"
 )
 
 type (
 	Wchar C.uint
 )
 
-var _ datautils.WrappableType[C.ImVec2, *Vec2] = &Vec2{}
+var _ internal.WrappableType[C.ImVec2, *Vec2] = &Vec2{}
 
 type Vec2 struct {
 	X float32
@@ -37,7 +37,7 @@ func (i Vec2) ToC() C.ImVec2 {
 	return C.ImVec2{x: C.float(i.X), y: C.float(i.Y)}
 }
 
-var _ datautils.WrappableType[C.ImVec4, *Vec4] = &Vec4{}
+var _ internal.WrappableType[C.ImVec4, *Vec4] = &Vec4{}
 
 type Vec4 struct {
 	X float32
@@ -66,7 +66,7 @@ func (i Vec4) ToC() C.ImVec4 {
 	return C.ImVec4{x: C.float(i.X), y: C.float(i.Y), z: C.float(i.Z), w: C.float(i.W)}
 }
 
-var _ datautils.WrappableType[C.ImColor, *Color] = &Color{}
+var _ internal.WrappableType[C.ImColor, *Color] = &Color{}
 
 type Color struct {
 	FieldValue Vec4
@@ -140,7 +140,7 @@ func (i Color) Color() color.Color {
 	}
 }
 
-var _ datautils.WrappableType[C.ImRect, *Rect] = &Rect{}
+var _ internal.WrappableType[C.ImRect, *Rect] = &Rect{}
 
 type Rect struct {
 	Min Vec2

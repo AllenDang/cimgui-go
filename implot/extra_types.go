@@ -8,10 +8,10 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/AllenDang/cimgui-go/datautils"
+	"github.com/AllenDang/cimgui-go/internal"
 )
 
-var _ datautils.WrappableType[C.ImPlotPoint, *PlotPoint] = &PlotPoint{}
+var _ internal.WrappableType[C.ImPlotPoint, *PlotPoint] = &PlotPoint{}
 
 type PlotPoint struct {
 	X float64
@@ -61,7 +61,7 @@ func (p PlotTime) ToC() C.ImPlotTime {
 	return C.ImPlotTime{S: C.xlong(p.Seconds), Us: C.int(p.FieldUs)}
 }
 
-var _ datautils.WrappableType[C.struct_tm, *Tm] = &Tm{}
+var _ internal.WrappableType[C.struct_tm, *Tm] = &Tm{}
 
 // Tm is an implemenation of tm C type
 // ref: https://en.cppreference.com/w/c/chrono/tm

@@ -6,8 +6,8 @@ package imguizmo
 import (
 	"unsafe"
 
-	"github.com/AllenDang/cimgui-go/datautils"
 	"github.com/AllenDang/cimgui-go/imgui"
+	"github.com/AllenDang/cimgui-go/internal"
 )
 
 // #include "../imgui/extra_types.h"
@@ -24,10 +24,10 @@ func BeginFrame() {
 }
 
 func DecomposeMatrixToComponents(matrix *float32, translation *float32, rotation *float32, scale *float32) {
-	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
-	translationArg, translationFin := datautils.WrapNumberPtr[C.float, float32](translation)
-	rotationArg, rotationFin := datautils.WrapNumberPtr[C.float, float32](rotation)
-	scaleArg, scaleFin := datautils.WrapNumberPtr[C.float, float32](scale)
+	matrixArg, matrixFin := internal.WrapNumberPtr[C.float, float32](matrix)
+	translationArg, translationFin := internal.WrapNumberPtr[C.float, float32](translation)
+	rotationArg, rotationFin := internal.WrapNumberPtr[C.float, float32](rotation)
+	scaleArg, scaleFin := internal.WrapNumberPtr[C.float, float32](scale)
 	C.ImGuizmo_DecomposeMatrixToComponents(matrixArg, translationArg, rotationArg, scaleArg)
 
 	matrixFin()
@@ -37,9 +37,9 @@ func DecomposeMatrixToComponents(matrix *float32, translation *float32, rotation
 }
 
 func DrawCubes(view *float32, projection *float32, matrices *float32, matrixCount int32) {
-	viewArg, viewFin := datautils.WrapNumberPtr[C.float, float32](view)
-	projectionArg, projectionFin := datautils.WrapNumberPtr[C.float, float32](projection)
-	matricesArg, matricesFin := datautils.WrapNumberPtr[C.float, float32](matrices)
+	viewArg, viewFin := internal.WrapNumberPtr[C.float, float32](view)
+	projectionArg, projectionFin := internal.WrapNumberPtr[C.float, float32](projection)
+	matricesArg, matricesFin := internal.WrapNumberPtr[C.float, float32](matrices)
 	C.ImGuizmo_DrawCubes(viewArg, projectionArg, matricesArg, C.int(matrixCount))
 
 	viewFin()
@@ -48,9 +48,9 @@ func DrawCubes(view *float32, projection *float32, matrices *float32, matrixCoun
 }
 
 func DrawGrid(view *float32, projection *float32, matrix *float32, gridSize float32) {
-	viewArg, viewFin := datautils.WrapNumberPtr[C.float, float32](view)
-	projectionArg, projectionFin := datautils.WrapNumberPtr[C.float, float32](projection)
-	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
+	viewArg, viewFin := internal.WrapNumberPtr[C.float, float32](view)
+	projectionArg, projectionFin := internal.WrapNumberPtr[C.float, float32](projection)
+	matrixArg, matrixFin := internal.WrapNumberPtr[C.float, float32](matrix)
 	C.ImGuizmo_DrawGrid(viewArg, projectionArg, matrixArg, C.float(gridSize))
 
 	viewFin()
@@ -67,7 +67,7 @@ func GetIDPtr(ptr_id uintptr) imgui.ID {
 }
 
 func GetIDStr(str_id string) imgui.ID {
-	str_idArg, str_idFin := datautils.WrapString[C.char](str_id)
+	str_idArg, str_idFin := internal.WrapString[C.char](str_id)
 
 	defer func() {
 		str_idFin()
@@ -76,8 +76,8 @@ func GetIDStr(str_id string) imgui.ID {
 }
 
 func GetIDStrStr(str_id_begin string, str_id_end string) imgui.ID {
-	str_id_beginArg, str_id_beginFin := datautils.WrapString[C.char](str_id_begin)
-	str_id_endArg, str_id_endFin := datautils.WrapString[C.char](str_id_end)
+	str_id_beginArg, str_id_beginFin := internal.WrapString[C.char](str_id_begin)
+	str_id_endArg, str_id_endFin := internal.WrapString[C.char](str_id_end)
 
 	defer func() {
 		str_id_beginFin()
@@ -91,7 +91,7 @@ func GetStyle() *Style {
 }
 
 func IsOverFloatPtr(position *float32, pixelRadius float32) bool {
-	positionArg, positionFin := datautils.WrapNumberPtr[C.float, float32](position)
+	positionArg, positionFin := internal.WrapNumberPtr[C.float, float32](position)
 
 	defer func() {
 		positionFin()
@@ -125,13 +125,13 @@ func IsUsingViewManipulate() bool {
 // localBounds: NULL
 // boundsSnap: NULL
 func ManipulateV(view *float32, projection *float32, operation OPERATION, mode MODE, matrix *float32, deltaMatrix *float32, snap *float32, localBounds *float32, boundsSnap *float32) bool {
-	viewArg, viewFin := datautils.WrapNumberPtr[C.float, float32](view)
-	projectionArg, projectionFin := datautils.WrapNumberPtr[C.float, float32](projection)
-	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
-	deltaMatrixArg, deltaMatrixFin := datautils.WrapNumberPtr[C.float, float32](deltaMatrix)
-	snapArg, snapFin := datautils.WrapNumberPtr[C.float, float32](snap)
-	localBoundsArg, localBoundsFin := datautils.WrapNumberPtr[C.float, float32](localBounds)
-	boundsSnapArg, boundsSnapFin := datautils.WrapNumberPtr[C.float, float32](boundsSnap)
+	viewArg, viewFin := internal.WrapNumberPtr[C.float, float32](view)
+	projectionArg, projectionFin := internal.WrapNumberPtr[C.float, float32](projection)
+	matrixArg, matrixFin := internal.WrapNumberPtr[C.float, float32](matrix)
+	deltaMatrixArg, deltaMatrixFin := internal.WrapNumberPtr[C.float, float32](deltaMatrix)
+	snapArg, snapFin := internal.WrapNumberPtr[C.float, float32](snap)
+	localBoundsArg, localBoundsFin := internal.WrapNumberPtr[C.float, float32](localBounds)
+	boundsSnapArg, boundsSnapFin := internal.WrapNumberPtr[C.float, float32](boundsSnap)
 
 	defer func() {
 		viewFin()
@@ -158,15 +158,15 @@ func PushIDPtr(ptr_id uintptr) {
 }
 
 func PushIDStr(str_id string) {
-	str_idArg, str_idFin := datautils.WrapString[C.char](str_id)
+	str_idArg, str_idFin := internal.WrapString[C.char](str_id)
 	C.ImGuizmo_PushID_Str(str_idArg)
 
 	str_idFin()
 }
 
 func PushIDStrStr(str_id_begin string, str_id_end string) {
-	str_id_beginArg, str_id_beginFin := datautils.WrapString[C.char](str_id_begin)
-	str_id_endArg, str_id_endFin := datautils.WrapString[C.char](str_id_end)
+	str_id_beginArg, str_id_beginFin := internal.WrapString[C.char](str_id_begin)
+	str_id_endArg, str_id_endFin := internal.WrapString[C.char](str_id_end)
 	C.ImGuizmo_PushID_StrStr(str_id_beginArg, str_id_endArg)
 
 	str_id_beginFin()
@@ -174,10 +174,10 @@ func PushIDStrStr(str_id_begin string, str_id_end string) {
 }
 
 func RecomposeMatrixFromComponents(translation *float32, rotation *float32, scale *float32, matrix *float32) {
-	translationArg, translationFin := datautils.WrapNumberPtr[C.float, float32](translation)
-	rotationArg, rotationFin := datautils.WrapNumberPtr[C.float, float32](rotation)
-	scaleArg, scaleFin := datautils.WrapNumberPtr[C.float, float32](scale)
-	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
+	translationArg, translationFin := internal.WrapNumberPtr[C.float, float32](translation)
+	rotationArg, rotationFin := internal.WrapNumberPtr[C.float, float32](rotation)
+	scaleArg, scaleFin := internal.WrapNumberPtr[C.float, float32](scale)
+	matrixArg, matrixFin := internal.WrapNumberPtr[C.float, float32](matrix)
 	C.ImGuizmo_RecomposeMatrixFromComponents(translationArg, rotationArg, scaleArg, matrixArg)
 
 	translationFin()
@@ -188,7 +188,7 @@ func RecomposeMatrixFromComponents(translation *float32, rotation *float32, scal
 
 func SetAlternativeWindow(window *imgui.Window) {
 	windowArg, windowFin := window.Handle()
-	C.ImGuizmo_SetAlternativeWindow(datautils.ConvertCTypes[*C.ImGuiWindow](windowArg))
+	C.ImGuizmo_SetAlternativeWindow(internal.ReinterpretCast[*C.ImGuiWindow](windowArg))
 
 	windowFin()
 }
@@ -205,7 +205,7 @@ func SetAxisMask(x bool, y bool, z bool) {
 // drawlist: nullptr
 func SetDrawlistV(drawlist *imgui.DrawList) {
 	drawlistArg, drawlistFin := drawlist.Handle()
-	C.ImGuizmo_SetDrawlist(datautils.ConvertCTypes[*C.ImDrawList](drawlistArg))
+	C.ImGuizmo_SetDrawlist(internal.ReinterpretCast[*C.ImDrawList](drawlistArg))
 
 	drawlistFin()
 }
@@ -220,7 +220,7 @@ func SetID(id int32) {
 
 func SetImGuiContext(ctx *imgui.Context) {
 	ctxArg, ctxFin := ctx.Handle()
-	C.ImGuizmo_SetImGuiContext(datautils.ConvertCTypes[*C.ImGuiContext](ctxArg))
+	C.ImGuizmo_SetImGuiContext(internal.ReinterpretCast[*C.ImGuiContext](ctxArg))
 
 	ctxFin()
 }
@@ -238,17 +238,17 @@ func SetRect(x float32, y float32, width float32, height float32) {
 }
 
 func ViewManipulateFloat(view *float32, length float32, position imgui.Vec2, size imgui.Vec2, backgroundColor uint32) {
-	viewArg, viewFin := datautils.WrapNumberPtr[C.float, float32](view)
-	C.ImGuizmo_ViewManipulate_Float(viewArg, C.float(length), datautils.ConvertCTypes[C.ImVec2](position.ToC()), datautils.ConvertCTypes[C.ImVec2](size.ToC()), C.ImU32(backgroundColor))
+	viewArg, viewFin := internal.WrapNumberPtr[C.float, float32](view)
+	C.ImGuizmo_ViewManipulate_Float(viewArg, C.float(length), internal.ReinterpretCast[C.ImVec2](position.ToC()), internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImU32(backgroundColor))
 
 	viewFin()
 }
 
 func ViewManipulateFloatPtr(view *float32, projection *float32, operation OPERATION, mode MODE, matrix *float32, length float32, position imgui.Vec2, size imgui.Vec2, backgroundColor uint32) {
-	viewArg, viewFin := datautils.WrapNumberPtr[C.float, float32](view)
-	projectionArg, projectionFin := datautils.WrapNumberPtr[C.float, float32](projection)
-	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
-	C.ImGuizmo_ViewManipulate_FloatPtr(viewArg, projectionArg, C.OPERATION(operation), C.MODE(mode), matrixArg, C.float(length), datautils.ConvertCTypes[C.ImVec2](position.ToC()), datautils.ConvertCTypes[C.ImVec2](size.ToC()), C.ImU32(backgroundColor))
+	viewArg, viewFin := internal.WrapNumberPtr[C.float, float32](view)
+	projectionArg, projectionFin := internal.WrapNumberPtr[C.float, float32](projection)
+	matrixArg, matrixFin := internal.WrapNumberPtr[C.float, float32](matrix)
+	C.ImGuizmo_ViewManipulate_FloatPtr(viewArg, projectionArg, C.OPERATION(operation), C.MODE(mode), matrixArg, C.float(length), internal.ReinterpretCast[C.ImVec2](position.ToC()), internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImU32(backgroundColor))
 
 	viewFin()
 	projectionFin()
@@ -261,15 +261,15 @@ func NewStyle() *Style {
 
 func (self *Style) Destroy() {
 	selfArg, selfFin := self.Handle()
-	C.Style_destroy(datautils.ConvertCTypes[*C.Style](selfArg))
+	C.Style_destroy(internal.ReinterpretCast[*C.Style](selfArg))
 
 	selfFin()
 }
 
 func Manipulate(view *float32, projection *float32, operation OPERATION, mode MODE, matrix *float32) bool {
-	viewArg, viewFin := datautils.WrapNumberPtr[C.float, float32](view)
-	projectionArg, projectionFin := datautils.WrapNumberPtr[C.float, float32](projection)
-	matrixArg, matrixFin := datautils.WrapNumberPtr[C.float, float32](matrix)
+	viewArg, viewFin := internal.WrapNumberPtr[C.float, float32](view)
+	projectionArg, projectionFin := internal.WrapNumberPtr[C.float, float32](projection)
+	matrixArg, matrixFin := internal.WrapNumberPtr[C.float, float32](matrix)
 
 	defer func() {
 		viewFin()
@@ -295,7 +295,7 @@ func (self *Style) TranslationLineThickness() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_Style_GetTranslationLineThickness(datautils.ConvertCTypes[*C.Style](selfArg)))
+	return float32(C.wrap_Style_GetTranslationLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
 }
 
 func (self Style) SetTranslationLineArrowSize(v float32) {
@@ -310,7 +310,7 @@ func (self *Style) TranslationLineArrowSize() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_Style_GetTranslationLineArrowSize(datautils.ConvertCTypes[*C.Style](selfArg)))
+	return float32(C.wrap_Style_GetTranslationLineArrowSize(internal.ReinterpretCast[*C.Style](selfArg)))
 }
 
 func (self Style) SetRotationLineThickness(v float32) {
@@ -325,7 +325,7 @@ func (self *Style) RotationLineThickness() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_Style_GetRotationLineThickness(datautils.ConvertCTypes[*C.Style](selfArg)))
+	return float32(C.wrap_Style_GetRotationLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
 }
 
 func (self Style) SetRotationOuterLineThickness(v float32) {
@@ -340,7 +340,7 @@ func (self *Style) RotationOuterLineThickness() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_Style_GetRotationOuterLineThickness(datautils.ConvertCTypes[*C.Style](selfArg)))
+	return float32(C.wrap_Style_GetRotationOuterLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
 }
 
 func (self Style) SetScaleLineThickness(v float32) {
@@ -355,7 +355,7 @@ func (self *Style) ScaleLineThickness() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_Style_GetScaleLineThickness(datautils.ConvertCTypes[*C.Style](selfArg)))
+	return float32(C.wrap_Style_GetScaleLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
 }
 
 func (self Style) SetScaleLineCircleSize(v float32) {
@@ -370,7 +370,7 @@ func (self *Style) ScaleLineCircleSize() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_Style_GetScaleLineCircleSize(datautils.ConvertCTypes[*C.Style](selfArg)))
+	return float32(C.wrap_Style_GetScaleLineCircleSize(internal.ReinterpretCast[*C.Style](selfArg)))
 }
 
 func (self Style) SetHatchedAxisLineThickness(v float32) {
@@ -385,7 +385,7 @@ func (self *Style) HatchedAxisLineThickness() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_Style_GetHatchedAxisLineThickness(datautils.ConvertCTypes[*C.Style](selfArg)))
+	return float32(C.wrap_Style_GetHatchedAxisLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
 }
 
 func (self Style) SetCenterCircleSize(v float32) {
@@ -400,13 +400,13 @@ func (self *Style) CenterCircleSize() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_Style_GetCenterCircleSize(datautils.ConvertCTypes[*C.Style](selfArg)))
+	return float32(C.wrap_Style_GetCenterCircleSize(internal.ReinterpretCast[*C.Style](selfArg)))
 }
 
 func (self Style) SetColors(v *[15]imgui.Vec4) {
 	vArg := make([]C.ImVec4, len(v))
 	for i, vV := range v {
-		vArg[i] = datautils.ConvertCTypes[C.ImVec4](vV.ToC())
+		vArg[i] = internal.ReinterpretCast[C.ImVec4](vV.ToC())
 	}
 
 	selfArg, selfFin := self.Handle()
@@ -426,7 +426,7 @@ func (self *Style) Colors() [15]imgui.Vec4 {
 	}()
 	return func() [15]imgui.Vec4 {
 		result := [15]imgui.Vec4{}
-		resultMirr := C.wrap_Style_GetColors(datautils.ConvertCTypes[*C.Style](selfArg))
+		resultMirr := C.wrap_Style_GetColors(internal.ReinterpretCast[*C.Style](selfArg))
 		for i := range result {
 			result[i] = func() imgui.Vec4 {
 				out := C.cimguizmo_ImVec4_GetAtIdx(resultMirr, C.int(i))
