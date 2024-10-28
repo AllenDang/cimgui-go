@@ -12,13 +12,13 @@ import (
 	"runtime/cgo"
 	"unsafe"
 
-	"github.com/AllenDang/cimgui-go/datautils"
+	"github.com/AllenDang/cimgui-go/internal"
 )
 
 type InputTextCallback func(data InputTextCallbackData) int
 
 type inputTextInternalState struct {
-	buf      *datautils.StringBuffer
+	buf      *internal.StringBuffer
 	callback InputTextCallback
 }
 
@@ -35,7 +35,7 @@ func generalInputTextCallback(cbData *C.ImGuiInputTextCallbackData) C.int {
 
 	if data.EventFlag() == InputTextFlagsCallbackResize {
 		statePtr.buf.ResizeTo(int(data.BufSize()))
-		C.wrap_ImGuiInputTextCallbackData_SetBuf(cbData, datautils.ConvertCTypes[*C.char](statePtr.buf.Ptr()))
+		C.wrap_ImGuiInputTextCallbackData_SetBuf(cbData, internal.ReinterpretCast[*C.char](statePtr.buf.Ptr()))
 		data.SetBufSize(int32(statePtr.buf.Size()))
 		data.SetBufTextLen(int32(data.BufTextLen()))
 		data.SetBufDirty(true)
@@ -49,14 +49,14 @@ func generalInputTextCallback(cbData *C.ImGuiInputTextCallbackData) C.int {
 }
 
 func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, callback InputTextCallback) bool {
-	labelArg, labelFin := datautils.WrapString[C.char](label)
+	labelArg, labelFin := internal.WrapString[C.char](label)
 	defer labelFin()
 
-	hintArg, hintFin := datautils.WrapString[C.char](hint)
+	hintArg, hintFin := internal.WrapString[C.char](hint)
 	defer hintFin()
 
 	state := &inputTextInternalState{
-		buf:      datautils.NewStringBuffer(*buf),
+		buf:      internal.NewStringBuffer(*buf),
 		callback: callback,
 	}
 
@@ -73,7 +73,7 @@ func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, ca
 	return C.igInputTextWithHint(
 		labelArg,
 		hintArg,
-		datautils.ConvertCTypes[*C.char](state.buf.Ptr()),
+		internal.ReinterpretCast[*C.char](state.buf.Ptr()),
 		C.xulong(len(*buf)+1),
 		C.ImGuiInputTextFlags(flags),
 		C.ImGuiInputTextCallback(C.generalInputTextCallback),
@@ -82,11 +82,11 @@ func InputTextWithHint(label, hint string, buf *string, flags InputTextFlags, ca
 }
 
 func InputTextMultiline(label string, buf *string, size Vec2, flags InputTextFlags, callback InputTextCallback) bool {
-	labelArg, labelFin := datautils.WrapString[C.char](label)
+	labelArg, labelFin := internal.WrapString[C.char](label)
 	defer labelFin()
 
 	state := &inputTextInternalState{
-		buf:      datautils.NewStringBuffer(*buf),
+		buf:      internal.NewStringBuffer(*buf),
 		callback: callback,
 	}
 
@@ -102,7 +102,7 @@ func InputTextMultiline(label string, buf *string, size Vec2, flags InputTextFla
 
 	return C.igInputTextMultiline(
 		labelArg,
-		datautils.ConvertCTypes[*C.char](state.buf.Ptr()),
+		internal.ReinterpretCast[*C.char](state.buf.Ptr()),
 		C.xulong(len(*buf)+1),
 		size.ToC(),
 		C.ImGuiInputTextFlags(flags),
