@@ -13516,7 +13516,7 @@ func ValueFloat(prefix string, v float32) {
 	prefixFin()
 }
 
-func (self BitVector) SetStorage(v vectors.Vector[*uint32]) {
+func (self BitVector) SetStorage(v vectors.Vector[uint32]) {
 	vData := v.Data
 	vDataArg, _ := internal.WrapNumberPtr[C.ImU32, uint32](vData)
 	vVecArg := new(C.ImVector_ImU32)
@@ -13530,7 +13530,7 @@ func (self BitVector) SetStorage(v vectors.Vector[*uint32]) {
 	C.wrap_ImBitVector_SetStorage(selfArg, *vVecArg)
 }
 
-func (self *BitVector) Storage() vectors.Vector[*uint32] {
+func (self *BitVector) Storage() vectors.Vector[uint32] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -13551,7 +13551,7 @@ func (self *Color) Value() Vec4 {
 	}()
 }
 
-func (self DrawChannel) SetCmdBuffer(v vectors.Vector[*DrawCmd]) {
+func (self DrawChannel) SetCmdBuffer(v vectors.Vector[DrawCmd]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImDrawCmd)
@@ -13565,7 +13565,7 @@ func (self DrawChannel) SetCmdBuffer(v vectors.Vector[*DrawCmd]) {
 	C.wrap_ImDrawChannel_Set_CmdBuffer(selfArg, *vVecArg)
 }
 
-func (self *DrawChannel) CmdBuffer() vectors.Vector[*DrawCmd] {
+func (self *DrawChannel) CmdBuffer() vectors.Vector[DrawCmd] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -13574,7 +13574,7 @@ func (self *DrawChannel) CmdBuffer() vectors.Vector[*DrawCmd] {
 	return vectors.NewVectorFromC(C.wrap_ImDrawChannel_Get_CmdBuffer(internal.ReinterpretCast[*C.ImDrawChannel](selfArg)).Size, C.wrap_ImDrawChannel_Get_CmdBuffer(internal.ReinterpretCast[*C.ImDrawChannel](selfArg)).Capacity, NewDrawCmdFromC(C.wrap_ImDrawChannel_Get_CmdBuffer(internal.ReinterpretCast[*C.ImDrawChannel](selfArg)).Data))
 }
 
-func (self DrawChannel) SetIdxBuffer(v vectors.Vector[*DrawIdx]) {
+func (self DrawChannel) SetIdxBuffer(v vectors.Vector[DrawIdx]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImDrawIdx)
@@ -13588,7 +13588,7 @@ func (self DrawChannel) SetIdxBuffer(v vectors.Vector[*DrawIdx]) {
 	C.wrap_ImDrawChannel_Set_IdxBuffer(selfArg, *vVecArg)
 }
 
-func (self *DrawChannel) IdxBuffer() vectors.Vector[*DrawIdx] {
+func (self *DrawChannel) IdxBuffer() vectors.Vector[DrawIdx] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -13909,7 +13909,7 @@ func (self *DrawData) OwnerViewport() *Viewport {
 	return NewViewportFromC(C.wrap_ImDrawData_GetOwnerViewport(internal.ReinterpretCast[*C.ImDrawData](selfArg)))
 }
 
-func (self DrawList) SetCmdBuffer(v vectors.Vector[*DrawCmd]) {
+func (self DrawList) SetCmdBuffer(v vectors.Vector[DrawCmd]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImDrawCmd)
@@ -13923,7 +13923,7 @@ func (self DrawList) SetCmdBuffer(v vectors.Vector[*DrawCmd]) {
 	C.wrap_ImDrawList_SetCmdBuffer(selfArg, *vVecArg)
 }
 
-func (self *DrawList) CmdBuffer() vectors.Vector[*DrawCmd] {
+func (self *DrawList) CmdBuffer() vectors.Vector[DrawCmd] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -13932,7 +13932,7 @@ func (self *DrawList) CmdBuffer() vectors.Vector[*DrawCmd] {
 	return vectors.NewVectorFromC(C.wrap_ImDrawList_GetCmdBuffer(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Size, C.wrap_ImDrawList_GetCmdBuffer(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Capacity, NewDrawCmdFromC(C.wrap_ImDrawList_GetCmdBuffer(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Data))
 }
 
-func (self DrawList) SetIdxBuffer(v vectors.Vector[*DrawIdx]) {
+func (self DrawList) SetIdxBuffer(v vectors.Vector[DrawIdx]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImDrawIdx)
@@ -13946,7 +13946,7 @@ func (self DrawList) SetIdxBuffer(v vectors.Vector[*DrawIdx]) {
 	C.wrap_ImDrawList_SetIdxBuffer(selfArg, *vVecArg)
 }
 
-func (self *DrawList) IdxBuffer() vectors.Vector[*DrawIdx] {
+func (self *DrawList) IdxBuffer() vectors.Vector[DrawIdx] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -13955,7 +13955,7 @@ func (self *DrawList) IdxBuffer() vectors.Vector[*DrawIdx] {
 	return vectors.NewVectorFromC(C.wrap_ImDrawList_GetIdxBuffer(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Size, C.wrap_ImDrawList_GetIdxBuffer(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Capacity, NewDrawIdxFromC(C.wrap_ImDrawList_GetIdxBuffer(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Data))
 }
 
-func (self DrawList) SetVtxBuffer(v vectors.Vector[*DrawVert]) {
+func (self DrawList) SetVtxBuffer(v vectors.Vector[DrawVert]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImDrawVert)
@@ -13969,7 +13969,7 @@ func (self DrawList) SetVtxBuffer(v vectors.Vector[*DrawVert]) {
 	C.wrap_ImDrawList_SetVtxBuffer(selfArg, *vVecArg)
 }
 
-func (self *DrawList) VtxBuffer() vectors.Vector[*DrawVert] {
+func (self *DrawList) VtxBuffer() vectors.Vector[DrawVert] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -14059,7 +14059,7 @@ func (self *DrawList) IdxWritePtr() *DrawIdx {
 	return NewDrawIdxFromC(C.wrap_ImDrawList_Get_IdxWritePtr(internal.ReinterpretCast[*C.ImDrawList](selfArg)))
 }
 
-func (self DrawList) SetPath(v vectors.Vector[*Vec2]) {
+func (self DrawList) SetPath(v vectors.Vector[Vec2]) {
 	vData := v.Data
 	vDataArg, _ := internal.Wrap(vData)
 	vVecArg := new(C.ImVector_ImVec2)
@@ -14113,7 +14113,7 @@ func (self *DrawList) Splitter() DrawListSplitter {
 	}())
 }
 
-func (self DrawList) SetClipRectStack(v vectors.Vector[*Vec4]) {
+func (self DrawList) SetClipRectStack(v vectors.Vector[Vec4]) {
 	vData := v.Data
 	vDataArg, _ := internal.Wrap(vData)
 	vVecArg := new(C.ImVector_ImVec4)
@@ -14127,7 +14127,7 @@ func (self DrawList) SetClipRectStack(v vectors.Vector[*Vec4]) {
 	C.wrap_ImDrawList_Set_ClipRectStack(selfArg, *vVecArg)
 }
 
-func (self DrawList) SetTextureIdStack(v vectors.Vector[*TextureID]) {
+func (self DrawList) SetTextureIdStack(v vectors.Vector[TextureID]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImTextureID)
@@ -14141,7 +14141,7 @@ func (self DrawList) SetTextureIdStack(v vectors.Vector[*TextureID]) {
 	C.wrap_ImDrawList_Set_TextureIdStack(selfArg, *vVecArg)
 }
 
-func (self *DrawList) TextureIdStack() vectors.Vector[*TextureID] {
+func (self *DrawList) TextureIdStack() vectors.Vector[TextureID] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -14150,7 +14150,7 @@ func (self *DrawList) TextureIdStack() vectors.Vector[*TextureID] {
 	return vectors.NewVectorFromC(C.wrap_ImDrawList_Get_TextureIdStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Size, C.wrap_ImDrawList_Get_TextureIdStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Capacity, NewTextureIDFromC(C.wrap_ImDrawList_Get_TextureIdStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Data))
 }
 
-func (self DrawList) SetCallbacksDataBuf(v vectors.Vector[*byte]) {
+func (self DrawList) SetCallbacksDataBuf(v vectors.Vector[byte]) {
 	vData := v.Data
 	vDataArg, _ := internal.WrapNumberPtr[C.ImU8, byte](vData)
 	vVecArg := new(C.ImVector_ImU8)
@@ -14164,7 +14164,7 @@ func (self DrawList) SetCallbacksDataBuf(v vectors.Vector[*byte]) {
 	C.wrap_ImDrawList_Set_CallbacksDataBuf(selfArg, *vVecArg)
 }
 
-func (self *DrawList) CallbacksDataBuf() vectors.Vector[*byte] {
+func (self *DrawList) CallbacksDataBuf() vectors.Vector[byte] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -14333,7 +14333,7 @@ func (self *DrawListSharedData) InitialFlags() DrawListFlags {
 	return DrawListFlags(C.wrap_ImDrawListSharedData_GetInitialFlags(internal.ReinterpretCast[*C.ImDrawListSharedData](selfArg)))
 }
 
-func (self DrawListSharedData) SetTempBuffer(v vectors.Vector[*Vec2]) {
+func (self DrawListSharedData) SetTempBuffer(v vectors.Vector[Vec2]) {
 	vData := v.Data
 	vDataArg, _ := internal.Wrap(vData)
 	vVecArg := new(C.ImVector_ImVec2)
@@ -14476,7 +14476,7 @@ func (self *DrawListSplitter) Count() int32 {
 	return int32(C.wrap_ImDrawListSplitter_Get_Count(internal.ReinterpretCast[*C.ImDrawListSplitter](selfArg)))
 }
 
-func (self DrawListSplitter) SetChannels(v vectors.Vector[*DrawChannel]) {
+func (self DrawListSplitter) SetChannels(v vectors.Vector[DrawChannel]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImDrawChannel)
@@ -14490,7 +14490,7 @@ func (self DrawListSplitter) SetChannels(v vectors.Vector[*DrawChannel]) {
 	C.wrap_ImDrawListSplitter_Set_Channels(selfArg, *vVecArg)
 }
 
-func (self *DrawListSplitter) Channels() vectors.Vector[*DrawChannel] {
+func (self *DrawListSplitter) Channels() vectors.Vector[DrawChannel] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -14550,7 +14550,7 @@ func (self *DrawVert) Col() uint32 {
 	return uint32(C.wrap_ImDrawVert_GetCol(internal.ReinterpretCast[*C.ImDrawVert](selfArg)))
 }
 
-func (self Font) SetIndexAdvanceX(v vectors.Vector[*float32]) {
+func (self Font) SetIndexAdvanceX(v vectors.Vector[float32]) {
 	vData := v.Data
 	vDataArg, _ := internal.WrapNumberPtr[C.float, float32](vData)
 	vVecArg := new(C.ImVector_float)
@@ -14564,7 +14564,7 @@ func (self Font) SetIndexAdvanceX(v vectors.Vector[*float32]) {
 	C.wrap_ImFont_SetIndexAdvanceX(selfArg, *vVecArg)
 }
 
-func (self *Font) IndexAdvanceX() vectors.Vector[*float32] {
+func (self *Font) IndexAdvanceX() vectors.Vector[float32] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -14603,7 +14603,7 @@ func (self *Font) FontSize() float32 {
 	return float32(C.wrap_ImFont_GetFontSize(internal.ReinterpretCast[*C.ImFont](selfArg)))
 }
 
-func (self Font) SetIndexLookup(v vectors.Vector[(*Wchar)]) {
+func (self Font) SetIndexLookup(v vectors.Vector[(Wchar)]) {
 	vData := v.Data
 
 	vVecArg := new(C.ImVector_ImWchar)
@@ -14617,7 +14617,7 @@ func (self Font) SetIndexLookup(v vectors.Vector[(*Wchar)]) {
 	C.wrap_ImFont_SetIndexLookup(selfArg, *vVecArg)
 }
 
-func (self *Font) IndexLookup() vectors.Vector[(*Wchar)] {
+func (self *Font) IndexLookup() vectors.Vector[(Wchar)] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -14626,7 +14626,7 @@ func (self *Font) IndexLookup() vectors.Vector[(*Wchar)] {
 	return vectors.NewVectorFromC(C.wrap_ImFont_GetIndexLookup(internal.ReinterpretCast[*C.ImFont](selfArg)).Size, C.wrap_ImFont_GetIndexLookup(internal.ReinterpretCast[*C.ImFont](selfArg)).Capacity, (*Wchar)(C.wrap_ImFont_GetIndexLookup(internal.ReinterpretCast[*C.ImFont](selfArg)).Data))
 }
 
-func (self Font) SetGlyphs(v vectors.Vector[*FontGlyph]) {
+func (self Font) SetGlyphs(v vectors.Vector[FontGlyph]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImFontGlyph)
@@ -14640,7 +14640,7 @@ func (self Font) SetGlyphs(v vectors.Vector[*FontGlyph]) {
 	C.wrap_ImFont_SetGlyphs(selfArg, *vVecArg)
 }
 
-func (self *Font) Glyphs() vectors.Vector[*FontGlyph] {
+func (self *Font) Glyphs() vectors.Vector[FontGlyph] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -15102,7 +15102,7 @@ func (self *FontAtlas) TexUvWhitePixel() Vec2 {
 	}()
 }
 
-func (self FontAtlas) SetCustomRects(v vectors.Vector[*FontAtlasCustomRect]) {
+func (self FontAtlas) SetCustomRects(v vectors.Vector[FontAtlasCustomRect]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImFontAtlasCustomRect)
@@ -15116,7 +15116,7 @@ func (self FontAtlas) SetCustomRects(v vectors.Vector[*FontAtlasCustomRect]) {
 	C.wrap_ImFontAtlas_SetCustomRects(selfArg, *vVecArg)
 }
 
-func (self *FontAtlas) CustomRects() vectors.Vector[*FontAtlasCustomRect] {
+func (self *FontAtlas) CustomRects() vectors.Vector[FontAtlasCustomRect] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -15125,7 +15125,7 @@ func (self *FontAtlas) CustomRects() vectors.Vector[*FontAtlasCustomRect] {
 	return vectors.NewVectorFromC(C.wrap_ImFontAtlas_GetCustomRects(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)).Size, C.wrap_ImFontAtlas_GetCustomRects(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)).Capacity, NewFontAtlasCustomRectFromC(C.wrap_ImFontAtlas_GetCustomRects(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)).Data))
 }
 
-func (self FontAtlas) SetConfigData(v vectors.Vector[*FontConfig]) {
+func (self FontAtlas) SetConfigData(v vectors.Vector[FontConfig]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImFontConfig)
@@ -15139,7 +15139,7 @@ func (self FontAtlas) SetConfigData(v vectors.Vector[*FontConfig]) {
 	C.wrap_ImFontAtlas_SetConfigData(selfArg, *vVecArg)
 }
 
-func (self *FontAtlas) ConfigData() vectors.Vector[*FontConfig] {
+func (self *FontAtlas) ConfigData() vectors.Vector[FontConfig] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -15875,7 +15875,7 @@ func (self *FontGlyph) V1() float32 {
 	return float32(C.wrap_ImFontGlyph_GetV1(internal.ReinterpretCast[*C.ImFontGlyph](selfArg)))
 }
 
-func (self FontGlyphRangesBuilder) SetUsedChars(v vectors.Vector[*uint32]) {
+func (self FontGlyphRangesBuilder) SetUsedChars(v vectors.Vector[uint32]) {
 	vData := v.Data
 	vDataArg, _ := internal.WrapNumberPtr[C.ImU32, uint32](vData)
 	vVecArg := new(C.ImVector_ImU32)
@@ -15889,7 +15889,7 @@ func (self FontGlyphRangesBuilder) SetUsedChars(v vectors.Vector[*uint32]) {
 	C.wrap_ImFontGlyphRangesBuilder_SetUsedChars(selfArg, *vVecArg)
 }
 
-func (self *FontGlyphRangesBuilder) UsedChars() vectors.Vector[*uint32] {
+func (self *FontGlyphRangesBuilder) UsedChars() vectors.Vector[uint32] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -16702,7 +16702,7 @@ func (self *Context) ContextName() [16]rune {
 	}()
 }
 
-func (self Context) SetInputEventsQueue(v vectors.Vector[*InputEvent]) {
+func (self Context) SetInputEventsQueue(v vectors.Vector[InputEvent]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiInputEvent)
@@ -16716,7 +16716,7 @@ func (self Context) SetInputEventsQueue(v vectors.Vector[*InputEvent]) {
 	C.wrap_ImGuiContext_SetInputEventsQueue(selfArg, *vVecArg)
 }
 
-func (self *Context) InputEventsQueue() vectors.Vector[*InputEvent] {
+func (self *Context) InputEventsQueue() vectors.Vector[InputEvent] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -16725,7 +16725,7 @@ func (self *Context) InputEventsQueue() vectors.Vector[*InputEvent] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetInputEventsQueue(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetInputEventsQueue(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, NewInputEventFromC(C.wrap_ImGuiContext_GetInputEventsQueue(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
-func (self Context) SetInputEventsTrail(v vectors.Vector[*InputEvent]) {
+func (self Context) SetInputEventsTrail(v vectors.Vector[InputEvent]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiInputEvent)
@@ -16739,7 +16739,7 @@ func (self Context) SetInputEventsTrail(v vectors.Vector[*InputEvent]) {
 	C.wrap_ImGuiContext_SetInputEventsTrail(selfArg, *vVecArg)
 }
 
-func (self *Context) InputEventsTrail() vectors.Vector[*InputEvent] {
+func (self *Context) InputEventsTrail() vectors.Vector[InputEvent] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -16778,7 +16778,7 @@ func (self *Context) InputEventsNextEventId() uint32 {
 	return uint32(C.wrap_ImGuiContext_GetInputEventsNextEventId(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
-func (self Context) SetCurrentWindowStack(v vectors.Vector[*WindowStackData]) {
+func (self Context) SetCurrentWindowStack(v vectors.Vector[WindowStackData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiWindowStackData)
@@ -16792,7 +16792,7 @@ func (self Context) SetCurrentWindowStack(v vectors.Vector[*WindowStackData]) {
 	C.wrap_ImGuiContext_SetCurrentWindowStack(selfArg, *vVecArg)
 }
 
-func (self *Context) CurrentWindowStack() vectors.Vector[*WindowStackData] {
+func (self *Context) CurrentWindowStack() vectors.Vector[WindowStackData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -17868,7 +17868,7 @@ func (self *Context) DebugFlashStyleColorIdx() Col {
 	return Col(C.wrap_ImGuiContext_GetDebugFlashStyleColorIdx(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
-func (self Context) SetColorStack(v vectors.Vector[*ColorMod]) {
+func (self Context) SetColorStack(v vectors.Vector[ColorMod]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiColorMod)
@@ -17882,7 +17882,7 @@ func (self Context) SetColorStack(v vectors.Vector[*ColorMod]) {
 	C.wrap_ImGuiContext_SetColorStack(selfArg, *vVecArg)
 }
 
-func (self *Context) ColorStack() vectors.Vector[*ColorMod] {
+func (self *Context) ColorStack() vectors.Vector[ColorMod] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -17891,7 +17891,7 @@ func (self *Context) ColorStack() vectors.Vector[*ColorMod] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetColorStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetColorStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, NewColorModFromC(C.wrap_ImGuiContext_GetColorStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
-func (self Context) SetStyleVarStack(v vectors.Vector[*StyleMod]) {
+func (self Context) SetStyleVarStack(v vectors.Vector[StyleMod]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiStyleMod)
@@ -17905,7 +17905,7 @@ func (self Context) SetStyleVarStack(v vectors.Vector[*StyleMod]) {
 	C.wrap_ImGuiContext_SetStyleVarStack(selfArg, *vVecArg)
 }
 
-func (self *Context) StyleVarStack() vectors.Vector[*StyleMod] {
+func (self *Context) StyleVarStack() vectors.Vector[StyleMod] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -17914,7 +17914,7 @@ func (self *Context) StyleVarStack() vectors.Vector[*StyleMod] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetStyleVarStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetStyleVarStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, NewStyleModFromC(C.wrap_ImGuiContext_GetStyleVarStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
-func (self Context) SetFocusScopeStack(v vectors.Vector[*FocusScopeData]) {
+func (self Context) SetFocusScopeStack(v vectors.Vector[FocusScopeData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiFocusScopeData)
@@ -17928,7 +17928,7 @@ func (self Context) SetFocusScopeStack(v vectors.Vector[*FocusScopeData]) {
 	C.wrap_ImGuiContext_SetFocusScopeStack(selfArg, *vVecArg)
 }
 
-func (self *Context) FocusScopeStack() vectors.Vector[*FocusScopeData] {
+func (self *Context) FocusScopeStack() vectors.Vector[FocusScopeData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -17937,7 +17937,7 @@ func (self *Context) FocusScopeStack() vectors.Vector[*FocusScopeData] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetFocusScopeStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetFocusScopeStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, NewFocusScopeDataFromC(C.wrap_ImGuiContext_GetFocusScopeStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
-func (self *Context) ItemFlagsStack() vectors.Vector[*ItemFlags] {
+func (self *Context) ItemFlagsStack() vectors.Vector[ItemFlags] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -17946,7 +17946,7 @@ func (self *Context) ItemFlagsStack() vectors.Vector[*ItemFlags] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetItemFlagsStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetItemFlagsStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, (*ItemFlags)(C.wrap_ImGuiContext_GetItemFlagsStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
-func (self Context) SetGroupStack(v vectors.Vector[*GroupData]) {
+func (self Context) SetGroupStack(v vectors.Vector[GroupData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiGroupData)
@@ -17960,7 +17960,7 @@ func (self Context) SetGroupStack(v vectors.Vector[*GroupData]) {
 	C.wrap_ImGuiContext_SetGroupStack(selfArg, *vVecArg)
 }
 
-func (self *Context) GroupStack() vectors.Vector[*GroupData] {
+func (self *Context) GroupStack() vectors.Vector[GroupData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -17969,7 +17969,7 @@ func (self *Context) GroupStack() vectors.Vector[*GroupData] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetGroupStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetGroupStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, NewGroupDataFromC(C.wrap_ImGuiContext_GetGroupStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
-func (self Context) SetOpenPopupStack(v vectors.Vector[*PopupData]) {
+func (self Context) SetOpenPopupStack(v vectors.Vector[PopupData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiPopupData)
@@ -17983,7 +17983,7 @@ func (self Context) SetOpenPopupStack(v vectors.Vector[*PopupData]) {
 	C.wrap_ImGuiContext_SetOpenPopupStack(selfArg, *vVecArg)
 }
 
-func (self *Context) OpenPopupStack() vectors.Vector[*PopupData] {
+func (self *Context) OpenPopupStack() vectors.Vector[PopupData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -17992,7 +17992,7 @@ func (self *Context) OpenPopupStack() vectors.Vector[*PopupData] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetOpenPopupStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetOpenPopupStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, NewPopupDataFromC(C.wrap_ImGuiContext_GetOpenPopupStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
-func (self Context) SetBeginPopupStack(v vectors.Vector[*PopupData]) {
+func (self Context) SetBeginPopupStack(v vectors.Vector[PopupData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiPopupData)
@@ -18006,7 +18006,7 @@ func (self Context) SetBeginPopupStack(v vectors.Vector[*PopupData]) {
 	C.wrap_ImGuiContext_SetBeginPopupStack(selfArg, *vVecArg)
 }
 
-func (self *Context) BeginPopupStack() vectors.Vector[*PopupData] {
+func (self *Context) BeginPopupStack() vectors.Vector[PopupData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -18015,7 +18015,7 @@ func (self *Context) BeginPopupStack() vectors.Vector[*PopupData] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetBeginPopupStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetBeginPopupStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, NewPopupDataFromC(C.wrap_ImGuiContext_GetBeginPopupStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
-func (self Context) SetTreeNodeStack(v vectors.Vector[*TreeNodeStackData]) {
+func (self Context) SetTreeNodeStack(v vectors.Vector[TreeNodeStackData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiTreeNodeStackData)
@@ -18029,7 +18029,7 @@ func (self Context) SetTreeNodeStack(v vectors.Vector[*TreeNodeStackData]) {
 	C.wrap_ImGuiContext_SetTreeNodeStack(selfArg, *vVecArg)
 }
 
-func (self *Context) TreeNodeStack() vectors.Vector[*TreeNodeStackData] {
+func (self *Context) TreeNodeStack() vectors.Vector[TreeNodeStackData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -18399,7 +18399,7 @@ func (self *Context) NavActivateFlags() ActivateFlags {
 	return ActivateFlags(C.wrap_ImGuiContext_GetNavActivateFlags(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
-func (self Context) SetNavFocusRoute(v vectors.Vector[*FocusScopeData]) {
+func (self Context) SetNavFocusRoute(v vectors.Vector[FocusScopeData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiFocusScopeData)
@@ -18413,7 +18413,7 @@ func (self Context) SetNavFocusRoute(v vectors.Vector[*FocusScopeData]) {
 	C.wrap_ImGuiContext_SetNavFocusRoute(selfArg, *vVecArg)
 }
 
-func (self *Context) NavFocusRoute() vectors.Vector[*FocusScopeData] {
+func (self *Context) NavFocusRoute() vectors.Vector[FocusScopeData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -19538,7 +19538,7 @@ func (self *Context) ClipperTempDataStacked() int32 {
 	return int32(C.wrap_ImGuiContext_GetClipperTempDataStacked(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
-func (self Context) SetClipperTempData(v vectors.Vector[*ListClipperData]) {
+func (self Context) SetClipperTempData(v vectors.Vector[ListClipperData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiListClipperData)
@@ -19552,7 +19552,7 @@ func (self Context) SetClipperTempData(v vectors.Vector[*ListClipperData]) {
 	C.wrap_ImGuiContext_SetClipperTempData(selfArg, *vVecArg)
 }
 
-func (self *Context) ClipperTempData() vectors.Vector[*ListClipperData] {
+func (self *Context) ClipperTempData() vectors.Vector[ListClipperData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -19613,7 +19613,7 @@ func (self *Context) TablesTempDataStacked() int32 {
 	return int32(C.wrap_ImGuiContext_GetTablesTempDataStacked(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
-func (self Context) SetTablesTempData(v vectors.Vector[*TableTempData]) {
+func (self Context) SetTablesTempData(v vectors.Vector[TableTempData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiTableTempData)
@@ -19627,7 +19627,7 @@ func (self Context) SetTablesTempData(v vectors.Vector[*TableTempData]) {
 	C.wrap_ImGuiContext_SetTablesTempData(selfArg, *vVecArg)
 }
 
-func (self *Context) TablesTempData() vectors.Vector[*TableTempData] {
+func (self *Context) TablesTempData() vectors.Vector[TableTempData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -19636,7 +19636,7 @@ func (self *Context) TablesTempData() vectors.Vector[*TableTempData] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetTablesTempData(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetTablesTempData(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, NewTableTempDataFromC(C.wrap_ImGuiContext_GetTablesTempData(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
-func (self Context) SetTablesLastTimeActive(v vectors.Vector[*float32]) {
+func (self Context) SetTablesLastTimeActive(v vectors.Vector[float32]) {
 	vData := v.Data
 	vDataArg, _ := internal.WrapNumberPtr[C.float, float32](vData)
 	vVecArg := new(C.ImVector_float)
@@ -19650,7 +19650,7 @@ func (self Context) SetTablesLastTimeActive(v vectors.Vector[*float32]) {
 	C.wrap_ImGuiContext_SetTablesLastTimeActive(selfArg, *vVecArg)
 }
 
-func (self *Context) TablesLastTimeActive() vectors.Vector[*float32] {
+func (self *Context) TablesLastTimeActive() vectors.Vector[float32] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -19659,7 +19659,7 @@ func (self *Context) TablesLastTimeActive() vectors.Vector[*float32] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetTablesLastTimeActive(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetTablesLastTimeActive(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, (*float32)(C.wrap_ImGuiContext_GetTablesLastTimeActive(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
-func (self Context) SetDrawChannelsTempMergeBuffer(v vectors.Vector[*DrawChannel]) {
+func (self Context) SetDrawChannelsTempMergeBuffer(v vectors.Vector[DrawChannel]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImDrawChannel)
@@ -19673,7 +19673,7 @@ func (self Context) SetDrawChannelsTempMergeBuffer(v vectors.Vector[*DrawChannel
 	C.wrap_ImGuiContext_SetDrawChannelsTempMergeBuffer(selfArg, *vVecArg)
 }
 
-func (self *Context) DrawChannelsTempMergeBuffer() vectors.Vector[*DrawChannel] {
+func (self *Context) DrawChannelsTempMergeBuffer() vectors.Vector[DrawChannel] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -19699,7 +19699,7 @@ func (self *Context) CurrentTabBar() *TabBar {
 	return NewTabBarFromC(C.wrap_ImGuiContext_GetCurrentTabBar(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
-func (self Context) SetCurrentTabBarStack(v vectors.Vector[*PtrOrIndex]) {
+func (self Context) SetCurrentTabBarStack(v vectors.Vector[PtrOrIndex]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiPtrOrIndex)
@@ -19713,7 +19713,7 @@ func (self Context) SetCurrentTabBarStack(v vectors.Vector[*PtrOrIndex]) {
 	C.wrap_ImGuiContext_SetCurrentTabBarStack(selfArg, *vVecArg)
 }
 
-func (self *Context) CurrentTabBarStack() vectors.Vector[*PtrOrIndex] {
+func (self *Context) CurrentTabBarStack() vectors.Vector[PtrOrIndex] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -19722,7 +19722,7 @@ func (self *Context) CurrentTabBarStack() vectors.Vector[*PtrOrIndex] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetCurrentTabBarStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetCurrentTabBarStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, NewPtrOrIndexFromC(C.wrap_ImGuiContext_GetCurrentTabBarStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
-func (self Context) SetShrinkWidthBuffer(v vectors.Vector[*ShrinkWidthItem]) {
+func (self Context) SetShrinkWidthBuffer(v vectors.Vector[ShrinkWidthItem]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiShrinkWidthItem)
@@ -19736,7 +19736,7 @@ func (self Context) SetShrinkWidthBuffer(v vectors.Vector[*ShrinkWidthItem]) {
 	C.wrap_ImGuiContext_SetShrinkWidthBuffer(selfArg, *vVecArg)
 }
 
-func (self *Context) ShrinkWidthBuffer() vectors.Vector[*ShrinkWidthItem] {
+func (self *Context) ShrinkWidthBuffer() vectors.Vector[ShrinkWidthItem] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -19797,7 +19797,7 @@ func (self *Context) MultiSelectTempDataStacked() int32 {
 	return int32(C.wrap_ImGuiContext_GetMultiSelectTempDataStacked(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
-func (self Context) SetMultiSelectTempData(v vectors.Vector[*MultiSelectTempData]) {
+func (self Context) SetMultiSelectTempData(v vectors.Vector[MultiSelectTempData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiMultiSelectTempData)
@@ -19811,7 +19811,7 @@ func (self Context) SetMultiSelectTempData(v vectors.Vector[*MultiSelectTempData
 	C.wrap_ImGuiContext_SetMultiSelectTempData(selfArg, *vVecArg)
 }
 
-func (self *Context) MultiSelectTempData() vectors.Vector[*MultiSelectTempData] {
+func (self *Context) MultiSelectTempData() vectors.Vector[MultiSelectTempData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -20461,9 +20461,9 @@ func (self *Context) TooltipPreviousWindow() *Window {
 	return NewWindowFromC(C.wrap_ImGuiContext_GetTooltipPreviousWindow(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
-func (self Context) SetClipboardHandlerData(v vectors.Vector[string]) {
+func (self Context) SetClipboardHandlerData(v vectors.Vector[int8]) {
 	vData := v.Data
-	vDataArg, _ := internal.WrapString[C.char](vData)
+	vDataArg, _ := internal.WrapNumberPtr[C.char, int8](vData)
 	vVecArg := new(C.ImVector_char)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -20475,16 +20475,16 @@ func (self Context) SetClipboardHandlerData(v vectors.Vector[string]) {
 	C.wrap_ImGuiContext_SetClipboardHandlerData(selfArg, *vVecArg)
 }
 
-func (self *Context) ClipboardHandlerData() vectors.Vector[string] {
+func (self *Context) ClipboardHandlerData() vectors.Vector[int8] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetClipboardHandlerData(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetClipboardHandlerData(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, C.GoString(C.wrap_ImGuiContext_GetClipboardHandlerData(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
+	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetClipboardHandlerData(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetClipboardHandlerData(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, (*int8)(C.wrap_ImGuiContext_GetClipboardHandlerData(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
-func (self Context) SetMenusIdSubmittedThisFrame(v vectors.Vector[*ID]) {
+func (self Context) SetMenusIdSubmittedThisFrame(v vectors.Vector[ID]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiID)
@@ -20498,7 +20498,7 @@ func (self Context) SetMenusIdSubmittedThisFrame(v vectors.Vector[*ID]) {
 	C.wrap_ImGuiContext_SetMenusIdSubmittedThisFrame(selfArg, *vVecArg)
 }
 
-func (self *Context) MenusIdSubmittedThisFrame() vectors.Vector[*ID] {
+func (self *Context) MenusIdSubmittedThisFrame() vectors.Vector[ID] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -20657,7 +20657,7 @@ func (self *Context) SettingsIniData() TextBuffer {
 	}())
 }
 
-func (self Context) SetSettingsHandlers(v vectors.Vector[*SettingsHandler]) {
+func (self Context) SetSettingsHandlers(v vectors.Vector[SettingsHandler]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiSettingsHandler)
@@ -20671,7 +20671,7 @@ func (self Context) SetSettingsHandlers(v vectors.Vector[*SettingsHandler]) {
 	C.wrap_ImGuiContext_SetSettingsHandlers(selfArg, *vVecArg)
 }
 
-func (self *Context) SettingsHandlers() vectors.Vector[*SettingsHandler] {
+func (self *Context) SettingsHandlers() vectors.Vector[SettingsHandler] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -20680,7 +20680,7 @@ func (self *Context) SettingsHandlers() vectors.Vector[*SettingsHandler] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetSettingsHandlers(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetSettingsHandlers(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, NewSettingsHandlerFromC(C.wrap_ImGuiContext_GetSettingsHandlers(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
-func (self Context) SetHooks(v vectors.Vector[*ContextHook]) {
+func (self Context) SetHooks(v vectors.Vector[ContextHook]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiContextHook)
@@ -20694,7 +20694,7 @@ func (self Context) SetHooks(v vectors.Vector[*ContextHook]) {
 	C.wrap_ImGuiContext_SetHooks(selfArg, *vVecArg)
 }
 
-func (self *Context) Hooks() vectors.Vector[*ContextHook] {
+func (self *Context) Hooks() vectors.Vector[ContextHook] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -21477,9 +21477,9 @@ func (self *Context) WantTextInputNextFrame() int32 {
 	return int32(C.wrap_ImGuiContext_GetWantTextInputNextFrame(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
-func (self Context) SetTempBuffer(v vectors.Vector[string]) {
+func (self Context) SetTempBuffer(v vectors.Vector[int8]) {
 	vData := v.Data
-	vDataArg, _ := internal.WrapString[C.char](vData)
+	vDataArg, _ := internal.WrapNumberPtr[C.char, int8](vData)
 	vVecArg := new(C.ImVector_char)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -21491,13 +21491,13 @@ func (self Context) SetTempBuffer(v vectors.Vector[string]) {
 	C.wrap_ImGuiContext_SetTempBuffer(selfArg, *vVecArg)
 }
 
-func (self *Context) TempBuffer() vectors.Vector[string] {
+func (self *Context) TempBuffer() vectors.Vector[int8] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetTempBuffer(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetTempBuffer(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, C.GoString(C.wrap_ImGuiContext_GetTempBuffer(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
+	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetTempBuffer(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetTempBuffer(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, (*int8)(C.wrap_ImGuiContext_GetTempBuffer(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
 func (self Context) SetTempKeychordName(v *[64]rune) {
@@ -21891,7 +21891,7 @@ func (self *DockContext) Nodes() Storage {
 	}())
 }
 
-func (self DockContext) SetRequests(v vectors.Vector[*DockRequest]) {
+func (self DockContext) SetRequests(v vectors.Vector[DockRequest]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiDockRequest)
@@ -21905,7 +21905,7 @@ func (self DockContext) SetRequests(v vectors.Vector[*DockRequest]) {
 	C.wrap_ImGuiDockContext_SetRequests(selfArg, *vVecArg)
 }
 
-func (self *DockContext) Requests() vectors.Vector[*DockRequest] {
+func (self *DockContext) Requests() vectors.Vector[DockRequest] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -21914,7 +21914,7 @@ func (self *DockContext) Requests() vectors.Vector[*DockRequest] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiDockContext_GetRequests(internal.ReinterpretCast[*C.ImGuiDockContext](selfArg)).Size, C.wrap_ImGuiDockContext_GetRequests(internal.ReinterpretCast[*C.ImGuiDockContext](selfArg)).Capacity, NewDockRequestFromC(C.wrap_ImGuiDockContext_GetRequests(internal.ReinterpretCast[*C.ImGuiDockContext](selfArg)).Data))
 }
 
-func (self DockContext) SetNodesSettings(v vectors.Vector[*DockNodeSettings]) {
+func (self DockContext) SetNodesSettings(v vectors.Vector[DockNodeSettings]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiDockNodeSettings)
@@ -21928,7 +21928,7 @@ func (self DockContext) SetNodesSettings(v vectors.Vector[*DockNodeSettings]) {
 	C.wrap_ImGuiDockContext_SetNodesSettings(selfArg, *vVecArg)
 }
 
-func (self *DockContext) NodesSettings() vectors.Vector[*DockNodeSettings] {
+func (self *DockContext) NodesSettings() vectors.Vector[DockNodeSettings] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -23103,7 +23103,7 @@ func (self *IDStackTool) QueryId() ID {
 	}())
 }
 
-func (self IDStackTool) SetResults(v vectors.Vector[*StackLevelInfo]) {
+func (self IDStackTool) SetResults(v vectors.Vector[StackLevelInfo]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiStackLevelInfo)
@@ -23117,7 +23117,7 @@ func (self IDStackTool) SetResults(v vectors.Vector[*StackLevelInfo]) {
 	C.wrap_ImGuiIDStackTool_SetResults(selfArg, *vVecArg)
 }
 
-func (self *IDStackTool) Results() vectors.Vector[*StackLevelInfo] {
+func (self *IDStackTool) Results() vectors.Vector[StackLevelInfo] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -25047,7 +25047,7 @@ func (self *IO) InputQueueSurrogate() uint16 {
 	return uint16(C.wrap_ImGuiIO_GetInputQueueSurrogate(internal.ReinterpretCast[*C.ImGuiIO](selfArg)))
 }
 
-func (self IO) SetInputQueueCharacters(v vectors.Vector[(*Wchar)]) {
+func (self IO) SetInputQueueCharacters(v vectors.Vector[(Wchar)]) {
 	vData := v.Data
 
 	vVecArg := new(C.ImVector_ImWchar)
@@ -25061,7 +25061,7 @@ func (self IO) SetInputQueueCharacters(v vectors.Vector[(*Wchar)]) {
 	C.wrap_ImGuiIO_SetInputQueueCharacters(selfArg, *vVecArg)
 }
 
-func (self *IO) InputQueueCharacters() vectors.Vector[(*Wchar)] {
+func (self *IO) InputQueueCharacters() vectors.Vector[(Wchar)] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -25579,9 +25579,9 @@ func (self *InputTextDeactivatedState) ID() ID {
 	}())
 }
 
-func (self InputTextDeactivatedState) SetTextA(v vectors.Vector[string]) {
+func (self InputTextDeactivatedState) SetTextA(v vectors.Vector[int8]) {
 	vData := v.Data
-	vDataArg, _ := internal.WrapString[C.char](vData)
+	vDataArg, _ := internal.WrapNumberPtr[C.char, int8](vData)
 	vVecArg := new(C.ImVector_char)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -25593,13 +25593,13 @@ func (self InputTextDeactivatedState) SetTextA(v vectors.Vector[string]) {
 	C.wrap_ImGuiInputTextDeactivatedState_SetTextA(selfArg, *vVecArg)
 }
 
-func (self *InputTextDeactivatedState) TextA() vectors.Vector[string] {
+func (self *InputTextDeactivatedState) TextA() vectors.Vector[int8] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImGuiInputTextDeactivatedState_GetTextA(internal.ReinterpretCast[*C.ImGuiInputTextDeactivatedState](selfArg)).Size, C.wrap_ImGuiInputTextDeactivatedState_GetTextA(internal.ReinterpretCast[*C.ImGuiInputTextDeactivatedState](selfArg)).Capacity, C.GoString(C.wrap_ImGuiInputTextDeactivatedState_GetTextA(internal.ReinterpretCast[*C.ImGuiInputTextDeactivatedState](selfArg)).Data))
+	return vectors.NewVectorFromC(C.wrap_ImGuiInputTextDeactivatedState_GetTextA(internal.ReinterpretCast[*C.ImGuiInputTextDeactivatedState](selfArg)).Size, C.wrap_ImGuiInputTextDeactivatedState_GetTextA(internal.ReinterpretCast[*C.ImGuiInputTextDeactivatedState](selfArg)).Capacity, (*int8)(C.wrap_ImGuiInputTextDeactivatedState_GetTextA(internal.ReinterpretCast[*C.ImGuiInputTextDeactivatedState](selfArg)).Data))
 }
 
 func (self InputTextState) SetCtx(v *Context) {
@@ -25654,9 +25654,9 @@ func (self *InputTextState) CurLenA() int32 {
 	return int32(C.wrap_ImGuiInputTextState_GetCurLenA(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)))
 }
 
-func (self InputTextState) SetTextA(v vectors.Vector[string]) {
+func (self InputTextState) SetTextA(v vectors.Vector[int8]) {
 	vData := v.Data
-	vDataArg, _ := internal.WrapString[C.char](vData)
+	vDataArg, _ := internal.WrapNumberPtr[C.char, int8](vData)
 	vVecArg := new(C.ImVector_char)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -25668,18 +25668,18 @@ func (self InputTextState) SetTextA(v vectors.Vector[string]) {
 	C.wrap_ImGuiInputTextState_SetTextA(selfArg, *vVecArg)
 }
 
-func (self *InputTextState) TextA() vectors.Vector[string] {
+func (self *InputTextState) TextA() vectors.Vector[int8] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImGuiInputTextState_GetTextA(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Size, C.wrap_ImGuiInputTextState_GetTextA(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Capacity, C.GoString(C.wrap_ImGuiInputTextState_GetTextA(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Data))
+	return vectors.NewVectorFromC(C.wrap_ImGuiInputTextState_GetTextA(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Size, C.wrap_ImGuiInputTextState_GetTextA(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Capacity, (*int8)(C.wrap_ImGuiInputTextState_GetTextA(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Data))
 }
 
-func (self InputTextState) SetInitialTextA(v vectors.Vector[string]) {
+func (self InputTextState) SetInitialTextA(v vectors.Vector[int8]) {
 	vData := v.Data
-	vDataArg, _ := internal.WrapString[C.char](vData)
+	vDataArg, _ := internal.WrapNumberPtr[C.char, int8](vData)
 	vVecArg := new(C.ImVector_char)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -25691,18 +25691,18 @@ func (self InputTextState) SetInitialTextA(v vectors.Vector[string]) {
 	C.wrap_ImGuiInputTextState_SetInitialTextA(selfArg, *vVecArg)
 }
 
-func (self *InputTextState) InitialTextA() vectors.Vector[string] {
+func (self *InputTextState) InitialTextA() vectors.Vector[int8] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImGuiInputTextState_GetInitialTextA(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Size, C.wrap_ImGuiInputTextState_GetInitialTextA(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Capacity, C.GoString(C.wrap_ImGuiInputTextState_GetInitialTextA(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Data))
+	return vectors.NewVectorFromC(C.wrap_ImGuiInputTextState_GetInitialTextA(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Size, C.wrap_ImGuiInputTextState_GetInitialTextA(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Capacity, (*int8)(C.wrap_ImGuiInputTextState_GetInitialTextA(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Data))
 }
 
-func (self InputTextState) SetCallbackTextBackup(v vectors.Vector[string]) {
+func (self InputTextState) SetCallbackTextBackup(v vectors.Vector[int8]) {
 	vData := v.Data
-	vDataArg, _ := internal.WrapString[C.char](vData)
+	vDataArg, _ := internal.WrapNumberPtr[C.char, int8](vData)
 	vVecArg := new(C.ImVector_char)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -25714,13 +25714,13 @@ func (self InputTextState) SetCallbackTextBackup(v vectors.Vector[string]) {
 	C.wrap_ImGuiInputTextState_SetCallbackTextBackup(selfArg, *vVecArg)
 }
 
-func (self *InputTextState) CallbackTextBackup() vectors.Vector[string] {
+func (self *InputTextState) CallbackTextBackup() vectors.Vector[int8] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImGuiInputTextState_GetCallbackTextBackup(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Size, C.wrap_ImGuiInputTextState_GetCallbackTextBackup(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Capacity, C.GoString(C.wrap_ImGuiInputTextState_GetCallbackTextBackup(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Data))
+	return vectors.NewVectorFromC(C.wrap_ImGuiInputTextState_GetCallbackTextBackup(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Size, C.wrap_ImGuiInputTextState_GetCallbackTextBackup(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Capacity, (*int8)(C.wrap_ImGuiInputTextState_GetCallbackTextBackup(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)).Data))
 }
 
 func (self InputTextState) SetBufCapacityA(v int32) {
@@ -26147,7 +26147,7 @@ func (self *KeyRoutingTable) Index() [154]KeyRoutingIndex {
 	}()
 }
 
-func (self KeyRoutingTable) SetEntries(v vectors.Vector[*KeyRoutingData]) {
+func (self KeyRoutingTable) SetEntries(v vectors.Vector[KeyRoutingData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiKeyRoutingData)
@@ -26161,7 +26161,7 @@ func (self KeyRoutingTable) SetEntries(v vectors.Vector[*KeyRoutingData]) {
 	C.wrap_ImGuiKeyRoutingTable_SetEntries(selfArg, *vVecArg)
 }
 
-func (self *KeyRoutingTable) Entries() vectors.Vector[*KeyRoutingData] {
+func (self *KeyRoutingTable) Entries() vectors.Vector[KeyRoutingData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -26170,7 +26170,7 @@ func (self *KeyRoutingTable) Entries() vectors.Vector[*KeyRoutingData] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiKeyRoutingTable_GetEntries(internal.ReinterpretCast[*C.ImGuiKeyRoutingTable](selfArg)).Size, C.wrap_ImGuiKeyRoutingTable_GetEntries(internal.ReinterpretCast[*C.ImGuiKeyRoutingTable](selfArg)).Capacity, NewKeyRoutingDataFromC(C.wrap_ImGuiKeyRoutingTable_GetEntries(internal.ReinterpretCast[*C.ImGuiKeyRoutingTable](selfArg)).Data))
 }
 
-func (self KeyRoutingTable) SetEntriesNext(v vectors.Vector[*KeyRoutingData]) {
+func (self KeyRoutingTable) SetEntriesNext(v vectors.Vector[KeyRoutingData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiKeyRoutingData)
@@ -26184,7 +26184,7 @@ func (self KeyRoutingTable) SetEntriesNext(v vectors.Vector[*KeyRoutingData]) {
 	C.wrap_ImGuiKeyRoutingTable_SetEntriesNext(selfArg, *vVecArg)
 }
 
-func (self *KeyRoutingTable) EntriesNext() vectors.Vector[*KeyRoutingData] {
+func (self *KeyRoutingTable) EntriesNext() vectors.Vector[KeyRoutingData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -26519,7 +26519,7 @@ func (self *ListClipperData) ItemsFrozen() int32 {
 	return int32(C.wrap_ImGuiListClipperData_GetItemsFrozen(internal.ReinterpretCast[*C.ImGuiListClipperData](selfArg)))
 }
 
-func (self ListClipperData) SetRanges(v vectors.Vector[*ListClipperRange]) {
+func (self ListClipperData) SetRanges(v vectors.Vector[ListClipperRange]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiListClipperRange)
@@ -26533,7 +26533,7 @@ func (self ListClipperData) SetRanges(v vectors.Vector[*ListClipperRange]) {
 	C.wrap_ImGuiListClipperData_SetRanges(selfArg, *vVecArg)
 }
 
-func (self *ListClipperData) Ranges() vectors.Vector[*ListClipperRange] {
+func (self *ListClipperData) Ranges() vectors.Vector[ListClipperRange] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -27001,7 +27001,7 @@ func (self *MetricsConfig) HighlightViewportID() ID {
 	}())
 }
 
-func (self MultiSelectIO) SetRequests(v vectors.Vector[*SelectionRequest]) {
+func (self MultiSelectIO) SetRequests(v vectors.Vector[SelectionRequest]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiSelectionRequest)
@@ -27015,7 +27015,7 @@ func (self MultiSelectIO) SetRequests(v vectors.Vector[*SelectionRequest]) {
 	C.wrap_ImGuiMultiSelectIO_SetRequests(selfArg, *vVecArg)
 }
 
-func (self *MultiSelectIO) Requests() vectors.Vector[*SelectionRequest] {
+func (self *MultiSelectIO) Requests() vectors.Vector[SelectionRequest] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -28517,7 +28517,7 @@ func (self *OldColumns) HostBackupParentWorkRect() Rect {
 	}()
 }
 
-func (self OldColumns) SetColumns(v vectors.Vector[*OldColumnData]) {
+func (self OldColumns) SetColumns(v vectors.Vector[OldColumnData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiOldColumnData)
@@ -28531,7 +28531,7 @@ func (self OldColumns) SetColumns(v vectors.Vector[*OldColumnData]) {
 	C.wrap_ImGuiOldColumns_SetColumns(selfArg, *vVecArg)
 }
 
-func (self *OldColumns) Columns() vectors.Vector[*OldColumnData] {
+func (self *OldColumns) Columns() vectors.Vector[OldColumnData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -28797,7 +28797,7 @@ func (self *PlatformIO) RendererRenderState() uintptr {
 	return uintptr(C.wrap_ImGuiPlatformIO_GetRenderer_RenderState(internal.ReinterpretCast[*C.ImGuiPlatformIO](selfArg)))
 }
 
-func (self PlatformIO) SetMonitors(v vectors.Vector[*PlatformMonitor]) {
+func (self PlatformIO) SetMonitors(v vectors.Vector[PlatformMonitor]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiPlatformMonitor)
@@ -28811,7 +28811,7 @@ func (self PlatformIO) SetMonitors(v vectors.Vector[*PlatformMonitor]) {
 	C.wrap_ImGuiPlatformIO_SetMonitors(selfArg, *vVecArg)
 }
 
-func (self *PlatformIO) Monitors() vectors.Vector[*PlatformMonitor] {
+func (self *PlatformIO) Monitors() vectors.Vector[PlatformMonitor] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -29583,7 +29583,7 @@ func (self *StackLevelInfo) Desc() [57]rune {
 	}()
 }
 
-func (self Storage) SetData(v vectors.Vector[*StoragePair]) {
+func (self Storage) SetData(v vectors.Vector[StoragePair]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiStoragePair)
@@ -29597,7 +29597,7 @@ func (self Storage) SetData(v vectors.Vector[*StoragePair]) {
 	C.wrap_ImGuiStorage_SetData(selfArg, *vVecArg)
 }
 
-func (self *Storage) Data() vectors.Vector[*StoragePair] {
+func (self *Storage) Data() vectors.Vector[StoragePair] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -30533,7 +30533,7 @@ func (self *TabBar) Window() *Window {
 	return NewWindowFromC(C.wrap_ImGuiTabBar_GetWindow(internal.ReinterpretCast[*C.ImGuiTabBar](selfArg)))
 }
 
-func (self TabBar) SetTabs(v vectors.Vector[*TabItem]) {
+func (self TabBar) SetTabs(v vectors.Vector[TabItem]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiTabItem)
@@ -30547,7 +30547,7 @@ func (self TabBar) SetTabs(v vectors.Vector[*TabItem]) {
 	C.wrap_ImGuiTabBar_SetTabs(selfArg, *vVecArg)
 }
 
-func (self *TabBar) Tabs() vectors.Vector[*TabItem] {
+func (self *TabBar) Tabs() vectors.Vector[TabItem] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -32229,7 +32229,7 @@ func (self *Table) InstanceDataFirst() TableInstanceData {
 	}())
 }
 
-func (self Table) SetInstanceDataExtra(v vectors.Vector[*TableInstanceData]) {
+func (self Table) SetInstanceDataExtra(v vectors.Vector[TableInstanceData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiTableInstanceData)
@@ -32243,7 +32243,7 @@ func (self Table) SetInstanceDataExtra(v vectors.Vector[*TableInstanceData]) {
 	C.wrap_ImGuiTable_SetInstanceDataExtra(selfArg, *vVecArg)
 }
 
-func (self *Table) InstanceDataExtra() vectors.Vector[*TableInstanceData] {
+func (self *Table) InstanceDataExtra() vectors.Vector[TableInstanceData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -32272,7 +32272,7 @@ func (self *Table) SortSpecsSingle() TableColumnSortSpecs {
 	}())
 }
 
-func (self Table) SetSortSpecsMulti(v vectors.Vector[*TableColumnSortSpecs]) {
+func (self Table) SetSortSpecsMulti(v vectors.Vector[TableColumnSortSpecs]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiTableColumnSortSpecs)
@@ -32286,7 +32286,7 @@ func (self Table) SetSortSpecsMulti(v vectors.Vector[*TableColumnSortSpecs]) {
 	C.wrap_ImGuiTable_SetSortSpecsMulti(selfArg, *vVecArg)
 }
 
-func (self *Table) SortSpecsMulti() vectors.Vector[*TableColumnSortSpecs] {
+func (self *Table) SortSpecsMulti() vectors.Vector[TableColumnSortSpecs] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -34430,7 +34430,7 @@ func (self *TableTempData) AngledHeadersExtraWidth() float32 {
 	return float32(C.wrap_ImGuiTableTempData_GetAngledHeadersExtraWidth(internal.ReinterpretCast[*C.ImGuiTableTempData](selfArg)))
 }
 
-func (self TableTempData) SetAngledHeadersRequests(v vectors.Vector[*TableHeaderData]) {
+func (self TableTempData) SetAngledHeadersRequests(v vectors.Vector[TableHeaderData]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiTableHeaderData)
@@ -34444,7 +34444,7 @@ func (self TableTempData) SetAngledHeadersRequests(v vectors.Vector[*TableHeader
 	C.wrap_ImGuiTableTempData_SetAngledHeadersRequests(selfArg, *vVecArg)
 }
 
-func (self *TableTempData) AngledHeadersRequests() vectors.Vector[*TableHeaderData] {
+func (self *TableTempData) AngledHeadersRequests() vectors.Vector[TableHeaderData] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -34631,9 +34631,9 @@ func (self *TableTempData) HostBackupItemWidthStackSize() int32 {
 	return int32(C.wrap_ImGuiTableTempData_GetHostBackupItemWidthStackSize(internal.ReinterpretCast[*C.ImGuiTableTempData](selfArg)))
 }
 
-func (self TextBuffer) SetBuf(v vectors.Vector[string]) {
+func (self TextBuffer) SetBuf(v vectors.Vector[int8]) {
 	vData := v.Data
-	vDataArg, _ := internal.WrapString[C.char](vData)
+	vDataArg, _ := internal.WrapNumberPtr[C.char, int8](vData)
 	vVecArg := new(C.ImVector_char)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
@@ -34645,13 +34645,13 @@ func (self TextBuffer) SetBuf(v vectors.Vector[string]) {
 	C.wrap_ImGuiTextBuffer_SetBuf(selfArg, *vVecArg)
 }
 
-func (self *TextBuffer) Buf() vectors.Vector[string] {
+func (self *TextBuffer) Buf() vectors.Vector[int8] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImGuiTextBuffer_GetBuf(internal.ReinterpretCast[*C.ImGuiTextBuffer](selfArg)).Size, C.wrap_ImGuiTextBuffer_GetBuf(internal.ReinterpretCast[*C.ImGuiTextBuffer](selfArg)).Capacity, C.GoString(C.wrap_ImGuiTextBuffer_GetBuf(internal.ReinterpretCast[*C.ImGuiTextBuffer](selfArg)).Data))
+	return vectors.NewVectorFromC(C.wrap_ImGuiTextBuffer_GetBuf(internal.ReinterpretCast[*C.ImGuiTextBuffer](selfArg)).Size, C.wrap_ImGuiTextBuffer_GetBuf(internal.ReinterpretCast[*C.ImGuiTextBuffer](selfArg)).Capacity, (*int8)(C.wrap_ImGuiTextBuffer_GetBuf(internal.ReinterpretCast[*C.ImGuiTextBuffer](selfArg)).Data))
 }
 
 func (self TextFilter) SetInputBuf(v *[256]rune) {
@@ -34686,7 +34686,7 @@ func (self *TextFilter) InputBuf() [256]rune {
 	}()
 }
 
-func (self TextFilter) SetFilters(v vectors.Vector[*TextRange]) {
+func (self TextFilter) SetFilters(v vectors.Vector[TextRange]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiTextRange)
@@ -34700,7 +34700,7 @@ func (self TextFilter) SetFilters(v vectors.Vector[*TextRange]) {
 	C.wrap_ImGuiTextFilter_SetFilters(selfArg, *vVecArg)
 }
 
-func (self *TextFilter) Filters() vectors.Vector[*TextRange] {
+func (self *TextFilter) Filters() vectors.Vector[TextRange] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -34724,7 +34724,7 @@ func (self *TextFilter) CountGrep() int32 {
 	return int32(C.wrap_ImGuiTextFilter_GetCountGrep(internal.ReinterpretCast[*C.ImGuiTextFilter](selfArg)))
 }
 
-func (self TextIndex) SetLineOffsets(v vectors.Vector[*int32]) {
+func (self TextIndex) SetLineOffsets(v vectors.Vector[int32]) {
 	vData := v.Data
 	vDataArg, _ := internal.WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
@@ -34738,7 +34738,7 @@ func (self TextIndex) SetLineOffsets(v vectors.Vector[*int32]) {
 	C.wrap_ImGuiTextIndex_SetLineOffsets(selfArg, *vVecArg)
 }
 
-func (self *TextIndex) LineOffsets() vectors.Vector[*int32] {
+func (self *TextIndex) LineOffsets() vectors.Vector[int32] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -36965,7 +36965,7 @@ func (self *Window) SetWindowPosPivot() Vec2 {
 	}()
 }
 
-func (self Window) SetIDStack(v vectors.Vector[*ID]) {
+func (self Window) SetIDStack(v vectors.Vector[ID]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiID)
@@ -36979,7 +36979,7 @@ func (self Window) SetIDStack(v vectors.Vector[*ID]) {
 	C.wrap_ImGuiWindow_SetIDStack(selfArg, *vVecArg)
 }
 
-func (self *Window) IDStack() vectors.Vector[*ID] {
+func (self *Window) IDStack() vectors.Vector[ID] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -37214,7 +37214,7 @@ func (self *Window) StateStorage() Storage {
 	}())
 }
 
-func (self Window) SetColumnsStorage(v vectors.Vector[*OldColumns]) {
+func (self Window) SetColumnsStorage(v vectors.Vector[OldColumns]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
 	vVecArg := new(C.ImVector_ImGuiOldColumns)
@@ -37228,7 +37228,7 @@ func (self Window) SetColumnsStorage(v vectors.Vector[*OldColumns]) {
 	C.wrap_ImGuiWindow_SetColumnsStorage(selfArg, *vVecArg)
 }
 
-func (self *Window) ColumnsStorage() vectors.Vector[*OldColumns] {
+func (self *Window) ColumnsStorage() vectors.Vector[OldColumns] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -38791,7 +38791,7 @@ func (self *WindowTempData) TextWrapPos() float32 {
 	return float32(C.wrap_ImGuiWindowTempData_GetTextWrapPos(internal.ReinterpretCast[*C.ImGuiWindowTempData](selfArg)))
 }
 
-func (self WindowTempData) SetItemWidthStack(v vectors.Vector[*float32]) {
+func (self WindowTempData) SetItemWidthStack(v vectors.Vector[float32]) {
 	vData := v.Data
 	vDataArg, _ := internal.WrapNumberPtr[C.float, float32](vData)
 	vVecArg := new(C.ImVector_float)
@@ -38805,7 +38805,7 @@ func (self WindowTempData) SetItemWidthStack(v vectors.Vector[*float32]) {
 	C.wrap_ImGuiWindowTempData_SetItemWidthStack(selfArg, *vVecArg)
 }
 
-func (self *WindowTempData) ItemWidthStack() vectors.Vector[*float32] {
+func (self *WindowTempData) ItemWidthStack() vectors.Vector[float32] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -38814,7 +38814,7 @@ func (self *WindowTempData) ItemWidthStack() vectors.Vector[*float32] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiWindowTempData_GetItemWidthStack(internal.ReinterpretCast[*C.ImGuiWindowTempData](selfArg)).Size, C.wrap_ImGuiWindowTempData_GetItemWidthStack(internal.ReinterpretCast[*C.ImGuiWindowTempData](selfArg)).Capacity, (*float32)(C.wrap_ImGuiWindowTempData_GetItemWidthStack(internal.ReinterpretCast[*C.ImGuiWindowTempData](selfArg)).Data))
 }
 
-func (self WindowTempData) SetTextWrapPosStack(v vectors.Vector[*float32]) {
+func (self WindowTempData) SetTextWrapPosStack(v vectors.Vector[float32]) {
 	vData := v.Data
 	vDataArg, _ := internal.WrapNumberPtr[C.float, float32](vData)
 	vVecArg := new(C.ImVector_float)
@@ -38828,7 +38828,7 @@ func (self WindowTempData) SetTextWrapPosStack(v vectors.Vector[*float32]) {
 	C.wrap_ImGuiWindowTempData_SetTextWrapPosStack(selfArg, *vVecArg)
 }
 
-func (self *WindowTempData) TextWrapPosStack() vectors.Vector[*float32] {
+func (self *WindowTempData) TextWrapPosStack() vectors.Vector[float32] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {

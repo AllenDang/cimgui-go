@@ -1,4 +1,4 @@
-package imgui
+package utils
 
 // SliceToPtr takes a slice and returns its C-compatible pointer.
 func SliceToPtr[T any](slice []T) *T {
