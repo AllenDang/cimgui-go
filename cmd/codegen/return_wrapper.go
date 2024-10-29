@@ -115,8 +115,13 @@ func getReturnWrapper(
 			return returnWrapper{}, fmt.Errorf("creating vector wrapper %w", err)
 		}
 
+		// NOTE: Special Case
+		if pureType == "char*" {
+			rw = simplePtrR("int8")
+		}
+
 		return returnWrapper{
-			returnType: GoIdentifier(fmt.Sprintf("vectors.Vector[%s]", rw.returnType)),
+			returnType: GoIdentifier(fmt.Sprintf("vectors.Vector[%s]", Replace(rw.returnType, "*", "", 1))),
 			returnStmt: fmt.Sprintf("vectors.NewVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
 		}, nil
 	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), context.enumNames):

@@ -195,9 +195,18 @@ func getArgWrapper(
 			return "", ArgumentWrapperData{}, fmt.Errorf("creating vector wrapper %w", err)
 		}
 
+		// NOTE Special Case
+		if pureType == "char*" { // we need to handle it as *byte, not string
+			charWrapper := simplePtrW("int8", "C.char")
+			w = charWrapper(ArgDef{
+				Name: dataName,
+				Type: pureType,
+			})
+		}
+
 		data = ArgumentWrapperData{
 			VarName: string("*" + a.Name + "VecArg"),
-			ArgType: GoIdentifier(fmt.Sprintf("vectors.Vector[%s]", w.ArgType)),
+			ArgType: GoIdentifier(fmt.Sprintf("vectors.Vector[%s]", Replace(w.ArgType, "*", "", 1))),
 			ArgDef: fmt.Sprintf(`%[5]s := %[2]s.Data
 %[1]s
 %[2]sVecArg := new(C.%[3]s)
