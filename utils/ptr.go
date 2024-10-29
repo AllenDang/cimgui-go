@@ -1,4 +1,4 @@
-package datautils
+package utils
 
 import (
 	"fmt"
