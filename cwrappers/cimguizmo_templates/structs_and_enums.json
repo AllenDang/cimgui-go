@@ -1,48 +1,62 @@
 {
+  "enum_comments": {
+    "OPERATION": {
+      "above": "   // call it when you want a gizmo\n   // Needs view and projection matrices.\n   // matrix parameter is the source matrix (where will be gizmo be drawn) and might be transformed by the function. Return deltaMatrix is optional\n   // translation is applied in world space"
+    }
+  },
   "enums": {
     "COLOR": [
       {
         "calc_value": 0,
+        "comment": "// directionColor[0]",
         "name": "DIRECTION_X",
         "value": "0"
       },
       {
         "calc_value": 1,
+        "comment": "// directionColor[1]",
         "name": "DIRECTION_Y",
         "value": "1"
       },
       {
         "calc_value": 2,
+        "comment": "// directionColor[2]",
         "name": "DIRECTION_Z",
         "value": "2"
       },
       {
         "calc_value": 3,
+        "comment": "// planeColor[0]",
         "name": "PLANE_X",
         "value": "3"
       },
       {
         "calc_value": 4,
+        "comment": "// planeColor[1]",
         "name": "PLANE_Y",
         "value": "4"
       },
       {
         "calc_value": 5,
+        "comment": "// planeColor[2]",
         "name": "PLANE_Z",
         "value": "5"
       },
       {
         "calc_value": 6,
+        "comment": "// selectionColor",
         "name": "SELECTION",
         "value": "6"
       },
       {
         "calc_value": 7,
+        "comment": "// inactiveColor",
         "name": "INACTIVE",
         "value": "7"
       },
       {
         "calc_value": 8,
+        "comment": "// translationLineColor",
         "name": "TRANSLATION_LINE",
         "value": "8"
       },
@@ -182,6 +196,7 @@
       },
       {
         "calc_value": 14336,
+        "comment": "// universal",
         "name": "SCALEU",
         "value": "SCALE_XU | SCALE_YU | SCALE_ZU"
       },
@@ -199,37 +214,62 @@
     "OPERATION": "ImGuizmo:178",
     "Style": "ImGuizmo:287"
   },
+  "struct_comments": [],
   "structs": {
     "Style": [
       {
+        "comment": {
+          "sameline": "// Thickness of lines for translation gizmo"
+        },
         "name": "TranslationLineThickness",
         "type": "float"
       },
       {
+        "comment": {
+          "sameline": "// Size of arrow at the end of lines for translation gizmo"
+        },
         "name": "TranslationLineArrowSize",
         "type": "float"
       },
       {
+        "comment": {
+          "sameline": "// Thickness of lines for rotation gizmo"
+        },
         "name": "RotationLineThickness",
         "type": "float"
       },
       {
+        "comment": {
+          "sameline": "// Thickness of line surrounding the rotation gizmo"
+        },
         "name": "RotationOuterLineThickness",
         "type": "float"
       },
       {
+        "comment": {
+          "sameline": "// Thickness of lines for scale gizmo"
+        },
         "name": "ScaleLineThickness",
         "type": "float"
       },
       {
+        "comment": {
+          "sameline": "// Size of circle at the end of lines for scale gizmo"
+        },
         "name": "ScaleLineCircleSize",
         "type": "float"
       },
       {
+        "comment": {
+          "sameline": "// Thickness of hatched axis lines"
+        },
         "name": "HatchedAxisLineThickness",
         "type": "float"
       },
       {
+        "comment": {
+          "sameline": "// Size of circle at the center of the translate/scale gizmo"
+        },
         "name": "CenterCircleSize",
         "type": "float"
       },

@@ -95,6 +95,7 @@ generate: cimgui cimplot cimnodes cimmarkdown cimguizmo
 # $2 - repository URL
 # $3 - $1/<c++ repo>/
 # $4 - branch in $3 (cd tmp/$1/$3 && git checkout $4)
+# $5 - additional generator options
 define update
 	@echo "updating $1 from $2"
 	mkdir -p tmp/
@@ -105,7 +106,7 @@ define update
 	cd tmp/$1/$3; \
 		git checkout $4
 	cd tmp/$1/generator; \
-		bash generator.sh --target "internal noimstrv comments" --cflags "glfw opengl3 opengl2 sdl2 -DIMGUI_USE_WCHAR32"
+		bash generator.sh --target "internal noimstrv comments" $5
 	cp -f tmp/$1/$1* cwrappers/
 	if test -e tmp/$1/generator/output/$1*; then \
 		cp -f tmp/$1/generator/output/$1* cwrappers/; \
@@ -123,7 +124,7 @@ endef
 .PHONY: update
 update: setup
 	rm -rf cwrappers/*
-	$(call update,cimgui,https://github.com/cimgui/cimgui,imgui,docking)
+	$(call update,cimgui,https://github.com/cimgui/cimgui,imgui,docking, --cflags "glfw opengl3 opengl2 sdl2 -DIMGUI_USE_WCHAR32")
 	cat templates/assert.h >> cwrappers/imgui/imconfig.h
 	$(call cimgui)
 	$(call update,cimplot,https://github.com/cimgui/cimplot,implot,master)

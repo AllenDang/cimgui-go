@@ -50,7 +50,7 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 		return nil, fmt.Errorf("cannot unmarshal structs section: %w", err)
 	}
 
-	if structSectionJson.StructComments != nil {
+	if structSectionJson.StructComments != nil && string(structSectionJson.StructComments) != "[]" {
 		err = json.Unmarshal(structSectionJson.StructComments, &structCommentJson)
 		if err != nil {
 			return nil, fmt.Errorf("cannot unmarshal struct's comments section: %w", err)

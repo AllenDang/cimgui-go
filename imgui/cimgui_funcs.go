@@ -6302,6 +6302,15 @@ func CurrentIO() *IO {
 	return NewIOFromC(C.igGetIO())
 }
 
+func InternalIOEx(ctx *Context) *IO {
+	ctxArg, ctxFin := ctx.Handle()
+
+	defer func() {
+		ctxFin()
+	}()
+	return NewIOFromC(C.igGetIOEx(internal.ReinterpretCast[*C.ImGuiContext](ctxArg)))
+}
+
 // Get input text state if active
 func InternalInputTextState(id ID) *InputTextState {
 	idArg, idFin := id.C()
