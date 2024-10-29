@@ -1,8 +1,12 @@
 package vectors
 
 import "C"
-import "runtime"
+import (
+	"runtime"
+	"unsafe"
+)
 
+// Vector is a representation of ImVector from Dear ImGui.
 type Vector[T any] struct {
 	Size     int
 	Capacity int
@@ -16,4 +20,11 @@ func NewVectorFromC[T any, CINT ~int32](size, capacity CINT, data *T) Vector[T] 
 
 func (v *Vector[T]) Pinner() *runtime.Pinner {
 	return v.pinner
+}
+
+// Slice converts a Vector to a slice []T.
+func (v Vector[T]) Slice() []T {
+	// We consider v.Data a pointer to 1st element of a slice []T
+	// of size v.Size and capacity v.Capacity
+	return unsafe.Slice(v.Data, v.Size)
 }
