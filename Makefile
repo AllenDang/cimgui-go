@@ -79,6 +79,14 @@ endef
 cimguizmo: setup
 	$(call cimguizmo)
 
+define cimcte
+	$(call generate,cimcte,ImGuiColorTextEdit,cwrappers/cimCTE.h,cwrappers/cimCTE_templates/definitions.json,cwrappers/cimCTE_templates/structs_and_enums.json,cwrappers/cimCTE_templates/typedefs_dict.json,-r ../cwrappers/cimgui_templates/structs_and_enums.json -rt ../cwrappers/cimgui_templates/typedefs_dict.json)
+endef
+
+## cimcte: generate cimgui binding
+.PHONY: cimcte
+cimcte: setup
+	$(call cimcte)
 
 compile_cimgui_macos:
 	rm -rf ./lib/build
@@ -135,6 +143,8 @@ update: setup
 	$(call cimmarkdown)
 	$(call update,cimguizmo,https://github.com/cimgui/cimguizmo,ImGuizmo,master)
 	$(call cimguizmo)
+	$(call update,cimCTE,https://github.com/gucio321/cimcte,ImGuiColorTextEdit,master)
+	$(call cimcte)
 	$(call dummy)
 
 # dummy creates dummy.go files to baypass GO vendor policy that excludes everything that has no .go files (including our C source).
