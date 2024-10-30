@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../cwrappers/cimcte.h"
+#include "../cwrappers/cimCTE.h"
 
 #ifdef __cplusplus
 extern "C" {

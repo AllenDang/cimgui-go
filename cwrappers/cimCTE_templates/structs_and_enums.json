@@ -1,256 +1,110 @@
 {
   "enums": {
-    "PaletteIndex": [
+    "LanguageDefinitionId": [
       {
         "calc_value": 0,
-        "name": "Default",
+        "name": "None",
         "value": "0"
       },
       {
         "calc_value": 1,
-        "name": "Keyword",
+        "name": "Cpp",
         "value": "1"
       },
       {
         "calc_value": 2,
-        "name": "Number",
+        "name": "C",
         "value": "2"
       },
       {
         "calc_value": 3,
-        "name": "String",
+        "name": "Cs",
         "value": "3"
       },
       {
         "calc_value": 4,
-        "name": "CharLiteral",
+        "name": "Python",
         "value": "4"
       },
       {
         "calc_value": 5,
-        "name": "Punctuation",
+        "name": "Lua",
         "value": "5"
       },
       {
         "calc_value": 6,
-        "name": "Preprocessor",
+        "name": "Json",
         "value": "6"
       },
       {
         "calc_value": 7,
-        "name": "Identifier",
+        "name": "Sql",
         "value": "7"
       },
       {
         "calc_value": 8,
-        "name": "KnownIdentifier",
+        "name": "AngelScript",
         "value": "8"
       },
       {
         "calc_value": 9,
-        "name": "PreprocIdentifier",
+        "name": "Glsl",
         "value": "9"
       },
       {
         "calc_value": 10,
-        "name": "Comment",
+        "name": "Hlsl",
         "value": "10"
-      },
-      {
-        "calc_value": 11,
-        "name": "MultiLineComment",
-        "value": "11"
-      },
-      {
-        "calc_value": 12,
-        "name": "Background",
-        "value": "12"
-      },
-      {
-        "calc_value": 13,
-        "name": "Cursor",
-        "value": "13"
-      },
-      {
-        "calc_value": 14,
-        "name": "Selection",
-        "value": "14"
-      },
-      {
-        "calc_value": 15,
-        "name": "ErrorMarker",
-        "value": "15"
-      },
-      {
-        "calc_value": 16,
-        "name": "Breakpoint",
-        "value": "16"
-      },
-      {
-        "calc_value": 17,
-        "name": "LineNumber",
-        "value": "17"
-      },
-      {
-        "calc_value": 18,
-        "name": "CurrentLineFill",
-        "value": "18"
-      },
-      {
-        "calc_value": 19,
-        "name": "CurrentLineFillInactive",
-        "value": "19"
-      },
-      {
-        "calc_value": 20,
-        "name": "CurrentLineEdge",
-        "value": "20"
-      },
-      {
-        "calc_value": 21,
-        "name": "Max",
-        "value": "21"
       }
     ],
-    "SelectionMode": [
+    "PaletteId": [
       {
         "calc_value": 0,
-        "name": "Normal",
+        "name": "Dark",
         "value": "0"
       },
       {
         "calc_value": 1,
-        "name": "Word",
+        "name": "Light",
         "value": "1"
       },
       {
         "calc_value": 2,
-        "name": "Line",
+        "name": "Mariana",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "RetroBlue",
+        "value": "3"
+      }
+    ],
+    "SetViewAtLineMode": [
+      {
+        "calc_value": 0,
+        "name": "FirstVisibleLine",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "Centered",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "LastVisibleLine",
         "value": "2"
       }
     ]
   },
   "enumtypes": [],
   "locations": {
-    "Breakpoint": "TextEditor:49",
-    "Coordinates": "TextEditor:68",
-    "Glyph": "TextEditor:136",
-    "Identifier": "TextEditor:122",
-    "LanguageDefinition": "TextEditor:151",
-    "PaletteIndex": "TextEditor:16",
-    "SelectionMode": "TextEditor:42",
-    "TextEditor": "TextEditor:13"
+    "LanguageDefinitionId": "TextEditor:28",
+    "PaletteId": "TextEditor:24",
+    "SetViewAtLineMode": "TextEditor:32",
+    "TextEditor": "TextEditor:16"
   },
   "structs": {
-    "Breakpoint": [
-      {
-        "name": "mLine",
-        "type": "int"
-      },
-      {
-        "name": "mEnabled",
-        "type": "bool"
-      },
-      {
-        "name": "mCondition",
-        "type": "string"
-      }
-    ],
-    "Coordinates": [
-      {
-        "name": "mLine",
-        "type": "int"
-      },
-      {
-        "name": "mColumn",
-        "type": "int"
-      }
-    ],
-    "Glyph": [
-      {
-        "name": "mChar",
-        "type": "Char"
-      },
-      {
-        "name": "mColorIndex",
-        "type": "PaletteIndex"
-      },
-      {
-        "bitfield": "1",
-        "name": "mComment",
-        "type": "bool"
-      },
-      {
-        "bitfield": "1",
-        "name": "mMultiLineComment",
-        "type": "bool"
-      },
-      {
-        "bitfield": "1",
-        "name": "mPreprocessor",
-        "type": "bool"
-      }
-    ],
-    "Identifier": [
-      {
-        "name": "mLocation",
-        "type": "Coordinates"
-      },
-      {
-        "name": "mDeclaration",
-        "type": "string"
-      }
-    ],
-    "LanguageDefinition": [
-      {
-        "name": "mName",
-        "type": "string"
-      },
-      {
-        "name": "mKeywords",
-        "type": "Keywords"
-      },
-      {
-        "name": "mIdentifiers",
-        "type": "Identifiers"
-      },
-      {
-        "name": "mPreprocIdentifiers",
-        "type": "Identifiers"
-      },
-      {
-        "name": "mCommentStart",
-        "type": "string"
-      },
-      {
-        "name": "mCommentEnd",
-        "type": "string"
-      },
-      {
-        "name": "mSingleLineComment",
-        "type": "string"
-      },
-      {
-        "name": "mPreprocChar",
-        "type": "char"
-      },
-      {
-        "name": "mAutoIndentation",
-        "type": "bool"
-      },
-      {
-        "name": "mTokenize",
-        "type": "TokenizeCallback"
-      },
-      {
-        "name": "mTokenRegexStrings",
-        "type": "TokenRegexStrings"
-      },
-      {
-        "name": "mCaseSensitive",
-        "type": "bool"
-      }
-    ],
     "TextEditor": []
   }
 }

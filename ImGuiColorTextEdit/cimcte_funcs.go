@@ -13,80 +13,22 @@ import (
 // #include "cimcte_wrapper.h"
 import "C"
 
-func NewBreakpoint() *Breakpoint {
-	return NewBreakpointFromC(C.Breakpoint_Breakpoint())
-}
-
-func (self *Breakpoint) Destroy() {
+func (self *TextEditor) AllCursorsHaveSelection() bool {
 	selfArg, selfFin := self.Handle()
-	C.Breakpoint_destroy(internal.ReinterpretCast[*C.Breakpoint](selfArg))
 
-	selfFin()
+	defer func() {
+		selfFin()
+	}()
+	return C.TextEditor_AllCursorsHaveSelection(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
 }
 
-func NewCoordinatesInt(aLine int32, aColumn int32) *Coordinates {
-	return NewCoordinatesFromC(C.Coordinates_Coordinates_Int(C.int(aLine), C.int(aColumn)))
-}
-
-func NewCoordinatesNil() *Coordinates {
-	return NewCoordinatesFromC(C.Coordinates_Coordinates_Nil())
-}
-
-func CoordinatesInvalid() Coordinates {
-	return *NewCoordinatesFromC(func() *C.Coordinates { result := C.Coordinates_Invalid(); return &result }())
-}
-
-func (self *Coordinates) Destroy() {
+func (self *TextEditor) AnyCursorHasSelection() bool {
 	selfArg, selfFin := self.Handle()
-	C.Coordinates_destroy(internal.ReinterpretCast[*C.Coordinates](selfArg))
 
-	selfFin()
-}
-
-func (self *Glyph) Destroy() {
-	selfArg, selfFin := self.Handle()
-	C.Glyph_destroy(internal.ReinterpretCast[*C.Glyph](selfArg))
-
-	selfFin()
-}
-
-func LanguageDefinitionAngelScript() *LanguageDefinition {
-	return NewLanguageDefinitionFromC(C.LanguageDefinition_AngelScript())
-}
-
-func LanguageDefinitionC() *LanguageDefinition {
-	return NewLanguageDefinitionFromC(C.LanguageDefinition_C())
-}
-
-func LanguageDefinitionCPlusPlus() *LanguageDefinition {
-	return NewLanguageDefinitionFromC(C.LanguageDefinition_CPlusPlus())
-}
-
-func LanguageDefinitionGLSL() *LanguageDefinition {
-	return NewLanguageDefinitionFromC(C.LanguageDefinition_GLSL())
-}
-
-func LanguageDefinitionHLSL() *LanguageDefinition {
-	return NewLanguageDefinitionFromC(C.LanguageDefinition_HLSL())
-}
-
-func NewLanguageDefinition() *LanguageDefinition {
-	return NewLanguageDefinitionFromC(C.LanguageDefinition_LanguageDefinition())
-}
-
-func LanguageDefinitionLua() *LanguageDefinition {
-	return NewLanguageDefinitionFromC(C.LanguageDefinition_Lua())
-}
-
-func LanguageDefinitionSQL() *LanguageDefinition {
-	return NewLanguageDefinitionFromC(C.LanguageDefinition_SQL())
-}
-
-func (self *LanguageDefinition) Destroy() {
-	selfArg, selfFin := self.Handle()
-	C.LanguageDefinition_destroy(internal.ReinterpretCast[*C.LanguageDefinition](selfArg))
-
-	selfFin()
+	defer func() {
+		selfFin()
+	}()
+	return C.TextEditor_AnyCursorHasSelection(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
 }
 
 func (self *TextEditor) CanRedo() bool {
@@ -107,6 +49,20 @@ func (self *TextEditor) CanUndo() bool {
 	return C.TextEditor_CanUndo(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
 }
 
+func (self *TextEditor) ClearExtraCursors() {
+	selfArg, selfFin := self.Handle()
+	C.TextEditor_ClearExtraCursors(internal.ReinterpretCast[*C.TextEditor](selfArg))
+
+	selfFin()
+}
+
+func (self *TextEditor) ClearSelections() {
+	selfArg, selfFin := self.Handle()
+	C.TextEditor_ClearSelections(internal.ReinterpretCast[*C.TextEditor](selfArg))
+
+	selfFin()
+}
+
 func (self *TextEditor) Copy() {
 	selfArg, selfFin := self.Handle()
 	C.TextEditor_Copy(internal.ReinterpretCast[*C.TextEditor](selfArg))
@@ -121,32 +77,82 @@ func (self *TextEditor) Cut() {
 	selfFin()
 }
 
-func (self *TextEditor) Delete() {
+func (self *TextEditor) CursorPosition(outLine *int32, outColumn *int32) {
 	selfArg, selfFin := self.Handle()
-	C.TextEditor_Delete(internal.ReinterpretCast[*C.TextEditor](selfArg))
+	outLineArg, outLineFin := internal.WrapNumberPtr[C.int, int32](outLine)
+	outColumnArg, outColumnFin := internal.WrapNumberPtr[C.int, int32](outColumn)
+	C.TextEditor_GetCursorPosition(internal.ReinterpretCast[*C.TextEditor](selfArg), outLineArg, outColumnArg)
 
 	selfFin()
+	outLineFin()
+	outColumnFin()
 }
 
-func (self *TextEditor) CursorPosition() Coordinates {
+func TextEditorGetDefaultPalette() PaletteId {
+	return PaletteId(C.TextEditor_GetDefaultPalette())
+}
+
+func (self *TextEditor) FirstVisibleLine() int32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return *NewCoordinatesFromC(func() *C.Coordinates {
-		result := C.TextEditor_GetCursorPosition(internal.ReinterpretCast[*C.TextEditor](selfArg))
-		return &result
-	}())
+	return int32(C.TextEditor_GetFirstVisibleLine(internal.ReinterpretCast[*C.TextEditor](selfArg)))
 }
 
-func (self *TextEditor) LanguageDefinition() *LanguageDefinition {
+func (self *TextEditor) LanguageDefinition() LanguageDefinitionId {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return NewLanguageDefinitionFromC(C.TextEditor_GetLanguageDefinition(internal.ReinterpretCast[*C.TextEditor](selfArg)))
+	return LanguageDefinitionId(C.TextEditor_GetLanguageDefinition(internal.ReinterpretCast[*C.TextEditor](selfArg)))
+}
+
+func (self *TextEditor) LanguageDefinitionName() string {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.GoString(C.TextEditor_GetLanguageDefinitionName(internal.ReinterpretCast[*C.TextEditor](selfArg)))
+}
+
+func (self *TextEditor) LastVisibleLine() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.TextEditor_GetLastVisibleLine(internal.ReinterpretCast[*C.TextEditor](selfArg)))
+}
+
+func (self *TextEditor) LineCount() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.TextEditor_GetLineCount(internal.ReinterpretCast[*C.TextEditor](selfArg)))
+}
+
+func (self *TextEditor) LineSpacing() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.TextEditor_GetLineSpacing(internal.ReinterpretCast[*C.TextEditor](selfArg)))
+}
+
+func (self *TextEditor) Palette() PaletteId {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return PaletteId(C.TextEditor_GetPalette(internal.ReinterpretCast[*C.TextEditor](selfArg)))
 }
 
 func (self *TextEditor) TabSize() int32 {
@@ -158,190 +164,67 @@ func (self *TextEditor) TabSize() int32 {
 	return int32(C.TextEditor_GetTabSize(internal.ReinterpretCast[*C.TextEditor](selfArg)))
 }
 
-func (self *TextEditor) TotalLines() int32 {
+func (self *TextEditor) UndoIndex() int32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.TextEditor_GetTotalLines(internal.ReinterpretCast[*C.TextEditor](selfArg)))
+	return int32(C.TextEditor_GetUndoIndex(internal.ReinterpretCast[*C.TextEditor](selfArg)))
 }
 
-func (self *TextEditor) HasSelection() bool {
+func (self *TextEditor) IsAutoIndentEnabled() bool {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return C.TextEditor_HasSelection(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
+	return C.TextEditor_IsAutoIndentEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
 }
 
-func (self *TextEditor) InsertTextStr(aValue string) {
-	selfArg, selfFin := self.Handle()
-	aValueArg, aValueFin := internal.WrapString[C.char](aValue)
-	C.TextEditor_InsertText_Str(internal.ReinterpretCast[*C.TextEditor](selfArg), aValueArg)
-
-	selfFin()
-	aValueFin()
-}
-
-func (self *TextEditor) IsColorizerEnabled() bool {
+func (self *TextEditor) IsOverwriteEnabled() bool {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return C.TextEditor_IsColorizerEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
+	return C.TextEditor_IsOverwriteEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
 }
 
-func (self *TextEditor) IsCursorPositionChanged() bool {
+func (self *TextEditor) IsReadOnlyEnabled() bool {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return C.TextEditor_IsCursorPositionChanged(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
+	return C.TextEditor_IsReadOnlyEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
 }
 
-func (self *TextEditor) IsHandleKeyboardInputsEnabled() bool {
+func (self *TextEditor) IsShortTabsEnabled() bool {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return C.TextEditor_IsHandleKeyboardInputsEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
+	return C.TextEditor_IsShortTabsEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
 }
 
-func (self *TextEditor) IsHandleMouseInputsEnabled() bool {
+func (self *TextEditor) IsShowLineNumbersEnabled() bool {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return C.TextEditor_IsHandleMouseInputsEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
+	return C.TextEditor_IsShowLineNumbersEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
 }
 
-func (self *TextEditor) IsImGuiChildIgnored() bool {
+func (self *TextEditor) IsShowWhitespacesEnabled() bool {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return C.TextEditor_IsImGuiChildIgnored(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
-}
-
-func (self *TextEditor) IsOverwrite() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.TextEditor_IsOverwrite(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
-}
-
-func (self *TextEditor) IsReadOnly() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.TextEditor_IsReadOnly(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
-}
-
-func (self *TextEditor) IsShowingWhitespaces() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.TextEditor_IsShowingWhitespaces(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
-}
-
-func (self *TextEditor) IsTextChanged() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.TextEditor_IsTextChanged(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
-}
-
-// MoveBottomV parameter default value hint:
-// aSelect: false
-func (self *TextEditor) MoveBottomV(aSelect bool) {
-	selfArg, selfFin := self.Handle()
-	C.TextEditor_MoveBottom(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aSelect))
-
-	selfFin()
-}
-
-// MoveDownV parameter default value hint:
-// aAmount: 1
-// aSelect: false
-func (self *TextEditor) MoveDownV(aAmount int32, aSelect bool) {
-	selfArg, selfFin := self.Handle()
-	C.TextEditor_MoveDown(internal.ReinterpretCast[*C.TextEditor](selfArg), C.int(aAmount), C.bool(aSelect))
-
-	selfFin()
-}
-
-// MoveEndV parameter default value hint:
-// aSelect: false
-func (self *TextEditor) MoveEndV(aSelect bool) {
-	selfArg, selfFin := self.Handle()
-	C.TextEditor_MoveEnd(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aSelect))
-
-	selfFin()
-}
-
-// MoveHomeV parameter default value hint:
-// aSelect: false
-func (self *TextEditor) MoveHomeV(aSelect bool) {
-	selfArg, selfFin := self.Handle()
-	C.TextEditor_MoveHome(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aSelect))
-
-	selfFin()
-}
-
-// MoveLeftV parameter default value hint:
-// aAmount: 1
-// aSelect: false
-// aWordMode: false
-func (self *TextEditor) MoveLeftV(aAmount int32, aSelect bool, aWordMode bool) {
-	selfArg, selfFin := self.Handle()
-	C.TextEditor_MoveLeft(internal.ReinterpretCast[*C.TextEditor](selfArg), C.int(aAmount), C.bool(aSelect), C.bool(aWordMode))
-
-	selfFin()
-}
-
-// MoveRightV parameter default value hint:
-// aAmount: 1
-// aSelect: false
-// aWordMode: false
-func (self *TextEditor) MoveRightV(aAmount int32, aSelect bool, aWordMode bool) {
-	selfArg, selfFin := self.Handle()
-	C.TextEditor_MoveRight(internal.ReinterpretCast[*C.TextEditor](selfArg), C.int(aAmount), C.bool(aSelect), C.bool(aWordMode))
-
-	selfFin()
-}
-
-// MoveTopV parameter default value hint:
-// aSelect: false
-func (self *TextEditor) MoveTopV(aSelect bool) {
-	selfArg, selfFin := self.Handle()
-	C.TextEditor_MoveTop(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aSelect))
-
-	selfFin()
-}
-
-// MoveUpV parameter default value hint:
-// aAmount: 1
-// aSelect: false
-func (self *TextEditor) MoveUpV(aAmount int32, aSelect bool) {
-	selfArg, selfFin := self.Handle()
-	C.TextEditor_MoveUp(internal.ReinterpretCast[*C.TextEditor](selfArg), C.int(aAmount), C.bool(aSelect))
-
-	selfFin()
+	return C.TextEditor_IsShowWhitespacesEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
 }
 
 func (self *TextEditor) Paste() {
@@ -361,15 +244,18 @@ func (self *TextEditor) RedoV(aSteps int32) {
 }
 
 // RenderV parameter default value hint:
+// aParentIsFocused: false
 // aSize: ImVec2()
 // aBorder: false
-func (self *TextEditor) RenderV(aTitle string, aSize imgui.Vec2, aBorder bool) {
+func (self *TextEditor) RenderV(aTitle string, aParentIsFocused bool, aSize imgui.Vec2, aBorder bool) bool {
 	selfArg, selfFin := self.Handle()
 	aTitleArg, aTitleFin := internal.WrapString[C.char](aTitle)
-	C.TextEditor_Render(internal.ReinterpretCast[*C.TextEditor](selfArg), aTitleArg, internal.ReinterpretCast[C.ImVec2](aSize.ToC()), C.bool(aBorder))
 
-	selfFin()
-	aTitleFin()
+	defer func() {
+		selfFin()
+		aTitleFin()
+	}()
+	return C.TextEditor_Render(internal.ReinterpretCast[*C.TextEditor](selfArg), aTitleArg, C.bool(aParentIsFocused), internal.ReinterpretCast[C.ImVec2](aSize.ToC()), C.bool(aBorder)) == C.bool(true)
 }
 
 func (self *TextEditor) SelectAll() {
@@ -379,100 +265,105 @@ func (self *TextEditor) SelectAll() {
 	selfFin()
 }
 
-func (self *TextEditor) SelectWordUnderCursor() {
+// SelectAllOccurrencesOfV parameter default value hint:
+// aCaseSensitive: true
+func (self *TextEditor) SelectAllOccurrencesOfV(aText string, aTextSize int32, aCaseSensitive bool) {
 	selfArg, selfFin := self.Handle()
-	C.TextEditor_SelectWordUnderCursor(internal.ReinterpretCast[*C.TextEditor](selfArg))
+	aTextArg, aTextFin := internal.WrapString[C.char](aText)
+	C.TextEditor_SelectAllOccurrencesOf(internal.ReinterpretCast[*C.TextEditor](selfArg), aTextArg, C.int(aTextSize), C.bool(aCaseSensitive))
+
+	selfFin()
+	aTextFin()
+}
+
+func (self *TextEditor) SelectLine(aLine int32) {
+	selfArg, selfFin := self.Handle()
+	C.TextEditor_SelectLine(internal.ReinterpretCast[*C.TextEditor](selfArg), C.int(aLine))
 
 	selfFin()
 }
 
-func (self *TextEditor) SetColorizerEnable(aValue bool) {
+// SelectNextOccurrenceOfV parameter default value hint:
+// aCaseSensitive: true
+func (self *TextEditor) SelectNextOccurrenceOfV(aText string, aTextSize int32, aCaseSensitive bool) {
 	selfArg, selfFin := self.Handle()
-	C.TextEditor_SetColorizerEnable(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aValue))
+	aTextArg, aTextFin := internal.WrapString[C.char](aText)
+	C.TextEditor_SelectNextOccurrenceOf(internal.ReinterpretCast[*C.TextEditor](selfArg), aTextArg, C.int(aTextSize), C.bool(aCaseSensitive))
+
+	selfFin()
+	aTextFin()
+}
+
+func (self *TextEditor) SelectRegion(aStartLine int32, aStartChar int32, aEndLine int32, aEndChar int32) {
+	selfArg, selfFin := self.Handle()
+	C.TextEditor_SelectRegion(internal.ReinterpretCast[*C.TextEditor](selfArg), C.int(aStartLine), C.int(aStartChar), C.int(aEndLine), C.int(aEndChar))
 
 	selfFin()
 }
 
-func (self *TextEditor) SetCursorPosition(aPosition Coordinates) {
+func (self *TextEditor) SetAutoIndentEnabled(aValue bool) {
 	selfArg, selfFin := self.Handle()
-	aPositionArg, aPositionFin := aPosition.C()
-	C.TextEditor_SetCursorPosition(internal.ReinterpretCast[*C.TextEditor](selfArg), internal.ReinterpretCast[C.Coordinates](aPositionArg))
-
-	selfFin()
-	aPositionFin()
-}
-
-func (self *TextEditor) SetHandleKeyboardInputs(aValue bool) {
-	selfArg, selfFin := self.Handle()
-	C.TextEditor_SetHandleKeyboardInputs(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aValue))
+	C.TextEditor_SetAutoIndentEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aValue))
 
 	selfFin()
 }
 
-func (self *TextEditor) SetHandleMouseInputs(aValue bool) {
+func (self *TextEditor) SetCursorPosition(aLine int32, aCharIndex int32) {
 	selfArg, selfFin := self.Handle()
-	C.TextEditor_SetHandleMouseInputs(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aValue))
+	C.TextEditor_SetCursorPosition(internal.ReinterpretCast[*C.TextEditor](selfArg), C.int(aLine), C.int(aCharIndex))
 
 	selfFin()
 }
 
-func (self *TextEditor) SetImGuiChildIgnored(aValue bool) {
+func TextEditorSetDefaultPalette(aValue PaletteId) {
+	C.TextEditor_SetDefaultPalette(C.PaletteId(aValue))
+}
+
+func (self *TextEditor) SetLanguageDefinition(aValue LanguageDefinitionId) {
 	selfArg, selfFin := self.Handle()
-	C.TextEditor_SetImGuiChildIgnored(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aValue))
+	C.TextEditor_SetLanguageDefinition(internal.ReinterpretCast[*C.TextEditor](selfArg), C.LanguageDefinitionId(aValue))
 
 	selfFin()
 }
 
-func (self *TextEditor) SetLanguageDefinition(aLanguageDef LanguageDefinition) {
+func (self *TextEditor) SetLineSpacing(aValue float32) {
 	selfArg, selfFin := self.Handle()
-	aLanguageDefArg, aLanguageDefFin := aLanguageDef.C()
-	C.TextEditor_SetLanguageDefinition(internal.ReinterpretCast[*C.TextEditor](selfArg), internal.ReinterpretCast[C.LanguageDefinition](aLanguageDefArg))
-
-	selfFin()
-	aLanguageDefFin()
-}
-
-func (self *TextEditor) SetReadOnly(aValue bool) {
-	selfArg, selfFin := self.Handle()
-	C.TextEditor_SetReadOnly(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aValue))
+	C.TextEditor_SetLineSpacing(internal.ReinterpretCast[*C.TextEditor](selfArg), C.float(aValue))
 
 	selfFin()
 }
 
-// SetSelectionV parameter default value hint:
-// aMode: SelectionMode::Normal
-func (self *TextEditor) SetSelectionV(aStart Coordinates, aEnd Coordinates, aMode SelectionMode) {
+func (self *TextEditor) SetPalette(aValue PaletteId) {
 	selfArg, selfFin := self.Handle()
-	aStartArg, aStartFin := aStart.C()
-	aEndArg, aEndFin := aEnd.C()
-	C.TextEditor_SetSelection(internal.ReinterpretCast[*C.TextEditor](selfArg), internal.ReinterpretCast[C.Coordinates](aStartArg), internal.ReinterpretCast[C.Coordinates](aEndArg), C.SelectionMode(aMode))
+	C.TextEditor_SetPalette(internal.ReinterpretCast[*C.TextEditor](selfArg), C.PaletteId(aValue))
 
 	selfFin()
-	aStartFin()
-	aEndFin()
 }
 
-func (self *TextEditor) SetSelectionEnd(aPosition Coordinates) {
+func (self *TextEditor) SetReadOnlyEnabled(aValue bool) {
 	selfArg, selfFin := self.Handle()
-	aPositionArg, aPositionFin := aPosition.C()
-	C.TextEditor_SetSelectionEnd(internal.ReinterpretCast[*C.TextEditor](selfArg), internal.ReinterpretCast[C.Coordinates](aPositionArg))
+	C.TextEditor_SetReadOnlyEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aValue))
 
 	selfFin()
-	aPositionFin()
 }
 
-func (self *TextEditor) SetSelectionStart(aPosition Coordinates) {
+func (self *TextEditor) SetShortTabsEnabled(aValue bool) {
 	selfArg, selfFin := self.Handle()
-	aPositionArg, aPositionFin := aPosition.C()
-	C.TextEditor_SetSelectionStart(internal.ReinterpretCast[*C.TextEditor](selfArg), internal.ReinterpretCast[C.Coordinates](aPositionArg))
+	C.TextEditor_SetShortTabsEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aValue))
 
 	selfFin()
-	aPositionFin()
 }
 
-func (self *TextEditor) SetShowWhitespaces(aValue bool) {
+func (self *TextEditor) SetShowLineNumbersEnabled(aValue bool) {
 	selfArg, selfFin := self.Handle()
-	C.TextEditor_SetShowWhitespaces(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aValue))
+	C.TextEditor_SetShowLineNumbersEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aValue))
+
+	selfFin()
+}
+
+func (self *TextEditor) SetShowWhitespacesEnabled(aValue bool) {
+	selfArg, selfFin := self.Handle()
+	C.TextEditor_SetShowWhitespacesEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg), C.bool(aValue))
 
 	selfFin()
 }
@@ -480,6 +371,13 @@ func (self *TextEditor) SetShowWhitespaces(aValue bool) {
 func (self *TextEditor) SetTabSize(aValue int32) {
 	selfArg, selfFin := self.Handle()
 	C.TextEditor_SetTabSize(internal.ReinterpretCast[*C.TextEditor](selfArg), C.int(aValue))
+
+	selfFin()
+}
+
+func (self *TextEditor) SetViewAtLine(aLine int32, aMode SetViewAtLineMode) {
+	selfArg, selfFin := self.Handle()
+	C.TextEditor_SetViewAtLine(internal.ReinterpretCast[*C.TextEditor](selfArg), C.int(aLine), C.SetViewAtLineMode(aMode))
 
 	selfFin()
 }
@@ -497,6 +395,13 @@ func (self *TextEditor) UndoV(aSteps int32) {
 	selfFin()
 }
 
+func (self *TextEditor) UnitTests() {
+	selfArg, selfFin := self.Handle()
+	C.TextEditor_UnitTests(internal.ReinterpretCast[*C.TextEditor](selfArg))
+
+	selfFin()
+}
+
 func (self *TextEditor) Destroy() {
 	selfArg, selfFin := self.Handle()
 	C.TextEditor_destroy(internal.ReinterpretCast[*C.TextEditor](selfArg))
@@ -504,58 +409,9 @@ func (self *TextEditor) Destroy() {
 	selfFin()
 }
 
-func (self *TextEditor) MoveBottom() {
+func (self *TextEditor) DebugPanel() {
 	selfArg, selfFin := self.Handle()
-	C.wrap_TextEditor_MoveBottom(internal.ReinterpretCast[*C.TextEditor](selfArg))
-
-	selfFin()
-}
-
-func (self *TextEditor) MoveDown() {
-	selfArg, selfFin := self.Handle()
-	C.wrap_TextEditor_MoveDown(internal.ReinterpretCast[*C.TextEditor](selfArg))
-
-	selfFin()
-}
-
-func (self *TextEditor) MoveEnd() {
-	selfArg, selfFin := self.Handle()
-	C.wrap_TextEditor_MoveEnd(internal.ReinterpretCast[*C.TextEditor](selfArg))
-
-	selfFin()
-}
-
-func (self *TextEditor) MoveHome() {
-	selfArg, selfFin := self.Handle()
-	C.wrap_TextEditor_MoveHome(internal.ReinterpretCast[*C.TextEditor](selfArg))
-
-	selfFin()
-}
-
-func (self *TextEditor) MoveLeft() {
-	selfArg, selfFin := self.Handle()
-	C.wrap_TextEditor_MoveLeft(internal.ReinterpretCast[*C.TextEditor](selfArg))
-
-	selfFin()
-}
-
-func (self *TextEditor) MoveRight() {
-	selfArg, selfFin := self.Handle()
-	C.wrap_TextEditor_MoveRight(internal.ReinterpretCast[*C.TextEditor](selfArg))
-
-	selfFin()
-}
-
-func (self *TextEditor) MoveTop() {
-	selfArg, selfFin := self.Handle()
-	C.wrap_TextEditor_MoveTop(internal.ReinterpretCast[*C.TextEditor](selfArg))
-
-	selfFin()
-}
-
-func (self *TextEditor) MoveUp() {
-	selfArg, selfFin := self.Handle()
-	C.wrap_TextEditor_MoveUp(internal.ReinterpretCast[*C.TextEditor](selfArg))
+	C.wrap_TextEditor_ImGuiDebugPanel(internal.ReinterpretCast[*C.TextEditor](selfArg))
 
 	selfFin()
 }
@@ -567,24 +423,33 @@ func (self *TextEditor) Redo() {
 	selfFin()
 }
 
-func (self *TextEditor) Render(aTitle string) {
+func (self *TextEditor) Render(aTitle string) bool {
 	selfArg, selfFin := self.Handle()
 	aTitleArg, aTitleFin := internal.WrapString[C.char](aTitle)
-	C.wrap_TextEditor_Render(internal.ReinterpretCast[*C.TextEditor](selfArg), aTitleArg)
 
-	selfFin()
-	aTitleFin()
+	defer func() {
+		selfFin()
+		aTitleFin()
+	}()
+	return C.wrap_TextEditor_Render(internal.ReinterpretCast[*C.TextEditor](selfArg), aTitleArg) == C.bool(true)
 }
 
-func (self *TextEditor) SetSelection(aStart Coordinates, aEnd Coordinates) {
+func (self *TextEditor) SelectAllOccurrencesOf(aText string, aTextSize int32) {
 	selfArg, selfFin := self.Handle()
-	aStartArg, aStartFin := aStart.C()
-	aEndArg, aEndFin := aEnd.C()
-	C.wrap_TextEditor_SetSelection(internal.ReinterpretCast[*C.TextEditor](selfArg), internal.ReinterpretCast[C.Coordinates](aStartArg), internal.ReinterpretCast[C.Coordinates](aEndArg))
+	aTextArg, aTextFin := internal.WrapString[C.char](aText)
+	C.wrap_TextEditor_SelectAllOccurrencesOf(internal.ReinterpretCast[*C.TextEditor](selfArg), aTextArg, C.int(aTextSize))
 
 	selfFin()
-	aStartFin()
-	aEndFin()
+	aTextFin()
+}
+
+func (self *TextEditor) SelectNextOccurrenceOf(aText string, aTextSize int32) {
+	selfArg, selfFin := self.Handle()
+	aTextArg, aTextFin := internal.WrapString[C.char](aText)
+	C.wrap_TextEditor_SelectNextOccurrenceOf(internal.ReinterpretCast[*C.TextEditor](selfArg), aTextArg, C.int(aTextSize))
+
+	selfFin()
+	aTextFin()
 }
 
 func (self *TextEditor) Undo() {
@@ -592,189 +457,4 @@ func (self *TextEditor) Undo() {
 	C.wrap_TextEditor_Undo(internal.ReinterpretCast[*C.TextEditor](selfArg))
 
 	selfFin()
-}
-
-func (self Breakpoint) SetMLine(v int32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_Breakpoint_SetMLine(selfArg, C.int(v))
-}
-
-func (self *Breakpoint) MLine() int32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return int32(C.wrap_Breakpoint_GetMLine(internal.ReinterpretCast[*C.Breakpoint](selfArg)))
-}
-
-func (self Breakpoint) SetMEnabled(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_Breakpoint_SetMEnabled(selfArg, C.bool(v))
-}
-
-func (self *Breakpoint) MEnabled() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_Breakpoint_GetMEnabled(internal.ReinterpretCast[*C.Breakpoint](selfArg)) == C.bool(true)
-}
-
-func (self Coordinates) SetMLine(v int32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_Coordinates_SetMLine(selfArg, C.int(v))
-}
-
-func (self *Coordinates) MLine() int32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return int32(C.wrap_Coordinates_GetMLine(internal.ReinterpretCast[*C.Coordinates](selfArg)))
-}
-
-func (self Coordinates) SetMColumn(v int32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_Coordinates_SetMColumn(selfArg, C.int(v))
-}
-
-func (self *Coordinates) MColumn() int32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return int32(C.wrap_Coordinates_GetMColumn(internal.ReinterpretCast[*C.Coordinates](selfArg)))
-}
-
-func (self Glyph) SetMColorIndex(v PaletteIndex) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_Glyph_SetMColorIndex(selfArg, C.PaletteIndex(v))
-}
-
-func (self *Glyph) MColorIndex() PaletteIndex {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return PaletteIndex(C.wrap_Glyph_GetMColorIndex(internal.ReinterpretCast[*C.Glyph](selfArg)))
-}
-
-func (self Glyph) SetMComment(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_Glyph_SetMComment(selfArg, C.bool(v))
-}
-
-func (self *Glyph) MComment() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_Glyph_GetMComment(internal.ReinterpretCast[*C.Glyph](selfArg)) == C.bool(true)
-}
-
-func (self Glyph) SetMMultiLineComment(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_Glyph_SetMMultiLineComment(selfArg, C.bool(v))
-}
-
-func (self *Glyph) MMultiLineComment() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_Glyph_GetMMultiLineComment(internal.ReinterpretCast[*C.Glyph](selfArg)) == C.bool(true)
-}
-
-func (self Glyph) SetMPreprocessor(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_Glyph_SetMPreprocessor(selfArg, C.bool(v))
-}
-
-func (self *Glyph) MPreprocessor() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_Glyph_GetMPreprocessor(internal.ReinterpretCast[*C.Glyph](selfArg)) == C.bool(true)
-}
-
-func (self Identifier) SetMLocation(v Coordinates) {
-	vArg, _ := v.C()
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_Identifier_SetMLocation(selfArg, internal.ReinterpretCast[C.Coordinates](vArg))
-}
-
-func (self *Identifier) MLocation() Coordinates {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return *NewCoordinatesFromC(func() *C.Coordinates {
-		result := C.wrap_Identifier_GetMLocation(internal.ReinterpretCast[*C.Identifier](selfArg))
-		return &result
-	}())
-}
-
-func (self LanguageDefinition) SetMPreprocChar(v rune) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_LanguageDefinition_SetMPreprocChar(selfArg, C.char(v))
-}
-
-func (self *LanguageDefinition) MPreprocChar() rune {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return rune(C.wrap_LanguageDefinition_GetMPreprocChar(internal.ReinterpretCast[*C.LanguageDefinition](selfArg)))
-}
-
-func (self LanguageDefinition) SetMAutoIndentation(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_LanguageDefinition_SetMAutoIndentation(selfArg, C.bool(v))
-}
-
-func (self *LanguageDefinition) MAutoIndentation() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_LanguageDefinition_GetMAutoIndentation(internal.ReinterpretCast[*C.LanguageDefinition](selfArg)) == C.bool(true)
-}
-
-func (self LanguageDefinition) SetMCaseSensitive(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_LanguageDefinition_SetMCaseSensitive(selfArg, C.bool(v))
-}
-
-func (self *LanguageDefinition) MCaseSensitive() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_LanguageDefinition_GetMCaseSensitive(internal.ReinterpretCast[*C.LanguageDefinition](selfArg)) == C.bool(true)
 }

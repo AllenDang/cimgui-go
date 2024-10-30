@@ -9,17 +9,11 @@
 extern "C" {
 #endif
 
-extern void wrap_TextEditor_MoveBottom(TextEditor* self);
-extern void wrap_TextEditor_MoveDown(TextEditor* self);
-extern void wrap_TextEditor_MoveEnd(TextEditor* self);
-extern void wrap_TextEditor_MoveHome(TextEditor* self);
-extern void wrap_TextEditor_MoveLeft(TextEditor* self);
-extern void wrap_TextEditor_MoveRight(TextEditor* self);
-extern void wrap_TextEditor_MoveTop(TextEditor* self);
-extern void wrap_TextEditor_MoveUp(TextEditor* self);
+extern void wrap_TextEditor_ImGuiDebugPanel(TextEditor* self);
 extern void wrap_TextEditor_Redo(TextEditor* self);
-extern void wrap_TextEditor_Render(TextEditor* self,const char* aTitle);
-extern void wrap_TextEditor_SetSelection(TextEditor* self,const Coordinates aStart,const Coordinates aEnd);
+extern bool wrap_TextEditor_Render(TextEditor* self,const char* aTitle);
+extern void wrap_TextEditor_SelectAllOccurrencesOf(TextEditor* self,const char* aText,int aTextSize);
+extern void wrap_TextEditor_SelectNextOccurrenceOf(TextEditor* self,const char* aText,int aTextSize);
 extern void wrap_TextEditor_Undo(TextEditor* self);
 
 #ifdef __cplusplus

@@ -7,74 +7,6 @@
 
 
 
-CIMGUI_API Breakpoint* Breakpoint_Breakpoint(void)
-{
-    return IM_NEW(Breakpoint)();
-}
-CIMGUI_API void Breakpoint_destroy(Breakpoint* self)
-{
-    IM_DELETE(self);
-}
-CIMGUI_API Coordinates* Coordinates_Coordinates_Nil(void)
-{
-    return IM_NEW(Coordinates)();
-}
-CIMGUI_API void Coordinates_destroy(Coordinates* self)
-{
-    IM_DELETE(self);
-}
-CIMGUI_API Coordinates* Coordinates_Coordinates_Int(int aLine,int aColumn)
-{
-    return IM_NEW(Coordinates)(aLine,aColumn);
-}
-CIMGUI_API Coordinates Coordinates_Invalid()
-{
-    return Coordinates::Invalid();
-}
-CIMGUI_API Glyph* Glyph_Glyph(Char aChar,PaletteIndex aColorIndex)
-{
-    return IM_NEW(Glyph)(aChar,aColorIndex);
-}
-CIMGUI_API void Glyph_destroy(Glyph* self)
-{
-    IM_DELETE(self);
-}
-CIMGUI_API LanguageDefinition* LanguageDefinition_LanguageDefinition(void)
-{
-    return IM_NEW(LanguageDefinition)();
-}
-CIMGUI_API void LanguageDefinition_destroy(LanguageDefinition* self)
-{
-    IM_DELETE(self);
-}
-CIMGUI_API const LanguageDefinition* LanguageDefinition_CPlusPlus()
-{
-    return &LanguageDefinition::CPlusPlus();
-}
-CIMGUI_API const LanguageDefinition* LanguageDefinition_HLSL()
-{
-    return &LanguageDefinition::HLSL();
-}
-CIMGUI_API const LanguageDefinition* LanguageDefinition_GLSL()
-{
-    return &LanguageDefinition::GLSL();
-}
-CIMGUI_API const LanguageDefinition* LanguageDefinition_C()
-{
-    return &LanguageDefinition::C();
-}
-CIMGUI_API const LanguageDefinition* LanguageDefinition_SQL()
-{
-    return &LanguageDefinition::SQL();
-}
-CIMGUI_API const LanguageDefinition* LanguageDefinition_AngelScript()
-{
-    return &LanguageDefinition::AngelScript();
-}
-CIMGUI_API const LanguageDefinition* LanguageDefinition_Lua()
-{
-    return &LanguageDefinition::Lua();
-}
 CIMGUI_API TextEditor* TextEditor_TextEditor(void)
 {
     return IM_NEW(TextEditor)();
@@ -83,113 +15,73 @@ CIMGUI_API void TextEditor_destroy(TextEditor* self)
 {
     IM_DELETE(self);
 }
-CIMGUI_API void TextEditor_SetLanguageDefinition(TextEditor* self,const LanguageDefinition aLanguageDef)
+CIMGUI_API void TextEditor_SetReadOnlyEnabled(TextEditor* self,bool aValue)
 {
-    return self->SetLanguageDefinition(aLanguageDef);
+    return self->SetReadOnlyEnabled(aValue);
 }
-CIMGUI_API const LanguageDefinition* TextEditor_GetLanguageDefinition(TextEditor* self)
+CIMGUI_API bool TextEditor_IsReadOnlyEnabled(TextEditor* self)
 {
-    return &self->GetLanguageDefinition();
+    return self->IsReadOnlyEnabled();
 }
-CIMGUI_API const Palette* TextEditor_GetPalette(TextEditor* self)
+CIMGUI_API void TextEditor_SetAutoIndentEnabled(TextEditor* self,bool aValue)
 {
-    return &self->GetPalette();
+    return self->SetAutoIndentEnabled(aValue);
 }
-CIMGUI_API void TextEditor_SetPalette(TextEditor* self,const Palette aValue)
+CIMGUI_API bool TextEditor_IsAutoIndentEnabled(TextEditor* self)
+{
+    return self->IsAutoIndentEnabled();
+}
+CIMGUI_API void TextEditor_SetShowWhitespacesEnabled(TextEditor* self,bool aValue)
+{
+    return self->SetShowWhitespacesEnabled(aValue);
+}
+CIMGUI_API bool TextEditor_IsShowWhitespacesEnabled(TextEditor* self)
+{
+    return self->IsShowWhitespacesEnabled();
+}
+CIMGUI_API void TextEditor_SetShowLineNumbersEnabled(TextEditor* self,bool aValue)
+{
+    return self->SetShowLineNumbersEnabled(aValue);
+}
+CIMGUI_API bool TextEditor_IsShowLineNumbersEnabled(TextEditor* self)
+{
+    return self->IsShowLineNumbersEnabled();
+}
+CIMGUI_API void TextEditor_SetShortTabsEnabled(TextEditor* self,bool aValue)
+{
+    return self->SetShortTabsEnabled(aValue);
+}
+CIMGUI_API bool TextEditor_IsShortTabsEnabled(TextEditor* self)
+{
+    return self->IsShortTabsEnabled();
+}
+CIMGUI_API int TextEditor_GetLineCount(TextEditor* self)
+{
+    return self->GetLineCount();
+}
+CIMGUI_API bool TextEditor_IsOverwriteEnabled(TextEditor* self)
+{
+    return self->IsOverwriteEnabled();
+}
+CIMGUI_API void TextEditor_SetPalette(TextEditor* self,PaletteId aValue)
 {
     return self->SetPalette(aValue);
 }
-CIMGUI_API void TextEditor_SetErrorMarkers(TextEditor* self,const ErrorMarkers aMarkers)
+CIMGUI_API PaletteId TextEditor_GetPalette(TextEditor* self)
 {
-    return self->SetErrorMarkers(aMarkers);
+    return self->GetPalette();
 }
-CIMGUI_API void TextEditor_SetBreakpoints(TextEditor* self,const Breakpoints aMarkers)
+CIMGUI_API void TextEditor_SetLanguageDefinition(TextEditor* self,LanguageDefinitionId aValue)
 {
-    return self->SetBreakpoints(aMarkers);
+    return self->SetLanguageDefinition(aValue);
 }
-CIMGUI_API void TextEditor_Render(TextEditor* self,const char* aTitle,const ImVec2 aSize,bool aBorder)
+CIMGUI_API LanguageDefinitionId TextEditor_GetLanguageDefinition(TextEditor* self)
 {
-    return self->Render(aTitle,aSize,aBorder);
+    return self->GetLanguageDefinition();
 }
-CIMGUI_API string TextEditor_GetSelectedText(TextEditor* self)
+CIMGUI_API const char* TextEditor_GetLanguageDefinitionName(TextEditor* self)
 {
-    return self->GetSelectedText();
-}
-CIMGUI_API string TextEditor_GetCurrentLineText(TextEditor* self)
-{
-    return self->GetCurrentLineText();
-}
-CIMGUI_API int TextEditor_GetTotalLines(TextEditor* self)
-{
-    return self->GetTotalLines();
-}
-CIMGUI_API bool TextEditor_IsOverwrite(TextEditor* self)
-{
-    return self->IsOverwrite();
-}
-CIMGUI_API void TextEditor_SetReadOnly(TextEditor* self,bool aValue)
-{
-    return self->SetReadOnly(aValue);
-}
-CIMGUI_API bool TextEditor_IsReadOnly(TextEditor* self)
-{
-    return self->IsReadOnly();
-}
-CIMGUI_API bool TextEditor_IsTextChanged(TextEditor* self)
-{
-    return self->IsTextChanged();
-}
-CIMGUI_API bool TextEditor_IsCursorPositionChanged(TextEditor* self)
-{
-    return self->IsCursorPositionChanged();
-}
-CIMGUI_API bool TextEditor_IsColorizerEnabled(TextEditor* self)
-{
-    return self->IsColorizerEnabled();
-}
-CIMGUI_API void TextEditor_SetColorizerEnable(TextEditor* self,bool aValue)
-{
-    return self->SetColorizerEnable(aValue);
-}
-CIMGUI_API Coordinates TextEditor_GetCursorPosition(TextEditor* self)
-{
-    return self->GetCursorPosition();
-}
-CIMGUI_API void TextEditor_SetCursorPosition(TextEditor* self,const Coordinates aPosition)
-{
-    return self->SetCursorPosition(aPosition);
-}
-CIMGUI_API void TextEditor_SetHandleMouseInputs(TextEditor* self,bool aValue)
-{
-    return self->SetHandleMouseInputs(aValue);
-}
-CIMGUI_API bool TextEditor_IsHandleMouseInputsEnabled(TextEditor* self)
-{
-    return self->IsHandleMouseInputsEnabled();
-}
-CIMGUI_API void TextEditor_SetHandleKeyboardInputs(TextEditor* self,bool aValue)
-{
-    return self->SetHandleKeyboardInputs(aValue);
-}
-CIMGUI_API bool TextEditor_IsHandleKeyboardInputsEnabled(TextEditor* self)
-{
-    return self->IsHandleKeyboardInputsEnabled();
-}
-CIMGUI_API void TextEditor_SetImGuiChildIgnored(TextEditor* self,bool aValue)
-{
-    return self->SetImGuiChildIgnored(aValue);
-}
-CIMGUI_API bool TextEditor_IsImGuiChildIgnored(TextEditor* self)
-{
-    return self->IsImGuiChildIgnored();
-}
-CIMGUI_API void TextEditor_SetShowWhitespaces(TextEditor* self,bool aValue)
-{
-    return self->SetShowWhitespaces(aValue);
-}
-CIMGUI_API bool TextEditor_IsShowingWhitespaces(TextEditor* self)
-{
-    return self->IsShowingWhitespaces();
+    return self->GetLanguageDefinitionName();
 }
 CIMGUI_API void TextEditor_SetTabSize(TextEditor* self,int aValue)
 {
@@ -199,69 +91,77 @@ CIMGUI_API int TextEditor_GetTabSize(TextEditor* self)
 {
     return self->GetTabSize();
 }
-CIMGUI_API void TextEditor_InsertText_std::string(TextEditor* self,const std::string aValue)
+CIMGUI_API void TextEditor_SetLineSpacing(TextEditor* self,float aValue)
 {
-    return self->InsertText(aValue);
+    return self->SetLineSpacing(aValue);
 }
-CIMGUI_API void TextEditor_InsertText_Str(TextEditor* self,const char* aValue)
+CIMGUI_API float TextEditor_GetLineSpacing(TextEditor* self)
 {
-    return self->InsertText(aValue);
+    return self->GetLineSpacing();
 }
-CIMGUI_API void TextEditor_MoveUp(TextEditor* self,int aAmount,bool aSelect)
+CIMGUI_API void TextEditor_SetDefaultPalette(PaletteId aValue)
 {
-    return self->MoveUp(aAmount,aSelect);
+    return TextEditor::SetDefaultPalette(aValue);
 }
-CIMGUI_API void TextEditor_MoveDown(TextEditor* self,int aAmount,bool aSelect)
+CIMGUI_API PaletteId TextEditor_GetDefaultPalette()
 {
-    return self->MoveDown(aAmount,aSelect);
-}
-CIMGUI_API void TextEditor_MoveLeft(TextEditor* self,int aAmount,bool aSelect,bool aWordMode)
-{
-    return self->MoveLeft(aAmount,aSelect,aWordMode);
-}
-CIMGUI_API void TextEditor_MoveRight(TextEditor* self,int aAmount,bool aSelect,bool aWordMode)
-{
-    return self->MoveRight(aAmount,aSelect,aWordMode);
-}
-CIMGUI_API void TextEditor_MoveTop(TextEditor* self,bool aSelect)
-{
-    return self->MoveTop(aSelect);
-}
-CIMGUI_API void TextEditor_MoveBottom(TextEditor* self,bool aSelect)
-{
-    return self->MoveBottom(aSelect);
-}
-CIMGUI_API void TextEditor_MoveHome(TextEditor* self,bool aSelect)
-{
-    return self->MoveHome(aSelect);
-}
-CIMGUI_API void TextEditor_MoveEnd(TextEditor* self,bool aSelect)
-{
-    return self->MoveEnd(aSelect);
-}
-CIMGUI_API void TextEditor_SetSelectionStart(TextEditor* self,const Coordinates aPosition)
-{
-    return self->SetSelectionStart(aPosition);
-}
-CIMGUI_API void TextEditor_SetSelectionEnd(TextEditor* self,const Coordinates aPosition)
-{
-    return self->SetSelectionEnd(aPosition);
-}
-CIMGUI_API void TextEditor_SetSelection(TextEditor* self,const Coordinates aStart,const Coordinates aEnd,SelectionMode aMode)
-{
-    return self->SetSelection(aStart,aEnd,aMode);
-}
-CIMGUI_API void TextEditor_SelectWordUnderCursor(TextEditor* self)
-{
-    return self->SelectWordUnderCursor();
+    return TextEditor::GetDefaultPalette();
 }
 CIMGUI_API void TextEditor_SelectAll(TextEditor* self)
 {
     return self->SelectAll();
 }
-CIMGUI_API bool TextEditor_HasSelection(TextEditor* self)
+CIMGUI_API void TextEditor_SelectLine(TextEditor* self,int aLine)
 {
-    return self->HasSelection();
+    return self->SelectLine(aLine);
+}
+CIMGUI_API void TextEditor_SelectRegion(TextEditor* self,int aStartLine,int aStartChar,int aEndLine,int aEndChar)
+{
+    return self->SelectRegion(aStartLine,aStartChar,aEndLine,aEndChar);
+}
+CIMGUI_API void TextEditor_SelectNextOccurrenceOf(TextEditor* self,const char* aText,int aTextSize,bool aCaseSensitive)
+{
+    return self->SelectNextOccurrenceOf(aText,aTextSize,aCaseSensitive);
+}
+CIMGUI_API void TextEditor_SelectAllOccurrencesOf(TextEditor* self,const char* aText,int aTextSize,bool aCaseSensitive)
+{
+    return self->SelectAllOccurrencesOf(aText,aTextSize,aCaseSensitive);
+}
+CIMGUI_API bool TextEditor_AnyCursorHasSelection(TextEditor* self)
+{
+    return self->AnyCursorHasSelection();
+}
+CIMGUI_API bool TextEditor_AllCursorsHaveSelection(TextEditor* self)
+{
+    return self->AllCursorsHaveSelection();
+}
+CIMGUI_API void TextEditor_ClearExtraCursors(TextEditor* self)
+{
+    return self->ClearExtraCursors();
+}
+CIMGUI_API void TextEditor_ClearSelections(TextEditor* self)
+{
+    return self->ClearSelections();
+}
+CIMGUI_API void TextEditor_SetCursorPosition(TextEditor* self,int aLine,int aCharIndex)
+{
+    return self->SetCursorPosition(aLine,aCharIndex);
+}
+CIMGUI_API void TextEditor_GetCursorPosition(TextEditor* self,int* outLine,int* outColumn)
+{
+    return self->GetCursorPosition(*outLine,*outColumn);
+}
+CIMGUI_API int TextEditor_GetFirstVisibleLine(TextEditor* self)
+{
+    return self->GetFirstVisibleLine();
+}
+CIMGUI_API int TextEditor_GetLastVisibleLine(TextEditor* self)
+{
+    return self->GetLastVisibleLine();
+}
+CIMGUI_API void TextEditor_SetViewAtLine(TextEditor* self,int aLine,SetViewAtLineMode aMode)
+{
+    return self->SetViewAtLine(aLine,aMode);
 }
 CIMGUI_API void TextEditor_Copy(TextEditor* self)
 {
@@ -275,9 +175,13 @@ CIMGUI_API void TextEditor_Paste(TextEditor* self)
 {
     return self->Paste();
 }
-CIMGUI_API void TextEditor_Delete(TextEditor* self)
+CIMGUI_API void TextEditor_Undo(TextEditor* self,int aSteps)
 {
-    return self->Delete();
+    return self->Undo(aSteps);
+}
+CIMGUI_API void TextEditor_Redo(TextEditor* self,int aSteps)
+{
+    return self->Redo(aSteps);
 }
 CIMGUI_API bool TextEditor_CanUndo(TextEditor* self)
 {
@@ -287,25 +191,17 @@ CIMGUI_API bool TextEditor_CanRedo(TextEditor* self)
 {
     return self->CanRedo();
 }
-CIMGUI_API void TextEditor_Undo(TextEditor* self,int aSteps)
+CIMGUI_API int TextEditor_GetUndoIndex(TextEditor* self)
 {
-    return self->Undo(aSteps);
+    return self->GetUndoIndex();
 }
-CIMGUI_API void TextEditor_Redo(TextEditor* self,int aSteps)
+CIMGUI_API bool TextEditor_Render(TextEditor* self,const char* aTitle,bool aParentIsFocused,const ImVec2 aSize,bool aBorder)
 {
-    return self->Redo(aSteps);
+    return self->Render(aTitle,aParentIsFocused,aSize,aBorder);
 }
-CIMGUI_API const Palette* TextEditor_GetDarkPalette()
+CIMGUI_API void TextEditor_UnitTests(TextEditor* self)
 {
-    return &TextEditor::GetDarkPalette();
-}
-CIMGUI_API const Palette* TextEditor_GetLightPalette()
-{
-    return &TextEditor::GetLightPalette();
-}
-CIMGUI_API const Palette* TextEditor_GetRetroBluePalette()
-{
-    return &TextEditor::GetRetroBluePalette();
+    return self->UnitTests();
 }
 
 ////////////////manually generated

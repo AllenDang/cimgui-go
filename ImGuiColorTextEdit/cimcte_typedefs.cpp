@@ -3,4 +3,4 @@
 
 
 #include "cimcte_typedefs.h"
-#include "../cwrappers/cimcte.h"
+#include "../cwrappers/cimCTE.h"

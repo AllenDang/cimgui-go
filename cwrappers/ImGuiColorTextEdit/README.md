@@ -1,3 +1,19 @@
+# About this fork
+You can use https://github.com/santaclose/ste as a demo.
+
+Feel free to join my [discord server](https://discord.gg/H7paVYPUUA) if you want to discuss anything about this fork.
+
+Features I've been working on:
+- multicursor (ctrl + click to add a new one)
+- ctrl + d for selecting next match
+- ctrl + \[ and ctrl + \] for indentation
+- more language definitions for syntax highlighting
+- switched to boost regex which seems more stable
+- ctrl + backspace and ctrl + delete for word mode delete
+- ctrl + / for comment toggling
+- it works without setting a language definition
+- middle mouse button for panning
+
 # ImGuiColorTextEdit
 Syntax highlighting text editor for ImGui
 
@@ -24,7 +40,7 @@ The code is (still) work in progress, please report if you find any issues.
  - whitespace indicators (TAB, space)
  
 # Known issues
- - syntax highligthing of most languages - except C/C++ - is based on std::regex, which is diasppointingly slow. Because of that, the highlighting process is amortized between multiple frames. C/C++ has a hand-written tokenizer which is much faster. 
+ - syntax highligthing of most languages - except C/C++ and Lua - is based on std::regex, which is diasppointingly slow. Because of that, the highlighting process is amortized between multiple frames. C/C++ and Lua have a hand-written tokenizer which is much faster. 
  
 Please post your screenshots if you find this little piece of software useful. :)
 

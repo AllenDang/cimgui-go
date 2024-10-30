@@ -3,39 +3,38 @@
 
 package ImGuiColorTextEdit
 
-// original name: PaletteIndex
-type PaletteIndex int32
+// original name: LanguageDefinitionId
+type LanguageDefinitionId int32
 
 const (
-	Default                 PaletteIndex = 0
-	Keyword                 PaletteIndex = 1
-	Number                  PaletteIndex = 2
-	String                  PaletteIndex = 3
-	CharLiteral             PaletteIndex = 4
-	Punctuation             PaletteIndex = 5
-	Preprocessor            PaletteIndex = 6
-	Identifier              PaletteIndex = 7
-	KnownIdentifier         PaletteIndex = 8
-	PreprocIdentifier       PaletteIndex = 9
-	Comment                 PaletteIndex = 10
-	MultiLineComment        PaletteIndex = 11
-	Background              PaletteIndex = 12
-	Cursor                  PaletteIndex = 13
-	Selection               PaletteIndex = 14
-	ErrorMarker             PaletteIndex = 15
-	Breakpoint              PaletteIndex = 16
-	LineNumber              PaletteIndex = 17
-	CurrentLineFill         PaletteIndex = 18
-	CurrentLineFillInactive PaletteIndex = 19
-	CurrentLineEdge         PaletteIndex = 20
-	Max                     PaletteIndex = 21
+	None        LanguageDefinitionId = 0
+	Cpp         LanguageDefinitionId = 1
+	C           LanguageDefinitionId = 2
+	Cs          LanguageDefinitionId = 3
+	Python      LanguageDefinitionId = 4
+	Lua         LanguageDefinitionId = 5
+	Json        LanguageDefinitionId = 6
+	Sql         LanguageDefinitionId = 7
+	AngelScript LanguageDefinitionId = 8
+	Glsl        LanguageDefinitionId = 9
+	Hlsl        LanguageDefinitionId = 10
 )
 
-// original name: SelectionMode
-type SelectionMode int32
+// original name: PaletteId
+type PaletteId int32
 
 const (
-	Normal SelectionMode = 0
-	Word   SelectionMode = 1
-	Line   SelectionMode = 2
+	Dark      PaletteId = 0
+	Light     PaletteId = 1
+	Mariana   PaletteId = 2
+	RetroBlue PaletteId = 3
+)
+
+// original name: SetViewAtLineMode
+type SetViewAtLineMode int32
+
+const (
+	FirstVisibleLine SetViewAtLineMode = 0
+	Centered         SetViewAtLineMode = 1
+	LastVisibleLine  SetViewAtLineMode = 2
 )
