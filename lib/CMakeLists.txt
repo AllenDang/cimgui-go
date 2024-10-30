@@ -28,6 +28,8 @@ file(GLOB IMGUI_SOURCES
     ../cwrappers/imgui_markdown/imgui_markdown.h
     ../cwrappers/ImGuizmo/ImGuizmo.cpp
     ../cwrappers/cimguizmo.cpp
+    ../cwrappers/ImGuiColorTextEdit/TextEditor.cpp
+    ../cwrappers/cimCTE.cpp
 	${TABLES_SOURCE}
 )
 
