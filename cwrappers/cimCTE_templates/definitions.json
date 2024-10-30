@@ -1,0 +1,1800 @@
+{
+  "Breakpoint_Breakpoint": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "Breakpoint_Breakpoint",
+      "constructor": true,
+      "defaults": {},
+      "funcname": "Breakpoint",
+      "location": "TextEditor:55",
+      "ov_cimguiname": "Breakpoint_Breakpoint",
+      "signature": "()",
+      "stname": "Breakpoint"
+    }
+  ],
+  "Breakpoint_destroy": [
+    {
+      "args": "(Breakpoint* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "Breakpoint*"
+        }
+      ],
+      "call_args": "(self)",
+      "cimguiname": "Breakpoint_destroy",
+      "defaults": {},
+      "destructor": true,
+      "ov_cimguiname": "Breakpoint_destroy",
+      "ret": "void",
+      "signature": "(Breakpoint*)",
+      "stname": "Breakpoint"
+    }
+  ],
+  "Coordinates_Coordinates": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "Coordinates_Coordinates",
+      "constructor": true,
+      "defaults": {},
+      "funcname": "Coordinates",
+      "location": "TextEditor:71",
+      "ov_cimguiname": "Coordinates_Coordinates_Nil",
+      "signature": "()",
+      "stname": "Coordinates"
+    },
+    {
+      "args": "(int aLine,int aColumn)",
+      "argsT": [
+        {
+          "name": "aLine",
+          "type": "int"
+        },
+        {
+          "name": "aColumn",
+          "type": "int"
+        }
+      ],
+      "argsoriginal": "(int aLine,int aColumn)",
+      "call_args": "(aLine,aColumn)",
+      "cimguiname": "Coordinates_Coordinates",
+      "constructor": true,
+      "defaults": {},
+      "funcname": "Coordinates",
+      "location": "TextEditor:72",
+      "ov_cimguiname": "Coordinates_Coordinates_Int",
+      "signature": "(int,int)",
+      "stname": "Coordinates"
+    }
+  ],
+  "Coordinates_Invalid": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "Coordinates_Invalid",
+      "defaults": {},
+      "funcname": "Invalid",
+      "is_static_function": true,
+      "location": "TextEditor:77",
+      "ov_cimguiname": "Coordinates_Invalid",
+      "ret": "Coordinates",
+      "signature": "()",
+      "stname": "Coordinates"
+    }
+  ],
+  "Coordinates_destroy": [
+    {
+      "args": "(Coordinates* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "Coordinates*"
+        }
+      ],
+      "call_args": "(self)",
+      "cimguiname": "Coordinates_destroy",
+      "defaults": {},
+      "destructor": true,
+      "ov_cimguiname": "Coordinates_destroy",
+      "ret": "void",
+      "signature": "(Coordinates*)",
+      "stname": "Coordinates"
+    }
+  ],
+  "Glyph_Glyph": [
+    {
+      "args": "(Char aChar,PaletteIndex aColorIndex)",
+      "argsT": [
+        {
+          "name": "aChar",
+          "type": "Char"
+        },
+        {
+          "name": "aColorIndex",
+          "type": "PaletteIndex"
+        }
+      ],
+      "argsoriginal": "(Char aChar,PaletteIndex aColorIndex)",
+      "call_args": "(aChar,aColorIndex)",
+      "cimguiname": "Glyph_Glyph",
+      "constructor": true,
+      "defaults": {},
+      "funcname": "Glyph",
+      "location": "TextEditor:144",
+      "ov_cimguiname": "Glyph_Glyph",
+      "signature": "(Char,PaletteIndex)",
+      "stname": "Glyph"
+    }
+  ],
+  "Glyph_destroy": [
+    {
+      "args": "(Glyph* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "Glyph*"
+        }
+      ],
+      "call_args": "(self)",
+      "cimguiname": "Glyph_destroy",
+      "defaults": {},
+      "destructor": true,
+      "ov_cimguiname": "Glyph_destroy",
+      "ret": "void",
+      "signature": "(Glyph*)",
+      "stname": "Glyph"
+    }
+  ],
+  "LanguageDefinition_AngelScript": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "LanguageDefinition_AngelScript",
+      "defaults": {},
+      "funcname": "AngelScript",
+      "is_static_function": true,
+      "location": "TextEditor:181",
+      "ov_cimguiname": "LanguageDefinition_AngelScript",
+      "ret": "const LanguageDefinition*",
+      "retref": "&",
+      "signature": "()",
+      "stname": "LanguageDefinition"
+    }
+  ],
+  "LanguageDefinition_C": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "LanguageDefinition_C",
+      "defaults": {},
+      "funcname": "C",
+      "is_static_function": true,
+      "location": "TextEditor:179",
+      "ov_cimguiname": "LanguageDefinition_C",
+      "ret": "const LanguageDefinition*",
+      "retref": "&",
+      "signature": "()",
+      "stname": "LanguageDefinition"
+    }
+  ],
+  "LanguageDefinition_CPlusPlus": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "LanguageDefinition_CPlusPlus",
+      "defaults": {},
+      "funcname": "CPlusPlus",
+      "is_static_function": true,
+      "location": "TextEditor:176",
+      "ov_cimguiname": "LanguageDefinition_CPlusPlus",
+      "ret": "const LanguageDefinition*",
+      "retref": "&",
+      "signature": "()",
+      "stname": "LanguageDefinition"
+    }
+  ],
+  "LanguageDefinition_GLSL": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "LanguageDefinition_GLSL",
+      "defaults": {},
+      "funcname": "GLSL",
+      "is_static_function": true,
+      "location": "TextEditor:178",
+      "ov_cimguiname": "LanguageDefinition_GLSL",
+      "ret": "const LanguageDefinition*",
+      "retref": "&",
+      "signature": "()",
+      "stname": "LanguageDefinition"
+    }
+  ],
+  "LanguageDefinition_HLSL": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "LanguageDefinition_HLSL",
+      "defaults": {},
+      "funcname": "HLSL",
+      "is_static_function": true,
+      "location": "TextEditor:177",
+      "ov_cimguiname": "LanguageDefinition_HLSL",
+      "ret": "const LanguageDefinition*",
+      "retref": "&",
+      "signature": "()",
+      "stname": "LanguageDefinition"
+    }
+  ],
+  "LanguageDefinition_LanguageDefinition": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "LanguageDefinition_LanguageDefinition",
+      "constructor": true,
+      "defaults": {},
+      "funcname": "LanguageDefinition",
+      "location": "TextEditor:171",
+      "ov_cimguiname": "LanguageDefinition_LanguageDefinition",
+      "signature": "()",
+      "stname": "LanguageDefinition"
+    }
+  ],
+  "LanguageDefinition_Lua": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "LanguageDefinition_Lua",
+      "defaults": {},
+      "funcname": "Lua",
+      "is_static_function": true,
+      "location": "TextEditor:182",
+      "ov_cimguiname": "LanguageDefinition_Lua",
+      "ret": "const LanguageDefinition*",
+      "retref": "&",
+      "signature": "()",
+      "stname": "LanguageDefinition"
+    }
+  ],
+  "LanguageDefinition_SQL": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "LanguageDefinition_SQL",
+      "defaults": {},
+      "funcname": "SQL",
+      "is_static_function": true,
+      "location": "TextEditor:180",
+      "ov_cimguiname": "LanguageDefinition_SQL",
+      "ret": "const LanguageDefinition*",
+      "retref": "&",
+      "signature": "()",
+      "stname": "LanguageDefinition"
+    }
+  ],
+  "LanguageDefinition_destroy": [
+    {
+      "args": "(LanguageDefinition* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "LanguageDefinition*"
+        }
+      ],
+      "call_args": "(self)",
+      "cimguiname": "LanguageDefinition_destroy",
+      "defaults": {},
+      "destructor": true,
+      "ov_cimguiname": "LanguageDefinition_destroy",
+      "ret": "void",
+      "signature": "(LanguageDefinition*)",
+      "stname": "LanguageDefinition"
+    }
+  ],
+  "TextEditor_CanRedo": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_CanRedo",
+      "defaults": {},
+      "funcname": "CanRedo",
+      "location": "TextEditor:261",
+      "ov_cimguiname": "TextEditor_CanRedo",
+      "ret": "bool",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_CanUndo": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_CanUndo",
+      "defaults": {},
+      "funcname": "CanUndo",
+      "location": "TextEditor:260",
+      "ov_cimguiname": "TextEditor_CanUndo",
+      "ret": "bool",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_Copy": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_Copy",
+      "defaults": {},
+      "funcname": "Copy",
+      "location": "TextEditor:255",
+      "ov_cimguiname": "TextEditor_Copy",
+      "ret": "void",
+      "signature": "()",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_Cut": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_Cut",
+      "defaults": {},
+      "funcname": "Cut",
+      "location": "TextEditor:256",
+      "ov_cimguiname": "TextEditor_Cut",
+      "ret": "void",
+      "signature": "()",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_Delete": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_Delete",
+      "defaults": {},
+      "funcname": "Delete",
+      "location": "TextEditor:258",
+      "ov_cimguiname": "TextEditor_Delete",
+      "ret": "void",
+      "signature": "()",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_GetCurrentLineText": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_GetCurrentLineText",
+      "defaults": {},
+      "funcname": "GetCurrentLineText",
+      "location": "TextEditor:205",
+      "ov_cimguiname": "TextEditor_GetCurrentLineText",
+      "ret": "string",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_GetCursorPosition": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_GetCursorPosition",
+      "defaults": {},
+      "funcname": "GetCursorPosition",
+      "location": "TextEditor:218",
+      "ov_cimguiname": "TextEditor_GetCursorPosition",
+      "ret": "Coordinates",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_GetDarkPalette": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_GetDarkPalette",
+      "defaults": {},
+      "funcname": "GetDarkPalette",
+      "is_static_function": true,
+      "location": "TextEditor:265",
+      "ov_cimguiname": "TextEditor_GetDarkPalette",
+      "ret": "const Palette*",
+      "retref": "&",
+      "signature": "()",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_GetLanguageDefinition": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_GetLanguageDefinition",
+      "defaults": {},
+      "funcname": "GetLanguageDefinition",
+      "location": "TextEditor:189",
+      "ov_cimguiname": "TextEditor_GetLanguageDefinition",
+      "ret": "const LanguageDefinition*",
+      "retref": "&",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_GetLightPalette": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_GetLightPalette",
+      "defaults": {},
+      "funcname": "GetLightPalette",
+      "is_static_function": true,
+      "location": "TextEditor:266",
+      "ov_cimguiname": "TextEditor_GetLightPalette",
+      "ret": "const Palette*",
+      "retref": "&",
+      "signature": "()",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_GetPalette": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_GetPalette",
+      "defaults": {},
+      "funcname": "GetPalette",
+      "location": "TextEditor:191",
+      "ov_cimguiname": "TextEditor_GetPalette",
+      "ret": "const Palette*",
+      "retref": "&",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_GetRetroBluePalette": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_GetRetroBluePalette",
+      "defaults": {},
+      "funcname": "GetRetroBluePalette",
+      "is_static_function": true,
+      "location": "TextEditor:267",
+      "ov_cimguiname": "TextEditor_GetRetroBluePalette",
+      "ret": "const Palette*",
+      "retref": "&",
+      "signature": "()",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_GetSelectedText": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_GetSelectedText",
+      "defaults": {},
+      "funcname": "GetSelectedText",
+      "location": "TextEditor:204",
+      "ov_cimguiname": "TextEditor_GetSelectedText",
+      "ret": "string",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_GetTabSize": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_GetTabSize",
+      "defaults": {},
+      "funcname": "GetTabSize",
+      "location": "TextEditor:234",
+      "ov_cimguiname": "TextEditor_GetTabSize",
+      "ret": "int",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_GetText": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_GetText",
+      "defaults": {},
+      "funcname": "GetText",
+      "location": "TextEditor:199",
+      "manual": true,
+      "ov_cimguiname": "TextEditor_GetText",
+      "ret": "string",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_GetTextLines": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_GetTextLines",
+      "defaults": {},
+      "funcname": "GetTextLines",
+      "location": "TextEditor:202",
+      "ov_cimguiname": "TextEditor_GetTextLines",
+      "ret": "string>",
+      "signature": "()const",
+      "skipped": true,
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_GetTotalLines": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_GetTotalLines",
+      "defaults": {},
+      "funcname": "GetTotalLines",
+      "location": "TextEditor:207",
+      "ov_cimguiname": "TextEditor_GetTotalLines",
+      "ret": "int",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_HasSelection": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_HasSelection",
+      "defaults": {},
+      "funcname": "HasSelection",
+      "location": "TextEditor:253",
+      "ov_cimguiname": "TextEditor_HasSelection",
+      "ret": "bool",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_InsertText": [
+    {
+      "args": "(TextEditor* self,const std::string aValue)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aValue",
+          "type": "const std::string"
+        }
+      ],
+      "argsoriginal": "(const std::string& aValue)",
+      "call_args": "(aValue)",
+      "cimguiname": "TextEditor_InsertText",
+      "defaults": {},
+      "funcname": "InsertText",
+      "location": "TextEditor:236",
+      "ov_cimguiname": "TextEditor_InsertText_std::string",
+      "ret": "void",
+      "signature": "(const std::string)",
+      "stname": "TextEditor"
+    },
+    {
+      "args": "(TextEditor* self,const char* aValue)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aValue",
+          "type": "const char*"
+        }
+      ],
+      "argsoriginal": "(const char* aValue)",
+      "call_args": "(aValue)",
+      "cimguiname": "TextEditor_InsertText",
+      "defaults": {},
+      "funcname": "InsertText",
+      "location": "TextEditor:237",
+      "ov_cimguiname": "TextEditor_InsertText_Str",
+      "ret": "void",
+      "signature": "(const char*)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_IsColorizerEnabled": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_IsColorizerEnabled",
+      "defaults": {},
+      "funcname": "IsColorizerEnabled",
+      "location": "TextEditor:215",
+      "ov_cimguiname": "TextEditor_IsColorizerEnabled",
+      "ret": "bool",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_IsCursorPositionChanged": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_IsCursorPositionChanged",
+      "defaults": {},
+      "funcname": "IsCursorPositionChanged",
+      "location": "TextEditor:213",
+      "ov_cimguiname": "TextEditor_IsCursorPositionChanged",
+      "ret": "bool",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_IsHandleKeyboardInputsEnabled": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_IsHandleKeyboardInputsEnabled",
+      "defaults": {},
+      "funcname": "IsHandleKeyboardInputsEnabled",
+      "location": "TextEditor:225",
+      "ov_cimguiname": "TextEditor_IsHandleKeyboardInputsEnabled",
+      "ret": "bool",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_IsHandleMouseInputsEnabled": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_IsHandleMouseInputsEnabled",
+      "defaults": {},
+      "funcname": "IsHandleMouseInputsEnabled",
+      "location": "TextEditor:222",
+      "ov_cimguiname": "TextEditor_IsHandleMouseInputsEnabled",
+      "ret": "bool",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_IsImGuiChildIgnored": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_IsImGuiChildIgnored",
+      "defaults": {},
+      "funcname": "IsImGuiChildIgnored",
+      "location": "TextEditor:228",
+      "ov_cimguiname": "TextEditor_IsImGuiChildIgnored",
+      "ret": "bool",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_IsOverwrite": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_IsOverwrite",
+      "defaults": {},
+      "funcname": "IsOverwrite",
+      "location": "TextEditor:208",
+      "ov_cimguiname": "TextEditor_IsOverwrite",
+      "ret": "bool",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_IsReadOnly": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_IsReadOnly",
+      "defaults": {},
+      "funcname": "IsReadOnly",
+      "location": "TextEditor:211",
+      "ov_cimguiname": "TextEditor_IsReadOnly",
+      "ret": "bool",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_IsShowingWhitespaces": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_IsShowingWhitespaces",
+      "defaults": {},
+      "funcname": "IsShowingWhitespaces",
+      "location": "TextEditor:231",
+      "ov_cimguiname": "TextEditor_IsShowingWhitespaces",
+      "ret": "bool",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_IsTextChanged": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_IsTextChanged",
+      "defaults": {},
+      "funcname": "IsTextChanged",
+      "location": "TextEditor:212",
+      "ov_cimguiname": "TextEditor_IsTextChanged",
+      "ret": "bool",
+      "signature": "()const",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_MoveBottom": [
+    {
+      "args": "(TextEditor* self,bool aSelect)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aSelect",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(bool aSelect=false)",
+      "call_args": "(aSelect)",
+      "cimguiname": "TextEditor_MoveBottom",
+      "defaults": {
+        "aSelect": "false"
+      },
+      "funcname": "MoveBottom",
+      "location": "TextEditor:244",
+      "ov_cimguiname": "TextEditor_MoveBottom",
+      "ret": "void",
+      "signature": "(bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_MoveDown": [
+    {
+      "args": "(TextEditor* self,int aAmount,bool aSelect)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aAmount",
+          "type": "int"
+        },
+        {
+          "name": "aSelect",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(int aAmount=1,bool aSelect=false)",
+      "call_args": "(aAmount,aSelect)",
+      "cimguiname": "TextEditor_MoveDown",
+      "defaults": {
+        "aAmount": "1",
+        "aSelect": "false"
+      },
+      "funcname": "MoveDown",
+      "location": "TextEditor:240",
+      "ov_cimguiname": "TextEditor_MoveDown",
+      "ret": "void",
+      "signature": "(int,bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_MoveEnd": [
+    {
+      "args": "(TextEditor* self,bool aSelect)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aSelect",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(bool aSelect=false)",
+      "call_args": "(aSelect)",
+      "cimguiname": "TextEditor_MoveEnd",
+      "defaults": {
+        "aSelect": "false"
+      },
+      "funcname": "MoveEnd",
+      "location": "TextEditor:246",
+      "ov_cimguiname": "TextEditor_MoveEnd",
+      "ret": "void",
+      "signature": "(bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_MoveHome": [
+    {
+      "args": "(TextEditor* self,bool aSelect)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aSelect",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(bool aSelect=false)",
+      "call_args": "(aSelect)",
+      "cimguiname": "TextEditor_MoveHome",
+      "defaults": {
+        "aSelect": "false"
+      },
+      "funcname": "MoveHome",
+      "location": "TextEditor:245",
+      "ov_cimguiname": "TextEditor_MoveHome",
+      "ret": "void",
+      "signature": "(bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_MoveLeft": [
+    {
+      "args": "(TextEditor* self,int aAmount,bool aSelect,bool aWordMode)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aAmount",
+          "type": "int"
+        },
+        {
+          "name": "aSelect",
+          "type": "bool"
+        },
+        {
+          "name": "aWordMode",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(int aAmount=1,bool aSelect=false,bool aWordMode=false)",
+      "call_args": "(aAmount,aSelect,aWordMode)",
+      "cimguiname": "TextEditor_MoveLeft",
+      "defaults": {
+        "aAmount": "1",
+        "aSelect": "false",
+        "aWordMode": "false"
+      },
+      "funcname": "MoveLeft",
+      "location": "TextEditor:241",
+      "ov_cimguiname": "TextEditor_MoveLeft",
+      "ret": "void",
+      "signature": "(int,bool,bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_MoveRight": [
+    {
+      "args": "(TextEditor* self,int aAmount,bool aSelect,bool aWordMode)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aAmount",
+          "type": "int"
+        },
+        {
+          "name": "aSelect",
+          "type": "bool"
+        },
+        {
+          "name": "aWordMode",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(int aAmount=1,bool aSelect=false,bool aWordMode=false)",
+      "call_args": "(aAmount,aSelect,aWordMode)",
+      "cimguiname": "TextEditor_MoveRight",
+      "defaults": {
+        "aAmount": "1",
+        "aSelect": "false",
+        "aWordMode": "false"
+      },
+      "funcname": "MoveRight",
+      "location": "TextEditor:242",
+      "ov_cimguiname": "TextEditor_MoveRight",
+      "ret": "void",
+      "signature": "(int,bool,bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_MoveTop": [
+    {
+      "args": "(TextEditor* self,bool aSelect)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aSelect",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(bool aSelect=false)",
+      "call_args": "(aSelect)",
+      "cimguiname": "TextEditor_MoveTop",
+      "defaults": {
+        "aSelect": "false"
+      },
+      "funcname": "MoveTop",
+      "location": "TextEditor:243",
+      "ov_cimguiname": "TextEditor_MoveTop",
+      "ret": "void",
+      "signature": "(bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_MoveUp": [
+    {
+      "args": "(TextEditor* self,int aAmount,bool aSelect)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aAmount",
+          "type": "int"
+        },
+        {
+          "name": "aSelect",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(int aAmount=1,bool aSelect=false)",
+      "call_args": "(aAmount,aSelect)",
+      "cimguiname": "TextEditor_MoveUp",
+      "defaults": {
+        "aAmount": "1",
+        "aSelect": "false"
+      },
+      "funcname": "MoveUp",
+      "location": "TextEditor:239",
+      "ov_cimguiname": "TextEditor_MoveUp",
+      "ret": "void",
+      "signature": "(int,bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_Paste": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_Paste",
+      "defaults": {},
+      "funcname": "Paste",
+      "location": "TextEditor:257",
+      "ov_cimguiname": "TextEditor_Paste",
+      "ret": "void",
+      "signature": "()",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_Redo": [
+    {
+      "args": "(TextEditor* self,int aSteps)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aSteps",
+          "type": "int"
+        }
+      ],
+      "argsoriginal": "(int aSteps=1)",
+      "call_args": "(aSteps)",
+      "cimguiname": "TextEditor_Redo",
+      "defaults": {
+        "aSteps": "1"
+      },
+      "funcname": "Redo",
+      "location": "TextEditor:263",
+      "ov_cimguiname": "TextEditor_Redo",
+      "ret": "void",
+      "signature": "(int)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_Render": [
+    {
+      "args": "(TextEditor* self,const char* aTitle,const ImVec2 aSize,bool aBorder)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aTitle",
+          "type": "const char*"
+        },
+        {
+          "name": "aSize",
+          "type": "const ImVec2"
+        },
+        {
+          "name": "aBorder",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(const char* aTitle,const ImVec2& aSize=ImVec2(),bool aBorder=false)",
+      "call_args": "(aTitle,aSize,aBorder)",
+      "cimguiname": "TextEditor_Render",
+      "defaults": {
+        "aBorder": "false",
+        "aSize": "ImVec2()"
+      },
+      "funcname": "Render",
+      "location": "TextEditor:197",
+      "ov_cimguiname": "TextEditor_Render",
+      "ret": "void",
+      "signature": "(const char*,const ImVec2,bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SelectAll": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_SelectAll",
+      "defaults": {},
+      "funcname": "SelectAll",
+      "location": "TextEditor:252",
+      "ov_cimguiname": "TextEditor_SelectAll",
+      "ret": "void",
+      "signature": "()",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SelectWordUnderCursor": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_SelectWordUnderCursor",
+      "defaults": {},
+      "funcname": "SelectWordUnderCursor",
+      "location": "TextEditor:251",
+      "ov_cimguiname": "TextEditor_SelectWordUnderCursor",
+      "ret": "void",
+      "signature": "()",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetBreakpoints": [
+    {
+      "args": "(TextEditor* self,const Breakpoints aMarkers)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aMarkers",
+          "type": "const Breakpoints"
+        }
+      ],
+      "argsoriginal": "(const Breakpoints& aMarkers)",
+      "call_args": "(aMarkers)",
+      "cimguiname": "TextEditor_SetBreakpoints",
+      "defaults": {},
+      "funcname": "SetBreakpoints",
+      "location": "TextEditor:195",
+      "ov_cimguiname": "TextEditor_SetBreakpoints",
+      "ret": "void",
+      "signature": "(const Breakpoints)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetColorizerEnable": [
+    {
+      "args": "(TextEditor* self,bool aValue)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aValue",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(bool aValue)",
+      "call_args": "(aValue)",
+      "cimguiname": "TextEditor_SetColorizerEnable",
+      "defaults": {},
+      "funcname": "SetColorizerEnable",
+      "location": "TextEditor:216",
+      "ov_cimguiname": "TextEditor_SetColorizerEnable",
+      "ret": "void",
+      "signature": "(bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetCursorPosition": [
+    {
+      "args": "(TextEditor* self,const Coordinates aPosition)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aPosition",
+          "type": "const Coordinates"
+        }
+      ],
+      "argsoriginal": "(const Coordinates& aPosition)",
+      "call_args": "(aPosition)",
+      "cimguiname": "TextEditor_SetCursorPosition",
+      "defaults": {},
+      "funcname": "SetCursorPosition",
+      "location": "TextEditor:219",
+      "ov_cimguiname": "TextEditor_SetCursorPosition",
+      "ret": "void",
+      "signature": "(const Coordinates)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetErrorMarkers": [
+    {
+      "args": "(TextEditor* self,const ErrorMarkers aMarkers)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aMarkers",
+          "type": "const ErrorMarkers"
+        }
+      ],
+      "argsoriginal": "(const ErrorMarkers& aMarkers)",
+      "call_args": "(aMarkers)",
+      "cimguiname": "TextEditor_SetErrorMarkers",
+      "defaults": {},
+      "funcname": "SetErrorMarkers",
+      "location": "TextEditor:194",
+      "ov_cimguiname": "TextEditor_SetErrorMarkers",
+      "ret": "void",
+      "signature": "(const ErrorMarkers)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetHandleKeyboardInputs": [
+    {
+      "args": "(TextEditor* self,bool aValue)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aValue",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(bool aValue)",
+      "call_args": "(aValue)",
+      "cimguiname": "TextEditor_SetHandleKeyboardInputs",
+      "defaults": {},
+      "funcname": "SetHandleKeyboardInputs",
+      "location": "TextEditor:224",
+      "ov_cimguiname": "TextEditor_SetHandleKeyboardInputs",
+      "ret": "void",
+      "signature": "(bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetHandleMouseInputs": [
+    {
+      "args": "(TextEditor* self,bool aValue)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aValue",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(bool aValue)",
+      "call_args": "(aValue)",
+      "cimguiname": "TextEditor_SetHandleMouseInputs",
+      "defaults": {},
+      "funcname": "SetHandleMouseInputs",
+      "location": "TextEditor:221",
+      "ov_cimguiname": "TextEditor_SetHandleMouseInputs",
+      "ret": "void",
+      "signature": "(bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetImGuiChildIgnored": [
+    {
+      "args": "(TextEditor* self,bool aValue)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aValue",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(bool aValue)",
+      "call_args": "(aValue)",
+      "cimguiname": "TextEditor_SetImGuiChildIgnored",
+      "defaults": {},
+      "funcname": "SetImGuiChildIgnored",
+      "location": "TextEditor:227",
+      "ov_cimguiname": "TextEditor_SetImGuiChildIgnored",
+      "ret": "void",
+      "signature": "(bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetLanguageDefinition": [
+    {
+      "args": "(TextEditor* self,const LanguageDefinition aLanguageDef)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aLanguageDef",
+          "type": "const LanguageDefinition"
+        }
+      ],
+      "argsoriginal": "(const LanguageDefinition& aLanguageDef)",
+      "call_args": "(aLanguageDef)",
+      "cimguiname": "TextEditor_SetLanguageDefinition",
+      "defaults": {},
+      "funcname": "SetLanguageDefinition",
+      "location": "TextEditor:188",
+      "ov_cimguiname": "TextEditor_SetLanguageDefinition",
+      "ret": "void",
+      "signature": "(const LanguageDefinition)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetPalette": [
+    {
+      "args": "(TextEditor* self,const Palette aValue)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aValue",
+          "type": "const Palette"
+        }
+      ],
+      "argsoriginal": "(const Palette& aValue)",
+      "call_args": "(aValue)",
+      "cimguiname": "TextEditor_SetPalette",
+      "defaults": {},
+      "funcname": "SetPalette",
+      "location": "TextEditor:192",
+      "ov_cimguiname": "TextEditor_SetPalette",
+      "ret": "void",
+      "signature": "(const Palette)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetReadOnly": [
+    {
+      "args": "(TextEditor* self,bool aValue)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aValue",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(bool aValue)",
+      "call_args": "(aValue)",
+      "cimguiname": "TextEditor_SetReadOnly",
+      "defaults": {},
+      "funcname": "SetReadOnly",
+      "location": "TextEditor:210",
+      "ov_cimguiname": "TextEditor_SetReadOnly",
+      "ret": "void",
+      "signature": "(bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetSelection": [
+    {
+      "args": "(TextEditor* self,const Coordinates aStart,const Coordinates aEnd,SelectionMode aMode)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aStart",
+          "type": "const Coordinates"
+        },
+        {
+          "name": "aEnd",
+          "type": "const Coordinates"
+        },
+        {
+          "name": "aMode",
+          "type": "SelectionMode"
+        }
+      ],
+      "argsoriginal": "(const Coordinates& aStart,const Coordinates& aEnd,SelectionMode aMode=SelectionMode::Normal)",
+      "call_args": "(aStart,aEnd,aMode)",
+      "cimguiname": "TextEditor_SetSelection",
+      "defaults": {
+        "aMode": "SelectionMode::Normal"
+      },
+      "funcname": "SetSelection",
+      "location": "TextEditor:250",
+      "ov_cimguiname": "TextEditor_SetSelection",
+      "ret": "void",
+      "signature": "(const Coordinates,const Coordinates,SelectionMode)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetSelectionEnd": [
+    {
+      "args": "(TextEditor* self,const Coordinates aPosition)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aPosition",
+          "type": "const Coordinates"
+        }
+      ],
+      "argsoriginal": "(const Coordinates& aPosition)",
+      "call_args": "(aPosition)",
+      "cimguiname": "TextEditor_SetSelectionEnd",
+      "defaults": {},
+      "funcname": "SetSelectionEnd",
+      "location": "TextEditor:249",
+      "ov_cimguiname": "TextEditor_SetSelectionEnd",
+      "ret": "void",
+      "signature": "(const Coordinates)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetSelectionStart": [
+    {
+      "args": "(TextEditor* self,const Coordinates aPosition)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aPosition",
+          "type": "const Coordinates"
+        }
+      ],
+      "argsoriginal": "(const Coordinates& aPosition)",
+      "call_args": "(aPosition)",
+      "cimguiname": "TextEditor_SetSelectionStart",
+      "defaults": {},
+      "funcname": "SetSelectionStart",
+      "location": "TextEditor:248",
+      "ov_cimguiname": "TextEditor_SetSelectionStart",
+      "ret": "void",
+      "signature": "(const Coordinates)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetShowWhitespaces": [
+    {
+      "args": "(TextEditor* self,bool aValue)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aValue",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(bool aValue)",
+      "call_args": "(aValue)",
+      "cimguiname": "TextEditor_SetShowWhitespaces",
+      "defaults": {},
+      "funcname": "SetShowWhitespaces",
+      "location": "TextEditor:230",
+      "ov_cimguiname": "TextEditor_SetShowWhitespaces",
+      "ret": "void",
+      "signature": "(bool)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetTabSize": [
+    {
+      "args": "(TextEditor* self,int aValue)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aValue",
+          "type": "int"
+        }
+      ],
+      "argsoriginal": "(int aValue)",
+      "call_args": "(aValue)",
+      "cimguiname": "TextEditor_SetTabSize",
+      "defaults": {},
+      "funcname": "SetTabSize",
+      "location": "TextEditor:233",
+      "ov_cimguiname": "TextEditor_SetTabSize",
+      "ret": "void",
+      "signature": "(int)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetText": [
+    {
+      "args": "(TextEditor* self,const std::string aText)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aText",
+          "type": "const std::string"
+        }
+      ],
+      "argsoriginal": "(const std::string& aText)",
+      "call_args": "(aText)",
+      "cimguiname": "TextEditor_SetText",
+      "defaults": {},
+      "funcname": "SetText",
+      "location": "TextEditor:198",
+      "manual": true,
+      "ov_cimguiname": "TextEditor_SetText",
+      "ret": "void",
+      "signature": "(const std::string)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_SetTextLines": [
+    {
+      "args": "(TextEditor* self,const std::vector_std_string aLines)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aLines",
+          "type": "const std::vector_std_string"
+        }
+      ],
+      "argsoriginal": "(const std::vector<std::string>& aLines)",
+      "call_args": "(aLines)",
+      "cimguiname": "TextEditor_SetTextLines",
+      "defaults": {},
+      "funcname": "SetTextLines",
+      "location": "TextEditor:201",
+      "ov_cimguiname": "TextEditor_SetTextLines",
+      "ret": "void",
+      "signature": "(const std::vector_std_string)",
+      "skipped": true,
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_TextEditor": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "TextEditor_TextEditor",
+      "constructor": true,
+      "defaults": {},
+      "funcname": "TextEditor",
+      "location": "TextEditor:185",
+      "ov_cimguiname": "TextEditor_TextEditor",
+      "signature": "()",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_Undo": [
+    {
+      "args": "(TextEditor* self,int aSteps)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        },
+        {
+          "name": "aSteps",
+          "type": "int"
+        }
+      ],
+      "argsoriginal": "(int aSteps=1)",
+      "call_args": "(aSteps)",
+      "cimguiname": "TextEditor_Undo",
+      "defaults": {
+        "aSteps": "1"
+      },
+      "funcname": "Undo",
+      "location": "TextEditor:262",
+      "ov_cimguiname": "TextEditor_Undo",
+      "ret": "void",
+      "signature": "(int)",
+      "stname": "TextEditor"
+    }
+  ],
+  "TextEditor_destroy": [
+    {
+      "args": "(TextEditor* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "TextEditor*"
+        }
+      ],
+      "call_args": "(self)",
+      "cimguiname": "TextEditor_destroy",
+      "defaults": {},
+      "destructor": true,
+      "location": "TextEditor:186",
+      "ov_cimguiname": "TextEditor_destroy",
+      "realdestructor": true,
+      "ret": "void",
+      "signature": "(TextEditor*)",
+      "stname": "TextEditor"
+    }
+  ]
+}

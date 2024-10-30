@@ -1,0 +1,256 @@
+{
+  "enums": {
+    "PaletteIndex": [
+      {
+        "calc_value": 0,
+        "name": "Default",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "Keyword",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "Number",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "String",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "name": "CharLiteral",
+        "value": "4"
+      },
+      {
+        "calc_value": 5,
+        "name": "Punctuation",
+        "value": "5"
+      },
+      {
+        "calc_value": 6,
+        "name": "Preprocessor",
+        "value": "6"
+      },
+      {
+        "calc_value": 7,
+        "name": "Identifier",
+        "value": "7"
+      },
+      {
+        "calc_value": 8,
+        "name": "KnownIdentifier",
+        "value": "8"
+      },
+      {
+        "calc_value": 9,
+        "name": "PreprocIdentifier",
+        "value": "9"
+      },
+      {
+        "calc_value": 10,
+        "name": "Comment",
+        "value": "10"
+      },
+      {
+        "calc_value": 11,
+        "name": "MultiLineComment",
+        "value": "11"
+      },
+      {
+        "calc_value": 12,
+        "name": "Background",
+        "value": "12"
+      },
+      {
+        "calc_value": 13,
+        "name": "Cursor",
+        "value": "13"
+      },
+      {
+        "calc_value": 14,
+        "name": "Selection",
+        "value": "14"
+      },
+      {
+        "calc_value": 15,
+        "name": "ErrorMarker",
+        "value": "15"
+      },
+      {
+        "calc_value": 16,
+        "name": "Breakpoint",
+        "value": "16"
+      },
+      {
+        "calc_value": 17,
+        "name": "LineNumber",
+        "value": "17"
+      },
+      {
+        "calc_value": 18,
+        "name": "CurrentLineFill",
+        "value": "18"
+      },
+      {
+        "calc_value": 19,
+        "name": "CurrentLineFillInactive",
+        "value": "19"
+      },
+      {
+        "calc_value": 20,
+        "name": "CurrentLineEdge",
+        "value": "20"
+      },
+      {
+        "calc_value": 21,
+        "name": "Max",
+        "value": "21"
+      }
+    ],
+    "SelectionMode": [
+      {
+        "calc_value": 0,
+        "name": "Normal",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "Word",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "Line",
+        "value": "2"
+      }
+    ]
+  },
+  "enumtypes": [],
+  "locations": {
+    "Breakpoint": "TextEditor:49",
+    "Coordinates": "TextEditor:68",
+    "Glyph": "TextEditor:136",
+    "Identifier": "TextEditor:122",
+    "LanguageDefinition": "TextEditor:151",
+    "PaletteIndex": "TextEditor:16",
+    "SelectionMode": "TextEditor:42",
+    "TextEditor": "TextEditor:13"
+  },
+  "structs": {
+    "Breakpoint": [
+      {
+        "name": "mLine",
+        "type": "int"
+      },
+      {
+        "name": "mEnabled",
+        "type": "bool"
+      },
+      {
+        "name": "mCondition",
+        "type": "string"
+      }
+    ],
+    "Coordinates": [
+      {
+        "name": "mLine",
+        "type": "int"
+      },
+      {
+        "name": "mColumn",
+        "type": "int"
+      }
+    ],
+    "Glyph": [
+      {
+        "name": "mChar",
+        "type": "Char"
+      },
+      {
+        "name": "mColorIndex",
+        "type": "PaletteIndex"
+      },
+      {
+        "bitfield": "1",
+        "name": "mComment",
+        "type": "bool"
+      },
+      {
+        "bitfield": "1",
+        "name": "mMultiLineComment",
+        "type": "bool"
+      },
+      {
+        "bitfield": "1",
+        "name": "mPreprocessor",
+        "type": "bool"
+      }
+    ],
+    "Identifier": [
+      {
+        "name": "mLocation",
+        "type": "Coordinates"
+      },
+      {
+        "name": "mDeclaration",
+        "type": "string"
+      }
+    ],
+    "LanguageDefinition": [
+      {
+        "name": "mName",
+        "type": "string"
+      },
+      {
+        "name": "mKeywords",
+        "type": "Keywords"
+      },
+      {
+        "name": "mIdentifiers",
+        "type": "Identifiers"
+      },
+      {
+        "name": "mPreprocIdentifiers",
+        "type": "Identifiers"
+      },
+      {
+        "name": "mCommentStart",
+        "type": "string"
+      },
+      {
+        "name": "mCommentEnd",
+        "type": "string"
+      },
+      {
+        "name": "mSingleLineComment",
+        "type": "string"
+      },
+      {
+        "name": "mPreprocChar",
+        "type": "char"
+      },
+      {
+        "name": "mAutoIndentation",
+        "type": "bool"
+      },
+      {
+        "name": "mTokenize",
+        "type": "TokenizeCallback"
+      },
+      {
+        "name": "mTokenRegexStrings",
+        "type": "TokenRegexStrings"
+      },
+      {
+        "name": "mCaseSensitive",
+        "type": "bool"
+      }
+    ],
+    "TextEditor": []
+  }
+}

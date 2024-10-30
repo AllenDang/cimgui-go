@@ -1,0 +1,21 @@
+{
+  "Breakpoint": "struct Breakpoint",
+  "Breakpoints": "std::unordered_set<int>",
+  "Char": "uint8_t",
+  "Coordinates": "struct Coordinates",
+  "ErrorMarkers": "std::map<int,std::string>",
+  "Glyph": "struct Glyph",
+  "Identifier": "struct Identifier",
+  "Identifiers": "std::unordered_map<std::string,Identifier>",
+  "Keywords": "std::unordered_set<std::string>",
+  "LanguageDefinition": "struct LanguageDefinition",
+  "Line": "std::vector<Glyph>",
+  "Lines": "std::vector<Line>",
+  "Palette": "std::array<ImU32,(unsigned)PaletteIndex::Max>",
+  "String": "std::string",
+  "TextEditor": "struct TextEditor",
+  "TokenRegexString": "std::pair<std::string,PaletteIndex>",
+  "TokenRegexStrings": "std::vector<TokenRegexString>",
+  "TokenizeCallback": "bool(*)(const char * in_begin,const char * in_end,const char *& out_begin,const char *& out_end,PaletteIndex & paletteIndex);",
+  "UndoBuffer": "std::vector<UndoRecord>"
+}
