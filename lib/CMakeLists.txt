@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.5)
 
 project(cimgui)
 
-set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 14)
 
 if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/../cwrappers/imgui/imgui_tables.cpp)
 	set(TABLES_SOURCE "../cwrappers/imgui/imgui_tables.cpp")
@@ -28,6 +28,11 @@ file(GLOB IMGUI_SOURCES
     ../cwrappers/imgui_markdown/imgui_markdown.h
     ../cwrappers/ImGuizmo/ImGuizmo.cpp
     ../cwrappers/cimguizmo.cpp
+    ../cwrappers/ImGuiColorTextEdit/TextEditor.cpp
+    ../cwrappers/ImGuiColorTextEdit/LanguageDefinitions.cpp
+    ../cwrappers/ImGuiColorTextEdit/UnitTests.cpp
+    ../cwrappers/ImGuiColorTextEdit/ImGuiDebugPanel.cpp
+    ../cwrappers/cimCTE.cpp
 	${TABLES_SOURCE}
 )
 
@@ -88,6 +93,8 @@ target_include_directories(cimgui PUBLIC ${GLFW3_INCLUDE_DIR})
 target_include_directories(cimgui PUBLIC ${SDL2_INCLUDE_DIR})
 set_target_properties(cimgui PROPERTIES PREFIX "")
 target_link_libraries(cimgui ${IMGUI_LIBRARIES})
+# this is for regex used by ImGuiColorTextEdit
+target_include_directories(cimgui PRIVATE ../cwrappers/ImGuiColorTextEdit/vendor/regex/include)
 
 #install
 install(TARGETS cimgui

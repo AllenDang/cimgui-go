@@ -1,0 +1,8 @@
+{
+  "Identifiers": "std::unordered_map<std::string,Identifier>",
+  "Line": "std::vector<Glyph>",
+  "Palette": "std::array<ImU32,(unsigned)PaletteIndex::Max>",
+  "TextEditor": "struct TextEditor",
+  "TokenRegexString": "std::pair<std::string,PaletteIndex>",
+  "TokenizeCallback": "bool(*)(const char* in_begin,const char* in_end,const char*& out_begin,const char*& out_end,PaletteIndex& paletteIndex);"
+}

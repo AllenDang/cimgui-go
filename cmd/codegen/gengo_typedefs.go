@@ -46,19 +46,19 @@ import "unsafe"
 		`
 #pragma once
 
-#include "../cwrappers/%s.h"
+#include "%s"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-`, data.prefix)
+`, data.flags.include)
 	typedefsCppSb := &strings.Builder{}
 	typedefsCppSb.WriteString(cppFileHeader)
 	fmt.Fprintf(typedefsCppSb,
 		`
 #include "%[1]s_typedefs.h"
-#include "../cwrappers/%[1]s.h"
-`, data.prefix)
+#include "%[2]s"
+`, data.prefix, data.flags.include)
 
 	// because go ranges through maps as if it was drunken, we need to sort keys.
 	keys := make([]CIdentifier, 0, len(typedefs.data))

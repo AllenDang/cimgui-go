@@ -1,0 +1,110 @@
+{
+  "enums": {
+    "LanguageDefinitionId": [
+      {
+        "calc_value": 0,
+        "name": "None",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "Cpp",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "C",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "Cs",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "name": "Python",
+        "value": "4"
+      },
+      {
+        "calc_value": 5,
+        "name": "Lua",
+        "value": "5"
+      },
+      {
+        "calc_value": 6,
+        "name": "Json",
+        "value": "6"
+      },
+      {
+        "calc_value": 7,
+        "name": "Sql",
+        "value": "7"
+      },
+      {
+        "calc_value": 8,
+        "name": "AngelScript",
+        "value": "8"
+      },
+      {
+        "calc_value": 9,
+        "name": "Glsl",
+        "value": "9"
+      },
+      {
+        "calc_value": 10,
+        "name": "Hlsl",
+        "value": "10"
+      }
+    ],
+    "PaletteId": [
+      {
+        "calc_value": 0,
+        "name": "Dark",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "Light",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "Mariana",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "RetroBlue",
+        "value": "3"
+      }
+    ],
+    "SetViewAtLineMode": [
+      {
+        "calc_value": 0,
+        "name": "FirstVisibleLine",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "Centered",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "LastVisibleLine",
+        "value": "2"
+      }
+    ]
+  },
+  "enumtypes": [],
+  "locations": {
+    "LanguageDefinitionId": "TextEditor:28",
+    "PaletteId": "TextEditor:24",
+    "SetViewAtLineMode": "TextEditor:32",
+    "TextEditor": "TextEditor:16"
+  },
+  "structs": {
+    "TextEditor": []
+  }
+}
