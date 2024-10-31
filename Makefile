@@ -96,7 +96,7 @@ compile_cimgui_macos:
 
 ## generate: generates both bindings (equal to `all`)
 .PHONY: generate
-generate: cimgui cimplot cimnodes cimmarkdown cimguizmo
+generate: cimgui cimplot cimnodes cimmarkdown cimguizmo cimcte
 
 # update updates sub-repos (like cimplot or cimgui)
 # $1 - subrepo directory
