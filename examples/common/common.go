@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"image"
 
+	cte "github.com/AllenDang/cimgui-go/ImGuiColorTextEdit"
 	"github.com/AllenDang/cimgui-go/backend"
 	"github.com/AllenDang/cimgui-go/imgui"
 	"github.com/AllenDang/cimgui-go/imguizmo"
@@ -30,10 +31,11 @@ var (
 	color4         [4]float32 = [4]float32{r, g, b, a}
 	selected       bool
 	//go:embed test.jpeg
-	imgData   []byte
-	img       *image.RGBA
-	texture   *backend.Texture
-	barValues []int64
+	imgData    []byte
+	img        *image.RGBA
+	texture    *backend.Texture
+	barValues  []int64
+	textEditor *cte.TextEditor
 )
 
 // Initialize prepares global variables. Call before anything related to backend.
@@ -54,6 +56,11 @@ func InputTextCallback(data imgui.InputTextCallbackData) int {
 func AfterCreateContext() {
 	texture = backend.NewTextureFromRgba(img)
 	implot.PlotCreateContext()
+	textEditor = cte.NewTextEditor()
+	textEditor.SetLanguageDefinition(cte.Cpp)
+	textEditor.SetText(`// Colorize a C++ file
+#include <iostream>
+ImGui::Text("Hello World")`)
 }
 
 func BeforeDestroyContext() {
@@ -66,6 +73,7 @@ func Loop() {
 	ShowPictureLoadingDemo()
 	ShowImPlotDemo()
 	ShowGizmoDemo()
+	ShowCTEDemo()
 }
 
 func ShowWidgetsDemo() {
@@ -127,6 +135,18 @@ func ShowImPlotDemo() {
 		implot.PlotPlotLineS64PtrInt("Line", barValues, int32(len(barValues)))
 		implot.PlotEndPlot()
 	}
+	imgui.End()
+}
+
+func ShowCTEDemo() {
+	basePos := imgui.MainViewport().Pos()
+	imgui.SetNextWindowPosV(imgui.NewVec2(basePos.X+800, basePos.Y+260), imgui.CondOnce, imgui.NewVec2(0, 0))
+	imgui.SetNextWindowSizeV(imgui.NewVec2(250, 400), imgui.CondOnce)
+	imgui.Begin("Color Text Edit")
+
+	if textEditor.Render("Color Text Edit") {
+	}
+
 	imgui.End()
 }
 
