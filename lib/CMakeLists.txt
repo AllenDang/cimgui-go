@@ -29,6 +29,9 @@ file(GLOB IMGUI_SOURCES
     ../cwrappers/ImGuizmo/ImGuizmo.cpp
     ../cwrappers/cimguizmo.cpp
     ../cwrappers/ImGuiColorTextEdit/TextEditor.cpp
+    ../cwrappers/ImGuiColorTextEdit/LanguageDefinitions.cpp
+    ../cwrappers/ImGuiColorTextEdit/UnitTests.cpp
+    ../cwrappers/ImGuiColorTextEdit/ImGuiDebugPanel.cpp
     ../cwrappers/cimCTE.cpp
 	${TABLES_SOURCE}
 )
