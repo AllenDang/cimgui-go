@@ -164,6 +164,15 @@ func (self *TextEditor) TabSize() int32 {
 	return int32(C.TextEditor_GetTabSize(internal.ReinterpretCast[*C.TextEditor](selfArg)))
 }
 
+func (self *TextEditor) Text() string {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.GoString(C.TextEditor_GetText(internal.ReinterpretCast[*C.TextEditor](selfArg)))
+}
+
 func (self *TextEditor) UndoIndex() int32 {
 	selfArg, selfFin := self.Handle()
 
@@ -171,6 +180,17 @@ func (self *TextEditor) UndoIndex() int32 {
 		selfFin()
 	}()
 	return int32(C.TextEditor_GetUndoIndex(internal.ReinterpretCast[*C.TextEditor](selfArg)))
+}
+
+// DebugPanelV parameter default value hint:
+// panelName: "Debug"
+func (self *TextEditor) DebugPanelV(panelName string) {
+	selfArg, selfFin := self.Handle()
+	panelNameArg, panelNameFin := internal.WrapString[C.char](panelName)
+	C.TextEditor_ImGuiDebugPanel(internal.ReinterpretCast[*C.TextEditor](selfArg), panelNameArg)
+
+	selfFin()
+	panelNameFin()
 }
 
 func (self *TextEditor) IsAutoIndentEnabled() bool {
@@ -373,6 +393,15 @@ func (self *TextEditor) SetTabSize(aValue int32) {
 	C.TextEditor_SetTabSize(internal.ReinterpretCast[*C.TextEditor](selfArg), C.int(aValue))
 
 	selfFin()
+}
+
+func (self *TextEditor) SetText(aText string) {
+	selfArg, selfFin := self.Handle()
+	aTextArg, aTextFin := internal.WrapString[C.char](aText)
+	C.TextEditor_SetText(internal.ReinterpretCast[*C.TextEditor](selfArg), aTextArg)
+
+	selfFin()
+	aTextFin()
 }
 
 func (self *TextEditor) SetViewAtLine(aLine int32, aMode SetViewAtLineMode) {
