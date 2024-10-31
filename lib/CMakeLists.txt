@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.5)
 
 project(cimgui)
 
@@ -93,6 +93,8 @@ target_include_directories(cimgui PUBLIC ${GLFW3_INCLUDE_DIR})
 target_include_directories(cimgui PUBLIC ${SDL2_INCLUDE_DIR})
 set_target_properties(cimgui PROPERTIES PREFIX "")
 target_link_libraries(cimgui ${IMGUI_LIBRARIES})
+# this is for regex used by ImGuiColorTextEdit
+target_include_directories(cimgui PRIVATE ../cwrappers/ImGuiColorTextEdit/vendor/regex/include)
 
 #install
 install(TARGETS cimgui
