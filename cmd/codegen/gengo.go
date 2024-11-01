@@ -48,6 +48,12 @@ var skippedTypedefs = map[CIdentifier]bool{
 	"ImS64": true,
 }
 
+const TypedefsPoolSize = 2 // TODO: 2 is for testing, add more later
+
+var customPoolSize = map[CIdentifier]int{
+	// nothing here for now
+}
+
 var replace = map[CIdentifier]GoIdentifier{
 	"igGetDrawData":           "CurrentDrawData",
 	"igGetDrawListSharedData": "CurrentDrawListSharedData",

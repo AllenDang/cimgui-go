@@ -309,9 +309,23 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		case IsCallbackTypedef(typedefs.data[k]):
-			if data.flags.showNotGenerated {
-				glg.Failf("typedef %s is a callback. Not implemented yet", k)
-			}
+			/*
+				if data.flags.showNotGenerated {
+					glg.Failf("typedef %s is a callback. Not implemented yet", k)
+				}
+			*/
+			// see https://github.com/AllenDang/cimgui-go/issues/224#issuecomment-2452156237
+			fmt.Println(k, typedefs.data[k])
+			// 1: preprocessing - parse typedefs.data[k] to get return type and arguments
+			typedefName := CIdentifier(k)
+			// TODO
+
+			// 2: write go type definition
+			fmt.Fprintf(callbacksGoSb, `
+type %[1]s func()
+type c%[1]s func()
+var pool%[1]s = internal.NewPool[%[1]s, c%[1]s]()
+`, typedefName.renameGoIdentifier())
 		case HasPrefix(typedefs.data[k], "struct"):
 			isOpaque := !IsStructName(k, structsMap)
 			if data.flags.showGenerated {
