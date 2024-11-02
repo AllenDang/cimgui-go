@@ -4,6 +4,7 @@ import "C"
 import (
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 
 	"github.com/kpango/glg"
@@ -315,10 +316,68 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 				}
 			*/
 			// see https://github.com/AllenDang/cimgui-go/issues/224#issuecomment-2452156237
-			fmt.Println(k, typedefs.data[k])
 			// 1: preprocessing - parse typedefs.data[k] to get return type and arguments
 			typedefName := CIdentifier(k)
-			// TODO
+			// now let me use a bit of regex.
+			// We have 2 possibilities:
+			// - returnType(*<funcName>)(args1 arg1Name, args2 arg2Name, args3 arg3Name);
+			// - returnType <funcName>(args1 arg1Name, args2 arg2Name, args3 arg3Name);
+			// NOTE: the second is uesed mainly in immarkdown
+			// NOTE: in the 1st, spaces does not matter so we'll trim them
+			expr1, err := regexp.Compile("([a-zA-Z0-9_]+)\\(\\*.*\\)\\((.*)\\);")
+			if err != nil {
+				panic("Cannot compile regex expr1!")
+			}
+
+			expr2, err := regexp.Compile("([a-zA-Z0-9_]+)\\s+([a-zA-Z0-9_]+)\\((.*)\\);")
+			if err != nil {
+				panic("Cannot compile regex expr2!")
+			}
+
+			// we need the following from them:
+			var returnTypeC CIdentifier
+			argsC := make([]ArgDef, 0)
+
+			if ok := expr1.MatchString(typedefs.data[k]); ok {
+				glg.Debugf("callback typedef is in form 1", k)
+				// now split by "("
+				// it should be something like this:
+				// ["returnType", "*<optional func name)", "args1 arg1Name, args2 arg2Name, args3 arg3Name);"]
+				parts := strings.Split(typedefs.data[k], "(")
+				if len(parts) != 3 {
+					panic("Cannot split by (, check implementation in cmd/codegen!")
+				}
+
+				returnTypeC = TrimSuffix(CIdentifier(parts[0]), " ")
+				argsStr := parts[2]
+				argsStr = TrimSuffix(argsStr, ");")
+				argsStr = ReplaceAll(argsStr, ", ", ",")
+				argsListStr := Split(argsStr, ",")
+				for _, argStr := range argsListStr {
+					// get name
+					argParts := Split(argStr, " ")
+					name := argParts[len(argParts)-1]
+					typeName := strings.Join(argParts[:len(argParts)-1], " ")
+					argsC = append(argsC, ArgDef{
+						Name: CIdentifier(name),
+						Type: CIdentifier(typeName),
+					})
+				}
+			} else if ok := expr2.MatchString(typedefs.data[k]); ok {
+				glg.Warnf("Callback option 2 for %s not implemented yet", k)
+				continue
+			} else {
+				if data.flags.showNotGenerated {
+					glg.Failf("cannot parse callback typedef %s: \"%s\".", k, typedefs.data[k])
+					continue
+				}
+			}
+
+			// 2: Find wrappers:
+			// We need to figure out how to wrap returnType and args.
+			// In fact, we need to swap meaning of them, because we want to convert C argument type to Go argument type
+			// so we are supposed to use returnWrapper for that.
+			glg.Debugf("From %s got \"%s\" and \"%v\"\n", k, returnTypeC, argsC)
 
 			// 2: write go type definition
 			fmt.Fprintf(callbacksGoSb, `
