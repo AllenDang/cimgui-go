@@ -12,6 +12,7 @@ import (
 type returnWrapper struct {
 	returnType GoIdentifier
 	returnStmt string
+	CType      GoIdentifier
 }
 
 func getReturnWrapper(
@@ -19,61 +20,61 @@ func getReturnWrapper(
 	context *Context,
 ) (returnWrapper, error) {
 	returnWrapperMap := map[CIdentifier]returnWrapper{
-		"bool":           {"bool", "%s == C.bool(true)"},
-		"bool*":          simplePtrR("bool"),
-		"const bool*":    simplePtrR("bool"),
-		"char":           simpleR("rune"),
-		"unsigned char":  simpleR("uint"),
-		"unsigned char*": {"*uint", "(*uint)(unsafe.Pointer(%s))"}, // NOTE: This should work but I'm not 100% sure
-		"char*":          {"string", "C.GoString(%s)"},
-		"const char*":    {"string", "C.GoString(%s)"},
+		"bool":           {"bool", "%s == C.bool(true)", "C.bool"},
+		"bool*":          simplePtrR("bool", "C.bool"),
+		"const bool*":    simplePtrR("bool", "c.bool"),
+		"char":           simpleR("rune", "C.char"),
+		"unsigned char":  simpleR("uint", "C.char"),
+		"unsigned char*": {"*uint", "(*uint)(unsafe.Pointer(%s))", "C.uchar"}, // NOTE: This should work but I'm not 100% sure
+		"char*":          {"string", "C.GoString(%s)", "*C.char"},
+		"const char*":    {"string", "C.GoString(%s)", "*C.char"},
 		// this is randomly used by cimCTE. It is const char* in c code but string in json for some reason
 		// probably should fix in cimCTE
-		"string":          {"string", "C.GoString(%s)"},
-		"const ImWchar*":  simpleR("(*Wchar)"),
-		"ImWchar*":        simpleR("(*Wchar)"),
-		"ImWchar":         simpleR("Wchar"),
-		"ImWchar16":       simpleR("uint16"),
-		"float":           simpleR("float32"),
-		"float*":          simplePtrR("float32"),
-		"double":          simpleR("float64"),
-		"double*":         simplePtrR("float64"),
-		"int":             simpleR("int32"),
-		"int32_t":         simpleR("int32"),
-		"int*":            simplePtrR("int32"),
-		"unsigned int":    simpleR("uint32"),
-		"unsigned int*":   simplePtrR("uint32"),
-		"short":           simpleR("int16"),
-		"unsigned short":  simpleR("uint16"),
-		"unsigned short*": simplePtrR("uint16"),
-		"ImS8":            simpleR("int"),
-		"ImS16":           simpleR("int16"),
-		"ImS16*":          simplePtrR("int16"),
-		"ImS32":           simpleR("int"),
-		"ImS64":           simpleR("int64"),
-		"ImS64*":          simplePtrR("int64"),
-		"ImU8":            simpleR("byte"),
-		"ImU8*":           simplePtrR("byte"),
-		"ImU16":           simpleR("uint16"),
-		"ImU16*":          simplePtrR("uint16"),
-		"ImU32":           simpleR("uint32"),
-		"ImU32*":          simplePtrR("uint32"),
-		"const ImU32*":    simplePtrR("uint32"),
-		"ImU64":           simpleR("uint64"),
-		"ImU64*":          simplePtrR("uint64"),
-		"ImVec4":          wrappableR(prefixGoPackage("Vec4", "imgui", context)),
+		"string":          {"string", "C.GoString(%s)", "*C.char"},
+		"const ImWchar*":  simpleR("(*Wchar)", "*C.ImWchar"),
+		"ImWchar*":        simpleR("(*Wchar)", "*C.ImWchar"),
+		"ImWchar":         simpleR("Wchar", "C.ImWchar"),
+		"ImWchar16":       simpleR("uint16", "C.ImWchar16"),
+		"float":           simpleR("float32", "C.float"),
+		"float*":          simplePtrR("float32", "C.float"),
+		"double":          simpleR("float64", "C.double"),
+		"double*":         simplePtrR("float64", "C.double"),
+		"int":             simpleR("int32", "C.int"),
+		"int32_t":         simpleR("int32", "C.int"),
+		"int*":            simplePtrR("int32", "C.int"),
+		"unsigned int":    simpleR("uint32", "C.uint"),
+		"unsigned int*":   simplePtrR("uint32", "C.uint"),
+		"short":           simpleR("int16", "C.short"),
+		"unsigned short":  simpleR("uint16", "C.ushort"),
+		"unsigned short*": simplePtrR("uint16", "C.ushort"),
+		"ImS8":            simpleR("int", "C.ImS8"),
+		"ImS16":           simpleR("int16", "C.ImS16"),
+		"ImS16*":          simplePtrR("int16", "C.ImS16"),
+		"ImS32":           simpleR("int", "C.ImS32"),
+		"ImS64":           simpleR("int64", "C.ImS64"),
+		"ImS64*":          simplePtrR("int64", "C.ImS64"),
+		"ImU8":            simpleR("byte", "C.ImU8"),
+		"ImU8*":           simplePtrR("byte", "C.ImU8"),
+		"ImU16":           simpleR("uint16", "C.ImU16"),
+		"ImU16*":          simplePtrR("uint16", "C.ImU16"),
+		"ImU32":           simpleR("uint32", "C.ImU32"),
+		"ImU32*":          simplePtrR("uint32", "C.ImU32"),
+		"const ImU32*":    simplePtrR("uint32", "C.ImU32"),
+		"ImU64":           simpleR("uint64", "C.ImU64"),
+		"ImU64*":          simplePtrR("uint64", "C.ImU64"),
+		"ImVec4":          wrappableR(prefixGoPackage("Vec4", "imgui", context), "C.ImVec4"),
 		"const ImVec4*":   imVec4PtrReturnW(context),
-		"ImVec2":          wrappableR(prefixGoPackage("Vec2", "imgui", context)),
-		"ImColor":         wrappableR(prefixGoPackage("Color", "imgui", context)),
-		"ImPlotPoint":     wrappableR(prefixGoPackage("PlotPoint", "implot", context)),
-		"ImRect":          wrappableR(prefixGoPackage("Rect", "imgui", context)),
-		"ImPlotTime":      wrappableR(prefixGoPackage("PlotTime", "implot", context)),
-		"tm":              wrappableR(prefixGoPackage("Tm", "implot", context)),
-		"const tm":        wrappableR(prefixGoPackage("Tm", "implot", context)),
-		"uintptr_t":       simpleR("uintptr"),
-		"size_t":          simpleR("uint64"),
-		"time_t":          simpleR("uint64"),
-		"void*":           simpleR("unsafe.Pointer"),
+		"ImVec2":          wrappableR(prefixGoPackage("Vec2", "imgui", context), "C.ImVec2"),
+		"ImColor":         wrappableR(prefixGoPackage("Color", "imgui", context), "C.ImColor"),
+		"ImPlotPoint":     wrappableR(prefixGoPackage("PlotPoint", "implot", context), "C.ImPlotPoint"),
+		"ImRect":          wrappableR(prefixGoPackage("Rect", "imgui", context), "C.ImRect"),
+		"ImPlotTime":      wrappableR(prefixGoPackage("PlotTime", "implot", context), "C.ImPlotTime"),
+		"tm":              wrappableR(prefixGoPackage("Tm", "implot", context), "C.tm"),
+		"const tm":        wrappableR(prefixGoPackage("Tm", "implot", context), "C.tm"),
+		"uintptr_t":       simpleR("uintptr", "C.uintptr_t"),
+		"size_t":          simpleR("uint64", "C.size_t"),
+		"time_t":          simpleR("uint64", "C.time_t"),
+		"void*":           simpleR("unsafe.Pointer", "unsafe.Pointer"),
 	}
 
 	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")
@@ -121,7 +122,7 @@ func getReturnWrapper(
 
 		// NOTE: Special Case
 		if pureType == "char*" {
-			rw = simplePtrR("int8")
+			rw = simplePtrR("int8", "C.char")
 		}
 
 		return returnWrapper{
@@ -184,23 +185,30 @@ func imVec4PtrReturnW(ctx *Context) returnWrapper {
 	return returnWrapper{
 		returnType: "*" + goType,
 		returnStmt: "(&" + string(goType) + "{}).FromC(unsafe.Pointer(%s))",
+		CType:      "*C.ImVec4",
 	}
 }
 
-func simpleR(goType GoIdentifier) returnWrapper {
-	return returnWrapper{goType, fmt.Sprintf("%s(%s)", goType, "%s")}
+func simpleR(goType GoIdentifier, cType GoIdentifier) returnWrapper {
+	return returnWrapper{
+		returnType: goType,
+		returnStmt: fmt.Sprintf("%s(%s)", goType, "%s"),
+		CType:      cType,
+	}
 }
 
-func simplePtrR(goType GoIdentifier) returnWrapper {
+func simplePtrR(goType, cType GoIdentifier) returnWrapper {
 	return returnWrapper{
 		returnType: GoIdentifier(fmt.Sprintf("*%s", goType)),
 		returnStmt: fmt.Sprintf("(*%s)(%s)", goType, "%s"),
+		CType:      GoIdentifier(fmt.Sprintf("*%s", cType)),
 	}
 }
 
-func wrappableR(goType GoIdentifier) returnWrapper {
+func wrappableR(goType, cType GoIdentifier) returnWrapper {
 	return returnWrapper{
 		returnType: goType,
 		returnStmt: fmt.Sprintf("func() %[1]s {out := %%s ; return *(&%[1]s{}).FromC(unsafe.Pointer(&out))}()", goType),
+		CType:      cType,
 	}
 }
