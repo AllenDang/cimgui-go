@@ -358,7 +358,11 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 					// get name
 					argParts := Split(argStr, " ")
 					var name, typeName string
+					fmt.Println(len(argParts), argParts)
 					switch len(argParts) {
+					case 1:
+						name = fmt.Sprintf("arg%d", a)
+						typeName = strings.Join(argParts, " ")
 					case 2: // like "int arg1" or "const int"
 						if argParts[0] == "const" {
 							name = fmt.Sprintf("arg%d", a)
@@ -367,7 +371,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 						}
 
 						fallthrough
-					case 1, 3: // something like "int" or "const int arg1"
+					case 3: // something like "int" or "const int arg1"
 						name = argParts[len(argParts)-1]
 						typeName = strings.Join(argParts[:len(argParts)-1], " ")
 					}
@@ -510,7 +514,9 @@ func wrap%[1]s(cb %[1]s %[5]s) %[2]s {
 			// now write N functions
 			for i := 0; i < TypedefsPoolSize; i++ {
 				fmt.Fprintf(callbacksGoSb,
-					"func callback%[1]s%[2]d(%[5]s) %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6]s) }\n",
+					`//export callback%[1]s%[2]d
+func callback%[1]s%[2]d(%[5]s) %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6]s) }
+					`,
 					typedefName.renameGoIdentifier(),
 					i,
 					returnType.CType,
