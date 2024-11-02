@@ -73,6 +73,7 @@ func getReturnWrapper(
 		"uintptr_t":       simpleR("uintptr"),
 		"size_t":          simpleR("uint64"),
 		"time_t":          simpleR("uint64"),
+		"void*":           simpleR("unsafe.Pointer"),
 	}
 
 	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")
