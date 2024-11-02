@@ -20,8 +20,8 @@ func NewPool[GoCallback, CCallback any](poolElements ...CCallback) *Pool[GoCallb
 	return result
 }
 
-func (p *Pool[GoCallback, CCallback]) Get(id int) CCallback {
-	return p.pool[id]
+func (p *Pool[GoCallback, CCallback]) Get(id int) GoCallback {
+	return p.allocations[id]
 }
 
 func (p *Pool[GoCallback, CCallback]) Allocate(callback GoCallback) CCallback {
