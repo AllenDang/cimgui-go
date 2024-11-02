@@ -357,11 +357,19 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 				for a, argStr := range argsListStr {
 					// get name
 					argParts := Split(argStr, " ")
-					name := argParts[len(argParts)-1]
-					typeName := strings.Join(argParts[:len(argParts)-1], " ")
-					if len(argParts) == 1 {
-						typeName = name
-						name = fmt.Sprintf("arg%d", a)
+					var name, typeName string
+					switch len(argParts) {
+					case 2: // like "int arg1" or "const int"
+						if argParts[0] == "const" {
+							name = fmt.Sprintf("arg%d", a)
+							typeName = strings.Join(argParts, " ")
+							break
+						}
+
+						fallthrough
+					case 1, 3: // something like "int" or "const int arg1"
+						name = argParts[len(argParts)-1]
+						typeName = strings.Join(argParts[:len(argParts)-1], " ")
 					}
 
 					argsC = append(argsC, ArgDef{
@@ -385,6 +393,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			// so we are supposed to use returnWrapper for that.
 			glg.Debugf("From %s got \"%s\" and \"%v\"\n", k, returnTypeC, argsC)
 
+			// 2.1: get return wrapper
 			var returnType ArgumentWrapperData
 			if returnTypeC == "void" {
 				returnType = ArgumentWrapperData{}
@@ -405,6 +414,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 				}
 			}
 
+			// 2.1: get arg wrappers
 			args := make([]returnWrapper, len(argsC))
 			for i, arg := range argsC {
 				rw, err := getReturnWrapper(arg.Type, data)
@@ -422,14 +432,10 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 				args[i] = rw
 			}
 
-			fmt.Println(args)
-
 			// 3: Prepare call statement
-
 			cCallStmt := ""
 			goCallStmt := ""
 			valuePassStmt := ""
-			fmt.Println(len(argsC), len(args))
 			for i, arg := range args {
 				cCallStmt += fmt.Sprintf("%s %s, ", argsC[i].Name, arg.CType)
 				goCallStmt += fmt.Sprintf("%s %s, ", argsC[i].Name, arg.returnType)
@@ -531,6 +537,7 @@ func init() {
 }
 `, typedefName.renameGoIdentifier(), strings.Join(poolNames, ",\n")+",\n")
 
+			glg.Successf("typedef %s is a callback. Implemented.", k)
 		case HasPrefix(typedefs.data[k], "struct"):
 			isOpaque := !IsStructName(k, structsMap)
 			if data.flags.showGenerated {
