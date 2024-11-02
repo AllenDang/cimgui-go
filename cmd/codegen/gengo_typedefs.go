@@ -29,17 +29,7 @@ func proceedTypedefs(
 
 	// we need FILES
 	typedefsGoSb := &strings.Builder{}
-	typedefsGoSb.WriteString(getGoPackageHeader(data))
-	fmt.Fprintf(typedefsGoSb,
-		`// #include <stdlib.h>
-// #include <memory.h>
-// #include "../imgui/extra_types.h"
-// #include "%[1]s_wrapper.h"
-// #include "%[1]s_typedefs.h"
-import "C"
-import "unsafe"
-
-`, data.prefix)
+	typedefsCGoHeaderSb := &strings.Builder{}
 
 	typedefsHeaderSb := &strings.Builder{}
 	typedefsHeaderSb.WriteString(cppFileHeader)
@@ -531,17 +521,38 @@ func callback%[1]s%[2]d(%[5]s) %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6
 					valuePassStmt,
 				)
 
-				poolNames[i] = fmt.Sprintf("callback%[1]s%[2]d", typedefName.renameGoIdentifier(), i)
+				fmt.Fprintf(typedefsCGoHeaderSb,
+					`// extern %[1]s callback%[2]s%[3]d(%[4]s);
+`,
+					returnTypeC,
+					typedefName.renameGoIdentifier(),
+					i,
+					func() string {
+						result := ""
+						for _, a := range argsC {
+							result += string(a.Type) + ", "
+						}
+
+						return TrimSuffix(result, ", ")
+						return result
+					}(),
+				)
+
+				poolNames[i] = fmt.Sprintf("C.%[3]s(C.callback%[1]s%[2]d)", typedefName.renameGoIdentifier(), i, k)
 			}
 
 			fmt.Fprintf(typedefsGoSb, `
-var pool%[1]s *internal.Pool[%[1]s, c%[1]s]
+var pool%[1]s *internal.Pool[%[1]s, C.%[3]s]
 func init() {
-	pool%[1]s = internal.NewPool[%[1]s, c%[1]s](
+	pool%[1]s = internal.NewPool[%[1]s, C.%[3]s](
 %[2]s
 )
 }
-`, typedefName.renameGoIdentifier(), strings.Join(poolNames, ",\n")+",\n")
+`,
+				typedefName.renameGoIdentifier(),
+				strings.Join(poolNames, ",\n")+",\n",
+				k,
+			)
 
 			glg.Successf("typedef %s is a callback. Implemented.", k)
 		case HasPrefix(typedefs.data[k], "struct"):
@@ -566,7 +577,26 @@ func init() {
 }
 #endif`)
 
-	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.go", data.prefix), []byte(typedefsGoSb.String()), 0644); err != nil {
+	typedefsGoResultSb := &strings.Builder{}
+	typedefsGoResultSb.WriteString(getGoPackageHeader(data))
+	fmt.Fprintf(typedefsGoResultSb,
+		`// #include <stdlib.h>
+// #include <memory.h>
+// #include "../imgui/extra_types.h"
+// #include "%[1]s_wrapper.h"
+// #include "%[1]s_typedefs.h"
+`, data.prefix)
+
+	typedefsGoResultSb.WriteString(typedefsCGoHeaderSb.String())
+
+	fmt.Fprintf(typedefsGoResultSb,
+		`import "C"
+import "unsafe"
+`)
+
+	typedefsGoResultSb.WriteString(typedefsGoSb.String())
+
+	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.go", data.prefix), []byte(typedefsGoResultSb.String()), 0644); err != nil {
 		return nil, fmt.Errorf("cannot write %s_typedefs.go: %w", data.prefix, err)
 	}
 
