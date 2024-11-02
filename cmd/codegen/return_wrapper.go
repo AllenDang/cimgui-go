@@ -105,12 +105,14 @@ func getReturnWrapper(
 			returnType: prefixGoPackage(t.renameGoIdentifier(), srcPackage, context),
 			// this is a small trick as using prefixGoPackage isn't in fact intended to be used in such a way, but it should treat the whole string as a "type" and prefix it correctly
 			returnStmt: string(prefixGoPackage(GoIdentifier(fmt.Sprintf("*New%sFromC(func() *C.%s {result := %%s; return &result}())", t.renameGoIdentifier(), t)), srcPackage, context)),
+			CType:      GoIdentifier(fmt.Sprintf("*C.%s", t)),
 		}, nil
 	case isEnum(t, context.enumNames):
 		goType := prefixGoPackage(t.renameEnum(), srcPackage, context)
 		return returnWrapper{
 			returnType: goType,
 			returnStmt: fmt.Sprintf("%s(%%s)", goType),
+			CType:      GoIdentifier(fmt.Sprintf("C.%s", t)),
 		}, nil
 	case HasPrefix(t, "ImVector_") &&
 		!(HasSuffix(t, "*") || HasSuffix(t, "]")):
@@ -128,18 +130,21 @@ func getReturnWrapper(
 		return returnWrapper{
 			returnType: GoIdentifier(fmt.Sprintf("vectors.Vector[%s]", Replace(rw.returnType, "*", "", 1))),
 			returnStmt: fmt.Sprintf("vectors.NewVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
+			CType:      GoIdentifier(fmt.Sprintf("*C.%s", t)),
 		}, nil
 	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), context.enumNames):
 		goType := prefixGoPackage("*"+TrimSuffix(t, "*").renameEnum(), srcPackage, context)
 		return returnWrapper{
 			returnType: goType,
 			returnStmt: fmt.Sprintf("(%s)(%%s)", goType),
+			CType:      GoIdentifier(fmt.Sprintf("*C.%s", TrimSuffix(t, "*"))),
 		}, nil
 	case HasSuffix(t, "*") && isStruct && !shouldSkipStruct(pureType):
 		goType := prefixGoPackage("*"+TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(), srcPackage, context)
 		return returnWrapper{
 			returnType: goType,
 			returnStmt: string(prefixGoPackage(GoIdentifier(fmt.Sprintf("New%sFromC(%%s)", TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier())), srcPackage, context)),
+			CType:      GoIdentifier(fmt.Sprintf("*C.%s", TrimPrefix(TrimSuffix(t, "*"), "const "))),
 		}, nil
 	case isArray:
 		typeCount := Split(t, "[")
@@ -171,6 +176,7 @@ result := [%[1]d]%[2]s{}
 
 	return result
 }()`, count, rw.returnType, fmt.Sprintf(rw.returnStmt, fmt.Sprintf("C.%s(resultMirr, C.int(i))", getterName))),
+			CType: GoIdentifier(fmt.Sprintf("*C.%s", typeName)),
 		}
 
 		return result, nil
