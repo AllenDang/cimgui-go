@@ -363,6 +363,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 						typeName = name
 						name = fmt.Sprintf("arg%d", a)
 					}
+
 					argsC = append(argsC, ArgDef{
 						Name: CIdentifier(name),
 						Type: CIdentifier(typeName),
@@ -405,7 +406,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			}
 
 			args := make([]returnWrapper, len(argsC))
-			for _, arg := range argsC {
+			for i, arg := range argsC {
 				rw, err := getReturnWrapper(arg.Type, data)
 				if err != nil {
 					if data.flags.showNotGenerated {
@@ -418,30 +419,66 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 				// fill rw return stmt
 				rw.returnStmt = fmt.Sprintf(rw.returnStmt, arg.Name)
 
-				args = append(args, rw)
+				args[i] = rw
 			}
 
 			fmt.Println(args)
 
+			// 3: Prepare call statement
+
+			cCallStmt := ""
+			goCallStmt := ""
+			valuePassStmt := ""
+			fmt.Println(len(argsC), len(args))
+			for i, arg := range args {
+				cCallStmt += fmt.Sprintf("%s %s, ", argsC[i].Name, arg.CType)
+				goCallStmt += fmt.Sprintf("%s %s, ", argsC[i].Name, arg.returnType)
+				valuePassStmt += fmt.Sprintf("%s, ", argsC[i].Name)
+			}
+
+			cCallStmt = TrimSuffix(cCallStmt, ", ")
+			goCallStmt = TrimSuffix(goCallStmt, ", ")
+			valuePassStmt = TrimSuffix(valuePassStmt, ", ")
+
+			// 4: Write code
 			fmt.Fprintf(callbacksGoSb, `
-type %[1]s func() %[2]s
-type c%[1]s func() %[3]s
+type %[1]s func(%[4]s) %[2]s
+type c%[1]s func(%[5]s) %[3]s
 `,
 				typedefName.renameGoIdentifier(),
 				returnType.ArgType,
 				returnType.CType,
+				goCallStmt,
+				cCallStmt,
 			)
+
+			cCallStmt2 := cCallStmt
+			if cCallStmt2 != "" {
+				cCallStmt2 = ", " + cCallStmt2
+			}
 
 			if returnType.ArgType == "" {
 				fmt.Fprintf(callbacksGoSb, `
-func wrap%[1]s(cb %[1]s) %[2]s {
-	cb()
+func wrap%[1]s(cb %[1]s %[3]s) %[2]s {
+	cb(%[4]s)
 }
-`, typedefName.renameGoIdentifier(), returnType.CType)
+`,
+					typedefName.renameGoIdentifier(),
+					returnType.CType,
+					cCallStmt2,
+					func() string {
+						result := ""
+						for _, a := range args {
+							result += a.returnStmt + ", "
+						}
+						result = TrimSuffix(result, ", ")
+						return result
+					}(),
+				)
 			} else {
 				fmt.Fprintf(callbacksGoSb, `
-func wrap%[1]s(cb %[1]s) %[2]s {
-	result := cb()
+func wrap%[1]s(cb %[1]s %[5]s) %[2]s {
+	result := cb(%[6]s)
 	%[3]s
 	return %[4]s
 }
@@ -450,6 +487,15 @@ func wrap%[1]s(cb %[1]s) %[2]s {
 					returnType.CType,
 					returnType.ArgDef,
 					returnType.VarName,
+					cCallStmt2,
+					func() string {
+						result := ""
+						for _, a := range args {
+							result += a.returnStmt + ", "
+						}
+						result = TrimSuffix(result, ", ")
+						return result
+					}(),
 				)
 			}
 
@@ -457,7 +503,8 @@ func wrap%[1]s(cb %[1]s) %[2]s {
 			poolNames := make([]string, TypedefsPoolSize)
 			// now write N functions
 			for i := 0; i < TypedefsPoolSize; i++ {
-				fmt.Fprintf(callbacksGoSb, "func callback%[1]s%[2]d() %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d)) }\n",
+				fmt.Fprintf(callbacksGoSb,
+					"func callback%[1]s%[2]d(%[5]s) %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6]s) }\n",
 					typedefName.renameGoIdentifier(),
 					i,
 					returnType.CType,
@@ -468,6 +515,8 @@ func wrap%[1]s(cb %[1]s) %[2]s {
 
 						return ""
 					}(),
+					cCallStmt,
+					valuePassStmt,
 				)
 
 				poolNames[i] = fmt.Sprintf("callback%[1]s%[2]d", typedefName.renameGoIdentifier(), i)
