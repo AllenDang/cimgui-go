@@ -391,7 +391,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			// We need to figure out how to wrap returnType and args.
 			// In fact, we need to swap meaning of them, because we want to convert C argument type to Go argument type
 			// so we are supposed to use returnWrapper for that.
-			glg.Debugf("From %s got \"%s\" and \"%v\"\n", k, returnTypeC, argsC)
+			glg.Debugf("From %s got \"%s\" and \"%v\"", k, returnTypeC, argsC)
 
 			// 2.1: get return wrapper
 			var returnType ArgumentWrapperData
