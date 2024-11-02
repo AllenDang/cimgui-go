@@ -399,30 +399,60 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			fmt.Fprintf(callbacksGoSb, `
 type %[1]s func() %[2]s
 type c%[1]s func() %[3]s
-func wrap%[1]s(cb %[1]s) %[3]s {
-	result := cb()
-	%[4]s
-	return %[5]s
+`,
+				typedefName.renameGoIdentifier(),
+				returnType.ArgType,
+				returnType.CType,
+			)
+
+			if returnType.ArgType == "" {
+				fmt.Fprintf(callbacksGoSb, `
+func wrap%[1]s(cb %[1]s) %[2]s {
+	cb()
 }
-`, typedefName.renameGoIdentifier(), returnType.ArgType, returnType.CType, returnType.ArgDefNoFin, returnType.VarName)
+`, typedefName.renameGoIdentifier(), returnType.CType)
+			} else {
+				fmt.Fprintf(callbacksGoSb, `
+func wrap%[1]s(cb %[1]s) %[2]s {
+	result := cb()
+	%[3]s
+	return %[4]s
+}
+`,
+					typedefName.renameGoIdentifier(),
+					returnType.CType,
+					returnType.ArgDef,
+					returnType.VarName,
+				)
+			}
 
 			// TODO: implement custom map
 			poolNames := make([]string, TypedefsPoolSize)
 			// now write N functions
 			for i := 0; i < TypedefsPoolSize; i++ {
-				fmt.Fprintf(callbacksGoSb, "func callback%[1]s%[2]d() %[3]s { return wrap%[1]s(pool%[1]s.Get(%[2]d)) }\n",
+				fmt.Fprintf(callbacksGoSb, "func callback%[1]s%[2]d() %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d)) }\n",
 					typedefName.renameGoIdentifier(),
 					i,
 					returnType.CType,
+					func() string {
+						if returnType.ArgType != "" {
+							return "return"
+						}
+
+						return ""
+					}(),
 				)
 
 				poolNames[i] = fmt.Sprintf("callback%[1]s%[2]d", typedefName.renameGoIdentifier(), i)
 			}
 
 			fmt.Fprintf(callbacksGoSb, `
-var pool%[1]s = internal.NewPool[%[1]s, c%[1]s](
+var pool%[1]s *internal.Pool[%[1]s, c%[1]s]
+func init() {
+	pool%[1]s = internal.NewPool[%[1]s, c%[1]s](
 %[2]s
 )
+}
 `, typedefName.renameGoIdentifier(), strings.Join(poolNames, ",\n")+",\n")
 
 		case HasPrefix(typedefs.data[k], "struct"):
