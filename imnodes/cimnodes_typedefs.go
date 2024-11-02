@@ -9,7 +9,11 @@ package imnodes
 // #include "cimnodes_wrapper.h"
 // #include "cimnodes_typedefs.h"
 import "C"
-import "github.com/AllenDang/cimgui-go/internal"
+import (
+	"unsafe"
+
+	"github.com/AllenDang/cimgui-go/internal"
+)
 
 type EmulateThreeButtonMouse struct {
 	CData *C.EmulateThreeButtonMouse
@@ -81,6 +85,34 @@ func (self NodesIO) C() (C.ImNodesIO, func()) {
 // SRC ~= *C.ImNodesIO
 func NewNodesIOFromC[SRC any](cvalue SRC) *NodesIO {
 	return &NodesIO{CData: internal.ReinterpretCast[*C.ImNodesIO](cvalue)}
+}
+
+type (
+	NodesMiniMapNodeHoveringCallback  func(arg0 int32, arg1 unsafe.Pointer)
+	cNodesMiniMapNodeHoveringCallback func(arg0 C.int, arg1 unsafe.Pointer)
+)
+
+func wrapNodesMiniMapNodeHoveringCallback(cb NodesMiniMapNodeHoveringCallback, arg0 C.int, arg1 unsafe.Pointer) {
+	cb(int32(arg0), unsafe.Pointer(arg1))
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback0
+func callbackNodesMiniMapNodeHoveringCallback0(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(0), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback1
+func callbackNodesMiniMapNodeHoveringCallback1(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(1), arg0, arg1)
+}
+
+var poolNodesMiniMapNodeHoveringCallback *internal.Pool[NodesMiniMapNodeHoveringCallback, cNodesMiniMapNodeHoveringCallback]
+
+func init() {
+	poolNodesMiniMapNodeHoveringCallback = internal.NewPool[NodesMiniMapNodeHoveringCallback, cNodesMiniMapNodeHoveringCallback](
+		callbackNodesMiniMapNodeHoveringCallback0,
+		callbackNodesMiniMapNodeHoveringCallback1,
+	)
 }
 
 type NodesMiniMapNodeHoveringCallbackUserData struct {
