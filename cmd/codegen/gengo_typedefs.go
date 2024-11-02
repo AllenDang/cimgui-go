@@ -380,11 +380,51 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			glg.Debugf("From %s got \"%s\" and \"%v\"\n", k, returnTypeC, argsC)
 
 			// 2: write go type definition
+			_, returnType, err := getArgWrapper(
+				&ArgDef{
+					Name: "result",
+					Type: returnTypeC,
+				},
+				false, false,
+				data,
+			)
+			if err != nil {
+				if data.flags.showNotGenerated {
+					glg.Failf("cannot get return wrapper for %s: %v", k, err)
+				}
+			}
+
+			fmt.Println(returnType)
+
 			fmt.Fprintf(callbacksGoSb, `
-type %[1]s func()
-type c%[1]s func()
-var pool%[1]s = internal.NewPool[%[1]s, c%[1]s]()
-`, typedefName.renameGoIdentifier())
+type %[1]s func() %[2]s
+type c%[1]s func() %[3]s
+func wrap%[1]s(cb %[1]s) %[3]s {
+	result := cb()
+	%[4]s
+	return %[5]s
+}
+`, typedefName.renameGoIdentifier(), returnType.ArgType, returnType.CType, returnType.ArgDefNoFin, returnType.VarName)
+
+			// TODO: implement custom map
+			poolNames := make([]string, TypedefsPoolSize)
+			// now write N functions
+			for i := 0; i < TypedefsPoolSize; i++ {
+				fmt.Fprintf(callbacksGoSb, "func callback%[1]s%[2]d() %[3]s { return wrap%[1]s(pool%[1]s.Get(%[2]d)) }\n",
+					typedefName.renameGoIdentifier(),
+					i,
+					returnType.CType,
+				)
+
+				poolNames[i] = fmt.Sprintf("callback%[1]s%[2]d", typedefName.renameGoIdentifier(), i)
+			}
+
+			fmt.Fprintf(callbacksGoSb, `
+var pool%[1]s = internal.NewPool[%[1]s, c%[1]s](
+%[2]s
+)
+`, typedefName.renameGoIdentifier(), strings.Join(poolNames, ",\n")+",\n")
+
 		case HasPrefix(typedefs.data[k], "struct"):
 			isOpaque := !IsStructName(k, structsMap)
 			if data.flags.showGenerated {
