@@ -28,9 +28,9 @@ func proceedTypedefs(
 	}
 
 	// we need FILES
-	callbacksGoSb := &strings.Builder{}
-	callbacksGoSb.WriteString(getGoPackageHeader(data))
-	fmt.Fprintf(callbacksGoSb,
+	typedefsGoSb := &strings.Builder{}
+	typedefsGoSb.WriteString(getGoPackageHeader(data))
+	fmt.Fprintf(typedefsGoSb,
 		`// #include <stdlib.h>
 // #include <memory.h>
 // #include "../imgui/extra_types.h"
@@ -182,7 +182,7 @@ extern %[1]s %[1]s_fromUintptr(uintptr_t ptr);`, k)
 
 			// NOTE: in case of problems e.g. with Textures, here might be potential issue:
 			// Handle() is incomplete - it doesn't have right finalizer (for now I think this will not affect code)
-			fmt.Fprintf(callbacksGoSb, `
+			fmt.Fprintf(typedefsGoSb, `
 type %[1]s struct {
 	Data uintptr
 }
@@ -227,7 +227,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 				glg.Successf("typedef %s is an alias typedef.", k)
 			}
 
-			fmt.Fprintf(callbacksGoSb, `
+			fmt.Fprintf(typedefsGoSb, `
 type %[1]s %[2]s
 
 // Handle returns C version of %[1]s and its finalizer func.
@@ -270,7 +270,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 		case returnTypeErr == nil && argTypeErr == nil && isPtr:
 			// if it's a pointer type, I think we can proceed as above, but without Handle() method...
 			// (handle proceeds pointer values and we don't want double pointers, really)
-			fmt.Fprintf(callbacksGoSb, `
+			fmt.Fprintf(typedefsGoSb, `
 type %[1]s  struct {
 	Data %[2]s
 }
@@ -451,7 +451,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			valuePassStmt = TrimSuffix(valuePassStmt, ", ")
 
 			// 4: Write code
-			fmt.Fprintf(callbacksGoSb, `
+			fmt.Fprintf(typedefsGoSb, `
 type %[1]s func(%[4]s) %[2]s
 type c%[1]s func(%[5]s) %[3]s
 `,
@@ -468,7 +468,7 @@ type c%[1]s func(%[5]s) %[3]s
 			}
 
 			if returnType.ArgType == "" {
-				fmt.Fprintf(callbacksGoSb, `
+				fmt.Fprintf(typedefsGoSb, `
 func wrap%[1]s(cb %[1]s %[3]s) %[2]s {
 	cb(%[4]s)
 }
@@ -486,7 +486,7 @@ func wrap%[1]s(cb %[1]s %[3]s) %[2]s {
 					}(),
 				)
 			} else {
-				fmt.Fprintf(callbacksGoSb, `
+				fmt.Fprintf(typedefsGoSb, `
 func wrap%[1]s(cb %[1]s %[5]s) %[2]s {
 	result := cb(%[6]s)
 	%[3]s
@@ -513,7 +513,7 @@ func wrap%[1]s(cb %[1]s %[5]s) %[2]s {
 			poolNames := make([]string, TypedefsPoolSize)
 			// now write N functions
 			for i := 0; i < TypedefsPoolSize; i++ {
-				fmt.Fprintf(callbacksGoSb,
+				fmt.Fprintf(typedefsGoSb,
 					`//export callback%[1]s%[2]d
 func callback%[1]s%[2]d(%[5]s) %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6]s) }
 					`,
@@ -534,7 +534,7 @@ func callback%[1]s%[2]d(%[5]s) %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6
 				poolNames[i] = fmt.Sprintf("callback%[1]s%[2]d", typedefName.renameGoIdentifier(), i)
 			}
 
-			fmt.Fprintf(callbacksGoSb, `
+			fmt.Fprintf(typedefsGoSb, `
 var pool%[1]s *internal.Pool[%[1]s, c%[1]s]
 func init() {
 	pool%[1]s = internal.NewPool[%[1]s, c%[1]s](
@@ -550,7 +550,7 @@ func init() {
 				glg.Successf("typedef %s is a struct (is opaque? %v).", k, isOpaque)
 			}
 
-			writeOpaqueStruct(k, isOpaque, callbacksGoSb)
+			writeOpaqueStruct(k, isOpaque, typedefsGoSb)
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		default:
@@ -566,7 +566,7 @@ func init() {
 }
 #endif`)
 
-	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.go", data.prefix), []byte(callbacksGoSb.String()), 0644); err != nil {
+	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.go", data.prefix), []byte(typedefsGoSb.String()), 0644); err != nil {
 		return nil, fmt.Errorf("cannot write %s_typedefs.go: %w", data.prefix, err)
 	}
 
