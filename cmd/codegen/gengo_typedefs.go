@@ -70,6 +70,7 @@ extern "C" {
 	// sort keys
 	SortStrings(keys)
 
+typedefsGeneration:
 	for _, k := range keys {
 		typedef := typedefs.data[k]
 		if shouldSkip, ok := skippedTypedefs[k]; ok && shouldSkip {
@@ -339,7 +340,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			argsC := make([]ArgDef, 0)
 
 			if ok := expr1.MatchString(typedefs.data[k]); ok {
-				glg.Debugf("callback typedef is in form 1", k)
+				glg.Debugf("callback typedef \"%s\" is in form 1", k)
 				// now split by "("
 				// it should be something like this:
 				// ["returnType", "*<optional func name)", "args1 arg1Name, args2 arg2Name, args3 arg3Name);"]
@@ -353,11 +354,15 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 				argsStr = TrimSuffix(argsStr, ");")
 				argsStr = ReplaceAll(argsStr, ", ", ",")
 				argsListStr := Split(argsStr, ",")
-				for _, argStr := range argsListStr {
+				for a, argStr := range argsListStr {
 					// get name
 					argParts := Split(argStr, " ")
 					name := argParts[len(argParts)-1]
 					typeName := strings.Join(argParts[:len(argParts)-1], " ")
+					if len(argParts) == 1 {
+						typeName = name
+						name = fmt.Sprintf("arg%d", a)
+					}
 					argsC = append(argsC, ArgDef{
 						Name: CIdentifier(name),
 						Type: CIdentifier(typeName),
@@ -379,22 +384,44 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			// so we are supposed to use returnWrapper for that.
 			glg.Debugf("From %s got \"%s\" and \"%v\"\n", k, returnTypeC, argsC)
 
-			// 2: write go type definition
-			_, returnType, err := getArgWrapper(
-				&ArgDef{
-					Name: "result",
-					Type: returnTypeC,
-				},
-				false, false,
-				data,
-			)
-			if err != nil {
-				if data.flags.showNotGenerated {
-					glg.Failf("cannot get return wrapper for %s: %v", k, err)
+			var returnType ArgumentWrapperData
+			if returnTypeC == "void" {
+				returnType = ArgumentWrapperData{}
+			} else {
+				_, returnType, err = getArgWrapper(
+					&ArgDef{
+						Name: "result",
+						Type: returnTypeC,
+					},
+					false, false,
+					data,
+				)
+				if err != nil {
+					if data.flags.showNotGenerated {
+						glg.Failf("cannot get return wrapper for %s - \"%s\": %v", k, returnTypeC, err)
+					}
+					continue typedefsGeneration
 				}
 			}
 
-			fmt.Println(returnType)
+			args := make([]returnWrapper, len(argsC))
+			for _, arg := range argsC {
+				rw, err := getReturnWrapper(arg.Type, data)
+				if err != nil {
+					if data.flags.showNotGenerated {
+						glg.Failf("cannot get arg wrapper for \"%s\" - \"%s\": %v", k, arg.Type, err)
+					}
+
+					continue typedefsGeneration
+				}
+
+				// fill rw return stmt
+				rw.returnStmt = fmt.Sprintf(rw.returnStmt, arg.Name)
+
+				args = append(args, rw)
+			}
+
+			fmt.Println(args)
 
 			fmt.Fprintf(callbacksGoSb, `
 type %[1]s func() %[2]s
