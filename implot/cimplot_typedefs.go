@@ -8,8 +8,18 @@ package implot
 // #include "../imgui/extra_types.h"
 // #include "cimplot_wrapper.h"
 // #include "cimplot_typedefs.h"
+// extern int callbackPlotFormatter0(double, char*, int, void*);
+// extern int callbackPlotFormatter1(double, char*, int, void*);
+// extern ImPlotPoint callbackPlotGetter0(int, void*);
+// extern ImPlotPoint callbackPlotGetter1(int, void*);
+// extern double callbackPlotTransform0(double, void*);
+// extern double callbackPlotTransform1(double, void*);
 import "C"
-import "github.com/AllenDang/cimgui-go/internal"
+import (
+	"unsafe"
+
+	"github.com/AllenDang/cimgui-go/internal"
+)
 
 type FormatterTimeData struct {
 	CData *C.Formatter_Time_Data
@@ -192,6 +202,92 @@ func (self PlotDateTimeSpec) C() (C.ImPlotDateTimeSpec, func()) {
 // SRC ~= *C.ImPlotDateTimeSpec
 func NewPlotDateTimeSpecFromC[SRC any](cvalue SRC) *PlotDateTimeSpec {
 	return &PlotDateTimeSpec{CData: internal.ReinterpretCast[*C.ImPlotDateTimeSpec](cvalue)}
+}
+
+type (
+	PlotFormatter  func(value float64, buff string, size int32, user_data unsafe.Pointer) int32
+	cPlotFormatter func(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int
+)
+
+func NewPlotFormatterFromC(cvalue *C.ImPlotFormatter) *PlotFormatter {
+	result := poolPlotFormatter.Find(*cvalue)
+	return &result
+}
+
+func (c PlotFormatter) C() (C.ImPlotFormatter, func()) {
+	return poolPlotFormatter.Allocate(c), func() {}
+}
+
+func wrapPlotFormatter(cb PlotFormatter, value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	result := cb(float64(value), C.GoString(buff), int32(size), unsafe.Pointer(user_data))
+
+	return C.int(result)
+}
+
+//export callbackPlotFormatter0
+func callbackPlotFormatter0(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(0), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter1
+func callbackPlotFormatter1(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(1), value, buff, size, user_data)
+}
+
+var poolPlotFormatter *internal.Pool[PlotFormatter, C.ImPlotFormatter]
+
+func init() {
+	poolPlotFormatter = internal.NewPool[PlotFormatter, C.ImPlotFormatter](
+		C.ImPlotFormatter(C.callbackPlotFormatter0),
+		C.ImPlotFormatter(C.callbackPlotFormatter1),
+	)
+}
+
+func ClearPlotFormatterPool() {
+	poolPlotFormatter.Clear()
+}
+
+type (
+	PlotGetter  func(idx int32, user_data unsafe.Pointer) PlotPoint
+	cPlotGetter func(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint
+)
+
+func NewPlotGetterFromC(cvalue *C.ImPlotGetter) *PlotGetter {
+	result := poolPlotGetter.Find(*cvalue)
+	return &result
+}
+
+func (c PlotGetter) C() (C.ImPlotGetter, func()) {
+	return poolPlotGetter.Allocate(c), func() {}
+}
+
+func wrapPlotGetter(cb PlotGetter, idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	result := cb(int32(idx), unsafe.Pointer(user_data))
+
+	return internal.ReinterpretCast[C.ImPlotPoint](result.ToC())
+}
+
+//export callbackPlotGetter0
+func callbackPlotGetter0(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(0), idx, user_data)
+}
+
+//export callbackPlotGetter1
+func callbackPlotGetter1(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(1), idx, user_data)
+}
+
+var poolPlotGetter *internal.Pool[PlotGetter, C.ImPlotGetter]
+
+func init() {
+	poolPlotGetter = internal.NewPool[PlotGetter, C.ImPlotGetter](
+		C.ImPlotGetter(C.callbackPlotGetter0),
+		C.ImPlotGetter(C.callbackPlotGetter1),
+	)
+}
+
+func ClearPlotGetterPool() {
+	poolPlotGetter.Clear()
 }
 
 type PlotInputMap struct {
@@ -528,4 +624,47 @@ func (self PlotTicker) C() (C.ImPlotTicker, func()) {
 // SRC ~= *C.ImPlotTicker
 func NewPlotTickerFromC[SRC any](cvalue SRC) *PlotTicker {
 	return &PlotTicker{CData: internal.ReinterpretCast[*C.ImPlotTicker](cvalue)}
+}
+
+type (
+	PlotTransform  func(value float64, user_data unsafe.Pointer) float64
+	cPlotTransform func(value C.double, user_data unsafe.Pointer) C.double
+)
+
+func NewPlotTransformFromC(cvalue *C.ImPlotTransform) *PlotTransform {
+	result := poolPlotTransform.Find(*cvalue)
+	return &result
+}
+
+func (c PlotTransform) C() (C.ImPlotTransform, func()) {
+	return poolPlotTransform.Allocate(c), func() {}
+}
+
+func wrapPlotTransform(cb PlotTransform, value C.double, user_data unsafe.Pointer) C.double {
+	result := cb(float64(value), unsafe.Pointer(user_data))
+
+	return C.double(result)
+}
+
+//export callbackPlotTransform0
+func callbackPlotTransform0(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(0), value, user_data)
+}
+
+//export callbackPlotTransform1
+func callbackPlotTransform1(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(1), value, user_data)
+}
+
+var poolPlotTransform *internal.Pool[PlotTransform, C.ImPlotTransform]
+
+func init() {
+	poolPlotTransform = internal.NewPool[PlotTransform, C.ImPlotTransform](
+		C.ImPlotTransform(C.callbackPlotTransform0),
+		C.ImPlotTransform(C.callbackPlotTransform1),
+	)
+}
+
+func ClearPlotTransformPool() {
+	poolPlotTransform.Clear()
 }

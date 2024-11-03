@@ -8,8 +8,22 @@ package imgui
 // #include "../imgui/extra_types.h"
 // #include "cimgui_wrapper.h"
 // #include "cimgui_typedefs.h"
+// extern void callbackDrawCallback0(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback1(ImDrawList*, ImDrawCmd*);
+// extern void callbackContextHookCallback0(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback1(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackErrorCallback0(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback1(ImGuiContext*, void*, char*);
+// extern void callbackMemFreeFunc0(void*, void*);
+// extern void callbackMemFreeFunc1(void*, void*);
+// extern void callbackSizeCallback0(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback1(ImGuiSizeCallbackData*);
 import "C"
-import "github.com/AllenDang/cimgui-go/internal"
+import (
+	"unsafe"
+
+	"github.com/AllenDang/cimgui-go/internal"
+)
 
 type BitArrayPtr struct {
 	Data *uint32
@@ -54,6 +68,47 @@ func (self BitVector) C() (C.ImBitVector, func()) {
 // SRC ~= *C.ImBitVector
 func NewBitVectorFromC[SRC any](cvalue SRC) *BitVector {
 	return &BitVector{CData: internal.ReinterpretCast[*C.ImBitVector](cvalue)}
+}
+
+type (
+	DrawCallback  func(parent_list *DrawList, cmd *DrawCmd)
+	cDrawCallback func(parent_list *C.ImDrawList, cmd *C.ImDrawCmd)
+)
+
+func NewDrawCallbackFromC(cvalue *C.ImDrawCallback) *DrawCallback {
+	result := poolDrawCallback.Find(*cvalue)
+	return &result
+}
+
+func (c DrawCallback) C() (C.ImDrawCallback, func()) {
+	return poolDrawCallback.Allocate(c), func() {}
+}
+
+func wrapDrawCallback(cb DrawCallback, parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	cb(NewDrawListFromC(parent_list), NewDrawCmdFromC(cmd))
+}
+
+//export callbackDrawCallback0
+func callbackDrawCallback0(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(0), parent_list, cmd)
+}
+
+//export callbackDrawCallback1
+func callbackDrawCallback1(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(1), parent_list, cmd)
+}
+
+var poolDrawCallback *internal.Pool[DrawCallback, C.ImDrawCallback]
+
+func init() {
+	poolDrawCallback = internal.NewPool[DrawCallback, C.ImDrawCallback](
+		C.ImDrawCallback(C.callbackDrawCallback0),
+		C.ImDrawCallback(C.callbackDrawCallback1),
+	)
+}
+
+func ClearDrawCallbackPool() {
+	poolDrawCallback.Clear()
 }
 
 type DrawChannel struct {
@@ -517,6 +572,47 @@ func NewContextHookFromC[SRC any](cvalue SRC) *ContextHook {
 	return &ContextHook{CData: internal.ReinterpretCast[*C.ImGuiContextHook](cvalue)}
 }
 
+type (
+	ContextHookCallback  func(ctx *Context, hook *ContextHook)
+	cContextHookCallback func(ctx *C.ImGuiContext, hook *C.ImGuiContextHook)
+)
+
+func NewContextHookCallbackFromC(cvalue *C.ImGuiContextHookCallback) *ContextHookCallback {
+	result := poolContextHookCallback.Find(*cvalue)
+	return &result
+}
+
+func (c ContextHookCallback) C() (C.ImGuiContextHookCallback, func()) {
+	return poolContextHookCallback.Allocate(c), func() {}
+}
+
+func wrapContextHookCallback(cb ContextHookCallback, ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	cb(NewContextFromC(ctx), NewContextHookFromC(hook))
+}
+
+//export callbackContextHookCallback0
+func callbackContextHookCallback0(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(0), ctx, hook)
+}
+
+//export callbackContextHookCallback1
+func callbackContextHookCallback1(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(1), ctx, hook)
+}
+
+var poolContextHookCallback *internal.Pool[ContextHookCallback, C.ImGuiContextHookCallback]
+
+func init() {
+	poolContextHookCallback = internal.NewPool[ContextHookCallback, C.ImGuiContextHookCallback](
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback0),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback1),
+	)
+}
+
+func ClearContextHookCallbackPool() {
+	poolContextHookCallback.Clear()
+}
+
 type DataTypeInfo struct {
 	CData *C.ImGuiDataTypeInfo
 }
@@ -692,6 +788,47 @@ func (self *DockRequest) Handle() (result *C.ImGuiDockRequest, fin func()) {
 // SRC ~= *C.ImGuiDockRequest
 func NewDockRequestFromC[SRC any](cvalue SRC) *DockRequest {
 	return &DockRequest{CData: internal.ReinterpretCast[*C.ImGuiDockRequest](cvalue)}
+}
+
+type (
+	ErrorCallback  func(ctx *Context, user_data unsafe.Pointer, msg string)
+	cErrorCallback func(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char)
+)
+
+func NewErrorCallbackFromC(cvalue *C.ImGuiErrorCallback) *ErrorCallback {
+	result := poolErrorCallback.Find(*cvalue)
+	return &result
+}
+
+func (c ErrorCallback) C() (C.ImGuiErrorCallback, func()) {
+	return poolErrorCallback.Allocate(c), func() {}
+}
+
+func wrapErrorCallback(cb ErrorCallback, ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	cb(NewContextFromC(ctx), unsafe.Pointer(user_data), C.GoString(msg))
+}
+
+//export callbackErrorCallback0
+func callbackErrorCallback0(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(0), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback1
+func callbackErrorCallback1(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(1), ctx, user_data, msg)
+}
+
+var poolErrorCallback *internal.Pool[ErrorCallback, C.ImGuiErrorCallback]
+
+func init() {
+	poolErrorCallback = internal.NewPool[ErrorCallback, C.ImGuiErrorCallback](
+		C.ImGuiErrorCallback(C.callbackErrorCallback0),
+		C.ImGuiErrorCallback(C.callbackErrorCallback1),
+	)
+}
+
+func ClearErrorCallbackPool() {
+	poolErrorCallback.Clear()
 }
 
 type ErrorRecoveryState struct {
@@ -1294,6 +1431,47 @@ func NewLocEntryFromC[SRC any](cvalue SRC) *LocEntry {
 	return &LocEntry{CData: internal.ReinterpretCast[*C.ImGuiLocEntry](cvalue)}
 }
 
+type (
+	MemFreeFunc  func(ptr unsafe.Pointer, user_data unsafe.Pointer)
+	cMemFreeFunc func(ptr unsafe.Pointer, user_data unsafe.Pointer)
+)
+
+func NewMemFreeFuncFromC(cvalue *C.ImGuiMemFreeFunc) *MemFreeFunc {
+	result := poolMemFreeFunc.Find(*cvalue)
+	return &result
+}
+
+func (c MemFreeFunc) C() (C.ImGuiMemFreeFunc, func()) {
+	return poolMemFreeFunc.Allocate(c), func() {}
+}
+
+func wrapMemFreeFunc(cb MemFreeFunc, ptr unsafe.Pointer, user_data unsafe.Pointer) {
+	cb(unsafe.Pointer(ptr), unsafe.Pointer(user_data))
+}
+
+//export callbackMemFreeFunc0
+func callbackMemFreeFunc0(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(0), ptr, user_data)
+}
+
+//export callbackMemFreeFunc1
+func callbackMemFreeFunc1(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(1), ptr, user_data)
+}
+
+var poolMemFreeFunc *internal.Pool[MemFreeFunc, C.ImGuiMemFreeFunc]
+
+func init() {
+	poolMemFreeFunc = internal.NewPool[MemFreeFunc, C.ImGuiMemFreeFunc](
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc0),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc1),
+	)
+}
+
+func ClearMemFreeFuncPool() {
+	poolMemFreeFunc.Clear()
+}
+
 type MenuColumns struct {
 	CData *C.ImGuiMenuColumns
 }
@@ -1774,6 +1952,47 @@ func (self ShrinkWidthItem) C() (C.ImGuiShrinkWidthItem, func()) {
 // SRC ~= *C.ImGuiShrinkWidthItem
 func NewShrinkWidthItemFromC[SRC any](cvalue SRC) *ShrinkWidthItem {
 	return &ShrinkWidthItem{CData: internal.ReinterpretCast[*C.ImGuiShrinkWidthItem](cvalue)}
+}
+
+type (
+	SizeCallback  func(data *SizeCallbackData)
+	cSizeCallback func(data *C.ImGuiSizeCallbackData)
+)
+
+func NewSizeCallbackFromC(cvalue *C.ImGuiSizeCallback) *SizeCallback {
+	result := poolSizeCallback.Find(*cvalue)
+	return &result
+}
+
+func (c SizeCallback) C() (C.ImGuiSizeCallback, func()) {
+	return poolSizeCallback.Allocate(c), func() {}
+}
+
+func wrapSizeCallback(cb SizeCallback, data *C.ImGuiSizeCallbackData) {
+	cb(NewSizeCallbackDataFromC(data))
+}
+
+//export callbackSizeCallback0
+func callbackSizeCallback0(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(0), data)
+}
+
+//export callbackSizeCallback1
+func callbackSizeCallback1(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(1), data)
+}
+
+var poolSizeCallback *internal.Pool[SizeCallback, C.ImGuiSizeCallback]
+
+func init() {
+	poolSizeCallback = internal.NewPool[SizeCallback, C.ImGuiSizeCallback](
+		C.ImGuiSizeCallback(C.callbackSizeCallback0),
+		C.ImGuiSizeCallback(C.callbackSizeCallback1),
+	)
+}
+
+func ClearSizeCallbackPool() {
+	poolSizeCallback.Clear()
 }
 
 type SizeCallbackData struct {

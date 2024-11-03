@@ -8,6 +8,8 @@ package imnodes
 // #include "../imgui/extra_types.h"
 // #include "cimnodes_wrapper.h"
 // #include "cimnodes_typedefs.h"
+// extern void callbackNodesMiniMapNodeHoveringCallback0(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback1(int, void*);
 import "C"
 import (
 	"unsafe"
@@ -92,6 +94,15 @@ type (
 	cNodesMiniMapNodeHoveringCallback func(arg0 C.int, arg1 unsafe.Pointer)
 )
 
+func NewNodesMiniMapNodeHoveringCallbackFromC(cvalue *C.ImNodesMiniMapNodeHoveringCallback) *NodesMiniMapNodeHoveringCallback {
+	result := poolNodesMiniMapNodeHoveringCallback.Find(*cvalue)
+	return &result
+}
+
+func (c NodesMiniMapNodeHoveringCallback) C() (C.ImNodesMiniMapNodeHoveringCallback, func()) {
+	return poolNodesMiniMapNodeHoveringCallback.Allocate(c), func() {}
+}
+
 func wrapNodesMiniMapNodeHoveringCallback(cb NodesMiniMapNodeHoveringCallback, arg0 C.int, arg1 unsafe.Pointer) {
 	cb(int32(arg0), unsafe.Pointer(arg1))
 }
@@ -106,13 +117,17 @@ func callbackNodesMiniMapNodeHoveringCallback1(arg0 C.int, arg1 unsafe.Pointer) 
 	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(1), arg0, arg1)
 }
 
-var poolNodesMiniMapNodeHoveringCallback *internal.Pool[NodesMiniMapNodeHoveringCallback, cNodesMiniMapNodeHoveringCallback]
+var poolNodesMiniMapNodeHoveringCallback *internal.Pool[NodesMiniMapNodeHoveringCallback, C.ImNodesMiniMapNodeHoveringCallback]
 
 func init() {
-	poolNodesMiniMapNodeHoveringCallback = internal.NewPool[NodesMiniMapNodeHoveringCallback, cNodesMiniMapNodeHoveringCallback](
-		callbackNodesMiniMapNodeHoveringCallback0,
-		callbackNodesMiniMapNodeHoveringCallback1,
+	poolNodesMiniMapNodeHoveringCallback = internal.NewPool[NodesMiniMapNodeHoveringCallback, C.ImNodesMiniMapNodeHoveringCallback](
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback0),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback1),
 	)
+}
+
+func ClearNodesMiniMapNodeHoveringCallbackPool() {
+	poolNodesMiniMapNodeHoveringCallback.Clear()
 }
 
 type NodesMiniMapNodeHoveringCallbackUserData struct {

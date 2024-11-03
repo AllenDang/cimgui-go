@@ -250,6 +250,17 @@ func (self *DrawList) AddBezierQuadraticV(p1 Vec2, p2 Vec2, p3 Vec2, col uint32,
 	selfFin()
 }
 
+// AddCallbackV parameter default value hint:
+// userdata_size: 0
+func (self *DrawList) AddCallbackV(callback DrawCallback, userdata uintptr, userdata_size uint64) {
+	selfArg, selfFin := self.Handle()
+	callbackArg, callbackFin := callback.C()
+	C.wrap_ImDrawList_AddCallbackV(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImDrawCallback](callbackArg), C.uintptr_t(userdata), C.xulong(userdata_size))
+
+	selfFin()
+	callbackFin()
+}
+
 // AddCircleV parameter default value hint:
 // num_segments: 0
 // thickness: 1.0f
@@ -9521,6 +9532,17 @@ func SetNextWindowSizeV(size Vec2, cond Cond) {
 	C.igSetNextWindowSize(internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImGuiCond(cond))
 }
 
+// set next window size limits. use 0.0f or FLT_MAX if you don't want limits. Use -1 for both min and max of same axis to preserve current size (which itself is a constraint). Use callback to apply non-trivial programmatic constraints.
+// SetNextWindowSizeConstraintsV parameter default value hint:
+// custom_callback: NULL
+// custom_callback_data: NULL
+func SetNextWindowSizeConstraintsV(size_min Vec2, size_max Vec2, custom_callback SizeCallback, custom_callback_data uintptr) {
+	custom_callbackArg, custom_callbackFin := custom_callback.C()
+	C.wrap_igSetNextWindowSizeConstraintsV(internal.ReinterpretCast[C.ImVec2](size_min.ToC()), internal.ReinterpretCast[C.ImVec2](size_max.ToC()), internal.ReinterpretCast[C.ImGuiSizeCallback](custom_callbackArg), C.uintptr_t(custom_callback_data))
+
+	custom_callbackFin()
+}
+
 // set next window viewport
 func SetNextWindowViewport(viewport_id ID) {
 	viewport_idArg, viewport_idFin := viewport_id.C()
@@ -11376,6 +11398,15 @@ func (self *DrawList) AddBezierQuadratic(p1 Vec2, p2 Vec2, p3 Vec2, col uint32, 
 	C.wrap_ImDrawList_AddBezierQuadratic(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), C.ImU32(col), C.float(thickness))
 
 	selfFin()
+}
+
+func (self *DrawList) AddCallback(callback DrawCallback, userdata uintptr) {
+	selfArg, selfFin := self.Handle()
+	callbackArg, callbackFin := callback.C()
+	C.wrap_ImDrawList_AddCallback(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImDrawCallback](callbackArg), C.uintptr_t(userdata))
+
+	selfFin()
+	callbackFin()
 }
 
 func (self *DrawList) AddCircle(center Vec2, radius float32, col uint32) {
@@ -13678,6 +13709,26 @@ func (self *DrawCmd) ElemCount() uint32 {
 		selfFin()
 	}()
 	return uint32(C.wrap_ImDrawCmd_GetElemCount(internal.ReinterpretCast[*C.ImDrawCmd](selfArg)))
+}
+
+func (self DrawCmd) SetUserCallback(v DrawCallback) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImDrawCmd_SetUserCallback(selfArg, internal.ReinterpretCast[C.ImDrawCallback](vArg))
+}
+
+func (self *DrawCmd) UserCallback() DrawCallback {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewDrawCallbackFromC(func() *C.ImDrawCallback {
+		result := C.wrap_ImDrawCmd_GetUserCallback(internal.ReinterpretCast[*C.ImDrawCmd](selfArg))
+		return &result
+	}())
 }
 
 func (self DrawCmd) SetUserCallbackData(v uintptr) {
@@ -20915,6 +20966,26 @@ func (self *Context) LogDepthToExpandDefault() int32 {
 	return int32(C.wrap_ImGuiContext_GetLogDepthToExpandDefault(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
+func (self Context) SetErrorCallback(v ErrorCallback) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetErrorCallback(selfArg, internal.ReinterpretCast[C.ImGuiErrorCallback](vArg))
+}
+
+func (self *Context) ErrorCallback() ErrorCallback {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewErrorCallbackFromC(func() *C.ImGuiErrorCallback {
+		result := C.wrap_ImGuiContext_GetErrorCallback(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
+		return &result
+	}())
+}
+
 func (self Context) SetErrorCallbackUserData(v uintptr) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -21583,6 +21654,26 @@ func (self *ContextHook) Owner() ID {
 	}()
 	return *NewIDFromC(func() *C.ImGuiID {
 		result := C.wrap_ImGuiContextHook_GetOwner(internal.ReinterpretCast[*C.ImGuiContextHook](selfArg))
+		return &result
+	}())
+}
+
+func (self ContextHook) SetCallback(v ContextHookCallback) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContextHook_SetCallback(selfArg, internal.ReinterpretCast[C.ImGuiContextHookCallback](vArg))
+}
+
+func (self *ContextHook) Callback() ContextHookCallback {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewContextHookCallbackFromC(func() *C.ImGuiContextHookCallback {
+		result := C.wrap_ImGuiContextHook_GetCallback(internal.ReinterpretCast[*C.ImGuiContextHook](selfArg))
 		return &result
 	}())
 }
@@ -28090,6 +28181,26 @@ func (self *NextWindowData) SizeConstraintRect() Rect {
 		out := C.wrap_ImGuiNextWindowData_GetSizeConstraintRect(internal.ReinterpretCast[*C.ImGuiNextWindowData](selfArg))
 		return *(&Rect{}).FromC(unsafe.Pointer(&out))
 	}()
+}
+
+func (self NextWindowData) SetSizeCallback(v SizeCallback) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiNextWindowData_SetSizeCallback(selfArg, internal.ReinterpretCast[C.ImGuiSizeCallback](vArg))
+}
+
+func (self *NextWindowData) SizeCallback() SizeCallback {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewSizeCallbackFromC(func() *C.ImGuiSizeCallback {
+		result := C.wrap_ImGuiNextWindowData_GetSizeCallback(internal.ReinterpretCast[*C.ImGuiNextWindowData](selfArg))
+		return &result
+	}())
 }
 
 func (self NextWindowData) SetSizeCallbackUserData(v uintptr) {
