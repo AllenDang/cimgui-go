@@ -557,6 +557,10 @@ func init() {
 %[2]s
 )
 }
+
+func Clear%[1]sPool() {
+	pool%[1]s.Clear()
+}
 `,
 				typedefName.renameGoIdentifier(),
 				strings.Join(poolNames, ",\n")+",\n",
