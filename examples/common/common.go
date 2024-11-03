@@ -68,6 +68,7 @@ func BeforeDestroyContext() {
 }
 
 func Loop() {
+	imgui.ClearSizeCallbackPool()
 	imguizmo.BeginFrame()
 	ShowWidgetsDemo()
 	ShowPictureLoadingDemo()
@@ -82,6 +83,10 @@ func ShowWidgetsDemo() {
 	}
 
 	imgui.SetNextWindowSizeV(imgui.NewVec2(300, 300), imgui.CondOnce)
+
+	imgui.SetNextWindowSizeConstraintsV(imgui.Vec2{300, 300}, imgui.Vec2{500, 500}, func(data *imgui.SizeCallbackData) {
+	}, 0)
+
 	imgui.Begin("Window 1")
 	if imgui.ButtonV("Click Me", imgui.NewVec2(80, 20)) {
 		fmt.Println("Button clicked")
