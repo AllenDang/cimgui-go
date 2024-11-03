@@ -43,7 +43,7 @@ There are several possible solutions:
   I this is the case, plelase report an issue ane we'll increase pool limit for the type.
 
 Refer: https://github.com/AllenDang/cimgui-go/issues/224
-`, callback))
+`, callback, len(p.pool)))
 }
 
 func (p *Pool[GoCallback, CCallback]) Find(callback CCallback) GoCallback {
