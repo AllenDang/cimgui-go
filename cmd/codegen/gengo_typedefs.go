@@ -348,7 +348,6 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 					// get name
 					argParts := Split(argStr, " ")
 					var name, typeName string
-					fmt.Println(len(argParts), argParts)
 					switch len(argParts) {
 					case 1:
 						name = fmt.Sprintf("arg%d", a)
@@ -444,12 +443,22 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			fmt.Fprintf(typedefsGoSb, `
 type %[1]s func(%[4]s) %[2]s
 type c%[1]s func(%[5]s) %[3]s
+
+func New%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
+	result := pool%[1]s.Find(*cvalue)
+	return &result
+}
+
+func (c %[1]s) C() (C.%[6]s, func()) {
+	return pool%[1]s.Allocate(c), func() { }
+}
 `,
 				typedefName.renameGoIdentifier(),
 				returnType.ArgType,
 				returnType.CType,
 				goCallStmt,
 				cCallStmt,
+				k,
 			)
 
 			cCallStmt2 := cCallStmt
@@ -530,7 +539,7 @@ func callback%[1]s%[2]d(%[5]s) %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6
 					func() string {
 						result := ""
 						for _, a := range argsC {
-							result += string(a.Type) + ", "
+							result += TrimPrefix(string(a.Type), "const ") + ", "
 						}
 
 						return TrimSuffix(result, ", ")
@@ -553,6 +562,9 @@ func init() {
 				strings.Join(poolNames, ",\n")+",\n",
 				k,
 			)
+
+			generatedTypedefs++
+			validTypeNames = append(validTypeNames, k)
 
 			glg.Successf("typedef %s is a callback. Implemented.", k)
 		case HasPrefix(typedefs.data[k], "struct"):
