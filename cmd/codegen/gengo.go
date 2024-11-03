@@ -49,7 +49,7 @@ var skippedTypedefs = map[CIdentifier]bool{
 	"ImGuiInputTextCallback": true,
 }
 
-const TypedefsPoolSize = 2 // TODO: 2 is for testing, add more later
+const TypedefsPoolSize = 32
 
 var customPoolSize = map[CIdentifier]int{
 	// nothing here for now
