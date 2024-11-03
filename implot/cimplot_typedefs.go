@@ -10,10 +10,100 @@ package implot
 // #include "cimplot_typedefs.h"
 // extern int callbackPlotFormatter0(double, char*, int, void*);
 // extern int callbackPlotFormatter1(double, char*, int, void*);
+// extern int callbackPlotFormatter2(double, char*, int, void*);
+// extern int callbackPlotFormatter3(double, char*, int, void*);
+// extern int callbackPlotFormatter4(double, char*, int, void*);
+// extern int callbackPlotFormatter5(double, char*, int, void*);
+// extern int callbackPlotFormatter6(double, char*, int, void*);
+// extern int callbackPlotFormatter7(double, char*, int, void*);
+// extern int callbackPlotFormatter8(double, char*, int, void*);
+// extern int callbackPlotFormatter9(double, char*, int, void*);
+// extern int callbackPlotFormatter10(double, char*, int, void*);
+// extern int callbackPlotFormatter11(double, char*, int, void*);
+// extern int callbackPlotFormatter12(double, char*, int, void*);
+// extern int callbackPlotFormatter13(double, char*, int, void*);
+// extern int callbackPlotFormatter14(double, char*, int, void*);
+// extern int callbackPlotFormatter15(double, char*, int, void*);
+// extern int callbackPlotFormatter16(double, char*, int, void*);
+// extern int callbackPlotFormatter17(double, char*, int, void*);
+// extern int callbackPlotFormatter18(double, char*, int, void*);
+// extern int callbackPlotFormatter19(double, char*, int, void*);
+// extern int callbackPlotFormatter20(double, char*, int, void*);
+// extern int callbackPlotFormatter21(double, char*, int, void*);
+// extern int callbackPlotFormatter22(double, char*, int, void*);
+// extern int callbackPlotFormatter23(double, char*, int, void*);
+// extern int callbackPlotFormatter24(double, char*, int, void*);
+// extern int callbackPlotFormatter25(double, char*, int, void*);
+// extern int callbackPlotFormatter26(double, char*, int, void*);
+// extern int callbackPlotFormatter27(double, char*, int, void*);
+// extern int callbackPlotFormatter28(double, char*, int, void*);
+// extern int callbackPlotFormatter29(double, char*, int, void*);
+// extern int callbackPlotFormatter30(double, char*, int, void*);
+// extern int callbackPlotFormatter31(double, char*, int, void*);
 // extern ImPlotPoint callbackPlotGetter0(int, void*);
 // extern ImPlotPoint callbackPlotGetter1(int, void*);
+// extern ImPlotPoint callbackPlotGetter2(int, void*);
+// extern ImPlotPoint callbackPlotGetter3(int, void*);
+// extern ImPlotPoint callbackPlotGetter4(int, void*);
+// extern ImPlotPoint callbackPlotGetter5(int, void*);
+// extern ImPlotPoint callbackPlotGetter6(int, void*);
+// extern ImPlotPoint callbackPlotGetter7(int, void*);
+// extern ImPlotPoint callbackPlotGetter8(int, void*);
+// extern ImPlotPoint callbackPlotGetter9(int, void*);
+// extern ImPlotPoint callbackPlotGetter10(int, void*);
+// extern ImPlotPoint callbackPlotGetter11(int, void*);
+// extern ImPlotPoint callbackPlotGetter12(int, void*);
+// extern ImPlotPoint callbackPlotGetter13(int, void*);
+// extern ImPlotPoint callbackPlotGetter14(int, void*);
+// extern ImPlotPoint callbackPlotGetter15(int, void*);
+// extern ImPlotPoint callbackPlotGetter16(int, void*);
+// extern ImPlotPoint callbackPlotGetter17(int, void*);
+// extern ImPlotPoint callbackPlotGetter18(int, void*);
+// extern ImPlotPoint callbackPlotGetter19(int, void*);
+// extern ImPlotPoint callbackPlotGetter20(int, void*);
+// extern ImPlotPoint callbackPlotGetter21(int, void*);
+// extern ImPlotPoint callbackPlotGetter22(int, void*);
+// extern ImPlotPoint callbackPlotGetter23(int, void*);
+// extern ImPlotPoint callbackPlotGetter24(int, void*);
+// extern ImPlotPoint callbackPlotGetter25(int, void*);
+// extern ImPlotPoint callbackPlotGetter26(int, void*);
+// extern ImPlotPoint callbackPlotGetter27(int, void*);
+// extern ImPlotPoint callbackPlotGetter28(int, void*);
+// extern ImPlotPoint callbackPlotGetter29(int, void*);
+// extern ImPlotPoint callbackPlotGetter30(int, void*);
+// extern ImPlotPoint callbackPlotGetter31(int, void*);
 // extern double callbackPlotTransform0(double, void*);
 // extern double callbackPlotTransform1(double, void*);
+// extern double callbackPlotTransform2(double, void*);
+// extern double callbackPlotTransform3(double, void*);
+// extern double callbackPlotTransform4(double, void*);
+// extern double callbackPlotTransform5(double, void*);
+// extern double callbackPlotTransform6(double, void*);
+// extern double callbackPlotTransform7(double, void*);
+// extern double callbackPlotTransform8(double, void*);
+// extern double callbackPlotTransform9(double, void*);
+// extern double callbackPlotTransform10(double, void*);
+// extern double callbackPlotTransform11(double, void*);
+// extern double callbackPlotTransform12(double, void*);
+// extern double callbackPlotTransform13(double, void*);
+// extern double callbackPlotTransform14(double, void*);
+// extern double callbackPlotTransform15(double, void*);
+// extern double callbackPlotTransform16(double, void*);
+// extern double callbackPlotTransform17(double, void*);
+// extern double callbackPlotTransform18(double, void*);
+// extern double callbackPlotTransform19(double, void*);
+// extern double callbackPlotTransform20(double, void*);
+// extern double callbackPlotTransform21(double, void*);
+// extern double callbackPlotTransform22(double, void*);
+// extern double callbackPlotTransform23(double, void*);
+// extern double callbackPlotTransform24(double, void*);
+// extern double callbackPlotTransform25(double, void*);
+// extern double callbackPlotTransform26(double, void*);
+// extern double callbackPlotTransform27(double, void*);
+// extern double callbackPlotTransform28(double, void*);
+// extern double callbackPlotTransform29(double, void*);
+// extern double callbackPlotTransform30(double, void*);
+// extern double callbackPlotTransform31(double, void*);
 import "C"
 import (
 	"unsafe"
@@ -234,12 +324,192 @@ func callbackPlotFormatter1(value C.double, buff *C.char, size C.int, user_data 
 	return wrapPlotFormatter(poolPlotFormatter.Get(1), value, buff, size, user_data)
 }
 
+//export callbackPlotFormatter2
+func callbackPlotFormatter2(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(2), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter3
+func callbackPlotFormatter3(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(3), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter4
+func callbackPlotFormatter4(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(4), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter5
+func callbackPlotFormatter5(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(5), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter6
+func callbackPlotFormatter6(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(6), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter7
+func callbackPlotFormatter7(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(7), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter8
+func callbackPlotFormatter8(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(8), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter9
+func callbackPlotFormatter9(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(9), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter10
+func callbackPlotFormatter10(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(10), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter11
+func callbackPlotFormatter11(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(11), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter12
+func callbackPlotFormatter12(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(12), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter13
+func callbackPlotFormatter13(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(13), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter14
+func callbackPlotFormatter14(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(14), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter15
+func callbackPlotFormatter15(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(15), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter16
+func callbackPlotFormatter16(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(16), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter17
+func callbackPlotFormatter17(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(17), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter18
+func callbackPlotFormatter18(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(18), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter19
+func callbackPlotFormatter19(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(19), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter20
+func callbackPlotFormatter20(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(20), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter21
+func callbackPlotFormatter21(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(21), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter22
+func callbackPlotFormatter22(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(22), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter23
+func callbackPlotFormatter23(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(23), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter24
+func callbackPlotFormatter24(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(24), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter25
+func callbackPlotFormatter25(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(25), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter26
+func callbackPlotFormatter26(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(26), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter27
+func callbackPlotFormatter27(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(27), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter28
+func callbackPlotFormatter28(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(28), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter29
+func callbackPlotFormatter29(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(29), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter30
+func callbackPlotFormatter30(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(30), value, buff, size, user_data)
+}
+
+//export callbackPlotFormatter31
+func callbackPlotFormatter31(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapPlotFormatter(poolPlotFormatter.Get(31), value, buff, size, user_data)
+}
+
 var poolPlotFormatter *internal.Pool[PlotFormatter, C.ImPlotFormatter]
 
 func init() {
 	poolPlotFormatter = internal.NewPool[PlotFormatter, C.ImPlotFormatter](
 		C.ImPlotFormatter(C.callbackPlotFormatter0),
 		C.ImPlotFormatter(C.callbackPlotFormatter1),
+		C.ImPlotFormatter(C.callbackPlotFormatter2),
+		C.ImPlotFormatter(C.callbackPlotFormatter3),
+		C.ImPlotFormatter(C.callbackPlotFormatter4),
+		C.ImPlotFormatter(C.callbackPlotFormatter5),
+		C.ImPlotFormatter(C.callbackPlotFormatter6),
+		C.ImPlotFormatter(C.callbackPlotFormatter7),
+		C.ImPlotFormatter(C.callbackPlotFormatter8),
+		C.ImPlotFormatter(C.callbackPlotFormatter9),
+		C.ImPlotFormatter(C.callbackPlotFormatter10),
+		C.ImPlotFormatter(C.callbackPlotFormatter11),
+		C.ImPlotFormatter(C.callbackPlotFormatter12),
+		C.ImPlotFormatter(C.callbackPlotFormatter13),
+		C.ImPlotFormatter(C.callbackPlotFormatter14),
+		C.ImPlotFormatter(C.callbackPlotFormatter15),
+		C.ImPlotFormatter(C.callbackPlotFormatter16),
+		C.ImPlotFormatter(C.callbackPlotFormatter17),
+		C.ImPlotFormatter(C.callbackPlotFormatter18),
+		C.ImPlotFormatter(C.callbackPlotFormatter19),
+		C.ImPlotFormatter(C.callbackPlotFormatter20),
+		C.ImPlotFormatter(C.callbackPlotFormatter21),
+		C.ImPlotFormatter(C.callbackPlotFormatter22),
+		C.ImPlotFormatter(C.callbackPlotFormatter23),
+		C.ImPlotFormatter(C.callbackPlotFormatter24),
+		C.ImPlotFormatter(C.callbackPlotFormatter25),
+		C.ImPlotFormatter(C.callbackPlotFormatter26),
+		C.ImPlotFormatter(C.callbackPlotFormatter27),
+		C.ImPlotFormatter(C.callbackPlotFormatter28),
+		C.ImPlotFormatter(C.callbackPlotFormatter29),
+		C.ImPlotFormatter(C.callbackPlotFormatter30),
+		C.ImPlotFormatter(C.callbackPlotFormatter31),
 	)
 }
 
@@ -277,12 +547,192 @@ func callbackPlotGetter1(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
 	return wrapPlotGetter(poolPlotGetter.Get(1), idx, user_data)
 }
 
+//export callbackPlotGetter2
+func callbackPlotGetter2(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(2), idx, user_data)
+}
+
+//export callbackPlotGetter3
+func callbackPlotGetter3(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(3), idx, user_data)
+}
+
+//export callbackPlotGetter4
+func callbackPlotGetter4(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(4), idx, user_data)
+}
+
+//export callbackPlotGetter5
+func callbackPlotGetter5(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(5), idx, user_data)
+}
+
+//export callbackPlotGetter6
+func callbackPlotGetter6(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(6), idx, user_data)
+}
+
+//export callbackPlotGetter7
+func callbackPlotGetter7(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(7), idx, user_data)
+}
+
+//export callbackPlotGetter8
+func callbackPlotGetter8(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(8), idx, user_data)
+}
+
+//export callbackPlotGetter9
+func callbackPlotGetter9(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(9), idx, user_data)
+}
+
+//export callbackPlotGetter10
+func callbackPlotGetter10(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(10), idx, user_data)
+}
+
+//export callbackPlotGetter11
+func callbackPlotGetter11(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(11), idx, user_data)
+}
+
+//export callbackPlotGetter12
+func callbackPlotGetter12(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(12), idx, user_data)
+}
+
+//export callbackPlotGetter13
+func callbackPlotGetter13(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(13), idx, user_data)
+}
+
+//export callbackPlotGetter14
+func callbackPlotGetter14(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(14), idx, user_data)
+}
+
+//export callbackPlotGetter15
+func callbackPlotGetter15(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(15), idx, user_data)
+}
+
+//export callbackPlotGetter16
+func callbackPlotGetter16(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(16), idx, user_data)
+}
+
+//export callbackPlotGetter17
+func callbackPlotGetter17(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(17), idx, user_data)
+}
+
+//export callbackPlotGetter18
+func callbackPlotGetter18(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(18), idx, user_data)
+}
+
+//export callbackPlotGetter19
+func callbackPlotGetter19(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(19), idx, user_data)
+}
+
+//export callbackPlotGetter20
+func callbackPlotGetter20(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(20), idx, user_data)
+}
+
+//export callbackPlotGetter21
+func callbackPlotGetter21(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(21), idx, user_data)
+}
+
+//export callbackPlotGetter22
+func callbackPlotGetter22(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(22), idx, user_data)
+}
+
+//export callbackPlotGetter23
+func callbackPlotGetter23(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(23), idx, user_data)
+}
+
+//export callbackPlotGetter24
+func callbackPlotGetter24(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(24), idx, user_data)
+}
+
+//export callbackPlotGetter25
+func callbackPlotGetter25(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(25), idx, user_data)
+}
+
+//export callbackPlotGetter26
+func callbackPlotGetter26(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(26), idx, user_data)
+}
+
+//export callbackPlotGetter27
+func callbackPlotGetter27(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(27), idx, user_data)
+}
+
+//export callbackPlotGetter28
+func callbackPlotGetter28(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(28), idx, user_data)
+}
+
+//export callbackPlotGetter29
+func callbackPlotGetter29(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(29), idx, user_data)
+}
+
+//export callbackPlotGetter30
+func callbackPlotGetter30(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(30), idx, user_data)
+}
+
+//export callbackPlotGetter31
+func callbackPlotGetter31(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapPlotGetter(poolPlotGetter.Get(31), idx, user_data)
+}
+
 var poolPlotGetter *internal.Pool[PlotGetter, C.ImPlotGetter]
 
 func init() {
 	poolPlotGetter = internal.NewPool[PlotGetter, C.ImPlotGetter](
 		C.ImPlotGetter(C.callbackPlotGetter0),
 		C.ImPlotGetter(C.callbackPlotGetter1),
+		C.ImPlotGetter(C.callbackPlotGetter2),
+		C.ImPlotGetter(C.callbackPlotGetter3),
+		C.ImPlotGetter(C.callbackPlotGetter4),
+		C.ImPlotGetter(C.callbackPlotGetter5),
+		C.ImPlotGetter(C.callbackPlotGetter6),
+		C.ImPlotGetter(C.callbackPlotGetter7),
+		C.ImPlotGetter(C.callbackPlotGetter8),
+		C.ImPlotGetter(C.callbackPlotGetter9),
+		C.ImPlotGetter(C.callbackPlotGetter10),
+		C.ImPlotGetter(C.callbackPlotGetter11),
+		C.ImPlotGetter(C.callbackPlotGetter12),
+		C.ImPlotGetter(C.callbackPlotGetter13),
+		C.ImPlotGetter(C.callbackPlotGetter14),
+		C.ImPlotGetter(C.callbackPlotGetter15),
+		C.ImPlotGetter(C.callbackPlotGetter16),
+		C.ImPlotGetter(C.callbackPlotGetter17),
+		C.ImPlotGetter(C.callbackPlotGetter18),
+		C.ImPlotGetter(C.callbackPlotGetter19),
+		C.ImPlotGetter(C.callbackPlotGetter20),
+		C.ImPlotGetter(C.callbackPlotGetter21),
+		C.ImPlotGetter(C.callbackPlotGetter22),
+		C.ImPlotGetter(C.callbackPlotGetter23),
+		C.ImPlotGetter(C.callbackPlotGetter24),
+		C.ImPlotGetter(C.callbackPlotGetter25),
+		C.ImPlotGetter(C.callbackPlotGetter26),
+		C.ImPlotGetter(C.callbackPlotGetter27),
+		C.ImPlotGetter(C.callbackPlotGetter28),
+		C.ImPlotGetter(C.callbackPlotGetter29),
+		C.ImPlotGetter(C.callbackPlotGetter30),
+		C.ImPlotGetter(C.callbackPlotGetter31),
 	)
 }
 
@@ -656,12 +1106,192 @@ func callbackPlotTransform1(value C.double, user_data unsafe.Pointer) C.double {
 	return wrapPlotTransform(poolPlotTransform.Get(1), value, user_data)
 }
 
+//export callbackPlotTransform2
+func callbackPlotTransform2(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(2), value, user_data)
+}
+
+//export callbackPlotTransform3
+func callbackPlotTransform3(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(3), value, user_data)
+}
+
+//export callbackPlotTransform4
+func callbackPlotTransform4(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(4), value, user_data)
+}
+
+//export callbackPlotTransform5
+func callbackPlotTransform5(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(5), value, user_data)
+}
+
+//export callbackPlotTransform6
+func callbackPlotTransform6(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(6), value, user_data)
+}
+
+//export callbackPlotTransform7
+func callbackPlotTransform7(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(7), value, user_data)
+}
+
+//export callbackPlotTransform8
+func callbackPlotTransform8(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(8), value, user_data)
+}
+
+//export callbackPlotTransform9
+func callbackPlotTransform9(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(9), value, user_data)
+}
+
+//export callbackPlotTransform10
+func callbackPlotTransform10(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(10), value, user_data)
+}
+
+//export callbackPlotTransform11
+func callbackPlotTransform11(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(11), value, user_data)
+}
+
+//export callbackPlotTransform12
+func callbackPlotTransform12(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(12), value, user_data)
+}
+
+//export callbackPlotTransform13
+func callbackPlotTransform13(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(13), value, user_data)
+}
+
+//export callbackPlotTransform14
+func callbackPlotTransform14(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(14), value, user_data)
+}
+
+//export callbackPlotTransform15
+func callbackPlotTransform15(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(15), value, user_data)
+}
+
+//export callbackPlotTransform16
+func callbackPlotTransform16(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(16), value, user_data)
+}
+
+//export callbackPlotTransform17
+func callbackPlotTransform17(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(17), value, user_data)
+}
+
+//export callbackPlotTransform18
+func callbackPlotTransform18(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(18), value, user_data)
+}
+
+//export callbackPlotTransform19
+func callbackPlotTransform19(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(19), value, user_data)
+}
+
+//export callbackPlotTransform20
+func callbackPlotTransform20(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(20), value, user_data)
+}
+
+//export callbackPlotTransform21
+func callbackPlotTransform21(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(21), value, user_data)
+}
+
+//export callbackPlotTransform22
+func callbackPlotTransform22(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(22), value, user_data)
+}
+
+//export callbackPlotTransform23
+func callbackPlotTransform23(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(23), value, user_data)
+}
+
+//export callbackPlotTransform24
+func callbackPlotTransform24(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(24), value, user_data)
+}
+
+//export callbackPlotTransform25
+func callbackPlotTransform25(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(25), value, user_data)
+}
+
+//export callbackPlotTransform26
+func callbackPlotTransform26(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(26), value, user_data)
+}
+
+//export callbackPlotTransform27
+func callbackPlotTransform27(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(27), value, user_data)
+}
+
+//export callbackPlotTransform28
+func callbackPlotTransform28(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(28), value, user_data)
+}
+
+//export callbackPlotTransform29
+func callbackPlotTransform29(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(29), value, user_data)
+}
+
+//export callbackPlotTransform30
+func callbackPlotTransform30(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(30), value, user_data)
+}
+
+//export callbackPlotTransform31
+func callbackPlotTransform31(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapPlotTransform(poolPlotTransform.Get(31), value, user_data)
+}
+
 var poolPlotTransform *internal.Pool[PlotTransform, C.ImPlotTransform]
 
 func init() {
 	poolPlotTransform = internal.NewPool[PlotTransform, C.ImPlotTransform](
 		C.ImPlotTransform(C.callbackPlotTransform0),
 		C.ImPlotTransform(C.callbackPlotTransform1),
+		C.ImPlotTransform(C.callbackPlotTransform2),
+		C.ImPlotTransform(C.callbackPlotTransform3),
+		C.ImPlotTransform(C.callbackPlotTransform4),
+		C.ImPlotTransform(C.callbackPlotTransform5),
+		C.ImPlotTransform(C.callbackPlotTransform6),
+		C.ImPlotTransform(C.callbackPlotTransform7),
+		C.ImPlotTransform(C.callbackPlotTransform8),
+		C.ImPlotTransform(C.callbackPlotTransform9),
+		C.ImPlotTransform(C.callbackPlotTransform10),
+		C.ImPlotTransform(C.callbackPlotTransform11),
+		C.ImPlotTransform(C.callbackPlotTransform12),
+		C.ImPlotTransform(C.callbackPlotTransform13),
+		C.ImPlotTransform(C.callbackPlotTransform14),
+		C.ImPlotTransform(C.callbackPlotTransform15),
+		C.ImPlotTransform(C.callbackPlotTransform16),
+		C.ImPlotTransform(C.callbackPlotTransform17),
+		C.ImPlotTransform(C.callbackPlotTransform18),
+		C.ImPlotTransform(C.callbackPlotTransform19),
+		C.ImPlotTransform(C.callbackPlotTransform20),
+		C.ImPlotTransform(C.callbackPlotTransform21),
+		C.ImPlotTransform(C.callbackPlotTransform22),
+		C.ImPlotTransform(C.callbackPlotTransform23),
+		C.ImPlotTransform(C.callbackPlotTransform24),
+		C.ImPlotTransform(C.callbackPlotTransform25),
+		C.ImPlotTransform(C.callbackPlotTransform26),
+		C.ImPlotTransform(C.callbackPlotTransform27),
+		C.ImPlotTransform(C.callbackPlotTransform28),
+		C.ImPlotTransform(C.callbackPlotTransform29),
+		C.ImPlotTransform(C.callbackPlotTransform30),
+		C.ImPlotTransform(C.callbackPlotTransform31),
 	)
 }
 

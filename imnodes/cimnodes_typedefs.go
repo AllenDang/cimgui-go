@@ -10,6 +10,36 @@ package imnodes
 // #include "cimnodes_typedefs.h"
 // extern void callbackNodesMiniMapNodeHoveringCallback0(int, void*);
 // extern void callbackNodesMiniMapNodeHoveringCallback1(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback2(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback3(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback4(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback5(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback6(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback7(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback8(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback9(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback10(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback11(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback12(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback13(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback14(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback15(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback16(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback17(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback18(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback19(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback20(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback21(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback22(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback23(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback24(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback25(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback26(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback27(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback28(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback29(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback30(int, void*);
+// extern void callbackNodesMiniMapNodeHoveringCallback31(int, void*);
 import "C"
 import (
 	"unsafe"
@@ -117,12 +147,192 @@ func callbackNodesMiniMapNodeHoveringCallback1(arg0 C.int, arg1 unsafe.Pointer) 
 	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(1), arg0, arg1)
 }
 
+//export callbackNodesMiniMapNodeHoveringCallback2
+func callbackNodesMiniMapNodeHoveringCallback2(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(2), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback3
+func callbackNodesMiniMapNodeHoveringCallback3(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(3), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback4
+func callbackNodesMiniMapNodeHoveringCallback4(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(4), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback5
+func callbackNodesMiniMapNodeHoveringCallback5(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(5), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback6
+func callbackNodesMiniMapNodeHoveringCallback6(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(6), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback7
+func callbackNodesMiniMapNodeHoveringCallback7(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(7), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback8
+func callbackNodesMiniMapNodeHoveringCallback8(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(8), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback9
+func callbackNodesMiniMapNodeHoveringCallback9(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(9), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback10
+func callbackNodesMiniMapNodeHoveringCallback10(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(10), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback11
+func callbackNodesMiniMapNodeHoveringCallback11(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(11), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback12
+func callbackNodesMiniMapNodeHoveringCallback12(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(12), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback13
+func callbackNodesMiniMapNodeHoveringCallback13(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(13), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback14
+func callbackNodesMiniMapNodeHoveringCallback14(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(14), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback15
+func callbackNodesMiniMapNodeHoveringCallback15(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(15), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback16
+func callbackNodesMiniMapNodeHoveringCallback16(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(16), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback17
+func callbackNodesMiniMapNodeHoveringCallback17(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(17), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback18
+func callbackNodesMiniMapNodeHoveringCallback18(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(18), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback19
+func callbackNodesMiniMapNodeHoveringCallback19(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(19), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback20
+func callbackNodesMiniMapNodeHoveringCallback20(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(20), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback21
+func callbackNodesMiniMapNodeHoveringCallback21(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(21), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback22
+func callbackNodesMiniMapNodeHoveringCallback22(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(22), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback23
+func callbackNodesMiniMapNodeHoveringCallback23(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(23), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback24
+func callbackNodesMiniMapNodeHoveringCallback24(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(24), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback25
+func callbackNodesMiniMapNodeHoveringCallback25(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(25), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback26
+func callbackNodesMiniMapNodeHoveringCallback26(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(26), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback27
+func callbackNodesMiniMapNodeHoveringCallback27(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(27), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback28
+func callbackNodesMiniMapNodeHoveringCallback28(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(28), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback29
+func callbackNodesMiniMapNodeHoveringCallback29(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(29), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback30
+func callbackNodesMiniMapNodeHoveringCallback30(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(30), arg0, arg1)
+}
+
+//export callbackNodesMiniMapNodeHoveringCallback31
+func callbackNodesMiniMapNodeHoveringCallback31(arg0 C.int, arg1 unsafe.Pointer) {
+	wrapNodesMiniMapNodeHoveringCallback(poolNodesMiniMapNodeHoveringCallback.Get(31), arg0, arg1)
+}
+
 var poolNodesMiniMapNodeHoveringCallback *internal.Pool[NodesMiniMapNodeHoveringCallback, C.ImNodesMiniMapNodeHoveringCallback]
 
 func init() {
 	poolNodesMiniMapNodeHoveringCallback = internal.NewPool[NodesMiniMapNodeHoveringCallback, C.ImNodesMiniMapNodeHoveringCallback](
 		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback0),
 		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback1),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback2),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback3),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback4),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback5),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback6),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback7),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback8),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback9),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback10),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback11),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback12),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback13),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback14),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback15),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback16),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback17),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback18),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback19),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback20),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback21),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback22),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback23),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback24),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback25),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback26),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback27),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback28),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback29),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback30),
+		C.ImNodesMiniMapNodeHoveringCallback(C.callbackNodesMiniMapNodeHoveringCallback31),
 	)
 }
 
