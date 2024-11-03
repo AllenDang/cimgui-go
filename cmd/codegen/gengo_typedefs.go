@@ -508,10 +508,14 @@ func wrap%[1]s(cb %[1]s %[5]s) %[2]s {
 				)
 			}
 
-			// TODO: implement custom map
-			poolNames := make([]string, TypedefsPoolSize)
+			size := TypedefsPoolSize
+			if h, ok := customPoolSize[k]; ok {
+				size = h
+			}
+
+			poolNames := make([]string, size)
 			// now write N functions
-			for i := 0; i < TypedefsPoolSize; i++ {
+			for i := 0; i < size; i++ {
 				fmt.Fprintf(typedefsGoSb,
 					`//export callback%[1]s%[2]d
 func callback%[1]s%[2]d(%[5]s) %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6]s) }
