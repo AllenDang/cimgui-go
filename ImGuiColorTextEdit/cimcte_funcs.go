@@ -170,7 +170,7 @@ func (self *TextEditor) Text() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.TextEditor_GetText(internal.ReinterpretCast[*C.TextEditor](selfArg)))
+	return C.GoString(C.TextEditor_GetText_alloc(internal.ReinterpretCast[*C.TextEditor](selfArg)))
 }
 
 func (self *TextEditor) UndoIndex() int32 {
