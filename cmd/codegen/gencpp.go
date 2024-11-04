@@ -7,6 +7,13 @@ import (
 	"unicode"
 )
 
+// cppFunctionsReplace allows to force-replace function name with some other name.
+// Introduced to replace TextEditor_GetText -> TextEditor_GetText_alloc
+// but could be re-used to force use of another function than json tells us to use.
+var cppFunctionsReplace = map[CIdentifier]CIdentifier{
+	"TextEditor_GetText": "TextEditor_GetText_alloc",
+}
+
 // Name of argument in cpp/go files.
 // It is used by functions that has text and text_end arguments.
 // In this case text_end is replaced by this argument (of type int)
@@ -108,7 +115,7 @@ extern "C" {
 		// could be generated in Go code.
 		// So, could be skip cimgui_wrapper.ccp/.h entirely?
 
-		cWrapperFuncName := "wrap_" + funcName
+		cWrapperFuncName := "wrap_" + f.FuncName
 
 		// Remove all ... arg
 		f.Args = strings.Replace(f.Args, ",...", "", 1)
@@ -389,6 +396,11 @@ extern "C" {
 				cppSb.WriteString(fmt.Sprintf("%s %s%s { return %s%s; }\n", f.Ret, cWrapperFuncName, f.Args, invokeFunctionName, actualCallArgsStr))
 			}
 		}
+
+		if v, ok := cppFunctionsReplace[funcName]; ok {
+			cWrapperFuncName = v
+		}
+
 		appendValidFunc()
 	}
 

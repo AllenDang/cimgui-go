@@ -259,6 +259,7 @@ result := C.%s(%s)
 		cfuncCall = "result"
 	case returnTypeKnown, returnTypeConstructor, returnTypeStructPtr:
 		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
+		fmt.Println(f.CWrapperFuncName)
 	}
 
 	switch returnTypeType {
