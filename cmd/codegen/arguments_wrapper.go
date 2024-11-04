@@ -126,6 +126,7 @@ func getArgWrapper(
 		"const tm":            wrappableW(prefixGoPackage("Tm", "implot", context), "C.struct_tm"),
 		"tm*":                 wrappablePtrW(prefixGoPackage("*Tm", "imgui", context), "C.struct_tm"),
 		"const tm*":           wrappablePtrW(prefixGoPackage("*Tm", "imgui", context), "C.struct_tm"),
+		"void*":               simpleW("unsafe.Pointer", "unsafe.Pointer"),
 	}
 
 	if a.Name == "type" || a.Name == "range" {
