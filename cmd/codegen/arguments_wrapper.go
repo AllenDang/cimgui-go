@@ -126,6 +126,7 @@ func getArgWrapper(
 		"const tm":            wrappableW(prefixGoPackage("Tm", "implot", context), "C.struct_tm"),
 		"tm*":                 wrappablePtrW(prefixGoPackage("*Tm", "imgui", context), "C.struct_tm"),
 		"const tm*":           wrappablePtrW(prefixGoPackage("*Tm", "imgui", context), "C.struct_tm"),
+		"void*":               simpleW("unsafe.Pointer", "unsafe.Pointer"),
 	}
 
 	if a.Name == "type" || a.Name == "range" {
@@ -289,7 +290,7 @@ for i, %[1]sV := range %[1]sArg {
 	}
 
 	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
-	if context.structNames[pureType] || (isRefTypedef && !shouldSkipRefTypedef) {
+	if context.structNames[pureType] || context.typedefsNames[pureType] || (isRefTypedef && !shouldSkipRefTypedef) {
 		srcPkg := context.flags.packageName
 		if isRefTypedef {
 			srcPkg = context.flags.refPackageName

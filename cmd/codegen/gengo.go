@@ -38,14 +38,21 @@ var skippedStructs = map[CIdentifier]bool{
 }
 
 var skippedTypedefs = map[CIdentifier]bool{
-	"ImU8":  true,
-	"ImU16": true,
-	"ImU32": true,
-	"ImU64": true,
-	"ImS8":  true,
-	"ImS16": true,
-	"ImS32": true,
-	"ImS64": true,
+	"ImU8":                   true,
+	"ImU16":                  true,
+	"ImU32":                  true,
+	"ImU64":                  true,
+	"ImS8":                   true,
+	"ImS16":                  true,
+	"ImS32":                  true,
+	"ImS64":                  true,
+	"ImGuiInputTextCallback": true,
+}
+
+const TypedefsPoolSize = 32
+
+var customPoolSize = map[CIdentifier]int{
+	// nothing here for now
 }
 
 var replace = map[CIdentifier]GoIdentifier{
