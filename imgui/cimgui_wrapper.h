@@ -25,7 +25,7 @@ extern ImGuiStoragePair* wrap_ImGuiStoragePair_ImGuiStoragePair_Ptr(ImGuiID _key
 extern uintptr_t wrap_ImGuiStorage_GetVoidPtr(ImGuiStorage* self,ImGuiID key);
 extern void** wrap_ImGuiStorage_GetVoidPtrRefV(ImGuiStorage* self,ImGuiID key,uintptr_t default_val);
 extern void wrap_ImGuiStorage_SetVoidPtr(ImGuiStorage* self,ImGuiID key,uintptr_t val);
-extern void wrap_ImGuiTextBuffer_Appendf(ImGuiTextBuffer* self,const char* fmt);
+extern void wrap_ImGuiTextBuffer_Appendf(struct ImGuiTextBuffer* buffer, const char* fmt);
 extern bool wrap_ImGuiTextFilter_PassFilterV(ImGuiTextFilter* self,const char* text,const int text_len);
 extern ImGuiID wrap_ImGuiWindow_GetID_Ptr(ImGuiWindow* self,const uintptr_t ptr);
 extern void wrap_igBulletText(const char* fmt);

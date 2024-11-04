@@ -182,9 +182,7 @@ func (self *TextEditor) UndoIndex() int32 {
 	return int32(C.TextEditor_GetUndoIndex(internal.ReinterpretCast[*C.TextEditor](selfArg)))
 }
 
-// DebugPanelV parameter default value hint:
-// panelName: "Debug"
-func (self *TextEditor) DebugPanelV(panelName string) {
+func (self *TextEditor) DebugPanel(panelName string) {
 	selfArg, selfFin := self.Handle()
 	panelNameArg, panelNameFin := internal.WrapString[C.char](panelName)
 	C.TextEditor_ImGuiDebugPanel(internal.ReinterpretCast[*C.TextEditor](selfArg), panelNameArg)
@@ -434,13 +432,6 @@ func (self *TextEditor) UnitTests() {
 func (self *TextEditor) Destroy() {
 	selfArg, selfFin := self.Handle()
 	C.TextEditor_destroy(internal.ReinterpretCast[*C.TextEditor](selfArg))
-
-	selfFin()
-}
-
-func (self *TextEditor) DebugPanel() {
-	selfArg, selfFin := self.Handle()
-	C.wrap_TextEditor_ImGuiDebugPanel(internal.ReinterpretCast[*C.TextEditor](selfArg))
 
 	selfFin()
 }

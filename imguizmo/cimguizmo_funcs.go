@@ -120,6 +120,10 @@ func IsUsingViewManipulate() bool {
 	return C.ImGuizmo_IsUsingViewManipulate() == C.bool(true)
 }
 
+func IsViewManipulateHovered() bool {
+	return C.ImGuizmo_IsViewManipulateHovered() == C.bool(true)
+}
+
 // ManipulateV parameter default value hint:
 // deltaMatrix: NULL
 // snap: NULL
