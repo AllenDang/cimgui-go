@@ -315,14 +315,14 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			// - returnType <funcName>(args1 arg1Name, args2 arg2Name, args3 arg3Name);
 			// NOTE: the second is uesed mainly in immarkdown
 			// NOTE: in the 1st, spaces does not matter so we'll trim them
-			expr1, err := regexp.Compile("([a-zA-Z0-9_]+)\\(\\*.*\\)\\((.*)\\);")
+			expr1, err := regexp.Compile("([a-zA-Z0-9_]+\\*?)\\(\\*.*\\)\\((.*)\\);")
 			if err != nil {
-				panic("Cannot compile regex expr1!")
+				panic(fmt.Sprintf("Cannot compile regex expr1!: %v", err))
 			}
 
 			expr2, err := regexp.Compile("([a-zA-Z0-9_]+)\\s+([a-zA-Z0-9_]+)\\((.*)\\);")
 			if err != nil {
-				panic("Cannot compile regex expr2!")
+				panic(fmt.Sprintf("Cannot compile regex expr2!: %v", err))
 			}
 
 			// we need the following from them:
