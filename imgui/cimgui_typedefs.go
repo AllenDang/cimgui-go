@@ -104,6 +104,38 @@ package imgui
 // extern void callbackErrorCallback29(ImGuiContext*, void*, char*);
 // extern void callbackErrorCallback30(ImGuiContext*, void*, char*);
 // extern void callbackErrorCallback31(ImGuiContext*, void*, char*);
+// extern void* callbackMemAllocFunc0(size_t, void*);
+// extern void* callbackMemAllocFunc1(size_t, void*);
+// extern void* callbackMemAllocFunc2(size_t, void*);
+// extern void* callbackMemAllocFunc3(size_t, void*);
+// extern void* callbackMemAllocFunc4(size_t, void*);
+// extern void* callbackMemAllocFunc5(size_t, void*);
+// extern void* callbackMemAllocFunc6(size_t, void*);
+// extern void* callbackMemAllocFunc7(size_t, void*);
+// extern void* callbackMemAllocFunc8(size_t, void*);
+// extern void* callbackMemAllocFunc9(size_t, void*);
+// extern void* callbackMemAllocFunc10(size_t, void*);
+// extern void* callbackMemAllocFunc11(size_t, void*);
+// extern void* callbackMemAllocFunc12(size_t, void*);
+// extern void* callbackMemAllocFunc13(size_t, void*);
+// extern void* callbackMemAllocFunc14(size_t, void*);
+// extern void* callbackMemAllocFunc15(size_t, void*);
+// extern void* callbackMemAllocFunc16(size_t, void*);
+// extern void* callbackMemAllocFunc17(size_t, void*);
+// extern void* callbackMemAllocFunc18(size_t, void*);
+// extern void* callbackMemAllocFunc19(size_t, void*);
+// extern void* callbackMemAllocFunc20(size_t, void*);
+// extern void* callbackMemAllocFunc21(size_t, void*);
+// extern void* callbackMemAllocFunc22(size_t, void*);
+// extern void* callbackMemAllocFunc23(size_t, void*);
+// extern void* callbackMemAllocFunc24(size_t, void*);
+// extern void* callbackMemAllocFunc25(size_t, void*);
+// extern void* callbackMemAllocFunc26(size_t, void*);
+// extern void* callbackMemAllocFunc27(size_t, void*);
+// extern void* callbackMemAllocFunc28(size_t, void*);
+// extern void* callbackMemAllocFunc29(size_t, void*);
+// extern void* callbackMemAllocFunc30(size_t, void*);
+// extern void* callbackMemAllocFunc31(size_t, void*);
 // extern void callbackMemFreeFunc0(void*, void*);
 // extern void callbackMemFreeFunc1(void*, void*);
 // extern void callbackMemFreeFunc2(void*, void*);
@@ -2119,6 +2151,229 @@ func (self LocEntry) C() (C.ImGuiLocEntry, func()) {
 // SRC ~= *C.ImGuiLocEntry
 func NewLocEntryFromC[SRC any](cvalue SRC) *LocEntry {
 	return &LocEntry{CData: internal.ReinterpretCast[*C.ImGuiLocEntry](cvalue)}
+}
+
+type (
+	MemAllocFunc  func(sz uint64, user_data unsafe.Pointer) unsafe.Pointer
+	cMemAllocFunc func(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer
+)
+
+func NewMemAllocFuncFromC(cvalue *C.ImGuiMemAllocFunc) *MemAllocFunc {
+	result := poolMemAllocFunc.Find(*cvalue)
+	return &result
+}
+
+func (c MemAllocFunc) C() (C.ImGuiMemAllocFunc, func()) {
+	return poolMemAllocFunc.Allocate(c), func() {}
+}
+
+func wrapMemAllocFunc(cb MemAllocFunc, sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	result := cb(uint64(sz), unsafe.Pointer(user_data))
+
+	return unsafe.Pointer(result)
+}
+
+//export callbackMemAllocFunc0
+func callbackMemAllocFunc0(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(0), sz, user_data)
+}
+
+//export callbackMemAllocFunc1
+func callbackMemAllocFunc1(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(1), sz, user_data)
+}
+
+//export callbackMemAllocFunc2
+func callbackMemAllocFunc2(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(2), sz, user_data)
+}
+
+//export callbackMemAllocFunc3
+func callbackMemAllocFunc3(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(3), sz, user_data)
+}
+
+//export callbackMemAllocFunc4
+func callbackMemAllocFunc4(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(4), sz, user_data)
+}
+
+//export callbackMemAllocFunc5
+func callbackMemAllocFunc5(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(5), sz, user_data)
+}
+
+//export callbackMemAllocFunc6
+func callbackMemAllocFunc6(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(6), sz, user_data)
+}
+
+//export callbackMemAllocFunc7
+func callbackMemAllocFunc7(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(7), sz, user_data)
+}
+
+//export callbackMemAllocFunc8
+func callbackMemAllocFunc8(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(8), sz, user_data)
+}
+
+//export callbackMemAllocFunc9
+func callbackMemAllocFunc9(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(9), sz, user_data)
+}
+
+//export callbackMemAllocFunc10
+func callbackMemAllocFunc10(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(10), sz, user_data)
+}
+
+//export callbackMemAllocFunc11
+func callbackMemAllocFunc11(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(11), sz, user_data)
+}
+
+//export callbackMemAllocFunc12
+func callbackMemAllocFunc12(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(12), sz, user_data)
+}
+
+//export callbackMemAllocFunc13
+func callbackMemAllocFunc13(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(13), sz, user_data)
+}
+
+//export callbackMemAllocFunc14
+func callbackMemAllocFunc14(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(14), sz, user_data)
+}
+
+//export callbackMemAllocFunc15
+func callbackMemAllocFunc15(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(15), sz, user_data)
+}
+
+//export callbackMemAllocFunc16
+func callbackMemAllocFunc16(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(16), sz, user_data)
+}
+
+//export callbackMemAllocFunc17
+func callbackMemAllocFunc17(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(17), sz, user_data)
+}
+
+//export callbackMemAllocFunc18
+func callbackMemAllocFunc18(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(18), sz, user_data)
+}
+
+//export callbackMemAllocFunc19
+func callbackMemAllocFunc19(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(19), sz, user_data)
+}
+
+//export callbackMemAllocFunc20
+func callbackMemAllocFunc20(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(20), sz, user_data)
+}
+
+//export callbackMemAllocFunc21
+func callbackMemAllocFunc21(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(21), sz, user_data)
+}
+
+//export callbackMemAllocFunc22
+func callbackMemAllocFunc22(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(22), sz, user_data)
+}
+
+//export callbackMemAllocFunc23
+func callbackMemAllocFunc23(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(23), sz, user_data)
+}
+
+//export callbackMemAllocFunc24
+func callbackMemAllocFunc24(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(24), sz, user_data)
+}
+
+//export callbackMemAllocFunc25
+func callbackMemAllocFunc25(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(25), sz, user_data)
+}
+
+//export callbackMemAllocFunc26
+func callbackMemAllocFunc26(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(26), sz, user_data)
+}
+
+//export callbackMemAllocFunc27
+func callbackMemAllocFunc27(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(27), sz, user_data)
+}
+
+//export callbackMemAllocFunc28
+func callbackMemAllocFunc28(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(28), sz, user_data)
+}
+
+//export callbackMemAllocFunc29
+func callbackMemAllocFunc29(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(29), sz, user_data)
+}
+
+//export callbackMemAllocFunc30
+func callbackMemAllocFunc30(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(30), sz, user_data)
+}
+
+//export callbackMemAllocFunc31
+func callbackMemAllocFunc31(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(31), sz, user_data)
+}
+
+var poolMemAllocFunc *internal.Pool[MemAllocFunc, C.ImGuiMemAllocFunc]
+
+func init() {
+	poolMemAllocFunc = internal.NewPool[MemAllocFunc, C.ImGuiMemAllocFunc](
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc0),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc1),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc2),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc3),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc4),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc5),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc6),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc7),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc8),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc9),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc10),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc11),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc12),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc13),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc14),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc15),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc16),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc17),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc18),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc19),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc20),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc21),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc22),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc23),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc24),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc25),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc26),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc27),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc28),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc29),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc30),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc31),
+	)
+}
+
+func ClearMemAllocFuncPool() {
+	poolMemAllocFunc.Clear()
 }
 
 type (

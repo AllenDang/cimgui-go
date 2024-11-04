@@ -9226,6 +9226,17 @@ func InternalSetActiveIdUsingAllKeyboardKeys() {
 	C.igSetActiveIdUsingAllKeyboardKeys()
 }
 
+// SetAllocatorFunctionsV parameter default value hint:
+// user_data: NULL
+func SetAllocatorFunctionsV(alloc_func MemAllocFunc, free_func MemFreeFunc, user_data uintptr) {
+	alloc_funcArg, alloc_funcFin := alloc_func.C()
+	free_funcArg, free_funcFin := free_func.C()
+	C.wrap_igSetAllocatorFunctionsV(internal.ReinterpretCast[C.ImGuiMemAllocFunc](alloc_funcArg), internal.ReinterpretCast[C.ImGuiMemFreeFunc](free_funcArg), C.uintptr_t(user_data))
+
+	alloc_funcFin()
+	free_funcFin()
+}
+
 func SetClipboardText(text string) {
 	textArg, textFin := internal.WrapString[C.char](text)
 	C.igSetClipboardText(textArg)
@@ -13051,6 +13062,15 @@ func SelectableBoolPtr(label string, p_selected *bool) bool {
 
 func InternalSeparatorEx(flags SeparatorFlags) {
 	C.wrap_igSeparatorEx(C.ImGuiSeparatorFlags(flags))
+}
+
+func SetAllocatorFunctions(alloc_func MemAllocFunc, free_func MemFreeFunc) {
+	alloc_funcArg, alloc_funcFin := alloc_func.C()
+	free_funcArg, free_funcFin := free_func.C()
+	C.wrap_igSetAllocatorFunctions(internal.ReinterpretCast[C.ImGuiMemAllocFunc](alloc_funcArg), internal.ReinterpretCast[C.ImGuiMemFreeFunc](free_funcArg))
+
+	alloc_funcFin()
+	free_funcFin()
 }
 
 func SetDragDropPayload(typeArg string, data uintptr, sz uint64) bool {
