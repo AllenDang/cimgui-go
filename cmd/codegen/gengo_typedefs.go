@@ -343,6 +343,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 				argsStr := parts[2]
 				argsStr = TrimSuffix(argsStr, ");")
 				argsStr = ReplaceAll(argsStr, ", ", ",")
+				argsStr = ReplaceAll(argsStr, "&", "")
 				argsListStr := Split(argsStr, ",")
 				for a, argStr := range argsListStr {
 					// get name
