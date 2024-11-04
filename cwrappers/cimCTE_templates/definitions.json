@@ -392,16 +392,16 @@
           "type": "TextEditor*"
         }
       ],
-      "argsoriginal": "()",
-      "call_args": "()",
+      "argsoriginal": "(TextEditor* self)",
+      "call_args": "(self)",
       "cimguiname": "TextEditor_GetText",
       "defaults": {},
       "funcname": "GetText",
       "location": "TextEditor:92",
       "manual": true,
       "ov_cimguiname": "TextEditor_GetText",
-      "ret": "string",
-      "signature": "()const",
+      "ret": "const char*",
+      "signature": "(TextEditor*)const",
       "stname": "TextEditor"
     }
   ],
@@ -450,7 +450,7 @@
   ],
   "TextEditor_ImGuiDebugPanel": [
     {
-      "args": "(TextEditor* self,const std::string panelName)",
+      "args": "(TextEditor* self,const char* panelName)",
       "argsT": [
         {
           "name": "self",
@@ -458,21 +458,19 @@
         },
         {
           "name": "panelName",
-          "type": "const std::string"
+          "type": "const char*"
         }
       ],
-      "argsoriginal": "(const std::string& panelName=\"Debug\")",
-      "call_args": "(panelName)",
+      "argsoriginal": "(TextEditor* self,const char* panelName)",
+      "call_args": "(self,panelName)",
       "cimguiname": "TextEditor_ImGuiDebugPanel",
-      "defaults": {
-        "panelName": "\"Debug\""
-      },
+      "defaults": {},
       "funcname": "ImGuiDebugPanel",
       "location": "TextEditor:99",
       "manual": true,
       "ov_cimguiname": "TextEditor_ImGuiDebugPanel",
       "ret": "void",
-      "signature": "(const std::string)",
+      "signature": "(TextEditor*,const char*)",
       "stname": "TextEditor"
     }
   ],
@@ -1122,7 +1120,7 @@
   ],
   "TextEditor_SetText": [
     {
-      "args": "(TextEditor* self,const std::string aText)",
+      "args": "(TextEditor* self,const char* aText)",
       "argsT": [
         {
           "name": "self",
@@ -1130,11 +1128,11 @@
         },
         {
           "name": "aText",
-          "type": "const std::string"
+          "type": "const char*"
         }
       ],
-      "argsoriginal": "(const std::string& aText)",
-      "call_args": "(aText)",
+      "argsoriginal": "(TextEditor* self,const char* aText)",
+      "call_args": "(self,aText)",
       "cimguiname": "TextEditor_SetText",
       "defaults": {},
       "funcname": "SetText",
@@ -1142,7 +1140,7 @@
       "manual": true,
       "ov_cimguiname": "TextEditor_SetText",
       "ret": "void",
-      "signature": "(const std::string)",
+      "signature": "(TextEditor*,const char*)",
       "stname": "TextEditor"
     }
   ],

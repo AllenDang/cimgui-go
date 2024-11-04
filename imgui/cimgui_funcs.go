@@ -2892,15 +2892,6 @@ func (self *TextBuffer) AppendV(str string, str_end string) {
 	str_endFin()
 }
 
-func (self *TextBuffer) Appendf(fmt string) {
-	selfArg, selfFin := self.Handle()
-	fmtArg, fmtFin := internal.WrapString[C.char](fmt)
-	C.wrap_ImGuiTextBuffer_Appendf(internal.ReinterpretCast[*C.ImGuiTextBuffer](selfArg), fmtArg)
-
-	selfFin()
-	fmtFin()
-}
-
 func (self *TextBuffer) Begin() string {
 	selfArg, selfFin := self.Handle()
 

@@ -20,17 +20,14 @@ func getReturnWrapper(
 	context *Context,
 ) (returnWrapper, error) {
 	returnWrapperMap := map[CIdentifier]returnWrapper{
-		"bool":           {"bool", "%s == C.bool(true)", "C.bool"},
-		"bool*":          simplePtrR("bool", "C.bool"),
-		"const bool*":    simplePtrR("bool", "c.bool"),
-		"char":           simpleR("rune", "C.char"),
-		"unsigned char":  simpleR("uint", "C.char"),
-		"unsigned char*": {"*uint", "(*uint)(unsafe.Pointer(%s))", "C.uchar"}, // NOTE: This should work but I'm not 100% sure
-		"char*":          {"string", "C.GoString(%s)", "*C.char"},
-		"const char*":    {"string", "C.GoString(%s)", "*C.char"},
-		// this is randomly used by cimCTE. It is const char* in c code but string in json for some reason
-		// probably should fix in cimCTE
-		"string":          {"string", "C.GoString(%s)", "*C.char"},
+		"bool":            {"bool", "%s == C.bool(true)", "C.bool"},
+		"bool*":           simplePtrR("bool", "C.bool"),
+		"const bool*":     simplePtrR("bool", "c.bool"),
+		"char":            simpleR("rune", "C.char"),
+		"unsigned char":   simpleR("uint", "C.char"),
+		"unsigned char*":  {"*uint", "(*uint)(unsafe.Pointer(%s))", "C.uchar"}, // NOTE: This should work but I'm not 100% sure
+		"char*":           {"string", "C.GoString(%s)", "*C.char"},
+		"const char*":     {"string", "C.GoString(%s)", "*C.char"},
 		"const ImWchar*":  simpleR("(*Wchar)", "*C.ImWchar"),
 		"ImWchar*":        simpleR("(*Wchar)", "*C.ImWchar"),
 		"ImWchar":         simpleR("Wchar", "C.ImWchar"),

@@ -143,7 +143,7 @@ update: setup
 	$(call cimmarkdown)
 	$(call update,cimguizmo,https://github.com/cimgui/cimguizmo,ImGuizmo,master)
 	$(call cimguizmo)
-	$(call update,cimCTE,https://github.com/cimgui/cimcte,ImGuiColorTextEdit,master_santa)
+	$(call update,cimCTE,https://github.com/cimgui/cimcte,ImGuiColorTextEdit,master)
 	$(call cimcte)
 	$(call dummy)
 

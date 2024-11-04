@@ -37,11 +37,9 @@ func getArgWrapper(
 	context *Context,
 ) (argDeclaration string, data ArgumentWrapperData, err error) {
 	argWrapperMap := map[CIdentifier]argumentWrapper{
-		"char":        simpleW("rune", "C.char"),
-		"char*":       constCharW,
-		"const char*": constCharW,
-		// used by code editor
-		"const std::string":   constCharW,
+		"char":                simpleW("rune", "C.char"),
+		"char*":               constCharW,
+		"const char*":         constCharW,
 		"const char**":        charPtrPtrW,
 		"const char* const[]": charPtrPtrW,
 		"unsigned char":       simpleW("uint", "C.uchar"),

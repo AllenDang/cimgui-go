@@ -31,6 +31,10 @@ CIMGUI_API bool ImGuizmo_IsUsingViewManipulate()
 {
     return ImGuizmo::IsUsingViewManipulate();
 }
+CIMGUI_API bool ImGuizmo_IsViewManipulateHovered()
+{
+    return ImGuizmo::IsViewManipulateHovered();
+}
 CIMGUI_API bool ImGuizmo_IsUsingAny()
 {
     return ImGuizmo::IsUsingAny();
