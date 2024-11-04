@@ -101,7 +101,7 @@ typedefsGeneration:
 
 		if IsTemplateTypedef(typedef) {
 			if data.flags.showNotGenerated {
-				glg.Failf("typedef %s is a template. not implemented yet", k)
+				glg.Warnf("typedef %s is a template. not implemented yet", k)
 			}
 
 			continue
