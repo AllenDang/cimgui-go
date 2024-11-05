@@ -32,8 +32,8 @@ const (
 	returnTypeNonUDT
 )
 
-// generateGoFuncs generates given list of functions and writes them to file
-func generateGoFuncs(
+// GenerateGoFuncs generates given list of functions and writes them to file
+func GenerateGoFuncs(
 	validFuncs []FuncDef,
 	context *Context,
 ) error {
