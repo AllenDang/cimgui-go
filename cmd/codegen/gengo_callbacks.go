@@ -11,6 +11,8 @@ import (
 
 var callbackNotGeneratedError = errors.New("callback was not generated")
 
+// This is an underlying function for gengo_typedefs.go for now.
+// May be reworked to be a separated "genertor" in the future.
 // - includes logging
 // - returns CallbackNotGeneratedError
 func (g *typedefsGenerator) writeCallback(typedefName CIdentifier, def string) error {
