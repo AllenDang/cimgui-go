@@ -101,10 +101,6 @@ typedefsGeneration:
 
 		known := generator.parseArgDef(CIdentifier(typedef), ctx)
 
-		if typedef == "void*" {
-			typedef = "uintptr_t"
-		}
-
 		switch {
 		case typedefs.data[k] == "void*":
 			if ctx.flags.showGenerated {
