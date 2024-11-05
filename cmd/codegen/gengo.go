@@ -1,12 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 )
 
 type (
+	// EnumIdentifier is in theory EnumName_
+	EnumIdentifier string
 	// CIdentifier is a string representing name of struct/func/enum in C
 	CIdentifier string
 	// GoIdentifier is a string representing name of struct/func/enum in Go
@@ -92,11 +93,9 @@ func (c CIdentifier) trimImGuiPrefix() CIdentifier {
 }
 
 func (c CIdentifier) renameGoIdentifier() GoIdentifier {
-	fmt.Println(c)
 	if r, ok := replace[c]; ok {
 		c = CIdentifier(r)
 	}
-	fmt.Println(c)
 
 	c = TrimSuffix(c, "_Nil")
 
@@ -118,8 +117,8 @@ func (c CIdentifier) renameGoIdentifier() GoIdentifier {
 	return GoIdentifier(c)
 }
 
-func (c CIdentifier) renameEnum() GoIdentifier {
-	return TrimSuffix(c, "_").renameGoIdentifier()
+func (c EnumIdentifier) renameEnum() CIdentifier {
+	return CIdentifier(TrimSuffix(c, "_"))
 }
 
 // returns true if s is of form TypeName<*> <(>Name<*><)>(args)
@@ -139,8 +138,8 @@ func IsStructName(name CIdentifier, ctx *Context) bool {
 	return ok
 }
 
-func IsEnumName(name CIdentifier, enums map[GoIdentifier]bool) bool {
-	_, ok := enums[name.renameEnum()]
+func IsEnumName(name CIdentifier, enums map[CIdentifier]bool) bool {
+	_, ok := enums[name]
 	return ok
 }
 

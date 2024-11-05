@@ -16,7 +16,7 @@ const (
 )
 
 // this cextracts enums and structs names from json file.
-func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []GoIdentifier, structNames []CIdentifier, err error) {
+func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []EnumIdentifier, structNames []CIdentifier, err error) {
 	enums, err := getEnumDefs(enumJsonBytes)
 	if err != nil {
 		return nil, nil, fmt.Errorf("cannot get enum definitions: %w", err)
@@ -28,7 +28,7 @@ func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []GoIdentifier, stru
 	}
 
 	for _, e := range enums {
-		enumNames = append(enumNames, e.Name.renameEnum())
+		enumNames = append(enumNames, e.Name)
 	}
 
 	for _, s := range structs {
@@ -113,17 +113,15 @@ type Context struct {
 
 	prefix string
 
-	funcNames map[CIdentifier]bool
-	enumNames map[GoIdentifier]bool
-
-	structNames map[CIdentifier]bool
-
+	funcNames     map[CIdentifier]bool
+	enumNames     map[CIdentifier]bool
+	structNames   map[CIdentifier]bool
 	typedefsNames map[CIdentifier]bool
 
 	arrayIndexGetters map[CIdentifier]CIdentifier
 
 	refStructNames map[CIdentifier]bool
-	refEnumNames   map[GoIdentifier]bool
+	refEnumNames   map[CIdentifier]bool
 	refTypedefs    map[CIdentifier]bool
 
 	// TODO: might want to remove this
@@ -174,7 +172,7 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 		return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
 	}
 
-	result.refEnumNames = make(map[GoIdentifier]bool)
+	result.refEnumNames = make(map[CIdentifier]bool)
 	result.refStructNames = make(map[CIdentifier]bool)
 	if len(jsonData.refStructAndEnums) > 0 {
 		refEnums, refStructs, err := getEnumAndStructNames(jsonData.refStructAndEnums)
@@ -182,7 +180,11 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 			return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
 		}
 
-		result.refEnumNames = SliceToMap(refEnums)
+		result.refEnumNames = make(map[CIdentifier]bool)
+		for _, refEnum := range refEnums {
+			result.refEnumNames[refEnum.renameEnum()] = true
+		}
+
 		result.refStructNames = SliceToMap(refStructs)
 	}
 
@@ -208,7 +210,11 @@ func main() {
 
 	// 1. Generate code
 	// 1.1. Generate Go Enums
-	enumNames := generateGoEnums(flags.prefix, context.enums, context)
+	enumNames, err := generateGoEnums(flags.prefix, context.enums, context)
+	if err != nil {
+		glg.Fatalf("Generating enum names: %v", err)
+	}
+
 	context.enumNames = MergeMaps(SliceToMap(enumNames), context.refEnumNames)
 
 	// 1.2. Generate Go typedefs
