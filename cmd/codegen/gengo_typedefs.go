@@ -666,17 +666,3 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 }
 `, name.renameGoIdentifier(), name, toPlainValue)
 }
-
-func IsStructName[T any](name CIdentifier, structs map[CIdentifier]T) bool {
-	_, ok := structs[name]
-	return ok
-}
-
-func IsEnumName(name CIdentifier, enums map[GoIdentifier]bool) bool {
-	_, ok := enums[name.renameEnum()]
-	return ok
-}
-
-func IsTemplateTypedef(s string) bool {
-	return strings.Contains(s, "<")
-}

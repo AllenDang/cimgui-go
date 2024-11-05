@@ -129,3 +129,17 @@ func IsCallbackTypedef(s string) bool {
 
 	return b
 }
+
+func IsStructName[T any](name CIdentifier, structs map[CIdentifier]T) bool {
+	_, ok := structs[name]
+	return ok
+}
+
+func IsEnumName(name CIdentifier, enums map[GoIdentifier]bool) bool {
+	_, ok := enums[name.renameEnum()]
+	return ok
+}
+
+func IsTemplateTypedef(s string) bool {
+	return strings.Contains(s, "<")
+}
