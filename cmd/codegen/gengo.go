@@ -71,6 +71,8 @@ func (c CIdentifier) trimImGuiPrefix() CIdentifier {
 	// order sensitive!
 	prefixes := []string{
 		"ImGuizmo",
+		"imnodes",
+		"ImNodes",
 		"ImGui",
 		"Im",
 		"ig",
@@ -102,8 +104,6 @@ func (c CIdentifier) renameGoIdentifier() GoIdentifier {
 		c = "new" + c[3:].trimImGuiPrefix()
 	case HasPrefix(c, "*"):
 		c = "*" + c[1:].trimImGuiPrefix()
-	case HasPrefix(c, "imnodes"):
-		c = Replace(c, "imnodes", "ImNodes", 1)
 	}
 
 	c = TrimPrefix(c, "Get")
