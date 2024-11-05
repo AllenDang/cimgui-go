@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 )
@@ -63,7 +64,7 @@ var replace = map[CIdentifier]GoIdentifier{
 	"igGetPlatformIO":         "CurrentPlatformIO",
 	"igGetStyle":              "CurrentStyle",
 	"igGetMouseCursor":        "CurrentMouseCursor",
-	"ImAxis":                  "PlotAxisEnum",
+	"ImAxis":                  "AxisEnum",
 	"GetItem_ID":              "ItemByID",
 }
 
@@ -91,9 +92,11 @@ func (c CIdentifier) trimImGuiPrefix() CIdentifier {
 }
 
 func (c CIdentifier) renameGoIdentifier() GoIdentifier {
+	fmt.Println(c)
 	if r, ok := replace[c]; ok {
 		c = CIdentifier(r)
 	}
+	fmt.Println(c)
 
 	c = TrimSuffix(c, "_Nil")
 
