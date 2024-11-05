@@ -119,88 +119,15 @@ typedefsGeneration:
 				glg.Successf("typedef %s is an alias typedef.", k)
 			}
 
-			fmt.Fprintf(generator.GoSb, `
-type %[1]s %[2]s
-
-// Handle returns C version of %[1]s and its finalizer func.
-func (selfSrc *%[1]s) Handle() (result *C.%[6]s, fin func()) {
-	self := (*%[2]s)(selfSrc)
-    %[3]s
-    return (*C.%[6]s)(%[4]s), func() { %[5]s }
-}
-
-// C is like Handle but returns plain type instead of pointer.
-func (self %[1]s) C() (C.%[6]s, func()) {
-    %[7]s
-    return (C.%[6]s)(%[8]s), func() { %[9]s }
-}
-
-// New%[1]sFromC creates %[1]s from its C pointer.
-// SRC ~= *C.%[6]s
-func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
-	return (*%[1]s)(%[10]s)
-}
-`,
-				k.renameGoIdentifier(),
-				known.argType.ArgType,
-
-				known.ptrArgType.ArgDef,
-				known.ptrArgType.VarName,
-				known.ptrArgType.Finalizer,
-
-				k,
-
-				known.argType.ArgDef,
-				known.argType.VarName,
-				known.argType.Finalizer,
-
-				fmt.Sprintf(known.ptrReturnType.returnStmt, fmt.Sprintf("internal.ReinterpretCast[*C.%s](cvalue)", k)),
-			)
+			generator.writeAliasTypedef(k, known)
 
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		case isPtr &&
 			known.returnTypeErr == nil &&
 			known.argTypeErr == nil:
-			// if it's a pointer type, I think we can proceed as above, but without Handle() method...
-			// (handle proceeds pointer values and we don't want double pointers, really)
-			fmt.Fprintf(generator.GoSb, `
-type %[1]s  struct {
-	Data %[2]s
-}
 
-// Handle returns C version of %[1]s and its finalizer func.
-func (self *%[1]s) Handle() (*C.%[6]s, func()) {
-	result, fn := self.C()
-	return &result, fn
-}
-
-// C is like Handle but returns plain type instead of pointer.
-func (selfStruct *%[1]s) C() (result C.%[6]s, fin func()) {
-	self := selfStruct.Data
-    %[3]s
-    return (C.%[6]s)(%[4]s), func() { %[5]s }
-}
-
-// New%[1]sFromC creates %[1]s from its C pointer.
-// SRC ~= *C.%[6]s
-func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
-	v := (%[8]s)(*internal.ReinterpretCast[*C.%[6]s](cvalue))
-	return &%[1]s{Data: %[7]s}
-}
-`,
-				k.renameGoIdentifier(),
-				known.argType.ArgType,
-
-				known.argType.ArgDef,
-				known.argType.VarName,
-				known.argType.Finalizer,
-
-				k,
-
-				fmt.Sprintf(known.returnType.returnStmt, "v"),
-				known.argType.CType,
-			)
+			generator.writePtrTypedef(k, known)
 
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
@@ -655,6 +582,88 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 		known.argType.Finalizer,
 
 		fmt.Sprintf(known.ptrReturnType.returnStmt, "cvalue"),
+	)
+}
+
+// k is plain C name of the typedef (key in typedefs_dict.json)
+// known is parsed value of k
+func (g *typedefsGenerator) writeAliasTypedef(k CIdentifier, known *typedefTypeContext) {
+	fmt.Fprintf(g.GoSb, `
+type %[1]s %[2]s
+
+// Handle returns C version of %[1]s and its finalizer func.
+func (selfSrc *%[1]s) Handle() (result *C.%[6]s, fin func()) {
+	self := (*%[2]s)(selfSrc)
+    %[3]s
+    return (*C.%[6]s)(%[4]s), func() { %[5]s }
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self %[1]s) C() (C.%[6]s, func()) {
+    %[7]s
+    return (C.%[6]s)(%[8]s), func() { %[9]s }
+}
+
+// New%[1]sFromC creates %[1]s from its C pointer.
+// SRC ~= *C.%[6]s
+func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
+	return (*%[1]s)(%[10]s)
+}
+`,
+		k.renameGoIdentifier(),
+		known.argType.ArgType,
+
+		known.ptrArgType.ArgDef,
+		known.ptrArgType.VarName,
+		known.ptrArgType.Finalizer,
+
+		k,
+
+		known.argType.ArgDef,
+		known.argType.VarName,
+		known.argType.Finalizer,
+
+		fmt.Sprintf(known.ptrReturnType.returnStmt, fmt.Sprintf("internal.ReinterpretCast[*C.%s](cvalue)", k)),
+	)
+}
+
+func (g *typedefsGenerator) writePtrTypedef(k CIdentifier, known *typedefTypeContext) {
+	fmt.Fprintf(g.GoSb, `
+type %[1]s  struct {
+	Data %[2]s
+}
+
+// Handle returns C version of %[1]s and its finalizer func.
+func (self *%[1]s) Handle() (*C.%[6]s, func()) {
+	result, fn := self.C()
+	return &result, fn
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (selfStruct *%[1]s) C() (result C.%[6]s, fin func()) {
+	self := selfStruct.Data
+    %[3]s
+    return (C.%[6]s)(%[4]s), func() { %[5]s }
+}
+
+// New%[1]sFromC creates %[1]s from its C pointer.
+// SRC ~= *C.%[6]s
+func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
+	v := (%[8]s)(*internal.ReinterpretCast[*C.%[6]s](cvalue))
+	return &%[1]s{Data: %[7]s}
+}
+`,
+		k.renameGoIdentifier(),
+		known.argType.ArgType,
+
+		known.argType.ArgDef,
+		known.argType.VarName,
+		known.argType.Finalizer,
+
+		k,
+
+		fmt.Sprintf(known.returnType.returnStmt, "v"),
+		known.argType.CType,
 	)
 }
 
