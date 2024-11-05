@@ -111,7 +111,10 @@ typedefsGeneration:
 
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
-		case known.ptrReturnTypeErr == nil && known.argTypeErr == nil && known.ptrArgTypeErr == nil && !isPtr:
+		case !isPtr &&
+			known.ptrReturnTypeErr == nil &&
+			known.argTypeErr == nil &&
+			known.ptrArgTypeErr == nil:
 			if ctx.flags.showGenerated {
 				glg.Successf("typedef %s is an alias typedef.", k)
 			}
@@ -156,7 +159,9 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
-		case known.returnTypeErr == nil && known.argTypeErr == nil && isPtr:
+		case isPtr &&
+			known.returnTypeErr == nil &&
+			known.argTypeErr == nil:
 			// if it's a pointer type, I think we can proceed as above, but without Handle() method...
 			// (handle proceeds pointer values and we don't want double pointers, really)
 			fmt.Fprintf(generator.GoSb, `
@@ -200,11 +205,6 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		case IsCallbackTypedef(typedefs.data[k]):
-			/*
-				if ctx.flags.showNotGenerated {
-					glg.Failf("typedef %s is a callback. Not implemented yet", k)
-				}
-			*/
 			// see https://github.com/AllenDang/cimgui-go/issues/224#issuecomment-2452156237
 			// 1: preprocessing - parse typedefs.data[k] to get return type and arguments
 			typedefName := CIdentifier(k)
