@@ -481,7 +481,7 @@ func Clear%[1]sPool() {
 				glg.Successf("typedef %s is a struct (is opaque? %v).", k, isOpaque)
 			}
 
-			writeOpaqueStruct(k, isOpaque, generator.GoSb)
+			generator.writeStruct(k, isOpaque)
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		default:
@@ -658,7 +658,10 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 	)
 }
 
-func writeOpaqueStruct(name CIdentifier, isOpaque bool, sb *strings.Builder) {
+func (g *typedefsGenerator) writeStruct(
+	name CIdentifier,
+	isOpaque bool, // if this is true, we assume that we cannot use the exact value of a struct (only pointer)
+) {
 	// this will be put only for structs that are NOT opaque (w can know the exact definition)
 	var toPlainValue string
 	if !isOpaque {
@@ -672,7 +675,7 @@ func (self %[1]s) C() (C.%[2]s, func()) {
 	}
 
 	// we need to make it a struct, because we need to hide C type (otherwise it will duplicate methods)
-	fmt.Fprintf(sb, `
+	fmt.Fprintf(g.GoSb, `
 type %[1]s struct {
 	CData *C.%[2]s
 }
