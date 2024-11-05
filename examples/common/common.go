@@ -55,7 +55,7 @@ func InputTextCallback(data imgui.InputTextCallbackData) int {
 
 func AfterCreateContext() {
 	texture = backend.NewTextureFromRgba(img)
-	implot.PlotCreateContext()
+	implot.CreateContext()
 	textEditor = cte.NewTextEditor()
 	textEditor.SetLanguageDefinition(cte.Cpp)
 	textEditor.SetText(`// Colorize a C++ file
@@ -64,7 +64,7 @@ ImGui::Text("Hello World")`)
 }
 
 func BeforeDestroyContext() {
-	implot.PlotDestroyContext()
+	implot.DestroyContext()
 }
 
 func Loop() {
@@ -135,10 +135,10 @@ func ShowImPlotDemo() {
 	imgui.SetNextWindowPosV(imgui.NewVec2(basePos.X+400, basePos.Y+60), imgui.CondOnce, imgui.NewVec2(0, 0))
 	imgui.SetNextWindowSizeV(imgui.NewVec2(500, 300), imgui.CondOnce)
 	imgui.Begin("Plot window")
-	if implot.PlotBeginPlotV("Plot", imgui.NewVec2(-1, -1), 0) {
-		implot.PlotPlotBarsS64PtrInt("Bar", barValues, int32(len(barValues)))
-		implot.PlotPlotLineS64PtrInt("Line", barValues, int32(len(barValues)))
-		implot.PlotEndPlot()
+	if implot.BeginPlotV("Plot", imgui.NewVec2(-1, -1), 0) {
+		implot.PlotBarsS64PtrInt("Bar", barValues, int32(len(barValues)))
+		implot.PlotLineS64PtrInt("Line", barValues, int32(len(barValues)))
+		implot.EndPlot()
 	}
 	imgui.End()
 }
