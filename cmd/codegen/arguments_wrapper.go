@@ -43,6 +43,7 @@ func getArgWrapper(
 		"const char**":        charPtrPtrW,
 		"const char* const[]": charPtrPtrW,
 		"unsigned char":       simpleW("uint", "C.uchar"),
+		"const unsigned char": simpleW("uint", "C.uchar"),
 		"unsigned char*":      simplePtrW("uint", "C.uchar"),
 		"unsigned char**":     uCharPtrW,
 		"size_t":              simpleW("uint64", "C.xulong"),
