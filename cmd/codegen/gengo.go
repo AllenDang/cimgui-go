@@ -130,8 +130,8 @@ func IsCallbackTypedef(s string) bool {
 	return b
 }
 
-func IsStructName[T any](name CIdentifier, structs map[CIdentifier]T) bool {
-	_, ok := structs[name]
+func IsStructName(name CIdentifier, ctx *Context) bool {
+	_, ok := ctx.structNames[name]
 	return ok
 }
 

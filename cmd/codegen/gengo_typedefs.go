@@ -22,11 +22,6 @@ func proceedTypedefs(
 	generatedTypedefs := 0
 	maxTypedefs := len(typedefs.data)
 
-	structsMap := make(map[CIdentifier]StructDef)
-	for _, s := range structs {
-		structsMap[s.Name] = s
-	}
-
 	// we need FILES
 	typedefsGoSb := &strings.Builder{}
 	typedefsCGoHeaderSb := &strings.Builder{}
@@ -577,7 +572,7 @@ func Clear%[1]sPool() {
 
 			glg.Successf("typedef %s is a callback. Implemented.", k)
 		case HasPrefix(typedefs.data[k], "struct"):
-			isOpaque := !IsStructName(k, structsMap)
+			isOpaque := !IsStructName(k, data)
 			if data.flags.showGenerated {
 				glg.Successf("typedef %s is a struct (is opaque? %v).", k, isOpaque)
 			}
