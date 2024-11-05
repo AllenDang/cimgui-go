@@ -73,6 +73,7 @@ func (c CIdentifier) trimImGuiPrefix() CIdentifier {
 		"ImGuizmo",
 		"imnodes",
 		"ImNodes",
+		"ImPlot",
 		"ImGui",
 		"Im",
 		"ig",
