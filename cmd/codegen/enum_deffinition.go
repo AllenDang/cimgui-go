@@ -14,7 +14,7 @@ type EnumsSection struct {
 
 // EnumDef represents a definition of an ImGui enum (like flags).
 type EnumDef struct {
-	Name         CIdentifier
+	Name         EnumIdentifier
 	CommentAbove string
 	Values       []EnumValueDef
 }
@@ -63,7 +63,7 @@ func getEnumDefs(enumJsonBytes []byte) ([]EnumDef, error) {
 		}
 
 		enum := EnumDef{
-			Name:   CIdentifier(k),
+			Name:   EnumIdentifier(k),
 			Values: enumValues,
 		}
 

@@ -101,7 +101,7 @@ func GenerateGoFuncs(
 type goFuncsGenerator struct {
 	prefix      string
 	structNames map[CIdentifier]bool
-	enumNames   map[GoIdentifier]bool
+	enumNames   map[CIdentifier]bool
 	refTypedefs map[CIdentifier]bool
 
 	sb                 strings.Builder
@@ -426,12 +426,8 @@ func (g *goFuncsGenerator) writeFinishers(shouldDefer bool, finishers []string) 
 }
 
 // isEnum returns true when given string is a valid enum type.
-func isEnum(argType CIdentifier, enumNames map[GoIdentifier]bool) bool {
-	for en := range enumNames {
-		if argType.renameEnum() == en {
-			return true
-		}
-	}
+func isEnum(argType CIdentifier, enumNames map[CIdentifier]bool) bool {
+	_, ok := enumNames[argType]
 
-	return false
+	return ok
 }

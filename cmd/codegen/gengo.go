@@ -6,6 +6,8 @@ import (
 )
 
 type (
+	// EnumIdentifier is in theory EnumName_
+	EnumIdentifier string
 	// CIdentifier is a string representing name of struct/func/enum in C
 	CIdentifier string
 	// GoIdentifier is a string representing name of struct/func/enum in Go
@@ -63,7 +65,7 @@ var replace = map[CIdentifier]GoIdentifier{
 	"igGetPlatformIO":         "CurrentPlatformIO",
 	"igGetStyle":              "CurrentStyle",
 	"igGetMouseCursor":        "CurrentMouseCursor",
-	"ImAxis":                  "PlotAxisEnum",
+	"ImAxis":                  "AxisEnum",
 	"GetItem_ID":              "ItemByID",
 }
 
@@ -71,6 +73,9 @@ func (c CIdentifier) trimImGuiPrefix() CIdentifier {
 	// order sensitive!
 	prefixes := []string{
 		"ImGuizmo",
+		"imnodes",
+		"ImNodes",
+		"ImPlot",
 		"ImGui",
 		"Im",
 		"ig",
@@ -102,8 +107,6 @@ func (c CIdentifier) renameGoIdentifier() GoIdentifier {
 		c = "new" + c[3:].trimImGuiPrefix()
 	case HasPrefix(c, "*"):
 		c = "*" + c[1:].trimImGuiPrefix()
-	case HasPrefix(c, "imnodes"):
-		c = Replace(c, "imnodes", "ImNodes", 1)
 	}
 
 	c = TrimPrefix(c, "Get")
@@ -114,8 +117,8 @@ func (c CIdentifier) renameGoIdentifier() GoIdentifier {
 	return GoIdentifier(c)
 }
 
-func (c CIdentifier) renameEnum() GoIdentifier {
-	return TrimSuffix(c, "_").renameGoIdentifier()
+func (c EnumIdentifier) renameEnum() CIdentifier {
+	return CIdentifier(TrimSuffix(c, "_"))
 }
 
 // returns true if s is of form TypeName<*> <(>Name<*><)>(args)
@@ -135,8 +138,8 @@ func IsStructName(name CIdentifier, ctx *Context) bool {
 	return ok
 }
 
-func IsEnumName(name CIdentifier, enums map[GoIdentifier]bool) bool {
-	_, ok := enums[name.renameEnum()]
+func IsEnumName(name CIdentifier, enums map[CIdentifier]bool) bool {
+	_, ok := enums[name]
 	return ok
 }
 

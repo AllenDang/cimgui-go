@@ -26,22 +26,22 @@ func (self *EmulateThreeButtonMouse) Destroy() {
 	selfFin()
 }
 
-func NewNodesIO() *NodesIO {
-	return NewNodesIOFromC(C.ImNodesIO_ImNodesIO())
+func NewIO() *IO {
+	return NewIOFromC(C.ImNodesIO_ImNodesIO())
 }
 
-func (self *NodesIO) Destroy() {
+func (self *IO) Destroy() {
 	selfArg, selfFin := self.Handle()
 	C.ImNodesIO_destroy(internal.ReinterpretCast[*C.ImNodesIO](selfArg))
 
 	selfFin()
 }
 
-func NewNodesStyle() *NodesStyle {
-	return NewNodesStyleFromC(C.ImNodesStyle_ImNodesStyle())
+func NewStyle() *Style {
+	return NewStyleFromC(C.ImNodesStyle_ImNodesStyle())
 }
 
-func (self *NodesStyle) Destroy() {
+func (self *Style) Destroy() {
 	selfArg, selfFin := self.Handle()
 	C.ImNodesStyle_destroy(internal.ReinterpretCast[*C.ImNodesStyle](selfArg))
 
@@ -70,75 +70,75 @@ func (self *MultipleSelectModifier) Destroy() {
 	selfFin()
 }
 
-// ImNodesBeginInputAttributeV parameter default value hint:
+// BeginInputAttributeV parameter default value hint:
 // shape: ImNodesPinShape_CircleFilled
-func ImNodesBeginInputAttributeV(id int32, shape NodesPinShape) {
+func BeginInputAttributeV(id int32, shape PinShape) {
 	C.imnodes_BeginInputAttribute(C.int(id), C.ImNodesPinShape(shape))
 }
 
-func ImNodesBeginNode(id int32) {
+func BeginNode(id int32) {
 	C.imnodes_BeginNode(C.int(id))
 }
 
-func ImNodesBeginNodeEditor() {
+func BeginNodeEditor() {
 	C.imnodes_BeginNodeEditor()
 }
 
-func ImNodesBeginNodeTitleBar() {
+func BeginNodeTitleBar() {
 	C.imnodes_BeginNodeTitleBar()
 }
 
-// ImNodesBeginOutputAttributeV parameter default value hint:
+// BeginOutputAttributeV parameter default value hint:
 // shape: ImNodesPinShape_CircleFilled
-func ImNodesBeginOutputAttributeV(id int32, shape NodesPinShape) {
+func BeginOutputAttributeV(id int32, shape PinShape) {
 	C.imnodes_BeginOutputAttribute(C.int(id), C.ImNodesPinShape(shape))
 }
 
-func ImNodesBeginStaticAttribute(id int32) {
+func BeginStaticAttribute(id int32) {
 	C.imnodes_BeginStaticAttribute(C.int(id))
 }
 
-func ImNodesClearLinkSelectionInt(link_id int32) {
+func ClearLinkSelectionInt(link_id int32) {
 	C.imnodes_ClearLinkSelection_Int(C.int(link_id))
 }
 
-func ImNodesClearLinkSelection() {
+func ClearLinkSelection() {
 	C.imnodes_ClearLinkSelection_Nil()
 }
 
-func ImNodesClearNodeSelectionInt(node_id int32) {
+func ClearNodeSelectionInt(node_id int32) {
 	C.imnodes_ClearNodeSelection_Int(C.int(node_id))
 }
 
-func ImNodesClearNodeSelection() {
+func ClearNodeSelection() {
 	C.imnodes_ClearNodeSelection_Nil()
 }
 
-func ImNodesCreateContext() *NodesContext {
-	return NewNodesContextFromC(C.imnodes_CreateContext())
+func CreateContext() *Context {
+	return NewContextFromC(C.imnodes_CreateContext())
 }
 
-// ImNodesDestroyContextV parameter default value hint:
+// DestroyContextV parameter default value hint:
 // ctx: NULL
-func ImNodesDestroyContextV(ctx *NodesContext) {
+func DestroyContextV(ctx *Context) {
 	ctxArg, ctxFin := ctx.Handle()
 	C.imnodes_DestroyContext(internal.ReinterpretCast[*C.ImNodesContext](ctxArg))
 
 	ctxFin()
 }
 
-func ImNodesEditorContextCreate() *NodesEditorContext {
-	return NewNodesEditorContextFromC(C.imnodes_EditorContextCreate())
+func EditorContextCreate() *EditorContext {
+	return NewEditorContextFromC(C.imnodes_EditorContextCreate())
 }
 
-func ImNodesEditorContextFree(noname1 *NodesEditorContext) {
+func EditorContextFree(noname1 *EditorContext) {
 	noname1Arg, noname1Fin := noname1.Handle()
 	C.imnodes_EditorContextFree(internal.ReinterpretCast[*C.ImNodesEditorContext](noname1Arg))
 
 	noname1Fin()
 }
 
-func ImNodesEditorContextGetPanning() imgui.Vec2 {
+func EditorContextGetPanning() imgui.Vec2 {
 	pOut := new(imgui.Vec2)
 	pOutArg, pOutFin := internal.Wrap(pOut)
 
@@ -149,54 +149,54 @@ func ImNodesEditorContextGetPanning() imgui.Vec2 {
 	return *pOut
 }
 
-func ImNodesEditorContextMoveToNode(node_id int32) {
+func EditorContextMoveToNode(node_id int32) {
 	C.imnodes_EditorContextMoveToNode(C.int(node_id))
 }
 
-func ImNodesEditorContextResetPanning(pos imgui.Vec2) {
+func EditorContextResetPanning(pos imgui.Vec2) {
 	C.imnodes_EditorContextResetPanning(internal.ReinterpretCast[C.ImVec2](pos.ToC()))
 }
 
-func ImNodesEditorContextSet(noname1 *NodesEditorContext) {
+func EditorContextSet(noname1 *EditorContext) {
 	noname1Arg, noname1Fin := noname1.Handle()
 	C.imnodes_EditorContextSet(internal.ReinterpretCast[*C.ImNodesEditorContext](noname1Arg))
 
 	noname1Fin()
 }
 
-func ImNodesEndInputAttribute() {
+func EndInputAttribute() {
 	C.imnodes_EndInputAttribute()
 }
 
-func ImNodesEndNode() {
+func EndNode() {
 	C.imnodes_EndNode()
 }
 
-func ImNodesEndNodeEditor() {
+func EndNodeEditor() {
 	C.imnodes_EndNodeEditor()
 }
 
-func ImNodesEndNodeTitleBar() {
+func EndNodeTitleBar() {
 	C.imnodes_EndNodeTitleBar()
 }
 
-func ImNodesEndOutputAttribute() {
+func EndOutputAttribute() {
 	C.imnodes_EndOutputAttribute()
 }
 
-func ImNodesEndStaticAttribute() {
+func EndStaticAttribute() {
 	C.imnodes_EndStaticAttribute()
 }
 
-func ImNodesGetCurrentContext() *NodesContext {
-	return NewNodesContextFromC(C.imnodes_GetCurrentContext())
+func GetCurrentContext() *Context {
+	return NewContextFromC(C.imnodes_GetCurrentContext())
 }
 
-func ImNodesGetIO() *NodesIO {
-	return NewNodesIOFromC(C.imnodes_GetIO())
+func GetIO() *IO {
+	return NewIOFromC(C.imnodes_GetIO())
 }
 
-func ImNodesGetNodeDimensions(id int32) imgui.Vec2 {
+func GetNodeDimensions(id int32) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
 	pOutArg, pOutFin := internal.Wrap(pOut)
 
@@ -207,7 +207,7 @@ func ImNodesGetNodeDimensions(id int32) imgui.Vec2 {
 	return *pOut
 }
 
-func ImNodesGetNodeEditorSpacePos(node_id int32) imgui.Vec2 {
+func GetNodeEditorSpacePos(node_id int32) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
 	pOutArg, pOutFin := internal.Wrap(pOut)
 
@@ -218,7 +218,7 @@ func ImNodesGetNodeEditorSpacePos(node_id int32) imgui.Vec2 {
 	return *pOut
 }
 
-func ImNodesGetNodeGridSpacePos(node_id int32) imgui.Vec2 {
+func GetNodeGridSpacePos(node_id int32) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
 	pOutArg, pOutFin := internal.Wrap(pOut)
 
@@ -229,7 +229,7 @@ func ImNodesGetNodeGridSpacePos(node_id int32) imgui.Vec2 {
 	return *pOut
 }
 
-func ImNodesGetNodeScreenSpacePos(node_id int32) imgui.Vec2 {
+func GetNodeScreenSpacePos(node_id int32) imgui.Vec2 {
 	pOut := new(imgui.Vec2)
 	pOutArg, pOutFin := internal.Wrap(pOut)
 
@@ -240,27 +240,27 @@ func ImNodesGetNodeScreenSpacePos(node_id int32) imgui.Vec2 {
 	return *pOut
 }
 
-func ImNodesGetSelectedLinks(link_ids *int32) {
+func GetSelectedLinks(link_ids *int32) {
 	link_idsArg, link_idsFin := internal.WrapNumberPtr[C.int, int32](link_ids)
 	C.imnodes_GetSelectedLinks(link_idsArg)
 
 	link_idsFin()
 }
 
-func ImNodesGetSelectedNodes(node_ids *int32) {
+func GetSelectedNodes(node_ids *int32) {
 	node_idsArg, node_idsFin := internal.WrapNumberPtr[C.int, int32](node_ids)
 	C.imnodes_GetSelectedNodes(node_idsArg)
 
 	node_idsFin()
 }
 
-func ImNodesGetStyle() *NodesStyle {
-	return NewNodesStyleFromC(C.imnodes_GetStyle())
+func GetStyle() *Style {
+	return NewStyleFromC(C.imnodes_GetStyle())
 }
 
-// ImNodesIsAnyAttributeActiveV parameter default value hint:
+// IsAnyAttributeActiveV parameter default value hint:
 // attribute_id: NULL
-func ImNodesIsAnyAttributeActiveV(attribute_id *int32) bool {
+func IsAnyAttributeActiveV(attribute_id *int32) bool {
 	attribute_idArg, attribute_idFin := internal.WrapNumberPtr[C.int, int32](attribute_id)
 
 	defer func() {
@@ -269,17 +269,17 @@ func ImNodesIsAnyAttributeActiveV(attribute_id *int32) bool {
 	return C.imnodes_IsAnyAttributeActive(attribute_idArg) == C.bool(true)
 }
 
-func ImNodesIsAttributeActive() bool {
+func IsAttributeActive() bool {
 	return C.imnodes_IsAttributeActive() == C.bool(true)
 }
 
-func ImNodesIsEditorHovered() bool {
+func IsEditorHovered() bool {
 	return C.imnodes_IsEditorHovered() == C.bool(true)
 }
 
-// ImNodesIsLinkCreatedBoolPtrV parameter default value hint:
+// IsLinkCreatedBoolPtrV parameter default value hint:
 // created_from_snap: NULL
-func ImNodesIsLinkCreatedBoolPtrV(started_at_attribute_id *int32, ended_at_attribute_id *int32, created_from_snap *bool) bool {
+func IsLinkCreatedBoolPtrV(started_at_attribute_id *int32, ended_at_attribute_id *int32, created_from_snap *bool) bool {
 	started_at_attribute_idArg, started_at_attribute_idFin := internal.WrapNumberPtr[C.int, int32](started_at_attribute_id)
 	ended_at_attribute_idArg, ended_at_attribute_idFin := internal.WrapNumberPtr[C.int, int32](ended_at_attribute_id)
 	created_from_snapArg, created_from_snapFin := internal.WrapNumberPtr[C.bool, bool](created_from_snap)
@@ -292,9 +292,9 @@ func ImNodesIsLinkCreatedBoolPtrV(started_at_attribute_id *int32, ended_at_attri
 	return C.imnodes_IsLinkCreated_BoolPtr(started_at_attribute_idArg, ended_at_attribute_idArg, created_from_snapArg) == C.bool(true)
 }
 
-// ImNodesIsLinkCreatedIntPtrV parameter default value hint:
+// IsLinkCreatedIntPtrV parameter default value hint:
 // created_from_snap: NULL
-func ImNodesIsLinkCreatedIntPtrV(started_at_node_id *int32, started_at_attribute_id *int32, ended_at_node_id *int32, ended_at_attribute_id *int32, created_from_snap *bool) bool {
+func IsLinkCreatedIntPtrV(started_at_node_id *int32, started_at_attribute_id *int32, ended_at_node_id *int32, ended_at_attribute_id *int32, created_from_snap *bool) bool {
 	started_at_node_idArg, started_at_node_idFin := internal.WrapNumberPtr[C.int, int32](started_at_node_id)
 	started_at_attribute_idArg, started_at_attribute_idFin := internal.WrapNumberPtr[C.int, int32](started_at_attribute_id)
 	ended_at_node_idArg, ended_at_node_idFin := internal.WrapNumberPtr[C.int, int32](ended_at_node_id)
@@ -311,7 +311,7 @@ func ImNodesIsLinkCreatedIntPtrV(started_at_node_id *int32, started_at_attribute
 	return C.imnodes_IsLinkCreated_IntPtr(started_at_node_idArg, started_at_attribute_idArg, ended_at_node_idArg, ended_at_attribute_idArg, created_from_snapArg) == C.bool(true)
 }
 
-func ImNodesIsLinkDestroyed(link_id *int32) bool {
+func IsLinkDestroyed(link_id *int32) bool {
 	link_idArg, link_idFin := internal.WrapNumberPtr[C.int, int32](link_id)
 
 	defer func() {
@@ -320,10 +320,10 @@ func ImNodesIsLinkDestroyed(link_id *int32) bool {
 	return C.imnodes_IsLinkDestroyed(link_idArg) == C.bool(true)
 }
 
-// ImNodesIsLinkDroppedV parameter default value hint:
+// IsLinkDroppedV parameter default value hint:
 // started_at_attribute_id: NULL
 // including_detached_links: true
-func ImNodesIsLinkDroppedV(started_at_attribute_id *int32, including_detached_links bool) bool {
+func IsLinkDroppedV(started_at_attribute_id *int32, including_detached_links bool) bool {
 	started_at_attribute_idArg, started_at_attribute_idFin := internal.WrapNumberPtr[C.int, int32](started_at_attribute_id)
 
 	defer func() {
@@ -332,7 +332,7 @@ func ImNodesIsLinkDroppedV(started_at_attribute_id *int32, including_detached_li
 	return C.imnodes_IsLinkDropped(started_at_attribute_idArg, C.bool(including_detached_links)) == C.bool(true)
 }
 
-func ImNodesIsLinkHovered(link_id *int32) bool {
+func IsLinkHovered(link_id *int32) bool {
 	link_idArg, link_idFin := internal.WrapNumberPtr[C.int, int32](link_id)
 
 	defer func() {
@@ -341,11 +341,11 @@ func ImNodesIsLinkHovered(link_id *int32) bool {
 	return C.imnodes_IsLinkHovered(link_idArg) == C.bool(true)
 }
 
-func ImNodesIsLinkSelected(link_id int32) bool {
+func IsLinkSelected(link_id int32) bool {
 	return C.imnodes_IsLinkSelected(C.int(link_id)) == C.bool(true)
 }
 
-func ImNodesIsLinkStarted(started_at_attribute_id *int32) bool {
+func IsLinkStarted(started_at_attribute_id *int32) bool {
 	started_at_attribute_idArg, started_at_attribute_idFin := internal.WrapNumberPtr[C.int, int32](started_at_attribute_id)
 
 	defer func() {
@@ -354,7 +354,7 @@ func ImNodesIsLinkStarted(started_at_attribute_id *int32) bool {
 	return C.imnodes_IsLinkStarted(started_at_attribute_idArg) == C.bool(true)
 }
 
-func ImNodesIsNodeHovered(node_id *int32) bool {
+func IsNodeHovered(node_id *int32) bool {
 	node_idArg, node_idFin := internal.WrapNumberPtr[C.int, int32](node_id)
 
 	defer func() {
@@ -363,11 +363,11 @@ func ImNodesIsNodeHovered(node_id *int32) bool {
 	return C.imnodes_IsNodeHovered(node_idArg) == C.bool(true)
 }
 
-func ImNodesIsNodeSelected(node_id int32) bool {
+func IsNodeSelected(node_id int32) bool {
 	return C.imnodes_IsNodeSelected(C.int(node_id)) == C.bool(true)
 }
 
-func ImNodesIsPinHovered(attribute_id *int32) bool {
+func IsPinHovered(attribute_id *int32) bool {
 	attribute_idArg, attribute_idFin := internal.WrapNumberPtr[C.int, int32](attribute_id)
 
 	defer func() {
@@ -376,25 +376,25 @@ func ImNodesIsPinHovered(attribute_id *int32) bool {
 	return C.imnodes_IsPinHovered(attribute_idArg) == C.bool(true)
 }
 
-func ImNodesLink(id int32, start_attribute_id int32, end_attribute_id int32) {
+func Link(id int32, start_attribute_id int32, end_attribute_id int32) {
 	C.imnodes_Link(C.int(id), C.int(start_attribute_id), C.int(end_attribute_id))
 }
 
-func ImNodesLoadCurrentEditorStateFromIniFile(file_name string) {
+func LoadCurrentEditorStateFromIniFile(file_name string) {
 	file_nameArg, file_nameFin := internal.WrapString[C.char](file_name)
 	C.imnodes_LoadCurrentEditorStateFromIniFile(file_nameArg)
 
 	file_nameFin()
 }
 
-func ImNodesLoadCurrentEditorStateFromIniString(data string, data_size uint64) {
+func LoadCurrentEditorStateFromIniString(data string, data_size uint64) {
 	dataArg, dataFin := internal.WrapString[C.char](data)
 	C.imnodes_LoadCurrentEditorStateFromIniString(dataArg, C.xulong(data_size))
 
 	dataFin()
 }
 
-func ImNodesLoadEditorStateFromIniFile(editor *NodesEditorContext, file_name string) {
+func LoadEditorStateFromIniFile(editor *EditorContext, file_name string) {
 	editorArg, editorFin := editor.Handle()
 	file_nameArg, file_nameFin := internal.WrapString[C.char](file_name)
 	C.imnodes_LoadEditorStateFromIniFile(internal.ReinterpretCast[*C.ImNodesEditorContext](editorArg), file_nameArg)
@@ -403,7 +403,7 @@ func ImNodesLoadEditorStateFromIniFile(editor *NodesEditorContext, file_name str
 	file_nameFin()
 }
 
-func ImNodesLoadEditorStateFromIniString(editor *NodesEditorContext, data string, data_size uint64) {
+func LoadEditorStateFromIniString(editor *EditorContext, data string, data_size uint64) {
 	editorArg, editorFin := editor.Handle()
 	dataArg, dataFin := internal.WrapString[C.char](data)
 	C.imnodes_LoadEditorStateFromIniString(internal.ReinterpretCast[*C.ImNodesEditorContext](editorArg), dataArg, C.xulong(data_size))
@@ -412,58 +412,58 @@ func ImNodesLoadEditorStateFromIniString(editor *NodesEditorContext, data string
 	dataFin()
 }
 
-func ImNodesNumSelectedLinks() int32 {
+func NumSelectedLinks() int32 {
 	return int32(C.imnodes_NumSelectedLinks())
 }
 
-func ImNodesNumSelectedNodes() int32 {
+func NumSelectedNodes() int32 {
 	return int32(C.imnodes_NumSelectedNodes())
 }
 
-func ImNodesPopAttributeFlag() {
+func PopAttributeFlag() {
 	C.imnodes_PopAttributeFlag()
 }
 
-func ImNodesPopColorStyle() {
+func PopColorStyle() {
 	C.imnodes_PopColorStyle()
 }
 
-// ImNodesPopStyleVarV parameter default value hint:
+// PopStyleVarV parameter default value hint:
 // count: 1
-func ImNodesPopStyleVarV(count int32) {
+func PopStyleVarV(count int32) {
 	C.imnodes_PopStyleVar(C.int(count))
 }
 
-func ImNodesPushAttributeFlag(flag NodesAttributeFlags) {
+func PushAttributeFlag(flag AttributeFlags) {
 	C.imnodes_PushAttributeFlag(C.ImNodesAttributeFlags(flag))
 }
 
-func ImNodesPushColorStyle(item NodesCol, color uint32) {
+func PushColorStyle(item Col, color uint32) {
 	C.imnodes_PushColorStyle(C.ImNodesCol(item), C.uint(color))
 }
 
-func ImNodesPushStyleVarFloat(style_item NodesStyleVar, value float32) {
+func PushStyleVarFloat(style_item StyleVar, value float32) {
 	C.imnodes_PushStyleVar_Float(C.ImNodesStyleVar(style_item), C.float(value))
 }
 
-func ImNodesPushStyleVarVec2(style_item NodesStyleVar, value imgui.Vec2) {
+func PushStyleVarVec2(style_item StyleVar, value imgui.Vec2) {
 	C.imnodes_PushStyleVar_Vec2(C.ImNodesStyleVar(style_item), internal.ReinterpretCast[C.ImVec2](value.ToC()))
 }
 
-func ImNodesSaveCurrentEditorStateToIniFile(file_name string) {
+func SaveCurrentEditorStateToIniFile(file_name string) {
 	file_nameArg, file_nameFin := internal.WrapString[C.char](file_name)
 	C.imnodes_SaveCurrentEditorStateToIniFile(file_nameArg)
 
 	file_nameFin()
 }
 
-// ImNodesSaveCurrentEditorStateToIniStringV parameter default value hint:
+// SaveCurrentEditorStateToIniStringV parameter default value hint:
 // data_size: NULL
-func ImNodesSaveCurrentEditorStateToIniStringV(data_size *uint64) string {
+func SaveCurrentEditorStateToIniStringV(data_size *uint64) string {
 	return C.GoString(C.imnodes_SaveCurrentEditorStateToIniString((*C.xulong)(data_size)))
 }
 
-func ImNodesSaveEditorStateToIniFile(editor *NodesEditorContext, file_name string) {
+func SaveEditorStateToIniFile(editor *EditorContext, file_name string) {
 	editorArg, editorFin := editor.Handle()
 	file_nameArg, file_nameFin := internal.WrapString[C.char](file_name)
 	C.imnodes_SaveEditorStateToIniFile(internal.ReinterpretCast[*C.ImNodesEditorContext](editorArg), file_nameArg)
@@ -472,9 +472,9 @@ func ImNodesSaveEditorStateToIniFile(editor *NodesEditorContext, file_name strin
 	file_nameFin()
 }
 
-// ImNodesSaveEditorStateToIniStringV parameter default value hint:
+// SaveEditorStateToIniStringV parameter default value hint:
 // data_size: NULL
-func ImNodesSaveEditorStateToIniStringV(editor *NodesEditorContext, data_size *uint64) string {
+func SaveEditorStateToIniStringV(editor *EditorContext, data_size *uint64) string {
 	editorArg, editorFin := editor.Handle()
 
 	defer func() {
@@ -483,92 +483,92 @@ func ImNodesSaveEditorStateToIniStringV(editor *NodesEditorContext, data_size *u
 	return C.GoString(C.imnodes_SaveEditorStateToIniString(internal.ReinterpretCast[*C.ImNodesEditorContext](editorArg), (*C.xulong)(data_size)))
 }
 
-func ImNodesSelectLink(link_id int32) {
+func SelectLink(link_id int32) {
 	C.imnodes_SelectLink(C.int(link_id))
 }
 
-func ImNodesSelectNode(node_id int32) {
+func SelectNode(node_id int32) {
 	C.imnodes_SelectNode(C.int(node_id))
 }
 
-func ImNodesSetCurrentContext(ctx *NodesContext) {
+func SetCurrentContext(ctx *Context) {
 	ctxArg, ctxFin := ctx.Handle()
 	C.imnodes_SetCurrentContext(internal.ReinterpretCast[*C.ImNodesContext](ctxArg))
 
 	ctxFin()
 }
 
-func ImNodesSetImGuiContext(ctx *imgui.Context) {
+func SetImGuiContext(ctx *imgui.Context) {
 	ctxArg, ctxFin := ctx.Handle()
 	C.imnodes_SetImGuiContext(internal.ReinterpretCast[*C.ImGuiContext](ctxArg))
 
 	ctxFin()
 }
 
-func ImNodesSetNodeDraggable(node_id int32, draggable bool) {
+func SetNodeDraggable(node_id int32, draggable bool) {
 	C.imnodes_SetNodeDraggable(C.int(node_id), C.bool(draggable))
 }
 
-func ImNodesSetNodeEditorSpacePos(node_id int32, editor_space_pos imgui.Vec2) {
+func SetNodeEditorSpacePos(node_id int32, editor_space_pos imgui.Vec2) {
 	C.imnodes_SetNodeEditorSpacePos(C.int(node_id), internal.ReinterpretCast[C.ImVec2](editor_space_pos.ToC()))
 }
 
-func ImNodesSetNodeGridSpacePos(node_id int32, grid_pos imgui.Vec2) {
+func SetNodeGridSpacePos(node_id int32, grid_pos imgui.Vec2) {
 	C.imnodes_SetNodeGridSpacePos(C.int(node_id), internal.ReinterpretCast[C.ImVec2](grid_pos.ToC()))
 }
 
-func ImNodesSetNodeScreenSpacePos(node_id int32, screen_space_pos imgui.Vec2) {
+func SetNodeScreenSpacePos(node_id int32, screen_space_pos imgui.Vec2) {
 	C.imnodes_SetNodeScreenSpacePos(C.int(node_id), internal.ReinterpretCast[C.ImVec2](screen_space_pos.ToC()))
 }
 
-func ImNodesSnapNodeToGrid(node_id int32) {
+func SnapNodeToGrid(node_id int32) {
 	C.imnodes_SnapNodeToGrid(C.int(node_id))
 }
 
-// ImNodesStyleColorsClassicV parameter default value hint:
+// StyleColorsClassicV parameter default value hint:
 // dest: NULL
-func ImNodesStyleColorsClassicV(dest *NodesStyle) {
+func StyleColorsClassicV(dest *Style) {
 	destArg, destFin := dest.Handle()
 	C.imnodes_StyleColorsClassic(internal.ReinterpretCast[*C.ImNodesStyle](destArg))
 
 	destFin()
 }
 
-// ImNodesStyleColorsDarkV parameter default value hint:
+// StyleColorsDarkV parameter default value hint:
 // dest: NULL
-func ImNodesStyleColorsDarkV(dest *NodesStyle) {
+func StyleColorsDarkV(dest *Style) {
 	destArg, destFin := dest.Handle()
 	C.imnodes_StyleColorsDark(internal.ReinterpretCast[*C.ImNodesStyle](destArg))
 
 	destFin()
 }
 
-// ImNodesStyleColorsLightV parameter default value hint:
+// StyleColorsLightV parameter default value hint:
 // dest: NULL
-func ImNodesStyleColorsLightV(dest *NodesStyle) {
+func StyleColorsLightV(dest *Style) {
 	destArg, destFin := dest.Handle()
 	C.imnodes_StyleColorsLight(internal.ReinterpretCast[*C.ImNodesStyle](destArg))
 
 	destFin()
 }
 
-func ImNodesBeginInputAttribute(id int32) {
+func BeginInputAttribute(id int32) {
 	C.wrap_imnodes_BeginInputAttribute(C.int(id))
 }
 
-func ImNodesBeginOutputAttribute(id int32) {
+func BeginOutputAttribute(id int32) {
 	C.wrap_imnodes_BeginOutputAttribute(C.int(id))
 }
 
-func ImNodesDestroyContext() {
+func DestroyContext() {
 	C.wrap_imnodes_DestroyContext()
 }
 
-func ImNodesIsAnyAttributeActive() bool {
+func IsAnyAttributeActive() bool {
 	return C.wrap_imnodes_IsAnyAttributeActive() == C.bool(true)
 }
 
-func ImNodesIsLinkCreatedBoolPtr(started_at_attribute_id *int32, ended_at_attribute_id *int32) bool {
+func IsLinkCreatedBoolPtr(started_at_attribute_id *int32, ended_at_attribute_id *int32) bool {
 	started_at_attribute_idArg, started_at_attribute_idFin := internal.WrapNumberPtr[C.int, int32](started_at_attribute_id)
 	ended_at_attribute_idArg, ended_at_attribute_idFin := internal.WrapNumberPtr[C.int, int32](ended_at_attribute_id)
 
@@ -579,7 +579,7 @@ func ImNodesIsLinkCreatedBoolPtr(started_at_attribute_id *int32, ended_at_attrib
 	return C.wrap_imnodes_IsLinkCreated_BoolPtr(started_at_attribute_idArg, ended_at_attribute_idArg) == C.bool(true)
 }
 
-func ImNodesIsLinkCreatedIntPtr(started_at_node_id *int32, started_at_attribute_id *int32, ended_at_node_id *int32, ended_at_attribute_id *int32) bool {
+func IsLinkCreatedIntPtr(started_at_node_id *int32, started_at_attribute_id *int32, ended_at_node_id *int32, ended_at_attribute_id *int32) bool {
 	started_at_node_idArg, started_at_node_idFin := internal.WrapNumberPtr[C.int, int32](started_at_node_id)
 	started_at_attribute_idArg, started_at_attribute_idFin := internal.WrapNumberPtr[C.int, int32](started_at_attribute_id)
 	ended_at_node_idArg, ended_at_node_idFin := internal.WrapNumberPtr[C.int, int32](ended_at_node_id)
@@ -594,23 +594,23 @@ func ImNodesIsLinkCreatedIntPtr(started_at_node_id *int32, started_at_attribute_
 	return C.wrap_imnodes_IsLinkCreated_IntPtr(started_at_node_idArg, started_at_attribute_idArg, ended_at_node_idArg, ended_at_attribute_idArg) == C.bool(true)
 }
 
-func ImNodesIsLinkDropped() bool {
+func IsLinkDropped() bool {
 	return C.wrap_imnodes_IsLinkDropped() == C.bool(true)
 }
 
-func ImNodesMiniMap() {
+func MiniMap() {
 	C.wrap_imnodes_MiniMap()
 }
 
-func ImNodesPopStyleVar() {
+func PopStyleVar() {
 	C.wrap_imnodes_PopStyleVar()
 }
 
-func ImNodesSaveCurrentEditorStateToIniString() string {
+func SaveCurrentEditorStateToIniString() string {
 	return C.GoString(C.wrap_imnodes_SaveCurrentEditorStateToIniString())
 }
 
-func ImNodesSaveEditorStateToIniString(editor *NodesEditorContext) string {
+func SaveEditorStateToIniString(editor *EditorContext) string {
 	editorArg, editorFin := editor.Handle()
 
 	defer func() {
@@ -619,15 +619,15 @@ func ImNodesSaveEditorStateToIniString(editor *NodesEditorContext) string {
 	return C.GoString(C.wrap_imnodes_SaveEditorStateToIniString(internal.ReinterpretCast[*C.ImNodesEditorContext](editorArg)))
 }
 
-func ImNodesStyleColorsClassic() {
+func StyleColorsClassic() {
 	C.wrap_imnodes_StyleColorsClassic()
 }
 
-func ImNodesStyleColorsDark() {
+func StyleColorsDark() {
 	C.wrap_imnodes_StyleColorsDark()
 }
 
-func ImNodesStyleColorsLight() {
+func StyleColorsLight() {
 	C.wrap_imnodes_StyleColorsLight()
 }
 
@@ -648,7 +648,7 @@ func (self *EmulateThreeButtonMouse) Modifier() *bool {
 	return (*bool)(C.wrap_EmulateThreeButtonMouse_GetModifier(internal.ReinterpretCast[*C.EmulateThreeButtonMouse](selfArg)))
 }
 
-func (self NodesIO) SetEmulateThreeButtonMouse(v EmulateThreeButtonMouse) {
+func (self IO) SetEmulateThreeButtonMouse(v EmulateThreeButtonMouse) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -656,7 +656,7 @@ func (self NodesIO) SetEmulateThreeButtonMouse(v EmulateThreeButtonMouse) {
 	C.wrap_ImNodesIO_SetEmulateThreeButtonMouse(selfArg, internal.ReinterpretCast[C.EmulateThreeButtonMouse](vArg))
 }
 
-func (self *NodesIO) EmulateThreeButtonMouse() EmulateThreeButtonMouse {
+func (self *IO) EmulateThreeButtonMouse() EmulateThreeButtonMouse {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -668,7 +668,7 @@ func (self *NodesIO) EmulateThreeButtonMouse() EmulateThreeButtonMouse {
 	}())
 }
 
-func (self NodesIO) SetLinkDetachWithModifierClick(v LinkDetachWithModifierClick) {
+func (self IO) SetLinkDetachWithModifierClick(v LinkDetachWithModifierClick) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -676,7 +676,7 @@ func (self NodesIO) SetLinkDetachWithModifierClick(v LinkDetachWithModifierClick
 	C.wrap_ImNodesIO_SetLinkDetachWithModifierClick(selfArg, internal.ReinterpretCast[C.LinkDetachWithModifierClick](vArg))
 }
 
-func (self *NodesIO) LinkDetachWithModifierClick() LinkDetachWithModifierClick {
+func (self *IO) LinkDetachWithModifierClick() LinkDetachWithModifierClick {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -688,7 +688,7 @@ func (self *NodesIO) LinkDetachWithModifierClick() LinkDetachWithModifierClick {
 	}())
 }
 
-func (self NodesIO) SetMultipleSelectModifier(v MultipleSelectModifier) {
+func (self IO) SetMultipleSelectModifier(v MultipleSelectModifier) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
@@ -696,7 +696,7 @@ func (self NodesIO) SetMultipleSelectModifier(v MultipleSelectModifier) {
 	C.wrap_ImNodesIO_SetMultipleSelectModifier(selfArg, internal.ReinterpretCast[C.MultipleSelectModifier](vArg))
 }
 
-func (self *NodesIO) MultipleSelectModifier() MultipleSelectModifier {
+func (self *IO) MultipleSelectModifier() MultipleSelectModifier {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -708,13 +708,13 @@ func (self *NodesIO) MultipleSelectModifier() MultipleSelectModifier {
 	}())
 }
 
-func (self NodesIO) SetAltMouseButton(v int32) {
+func (self IO) SetAltMouseButton(v int32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesIO_SetAltMouseButton(selfArg, C.int(v))
 }
 
-func (self *NodesIO) AltMouseButton() int32 {
+func (self *IO) AltMouseButton() int32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -723,13 +723,13 @@ func (self *NodesIO) AltMouseButton() int32 {
 	return int32(C.wrap_ImNodesIO_GetAltMouseButton(internal.ReinterpretCast[*C.ImNodesIO](selfArg)))
 }
 
-func (self NodesIO) SetAutoPanningSpeed(v float32) {
+func (self IO) SetAutoPanningSpeed(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesIO_SetAutoPanningSpeed(selfArg, C.float(v))
 }
 
-func (self *NodesIO) AutoPanningSpeed() float32 {
+func (self *IO) AutoPanningSpeed() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -738,13 +738,13 @@ func (self *NodesIO) AutoPanningSpeed() float32 {
 	return float32(C.wrap_ImNodesIO_GetAutoPanningSpeed(internal.ReinterpretCast[*C.ImNodesIO](selfArg)))
 }
 
-func (self NodesStyle) SetGridSpacing(v float32) {
+func (self Style) SetGridSpacing(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetGridSpacing(selfArg, C.float(v))
 }
 
-func (self *NodesStyle) GridSpacing() float32 {
+func (self *Style) GridSpacing() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -753,13 +753,13 @@ func (self *NodesStyle) GridSpacing() float32 {
 	return float32(C.wrap_ImNodesStyle_GetGridSpacing(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
-func (self NodesStyle) SetNodeCornerRounding(v float32) {
+func (self Style) SetNodeCornerRounding(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetNodeCornerRounding(selfArg, C.float(v))
 }
 
-func (self *NodesStyle) NodeCornerRounding() float32 {
+func (self *Style) NodeCornerRounding() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -768,13 +768,13 @@ func (self *NodesStyle) NodeCornerRounding() float32 {
 	return float32(C.wrap_ImNodesStyle_GetNodeCornerRounding(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
-func (self NodesStyle) SetNodePadding(v imgui.Vec2) {
+func (self Style) SetNodePadding(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetNodePadding(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
 }
 
-func (self *NodesStyle) NodePadding() imgui.Vec2 {
+func (self *Style) NodePadding() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -786,13 +786,13 @@ func (self *NodesStyle) NodePadding() imgui.Vec2 {
 	}()
 }
 
-func (self NodesStyle) SetNodeBorderThickness(v float32) {
+func (self Style) SetNodeBorderThickness(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetNodeBorderThickness(selfArg, C.float(v))
 }
 
-func (self *NodesStyle) NodeBorderThickness() float32 {
+func (self *Style) NodeBorderThickness() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -801,13 +801,13 @@ func (self *NodesStyle) NodeBorderThickness() float32 {
 	return float32(C.wrap_ImNodesStyle_GetNodeBorderThickness(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
-func (self NodesStyle) SetLinkThickness(v float32) {
+func (self Style) SetLinkThickness(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetLinkThickness(selfArg, C.float(v))
 }
 
-func (self *NodesStyle) LinkThickness() float32 {
+func (self *Style) LinkThickness() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -816,13 +816,13 @@ func (self *NodesStyle) LinkThickness() float32 {
 	return float32(C.wrap_ImNodesStyle_GetLinkThickness(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
-func (self NodesStyle) SetLinkLineSegmentsPerLength(v float32) {
+func (self Style) SetLinkLineSegmentsPerLength(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetLinkLineSegmentsPerLength(selfArg, C.float(v))
 }
 
-func (self *NodesStyle) LinkLineSegmentsPerLength() float32 {
+func (self *Style) LinkLineSegmentsPerLength() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -831,13 +831,13 @@ func (self *NodesStyle) LinkLineSegmentsPerLength() float32 {
 	return float32(C.wrap_ImNodesStyle_GetLinkLineSegmentsPerLength(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
-func (self NodesStyle) SetLinkHoverDistance(v float32) {
+func (self Style) SetLinkHoverDistance(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetLinkHoverDistance(selfArg, C.float(v))
 }
 
-func (self *NodesStyle) LinkHoverDistance() float32 {
+func (self *Style) LinkHoverDistance() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -846,13 +846,13 @@ func (self *NodesStyle) LinkHoverDistance() float32 {
 	return float32(C.wrap_ImNodesStyle_GetLinkHoverDistance(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
-func (self NodesStyle) SetPinCircleRadius(v float32) {
+func (self Style) SetPinCircleRadius(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetPinCircleRadius(selfArg, C.float(v))
 }
 
-func (self *NodesStyle) PinCircleRadius() float32 {
+func (self *Style) PinCircleRadius() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -861,13 +861,13 @@ func (self *NodesStyle) PinCircleRadius() float32 {
 	return float32(C.wrap_ImNodesStyle_GetPinCircleRadius(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
-func (self NodesStyle) SetPinQuadSideLength(v float32) {
+func (self Style) SetPinQuadSideLength(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetPinQuadSideLength(selfArg, C.float(v))
 }
 
-func (self *NodesStyle) PinQuadSideLength() float32 {
+func (self *Style) PinQuadSideLength() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -876,13 +876,13 @@ func (self *NodesStyle) PinQuadSideLength() float32 {
 	return float32(C.wrap_ImNodesStyle_GetPinQuadSideLength(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
-func (self NodesStyle) SetPinTriangleSideLength(v float32) {
+func (self Style) SetPinTriangleSideLength(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetPinTriangleSideLength(selfArg, C.float(v))
 }
 
-func (self *NodesStyle) PinTriangleSideLength() float32 {
+func (self *Style) PinTriangleSideLength() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -891,13 +891,13 @@ func (self *NodesStyle) PinTriangleSideLength() float32 {
 	return float32(C.wrap_ImNodesStyle_GetPinTriangleSideLength(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
-func (self NodesStyle) SetPinLineThickness(v float32) {
+func (self Style) SetPinLineThickness(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetPinLineThickness(selfArg, C.float(v))
 }
 
-func (self *NodesStyle) PinLineThickness() float32 {
+func (self *Style) PinLineThickness() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -906,13 +906,13 @@ func (self *NodesStyle) PinLineThickness() float32 {
 	return float32(C.wrap_ImNodesStyle_GetPinLineThickness(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
-func (self NodesStyle) SetPinHoverRadius(v float32) {
+func (self Style) SetPinHoverRadius(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetPinHoverRadius(selfArg, C.float(v))
 }
 
-func (self *NodesStyle) PinHoverRadius() float32 {
+func (self *Style) PinHoverRadius() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -921,13 +921,13 @@ func (self *NodesStyle) PinHoverRadius() float32 {
 	return float32(C.wrap_ImNodesStyle_GetPinHoverRadius(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
-func (self NodesStyle) SetPinOffset(v float32) {
+func (self Style) SetPinOffset(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetPinOffset(selfArg, C.float(v))
 }
 
-func (self *NodesStyle) PinOffset() float32 {
+func (self *Style) PinOffset() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -936,13 +936,13 @@ func (self *NodesStyle) PinOffset() float32 {
 	return float32(C.wrap_ImNodesStyle_GetPinOffset(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
-func (self NodesStyle) SetMiniMapPadding(v imgui.Vec2) {
+func (self Style) SetMiniMapPadding(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetMiniMapPadding(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
 }
 
-func (self *NodesStyle) MiniMapPadding() imgui.Vec2 {
+func (self *Style) MiniMapPadding() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -954,13 +954,13 @@ func (self *NodesStyle) MiniMapPadding() imgui.Vec2 {
 	}()
 }
 
-func (self NodesStyle) SetMiniMapOffset(v imgui.Vec2) {
+func (self Style) SetMiniMapOffset(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetMiniMapOffset(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
 }
 
-func (self *NodesStyle) MiniMapOffset() imgui.Vec2 {
+func (self *Style) MiniMapOffset() imgui.Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -972,22 +972,22 @@ func (self *NodesStyle) MiniMapOffset() imgui.Vec2 {
 	}()
 }
 
-func (self NodesStyle) SetFlags(v NodesStyleFlags) {
+func (self Style) SetFlags(v StyleFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetFlags(selfArg, C.ImNodesStyleFlags(v))
 }
 
-func (self *NodesStyle) Flags() NodesStyleFlags {
+func (self *Style) Flags() StyleFlags {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return NodesStyleFlags(C.wrap_ImNodesStyle_GetFlags(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
+	return StyleFlags(C.wrap_ImNodesStyle_GetFlags(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
-func (self NodesStyle) SetColors(v *[29]uint32) {
+func (self Style) SetColors(v *[29]uint32) {
 	vArg := make([]C.uint, len(v))
 	for i, vV := range v {
 		vArg[i] = C.uint(vV)
@@ -1002,7 +1002,7 @@ func (self NodesStyle) SetColors(v *[29]uint32) {
 	}
 }
 
-func (self *NodesStyle) Colors() [29]uint32 {
+func (self *Style) Colors() [29]uint32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {

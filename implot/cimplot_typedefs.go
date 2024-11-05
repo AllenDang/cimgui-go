@@ -8,102 +8,102 @@ package implot
 // #include "../imgui/extra_types.h"
 // #include "cimplot_wrapper.h"
 // #include "cimplot_typedefs.h"
-// extern int callbackPlotFormatter0(double, char*, int, void*);
-// extern int callbackPlotFormatter1(double, char*, int, void*);
-// extern int callbackPlotFormatter2(double, char*, int, void*);
-// extern int callbackPlotFormatter3(double, char*, int, void*);
-// extern int callbackPlotFormatter4(double, char*, int, void*);
-// extern int callbackPlotFormatter5(double, char*, int, void*);
-// extern int callbackPlotFormatter6(double, char*, int, void*);
-// extern int callbackPlotFormatter7(double, char*, int, void*);
-// extern int callbackPlotFormatter8(double, char*, int, void*);
-// extern int callbackPlotFormatter9(double, char*, int, void*);
-// extern int callbackPlotFormatter10(double, char*, int, void*);
-// extern int callbackPlotFormatter11(double, char*, int, void*);
-// extern int callbackPlotFormatter12(double, char*, int, void*);
-// extern int callbackPlotFormatter13(double, char*, int, void*);
-// extern int callbackPlotFormatter14(double, char*, int, void*);
-// extern int callbackPlotFormatter15(double, char*, int, void*);
-// extern int callbackPlotFormatter16(double, char*, int, void*);
-// extern int callbackPlotFormatter17(double, char*, int, void*);
-// extern int callbackPlotFormatter18(double, char*, int, void*);
-// extern int callbackPlotFormatter19(double, char*, int, void*);
-// extern int callbackPlotFormatter20(double, char*, int, void*);
-// extern int callbackPlotFormatter21(double, char*, int, void*);
-// extern int callbackPlotFormatter22(double, char*, int, void*);
-// extern int callbackPlotFormatter23(double, char*, int, void*);
-// extern int callbackPlotFormatter24(double, char*, int, void*);
-// extern int callbackPlotFormatter25(double, char*, int, void*);
-// extern int callbackPlotFormatter26(double, char*, int, void*);
-// extern int callbackPlotFormatter27(double, char*, int, void*);
-// extern int callbackPlotFormatter28(double, char*, int, void*);
-// extern int callbackPlotFormatter29(double, char*, int, void*);
-// extern int callbackPlotFormatter30(double, char*, int, void*);
-// extern int callbackPlotFormatter31(double, char*, int, void*);
-// extern ImPlotPoint callbackPlotGetter0(int, void*);
-// extern ImPlotPoint callbackPlotGetter1(int, void*);
-// extern ImPlotPoint callbackPlotGetter2(int, void*);
-// extern ImPlotPoint callbackPlotGetter3(int, void*);
-// extern ImPlotPoint callbackPlotGetter4(int, void*);
-// extern ImPlotPoint callbackPlotGetter5(int, void*);
-// extern ImPlotPoint callbackPlotGetter6(int, void*);
-// extern ImPlotPoint callbackPlotGetter7(int, void*);
-// extern ImPlotPoint callbackPlotGetter8(int, void*);
-// extern ImPlotPoint callbackPlotGetter9(int, void*);
-// extern ImPlotPoint callbackPlotGetter10(int, void*);
-// extern ImPlotPoint callbackPlotGetter11(int, void*);
-// extern ImPlotPoint callbackPlotGetter12(int, void*);
-// extern ImPlotPoint callbackPlotGetter13(int, void*);
-// extern ImPlotPoint callbackPlotGetter14(int, void*);
-// extern ImPlotPoint callbackPlotGetter15(int, void*);
-// extern ImPlotPoint callbackPlotGetter16(int, void*);
-// extern ImPlotPoint callbackPlotGetter17(int, void*);
-// extern ImPlotPoint callbackPlotGetter18(int, void*);
-// extern ImPlotPoint callbackPlotGetter19(int, void*);
-// extern ImPlotPoint callbackPlotGetter20(int, void*);
-// extern ImPlotPoint callbackPlotGetter21(int, void*);
-// extern ImPlotPoint callbackPlotGetter22(int, void*);
-// extern ImPlotPoint callbackPlotGetter23(int, void*);
-// extern ImPlotPoint callbackPlotGetter24(int, void*);
-// extern ImPlotPoint callbackPlotGetter25(int, void*);
-// extern ImPlotPoint callbackPlotGetter26(int, void*);
-// extern ImPlotPoint callbackPlotGetter27(int, void*);
-// extern ImPlotPoint callbackPlotGetter28(int, void*);
-// extern ImPlotPoint callbackPlotGetter29(int, void*);
-// extern ImPlotPoint callbackPlotGetter30(int, void*);
-// extern ImPlotPoint callbackPlotGetter31(int, void*);
-// extern double callbackPlotTransform0(double, void*);
-// extern double callbackPlotTransform1(double, void*);
-// extern double callbackPlotTransform2(double, void*);
-// extern double callbackPlotTransform3(double, void*);
-// extern double callbackPlotTransform4(double, void*);
-// extern double callbackPlotTransform5(double, void*);
-// extern double callbackPlotTransform6(double, void*);
-// extern double callbackPlotTransform7(double, void*);
-// extern double callbackPlotTransform8(double, void*);
-// extern double callbackPlotTransform9(double, void*);
-// extern double callbackPlotTransform10(double, void*);
-// extern double callbackPlotTransform11(double, void*);
-// extern double callbackPlotTransform12(double, void*);
-// extern double callbackPlotTransform13(double, void*);
-// extern double callbackPlotTransform14(double, void*);
-// extern double callbackPlotTransform15(double, void*);
-// extern double callbackPlotTransform16(double, void*);
-// extern double callbackPlotTransform17(double, void*);
-// extern double callbackPlotTransform18(double, void*);
-// extern double callbackPlotTransform19(double, void*);
-// extern double callbackPlotTransform20(double, void*);
-// extern double callbackPlotTransform21(double, void*);
-// extern double callbackPlotTransform22(double, void*);
-// extern double callbackPlotTransform23(double, void*);
-// extern double callbackPlotTransform24(double, void*);
-// extern double callbackPlotTransform25(double, void*);
-// extern double callbackPlotTransform26(double, void*);
-// extern double callbackPlotTransform27(double, void*);
-// extern double callbackPlotTransform28(double, void*);
-// extern double callbackPlotTransform29(double, void*);
-// extern double callbackPlotTransform30(double, void*);
-// extern double callbackPlotTransform31(double, void*);
+// extern int callbackFormatter0(double, char*, int, void*);
+// extern int callbackFormatter1(double, char*, int, void*);
+// extern int callbackFormatter2(double, char*, int, void*);
+// extern int callbackFormatter3(double, char*, int, void*);
+// extern int callbackFormatter4(double, char*, int, void*);
+// extern int callbackFormatter5(double, char*, int, void*);
+// extern int callbackFormatter6(double, char*, int, void*);
+// extern int callbackFormatter7(double, char*, int, void*);
+// extern int callbackFormatter8(double, char*, int, void*);
+// extern int callbackFormatter9(double, char*, int, void*);
+// extern int callbackFormatter10(double, char*, int, void*);
+// extern int callbackFormatter11(double, char*, int, void*);
+// extern int callbackFormatter12(double, char*, int, void*);
+// extern int callbackFormatter13(double, char*, int, void*);
+// extern int callbackFormatter14(double, char*, int, void*);
+// extern int callbackFormatter15(double, char*, int, void*);
+// extern int callbackFormatter16(double, char*, int, void*);
+// extern int callbackFormatter17(double, char*, int, void*);
+// extern int callbackFormatter18(double, char*, int, void*);
+// extern int callbackFormatter19(double, char*, int, void*);
+// extern int callbackFormatter20(double, char*, int, void*);
+// extern int callbackFormatter21(double, char*, int, void*);
+// extern int callbackFormatter22(double, char*, int, void*);
+// extern int callbackFormatter23(double, char*, int, void*);
+// extern int callbackFormatter24(double, char*, int, void*);
+// extern int callbackFormatter25(double, char*, int, void*);
+// extern int callbackFormatter26(double, char*, int, void*);
+// extern int callbackFormatter27(double, char*, int, void*);
+// extern int callbackFormatter28(double, char*, int, void*);
+// extern int callbackFormatter29(double, char*, int, void*);
+// extern int callbackFormatter30(double, char*, int, void*);
+// extern int callbackFormatter31(double, char*, int, void*);
+// extern ImPlotPoint callbackter0(int, void*);
+// extern ImPlotPoint callbackter1(int, void*);
+// extern ImPlotPoint callbackter2(int, void*);
+// extern ImPlotPoint callbackter3(int, void*);
+// extern ImPlotPoint callbackter4(int, void*);
+// extern ImPlotPoint callbackter5(int, void*);
+// extern ImPlotPoint callbackter6(int, void*);
+// extern ImPlotPoint callbackter7(int, void*);
+// extern ImPlotPoint callbackter8(int, void*);
+// extern ImPlotPoint callbackter9(int, void*);
+// extern ImPlotPoint callbackter10(int, void*);
+// extern ImPlotPoint callbackter11(int, void*);
+// extern ImPlotPoint callbackter12(int, void*);
+// extern ImPlotPoint callbackter13(int, void*);
+// extern ImPlotPoint callbackter14(int, void*);
+// extern ImPlotPoint callbackter15(int, void*);
+// extern ImPlotPoint callbackter16(int, void*);
+// extern ImPlotPoint callbackter17(int, void*);
+// extern ImPlotPoint callbackter18(int, void*);
+// extern ImPlotPoint callbackter19(int, void*);
+// extern ImPlotPoint callbackter20(int, void*);
+// extern ImPlotPoint callbackter21(int, void*);
+// extern ImPlotPoint callbackter22(int, void*);
+// extern ImPlotPoint callbackter23(int, void*);
+// extern ImPlotPoint callbackter24(int, void*);
+// extern ImPlotPoint callbackter25(int, void*);
+// extern ImPlotPoint callbackter26(int, void*);
+// extern ImPlotPoint callbackter27(int, void*);
+// extern ImPlotPoint callbackter28(int, void*);
+// extern ImPlotPoint callbackter29(int, void*);
+// extern ImPlotPoint callbackter30(int, void*);
+// extern ImPlotPoint callbackter31(int, void*);
+// extern double callbackTransform0(double, void*);
+// extern double callbackTransform1(double, void*);
+// extern double callbackTransform2(double, void*);
+// extern double callbackTransform3(double, void*);
+// extern double callbackTransform4(double, void*);
+// extern double callbackTransform5(double, void*);
+// extern double callbackTransform6(double, void*);
+// extern double callbackTransform7(double, void*);
+// extern double callbackTransform8(double, void*);
+// extern double callbackTransform9(double, void*);
+// extern double callbackTransform10(double, void*);
+// extern double callbackTransform11(double, void*);
+// extern double callbackTransform12(double, void*);
+// extern double callbackTransform13(double, void*);
+// extern double callbackTransform14(double, void*);
+// extern double callbackTransform15(double, void*);
+// extern double callbackTransform16(double, void*);
+// extern double callbackTransform17(double, void*);
+// extern double callbackTransform18(double, void*);
+// extern double callbackTransform19(double, void*);
+// extern double callbackTransform20(double, void*);
+// extern double callbackTransform21(double, void*);
+// extern double callbackTransform22(double, void*);
+// extern double callbackTransform23(double, void*);
+// extern double callbackTransform24(double, void*);
+// extern double callbackTransform25(double, void*);
+// extern double callbackTransform26(double, void*);
+// extern double callbackTransform27(double, void*);
+// extern double callbackTransform28(double, void*);
+// extern double callbackTransform29(double, void*);
+// extern double callbackTransform30(double, void*);
+// extern double callbackTransform31(double, void*);
 import "C"
 import (
 	"unsafe"
@@ -132,1169 +132,1169 @@ func NewFormatterTimeDataFromC[SRC any](cvalue SRC) *FormatterTimeData {
 	return &FormatterTimeData{CData: internal.ReinterpretCast[*C.Formatter_Time_Data](cvalue)}
 }
 
-type PlotAlignmentData struct {
+type AlignmentData struct {
 	CData *C.ImPlotAlignmentData
 }
 
-// Handle returns C version of PlotAlignmentData and its finalizer func.
-func (self *PlotAlignmentData) Handle() (result *C.ImPlotAlignmentData, fin func()) {
+// Handle returns C version of AlignmentData and its finalizer func.
+func (self *AlignmentData) Handle() (result *C.ImPlotAlignmentData, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotAlignmentData) C() (C.ImPlotAlignmentData, func()) {
+func (self AlignmentData) C() (C.ImPlotAlignmentData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotAlignmentDataFromC creates PlotAlignmentData from its C pointer.
+// NewAlignmentDataFromC creates AlignmentData from its C pointer.
 // SRC ~= *C.ImPlotAlignmentData
-func NewPlotAlignmentDataFromC[SRC any](cvalue SRC) *PlotAlignmentData {
-	return &PlotAlignmentData{CData: internal.ReinterpretCast[*C.ImPlotAlignmentData](cvalue)}
+func NewAlignmentDataFromC[SRC any](cvalue SRC) *AlignmentData {
+	return &AlignmentData{CData: internal.ReinterpretCast[*C.ImPlotAlignmentData](cvalue)}
 }
 
-type PlotAnnotation struct {
+type Annotation struct {
 	CData *C.ImPlotAnnotation
 }
 
-// Handle returns C version of PlotAnnotation and its finalizer func.
-func (self *PlotAnnotation) Handle() (result *C.ImPlotAnnotation, fin func()) {
+// Handle returns C version of Annotation and its finalizer func.
+func (self *Annotation) Handle() (result *C.ImPlotAnnotation, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotAnnotation) C() (C.ImPlotAnnotation, func()) {
+func (self Annotation) C() (C.ImPlotAnnotation, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotAnnotationFromC creates PlotAnnotation from its C pointer.
+// NewAnnotationFromC creates Annotation from its C pointer.
 // SRC ~= *C.ImPlotAnnotation
-func NewPlotAnnotationFromC[SRC any](cvalue SRC) *PlotAnnotation {
-	return &PlotAnnotation{CData: internal.ReinterpretCast[*C.ImPlotAnnotation](cvalue)}
+func NewAnnotationFromC[SRC any](cvalue SRC) *Annotation {
+	return &Annotation{CData: internal.ReinterpretCast[*C.ImPlotAnnotation](cvalue)}
 }
 
-type PlotAnnotationCollection struct {
+type AnnotationCollection struct {
 	CData *C.ImPlotAnnotationCollection
 }
 
-// Handle returns C version of PlotAnnotationCollection and its finalizer func.
-func (self *PlotAnnotationCollection) Handle() (result *C.ImPlotAnnotationCollection, fin func()) {
+// Handle returns C version of AnnotationCollection and its finalizer func.
+func (self *AnnotationCollection) Handle() (result *C.ImPlotAnnotationCollection, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotAnnotationCollection) C() (C.ImPlotAnnotationCollection, func()) {
+func (self AnnotationCollection) C() (C.ImPlotAnnotationCollection, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotAnnotationCollectionFromC creates PlotAnnotationCollection from its C pointer.
+// NewAnnotationCollectionFromC creates AnnotationCollection from its C pointer.
 // SRC ~= *C.ImPlotAnnotationCollection
-func NewPlotAnnotationCollectionFromC[SRC any](cvalue SRC) *PlotAnnotationCollection {
-	return &PlotAnnotationCollection{CData: internal.ReinterpretCast[*C.ImPlotAnnotationCollection](cvalue)}
+func NewAnnotationCollectionFromC[SRC any](cvalue SRC) *AnnotationCollection {
+	return &AnnotationCollection{CData: internal.ReinterpretCast[*C.ImPlotAnnotationCollection](cvalue)}
 }
 
-type PlotAxis struct {
+type Axis struct {
 	CData *C.ImPlotAxis
 }
 
-// Handle returns C version of PlotAxis and its finalizer func.
-func (self *PlotAxis) Handle() (result *C.ImPlotAxis, fin func()) {
+// Handle returns C version of Axis and its finalizer func.
+func (self *Axis) Handle() (result *C.ImPlotAxis, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotAxis) C() (C.ImPlotAxis, func()) {
+func (self Axis) C() (C.ImPlotAxis, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotAxisFromC creates PlotAxis from its C pointer.
+// NewAxisFromC creates Axis from its C pointer.
 // SRC ~= *C.ImPlotAxis
-func NewPlotAxisFromC[SRC any](cvalue SRC) *PlotAxis {
-	return &PlotAxis{CData: internal.ReinterpretCast[*C.ImPlotAxis](cvalue)}
+func NewAxisFromC[SRC any](cvalue SRC) *Axis {
+	return &Axis{CData: internal.ReinterpretCast[*C.ImPlotAxis](cvalue)}
 }
 
-type PlotAxisColor struct {
+type AxisColor struct {
 	CData *C.ImPlotAxisColor
 }
 
-// Handle returns C version of PlotAxisColor and its finalizer func.
-func (self *PlotAxisColor) Handle() (result *C.ImPlotAxisColor, fin func()) {
+// Handle returns C version of AxisColor and its finalizer func.
+func (self *AxisColor) Handle() (result *C.ImPlotAxisColor, fin func()) {
 	return self.CData, func() {}
 }
 
-// NewPlotAxisColorFromC creates PlotAxisColor from its C pointer.
+// NewAxisColorFromC creates AxisColor from its C pointer.
 // SRC ~= *C.ImPlotAxisColor
-func NewPlotAxisColorFromC[SRC any](cvalue SRC) *PlotAxisColor {
-	return &PlotAxisColor{CData: internal.ReinterpretCast[*C.ImPlotAxisColor](cvalue)}
+func NewAxisColorFromC[SRC any](cvalue SRC) *AxisColor {
+	return &AxisColor{CData: internal.ReinterpretCast[*C.ImPlotAxisColor](cvalue)}
 }
 
-type PlotColormapData struct {
+type ColormapData struct {
 	CData *C.ImPlotColormapData
 }
 
-// Handle returns C version of PlotColormapData and its finalizer func.
-func (self *PlotColormapData) Handle() (result *C.ImPlotColormapData, fin func()) {
+// Handle returns C version of ColormapData and its finalizer func.
+func (self *ColormapData) Handle() (result *C.ImPlotColormapData, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotColormapData) C() (C.ImPlotColormapData, func()) {
+func (self ColormapData) C() (C.ImPlotColormapData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotColormapDataFromC creates PlotColormapData from its C pointer.
+// NewColormapDataFromC creates ColormapData from its C pointer.
 // SRC ~= *C.ImPlotColormapData
-func NewPlotColormapDataFromC[SRC any](cvalue SRC) *PlotColormapData {
-	return &PlotColormapData{CData: internal.ReinterpretCast[*C.ImPlotColormapData](cvalue)}
+func NewColormapDataFromC[SRC any](cvalue SRC) *ColormapData {
+	return &ColormapData{CData: internal.ReinterpretCast[*C.ImPlotColormapData](cvalue)}
 }
 
-type PlotContext struct {
+type Context struct {
 	CData *C.ImPlotContext
 }
 
-// Handle returns C version of PlotContext and its finalizer func.
-func (self *PlotContext) Handle() (result *C.ImPlotContext, fin func()) {
+// Handle returns C version of Context and its finalizer func.
+func (self *Context) Handle() (result *C.ImPlotContext, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotContext) C() (C.ImPlotContext, func()) {
+func (self Context) C() (C.ImPlotContext, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotContextFromC creates PlotContext from its C pointer.
+// NewContextFromC creates Context from its C pointer.
 // SRC ~= *C.ImPlotContext
-func NewPlotContextFromC[SRC any](cvalue SRC) *PlotContext {
-	return &PlotContext{CData: internal.ReinterpretCast[*C.ImPlotContext](cvalue)}
+func NewContextFromC[SRC any](cvalue SRC) *Context {
+	return &Context{CData: internal.ReinterpretCast[*C.ImPlotContext](cvalue)}
 }
 
-type PlotDateTimeSpec struct {
+type DateTimeSpec struct {
 	CData *C.ImPlotDateTimeSpec
 }
 
-// Handle returns C version of PlotDateTimeSpec and its finalizer func.
-func (self *PlotDateTimeSpec) Handle() (result *C.ImPlotDateTimeSpec, fin func()) {
+// Handle returns C version of DateTimeSpec and its finalizer func.
+func (self *DateTimeSpec) Handle() (result *C.ImPlotDateTimeSpec, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotDateTimeSpec) C() (C.ImPlotDateTimeSpec, func()) {
+func (self DateTimeSpec) C() (C.ImPlotDateTimeSpec, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotDateTimeSpecFromC creates PlotDateTimeSpec from its C pointer.
+// NewDateTimeSpecFromC creates DateTimeSpec from its C pointer.
 // SRC ~= *C.ImPlotDateTimeSpec
-func NewPlotDateTimeSpecFromC[SRC any](cvalue SRC) *PlotDateTimeSpec {
-	return &PlotDateTimeSpec{CData: internal.ReinterpretCast[*C.ImPlotDateTimeSpec](cvalue)}
+func NewDateTimeSpecFromC[SRC any](cvalue SRC) *DateTimeSpec {
+	return &DateTimeSpec{CData: internal.ReinterpretCast[*C.ImPlotDateTimeSpec](cvalue)}
 }
 
 type (
-	PlotFormatter  func(value float64, buff string, size int32, user_data unsafe.Pointer) int32
-	cPlotFormatter func(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int
+	Formatter  func(value float64, buff string, size int32, user_data unsafe.Pointer) int32
+	cFormatter func(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int
 )
 
-func NewPlotFormatterFromC(cvalue *C.ImPlotFormatter) *PlotFormatter {
-	result := poolPlotFormatter.Find(*cvalue)
+func NewFormatterFromC(cvalue *C.ImPlotFormatter) *Formatter {
+	result := poolFormatter.Find(*cvalue)
 	return &result
 }
 
-func (c PlotFormatter) C() (C.ImPlotFormatter, func()) {
-	return poolPlotFormatter.Allocate(c), func() {}
+func (c Formatter) C() (C.ImPlotFormatter, func()) {
+	return poolFormatter.Allocate(c), func() {}
 }
 
-func wrapPlotFormatter(cb PlotFormatter, value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+func wrapFormatter(cb Formatter, value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
 	result := cb(float64(value), C.GoString(buff), int32(size), unsafe.Pointer(user_data))
 
 	return C.int(result)
 }
 
-//export callbackPlotFormatter0
-func callbackPlotFormatter0(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(0), value, buff, size, user_data)
+//export callbackFormatter0
+func callbackFormatter0(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(0), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter1
-func callbackPlotFormatter1(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(1), value, buff, size, user_data)
+//export callbackFormatter1
+func callbackFormatter1(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(1), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter2
-func callbackPlotFormatter2(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(2), value, buff, size, user_data)
+//export callbackFormatter2
+func callbackFormatter2(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(2), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter3
-func callbackPlotFormatter3(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(3), value, buff, size, user_data)
+//export callbackFormatter3
+func callbackFormatter3(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(3), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter4
-func callbackPlotFormatter4(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(4), value, buff, size, user_data)
+//export callbackFormatter4
+func callbackFormatter4(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(4), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter5
-func callbackPlotFormatter5(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(5), value, buff, size, user_data)
+//export callbackFormatter5
+func callbackFormatter5(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(5), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter6
-func callbackPlotFormatter6(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(6), value, buff, size, user_data)
+//export callbackFormatter6
+func callbackFormatter6(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(6), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter7
-func callbackPlotFormatter7(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(7), value, buff, size, user_data)
+//export callbackFormatter7
+func callbackFormatter7(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(7), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter8
-func callbackPlotFormatter8(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(8), value, buff, size, user_data)
+//export callbackFormatter8
+func callbackFormatter8(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(8), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter9
-func callbackPlotFormatter9(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(9), value, buff, size, user_data)
+//export callbackFormatter9
+func callbackFormatter9(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(9), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter10
-func callbackPlotFormatter10(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(10), value, buff, size, user_data)
+//export callbackFormatter10
+func callbackFormatter10(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(10), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter11
-func callbackPlotFormatter11(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(11), value, buff, size, user_data)
+//export callbackFormatter11
+func callbackFormatter11(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(11), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter12
-func callbackPlotFormatter12(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(12), value, buff, size, user_data)
+//export callbackFormatter12
+func callbackFormatter12(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(12), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter13
-func callbackPlotFormatter13(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(13), value, buff, size, user_data)
+//export callbackFormatter13
+func callbackFormatter13(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(13), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter14
-func callbackPlotFormatter14(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(14), value, buff, size, user_data)
+//export callbackFormatter14
+func callbackFormatter14(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(14), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter15
-func callbackPlotFormatter15(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(15), value, buff, size, user_data)
+//export callbackFormatter15
+func callbackFormatter15(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(15), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter16
-func callbackPlotFormatter16(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(16), value, buff, size, user_data)
+//export callbackFormatter16
+func callbackFormatter16(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(16), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter17
-func callbackPlotFormatter17(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(17), value, buff, size, user_data)
+//export callbackFormatter17
+func callbackFormatter17(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(17), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter18
-func callbackPlotFormatter18(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(18), value, buff, size, user_data)
+//export callbackFormatter18
+func callbackFormatter18(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(18), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter19
-func callbackPlotFormatter19(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(19), value, buff, size, user_data)
+//export callbackFormatter19
+func callbackFormatter19(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(19), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter20
-func callbackPlotFormatter20(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(20), value, buff, size, user_data)
+//export callbackFormatter20
+func callbackFormatter20(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(20), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter21
-func callbackPlotFormatter21(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(21), value, buff, size, user_data)
+//export callbackFormatter21
+func callbackFormatter21(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(21), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter22
-func callbackPlotFormatter22(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(22), value, buff, size, user_data)
+//export callbackFormatter22
+func callbackFormatter22(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(22), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter23
-func callbackPlotFormatter23(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(23), value, buff, size, user_data)
+//export callbackFormatter23
+func callbackFormatter23(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(23), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter24
-func callbackPlotFormatter24(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(24), value, buff, size, user_data)
+//export callbackFormatter24
+func callbackFormatter24(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(24), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter25
-func callbackPlotFormatter25(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(25), value, buff, size, user_data)
+//export callbackFormatter25
+func callbackFormatter25(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(25), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter26
-func callbackPlotFormatter26(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(26), value, buff, size, user_data)
+//export callbackFormatter26
+func callbackFormatter26(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(26), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter27
-func callbackPlotFormatter27(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(27), value, buff, size, user_data)
+//export callbackFormatter27
+func callbackFormatter27(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(27), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter28
-func callbackPlotFormatter28(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(28), value, buff, size, user_data)
+//export callbackFormatter28
+func callbackFormatter28(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(28), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter29
-func callbackPlotFormatter29(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(29), value, buff, size, user_data)
+//export callbackFormatter29
+func callbackFormatter29(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(29), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter30
-func callbackPlotFormatter30(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(30), value, buff, size, user_data)
+//export callbackFormatter30
+func callbackFormatter30(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(30), value, buff, size, user_data)
 }
 
-//export callbackPlotFormatter31
-func callbackPlotFormatter31(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	return wrapPlotFormatter(poolPlotFormatter.Get(31), value, buff, size, user_data)
+//export callbackFormatter31
+func callbackFormatter31(value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
+	return wrapFormatter(poolFormatter.Get(31), value, buff, size, user_data)
 }
 
-var poolPlotFormatter *internal.Pool[PlotFormatter, C.ImPlotFormatter]
+var poolFormatter *internal.Pool[Formatter, C.ImPlotFormatter]
 
 func init() {
-	poolPlotFormatter = internal.NewPool[PlotFormatter, C.ImPlotFormatter](
-		C.ImPlotFormatter(C.callbackPlotFormatter0),
-		C.ImPlotFormatter(C.callbackPlotFormatter1),
-		C.ImPlotFormatter(C.callbackPlotFormatter2),
-		C.ImPlotFormatter(C.callbackPlotFormatter3),
-		C.ImPlotFormatter(C.callbackPlotFormatter4),
-		C.ImPlotFormatter(C.callbackPlotFormatter5),
-		C.ImPlotFormatter(C.callbackPlotFormatter6),
-		C.ImPlotFormatter(C.callbackPlotFormatter7),
-		C.ImPlotFormatter(C.callbackPlotFormatter8),
-		C.ImPlotFormatter(C.callbackPlotFormatter9),
-		C.ImPlotFormatter(C.callbackPlotFormatter10),
-		C.ImPlotFormatter(C.callbackPlotFormatter11),
-		C.ImPlotFormatter(C.callbackPlotFormatter12),
-		C.ImPlotFormatter(C.callbackPlotFormatter13),
-		C.ImPlotFormatter(C.callbackPlotFormatter14),
-		C.ImPlotFormatter(C.callbackPlotFormatter15),
-		C.ImPlotFormatter(C.callbackPlotFormatter16),
-		C.ImPlotFormatter(C.callbackPlotFormatter17),
-		C.ImPlotFormatter(C.callbackPlotFormatter18),
-		C.ImPlotFormatter(C.callbackPlotFormatter19),
-		C.ImPlotFormatter(C.callbackPlotFormatter20),
-		C.ImPlotFormatter(C.callbackPlotFormatter21),
-		C.ImPlotFormatter(C.callbackPlotFormatter22),
-		C.ImPlotFormatter(C.callbackPlotFormatter23),
-		C.ImPlotFormatter(C.callbackPlotFormatter24),
-		C.ImPlotFormatter(C.callbackPlotFormatter25),
-		C.ImPlotFormatter(C.callbackPlotFormatter26),
-		C.ImPlotFormatter(C.callbackPlotFormatter27),
-		C.ImPlotFormatter(C.callbackPlotFormatter28),
-		C.ImPlotFormatter(C.callbackPlotFormatter29),
-		C.ImPlotFormatter(C.callbackPlotFormatter30),
-		C.ImPlotFormatter(C.callbackPlotFormatter31),
+	poolFormatter = internal.NewPool[Formatter, C.ImPlotFormatter](
+		C.ImPlotFormatter(C.callbackFormatter0),
+		C.ImPlotFormatter(C.callbackFormatter1),
+		C.ImPlotFormatter(C.callbackFormatter2),
+		C.ImPlotFormatter(C.callbackFormatter3),
+		C.ImPlotFormatter(C.callbackFormatter4),
+		C.ImPlotFormatter(C.callbackFormatter5),
+		C.ImPlotFormatter(C.callbackFormatter6),
+		C.ImPlotFormatter(C.callbackFormatter7),
+		C.ImPlotFormatter(C.callbackFormatter8),
+		C.ImPlotFormatter(C.callbackFormatter9),
+		C.ImPlotFormatter(C.callbackFormatter10),
+		C.ImPlotFormatter(C.callbackFormatter11),
+		C.ImPlotFormatter(C.callbackFormatter12),
+		C.ImPlotFormatter(C.callbackFormatter13),
+		C.ImPlotFormatter(C.callbackFormatter14),
+		C.ImPlotFormatter(C.callbackFormatter15),
+		C.ImPlotFormatter(C.callbackFormatter16),
+		C.ImPlotFormatter(C.callbackFormatter17),
+		C.ImPlotFormatter(C.callbackFormatter18),
+		C.ImPlotFormatter(C.callbackFormatter19),
+		C.ImPlotFormatter(C.callbackFormatter20),
+		C.ImPlotFormatter(C.callbackFormatter21),
+		C.ImPlotFormatter(C.callbackFormatter22),
+		C.ImPlotFormatter(C.callbackFormatter23),
+		C.ImPlotFormatter(C.callbackFormatter24),
+		C.ImPlotFormatter(C.callbackFormatter25),
+		C.ImPlotFormatter(C.callbackFormatter26),
+		C.ImPlotFormatter(C.callbackFormatter27),
+		C.ImPlotFormatter(C.callbackFormatter28),
+		C.ImPlotFormatter(C.callbackFormatter29),
+		C.ImPlotFormatter(C.callbackFormatter30),
+		C.ImPlotFormatter(C.callbackFormatter31),
 	)
 }
 
-func ClearPlotFormatterPool() {
-	poolPlotFormatter.Clear()
+func ClearFormatterPool() {
+	poolFormatter.Clear()
 }
 
 type (
-	PlotGetter  func(idx int32, user_data unsafe.Pointer) PlotPoint
-	cPlotGetter func(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint
+	ter  func(idx int32, user_data unsafe.Pointer) PlotPoint
+	cter func(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint
 )
 
-func NewPlotGetterFromC(cvalue *C.ImPlotGetter) *PlotGetter {
-	result := poolPlotGetter.Find(*cvalue)
+func NewterFromC(cvalue *C.ImPlotGetter) *ter {
+	result := poolter.Find(*cvalue)
 	return &result
 }
 
-func (c PlotGetter) C() (C.ImPlotGetter, func()) {
-	return poolPlotGetter.Allocate(c), func() {}
+func (c ter) C() (C.ImPlotGetter, func()) {
+	return poolter.Allocate(c), func() {}
 }
 
-func wrapPlotGetter(cb PlotGetter, idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+func wrapter(cb ter, idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
 	result := cb(int32(idx), unsafe.Pointer(user_data))
 
 	return internal.ReinterpretCast[C.ImPlotPoint](result.ToC())
 }
 
-//export callbackPlotGetter0
-func callbackPlotGetter0(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(0), idx, user_data)
+//export callbackter0
+func callbackter0(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(0), idx, user_data)
 }
 
-//export callbackPlotGetter1
-func callbackPlotGetter1(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(1), idx, user_data)
+//export callbackter1
+func callbackter1(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(1), idx, user_data)
 }
 
-//export callbackPlotGetter2
-func callbackPlotGetter2(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(2), idx, user_data)
+//export callbackter2
+func callbackter2(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(2), idx, user_data)
 }
 
-//export callbackPlotGetter3
-func callbackPlotGetter3(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(3), idx, user_data)
+//export callbackter3
+func callbackter3(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(3), idx, user_data)
 }
 
-//export callbackPlotGetter4
-func callbackPlotGetter4(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(4), idx, user_data)
+//export callbackter4
+func callbackter4(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(4), idx, user_data)
 }
 
-//export callbackPlotGetter5
-func callbackPlotGetter5(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(5), idx, user_data)
+//export callbackter5
+func callbackter5(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(5), idx, user_data)
 }
 
-//export callbackPlotGetter6
-func callbackPlotGetter6(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(6), idx, user_data)
+//export callbackter6
+func callbackter6(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(6), idx, user_data)
 }
 
-//export callbackPlotGetter7
-func callbackPlotGetter7(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(7), idx, user_data)
+//export callbackter7
+func callbackter7(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(7), idx, user_data)
 }
 
-//export callbackPlotGetter8
-func callbackPlotGetter8(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(8), idx, user_data)
+//export callbackter8
+func callbackter8(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(8), idx, user_data)
 }
 
-//export callbackPlotGetter9
-func callbackPlotGetter9(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(9), idx, user_data)
+//export callbackter9
+func callbackter9(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(9), idx, user_data)
 }
 
-//export callbackPlotGetter10
-func callbackPlotGetter10(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(10), idx, user_data)
+//export callbackter10
+func callbackter10(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(10), idx, user_data)
 }
 
-//export callbackPlotGetter11
-func callbackPlotGetter11(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(11), idx, user_data)
+//export callbackter11
+func callbackter11(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(11), idx, user_data)
 }
 
-//export callbackPlotGetter12
-func callbackPlotGetter12(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(12), idx, user_data)
+//export callbackter12
+func callbackter12(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(12), idx, user_data)
 }
 
-//export callbackPlotGetter13
-func callbackPlotGetter13(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(13), idx, user_data)
+//export callbackter13
+func callbackter13(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(13), idx, user_data)
 }
 
-//export callbackPlotGetter14
-func callbackPlotGetter14(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(14), idx, user_data)
+//export callbackter14
+func callbackter14(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(14), idx, user_data)
 }
 
-//export callbackPlotGetter15
-func callbackPlotGetter15(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(15), idx, user_data)
+//export callbackter15
+func callbackter15(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(15), idx, user_data)
 }
 
-//export callbackPlotGetter16
-func callbackPlotGetter16(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(16), idx, user_data)
+//export callbackter16
+func callbackter16(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(16), idx, user_data)
 }
 
-//export callbackPlotGetter17
-func callbackPlotGetter17(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(17), idx, user_data)
+//export callbackter17
+func callbackter17(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(17), idx, user_data)
 }
 
-//export callbackPlotGetter18
-func callbackPlotGetter18(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(18), idx, user_data)
+//export callbackter18
+func callbackter18(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(18), idx, user_data)
 }
 
-//export callbackPlotGetter19
-func callbackPlotGetter19(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(19), idx, user_data)
+//export callbackter19
+func callbackter19(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(19), idx, user_data)
 }
 
-//export callbackPlotGetter20
-func callbackPlotGetter20(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(20), idx, user_data)
+//export callbackter20
+func callbackter20(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(20), idx, user_data)
 }
 
-//export callbackPlotGetter21
-func callbackPlotGetter21(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(21), idx, user_data)
+//export callbackter21
+func callbackter21(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(21), idx, user_data)
 }
 
-//export callbackPlotGetter22
-func callbackPlotGetter22(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(22), idx, user_data)
+//export callbackter22
+func callbackter22(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(22), idx, user_data)
 }
 
-//export callbackPlotGetter23
-func callbackPlotGetter23(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(23), idx, user_data)
+//export callbackter23
+func callbackter23(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(23), idx, user_data)
 }
 
-//export callbackPlotGetter24
-func callbackPlotGetter24(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(24), idx, user_data)
+//export callbackter24
+func callbackter24(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(24), idx, user_data)
 }
 
-//export callbackPlotGetter25
-func callbackPlotGetter25(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(25), idx, user_data)
+//export callbackter25
+func callbackter25(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(25), idx, user_data)
 }
 
-//export callbackPlotGetter26
-func callbackPlotGetter26(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(26), idx, user_data)
+//export callbackter26
+func callbackter26(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(26), idx, user_data)
 }
 
-//export callbackPlotGetter27
-func callbackPlotGetter27(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(27), idx, user_data)
+//export callbackter27
+func callbackter27(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(27), idx, user_data)
 }
 
-//export callbackPlotGetter28
-func callbackPlotGetter28(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(28), idx, user_data)
+//export callbackter28
+func callbackter28(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(28), idx, user_data)
 }
 
-//export callbackPlotGetter29
-func callbackPlotGetter29(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(29), idx, user_data)
+//export callbackter29
+func callbackter29(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(29), idx, user_data)
 }
 
-//export callbackPlotGetter30
-func callbackPlotGetter30(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(30), idx, user_data)
+//export callbackter30
+func callbackter30(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(30), idx, user_data)
 }
 
-//export callbackPlotGetter31
-func callbackPlotGetter31(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
-	return wrapPlotGetter(poolPlotGetter.Get(31), idx, user_data)
+//export callbackter31
+func callbackter31(idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
+	return wrapter(poolter.Get(31), idx, user_data)
 }
 
-var poolPlotGetter *internal.Pool[PlotGetter, C.ImPlotGetter]
+var poolter *internal.Pool[ter, C.ImPlotGetter]
 
 func init() {
-	poolPlotGetter = internal.NewPool[PlotGetter, C.ImPlotGetter](
-		C.ImPlotGetter(C.callbackPlotGetter0),
-		C.ImPlotGetter(C.callbackPlotGetter1),
-		C.ImPlotGetter(C.callbackPlotGetter2),
-		C.ImPlotGetter(C.callbackPlotGetter3),
-		C.ImPlotGetter(C.callbackPlotGetter4),
-		C.ImPlotGetter(C.callbackPlotGetter5),
-		C.ImPlotGetter(C.callbackPlotGetter6),
-		C.ImPlotGetter(C.callbackPlotGetter7),
-		C.ImPlotGetter(C.callbackPlotGetter8),
-		C.ImPlotGetter(C.callbackPlotGetter9),
-		C.ImPlotGetter(C.callbackPlotGetter10),
-		C.ImPlotGetter(C.callbackPlotGetter11),
-		C.ImPlotGetter(C.callbackPlotGetter12),
-		C.ImPlotGetter(C.callbackPlotGetter13),
-		C.ImPlotGetter(C.callbackPlotGetter14),
-		C.ImPlotGetter(C.callbackPlotGetter15),
-		C.ImPlotGetter(C.callbackPlotGetter16),
-		C.ImPlotGetter(C.callbackPlotGetter17),
-		C.ImPlotGetter(C.callbackPlotGetter18),
-		C.ImPlotGetter(C.callbackPlotGetter19),
-		C.ImPlotGetter(C.callbackPlotGetter20),
-		C.ImPlotGetter(C.callbackPlotGetter21),
-		C.ImPlotGetter(C.callbackPlotGetter22),
-		C.ImPlotGetter(C.callbackPlotGetter23),
-		C.ImPlotGetter(C.callbackPlotGetter24),
-		C.ImPlotGetter(C.callbackPlotGetter25),
-		C.ImPlotGetter(C.callbackPlotGetter26),
-		C.ImPlotGetter(C.callbackPlotGetter27),
-		C.ImPlotGetter(C.callbackPlotGetter28),
-		C.ImPlotGetter(C.callbackPlotGetter29),
-		C.ImPlotGetter(C.callbackPlotGetter30),
-		C.ImPlotGetter(C.callbackPlotGetter31),
+	poolter = internal.NewPool[ter, C.ImPlotGetter](
+		C.ImPlotGetter(C.callbackter0),
+		C.ImPlotGetter(C.callbackter1),
+		C.ImPlotGetter(C.callbackter2),
+		C.ImPlotGetter(C.callbackter3),
+		C.ImPlotGetter(C.callbackter4),
+		C.ImPlotGetter(C.callbackter5),
+		C.ImPlotGetter(C.callbackter6),
+		C.ImPlotGetter(C.callbackter7),
+		C.ImPlotGetter(C.callbackter8),
+		C.ImPlotGetter(C.callbackter9),
+		C.ImPlotGetter(C.callbackter10),
+		C.ImPlotGetter(C.callbackter11),
+		C.ImPlotGetter(C.callbackter12),
+		C.ImPlotGetter(C.callbackter13),
+		C.ImPlotGetter(C.callbackter14),
+		C.ImPlotGetter(C.callbackter15),
+		C.ImPlotGetter(C.callbackter16),
+		C.ImPlotGetter(C.callbackter17),
+		C.ImPlotGetter(C.callbackter18),
+		C.ImPlotGetter(C.callbackter19),
+		C.ImPlotGetter(C.callbackter20),
+		C.ImPlotGetter(C.callbackter21),
+		C.ImPlotGetter(C.callbackter22),
+		C.ImPlotGetter(C.callbackter23),
+		C.ImPlotGetter(C.callbackter24),
+		C.ImPlotGetter(C.callbackter25),
+		C.ImPlotGetter(C.callbackter26),
+		C.ImPlotGetter(C.callbackter27),
+		C.ImPlotGetter(C.callbackter28),
+		C.ImPlotGetter(C.callbackter29),
+		C.ImPlotGetter(C.callbackter30),
+		C.ImPlotGetter(C.callbackter31),
 	)
 }
 
-func ClearPlotGetterPool() {
-	poolPlotGetter.Clear()
+func ClearterPool() {
+	poolter.Clear()
 }
 
-type PlotInputMap struct {
+type InputMap struct {
 	CData *C.ImPlotInputMap
 }
 
-// Handle returns C version of PlotInputMap and its finalizer func.
-func (self *PlotInputMap) Handle() (result *C.ImPlotInputMap, fin func()) {
+// Handle returns C version of InputMap and its finalizer func.
+func (self *InputMap) Handle() (result *C.ImPlotInputMap, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotInputMap) C() (C.ImPlotInputMap, func()) {
+func (self InputMap) C() (C.ImPlotInputMap, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotInputMapFromC creates PlotInputMap from its C pointer.
+// NewInputMapFromC creates InputMap from its C pointer.
 // SRC ~= *C.ImPlotInputMap
-func NewPlotInputMapFromC[SRC any](cvalue SRC) *PlotInputMap {
-	return &PlotInputMap{CData: internal.ReinterpretCast[*C.ImPlotInputMap](cvalue)}
+func NewInputMapFromC[SRC any](cvalue SRC) *InputMap {
+	return &InputMap{CData: internal.ReinterpretCast[*C.ImPlotInputMap](cvalue)}
 }
 
-type PlotItem struct {
+type Item struct {
 	CData *C.ImPlotItem
 }
 
-// Handle returns C version of PlotItem and its finalizer func.
-func (self *PlotItem) Handle() (result *C.ImPlotItem, fin func()) {
+// Handle returns C version of Item and its finalizer func.
+func (self *Item) Handle() (result *C.ImPlotItem, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotItem) C() (C.ImPlotItem, func()) {
+func (self Item) C() (C.ImPlotItem, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotItemFromC creates PlotItem from its C pointer.
+// NewItemFromC creates Item from its C pointer.
 // SRC ~= *C.ImPlotItem
-func NewPlotItemFromC[SRC any](cvalue SRC) *PlotItem {
-	return &PlotItem{CData: internal.ReinterpretCast[*C.ImPlotItem](cvalue)}
+func NewItemFromC[SRC any](cvalue SRC) *Item {
+	return &Item{CData: internal.ReinterpretCast[*C.ImPlotItem](cvalue)}
 }
 
-type PlotItemGroup struct {
+type ItemGroup struct {
 	CData *C.ImPlotItemGroup
 }
 
-// Handle returns C version of PlotItemGroup and its finalizer func.
-func (self *PlotItemGroup) Handle() (result *C.ImPlotItemGroup, fin func()) {
+// Handle returns C version of ItemGroup and its finalizer func.
+func (self *ItemGroup) Handle() (result *C.ImPlotItemGroup, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotItemGroup) C() (C.ImPlotItemGroup, func()) {
+func (self ItemGroup) C() (C.ImPlotItemGroup, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotItemGroupFromC creates PlotItemGroup from its C pointer.
+// NewItemGroupFromC creates ItemGroup from its C pointer.
 // SRC ~= *C.ImPlotItemGroup
-func NewPlotItemGroupFromC[SRC any](cvalue SRC) *PlotItemGroup {
-	return &PlotItemGroup{CData: internal.ReinterpretCast[*C.ImPlotItemGroup](cvalue)}
+func NewItemGroupFromC[SRC any](cvalue SRC) *ItemGroup {
+	return &ItemGroup{CData: internal.ReinterpretCast[*C.ImPlotItemGroup](cvalue)}
 }
 
-type PlotLegend struct {
+type Legend struct {
 	CData *C.ImPlotLegend
 }
 
-// Handle returns C version of PlotLegend and its finalizer func.
-func (self *PlotLegend) Handle() (result *C.ImPlotLegend, fin func()) {
+// Handle returns C version of Legend and its finalizer func.
+func (self *Legend) Handle() (result *C.ImPlotLegend, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotLegend) C() (C.ImPlotLegend, func()) {
+func (self Legend) C() (C.ImPlotLegend, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotLegendFromC creates PlotLegend from its C pointer.
+// NewLegendFromC creates Legend from its C pointer.
 // SRC ~= *C.ImPlotLegend
-func NewPlotLegendFromC[SRC any](cvalue SRC) *PlotLegend {
-	return &PlotLegend{CData: internal.ReinterpretCast[*C.ImPlotLegend](cvalue)}
+func NewLegendFromC[SRC any](cvalue SRC) *Legend {
+	return &Legend{CData: internal.ReinterpretCast[*C.ImPlotLegend](cvalue)}
 }
 
-type PlotNextItemData struct {
+type NextItemData struct {
 	CData *C.ImPlotNextItemData
 }
 
-// Handle returns C version of PlotNextItemData and its finalizer func.
-func (self *PlotNextItemData) Handle() (result *C.ImPlotNextItemData, fin func()) {
+// Handle returns C version of NextItemData and its finalizer func.
+func (self *NextItemData) Handle() (result *C.ImPlotNextItemData, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotNextItemData) C() (C.ImPlotNextItemData, func()) {
+func (self NextItemData) C() (C.ImPlotNextItemData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotNextItemDataFromC creates PlotNextItemData from its C pointer.
+// NewNextItemDataFromC creates NextItemData from its C pointer.
 // SRC ~= *C.ImPlotNextItemData
-func NewPlotNextItemDataFromC[SRC any](cvalue SRC) *PlotNextItemData {
-	return &PlotNextItemData{CData: internal.ReinterpretCast[*C.ImPlotNextItemData](cvalue)}
+func NewNextItemDataFromC[SRC any](cvalue SRC) *NextItemData {
+	return &NextItemData{CData: internal.ReinterpretCast[*C.ImPlotNextItemData](cvalue)}
 }
 
-type PlotNextPlotData struct {
+type NextPlotData struct {
 	CData *C.ImPlotNextPlotData
 }
 
-// Handle returns C version of PlotNextPlotData and its finalizer func.
-func (self *PlotNextPlotData) Handle() (result *C.ImPlotNextPlotData, fin func()) {
+// Handle returns C version of NextPlotData and its finalizer func.
+func (self *NextPlotData) Handle() (result *C.ImPlotNextPlotData, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotNextPlotData) C() (C.ImPlotNextPlotData, func()) {
+func (self NextPlotData) C() (C.ImPlotNextPlotData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotNextPlotDataFromC creates PlotNextPlotData from its C pointer.
+// NewNextPlotDataFromC creates NextPlotData from its C pointer.
 // SRC ~= *C.ImPlotNextPlotData
-func NewPlotNextPlotDataFromC[SRC any](cvalue SRC) *PlotNextPlotData {
-	return &PlotNextPlotData{CData: internal.ReinterpretCast[*C.ImPlotNextPlotData](cvalue)}
+func NewNextPlotDataFromC[SRC any](cvalue SRC) *NextPlotData {
+	return &NextPlotData{CData: internal.ReinterpretCast[*C.ImPlotNextPlotData](cvalue)}
 }
 
-type PlotPlot struct {
+type Plot struct {
 	CData *C.ImPlotPlot
 }
 
-// Handle returns C version of PlotPlot and its finalizer func.
-func (self *PlotPlot) Handle() (result *C.ImPlotPlot, fin func()) {
+// Handle returns C version of Plot and its finalizer func.
+func (self *Plot) Handle() (result *C.ImPlotPlot, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotPlot) C() (C.ImPlotPlot, func()) {
+func (self Plot) C() (C.ImPlotPlot, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotPlotFromC creates PlotPlot from its C pointer.
+// NewPlotFromC creates Plot from its C pointer.
 // SRC ~= *C.ImPlotPlot
-func NewPlotPlotFromC[SRC any](cvalue SRC) *PlotPlot {
-	return &PlotPlot{CData: internal.ReinterpretCast[*C.ImPlotPlot](cvalue)}
+func NewPlotFromC[SRC any](cvalue SRC) *Plot {
+	return &Plot{CData: internal.ReinterpretCast[*C.ImPlotPlot](cvalue)}
 }
 
-type PlotPointError struct {
+type PointError struct {
 	CData *C.ImPlotPointError
 }
 
-// Handle returns C version of PlotPointError and its finalizer func.
-func (self *PlotPointError) Handle() (result *C.ImPlotPointError, fin func()) {
+// Handle returns C version of PointError and its finalizer func.
+func (self *PointError) Handle() (result *C.ImPlotPointError, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotPointError) C() (C.ImPlotPointError, func()) {
+func (self PointError) C() (C.ImPlotPointError, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotPointErrorFromC creates PlotPointError from its C pointer.
+// NewPointErrorFromC creates PointError from its C pointer.
 // SRC ~= *C.ImPlotPointError
-func NewPlotPointErrorFromC[SRC any](cvalue SRC) *PlotPointError {
-	return &PlotPointError{CData: internal.ReinterpretCast[*C.ImPlotPointError](cvalue)}
+func NewPointErrorFromC[SRC any](cvalue SRC) *PointError {
+	return &PointError{CData: internal.ReinterpretCast[*C.ImPlotPointError](cvalue)}
 }
 
-type PlotRange struct {
+type Range struct {
 	CData *C.ImPlotRange
 }
 
-// Handle returns C version of PlotRange and its finalizer func.
-func (self *PlotRange) Handle() (result *C.ImPlotRange, fin func()) {
+// Handle returns C version of Range and its finalizer func.
+func (self *Range) Handle() (result *C.ImPlotRange, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotRange) C() (C.ImPlotRange, func()) {
+func (self Range) C() (C.ImPlotRange, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotRangeFromC creates PlotRange from its C pointer.
+// NewRangeFromC creates Range from its C pointer.
 // SRC ~= *C.ImPlotRange
-func NewPlotRangeFromC[SRC any](cvalue SRC) *PlotRange {
-	return &PlotRange{CData: internal.ReinterpretCast[*C.ImPlotRange](cvalue)}
+func NewRangeFromC[SRC any](cvalue SRC) *Range {
+	return &Range{CData: internal.ReinterpretCast[*C.ImPlotRange](cvalue)}
 }
 
-type PlotRect struct {
+type Rect struct {
 	CData *C.ImPlotRect
 }
 
-// Handle returns C version of PlotRect and its finalizer func.
-func (self *PlotRect) Handle() (result *C.ImPlotRect, fin func()) {
+// Handle returns C version of Rect and its finalizer func.
+func (self *Rect) Handle() (result *C.ImPlotRect, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotRect) C() (C.ImPlotRect, func()) {
+func (self Rect) C() (C.ImPlotRect, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotRectFromC creates PlotRect from its C pointer.
+// NewRectFromC creates Rect from its C pointer.
 // SRC ~= *C.ImPlotRect
-func NewPlotRectFromC[SRC any](cvalue SRC) *PlotRect {
-	return &PlotRect{CData: internal.ReinterpretCast[*C.ImPlotRect](cvalue)}
+func NewRectFromC[SRC any](cvalue SRC) *Rect {
+	return &Rect{CData: internal.ReinterpretCast[*C.ImPlotRect](cvalue)}
 }
 
-type PlotStyle struct {
+type Style struct {
 	CData *C.ImPlotStyle
 }
 
-// Handle returns C version of PlotStyle and its finalizer func.
-func (self *PlotStyle) Handle() (result *C.ImPlotStyle, fin func()) {
+// Handle returns C version of Style and its finalizer func.
+func (self *Style) Handle() (result *C.ImPlotStyle, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotStyle) C() (C.ImPlotStyle, func()) {
+func (self Style) C() (C.ImPlotStyle, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotStyleFromC creates PlotStyle from its C pointer.
+// NewStyleFromC creates Style from its C pointer.
 // SRC ~= *C.ImPlotStyle
-func NewPlotStyleFromC[SRC any](cvalue SRC) *PlotStyle {
-	return &PlotStyle{CData: internal.ReinterpretCast[*C.ImPlotStyle](cvalue)}
+func NewStyleFromC[SRC any](cvalue SRC) *Style {
+	return &Style{CData: internal.ReinterpretCast[*C.ImPlotStyle](cvalue)}
 }
 
-type PlotSubplot struct {
+type Subplot struct {
 	CData *C.ImPlotSubplot
 }
 
-// Handle returns C version of PlotSubplot and its finalizer func.
-func (self *PlotSubplot) Handle() (result *C.ImPlotSubplot, fin func()) {
+// Handle returns C version of Subplot and its finalizer func.
+func (self *Subplot) Handle() (result *C.ImPlotSubplot, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotSubplot) C() (C.ImPlotSubplot, func()) {
+func (self Subplot) C() (C.ImPlotSubplot, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotSubplotFromC creates PlotSubplot from its C pointer.
+// NewSubplotFromC creates Subplot from its C pointer.
 // SRC ~= *C.ImPlotSubplot
-func NewPlotSubplotFromC[SRC any](cvalue SRC) *PlotSubplot {
-	return &PlotSubplot{CData: internal.ReinterpretCast[*C.ImPlotSubplot](cvalue)}
+func NewSubplotFromC[SRC any](cvalue SRC) *Subplot {
+	return &Subplot{CData: internal.ReinterpretCast[*C.ImPlotSubplot](cvalue)}
 }
 
-type PlotTag struct {
+type Tag struct {
 	CData *C.ImPlotTag
 }
 
-// Handle returns C version of PlotTag and its finalizer func.
-func (self *PlotTag) Handle() (result *C.ImPlotTag, fin func()) {
+// Handle returns C version of Tag and its finalizer func.
+func (self *Tag) Handle() (result *C.ImPlotTag, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotTag) C() (C.ImPlotTag, func()) {
+func (self Tag) C() (C.ImPlotTag, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotTagFromC creates PlotTag from its C pointer.
+// NewTagFromC creates Tag from its C pointer.
 // SRC ~= *C.ImPlotTag
-func NewPlotTagFromC[SRC any](cvalue SRC) *PlotTag {
-	return &PlotTag{CData: internal.ReinterpretCast[*C.ImPlotTag](cvalue)}
+func NewTagFromC[SRC any](cvalue SRC) *Tag {
+	return &Tag{CData: internal.ReinterpretCast[*C.ImPlotTag](cvalue)}
 }
 
-type PlotTagCollection struct {
+type TagCollection struct {
 	CData *C.ImPlotTagCollection
 }
 
-// Handle returns C version of PlotTagCollection and its finalizer func.
-func (self *PlotTagCollection) Handle() (result *C.ImPlotTagCollection, fin func()) {
+// Handle returns C version of TagCollection and its finalizer func.
+func (self *TagCollection) Handle() (result *C.ImPlotTagCollection, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotTagCollection) C() (C.ImPlotTagCollection, func()) {
+func (self TagCollection) C() (C.ImPlotTagCollection, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotTagCollectionFromC creates PlotTagCollection from its C pointer.
+// NewTagCollectionFromC creates TagCollection from its C pointer.
 // SRC ~= *C.ImPlotTagCollection
-func NewPlotTagCollectionFromC[SRC any](cvalue SRC) *PlotTagCollection {
-	return &PlotTagCollection{CData: internal.ReinterpretCast[*C.ImPlotTagCollection](cvalue)}
+func NewTagCollectionFromC[SRC any](cvalue SRC) *TagCollection {
+	return &TagCollection{CData: internal.ReinterpretCast[*C.ImPlotTagCollection](cvalue)}
 }
 
-type PlotTick struct {
+type Tick struct {
 	CData *C.ImPlotTick
 }
 
-// Handle returns C version of PlotTick and its finalizer func.
-func (self *PlotTick) Handle() (result *C.ImPlotTick, fin func()) {
+// Handle returns C version of Tick and its finalizer func.
+func (self *Tick) Handle() (result *C.ImPlotTick, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotTick) C() (C.ImPlotTick, func()) {
+func (self Tick) C() (C.ImPlotTick, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotTickFromC creates PlotTick from its C pointer.
+// NewTickFromC creates Tick from its C pointer.
 // SRC ~= *C.ImPlotTick
-func NewPlotTickFromC[SRC any](cvalue SRC) *PlotTick {
-	return &PlotTick{CData: internal.ReinterpretCast[*C.ImPlotTick](cvalue)}
+func NewTickFromC[SRC any](cvalue SRC) *Tick {
+	return &Tick{CData: internal.ReinterpretCast[*C.ImPlotTick](cvalue)}
 }
 
-type PlotTicker struct {
+type Ticker struct {
 	CData *C.ImPlotTicker
 }
 
-// Handle returns C version of PlotTicker and its finalizer func.
-func (self *PlotTicker) Handle() (result *C.ImPlotTicker, fin func()) {
+// Handle returns C version of Ticker and its finalizer func.
+func (self *Ticker) Handle() (result *C.ImPlotTicker, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self PlotTicker) C() (C.ImPlotTicker, func()) {
+func (self Ticker) C() (C.ImPlotTicker, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewPlotTickerFromC creates PlotTicker from its C pointer.
+// NewTickerFromC creates Ticker from its C pointer.
 // SRC ~= *C.ImPlotTicker
-func NewPlotTickerFromC[SRC any](cvalue SRC) *PlotTicker {
-	return &PlotTicker{CData: internal.ReinterpretCast[*C.ImPlotTicker](cvalue)}
+func NewTickerFromC[SRC any](cvalue SRC) *Ticker {
+	return &Ticker{CData: internal.ReinterpretCast[*C.ImPlotTicker](cvalue)}
 }
 
 type (
-	PlotTransform  func(value float64, user_data unsafe.Pointer) float64
-	cPlotTransform func(value C.double, user_data unsafe.Pointer) C.double
+	Transform  func(value float64, user_data unsafe.Pointer) float64
+	cTransform func(value C.double, user_data unsafe.Pointer) C.double
 )
 
-func NewPlotTransformFromC(cvalue *C.ImPlotTransform) *PlotTransform {
-	result := poolPlotTransform.Find(*cvalue)
+func NewTransformFromC(cvalue *C.ImPlotTransform) *Transform {
+	result := poolTransform.Find(*cvalue)
 	return &result
 }
 
-func (c PlotTransform) C() (C.ImPlotTransform, func()) {
-	return poolPlotTransform.Allocate(c), func() {}
+func (c Transform) C() (C.ImPlotTransform, func()) {
+	return poolTransform.Allocate(c), func() {}
 }
 
-func wrapPlotTransform(cb PlotTransform, value C.double, user_data unsafe.Pointer) C.double {
+func wrapTransform(cb Transform, value C.double, user_data unsafe.Pointer) C.double {
 	result := cb(float64(value), unsafe.Pointer(user_data))
 
 	return C.double(result)
 }
 
-//export callbackPlotTransform0
-func callbackPlotTransform0(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(0), value, user_data)
+//export callbackTransform0
+func callbackTransform0(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(0), value, user_data)
 }
 
-//export callbackPlotTransform1
-func callbackPlotTransform1(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(1), value, user_data)
+//export callbackTransform1
+func callbackTransform1(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(1), value, user_data)
 }
 
-//export callbackPlotTransform2
-func callbackPlotTransform2(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(2), value, user_data)
+//export callbackTransform2
+func callbackTransform2(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(2), value, user_data)
 }
 
-//export callbackPlotTransform3
-func callbackPlotTransform3(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(3), value, user_data)
+//export callbackTransform3
+func callbackTransform3(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(3), value, user_data)
 }
 
-//export callbackPlotTransform4
-func callbackPlotTransform4(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(4), value, user_data)
+//export callbackTransform4
+func callbackTransform4(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(4), value, user_data)
 }
 
-//export callbackPlotTransform5
-func callbackPlotTransform5(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(5), value, user_data)
+//export callbackTransform5
+func callbackTransform5(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(5), value, user_data)
 }
 
-//export callbackPlotTransform6
-func callbackPlotTransform6(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(6), value, user_data)
+//export callbackTransform6
+func callbackTransform6(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(6), value, user_data)
 }
 
-//export callbackPlotTransform7
-func callbackPlotTransform7(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(7), value, user_data)
+//export callbackTransform7
+func callbackTransform7(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(7), value, user_data)
 }
 
-//export callbackPlotTransform8
-func callbackPlotTransform8(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(8), value, user_data)
+//export callbackTransform8
+func callbackTransform8(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(8), value, user_data)
 }
 
-//export callbackPlotTransform9
-func callbackPlotTransform9(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(9), value, user_data)
+//export callbackTransform9
+func callbackTransform9(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(9), value, user_data)
 }
 
-//export callbackPlotTransform10
-func callbackPlotTransform10(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(10), value, user_data)
+//export callbackTransform10
+func callbackTransform10(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(10), value, user_data)
 }
 
-//export callbackPlotTransform11
-func callbackPlotTransform11(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(11), value, user_data)
+//export callbackTransform11
+func callbackTransform11(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(11), value, user_data)
 }
 
-//export callbackPlotTransform12
-func callbackPlotTransform12(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(12), value, user_data)
+//export callbackTransform12
+func callbackTransform12(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(12), value, user_data)
 }
 
-//export callbackPlotTransform13
-func callbackPlotTransform13(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(13), value, user_data)
+//export callbackTransform13
+func callbackTransform13(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(13), value, user_data)
 }
 
-//export callbackPlotTransform14
-func callbackPlotTransform14(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(14), value, user_data)
+//export callbackTransform14
+func callbackTransform14(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(14), value, user_data)
 }
 
-//export callbackPlotTransform15
-func callbackPlotTransform15(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(15), value, user_data)
+//export callbackTransform15
+func callbackTransform15(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(15), value, user_data)
 }
 
-//export callbackPlotTransform16
-func callbackPlotTransform16(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(16), value, user_data)
+//export callbackTransform16
+func callbackTransform16(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(16), value, user_data)
 }
 
-//export callbackPlotTransform17
-func callbackPlotTransform17(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(17), value, user_data)
+//export callbackTransform17
+func callbackTransform17(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(17), value, user_data)
 }
 
-//export callbackPlotTransform18
-func callbackPlotTransform18(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(18), value, user_data)
+//export callbackTransform18
+func callbackTransform18(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(18), value, user_data)
 }
 
-//export callbackPlotTransform19
-func callbackPlotTransform19(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(19), value, user_data)
+//export callbackTransform19
+func callbackTransform19(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(19), value, user_data)
 }
 
-//export callbackPlotTransform20
-func callbackPlotTransform20(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(20), value, user_data)
+//export callbackTransform20
+func callbackTransform20(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(20), value, user_data)
 }
 
-//export callbackPlotTransform21
-func callbackPlotTransform21(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(21), value, user_data)
+//export callbackTransform21
+func callbackTransform21(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(21), value, user_data)
 }
 
-//export callbackPlotTransform22
-func callbackPlotTransform22(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(22), value, user_data)
+//export callbackTransform22
+func callbackTransform22(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(22), value, user_data)
 }
 
-//export callbackPlotTransform23
-func callbackPlotTransform23(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(23), value, user_data)
+//export callbackTransform23
+func callbackTransform23(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(23), value, user_data)
 }
 
-//export callbackPlotTransform24
-func callbackPlotTransform24(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(24), value, user_data)
+//export callbackTransform24
+func callbackTransform24(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(24), value, user_data)
 }
 
-//export callbackPlotTransform25
-func callbackPlotTransform25(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(25), value, user_data)
+//export callbackTransform25
+func callbackTransform25(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(25), value, user_data)
 }
 
-//export callbackPlotTransform26
-func callbackPlotTransform26(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(26), value, user_data)
+//export callbackTransform26
+func callbackTransform26(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(26), value, user_data)
 }
 
-//export callbackPlotTransform27
-func callbackPlotTransform27(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(27), value, user_data)
+//export callbackTransform27
+func callbackTransform27(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(27), value, user_data)
 }
 
-//export callbackPlotTransform28
-func callbackPlotTransform28(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(28), value, user_data)
+//export callbackTransform28
+func callbackTransform28(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(28), value, user_data)
 }
 
-//export callbackPlotTransform29
-func callbackPlotTransform29(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(29), value, user_data)
+//export callbackTransform29
+func callbackTransform29(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(29), value, user_data)
 }
 
-//export callbackPlotTransform30
-func callbackPlotTransform30(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(30), value, user_data)
+//export callbackTransform30
+func callbackTransform30(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(30), value, user_data)
 }
 
-//export callbackPlotTransform31
-func callbackPlotTransform31(value C.double, user_data unsafe.Pointer) C.double {
-	return wrapPlotTransform(poolPlotTransform.Get(31), value, user_data)
+//export callbackTransform31
+func callbackTransform31(value C.double, user_data unsafe.Pointer) C.double {
+	return wrapTransform(poolTransform.Get(31), value, user_data)
 }
 
-var poolPlotTransform *internal.Pool[PlotTransform, C.ImPlotTransform]
+var poolTransform *internal.Pool[Transform, C.ImPlotTransform]
 
 func init() {
-	poolPlotTransform = internal.NewPool[PlotTransform, C.ImPlotTransform](
-		C.ImPlotTransform(C.callbackPlotTransform0),
-		C.ImPlotTransform(C.callbackPlotTransform1),
-		C.ImPlotTransform(C.callbackPlotTransform2),
-		C.ImPlotTransform(C.callbackPlotTransform3),
-		C.ImPlotTransform(C.callbackPlotTransform4),
-		C.ImPlotTransform(C.callbackPlotTransform5),
-		C.ImPlotTransform(C.callbackPlotTransform6),
-		C.ImPlotTransform(C.callbackPlotTransform7),
-		C.ImPlotTransform(C.callbackPlotTransform8),
-		C.ImPlotTransform(C.callbackPlotTransform9),
-		C.ImPlotTransform(C.callbackPlotTransform10),
-		C.ImPlotTransform(C.callbackPlotTransform11),
-		C.ImPlotTransform(C.callbackPlotTransform12),
-		C.ImPlotTransform(C.callbackPlotTransform13),
-		C.ImPlotTransform(C.callbackPlotTransform14),
-		C.ImPlotTransform(C.callbackPlotTransform15),
-		C.ImPlotTransform(C.callbackPlotTransform16),
-		C.ImPlotTransform(C.callbackPlotTransform17),
-		C.ImPlotTransform(C.callbackPlotTransform18),
-		C.ImPlotTransform(C.callbackPlotTransform19),
-		C.ImPlotTransform(C.callbackPlotTransform20),
-		C.ImPlotTransform(C.callbackPlotTransform21),
-		C.ImPlotTransform(C.callbackPlotTransform22),
-		C.ImPlotTransform(C.callbackPlotTransform23),
-		C.ImPlotTransform(C.callbackPlotTransform24),
-		C.ImPlotTransform(C.callbackPlotTransform25),
-		C.ImPlotTransform(C.callbackPlotTransform26),
-		C.ImPlotTransform(C.callbackPlotTransform27),
-		C.ImPlotTransform(C.callbackPlotTransform28),
-		C.ImPlotTransform(C.callbackPlotTransform29),
-		C.ImPlotTransform(C.callbackPlotTransform30),
-		C.ImPlotTransform(C.callbackPlotTransform31),
+	poolTransform = internal.NewPool[Transform, C.ImPlotTransform](
+		C.ImPlotTransform(C.callbackTransform0),
+		C.ImPlotTransform(C.callbackTransform1),
+		C.ImPlotTransform(C.callbackTransform2),
+		C.ImPlotTransform(C.callbackTransform3),
+		C.ImPlotTransform(C.callbackTransform4),
+		C.ImPlotTransform(C.callbackTransform5),
+		C.ImPlotTransform(C.callbackTransform6),
+		C.ImPlotTransform(C.callbackTransform7),
+		C.ImPlotTransform(C.callbackTransform8),
+		C.ImPlotTransform(C.callbackTransform9),
+		C.ImPlotTransform(C.callbackTransform10),
+		C.ImPlotTransform(C.callbackTransform11),
+		C.ImPlotTransform(C.callbackTransform12),
+		C.ImPlotTransform(C.callbackTransform13),
+		C.ImPlotTransform(C.callbackTransform14),
+		C.ImPlotTransform(C.callbackTransform15),
+		C.ImPlotTransform(C.callbackTransform16),
+		C.ImPlotTransform(C.callbackTransform17),
+		C.ImPlotTransform(C.callbackTransform18),
+		C.ImPlotTransform(C.callbackTransform19),
+		C.ImPlotTransform(C.callbackTransform20),
+		C.ImPlotTransform(C.callbackTransform21),
+		C.ImPlotTransform(C.callbackTransform22),
+		C.ImPlotTransform(C.callbackTransform23),
+		C.ImPlotTransform(C.callbackTransform24),
+		C.ImPlotTransform(C.callbackTransform25),
+		C.ImPlotTransform(C.callbackTransform26),
+		C.ImPlotTransform(C.callbackTransform27),
+		C.ImPlotTransform(C.callbackTransform28),
+		C.ImPlotTransform(C.callbackTransform29),
+		C.ImPlotTransform(C.callbackTransform30),
+		C.ImPlotTransform(C.callbackTransform31),
 	)
 }
 
-func ClearPlotTransformPool() {
-	poolPlotTransform.Clear()
+func ClearTransformPool() {
+	poolTransform.Clear()
 }

@@ -106,7 +106,7 @@ func getReturnWrapper(
 			CType:      GoIdentifier(fmt.Sprintf("*C.%s", t)),
 		}, nil
 	case isEnum(t, context.enumNames):
-		goType := prefixGoPackage(t.renameEnum(), srcPackage, context)
+		goType := prefixGoPackage(t.renameGoIdentifier(), srcPackage, context)
 		return returnWrapper{
 			returnType: goType,
 			returnStmt: fmt.Sprintf("%s(%%s)", goType),
@@ -131,7 +131,7 @@ func getReturnWrapper(
 			CType:      GoIdentifier(fmt.Sprintf("*C.%s", t)),
 		}, nil
 	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), context.enumNames):
-		goType := prefixGoPackage("*"+TrimSuffix(t, "*").renameEnum(), srcPackage, context)
+		goType := prefixGoPackage("*"+TrimSuffix(t, "*").renameGoIdentifier(), srcPackage, context)
 		return returnWrapper{
 			returnType: goType,
 			returnStmt: fmt.Sprintf("(%s)(%%s)", goType),
