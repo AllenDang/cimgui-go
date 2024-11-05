@@ -36,17 +36,18 @@ func afterCreateContext() {
 		Height: screenHeight,
 	}
 
-	implot.PlotCreateContext()
+	implot.CreateContext()
 }
 
 func loop() {
+	imgui.ClearSizeCallbackPool()
 	common.ShowWidgetsDemo()
 	showPictureLoadingDemo()
 	common.ShowImPlotDemo()
 }
 
 func beforeDestroyContext() {
-	implot.PlotDestroyContext()
+	implot.DestroyContext()
 }
 
 func main() {
