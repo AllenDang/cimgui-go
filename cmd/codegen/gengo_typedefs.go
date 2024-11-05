@@ -10,41 +10,36 @@ import (
 	"github.com/kpango/glg"
 )
 
+type typedefsGenerator struct {
+	GoSb        *strings.Builder
+	CGoHeaderSb *strings.Builder
+	HSb         *strings.Builder
+	CppSb       *strings.Builder
+	ctx         *Context
+}
+
 // this function will proceed the following typedefs:
 // - all structs thatare not present in struct_and_enums.json (they are supposed to be epaque)
 // - everything that satisfies IsCallbackTypedef
 func proceedTypedefs(
 	typedefs *Typedefs,
 	structs []StructDef,
-	data *Context,
+	ctx *Context,
 ) (validTypeNames []CIdentifier, err error) {
 	// quick counter for coverage control
 	generatedTypedefs := 0
 	maxTypedefs := len(typedefs.data)
 
-	// we need FILES
-	typedefsGoSb := &strings.Builder{}
-	typedefsCGoHeaderSb := &strings.Builder{}
+	generator := &typedefsGenerator{
+		// we need FILES
+		GoSb:        &strings.Builder{},
+		CGoHeaderSb: &strings.Builder{},
+		HSb:         &strings.Builder{},
+		CppSb:       &strings.Builder{},
+		ctx:         ctx,
+	}
 
-	typedefsHeaderSb := &strings.Builder{}
-	typedefsHeaderSb.WriteString(cppFileHeader)
-	fmt.Fprintf(typedefsHeaderSb,
-		`
-#pragma once
-
-#include "%s"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-`, data.flags.include)
-	typedefsCppSb := &strings.Builder{}
-	typedefsCppSb.WriteString(cppFileHeader)
-	fmt.Fprintf(typedefsCppSb,
-		`
-#include "%[1]s_typedefs.h"
-#include "%[2]s"
-`, data.prefix, data.flags.include)
+	generator.writeHeaders()
 
 	// because go ranges through maps as if it was drunken, we need to sort keys.
 	keys := make([]CIdentifier, 0, len(typedefs.data))
@@ -59,7 +54,7 @@ typedefsGeneration:
 	for _, k := range keys {
 		typedef := typedefs.data[k]
 		if shouldSkip, ok := skippedTypedefs[k]; ok && shouldSkip {
-			if data.flags.showNotGenerated {
+			if ctx.flags.showNotGenerated {
 				glg.Infof("Arbitrarly skipping typedef %s", k)
 			}
 
@@ -67,8 +62,8 @@ typedefsGeneration:
 			continue
 		}
 
-		if _, exists := data.refTypedefs[k]; exists {
-			if data.flags.showNotGenerated {
+		if _, exists := ctx.refTypedefs[k]; exists {
+			if ctx.flags.showNotGenerated {
 				glg.Infof("Duplicate of %s in reference typedefs. Skipping.", k)
 			}
 
@@ -77,7 +72,7 @@ typedefsGeneration:
 		}
 
 		if shouldSkipStruct(k) {
-			if data.flags.showNotGenerated {
+			if ctx.flags.showNotGenerated {
 				glg.Infof("Arbitrarly skipping struct %s", k)
 			}
 
@@ -85,8 +80,8 @@ typedefsGeneration:
 			continue
 		}
 
-		if IsEnumName(k, data.enumNames) /*|| IsStructName(k, structs)*/ {
-			if data.flags.showGenerated {
+		if IsEnumName(k, ctx.enumNames) /*|| IsStructName(k, structs)*/ {
+			if ctx.flags.showGenerated {
 				glg.Infof("typedef %s has extended deffinition in structs_and_enums.json. Will generate later", k)
 			}
 
@@ -95,7 +90,7 @@ typedefsGeneration:
 		}
 
 		if IsTemplateTypedef(typedef) {
-			if data.flags.showNotGenerated {
+			if ctx.flags.showNotGenerated {
 				glg.Warnf("typedef %s is a template. not implemented yet", k)
 			}
 
@@ -119,12 +114,12 @@ typedefsGeneration:
 		// - short* -> *int16 (for NewXXXFromC)
 		knownReturnType, returnTypeErr = getReturnWrapper(
 			CIdentifier(typedef),
-			data, // TODO: this might be empty
+			ctx, // TODO: this might be empty
 		)
 
 		knownPtrReturnType, ptrReturnTypeErr = getReturnWrapper(
 			CIdentifier(typedef)+"*",
-			data, // TODO: this might be empty
+			ctx, // TODO: this might be empty
 		)
 
 		_, knownArgType, argTypeErr = getArgWrapper(
@@ -133,7 +128,7 @@ typedefsGeneration:
 				Type: CIdentifier(typedef),
 			},
 			false, false,
-			data, // TODO: this might be empty
+			ctx, // TODO: this might be empty
 		)
 
 		_, knownPtrArgType, ptrArgTypeErr = getArgWrapper(
@@ -142,17 +137,17 @@ typedefsGeneration:
 				Type: CIdentifier(typedef) + "*",
 			},
 			false, false,
-			data, // TODO: this might be empty
+			ctx, // TODO: this might be empty
 		)
 
 		// check if k is a name of struct from structDefs
 		switch {
 		case typedefs.data[k] == "void*":
-			if data.flags.showGenerated {
+			if ctx.flags.showGenerated {
 				glg.Successf("typedef %s is an alias to void*.", k)
 			}
 
-			fmt.Fprintf(typedefsCppSb,
+			fmt.Fprintf(generator.CppSb,
 				`
 uintptr_t %[1]s_toUintptr(%[1]s ptr) {
 	return (uintptr_t)ptr;
@@ -162,12 +157,12 @@ uintptr_t %[1]s_toUintptr(%[1]s ptr) {
 	return (%[1]s)ptr;
 }
 `, k)
-			fmt.Fprintf(typedefsHeaderSb, `extern uintptr_t %[1]s_toUintptr(%[1]s ptr);
+			fmt.Fprintf(generator.HSb, `extern uintptr_t %[1]s_toUintptr(%[1]s ptr);
 extern %[1]s %[1]s_fromUintptr(uintptr_t ptr);`, k)
 
 			// NOTE: in case of problems e.g. with Textures, here might be potential issue:
 			// Handle() is incomplete - it doesn't have right finalizer (for now I think this will not affect code)
-			fmt.Fprintf(typedefsGoSb, `
+			fmt.Fprintf(generator.GoSb, `
 type %[1]s struct {
 	Data uintptr
 }
@@ -208,11 +203,11 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		case ptrReturnTypeErr == nil && argTypeErr == nil && ptrArgTypeErr == nil && !isPtr:
-			if data.flags.showGenerated {
+			if ctx.flags.showGenerated {
 				glg.Successf("typedef %s is an alias typedef.", k)
 			}
 
-			fmt.Fprintf(typedefsGoSb, `
+			fmt.Fprintf(generator.GoSb, `
 type %[1]s %[2]s
 
 // Handle returns C version of %[1]s and its finalizer func.
@@ -255,7 +250,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 		case returnTypeErr == nil && argTypeErr == nil && isPtr:
 			// if it's a pointer type, I think we can proceed as above, but without Handle() method...
 			// (handle proceeds pointer values and we don't want double pointers, really)
-			fmt.Fprintf(typedefsGoSb, `
+			fmt.Fprintf(generator.GoSb, `
 type %[1]s  struct {
 	Data %[2]s
 }
@@ -297,7 +292,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			validTypeNames = append(validTypeNames, k)
 		case IsCallbackTypedef(typedefs.data[k]):
 			/*
-				if data.flags.showNotGenerated {
+				if ctx.flags.showNotGenerated {
 					glg.Failf("typedef %s is a callback. Not implemented yet", k)
 				}
 			*/
@@ -370,7 +365,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 				glg.Warnf("Callback option 2 for %s not implemented yet", k)
 				continue
 			} else {
-				if data.flags.showNotGenerated {
+				if ctx.flags.showNotGenerated {
 					glg.Failf("cannot parse callback typedef %s: \"%s\".", k, typedefs.data[k])
 					continue
 				}
@@ -393,10 +388,10 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 						Type: returnTypeC,
 					},
 					false, false,
-					data,
+					ctx,
 				)
 				if err != nil {
-					if data.flags.showNotGenerated {
+					if ctx.flags.showNotGenerated {
 						glg.Failf("cannot get return wrapper for %s - \"%s\": %v", k, returnTypeC, err)
 					}
 					continue typedefsGeneration
@@ -406,9 +401,9 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			// 2.1: get arg wrappers
 			args := make([]returnWrapper, len(argsC))
 			for i, arg := range argsC {
-				rw, err := getReturnWrapper(arg.Type, data)
+				rw, err := getReturnWrapper(arg.Type, ctx)
 				if err != nil {
-					if data.flags.showNotGenerated {
+					if ctx.flags.showNotGenerated {
 						glg.Failf("cannot get arg wrapper for \"%s\" - \"%s\": %v", k, arg.Type, err)
 					}
 
@@ -436,7 +431,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 			valuePassStmt = TrimSuffix(valuePassStmt, ", ")
 
 			// 4: Write code
-			fmt.Fprintf(typedefsGoSb, `
+			fmt.Fprintf(generator.GoSb, `
 type %[1]s func(%[4]s) %[2]s
 type c%[1]s func(%[5]s) %[3]s
 
@@ -463,7 +458,7 @@ func (c %[1]s) C() (C.%[6]s, func()) {
 			}
 
 			if returnType.ArgType == "" {
-				fmt.Fprintf(typedefsGoSb, `
+				fmt.Fprintf(generator.GoSb, `
 func wrap%[1]s(cb %[1]s %[3]s) %[2]s {
 	cb(%[4]s)
 }
@@ -481,7 +476,7 @@ func wrap%[1]s(cb %[1]s %[3]s) %[2]s {
 					}(),
 				)
 			} else {
-				fmt.Fprintf(typedefsGoSb, `
+				fmt.Fprintf(generator.GoSb, `
 func wrap%[1]s(cb %[1]s %[5]s) %[2]s {
 	result := cb(%[6]s)
 	%[3]s
@@ -512,7 +507,7 @@ func wrap%[1]s(cb %[1]s %[5]s) %[2]s {
 			poolNames := make([]string, size)
 			// now write N functions
 			for i := 0; i < size; i++ {
-				fmt.Fprintf(typedefsGoSb,
+				fmt.Fprintf(generator.GoSb,
 					`//export callback%[1]s%[2]d
 func callback%[1]s%[2]d(%[5]s) %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6]s) }
 					`,
@@ -530,7 +525,7 @@ func callback%[1]s%[2]d(%[5]s) %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6
 					valuePassStmt,
 				)
 
-				fmt.Fprintf(typedefsCGoHeaderSb,
+				fmt.Fprintf(generator.CGoHeaderSb,
 					`// extern %[1]s callback%[2]s%[3]d(%[4]s);
 `,
 					returnTypeC,
@@ -550,7 +545,7 @@ func callback%[1]s%[2]d(%[5]s) %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6
 				poolNames[i] = fmt.Sprintf("C.%[3]s(C.callback%[1]s%[2]d)", typedefName.renameGoIdentifier(), i, k)
 			}
 
-			fmt.Fprintf(typedefsGoSb, `
+			fmt.Fprintf(generator.GoSb, `
 var pool%[1]s *internal.Pool[%[1]s, C.%[3]s]
 func init() {
 	pool%[1]s = internal.NewPool[%[1]s, C.%[3]s](
@@ -572,56 +567,56 @@ func Clear%[1]sPool() {
 
 			glg.Successf("typedef %s is a callback. Implemented.", k)
 		case HasPrefix(typedefs.data[k], "struct"):
-			isOpaque := !IsStructName(k, data)
-			if data.flags.showGenerated {
+			isOpaque := !IsStructName(k, ctx)
+			if ctx.flags.showGenerated {
 				glg.Successf("typedef %s is a struct (is opaque? %v).", k, isOpaque)
 			}
 
-			writeOpaqueStruct(k, isOpaque, typedefsGoSb)
+			writeOpaqueStruct(k, isOpaque, generator.GoSb)
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		default:
-			if data.flags.showNotGenerated {
+			if ctx.flags.showNotGenerated {
 				glg.Failf("unknown situation happened for type %s; not implemented. Probably unknown Arg (err: %v), Ret (err; %v) PtrArg (err: %v) or PtrRet (err: %v) type wrappers for isPointer: %v for %s. Check out source code for more details", k, argTypeErr, returnTypeErr, ptrArgTypeErr, ptrReturnTypeErr, isPtr, typedefs.data[k])
 			}
 		}
 	}
 
-	fmt.Fprint(typedefsHeaderSb,
+	fmt.Fprint(generator.HSb,
 		`
 #ifdef __cplusplus
 }
 #endif`)
 
 	typedefsGoResultSb := &strings.Builder{}
-	typedefsGoResultSb.WriteString(getGoPackageHeader(data))
+	typedefsGoResultSb.WriteString(getGoPackageHeader(ctx))
 	fmt.Fprintf(typedefsGoResultSb,
 		`// #include <stdlib.h>
 // #include <memory.h>
 // #include "../imgui/extra_types.h"
 // #include "%[1]s_wrapper.h"
 // #include "%[1]s_typedefs.h"
-`, data.prefix)
+`, ctx.prefix)
 
-	typedefsGoResultSb.WriteString(typedefsCGoHeaderSb.String())
+	typedefsGoResultSb.WriteString(generator.CGoHeaderSb.String())
 
 	fmt.Fprintf(typedefsGoResultSb,
 		`import "C"
 import "unsafe"
 `)
 
-	typedefsGoResultSb.WriteString(typedefsGoSb.String())
+	typedefsGoResultSb.WriteString(generator.GoSb.String())
 
-	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.go", data.prefix), []byte(typedefsGoResultSb.String()), 0644); err != nil {
-		return nil, fmt.Errorf("cannot write %s_typedefs.go: %w", data.prefix, err)
+	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.go", ctx.prefix), []byte(typedefsGoResultSb.String()), 0644); err != nil {
+		return nil, fmt.Errorf("cannot write %s_typedefs.go: %w", ctx.prefix, err)
 	}
 
-	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.cpp", data.prefix), []byte(typedefsCppSb.String()), 0644); err != nil {
-		return nil, fmt.Errorf("cannot write %s_typedefs.cpp: %w", data.prefix, err)
+	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.cpp", ctx.prefix), []byte(generator.CppSb.String()), 0644); err != nil {
+		return nil, fmt.Errorf("cannot write %s_typedefs.cpp: %w", ctx.prefix, err)
 	}
 
-	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.h", data.prefix), []byte(typedefsHeaderSb.String()), 0644); err != nil {
-		return nil, fmt.Errorf("cannot write %s_typedefs.h: %w", data.prefix, err)
+	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.h", ctx.prefix), []byte(generator.HSb.String()), 0644); err != nil {
+		return nil, fmt.Errorf("cannot write %s_typedefs.h: %w", ctx.prefix, err)
 	}
 
 	glg.Infof("Typedefs generation complete. Generated %d/%d (%.2f%%) typedefs.", generatedTypedefs, maxTypedefs, float32(generatedTypedefs*100)/float32(maxTypedefs))
@@ -660,4 +655,24 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 	return &%[1]s{CData: internal.ReinterpretCast[*C.%[2]s](cvalue)}
 }
 `, name.renameGoIdentifier(), name, toPlainValue)
+}
+
+func (g *typedefsGenerator) writeHeaders() {
+	g.HSb.WriteString(cppFileHeader)
+	fmt.Fprintf(g.HSb,
+		`
+#pragma once
+
+#include "%s"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+`, g.ctx.flags.include)
+	g.CppSb.WriteString(cppFileHeader)
+	fmt.Fprintf(g.CppSb,
+		`
+#include "%[1]s_typedefs.h"
+#include "%[2]s"
+`, g.ctx.prefix, g.ctx.flags.include)
 }
