@@ -212,7 +212,7 @@ func main() {
 	context.enumNames = MergeMaps(SliceToMap(enumNames), context.refEnumNames)
 
 	// 1.2. Generate Go typedefs
-	callbacks, err := proceedTypedefs(context.typedefs, context.structs, context)
+	callbacks, err := GenerateTypedefs(context.typedefs, context.structs, context)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -234,7 +234,7 @@ func main() {
 	// This variable stores funcs that needs to be written to GO now.
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
-	if err := generateGoFuncs(validFuncs, context); err != nil {
+	if err := GenerateGoFuncs(validFuncs, context); err != nil {
 		log.Panic(err)
 	}
 }

@@ -17,10 +17,8 @@ type typedefsGenerator struct {
 	ctx         *Context
 }
 
-// this function will proceed the following typedefs:
-// - all structs thatare not present in struct_and_enums.json (they are supposed to be epaque)
-// - everything that satisfies IsCallbackTypedef
-func proceedTypedefs(
+// GenerateTypedefs will proceed all typedefs from typedefs_dict.json
+func GenerateTypedefs(
 	typedefs *Typedefs,
 	structs []StructDef,
 	ctx *Context,
