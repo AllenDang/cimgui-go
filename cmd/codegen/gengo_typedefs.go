@@ -99,110 +99,23 @@ typedefsGeneration:
 
 		isPtr := HasSuffix(typedef, "*")
 
-		var knownReturnType, knownPtrReturnType returnWrapper
-		var knownArgType, knownPtrArgType ArgumentWrapperData
-		var argTypeErr, ptrArgTypeErr, returnTypeErr, ptrReturnTypeErr error
+		known := generator.parseArgDef(CIdentifier(typedef), ctx)
 
 		if typedef == "void*" {
 			typedef = "uintptr_t"
 		}
 
-		// Let's say our pureType is of form short
-		// the following code needs to handle two things:
-		// - int16 -> short (to know go type AND know how to proceed in c() func)
-		// - *int16 -> short* (for Handle())
-		// - short* -> *int16 (for NewXXXFromC)
-		knownReturnType, returnTypeErr = getReturnWrapper(
-			CIdentifier(typedef),
-			ctx, // TODO: this might be empty
-		)
-
-		knownPtrReturnType, ptrReturnTypeErr = getReturnWrapper(
-			CIdentifier(typedef)+"*",
-			ctx, // TODO: this might be empty
-		)
-
-		_, knownArgType, argTypeErr = getArgWrapper(
-			&ArgDef{
-				Name: "self",
-				Type: CIdentifier(typedef),
-			},
-			false, false,
-			ctx, // TODO: this might be empty
-		)
-
-		_, knownPtrArgType, ptrArgTypeErr = getArgWrapper(
-			&ArgDef{
-				Name: "self",
-				Type: CIdentifier(typedef) + "*",
-			},
-			false, false,
-			ctx, // TODO: this might be empty
-		)
-
-		// check if k is a name of struct from structDefs
 		switch {
 		case typedefs.data[k] == "void*":
 			if ctx.flags.showGenerated {
 				glg.Successf("typedef %s is an alias to void*.", k)
 			}
 
-			fmt.Fprintf(generator.CppSb,
-				`
-uintptr_t %[1]s_toUintptr(%[1]s ptr) {
-	return (uintptr_t)ptr;
-}
-
-%[1]s %[1]s_fromUintptr(uintptr_t ptr) {
-	return (%[1]s)ptr;
-}
-`, k)
-			fmt.Fprintf(generator.HSb, `extern uintptr_t %[1]s_toUintptr(%[1]s ptr);
-extern %[1]s %[1]s_fromUintptr(uintptr_t ptr);`, k)
-
-			// NOTE: in case of problems e.g. with Textures, here might be potential issue:
-			// Handle() is incomplete - it doesn't have right finalizer (for now I think this will not affect code)
-			fmt.Fprintf(generator.GoSb, `
-type %[1]s struct {
-	Data uintptr
-}
-
-// Handle returns C version of %[1]s and its finalizer func.
-func (self *%[1]s) Handle() (result *C.%[6]s, fin func()) {
-	r, f := self.C()
-    return &r, f
-}
-
-// C is like Handle but returns plain type instead of pointer.
-func (self %[1]s) C() (C.%[6]s, func()) {
-    return (C.%[6]s)(C.%[6]s_fromUintptr(C.uintptr_t(self.Data))), func() { }
-}
-
-// New%[1]sFromC creates %[1]s from its C pointer.
-// SRC ~= *C.%[6]s
-func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
-	return &%[1]s{Data: (uintptr)(C.%[6]s_toUintptr(*internal.ReinterpretCast[*C.%[6]s](cvalue)))}
-}
-`,
-				k.renameGoIdentifier(),
-				knownArgType.ArgType,
-
-				knownPtrArgType.ArgDef,
-				knownPtrArgType.VarName,
-				knownPtrArgType.Finalizer,
-
-				k,
-
-				knownArgType.ArgDef,
-				knownArgType.VarName,
-				knownArgType.Finalizer,
-
-				fmt.Sprintf(knownPtrReturnType.returnStmt, "cvalue"),
-			)
+			generator.writeVoidPtrTypedef(k, known)
 
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
-		case ptrReturnTypeErr == nil && argTypeErr == nil && ptrArgTypeErr == nil && !isPtr:
+		case known.ptrReturnTypeErr == nil && known.argTypeErr == nil && known.ptrArgTypeErr == nil && !isPtr:
 			if ctx.flags.showGenerated {
 				glg.Successf("typedef %s is an alias typedef.", k)
 			}
@@ -230,24 +143,24 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 }
 `,
 				k.renameGoIdentifier(),
-				knownArgType.ArgType,
+				known.argType.ArgType,
 
-				knownPtrArgType.ArgDef,
-				knownPtrArgType.VarName,
-				knownPtrArgType.Finalizer,
+				known.ptrArgType.ArgDef,
+				known.ptrArgType.VarName,
+				known.ptrArgType.Finalizer,
 
 				k,
 
-				knownArgType.ArgDef,
-				knownArgType.VarName,
-				knownArgType.Finalizer,
+				known.argType.ArgDef,
+				known.argType.VarName,
+				known.argType.Finalizer,
 
-				fmt.Sprintf(knownPtrReturnType.returnStmt, fmt.Sprintf("internal.ReinterpretCast[*C.%s](cvalue)", k)),
+				fmt.Sprintf(known.ptrReturnType.returnStmt, fmt.Sprintf("internal.ReinterpretCast[*C.%s](cvalue)", k)),
 			)
 
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
-		case returnTypeErr == nil && argTypeErr == nil && isPtr:
+		case known.returnTypeErr == nil && known.argTypeErr == nil && isPtr:
 			// if it's a pointer type, I think we can proceed as above, but without Handle() method...
 			// (handle proceeds pointer values and we don't want double pointers, really)
 			fmt.Fprintf(generator.GoSb, `
@@ -276,16 +189,16 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 }
 `,
 				k.renameGoIdentifier(),
-				knownArgType.ArgType,
+				known.argType.ArgType,
 
-				knownArgType.ArgDef,
-				knownArgType.VarName,
-				knownArgType.Finalizer,
+				known.argType.ArgDef,
+				known.argType.VarName,
+				known.argType.Finalizer,
 
 				k,
 
-				fmt.Sprintf(knownReturnType.returnStmt, "v"),
-				knownArgType.CType,
+				fmt.Sprintf(known.returnType.returnStmt, "v"),
+				known.argType.CType,
 			)
 
 			generatedTypedefs++
@@ -577,7 +490,8 @@ func Clear%[1]sPool() {
 			validTypeNames = append(validTypeNames, k)
 		default:
 			if ctx.flags.showNotGenerated {
-				glg.Failf("unknown situation happened for type %s; not implemented. Probably unknown Arg (err: %v), Ret (err; %v) PtrArg (err: %v) or PtrRet (err: %v) type wrappers for isPointer: %v for %s. Check out source code for more details", k, argTypeErr, returnTypeErr, ptrArgTypeErr, ptrReturnTypeErr, isPtr, typedefs.data[k])
+				glg.Failf("unknown situation happened for type %s; not implemented. Probably unknown Arg (err: %v), Ret (err; %v) PtrArg (err: %v) or PtrRet (err: %v) type wrappers for isPointer: %v for %s. Check out source code for more details",
+					k, known.argTypeErr, known.returnTypeErr, known.ptrArgTypeErr, known.ptrReturnTypeErr, isPtr, typedefs.data[k])
 			}
 		}
 	}
@@ -623,6 +537,131 @@ import "unsafe"
 	return validTypeNames, nil
 }
 
+// Let's say our pureType is of form "short"
+// the following code needs to handle two things:
+// - int16 -> short (to know go type AND know how to proceed in C() func)
+// - *int16 -> short* (for Handle())
+// - short* -> *int16 (for NewXXXFromC)
+type typedefTypeContext struct {
+	argType,
+	ptrArgType ArgumentWrapperData
+	returnType,
+	ptrReturnType returnWrapper
+
+	argTypeErr, ptrArgTypeErr,
+	returnTypeErr, ptrReturnTypeErr error
+}
+
+func (g *typedefsGenerator) parseArgDef(typedef CIdentifier, ctx *Context) *typedefTypeContext {
+	result := &typedefTypeContext{}
+	result.returnType, result.returnTypeErr = getReturnWrapper(
+		CIdentifier(typedef),
+		ctx,
+	)
+
+	result.ptrReturnType, result.ptrReturnTypeErr = getReturnWrapper(
+		CIdentifier(typedef)+"*",
+		ctx,
+	)
+
+	_, result.argType, result.argTypeErr = getArgWrapper(
+		&ArgDef{
+			Name: "self",
+			Type: CIdentifier(typedef),
+		},
+		false, false,
+		ctx,
+	)
+
+	_, result.ptrArgType, result.ptrArgTypeErr = getArgWrapper(
+		&ArgDef{
+			Name: "self",
+			Type: CIdentifier(typedef) + "*",
+		},
+		false, false,
+		ctx,
+	)
+
+	return result
+}
+
+func (g *typedefsGenerator) writeHeaders() {
+	g.HSb.WriteString(cppFileHeader)
+	fmt.Fprintf(g.HSb,
+		`
+#pragma once
+
+#include "%s"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+`, g.ctx.flags.include)
+	g.CppSb.WriteString(cppFileHeader)
+	fmt.Fprintf(g.CppSb,
+		`
+#include "%[1]s_typedefs.h"
+#include "%[2]s"
+`, g.ctx.prefix, g.ctx.flags.include)
+}
+
+// k is plain C name of the typedef (key in typedefs_dict.json)
+// known is parsed value of k
+func (g *typedefsGenerator) writeVoidPtrTypedef(k CIdentifier, known *typedefTypeContext) {
+	fmt.Fprintf(g.CppSb,
+		`
+uintptr_t %[1]s_toUintptr(%[1]s ptr) {
+	return (uintptr_t)ptr;
+}
+
+%[1]s %[1]s_fromUintptr(uintptr_t ptr) {
+	return (%[1]s)ptr;
+}
+`, k)
+	fmt.Fprintf(g.HSb, `extern uintptr_t %[1]s_toUintptr(%[1]s ptr);
+extern %[1]s %[1]s_fromUintptr(uintptr_t ptr);`, k)
+
+	// NOTE: in case of problems e.g. with Textures, here might be potential issue:
+	// Handle() is incomplete - it doesn't have right finalizer (for now I think this will not affect code)
+	fmt.Fprintf(g.GoSb, `
+type %[1]s struct {
+	Data uintptr
+}
+
+// Handle returns C version of %[1]s and its finalizer func.
+func (self *%[1]s) Handle() (result *C.%[6]s, fin func()) {
+	r, f := self.C()
+    return &r, f
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self %[1]s) C() (C.%[6]s, func()) {
+    return (C.%[6]s)(C.%[6]s_fromUintptr(C.uintptr_t(self.Data))), func() { }
+}
+
+// New%[1]sFromC creates %[1]s from its C pointer.
+// SRC ~= *C.%[6]s
+func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
+	return &%[1]s{Data: (uintptr)(C.%[6]s_toUintptr(*internal.ReinterpretCast[*C.%[6]s](cvalue)))}
+}
+`,
+		k.renameGoIdentifier(),
+		known.argType.ArgType,
+
+		known.ptrArgType.ArgDef,
+		known.ptrArgType.VarName,
+		known.ptrArgType.Finalizer,
+
+		k,
+
+		known.argType.ArgDef,
+		known.argType.VarName,
+		known.argType.Finalizer,
+
+		fmt.Sprintf(known.ptrReturnType.returnStmt, "cvalue"),
+	)
+}
+
 func writeOpaqueStruct(name CIdentifier, isOpaque bool, sb *strings.Builder) {
 	// this will be put only for structs that are NOT opaque (w can know the exact definition)
 	var toPlainValue string
@@ -655,24 +694,4 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 	return &%[1]s{CData: internal.ReinterpretCast[*C.%[2]s](cvalue)}
 }
 `, name.renameGoIdentifier(), name, toPlainValue)
-}
-
-func (g *typedefsGenerator) writeHeaders() {
-	g.HSb.WriteString(cppFileHeader)
-	fmt.Fprintf(g.HSb,
-		`
-#pragma once
-
-#include "%s"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-`, g.ctx.flags.include)
-	g.CppSb.WriteString(cppFileHeader)
-	fmt.Fprintf(g.CppSb,
-		`
-#include "%[1]s_typedefs.h"
-#include "%[2]s"
-`, g.ctx.prefix, g.ctx.flags.include)
 }
