@@ -98,10 +98,11 @@ func main() {
 
 	game := &Game{showCimgui: true, cimgui: ebitenBackend}
 
+	game.cimgui.CreateWindow("Hello, world!", 800, 600)
+
 	common.AfterCreateContext()
 	defer common.BeforeDestroyContext()
 
-	game.cimgui.CreateWindow("Hello, world!", 800, 600)
 	game.cimgui.SetBgColor(imgui.Vec4{0.2, 0.2, 0.2, 0.7})
 	ebiten.SetWindowSize(screenWidth, screenHeight)
 	ebiten.SetWindowTitle("Shapes (Ebitengine Demo)")
