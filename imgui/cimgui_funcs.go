@@ -6928,6 +6928,21 @@ func InternalImFontAtlasBuildMultiplyCalcLookupTable(out_table *[256]uint, in_mu
 	}
 }
 
+func InternalImFontAtlasBuildMultiplyRectAlpha8(table *[256]uint, pixels *uint, x int32, y int32, w int32, h int32, stride int32) {
+	tableArg := make([]C.uchar, len(table))
+	for i, tableV := range table {
+		tableArg[i] = C.uchar(tableV)
+	}
+	pixelsArg, pixelsFin := internal.WrapNumberPtr[C.uchar, uint](pixels)
+	C.igImFontAtlasBuildMultiplyRectAlpha8((*C.uchar)(&tableArg[0]), pixelsArg, C.int(x), C.int(y), C.int(w), C.int(h), C.int(stride))
+
+	for i, tableV := range tableArg {
+		(*table)[i] = uint(tableV)
+	}
+
+	pixelsFin()
+}
+
 func InternalImFontAtlasBuildPackCustomRects(atlas *FontAtlas, stbrp_context_opaque uintptr) {
 	atlasArg, atlasFin := atlas.Handle()
 	C.wrap_igImFontAtlasBuildPackCustomRects(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.uintptr_t(stbrp_context_opaque))
