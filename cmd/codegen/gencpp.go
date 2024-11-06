@@ -442,20 +442,8 @@ extern "C" {
 func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []StructDef, context *Context) (accessors []FuncDef, err error) {
 	var structAccessorFuncs []FuncDef
 
-	// TODO: extrac this to some separated function, maybe on top of this file
-	skipFuncNames := map[CIdentifier]bool{
-		"ImVec1_GetX":      true,
-		"ImVec2_GetX":      true,
-		"ImVec2_GetY":      true,
-		"ImVec4_GetX":      true,
-		"ImVec4_GetY":      true,
-		"ImVec4_GetW":      true,
-		"ImVec4_GetZ":      true,
-		"ImRect_GetMin":    true,
-		"ImRect_GetMax":    true,
-		"ImPlotPoint_SetX": true,
-		"ImPlotPoint_SetY": true,
-	}
+	// makes a setsum with context.preset.SkipFUncs
+	skipFuncNames := map[CIdentifier]bool{}
 
 	// Add all valid function's name to skipFuncNames
 	for _, f := range validFuncs {
@@ -491,7 +479,7 @@ extern "C" {
 			}
 
 			setterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Set%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
-			if skipFuncNames[setterFuncName] {
+			if skipFuncNames[setterFuncName] || context.preset.SkipFuncs[setterFuncName] {
 				continue
 			}
 
@@ -556,7 +544,7 @@ extern "C" {
 			}
 
 			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
-			if skipFuncNames[getterFuncName] {
+			if skipFuncNames[getterFuncName] || context.preset.SkipFuncs[getterFuncName] {
 				continue
 			}
 

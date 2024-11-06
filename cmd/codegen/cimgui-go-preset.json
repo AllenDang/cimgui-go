@@ -6,7 +6,18 @@
                 "ImFontAtlas_GetTexDataAsAlpha8":  true,
                 "ImFontAtlas_GetTexDataAsAlpha8V": true,
                 "ImFontAtlas_GetTexDataAsRGBA32":  true,
-                "ImFontAtlas_GetTexDataAsRGBA32V": true
+                "ImFontAtlas_GetTexDataAsRGBA32V": true,
+                "ImVec1_GetX":                     true,
+                "ImVec2_GetX":                     true,
+                "ImVec2_GetY":                     true,
+                "ImVec4_GetX":                     true,
+                "ImVec4_GetY":                     true,
+                "ImVec4_GetW":                     true,
+                "ImVec4_GetZ":                     true,
+                "ImRect_GetMin":                   true,
+                "ImRect_GetMax":                   true,
+                "ImPlotPoint_SetX":                true,
+                "ImPlotPoint_SetY":                true
         },
         "SkipStructs": {
                 "ImVec1":     true,
@@ -42,13 +53,13 @@
                 "ImAxis":                  "AxisEnum",
                 "GetItem_ID":              "ItemByID"
         },
-        "TrimPrefix": {
-                "ImGuizmo": true,
-                "imnodes":  true,
-                "ImNodes":  true,
-                "ImPlot":   true,
-                "ImGui":    true,
-                "Im":       true,
-                "ig":       true
-        }
+        "TrimPrefix": [
+                "ImGuizmo",
+                "imnodes",
+                "ImNodes",
+                "ImPlot",
+                "ImGui",
+                "Im",
+                "ig"
+        ]
 }

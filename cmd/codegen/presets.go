@@ -23,5 +23,5 @@ type Preset struct {
 	// TrimPrefix allows to remove unwanted prefixes from everything during C->Go renaming.
 	// NOTE: order sensitive!
 	// NOTE: Case sensitive
-	TrimPrefix map[string]string
+	TrimPrefix []string
 }
