@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -16,7 +17,7 @@ const (
 )
 
 // this cextracts enums and structs names from json file.
-func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []EnumIdentifier, structNames []CIdentifier, err error) {
+func getEnumAndStructNames(enumJsonBytes []byte, context *Context) (enumNames []EnumIdentifier, structNames []CIdentifier, err error) {
 	enums, err := getEnumDefs(enumJsonBytes)
 	if err != nil {
 		return nil, nil, fmt.Errorf("cannot get enum definitions: %w", err)
@@ -32,7 +33,7 @@ func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []EnumIdentifier, st
 	}
 
 	for _, s := range structs {
-		if !shouldSkipStruct(s.Name) {
+		if shouldSkipStruct := context.preset.SkipStructs[s.Name]; !shouldSkipStruct {
 			structNames = append(structNames, s.Name)
 		}
 	}
@@ -64,7 +65,9 @@ type jsonData struct {
 	defs,
 
 	refStructAndEnums,
-	refTypedefs []byte
+	refTypedefs,
+
+	preset []byte
 }
 
 func loadData(f *flags) (*jsonData, error) {
@@ -101,6 +104,13 @@ func loadData(f *flags) (*jsonData, error) {
 		}
 	}
 
+	if len(f.presetJsonPath) > 0 {
+		result.preset, err = os.ReadFile(f.presetJsonPath)
+		if err != nil {
+			log.Panic(err)
+		}
+	}
+
 	return result, nil
 }
 
@@ -126,6 +136,8 @@ type Context struct {
 
 	// TODO: might want to remove this
 	flags *flags
+
+	preset *Preset
 }
 
 func parseJson(jsonData *jsonData) (*Context, error) {
@@ -133,6 +145,11 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 
 	result := &Context{
 		arrayIndexGetters: make(map[CIdentifier]CIdentifier),
+		preset:            &Preset{},
+	}
+
+	if len(jsonData.preset) > 0 {
+		json.Unmarshal(jsonData.preset, result.preset)
 	}
 
 	// get definitions from json file
@@ -166,7 +183,7 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 		result.refTypedefs = RemoveMapValues(typedefs.data)
 	}
 
-	_, structs, err := getEnumAndStructNames(jsonData.structAndEnums)
+	_, structs, err := getEnumAndStructNames(jsonData.structAndEnums, result)
 	result.structNames = SliceToMap(structs)
 	if err != nil {
 		return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
@@ -175,7 +192,7 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 	result.refEnumNames = make(map[CIdentifier]bool)
 	result.refStructNames = make(map[CIdentifier]bool)
 	if len(jsonData.refStructAndEnums) > 0 {
-		refEnums, refStructs, err := getEnumAndStructNames(jsonData.refStructAndEnums)
+		refEnums, refStructs, err := getEnumAndStructNames(jsonData.refStructAndEnums, result)
 		if err != nil {
 			return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
 		}
@@ -226,7 +243,7 @@ func main() {
 	context.structNames = SliceToMap(callbacks)
 
 	// 1.3. Generate C wrapper
-	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, context.funcs)
+	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, context.funcs, context)
 	if err != nil {
 		log.Panic(err)
 	}

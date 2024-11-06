@@ -7,13 +7,6 @@ import (
 	"unicode"
 )
 
-// cppFunctionsReplace allows to force-replace function name with some other name.
-// Introduced to replace TextEditor_GetText -> TextEditor_GetText_alloc
-// but could be re-used to force use of another function than json tells us to use.
-var cppFunctionsReplace = map[CIdentifier]CIdentifier{
-	"TextEditor_GetText": "TextEditor_GetText_alloc",
-}
-
 // Name of argument in cpp/go files.
 // It is used by functions that has text and text_end arguments.
 // In this case text_end is replaced by this argument (of type int)
@@ -33,7 +26,7 @@ func shouldExportFunc(funcName CIdentifier) bool {
 }
 
 // Generate cpp wrapper and return valid functions
-func generateCppWrapper(prefix, includePath string, funcDefs []FuncDef) ([]FuncDef, error) {
+func generateCppWrapper(prefix, includePath string, funcDefs []FuncDef, ctx *Context) ([]FuncDef, error) {
 	var validFuncs []FuncDef
 
 	// Generate header
@@ -397,7 +390,7 @@ extern "C" {
 			}
 		}
 
-		if v, ok := cppFunctionsReplace[funcName]; ok {
+		if v, ok := ctx.preset.OriginReplace[funcName]; ok {
 			cWrapperFuncName = v
 		}
 
@@ -442,20 +435,8 @@ extern "C" {
 func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []StructDef, context *Context) (accessors []FuncDef, err error) {
 	var structAccessorFuncs []FuncDef
 
-	// TODO: extrac this to some separated function, maybe on top of this file
-	skipFuncNames := map[CIdentifier]bool{
-		"ImVec1_GetX":      true,
-		"ImVec2_GetX":      true,
-		"ImVec2_GetY":      true,
-		"ImVec4_GetX":      true,
-		"ImVec4_GetY":      true,
-		"ImVec4_GetW":      true,
-		"ImVec4_GetZ":      true,
-		"ImRect_GetMin":    true,
-		"ImRect_GetMax":    true,
-		"ImPlotPoint_SetX": true,
-		"ImPlotPoint_SetY": true,
-	}
+	// makes a setsum with context.preset.SkipFUncs
+	skipFuncNames := map[CIdentifier]bool{}
 
 	// Add all valid function's name to skipFuncNames
 	for _, f := range validFuncs {
@@ -491,7 +472,7 @@ extern "C" {
 			}
 
 			setterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Set%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
-			if skipFuncNames[setterFuncName] {
+			if skipFuncNames[setterFuncName] || context.preset.SkipFuncs[setterFuncName] {
 				continue
 			}
 
@@ -556,7 +537,7 @@ extern "C" {
 			}
 
 			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
-			if skipFuncNames[getterFuncName] {
+			if skipFuncNames[getterFuncName] || context.preset.SkipFuncs[getterFuncName] {
 				continue
 			}
 

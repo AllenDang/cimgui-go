@@ -16,72 +16,8 @@ type (
 	GoIdentifier string
 )
 
-// Skip functions
-// e.g. they are temporarily hard-coded
-var skippedFuncs = map[CIdentifier]bool{
-	"igInputText":                     true,
-	"igInputTextWithHint":             true,
-	"igInputTextMultiline":            true,
-	"ImFontAtlas_GetTexDataAsAlpha8":  true,
-	"ImFontAtlas_GetTexDataAsAlpha8V": true,
-	"ImFontAtlas_GetTexDataAsRGBA32":  true,
-	"ImFontAtlas_GetTexDataAsRGBA32V": true,
-}
-
-// structures that's methods should be skipped
-var skippedStructs = map[CIdentifier]bool{
-	"ImVec1":     true,
-	"ImVec2":     true,
-	"ImVec2ih":   true,
-	"ImVec4":     true,
-	"ImColor":    true,
-	"ImRect":     true,
-	"ImPlotTime": true,
-}
-
-var skippedTypedefs = map[CIdentifier]bool{
-	"ImU8":                   true,
-	"ImU16":                  true,
-	"ImU32":                  true,
-	"ImU64":                  true,
-	"ImS8":                   true,
-	"ImS16":                  true,
-	"ImS32":                  true,
-	"ImS64":                  true,
-	"ImGuiInputTextCallback": true,
-}
-
-const TypedefsPoolSize = 32
-
-var customPoolSize = map[CIdentifier]int{
-	// nothing here for now
-}
-
-var replace = map[CIdentifier]GoIdentifier{
-	"igGetDrawData":           "CurrentDrawData",
-	"igGetDrawListSharedData": "CurrentDrawListSharedData",
-	"igGetFont":               "CurrentFont",
-	"igGetIO":                 "CurrentIO",
-	"igGetPlatformIO":         "CurrentPlatformIO",
-	"igGetStyle":              "CurrentStyle",
-	"igGetMouseCursor":        "CurrentMouseCursor",
-	"ImAxis":                  "AxisEnum",
-	"GetItem_ID":              "ItemByID",
-}
-
-func (c CIdentifier) trimImGuiPrefix() CIdentifier {
-	// order sensitive!
-	prefixes := []string{
-		"ImGuizmo",
-		"imnodes",
-		"ImNodes",
-		"ImPlot",
-		"ImGui",
-		"Im",
-		"ig",
-	}
-
-	for _, prefix := range prefixes {
+func (c CIdentifier) trimImGuiPrefix(ctx *Context) CIdentifier {
+	for _, prefix := range ctx.preset.TrimPrefix {
 		if HasPrefix(c, prefix) &&
 			len(c) > len(prefix) && // check if removing it will not result in an empty string
 			strings.ToUpper(string(c[len(prefix)])) == string(c[len(prefix)]) { // check if the method will still be exported
@@ -92,21 +28,21 @@ func (c CIdentifier) trimImGuiPrefix() CIdentifier {
 	return c
 }
 
-func (c CIdentifier) renameGoIdentifier() GoIdentifier {
-	if r, ok := replace[c]; ok {
+func (c CIdentifier) renameGoIdentifier(ctx *Context) GoIdentifier {
+	if r, ok := ctx.preset.Replace[c]; ok {
 		c = CIdentifier(r)
 	}
 
 	c = TrimSuffix(c, "_Nil")
 
-	c = c.trimImGuiPrefix()
+	c = c.trimImGuiPrefix(ctx)
 	switch {
 	case HasPrefix(c, "New"):
-		c = "New" + c[3:].trimImGuiPrefix()
+		c = "New" + c[3:].trimImGuiPrefix(ctx)
 	case HasPrefix(c, "new"):
-		c = "new" + c[3:].trimImGuiPrefix()
+		c = "new" + c[3:].trimImGuiPrefix(ctx)
 	case HasPrefix(c, "*"):
-		c = "*" + c[1:].trimImGuiPrefix()
+		c = "*" + c[1:].trimImGuiPrefix(ctx)
 	}
 
 	c = TrimPrefix(c, "Get")
@@ -138,7 +74,7 @@ func IsStructName(name CIdentifier, ctx *Context) bool {
 	return ok
 }
 
-func IsEnumName(name CIdentifier, enums map[CIdentifier]bool) bool {
+func IsEnum(name CIdentifier, enums map[CIdentifier]bool) bool {
 	_, ok := enums[name]
 	return ok
 }

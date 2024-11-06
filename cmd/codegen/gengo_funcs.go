@@ -49,7 +49,7 @@ func GenerateGoFuncs(
 
 	for _, f := range validFuncs {
 		// check whether the function shouldn't be skipped
-		if skippedFuncs[f.FuncName] {
+		if context.preset.SkipFuncs[f.FuncName] {
 			continue
 		}
 
@@ -175,29 +175,29 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 	case returnTypeStructSetter:
 		funcParts := Split(f.FuncName, "_")
 		funcName = TrimPrefix(f.FuncName, string(funcParts[0]+"_"))
-		if len(funcName) == 0 || !HasPrefix(funcName, "Set") || skippedStructs[funcParts[0]] {
+		if len(funcName) == 0 || !HasPrefix(funcName, "Set") || g.context.preset.SkipMethods[funcParts[0]] {
 			return false
 		}
 
-		receiver = funcParts[0].renameGoIdentifier()
+		receiver = funcParts[0].renameGoIdentifier(g.context)
 	case returnTypeKnown:
 		shouldDefer = true
 		cReturnType = f.Ret
-		returnType = f.Ret.renameGoIdentifier()
+		returnType = f.Ret.renameGoIdentifier(g.context)
 	case returnTypeStructPtr:
 		// return Im struct ptr
 		shouldDefer = true
 		cReturnType = TrimPrefix(f.Ret, "const ")
-		returnType = cReturnType.renameGoIdentifier()
+		returnType = cReturnType.renameGoIdentifier(g.context)
 	case returnTypeStruct:
 		shouldDefer = true
 		cReturnType = f.Ret
-		returnType = cReturnType.renameGoIdentifier()
+		returnType = cReturnType.renameGoIdentifier(g.context)
 	case returnTypeConstructor:
 		shouldDefer = true
 		parts := Split(f.FuncName, "_")
 		cReturnType = parts[0] + "*"
-		returnType = cReturnType.renameGoIdentifier()
+		returnType = cReturnType.renameGoIdentifier(g.context)
 
 		suffix := ""
 		if len(parts) > 2 {
@@ -296,7 +296,7 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver GoIdentifier, fu
 		receiver = GoIdentifier(fmt.Sprintf("(self %s)", receiver))
 	}
 
-	goFuncName := funcName.renameGoIdentifier()
+	goFuncName := funcName.renameGoIdentifier(g.context)
 
 	// if file comes from imgui_internal.h,prefix Internal is added.
 	// ref: https://github.com/AllenDang/cimgui-go/pull/118
@@ -424,11 +424,4 @@ func (g *goFuncsGenerator) writeFinishers(shouldDefer bool, finishers []string) 
 
 	g.sb.WriteString(strings.Join(finishers, "\n"))
 	g.sb.WriteString("\n\n")
-}
-
-// isEnum returns true when given string is a valid enum type.
-func isEnum(argType CIdentifier, enumNames map[CIdentifier]bool) bool {
-	_, ok := enumNames[argType]
-
-	return ok
 }
