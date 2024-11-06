@@ -102,22 +102,3 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 
 	return structs, nil
 }
-
-func shouldSkipStruct(name CIdentifier) bool {
-	valueTypeStructs := map[CIdentifier]bool{
-		"ImVec2ih":    true,
-		"ImVec2":      true,
-		"ImVec4":      true,
-		"ImRect":      true,
-		"ImColor":     true,
-		"ImPlotPoint": true,
-		"ImPlotTime":  true,
-	}
-
-	// Skip all value type struct
-	if valueTypeStructs[name] {
-		return true
-	}
-
-	return false
-}

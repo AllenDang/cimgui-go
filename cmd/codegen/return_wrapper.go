@@ -94,11 +94,13 @@ func getReturnWrapper(
 		srcPackage = GoIdentifier(context.flags.refPackageName)
 	}
 
+	_, shouldSkipStruct := context.preset.SkipStructs[pureType]
+
 	switch {
 	case known:
 		return w, nil
 		// case (context.structNames[t] || context.refStructNames[t]) && !shouldSkipStruct(t):
-	case !HasSuffix(t, "*") && isStruct && !shouldSkipStruct(pureType):
+	case !HasSuffix(t, "*") && isStruct && !shouldSkipStruct:
 		return returnWrapper{
 			returnType: prefixGoPackage(t.renameGoIdentifier(context), srcPackage, context),
 			// this is a small trick as using prefixGoPackage isn't in fact intended to be used in such a way, but it should treat the whole string as a "type" and prefix it correctly
@@ -137,7 +139,7 @@ func getReturnWrapper(
 			returnStmt: fmt.Sprintf("(%s)(%%s)", goType),
 			CType:      GoIdentifier(fmt.Sprintf("*C.%s", TrimSuffix(t, "*"))),
 		}, nil
-	case HasSuffix(t, "*") && isStruct && !shouldSkipStruct(pureType):
+	case HasSuffix(t, "*") && isStruct && !shouldSkipStruct:
 		goType := prefixGoPackage("*"+TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(context), srcPackage, context)
 		return returnWrapper{
 			returnType: goType,

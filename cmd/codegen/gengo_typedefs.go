@@ -67,7 +67,7 @@ func GenerateTypedefs(
 			continue
 		}
 
-		if shouldSkipStruct(k) {
+		if shouldSkipStruct := ctx.preset.SkipStructs[k]; shouldSkipStruct {
 			if ctx.flags.showNotGenerated {
 				glg.Infof("Arbitrarly skipping struct %s", k)
 			}

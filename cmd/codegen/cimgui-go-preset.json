@@ -20,6 +20,15 @@
                 "ImPlotPoint_SetY":                true
         },
         "SkipStructs": {
+                "ImVec2":      true,
+                "ImVec2ih":    true,
+                "ImVec4":      true,
+                "ImColor":     true,
+                "ImRect":      true,
+                "ImPlotTime":  true,
+                "ImPlotPoint": true
+        },
+        "SkipMethods": {
                 "ImVec1":     true,
                 "ImVec2":     true,
                 "ImVec2ih":   true,

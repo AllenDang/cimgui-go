@@ -17,7 +17,7 @@ const (
 )
 
 // this cextracts enums and structs names from json file.
-func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []EnumIdentifier, structNames []CIdentifier, err error) {
+func getEnumAndStructNames(enumJsonBytes []byte, context *Context) (enumNames []EnumIdentifier, structNames []CIdentifier, err error) {
 	enums, err := getEnumDefs(enumJsonBytes)
 	if err != nil {
 		return nil, nil, fmt.Errorf("cannot get enum definitions: %w", err)
@@ -33,7 +33,7 @@ func getEnumAndStructNames(enumJsonBytes []byte) (enumNames []EnumIdentifier, st
 	}
 
 	for _, s := range structs {
-		if !shouldSkipStruct(s.Name) {
+		if shouldSkipStruct := context.preset.SkipStructs[s.Name]; !shouldSkipStruct {
 			structNames = append(structNames, s.Name)
 		}
 	}
@@ -148,6 +148,10 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 		preset:            &Preset{},
 	}
 
+	if len(jsonData.preset) > 0 {
+		json.Unmarshal(jsonData.preset, result.preset)
+	}
+
 	// get definitions from json file
 	result.funcs, err = getFunDefs(jsonData.defs)
 	if err != nil {
@@ -179,7 +183,7 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 		result.refTypedefs = RemoveMapValues(typedefs.data)
 	}
 
-	_, structs, err := getEnumAndStructNames(jsonData.structAndEnums)
+	_, structs, err := getEnumAndStructNames(jsonData.structAndEnums, result)
 	result.structNames = SliceToMap(structs)
 	if err != nil {
 		return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
@@ -188,7 +192,7 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 	result.refEnumNames = make(map[CIdentifier]bool)
 	result.refStructNames = make(map[CIdentifier]bool)
 	if len(jsonData.refStructAndEnums) > 0 {
-		refEnums, refStructs, err := getEnumAndStructNames(jsonData.refStructAndEnums)
+		refEnums, refStructs, err := getEnumAndStructNames(jsonData.refStructAndEnums, result)
 		if err != nil {
 			return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
 		}
@@ -199,10 +203,6 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 		}
 
 		result.refStructNames = SliceToMap(refStructs)
-	}
-
-	if len(jsonData.preset) > 0 {
-		json.Unmarshal(jsonData.preset, result.preset)
 	}
 
 	return result, nil
