@@ -11595,6 +11595,20 @@ func (self *Context) ColormapData() ColormapData {
 	}())
 }
 
+func (self Context) SetColormapModifiers(v vectors.Vector[Colormap]) {
+	vData := v.Data
+
+	vVecArg := new(C.ImVector_ImPlotColormap)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = (*C.ImPlotColormap)(vData)
+	v.Pinner().Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotContext_SetColormapModifiers(selfArg, *vVecArg)
+}
+
 func (self *Context) ColormapModifiers() vectors.Vector[Colormap] {
 	selfArg, selfFin := self.Handle()
 
