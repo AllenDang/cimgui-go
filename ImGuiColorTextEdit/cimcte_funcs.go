@@ -4,6 +4,8 @@
 package ImGuiColorTextEdit
 
 import (
+	"unsafe"
+
 	"github.com/AllenDang/cimgui-go/imgui"
 	"github.com/AllenDang/cimgui-go/internal"
 )
@@ -11,6 +13,7 @@ import (
 // #include "../imgui/extra_types.h"
 // #include "cimcte_structs_accessor.h"
 // #include "cimcte_wrapper.h"
+// #include "stdlib.h"
 import "C"
 
 func (self *TextEditor) AllCursorsHaveSelection() bool {
@@ -116,7 +119,11 @@ func (self *TextEditor) LanguageDefinitionName() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.TextEditor_GetLanguageDefinitionName(internal.ReinterpretCast[*C.TextEditor](selfArg)))
+	return func() string {
+		result := C.TextEditor_GetLanguageDefinitionName(internal.ReinterpretCast[*C.TextEditor](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self *TextEditor) LastVisibleLine() int32 {
@@ -170,7 +177,11 @@ func (self *TextEditor) Text() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.TextEditor_GetText_alloc(internal.ReinterpretCast[*C.TextEditor](selfArg)))
+	return func() string {
+		result := C.TextEditor_GetText_alloc(internal.ReinterpretCast[*C.TextEditor](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self *TextEditor) UndoIndex() int32 {

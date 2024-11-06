@@ -6,6 +6,7 @@ package imgui
 // #include "../imgui/extra_types.h"
 // #include "cimgui_structs_accessor.h"
 // #include "cimgui_wrapper.h"
+// #include "stdlib.h"
 import "C"
 import (
 	"unsafe"
@@ -1321,7 +1322,11 @@ func (self *Font) CalcWordWrapPositionA(scale float32, text string, wrap_width f
 		selfFin()
 		textFin()
 	}()
-	return C.GoString(C.wrap_ImFont_CalcWordWrapPositionA(internal.ReinterpretCast[*C.ImFont](selfArg), C.float(scale), textArg, C.int(len(text)), C.float(wrap_width)))
+	return func() string {
+		result := C.wrap_ImFont_CalcWordWrapPositionA(internal.ReinterpretCast[*C.ImFont](selfArg), C.float(scale), textArg, C.int(len(text)), C.float(wrap_width))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self *Font) ClearOutputData() {
@@ -1364,7 +1369,11 @@ func (self *Font) DebugName() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.ImFont_GetDebugName(internal.ReinterpretCast[*C.ImFont](selfArg)))
+	return func() string {
+		result := C.ImFont_GetDebugName(internal.ReinterpretCast[*C.ImFont](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self *Font) GrowIndex(new_size int32) {
@@ -2898,7 +2907,11 @@ func (self *TextBuffer) Begin() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.ImGuiTextBuffer_begin(internal.ReinterpretCast[*C.ImGuiTextBuffer](selfArg)))
+	return func() string {
+		result := C.ImGuiTextBuffer_begin(internal.ReinterpretCast[*C.ImGuiTextBuffer](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self *TextBuffer) cstr() string {
@@ -2907,7 +2920,11 @@ func (self *TextBuffer) cstr() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.ImGuiTextBuffer_c_str(internal.ReinterpretCast[*C.ImGuiTextBuffer](selfArg)))
+	return func() string {
+		result := C.ImGuiTextBuffer_c_str(internal.ReinterpretCast[*C.ImGuiTextBuffer](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self *TextBuffer) Clear() {
@@ -2940,7 +2957,11 @@ func (self *TextBuffer) End() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.ImGuiTextBuffer_end(internal.ReinterpretCast[*C.ImGuiTextBuffer](selfArg)))
+	return func() string {
+		result := C.ImGuiTextBuffer_end(internal.ReinterpretCast[*C.ImGuiTextBuffer](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self *TextBuffer) Reserve(capacity int32) {
@@ -3051,7 +3072,11 @@ func (self *TextIndex) Internalgetlinebegin(base string, n int32) string {
 		selfFin()
 		baseFin()
 	}()
-	return C.GoString(C.ImGuiTextIndex_get_line_begin(internal.ReinterpretCast[*C.ImGuiTextIndex](selfArg), baseArg, C.int(n)))
+	return func() string {
+		result := C.ImGuiTextIndex_get_line_begin(internal.ReinterpretCast[*C.ImGuiTextIndex](selfArg), baseArg, C.int(n))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self *TextIndex) Internalgetlineend(base string, n int32) string {
@@ -3062,7 +3087,11 @@ func (self *TextIndex) Internalgetlineend(base string, n int32) string {
 		selfFin()
 		baseFin()
 	}()
-	return C.GoString(C.ImGuiTextIndex_get_line_end(internal.ReinterpretCast[*C.ImGuiTextIndex](selfArg), baseArg, C.int(n)))
+	return func() string {
+		result := C.ImGuiTextIndex_get_line_end(internal.ReinterpretCast[*C.ImGuiTextIndex](selfArg), baseArg, C.int(n))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self *TextIndex) InternalSize() int32 {
@@ -3269,7 +3298,11 @@ func (self *WindowSettings) InternalName() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.ImGuiWindowSettings_GetName(internal.ReinterpretCast[*C.ImGuiWindowSettings](selfArg)))
+	return func() string {
+		result := C.ImGuiWindowSettings_GetName(internal.ReinterpretCast[*C.ImGuiWindowSettings](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalNewWindowSettings() *WindowSettings {
@@ -5849,7 +5882,11 @@ func InternalFindRenderedTextEndV(text string) string {
 	defer func() {
 		textFin()
 	}()
-	return C.GoString(C.wrap_igFindRenderedTextEndV(textArg, C.int(len(text))))
+	return func() string {
+		result := C.wrap_igFindRenderedTextEndV(textArg, C.int(len(text)))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalFindSettingsHandler(type_name string) *SettingsHandler {
@@ -6002,7 +6039,11 @@ func InternalBoxSelectState(id ID) *BoxSelectState {
 }
 
 func ClipboardText() string {
-	return C.GoString(C.igGetClipboardText())
+	return func() string {
+		result := C.igGetClipboardText()
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 // retrieve given style color with style alpha applied and optional extra alpha multiplier, packed as a 32-bit value suitable for ImDrawList
@@ -6378,7 +6419,11 @@ func InternalKeyChordName(key_chord KeyChord) string {
 	defer func() {
 		key_chordFin()
 	}()
-	return C.GoString(C.igGetKeyChordName(internal.ReinterpretCast[C.ImGuiKeyChord](key_chordArg)))
+	return func() string {
+		result := C.igGetKeyChordName(internal.ReinterpretCast[C.ImGuiKeyChord](key_chordArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalKeyDataContextPtr(ctx *Context, key Key) *KeyData {
@@ -6407,7 +6452,11 @@ func InternalKeyMagnitude2d(key_left Key, key_right Key, key_up Key, key_down Ke
 
 // [DEBUG] returns English name of the key. Those names a provided for debugging purpose and are not meant to be saved persistently not compared.
 func KeyName(key Key) string {
-	return C.GoString(C.igGetKeyName(C.ImGuiKey(key)))
+	return func() string {
+		result := C.igGetKeyName(C.ImGuiKey(key))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalKeyOwner(key Key) ID {
@@ -6553,7 +6602,11 @@ func CurrentStyle() *Style {
 
 // get a string corresponding to the enum value (for display, saving, etc.).
 func StyleColorName(idx Col) string {
-	return C.GoString(C.igGetStyleColorName(C.ImGuiCol(idx)))
+	return func() string {
+		result := C.igGetStyleColorName(C.ImGuiCol(idx))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 // retrieve style color as stored in ImGuiStyle structure. use to feed back into PushStyleColor(), otherwise use GetColorU32() to get style color with style alpha baked in.
@@ -6610,7 +6663,11 @@ func InternalTypingSelectRequestV(flags TypingSelectFlags) *TypingSelectRequest 
 
 // get the compiled version string e.g. "1.80 WIP" (essentially the value for IMGUI_VERSION from the compiled version of imgui.cpp)
 func Version() string {
-	return C.GoString(C.igGetVersion())
+	return func() string {
+		result := C.igGetVersion()
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalViewportPlatformMonitor(viewport *Viewport) *PlatformMonitor {
@@ -7184,7 +7241,11 @@ func InternalImParseFormatFindEnd(format string) string {
 	defer func() {
 		formatFin()
 	}()
-	return C.GoString(C.igImParseFormatFindEnd(formatArg))
+	return func() string {
+		result := C.igImParseFormatFindEnd(formatArg)
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalImParseFormatFindStart(format string) string {
@@ -7193,7 +7254,11 @@ func InternalImParseFormatFindStart(format string) string {
 	defer func() {
 		formatFin()
 	}()
-	return C.GoString(C.igImParseFormatFindStart(formatArg))
+	return func() string {
+		result := C.igImParseFormatFindStart(formatArg)
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalImParseFormatPrecision(format string, default_value int32) int32 {
@@ -7222,7 +7287,11 @@ func InternalImParseFormatSanitizeForScanning(fmt_in string, fmt_out string, fmt
 		fmt_inFin()
 		fmt_outFin()
 	}()
-	return C.GoString(C.igImParseFormatSanitizeForScanning(fmt_inArg, fmt_outArg, C.xulong(fmt_out_size)))
+	return func() string {
+		result := C.igImParseFormatSanitizeForScanning(fmt_inArg, fmt_outArg, C.xulong(fmt_out_size))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalImParseFormatTrimDecorations(format string, buf string, buf_size uint64) string {
@@ -7233,7 +7302,11 @@ func InternalImParseFormatTrimDecorations(format string, buf string, buf_size ui
 		formatFin()
 		bufFin()
 	}()
-	return C.GoString(C.igImParseFormatTrimDecorations(formatArg, bufArg, C.xulong(buf_size)))
+	return func() string {
+		result := C.igImParseFormatTrimDecorations(formatArg, bufArg, C.xulong(buf_size))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 // DragBehaviorT/SliderBehaviorT uses ImPow with either float/double and need the precision
@@ -7284,7 +7357,11 @@ func InternalImStrSkipBlank(str string) string {
 	defer func() {
 		strFin()
 	}()
-	return C.GoString(C.igImStrSkipBlank(strArg))
+	return func() string {
+		result := C.igImStrSkipBlank(strArg)
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 // Remove leading and trailing blanks from a buffer.
@@ -7304,7 +7381,11 @@ func InternalImStrbol(buf_mid_line string, buf_begin string) string {
 		buf_mid_lineFin()
 		buf_beginFin()
 	}()
-	return C.GoString(C.igImStrbol(buf_mid_lineArg, buf_beginArg))
+	return func() string {
+		result := C.igImStrbol(buf_mid_lineArg, buf_beginArg)
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 // Find first occurrence of 'c' in string range.
@@ -7316,7 +7397,11 @@ func InternalImStrchrRange(str_begin string, str_end string, c rune) string {
 		str_beginFin()
 		str_endFin()
 	}()
-	return C.GoString(C.igImStrchrRange(str_beginArg, str_endArg, C.char(c)))
+	return func() string {
+		result := C.igImStrchrRange(str_beginArg, str_endArg, C.char(c))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 // Duplicate a string.
@@ -7326,7 +7411,11 @@ func InternalImStrdup(str string) string {
 	defer func() {
 		strFin()
 	}()
-	return C.GoString(C.igImStrdup(strArg))
+	return func() string {
+		result := C.igImStrdup(strArg)
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 // Copy in provided buffer, recreate buffer if needed.
@@ -7338,7 +7427,11 @@ func InternalImStrdupcpy(dst string, p_dst_size *uint64, str string) string {
 		dstFin()
 		strFin()
 	}()
-	return C.GoString(C.igImStrdupcpy(dstArg, (*C.xulong)(p_dst_size), strArg))
+	return func() string {
+		result := C.igImStrdupcpy(dstArg, (*C.xulong)(p_dst_size), strArg)
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 // End end-of-line
@@ -7350,7 +7443,11 @@ func InternalImStreolRange(str string, str_end string) string {
 		strFin()
 		str_endFin()
 	}()
-	return C.GoString(C.igImStreolRange(strArg, str_endArg))
+	return func() string {
+		result := C.igImStreolRange(strArg, str_endArg)
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 // Case insensitive compare.
@@ -7378,7 +7475,11 @@ func InternalImStristr(haystack string, haystack_end string, needle string, need
 		needleFin()
 		needle_endFin()
 	}()
-	return C.GoString(C.igImStristr(haystackArg, haystack_endArg, needleArg, needle_endArg))
+	return func() string {
+		result := C.igImStristr(haystackArg, haystack_endArg, needleArg, needle_endArg)
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 // Computer string length (ImWchar string)
@@ -7434,7 +7535,11 @@ func InternalImTextCharToUtf8(out_buf *[5]rune, c uint32) string {
 			(*out_buf)[i] = rune(out_bufV)
 		}
 	}()
-	return C.GoString(C.igImTextCharToUtf8((*C.char)(&out_bufArg[0]), C.uint(c)))
+	return func() string {
+		result := C.igImTextCharToUtf8((*C.char)(&out_bufArg[0]), C.uint(c))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 // return number of UTF-8 code-points (NOT bytes count)
@@ -7487,7 +7592,11 @@ func InternalImTextFindPreviousUtf8Codepoint(in_text_start string, in_text_curr 
 		in_text_startFin()
 		in_text_currFin()
 	}()
-	return C.GoString(C.igImTextFindPreviousUtf8Codepoint(in_text_startArg, in_text_currArg))
+	return func() string {
+		result := C.igImTextFindPreviousUtf8Codepoint(in_text_startArg, in_text_currArg)
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 // return input UTF-8 bytes count
@@ -8351,7 +8460,11 @@ func LoadIniSettingsFromMemoryV(ini_data string, ini_size uint64) {
 }
 
 func InternalLocalizeGetMsg(key LocKey) string {
-	return C.GoString(C.igLocalizeGetMsg(C.ImGuiLocKey(key)))
+	return func() string {
+		result := C.igLocalizeGetMsg(C.ImGuiLocKey(key))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalLocalizeRegisterEntries(entries *LocEntry, count int32) {
@@ -9098,7 +9211,11 @@ func SaveIniSettingsToDisk(ini_filename string) {
 // SaveIniSettingsToMemoryV parameter default value hint:
 // out_ini_size: NULL
 func SaveIniSettingsToMemoryV(out_ini_size *uint64) string {
-	return C.GoString(C.igSaveIniSettingsToMemory((*C.xulong)(out_ini_size)))
+	return func() string {
+		result := C.igSaveIniSettingsToMemory((*C.xulong)(out_ini_size))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalScaleWindowsInViewport(viewport *ViewportP, scale float32) {
@@ -10338,7 +10455,11 @@ func InternalTabBarGetTabName(tab_bar *TabBar, tab *TabItem) string {
 		tab_barFin()
 		tabFin()
 	}()
-	return C.GoString(C.igTabBarGetTabName(internal.ReinterpretCast[*C.ImGuiTabBar](tab_barArg), internal.ReinterpretCast[*C.ImGuiTabItem](tabArg)))
+	return func() string {
+		result := C.igTabBarGetTabName(internal.ReinterpretCast[*C.ImGuiTabBar](tab_barArg), internal.ReinterpretCast[*C.ImGuiTabItem](tabArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalTabBarGetTabOrder(tab_bar *TabBar, tab *TabItem) int32 {
@@ -10650,7 +10771,11 @@ func TableGetColumnIndex() int32 {
 // TableGetColumnNameIntV parameter default value hint:
 // column_n: -1
 func TableGetColumnNameIntV(column_n int32) string {
-	return C.GoString(C.igTableGetColumnName_Int(C.int(column_n)))
+	return func() string {
+		result := C.igTableGetColumnName_Int(C.int(column_n))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalTableGetColumnNameTablePtr(table *Table, column_n int32) string {
@@ -10659,7 +10784,11 @@ func InternalTableGetColumnNameTablePtr(table *Table, column_n int32) string {
 	defer func() {
 		tableFin()
 	}()
-	return C.GoString(C.igTableGetColumnName_TablePtr(internal.ReinterpretCast[*C.ImGuiTable](tableArg), C.int(column_n)))
+	return func() string {
+		result := C.igTableGetColumnName_TablePtr(internal.ReinterpretCast[*C.ImGuiTable](tableArg), C.int(column_n))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalTableGetColumnNextSortDirection(column *TableColumn) SortDirection {
@@ -12420,7 +12549,11 @@ func InternalFindRenderedTextEnd(text string) string {
 	defer func() {
 		textFin()
 	}()
-	return C.GoString(C.wrap_igFindRenderedTextEnd(textArg, C.int(len(text))))
+	return func() string {
+		result := C.wrap_igFindRenderedTextEnd(textArg, C.int(len(text)))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalFocusWindow(window *Window) {
@@ -13019,7 +13152,11 @@ func SameLine() {
 }
 
 func SaveIniSettingsToMemory() string {
-	return C.GoString(C.wrap_igSaveIniSettingsToMemory())
+	return func() string {
+		result := C.wrap_igSaveIniSettingsToMemory()
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalScrollToItem() {
@@ -13443,7 +13580,11 @@ func TableGetColumnFlags() TableColumnFlags {
 }
 
 func TableGetColumnNameInt() string {
-	return C.GoString(C.wrap_igTableGetColumnName_Int())
+	return func() string {
+		result := C.wrap_igTableGetColumnName_Int()
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func InternalTableGetColumnResizeID(table *Table, column_n int32) ID {
@@ -14279,7 +14420,11 @@ func (self *DrawList) OwnerName() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImDrawList_Get_OwnerName(internal.ReinterpretCast[*C.ImDrawList](selfArg)))
+	return func() string {
+		result := C.wrap_ImDrawList_Get_OwnerName(internal.ReinterpretCast[*C.ImDrawList](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self DrawListSharedData) SetTexUvWhitePixel(v Vec2) {
@@ -20812,7 +20957,7 @@ func (self Context) SetLocalizationTable(v *[13]string) {
 	C.wrap_ImGuiContext_SetLocalizationTable(selfArg, (**C.char)(&vArg[0]))
 
 	for i, vV := range vArg {
-		(*v)[i] = C.GoString(vV)
+		(*v)[i] = func() string { result := vV; defer C.free(unsafe.Pointer(result)); return C.GoString(result) }()
 	}
 }
 
@@ -20826,7 +20971,11 @@ func (self *Context) LocalizationTable() [13]string {
 		result := [13]string{}
 		resultMirr := C.wrap_ImGuiContext_GetLocalizationTable(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
 		for i := range result {
-			result[i] = C.GoString(C.cimgui_const_charPtr_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = func() string {
+				result := C.cimgui_const_charPtr_GetAtIdx(resultMirr, C.int(i))
+				defer C.free(unsafe.Pointer(result))
+				return C.GoString(result)
+			}()
 		}
 
 		return result
@@ -20897,7 +21046,11 @@ func (self *Context) LogNextPrefix() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiContext_GetLogNextPrefix(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiContext_GetLogNextPrefix(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self Context) SetLogNextSuffix(v string) {
@@ -20914,7 +21067,11 @@ func (self *Context) LogNextSuffix() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiContext_GetLogNextSuffix(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiContext_GetLogNextSuffix(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self Context) SetLogLinePosY(v float32) {
@@ -21748,7 +21905,11 @@ func (self *DataTypeInfo) Name() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiDataTypeInfo_GetName(internal.ReinterpretCast[*C.ImGuiDataTypeInfo](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiDataTypeInfo_GetName(internal.ReinterpretCast[*C.ImGuiDataTypeInfo](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self DataTypeInfo) SetPrintFmt(v string) {
@@ -21765,7 +21926,11 @@ func (self *DataTypeInfo) PrintFmt() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiDataTypeInfo_GetPrintFmt(internal.ReinterpretCast[*C.ImGuiDataTypeInfo](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiDataTypeInfo_GetPrintFmt(internal.ReinterpretCast[*C.ImGuiDataTypeInfo](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self DataTypeInfo) SetScanFmt(v string) {
@@ -21782,7 +21947,11 @@ func (self *DataTypeInfo) ScanFmt() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiDataTypeInfo_GetScanFmt(internal.ReinterpretCast[*C.ImGuiDataTypeInfo](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiDataTypeInfo_GetScanFmt(internal.ReinterpretCast[*C.ImGuiDataTypeInfo](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self DataTypeStorage) SetData(v *[8]byte) {
@@ -23365,7 +23534,11 @@ func (self *IO) IniFilename() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiIO_GetIniFilename(internal.ReinterpretCast[*C.ImGuiIO](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiIO_GetIniFilename(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self IO) SetLogFilename(v string) {
@@ -23382,7 +23555,11 @@ func (self *IO) LogFilename() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiIO_GetLogFilename(internal.ReinterpretCast[*C.ImGuiIO](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiIO_GetLogFilename(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self IO) SetUserData(v uintptr) {
@@ -24096,7 +24273,11 @@ func (self *IO) BackendPlatformName() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiIO_GetBackendPlatformName(internal.ReinterpretCast[*C.ImGuiIO](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiIO_GetBackendPlatformName(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self IO) SetBackendRendererName(v string) {
@@ -24113,7 +24294,11 @@ func (self *IO) BackendRendererName() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiIO_GetBackendRendererName(internal.ReinterpretCast[*C.ImGuiIO](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiIO_GetBackendRendererName(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self IO) SetBackendPlatformUserData(v uintptr) {
@@ -25583,7 +25768,11 @@ func (self *InputTextCallbackData) Buf() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiInputTextCallbackData_GetBuf(internal.ReinterpretCast[*C.ImGuiInputTextCallbackData](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiInputTextCallbackData_GetBuf(internal.ReinterpretCast[*C.ImGuiInputTextCallbackData](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self InputTextCallbackData) SetBufTextLen(v int32) {
@@ -26763,7 +26952,11 @@ func (self *LocEntry) Text() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiLocEntry_GetText(internal.ReinterpretCast[*C.ImGuiLocEntry](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiLocEntry_GetText(internal.ReinterpretCast[*C.ImGuiLocEntry](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self MenuColumns) SetTotalWidth(v uint32) {
@@ -29471,7 +29664,11 @@ func (self *SettingsHandler) TypeName() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiSettingsHandler_GetTypeName(internal.ReinterpretCast[*C.ImGuiSettingsHandler](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiSettingsHandler_GetTypeName(internal.ReinterpretCast[*C.ImGuiSettingsHandler](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self SettingsHandler) SetTypeHash(v ID) {
@@ -34913,7 +35110,11 @@ func (self *TextRange) B() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiTextRange_GetB(internal.ReinterpretCast[*C.ImGuiTextRange](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiTextRange_GetB(internal.ReinterpretCast[*C.ImGuiTextRange](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self TextRange) SetE(v string) {
@@ -34930,7 +35131,11 @@ func (self *TextRange) E() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiTextRange_GetE(internal.ReinterpretCast[*C.ImGuiTextRange](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiTextRange_GetE(internal.ReinterpretCast[*C.ImGuiTextRange](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self TreeNodeStackData) SetID(v ID) {
@@ -35045,7 +35250,11 @@ func (self *TypingSelectRequest) SearchBuffer() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiTypingSelectRequest_GetSearchBuffer(internal.ReinterpretCast[*C.ImGuiTypingSelectRequest](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiTypingSelectRequest_GetSearchBuffer(internal.ReinterpretCast[*C.ImGuiTypingSelectRequest](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self TypingSelectRequest) SetSelectRequest(v bool) {
@@ -35949,7 +36158,11 @@ func (self *Window) Name() string {
 	defer func() {
 		selfFin()
 	}()
-	return C.GoString(C.wrap_ImGuiWindow_GetName(internal.ReinterpretCast[*C.ImGuiWindow](selfArg)))
+	return func() string {
+		result := C.wrap_ImGuiWindow_GetName(internal.ReinterpretCast[*C.ImGuiWindow](selfArg))
+		defer C.free(unsafe.Pointer(result))
+		return C.GoString(result)
+	}()
 }
 
 func (self Window) SetID(v ID) {

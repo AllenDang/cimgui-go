@@ -119,6 +119,7 @@ func (g *goFuncsGenerator) writeFuncsFileHeader() {
 		`// #include "../imgui/extra_types.h"
 // #include "%[1]s_structs_accessor.h"
 // #include "%[1]s_wrapper.h"
+// #include "stdlib.h"
 import "C"
 import "unsafe"
 
