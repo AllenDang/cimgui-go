@@ -167,7 +167,7 @@ func getArgWrapper(
 	}
 	_, isRefTypedef := context.refTypedefs[pureType]
 
-	if goEnumName := a.Type; isEnum(goEnumName, context.enumNames) {
+	if goEnumName := pureType; isEnum(goEnumName, context.enumNames) {
 		srcPkg := context.flags.packageName
 		if isRefTypedef {
 			srcPkg = context.flags.refPackageName
@@ -178,7 +178,7 @@ func getArgWrapper(
 		argDeclaration = fmt.Sprintf("%s %s", a.Name, goType)
 		data = ArgumentWrapperData{
 			ArgType: goType,
-			VarName: fmt.Sprintf("C.%s(%s)", a.Type, a.Name),
+			VarName: fmt.Sprintf("C.%s(%s)", pureType, a.Name),
 			CType:   GoIdentifier(fmt.Sprintf("C.%s", a.Type)),
 		}
 
