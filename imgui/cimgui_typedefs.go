@@ -1347,7 +1347,7 @@ func (c ErrorCallback) C() (C.ImGuiErrorCallback, func()) {
 }
 
 func wrapErrorCallback(cb ErrorCallback, ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
-	cb(NewContextFromC(ctx), unsafe.Pointer(user_data), C.GoString(msg))
+	cb(NewContextFromC(ctx), unsafe.Pointer(user_data), func() string { result := msg; defer C.free(unsafe.Pointer(result)); return C.GoString(result) }())
 }
 
 //export callbackErrorCallback0
