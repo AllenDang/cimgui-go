@@ -24,4 +24,8 @@ type Preset struct {
 	// NOTE: order sensitive!
 	// NOTE: Case sensitive
 	TrimPrefix []string
+	// OriginReplace allows to force-replace function name with some other name.
+	// Introduced to replace TextEditor_GetText -> TextEditor_GetText_alloc
+	// but could be re-used to force use of another function than json tells us to use.
+	OriginReplace map[CIdentifier]CIdentifier
 }

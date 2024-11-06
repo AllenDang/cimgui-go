@@ -243,7 +243,7 @@ func main() {
 	context.structNames = SliceToMap(callbacks)
 
 	// 1.3. Generate C wrapper
-	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, context.funcs)
+	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, context.funcs, context)
 	if err != nil {
 		log.Panic(err)
 	}

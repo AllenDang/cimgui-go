@@ -61,5 +61,8 @@
                 "ImGui",
                 "Im",
                 "ig"
-        ]
+        ],
+        "OriginReplace": {
+                "TextEditor_GetText": "TextEditor_GetText_alloc"
+        }
 }

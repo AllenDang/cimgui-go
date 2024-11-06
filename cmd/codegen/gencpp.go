@@ -7,13 +7,6 @@ import (
 	"unicode"
 )
 
-// cppFunctionsReplace allows to force-replace function name with some other name.
-// Introduced to replace TextEditor_GetText -> TextEditor_GetText_alloc
-// but could be re-used to force use of another function than json tells us to use.
-var cppFunctionsReplace = map[CIdentifier]CIdentifier{
-	"TextEditor_GetText": "TextEditor_GetText_alloc",
-}
-
 // Name of argument in cpp/go files.
 // It is used by functions that has text and text_end arguments.
 // In this case text_end is replaced by this argument (of type int)
@@ -33,7 +26,7 @@ func shouldExportFunc(funcName CIdentifier) bool {
 }
 
 // Generate cpp wrapper and return valid functions
-func generateCppWrapper(prefix, includePath string, funcDefs []FuncDef) ([]FuncDef, error) {
+func generateCppWrapper(prefix, includePath string, funcDefs []FuncDef, ctx *Context) ([]FuncDef, error) {
 	var validFuncs []FuncDef
 
 	// Generate header
@@ -397,7 +390,7 @@ extern "C" {
 			}
 		}
 
-		if v, ok := cppFunctionsReplace[funcName]; ok {
+		if v, ok := ctx.preset.OriginReplace[funcName]; ok {
 			cWrapperFuncName = v
 		}
 
