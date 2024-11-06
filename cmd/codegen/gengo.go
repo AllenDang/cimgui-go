@@ -16,19 +16,8 @@ type (
 	GoIdentifier string
 )
 
-func (c CIdentifier) trimImGuiPrefix() CIdentifier {
-	// order sensitive!
-	prefixes := []string{
-		"ImGuizmo",
-		"imnodes",
-		"ImNodes",
-		"ImPlot",
-		"ImGui",
-		"Im",
-		"ig",
-	}
-
-	for _, prefix := range prefixes {
+func (c CIdentifier) trimImGuiPrefix(ctx *Context) CIdentifier {
+	for _, prefix := range ctx.preset.TrimPrefix {
 		if HasPrefix(c, prefix) &&
 			len(c) > len(prefix) && // check if removing it will not result in an empty string
 			strings.ToUpper(string(c[len(prefix)])) == string(c[len(prefix)]) { // check if the method will still be exported
@@ -46,14 +35,14 @@ func (c CIdentifier) renameGoIdentifier(ctx *Context) GoIdentifier {
 
 	c = TrimSuffix(c, "_Nil")
 
-	c = c.trimImGuiPrefix()
+	c = c.trimImGuiPrefix(ctx)
 	switch {
 	case HasPrefix(c, "New"):
-		c = "New" + c[3:].trimImGuiPrefix()
+		c = "New" + c[3:].trimImGuiPrefix(ctx)
 	case HasPrefix(c, "new"):
-		c = "new" + c[3:].trimImGuiPrefix()
+		c = "new" + c[3:].trimImGuiPrefix(ctx)
 	case HasPrefix(c, "*"):
-		c = "*" + c[1:].trimImGuiPrefix()
+		c = "*" + c[1:].trimImGuiPrefix(ctx)
 	}
 
 	c = TrimPrefix(c, "Get")

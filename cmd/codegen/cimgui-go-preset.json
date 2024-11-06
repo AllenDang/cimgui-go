@@ -41,5 +41,14 @@
                 "igGetMouseCursor":        "CurrentMouseCursor",
                 "ImAxis":                  "AxisEnum",
                 "GetItem_ID":              "ItemByID"
+        },
+        "TrimPrefix": {
+                "ImGuizmo": true,
+                "imnodes":  true,
+                "ImNodes":  true,
+                "ImPlot":   true,
+                "ImGui":    true,
+                "Im":       true,
+                "ig":       true
         }
 }

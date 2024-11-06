@@ -20,4 +20,8 @@ type Preset struct {
 	// Replace is a map for C -> Go names conversion.
 	// It allows you to force-rename anything (including functions and enums)
 	Replace map[CIdentifier]GoIdentifier
+	// TrimPrefix allows to remove unwanted prefixes from everything during C->Go renaming.
+	// NOTE: order sensitive!
+	// NOTE: Case sensitive
+	TrimPrefix map[string]string
 }
