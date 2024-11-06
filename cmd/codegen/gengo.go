@@ -74,7 +74,7 @@ func IsStructName(name CIdentifier, ctx *Context) bool {
 	return ok
 }
 
-func IsEnumName(name CIdentifier, enums map[CIdentifier]bool) bool {
+func IsEnum(name CIdentifier, enums map[CIdentifier]bool) bool {
 	_, ok := enums[name]
 	return ok
 }

@@ -425,10 +425,3 @@ func (g *goFuncsGenerator) writeFinishers(shouldDefer bool, finishers []string) 
 	g.sb.WriteString(strings.Join(finishers, "\n"))
 	g.sb.WriteString("\n\n")
 }
-
-// isEnum returns true when given string is a valid enum type.
-func isEnum(argType CIdentifier, enumNames map[CIdentifier]bool) bool {
-	_, ok := enumNames[argType]
-
-	return ok
-}

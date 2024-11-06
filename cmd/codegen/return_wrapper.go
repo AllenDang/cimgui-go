@@ -81,7 +81,7 @@ func getReturnWrapper(
 	_, isRefTypedef := context.refTypedefs[pureType]
 	_, shouldSkipRefTypedef := context.preset.SkipTypedefs[pureType]
 	_, isStruct := context.structNames[pureType]
-	isStruct = isStruct || ((isRefStruct || (isRefTypedef && !isEnum(pureType, context.refEnumNames))) && !shouldSkipRefTypedef)
+	isStruct = isStruct || ((isRefStruct || (isRefTypedef && !IsEnum(pureType, context.refEnumNames))) && !shouldSkipRefTypedef)
 	w, known := returnWrapperMap[t]
 	// check if is array (match regex)
 	isArray, err := regexp.Match(".*\\[\\d+\\]", []byte(t))
@@ -107,7 +107,7 @@ func getReturnWrapper(
 			returnStmt: string(prefixGoPackage(GoIdentifier(fmt.Sprintf("*New%sFromC(func() *C.%s {result := %%s; return &result}())", t.renameGoIdentifier(context), t)), srcPackage, context)),
 			CType:      GoIdentifier(fmt.Sprintf("*C.%s", t)),
 		}, nil
-	case isEnum(t, context.enumNames):
+	case IsEnum(t, context.enumNames):
 		goType := prefixGoPackage(t.renameGoIdentifier(context), srcPackage, context)
 		return returnWrapper{
 			returnType: goType,
@@ -132,7 +132,7 @@ func getReturnWrapper(
 			returnStmt: fmt.Sprintf("vectors.NewVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
 			CType:      GoIdentifier(fmt.Sprintf("*C.%s", t)),
 		}, nil
-	case HasSuffix(t, "*") && isEnum(TrimSuffix(t, "*"), context.enumNames):
+	case HasSuffix(t, "*") && IsEnum(TrimSuffix(t, "*"), context.enumNames):
 		goType := prefixGoPackage("*"+TrimSuffix(t, "*").renameGoIdentifier(context), srcPackage, context)
 		return returnWrapper{
 			returnType: goType,

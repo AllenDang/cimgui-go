@@ -167,7 +167,7 @@ func getArgWrapper(
 	}
 	_, isRefTypedef := context.refTypedefs[pureType]
 
-	if goEnumName := pureType; isEnum(goEnumName, context.enumNames) {
+	if goEnumName := pureType; IsEnum(goEnumName, context.enumNames) {
 		srcPkg := context.flags.packageName
 		if isRefTypedef {
 			srcPkg = context.flags.refPackageName

@@ -76,7 +76,7 @@ func GenerateTypedefs(
 			continue
 		}
 
-		if IsEnumName(k, ctx.enumNames) /*|| IsStructName(k, structs)*/ {
+		if IsEnum(k, ctx.enumNames) /*|| IsStructName(k, structs)*/ {
 			if ctx.flags.showGenerated {
 				glg.Infof("typedef %s has extended deffinition in structs_and_enums.json. Will generate later", k)
 			}
