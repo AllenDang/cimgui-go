@@ -5841,6 +5841,17 @@ func InternalFindBestWindowPosForPopup(window *Window) Vec2 {
 	return *pOut
 }
 
+func InternalFindBestWindowPosForPopupEx(ref_pos Vec2, size Vec2, last_dir *Dir, r_outer Rect, r_avoid Rect, policy PopupPositionPolicy) Vec2 {
+	pOut := new(Vec2)
+	pOutArg, pOutFin := internal.Wrap(pOut)
+
+	C.igFindBestWindowPosForPopupEx(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](ref_pos.ToC()), internal.ReinterpretCast[C.ImVec2](size.ToC()), (*C.ImGuiDir)(last_dir), internal.ReinterpretCast[C.ImRect](r_outer.ToC()), internal.ReinterpretCast[C.ImRect](r_avoid.ToC()), C.ImGuiPopupPositionPolicy(policy))
+
+	pOutFin()
+
+	return *pOut
+}
+
 func InternalFindBlockingModal(window *Window) *Window {
 	windowArg, windowFin := window.Handle()
 
@@ -8655,6 +8666,15 @@ func InternalMultiSelectItemFooter(id ID, p_selected *bool, p_pressed *bool) {
 	idFin()
 	p_selectedFin()
 	p_pressedFin()
+}
+
+func InternalMultiSelectItemHeader(id ID, p_selected *bool, p_button_flags *ButtonFlags) {
+	idArg, idFin := id.C()
+	p_selectedArg, p_selectedFin := internal.WrapNumberPtr[C.bool, bool](p_selected)
+	C.igMultiSelectItemHeader(internal.ReinterpretCast[C.ImGuiID](idArg), p_selectedArg, (*C.ImGuiButtonFlags)(p_button_flags))
+
+	idFin()
+	p_selectedFin()
 }
 
 func InternalNavClearPreferredPosForAxis(axis Axis) {
@@ -18157,6 +18177,20 @@ func (self *Context) FocusScopeStack() vectors.Vector[FocusScopeData] {
 		selfFin()
 	}()
 	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetFocusScopeStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetFocusScopeStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, NewFocusScopeDataFromC(C.wrap_ImGuiContext_GetFocusScopeStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
+}
+
+func (self Context) SetItemFlagsStack(v vectors.Vector[ItemFlags]) {
+	vData := v.Data
+
+	vVecArg := new(C.ImVector_ImGuiItemFlags)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = (*C.ImGuiItemFlags)(vData)
+	v.Pinner().Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetItemFlagsStack(selfArg, *vVecArg)
 }
 
 func (self *Context) ItemFlagsStack() vectors.Vector[ItemFlags] {
