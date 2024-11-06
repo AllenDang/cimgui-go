@@ -179,25 +179,25 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 			return false
 		}
 
-		receiver = funcParts[0].renameGoIdentifier()
+		receiver = funcParts[0].renameGoIdentifier(g.context)
 	case returnTypeKnown:
 		shouldDefer = true
 		cReturnType = f.Ret
-		returnType = f.Ret.renameGoIdentifier()
+		returnType = f.Ret.renameGoIdentifier(g.context)
 	case returnTypeStructPtr:
 		// return Im struct ptr
 		shouldDefer = true
 		cReturnType = TrimPrefix(f.Ret, "const ")
-		returnType = cReturnType.renameGoIdentifier()
+		returnType = cReturnType.renameGoIdentifier(g.context)
 	case returnTypeStruct:
 		shouldDefer = true
 		cReturnType = f.Ret
-		returnType = cReturnType.renameGoIdentifier()
+		returnType = cReturnType.renameGoIdentifier(g.context)
 	case returnTypeConstructor:
 		shouldDefer = true
 		parts := Split(f.FuncName, "_")
 		cReturnType = parts[0] + "*"
-		returnType = cReturnType.renameGoIdentifier()
+		returnType = cReturnType.renameGoIdentifier(g.context)
 
 		suffix := ""
 		if len(parts) > 2 {
@@ -296,7 +296,7 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver GoIdentifier, fu
 		receiver = GoIdentifier(fmt.Sprintf("(self %s)", receiver))
 	}
 
-	goFuncName := funcName.renameGoIdentifier()
+	goFuncName := funcName.renameGoIdentifier(g.context)
 
 	// if file comes from imgui_internal.h,prefix Internal is added.
 	// ref: https://github.com/AllenDang/cimgui-go/pull/118

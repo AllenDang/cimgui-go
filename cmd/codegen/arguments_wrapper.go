@@ -137,7 +137,7 @@ func getArgWrapper(
 	}
 
 	if isGetter {
-		argDeclaration = fmt.Sprintf("%s %s", a.Name, a.Type.renameGoIdentifier())
+		argDeclaration = fmt.Sprintf("%s %s", a.Name, a.Type.renameGoIdentifier(context))
 		data = ArgumentWrapperData{
 			ArgDef:      fmt.Sprintf("%[1]sArg, %[1]sFin := %[1]s.Handle()", a.Name),
 			ArgDefNoFin: fmt.Sprintf("%[1]sArg, _ := %[1]s.Handle()", a.Name),
@@ -173,7 +173,7 @@ func getArgWrapper(
 			srcPkg = context.flags.refPackageName
 		}
 
-		goType := prefixGoPackage(goEnumName.renameGoIdentifier(), GoIdentifier(srcPkg), context)
+		goType := prefixGoPackage(goEnumName.renameGoIdentifier(context), GoIdentifier(srcPkg), context)
 
 		if isPointer {
 			argDeclaration = fmt.Sprintf("%s *%s", a.Name, goType)
@@ -304,7 +304,7 @@ for i, %[1]sV := range %[1]sArg {
 			srcPkg = context.flags.refPackageName
 		}
 
-		goType := prefixGoPackage(pureType.renameGoIdentifier(), GoIdentifier(srcPkg), context)
+		goType := prefixGoPackage(pureType.renameGoIdentifier(context), GoIdentifier(srcPkg), context)
 		cType := GoIdentifier(fmt.Sprintf("C.%s", pureType))
 		argType := goType
 		fn := ""

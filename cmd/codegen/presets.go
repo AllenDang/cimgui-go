@@ -12,4 +12,12 @@ type Preset struct {
 	// SkipTypedefs typedefs from typedefs_dict.json to be skipped
 	// e.g. for hardcoded typedefs or typedefs which are obvious (e.g. ImU16 becomes uint16 without extra type information)
 	SkipTypedefs map[CIdentifier]bool
+	// TypedefsPoolSize sets a default size for callbacks pool.
+	// Rembmber to set this as it defaults to 0 and you'll get no callbacks!
+	TypedefsPoolSize int
+	// TypedefsCustomPoolSizes allows to override TypedefsPoolSize for certain types.
+	TypedefsCustomPoolSizes map[CIdentifier]int
+	// Replace is a map for C -> Go names conversion.
+	// It allows you to force-rename anything (including functions and enums)
+	Replace map[CIdentifier]GoIdentifier
 }

@@ -128,7 +128,7 @@ func GenerateTypedefs(
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		case IsCallbackTypedef(typedefs.data[k]):
-			if err := generator.writeCallback(k, typedef); err != nil {
+			if err := generator.writeCallback(k, typedef, ctx); err != nil {
 				if ctx.flags.showNotGenerated {
 					glg.Failf("cannot write callback %s: %v", k, err)
 					continue
@@ -272,7 +272,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 	return &%[1]s{Data: (uintptr)(C.%[6]s_toUintptr(*internal.ReinterpretCast[*C.%[6]s](cvalue)))}
 }
 `,
-		k.renameGoIdentifier(),
+		k.renameGoIdentifier(g.ctx),
 		known.argType.ArgType,
 
 		known.ptrArgType.ArgDef,
@@ -314,7 +314,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 	return (*%[1]s)(%[10]s)
 }
 `,
-		k.renameGoIdentifier(),
+		k.renameGoIdentifier(g.ctx),
 		known.argType.ArgType,
 
 		known.ptrArgType.ArgDef,
@@ -357,7 +357,7 @@ func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 	return &%[1]s{Data: %[7]s}
 }
 `,
-		k.renameGoIdentifier(),
+		k.renameGoIdentifier(g.ctx),
 		known.argType.ArgType,
 
 		known.argType.ArgDef,
@@ -384,7 +384,7 @@ func (self %[1]s) C() (C.%[2]s, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
-`, name.renameGoIdentifier(), name)
+`, name.renameGoIdentifier(g.ctx), name)
 	}
 
 	// we need to make it a struct, because we need to hide C type (otherwise it will duplicate methods)
@@ -405,7 +405,7 @@ func (self *%[1]s) Handle() (result *C.%[2]s, fin func()) {
 func New%[1]sFromC[SRC any](cvalue SRC) *%[1]s {
 	return &%[1]s{CData: internal.ReinterpretCast[*C.%[2]s](cvalue)}
 }
-`, name.renameGoIdentifier(), name, toPlainValue)
+`, name.renameGoIdentifier(g.ctx), name, toPlainValue)
 }
 
 func (g *typedefsGenerator) saveToDisk() error {

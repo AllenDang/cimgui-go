@@ -27,5 +27,19 @@
                 "ImU32":                  true,
                 "ImU64":                  true,
                 "ImGuiInputTextCallback": true
+        },
+        "TypedefsPoolSize": 32,
+        "TypedefsCustomPoolSizes": {
+        },
+        "Replace": {
+                "igGetDrawData":           "CurrentDrawData",
+                "igGetDrawListSharedData": "CurrentDrawListSharedData",
+                "igGetFont":               "CurrentFont",
+                "igGetIO":                 "CurrentIO",
+                "igGetPlatformIO":         "CurrentPlatformIO",
+                "igGetStyle":              "CurrentStyle",
+                "igGetMouseCursor":        "CurrentMouseCursor",
+                "ImAxis":                  "AxisEnum",
+                "GetItem_ID":              "ItemByID"
         }
 }

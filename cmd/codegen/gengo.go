@@ -16,24 +16,6 @@ type (
 	GoIdentifier string
 )
 
-const TypedefsPoolSize = 32
-
-var customPoolSize = map[CIdentifier]int{
-	// nothing here for now
-}
-
-var replace = map[CIdentifier]GoIdentifier{
-	"igGetDrawData":           "CurrentDrawData",
-	"igGetDrawListSharedData": "CurrentDrawListSharedData",
-	"igGetFont":               "CurrentFont",
-	"igGetIO":                 "CurrentIO",
-	"igGetPlatformIO":         "CurrentPlatformIO",
-	"igGetStyle":              "CurrentStyle",
-	"igGetMouseCursor":        "CurrentMouseCursor",
-	"ImAxis":                  "AxisEnum",
-	"GetItem_ID":              "ItemByID",
-}
-
 func (c CIdentifier) trimImGuiPrefix() CIdentifier {
 	// order sensitive!
 	prefixes := []string{
@@ -57,8 +39,8 @@ func (c CIdentifier) trimImGuiPrefix() CIdentifier {
 	return c
 }
 
-func (c CIdentifier) renameGoIdentifier() GoIdentifier {
-	if r, ok := replace[c]; ok {
+func (c CIdentifier) renameGoIdentifier(ctx *Context) GoIdentifier {
+	if r, ok := ctx.preset.Replace[c]; ok {
 		c = CIdentifier(r)
 	}
 

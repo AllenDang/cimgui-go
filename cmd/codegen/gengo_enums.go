@@ -15,7 +15,7 @@ func generateGoEnums(prefix string, enums []EnumDef, ctx *Context) ([]CIdentifie
 	var enumNames []CIdentifier
 	for _, e := range enums {
 		originalName := e.Name
-		eName := e.Name.renameEnum().renameGoIdentifier()
+		eName := e.Name.renameEnum().renameGoIdentifier(ctx)
 
 		enumNames = append(enumNames, e.Name.renameEnum())
 
@@ -29,7 +29,7 @@ func generateGoEnums(prefix string, enums []EnumDef, ctx *Context) ([]CIdentifie
 			if v.Comment != "" {
 				sb.WriteString(fmt.Sprintf("%s\n", v.Comment))
 			}
-			sb.WriteString(fmt.Sprintf("\t%s %s = %d\n", vName.renameGoIdentifier(), eName, v.Value))
+			sb.WriteString(fmt.Sprintf("\t%s %s = %d\n", vName.renameGoIdentifier(ctx), eName, v.Value))
 		}
 
 		sb.WriteString(")\n\n")
