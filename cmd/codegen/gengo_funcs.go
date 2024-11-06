@@ -49,7 +49,7 @@ func GenerateGoFuncs(
 
 	for _, f := range validFuncs {
 		// check whether the function shouldn't be skipped
-		if skippedFuncs[f.FuncName] {
+		if context.preset.SkipFuncs[f.FuncName] {
 			continue
 		}
 

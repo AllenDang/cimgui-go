@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -64,7 +65,9 @@ type jsonData struct {
 	defs,
 
 	refStructAndEnums,
-	refTypedefs []byte
+	refTypedefs,
+
+	preset []byte
 }
 
 func loadData(f *flags) (*jsonData, error) {
@@ -101,6 +104,13 @@ func loadData(f *flags) (*jsonData, error) {
 		}
 	}
 
+	if len(f.presetJsonPath) > 0 {
+		result.preset, err = os.ReadFile(f.presetJsonPath)
+		if err != nil {
+			log.Panic(err)
+		}
+	}
+
 	return result, nil
 }
 
@@ -126,6 +136,8 @@ type Context struct {
 
 	// TODO: might want to remove this
 	flags *flags
+
+	preset *Preset
 }
 
 func parseJson(jsonData *jsonData) (*Context, error) {
@@ -133,6 +145,7 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 
 	result := &Context{
 		arrayIndexGetters: make(map[CIdentifier]CIdentifier),
+		preset:            &Preset{},
 	}
 
 	// get definitions from json file
@@ -186,6 +199,10 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 		}
 
 		result.refStructNames = SliceToMap(refStructs)
+	}
+
+	if len(jsonData.preset) > 0 {
+		json.Unmarshal(jsonData.preset, result.preset)
 	}
 
 	return result, nil

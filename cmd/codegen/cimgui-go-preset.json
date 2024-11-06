@@ -1,0 +1,11 @@
+{
+        "SkipFuncs": {
+                "igInputText":                     true,
+                "igInputTextWithHint":             true,
+                "igInputTextMultiline":            true,
+                "ImFontAtlas_GetTexDataAsAlpha8":  true,
+                "ImFontAtlas_GetTexDataAsAlpha8V": true,
+                "ImFontAtlas_GetTexDataAsRGBA32":  true,
+                "ImFontAtlas_GetTexDataAsRGBA32V": true
+        }
+}

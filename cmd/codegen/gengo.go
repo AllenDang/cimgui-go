@@ -16,18 +16,6 @@ type (
 	GoIdentifier string
 )
 
-// Skip functions
-// e.g. they are temporarily hard-coded
-var skippedFuncs = map[CIdentifier]bool{
-	"igInputText":                     true,
-	"igInputTextWithHint":             true,
-	"igInputTextMultiline":            true,
-	"ImFontAtlas_GetTexDataAsAlpha8":  true,
-	"ImFontAtlas_GetTexDataAsAlpha8V": true,
-	"ImFontAtlas_GetTexDataAsRGBA32":  true,
-	"ImFontAtlas_GetTexDataAsRGBA32V": true,
-}
-
 // structures that's methods should be skipped
 var skippedStructs = map[CIdentifier]bool{
 	"ImVec1":     true,

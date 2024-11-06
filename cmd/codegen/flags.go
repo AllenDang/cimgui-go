@@ -11,6 +11,7 @@ type flags struct {
 	typedefsJsonpath,
 	refEnumsJsonPath,
 	refTypedefsJsonPath,
+	presetJsonPath,
 	refPackageName, // name for refTypedefs (default: imgui)
 	packageName, // name for current package (e.g. imgui, implot)
 	prefix,
@@ -27,6 +28,7 @@ func parse() *flags {
 	flag.StringVar(&flags.typedefsJsonpath, "t", "", "typedefs dict json file path")
 	flag.StringVar(&flags.refEnumsJsonPath, "r", "", "reference structs and enums json file path")
 	flag.StringVar(&flags.refTypedefsJsonPath, "rt", "", "reference typedefs_dict.json file path")
+	flag.StringVar(&flags.presetJsonPath, "preset", "", "Preset of custom (manual) generator rules. See go doc github.com/AllenDang/cimgui-go/cmd/codegen.Preset for more details.")
 	flag.StringVar(&flags.refPackageName, "refPkg", "imgui", "name for refTypedefs package name")
 	flag.StringVar(&flags.packageName, "pkg", "", "name for current package")
 	flag.StringVar(&flags.prefix, "p", "", "prefix for the generated file")
