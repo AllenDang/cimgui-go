@@ -49,7 +49,7 @@ func GenerateTypedefs(
 
 	for _, k := range keys {
 		typedef := typedefs.data[k]
-		if shouldSkip, ok := skippedTypedefs[k]; ok && shouldSkip {
+		if shouldSkip, ok := ctx.preset.SkipTypedefs[k]; ok && shouldSkip {
 			if ctx.flags.showNotGenerated {
 				glg.Infof("Arbitrarly skipping typedef %s", k)
 			}

@@ -175,7 +175,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 	case returnTypeStructSetter:
 		funcParts := Split(f.FuncName, "_")
 		funcName = TrimPrefix(f.FuncName, string(funcParts[0]+"_"))
-		if len(funcName) == 0 || !HasPrefix(funcName, "Set") || skippedStructs[funcParts[0]] {
+		if len(funcName) == 0 || !HasPrefix(funcName, "Set") || g.context.preset.SkipStructs[funcParts[0]] {
 			return false
 		}
 

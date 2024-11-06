@@ -16,29 +16,6 @@ type (
 	GoIdentifier string
 )
 
-// structures that's methods should be skipped
-var skippedStructs = map[CIdentifier]bool{
-	"ImVec1":     true,
-	"ImVec2":     true,
-	"ImVec2ih":   true,
-	"ImVec4":     true,
-	"ImColor":    true,
-	"ImRect":     true,
-	"ImPlotTime": true,
-}
-
-var skippedTypedefs = map[CIdentifier]bool{
-	"ImU8":                   true,
-	"ImU16":                  true,
-	"ImU32":                  true,
-	"ImU64":                  true,
-	"ImS8":                   true,
-	"ImS16":                  true,
-	"ImS32":                  true,
-	"ImS64":                  true,
-	"ImGuiInputTextCallback": true,
-}
-
 const TypedefsPoolSize = 32
 
 var customPoolSize = map[CIdentifier]int{

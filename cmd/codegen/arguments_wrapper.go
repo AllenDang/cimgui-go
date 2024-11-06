@@ -297,7 +297,7 @@ for i, %[1]sV := range %[1]sArg {
 		return argDeclaration, data, nil
 	}
 
-	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
+	_, shouldSkipRefTypedef := context.preset.SkipTypedefs[pureType]
 	if context.structNames[pureType] || context.typedefsNames[pureType] || (isRefTypedef && !shouldSkipRefTypedef) {
 		srcPkg := context.flags.packageName
 		if isRefTypedef {

@@ -79,7 +79,7 @@ func getReturnWrapper(
 	// check if pureType is a declared type (struct or something else from typedefs)
 	_, isRefStruct := context.refStructNames[pureType]
 	_, isRefTypedef := context.refTypedefs[pureType]
-	_, shouldSkipRefTypedef := skippedTypedefs[pureType]
+	_, shouldSkipRefTypedef := context.preset.SkipTypedefs[pureType]
 	_, isStruct := context.structNames[pureType]
 	isStruct = isStruct || ((isRefStruct || (isRefTypedef && !isEnum(pureType, context.refEnumNames))) && !shouldSkipRefTypedef)
 	w, known := returnWrapperMap[t]

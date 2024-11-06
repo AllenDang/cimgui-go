@@ -7,5 +7,25 @@
                 "ImFontAtlas_GetTexDataAsAlpha8V": true,
                 "ImFontAtlas_GetTexDataAsRGBA32":  true,
                 "ImFontAtlas_GetTexDataAsRGBA32V": true
+        },
+        "SkipStructs": {
+                "ImVec1":     true,
+                "ImVec2":     true,
+                "ImVec2ih":   true,
+                "ImVec4":     true,
+                "ImColor":    true,
+                "ImRect":     true,
+                "ImPlotTime": true
+        },
+        "SkipTypedefs": {
+                "ImS8":                   true,
+                "ImS16":                  true,
+                "ImS32":                  true,
+                "ImS64":                  true,
+                "ImU8":                   true,
+                "ImU16":                  true,
+                "ImU32":                  true,
+                "ImU64":                  true,
+                "ImGuiInputTextCallback": true
         }
 }
