@@ -311,6 +311,8 @@ func (c Formatter) C() (C.ImPlotFormatter, func()) {
 func wrapFormatter(cb Formatter, value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
 	result := cb(float64(value), func() string { result := buff; defer C.free(unsafe.Pointer(result)); return C.GoString(result) }(), int32(size), unsafe.Pointer(user_data))
 
+	defer func() {
+	}()
 	return C.int(result)
 }
 
@@ -534,6 +536,8 @@ func (c ter) C() (C.ImPlotGetter, func()) {
 func wrapter(cb ter, idx C.int, user_data unsafe.Pointer) C.ImPlotPoint {
 	result := cb(int32(idx), unsafe.Pointer(user_data))
 
+	defer func() {
+	}()
 	return internal.ReinterpretCast[C.ImPlotPoint](result.ToC())
 }
 
@@ -1093,6 +1097,8 @@ func (c Transform) C() (C.ImPlotTransform, func()) {
 func wrapTransform(cb Transform, value C.double, user_data unsafe.Pointer) C.double {
 	result := cb(float64(value), unsafe.Pointer(user_data))
 
+	defer func() {
+	}()
 	return C.double(result)
 }
 

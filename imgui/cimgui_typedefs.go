@@ -2170,6 +2170,8 @@ func (c MemAllocFunc) C() (C.ImGuiMemAllocFunc, func()) {
 func wrapMemAllocFunc(cb MemAllocFunc, sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
 	result := cb(uint64(sz), unsafe.Pointer(user_data))
 
+	defer func() {
+	}()
 	return unsafe.Pointer(result)
 }
 
