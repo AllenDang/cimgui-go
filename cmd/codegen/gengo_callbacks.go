@@ -131,8 +131,6 @@ func (g *typedefsGenerator) writeCallback(typedefName CIdentifier, def string, c
 				Type: CIdentifier(typeName),
 			})
 		}
-		fmt.Println(returnTypeC)
-		fmt.Println(argsC)
 	} else {
 		if g.ctx.flags.showNotGenerated {
 			return fmt.Errorf("cannot parse callback typedef: %w", callbackNotGeneratedError)
