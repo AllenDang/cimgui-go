@@ -433,6 +433,57 @@ func (self *Link) Numbracketsopen() int32 {
 	return int32(C.wrap_Link_GetNum_brackets_open(internal.ReinterpretCast[*C.Link](selfArg)))
 }
 
+func (self MarkdownConfig) SetLinkCallback(v *MarkdownLinkCallback) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_MarkdownConfig_SetLinkCallback(selfArg, internal.ReinterpretCast[*C.MarkdownLinkCallback](vArg))
+}
+
+func (self *MarkdownConfig) LinkCallback() *MarkdownLinkCallback {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewMarkdownLinkCallbackFromC(C.wrap_MarkdownConfig_GetLinkCallback(internal.ReinterpretCast[*C.MarkdownConfig](selfArg)))
+}
+
+func (self MarkdownConfig) SetTooltipCallback(v *MarkdownTooltipCallback) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_MarkdownConfig_SetTooltipCallback(selfArg, internal.ReinterpretCast[*C.MarkdownTooltipCallback](vArg))
+}
+
+func (self *MarkdownConfig) TooltipCallback() *MarkdownTooltipCallback {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewMarkdownTooltipCallbackFromC(C.wrap_MarkdownConfig_GetTooltipCallback(internal.ReinterpretCast[*C.MarkdownConfig](selfArg)))
+}
+
+func (self MarkdownConfig) SetImageCallback(v *MarkdownImageCallback) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_MarkdownConfig_SetImageCallback(selfArg, internal.ReinterpretCast[*C.MarkdownImageCallback](vArg))
+}
+
+func (self *MarkdownConfig) ImageCallback() *MarkdownImageCallback {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewMarkdownImageCallbackFromC(C.wrap_MarkdownConfig_GetImageCallback(internal.ReinterpretCast[*C.MarkdownConfig](selfArg)))
+}
+
 func (self MarkdownConfig) SetLinkIcon(v string) {
 	vArg, _ := internal.WrapString[C.char](v)
 
@@ -503,6 +554,23 @@ func (self *MarkdownConfig) UserData() uintptr {
 		selfFin()
 	}()
 	return uintptr(C.wrap_MarkdownConfig_GetUserData(internal.ReinterpretCast[*C.MarkdownConfig](selfArg)))
+}
+
+func (self MarkdownConfig) SetFormatCallback(v *MarkdownFormalCallback) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_MarkdownConfig_SetFormatCallback(selfArg, internal.ReinterpretCast[*C.MarkdownFormalCallback](vArg))
+}
+
+func (self *MarkdownConfig) FormatCallback() *MarkdownFormalCallback {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewMarkdownFormalCallbackFromC(C.wrap_MarkdownConfig_GetFormatCallback(internal.ReinterpretCast[*C.MarkdownConfig](selfArg)))
 }
 
 func (self MarkdownFormatInfo) SetType(v MarkdownFormatType) {
