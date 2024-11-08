@@ -9,6 +9,13 @@ import (
 	"github.com/kpango/glg"
 )
 
+type callbackType int
+
+const (
+	callbackType1 callbackType = iota
+	callbackTYpe2
+)
+
 var callbackNotGeneratedError = errors.New("callback was not generated")
 
 // This is an underlying function for gengo_typedefs.go for now.
@@ -39,7 +46,10 @@ func (g *typedefsGenerator) writeCallback(typedefName CIdentifier, def string, c
 	var returnTypeC CIdentifier
 	argsC := make([]ArgDef, 0)
 
+	var cbType callbackType
+
 	if ok := expr1.MatchString(def); ok {
+		cbType = callbackType1
 		glg.Debugf("callback typedef \"%s\" is in form 1", typedefName)
 		// now split by "("
 		// it should be something like this:
@@ -82,8 +92,47 @@ func (g *typedefsGenerator) writeCallback(typedefName CIdentifier, def string, c
 			})
 		}
 	} else if ok := expr2.MatchString(def); ok {
-		glg.Warnf("Callback option 2 for %s not implemented yet", typedefName)
-		return callbackNotGeneratedError
+		cbType = callbackTYpe2
+		parts := Split(def, "(")
+		if len(parts) != 2 {
+			panic("Cannot split by (, check implementation in cmd/codegen!")
+		}
+
+		returnTypeC = TrimSuffix(CIdentifier(parts[0]), " ")
+		returnTypeC = TrimSuffix(CIdentifier(parts[0]), fmt.Sprintf(" %s", typedefName))
+		argsStr := parts[1]
+		argsStr = TrimSuffix(argsStr, ");")
+		argsStr = ReplaceAll(argsStr, ", ", ",")
+		argsStr = ReplaceAll(argsStr, "&", "")
+		argsListStr := Split(argsStr, ",")
+		for a, argStr := range argsListStr {
+			// get name
+			argParts := Split(argStr, " ")
+			var name, typeName string
+			switch len(argParts) {
+			case 1:
+				name = fmt.Sprintf("arg%d", a)
+				typeName = strings.Join(argParts, " ")
+			case 2: // like "int arg1" or "const int"
+				if argParts[0] == "const" {
+					name = fmt.Sprintf("arg%d", a)
+					typeName = strings.Join(argParts, " ")
+					break
+				}
+
+				fallthrough
+			case 3: // something like "int" or "const int arg1"
+				name = argParts[len(argParts)-1]
+				typeName = strings.Join(argParts[:len(argParts)-1], " ")
+			}
+
+			argsC = append(argsC, ArgDef{
+				Name: CIdentifier(name),
+				Type: CIdentifier(typeName),
+			})
+		}
+		fmt.Println(returnTypeC)
+		fmt.Println(argsC)
 	} else {
 		if g.ctx.flags.showNotGenerated {
 			return fmt.Errorf("cannot parse callback typedef: %w", callbackNotGeneratedError)
@@ -142,6 +191,7 @@ func (g *typedefsGenerator) writeCallback(typedefName CIdentifier, def string, c
 	goCallStmt = TrimSuffix(goCallStmt, ", ")
 	valuePassStmt = TrimSuffix(valuePassStmt, ", ")
 
+	_ = cbType
 	// 4: Write code
 	fmt.Fprintf(g.GoSb, `
 type %[1]s func(%[4]s) %[2]s
@@ -153,6 +203,10 @@ func New%[1]sFromC(cvalue *C.%[6]s) *%[1]s {
 }
 
 func (c %[1]s) C() (C.%[6]s, func()) {
+	return pool%[1]s.Allocate(c), func() { }
+}
+
+func (c %[1]s) Handle() (*C.%[6]s, func()) {
 	return pool%[1]s.Allocate(c), func() { }
 }
 `,

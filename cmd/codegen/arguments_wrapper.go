@@ -180,7 +180,7 @@ func getArgWrapper(
 			data = ArgumentWrapperData{
 				ArgType: GoIdentifier(fmt.Sprintf("*%s", goType)),
 				VarName: fmt.Sprintf("(*C.%s)(%s)", pureType, a.Name),
-				CType:   GoIdentifier(fmt.Sprintf("*C.%s", a.Type)),
+				CType:   GoIdentifier(fmt.Sprintf("*C.%s", pureType)),
 			}
 		} else {
 			argDeclaration = fmt.Sprintf("%s %s", a.Name, goType)
