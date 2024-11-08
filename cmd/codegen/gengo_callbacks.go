@@ -13,7 +13,7 @@ type callbackType int
 
 const (
 	callbackType1 callbackType = iota
-	callbackTYpe2
+	callbackType2
 )
 
 var callbackNotGeneratedError = errors.New("callback was not generated")
@@ -92,7 +92,7 @@ func (g *typedefsGenerator) writeCallback(typedefName CIdentifier, def string, c
 			})
 		}
 	} else if ok := expr2.MatchString(def); ok {
-		cbType = callbackTYpe2
+		cbType = callbackType2
 		parts := Split(def, "(")
 		if len(parts) != 2 {
 			panic("Cannot split by (, check implementation in cmd/codegen!")
@@ -207,7 +207,8 @@ func (c %[1]s) C() (C.%[6]s, func()) {
 }
 
 func (c %[1]s) Handle() (*C.%[6]s, func()) {
-	return pool%[1]s.Allocate(c), func() { }
+	result := pool%[1]s.Allocate(c)
+	return &result, func() {}
 }
 `,
 		typedefName.renameGoIdentifier(context),
@@ -308,7 +309,12 @@ func callback%[1]s%[2]d(%[5]s) %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6
 			}(),
 		)
 
-		poolNames[i] = fmt.Sprintf("C.%[3]s(C.callback%[1]s%[2]d)", typedefName.renameGoIdentifier(context), i, typedefName)
+		switch cbType {
+		case callbackType1:
+			poolNames[i] = fmt.Sprintf("C.%[3]s(C.callback%[1]s%[2]d)", typedefName.renameGoIdentifier(context), i, typedefName)
+		case callbackType2:
+			poolNames[i] = fmt.Sprintf("(*C.%[3]s)(C.callback%[1]s%[2]d)", typedefName.renameGoIdentifier(context), i, typedefName)
+		}
 	}
 
 	fmt.Fprintf(g.GoSb, `
