@@ -96,6 +96,7 @@ func getReturnWrapper(
 
 	_, shouldSkipStruct := context.preset.SkipStructs[pureType]
 
+	t = TrimPrefix(t, "const ")
 	switch {
 	case known:
 		return w, nil
@@ -105,7 +106,7 @@ func getReturnWrapper(
 			returnType: prefixGoPackage(t.renameGoIdentifier(context), srcPackage, context),
 			// this is a small trick as using prefixGoPackage isn't in fact intended to be used in such a way, but it should treat the whole string as a "type" and prefix it correctly
 			returnStmt: string(prefixGoPackage(GoIdentifier(fmt.Sprintf("*New%sFromC(func() *C.%s {result := %%s; return &result}())", t.renameGoIdentifier(context), t)), srcPackage, context)),
-			CType:      GoIdentifier(fmt.Sprintf("*C.%s", t)),
+			CType:      GoIdentifier(fmt.Sprintf("C.%s", t)),
 		}, nil
 	case IsEnum(t, context.enumNames):
 		goType := prefixGoPackage(t.renameGoIdentifier(context), srcPackage, context)
@@ -140,11 +141,11 @@ func getReturnWrapper(
 			CType:      GoIdentifier(fmt.Sprintf("*C.%s", TrimSuffix(t, "*"))),
 		}, nil
 	case HasSuffix(t, "*") && isStruct && !shouldSkipStruct:
-		goType := prefixGoPackage("*"+TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(context), srcPackage, context)
+		goType := prefixGoPackage("*"+TrimSuffix(t, "*").renameGoIdentifier(context), srcPackage, context)
 		return returnWrapper{
 			returnType: goType,
-			returnStmt: string(prefixGoPackage(GoIdentifier(fmt.Sprintf("New%sFromC(%%s)", TrimPrefix(TrimSuffix(t, "*"), "const ").renameGoIdentifier(context))), srcPackage, context)),
-			CType:      GoIdentifier(fmt.Sprintf("*C.%s", TrimPrefix(TrimSuffix(t, "*"), "const "))),
+			returnStmt: string(prefixGoPackage(GoIdentifier(fmt.Sprintf("New%sFromC(%%s)", TrimSuffix(t, "*").renameGoIdentifier(context))), srcPackage, context)),
+			CType:      GoIdentifier(fmt.Sprintf("*C.%s", TrimSuffix(t, "*"))),
 		}, nil
 	case isArray:
 		typeCount := Split(t, "[")
