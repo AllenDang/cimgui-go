@@ -26,6 +26,11 @@ func (self TextEditor) C() (C.TextEditor, func()) {
 	return *result, fn
 }
 
+// NewEmptyTextEditor creates TextEditor with its 0 value.
+func NewTextEditorEmpty() *TextEditor {
+	return &TextEditor{CData: new(C.TextEditor)}
+}
+
 // NewTextEditorFromC creates TextEditor from its C pointer.
 // SRC ~= *C.TextEditor
 func NewTextEditorFromC[SRC any](cvalue SRC) *TextEditor {

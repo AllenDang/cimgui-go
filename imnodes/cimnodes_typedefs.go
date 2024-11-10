@@ -62,6 +62,11 @@ func (self EmulateThreeButtonMouse) C() (C.EmulateThreeButtonMouse, func()) {
 	return *result, fn
 }
 
+// NewEmptyEmulateThreeButtonMouse creates EmulateThreeButtonMouse with its 0 value.
+func NewEmulateThreeButtonMouseEmpty() *EmulateThreeButtonMouse {
+	return &EmulateThreeButtonMouse{CData: new(C.EmulateThreeButtonMouse)}
+}
+
 // NewEmulateThreeButtonMouseFromC creates EmulateThreeButtonMouse from its C pointer.
 // SRC ~= *C.EmulateThreeButtonMouse
 func NewEmulateThreeButtonMouseFromC[SRC any](cvalue SRC) *EmulateThreeButtonMouse {
@@ -111,6 +116,11 @@ func (self *IO) Handle() (result *C.ImNodesIO, fin func()) {
 func (self IO) C() (C.ImNodesIO, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyIO creates IO with its 0 value.
+func NewIOEmpty() *IO {
+	return &IO{CData: new(C.ImNodesIO)}
 }
 
 // NewIOFromC creates IO from its C pointer.
@@ -376,6 +386,11 @@ func (self Style) C() (C.ImNodesStyle, func()) {
 	return *result, fn
 }
 
+// NewEmptyStyle creates Style with its 0 value.
+func NewStyleEmpty() *Style {
+	return &Style{CData: new(C.ImNodesStyle)}
+}
+
 // NewStyleFromC creates Style from its C pointer.
 // SRC ~= *C.ImNodesStyle
 func NewStyleFromC[SRC any](cvalue SRC) *Style {
@@ -397,6 +412,11 @@ func (self LinkDetachWithModifierClick) C() (C.LinkDetachWithModifierClick, func
 	return *result, fn
 }
 
+// NewEmptyLinkDetachWithModifierClick creates LinkDetachWithModifierClick with its 0 value.
+func NewLinkDetachWithModifierClickEmpty() *LinkDetachWithModifierClick {
+	return &LinkDetachWithModifierClick{CData: new(C.LinkDetachWithModifierClick)}
+}
+
 // NewLinkDetachWithModifierClickFromC creates LinkDetachWithModifierClick from its C pointer.
 // SRC ~= *C.LinkDetachWithModifierClick
 func NewLinkDetachWithModifierClickFromC[SRC any](cvalue SRC) *LinkDetachWithModifierClick {
@@ -416,6 +436,11 @@ func (self *MultipleSelectModifier) Handle() (result *C.MultipleSelectModifier, 
 func (self MultipleSelectModifier) C() (C.MultipleSelectModifier, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyMultipleSelectModifier creates MultipleSelectModifier with its 0 value.
+func NewMultipleSelectModifierEmpty() *MultipleSelectModifier {
+	return &MultipleSelectModifier{CData: new(C.MultipleSelectModifier)}
 }
 
 // NewMultipleSelectModifierFromC creates MultipleSelectModifier from its C pointer.

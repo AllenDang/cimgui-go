@@ -26,6 +26,11 @@ func (self Style) C() (C.Style, func()) {
 	return *result, fn
 }
 
+// NewEmptyStyle creates Style with its 0 value.
+func NewStyleEmpty() *Style {
+	return &Style{CData: new(C.Style)}
+}
+
 // NewStyleFromC creates Style from its C pointer.
 // SRC ~= *C.Style
 func NewStyleFromC[SRC any](cvalue SRC) *Style {
