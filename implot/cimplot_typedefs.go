@@ -126,6 +126,11 @@ func (self FormatterTimeData) C() (C.Formatter_Time_Data, func()) {
 	return *result, fn
 }
 
+// NewEmptyFormatterTimeData creates FormatterTimeData with its 0 value.
+func NewFormatterTimeDataEmpty() *FormatterTimeData {
+	return &FormatterTimeData{CData: new(C.Formatter_Time_Data)}
+}
+
 // NewFormatterTimeDataFromC creates FormatterTimeData from its C pointer.
 // SRC ~= *C.Formatter_Time_Data
 func NewFormatterTimeDataFromC[SRC any](cvalue SRC) *FormatterTimeData {
@@ -145,6 +150,11 @@ func (self *AlignmentData) Handle() (result *C.ImPlotAlignmentData, fin func()) 
 func (self AlignmentData) C() (C.ImPlotAlignmentData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyAlignmentData creates AlignmentData with its 0 value.
+func NewAlignmentDataEmpty() *AlignmentData {
+	return &AlignmentData{CData: new(C.ImPlotAlignmentData)}
 }
 
 // NewAlignmentDataFromC creates AlignmentData from its C pointer.
@@ -168,6 +178,11 @@ func (self Annotation) C() (C.ImPlotAnnotation, func()) {
 	return *result, fn
 }
 
+// NewEmptyAnnotation creates Annotation with its 0 value.
+func NewAnnotationEmpty() *Annotation {
+	return &Annotation{CData: new(C.ImPlotAnnotation)}
+}
+
 // NewAnnotationFromC creates Annotation from its C pointer.
 // SRC ~= *C.ImPlotAnnotation
 func NewAnnotationFromC[SRC any](cvalue SRC) *Annotation {
@@ -189,6 +204,11 @@ func (self AnnotationCollection) C() (C.ImPlotAnnotationCollection, func()) {
 	return *result, fn
 }
 
+// NewEmptyAnnotationCollection creates AnnotationCollection with its 0 value.
+func NewAnnotationCollectionEmpty() *AnnotationCollection {
+	return &AnnotationCollection{CData: new(C.ImPlotAnnotationCollection)}
+}
+
 // NewAnnotationCollectionFromC creates AnnotationCollection from its C pointer.
 // SRC ~= *C.ImPlotAnnotationCollection
 func NewAnnotationCollectionFromC[SRC any](cvalue SRC) *AnnotationCollection {
@@ -208,6 +228,11 @@ func (self *Axis) Handle() (result *C.ImPlotAxis, fin func()) {
 func (self Axis) C() (C.ImPlotAxis, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyAxis creates Axis with its 0 value.
+func NewAxisEmpty() *Axis {
+	return &Axis{CData: new(C.ImPlotAxis)}
 }
 
 // NewAxisFromC creates Axis from its C pointer.
@@ -246,6 +271,11 @@ func (self ColormapData) C() (C.ImPlotColormapData, func()) {
 	return *result, fn
 }
 
+// NewEmptyColormapData creates ColormapData with its 0 value.
+func NewColormapDataEmpty() *ColormapData {
+	return &ColormapData{CData: new(C.ImPlotColormapData)}
+}
+
 // NewColormapDataFromC creates ColormapData from its C pointer.
 // SRC ~= *C.ImPlotColormapData
 func NewColormapDataFromC[SRC any](cvalue SRC) *ColormapData {
@@ -267,6 +297,11 @@ func (self Context) C() (C.ImPlotContext, func()) {
 	return *result, fn
 }
 
+// NewEmptyContext creates Context with its 0 value.
+func NewContextEmpty() *Context {
+	return &Context{CData: new(C.ImPlotContext)}
+}
+
 // NewContextFromC creates Context from its C pointer.
 // SRC ~= *C.ImPlotContext
 func NewContextFromC[SRC any](cvalue SRC) *Context {
@@ -286,6 +321,11 @@ func (self *DateTimeSpec) Handle() (result *C.ImPlotDateTimeSpec, fin func()) {
 func (self DateTimeSpec) C() (C.ImPlotDateTimeSpec, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyDateTimeSpec creates DateTimeSpec with its 0 value.
+func NewDateTimeSpecEmpty() *DateTimeSpec {
+	return &DateTimeSpec{CData: new(C.ImPlotDateTimeSpec)}
 }
 
 // NewDateTimeSpecFromC creates DateTimeSpec from its C pointer.
@@ -759,6 +799,11 @@ func (self InputMap) C() (C.ImPlotInputMap, func()) {
 	return *result, fn
 }
 
+// NewEmptyInputMap creates InputMap with its 0 value.
+func NewInputMapEmpty() *InputMap {
+	return &InputMap{CData: new(C.ImPlotInputMap)}
+}
+
 // NewInputMapFromC creates InputMap from its C pointer.
 // SRC ~= *C.ImPlotInputMap
 func NewInputMapFromC[SRC any](cvalue SRC) *InputMap {
@@ -778,6 +823,11 @@ func (self *Item) Handle() (result *C.ImPlotItem, fin func()) {
 func (self Item) C() (C.ImPlotItem, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyItem creates Item with its 0 value.
+func NewItemEmpty() *Item {
+	return &Item{CData: new(C.ImPlotItem)}
 }
 
 // NewItemFromC creates Item from its C pointer.
@@ -801,6 +851,11 @@ func (self ItemGroup) C() (C.ImPlotItemGroup, func()) {
 	return *result, fn
 }
 
+// NewEmptyItemGroup creates ItemGroup with its 0 value.
+func NewItemGroupEmpty() *ItemGroup {
+	return &ItemGroup{CData: new(C.ImPlotItemGroup)}
+}
+
 // NewItemGroupFromC creates ItemGroup from its C pointer.
 // SRC ~= *C.ImPlotItemGroup
 func NewItemGroupFromC[SRC any](cvalue SRC) *ItemGroup {
@@ -820,6 +875,11 @@ func (self *Legend) Handle() (result *C.ImPlotLegend, fin func()) {
 func (self Legend) C() (C.ImPlotLegend, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyLegend creates Legend with its 0 value.
+func NewLegendEmpty() *Legend {
+	return &Legend{CData: new(C.ImPlotLegend)}
 }
 
 // NewLegendFromC creates Legend from its C pointer.
@@ -843,6 +903,11 @@ func (self NextItemData) C() (C.ImPlotNextItemData, func()) {
 	return *result, fn
 }
 
+// NewEmptyNextItemData creates NextItemData with its 0 value.
+func NewNextItemDataEmpty() *NextItemData {
+	return &NextItemData{CData: new(C.ImPlotNextItemData)}
+}
+
 // NewNextItemDataFromC creates NextItemData from its C pointer.
 // SRC ~= *C.ImPlotNextItemData
 func NewNextItemDataFromC[SRC any](cvalue SRC) *NextItemData {
@@ -862,6 +927,11 @@ func (self *NextPlotData) Handle() (result *C.ImPlotNextPlotData, fin func()) {
 func (self NextPlotData) C() (C.ImPlotNextPlotData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyNextPlotData creates NextPlotData with its 0 value.
+func NewNextPlotDataEmpty() *NextPlotData {
+	return &NextPlotData{CData: new(C.ImPlotNextPlotData)}
 }
 
 // NewNextPlotDataFromC creates NextPlotData from its C pointer.
@@ -885,6 +955,11 @@ func (self Plot) C() (C.ImPlotPlot, func()) {
 	return *result, fn
 }
 
+// NewEmptyPlot creates Plot with its 0 value.
+func NewPlotEmpty() *Plot {
+	return &Plot{CData: new(C.ImPlotPlot)}
+}
+
 // NewPlotFromC creates Plot from its C pointer.
 // SRC ~= *C.ImPlotPlot
 func NewPlotFromC[SRC any](cvalue SRC) *Plot {
@@ -904,6 +979,11 @@ func (self *PointError) Handle() (result *C.ImPlotPointError, fin func()) {
 func (self PointError) C() (C.ImPlotPointError, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyPointError creates PointError with its 0 value.
+func NewPointErrorEmpty() *PointError {
+	return &PointError{CData: new(C.ImPlotPointError)}
 }
 
 // NewPointErrorFromC creates PointError from its C pointer.
@@ -927,6 +1007,11 @@ func (self Range) C() (C.ImPlotRange, func()) {
 	return *result, fn
 }
 
+// NewEmptyRange creates Range with its 0 value.
+func NewRangeEmpty() *Range {
+	return &Range{CData: new(C.ImPlotRange)}
+}
+
 // NewRangeFromC creates Range from its C pointer.
 // SRC ~= *C.ImPlotRange
 func NewRangeFromC[SRC any](cvalue SRC) *Range {
@@ -946,6 +1031,11 @@ func (self *Rect) Handle() (result *C.ImPlotRect, fin func()) {
 func (self Rect) C() (C.ImPlotRect, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyRect creates Rect with its 0 value.
+func NewRectEmpty() *Rect {
+	return &Rect{CData: new(C.ImPlotRect)}
 }
 
 // NewRectFromC creates Rect from its C pointer.
@@ -969,6 +1059,11 @@ func (self Style) C() (C.ImPlotStyle, func()) {
 	return *result, fn
 }
 
+// NewEmptyStyle creates Style with its 0 value.
+func NewStyleEmpty() *Style {
+	return &Style{CData: new(C.ImPlotStyle)}
+}
+
 // NewStyleFromC creates Style from its C pointer.
 // SRC ~= *C.ImPlotStyle
 func NewStyleFromC[SRC any](cvalue SRC) *Style {
@@ -988,6 +1083,11 @@ func (self *Subplot) Handle() (result *C.ImPlotSubplot, fin func()) {
 func (self Subplot) C() (C.ImPlotSubplot, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptySubplot creates Subplot with its 0 value.
+func NewSubplotEmpty() *Subplot {
+	return &Subplot{CData: new(C.ImPlotSubplot)}
 }
 
 // NewSubplotFromC creates Subplot from its C pointer.
@@ -1011,6 +1111,11 @@ func (self Tag) C() (C.ImPlotTag, func()) {
 	return *result, fn
 }
 
+// NewEmptyTag creates Tag with its 0 value.
+func NewTagEmpty() *Tag {
+	return &Tag{CData: new(C.ImPlotTag)}
+}
+
 // NewTagFromC creates Tag from its C pointer.
 // SRC ~= *C.ImPlotTag
 func NewTagFromC[SRC any](cvalue SRC) *Tag {
@@ -1030,6 +1135,11 @@ func (self *TagCollection) Handle() (result *C.ImPlotTagCollection, fin func()) 
 func (self TagCollection) C() (C.ImPlotTagCollection, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyTagCollection creates TagCollection with its 0 value.
+func NewTagCollectionEmpty() *TagCollection {
+	return &TagCollection{CData: new(C.ImPlotTagCollection)}
 }
 
 // NewTagCollectionFromC creates TagCollection from its C pointer.
@@ -1053,6 +1163,11 @@ func (self Tick) C() (C.ImPlotTick, func()) {
 	return *result, fn
 }
 
+// NewEmptyTick creates Tick with its 0 value.
+func NewTickEmpty() *Tick {
+	return &Tick{CData: new(C.ImPlotTick)}
+}
+
 // NewTickFromC creates Tick from its C pointer.
 // SRC ~= *C.ImPlotTick
 func NewTickFromC[SRC any](cvalue SRC) *Tick {
@@ -1072,6 +1187,11 @@ func (self *Ticker) Handle() (result *C.ImPlotTicker, fin func()) {
 func (self Ticker) C() (C.ImPlotTicker, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyTicker creates Ticker with its 0 value.
+func NewTickerEmpty() *Ticker {
+	return &Ticker{CData: new(C.ImPlotTicker)}
 }
 
 // NewTickerFromC creates Ticker from its C pointer.
