@@ -154,6 +154,11 @@ func (self Emphasis) C() (C.Emphasis, func()) {
 	return *result, fn
 }
 
+// NewEmptyEmphasis creates Emphasis with its 0 value.
+func NewEmphasisEmpty() *Emphasis {
+	return &Emphasis{CData: new(C.Emphasis)}
+}
+
 // NewEmphasisFromC creates Emphasis from its C pointer.
 // SRC ~= *C.Emphasis
 func NewEmphasisFromC[SRC any](cvalue SRC) *Emphasis {
@@ -173,6 +178,11 @@ func (self *Line) Handle() (result *C.Line, fin func()) {
 func (self Line) C() (C.Line, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyLine creates Line with its 0 value.
+func NewLineEmpty() *Line {
+	return &Line{CData: new(C.Line)}
 }
 
 // NewLineFromC creates Line from its C pointer.
@@ -196,6 +206,11 @@ func (self Link) C() (C.Link, func()) {
 	return *result, fn
 }
 
+// NewEmptyLink creates Link with its 0 value.
+func NewLinkEmpty() *Link {
+	return &Link{CData: new(C.Link)}
+}
+
 // NewLinkFromC creates Link from its C pointer.
 // SRC ~= *C.Link
 func NewLinkFromC[SRC any](cvalue SRC) *Link {
@@ -215,6 +230,11 @@ func (self *MarkdownConfig) Handle() (result *C.MarkdownConfig, fin func()) {
 func (self MarkdownConfig) C() (C.MarkdownConfig, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyMarkdownConfig creates MarkdownConfig with its 0 value.
+func NewMarkdownConfigEmpty() *MarkdownConfig {
+	return &MarkdownConfig{CData: new(C.MarkdownConfig)}
 }
 
 // NewMarkdownConfigFromC creates MarkdownConfig from its C pointer.
@@ -460,6 +480,11 @@ func (self MarkdownFormatInfo) C() (C.MarkdownFormatInfo, func()) {
 	return *result, fn
 }
 
+// NewEmptyMarkdownFormatInfo creates MarkdownFormatInfo with its 0 value.
+func NewMarkdownFormatInfoEmpty() *MarkdownFormatInfo {
+	return &MarkdownFormatInfo{CData: new(C.MarkdownFormatInfo)}
+}
+
 // NewMarkdownFormatInfoFromC creates MarkdownFormatInfo from its C pointer.
 // SRC ~= *C.MarkdownFormatInfo
 func NewMarkdownFormatInfoFromC[SRC any](cvalue SRC) *MarkdownFormatInfo {
@@ -479,6 +504,11 @@ func (self *MarkdownHeadingFormat) Handle() (result *C.MarkdownHeadingFormat, fi
 func (self MarkdownHeadingFormat) C() (C.MarkdownHeadingFormat, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyMarkdownHeadingFormat creates MarkdownHeadingFormat with its 0 value.
+func NewMarkdownHeadingFormatEmpty() *MarkdownHeadingFormat {
+	return &MarkdownHeadingFormat{CData: new(C.MarkdownHeadingFormat)}
 }
 
 // NewMarkdownHeadingFormatFromC creates MarkdownHeadingFormat from its C pointer.
@@ -729,6 +759,11 @@ func (self MarkdownImageData) C() (C.MarkdownImageData, func()) {
 	return *result, fn
 }
 
+// NewEmptyMarkdownImageData creates MarkdownImageData with its 0 value.
+func NewMarkdownImageDataEmpty() *MarkdownImageData {
+	return &MarkdownImageData{CData: new(C.MarkdownImageData)}
+}
+
 // NewMarkdownImageDataFromC creates MarkdownImageData from its C pointer.
 // SRC ~= *C.MarkdownImageData
 func NewMarkdownImageDataFromC[SRC any](cvalue SRC) *MarkdownImageData {
@@ -970,6 +1005,11 @@ func (self *MarkdownLinkCallbackData) Handle() (result *C.MarkdownLinkCallbackDa
 func (self MarkdownLinkCallbackData) C() (C.MarkdownLinkCallbackData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyMarkdownLinkCallbackData creates MarkdownLinkCallbackData with its 0 value.
+func NewMarkdownLinkCallbackDataEmpty() *MarkdownLinkCallbackData {
+	return &MarkdownLinkCallbackData{CData: new(C.MarkdownLinkCallbackData)}
 }
 
 // NewMarkdownLinkCallbackDataFromC creates MarkdownLinkCallbackData from its C pointer.
@@ -1215,6 +1255,11 @@ func (self MarkdownTooltipCallbackData) C() (C.MarkdownTooltipCallbackData, func
 	return *result, fn
 }
 
+// NewEmptyMarkdownTooltipCallbackData creates MarkdownTooltipCallbackData with its 0 value.
+func NewMarkdownTooltipCallbackDataEmpty() *MarkdownTooltipCallbackData {
+	return &MarkdownTooltipCallbackData{CData: new(C.MarkdownTooltipCallbackData)}
+}
+
 // NewMarkdownTooltipCallbackDataFromC creates MarkdownTooltipCallbackData from its C pointer.
 // SRC ~= *C.MarkdownTooltipCallbackData
 func NewMarkdownTooltipCallbackDataFromC[SRC any](cvalue SRC) *MarkdownTooltipCallbackData {
@@ -1236,6 +1281,11 @@ func (self TextBlock) C() (C.TextBlock, func()) {
 	return *result, fn
 }
 
+// NewEmptyTextBlock creates TextBlock with its 0 value.
+func NewTextBlockEmpty() *TextBlock {
+	return &TextBlock{CData: new(C.TextBlock)}
+}
+
 // NewTextBlockFromC creates TextBlock from its C pointer.
 // SRC ~= *C.TextBlock
 func NewTextBlockFromC[SRC any](cvalue SRC) *TextBlock {
@@ -1255,6 +1305,11 @@ func (self *TextRegion) Handle() (result *C.TextRegion, fin func()) {
 func (self TextRegion) C() (C.TextRegion, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyTextRegion creates TextRegion with its 0 value.
+func NewTextRegionEmpty() *TextRegion {
+	return &TextRegion{CData: new(C.TextRegion)}
 }
 
 // NewTextRegionFromC creates TextRegion from its C pointer.
