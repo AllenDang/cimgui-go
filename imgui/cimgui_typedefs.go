@@ -246,6 +246,11 @@ func (self BitVector) C() (C.ImBitVector, func()) {
 	return *result, fn
 }
 
+// NewEmptyBitVector creates BitVector with its 0 value.
+func NewBitVectorEmpty() *BitVector {
+	return &BitVector{CData: new(C.ImBitVector)}
+}
+
 // NewBitVectorFromC creates BitVector from its C pointer.
 // SRC ~= *C.ImBitVector
 func NewBitVectorFromC[SRC any](cvalue SRC) *BitVector {
@@ -488,6 +493,11 @@ func (self DrawChannel) C() (C.ImDrawChannel, func()) {
 	return *result, fn
 }
 
+// NewEmptyDrawChannel creates DrawChannel with its 0 value.
+func NewDrawChannelEmpty() *DrawChannel {
+	return &DrawChannel{CData: new(C.ImDrawChannel)}
+}
+
 // NewDrawChannelFromC creates DrawChannel from its C pointer.
 // SRC ~= *C.ImDrawChannel
 func NewDrawChannelFromC[SRC any](cvalue SRC) *DrawChannel {
@@ -507,6 +517,11 @@ func (self *DrawCmd) Handle() (result *C.ImDrawCmd, fin func()) {
 func (self DrawCmd) C() (C.ImDrawCmd, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyDrawCmd creates DrawCmd with its 0 value.
+func NewDrawCmdEmpty() *DrawCmd {
+	return &DrawCmd{CData: new(C.ImDrawCmd)}
 }
 
 // NewDrawCmdFromC creates DrawCmd from its C pointer.
@@ -530,6 +545,11 @@ func (self DrawCmdHeader) C() (C.ImDrawCmdHeader, func()) {
 	return *result, fn
 }
 
+// NewEmptyDrawCmdHeader creates DrawCmdHeader with its 0 value.
+func NewDrawCmdHeaderEmpty() *DrawCmdHeader {
+	return &DrawCmdHeader{CData: new(C.ImDrawCmdHeader)}
+}
+
 // NewDrawCmdHeaderFromC creates DrawCmdHeader from its C pointer.
 // SRC ~= *C.ImDrawCmdHeader
 func NewDrawCmdHeaderFromC[SRC any](cvalue SRC) *DrawCmdHeader {
@@ -551,6 +571,11 @@ func (self DrawData) C() (C.ImDrawData, func()) {
 	return *result, fn
 }
 
+// NewEmptyDrawData creates DrawData with its 0 value.
+func NewDrawDataEmpty() *DrawData {
+	return &DrawData{CData: new(C.ImDrawData)}
+}
+
 // NewDrawDataFromC creates DrawData from its C pointer.
 // SRC ~= *C.ImDrawData
 func NewDrawDataFromC[SRC any](cvalue SRC) *DrawData {
@@ -570,6 +595,11 @@ func (self *DrawDataBuilder) Handle() (result *C.ImDrawDataBuilder, fin func()) 
 func (self DrawDataBuilder) C() (C.ImDrawDataBuilder, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyDrawDataBuilder creates DrawDataBuilder with its 0 value.
+func NewDrawDataBuilderEmpty() *DrawDataBuilder {
+	return &DrawDataBuilder{CData: new(C.ImDrawDataBuilder)}
 }
 
 // NewDrawDataBuilderFromC creates DrawDataBuilder from its C pointer.
@@ -613,6 +643,11 @@ func (self DrawList) C() (C.ImDrawList, func()) {
 	return *result, fn
 }
 
+// NewEmptyDrawList creates DrawList with its 0 value.
+func NewDrawListEmpty() *DrawList {
+	return &DrawList{CData: new(C.ImDrawList)}
+}
+
 // NewDrawListFromC creates DrawList from its C pointer.
 // SRC ~= *C.ImDrawList
 func NewDrawListFromC[SRC any](cvalue SRC) *DrawList {
@@ -632,6 +667,11 @@ func (self *DrawListSharedData) Handle() (result *C.ImDrawListSharedData, fin fu
 func (self DrawListSharedData) C() (C.ImDrawListSharedData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyDrawListSharedData creates DrawListSharedData with its 0 value.
+func NewDrawListSharedDataEmpty() *DrawListSharedData {
+	return &DrawListSharedData{CData: new(C.ImDrawListSharedData)}
 }
 
 // NewDrawListSharedDataFromC creates DrawListSharedData from its C pointer.
@@ -655,6 +695,11 @@ func (self DrawListSplitter) C() (C.ImDrawListSplitter, func()) {
 	return *result, fn
 }
 
+// NewEmptyDrawListSplitter creates DrawListSplitter with its 0 value.
+func NewDrawListSplitterEmpty() *DrawListSplitter {
+	return &DrawListSplitter{CData: new(C.ImDrawListSplitter)}
+}
+
 // NewDrawListSplitterFromC creates DrawListSplitter from its C pointer.
 // SRC ~= *C.ImDrawListSplitter
 func NewDrawListSplitterFromC[SRC any](cvalue SRC) *DrawListSplitter {
@@ -674,6 +719,11 @@ func (self *DrawVert) Handle() (result *C.ImDrawVert, fin func()) {
 func (self DrawVert) C() (C.ImDrawVert, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyDrawVert creates DrawVert with its 0 value.
+func NewDrawVertEmpty() *DrawVert {
+	return &DrawVert{CData: new(C.ImDrawVert)}
 }
 
 // NewDrawVertFromC creates DrawVert from its C pointer.
@@ -697,6 +747,11 @@ func (self Font) C() (C.ImFont, func()) {
 	return *result, fn
 }
 
+// NewEmptyFont creates Font with its 0 value.
+func NewFontEmpty() *Font {
+	return &Font{CData: new(C.ImFont)}
+}
+
 // NewFontFromC creates Font from its C pointer.
 // SRC ~= *C.ImFont
 func NewFontFromC[SRC any](cvalue SRC) *Font {
@@ -716,6 +771,11 @@ func (self *FontAtlas) Handle() (result *C.ImFontAtlas, fin func()) {
 func (self FontAtlas) C() (C.ImFontAtlas, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyFontAtlas creates FontAtlas with its 0 value.
+func NewFontAtlasEmpty() *FontAtlas {
+	return &FontAtlas{CData: new(C.ImFontAtlas)}
 }
 
 // NewFontAtlasFromC creates FontAtlas from its C pointer.
@@ -739,6 +799,11 @@ func (self FontAtlasCustomRect) C() (C.ImFontAtlasCustomRect, func()) {
 	return *result, fn
 }
 
+// NewEmptyFontAtlasCustomRect creates FontAtlasCustomRect with its 0 value.
+func NewFontAtlasCustomRectEmpty() *FontAtlasCustomRect {
+	return &FontAtlasCustomRect{CData: new(C.ImFontAtlasCustomRect)}
+}
+
 // NewFontAtlasCustomRectFromC creates FontAtlasCustomRect from its C pointer.
 // SRC ~= *C.ImFontAtlasCustomRect
 func NewFontAtlasCustomRectFromC[SRC any](cvalue SRC) *FontAtlasCustomRect {
@@ -758,6 +823,11 @@ func (self *FontBuilderIO) Handle() (result *C.ImFontBuilderIO, fin func()) {
 func (self FontBuilderIO) C() (C.ImFontBuilderIO, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyFontBuilderIO creates FontBuilderIO with its 0 value.
+func NewFontBuilderIOEmpty() *FontBuilderIO {
+	return &FontBuilderIO{CData: new(C.ImFontBuilderIO)}
 }
 
 // NewFontBuilderIOFromC creates FontBuilderIO from its C pointer.
@@ -781,6 +851,11 @@ func (self FontConfig) C() (C.ImFontConfig, func()) {
 	return *result, fn
 }
 
+// NewEmptyFontConfig creates FontConfig with its 0 value.
+func NewFontConfigEmpty() *FontConfig {
+	return &FontConfig{CData: new(C.ImFontConfig)}
+}
+
 // NewFontConfigFromC creates FontConfig from its C pointer.
 // SRC ~= *C.ImFontConfig
 func NewFontConfigFromC[SRC any](cvalue SRC) *FontConfig {
@@ -800,6 +875,11 @@ func (self *FontGlyph) Handle() (result *C.ImFontGlyph, fin func()) {
 func (self FontGlyph) C() (C.ImFontGlyph, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyFontGlyph creates FontGlyph with its 0 value.
+func NewFontGlyphEmpty() *FontGlyph {
+	return &FontGlyph{CData: new(C.ImFontGlyph)}
 }
 
 // NewFontGlyphFromC creates FontGlyph from its C pointer.
@@ -823,6 +903,11 @@ func (self FontGlyphRangesBuilder) C() (C.ImFontGlyphRangesBuilder, func()) {
 	return *result, fn
 }
 
+// NewEmptyFontGlyphRangesBuilder creates FontGlyphRangesBuilder with its 0 value.
+func NewFontGlyphRangesBuilderEmpty() *FontGlyphRangesBuilder {
+	return &FontGlyphRangesBuilder{CData: new(C.ImFontGlyphRangesBuilder)}
+}
+
 // NewFontGlyphRangesBuilderFromC creates FontGlyphRangesBuilder from its C pointer.
 // SRC ~= *C.ImFontGlyphRangesBuilder
 func NewFontGlyphRangesBuilderFromC[SRC any](cvalue SRC) *FontGlyphRangesBuilder {
@@ -842,6 +927,11 @@ func (self *BoxSelectState) Handle() (result *C.ImGuiBoxSelectState, fin func())
 func (self BoxSelectState) C() (C.ImGuiBoxSelectState, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyBoxSelectState creates BoxSelectState with its 0 value.
+func NewBoxSelectStateEmpty() *BoxSelectState {
+	return &BoxSelectState{CData: new(C.ImGuiBoxSelectState)}
 }
 
 // NewBoxSelectStateFromC creates BoxSelectState from its C pointer.
@@ -865,6 +955,11 @@ func (self ColorMod) C() (C.ImGuiColorMod, func()) {
 	return *result, fn
 }
 
+// NewEmptyColorMod creates ColorMod with its 0 value.
+func NewColorModEmpty() *ColorMod {
+	return &ColorMod{CData: new(C.ImGuiColorMod)}
+}
+
 // NewColorModFromC creates ColorMod from its C pointer.
 // SRC ~= *C.ImGuiColorMod
 func NewColorModFromC[SRC any](cvalue SRC) *ColorMod {
@@ -884,6 +979,11 @@ func (self *ComboPreviewData) Handle() (result *C.ImGuiComboPreviewData, fin fun
 func (self ComboPreviewData) C() (C.ImGuiComboPreviewData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyComboPreviewData creates ComboPreviewData with its 0 value.
+func NewComboPreviewDataEmpty() *ComboPreviewData {
+	return &ComboPreviewData{CData: new(C.ImGuiComboPreviewData)}
 }
 
 // NewComboPreviewDataFromC creates ComboPreviewData from its C pointer.
@@ -907,6 +1007,11 @@ func (self Context) C() (C.ImGuiContext, func()) {
 	return *result, fn
 }
 
+// NewEmptyContext creates Context with its 0 value.
+func NewContextEmpty() *Context {
+	return &Context{CData: new(C.ImGuiContext)}
+}
+
 // NewContextFromC creates Context from its C pointer.
 // SRC ~= *C.ImGuiContext
 func NewContextFromC[SRC any](cvalue SRC) *Context {
@@ -926,6 +1031,11 @@ func (self *ContextHook) Handle() (result *C.ImGuiContextHook, fin func()) {
 func (self ContextHook) C() (C.ImGuiContextHook, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyContextHook creates ContextHook with its 0 value.
+func NewContextHookEmpty() *ContextHook {
+	return &ContextHook{CData: new(C.ImGuiContextHook)}
 }
 
 // NewContextHookFromC creates ContextHook from its C pointer.
@@ -1170,6 +1280,11 @@ func (self DataTypeInfo) C() (C.ImGuiDataTypeInfo, func()) {
 	return *result, fn
 }
 
+// NewEmptyDataTypeInfo creates DataTypeInfo with its 0 value.
+func NewDataTypeInfoEmpty() *DataTypeInfo {
+	return &DataTypeInfo{CData: new(C.ImGuiDataTypeInfo)}
+}
+
 // NewDataTypeInfoFromC creates DataTypeInfo from its C pointer.
 // SRC ~= *C.ImGuiDataTypeInfo
 func NewDataTypeInfoFromC[SRC any](cvalue SRC) *DataTypeInfo {
@@ -1189,6 +1304,11 @@ func (self *DataTypeStorage) Handle() (result *C.ImGuiDataTypeStorage, fin func(
 func (self DataTypeStorage) C() (C.ImGuiDataTypeStorage, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyDataTypeStorage creates DataTypeStorage with its 0 value.
+func NewDataTypeStorageEmpty() *DataTypeStorage {
+	return &DataTypeStorage{CData: new(C.ImGuiDataTypeStorage)}
 }
 
 // NewDataTypeStorageFromC creates DataTypeStorage from its C pointer.
@@ -1212,6 +1332,11 @@ func (self DataVarInfo) C() (C.ImGuiDataVarInfo, func()) {
 	return *result, fn
 }
 
+// NewEmptyDataVarInfo creates DataVarInfo with its 0 value.
+func NewDataVarInfoEmpty() *DataVarInfo {
+	return &DataVarInfo{CData: new(C.ImGuiDataVarInfo)}
+}
+
 // NewDataVarInfoFromC creates DataVarInfo from its C pointer.
 // SRC ~= *C.ImGuiDataVarInfo
 func NewDataVarInfoFromC[SRC any](cvalue SRC) *DataVarInfo {
@@ -1231,6 +1356,11 @@ func (self *DebugAllocEntry) Handle() (result *C.ImGuiDebugAllocEntry, fin func(
 func (self DebugAllocEntry) C() (C.ImGuiDebugAllocEntry, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyDebugAllocEntry creates DebugAllocEntry with its 0 value.
+func NewDebugAllocEntryEmpty() *DebugAllocEntry {
+	return &DebugAllocEntry{CData: new(C.ImGuiDebugAllocEntry)}
 }
 
 // NewDebugAllocEntryFromC creates DebugAllocEntry from its C pointer.
@@ -1254,6 +1384,11 @@ func (self DebugAllocInfo) C() (C.ImGuiDebugAllocInfo, func()) {
 	return *result, fn
 }
 
+// NewEmptyDebugAllocInfo creates DebugAllocInfo with its 0 value.
+func NewDebugAllocInfoEmpty() *DebugAllocInfo {
+	return &DebugAllocInfo{CData: new(C.ImGuiDebugAllocInfo)}
+}
+
 // NewDebugAllocInfoFromC creates DebugAllocInfo from its C pointer.
 // SRC ~= *C.ImGuiDebugAllocInfo
 func NewDebugAllocInfoFromC[SRC any](cvalue SRC) *DebugAllocInfo {
@@ -1275,6 +1410,11 @@ func (self DockContext) C() (C.ImGuiDockContext, func()) {
 	return *result, fn
 }
 
+// NewEmptyDockContext creates DockContext with its 0 value.
+func NewDockContextEmpty() *DockContext {
+	return &DockContext{CData: new(C.ImGuiDockContext)}
+}
+
 // NewDockContextFromC creates DockContext from its C pointer.
 // SRC ~= *C.ImGuiDockContext
 func NewDockContextFromC[SRC any](cvalue SRC) *DockContext {
@@ -1294,6 +1434,11 @@ func (self *DockNode) Handle() (result *C.ImGuiDockNode, fin func()) {
 func (self DockNode) C() (C.ImGuiDockNode, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyDockNode creates DockNode with its 0 value.
+func NewDockNodeEmpty() *DockNode {
+	return &DockNode{CData: new(C.ImGuiDockNode)}
 }
 
 // NewDockNodeFromC creates DockNode from its C pointer.
@@ -1568,6 +1713,11 @@ func (self ErrorRecoveryState) C() (C.ImGuiErrorRecoveryState, func()) {
 	return *result, fn
 }
 
+// NewEmptyErrorRecoveryState creates ErrorRecoveryState with its 0 value.
+func NewErrorRecoveryStateEmpty() *ErrorRecoveryState {
+	return &ErrorRecoveryState{CData: new(C.ImGuiErrorRecoveryState)}
+}
+
 // NewErrorRecoveryStateFromC creates ErrorRecoveryState from its C pointer.
 // SRC ~= *C.ImGuiErrorRecoveryState
 func NewErrorRecoveryStateFromC[SRC any](cvalue SRC) *ErrorRecoveryState {
@@ -1589,6 +1739,11 @@ func (self FocusScopeData) C() (C.ImGuiFocusScopeData, func()) {
 	return *result, fn
 }
 
+// NewEmptyFocusScopeData creates FocusScopeData with its 0 value.
+func NewFocusScopeDataEmpty() *FocusScopeData {
+	return &FocusScopeData{CData: new(C.ImGuiFocusScopeData)}
+}
+
 // NewFocusScopeDataFromC creates FocusScopeData from its C pointer.
 // SRC ~= *C.ImGuiFocusScopeData
 func NewFocusScopeDataFromC[SRC any](cvalue SRC) *FocusScopeData {
@@ -1608,6 +1763,11 @@ func (self *GroupData) Handle() (result *C.ImGuiGroupData, fin func()) {
 func (self GroupData) C() (C.ImGuiGroupData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyGroupData creates GroupData with its 0 value.
+func NewGroupDataEmpty() *GroupData {
+	return &GroupData{CData: new(C.ImGuiGroupData)}
 }
 
 // NewGroupDataFromC creates GroupData from its C pointer.
@@ -1651,6 +1811,11 @@ func (self IDStackTool) C() (C.ImGuiIDStackTool, func()) {
 	return *result, fn
 }
 
+// NewEmptyIDStackTool creates IDStackTool with its 0 value.
+func NewIDStackToolEmpty() *IDStackTool {
+	return &IDStackTool{CData: new(C.ImGuiIDStackTool)}
+}
+
 // NewIDStackToolFromC creates IDStackTool from its C pointer.
 // SRC ~= *C.ImGuiIDStackTool
 func NewIDStackToolFromC[SRC any](cvalue SRC) *IDStackTool {
@@ -1670,6 +1835,11 @@ func (self *IO) Handle() (result *C.ImGuiIO, fin func()) {
 func (self IO) C() (C.ImGuiIO, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyIO creates IO with its 0 value.
+func NewIOEmpty() *IO {
+	return &IO{CData: new(C.ImGuiIO)}
 }
 
 // NewIOFromC creates IO from its C pointer.
@@ -1693,6 +1863,11 @@ func (self InputEvent) C() (C.ImGuiInputEvent, func()) {
 	return *result, fn
 }
 
+// NewEmptyInputEvent creates InputEvent with its 0 value.
+func NewInputEventEmpty() *InputEvent {
+	return &InputEvent{CData: new(C.ImGuiInputEvent)}
+}
+
 // NewInputEventFromC creates InputEvent from its C pointer.
 // SRC ~= *C.ImGuiInputEvent
 func NewInputEventFromC[SRC any](cvalue SRC) *InputEvent {
@@ -1712,6 +1887,11 @@ func (self *InputEventAppFocused) Handle() (result *C.ImGuiInputEventAppFocused,
 func (self InputEventAppFocused) C() (C.ImGuiInputEventAppFocused, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyInputEventAppFocused creates InputEventAppFocused with its 0 value.
+func NewInputEventAppFocusedEmpty() *InputEventAppFocused {
+	return &InputEventAppFocused{CData: new(C.ImGuiInputEventAppFocused)}
 }
 
 // NewInputEventAppFocusedFromC creates InputEventAppFocused from its C pointer.
@@ -1735,6 +1915,11 @@ func (self InputEventKey) C() (C.ImGuiInputEventKey, func()) {
 	return *result, fn
 }
 
+// NewEmptyInputEventKey creates InputEventKey with its 0 value.
+func NewInputEventKeyEmpty() *InputEventKey {
+	return &InputEventKey{CData: new(C.ImGuiInputEventKey)}
+}
+
 // NewInputEventKeyFromC creates InputEventKey from its C pointer.
 // SRC ~= *C.ImGuiInputEventKey
 func NewInputEventKeyFromC[SRC any](cvalue SRC) *InputEventKey {
@@ -1754,6 +1939,11 @@ func (self *InputEventMouseButton) Handle() (result *C.ImGuiInputEventMouseButto
 func (self InputEventMouseButton) C() (C.ImGuiInputEventMouseButton, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyInputEventMouseButton creates InputEventMouseButton with its 0 value.
+func NewInputEventMouseButtonEmpty() *InputEventMouseButton {
+	return &InputEventMouseButton{CData: new(C.ImGuiInputEventMouseButton)}
 }
 
 // NewInputEventMouseButtonFromC creates InputEventMouseButton from its C pointer.
@@ -1777,6 +1967,11 @@ func (self InputEventMousePos) C() (C.ImGuiInputEventMousePos, func()) {
 	return *result, fn
 }
 
+// NewEmptyInputEventMousePos creates InputEventMousePos with its 0 value.
+func NewInputEventMousePosEmpty() *InputEventMousePos {
+	return &InputEventMousePos{CData: new(C.ImGuiInputEventMousePos)}
+}
+
 // NewInputEventMousePosFromC creates InputEventMousePos from its C pointer.
 // SRC ~= *C.ImGuiInputEventMousePos
 func NewInputEventMousePosFromC[SRC any](cvalue SRC) *InputEventMousePos {
@@ -1796,6 +1991,11 @@ func (self *InputEventMouseViewport) Handle() (result *C.ImGuiInputEventMouseVie
 func (self InputEventMouseViewport) C() (C.ImGuiInputEventMouseViewport, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyInputEventMouseViewport creates InputEventMouseViewport with its 0 value.
+func NewInputEventMouseViewportEmpty() *InputEventMouseViewport {
+	return &InputEventMouseViewport{CData: new(C.ImGuiInputEventMouseViewport)}
 }
 
 // NewInputEventMouseViewportFromC creates InputEventMouseViewport from its C pointer.
@@ -1819,6 +2019,11 @@ func (self InputEventMouseWheel) C() (C.ImGuiInputEventMouseWheel, func()) {
 	return *result, fn
 }
 
+// NewEmptyInputEventMouseWheel creates InputEventMouseWheel with its 0 value.
+func NewInputEventMouseWheelEmpty() *InputEventMouseWheel {
+	return &InputEventMouseWheel{CData: new(C.ImGuiInputEventMouseWheel)}
+}
+
 // NewInputEventMouseWheelFromC creates InputEventMouseWheel from its C pointer.
 // SRC ~= *C.ImGuiInputEventMouseWheel
 func NewInputEventMouseWheelFromC[SRC any](cvalue SRC) *InputEventMouseWheel {
@@ -1840,6 +2045,11 @@ func (self InputEventText) C() (C.ImGuiInputEventText, func()) {
 	return *result, fn
 }
 
+// NewEmptyInputEventText creates InputEventText with its 0 value.
+func NewInputEventTextEmpty() *InputEventText {
+	return &InputEventText{CData: new(C.ImGuiInputEventText)}
+}
+
 // NewInputEventTextFromC creates InputEventText from its C pointer.
 // SRC ~= *C.ImGuiInputEventText
 func NewInputEventTextFromC[SRC any](cvalue SRC) *InputEventText {
@@ -1859,6 +2069,11 @@ func (self *InputTextCallbackData) Handle() (result *C.ImGuiInputTextCallbackDat
 func (self InputTextCallbackData) C() (C.ImGuiInputTextCallbackData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyInputTextCallbackData creates InputTextCallbackData with its 0 value.
+func NewInputTextCallbackDataEmpty() *InputTextCallbackData {
+	return &InputTextCallbackData{CData: new(C.ImGuiInputTextCallbackData)}
 }
 
 // NewInputTextCallbackDataFromC creates InputTextCallbackData from its C pointer.
@@ -1897,6 +2112,11 @@ func (self InputTextDeactivatedState) C() (C.ImGuiInputTextDeactivatedState, fun
 	return *result, fn
 }
 
+// NewEmptyInputTextDeactivatedState creates InputTextDeactivatedState with its 0 value.
+func NewInputTextDeactivatedStateEmpty() *InputTextDeactivatedState {
+	return &InputTextDeactivatedState{CData: new(C.ImGuiInputTextDeactivatedState)}
+}
+
 // NewInputTextDeactivatedStateFromC creates InputTextDeactivatedState from its C pointer.
 // SRC ~= *C.ImGuiInputTextDeactivatedState
 func NewInputTextDeactivatedStateFromC[SRC any](cvalue SRC) *InputTextDeactivatedState {
@@ -1916,6 +2136,11 @@ func (self *InputTextState) Handle() (result *C.ImGuiInputTextState, fin func())
 func (self InputTextState) C() (C.ImGuiInputTextState, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyInputTextState creates InputTextState with its 0 value.
+func NewInputTextStateEmpty() *InputTextState {
+	return &InputTextState{CData: new(C.ImGuiInputTextState)}
 }
 
 // NewInputTextStateFromC creates InputTextState from its C pointer.
@@ -1959,6 +2184,11 @@ func (self KeyData) C() (C.ImGuiKeyData, func()) {
 	return *result, fn
 }
 
+// NewEmptyKeyData creates KeyData with its 0 value.
+func NewKeyDataEmpty() *KeyData {
+	return &KeyData{CData: new(C.ImGuiKeyData)}
+}
+
 // NewKeyDataFromC creates KeyData from its C pointer.
 // SRC ~= *C.ImGuiKeyData
 func NewKeyDataFromC[SRC any](cvalue SRC) *KeyData {
@@ -1980,6 +2210,11 @@ func (self KeyOwnerData) C() (C.ImGuiKeyOwnerData, func()) {
 	return *result, fn
 }
 
+// NewEmptyKeyOwnerData creates KeyOwnerData with its 0 value.
+func NewKeyOwnerDataEmpty() *KeyOwnerData {
+	return &KeyOwnerData{CData: new(C.ImGuiKeyOwnerData)}
+}
+
 // NewKeyOwnerDataFromC creates KeyOwnerData from its C pointer.
 // SRC ~= *C.ImGuiKeyOwnerData
 func NewKeyOwnerDataFromC[SRC any](cvalue SRC) *KeyOwnerData {
@@ -1999,6 +2234,11 @@ func (self *KeyRoutingData) Handle() (result *C.ImGuiKeyRoutingData, fin func())
 func (self KeyRoutingData) C() (C.ImGuiKeyRoutingData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyKeyRoutingData creates KeyRoutingData with its 0 value.
+func NewKeyRoutingDataEmpty() *KeyRoutingData {
+	return &KeyRoutingData{CData: new(C.ImGuiKeyRoutingData)}
 }
 
 // NewKeyRoutingDataFromC creates KeyRoutingData from its C pointer.
@@ -2042,6 +2282,11 @@ func (self KeyRoutingTable) C() (C.ImGuiKeyRoutingTable, func()) {
 	return *result, fn
 }
 
+// NewEmptyKeyRoutingTable creates KeyRoutingTable with its 0 value.
+func NewKeyRoutingTableEmpty() *KeyRoutingTable {
+	return &KeyRoutingTable{CData: new(C.ImGuiKeyRoutingTable)}
+}
+
 // NewKeyRoutingTableFromC creates KeyRoutingTable from its C pointer.
 // SRC ~= *C.ImGuiKeyRoutingTable
 func NewKeyRoutingTableFromC[SRC any](cvalue SRC) *KeyRoutingTable {
@@ -2061,6 +2306,11 @@ func (self *LastItemData) Handle() (result *C.ImGuiLastItemData, fin func()) {
 func (self LastItemData) C() (C.ImGuiLastItemData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyLastItemData creates LastItemData with its 0 value.
+func NewLastItemDataEmpty() *LastItemData {
+	return &LastItemData{CData: new(C.ImGuiLastItemData)}
 }
 
 // NewLastItemDataFromC creates LastItemData from its C pointer.
@@ -2084,6 +2334,11 @@ func (self ListClipper) C() (C.ImGuiListClipper, func()) {
 	return *result, fn
 }
 
+// NewEmptyListClipper creates ListClipper with its 0 value.
+func NewListClipperEmpty() *ListClipper {
+	return &ListClipper{CData: new(C.ImGuiListClipper)}
+}
+
 // NewListClipperFromC creates ListClipper from its C pointer.
 // SRC ~= *C.ImGuiListClipper
 func NewListClipperFromC[SRC any](cvalue SRC) *ListClipper {
@@ -2103,6 +2358,11 @@ func (self *ListClipperData) Handle() (result *C.ImGuiListClipperData, fin func(
 func (self ListClipperData) C() (C.ImGuiListClipperData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyListClipperData creates ListClipperData with its 0 value.
+func NewListClipperDataEmpty() *ListClipperData {
+	return &ListClipperData{CData: new(C.ImGuiListClipperData)}
 }
 
 // NewListClipperDataFromC creates ListClipperData from its C pointer.
@@ -2126,6 +2386,11 @@ func (self ListClipperRange) C() (C.ImGuiListClipperRange, func()) {
 	return *result, fn
 }
 
+// NewEmptyListClipperRange creates ListClipperRange with its 0 value.
+func NewListClipperRangeEmpty() *ListClipperRange {
+	return &ListClipperRange{CData: new(C.ImGuiListClipperRange)}
+}
+
 // NewListClipperRangeFromC creates ListClipperRange from its C pointer.
 // SRC ~= *C.ImGuiListClipperRange
 func NewListClipperRangeFromC[SRC any](cvalue SRC) *ListClipperRange {
@@ -2145,6 +2410,11 @@ func (self *LocEntry) Handle() (result *C.ImGuiLocEntry, fin func()) {
 func (self LocEntry) C() (C.ImGuiLocEntry, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyLocEntry creates LocEntry with its 0 value.
+func NewLocEntryEmpty() *LocEntry {
+	return &LocEntry{CData: new(C.ImGuiLocEntry)}
 }
 
 // NewLocEntryFromC creates LocEntry from its C pointer.
@@ -2614,6 +2884,11 @@ func (self MenuColumns) C() (C.ImGuiMenuColumns, func()) {
 	return *result, fn
 }
 
+// NewEmptyMenuColumns creates MenuColumns with its 0 value.
+func NewMenuColumnsEmpty() *MenuColumns {
+	return &MenuColumns{CData: new(C.ImGuiMenuColumns)}
+}
+
 // NewMenuColumnsFromC creates MenuColumns from its C pointer.
 // SRC ~= *C.ImGuiMenuColumns
 func NewMenuColumnsFromC[SRC any](cvalue SRC) *MenuColumns {
@@ -2633,6 +2908,11 @@ func (self *MetricsConfig) Handle() (result *C.ImGuiMetricsConfig, fin func()) {
 func (self MetricsConfig) C() (C.ImGuiMetricsConfig, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyMetricsConfig creates MetricsConfig with its 0 value.
+func NewMetricsConfigEmpty() *MetricsConfig {
+	return &MetricsConfig{CData: new(C.ImGuiMetricsConfig)}
 }
 
 // NewMetricsConfigFromC creates MetricsConfig from its C pointer.
@@ -2656,6 +2936,11 @@ func (self MultiSelectIO) C() (C.ImGuiMultiSelectIO, func()) {
 	return *result, fn
 }
 
+// NewEmptyMultiSelectIO creates MultiSelectIO with its 0 value.
+func NewMultiSelectIOEmpty() *MultiSelectIO {
+	return &MultiSelectIO{CData: new(C.ImGuiMultiSelectIO)}
+}
+
 // NewMultiSelectIOFromC creates MultiSelectIO from its C pointer.
 // SRC ~= *C.ImGuiMultiSelectIO
 func NewMultiSelectIOFromC[SRC any](cvalue SRC) *MultiSelectIO {
@@ -2675,6 +2960,11 @@ func (self *MultiSelectState) Handle() (result *C.ImGuiMultiSelectState, fin fun
 func (self MultiSelectState) C() (C.ImGuiMultiSelectState, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyMultiSelectState creates MultiSelectState with its 0 value.
+func NewMultiSelectStateEmpty() *MultiSelectState {
+	return &MultiSelectState{CData: new(C.ImGuiMultiSelectState)}
 }
 
 // NewMultiSelectStateFromC creates MultiSelectState from its C pointer.
@@ -2698,6 +2988,11 @@ func (self MultiSelectTempData) C() (C.ImGuiMultiSelectTempData, func()) {
 	return *result, fn
 }
 
+// NewEmptyMultiSelectTempData creates MultiSelectTempData with its 0 value.
+func NewMultiSelectTempDataEmpty() *MultiSelectTempData {
+	return &MultiSelectTempData{CData: new(C.ImGuiMultiSelectTempData)}
+}
+
 // NewMultiSelectTempDataFromC creates MultiSelectTempData from its C pointer.
 // SRC ~= *C.ImGuiMultiSelectTempData
 func NewMultiSelectTempDataFromC[SRC any](cvalue SRC) *MultiSelectTempData {
@@ -2717,6 +3012,11 @@ func (self *NavItemData) Handle() (result *C.ImGuiNavItemData, fin func()) {
 func (self NavItemData) C() (C.ImGuiNavItemData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyNavItemData creates NavItemData with its 0 value.
+func NewNavItemDataEmpty() *NavItemData {
+	return &NavItemData{CData: new(C.ImGuiNavItemData)}
 }
 
 // NewNavItemDataFromC creates NavItemData from its C pointer.
@@ -2740,6 +3040,11 @@ func (self NextItemData) C() (C.ImGuiNextItemData, func()) {
 	return *result, fn
 }
 
+// NewEmptyNextItemData creates NextItemData with its 0 value.
+func NewNextItemDataEmpty() *NextItemData {
+	return &NextItemData{CData: new(C.ImGuiNextItemData)}
+}
+
 // NewNextItemDataFromC creates NextItemData from its C pointer.
 // SRC ~= *C.ImGuiNextItemData
 func NewNextItemDataFromC[SRC any](cvalue SRC) *NextItemData {
@@ -2759,6 +3064,11 @@ func (self *NextWindowData) Handle() (result *C.ImGuiNextWindowData, fin func())
 func (self NextWindowData) C() (C.ImGuiNextWindowData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyNextWindowData creates NextWindowData with its 0 value.
+func NewNextWindowDataEmpty() *NextWindowData {
+	return &NextWindowData{CData: new(C.ImGuiNextWindowData)}
 }
 
 // NewNextWindowDataFromC creates NextWindowData from its C pointer.
@@ -2782,6 +3092,11 @@ func (self OldColumnData) C() (C.ImGuiOldColumnData, func()) {
 	return *result, fn
 }
 
+// NewEmptyOldColumnData creates OldColumnData with its 0 value.
+func NewOldColumnDataEmpty() *OldColumnData {
+	return &OldColumnData{CData: new(C.ImGuiOldColumnData)}
+}
+
 // NewOldColumnDataFromC creates OldColumnData from its C pointer.
 // SRC ~= *C.ImGuiOldColumnData
 func NewOldColumnDataFromC[SRC any](cvalue SRC) *OldColumnData {
@@ -2801,6 +3116,11 @@ func (self *OldColumns) Handle() (result *C.ImGuiOldColumns, fin func()) {
 func (self OldColumns) C() (C.ImGuiOldColumns, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyOldColumns creates OldColumns with its 0 value.
+func NewOldColumnsEmpty() *OldColumns {
+	return &OldColumns{CData: new(C.ImGuiOldColumns)}
 }
 
 // NewOldColumnsFromC creates OldColumns from its C pointer.
@@ -2824,6 +3144,11 @@ func (self OnceUponAFrame) C() (C.ImGuiOnceUponAFrame, func()) {
 	return *result, fn
 }
 
+// NewEmptyOnceUponAFrame creates OnceUponAFrame with its 0 value.
+func NewOnceUponAFrameEmpty() *OnceUponAFrame {
+	return &OnceUponAFrame{CData: new(C.ImGuiOnceUponAFrame)}
+}
+
 // NewOnceUponAFrameFromC creates OnceUponAFrame from its C pointer.
 // SRC ~= *C.ImGuiOnceUponAFrame
 func NewOnceUponAFrameFromC[SRC any](cvalue SRC) *OnceUponAFrame {
@@ -2843,6 +3168,11 @@ func (self *Payload) Handle() (result *C.ImGuiPayload, fin func()) {
 func (self Payload) C() (C.ImGuiPayload, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyPayload creates Payload with its 0 value.
+func NewPayloadEmpty() *Payload {
+	return &Payload{CData: new(C.ImGuiPayload)}
 }
 
 // NewPayloadFromC creates Payload from its C pointer.
@@ -2866,6 +3196,11 @@ func (self PlatformIO) C() (C.ImGuiPlatformIO, func()) {
 	return *result, fn
 }
 
+// NewEmptyPlatformIO creates PlatformIO with its 0 value.
+func NewPlatformIOEmpty() *PlatformIO {
+	return &PlatformIO{CData: new(C.ImGuiPlatformIO)}
+}
+
 // NewPlatformIOFromC creates PlatformIO from its C pointer.
 // SRC ~= *C.ImGuiPlatformIO
 func NewPlatformIOFromC[SRC any](cvalue SRC) *PlatformIO {
@@ -2885,6 +3220,11 @@ func (self *PlatformImeData) Handle() (result *C.ImGuiPlatformImeData, fin func(
 func (self PlatformImeData) C() (C.ImGuiPlatformImeData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyPlatformImeData creates PlatformImeData with its 0 value.
+func NewPlatformImeDataEmpty() *PlatformImeData {
+	return &PlatformImeData{CData: new(C.ImGuiPlatformImeData)}
 }
 
 // NewPlatformImeDataFromC creates PlatformImeData from its C pointer.
@@ -2908,6 +3248,11 @@ func (self PlatformMonitor) C() (C.ImGuiPlatformMonitor, func()) {
 	return *result, fn
 }
 
+// NewEmptyPlatformMonitor creates PlatformMonitor with its 0 value.
+func NewPlatformMonitorEmpty() *PlatformMonitor {
+	return &PlatformMonitor{CData: new(C.ImGuiPlatformMonitor)}
+}
+
 // NewPlatformMonitorFromC creates PlatformMonitor from its C pointer.
 // SRC ~= *C.ImGuiPlatformMonitor
 func NewPlatformMonitorFromC[SRC any](cvalue SRC) *PlatformMonitor {
@@ -2927,6 +3272,11 @@ func (self *PopupData) Handle() (result *C.ImGuiPopupData, fin func()) {
 func (self PopupData) C() (C.ImGuiPopupData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyPopupData creates PopupData with its 0 value.
+func NewPopupDataEmpty() *PopupData {
+	return &PopupData{CData: new(C.ImGuiPopupData)}
 }
 
 // NewPopupDataFromC creates PopupData from its C pointer.
@@ -2950,6 +3300,11 @@ func (self PtrOrIndex) C() (C.ImGuiPtrOrIndex, func()) {
 	return *result, fn
 }
 
+// NewEmptyPtrOrIndex creates PtrOrIndex with its 0 value.
+func NewPtrOrIndexEmpty() *PtrOrIndex {
+	return &PtrOrIndex{CData: new(C.ImGuiPtrOrIndex)}
+}
+
 // NewPtrOrIndexFromC creates PtrOrIndex from its C pointer.
 // SRC ~= *C.ImGuiPtrOrIndex
 func NewPtrOrIndexFromC[SRC any](cvalue SRC) *PtrOrIndex {
@@ -2969,6 +3324,11 @@ func (self *SelectionBasicStorage) Handle() (result *C.ImGuiSelectionBasicStorag
 func (self SelectionBasicStorage) C() (C.ImGuiSelectionBasicStorage, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptySelectionBasicStorage creates SelectionBasicStorage with its 0 value.
+func NewSelectionBasicStorageEmpty() *SelectionBasicStorage {
+	return &SelectionBasicStorage{CData: new(C.ImGuiSelectionBasicStorage)}
 }
 
 // NewSelectionBasicStorageFromC creates SelectionBasicStorage from its C pointer.
@@ -2992,6 +3352,11 @@ func (self SelectionExternalStorage) C() (C.ImGuiSelectionExternalStorage, func(
 	return *result, fn
 }
 
+// NewEmptySelectionExternalStorage creates SelectionExternalStorage with its 0 value.
+func NewSelectionExternalStorageEmpty() *SelectionExternalStorage {
+	return &SelectionExternalStorage{CData: new(C.ImGuiSelectionExternalStorage)}
+}
+
 // NewSelectionExternalStorageFromC creates SelectionExternalStorage from its C pointer.
 // SRC ~= *C.ImGuiSelectionExternalStorage
 func NewSelectionExternalStorageFromC[SRC any](cvalue SRC) *SelectionExternalStorage {
@@ -3011,6 +3376,11 @@ func (self *SelectionRequest) Handle() (result *C.ImGuiSelectionRequest, fin fun
 func (self SelectionRequest) C() (C.ImGuiSelectionRequest, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptySelectionRequest creates SelectionRequest with its 0 value.
+func NewSelectionRequestEmpty() *SelectionRequest {
+	return &SelectionRequest{CData: new(C.ImGuiSelectionRequest)}
 }
 
 // NewSelectionRequestFromC creates SelectionRequest from its C pointer.
@@ -3054,6 +3424,11 @@ func (self SettingsHandler) C() (C.ImGuiSettingsHandler, func()) {
 	return *result, fn
 }
 
+// NewEmptySettingsHandler creates SettingsHandler with its 0 value.
+func NewSettingsHandlerEmpty() *SettingsHandler {
+	return &SettingsHandler{CData: new(C.ImGuiSettingsHandler)}
+}
+
 // NewSettingsHandlerFromC creates SettingsHandler from its C pointer.
 // SRC ~= *C.ImGuiSettingsHandler
 func NewSettingsHandlerFromC[SRC any](cvalue SRC) *SettingsHandler {
@@ -3073,6 +3448,11 @@ func (self *ShrinkWidthItem) Handle() (result *C.ImGuiShrinkWidthItem, fin func(
 func (self ShrinkWidthItem) C() (C.ImGuiShrinkWidthItem, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyShrinkWidthItem creates ShrinkWidthItem with its 0 value.
+func NewShrinkWidthItemEmpty() *ShrinkWidthItem {
+	return &ShrinkWidthItem{CData: new(C.ImGuiShrinkWidthItem)}
 }
 
 // NewShrinkWidthItemFromC creates ShrinkWidthItem from its C pointer.
@@ -3317,6 +3697,11 @@ func (self SizeCallbackData) C() (C.ImGuiSizeCallbackData, func()) {
 	return *result, fn
 }
 
+// NewEmptySizeCallbackData creates SizeCallbackData with its 0 value.
+func NewSizeCallbackDataEmpty() *SizeCallbackData {
+	return &SizeCallbackData{CData: new(C.ImGuiSizeCallbackData)}
+}
+
 // NewSizeCallbackDataFromC creates SizeCallbackData from its C pointer.
 // SRC ~= *C.ImGuiSizeCallbackData
 func NewSizeCallbackDataFromC[SRC any](cvalue SRC) *SizeCallbackData {
@@ -3336,6 +3721,11 @@ func (self *StackLevelInfo) Handle() (result *C.ImGuiStackLevelInfo, fin func())
 func (self StackLevelInfo) C() (C.ImGuiStackLevelInfo, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyStackLevelInfo creates StackLevelInfo with its 0 value.
+func NewStackLevelInfoEmpty() *StackLevelInfo {
+	return &StackLevelInfo{CData: new(C.ImGuiStackLevelInfo)}
 }
 
 // NewStackLevelInfoFromC creates StackLevelInfo from its C pointer.
@@ -3359,6 +3749,11 @@ func (self Storage) C() (C.ImGuiStorage, func()) {
 	return *result, fn
 }
 
+// NewEmptyStorage creates Storage with its 0 value.
+func NewStorageEmpty() *Storage {
+	return &Storage{CData: new(C.ImGuiStorage)}
+}
+
 // NewStorageFromC creates Storage from its C pointer.
 // SRC ~= *C.ImGuiStorage
 func NewStorageFromC[SRC any](cvalue SRC) *Storage {
@@ -3378,6 +3773,11 @@ func (self *StoragePair) Handle() (result *C.ImGuiStoragePair, fin func()) {
 func (self StoragePair) C() (C.ImGuiStoragePair, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyStoragePair creates StoragePair with its 0 value.
+func NewStoragePairEmpty() *StoragePair {
+	return &StoragePair{CData: new(C.ImGuiStoragePair)}
 }
 
 // NewStoragePairFromC creates StoragePair from its C pointer.
@@ -3401,6 +3801,11 @@ func (self Style) C() (C.ImGuiStyle, func()) {
 	return *result, fn
 }
 
+// NewEmptyStyle creates Style with its 0 value.
+func NewStyleEmpty() *Style {
+	return &Style{CData: new(C.ImGuiStyle)}
+}
+
 // NewStyleFromC creates Style from its C pointer.
 // SRC ~= *C.ImGuiStyle
 func NewStyleFromC[SRC any](cvalue SRC) *Style {
@@ -3420,6 +3825,11 @@ func (self *StyleMod) Handle() (result *C.ImGuiStyleMod, fin func()) {
 func (self StyleMod) C() (C.ImGuiStyleMod, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyStyleMod creates StyleMod with its 0 value.
+func NewStyleModEmpty() *StyleMod {
+	return &StyleMod{CData: new(C.ImGuiStyleMod)}
 }
 
 // NewStyleModFromC creates StyleMod from its C pointer.
@@ -3443,6 +3853,11 @@ func (self TabBar) C() (C.ImGuiTabBar, func()) {
 	return *result, fn
 }
 
+// NewEmptyTabBar creates TabBar with its 0 value.
+func NewTabBarEmpty() *TabBar {
+	return &TabBar{CData: new(C.ImGuiTabBar)}
+}
+
 // NewTabBarFromC creates TabBar from its C pointer.
 // SRC ~= *C.ImGuiTabBar
 func NewTabBarFromC[SRC any](cvalue SRC) *TabBar {
@@ -3462,6 +3877,11 @@ func (self *TabItem) Handle() (result *C.ImGuiTabItem, fin func()) {
 func (self TabItem) C() (C.ImGuiTabItem, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyTabItem creates TabItem with its 0 value.
+func NewTabItemEmpty() *TabItem {
+	return &TabItem{CData: new(C.ImGuiTabItem)}
 }
 
 // NewTabItemFromC creates TabItem from its C pointer.
@@ -3485,6 +3905,11 @@ func (self Table) C() (C.ImGuiTable, func()) {
 	return *result, fn
 }
 
+// NewEmptyTable creates Table with its 0 value.
+func NewTableEmpty() *Table {
+	return &Table{CData: new(C.ImGuiTable)}
+}
+
 // NewTableFromC creates Table from its C pointer.
 // SRC ~= *C.ImGuiTable
 func NewTableFromC[SRC any](cvalue SRC) *Table {
@@ -3506,6 +3931,11 @@ func (self TableCellData) C() (C.ImGuiTableCellData, func()) {
 	return *result, fn
 }
 
+// NewEmptyTableCellData creates TableCellData with its 0 value.
+func NewTableCellDataEmpty() *TableCellData {
+	return &TableCellData{CData: new(C.ImGuiTableCellData)}
+}
+
 // NewTableCellDataFromC creates TableCellData from its C pointer.
 // SRC ~= *C.ImGuiTableCellData
 func NewTableCellDataFromC[SRC any](cvalue SRC) *TableCellData {
@@ -3525,6 +3955,11 @@ func (self *TableColumn) Handle() (result *C.ImGuiTableColumn, fin func()) {
 func (self TableColumn) C() (C.ImGuiTableColumn, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyTableColumn creates TableColumn with its 0 value.
+func NewTableColumnEmpty() *TableColumn {
+	return &TableColumn{CData: new(C.ImGuiTableColumn)}
 }
 
 // NewTableColumnFromC creates TableColumn from its C pointer.
@@ -3568,6 +4003,11 @@ func (self TableColumnSettings) C() (C.ImGuiTableColumnSettings, func()) {
 	return *result, fn
 }
 
+// NewEmptyTableColumnSettings creates TableColumnSettings with its 0 value.
+func NewTableColumnSettingsEmpty() *TableColumnSettings {
+	return &TableColumnSettings{CData: new(C.ImGuiTableColumnSettings)}
+}
+
 // NewTableColumnSettingsFromC creates TableColumnSettings from its C pointer.
 // SRC ~= *C.ImGuiTableColumnSettings
 func NewTableColumnSettingsFromC[SRC any](cvalue SRC) *TableColumnSettings {
@@ -3587,6 +4027,11 @@ func (self *TableColumnSortSpecs) Handle() (result *C.ImGuiTableColumnSortSpecs,
 func (self TableColumnSortSpecs) C() (C.ImGuiTableColumnSortSpecs, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyTableColumnSortSpecs creates TableColumnSortSpecs with its 0 value.
+func NewTableColumnSortSpecsEmpty() *TableColumnSortSpecs {
+	return &TableColumnSortSpecs{CData: new(C.ImGuiTableColumnSortSpecs)}
 }
 
 // NewTableColumnSortSpecsFromC creates TableColumnSortSpecs from its C pointer.
@@ -3645,6 +4090,11 @@ func (self TableHeaderData) C() (C.ImGuiTableHeaderData, func()) {
 	return *result, fn
 }
 
+// NewEmptyTableHeaderData creates TableHeaderData with its 0 value.
+func NewTableHeaderDataEmpty() *TableHeaderData {
+	return &TableHeaderData{CData: new(C.ImGuiTableHeaderData)}
+}
+
 // NewTableHeaderDataFromC creates TableHeaderData from its C pointer.
 // SRC ~= *C.ImGuiTableHeaderData
 func NewTableHeaderDataFromC[SRC any](cvalue SRC) *TableHeaderData {
@@ -3664,6 +4114,11 @@ func (self *TableInstanceData) Handle() (result *C.ImGuiTableInstanceData, fin f
 func (self TableInstanceData) C() (C.ImGuiTableInstanceData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyTableInstanceData creates TableInstanceData with its 0 value.
+func NewTableInstanceDataEmpty() *TableInstanceData {
+	return &TableInstanceData{CData: new(C.ImGuiTableInstanceData)}
 }
 
 // NewTableInstanceDataFromC creates TableInstanceData from its C pointer.
@@ -3687,6 +4142,11 @@ func (self TableSettings) C() (C.ImGuiTableSettings, func()) {
 	return *result, fn
 }
 
+// NewEmptyTableSettings creates TableSettings with its 0 value.
+func NewTableSettingsEmpty() *TableSettings {
+	return &TableSettings{CData: new(C.ImGuiTableSettings)}
+}
+
 // NewTableSettingsFromC creates TableSettings from its C pointer.
 // SRC ~= *C.ImGuiTableSettings
 func NewTableSettingsFromC[SRC any](cvalue SRC) *TableSettings {
@@ -3706,6 +4166,11 @@ func (self *TableSortSpecs) Handle() (result *C.ImGuiTableSortSpecs, fin func())
 func (self TableSortSpecs) C() (C.ImGuiTableSortSpecs, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyTableSortSpecs creates TableSortSpecs with its 0 value.
+func NewTableSortSpecsEmpty() *TableSortSpecs {
+	return &TableSortSpecs{CData: new(C.ImGuiTableSortSpecs)}
 }
 
 // NewTableSortSpecsFromC creates TableSortSpecs from its C pointer.
@@ -3729,6 +4194,11 @@ func (self TableTempData) C() (C.ImGuiTableTempData, func()) {
 	return *result, fn
 }
 
+// NewEmptyTableTempData creates TableTempData with its 0 value.
+func NewTableTempDataEmpty() *TableTempData {
+	return &TableTempData{CData: new(C.ImGuiTableTempData)}
+}
+
 // NewTableTempDataFromC creates TableTempData from its C pointer.
 // SRC ~= *C.ImGuiTableTempData
 func NewTableTempDataFromC[SRC any](cvalue SRC) *TableTempData {
@@ -3748,6 +4218,11 @@ func (self *TextBuffer) Handle() (result *C.ImGuiTextBuffer, fin func()) {
 func (self TextBuffer) C() (C.ImGuiTextBuffer, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyTextBuffer creates TextBuffer with its 0 value.
+func NewTextBufferEmpty() *TextBuffer {
+	return &TextBuffer{CData: new(C.ImGuiTextBuffer)}
 }
 
 // NewTextBufferFromC creates TextBuffer from its C pointer.
@@ -3771,6 +4246,11 @@ func (self TextFilter) C() (C.ImGuiTextFilter, func()) {
 	return *result, fn
 }
 
+// NewEmptyTextFilter creates TextFilter with its 0 value.
+func NewTextFilterEmpty() *TextFilter {
+	return &TextFilter{CData: new(C.ImGuiTextFilter)}
+}
+
 // NewTextFilterFromC creates TextFilter from its C pointer.
 // SRC ~= *C.ImGuiTextFilter
 func NewTextFilterFromC[SRC any](cvalue SRC) *TextFilter {
@@ -3790,6 +4270,11 @@ func (self *TextIndex) Handle() (result *C.ImGuiTextIndex, fin func()) {
 func (self TextIndex) C() (C.ImGuiTextIndex, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyTextIndex creates TextIndex with its 0 value.
+func NewTextIndexEmpty() *TextIndex {
+	return &TextIndex{CData: new(C.ImGuiTextIndex)}
 }
 
 // NewTextIndexFromC creates TextIndex from its C pointer.
@@ -3813,6 +4298,11 @@ func (self TextRange) C() (C.ImGuiTextRange, func()) {
 	return *result, fn
 }
 
+// NewEmptyTextRange creates TextRange with its 0 value.
+func NewTextRangeEmpty() *TextRange {
+	return &TextRange{CData: new(C.ImGuiTextRange)}
+}
+
 // NewTextRangeFromC creates TextRange from its C pointer.
 // SRC ~= *C.ImGuiTextRange
 func NewTextRangeFromC[SRC any](cvalue SRC) *TextRange {
@@ -3832,6 +4322,11 @@ func (self *TreeNodeStackData) Handle() (result *C.ImGuiTreeNodeStackData, fin f
 func (self TreeNodeStackData) C() (C.ImGuiTreeNodeStackData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyTreeNodeStackData creates TreeNodeStackData with its 0 value.
+func NewTreeNodeStackDataEmpty() *TreeNodeStackData {
+	return &TreeNodeStackData{CData: new(C.ImGuiTreeNodeStackData)}
 }
 
 // NewTreeNodeStackDataFromC creates TreeNodeStackData from its C pointer.
@@ -3855,6 +4350,11 @@ func (self TypingSelectRequest) C() (C.ImGuiTypingSelectRequest, func()) {
 	return *result, fn
 }
 
+// NewEmptyTypingSelectRequest creates TypingSelectRequest with its 0 value.
+func NewTypingSelectRequestEmpty() *TypingSelectRequest {
+	return &TypingSelectRequest{CData: new(C.ImGuiTypingSelectRequest)}
+}
+
 // NewTypingSelectRequestFromC creates TypingSelectRequest from its C pointer.
 // SRC ~= *C.ImGuiTypingSelectRequest
 func NewTypingSelectRequestFromC[SRC any](cvalue SRC) *TypingSelectRequest {
@@ -3874,6 +4374,11 @@ func (self *TypingSelectState) Handle() (result *C.ImGuiTypingSelectState, fin f
 func (self TypingSelectState) C() (C.ImGuiTypingSelectState, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyTypingSelectState creates TypingSelectState with its 0 value.
+func NewTypingSelectStateEmpty() *TypingSelectState {
+	return &TypingSelectState{CData: new(C.ImGuiTypingSelectState)}
 }
 
 // NewTypingSelectStateFromC creates TypingSelectState from its C pointer.
@@ -3897,6 +4402,11 @@ func (self Viewport) C() (C.ImGuiViewport, func()) {
 	return *result, fn
 }
 
+// NewEmptyViewport creates Viewport with its 0 value.
+func NewViewportEmpty() *Viewport {
+	return &Viewport{CData: new(C.ImGuiViewport)}
+}
+
 // NewViewportFromC creates Viewport from its C pointer.
 // SRC ~= *C.ImGuiViewport
 func NewViewportFromC[SRC any](cvalue SRC) *Viewport {
@@ -3916,6 +4426,11 @@ func (self *ViewportP) Handle() (result *C.ImGuiViewportP, fin func()) {
 func (self ViewportP) C() (C.ImGuiViewportP, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyViewportP creates ViewportP with its 0 value.
+func NewViewportPEmpty() *ViewportP {
+	return &ViewportP{CData: new(C.ImGuiViewportP)}
 }
 
 // NewViewportPFromC creates ViewportP from its C pointer.
@@ -3939,6 +4454,11 @@ func (self Window) C() (C.ImGuiWindow, func()) {
 	return *result, fn
 }
 
+// NewEmptyWindow creates Window with its 0 value.
+func NewWindowEmpty() *Window {
+	return &Window{CData: new(C.ImGuiWindow)}
+}
+
 // NewWindowFromC creates Window from its C pointer.
 // SRC ~= *C.ImGuiWindow
 func NewWindowFromC[SRC any](cvalue SRC) *Window {
@@ -3958,6 +4478,11 @@ func (self *WindowClass) Handle() (result *C.ImGuiWindowClass, fin func()) {
 func (self WindowClass) C() (C.ImGuiWindowClass, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyWindowClass creates WindowClass with its 0 value.
+func NewWindowClassEmpty() *WindowClass {
+	return &WindowClass{CData: new(C.ImGuiWindowClass)}
 }
 
 // NewWindowClassFromC creates WindowClass from its C pointer.
@@ -3981,6 +4506,11 @@ func (self WindowDockStyle) C() (C.ImGuiWindowDockStyle, func()) {
 	return *result, fn
 }
 
+// NewEmptyWindowDockStyle creates WindowDockStyle with its 0 value.
+func NewWindowDockStyleEmpty() *WindowDockStyle {
+	return &WindowDockStyle{CData: new(C.ImGuiWindowDockStyle)}
+}
+
 // NewWindowDockStyleFromC creates WindowDockStyle from its C pointer.
 // SRC ~= *C.ImGuiWindowDockStyle
 func NewWindowDockStyleFromC[SRC any](cvalue SRC) *WindowDockStyle {
@@ -4000,6 +4530,11 @@ func (self *WindowSettings) Handle() (result *C.ImGuiWindowSettings, fin func())
 func (self WindowSettings) C() (C.ImGuiWindowSettings, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyWindowSettings creates WindowSettings with its 0 value.
+func NewWindowSettingsEmpty() *WindowSettings {
+	return &WindowSettings{CData: new(C.ImGuiWindowSettings)}
 }
 
 // NewWindowSettingsFromC creates WindowSettings from its C pointer.
@@ -4023,6 +4558,11 @@ func (self WindowStackData) C() (C.ImGuiWindowStackData, func()) {
 	return *result, fn
 }
 
+// NewEmptyWindowStackData creates WindowStackData with its 0 value.
+func NewWindowStackDataEmpty() *WindowStackData {
+	return &WindowStackData{CData: new(C.ImGuiWindowStackData)}
+}
+
 // NewWindowStackDataFromC creates WindowStackData from its C pointer.
 // SRC ~= *C.ImGuiWindowStackData
 func NewWindowStackDataFromC[SRC any](cvalue SRC) *WindowStackData {
@@ -4042,6 +4582,11 @@ func (self *WindowTempData) Handle() (result *C.ImGuiWindowTempData, fin func())
 func (self WindowTempData) C() (C.ImGuiWindowTempData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyWindowTempData creates WindowTempData with its 0 value.
+func NewWindowTempDataEmpty() *WindowTempData {
+	return &WindowTempData{CData: new(C.ImGuiWindowTempData)}
 }
 
 // NewWindowTempDataFromC creates WindowTempData from its C pointer.
@@ -4103,6 +4648,11 @@ func (self *Vec1) Handle() (result *C.ImVec1, fin func()) {
 func (self Vec1) C() (C.ImVec1, func()) {
 	result, fn := self.Handle()
 	return *result, fn
+}
+
+// NewEmptyVec1 creates Vec1 with its 0 value.
+func NewVec1Empty() *Vec1 {
+	return &Vec1{CData: new(C.ImVec1)}
 }
 
 // NewVec1FromC creates Vec1 from its C pointer.
