@@ -49,20 +49,27 @@ We had to bring this unpleasantness to Go as well.
 Our code defaults to pointers, but you can easily convert your slice to a pointer by simply `&(slice[0])`.
 You can also use `imgui.SliceToPtr`.
 
+## Callbacks
+
+Please note that at the moment (November 2024) go (1.23) does not support passing annonymous functions to C via CGO.
+We have it workarounded by pre-generating large amount of global functions and a pool.
+For details see https://github.com/AllenDang/cimgui-go/issues/224 .
+Just be aware of the limitation that you may run out of pre-generated pool and experience a crash.
+
 ## Function coverage
 Currently most of the functions are generated, except memory related stuff (eg. memory allocator, storage management, etc...).
 If you find any function is missing, report an issue.
 
-## Generate binding
+# Generate binding
 Install [GNU make](https://www.gnu.org/software/make/manual/make.html) and run `make` to re-generate bunding.
 
-## Update
+# Update
 
 To update to the latest version of dependencies, run `make update`.
 After doing this, commit changes and navigate to GitHub.
 In Actions tab, manually trigger `Compile cimgui` workflows.
 
-## How does it work?
+# How does it work?
 
 - `cwrappers/` directory holds C binding for C++ Dear ImGui libraries
 - generator bases on `cwrappers/{package_name}_templates` and generates all necessary GO/C code placing it in `{pkgname}/` directories in the root of cimgui-go
