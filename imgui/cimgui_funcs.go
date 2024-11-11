@@ -2914,7 +2914,7 @@ func (self *TextBuffer) Begin() string {
 	}()
 }
 
-func (self *TextBuffer) cstr() string {
+func (self *TextBuffer) Cstr() string {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
@@ -3064,7 +3064,7 @@ func (self *TextIndex) InternalClear() {
 	selfFin()
 }
 
-func (self *TextIndex) Internalgetlinebegin(base string, n int32) string {
+func (self *TextIndex) InternalGetlinebegin(base string, n int32) string {
 	selfArg, selfFin := self.Handle()
 	baseArg, baseFin := internal.WrapString[C.char](base)
 
@@ -3079,7 +3079,7 @@ func (self *TextIndex) Internalgetlinebegin(base string, n int32) string {
 	}()
 }
 
-func (self *TextIndex) Internalgetlineend(base string, n int32) string {
+func (self *TextIndex) InternalGetlineend(base string, n int32) string {
 	selfArg, selfFin := self.Handle()
 	baseArg, baseFin := internal.WrapString[C.char](base)
 

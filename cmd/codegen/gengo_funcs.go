@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"unicode"
 
 	"github.com/kpango/glg"
 )
@@ -297,6 +298,8 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver GoIdentifier, fu
 	}
 
 	goFuncName := funcName.renameGoIdentifier(g.context)
+	// make sure goFuncName is exported
+	goFuncName = GoIdentifier(unicode.ToUpper(rune(goFuncName[0]))) + goFuncName[1:]
 
 	// if file comes from imgui_internal.h,prefix Internal is added.
 	// ref: https://github.com/AllenDang/cimgui-go/pull/118
