@@ -349,7 +349,7 @@ func (c Formatter) C() (C.ImPlotFormatter, func()) {
 }
 
 func wrapFormatter(cb Formatter, value C.double, buff *C.char, size C.int, user_data unsafe.Pointer) C.int {
-	result := cb(float64(value), func() string { result := buff; defer C.free(unsafe.Pointer(result)); return C.GoString(result) }(), int32(size), unsafe.Pointer(user_data))
+	result := cb(float64(value), C.GoString(buff), int32(size), unsafe.Pointer(user_data))
 
 	defer func() {
 	}()

@@ -27,8 +27,8 @@ func getReturnWrapper(
 		"unsigned char":       simpleR("uint", "C.char"),
 		"const unsigned char": simpleR("uint", "C.char"),
 		"unsigned char*":      {"*uint", "(*uint)(unsafe.Pointer(%s))", "C.uchar"}, // NOTE: This should work but I'm not 100% sure
-		"char*":               {"string", "func() string {result := %s; defer C.free(unsafe.Pointer(result)); return C.GoString(result) }()", "*C.char"},
-		"const char*":         {"string", "func() string {result := %s; defer C.free(unsafe.Pointer(result)); return C.GoString(result) }()", "*C.char"},
+		"char*":               {"string", "C.GoString(%s)", "*C.char"},
+		"const char*":         {"string", "C.GoString(%s)", "*C.char"},
 		"const ImWchar*":      simpleR("(*Wchar)", "*C.ImWchar"),
 		"ImWchar*":            simpleR("(*Wchar)", "*C.ImWchar"),
 		"ImWchar":             simpleR("Wchar", "C.ImWchar"),

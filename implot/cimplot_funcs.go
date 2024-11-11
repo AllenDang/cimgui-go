@@ -14,7 +14,6 @@ import (
 // #include "../imgui/extra_types.h"
 // #include "cimplot_structs_accessor.h"
 // #include "cimplot_wrapper.h"
-// #include "stdlib.h"
 import "C"
 
 func (self *AlignmentData) Begin() {
@@ -79,11 +78,7 @@ func (self *AnnotationCollection) Text(idx int32) string {
 	defer func() {
 		selfFin()
 	}()
-	return func() string {
-		result := C.ImPlotAnnotationCollection_GetText(internal.ReinterpretCast[*C.ImPlotAnnotationCollection](selfArg), C.int(idx))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.ImPlotAnnotationCollection_GetText(internal.ReinterpretCast[*C.ImPlotAnnotationCollection](selfArg), C.int(idx)))
 }
 
 func NewAnnotationCollection() *AnnotationCollection {
@@ -493,11 +488,7 @@ func (self *ColormapData) Name(cmap Colormap) string {
 	defer func() {
 		selfFin()
 	}()
-	return func() string {
-		result := C.ImPlotColormapData_GetName(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.ImPlotColormapData_GetName(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap)))
 }
 
 func (self *ColormapData) Table(cmap Colormap) *uint32 {
@@ -695,11 +686,7 @@ func (self *ItemGroup) LegendLabel(i int32) string {
 	defer func() {
 		selfFin()
 	}()
-	return func() string {
-		result := C.ImPlotItemGroup_GetLegendLabel(internal.ReinterpretCast[*C.ImPlotItemGroup](selfArg), C.int(i))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.ImPlotItemGroup_GetLegendLabel(internal.ReinterpretCast[*C.ImPlotItemGroup](selfArg), C.int(i)))
 }
 
 func (self *ItemGroup) OrAddItem(id imgui.ID) *Item {
@@ -829,11 +816,7 @@ func (self *Plot) AxisLabel(axis Axis) string {
 		selfFin()
 		axisFin()
 	}()
-	return func() string {
-		result := C.ImPlotPlot_GetAxisLabel(internal.ReinterpretCast[*C.ImPlotPlot](selfArg), internal.ReinterpretCast[C.ImPlotAxis](axisArg))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.ImPlotPlot_GetAxisLabel(internal.ReinterpretCast[*C.ImPlotPlot](selfArg), internal.ReinterpretCast[C.ImPlotAxis](axisArg)))
 }
 
 func (self *Plot) Title() string {
@@ -842,11 +825,7 @@ func (self *Plot) Title() string {
 	defer func() {
 		selfFin()
 	}()
-	return func() string {
-		result := C.ImPlotPlot_GetTitle(internal.ReinterpretCast[*C.ImPlotPlot](selfArg))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.ImPlotPlot_GetTitle(internal.ReinterpretCast[*C.ImPlotPlot](selfArg)))
 }
 
 func (self *Plot) HasTitle() bool {
@@ -1129,11 +1108,7 @@ func (self *TagCollection) Text(idx int32) string {
 	defer func() {
 		selfFin()
 	}()
-	return func() string {
-		result := C.ImPlotTagCollection_GetText(internal.ReinterpretCast[*C.ImPlotTagCollection](selfArg), C.int(idx))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.ImPlotTagCollection_GetText(internal.ReinterpretCast[*C.ImPlotTagCollection](selfArg), C.int(idx)))
 }
 
 func NewTagCollection() *TagCollection {
@@ -1204,11 +1179,7 @@ func (self *Ticker) TextInt(idx int32) string {
 	defer func() {
 		selfFin()
 	}()
-	return func() string {
-		result := C.ImPlotTicker_GetText_Int(internal.ReinterpretCast[*C.ImPlotTicker](selfArg), C.int(idx))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.ImPlotTicker_GetText_Int(internal.ReinterpretCast[*C.ImPlotTicker](selfArg), C.int(idx)))
 }
 
 func (self *Ticker) TextPlotTick(tick Tick) string {
@@ -1219,11 +1190,7 @@ func (self *Ticker) TextPlotTick(tick Tick) string {
 		selfFin()
 		tickFin()
 	}()
-	return func() string {
-		result := C.ImPlotTicker_GetText_PlotTick(internal.ReinterpretCast[*C.ImPlotTicker](selfArg), internal.ReinterpretCast[C.ImPlotTick](tickArg))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.ImPlotTicker_GetText_PlotTick(internal.ReinterpretCast[*C.ImPlotTicker](selfArg), internal.ReinterpretCast[C.ImPlotTick](tickArg)))
 }
 
 func NewTicker() *Ticker {
@@ -2031,11 +1998,7 @@ func GetColormapIndex(name string) Colormap {
 }
 
 func GetColormapName(cmap Colormap) string {
-	return func() string {
-		result := C.ImPlot_GetColormapName(C.ImPlotColormap(cmap))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.ImPlot_GetColormapName(C.ImPlotColormap(cmap)))
 }
 
 // GetColormapSizeV parameter default value hint:
@@ -2102,11 +2065,7 @@ func GetLocationPosV(outer_rect imgui.Rect, inner_size imgui.Vec2, location Loca
 }
 
 func GetMarkerName(idx Marker) string {
-	return func() string {
-		result := C.ImPlot_GetMarkerName(C.ImPlotMarker(idx))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.ImPlot_GetMarkerName(C.ImPlotMarker(idx)))
 }
 
 func GetPlot(title string) *Plot {
@@ -2191,11 +2150,7 @@ func GetStyle() *Style {
 }
 
 func GetStyleColorName(idx Col) string {
-	return func() string {
-		result := C.ImPlot_GetStyleColorName(C.ImPlotCol(idx))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.ImPlot_GetStyleColorName(C.ImPlotCol(idx)))
 }
 
 func GetStyleColorU32(idx Col) uint32 {
