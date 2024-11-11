@@ -122,6 +122,29 @@ func UnderLine(col_ imgui.Color) {
 	C.UnderLine(internal.ReinterpretCast[C.ImColor](col_.ToC()))
 }
 
+func DefaultMarkdownFormatCallback(markdownFormatInfo_ MarkdownFormatInfo, start_ bool) {
+	markdownFormatInfo_Arg, markdownFormatInfo_Fin := markdownFormatInfo_.C()
+	C.defaultMarkdownFormatCallback(internal.ReinterpretCast[C.MarkdownFormatInfo](markdownFormatInfo_Arg), C.bool(start_))
+
+	markdownFormatInfo_Fin()
+}
+
+func DefaultMarkdownTooltipCallback(data_ MarkdownTooltipCallbackData) {
+	data_Arg, data_Fin := data_.C()
+	C.defaultMarkdownTooltipCallback(internal.ReinterpretCast[C.MarkdownTooltipCallbackData](data_Arg))
+
+	data_Fin()
+}
+
+func Size(self *TextBlock) int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.size(internal.ReinterpretCast[*C.TextBlock](selfArg)))
+}
+
 func RenderLinkTextWrapped(self *TextRegion, text_ string, link_ Link, markdown_ string, mdConfig_ MarkdownConfig, linkHoverStart_ []string) {
 	selfArg, selfFin := self.Handle()
 	text_Arg, text_Fin := internal.WrapString[C.char](text_)
