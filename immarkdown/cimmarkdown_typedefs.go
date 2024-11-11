@@ -155,7 +155,7 @@ func (self Emphasis) C() (C.Emphasis, func()) {
 }
 
 // NewEmptyEmphasis creates Emphasis with its 0 value.
-func NewEmphasisEmpty() *Emphasis {
+func NewEmptyEmphasis() *Emphasis {
 	return &Emphasis{CData: new(C.Emphasis)}
 }
 
@@ -181,7 +181,7 @@ func (self Line) C() (C.Line, func()) {
 }
 
 // NewEmptyLine creates Line with its 0 value.
-func NewLineEmpty() *Line {
+func NewEmptyLine() *Line {
 	return &Line{CData: new(C.Line)}
 }
 
@@ -207,7 +207,7 @@ func (self Link) C() (C.Link, func()) {
 }
 
 // NewEmptyLink creates Link with its 0 value.
-func NewLinkEmpty() *Link {
+func NewEmptyLink() *Link {
 	return &Link{CData: new(C.Link)}
 }
 
@@ -233,7 +233,7 @@ func (self MarkdownConfig) C() (C.MarkdownConfig, func()) {
 }
 
 // NewEmptyMarkdownConfig creates MarkdownConfig with its 0 value.
-func NewMarkdownConfigEmpty() *MarkdownConfig {
+func NewEmptyMarkdownConfig() *MarkdownConfig {
 	return &MarkdownConfig{CData: new(C.MarkdownConfig)}
 }
 
@@ -481,7 +481,7 @@ func (self MarkdownFormatInfo) C() (C.MarkdownFormatInfo, func()) {
 }
 
 // NewEmptyMarkdownFormatInfo creates MarkdownFormatInfo with its 0 value.
-func NewMarkdownFormatInfoEmpty() *MarkdownFormatInfo {
+func NewEmptyMarkdownFormatInfo() *MarkdownFormatInfo {
 	return &MarkdownFormatInfo{CData: new(C.MarkdownFormatInfo)}
 }
 
@@ -507,7 +507,7 @@ func (self MarkdownHeadingFormat) C() (C.MarkdownHeadingFormat, func()) {
 }
 
 // NewEmptyMarkdownHeadingFormat creates MarkdownHeadingFormat with its 0 value.
-func NewMarkdownHeadingFormatEmpty() *MarkdownHeadingFormat {
+func NewEmptyMarkdownHeadingFormat() *MarkdownHeadingFormat {
 	return &MarkdownHeadingFormat{CData: new(C.MarkdownHeadingFormat)}
 }
 
@@ -760,7 +760,7 @@ func (self MarkdownImageData) C() (C.MarkdownImageData, func()) {
 }
 
 // NewEmptyMarkdownImageData creates MarkdownImageData with its 0 value.
-func NewMarkdownImageDataEmpty() *MarkdownImageData {
+func NewEmptyMarkdownImageData() *MarkdownImageData {
 	return &MarkdownImageData{CData: new(C.MarkdownImageData)}
 }
 
@@ -1008,7 +1008,7 @@ func (self MarkdownLinkCallbackData) C() (C.MarkdownLinkCallbackData, func()) {
 }
 
 // NewEmptyMarkdownLinkCallbackData creates MarkdownLinkCallbackData with its 0 value.
-func NewMarkdownLinkCallbackDataEmpty() *MarkdownLinkCallbackData {
+func NewEmptyMarkdownLinkCallbackData() *MarkdownLinkCallbackData {
 	return &MarkdownLinkCallbackData{CData: new(C.MarkdownLinkCallbackData)}
 }
 
@@ -1256,7 +1256,7 @@ func (self MarkdownTooltipCallbackData) C() (C.MarkdownTooltipCallbackData, func
 }
 
 // NewEmptyMarkdownTooltipCallbackData creates MarkdownTooltipCallbackData with its 0 value.
-func NewMarkdownTooltipCallbackDataEmpty() *MarkdownTooltipCallbackData {
+func NewEmptyMarkdownTooltipCallbackData() *MarkdownTooltipCallbackData {
 	return &MarkdownTooltipCallbackData{CData: new(C.MarkdownTooltipCallbackData)}
 }
 
@@ -1282,7 +1282,7 @@ func (self TextBlock) C() (C.TextBlock, func()) {
 }
 
 // NewEmptyTextBlock creates TextBlock with its 0 value.
-func NewTextBlockEmpty() *TextBlock {
+func NewEmptyTextBlock() *TextBlock {
 	return &TextBlock{CData: new(C.TextBlock)}
 }
 
@@ -1308,7 +1308,7 @@ func (self TextRegion) C() (C.TextRegion, func()) {
 }
 
 // NewEmptyTextRegion creates TextRegion with its 0 value.
-func NewTextRegionEmpty() *TextRegion {
+func NewEmptyTextRegion() *TextRegion {
 	return &TextRegion{CData: new(C.TextRegion)}
 }
 

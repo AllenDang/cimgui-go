@@ -27,7 +27,7 @@ func (self Style) C() (C.Style, func()) {
 }
 
 // NewEmptyStyle creates Style with its 0 value.
-func NewStyleEmpty() *Style {
+func NewEmptyStyle() *Style {
 	return &Style{CData: new(C.Style)}
 }
 

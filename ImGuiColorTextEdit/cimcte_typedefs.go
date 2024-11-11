@@ -27,7 +27,7 @@ func (self TextEditor) C() (C.TextEditor, func()) {
 }
 
 // NewEmptyTextEditor creates TextEditor with its 0 value.
-func NewTextEditorEmpty() *TextEditor {
+func NewEmptyTextEditor() *TextEditor {
 	return &TextEditor{CData: new(C.TextEditor)}
 }
 
