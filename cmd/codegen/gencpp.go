@@ -12,19 +12,6 @@ import (
 // In this case text_end is replaced by this argument (of type int)
 const textLenRegisteredName = "text_len"
 
-// Returns if should export func
-func shouldExportFunc(funcName CIdentifier) bool {
-	switch {
-	case unicode.IsUpper(rune(funcName[0])):
-		return true
-	case HasPrefix(funcName, "ig"):
-		return len(funcName) > 2 && unicode.IsUpper(rune(funcName[2]))
-	case HasPrefix(funcName, "imnodes_") && unicode.IsUpper(rune(TrimPrefix(funcName, "imnodes_")[0])):
-		return true
-	}
-	return false
-}
-
 // Generate cpp wrapper and return valid functions
 func generateCppWrapper(prefix, includePath string, funcDefs []FuncDef, ctx *Context) ([]FuncDef, error) {
 	var validFuncs []FuncDef
@@ -83,11 +70,6 @@ extern "C" {
 
 		// check if func name is valid
 		if len(f.FuncName) == 0 {
-			shouldSkip = true
-		}
-
-		// Check lower case for function
-		if !shouldExportFunc(f.FuncName) {
 			shouldSkip = true
 		}
 
