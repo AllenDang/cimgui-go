@@ -127,7 +127,7 @@ func (self FormatterTimeData) C() (C.Formatter_Time_Data, func()) {
 }
 
 // NewEmptyFormatterTimeData creates FormatterTimeData with its 0 value.
-func NewFormatterTimeDataEmpty() *FormatterTimeData {
+func NewEmptyFormatterTimeData() *FormatterTimeData {
 	return &FormatterTimeData{CData: new(C.Formatter_Time_Data)}
 }
 
@@ -153,7 +153,7 @@ func (self AlignmentData) C() (C.ImPlotAlignmentData, func()) {
 }
 
 // NewEmptyAlignmentData creates AlignmentData with its 0 value.
-func NewAlignmentDataEmpty() *AlignmentData {
+func NewEmptyAlignmentData() *AlignmentData {
 	return &AlignmentData{CData: new(C.ImPlotAlignmentData)}
 }
 
@@ -179,7 +179,7 @@ func (self Annotation) C() (C.ImPlotAnnotation, func()) {
 }
 
 // NewEmptyAnnotation creates Annotation with its 0 value.
-func NewAnnotationEmpty() *Annotation {
+func NewEmptyAnnotation() *Annotation {
 	return &Annotation{CData: new(C.ImPlotAnnotation)}
 }
 
@@ -205,7 +205,7 @@ func (self AnnotationCollection) C() (C.ImPlotAnnotationCollection, func()) {
 }
 
 // NewEmptyAnnotationCollection creates AnnotationCollection with its 0 value.
-func NewAnnotationCollectionEmpty() *AnnotationCollection {
+func NewEmptyAnnotationCollection() *AnnotationCollection {
 	return &AnnotationCollection{CData: new(C.ImPlotAnnotationCollection)}
 }
 
@@ -231,7 +231,7 @@ func (self Axis) C() (C.ImPlotAxis, func()) {
 }
 
 // NewEmptyAxis creates Axis with its 0 value.
-func NewAxisEmpty() *Axis {
+func NewEmptyAxis() *Axis {
 	return &Axis{CData: new(C.ImPlotAxis)}
 }
 
@@ -272,7 +272,7 @@ func (self ColormapData) C() (C.ImPlotColormapData, func()) {
 }
 
 // NewEmptyColormapData creates ColormapData with its 0 value.
-func NewColormapDataEmpty() *ColormapData {
+func NewEmptyColormapData() *ColormapData {
 	return &ColormapData{CData: new(C.ImPlotColormapData)}
 }
 
@@ -298,7 +298,7 @@ func (self Context) C() (C.ImPlotContext, func()) {
 }
 
 // NewEmptyContext creates Context with its 0 value.
-func NewContextEmpty() *Context {
+func NewEmptyContext() *Context {
 	return &Context{CData: new(C.ImPlotContext)}
 }
 
@@ -324,7 +324,7 @@ func (self DateTimeSpec) C() (C.ImPlotDateTimeSpec, func()) {
 }
 
 // NewEmptyDateTimeSpec creates DateTimeSpec with its 0 value.
-func NewDateTimeSpecEmpty() *DateTimeSpec {
+func NewEmptyDateTimeSpec() *DateTimeSpec {
 	return &DateTimeSpec{CData: new(C.ImPlotDateTimeSpec)}
 }
 
@@ -800,7 +800,7 @@ func (self InputMap) C() (C.ImPlotInputMap, func()) {
 }
 
 // NewEmptyInputMap creates InputMap with its 0 value.
-func NewInputMapEmpty() *InputMap {
+func NewEmptyInputMap() *InputMap {
 	return &InputMap{CData: new(C.ImPlotInputMap)}
 }
 
@@ -826,7 +826,7 @@ func (self Item) C() (C.ImPlotItem, func()) {
 }
 
 // NewEmptyItem creates Item with its 0 value.
-func NewItemEmpty() *Item {
+func NewEmptyItem() *Item {
 	return &Item{CData: new(C.ImPlotItem)}
 }
 
@@ -852,7 +852,7 @@ func (self ItemGroup) C() (C.ImPlotItemGroup, func()) {
 }
 
 // NewEmptyItemGroup creates ItemGroup with its 0 value.
-func NewItemGroupEmpty() *ItemGroup {
+func NewEmptyItemGroup() *ItemGroup {
 	return &ItemGroup{CData: new(C.ImPlotItemGroup)}
 }
 
@@ -878,7 +878,7 @@ func (self Legend) C() (C.ImPlotLegend, func()) {
 }
 
 // NewEmptyLegend creates Legend with its 0 value.
-func NewLegendEmpty() *Legend {
+func NewEmptyLegend() *Legend {
 	return &Legend{CData: new(C.ImPlotLegend)}
 }
 
@@ -904,7 +904,7 @@ func (self NextItemData) C() (C.ImPlotNextItemData, func()) {
 }
 
 // NewEmptyNextItemData creates NextItemData with its 0 value.
-func NewNextItemDataEmpty() *NextItemData {
+func NewEmptyNextItemData() *NextItemData {
 	return &NextItemData{CData: new(C.ImPlotNextItemData)}
 }
 
@@ -930,7 +930,7 @@ func (self NextPlotData) C() (C.ImPlotNextPlotData, func()) {
 }
 
 // NewEmptyNextPlotData creates NextPlotData with its 0 value.
-func NewNextPlotDataEmpty() *NextPlotData {
+func NewEmptyNextPlotData() *NextPlotData {
 	return &NextPlotData{CData: new(C.ImPlotNextPlotData)}
 }
 
@@ -956,7 +956,7 @@ func (self Plot) C() (C.ImPlotPlot, func()) {
 }
 
 // NewEmptyPlot creates Plot with its 0 value.
-func NewPlotEmpty() *Plot {
+func NewEmptyPlot() *Plot {
 	return &Plot{CData: new(C.ImPlotPlot)}
 }
 
@@ -982,7 +982,7 @@ func (self PointError) C() (C.ImPlotPointError, func()) {
 }
 
 // NewEmptyPointError creates PointError with its 0 value.
-func NewPointErrorEmpty() *PointError {
+func NewEmptyPointError() *PointError {
 	return &PointError{CData: new(C.ImPlotPointError)}
 }
 
@@ -1008,7 +1008,7 @@ func (self Range) C() (C.ImPlotRange, func()) {
 }
 
 // NewEmptyRange creates Range with its 0 value.
-func NewRangeEmpty() *Range {
+func NewEmptyRange() *Range {
 	return &Range{CData: new(C.ImPlotRange)}
 }
 
@@ -1034,7 +1034,7 @@ func (self Rect) C() (C.ImPlotRect, func()) {
 }
 
 // NewEmptyRect creates Rect with its 0 value.
-func NewRectEmpty() *Rect {
+func NewEmptyRect() *Rect {
 	return &Rect{CData: new(C.ImPlotRect)}
 }
 
@@ -1060,7 +1060,7 @@ func (self Style) C() (C.ImPlotStyle, func()) {
 }
 
 // NewEmptyStyle creates Style with its 0 value.
-func NewStyleEmpty() *Style {
+func NewEmptyStyle() *Style {
 	return &Style{CData: new(C.ImPlotStyle)}
 }
 
@@ -1086,7 +1086,7 @@ func (self Subplot) C() (C.ImPlotSubplot, func()) {
 }
 
 // NewEmptySubplot creates Subplot with its 0 value.
-func NewSubplotEmpty() *Subplot {
+func NewEmptySubplot() *Subplot {
 	return &Subplot{CData: new(C.ImPlotSubplot)}
 }
 
@@ -1112,7 +1112,7 @@ func (self Tag) C() (C.ImPlotTag, func()) {
 }
 
 // NewEmptyTag creates Tag with its 0 value.
-func NewTagEmpty() *Tag {
+func NewEmptyTag() *Tag {
 	return &Tag{CData: new(C.ImPlotTag)}
 }
 
@@ -1138,7 +1138,7 @@ func (self TagCollection) C() (C.ImPlotTagCollection, func()) {
 }
 
 // NewEmptyTagCollection creates TagCollection with its 0 value.
-func NewTagCollectionEmpty() *TagCollection {
+func NewEmptyTagCollection() *TagCollection {
 	return &TagCollection{CData: new(C.ImPlotTagCollection)}
 }
 
@@ -1164,7 +1164,7 @@ func (self Tick) C() (C.ImPlotTick, func()) {
 }
 
 // NewEmptyTick creates Tick with its 0 value.
-func NewTickEmpty() *Tick {
+func NewEmptyTick() *Tick {
 	return &Tick{CData: new(C.ImPlotTick)}
 }
 
@@ -1190,7 +1190,7 @@ func (self Ticker) C() (C.ImPlotTicker, func()) {
 }
 
 // NewEmptyTicker creates Ticker with its 0 value.
-func NewTickerEmpty() *Ticker {
+func NewEmptyTicker() *Ticker {
 	return &Ticker{CData: new(C.ImPlotTicker)}
 }
 

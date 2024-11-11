@@ -247,7 +247,7 @@ func (self BitVector) C() (C.ImBitVector, func()) {
 }
 
 // NewEmptyBitVector creates BitVector with its 0 value.
-func NewBitVectorEmpty() *BitVector {
+func NewEmptyBitVector() *BitVector {
 	return &BitVector{CData: new(C.ImBitVector)}
 }
 
@@ -494,7 +494,7 @@ func (self DrawChannel) C() (C.ImDrawChannel, func()) {
 }
 
 // NewEmptyDrawChannel creates DrawChannel with its 0 value.
-func NewDrawChannelEmpty() *DrawChannel {
+func NewEmptyDrawChannel() *DrawChannel {
 	return &DrawChannel{CData: new(C.ImDrawChannel)}
 }
 
@@ -520,7 +520,7 @@ func (self DrawCmd) C() (C.ImDrawCmd, func()) {
 }
 
 // NewEmptyDrawCmd creates DrawCmd with its 0 value.
-func NewDrawCmdEmpty() *DrawCmd {
+func NewEmptyDrawCmd() *DrawCmd {
 	return &DrawCmd{CData: new(C.ImDrawCmd)}
 }
 
@@ -546,7 +546,7 @@ func (self DrawCmdHeader) C() (C.ImDrawCmdHeader, func()) {
 }
 
 // NewEmptyDrawCmdHeader creates DrawCmdHeader with its 0 value.
-func NewDrawCmdHeaderEmpty() *DrawCmdHeader {
+func NewEmptyDrawCmdHeader() *DrawCmdHeader {
 	return &DrawCmdHeader{CData: new(C.ImDrawCmdHeader)}
 }
 
@@ -572,7 +572,7 @@ func (self DrawData) C() (C.ImDrawData, func()) {
 }
 
 // NewEmptyDrawData creates DrawData with its 0 value.
-func NewDrawDataEmpty() *DrawData {
+func NewEmptyDrawData() *DrawData {
 	return &DrawData{CData: new(C.ImDrawData)}
 }
 
@@ -598,7 +598,7 @@ func (self DrawDataBuilder) C() (C.ImDrawDataBuilder, func()) {
 }
 
 // NewEmptyDrawDataBuilder creates DrawDataBuilder with its 0 value.
-func NewDrawDataBuilderEmpty() *DrawDataBuilder {
+func NewEmptyDrawDataBuilder() *DrawDataBuilder {
 	return &DrawDataBuilder{CData: new(C.ImDrawDataBuilder)}
 }
 
@@ -644,7 +644,7 @@ func (self DrawList) C() (C.ImDrawList, func()) {
 }
 
 // NewEmptyDrawList creates DrawList with its 0 value.
-func NewDrawListEmpty() *DrawList {
+func NewEmptyDrawList() *DrawList {
 	return &DrawList{CData: new(C.ImDrawList)}
 }
 
@@ -670,7 +670,7 @@ func (self DrawListSharedData) C() (C.ImDrawListSharedData, func()) {
 }
 
 // NewEmptyDrawListSharedData creates DrawListSharedData with its 0 value.
-func NewDrawListSharedDataEmpty() *DrawListSharedData {
+func NewEmptyDrawListSharedData() *DrawListSharedData {
 	return &DrawListSharedData{CData: new(C.ImDrawListSharedData)}
 }
 
@@ -696,7 +696,7 @@ func (self DrawListSplitter) C() (C.ImDrawListSplitter, func()) {
 }
 
 // NewEmptyDrawListSplitter creates DrawListSplitter with its 0 value.
-func NewDrawListSplitterEmpty() *DrawListSplitter {
+func NewEmptyDrawListSplitter() *DrawListSplitter {
 	return &DrawListSplitter{CData: new(C.ImDrawListSplitter)}
 }
 
@@ -722,7 +722,7 @@ func (self DrawVert) C() (C.ImDrawVert, func()) {
 }
 
 // NewEmptyDrawVert creates DrawVert with its 0 value.
-func NewDrawVertEmpty() *DrawVert {
+func NewEmptyDrawVert() *DrawVert {
 	return &DrawVert{CData: new(C.ImDrawVert)}
 }
 
@@ -748,7 +748,7 @@ func (self Font) C() (C.ImFont, func()) {
 }
 
 // NewEmptyFont creates Font with its 0 value.
-func NewFontEmpty() *Font {
+func NewEmptyFont() *Font {
 	return &Font{CData: new(C.ImFont)}
 }
 
@@ -774,7 +774,7 @@ func (self FontAtlas) C() (C.ImFontAtlas, func()) {
 }
 
 // NewEmptyFontAtlas creates FontAtlas with its 0 value.
-func NewFontAtlasEmpty() *FontAtlas {
+func NewEmptyFontAtlas() *FontAtlas {
 	return &FontAtlas{CData: new(C.ImFontAtlas)}
 }
 
@@ -800,7 +800,7 @@ func (self FontAtlasCustomRect) C() (C.ImFontAtlasCustomRect, func()) {
 }
 
 // NewEmptyFontAtlasCustomRect creates FontAtlasCustomRect with its 0 value.
-func NewFontAtlasCustomRectEmpty() *FontAtlasCustomRect {
+func NewEmptyFontAtlasCustomRect() *FontAtlasCustomRect {
 	return &FontAtlasCustomRect{CData: new(C.ImFontAtlasCustomRect)}
 }
 
@@ -826,7 +826,7 @@ func (self FontBuilderIO) C() (C.ImFontBuilderIO, func()) {
 }
 
 // NewEmptyFontBuilderIO creates FontBuilderIO with its 0 value.
-func NewFontBuilderIOEmpty() *FontBuilderIO {
+func NewEmptyFontBuilderIO() *FontBuilderIO {
 	return &FontBuilderIO{CData: new(C.ImFontBuilderIO)}
 }
 
@@ -852,7 +852,7 @@ func (self FontConfig) C() (C.ImFontConfig, func()) {
 }
 
 // NewEmptyFontConfig creates FontConfig with its 0 value.
-func NewFontConfigEmpty() *FontConfig {
+func NewEmptyFontConfig() *FontConfig {
 	return &FontConfig{CData: new(C.ImFontConfig)}
 }
 
@@ -878,7 +878,7 @@ func (self FontGlyph) C() (C.ImFontGlyph, func()) {
 }
 
 // NewEmptyFontGlyph creates FontGlyph with its 0 value.
-func NewFontGlyphEmpty() *FontGlyph {
+func NewEmptyFontGlyph() *FontGlyph {
 	return &FontGlyph{CData: new(C.ImFontGlyph)}
 }
 
@@ -904,7 +904,7 @@ func (self FontGlyphRangesBuilder) C() (C.ImFontGlyphRangesBuilder, func()) {
 }
 
 // NewEmptyFontGlyphRangesBuilder creates FontGlyphRangesBuilder with its 0 value.
-func NewFontGlyphRangesBuilderEmpty() *FontGlyphRangesBuilder {
+func NewEmptyFontGlyphRangesBuilder() *FontGlyphRangesBuilder {
 	return &FontGlyphRangesBuilder{CData: new(C.ImFontGlyphRangesBuilder)}
 }
 
@@ -930,7 +930,7 @@ func (self BoxSelectState) C() (C.ImGuiBoxSelectState, func()) {
 }
 
 // NewEmptyBoxSelectState creates BoxSelectState with its 0 value.
-func NewBoxSelectStateEmpty() *BoxSelectState {
+func NewEmptyBoxSelectState() *BoxSelectState {
 	return &BoxSelectState{CData: new(C.ImGuiBoxSelectState)}
 }
 
@@ -956,7 +956,7 @@ func (self ColorMod) C() (C.ImGuiColorMod, func()) {
 }
 
 // NewEmptyColorMod creates ColorMod with its 0 value.
-func NewColorModEmpty() *ColorMod {
+func NewEmptyColorMod() *ColorMod {
 	return &ColorMod{CData: new(C.ImGuiColorMod)}
 }
 
@@ -982,7 +982,7 @@ func (self ComboPreviewData) C() (C.ImGuiComboPreviewData, func()) {
 }
 
 // NewEmptyComboPreviewData creates ComboPreviewData with its 0 value.
-func NewComboPreviewDataEmpty() *ComboPreviewData {
+func NewEmptyComboPreviewData() *ComboPreviewData {
 	return &ComboPreviewData{CData: new(C.ImGuiComboPreviewData)}
 }
 
@@ -1008,7 +1008,7 @@ func (self Context) C() (C.ImGuiContext, func()) {
 }
 
 // NewEmptyContext creates Context with its 0 value.
-func NewContextEmpty() *Context {
+func NewEmptyContext() *Context {
 	return &Context{CData: new(C.ImGuiContext)}
 }
 
@@ -1034,7 +1034,7 @@ func (self ContextHook) C() (C.ImGuiContextHook, func()) {
 }
 
 // NewEmptyContextHook creates ContextHook with its 0 value.
-func NewContextHookEmpty() *ContextHook {
+func NewEmptyContextHook() *ContextHook {
 	return &ContextHook{CData: new(C.ImGuiContextHook)}
 }
 
@@ -1281,7 +1281,7 @@ func (self DataTypeInfo) C() (C.ImGuiDataTypeInfo, func()) {
 }
 
 // NewEmptyDataTypeInfo creates DataTypeInfo with its 0 value.
-func NewDataTypeInfoEmpty() *DataTypeInfo {
+func NewEmptyDataTypeInfo() *DataTypeInfo {
 	return &DataTypeInfo{CData: new(C.ImGuiDataTypeInfo)}
 }
 
@@ -1307,7 +1307,7 @@ func (self DataTypeStorage) C() (C.ImGuiDataTypeStorage, func()) {
 }
 
 // NewEmptyDataTypeStorage creates DataTypeStorage with its 0 value.
-func NewDataTypeStorageEmpty() *DataTypeStorage {
+func NewEmptyDataTypeStorage() *DataTypeStorage {
 	return &DataTypeStorage{CData: new(C.ImGuiDataTypeStorage)}
 }
 
@@ -1333,7 +1333,7 @@ func (self DataVarInfo) C() (C.ImGuiDataVarInfo, func()) {
 }
 
 // NewEmptyDataVarInfo creates DataVarInfo with its 0 value.
-func NewDataVarInfoEmpty() *DataVarInfo {
+func NewEmptyDataVarInfo() *DataVarInfo {
 	return &DataVarInfo{CData: new(C.ImGuiDataVarInfo)}
 }
 
@@ -1359,7 +1359,7 @@ func (self DebugAllocEntry) C() (C.ImGuiDebugAllocEntry, func()) {
 }
 
 // NewEmptyDebugAllocEntry creates DebugAllocEntry with its 0 value.
-func NewDebugAllocEntryEmpty() *DebugAllocEntry {
+func NewEmptyDebugAllocEntry() *DebugAllocEntry {
 	return &DebugAllocEntry{CData: new(C.ImGuiDebugAllocEntry)}
 }
 
@@ -1385,7 +1385,7 @@ func (self DebugAllocInfo) C() (C.ImGuiDebugAllocInfo, func()) {
 }
 
 // NewEmptyDebugAllocInfo creates DebugAllocInfo with its 0 value.
-func NewDebugAllocInfoEmpty() *DebugAllocInfo {
+func NewEmptyDebugAllocInfo() *DebugAllocInfo {
 	return &DebugAllocInfo{CData: new(C.ImGuiDebugAllocInfo)}
 }
 
@@ -1411,7 +1411,7 @@ func (self DockContext) C() (C.ImGuiDockContext, func()) {
 }
 
 // NewEmptyDockContext creates DockContext with its 0 value.
-func NewDockContextEmpty() *DockContext {
+func NewEmptyDockContext() *DockContext {
 	return &DockContext{CData: new(C.ImGuiDockContext)}
 }
 
@@ -1437,7 +1437,7 @@ func (self DockNode) C() (C.ImGuiDockNode, func()) {
 }
 
 // NewEmptyDockNode creates DockNode with its 0 value.
-func NewDockNodeEmpty() *DockNode {
+func NewEmptyDockNode() *DockNode {
 	return &DockNode{CData: new(C.ImGuiDockNode)}
 }
 
@@ -1714,7 +1714,7 @@ func (self ErrorRecoveryState) C() (C.ImGuiErrorRecoveryState, func()) {
 }
 
 // NewEmptyErrorRecoveryState creates ErrorRecoveryState with its 0 value.
-func NewErrorRecoveryStateEmpty() *ErrorRecoveryState {
+func NewEmptyErrorRecoveryState() *ErrorRecoveryState {
 	return &ErrorRecoveryState{CData: new(C.ImGuiErrorRecoveryState)}
 }
 
@@ -1740,7 +1740,7 @@ func (self FocusScopeData) C() (C.ImGuiFocusScopeData, func()) {
 }
 
 // NewEmptyFocusScopeData creates FocusScopeData with its 0 value.
-func NewFocusScopeDataEmpty() *FocusScopeData {
+func NewEmptyFocusScopeData() *FocusScopeData {
 	return &FocusScopeData{CData: new(C.ImGuiFocusScopeData)}
 }
 
@@ -1766,7 +1766,7 @@ func (self GroupData) C() (C.ImGuiGroupData, func()) {
 }
 
 // NewEmptyGroupData creates GroupData with its 0 value.
-func NewGroupDataEmpty() *GroupData {
+func NewEmptyGroupData() *GroupData {
 	return &GroupData{CData: new(C.ImGuiGroupData)}
 }
 
@@ -1812,7 +1812,7 @@ func (self IDStackTool) C() (C.ImGuiIDStackTool, func()) {
 }
 
 // NewEmptyIDStackTool creates IDStackTool with its 0 value.
-func NewIDStackToolEmpty() *IDStackTool {
+func NewEmptyIDStackTool() *IDStackTool {
 	return &IDStackTool{CData: new(C.ImGuiIDStackTool)}
 }
 
@@ -1838,7 +1838,7 @@ func (self IO) C() (C.ImGuiIO, func()) {
 }
 
 // NewEmptyIO creates IO with its 0 value.
-func NewIOEmpty() *IO {
+func NewEmptyIO() *IO {
 	return &IO{CData: new(C.ImGuiIO)}
 }
 
@@ -1864,7 +1864,7 @@ func (self InputEvent) C() (C.ImGuiInputEvent, func()) {
 }
 
 // NewEmptyInputEvent creates InputEvent with its 0 value.
-func NewInputEventEmpty() *InputEvent {
+func NewEmptyInputEvent() *InputEvent {
 	return &InputEvent{CData: new(C.ImGuiInputEvent)}
 }
 
@@ -1890,7 +1890,7 @@ func (self InputEventAppFocused) C() (C.ImGuiInputEventAppFocused, func()) {
 }
 
 // NewEmptyInputEventAppFocused creates InputEventAppFocused with its 0 value.
-func NewInputEventAppFocusedEmpty() *InputEventAppFocused {
+func NewEmptyInputEventAppFocused() *InputEventAppFocused {
 	return &InputEventAppFocused{CData: new(C.ImGuiInputEventAppFocused)}
 }
 
@@ -1916,7 +1916,7 @@ func (self InputEventKey) C() (C.ImGuiInputEventKey, func()) {
 }
 
 // NewEmptyInputEventKey creates InputEventKey with its 0 value.
-func NewInputEventKeyEmpty() *InputEventKey {
+func NewEmptyInputEventKey() *InputEventKey {
 	return &InputEventKey{CData: new(C.ImGuiInputEventKey)}
 }
 
@@ -1942,7 +1942,7 @@ func (self InputEventMouseButton) C() (C.ImGuiInputEventMouseButton, func()) {
 }
 
 // NewEmptyInputEventMouseButton creates InputEventMouseButton with its 0 value.
-func NewInputEventMouseButtonEmpty() *InputEventMouseButton {
+func NewEmptyInputEventMouseButton() *InputEventMouseButton {
 	return &InputEventMouseButton{CData: new(C.ImGuiInputEventMouseButton)}
 }
 
@@ -1968,7 +1968,7 @@ func (self InputEventMousePos) C() (C.ImGuiInputEventMousePos, func()) {
 }
 
 // NewEmptyInputEventMousePos creates InputEventMousePos with its 0 value.
-func NewInputEventMousePosEmpty() *InputEventMousePos {
+func NewEmptyInputEventMousePos() *InputEventMousePos {
 	return &InputEventMousePos{CData: new(C.ImGuiInputEventMousePos)}
 }
 
@@ -1994,7 +1994,7 @@ func (self InputEventMouseViewport) C() (C.ImGuiInputEventMouseViewport, func())
 }
 
 // NewEmptyInputEventMouseViewport creates InputEventMouseViewport with its 0 value.
-func NewInputEventMouseViewportEmpty() *InputEventMouseViewport {
+func NewEmptyInputEventMouseViewport() *InputEventMouseViewport {
 	return &InputEventMouseViewport{CData: new(C.ImGuiInputEventMouseViewport)}
 }
 
@@ -2020,7 +2020,7 @@ func (self InputEventMouseWheel) C() (C.ImGuiInputEventMouseWheel, func()) {
 }
 
 // NewEmptyInputEventMouseWheel creates InputEventMouseWheel with its 0 value.
-func NewInputEventMouseWheelEmpty() *InputEventMouseWheel {
+func NewEmptyInputEventMouseWheel() *InputEventMouseWheel {
 	return &InputEventMouseWheel{CData: new(C.ImGuiInputEventMouseWheel)}
 }
 
@@ -2046,7 +2046,7 @@ func (self InputEventText) C() (C.ImGuiInputEventText, func()) {
 }
 
 // NewEmptyInputEventText creates InputEventText with its 0 value.
-func NewInputEventTextEmpty() *InputEventText {
+func NewEmptyInputEventText() *InputEventText {
 	return &InputEventText{CData: new(C.ImGuiInputEventText)}
 }
 
@@ -2072,7 +2072,7 @@ func (self InputTextCallbackData) C() (C.ImGuiInputTextCallbackData, func()) {
 }
 
 // NewEmptyInputTextCallbackData creates InputTextCallbackData with its 0 value.
-func NewInputTextCallbackDataEmpty() *InputTextCallbackData {
+func NewEmptyInputTextCallbackData() *InputTextCallbackData {
 	return &InputTextCallbackData{CData: new(C.ImGuiInputTextCallbackData)}
 }
 
@@ -2113,7 +2113,7 @@ func (self InputTextDeactivatedState) C() (C.ImGuiInputTextDeactivatedState, fun
 }
 
 // NewEmptyInputTextDeactivatedState creates InputTextDeactivatedState with its 0 value.
-func NewInputTextDeactivatedStateEmpty() *InputTextDeactivatedState {
+func NewEmptyInputTextDeactivatedState() *InputTextDeactivatedState {
 	return &InputTextDeactivatedState{CData: new(C.ImGuiInputTextDeactivatedState)}
 }
 
@@ -2139,7 +2139,7 @@ func (self InputTextState) C() (C.ImGuiInputTextState, func()) {
 }
 
 // NewEmptyInputTextState creates InputTextState with its 0 value.
-func NewInputTextStateEmpty() *InputTextState {
+func NewEmptyInputTextState() *InputTextState {
 	return &InputTextState{CData: new(C.ImGuiInputTextState)}
 }
 
@@ -2185,7 +2185,7 @@ func (self KeyData) C() (C.ImGuiKeyData, func()) {
 }
 
 // NewEmptyKeyData creates KeyData with its 0 value.
-func NewKeyDataEmpty() *KeyData {
+func NewEmptyKeyData() *KeyData {
 	return &KeyData{CData: new(C.ImGuiKeyData)}
 }
 
@@ -2211,7 +2211,7 @@ func (self KeyOwnerData) C() (C.ImGuiKeyOwnerData, func()) {
 }
 
 // NewEmptyKeyOwnerData creates KeyOwnerData with its 0 value.
-func NewKeyOwnerDataEmpty() *KeyOwnerData {
+func NewEmptyKeyOwnerData() *KeyOwnerData {
 	return &KeyOwnerData{CData: new(C.ImGuiKeyOwnerData)}
 }
 
@@ -2237,7 +2237,7 @@ func (self KeyRoutingData) C() (C.ImGuiKeyRoutingData, func()) {
 }
 
 // NewEmptyKeyRoutingData creates KeyRoutingData with its 0 value.
-func NewKeyRoutingDataEmpty() *KeyRoutingData {
+func NewEmptyKeyRoutingData() *KeyRoutingData {
 	return &KeyRoutingData{CData: new(C.ImGuiKeyRoutingData)}
 }
 
@@ -2283,7 +2283,7 @@ func (self KeyRoutingTable) C() (C.ImGuiKeyRoutingTable, func()) {
 }
 
 // NewEmptyKeyRoutingTable creates KeyRoutingTable with its 0 value.
-func NewKeyRoutingTableEmpty() *KeyRoutingTable {
+func NewEmptyKeyRoutingTable() *KeyRoutingTable {
 	return &KeyRoutingTable{CData: new(C.ImGuiKeyRoutingTable)}
 }
 
@@ -2309,7 +2309,7 @@ func (self LastItemData) C() (C.ImGuiLastItemData, func()) {
 }
 
 // NewEmptyLastItemData creates LastItemData with its 0 value.
-func NewLastItemDataEmpty() *LastItemData {
+func NewEmptyLastItemData() *LastItemData {
 	return &LastItemData{CData: new(C.ImGuiLastItemData)}
 }
 
@@ -2335,7 +2335,7 @@ func (self ListClipper) C() (C.ImGuiListClipper, func()) {
 }
 
 // NewEmptyListClipper creates ListClipper with its 0 value.
-func NewListClipperEmpty() *ListClipper {
+func NewEmptyListClipper() *ListClipper {
 	return &ListClipper{CData: new(C.ImGuiListClipper)}
 }
 
@@ -2361,7 +2361,7 @@ func (self ListClipperData) C() (C.ImGuiListClipperData, func()) {
 }
 
 // NewEmptyListClipperData creates ListClipperData with its 0 value.
-func NewListClipperDataEmpty() *ListClipperData {
+func NewEmptyListClipperData() *ListClipperData {
 	return &ListClipperData{CData: new(C.ImGuiListClipperData)}
 }
 
@@ -2387,7 +2387,7 @@ func (self ListClipperRange) C() (C.ImGuiListClipperRange, func()) {
 }
 
 // NewEmptyListClipperRange creates ListClipperRange with its 0 value.
-func NewListClipperRangeEmpty() *ListClipperRange {
+func NewEmptyListClipperRange() *ListClipperRange {
 	return &ListClipperRange{CData: new(C.ImGuiListClipperRange)}
 }
 
@@ -2413,7 +2413,7 @@ func (self LocEntry) C() (C.ImGuiLocEntry, func()) {
 }
 
 // NewEmptyLocEntry creates LocEntry with its 0 value.
-func NewLocEntryEmpty() *LocEntry {
+func NewEmptyLocEntry() *LocEntry {
 	return &LocEntry{CData: new(C.ImGuiLocEntry)}
 }
 
@@ -2885,7 +2885,7 @@ func (self MenuColumns) C() (C.ImGuiMenuColumns, func()) {
 }
 
 // NewEmptyMenuColumns creates MenuColumns with its 0 value.
-func NewMenuColumnsEmpty() *MenuColumns {
+func NewEmptyMenuColumns() *MenuColumns {
 	return &MenuColumns{CData: new(C.ImGuiMenuColumns)}
 }
 
@@ -2911,7 +2911,7 @@ func (self MetricsConfig) C() (C.ImGuiMetricsConfig, func()) {
 }
 
 // NewEmptyMetricsConfig creates MetricsConfig with its 0 value.
-func NewMetricsConfigEmpty() *MetricsConfig {
+func NewEmptyMetricsConfig() *MetricsConfig {
 	return &MetricsConfig{CData: new(C.ImGuiMetricsConfig)}
 }
 
@@ -2937,7 +2937,7 @@ func (self MultiSelectIO) C() (C.ImGuiMultiSelectIO, func()) {
 }
 
 // NewEmptyMultiSelectIO creates MultiSelectIO with its 0 value.
-func NewMultiSelectIOEmpty() *MultiSelectIO {
+func NewEmptyMultiSelectIO() *MultiSelectIO {
 	return &MultiSelectIO{CData: new(C.ImGuiMultiSelectIO)}
 }
 
@@ -2963,7 +2963,7 @@ func (self MultiSelectState) C() (C.ImGuiMultiSelectState, func()) {
 }
 
 // NewEmptyMultiSelectState creates MultiSelectState with its 0 value.
-func NewMultiSelectStateEmpty() *MultiSelectState {
+func NewEmptyMultiSelectState() *MultiSelectState {
 	return &MultiSelectState{CData: new(C.ImGuiMultiSelectState)}
 }
 
@@ -2989,7 +2989,7 @@ func (self MultiSelectTempData) C() (C.ImGuiMultiSelectTempData, func()) {
 }
 
 // NewEmptyMultiSelectTempData creates MultiSelectTempData with its 0 value.
-func NewMultiSelectTempDataEmpty() *MultiSelectTempData {
+func NewEmptyMultiSelectTempData() *MultiSelectTempData {
 	return &MultiSelectTempData{CData: new(C.ImGuiMultiSelectTempData)}
 }
 
@@ -3015,7 +3015,7 @@ func (self NavItemData) C() (C.ImGuiNavItemData, func()) {
 }
 
 // NewEmptyNavItemData creates NavItemData with its 0 value.
-func NewNavItemDataEmpty() *NavItemData {
+func NewEmptyNavItemData() *NavItemData {
 	return &NavItemData{CData: new(C.ImGuiNavItemData)}
 }
 
@@ -3041,7 +3041,7 @@ func (self NextItemData) C() (C.ImGuiNextItemData, func()) {
 }
 
 // NewEmptyNextItemData creates NextItemData with its 0 value.
-func NewNextItemDataEmpty() *NextItemData {
+func NewEmptyNextItemData() *NextItemData {
 	return &NextItemData{CData: new(C.ImGuiNextItemData)}
 }
 
@@ -3067,7 +3067,7 @@ func (self NextWindowData) C() (C.ImGuiNextWindowData, func()) {
 }
 
 // NewEmptyNextWindowData creates NextWindowData with its 0 value.
-func NewNextWindowDataEmpty() *NextWindowData {
+func NewEmptyNextWindowData() *NextWindowData {
 	return &NextWindowData{CData: new(C.ImGuiNextWindowData)}
 }
 
@@ -3093,7 +3093,7 @@ func (self OldColumnData) C() (C.ImGuiOldColumnData, func()) {
 }
 
 // NewEmptyOldColumnData creates OldColumnData with its 0 value.
-func NewOldColumnDataEmpty() *OldColumnData {
+func NewEmptyOldColumnData() *OldColumnData {
 	return &OldColumnData{CData: new(C.ImGuiOldColumnData)}
 }
 
@@ -3119,7 +3119,7 @@ func (self OldColumns) C() (C.ImGuiOldColumns, func()) {
 }
 
 // NewEmptyOldColumns creates OldColumns with its 0 value.
-func NewOldColumnsEmpty() *OldColumns {
+func NewEmptyOldColumns() *OldColumns {
 	return &OldColumns{CData: new(C.ImGuiOldColumns)}
 }
 
@@ -3145,7 +3145,7 @@ func (self OnceUponAFrame) C() (C.ImGuiOnceUponAFrame, func()) {
 }
 
 // NewEmptyOnceUponAFrame creates OnceUponAFrame with its 0 value.
-func NewOnceUponAFrameEmpty() *OnceUponAFrame {
+func NewEmptyOnceUponAFrame() *OnceUponAFrame {
 	return &OnceUponAFrame{CData: new(C.ImGuiOnceUponAFrame)}
 }
 
@@ -3171,7 +3171,7 @@ func (self Payload) C() (C.ImGuiPayload, func()) {
 }
 
 // NewEmptyPayload creates Payload with its 0 value.
-func NewPayloadEmpty() *Payload {
+func NewEmptyPayload() *Payload {
 	return &Payload{CData: new(C.ImGuiPayload)}
 }
 
@@ -3197,7 +3197,7 @@ func (self PlatformIO) C() (C.ImGuiPlatformIO, func()) {
 }
 
 // NewEmptyPlatformIO creates PlatformIO with its 0 value.
-func NewPlatformIOEmpty() *PlatformIO {
+func NewEmptyPlatformIO() *PlatformIO {
 	return &PlatformIO{CData: new(C.ImGuiPlatformIO)}
 }
 
@@ -3223,7 +3223,7 @@ func (self PlatformImeData) C() (C.ImGuiPlatformImeData, func()) {
 }
 
 // NewEmptyPlatformImeData creates PlatformImeData with its 0 value.
-func NewPlatformImeDataEmpty() *PlatformImeData {
+func NewEmptyPlatformImeData() *PlatformImeData {
 	return &PlatformImeData{CData: new(C.ImGuiPlatformImeData)}
 }
 
@@ -3249,7 +3249,7 @@ func (self PlatformMonitor) C() (C.ImGuiPlatformMonitor, func()) {
 }
 
 // NewEmptyPlatformMonitor creates PlatformMonitor with its 0 value.
-func NewPlatformMonitorEmpty() *PlatformMonitor {
+func NewEmptyPlatformMonitor() *PlatformMonitor {
 	return &PlatformMonitor{CData: new(C.ImGuiPlatformMonitor)}
 }
 
@@ -3275,7 +3275,7 @@ func (self PopupData) C() (C.ImGuiPopupData, func()) {
 }
 
 // NewEmptyPopupData creates PopupData with its 0 value.
-func NewPopupDataEmpty() *PopupData {
+func NewEmptyPopupData() *PopupData {
 	return &PopupData{CData: new(C.ImGuiPopupData)}
 }
 
@@ -3301,7 +3301,7 @@ func (self PtrOrIndex) C() (C.ImGuiPtrOrIndex, func()) {
 }
 
 // NewEmptyPtrOrIndex creates PtrOrIndex with its 0 value.
-func NewPtrOrIndexEmpty() *PtrOrIndex {
+func NewEmptyPtrOrIndex() *PtrOrIndex {
 	return &PtrOrIndex{CData: new(C.ImGuiPtrOrIndex)}
 }
 
@@ -3327,7 +3327,7 @@ func (self SelectionBasicStorage) C() (C.ImGuiSelectionBasicStorage, func()) {
 }
 
 // NewEmptySelectionBasicStorage creates SelectionBasicStorage with its 0 value.
-func NewSelectionBasicStorageEmpty() *SelectionBasicStorage {
+func NewEmptySelectionBasicStorage() *SelectionBasicStorage {
 	return &SelectionBasicStorage{CData: new(C.ImGuiSelectionBasicStorage)}
 }
 
@@ -3353,7 +3353,7 @@ func (self SelectionExternalStorage) C() (C.ImGuiSelectionExternalStorage, func(
 }
 
 // NewEmptySelectionExternalStorage creates SelectionExternalStorage with its 0 value.
-func NewSelectionExternalStorageEmpty() *SelectionExternalStorage {
+func NewEmptySelectionExternalStorage() *SelectionExternalStorage {
 	return &SelectionExternalStorage{CData: new(C.ImGuiSelectionExternalStorage)}
 }
 
@@ -3379,7 +3379,7 @@ func (self SelectionRequest) C() (C.ImGuiSelectionRequest, func()) {
 }
 
 // NewEmptySelectionRequest creates SelectionRequest with its 0 value.
-func NewSelectionRequestEmpty() *SelectionRequest {
+func NewEmptySelectionRequest() *SelectionRequest {
 	return &SelectionRequest{CData: new(C.ImGuiSelectionRequest)}
 }
 
@@ -3425,7 +3425,7 @@ func (self SettingsHandler) C() (C.ImGuiSettingsHandler, func()) {
 }
 
 // NewEmptySettingsHandler creates SettingsHandler with its 0 value.
-func NewSettingsHandlerEmpty() *SettingsHandler {
+func NewEmptySettingsHandler() *SettingsHandler {
 	return &SettingsHandler{CData: new(C.ImGuiSettingsHandler)}
 }
 
@@ -3451,7 +3451,7 @@ func (self ShrinkWidthItem) C() (C.ImGuiShrinkWidthItem, func()) {
 }
 
 // NewEmptyShrinkWidthItem creates ShrinkWidthItem with its 0 value.
-func NewShrinkWidthItemEmpty() *ShrinkWidthItem {
+func NewEmptyShrinkWidthItem() *ShrinkWidthItem {
 	return &ShrinkWidthItem{CData: new(C.ImGuiShrinkWidthItem)}
 }
 
@@ -3698,7 +3698,7 @@ func (self SizeCallbackData) C() (C.ImGuiSizeCallbackData, func()) {
 }
 
 // NewEmptySizeCallbackData creates SizeCallbackData with its 0 value.
-func NewSizeCallbackDataEmpty() *SizeCallbackData {
+func NewEmptySizeCallbackData() *SizeCallbackData {
 	return &SizeCallbackData{CData: new(C.ImGuiSizeCallbackData)}
 }
 
@@ -3724,7 +3724,7 @@ func (self StackLevelInfo) C() (C.ImGuiStackLevelInfo, func()) {
 }
 
 // NewEmptyStackLevelInfo creates StackLevelInfo with its 0 value.
-func NewStackLevelInfoEmpty() *StackLevelInfo {
+func NewEmptyStackLevelInfo() *StackLevelInfo {
 	return &StackLevelInfo{CData: new(C.ImGuiStackLevelInfo)}
 }
 
@@ -3750,7 +3750,7 @@ func (self Storage) C() (C.ImGuiStorage, func()) {
 }
 
 // NewEmptyStorage creates Storage with its 0 value.
-func NewStorageEmpty() *Storage {
+func NewEmptyStorage() *Storage {
 	return &Storage{CData: new(C.ImGuiStorage)}
 }
 
@@ -3776,7 +3776,7 @@ func (self StoragePair) C() (C.ImGuiStoragePair, func()) {
 }
 
 // NewEmptyStoragePair creates StoragePair with its 0 value.
-func NewStoragePairEmpty() *StoragePair {
+func NewEmptyStoragePair() *StoragePair {
 	return &StoragePair{CData: new(C.ImGuiStoragePair)}
 }
 
@@ -3802,7 +3802,7 @@ func (self Style) C() (C.ImGuiStyle, func()) {
 }
 
 // NewEmptyStyle creates Style with its 0 value.
-func NewStyleEmpty() *Style {
+func NewEmptyStyle() *Style {
 	return &Style{CData: new(C.ImGuiStyle)}
 }
 
@@ -3828,7 +3828,7 @@ func (self StyleMod) C() (C.ImGuiStyleMod, func()) {
 }
 
 // NewEmptyStyleMod creates StyleMod with its 0 value.
-func NewStyleModEmpty() *StyleMod {
+func NewEmptyStyleMod() *StyleMod {
 	return &StyleMod{CData: new(C.ImGuiStyleMod)}
 }
 
@@ -3854,7 +3854,7 @@ func (self TabBar) C() (C.ImGuiTabBar, func()) {
 }
 
 // NewEmptyTabBar creates TabBar with its 0 value.
-func NewTabBarEmpty() *TabBar {
+func NewEmptyTabBar() *TabBar {
 	return &TabBar{CData: new(C.ImGuiTabBar)}
 }
 
@@ -3880,7 +3880,7 @@ func (self TabItem) C() (C.ImGuiTabItem, func()) {
 }
 
 // NewEmptyTabItem creates TabItem with its 0 value.
-func NewTabItemEmpty() *TabItem {
+func NewEmptyTabItem() *TabItem {
 	return &TabItem{CData: new(C.ImGuiTabItem)}
 }
 
@@ -3906,7 +3906,7 @@ func (self Table) C() (C.ImGuiTable, func()) {
 }
 
 // NewEmptyTable creates Table with its 0 value.
-func NewTableEmpty() *Table {
+func NewEmptyTable() *Table {
 	return &Table{CData: new(C.ImGuiTable)}
 }
 
@@ -3932,7 +3932,7 @@ func (self TableCellData) C() (C.ImGuiTableCellData, func()) {
 }
 
 // NewEmptyTableCellData creates TableCellData with its 0 value.
-func NewTableCellDataEmpty() *TableCellData {
+func NewEmptyTableCellData() *TableCellData {
 	return &TableCellData{CData: new(C.ImGuiTableCellData)}
 }
 
@@ -3958,7 +3958,7 @@ func (self TableColumn) C() (C.ImGuiTableColumn, func()) {
 }
 
 // NewEmptyTableColumn creates TableColumn with its 0 value.
-func NewTableColumnEmpty() *TableColumn {
+func NewEmptyTableColumn() *TableColumn {
 	return &TableColumn{CData: new(C.ImGuiTableColumn)}
 }
 
@@ -4004,7 +4004,7 @@ func (self TableColumnSettings) C() (C.ImGuiTableColumnSettings, func()) {
 }
 
 // NewEmptyTableColumnSettings creates TableColumnSettings with its 0 value.
-func NewTableColumnSettingsEmpty() *TableColumnSettings {
+func NewEmptyTableColumnSettings() *TableColumnSettings {
 	return &TableColumnSettings{CData: new(C.ImGuiTableColumnSettings)}
 }
 
@@ -4030,7 +4030,7 @@ func (self TableColumnSortSpecs) C() (C.ImGuiTableColumnSortSpecs, func()) {
 }
 
 // NewEmptyTableColumnSortSpecs creates TableColumnSortSpecs with its 0 value.
-func NewTableColumnSortSpecsEmpty() *TableColumnSortSpecs {
+func NewEmptyTableColumnSortSpecs() *TableColumnSortSpecs {
 	return &TableColumnSortSpecs{CData: new(C.ImGuiTableColumnSortSpecs)}
 }
 
@@ -4091,7 +4091,7 @@ func (self TableHeaderData) C() (C.ImGuiTableHeaderData, func()) {
 }
 
 // NewEmptyTableHeaderData creates TableHeaderData with its 0 value.
-func NewTableHeaderDataEmpty() *TableHeaderData {
+func NewEmptyTableHeaderData() *TableHeaderData {
 	return &TableHeaderData{CData: new(C.ImGuiTableHeaderData)}
 }
 
@@ -4117,7 +4117,7 @@ func (self TableInstanceData) C() (C.ImGuiTableInstanceData, func()) {
 }
 
 // NewEmptyTableInstanceData creates TableInstanceData with its 0 value.
-func NewTableInstanceDataEmpty() *TableInstanceData {
+func NewEmptyTableInstanceData() *TableInstanceData {
 	return &TableInstanceData{CData: new(C.ImGuiTableInstanceData)}
 }
 
@@ -4143,7 +4143,7 @@ func (self TableSettings) C() (C.ImGuiTableSettings, func()) {
 }
 
 // NewEmptyTableSettings creates TableSettings with its 0 value.
-func NewTableSettingsEmpty() *TableSettings {
+func NewEmptyTableSettings() *TableSettings {
 	return &TableSettings{CData: new(C.ImGuiTableSettings)}
 }
 
@@ -4169,7 +4169,7 @@ func (self TableSortSpecs) C() (C.ImGuiTableSortSpecs, func()) {
 }
 
 // NewEmptyTableSortSpecs creates TableSortSpecs with its 0 value.
-func NewTableSortSpecsEmpty() *TableSortSpecs {
+func NewEmptyTableSortSpecs() *TableSortSpecs {
 	return &TableSortSpecs{CData: new(C.ImGuiTableSortSpecs)}
 }
 
@@ -4195,7 +4195,7 @@ func (self TableTempData) C() (C.ImGuiTableTempData, func()) {
 }
 
 // NewEmptyTableTempData creates TableTempData with its 0 value.
-func NewTableTempDataEmpty() *TableTempData {
+func NewEmptyTableTempData() *TableTempData {
 	return &TableTempData{CData: new(C.ImGuiTableTempData)}
 }
 
@@ -4221,7 +4221,7 @@ func (self TextBuffer) C() (C.ImGuiTextBuffer, func()) {
 }
 
 // NewEmptyTextBuffer creates TextBuffer with its 0 value.
-func NewTextBufferEmpty() *TextBuffer {
+func NewEmptyTextBuffer() *TextBuffer {
 	return &TextBuffer{CData: new(C.ImGuiTextBuffer)}
 }
 
@@ -4247,7 +4247,7 @@ func (self TextFilter) C() (C.ImGuiTextFilter, func()) {
 }
 
 // NewEmptyTextFilter creates TextFilter with its 0 value.
-func NewTextFilterEmpty() *TextFilter {
+func NewEmptyTextFilter() *TextFilter {
 	return &TextFilter{CData: new(C.ImGuiTextFilter)}
 }
 
@@ -4273,7 +4273,7 @@ func (self TextIndex) C() (C.ImGuiTextIndex, func()) {
 }
 
 // NewEmptyTextIndex creates TextIndex with its 0 value.
-func NewTextIndexEmpty() *TextIndex {
+func NewEmptyTextIndex() *TextIndex {
 	return &TextIndex{CData: new(C.ImGuiTextIndex)}
 }
 
@@ -4299,7 +4299,7 @@ func (self TextRange) C() (C.ImGuiTextRange, func()) {
 }
 
 // NewEmptyTextRange creates TextRange with its 0 value.
-func NewTextRangeEmpty() *TextRange {
+func NewEmptyTextRange() *TextRange {
 	return &TextRange{CData: new(C.ImGuiTextRange)}
 }
 
@@ -4325,7 +4325,7 @@ func (self TreeNodeStackData) C() (C.ImGuiTreeNodeStackData, func()) {
 }
 
 // NewEmptyTreeNodeStackData creates TreeNodeStackData with its 0 value.
-func NewTreeNodeStackDataEmpty() *TreeNodeStackData {
+func NewEmptyTreeNodeStackData() *TreeNodeStackData {
 	return &TreeNodeStackData{CData: new(C.ImGuiTreeNodeStackData)}
 }
 
@@ -4351,7 +4351,7 @@ func (self TypingSelectRequest) C() (C.ImGuiTypingSelectRequest, func()) {
 }
 
 // NewEmptyTypingSelectRequest creates TypingSelectRequest with its 0 value.
-func NewTypingSelectRequestEmpty() *TypingSelectRequest {
+func NewEmptyTypingSelectRequest() *TypingSelectRequest {
 	return &TypingSelectRequest{CData: new(C.ImGuiTypingSelectRequest)}
 }
 
@@ -4377,7 +4377,7 @@ func (self TypingSelectState) C() (C.ImGuiTypingSelectState, func()) {
 }
 
 // NewEmptyTypingSelectState creates TypingSelectState with its 0 value.
-func NewTypingSelectStateEmpty() *TypingSelectState {
+func NewEmptyTypingSelectState() *TypingSelectState {
 	return &TypingSelectState{CData: new(C.ImGuiTypingSelectState)}
 }
 
@@ -4403,7 +4403,7 @@ func (self Viewport) C() (C.ImGuiViewport, func()) {
 }
 
 // NewEmptyViewport creates Viewport with its 0 value.
-func NewViewportEmpty() *Viewport {
+func NewEmptyViewport() *Viewport {
 	return &Viewport{CData: new(C.ImGuiViewport)}
 }
 
@@ -4429,7 +4429,7 @@ func (self ViewportP) C() (C.ImGuiViewportP, func()) {
 }
 
 // NewEmptyViewportP creates ViewportP with its 0 value.
-func NewViewportPEmpty() *ViewportP {
+func NewEmptyViewportP() *ViewportP {
 	return &ViewportP{CData: new(C.ImGuiViewportP)}
 }
 
@@ -4455,7 +4455,7 @@ func (self Window) C() (C.ImGuiWindow, func()) {
 }
 
 // NewEmptyWindow creates Window with its 0 value.
-func NewWindowEmpty() *Window {
+func NewEmptyWindow() *Window {
 	return &Window{CData: new(C.ImGuiWindow)}
 }
 
@@ -4481,7 +4481,7 @@ func (self WindowClass) C() (C.ImGuiWindowClass, func()) {
 }
 
 // NewEmptyWindowClass creates WindowClass with its 0 value.
-func NewWindowClassEmpty() *WindowClass {
+func NewEmptyWindowClass() *WindowClass {
 	return &WindowClass{CData: new(C.ImGuiWindowClass)}
 }
 
@@ -4507,7 +4507,7 @@ func (self WindowDockStyle) C() (C.ImGuiWindowDockStyle, func()) {
 }
 
 // NewEmptyWindowDockStyle creates WindowDockStyle with its 0 value.
-func NewWindowDockStyleEmpty() *WindowDockStyle {
+func NewEmptyWindowDockStyle() *WindowDockStyle {
 	return &WindowDockStyle{CData: new(C.ImGuiWindowDockStyle)}
 }
 
@@ -4533,7 +4533,7 @@ func (self WindowSettings) C() (C.ImGuiWindowSettings, func()) {
 }
 
 // NewEmptyWindowSettings creates WindowSettings with its 0 value.
-func NewWindowSettingsEmpty() *WindowSettings {
+func NewEmptyWindowSettings() *WindowSettings {
 	return &WindowSettings{CData: new(C.ImGuiWindowSettings)}
 }
 
@@ -4559,7 +4559,7 @@ func (self WindowStackData) C() (C.ImGuiWindowStackData, func()) {
 }
 
 // NewEmptyWindowStackData creates WindowStackData with its 0 value.
-func NewWindowStackDataEmpty() *WindowStackData {
+func NewEmptyWindowStackData() *WindowStackData {
 	return &WindowStackData{CData: new(C.ImGuiWindowStackData)}
 }
 
@@ -4585,7 +4585,7 @@ func (self WindowTempData) C() (C.ImGuiWindowTempData, func()) {
 }
 
 // NewEmptyWindowTempData creates WindowTempData with its 0 value.
-func NewWindowTempDataEmpty() *WindowTempData {
+func NewEmptyWindowTempData() *WindowTempData {
 	return &WindowTempData{CData: new(C.ImGuiWindowTempData)}
 }
 
@@ -4651,7 +4651,7 @@ func (self Vec1) C() (C.ImVec1, func()) {
 }
 
 // NewEmptyVec1 creates Vec1 with its 0 value.
-func NewVec1Empty() *Vec1 {
+func NewEmptyVec1() *Vec1 {
 	return &Vec1{CData: new(C.ImVec1)}
 }
 

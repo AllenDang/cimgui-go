@@ -386,7 +386,7 @@ func (self %[1]s) C() (C.%[2]s, func()) {
 }
 
 // NewEmpty%[1]s creates %[1]s with its 0 value.
-func New%[1]sEmpty() *%[1]s {
+func NewEmpty%[1]s() *%[1]s {
 	return &%[1]s{CData: new(C.%[2]s)}
 }
 `, name.renameGoIdentifier(g.ctx), name)

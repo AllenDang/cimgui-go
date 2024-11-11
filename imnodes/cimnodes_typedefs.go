@@ -63,7 +63,7 @@ func (self EmulateThreeButtonMouse) C() (C.EmulateThreeButtonMouse, func()) {
 }
 
 // NewEmptyEmulateThreeButtonMouse creates EmulateThreeButtonMouse with its 0 value.
-func NewEmulateThreeButtonMouseEmpty() *EmulateThreeButtonMouse {
+func NewEmptyEmulateThreeButtonMouse() *EmulateThreeButtonMouse {
 	return &EmulateThreeButtonMouse{CData: new(C.EmulateThreeButtonMouse)}
 }
 
@@ -119,7 +119,7 @@ func (self IO) C() (C.ImNodesIO, func()) {
 }
 
 // NewEmptyIO creates IO with its 0 value.
-func NewIOEmpty() *IO {
+func NewEmptyIO() *IO {
 	return &IO{CData: new(C.ImNodesIO)}
 }
 
@@ -387,7 +387,7 @@ func (self Style) C() (C.ImNodesStyle, func()) {
 }
 
 // NewEmptyStyle creates Style with its 0 value.
-func NewStyleEmpty() *Style {
+func NewEmptyStyle() *Style {
 	return &Style{CData: new(C.ImNodesStyle)}
 }
 
@@ -413,7 +413,7 @@ func (self LinkDetachWithModifierClick) C() (C.LinkDetachWithModifierClick, func
 }
 
 // NewEmptyLinkDetachWithModifierClick creates LinkDetachWithModifierClick with its 0 value.
-func NewLinkDetachWithModifierClickEmpty() *LinkDetachWithModifierClick {
+func NewEmptyLinkDetachWithModifierClick() *LinkDetachWithModifierClick {
 	return &LinkDetachWithModifierClick{CData: new(C.LinkDetachWithModifierClick)}
 }
 
@@ -439,7 +439,7 @@ func (self MultipleSelectModifier) C() (C.MultipleSelectModifier, func()) {
 }
 
 // NewEmptyMultipleSelectModifier creates MultipleSelectModifier with its 0 value.
-func NewMultipleSelectModifierEmpty() *MultipleSelectModifier {
+func NewEmptyMultipleSelectModifier() *MultipleSelectModifier {
 	return &MultipleSelectModifier{CData: new(C.MultipleSelectModifier)}
 }
 
