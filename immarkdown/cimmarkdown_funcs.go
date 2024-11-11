@@ -13,7 +13,6 @@ import (
 // #include "../imgui/extra_types.h"
 // #include "cimmarkdown_structs_accessor.h"
 // #include "cimmarkdown_wrapper.h"
-// #include "stdlib.h"
 import "C"
 
 func IsCharInsideWord(c_ rune) bool {
@@ -521,11 +520,7 @@ func (self *MarkdownConfig) LinkIcon() string {
 	defer func() {
 		selfFin()
 	}()
-	return func() string {
-		result := C.wrap_MarkdownConfig_GetLinkIcon(internal.ReinterpretCast[*C.MarkdownConfig](selfArg))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.wrap_MarkdownConfig_GetLinkIcon(internal.ReinterpretCast[*C.MarkdownConfig](selfArg)))
 }
 
 func (self MarkdownConfig) SetHeadingFormats(v *[3]MarkdownHeadingFormat) {
@@ -844,11 +839,7 @@ func (self *MarkdownLinkCallbackData) Text() string {
 	defer func() {
 		selfFin()
 	}()
-	return func() string {
-		result := C.wrap_MarkdownLinkCallbackData_GetText(internal.ReinterpretCast[*C.MarkdownLinkCallbackData](selfArg))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.wrap_MarkdownLinkCallbackData_GetText(internal.ReinterpretCast[*C.MarkdownLinkCallbackData](selfArg)))
 }
 
 func (self MarkdownLinkCallbackData) SetTextLength(v int32) {
@@ -880,11 +871,7 @@ func (self *MarkdownLinkCallbackData) Link() string {
 	defer func() {
 		selfFin()
 	}()
-	return func() string {
-		result := C.wrap_MarkdownLinkCallbackData_GetLink(internal.ReinterpretCast[*C.MarkdownLinkCallbackData](selfArg))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.wrap_MarkdownLinkCallbackData_GetLink(internal.ReinterpretCast[*C.MarkdownLinkCallbackData](selfArg)))
 }
 
 func (self MarkdownLinkCallbackData) SetLinkLength(v int32) {
@@ -966,11 +953,7 @@ func (self *MarkdownTooltipCallbackData) LinkIcon() string {
 	defer func() {
 		selfFin()
 	}()
-	return func() string {
-		result := C.wrap_MarkdownTooltipCallbackData_GetLinkIcon(internal.ReinterpretCast[*C.MarkdownTooltipCallbackData](selfArg))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.wrap_MarkdownTooltipCallbackData_GetLinkIcon(internal.ReinterpretCast[*C.MarkdownTooltipCallbackData](selfArg)))
 }
 
 func (self TextBlock) SetStart(v int32) {

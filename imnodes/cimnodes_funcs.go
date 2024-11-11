@@ -13,7 +13,6 @@ import (
 // #include "../imgui/extra_types.h"
 // #include "cimnodes_structs_accessor.h"
 // #include "cimnodes_wrapper.h"
-// #include "stdlib.h"
 import "C"
 
 func NewEmulateThreeButtonMouse() *EmulateThreeButtonMouse {
@@ -475,11 +474,7 @@ func SaveCurrentEditorStateToIniFile(file_name string) {
 // SaveCurrentEditorStateToIniStringV parameter default value hint:
 // data_size: NULL
 func SaveCurrentEditorStateToIniStringV(data_size *uint64) string {
-	return func() string {
-		result := C.imnodes_SaveCurrentEditorStateToIniString((*C.xulong)(data_size))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.imnodes_SaveCurrentEditorStateToIniString((*C.xulong)(data_size)))
 }
 
 func SaveEditorStateToIniFile(editor *EditorContext, file_name string) {
@@ -499,11 +494,7 @@ func SaveEditorStateToIniStringV(editor *EditorContext, data_size *uint64) strin
 	defer func() {
 		editorFin()
 	}()
-	return func() string {
-		result := C.imnodes_SaveEditorStateToIniString(internal.ReinterpretCast[*C.ImNodesEditorContext](editorArg), (*C.xulong)(data_size))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.imnodes_SaveEditorStateToIniString(internal.ReinterpretCast[*C.ImNodesEditorContext](editorArg), (*C.xulong)(data_size)))
 }
 
 func SelectLink(link_id int32) {
@@ -630,11 +621,7 @@ func PopStyleVar() {
 }
 
 func SaveCurrentEditorStateToIniString() string {
-	return func() string {
-		result := C.wrap_imnodes_SaveCurrentEditorStateToIniString()
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.wrap_imnodes_SaveCurrentEditorStateToIniString())
 }
 
 func SaveEditorStateToIniString(editor *EditorContext) string {
@@ -643,11 +630,7 @@ func SaveEditorStateToIniString(editor *EditorContext) string {
 	defer func() {
 		editorFin()
 	}()
-	return func() string {
-		result := C.wrap_imnodes_SaveEditorStateToIniString(internal.ReinterpretCast[*C.ImNodesEditorContext](editorArg))
-		defer C.free(unsafe.Pointer(result))
-		return C.GoString(result)
-	}()
+	return C.GoString(C.wrap_imnodes_SaveEditorStateToIniString(internal.ReinterpretCast[*C.ImNodesEditorContext](editorArg)))
 }
 
 func StyleColorsClassic() {
