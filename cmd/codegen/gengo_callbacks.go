@@ -103,7 +103,7 @@ func (g *typedefsGenerator) writeCallback(typedefName CIdentifier, def string, c
 		argsStr := parts[1]
 		argsStr = TrimSuffix(argsStr, ");")
 		argsStr = ReplaceAll(argsStr, ", ", ",")
-		argsStr = ReplaceAll(argsStr, "&", "")
+		argsStr = ReplaceAll(argsStr, "&", "*")
 		argsListStr := Split(argsStr, ",")
 		for a, argStr := range argsListStr {
 			// get name

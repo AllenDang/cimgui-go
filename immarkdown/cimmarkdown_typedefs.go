@@ -8,38 +8,38 @@ package immarkdown
 // #include "../imgui/extra_types.h"
 // #include "cimmarkdown_wrapper.h"
 // #include "cimmarkdown_typedefs.h"
-// extern void callbackMarkdownFormalCallback0(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback1(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback2(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback3(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback4(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback5(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback6(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback7(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback8(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback9(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback10(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback11(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback12(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback13(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback14(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback15(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback16(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback17(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback18(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback19(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback20(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback21(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback22(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback23(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback24(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback25(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback26(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback27(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback28(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback29(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback30(MarkdownFormatInfo, bool);
-// extern void callbackMarkdownFormalCallback31(MarkdownFormatInfo, bool);
+// extern void callbackMarkdownFormalCallback0(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback1(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback2(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback3(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback4(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback5(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback6(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback7(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback8(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback9(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback10(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback11(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback12(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback13(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback14(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback15(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback16(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback17(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback18(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback19(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback20(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback21(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback22(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback23(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback24(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback25(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback26(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback27(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback28(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback29(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback30(MarkdownFormatInfo*, bool);
+// extern void callbackMarkdownFormalCallback31(MarkdownFormatInfo*, bool);
 // extern MarkdownImageData callbackMarkdownImageCallback0(MarkdownLinkCallbackData);
 // extern MarkdownImageData callbackMarkdownImageCallback1(MarkdownLinkCallbackData);
 // extern MarkdownImageData callbackMarkdownImageCallback2(MarkdownLinkCallbackData);
@@ -244,8 +244,8 @@ func NewMarkdownConfigFromC[SRC any](cvalue SRC) *MarkdownConfig {
 }
 
 type (
-	MarkdownFormalCallback  func(markdownFormatInfo_ MarkdownFormatInfo, start_ bool)
-	cMarkdownFormalCallback func(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool)
+	MarkdownFormalCallback  func(markdownFormatInfo_ *MarkdownFormatInfo, start_ bool)
+	cMarkdownFormalCallback func(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool)
 )
 
 func NewMarkdownFormalCallbackFromC(cvalue *C.MarkdownFormalCallback) *MarkdownFormalCallback {
@@ -258,167 +258,167 @@ func (c MarkdownFormalCallback) Handle() (*C.MarkdownFormalCallback, func()) {
 	return result, func() {}
 }
 
-func wrapMarkdownFormalCallback(cb MarkdownFormalCallback, markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
-	cb(*NewMarkdownFormatInfoFromC(func() *C.MarkdownFormatInfo { result := markdownFormatInfo_; return &result }()), start_ == C.bool(true))
+func wrapMarkdownFormalCallback(cb MarkdownFormalCallback, markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
+	cb(NewMarkdownFormatInfoFromC(markdownFormatInfo_), start_ == C.bool(true))
 }
 
 //export callbackMarkdownFormalCallback0
-func callbackMarkdownFormalCallback0(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback0(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(0), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback1
-func callbackMarkdownFormalCallback1(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback1(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(1), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback2
-func callbackMarkdownFormalCallback2(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback2(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(2), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback3
-func callbackMarkdownFormalCallback3(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback3(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(3), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback4
-func callbackMarkdownFormalCallback4(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback4(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(4), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback5
-func callbackMarkdownFormalCallback5(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback5(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(5), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback6
-func callbackMarkdownFormalCallback6(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback6(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(6), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback7
-func callbackMarkdownFormalCallback7(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback7(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(7), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback8
-func callbackMarkdownFormalCallback8(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback8(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(8), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback9
-func callbackMarkdownFormalCallback9(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback9(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(9), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback10
-func callbackMarkdownFormalCallback10(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback10(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(10), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback11
-func callbackMarkdownFormalCallback11(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback11(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(11), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback12
-func callbackMarkdownFormalCallback12(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback12(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(12), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback13
-func callbackMarkdownFormalCallback13(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback13(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(13), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback14
-func callbackMarkdownFormalCallback14(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback14(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(14), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback15
-func callbackMarkdownFormalCallback15(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback15(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(15), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback16
-func callbackMarkdownFormalCallback16(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback16(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(16), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback17
-func callbackMarkdownFormalCallback17(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback17(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(17), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback18
-func callbackMarkdownFormalCallback18(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback18(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(18), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback19
-func callbackMarkdownFormalCallback19(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback19(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(19), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback20
-func callbackMarkdownFormalCallback20(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback20(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(20), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback21
-func callbackMarkdownFormalCallback21(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback21(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(21), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback22
-func callbackMarkdownFormalCallback22(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback22(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(22), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback23
-func callbackMarkdownFormalCallback23(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback23(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(23), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback24
-func callbackMarkdownFormalCallback24(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback24(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(24), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback25
-func callbackMarkdownFormalCallback25(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback25(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(25), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback26
-func callbackMarkdownFormalCallback26(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback26(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(26), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback27
-func callbackMarkdownFormalCallback27(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback27(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(27), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback28
-func callbackMarkdownFormalCallback28(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback28(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(28), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback29
-func callbackMarkdownFormalCallback29(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback29(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(29), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback30
-func callbackMarkdownFormalCallback30(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback30(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(30), markdownFormatInfo_, start_)
 }
 
 //export callbackMarkdownFormalCallback31
-func callbackMarkdownFormalCallback31(markdownFormatInfo_ C.MarkdownFormatInfo, start_ C.bool) {
+func callbackMarkdownFormalCallback31(markdownFormatInfo_ *C.MarkdownFormatInfo, start_ C.bool) {
 	wrapMarkdownFormalCallback(poolMarkdownFormalCallback.Get(31), markdownFormatInfo_, start_)
 }
 
