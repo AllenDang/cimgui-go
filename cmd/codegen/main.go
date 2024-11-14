@@ -126,7 +126,6 @@ type Context struct {
 	typedefs *Typedefs
 
 	// ghese fields are filled by parser while it generates code.
-	funcNames     map[CIdentifier]bool // funcs are filled by gencpp
 	enumNames     map[CIdentifier]bool
 	typedefsNames map[CIdentifier]bool
 
