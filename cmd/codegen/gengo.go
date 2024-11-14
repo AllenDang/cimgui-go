@@ -74,11 +74,6 @@ func IsStructName(name CIdentifier, ctx *Context) bool {
 	return ok
 }
 
-func IsEnum(name CIdentifier, enums map[CIdentifier]bool) bool {
-	_, ok := enums[name]
-	return ok
-}
-
 func IsTemplateTypedef(s string) bool {
 	return strings.Contains(s, "<")
 }

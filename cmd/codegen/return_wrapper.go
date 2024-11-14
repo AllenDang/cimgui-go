@@ -84,7 +84,7 @@ func getReturnWrapper(
 	_, isRefEnum := context.refEnumNames[pureType]
 	_, shouldSkipRefTypedef := context.preset.SkipTypedefs[pureType]
 	_, isStruct := context.typedefsNames[pureType]
-	isStruct = isStruct || ((isRefStruct || (isRefTypedef && !IsEnum(pureType, context.refEnumNames))) && !shouldSkipRefTypedef)
+	isStruct = isStruct || ((isRefStruct || (isRefTypedef && !isRefEnum)) && !shouldSkipRefTypedef)
 	w, known := returnWrapperMap[t]
 	// check if is array (match regex)
 	isArray, err := regexp.Match(".*\\[\\d+\\]", []byte(t))
