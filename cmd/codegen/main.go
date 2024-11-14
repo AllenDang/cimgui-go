@@ -17,7 +17,7 @@ const (
 )
 
 // this cextracts enums and structs names from json file.
-func getEnumAndStructNames(enumJsonBytes []byte, context *Context) (enumNames []EnumIdentifier, structNames []CIdentifier, err error) {
+func getEnumAndStructNames(enumJsonBytes []byte, context *Context) (enumNames []EnumIdentifier, typedefsNames []CIdentifier, err error) {
 	enums, err := getEnumDefs(enumJsonBytes)
 	if err != nil {
 		return nil, nil, fmt.Errorf("cannot get enum definitions: %w", err)
@@ -34,7 +34,7 @@ func getEnumAndStructNames(enumJsonBytes []byte, context *Context) (enumNames []
 
 	for _, s := range structs {
 		if shouldSkipStruct := context.preset.SkipStructs[s.Name]; !shouldSkipStruct {
-			structNames = append(structNames, s.Name)
+			typedefsNames = append(typedefsNames, s.Name)
 		}
 	}
 
@@ -116,20 +116,24 @@ func loadData(f *flags) (*jsonData, error) {
 
 // this will store json data processed by appropiate pre-rocessors
 type Context struct {
+	// prefix for generated files (prefix_fileType.go)
+	prefix string
+
+	// plain idata loaded from json
 	funcs    []FuncDef
 	structs  []StructDef
 	enums    []EnumDef
 	typedefs *Typedefs
 
-	prefix string
-
-	funcNames     map[CIdentifier]bool
+	// ghese fields are filled by parser while it generates code.
 	enumNames     map[CIdentifier]bool
-	structNames   map[CIdentifier]bool
 	typedefsNames map[CIdentifier]bool
 
+	// contains helper C functions to get/set struct fields
+	// of array types
 	arrayIndexGetters map[CIdentifier]CIdentifier
 
+	// contains identifiers from other package (usually imgui).
 	refStructNames map[CIdentifier]bool
 	refEnumNames   map[CIdentifier]bool
 	refTypedefs    map[CIdentifier]bool
@@ -184,7 +188,7 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 	}
 
 	_, structs, err := getEnumAndStructNames(jsonData.structAndEnums, result)
-	result.structNames = SliceToMap(structs)
+	result.typedefsNames = SliceToMap(structs)
 	if err != nil {
 		return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
 	}
@@ -232,15 +236,15 @@ func main() {
 		glg.Fatalf("Generating enum names: %v", err)
 	}
 
-	context.enumNames = MergeMaps(SliceToMap(enumNames), context.refEnumNames)
+	context.enumNames = SliceToMap(enumNames)
 
 	// 1.2. Generate Go typedefs
-	callbacks, err := GenerateTypedefs(context.typedefs, context.structs, context)
+	typedefsNames, err := GenerateTypedefs(context.typedefs, context.structs, context)
 	if err != nil {
 		log.Panic(err)
 	}
 
-	context.structNames = SliceToMap(callbacks)
+	context.typedefsNames = SliceToMap(typedefsNames)
 
 	// 1.3. Generate C wrapper
 	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, context.funcs, context)

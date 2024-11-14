@@ -676,10 +676,9 @@ func (self *IO) EmulateThreeButtonMouse() EmulateThreeButtonMouse {
 	defer func() {
 		selfFin()
 	}()
-	return *NewEmulateThreeButtonMouseFromC(func() *C.EmulateThreeButtonMouse {
-		result := C.wrap_ImNodesIO_GetEmulateThreeButtonMouse(internal.ReinterpretCast[*C.ImNodesIO](selfArg))
-		return &result
-	}())
+
+	result := C.wrap_ImNodesIO_GetEmulateThreeButtonMouse(internal.ReinterpretCast[*C.ImNodesIO](selfArg))
+	return *NewEmulateThreeButtonMouseFromC(func() *C.EmulateThreeButtonMouse { result := result; return &result }())
 }
 
 func (self IO) SetLinkDetachWithModifierClick(v LinkDetachWithModifierClick) {
@@ -696,10 +695,9 @@ func (self *IO) LinkDetachWithModifierClick() LinkDetachWithModifierClick {
 	defer func() {
 		selfFin()
 	}()
-	return *NewLinkDetachWithModifierClickFromC(func() *C.LinkDetachWithModifierClick {
-		result := C.wrap_ImNodesIO_GetLinkDetachWithModifierClick(internal.ReinterpretCast[*C.ImNodesIO](selfArg))
-		return &result
-	}())
+
+	result := C.wrap_ImNodesIO_GetLinkDetachWithModifierClick(internal.ReinterpretCast[*C.ImNodesIO](selfArg))
+	return *NewLinkDetachWithModifierClickFromC(func() *C.LinkDetachWithModifierClick { result := result; return &result }())
 }
 
 func (self IO) SetMultipleSelectModifier(v MultipleSelectModifier) {
@@ -716,10 +714,9 @@ func (self *IO) MultipleSelectModifier() MultipleSelectModifier {
 	defer func() {
 		selfFin()
 	}()
-	return *NewMultipleSelectModifierFromC(func() *C.MultipleSelectModifier {
-		result := C.wrap_ImNodesIO_GetMultipleSelectModifier(internal.ReinterpretCast[*C.ImNodesIO](selfArg))
-		return &result
-	}())
+
+	result := C.wrap_ImNodesIO_GetMultipleSelectModifier(internal.ReinterpretCast[*C.ImNodesIO](selfArg))
+	return *NewMultipleSelectModifierFromC(func() *C.MultipleSelectModifier { result := result; return &result }())
 }
 
 func (self IO) SetAltMouseButton(v int32) {

@@ -70,12 +70,7 @@ func IsCallbackTypedef(s string) bool {
 }
 
 func IsStructName(name CIdentifier, ctx *Context) bool {
-	_, ok := ctx.structNames[name]
-	return ok
-}
-
-func IsEnum(name CIdentifier, enums map[CIdentifier]bool) bool {
-	_, ok := enums[name]
+	_, ok := ctx.typedefsNames[name]
 	return ok
 }
 
