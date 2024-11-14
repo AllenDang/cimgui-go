@@ -240,12 +240,12 @@ func main() {
 	context.enumNames = SliceToMap(enumNames)
 
 	// 1.2. Generate Go typedefs
-	callbacks, err := GenerateTypedefs(context.typedefs, context.structs, context)
+	typedefsNames, err := GenerateTypedefs(context.typedefs, context.structs, context)
 	if err != nil {
 		log.Panic(err)
 	}
 
-	context.typedefsNames = SliceToMap(callbacks)
+	context.typedefsNames = SliceToMap(typedefsNames)
 
 	// 1.3. Generate C wrapper
 	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, context.funcs, context)
