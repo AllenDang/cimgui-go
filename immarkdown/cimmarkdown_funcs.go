@@ -199,10 +199,9 @@ func (self *Emphasis) Text() TextBlock {
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextBlockFromC(func() *C.TextBlock {
-		result := C.wrap_Emphasis_GetText(internal.ReinterpretCast[*C.Emphasis](selfArg))
-		return &result
-	}())
+
+	result := C.wrap_Emphasis_GetText(internal.ReinterpretCast[*C.Emphasis](selfArg))
+	return *NewTextBlockFromC(func() *C.TextBlock { result := result; return &result }())
 }
 
 func (self Emphasis) SetSym(v rune) {
@@ -399,10 +398,9 @@ func (self *Link) Text() TextBlock {
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextBlockFromC(func() *C.TextBlock {
-		result := C.wrap_Link_GetText(internal.ReinterpretCast[*C.Link](selfArg))
-		return &result
-	}())
+
+	result := C.wrap_Link_GetText(internal.ReinterpretCast[*C.Link](selfArg))
+	return *NewTextBlockFromC(func() *C.TextBlock { result := result; return &result }())
 }
 
 func (self Link) SetUrl(v TextBlock) {
@@ -419,10 +417,9 @@ func (self *Link) Url() TextBlock {
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextBlockFromC(func() *C.TextBlock {
-		result := C.wrap_Link_GetUrl(internal.ReinterpretCast[*C.Link](selfArg))
-		return &result
-	}())
+
+	result := C.wrap_Link_GetUrl(internal.ReinterpretCast[*C.Link](selfArg))
+	return *NewTextBlockFromC(func() *C.TextBlock { result := result; return &result }())
 }
 
 func (self Link) SetIsImage(v bool) {
@@ -933,10 +930,9 @@ func (self *MarkdownTooltipCallbackData) LinkData() MarkdownLinkCallbackData {
 	defer func() {
 		selfFin()
 	}()
-	return *NewMarkdownLinkCallbackDataFromC(func() *C.MarkdownLinkCallbackData {
-		result := C.wrap_MarkdownTooltipCallbackData_GetLinkData(internal.ReinterpretCast[*C.MarkdownTooltipCallbackData](selfArg))
-		return &result
-	}())
+
+	result := C.wrap_MarkdownTooltipCallbackData_GetLinkData(internal.ReinterpretCast[*C.MarkdownTooltipCallbackData](selfArg))
+	return *NewMarkdownLinkCallbackDataFromC(func() *C.MarkdownLinkCallbackData { result := result; return &result }())
 }
 
 func (self MarkdownTooltipCallbackData) SetLinkIcon(v string) {
