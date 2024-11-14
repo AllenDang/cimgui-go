@@ -40,7 +40,7 @@ func GenerateGoFuncs(
 ) error {
 	generator := &goFuncsGenerator{
 		prefix:      context.prefix,
-		structNames: context.typedefsNames,
+		structNames: context.structNames,
 		enumNames:   context.enumNames,
 		refTypedefs: context.refTypedefs,
 		context:     context,

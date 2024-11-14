@@ -126,10 +126,9 @@ type Context struct {
 	typedefs *Typedefs
 
 	// ghese fields are filled by parser while it generates code.
-	funcNames     map[CIdentifier]bool // funcs are filled by gencpp
-	enumNames     map[CIdentifier]bool
-	structNames   map[CIdentifier]bool
-	typedefsNames map[CIdentifier]bool
+	funcNames   map[CIdentifier]bool // funcs are filled by gencpp
+	enumNames   map[CIdentifier]bool
+	structNames map[CIdentifier]bool
 
 	// contains helper C functions to get/set struct fields
 	// of array types
@@ -238,7 +237,7 @@ func main() {
 		glg.Fatalf("Generating enum names: %v", err)
 	}
 
-	context.enumNames = MergeMaps(SliceToMap(enumNames))
+	context.enumNames = SliceToMap(enumNames)
 
 	// 1.2. Generate Go typedefs
 	callbacks, err := GenerateTypedefs(context.typedefs, context.structs, context)
