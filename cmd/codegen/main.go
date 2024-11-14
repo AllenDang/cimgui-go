@@ -116,20 +116,26 @@ func loadData(f *flags) (*jsonData, error) {
 
 // this will store json data processed by appropiate pre-rocessors
 type Context struct {
+	// prefix for generated files (prefix_fileType.go)
+	prefix string
+
+	// plain idata loaded from json
 	funcs    []FuncDef
 	structs  []StructDef
 	enums    []EnumDef
 	typedefs *Typedefs
 
-	prefix string
-
-	funcNames     map[CIdentifier]bool
+	// ghese fields are filled by parser while it generates code.
+	funcNames     map[CIdentifier]bool // funcs are filled by gencpp
 	enumNames     map[CIdentifier]bool
 	structNames   map[CIdentifier]bool
 	typedefsNames map[CIdentifier]bool
 
+	// contains helper C functions to get/set struct fields
+	// of array types
 	arrayIndexGetters map[CIdentifier]CIdentifier
 
+	// contains identifiers from other package (usually imgui).
 	refStructNames map[CIdentifier]bool
 	refEnumNames   map[CIdentifier]bool
 	refTypedefs    map[CIdentifier]bool
@@ -232,7 +238,7 @@ func main() {
 		glg.Fatalf("Generating enum names: %v", err)
 	}
 
-	context.enumNames = MergeMaps(SliceToMap(enumNames), context.refEnumNames)
+	context.enumNames = MergeMaps(SliceToMap(enumNames))
 
 	// 1.2. Generate Go typedefs
 	callbacks, err := GenerateTypedefs(context.typedefs, context.structs, context)

@@ -75,10 +75,13 @@ func getReturnWrapper(
 		"void*":               simpleR("unsafe.Pointer", "unsafe.Pointer"),
 	}
 
+	isPointer := HasSuffix(t, "*")
 	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")
 	// check if pureType is a declared type (struct or something else from typedefs)
 	_, isRefStruct := context.refStructNames[pureType]
 	_, isRefTypedef := context.refTypedefs[pureType]
+	_, isEnum := context.enumNames[pureType]
+	_, isRefEnum := context.refEnumNames[pureType]
 	_, shouldSkipRefTypedef := context.preset.SkipTypedefs[pureType]
 	_, isStruct := context.structNames[pureType]
 	isStruct = isStruct || ((isRefStruct || (isRefTypedef && !IsEnum(pureType, context.refEnumNames))) && !shouldSkipRefTypedef)
@@ -96,25 +99,32 @@ func getReturnWrapper(
 
 	_, shouldSkipStruct := context.preset.SkipStructs[pureType]
 
-	pureType = TrimPrefix(t, "const ")
 	switch {
 	case known:
 		return w, nil
 		// case (context.structNames[t] || context.refStructNames[t]) && !shouldSkipStruct(t):
-	case !HasSuffix(t, "*") && isStruct && !shouldSkipStruct:
+	case !isPointer && isStruct && !shouldSkipStruct:
 		return returnWrapper{
 			returnType: prefixGoPackage(pureType.renameGoIdentifier(context), srcPackage, context),
 			// this is a small trick as using prefixGoPackage isn't in fact intended to be used in such a way, but it should treat the whole string as a "type" and prefix it correctly
 			returnStmt: string(prefixGoPackage(GoIdentifier(fmt.Sprintf("*New%sFromC(func() *C.%s {result := %%s; return &result}())", pureType.renameGoIdentifier(context), pureType)), srcPackage, context)),
 			CType:      GoIdentifier(fmt.Sprintf("C.%s", pureType)),
 		}, nil
-	case IsEnum(t, context.enumNames):
+	case isEnum || isRefEnum:
 		goType := prefixGoPackage(pureType.renameGoIdentifier(context), srcPackage, context)
-		return returnWrapper{
-			returnType: goType,
-			returnStmt: fmt.Sprintf("%s(%%s)", goType),
-			CType:      GoIdentifier(fmt.Sprintf("C.%s", pureType)),
-		}, nil
+		if isPointer {
+			return returnWrapper{
+				returnType: "*" + goType,
+				returnStmt: fmt.Sprintf("(*%s)(%%s)", goType),
+				CType:      GoIdentifier(fmt.Sprintf("*C.%s", TrimSuffix(pureType, "*"))),
+			}, nil
+		} else {
+			return returnWrapper{
+				returnType: goType,
+				returnStmt: fmt.Sprintf("%s(%%s)", goType),
+				CType:      GoIdentifier(fmt.Sprintf("C.%s", pureType)),
+			}, nil
+		}
 	case HasPrefix(t, "ImVector_") &&
 		!(HasSuffix(t, "*") || HasSuffix(t, "]")):
 		pureType := CIdentifier(TrimPrefix(t, "ImVector_") + "*")
@@ -132,13 +142,6 @@ func getReturnWrapper(
 			returnType: GoIdentifier(fmt.Sprintf("vectors.Vector[%s]", Replace(rw.returnType, "*", "", 1))),
 			returnStmt: fmt.Sprintf("vectors.NewVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
 			CType:      GoIdentifier(fmt.Sprintf("*C.%s", pureType)),
-		}, nil
-	case HasSuffix(t, "*") && IsEnum(TrimSuffix(t, "*"), context.enumNames):
-		goType := prefixGoPackage("*"+TrimSuffix(pureType, "*").renameGoIdentifier(context), srcPackage, context)
-		return returnWrapper{
-			returnType: goType,
-			returnStmt: fmt.Sprintf("(%s)(%%s)", goType),
-			CType:      GoIdentifier(fmt.Sprintf("*C.%s", TrimSuffix(pureType, "*"))),
 		}, nil
 	case HasSuffix(t, "*") && isStruct && !shouldSkipStruct:
 		goType := prefixGoPackage("*"+TrimSuffix(pureType, "*").renameGoIdentifier(context), srcPackage, context)
