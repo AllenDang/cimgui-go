@@ -83,7 +83,7 @@ func getReturnWrapper(
 	_, isEnum := context.enumNames[pureType]
 	_, isRefEnum := context.refEnumNames[pureType]
 	_, shouldSkipRefTypedef := context.preset.SkipTypedefs[pureType]
-	_, isStruct := context.structNames[pureType]
+	_, isStruct := context.typedefsNames[pureType]
 	isStruct = isStruct || ((isRefStruct || (isRefTypedef && !IsEnum(pureType, context.refEnumNames))) && !shouldSkipRefTypedef)
 	w, known := returnWrapperMap[t]
 	// check if is array (match regex)
@@ -102,7 +102,7 @@ func getReturnWrapper(
 	switch {
 	case known:
 		return w, nil
-		// case (context.structNames[t] || context.refStructNames[t]) && !shouldSkipStruct(t):
+		// case (context.typedefsNames[t] || context.refStructNames[t]) && !shouldSkipStruct(t):
 	case !isPointer && isStruct && !shouldSkipStruct:
 		return returnWrapper{
 			returnType: prefixGoPackage(pureType.renameGoIdentifier(context), srcPackage, context),

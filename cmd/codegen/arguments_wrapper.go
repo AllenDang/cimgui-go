@@ -301,7 +301,7 @@ for i, %[1]sV := range %[1]sArg {
 	}
 
 	_, shouldSkipRefTypedef := context.preset.SkipTypedefs[pureType]
-	if context.structNames[pureType] || (isRefTypedef && !shouldSkipRefTypedef) {
+	if context.typedefsNames[pureType] || (isRefTypedef && !shouldSkipRefTypedef) {
 		srcPkg := context.flags.packageName
 		if isRefTypedef {
 			srcPkg = context.flags.refPackageName

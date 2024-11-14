@@ -40,7 +40,7 @@ func GenerateGoFuncs(
 ) error {
 	generator := &goFuncsGenerator{
 		prefix:      context.prefix,
-		structNames: context.structNames,
+		typedefsNames: context.typedefsNames,
 		enumNames:   context.enumNames,
 		refTypedefs: context.refTypedefs,
 		context:     context,
@@ -101,7 +101,7 @@ func GenerateGoFuncs(
 // goFuncsGenerator is an internal state of GO funcs' generator
 type goFuncsGenerator struct {
 	prefix      string
-	structNames map[CIdentifier]bool
+	typedefsNames map[CIdentifier]bool
 	enumNames   map[CIdentifier]bool
 	refTypedefs map[CIdentifier]bool
 
@@ -150,9 +150,9 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 		} else {
 			returnTypeType = returnTypeVoid
 		}
-	} else if HasSuffix(f.Ret, "*") && (g.structNames[TrimSuffix(f.Ret, "*")] || g.structNames[TrimSuffix(TrimPrefix(f.Ret, "const "), "*")]) {
+	} else if HasSuffix(f.Ret, "*") && (g.typedefsNames[TrimSuffix(f.Ret, "*")] || g.typedefsNames[TrimSuffix(TrimPrefix(f.Ret, "const "), "*")]) {
 		returnTypeType = returnTypeStructPtr
-	} else if f.StructGetter && g.structNames[f.Ret] {
+	} else if f.StructGetter && g.typedefsNames[f.Ret] {
 		returnTypeType = returnTypeStruct
 	} else if f.Constructor {
 		returnTypeType = returnTypeConstructor
@@ -366,7 +366,7 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []GoIdentifier, arg
 		decl, wrapper, err := getArgWrapper(
 			&a,
 			i == 0 && f.StructSetter,
-			f.StructGetter && g.structNames[a.Type],
+			f.StructGetter && g.typedefsNames[a.Type],
 			g.context,
 		)
 		if err != nil {

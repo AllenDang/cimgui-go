@@ -17,7 +17,7 @@ const (
 )
 
 // this cextracts enums and structs names from json file.
-func getEnumAndStructNames(enumJsonBytes []byte, context *Context) (enumNames []EnumIdentifier, structNames []CIdentifier, err error) {
+func getEnumAndStructNames(enumJsonBytes []byte, context *Context) (enumNames []EnumIdentifier, typedefsNames []CIdentifier, err error) {
 	enums, err := getEnumDefs(enumJsonBytes)
 	if err != nil {
 		return nil, nil, fmt.Errorf("cannot get enum definitions: %w", err)
@@ -34,7 +34,7 @@ func getEnumAndStructNames(enumJsonBytes []byte, context *Context) (enumNames []
 
 	for _, s := range structs {
 		if shouldSkipStruct := context.preset.SkipStructs[s.Name]; !shouldSkipStruct {
-			structNames = append(structNames, s.Name)
+			typedefsNames = append(typedefsNames, s.Name)
 		}
 	}
 
@@ -126,9 +126,9 @@ type Context struct {
 	typedefs *Typedefs
 
 	// ghese fields are filled by parser while it generates code.
-	funcNames   map[CIdentifier]bool // funcs are filled by gencpp
-	enumNames   map[CIdentifier]bool
-	structNames map[CIdentifier]bool
+	funcNames     map[CIdentifier]bool // funcs are filled by gencpp
+	enumNames     map[CIdentifier]bool
+	typedefsNames map[CIdentifier]bool
 
 	// contains helper C functions to get/set struct fields
 	// of array types
@@ -189,7 +189,7 @@ func parseJson(jsonData *jsonData) (*Context, error) {
 	}
 
 	_, structs, err := getEnumAndStructNames(jsonData.structAndEnums, result)
-	result.structNames = SliceToMap(structs)
+	result.typedefsNames = SliceToMap(structs)
 	if err != nil {
 		return nil, fmt.Errorf("cannot get reference struct and enums names: %w", err)
 	}
@@ -245,7 +245,7 @@ func main() {
 		log.Panic(err)
 	}
 
-	context.structNames = SliceToMap(callbacks)
+	context.typedefsNames = SliceToMap(callbacks)
 
 	// 1.3. Generate C wrapper
 	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, context.funcs, context)
