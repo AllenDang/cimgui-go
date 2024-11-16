@@ -40,6 +40,13 @@ type Preset struct {
 	InternalFiles []string
 	// InternalPrefix is a prefix for identifiers from InternalFiles.
 	InternalPrefix string
+	// PackagePath is an import path of the package.
+	// This is base path. flags.packageName will be added.
+	// Example:
+	//   "github.com/AllenDang/cimgui-go"
+	//   If enerated with -pkg imgui, import path
+	//   is supposed to be "github.com/AllenDang/cimgui-go/imgui"
+	PackagePath string
 }
 
 func (p *Preset) MergeCGoPreamble() string {
