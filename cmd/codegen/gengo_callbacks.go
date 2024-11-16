@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"os"
 	"regexp"
 	"sort"
 	"strings"
@@ -38,6 +39,8 @@ func GenerateCallbacks(callbacks []CIdentifier, context *Context) (validTypes []
 		return callbacks[i] < callbacks[j]
 	})
 
+	result.writeHeaer()
+
 	for _, typedefName := range callbacks {
 		if err := result.writeCallback(typedefName, result.ctx.typedefs.data[typedefName]); err != nil {
 			if errors.Is(err, callbackNotGeneratedError) {
@@ -54,6 +57,10 @@ func GenerateCallbacks(callbacks []CIdentifier, context *Context) (validTypes []
 		glg.Successf("Callback \"%s\" was generated", typedefName)
 
 		validTypes = append(validTypes, typedefName)
+	}
+
+	if err := result.saveToDisk(); err != nil {
+		return nil, fmt.Errorf("cannot save to disk: %w", err)
 	}
 
 	return validTypes, nil
@@ -436,6 +443,35 @@ func Clear%[1]sPool() {
 			strings.Join(poolNames, ",\n")+",\n",
 			typedefName,
 		)
+	}
+
+	return nil
+}
+
+func (g *callbacksGenerator) writeHeaer() {
+}
+
+func (g *callbacksGenerator) saveToDisk() error {
+	result := &strings.Builder{}
+	result.WriteString(getGoPackageHeader(g.ctx))
+	fmt.Fprintf(result,
+		`// #include <stdlib.h>
+// #include <memory.h>
+// #include "../imgui/extra_types.h"
+// #include "%[1]s_wrapper.h"
+// #include "%[1]s_typedefs.h"
+`, g.ctx.prefix)
+
+	fmt.Fprintf(result, g.cgoSb.String())
+
+	fmt.Fprintf(result, `import "C"
+import "unsafe"
+`)
+
+	fmt.Fprintf(result, g.goSb.String())
+
+	if err := os.WriteFile(fmt.Sprintf("%s_callbacks.go", g.ctx.prefix), []byte(result.String()), 0644); err != nil {
+		return fmt.Errorf("cannot write %s_typedefs.go: %w", g.ctx.prefix, err)
 	}
 
 	return nil
