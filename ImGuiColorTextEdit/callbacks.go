@@ -8,5 +8,4 @@ package ImGuiColorTextEdit
 // #include "wrapper.h"
 // #include "typedefs.h"
 // #include "../imgui/extra_types.h"
-
 import "C"

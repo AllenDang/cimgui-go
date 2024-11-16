@@ -8,7 +8,6 @@ package immarkdown
 // #include "wrapper.h"
 // #include "typedefs.h"
 // #include "../imgui/extra_types.h"
-
 // extern void callbackMarkdownFormalCallback0(MarkdownFormatInfo*, bool);
 // extern void callbackMarkdownFormalCallback1(MarkdownFormatInfo*, bool);
 // extern void callbackMarkdownFormalCallback2(MarkdownFormatInfo*, bool);

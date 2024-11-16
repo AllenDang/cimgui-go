@@ -8,7 +8,6 @@ package implot
 // #include "wrapper.h"
 // #include "typedefs.h"
 // #include "../imgui/extra_types.h"
-
 // extern int callbackFormatter0(double, char*, int, void*);
 // extern int callbackFormatter1(double, char*, int, void*);
 // extern int callbackFormatter2(double, char*, int, void*);

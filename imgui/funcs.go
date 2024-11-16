@@ -6,7 +6,6 @@ package imgui
 // #include "structs_accessor.h"
 // #include "wrapper.h"
 // #include "../imgui/extra_types.h"
-
 import "C"
 import (
 	"unsafe"

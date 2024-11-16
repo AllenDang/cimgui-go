@@ -8,7 +8,6 @@ package immarkdown
 // #include "wrapper.h"
 // #include "typedefs.h"
 // #include "../imgui/extra_types.h"
-
 import "C"
 import "github.com/AllenDang/cimgui-go/internal"
 
