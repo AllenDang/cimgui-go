@@ -36,69 +36,63 @@ define generate
 	go run golang.org/x/tools/cmd/goimports@latest -w $(2)/callbacks.go
 endef
 
-define cimgui
+define imgui
 	$(call generate,cimgui,imgui,cwrappers/cimgui.h,cwrappers/cimgui_templates/definitions.json,cwrappers/cimgui_templates/structs_and_enums.json,cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
-## cimgui: generate cimgui binding
-.PHONY: cimgui
-cimgui: setup
-	$(call cimgui)
+## cimgui: generate imgui binding
+.PHONY: imgui
+imgui: setup
+	$(call imgui)
 
-define cimplot
+define implot
 	$(call generate,cimplot,implot,cwrappers/cimplot.h,cwrappers/cimplot_templates/definitions.json,cwrappers/cimplot_templates/structs_and_enums.json,cwrappers/cimplot_templates/typedefs_dict.json,-r ../cwrappers/cimgui_templates/structs_and_enums.json -rt ../cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
-## cimplot: generate implot binding
-.PHONY: cimplot
-cimplot: setup
-	$(call cimplot)
+## implot: generate implot binding
+.PHONY: implot
+implot: setup
+	$(call implot)
 
-define cimnodes
+define imnodes
 	$(call generate,cimnodes,imnodes,cwrappers/cimnodes.h,cwrappers/cimnodes_templates/definitions.json,cwrappers/cimnodes_templates/structs_and_enums.json,cwrappers/cimnodes_templates/typedefs_dict.json,-r ../cwrappers/cimgui_templates/structs_and_enums.json -rt ../cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
-## cimnodes: generate imnodes binding
-.PHONY: cimnodes
-cimnodes: setup
-	$(call cimnodes)
+## imnodes: generate imnodes binding
+.PHONY: imnodes
+imnodes: setup
+	$(call imnodes)
 
-define cimmarkdown
+define immarkdown
 	$(call generate,cimmarkdown,immarkdown,cwrappers/cimmarkdown.h,cwrappers/cimmarkdown_templates/definitions.json,cwrappers/cimmarkdown_templates/structs_and_enums.json,cwrappers/cimmarkdown_templates/typedefs_dict.json,-r ../cwrappers/cimgui_templates/structs_and_enums.json -rt ../cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
-## cimmarkdown: generate immarkdown binding
-.PHONY: cimmarkdown
-cimmarkdown: setup
-	$(call cimmarkdown)
+## immarkdown: generate immarkdown binding
+.PHONY: immarkdown
+immarkdown: setup
+	$(call immarkdown)
 
-define cimguizmo
+define imguizmo
 	$(call generate,cimguizmo,imguizmo,cwrappers/cimguizmo.h,cwrappers/cimguizmo_templates/definitions.json,cwrappers/cimguizmo_templates/structs_and_enums.json,cwrappers/cimguizmo_templates/typedefs_dict.json,-r ../cwrappers/cimgui_templates/structs_and_enums.json -rt ../cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
-## cimgui: generate cimgui binding
-.PHONY: cimguizmo
-cimguizmo: setup
-	$(call cimguizmo)
+## imguizmo: generate imguizmo binding
+.PHONY: imguizmo
+imguizmo: setup
+	$(call imguizmo)
 
-define cimcte
+define imcte
 	$(call generate,cimcte,ImGuiColorTextEdit,cwrappers/cimCTE.h,cwrappers/cimCTE_templates/definitions.json,cwrappers/cimCTE_templates/structs_and_enums.json,cwrappers/cimCTE_templates/typedefs_dict.json,-r ../cwrappers/cimgui_templates/structs_and_enums.json -rt ../cwrappers/cimgui_templates/typedefs_dict.json)
 endef
 
-## cimcte: generate cimgui binding
-.PHONY: cimcte
-cimcte: setup
-	$(call cimcte)
-
-compile_cimgui_macos:
-	rm -rf ./lib/build
-	cd ./lib; cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DIMGUI_STATIC=On -DCMAKE_OSX_ARCHITECTURES=arm64
-	cd ./lib/build; make
-	cp -f ./lib/build/cimgui.a ./lib/macos/arm64/
+## imcte: generate ImGuiColorTextEdit binding
+.PHONY: imcte
+imcte: setup
+	$(call imcte)
 
 ## generate: generates both bindings (equal to `all`)
 .PHONY: generate
-generate: cimgui cimplot cimnodes cimmarkdown cimguizmo cimcte
+generate: imgui implot imnodes immarkdown imguizmo imcte
 
 # update updates sub-repos (like cimplot or cimgui)
 # $1 - subrepo directory
