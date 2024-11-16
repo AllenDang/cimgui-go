@@ -226,12 +226,12 @@ extern "C" {
 	fmt.Fprintf(g.GoSb,
 		`// #include <stdlib.h>
 // #include <memory.h>
-// #include "../imgui/extra_types.h"
 // #include "wrapper.h"
 // #include "typedefs.h"
+%s
 import "C"
 import "unsafe"
-`)
+`, g.ctx.preset.MergeCGoPreamble())
 }
 
 // k is plain C name of the typedef (key in typedefs_dict.json)

@@ -44,6 +44,7 @@ func GenerateGoFuncs(
 		enumNames:     context.enumNames,
 		refTypedefs:   context.refTypedefs,
 		context:       context,
+		sb:            &strings.Builder{},
 	}
 
 	generator.writeFuncsFileHeader()
@@ -105,7 +106,7 @@ type goFuncsGenerator struct {
 	enumNames     map[CIdentifier]bool
 	refTypedefs   map[CIdentifier]bool
 
-	sb                 strings.Builder
+	sb                 *strings.Builder
 	convertedFuncCount int
 	shouldGenerate     bool
 
@@ -116,14 +117,14 @@ type goFuncsGenerator struct {
 func (g *goFuncsGenerator) writeFuncsFileHeader() {
 	g.sb.WriteString(getGoPackageHeader(g.context))
 
-	g.sb.WriteString(
-		`// #include "../imgui/extra_types.h"
-// #include "structs_accessor.h"
+	fmt.Fprintf(g.sb,
+		`// #include "structs_accessor.h"
 // #include "wrapper.h"
+%s
 import "C"
 import "unsafe"
 
-`)
+`, g.context.preset.MergeCGoPreamble())
 }
 
 func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argWrappers []ArgumentWrapperData) (noErrors bool) {
@@ -302,8 +303,11 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver GoIdentifier, fu
 
 	// if file comes from imgui_internal.h,prefix Internal is added.
 	// ref: https://github.com/AllenDang/cimgui-go/pull/118
-	if strings.Contains(f.Location, "imgui_internal") {
-		goFuncName = "Internal" + goFuncName
+	for _, internalFile := range g.context.preset.InternalFiles {
+		if strings.HasPrefix(f.Location, internalFile) {
+			goFuncName = GoIdentifier(g.context.preset.InternalPrefix) + goFuncName
+			break
+		}
 	}
 
 	// Generate default param value hint

@@ -1,4 +1,5 @@
 {
+        "PackagePath": "github.com/AllenDang/cimgui-go",
         "SkipFuncs": {
                 "igInputText":                     true,
                 "igInputTextWithHint":             true,
@@ -73,5 +74,12 @@
         ],
         "OriginReplace": {
                 "TextEditor_GetText": "TextEditor_GetText_alloc"
-        }
+        },
+        "ExtraCGOPreamble": [
+                "#include \"../imgui/extra_types.h\""
+        ],
+        "InternalFiles": [
+                "imgui_internal"
+        ],
+        "InternalPrefix": "Internal"
 }

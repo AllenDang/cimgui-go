@@ -1,5 +1,7 @@
 package main
 
+import "strings"
+
 // Preset is a set of rules iperative to XXX_templates/ json files.
 // They are used to manually set some properties of the generator.
 type Preset struct {
@@ -30,4 +32,32 @@ type Preset struct {
 	// Introduced to replace TextEditor_GetText -> TextEditor_GetText_alloc
 	// but could be re-used to force use of another function than json tells us to use.
 	OriginReplace map[CIdentifier]CIdentifier
+	// ExtraCGOPreamble allows to specify additional C code elements in Go files.
+	// For example could be used to include extra files.
+	// For ease of use, its in form of []string. These lines will be merged and prefixed (if appliable) with '//'
+	ExtraCGOPreamble []string
+	// InternalFiles allows to specify files that are considered Internal.
+	// If an identifier is found in such a file, it will be generated but its
+	// name will be prefixed with InternalPrefix
+	InternalFiles []string
+	// InternalPrefix is a prefix for identifiers from InternalFiles.
+	InternalPrefix string
+	// PackagePath is an import path of the package.
+	// This is base path. flags.packageName will be added.
+	// Example:
+	//   "github.com/AllenDang/cimgui-go"
+	//   If enerated with -pkg imgui, import path
+	//   is supposed to be "github.com/AllenDang/cimgui-go/imgui"
+	PackagePath string
+}
+
+func (p *Preset) MergeCGoPreamble() string {
+	result := ""
+	for _, line := range p.ExtraCGOPreamble {
+		result += "// " + line + "\n"
+	}
+
+	result = strings.TrimSuffix(result, "\n")
+
+	return result
 }

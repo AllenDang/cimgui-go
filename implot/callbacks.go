@@ -5,9 +5,9 @@ package implot
 
 // #include <stdlib.h>
 // #include <memory.h>
-// #include "../imgui/extra_types.h"
 // #include "wrapper.h"
 // #include "typedefs.h"
+// #include "../imgui/extra_types.h"
 // extern int callbackFormatter0(double, char*, int, void*);
 // extern int callbackFormatter1(double, char*, int, void*);
 // extern int callbackFormatter2(double, char*, int, void*);

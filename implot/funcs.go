@@ -11,9 +11,9 @@ import (
 	"github.com/AllenDang/cimgui-go/utils/vectors"
 )
 
-// #include "../imgui/extra_types.h"
 // #include "structs_accessor.h"
 // #include "wrapper.h"
+// #include "../imgui/extra_types.h"
 import "C"
 
 func (self *AlignmentData) Begin() {
