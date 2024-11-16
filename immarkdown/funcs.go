@@ -11,8 +11,8 @@ import (
 )
 
 // #include "../imgui/extra_types.h"
-// #include "cimmarkdown_structs_accessor.h"
-// #include "cimmarkdown_wrapper.h"
+// #include "structs_accessor.h"
+// #include "wrapper.h"
 import "C"
 
 func IsCharInsideWord(c_ rune) bool {

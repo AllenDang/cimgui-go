@@ -3,8 +3,8 @@
 
 
 #include <string.h>
-#include "cimmarkdown_wrapper.h"
-#include "cimmarkdown_structs_accessor.h"
+#include "wrapper.h"
+#include "structs_accessor.h"
 
 void wrap_Emphasis_SetState(Emphasis *EmphasisPtr, EmphasisState v) { EmphasisPtr->state = v; }
 EmphasisState wrap_Emphasis_GetState(Emphasis *self) { return self->state; }
