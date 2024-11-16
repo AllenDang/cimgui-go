@@ -31,10 +31,10 @@ extern "C" {
 
 	cppSb := &strings.Builder{}
 	cppSb.WriteString(cppFileHeader)
-	fmt.Fprintf(cppSb, `#include "%s_wrapper.h"
+	fmt.Fprintf(cppSb, `#include "wrapper.h"
 #include "%s"
 
-`, prefix, includePath)
+`, includePath)
 
 	// Note for future generations: can't replace with range, because we edit funcDefs later
 	for i := 0; i < len(funcDefs); i++ {
@@ -385,7 +385,7 @@ extern "C" {
 #endif
 `)
 
-	headerPath := fmt.Sprintf("%s_wrapper.h", prefix)
+	headerPath := "wrapper.h"
 	headerFile, err := os.Create(headerPath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create header file %v: %v", headerPath, err)
@@ -398,7 +398,7 @@ extern "C" {
 		return nil, fmt.Errorf("failed to write header file %v: %v", headerPath, err)
 	}
 
-	cppPath := fmt.Sprintf("%s_wrapper.cpp", prefix)
+	cppPath := "wrapper.cpp"
 	cppFile, err := os.Create(cppPath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create cpp file %v: %v", cppPath, err)
@@ -430,22 +430,22 @@ func generateCppStructsAccessor(prefix string, validFuncs []FuncDef, structs []S
 	sbHeader.WriteString(cppFileHeader)
 	sbCpp.WriteString(cppFileHeader)
 
-	sbHeader.WriteString(fmt.Sprintf(`#pragma once
+	sbHeader.WriteString(`#pragma once
 
-#include "%s_wrapper.h"
+#include "wrapper.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-`, prefix))
+`)
 
-	sbCpp.WriteString(fmt.Sprintf(`
+	sbCpp.WriteString(`
 #include <string.h>
-#include "%[1]s_wrapper.h"
-#include "%[1]s_structs_accessor.h"
+#include "wrapper.h"
+#include "structs_accessor.h"
 
-`, prefix))
+`)
 
 	for _, s := range structs {
 		for _, m := range s.Members {
@@ -574,7 +574,7 @@ extern "C" {
 #endif
 `)
 
-	headerPath := fmt.Sprintf("%s_structs_accessor.h", prefix)
+	headerPath := "structs_accessor.h"
 	headerFile, err := os.Create(headerPath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create cpp file %v: %v", headerPath, err)
@@ -587,7 +587,7 @@ extern "C" {
 		return nil, fmt.Errorf("failed to write to file %v: %v", headerPath, err)
 	}
 
-	cppPath := fmt.Sprintf("%s_structs_accessor.cpp", prefix)
+	cppPath := "structs_accessor.cpp"
 	cppFile, err := os.Create(cppPath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create cpp file %v: %v", cppPath, err)

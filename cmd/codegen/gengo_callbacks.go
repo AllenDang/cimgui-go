@@ -458,9 +458,9 @@ func (g *callbacksGenerator) saveToDisk() error {
 		`// #include <stdlib.h>
 // #include <memory.h>
 // #include "../imgui/extra_types.h"
-// #include "%[1]s_wrapper.h"
-// #include "%[1]s_typedefs.h"
-`, g.ctx.prefix)
+// #include "wrapper.h"
+// #include "typedefs.h"
+`)
 
 	fmt.Fprintf(result, g.cgoSb.String())
 
@@ -470,8 +470,8 @@ import "unsafe"
 
 	fmt.Fprintf(result, g.goSb.String())
 
-	if err := os.WriteFile(fmt.Sprintf("%s_callbacks.go", g.ctx.prefix), []byte(result.String()), 0644); err != nil {
-		return fmt.Errorf("cannot write %s_typedefs.go: %w", g.ctx.prefix, err)
+	if err := os.WriteFile("callbacks.go", []byte(result.String()), 0644); err != nil {
+		return fmt.Errorf("cannot write typedefs.go: %w", err)
 	}
 
 	return nil
