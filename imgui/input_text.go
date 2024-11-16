@@ -3,8 +3,8 @@ package imgui
 // #include <memory.h>
 // #include <stdlib.h>
 // #include "extra_types.h"
-// #include "cimgui_wrapper.h"
-// #include "cimgui_structs_accessor.h"
+// #include "wrapper.h"
+// #include "structs_accessor.h"
 // extern int generalInputTextCallback(ImGuiInputTextCallbackData* data);
 import "C"
 

@@ -6,8 +6,8 @@ package imgui
 // #include <stdlib.h>
 // #include <memory.h>
 // #include "../imgui/extra_types.h"
-// #include "cimgui_wrapper.h"
-// #include "cimgui_typedefs.h"
+// #include "wrapper.h"
+// #include "typedefs.h"
 // extern void callbackDrawCallback0(ImDrawList*, ImDrawCmd*);
 // extern void callbackDrawCallback1(ImDrawList*, ImDrawCmd*);
 // extern void callbackDrawCallback2(ImDrawList*, ImDrawCmd*);

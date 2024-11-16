@@ -2,5 +2,5 @@
 // DO NOT EDIT.
 
 
-#include "cimgui_typedefs.h"
+#include "typedefs.h"
 #include "../cwrappers/cimgui.h"

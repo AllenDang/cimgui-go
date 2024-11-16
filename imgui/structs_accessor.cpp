@@ -3,8 +3,8 @@
 
 
 #include <string.h>
-#include "cimgui_wrapper.h"
-#include "cimgui_structs_accessor.h"
+#include "wrapper.h"
+#include "structs_accessor.h"
 
 void wrap_ImBitVector_SetStorage(ImBitVector *ImBitVectorPtr, ImVector_ImU32 v) { ImBitVectorPtr->Storage = v; }
 ImVector_ImU32 wrap_ImBitVector_GetStorage(ImBitVector *self) { return self->Storage; }
