@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../imgui/cimgui_wrapper.h"
+#include "../../imgui/wrapper.h"
 #include "../../thirdparty/glfw/include/GLFW/glfw3.h" // Will drag system OpenGL headers
 #include "../../imgui/extra_types.h"
 

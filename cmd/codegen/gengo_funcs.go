@@ -39,11 +39,11 @@ func GenerateGoFuncs(
 	context *Context,
 ) error {
 	generator := &goFuncsGenerator{
-		prefix:      context.prefix,
+		prefix:        context.prefix,
 		typedefsNames: context.typedefsNames,
-		enumNames:   context.enumNames,
-		refTypedefs: context.refTypedefs,
-		context:     context,
+		enumNames:     context.enumNames,
+		refTypedefs:   context.refTypedefs,
+		context:       context,
 	}
 
 	generator.writeFuncsFileHeader()
@@ -83,7 +83,7 @@ func GenerateGoFuncs(
 		100*float32(generator.convertedFuncCount)/float32(len(validFuncs)),
 	)
 
-	goFile, err := os.Create(fmt.Sprintf("%s_funcs.go", context.prefix))
+	goFile, err := os.Create("funcs.go")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -100,10 +100,10 @@ func GenerateGoFuncs(
 
 // goFuncsGenerator is an internal state of GO funcs' generator
 type goFuncsGenerator struct {
-	prefix      string
+	prefix        string
 	typedefsNames map[CIdentifier]bool
-	enumNames   map[CIdentifier]bool
-	refTypedefs map[CIdentifier]bool
+	enumNames     map[CIdentifier]bool
+	refTypedefs   map[CIdentifier]bool
 
 	sb                 strings.Builder
 	convertedFuncCount int
@@ -116,14 +116,14 @@ type goFuncsGenerator struct {
 func (g *goFuncsGenerator) writeFuncsFileHeader() {
 	g.sb.WriteString(getGoPackageHeader(g.context))
 
-	g.sb.WriteString(fmt.Sprintf(
+	g.sb.WriteString(
 		`// #include "../imgui/extra_types.h"
-// #include "%[1]s_structs_accessor.h"
-// #include "%[1]s_wrapper.h"
+// #include "structs_accessor.h"
+// #include "wrapper.h"
 import "C"
 import "unsafe"
 
-`, g.prefix))
+`)
 }
 
 func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argWrappers []ArgumentWrapperData) (noErrors bool) {

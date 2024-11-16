@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cimgui_wrapper.h"
+#include "wrapper.h"
 #include <stddef.h>
 
 #ifdef __cplusplus

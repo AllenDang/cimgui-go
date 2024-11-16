@@ -9,8 +9,8 @@ package backend
 // extern void keyCallback(void*, int, int, int, int);
 // extern void sizeCallback(void*, int, int);
 // #include "../imgui/extra_types.h"
-// #include "../imgui/cimgui_wrapper.h"
-// #include "../imgui/cimgui_typedefs.h"
+// #include "../imgui/wrapper.h"
+// #include "../imgui/typedefs.h"
 import "C"
 
 import (

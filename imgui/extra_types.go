@@ -1,6 +1,6 @@
 package imgui
 
-// #include "cimgui_wrapper.h"
+// #include "wrapper.h"
 // #include "extra_types.h"
 import "C"
 

@@ -1,8 +1,8 @@
 package imgui
 
 // #include <stdlib.h>
-// #include "cimgui_wrapper.h"
-// #include "cimgui_typedefs.h"
+// #include "wrapper.h"
+// #include "typedefs.h"
 // typedef char* (*get_clipboard_cb)(ImGuiContext* );
 // typedef void (*set_clipboard_cb)(ImGuiContext*, char* );
 // extern char* get_clipboard_callback(ImGuiContext* user_data);

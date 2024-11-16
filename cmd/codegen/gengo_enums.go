@@ -35,7 +35,7 @@ func generateGoEnums(prefix string, enums []EnumDef, ctx *Context) ([]CIdentifie
 		sb.WriteString(")\n\n")
 	}
 
-	enumFile, err := os.Create(fmt.Sprintf("%s_enums.go", prefix))
+	enumFile, err := os.Create("enums.go")
 	if err != nil {
 		return nil, err
 	}

@@ -218,20 +218,20 @@ extern "C" {
 	g.CppSb.WriteString(cppFileHeader)
 	fmt.Fprintf(g.CppSb,
 		`
-#include "%[1]s_typedefs.h"
-#include "%[2]s"
-`, g.ctx.prefix, g.ctx.flags.include)
+#include "typedefs.h"
+#include "%[1]s"
+`, g.ctx.flags.include)
 
 	g.GoSb.WriteString(getGoPackageHeader(g.ctx))
 	fmt.Fprintf(g.GoSb,
 		`// #include <stdlib.h>
 // #include <memory.h>
 // #include "../imgui/extra_types.h"
-// #include "%[1]s_wrapper.h"
-// #include "%[1]s_typedefs.h"
+// #include "wrapper.h"
+// #include "typedefs.h"
 import "C"
 import "unsafe"
-`, g.ctx.prefix)
+`)
 }
 
 // k is plain C name of the typedef (key in typedefs_dict.json)
@@ -422,16 +422,16 @@ func (g *typedefsGenerator) saveToDisk() error {
 }
 #endif`)
 
-	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.go", g.ctx.prefix), []byte(g.GoSb.String()), 0644); err != nil {
-		return fmt.Errorf("cannot write %s_typedefs.go: %w", g.ctx.prefix, err)
+	if err := os.WriteFile("typedefs.go", []byte(g.GoSb.String()), 0644); err != nil {
+		return fmt.Errorf("cannot write typedefs.go: %w", err)
 	}
 
-	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.cpp", g.ctx.prefix), []byte(g.CppSb.String()), 0644); err != nil {
-		return fmt.Errorf("cannot write %s_typedefs.cpp: %w", g.ctx.prefix, err)
+	if err := os.WriteFile("typedefs.cpp", []byte(g.CppSb.String()), 0644); err != nil {
+		return fmt.Errorf("cannot write typedefs.cpp: %w", err)
 	}
 
-	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.h", g.ctx.prefix), []byte(g.HSb.String()), 0644); err != nil {
-		return fmt.Errorf("cannot write %s_typedefs.h: %w", g.ctx.prefix, err)
+	if err := os.WriteFile("typedefs.h", []byte(g.HSb.String()), 0644); err != nil {
+		return fmt.Errorf("cannot write typedefs.h: %w", err)
 	}
 
 	return nil
