@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/kpango/glg"
@@ -87,7 +86,7 @@ func loadData(f *flags) (*jsonData, error) {
 
 	result.structAndEnums, err = os.ReadFile(f.enumsJsonpath)
 	if err != nil {
-		log.Panic(err)
+		glg.Fatalf("cannot read struct and enums json file: %v", err)
 	}
 
 	if len(f.refEnumsJsonPath) > 0 {
@@ -107,7 +106,7 @@ func loadData(f *flags) (*jsonData, error) {
 	if len(f.presetJsonPath) > 0 {
 		result.preset, err = os.ReadFile(f.presetJsonPath)
 		if err != nil {
-			log.Panic(err)
+			glg.Fatalf("cannot read preset json file: %v", err)
 		}
 	}
 
@@ -241,14 +240,14 @@ func main() {
 	// 1.2. Generate Go typedefs
 	typedefsNames, callbacksToGenerate, err := GenerateTypedefs(context.typedefs, context.structs, context)
 	if err != nil {
-		log.Panic(err)
+		glg.Fatalf("Cannot generate typedefs: %v", err)
 	}
 
 	context.typedefsNames = SliceToMap(typedefsNames)
 
 	validCallbacks, err := GenerateCallbacks(callbacksToGenerate, context)
 	if err != nil {
-		log.Panic(err)
+		glg.Fatalf("Cannot generate callbacks: %v", err)
 	}
 
 	context.typedefsNames = MergeMaps(context.typedefsNames, SliceToMap(validCallbacks))
@@ -256,20 +255,20 @@ func main() {
 	// 1.3. Generate C wrapper
 	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, context.funcs, context)
 	if err != nil {
-		log.Panic(err)
+		glg.Fatalf("Cannot generate CPP Wrapper: %v", err)
 	}
 
 	// 1.3.1. Generate Struct accessors in C
 	structAccessorFuncs, err := generateCppStructsAccessor(flags.prefix, validFuncs, context.structs, context)
 	if err != nil {
-		log.Panic(err)
+		glg.Fatalf("Cannot generate CPP Struct Accessors: %v", err)
 	}
 
 	// This variable stores funcs that needs to be written to GO now.
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
 	if err := GenerateGoFuncs(validFuncs, context); err != nil {
-		log.Panic(err)
+		glg.Fatalf("Cannot generate Go functions: %v", err)
 	}
 }
 
