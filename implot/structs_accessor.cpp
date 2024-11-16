@@ -3,8 +3,8 @@
 
 
 #include <string.h>
-#include "cimplot_wrapper.h"
-#include "cimplot_structs_accessor.h"
+#include "wrapper.h"
+#include "structs_accessor.h"
 
 void wrap_Formatter_Time_Data_SetTime(Formatter_Time_Data *Formatter_Time_DataPtr, ImPlotTime v) { Formatter_Time_DataPtr->Time = v; }
 ImPlotTime wrap_Formatter_Time_Data_GetTime(Formatter_Time_Data *self) { return self->Time; }

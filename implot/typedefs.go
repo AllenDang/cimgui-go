@@ -6,8 +6,8 @@ package implot
 // #include <stdlib.h>
 // #include <memory.h>
 // #include "../imgui/extra_types.h"
-// #include "cimplot_wrapper.h"
-// #include "cimplot_typedefs.h"
+// #include "wrapper.h"
+// #include "typedefs.h"
 import "C"
 import "github.com/AllenDang/cimgui-go/internal"
 

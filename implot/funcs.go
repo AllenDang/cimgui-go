@@ -12,8 +12,8 @@ import (
 )
 
 // #include "../imgui/extra_types.h"
-// #include "cimplot_structs_accessor.h"
-// #include "cimplot_wrapper.h"
+// #include "structs_accessor.h"
+// #include "wrapper.h"
 import "C"
 
 func (self *AlignmentData) Begin() {

@@ -2,5 +2,5 @@
 // DO NOT EDIT.
 
 
-#include "cimplot_typedefs.h"
+#include "typedefs.h"
 #include "../cwrappers/cimplot.h"
