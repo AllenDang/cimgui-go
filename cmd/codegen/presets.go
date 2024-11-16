@@ -1,5 +1,7 @@
 package main
 
+import "strings"
+
 // Preset is a set of rules iperative to XXX_templates/ json files.
 // They are used to manually set some properties of the generator.
 type Preset struct {
@@ -54,6 +56,8 @@ func (p *Preset) MergeCGoPreamble() string {
 	for _, line := range p.ExtraCGOPreamble {
 		result += "// " + line + "\n"
 	}
+
+	result = strings.TrimSuffix(result, "\n")
 
 	return result
 }
