@@ -303,8 +303,11 @@ func (g *goFuncsGenerator) generateFuncDeclarationStmt(receiver GoIdentifier, fu
 
 	// if file comes from imgui_internal.h,prefix Internal is added.
 	// ref: https://github.com/AllenDang/cimgui-go/pull/118
-	if strings.Contains(f.Location, "imgui_internal") {
-		goFuncName = "Internal" + goFuncName
+	for _, internalFile := range g.context.preset.InternalFiles {
+		if strings.HasPrefix(f.Location, internalFile) {
+			goFuncName = GoIdentifier(g.context.preset.InternalPrefix) + goFuncName
+			break
+		}
 	}
 
 	// Generate default param value hint

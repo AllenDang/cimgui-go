@@ -76,5 +76,9 @@
         },
         "ExtraCGOPreamble": [
                 "#include \"../imgui/extra_types.h\""
-        ]
+        ],
+        "InternalFiles": [
+                "imgui_internal"
+        ],
+        "InternalPrefix": "Internal"
 }

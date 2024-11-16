@@ -34,6 +34,12 @@ type Preset struct {
 	// For example could be used to include extra files.
 	// For ease of use, its in form of []string. These lines will be merged and prefixed (if appliable) with '//'
 	ExtraCGOPreamble []string
+	// InternalFiles allows to specify files that are considered Internal.
+	// If an identifier is found in such a file, it will be generated but its
+	// name will be prefixed with InternalPrefix
+	InternalFiles []string
+	// InternalPrefix is a prefix for identifiers from InternalFiles.
+	InternalPrefix string
 }
 
 func (p *Preset) MergeCGoPreamble() string {
