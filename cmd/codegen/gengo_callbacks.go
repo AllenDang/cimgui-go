@@ -457,10 +457,10 @@ func (g *callbacksGenerator) saveToDisk() error {
 	fmt.Fprintf(result,
 		`// #include <stdlib.h>
 // #include <memory.h>
-// #include "../imgui/extra_types.h"
 // #include "wrapper.h"
 // #include "typedefs.h"
-`)
+%s
+`, g.ctx.preset.MergeCGoPreamble())
 
 	fmt.Fprintf(result, g.cgoSb.String())
 

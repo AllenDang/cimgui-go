@@ -44,6 +44,7 @@ func GenerateGoFuncs(
 		enumNames:     context.enumNames,
 		refTypedefs:   context.refTypedefs,
 		context:       context,
+		sb:            &strings.Builder{},
 	}
 
 	generator.writeFuncsFileHeader()
@@ -105,7 +106,7 @@ type goFuncsGenerator struct {
 	enumNames     map[CIdentifier]bool
 	refTypedefs   map[CIdentifier]bool
 
-	sb                 strings.Builder
+	sb                 *strings.Builder
 	convertedFuncCount int
 	shouldGenerate     bool
 
@@ -116,14 +117,14 @@ type goFuncsGenerator struct {
 func (g *goFuncsGenerator) writeFuncsFileHeader() {
 	g.sb.WriteString(getGoPackageHeader(g.context))
 
-	g.sb.WriteString(
-		`// #include "../imgui/extra_types.h"
-// #include "structs_accessor.h"
+	fmt.Fprintf(g.sb,
+		`// #include "structs_accessor.h"
 // #include "wrapper.h"
+%s
 import "C"
 import "unsafe"
 
-`)
+`, g.context.preset.MergeCGoPreamble())
 }
 
 func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argWrappers []ArgumentWrapperData) (noErrors bool) {

@@ -30,4 +30,17 @@ type Preset struct {
 	// Introduced to replace TextEditor_GetText -> TextEditor_GetText_alloc
 	// but could be re-used to force use of another function than json tells us to use.
 	OriginReplace map[CIdentifier]CIdentifier
+	// ExtraCGOPreamble allows to specify additional C code elements in Go files.
+	// For example could be used to include extra files.
+	// For ease of use, its in form of []string. These lines will be merged and prefixed (if appliable) with '//'
+	ExtraCGOPreamble []string
+}
+
+func (p *Preset) MergeCGoPreamble() string {
+	result := ""
+	for _, line := range p.ExtraCGOPreamble {
+		result += "// " + line + "\n"
+	}
+
+	return result
 }
