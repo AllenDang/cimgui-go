@@ -2,7 +2,7 @@
 // DO NOT EDIT.
 
 
-#include "cimnodes_typedefs.h"
+#include "typedefs.h"
 #include "../cwrappers/cimnodes.h"
 
 uintptr_t ImNodesMiniMapNodeHoveringCallbackUserData_toUintptr(ImNodesMiniMapNodeHoveringCallbackUserData ptr) {

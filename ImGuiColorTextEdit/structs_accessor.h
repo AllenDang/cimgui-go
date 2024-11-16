@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "cimcte_wrapper.h"
+#include "wrapper.h"
 
 #ifdef __cplusplus
 extern "C" {

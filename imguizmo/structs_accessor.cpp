@@ -3,8 +3,8 @@
 
 
 #include <string.h>
-#include "cimguizmo_wrapper.h"
-#include "cimguizmo_structs_accessor.h"
+#include "wrapper.h"
+#include "structs_accessor.h"
 
 void wrap_Style_SetTranslationLineThickness(Style *StylePtr, float v) { StylePtr->TranslationLineThickness = v; }
 float wrap_Style_GetTranslationLineThickness(Style *self) { return self->TranslationLineThickness; }

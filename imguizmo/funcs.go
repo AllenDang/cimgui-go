@@ -11,8 +11,8 @@ import (
 )
 
 // #include "../imgui/extra_types.h"
-// #include "cimguizmo_structs_accessor.h"
-// #include "cimguizmo_wrapper.h"
+// #include "structs_accessor.h"
+// #include "wrapper.h"
 import "C"
 
 func AllowAxisFlip(value bool) {

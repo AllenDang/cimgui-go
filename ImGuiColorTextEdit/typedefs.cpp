@@ -2,5 +2,5 @@
 // DO NOT EDIT.
 
 
-#include "cimcte_typedefs.h"
+#include "typedefs.h"
 #include "../cwrappers/cimCTE.h"

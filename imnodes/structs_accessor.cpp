@@ -3,8 +3,8 @@
 
 
 #include <string.h>
-#include "cimnodes_wrapper.h"
-#include "cimnodes_structs_accessor.h"
+#include "wrapper.h"
+#include "structs_accessor.h"
 
 void wrap_EmulateThreeButtonMouse_SetModifier(EmulateThreeButtonMouse *EmulateThreeButtonMousePtr, const bool* v) { EmulateThreeButtonMousePtr->Modifier = v; }
 const bool* wrap_EmulateThreeButtonMouse_GetModifier(EmulateThreeButtonMouse *self) { return self->Modifier; }

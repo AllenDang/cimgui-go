@@ -6,8 +6,8 @@ package imnodes
 // #include <stdlib.h>
 // #include <memory.h>
 // #include "../imgui/extra_types.h"
-// #include "cimnodes_wrapper.h"
-// #include "cimnodes_typedefs.h"
+// #include "wrapper.h"
+// #include "typedefs.h"
 // extern void callbackMiniMapNodeHoveringCallback0(int, void*);
 // extern void callbackMiniMapNodeHoveringCallback1(int, void*);
 // extern void callbackMiniMapNodeHoveringCallback2(int, void*);

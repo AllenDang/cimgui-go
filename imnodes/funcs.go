@@ -11,8 +11,8 @@ import (
 )
 
 // #include "../imgui/extra_types.h"
-// #include "cimnodes_structs_accessor.h"
-// #include "cimnodes_wrapper.h"
+// #include "structs_accessor.h"
+// #include "wrapper.h"
 import "C"
 
 func NewEmulateThreeButtonMouse() *EmulateThreeButtonMouse {

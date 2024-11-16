@@ -2,5 +2,7 @@
 // DO NOT EDIT.
 
 
-#include "cimguizmo_typedefs.h"
-#include "../cwrappers/cimguizmo.h"
+#include <string.h>
+#include "wrapper.h"
+#include "structs_accessor.h"
+

@@ -9,8 +9,8 @@ import (
 )
 
 // #include "../imgui/extra_types.h"
-// #include "cimcte_structs_accessor.h"
-// #include "cimcte_wrapper.h"
+// #include "structs_accessor.h"
+// #include "wrapper.h"
 import "C"
 
 func (self *TextEditor) AllCursorsHaveSelection() bool {

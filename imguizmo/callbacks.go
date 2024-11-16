@@ -6,6 +6,6 @@ package imguizmo
 // #include <stdlib.h>
 // #include <memory.h>
 // #include "../imgui/extra_types.h"
-// #include "cimguizmo_wrapper.h"
-// #include "cimguizmo_typedefs.h"
+// #include "wrapper.h"
+// #include "typedefs.h"
 import "C"

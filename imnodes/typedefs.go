@@ -6,8 +6,8 @@ package imnodes
 // #include <stdlib.h>
 // #include <memory.h>
 // #include "../imgui/extra_types.h"
-// #include "cimnodes_wrapper.h"
-// #include "cimnodes_typedefs.h"
+// #include "wrapper.h"
+// #include "typedefs.h"
 import "C"
 import "github.com/AllenDang/cimgui-go/internal"
 

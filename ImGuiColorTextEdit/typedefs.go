@@ -6,8 +6,8 @@ package ImGuiColorTextEdit
 // #include <stdlib.h>
 // #include <memory.h>
 // #include "../imgui/extra_types.h"
-// #include "cimcte_wrapper.h"
-// #include "cimcte_typedefs.h"
+// #include "wrapper.h"
+// #include "typedefs.h"
 import "C"
 import "github.com/AllenDang/cimgui-go/internal"
 
