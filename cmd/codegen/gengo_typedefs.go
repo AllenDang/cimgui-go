@@ -10,11 +10,10 @@ import (
 )
 
 type typedefsGenerator struct {
-	GoSb        *strings.Builder
-	CGoHeaderSb *strings.Builder
-	HSb         *strings.Builder
-	CppSb       *strings.Builder
-	ctx         *Context
+	GoSb  *strings.Builder
+	HSb   *strings.Builder
+	CppSb *strings.Builder
+	ctx   *Context
 }
 
 // GenerateTypedefs will proceed all typedefs from typedefs_dict.json
@@ -22,18 +21,17 @@ func GenerateTypedefs(
 	typedefs *Typedefs,
 	structs []StructDef,
 	ctx *Context,
-) (validTypeNames []CIdentifier, err error) {
+) (validTypeNames, callbacks []CIdentifier, err error) {
 	// quick counter for coverage control
 	generatedTypedefs := 0
 	maxTypedefs := len(typedefs.data)
 
 	generator := &typedefsGenerator{
 		// we need FILES
-		GoSb:        &strings.Builder{},
-		CGoHeaderSb: &strings.Builder{},
-		HSb:         &strings.Builder{},
-		CppSb:       &strings.Builder{},
-		ctx:         ctx,
+		GoSb:  &strings.Builder{},
+		HSb:   &strings.Builder{},
+		CppSb: &strings.Builder{},
+		ctx:   ctx,
 	}
 
 	generator.writeHeaders()
@@ -130,17 +128,8 @@ func GenerateTypedefs(
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		case IsCallbackTypedef(typedefs.data[k]):
-			if err := generator.writeCallback(k, typedef, ctx); err != nil {
-				if ctx.flags.showNotGenerated {
-					glg.Failf("cannot write callback %s: %v", k, err)
-					continue
-				}
-			}
-
-			generatedTypedefs++
-			validTypeNames = append(validTypeNames, k)
-
-			glg.Successf("typedef %s is a callback. Implemented.", k)
+			maxTypedefs--
+			callbacks = append(callbacks, k)
 		case HasPrefix(typedefs.data[k], "struct"):
 			isOpaque := !IsStructName(k, ctx)
 			if ctx.flags.showGenerated {
@@ -159,11 +148,11 @@ func GenerateTypedefs(
 	}
 
 	if err := generator.saveToDisk(); err != nil {
-		return nil, fmt.Errorf("cannot save typedefs to disk: %w", err)
+		return nil, nil, fmt.Errorf("cannot save typedefs to disk: %w", err)
 	}
 
 	glg.Infof("Typedefs generation complete. Generated %d/%d (%.2f%%) typedefs.", generatedTypedefs, maxTypedefs, float32(generatedTypedefs*100)/float32(maxTypedefs))
-	return validTypeNames, nil
+	return validTypeNames, callbacks, nil
 }
 
 // Let's say our pureType is of form "short"
@@ -232,6 +221,17 @@ extern "C" {
 #include "%[1]s_typedefs.h"
 #include "%[2]s"
 `, g.ctx.prefix, g.ctx.flags.include)
+
+	g.GoSb.WriteString(getGoPackageHeader(g.ctx))
+	fmt.Fprintf(g.GoSb,
+		`// #include <stdlib.h>
+// #include <memory.h>
+// #include "../imgui/extra_types.h"
+// #include "%[1]s_wrapper.h"
+// #include "%[1]s_typedefs.h"
+import "C"
+import "unsafe"
+`, g.ctx.prefix)
 }
 
 // k is plain C name of the typedef (key in typedefs_dict.json)
@@ -422,26 +422,7 @@ func (g *typedefsGenerator) saveToDisk() error {
 }
 #endif`)
 
-	typedefsGoResultSb := &strings.Builder{}
-	typedefsGoResultSb.WriteString(getGoPackageHeader(g.ctx))
-	fmt.Fprintf(typedefsGoResultSb,
-		`// #include <stdlib.h>
-// #include <memory.h>
-// #include "../imgui/extra_types.h"
-// #include "%[1]s_wrapper.h"
-// #include "%[1]s_typedefs.h"
-`, g.ctx.prefix)
-
-	typedefsGoResultSb.WriteString(g.CGoHeaderSb.String())
-
-	fmt.Fprintf(typedefsGoResultSb,
-		`import "C"
-import "unsafe"
-`)
-
-	typedefsGoResultSb.WriteString(g.GoSb.String())
-
-	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.go", g.ctx.prefix), []byte(typedefsGoResultSb.String()), 0644); err != nil {
+	if err := os.WriteFile(fmt.Sprintf("%s_typedefs.go", g.ctx.prefix), []byte(g.GoSb.String()), 0644); err != nil {
 		return fmt.Errorf("cannot write %s_typedefs.go: %w", g.ctx.prefix, err)
 	}
 

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"sort"
 	"strings"
 
 	"github.com/kpango/glg"
@@ -18,11 +19,51 @@ const (
 
 var callbackNotGeneratedError = errors.New("callback was not generated")
 
+type callbacksGenerator struct {
+	goSb, cgoSb *strings.Builder
+	ctx         *Context
+}
+
+func GenerateCallbacks(callbacks []CIdentifier, context *Context) (validTypes []CIdentifier, err error) {
+	result := &callbacksGenerator{
+		goSb:  &strings.Builder{},
+		cgoSb: &strings.Builder{},
+		ctx:   context,
+	}
+
+	validTypes = make([]CIdentifier, 0)
+
+	// sort just in case
+	sort.Slice(callbacks, func(i, j int) bool {
+		return callbacks[i] < callbacks[j]
+	})
+
+	for _, typedefName := range callbacks {
+		if err := result.writeCallback(typedefName, result.ctx.typedefs.data[typedefName]); err != nil {
+			if errors.Is(err, callbackNotGeneratedError) {
+				if context.flags.showNotGenerated {
+					glg.Warnf("Callback \"%s\" was not generated", typedefName)
+				}
+
+				continue
+			}
+
+			return nil, err
+		}
+
+		glg.Successf("Callback \"%s\" was generated", typedefName)
+
+		validTypes = append(validTypes, typedefName)
+	}
+
+	return validTypes, nil
+}
+
 // This is an underlying function for gengo_typedefs.go for now.
 // May be reworked to be a separated "genertor" in the future.
 // - includes logging
 // - returns CallbackNotGeneratedError
-func (g *typedefsGenerator) writeCallback(typedefName CIdentifier, def string, context *Context) error {
+func (g *callbacksGenerator) writeCallback(typedefName CIdentifier, def string) error {
 	// see https://github.com/AllenDang/cimgui-go/issues/224#issuecomment-2452156237
 	// 1: preprocessing - parse typedefs.data[k] to get return type and arguments
 
@@ -192,7 +233,7 @@ func (g *typedefsGenerator) writeCallback(typedefName CIdentifier, def string, c
 	// 4: Write code
 	switch cbType {
 	case callbackType1:
-		fmt.Fprintf(g.GoSb, `
+		fmt.Fprintf(g.goSb, `
 type %[1]s func(%[4]s) %[2]s
 type c%[1]s func(%[5]s) %[3]s
 
@@ -205,7 +246,7 @@ func (c %[1]s) C() (C.%[6]s, func()) {
 	return pool%[1]s.Allocate(c), func() { }
 }
 `,
-			typedefName.renameGoIdentifier(context),
+			typedefName.renameGoIdentifier(g.ctx),
 			returnType.ArgType,
 			returnType.CType,
 			goCallStmt,
@@ -213,7 +254,7 @@ func (c %[1]s) C() (C.%[6]s, func()) {
 			typedefName,
 		)
 	case callbackType2:
-		fmt.Fprintf(g.GoSb, `
+		fmt.Fprintf(g.goSb, `
 type %[1]s func(%[4]s) %[2]s
 type c%[1]s func(%[5]s) %[3]s
 
@@ -227,7 +268,7 @@ func (c %[1]s) Handle() (*C.%[6]s, func()) {
 	return result, func() {}
 }
 `,
-			typedefName.renameGoIdentifier(context),
+			typedefName.renameGoIdentifier(g.ctx),
 			returnType.ArgType,
 			returnType.CType,
 			goCallStmt,
@@ -242,12 +283,12 @@ func (c %[1]s) Handle() (*C.%[6]s, func()) {
 	}
 
 	if returnType.ArgType == "" {
-		fmt.Fprintf(g.GoSb, `
+		fmt.Fprintf(g.goSb, `
 func wrap%[1]s(cb %[1]s %[3]s) %[2]s {
 	cb(%[4]s)
 }
 `,
-			typedefName.renameGoIdentifier(context),
+			typedefName.renameGoIdentifier(g.ctx),
 			returnType.CType,
 			cCallStmt2,
 			func() string {
@@ -260,7 +301,7 @@ func wrap%[1]s(cb %[1]s %[3]s) %[2]s {
 			}(),
 		)
 	} else {
-		fmt.Fprintf(g.GoSb, `
+		fmt.Fprintf(g.goSb, `
 func wrap%[1]s(cb %[1]s %[5]s) %[2]s {
 	result := cb(%[6]s)
 	%[3]s
@@ -270,7 +311,7 @@ func wrap%[1]s(cb %[1]s %[5]s) %[2]s {
 	return %[4]s
 }
 `,
-			typedefName.renameGoIdentifier(context),
+			typedefName.renameGoIdentifier(g.ctx),
 			returnType.CType,
 			returnType.ArgDef,
 			returnType.VarName,
@@ -287,8 +328,8 @@ func wrap%[1]s(cb %[1]s %[5]s) %[2]s {
 		)
 	}
 
-	size := context.preset.TypedefsPoolSize
-	if h, ok := context.preset.TypedefsCustomPoolSizes[typedefName]; ok {
+	size := g.ctx.preset.TypedefsPoolSize
+	if h, ok := g.ctx.preset.TypedefsCustomPoolSizes[typedefName]; ok {
 		size = h
 	}
 
@@ -297,11 +338,11 @@ func wrap%[1]s(cb %[1]s %[5]s) %[2]s {
 	for i := 0; i < size; i++ {
 		switch cbType {
 		case callbackType1:
-			fmt.Fprintf(g.GoSb,
+			fmt.Fprintf(g.goSb,
 				`//export callback%[1]s%[2]d
 func callback%[1]s%[2]d(%[5]s) %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6]s) }
 					`,
-				typedefName.renameGoIdentifier(context),
+				typedefName.renameGoIdentifier(g.ctx),
 				i,
 				returnType.CType,
 				func() string {
@@ -316,11 +357,11 @@ func callback%[1]s%[2]d(%[5]s) %[3]s { %[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6
 			)
 		case callbackType2:
 
-			fmt.Fprintf(g.GoSb,
+			fmt.Fprintf(g.goSb,
 				`//export callback%[1]s%[2]d
 func callback%[1]s%[2]d(%[5]s) %[3]s {%[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6]s) }
 					`,
-				typedefName.renameGoIdentifier(context),
+				typedefName.renameGoIdentifier(g.ctx),
 				i,
 				returnType.CType,
 				func() string {
@@ -335,11 +376,11 @@ func callback%[1]s%[2]d(%[5]s) %[3]s {%[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6]
 			)
 		}
 
-		fmt.Fprintf(g.CGoHeaderSb,
+		fmt.Fprintf(g.cgoSb,
 			`// extern %[1]s callback%[2]s%[3]d(%[4]s);
 `,
 			returnTypeC,
-			typedefName.renameGoIdentifier(context),
+			typedefName.renameGoIdentifier(g.ctx),
 			i,
 			func() string {
 				result := ""
@@ -354,15 +395,15 @@ func callback%[1]s%[2]d(%[5]s) %[3]s {%[4]s wrap%[1]s(pool%[1]s.Get(%[2]d), %[6]
 
 		switch cbType {
 		case callbackType1:
-			poolNames[i] = fmt.Sprintf("C.%[3]s(C.callback%[1]s%[2]d)", typedefName.renameGoIdentifier(context), i, typedefName)
+			poolNames[i] = fmt.Sprintf("C.%[3]s(C.callback%[1]s%[2]d)", typedefName.renameGoIdentifier(g.ctx), i, typedefName)
 		case callbackType2:
-			poolNames[i] = fmt.Sprintf("(*C.%[3]s)(C.callback%[1]s%[2]d)", typedefName.renameGoIdentifier(context), i, typedefName)
+			poolNames[i] = fmt.Sprintf("(*C.%[3]s)(C.callback%[1]s%[2]d)", typedefName.renameGoIdentifier(g.ctx), i, typedefName)
 		}
 	}
 
 	switch cbType {
 	case callbackType1:
-		fmt.Fprintf(g.GoSb, `
+		fmt.Fprintf(g.goSb, `
 var pool%[1]s *internal.Pool[%[1]s, C.%[3]s]
 func init() {
 	pool%[1]s = internal.NewPool[%[1]s, C.%[3]s](
@@ -374,12 +415,12 @@ func Clear%[1]sPool() {
 	pool%[1]s.Clear()
 }
 `,
-			typedefName.renameGoIdentifier(context),
+			typedefName.renameGoIdentifier(g.ctx),
 			strings.Join(poolNames, ",\n")+",\n",
 			typedefName,
 		)
 	case callbackType2:
-		fmt.Fprintf(g.GoSb, `
+		fmt.Fprintf(g.goSb, `
 var pool%[1]s *internal.Pool[%[1]s, *C.%[3]s]
 func init() {
 	pool%[1]s = internal.NewPool[%[1]s, *C.%[3]s](
@@ -391,7 +432,7 @@ func Clear%[1]sPool() {
 	pool%[1]s.Clear()
 }
 `,
-			typedefName.renameGoIdentifier(context),
+			typedefName.renameGoIdentifier(g.ctx),
 			strings.Join(poolNames, ",\n")+",\n",
 			typedefName,
 		)
