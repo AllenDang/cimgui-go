@@ -63,7 +63,7 @@ func GenerateGoFuncs(
 		// stop, when the function should not be generated
 		if !generator.shouldGenerate {
 			if context.flags.showNotGenerated {
-				glg.Failf("not generated: %s%s", f.FuncName, f.Args)
+				glg.Errorf("not generated: %s%s", f.FuncName, f.Args)
 			}
 			continue
 		} else {

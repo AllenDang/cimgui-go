@@ -141,7 +141,7 @@ func GenerateTypedefs(
 			validTypeNames = append(validTypeNames, k)
 		default:
 			if ctx.flags.showNotGenerated {
-				glg.Failf("unknown situation happened for type %s; not implemented. Probably unknown Arg (err: %v), Ret (err; %v) PtrArg (err: %v) or PtrRet (err: %v) type wrappers for isPointer: %v for %s. Check out source code for more details",
+				glg.Errorf("unknown situation happened for type %s; not implemented. Probably unknown Arg (err: %v), Ret (err; %v) PtrArg (err: %v) or PtrRet (err: %v) type wrappers for isPointer: %v for %s. Check out source code for more details",
 					k, known.argTypeErr, known.returnTypeErr, known.ptrArgTypeErr, known.ptrReturnTypeErr, isPtr, typedefs.data[k])
 			}
 		}
