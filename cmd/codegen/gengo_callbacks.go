@@ -45,7 +45,7 @@ func GenerateCallbacks(callbacks []CIdentifier, context *Context) (validTypes []
 		if err := result.writeCallback(typedefName, result.ctx.typedefs.data[typedefName]); err != nil {
 			if errors.Is(err, callbackNotGeneratedError) {
 				if context.flags.showNotGenerated {
-					glg.Warnf("Callback \"%s\" was not generated", typedefName)
+					glg.Warnf("Callback \"%s\" was not generated: %v", typedefName, err)
 				}
 
 				continue
