@@ -5,9 +5,10 @@ package imgui
 
 // #include <stdlib.h>
 // #include <memory.h>
-// #include "../imgui/extra_types.h"
 // #include "wrapper.h"
 // #include "typedefs.h"
+// #include "../imgui/extra_types.h"
+
 // extern void callbackDrawCallback0(ImDrawList*, ImDrawCmd*);
 // extern void callbackDrawCallback1(ImDrawList*, ImDrawCmd*);
 // extern void callbackDrawCallback2(ImDrawList*, ImDrawCmd*);
