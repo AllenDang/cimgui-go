@@ -69,7 +69,7 @@ func main() {
 		})
 	*/
 
-	currentBackend.SetCloseCallback(func(b backend.Backend[ebitenbackend.EbitenBackendFlags]) {
+	currentBackend.SetCloseCallback(func() {
 		fmt.Println("window is closing")
 	})
 

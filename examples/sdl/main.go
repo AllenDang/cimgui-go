@@ -31,7 +31,7 @@ func main() {
 		fmt.Printf("drop triggered: %v", p)
 	})
 
-	currentBackend.SetCloseCallback(func(b backend.Backend[sdlbackend.SDLWindowFlags]) {
+	currentBackend.SetCloseCallback(func() {
 		fmt.Println("window is closing")
 	})
 

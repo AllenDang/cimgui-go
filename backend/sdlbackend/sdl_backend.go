@@ -414,9 +414,9 @@ func (b *SDLBackend) SetDropCallback(cbfun backend.DropCallback) {
 	// C.igSDLWindow_SetDropCallbackCB(b.handle())
 }
 
-func (b *SDLBackend) SetCloseCallback(cbfun backend.WindowCloseCallback[SDLWindowFlags]) {
+func (b *SDLBackend) SetCloseCallback(cbfun backend.WindowCloseCallback) {
 	b.closeCB = func(_ unsafe.Pointer) {
-		cbfun(b)
+		cbfun()
 	}
 
 	// TODO: not implemented
