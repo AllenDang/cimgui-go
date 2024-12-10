@@ -114,7 +114,7 @@ func (b *EbitenBackend) SetDropCallback(backend.DropCallback) {
 	panic("SetDropCallback is not implemented for Ebiten backend yet.")
 }
 
-func (b *EbitenBackend) SetCloseCallback(cb backend.WindowCloseCallback[EbitenBackendFlags]) {
+func (b *EbitenBackend) SetCloseCallback(cb backend.WindowCloseCallback) {
 	b.closeCb = cb
 }
 

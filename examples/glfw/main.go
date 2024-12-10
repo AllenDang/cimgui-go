@@ -32,7 +32,7 @@ func main() {
 		fmt.Printf("drop triggered: %v", p)
 	})
 
-	currentBackend.SetCloseCallback(func(b backend.Backend[glfwbackend.GLFWWindowFlags]) {
+	currentBackend.SetCloseCallback(func() {
 		fmt.Println("window is closing")
 	})
 
