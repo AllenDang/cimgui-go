@@ -118,7 +118,7 @@ type (
 	SizeChangeCallback func(w, h int)
 )
 
-type WindowCloseCallback[BackendFlagsT ~int] func(b Backend[BackendFlagsT])
+type WindowCloseCallback func()
 
 //export closeCallback
 func closeCallback(wnd unsafe.Pointer) {
@@ -161,7 +161,7 @@ type Backend[BackendFlagsT ~int] interface {
 	SetTargetFPS(fps uint)
 
 	SetDropCallback(DropCallback)
-	SetCloseCallback(WindowCloseCallback[BackendFlagsT])
+	SetCloseCallback(WindowCloseCallback)
 	SetKeyCallback(KeyCallback)
 	SetSizeChangeCallback(SizeChangeCallback)
 	// SetWindowFlags selected hint to specified value.

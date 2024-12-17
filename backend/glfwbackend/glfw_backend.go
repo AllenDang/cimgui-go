@@ -382,9 +382,9 @@ func (b *GLFWBackend) SetDropCallback(cbfun backend.DropCallback) {
 	C.igGLFWWindow_SetDropCallbackCB(b.handle())
 }
 
-func (b *GLFWBackend) SetCloseCallback(cbfun backend.WindowCloseCallback[GLFWWindowFlags]) {
+func (b *GLFWBackend) SetCloseCallback(cbfun backend.WindowCloseCallback) {
 	b.closeCB = func(_ unsafe.Pointer) {
-		cbfun(b)
+		cbfun()
 	}
 
 	C.igGLFWWindow_SetCloseCallback(b.handle())

@@ -29,7 +29,7 @@ type EbitenBackend struct {
 	afterRender,
 	beforeDestroy,
 	loop func()
-	closeCb backend.WindowCloseCallback[EbitenBackendFlags]
+	closeCb backend.WindowCloseCallback
 
 	// ebiten stuff
 	filter                      ebiten.Filter
@@ -112,7 +112,7 @@ func (e *EbitenBackend) SetContext(ctx *imgui.Context) *EbitenBackend {
 // This is usually called inside the game's Update() function.
 func (e *EbitenBackend) BeginFrame() {
 	if ebiten.IsWindowBeingClosed() && e.closeCb != nil {
-		e.closeCb(e)
+		e.closeCb()
 	}
 
 	if e.beforeRender != nil {
