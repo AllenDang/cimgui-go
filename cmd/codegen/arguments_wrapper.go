@@ -52,55 +52,31 @@ func getArgWrapper(
 		"float":  simpleW("float32", "C.float"),
 		"float*": simplePtrW("float32", "C.float"),
 
-		"time_t":          simpleW("uint64", "C.xulong"),
+		"double":  simpleW("float64", "C.double"),
+		"double*": simplePtrW("float64", "C.double"),
+
 		"short":           simpleW("int16", "C.short"),
+		"short*":          simplePtrW("int16", "C.short"),
 		"unsigned short":  simpleW("uint16", "C.ushort"),
 		"unsigned short*": simplePtrW("uint16", "C.ushort"),
-		"int32_t":         simpleW("int32", "C.int32_t"),
-		"void*":           simpleW("unsafe.Pointer", "unsafe.Pointer"),
-		"tm":              wrappableW(prefixGoPackage("Tm", "implot", context), "C.struct_tm"),
-		"const tm":        wrappableW(prefixGoPackage("Tm", "implot", context), "C.struct_tm"),
-		"tm*":             wrappablePtrW(prefixGoPackage("*Tm", "imgui", context), "C.struct_tm"),
-		"const tm*":       wrappablePtrW(prefixGoPackage("*Tm", "imgui", context), "C.struct_tm"),
-		"int":             simpleW("int32", "C.int"),
-		"const int":       simpleW("int32", "C.int"),
-		"int*":            simplePtrW("int32", "C.int"),
-		"unsigned int":    simpleW("uint32", "C.uint"),
-		"unsigned int*":   simplePtrW("uint32", "C.uint"),
-		"double":          simpleW("float64", "C.double"),
-		"double*":         simplePtrW("float64", "C.double"),
-		"const double*":   simplePtrW("float64", "C.double"),
-		"bool":            simpleW("bool", "C.bool"),
-		"const bool":      simpleW("bool", "C.bool"),
-		"bool*":           simplePtrW("bool", "C.bool"),
-		"const bool*":     simplePtrW("bool", "C.bool"),
 
-		"ImWchar*":          simpleW("("+prefixGoPackage("*Wchar", "imgui", context)+")", "(*C.ImWchar)"),
-		"const ImWchar*":    simpleW("("+prefixGoPackage("*Wchar", "imgui", context)+")", "(*C.ImWchar)"),
-		"uintptr_t":         simpleW("uintptr", "C.uintptr_t"),
-		"const uintptr_t":   simpleW("uintptr", "C.uintptr_t"),
-		"const ImVec2":      wrappableW(prefixGoPackage("Vec2", "imgui", context), "C.ImVec2"),
-		"const ImVec2*":     wrappablePtrW(prefixGoPackage("*Vec2", "imgui", context), "C.ImVec2"),
-		"ImVec2":            wrappableW(prefixGoPackage("Vec2", "imgui", context), "C.ImVec2"),
-		"ImVec2*":           wrappablePtrW(prefixGoPackage("*Vec2", "imgui", context), "C.ImVec2"),
-		"ImVec2[2]":         wrappablePtrArrayW(2, "C.ImVec2", prefixGoPackage("Vec2", "imgui", context)),
-		"const ImVec4":      wrappableW(prefixGoPackage("Vec4", "imgui", context), "C.ImVec4"),
-		"const ImVec4*":     wrappablePtrW(prefixGoPackage("*Vec4", "imgui", context), "C.ImVec4"),
-		"ImVec4":            wrappableW(prefixGoPackage("Vec4", "imgui", context), "C.ImVec4"),
-		"ImVec4*":           wrappablePtrW(prefixGoPackage("*Vec4", "imgui", context), "C.ImVec4"),
-		"ImColor":           wrappableW(prefixGoPackage("Color", "imgui", context), "C.ImColor"),
-		"ImColor*":          wrappablePtrW(prefixGoPackage("*Color", "imgui", context), "C.ImColor"),
-		"ImRect":            wrappableW(prefixGoPackage("Rect", "imgui", context), "C.ImRect"),
-		"const ImRect":      wrappableW(prefixGoPackage("Rect", "imgui", context), "C.ImRect"),
-		"ImRect*":           wrappablePtrW(prefixGoPackage("*Rect", "imgui", context), "C.ImRect"),
-		"const ImRect*":     wrappablePtrW(prefixGoPackage("*Rect", "imgui", context), "C.ImRect"),
-		"ImPlotPoint":       wrappableW(prefixGoPackage("PlotPoint", "implot", context), "C.ImPlotPoint"),
-		"const ImPlotPoint": wrappableW(prefixGoPackage("PlotPoint", "implot", context), "C.ImPlotPoint"),
-		"ImPlotPoint*":      wrappablePtrW(prefixGoPackage("*PlotPoint", "implot", context), "C.ImPlotPoint"),
-		"ImPlotTime":        wrappableW(prefixGoPackage("PlotTime", "implot", context), "C.ImPlotTime"),
-		"const ImPlotTime":  wrappableW(prefixGoPackage("PlotTime", "implot", context), "C.ImPlotTime"),
-		"ImPlotTime*":       wrappablePtrW(prefixGoPackage("*PlotTime", "implot", context), "C.ImPlotTime"),
-		"const ImPlotTime*": wrappablePtrW(prefixGoPackage("*PlotTime", "implot", context), "C.ImPlotTime"),
+		"int":           simpleW("int32", "C.int"),
+		"int32_t":       simpleW("int32", "C.int32_t"),
+		"int*":          simplePtrW("int32", "C.int"),
+		"unsigned int":  simpleW("uint32", "C.uint"),
+		"unsigned int*": simplePtrW("uint32", "C.uint"),
+
+		"bool":  simpleW("bool", "C.bool"),
+		"bool*": simplePtrW("bool", "C.bool"),
+
+		"time_t": simpleW("uint64", "C.xulong"),
+		"tm":     wrappableW(prefixGoPackage("Tm", "implot", context), "C.struct_tm"),
+		"tm*":    wrappablePtrW(prefixGoPackage("*Tm", "imgui", context), "C.struct_tm"),
+
+		"void*":     simpleW("unsafe.Pointer", "unsafe.Pointer"),
+		"uintptr_t": simpleW("uintptr", "C.uintptr_t"),
+
+		"ImVec2[2]": wrappablePtrArrayW(2, "C.ImVec2", prefixGoPackage("Vec2", "imgui", context)),
 	}
 
 	// introduce content of preset
@@ -110,6 +86,11 @@ func getArgWrapper(
 
 	for k, v := range context.preset.SimplePtrTypes {
 		argWrapperMap[k+"*"] = simplePtrW(prefixGoPackage(v[0], v[2], context), v[1])
+	}
+
+	for k, v := range context.preset.WrappableTypes {
+		argWrapperMap[k] = wrappableW(prefixGoPackage(v[0], v[2], context), v[1])
+		argWrapperMap[k+"*"] = wrappablePtrW(prefixGoPackage("*"+v[0], v[2], context), v[1])
 	}
 
 	if a.Name == "type" || a.Name == "range" {
