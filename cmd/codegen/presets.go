@@ -60,6 +60,22 @@ type Preset struct {
 	//   If enerated with -pkg imgui, import path
 	//   is supposed to be "github.com/AllenDang/cimgui-go/imgui"
 	PackagePath string
+	// SimpleTypes are used for simple (go-convertable) custom types.
+	// Example:
+	//   ImS16 is defined as short in C code, so Go can easily convert it via int16()
+	// Expected format is:
+	//   "ImS16": ["int16", "C.ImS16", "pkgname"]
+	// where:
+	// - ImS16 is a C type name
+	// - int16 is a Go-friendly type name
+	// - C.ImS16 is a cgo compatible type name
+	// - pkgname is a source package for the type (in this case int16 is a builtin so it should be empty)
+	// See also: simpleW
+	SimpleTypes map[CIdentifier][3]GoIdentifier
+	// SimplePtrTypes are just like SimpleTypes but for pointer types.
+	// Example:
+	//   "ImS16": ["int16", "C.ImS16", "pkgname"]
+	SimplePtrTypes map[CIdentifier][3]GoIdentifier
 }
 
 func (p *Preset) MergeCGoPreamble() string {

@@ -92,5 +92,29 @@
         "InternalFiles": [
                 "imgui_internal"
         ],
-        "InternalPrefix": "Internal"
+        "InternalPrefix": "Internal",
+        "SimpleTypes": {
+                "ImU8":      ["byte", "C.ImU8"],
+                "ImU16":     ["uint16", "C.ImU16"],
+                "ImU32":     ["uint32", "C.ImU32"],
+                "ImU64":     ["uint64", "C.ImU64"],
+                "ImS8":      ["int", "C.ImS8"],
+                "ImS16":     ["int16", "C.ImS16"],
+                "ImS32":     ["int", "C.ImS32"],
+                "ImS64":     ["int64", "C.ImS64"],
+                "ImWchar":   ["Wchar", "C.ImWchar", "imgui"],
+                "ImWchar*":  ["*Wchar", "(*C.ImWchar)", "imgui"],
+                "ImWchar16": ["uint16", "C.ImWchar16", "imgui"]
+        },
+        "SimplePtrTypes": {
+                "ImU8":  ["byte", "C.ImU8"],
+                "ImU16": ["uint16", "C.ImU16"],
+                "ImU32": ["uint32", "C.ImU32"],
+                "ImU64": ["uint64", "C.ImU64"],
+                "ImS8":  ["int8", "C.ImS8"],
+                "ImS16": ["int16", "C.ImS16"],
+                "ImS32": ["int32", "C.ImS32"],
+                "ImS64": ["int64", "C.ImS64"]
+
+        }
 }
