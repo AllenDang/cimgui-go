@@ -31,7 +31,14 @@ type Preset struct {
 	// OriginReplace allows to force-replace function name with some other name.
 	// Introduced to replace TextEditor_GetText -> TextEditor_GetText_alloc
 	// but could be re-used to force use of another function than json tells us to use.
+	//
+	// It differs from Replace - Replace renames an identifier in general (changes its name but refers to the same function).
+	// This allows to absolutely abandon the source C function and use some OTHER C function.
 	OriginReplace map[CIdentifier]CIdentifier
+	// DefaultArgReplace is used in C-side default args generation (gencpp.go).
+	// cimgui-go uses this to change FLT_MIN with igGet_FLT_MIN()
+	// NOTE: Iterated randomly!
+	DefaultArgReplace map[CIdentifier]CIdentifier
 	// ExtraCGOPreamble allows to specify additional C code elements in Go files.
 	// For example could be used to include extra files.
 	// For ease of use, its in form of []string. These lines will be merged and prefixed (if appliable) with '//'

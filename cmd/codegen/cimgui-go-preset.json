@@ -75,6 +75,10 @@
         "OriginReplace": {
                 "TextEditor_GetText": "TextEditor_GetText_alloc"
         },
+        "DefaultArgReplace": {
+                "FLT_MIN": "igGET_FLT_MIN()",
+                "FLT_MAX": "igGET_FLT_MAX()"
+        },
         "ExtraCGOPreamble": [
                 "#include \"../imgui/extra_types.h\""
         ],
