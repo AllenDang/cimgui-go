@@ -239,10 +239,6 @@ extern "C" {
 					v = string(r)
 				}
 
-				if v == "FLT_MAX" {
-					v = "igGET_FLT_MAX()"
-				}
-
 				if v == "((void*)0)" {
 					v = "NULL"
 				}
