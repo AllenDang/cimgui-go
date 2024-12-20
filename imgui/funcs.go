@@ -14695,7 +14695,7 @@ func (self *Font) FontSize() float32 {
 	return float32(C.wrap_ImFont_GetFontSize(internal.ReinterpretCast[*C.ImFont](selfArg)))
 }
 
-func (self Font) SetIndexLookup(v vectors.Vector[(Wchar)]) {
+func (self Font) SetIndexLookup(v vectors.Vector[Wchar]) {
 	vData := v.Data
 
 	vVecArg := new(C.ImVector_ImWchar)
@@ -25095,7 +25095,7 @@ func (self *IO) InputQueueSurrogate() uint16 {
 	return uint16(result)
 }
 
-func (self IO) SetInputQueueCharacters(v vectors.Vector[(Wchar)]) {
+func (self IO) SetInputQueueCharacters(v vectors.Vector[Wchar]) {
 	vData := v.Data
 
 	vVecArg := new(C.ImVector_ImWchar)
