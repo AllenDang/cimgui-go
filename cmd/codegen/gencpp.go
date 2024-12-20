@@ -239,16 +239,8 @@ extern "C" {
 					v = string(r)
 				}
 
-				if v == "((void*)0)" {
-					v = "NULL"
-				}
-
-				if v == "nullptr" || v == "NULL" {
-					v = "0"
-				}
-
-				if k == "text_end" || k == "text_end_" {
-					v = "0"
+				if r, ok := ctx.preset.DefaultArgArbitraryValue[CIdentifier(k)]; ok {
+					v = string(r)
 				}
 
 				if strings.Contains(invocationStmt, ","+k) {

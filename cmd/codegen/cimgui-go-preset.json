@@ -76,8 +76,15 @@
                 "TextEditor_GetText": "TextEditor_GetText_alloc"
         },
         "DefaultArgReplace": {
-                "FLT_MIN": "igGET_FLT_MIN()",
-                "FLT_MAX": "igGET_FLT_MAX()"
+                "FLT_MIN":    "igGET_FLT_MIN()",
+                "FLT_MAX":    "igGET_FLT_MAX()",
+                "nullptr":    "0",
+                "NULL":       "0",
+                "((void*)0)": "0"
+        },
+        "DefaultArgArbitraryValue": {
+                "text_end":   0,
+                "text_end_": "0"
         },
         "ExtraCGOPreamble": [
                 "#include \"../imgui/extra_types.h\""

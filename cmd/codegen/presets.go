@@ -39,6 +39,10 @@ type Preset struct {
 	// cimgui-go uses this to change FLT_MIN with igGet_FLT_MIN()
 	// NOTE: Iterated randomly!
 	DefaultArgReplace map[CIdentifier]CIdentifier
+	// DefaultArgArbitraryValue is similar to the above DefaultArgReplace, but
+	// associates default arg name with any arbitrary value.
+	// cimgui-go uses this to set text_end to 0
+	DefaultArgArbitraryValue map[CIdentifier]CIdentifier
 	// ExtraCGOPreamble allows to specify additional C code elements in Go files.
 	// For example could be used to include extra files.
 	// For ease of use, its in form of []string. These lines will be merged and prefixed (if appliable) with '//'
