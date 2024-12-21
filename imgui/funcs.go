@@ -3683,6 +3683,14 @@ func (self *Vec2) Destroy() {
 	selfFin()
 }
 
+func NewVec4Float(_x float32, _y float32, _z float32, _w float32) *Vec4 {
+	return (&Vec4{}).FromC(unsafe.Pointer(C.ImVec4_ImVec4_Float(C.float(_x), C.float(_y), C.float(_z), C.float(_w))))
+}
+
+func NewVec4Nil() *Vec4 {
+	return (&Vec4{}).FromC(unsafe.Pointer(C.ImVec4_ImVec4_Nil()))
+}
+
 func (self *Vec4) Destroy() {
 	selfArg, selfFin := internal.Wrap(self)
 	C.ImVec4_destroy(internal.ReinterpretCast[*C.ImVec4](selfArg))
@@ -14217,6 +14225,15 @@ func (self DrawList) SetClipRectStack(v vectors.Vector[Vec4]) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImDrawList_Set_ClipRectStack(selfArg, *vVecArg)
+}
+
+func (self *DrawList) ClipRectStack() vectors.Vector[Vec4] {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return vectors.NewVectorFromC(C.wrap_ImDrawList_Get_ClipRectStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Size, C.wrap_ImDrawList_Get_ClipRectStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Capacity, (&Vec4{}).FromC(unsafe.Pointer(C.wrap_ImDrawList_Get_ClipRectStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Data)))
 }
 
 func (self DrawList) SetTextureIdStack(v vectors.Vector[TextureID]) {
