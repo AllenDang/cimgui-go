@@ -461,7 +461,7 @@ func (self *ColormapData) KeyColor(cmap Colormap, idx int32) uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.ImPlotColormapData_GetKeyColor(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap), C.int(idx)))
+	return (uint32)(C.ImPlotColormapData_GetKeyColor(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap), C.int(idx)))
 }
 
 func (self *ColormapData) KeyCount(cmap Colormap) int32 {
@@ -506,7 +506,7 @@ func (self *ColormapData) TableColor(cmap Colormap, idx int32) uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.ImPlotColormapData_GetTableColor(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap), C.int(idx)))
+	return (uint32)(C.ImPlotColormapData_GetTableColor(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap), C.int(idx)))
 }
 
 func (self *ColormapData) TableSize(cmap Colormap) int32 {
@@ -537,7 +537,7 @@ func (self *ColormapData) LerpTable(cmap Colormap, t float32) uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.ImPlotColormapData_LerpTable(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap), C.float(t)))
+	return (uint32)(C.ImPlotColormapData_LerpTable(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg), C.ImPlotColormap(cmap), C.float(t)))
 }
 
 func (self *ColormapData) RebuildTables() {
@@ -1483,7 +1483,7 @@ func BustPlotCache() {
 }
 
 func CalcHoverColor(col uint32) uint32 {
-	return uint32(C.ImPlot_CalcHoverColor(C.ImU32(col)))
+	return (uint32)(C.ImPlot_CalcHoverColor(C.ImU32(col)))
 }
 
 func CalcLegendSize(items *ItemGroup, pad imgui.Vec2, spacing imgui.Vec2, vertical bool) imgui.Vec2 {
@@ -1500,11 +1500,11 @@ func CalcLegendSize(items *ItemGroup, pad imgui.Vec2, spacing imgui.Vec2, vertic
 }
 
 func CalcTextColorU32(bg uint32) uint32 {
-	return uint32(C.ImPlot_CalcTextColor_U32(C.ImU32(bg)))
+	return (uint32)(C.ImPlot_CalcTextColor_U32(C.ImU32(bg)))
 }
 
 func CalcTextColorVec4(bg imgui.Vec4) uint32 {
-	return uint32(C.ImPlot_CalcTextColor_Vec4(internal.ReinterpretCast[C.ImVec4](bg.ToC())))
+	return (uint32)(C.ImPlot_CalcTextColor_Vec4(internal.ReinterpretCast[C.ImVec4](bg.ToC())))
 }
 
 func CalcTextSizeVertical(text string) imgui.Vec2 {
@@ -1985,7 +1985,7 @@ func GetColormapColorV(idx int32, cmap Colormap) imgui.Vec4 {
 }
 
 func GetColormapColorU32(idx int32, cmap Colormap) uint32 {
-	return uint32(C.ImPlot_GetColormapColorU32(C.int(idx), C.ImPlotColormap(cmap)))
+	return (uint32)(C.ImPlot_GetColormapColorU32(C.int(idx), C.ImPlotColormap(cmap)))
 }
 
 func GetColormapCount() int32 {
@@ -2158,7 +2158,7 @@ func GetStyleColorName(idx Col) string {
 }
 
 func GetStyleColorU32(idx Col) uint32 {
-	return uint32(C.ImPlot_GetStyleColorU32(C.ImPlotCol(idx)))
+	return (uint32)(C.ImPlot_GetStyleColorU32(C.ImPlotCol(idx)))
 }
 
 func GetStyleColorVec4(idx Col) imgui.Vec4 {
@@ -2190,7 +2190,7 @@ func ImAlmostEqualV(v1 float64, v2 float64, ulp int32) bool {
 }
 
 func ImAlphaU32(col uint32, alpha float32) uint32 {
-	return uint32(C.ImPlot_ImAlphaU32(C.ImU32(col), C.float(alpha)))
+	return (uint32)(C.ImPlot_ImAlphaU32(C.ImU32(col), C.float(alpha)))
 }
 
 func ImAsinhFloat(x float32) float32 {
@@ -2223,7 +2223,7 @@ func ImLerpU32(colors *uint32, size int32, t float32) uint32 {
 	defer func() {
 		colorsFin()
 	}()
-	return uint32(C.ImPlot_ImLerpU32(colorsArg, C.int(size), C.float(t)))
+	return (uint32)(C.ImPlot_ImLerpU32(colorsArg, C.int(size), C.float(t)))
 }
 
 func ImLog10Float(x float32) float32 {
@@ -2249,7 +2249,7 @@ func ImMaxArrayS16Ptr(values *int16, count int32) int16 {
 	defer func() {
 		valuesFin()
 	}()
-	return int16(C.ImPlot_ImMaxArray_S16Ptr(valuesArg, C.int(count)))
+	return (int16)(C.ImPlot_ImMaxArray_S16Ptr(valuesArg, C.int(count)))
 }
 
 func ImMaxArrayS32Ptr(values *int32, count int32) int {
@@ -2258,7 +2258,7 @@ func ImMaxArrayS32Ptr(values *int32, count int32) int {
 	defer func() {
 		valuesFin()
 	}()
-	return int(C.ImPlot_ImMaxArray_S32Ptr(valuesArg, C.int(count)))
+	return (int)(C.ImPlot_ImMaxArray_S32Ptr(valuesArg, C.int(count)))
 }
 
 func ImMaxArrayS64Ptr(values *int64, count int32) int64 {
@@ -2267,7 +2267,7 @@ func ImMaxArrayS64Ptr(values *int64, count int32) int64 {
 	defer func() {
 		valuesFin()
 	}()
-	return int64(C.ImPlot_ImMaxArray_S64Ptr(valuesArg, C.int(count)))
+	return (int64)(C.ImPlot_ImMaxArray_S64Ptr(valuesArg, C.int(count)))
 }
 
 func ImMaxArrayS8Ptr(values *int8, count int32) int {
@@ -2276,7 +2276,7 @@ func ImMaxArrayS8Ptr(values *int8, count int32) int {
 	defer func() {
 		valuesFin()
 	}()
-	return int(C.ImPlot_ImMaxArray_S8Ptr(valuesArg, C.int(count)))
+	return (int)(C.ImPlot_ImMaxArray_S8Ptr(valuesArg, C.int(count)))
 }
 
 func ImMaxArrayU16Ptr(values *uint16, count int32) uint16 {
@@ -2285,7 +2285,7 @@ func ImMaxArrayU16Ptr(values *uint16, count int32) uint16 {
 	defer func() {
 		valuesFin()
 	}()
-	return uint16(C.ImPlot_ImMaxArray_U16Ptr(valuesArg, C.int(count)))
+	return (uint16)(C.ImPlot_ImMaxArray_U16Ptr(valuesArg, C.int(count)))
 }
 
 func ImMaxArrayU32Ptr(values *uint32, count int32) uint32 {
@@ -2294,7 +2294,7 @@ func ImMaxArrayU32Ptr(values *uint32, count int32) uint32 {
 	defer func() {
 		valuesFin()
 	}()
-	return uint32(C.ImPlot_ImMaxArray_U32Ptr(valuesArg, C.int(count)))
+	return (uint32)(C.ImPlot_ImMaxArray_U32Ptr(valuesArg, C.int(count)))
 }
 
 func ImMaxArrayU64Ptr(values *uint64, count int32) uint64 {
@@ -2303,7 +2303,7 @@ func ImMaxArrayU64Ptr(values *uint64, count int32) uint64 {
 	defer func() {
 		valuesFin()
 	}()
-	return uint64(C.ImPlot_ImMaxArray_U64Ptr(valuesArg, C.int(count)))
+	return (uint64)(C.ImPlot_ImMaxArray_U64Ptr(valuesArg, C.int(count)))
 }
 
 func ImMaxArrayU8Ptr(values *byte, count int32) byte {
@@ -2312,7 +2312,7 @@ func ImMaxArrayU8Ptr(values *byte, count int32) byte {
 	defer func() {
 		valuesFin()
 	}()
-	return byte(C.ImPlot_ImMaxArray_U8Ptr(valuesArg, C.int(count)))
+	return (byte)(C.ImPlot_ImMaxArray_U8Ptr(valuesArg, C.int(count)))
 }
 
 func ImMaxArraydoublePtr(values *float64, count int32) float64 {
@@ -2429,7 +2429,7 @@ func ImMinArrayS16Ptr(values *int16, count int32) int16 {
 	defer func() {
 		valuesFin()
 	}()
-	return int16(C.ImPlot_ImMinArray_S16Ptr(valuesArg, C.int(count)))
+	return (int16)(C.ImPlot_ImMinArray_S16Ptr(valuesArg, C.int(count)))
 }
 
 func ImMinArrayS32Ptr(values *int32, count int32) int {
@@ -2438,7 +2438,7 @@ func ImMinArrayS32Ptr(values *int32, count int32) int {
 	defer func() {
 		valuesFin()
 	}()
-	return int(C.ImPlot_ImMinArray_S32Ptr(valuesArg, C.int(count)))
+	return (int)(C.ImPlot_ImMinArray_S32Ptr(valuesArg, C.int(count)))
 }
 
 func ImMinArrayS64Ptr(values *int64, count int32) int64 {
@@ -2447,7 +2447,7 @@ func ImMinArrayS64Ptr(values *int64, count int32) int64 {
 	defer func() {
 		valuesFin()
 	}()
-	return int64(C.ImPlot_ImMinArray_S64Ptr(valuesArg, C.int(count)))
+	return (int64)(C.ImPlot_ImMinArray_S64Ptr(valuesArg, C.int(count)))
 }
 
 func ImMinArrayS8Ptr(values *int8, count int32) int {
@@ -2456,7 +2456,7 @@ func ImMinArrayS8Ptr(values *int8, count int32) int {
 	defer func() {
 		valuesFin()
 	}()
-	return int(C.ImPlot_ImMinArray_S8Ptr(valuesArg, C.int(count)))
+	return (int)(C.ImPlot_ImMinArray_S8Ptr(valuesArg, C.int(count)))
 }
 
 func ImMinArrayU16Ptr(values *uint16, count int32) uint16 {
@@ -2465,7 +2465,7 @@ func ImMinArrayU16Ptr(values *uint16, count int32) uint16 {
 	defer func() {
 		valuesFin()
 	}()
-	return uint16(C.ImPlot_ImMinArray_U16Ptr(valuesArg, C.int(count)))
+	return (uint16)(C.ImPlot_ImMinArray_U16Ptr(valuesArg, C.int(count)))
 }
 
 func ImMinArrayU32Ptr(values *uint32, count int32) uint32 {
@@ -2474,7 +2474,7 @@ func ImMinArrayU32Ptr(values *uint32, count int32) uint32 {
 	defer func() {
 		valuesFin()
 	}()
-	return uint32(C.ImPlot_ImMinArray_U32Ptr(valuesArg, C.int(count)))
+	return (uint32)(C.ImPlot_ImMinArray_U32Ptr(valuesArg, C.int(count)))
 }
 
 func ImMinArrayU64Ptr(values *uint64, count int32) uint64 {
@@ -2483,7 +2483,7 @@ func ImMinArrayU64Ptr(values *uint64, count int32) uint64 {
 	defer func() {
 		valuesFin()
 	}()
-	return uint64(C.ImPlot_ImMinArray_U64Ptr(valuesArg, C.int(count)))
+	return (uint64)(C.ImPlot_ImMinArray_U64Ptr(valuesArg, C.int(count)))
 }
 
 func ImMinArrayU8Ptr(values *byte, count int32) byte {
@@ -2492,7 +2492,7 @@ func ImMinArrayU8Ptr(values *byte, count int32) byte {
 	defer func() {
 		valuesFin()
 	}()
-	return byte(C.ImPlot_ImMinArray_U8Ptr(valuesArg, C.int(count)))
+	return (byte)(C.ImPlot_ImMinArray_U8Ptr(valuesArg, C.int(count)))
 }
 
 func ImMinArraydoublePtr(values *float64, count int32) float64 {
@@ -2615,7 +2615,7 @@ func ImMinMaxArraydoublePtr(values *float64, count int32, min_out *float64, max_
 }
 
 func ImMixU32(a uint32, b uint32, s uint32) uint32 {
-	return uint32(C.ImPlot_ImMixU32(C.ImU32(a), C.ImU32(b), C.ImU32(s)))
+	return (uint32)(C.ImPlot_ImMixU32(C.ImU32(a), C.ImU32(b), C.ImU32(s)))
 }
 
 func ImNan(val float64) bool {
@@ -2675,35 +2675,35 @@ func ImRemap01Float(x float32, x0 float32, x1 float32) float32 {
 }
 
 func ImRemap01S16(x int16, x0 int16, x1 int16) int16 {
-	return int16(C.ImPlot_ImRemap01_S16(C.ImS16(x), C.ImS16(x0), C.ImS16(x1)))
+	return (int16)(C.ImPlot_ImRemap01_S16(C.ImS16(x), C.ImS16(x0), C.ImS16(x1)))
 }
 
 func ImRemap01S32(x int, x0 int, x1 int) int {
-	return int(C.ImPlot_ImRemap01_S32(C.ImS32(x), C.ImS32(x0), C.ImS32(x1)))
+	return (int)(C.ImPlot_ImRemap01_S32(C.ImS32(x), C.ImS32(x0), C.ImS32(x1)))
 }
 
 func ImRemap01S64(x int64, x0 int64, x1 int64) int64 {
-	return int64(C.ImPlot_ImRemap01_S64(C.ImS64(x), C.ImS64(x0), C.ImS64(x1)))
+	return (int64)(C.ImPlot_ImRemap01_S64(C.ImS64(x), C.ImS64(x0), C.ImS64(x1)))
 }
 
 func ImRemap01S8(x int, x0 int, x1 int) int {
-	return int(C.ImPlot_ImRemap01_S8(C.ImS8(x), C.ImS8(x0), C.ImS8(x1)))
+	return (int)(C.ImPlot_ImRemap01_S8(C.ImS8(x), C.ImS8(x0), C.ImS8(x1)))
 }
 
 func ImRemap01U16(x uint16, x0 uint16, x1 uint16) uint16 {
-	return uint16(C.ImPlot_ImRemap01_U16(C.ImU16(x), C.ImU16(x0), C.ImU16(x1)))
+	return (uint16)(C.ImPlot_ImRemap01_U16(C.ImU16(x), C.ImU16(x0), C.ImU16(x1)))
 }
 
 func ImRemap01U32(x uint32, x0 uint32, x1 uint32) uint32 {
-	return uint32(C.ImPlot_ImRemap01_U32(C.ImU32(x), C.ImU32(x0), C.ImU32(x1)))
+	return (uint32)(C.ImPlot_ImRemap01_U32(C.ImU32(x), C.ImU32(x0), C.ImU32(x1)))
 }
 
 func ImRemap01U64(x uint64, x0 uint64, x1 uint64) uint64 {
-	return uint64(C.ImPlot_ImRemap01_U64(C.ImU64(x), C.ImU64(x0), C.ImU64(x1)))
+	return (uint64)(C.ImPlot_ImRemap01_U64(C.ImU64(x), C.ImU64(x0), C.ImU64(x1)))
 }
 
 func ImRemap01U8(x byte, x0 byte, x1 byte) byte {
-	return byte(C.ImPlot_ImRemap01_U8(C.ImU8(x), C.ImU8(x0), C.ImU8(x1)))
+	return (byte)(C.ImPlot_ImRemap01_U8(C.ImU8(x), C.ImU8(x0), C.ImU8(x1)))
 }
 
 func ImRemap01double(x float64, x0 float64, x1 float64) float64 {
@@ -2715,35 +2715,35 @@ func ImRemapFloat(x float32, x0 float32, x1 float32, y0 float32, y1 float32) flo
 }
 
 func ImRemapS16(x int16, x0 int16, x1 int16, y0 int16, y1 int16) int16 {
-	return int16(C.ImPlot_ImRemap_S16(C.ImS16(x), C.ImS16(x0), C.ImS16(x1), C.ImS16(y0), C.ImS16(y1)))
+	return (int16)(C.ImPlot_ImRemap_S16(C.ImS16(x), C.ImS16(x0), C.ImS16(x1), C.ImS16(y0), C.ImS16(y1)))
 }
 
 func ImRemapS32(x int, x0 int, x1 int, y0 int, y1 int) int {
-	return int(C.ImPlot_ImRemap_S32(C.ImS32(x), C.ImS32(x0), C.ImS32(x1), C.ImS32(y0), C.ImS32(y1)))
+	return (int)(C.ImPlot_ImRemap_S32(C.ImS32(x), C.ImS32(x0), C.ImS32(x1), C.ImS32(y0), C.ImS32(y1)))
 }
 
 func ImRemapS64(x int64, x0 int64, x1 int64, y0 int64, y1 int64) int64 {
-	return int64(C.ImPlot_ImRemap_S64(C.ImS64(x), C.ImS64(x0), C.ImS64(x1), C.ImS64(y0), C.ImS64(y1)))
+	return (int64)(C.ImPlot_ImRemap_S64(C.ImS64(x), C.ImS64(x0), C.ImS64(x1), C.ImS64(y0), C.ImS64(y1)))
 }
 
 func ImRemapS8(x int, x0 int, x1 int, y0 int, y1 int) int {
-	return int(C.ImPlot_ImRemap_S8(C.ImS8(x), C.ImS8(x0), C.ImS8(x1), C.ImS8(y0), C.ImS8(y1)))
+	return (int)(C.ImPlot_ImRemap_S8(C.ImS8(x), C.ImS8(x0), C.ImS8(x1), C.ImS8(y0), C.ImS8(y1)))
 }
 
 func ImRemapU16(x uint16, x0 uint16, x1 uint16, y0 uint16, y1 uint16) uint16 {
-	return uint16(C.ImPlot_ImRemap_U16(C.ImU16(x), C.ImU16(x0), C.ImU16(x1), C.ImU16(y0), C.ImU16(y1)))
+	return (uint16)(C.ImPlot_ImRemap_U16(C.ImU16(x), C.ImU16(x0), C.ImU16(x1), C.ImU16(y0), C.ImU16(y1)))
 }
 
 func ImRemapU32(x uint32, x0 uint32, x1 uint32, y0 uint32, y1 uint32) uint32 {
-	return uint32(C.ImPlot_ImRemap_U32(C.ImU32(x), C.ImU32(x0), C.ImU32(x1), C.ImU32(y0), C.ImU32(y1)))
+	return (uint32)(C.ImPlot_ImRemap_U32(C.ImU32(x), C.ImU32(x0), C.ImU32(x1), C.ImU32(y0), C.ImU32(y1)))
 }
 
 func ImRemapU64(x uint64, x0 uint64, x1 uint64, y0 uint64, y1 uint64) uint64 {
-	return uint64(C.ImPlot_ImRemap_U64(C.ImU64(x), C.ImU64(x0), C.ImU64(x1), C.ImU64(y0), C.ImU64(y1)))
+	return (uint64)(C.ImPlot_ImRemap_U64(C.ImU64(x), C.ImU64(x0), C.ImU64(x1), C.ImU64(y0), C.ImU64(y1)))
 }
 
 func ImRemapU8(x byte, x0 byte, x1 byte, y0 byte, y1 byte) byte {
-	return byte(C.ImPlot_ImRemap_U8(C.ImU8(x), C.ImU8(x0), C.ImU8(x1), C.ImU8(y0), C.ImU8(y1)))
+	return (byte)(C.ImPlot_ImRemap_U8(C.ImU8(x), C.ImU8(x0), C.ImU8(x1), C.ImU8(y0), C.ImU8(y1)))
 }
 
 func ImRemapdouble(x float64, x0 float64, x1 float64, y0 float64, y1 float64) float64 {
@@ -2863,7 +2863,7 @@ func ImSumS16Ptr(values *int16, count int32) int16 {
 	defer func() {
 		valuesFin()
 	}()
-	return int16(C.ImPlot_ImSum_S16Ptr(valuesArg, C.int(count)))
+	return (int16)(C.ImPlot_ImSum_S16Ptr(valuesArg, C.int(count)))
 }
 
 func ImSumS32Ptr(values *int32, count int32) int {
@@ -2872,7 +2872,7 @@ func ImSumS32Ptr(values *int32, count int32) int {
 	defer func() {
 		valuesFin()
 	}()
-	return int(C.ImPlot_ImSum_S32Ptr(valuesArg, C.int(count)))
+	return (int)(C.ImPlot_ImSum_S32Ptr(valuesArg, C.int(count)))
 }
 
 func ImSumS64Ptr(values *int64, count int32) int64 {
@@ -2881,7 +2881,7 @@ func ImSumS64Ptr(values *int64, count int32) int64 {
 	defer func() {
 		valuesFin()
 	}()
-	return int64(C.ImPlot_ImSum_S64Ptr(valuesArg, C.int(count)))
+	return (int64)(C.ImPlot_ImSum_S64Ptr(valuesArg, C.int(count)))
 }
 
 func ImSumS8Ptr(values *int8, count int32) int {
@@ -2890,7 +2890,7 @@ func ImSumS8Ptr(values *int8, count int32) int {
 	defer func() {
 		valuesFin()
 	}()
-	return int(C.ImPlot_ImSum_S8Ptr(valuesArg, C.int(count)))
+	return (int)(C.ImPlot_ImSum_S8Ptr(valuesArg, C.int(count)))
 }
 
 func ImSumU16Ptr(values *uint16, count int32) uint16 {
@@ -2899,7 +2899,7 @@ func ImSumU16Ptr(values *uint16, count int32) uint16 {
 	defer func() {
 		valuesFin()
 	}()
-	return uint16(C.ImPlot_ImSum_U16Ptr(valuesArg, C.int(count)))
+	return (uint16)(C.ImPlot_ImSum_U16Ptr(valuesArg, C.int(count)))
 }
 
 func ImSumU32Ptr(values *uint32, count int32) uint32 {
@@ -2908,7 +2908,7 @@ func ImSumU32Ptr(values *uint32, count int32) uint32 {
 	defer func() {
 		valuesFin()
 	}()
-	return uint32(C.ImPlot_ImSum_U32Ptr(valuesArg, C.int(count)))
+	return (uint32)(C.ImPlot_ImSum_U32Ptr(valuesArg, C.int(count)))
 }
 
 func ImSumU64Ptr(values *uint64, count int32) uint64 {
@@ -2917,7 +2917,7 @@ func ImSumU64Ptr(values *uint64, count int32) uint64 {
 	defer func() {
 		valuesFin()
 	}()
-	return uint64(C.ImPlot_ImSum_U64Ptr(valuesArg, C.int(count)))
+	return (uint64)(C.ImPlot_ImSum_U64Ptr(valuesArg, C.int(count)))
 }
 
 func ImSumU8Ptr(values *byte, count int32) byte {
@@ -2926,7 +2926,7 @@ func ImSumU8Ptr(values *byte, count int32) byte {
 	defer func() {
 		valuesFin()
 	}()
-	return byte(C.ImPlot_ImSum_U8Ptr(valuesArg, C.int(count)))
+	return (byte)(C.ImPlot_ImSum_U8Ptr(valuesArg, C.int(count)))
 }
 
 func ImSumdoublePtr(values *float64, count int32) float64 {
@@ -3104,7 +3104,7 @@ func NextColormapColor() imgui.Vec4 {
 }
 
 func NextColormapColorU32() uint32 {
-	return uint32(C.ImPlot_NextColormapColorU32())
+	return (uint32)(C.ImPlot_NextColormapColorU32())
 }
 
 func NiceNum(x float64, round bool) float64 {
@@ -6974,7 +6974,7 @@ func SampleColormapV(t float32, cmap Colormap) imgui.Vec4 {
 }
 
 func SampleColormapU32(t float32, cmap Colormap) uint32 {
-	return uint32(C.ImPlot_SampleColormapU32(C.float(t), C.ImPlotColormap(cmap)))
+	return (uint32)(C.ImPlot_SampleColormapU32(C.float(t), C.ImPlotColormap(cmap)))
 }
 
 func SetAxes(x_axis AxisEnum, y_axis AxisEnum) {
@@ -10561,7 +10561,7 @@ func (self *Annotation) ColorBg() uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImPlotAnnotation_GetColorBg(internal.ReinterpretCast[*C.ImPlotAnnotation](selfArg)))
+	return (uint32)(C.wrap_ImPlotAnnotation_GetColorBg(internal.ReinterpretCast[*C.ImPlotAnnotation](selfArg)))
 }
 
 func (self Annotation) SetColorFg(v uint32) {
@@ -10576,7 +10576,7 @@ func (self *Annotation) ColorFg() uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImPlotAnnotation_GetColorFg(internal.ReinterpretCast[*C.ImPlotAnnotation](selfArg)))
+	return (uint32)(C.wrap_ImPlotAnnotation_GetColorFg(internal.ReinterpretCast[*C.ImPlotAnnotation](selfArg)))
 }
 
 func (self Annotation) SetTextOffset(v int32) {
@@ -11213,7 +11213,7 @@ func (self *Axis) ColorMaj() uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImPlotAxis_GetColorMaj(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+	return (uint32)(C.wrap_ImPlotAxis_GetColorMaj(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
 }
 
 func (self Axis) SetColorMin(v uint32) {
@@ -11228,7 +11228,7 @@ func (self *Axis) ColorMin() uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImPlotAxis_GetColorMin(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+	return (uint32)(C.wrap_ImPlotAxis_GetColorMin(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
 }
 
 func (self Axis) SetColorTick(v uint32) {
@@ -11243,7 +11243,7 @@ func (self *Axis) ColorTick() uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImPlotAxis_GetColorTick(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+	return (uint32)(C.wrap_ImPlotAxis_GetColorTick(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
 }
 
 func (self Axis) SetColorTxt(v uint32) {
@@ -11258,7 +11258,7 @@ func (self *Axis) ColorTxt() uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImPlotAxis_GetColorTxt(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+	return (uint32)(C.wrap_ImPlotAxis_GetColorTxt(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
 }
 
 func (self Axis) SetColorBg(v uint32) {
@@ -11273,7 +11273,7 @@ func (self *Axis) ColorBg() uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImPlotAxis_GetColorBg(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+	return (uint32)(C.wrap_ImPlotAxis_GetColorBg(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
 }
 
 func (self Axis) SetColorHov(v uint32) {
@@ -11288,7 +11288,7 @@ func (self *Axis) ColorHov() uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImPlotAxis_GetColorHov(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+	return (uint32)(C.wrap_ImPlotAxis_GetColorHov(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
 }
 
 func (self Axis) SetColorAct(v uint32) {
@@ -11303,7 +11303,7 @@ func (self *Axis) ColorAct() uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImPlotAxis_GetColorAct(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+	return (uint32)(C.wrap_ImPlotAxis_GetColorAct(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
 }
 
 func (self Axis) SetColorHiLi(v uint32) {
@@ -11318,7 +11318,7 @@ func (self *Axis) ColorHiLi() uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImPlotAxis_GetColorHiLi(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+	return (uint32)(C.wrap_ImPlotAxis_GetColorHiLi(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
 }
 
 func (self Axis) SetEnabled(v bool) {
@@ -12452,7 +12452,7 @@ func (self *Item) Color() uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImPlotItem_GetColor(internal.ReinterpretCast[*C.ImPlotItem](selfArg)))
+	return (uint32)(C.wrap_ImPlotItem_GetColor(internal.ReinterpretCast[*C.ImPlotItem](selfArg)))
 }
 
 func (self Item) SetLegendHoverRect(v imgui.Rect) {
@@ -14785,7 +14785,7 @@ func (self *Tag) ColorBg() uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImPlotTag_GetColorBg(internal.ReinterpretCast[*C.ImPlotTag](selfArg)))
+	return (uint32)(C.wrap_ImPlotTag_GetColorBg(internal.ReinterpretCast[*C.ImPlotTag](selfArg)))
 }
 
 func (self Tag) SetColorFg(v uint32) {
@@ -14800,7 +14800,7 @@ func (self *Tag) ColorFg() uint32 {
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImPlotTag_GetColorFg(internal.ReinterpretCast[*C.ImPlotTag](selfArg)))
+	return (uint32)(C.wrap_ImPlotTag_GetColorFg(internal.ReinterpretCast[*C.ImPlotTag](selfArg)))
 }
 
 func (self Tag) SetTextOffset(v int32) {
