@@ -15,6 +15,7 @@ import (
 	_ "github.com/AllenDang/cimgui-go/immarkdown"
 	_ "github.com/AllenDang/cimgui-go/imnodes"
 	"github.com/AllenDang/cimgui-go/implot"
+	"github.com/AllenDang/cimgui-go/utils"
 )
 
 var (
@@ -136,8 +137,8 @@ func ShowImPlotDemo() {
 	imgui.SetNextWindowSizeV(imgui.NewVec2(500, 300), imgui.CondOnce)
 	imgui.Begin("Plot window")
 	if implot.BeginPlotV("Plot", imgui.NewVec2(-1, -1), 0) {
-		implot.PlotBarsS64PtrInt("Bar", barValues, int32(len(barValues)))
-		implot.PlotLineS64PtrInt("Line", barValues, int32(len(barValues)))
+		implot.PlotBarsS64PtrInt("Bar", utils.SliceToPtr(barValues), int32(len(barValues)))
+		implot.PlotLineS64PtrInt("Line", utils.SliceToPtr(barValues), int32(len(barValues)))
 		implot.EndPlot()
 	}
 	imgui.End()
