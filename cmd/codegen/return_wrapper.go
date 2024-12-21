@@ -42,26 +42,25 @@ func getReturnWrapper(
 		"size_t":          simpleR("uint64", "C.size_t"),
 		"time_t":          simpleR("uint64", "C.time_t"),
 		"void*":           simpleR("unsafe.Pointer", "unsafe.Pointer"),
+		"tm":              wrappableR(prefixGoPackage("Tm", "implot", context), "C.tm"),
 
-		"ImS16*":      simplePtrR("int16", "C.ImS16"),
-		"ImS64*":      simplePtrR("int64", "C.ImS64"),
-		"ImU8*":       simplePtrR("byte", "C.ImU8"),
-		"ImU16*":      simplePtrR("uint16", "C.ImU16"),
-		"ImU32*":      simplePtrR("uint32", "C.ImU32"),
-		"ImU64*":      simplePtrR("uint64", "C.ImU64"),
-		"ImVec4":      wrappableR(prefixGoPackage("Vec4", "imgui", context), "C.ImVec4"),
-		"ImVec4*":     imVec4PtrReturnW(context),
-		"ImVec2":      wrappableR(prefixGoPackage("Vec2", "imgui", context), "C.ImVec2"),
-		"ImColor":     wrappableR(prefixGoPackage("Color", "imgui", context), "C.ImColor"),
-		"ImPlotPoint": wrappableR(prefixGoPackage("PlotPoint", "implot", context), "C.ImPlotPoint"),
-		"ImRect":      wrappableR(prefixGoPackage("Rect", "imgui", context), "C.ImRect"),
-		"ImPlotTime":  wrappableR(prefixGoPackage("PlotTime", "implot", context), "C.ImPlotTime"),
-		"tm":          wrappableR(prefixGoPackage("Tm", "implot", context), "C.tm"),
+		// TODO: this should be generalized and loaded from preset
+		"ImVec4*": imVec4PtrReturnW(context),
 	}
 
 	// import preset
 	for k, v := range context.preset.SimpleTypes {
 		returnWrapperMap[k] = simpleR("("+prefixGoPackage(v[0], v[2], context)+")", v[1])
+	}
+
+	for k, v := range context.preset.SimplePtrTypes {
+		returnWrapperMap[k+"*"] = simplePtrR(prefixGoPackage(v[0], v[2], context), v[1])
+	}
+
+	for k, v := range context.preset.WrappableTypes {
+		returnWrapperMap[k] = wrappableR(prefixGoPackage(v[0], v[2], context), v[1])
+		// TODO: now wrappablePtrR yet - implement.
+		// returnWrapperMap[k+"*"] = wrappablePtrR(prefixGoPackage("*"+v[0], v[2], context), v[1])
 	}
 
 	isPointer := HasSuffix(t, "*")
