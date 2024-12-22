@@ -10,7 +10,7 @@ import (
 type FuncDef struct {
 	// FuncName is a cimgui name of the function
 	FuncName CIdentifier `json:"ov_cimguiname"`
-	// FuncName is an original Dear ImGui's name of the function
+	// OriginalFuncName is an original Dear ImGui's name of the function
 	OriginalFuncName CIdentifier `json:"original_func_name"`
 	// Args represents a plain string list of function arguments
 	Args string `json:"args"`
@@ -24,12 +24,12 @@ type FuncDef struct {
 	// Comment on function
 	Comment string `json:"comment"`
 
-	Constructor  bool `json:"constructor"`
-	Destructor   bool `json:"destructor"`
-	StructSetter bool `json:"struct_setter"`
-	StructGetter bool `json:"struct_getter"`
+	Constructor  bool
+	Destructor   bool
+	StructSetter bool
+	StructGetter bool
 
-	InvocationStmt string `json:"invocation_stmt"`
+	InvocationStmt string
 
 	// Ret determines a type of returned value
 	Ret    CIdentifier `json:"ret"`
