@@ -55,7 +55,7 @@ extern void wrap_MarkdownConfig_SetLinkIcon(MarkdownConfig *MarkdownConfigPtr, c
 extern const char* wrap_MarkdownConfig_GetLinkIcon(MarkdownConfig *self);
 extern void wrap_MarkdownConfig_SetHeadingFormats(MarkdownConfig *MarkdownConfigPtr, MarkdownHeadingFormat* v);
 extern MarkdownHeadingFormat* wrap_MarkdownConfig_GetHeadingFormats(MarkdownConfig *self);
-extern MarkdownHeadingFormat cimmarkdown_MarkdownHeadingFormat_GetAtIdx(MarkdownHeadingFormat *self, int index);
+extern MarkdownHeadingFormat immarkdown_MarkdownHeadingFormat_GetAtIdx(MarkdownHeadingFormat *self, int index);
 extern void wrap_MarkdownConfig_SetUserData(MarkdownConfig *MarkdownConfigPtr, uintptr_t v);
 extern uintptr_t wrap_MarkdownConfig_GetUserData(MarkdownConfig *self);
 extern void wrap_MarkdownConfig_SetFormatCallback(MarkdownConfig *MarkdownConfigPtr, MarkdownFormalCallback* v);

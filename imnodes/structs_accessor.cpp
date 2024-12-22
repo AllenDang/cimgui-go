@@ -52,7 +52,7 @@ void wrap_ImNodesStyle_SetFlags(ImNodesStyle *ImNodesStylePtr, ImNodesStyleFlags
 ImNodesStyleFlags wrap_ImNodesStyle_GetFlags(ImNodesStyle *self) { return self->Flags; }
 void wrap_ImNodesStyle_SetColors(ImNodesStyle *ImNodesStylePtr, unsigned int* v) { memcpy(ImNodesStylePtr->Colors, v, sizeof(unsigned int)*29); }
 unsigned int* wrap_ImNodesStyle_GetColors(ImNodesStyle *self) { return self->Colors; }
-unsigned int cimnodes_unsigned_int_GetAtIdx(unsigned int *self, int index) { return self[index]; }
+unsigned int imnodes_unsigned_int_GetAtIdx(unsigned int *self, int index) { return self[index]; }
 void wrap_LinkDetachWithModifierClick_SetModifier(LinkDetachWithModifierClick *LinkDetachWithModifierClickPtr, const bool* v) { LinkDetachWithModifierClickPtr->Modifier = v; }
 const bool* wrap_LinkDetachWithModifierClick_GetModifier(LinkDetachWithModifierClick *self) { return self->Modifier; }
 void wrap_MultipleSelectModifier_SetModifier(MultipleSelectModifier *MultipleSelectModifierPtr, const bool* v) { MultipleSelectModifierPtr->Modifier = v; }
