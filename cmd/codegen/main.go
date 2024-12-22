@@ -228,7 +228,7 @@ func main() {
 
 	// 1. Generate code
 	// 1.1. Generate Go Enums
-	enumNames, err := generateGoEnums(flags.prefix, context.enums, context)
+	enumNames, err := generateGoEnums(context.enums, context)
 	if err != nil {
 		glg.Fatalf("Generating enum names: %v", err)
 	}

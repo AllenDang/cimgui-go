@@ -7,7 +7,7 @@ import (
 )
 
 // Generate enums and return enum type names
-func generateGoEnums(prefix string, enums []EnumDef, ctx *Context) ([]CIdentifier, error) {
+func generateGoEnums(enums []EnumDef, ctx *Context) ([]CIdentifier, error) {
 	var sb strings.Builder
 
 	sb.WriteString(getGoPackageHeader(ctx))
