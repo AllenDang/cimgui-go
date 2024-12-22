@@ -106,6 +106,7 @@ func loadData(f *flags) (*jsonData, error) {
 		if err != nil {
 			glg.Fatalf("cannot read preset json file: %v", err)
 		}
+
 	}
 
 	return result, nil
@@ -138,16 +139,23 @@ type Context struct {
 	preset *Preset
 }
 
-func parseJson(jsonData *jsonData) (*Context, error) {
+func parseJson(jsonData *jsonData, f *flags) (*Context, error) {
 	var err error
 
 	result := &Context{
 		arrayIndexGetters: make(map[CIdentifier]CIdentifier),
 		preset:            &Preset{},
+		flags:             f,
 	}
 
 	if len(jsonData.preset) > 0 {
-		json.Unmarshal(jsonData.preset, result.preset)
+		if err := json.Unmarshal(jsonData.preset, result.preset); err != nil {
+			glg.Warnf("Unable to load preset: %v", err)
+		}
+
+		if result.flags.Verbose {
+			glg.Debugf("Preset loaded: %v", result.preset)
+		}
 	}
 
 	// get definitions from json file
@@ -215,15 +223,14 @@ func main() {
 		glg.Fatalf("cannot load data: %v", err)
 	}
 
-	context, err := parseJson(jsonData)
+	context, err := parseJson(jsonData, flags)
 	if err != nil {
 		glg.Fatalf("cannot parse json: %v", err)
 	}
 
-	context.flags = flags
-
 	// 1. Generate code
 	// 1.1. Generate Go Enums
+	glg.Info("Generating Go Enums")
 	enumNames, err := generateGoEnums(context.enums, context)
 	if err != nil {
 		glg.Fatalf("Generating enum names: %v", err)
@@ -232,6 +239,7 @@ func main() {
 	context.enumNames = SliceToMap(enumNames)
 
 	// 1.2. Generate Go typedefs
+	glg.Info("Generating Go Typedefs")
 	typedefsNames, callbacksToGenerate, err := GenerateTypedefs(context.typedefs, context.structs, context)
 	if err != nil {
 		glg.Fatalf("Cannot generate typedefs: %v", err)
@@ -247,12 +255,14 @@ func main() {
 	context.typedefsNames = MergeMaps(context.typedefsNames, SliceToMap(validCallbacks))
 
 	// 1.3. Generate C wrapper
+	glg.Info("Generating C Wrapper")
 	validFuncs, err := generateCppWrapper(flags.Include, context.funcs, context)
 	if err != nil {
 		glg.Fatalf("Cannot generate CPP Wrapper: %v", err)
 	}
 
 	// 1.3.1. Generate Struct accessors in C
+	glg.Info("Generating C Struct Accessors")
 	structAccessorFuncs, err := generateCppStructsAccessor(validFuncs, context.structs, context)
 	if err != nil {
 		glg.Fatalf("Cannot generate CPP Struct Accessors: %v", err)
@@ -261,6 +271,8 @@ func main() {
 	// This variable stores funcs that needs to be written to GO now.
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
+	// 1.4. Generate Go functions
+	glg.Info("Generating Go Functions")
 	if err := GenerateGoFuncs(validFuncs, context); err != nil {
 		glg.Fatalf("Cannot generate Go functions: %v", err)
 	}

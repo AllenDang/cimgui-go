@@ -15,6 +15,10 @@ func FormatGo(s string, ctx *Context) string {
 		ExtraRules: true,
 	})
 	if err != nil {
+		if ctx.flags.Verbose {
+			glg.Debugf(string(s))
+		}
+
 		glg.Fatalf("Unable to format go code: %v", err)
 	}
 
@@ -26,6 +30,13 @@ func FormatGo(s string, ctx *Context) string {
 		TabWidth:   8,
 		FormatOnly: false,
 	})
+	if err != nil {
+		if ctx.flags.Verbose {
+			glg.Debugf(string(s))
+		}
+
+		glg.Fatalf("Unable to goimports code: %v", err)
+	}
 
 	return string(sBytes)
 }

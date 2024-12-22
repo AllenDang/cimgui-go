@@ -5,6 +5,7 @@ import "github.com/cosiner/flag"
 type flags struct {
 	ShowGenerated    bool `names:"-lg, --log-generated" usage:"Log about functions that was generated." default:"false"`
 	ShowNotGenerated bool `names:"-lng, --log-not-generated" usage:"Log about functions that was NOT generated." default:"false"`
+	Verbose          bool `names:"--verbose" usage:"Verbose output (dump literally everything it could dump)." default:"false`
 
 	DefJsonPath      string `names:"-d, --definitions" usage:"definitions.json file path"`
 	EnumsJsonpath    string `names:"-e, --enums" usage:"structs_and_enums.json file path"`
