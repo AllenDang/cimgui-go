@@ -39,7 +39,6 @@ func GenerateGoFuncs(
 	context *Context,
 ) error {
 	generator := &goFuncsGenerator{
-		prefix:        context.prefix,
 		typedefsNames: context.typedefsNames,
 		enumNames:     context.enumNames,
 		refTypedefs:   context.refTypedefs,
@@ -101,7 +100,6 @@ func GenerateGoFuncs(
 
 // goFuncsGenerator is an internal state of GO funcs' generator
 type goFuncsGenerator struct {
-	prefix        string
 	typedefsNames map[CIdentifier]bool
 	enumNames     map[CIdentifier]bool
 	refTypedefs   map[CIdentifier]bool
