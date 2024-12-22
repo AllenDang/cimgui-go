@@ -80,9 +80,9 @@ func getReturnWrapper(
 		glg.Fatalf("Error in regex: %s", err)
 	}
 
-	srcPackage := GoIdentifier(context.flags.packageName)
+	srcPackage := GoIdentifier(context.flags.PackageName)
 	if isRefTypedef {
-		srcPackage = GoIdentifier(context.flags.refPackageName)
+		srcPackage = GoIdentifier(context.flags.RefPackageName)
 	}
 
 	_, shouldSkipStruct := context.preset.SkipStructs[pureType]

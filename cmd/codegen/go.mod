@@ -10,6 +10,7 @@ require (
 )
 
 require (
+	github.com/cosiner/flag v0.5.2 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/kpango/fastime v1.1.9 // indirect

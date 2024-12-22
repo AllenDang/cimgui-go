@@ -44,7 +44,7 @@ type Preset struct {
 	// cimgui-go uses this to set text_end to 0
 	DefaultArgArbitraryValue map[CIdentifier]CIdentifier
 	// ExtraCGOPreamble allows to specify additional C code elements in Go files.
-	// For example could be used to include extra files.
+	// For example could be used to Include extra files.
 	// For ease of use, its in form of []string. These lines will be merged and prefixed (if appliable) with '//'
 	ExtraCGOPreamble []string
 	// InternalFiles allows to specify files that are considered Internal.
@@ -54,7 +54,7 @@ type Preset struct {
 	// InternalPrefix is a prefix for identifiers from InternalFiles.
 	InternalPrefix string
 	// PackagePath is an import path of the package.
-	// This is base path. flags.packageName will be added.
+	// This is base path. flags.PackageName will be added.
 	// Example:
 	//   "github.com/AllenDang/cimgui-go"
 	//   If enerated with -pkg imgui, import path

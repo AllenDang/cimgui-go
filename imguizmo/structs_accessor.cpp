@@ -24,4 +24,4 @@ void wrap_Style_SetCenterCircleSize(Style *StylePtr, float v) { StylePtr->Center
 float wrap_Style_GetCenterCircleSize(Style *self) { return self->CenterCircleSize; }
 void wrap_Style_SetColors(Style *StylePtr, ImVec4* v) { memcpy(StylePtr->Colors, v, sizeof(ImVec4)*15); }
 ImVec4* wrap_Style_GetColors(Style *self) { return self->Colors; }
-ImVec4 cimguizmo_ImVec4_GetAtIdx(ImVec4 *self, int index) { return self[index]; }
+ImVec4 imguizmo_ImVec4_GetAtIdx(ImVec4 *self, int index) { return self[index]; }

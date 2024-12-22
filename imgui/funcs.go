@@ -14482,7 +14482,7 @@ func (self *DrawListSharedData) ArcFastVtx() [48]Vec2 {
 		resultMirr := C.wrap_ImDrawListSharedData_GetArcFastVtx(internal.ReinterpretCast[*C.ImDrawListSharedData](selfArg))
 		for i := range result {
 			result[i] = func() Vec2 {
-				out := C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
+				out := C.imgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
 				return *(&Vec2{}).FromC(unsafe.Pointer(&out))
 			}()
 		}
@@ -14531,7 +14531,7 @@ func (self *DrawListSharedData) CircleSegmentCounts() [64](byte) {
 		result := [64](byte){}
 		resultMirr := C.wrap_ImDrawListSharedData_GetCircleSegmentCounts(internal.ReinterpretCast[*C.ImDrawListSharedData](selfArg))
 		for i := range result {
-			result[i] = (byte)(C.cimgui_ImU8_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = (byte)(C.imgui_ImU8_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -14999,7 +14999,7 @@ func (self *Font) Used4kPagesMap() [34](byte) {
 		result := [34](byte){}
 		resultMirr := C.wrap_ImFont_GetUsed4kPagesMap(internal.ReinterpretCast[*C.ImFont](selfArg))
 		for i := range result {
-			result[i] = (byte)(C.cimgui_ImU8_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = (byte)(C.imgui_ImU8_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -15283,7 +15283,7 @@ func (self *FontAtlas) TexUvLines() [64]Vec4 {
 		resultMirr := C.wrap_ImFontAtlas_GetTexUvLines(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
 		for i := range result {
 			result[i] = func() Vec4 {
-				out := C.cimgui_ImVec4_GetAtIdx(resultMirr, C.int(i))
+				out := C.imgui_ImVec4_GetAtIdx(resultMirr, C.int(i))
 				return *(&Vec4{}).FromC(unsafe.Pointer(&out))
 			}()
 		}
@@ -15780,7 +15780,7 @@ func (self *FontConfig) Name() [40]rune {
 		result := [40]rune{}
 		resultMirr := C.wrap_ImFontConfig_GetName(internal.ReinterpretCast[*C.ImFontConfig](selfArg))
 		for i := range result {
-			result[i] = rune(C.cimgui_char_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -16798,7 +16798,7 @@ func (self *Context) ContextName() [16]rune {
 		result := [16]rune{}
 		resultMirr := C.wrap_ImGuiContext_GetContextName(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
 		for i := range result {
-			result[i] = rune(C.cimgui_char_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -17737,7 +17737,7 @@ func (self *Context) KeysOwnerData() [154]KeyOwnerData {
 		resultMirr := C.wrap_ImGuiContext_GetKeysOwnerData(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
 		for i := range result {
 			result[i] = *NewKeyOwnerDataFromC(func() *C.ImGuiKeyOwnerData {
-				result := C.cimgui_ImGuiKeyOwnerData_GetAtIdx(resultMirr, C.int(i))
+				result := C.imgui_ImGuiKeyOwnerData_GetAtIdx(resultMirr, C.int(i))
 				return &result
 			}())
 		}
@@ -19589,7 +19589,7 @@ func (self *Context) DragDropPayloadBufLocal() [16]uint {
 		result := [16]uint{}
 		resultMirr := C.wrap_ImGuiContext_GetDragDropPayloadBufLocal(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
 		for i := range result {
-			result[i] = uint(C.cimgui_unsigned_char_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = uint(C.imgui_unsigned_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -20801,7 +20801,7 @@ func (self *Context) LocalizationTable() [13]string {
 		result := [13]string{}
 		resultMirr := C.wrap_ImGuiContext_GetLocalizationTable(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
 		for i := range result {
-			result[i] = C.GoString(C.cimgui_const_charPtr_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = C.GoString(C.imgui_const_charPtr_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -21442,7 +21442,7 @@ func (self *Context) FramerateSecPerFrame() [60]float32 {
 		result := [60]float32{}
 		resultMirr := C.wrap_ImGuiContext_GetFramerateSecPerFrame(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
 		for i := range result {
-			result[i] = float32(C.cimgui_float_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = float32(C.imgui_float_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -21587,7 +21587,7 @@ func (self *Context) TempKeychordName() [64]rune {
 		result := [64]rune{}
 		resultMirr := C.wrap_ImGuiContext_GetTempKeychordName(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
 		for i := range result {
-			result[i] = rune(C.cimgui_char_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -21772,7 +21772,7 @@ func (self *DataTypeStorage) Data() [8](byte) {
 		result := [8](byte){}
 		resultMirr := C.wrap_ImGuiDataTypeStorage_GetData(internal.ReinterpretCast[*C.ImGuiDataTypeStorage](selfArg))
 		for i := range result {
-			result[i] = (byte)(C.cimgui_ImU8_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = (byte)(C.imgui_ImU8_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -21941,7 +21941,7 @@ func (self *DebugAllocInfo) LastEntriesBuf() [6]DebugAllocEntry {
 		resultMirr := C.wrap_ImGuiDebugAllocInfo_GetLastEntriesBuf(internal.ReinterpretCast[*C.ImGuiDebugAllocInfo](selfArg))
 		for i := range result {
 			result[i] = *NewDebugAllocEntryFromC(func() *C.ImGuiDebugAllocEntry {
-				result := C.cimgui_ImGuiDebugAllocEntry_GetAtIdx(resultMirr, C.int(i))
+				result := C.imgui_ImGuiDebugAllocEntry_GetAtIdx(resultMirr, C.int(i))
 				return &result
 			}())
 		}
@@ -22152,7 +22152,7 @@ func (self *DockNode) ChildNodes() [2]*DockNode {
 		result := [2]*DockNode{}
 		resultMirr := C.wrap_ImGuiDockNode_GetChildNodes(internal.ReinterpretCast[*C.ImGuiDockNode](selfArg))
 		for i := range result {
-			result[i] = NewDockNodeFromC(C.cimgui_ImGuiDockNodePtr_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = NewDockNodeFromC(C.imgui_ImGuiDockNodePtr_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -24367,7 +24367,7 @@ func (self *IO) MouseDown() [5]bool {
 		result := [5]bool{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDown(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = C.cimgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
+			result[i] = C.imgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -24543,7 +24543,7 @@ func (self *IO) KeysData() [154]KeyData {
 		result := [154]KeyData{}
 		resultMirr := C.wrap_ImGuiIO_GetKeysData(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = *NewKeyDataFromC(func() *C.ImGuiKeyData { result := C.cimgui_ImGuiKeyData_GetAtIdx(resultMirr, C.int(i)); return &result }())
+			result[i] = *NewKeyDataFromC(func() *C.ImGuiKeyData { result := C.imgui_ImGuiKeyData_GetAtIdx(resultMirr, C.int(i)); return &result }())
 		}
 
 		return result
@@ -24609,7 +24609,7 @@ func (self *IO) MouseClickedPos() [5]Vec2 {
 		resultMirr := C.wrap_ImGuiIO_GetMouseClickedPos(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
 			result[i] = func() Vec2 {
-				out := C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
+				out := C.imgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
 				return *(&Vec2{}).FromC(unsafe.Pointer(&out))
 			}()
 		}
@@ -24643,7 +24643,7 @@ func (self *IO) MouseClickedTime() [5]float64 {
 		result := [5]float64{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseClickedTime(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = float64(C.cimgui_double_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = float64(C.imgui_double_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -24675,7 +24675,7 @@ func (self *IO) MouseClicked() [5]bool {
 		result := [5]bool{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseClicked(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = C.cimgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
+			result[i] = C.imgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -24707,7 +24707,7 @@ func (self *IO) MouseDoubleClicked() [5]bool {
 		result := [5]bool{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDoubleClicked(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = C.cimgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
+			result[i] = C.imgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -24739,7 +24739,7 @@ func (self *IO) MouseClickedCount() [5](uint16) {
 		result := [5](uint16){}
 		resultMirr := C.wrap_ImGuiIO_GetMouseClickedCount(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = (uint16)(C.cimgui_ImU16_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = (uint16)(C.imgui_ImU16_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -24771,7 +24771,7 @@ func (self *IO) MouseClickedLastCount() [5](uint16) {
 		result := [5](uint16){}
 		resultMirr := C.wrap_ImGuiIO_GetMouseClickedLastCount(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = (uint16)(C.cimgui_ImU16_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = (uint16)(C.imgui_ImU16_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -24803,7 +24803,7 @@ func (self *IO) MouseReleased() [5]bool {
 		result := [5]bool{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseReleased(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = C.cimgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
+			result[i] = C.imgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -24835,7 +24835,7 @@ func (self *IO) MouseDownOwned() [5]bool {
 		result := [5]bool{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDownOwned(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = C.cimgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
+			result[i] = C.imgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -24867,7 +24867,7 @@ func (self *IO) MouseDownOwnedUnlessPopupClose() [5]bool {
 		result := [5]bool{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDownOwnedUnlessPopupClose(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = C.cimgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
+			result[i] = C.imgui_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -24929,7 +24929,7 @@ func (self *IO) MouseDownDuration() [5]float32 {
 		result := [5]float32{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDownDuration(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = float32(C.cimgui_float_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = float32(C.imgui_float_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -24961,7 +24961,7 @@ func (self *IO) MouseDownDurationPrev() [5]float32 {
 		result := [5]float32{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDownDurationPrev(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = float32(C.cimgui_float_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = float32(C.imgui_float_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -24994,7 +24994,7 @@ func (self *IO) MouseDragMaxDistanceAbs() [5]Vec2 {
 		resultMirr := C.wrap_ImGuiIO_GetMouseDragMaxDistanceAbs(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
 			result[i] = func() Vec2 {
-				out := C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
+				out := C.imgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
 				return *(&Vec2{}).FromC(unsafe.Pointer(&out))
 			}()
 		}
@@ -25028,7 +25028,7 @@ func (self *IO) MouseDragMaxDistanceSqr() [5]float32 {
 		result := [5]float32{}
 		resultMirr := C.wrap_ImGuiIO_GetMouseDragMaxDistanceSqr(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
-			result[i] = float32(C.cimgui_float_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = float32(C.imgui_float_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -26195,7 +26195,7 @@ func (self *KeyRoutingTable) Index() [154]KeyRoutingIndex {
 		resultMirr := C.wrap_ImGuiKeyRoutingTable_GetIndex(internal.ReinterpretCast[*C.ImGuiKeyRoutingTable](selfArg))
 		for i := range result {
 			result[i] = *NewKeyRoutingIndexFromC(func() *C.ImGuiKeyRoutingIndex {
-				result := C.cimgui_ImGuiKeyRoutingIndex_GetAtIdx(resultMirr, C.int(i))
+				result := C.imgui_ImGuiKeyRoutingIndex_GetAtIdx(resultMirr, C.int(i))
 				return &result
 			}())
 		}
@@ -26834,7 +26834,7 @@ func (self *MenuColumns) Widths() [4](uint16) {
 		result := [4](uint16){}
 		resultMirr := C.wrap_ImGuiMenuColumns_GetWidths(internal.ReinterpretCast[*C.ImGuiMenuColumns](selfArg))
 		for i := range result {
-			result[i] = (uint16)(C.cimgui_ImU16_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = (uint16)(C.imgui_ImU16_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -28733,7 +28733,7 @@ func (self *Payload) DataType() [33]rune {
 		result := [33]rune{}
 		resultMirr := C.wrap_ImGuiPayload_GetDataType(internal.ReinterpretCast[*C.ImGuiPayload](selfArg))
 		for i := range result {
-			result[i] = rune(C.cimgui_char_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -29617,7 +29617,7 @@ func (self *StackLevelInfo) Desc() [57]rune {
 		result := [57]rune{}
 		resultMirr := C.wrap_ImGuiStackLevelInfo_GetDesc(internal.ReinterpretCast[*C.ImGuiStackLevelInfo](selfArg))
 		for i := range result {
-			result[i] = rune(C.cimgui_char_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -30457,7 +30457,7 @@ func (self *Style) Colors() [58]Vec4 {
 		resultMirr := C.wrap_ImGuiStyle_GetColors(internal.ReinterpretCast[*C.ImGuiStyle](selfArg))
 		for i := range result {
 			result[i] = func() Vec4 {
-				out := C.cimgui_ImVec4_GetAtIdx(resultMirr, C.int(i))
+				out := C.imgui_ImVec4_GetAtIdx(resultMirr, C.int(i))
 				return *(&Vec4{}).FromC(unsafe.Pointer(&out))
 			}()
 		}
@@ -31713,7 +31713,7 @@ func (self *Table) RowBgColor() [2](uint32) {
 		result := [2](uint32){}
 		resultMirr := C.wrap_ImGuiTable_GetRowBgColor(internal.ReinterpretCast[*C.ImGuiTable](selfArg))
 		for i := range result {
-			result[i] = (uint32)(C.cimgui_ImU32_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = (uint32)(C.imgui_ImU32_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -34655,7 +34655,7 @@ func (self *TextFilter) InputBuf() [256]rune {
 		result := [256]rune{}
 		resultMirr := C.wrap_ImGuiTextFilter_GetInputBuf(internal.ReinterpretCast[*C.ImGuiTextFilter](selfArg))
 		for i := range result {
-			result[i] = rune(C.cimgui_char_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -34975,7 +34975,7 @@ func (self *TypingSelectState) SearchBuffer() [64]rune {
 		result := [64]rune{}
 		resultMirr := C.wrap_ImGuiTypingSelectState_GetSearchBuffer(internal.ReinterpretCast[*C.ImGuiTypingSelectState](selfArg))
 		for i := range result {
-			result[i] = rune(C.cimgui_char_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -35544,7 +35544,7 @@ func (self *ViewportP) BgFgDrawListsLastFrame() [2]int32 {
 		result := [2]int32{}
 		resultMirr := C.wrap_ImGuiViewportP_GetBgFgDrawListsLastFrame(internal.ReinterpretCast[*C.ImGuiViewportP](selfArg))
 		for i := range result {
-			result[i] = int32(C.cimgui_int_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = int32(C.imgui_int_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -35577,7 +35577,7 @@ func (self *ViewportP) BgFgDrawLists() [2]*DrawList {
 		result := [2]*DrawList{}
 		resultMirr := C.wrap_ImGuiViewportP_GetBgFgDrawLists(internal.ReinterpretCast[*C.ImGuiViewportP](selfArg))
 		for i := range result {
-			result[i] = NewDrawListFromC(C.cimgui_ImDrawListPtr_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = NewDrawListFromC(C.imgui_ImDrawListPtr_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -37455,7 +37455,7 @@ func (self *Window) NavLastIds() [2]ID {
 		result := [2]ID{}
 		resultMirr := C.wrap_ImGuiWindow_GetNavLastIds(internal.ReinterpretCast[*C.ImGuiWindow](selfArg))
 		for i := range result {
-			result[i] = *NewIDFromC(func() *C.ImGuiID { result := C.cimgui_ImGuiID_GetAtIdx(resultMirr, C.int(i)); return &result }())
+			result[i] = *NewIDFromC(func() *C.ImGuiID { result := C.imgui_ImGuiID_GetAtIdx(resultMirr, C.int(i)); return &result }())
 		}
 
 		return result
@@ -37488,7 +37488,7 @@ func (self *Window) NavRectRel() [2]Rect {
 		resultMirr := C.wrap_ImGuiWindow_GetNavRectRel(internal.ReinterpretCast[*C.ImGuiWindow](selfArg))
 		for i := range result {
 			result[i] = func() Rect {
-				out := C.cimgui_ImRect_GetAtIdx(resultMirr, C.int(i))
+				out := C.imgui_ImRect_GetAtIdx(resultMirr, C.int(i))
 				return *(&Rect{}).FromC(unsafe.Pointer(&out))
 			}()
 		}
@@ -37522,7 +37522,7 @@ func (self *Window) NavPreferredScoringPosRel() [2]Vec2 {
 		resultMirr := C.wrap_ImGuiWindow_GetNavPreferredScoringPosRel(internal.ReinterpretCast[*C.ImGuiWindow](selfArg))
 		for i := range result {
 			result[i] = func() Vec2 {
-				out := C.cimgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
+				out := C.imgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
 				return *(&Vec2{}).FromC(unsafe.Pointer(&out))
 			}()
 		}
@@ -37947,7 +37947,7 @@ func (self *WindowDockStyle) Colors() [8](uint32) {
 		result := [8](uint32){}
 		resultMirr := C.wrap_ImGuiWindowDockStyle_GetColors(internal.ReinterpretCast[*C.ImGuiWindowDockStyle](selfArg))
 		for i := range result {
-			result[i] = (uint32)(C.cimgui_ImU32_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = (uint32)(C.imgui_ImU32_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result

@@ -1,0 +1,13 @@
+{
+        "PackagePath": "example.com/mypkg",
+        "TypedefsPoolSize": 32,
+        "DefaultArgReplace": {
+                "nullptr":    "0",
+                "NULL":       "0",
+                "((void*)0)": "0"
+        },
+        "DefaultArgArbitraryValue": {
+                "text_end":  "0",
+                "text_end_": "0"
+        }
+}

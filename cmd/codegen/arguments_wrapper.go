@@ -137,9 +137,9 @@ func getArgWrapper(
 	_, isRefEnum := context.refEnumNames[pureType]
 
 	if isEnum || isRefEnum {
-		srcPkg := context.flags.packageName
+		srcPkg := context.flags.PackageName
 		if isRefTypedef {
-			srcPkg = context.flags.refPackageName
+			srcPkg = context.flags.RefPackageName
 		}
 
 		goType := prefixGoPackage(pureType.renameGoIdentifier(context), GoIdentifier(srcPkg), context)
@@ -268,9 +268,9 @@ for i, %[1]sV := range %[1]sArg {
 
 	_, shouldSkipRefTypedef := context.preset.SkipTypedefs[pureType]
 	if context.typedefsNames[pureType] || (isRefTypedef && !shouldSkipRefTypedef) {
-		srcPkg := context.flags.packageName
+		srcPkg := context.flags.PackageName
 		if isRefTypedef {
-			srcPkg = context.flags.refPackageName
+			srcPkg = context.flags.RefPackageName
 		}
 
 		goType := prefixGoPackage(pureType.renameGoIdentifier(context), GoIdentifier(srcPkg), context)

@@ -55,7 +55,7 @@ extern void wrap_ImNodesStyle_SetFlags(ImNodesStyle *ImNodesStylePtr, ImNodesSty
 extern ImNodesStyleFlags wrap_ImNodesStyle_GetFlags(ImNodesStyle *self);
 extern void wrap_ImNodesStyle_SetColors(ImNodesStyle *ImNodesStylePtr, unsigned int* v);
 extern unsigned int* wrap_ImNodesStyle_GetColors(ImNodesStyle *self);
-extern unsigned int cimnodes_unsigned_int_GetAtIdx(unsigned int *self, int index);
+extern unsigned int imnodes_unsigned_int_GetAtIdx(unsigned int *self, int index);
 extern void wrap_LinkDetachWithModifierClick_SetModifier(LinkDetachWithModifierClick *LinkDetachWithModifierClickPtr, const bool* v);
 extern const bool* wrap_LinkDetachWithModifierClick_GetModifier(LinkDetachWithModifierClick *self);
 extern void wrap_MultipleSelectModifier_SetModifier(MultipleSelectModifier *MultipleSelectModifierPtr, const bool* v);

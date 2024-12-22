@@ -439,7 +439,7 @@ func (self *Style) Colors() [15]imgui.Vec4 {
 		resultMirr := C.wrap_Style_GetColors(internal.ReinterpretCast[*C.Style](selfArg))
 		for i := range result {
 			result[i] = func() imgui.Vec4 {
-				out := C.cimguizmo_ImVec4_GetAtIdx(resultMirr, C.int(i))
+				out := C.imguizmo_ImVec4_GetAtIdx(resultMirr, C.int(i))
 				return *(&imgui.Vec4{}).FromC(unsafe.Pointer(&out))
 			}()
 		}

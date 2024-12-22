@@ -39,7 +39,6 @@ func GenerateGoFuncs(
 	context *Context,
 ) error {
 	generator := &goFuncsGenerator{
-		prefix:        context.prefix,
 		typedefsNames: context.typedefsNames,
 		enumNames:     context.enumNames,
 		refTypedefs:   context.refTypedefs,
@@ -63,12 +62,12 @@ func GenerateGoFuncs(
 
 		// stop, when the function should not be generated
 		if !generator.shouldGenerate {
-			if context.flags.showNotGenerated {
+			if context.flags.ShowNotGenerated {
 				glg.Errorf("not generated: %s%s", f.FuncName, f.Args)
 			}
 			continue
 		} else {
-			if context.flags.showGenerated {
+			if context.flags.ShowGenerated {
 				glg.Successf("generated: %s%s", f.FuncName, f.Args)
 			}
 		}
@@ -101,7 +100,6 @@ func GenerateGoFuncs(
 
 // goFuncsGenerator is an internal state of GO funcs' generator
 type goFuncsGenerator struct {
-	prefix        string
 	typedefsNames map[CIdentifier]bool
 	enumNames     map[CIdentifier]bool
 	refTypedefs   map[CIdentifier]bool

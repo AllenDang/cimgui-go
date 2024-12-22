@@ -10918,7 +10918,7 @@ func (self *Axis) FormatSpec() [16]rune {
 		result := [16]rune{}
 		resultMirr := C.wrap_ImPlotAxis_GetFormatSpec(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
 		for i := range result {
-			result[i] = rune(C.cimplot_char_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = rune(C.implot_char_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -12815,7 +12815,7 @@ func (self *NextItemData) Colors() [5]imgui.Vec4 {
 		resultMirr := C.wrap_ImPlotNextItemData_GetColors(internal.ReinterpretCast[*C.ImPlotNextItemData](selfArg))
 		for i := range result {
 			result[i] = func() imgui.Vec4 {
-				out := C.cimplot_ImVec4_GetAtIdx(resultMirr, C.int(i))
+				out := C.implot_ImVec4_GetAtIdx(resultMirr, C.int(i))
 				return *(&imgui.Vec4{}).FromC(unsafe.Pointer(&out))
 			}()
 		}
@@ -13089,7 +13089,7 @@ func (self *NextPlotData) RangeCond() [6]Cond {
 		result := [6]Cond{}
 		resultMirr := C.wrap_ImPlotNextPlotData_GetRangeCond(internal.ReinterpretCast[*C.ImPlotNextPlotData](selfArg))
 		for i := range result {
-			result[i] = Cond(C.cimplot_ImPlotCond_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = Cond(C.implot_ImPlotCond_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -13122,7 +13122,7 @@ func (self *NextPlotData) Range() [6]Range {
 		result := [6]Range{}
 		resultMirr := C.wrap_ImPlotNextPlotData_GetRange(internal.ReinterpretCast[*C.ImPlotNextPlotData](selfArg))
 		for i := range result {
-			result[i] = *NewRangeFromC(func() *C.ImPlotRange { result := C.cimplot_ImPlotRange_GetAtIdx(resultMirr, C.int(i)); return &result }())
+			result[i] = *NewRangeFromC(func() *C.ImPlotRange { result := C.implot_ImPlotRange_GetAtIdx(resultMirr, C.int(i)); return &result }())
 		}
 
 		return result
@@ -13154,7 +13154,7 @@ func (self *NextPlotData) HasRange() [6]bool {
 		result := [6]bool{}
 		resultMirr := C.wrap_ImPlotNextPlotData_GetHasRange(internal.ReinterpretCast[*C.ImPlotNextPlotData](selfArg))
 		for i := range result {
-			result[i] = C.cimplot_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
+			result[i] = C.implot_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -13186,7 +13186,7 @@ func (self *NextPlotData) Fit() [6]bool {
 		result := [6]bool{}
 		resultMirr := C.wrap_ImPlotNextPlotData_GetFit(internal.ReinterpretCast[*C.ImPlotNextPlotData](selfArg))
 		for i := range result {
-			result[i] = C.cimplot_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
+			result[i] = C.implot_bool_GetAtIdx(resultMirr, C.int(i)) == C.bool(true)
 		}
 
 		return result
@@ -13219,7 +13219,7 @@ func (self *NextPlotData) LinkedMin() [6]*float64 {
 		result := [6]*float64{}
 		resultMirr := C.wrap_ImPlotNextPlotData_GetLinkedMin(internal.ReinterpretCast[*C.ImPlotNextPlotData](selfArg))
 		for i := range result {
-			result[i] = (*float64)(C.cimplot_doublePtr_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = (*float64)(C.implot_doublePtr_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -13252,7 +13252,7 @@ func (self *NextPlotData) LinkedMax() [6]*float64 {
 		result := [6]*float64{}
 		resultMirr := C.wrap_ImPlotNextPlotData_GetLinkedMax(internal.ReinterpretCast[*C.ImPlotNextPlotData](selfArg))
 		for i := range result {
-			result[i] = (*float64)(C.cimplot_doublePtr_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = (*float64)(C.implot_doublePtr_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result
@@ -13365,7 +13365,7 @@ func (self *Plot) Axes() [6]Axis {
 		result := [6]Axis{}
 		resultMirr := C.wrap_ImPlotPlot_GetAxes(internal.ReinterpretCast[*C.ImPlotPlot](selfArg))
 		for i := range result {
-			result[i] = *NewAxisFromC(func() *C.ImPlotAxis { result := C.cimplot_ImPlotAxis_GetAtIdx(resultMirr, C.int(i)); return &result }())
+			result[i] = *NewAxisFromC(func() *C.ImPlotAxis { result := C.implot_ImPlotAxis_GetAtIdx(resultMirr, C.int(i)); return &result }())
 		}
 
 		return result
@@ -14306,7 +14306,7 @@ func (self *Style) Colors() [21]imgui.Vec4 {
 		resultMirr := C.wrap_ImPlotStyle_GetColors(internal.ReinterpretCast[*C.ImPlotStyle](selfArg))
 		for i := range result {
 			result[i] = func() imgui.Vec4 {
-				out := C.cimplot_ImVec4_GetAtIdx(resultMirr, C.int(i))
+				out := C.implot_ImVec4_GetAtIdx(resultMirr, C.int(i))
 				return *(&imgui.Vec4{}).FromC(unsafe.Pointer(&out))
 			}()
 		}
@@ -14706,7 +14706,7 @@ func (self *Subplot) TempSizes() [2]float32 {
 		result := [2]float32{}
 		resultMirr := C.wrap_ImPlotSubplot_GetTempSizes(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg))
 		for i := range result {
-			result[i] = float32(C.cimplot_float_GetAtIdx(resultMirr, C.int(i)))
+			result[i] = float32(C.implot_float_GetAtIdx(resultMirr, C.int(i)))
 		}
 
 		return result

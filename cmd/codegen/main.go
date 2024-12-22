@@ -39,19 +39,19 @@ func getEnumAndStructNames(enumJsonBytes []byte, context *Context) (enumNames []
 }
 
 func validateFiles(f *flags) {
-	stat, err := os.Stat(f.defJsonPath)
+	stat, err := os.Stat(f.DefJsonPath)
 	if err != nil || stat.IsDir() {
 		glg.Fatal("Invalid definitions json file path")
 	}
 
-	stat, err = os.Stat(f.enumsJsonpath)
+	stat, err = os.Stat(f.EnumsJsonpath)
 	if err != nil || stat.IsDir() {
 		glg.Fatal("Invalid enum json file path")
 	}
 
-	stat, err = os.Stat(f.typedefsJsonpath)
+	stat, err = os.Stat(f.TypedefsJsonpath)
 	if err != nil || stat.IsDir() {
-		glg.Fatalf("Invalid typedefs json file path: %s", f.typedefsJsonpath)
+		glg.Fatalf("Invalid typedefs json file path: %s", f.TypedefsJsonpath)
 	}
 }
 
@@ -72,40 +72,41 @@ func loadData(f *flags) (*jsonData, error) {
 
 	result := &jsonData{}
 
-	result.defs, err = os.ReadFile(f.defJsonPath)
+	result.defs, err = os.ReadFile(f.DefJsonPath)
 	if err != nil {
 		return nil, fmt.Errorf("cannot read definitions json file: %w", err)
 	}
 
-	result.typedefs, err = os.ReadFile(f.typedefsJsonpath)
+	result.typedefs, err = os.ReadFile(f.TypedefsJsonpath)
 	if err != nil {
 		return nil, fmt.Errorf("cannot read typedefs json file: %w", err)
 	}
 
-	result.structAndEnums, err = os.ReadFile(f.enumsJsonpath)
+	result.structAndEnums, err = os.ReadFile(f.EnumsJsonpath)
 	if err != nil {
 		glg.Fatalf("cannot read struct and enums json file: %v", err)
 	}
 
-	if len(f.refEnumsJsonPath) > 0 {
-		result.refStructAndEnums, err = os.ReadFile(f.refEnumsJsonPath)
+	if len(f.RefEnumsJsonPath) > 0 {
+		result.refStructAndEnums, err = os.ReadFile(f.RefEnumsJsonPath)
 		if err != nil {
 			return nil, fmt.Errorf("cannot read reference struct and enums json file: %w", err)
 		}
 	}
 
-	if len(f.refTypedefsJsonPath) > 0 {
-		result.refTypedefs, err = os.ReadFile(f.refTypedefsJsonPath)
+	if len(f.RefTypedefsJsonPath) > 0 {
+		result.refTypedefs, err = os.ReadFile(f.RefTypedefsJsonPath)
 		if err != nil {
 			return nil, fmt.Errorf("cannot read reference typedefs json file: %w", err)
 		}
 	}
 
-	if len(f.presetJsonPath) > 0 {
-		result.preset, err = os.ReadFile(f.presetJsonPath)
+	if len(f.PresetJsonPath) > 0 {
+		result.preset, err = os.ReadFile(f.PresetJsonPath)
 		if err != nil {
 			glg.Fatalf("cannot read preset json file: %v", err)
 		}
+
 	}
 
 	return result, nil
@@ -113,9 +114,6 @@ func loadData(f *flags) (*jsonData, error) {
 
 // this will store json data processed by appropiate pre-rocessors
 type Context struct {
-	// prefix for generated files (prefix_fileType.go)
-	prefix string
-
 	// plain idata loaded from json
 	funcs    []FuncDef
 	structs  []StructDef
@@ -141,16 +139,23 @@ type Context struct {
 	preset *Preset
 }
 
-func parseJson(jsonData *jsonData) (*Context, error) {
+func parseJson(jsonData *jsonData, f *flags) (*Context, error) {
 	var err error
 
 	result := &Context{
 		arrayIndexGetters: make(map[CIdentifier]CIdentifier),
 		preset:            &Preset{},
+		flags:             f,
 	}
 
 	if len(jsonData.preset) > 0 {
-		json.Unmarshal(jsonData.preset, result.preset)
+		if err := json.Unmarshal(jsonData.preset, result.preset); err != nil {
+			glg.Warnf("Unable to load preset: %v", err)
+		}
+
+		if result.flags.Verbose {
+			glg.Debugf("Preset loaded: %v", result.preset)
+		}
 	}
 
 	// get definitions from json file
@@ -218,17 +223,15 @@ func main() {
 		glg.Fatalf("cannot load data: %v", err)
 	}
 
-	context, err := parseJson(jsonData)
+	context, err := parseJson(jsonData, flags)
 	if err != nil {
 		glg.Fatalf("cannot parse json: %v", err)
 	}
 
-	context.prefix = flags.prefix
-	context.flags = flags
-
 	// 1. Generate code
 	// 1.1. Generate Go Enums
-	enumNames, err := generateGoEnums(flags.prefix, context.enums, context)
+	glg.Info("Generating Go Enums")
+	enumNames, err := generateGoEnums(context.enums, context)
 	if err != nil {
 		glg.Fatalf("Generating enum names: %v", err)
 	}
@@ -236,6 +239,7 @@ func main() {
 	context.enumNames = SliceToMap(enumNames)
 
 	// 1.2. Generate Go typedefs
+	glg.Info("Generating Go Typedefs")
 	typedefsNames, callbacksToGenerate, err := GenerateTypedefs(context.typedefs, context.structs, context)
 	if err != nil {
 		glg.Fatalf("Cannot generate typedefs: %v", err)
@@ -251,13 +255,15 @@ func main() {
 	context.typedefsNames = MergeMaps(context.typedefsNames, SliceToMap(validCallbacks))
 
 	// 1.3. Generate C wrapper
-	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, context.funcs, context)
+	glg.Info("Generating C Wrapper")
+	validFuncs, err := generateCppWrapper(flags.Include, context.funcs, context)
 	if err != nil {
 		glg.Fatalf("Cannot generate CPP Wrapper: %v", err)
 	}
 
 	// 1.3.1. Generate Struct accessors in C
-	structAccessorFuncs, err := generateCppStructsAccessor(flags.prefix, validFuncs, context.structs, context)
+	glg.Info("Generating C Struct Accessors")
+	structAccessorFuncs, err := generateCppStructsAccessor(validFuncs, context.structs, context)
 	if err != nil {
 		glg.Fatalf("Cannot generate CPP Struct Accessors: %v", err)
 	}
@@ -265,6 +271,8 @@ func main() {
 	// This variable stores funcs that needs to be written to GO now.
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
+	// 1.4. Generate Go functions
+	glg.Info("Generating Go Functions")
 	if err := GenerateGoFuncs(validFuncs, context); err != nil {
 		glg.Fatalf("Cannot generate Go functions: %v", err)
 	}
@@ -281,14 +289,14 @@ import (
 )
 `,
 		generatorInfo,
-		ctx.flags.packageName,
-		ctx.flags.refPackageName,
+		ctx.flags.PackageName,
+		ctx.flags.RefPackageName,
 		ctx.preset.PackagePath,
 	)
 }
 
 func prefixGoPackage(t, sourcePackage GoIdentifier, ctx *Context) GoIdentifier {
-	if sourcePackage == GoIdentifier(ctx.flags.packageName) || sourcePackage == "" {
+	if sourcePackage == GoIdentifier(ctx.flags.PackageName) || sourcePackage == "" {
 		return t
 	}
 

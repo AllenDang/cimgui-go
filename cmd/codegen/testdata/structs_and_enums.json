@@ -1,0 +1,39 @@
+{
+        "structs":{
+                "B":[
+                        {
+                                "name": "Field1",
+                                "type": "int"
+                        },
+                        {
+                                "name": "Field2",
+                                "type": "A"
+                        }
+                ]
+        },
+        "struct_comments": {
+                "B": {
+                        "above": "// this is an example struct"
+                }
+        },
+        "enums": {
+                "A_": [
+                        {
+                                "calc_value": 0,
+                                "comment": "// A default value of A",
+                                "name": "A_Default",
+                                "value": "0"
+                        },
+                        {
+                                "calc_value": 1,
+                                "name": "A_One",
+                                "value": "1 << 0"
+                        }
+                ]
+        },
+        "enum_comments": {
+                "A_": {
+                        "above": "// this is an example enum"
+                }
+        }
+}

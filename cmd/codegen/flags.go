@@ -1,39 +1,31 @@
 package main
 
-import "flag"
+import "github.com/cosiner/flag"
 
 type flags struct {
-	showGenerated    bool
-	showNotGenerated bool
+	ShowGenerated    bool `names:"-lg, --log-generated" usage:"Log about functions that was generated." default:"false"`
+	ShowNotGenerated bool `names:"-lng, --log-not-generated" usage:"Log about functions that was NOT generated." default:"false"`
+	Verbose          bool `names:"--verbose" usage:"Verbose output (dump literally everything it could dump)." default:"false`
 
-	defJsonPath,
-	enumsJsonpath,
-	typedefsJsonpath,
-	refEnumsJsonPath,
-	refTypedefsJsonPath,
-	presetJsonPath,
-	refPackageName, // name for refTypedefs (default: imgui)
-	packageName, // name for current package (e.g. imgui, implot)
-	prefix,
-	include string
+	DefJsonPath      string `names:"-d, --definitions" usage:"definitions.json file path"`
+	EnumsJsonpath    string `names:"-e, --enums" usage:"structs_and_enums.json file path"`
+	TypedefsJsonpath string `names:"-t, --typedefs" usage:"typedefs_dict.json file path"`
+
+	RefEnumsJsonPath    string `names:"-re, --ref-enums" usage:"structs_and_enums.json file path for reference package (see README.md)."`
+	RefTypedefsJsonPath string `names:"-rt, --ref-typedefs" usage:"typedefs_dict.json file path for reference package (see README.md)."`
+
+	PresetJsonPath string `names:"-p, --preset" usage:"Preset of custom (manual) generator rules. See go doc github.com/AllenDang/cimgui-go/cmd/codegen.Preset for more details. (in form of json file)"`
+
+	// name for refTypedefs (default: imgui)
+	RefPackageName string `names:"-rp, --ref-pkg" usage:"name for refTypedefs package name" default:"imgui"`
+	// name for current package (e.g. imgui, implot)
+	PackageName string `names:"-pkg, --package" usage:"name for current package"`
+	Include     string `names:"-i, --include" usage:"Include header file (source project's header)"`
 }
 
 func parse() *flags {
 	flags := &flags{}
-	flag.BoolVar(&flags.showGenerated, "generated", false, "Log about functions that was generated.")
-	flag.BoolVar(&flags.showNotGenerated, "not-generated", true, "Log about functions that was NOT generated.")
-
-	flag.StringVar(&flags.defJsonPath, "d", "", "definitions json file path")
-	flag.StringVar(&flags.enumsJsonpath, "e", "", "structs and enums json file path")
-	flag.StringVar(&flags.typedefsJsonpath, "t", "", "typedefs dict json file path")
-	flag.StringVar(&flags.refEnumsJsonPath, "r", "", "reference structs and enums json file path")
-	flag.StringVar(&flags.refTypedefsJsonPath, "rt", "", "reference typedefs_dict.json file path")
-	flag.StringVar(&flags.presetJsonPath, "preset", "", "Preset of custom (manual) generator rules. See go doc github.com/AllenDang/cimgui-go/cmd/codegen.Preset for more details.")
-	flag.StringVar(&flags.refPackageName, "refPkg", "imgui", "name for refTypedefs package name")
-	flag.StringVar(&flags.packageName, "pkg", "", "name for current package")
-	flag.StringVar(&flags.prefix, "p", "", "prefix for the generated file")
-	flag.StringVar(&flags.include, "i", "", "include header file")
-	flag.Parse()
+	flag.ParseStruct(flags)
 
 	return flags
 }

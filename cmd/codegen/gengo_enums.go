@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/kpango/glg"
 )
 
 // Generate enums and return enum type names
-func generateGoEnums(prefix string, enums []EnumDef, ctx *Context) ([]CIdentifier, error) {
+func generateGoEnums(enums []EnumDef, ctx *Context) ([]CIdentifier, error) {
 	var sb strings.Builder
 
 	sb.WriteString(getGoPackageHeader(ctx))
@@ -33,6 +35,10 @@ func generateGoEnums(prefix string, enums []EnumDef, ctx *Context) ([]CIdentifie
 		}
 
 		sb.WriteString(")\n\n")
+
+		if ctx.flags.ShowGenerated {
+			glg.Successf("Generated enum: %s", eName)
+		}
 	}
 
 	enumFile, err := os.Create("enums.go")

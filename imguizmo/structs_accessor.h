@@ -27,7 +27,7 @@ extern void wrap_Style_SetCenterCircleSize(Style *StylePtr, float v);
 extern float wrap_Style_GetCenterCircleSize(Style *self);
 extern void wrap_Style_SetColors(Style *StylePtr, ImVec4* v);
 extern ImVec4* wrap_Style_GetColors(Style *self);
-extern ImVec4 cimguizmo_ImVec4_GetAtIdx(ImVec4 *self, int index);
+extern ImVec4 imguizmo_ImVec4_GetAtIdx(ImVec4 *self, int index);
 
 #ifdef __cplusplus
 }

@@ -52,7 +52,7 @@ void wrap_MarkdownConfig_SetLinkIcon(MarkdownConfig *MarkdownConfigPtr, const ch
 const char* wrap_MarkdownConfig_GetLinkIcon(MarkdownConfig *self) { return self->linkIcon; }
 void wrap_MarkdownConfig_SetHeadingFormats(MarkdownConfig *MarkdownConfigPtr, MarkdownHeadingFormat* v) { memcpy(MarkdownConfigPtr->headingFormats, v, sizeof(MarkdownHeadingFormat)*3); }
 MarkdownHeadingFormat* wrap_MarkdownConfig_GetHeadingFormats(MarkdownConfig *self) { return self->headingFormats; }
-MarkdownHeadingFormat cimmarkdown_MarkdownHeadingFormat_GetAtIdx(MarkdownHeadingFormat *self, int index) { return self[index]; }
+MarkdownHeadingFormat immarkdown_MarkdownHeadingFormat_GetAtIdx(MarkdownHeadingFormat *self, int index) { return self[index]; }
 void wrap_MarkdownConfig_SetUserData(MarkdownConfig *MarkdownConfigPtr, uintptr_t v) { MarkdownConfigPtr->userData = (void*)v; }
 uintptr_t wrap_MarkdownConfig_GetUserData(MarkdownConfig *self) { return (uintptr_t)self->userData; }
 void wrap_MarkdownConfig_SetFormatCallback(MarkdownConfig *MarkdownConfigPtr, MarkdownFormalCallback* v) { MarkdownConfigPtr->formatCallback = v; }

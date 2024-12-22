@@ -1,0 +1,21 @@
+{
+    "FuncName": {
+        "ov_cimguiname": "Foo",
+        "original_func_name": "OrgFoo",
+        "args": "(A a)",
+        "argsT": [
+            {
+                "name": "a",
+                "type": "A",
+                "custom_type": ""
+            }
+        ],
+        "defaults": {
+            "a": "1"
+        },
+        "nonUDT": 0,
+        "comment": "function comment (optional)",
+        "location": 15
+    }
+}
+
