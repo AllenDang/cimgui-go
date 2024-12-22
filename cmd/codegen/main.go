@@ -257,7 +257,7 @@ func main() {
 	}
 
 	// 1.3.1. Generate Struct accessors in C
-	structAccessorFuncs, err := generateCppStructsAccessor(flags.prefix, validFuncs, context.structs, context)
+	structAccessorFuncs, err := generateCppStructsAccessor(validFuncs, context.structs, context)
 	if err != nil {
 		glg.Fatalf("Cannot generate CPP Struct Accessors: %v", err)
 	}
