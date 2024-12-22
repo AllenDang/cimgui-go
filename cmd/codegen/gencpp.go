@@ -22,7 +22,7 @@ func generateCppWrapper(includePath string, funcDefs []FuncDef, ctx *Context) ([
 	headerSb.WriteString(cppFileHeader)
 	headerSb.WriteString(fmt.Sprintf(`#pragma once
 
-#Include "%s"
+#include "%s"
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,8 +32,8 @@ extern "C" {
 
 	cppSb := &strings.Builder{}
 	cppSb.WriteString(cppFileHeader)
-	fmt.Fprintf(cppSb, `#Include "wrapper.h"
-#Include "%s"
+	fmt.Fprintf(cppSb, `#include "wrapper.h"
+#include "%s"
 
 `, includePath)
 
@@ -394,7 +394,7 @@ func generateCppStructsAccessor(validFuncs []FuncDef, structs []StructDef, conte
 
 	sbHeader.WriteString(`#pragma once
 
-#Include "wrapper.h"
+#include "wrapper.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -403,9 +403,9 @@ extern "C" {
 `)
 
 	sbCpp.WriteString(`
-#Include <string.h>
-#Include "wrapper.h"
-#Include "structs_accessor.h"
+#include <string.h>
+#include "wrapper.h"
+#include "structs_accessor.h"
 
 `)
 

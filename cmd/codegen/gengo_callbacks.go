@@ -455,10 +455,10 @@ func (g *callbacksGenerator) saveToDisk() error {
 	result := &strings.Builder{}
 	result.WriteString(getGoPackageHeader(g.ctx))
 	fmt.Fprintf(result,
-		`// #Include <stdlib.h>
-// #Include <memory.h>
-// #Include "wrapper.h"
-// #Include "typedefs.h"
+		`// #include <stdlib.h>
+// #include <memory.h>
+// #include "wrapper.h"
+// #include "typedefs.h"
 %s
 `, g.ctx.preset.MergeCGoPreamble())
 

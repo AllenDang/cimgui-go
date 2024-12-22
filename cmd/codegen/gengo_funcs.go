@@ -116,8 +116,8 @@ func (g *goFuncsGenerator) writeFuncsFileHeader() {
 	g.sb.WriteString(getGoPackageHeader(g.context))
 
 	fmt.Fprintf(g.sb,
-		`// #Include "structs_accessor.h"
-// #Include "wrapper.h"
+		`// #include "structs_accessor.h"
+// #include "wrapper.h"
 %s
 import "C"
 import "unsafe"

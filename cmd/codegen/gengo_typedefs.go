@@ -209,7 +209,7 @@ func (g *typedefsGenerator) writeHeaders() {
 		`
 #pragma once
 
-#Include "%s"
+#include "%s"
 
 #ifdef __cplusplus
 extern "C" {
@@ -218,16 +218,16 @@ extern "C" {
 	g.CppSb.WriteString(cppFileHeader)
 	fmt.Fprintf(g.CppSb,
 		`
-#Include "typedefs.h"
-#Include "%[1]s"
+#include "typedefs.h"
+#include "%[1]s"
 `, g.ctx.flags.Include)
 
 	g.GoSb.WriteString(getGoPackageHeader(g.ctx))
 	fmt.Fprintf(g.GoSb,
-		`// #Include <stdlib.h>
-// #Include <memory.h>
-// #Include "wrapper.h"
-// #Include "typedefs.h"
+		`// #include <stdlib.h>
+// #include <memory.h>
+// #include "wrapper.h"
+// #include "typedefs.h"
 %s
 import "C"
 import "unsafe"
