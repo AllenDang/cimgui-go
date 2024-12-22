@@ -24,7 +24,7 @@ define generate
 	mkdir -p $(2)
 	cat templates/cflags.go |sed -e "s/^package.*/package $(2)/g" > $(2)/cflags.go
 	cd $(2); \
-		../codegen -preset ../cmd/codegen/cimgui-go-preset.json -p $(1) -pkg $(2) -i ../$(3) -d ../$(4) -e ../$(5) -t ../$(6) $(7)
+		../codegen -preset ../cmd/codegen/cimgui-go-preset.json -pkg $(2) -i ../$(3) -d ../$(4) -e ../$(5) -t ../$(6) $(7)
 endef
 
 define imgui
