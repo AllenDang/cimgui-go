@@ -113,9 +113,6 @@ func loadData(f *flags) (*jsonData, error) {
 
 // this will store json data processed by appropiate pre-rocessors
 type Context struct {
-	// prefix for generated files (prefix_fileType.go)
-	prefix string
-
 	// plain idata loaded from json
 	funcs    []FuncDef
 	structs  []StructDef
@@ -223,7 +220,6 @@ func main() {
 		glg.Fatalf("cannot parse json: %v", err)
 	}
 
-	context.prefix = flags.prefix
 	context.flags = flags
 
 	// 1. Generate code
@@ -251,7 +247,7 @@ func main() {
 	context.typedefsNames = MergeMaps(context.typedefsNames, SliceToMap(validCallbacks))
 
 	// 1.3. Generate C wrapper
-	validFuncs, err := generateCppWrapper(flags.prefix, flags.include, context.funcs, context)
+	validFuncs, err := generateCppWrapper(flags.include, context.funcs, context)
 	if err != nil {
 		glg.Fatalf("Cannot generate CPP Wrapper: %v", err)
 	}

@@ -14,7 +14,7 @@ import (
 const textLenRegisteredName = "text_len"
 
 // Generate cpp wrapper and return valid functions
-func generateCppWrapper(prefix, includePath string, funcDefs []FuncDef, ctx *Context) ([]FuncDef, error) {
+func generateCppWrapper(includePath string, funcDefs []FuncDef, ctx *Context) ([]FuncDef, error) {
 	var validFuncs []FuncDef
 
 	// Generate header
@@ -583,7 +583,7 @@ func getPtrIfSize(size int) string {
 
 func AddArrayIndexGetter(t CIdentifier, sbHeader, sbCpp *strings.Builder, context *Context) {
 	tStr := ReplaceAll(ReplaceAll(t, " ", "_"), "*", "Ptr")
-	getterFuncName := CIdentifier(context.prefix) + "_" + tStr + "_GetAtIdx"
+	getterFuncName := CIdentifier(context.flags.packageName) + "_" + tStr + "_GetAtIdx"
 	context.arrayIndexGetters[t] = getterFuncName
 
 	fmt.Fprintf(

@@ -14,7 +14,6 @@ type flags struct {
 	presetJsonPath,
 	refPackageName, // name for refTypedefs (default: imgui)
 	packageName, // name for current package (e.g. imgui, implot)
-	prefix,
 	include string
 }
 
@@ -31,8 +30,7 @@ func parse() *flags {
 	flag.StringVar(&flags.presetJsonPath, "preset", "", "Preset of custom (manual) generator rules. See go doc github.com/AllenDang/cimgui-go/cmd/codegen.Preset for more details.")
 	flag.StringVar(&flags.refPackageName, "refPkg", "imgui", "name for refTypedefs package name")
 	flag.StringVar(&flags.packageName, "pkg", "", "name for current package")
-	flag.StringVar(&flags.prefix, "p", "", "prefix for the generated code (used for internal C functions)")
-	flag.StringVar(&flags.include, "i", "", "include header file")
+	flag.StringVar(&flags.include, "i", "", "include header file (source project's header)")
 	flag.Parse()
 
 	return flags
