@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 	"unicode"
 )
@@ -221,64 +222,25 @@ extern "C" {
 			invocationStmt := fmt.Sprintf("(%s)", Join(invocationArgs, ","))
 
 			for k, v := range f.Defaults {
-				if v == "ImVec2(0,0)" || v == "ImVec2(0.0f,0.0f)" {
-					v = "(ImVec2){.x=0, .y=0}"
+				// match anything of form ImVec2(0, 0) or ImVec2(0.0f, 0.0f)
+				re := regexp.MustCompile(`(\w*)\((.*)\)`)
+				// 3, because according to FindStringSubmatch doc, it returns [ImVec2(x, y), ImVec2, "x, y"]
+				// we also need to ensure aur match matches the whole string
+				// we also don't want sizeof
+				if m := re.FindStringSubmatch(v); len(m) == 3 && m[0] == v && m[1] != "sizeof" {
+					for k, v := range ctx.preset.DefaultArgReplace {
+						m[2] = ReplaceAll(m[2], k, v)
+					}
+
+					v = fmt.Sprintf("(%s){%s}", m[1], m[2])
 				}
 
-				if v == "ImVec2(1,1)" {
-					v = "(ImVec2){.x=1, .y=1}"
+				if r, ok := ctx.preset.DefaultArgReplace[CIdentifier(v)]; ok {
+					v = string(r)
 				}
 
-				if v == "ImVec2(1,0)" {
-					v = "(ImVec2){.x=1, .y=0}"
-				}
-
-				if v == "ImVec2(0,1)" {
-					v = "(ImVec2){.x=0, .y=1}"
-				}
-
-				if v == "ImVec2(-1,0)" {
-					v = "(ImVec2){.x=-1, .y=0}"
-				}
-
-				if v == "ImVec2(-FLT_MIN,0)" {
-					v = "(ImVec2){.x=-1*igGET_FLT_MIN(), .y=0}"
-				}
-
-				if v == "ImVec4(0,0,0,0)" {
-					v = "(ImVec4){.x=0, .y=0, .z=0, .w=0}"
-				}
-
-				if v == "ImVec4(1,1,1,1)" {
-					v = "(ImVec4){.x=1, .y=1, .z=1, .w=1}"
-				}
-
-				if v == "ImVec4(0,0,0,-1)" {
-					v = "(ImVec4){.x=0, .y=0, .z=0, .w=-1}"
-				}
-
-				if v == "ImPlotPoint(0,0)" {
-					v = "(ImPlotPoint){.x=0, .y=0}"
-				}
-
-				if v == "ImPlotPoint(1,1)" {
-					v = "(ImPlotPoint){.x=1, .y=1}"
-				}
-
-				if v == "FLT_MAX" {
-					v = "igGET_FLT_MAX()"
-				}
-
-				if v == "((void*)0)" {
-					v = "NULL"
-				}
-
-				if v == "nullptr" || v == "NULL" {
-					v = "0"
-				}
-
-				if k == "text_end" || k == "text_end_" {
-					v = "0"
+				if r, ok := ctx.preset.DefaultArgArbitraryValue[CIdentifier(k)]; ok {
+					v = string(r)
 				}
 
 				if strings.Contains(invocationStmt, ","+k) {
