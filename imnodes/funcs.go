@@ -279,7 +279,7 @@ func IsEditorHovered() bool {
 
 // IsLinkCreatedBoolPtrV parameter default value hint:
 // created_from_snap: NULL
-func IsLinkCreatedBoolPtrV(started_at_attribute_id *int32, ended_at_attribute_id *int32, created_from_snap *bool) bool {
+func IsLinkCreatedBoolPtrV(started_at_attribute_id, ended_at_attribute_id *int32, created_from_snap *bool) bool {
 	started_at_attribute_idArg, started_at_attribute_idFin := internal.WrapNumberPtr[C.int, int32](started_at_attribute_id)
 	ended_at_attribute_idArg, ended_at_attribute_idFin := internal.WrapNumberPtr[C.int, int32](ended_at_attribute_id)
 	created_from_snapArg, created_from_snapFin := internal.WrapNumberPtr[C.bool, bool](created_from_snap)
@@ -294,7 +294,7 @@ func IsLinkCreatedBoolPtrV(started_at_attribute_id *int32, ended_at_attribute_id
 
 // IsLinkCreatedIntPtrV parameter default value hint:
 // created_from_snap: NULL
-func IsLinkCreatedIntPtrV(started_at_node_id *int32, started_at_attribute_id *int32, ended_at_node_id *int32, ended_at_attribute_id *int32, created_from_snap *bool) bool {
+func IsLinkCreatedIntPtrV(started_at_node_id, started_at_attribute_id, ended_at_node_id, ended_at_attribute_id *int32, created_from_snap *bool) bool {
 	started_at_node_idArg, started_at_node_idFin := internal.WrapNumberPtr[C.int, int32](started_at_node_id)
 	started_at_attribute_idArg, started_at_attribute_idFin := internal.WrapNumberPtr[C.int, int32](started_at_attribute_id)
 	ended_at_node_idArg, ended_at_node_idFin := internal.WrapNumberPtr[C.int, int32](ended_at_node_id)
@@ -376,7 +376,7 @@ func IsPinHovered(attribute_id *int32) bool {
 	return C.imnodes_IsPinHovered(attribute_idArg) == C.bool(true)
 }
 
-func Link(id int32, start_attribute_id int32, end_attribute_id int32) {
+func Link(id, start_attribute_id, end_attribute_id int32) {
 	C.imnodes_Link(C.int(id), C.int(start_attribute_id), C.int(end_attribute_id))
 }
 
@@ -582,7 +582,7 @@ func IsAnyAttributeActive() bool {
 	return C.wrap_imnodes_IsAnyAttributeActive() == C.bool(true)
 }
 
-func IsLinkCreatedBoolPtr(started_at_attribute_id *int32, ended_at_attribute_id *int32) bool {
+func IsLinkCreatedBoolPtr(started_at_attribute_id, ended_at_attribute_id *int32) bool {
 	started_at_attribute_idArg, started_at_attribute_idFin := internal.WrapNumberPtr[C.int, int32](started_at_attribute_id)
 	ended_at_attribute_idArg, ended_at_attribute_idFin := internal.WrapNumberPtr[C.int, int32](ended_at_attribute_id)
 
@@ -593,7 +593,7 @@ func IsLinkCreatedBoolPtr(started_at_attribute_id *int32, ended_at_attribute_id 
 	return C.wrap_imnodes_IsLinkCreated_BoolPtr(started_at_attribute_idArg, ended_at_attribute_idArg) == C.bool(true)
 }
 
-func IsLinkCreatedIntPtr(started_at_node_id *int32, started_at_attribute_id *int32, ended_at_node_id *int32, ended_at_attribute_id *int32) bool {
+func IsLinkCreatedIntPtr(started_at_node_id, started_at_attribute_id, ended_at_node_id, ended_at_attribute_id *int32) bool {
 	started_at_node_idArg, started_at_node_idFin := internal.WrapNumberPtr[C.int, int32](started_at_node_id)
 	started_at_attribute_idArg, started_at_attribute_idFin := internal.WrapNumberPtr[C.int, int32](started_at_attribute_id)
 	ended_at_node_idArg, ended_at_node_idFin := internal.WrapNumberPtr[C.int, int32](ended_at_node_id)

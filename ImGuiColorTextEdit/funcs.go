@@ -77,7 +77,7 @@ func (self *TextEditor) Cut() {
 	selfFin()
 }
 
-func (self *TextEditor) CursorPosition(outLine *int32, outColumn *int32) {
+func (self *TextEditor) CursorPosition(outLine, outColumn *int32) {
 	selfArg, selfFin := self.Handle()
 	outLineArg, outLineFin := internal.WrapNumberPtr[C.int, int32](outLine)
 	outColumnArg, outColumnFin := internal.WrapNumberPtr[C.int, int32](outColumn)
@@ -312,7 +312,7 @@ func (self *TextEditor) SelectNextOccurrenceOfV(aText string, aTextSize int32, a
 	aTextFin()
 }
 
-func (self *TextEditor) SelectRegion(aStartLine int32, aStartChar int32, aEndLine int32, aEndChar int32) {
+func (self *TextEditor) SelectRegion(aStartLine, aStartChar, aEndLine, aEndChar int32) {
 	selfArg, selfFin := self.Handle()
 	C.TextEditor_SelectRegion(internal.ReinterpretCast[*C.TextEditor](selfArg), C.int(aStartLine), C.int(aStartChar), C.int(aEndLine), C.int(aEndChar))
 
@@ -326,7 +326,7 @@ func (self *TextEditor) SetAutoIndentEnabled(aValue bool) {
 	selfFin()
 }
 
-func (self *TextEditor) SetCursorPosition(aLine int32, aCharIndex int32) {
+func (self *TextEditor) SetCursorPosition(aLine, aCharIndex int32) {
 	selfArg, selfFin := self.Handle()
 	C.TextEditor_SetCursorPosition(internal.ReinterpretCast[*C.TextEditor](selfArg), C.int(aLine), C.int(aCharIndex))
 

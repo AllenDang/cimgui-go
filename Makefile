@@ -27,7 +27,6 @@ define generate
 	cd $(2); \
 		../codegen -preset ../cmd/codegen/cimgui-go-preset.json -p $(1) -pkg $(2) -i ../$(3) -d ../$(4) -e ../$(5) -t ../$(6) $(7)
 	go run mvdan.cc/gofumpt@latest -w $(2)/enums.go
-	go run mvdan.cc/gofumpt@latest -w $(2)/funcs.go
 	go run mvdan.cc/gofumpt@latest -w $(2)/typedefs.go
 	go run mvdan.cc/gofumpt@latest -w $(2)/callbacks.go
 	go run golang.org/x/tools/cmd/goimports@latest -w $(2)/funcs.go
