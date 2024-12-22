@@ -31,7 +31,7 @@ func parse() *flags {
 	flag.StringVar(&flags.presetJsonPath, "preset", "", "Preset of custom (manual) generator rules. See go doc github.com/AllenDang/cimgui-go/cmd/codegen.Preset for more details.")
 	flag.StringVar(&flags.refPackageName, "refPkg", "imgui", "name for refTypedefs package name")
 	flag.StringVar(&flags.packageName, "pkg", "", "name for current package")
-	flag.StringVar(&flags.prefix, "p", "", "prefix for the generated file")
+	flag.StringVar(&flags.prefix, "p", "", "prefix for the generated code (used for internal C functions)")
 	flag.StringVar(&flags.include, "i", "", "include header file")
 	flag.Parse()
 
