@@ -422,7 +422,7 @@ func (g *typedefsGenerator) saveToDisk() error {
 }
 #endif`)
 
-	if err := os.WriteFile("typedefs.go", []byte(g.GoSb.String()), 0644); err != nil {
+	if err := os.WriteFile("typedefs.go", []byte(FormatGo(g.GoSb.String(), g.ctx)), 0644); err != nil {
 		return fmt.Errorf("cannot write typedefs.go: %w", err)
 	}
 

@@ -470,7 +470,7 @@ import "unsafe"
 
 	fmt.Fprintf(result, g.goSb.String())
 
-	if err := os.WriteFile("callbacks.go", []byte(result.String()), 0644); err != nil {
+	if err := os.WriteFile("callbacks.go", []byte(FormatGo(result.String(), g.ctx)), 0644); err != nil {
 		return fmt.Errorf("cannot write typedefs.go: %w", err)
 	}
 

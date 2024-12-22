@@ -42,7 +42,7 @@ func generateGoEnums(prefix string, enums []EnumDef, ctx *Context) ([]CIdentifie
 
 	defer enumFile.Close()
 
-	_, _ = enumFile.WriteString(sb.String())
+	_, _ = enumFile.WriteString(FormatGo(sb.String(), ctx))
 
 	return enumNames, nil
 }

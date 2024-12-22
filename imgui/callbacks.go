@@ -1096,8 +1096,8 @@ func ClearMemAllocFuncPool() {
 }
 
 type (
-	MemFreeFunc  func(ptr unsafe.Pointer, user_data unsafe.Pointer)
-	cMemFreeFunc func(ptr unsafe.Pointer, user_data unsafe.Pointer)
+	MemFreeFunc  func(ptr, user_data unsafe.Pointer)
+	cMemFreeFunc func(ptr, user_data unsafe.Pointer)
 )
 
 func NewMemFreeFuncFromC(cvalue *C.ImGuiMemFreeFunc) *MemFreeFunc {
@@ -1109,167 +1109,167 @@ func (c MemFreeFunc) C() (C.ImGuiMemFreeFunc, func()) {
 	return poolMemFreeFunc.Allocate(c), func() {}
 }
 
-func wrapMemFreeFunc(cb MemFreeFunc, ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func wrapMemFreeFunc(cb MemFreeFunc, ptr, user_data unsafe.Pointer) {
 	cb(unsafe.Pointer(ptr), unsafe.Pointer(user_data))
 }
 
 //export callbackMemFreeFunc0
-func callbackMemFreeFunc0(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc0(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(0), ptr, user_data)
 }
 
 //export callbackMemFreeFunc1
-func callbackMemFreeFunc1(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc1(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(1), ptr, user_data)
 }
 
 //export callbackMemFreeFunc2
-func callbackMemFreeFunc2(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc2(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(2), ptr, user_data)
 }
 
 //export callbackMemFreeFunc3
-func callbackMemFreeFunc3(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc3(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(3), ptr, user_data)
 }
 
 //export callbackMemFreeFunc4
-func callbackMemFreeFunc4(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc4(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(4), ptr, user_data)
 }
 
 //export callbackMemFreeFunc5
-func callbackMemFreeFunc5(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc5(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(5), ptr, user_data)
 }
 
 //export callbackMemFreeFunc6
-func callbackMemFreeFunc6(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc6(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(6), ptr, user_data)
 }
 
 //export callbackMemFreeFunc7
-func callbackMemFreeFunc7(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc7(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(7), ptr, user_data)
 }
 
 //export callbackMemFreeFunc8
-func callbackMemFreeFunc8(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc8(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(8), ptr, user_data)
 }
 
 //export callbackMemFreeFunc9
-func callbackMemFreeFunc9(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc9(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(9), ptr, user_data)
 }
 
 //export callbackMemFreeFunc10
-func callbackMemFreeFunc10(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc10(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(10), ptr, user_data)
 }
 
 //export callbackMemFreeFunc11
-func callbackMemFreeFunc11(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc11(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(11), ptr, user_data)
 }
 
 //export callbackMemFreeFunc12
-func callbackMemFreeFunc12(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc12(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(12), ptr, user_data)
 }
 
 //export callbackMemFreeFunc13
-func callbackMemFreeFunc13(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc13(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(13), ptr, user_data)
 }
 
 //export callbackMemFreeFunc14
-func callbackMemFreeFunc14(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc14(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(14), ptr, user_data)
 }
 
 //export callbackMemFreeFunc15
-func callbackMemFreeFunc15(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc15(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(15), ptr, user_data)
 }
 
 //export callbackMemFreeFunc16
-func callbackMemFreeFunc16(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc16(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(16), ptr, user_data)
 }
 
 //export callbackMemFreeFunc17
-func callbackMemFreeFunc17(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc17(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(17), ptr, user_data)
 }
 
 //export callbackMemFreeFunc18
-func callbackMemFreeFunc18(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc18(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(18), ptr, user_data)
 }
 
 //export callbackMemFreeFunc19
-func callbackMemFreeFunc19(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc19(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(19), ptr, user_data)
 }
 
 //export callbackMemFreeFunc20
-func callbackMemFreeFunc20(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc20(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(20), ptr, user_data)
 }
 
 //export callbackMemFreeFunc21
-func callbackMemFreeFunc21(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc21(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(21), ptr, user_data)
 }
 
 //export callbackMemFreeFunc22
-func callbackMemFreeFunc22(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc22(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(22), ptr, user_data)
 }
 
 //export callbackMemFreeFunc23
-func callbackMemFreeFunc23(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc23(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(23), ptr, user_data)
 }
 
 //export callbackMemFreeFunc24
-func callbackMemFreeFunc24(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc24(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(24), ptr, user_data)
 }
 
 //export callbackMemFreeFunc25
-func callbackMemFreeFunc25(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc25(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(25), ptr, user_data)
 }
 
 //export callbackMemFreeFunc26
-func callbackMemFreeFunc26(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc26(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(26), ptr, user_data)
 }
 
 //export callbackMemFreeFunc27
-func callbackMemFreeFunc27(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc27(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(27), ptr, user_data)
 }
 
 //export callbackMemFreeFunc28
-func callbackMemFreeFunc28(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc28(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(28), ptr, user_data)
 }
 
 //export callbackMemFreeFunc29
-func callbackMemFreeFunc29(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc29(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(29), ptr, user_data)
 }
 
 //export callbackMemFreeFunc30
-func callbackMemFreeFunc30(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc30(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(30), ptr, user_data)
 }
 
 //export callbackMemFreeFunc31
-func callbackMemFreeFunc31(ptr unsafe.Pointer, user_data unsafe.Pointer) {
+func callbackMemFreeFunc31(ptr, user_data unsafe.Pointer) {
 	wrapMemFreeFunc(poolMemFreeFunc.Get(31), ptr, user_data)
 }
 

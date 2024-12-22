@@ -91,7 +91,7 @@ func GenerateGoFuncs(
 
 	defer goFile.Close()
 
-	_, err = goFile.WriteString(generator.sb.String())
+	_, err = goFile.WriteString(FormatGo(generator.sb.String(), context))
 	if err != nil {
 		return fmt.Errorf("failed to write content of GO file: %w", err)
 	}
