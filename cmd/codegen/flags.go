@@ -19,7 +19,7 @@ type flags struct {
 	RefPackageName string `names:"-rp, --ref-pkg" usage:"name for refTypedefs package name" default:"imgui"`
 	// name for current package (e.g. imgui, implot)
 	PackageName string `names:"-pkg, --package" usage:"name for current package"`
-	Include     string `names:"-i, --Include" usage:"Include header file (source project's header)"`
+	Include     string `names:"-i, --include" usage:"Include header file (source project's header)"`
 }
 
 func parse() *flags {
