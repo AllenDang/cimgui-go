@@ -22,7 +22,7 @@ func generateCppWrapper(includePath string, funcDefs []FuncDef, ctx *Context) ([
 	headerSb.WriteString(cppFileHeader)
 	headerSb.WriteString(fmt.Sprintf(`#pragma once
 
-#include "%s"
+#Include "%s"
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,8 +32,8 @@ extern "C" {
 
 	cppSb := &strings.Builder{}
 	cppSb.WriteString(cppFileHeader)
-	fmt.Fprintf(cppSb, `#include "wrapper.h"
-#include "%s"
+	fmt.Fprintf(cppSb, `#Include "wrapper.h"
+#Include "%s"
 
 `, includePath)
 
@@ -394,7 +394,7 @@ func generateCppStructsAccessor(validFuncs []FuncDef, structs []StructDef, conte
 
 	sbHeader.WriteString(`#pragma once
 
-#include "wrapper.h"
+#Include "wrapper.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -403,9 +403,9 @@ extern "C" {
 `)
 
 	sbCpp.WriteString(`
-#include <string.h>
-#include "wrapper.h"
-#include "structs_accessor.h"
+#Include <string.h>
+#Include "wrapper.h"
+#Include "structs_accessor.h"
 
 `)
 
@@ -583,7 +583,7 @@ func getPtrIfSize(size int) string {
 
 func AddArrayIndexGetter(t CIdentifier, sbHeader, sbCpp *strings.Builder, context *Context) {
 	tStr := ReplaceAll(ReplaceAll(t, " ", "_"), "*", "Ptr")
-	getterFuncName := CIdentifier(context.flags.packageName) + "_" + tStr + "_GetAtIdx"
+	getterFuncName := CIdentifier(context.flags.PackageName) + "_" + tStr + "_GetAtIdx"
 	context.arrayIndexGetters[t] = getterFuncName
 
 	fmt.Fprintf(

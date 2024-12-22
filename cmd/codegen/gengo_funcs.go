@@ -62,12 +62,12 @@ func GenerateGoFuncs(
 
 		// stop, when the function should not be generated
 		if !generator.shouldGenerate {
-			if context.flags.showNotGenerated {
+			if context.flags.ShowNotGenerated {
 				glg.Errorf("not generated: %s%s", f.FuncName, f.Args)
 			}
 			continue
 		} else {
-			if context.flags.showGenerated {
+			if context.flags.ShowGenerated {
 				glg.Successf("generated: %s%s", f.FuncName, f.Args)
 			}
 		}
@@ -116,8 +116,8 @@ func (g *goFuncsGenerator) writeFuncsFileHeader() {
 	g.sb.WriteString(getGoPackageHeader(g.context))
 
 	fmt.Fprintf(g.sb,
-		`// #include "structs_accessor.h"
-// #include "wrapper.h"
+		`// #Include "structs_accessor.h"
+// #Include "wrapper.h"
 %s
 import "C"
 import "unsafe"

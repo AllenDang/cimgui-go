@@ -48,7 +48,7 @@ func GenerateTypedefs(
 	for _, k := range keys {
 		typedef := typedefs.data[k]
 		if shouldSkip, ok := ctx.preset.SkipTypedefs[k]; ok && shouldSkip {
-			if ctx.flags.showNotGenerated {
+			if ctx.flags.ShowNotGenerated {
 				glg.Infof("Arbitrarly skipping typedef %s", k)
 			}
 
@@ -57,7 +57,7 @@ func GenerateTypedefs(
 		}
 
 		if _, exists := ctx.refTypedefs[k]; exists {
-			if ctx.flags.showNotGenerated {
+			if ctx.flags.ShowNotGenerated {
 				glg.Infof("Duplicate of %s in reference typedefs. Skipping.", k)
 			}
 
@@ -66,7 +66,7 @@ func GenerateTypedefs(
 		}
 
 		if shouldSkipStruct := ctx.preset.SkipStructs[k]; shouldSkipStruct {
-			if ctx.flags.showNotGenerated {
+			if ctx.flags.ShowNotGenerated {
 				glg.Infof("Arbitrarly skipping struct %s", k)
 			}
 
@@ -77,7 +77,7 @@ func GenerateTypedefs(
 		_, isEnum := ctx.enumNames[k]
 		_, isRefEnum := ctx.refEnumNames[k]
 		if isEnum || isRefEnum {
-			if ctx.flags.showGenerated {
+			if ctx.flags.ShowGenerated {
 				glg.Infof("typedef %s has extended deffinition in structs_and_enums.json. Will generate later", k)
 			}
 
@@ -86,7 +86,7 @@ func GenerateTypedefs(
 		}
 
 		if IsTemplateTypedef(typedef) {
-			if ctx.flags.showNotGenerated {
+			if ctx.flags.ShowNotGenerated {
 				glg.Warnf("typedef %s is a template. not implemented yet", k)
 			}
 
@@ -99,7 +99,7 @@ func GenerateTypedefs(
 
 		switch {
 		case typedefs.data[k] == "void*":
-			if ctx.flags.showGenerated {
+			if ctx.flags.ShowGenerated {
 				glg.Successf("typedef %s is an alias to void*.", k)
 			}
 
@@ -111,7 +111,7 @@ func GenerateTypedefs(
 			known.ptrReturnTypeErr == nil &&
 			known.argTypeErr == nil &&
 			known.ptrArgTypeErr == nil:
-			if ctx.flags.showGenerated {
+			if ctx.flags.ShowGenerated {
 				glg.Successf("typedef %s is an alias typedef.", k)
 			}
 
@@ -132,7 +132,7 @@ func GenerateTypedefs(
 			callbacks = append(callbacks, k)
 		case HasPrefix(typedefs.data[k], "struct"):
 			isOpaque := !IsStructName(k, ctx)
-			if ctx.flags.showGenerated {
+			if ctx.flags.ShowGenerated {
 				glg.Successf("typedef %s is a struct (is opaque? %v).", k, isOpaque)
 			}
 
@@ -140,7 +140,7 @@ func GenerateTypedefs(
 			generatedTypedefs++
 			validTypeNames = append(validTypeNames, k)
 		default:
-			if ctx.flags.showNotGenerated {
+			if ctx.flags.ShowNotGenerated {
 				glg.Errorf("unknown situation happened for type %s; not implemented. Probably unknown Arg (err: %v), Ret (err; %v) PtrArg (err: %v) or PtrRet (err: %v) type wrappers for isPointer: %v for %s. Check out source code for more details",
 					k, known.argTypeErr, known.returnTypeErr, known.ptrArgTypeErr, known.ptrReturnTypeErr, isPtr, typedefs.data[k])
 			}
@@ -209,25 +209,25 @@ func (g *typedefsGenerator) writeHeaders() {
 		`
 #pragma once
 
-#include "%s"
+#Include "%s"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-`, g.ctx.flags.include)
+`, g.ctx.flags.Include)
 	g.CppSb.WriteString(cppFileHeader)
 	fmt.Fprintf(g.CppSb,
 		`
-#include "typedefs.h"
-#include "%[1]s"
-`, g.ctx.flags.include)
+#Include "typedefs.h"
+#Include "%[1]s"
+`, g.ctx.flags.Include)
 
 	g.GoSb.WriteString(getGoPackageHeader(g.ctx))
 	fmt.Fprintf(g.GoSb,
-		`// #include <stdlib.h>
-// #include <memory.h>
-// #include "wrapper.h"
-// #include "typedefs.h"
+		`// #Include <stdlib.h>
+// #Include <memory.h>
+// #Include "wrapper.h"
+// #Include "typedefs.h"
 %s
 import "C"
 import "unsafe"

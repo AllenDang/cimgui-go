@@ -44,7 +44,7 @@ func GenerateCallbacks(callbacks []CIdentifier, context *Context) (validTypes []
 	for _, typedefName := range callbacks {
 		if err := result.writeCallback(typedefName, result.ctx.typedefs.data[typedefName]); err != nil {
 			if errors.Is(err, callbackNotGeneratedError) {
-				if context.flags.showNotGenerated {
+				if context.flags.ShowNotGenerated {
 					glg.Warnf("Callback \"%s\" was not generated: %v", typedefName, err)
 				}
 
@@ -180,7 +180,7 @@ func (g *callbacksGenerator) writeCallback(typedefName CIdentifier, def string) 
 			})
 		}
 	} else {
-		if g.ctx.flags.showNotGenerated {
+		if g.ctx.flags.ShowNotGenerated {
 			return fmt.Errorf("cannot parse callback typedef: %w", callbackNotGeneratedError)
 		}
 	}
@@ -455,10 +455,10 @@ func (g *callbacksGenerator) saveToDisk() error {
 	result := &strings.Builder{}
 	result.WriteString(getGoPackageHeader(g.ctx))
 	fmt.Fprintf(result,
-		`// #include <stdlib.h>
-// #include <memory.h>
-// #include "wrapper.h"
-// #include "typedefs.h"
+		`// #Include <stdlib.h>
+// #Include <memory.h>
+// #Include "wrapper.h"
+// #Include "typedefs.h"
 %s
 `, g.ctx.preset.MergeCGoPreamble())
 

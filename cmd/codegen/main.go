@@ -39,19 +39,19 @@ func getEnumAndStructNames(enumJsonBytes []byte, context *Context) (enumNames []
 }
 
 func validateFiles(f *flags) {
-	stat, err := os.Stat(f.defJsonPath)
+	stat, err := os.Stat(f.DefJsonPath)
 	if err != nil || stat.IsDir() {
 		glg.Fatal("Invalid definitions json file path")
 	}
 
-	stat, err = os.Stat(f.enumsJsonpath)
+	stat, err = os.Stat(f.EnumsJsonpath)
 	if err != nil || stat.IsDir() {
 		glg.Fatal("Invalid enum json file path")
 	}
 
-	stat, err = os.Stat(f.typedefsJsonpath)
+	stat, err = os.Stat(f.TypedefsJsonpath)
 	if err != nil || stat.IsDir() {
-		glg.Fatalf("Invalid typedefs json file path: %s", f.typedefsJsonpath)
+		glg.Fatalf("Invalid typedefs json file path: %s", f.TypedefsJsonpath)
 	}
 }
 
@@ -72,37 +72,37 @@ func loadData(f *flags) (*jsonData, error) {
 
 	result := &jsonData{}
 
-	result.defs, err = os.ReadFile(f.defJsonPath)
+	result.defs, err = os.ReadFile(f.DefJsonPath)
 	if err != nil {
 		return nil, fmt.Errorf("cannot read definitions json file: %w", err)
 	}
 
-	result.typedefs, err = os.ReadFile(f.typedefsJsonpath)
+	result.typedefs, err = os.ReadFile(f.TypedefsJsonpath)
 	if err != nil {
 		return nil, fmt.Errorf("cannot read typedefs json file: %w", err)
 	}
 
-	result.structAndEnums, err = os.ReadFile(f.enumsJsonpath)
+	result.structAndEnums, err = os.ReadFile(f.EnumsJsonpath)
 	if err != nil {
 		glg.Fatalf("cannot read struct and enums json file: %v", err)
 	}
 
-	if len(f.refEnumsJsonPath) > 0 {
-		result.refStructAndEnums, err = os.ReadFile(f.refEnumsJsonPath)
+	if len(f.RefEnumsJsonPath) > 0 {
+		result.refStructAndEnums, err = os.ReadFile(f.RefEnumsJsonPath)
 		if err != nil {
 			return nil, fmt.Errorf("cannot read reference struct and enums json file: %w", err)
 		}
 	}
 
-	if len(f.refTypedefsJsonPath) > 0 {
-		result.refTypedefs, err = os.ReadFile(f.refTypedefsJsonPath)
+	if len(f.RefTypedefsJsonPath) > 0 {
+		result.refTypedefs, err = os.ReadFile(f.RefTypedefsJsonPath)
 		if err != nil {
 			return nil, fmt.Errorf("cannot read reference typedefs json file: %w", err)
 		}
 	}
 
-	if len(f.presetJsonPath) > 0 {
-		result.preset, err = os.ReadFile(f.presetJsonPath)
+	if len(f.PresetJsonPath) > 0 {
+		result.preset, err = os.ReadFile(f.PresetJsonPath)
 		if err != nil {
 			glg.Fatalf("cannot read preset json file: %v", err)
 		}
@@ -247,7 +247,7 @@ func main() {
 	context.typedefsNames = MergeMaps(context.typedefsNames, SliceToMap(validCallbacks))
 
 	// 1.3. Generate C wrapper
-	validFuncs, err := generateCppWrapper(flags.include, context.funcs, context)
+	validFuncs, err := generateCppWrapper(flags.Include, context.funcs, context)
 	if err != nil {
 		glg.Fatalf("Cannot generate CPP Wrapper: %v", err)
 	}
@@ -277,14 +277,14 @@ import (
 )
 `,
 		generatorInfo,
-		ctx.flags.packageName,
-		ctx.flags.refPackageName,
+		ctx.flags.PackageName,
+		ctx.flags.RefPackageName,
 		ctx.preset.PackagePath,
 	)
 }
 
 func prefixGoPackage(t, sourcePackage GoIdentifier, ctx *Context) GoIdentifier {
-	if sourcePackage == GoIdentifier(ctx.flags.packageName) || sourcePackage == "" {
+	if sourcePackage == GoIdentifier(ctx.flags.PackageName) || sourcePackage == "" {
 		return t
 	}
 
