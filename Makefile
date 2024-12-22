@@ -25,10 +25,6 @@ define generate
 	cat templates/cflags.go |sed -e "s/^package.*/package $(2)/g" > $(2)/cflags.go
 	cd $(2); \
 		../codegen -preset ../cmd/codegen/cimgui-go-preset.json -p $(1) -pkg $(2) -i ../$(3) -d ../$(4) -e ../$(5) -t ../$(6) $(7)
-	go run golang.org/x/tools/cmd/goimports@latest -w $(2)/funcs.go
-	go run golang.org/x/tools/cmd/goimports@latest -w $(2)/enums.go
-	go run golang.org/x/tools/cmd/goimports@latest -w $(2)/typedefs.go
-	go run golang.org/x/tools/cmd/goimports@latest -w $(2)/callbacks.go
 endef
 
 define imgui

@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/kpango/glg"
+	"golang.org/x/tools/imports"
 	"mvdan.cc/gofumpt/format"
 )
 
@@ -16,6 +17,15 @@ func FormatGo(s string, ctx *Context) string {
 	if err != nil {
 		glg.Fatalf("Unable to format go code: %v", err)
 	}
+
+	sBytes, err = imports.Process("", sBytes, &imports.Options{
+		Fragment:   false,
+		AllErrors:  true,
+		Comments:   true,
+		TabIndent:  true,
+		TabWidth:   8,
+		FormatOnly: false,
+	})
 
 	return string(sBytes)
 }
