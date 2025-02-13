@@ -1,8 +1,6 @@
 module github.com/AllenDang/cimgui-go
 
-go 1.22.0
-
-toolchain go1.23.1
+go 1.24.0
 
 require github.com/hajimehoshi/ebiten/v2 v2.8.6
 
