@@ -49,6 +49,8 @@
                 "ImU64":                  true,
                 "ImGuiInputTextCallback": true
         },
+        "SkipFiles": [
+        ],
         "TypedefsPoolSize": 32,
         "TypedefsCustomPoolSizes": {
         },
