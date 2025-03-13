@@ -94,7 +94,7 @@ target_include_directories(cimgui PUBLIC ${SDL2_INCLUDE_DIR})
 set_target_properties(cimgui PROPERTIES PREFIX "")
 target_link_libraries(cimgui ${IMGUI_LIBRARIES})
 # this is for regex used by ImGuiColorTextEdit
-target_include_directories(cimgui PRIVATE ../cwrappers/ImGuiColorTextEdit/vendor/regex/include)
+target_include_directories(cimgui PRIVATE ../cwrappers/ImGuiColorTextEdit/vendor1/regex/include)
 
 #install
 install(TARGETS cimgui
