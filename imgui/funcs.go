@@ -1587,10 +1587,6 @@ func (self *ErrorRecoveryState) InternalDestroy() {
 	selfFin()
 }
 
-func FreeTypeGetBuilderForFreeType() *FontBuilderIO {
-	return NewFontBuilderIOFromC(C.ImGuiFreeType_GetBuilderForFreeType())
-}
-
 func InternalNewIDStackTool() *IDStackTool {
 	return NewIDStackToolFromC(C.ImGuiIDStackTool_ImGuiIDStackTool())
 }
@@ -6493,7 +6489,7 @@ func InternalPlatformIOContextPtr(ctx *Context) *PlatformIO {
 }
 
 // access the ImGuiPlatformIO structure (mostly hooks/functions to connect to platform/renderer and OS Clipboard, IME etc.)
-func PlatformIO() *PlatformIO {
+func CurrentPlatformIO() *PlatformIO {
 	return NewPlatformIOFromC(C.igGetPlatformIO_Nil())
 }
 
