@@ -655,7 +655,7 @@ namespace ImGui
                             useLinkCallback = imageData.useLinkCallback;
                             if( imageData.isValid )
                             {
-                                ImGui::Image( imageData.user_texture_id, imageData.size, imageData.uv0, imageData.uv1, imageData.tint_col, imageData.border_col );
+                                ImGui::ImageWithBg( imageData.user_texture_id, imageData.size, imageData.uv0, imageData.uv1, imageData.border_col, imageData.tint_col);
                                 drawnImage = true;
                             }
                         }
