@@ -119,6 +119,7 @@ endef
 update: setup
 	rm -rf cwrappers/*
 	$(call update,cimgui,https://github.com/cimgui/cimgui,imgui,docking, --cflags "glfw opengl3 opengl2 sdl2 -DIMGUI_USE_WCHAR32")
+	$(call vendor-elimitate)
 	cat templates/assert.h >> cwrappers/imgui/imconfig.h
 	$(call cimgui)
 	$(call update,cimplot,https://github.com/cimgui/cimplot,implot,master)
@@ -141,6 +142,12 @@ define dummy
 		echo -e "\t_ \"github.com/AllenDang/cimgui-go/$$i\"" >> dummy.go; \
 		done
 	echo ")" >> dummy.go
+endef
+
+define vendor-eliminate
+	for i in `find . -name vendor -type d`; do \
+		mv $$i $$i1; \
+		done
 endef
 
 .PHONY: dummy
