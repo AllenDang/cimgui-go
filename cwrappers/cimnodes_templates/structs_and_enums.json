@@ -347,6 +347,13 @@
     "LinkDetachWithModifierClick": "imnodes:124",
     "MultipleSelectModifier": "imnodes:140"
   },
+  "nonPOD": {
+    "EmulateThreeButtonMouse": true,
+    "ImNodesIO": true,
+    "ImNodesStyle": true,
+    "LinkDetachWithModifierClick": true,
+    "MultipleSelectModifier": true
+  },
   "structs": {
     "EmulateThreeButtonMouse": [
       {

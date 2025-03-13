@@ -99,10 +99,13 @@
   },
   "enumtypes": [],
   "locations": {
-    "LanguageDefinitionId": "TextEditor:28",
-    "PaletteId": "TextEditor:24",
-    "SetViewAtLineMode": "TextEditor:32",
-    "TextEditor": "TextEditor:16"
+    "LanguageDefinitionId": "TextEditor:27",
+    "PaletteId": "TextEditor:23",
+    "SetViewAtLineMode": "TextEditor:31",
+    "TextEditor": "TextEditor:15"
+  },
+  "nonPOD": {
+    "TextEditor": true
   },
   "structs": {
     "TextEditor": []

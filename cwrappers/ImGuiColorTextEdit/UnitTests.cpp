@@ -186,4 +186,18 @@ void TextEditor::UnitTests()
 		assert(FindNextOccurrence("zxcv", 4, { 3, 10 }, outStart, outEnd) && outStart == Coordinates(3, 1) && outEnd == Coordinates(3, 5)); // from behind in same line
 		assert(!FindNextOccurrence("lalal", 4, { 3, 5 }, outStart, outEnd)); // not found
 	}
+
+	SetText("\t\t\nasd\t\n");
+	// --- SanitizeCoordinates --- //
+	{
+		mTabSize = 4;
+		assert(SanitizeCoordinates(Coordinates(1, 200)) == Coordinates(1, 4));
+		assert(SanitizeCoordinates(Coordinates(1, 3)) == Coordinates(1, 3));
+		assert(SanitizeCoordinates(Coordinates(0, 0)) == Coordinates(0, 0));
+		assert(SanitizeCoordinates(Coordinates(0, 1)) == Coordinates(0, 0));
+		assert(SanitizeCoordinates(Coordinates(0, 2)) == Coordinates(0, 0));
+		assert(SanitizeCoordinates(Coordinates(0, 3)) == Coordinates(0, 4));
+		assert(SanitizeCoordinates(Coordinates(0, 4)) == Coordinates(0, 4));
+		assert(SanitizeCoordinates(Coordinates(0, 5)) == Coordinates(0, 4));
+	}
 }

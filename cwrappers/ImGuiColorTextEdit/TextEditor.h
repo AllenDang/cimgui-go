@@ -10,7 +10,6 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <map>
-#include <boost/regex.hpp>
 #include "imgui.h"
 
 class IMGUI_API TextEditor
@@ -45,7 +44,6 @@ public:
 	inline void SetShortTabsEnabled(bool aValue) { mShortTabs = aValue; }
 	inline bool IsShortTabsEnabled() const { return mShortTabs; }
 	inline int GetLineCount() const { return mLines.size(); }
-	inline bool IsOverwriteEnabled() const { return mOverwrite; }
 	void SetPalette(PaletteId aValue);
 	PaletteId GetPalette() const { return mPaletteId; }
 	void SetLanguageDefinition(LanguageDefinitionId aValue);
@@ -71,7 +69,7 @@ public:
 	void SetCursorPosition(int aLine, int aCharIndex);
 	inline void GetCursorPosition(int& outLine, int& outColumn) const
 	{
-		auto coords = GetActualCursorCoordinates();
+		auto coords = GetSanitizedCursorCoordinates();
 		outLine = coords.mLine;
 		outColumn = coords.mColumn;
 	}
@@ -304,7 +302,6 @@ private:
 		UndoOperationType mType;
 	};
 
-	typedef std::vector<std::pair<boost::regex, PaletteIndex>> RegexList;
 
 	class UndoRecord
 	{
@@ -369,8 +366,8 @@ private:
 	void EnsureCursorVisible(int aCursor = -1, bool aStartToo = false);
 
 	Coordinates SanitizeCoordinates(const Coordinates& aValue) const;
-	Coordinates GetActualCursorCoordinates(int aCursor = -1, bool aStart = false) const;
-	Coordinates ScreenPosToCoordinates(const ImVec2& aPosition, bool aInsertionMode = false, bool* isOverLineNumber = nullptr) const;
+	Coordinates GetSanitizedCursorCoordinates(int aCursor = -1, bool aStart = false) const;
+	Coordinates ScreenPosToCoordinates(const ImVec2& aPosition, bool* isOverLineNumber = nullptr) const;
 	Coordinates FindWordStart(const Coordinates& aFrom) const;
 	Coordinates FindWordEnd(const Coordinates& aFrom) const;
 	int GetCharacterIndexL(const Coordinates& aCoordinates) const;
@@ -412,7 +409,6 @@ private:
 
 	int mTabSize = 4;
 	float mLineSpacing = 1.0f;
-	bool mOverwrite = false;
 	bool mReadOnly = false;
 	bool mAutoIndent = true;
 	bool mShowWhitespaces = true;
@@ -456,7 +452,6 @@ private:
 	Palette mPalette;
 	LanguageDefinitionId mLanguageDefinitionId;
 	const LanguageDefinition* mLanguageDefinition = nullptr;
-	RegexList mRegexList;
 
 	inline bool IsHorizontalScrollbarVisible() const { return mCurrentSpaceWidth > mContentWidth; }
 	inline bool IsVerticalScrollbarVisible() const { return mCurrentSpaceHeight > mContentHeight; }
@@ -469,4 +464,8 @@ private:
 	static const std::unordered_map<char, char> OPEN_TO_CLOSE_CHAR;
 	static const std::unordered_map<char, char> CLOSE_TO_OPEN_CHAR;
 	static PaletteId defaultPalette;
+
+private:
+    struct RegexList;
+    std::shared_ptr<RegexList> mRegexList;
 };

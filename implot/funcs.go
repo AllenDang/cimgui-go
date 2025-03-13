@@ -1151,17 +1151,6 @@ func (self *Ticker) AddTickPlotTick(tick Tick) *Tick {
 	return NewTickFromC(C.ImPlotTicker_AddTick_PlotTick(internal.ReinterpretCast[*C.ImPlotTicker](selfArg), internal.ReinterpretCast[C.ImPlotTick](tickArg)))
 }
 
-func (self *Ticker) AddTickdoublePlotFormatter(value float64, major bool, level int32, show_label bool, formatter Formatter, data uintptr) *Tick {
-	selfArg, selfFin := self.Handle()
-	formatterArg, formatterFin := formatter.C()
-
-	defer func() {
-		selfFin()
-		formatterFin()
-	}()
-	return NewTickFromC(C.wrap_ImPlotTicker_AddTick_doublePlotFormatter(internal.ReinterpretCast[*C.ImPlotTicker](selfArg), C.double(value), C.bool(major), C.int(level), C.bool(show_label), internal.ReinterpretCast[C.ImPlotFormatter](formatterArg), C.uintptr_t(data)))
-}
-
 func (self *Ticker) AddTickdoubleStr(value float64, major bool, level int32, show_label bool, label string) *Tick {
 	selfArg, selfFin := self.Handle()
 	labelArg, labelFin := internal.WrapString[C.char](label)
@@ -2070,6 +2059,10 @@ func GetLocationPosV(outer_rect imgui.Rect, inner_size imgui.Vec2, location Loca
 
 func GetMarkerName(idx Marker) string {
 	return C.GoString(C.ImPlot_GetMarkerName(C.ImPlotMarker(idx)))
+}
+
+func GetMonth(t PlotTime) int32 {
+	return int32(C.ImPlot_GetMonth(internal.ReinterpretCast[C.ImPlotTime](t.ToC())))
 }
 
 func GetPlot(title string) *Plot {
@@ -3012,50 +3005,6 @@ func LabelAxisValueV(axis Axis, value float64, buff string, size int32, round bo
 	buffFin()
 }
 
-func LocatorDefault(ticker *Ticker, rangeArg Range, pixels float32, vertical bool, formatter Formatter, formatter_data uintptr) {
-	tickerArg, tickerFin := ticker.Handle()
-	rangeArgArg, rangeArgFin := rangeArg.C()
-	formatterArg, formatterFin := formatter.C()
-	C.wrap_ImPlot_Locator_Default(internal.ReinterpretCast[*C.ImPlotTicker](tickerArg), internal.ReinterpretCast[C.ImPlotRange](rangeArgArg), C.float(pixels), C.bool(vertical), internal.ReinterpretCast[C.ImPlotFormatter](formatterArg), C.uintptr_t(formatter_data))
-
-	tickerFin()
-	rangeArgFin()
-	formatterFin()
-}
-
-func LocatorLog10(ticker *Ticker, rangeArg Range, pixels float32, vertical bool, formatter Formatter, formatter_data uintptr) {
-	tickerArg, tickerFin := ticker.Handle()
-	rangeArgArg, rangeArgFin := rangeArg.C()
-	formatterArg, formatterFin := formatter.C()
-	C.wrap_ImPlot_Locator_Log10(internal.ReinterpretCast[*C.ImPlotTicker](tickerArg), internal.ReinterpretCast[C.ImPlotRange](rangeArgArg), C.float(pixels), C.bool(vertical), internal.ReinterpretCast[C.ImPlotFormatter](formatterArg), C.uintptr_t(formatter_data))
-
-	tickerFin()
-	rangeArgFin()
-	formatterFin()
-}
-
-func LocatorSymLog(ticker *Ticker, rangeArg Range, pixels float32, vertical bool, formatter Formatter, formatter_data uintptr) {
-	tickerArg, tickerFin := ticker.Handle()
-	rangeArgArg, rangeArgFin := rangeArg.C()
-	formatterArg, formatterFin := formatter.C()
-	C.wrap_ImPlot_Locator_SymLog(internal.ReinterpretCast[*C.ImPlotTicker](tickerArg), internal.ReinterpretCast[C.ImPlotRange](rangeArgArg), C.float(pixels), C.bool(vertical), internal.ReinterpretCast[C.ImPlotFormatter](formatterArg), C.uintptr_t(formatter_data))
-
-	tickerFin()
-	rangeArgFin()
-	formatterFin()
-}
-
-func LocatorTime(ticker *Ticker, rangeArg Range, pixels float32, vertical bool, formatter Formatter, formatter_data uintptr) {
-	tickerArg, tickerFin := ticker.Handle()
-	rangeArgArg, rangeArgFin := rangeArg.C()
-	formatterArg, formatterFin := formatter.C()
-	C.wrap_ImPlot_Locator_Time(internal.ReinterpretCast[*C.ImPlotTicker](tickerArg), internal.ReinterpretCast[C.ImPlotRange](rangeArgArg), C.float(pixels), C.bool(vertical), internal.ReinterpretCast[C.ImPlotFormatter](formatterArg), C.uintptr_t(formatter_data))
-
-	tickerFin()
-	rangeArgFin()
-	formatterFin()
-}
-
 // MakeTimeV parameter default value hint:
 // month: 0
 // day: 1
@@ -3109,6 +3058,17 @@ func NextColormapColorU32() uint32 {
 
 func NiceNum(x float64, round bool) float64 {
 	return float64(C.ImPlot_NiceNum(C.double(x), C.bool(round)))
+}
+
+func Now() PlotTime {
+	pOut := new(PlotTime)
+	pOutArg, pOutFin := internal.Wrap(pOut)
+
+	C.ImPlot_Now(internal.ReinterpretCast[*C.ImPlotTime](pOutArg))
+
+	pOutFin()
+
+	return *pOut
 }
 
 func OrderOfMagnitude(val float64) int32 {
@@ -5080,21 +5040,6 @@ func PlotLinedoublePtrdoublePtrV(label_id string, xs, ys *float64, count int32, 
 	ysFin()
 }
 
-// PlotPieChartFloatPtrPlotFormatterV parameter default value hint:
-// fmt_data: nullptr
-// angle0: 90
-// flags: 0
-func PlotPieChartFloatPtrPlotFormatterV(label_ids []string, values *float32, count int32, x, y, radius float64, fmt Formatter, fmt_data uintptr, angle0 float64, flags PieChartFlags) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.float, float32](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_FloatPtrPlotFormatterV(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg), C.uintptr_t(fmt_data), C.double(angle0), C.ImPlotPieChartFlags(flags))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
-}
-
 // PlotPieChartFloatPtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
@@ -5108,21 +5053,6 @@ func PlotPieChartFloatPtrStrV(label_ids []string, values *float32, count int32, 
 	label_idsFin()
 	valuesFin()
 	label_fmtFin()
-}
-
-// PlotPieChartS16PtrPlotFormatterV parameter default value hint:
-// fmt_data: nullptr
-// angle0: 90
-// flags: 0
-func PlotPieChartS16PtrPlotFormatterV(label_ids []string, values *int16, count int32, x, y, radius float64, fmt Formatter, fmt_data uintptr, angle0 float64, flags PieChartFlags) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImS16, int16](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_S16PtrPlotFormatterV(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg), C.uintptr_t(fmt_data), C.double(angle0), C.ImPlotPieChartFlags(flags))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
 }
 
 // PlotPieChartS16PtrStrV parameter default value hint:
@@ -5140,21 +5070,6 @@ func PlotPieChartS16PtrStrV(label_ids []string, values *int16, count int32, x, y
 	label_fmtFin()
 }
 
-// PlotPieChartS32PtrPlotFormatterV parameter default value hint:
-// fmt_data: nullptr
-// angle0: 90
-// flags: 0
-func PlotPieChartS32PtrPlotFormatterV(label_ids []string, values *int32, count int32, x, y, radius float64, fmt Formatter, fmt_data uintptr, angle0 float64, flags PieChartFlags) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImS32, int32](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_S32PtrPlotFormatterV(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg), C.uintptr_t(fmt_data), C.double(angle0), C.ImPlotPieChartFlags(flags))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
-}
-
 // PlotPieChartS32PtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
@@ -5168,21 +5083,6 @@ func PlotPieChartS32PtrStrV(label_ids []string, values *int32, count int32, x, y
 	label_idsFin()
 	valuesFin()
 	label_fmtFin()
-}
-
-// PlotPieChartS64PtrPlotFormatterV parameter default value hint:
-// fmt_data: nullptr
-// angle0: 90
-// flags: 0
-func PlotPieChartS64PtrPlotFormatterV(label_ids []string, values *int64, count int32, x, y, radius float64, fmt Formatter, fmt_data uintptr, angle0 float64, flags PieChartFlags) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImS64, int64](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_S64PtrPlotFormatterV(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg), C.uintptr_t(fmt_data), C.double(angle0), C.ImPlotPieChartFlags(flags))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
 }
 
 // PlotPieChartS64PtrStrV parameter default value hint:
@@ -5200,21 +5100,6 @@ func PlotPieChartS64PtrStrV(label_ids []string, values *int64, count int32, x, y
 	label_fmtFin()
 }
 
-// PlotPieChartS8PtrPlotFormatterV parameter default value hint:
-// fmt_data: nullptr
-// angle0: 90
-// flags: 0
-func PlotPieChartS8PtrPlotFormatterV(label_ids []string, values *int8, count int32, x, y, radius float64, fmt Formatter, fmt_data uintptr, angle0 float64, flags PieChartFlags) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImS8, int8](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_S8PtrPlotFormatterV(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg), C.uintptr_t(fmt_data), C.double(angle0), C.ImPlotPieChartFlags(flags))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
-}
-
 // PlotPieChartS8PtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
@@ -5228,21 +5113,6 @@ func PlotPieChartS8PtrStrV(label_ids []string, values *int8, count int32, x, y, 
 	label_idsFin()
 	valuesFin()
 	label_fmtFin()
-}
-
-// PlotPieChartU16PtrPlotFormatterV parameter default value hint:
-// fmt_data: nullptr
-// angle0: 90
-// flags: 0
-func PlotPieChartU16PtrPlotFormatterV(label_ids []string, values *uint16, count int32, x, y, radius float64, fmt Formatter, fmt_data uintptr, angle0 float64, flags PieChartFlags) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImU16, uint16](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_U16PtrPlotFormatterV(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg), C.uintptr_t(fmt_data), C.double(angle0), C.ImPlotPieChartFlags(flags))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
 }
 
 // PlotPieChartU16PtrStrV parameter default value hint:
@@ -5260,21 +5130,6 @@ func PlotPieChartU16PtrStrV(label_ids []string, values *uint16, count int32, x, 
 	label_fmtFin()
 }
 
-// PlotPieChartU32PtrPlotFormatterV parameter default value hint:
-// fmt_data: nullptr
-// angle0: 90
-// flags: 0
-func PlotPieChartU32PtrPlotFormatterV(label_ids []string, values *uint32, count int32, x, y, radius float64, fmt Formatter, fmt_data uintptr, angle0 float64, flags PieChartFlags) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImU32, uint32](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_U32PtrPlotFormatterV(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg), C.uintptr_t(fmt_data), C.double(angle0), C.ImPlotPieChartFlags(flags))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
-}
-
 // PlotPieChartU32PtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
@@ -5288,21 +5143,6 @@ func PlotPieChartU32PtrStrV(label_ids []string, values *uint32, count int32, x, 
 	label_idsFin()
 	valuesFin()
 	label_fmtFin()
-}
-
-// PlotPieChartU64PtrPlotFormatterV parameter default value hint:
-// fmt_data: nullptr
-// angle0: 90
-// flags: 0
-func PlotPieChartU64PtrPlotFormatterV(label_ids []string, values *uint64, count int32, x, y, radius float64, fmt Formatter, fmt_data uintptr, angle0 float64, flags PieChartFlags) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImU64, uint64](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_U64PtrPlotFormatterV(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg), C.uintptr_t(fmt_data), C.double(angle0), C.ImPlotPieChartFlags(flags))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
 }
 
 // PlotPieChartU64PtrStrV parameter default value hint:
@@ -5320,21 +5160,6 @@ func PlotPieChartU64PtrStrV(label_ids []string, values *uint64, count int32, x, 
 	label_fmtFin()
 }
 
-// PlotPieChartU8PtrPlotFormatterV parameter default value hint:
-// fmt_data: nullptr
-// angle0: 90
-// flags: 0
-func PlotPieChartU8PtrPlotFormatterV(label_ids []string, values *byte, count int32, x, y, radius float64, fmt Formatter, fmt_data uintptr, angle0 float64, flags PieChartFlags) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImU8, byte](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_U8PtrPlotFormatterV(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg), C.uintptr_t(fmt_data), C.double(angle0), C.ImPlotPieChartFlags(flags))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
-}
-
 // PlotPieChartU8PtrStrV parameter default value hint:
 // label_fmt: "%.1f"
 // angle0: 90
@@ -5348,21 +5173,6 @@ func PlotPieChartU8PtrStrV(label_ids []string, values *byte, count int32, x, y, 
 	label_idsFin()
 	valuesFin()
 	label_fmtFin()
-}
-
-// PlotPieChartdoublePtrPlotFormatterV parameter default value hint:
-// fmt_data: nullptr
-// angle0: 90
-// flags: 0
-func PlotPieChartdoublePtrPlotFormatterV(label_ids []string, values *float64, count int32, x, y, radius float64, fmt Formatter, fmt_data uintptr, angle0 float64, flags PieChartFlags) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.double, float64](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_doublePtrPlotFormatterV(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg), C.uintptr_t(fmt_data), C.double(angle0), C.ImPlotPieChartFlags(flags))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
 }
 
 // PlotPieChartdoublePtrStrV parameter default value hint:
@@ -7088,15 +6898,6 @@ func SetupAxisV(axis AxisEnum, label string, flags AxisFlags) {
 	labelFin()
 }
 
-// SetupAxisFormatPlotFormatterV parameter default value hint:
-// data: nullptr
-func SetupAxisFormatPlotFormatterV(axis AxisEnum, formatter Formatter, data uintptr) {
-	formatterArg, formatterFin := formatter.C()
-	C.wrap_ImPlot_SetupAxisFormat_PlotFormatterV(C.ImAxis(axis), internal.ReinterpretCast[C.ImPlotFormatter](formatterArg), C.uintptr_t(data))
-
-	formatterFin()
-}
-
 func SetupAxisFormatStr(axis AxisEnum, fmt string) {
 	fmtArg, fmtFin := internal.WrapString[C.char](fmt)
 	C.ImPlot_SetupAxisFormat_Str(C.ImAxis(axis), fmtArg)
@@ -7125,17 +6926,6 @@ func SetupAxisLinks(axis AxisEnum, link_min, link_max *float64) {
 
 func SetupAxisScalePlotScale(axis AxisEnum, scale Scale) {
 	C.ImPlot_SetupAxisScale_PlotScale(C.ImAxis(axis), C.ImPlotScale(scale))
-}
-
-// SetupAxisScalePlotTransformV parameter default value hint:
-// data: nullptr
-func SetupAxisScalePlotTransformV(axis AxisEnum, forward, inverse Transform, data uintptr) {
-	forwardArg, forwardFin := forward.C()
-	inverseArg, inverseFin := inverse.C()
-	C.wrap_ImPlot_SetupAxisScale_PlotTransformV(C.ImAxis(axis), internal.ReinterpretCast[C.ImPlotTransform](forwardArg), internal.ReinterpretCast[C.ImPlotTransform](inverseArg), C.uintptr_t(data))
-
-	forwardFin()
-	inverseFin()
 }
 
 // SetupAxisTicksdoubleV parameter default value hint:
@@ -7393,6 +7183,17 @@ func TagYStr(y float64, col imgui.Vec4, fmt string) {
 	C.wrap_ImPlot_TagY_Str(C.double(y), internal.ReinterpretCast[C.ImVec4](col.ToC()), fmtArg)
 
 	fmtFin()
+}
+
+func Today() PlotTime {
+	pOut := new(PlotTime)
+	pOutArg, pOutFin := internal.Wrap(pOut)
+
+	C.ImPlot_Today(internal.ReinterpretCast[*C.ImPlotTime](pOutArg))
+
+	pOutFin()
+
+	return *pOut
 }
 
 func TransformForwardLog10(v float64, noname1 uintptr) float64 {
@@ -9055,17 +8856,6 @@ func PlotLinedoublePtrdoublePtr(label_id string, xs, ys *float64, count int32) {
 	ysFin()
 }
 
-func PlotPieChartFloatPtrPlotFormatter(label_ids []string, values *float32, count int32, x, y, radius float64, fmt Formatter) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.float, float32](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_FloatPtrPlotFormatter(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
-}
-
 func PlotPieChartFloatPtrStr(label_ids []string, values *float32, count int32, x, y, radius float64) {
 	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
 	valuesArg, valuesFin := internal.WrapNumberPtr[C.float, float32](values)
@@ -9073,17 +8863,6 @@ func PlotPieChartFloatPtrStr(label_ids []string, values *float32, count int32, x
 
 	label_idsFin()
 	valuesFin()
-}
-
-func PlotPieChartS16PtrPlotFormatter(label_ids []string, values *int16, count int32, x, y, radius float64, fmt Formatter) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImS16, int16](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_S16PtrPlotFormatter(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
 }
 
 func PlotPieChartS16PtrStr(label_ids []string, values *int16, count int32, x, y, radius float64) {
@@ -9095,17 +8874,6 @@ func PlotPieChartS16PtrStr(label_ids []string, values *int16, count int32, x, y,
 	valuesFin()
 }
 
-func PlotPieChartS32PtrPlotFormatter(label_ids []string, values *int32, count int32, x, y, radius float64, fmt Formatter) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImS32, int32](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_S32PtrPlotFormatter(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
-}
-
 func PlotPieChartS32PtrStr(label_ids []string, values *int32, count int32, x, y, radius float64) {
 	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
 	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImS32, int32](values)
@@ -9113,17 +8881,6 @@ func PlotPieChartS32PtrStr(label_ids []string, values *int32, count int32, x, y,
 
 	label_idsFin()
 	valuesFin()
-}
-
-func PlotPieChartS64PtrPlotFormatter(label_ids []string, values *int64, count int32, x, y, radius float64, fmt Formatter) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImS64, int64](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_S64PtrPlotFormatter(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
 }
 
 func PlotPieChartS64PtrStr(label_ids []string, values *int64, count int32, x, y, radius float64) {
@@ -9135,17 +8892,6 @@ func PlotPieChartS64PtrStr(label_ids []string, values *int64, count int32, x, y,
 	valuesFin()
 }
 
-func PlotPieChartS8PtrPlotFormatter(label_ids []string, values *int8, count int32, x, y, radius float64, fmt Formatter) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImS8, int8](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_S8PtrPlotFormatter(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
-}
-
 func PlotPieChartS8PtrStr(label_ids []string, values *int8, count int32, x, y, radius float64) {
 	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
 	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImS8, int8](values)
@@ -9153,17 +8899,6 @@ func PlotPieChartS8PtrStr(label_ids []string, values *int8, count int32, x, y, r
 
 	label_idsFin()
 	valuesFin()
-}
-
-func PlotPieChartU16PtrPlotFormatter(label_ids []string, values *uint16, count int32, x, y, radius float64, fmt Formatter) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImU16, uint16](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_U16PtrPlotFormatter(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
 }
 
 func PlotPieChartU16PtrStr(label_ids []string, values *uint16, count int32, x, y, radius float64) {
@@ -9175,17 +8910,6 @@ func PlotPieChartU16PtrStr(label_ids []string, values *uint16, count int32, x, y
 	valuesFin()
 }
 
-func PlotPieChartU32PtrPlotFormatter(label_ids []string, values *uint32, count int32, x, y, radius float64, fmt Formatter) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImU32, uint32](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_U32PtrPlotFormatter(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
-}
-
 func PlotPieChartU32PtrStr(label_ids []string, values *uint32, count int32, x, y, radius float64) {
 	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
 	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImU32, uint32](values)
@@ -9193,17 +8917,6 @@ func PlotPieChartU32PtrStr(label_ids []string, values *uint32, count int32, x, y
 
 	label_idsFin()
 	valuesFin()
-}
-
-func PlotPieChartU64PtrPlotFormatter(label_ids []string, values *uint64, count int32, x, y, radius float64, fmt Formatter) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImU64, uint64](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_U64PtrPlotFormatter(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
 }
 
 func PlotPieChartU64PtrStr(label_ids []string, values *uint64, count int32, x, y, radius float64) {
@@ -9215,17 +8928,6 @@ func PlotPieChartU64PtrStr(label_ids []string, values *uint64, count int32, x, y
 	valuesFin()
 }
 
-func PlotPieChartU8PtrPlotFormatter(label_ids []string, values *byte, count int32, x, y, radius float64, fmt Formatter) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImU8, byte](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_U8PtrPlotFormatter(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
-}
-
 func PlotPieChartU8PtrStr(label_ids []string, values *byte, count int32, x, y, radius float64) {
 	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
 	valuesArg, valuesFin := internal.WrapNumberPtr[C.ImU8, byte](values)
@@ -9233,17 +8935,6 @@ func PlotPieChartU8PtrStr(label_ids []string, values *byte, count int32, x, y, r
 
 	label_idsFin()
 	valuesFin()
-}
-
-func PlotPieChartdoublePtrPlotFormatter(label_ids []string, values *float64, count int32, x, y, radius float64, fmt Formatter) {
-	label_idsArg, label_idsFin := internal.WrapStringList[C.char](label_ids)
-	valuesArg, valuesFin := internal.WrapNumberPtr[C.double, float64](values)
-	fmtArg, fmtFin := fmt.C()
-	C.wrap_ImPlot_PlotPieChart_doublePtrPlotFormatter(label_idsArg, valuesArg, C.int(count), C.double(x), C.double(y), C.double(radius), internal.ReinterpretCast[C.ImPlotFormatter](fmtArg))
-
-	label_idsFin()
-	valuesFin()
-	fmtFin()
 }
 
 func PlotPieChartdoublePtrStr(label_ids []string, values *float64, count int32, x, y, radius float64) {
@@ -10291,24 +9982,8 @@ func SetupAxis(axis AxisEnum) {
 	C.wrap_ImPlot_SetupAxis(C.ImAxis(axis))
 }
 
-func SetupAxisFormatPlotFormatter(axis AxisEnum, formatter Formatter) {
-	formatterArg, formatterFin := formatter.C()
-	C.wrap_ImPlot_SetupAxisFormat_PlotFormatter(C.ImAxis(axis), internal.ReinterpretCast[C.ImPlotFormatter](formatterArg))
-
-	formatterFin()
-}
-
 func SetupAxisLimits(axis AxisEnum, v_min, v_max float64) {
 	C.wrap_ImPlot_SetupAxisLimits(C.ImAxis(axis), C.double(v_min), C.double(v_max))
-}
-
-func SetupAxisScalePlotTransform(axis AxisEnum, forward, inverse Transform) {
-	forwardArg, forwardFin := forward.C()
-	inverseArg, inverseFin := inverse.C()
-	C.wrap_ImPlot_SetupAxisScale_PlotTransform(C.ImAxis(axis), internal.ReinterpretCast[C.ImPlotTransform](forwardArg), internal.ReinterpretCast[C.ImPlotTransform](inverseArg))
-
-	forwardFin()
-	inverseFin()
 }
 
 func SetupAxisTicksdouble(axis AxisEnum, v_min, v_max float64, n_ticks int32) {
@@ -10416,17 +10091,6 @@ func (self *FormatterTimeData) TimeDataGetSpec() DateTimeSpec {
 
 	result := C.wrap_Formatter_Time_Data_GetSpec(internal.ReinterpretCast[*C.Formatter_Time_Data](selfArg))
 	return *NewDateTimeSpecFromC(func() *C.ImPlotDateTimeSpec { result := result; return &result }())
-}
-
-func (self *FormatterTimeData) TimeDataGetUserFormatter() Formatter {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_Formatter_Time_Data_GetUserFormatter(internal.ReinterpretCast[*C.Formatter_Time_Data](selfArg))
-	return *NewFormatterFromC(func() *C.ImPlotFormatter { result := result; return &result }())
 }
 
 func (self *FormatterTimeData) TimeDataGetUserFormatterData() uintptr {
@@ -10859,25 +10523,6 @@ func (self *Axis) Ticker() Ticker {
 	return *NewTickerFromC(func() *C.ImPlotTicker { result := result; return &result }())
 }
 
-func (self Axis) SetFormatter(v Formatter) {
-	vArg, _ := v.C()
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImPlotAxis_SetFormatter(selfArg, internal.ReinterpretCast[C.ImPlotFormatter](vArg))
-}
-
-func (self *Axis) Formatter() Formatter {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImPlotAxis_GetFormatter(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
-	return *NewFormatterFromC(func() *C.ImPlotFormatter { result := result; return &result }())
-}
-
 func (self Axis) SetFormatterData(v uintptr) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -11008,44 +10653,6 @@ func (self *Axis) PickerTimeMax() PlotTime {
 		out := C.wrap_ImPlotAxis_GetPickerTimeMax(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
 		return *(&PlotTime{}).FromC(unsafe.Pointer(&out))
 	}()
-}
-
-func (self Axis) SetTransformForward(v Transform) {
-	vArg, _ := v.C()
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImPlotAxis_SetTransformForward(selfArg, internal.ReinterpretCast[C.ImPlotTransform](vArg))
-}
-
-func (self *Axis) TransformForward() Transform {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImPlotAxis_GetTransformForward(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
-	return *NewTransformFromC(func() *C.ImPlotTransform { result := result; return &result }())
-}
-
-func (self Axis) SetTransformInverse(v Transform) {
-	vArg, _ := v.C()
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImPlotAxis_SetTransformInverse(selfArg, internal.ReinterpretCast[C.ImPlotTransform](vArg))
-}
-
-func (self *Axis) TransformInverse() Transform {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-
-	result := C.wrap_ImPlotAxis_GetTransformInverse(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
-	return *NewTransformFromC(func() *C.ImPlotTransform { result := result; return &result }())
 }
 
 func (self Axis) SetTransformData(v uintptr) {

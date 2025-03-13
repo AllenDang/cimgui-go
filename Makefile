@@ -119,19 +119,19 @@ endef
 update: setup
 	rm -rf cwrappers/*
 	$(call update,cimgui,https://github.com/cimgui/cimgui,imgui,docking, --cflags "glfw opengl3 opengl2 sdl2 -DIMGUI_USE_WCHAR32")
-	$(call vendor-elimitate)
 	cat templates/assert.h >> cwrappers/imgui/imconfig.h
-	$(call cimgui)
+	$(call imgui)
 	$(call update,cimplot,https://github.com/cimgui/cimplot,implot,master)
-	$(call cimplot)
+	$(call implot)
 	$(call update,cimnodes,https://github.com/cimgui/cimnodes,imnodes,master)
-	$(call cimnodes)
+	$(call imnodes)
 	$(call update,cimmarkdown,https://github.com/gucio321/cimmarkdown,imgui_markdown,main)
-	$(call cimmarkdown)
+	$(call immarkdown)
 	$(call update,cimguizmo,https://github.com/cimgui/cimguizmo,ImGuizmo,master)
-	$(call cimguizmo)
+	$(call imguizmo)
 	$(call update,cimCTE,https://github.com/cimgui/cimcte,ImGuiColorTextEdit,master)
-	$(call cimcte)
+	$(call imcte)
+	$(call vendor-eliminate)
 	$(call dummy)
 
 # dummy creates dummy.go files to baypass GO vendor policy that excludes everything that has no .go files (including our C source).
@@ -146,7 +146,7 @@ endef
 
 define vendor-eliminate
 	for i in `find . -name vendor -type d`; do \
-		mv $$i $$i1; \
+		mv $$i $${i}1; \
 		done
 endef
 

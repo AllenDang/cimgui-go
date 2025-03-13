@@ -2907,6 +2907,14 @@ CIMGUI_API tm* ImPlot_GetLocTime(const ImPlotTime t,tm* ptm)
 {
     return ImPlot::GetLocTime(t,ptm);
 }
+CIMGUI_API void ImPlot_MkTime(ImPlotTime *pOut,struct tm* ptm)
+{
+    *pOut = ImPlot::MkTime(ptm);
+}
+CIMGUI_API tm* ImPlot_GetTime(const ImPlotTime t,tm* ptm)
+{
+    return ImPlot::GetTime(t,ptm);
+}
 CIMGUI_API void ImPlot_MakeTime(ImPlotTime *pOut,int year,int month,int day,int hour,int min,int sec,int us)
 {
     *pOut = ImPlot::MakeTime(year,month,day,hour,min,sec,us);
@@ -2914,6 +2922,10 @@ CIMGUI_API void ImPlot_MakeTime(ImPlotTime *pOut,int year,int month,int day,int 
 CIMGUI_API int ImPlot_GetYear(const ImPlotTime t)
 {
     return ImPlot::GetYear(t);
+}
+CIMGUI_API int ImPlot_GetMonth(const ImPlotTime t)
+{
+    return ImPlot::GetMonth(t);
 }
 CIMGUI_API void ImPlot_AddTime(ImPlotTime *pOut,const ImPlotTime t,ImPlotTimeUnit unit,int count)
 {
@@ -2934,6 +2946,14 @@ CIMGUI_API void ImPlot_RoundTime(ImPlotTime *pOut,const ImPlotTime t,ImPlotTimeU
 CIMGUI_API void ImPlot_CombineDateTime(ImPlotTime *pOut,const ImPlotTime date_part,const ImPlotTime time_part)
 {
     *pOut = ImPlot::CombineDateTime(date_part,time_part);
+}
+CIMGUI_API void ImPlot_Now(ImPlotTime *pOut)
+{
+    *pOut = ImPlot::Now();
+}
+CIMGUI_API void ImPlot_Today(ImPlotTime *pOut)
+{
+    *pOut = ImPlot::Today();
 }
 CIMGUI_API int ImPlot_FormatTime(const ImPlotTime t,char* buffer,int size,ImPlotTimeFmt fmt,bool use_24_hr_clk)
 {

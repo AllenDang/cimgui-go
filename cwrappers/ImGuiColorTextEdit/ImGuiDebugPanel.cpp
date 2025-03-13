@@ -11,15 +11,20 @@ void TextEditor::ImGuiDebugPanel(const std::string& panelName)
 		ImGui::DragInt("Cursor count", &mState.mCurrentCursor);
 		for (int i = 0; i <= mState.mCurrentCursor; i++)
 		{
+			static Coordinates sanitizedStart, sanitizedEnd;
+			sanitizedStart = SanitizeCoordinates(mState.mCursors[i].mInteractiveStart);
+			sanitizedEnd = SanitizeCoordinates(mState.mCursors[i].mInteractiveStart);
 			ImGui::DragInt2("Interactive start", &mState.mCursors[i].mInteractiveStart.mLine);
 			ImGui::DragInt2("Interactive end", &mState.mCursors[i].mInteractiveEnd.mLine);
+			ImGui::Text("Sanitized start: %d, %d", sanitizedStart.mLine, sanitizedStart.mColumn);
+			ImGui::Text("Sanitized end:   %d, %d", sanitizedEnd.mLine, sanitizedEnd.mColumn);
 		}
 	}
 	if (ImGui::CollapsingHeader("Lines"))
 	{
 		for (int i = 0; i < mLines.size(); i++)
 		{
-			ImGui::Text("%d", mLines[i].size());
+			ImGui::Text("%zu", mLines[i].size());
 		}
 	}
 	if (ImGui::CollapsingHeader("Undo"))

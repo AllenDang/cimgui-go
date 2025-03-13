@@ -200,15 +200,6 @@ func (self *TextEditor) IsAutoIndentEnabled() bool {
 	return C.TextEditor_IsAutoIndentEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
 }
 
-func (self *TextEditor) IsOverwriteEnabled() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.TextEditor_IsOverwriteEnabled(internal.ReinterpretCast[*C.TextEditor](selfArg)) == C.bool(true)
-}
-
 func (self *TextEditor) IsReadOnlyEnabled() bool {
 	selfArg, selfFin := self.Handle()
 

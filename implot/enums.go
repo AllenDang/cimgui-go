@@ -320,6 +320,7 @@ const (
 	PieChartFlagsNone         PieChartFlags = 0
 	PieChartFlagsNormalize    PieChartFlags = 1024
 	PieChartFlagsIgnoreHidden PieChartFlags = 2048
+	PieChartFlagsExploding    PieChartFlags = 4096
 )
 
 // original name: ImPlotScale_

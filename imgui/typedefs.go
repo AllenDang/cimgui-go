@@ -679,30 +679,30 @@ func NewDataTypeStorageFromC[SRC any](cvalue SRC) *DataTypeStorage {
 	return &DataTypeStorage{CData: internal.ReinterpretCast[*C.ImGuiDataTypeStorage](cvalue)}
 }
 
-type DataVarInfo struct {
-	CData *C.ImGuiDataVarInfo
+type DeactivatedItemData struct {
+	CData *C.ImGuiDeactivatedItemData
 }
 
-// Handle returns C version of DataVarInfo and its finalizer func.
-func (self *DataVarInfo) Handle() (result *C.ImGuiDataVarInfo, fin func()) {
+// Handle returns C version of DeactivatedItemData and its finalizer func.
+func (self *DeactivatedItemData) Handle() (result *C.ImGuiDeactivatedItemData, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self DataVarInfo) C() (C.ImGuiDataVarInfo, func()) {
+func (self DeactivatedItemData) C() (C.ImGuiDeactivatedItemData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewEmptyDataVarInfo creates DataVarInfo with its 0 value.
-func NewEmptyDataVarInfo() *DataVarInfo {
-	return &DataVarInfo{CData: new(C.ImGuiDataVarInfo)}
+// NewEmptyDeactivatedItemData creates DeactivatedItemData with its 0 value.
+func NewEmptyDeactivatedItemData() *DeactivatedItemData {
+	return &DeactivatedItemData{CData: new(C.ImGuiDeactivatedItemData)}
 }
 
-// NewDataVarInfoFromC creates DataVarInfo from its C pointer.
-// SRC ~= *C.ImGuiDataVarInfo
-func NewDataVarInfoFromC[SRC any](cvalue SRC) *DataVarInfo {
-	return &DataVarInfo{CData: internal.ReinterpretCast[*C.ImGuiDataVarInfo](cvalue)}
+// NewDeactivatedItemDataFromC creates DeactivatedItemData from its C pointer.
+// SRC ~= *C.ImGuiDeactivatedItemData
+func NewDeactivatedItemDataFromC[SRC any](cvalue SRC) *DeactivatedItemData {
+	return &DeactivatedItemData{CData: internal.ReinterpretCast[*C.ImGuiDeactivatedItemData](cvalue)}
 }
 
 type DebugAllocEntry struct {
@@ -2310,6 +2310,32 @@ func NewEmptyStyleMod() *StyleMod {
 // SRC ~= *C.ImGuiStyleMod
 func NewStyleModFromC[SRC any](cvalue SRC) *StyleMod {
 	return &StyleMod{CData: internal.ReinterpretCast[*C.ImGuiStyleMod](cvalue)}
+}
+
+type StyleVarInfo struct {
+	CData *C.ImGuiStyleVarInfo
+}
+
+// Handle returns C version of StyleVarInfo and its finalizer func.
+func (self *StyleVarInfo) Handle() (result *C.ImGuiStyleVarInfo, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self StyleVarInfo) C() (C.ImGuiStyleVarInfo, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyStyleVarInfo creates StyleVarInfo with its 0 value.
+func NewEmptyStyleVarInfo() *StyleVarInfo {
+	return &StyleVarInfo{CData: new(C.ImGuiStyleVarInfo)}
+}
+
+// NewStyleVarInfoFromC creates StyleVarInfo from its C pointer.
+// SRC ~= *C.ImGuiStyleVarInfo
+func NewStyleVarInfoFromC[SRC any](cvalue SRC) *StyleVarInfo {
+	return &StyleVarInfo{CData: internal.ReinterpretCast[*C.ImGuiStyleVarInfo](cvalue)}
 }
 
 type TabBar struct {

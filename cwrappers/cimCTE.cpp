@@ -59,10 +59,6 @@ CIMGUI_API int TextEditor_GetLineCount(TextEditor* self)
 {
     return self->GetLineCount();
 }
-CIMGUI_API bool TextEditor_IsOverwriteEnabled(TextEditor* self)
-{
-    return self->IsOverwriteEnabled();
-}
 CIMGUI_API void TextEditor_SetPalette(TextEditor* self,PaletteId aValue)
 {
     return self->SetPalette(aValue);
