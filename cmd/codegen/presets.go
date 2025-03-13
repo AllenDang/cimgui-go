@@ -16,6 +16,9 @@ type Preset struct {
 	// SkipTypedefs typedefs from typedefs_dict.json to be skipped
 	// e.g. for hardcoded typedefs or typedefs which are obvious (e.g. ImU16 becomes uint16 without extra type information)
 	SkipTypedefs map[CIdentifier]bool
+	// SkipFiles contains filenames (probably without extension) refering to location field in definitions.json.
+	// This could aso contain line number in form of filename:lineN.
+	SkipFiles []string
 	// TypedefsPoolSize sets a default size for callbacks pool.
 	// Rembmber to set this as it defaults to 0 and you'll get no callbacks!
 	TypedefsPoolSize int
