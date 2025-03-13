@@ -80,7 +80,7 @@ func (g *callbacksGenerator) writeCallback(typedefName CIdentifier, def string) 
 	// - returnType <funcName>(args1 arg1Name, args2 arg2Name, args3 arg3Name);
 	// NOTE: the second is uesed mainly in immarkdown
 	// NOTE: in the 1st, spaces does not matter so we'll trim them
-	expr1, err := regexp.Compile("([a-zA-Z0-9_]+\\*?)\\(\\*.*\\)\\((.*)\\);")
+	expr1, err := regexp.Compile("(typedef )?([a-zA-Z0-9_]+\\*?) *\\(\\*.*\\)\\((.*)\\);")
 	if err != nil {
 		panic(fmt.Sprintf("Cannot compile regex expr1!: %v", err))
 	}
@@ -102,6 +102,7 @@ func (g *callbacksGenerator) writeCallback(typedefName CIdentifier, def string) 
 		// now split by "("
 		// it should be something like this:
 		// ["returnType", "*<optional func name)", "args1 arg1Name, args2 arg2Name, args3 arg3Name);"]
+		def = TrimPrefix(def, "typedef ")
 		parts := Split(def, "(")
 		if len(parts) != 3 {
 			panic("Cannot split by (, check implementation in cmd/codegen!")
