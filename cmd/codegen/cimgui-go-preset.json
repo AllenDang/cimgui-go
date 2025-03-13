@@ -50,6 +50,7 @@
                 "ImGuiInputTextCallback": true
         },
         "SkipFiles": [
+                "imgui_freetype"
         ],
         "TypedefsPoolSize": 32,
         "TypedefsCustomPoolSizes": {
