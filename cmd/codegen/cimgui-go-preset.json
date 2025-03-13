@@ -60,6 +60,7 @@
                 "igGetDrawListSharedData": "CurrentDrawListSharedData",
                 "igGetFont":               "CurrentFont",
                 "igGetIO":                 "CurrentIO",
+                "igGetPlatformIO_Nil":         "CurrentPlatformIO",
                 "igGetPlatformIO":         "CurrentPlatformIO",
                 "igGetStyle":              "CurrentStyle",
                 "igGetMouseCursor":        "CurrentMouseCursor",
