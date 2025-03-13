@@ -54,6 +54,14 @@ func GenerateGoFuncs(
 			continue
 		}
 
+		if MapContainsAny(f.Location, context.preset.SkipFiles) {
+			if context.flags.ShowNotGenerated {
+				glg.Warnf("File %s skipped: %s%s", f.Location, f.FuncName, f.Args)
+			}
+
+			continue
+		}
+
 		args, argWrappers := generator.generateFuncArgs(f)
 
 		if len(f.ArgsT) == 0 {
@@ -65,6 +73,7 @@ func GenerateGoFuncs(
 			if context.flags.ShowNotGenerated {
 				glg.Errorf("not generated: %s%s", f.FuncName, f.Args)
 			}
+
 			continue
 		} else {
 			if context.flags.ShowGenerated {

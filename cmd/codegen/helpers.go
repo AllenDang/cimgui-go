@@ -25,8 +25,8 @@ func ReplaceAll[s, t, u ~string](str s, old t, new u) s {
 	return s(strings.ReplaceAll(string(str), string(old), string(new)))
 }
 
-func Contains[s ~string](str s, substr string) bool {
-	return strings.Contains(string(str), substr)
+func Contains[t ~string, s ~string](str s, substr t) bool {
+	return strings.Contains(string(str), string(substr))
 }
 
 func Split[s ~string](str s, sep string) []s {
@@ -93,4 +93,14 @@ func RemoveMapValues[T comparable, S any](m map[T]S) map[T]bool {
 	}
 
 	return result
+}
+
+func MapContainsAny[T ~string, S ~string](key T, dict []S) bool {
+	for _, v := range dict {
+		if Contains(key, v) {
+			return true
+		}
+	}
+
+	return false
 }
