@@ -96,7 +96,7 @@ func (e *EbitenBackend) onfinalize() {
 	}
 
 	runtime.SetFinalizer(e, nil)
-	e.ctx.Destroy()
+	imgui.DestroyContext()
 }
 
 func (e *EbitenBackend) controlCursorShapeFn() {
