@@ -85,7 +85,7 @@ GLFWwindow *igCreateGLFWWindow(const char *title, int width, int height,
     afterCreateContext();
   }
 
-  ImGuiIO *io = igGetIO();
+  ImGuiIO *io = igGetIO_Nil();
   io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
   // io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad
   // Controls
@@ -145,7 +145,7 @@ void glfw_render(GLFWwindow *window, VoidCallback renderLoop) {
   igRender();
   ImGui_ImplOpenGL3_RenderDrawData(igGetDrawData());
 
-  ImGuiIO *io = igGetIO();
+  ImGuiIO *io = igGetIO_Nil();
 
   // Update and Render additional Platform Windows
   // (Platform functions may change the current OpenGL context, so we
@@ -165,7 +165,7 @@ void glfw_render(GLFWwindow *window, VoidCallback renderLoop) {
 void igGLFWRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
                VoidCallback beforeDestroyContext) {
   glfwMakeContextCurrent(window);
-  ImGuiIO *io = igGetIO();
+  ImGuiIO *io = igGetIO_Nil();
 
   // Load Fonts
   // - If no fonts are loaded, dear imgui will use the default font. You can
