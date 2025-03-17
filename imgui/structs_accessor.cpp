@@ -2781,6 +2781,10 @@ void wrap_ImGuiWindow_SetScrollbarX(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGui
 bool wrap_ImGuiWindow_GetScrollbarX(ImGuiWindow *self) { return self->ScrollbarX; }
 void wrap_ImGuiWindow_SetScrollbarY(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->ScrollbarY = v; }
 bool wrap_ImGuiWindow_GetScrollbarY(ImGuiWindow *self) { return self->ScrollbarY; }
+void wrap_ImGuiWindow_SetScrollbarXStabilizeEnabled(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->ScrollbarXStabilizeEnabled = v; }
+bool wrap_ImGuiWindow_GetScrollbarXStabilizeEnabled(ImGuiWindow *self) { return self->ScrollbarXStabilizeEnabled; }
+void wrap_ImGuiWindow_SetScrollbarXStabilizeToggledHistory(ImGuiWindow *ImGuiWindowPtr, ImU8 v) { ImGuiWindowPtr->ScrollbarXStabilizeToggledHistory = v; }
+ImU8 wrap_ImGuiWindow_GetScrollbarXStabilizeToggledHistory(ImGuiWindow *self) { return self->ScrollbarXStabilizeToggledHistory; }
 void wrap_ImGuiWindow_SetViewportOwned(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->ViewportOwned = v; }
 bool wrap_ImGuiWindow_GetViewportOwned(ImGuiWindow *self) { return self->ViewportOwned; }
 void wrap_ImGuiWindow_SetActive(ImGuiWindow *ImGuiWindowPtr, bool v) { ImGuiWindowPtr->Active = v; }

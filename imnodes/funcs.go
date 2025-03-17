@@ -412,6 +412,20 @@ func LoadEditorStateFromIniString(editor *EditorContext, data string, data_size 
 	dataFin()
 }
 
+// MiniMapV parameter default value hint:
+// minimap_size_fraction: 0.2f
+// location: ImNodesMiniMapLocation_TopLeft
+// node_hovering_callback: NULL
+// node_hovering_callback_data: NULL
+func MiniMapV(minimap_size_fraction float32, location MiniMapLocation, node_hovering_callback MiniMapNodeHoveringCallback, node_hovering_callback_data MiniMapNodeHoveringCallbackUserData) {
+	node_hovering_callbackArg, node_hovering_callbackFin := node_hovering_callback.C()
+	node_hovering_callback_dataArg, node_hovering_callback_dataFin := node_hovering_callback_data.C()
+	C.imnodes_MiniMap(C.float(minimap_size_fraction), C.ImNodesMiniMapLocation(location), internal.ReinterpretCast[C.ImNodesMiniMapNodeHoveringCallback](node_hovering_callbackArg), internal.ReinterpretCast[C.ImNodesMiniMapNodeHoveringCallbackUserData](node_hovering_callback_dataArg))
+
+	node_hovering_callbackFin()
+	node_hovering_callback_dataFin()
+}
+
 func NumSelectedLinks() int32 {
 	return int32(C.imnodes_NumSelectedLinks())
 }

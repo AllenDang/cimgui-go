@@ -8,4 +8,1531 @@ package imgui
 // #include "wrapper.h"
 // #include "typedefs.h"
 // #include "../imgui/extra_types.h"
+// extern void callbackDrawCallback0(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback1(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback2(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback3(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback4(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback5(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback6(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback7(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback8(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback9(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback10(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback11(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback12(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback13(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback14(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback15(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback16(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback17(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback18(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback19(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback20(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback21(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback22(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback23(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback24(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback25(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback26(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback27(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback28(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback29(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback30(ImDrawList*, ImDrawCmd*);
+// extern void callbackDrawCallback31(ImDrawList*, ImDrawCmd*);
+// extern void callbackContextHookCallback0(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback1(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback2(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback3(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback4(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback5(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback6(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback7(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback8(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback9(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback10(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback11(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback12(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback13(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback14(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback15(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback16(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback17(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback18(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback19(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback20(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback21(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback22(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback23(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback24(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback25(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback26(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback27(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback28(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback29(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback30(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackContextHookCallback31(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackErrorCallback0(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback1(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback2(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback3(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback4(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback5(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback6(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback7(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback8(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback9(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback10(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback11(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback12(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback13(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback14(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback15(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback16(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback17(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback18(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback19(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback20(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback21(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback22(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback23(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback24(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback25(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback26(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback27(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback28(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback29(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback30(ImGuiContext*, void*, char*);
+// extern void callbackErrorCallback31(ImGuiContext*, void*, char*);
+// extern void* callbackMemAllocFunc0(size_t, void*);
+// extern void* callbackMemAllocFunc1(size_t, void*);
+// extern void* callbackMemAllocFunc2(size_t, void*);
+// extern void* callbackMemAllocFunc3(size_t, void*);
+// extern void* callbackMemAllocFunc4(size_t, void*);
+// extern void* callbackMemAllocFunc5(size_t, void*);
+// extern void* callbackMemAllocFunc6(size_t, void*);
+// extern void* callbackMemAllocFunc7(size_t, void*);
+// extern void* callbackMemAllocFunc8(size_t, void*);
+// extern void* callbackMemAllocFunc9(size_t, void*);
+// extern void* callbackMemAllocFunc10(size_t, void*);
+// extern void* callbackMemAllocFunc11(size_t, void*);
+// extern void* callbackMemAllocFunc12(size_t, void*);
+// extern void* callbackMemAllocFunc13(size_t, void*);
+// extern void* callbackMemAllocFunc14(size_t, void*);
+// extern void* callbackMemAllocFunc15(size_t, void*);
+// extern void* callbackMemAllocFunc16(size_t, void*);
+// extern void* callbackMemAllocFunc17(size_t, void*);
+// extern void* callbackMemAllocFunc18(size_t, void*);
+// extern void* callbackMemAllocFunc19(size_t, void*);
+// extern void* callbackMemAllocFunc20(size_t, void*);
+// extern void* callbackMemAllocFunc21(size_t, void*);
+// extern void* callbackMemAllocFunc22(size_t, void*);
+// extern void* callbackMemAllocFunc23(size_t, void*);
+// extern void* callbackMemAllocFunc24(size_t, void*);
+// extern void* callbackMemAllocFunc25(size_t, void*);
+// extern void* callbackMemAllocFunc26(size_t, void*);
+// extern void* callbackMemAllocFunc27(size_t, void*);
+// extern void* callbackMemAllocFunc28(size_t, void*);
+// extern void* callbackMemAllocFunc29(size_t, void*);
+// extern void* callbackMemAllocFunc30(size_t, void*);
+// extern void* callbackMemAllocFunc31(size_t, void*);
+// extern void callbackMemFreeFunc0(void*, void*);
+// extern void callbackMemFreeFunc1(void*, void*);
+// extern void callbackMemFreeFunc2(void*, void*);
+// extern void callbackMemFreeFunc3(void*, void*);
+// extern void callbackMemFreeFunc4(void*, void*);
+// extern void callbackMemFreeFunc5(void*, void*);
+// extern void callbackMemFreeFunc6(void*, void*);
+// extern void callbackMemFreeFunc7(void*, void*);
+// extern void callbackMemFreeFunc8(void*, void*);
+// extern void callbackMemFreeFunc9(void*, void*);
+// extern void callbackMemFreeFunc10(void*, void*);
+// extern void callbackMemFreeFunc11(void*, void*);
+// extern void callbackMemFreeFunc12(void*, void*);
+// extern void callbackMemFreeFunc13(void*, void*);
+// extern void callbackMemFreeFunc14(void*, void*);
+// extern void callbackMemFreeFunc15(void*, void*);
+// extern void callbackMemFreeFunc16(void*, void*);
+// extern void callbackMemFreeFunc17(void*, void*);
+// extern void callbackMemFreeFunc18(void*, void*);
+// extern void callbackMemFreeFunc19(void*, void*);
+// extern void callbackMemFreeFunc20(void*, void*);
+// extern void callbackMemFreeFunc21(void*, void*);
+// extern void callbackMemFreeFunc22(void*, void*);
+// extern void callbackMemFreeFunc23(void*, void*);
+// extern void callbackMemFreeFunc24(void*, void*);
+// extern void callbackMemFreeFunc25(void*, void*);
+// extern void callbackMemFreeFunc26(void*, void*);
+// extern void callbackMemFreeFunc27(void*, void*);
+// extern void callbackMemFreeFunc28(void*, void*);
+// extern void callbackMemFreeFunc29(void*, void*);
+// extern void callbackMemFreeFunc30(void*, void*);
+// extern void callbackMemFreeFunc31(void*, void*);
+// extern void callbackSizeCallback0(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback1(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback2(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback3(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback4(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback5(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback6(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback7(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback8(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback9(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback10(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback11(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback12(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback13(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback14(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback15(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback16(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback17(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback18(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback19(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback20(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback21(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback22(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback23(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback24(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback25(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback26(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback27(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback28(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback29(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback30(ImGuiSizeCallbackData*);
+// extern void callbackSizeCallback31(ImGuiSizeCallbackData*);
 import "C"
+import (
+	"unsafe"
+
+	"github.com/AllenDang/cimgui-go/internal"
+)
+
+type (
+	DrawCallback  func(parent_list *DrawList, cmd *DrawCmd)
+	cDrawCallback func(parent_list *C.ImDrawList, cmd *C.ImDrawCmd)
+)
+
+func NewDrawCallbackFromC(cvalue *C.ImDrawCallback) *DrawCallback {
+	result := poolDrawCallback.Find(*cvalue)
+	return &result
+}
+
+func (c DrawCallback) C() (C.ImDrawCallback, func()) {
+	return poolDrawCallback.Allocate(c), func() {}
+}
+
+func wrapDrawCallback(cb DrawCallback, parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	cb(NewDrawListFromC(parent_list), NewDrawCmdFromC(cmd))
+}
+
+//export callbackDrawCallback0
+func callbackDrawCallback0(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(0), parent_list, cmd)
+}
+
+//export callbackDrawCallback1
+func callbackDrawCallback1(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(1), parent_list, cmd)
+}
+
+//export callbackDrawCallback2
+func callbackDrawCallback2(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(2), parent_list, cmd)
+}
+
+//export callbackDrawCallback3
+func callbackDrawCallback3(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(3), parent_list, cmd)
+}
+
+//export callbackDrawCallback4
+func callbackDrawCallback4(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(4), parent_list, cmd)
+}
+
+//export callbackDrawCallback5
+func callbackDrawCallback5(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(5), parent_list, cmd)
+}
+
+//export callbackDrawCallback6
+func callbackDrawCallback6(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(6), parent_list, cmd)
+}
+
+//export callbackDrawCallback7
+func callbackDrawCallback7(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(7), parent_list, cmd)
+}
+
+//export callbackDrawCallback8
+func callbackDrawCallback8(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(8), parent_list, cmd)
+}
+
+//export callbackDrawCallback9
+func callbackDrawCallback9(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(9), parent_list, cmd)
+}
+
+//export callbackDrawCallback10
+func callbackDrawCallback10(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(10), parent_list, cmd)
+}
+
+//export callbackDrawCallback11
+func callbackDrawCallback11(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(11), parent_list, cmd)
+}
+
+//export callbackDrawCallback12
+func callbackDrawCallback12(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(12), parent_list, cmd)
+}
+
+//export callbackDrawCallback13
+func callbackDrawCallback13(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(13), parent_list, cmd)
+}
+
+//export callbackDrawCallback14
+func callbackDrawCallback14(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(14), parent_list, cmd)
+}
+
+//export callbackDrawCallback15
+func callbackDrawCallback15(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(15), parent_list, cmd)
+}
+
+//export callbackDrawCallback16
+func callbackDrawCallback16(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(16), parent_list, cmd)
+}
+
+//export callbackDrawCallback17
+func callbackDrawCallback17(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(17), parent_list, cmd)
+}
+
+//export callbackDrawCallback18
+func callbackDrawCallback18(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(18), parent_list, cmd)
+}
+
+//export callbackDrawCallback19
+func callbackDrawCallback19(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(19), parent_list, cmd)
+}
+
+//export callbackDrawCallback20
+func callbackDrawCallback20(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(20), parent_list, cmd)
+}
+
+//export callbackDrawCallback21
+func callbackDrawCallback21(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(21), parent_list, cmd)
+}
+
+//export callbackDrawCallback22
+func callbackDrawCallback22(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(22), parent_list, cmd)
+}
+
+//export callbackDrawCallback23
+func callbackDrawCallback23(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(23), parent_list, cmd)
+}
+
+//export callbackDrawCallback24
+func callbackDrawCallback24(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(24), parent_list, cmd)
+}
+
+//export callbackDrawCallback25
+func callbackDrawCallback25(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(25), parent_list, cmd)
+}
+
+//export callbackDrawCallback26
+func callbackDrawCallback26(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(26), parent_list, cmd)
+}
+
+//export callbackDrawCallback27
+func callbackDrawCallback27(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(27), parent_list, cmd)
+}
+
+//export callbackDrawCallback28
+func callbackDrawCallback28(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(28), parent_list, cmd)
+}
+
+//export callbackDrawCallback29
+func callbackDrawCallback29(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(29), parent_list, cmd)
+}
+
+//export callbackDrawCallback30
+func callbackDrawCallback30(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(30), parent_list, cmd)
+}
+
+//export callbackDrawCallback31
+func callbackDrawCallback31(parent_list *C.ImDrawList, cmd *C.ImDrawCmd) {
+	wrapDrawCallback(poolDrawCallback.Get(31), parent_list, cmd)
+}
+
+var poolDrawCallback *internal.Pool[DrawCallback, C.ImDrawCallback]
+
+func init() {
+	poolDrawCallback = internal.NewPool[DrawCallback, C.ImDrawCallback](
+		C.ImDrawCallback(C.callbackDrawCallback0),
+		C.ImDrawCallback(C.callbackDrawCallback1),
+		C.ImDrawCallback(C.callbackDrawCallback2),
+		C.ImDrawCallback(C.callbackDrawCallback3),
+		C.ImDrawCallback(C.callbackDrawCallback4),
+		C.ImDrawCallback(C.callbackDrawCallback5),
+		C.ImDrawCallback(C.callbackDrawCallback6),
+		C.ImDrawCallback(C.callbackDrawCallback7),
+		C.ImDrawCallback(C.callbackDrawCallback8),
+		C.ImDrawCallback(C.callbackDrawCallback9),
+		C.ImDrawCallback(C.callbackDrawCallback10),
+		C.ImDrawCallback(C.callbackDrawCallback11),
+		C.ImDrawCallback(C.callbackDrawCallback12),
+		C.ImDrawCallback(C.callbackDrawCallback13),
+		C.ImDrawCallback(C.callbackDrawCallback14),
+		C.ImDrawCallback(C.callbackDrawCallback15),
+		C.ImDrawCallback(C.callbackDrawCallback16),
+		C.ImDrawCallback(C.callbackDrawCallback17),
+		C.ImDrawCallback(C.callbackDrawCallback18),
+		C.ImDrawCallback(C.callbackDrawCallback19),
+		C.ImDrawCallback(C.callbackDrawCallback20),
+		C.ImDrawCallback(C.callbackDrawCallback21),
+		C.ImDrawCallback(C.callbackDrawCallback22),
+		C.ImDrawCallback(C.callbackDrawCallback23),
+		C.ImDrawCallback(C.callbackDrawCallback24),
+		C.ImDrawCallback(C.callbackDrawCallback25),
+		C.ImDrawCallback(C.callbackDrawCallback26),
+		C.ImDrawCallback(C.callbackDrawCallback27),
+		C.ImDrawCallback(C.callbackDrawCallback28),
+		C.ImDrawCallback(C.callbackDrawCallback29),
+		C.ImDrawCallback(C.callbackDrawCallback30),
+		C.ImDrawCallback(C.callbackDrawCallback31),
+	)
+}
+
+func ClearDrawCallbackPool() {
+	poolDrawCallback.Clear()
+}
+
+type (
+	ContextHookCallback  func(ctx *Context, hook *ContextHook)
+	cContextHookCallback func(ctx *C.ImGuiContext, hook *C.ImGuiContextHook)
+)
+
+func NewContextHookCallbackFromC(cvalue *C.ImGuiContextHookCallback) *ContextHookCallback {
+	result := poolContextHookCallback.Find(*cvalue)
+	return &result
+}
+
+func (c ContextHookCallback) C() (C.ImGuiContextHookCallback, func()) {
+	return poolContextHookCallback.Allocate(c), func() {}
+}
+
+func wrapContextHookCallback(cb ContextHookCallback, ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	cb(NewContextFromC(ctx), NewContextHookFromC(hook))
+}
+
+//export callbackContextHookCallback0
+func callbackContextHookCallback0(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(0), ctx, hook)
+}
+
+//export callbackContextHookCallback1
+func callbackContextHookCallback1(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(1), ctx, hook)
+}
+
+//export callbackContextHookCallback2
+func callbackContextHookCallback2(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(2), ctx, hook)
+}
+
+//export callbackContextHookCallback3
+func callbackContextHookCallback3(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(3), ctx, hook)
+}
+
+//export callbackContextHookCallback4
+func callbackContextHookCallback4(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(4), ctx, hook)
+}
+
+//export callbackContextHookCallback5
+func callbackContextHookCallback5(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(5), ctx, hook)
+}
+
+//export callbackContextHookCallback6
+func callbackContextHookCallback6(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(6), ctx, hook)
+}
+
+//export callbackContextHookCallback7
+func callbackContextHookCallback7(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(7), ctx, hook)
+}
+
+//export callbackContextHookCallback8
+func callbackContextHookCallback8(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(8), ctx, hook)
+}
+
+//export callbackContextHookCallback9
+func callbackContextHookCallback9(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(9), ctx, hook)
+}
+
+//export callbackContextHookCallback10
+func callbackContextHookCallback10(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(10), ctx, hook)
+}
+
+//export callbackContextHookCallback11
+func callbackContextHookCallback11(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(11), ctx, hook)
+}
+
+//export callbackContextHookCallback12
+func callbackContextHookCallback12(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(12), ctx, hook)
+}
+
+//export callbackContextHookCallback13
+func callbackContextHookCallback13(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(13), ctx, hook)
+}
+
+//export callbackContextHookCallback14
+func callbackContextHookCallback14(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(14), ctx, hook)
+}
+
+//export callbackContextHookCallback15
+func callbackContextHookCallback15(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(15), ctx, hook)
+}
+
+//export callbackContextHookCallback16
+func callbackContextHookCallback16(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(16), ctx, hook)
+}
+
+//export callbackContextHookCallback17
+func callbackContextHookCallback17(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(17), ctx, hook)
+}
+
+//export callbackContextHookCallback18
+func callbackContextHookCallback18(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(18), ctx, hook)
+}
+
+//export callbackContextHookCallback19
+func callbackContextHookCallback19(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(19), ctx, hook)
+}
+
+//export callbackContextHookCallback20
+func callbackContextHookCallback20(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(20), ctx, hook)
+}
+
+//export callbackContextHookCallback21
+func callbackContextHookCallback21(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(21), ctx, hook)
+}
+
+//export callbackContextHookCallback22
+func callbackContextHookCallback22(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(22), ctx, hook)
+}
+
+//export callbackContextHookCallback23
+func callbackContextHookCallback23(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(23), ctx, hook)
+}
+
+//export callbackContextHookCallback24
+func callbackContextHookCallback24(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(24), ctx, hook)
+}
+
+//export callbackContextHookCallback25
+func callbackContextHookCallback25(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(25), ctx, hook)
+}
+
+//export callbackContextHookCallback26
+func callbackContextHookCallback26(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(26), ctx, hook)
+}
+
+//export callbackContextHookCallback27
+func callbackContextHookCallback27(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(27), ctx, hook)
+}
+
+//export callbackContextHookCallback28
+func callbackContextHookCallback28(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(28), ctx, hook)
+}
+
+//export callbackContextHookCallback29
+func callbackContextHookCallback29(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(29), ctx, hook)
+}
+
+//export callbackContextHookCallback30
+func callbackContextHookCallback30(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(30), ctx, hook)
+}
+
+//export callbackContextHookCallback31
+func callbackContextHookCallback31(ctx *C.ImGuiContext, hook *C.ImGuiContextHook) {
+	wrapContextHookCallback(poolContextHookCallback.Get(31), ctx, hook)
+}
+
+var poolContextHookCallback *internal.Pool[ContextHookCallback, C.ImGuiContextHookCallback]
+
+func init() {
+	poolContextHookCallback = internal.NewPool[ContextHookCallback, C.ImGuiContextHookCallback](
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback0),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback1),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback2),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback3),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback4),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback5),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback6),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback7),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback8),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback9),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback10),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback11),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback12),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback13),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback14),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback15),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback16),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback17),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback18),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback19),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback20),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback21),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback22),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback23),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback24),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback25),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback26),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback27),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback28),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback29),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback30),
+		C.ImGuiContextHookCallback(C.callbackContextHookCallback31),
+	)
+}
+
+func ClearContextHookCallbackPool() {
+	poolContextHookCallback.Clear()
+}
+
+type (
+	ErrorCallback  func(ctx *Context, user_data unsafe.Pointer, msg string)
+	cErrorCallback func(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char)
+)
+
+func NewErrorCallbackFromC(cvalue *C.ImGuiErrorCallback) *ErrorCallback {
+	result := poolErrorCallback.Find(*cvalue)
+	return &result
+}
+
+func (c ErrorCallback) C() (C.ImGuiErrorCallback, func()) {
+	return poolErrorCallback.Allocate(c), func() {}
+}
+
+func wrapErrorCallback(cb ErrorCallback, ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	cb(NewContextFromC(ctx), unsafe.Pointer(user_data), C.GoString(msg))
+}
+
+//export callbackErrorCallback0
+func callbackErrorCallback0(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(0), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback1
+func callbackErrorCallback1(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(1), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback2
+func callbackErrorCallback2(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(2), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback3
+func callbackErrorCallback3(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(3), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback4
+func callbackErrorCallback4(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(4), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback5
+func callbackErrorCallback5(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(5), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback6
+func callbackErrorCallback6(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(6), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback7
+func callbackErrorCallback7(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(7), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback8
+func callbackErrorCallback8(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(8), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback9
+func callbackErrorCallback9(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(9), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback10
+func callbackErrorCallback10(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(10), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback11
+func callbackErrorCallback11(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(11), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback12
+func callbackErrorCallback12(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(12), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback13
+func callbackErrorCallback13(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(13), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback14
+func callbackErrorCallback14(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(14), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback15
+func callbackErrorCallback15(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(15), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback16
+func callbackErrorCallback16(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(16), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback17
+func callbackErrorCallback17(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(17), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback18
+func callbackErrorCallback18(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(18), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback19
+func callbackErrorCallback19(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(19), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback20
+func callbackErrorCallback20(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(20), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback21
+func callbackErrorCallback21(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(21), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback22
+func callbackErrorCallback22(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(22), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback23
+func callbackErrorCallback23(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(23), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback24
+func callbackErrorCallback24(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(24), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback25
+func callbackErrorCallback25(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(25), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback26
+func callbackErrorCallback26(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(26), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback27
+func callbackErrorCallback27(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(27), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback28
+func callbackErrorCallback28(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(28), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback29
+func callbackErrorCallback29(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(29), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback30
+func callbackErrorCallback30(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(30), ctx, user_data, msg)
+}
+
+//export callbackErrorCallback31
+func callbackErrorCallback31(ctx *C.ImGuiContext, user_data unsafe.Pointer, msg *C.char) {
+	wrapErrorCallback(poolErrorCallback.Get(31), ctx, user_data, msg)
+}
+
+var poolErrorCallback *internal.Pool[ErrorCallback, C.ImGuiErrorCallback]
+
+func init() {
+	poolErrorCallback = internal.NewPool[ErrorCallback, C.ImGuiErrorCallback](
+		C.ImGuiErrorCallback(C.callbackErrorCallback0),
+		C.ImGuiErrorCallback(C.callbackErrorCallback1),
+		C.ImGuiErrorCallback(C.callbackErrorCallback2),
+		C.ImGuiErrorCallback(C.callbackErrorCallback3),
+		C.ImGuiErrorCallback(C.callbackErrorCallback4),
+		C.ImGuiErrorCallback(C.callbackErrorCallback5),
+		C.ImGuiErrorCallback(C.callbackErrorCallback6),
+		C.ImGuiErrorCallback(C.callbackErrorCallback7),
+		C.ImGuiErrorCallback(C.callbackErrorCallback8),
+		C.ImGuiErrorCallback(C.callbackErrorCallback9),
+		C.ImGuiErrorCallback(C.callbackErrorCallback10),
+		C.ImGuiErrorCallback(C.callbackErrorCallback11),
+		C.ImGuiErrorCallback(C.callbackErrorCallback12),
+		C.ImGuiErrorCallback(C.callbackErrorCallback13),
+		C.ImGuiErrorCallback(C.callbackErrorCallback14),
+		C.ImGuiErrorCallback(C.callbackErrorCallback15),
+		C.ImGuiErrorCallback(C.callbackErrorCallback16),
+		C.ImGuiErrorCallback(C.callbackErrorCallback17),
+		C.ImGuiErrorCallback(C.callbackErrorCallback18),
+		C.ImGuiErrorCallback(C.callbackErrorCallback19),
+		C.ImGuiErrorCallback(C.callbackErrorCallback20),
+		C.ImGuiErrorCallback(C.callbackErrorCallback21),
+		C.ImGuiErrorCallback(C.callbackErrorCallback22),
+		C.ImGuiErrorCallback(C.callbackErrorCallback23),
+		C.ImGuiErrorCallback(C.callbackErrorCallback24),
+		C.ImGuiErrorCallback(C.callbackErrorCallback25),
+		C.ImGuiErrorCallback(C.callbackErrorCallback26),
+		C.ImGuiErrorCallback(C.callbackErrorCallback27),
+		C.ImGuiErrorCallback(C.callbackErrorCallback28),
+		C.ImGuiErrorCallback(C.callbackErrorCallback29),
+		C.ImGuiErrorCallback(C.callbackErrorCallback30),
+		C.ImGuiErrorCallback(C.callbackErrorCallback31),
+	)
+}
+
+func ClearErrorCallbackPool() {
+	poolErrorCallback.Clear()
+}
+
+type (
+	MemAllocFunc  func(sz uint64, user_data unsafe.Pointer) unsafe.Pointer
+	cMemAllocFunc func(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer
+)
+
+func NewMemAllocFuncFromC(cvalue *C.ImGuiMemAllocFunc) *MemAllocFunc {
+	result := poolMemAllocFunc.Find(*cvalue)
+	return &result
+}
+
+func (c MemAllocFunc) C() (C.ImGuiMemAllocFunc, func()) {
+	return poolMemAllocFunc.Allocate(c), func() {}
+}
+
+func wrapMemAllocFunc(cb MemAllocFunc, sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	result := cb(uint64(sz), unsafe.Pointer(user_data))
+
+	defer func() {
+	}()
+	return unsafe.Pointer(result)
+}
+
+//export callbackMemAllocFunc0
+func callbackMemAllocFunc0(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(0), sz, user_data)
+}
+
+//export callbackMemAllocFunc1
+func callbackMemAllocFunc1(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(1), sz, user_data)
+}
+
+//export callbackMemAllocFunc2
+func callbackMemAllocFunc2(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(2), sz, user_data)
+}
+
+//export callbackMemAllocFunc3
+func callbackMemAllocFunc3(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(3), sz, user_data)
+}
+
+//export callbackMemAllocFunc4
+func callbackMemAllocFunc4(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(4), sz, user_data)
+}
+
+//export callbackMemAllocFunc5
+func callbackMemAllocFunc5(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(5), sz, user_data)
+}
+
+//export callbackMemAllocFunc6
+func callbackMemAllocFunc6(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(6), sz, user_data)
+}
+
+//export callbackMemAllocFunc7
+func callbackMemAllocFunc7(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(7), sz, user_data)
+}
+
+//export callbackMemAllocFunc8
+func callbackMemAllocFunc8(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(8), sz, user_data)
+}
+
+//export callbackMemAllocFunc9
+func callbackMemAllocFunc9(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(9), sz, user_data)
+}
+
+//export callbackMemAllocFunc10
+func callbackMemAllocFunc10(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(10), sz, user_data)
+}
+
+//export callbackMemAllocFunc11
+func callbackMemAllocFunc11(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(11), sz, user_data)
+}
+
+//export callbackMemAllocFunc12
+func callbackMemAllocFunc12(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(12), sz, user_data)
+}
+
+//export callbackMemAllocFunc13
+func callbackMemAllocFunc13(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(13), sz, user_data)
+}
+
+//export callbackMemAllocFunc14
+func callbackMemAllocFunc14(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(14), sz, user_data)
+}
+
+//export callbackMemAllocFunc15
+func callbackMemAllocFunc15(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(15), sz, user_data)
+}
+
+//export callbackMemAllocFunc16
+func callbackMemAllocFunc16(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(16), sz, user_data)
+}
+
+//export callbackMemAllocFunc17
+func callbackMemAllocFunc17(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(17), sz, user_data)
+}
+
+//export callbackMemAllocFunc18
+func callbackMemAllocFunc18(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(18), sz, user_data)
+}
+
+//export callbackMemAllocFunc19
+func callbackMemAllocFunc19(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(19), sz, user_data)
+}
+
+//export callbackMemAllocFunc20
+func callbackMemAllocFunc20(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(20), sz, user_data)
+}
+
+//export callbackMemAllocFunc21
+func callbackMemAllocFunc21(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(21), sz, user_data)
+}
+
+//export callbackMemAllocFunc22
+func callbackMemAllocFunc22(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(22), sz, user_data)
+}
+
+//export callbackMemAllocFunc23
+func callbackMemAllocFunc23(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(23), sz, user_data)
+}
+
+//export callbackMemAllocFunc24
+func callbackMemAllocFunc24(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(24), sz, user_data)
+}
+
+//export callbackMemAllocFunc25
+func callbackMemAllocFunc25(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(25), sz, user_data)
+}
+
+//export callbackMemAllocFunc26
+func callbackMemAllocFunc26(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(26), sz, user_data)
+}
+
+//export callbackMemAllocFunc27
+func callbackMemAllocFunc27(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(27), sz, user_data)
+}
+
+//export callbackMemAllocFunc28
+func callbackMemAllocFunc28(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(28), sz, user_data)
+}
+
+//export callbackMemAllocFunc29
+func callbackMemAllocFunc29(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(29), sz, user_data)
+}
+
+//export callbackMemAllocFunc30
+func callbackMemAllocFunc30(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(30), sz, user_data)
+}
+
+//export callbackMemAllocFunc31
+func callbackMemAllocFunc31(sz C.size_t, user_data unsafe.Pointer) unsafe.Pointer {
+	return wrapMemAllocFunc(poolMemAllocFunc.Get(31), sz, user_data)
+}
+
+var poolMemAllocFunc *internal.Pool[MemAllocFunc, C.ImGuiMemAllocFunc]
+
+func init() {
+	poolMemAllocFunc = internal.NewPool[MemAllocFunc, C.ImGuiMemAllocFunc](
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc0),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc1),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc2),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc3),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc4),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc5),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc6),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc7),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc8),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc9),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc10),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc11),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc12),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc13),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc14),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc15),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc16),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc17),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc18),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc19),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc20),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc21),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc22),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc23),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc24),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc25),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc26),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc27),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc28),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc29),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc30),
+		C.ImGuiMemAllocFunc(C.callbackMemAllocFunc31),
+	)
+}
+
+func ClearMemAllocFuncPool() {
+	poolMemAllocFunc.Clear()
+}
+
+type (
+	MemFreeFunc  func(ptr, user_data unsafe.Pointer)
+	cMemFreeFunc func(ptr, user_data unsafe.Pointer)
+)
+
+func NewMemFreeFuncFromC(cvalue *C.ImGuiMemFreeFunc) *MemFreeFunc {
+	result := poolMemFreeFunc.Find(*cvalue)
+	return &result
+}
+
+func (c MemFreeFunc) C() (C.ImGuiMemFreeFunc, func()) {
+	return poolMemFreeFunc.Allocate(c), func() {}
+}
+
+func wrapMemFreeFunc(cb MemFreeFunc, ptr, user_data unsafe.Pointer) {
+	cb(unsafe.Pointer(ptr), unsafe.Pointer(user_data))
+}
+
+//export callbackMemFreeFunc0
+func callbackMemFreeFunc0(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(0), ptr, user_data)
+}
+
+//export callbackMemFreeFunc1
+func callbackMemFreeFunc1(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(1), ptr, user_data)
+}
+
+//export callbackMemFreeFunc2
+func callbackMemFreeFunc2(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(2), ptr, user_data)
+}
+
+//export callbackMemFreeFunc3
+func callbackMemFreeFunc3(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(3), ptr, user_data)
+}
+
+//export callbackMemFreeFunc4
+func callbackMemFreeFunc4(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(4), ptr, user_data)
+}
+
+//export callbackMemFreeFunc5
+func callbackMemFreeFunc5(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(5), ptr, user_data)
+}
+
+//export callbackMemFreeFunc6
+func callbackMemFreeFunc6(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(6), ptr, user_data)
+}
+
+//export callbackMemFreeFunc7
+func callbackMemFreeFunc7(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(7), ptr, user_data)
+}
+
+//export callbackMemFreeFunc8
+func callbackMemFreeFunc8(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(8), ptr, user_data)
+}
+
+//export callbackMemFreeFunc9
+func callbackMemFreeFunc9(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(9), ptr, user_data)
+}
+
+//export callbackMemFreeFunc10
+func callbackMemFreeFunc10(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(10), ptr, user_data)
+}
+
+//export callbackMemFreeFunc11
+func callbackMemFreeFunc11(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(11), ptr, user_data)
+}
+
+//export callbackMemFreeFunc12
+func callbackMemFreeFunc12(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(12), ptr, user_data)
+}
+
+//export callbackMemFreeFunc13
+func callbackMemFreeFunc13(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(13), ptr, user_data)
+}
+
+//export callbackMemFreeFunc14
+func callbackMemFreeFunc14(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(14), ptr, user_data)
+}
+
+//export callbackMemFreeFunc15
+func callbackMemFreeFunc15(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(15), ptr, user_data)
+}
+
+//export callbackMemFreeFunc16
+func callbackMemFreeFunc16(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(16), ptr, user_data)
+}
+
+//export callbackMemFreeFunc17
+func callbackMemFreeFunc17(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(17), ptr, user_data)
+}
+
+//export callbackMemFreeFunc18
+func callbackMemFreeFunc18(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(18), ptr, user_data)
+}
+
+//export callbackMemFreeFunc19
+func callbackMemFreeFunc19(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(19), ptr, user_data)
+}
+
+//export callbackMemFreeFunc20
+func callbackMemFreeFunc20(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(20), ptr, user_data)
+}
+
+//export callbackMemFreeFunc21
+func callbackMemFreeFunc21(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(21), ptr, user_data)
+}
+
+//export callbackMemFreeFunc22
+func callbackMemFreeFunc22(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(22), ptr, user_data)
+}
+
+//export callbackMemFreeFunc23
+func callbackMemFreeFunc23(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(23), ptr, user_data)
+}
+
+//export callbackMemFreeFunc24
+func callbackMemFreeFunc24(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(24), ptr, user_data)
+}
+
+//export callbackMemFreeFunc25
+func callbackMemFreeFunc25(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(25), ptr, user_data)
+}
+
+//export callbackMemFreeFunc26
+func callbackMemFreeFunc26(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(26), ptr, user_data)
+}
+
+//export callbackMemFreeFunc27
+func callbackMemFreeFunc27(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(27), ptr, user_data)
+}
+
+//export callbackMemFreeFunc28
+func callbackMemFreeFunc28(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(28), ptr, user_data)
+}
+
+//export callbackMemFreeFunc29
+func callbackMemFreeFunc29(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(29), ptr, user_data)
+}
+
+//export callbackMemFreeFunc30
+func callbackMemFreeFunc30(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(30), ptr, user_data)
+}
+
+//export callbackMemFreeFunc31
+func callbackMemFreeFunc31(ptr, user_data unsafe.Pointer) {
+	wrapMemFreeFunc(poolMemFreeFunc.Get(31), ptr, user_data)
+}
+
+var poolMemFreeFunc *internal.Pool[MemFreeFunc, C.ImGuiMemFreeFunc]
+
+func init() {
+	poolMemFreeFunc = internal.NewPool[MemFreeFunc, C.ImGuiMemFreeFunc](
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc0),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc1),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc2),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc3),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc4),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc5),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc6),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc7),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc8),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc9),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc10),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc11),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc12),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc13),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc14),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc15),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc16),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc17),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc18),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc19),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc20),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc21),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc22),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc23),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc24),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc25),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc26),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc27),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc28),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc29),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc30),
+		C.ImGuiMemFreeFunc(C.callbackMemFreeFunc31),
+	)
+}
+
+func ClearMemFreeFuncPool() {
+	poolMemFreeFunc.Clear()
+}
+
+type (
+	SizeCallback  func(data *SizeCallbackData)
+	cSizeCallback func(data *C.ImGuiSizeCallbackData)
+)
+
+func NewSizeCallbackFromC(cvalue *C.ImGuiSizeCallback) *SizeCallback {
+	result := poolSizeCallback.Find(*cvalue)
+	return &result
+}
+
+func (c SizeCallback) C() (C.ImGuiSizeCallback, func()) {
+	return poolSizeCallback.Allocate(c), func() {}
+}
+
+func wrapSizeCallback(cb SizeCallback, data *C.ImGuiSizeCallbackData) {
+	cb(NewSizeCallbackDataFromC(data))
+}
+
+//export callbackSizeCallback0
+func callbackSizeCallback0(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(0), data)
+}
+
+//export callbackSizeCallback1
+func callbackSizeCallback1(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(1), data)
+}
+
+//export callbackSizeCallback2
+func callbackSizeCallback2(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(2), data)
+}
+
+//export callbackSizeCallback3
+func callbackSizeCallback3(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(3), data)
+}
+
+//export callbackSizeCallback4
+func callbackSizeCallback4(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(4), data)
+}
+
+//export callbackSizeCallback5
+func callbackSizeCallback5(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(5), data)
+}
+
+//export callbackSizeCallback6
+func callbackSizeCallback6(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(6), data)
+}
+
+//export callbackSizeCallback7
+func callbackSizeCallback7(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(7), data)
+}
+
+//export callbackSizeCallback8
+func callbackSizeCallback8(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(8), data)
+}
+
+//export callbackSizeCallback9
+func callbackSizeCallback9(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(9), data)
+}
+
+//export callbackSizeCallback10
+func callbackSizeCallback10(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(10), data)
+}
+
+//export callbackSizeCallback11
+func callbackSizeCallback11(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(11), data)
+}
+
+//export callbackSizeCallback12
+func callbackSizeCallback12(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(12), data)
+}
+
+//export callbackSizeCallback13
+func callbackSizeCallback13(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(13), data)
+}
+
+//export callbackSizeCallback14
+func callbackSizeCallback14(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(14), data)
+}
+
+//export callbackSizeCallback15
+func callbackSizeCallback15(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(15), data)
+}
+
+//export callbackSizeCallback16
+func callbackSizeCallback16(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(16), data)
+}
+
+//export callbackSizeCallback17
+func callbackSizeCallback17(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(17), data)
+}
+
+//export callbackSizeCallback18
+func callbackSizeCallback18(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(18), data)
+}
+
+//export callbackSizeCallback19
+func callbackSizeCallback19(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(19), data)
+}
+
+//export callbackSizeCallback20
+func callbackSizeCallback20(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(20), data)
+}
+
+//export callbackSizeCallback21
+func callbackSizeCallback21(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(21), data)
+}
+
+//export callbackSizeCallback22
+func callbackSizeCallback22(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(22), data)
+}
+
+//export callbackSizeCallback23
+func callbackSizeCallback23(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(23), data)
+}
+
+//export callbackSizeCallback24
+func callbackSizeCallback24(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(24), data)
+}
+
+//export callbackSizeCallback25
+func callbackSizeCallback25(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(25), data)
+}
+
+//export callbackSizeCallback26
+func callbackSizeCallback26(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(26), data)
+}
+
+//export callbackSizeCallback27
+func callbackSizeCallback27(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(27), data)
+}
+
+//export callbackSizeCallback28
+func callbackSizeCallback28(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(28), data)
+}
+
+//export callbackSizeCallback29
+func callbackSizeCallback29(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(29), data)
+}
+
+//export callbackSizeCallback30
+func callbackSizeCallback30(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(30), data)
+}
+
+//export callbackSizeCallback31
+func callbackSizeCallback31(data *C.ImGuiSizeCallbackData) {
+	wrapSizeCallback(poolSizeCallback.Get(31), data)
+}
+
+var poolSizeCallback *internal.Pool[SizeCallback, C.ImGuiSizeCallback]
+
+func init() {
+	poolSizeCallback = internal.NewPool[SizeCallback, C.ImGuiSizeCallback](
+		C.ImGuiSizeCallback(C.callbackSizeCallback0),
+		C.ImGuiSizeCallback(C.callbackSizeCallback1),
+		C.ImGuiSizeCallback(C.callbackSizeCallback2),
+		C.ImGuiSizeCallback(C.callbackSizeCallback3),
+		C.ImGuiSizeCallback(C.callbackSizeCallback4),
+		C.ImGuiSizeCallback(C.callbackSizeCallback5),
+		C.ImGuiSizeCallback(C.callbackSizeCallback6),
+		C.ImGuiSizeCallback(C.callbackSizeCallback7),
+		C.ImGuiSizeCallback(C.callbackSizeCallback8),
+		C.ImGuiSizeCallback(C.callbackSizeCallback9),
+		C.ImGuiSizeCallback(C.callbackSizeCallback10),
+		C.ImGuiSizeCallback(C.callbackSizeCallback11),
+		C.ImGuiSizeCallback(C.callbackSizeCallback12),
+		C.ImGuiSizeCallback(C.callbackSizeCallback13),
+		C.ImGuiSizeCallback(C.callbackSizeCallback14),
+		C.ImGuiSizeCallback(C.callbackSizeCallback15),
+		C.ImGuiSizeCallback(C.callbackSizeCallback16),
+		C.ImGuiSizeCallback(C.callbackSizeCallback17),
+		C.ImGuiSizeCallback(C.callbackSizeCallback18),
+		C.ImGuiSizeCallback(C.callbackSizeCallback19),
+		C.ImGuiSizeCallback(C.callbackSizeCallback20),
+		C.ImGuiSizeCallback(C.callbackSizeCallback21),
+		C.ImGuiSizeCallback(C.callbackSizeCallback22),
+		C.ImGuiSizeCallback(C.callbackSizeCallback23),
+		C.ImGuiSizeCallback(C.callbackSizeCallback24),
+		C.ImGuiSizeCallback(C.callbackSizeCallback25),
+		C.ImGuiSizeCallback(C.callbackSizeCallback26),
+		C.ImGuiSizeCallback(C.callbackSizeCallback27),
+		C.ImGuiSizeCallback(C.callbackSizeCallback28),
+		C.ImGuiSizeCallback(C.callbackSizeCallback29),
+		C.ImGuiSizeCallback(C.callbackSizeCallback30),
+		C.ImGuiSizeCallback(C.callbackSizeCallback31),
+	)
+}
+
+func ClearSizeCallbackPool() {
+	poolSizeCallback.Clear()
+}
