@@ -96,7 +96,7 @@ SDL_Window* igCreateSDLWindow(const char* title, int width, int height,VoidCallb
         afterCreateContext();
     }
 
-    ImGuiIO* io = igGetIO();
+    ImGuiIO* io = igGetIO_Nil();
     io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io->ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     io->ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
@@ -149,7 +149,7 @@ void igRefresh() {
 
 void igSDLRunLoop(SDL_Window *window, VoidCallback loop, VoidCallback beforeRender, VoidCallback afterRender,
                VoidCallback beforeDestroyContext) {
-    ImGuiIO* io = igGetIO();
+    ImGuiIO* io = igGetIO_Nil();
     // Main loop
     bool done = false;
 #ifdef __EMSCRIPTEN__
