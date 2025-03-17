@@ -6304,7 +6304,7 @@ func InternalIOContextPtr(ctx *Context) *IO {
 }
 
 // access the ImGuiIO structure (mouse/keyboard/gamepad inputs, time, various configuration options/flags)
-func IO() *IO {
+func CurrentIO() *IO {
 	return NewIOFromC(C.igGetIO_Nil())
 }
 
