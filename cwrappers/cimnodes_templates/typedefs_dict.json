@@ -7,7 +7,7 @@
   "ImNodesEditorContext": "struct ImNodesEditorContext",
   "ImNodesIO": "struct ImNodesIO",
   "ImNodesMiniMapLocation": "int",
-  "ImNodesMiniMapNodeHoveringCallback": "void(*)(int,void*);",
+  "ImNodesMiniMapNodeHoveringCallback": "void (*)(int, void*);",
   "ImNodesMiniMapNodeHoveringCallbackUserData": "void*",
   "ImNodesPinShape": "int",
   "ImNodesStyle": "struct ImNodesStyle",

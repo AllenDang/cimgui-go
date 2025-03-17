@@ -2072,6 +2072,10 @@ func GetMarkerName(idx Marker) string {
 	return C.GoString(C.ImPlot_GetMarkerName(C.ImPlotMarker(idx)))
 }
 
+func GetMonth(t PlotTime) int32 {
+	return int32(C.ImPlot_GetMonth(internal.ReinterpretCast[C.ImPlotTime](t.ToC())))
+}
+
 func GetPlot(title string) *Plot {
 	titleArg, titleFin := internal.WrapString[C.char](title)
 
@@ -3109,6 +3113,17 @@ func NextColormapColorU32() uint32 {
 
 func NiceNum(x float64, round bool) float64 {
 	return float64(C.ImPlot_NiceNum(C.double(x), C.bool(round)))
+}
+
+func Now() PlotTime {
+	pOut := new(PlotTime)
+	pOutArg, pOutFin := internal.Wrap(pOut)
+
+	C.ImPlot_Now(internal.ReinterpretCast[*C.ImPlotTime](pOutArg))
+
+	pOutFin()
+
+	return *pOut
 }
 
 func OrderOfMagnitude(val float64) int32 {
@@ -7393,6 +7408,17 @@ func TagYStr(y float64, col imgui.Vec4, fmt string) {
 	C.wrap_ImPlot_TagY_Str(C.double(y), internal.ReinterpretCast[C.ImVec4](col.ToC()), fmtArg)
 
 	fmtFin()
+}
+
+func Today() PlotTime {
+	pOut := new(PlotTime)
+	pOutArg, pOutFin := internal.Wrap(pOut)
+
+	C.ImPlot_Today(internal.ReinterpretCast[*C.ImPlotTime](pOutArg))
+
+	pOutFin()
+
+	return *pOut
 }
 
 func TransformForwardLog10(v float64, noname1 uintptr) float64 {

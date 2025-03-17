@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 extern void wrap_ImDrawList_AddCallbackV(ImDrawList* self,ImDrawCallback callback,uintptr_t userdata,size_t userdata_size);
-extern void wrap_ImDrawList_AddText_FontPtrV(ImDrawList* self,const ImFont* font,float font_size,const ImVec2 pos,ImU32 col,const char* text_begin,float wrap_width,const ImVec4* cpu_fine_clip_rect);
+extern void wrap_ImDrawList_AddText_FontPtrV(ImDrawList* self,ImFont* font,float font_size,const ImVec2 pos,ImU32 col,const char* text_begin,float wrap_width,const ImVec4* cpu_fine_clip_rect);
 extern void wrap_ImDrawList_AddText_Vec2V(ImDrawList* self,const ImVec2 pos,ImU32 col,const char* text_begin);
 extern ImFont* wrap_ImFontAtlas_AddFontFromMemoryCompressedTTFV(ImFontAtlas* self,const uintptr_t compressed_font_data,int compressed_font_data_size,float size_pixels,const ImFontConfig* font_cfg,const ImWchar* glyph_ranges);
 extern ImFont* wrap_ImFontAtlas_AddFontFromMemoryTTFV(ImFontAtlas* self,uintptr_t font_data,int font_data_size,float size_pixels,const ImFontConfig* font_cfg,const ImWchar* glyph_ranges);
@@ -18,14 +18,14 @@ extern void wrap_ImFontGlyphRangesBuilder_AddTextV(ImFontGlyphRangesBuilder* sel
 extern void wrap_ImFont_CalcTextSizeAV(ImVec2 *pOut,ImFont* self,float size,float max_width,float wrap_width,const char* text_begin,const char** remaining);
 extern const char* wrap_ImFont_CalcWordWrapPositionA(ImFont* self,float scale,const char* text,const int text_len,float wrap_width);
 extern void wrap_ImFont_RenderTextV(ImFont* self,ImDrawList* draw_list,float size,const ImVec2 pos,ImU32 col,const ImVec4 clip_rect,const char* text_begin,float wrap_width,bool cpu_fine_clip);
-extern uintptr_t wrap_ImGuiDataVarInfo_GetVarPtr(ImGuiDataVarInfo* self,uintptr_t parent);
 extern void wrap_ImGuiInputTextCallbackData_InsertCharsV(ImGuiInputTextCallbackData* self,int pos,const char* text,const int text_len);
 extern ImGuiPtrOrIndex* wrap_ImGuiPtrOrIndex_ImGuiPtrOrIndex_Ptr(uintptr_t ptr);
 extern ImGuiStoragePair* wrap_ImGuiStoragePair_ImGuiStoragePair_Ptr(ImGuiID _key,uintptr_t _val);
 extern uintptr_t wrap_ImGuiStorage_GetVoidPtr(ImGuiStorage* self,ImGuiID key);
 extern void** wrap_ImGuiStorage_GetVoidPtrRefV(ImGuiStorage* self,ImGuiID key,uintptr_t default_val);
 extern void wrap_ImGuiStorage_SetVoidPtr(ImGuiStorage* self,ImGuiID key,uintptr_t val);
-extern void wrap_ImGuiTextBuffer_appendf(struct ImGuiTextBuffer* buffer, const char* fmt);
+extern uintptr_t wrap_ImGuiStyleVarInfo_GetVarPtr(ImGuiStyleVarInfo* self,uintptr_t parent);
+extern void wrap_ImGuiTextBuffer_appendf(ImGuiTextBuffer* self, const char* fmt);
 extern bool wrap_ImGuiTextFilter_PassFilterV(ImGuiTextFilter* self,const char* text,const int text_len);
 extern ImGuiID wrap_ImGuiWindow_GetID_Ptr(ImGuiWindow* self,const uintptr_t ptr);
 extern void wrap_igBulletText(const char* fmt);
@@ -118,7 +118,7 @@ extern void wrap_ImDrawList_AddNgon(ImDrawList* self,const ImVec2 center,float r
 extern void wrap_ImDrawList_AddQuad(ImDrawList* self,const ImVec2 p1,const ImVec2 p2,const ImVec2 p3,const ImVec2 p4,ImU32 col);
 extern void wrap_ImDrawList_AddRect(ImDrawList* self,const ImVec2 p_min,const ImVec2 p_max,ImU32 col);
 extern void wrap_ImDrawList_AddRectFilled(ImDrawList* self,const ImVec2 p_min,const ImVec2 p_max,ImU32 col);
-extern void wrap_ImDrawList_AddText_FontPtr(ImDrawList* self,const ImFont* font,float font_size,const ImVec2 pos,ImU32 col,const char* text_begin);
+extern void wrap_ImDrawList_AddText_FontPtr(ImDrawList* self,ImFont* font,float font_size,const ImVec2 pos,ImU32 col,const char* text_begin);
 extern void wrap_ImDrawList_AddText_Vec2(ImDrawList* self,const ImVec2 pos,ImU32 col,const char* text_begin);
 extern void wrap_ImDrawList_AddTriangle(ImDrawList* self,const ImVec2 p1,const ImVec2 p2,const ImVec2 p3,ImU32 col);
 extern void wrap_ImDrawList_PathArcTo(ImDrawList* self,const ImVec2 center,float radius,float a_min,float a_max);
@@ -229,7 +229,8 @@ extern ImGuiID wrap_igImHashStr(const char* data);
 extern int wrap_igImTextStrFromUtf8(ImWchar* out_buf,int out_buf_size,const char* in_text,const char* in_text_end);
 extern void wrap_igImage(ImTextureID user_texture_id,const ImVec2 image_size);
 extern bool wrap_igImageButton(const char* str_id,ImTextureID user_texture_id,const ImVec2 image_size);
-extern bool wrap_igImageButtonEx(ImGuiID id,ImTextureID texture_id,const ImVec2 image_size,const ImVec2 uv0,const ImVec2 uv1,const ImVec4 bg_col,const ImVec4 tint_col);
+extern bool wrap_igImageButtonEx(ImGuiID id,ImTextureID user_texture_id,const ImVec2 image_size,const ImVec2 uv0,const ImVec2 uv1,const ImVec4 bg_col,const ImVec4 tint_col);
+extern void wrap_igImageWithBg(ImTextureID user_texture_id,const ImVec2 image_size);
 extern void wrap_igIndent();
 extern bool wrap_igInputDouble(const char* label,double* v);
 extern bool wrap_igInputFloat(const char* label,float* v);
@@ -300,6 +301,7 @@ extern const char* wrap_igSaveIniSettingsToMemory();
 extern void wrap_igScrollToItem();
 extern void wrap_igScrollToRect(ImGuiWindow* window,const ImRect rect);
 extern void wrap_igScrollToRectEx(ImVec2* pOut,ImGuiWindow* window,const ImRect rect);
+extern bool wrap_igScrollbarEx(const ImRect bb,ImGuiID id,ImGuiAxis axis,ImS64* p_scroll_v,ImS64 avail_v,ImS64 contents_v);
 extern bool wrap_igSelectable_Bool(const char* label);
 extern bool wrap_igSelectable_BoolPtr(const char* label,bool* p_selected);
 extern void wrap_igSeparatorEx(ImGuiSeparatorFlags flags);

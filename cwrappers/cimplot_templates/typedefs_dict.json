@@ -23,8 +23,8 @@
   "ImPlotDummyFlags": "int",
   "ImPlotErrorBarsFlags": "int",
   "ImPlotFlags": "int",
-  "ImPlotFormatter": "int(*)(double value,char* buff,int size,void* user_data);",
-  "ImPlotGetter": "ImPlotPoint(*)(int idx,void* user_data);",
+  "ImPlotFormatter": "int (*)(double value, char* buff, int size, void* user_data);",
+  "ImPlotGetter": "ImPlotPoint (*)(int idx, void* user_data);",
   "ImPlotHeatmapFlags": "int",
   "ImPlotHistogramFlags": "int",
   "ImPlotImageFlags": "int",
@@ -37,7 +37,7 @@
   "ImPlotLegendFlags": "int",
   "ImPlotLineFlags": "int",
   "ImPlotLocation": "int",
-  "ImPlotLocator": "void(*)(ImPlotTicker& ticker,const ImPlotRange& range,float pixels,bool vertical,ImPlotFormatter formatter,void* formatter_data);",
+  "ImPlotLocator": "void (*)(ImPlotTicker& ticker, const ImPlotRange& range, float pixels, bool vertical, ImPlotFormatter formatter, void* formatter_data);",
   "ImPlotMarker": "int",
   "ImPlotMouseTextFlags": "int",
   "ImPlotNextItemData": "struct ImPlotNextItemData",
@@ -65,5 +65,5 @@
   "ImPlotTime": "struct ImPlotTime",
   "ImPlotTimeFmt": "int",
   "ImPlotTimeUnit": "int",
-  "ImPlotTransform": "double(*)(double value,void* user_data);"
+  "ImPlotTransform": "double (*)(double value, void* user_data);"
 }

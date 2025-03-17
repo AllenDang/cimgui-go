@@ -326,12 +326,14 @@ const (
 	ColorEditFlagsNoDragDrop ColorEditFlags = 512
 	//              // ColorButton: disable border (which is enforced by default)
 	ColorEditFlagsNoBorder ColorEditFlags = 1024
+	//              // ColorEdit, ColorPicker, ColorButton: disable alpha in the preview,. Contrary to _NoAlpha it may still be edited when calling ColorEdit4()/ColorPicker4(). For ColorButton() this does the same as _NoAlpha.
+	ColorEditFlagsAlphaOpaque ColorEditFlags = 2048
+	//              // ColorEdit, ColorPicker, ColorButton: disable rendering a checkerboard background behind transparent color.
+	ColorEditFlagsAlphaNoBg ColorEditFlags = 4096
+	//              // ColorEdit, ColorPicker, ColorButton: display half opaque / half transparent preview.
+	ColorEditFlagsAlphaPreviewHalf ColorEditFlags = 8192
 	//              // ColorEdit, ColorPicker: show vertical alpha bar/gradient in picker.
 	ColorEditFlagsAlphaBar ColorEditFlags = 65536
-	//              // ColorEdit, ColorPicker, ColorButton: display preview as a transparent color over a checkerboard, instead of opaque.
-	ColorEditFlagsAlphaPreview ColorEditFlags = 131072
-	//              // ColorEdit, ColorPicker, ColorButton: display half opaque / half checkerboard, instead of opaque.
-	ColorEditFlagsAlphaPreviewHalf ColorEditFlags = 262144
 	//              // (WIP) ColorEdit: Currently only disable 0.0f..1.0f limits in RGBA edition (note: you probably want to use ImGuiColorEditFlags_Float flag as well).
 	ColorEditFlagsHDR ColorEditFlags = 524288
 	// [Display]    // ColorEdit: override _display_ type among RGB/HSV/Hex. ColorPicker: select any combination using one or more of RGB/HSV/Hex.
@@ -353,6 +355,7 @@ const (
 	// [Input]      // ColorEdit, ColorPicker: input and output data in HSV format.
 	ColorEditFlagsInputHSV       ColorEditFlags = 268435456
 	ColorEditFlagsDefaultOptions ColorEditFlags = 177209344
+	ColorEditFlagsAlphaMask      ColorEditFlags = 14338
 	ColorEditFlagsDisplayMask    ColorEditFlags = 7340032
 	ColorEditFlagsDataTypeMask   ColorEditFlags = 25165824
 	ColorEditFlagsPickerMask     ColorEditFlags = 100663296
@@ -471,9 +474,8 @@ const (
 type DataTypePrivate int32
 
 const (
-	DataTypeString  DataTypePrivate = 12
-	DataTypePointer DataTypePrivate = 13
-	DataTypeID      DataTypePrivate = 14
+	DataTypePointer DataTypePrivate = 12
+	DataTypeID      DataTypePrivate = 13
 )
 
 // A primary data type
@@ -502,10 +504,13 @@ const (
 	// double
 	DataTypeDouble DataType = 9
 	// bool (provided for user convenience, not supported by scalar widgets)
-	DataTypeBool  DataType = 10
-	DataTypeCOUNT DataType = 11
+	DataTypeBool DataType = 10
+	// char* (provided for user convenience, not supported by scalar widgets)
+	DataTypeString DataType = 11
+	DataTypeCOUNT  DataType = 12
 )
 
+// See IMGUI_DEBUG_LOG() and IMGUI_DEBUG_LOG_XXX() macros.
 // original name: ImGuiDebugLogFlags_
 type DebugLogFlags int32
 
@@ -520,10 +525,11 @@ const (
 	DebugLogFlagsEventClipper      DebugLogFlags = 32
 	DebugLogFlagsEventSelection    DebugLogFlags = 64
 	DebugLogFlagsEventIO           DebugLogFlags = 128
-	DebugLogFlagsEventInputRouting DebugLogFlags = 256
-	DebugLogFlagsEventDocking      DebugLogFlags = 512
-	DebugLogFlagsEventViewport     DebugLogFlags = 1024
-	DebugLogFlagsEventMask         DebugLogFlags = 2047
+	DebugLogFlagsEventFont         DebugLogFlags = 256
+	DebugLogFlagsEventInputRouting DebugLogFlags = 512
+	DebugLogFlagsEventDocking      DebugLogFlags = 1024
+	DebugLogFlagsEventViewport     DebugLogFlags = 2048
+	DebugLogFlagsEventMask         DebugLogFlags = 4095
 	// Also send output to TTY
 	DebugLogFlagsOutputToTTY DebugLogFlags = 1048576
 	// Also send output to Test Engine
@@ -678,6 +684,39 @@ const (
 	// Consider docking hierarchy (treat dockspace host as parent of docked window) (when used with _ChildWindows or _RootWindow)
 	FocusedFlagsDockHierarchy       FocusedFlags = 16
 	FocusedFlagsRootAndChildWindows FocusedFlags = 3
+)
+
+// Hinting greatly impacts visuals (and glyph sizes).
+// - By default, hinting is enabled and the font's native hinter is preferred over the auto-hinter.
+// - When disabled, FreeType generates blurrier glyphs, more or less matches the stb_truetype.h
+// - The Default hinting mode usually looks good, but may distort glyphs in an unusual way.
+// - The Light hinting mode generates fuzzier glyphs but better matches Microsoft's rasterizer.
+// You can set those flags globaly in ImFontAtlas::FontBuilderFlags
+// You can set those flags on a per font basis in ImFontConfig::FontBuilderFlags
+// original name: ImGuiFreeTypeBuilderFlags
+type FreeTypeBuilderFlags int32
+
+const (
+	// Disable hinting. This generally generates 'blurrier' bitmap glyphs when the glyph are rendered in any of the anti-aliased modes.
+	FreeTypeBuilderFlagsNoHinting FreeTypeBuilderFlags = 1
+	// Disable auto-hinter.
+	FreeTypeBuilderFlagsNoAutoHint FreeTypeBuilderFlags = 2
+	// Indicates that the auto-hinter is preferred over the font's native hinter.
+	FreeTypeBuilderFlagsForceAutoHint FreeTypeBuilderFlags = 4
+	// A lighter hinting algorithm for gray-level modes. Many generated glyphs are fuzzier but better resemble their original shape. This is achieved by snapping glyphs to the pixel grid only vertically (Y-axis), as is done by Microsoft's ClearType and Adobe's proprietary font renderer. This preserves inter-glyph spacing in horizontal text.
+	FreeTypeBuilderFlagsLightHinting FreeTypeBuilderFlags = 8
+	// Strong hinting algorithm that should only be used for monochrome output.
+	FreeTypeBuilderFlagsMonoHinting FreeTypeBuilderFlags = 16
+	// Styling: Should we artificially embolden the font?
+	FreeTypeBuilderFlagsBold FreeTypeBuilderFlags = 32
+	// Styling: Should we slant the font, emulating italic style?
+	FreeTypeBuilderFlagsOblique FreeTypeBuilderFlags = 64
+	// Disable anti-aliasing. Combine this with MonoHinting for best results!
+	FreeTypeBuilderFlagsMonochrome FreeTypeBuilderFlags = 128
+	// Enable FreeType color-layered glyphs
+	FreeTypeBuilderFlagsLoadColor FreeTypeBuilderFlags = 256
+	// Enable FreeType bitmap glyphs
+	FreeTypeBuilderFlagsBitmap FreeTypeBuilderFlags = 512
 )
 
 // Extend ImGuiHoveredFlags_
@@ -895,18 +934,20 @@ const (
 	InputTextFlagsNoHorizontalScroll InputTextFlags = 32768
 	// Disable undo/redo. Note that input text owns the text data while active, if you want to provide your own undo/redo stack you need e.g. to call ClearActiveID().
 	InputTextFlagsNoUndoRedo InputTextFlags = 65536
+	// When text doesn't fit, elide left side to ensure right side stays visible. Useful for path/filenames. Single-line only!
+	InputTextFlagsElideLeft InputTextFlags = 131072
 	// Callback on pressing TAB (for completion handling)
-	InputTextFlagsCallbackCompletion InputTextFlags = 131072
+	InputTextFlagsCallbackCompletion InputTextFlags = 262144
 	// Callback on pressing Up/Down arrows (for history handling)
-	InputTextFlagsCallbackHistory InputTextFlags = 262144
+	InputTextFlagsCallbackHistory InputTextFlags = 524288
 	// Callback on each iteration. User code may query cursor position, modify text buffer.
-	InputTextFlagsCallbackAlways InputTextFlags = 524288
+	InputTextFlagsCallbackAlways InputTextFlags = 1048576
 	// Callback on character inputs to replace or discard them. Modify 'EventChar' to replace or discard, or return 1 in callback to discard.
-	InputTextFlagsCallbackCharFilter InputTextFlags = 1048576
+	InputTextFlagsCallbackCharFilter InputTextFlags = 2097152
 	// Callback on buffer capacity changes request (beyond 'buf_size' parameter value), allowing the string to grow. Notify when the string wants to be resized (for string types which hold a cache of their Size). You will be provided a new BufSize in the callback and NEED to honor it. (see misc/cpp/imgui_stdlib.h for an example of using this)
-	InputTextFlagsCallbackResize InputTextFlags = 2097152
-	// Callback on any edit (note that InputText() already returns true on edit, the callback is useful mainly to manipulate the underlying buffer while focus is active)
-	InputTextFlagsCallbackEdit InputTextFlags = 4194304
+	InputTextFlagsCallbackResize InputTextFlags = 4194304
+	// Callback on any edit. Note that InputText() already returns true on edit + you can always use IsItemEdited(). The callback is useful to manipulate the underlying buffer while focus is active.
+	InputTextFlagsCallbackEdit InputTextFlags = 8388608
 )
 
 // Extend ImGuiItemFlags
@@ -994,9 +1035,9 @@ const (
 )
 
 // A key identifier (ImGuiKey_XXX or ImGuiMod_XXX value): can represent Keyboard, Mouse and Gamepad values.
-// All our named keys are >= 512. Keys value 0 to 511 are left unused as legacy native/opaque key values (< 1.87).
-// Since >= 1.89 we increased typing (went from int to enum), some legacy code may need a cast to ImGuiKey.
-// Read details about the 1.87 and 1.89 transition : https://github.com/ocornut/imgui/issues/4921
+// All our named keys are >= 512. Keys value 0 to 511 are left unused and were legacy native/opaque key values (< 1.87).
+// Support for legacy keys was completely removed in 1.91.5.
+// Read details about the 1.87+ transition : https://github.com/ocornut/imgui/issues/4921
 // Note that "Keys" related to physical keys and are not the same concept as input "Characters", the later are submitted via io.AddInputCharacter().
 // The keyboard key enum values are named after the keys on a standard US keyboard, and on other keyboard types the keys reported may not match the keycaps.
 // original name: ImGuiKey
@@ -1004,6 +1045,8 @@ type Key int32
 
 const (
 	KeyNone Key = 0
+	// First valid key value (other than 0)
+	KeyNamedKeyBEGIN Key = 512
 	// == ImGuiKey_NamedKey_BEGIN
 	KeyTab        Key = 512
 	KeyLeftArrow  Key = 513
@@ -1136,66 +1179,68 @@ const (
 	// Available on some keyboard/mouses. Often referred as "Browser Back"
 	KeyAppBack    Key = 629
 	KeyAppForward Key = 630
+	// Non-US backslash.
+	KeyOem102 Key = 631
 	// Menu (Xbox)      + (Switch)   Start/Options (PS)
-	KeyGamepadStart Key = 631
+	KeyGamepadStart Key = 632
 	// View (Xbox)      - (Switch)   Share (PS)
-	KeyGamepadBack Key = 632
+	KeyGamepadBack Key = 633
 	// X (Xbox)         Y (Switch)   Square (PS)        // Tap: Toggle Menu. Hold: Windowing mode (Focus/Move/Resize windows)
-	KeyGamepadFaceLeft Key = 633
+	KeyGamepadFaceLeft Key = 634
 	// B (Xbox)         A (Switch)   Circle (PS)        // Cancel / Close / Exit
-	KeyGamepadFaceRight Key = 634
+	KeyGamepadFaceRight Key = 635
 	// Y (Xbox)         X (Switch)   Triangle (PS)      // Text Input / On-screen Keyboard
-	KeyGamepadFaceUp Key = 635
+	KeyGamepadFaceUp Key = 636
 	// A (Xbox)         B (Switch)   Cross (PS)         // Activate / Open / Toggle / Tweak
-	KeyGamepadFaceDown Key = 636
+	KeyGamepadFaceDown Key = 637
 	// D-pad Left                                       // Move / Tweak / Resize Window (in Windowing mode)
-	KeyGamepadDpadLeft Key = 637
+	KeyGamepadDpadLeft Key = 638
 	// D-pad Right                                      // Move / Tweak / Resize Window (in Windowing mode)
-	KeyGamepadDpadRight Key = 638
+	KeyGamepadDpadRight Key = 639
 	// D-pad Up                                         // Move / Tweak / Resize Window (in Windowing mode)
-	KeyGamepadDpadUp Key = 639
+	KeyGamepadDpadUp Key = 640
 	// D-pad Down                                       // Move / Tweak / Resize Window (in Windowing mode)
-	KeyGamepadDpadDown Key = 640
+	KeyGamepadDpadDown Key = 641
 	// L Bumper (Xbox)  L (Switch)   L1 (PS)            // Tweak Slower / Focus Previous (in Windowing mode)
-	KeyGamepadL1 Key = 641
+	KeyGamepadL1 Key = 642
 	// R Bumper (Xbox)  R (Switch)   R1 (PS)            // Tweak Faster / Focus Next (in Windowing mode)
-	KeyGamepadR1 Key = 642
+	KeyGamepadR1 Key = 643
 	// L Trig. (Xbox)   ZL (Switch)  L2 (PS) [Analog]
-	KeyGamepadL2 Key = 643
+	KeyGamepadL2 Key = 644
 	// R Trig. (Xbox)   ZR (Switch)  R2 (PS) [Analog]
-	KeyGamepadR2 Key = 644
+	KeyGamepadR2 Key = 645
 	// L Stick (Xbox)   L3 (Switch)  L3 (PS)
-	KeyGamepadL3 Key = 645
+	KeyGamepadL3 Key = 646
 	// R Stick (Xbox)   R3 (Switch)  R3 (PS)
-	KeyGamepadR3 Key = 646
+	KeyGamepadR3 Key = 647
 	// [Analog]                                         // Move Window (in Windowing mode)
-	KeyGamepadLStickLeft Key = 647
+	KeyGamepadLStickLeft Key = 648
 	// [Analog]                                         // Move Window (in Windowing mode)
-	KeyGamepadLStickRight Key = 648
+	KeyGamepadLStickRight Key = 649
 	// [Analog]                                         // Move Window (in Windowing mode)
-	KeyGamepadLStickUp Key = 649
+	KeyGamepadLStickUp Key = 650
 	// [Analog]                                         // Move Window (in Windowing mode)
-	KeyGamepadLStickDown Key = 650
+	KeyGamepadLStickDown Key = 651
 	// [Analog]
-	KeyGamepadRStickLeft Key = 651
+	KeyGamepadRStickLeft Key = 652
 	// [Analog]
-	KeyGamepadRStickRight Key = 652
+	KeyGamepadRStickRight Key = 653
 	// [Analog]
-	KeyGamepadRStickUp Key = 653
+	KeyGamepadRStickUp Key = 654
 	// [Analog]
-	KeyGamepadRStickDown   Key = 654
-	KeyMouseLeft           Key = 655
-	KeyMouseRight          Key = 656
-	KeyMouseMiddle         Key = 657
-	KeyMouseX1             Key = 658
-	KeyMouseX2             Key = 659
-	KeyMouseWheelX         Key = 660
-	KeyMouseWheelY         Key = 661
-	KeyReservedForModCtrl  Key = 662
-	KeyReservedForModShift Key = 663
-	KeyReservedForModAlt   Key = 664
-	KeyReservedForModSuper Key = 665
-	KeyCOUNT               Key = 666
+	KeyGamepadRStickDown   Key = 655
+	KeyMouseLeft           Key = 656
+	KeyMouseRight          Key = 657
+	KeyMouseMiddle         Key = 658
+	KeyMouseX1             Key = 659
+	KeyMouseX2             Key = 660
+	KeyMouseWheelX         Key = 661
+	KeyMouseWheelY         Key = 662
+	KeyReservedForModCtrl  Key = 663
+	KeyReservedForModShift Key = 664
+	KeyReservedForModAlt   Key = 665
+	KeyReservedForModSuper Key = 666
+	KeyNamedKeyEND         Key = 667
 	ModNone                Key = 0
 	// Ctrl (non-macOS), Cmd (macOS)
 	ModCtrl Key = 4096
@@ -1207,13 +1252,7 @@ const (
 	ModSuper Key = 32768
 	// 4-bits
 	ModMask          Key = 61440
-	KeyNamedKeyBEGIN Key = 512
-	KeyNamedKeyEND   Key = 666
-	KeyNamedKeyCOUNT Key = 154
-	// Size of KeysData[]: only hold named keys
-	KeyKeysDataSIZE Key = 154
-	// Accesses to io.KeysData[] must use (key - ImGuiKey_KeysData_OFFSET) index.
-	KeyKeysDataOFFSET Key = 512
+	KeyNamedKeyCOUNT Key = 155
 )
 
 // FIXME: this is in development, not exposed/functional as a generic feature yet.
@@ -1247,15 +1286,17 @@ const (
 	LocKeyCOUNT                         LocKey = 13
 )
 
-// original name: ImGuiLogType
-type LogType int32
+// Flags for LogBegin() text capturing function
+// original name: ImGuiLogFlags_
+type LogFlags int32
 
 const (
-	LogTypeNone      LogType = 0
-	LogTypeTTY       LogType = 1
-	LogTypeFile      LogType = 2
-	LogTypeBuffer    LogType = 3
-	LogTypeClipboard LogType = 4
+	LogFlagsNone            LogFlags = 0
+	LogFlagsOutputTTY       LogFlags = 1
+	LogFlagsOutputFile      LogFlags = 2
+	LogFlagsOutputBuffer    LogFlags = 4
+	LogFlagsOutputClipboard LogFlags = 8
+	LogFlagsOutputMask      LogFlags = 15
 )
 
 // Identify a mouse button.
@@ -1292,9 +1333,13 @@ const (
 	MouseCursorResizeNWSE MouseCursor = 6
 	// (Unused by Dear ImGui functions. Use for e.g. hyperlinks)
 	MouseCursorHand MouseCursor = 7
+	// When waiting for something to process/load.
+	MouseCursorWait MouseCursor = 8
+	// When waiting for something to process/load, but application is still interactive.
+	MouseCursorProgress MouseCursor = 9
 	// When hovering something with disallowed interaction. Usually a crossed circle.
-	MouseCursorNotAllowed MouseCursor = 8
-	MouseCursorCOUNT      MouseCursor = 9
+	MouseCursorNotAllowed MouseCursor = 10
+	MouseCursorCOUNT      MouseCursor = 11
 )
 
 // Enumeration for AddMouseSourceEvent() actual source of Mouse Input data.
@@ -1440,11 +1485,12 @@ const (
 	NextWindowDataFlagsHasFocus          NextWindowDataFlags = 32
 	NextWindowDataFlagsHasBgAlpha        NextWindowDataFlags = 64
 	NextWindowDataFlagsHasScroll         NextWindowDataFlags = 128
-	NextWindowDataFlagsHasChildFlags     NextWindowDataFlags = 256
-	NextWindowDataFlagsHasRefreshPolicy  NextWindowDataFlags = 512
-	NextWindowDataFlagsHasViewport       NextWindowDataFlags = 1024
-	NextWindowDataFlagsHasDock           NextWindowDataFlags = 2048
-	NextWindowDataFlagsHasWindowClass    NextWindowDataFlags = 4096
+	NextWindowDataFlagsHasWindowFlags    NextWindowDataFlags = 256
+	NextWindowDataFlagsHasChildFlags     NextWindowDataFlags = 512
+	NextWindowDataFlagsHasRefreshPolicy  NextWindowDataFlags = 1024
+	NextWindowDataFlagsHasViewport       NextWindowDataFlags = 2048
+	NextWindowDataFlagsHasDock           NextWindowDataFlags = 4096
+	NextWindowDataFlagsHasWindowClass    NextWindowDataFlags = 8192
 )
 
 // Flags for internal's BeginColumns(). This is an obsolete API. Prefer using BeginTable() nowadays!
@@ -1638,7 +1684,9 @@ const (
 	SliderFlagsClampOnInput SliderFlags = 512
 	// Clamp even if min==max==0.0f. Otherwise due to legacy reason DragXXX functions don't clamp with those values. When your clamping limits are dynamic you almost always want to use it.
 	SliderFlagsClampZeroRange SliderFlags = 1024
-	SliderFlagsAlwaysClamp    SliderFlags = 1536
+	// Disable keyboard modifiers altering tweak speed. Useful if you want to alter tweak speed yourself based on your own logic.
+	SliderFlagsNoSpeedTweaks SliderFlags = 2048
+	SliderFlagsAlwaysClamp   SliderFlags = 1536
 	// [Internal] We treat using those bits as being potentially a 'float power' argument from the previous API that has got miscast to this enum, and will trigger an assert if needed.
 	SliderFlagsInvalidMask SliderFlags = 1879048207
 )
@@ -1712,31 +1760,33 @@ const (
 	StyleVarGrabMinSize StyleVar = 20
 	// float     GrabRounding
 	StyleVarGrabRounding StyleVar = 21
+	// float     ImageBorderSize
+	StyleVarImageBorderSize StyleVar = 22
 	// float     TabRounding
-	StyleVarTabRounding StyleVar = 22
+	StyleVarTabRounding StyleVar = 23
 	// float     TabBorderSize
-	StyleVarTabBorderSize StyleVar = 23
+	StyleVarTabBorderSize StyleVar = 24
 	// float     TabBarBorderSize
-	StyleVarTabBarBorderSize StyleVar = 24
+	StyleVarTabBarBorderSize StyleVar = 25
 	// float     TabBarOverlineSize
-	StyleVarTabBarOverlineSize StyleVar = 25
+	StyleVarTabBarOverlineSize StyleVar = 26
 	// float     TableAngledHeadersAngle
-	StyleVarTableAngledHeadersAngle StyleVar = 26
+	StyleVarTableAngledHeadersAngle StyleVar = 27
 	// ImVec2  TableAngledHeadersTextAlign
-	StyleVarTableAngledHeadersTextAlign StyleVar = 27
+	StyleVarTableAngledHeadersTextAlign StyleVar = 28
 	// ImVec2    ButtonTextAlign
-	StyleVarButtonTextAlign StyleVar = 28
+	StyleVarButtonTextAlign StyleVar = 29
 	// ImVec2    SelectableTextAlign
-	StyleVarSelectableTextAlign StyleVar = 29
+	StyleVarSelectableTextAlign StyleVar = 30
 	// float     SeparatorTextBorderSize
-	StyleVarSeparatorTextBorderSize StyleVar = 30
+	StyleVarSeparatorTextBorderSize StyleVar = 31
 	// ImVec2    SeparatorTextAlign
-	StyleVarSeparatorTextAlign StyleVar = 31
+	StyleVarSeparatorTextAlign StyleVar = 32
 	// ImVec2    SeparatorTextPadding
-	StyleVarSeparatorTextPadding StyleVar = 32
+	StyleVarSeparatorTextPadding StyleVar = 33
 	// float     DockingSeparatorSize
-	StyleVarDockingSeparatorSize StyleVar = 33
-	StyleVarCOUNT                StyleVar = 34
+	StyleVarDockingSeparatorSize StyleVar = 34
+	StyleVarCOUNT                StyleVar = 35
 )
 
 // Extend ImGuiTabBarFlags_
@@ -1789,8 +1839,10 @@ const (
 	TabItemFlagsNoCloseButton TabItemFlagsPrivate = 1048576
 	// Used by TabItemButton, change the tab item behavior to mimic a button
 	TabItemFlagsButton TabItemFlagsPrivate = 2097152
+	// To reserve space e.g. with ImGuiTabItemFlags_Leading
+	TabItemFlagsInvisible TabItemFlagsPrivate = 4194304
 	// [Docking] Trailing tabs with the _Unsorted flag will be sorted based on the DockOrder of their Window.
-	TabItemFlagsUnsorted TabItemFlagsPrivate = 4194304
+	TabItemFlagsUnsorted TabItemFlagsPrivate = 8388608
 )
 
 // Flags for ImGui::BeginTabItem()
@@ -2074,11 +2126,13 @@ const (
 	// Extend hit box to the left-most and right-most edges (cover the indent area).
 	TreeNodeFlagsSpanFullWidth TreeNodeFlags = 4096
 	// Narrow hit box + narrow hovering highlight, will only cover the label text.
-	TreeNodeFlagsSpanTextWidth TreeNodeFlags = 8192
-	// Frame will span all columns of its container table (text will still fit in current column)
+	TreeNodeFlagsSpanLabelWidth TreeNodeFlags = 8192
+	// Frame will span all columns of its container table (label will still fit in current column)
 	TreeNodeFlagsSpanAllColumns TreeNodeFlags = 16384
+	// Label will span all columns of its container table
+	TreeNodeFlagsLabelSpanAllColumns TreeNodeFlags = 32768
 	// (WIP) Nav: left direction may move to this TreeNode() from any of its child (items submitted between TreeNode and TreePop)
-	TreeNodeFlagsNavLeftJumpsBackHere TreeNodeFlags = 32768
+	TreeNodeFlagsNavLeftJumpsBackHere TreeNodeFlags = 131072
 	TreeNodeFlagsCollapsingHeader     TreeNodeFlags = 26
 )
 
@@ -2199,6 +2253,8 @@ const (
 	WindowFlagsNoNav        WindowFlags = 196608
 	WindowFlagsNoDecoration WindowFlags = 43
 	WindowFlagsNoInputs     WindowFlags = 197120
+	// Don't use! For internal use by Begin()/NewFrame()
+	WindowFlagsDockNodeHost WindowFlags = 8388608
 	// Don't use! For internal use by BeginChild()
 	WindowFlagsChildWindow WindowFlags = 16777216
 	// Don't use! For internal use by BeginTooltip()
@@ -2209,8 +2265,6 @@ const (
 	WindowFlagsModal WindowFlags = 134217728
 	// Don't use! For internal use by BeginMenu()
 	WindowFlagsChildMenu WindowFlags = 268435456
-	// Don't use! For internal use by Begin()/NewFrame()
-	WindowFlagsDockNodeHost WindowFlags = 536870912
 )
 
 // original name: ImGuiWindowRefreshFlags_

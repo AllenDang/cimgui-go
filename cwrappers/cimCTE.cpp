@@ -4,7 +4,7 @@
 #include "imgui_internal.h"
 #include "./ImGuiColorTextEdit/TextEditor.h"
 #include "cimCTE.h"
-
+#include <cstring>
 
 
 CIMGUI_API TextEditor* TextEditor_TextEditor(void)
@@ -58,10 +58,6 @@ CIMGUI_API bool TextEditor_IsShortTabsEnabled(TextEditor* self)
 CIMGUI_API int TextEditor_GetLineCount(TextEditor* self)
 {
     return self->GetLineCount();
-}
-CIMGUI_API bool TextEditor_IsOverwriteEnabled(TextEditor* self)
-{
-    return self->IsOverwriteEnabled();
 }
 CIMGUI_API void TextEditor_SetPalette(TextEditor* self,PaletteId aValue)
 {

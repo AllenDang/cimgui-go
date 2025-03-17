@@ -42,7 +42,6 @@ CIMGUI_API bool TextEditor_IsShowLineNumbersEnabled(TextEditor* self);
 CIMGUI_API void TextEditor_SetShortTabsEnabled(TextEditor* self,bool aValue);
 CIMGUI_API bool TextEditor_IsShortTabsEnabled(TextEditor* self);
 CIMGUI_API int TextEditor_GetLineCount(TextEditor* self);
-CIMGUI_API bool TextEditor_IsOverwriteEnabled(TextEditor* self);
 CIMGUI_API void TextEditor_SetPalette(TextEditor* self,PaletteId aValue);
 CIMGUI_API PaletteId TextEditor_GetPalette(TextEditor* self);
 CIMGUI_API void TextEditor_SetLanguageDefinition(TextEditor* self,LanguageDefinitionId aValue);

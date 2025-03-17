@@ -50,6 +50,7 @@
                 "ImGuiInputTextCallback": true
         },
         "SkipFiles": [
+                "imgui_freetype"
         ],
         "TypedefsPoolSize": 32,
         "TypedefsCustomPoolSizes": {
@@ -58,7 +59,8 @@
                 "igGetDrawData":           "CurrentDrawData",
                 "igGetDrawListSharedData": "CurrentDrawListSharedData",
                 "igGetFont":               "CurrentFont",
-                "igGetIO":                 "CurrentIO",
+                "igGetIO_Nil":             "CurrentIO",
+                "igGetPlatformIO_Nil":     "CurrentPlatformIO",
                 "igGetPlatformIO":         "CurrentPlatformIO",
                 "igGetStyle":              "CurrentStyle",
                 "igGetMouseCursor":        "CurrentMouseCursor",

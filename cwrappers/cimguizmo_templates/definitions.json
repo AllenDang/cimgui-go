@@ -938,6 +938,7 @@
       "cimguiname": "Style_destroy",
       "defaults": {},
       "destructor": true,
+      "location": "ImGuizmo:291",
       "ov_cimguiname": "Style_destroy",
       "ret": "void",
       "signature": "(Style*)",
