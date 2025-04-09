@@ -31,6 +31,7 @@ const (
 	// function with first arugment as pointer of return value
 	returnTypeNonUDT
 	// will be treated as struct fieldd getter
+	// TODO: This is convirmed to work only with returnTypeKnown.
 	returnTypeCustomFin
 )
 
@@ -141,7 +142,6 @@ import "unsafe"
 }
 
 func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argWrappers []ArgumentWrapperData) (noErrors bool) {
-	fmt.Println("---")
 	var cReturnType CIdentifier
 	var returnType, receiver GoIdentifier
 	var cfuncCall string
@@ -175,8 +175,6 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 
 	if _, ok := g.context.preset.CustomFInalizer[f.FuncName]; ok {
 		returnTypeType |= returnTypeCustomFin
-		fmt.Println("this")
-		fmt.Println(f)
 	}
 
 	// determine function name, return type (and return statement)
@@ -249,6 +247,25 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 		g.sb.WriteString("\n")
 	}
 
+	// assume there is a variable called "result" which should be freed by calling its CustomFinalizer
+	if returnTypeType.Is(returnTypeCustomFin) {
+		finishers = append(finishers, fmt.Sprintf("C.%s(%s)", g.context.preset.CustomFInalizer[f.FuncName], "resutl"))
+	}
+
+	// return Var switch
+	switch {
+	case returnTypeType.Is(returnTypeStruct | returnTypeCustomFin):
+		g.sb.WriteString(fmt.Sprintf(`
+result := C.%s(%s)
+`,
+			f.CWrapperFuncName,
+			argInvokeStmt,
+		))
+		cfuncCall = "result"
+	case returnTypeType.Is(returnTypeKnown | returnTypeConstructor | returnTypeStructPtr):
+		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
+	}
+
 	if shouldDefer {
 		g.writeFinishers(shouldDefer, finishers)
 	}
@@ -267,19 +284,6 @@ C.%s(selfArg, %s)
 
 	if !shouldDefer {
 		g.writeFinishers(shouldDefer, finishers)
-	}
-
-	switch {
-	case returnTypeType.Is(returnTypeStruct):
-		g.sb.WriteString(fmt.Sprintf(`
-result := C.%s(%s)
-`,
-			f.CWrapperFuncName,
-			argInvokeStmt,
-		))
-		cfuncCall = "result"
-	case returnTypeType.Is(returnTypeKnown | returnTypeConstructor | returnTypeStructPtr):
-		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
 	}
 
 	switch {
