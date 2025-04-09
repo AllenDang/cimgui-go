@@ -171,7 +171,7 @@ func (self *TextEditor) Text() string {
 
 	defer func() {
 		selfFin()
-		C.TextEditor_GetText_free(resutl)
+		C.TextEditor_GetText_free(result)
 	}()
 	return C.GoString(result)
 }
