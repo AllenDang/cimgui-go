@@ -167,10 +167,13 @@ func (self *TextEditor) TabSize() int32 {
 func (self *TextEditor) Text() string {
 	selfArg, selfFin := self.Handle()
 
+	result := C.TextEditor_GetText_alloc(internal.ReinterpretCast[*C.TextEditor](selfArg))
+
 	defer func() {
 		selfFin()
+		C.TextEditor_GetText_free(result)
 	}()
-	return C.GoString(C.TextEditor_GetText_alloc(internal.ReinterpretCast[*C.TextEditor](selfArg)))
+	return C.GoString(result)
 }
 
 func (self *TextEditor) UndoIndex() int32 {

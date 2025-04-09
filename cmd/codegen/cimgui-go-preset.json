@@ -79,6 +79,9 @@
         "OriginReplace": {
                 "TextEditor_GetText": "TextEditor_GetText_alloc"
         },
+        "CustomFinalizer": {
+                "TextEditor_GetText": "TextEditor_GetText_free"
+        },
         "DefaultArgReplace": {
                 "FLT_MIN":    "igGET_FLT_MIN()",
                 "FLT_MAX":    "igGET_FLT_MAX()",
