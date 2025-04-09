@@ -92,6 +92,20 @@ type Preset struct {
 	// Example syntax:
 	//    "ImVec2": ["Vec2", "C.ImVec2", "imgui"]
 	WrappableTypes map[CIdentifier][3]GoIdentifier
+	// CustomFinalizer is a map of C func name : C func name.
+	// Assume:
+	//   * F is a C function
+	//   * F has EXACTLY 1 return value.
+	// Then:
+	//   * if FX = CustomFinalizer[F]
+	//   * Every call to x = F(...) will have its respective call to FX(x)
+	// NOTE: This FX call will be called before or just after returning x converted to Go-compatible type.
+	// so for example:
+	//   x := F(x)
+	//   defer FX(x)
+	//   return CToGo(x)
+	// In other words, CToGo is supposed to copy the value of x.
+	CustomFInalizer map[CIdentifier]CIdentifier
 }
 
 func (p *Preset) MergeCGoPreamble() string {
