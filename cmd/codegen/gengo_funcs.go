@@ -1,6 +1,5 @@
 package main
 
-import "C"
 import (
 	"fmt"
 	"os"
@@ -12,11 +11,11 @@ import (
 
 // returnTypeType represents an arbitrary type of return value of the function.
 // for example Known reffers to returnTypeWrappersMap (see below)
-type returnTypeType byte
+type returnTypeType uint16
 
 const (
 	// default value - will cause the function to be skipped and an error will be printed to stdout
-	returnTypeUnknown returnTypeType = iota
+	returnTypeUnknown returnTypeType = 1 << iota
 	// return type is void (in go - the function returns nothing)
 	returnTypeVoid
 	// METHOD returns nothing, but it has receiver (called self)
@@ -31,7 +30,14 @@ const (
 	returnTypeConstructor
 	// function with first arugment as pointer of return value
 	returnTypeNonUDT
+	// will be treated as struct fieldd getter
+	returnTypeCustomFin
 )
+
+// Is returns true if r contains t.
+func (r *returnTypeType) Is(t returnTypeType) bool {
+	return *r&t != 0
+}
 
 // GenerateGoFuncs generates given list of functions and writes them to file
 func GenerateGoFuncs(
@@ -135,6 +141,7 @@ import "unsafe"
 }
 
 func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argWrappers []ArgumentWrapperData) (noErrors bool) {
+	fmt.Println("---")
 	var cReturnType CIdentifier
 	var returnType, receiver GoIdentifier
 	var cfuncCall string
@@ -166,11 +173,17 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 		returnTypeType = returnTypeConstructor
 	}
 
+	if _, ok := g.context.preset.CustomFInalizer[f.FuncName]; ok {
+		returnTypeType |= returnTypeCustomFin
+		fmt.Println("this")
+		fmt.Println(f)
+	}
+
 	// determine function name, return type (and return statement)
-	switch returnTypeType {
-	case returnTypeVoid:
+	switch {
+	case returnTypeType.Is(returnTypeVoid):
 		// noop
-	case returnTypeNonUDT:
+	case returnTypeType.Is(returnTypeNonUDT):
 		outArg := argWrappers[0]
 		returnType = TrimPrefix(outArg.ArgType, "*")
 
@@ -180,7 +193,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 %s
 		`, f.ArgsT[0].Name, returnType, outArg.ArgDef)
 		args = args[1:]
-	case returnTypeStructSetter:
+	case returnTypeType.Is(returnTypeStructSetter):
 		funcParts := Split(f.FuncName, "_")
 		funcName = TrimPrefix(f.FuncName, string(funcParts[0]+"_"))
 		if len(funcName) == 0 || !HasPrefix(funcName, "Set") || g.context.preset.SkipMethods[funcParts[0]] {
@@ -188,20 +201,20 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 		}
 
 		receiver = funcParts[0].renameGoIdentifier(g.context)
-	case returnTypeKnown:
+	case returnTypeType.Is(returnTypeKnown):
 		shouldDefer = true
 		cReturnType = f.Ret
 		returnType = f.Ret.renameGoIdentifier(g.context)
-	case returnTypeStructPtr:
+	case returnTypeType.Is(returnTypeStructPtr):
 		// return Im struct ptr
 		shouldDefer = true
 		cReturnType = TrimPrefix(f.Ret, "const ")
 		returnType = cReturnType.renameGoIdentifier(g.context)
-	case returnTypeStruct:
+	case returnTypeType.Is(returnTypeStruct):
 		shouldDefer = true
 		cReturnType = f.Ret
 		returnType = cReturnType.renameGoIdentifier(g.context)
-	case returnTypeConstructor:
+	case returnTypeType.Is(returnTypeConstructor):
 		shouldDefer = true
 		parts := Split(f.FuncName, "_")
 		cReturnType = parts[0] + "*"
@@ -220,8 +233,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 
 	rw, err := getReturnWrapper(cReturnType, g.context)
 	if err != nil {
-		switch returnTypeType {
-		case returnTypeKnown, returnTypeStructPtr, returnTypeConstructor, returnTypeStruct:
+		if returnTypeType.Is(returnTypeKnown | returnTypeStructPtr | returnTypeConstructor | returnTypeStruct) {
 			return false
 		}
 	}
@@ -242,10 +254,10 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 	}
 
 	// write non-return function calls (finalizers called normally)
-	switch returnTypeType {
-	case returnTypeVoid, returnTypeNonUDT:
+	switch {
+	case returnTypeType.Is(returnTypeVoid | returnTypeNonUDT):
 		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.CWrapperFuncName, argInvokeStmt))
-	case returnTypeStructSetter:
+	case returnTypeType.Is(returnTypeStructSetter):
 		g.sb.WriteString(fmt.Sprintf(`
 selfArg, selfFin := self.Handle()
 defer selfFin()
@@ -257,8 +269,8 @@ C.%s(selfArg, %s)
 		g.writeFinishers(shouldDefer, finishers)
 	}
 
-	switch returnTypeType {
-	case returnTypeStruct:
+	switch {
+	case returnTypeType.Is(returnTypeStruct):
 		g.sb.WriteString(fmt.Sprintf(`
 result := C.%s(%s)
 `,
@@ -266,14 +278,14 @@ result := C.%s(%s)
 			argInvokeStmt,
 		))
 		cfuncCall = "result"
-	case returnTypeKnown, returnTypeConstructor, returnTypeStructPtr:
+	case returnTypeType.Is(returnTypeKnown | returnTypeConstructor | returnTypeStructPtr):
 		cfuncCall = fmt.Sprintf("C.%s(%s)", f.CWrapperFuncName, argInvokeStmt)
 	}
 
-	switch returnTypeType {
-	case returnTypeNonUDT:
+	switch {
+	case returnTypeType.Is(returnTypeNonUDT):
 		g.sb.WriteString(fmt.Sprintf("return %s", cfuncCall))
-	case returnTypeKnown, returnTypeStructPtr, returnTypeConstructor, returnTypeStruct:
+	case returnTypeType.Is(returnTypeKnown | returnTypeStructPtr | returnTypeConstructor | returnTypeStruct):
 		g.sb.WriteString("return " + fmt.Sprintf(rw.returnStmt, cfuncCall))
 	}
 
