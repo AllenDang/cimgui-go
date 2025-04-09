@@ -196,11 +196,11 @@ func (self Emphasis) SetText(v TextBlock) {
 func (self *Emphasis) Text() TextBlock {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_Emphasis_GetText(internal.ReinterpretCast[*C.Emphasis](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_Emphasis_GetText(internal.ReinterpretCast[*C.Emphasis](selfArg))
 	return *NewTextBlockFromC(func() *C.TextBlock { result := result; return &result }())
 }
 
@@ -395,11 +395,11 @@ func (self Link) SetText(v TextBlock) {
 func (self *Link) Text() TextBlock {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_Link_GetText(internal.ReinterpretCast[*C.Link](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_Link_GetText(internal.ReinterpretCast[*C.Link](selfArg))
 	return *NewTextBlockFromC(func() *C.TextBlock { result := result; return &result }())
 }
 
@@ -414,11 +414,11 @@ func (self Link) SetUrl(v TextBlock) {
 func (self *Link) Url() TextBlock {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_Link_GetUrl(internal.ReinterpretCast[*C.Link](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_Link_GetUrl(internal.ReinterpretCast[*C.Link](selfArg))
 	return *NewTextBlockFromC(func() *C.TextBlock { result := result; return &result }())
 }
 
@@ -927,11 +927,11 @@ func (self MarkdownTooltipCallbackData) SetLinkData(v MarkdownLinkCallbackData) 
 func (self *MarkdownTooltipCallbackData) LinkData() MarkdownLinkCallbackData {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_MarkdownTooltipCallbackData_GetLinkData(internal.ReinterpretCast[*C.MarkdownTooltipCallbackData](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_MarkdownTooltipCallbackData_GetLinkData(internal.ReinterpretCast[*C.MarkdownTooltipCallbackData](selfArg))
 	return *NewMarkdownLinkCallbackDataFromC(func() *C.MarkdownLinkCallbackData { result := result; return &result }())
 }
 

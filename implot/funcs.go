@@ -10436,22 +10436,22 @@ func (self *FormatterTimeData) TimeDataGetTime() PlotTime {
 func (self *FormatterTimeData) TimeDataGetSpec() DateTimeSpec {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_Formatter_Time_Data_GetSpec(internal.ReinterpretCast[*C.Formatter_Time_Data](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_Formatter_Time_Data_GetSpec(internal.ReinterpretCast[*C.Formatter_Time_Data](selfArg))
 	return *NewDateTimeSpecFromC(func() *C.ImPlotDateTimeSpec { result := result; return &result }())
 }
 
 func (self *FormatterTimeData) TimeDataGetUserFormatter() Formatter {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_Formatter_Time_Data_GetUserFormatter(internal.ReinterpretCast[*C.Formatter_Time_Data](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_Formatter_Time_Data_GetUserFormatter(internal.ReinterpretCast[*C.Formatter_Time_Data](selfArg))
 	return *NewFormatterFromC(func() *C.ImPlotFormatter { result := result; return &result }())
 }
 
@@ -10754,11 +10754,11 @@ func (self Axis) SetRange(v Range) {
 func (self *Axis) Range() Range {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotAxis_GetRange(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotAxis_GetRange(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
 	return *NewRangeFromC(func() *C.ImPlotRange { result := result; return &result }())
 }
 
@@ -10803,11 +10803,11 @@ func (self Axis) SetFitExtents(v Range) {
 func (self *Axis) FitExtents() Range {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotAxis_GetFitExtents(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotAxis_GetFitExtents(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
 	return *NewRangeFromC(func() *C.ImPlotRange { result := result; return &result }())
 }
 
@@ -10839,11 +10839,11 @@ func (self Axis) SetConstraintRange(v Range) {
 func (self *Axis) ConstraintRange() Range {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotAxis_GetConstraintRange(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotAxis_GetConstraintRange(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
 	return *NewRangeFromC(func() *C.ImPlotRange { result := result; return &result }())
 }
 
@@ -10858,11 +10858,11 @@ func (self Axis) SetConstraintZoom(v Range) {
 func (self *Axis) ConstraintZoom() Range {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotAxis_GetConstraintZoom(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotAxis_GetConstraintZoom(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
 	return *NewRangeFromC(func() *C.ImPlotRange { result := result; return &result }())
 }
 
@@ -10877,11 +10877,11 @@ func (self Axis) SetTicker(v Ticker) {
 func (self *Axis) Ticker() Ticker {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotAxis_GetTicker(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotAxis_GetTicker(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
 	return *NewTickerFromC(func() *C.ImPlotTicker { result := result; return &result }())
 }
 
@@ -10896,11 +10896,11 @@ func (self Axis) SetFormatter(v Formatter) {
 func (self *Axis) Formatter() Formatter {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotAxis_GetFormatter(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotAxis_GetFormatter(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
 	return *NewFormatterFromC(func() *C.ImPlotFormatter { result := result; return &result }())
 }
 
@@ -11047,11 +11047,11 @@ func (self Axis) SetTransformForward(v Transform) {
 func (self *Axis) TransformForward() Transform {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotAxis_GetTransformForward(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotAxis_GetTransformForward(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
 	return *NewTransformFromC(func() *C.ImPlotTransform { result := result; return &result }())
 }
 
@@ -11066,11 +11066,11 @@ func (self Axis) SetTransformInverse(v Transform) {
 func (self *Axis) TransformInverse() Transform {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotAxis_GetTransformInverse(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotAxis_GetTransformInverse(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
 	return *NewTransformFromC(func() *C.ImPlotTransform { result := result; return &result }())
 }
 
@@ -11793,11 +11793,11 @@ func (self Context) SetCTicker(v Ticker) {
 func (self *Context) CTicker() Ticker {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotContext_GetCTicker(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotContext_GetCTicker(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
 	return *NewTickerFromC(func() *C.ImPlotTicker { result := result; return &result }())
 }
 
@@ -11812,11 +11812,11 @@ func (self Context) SetAnnotations(v AnnotationCollection) {
 func (self *Context) Annotations() AnnotationCollection {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotContext_GetAnnotations(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotContext_GetAnnotations(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
 	return *NewAnnotationCollectionFromC(func() *C.ImPlotAnnotationCollection { result := result; return &result }())
 }
 
@@ -11831,11 +11831,11 @@ func (self Context) SetTags(v TagCollection) {
 func (self *Context) Tags() TagCollection {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotContext_GetTags(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotContext_GetTags(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
 	return *NewTagCollectionFromC(func() *C.ImPlotTagCollection { result := result; return &result }())
 }
 
@@ -11850,11 +11850,11 @@ func (self Context) SetStyle(v Style) {
 func (self *Context) Style() Style {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotContext_GetStyle(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotContext_GetStyle(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
 	return *NewStyleFromC(func() *C.ImPlotStyle { result := result; return &result }())
 }
 
@@ -11915,11 +11915,11 @@ func (self Context) SetColormapData(v ColormapData) {
 func (self *Context) ColormapData() ColormapData {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotContext_GetColormapData(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotContext_GetColormapData(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
 	return *NewColormapDataFromC(func() *C.ImPlotColormapData { result := result; return &result }())
 }
 
@@ -12074,11 +12074,11 @@ func (self Context) SetNextPlotData(v NextPlotData) {
 func (self *Context) NextPlotData() NextPlotData {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotContext_GetNextPlotData(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotContext_GetNextPlotData(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
 	return *NewNextPlotDataFromC(func() *C.ImPlotNextPlotData { result := result; return &result }())
 }
 
@@ -12093,11 +12093,11 @@ func (self Context) SetNextItemData(v NextItemData) {
 func (self *Context) NextItemData() NextItemData {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotContext_GetNextItemData(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotContext_GetNextItemData(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
 	return *NewNextItemDataFromC(func() *C.ImPlotNextItemData { result := result; return &result }())
 }
 
@@ -12112,11 +12112,11 @@ func (self Context) SetInputMap(v InputMap) {
 func (self *Context) InputMap() InputMap {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotContext_GetInputMap(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotContext_GetInputMap(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
 	return *NewInputMapFromC(func() *C.ImPlotInputMap { result := result; return &result }())
 }
 
@@ -12590,11 +12590,11 @@ func (self ItemGroup) SetLegend(v Legend) {
 func (self *ItemGroup) Legend() Legend {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotItemGroup_GetLegend(internal.ReinterpretCast[*C.ImPlotItemGroup](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotItemGroup_GetLegend(internal.ReinterpretCast[*C.ImPlotItemGroup](selfArg))
 	return *NewLegendFromC(func() *C.ImPlotLegend { result := result; return &result }())
 }
 
@@ -13429,11 +13429,11 @@ func (self Plot) SetItems(v ItemGroup) {
 func (self *Plot) Items() ItemGroup {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotPlot_GetItems(internal.ReinterpretCast[*C.ImPlotPlot](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotPlot_GetItems(internal.ReinterpretCast[*C.ImPlotPlot](selfArg))
 	return *NewItemGroupFromC(func() *C.ImPlotItemGroup { result := result; return &result }())
 }
 
@@ -13826,11 +13826,11 @@ func (self Rect) SetX(v Range) {
 func (self *Rect) X() Range {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotRect_GetX(internal.ReinterpretCast[*C.ImPlotRect](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotRect_GetX(internal.ReinterpretCast[*C.ImPlotRect](selfArg))
 	return *NewRangeFromC(func() *C.ImPlotRange { result := result; return &result }())
 }
 
@@ -13845,11 +13845,11 @@ func (self Rect) SetY(v Range) {
 func (self *Rect) Y() Range {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotRect_GetY(internal.ReinterpretCast[*C.ImPlotRect](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotRect_GetY(internal.ReinterpretCast[*C.ImPlotRect](selfArg))
 	return *NewRangeFromC(func() *C.ImPlotRange { result := result; return &result }())
 }
 
@@ -14462,11 +14462,11 @@ func (self Subplot) SetItems(v ItemGroup) {
 func (self *Subplot) Items() ItemGroup {
 	selfArg, selfFin := self.Handle()
 
+	result := C.wrap_ImPlotSubplot_GetItems(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg))
+
 	defer func() {
 		selfFin()
 	}()
-
-	result := C.wrap_ImPlotSubplot_GetItems(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg))
 	return *NewItemGroupFromC(func() *C.ImPlotItemGroup { result := result; return &result }())
 }
 
