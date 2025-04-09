@@ -249,7 +249,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 
 	// assume there is a variable called "result" which should be freed by calling its CustomFinalizer
 	if returnTypeType.Is(returnTypeCustomFin) {
-		finishers = append(finishers, fmt.Sprintf("C.%s(%s)", g.context.preset.CustomFInalizer[f.FuncName], "resutl"))
+		finishers = append(finishers, fmt.Sprintf("C.%s(result)", g.context.preset.CustomFInalizer[f.FuncName]))
 	}
 
 	// return Var switch
