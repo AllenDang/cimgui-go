@@ -90,7 +90,7 @@
                 "((void*)0)": "0"
         },
         "DefaultArgArbitraryValue": {
-                "text_end":   0,
+                "text_end":   "0",
                 "text_end_": "0"
         },
         "ExtraCGOPreamble": [
