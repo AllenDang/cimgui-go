@@ -1,12 +1,20 @@
----
+version: "2"
 linters:
-  disable-all: true
-  enable:
-    - gofmt
-
-run:
-  timeout: 5m
-
+  default: none
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
 issues:
   max-same-issues: 0
-  exclude-use-default: false
+formatters:
+  enable:
+    - gofmt
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
