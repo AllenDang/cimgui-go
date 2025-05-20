@@ -35,6 +35,16 @@ endef
 imgui: setup
 	$(call imgui)
 
+define impl
+	$(call generate,impl,cwrappers/cimgui_impl.h,cwrappers/cimgui_templates/impl_definitions.json,templates/impl_structs.json,templates/impl_typedefs_dict.json,--ref-enums ../cwrappers/cimgui_templates/structs_and_enums.json --ref-typedefs ../cwrappers/cimgui_templates/typedefs_dict.json)
+endef
+
+## impl: generate imgui_impl binding
+.PHONY: impl
+impl: setup
+	$(call impl)
+
+
 define implot
 	$(call generate,implot,cwrappers/cimplot.h,cwrappers/cimplot_templates/definitions.json,cwrappers/cimplot_templates/structs_and_enums.json,cwrappers/cimplot_templates/typedefs_dict.json,--ref-enums ../cwrappers/cimgui_templates/structs_and_enums.json --ref-typedefs ../cwrappers/cimgui_templates/typedefs_dict.json)
 endef
