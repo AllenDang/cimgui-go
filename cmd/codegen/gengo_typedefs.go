@@ -47,7 +47,7 @@ func GenerateTypedefs(
 
 	for _, k := range keys {
 		typedef := typedefs.data[k]
-		if shouldSkip, ok := ctx.preset.SkipTypedefs[k]; ok && shouldSkip {
+		if shouldSkip := ctx.preset.SkipTypedefs[k]; shouldSkip != ctx.preset.ReverseMode {
 			if ctx.flags.ShowNotGenerated {
 				glg.Infof("Arbitrarly skipping typedef %s", k)
 			}
@@ -65,7 +65,7 @@ func GenerateTypedefs(
 			continue
 		}
 
-		if shouldSkipStruct := ctx.preset.SkipStructs[k]; shouldSkipStruct {
+		if shouldSkipStruct := ctx.preset.SkipStructs[k]; shouldSkipStruct != ctx.preset.ReverseMode {
 			if ctx.flags.ShowNotGenerated {
 				glg.Infof("Arbitrarly skipping struct %s", k)
 			}

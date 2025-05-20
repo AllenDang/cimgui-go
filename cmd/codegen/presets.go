@@ -5,6 +5,18 @@ import "strings"
 // Preset is a set of rules iperative to XXX_templates/ json files.
 // They are used to manually set some properties of the generator.
 type Preset struct {
+	// ReverseMode if set, Skip* behavior is reversed.
+	// Example: If SkipFuncs has "foo", and ReverseMode is set, only the "foo" function will be generateed.
+	//
+	// Technical note: this might be a bit confusing as met in code, so a quick explaination:
+	// a      b        result
+	// true,  true  -> false
+	// true,  false -> true
+	// false, true  -> true
+	// false, false -> false
+	//
+	// So we use: a != b to check this cond.
+	ReverseMode bool
 	// SkipFuncs functions (from definitions.json) to be skipped
 	// e.g. they are temporarily hard-coded
 	SkipFuncs map[CIdentifier]bool

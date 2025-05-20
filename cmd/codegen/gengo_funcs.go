@@ -57,11 +57,11 @@ func GenerateGoFuncs(
 
 	for _, f := range validFuncs {
 		// check whether the function shouldn't be skipped
-		if context.preset.SkipFuncs[f.FuncName] {
+		if skip := context.preset.SkipFuncs[f.FuncName]; skip != context.preset.ReverseMode {
 			continue
 		}
 
-		if MapContainsAny(f.Location, context.preset.SkipFiles) {
+		if MapContainsAny(f.Location, context.preset.SkipFiles) != context.preset.ReverseMode {
 			if context.flags.ShowNotGenerated {
 				glg.Warnf("File %s skipped: %s%s", f.Location, f.FuncName, f.Args)
 			}
@@ -194,7 +194,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 	case returnTypeType.Is(returnTypeStructSetter):
 		funcParts := Split(f.FuncName, "_")
 		funcName = TrimPrefix(f.FuncName, string(funcParts[0]+"_"))
-		if len(funcName) == 0 || !HasPrefix(funcName, "Set") || g.context.preset.SkipMethods[funcParts[0]] {
+		if len(funcName) == 0 || !HasPrefix(funcName, "Set") || g.context.preset.SkipMethods[funcParts[0]] != g.context.preset.ReverseMode {
 			return false
 		}
 
