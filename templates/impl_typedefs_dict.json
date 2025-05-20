@@ -1,1 +1,3 @@
-{}
+{
+        "GLFWwindow": "void*"
+}
