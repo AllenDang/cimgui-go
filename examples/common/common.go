@@ -14,6 +14,7 @@ import (
 	_ "github.com/AllenDang/cimgui-go/imguizmo"
 	_ "github.com/AllenDang/cimgui-go/immarkdown"
 	_ "github.com/AllenDang/cimgui-go/imnodes"
+	_ "github.com/AllenDang/cimgui-go/impl"
 	"github.com/AllenDang/cimgui-go/implot"
 	"github.com/AllenDang/cimgui-go/utils"
 )
