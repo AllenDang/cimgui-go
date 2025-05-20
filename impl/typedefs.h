@@ -9,7 +9,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+extern uintptr_t GLFWwindow_toUintptr(GLFWwindow ptr);
+extern GLFWwindow GLFWwindow_fromUintptr(uintptr_t ptr);
 #ifdef __cplusplus
 }
 #endif

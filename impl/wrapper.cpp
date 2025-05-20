@@ -4,6 +4,3 @@
 #include "wrapper.h"
 #include "../cwrappers/cimgui_impl.h"
 
-bool wrap_ImGui_ImplSDL2_InitForOpenGL(SDL_Window* window,uintptr_t sdl_gl_context) { return ImGui_ImplSDL2_InitForOpenGL(window,(void*)(uintptr_t)sdl_gl_context); }
-bool wrap_ImGui_ImplOpenGL3_Init() { return ImGui_ImplOpenGL3_Init(0); }
-void wrap_ImGui_ImplSDL2_SetGamepadMode(ImGui_ImplSDL2_GamepadMode mode) { ImGui_ImplSDL2_SetGamepadMode(mode,0,-1); }

@@ -9,9 +9,6 @@
 extern "C" {
 #endif
 
-extern bool wrap_ImGui_ImplSDL2_InitForOpenGL(SDL_Window* window,uintptr_t sdl_gl_context);
-extern bool wrap_ImGui_ImplOpenGL3_Init();
-extern void wrap_ImGui_ImplSDL2_SetGamepadMode(ImGui_ImplSDL2_GamepadMode mode);
 
 #ifdef __cplusplus
 }

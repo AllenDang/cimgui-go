@@ -3,117 +3,17 @@
 
 package impl
 
-import (
-	"github.com/AllenDang/cimgui-go/imgui"
-	"github.com/AllenDang/cimgui-go/internal"
-)
-
 // #include "structs_accessor.h"
 // #include "wrapper.h"
 // #include "../imgui/extra_types.h"
 import "C"
+import "github.com/AllenDang/cimgui-go/internal"
 
-func ImplGlfwNewFrame() {
-	C.ImGui_ImplGlfw_NewFrame()
-}
-
-func ImplGlfwSetCallbacksChainForAllWindows(chain_for_all_windows bool) {
-	C.ImGui_ImplGlfw_SetCallbacksChainForAllWindows(C.bool(chain_for_all_windows))
-}
-
-func ImplGlfwShutdown() {
-	C.ImGui_ImplGlfw_Shutdown()
-}
-
-func ImplGlfwSleep(milliseconds int32) {
-	C.ImGui_ImplGlfw_Sleep(C.int(milliseconds))
-}
-
-func ImplOpenGL2CreateDeviceObjects() bool {
-	return C.ImGui_ImplOpenGL2_CreateDeviceObjects() == C.bool(true)
-}
-
-func ImplOpenGL2CreateFontsTexture() bool {
-	return C.ImGui_ImplOpenGL2_CreateFontsTexture() == C.bool(true)
-}
-
-func ImplOpenGL2DestroyDeviceObjects() {
-	C.ImGui_ImplOpenGL2_DestroyDeviceObjects()
-}
-
-func ImplOpenGL2DestroyFontsTexture() {
-	C.ImGui_ImplOpenGL2_DestroyFontsTexture()
-}
-
-func ImplOpenGL2Init() bool {
-	return C.ImGui_ImplOpenGL2_Init() == C.bool(true)
-}
-
-func ImplOpenGL2NewFrame() {
-	C.ImGui_ImplOpenGL2_NewFrame()
-}
-
-func ImplOpenGL2RenderDrawData(draw_data *imgui.DrawData) {
-	draw_dataArg, draw_dataFin := draw_data.Handle()
-	C.ImGui_ImplOpenGL2_RenderDrawData(internal.ReinterpretCast[*C.ImDrawData](draw_dataArg))
-
-	draw_dataFin()
-}
-
-func ImplOpenGL2Shutdown() {
-	C.ImGui_ImplOpenGL2_Shutdown()
-}
-
-func ImplOpenGL3CreateDeviceObjects() bool {
-	return C.ImGui_ImplOpenGL3_CreateDeviceObjects() == C.bool(true)
-}
-
-func ImplOpenGL3CreateFontsTexture() bool {
-	return C.ImGui_ImplOpenGL3_CreateFontsTexture() == C.bool(true)
-}
-
-func ImplOpenGL3DestroyDeviceObjects() {
-	C.ImGui_ImplOpenGL3_DestroyDeviceObjects()
-}
-
-func ImplOpenGL3DestroyFontsTexture() {
-	C.ImGui_ImplOpenGL3_DestroyFontsTexture()
-}
-
-// ImplOpenGL3InitV parameter default value hint:
-// glsl_version: nullptr
-func ImplOpenGL3InitV(glsl_version string) bool {
-	glsl_versionArg, glsl_versionFin := internal.WrapString[C.char](glsl_version)
+func ImplGlfwInitForOpenGL(window *GLFWwindow, install_callbacks bool) bool {
+	windowArg, windowFin := window.Handle()
 
 	defer func() {
-		glsl_versionFin()
+		windowFin()
 	}()
-	return C.ImGui_ImplOpenGL3_Init(glsl_versionArg) == C.bool(true)
-}
-
-func ImplOpenGL3NewFrame() {
-	C.ImGui_ImplOpenGL3_NewFrame()
-}
-
-func ImplOpenGL3RenderDrawData(draw_data *imgui.DrawData) {
-	draw_dataArg, draw_dataFin := draw_data.Handle()
-	C.ImGui_ImplOpenGL3_RenderDrawData(internal.ReinterpretCast[*C.ImDrawData](draw_dataArg))
-
-	draw_dataFin()
-}
-
-func ImplOpenGL3Shutdown() {
-	C.ImGui_ImplOpenGL3_Shutdown()
-}
-
-func ImplSDL2NewFrame() {
-	C.ImGui_ImplSDL2_NewFrame()
-}
-
-func ImplSDL2Shutdown() {
-	C.ImGui_ImplSDL2_Shutdown()
-}
-
-func ImplOpenGL3Init() bool {
-	return C.wrap_ImGui_ImplOpenGL3_Init() == C.bool(true)
+	return C.ImGui_ImplGlfw_InitForOpenGL(internal.ReinterpretCast[*C.GLFWwindow](windowArg), C.bool(install_callbacks)) == C.bool(true)
 }

@@ -9,3 +9,25 @@ package impl
 // #include "typedefs.h"
 // #include "../imgui/extra_types.h"
 import "C"
+import "github.com/AllenDang/cimgui-go/internal"
+
+type GLFWwindow struct {
+	Data uintptr
+}
+
+// Handle returns C version of GLFWwindow and its finalizer func.
+func (self *GLFWwindow) Handle() (result *C.GLFWwindow, fin func()) {
+	r, f := self.C()
+	return &r, f
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self GLFWwindow) C() (C.GLFWwindow, func()) {
+	return (C.GLFWwindow)(C.GLFWwindow_fromUintptr(C.uintptr_t(self.Data))), func() {}
+}
+
+// NewGLFWwindowFromC creates GLFWwindow from its C pointer.
+// SRC ~= *C.GLFWwindow
+func NewGLFWwindowFromC[SRC any](cvalue SRC) *GLFWwindow {
+	return &GLFWwindow{Data: (uintptr)(C.GLFWwindow_toUintptr(*internal.ReinterpretCast[*C.GLFWwindow](cvalue)))}
+}
