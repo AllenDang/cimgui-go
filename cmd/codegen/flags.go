@@ -21,6 +21,8 @@ type flags struct {
 	// name for current package (e.g. imgui, implot)
 	PackageName string `names:"-pkg, --package" usage:"name for current package"`
 	Include     string `names:"-i, --include" usage:"Include header file (source project's header)"`
+	// RefInclude is a reference include path (e.g. for cimgui.h if the extension doesn't include it by default.
+	RefInclude string `names:"-ri, --ref-include" usage:"Include reference header file (reference project's header - e.g. cimgui.h)"`
 }
 
 func parse() *flags {

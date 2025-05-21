@@ -22,13 +22,20 @@ func generateCppWrapper(includePath string, funcDefs []FuncDef, ctx *Context) ([
 	headerSb.WriteString(cppFileHeader)
 	headerSb.WriteString(fmt.Sprintf(`#pragma once
 
-#include "%s"
+%[2]s
+#include "%[1]s"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-`, includePath))
+`, includePath, func() string {
+		if ctx.flags.RefInclude != "" {
+			return fmt.Sprintf("#include \"%s\"", ctx.flags.RefInclude)
+		}
+
+		return ""
+	}()))
 
 	cppSb := &strings.Builder{}
 	cppSb.WriteString(cppFileHeader)
@@ -40,7 +47,6 @@ extern "C" {
 	// Note for future generations: can't replace with range, because we edit funcDefs later
 	for i := 0; i < len(funcDefs); i++ {
 		f := funcDefs[i]
-
 		shouldSkip := false
 
 		// Check func names (some of them are arbitrarly skipped)
