@@ -42,7 +42,7 @@ imgui: setup
 	$(call imgui)
 
 define impl
-	$(call generate,impl,cwrappers/cimgui_impl.h,cwrappers/cimgui_templates/impl_definitions.json,templates/impl_structs.json,templates/impl_typedefs_dict.json,--ref-enums ../cwrappers/cimgui_templates/structs_and_enums.json --ref-typedefs ../cwrappers/cimgui_templates/typedefs_dict.json,../templates/impl_preset.json)
+	$(call generate,impl,cwrappers/cimgui_impl.h,cwrappers/cimgui_templates/impl_definitions.json,templates/impl_structs.json,templates/impl_typedefs_dict.json,--ref-enums ../cwrappers/cimgui_templates/structs_and_enums.json --ref-typedefs ../cwrappers/cimgui_templates/typedefs_dict.json --ref-include ../cwrappers/cimgui.h,../templates/impl_preset.json)
 endef
 
 ## impl: generate imgui_impl binding
