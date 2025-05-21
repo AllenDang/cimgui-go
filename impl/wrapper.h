@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "../cwrappers/cimgui.h"
 #include "../cwrappers/cimgui_impl.h"
 
 #ifdef __cplusplus
