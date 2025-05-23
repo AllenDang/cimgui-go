@@ -209,12 +209,19 @@ func (g *typedefsGenerator) writeHeaders() {
 		`
 #pragma once
 
-#include "%s"
+%[2]s
+#include "%[1]s"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-`, g.ctx.flags.Include)
+`, g.ctx.flags.Include, func() string {
+			if g.ctx.flags.RefInclude != "" {
+				return fmt.Sprintf("#include \"%s\"", g.ctx.flags.RefInclude)
+			}
+
+			return ""
+		}())
 	g.CppSb.WriteString(cppFileHeader)
 	fmt.Fprintf(g.CppSb,
 		`
