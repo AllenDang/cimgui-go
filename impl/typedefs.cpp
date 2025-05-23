@@ -4,11 +4,3 @@
 
 #include "typedefs.h"
 #include "../cwrappers/cimgui_impl.h"
-
-uintptr_t GLFWwindow_toUintptr(GLFWwindow ptr) {
-	return (uintptr_t)ptr;
-}
-
-GLFWwindow GLFWwindow_fromUintptr(uintptr_t ptr) {
-	return (GLFWwindow)ptr;
-}
