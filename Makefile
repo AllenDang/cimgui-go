@@ -20,6 +20,7 @@ setup:
 # $6: additional agruments to codegen call (e.g. -r option)
 # $7: (if other) preset file
 # $8: (optional) custom package name (if empty, use $1)
+# $9: (optional) custom directory for source (.. is default)
 define generate
 	@echo "Generating for $(1)"
 	mkdir -p $(1)
@@ -29,7 +30,12 @@ define generate
 		else \
 		pkgname="$(8)"; \
 	fi; \
-	cat templates/cflags.go |sed -e "s/^package.*/package $$pkgname/g" > $(1)/cflags.go; \
+	if [ "$9" == "" ]; then \
+		refpath=".."; \
+		else \
+		refpath="$(9)"; \
+	fi; \
+	cat templates/cflags.go |sed -e "s/^package.*/package $$pkgname/g" -e "s/{{REF}}/$$refpath/g" > $(1)/cflags.go; \
 	if [ "$7" == "" ]; then \
 		preset="../cmd/codegen/cimgui-go-preset.json"; \
 		else \
@@ -49,7 +55,7 @@ imgui: setup
 	$(call imgui)
 
 define impl
-	$(call generate,impl/glfw,../cwrappers/cimgui_impl.h,../cwrappers/cimgui_templates/impl_definitions.json,../templates/impl_structs.json,../templates/impl_typedefs_dict.json,--ref-enums ../../cwrappers/cimgui_templates/structs_and_enums.json --ref-typedefs ../../cwrappers/cimgui_templates/typedefs_dict.json --ref-include ../../cwrappers/cimgui.h,../../templates/impl_preset.json,glfw)
+	$(call generate,impl/glfw,../cwrappers/cimgui_impl.h,../cwrappers/cimgui_templates/impl_definitions.json,../templates/impl_structs.json,../templates/impl_typedefs_dict.json,--ref-enums ../../cwrappers/cimgui_templates/structs_and_enums.json --ref-typedefs ../../cwrappers/cimgui_templates/typedefs_dict.json --ref-include ../../cwrappers/cimgui.h,../../templates/impl_preset.json,glfw,\.\.\/\.\.)
 endef
 
 ## impl: generate imgui_impl binding
