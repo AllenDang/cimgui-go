@@ -45,7 +45,7 @@
                 "((void*)0)": "0"
         },
         "ExtraCGOPreamble": [
-                "#include \"../imgui/extra_types.h\""
+                "#include \"../../imgui/extra_types.h\""
         ],
         "SimpleTypes": {
                 "ImU8":      ["byte", "C.ImU8"],
