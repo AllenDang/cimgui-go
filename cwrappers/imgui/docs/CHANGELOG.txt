@@ -36,6 +36,154 @@ HOW TO UPDATE?
 - Please report any issue!
 
 -----------------------------------------------------------------------
+ VERSION 1.92.0 WIP (In Progress)
+-----------------------------------------------------------------------
+
+Breaking changes:
+
+- TreeNode: renamed ImGuiTreeNodeFlags_NavLeftJumpsBackHere to ImGuiTreeNodeFlags_NavLeftJumpsToParent
+  for clarity. Kept inline redirection enum (will obsolete). (#1079, #8639)
+- Commented out PushAllowKeyboardFocus()/PopAllowKeyboardFocus() which was obsoleted
+  in 1.89.4 (March 2023). (#3092)
+   - PushAllowKeyboardFocus(bool tab_stop) --> PushItemFlag(ImGuiItemFlags_NoTabStop, !tab_stop);
+   - PopAllowKeyboardFocus()               --> PopItemFlag().
+- Commented out ImGuiListClipper::ForceDisplayRangeByIndices() which was obsoleted
+  in 1.89.6 (June 2023).
+   - ForceDisplayRangeByIndices()          --> IncludeItemsByIndex()
+- Backends: SDL3: Fixed casing typo in function name: (#8509, #8163, #7998, #7988) [@puugz]
+  - Imgui_ImplSDLGPU3_PrepareDrawData() -> ImGui_ImplSDLGPU3_PrepareDrawData()
+
+Other changes:
+
+- IO: variations in analog-only components of gamepad events do not interfere
+  with trickling of mouse position events (#4921, #8508)
+- Windows: fixed SetNextWindowCollapsed()/SetWindowCollapsed() breaking
+  codepath that preserve last contents size when collapsed, resulting in
+  programmatically uncollapsing auto-sizing windows having them flicker size
+  for a frame. (#7691) [@achabense]
+- Windows: loosened code to allow hovering of resize grips, borders, and table
+  borders while hovering a sibling child window, so that the code in master matches
+  one in docking (they accidentally diverged). (#8554)
+- TreeNode: added experimental flags to draw tree hierarchy outlines linking
+  parent and tree nodes: (#2920)
+  - ImGuiTreeNodeFlags_DrawLinesNone: No lines drawn (default value in style.TreeLinesFlags).
+  - ImGuiTreeNodeFlags_DrawLinesFull: Horizontal lines to child nodes. Vertical line drawn down to TreePop() position: cover full contents.
+  - ImGuiTreeNodeFlags_DrawLinesToNodes: Horizontal lines to child nodes. Vertical line drawn down to bottom-most child node.
+  - Added style.TreeLinesFlags which stores the default setting,
+    which may be overriden in individual TreeNode() calls.
+  - Added style.TreeLinesSize (default to 1.0f).
+  - Added style.TreeLinesRadius (default to 0.0f).
+  - Added ImGuiCol_TreeLines (in default style this is the same as ImGuiCol_Border).
+  - Caveats:
+    - Tree nodes may be used in many creative ways (manually positioning openable
+      nodes in unusual ways, using indent to create tree-looking structures, etc.)
+      and the feature may not accurately represent them in every cases.
+    - The feature adds a little cost as extra data needs to be stored.
+      (ImGuiTreeNodeFlags_DrawLinesToNodes is slower than ImGuiTreeNodeFlags_DrawLinesFull
+      which may be meaningful on very large trees, as it needs to record bottom-most
+      Y position even for clipped nodes).
+    - The feature is unlikely to ever work properly when using a coarse clipper
+      such as ImGuiListClipper.
+- TreeNode: fixed incorrect clipping of arrow/bullet when using ImGuiTreeNodeFlags_SpanAllColumns.
+- InputText: fixed cursor positioning issue using up/down keys near end of lines while
+  editing non-ASCII text. (Regression from 1.91.2) (#8635, #7925)
+- Tables: fixed TableHeader() eager vertical clipping of text which may be noticeable
+  with FramePadding.y was too small. (#6236)
+- Tables: fixed an assert when combining Tables, Frozen Rows, Clipper and BeginMultiSelect()
+  in a certain order. (#8595, #8250)
+- Tabs: fixes small issues with how "..." ellipsis moved depending on visibility
+  of Close Button or Unsaved Document marker. (#8387)
+- Tooltips: tooltips have a maximum size corresponding to host display/monitor size,
+  which mitigates edge case issues in multi-viewport scenarios where abnormally large
+  windows (e.g. determined programmatically) can lead to renderer backend trying to
+  create abnormally large framebuffers.
+- Nav: fixed assertion when holding gamepad FaceLeft/West button to open
+  CTRL+Tab windowing + pressing a keyboard key. (#8525)
+- Error Handling: added better error report and recovery for extraneous
+  EndPopup() call. (#1651, #8499)
+- Error Handling: added better error report and recovery when calling EndFrame()
+  or Render() without NewFrame(). Was previously only an assert.
+- Fonts: reworked text ellipsis logic to ensure a "..." is always displayed instead
+  of a single character. (#7024)
+- Fonts: word-wrapping code handle ideographic comma & full stop (U+3001, U+3002). (#8540)
+- Fonts: fixed CalcWordWrapPositionA() fallback when width is too small to wrap:
+  would use a +1 offset instead of advancing to the next UTF-8 codepoint. (#8540)
+- Style, InputText: added ImGuiCol_InputTextCursor to configure color of
+  the InputText cursor/caret. (#7031)
+- Platform IME: added ImGuiPlatformImeData::ViewportId info (backported from Docking branch).
+- Platform IME: added ImGuiPlatformImeData::WantTextInput which might set independently
+  of WantVisible. This is set in the same structure because activating text input generally
+  requires providing a window to the backend. (#8584, #6341)
+- Misc: added extra operators to ImVec4 in IMGUI_DEFINE_MATH_OPERATORS block. (#8510) [@gan74]
+- Backends: Win32: Fixed an issue where externally losing mouse capture (due to e.g. focus loss)
+  would fail to claim it again the next subsequent click. (#8594)
+- Backends: SDL2, SDL3, OSX: Fill gamepad inputs and set ImGuiBackendFlags_HasGamepad
+  regardless of ImGuiConfigFlags_NavEnableGamepad being set. (#8508)
+- Backends: SDL2, SDL3: don't attempt to call SDL_CaptureMouse() on drivers where we don't
+  call SDL_GetGlobalMouseState(). This is specifically for Wayland but we currently use
+  the same white-list as SDL_GetGlobalMouseState(). (#8561) [@vs49688]
+- Backends: GLFW, SDL2, SDL3: include GLFW/SDL version number in io.BackendPlatformName.
+- Backends: SDL3: Update for SDL3 api changes: revert SDL_GetClipboardText()
+  memory ownership change. (#8530, #7801) [@Green-Sky]
+- Backends: SDL3: honor ImGuiPlatformImeData->WantTextInput as an alternative
+  way to call SDL_StartTextInput(), without IME being necessarily visible. (#8584)
+- Backends: SDLGPU3: Fixed creating atlas texture earlier than other backends, preventing
+  to load fonts between the Init and NewFrames calls.
+- Backends: SDLGPU3: Made ImGui_ImplSDLGPU3_PrepareDrawData() reuse GPU Transfer Buffers which
+  were unusually slow to recreate every frame. Much faster now. (#8534) [@ocornut, @TheMode]
+- Backends: SDLGPU3: added support for ImDrawCallback_ResetRenderState. (#8599)
+- Backends: DirectX10, DirectX11, DirectX12: Honor FramebufferScale to allow for custom
+  platform backends and experiments using it (consistently with other renderer backends,
+  even though in normal condition it is not set under Windows). (#8412) [@WSSDude]
+- Backends: Vulkan: Deep-copy ImGui_ImplVulkan_InitInfo::PipelineRenderingCreateInfo's
+  pColorAttachmentFormats buffer when set, in order to reduce common user-error of
+  specifying a pointer to data that gets out of scope. (#8282)
+- Backends: Vulkan: Load dynamic rendering functions using vkGetDeviceProcAddr()
+  + try both non-KHR and KHR versions. (#8600, #8326, #8365) [@ChrisTom-94]
+- Backends: Vulkan: fixed validation errors in window create/resize helpers used by examples
+  and by multi-viewports implementation, which would typically trigger errors while detaching
+  secondary viewports. (#8600, #8176) [@ChrisTom-94]
+- Examples: Apple+Metal, Apple+OpenGL: add Makefile (CLion opens them nicely). (#8637) [@pthom]
+- Examples: DirectX12+Win32: also test for IsIconic() for sleeping since we don't seem to
+  get a DXGI_STATUS_OCCLUDED signal when minimized. (#8603) [@dooann]
+
+Docking+Viewports Branch:
+
+- Viewports: added per-viewport FramebufferScale for Retina display multi-monitor support.
+  Backend must provide platform_io.platform_io.Platform_GetWindowFramebufferScale handler.
+  This effectively fixes clipping/rendering on multi-monitors with varying Retina scale.
+  (this per-se doesn't fix the font quality which requires setting RasterizerDensity
+  separately. More on this later as it should soon become automatic).
+  (#1065, #1542, #1676, #1786, #2826, #3757, #5081, #5580, #5592, #6465, #7273, #7779 etc.)
+- Backends: Win32: Viewports: fixed an issue when closing a window from
+  the OS close button (with io.ConfigViewportsNoDecoration=false) while 
+  user code is discarding the 'bool *p_open=false output' from Begin(). 
+  Because we allowed the Win32 window to close early, Windows destroyed
+  it and our imgui window became not visible even though user code was
+  still submitting it.
+- Backends: GLFW, SDL2, SDL3, Apple: provide Platform_GetWindowFramebufferScale handler,
+  (#1065, #1542, #1676, #1786, #2826, #3757, #5081, #5580, #5592, #6465, #7273, #7779 etc.)
+- Backends: SDLGPU3 for SDL3: added multi-viewport support. (#8573) [@Lekoopapaul]
+- Backends: SDL2, SDL3: revert updating monitors and work areas info every
+  frame. Only do it on Windows to detect task-bar resize until we get an
+  adequate event for it. (#8415, #8558)
+- Backends: SDL3: macOS: Fixed secondary-viewports not appearing on a different
+  monitor than the main viewport. Because SDL_SetWindowParent() seems to restrict it.
+- Backends: GLFW: Disable multi-viewports under Wayland (require GLFW 3.4). (#8587)
+
+
+-----------------------------------------------------------------------
+ VERSION 1.91.9b (Released 2025-03-17)
+-----------------------------------------------------------------------
+
+Decorated log and release notes: https://github.com/ocornut/imgui/releases/tag/v1.91.9b
+
+- Tables: Fixed assert when loading .ini settings with reordered columns. (#8496, #7934)
+- Tables: Fixed issues when loading .ini settings for a table with columns using
+  ImGuiTableColumnFlags_DefaultHide or ImGuiTableColumnFlags_DefaultSort. (#8496, #7934)
+
+
+-----------------------------------------------------------------------
  VERSION 1.91.9 (Released 2025-03-14)
 -----------------------------------------------------------------------
 
@@ -64,6 +212,8 @@ Breaking changes:
 - Backends: Vulkan: Added 'uint32_t api_version' argument to ImGui_ImplVulkan_LoadFunctions().
   Note that it was also added to ImGui_ImplVulkan_InitInfo but for the later it is optional.
   (#8326, #8365, #8400)
+- Internals: Fonts: ImFontAtlas::ConfigData[] has been renamed to ImFontAtlas::Sources[],
+- Internals: Fonts: ImFont::ConfigData[], ConfigDataCount has been renamed to Sources[], SourcesCount.
 - Internals: Menus: reworked mangling of menu windows to use "###Menu_00" etc. instead
   of "##Menu_00", allowing them to also store the menu name before it. This shouldn't
   affect code unless directly accessing menu window from their mangled name.
@@ -529,7 +679,7 @@ Other changes:
      - Set io.ConfigNavCursorVisibleAuto = true (default) to enable automatic toggling
        of cursor visibility (mouse click hide the cursor, arrow keys makes it visible).
      - Set io.ConfigNavCursorVisibleAlways to keep cursor always visible.
-  - Nav: added NavSetCursorVisible(bool visible) function to manipulate visibility of
+  - Nav: added SetNavCursorVisible(bool visible) function to manipulate visibility of
     navigation cursor (e.g. set default state, or after some actions). (#1074, #2048, #7237, #8059)
   - Nav: added io.ConfigNavEscapeClearFocusItem and io.ConfigNavEscapeClearFocusWindow to change
     how pressing Escape affects navigation. (#8059, #2048, #1074, #3200)
@@ -658,7 +808,7 @@ Decorated log and release notes: https://github.com/ocornut/imgui/releases/tag/v
 
 Breaking changes:
 
- - Internals: using multiple overlayed ButtonBehavior() with same ID will now have the
+ - Internals: using multiple overlaid ButtonBehavior() with same ID will now have the
    io.ConfigDebugHighlightIdConflicts=true feature emit a warning. (#8030)
    It was one of the rare case where using same ID is legal. Workarounds:
    - use single ButtonBehavior() call with multiple _MouseButton flags

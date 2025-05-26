@@ -74,7 +74,7 @@ extern void wrap_igRenderPlatformWindowsDefaultV(uintptr_t platform_render_arg,u
 extern void wrap_igRenderTextV(ImVec2 pos,const char* text,const int text_len,bool hide_text_after_hash);
 extern void wrap_igRenderTextClippedV(const ImVec2 pos_min,const ImVec2 pos_max,const char* text,const int text_len,const ImVec2* text_size_if_known,const ImVec2 align,const ImRect* clip_rect);
 extern void wrap_igRenderTextClippedExV(ImDrawList* draw_list,const ImVec2 pos_min,const ImVec2 pos_max,const char* text,const int text_len,const ImVec2* text_size_if_known,const ImVec2 align,const ImRect* clip_rect);
-extern void wrap_igRenderTextEllipsis(ImDrawList* draw_list,const ImVec2 pos_min,const ImVec2 pos_max,float clip_max_x,float ellipsis_max_x,const char* text,const int text_len,const ImVec2* text_size_if_known);
+extern void wrap_igRenderTextEllipsis(ImDrawList* draw_list,const ImVec2 pos_min,const ImVec2 pos_max,float ellipsis_max_x,const char* text,const int text_len,const ImVec2* text_size_if_known);
 extern void wrap_igRenderTextWrapped(ImVec2 pos,const char* text,const int text_len,float wrap_width);
 extern void wrap_igSetAllocatorFunctionsV(ImGuiMemAllocFunc alloc_func,ImGuiMemFreeFunc free_func,uintptr_t user_data);
 extern bool wrap_igSetDragDropPayloadV(const char* type,const uintptr_t data,size_t sz,ImGuiCond cond);
@@ -87,6 +87,7 @@ extern bool wrap_igSliderScalarV(const char* label,ImGuiDataType data_type,uintp
 extern bool wrap_igSliderScalarNV(const char* label,ImGuiDataType data_type,uintptr_t p_data,int components,const uintptr_t p_min,const uintptr_t p_max,const char* format,ImGuiSliderFlags flags);
 extern bool wrap_igTempInputScalarV(const ImRect bb,ImGuiID id,const char* label,ImGuiDataType data_type,uintptr_t p_data,const char* format,const uintptr_t p_clamp_min,const uintptr_t p_clamp_max);
 extern void wrap_igText(const char* fmt);
+extern void wrap_igTextAligned(float align_x,float size_x,const char* fmt);
 extern void wrap_igTextColored(const ImVec4 col,const char* fmt);
 extern void wrap_igTextDisabled(const char* fmt);
 extern void wrap_igTextExV(const char* text,const int text_len,ImGuiTextFlags flags);
@@ -137,8 +138,8 @@ extern ImFont* wrap_ImFontAtlas_AddFontFromMemoryTTF(ImFontAtlas* self,uintptr_t
 extern void wrap_ImFontAtlas_GetTexDataAsAlpha8(ImFontAtlas* self,unsigned char** out_pixels,int* out_width,int* out_height);
 extern void wrap_ImFontAtlas_GetTexDataAsRGBA32(ImFontAtlas* self,unsigned char** out_pixels,int* out_width,int* out_height);
 extern void wrap_ImFontGlyphRangesBuilder_AddText(ImFontGlyphRangesBuilder* self,const char* text,const int text_len);
-extern void wrap_ImFont_AddRemapChar(ImFont* self,ImWchar dst,ImWchar src);
 extern void wrap_ImFont_CalcTextSizeA(ImVec2* pOut,ImFont* self,float size,float max_width,float wrap_width,const char* text_begin);
+extern void wrap_ImFont_RenderChar(ImFont* self,ImDrawList* draw_list,float size,const ImVec2 pos,ImU32 col,ImWchar c);
 extern void wrap_ImFont_RenderText(ImFont* self,ImDrawList* draw_list,float size,const ImVec2 pos,ImU32 col,const ImVec4 clip_rect,const char* text_begin);
 extern void wrap_ImGuiIO_SetKeyEventNativeData(ImGuiIO* self,ImGuiKey key,int native_keycode,int native_scancode);
 extern void wrap_ImGuiInputTextCallbackData_InsertChars(ImGuiInputTextCallbackData* self,int pos,const char* text,const int text_len);

@@ -4656,13 +4656,13 @@ func PlotHistogramdoublePtrV(label_id string, values *float64, count, bins int32
 // uv1: ImVec2(1,1)
 // tint_col: ImVec4(1,1,1,1)
 // flags: 0
-func PlotImageV(label_id string, user_texture_id imgui.TextureID, bounds_min, bounds_max PlotPoint, uv0, uv1 imgui.Vec2, tint_col imgui.Vec4, flags ImageFlags) {
+func PlotImageV(label_id string, tex_ref imgui.TextureID, bounds_min, bounds_max PlotPoint, uv0, uv1 imgui.Vec2, tint_col imgui.Vec4, flags ImageFlags) {
 	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
-	C.ImPlot_PlotImage(label_idArg, internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImPlotPoint](bounds_min.ToC()), internal.ReinterpretCast[C.ImPlotPoint](bounds_max.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec4](tint_col.ToC()), C.ImPlotImageFlags(flags))
+	tex_refArg, tex_refFin := tex_ref.C()
+	C.ImPlot_PlotImage(label_idArg, internal.ReinterpretCast[C.ImTextureID](tex_refArg), internal.ReinterpretCast[C.ImPlotPoint](bounds_min.ToC()), internal.ReinterpretCast[C.ImPlotPoint](bounds_max.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec4](tint_col.ToC()), C.ImPlotImageFlags(flags))
 
 	label_idFin()
-	user_texture_idFin()
+	tex_refFin()
 }
 
 // PlotInfLinesFloatPtrV parameter default value hint:
@@ -8782,13 +8782,13 @@ func PlotHistogramdoublePtr(label_id string, values *float64, count int32) float
 	return float64(C.wrap_ImPlot_PlotHistogram_doublePtr(label_idArg, valuesArg, C.int(count)))
 }
 
-func PlotImage(label_id string, user_texture_id imgui.TextureID, bounds_min, bounds_max PlotPoint) {
+func PlotImage(label_id string, tex_ref imgui.TextureID, bounds_min, bounds_max PlotPoint) {
 	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
-	C.wrap_ImPlot_PlotImage(label_idArg, internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImPlotPoint](bounds_min.ToC()), internal.ReinterpretCast[C.ImPlotPoint](bounds_max.ToC()))
+	tex_refArg, tex_refFin := tex_ref.C()
+	C.wrap_ImPlot_PlotImage(label_idArg, internal.ReinterpretCast[C.ImTextureID](tex_refArg), internal.ReinterpretCast[C.ImPlotPoint](bounds_min.ToC()), internal.ReinterpretCast[C.ImPlotPoint](bounds_max.ToC()))
 
 	label_idFin()
-	user_texture_idFin()
+	tex_refFin()
 }
 
 func PlotInfLinesFloatPtr(label_id string, values *float32, count int32) {

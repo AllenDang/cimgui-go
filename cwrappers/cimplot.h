@@ -1100,7 +1100,7 @@ CIMGUI_API void ImPlot_PlotDigital_U32Ptr(const char* label_id,const ImU32* xs,c
 CIMGUI_API void ImPlot_PlotDigital_S64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,ImPlotDigitalFlags flags,int offset,int stride);
 CIMGUI_API void ImPlot_PlotDigital_U64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,ImPlotDigitalFlags flags,int offset,int stride);
 CIMGUI_API void ImPlot_PlotDigitalG(const char* label_id,ImPlotPoint_getter getter,void* data,int count,ImPlotDigitalFlags flags);//custom generation
-CIMGUI_API void ImPlot_PlotImage(const char* label_id,ImTextureID user_texture_id,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max,const ImVec2 uv0,const ImVec2 uv1,const ImVec4 tint_col,ImPlotImageFlags flags);
+CIMGUI_API void ImPlot_PlotImage(const char* label_id,ImTextureID tex_ref,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max,const ImVec2 uv0,const ImVec2 uv1,const ImVec4 tint_col,ImPlotImageFlags flags);
 CIMGUI_API void ImPlot_PlotText(const char* text,double x,double y,const ImVec2 pix_offset,ImPlotTextFlags flags);
 CIMGUI_API void ImPlot_PlotDummy(const char* label_id,ImPlotDummyFlags flags);
 CIMGUI_API bool ImPlot_DragPoint(int id,double* x,double* y,const ImVec4 col,float size,ImPlotDragToolFlags flags,bool* out_clicked,bool* out_hovered,bool* held);
@@ -1109,12 +1109,21 @@ CIMGUI_API bool ImPlot_DragLineY(int id,double* y,const ImVec4 col,float thickne
 CIMGUI_API bool ImPlot_DragRect(int id,double* x1,double* y1,double* x2,double* y2,const ImVec4 col,ImPlotDragToolFlags flags,bool* out_clicked,bool* out_hovered,bool* held);
 CIMGUI_API void ImPlot_Annotation_Bool(double x,double y,const ImVec4 col,const ImVec2 pix_offset,bool clamp,bool round);
 CIMGUI_API void ImPlot_Annotation_Str(double x,double y,const ImVec4 col,const ImVec2 pix_offset,bool clamp,const char* fmt,...);
+#ifdef CIMGUI_VARGS0
+CIMGUI_API void ImPlot_Annotation_Str0(double x,double y,const ImVec4 col,const ImVec2 pix_offset,bool clamp,const char* fmt);
+#endif
 CIMGUI_API void ImPlot_AnnotationV(double x,double y,const ImVec4 col,const ImVec2 pix_offset,bool clamp,const char* fmt,va_list args);
 CIMGUI_API void ImPlot_TagX_Bool(double x,const ImVec4 col,bool round);
 CIMGUI_API void ImPlot_TagX_Str(double x,const ImVec4 col,const char* fmt,...);
+#ifdef CIMGUI_VARGS0
+CIMGUI_API void ImPlot_TagX_Str0(double x,const ImVec4 col,const char* fmt);
+#endif
 CIMGUI_API void ImPlot_TagXV(double x,const ImVec4 col,const char* fmt,va_list args);
 CIMGUI_API void ImPlot_TagY_Bool(double y,const ImVec4 col,bool round);
 CIMGUI_API void ImPlot_TagY_Str(double y,const ImVec4 col,const char* fmt,...);
+#ifdef CIMGUI_VARGS0
+CIMGUI_API void ImPlot_TagY_Str0(double y,const ImVec4 col,const char* fmt);
+#endif
 CIMGUI_API void ImPlot_TagYV(double y,const ImVec4 col,const char* fmt,va_list args);
 CIMGUI_API void ImPlot_SetAxis(ImAxis axis);
 CIMGUI_API void ImPlot_SetAxes(ImAxis x_axis,ImAxis y_axis);

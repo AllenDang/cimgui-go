@@ -7,7 +7,7 @@
 // - Introduction, links and more at the top of imgui.cpp
 
 // Important note to the reader who wish to integrate imgui_impl_sdlgpu3.cpp/.h in their own engine/app.
-// - Unlike other backends, the user must call the function Imgui_ImplSDLGPU_PrepareDrawData() BEFORE issuing a SDL_GPURenderPass containing ImGui_ImplSDLGPU_RenderDrawData.
+// - Unlike other backends, the user must call the function ImGui_ImplSDLGPU_PrepareDrawData() BEFORE issuing a SDL_GPURenderPass containing ImGui_ImplSDLGPU_RenderDrawData.
 //   Calling the function is MANDATORY, otherwise the ImGui will not upload neither the vertex nor the index buffer for the GPU. See imgui_impl_sdlgpu3.cpp for more info.
 
 #include "imgui.h"
@@ -34,12 +34,15 @@ int main(int, char**)
     }
 
     // Create SDL window graphics context
-    SDL_Window* window = SDL_CreateWindow("Dear ImGui SDL3+SDL_GPU example", 1280, 720, SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY);
+    SDL_WindowFlags window_flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN | SDL_WINDOW_HIGH_PIXEL_DENSITY;
+    SDL_Window* window = SDL_CreateWindow("Dear ImGui SDL3+SDL_GPU example", 1280, 720, window_flags);
     if (window == nullptr)
     {
         printf("Error: SDL_CreateWindow(): %s\n", SDL_GetError());
         return -1;
     }
+    SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+    SDL_ShowWindow(window);
 
     // Create GPU Device
     SDL_GPUDevice* gpu_device = SDL_CreateGPUDevice(SDL_GPU_SHADERFORMAT_SPIRV | SDL_GPU_SHADERFORMAT_DXIL | SDL_GPU_SHADERFORMAT_METALLIB,true,nullptr);
@@ -63,10 +66,20 @@ int main(int, char**)
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
     //ImGui::StyleColorsLight();
+
+    // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+    ImGuiStyle& style = ImGui::GetStyle();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        style.WindowRounding = 0.0f;
+        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+    }
 
     // Setup Platform/Renderer backends
     ImGui_ImplSDL3_InitForSDLGPU(window);
@@ -178,8 +191,8 @@ int main(int, char**)
 
         if (swapchain_texture != nullptr && !is_minimized)
         {
-            // This is mandatory: call Imgui_ImplSDLGPU3_PrepareDrawData() to upload the vertex/index buffer!
-            Imgui_ImplSDLGPU3_PrepareDrawData(draw_data, command_buffer);
+            // This is mandatory: call ImGui_ImplSDLGPU3_PrepareDrawData() to upload the vertex/index buffer!
+            ImGui_ImplSDLGPU3_PrepareDrawData(draw_data, command_buffer);
 
             // Setup and start a render pass
             SDL_GPUColorTargetInfo target_info = {};
@@ -196,6 +209,13 @@ int main(int, char**)
             ImGui_ImplSDLGPU3_RenderDrawData(draw_data, command_buffer, render_pass);
 
             SDL_EndGPURenderPass(render_pass);
+        }
+
+        // Update and Render additional Platform Windows
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
         }
 
         // Submit the command buffer
