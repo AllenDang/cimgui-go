@@ -252,52 +252,57 @@ const (
 	ColResizeGrip        Col = 30
 	ColResizeGripHovered Col = 31
 	ColResizeGripActive  Col = 32
+	// InputText cursor/caret
+	ColInputTextCursor Col = 33
 	// Tab background, when hovered
-	ColTabHovered Col = 33
+	ColTabHovered Col = 34
 	// Tab background, when tab-bar is focused & tab is unselected
-	ColTab Col = 34
+	ColTab Col = 35
 	// Tab background, when tab-bar is focused & tab is selected
-	ColTabSelected Col = 35
+	ColTabSelected Col = 36
 	// Tab horizontal overline, when tab-bar is focused & tab is selected
-	ColTabSelectedOverline Col = 36
+	ColTabSelectedOverline Col = 37
 	// Tab background, when tab-bar is unfocused & tab is unselected
-	ColTabDimmed Col = 37
+	ColTabDimmed Col = 38
 	// Tab background, when tab-bar is unfocused & tab is selected
-	ColTabDimmedSelected Col = 38
+	ColTabDimmedSelected Col = 39
 	//..horizontal overline, when tab-bar is unfocused & tab is selected
-	ColTabDimmedSelectedOverline Col = 39
+	ColTabDimmedSelectedOverline Col = 40
 	// Preview overlay color when about to docking something
-	ColDockingPreview Col = 40
+	ColDockingPreview Col = 41
 	// Background color for empty node (e.g. CentralNode with no window docked into it)
-	ColDockingEmptyBg       Col = 41
-	ColPlotLines            Col = 42
-	ColPlotLinesHovered     Col = 43
-	ColPlotHistogram        Col = 44
-	ColPlotHistogramHovered Col = 45
+	ColDockingEmptyBg       Col = 42
+	ColPlotLines            Col = 43
+	ColPlotLinesHovered     Col = 44
+	ColPlotHistogram        Col = 45
+	ColPlotHistogramHovered Col = 46
 	// Table header background
-	ColTableHeaderBg Col = 46
+	ColTableHeaderBg Col = 47
 	// Table outer and header borders (prefer using Alpha=1.0 here)
-	ColTableBorderStrong Col = 47
+	ColTableBorderStrong Col = 48
 	// Table inner borders (prefer using Alpha=1.0 here)
-	ColTableBorderLight Col = 48
+	ColTableBorderLight Col = 49
 	// Table row background (even rows)
-	ColTableRowBg Col = 49
+	ColTableRowBg Col = 50
 	// Table row background (odd rows)
-	ColTableRowBgAlt Col = 50
+	ColTableRowBgAlt Col = 51
 	// Hyperlink color
-	ColTextLink       Col = 51
-	ColTextSelectedBg Col = 52
+	ColTextLink Col = 52
+	// Selected text inside an InputText
+	ColTextSelectedBg Col = 53
+	// Tree node hierarchy outlines when using ImGuiTreeNodeFlags_DrawLines
+	ColTreeLines Col = 54
 	// Rectangle highlighting a drop target
-	ColDragDropTarget Col = 53
+	ColDragDropTarget Col = 55
 	// Color of keyboard/gamepad navigation cursor/rectangle, when visible
-	ColNavCursor Col = 54
+	ColNavCursor Col = 56
 	// Highlight window when using CTRL+TAB
-	ColNavWindowingHighlight Col = 55
+	ColNavWindowingHighlight Col = 57
 	// Darken/colorize entire screen behind the CTRL+TAB window list, when active
-	ColNavWindowingDimBg Col = 56
+	ColNavWindowingDimBg Col = 58
 	// Darken/colorize entire screen behind a modal window, when one is active
-	ColModalWindowDimBg Col = 57
-	ColCOUNT            Col = 58
+	ColModalWindowDimBg Col = 59
+	ColCOUNT            Col = 60
 )
 
 // Flags for ColorEdit3() / ColorEdit4() / ColorPicker3() / ColorPicker4() / ColorButton()
@@ -691,7 +696,7 @@ const (
 // - When disabled, FreeType generates blurrier glyphs, more or less matches the stb_truetype.h
 // - The Default hinting mode usually looks good, but may distort glyphs in an unusual way.
 // - The Light hinting mode generates fuzzier glyphs but better matches Microsoft's rasterizer.
-// You can set those flags globaly in ImFontAtlas::FontBuilderFlags
+// You can set those flags globally in ImFontAtlas::FontBuilderFlags
 // You can set those flags on a per font basis in ImFontConfig::FontBuilderFlags
 // original name: ImGuiFreeTypeBuilderFlags
 type FreeTypeBuilderFlags int32
@@ -1774,19 +1779,23 @@ const (
 	StyleVarTableAngledHeadersAngle StyleVar = 27
 	// ImVec2  TableAngledHeadersTextAlign
 	StyleVarTableAngledHeadersTextAlign StyleVar = 28
+	// float     TreeLinesSize
+	StyleVarTreeLinesSize StyleVar = 29
+	// float     TreeLinesRounding
+	StyleVarTreeLinesRounding StyleVar = 30
 	// ImVec2    ButtonTextAlign
-	StyleVarButtonTextAlign StyleVar = 29
+	StyleVarButtonTextAlign StyleVar = 31
 	// ImVec2    SelectableTextAlign
-	StyleVarSelectableTextAlign StyleVar = 30
+	StyleVarSelectableTextAlign StyleVar = 32
 	// float     SeparatorTextBorderSize
-	StyleVarSeparatorTextBorderSize StyleVar = 31
+	StyleVarSeparatorTextBorderSize StyleVar = 33
 	// ImVec2    SeparatorTextAlign
-	StyleVarSeparatorTextAlign StyleVar = 32
+	StyleVarSeparatorTextAlign StyleVar = 34
 	// ImVec2    SeparatorTextPadding
-	StyleVarSeparatorTextPadding StyleVar = 33
+	StyleVarSeparatorTextPadding StyleVar = 35
 	// float     DockingSeparatorSize
-	StyleVarDockingSeparatorSize StyleVar = 34
-	StyleVarCOUNT                StyleVar = 35
+	StyleVarDockingSeparatorSize StyleVar = 36
+	StyleVarCOUNT                StyleVar = 37
 )
 
 // Extend ImGuiTabBarFlags_
@@ -2086,11 +2095,14 @@ const (
 type TreeNodeFlagsPrivate int32
 
 const (
+	// Don't claim nav focus when interacting with this item (#8551)
+	TreeNodeFlagsNoNavFocus TreeNodeFlagsPrivate = 134217728
 	// FIXME-WIP: Hard-coded for CollapsingHeader()
 	TreeNodeFlagsClipLabelForTrailingButton TreeNodeFlagsPrivate = 268435456
 	// FIXME-WIP: Turn Down arrow into an Up arrow, for reversed trees (#6517)
 	TreeNodeFlagsUpsideDownArrow TreeNodeFlagsPrivate = 536870912
 	TreeNodeFlagsOpenOnMask      TreeNodeFlagsPrivate = 192
+	TreeNodeFlagsDrawLinesMask   TreeNodeFlagsPrivate = 1835008
 )
 
 // Flags for ImGui::TreeNodeEx(), ImGui::CollapsingHeader*()
@@ -2131,9 +2143,15 @@ const (
 	TreeNodeFlagsSpanAllColumns TreeNodeFlags = 16384
 	// Label will span all columns of its container table
 	TreeNodeFlagsLabelSpanAllColumns TreeNodeFlags = 32768
-	// (WIP) Nav: left direction may move to this TreeNode() from any of its child (items submitted between TreeNode and TreePop)
-	TreeNodeFlagsNavLeftJumpsBackHere TreeNodeFlags = 131072
+	// Nav: left arrow moves back to parent. This is processed in TreePop() when there's an unfullfilled Left nav request remaining.
+	TreeNodeFlagsNavLeftJumpsToParent TreeNodeFlags = 131072
 	TreeNodeFlagsCollapsingHeader     TreeNodeFlags = 26
+	// No lines drawn
+	TreeNodeFlagsDrawLinesNone TreeNodeFlags = 262144
+	// Horizontal lines to child nodes. Vertical line drawn down to TreePop() position: cover full contents. Faster (for large trees).
+	TreeNodeFlagsDrawLinesFull TreeNodeFlags = 524288
+	// Horizontal lines to child nodes. Vertical line drawn down to bottom-most child node. Slower (for large trees).
+	TreeNodeFlagsDrawLinesToNodes TreeNodeFlags = 1048576
 )
 
 // Flags for GetTypingSelectRequest()

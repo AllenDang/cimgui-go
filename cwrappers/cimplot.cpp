@@ -1192,9 +1192,9 @@ CIMGUI_API void ImPlot_PlotDigitalG(const char* label_id,ImPlotPoint_getter gett
     getter_funcX = getter;
     ImPlot::PlotDigitalG(label_id,Wrapper,data,count,flags);
 }
-CIMGUI_API void ImPlot_PlotImage(const char* label_id,ImTextureID user_texture_id,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max,const ImVec2 uv0,const ImVec2 uv1,const ImVec4 tint_col,ImPlotImageFlags flags)
+CIMGUI_API void ImPlot_PlotImage(const char* label_id,ImTextureID tex_ref,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max,const ImVec2 uv0,const ImVec2 uv1,const ImVec4 tint_col,ImPlotImageFlags flags)
 {
-    return ImPlot::PlotImage(label_id,user_texture_id,bounds_min,bounds_max,uv0,uv1,tint_col,flags);
+    return ImPlot::PlotImage(label_id,tex_ref,bounds_min,bounds_max,uv0,uv1,tint_col,flags);
 }
 CIMGUI_API void ImPlot_PlotText(const char* text,double x,double y,const ImVec2 pix_offset,ImPlotTextFlags flags)
 {
@@ -1231,6 +1231,12 @@ CIMGUI_API void ImPlot_Annotation_Str(double x,double y,const ImVec4 col,const I
     ImPlot::AnnotationV(x,y,col,pix_offset,clamp,fmt,args);
     va_end(args);
 }
+#ifdef CIMGUI_VARGS0
+CIMGUI_API void ImPlot_Annotation_Str0(double x,double y,const ImVec4 col,const ImVec2 pix_offset,bool clamp,const char* fmt)
+{
+    return ImPlot_Annotation_Str(x,y,col,pix_offset,clamp,fmt);
+}
+#endif
 CIMGUI_API void ImPlot_AnnotationV(double x,double y,const ImVec4 col,const ImVec2 pix_offset,bool clamp,const char* fmt,va_list args)
 {
     return ImPlot::AnnotationV(x,y,col,pix_offset,clamp,fmt,args);
@@ -1246,6 +1252,12 @@ CIMGUI_API void ImPlot_TagX_Str(double x,const ImVec4 col,const char* fmt,...)
     ImPlot::TagXV(x,col,fmt,args);
     va_end(args);
 }
+#ifdef CIMGUI_VARGS0
+CIMGUI_API void ImPlot_TagX_Str0(double x,const ImVec4 col,const char* fmt)
+{
+    return ImPlot_TagX_Str(x,col,fmt);
+}
+#endif
 CIMGUI_API void ImPlot_TagXV(double x,const ImVec4 col,const char* fmt,va_list args)
 {
     return ImPlot::TagXV(x,col,fmt,args);
@@ -1261,6 +1273,12 @@ CIMGUI_API void ImPlot_TagY_Str(double y,const ImVec4 col,const char* fmt,...)
     ImPlot::TagYV(y,col,fmt,args);
     va_end(args);
 }
+#ifdef CIMGUI_VARGS0
+CIMGUI_API void ImPlot_TagY_Str0(double y,const ImVec4 col,const char* fmt)
+{
+    return ImPlot_TagY_Str(y,col,fmt);
+}
+#endif
 CIMGUI_API void ImPlot_TagYV(double y,const ImVec4 col,const char* fmt,va_list args)
 {
     return ImPlot::TagYV(y,col,fmt,args);

@@ -1240,12 +1240,10 @@ func (self *Font) AddGlyph(src_cfg *FontConfig, c Wchar, x0, y0, x1, y1, u0, v0,
 	src_cfgFin()
 }
 
-// Makes 'dst' character/glyph points to 'src' character/glyph. Currently needs to be called AFTER fonts have been built.
-// AddRemapCharV parameter default value hint:
-// overwrite_dst: true
-func (self *Font) AddRemapCharV(dst, src Wchar, overwrite_dst bool) {
+// , bool overwrite_dst = true); // Makes 'from_codepoint' character points to 'to_codepoint' character. Currently needs to be called AFTER fonts have been built.
+func (self *Font) AddRemapChar(from_codepoint, to_codepoint Wchar, overwrite_dst bool) {
 	selfArg, selfFin := self.Handle()
-	C.ImFont_AddRemapChar(internal.ReinterpretCast[*C.ImFont](selfArg), C.ImWchar(dst), C.ImWchar(src), C.bool(overwrite_dst))
+	C.ImFont_AddRemapChar(internal.ReinterpretCast[*C.ImFont](selfArg), C.ImWchar(from_codepoint), C.ImWchar(to_codepoint), C.bool(overwrite_dst))
 
 	selfFin()
 }
@@ -1360,13 +1358,17 @@ func (self *Font) IsLoaded() bool {
 	return C.ImFont_IsLoaded(internal.ReinterpretCast[*C.ImFont](selfArg)) == C.bool(true)
 }
 
-func (self *Font) RenderChar(draw_list *DrawList, size float32, pos Vec2, col uint32, c Wchar) {
+// RenderCharV parameter default value hint:
+// cpu_fine_clip: NULL
+func (self *Font) RenderCharV(draw_list *DrawList, size float32, pos Vec2, col uint32, c Wchar, cpu_fine_clip *Vec4) {
 	selfArg, selfFin := self.Handle()
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.ImFont_RenderChar(internal.ReinterpretCast[*C.ImFont](selfArg), internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.float(size), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), C.ImWchar(c))
+	cpu_fine_clipArg, cpu_fine_clipFin := internal.Wrap(cpu_fine_clip)
+	C.ImFont_RenderChar(internal.ReinterpretCast[*C.ImFont](selfArg), internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.float(size), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), C.ImWchar(c), internal.ReinterpretCast[*C.ImVec4](cpu_fine_clipArg))
 
 	selfFin()
 	draw_listFin()
+	cpu_fine_clipFin()
 }
 
 // RenderTextV parameter default value hint:
@@ -9142,11 +9144,11 @@ func InternalRenderTextClippedExV(draw_list *DrawList, pos_min, pos_max Vec2, te
 	clip_rectFin()
 }
 
-func InternalRenderTextEllipsis(draw_list *DrawList, pos_min, pos_max Vec2, clip_max_x, ellipsis_max_x float32, text string, text_size_if_known *Vec2) {
+func InternalRenderTextEllipsis(draw_list *DrawList, pos_min, pos_max Vec2, ellipsis_max_x float32, text string, text_size_if_known *Vec2) {
 	draw_listArg, draw_listFin := draw_list.Handle()
 	textArg, textFin := internal.WrapString[C.char](text)
 	text_size_if_knownArg, text_size_if_knownFin := internal.Wrap(text_size_if_known)
-	C.wrap_igRenderTextEllipsis(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2](pos_min.ToC()), internal.ReinterpretCast[C.ImVec2](pos_max.ToC()), C.float(clip_max_x), C.float(ellipsis_max_x), textArg, C.int(len(text)), internal.ReinterpretCast[*C.ImVec2](text_size_if_knownArg))
+	C.wrap_igRenderTextEllipsis(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2](pos_min.ToC()), internal.ReinterpretCast[C.ImVec2](pos_max.ToC()), C.float(ellipsis_max_x), textArg, C.int(len(text)), internal.ReinterpretCast[*C.ImVec2](text_size_if_knownArg))
 
 	draw_listFin()
 	textFin()
@@ -9525,7 +9527,7 @@ func SetNextFrameWantCaptureKeyboard(want_capture_keyboard bool) {
 	C.igSetNextFrameWantCaptureKeyboard(C.bool(want_capture_keyboard))
 }
 
-// Override io.WantCaptureMouse flag next frame (said flag is left for your application to handle, typical when true it instucts your app to ignore inputs). This is equivalent to setting "io.WantCaptureMouse = want_capture_mouse;" after the next NewFrame() call.
+// Override io.WantCaptureMouse flag next frame (said flag is left for your application to handle, typical when true it instructs your app to ignore inputs). This is equivalent to setting "io.WantCaptureMouse = want_capture_mouse;" after the next NewFrame() call.
 func SetNextFrameWantCaptureMouse(want_capture_mouse bool) {
 	C.igSetNextFrameWantCaptureMouse(C.bool(want_capture_mouse))
 }
@@ -10892,8 +10894,16 @@ func InternalTablePopBackgroundChannel() {
 	C.igTablePopBackgroundChannel()
 }
 
+func InternalTablePopColumnChannel() {
+	C.igTablePopColumnChannel()
+}
+
 func InternalTablePushBackgroundChannel() {
 	C.igTablePushBackgroundChannel()
+}
+
+func InternalTablePushColumnChannel(column_n int32) {
+	C.igTablePushColumnChannel(C.int(column_n))
 }
 
 func InternalTableRemove(table *Table) {
@@ -11109,6 +11119,14 @@ func Text(fmt string) {
 	fmtFin()
 }
 
+// FIXME-WIP: Works but API is likely to be reworked. This is designed for 1 item on the line. (#7024)
+func InternalTextAligned(align_x, size_x float32, fmt string) {
+	fmtArg, fmtFin := internal.WrapString[C.char](fmt)
+	C.wrap_igTextAligned(C.float(align_x), C.float(size_x), fmtArg)
+
+	fmtFin()
+}
+
 // shortcut for PushStyleColor(ImGuiCol_Text, col); Text(fmt, ...); PopStyleColor();
 func TextColored(col Vec4, fmt string) {
 	fmtArg, fmtFin := internal.WrapString[C.char](fmt)
@@ -11193,6 +11211,17 @@ func InternalTreeNodeBehaviorV(id ID, flags TreeNodeFlags, label, label_end stri
 		label_endFin()
 	}()
 	return C.igTreeNodeBehavior(internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiTreeNodeFlags(flags), labelArg, label_endArg) == C.bool(true)
+}
+
+func InternalTreeNodeDrawLineToChildNode(target_pos Vec2) {
+	C.igTreeNodeDrawLineToChildNode(internal.ReinterpretCast[C.ImVec2](target_pos.ToC()))
+}
+
+func InternalTreeNodeDrawLineToTreePop(data *TreeNodeStackData) {
+	dataArg, dataFin := data.Handle()
+	C.igTreeNodeDrawLineToTreePop(internal.ReinterpretCast[*C.ImGuiTreeNodeStackData](dataArg))
+
+	dataFin()
 }
 
 func TreeNodeExPtr(ptr_id uintptr, flags TreeNodeFlags, fmt string) bool {
@@ -11315,8 +11344,8 @@ func UnindentV(indent_w float32) {
 	C.igUnindent(C.float(indent_w))
 }
 
-func InternalUpdateHoveredWindowAndCaptureFlags() {
-	C.igUpdateHoveredWindowAndCaptureFlags()
+func InternalUpdateHoveredWindowAndCaptureFlags(mouse_pos Vec2) {
+	C.igUpdateHoveredWindowAndCaptureFlags(internal.ReinterpretCast[C.ImVec2](mouse_pos.ToC()))
 }
 
 func InternalUpdateInputEvents(trickle_fast_inputs bool) {
@@ -11758,13 +11787,6 @@ func (self *FontGlyphRangesBuilder) AddText(text string) {
 	textFin()
 }
 
-func (self *Font) AddRemapChar(dst, src Wchar) {
-	selfArg, selfFin := self.Handle()
-	C.wrap_ImFont_AddRemapChar(internal.ReinterpretCast[*C.ImFont](selfArg), C.ImWchar(dst), C.ImWchar(src))
-
-	selfFin()
-}
-
 func (self *Font) CalcTextSizeA(size, max_width, wrap_width float32, text_begin string) Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := internal.Wrap(pOut)
@@ -11778,6 +11800,15 @@ func (self *Font) CalcTextSizeA(size, max_width, wrap_width float32, text_begin 
 	text_beginFin()
 
 	return *pOut
+}
+
+func (self *Font) RenderChar(draw_list *DrawList, size float32, pos Vec2, col uint32, c Wchar) {
+	selfArg, selfFin := self.Handle()
+	draw_listArg, draw_listFin := draw_list.Handle()
+	C.wrap_ImFont_RenderChar(internal.ReinterpretCast[*C.ImFont](selfArg), internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.float(size), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), C.ImWchar(c))
+
+	selfFin()
+	draw_listFin()
 }
 
 func (self *Font) RenderText(draw_list *DrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string) {
@@ -19204,6 +19235,21 @@ func (self *Context) NavJustMovedToHasSelectionData() bool {
 	return C.wrap_ImGuiContext_GetNavJustMovedToHasSelectionData(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
 }
 
+func (self Context) SetConfigNavWindowingWithGamepad(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetConfigNavWindowingWithGamepad(selfArg, C.bool(v))
+}
+
+func (self *Context) ConfigNavWindowingWithGamepad() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiContext_GetConfigNavWindowingWithGamepad(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
+}
+
 func (self Context) SetConfigNavWindowingKeyNext(v KeyChord) {
 	vArg, _ := v.C()
 
@@ -19321,6 +19367,21 @@ func (self *Context) NavWindowingHighlightAlpha() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiContext_GetNavWindowingHighlightAlpha(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+}
+
+func (self Context) SetNavWindowingInputSource(v InputSource) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetNavWindowingInputSource(selfArg, C.ImGuiInputSource(v))
+}
+
+func (self *Context) NavWindowingInputSource() InputSource {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return InputSource(C.wrap_ImGuiContext_GetNavWindowingInputSource(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
 func (self Context) SetNavWindowingToggleLayer(v bool) {
@@ -20727,25 +20788,6 @@ func (self *Context) PlatformImeDataPrev() PlatformImeData {
 		selfFin()
 	}()
 	return *NewPlatformImeDataFromC(func() *C.ImGuiPlatformImeData { result := result; return &result }())
-}
-
-func (self Context) SetPlatformImeViewport(v ID) {
-	vArg, _ := v.C()
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetPlatformImeViewport(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
-}
-
-func (self *Context) PlatformImeViewport() ID {
-	selfArg, selfFin := self.Handle()
-
-	result := C.wrap_ImGuiContext_GetPlatformImeViewport(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
-
-	defer func() {
-		selfFin()
-	}()
-	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
 func (self Context) SetDockContext(v DockContext) {
@@ -23430,6 +23472,24 @@ func (self *IO) DisplaySize() Vec2 {
 	}()
 }
 
+func (self IO) SetDisplayFramebufferScale(v Vec2) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetDisplayFramebufferScale(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+}
+
+func (self *IO) DisplayFramebufferScale() Vec2 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec2 {
+		out := C.wrap_ImGuiIO_GetDisplayFramebufferScale(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
+}
+
 func (self IO) SetDeltaTime(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -23571,24 +23631,6 @@ func (self *IO) FontDefault() *Font {
 		selfFin()
 	}()
 	return NewFontFromC(C.wrap_ImGuiIO_GetFontDefault(internal.ReinterpretCast[*C.ImGuiIO](selfArg)))
-}
-
-func (self IO) SetDisplayFramebufferScale(v Vec2) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiIO_SetDisplayFramebufferScale(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
-}
-
-func (self *IO) DisplayFramebufferScale() Vec2 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return func() Vec2 {
-		out := C.wrap_ImGuiIO_GetDisplayFramebufferScale(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
-		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
-	}()
 }
 
 func (self IO) SetConfigNavSwapGamepadButtons(v bool) {
@@ -27250,6 +27292,21 @@ func (self *MetricsConfig) HighlightViewportID() ID {
 	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
+func (self MetricsConfig) SetShowFontPreview(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiMetricsConfig_SetShowFontPreview(selfArg, C.bool(v))
+}
+
+func (self *MetricsConfig) ShowFontPreview() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiMetricsConfig_GetShowFontPreview(internal.ReinterpretCast[*C.ImGuiMetricsConfig](selfArg)) == C.bool(true)
+}
+
 func (self MultiSelectIO) SetRequests(v vectors.Vector[SelectionRequest]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
@@ -29093,6 +29150,21 @@ func (self *PlatformImeData) WantVisible() bool {
 	return C.wrap_ImGuiPlatformImeData_GetWantVisible(internal.ReinterpretCast[*C.ImGuiPlatformImeData](selfArg)) == C.bool(true)
 }
 
+func (self PlatformImeData) SetWantTextInput(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiPlatformImeData_SetWantTextInput(selfArg, C.bool(v))
+}
+
+func (self *PlatformImeData) WantTextInput() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiPlatformImeData_GetWantTextInput(internal.ReinterpretCast[*C.ImGuiPlatformImeData](selfArg)) == C.bool(true)
+}
+
 func (self PlatformImeData) SetInputPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -29124,6 +29196,25 @@ func (self *PlatformImeData) InputLineHeight() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiPlatformImeData_GetInputLineHeight(internal.ReinterpretCast[*C.ImGuiPlatformImeData](selfArg)))
+}
+
+func (self PlatformImeData) SetViewportId(v ID) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiPlatformImeData_SetViewportId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
+}
+
+func (self *PlatformImeData) ViewportId() ID {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImGuiPlatformImeData_GetViewportId(internal.ReinterpretCast[*C.ImGuiPlatformImeData](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
 func (self PlatformMonitor) SetMainPos(v Vec2) {
@@ -30443,6 +30534,51 @@ func (self *Style) TableAngledHeadersTextAlign() Vec2 {
 	}()
 }
 
+func (self Style) SetTreeLinesFlags(v TreeNodeFlags) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetTreeLinesFlags(selfArg, C.ImGuiTreeNodeFlags(v))
+}
+
+func (self *Style) TreeLinesFlags() TreeNodeFlags {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return TreeNodeFlags(C.wrap_ImGuiStyle_GetTreeLinesFlags(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
+func (self Style) SetTreeLinesSize(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetTreeLinesSize(selfArg, C.float(v))
+}
+
+func (self *Style) TreeLinesSize() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_GetTreeLinesSize(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
+func (self Style) SetTreeLinesRounding(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetTreeLinesRounding(selfArg, C.float(v))
+}
+
+func (self *Style) TreeLinesRounding() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_GetTreeLinesRounding(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
 func (self Style) SetColorButtonPosition(v Dir) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -30686,7 +30822,7 @@ func (self *Style) CircleTessellationMaxError() float32 {
 	return float32(C.wrap_ImGuiStyle_GetCircleTessellationMaxError(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
 }
 
-func (self Style) SetColors(v *[58]Vec4) {
+func (self Style) SetColors(v *[60]Vec4) {
 	vArg := make([]C.ImVec4, len(v))
 	for i, vV := range v {
 		vArg[i] = internal.ReinterpretCast[C.ImVec4](vV.ToC())
@@ -30701,14 +30837,14 @@ func (self Style) SetColors(v *[58]Vec4) {
 	}
 }
 
-func (self *Style) Colors() [58]Vec4 {
+func (self *Style) Colors() [60]Vec4 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return func() [58]Vec4 {
-		result := [58]Vec4{}
+	return func() [60]Vec4 {
+		result := [60]Vec4{}
 		resultMirr := C.wrap_ImGuiStyle_GetColors(internal.ReinterpretCast[*C.ImGuiStyle](selfArg))
 		for i := range result {
 			result[i] = func() Vec4 {
@@ -35154,6 +35290,55 @@ func (self *TreeNodeStackData) NavRect() Rect {
 	}()
 }
 
+func (self TreeNodeStackData) SetDrawLinesX1(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTreeNodeStackData_SetDrawLinesX1(selfArg, C.float(v))
+}
+
+func (self *TreeNodeStackData) DrawLinesX1() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiTreeNodeStackData_GetDrawLinesX1(internal.ReinterpretCast[*C.ImGuiTreeNodeStackData](selfArg)))
+}
+
+func (self TreeNodeStackData) SetDrawLinesToNodesY2(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTreeNodeStackData_SetDrawLinesToNodesY2(selfArg, C.float(v))
+}
+
+func (self *TreeNodeStackData) DrawLinesToNodesY2() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiTreeNodeStackData_GetDrawLinesToNodesY2(internal.ReinterpretCast[*C.ImGuiTreeNodeStackData](selfArg)))
+}
+
+func (self TreeNodeStackData) SetDrawLinesTableColumn(v TableColumnIdx) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTreeNodeStackData_SetDrawLinesTableColumn(selfArg, internal.ReinterpretCast[C.ImGuiTableColumnIdx](vArg))
+}
+
+func (self *TreeNodeStackData) DrawLinesTableColumn() TableColumnIdx {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImGuiTreeNodeStackData_GetDrawLinesTableColumn(internal.ReinterpretCast[*C.ImGuiTreeNodeStackData](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTableColumnIdxFromC(func() *C.ImGuiTableColumnIdx { result := result; return &result }())
+}
+
 func (self TypingSelectRequest) SetFlags(v TypingSelectFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -35427,6 +35612,24 @@ func (self *Viewport) Size() Vec2 {
 	}()
 	return func() Vec2 {
 		out := C.wrap_ImGuiViewport_GetSize(internal.ReinterpretCast[*C.ImGuiViewport](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
+}
+
+func (self Viewport) SetFramebufferScale(v Vec2) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiViewport_SetFramebufferScale(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+}
+
+func (self *Viewport) FramebufferScale() Vec2 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec2 {
+		out := C.wrap_ImGuiViewport_GetFramebufferScale(internal.ReinterpretCast[*C.ImGuiViewport](selfArg))
 		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
 	}()
 }
@@ -38963,6 +39166,21 @@ func (self *WindowTempData) TreeHasStackDataDepthMask() uint32 {
 		selfFin()
 	}()
 	return (uint32)(C.wrap_ImGuiWindowTempData_GetTreeHasStackDataDepthMask(internal.ReinterpretCast[*C.ImGuiWindowTempData](selfArg)))
+}
+
+func (self WindowTempData) SetTreeRecordsClippedNodesY2Mask(v uint32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiWindowTempData_SetTreeRecordsClippedNodesY2Mask(selfArg, C.ImU32(v))
+}
+
+func (self *WindowTempData) TreeRecordsClippedNodesY2Mask() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (uint32)(C.wrap_ImGuiWindowTempData_GetTreeRecordsClippedNodesY2Mask(internal.ReinterpretCast[*C.ImGuiWindowTempData](selfArg)))
 }
 
 func (self WindowTempData) SetStateStorage(v *Storage) {

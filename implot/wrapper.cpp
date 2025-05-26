@@ -174,7 +174,7 @@ double wrap_ImPlot_PlotHistogram_U32Ptr(const char* label_id,const ImU32* values
 double wrap_ImPlot_PlotHistogram_U64Ptr(const char* label_id,const ImU64* values,int count) { return ImPlot_PlotHistogram_U64Ptr(label_id,values,count,ImPlotBin_Sturges,1.0,(ImPlotRange){},0); }
 double wrap_ImPlot_PlotHistogram_U8Ptr(const char* label_id,const ImU8* values,int count) { return ImPlot_PlotHistogram_U8Ptr(label_id,values,count,ImPlotBin_Sturges,1.0,(ImPlotRange){},0); }
 double wrap_ImPlot_PlotHistogram_doublePtr(const char* label_id,const double* values,int count) { return ImPlot_PlotHistogram_doublePtr(label_id,values,count,ImPlotBin_Sturges,1.0,(ImPlotRange){},0); }
-void wrap_ImPlot_PlotImage(const char* label_id,ImTextureID user_texture_id,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max) { ImPlot_PlotImage(label_id,user_texture_id,bounds_min,bounds_max,(ImVec2){0,0},(ImVec2){1,1},(ImVec4){1,1,1,1},0); }
+void wrap_ImPlot_PlotImage(const char* label_id,ImTextureID tex_ref,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max) { ImPlot_PlotImage(label_id,tex_ref,bounds_min,bounds_max,(ImVec2){0,0},(ImVec2){1,1},(ImVec4){1,1,1,1},0); }
 void wrap_ImPlot_PlotInfLines_FloatPtr(const char* label_id,const float* values,int count) { ImPlot_PlotInfLines_FloatPtr(label_id,values,count,0,0,sizeof(float)); }
 void wrap_ImPlot_PlotInfLines_S16Ptr(const char* label_id,const ImS16* values,int count) { ImPlot_PlotInfLines_S16Ptr(label_id,values,count,0,0,sizeof(ImS16)); }
 void wrap_ImPlot_PlotInfLines_S32Ptr(const char* label_id,const ImS32* values,int count) { ImPlot_PlotInfLines_S32Ptr(label_id,values,count,0,0,sizeof(ImS32)); }
