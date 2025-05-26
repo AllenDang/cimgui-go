@@ -8,6 +8,8 @@
 #include "../../cwrappers/cimgui_impl.h"
 #include "../../thirdparty/glfw/include/GLFW/glfw3.h" // Will drag system OpenGL headers
 #include <cstdlib>
+#include <thread>
+#include <chrono>
 
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to
@@ -191,28 +193,24 @@ void igGLFWRunLoop(GLFWwindow *window, VoidCallback loop, VoidCallback beforeRen
   // NULL, io.Fonts->GetGlyphRangesJapanese()); IM_ASSERT(font != NULL);
 
   // Main loop
-  double lasttime = glfwGetTime();
+  double lastFrameTime = glfwGetTime();
   while (!glfwWindowShouldClose(window)) {
-    if (beforeRender != NULL) {
-      beforeRender();
-    }
-
-    glfw_render(window, loop);
-
     double frameTime = 1.0 / glfw_target_fps;
-    double targetTime = lasttime + frameTime;
+    double frameDeltaTime = glfwGetTime() - lastFrameTime;
 
-    double waitTime = targetTime - glfwGetTime();
-    if (waitTime > 0.0) {
-      glfwWaitEventsTimeout(waitTime);
-    } else {
+    if(frameDeltaTime >= frameTime) {
       glfwPollEvents();
-    }
-
-    lasttime += frameTime;
-
-    if (afterRender != NULL) {
-      afterRender();
+      if (beforeRender != NULL) {
+        beforeRender();
+      }
+      glfw_render(window, loop);
+      if (afterRender != NULL) {
+        afterRender();
+      }
+      lastFrameTime += frameTime;
+    } else {
+      double timeToSleep = frameTime - frameDeltaTime;
+      std::this_thread::sleep_for(std::chrono::duration<double>(timeToSleep));
     }
   }
 
