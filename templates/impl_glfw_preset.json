@@ -2,7 +2,8 @@
         "PackagePath": "github.com/AllenDang/cimgui-go",
         "ReverseMode": true,
         "SkipFuncs": {
-                "ImGui_ImplGlfw_InitForOpenGL": true
+                "ImGui_ImplGlfw_InitForOpenGL": true,
+                "ImGui_ImplGlfw_NewFrame": true
         },
         "SKipTypedefs": {
                 "GLFWwindow": true
