@@ -3,7 +3,9 @@
         "ReverseMode": true,
         "SkipFuncs": {
                 "ImGui_ImplGlfw_InitForOpenGL": true,
-                "ImGui_ImplGlfw_NewFrame": true
+                "ImGui_ImplGlfw_NewFrame": true,
+                "ImGui_ImplGlfw_Shutdown": true,
+                "ImGui_ImplGlfw_KeyCallback": true
         },
         "SKipTypedefs": {
                 "GLFWwindow": true
