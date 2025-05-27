@@ -55,7 +55,10 @@ imgui: setup
 	$(call imgui)
 
 define impl
+	@echo "Generate for glfw"
 	$(call generate,impl/glfw,../cwrappers/cimgui_impl.h,../cwrappers/cimgui_templates/impl_definitions.json,../templates/impl_glfw_structs.json,../templates/impl_glfw_typedefs_dict.json,--ref-enums ../../cwrappers/cimgui_templates/structs_and_enums.json --ref-typedefs ../../cwrappers/cimgui_templates/typedefs_dict.json --ref-include ../../cwrappers/cimgui.h,../../templates/impl_glfw_preset.json,glfw,\.\.\/\.\.)
+	@echo "Generate for opengl3"
+	$(call generate,impl/opengl3,../cwrappers/cimgui_impl.h,../cwrappers/cimgui_templates/impl_definitions.json,../templates/impl_opengl3_structs.json,../templates/impl_opengl3_typedefs_dict.json,--ref-enums ../../cwrappers/cimgui_templates/structs_and_enums.json --ref-typedefs ../../cwrappers/cimgui_templates/typedefs_dict.json --ref-include ../../cwrappers/cimgui.h,../../templates/impl_opengl3_preset.json,opengl3,\.\.\/\.\.)
 endef
 
 ## impl: generate imgui_impl binding
