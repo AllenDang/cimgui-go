@@ -1,4 +1,5 @@
 NAME=cimgui-go Code Generator
+SHELL := /usr/bin/env bash
 
 .PHONY: all
 
