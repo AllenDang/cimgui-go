@@ -6,6 +6,8 @@ import (
 	"regexp"
 	"strings"
 	"unicode"
+
+	"github.com/kpango/glg"
 )
 
 // Name of argument in cpp/go files.
@@ -52,6 +54,10 @@ extern "C" {
 		// Check func names (some of them are arbitrarly skipped)
 		if HasPrefix(f.FuncName, "ImSpan") ||
 			HasPrefix(f.FuncName, "ImBitArray") {
+			if ctx.flags.ShowNotGenerated {
+				glg.Debugf("Skipped (ImBitArray or ImSpan): %v", f.FuncName)
+			}
+
 			shouldSkip = true
 			continue
 		}
@@ -71,6 +77,10 @@ extern "C" {
 				a.Type == "va_list" ||
 				(a.Name == "self" && a.Type == "ImVector*") {
 				shouldSkip = true
+				if ctx.flags.ShowNotGenerated {
+					glg.Debugf("Skipped (arg type): %v %v", f.FuncName, a.Type)
+				}
+
 				break
 			}
 		}
@@ -79,6 +89,9 @@ extern "C" {
 		if len(f.FuncName) == 0 ||
 			MapContainsAny(f.Location, ctx.preset.SkipFiles) != ctx.preset.ReverseMode {
 			shouldSkip = true
+			if ctx.flags.ShowNotGenerated {
+				glg.Debugf("Skipped (invalid func name or location): %v in %v", f.FuncName, f.Location)
+			}
 		}
 
 		if shouldSkip {
