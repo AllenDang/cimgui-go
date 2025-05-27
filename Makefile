@@ -36,7 +36,7 @@ define generate
 		else \
 		refpath="$(9)"; \
 	fi; \
-	cat templates/cflags.go |sed -e "s/^package.*/package $$pkgname/g" -e "s/{{REF}}/$$refpath/g" > $(1)/cflags.go; \
+	cat templates/cflags.go.template |sed -e "s/^package.*/package $$pkgname/g" -e "s/{{REF}}/$$refpath/g" > $(1)/cflags.go; \
 	if [ "$7" == "" ]; then \
 		preset="../cmd/codegen/cimgui-go-preset.json"; \
 		else \
