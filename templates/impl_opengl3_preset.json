@@ -7,7 +7,7 @@
                 "ImGui_ImplOpenGL3_RenderDrawData": true
         },
         "SKipTypedefs": {
-                "GLFWwindow": true
+                "ImDrawData": true
         },
         "SKipStructs": {
                 "GLFWwindow": true
