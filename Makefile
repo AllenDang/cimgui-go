@@ -114,7 +114,7 @@ imcte: setup
 
 ## generate: generates both bindings (equal to `all`)
 .PHONY: generate
-generate: imgui implot imnodes immarkdown imguizmo imcte
+generate: imgui implot imnodes immarkdown imguizmo imcte impl
 
 # update updates sub-repos (like cimplot or cimgui)
 # $1 - subrepo directory
