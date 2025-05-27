@@ -6,6 +6,8 @@ import (
 	"regexp"
 	"strings"
 	"unicode"
+
+	"github.com/kpango/glg"
 )
 
 // Name of argument in cpp/go files.
@@ -22,13 +24,20 @@ func generateCppWrapper(includePath string, funcDefs []FuncDef, ctx *Context) ([
 	headerSb.WriteString(cppFileHeader)
 	headerSb.WriteString(fmt.Sprintf(`#pragma once
 
-#include "%s"
+%[2]s
+#include "%[1]s"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-`, includePath))
+`, includePath, func() string {
+		if ctx.flags.RefInclude != "" {
+			return fmt.Sprintf("#include \"%s\"", ctx.flags.RefInclude)
+		}
+
+		return ""
+	}()))
 
 	cppSb := &strings.Builder{}
 	cppSb.WriteString(cppFileHeader)
@@ -40,12 +49,15 @@ extern "C" {
 	// Note for future generations: can't replace with range, because we edit funcDefs later
 	for i := 0; i < len(funcDefs); i++ {
 		f := funcDefs[i]
-
 		shouldSkip := false
 
 		// Check func names (some of them are arbitrarly skipped)
 		if HasPrefix(f.FuncName, "ImSpan") ||
 			HasPrefix(f.FuncName, "ImBitArray") {
+			if ctx.flags.ShowNotGenerated {
+				glg.Debugf("Skipped (ImBitArray or ImSpan): %v", f.FuncName)
+			}
+
 			shouldSkip = true
 			continue
 		}
@@ -65,14 +77,21 @@ extern "C" {
 				a.Type == "va_list" ||
 				(a.Name == "self" && a.Type == "ImVector*") {
 				shouldSkip = true
+				if ctx.flags.ShowNotGenerated {
+					glg.Debugf("Skipped (arg type): %v %v", f.FuncName, a.Type)
+				}
+
 				break
 			}
 		}
 
 		// check if func name is valid
 		if len(f.FuncName) == 0 ||
-			MapContainsAny(f.Location, ctx.preset.SkipFiles) {
+			MapContainsAny(f.Location, ctx.preset.SkipFiles) != ctx.preset.ReverseMode {
 			shouldSkip = true
+			if ctx.flags.ShowNotGenerated {
+				glg.Debugf("Skipped (invalid func name or location): %v in %v", f.FuncName, f.Location)
+			}
 		}
 
 		if shouldSkip {
@@ -417,7 +436,7 @@ extern "C" {
 			}
 
 			setterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Set%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
-			if skipFuncNames[setterFuncName] || context.preset.SkipFuncs[setterFuncName] {
+			if skipFuncNames[setterFuncName] || context.preset.SkipFuncs[setterFuncName] != context.preset.ReverseMode {
 				continue
 			}
 
@@ -482,7 +501,7 @@ extern "C" {
 			}
 
 			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
-			if skipFuncNames[getterFuncName] || context.preset.SkipFuncs[getterFuncName] {
+			if skipFuncNames[getterFuncName] || context.preset.SkipFuncs[getterFuncName] != context.preset.ReverseMode {
 				continue
 			}
 

@@ -4,8 +4,8 @@
 
 #pragma once
 
-
-#include "../cwrappers/cimmarkdown.h"
+#include "../../cwrappers/cimgui.h"
+#include "../../cwrappers/cimgui_impl.h"
 
 #ifdef __cplusplus
 extern "C" {

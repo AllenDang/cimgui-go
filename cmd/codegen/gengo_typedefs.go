@@ -47,7 +47,7 @@ func GenerateTypedefs(
 
 	for _, k := range keys {
 		typedef := typedefs.data[k]
-		if shouldSkip, ok := ctx.preset.SkipTypedefs[k]; ok && shouldSkip {
+		if shouldSkip := ctx.preset.SkipTypedefs[k]; shouldSkip != ctx.preset.ReverseMode {
 			if ctx.flags.ShowNotGenerated {
 				glg.Infof("Arbitrarly skipping typedef %s", k)
 			}
@@ -65,7 +65,7 @@ func GenerateTypedefs(
 			continue
 		}
 
-		if shouldSkipStruct := ctx.preset.SkipStructs[k]; shouldSkipStruct {
+		if shouldSkipStruct := ctx.preset.SkipStructs[k]; shouldSkipStruct != ctx.preset.ReverseMode {
 			if ctx.flags.ShowNotGenerated {
 				glg.Infof("Arbitrarly skipping struct %s", k)
 			}
@@ -209,12 +209,19 @@ func (g *typedefsGenerator) writeHeaders() {
 		`
 #pragma once
 
-#include "%s"
+%[2]s
+#include "%[1]s"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-`, g.ctx.flags.Include)
+`, g.ctx.flags.Include, func() string {
+			if g.ctx.flags.RefInclude != "" {
+				return fmt.Sprintf("#include \"%s\"", g.ctx.flags.RefInclude)
+			}
+
+			return ""
+		}())
 	g.CppSb.WriteString(cppFileHeader)
 	fmt.Fprintf(g.CppSb,
 		`

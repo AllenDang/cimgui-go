@@ -266,7 +266,7 @@ for i, %[1]sV := range %[1]sArg {
 		return argDeclaration, data, nil
 	}
 
-	_, shouldSkipRefTypedef := context.preset.SkipTypedefs[pureType]
+	shouldSkipRefTypedef := context.preset.SkipTypedefs[pureType] != context.preset.ReverseMode
 	if context.typedefsNames[pureType] || (isRefTypedef && !shouldSkipRefTypedef) {
 		srcPkg := context.flags.PackageName
 		if isRefTypedef {

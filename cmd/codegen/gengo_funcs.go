@@ -45,6 +45,8 @@ func GenerateGoFuncs(
 	validFuncs []FuncDef,
 	context *Context,
 ) error {
+	funcsToConvert := len(validFuncs)
+
 	generator := &goFuncsGenerator{
 		typedefsNames: context.typedefsNames,
 		enumNames:     context.enumNames,
@@ -57,14 +59,21 @@ func GenerateGoFuncs(
 
 	for _, f := range validFuncs {
 		// check whether the function shouldn't be skipped
-		if context.preset.SkipFuncs[f.FuncName] {
+		if skip := context.preset.SkipFuncs[f.FuncName]; skip != context.preset.ReverseMode {
+			funcsToConvert--
+			if context.flags.ShowNotGenerated {
+				glg.Debugf("Func skipped: %s%s", f.FuncName, f.Args)
+			}
+
 			continue
 		}
 
-		if MapContainsAny(f.Location, context.preset.SkipFiles) {
+		if MapContainsAny(f.Location, context.preset.SkipFiles) != context.preset.ReverseMode {
 			if context.flags.ShowNotGenerated {
 				glg.Warnf("File %s skipped: %s%s", f.Location, f.FuncName, f.Args)
 			}
+
+			funcsToConvert--
 
 			continue
 		}
@@ -95,8 +104,8 @@ func GenerateGoFuncs(
 
 	glg.Infof("Convert progress: %d/%d (%.2f%%)",
 		generator.convertedFuncCount,
-		len(validFuncs),
-		100*float32(generator.convertedFuncCount)/float32(len(validFuncs)),
+		funcsToConvert,
+		100*float32(generator.convertedFuncCount)/float32(funcsToConvert),
 	)
 
 	goFile, err := os.Create("funcs.go")
@@ -194,7 +203,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 	case returnTypeType.Is(returnTypeStructSetter):
 		funcParts := Split(f.FuncName, "_")
 		funcName = TrimPrefix(f.FuncName, string(funcParts[0]+"_"))
-		if len(funcName) == 0 || !HasPrefix(funcName, "Set") || g.context.preset.SkipMethods[funcParts[0]] {
+		if len(funcName) == 0 || !HasPrefix(funcName, "Set") || g.context.preset.SkipMethods[funcParts[0]] != g.context.preset.ReverseMode {
 			return false
 		}
 

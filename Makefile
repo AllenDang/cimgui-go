@@ -1,4 +1,5 @@
 NAME=cimgui-go Code Generator
+SHELL := /usr/bin/env bash
 
 .PHONY: all
 
@@ -12,18 +13,37 @@ setup:
 		go build -o ../../codegen .
 
 # Parameters:
-# $1: go package name
+# $1: output path
 # $2: include path (of header file)
 # $3: definitions.json filepath
 # $4: structs_and_enums.json filepath
 # $5: typedefs_dict.json filepath
 # $6: additional agruments to codegen call (e.g. -r option)
+# $7: (if other) preset file
+# $8: (optional) custom package name (if empty, use $1)
+# $9: (optional) custom directory for source (.. is default)
 define generate
 	@echo "Generating for $(1)"
 	mkdir -p $(1)
-	cat templates/cflags.go |sed -e "s/^package.*/package $(1)/g" > $(1)/cflags.go
+	src=`pwd`; \
+	if [ "$8" == "" ]; then \
+		pkgname="$(1)"; \
+		else \
+		pkgname="$(8)"; \
+	fi; \
+	if [ "$9" == "" ]; then \
+		refpath=".."; \
+		else \
+		refpath="$(9)"; \
+	fi; \
+	cat templates/cflags.go.template |sed -e "s/^package.*/package $$pkgname/g" -e "s/{{REF}}/$$refpath/g" > $(1)/cflags.go; \
+	if [ "$7" == "" ]; then \
+		preset="../cmd/codegen/cimgui-go-preset.json"; \
+		else \
+		preset="$7"; \
+	fi; \
 	cd $(1); \
-		../codegen --preset ../cmd/codegen/cimgui-go-preset.json --package $(1) --include ../$(2) --definitions ../$(3) --enums ../$(4) --typedefs ../$(5) $(6)
+		$$src/codegen --preset $$preset --package $$pkgname --include ../$(2) --definitions ../$(3) --enums ../$(4) --typedefs ../$(5) $(6)
 endef
 
 define imgui
@@ -34,6 +54,19 @@ endef
 .PHONY: imgui
 imgui: setup
 	$(call imgui)
+
+define impl
+	@echo "Generate for glfw"
+	$(call generate,impl/glfw,../cwrappers/cimgui_impl.h,../cwrappers/cimgui_templates/impl_definitions.json,../templates/impl_glfw_structs.json,../templates/impl_glfw_typedefs_dict.json,--ref-enums ../../cwrappers/cimgui_templates/structs_and_enums.json --ref-typedefs ../../cwrappers/cimgui_templates/typedefs_dict.json --ref-include ../../cwrappers/cimgui.h,../../templates/impl_glfw_preset.json,glfw,\.\.\/\.\.)
+	@echo "Generate for opengl3"
+	$(call generate,impl/opengl3,../cwrappers/cimgui_impl.h,../cwrappers/cimgui_templates/impl_definitions.json,../templates/impl_opengl3_structs.json,../templates/impl_opengl3_typedefs_dict.json,--ref-enums ../../cwrappers/cimgui_templates/structs_and_enums.json --ref-typedefs ../../cwrappers/cimgui_templates/typedefs_dict.json --ref-include ../../cwrappers/cimgui.h,../../templates/impl_opengl3_preset.json,opengl3,\.\.\/\.\.)
+endef
+
+## impl: generate imgui_impl binding
+.PHONY: impl
+impl: setup
+	$(call impl)
+
 
 define implot
 	$(call generate,implot,cwrappers/cimplot.h,cwrappers/cimplot_templates/definitions.json,cwrappers/cimplot_templates/structs_and_enums.json,cwrappers/cimplot_templates/typedefs_dict.json,--ref-enums ../cwrappers/cimgui_templates/structs_and_enums.json --ref-typedefs ../cwrappers/cimgui_templates/typedefs_dict.json)
@@ -82,7 +115,7 @@ imcte: setup
 
 ## generate: generates both bindings (equal to `all`)
 .PHONY: generate
-generate: imgui implot imnodes immarkdown imguizmo imcte
+generate: imgui implot imnodes immarkdown imguizmo imcte impl
 
 # update updates sub-repos (like cimplot or cimgui)
 # $1 - subrepo directory
