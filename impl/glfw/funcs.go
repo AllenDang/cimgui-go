@@ -17,3 +17,18 @@ func ImplGlfwInitForOpenGL(window *GLFWwindow, install_callbacks bool) bool {
 	}()
 	return C.ImGui_ImplGlfw_InitForOpenGL(internal.ReinterpretCast[*C.GLFWwindow](windowArg), C.bool(install_callbacks)) == C.bool(true)
 }
+
+func ImplGlfwKeyCallback(window *GLFWwindow, key, scancode, action, mods int32) {
+	windowArg, windowFin := window.Handle()
+	C.ImGui_ImplGlfw_KeyCallback(internal.ReinterpretCast[*C.GLFWwindow](windowArg), C.int(key), C.int(scancode), C.int(action), C.int(mods))
+
+	windowFin()
+}
+
+func ImplGlfwNewFrame() {
+	C.ImGui_ImplGlfw_NewFrame()
+}
+
+func ImplGlfwShutdown() {
+	C.ImGui_ImplGlfw_Shutdown()
+}
