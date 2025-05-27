@@ -45,6 +45,8 @@ func GenerateGoFuncs(
 	validFuncs []FuncDef,
 	context *Context,
 ) error {
+	funcsToConvert := len(validFuncs)
+
 	generator := &goFuncsGenerator{
 		typedefsNames: context.typedefsNames,
 		enumNames:     context.enumNames,
@@ -58,6 +60,11 @@ func GenerateGoFuncs(
 	for _, f := range validFuncs {
 		// check whether the function shouldn't be skipped
 		if skip := context.preset.SkipFuncs[f.FuncName]; skip != context.preset.ReverseMode {
+			funcsToConvert--
+			if context.flags.ShowNotGenerated {
+				glg.Debugf("Func skipped: %s%s", f.FuncName, f.Args)
+			}
+
 			continue
 		}
 
@@ -65,6 +72,8 @@ func GenerateGoFuncs(
 			if context.flags.ShowNotGenerated {
 				glg.Warnf("File %s skipped: %s%s", f.Location, f.FuncName, f.Args)
 			}
+
+			funcsToConvert--
 
 			continue
 		}
@@ -95,8 +104,8 @@ func GenerateGoFuncs(
 
 	glg.Infof("Convert progress: %d/%d (%.2f%%)",
 		generator.convertedFuncCount,
-		len(validFuncs),
-		100*float32(generator.convertedFuncCount)/float32(len(validFuncs)),
+		funcsToConvert,
+		100*float32(generator.convertedFuncCount)/float32(funcsToConvert),
 	)
 
 	goFile, err := os.Create("funcs.go")
