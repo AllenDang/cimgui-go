@@ -68,7 +68,7 @@ func GenerateGoFuncs(
 			continue
 		}
 
-		if MapContainsAny(f.Location, context.preset.SkipFiles) != context.preset.ReverseMode {
+		if context.ShouldSkipFile(f.Location) {
 			if context.flags.ShowNotGenerated {
 				glg.Warnf("File %s skipped: %s%s", f.Location, f.FuncName, f.Args)
 			}

@@ -21,6 +21,10 @@ func (c *Context) ShouldSkipMethod(t CIdentifier) bool {
 	return c.Skip.Methods.ShouldSkip(t) != c.preset.ReverseMode
 }
 
+func (c *Context) ShouldSkipFile(t string) bool {
+	return c.Skip.Files.ShouldSkip(t) != c.preset.ReverseMode
+}
+
 // Skipper is an advanced method of skipping functions/types basing on a set of regular expressions.
 // Regular expressions must be compatible with the `regexp` package in Go.
 type Skipper[T ~string] struct {

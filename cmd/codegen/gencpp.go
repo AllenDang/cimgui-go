@@ -87,7 +87,7 @@ extern "C" {
 
 		// check if func name is valid
 		if len(f.FuncName) == 0 ||
-			MapContainsAny(f.Location, ctx.preset.SkipFiles) != ctx.preset.ReverseMode {
+			ctx.ShouldSkipFile(f.Location) {
 			shouldSkip = true
 			if ctx.flags.ShowNotGenerated {
 				glg.Debugf("Skipped (invalid func name or location): %v in %v", f.FuncName, f.Location)
