@@ -1,42 +1,42 @@
 {
         "PackagePath": "github.com/AllenDang/cimgui-go",
         "SkipFuncs": [
-                "igInputText",
-                "igInputTextWithHint",
-                "igInputTextMultiline",
-                "ImFontAtlas_GetTexDataAsAlpha8",
-                "ImFontAtlas_GetTexDataAsAlpha8V",
-                "ImFontAtlas_GetTexDataAsRGBA32",
-                "ImFontAtlas_GetTexDataAsRGBA32V",
-                "ImVec1_GetX",
-                "ImVec2_GetX",
-                "ImVec2_GetY",
-                "ImVec4_GetX",
-                "ImVec4_GetY",
-                "ImVec4_GetW",
-                "ImVec4_GetZ",
-                "ImRect_GetMin",
-                "ImRect_GetMax",
-                "ImPlotPoint_SetX",
-                "ImPlotPoint_SetY"
+                "igInputText$",
+                "igInputTextWithHint$",
+                "igInputTextMultiline$",
+                "ImFontAtlas_GetTexDataAsAlpha8$",
+                "ImFontAtlas_GetTexDataAsAlpha8V$",
+                "ImFontAtlas_GetTexDataAsRGBA32$",
+                "ImFontAtlas_GetTexDataAsRGBA32V$",
+                "ImVec1_GetX$",
+                "ImVec2_GetX$",
+                "ImVec2_GetY$",
+                "ImVec4_GetX$",
+                "ImVec4_GetY$",
+                "ImVec4_GetW$",
+                "ImVec4_GetZ$",
+                "ImRect_GetMin$",
+                "ImRect_GetMax$",
+                "ImPlotPoint_SetX$",
+                "ImPlotPoint_SetY$"
         ],
         "SkipStructs": [
-                "ImVec2",
-                "ImVec2ih",
-                "ImVec4",
-                "ImColor",
-                "ImRect",
-                "ImPlotTime",
-                "ImPlotPoint"
+                "ImVec2$",
+                "ImVec2ih$",
+                "ImVec4$",
+                "ImColor$",
+                "ImRect$",
+                "ImPlotTime$",
+                "ImPlotPoint$"
         ],
         "SkipMethods": [
-                "ImVec1",
-                "ImVec2",
-                "ImVec2ih",
-                "ImVec4",
-                "ImColor",
-                "ImRect",
-                "ImPlotTime"
+                "ImVec1$",
+                "ImVec2$",
+                "ImVec2ih$",
+                "ImVec4$",
+                "ImColor$",
+                "ImRect$",
+                "ImPlotTime$"
         ],
         "SkipTypedefs": [
                 "ImS8",
@@ -47,7 +47,7 @@
                 "ImU16",
                 "ImU32",
                 "ImU64",
-                "ImGuiInputTextCallback"
+                "ImGuiInputTextCallback$"
         ],
         "SkipFiles": [
                 "imgui_freetype"
