@@ -5,6 +5,18 @@ import (
 	"regexp"
 )
 
+// Technical note: this might be a bit confusing as met in code, so a quick explaination:
+// a - is name actually in skip list
+// b - is reverse mode active
+//
+// a      b        shouldSkip?
+// true,  true  -> false
+// true,  false -> true
+// false, true  -> true
+// false, false -> false
+//
+// So we use: a != b to check this cond.
+
 func (c *Context) ShouldSkipFunc(f CIdentifier) bool {
 	return c.Skip.Funcs.ShouldSkip(f) != c.preset.ReverseMode
 }
