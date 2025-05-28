@@ -436,7 +436,7 @@ extern "C" {
 			}
 
 			setterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Set%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
-			if skipFuncNames[setterFuncName] || context.preset.SkipFuncs[setterFuncName] != context.preset.ReverseMode {
+			if skipFuncNames[setterFuncName] || context.ShouldSkipFunc(setterFuncName) {
 				continue
 			}
 
@@ -501,7 +501,7 @@ extern "C" {
 			}
 
 			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
-			if skipFuncNames[getterFuncName] || context.preset.SkipFuncs[getterFuncName] != context.preset.ReverseMode {
+			if skipFuncNames[getterFuncName] || context.ShouldSkipFunc(getterFuncName) {
 				continue
 			}
 

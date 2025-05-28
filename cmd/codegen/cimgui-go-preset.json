@@ -1,54 +1,54 @@
 {
         "PackagePath": "github.com/AllenDang/cimgui-go",
-        "SkipFuncs": {
-                "igInputText":                     true,
-                "igInputTextWithHint":             true,
-                "igInputTextMultiline":            true,
-                "ImFontAtlas_GetTexDataAsAlpha8":  true,
-                "ImFontAtlas_GetTexDataAsAlpha8V": true,
-                "ImFontAtlas_GetTexDataAsRGBA32":  true,
-                "ImFontAtlas_GetTexDataAsRGBA32V": true,
-                "ImVec1_GetX":                     true,
-                "ImVec2_GetX":                     true,
-                "ImVec2_GetY":                     true,
-                "ImVec4_GetX":                     true,
-                "ImVec4_GetY":                     true,
-                "ImVec4_GetW":                     true,
-                "ImVec4_GetZ":                     true,
-                "ImRect_GetMin":                   true,
-                "ImRect_GetMax":                   true,
-                "ImPlotPoint_SetX":                true,
-                "ImPlotPoint_SetY":                true
-        },
-        "SkipStructs": {
-                "ImVec2":      true,
-                "ImVec2ih":    true,
-                "ImVec4":      true,
-                "ImColor":     true,
-                "ImRect":      true,
-                "ImPlotTime":  true,
-                "ImPlotPoint": true
-        },
-        "SkipMethods": {
-                "ImVec1":     true,
-                "ImVec2":     true,
-                "ImVec2ih":   true,
-                "ImVec4":     true,
-                "ImColor":    true,
-                "ImRect":     true,
-                "ImPlotTime": true
-        },
-        "SkipTypedefs": {
-                "ImS8":                   true,
-                "ImS16":                  true,
-                "ImS32":                  true,
-                "ImS64":                  true,
-                "ImU8":                   true,
-                "ImU16":                  true,
-                "ImU32":                  true,
-                "ImU64":                  true,
-                "ImGuiInputTextCallback": true
-        },
+        "SkipFuncs": [
+                "igInputText",
+                "igInputTextWithHint",
+                "igInputTextMultiline",
+                "ImFontAtlas_GetTexDataAsAlpha8",
+                "ImFontAtlas_GetTexDataAsAlpha8V",
+                "ImFontAtlas_GetTexDataAsRGBA32",
+                "ImFontAtlas_GetTexDataAsRGBA32V",
+                "ImVec1_GetX",
+                "ImVec2_GetX",
+                "ImVec2_GetY",
+                "ImVec4_GetX",
+                "ImVec4_GetY",
+                "ImVec4_GetW",
+                "ImVec4_GetZ",
+                "ImRect_GetMin",
+                "ImRect_GetMax",
+                "ImPlotPoint_SetX",
+                "ImPlotPoint_SetY"
+        ],
+        "SkipStructs": [
+                "ImVec2",
+                "ImVec2ih",
+                "ImVec4",
+                "ImColor",
+                "ImRect",
+                "ImPlotTime",
+                "ImPlotPoint"
+        ],
+        "SkipMethods": [
+                "ImVec1",
+                "ImVec2",
+                "ImVec2ih",
+                "ImVec4",
+                "ImColor",
+                "ImRect",
+                "ImPlotTime"
+        ],
+        "SkipTypedefs": [
+                "ImS8",
+                "ImS16",
+                "ImS32",
+                "ImS64",
+                "ImU8",
+                "ImU16",
+                "ImU32",
+                "ImU64",
+                "ImGuiInputTextCallback"
+        ],
         "SkipFiles": [
                 "imgui_freetype"
         ],

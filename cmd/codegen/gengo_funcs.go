@@ -59,7 +59,7 @@ func GenerateGoFuncs(
 
 	for _, f := range validFuncs {
 		// check whether the function shouldn't be skipped
-		if skip := context.preset.SkipFuncs[f.FuncName]; skip != context.preset.ReverseMode {
+		if context.ShouldSkipFunc(f.FuncName) {
 			funcsToConvert--
 			if context.flags.ShowNotGenerated {
 				glg.Debugf("Func skipped: %s%s", f.FuncName, f.Args)
@@ -203,7 +203,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 	case returnTypeType.Is(returnTypeStructSetter):
 		funcParts := Split(f.FuncName, "_")
 		funcName = TrimPrefix(f.FuncName, string(funcParts[0]+"_"))
-		if len(funcName) == 0 || !HasPrefix(funcName, "Set") || g.context.preset.SkipMethods[funcParts[0]] != g.context.preset.ReverseMode {
+		if len(funcName) == 0 || !HasPrefix(funcName, "Set") || g.context.ShouldSkipMethod(funcParts[0]) {
 			return false
 		}
 

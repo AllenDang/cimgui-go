@@ -30,7 +30,7 @@ func getEnumAndStructNames(enumJsonBytes []byte, context *Context) (enumNames []
 	}
 
 	for _, s := range structs {
-		if shouldSkipStruct := context.preset.SkipStructs[s.Name]; !shouldSkipStruct {
+		if !context.ShouldSkipStruct(s.Name) {
 			typedefsNames = append(typedefsNames, s.Name)
 		}
 	}
@@ -120,6 +120,11 @@ type Context struct {
 	enums    []EnumDef
 	typedefs *Typedefs
 
+	Skip struct {
+		Funcs, Typedefs, Structs, Methods *Skipper[CIdentifier]
+		Files                             *Skipper[string]
+	}
+
 	// ghese fields are filled by parser while it generates code.
 	enumNames     map[CIdentifier]bool
 	typedefsNames map[CIdentifier]bool
@@ -155,6 +160,31 @@ func parseJson(jsonData *jsonData, f *flags) (*Context, error) {
 
 		if result.flags.Verbose {
 			glg.Debugf("Preset loaded: %v", result.preset)
+		}
+
+		result.Skip.Funcs, err = CreateSkipper(result.preset.SkipFuncs)
+		if err != nil {
+			return nil, fmt.Errorf("cannot create skipper for functions: %w", err)
+		}
+
+		result.Skip.Typedefs, err = CreateSkipper(result.preset.SkipTypedefs)
+		if err != nil {
+			return nil, fmt.Errorf("cannot create skipper for typedefs: %w", err)
+		}
+
+		result.Skip.Structs, err = CreateSkipper(result.preset.SkipStructs)
+		if err != nil {
+			return nil, fmt.Errorf("cannot create skipper for structs: %w", err)
+		}
+
+		result.Skip.Files, err = CreateSkipper(result.preset.SkipFiles)
+		if err != nil {
+			return nil, fmt.Errorf("cannot create skipper for files: %w", err)
+		}
+
+		result.Skip.Methods, err = CreateSkipper(result.preset.SkipMethods)
+		if err != nil {
+			return nil, fmt.Errorf("cannot create skipper for methods: %w", err)
 		}
 	}
 

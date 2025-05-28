@@ -70,7 +70,7 @@ func getReturnWrapper(
 	_, isRefTypedef := context.refTypedefs[pureType]
 	_, isEnum := context.enumNames[pureType]
 	_, isRefEnum := context.refEnumNames[pureType]
-	_, shouldSkipRefTypedef := context.preset.SkipTypedefs[pureType]
+	shouldSkipRefTypedef := context.ShouldSkipTypedef(pureType)
 	_, isStruct := context.typedefsNames[pureType]
 	isStruct = isStruct || ((isRefStruct || (isRefTypedef && !isRefEnum)) && !shouldSkipRefTypedef)
 	w, known := returnWrapperMap[TrimPrefix(t, "const ")]
@@ -85,7 +85,7 @@ func getReturnWrapper(
 		srcPackage = GoIdentifier(context.flags.RefPackageName)
 	}
 
-	_, shouldSkipStruct := context.preset.SkipStructs[pureType]
+	shouldSkipStruct := context.ShouldSkipStruct(pureType)
 
 	switch {
 	case known:

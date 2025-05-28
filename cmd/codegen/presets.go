@@ -19,15 +19,15 @@ type Preset struct {
 	ReverseMode bool
 	// SkipFuncs functions (from definitions.json) to be skipped
 	// e.g. they are temporarily hard-coded
-	SkipFuncs map[CIdentifier]bool
+	SkipFuncs []CIdentifier
 	// SkipStructs allows to specify struct names that will be skipped.
-	SkipStructs map[CIdentifier]bool
+	SkipStructs []CIdentifier
 	// SkipMethods struct names from structs_and_enums.json.
 	// structures that's METHODS should be skipped
-	SkipMethods map[CIdentifier]bool
+	SkipMethods []CIdentifier
 	// SkipTypedefs typedefs from typedefs_dict.json to be skipped
 	// e.g. for hardcoded typedefs or typedefs which are obvious (e.g. ImU16 becomes uint16 without extra type information)
-	SkipTypedefs map[CIdentifier]bool
+	SkipTypedefs []CIdentifier
 	// SkipFiles contains filenames (probably without extension) refering to location field in definitions.json.
 	// This could aso contain line number in form of filename:lineN.
 	SkipFiles []string

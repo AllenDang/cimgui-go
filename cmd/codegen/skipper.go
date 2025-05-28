@@ -5,9 +5,25 @@ import (
 	"regexp"
 )
 
+func (c *Context) ShouldSkipFunc(f CIdentifier) bool {
+	return c.Skip.Funcs.ShouldSkip(f) != c.preset.ReverseMode
+}
+
+func (c *Context) ShouldSkipTypedef(t CIdentifier) bool {
+	return c.Skip.Typedefs.ShouldSkip(t) != c.preset.ReverseMode
+}
+
+func (c *Context) ShouldSkipStruct(t CIdentifier) bool {
+	return c.Skip.Structs.ShouldSkip(t) != c.preset.ReverseMode
+}
+
+func (c *Context) ShouldSkipMethod(t CIdentifier) bool {
+	return c.Skip.Methods.ShouldSkip(t) != c.preset.ReverseMode
+}
+
 // Skipper is an advanced method of skipping functions/types basing on a set of regular expressions.
 // Regular expressions must be compatible with the `regexp` package in Go.
-type Skipper struct {
+type Skipper[T ~string] struct {
 	data []regexp.Regexp
 }
 
