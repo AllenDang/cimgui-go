@@ -1,18 +1,15 @@
 {
         "PackagePath": "github.com/AllenDang/cimgui-go",
         "ReverseMode": true,
-        "SkipFuncs": {
-                "ImGui_ImplGlfw_InitForOpenGL": true,
-                "ImGui_ImplGlfw_NewFrame": true,
-                "ImGui_ImplGlfw_Shutdown": true,
-                "ImGui_ImplGlfw_KeyCallback": true
-        },
-        "SKipTypedefs": {
-                "GLFWwindow": true
-        },
-        "SKipStructs": {
-                "GLFWwindow": true
-        },
+        "SkipFuncs": [
+                "ImGui_ImplGlfw_*"
+        ],
+        "SKipTypedefs": [
+                "GLFWwindow"
+        ],
+        "SKipStructs": [
+                "GLFWwindow"
+        ],
         "SkipFiles": [
                 "imgui_impl_glfw"
         ],

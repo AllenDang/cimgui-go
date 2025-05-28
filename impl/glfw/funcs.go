@@ -9,6 +9,27 @@ package glfw
 import "C"
 import "github.com/AllenDang/cimgui-go/internal"
 
+func ImplGlfwCharCallback(window *GLFWwindow, c uint32) {
+	windowArg, windowFin := window.Handle()
+	C.ImGui_ImplGlfw_CharCallback(internal.ReinterpretCast[*C.GLFWwindow](windowArg), C.uint(c))
+
+	windowFin()
+}
+
+func ImplGlfwCursorEnterCallback(window *GLFWwindow, entered int32) {
+	windowArg, windowFin := window.Handle()
+	C.ImGui_ImplGlfw_CursorEnterCallback(internal.ReinterpretCast[*C.GLFWwindow](windowArg), C.int(entered))
+
+	windowFin()
+}
+
+func ImplGlfwCursorPosCallback(window *GLFWwindow, x, y float64) {
+	windowArg, windowFin := window.Handle()
+	C.ImGui_ImplGlfw_CursorPosCallback(internal.ReinterpretCast[*C.GLFWwindow](windowArg), C.double(x), C.double(y))
+
+	windowFin()
+}
+
 func ImplGlfwInitForOpenGL(window *GLFWwindow, install_callbacks bool) bool {
 	windowArg, windowFin := window.Handle()
 
@@ -18,9 +39,41 @@ func ImplGlfwInitForOpenGL(window *GLFWwindow, install_callbacks bool) bool {
 	return C.ImGui_ImplGlfw_InitForOpenGL(internal.ReinterpretCast[*C.GLFWwindow](windowArg), C.bool(install_callbacks)) == C.bool(true)
 }
 
+func ImplGlfwInitForOther(window *GLFWwindow, install_callbacks bool) bool {
+	windowArg, windowFin := window.Handle()
+
+	defer func() {
+		windowFin()
+	}()
+	return C.ImGui_ImplGlfw_InitForOther(internal.ReinterpretCast[*C.GLFWwindow](windowArg), C.bool(install_callbacks)) == C.bool(true)
+}
+
+func ImplGlfwInitForVulkan(window *GLFWwindow, install_callbacks bool) bool {
+	windowArg, windowFin := window.Handle()
+
+	defer func() {
+		windowFin()
+	}()
+	return C.ImGui_ImplGlfw_InitForVulkan(internal.ReinterpretCast[*C.GLFWwindow](windowArg), C.bool(install_callbacks)) == C.bool(true)
+}
+
+func ImplGlfwInstallCallbacks(window *GLFWwindow) {
+	windowArg, windowFin := window.Handle()
+	C.ImGui_ImplGlfw_InstallCallbacks(internal.ReinterpretCast[*C.GLFWwindow](windowArg))
+
+	windowFin()
+}
+
 func ImplGlfwKeyCallback(window *GLFWwindow, key, scancode, action, mods int32) {
 	windowArg, windowFin := window.Handle()
 	C.ImGui_ImplGlfw_KeyCallback(internal.ReinterpretCast[*C.GLFWwindow](windowArg), C.int(key), C.int(scancode), C.int(action), C.int(mods))
+
+	windowFin()
+}
+
+func ImplGlfwMouseButtonCallback(window *GLFWwindow, button, action, mods int32) {
+	windowArg, windowFin := window.Handle()
+	C.ImGui_ImplGlfw_MouseButtonCallback(internal.ReinterpretCast[*C.GLFWwindow](windowArg), C.int(button), C.int(action), C.int(mods))
 
 	windowFin()
 }
@@ -29,6 +82,35 @@ func ImplGlfwNewFrame() {
 	C.ImGui_ImplGlfw_NewFrame()
 }
 
+func ImplGlfwRestoreCallbacks(window *GLFWwindow) {
+	windowArg, windowFin := window.Handle()
+	C.ImGui_ImplGlfw_RestoreCallbacks(internal.ReinterpretCast[*C.GLFWwindow](windowArg))
+
+	windowFin()
+}
+
+func ImplGlfwScrollCallback(window *GLFWwindow, xoffset, yoffset float64) {
+	windowArg, windowFin := window.Handle()
+	C.ImGui_ImplGlfw_ScrollCallback(internal.ReinterpretCast[*C.GLFWwindow](windowArg), C.double(xoffset), C.double(yoffset))
+
+	windowFin()
+}
+
+func ImplGlfwSetCallbacksChainForAllWindows(chain_for_all_windows bool) {
+	C.ImGui_ImplGlfw_SetCallbacksChainForAllWindows(C.bool(chain_for_all_windows))
+}
+
 func ImplGlfwShutdown() {
 	C.ImGui_ImplGlfw_Shutdown()
+}
+
+func ImplGlfwSleep(milliseconds int32) {
+	C.ImGui_ImplGlfw_Sleep(C.int(milliseconds))
+}
+
+func ImplGlfwWindowFocusCallback(window *GLFWwindow, focused int32) {
+	windowArg, windowFin := window.Handle()
+	C.ImGui_ImplGlfw_WindowFocusCallback(internal.ReinterpretCast[*C.GLFWwindow](windowArg), C.int(focused))
+
+	windowFin()
 }

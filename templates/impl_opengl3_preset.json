@@ -1,18 +1,15 @@
 {
         "PackagePath": "github.com/AllenDang/cimgui-go",
         "ReverseMode": true,
-        "SkipFuncs": {
-                "ImGui_ImplOpenGL3_Init": true,
-                "ImGui_ImplOpenGL3_NewFrame": true,
-                "ImGui_ImplOpenGL3_RenderDrawData": true,
-                "ImGui_ImplOpenGL3_Shutdown": true
-        },
-        "SKipTypedefs": {
-                "ImDrawData": true
-        },
-        "SKipStructs": {
-                "GLFWwindow": true
-        },
+        "SkipFuncs": [
+                "ImGui_ImplOpenGL3_*"
+        ],
+        "SkipTypedefs": [
+                "ImDrawData"
+        ],
+        "SkipStructs": [
+                "GLFWwindow"
+        ],
         "SkipFiles": [
                 "imgui_impl_opengl"
         ],

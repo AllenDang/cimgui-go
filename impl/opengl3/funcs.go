@@ -13,6 +13,33 @@ import (
 // #include "../../imgui/extra_types.h"
 import "C"
 
+func ImplOpenGL3CreateDeviceObjects() bool {
+	return C.ImGui_ImplOpenGL3_CreateDeviceObjects() == C.bool(true)
+}
+
+func ImplOpenGL3CreateFontsTexture() bool {
+	return C.ImGui_ImplOpenGL3_CreateFontsTexture() == C.bool(true)
+}
+
+func ImplOpenGL3DestroyDeviceObjects() {
+	C.ImGui_ImplOpenGL3_DestroyDeviceObjects()
+}
+
+func ImplOpenGL3DestroyFontsTexture() {
+	C.ImGui_ImplOpenGL3_DestroyFontsTexture()
+}
+
+// ImplOpenGL3InitV parameter default value hint:
+// glsl_version: nullptr
+func ImplOpenGL3InitV(glsl_version string) bool {
+	glsl_versionArg, glsl_versionFin := internal.WrapString[C.char](glsl_version)
+
+	defer func() {
+		glsl_versionFin()
+	}()
+	return C.ImGui_ImplOpenGL3_Init(glsl_versionArg) == C.bool(true)
+}
+
 func ImplOpenGL3NewFrame() {
 	C.ImGui_ImplOpenGL3_NewFrame()
 }

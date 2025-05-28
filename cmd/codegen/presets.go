@@ -4,32 +4,30 @@ import "strings"
 
 // Preset is a set of rules iperative to XXX_templates/ json files.
 // They are used to manually set some properties of the generator.
+// NOTE: Some strings are preocessed by regexp library, so you can use go-compatible regular expressions.
+// NOTE: remember, that e.g. pattern "foo" will match "bazfoobar", so you should use "^foo$" to match only "foo".
 type Preset struct {
 	// ReverseMode if set, Skip* behavior is reversed.
 	// Example: If SkipFuncs has "foo", and ReverseMode is set, only the "foo" function will be generateed.
-	//
-	// Technical note: this might be a bit confusing as met in code, so a quick explaination:
-	// a      b        result
-	// true,  true  -> false
-	// true,  false -> true
-	// false, true  -> true
-	// false, false -> false
-	//
-	// So we use: a != b to check this cond.
 	ReverseMode bool
 	// SkipFuncs functions (from definitions.json) to be skipped
 	// e.g. they are temporarily hard-coded
-	SkipFuncs map[CIdentifier]bool
+	// NOTE: These strings are parsed by regexp library.
+	SkipFuncs []CIdentifier
 	// SkipStructs allows to specify struct names that will be skipped.
-	SkipStructs map[CIdentifier]bool
+	// NOTE: These strings are parsed by regexp library.
+	SkipStructs []CIdentifier
 	// SkipMethods struct names from structs_and_enums.json.
 	// structures that's METHODS should be skipped
-	SkipMethods map[CIdentifier]bool
+	// NOTE: These strings are parsed by regexp library.
+	SkipMethods []CIdentifier
 	// SkipTypedefs typedefs from typedefs_dict.json to be skipped
 	// e.g. for hardcoded typedefs or typedefs which are obvious (e.g. ImU16 becomes uint16 without extra type information)
-	SkipTypedefs map[CIdentifier]bool
+	// NOTE: These strings are parsed by regexp library.
+	SkipTypedefs []CIdentifier
 	// SkipFiles contains filenames (probably without extension) refering to location field in definitions.json.
 	// This could aso contain line number in form of filename:lineN.
+	// NOTE: These strings are parsed by regexp library.
 	SkipFiles []string
 	// TypedefsPoolSize sets a default size for callbacks pool.
 	// Rembmber to set this as it defaults to 0 and you'll get no callbacks!
