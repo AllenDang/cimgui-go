@@ -4,4 +4,4 @@
 #include "wrapper.h"
 #include "../../cwrappers/cimgui_impl.h"
 
-bool wrap_ImGui_ImplOpenGL3_Init() { return ImGui_ImplOpenGL3_Init(0); }
+bool wrap_ImGui_ImplOpenGL3_Init() { return ImGui_ImplOpenGL3_Init(nullptr); }
