@@ -4,34 +4,86 @@
 package opengl3
 
 import (
-	"github.com/AllenDang/cimgui-go/imgui"
+	"/imgui"
+
 	"github.com/AllenDang/cimgui-go/internal"
 )
 
 // #include "structs_accessor.h"
 // #include "wrapper.h"
-// #include "../../imgui/extra_types.h"
+
 import "C"
 
-func ImplOpenGL3CreateDeviceObjects() bool {
+func ImGuiImplGlfwNewFrame() {
+	C.ImGui_ImplGlfw_NewFrame()
+}
+
+func ImGuiImplGlfwSetCallbacksChainForAllWindows(chain_for_all_windows bool) {
+	C.ImGui_ImplGlfw_SetCallbacksChainForAllWindows(C.bool(chain_for_all_windows))
+}
+
+func ImGuiImplGlfwShutdown() {
+	C.ImGui_ImplGlfw_Shutdown()
+}
+
+func ImGuiImplGlfwSleep(milliseconds int32) {
+	C.ImGui_ImplGlfw_Sleep(C.int(milliseconds))
+}
+
+func ImGuiImplOpenGL2CreateDeviceObjects() bool {
+	return C.ImGui_ImplOpenGL2_CreateDeviceObjects() == C.bool(true)
+}
+
+func ImGuiImplOpenGL2CreateFontsTexture() bool {
+	return C.ImGui_ImplOpenGL2_CreateFontsTexture() == C.bool(true)
+}
+
+func ImGuiImplOpenGL2DestroyDeviceObjects() {
+	C.ImGui_ImplOpenGL2_DestroyDeviceObjects()
+}
+
+func ImGuiImplOpenGL2DestroyFontsTexture() {
+	C.ImGui_ImplOpenGL2_DestroyFontsTexture()
+}
+
+func ImGuiImplOpenGL2Init() bool {
+	return C.ImGui_ImplOpenGL2_Init() == C.bool(true)
+}
+
+func ImGuiImplOpenGL2NewFrame() {
+	C.ImGui_ImplOpenGL2_NewFrame()
+}
+
+func ImGuiImplOpenGL2RenderDrawData(draw_data *imgui.ImDrawData) {
+	draw_dataArg, draw_dataFin := draw_data.Handle()
+	C.ImGui_ImplOpenGL2_RenderDrawData(internal.ReinterpretCast[*C.ImDrawData](draw_dataArg))
+
+	draw_dataFin()
+}
+
+func ImGuiImplOpenGL2Shutdown() {
+	C.ImGui_ImplOpenGL2_Shutdown()
+}
+
+func ImGuiImplOpenGL3CreateDeviceObjects() bool {
 	return C.ImGui_ImplOpenGL3_CreateDeviceObjects() == C.bool(true)
 }
 
-func ImplOpenGL3CreateFontsTexture() bool {
+func ImGuiImplOpenGL3CreateFontsTexture() bool {
 	return C.ImGui_ImplOpenGL3_CreateFontsTexture() == C.bool(true)
 }
 
-func ImplOpenGL3DestroyDeviceObjects() {
+func ImGuiImplOpenGL3DestroyDeviceObjects() {
 	C.ImGui_ImplOpenGL3_DestroyDeviceObjects()
 }
 
-func ImplOpenGL3DestroyFontsTexture() {
+func ImGuiImplOpenGL3DestroyFontsTexture() {
 	C.ImGui_ImplOpenGL3_DestroyFontsTexture()
 }
 
-// ImplOpenGL3InitV parameter default value hint:
+// ImGuiImplOpenGL3InitV parameter default value hint:
 // glsl_version: nullptr
-func ImplOpenGL3InitV(glsl_version string) bool {
+func ImGuiImplOpenGL3InitV(glsl_version string) bool {
 	glsl_versionArg, glsl_versionFin := internal.WrapString[C.char](glsl_version)
 
 	defer func() {
@@ -40,21 +92,29 @@ func ImplOpenGL3InitV(glsl_version string) bool {
 	return C.ImGui_ImplOpenGL3_Init(glsl_versionArg) == C.bool(true)
 }
 
-func ImplOpenGL3NewFrame() {
+func ImGuiImplOpenGL3NewFrame() {
 	C.ImGui_ImplOpenGL3_NewFrame()
 }
 
-func ImplOpenGL3RenderDrawData(draw_data *imgui.DrawData) {
+func ImGuiImplOpenGL3RenderDrawData(draw_data *imgui.ImDrawData) {
 	draw_dataArg, draw_dataFin := draw_data.Handle()
 	C.ImGui_ImplOpenGL3_RenderDrawData(internal.ReinterpretCast[*C.ImDrawData](draw_dataArg))
 
 	draw_dataFin()
 }
 
-func ImplOpenGL3Shutdown() {
+func ImGuiImplOpenGL3Shutdown() {
 	C.ImGui_ImplOpenGL3_Shutdown()
 }
 
-func ImplOpenGL3Init() bool {
+func ImGuiImplSDL2NewFrame() {
+	C.ImGui_ImplSDL2_NewFrame()
+}
+
+func ImGuiImplSDL2Shutdown() {
+	C.ImGui_ImplSDL2_Shutdown()
+}
+
+func ImGuiImplOpenGL3Init() bool {
 	return C.wrap_ImGui_ImplOpenGL3_Init() == C.bool(true)
 }

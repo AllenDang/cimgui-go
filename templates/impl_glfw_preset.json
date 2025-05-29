@@ -17,26 +17,12 @@
         "TypedefsCustomPoolSizes": {
         },
         "Replace": {
-                "igGetDrawData":           "CurrentDrawData",
-                "igGetDrawListSharedData": "CurrentDrawListSharedData",
-                "igGetFont":               "CurrentFont",
-                "igGetIO_Nil":             "CurrentIO",
-                "igGetPlatformIO_Nil":     "CurrentPlatformIO",
-                "igGetPlatformIO":         "CurrentPlatformIO",
-                "igGetStyle":              "CurrentStyle",
-                "igGetMouseCursor":        "CurrentMouseCursor",
-                "ImAxis":                  "AxisEnum",
-                "GetItem_ID":              "ItemByID"
         },
         "TrimPrefix": [
-                "ImGui_ImplGlfw_"
+                "ImGui_ImplGlfw_",
+                "Im"
         ],
         "DefaultArgReplace": {
-                "FLT_MIN":    "igGET_FLT_MIN()",
-                "FLT_MAX":    "igGET_FLT_MAX()",
-                "nullptr":    "0",
-                "NULL":       "0",
-                "((void*)0)": "0"
         },
         "ExtraCGOPreamble": [
                 "#include \"../../imgui/extra_types.h\""
