@@ -19,7 +19,7 @@
         "Replace": {
         },
         "TrimPrefix": [
-                "ImGui_ImplOpenGL3_"
+                "ImGui_ImplOpenGL3_",
                 "Im"
         ],
         "DefaultArgReplace": {
