@@ -13,25 +13,25 @@ import (
 // #include "../../imgui/extra_types.h"
 import "C"
 
-func ImplOpenGL3CreateDeviceObjects() bool {
+func CreateDeviceObjects() bool {
 	return C.ImGui_ImplOpenGL3_CreateDeviceObjects() == C.bool(true)
 }
 
-func ImplOpenGL3CreateFontsTexture() bool {
+func CreateFontsTexture() bool {
 	return C.ImGui_ImplOpenGL3_CreateFontsTexture() == C.bool(true)
 }
 
-func ImplOpenGL3DestroyDeviceObjects() {
+func DestroyDeviceObjects() {
 	C.ImGui_ImplOpenGL3_DestroyDeviceObjects()
 }
 
-func ImplOpenGL3DestroyFontsTexture() {
+func DestroyFontsTexture() {
 	C.ImGui_ImplOpenGL3_DestroyFontsTexture()
 }
 
-// ImplOpenGL3InitV parameter default value hint:
+// InitV parameter default value hint:
 // glsl_version: nullptr
-func ImplOpenGL3InitV(glsl_version string) bool {
+func InitV(glsl_version string) bool {
 	glsl_versionArg, glsl_versionFin := internal.WrapString[C.char](glsl_version)
 
 	defer func() {
@@ -40,21 +40,21 @@ func ImplOpenGL3InitV(glsl_version string) bool {
 	return C.ImGui_ImplOpenGL3_Init(glsl_versionArg) == C.bool(true)
 }
 
-func ImplOpenGL3NewFrame() {
+func NewFrame() {
 	C.ImGui_ImplOpenGL3_NewFrame()
 }
 
-func ImplOpenGL3RenderDrawData(draw_data *imgui.DrawData) {
+func RenderDrawData(draw_data *imgui.DrawData) {
 	draw_dataArg, draw_dataFin := draw_data.Handle()
 	C.ImGui_ImplOpenGL3_RenderDrawData(internal.ReinterpretCast[*C.ImDrawData](draw_dataArg))
 
 	draw_dataFin()
 }
 
-func ImplOpenGL3Shutdown() {
+func Shutdown() {
 	C.ImGui_ImplOpenGL3_Shutdown()
 }
 
-func ImplOpenGL3Init() bool {
+func Init() bool {
 	return C.wrap_ImGui_ImplOpenGL3_Init() == C.bool(true)
 }
