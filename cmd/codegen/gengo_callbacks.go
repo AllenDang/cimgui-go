@@ -32,6 +32,9 @@ func GenerateCallbacks(callbacks []CIdentifier, context *Context) (validTypes []
 		ctx:   context,
 	}
 
+	generatedCallbacks := 0
+	callbacksToGenerate := len(callbacks)
+
 	validTypes = make([]CIdentifier, 0)
 
 	// sort just in case
@@ -54,15 +57,19 @@ func GenerateCallbacks(callbacks []CIdentifier, context *Context) (validTypes []
 			return nil, err
 		}
 
-		glg.Successf("Callback \"%s\" was generated", typedefName)
+		if context.flags.ShowGenerated {
+			glg.Successf("Callback \"%s\" was generated", typedefName)
+		}
 
 		validTypes = append(validTypes, typedefName)
+		generatedCallbacks++
 	}
 
 	if err := result.saveToDisk(); err != nil {
 		return nil, fmt.Errorf("cannot save to disk: %w", err)
 	}
 
+	glg.Infof("Callbacks generation complete. Generated %d/%d callbacks (%.2f%%)", generatedCallbacks, callbacksToGenerate, float32(generatedCallbacks)/float32(callbacksToGenerate)*100)
 	return validTypes, nil
 }
 
@@ -98,7 +105,10 @@ func (g *callbacksGenerator) writeCallback(typedefName CIdentifier, def string) 
 
 	if ok := expr1.MatchString(def); ok {
 		cbType = callbackType1
-		glg.Debugf("callback typedef \"%s\" is in form 1", typedefName)
+		if g.ctx.flags.Verbose {
+			glg.Debugf("callback typedef \"%s\" is in form 1", typedefName)
+		}
+
 		// now split by "("
 		// it should be something like this:
 		// ["returnType", "*<optional func name)", "args1 arg1Name, args2 arg2Name, args3 arg3Name);"]
@@ -190,7 +200,9 @@ func (g *callbacksGenerator) writeCallback(typedefName CIdentifier, def string) 
 	// We need to figure out how to wrap returnType and args.
 	// In fact, we need to swap meaning of them, because we want to convert C argument type to Go argument type
 	// so we are supposed to use returnWrapper for that.
-	glg.Debugf("From %s got \"%s\" and \"%v\"", typedefName, returnTypeC, argsC)
+	if g.ctx.flags.Verbose {
+		glg.Debugf("From %s got \"%s\" and \"%v\"", typedefName, returnTypeC, argsC)
+	}
 
 	// 2.1: get return wrapper
 	var returnType ArgumentWrapperData

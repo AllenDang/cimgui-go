@@ -102,7 +102,7 @@ func GenerateGoFuncs(
 		}
 	}
 
-	glg.Infof("Convert progress: %d/%d (%.2f%%)",
+	glg.Infof("GO Functions generation complete. Generated %d/%d (%.2f%%)",
 		generator.convertedFuncCount,
 		funcsToConvert,
 		100*float32(generator.convertedFuncCount)/float32(funcsToConvert),
@@ -234,7 +234,10 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 
 		funcName = CIdentifier("New" + string(parts[0]) + suffix)
 	default:
-		glg.Debugf("Unknown return type \"%s\" in function %s", f.Ret, f.FuncName)
+		if g.context.flags.Verbose {
+			glg.Debugf("Unknown return type \"%s\" in function %s", f.Ret, f.FuncName)
+		}
+
 		return false
 	}
 
@@ -406,7 +409,10 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []GoIdentifier, arg
 			g.context,
 		)
 		if err != nil {
-			glg.Debugf("Unknown argument type \"%s\" in function %s", a.Type, f.FuncName)
+			if g.context.flags.Verbose {
+				glg.Debugf("Unknown argument type \"%s\" in function %s", a.Type, f.FuncName)
+			}
+
 			break
 		}
 
