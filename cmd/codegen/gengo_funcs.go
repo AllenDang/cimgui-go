@@ -108,16 +108,12 @@ func GenerateGoFuncs(
 		100*float32(generator.convertedFuncCount)/float32(funcsToConvert),
 	)
 
-	goFile, err := os.Create("funcs.go")
-	if err != nil {
-		panic(err.Error())
-	}
+	filename := "funcs.go"
+	glg.Infof("Running Formatting on %s", filename)
+	filecontent := FormatGo(generator.sb.String(), context)
 
-	defer goFile.Close()
-
-	_, err = goFile.WriteString(FormatGo(generator.sb.String(), context))
-	if err != nil {
-		return fmt.Errorf("failed to write content of GO file: %w", err)
+	if err := os.WriteFile(filename, []byte(filecontent), 0o666); err != nil {
+		return fmt.Errorf("failed to write content of GO file %s: %w", filename, err)
 	}
 
 	return nil
