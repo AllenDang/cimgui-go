@@ -227,7 +227,7 @@ func (g *callbacksGenerator) writeCallback(typedefName CIdentifier, def string) 
 	for i, arg := range argsC {
 		rw, err := getReturnWrapper(arg.Type, g.ctx)
 		if err != nil {
-			return fmt.Errorf("unable to get arg wrapper for \"%s\" - \"%s\" %w: %w", typedefName, arg.Type, callbackNotGeneratedError, err)
+			return fmt.Errorf("unable to get arg wrapper for \"%s\" (%w): %w", arg.Type, callbackNotGeneratedError, err)
 		}
 
 		// fill rw return stmt
