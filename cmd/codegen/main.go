@@ -260,7 +260,7 @@ func main() {
 
 	// 1. Generate code
 	// 1.1. Generate Go Enums
-	glg.Info("Generating Go Enums")
+	glg.Info("Generating Go Enums...")
 	enumNames, err := generateGoEnums(context.enums, context)
 	if err != nil {
 		glg.Fatalf("Generating enum names: %v", err)
@@ -269,7 +269,7 @@ func main() {
 	context.enumNames = SliceToMap(enumNames)
 
 	// 1.2. Generate Go typedefs
-	glg.Info("Generating Go Typedefs")
+	glg.Info("Generating Go Typedefs...")
 	typedefsNames, callbacksToGenerate, err := GenerateTypedefs(context.typedefs, context.structs, context)
 	if err != nil {
 		glg.Fatalf("Cannot generate typedefs: %v", err)
@@ -277,6 +277,7 @@ func main() {
 
 	context.typedefsNames = SliceToMap(typedefsNames)
 
+	glg.Info("Generating Go Callbacks...")
 	validCallbacks, err := GenerateCallbacks(callbacksToGenerate, context)
 	if err != nil {
 		glg.Fatalf("Cannot generate callbacks: %v", err)
@@ -285,14 +286,14 @@ func main() {
 	context.typedefsNames = MergeMaps(context.typedefsNames, SliceToMap(validCallbacks))
 
 	// 1.3. Generate C wrapper
-	glg.Info("Generating C Wrapper")
+	glg.Info("Generating C Wrapper...")
 	validFuncs, err := generateCppWrapper(flags.Include, context.funcs, context)
 	if err != nil {
 		glg.Fatalf("Cannot generate CPP Wrapper: %v", err)
 	}
 
 	// 1.3.1. Generate Struct accessors in C
-	glg.Info("Generating C Struct Accessors")
+	glg.Info("Generating C Struct Accessors...")
 	structAccessorFuncs, err := generateCppStructsAccessor(validFuncs, context.structs, context)
 	if err != nil {
 		glg.Fatalf("Cannot generate CPP Struct Accessors: %v", err)
@@ -302,10 +303,12 @@ func main() {
 	validFuncs = append(validFuncs, structAccessorFuncs...)
 
 	// 1.4. Generate Go functions
-	glg.Info("Generating Go Functions")
+	glg.Info("Generating Go Functions...")
 	if err := GenerateGoFuncs(validFuncs, context); err != nil {
 		glg.Fatalf("Cannot generate Go functions: %v", err)
 	}
+
+	glg.Success("Done.")
 }
 
 func getGoPackageHeader(ctx *Context) string {

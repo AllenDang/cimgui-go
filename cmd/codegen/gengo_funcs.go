@@ -87,7 +87,7 @@ func GenerateGoFuncs(
 		// stop, when the function should not be generated
 		if !generator.shouldGenerate {
 			if context.flags.ShowNotGenerated {
-				glg.Errorf("not generated: %s%s", f.FuncName, f.Args)
+				glg.Warnf("not generated: %s%s", f.FuncName, f.Args)
 			}
 
 			continue
@@ -102,22 +102,18 @@ func GenerateGoFuncs(
 		}
 	}
 
-	glg.Infof("Convert progress: %d/%d (%.2f%%)",
+	glg.Infof("GO Functions generation complete. Generated %d/%d (%.2f%%)",
 		generator.convertedFuncCount,
 		funcsToConvert,
 		100*float32(generator.convertedFuncCount)/float32(funcsToConvert),
 	)
 
-	goFile, err := os.Create("funcs.go")
-	if err != nil {
-		panic(err.Error())
-	}
+	filename := "funcs.go"
+	glg.Infof("Running Formatting on %s", filename)
+	filecontent := FormatGo(generator.sb.String(), context)
 
-	defer goFile.Close()
-
-	_, err = goFile.WriteString(FormatGo(generator.sb.String(), context))
-	if err != nil {
-		return fmt.Errorf("failed to write content of GO file: %w", err)
+	if err := os.WriteFile(filename, []byte(filecontent), 0o666); err != nil {
+		return fmt.Errorf("failed to write content of GO file %s: %w", filename, err)
 	}
 
 	return nil
@@ -234,7 +230,10 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 
 		funcName = CIdentifier("New" + string(parts[0]) + suffix)
 	default:
-		glg.Debugf("Unknown return type \"%s\" in function %s", f.Ret, f.FuncName)
+		if g.context.flags.Verbose {
+			glg.Debugf("Unknown return type \"%s\" in function %s", f.Ret, f.FuncName)
+		}
+
 		return false
 	}
 
@@ -406,7 +405,10 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []GoIdentifier, arg
 			g.context,
 		)
 		if err != nil {
-			glg.Debugf("Unknown argument type \"%s\" in function %s", a.Type, f.FuncName)
+			if g.context.flags.Verbose {
+				glg.Debugf("Unknown argument type \"%s\" in function %s", a.Type, f.FuncName)
+			}
+
 			break
 		}
 
