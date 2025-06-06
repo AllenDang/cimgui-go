@@ -61,9 +61,9 @@ func (b *EbitenBackend) Run(loop func()) {
 	ebiten.RunGame(b)
 }
 
-// TODO: Not implemented
+// Because Ebiten refreshes continuously anyway, Refresh has nothing to do here.
 func (b *EbitenBackend) Refresh() {
-	panic("Refresh is not implemented for Ebiten backend yet.")
+	// noop
 }
 
 func (b *EbitenBackend) SetWindowPos(x, y int) {
