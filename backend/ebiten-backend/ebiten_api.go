@@ -74,6 +74,14 @@ func (e *EbitenBackend) Update() error {
 		game.Update()
 	})
 
+	if e.shouldClose {
+		if e.closeCb != nil {
+			e.closeCb()
+		}
+
+		return ebiten.Termination
+	}
+
 	return nil
 }
 
