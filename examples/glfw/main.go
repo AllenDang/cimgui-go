@@ -8,8 +8,7 @@ import (
 	"github.com/AllenDang/cimgui-go/backend/glfwbackend"
 	"github.com/AllenDang/cimgui-go/examples/common"
 	"github.com/AllenDang/cimgui-go/imgui"
-	_ "github.com/AllenDang/cimgui-go/immarkdown"
-	_ "github.com/AllenDang/cimgui-go/imnodes"
+	_ "github.com/AllenDang/cimgui-go/impl/glfw"
 )
 
 var currentBackend backend.Backend[glfwbackend.GLFWWindowFlags]

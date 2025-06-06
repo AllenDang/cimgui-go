@@ -29,7 +29,8 @@ type EbitenBackend struct {
 	afterRender,
 	beforeDestroy,
 	loop func()
-	closeCb backend.WindowCloseCallback
+	closeCb     backend.WindowCloseCallback
+	shouldClose bool
 
 	// ebiten stuff
 	filter                      ebiten.Filter

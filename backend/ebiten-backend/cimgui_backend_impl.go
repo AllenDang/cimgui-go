@@ -61,9 +61,9 @@ func (b *EbitenBackend) Run(loop func()) {
 	ebiten.RunGame(b)
 }
 
-// TODO: Not implemented
+// Because Ebiten refreshes continuously anyway, Refresh has nothing to do here.
 func (b *EbitenBackend) Refresh() {
-	panic("Refresh is not implemented for Ebiten backend yet.")
+	// noop
 }
 
 func (b *EbitenBackend) SetWindowPos(x, y int) {
@@ -95,9 +95,9 @@ func (b *EbitenBackend) DisplaySize() (width, height int32) {
 	return 0, 0
 }
 
-// TODO: Not implemented
-func (b *EbitenBackend) SetShouldClose(bool) {
-	panic("SetShouldClose is not implemented for Ebiten backend yet.")
+// SetShouldClose asks to close the window and stop the game loop. WIll call CloseCallback if set.
+func (b *EbitenBackend) SetShouldClose(sc bool) {
+	b.shouldClose = sc
 }
 
 func (b *EbitenBackend) ContentScale() (xScale, yScale float32) {
