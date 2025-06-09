@@ -190,6 +190,8 @@ extern void igSDLWindow_GetWindowPos(SDL_Window *window, int *x, int *y);
 extern void igSDLWindow_SetSize(SDL_Window *window, int width, int height);
 extern void igSDLWindow_SetTitle(SDL_Window *window, const char *title);
 extern void igSDLWindow_SetSizeLimits(SDL_Window *window, int minWidth, int minHeight, int maxWidth, int maxHeight);
+
+extern void igSDL_SetClipboard(const char *text);
 //extern void igSDLWindow_SetCloseCallback(SDL_Window *window);
 //extern void igSDLWindow_SetKeyCallback(SDL_Window *window);
 //extern void igSDLWindow_SetSizeCallback(SDL_Window *window);
@@ -198,6 +200,8 @@ extern void igRefresh();
 extern ImTextureID igCreateTexture(unsigned char *pixels, int width, int height);
 extern void igDeleteTexture(ImTextureID id);
 extern void igSDLWindowHint(SDL_WindowFlags hint, int value);
+
+extern void igSDL_Free(char* str);
 
 //extern void dropCallback(int, char **);
 //extern void closeCallback(SDL_Window *window);

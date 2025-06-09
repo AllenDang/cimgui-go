@@ -357,6 +357,20 @@ func (b *SDLBackend) SetWindowTitle(title string) {
 	C.igSDLWindow_SetTitle(b.handle(), (*C.char)(titleArg))
 }
 
+func (b *SDLBackend) SetClipboard(text string) {
+	clipboardArg, clipboardFin := internal.WrapString[C.char](text)
+	defer clipboardFin()
+
+	C.igSDL_SetClipboard((*C.char)(clipboardArg))
+}
+
+func (b *SDLBackend) Clipboard() string {
+	cText := C.SDL_GetClipboardText()
+	defer C.igSDL_Free(cText)
+
+	return C.GoString(cText)
+}
+
 // The minimum and maximum size of the content area of a windowed mode window.
 // To specify only a minimum size or only a maximum one, set the other pair to -1
 // e.g. SetWindowSizeLimits(640, 480, -1, -1)
