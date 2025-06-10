@@ -83,7 +83,9 @@ func (b *EbitenBackend) SetWindowSize(width, height int) {
 	*/
 }
 
-func (b *EbitenBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight int) {} // TODO
+func (b *EbitenBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight int) {
+	ebiten.SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight)
+}
 
 func (b *EbitenBackend) SetWindowTitle(title string) {
 	ebiten.SetWindowTitle(title)
