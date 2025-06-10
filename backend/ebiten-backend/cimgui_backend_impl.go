@@ -91,10 +91,9 @@ func (b *EbitenBackend) SetWindowTitle(title string) {
 	ebiten.SetWindowTitle(title)
 }
 
-// TODO: Not implemented
 func (b *EbitenBackend) DisplaySize() (width, height int32) {
-	panic("SetShouldClose is not implemented for Ebiten backend yet.")
-	return 0, 0
+	w, h := ebiten.Monitor().Size()
+	return int32(w), int32(h)
 }
 
 // SetShouldClose asks to close the window and stop the game loop. WIll call CloseCallback if set.
