@@ -31,6 +31,7 @@ type EbitenBackend struct {
 	loop func()
 	closeCb     backend.WindowCloseCallback
 	shouldClose bool
+	resizeCb    backend.SizeChangeCallback
 
 	// ebiten stuff
 	filter                      ebiten.Filter

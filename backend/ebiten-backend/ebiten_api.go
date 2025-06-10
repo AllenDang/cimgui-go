@@ -86,13 +86,23 @@ func (e *EbitenBackend) Update() error {
 }
 
 func (e *EbitenBackend) Layout(outsideWidth, outsideHeight int) (int, int) {
+	var newW, newH int
 	if e.retina {
 		m := ebiten.DeviceScaleFactor()
-		e.currentWidth = int(float64(outsideWidth) * m)
-		e.currentHeight = int(float64(outsideHeight) * m)
+		newW = int(float64(outsideWidth) * m)
+		newH = int(float64(outsideHeight) * m)
 	} else {
-		e.currentWidth = outsideWidth
-		e.currentHeight = outsideHeight
+		newW = outsideWidth
+		newH = outsideHeight
+	}
+
+	if e.currentWidth != newW || e.currentHeight != newH {
+		e.currentWidth = newW
+		e.currentHeight = newH
+
+		if e.resizeCb != nil {
+			e.resizeCb(e.currentWidth, e.currentHeight)
+		}
 	}
 
 	return e.currentWidth, e.currentHeight

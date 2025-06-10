@@ -119,8 +119,11 @@ func (b *EbitenBackend) SetCloseCallback(cb backend.WindowCloseCallback) {
 	b.closeCb = cb
 }
 
-func (b *EbitenBackend) SetKeyCallback(backend.KeyCallback)               {} // TODO
-func (b *EbitenBackend) SetSizeChangeCallback(backend.SizeChangeCallback) {} // TODO
+func (b *EbitenBackend) SetKeyCallback(backend.KeyCallback) {} // TODO
+
+func (b *EbitenBackend) SetSizeChangeCallback(c backend.SizeChangeCallback) {
+	b.resizeCb = c
+}
 
 func (b *EbitenBackend) SetWindowFlags(flag EbitenBackendFlags, value int) {
 	switch flag {
