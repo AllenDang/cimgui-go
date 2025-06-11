@@ -121,8 +121,8 @@ func (b *EbitenBackend) SetCloseCallback(cb backend.WindowCloseCallback) {
 
 func (b *EbitenBackend) SetKeyCallback(backend.KeyCallback) {} // TODO
 
-func (b *EbitenBackend) SetSizeChangeCallback(c backend.SizeChangeCallback) {
-	b.resizeCb = c
+func (b *EbitenBackend) SetSizeChangeCallback(cb backend.SizeChangeCallback) {
+	b.resizeCb = cb
 }
 
 func (b *EbitenBackend) SetWindowFlags(flag EbitenBackendFlags, value int) {
