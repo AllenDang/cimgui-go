@@ -83,16 +83,17 @@ func (b *EbitenBackend) SetWindowSize(width, height int) {
 	*/
 }
 
-func (b *EbitenBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight int) {} // TODO
+func (b *EbitenBackend) SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight int) {
+	ebiten.SetWindowSizeLimits(minWidth, minHeight, maxWidth, maxHeight)
+}
 
 func (b *EbitenBackend) SetWindowTitle(title string) {
 	ebiten.SetWindowTitle(title)
 }
 
-// TODO: Not implemented
 func (b *EbitenBackend) DisplaySize() (width, height int32) {
-	panic("SetShouldClose is not implemented for Ebiten backend yet.")
-	return 0, 0
+	w, h := ebiten.Monitor().Size()
+	return int32(w), int32(h)
 }
 
 // SetShouldClose asks to close the window and stop the game loop. WIll call CloseCallback if set.
@@ -118,8 +119,11 @@ func (b *EbitenBackend) SetCloseCallback(cb backend.WindowCloseCallback) {
 	b.closeCb = cb
 }
 
-func (b *EbitenBackend) SetKeyCallback(backend.KeyCallback)               {} // TODO
-func (b *EbitenBackend) SetSizeChangeCallback(backend.SizeChangeCallback) {} // TODO
+func (b *EbitenBackend) SetKeyCallback(backend.KeyCallback) {} // TODO
+
+func (b *EbitenBackend) SetSizeChangeCallback(cb backend.SizeChangeCallback) {
+	b.resizeCb = cb
+}
 
 func (b *EbitenBackend) SetWindowFlags(flag EbitenBackendFlags, value int) {
 	switch flag {
