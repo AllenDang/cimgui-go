@@ -16,7 +16,9 @@ const (
 	// EbitenBackendFlagsResizingMode sets the resizing mode.
 	// Possible values: WindowResizingModeDisabled, WindowResizingModeOnlyFullscreenEnabled, WindowResizingModeEnabled
 	EbitenBackendFlagsResizingMode
+	// EbitenBackendFlagsFPSMode if 0 set enables vsync. See also: ebiten.SetVsyncEnabled
 	EbitenBackendFlagsFPSMode
+	// EbitenBackendFlagsDecorated sets the window decoration if != 0.
 	EbitenBackendFlagsDecorated
 	EbitenBackendFlagsFloating
 	EbitenBackendFlagsMaximized
