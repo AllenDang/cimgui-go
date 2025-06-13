@@ -254,6 +254,10 @@ void igSDLWindow_SetSize(SDL_Window *window, int width, int height) { SDL_SetWin
 
 void igSDLWindow_SetTitle(SDL_Window *window, const char *title) { SDL_SetWindowTitle(window, title); }
 
+void igSDL_SetClipboard(const char *text) { SDL_SetClipboardText(text); }
+
+void igSDL_Free(char* str) { SDL_free(str); }
+
 void igSDLWindow_SetSizeLimits(SDL_Window *window, int minWidth, int minHeight, int maxWidth, int maxHeight) {
   SDL_SetWindowMinimumSize(window, minWidth, minHeight);
   SDL_SetWindowMaximumSize(window, maxWidth, maxHeight);
