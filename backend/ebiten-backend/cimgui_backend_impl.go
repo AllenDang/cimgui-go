@@ -58,7 +58,11 @@ func (b *EbitenBackend) Run(loop func()) {
 		b.afterCreateContext()
 	}
 
-	ebiten.RunGame(b)
+	if err := ebiten.RunGameWithOptions(b, &ebiten.RunGameOptions{
+		ScreenTransparent: b.transparent,
+	}); err != nil {
+		panic(err)
+	}
 }
 
 // Because Ebiten refreshes continuously anyway, Refresh has nothing to do here.
@@ -157,6 +161,8 @@ func (b *EbitenBackend) SetWindowFlags(flag EbitenBackendFlags, value int) {
 		ebiten.SetWindowMousePassthrough(value != 0)
 	case EbitenBackendFlagsDebug:
 		b.debug = value != 0
+	case EbitenBackendFlagsTransparent:
+		b.transparent = value != 0
 	default:
 		panic("Invalid flag for SetWindowFlags.")
 	}
