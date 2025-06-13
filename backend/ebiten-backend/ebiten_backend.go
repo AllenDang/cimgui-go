@@ -46,9 +46,10 @@ type EbitenBackend struct {
 		pkgFillVertIndices   []uint16
 		pkgFillTrianglesOpts ebiten.DrawTrianglesOptions
 	}
-	debug    bool // if true render some extra debug info
-	clipMask bool // https://github.com/ocornut/imgui/issues/7372
-	lmask    *ebiten.Image
+	debug       bool // if true render some extra debug info
+	clipMask    bool // https://github.com/ocornut/imgui/issues/7372
+	lmask       *ebiten.Image
+	transparent bool
 
 	syncInputs         bool
 	syncInputsFn       func()

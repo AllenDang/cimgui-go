@@ -32,4 +32,6 @@ const (
 	// - I: Toggle input sync (if disabled no input will be handled)
 	// - S: Toggle cursor shape sync
 	EbitenBackendFlagsDebug
+	// EbitenBackendFlagsTransparent sets whether window is transparent. See also: ebiten.RunGameOptions.ScreenTransparent
+	EbitenBackendFlagsTransparent
 )
