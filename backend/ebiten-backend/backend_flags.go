@@ -25,5 +25,9 @@ const (
 	EbitenBackendFlagsMousePassthrough
 	// EbitenBackendFlagsDebug is a flag to enable debug mode. It will show FPS, TPS, ClipMask and enable ClipMask shortcut.
 	// 0 (default) disabled, 1 (or anything else) enabled
+	// The following keys are bound to the following actions:
+	// - C: Toggle ClipMask
+	// - I: Toggle input sync (if disabled no input will be handled)
+	// - S: Toggle cursor shape sync
 	EbitenBackendFlagsDebug
 )
