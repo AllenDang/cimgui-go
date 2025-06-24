@@ -1,0 +1,65 @@
+{
+        "PackagePath": "github.com/AllenDang/cimgui-go",
+        "ReverseMode": true,
+        "SkipFuncs": [
+                "ImGui_ImplSDL2_*"
+        ],
+        "SKipTypedefs": [
+                "SDL_Window",
+                "SDL_Renderer"
+        ],
+        "SKipStructs": [
+                "SDL_Window",
+                "SDL_Renderer"
+        ],
+        "SkipFiles": [
+                "imgui_impl_sdl2"
+        ],
+        "TypedefsPoolSize": 32,
+        "TypedefsCustomPoolSizes": {
+        },
+        "Replace": {
+        },
+        "TrimPrefix": [
+                "ImGui_ImplSDL2_",
+                "Im"
+        ],
+        "DefaultArgReplace": {
+        },
+        "ExtraCGOPreamble": [
+                "#include \"../../imgui/extra_types.h\""
+        ],
+        "SimpleTypes": {
+                "ImU8":      ["byte", "C.ImU8"],
+                "ImU16":     ["uint16", "C.ImU16"],
+                "ImU32":     ["uint32", "C.ImU32"],
+                "ImU64":     ["uint64", "C.ImU64"],
+                "ImS8":      ["int", "C.ImS8"],
+                "ImS16":     ["int16", "C.ImS16"],
+                "ImS32":     ["int", "C.ImS32"],
+                "ImS64":     ["int64", "C.ImS64"],
+                "ImWchar":   ["Wchar", "C.ImWchar", "imgui"],
+                "ImWchar*":  ["*Wchar", "(*C.ImWchar)", "imgui"],
+                "ImWchar16": ["uint16", "C.ImWchar16", "imgui"]
+        },
+        "SimplePtrTypes": {
+                "ImU8":  ["byte", "C.ImU8"],
+                "ImU16": ["uint16", "C.ImU16"],
+                "ImU32": ["uint32", "C.ImU32"],
+                "ImU64": ["uint64", "C.ImU64"],
+                "ImS8":  ["int8", "C.ImS8"],
+                "ImS16": ["int16", "C.ImS16"],
+                "ImS32": ["int32", "C.ImS32"],
+                "ImS64": ["int64", "C.ImS64"]
+
+        },
+        "WrappableTypes": {
+                "ImVec2":      ["Vec2", "C.ImVec2", "imgui"],
+                "ImVec4":      ["Vec4", "C.ImVec4", "imgui"],
+                "ImColor":     ["Color", "C.ImColor", "imgui"],
+                "ImRect":      ["Rect", "C.ImRect", "imgui"],
+                "ImPlotPoint": ["PlotPoint", "C.ImPlotPoint", "implot"],
+                "ImPlotTime":  ["PlotTime", "C.ImPlotTime", "implot"]
+
+        }
+}
