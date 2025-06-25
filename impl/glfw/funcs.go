@@ -30,6 +30,15 @@ func CursorPosCallback(window *GLFWwindow, x, y float64) {
 	windowFin()
 }
 
+func ContentScaleForWindow(window *GLFWwindow) float32 {
+	windowArg, windowFin := window.Handle()
+
+	defer func() {
+		windowFin()
+	}()
+	return float32(C.ImGui_ImplGlfw_GetContentScaleForWindow(internal.ReinterpretCast[*C.GLFWwindow](windowArg)))
+}
+
 func InitForOpenGL(window *GLFWwindow, install_callbacks bool) bool {
 	windowArg, windowFin := window.Handle()
 
