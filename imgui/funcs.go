@@ -6319,7 +6319,7 @@ func CurrentFont() *Font {
 }
 
 // get current font bound at current size // == GetFont()->GetFontBaked(GetFontSize())
-func FontBaked() *FontBaked {
+func GetFontBaked() *FontBaked {
 	return NewFontBakedFromC(C.igGetFontBaked())
 }
 
