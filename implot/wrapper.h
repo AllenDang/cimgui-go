@@ -180,7 +180,7 @@ extern double wrap_ImPlot_PlotHistogram_U32Ptr(const char* label_id,const ImU32*
 extern double wrap_ImPlot_PlotHistogram_U64Ptr(const char* label_id,const ImU64* values,int count);
 extern double wrap_ImPlot_PlotHistogram_U8Ptr(const char* label_id,const ImU8* values,int count);
 extern double wrap_ImPlot_PlotHistogram_doublePtr(const char* label_id,const double* values,int count);
-extern void wrap_ImPlot_PlotImage(const char* label_id,ImTextureID tex_ref,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max);
+extern void wrap_ImPlot_PlotImage(const char* label_id,ImTextureRef tex_ref,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max);
 extern void wrap_ImPlot_PlotInfLines_FloatPtr(const char* label_id,const float* values,int count);
 extern void wrap_ImPlot_PlotInfLines_S16Ptr(const char* label_id,const ImS16* values,int count);
 extern void wrap_ImPlot_PlotInfLines_S32Ptr(const char* label_id,const ImS32* values,int count);

@@ -9,6 +9,9 @@
     "ImFontAtlasFlags_": {
       "above": "// Flags for ImFontAtlas build"
     },
+    "ImFontFlags_": {
+      "above": "// Font flags\n// (in future versions as we redesign font loading API, this will become more important and better documented. for now please consider this as internal/advanced use)"
+    },
     "ImGuiAxis": {
       "above": "// X/Y enums are fixed to 0/1 so they may be used to index ImVec2"
     },
@@ -71,9 +74,6 @@
     },
     "ImGuiFocusedFlags_": {
       "above": "// Flags for ImGui::IsWindowFocused()"
-    },
-    "ImGuiFreeTypeBuilderFlags": {
-      "above": "// Hinting greatly impacts visuals (and glyph sizes).\n// - By default, hinting is enabled and the font's native hinter is preferred over the auto-hinter.\n// - When disabled, FreeType generates blurrier glyphs, more or less matches the stb_truetype.h\n// - The Default hinting mode usually looks good, but may distort glyphs in an unusual way.\n// - The Light hinting mode generates fuzzier glyphs but better matches Microsoft's rasterizer.\n// You can set those flags globally in ImFontAtlas::FontBuilderFlags\n// You can set those flags on a per font basis in ImFontConfig::FontBuilderFlags"
     },
     "ImGuiHoveredFlagsPrivate_": {
       "above": "// Extend ImGuiHoveredFlags_"
@@ -200,6 +200,12 @@
     },
     "ImGuiWindowFlags_": {
       "above": "// Flags for ImGui::Begin()\n// (Those are per-window flags. There are shared flags in ImGuiIO: io.ConfigWindowsResizeFromEdges and io.ConfigWindowsMoveFromTitleBarOnly)"
+    },
+    "ImTextureFormat": {
+      "above": "// We intentionally support a limited amount of texture formats to limit burden on CPU-side code and extension.\n// Most standard backends only support RGBA32 but we provide a single channel option for low-resource/embedded systems."
+    },
+    "ImTextureStatus": {
+      "above": "// Status of a texture to communicate with Renderer Backend."
     }
   },
   "enums": {
@@ -338,6 +344,31 @@
         "value": "1 << 2"
       }
     ],
+    "ImFontFlags_": [
+      {
+        "calc_value": 0,
+        "name": "ImFontFlags_None",
+        "value": "0"
+      },
+      {
+        "calc_value": 2,
+        "comment": "// Disable throwing an error/assert when calling AddFontXXX() with missing file/data. Calling code is expected to check AddFontXXX() return value.",
+        "name": "ImFontFlags_NoLoadError",
+        "value": "1 << 1"
+      },
+      {
+        "calc_value": 4,
+        "comment": "// [Internal] Disable loading new glyphs.",
+        "name": "ImFontFlags_NoLoadGlyphs",
+        "value": "1 << 2"
+      },
+      {
+        "calc_value": 8,
+        "comment": "// [Internal] Disable loading new baked sizes, disable garbage collecting current ones. e.g. if you want to lock a font to a single size. Important: if you use this to preload given sizes, consider the possibility of multiple font density used on Retina display.",
+        "name": "ImFontFlags_LockBakedSizes",
+        "value": "1 << 3"
+      }
+    ],
     "ImGuiActivateFlags_": [
       {
         "calc_value": 0,
@@ -421,6 +452,12 @@
         "comment": "// Backend Renderer supports ImDrawCmd::VtxOffset. This enables output of large meshes (64K+ vertices) while still using 16-bit indices.",
         "name": "ImGuiBackendFlags_RendererHasVtxOffset",
         "value": "1 << 3"
+      },
+      {
+        "calc_value": 16,
+        "comment": "// Backend Renderer supports ImTextureData requests to create/update/destroy textures. This enables incremental texture updates and texture reloads.",
+        "name": "ImGuiBackendFlags_RendererHasTextures",
+        "value": "1 << 4"
       },
       {
         "calc_value": 1024,
@@ -531,6 +568,12 @@
         "comment": "// don't test key/input owner when polling the key (note: mouse buttons are keys! often, the key in question will be ImGuiKey_MouseLeft!)",
         "name": "ImGuiButtonFlags_NoTestKeyOwner",
         "value": "1 << 21"
+      },
+      {
+        "calc_value": 4194304,
+        "comment": "// [EXPERIMENTAL: Not very well specced]. Don't focus parent window when clicking.",
+        "name": "ImGuiButtonFlags_NoFocus",
+        "value": "1 << 22"
       },
       {
         "calc_value": 1008,
@@ -1311,18 +1354,6 @@
         "value": "1 << 10"
       },
       {
-        "calc_value": 16384,
-        "comment": "// [BETA: Don't use] FIXME-DPI: Reposition and resize imgui windows when the DpiScale of a viewport changed (mostly useful for the main viewport hosting other window). Note that resizing the main window itself is up to your application.",
-        "name": "ImGuiConfigFlags_DpiEnableScaleViewports",
-        "value": "1 << 14"
-      },
-      {
-        "calc_value": 32768,
-        "comment": "// [BETA: Don't use] FIXME-DPI: Request bitmap-scaled fonts to match DpiScale. This is a very low-quality workaround. The correct way to handle DPI is _currently_ to replace the atlas and/or fonts in the Platform_OnChangedViewport callback, but this is all early work in progress.",
-        "name": "ImGuiConfigFlags_DpiEnableScaleFonts",
-        "value": "1 << 15"
-      },
-      {
         "calc_value": 1048576,
         "comment": "// Application is SRGB-aware.",
         "name": "ImGuiConfigFlags_IsSRGB",
@@ -1918,65 +1949,65 @@
         "value": "ImGuiFocusedFlags_RootWindow | ImGuiFocusedFlags_ChildWindows"
       }
     ],
-    "ImGuiFreeTypeBuilderFlags": [
+    "ImGuiFreeTypeLoaderFlags_": [
       {
         "calc_value": 1,
         "comment": "// Disable hinting. This generally generates 'blurrier' bitmap glyphs when the glyph are rendered in any of the anti-aliased modes.",
-        "name": "ImGuiFreeTypeBuilderFlags_NoHinting",
+        "name": "ImGuiFreeTypeLoaderFlags_NoHinting",
         "value": "1 << 0"
       },
       {
         "calc_value": 2,
         "comment": "// Disable auto-hinter.",
-        "name": "ImGuiFreeTypeBuilderFlags_NoAutoHint",
+        "name": "ImGuiFreeTypeLoaderFlags_NoAutoHint",
         "value": "1 << 1"
       },
       {
         "calc_value": 4,
         "comment": "// Indicates that the auto-hinter is preferred over the font's native hinter.",
-        "name": "ImGuiFreeTypeBuilderFlags_ForceAutoHint",
+        "name": "ImGuiFreeTypeLoaderFlags_ForceAutoHint",
         "value": "1 << 2"
       },
       {
         "calc_value": 8,
         "comment": "// A lighter hinting algorithm for gray-level modes. Many generated glyphs are fuzzier but better resemble their original shape. This is achieved by snapping glyphs to the pixel grid only vertically (Y-axis), as is done by Microsoft's ClearType and Adobe's proprietary font renderer. This preserves inter-glyph spacing in horizontal text.",
-        "name": "ImGuiFreeTypeBuilderFlags_LightHinting",
+        "name": "ImGuiFreeTypeLoaderFlags_LightHinting",
         "value": "1 << 3"
       },
       {
         "calc_value": 16,
         "comment": "// Strong hinting algorithm that should only be used for monochrome output.",
-        "name": "ImGuiFreeTypeBuilderFlags_MonoHinting",
+        "name": "ImGuiFreeTypeLoaderFlags_MonoHinting",
         "value": "1 << 4"
       },
       {
         "calc_value": 32,
         "comment": "// Styling: Should we artificially embolden the font?",
-        "name": "ImGuiFreeTypeBuilderFlags_Bold",
+        "name": "ImGuiFreeTypeLoaderFlags_Bold",
         "value": "1 << 5"
       },
       {
         "calc_value": 64,
         "comment": "// Styling: Should we slant the font, emulating italic style?",
-        "name": "ImGuiFreeTypeBuilderFlags_Oblique",
+        "name": "ImGuiFreeTypeLoaderFlags_Oblique",
         "value": "1 << 6"
       },
       {
         "calc_value": 128,
         "comment": "// Disable anti-aliasing. Combine this with MonoHinting for best results!",
-        "name": "ImGuiFreeTypeBuilderFlags_Monochrome",
+        "name": "ImGuiFreeTypeLoaderFlags_Monochrome",
         "value": "1 << 7"
       },
       {
         "calc_value": 256,
         "comment": "// Enable FreeType color-layered glyphs",
-        "name": "ImGuiFreeTypeBuilderFlags_LoadColor",
+        "name": "ImGuiFreeTypeLoaderFlags_LoadColor",
         "value": "1 << 8"
       },
       {
         "calc_value": 512,
         "comment": "// Enable FreeType bitmap glyphs",
-        "name": "ImGuiFreeTypeBuilderFlags_Bitmap",
+        "name": "ImGuiFreeTypeLoaderFlags_Bitmap",
         "value": "1 << 9"
       }
     ],
@@ -2612,6 +2643,12 @@
         "value": "1 << 16"
       },
       {
+        "calc_value": 131072,
+        "comment": "// false     // [EXPERIMENTAL: Not very well specced] Clicking doesn't take focus. Automatically sets ImGuiButtonFlags_NoFocus + ImGuiButtonFlags_NoNavFocus in ButtonBehavior().",
+        "name": "ImGuiItemFlags_NoFocus",
+        "value": "1 << 17"
+      },
+      {
         "calc_value": 1048576,
         "comment": "// false     // [WIP] Auto-activate input mode when tab focused. Currently only used and supported by a few items before it becomes a generic feature.",
         "name": "ImGuiItemFlags_Inputable",
@@ -2858,6 +2895,7 @@
       },
       {
         "calc_value": 530,
+        "comment": "// Also see ImGuiMod_Ctrl, ImGuiMod_Shift, ImGuiMod_Alt, ImGuiMod_Super below!",
         "name": "ImGuiKey_LeftSuper",
         "value": "530"
       },
@@ -3381,145 +3419,145 @@
       },
       {
         "calc_value": 632,
-        "comment": "// Menu (Xbox)      + (Switch)   Start/Options (PS)",
+        "comment": "// Menu        | +       | Options  |",
         "name": "ImGuiKey_GamepadStart",
         "value": "632"
       },
       {
         "calc_value": 633,
-        "comment": "// View (Xbox)      - (Switch)   Share (PS)",
+        "comment": "// View        | -       | Share    |",
         "name": "ImGuiKey_GamepadBack",
         "value": "633"
       },
       {
         "calc_value": 634,
-        "comment": "// X (Xbox)         Y (Switch)   Square (PS)        // Tap: Toggle Menu. Hold: Windowing mode (Focus/Move/Resize windows)",
+        "comment": "// X           | Y       | Square   | Tap: Toggle Menu. Hold: Windowing mode (Focus/Move/Resize windows)",
         "name": "ImGuiKey_GamepadFaceLeft",
         "value": "634"
       },
       {
         "calc_value": 635,
-        "comment": "// B (Xbox)         A (Switch)   Circle (PS)        // Cancel / Close / Exit",
+        "comment": "// B           | A       | Circle   | Cancel / Close / Exit",
         "name": "ImGuiKey_GamepadFaceRight",
         "value": "635"
       },
       {
         "calc_value": 636,
-        "comment": "// Y (Xbox)         X (Switch)   Triangle (PS)      // Text Input / On-screen Keyboard",
+        "comment": "// Y           | X       | Triangle | Text Input / On-screen Keyboard",
         "name": "ImGuiKey_GamepadFaceUp",
         "value": "636"
       },
       {
         "calc_value": 637,
-        "comment": "// A (Xbox)         B (Switch)   Cross (PS)         // Activate / Open / Toggle / Tweak",
+        "comment": "// A           | B       | Cross    | Activate / Open / Toggle / Tweak",
         "name": "ImGuiKey_GamepadFaceDown",
         "value": "637"
       },
       {
         "calc_value": 638,
-        "comment": "// D-pad Left                                       // Move / Tweak / Resize Window (in Windowing mode)",
+        "comment": "// D-pad Left  | \"       | \"        | Move / Tweak / Resize Window (in Windowing mode)",
         "name": "ImGuiKey_GamepadDpadLeft",
         "value": "638"
       },
       {
         "calc_value": 639,
-        "comment": "// D-pad Right                                      // Move / Tweak / Resize Window (in Windowing mode)",
+        "comment": "// D-pad Right | \"       | \"        | Move / Tweak / Resize Window (in Windowing mode)",
         "name": "ImGuiKey_GamepadDpadRight",
         "value": "639"
       },
       {
         "calc_value": 640,
-        "comment": "// D-pad Up                                         // Move / Tweak / Resize Window (in Windowing mode)",
+        "comment": "// D-pad Up    | \"       | \"        | Move / Tweak / Resize Window (in Windowing mode)",
         "name": "ImGuiKey_GamepadDpadUp",
         "value": "640"
       },
       {
         "calc_value": 641,
-        "comment": "// D-pad Down                                       // Move / Tweak / Resize Window (in Windowing mode)",
+        "comment": "// D-pad Down  | \"       | \"        | Move / Tweak / Resize Window (in Windowing mode)",
         "name": "ImGuiKey_GamepadDpadDown",
         "value": "641"
       },
       {
         "calc_value": 642,
-        "comment": "// L Bumper (Xbox)  L (Switch)   L1 (PS)            // Tweak Slower / Focus Previous (in Windowing mode)",
+        "comment": "// L Bumper    | L       | L1       | Tweak Slower / Focus Previous (in Windowing mode)",
         "name": "ImGuiKey_GamepadL1",
         "value": "642"
       },
       {
         "calc_value": 643,
-        "comment": "// R Bumper (Xbox)  R (Switch)   R1 (PS)            // Tweak Faster / Focus Next (in Windowing mode)",
+        "comment": "// R Bumper    | R       | R1       | Tweak Faster / Focus Next (in Windowing mode)",
         "name": "ImGuiKey_GamepadR1",
         "value": "643"
       },
       {
         "calc_value": 644,
-        "comment": "// L Trig. (Xbox)   ZL (Switch)  L2 (PS) [Analog]",
+        "comment": "// L Trigger   | ZL      | L2       | [Analog]",
         "name": "ImGuiKey_GamepadL2",
         "value": "644"
       },
       {
         "calc_value": 645,
-        "comment": "// R Trig. (Xbox)   ZR (Switch)  R2 (PS) [Analog]",
+        "comment": "// R Trigger   | ZR      | R2       | [Analog]",
         "name": "ImGuiKey_GamepadR2",
         "value": "645"
       },
       {
         "calc_value": 646,
-        "comment": "// L Stick (Xbox)   L3 (Switch)  L3 (PS)",
+        "comment": "// L Stick     | L3      | L3       |",
         "name": "ImGuiKey_GamepadL3",
         "value": "646"
       },
       {
         "calc_value": 647,
-        "comment": "// R Stick (Xbox)   R3 (Switch)  R3 (PS)",
+        "comment": "// R Stick     | R3      | R3       |",
         "name": "ImGuiKey_GamepadR3",
         "value": "647"
       },
       {
         "calc_value": 648,
-        "comment": "// [Analog]                                         // Move Window (in Windowing mode)",
+        "comment": "//             |         |          | [Analog] Move Window (in Windowing mode)",
         "name": "ImGuiKey_GamepadLStickLeft",
         "value": "648"
       },
       {
         "calc_value": 649,
-        "comment": "// [Analog]                                         // Move Window (in Windowing mode)",
+        "comment": "//             |         |          | [Analog] Move Window (in Windowing mode)",
         "name": "ImGuiKey_GamepadLStickRight",
         "value": "649"
       },
       {
         "calc_value": 650,
-        "comment": "// [Analog]                                         // Move Window (in Windowing mode)",
+        "comment": "//             |         |          | [Analog] Move Window (in Windowing mode)",
         "name": "ImGuiKey_GamepadLStickUp",
         "value": "650"
       },
       {
         "calc_value": 651,
-        "comment": "// [Analog]                                         // Move Window (in Windowing mode)",
+        "comment": "//             |         |          | [Analog] Move Window (in Windowing mode)",
         "name": "ImGuiKey_GamepadLStickDown",
         "value": "651"
       },
       {
         "calc_value": 652,
-        "comment": "// [Analog]",
+        "comment": "//             |         |          | [Analog]",
         "name": "ImGuiKey_GamepadRStickLeft",
         "value": "652"
       },
       {
         "calc_value": 653,
-        "comment": "// [Analog]",
+        "comment": "//             |         |          | [Analog]",
         "name": "ImGuiKey_GamepadRStickRight",
         "value": "653"
       },
       {
         "calc_value": 654,
-        "comment": "// [Analog]",
+        "comment": "//             |         |          | [Analog]",
         "name": "ImGuiKey_GamepadRStickUp",
         "value": "654"
       },
       {
         "calc_value": 655,
-        "comment": "// [Analog]",
+        "comment": "//             |         |          | [Analog]",
         "name": "ImGuiKey_GamepadRStickDown",
         "value": "655"
       },
@@ -3584,6 +3622,11 @@
         "value": "667"
       },
       {
+        "calc_value": 155,
+        "name": "ImGuiKey_NamedKey_COUNT",
+        "value": "ImGuiKey_NamedKey_END - ImGuiKey_NamedKey_BEGIN"
+      },
+      {
         "calc_value": 0,
         "name": "ImGuiMod_None",
         "value": "0"
@@ -3617,11 +3660,6 @@
         "comment": "// 4-bits",
         "name": "ImGuiMod_Mask_",
         "value": "0xF000"
-      },
-      {
-        "calc_value": 155,
-        "name": "ImGuiKey_NamedKey_COUNT",
-        "value": "ImGuiKey_NamedKey_END - ImGuiKey_NamedKey_BEGIN"
       }
     ],
     "ImGuiLayoutType_": [
@@ -6031,6 +6069,51 @@
         "name": "ImGuiWindowRefreshFlags_RefreshOnFocus",
         "value": "1 << 2"
       }
+    ],
+    "ImTextureFormat": [
+      {
+        "calc_value": 0,
+        "comment": "// 4 components per pixel, each is unsigned 8-bit. Total size = TexWidth * TexHeight * 4",
+        "name": "ImTextureFormat_RGBA32",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "comment": "// 1 component per pixel, each is unsigned 8-bit. Total size = TexWidth * TexHeight",
+        "name": "ImTextureFormat_Alpha8",
+        "value": "1"
+      }
+    ],
+    "ImTextureStatus": [
+      {
+        "calc_value": 0,
+        "name": "ImTextureStatus_OK",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "comment": "// Backend destroyed the texture.",
+        "name": "ImTextureStatus_Destroyed",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "comment": "// Requesting backend to create the texture. Set status OK when done.",
+        "name": "ImTextureStatus_WantCreate",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "comment": "// Requesting backend to update specific blocks of pixels (write to texture portions which have never been used before). Set status OK when done.",
+        "name": "ImTextureStatus_WantUpdates",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "comment": "// Requesting backend to destroy the texture. Set status to Destroyed when done.",
+        "name": "ImTextureStatus_WantDestroy",
+        "value": "4"
+      }
     ]
   },
   "enumtypes": {
@@ -6041,204 +6124,217 @@
     "ImGuiSortDirection": "ImU8"
   },
   "locations": {
-    "ImBitVector": "imgui_internal:631",
-    "ImColor": "imgui:2918",
-    "ImDrawChannel": "imgui:3165",
-    "ImDrawCmd": "imgui:3122",
-    "ImDrawCmdHeader": "imgui:3157",
-    "ImDrawData": "imgui:3381",
-    "ImDrawDataBuilder": "imgui_internal:822",
-    "ImDrawFlags_": "imgui:3190",
-    "ImDrawList": "imgui:3228",
-    "ImDrawListFlags_": "imgui:3210",
-    "ImDrawListSharedData": "imgui_internal:799",
-    "ImDrawListSplitter": "imgui:3173",
-    "ImDrawVert": "imgui:3142",
-    "ImFont": "imgui:3609",
-    "ImFontAtlas": "imgui:3505",
-    "ImFontAtlasCustomRect": "imgui:3464",
-    "ImFontAtlasFlags_": "imgui:3480",
-    "ImFontBuilderIO": "imgui_internal:3902",
-    "ImFontConfig": "imgui:3406",
-    "ImFontGlyph": "imgui:3437",
-    "ImFontGlyphRangesBuilder": "imgui:3449",
-    "ImGuiActivateFlags_": "imgui_internal:1605",
-    "ImGuiAxis": "imgui_internal:1070",
-    "ImGuiBackendFlags_": "imgui:1682",
-    "ImGuiBoxSelectState": "imgui_internal:1794",
-    "ImGuiButtonFlagsPrivate_": "imgui_internal:958",
-    "ImGuiButtonFlags_": "imgui:1821",
-    "ImGuiChildFlags_": "imgui:1157",
-    "ImGuiCol_": "imgui:1697",
-    "ImGuiColorEditFlags_": "imgui:1832",
-    "ImGuiColorMod": "imgui_internal:843",
-    "ImGuiComboFlagsPrivate_": "imgui_internal:983",
-    "ImGuiComboFlags_": "imgui:1312",
-    "ImGuiComboPreviewData": "imgui_internal:1084",
-    "ImGuiCond_": "imgui:1946",
-    "ImGuiConfigFlags_": "imgui:1653",
-    "ImGuiContext": "imgui_internal:2266",
-    "ImGuiContextHook": "imgui_internal:2251",
-    "ImGuiContextHookType": "imgui_internal:2249",
-    "ImGuiDataAuthority_": "imgui_internal:1907",
-    "ImGuiDataTypeInfo": "imgui_internal:869",
-    "ImGuiDataTypePrivate_": "imgui_internal:878",
-    "ImGuiDataTypeStorage": "imgui_internal:863",
-    "ImGuiDataType_": "imgui:1460",
-    "ImGuiDeactivatedItemData": "imgui_internal:1370",
-    "ImGuiDebugAllocEntry": "imgui_internal:2184",
-    "ImGuiDebugAllocInfo": "imgui_internal:2191",
-    "ImGuiDebugLogFlags_": "imgui_internal:2162",
-    "ImGuiDir": "imgui:1478",
-    "ImGuiDockContext": "imgui_internal:2009",
-    "ImGuiDockNode": "imgui_internal:1923",
-    "ImGuiDockNodeFlagsPrivate_": "imgui_internal:1875",
-    "ImGuiDockNodeFlags_": "imgui:1413",
-    "ImGuiDockNodeState": "imgui_internal:1914",
-    "ImGuiDragDropFlags_": "imgui:1432",
-    "ImGuiErrorRecoveryState": "imgui_internal:1326",
-    "ImGuiFocusRequestFlags_": "imgui_internal:1030",
-    "ImGuiFocusScopeData": "imgui_internal:1691",
-    "ImGuiFocusedFlags_": "imgui:1359",
-    "ImGuiFreeTypeBuilderFlags": "imgui_freetype:26",
-    "ImGuiGroupData": "imgui_internal:1097",
-    "ImGuiHoveredFlagsPrivate_": "imgui_internal:941",
-    "ImGuiHoveredFlags_": "imgui:1373",
-    "ImGuiIDStackTool": "imgui_internal:2231",
-    "ImGuiIO": "imgui:2332",
-    "ImGuiInputEvent": "imgui_internal:1465",
-    "ImGuiInputEventAppFocused": "imgui_internal:1463",
-    "ImGuiInputEventKey": "imgui_internal:1461",
-    "ImGuiInputEventMouseButton": "imgui_internal:1459",
-    "ImGuiInputEventMousePos": "imgui_internal:1457",
-    "ImGuiInputEventMouseViewport": "imgui_internal:1460",
-    "ImGuiInputEventMouseWheel": "imgui_internal:1458",
-    "ImGuiInputEventText": "imgui_internal:1462",
-    "ImGuiInputEventType": "imgui_internal:1433",
-    "ImGuiInputFlagsPrivate_": "imgui_internal:1532",
-    "ImGuiInputFlags_": "imgui:1630",
-    "ImGuiInputSource": "imgui_internal:1446",
-    "ImGuiInputTextCallbackData": "imgui:2588",
-    "ImGuiInputTextDeactivatedState": "imgui_internal:1133",
-    "ImGuiInputTextFlagsPrivate_": "imgui_internal:949",
-    "ImGuiInputTextFlags_": "imgui:1191",
-    "ImGuiInputTextState": "imgui_internal:1155",
-    "ImGuiItemFlagsPrivate_": "imgui_internal:891",
-    "ImGuiItemFlags_": "imgui:1178",
-    "ImGuiItemStatusFlags_": "imgui_internal:915",
-    "ImGuiKey": "imgui:1502",
-    "ImGuiKeyData": "imgui:2324",
-    "ImGuiKeyOwnerData": "imgui_internal:1519",
-    "ImGuiKeyRoutingData": "imgui_internal:1493",
-    "ImGuiKeyRoutingTable": "imgui_internal:1507",
-    "ImGuiLastItemData": "imgui_internal:1295",
-    "ImGuiLayoutType_": "imgui_internal:1051",
-    "ImGuiListClipper": "imgui:2818",
-    "ImGuiListClipperData": "imgui_internal:1589",
-    "ImGuiListClipperRange": "imgui_internal:1576",
-    "ImGuiLocEntry": "imgui_internal:2135",
-    "ImGuiLocKey": "imgui_internal:2117",
-    "ImGuiLogFlags_": "imgui_internal:1058",
-    "ImGuiMenuColumns": "imgui_internal:1115",
-    "ImGuiMetricsConfig": "imgui_internal:2201",
-    "ImGuiMouseButton_": "imgui:1904",
-    "ImGuiMouseCursor_": "imgui:1914",
-    "ImGuiMouseSource": "imgui:1935",
-    "ImGuiMultiSelectFlags_": "imgui:2976",
-    "ImGuiMultiSelectIO": "imgui:3003",
-    "ImGuiMultiSelectState": "imgui_internal:1851",
-    "ImGuiMultiSelectTempData": "imgui_internal:1826",
-    "ImGuiNavItemData": "imgui_internal:1674",
-    "ImGuiNavLayer": "imgui_internal:1666",
-    "ImGuiNavMoveFlags_": "imgui_internal:1644",
-    "ImGuiNavRenderCursorFlags_": "imgui_internal:1630",
-    "ImGuiNextItemData": "imgui_internal:1274",
-    "ImGuiNextItemDataFlags_": "imgui_internal:1264",
-    "ImGuiNextWindowData": "imgui_internal:1232",
-    "ImGuiNextWindowDataFlags_": "imgui_internal:1212",
-    "ImGuiOldColumnData": "imgui_internal:1759",
-    "ImGuiOldColumnFlags_": "imgui_internal:1739",
-    "ImGuiOldColumns": "imgui_internal:1769",
-    "ImGuiOnceUponAFrame": "imgui:2688",
-    "ImGuiPayload": "imgui:2653",
-    "ImGuiPlatformIO": "imgui:3782",
-    "ImGuiPlatformImeData": "imgui:3889",
-    "ImGuiPlatformMonitor": "imgui:3879",
-    "ImGuiPlotType": "imgui_internal:1077",
-    "ImGuiPopupData": "imgui_internal:1390",
-    "ImGuiPopupFlags_": "imgui:1277",
-    "ImGuiPopupPositionPolicy": "imgui_internal:1382",
-    "ImGuiPtrOrIndex": "imgui_internal:1360",
-    "ImGuiScrollFlags_": "imgui_internal:1616",
-    "ImGuiSelectableFlagsPrivate_": "imgui_internal:996",
-    "ImGuiSelectableFlags_": "imgui:1295",
-    "ImGuiSelectionBasicStorage": "imgui:3049",
-    "ImGuiSelectionExternalStorage": "imgui:3072",
-    "ImGuiSelectionRequest": "imgui:3023",
-    "ImGuiSelectionRequestType": "imgui:3015",
-    "ImGuiSeparatorFlags_": "imgui_internal:1019",
-    "ImGuiSettingsHandler": "imgui_internal:2097",
-    "ImGuiShrinkWidthItem": "imgui_internal:1353",
-    "ImGuiSizeCallbackData": "imgui:2622",
-    "ImGuiSliderFlagsPrivate_": "imgui_internal:989",
-    "ImGuiSliderFlags_": "imgui:1888",
-    "ImGuiSortDirection": "imgui:1489",
-    "ImGuiStackLevelInfo": "imgui_internal:2219",
-    "ImGuiStorage": "imgui:2761",
-    "ImGuiStoragePair": "imgui:2744",
-    "ImGuiStyle": "imgui:2233",
-    "ImGuiStyleMod": "imgui_internal:850",
-    "ImGuiStyleVarInfo": "imgui_internal:834",
-    "ImGuiStyleVar_": "imgui:1777",
-    "ImGuiTabBar": "imgui_internal:2906",
-    "ImGuiTabBarFlagsPrivate_": "imgui_internal:2868",
-    "ImGuiTabBarFlags_": "imgui:1327",
-    "ImGuiTabItem": "imgui_internal:2886",
-    "ImGuiTabItemFlagsPrivate_": "imgui_internal:2876",
-    "ImGuiTabItemFlags_": "imgui:1344",
-    "ImGuiTable": "imgui_internal:3049",
-    "ImGuiTableBgTarget_": "imgui:2087",
-    "ImGuiTableCellData": "imgui_internal:3017",
-    "ImGuiTableColumn": "imgui_internal:2957",
-    "ImGuiTableColumnFlags_": "imgui:2034",
-    "ImGuiTableColumnSettings": "imgui_internal:3197",
-    "ImGuiTableColumnSortSpecs": "imgui:2109",
-    "ImGuiTableFlags_": "imgui:1981",
-    "ImGuiTableHeaderData": "imgui_internal:3026",
-    "ImGuiTableInstanceData": "imgui_internal:3036",
-    "ImGuiTableRowFlags_": "imgui:2072",
-    "ImGuiTableSettings": "imgui_internal:3221",
-    "ImGuiTableSortSpecs": "imgui:2099",
-    "ImGuiTableTempData": "imgui_internal:3174",
-    "ImGuiTextBuffer": "imgui:2723",
-    "ImGuiTextFilter": "imgui:2696",
-    "ImGuiTextFlags_": "imgui_internal:1037",
-    "ImGuiTextIndex": "imgui_internal:751",
-    "ImGuiTextRange": "imgui:2706",
-    "ImGuiTooltipFlags_": "imgui_internal:1043",
-    "ImGuiTreeNodeFlagsPrivate_": "imgui_internal:1010",
-    "ImGuiTreeNodeFlags_": "imgui:1233",
-    "ImGuiTreeNodeStackData": "imgui_internal:1314",
-    "ImGuiTypingSelectFlags_": "imgui_internal:1702",
-    "ImGuiTypingSelectRequest": "imgui_internal:1710",
-    "ImGuiTypingSelectState": "imgui_internal:1721",
-    "ImGuiViewport": "imgui:3696",
-    "ImGuiViewportFlags_": "imgui:3668",
-    "ImGuiViewportP": "imgui_internal:2026",
-    "ImGuiWindow": "imgui_internal:2714",
-    "ImGuiWindowClass": "imgui:2637",
-    "ImGuiWindowDockStyle": "imgui_internal:2004",
-    "ImGuiWindowDockStyleCol": "imgui_internal:1990",
-    "ImGuiWindowFlags_": "imgui:1106",
-    "ImGuiWindowRefreshFlags_": "imgui_internal:1203",
-    "ImGuiWindowSettings": "imgui_internal:2078",
-    "ImGuiWindowStackData": "imgui_internal:1344",
-    "ImGuiWindowTempData": "imgui_internal:2657",
-    "ImRect": "imgui_internal:553",
-    "ImVec1": "imgui_internal:535",
-    "ImVec2": "imgui:284",
-    "ImVec2ih": "imgui_internal:543",
-    "ImVec4": "imgui:297"
+    "ImBitVector": "imgui_internal:647",
+    "ImColor": "imgui:3010",
+    "ImDrawChannel": "imgui:3258",
+    "ImDrawCmd": "imgui:3214",
+    "ImDrawCmdHeader": "imgui:3250",
+    "ImDrawData": "imgui:3479",
+    "ImDrawDataBuilder": "imgui_internal:875",
+    "ImDrawFlags_": "imgui:3283",
+    "ImDrawList": "imgui:3321",
+    "ImDrawListFlags_": "imgui:3303",
+    "ImDrawListSharedData": "imgui_internal:848",
+    "ImDrawListSplitter": "imgui:3266",
+    "ImDrawVert": "imgui:3235",
+    "ImFont": "imgui:3894",
+    "ImFontAtlas": "imgui:3699",
+    "ImFontAtlasBuilder": "imgui_internal:4065",
+    "ImFontAtlasFlags_": "imgui:3672",
+    "ImFontAtlasPostProcessData": "imgui_internal:4038",
+    "ImFontAtlasRect": "imgui:3662",
+    "ImFontAtlasRectEntry": "imgui_internal:4030",
+    "ImFontBaked": "imgui:3847",
+    "ImFontConfig": "imgui:3584",
+    "ImFontFlags_": "imgui:3881",
+    "ImFontGlyph": "imgui:3624",
+    "ImFontGlyphRangesBuilder": "imgui:3640",
+    "ImFontLoader": "imgui_internal:3982",
+    "ImFontStackData": "imgui_internal:883",
+    "ImGuiActivateFlags_": "imgui_internal:1667",
+    "ImGuiAxis": "imgui_internal:1132",
+    "ImGuiBackendFlags_": "imgui:1756",
+    "ImGuiBoxSelectState": "imgui_internal:1856",
+    "ImGuiButtonFlagsPrivate_": "imgui_internal:1019",
+    "ImGuiButtonFlags_": "imgui:1896",
+    "ImGuiChildFlags_": "imgui:1230",
+    "ImGuiCol_": "imgui:1772",
+    "ImGuiColorEditFlags_": "imgui:1907",
+    "ImGuiColorMod": "imgui_internal:903",
+    "ImGuiComboFlagsPrivate_": "imgui_internal:1045",
+    "ImGuiComboFlags_": "imgui:1385",
+    "ImGuiComboPreviewData": "imgui_internal:1146",
+    "ImGuiCond_": "imgui:2021",
+    "ImGuiConfigFlags_": "imgui:1727",
+    "ImGuiContext": "imgui_internal:2329",
+    "ImGuiContextHook": "imgui_internal:2314",
+    "ImGuiContextHookType": "imgui_internal:2312",
+    "ImGuiDataAuthority_": "imgui_internal:1969",
+    "ImGuiDataTypeInfo": "imgui_internal:929",
+    "ImGuiDataTypePrivate_": "imgui_internal:938",
+    "ImGuiDataTypeStorage": "imgui_internal:923",
+    "ImGuiDataType_": "imgui:1533",
+    "ImGuiDeactivatedItemData": "imgui_internal:1432",
+    "ImGuiDebugAllocEntry": "imgui_internal:2246",
+    "ImGuiDebugAllocInfo": "imgui_internal:2253",
+    "ImGuiDebugLogFlags_": "imgui_internal:2224",
+    "ImGuiDir": "imgui:1551",
+    "ImGuiDockContext": "imgui_internal:2071",
+    "ImGuiDockNode": "imgui_internal:1985",
+    "ImGuiDockNodeFlagsPrivate_": "imgui_internal:1937",
+    "ImGuiDockNodeFlags_": "imgui:1486",
+    "ImGuiDockNodeState": "imgui_internal:1976",
+    "ImGuiDragDropFlags_": "imgui:1505",
+    "ImGuiErrorRecoveryState": "imgui_internal:1388",
+    "ImGuiFocusRequestFlags_": "imgui_internal:1092",
+    "ImGuiFocusScopeData": "imgui_internal:1753",
+    "ImGuiFocusedFlags_": "imgui:1432",
+    "ImGuiFreeTypeLoaderFlags_": "imgui_freetype:29",
+    "ImGuiGroupData": "imgui_internal:1159",
+    "ImGuiHoveredFlagsPrivate_": "imgui_internal:1002",
+    "ImGuiHoveredFlags_": "imgui:1446",
+    "ImGuiIDStackTool": "imgui_internal:2294",
+    "ImGuiIO": "imgui:2418",
+    "ImGuiInputEvent": "imgui_internal:1527",
+    "ImGuiInputEventAppFocused": "imgui_internal:1525",
+    "ImGuiInputEventKey": "imgui_internal:1523",
+    "ImGuiInputEventMouseButton": "imgui_internal:1521",
+    "ImGuiInputEventMousePos": "imgui_internal:1519",
+    "ImGuiInputEventMouseViewport": "imgui_internal:1522",
+    "ImGuiInputEventMouseWheel": "imgui_internal:1520",
+    "ImGuiInputEventText": "imgui_internal:1524",
+    "ImGuiInputEventType": "imgui_internal:1495",
+    "ImGuiInputFlagsPrivate_": "imgui_internal:1594",
+    "ImGuiInputFlags_": "imgui:1704",
+    "ImGuiInputSource": "imgui_internal:1508",
+    "ImGuiInputTextCallbackData": "imgui:2680",
+    "ImGuiInputTextDeactivatedState": "imgui_internal:1195",
+    "ImGuiInputTextFlagsPrivate_": "imgui_internal:1010",
+    "ImGuiInputTextFlags_": "imgui:1264",
+    "ImGuiInputTextState": "imgui_internal:1217",
+    "ImGuiItemFlagsPrivate_": "imgui_internal:951",
+    "ImGuiItemFlags_": "imgui:1251",
+    "ImGuiItemStatusFlags_": "imgui_internal:976",
+    "ImGuiKey": "imgui:1575",
+    "ImGuiKeyData": "imgui:2410",
+    "ImGuiKeyOwnerData": "imgui_internal:1581",
+    "ImGuiKeyRoutingData": "imgui_internal:1555",
+    "ImGuiKeyRoutingTable": "imgui_internal:1569",
+    "ImGuiLastItemData": "imgui_internal:1357",
+    "ImGuiLayoutType_": "imgui_internal:1113",
+    "ImGuiListClipper": "imgui:2910",
+    "ImGuiListClipperData": "imgui_internal:1651",
+    "ImGuiListClipperRange": "imgui_internal:1638",
+    "ImGuiLocEntry": "imgui_internal:2197",
+    "ImGuiLocKey": "imgui_internal:2179",
+    "ImGuiLogFlags_": "imgui_internal:1120",
+    "ImGuiMenuColumns": "imgui_internal:1177",
+    "ImGuiMetricsConfig": "imgui_internal:2263",
+    "ImGuiMouseButton_": "imgui:1979",
+    "ImGuiMouseCursor_": "imgui:1989",
+    "ImGuiMouseSource": "imgui:2010",
+    "ImGuiMultiSelectFlags_": "imgui:3068",
+    "ImGuiMultiSelectIO": "imgui:3095",
+    "ImGuiMultiSelectState": "imgui_internal:1913",
+    "ImGuiMultiSelectTempData": "imgui_internal:1888",
+    "ImGuiNavItemData": "imgui_internal:1736",
+    "ImGuiNavLayer": "imgui_internal:1728",
+    "ImGuiNavMoveFlags_": "imgui_internal:1706",
+    "ImGuiNavRenderCursorFlags_": "imgui_internal:1692",
+    "ImGuiNextItemData": "imgui_internal:1336",
+    "ImGuiNextItemDataFlags_": "imgui_internal:1326",
+    "ImGuiNextWindowData": "imgui_internal:1294",
+    "ImGuiNextWindowDataFlags_": "imgui_internal:1274",
+    "ImGuiOldColumnData": "imgui_internal:1821",
+    "ImGuiOldColumnFlags_": "imgui_internal:1801",
+    "ImGuiOldColumns": "imgui_internal:1831",
+    "ImGuiOnceUponAFrame": "imgui:2780",
+    "ImGuiPayload": "imgui:2745",
+    "ImGuiPlatformIO": "imgui:4078",
+    "ImGuiPlatformImeData": "imgui:4193",
+    "ImGuiPlatformMonitor": "imgui:4183",
+    "ImGuiPlotType": "imgui_internal:1139",
+    "ImGuiPopupData": "imgui_internal:1452",
+    "ImGuiPopupFlags_": "imgui:1350",
+    "ImGuiPopupPositionPolicy": "imgui_internal:1444",
+    "ImGuiPtrOrIndex": "imgui_internal:1422",
+    "ImGuiScrollFlags_": "imgui_internal:1678",
+    "ImGuiSelectableFlagsPrivate_": "imgui_internal:1058",
+    "ImGuiSelectableFlags_": "imgui:1368",
+    "ImGuiSelectionBasicStorage": "imgui:3141",
+    "ImGuiSelectionExternalStorage": "imgui:3164",
+    "ImGuiSelectionRequest": "imgui:3115",
+    "ImGuiSelectionRequestType": "imgui:3107",
+    "ImGuiSeparatorFlags_": "imgui_internal:1081",
+    "ImGuiSettingsHandler": "imgui_internal:2159",
+    "ImGuiShrinkWidthItem": "imgui_internal:1415",
+    "ImGuiSizeCallbackData": "imgui:2714",
+    "ImGuiSliderFlagsPrivate_": "imgui_internal:1051",
+    "ImGuiSliderFlags_": "imgui:1963",
+    "ImGuiSortDirection": "imgui:1562",
+    "ImGuiStackLevelInfo": "imgui_internal:2282",
+    "ImGuiStorage": "imgui:2853",
+    "ImGuiStoragePair": "imgui:2836",
+    "ImGuiStyle": "imgui:2308",
+    "ImGuiStyleMod": "imgui_internal:910",
+    "ImGuiStyleVarInfo": "imgui_internal:894",
+    "ImGuiStyleVar_": "imgui:1852",
+    "ImGuiTabBar": "imgui_internal:2974",
+    "ImGuiTabBarFlagsPrivate_": "imgui_internal:2936",
+    "ImGuiTabBarFlags_": "imgui:1400",
+    "ImGuiTabItem": "imgui_internal:2954",
+    "ImGuiTabItemFlagsPrivate_": "imgui_internal:2944",
+    "ImGuiTabItemFlags_": "imgui:1417",
+    "ImGuiTable": "imgui_internal:3117",
+    "ImGuiTableBgTarget_": "imgui:2162",
+    "ImGuiTableCellData": "imgui_internal:3085",
+    "ImGuiTableColumn": "imgui_internal:3025",
+    "ImGuiTableColumnFlags_": "imgui:2109",
+    "ImGuiTableColumnSettings": "imgui_internal:3265",
+    "ImGuiTableColumnSortSpecs": "imgui:2184",
+    "ImGuiTableFlags_": "imgui:2056",
+    "ImGuiTableHeaderData": "imgui_internal:3094",
+    "ImGuiTableInstanceData": "imgui_internal:3104",
+    "ImGuiTableRowFlags_": "imgui:2147",
+    "ImGuiTableSettings": "imgui_internal:3289",
+    "ImGuiTableSortSpecs": "imgui:2174",
+    "ImGuiTableTempData": "imgui_internal:3242",
+    "ImGuiTextBuffer": "imgui:2815",
+    "ImGuiTextFilter": "imgui:2788",
+    "ImGuiTextFlags_": "imgui_internal:1099",
+    "ImGuiTextIndex": "imgui_internal:800",
+    "ImGuiTextRange": "imgui:2798",
+    "ImGuiTooltipFlags_": "imgui_internal:1105",
+    "ImGuiTreeNodeFlagsPrivate_": "imgui_internal:1072",
+    "ImGuiTreeNodeFlags_": "imgui:1306",
+    "ImGuiTreeNodeStackData": "imgui_internal:1376",
+    "ImGuiTypingSelectFlags_": "imgui_internal:1764",
+    "ImGuiTypingSelectRequest": "imgui_internal:1772",
+    "ImGuiTypingSelectState": "imgui_internal:1783",
+    "ImGuiViewport": "imgui:3992",
+    "ImGuiViewportFlags_": "imgui:3964",
+    "ImGuiViewportP": "imgui_internal:2088",
+    "ImGuiWindow": "imgui_internal:2781",
+    "ImGuiWindowClass": "imgui:2729",
+    "ImGuiWindowDockStyle": "imgui_internal:2066",
+    "ImGuiWindowDockStyleCol": "imgui_internal:2052",
+    "ImGuiWindowFlags_": "imgui:1179",
+    "ImGuiWindowRefreshFlags_": "imgui_internal:1265",
+    "ImGuiWindowSettings": "imgui_internal:2140",
+    "ImGuiWindowStackData": "imgui_internal:1406",
+    "ImGuiWindowTempData": "imgui_internal:2724",
+    "ImRect": "imgui_internal:569",
+    "ImTextureData": "imgui:3542",
+    "ImTextureFormat": "imgui:3510",
+    "ImTextureRect": "imgui:3529",
+    "ImTextureRef": "imgui:360",
+    "ImTextureStatus": "imgui:3517",
+    "ImVec1": "imgui_internal:543",
+    "ImVec2": "imgui:292",
+    "ImVec2i": "imgui_internal:551",
+    "ImVec2ih": "imgui_internal:559",
+    "ImVec4": "imgui:305",
+    "stbrp_context_opaque": "imgui_internal:4062"
   },
   "nonPOD": {
     "ImBitArray": true,
@@ -6251,9 +6347,13 @@
     "ImDrawListSplitter": true,
     "ImFont": true,
     "ImFontAtlas": true,
-    "ImFontAtlasCustomRect": true,
+    "ImFontAtlasBuilder": true,
+    "ImFontAtlasRect": true,
+    "ImFontBaked": true,
     "ImFontConfig": true,
+    "ImFontGlyph": true,
     "ImFontGlyphRangesBuilder": true,
+    "ImFontLoader": true,
     "ImGuiBoxSelectState": true,
     "ImGuiComboPreviewData": true,
     "ImGuiContext": true,
@@ -6319,8 +6419,12 @@
     "ImRect": true,
     "ImSpan": true,
     "ImSpanAllocator": true,
+    "ImStableVector": true,
+    "ImTextureData": true,
+    "ImTextureRef": true,
     "ImVec1": true,
     "ImVec2": true,
+    "ImVec2i": true,
     "ImVec2ih": true,
     "ImVec4": true,
     "ImVector": true
@@ -6336,7 +6440,7 @@
       "above": "// [Internal] For use by ImDrawListSplitter"
     },
     "ImDrawCmd": {
-      "above": "// Typically, 1 command = 1 GPU draw call (unless command is a callback)\n// - VtxOffset: When 'io.BackendFlags & ImGuiBackendFlags_RendererHasVtxOffset' is enabled,\n//   this fields allow us to render meshes larger than 64K vertices while keeping 16-bit indices.\n//   Backends made for <1.71. will typically ignore the VtxOffset fields.\n// - The ClipRect/TextureId/VtxOffset fields must be contiguous as we memcmp() them together (this is asserted for)."
+      "above": "// Typically, 1 command = 1 GPU draw call (unless command is a callback)\n// - VtxOffset: When 'io.BackendFlags & ImGuiBackendFlags_RendererHasVtxOffset' is enabled,\n//   this fields allow us to render meshes larger than 64K vertices while keeping 16-bit indices.\n//   Backends made for <1.71. will typically ignore the VtxOffset fields.\n// - The ClipRect/TexRef/VtxOffset fields must be contiguous as we memcmp() them together (this is asserted for)."
     },
     "ImDrawCmdHeader": {
       "above": "\n// [Internal] For use by ImDrawList"
@@ -6354,25 +6458,37 @@
       "above": "// Split/Merge functions are used to split the draw list into different layers which can be drawn into out of order.\n// This is used by the Columns/Tables API, so items of each column can be batched together in a same draw call."
     },
     "ImFont": {
-      "above": "// Font runtime data and rendering\n// ImFontAtlas automatically loads a default embedded font for you when you call GetTexDataAsAlpha8() or GetTexDataAsRGBA32()."
+      "above": "// Font runtime data and rendering\n// - ImFontAtlas automatically loads a default embedded font for you if you didn't load one manually.\n// - Since 1.92.X a font may be rendered as any size! Therefore a font doesn't have one specific size.\n// - Use 'font->GetFontBaked(size)' to retrieve the ImFontBaked* corresponding to a given size.\n// - If you used g.Font + g.FontSize (which is frequent from the ImGui layer), you can use g.FontBaked as a shortcut, as g.FontBaked == g.Font->GetFontBaked(g.FontSize)."
     },
     "ImFontAtlas": {
-      "above": "// Load and rasterize multiple TTF/OTF fonts into a same texture. The font atlas will build a single texture holding:\n//  - One or more fonts.\n//  - Custom graphics data needed to render the shapes needed by Dear ImGui.\n//  - Mouse cursor shapes for software cursor rendering (unless setting 'Flags |= ImFontAtlasFlags_NoMouseCursors' in the font atlas).\n// It is the user-code responsibility to setup/build the atlas, then upload the pixel data into a texture accessible by your graphics api.\n//  - Optionally, call any of the AddFont*** functions. If you don't call any, the default font embedded in the code will be loaded for you.\n//  - Call GetTexDataAsAlpha8() or GetTexDataAsRGBA32() to build and retrieve pixels data.\n//  - Upload the pixels data into a texture within your graphics system (see imgui_impl_xxxx.cpp examples)\n//  - Call SetTexID(my_tex_id); and pass the pointer/identifier to your texture in a format natural to your graphics API.\n//    This value will be passed back to you during rendering to identify the texture. Read FAQ entry about ImTextureID for more details.\n// Common pitfalls:\n// - If you pass a 'glyph_ranges' array to AddFont*** functions, you need to make sure that your array persist up until the\n//   atlas is build (when calling GetTexData*** or Build()). We only copy the pointer, not the data.\n// - Important: By default, AddFontFromMemoryTTF() takes ownership of the data. Even though we are not writing to it, we will free the pointer on destruction.\n//   You can set font_cfg->FontDataOwnedByAtlas=false to keep ownership of your data and it won't be freed,\n// - Even though many functions are suffixed with \"TTF\", OTF data is supported just as well.\n// - This is an old API and it is currently awkward for those and various other reasons! We will address them in the future!"
+      "above": "// Load and rasterize multiple TTF/OTF fonts into a same texture. The font atlas will build a single texture holding:\n//  - One or more fonts.\n//  - Custom graphics data needed to render the shapes needed by Dear ImGui.\n//  - Mouse cursor shapes for software cursor rendering (unless setting 'Flags |= ImFontAtlasFlags_NoMouseCursors' in the font atlas).\n//  - If you don't call any AddFont*** functions, the default font embedded in the code will be loaded for you.\n// It is the rendering backend responsibility to upload texture into your graphics API:\n//  - ImGui_ImplXXXX_RenderDrawData() functions generally iterate platform_io->Textures[] to create/update/destroy each ImTextureData instance.\n//  - Backend then set ImTextureData's TexID and BackendUserData.\n//  - Texture id are passed back to you during rendering to identify the texture. Read FAQ entry about ImTextureID/ImTextureRef for more details.\n// Legacy path:\n//  - Call Build() + GetTexDataAsAlpha8() or GetTexDataAsRGBA32() to build and retrieve pixels data.\n//  - Call SetTexID(my_tex_id); and pass the pointer/identifier to your texture in a format natural to your graphics API.\n// Common pitfalls:\n// - If you pass a 'glyph_ranges' array to AddFont*** functions, you need to make sure that your array persist up until the\n//   atlas is build (when calling GetTexData*** or Build()). We only copy the pointer, not the data.\n// - Important: By default, AddFontFromMemoryTTF() takes ownership of the data. Even though we are not writing to it, we will free the pointer on destruction.\n//   You can set font_cfg->FontDataOwnedByAtlas=false to keep ownership of your data and it won't be freed,\n// - Even though many functions are suffixed with \"TTF\", OTF data is supported just as well.\n// - This is an old API and it is currently awkward for those and various other reasons! We will address them in the future!"
     },
-    "ImFontAtlasCustomRect": {
-      "above": "// See ImFontAtlas::AddCustomRectXXX functions."
+    "ImFontAtlasBuilder": {
+      "above": "// Internal storage for incrementally packing and building a ImFontAtlas"
     },
-    "ImFontBuilderIO": {
-      "above": "// This structure is likely to evolve as we add support for incremental atlas updates.\n// Conceptually this could be in ImGuiPlatformIO, but we are far from ready to make this public."
+    "ImFontAtlasPostProcessData": {
+      "above": "// Data available to potential texture post-processing functions"
+    },
+    "ImFontAtlasRect": {
+      "above": "// Output of ImFontAtlas::GetCustomRect() when using custom rectangles.\n// Those values may not be cached/stored as they are only valid for the current value of atlas->TexRef\n// (this is in theory derived from ImTextureRect but we use separate structures for reasons)"
+    },
+    "ImFontAtlasRectEntry": {
+      "above": "// Packed rectangle lookup entry (we need an indirection to allow removing/reordering rectangles)\n// User are returned ImFontAtlasRectId values which are meant to be persistent.\n// We handle this with an indirection. While Rects[] may be in theory shuffled, compacted etc., RectsIndex[] cannot it is keyed by ImFontAtlasRectId.\n// RectsIndex[] is used both as an index into Rects[] and an index into itself. This is basically a free-list. See ImFontAtlasBuildAllocRectIndexEntry() code.\n// Having this also makes it easier to e.g. sort rectangles during repack."
+    },
+    "ImFontBaked": {
+      "above": "// Font runtime data for a given size\n// Important: pointers to ImFontBaked are only valid for the current frame."
     },
     "ImFontConfig": {
       "above": "// A font input/source (we may rename this to ImFontSource in the future)"
     },
     "ImFontGlyph": {
-      "above": "// Hold rendering data for one glyph.\n// (Note: some language parsers may fail to convert the 31+1 bitfield members, in this case maybe drop store a single u32 or we can rework this)"
+      "above": "// Hold rendering data for one glyph.\n// (Note: some language parsers may fail to convert the bitfield members, in this case maybe drop store a single u32 or we can rework this)"
     },
     "ImFontGlyphRangesBuilder": {
       "above": "// Helper to build glyph ranges from text/string data. Feed your application strings/characters to it then call BuildRanges().\n// This is essentially a tightly packed of vector of 64k booleans = 8KB storage."
+    },
+    "ImFontLoader": {
+      "above": "// Hooks and storage for a given font backend.\n// This structure is likely to evolve as we add support for incremental atlas updates.\n// Conceptually this could be public, but API is still going to be evolve."
     },
     "ImGuiColorMod": {
       "above": "// Stacked color modifier, backup of modified data so we can restore it"
@@ -6578,6 +6694,15 @@
     "ImRect": {
       "above": "// Helper: ImRect (2D axis aligned bounding-box)\n// NB: we can't rely on ImVec2 math operators being available here!"
     },
+    "ImTextureData": {
+      "above": "// Specs and pixel storage for a texture used by Dear ImGui.\n// This is only useful for (1) core library and (2) backends. End-user/applications do not need to care about this.\n// Renderer Backends will create a GPU-side version of this.\n// Why does we store two identifiers: TexID and BackendUserData?\n// - ImTextureID    TexID           = lower-level identifier stored in ImDrawCmd. ImDrawCmd can refer to textures not created by the backend, and for which there's no ImTextureData.\n// - void*          BackendUserData = higher-level opaque storage for backend own book-keeping. Some backends may have enough with TexID and not need both.\n // In columns below: who reads/writes each fields? 'r'=read, 'w'=write, 'core'=main library, 'backend'=renderer backend"
+    },
+    "ImTextureRect": {
+      "above": "// Coordinates of a rectangle within a texture.\n// When a texture is in ImTextureStatus_WantUpdates state, we provide a list of individual rectangles to copy to the graphics system.\n// You may use ImTextureData::Updates[] for the list, or ImTextureData::UpdateBox for a single bounding box."
+    },
+    "ImVec2i": {
+      "above": "// Helper: ImVec2i (2D vector, integer)"
+    },
     "ImVec2ih": {
       "above": "// Helper: ImVec2ih (2D vector, half-size integer, for long-term packed storage)"
     },
@@ -6621,10 +6746,10 @@
       },
       {
         "comment": {
-          "sameline": "// 4-8  // User-provided texture ID. Set by user in ImfontAtlas::SetTexID() for fonts or passed to Image*() functions. Ignore if never using images or multiple fonts atlas."
+          "sameline": "// 16   // Reference to a font/texture atlas (where backend called ImTextureData::SetTexID()) or to a user-provided texture ID (via e.g. ImGui::Image() calls). Both will lead to a ImTextureID value."
         },
-        "name": "TextureId",
-        "type": "ImTextureID"
+        "name": "TexRef",
+        "type": "ImTextureRef"
       },
       {
         "comment": {
@@ -6682,8 +6807,8 @@
         "type": "ImVec4"
       },
       {
-        "name": "TextureId",
-        "type": "ImTextureID"
+        "name": "TexRef",
+        "type": "ImTextureRef"
       },
       {
         "name": "VtxOffset",
@@ -6700,7 +6825,7 @@
       },
       {
         "comment": {
-          "sameline": "// Number of ImDrawList* to render"
+          "sameline": "// Number of ImDrawList* to render. (== CmdLists.Size). Exists for legacy reason."
         },
         "name": "CmdListsCount",
         "type": "int"
@@ -6743,7 +6868,7 @@
       },
       {
         "comment": {
-          "sameline": "// Amount of pixels for each unit of DisplaySize. Based on io.DisplayFramebufferScale. Generally (1,1) on normal display, (2,2) on OSX with Retina display."
+          "sameline": "// Amount of pixels for each unit of DisplaySize. Copied from viewport->FramebufferScale (== io.DisplayFramebufferScale for main viewport). Generally (1,1) on normal display, (2,2) on OSX with Retina display."
         },
         "name": "FramebufferScale",
         "type": "ImVec2"
@@ -6754,6 +6879,14 @@
         },
         "name": "OwnerViewport",
         "type": "ImGuiViewport*"
+      },
+      {
+        "comment": {
+          "sameline": "// List of textures to update. Most of the times the list is shared by all ImDrawData, has only 1 texture and it doesn't need any update. This almost always points to ImGui::GetPlatformIO().Textures[]. May be overriden or set to NULL if you want to manually update textures."
+        },
+        "name": "Textures",
+        "template_type": "ImTextureData*",
+        "type": "ImVector_ImTextureDataPtr*"
       }
     ],
     "ImDrawDataBuilder": [
@@ -6868,9 +7001,9 @@
         "comment": {
           "sameline": "// [Internal]"
         },
-        "name": "_TextureIdStack",
-        "template_type": "ImTextureID",
-        "type": "ImVector_ImTextureID"
+        "name": "_TextureStack",
+        "template_type": "ImTextureRef",
+        "type": "ImVector_ImTextureRef"
       },
       {
         "comment": {
@@ -6898,35 +7031,42 @@
     "ImDrawListSharedData": [
       {
         "comment": {
-          "sameline": "// UV of white pixel in the atlas"
+          "sameline": "// UV of white pixel in the atlas (== FontAtlas->TexUvWhitePixel)"
         },
         "name": "TexUvWhitePixel",
         "type": "ImVec2"
       },
       {
         "comment": {
-          "sameline": "// UV of anti-aliased lines in the atlas"
+          "sameline": "// UV of anti-aliased lines in the atlas (== FontAtlas->TexUvLines)"
         },
         "name": "TexUvLines",
         "type": "const ImVec4*"
       },
       {
         "comment": {
-          "sameline": "// Current/default font (optional, for simplified AddText overload)"
+          "sameline": "// Current font atlas"
+        },
+        "name": "FontAtlas",
+        "type": "ImFontAtlas*"
+      },
+      {
+        "comment": {
+          "sameline": "// Current font (used for simplified AddText overload)"
         },
         "name": "Font",
         "type": "ImFont*"
       },
       {
         "comment": {
-          "sameline": "// Current/default font size (optional, for simplified AddText overload)"
+          "sameline": "// Current font size (used for for simplified AddText overload)"
         },
         "name": "FontSize",
         "type": "float"
       },
       {
         "comment": {
-          "sameline": "// Current/default font scale (== FontSize / Font->FontSize)"
+          "sameline": "// Current font scale (== FontSize / Font->FontSize)"
         },
         "name": "FontScale",
         "type": "float"
@@ -6973,6 +7113,21 @@
         "name": "TempBuffer",
         "template_type": "ImVec2",
         "type": "ImVector_ImVec2"
+      },
+      {
+        "comment": {
+          "sameline": "// All draw lists associated to this ImDrawListSharedData"
+        },
+        "name": "DrawLists",
+        "template_type": "ImDrawList*",
+        "type": "ImVector_ImDrawListPtr"
+      },
+      {
+        "comment": {
+          "sameline": "// [OPTIONAL] Link to Dear ImGui context. 99% of ImDrawList/ImFontAtlas can function without an ImGui context, but this facilitate handling one legacy edge case."
+        },
+        "name": "Context",
+        "type": "ImGuiContext*"
       },
       {
         "comment": {
@@ -7040,79 +7195,55 @@
     "ImFont": [
       {
         "comment": {
-          "above": "\n    // [Internal] Members: Hot ~20/24 bytes (for CalcTextSize)",
-          "sameline": "// 12-16 // out // Sparse. Glyphs->AdvanceX in a directly indexable way (cache-friendly for CalcTextSize functions which only this info, and are often bottleneck in large UI)."
+          "above": "\n    // [Internal] Members: Hot ~12-20 bytes",
+          "sameline": "// 4-8   // Cache last bound baked. NEVER USE DIRECTLY. Use GetFontBaked()."
         },
-        "name": "IndexAdvanceX",
-        "template_type": "float",
-        "type": "ImVector_float"
+        "name": "LastBaked",
+        "type": "ImFontBaked*"
       },
       {
         "comment": {
-          "sameline": "// 4     // out // = FallbackGlyph->AdvanceX"
-        },
-        "name": "FallbackAdvanceX",
-        "type": "float"
-      },
-      {
-        "comment": {
-          "sameline": "// 4     // in  // Height of characters/line, set during loading (don't change after loading)"
-        },
-        "name": "FontSize",
-        "type": "float"
-      },
-      {
-        "comment": {
-          "above": "    // [Internal] Members: Hot ~28/40 bytes (for RenderText loop)",
-          "sameline": "// 12-16 // out // Sparse. Index glyphs by Unicode code-point."
-        },
-        "name": "IndexLookup",
-        "template_type": "ImU16",
-        "type": "ImVector_ImU16"
-      },
-      {
-        "comment": {
-          "sameline": "// 12-16 // out // All glyphs."
-        },
-        "name": "Glyphs",
-        "template_type": "ImFontGlyph",
-        "type": "ImVector_ImFontGlyph"
-      },
-      {
-        "comment": {
-          "sameline": "// 4-8   // out // = FindGlyph(FontFallbackChar)"
-        },
-        "name": "FallbackGlyph",
-        "type": "ImFontGlyph*"
-      },
-      {
-        "comment": {
-          "above": "    // [Internal] Members: Cold ~32/40 bytes\n    // Conceptually Sources[] is the list of font sources merged to create this font.",
-          "sameline": "// 4-8   // out // What we has been loaded into"
+          "sameline": "// 4-8   // What we have been loaded into."
         },
         "name": "ContainerAtlas",
         "type": "ImFontAtlas*"
       },
       {
         "comment": {
-          "sameline": "// 4-8   // in  // Pointer within ContainerAtlas->Sources[], to SourcesCount instances"
+          "sameline": "// 4     // Font flags."
+        },
+        "name": "Flags",
+        "type": "ImFontFlags"
+      },
+      {
+        "comment": {
+          "sameline": "// Current rasterizer density. This is a varying state of the font."
+        },
+        "name": "CurrentRasterizerDensity",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "above": "    // [Internal] Members: Cold ~24-52 bytes\n    // Conceptually Sources[] is the list of font sources merged to create this font.",
+          "sameline": "// Unique identifier for the font"
+        },
+        "name": "FontId",
+        "type": "ImGuiID"
+      },
+      {
+        "comment": {
+          "sameline": "// 4     // in  // Font size passed to AddFont(). Use for old code calling PushFont() expecting to use that size. (use ImGui::GetFontBaked() to get font baked at current bound size)."
+        },
+        "name": "LegacySize",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "sameline": "// 16    // in  // List of sources. Pointers within ContainerAtlas->Sources[]"
         },
         "name": "Sources",
-        "type": "ImFontConfig*"
-      },
-      {
-        "comment": {
-          "sameline": "// 2     // in  // Number of ImFontConfig involved in creating this font. Usually 1, or >1 when merging multiple font sources into one ImFont."
-        },
-        "name": "SourcesCount",
-        "type": "short"
-      },
-      {
-        "comment": {
-          "sameline": "// 1     // out // 1 or 3"
-        },
-        "name": "EllipsisCharCount",
-        "type": "short"
+        "template_type": "ImFontConfig*",
+        "type": "ImVector_ImFontConfigPtr"
       },
       {
         "comment": {
@@ -7130,60 +7261,25 @@
       },
       {
         "comment": {
-          "sameline": "// 4     // out // Total ellipsis Width"
-        },
-        "name": "EllipsisWidth",
-        "type": "float"
-      },
-      {
-        "comment": {
-          "sameline": "// 4     // out // Step between characters when EllipsisCount > 0"
-        },
-        "name": "EllipsisCharStep",
-        "type": "float"
-      },
-      {
-        "comment": {
-          "sameline": "// 4     // in  // Base font scale (1.0f), multiplied by the per-window font scale which you can adjust with SetWindowFontScale()"
-        },
-        "name": "Scale",
-        "type": "float"
-      },
-      {
-        "comment": {
-          "sameline": "// 4+4   // out // Ascent: distance from top to bottom of e.g. 'A' [0..FontSize] (unscaled)"
-        },
-        "name": "Ascent",
-        "type": "float"
-      },
-      {
-        "comment": {
-          "sameline": "// 4+4   // out // Ascent: distance from top to bottom of e.g. 'A' [0..FontSize] (unscaled)"
-        },
-        "name": "Descent",
-        "type": "float"
-      },
-      {
-        "comment": {
-          "sameline": "// 4     // out // Total surface in pixels to get an idea of the font rasterization/texture cost (not exact, we approximate the cost of padding between glyphs)"
-        },
-        "name": "MetricsTotalSurface",
-        "type": "int"
-      },
-      {
-        "comment": {
-          "sameline": "// 1     // out //"
-        },
-        "name": "DirtyLookupTables",
-        "type": "bool"
-      },
-      {
-        "comment": {
           "sameline": "// 1 bytes if ImWchar=ImWchar16, 16 bytes if ImWchar==ImWchar32. Store 1-bit for each block of 4K codepoints that has one active glyph. This is mainly used to facilitate iterations across all used codepoints."
         },
         "name": "Used8kPagesMap[(0xFFFF+1)/8192/8]",
         "size": 1,
         "type": "ImU8"
+      },
+      {
+        "comment": {
+          "sameline": "// 1     //     // Mark when the \"...\" glyph needs to be generated."
+        },
+        "name": "EllipsisAutoBake",
+        "type": "bool"
+      },
+      {
+        "comment": {
+          "sameline": "// 16    //     // Remapping pairs when using AddRemapChar(), otherwise empty."
+        },
+        "name": "RemapPairs",
+        "type": "ImGuiStorage"
       }
     ],
     "ImFontAtlas": [
@@ -7197,23 +7293,44 @@
       },
       {
         "comment": {
-          "sameline": "// User data to refer to the texture once it has been uploaded to user's graphic systems. It is passed back to you during rendering via the ImDrawCmd structure."
+          "sameline": "// Desired texture format (default to ImTextureFormat_RGBA32 but may be changed to ImTextureFormat_Alpha8)."
         },
-        "name": "TexID",
-        "type": "ImTextureID"
-      },
-      {
-        "comment": {
-          "sameline": "// Texture width desired by user before Build(). Must be a power-of-two. If have many glyphs your graphics API have texture size restrictions you may want to increase texture width to decrease height."
-        },
-        "name": "TexDesiredWidth",
-        "type": "int"
+        "name": "TexDesiredFormat",
+        "type": "ImTextureFormat"
       },
       {
         "comment": {
           "sameline": "// FIXME: Should be called \"TexPackPadding\". Padding between glyphs within texture in pixels. Defaults to 1. If your rendering method doesn't rely on bilinear filtering you may set this to 0 (will also need to set AntiAliasedLinesUseTex = false)."
         },
         "name": "TexGlyphPadding",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// Minimum desired texture width. Must be a power of two. Default to 512."
+        },
+        "name": "TexMinWidth",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// Minimum desired texture height. Must be a power of two. Default to 128."
+        },
+        "name": "TexMinHeight",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// Maximum desired texture width. Must be a power of two. Default to 8192."
+        },
+        "name": "TexMaxWidth",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// Maximum desired texture height. Must be a power of two. Default to 8192."
+        },
+        "name": "TexMaxHeight",
         "type": "int"
       },
       {
@@ -7225,64 +7342,65 @@
       },
       {
         "comment": {
-          "above": "    // [Internal]\n    // NB: Access texture data via GetTexData*() calls! Which will setup a default font for you.",
-          "sameline": "// Marked as Locked by ImGui::NewFrame() so attempt to modify the atlas will assert."
+          "sameline": "// Latest texture identifier == TexData->GetTexRef()."
+        },
+        "name": "TexRef",
+        "type": "ImTextureRef"
+      },
+      {
+        "comment": {
+          "sameline": "// Latest texture."
+        },
+        "name": "TexData",
+        "type": "ImTextureData*"
+      },
+      {
+        "comment": {
+          "above": "    // [Internal]",
+          "sameline": "// Texture list (most often TexList.Size == 1). TexData is always == TexList.back(). DO NOT USE DIRECTLY, USE GetDrawData().Textures[]/GetPlatformIO().Textures[] instead!"
+        },
+        "name": "TexList",
+        "template_type": "ImTextureData*",
+        "type": "ImVector_ImTextureDataPtr"
+      },
+      {
+        "comment": {
+          "sameline": "// Marked as locked during ImGui::NewFrame()..EndFrame() scope if TexUpdates are not supported. Any attempt to modify the atlas will assert."
         },
         "name": "Locked",
         "type": "bool"
       },
       {
         "comment": {
-          "sameline": "// Set when texture was built matching current font input"
+          "sameline": "// Copy of (BackendFlags & ImGuiBackendFlags_RendererHasTextures) from supporting context."
         },
-        "name": "TexReady",
+        "name": "RendererHasTextures",
         "type": "bool"
       },
       {
         "comment": {
-          "sameline": "// Tell whether our texture data is known to use colors (rather than just alpha channel), in order to help backend select a format."
+          "sameline": "// Set when texture was built matching current font input. Mostly useful for legacy IsBuilt() call."
+        },
+        "name": "TexIsBuilt",
+        "type": "bool"
+      },
+      {
+        "comment": {
+          "sameline": "// Tell whether our texture data is known to use colors (rather than just alpha channel), in order to help backend select a format or conversion process."
         },
         "name": "TexPixelsUseColors",
         "type": "bool"
       },
       {
         "comment": {
-          "sameline": "// 1 component per pixel, each component is unsigned 8-bit. Total size = TexWidth * TexHeight"
-        },
-        "name": "TexPixelsAlpha8",
-        "type": "unsigned char*"
-      },
-      {
-        "comment": {
-          "sameline": "// 4 component per pixel, each component is unsigned 8-bit. Total size = TexWidth * TexHeight * 4"
-        },
-        "name": "TexPixelsRGBA32",
-        "type": "unsigned int*"
-      },
-      {
-        "comment": {
-          "sameline": "// Texture width calculated during Build()."
-        },
-        "name": "TexWidth",
-        "type": "int"
-      },
-      {
-        "comment": {
-          "sameline": "// Texture height calculated during Build()."
-        },
-        "name": "TexHeight",
-        "type": "int"
-      },
-      {
-        "comment": {
-          "sameline": "// = (1.0f/TexWidth, 1.0f/TexHeight)"
+          "sameline": "// = (1.0f/TexData->TexWidth, 1.0f/TexData->TexHeight). May change as new texture gets created."
         },
         "name": "TexUvScale",
         "type": "ImVec2"
       },
       {
         "comment": {
-          "sameline": "// Texture coordinates to a white pixel"
+          "sameline": "// Texture coordinates to a white pixel. May change as new texture gets created."
         },
         "name": "TexUvWhitePixel",
         "type": "ImVec2"
@@ -7294,14 +7412,6 @@
         "name": "Fonts",
         "template_type": "ImFont*",
         "type": "ImVector_ImFontPtr"
-      },
-      {
-        "comment": {
-          "sameline": "// Rectangles for packing custom texture data into the atlas."
-        },
-        "name": "CustomRects",
-        "template_type": "ImFontAtlasCustomRect",
-        "type": "ImVector_ImFontAtlasCustomRect"
       },
       {
         "comment": {
@@ -7321,111 +7431,452 @@
       },
       {
         "comment": {
-          "above": "    // [Internal] Font builder",
-          "sameline": "// Opaque interface to a font builder (default to stb_truetype, can be changed to use FreeType by defining IMGUI_ENABLE_FREETYPE)."
+          "sameline": "// Next value to be stored in TexData->UniqueID"
         },
-        "name": "FontBuilderIO",
-        "type": "const ImFontBuilderIO*"
+        "name": "TexNextUniqueID",
+        "type": "int"
       },
       {
         "comment": {
-          "sameline": "// Shared flags (for all fonts) for custom font builder. THIS IS BUILD IMPLEMENTATION DEPENDENT. Per-font override is also available in ImFontConfig."
+          "sameline": "// Next value to be stored in ImFont->FontID"
         },
-        "name": "FontBuilderFlags",
+        "name": "FontNextUniqueID",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// List of users for this atlas. Typically one per Dear ImGui context."
+        },
+        "name": "DrawListSharedDatas",
+        "template_type": "ImDrawListSharedData*",
+        "type": "ImVector_ImDrawListSharedDataPtr"
+      },
+      {
+        "comment": {
+          "sameline": "// Opaque interface to our data that doesn't need to be public and may be discarded when rebuilding."
+        },
+        "name": "Builder",
+        "type": "ImFontAtlasBuilder*"
+      },
+      {
+        "comment": {
+          "sameline": "// Font loader opaque interface (default to stb_truetype, can be changed to use FreeType by defining IMGUI_ENABLE_FREETYPE). Don't set directly!"
+        },
+        "name": "FontLoader",
+        "type": "const ImFontLoader*"
+      },
+      {
+        "comment": {
+          "sameline": "// Font loader name (for display e.g. in About box) == FontLoader->Name"
+        },
+        "name": "FontLoaderName",
+        "type": "const char*"
+      },
+      {
+        "comment": {
+          "sameline": "// Font backend opaque storage"
+        },
+        "name": "FontLoaderData",
+        "type": "void*"
+      },
+      {
+        "comment": {
+          "sameline": "// Shared flags (for all fonts) for font loader. THIS IS BUILD IMPLEMENTATION DEPENDENT (e.g. Per-font override is also available in ImFontConfig)."
+        },
+        "name": "FontLoaderFlags",
         "type": "unsigned int"
       },
       {
         "comment": {
-          "above": "    // [Internal] Packing data",
-          "sameline": "// Custom texture rectangle ID for white pixel and mouse cursors"
+          "sameline": "// Number of contexts using this atlas"
         },
-        "name": "PackIdMouseCursors",
+        "name": "RefCount",
         "type": "int"
       },
       {
         "comment": {
-          "sameline": "// Custom texture rectangle ID for baked anti-aliased lines"
+          "sameline": "// Context which own the atlas will be in charge of updating and destroying it."
         },
-        "name": "PackIdLines",
+        "name": "OwnerContext",
+        "type": "ImGuiContext*"
+      }
+    ],
+    "ImFontAtlasBuilder": [
+      {
+        "comment": {
+          "sameline": "// Actually 'stbrp_context' but we don't want to define this in the header file."
+        },
+        "name": "PackContext",
+        "type": "stbrp_context_opaque"
+      },
+      {
+        "name": "PackNodes",
+        "template_type": "stbrp_node_im",
+        "type": "ImVector_stbrp_node_im"
+      },
+      {
+        "name": "Rects",
+        "template_type": "ImTextureRect",
+        "type": "ImVector_ImTextureRect"
+      },
+      {
+        "comment": {
+          "sameline": "// ImFontAtlasRectId -> index into Rects[]"
+        },
+        "name": "RectsIndex",
+        "template_type": "ImFontAtlasRectEntry",
+        "type": "ImVector_ImFontAtlasRectEntry"
+      },
+      {
+        "comment": {
+          "sameline": "// Misc scratch buffer"
+        },
+        "name": "TempBuffer",
+        "template_type": "unsigned char",
+        "type": "ImVector_unsigned_char"
+      },
+      {
+        "comment": {
+          "sameline": "// First unused entry"
+        },
+        "name": "RectsIndexFreeListStart",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// Number of packed rectangles."
+        },
+        "name": "RectsPackedCount",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// Number of packed pixels. Used when compacting to heuristically find the ideal texture size."
+        },
+        "name": "RectsPackedSurface",
+        "type": "int"
+      },
+      {
+        "name": "RectsDiscardedCount",
+        "type": "int"
+      },
+      {
+        "name": "RectsDiscardedSurface",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// Current frame count"
+        },
+        "name": "FrameCount",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// Largest rectangle to pack (de-facto used as a \"minimum texture size\")"
+        },
+        "name": "MaxRectSize",
+        "type": "ImVec2i"
+      },
+      {
+        "comment": {
+          "sameline": "// Bottom-right most used pixels"
+        },
+        "name": "MaxRectBounds",
+        "type": "ImVec2i"
+      },
+      {
+        "comment": {
+          "sameline": "// Disable resizing texture"
+        },
+        "name": "LockDisableResize",
+        "type": "bool"
+      },
+      {
+        "comment": {
+          "sameline": "// Set when missing ImGuiBackendFlags_RendererHasTextures features forces atlas to preload everything."
+        },
+        "name": "PreloadedAllGlyphsRanges",
+        "type": "bool"
+      },
+      {
+        "comment": {
+          "above": "    // Cache of all ImFontBaked"
+        },
+        "name": "BakedPool",
+        "template_type": "ImFontBaked,32",
+        "type": "ImStableVector_ImFontBaked__32"
+      },
+      {
+        "comment": {
+          "sameline": "// BakedId --> ImFontBaked*"
+        },
+        "name": "BakedMap",
+        "type": "ImGuiStorage"
+      },
+      {
+        "name": "BakedDiscardedCount",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "above": "    // Custom rectangle identifiers",
+          "sameline": "// White pixel + mouse cursors. Also happen to be fallback in case of packing failure."
+        },
+        "name": "PackIdMouseCursors",
+        "type": "ImFontAtlasRectId"
+      },
+      {
+        "name": "PackIdLinesTexData",
+        "type": "ImFontAtlasRectId"
+      }
+    ],
+    "ImFontAtlasPostProcessData": [
+      {
+        "name": "FontAtlas",
+        "type": "ImFontAtlas*"
+      },
+      {
+        "name": "Font",
+        "type": "ImFont*"
+      },
+      {
+        "name": "FontSrc",
+        "type": "ImFontConfig*"
+      },
+      {
+        "name": "FontBaked",
+        "type": "ImFontBaked*"
+      },
+      {
+        "name": "Glyph",
+        "type": "ImFontGlyph*"
+      },
+      {
+        "comment": {
+          "above": "    // Pixel data"
+        },
+        "name": "Pixels",
+        "type": "void*"
+      },
+      {
+        "name": "Format",
+        "type": "ImTextureFormat"
+      },
+      {
+        "name": "Pitch",
+        "type": "int"
+      },
+      {
+        "name": "Width",
+        "type": "int"
+      },
+      {
+        "name": "Height",
         "type": "int"
       }
     ],
-    "ImFontAtlasCustomRect": [
+    "ImFontAtlasRect": [
       {
         "comment": {
-          "sameline": "// Output   // Packed position in Atlas"
+          "sameline": "// Position (in current texture)"
         },
-        "name": "X",
+        "name": "x",
         "type": "unsigned short"
       },
       {
         "comment": {
-          "sameline": "// Output   // Packed position in Atlas"
+          "sameline": "// Position (in current texture)"
         },
-        "name": "Y",
+        "name": "y",
         "type": "unsigned short"
       },
       {
         "comment": {
-          "above": "    // [Internal]",
-          "sameline": "// Input    // Desired rectangle dimension"
+          "sameline": "// Size"
         },
-        "name": "Width",
+        "name": "w",
         "type": "unsigned short"
       },
       {
         "comment": {
-          "above": "    // [Internal]",
-          "sameline": "// Input    // Desired rectangle dimension"
+          "sameline": "// Size"
         },
-        "name": "Height",
+        "name": "h",
         "type": "unsigned short"
       },
       {
-        "bitfield": "31",
         "comment": {
-          "sameline": "// Input    // For custom font glyphs only (ID < 0x110000)"
+          "sameline": "// UV coordinates (in current texture)"
         },
-        "name": "GlyphID",
+        "name": "uv0",
+        "type": "ImVec2"
+      },
+      {
+        "comment": {
+          "sameline": "// UV coordinates (in current texture)"
+        },
+        "name": "uv1",
+        "type": "ImVec2"
+      }
+    ],
+    "ImFontAtlasRectEntry": [
+      {
+        "bitfield": "20",
+        "comment": {
+          "sameline": "// When Used: ImFontAtlasRectId -> into Rects[]. When unused: index to next unused RectsIndex[] slot to consume free-list."
+        },
+        "name": "TargetIndex",
+        "type": "int"
+      },
+      {
+        "bitfield": "10",
+        "comment": {
+          "sameline": "// Increased each time the entry is reused for a new rectangle."
+        },
+        "name": "Generation",
+        "type": "int"
+      },
+      {
+        "bitfield": "1",
+        "name": "IsUsed",
+        "type": "unsigned int"
+      }
+    ],
+    "ImFontBaked": [
+      {
+        "comment": {
+          "above": "\n    // [Internal] Members: Hot ~20/24 bytes (for CalcTextSize)",
+          "sameline": "// 12-16 // out // Sparse. Glyphs->AdvanceX in a directly indexable way (cache-friendly for CalcTextSize functions which only this info, and are often bottleneck in large UI)."
+        },
+        "name": "IndexAdvanceX",
+        "template_type": "float",
+        "type": "ImVector_float"
+      },
+      {
+        "comment": {
+          "sameline": "// 4     // out // FindGlyph(FallbackChar)->AdvanceX"
+        },
+        "name": "FallbackAdvanceX",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "sameline": "// 4     // in  // Height of characters/line, set during loading (doesn't change after loading)"
+        },
+        "name": "Size",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "sameline": "// 4     // in  // Density this is baked at"
+        },
+        "name": "RasterizerDensity",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "above": "    // [Internal] Members: Hot ~28/36 bytes (for RenderText loop)",
+          "sameline": "// 12-16 // out // Sparse. Index glyphs by Unicode code-point."
+        },
+        "name": "IndexLookup",
+        "template_type": "ImU16",
+        "type": "ImVector_ImU16"
+      },
+      {
+        "comment": {
+          "sameline": "// 12-16 // out // All glyphs."
+        },
+        "name": "Glyphs",
+        "template_type": "ImFontGlyph",
+        "type": "ImVector_ImFontGlyph"
+      },
+      {
+        "comment": {
+          "sameline": "// 4     // out // Index of FontFallbackChar"
+        },
+        "name": "FallbackGlyphIndex",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "above": "    // [Internal] Members: Cold",
+          "sameline": "// 4+4   // out // Ascent: distance from top to bottom of e.g. 'A' [0..FontSize] (unscaled)"
+        },
+        "name": "Ascent",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "above": "    // [Internal] Members: Cold",
+          "sameline": "// 4+4   // out // Ascent: distance from top to bottom of e.g. 'A' [0..FontSize] (unscaled)"
+        },
+        "name": "Descent",
+        "type": "float"
+      },
+      {
+        "bitfield": "26",
+        "comment": {
+          "sameline": "// 3  // out // Total surface in pixels to get an idea of the font rasterization/texture cost (not exact, we approximate the cost of padding between glyphs)"
+        },
+        "name": "MetricsTotalSurface",
         "type": "unsigned int"
       },
       {
         "bitfield": "1",
         "comment": {
-          "sameline": "// Input  // For custom font glyphs only: glyph is colored, removed tinting."
+          "sameline": "// 0  //     // Queued for destroy"
         },
-        "name": "GlyphColored",
+        "name": "WantDestroy",
+        "type": "unsigned int"
+      },
+      {
+        "bitfield": "1",
+        "comment": {
+          "sameline": "// 0  //     //"
+        },
+        "name": "LockLoadingFallback",
         "type": "unsigned int"
       },
       {
         "comment": {
-          "sameline": "// Input    // For custom font glyphs only: glyph xadvance"
+          "sameline": "// 4     //     // Record of that time this was bounds"
         },
-        "name": "GlyphAdvanceX",
-        "type": "float"
+        "name": "LastUsedFrame",
+        "type": "int"
       },
       {
         "comment": {
-          "sameline": "// Input    // For custom font glyphs only: glyph display offset"
+          "sameline": "// 4     //"
         },
-        "name": "GlyphOffset",
-        "type": "ImVec2"
+        "name": "BakedId",
+        "type": "ImGuiID"
       },
       {
         "comment": {
-          "sameline": "// Input    // For custom font glyphs only: target font"
+          "sameline": "// 4-8   // in  // Parent font"
         },
-        "name": "Font",
+        "name": "ContainerFont",
         "type": "ImFont*"
-      }
-    ],
-    "ImFontBuilderIO": [
+      },
       {
-        "name": "FontBuilder_Build",
-        "type": "bool(*)(ImFontAtlas* atlas)"
+        "comment": {
+          "sameline": "// 4-8   //     // Font loader opaque storage (per baked font * sources): single contiguous buffer allocated by imgui, passed to loader."
+        },
+        "name": "FontLoaderDatas",
+        "type": "void*"
       }
     ],
     "ImFontConfig": [
+      {
+        "comment": {
+          "above": "\n    // Data Source",
+          "sameline": "// <auto>   // Name (strictly to ease debugging, hence limited size buffer)"
+        },
+        "name": "Name[40]",
+        "size": 40,
+        "type": "char"
+      },
       {
         "comment": {
           "sameline": "//          // TTF/OTF data"
@@ -7449,6 +7900,7 @@
       },
       {
         "comment": {
+          "above": "    // Options",
           "sameline": "// false    // Merge into previous ImFont, so you can combine multiple inputs font into one ImFont (e.g. ASCII font + icons + Japanese glyphs). You may want to use GlyphOffset.y when merge font of different heights."
         },
         "name": "MergeMode",
@@ -7463,24 +7915,31 @@
       },
       {
         "comment": {
+          "sameline": "// true     // Align Scaled GlyphOffset.y to pixel boundaries."
+        },
+        "name": "PixelSnapV",
+        "type": "bool"
+      },
+      {
+        "comment": {
           "sameline": "// 0        // Index of font within TTF/OTF file"
         },
         "name": "FontNo",
-        "type": "int"
+        "type": "ImS8"
       },
       {
         "comment": {
           "sameline": "// 0 (2)    // Rasterize at higher quality for sub-pixel positioning. 0 == auto == 1 or 2 depending on size. Note the difference between 2 and 3 is minimal. You can reduce this to 1 for large glyphs save memory. Read https://github.com/nothings/stb/blob/master/tests/oversample/README.md for details."
         },
         "name": "OversampleH",
-        "type": "int"
+        "type": "ImS8"
       },
       {
         "comment": {
           "sameline": "// 0 (1)    // Rasterize at higher quality for sub-pixel positioning. 0 == auto == 1. This is not really useful as we don't use sub-pixel positions on the Y axis."
         },
         "name": "OversampleV",
-        "type": "int"
+        "type": "ImS8"
       },
       {
         "comment": {
@@ -7491,22 +7950,29 @@
       },
       {
         "comment": {
-          "above": "\n    //ImVec2        GlyphExtraSpacing;      // 0, 0     // (REMOVED IN 1.91.9: use GlyphExtraAdvanceX)",
-          "sameline": "// 0, 0     // Offset all glyphs from this font input."
-        },
-        "name": "GlyphOffset",
-        "type": "ImVec2"
-      },
-      {
-        "comment": {
-          "sameline": "// NULL     // THE ARRAY DATA NEEDS TO PERSIST AS LONG AS THE FONT IS ALIVE. Pointer to a user-provided list of Unicode range (2 value per range, values are inclusive, zero-terminated list)."
+          "sameline": "// NULL     // *LEGACY* THE ARRAY DATA NEEDS TO PERSIST AS LONG AS THE FONT IS ALIVE. Pointer to a user-provided list of Unicode range (2 value per range, values are inclusive, zero-terminated list)."
         },
         "name": "GlyphRanges",
         "type": "const ImWchar*"
       },
       {
         "comment": {
-          "sameline": "// 0        // Minimum AdvanceX for glyphs, set Min to align font icons, set both Min/Max to enforce mono-space font"
+          "sameline": "// NULL     // Pointer to a small user-provided list of Unicode ranges (2 value per range, values are inclusive, zero-terminated list). This is very close to GlyphRanges[] but designed to exclude ranges from a font source, when merging fonts with overlapping glyphs. Use \"Input Glyphs Overlap Detection Tool\" to find about your overlapping ranges."
+        },
+        "name": "GlyphExcludeRanges",
+        "type": "const ImWchar*"
+      },
+      {
+        "comment": {
+          "above": "\n    //ImVec2        GlyphExtraSpacing;      // 0, 0     // (REMOVED AT IT SEEMS LARGELY OBSOLETE. PLEASE REPORT IF YOU WERE USING THIS). Extra spacing (in pixels) between glyphs when rendered: essentially add to glyph->AdvanceX. Only X axis is supported for now.",
+          "sameline": "// 0, 0     // Offset (in pixels) all glyphs from this font input. Absolute value for default size, other sizes will scale this value."
+        },
+        "name": "GlyphOffset",
+        "type": "ImVec2"
+      },
+      {
+        "comment": {
+          "sameline": "// 0        // Minimum AdvanceX for glyphs, set Min to align font icons, set both Min/Max to enforce mono-space font. Absolute value for default size, other sizes will scale this value."
         },
         "name": "GlyphMinAdvanceX",
         "type": "float"
@@ -7520,7 +7986,7 @@
       },
       {
         "comment": {
-          "sameline": "// 0        // Extra spacing (in pixels) between glyphs. Please contact us if you are using this."
+          "sameline": "// 0        // Extra spacing (in pixels) between glyphs. Please contact us if you are using this. // FIXME-NEWATLAS: Intentionally unscaled"
         },
         "name": "GlyphExtraAdvanceX",
         "type": "float"
@@ -7529,11 +7995,12 @@
         "comment": {
           "sameline": "// 0        // Settings for custom font builder. THIS IS BUILDER IMPLEMENTATION DEPENDENT. Leave as zero if unsure."
         },
-        "name": "FontBuilderFlags",
+        "name": "FontLoaderFlags",
         "type": "unsigned int"
       },
       {
         "comment": {
+          "above": "\n    //unsigned int  FontBuilderFlags;       // --       // [Renamed in 1.92] Ue FontLoaderFlags.",
           "sameline": "// 1.0f     // Linearly brighten (>1.0f) or darken (<1.0f) font output. Brightening small fonts may be a good workaround to make them more readable. This is a silly thing we may remove in the future."
         },
         "name": "RasterizerMultiply",
@@ -7541,7 +8008,7 @@
       },
       {
         "comment": {
-          "sameline": "// 1.0f     // DPI scale for rasterization, not altering other font metrics: make it easy to swap between e.g. a 100% and a 400% fonts for a zooming display, or handle Retina screen. IMPORTANT: If you change this it is expected that you increase/decrease font scale roughly to the inverse of this, otherwise quality may look lowered."
+          "sameline": "// 1.0f     // [LEGACY: this only makes sense when ImGuiBackendFlags_RendererHasTextures is not supported] DPI scale multiplier for rasterization. Not altering other font metrics: makes it easy to swap between e.g. a 100% and a 400% fonts for a zooming display, or handle Retina screen. IMPORTANT: If you change this it is expected that you increase/decrease font scale roughly to the inverse of this, otherwise quality may look lowered."
         },
         "name": "RasterizerDensity",
         "type": "float"
@@ -7556,15 +8023,31 @@
       {
         "comment": {
           "above": "    // [Internal]",
-          "sameline": "// Name (strictly to ease debugging)"
+          "sameline": "// Font flags (don't use just yet, will be exposed in upcoming 1.92.X updates)"
         },
-        "name": "Name[40]",
-        "size": 40,
-        "type": "char"
+        "name": "Flags",
+        "type": "ImFontFlags"
       },
       {
+        "comment": {
+          "sameline": "// Target font (as we merging fonts, multiple ImFontConfig may target the same font)"
+        },
         "name": "DstFont",
         "type": "ImFont*"
+      },
+      {
+        "comment": {
+          "sameline": "// Custom font backend for this source (other use one stored in ImFontAtlas)"
+        },
+        "name": "FontLoader",
+        "type": "const ImFontLoader*"
+      },
+      {
+        "comment": {
+          "sameline": "// Font loader opaque storage (per font config)"
+        },
+        "name": "FontLoaderData",
+        "type": "void*"
       }
     ],
     "ImFontGlyph": [
@@ -7585,7 +8068,15 @@
         "type": "unsigned int"
       },
       {
-        "bitfield": "30",
+        "bitfield": "4",
+        "comment": {
+          "sameline": "// Index of source in parent font"
+        },
+        "name": "SourceIdx",
+        "type": "unsigned int"
+      },
+      {
+        "bitfield": "26",
         "comment": {
           "sameline": "// 0x0000..0x10FFFF"
         },
@@ -7594,66 +8085,73 @@
       },
       {
         "comment": {
-          "sameline": "// Horizontal distance to advance layout with"
+          "sameline": "// Horizontal distance to advance cursor/layout position."
         },
         "name": "AdvanceX",
         "type": "float"
       },
       {
         "comment": {
-          "sameline": "// Glyph corners"
+          "sameline": "// Glyph corners. Offsets from current cursor/layout position."
         },
         "name": "X0",
         "type": "float"
       },
       {
         "comment": {
-          "sameline": "// Glyph corners"
+          "sameline": "// Glyph corners. Offsets from current cursor/layout position."
         },
         "name": "Y0",
         "type": "float"
       },
       {
         "comment": {
-          "sameline": "// Glyph corners"
+          "sameline": "// Glyph corners. Offsets from current cursor/layout position."
         },
         "name": "X1",
         "type": "float"
       },
       {
         "comment": {
-          "sameline": "// Glyph corners"
+          "sameline": "// Glyph corners. Offsets from current cursor/layout position."
         },
         "name": "Y1",
         "type": "float"
       },
       {
         "comment": {
-          "sameline": "// Texture coordinates"
+          "sameline": "// Texture coordinates for the current value of ImFontAtlas->TexRef. Cached equivalent of calling GetCustomRect() with PackId."
         },
         "name": "U0",
         "type": "float"
       },
       {
         "comment": {
-          "sameline": "// Texture coordinates"
+          "sameline": "// Texture coordinates for the current value of ImFontAtlas->TexRef. Cached equivalent of calling GetCustomRect() with PackId."
         },
         "name": "V0",
         "type": "float"
       },
       {
         "comment": {
-          "sameline": "// Texture coordinates"
+          "sameline": "// Texture coordinates for the current value of ImFontAtlas->TexRef. Cached equivalent of calling GetCustomRect() with PackId."
         },
         "name": "U1",
         "type": "float"
       },
       {
         "comment": {
-          "sameline": "// Texture coordinates"
+          "sameline": "// Texture coordinates for the current value of ImFontAtlas->TexRef. Cached equivalent of calling GetCustomRect() with PackId."
         },
         "name": "V1",
         "type": "float"
+      },
+      {
+        "comment": {
+          "sameline": "// [Internal] ImFontAtlasRectId value (FIXME: Cold data, could be moved elsewhere?)"
+        },
+        "name": "PackId",
+        "type": "int"
       }
     ],
     "ImFontGlyphRangesBuilder": [
@@ -7664,6 +8162,71 @@
         "name": "UsedChars",
         "template_type": "ImU32",
         "type": "ImVector_ImU32"
+      }
+    ],
+    "ImFontLoader": [
+      {
+        "name": "Name",
+        "type": "const char*"
+      },
+      {
+        "name": "LoaderInit",
+        "type": "bool(*)(ImFontAtlas* atlas)"
+      },
+      {
+        "name": "LoaderShutdown",
+        "type": "void(*)(ImFontAtlas* atlas)"
+      },
+      {
+        "name": "FontSrcInit",
+        "type": "bool(*)(ImFontAtlas* atlas,ImFontConfig* src)"
+      },
+      {
+        "name": "FontSrcDestroy",
+        "type": "void(*)(ImFontAtlas* atlas,ImFontConfig* src)"
+      },
+      {
+        "name": "FontSrcContainsGlyph",
+        "type": "bool(*)(ImFontAtlas* atlas,ImFontConfig* src,ImWchar codepoint)"
+      },
+      {
+        "name": "FontBakedInit",
+        "type": "bool(*)(ImFontAtlas* atlas,ImFontConfig* src,ImFontBaked* baked,void* loader_data_for_baked_src)"
+      },
+      {
+        "name": "FontBakedDestroy",
+        "type": "void(*)(ImFontAtlas* atlas,ImFontConfig* src,ImFontBaked* baked,void* loader_data_for_baked_src)"
+      },
+      {
+        "name": "FontBakedLoadGlyph",
+        "type": "bool(*)(ImFontAtlas* atlas,ImFontConfig* src,ImFontBaked* baked,void* loader_data_for_baked_src,ImWchar codepoint,ImFontGlyph* out_glyph)"
+      },
+      {
+        "comment": {
+          "above": "    // Size of backend data, Per Baked * Per Source. Buffers are managed by core to avoid excessive allocations.\n    // FIXME: At this point the two other types of buffers may be managed by core to be consistent?"
+        },
+        "name": "FontBakedSrcLoaderDataSize",
+        "type": "size_t"
+      }
+    ],
+    "ImFontStackData": [
+      {
+        "name": "Font",
+        "type": "ImFont*"
+      },
+      {
+        "comment": {
+          "sameline": "// ~~ style.FontSizeBase"
+        },
+        "name": "FontSizeBeforeScaling",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "sameline": "// ~~ g.FontSize"
+        },
+        "name": "FontSizeAfterScaling",
+        "type": "float"
       }
     ],
     "ImGuiBoxSelectState": [
@@ -7799,13 +8362,6 @@
         "type": "bool"
       },
       {
-        "comment": {
-          "sameline": "// IO.Fonts-> is owned by the ImGuiContext and will be destructed along with it."
-        },
-        "name": "FontAtlasOwnedByContext",
-        "type": "bool"
-      },
-      {
         "name": "IO",
         "type": "ImGuiIO"
       },
@@ -7830,30 +8386,52 @@
       },
       {
         "comment": {
-          "sameline": "// (Shortcut) == FontStack.empty() ? IO.Font : FontStack.back()"
+          "sameline": "// List of font atlases used by the context (generally only contains g.IO.Fonts aka the main font atlas)"
+        },
+        "name": "FontAtlases",
+        "template_type": "ImFontAtlas*",
+        "type": "ImVector_ImFontAtlasPtr"
+      },
+      {
+        "comment": {
+          "sameline": "// Currently bound font. (== FontStack.back().Font)"
         },
         "name": "Font",
         "type": "ImFont*"
       },
       {
         "comment": {
-          "sameline": "// (Shortcut) == FontBaseSize * g.CurrentWindow->FontWindowScale == window->FontSize(). Text height for current window."
+          "sameline": "// Currently bound font at currently bound size. (== Font->GetFontBaked(FontSize))"
+        },
+        "name": "FontBaked",
+        "type": "ImFontBaked*"
+      },
+      {
+        "comment": {
+          "sameline": "// Currently bound font size == line height (== FontSizeBase + externals scales applied in the UpdateCurrentFontSize() function)."
         },
         "name": "FontSize",
         "type": "float"
       },
       {
         "comment": {
-          "sameline": "// (Shortcut) == IO.FontGlobalScale * Font->Scale * Font->FontSize. Base text height."
+          "sameline": "// Font size before scaling == style.FontSizeBase == value passed to PushFont() when specified."
         },
-        "name": "FontBaseSize",
+        "name": "FontSizeBase",
         "type": "float"
       },
       {
         "comment": {
-          "sameline": "// == FontSize / Font->FontSize"
+          "sameline": "// == FontBaked->Size / FontSize. Scale factor over baked size. Rarely used nowadays, very often == 1.0f."
         },
-        "name": "FontScale",
+        "name": "FontBakedScale",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "sameline": "// Current font density. Used by all calls to GetFontBaked()."
+        },
+        "name": "FontRasterizerDensity",
         "type": "float"
       },
       {
@@ -8402,8 +8980,8 @@
           "sameline": "// Stack for PushFont()/PopFont() - inherited by Begin()"
         },
         "name": "FontStack",
-        "template_type": "ImFont*",
-        "type": "ImVector_ImFontPtr"
+        "template_type": "ImFontStackData",
+        "type": "ImVector_ImFontStackData"
       },
       {
         "comment": {
@@ -9194,8 +9772,12 @@
         "type": "ImGuiInputTextDeactivatedState"
       },
       {
-        "name": "InputTextPasswordFont",
-        "type": "ImFont"
+        "name": "InputTextPasswordFontBackupBaked",
+        "type": "ImFontBaked"
+      },
+      {
+        "name": "InputTextPasswordFontBackupFlags",
+        "type": "ImFontFlags"
       },
       {
         "comment": {
@@ -9395,8 +9977,14 @@
       },
       {
         "comment": {
-          "above": "    // Extensions\n    // FIXME: We could provide an API to register one slot in an array held in ImGuiContext?"
+          "above": "    // Extensions\n    // FIXME: We could provide an API to register one slot in an array held in ImGuiContext?",
+          "sameline": "// List of textures created/managed by user or third-party extension. Automatically appended into platform_io.Textures[]."
         },
+        "name": "UserTextures",
+        "template_type": "ImTextureData*",
+        "type": "ImVector_ImTextureDataPtr"
+      },
+      {
         "name": "DockContext",
         "type": "ImGuiDockContext"
       },
@@ -10324,7 +10912,7 @@
       },
       {
         "comment": {
-          "sameline": "// = (1, 1)         // Main display density. For retina display where window coordinates are different from framebuffer coordinates. This generally ends up in ImDrawData::FramebufferScale."
+          "sameline": "// = (1, 1)         // Main display density. For retina display where window coordinates are different from framebuffer coordinates. This will affect font density + will end up in ImDrawData::FramebufferScale."
         },
         "name": "DisplayFramebufferScale",
         "type": "ImVec2"
@@ -10374,10 +10962,10 @@
       },
       {
         "comment": {
-          "sameline": "// = 1.0f           // Global scale all fonts"
+          "sameline": "// = NULL           // Font to use on NewFrame(). Use NULL to uses Fonts->Fonts[0]."
         },
-        "name": "FontGlobalScale",
-        "type": "float"
+        "name": "FontDefault",
+        "type": "ImFont*"
       },
       {
         "comment": {
@@ -10385,13 +10973,6 @@
         },
         "name": "FontAllowUserScaling",
         "type": "bool"
-      },
-      {
-        "comment": {
-          "sameline": "// = NULL           // Font to use on NewFrame(). Use NULL to uses Fonts->Fonts[0]."
-        },
-        "name": "FontDefault",
-        "type": "ImFont*"
       },
       {
         "comment": {
@@ -10499,6 +11080,21 @@
           "sameline": "// = false          // Disable default OS parenting to main viewport for secondary viewports. By default, viewports are marked with ParentViewportId = <main_viewport>, expecting the platform backend to setup a parent/child relationship between the OS windows (some backend may ignore this). Set to true if you want the default to be 0, then all viewports will be top-level OS windows."
         },
         "name": "ConfigViewportsNoDefaultParent",
+        "type": "bool"
+      },
+      {
+        "comment": {
+          "above": "    // DPI/Scaling options\n    // This may keep evolving during 1.92.x releases. Expect some turbulence.",
+          "sameline": "// = false          // [EXPERIMENTAL] Automatically overwrite style.FontScaleDpi when Monitor DPI changes. This will scale fonts but _NOT_ scale sizes/padding for now."
+        },
+        "name": "ConfigDpiScaleFonts",
+        "type": "bool"
+      },
+      {
+        "comment": {
+          "sameline": "// = false          // [EXPERIMENTAL] Scale Dear ImGui and Platform Windows when Monitor DPI changes."
+        },
+        "name": "ConfigDpiScaleViewports",
         "type": "bool"
       },
       {
@@ -10914,7 +11510,7 @@
       },
       {
         "comment": {
-          "sameline": "// Key state for all known keys. Use IsKeyXXX() functions to access this."
+          "sameline": "// Key state for all known keys. MUST use 'key - ImGuiKey_NamedKey_BEGIN' as index. Use IsKeyXXX() functions to access this."
         },
         "name": "KeysData[ImGuiKey_NamedKey_COUNT]",
         "size": 155,
@@ -11644,7 +12240,7 @@
           "sameline": "// [Internal] Cursor position at the time of Begin() or after table frozen rows are all processed"
         },
         "name": "StartPosY",
-        "type": "float"
+        "type": "double"
       },
       {
         "comment": {
@@ -11800,6 +12396,10 @@
       },
       {
         "name": "ShowTextEncodingViewer",
+        "type": "bool"
+      },
+      {
+        "name": "ShowTextureUsedRect",
         "type": "bool"
       },
       {
@@ -12500,6 +13100,17 @@
       },
       {
         "comment": {
+          "above": "    // Optional: Maximum texture size supported by renderer (used to adjust how we size textures). 0 if not known."
+        },
+        "name": "Renderer_TextureMaxWidth",
+        "type": "int"
+      },
+      {
+        "name": "Renderer_TextureMaxHeight",
+        "type": "int"
+      },
+      {
+        "comment": {
           "above": "    // Written by some backends during ImGui_ImplXXXX_RenderDrawData() call to point backend_specific ImGui_ImplXXXX_RenderState* structure."
         },
         "name": "Renderer_RenderState",
@@ -12689,6 +13300,15 @@
         "name": "Monitors",
         "template_type": "ImGuiPlatformMonitor",
         "type": "ImVector_ImGuiPlatformMonitor"
+      },
+      {
+        "comment": {
+          "above": "    // Textures list (the list is updated by calling ImGui::EndFrame or ImGui::Render)\n    // The ImGui_ImplXXXX_RenderDrawData() function of each backend generally access this via ImDrawData::Textures which points to this. The array is available here mostly because backends will want to destroy textures on shutdown.",
+          "sameline": "// List of textures used by Dear ImGui (most often 1) + contents of external texture list is automatically appended into this."
+        },
+        "name": "Textures",
+        "template_type": "ImTextureData*",
+        "type": "ImVector_ImTextureDataPtr"
       },
       {
         "comment": {
@@ -13117,6 +13737,28 @@
     "ImGuiStyle": [
       {
         "comment": {
+          "above": "\n    // Font scaling\n    // - recap: ImGui::GetFontSize() == FontSizeBase * (FontScaleMain * FontScaleDpi * other_scaling_factors)",
+          "sameline": "// Current base font size before external global factors are applied. Use PushFont(NULL, size) to modify. Use ImGui::GetFontSize() to obtain scaled value."
+        },
+        "name": "FontSizeBase",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "sameline": "// Main global scale factor. May be set by application once, or exposed to end-user."
+        },
+        "name": "FontScaleMain",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "sameline": "// Additional global scale factor from viewport/monitor contents scale. When io.ConfigDpiScaleFonts is enabled, this is automatically overwritten when changing monitor DPI."
+        },
+        "name": "FontScaleDpi",
+        "type": "float"
+      },
+      {
+        "comment": {
           "sameline": "// Global alpha applies to everything in Dear ImGui."
         },
         "name": "Alpha",
@@ -13536,6 +14178,21 @@
         },
         "name": "HoverFlagsForTooltipNav",
         "type": "ImGuiHoveredFlags"
+      },
+      {
+        "comment": {
+          "above": "    // [Internal]",
+          "sameline": "// FIXME-WIP: Reference scale, as applied by ScaleAllSizes()."
+        },
+        "name": "_MainScale",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "sameline": "// FIXME: Temporary hack until we finish remaining work."
+        },
+        "name": "_NextFrameFontSizeBase",
+        "type": "float"
       }
     ],
     "ImGuiStyleMod": [
@@ -15314,7 +15971,7 @@
       },
       {
         "comment": {
-          "sameline": "// Density of the viewport for Retina display (always 1,1 on Windows, may be 2,2 etc on macOS/iOS)."
+          "sameline": "// Density of the viewport for Retina display (always 1,1 on Windows, may be 2,2 etc on macOS/iOS). This will affect font rasterizer density."
         },
         "name": "FramebufferScale",
         "type": "ImVec2"
@@ -16181,10 +16838,6 @@
         "type": "float"
       },
       {
-        "name": "FontDpiScale",
-        "type": "float"
-      },
-      {
         "comment": {
           "sameline": "// This is a copy of window->CalcFontSize() at the time of Begin(), trying to phase out CalcFontSize() especially as it may be called on non-current window."
         },
@@ -16823,6 +17476,169 @@
         "type": "ImVec2"
       }
     ],
+    "ImTextureData": [
+      {
+        "comment": {
+          "above": "\n    //------------------------------------------ core / backend ---------------------------------------",
+          "sameline": "// w    -   // Sequential index to facilitate identifying a texture when debugging/printing. Unique per atlas."
+        },
+        "name": "UniqueID",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// rw   rw  // ImTextureStatus_OK/_WantCreate/_WantUpdates/_WantDestroy. Always use SetStatus() to modify!"
+        },
+        "name": "Status",
+        "type": "ImTextureStatus"
+      },
+      {
+        "comment": {
+          "sameline": "// -    rw  // Convenience storage for backend. Some backends may have enough with TexID."
+        },
+        "name": "BackendUserData",
+        "type": "void*"
+      },
+      {
+        "comment": {
+          "sameline": "// r    w   // Backend-specific texture identifier. Always use SetTexID() to modify! The identifier will stored in ImDrawCmd::GetTexID() and passed to backend's RenderDrawData function."
+        },
+        "name": "TexID",
+        "type": "ImTextureID"
+      },
+      {
+        "comment": {
+          "sameline": "// w    r   // ImTextureFormat_RGBA32 (default) or ImTextureFormat_Alpha8"
+        },
+        "name": "Format",
+        "type": "ImTextureFormat"
+      },
+      {
+        "comment": {
+          "sameline": "// w    r   // Texture width"
+        },
+        "name": "Width",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// w    r   // Texture height"
+        },
+        "name": "Height",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// w    r   // 4 or 1"
+        },
+        "name": "BytesPerPixel",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// w    r   // Pointer to buffer holding 'Width*Height' pixels and 'Width*Height*BytesPerPixels' bytes."
+        },
+        "name": "Pixels",
+        "type": "unsigned char*"
+      },
+      {
+        "comment": {
+          "sameline": "// w    r   // Bounding box encompassing all past and queued Updates[]."
+        },
+        "name": "UsedRect",
+        "type": "ImTextureRect"
+      },
+      {
+        "comment": {
+          "sameline": "// w    r   // Bounding box encompassing all queued Updates[]."
+        },
+        "name": "UpdateRect",
+        "type": "ImTextureRect"
+      },
+      {
+        "comment": {
+          "sameline": "// w    r   // Array of individual updates."
+        },
+        "name": "Updates",
+        "template_type": "ImTextureRect",
+        "type": "ImVector_ImTextureRect"
+      },
+      {
+        "comment": {
+          "sameline": "// w    r   // In order to facilitate handling Status==WantDestroy in some backend: this is a count successive frames where the texture was not used. Always >0 when Status==WantDestroy."
+        },
+        "name": "UnusedFrames",
+        "type": "int"
+      },
+      {
+        "comment": {
+          "sameline": "// w    r   // Number of contexts using this texture. Used during backend shutdown."
+        },
+        "name": "RefCount",
+        "type": "unsigned short"
+      },
+      {
+        "comment": {
+          "sameline": "// w    r   // Tell whether our texture data is known to use colors (rather than just white + alpha)."
+        },
+        "name": "UseColors",
+        "type": "bool"
+      },
+      {
+        "comment": {
+          "sameline": "// rw   -   // [Internal] Queued to set ImTextureStatus_WantDestroy next frame. May still be used in the current frame."
+        },
+        "name": "WantDestroyNextFrame",
+        "type": "bool"
+      }
+    ],
+    "ImTextureRect": [
+      {
+        "comment": {
+          "sameline": "// Upper-left coordinates of rectangle to update"
+        },
+        "name": "x",
+        "type": "unsigned short"
+      },
+      {
+        "comment": {
+          "sameline": "// Upper-left coordinates of rectangle to update"
+        },
+        "name": "y",
+        "type": "unsigned short"
+      },
+      {
+        "comment": {
+          "sameline": "// Size of rectangle to update (in pixels)"
+        },
+        "name": "w",
+        "type": "unsigned short"
+      },
+      {
+        "comment": {
+          "sameline": "// Size of rectangle to update (in pixels)"
+        },
+        "name": "h",
+        "type": "unsigned short"
+      }
+    ],
+    "ImTextureRef": [
+      {
+        "comment": {
+          "above": "    // Members (either are set, never both!)",
+          "sameline": "//      A texture, generally owned by a ImFontAtlas. Will convert to ImTextureID during render loop, after texture has been uploaded."
+        },
+        "name": "_TexData",
+        "type": "ImTextureData*"
+      },
+      {
+        "comment": {
+          "sameline": "// _OR_ Low-level backend texture identifier, if already uploaded or created by user/app. Generally provided to e.g. ImGui::Image() calls."
+        },
+        "name": "_TexID",
+        "type": "ImTextureID"
+      }
+    ],
     "ImVec1": [
       {
         "name": "x",
@@ -16837,6 +17653,16 @@
       {
         "name": "y",
         "type": "float"
+      }
+    ],
+    "ImVec2i": [
+      {
+        "name": "x",
+        "type": "int"
+      },
+      {
+        "name": "y",
+        "type": "int"
       }
     ],
     "ImVec2ih": [
@@ -16865,6 +17691,13 @@
       {
         "name": "w",
         "type": "float"
+      }
+    ],
+    "stbrp_context_opaque": [
+      {
+        "name": "data[80]",
+        "size": 80,
+        "type": "char"
       }
     ]
   },
@@ -16944,6 +17777,20 @@
         "type": "int"
       }
     ],
+    "ImStableVector": [
+      {
+        "name": "Size",
+        "type": "int"
+      },
+      {
+        "name": "Capacity",
+        "type": "int"
+      },
+      {
+        "name": "Blocks",
+        "type": "ImVector<T*>"
+      }
+    ],
     "ImVector": [
       {
         "name": "Size",
@@ -16977,16 +17824,24 @@
       "ImGuiTableColumn": true,
       "ImGuiTableColumnIdx": true
     },
+    "ImStableVector": {
+      "ImFontBaked,32": true
+    },
     "ImVector": {
       "ImDrawChannel": true,
       "ImDrawCmd": true,
       "ImDrawIdx": true,
       "ImDrawList*": true,
+      "ImDrawListSharedData*": true,
       "ImDrawVert": true,
       "ImFont*": true,
-      "ImFontAtlasCustomRect": true,
+      "ImFontAtlas*": true,
+      "ImFontAtlasRectEntry": true,
+      "ImFontBaked*": true,
       "ImFontConfig": true,
+      "ImFontConfig*": true,
       "ImFontGlyph": true,
+      "ImFontStackData": true,
       "ImGuiColorMod": true,
       "ImGuiContextHook": true,
       "ImGuiDockNodeSettings": true,
@@ -17025,7 +17880,9 @@
       "ImGuiViewportP*": true,
       "ImGuiWindow*": true,
       "ImGuiWindowStackData": true,
-      "ImTextureID": true,
+      "ImTextureData*": true,
+      "ImTextureRect": true,
+      "ImTextureRef": true,
       "ImU16": true,
       "ImU32": true,
       "ImU8": true,
@@ -17036,6 +17893,7 @@
       "const char*": true,
       "float": true,
       "int": true,
+      "stbrp_node_im": true,
       "unsigned char": true
     }
   },
@@ -17045,6 +17903,7 @@
     "ImPool": "T",
     "ImSpan": "T",
     "ImSpanAllocator": "int CHUNKS",
+    "ImStableVector": "typename T, int BLOCK_SIZE",
     "ImVector": "T"
   }
 }

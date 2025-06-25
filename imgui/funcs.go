@@ -80,6 +80,7 @@ func (self *Color) Destroy() {
 	selfFin()
 }
 
+// == (TexRef._TexData ? TexRef._TexData->TexID : TexRef._TexID
 func (self *DrawCmd) TexID() TextureID {
 	selfArg, selfFin := self.Handle()
 
@@ -331,13 +332,13 @@ func (self *DrawList) AddEllipseFilledV(center, radius Vec2, col uint32, rot flo
 // uv_min: ImVec2(0,0)
 // uv_max: ImVec2(1,1)
 // col: 4294967295
-func (self *DrawList) AddImageV(user_texture_id TextureID, p_min, p_max, uv_min, uv_max Vec2, col uint32) {
+func (self *DrawList) AddImageV(tex_ref TextureRef, p_min, p_max, uv_min, uv_max Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
-	C.ImDrawList_AddImage(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), internal.ReinterpretCast[C.ImVec2](uv_min.ToC()), internal.ReinterpretCast[C.ImVec2](uv_max.ToC()), C.ImU32(col))
+	tex_refArg, tex_refFin := tex_ref.C()
+	C.ImDrawList_AddImage(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), internal.ReinterpretCast[C.ImVec2](uv_min.ToC()), internal.ReinterpretCast[C.ImVec2](uv_max.ToC()), C.ImU32(col))
 
 	selfFin()
-	user_texture_idFin()
+	tex_refFin()
 }
 
 // AddImageQuadV parameter default value hint:
@@ -346,24 +347,24 @@ func (self *DrawList) AddImageV(user_texture_id TextureID, p_min, p_max, uv_min,
 // uv3: ImVec2(1,1)
 // uv4: ImVec2(0,1)
 // col: 4294967295
-func (self *DrawList) AddImageQuadV(user_texture_id TextureID, p1, p2, p3, p4, uv1, uv2, uv3, uv4 Vec2, col uint32) {
+func (self *DrawList) AddImageQuadV(tex_ref TextureRef, p1, p2, p3, p4, uv1, uv2, uv3, uv4 Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
-	C.ImDrawList_AddImageQuad(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec2](uv2.ToC()), internal.ReinterpretCast[C.ImVec2](uv3.ToC()), internal.ReinterpretCast[C.ImVec2](uv4.ToC()), C.ImU32(col))
+	tex_refArg, tex_refFin := tex_ref.C()
+	C.ImDrawList_AddImageQuad(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec2](uv2.ToC()), internal.ReinterpretCast[C.ImVec2](uv3.ToC()), internal.ReinterpretCast[C.ImVec2](uv4.ToC()), C.ImU32(col))
 
 	selfFin()
-	user_texture_idFin()
+	tex_refFin()
 }
 
 // AddImageRoundedV parameter default value hint:
 // flags: 0
-func (self *DrawList) AddImageRoundedV(user_texture_id TextureID, p_min, p_max, uv_min, uv_max Vec2, col uint32, rounding float32, flags DrawFlags) {
+func (self *DrawList) AddImageRoundedV(tex_ref TextureRef, p_min, p_max, uv_min, uv_max Vec2, col uint32, rounding float32, flags DrawFlags) {
 	selfArg, selfFin := self.Handle()
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
-	C.ImDrawList_AddImageRounded(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), internal.ReinterpretCast[C.ImVec2](uv_min.ToC()), internal.ReinterpretCast[C.ImVec2](uv_max.ToC()), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
+	tex_refArg, tex_refFin := tex_ref.C()
+	C.ImDrawList_AddImageRounded(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), internal.ReinterpretCast[C.ImVec2](uv_min.ToC()), internal.ReinterpretCast[C.ImVec2](uv_max.ToC()), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
 
 	selfFin()
-	user_texture_idFin()
+	tex_refFin()
 }
 
 // AddLineV parameter default value hint:
@@ -663,9 +664,9 @@ func (self *DrawList) PopClipRect() {
 	selfFin()
 }
 
-func (self *DrawList) PopTextureID() {
+func (self *DrawList) PopTexture() {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PopTextureID(internal.ReinterpretCast[*C.ImDrawList](selfArg))
+	C.ImDrawList_PopTexture(internal.ReinterpretCast[*C.ImDrawList](selfArg))
 
 	selfFin()
 }
@@ -747,13 +748,13 @@ func (self *DrawList) PushClipRectFullScreen() {
 	selfFin()
 }
 
-func (self *DrawList) PushTextureID(texture_id TextureID) {
+func (self *DrawList) PushTexture(tex_ref TextureRef) {
 	selfArg, selfFin := self.Handle()
-	texture_idArg, texture_idFin := texture_id.C()
-	C.ImDrawList_PushTextureID(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureID](texture_idArg))
+	tex_refArg, tex_refFin := tex_ref.C()
+	C.ImDrawList_PushTexture(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg))
 
 	selfFin()
-	texture_idFin()
+	tex_refFin()
 }
 
 func (self *DrawList) CalcCircleAutoSegmentCount(radius float32) int32 {
@@ -779,9 +780,9 @@ func (self *DrawList) OnChangedClipRect() {
 	selfFin()
 }
 
-func (self *DrawList) OnChangedTextureID() {
+func (self *DrawList) OnChangedTexture() {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList__OnChangedTextureID(internal.ReinterpretCast[*C.ImDrawList](selfArg))
+	C.ImDrawList__OnChangedTexture(internal.ReinterpretCast[*C.ImDrawList](selfArg))
 
 	selfFin()
 }
@@ -821,13 +822,22 @@ func (self *DrawList) ResetForNewFrame() {
 	selfFin()
 }
 
-func (self *DrawList) SetTextureID(texture_id TextureID) {
+func (self *DrawList) SetDrawListSharedData(data *DrawListSharedData) {
 	selfArg, selfFin := self.Handle()
-	texture_idArg, texture_idFin := texture_id.C()
-	C.ImDrawList__SetTextureID(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureID](texture_idArg))
+	dataArg, dataFin := data.Handle()
+	C.ImDrawList__SetDrawListSharedData(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[*C.ImDrawListSharedData](dataArg))
 
 	selfFin()
-	texture_idFin()
+	dataFin()
+}
+
+func (self *DrawList) SetTexture(tex_ref TextureRef) {
+	selfArg, selfFin := self.Handle()
+	tex_refArg, tex_refFin := tex_ref.C()
+	C.ImDrawList__SetTexture(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg))
+
+	selfFin()
+	tex_refFin()
 }
 
 func (self *DrawList) TryMergeDrawCmds() {
@@ -844,46 +854,43 @@ func (self *DrawList) Destroy() {
 	selfFin()
 }
 
-func NewFontAtlasCustomRect() *FontAtlasCustomRect {
-	return NewFontAtlasCustomRectFromC(C.ImFontAtlasCustomRect_ImFontAtlasCustomRect())
+func InternalNewFontAtlasBuilder() *FontAtlasBuilder {
+	return NewFontAtlasBuilderFromC(C.ImFontAtlasBuilder_ImFontAtlasBuilder())
 }
 
-func (self *FontAtlasCustomRect) IsPacked() bool {
+func (self *FontAtlasBuilder) InternalDestroy() {
 	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.ImFontAtlasCustomRect_IsPacked(internal.ReinterpretCast[*C.ImFontAtlasCustomRect](selfArg)) == C.bool(true)
-}
-
-func (self *FontAtlasCustomRect) Destroy() {
-	selfArg, selfFin := self.Handle()
-	C.ImFontAtlasCustomRect_destroy(internal.ReinterpretCast[*C.ImFontAtlasCustomRect](selfArg))
+	C.ImFontAtlasBuilder_destroy(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg))
 
 	selfFin()
 }
 
-// AddCustomRectFontGlyphV parameter default value hint:
-// offset: ImVec2(0,0)
-func (self *FontAtlas) AddCustomRectFontGlyphV(font *Font, id Wchar, width, height int32, advance_x float32, offset Vec2) int32 {
-	selfArg, selfFin := self.Handle()
-	fontArg, fontFin := font.Handle()
-
-	defer func() {
-		selfFin()
-		fontFin()
-	}()
-	return int32(C.ImFontAtlas_AddCustomRectFontGlyph(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), internal.ReinterpretCast[*C.ImFont](fontArg), C.ImWchar(id), C.int(width), C.int(height), C.float(advance_x), internal.ReinterpretCast[C.ImVec2](offset.ToC())))
+func NewFontAtlasRect() *FontAtlasRect {
+	return NewFontAtlasRectFromC(C.ImFontAtlasRect_ImFontAtlasRect())
 }
 
-func (self *FontAtlas) AddCustomRectRegular(width, height int32) int32 {
+func (self *FontAtlasRect) Destroy() {
 	selfArg, selfFin := self.Handle()
+	C.ImFontAtlasRect_destroy(internal.ReinterpretCast[*C.ImFontAtlasRect](selfArg))
+
+	selfFin()
+}
+
+// Register a rectangle. Return -1 (ImFontAtlasRectId_Invalid) on error.
+// AddCustomRectV parameter default value hint:
+// out_r: NULL
+func (self *FontAtlas) AddCustomRectV(width, height int32, out_r *FontAtlasRect) FontAtlasRectId {
+	selfArg, selfFin := self.Handle()
+	out_rArg, out_rFin := out_r.Handle()
 
 	defer func() {
 		selfFin()
+		out_rFin()
 	}()
-	return int32(C.ImFontAtlas_AddCustomRectRegular(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), C.int(width), C.int(height)))
+	return *NewFontAtlasRectIdFromC(func() *C.ImFontAtlasRectId {
+		result := C.ImFontAtlas_AddCustomRect(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), C.int(width), C.int(height), internal.ReinterpretCast[*C.ImFontAtlasRect](out_rArg))
+		return &result
+	}())
 }
 
 func (self *FontAtlas) AddFont(font_cfg *FontConfig) *Font {
@@ -911,6 +918,7 @@ func (self *FontAtlas) AddFontDefaultV(font_cfg *FontConfig) *Font {
 }
 
 // AddFontFromFileTTFV parameter default value hint:
+// size_pixels: 0.0f
 // font_cfg: NULL
 // glyph_ranges: NULL
 func (self *FontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32, font_cfg *FontConfig, glyph_ranges *Wchar) *Font {
@@ -928,6 +936,7 @@ func (self *FontAtlas) AddFontFromFileTTFV(filename string, size_pixels float32,
 
 // 'compressed_font_data_base85' still owned by caller. Compress with binary_to_compressed_c.cpp with -base85 parameter.
 // AddFontFromMemoryCompressedBase85TTFV parameter default value hint:
+// size_pixels: 0.0f
 // font_cfg: NULL
 // glyph_ranges: NULL
 func (self *FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_data_base85 string, size_pixels float32, font_cfg *FontConfig, glyph_ranges *Wchar) *Font {
@@ -945,6 +954,7 @@ func (self *FontAtlas) AddFontFromMemoryCompressedBase85TTFV(compressed_font_dat
 
 // 'compressed_font_data' still owned by caller. Compress with binary_to_compressed_c.cpp.
 // AddFontFromMemoryCompressedTTFV parameter default value hint:
+// size_pixels: 0.0f
 // font_cfg: NULL
 // glyph_ranges: NULL
 func (self *FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data uintptr, compressed_font_data_size int32, size_pixels float32, font_cfg *FontConfig, glyph_ranges *Wchar) *Font {
@@ -960,6 +970,7 @@ func (self *FontAtlas) AddFontFromMemoryCompressedTTFV(compressed_font_data uint
 
 // Note: Transfer ownership of 'ttf_data' to ImFontAtlas! Will be deleted after destruction of the atlas. Set font_cfg->FontDataOwnedByAtlas=false to keep ownership of your data and it won't be freed.
 // AddFontFromMemoryTTFV parameter default value hint:
+// size_pixels: 0.0f
 // font_cfg: NULL
 // glyph_ranges: NULL
 func (self *FontAtlas) AddFontFromMemoryTTFV(font_data uintptr, font_data_size int32, size_pixels float32, font_cfg *FontConfig, glyph_ranges *Wchar) *Font {
@@ -973,30 +984,7 @@ func (self *FontAtlas) AddFontFromMemoryTTFV(font_data uintptr, font_data_size i
 	return NewFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryTTFV(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), C.uintptr_t(font_data), C.int(font_data_size), C.float(size_pixels), internal.ReinterpretCast[*C.ImFontConfig](font_cfgArg), (*C.ImWchar)(glyph_ranges)))
 }
 
-// Build pixels data. This is called automatically for you by the GetTexData*** functions.
-func (self *FontAtlas) Build() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.ImFontAtlas_Build(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)) == C.bool(true)
-}
-
-func (self *FontAtlas) CalcCustomRectUV(rect *FontAtlasCustomRect, out_uv_min, out_uv_max *Vec2) {
-	selfArg, selfFin := self.Handle()
-	rectArg, rectFin := rect.Handle()
-	out_uv_minArg, out_uv_minFin := internal.Wrap(out_uv_min)
-	out_uv_maxArg, out_uv_maxFin := internal.Wrap(out_uv_max)
-	C.ImFontAtlas_CalcCustomRectUV(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), internal.ReinterpretCast[*C.ImFontAtlasCustomRect](rectArg), internal.ReinterpretCast[*C.ImVec2](out_uv_minArg), internal.ReinterpretCast[*C.ImVec2](out_uv_maxArg))
-
-	selfFin()
-	rectFin()
-	out_uv_minFin()
-	out_uv_maxFin()
-}
-
-// Clear all input and output.
+// Clear everything (input fonts, output glyphs/textures)
 func (self *FontAtlas) Clear() {
 	selfArg, selfFin := self.Handle()
 	C.ImFontAtlas_Clear(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
@@ -1004,7 +992,7 @@ func (self *FontAtlas) Clear() {
 	selfFin()
 }
 
-// Clear input+output font data (same as ClearInputData() + glyphs storage, UV coordinates).
+// [OBSOLETE] Clear input+output font data (same as ClearInputData() + glyphs storage, UV coordinates).
 func (self *FontAtlas) ClearFonts() {
 	selfArg, selfFin := self.Handle()
 	C.ImFontAtlas_ClearFonts(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
@@ -1012,7 +1000,7 @@ func (self *FontAtlas) ClearFonts() {
 	selfFin()
 }
 
-// Clear input data (all ImFontConfig structures including sizes, TTF data, glyph ranges, etc.) = all the data used to build the texture and fonts.
+// [OBSOLETE] Clear input data (all ImFontConfig structures including sizes, TTF data, glyph ranges, etc.) = all the data used to build the texture and fonts.
 func (self *FontAtlas) ClearInputData() {
 	selfArg, selfFin := self.Handle()
 	C.ImFontAtlas_ClearInputData(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
@@ -1020,7 +1008,7 @@ func (self *FontAtlas) ClearInputData() {
 	selfFin()
 }
 
-// Clear output texture data (CPU side). Saves RAM once the texture has been copied to graphics memory.
+// [OBSOLETE] Clear CPU-side copy of the texture data. Saves RAM once the texture has been copied to graphics memory.
 func (self *FontAtlas) ClearTexData() {
 	selfArg, selfFin := self.Handle()
 	C.ImFontAtlas_ClearTexData(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
@@ -1028,43 +1016,26 @@ func (self *FontAtlas) ClearTexData() {
 	selfFin()
 }
 
-func (self *FontAtlas) CustomRectByIndex(index int32) *FontAtlasCustomRect {
+// Compact cached glyphs and texture.
+func (self *FontAtlas) CompactCache() {
 	selfArg, selfFin := self.Handle()
+	C.ImFontAtlas_CompactCache(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
 
-	defer func() {
-		selfFin()
-	}()
-	return NewFontAtlasCustomRectFromC(C.ImFontAtlas_GetCustomRectByIndex(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), C.int(index)))
+	selfFin()
 }
 
-// Default + Half-Width + Japanese Hiragana/Katakana + full set of about 21000 CJK Unified Ideographs
-func (self *FontAtlas) GlyphRangesChineseFull() *Wchar {
+// Get rectangle coordinates for current texture. Valid immediately, never store this (read above)!
+func (self *FontAtlas) CustomRect(id FontAtlasRectId, out_r *FontAtlasRect) bool {
 	selfArg, selfFin := self.Handle()
+	idArg, idFin := id.C()
+	out_rArg, out_rFin := out_r.Handle()
 
 	defer func() {
 		selfFin()
+		idFin()
+		out_rFin()
 	}()
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesChineseFull(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
-}
-
-// Default + Half-Width + Japanese Hiragana/Katakana + set of 2500 CJK Unified Ideographs for common simplified Chinese
-func (self *FontAtlas) GlyphRangesChineseSimplifiedCommon() *Wchar {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
-}
-
-// Default + about 400 Cyrillic characters
-func (self *FontAtlas) GlyphRangesCyrillic() *Wchar {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesCyrillic(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+	return C.ImFontAtlas_GetCustomRect(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), internal.ReinterpretCast[C.ImFontAtlasRectId](idArg), internal.ReinterpretCast[*C.ImFontAtlasRect](out_rArg)) == C.bool(true)
 }
 
 // Basic Latin, Extended Latin
@@ -1077,82 +1048,88 @@ func (self *FontAtlas) GlyphRangesDefault() *Wchar {
 	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesDefault(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
-// Default + Greek and Coptic
-func (self *FontAtlas) GlyphRangesGreek() *Wchar {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesGreek(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
-}
-
-// Default + Hiragana, Katakana, Half-Width, Selection of 2999 Ideographs
-func (self *FontAtlas) GlyphRangesJapanese() *Wchar {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesJapanese(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
-}
-
-// Default + Korean characters
-func (self *FontAtlas) GlyphRangesKorean() *Wchar {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesKorean(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
-}
-
-// Default + Thai characters
-func (self *FontAtlas) GlyphRangesThai() *Wchar {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesThai(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
-}
-
-// Default + Vietnamese characters
-func (self *FontAtlas) GlyphRangesVietnamese() *Wchar {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return (*Wchar)(C.ImFontAtlas_GetGlyphRangesVietnamese(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
-}
-
 func NewFontAtlas() *FontAtlas {
 	return NewFontAtlasFromC(C.ImFontAtlas_ImFontAtlas())
 }
 
-// Bit ambiguous: used to detect when user didn't build texture but effectively we should check TexID != 0 except that would be backend dependent...
-func (self *FontAtlas) IsBuilt() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.ImFontAtlas_IsBuilt(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)) == C.bool(true)
-}
-
-func (self *FontAtlas) SetTexID(id TextureID) {
+// Unregister a rectangle. Existing pixels will stay in texture until resized / garbage collected.
+func (self *FontAtlas) RemoveCustomRect(id FontAtlasRectId) {
 	selfArg, selfFin := self.Handle()
 	idArg, idFin := id.C()
-	C.ImFontAtlas_SetTexID(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), internal.ReinterpretCast[C.ImTextureID](idArg))
+	C.ImFontAtlas_RemoveCustomRect(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), internal.ReinterpretCast[C.ImFontAtlasRectId](idArg))
 
 	selfFin()
 	idFin()
 }
 
+func (self *FontAtlas) RemoveFont(font *Font) {
+	selfArg, selfFin := self.Handle()
+	fontArg, fontFin := font.Handle()
+	C.ImFontAtlas_RemoveFont(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), internal.ReinterpretCast[*C.ImFont](fontArg))
+
+	selfFin()
+	fontFin()
+}
+
 func (self *FontAtlas) Destroy() {
 	selfArg, selfFin := self.Handle()
 	C.ImFontAtlas_destroy(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
+
+	selfFin()
+}
+
+func (self *FontBaked) ClearOutputData() {
+	selfArg, selfFin := self.Handle()
+	C.ImFontBaked_ClearOutputData(internal.ReinterpretCast[*C.ImFontBaked](selfArg))
+
+	selfFin()
+}
+
+// Return U+FFFD glyph if requested glyph doesn't exists.
+func (self *FontBaked) FindGlyph(c Wchar) *FontGlyph {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontGlyphFromC(C.ImFontBaked_FindGlyph(internal.ReinterpretCast[*C.ImFontBaked](selfArg), C.ImWchar(c)))
+}
+
+// Return NULL if glyph doesn't exist
+func (self *FontBaked) FindGlyphNoFallback(c Wchar) *FontGlyph {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontGlyphFromC(C.ImFontBaked_FindGlyphNoFallback(internal.ReinterpretCast[*C.ImFontBaked](selfArg), C.ImWchar(c)))
+}
+
+func (self *FontBaked) CharAdvance(c Wchar) float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.ImFontBaked_GetCharAdvance(internal.ReinterpretCast[*C.ImFontBaked](selfArg), C.ImWchar(c)))
+}
+
+func NewFontBaked() *FontBaked {
+	return NewFontBakedFromC(C.ImFontBaked_ImFontBaked())
+}
+
+func (self *FontBaked) IsGlyphLoaded(c Wchar) bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.ImFontBaked_IsGlyphLoaded(internal.ReinterpretCast[*C.ImFontBaked](selfArg), C.ImWchar(c)) == C.bool(true)
+}
+
+func (self *FontBaked) Destroy() {
+	selfArg, selfFin := self.Handle()
+	C.ImFontBaked_destroy(internal.ReinterpretCast[*C.ImFontBaked](selfArg))
 
 	selfFin()
 }
@@ -1231,26 +1208,32 @@ func (self *FontGlyphRangesBuilder) Destroy() {
 	selfFin()
 }
 
-func (self *Font) AddGlyph(src_cfg *FontConfig, c Wchar, x0, y0, x1, y1, u0, v0, u1, v1, advance_x float32) {
-	selfArg, selfFin := self.Handle()
-	src_cfgArg, src_cfgFin := src_cfg.Handle()
-	C.ImFont_AddGlyph(internal.ReinterpretCast[*C.ImFont](selfArg), internal.ReinterpretCast[*C.ImFontConfig](src_cfgArg), C.ImWchar(c), C.float(x0), C.float(y0), C.float(x1), C.float(y1), C.float(u0), C.float(v0), C.float(u1), C.float(v1), C.float(advance_x))
-
-	selfFin()
-	src_cfgFin()
+func NewFontGlyph() *FontGlyph {
+	return NewFontGlyphFromC(C.ImFontGlyph_ImFontGlyph())
 }
 
-// , bool overwrite_dst = true); // Makes 'from_codepoint' character points to 'to_codepoint' character. Currently needs to be called AFTER fonts have been built.
-func (self *Font) AddRemapChar(from_codepoint, to_codepoint Wchar, overwrite_dst bool) {
+func (self *FontGlyph) Destroy() {
 	selfArg, selfFin := self.Handle()
-	C.ImFont_AddRemapChar(internal.ReinterpretCast[*C.ImFont](selfArg), C.ImWchar(from_codepoint), C.ImWchar(to_codepoint), C.bool(overwrite_dst))
+	C.ImFontGlyph_destroy(internal.ReinterpretCast[*C.ImFontGlyph](selfArg))
 
 	selfFin()
 }
 
-func (self *Font) BuildLookupTable() {
+func InternalNewFontLoader() *FontLoader {
+	return NewFontLoaderFromC(C.ImFontLoader_ImFontLoader())
+}
+
+func (self *FontLoader) InternalDestroy() {
 	selfArg, selfFin := self.Handle()
-	C.ImFont_BuildLookupTable(internal.ReinterpretCast[*C.ImFont](selfArg))
+	C.ImFontLoader_destroy(internal.ReinterpretCast[*C.ImFontLoader](selfArg))
+
+	selfFin()
+}
+
+// Makes 'from_codepoint' character points to 'to_codepoint' glyph.
+func (self *Font) AddRemapChar(from_codepoint, to_codepoint Wchar) {
+	selfArg, selfFin := self.Handle()
+	C.ImFont_AddRemapChar(internal.ReinterpretCast[*C.ImFont](selfArg), C.ImWchar(from_codepoint), C.ImWchar(to_codepoint))
 
 	selfFin()
 }
@@ -1275,7 +1258,7 @@ func (self *Font) CalcTextSizeAV(size, max_width, wrap_width float32, text_begin
 	return *pOut
 }
 
-func (self *Font) CalcWordWrapPositionA(scale float32, text string, wrap_width float32) string {
+func (self *Font) CalcWordWrapPosition(size float32, text string, wrap_width float32) string {
 	selfArg, selfFin := self.Handle()
 	textArg, textFin := internal.WrapString[C.char](text)
 
@@ -1283,7 +1266,7 @@ func (self *Font) CalcWordWrapPositionA(scale float32, text string, wrap_width f
 		selfFin()
 		textFin()
 	}()
-	return C.GoString(C.wrap_ImFont_CalcWordWrapPositionA(internal.ReinterpretCast[*C.ImFont](selfArg), C.float(scale), textArg, C.int(len(text)), C.float(wrap_width)))
+	return C.GoString(C.wrap_ImFont_CalcWordWrapPosition(internal.ReinterpretCast[*C.ImFont](selfArg), C.float(size), textArg, C.int(len(text)), C.float(wrap_width)))
 }
 
 func (self *Font) ClearOutputData() {
@@ -1293,33 +1276,7 @@ func (self *Font) ClearOutputData() {
 	selfFin()
 }
 
-func (self *Font) FindGlyph(c Wchar) *FontGlyph {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return NewFontGlyphFromC(C.ImFont_FindGlyph(internal.ReinterpretCast[*C.ImFont](selfArg), C.ImWchar(c)))
-}
-
-func (self *Font) FindGlyphNoFallback(c Wchar) *FontGlyph {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return NewFontGlyphFromC(C.ImFont_FindGlyphNoFallback(internal.ReinterpretCast[*C.ImFont](selfArg), C.ImWchar(c)))
-}
-
-func (self *Font) CharAdvance(c Wchar) float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.ImFont_GetCharAdvance(internal.ReinterpretCast[*C.ImFont](selfArg), C.ImWchar(c)))
-}
-
+// Fill ImFontConfig::Name.
 func (self *Font) DebugName() string {
 	selfArg, selfFin := self.Handle()
 
@@ -1329,15 +1286,29 @@ func (self *Font) DebugName() string {
 	return C.GoString(C.ImFont_GetDebugName(internal.ReinterpretCast[*C.ImFont](selfArg)))
 }
 
-func (self *Font) GrowIndex(new_size int32) {
+// Get or create baked data for given size
+// FontBakedV parameter default value hint:
+// density: -1.0f
+func (self *Font) FontBakedV(font_size, density float32) *FontBaked {
 	selfArg, selfFin := self.Handle()
-	C.ImFont_GrowIndex(internal.ReinterpretCast[*C.ImFont](selfArg), C.int(new_size))
 
-	selfFin()
+	defer func() {
+		selfFin()
+	}()
+	return NewFontBakedFromC(C.ImFont_GetFontBaked(internal.ReinterpretCast[*C.ImFont](selfArg), C.float(font_size), C.float(density)))
 }
 
 func NewFont() *Font {
 	return NewFontFromC(C.ImFont_ImFont())
+}
+
+func (self *Font) IsGlyphInFont(c Wchar) bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.ImFont_IsGlyphInFont(internal.ReinterpretCast[*C.ImFont](selfArg), C.ImWchar(c)) == C.bool(true)
 }
 
 func (self *Font) IsGlyphRangeUnused(c_begin, c_last uint32) bool {
@@ -2701,6 +2672,7 @@ func NewStyle() *Style {
 	return NewStyleFromC(C.ImGuiStyle_ImGuiStyle())
 }
 
+// Scale all spacing/padding/thickness values. Do not scale fonts.
 func (self *Style) ScaleAllSizes(scale_factor float32) {
 	selfArg, selfFin := self.Handle()
 	C.ImGuiStyle_ScaleAllSizes(internal.ReinterpretCast[*C.ImGuiStyle](selfArg), C.float(scale_factor))
@@ -3250,15 +3222,6 @@ func (self *WindowSettings) InternalDestroy() {
 	selfFin()
 }
 
-func (self *Window) InternalCalcFontSize() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.ImGuiWindow_CalcFontSize(internal.ReinterpretCast[*C.ImGuiWindow](selfArg)))
-}
-
 func (self *Window) InternalIDFromPos(p_abs Vec2) ID {
 	selfArg, selfFin := self.Handle()
 
@@ -3628,6 +3591,143 @@ func (self *Rect) InternalDestroy() {
 	selfFin()
 }
 
+func (self *TextureData) Create(format TextureFormat, w, h int32) {
+	selfArg, selfFin := self.Handle()
+	C.ImTextureData_Create(internal.ReinterpretCast[*C.ImTextureData](selfArg), C.ImTextureFormat(format), C.int(w), C.int(h))
+
+	selfFin()
+}
+
+func (self *TextureData) DestroyPixels() {
+	selfArg, selfFin := self.Handle()
+	C.ImTextureData_DestroyPixels(internal.ReinterpretCast[*C.ImTextureData](selfArg))
+
+	selfFin()
+}
+
+func (self *TextureData) Pitch() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.ImTextureData_GetPitch(internal.ReinterpretCast[*C.ImTextureData](selfArg)))
+}
+
+func (self *TextureData) Pixels() uintptr {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImTextureData_GetPixels(internal.ReinterpretCast[*C.ImTextureData](selfArg)))
+}
+
+func (self *TextureData) PixelsAt(x, y int32) uintptr {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImTextureData_GetPixelsAt(internal.ReinterpretCast[*C.ImTextureData](selfArg), C.int(x), C.int(y)))
+}
+
+func (self *TextureData) SizeInBytes() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.ImTextureData_GetSizeInBytes(internal.ReinterpretCast[*C.ImTextureData](selfArg)))
+}
+
+func (self *TextureData) TexID() TextureID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTextureIDFromC(func() *C.ImTextureID {
+		result := C.ImTextureData_GetTexID(internal.ReinterpretCast[*C.ImTextureData](selfArg))
+		return &result
+	}())
+}
+
+func (self *TextureData) TexRef() TextureRef {
+	pOut := new(TextureRef)
+	pOutArg, pOutFin := pOut.Handle()
+
+	selfArg, selfFin := self.Handle()
+	C.ImTextureData_GetTexRef(internal.ReinterpretCast[*C.ImTextureRef](pOutArg), internal.ReinterpretCast[*C.ImTextureData](selfArg))
+
+	pOutFin()
+	selfFin()
+
+	return *pOut
+}
+
+func NewTextureData() *TextureData {
+	return NewTextureDataFromC(C.ImTextureData_ImTextureData())
+}
+
+// Call after honoring a request. Never modify Status directly!
+func (self *TextureData) SetStatus(status TextureStatus) {
+	selfArg, selfFin := self.Handle()
+	C.ImTextureData_SetStatus(internal.ReinterpretCast[*C.ImTextureData](selfArg), C.ImTextureStatus(status))
+
+	selfFin()
+}
+
+// Call after creating or destroying the texture. Never modify TexID directly!
+func (self *TextureData) SetTexID(tex_id TextureID) {
+	selfArg, selfFin := self.Handle()
+	tex_idArg, tex_idFin := tex_id.C()
+	C.ImTextureData_SetTexID(internal.ReinterpretCast[*C.ImTextureData](selfArg), internal.ReinterpretCast[C.ImTextureID](tex_idArg))
+
+	selfFin()
+	tex_idFin()
+}
+
+func (self *TextureData) Destroy() {
+	selfArg, selfFin := self.Handle()
+	C.ImTextureData_destroy(internal.ReinterpretCast[*C.ImTextureData](selfArg))
+
+	selfFin()
+}
+
+// == (_TexData ? _TexData->TexID : _TexID) // Implemented below in the file.
+func (self *TextureRef) TexID() TextureID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTextureIDFromC(func() *C.ImTextureID {
+		result := C.ImTextureRef_GetTexID(internal.ReinterpretCast[*C.ImTextureRef](selfArg))
+		return &result
+	}())
+}
+
+func NewTextureRefNil() *TextureRef {
+	return NewTextureRefFromC(C.ImTextureRef_ImTextureRef_Nil())
+}
+
+func NewTextureRefTextureID(tex_id TextureID) *TextureRef {
+	tex_idArg, tex_idFin := tex_id.C()
+
+	defer func() {
+		tex_idFin()
+	}()
+	return NewTextureRefFromC(C.ImTextureRef_ImTextureRef_TextureID(internal.ReinterpretCast[C.ImTextureID](tex_idArg)))
+}
+
+func (self *TextureRef) Destroy() {
+	selfArg, selfFin := self.Handle()
+	C.ImTextureRef_destroy(internal.ReinterpretCast[*C.ImTextureRef](selfArg))
+
+	selfFin()
+}
+
 func InternalNewVec1Float(_x float32) *Vec1 {
 	return NewVec1FromC(C.ImVec1_ImVec1_Float(C.float(_x)))
 }
@@ -3646,6 +3746,21 @@ func (self *Vec1) InternalDestroy() {
 func (self *Vec2) Destroy() {
 	selfArg, selfFin := internal.Wrap(self)
 	C.ImVec2_destroy(internal.ReinterpretCast[*C.ImVec2](selfArg))
+
+	selfFin()
+}
+
+func InternalNewVec2iInt(_x, _y int32) *Vec2i {
+	return NewVec2iFromC(C.ImVec2i_ImVec2i_Int(C.int(_x), C.int(_y)))
+}
+
+func InternalNewVec2iNil() *Vec2i {
+	return NewVec2iFromC(C.ImVec2i_ImVec2i_Nil())
+}
+
+func (self *Vec2i) InternalDestroy() {
+	selfArg, selfFin := self.Handle()
+	C.ImVec2i_destroy(internal.ReinterpretCast[*C.ImVec2i](selfArg))
 
 	selfFin()
 }
@@ -4832,6 +4947,15 @@ func InternalDebugNodeFontGlyph(font *Font, glyph *FontGlyph) {
 	glyphFin()
 }
 
+func InternalDebugNodeFontGlyphesForSrcMask(font *Font, baked *FontBaked, src_mask int32) {
+	fontArg, fontFin := font.Handle()
+	bakedArg, bakedFin := baked.Handle()
+	C.igDebugNodeFontGlyphesForSrcMask(internal.ReinterpretCast[*C.ImFont](fontArg), internal.ReinterpretCast[*C.ImFontBaked](bakedArg), C.int(src_mask))
+
+	fontFin()
+	bakedFin()
+}
+
 func InternalDebugNodeInputTextState(state *InputTextState) {
 	stateArg, stateFin := state.Handle()
 	C.igDebugNodeInputTextState(internal.ReinterpretCast[*C.ImGuiInputTextState](stateArg))
@@ -4885,6 +5009,18 @@ func InternalDebugNodeTableSettings(settings *TableSettings) {
 	C.igDebugNodeTableSettings(internal.ReinterpretCast[*C.ImGuiTableSettings](settingsArg))
 
 	settingsFin()
+}
+
+// ID used to facilitate persisting the "current" texture.
+// InternalDebugNodeTextureV parameter default value hint:
+// highlight_rect: NULL
+func InternalDebugNodeTextureV(tex *TextureData, int_id int32, highlight_rect *FontAtlasRect) {
+	texArg, texFin := tex.Handle()
+	highlight_rectArg, highlight_rectFin := highlight_rect.Handle()
+	C.igDebugNodeTexture(internal.ReinterpretCast[*C.ImTextureData](texArg), C.int(int_id), internal.ReinterpretCast[*C.ImFontAtlasRect](highlight_rectArg))
+
+	texFin()
+	highlight_rectFin()
 }
 
 func InternalDebugNodeTypingSelectState(state *TypingSelectState) {
@@ -6163,7 +6299,7 @@ func DragDropPayload() *Payload {
 	return NewPayloadFromC(C.igGetDragDropPayload())
 }
 
-// valid after Render() and until the next call to NewFrame(). this is what you have to render.
+// valid after Render() and until the next call to NewFrame(). Call ImGui_ImplXXXX_RenderDrawData() function in your Renderer Backend to render.
 func CurrentDrawData() *DrawData {
 	return NewDrawDataFromC(C.igGetDrawData())
 }
@@ -6182,7 +6318,16 @@ func CurrentFont() *Font {
 	return NewFontFromC(C.igGetFont())
 }
 
-// get current font size (= height in pixels) of current font with current scale applied
+// get current font bound at current size // == GetFont()->GetFontBaked(GetFontSize())
+func FontBaked() *FontBaked {
+	return NewFontBakedFromC(C.igGetFontBaked())
+}
+
+func InternalFontRasterizerDensity() float32 {
+	return float32(C.igGetFontRasterizerDensity())
+}
+
+// get current scaled font size (= height in pixels). AFTER global scale factors applied. *IMPORTANT* DO NOT PASS THIS VALUE TO PushFont()! Use ImGui::GetStyle().FontSizeBase to get value before global scale factors.
 func FontSize() float32 {
 	return float32(C.igGetFontSize())
 }
@@ -6517,6 +6662,10 @@ func InternalPopupAllowedExtentRect(window *Window) Rect {
 	windowFin()
 
 	return *pOut
+}
+
+func InternalRoundedFontSize(size float32) float32 {
+	return float32(C.igGetRoundedFontSize(C.float(size)))
 }
 
 // get maximum scrolling amount ~~ ContentSize.x - WindowSize.x - DecorationsSize.x
@@ -6912,20 +7061,149 @@ func InternalImFloorVec2(v Vec2) Vec2 {
 	return *pOut
 }
 
-func InternalImFontAtlasBuildFinish(atlas *FontAtlas) {
+func InternalImFontAtlasAddDrawListSharedData(atlas *FontAtlas, data *DrawListSharedData) {
 	atlasArg, atlasFin := atlas.Handle()
-	C.igImFontAtlasBuildFinish(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+	dataArg, dataFin := data.Handle()
+	C.igImFontAtlasAddDrawListSharedData(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImDrawListSharedData](dataArg))
+
+	atlasFin()
+	dataFin()
+}
+
+func InternalImFontAtlasBakedAdd(atlas *FontAtlas, font *Font, font_size, font_rasterizer_density float32, baked_id ID) *FontBaked {
+	atlasArg, atlasFin := atlas.Handle()
+	fontArg, fontFin := font.Handle()
+	baked_idArg, baked_idFin := baked_id.C()
+
+	defer func() {
+		atlasFin()
+		fontFin()
+		baked_idFin()
+	}()
+	return NewFontBakedFromC(C.igImFontAtlasBakedAdd(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFont](fontArg), C.float(font_size), C.float(font_rasterizer_density), internal.ReinterpretCast[C.ImGuiID](baked_idArg)))
+}
+
+func InternalImFontAtlasBakedAddFontGlyph(atlas *FontAtlas, baked *FontBaked, src *FontConfig, in_glyph *FontGlyph) *FontGlyph {
+	atlasArg, atlasFin := atlas.Handle()
+	bakedArg, bakedFin := baked.Handle()
+	srcArg, srcFin := src.Handle()
+	in_glyphArg, in_glyphFin := in_glyph.Handle()
+
+	defer func() {
+		atlasFin()
+		bakedFin()
+		srcFin()
+		in_glyphFin()
+	}()
+	return NewFontGlyphFromC(C.igImFontAtlasBakedAddFontGlyph(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFontBaked](bakedArg), internal.ReinterpretCast[*C.ImFontConfig](srcArg), internal.ReinterpretCast[*C.ImFontGlyph](in_glyphArg)))
+}
+
+func InternalImFontAtlasBakedDiscard(atlas *FontAtlas, font *Font, baked *FontBaked) {
+	atlasArg, atlasFin := atlas.Handle()
+	fontArg, fontFin := font.Handle()
+	bakedArg, bakedFin := baked.Handle()
+	C.igImFontAtlasBakedDiscard(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFont](fontArg), internal.ReinterpretCast[*C.ImFontBaked](bakedArg))
+
+	atlasFin()
+	fontFin()
+	bakedFin()
+}
+
+func InternalImFontAtlasBakedDiscardFontGlyph(atlas *FontAtlas, font *Font, baked *FontBaked, glyph *FontGlyph) {
+	atlasArg, atlasFin := atlas.Handle()
+	fontArg, fontFin := font.Handle()
+	bakedArg, bakedFin := baked.Handle()
+	glyphArg, glyphFin := glyph.Handle()
+	C.igImFontAtlasBakedDiscardFontGlyph(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFont](fontArg), internal.ReinterpretCast[*C.ImFontBaked](bakedArg), internal.ReinterpretCast[*C.ImFontGlyph](glyphArg))
+
+	atlasFin()
+	fontFin()
+	bakedFin()
+	glyphFin()
+}
+
+func InternalImFontAtlasBakedGetClosestMatch(atlas *FontAtlas, font *Font, font_size, font_rasterizer_density float32) *FontBaked {
+	atlasArg, atlasFin := atlas.Handle()
+	fontArg, fontFin := font.Handle()
+
+	defer func() {
+		atlasFin()
+		fontFin()
+	}()
+	return NewFontBakedFromC(C.igImFontAtlasBakedGetClosestMatch(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFont](fontArg), C.float(font_size), C.float(font_rasterizer_density)))
+}
+
+func InternalImFontAtlasBakedGetId(font_id ID, baked_size, rasterizer_density float32) ID {
+	font_idArg, font_idFin := font_id.C()
+
+	defer func() {
+		font_idFin()
+	}()
+	return *NewIDFromC(func() *C.ImGuiID {
+		result := C.igImFontAtlasBakedGetId(internal.ReinterpretCast[C.ImGuiID](font_idArg), C.float(baked_size), C.float(rasterizer_density))
+		return &result
+	}())
+}
+
+func InternalImFontAtlasBakedGetOrAdd(atlas *FontAtlas, font *Font, font_size, font_rasterizer_density float32) *FontBaked {
+	atlasArg, atlasFin := atlas.Handle()
+	fontArg, fontFin := font.Handle()
+
+	defer func() {
+		atlasFin()
+		fontFin()
+	}()
+	return NewFontBakedFromC(C.igImFontAtlasBakedGetOrAdd(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFont](fontArg), C.float(font_size), C.float(font_rasterizer_density)))
+}
+
+func InternalImFontAtlasBakedSetFontGlyphBitmap(atlas *FontAtlas, baked *FontBaked, src *FontConfig, glyph *FontGlyph, r *TextureRect, src_pixels *uint, src_fmt TextureFormat, src_pitch int32) {
+	atlasArg, atlasFin := atlas.Handle()
+	bakedArg, bakedFin := baked.Handle()
+	srcArg, srcFin := src.Handle()
+	glyphArg, glyphFin := glyph.Handle()
+	rArg, rFin := r.Handle()
+	src_pixelsArg, src_pixelsFin := internal.WrapNumberPtr[C.uchar, uint](src_pixels)
+	C.igImFontAtlasBakedSetFontGlyphBitmap(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFontBaked](bakedArg), internal.ReinterpretCast[*C.ImFontConfig](srcArg), internal.ReinterpretCast[*C.ImFontGlyph](glyphArg), internal.ReinterpretCast[*C.ImTextureRect](rArg), src_pixelsArg, C.ImTextureFormat(src_fmt), C.int(src_pitch))
+
+	atlasFin()
+	bakedFin()
+	srcFin()
+	glyphFin()
+	rFin()
+	src_pixelsFin()
+}
+
+// Clear output and custom rects
+func InternalImFontAtlasBuildClear(atlas *FontAtlas) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igImFontAtlasBuildClear(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
 
 	atlasFin()
 }
 
-func InternalImFontAtlasBuildGetOversampleFactors(src *FontConfig, out_oversample_h, out_oversample_v *int32) {
+func InternalImFontAtlasBuildDestroy(atlas *FontAtlas) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igImFontAtlasBuildDestroy(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+
+	atlasFin()
+}
+
+func InternalImFontAtlasBuildDiscardBakes(atlas *FontAtlas, unused_frames int32) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igImFontAtlasBuildDiscardBakes(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.int(unused_frames))
+
+	atlasFin()
+}
+
+func InternalImFontAtlasBuildGetOversampleFactors(src *FontConfig, baked *FontBaked, out_oversample_h, out_oversample_v *int32) {
 	srcArg, srcFin := src.Handle()
+	bakedArg, bakedFin := baked.Handle()
 	out_oversample_hArg, out_oversample_hFin := internal.WrapNumberPtr[C.int, int32](out_oversample_h)
 	out_oversample_vArg, out_oversample_vFin := internal.WrapNumberPtr[C.int, int32](out_oversample_v)
-	C.igImFontAtlasBuildGetOversampleFactors(internal.ReinterpretCast[*C.ImFontConfig](srcArg), out_oversample_hArg, out_oversample_vArg)
+	C.igImFontAtlasBuildGetOversampleFactors(internal.ReinterpretCast[*C.ImFontConfig](srcArg), internal.ReinterpretCast[*C.ImFontBaked](bakedArg), out_oversample_hArg, out_oversample_vArg)
 
 	srcFin()
+	bakedFin()
 	out_oversample_hFin()
 	out_oversample_vFin()
 }
@@ -6937,71 +7215,127 @@ func InternalImFontAtlasBuildInit(atlas *FontAtlas) {
 	atlasFin()
 }
 
-func InternalImFontAtlasBuildMultiplyCalcLookupTable(out_table *[256]uint, in_multiply_factor float32) {
-	out_tableArg := make([]C.uchar, len(out_table))
-	for i, out_tableV := range out_table {
-		out_tableArg[i] = C.uchar(out_tableV)
-	}
-	C.igImFontAtlasBuildMultiplyCalcLookupTable((*C.uchar)(&out_tableArg[0]), C.float(in_multiply_factor))
-
-	for i, out_tableV := range out_tableArg {
-		(*out_table)[i] = uint(out_tableV)
-	}
-}
-
-func InternalImFontAtlasBuildMultiplyRectAlpha8(table *[256]uint, pixels *uint, x, y, w, h, stride int32) {
-	tableArg := make([]C.uchar, len(table))
-	for i, tableV := range table {
-		tableArg[i] = C.uchar(tableV)
-	}
-	pixelsArg, pixelsFin := internal.WrapNumberPtr[C.uchar, uint](pixels)
-	C.igImFontAtlasBuildMultiplyRectAlpha8((*C.uchar)(&tableArg[0]), pixelsArg, C.int(x), C.int(y), C.int(w), C.int(h), C.int(stride))
-
-	for i, tableV := range tableArg {
-		(*table)[i] = uint(tableV)
-	}
-
-	pixelsFin()
-}
-
-func InternalImFontAtlasBuildPackCustomRects(atlas *FontAtlas, stbrp_context_opaque uintptr) {
+// Legacy
+func InternalImFontAtlasBuildLegacyPreloadAllGlyphRanges(atlas *FontAtlas) {
 	atlasArg, atlasFin := atlas.Handle()
-	C.wrap_igImFontAtlasBuildPackCustomRects(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.uintptr_t(stbrp_context_opaque))
+	C.igImFontAtlasBuildLegacyPreloadAllGlyphRanges(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
 
 	atlasFin()
 }
 
-func InternalImFontAtlasBuildRender32bppRectFromString(atlas *FontAtlas, x, y, w, h int32, in_str string, in_marker_char rune, in_marker_pixel_value uint32) {
+func InternalImFontAtlasBuildMain(atlas *FontAtlas) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igImFontAtlasBuildMain(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+
+	atlasFin()
+}
+
+func InternalImFontAtlasBuildRenderBitmapFromString(atlas *FontAtlas, x, y, w, h int32, in_str string, in_marker_char rune) {
 	atlasArg, atlasFin := atlas.Handle()
 	in_strArg, in_strFin := internal.WrapString[C.char](in_str)
-	C.igImFontAtlasBuildRender32bppRectFromString(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.int(x), C.int(y), C.int(w), C.int(h), in_strArg, C.char(in_marker_char), C.uint(in_marker_pixel_value))
+	C.igImFontAtlasBuildRenderBitmapFromString(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.int(x), C.int(y), C.int(w), C.int(h), in_strArg, C.char(in_marker_char))
 
 	atlasFin()
 	in_strFin()
 }
 
-func InternalImFontAtlasBuildRender8bppRectFromString(atlas *FontAtlas, x, y, w, h int32, in_str string, in_marker_char rune, in_marker_pixel_value uint) {
+func InternalImFontAtlasBuildSetupFontLoader(atlas *FontAtlas, font_loader *FontLoader) {
 	atlasArg, atlasFin := atlas.Handle()
-	in_strArg, in_strFin := internal.WrapString[C.char](in_str)
-	C.igImFontAtlasBuildRender8bppRectFromString(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.int(x), C.int(y), C.int(w), C.int(h), in_strArg, C.char(in_marker_char), C.uchar(in_marker_pixel_value))
+	font_loaderArg, font_loaderFin := font_loader.Handle()
+	C.igImFontAtlasBuildSetupFontLoader(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFontLoader](font_loaderArg))
 
 	atlasFin()
-	in_strFin()
+	font_loaderFin()
 }
 
-func InternalImFontAtlasBuildSetupFont(atlas *FontAtlas, font *Font, src *FontConfig, ascent, descent float32) {
+func InternalImFontAtlasBuildSetupFontSpecialGlyphs(atlas *FontAtlas, font *Font, src *FontConfig) {
 	atlasArg, atlasFin := atlas.Handle()
 	fontArg, fontFin := font.Handle()
 	srcArg, srcFin := src.Handle()
-	C.igImFontAtlasBuildSetupFont(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFont](fontArg), internal.ReinterpretCast[*C.ImFontConfig](srcArg), C.float(ascent), C.float(descent))
+	C.igImFontAtlasBuildSetupFontSpecialGlyphs(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFont](fontArg), internal.ReinterpretCast[*C.ImFontConfig](srcArg))
 
 	atlasFin()
 	fontFin()
 	srcFin()
 }
 
-func InternalImFontAtlasGetBuilderForStbTruetype() *FontBuilderIO {
-	return NewFontBuilderIOFromC(C.igImFontAtlasGetBuilderForStbTruetype())
+func InternalImFontAtlasBuildUpdatePointers(atlas *FontAtlas) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igImFontAtlasBuildUpdatePointers(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+
+	atlasFin()
+}
+
+func InternalImFontAtlasDebugLogTextureRequests(atlas *FontAtlas) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igImFontAtlasDebugLogTextureRequests(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+
+	atlasFin()
+}
+
+func InternalImFontAtlasFontDestroyOutput(atlas *FontAtlas, font *Font) {
+	atlasArg, atlasFin := atlas.Handle()
+	fontArg, fontFin := font.Handle()
+	C.igImFontAtlasFontDestroyOutput(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFont](fontArg))
+
+	atlasFin()
+	fontFin()
+}
+
+func InternalImFontAtlasFontDestroySourceData(atlas *FontAtlas, src *FontConfig) {
+	atlasArg, atlasFin := atlas.Handle()
+	srcArg, srcFin := src.Handle()
+	C.igImFontAtlasFontDestroySourceData(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFontConfig](srcArg))
+
+	atlasFin()
+	srcFin()
+}
+
+func InternalImFontAtlasFontDiscardBakes(atlas *FontAtlas, font *Font, unused_frames int32) {
+	atlasArg, atlasFin := atlas.Handle()
+	fontArg, fontFin := font.Handle()
+	C.igImFontAtlasFontDiscardBakes(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFont](fontArg), C.int(unused_frames))
+
+	atlasFin()
+	fontFin()
+}
+
+// Using FontDestroyOutput/FontInitOutput sequence useful notably if font loader params have changed
+func InternalImFontAtlasFontInitOutput(atlas *FontAtlas, font *Font) bool {
+	atlasArg, atlasFin := atlas.Handle()
+	fontArg, fontFin := font.Handle()
+
+	defer func() {
+		atlasFin()
+		fontFin()
+	}()
+	return C.igImFontAtlasFontInitOutput(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFont](fontArg)) == C.bool(true)
+}
+
+func InternalImFontAtlasFontSourceAddToFont(atlas *FontAtlas, font *Font, src *FontConfig) {
+	atlasArg, atlasFin := atlas.Handle()
+	fontArg, fontFin := font.Handle()
+	srcArg, srcFin := src.Handle()
+	C.igImFontAtlasFontSourceAddToFont(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFont](fontArg), internal.ReinterpretCast[*C.ImFontConfig](srcArg))
+
+	atlasFin()
+	fontFin()
+	srcFin()
+}
+
+func InternalImFontAtlasFontSourceInit(atlas *FontAtlas, src *FontConfig) bool {
+	atlasArg, atlasFin := atlas.Handle()
+	srcArg, srcFin := src.Handle()
+
+	defer func() {
+		atlasFin()
+		srcFin()
+	}()
+	return C.igImFontAtlasFontSourceInit(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFontConfig](srcArg)) == C.bool(true)
+}
+
+func InternalImFontAtlasGetFontLoaderForStbTruetype() *FontLoader {
+	return NewFontLoaderFromC(C.igImFontAtlasGetFontLoaderForStbTruetype())
 }
 
 func InternalImFontAtlasGetMouseCursorTexData(atlas *FontAtlas, cursor_type MouseCursor, out_offset, out_size *Vec2, out_uv_border, out_uv_fill [2]*Vec2) bool {
@@ -7040,9 +7374,216 @@ func InternalImFontAtlasGetMouseCursorTexData(atlas *FontAtlas, cursor_type Mous
 	return C.igImFontAtlasGetMouseCursorTexData(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.ImGuiMouseCursor(cursor_type), internal.ReinterpretCast[*C.ImVec2](out_offsetArg), internal.ReinterpretCast[*C.ImVec2](out_sizeArg), (*C.ImVec2)(&out_uv_borderArg[0]), (*C.ImVec2)(&out_uv_fillArg[0])) == C.bool(true)
 }
 
-func InternalImFontAtlasUpdateSourcesPointers(atlas *FontAtlas) {
+// InternalImFontAtlasPackAddRectV parameter default value hint:
+// overwrite_entry: NULL
+func InternalImFontAtlasPackAddRectV(atlas *FontAtlas, w, h int32, overwrite_entry *FontAtlasRectEntry) FontAtlasRectId {
 	atlasArg, atlasFin := atlas.Handle()
-	C.igImFontAtlasUpdateSourcesPointers(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+	overwrite_entryArg, overwrite_entryFin := overwrite_entry.Handle()
+
+	defer func() {
+		atlasFin()
+		overwrite_entryFin()
+	}()
+	return *NewFontAtlasRectIdFromC(func() *C.ImFontAtlasRectId {
+		result := C.igImFontAtlasPackAddRect(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.int(w), C.int(h), internal.ReinterpretCast[*C.ImFontAtlasRectEntry](overwrite_entryArg))
+		return &result
+	}())
+}
+
+func InternalImFontAtlasPackDiscardRect(atlas *FontAtlas, id FontAtlasRectId) {
+	atlasArg, atlasFin := atlas.Handle()
+	idArg, idFin := id.C()
+	C.igImFontAtlasPackDiscardRect(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[C.ImFontAtlasRectId](idArg))
+
+	atlasFin()
+	idFin()
+}
+
+func InternalImFontAtlasPackGetRect(atlas *FontAtlas, id FontAtlasRectId) *TextureRect {
+	atlasArg, atlasFin := atlas.Handle()
+	idArg, idFin := id.C()
+
+	defer func() {
+		atlasFin()
+		idFin()
+	}()
+	return NewTextureRectFromC(C.igImFontAtlasPackGetRect(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[C.ImFontAtlasRectId](idArg)))
+}
+
+func InternalImFontAtlasPackGetRectSafe(atlas *FontAtlas, id FontAtlasRectId) *TextureRect {
+	atlasArg, atlasFin := atlas.Handle()
+	idArg, idFin := id.C()
+
+	defer func() {
+		atlasFin()
+		idFin()
+	}()
+	return NewTextureRectFromC(C.igImFontAtlasPackGetRectSafe(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[C.ImFontAtlasRectId](idArg)))
+}
+
+func InternalImFontAtlasPackInit(atlas *FontAtlas) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igImFontAtlasPackInit(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+
+	atlasFin()
+}
+
+func InternalImFontAtlasRectIdGetGeneration(id FontAtlasRectId) int32 {
+	idArg, idFin := id.C()
+
+	defer func() {
+		idFin()
+	}()
+	return int32(C.igImFontAtlasRectId_GetGeneration(internal.ReinterpretCast[C.ImFontAtlasRectId](idArg)))
+}
+
+func InternalImFontAtlasRectIdGetIndex(id FontAtlasRectId) int32 {
+	idArg, idFin := id.C()
+
+	defer func() {
+		idFin()
+	}()
+	return int32(C.igImFontAtlasRectId_GetIndex(internal.ReinterpretCast[C.ImFontAtlasRectId](idArg)))
+}
+
+func InternalImFontAtlasRectIdMake(index_idx, gen_idx int32) FontAtlasRectId {
+	return *NewFontAtlasRectIdFromC(func() *C.ImFontAtlasRectId {
+		result := C.igImFontAtlasRectId_Make(C.int(index_idx), C.int(gen_idx))
+		return &result
+	}())
+}
+
+func InternalImFontAtlasRemoveDrawListSharedData(atlas *FontAtlas, data *DrawListSharedData) {
+	atlasArg, atlasFin := atlas.Handle()
+	dataArg, dataFin := data.Handle()
+	C.igImFontAtlasRemoveDrawListSharedData(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImDrawListSharedData](dataArg))
+
+	atlasFin()
+	dataFin()
+}
+
+func InternalImFontAtlasTextureAdd(atlas *FontAtlas, w, h int32) *TextureData {
+	atlasArg, atlasFin := atlas.Handle()
+
+	defer func() {
+		atlasFin()
+	}()
+	return NewTextureDataFromC(C.igImFontAtlasTextureAdd(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.int(w), C.int(h)))
+}
+
+func InternalImFontAtlasTextureBlockConvert(src_pixels *uint, src_fmt TextureFormat, src_pitch int32, dst_pixels *uint, dst_fmt TextureFormat, dst_pitch, w, h int32) {
+	src_pixelsArg, src_pixelsFin := internal.WrapNumberPtr[C.uchar, uint](src_pixels)
+	dst_pixelsArg, dst_pixelsFin := internal.WrapNumberPtr[C.uchar, uint](dst_pixels)
+	C.igImFontAtlasTextureBlockConvert(src_pixelsArg, C.ImTextureFormat(src_fmt), C.int(src_pitch), dst_pixelsArg, C.ImTextureFormat(dst_fmt), C.int(dst_pitch), C.int(w), C.int(h))
+
+	src_pixelsFin()
+	dst_pixelsFin()
+}
+
+func InternalImFontAtlasTextureBlockCopy(src_tex *TextureData, src_x, src_y int32, dst_tex *TextureData, dst_x, dst_y, w, h int32) {
+	src_texArg, src_texFin := src_tex.Handle()
+	dst_texArg, dst_texFin := dst_tex.Handle()
+	C.igImFontAtlasTextureBlockCopy(internal.ReinterpretCast[*C.ImTextureData](src_texArg), C.int(src_x), C.int(src_y), internal.ReinterpretCast[*C.ImTextureData](dst_texArg), C.int(dst_x), C.int(dst_y), C.int(w), C.int(h))
+
+	src_texFin()
+	dst_texFin()
+}
+
+func InternalImFontAtlasTextureBlockFill(dst_tex *TextureData, dst_x, dst_y, w, h int32, col uint32) {
+	dst_texArg, dst_texFin := dst_tex.Handle()
+	C.igImFontAtlasTextureBlockFill(internal.ReinterpretCast[*C.ImTextureData](dst_texArg), C.int(dst_x), C.int(dst_y), C.int(w), C.int(h), C.ImU32(col))
+
+	dst_texFin()
+}
+
+func InternalImFontAtlasTextureBlockPostProcess(data *FontAtlasPostProcessData) {
+	dataArg, dataFin := data.Handle()
+	C.igImFontAtlasTextureBlockPostProcess(internal.ReinterpretCast[*C.ImFontAtlasPostProcessData](dataArg))
+
+	dataFin()
+}
+
+func InternalImFontAtlasTextureBlockPostProcessMultiply(data *FontAtlasPostProcessData, multiply_factor float32) {
+	dataArg, dataFin := data.Handle()
+	C.igImFontAtlasTextureBlockPostProcessMultiply(internal.ReinterpretCast[*C.ImFontAtlasPostProcessData](dataArg), C.float(multiply_factor))
+
+	dataFin()
+}
+
+func InternalImFontAtlasTextureBlockQueueUpload(atlas *FontAtlas, tex *TextureData, x, y, w, h int32) {
+	atlasArg, atlasFin := atlas.Handle()
+	texArg, texFin := tex.Handle()
+	C.igImFontAtlasTextureBlockQueueUpload(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImTextureData](texArg), C.int(x), C.int(y), C.int(w), C.int(h))
+
+	atlasFin()
+	texFin()
+}
+
+func InternalImFontAtlasTextureCompact(atlas *FontAtlas) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igImFontAtlasTextureCompact(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+
+	atlasFin()
+}
+
+func InternalImFontAtlasTextureGetSizeEstimate(atlas *FontAtlas) Vec2i {
+	pOut := new(Vec2i)
+	pOutArg, pOutFin := pOut.Handle()
+
+	atlasArg, atlasFin := atlas.Handle()
+	C.igImFontAtlasTextureGetSizeEstimate(internal.ReinterpretCast[*C.ImVec2i](pOutArg), internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+
+	pOutFin()
+	atlasFin()
+
+	return *pOut
+}
+
+// InternalImFontAtlasTextureGrowV parameter default value hint:
+// old_w: -1
+// old_h: -1
+func InternalImFontAtlasTextureGrowV(atlas *FontAtlas, old_w, old_h int32) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igImFontAtlasTextureGrow(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.int(old_w), C.int(old_h))
+
+	atlasFin()
+}
+
+func InternalImFontAtlasTextureMakeSpace(atlas *FontAtlas) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igImFontAtlasTextureMakeSpace(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+
+	atlasFin()
+}
+
+func InternalImFontAtlasTextureRepack(atlas *FontAtlas, w, h int32) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igImFontAtlasTextureRepack(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.int(w), C.int(h))
+
+	atlasFin()
+}
+
+func InternalImFontAtlasUpdateDrawListsSharedData(atlas *FontAtlas) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igImFontAtlasUpdateDrawListsSharedData(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+
+	atlasFin()
+}
+
+func InternalImFontAtlasUpdateDrawListsTextures(atlas *FontAtlas, old_tex, new_tex TextureRef) {
+	atlasArg, atlasFin := atlas.Handle()
+	old_texArg, old_texFin := old_tex.C()
+	new_texArg, new_texFin := new_tex.C()
+	C.igImFontAtlasUpdateDrawListsTextures(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[C.ImTextureRef](old_texArg), internal.ReinterpretCast[C.ImTextureRef](new_texArg))
+
+	atlasFin()
+	old_texFin()
+	new_texFin()
+}
+
+func InternalImFontAtlasUpdateNewFrame(atlas *FontAtlas, frame_count int32, renderer_has_textures bool) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igImFontAtlasUpdateNewFrame(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.int(frame_count), C.bool(renderer_has_textures))
 
 	atlasFin()
 }
@@ -7209,6 +7750,11 @@ func InternalImMax(lhs, rhs Vec2) Vec2 {
 	return *pOut
 }
 
+// Duplicate a chunk of memory.
+func InternalImMemdup(src uintptr, size uint64) uintptr {
+	return uintptr(C.wrap_igImMemdup(C.uintptr_t(src), C.xulong(size)))
+}
+
 func InternalImMin(lhs, rhs Vec2) Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := internal.Wrap(pOut)
@@ -7311,6 +7857,10 @@ func InternalImRotate(v Vec2, cos_a, sin_a float32) Vec2 {
 	pOutFin()
 
 	return *pOut
+}
+
+func InternalImRound64(f float32) float32 {
+	return float32(C.igImRound64(C.float(f)))
 }
 
 func InternalImRsqrtFloat(x float32) float32 {
@@ -7573,6 +8123,18 @@ func InternalImTextStrToUtf8(out_buf string, out_buf_size int32, in_text, in_tex
 	return int32(C.igImTextStrToUtf8(out_bufArg, C.int(out_buf_size), (*C.ImWchar)(in_text), (*C.ImWchar)(in_text_end)))
 }
 
+func InternalImTextureDataGetFormatBytesPerPixel(format TextureFormat) int32 {
+	return int32(C.igImTextureDataGetFormatBytesPerPixel(C.ImTextureFormat(format)))
+}
+
+func InternalImTextureDataGetFormatName(format TextureFormat) string {
+	return C.GoString(C.igImTextureDataGetFormatName(C.ImTextureFormat(format)))
+}
+
+func InternalImTextureDataGetStatusName(status TextureStatus) string {
+	return C.GoString(C.igImTextureDataGetStatusName(C.ImTextureStatus(status)))
+}
+
 func InternalImToUpper(c rune) rune {
 	return rune(C.igImToUpper(C.char(c)))
 }
@@ -7611,6 +8173,10 @@ func InternalImTriangleIsClockwise(a, b, c Vec2) bool {
 	return C.igImTriangleIsClockwise(internal.ReinterpretCast[C.ImVec2](a.ToC()), internal.ReinterpretCast[C.ImVec2](b.ToC()), internal.ReinterpretCast[C.ImVec2](c.ToC())) == C.bool(true)
 }
 
+func InternalImTrunc64(f float32) float32 {
+	return float32(C.igImTrunc64(C.float(f)))
+}
+
 func InternalImTruncFloat(f float32) float32 {
 	return float32(C.igImTrunc_Float(C.float(f)))
 }
@@ -7633,11 +8199,11 @@ func InternalImUpperPowerOfTwo(v int32) int32 {
 // ImageV parameter default value hint:
 // uv0: ImVec2(0,0)
 // uv1: ImVec2(1,1)
-func ImageV(user_texture_id TextureID, image_size, uv0, uv1 Vec2) {
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
-	C.igImage(internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()))
+func ImageV(tex_ref TextureRef, image_size, uv0, uv1 Vec2) {
+	tex_refArg, tex_refFin := tex_ref.C()
+	C.igImage(internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()))
 
-	user_texture_idFin()
+	tex_refFin()
 }
 
 // ImageButtonV parameter default value hint:
@@ -7645,28 +8211,28 @@ func ImageV(user_texture_id TextureID, image_size, uv0, uv1 Vec2) {
 // uv1: ImVec2(1,1)
 // bg_col: ImVec4(0,0,0,0)
 // tint_col: ImVec4(1,1,1,1)
-func ImageButtonV(str_id string, user_texture_id TextureID, image_size, uv0, uv1 Vec2, bg_col, tint_col Vec4) bool {
+func ImageButtonV(str_id string, tex_ref TextureRef, image_size, uv0, uv1 Vec2, bg_col, tint_col Vec4) bool {
 	str_idArg, str_idFin := internal.WrapString[C.char](str_id)
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
+	tex_refArg, tex_refFin := tex_ref.C()
 
 	defer func() {
 		str_idFin()
-		user_texture_idFin()
+		tex_refFin()
 	}()
-	return C.igImageButton(str_idArg, internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec4](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4](tint_col.ToC())) == C.bool(true)
+	return C.igImageButton(str_idArg, internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec4](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4](tint_col.ToC())) == C.bool(true)
 }
 
 // InternalImageButtonExV parameter default value hint:
 // flags: 0
-func InternalImageButtonExV(id ID, user_texture_id TextureID, image_size, uv0, uv1 Vec2, bg_col, tint_col Vec4, flags ButtonFlags) bool {
+func InternalImageButtonExV(id ID, tex_ref TextureRef, image_size, uv0, uv1 Vec2, bg_col, tint_col Vec4, flags ButtonFlags) bool {
 	idArg, idFin := id.C()
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
+	tex_refArg, tex_refFin := tex_ref.C()
 
 	defer func() {
 		idFin()
-		user_texture_idFin()
+		tex_refFin()
 	}()
-	return C.igImageButtonEx(internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec4](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4](tint_col.ToC()), C.ImGuiButtonFlags(flags)) == C.bool(true)
+	return C.igImageButtonEx(internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec4](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4](tint_col.ToC()), C.ImGuiButtonFlags(flags)) == C.bool(true)
 }
 
 // ImageWithBgV parameter default value hint:
@@ -7674,11 +8240,11 @@ func InternalImageButtonExV(id ID, user_texture_id TextureID, image_size, uv0, u
 // uv1: ImVec2(1,1)
 // bg_col: ImVec4(0,0,0,0)
 // tint_col: ImVec4(1,1,1,1)
-func ImageWithBgV(user_texture_id TextureID, image_size, uv0, uv1 Vec2, bg_col, tint_col Vec4) {
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
-	C.igImageWithBg(internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec4](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4](tint_col.ToC()))
+func ImageWithBgV(tex_ref TextureRef, image_size, uv0, uv1 Vec2, bg_col, tint_col Vec4) {
+	tex_refArg, tex_refFin := tex_ref.C()
+	C.igImageWithBg(internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec4](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4](tint_col.ToC()))
 
-	user_texture_idFin()
+	tex_refFin()
 }
 
 // move content position toward the right, by indent_w, or style.IndentSpacing if indent_w <= 0
@@ -8819,6 +9385,10 @@ func PopItemWidth() {
 	C.igPopItemWidth()
 }
 
+func InternalPopPasswordFont() {
+	C.igPopPasswordFont()
+}
+
 // PopStyleColorV parameter default value hint:
 // count: 1
 func PopStyleColorV(count int32) {
@@ -8864,10 +9434,10 @@ func InternalPushFocusScope(id ID) {
 	idFin()
 }
 
-// use NULL as a shortcut to push default font
-func PushFont(font *Font) {
+// Use NULL as a shortcut to keep current font. Use 0.0f to keep current size.
+func PushFont(font *Font, font_size_base_unscaled float32) {
 	fontArg, fontFin := font.Handle()
-	C.igPushFont(internal.ReinterpretCast[*C.ImFont](fontArg))
+	C.igPushFont(internal.ReinterpretCast[*C.ImFont](fontArg), C.float(font_size_base_unscaled))
 
 	fontFin()
 }
@@ -8982,6 +9552,21 @@ func RadioButtonIntPtr(label string, v *int32, v_button int32) bool {
 		vFin()
 	}()
 	return C.igRadioButton_IntPtr(labelArg, vArg, C.int(v_button)) == C.bool(true)
+}
+
+func InternalRegisterFontAtlas(atlas *FontAtlas) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igRegisterFontAtlas(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+
+	atlasFin()
+}
+
+// Register external texture
+func InternalRegisterUserTexture(tex *TextureData) {
+	texArg, texFin := tex.Handle()
+	C.igRegisterUserTexture(internal.ReinterpretCast[*C.ImTextureData](texArg))
+
+	texFin()
 }
 
 func InternalRemoveContextHook(context *Context, hook_to_remove ID) {
@@ -9364,9 +9949,9 @@ func SetCurrentContext(ctx *Context) {
 	ctxFin()
 }
 
-func InternalSetCurrentFont(font *Font) {
+func InternalSetCurrentFont(font *Font, font_size_before_scaling, font_size_after_scaling float32) {
 	fontArg, fontFin := font.Handle()
-	C.igSetCurrentFont(internal.ReinterpretCast[*C.ImFont](fontArg))
+	C.igSetCurrentFont(internal.ReinterpretCast[*C.ImFont](fontArg), C.float(font_size_before_scaling), C.float(font_size_after_scaling))
 
 	fontFin()
 }
@@ -9419,6 +10004,10 @@ func InternalSetFocusID(id ID, window *Window) {
 
 	idFin()
 	windowFin()
+}
+
+func InternalSetFontRasterizerDensity(rasterizer_density float32) {
+	C.igSetFontRasterizerDensity(C.float(rasterizer_density))
 }
 
 func InternalSetHoveredID(id ID) {
@@ -9815,11 +10404,6 @@ func SetWindowFocusStr(name string) {
 	C.igSetWindowFocus_Str(nameArg)
 
 	nameFin()
-}
-
-// [OBSOLETE] set font scale. Adjust IO.FontGlobalScale if you want to scale all windows. This is an old API! For correct scaling, prefer to reload font + rebuild ImFontAtlas + call style.ScaleAllSizes().
-func SetWindowFontScale(scale float32) {
-	C.igSetWindowFontScale(C.float(scale))
 }
 
 func InternalSetWindowHiddenAndSkipItemsForCurrentFrame(window *Window) {
@@ -11165,13 +11749,15 @@ func TextLink(label string) bool {
 // hyperlink text button, automatically open file/url when clicked
 // TextLinkOpenURLV parameter default value hint:
 // url: NULL
-func TextLinkOpenURLV(label, url string) {
+func TextLinkOpenURLV(label, url string) bool {
 	labelArg, labelFin := internal.WrapString[C.char](label)
 	urlArg, urlFin := internal.WrapString[C.char](url)
-	C.igTextLinkOpenURL(labelArg, urlArg)
 
-	labelFin()
-	urlFin()
+	defer func() {
+		labelFin()
+		urlFin()
+	}()
+	return C.igTextLinkOpenURL(labelArg, urlArg) == C.bool(true)
 }
 
 // raw text without formatting. Roughly equivalent to Text("%s", text) but: A) doesn't require null terminated string if 'text_end' is specified, B) it's faster, no memory copy is done, no buffer size limits, recommended for long chunks of text.
@@ -11342,6 +11928,24 @@ func TreePushStr(str_id string) {
 // indent_w: 0.0f
 func UnindentV(indent_w float32) {
 	C.igUnindent(C.float(indent_w))
+}
+
+func InternalUnregisterFontAtlas(atlas *FontAtlas) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.igUnregisterFontAtlas(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+
+	atlasFin()
+}
+
+func InternalUnregisterUserTexture(tex *TextureData) {
+	texArg, texFin := tex.Handle()
+	C.igUnregisterUserTexture(internal.ReinterpretCast[*C.ImTextureData](texArg))
+
+	texFin()
+}
+
+func InternalUpdateCurrentFontSize(restore_font_size_after_scaling float32) {
+	C.igUpdateCurrentFontSize(C.float(restore_font_size_after_scaling))
 }
 
 func InternalUpdateHoveredWindowAndCaptureFlags(mouse_pos Vec2) {
@@ -11580,31 +12184,31 @@ func (self *DrawList) AddEllipseFilled(center, radius Vec2, col uint32) {
 	selfFin()
 }
 
-func (self *DrawList) AddImage(user_texture_id TextureID, p_min, p_max Vec2) {
+func (self *DrawList) AddImage(tex_ref TextureRef, p_min, p_max Vec2) {
 	selfArg, selfFin := self.Handle()
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
-	C.wrap_ImDrawList_AddImage(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()))
+	tex_refArg, tex_refFin := tex_ref.C()
+	C.wrap_ImDrawList_AddImage(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()))
 
 	selfFin()
-	user_texture_idFin()
+	tex_refFin()
 }
 
-func (self *DrawList) AddImageQuad(user_texture_id TextureID, p1, p2, p3, p4 Vec2) {
+func (self *DrawList) AddImageQuad(tex_ref TextureRef, p1, p2, p3, p4 Vec2) {
 	selfArg, selfFin := self.Handle()
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
-	C.wrap_ImDrawList_AddImageQuad(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()))
+	tex_refArg, tex_refFin := tex_ref.C()
+	C.wrap_ImDrawList_AddImageQuad(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()))
 
 	selfFin()
-	user_texture_idFin()
+	tex_refFin()
 }
 
-func (self *DrawList) AddImageRounded(user_texture_id TextureID, p_min, p_max, uv_min, uv_max Vec2, col uint32, rounding float32) {
+func (self *DrawList) AddImageRounded(tex_ref TextureRef, p_min, p_max, uv_min, uv_max Vec2, col uint32, rounding float32) {
 	selfArg, selfFin := self.Handle()
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
-	C.wrap_ImDrawList_AddImageRounded(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), internal.ReinterpretCast[C.ImVec2](uv_min.ToC()), internal.ReinterpretCast[C.ImVec2](uv_max.ToC()), C.ImU32(col), C.float(rounding))
+	tex_refArg, tex_refFin := tex_ref.C()
+	C.wrap_ImDrawList_AddImageRounded(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), internal.ReinterpretCast[C.ImVec2](uv_min.ToC()), internal.ReinterpretCast[C.ImVec2](uv_max.ToC()), C.ImU32(col), C.float(rounding))
 
 	selfFin()
-	user_texture_idFin()
+	tex_refFin()
 }
 
 func (self *DrawList) AddLine(p1, p2 Vec2, col uint32) {
@@ -11718,15 +12322,16 @@ func (self *DrawList) PushClipRect(clip_rect_min, clip_rect_max Vec2) {
 	selfFin()
 }
 
-func (self *FontAtlas) AddCustomRectFontGlyph(font *Font, id Wchar, width, height int32, advance_x float32) int32 {
+func (self *FontAtlas) AddCustomRect(width, height int32) FontAtlasRectId {
 	selfArg, selfFin := self.Handle()
-	fontArg, fontFin := font.Handle()
 
 	defer func() {
 		selfFin()
-		fontFin()
 	}()
-	return int32(C.wrap_ImFontAtlas_AddCustomRectFontGlyph(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), internal.ReinterpretCast[*C.ImFont](fontArg), C.ImWchar(id), C.int(width), C.int(height), C.float(advance_x)))
+	return *NewFontAtlasRectIdFromC(func() *C.ImFontAtlasRectId {
+		result := C.wrap_ImFontAtlas_AddCustomRect(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), C.int(width), C.int(height))
+		return &result
+	}())
 }
 
 func (self *FontAtlas) AddFontDefault() *Font {
@@ -11738,7 +12343,7 @@ func (self *FontAtlas) AddFontDefault() *Font {
 	return NewFontFromC(C.wrap_ImFontAtlas_AddFontDefault(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
-func (self *FontAtlas) AddFontFromFileTTF(filename string, size_pixels float32) *Font {
+func (self *FontAtlas) AddFontFromFileTTF(filename string) *Font {
 	selfArg, selfFin := self.Handle()
 	filenameArg, filenameFin := internal.WrapString[C.char](filename)
 
@@ -11746,10 +12351,10 @@ func (self *FontAtlas) AddFontFromFileTTF(filename string, size_pixels float32) 
 		selfFin()
 		filenameFin()
 	}()
-	return NewFontFromC(C.wrap_ImFontAtlas_AddFontFromFileTTF(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), filenameArg, C.float(size_pixels)))
+	return NewFontFromC(C.wrap_ImFontAtlas_AddFontFromFileTTF(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), filenameArg))
 }
 
-func (self *FontAtlas) AddFontFromMemoryCompressedBase85TTF(compressed_font_data_base85 string, size_pixels float32) *Font {
+func (self *FontAtlas) AddFontFromMemoryCompressedBase85TTF(compressed_font_data_base85 string) *Font {
 	selfArg, selfFin := self.Handle()
 	compressed_font_data_base85Arg, compressed_font_data_base85Fin := internal.WrapString[C.char](compressed_font_data_base85)
 
@@ -11757,25 +12362,25 @@ func (self *FontAtlas) AddFontFromMemoryCompressedBase85TTF(compressed_font_data
 		selfFin()
 		compressed_font_data_base85Fin()
 	}()
-	return NewFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), compressed_font_data_base85Arg, C.float(size_pixels)))
+	return NewFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), compressed_font_data_base85Arg))
 }
 
-func (self *FontAtlas) AddFontFromMemoryCompressedTTF(compressed_font_data uintptr, compressed_font_data_size int32, size_pixels float32) *Font {
+func (self *FontAtlas) AddFontFromMemoryCompressedTTF(compressed_font_data uintptr, compressed_font_data_size int32) *Font {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return NewFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedTTF(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), C.uintptr_t(compressed_font_data), C.int(compressed_font_data_size), C.float(size_pixels)))
+	return NewFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryCompressedTTF(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), C.uintptr_t(compressed_font_data), C.int(compressed_font_data_size)))
 }
 
-func (self *FontAtlas) AddFontFromMemoryTTF(font_data uintptr, font_data_size int32, size_pixels float32) *Font {
+func (self *FontAtlas) AddFontFromMemoryTTF(font_data uintptr, font_data_size int32) *Font {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return NewFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryTTF(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), C.uintptr_t(font_data), C.int(font_data_size), C.float(size_pixels)))
+	return NewFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryTTF(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), C.uintptr_t(font_data), C.int(font_data_size)))
 }
 
 func (self *FontGlyphRangesBuilder) AddText(text string) {
@@ -11800,6 +12405,15 @@ func (self *Font) CalcTextSizeA(size, max_width, wrap_width float32, text_begin 
 	text_beginFin()
 
 	return *pOut
+}
+
+func (self *Font) FontBaked(font_size float32) *FontBaked {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontBakedFromC(C.wrap_ImFont_GetFontBaked(internal.ReinterpretCast[*C.ImFont](selfArg), C.float(font_size)))
 }
 
 func (self *Font) RenderChar(draw_list *DrawList, size float32, pos Vec2, col uint32, c Wchar) {
@@ -12328,6 +12942,13 @@ func InternalDebugDrawLineExtents() {
 	C.wrap_igDebugDrawLineExtents()
 }
 
+func InternalDebugNodeTexture(tex *TextureData, int_id int32) {
+	texArg, texFin := tex.Handle()
+	C.wrap_igDebugNodeTexture(internal.ReinterpretCast[*C.ImTextureData](texArg), C.int(int_id))
+
+	texFin()
+}
+
 func DestroyContext() {
 	C.wrap_igDestroyContext()
 }
@@ -12608,6 +13229,25 @@ func InternalImFileLoadToMemory(filename, mode string) uintptr {
 	return uintptr(C.wrap_igImFileLoadToMemory(filenameArg, modeArg))
 }
 
+func InternalImFontAtlasPackAddRect(atlas *FontAtlas, w, h int32) FontAtlasRectId {
+	atlasArg, atlasFin := atlas.Handle()
+
+	defer func() {
+		atlasFin()
+	}()
+	return *NewFontAtlasRectIdFromC(func() *C.ImFontAtlasRectId {
+		result := C.wrap_igImFontAtlasPackAddRect(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.int(w), C.int(h))
+		return &result
+	}())
+}
+
+func InternalImFontAtlasTextureGrow(atlas *FontAtlas) {
+	atlasArg, atlasFin := atlas.Handle()
+	C.wrap_igImFontAtlasTextureGrow(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+
+	atlasFin()
+}
+
 func InternalImHashData(data uintptr, data_size uint64) ID {
 	return *NewIDFromC(func() *C.ImGuiID {
 		result := C.wrap_igImHashData(C.uintptr_t(data), C.xulong(data_size))
@@ -12635,40 +13275,40 @@ func InternalImTextStrFromUtf8(out_buf *Wchar, out_buf_size int32, in_text, in_t
 	return int32(C.wrap_igImTextStrFromUtf8((*C.ImWchar)(out_buf), C.int(out_buf_size), in_textArg, in_text_endArg))
 }
 
-func Image(user_texture_id TextureID, image_size Vec2) {
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
-	C.wrap_igImage(internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()))
+func Image(tex_ref TextureRef, image_size Vec2) {
+	tex_refArg, tex_refFin := tex_ref.C()
+	C.wrap_igImage(internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()))
 
-	user_texture_idFin()
+	tex_refFin()
 }
 
-func ImageButton(str_id string, user_texture_id TextureID, image_size Vec2) bool {
+func ImageButton(str_id string, tex_ref TextureRef, image_size Vec2) bool {
 	str_idArg, str_idFin := internal.WrapString[C.char](str_id)
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
+	tex_refArg, tex_refFin := tex_ref.C()
 
 	defer func() {
 		str_idFin()
-		user_texture_idFin()
+		tex_refFin()
 	}()
-	return C.wrap_igImageButton(str_idArg, internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC())) == C.bool(true)
+	return C.wrap_igImageButton(str_idArg, internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC())) == C.bool(true)
 }
 
-func InternalImageButtonEx(id ID, user_texture_id TextureID, image_size, uv0, uv1 Vec2, bg_col, tint_col Vec4) bool {
+func InternalImageButtonEx(id ID, tex_ref TextureRef, image_size, uv0, uv1 Vec2, bg_col, tint_col Vec4) bool {
 	idArg, idFin := id.C()
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
+	tex_refArg, tex_refFin := tex_ref.C()
 
 	defer func() {
 		idFin()
-		user_texture_idFin()
+		tex_refFin()
 	}()
-	return C.wrap_igImageButtonEx(internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec4](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4](tint_col.ToC())) == C.bool(true)
+	return C.wrap_igImageButtonEx(internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec4](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4](tint_col.ToC())) == C.bool(true)
 }
 
-func ImageWithBg(user_texture_id TextureID, image_size Vec2) {
-	user_texture_idArg, user_texture_idFin := user_texture_id.C()
-	C.wrap_igImageWithBg(internal.ReinterpretCast[C.ImTextureID](user_texture_idArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()))
+func ImageWithBg(tex_ref TextureRef, image_size Vec2) {
+	tex_refArg, tex_refFin := tex_ref.C()
+	C.wrap_igImageWithBg(internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()))
 
-	user_texture_idFin()
+	tex_refFin()
 }
 
 func Indent() {
@@ -13643,11 +14283,13 @@ func InternalTextEx(text string) {
 	textFin()
 }
 
-func TextLinkOpenURL(label string) {
+func TextLinkOpenURL(label string) bool {
 	labelArg, labelFin := internal.WrapString[C.char](label)
-	C.wrap_igTextLinkOpenURL(labelArg)
 
-	labelFin()
+	defer func() {
+		labelFin()
+	}()
+	return C.wrap_igTextLinkOpenURL(labelArg) == C.bool(true)
 }
 
 func TextUnformatted(text string) {
@@ -13818,23 +14460,23 @@ func (self *DrawCmd) ClipRect() Vec4 {
 	}()
 }
 
-func (self DrawCmd) SetTextureId(v TextureID) {
+func (self DrawCmd) SetTexRef(v TextureRef) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawCmd_SetTextureId(selfArg, internal.ReinterpretCast[C.ImTextureID](vArg))
+	C.wrap_ImDrawCmd_SetTexRef(selfArg, internal.ReinterpretCast[C.ImTextureRef](vArg))
 }
 
-func (self *DrawCmd) TextureId() TextureID {
+func (self *DrawCmd) TexRef() TextureRef {
 	selfArg, selfFin := self.Handle()
 
-	result := C.wrap_ImDrawCmd_GetTextureId(internal.ReinterpretCast[*C.ImDrawCmd](selfArg))
+	result := C.wrap_ImDrawCmd_GetTexRef(internal.ReinterpretCast[*C.ImDrawCmd](selfArg))
 
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextureIDFromC(func() *C.ImTextureID { result := result; return &result }())
+	return *NewTextureRefFromC(func() *C.ImTextureRef { result := result; return &result }())
 }
 
 func (self DrawCmd) SetVtxOffset(v uint32) {
@@ -13964,23 +14606,23 @@ func (self *DrawCmdHeader) ClipRect() Vec4 {
 	}()
 }
 
-func (self DrawCmdHeader) SetTextureId(v TextureID) {
+func (self DrawCmdHeader) SetTexRef(v TextureRef) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawCmdHeader_SetTextureId(selfArg, internal.ReinterpretCast[C.ImTextureID](vArg))
+	C.wrap_ImDrawCmdHeader_SetTexRef(selfArg, internal.ReinterpretCast[C.ImTextureRef](vArg))
 }
 
-func (self *DrawCmdHeader) TextureId() TextureID {
+func (self *DrawCmdHeader) TexRef() TextureRef {
 	selfArg, selfFin := self.Handle()
 
-	result := C.wrap_ImDrawCmdHeader_GetTextureId(internal.ReinterpretCast[*C.ImDrawCmdHeader](selfArg))
+	result := C.wrap_ImDrawCmdHeader_GetTexRef(internal.ReinterpretCast[*C.ImDrawCmdHeader](selfArg))
 
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextureIDFromC(func() *C.ImTextureID { result := result; return &result }())
+	return *NewTextureRefFromC(func() *C.ImTextureRef { result := result; return &result }())
 }
 
 func (self DrawCmdHeader) SetVtxOffset(v uint32) {
@@ -14354,27 +14996,27 @@ func (self *DrawList) ClipRectStack() vectors.Vector[Vec4] {
 	return vectors.NewVectorFromC(C.wrap_ImDrawList_Get_ClipRectStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Size, C.wrap_ImDrawList_Get_ClipRectStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Capacity, (&Vec4{}).FromC(unsafe.Pointer(C.wrap_ImDrawList_Get_ClipRectStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Data)))
 }
 
-func (self DrawList) SetTextureIdStack(v vectors.Vector[TextureID]) {
+func (self DrawList) SetTextureStack(v vectors.Vector[TextureRef]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
-	vVecArg := new(C.ImVector_ImTextureID)
+	vVecArg := new(C.ImVector_ImTextureRef)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = internal.ReinterpretCast[*C.ImTextureID](vDataArg)
+	vVecArg.Data = internal.ReinterpretCast[*C.ImTextureRef](vDataArg)
 	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawList_Set_TextureIdStack(selfArg, *vVecArg)
+	C.wrap_ImDrawList_Set_TextureStack(selfArg, *vVecArg)
 }
 
-func (self *DrawList) TextureIdStack() vectors.Vector[TextureID] {
+func (self *DrawList) TextureStack() vectors.Vector[TextureRef] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImDrawList_Get_TextureIdStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Size, C.wrap_ImDrawList_Get_TextureIdStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Capacity, NewTextureIDFromC(C.wrap_ImDrawList_Get_TextureIdStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Data))
+	return vectors.NewVectorFromC(C.wrap_ImDrawList_Get_TextureStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Size, C.wrap_ImDrawList_Get_TextureStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Capacity, NewTextureRefFromC(C.wrap_ImDrawList_Get_TextureStack(internal.ReinterpretCast[*C.ImDrawList](selfArg)).Data))
 }
 
 func (self DrawList) SetCallbacksDataBuf(v vectors.Vector[byte]) {
@@ -14465,6 +15107,23 @@ func (self *DrawListSharedData) TexUvLines() *Vec4 {
 		selfFin()
 	}()
 	return (&Vec4{}).FromC(unsafe.Pointer(C.wrap_ImDrawListSharedData_GetTexUvLines(internal.ReinterpretCast[*C.ImDrawListSharedData](selfArg))))
+}
+
+func (self DrawListSharedData) SetFontAtlas(v *FontAtlas) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImDrawListSharedData_SetFontAtlas(selfArg, internal.ReinterpretCast[*C.ImFontAtlas](vArg))
+}
+
+func (self *DrawListSharedData) FontAtlas() *FontAtlas {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontAtlasFromC(C.wrap_ImDrawListSharedData_GetFontAtlas(internal.ReinterpretCast[*C.ImDrawListSharedData](selfArg)))
 }
 
 func (self DrawListSharedData) SetFont(v *Font) {
@@ -14604,6 +15263,23 @@ func (self DrawListSharedData) SetTempBuffer(v vectors.Vector[Vec2]) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImDrawListSharedData_SetTempBuffer(selfArg, *vVecArg)
+}
+
+func (self DrawListSharedData) SetContext(v *Context) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImDrawListSharedData_SetContext(selfArg, internal.ReinterpretCast[*C.ImGuiContext](vArg))
+}
+
+func (self *DrawListSharedData) Context() *Context {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewContextFromC(C.wrap_ImDrawListSharedData_GetContext(internal.ReinterpretCast[*C.ImDrawListSharedData](selfArg)))
 }
 
 func (self DrawListSharedData) SetArcFastVtx(v *[48]Vec2) {
@@ -14792,120 +15468,21 @@ func (self *DrawVert) Col() uint32 {
 	return (uint32)(C.wrap_ImDrawVert_GetCol(internal.ReinterpretCast[*C.ImDrawVert](selfArg)))
 }
 
-func (self Font) SetIndexAdvanceX(v vectors.Vector[float32]) {
-	vData := v.Data
-	vDataArg, _ := internal.WrapNumberPtr[C.float, float32](vData)
-	vVecArg := new(C.ImVector_float)
-	vVecArg.Size = C.int(v.Size)
-	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = vDataArg
-	v.Pinner().Pin(vVecArg.Data)
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFont_SetIndexAdvanceX(selfArg, *vVecArg)
-}
-
-func (self *Font) IndexAdvanceX() vectors.Vector[float32] {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return vectors.NewVectorFromC(C.wrap_ImFont_GetIndexAdvanceX(internal.ReinterpretCast[*C.ImFont](selfArg)).Size, C.wrap_ImFont_GetIndexAdvanceX(internal.ReinterpretCast[*C.ImFont](selfArg)).Capacity, (*float32)(C.wrap_ImFont_GetIndexAdvanceX(internal.ReinterpretCast[*C.ImFont](selfArg)).Data))
-}
-
-func (self Font) SetFallbackAdvanceX(v float32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFont_SetFallbackAdvanceX(selfArg, C.float(v))
-}
-
-func (self *Font) FallbackAdvanceX() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImFont_GetFallbackAdvanceX(internal.ReinterpretCast[*C.ImFont](selfArg)))
-}
-
-func (self Font) SetFontSize(v float32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFont_SetFontSize(selfArg, C.float(v))
-}
-
-func (self *Font) FontSize() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImFont_GetFontSize(internal.ReinterpretCast[*C.ImFont](selfArg)))
-}
-
-func (self Font) SetIndexLookup(v vectors.Vector[uint16]) {
-	vData := v.Data
-	vDataArg, _ := internal.WrapNumberPtr[C.ImU16, uint16](vData)
-	vVecArg := new(C.ImVector_ImU16)
-	vVecArg.Size = C.int(v.Size)
-	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = vDataArg
-	v.Pinner().Pin(vVecArg.Data)
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFont_SetIndexLookup(selfArg, *vVecArg)
-}
-
-func (self *Font) IndexLookup() vectors.Vector[uint16] {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return vectors.NewVectorFromC(C.wrap_ImFont_GetIndexLookup(internal.ReinterpretCast[*C.ImFont](selfArg)).Size, C.wrap_ImFont_GetIndexLookup(internal.ReinterpretCast[*C.ImFont](selfArg)).Capacity, (*uint16)(C.wrap_ImFont_GetIndexLookup(internal.ReinterpretCast[*C.ImFont](selfArg)).Data))
-}
-
-func (self Font) SetGlyphs(v vectors.Vector[FontGlyph]) {
-	vData := v.Data
-	vDataArg, _ := vData.Handle()
-	vVecArg := new(C.ImVector_ImFontGlyph)
-	vVecArg.Size = C.int(v.Size)
-	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = internal.ReinterpretCast[*C.ImFontGlyph](vDataArg)
-	v.Pinner().Pin(vVecArg.Data)
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFont_SetGlyphs(selfArg, *vVecArg)
-}
-
-func (self *Font) Glyphs() vectors.Vector[FontGlyph] {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return vectors.NewVectorFromC(C.wrap_ImFont_GetGlyphs(internal.ReinterpretCast[*C.ImFont](selfArg)).Size, C.wrap_ImFont_GetGlyphs(internal.ReinterpretCast[*C.ImFont](selfArg)).Capacity, NewFontGlyphFromC(C.wrap_ImFont_GetGlyphs(internal.ReinterpretCast[*C.ImFont](selfArg)).Data))
-}
-
-func (self Font) SetFallbackGlyph(v *FontGlyph) {
+func (self Font) SetLastBaked(v *FontBaked) {
 	vArg, _ := v.Handle()
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFont_SetFallbackGlyph(selfArg, internal.ReinterpretCast[*C.ImFontGlyph](vArg))
+	C.wrap_ImFont_SetLastBaked(selfArg, internal.ReinterpretCast[*C.ImFontBaked](vArg))
 }
 
-func (self *Font) FallbackGlyph() *FontGlyph {
+func (self *Font) LastBaked() *FontBaked {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return NewFontGlyphFromC(C.wrap_ImFont_GetFallbackGlyph(internal.ReinterpretCast[*C.ImFont](selfArg)))
+	return NewFontBakedFromC(C.wrap_ImFont_GetLastBaked(internal.ReinterpretCast[*C.ImFont](selfArg)))
 }
 
 func (self Font) SetContainerAtlas(v *FontAtlas) {
@@ -14925,51 +15502,68 @@ func (self *Font) ContainerAtlas() *FontAtlas {
 	return NewFontAtlasFromC(C.wrap_ImFont_GetContainerAtlas(internal.ReinterpretCast[*C.ImFont](selfArg)))
 }
 
-func (self Font) SetSources(v *FontConfig) {
-	vArg, _ := v.Handle()
-
+func (self Font) SetFlags(v FontFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFont_SetSources(selfArg, internal.ReinterpretCast[*C.ImFontConfig](vArg))
+	C.wrap_ImFont_SetFlags(selfArg, C.ImFontFlags(v))
 }
 
-func (self *Font) Sources() *FontConfig {
+func (self *Font) Flags() FontFlags {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return NewFontConfigFromC(C.wrap_ImFont_GetSources(internal.ReinterpretCast[*C.ImFont](selfArg)))
+	return FontFlags(C.wrap_ImFont_GetFlags(internal.ReinterpretCast[*C.ImFont](selfArg)))
 }
 
-func (self Font) SetSourcesCount(v int16) {
+func (self Font) SetCurrentRasterizerDensity(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFont_SetSourcesCount(selfArg, C.short(v))
+	C.wrap_ImFont_SetCurrentRasterizerDensity(selfArg, C.float(v))
 }
 
-func (self *Font) SourcesCount() int16 {
+func (self *Font) CurrentRasterizerDensity() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int16(C.wrap_ImFont_GetSourcesCount(internal.ReinterpretCast[*C.ImFont](selfArg)))
+	return float32(C.wrap_ImFont_GetCurrentRasterizerDensity(internal.ReinterpretCast[*C.ImFont](selfArg)))
 }
 
-func (self Font) SetEllipsisCharCount(v int16) {
+func (self Font) SetFontId(v ID) {
+	vArg, _ := v.C()
+
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFont_SetEllipsisCharCount(selfArg, C.short(v))
+	C.wrap_ImFont_SetFontId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
 }
 
-func (self *Font) EllipsisCharCount() int16 {
+func (self *Font) FontId() ID {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImFont_GetFontId(internal.ReinterpretCast[*C.ImFont](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
+}
+
+func (self Font) SetLegacySize(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFont_SetLegacySize(selfArg, C.float(v))
+}
+
+func (self *Font) LegacySize() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int16(C.wrap_ImFont_GetEllipsisCharCount(internal.ReinterpretCast[*C.ImFont](selfArg)))
+	return float32(C.wrap_ImFont_GetLegacySize(internal.ReinterpretCast[*C.ImFont](selfArg)))
 }
 
 func (self Font) SetEllipsisChar(v Wchar) {
@@ -15000,111 +15594,6 @@ func (self *Font) FallbackChar() Wchar {
 		selfFin()
 	}()
 	return (Wchar)(C.wrap_ImFont_GetFallbackChar(internal.ReinterpretCast[*C.ImFont](selfArg)))
-}
-
-func (self Font) SetEllipsisWidth(v float32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFont_SetEllipsisWidth(selfArg, C.float(v))
-}
-
-func (self *Font) EllipsisWidth() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImFont_GetEllipsisWidth(internal.ReinterpretCast[*C.ImFont](selfArg)))
-}
-
-func (self Font) SetEllipsisCharStep(v float32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFont_SetEllipsisCharStep(selfArg, C.float(v))
-}
-
-func (self *Font) EllipsisCharStep() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImFont_GetEllipsisCharStep(internal.ReinterpretCast[*C.ImFont](selfArg)))
-}
-
-func (self Font) SetScale(v float32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFont_SetScale(selfArg, C.float(v))
-}
-
-func (self *Font) Scale() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImFont_GetScale(internal.ReinterpretCast[*C.ImFont](selfArg)))
-}
-
-func (self Font) SetAscent(v float32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFont_SetAscent(selfArg, C.float(v))
-}
-
-func (self *Font) Ascent() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImFont_GetAscent(internal.ReinterpretCast[*C.ImFont](selfArg)))
-}
-
-func (self Font) SetDescent(v float32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFont_SetDescent(selfArg, C.float(v))
-}
-
-func (self *Font) Descent() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImFont_GetDescent(internal.ReinterpretCast[*C.ImFont](selfArg)))
-}
-
-func (self Font) SetMetricsTotalSurface(v int32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFont_SetMetricsTotalSurface(selfArg, C.int(v))
-}
-
-func (self *Font) MetricsTotalSurface() int32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return int32(C.wrap_ImFont_GetMetricsTotalSurface(internal.ReinterpretCast[*C.ImFont](selfArg)))
-}
-
-func (self Font) SetDirtyLookupTables(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFont_SetDirtyLookupTables(selfArg, C.bool(v))
-}
-
-func (self *Font) DirtyLookupTables() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_ImFont_GetDirtyLookupTables(internal.ReinterpretCast[*C.ImFont](selfArg)) == C.bool(true)
 }
 
 func (self Font) SetUsed8kPagesMap(v *[1]byte) {
@@ -15139,6 +15628,40 @@ func (self *Font) Used8kPagesMap() [1](byte) {
 	}()
 }
 
+func (self Font) SetEllipsisAutoBake(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFont_SetEllipsisAutoBake(selfArg, C.bool(v))
+}
+
+func (self *Font) EllipsisAutoBake() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImFont_GetEllipsisAutoBake(internal.ReinterpretCast[*C.ImFont](selfArg)) == C.bool(true)
+}
+
+func (self Font) SetRemapPairs(v Storage) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFont_SetRemapPairs(selfArg, internal.ReinterpretCast[C.ImGuiStorage](vArg))
+}
+
+func (self *Font) RemapPairs() Storage {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImFont_GetRemapPairs(internal.ReinterpretCast[*C.ImFont](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewStorageFromC(func() *C.ImGuiStorage { result := result; return &result }())
+}
+
 func (self FontAtlas) SetFlags(v FontAtlasFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -15154,19 +15677,19 @@ func (self *FontAtlas) Flags() FontAtlasFlags {
 	return FontAtlasFlags(C.wrap_ImFontAtlas_GetFlags(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
-func (self FontAtlas) SetTexDesiredWidth(v int32) {
+func (self FontAtlas) SetTexDesiredFormat(v TextureFormat) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlas_SetTexDesiredWidth(selfArg, C.int(v))
+	C.wrap_ImFontAtlas_SetTexDesiredFormat(selfArg, C.ImTextureFormat(v))
 }
 
-func (self *FontAtlas) TexDesiredWidth() int32 {
+func (self *FontAtlas) TexDesiredFormat() TextureFormat {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_ImFontAtlas_GetTexDesiredWidth(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+	return TextureFormat(C.wrap_ImFontAtlas_GetTexDesiredFormat(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
 func (self FontAtlas) SetTexGlyphPadding(v int32) {
@@ -15184,6 +15707,66 @@ func (self *FontAtlas) TexGlyphPadding() int32 {
 	return int32(C.wrap_ImFontAtlas_GetTexGlyphPadding(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
+func (self FontAtlas) SetTexMinWidth(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlas_SetTexMinWidth(selfArg, C.int(v))
+}
+
+func (self *FontAtlas) TexMinWidth() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlas_GetTexMinWidth(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+}
+
+func (self FontAtlas) SetTexMinHeight(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlas_SetTexMinHeight(selfArg, C.int(v))
+}
+
+func (self *FontAtlas) TexMinHeight() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlas_GetTexMinHeight(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+}
+
+func (self FontAtlas) SetTexMaxWidth(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlas_SetTexMaxWidth(selfArg, C.int(v))
+}
+
+func (self *FontAtlas) TexMaxWidth() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlas_GetTexMaxWidth(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+}
+
+func (self FontAtlas) SetTexMaxHeight(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlas_SetTexMaxHeight(selfArg, C.int(v))
+}
+
+func (self *FontAtlas) TexMaxHeight() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlas_GetTexMaxHeight(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+}
+
 func (self FontAtlas) SetUserData(v uintptr) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -15197,6 +15780,42 @@ func (self *FontAtlas) UserData() uintptr {
 		selfFin()
 	}()
 	return uintptr(C.wrap_ImFontAtlas_GetUserData(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+}
+
+func (self FontAtlas) SetTexRef(v TextureRef) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlas_SetTexRef(selfArg, internal.ReinterpretCast[C.ImTextureRef](vArg))
+}
+
+func (self *FontAtlas) TexRef() TextureRef {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImFontAtlas_GetTexRef(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTextureRefFromC(func() *C.ImTextureRef { result := result; return &result }())
+}
+
+func (self FontAtlas) SetTexData(v *TextureData) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlas_SetTexData(selfArg, internal.ReinterpretCast[*C.ImTextureData](vArg))
+}
+
+func (self *FontAtlas) TexData() *TextureData {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewTextureDataFromC(C.wrap_ImFontAtlas_GetTexData(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
 func (self FontAtlas) SetLocked(v bool) {
@@ -15214,19 +15833,34 @@ func (self *FontAtlas) Locked() bool {
 	return C.wrap_ImFontAtlas_GetLocked(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)) == C.bool(true)
 }
 
-func (self FontAtlas) SetTexReady(v bool) {
+func (self FontAtlas) SetRendererHasTextures(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlas_SetTexReady(selfArg, C.bool(v))
+	C.wrap_ImFontAtlas_SetRendererHasTextures(selfArg, C.bool(v))
 }
 
-func (self *FontAtlas) TexReady() bool {
+func (self *FontAtlas) RendererHasTextures() bool {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return C.wrap_ImFontAtlas_GetTexReady(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)) == C.bool(true)
+	return C.wrap_ImFontAtlas_GetRendererHasTextures(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)) == C.bool(true)
+}
+
+func (self FontAtlas) SetTexIsBuilt(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlas_SetTexIsBuilt(selfArg, C.bool(v))
+}
+
+func (self *FontAtlas) TexIsBuilt() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImFontAtlas_GetTexIsBuilt(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)) == C.bool(true)
 }
 
 func (self FontAtlas) SetTexPixelsUseColors(v bool) {
@@ -15242,70 +15876,6 @@ func (self *FontAtlas) TexPixelsUseColors() bool {
 		selfFin()
 	}()
 	return C.wrap_ImFontAtlas_GetTexPixelsUseColors(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)) == C.bool(true)
-}
-
-func (self FontAtlas) SetTexPixelsAlpha8(v *uint) {
-	vArg, _ := internal.WrapNumberPtr[C.uchar, uint](v)
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFontAtlas_SetTexPixelsAlpha8(selfArg, vArg)
-}
-
-func (self *FontAtlas) TexPixelsAlpha8() *uint {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return (*uint)(unsafe.Pointer(C.wrap_ImFontAtlas_GetTexPixelsAlpha8(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))))
-}
-
-func (self FontAtlas) SetTexPixelsRGBA32(v *uint32) {
-	vArg, _ := internal.WrapNumberPtr[C.uint, uint32](v)
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFontAtlas_SetTexPixelsRGBA32(selfArg, vArg)
-}
-
-func (self *FontAtlas) TexPixelsRGBA32() *uint32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return (*uint32)(C.wrap_ImFontAtlas_GetTexPixelsRGBA32(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
-}
-
-func (self FontAtlas) SetTexWidth(v int32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFontAtlas_SetTexWidth(selfArg, C.int(v))
-}
-
-func (self *FontAtlas) TexWidth() int32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return int32(C.wrap_ImFontAtlas_GetTexWidth(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
-}
-
-func (self FontAtlas) SetTexHeight(v int32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFontAtlas_SetTexHeight(selfArg, C.int(v))
-}
-
-func (self *FontAtlas) TexHeight() int32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return int32(C.wrap_ImFontAtlas_GetTexHeight(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
 func (self FontAtlas) SetTexUvScale(v Vec2) {
@@ -15342,29 +15912,6 @@ func (self *FontAtlas) TexUvWhitePixel() Vec2 {
 		out := C.wrap_ImFontAtlas_GetTexUvWhitePixel(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
 		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
 	}()
-}
-
-func (self FontAtlas) SetCustomRects(v vectors.Vector[FontAtlasCustomRect]) {
-	vData := v.Data
-	vDataArg, _ := vData.Handle()
-	vVecArg := new(C.ImVector_ImFontAtlasCustomRect)
-	vVecArg.Size = C.int(v.Size)
-	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = internal.ReinterpretCast[*C.ImFontAtlasCustomRect](vDataArg)
-	v.Pinner().Pin(vVecArg.Data)
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFontAtlas_SetCustomRects(selfArg, *vVecArg)
-}
-
-func (self *FontAtlas) CustomRects() vectors.Vector[FontAtlasCustomRect] {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return vectors.NewVectorFromC(C.wrap_ImFontAtlas_GetCustomRects(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)).Size, C.wrap_ImFontAtlas_GetCustomRects(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)).Capacity, NewFontAtlasCustomRectFromC(C.wrap_ImFontAtlas_GetCustomRects(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)).Data))
 }
 
 func (self FontAtlas) SetSources(v vectors.Vector[FontConfig]) {
@@ -15425,206 +15972,1045 @@ func (self *FontAtlas) TexUvLines() [33]Vec4 {
 	}()
 }
 
-func (self FontAtlas) SetFontBuilderIO(v *FontBuilderIO) {
+func (self FontAtlas) SetTexNextUniqueID(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlas_SetTexNextUniqueID(selfArg, C.int(v))
+}
+
+func (self *FontAtlas) TexNextUniqueID() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlas_GetTexNextUniqueID(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+}
+
+func (self FontAtlas) SetFontNextUniqueID(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlas_SetFontNextUniqueID(selfArg, C.int(v))
+}
+
+func (self *FontAtlas) FontNextUniqueID() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlas_GetFontNextUniqueID(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+}
+
+func (self FontAtlas) SetBuilder(v *FontAtlasBuilder) {
 	vArg, _ := v.Handle()
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlas_SetFontBuilderIO(selfArg, internal.ReinterpretCast[*C.ImFontBuilderIO](vArg))
+	C.wrap_ImFontAtlas_SetBuilder(selfArg, internal.ReinterpretCast[*C.ImFontAtlasBuilder](vArg))
 }
 
-func (self *FontAtlas) FontBuilderIO() *FontBuilderIO {
+func (self *FontAtlas) Builder() *FontAtlasBuilder {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return NewFontBuilderIOFromC(C.wrap_ImFontAtlas_GetFontBuilderIO(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+	return NewFontAtlasBuilderFromC(C.wrap_ImFontAtlas_GetBuilder(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
-func (self FontAtlas) SetFontBuilderFlags(v uint32) {
+func (self FontAtlas) SetFontLoader(v *FontLoader) {
+	vArg, _ := v.Handle()
+
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlas_SetFontBuilderFlags(selfArg, C.uint(v))
+	C.wrap_ImFontAtlas_SetFontLoader(selfArg, internal.ReinterpretCast[*C.ImFontLoader](vArg))
 }
 
-func (self *FontAtlas) FontBuilderFlags() uint32 {
+func (self *FontAtlas) FontLoader() *FontLoader {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImFontAtlas_GetFontBuilderFlags(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+	return NewFontLoaderFromC(C.wrap_ImFontAtlas_GetFontLoader(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
-func (self FontAtlas) SetPackIdMouseCursors(v int32) {
+func (self FontAtlas) SetFontLoaderName(v string) {
+	vArg, _ := internal.WrapString[C.char](v)
+
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlas_SetPackIdMouseCursors(selfArg, C.int(v))
+	C.wrap_ImFontAtlas_SetFontLoaderName(selfArg, vArg)
 }
 
-func (self *FontAtlas) PackIdMouseCursors() int32 {
+func (self *FontAtlas) FontLoaderName() string {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_ImFontAtlas_GetPackIdMouseCursors(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+	return C.GoString(C.wrap_ImFontAtlas_GetFontLoaderName(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
-func (self FontAtlas) SetPackIdLines(v int32) {
+func (self FontAtlas) SetFontLoaderData(v uintptr) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlas_SetPackIdLines(selfArg, C.int(v))
+	C.wrap_ImFontAtlas_SetFontLoaderData(selfArg, C.uintptr_t(v))
 }
 
-func (self *FontAtlas) PackIdLines() int32 {
+func (self *FontAtlas) FontLoaderData() uintptr {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_ImFontAtlas_GetPackIdLines(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+	return uintptr(C.wrap_ImFontAtlas_GetFontLoaderData(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
-func (self FontAtlasCustomRect) SetX(v uint16) {
+func (self FontAtlas) SetFontLoaderFlags(v uint32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlasCustomRect_SetX(selfArg, C.ushort(v))
+	C.wrap_ImFontAtlas_SetFontLoaderFlags(selfArg, C.uint(v))
 }
 
-func (self *FontAtlasCustomRect) X() uint16 {
+func (self *FontAtlas) FontLoaderFlags() uint32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint16(C.wrap_ImFontAtlasCustomRect_GetX(internal.ReinterpretCast[*C.ImFontAtlasCustomRect](selfArg)))
+	return uint32(C.wrap_ImFontAtlas_GetFontLoaderFlags(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
-func (self FontAtlasCustomRect) SetY(v uint16) {
+func (self FontAtlas) SetRefCount(v int32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlasCustomRect_SetY(selfArg, C.ushort(v))
+	C.wrap_ImFontAtlas_SetRefCount(selfArg, C.int(v))
 }
 
-func (self *FontAtlasCustomRect) Y() uint16 {
+func (self *FontAtlas) RefCount() int32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint16(C.wrap_ImFontAtlasCustomRect_GetY(internal.ReinterpretCast[*C.ImFontAtlasCustomRect](selfArg)))
+	return int32(C.wrap_ImFontAtlas_GetRefCount(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
-func (self FontAtlasCustomRect) SetWidth(v uint16) {
+func (self FontAtlas) SetOwnerContext(v *Context) {
+	vArg, _ := v.Handle()
+
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlasCustomRect_SetWidth(selfArg, C.ushort(v))
+	C.wrap_ImFontAtlas_SetOwnerContext(selfArg, internal.ReinterpretCast[*C.ImGuiContext](vArg))
 }
 
-func (self *FontAtlasCustomRect) Width() uint16 {
+func (self *FontAtlas) OwnerContext() *Context {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint16(C.wrap_ImFontAtlasCustomRect_GetWidth(internal.ReinterpretCast[*C.ImFontAtlasCustomRect](selfArg)))
+	return NewContextFromC(C.wrap_ImFontAtlas_GetOwnerContext(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
-func (self FontAtlasCustomRect) SetHeight(v uint16) {
+func (self FontAtlasBuilder) SetPackContext(v stbrpcontextopaque) {
+	vArg, _ := v.C()
+
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlasCustomRect_SetHeight(selfArg, C.ushort(v))
+	C.wrap_ImFontAtlasBuilder_SetPackContext(selfArg, internal.ReinterpretCast[C.stbrp_context_opaque](vArg))
 }
 
-func (self *FontAtlasCustomRect) Height() uint16 {
+func (self *FontAtlasBuilder) PackContext() stbrpcontextopaque {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImFontAtlasBuilder_GetPackContext(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewstbrpcontextopaqueFromC(func() *C.stbrp_context_opaque { result := result; return &result }())
+}
+
+func (self FontAtlasBuilder) SetRects(v vectors.Vector[TextureRect]) {
+	vData := v.Data
+	vDataArg, _ := vData.Handle()
+	vVecArg := new(C.ImVector_ImTextureRect)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = internal.ReinterpretCast[*C.ImTextureRect](vDataArg)
+	v.Pinner().Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasBuilder_SetRects(selfArg, *vVecArg)
+}
+
+func (self *FontAtlasBuilder) Rects() vectors.Vector[TextureRect] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint16(C.wrap_ImFontAtlasCustomRect_GetHeight(internal.ReinterpretCast[*C.ImFontAtlasCustomRect](selfArg)))
+	return vectors.NewVectorFromC(C.wrap_ImFontAtlasBuilder_GetRects(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)).Size, C.wrap_ImFontAtlasBuilder_GetRects(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)).Capacity, NewTextureRectFromC(C.wrap_ImFontAtlasBuilder_GetRects(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)).Data))
 }
 
-func (self FontAtlasCustomRect) SetGlyphID(v uint32) {
+func (self FontAtlasBuilder) SetRectsIndex(v vectors.Vector[FontAtlasRectEntry]) {
+	vData := v.Data
+	vDataArg, _ := vData.Handle()
+	vVecArg := new(C.ImVector_ImFontAtlasRectEntry)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = internal.ReinterpretCast[*C.ImFontAtlasRectEntry](vDataArg)
+	v.Pinner().Pin(vVecArg.Data)
+
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlasCustomRect_SetGlyphID(selfArg, C.uint(v))
+	C.wrap_ImFontAtlasBuilder_SetRectsIndex(selfArg, *vVecArg)
 }
 
-func (self *FontAtlasCustomRect) GlyphID() uint32 {
+func (self *FontAtlasBuilder) RectsIndex() vectors.Vector[FontAtlasRectEntry] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImFontAtlasCustomRect_GetGlyphID(internal.ReinterpretCast[*C.ImFontAtlasCustomRect](selfArg)))
+	return vectors.NewVectorFromC(C.wrap_ImFontAtlasBuilder_GetRectsIndex(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)).Size, C.wrap_ImFontAtlasBuilder_GetRectsIndex(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)).Capacity, NewFontAtlasRectEntryFromC(C.wrap_ImFontAtlasBuilder_GetRectsIndex(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)).Data))
 }
 
-func (self FontAtlasCustomRect) SetGlyphColored(v uint32) {
+func (self FontAtlasBuilder) SetRectsIndexFreeListStart(v int32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlasCustomRect_SetGlyphColored(selfArg, C.uint(v))
+	C.wrap_ImFontAtlasBuilder_SetRectsIndexFreeListStart(selfArg, C.int(v))
 }
 
-func (self *FontAtlasCustomRect) GlyphColored() uint32 {
+func (self *FontAtlasBuilder) RectsIndexFreeListStart() int32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImFontAtlasCustomRect_GetGlyphColored(internal.ReinterpretCast[*C.ImFontAtlasCustomRect](selfArg)))
+	return int32(C.wrap_ImFontAtlasBuilder_GetRectsIndexFreeListStart(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)))
 }
 
-func (self FontAtlasCustomRect) SetGlyphAdvanceX(v float32) {
+func (self FontAtlasBuilder) SetRectsPackedCount(v int32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlasCustomRect_SetGlyphAdvanceX(selfArg, C.float(v))
+	C.wrap_ImFontAtlasBuilder_SetRectsPackedCount(selfArg, C.int(v))
 }
 
-func (self *FontAtlasCustomRect) GlyphAdvanceX() float32 {
+func (self *FontAtlasBuilder) RectsPackedCount() int32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImFontAtlasCustomRect_GetGlyphAdvanceX(internal.ReinterpretCast[*C.ImFontAtlasCustomRect](selfArg)))
+	return int32(C.wrap_ImFontAtlasBuilder_GetRectsPackedCount(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)))
 }
 
-func (self FontAtlasCustomRect) SetGlyphOffset(v Vec2) {
+func (self FontAtlasBuilder) SetRectsPackedSurface(v int32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlasCustomRect_SetGlyphOffset(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImFontAtlasBuilder_SetRectsPackedSurface(selfArg, C.int(v))
 }
 
-func (self *FontAtlasCustomRect) GlyphOffset() Vec2 {
+func (self *FontAtlasBuilder) RectsPackedSurface() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlasBuilder_GetRectsPackedSurface(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)))
+}
+
+func (self FontAtlasBuilder) SetRectsDiscardedCount(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasBuilder_SetRectsDiscardedCount(selfArg, C.int(v))
+}
+
+func (self *FontAtlasBuilder) RectsDiscardedCount() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlasBuilder_GetRectsDiscardedCount(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)))
+}
+
+func (self FontAtlasBuilder) SetRectsDiscardedSurface(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasBuilder_SetRectsDiscardedSurface(selfArg, C.int(v))
+}
+
+func (self *FontAtlasBuilder) RectsDiscardedSurface() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlasBuilder_GetRectsDiscardedSurface(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)))
+}
+
+func (self FontAtlasBuilder) SetFrameCount(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasBuilder_SetFrameCount(selfArg, C.int(v))
+}
+
+func (self *FontAtlasBuilder) FrameCount() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlasBuilder_GetFrameCount(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)))
+}
+
+func (self FontAtlasBuilder) SetMaxRectSize(v Vec2i) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasBuilder_SetMaxRectSize(selfArg, internal.ReinterpretCast[C.ImVec2i](vArg))
+}
+
+func (self *FontAtlasBuilder) MaxRectSize() Vec2i {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImFontAtlasBuilder_GetMaxRectSize(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewVec2iFromC(func() *C.ImVec2i { result := result; return &result }())
+}
+
+func (self FontAtlasBuilder) SetMaxRectBounds(v Vec2i) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasBuilder_SetMaxRectBounds(selfArg, internal.ReinterpretCast[C.ImVec2i](vArg))
+}
+
+func (self *FontAtlasBuilder) MaxRectBounds() Vec2i {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImFontAtlasBuilder_GetMaxRectBounds(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewVec2iFromC(func() *C.ImVec2i { result := result; return &result }())
+}
+
+func (self FontAtlasBuilder) SetLockDisableResize(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasBuilder_SetLockDisableResize(selfArg, C.bool(v))
+}
+
+func (self *FontAtlasBuilder) LockDisableResize() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImFontAtlasBuilder_GetLockDisableResize(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)) == C.bool(true)
+}
+
+func (self FontAtlasBuilder) SetPreloadedAllGlyphsRanges(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasBuilder_SetPreloadedAllGlyphsRanges(selfArg, C.bool(v))
+}
+
+func (self *FontAtlasBuilder) PreloadedAllGlyphsRanges() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImFontAtlasBuilder_GetPreloadedAllGlyphsRanges(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)) == C.bool(true)
+}
+
+func (self FontAtlasBuilder) SetBakedMap(v Storage) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasBuilder_SetBakedMap(selfArg, internal.ReinterpretCast[C.ImGuiStorage](vArg))
+}
+
+func (self *FontAtlasBuilder) BakedMap() Storage {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImFontAtlasBuilder_GetBakedMap(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewStorageFromC(func() *C.ImGuiStorage { result := result; return &result }())
+}
+
+func (self FontAtlasBuilder) SetBakedDiscardedCount(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasBuilder_SetBakedDiscardedCount(selfArg, C.int(v))
+}
+
+func (self *FontAtlasBuilder) BakedDiscardedCount() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlasBuilder_GetBakedDiscardedCount(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg)))
+}
+
+func (self FontAtlasBuilder) SetPackIdMouseCursors(v FontAtlasRectId) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasBuilder_SetPackIdMouseCursors(selfArg, internal.ReinterpretCast[C.ImFontAtlasRectId](vArg))
+}
+
+func (self *FontAtlasBuilder) PackIdMouseCursors() FontAtlasRectId {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImFontAtlasBuilder_GetPackIdMouseCursors(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewFontAtlasRectIdFromC(func() *C.ImFontAtlasRectId { result := result; return &result }())
+}
+
+func (self FontAtlasBuilder) SetPackIdLinesTexData(v FontAtlasRectId) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasBuilder_SetPackIdLinesTexData(selfArg, internal.ReinterpretCast[C.ImFontAtlasRectId](vArg))
+}
+
+func (self *FontAtlasBuilder) PackIdLinesTexData() FontAtlasRectId {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImFontAtlasBuilder_GetPackIdLinesTexData(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewFontAtlasRectIdFromC(func() *C.ImFontAtlasRectId { result := result; return &result }())
+}
+
+func (self FontAtlasPostProcessData) SetFontAtlas(v *FontAtlas) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasPostProcessData_SetFontAtlas(selfArg, internal.ReinterpretCast[*C.ImFontAtlas](vArg))
+}
+
+func (self *FontAtlasPostProcessData) FontAtlas() *FontAtlas {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontAtlasFromC(C.wrap_ImFontAtlasPostProcessData_GetFontAtlas(internal.ReinterpretCast[*C.ImFontAtlasPostProcessData](selfArg)))
+}
+
+func (self FontAtlasPostProcessData) SetFont(v *Font) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasPostProcessData_SetFont(selfArg, internal.ReinterpretCast[*C.ImFont](vArg))
+}
+
+func (self *FontAtlasPostProcessData) Font() *Font {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontFromC(C.wrap_ImFontAtlasPostProcessData_GetFont(internal.ReinterpretCast[*C.ImFontAtlasPostProcessData](selfArg)))
+}
+
+func (self FontAtlasPostProcessData) SetFontSrc(v *FontConfig) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasPostProcessData_SetFontSrc(selfArg, internal.ReinterpretCast[*C.ImFontConfig](vArg))
+}
+
+func (self *FontAtlasPostProcessData) FontSrc() *FontConfig {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontConfigFromC(C.wrap_ImFontAtlasPostProcessData_GetFontSrc(internal.ReinterpretCast[*C.ImFontAtlasPostProcessData](selfArg)))
+}
+
+func (self FontAtlasPostProcessData) SetFontBaked(v *FontBaked) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasPostProcessData_SetFontBaked(selfArg, internal.ReinterpretCast[*C.ImFontBaked](vArg))
+}
+
+func (self *FontAtlasPostProcessData) FontBaked() *FontBaked {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontBakedFromC(C.wrap_ImFontAtlasPostProcessData_GetFontBaked(internal.ReinterpretCast[*C.ImFontAtlasPostProcessData](selfArg)))
+}
+
+func (self FontAtlasPostProcessData) SetGlyph(v *FontGlyph) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasPostProcessData_SetGlyph(selfArg, internal.ReinterpretCast[*C.ImFontGlyph](vArg))
+}
+
+func (self *FontAtlasPostProcessData) Glyph() *FontGlyph {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontGlyphFromC(C.wrap_ImFontAtlasPostProcessData_GetGlyph(internal.ReinterpretCast[*C.ImFontAtlasPostProcessData](selfArg)))
+}
+
+func (self FontAtlasPostProcessData) SetPixels(v uintptr) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasPostProcessData_SetPixels(selfArg, C.uintptr_t(v))
+}
+
+func (self *FontAtlasPostProcessData) Pixels() uintptr {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImFontAtlasPostProcessData_GetPixels(internal.ReinterpretCast[*C.ImFontAtlasPostProcessData](selfArg)))
+}
+
+func (self FontAtlasPostProcessData) SetFormat(v TextureFormat) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasPostProcessData_SetFormat(selfArg, C.ImTextureFormat(v))
+}
+
+func (self *FontAtlasPostProcessData) Format() TextureFormat {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return TextureFormat(C.wrap_ImFontAtlasPostProcessData_GetFormat(internal.ReinterpretCast[*C.ImFontAtlasPostProcessData](selfArg)))
+}
+
+func (self FontAtlasPostProcessData) SetPitch(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasPostProcessData_SetPitch(selfArg, C.int(v))
+}
+
+func (self *FontAtlasPostProcessData) Pitch() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlasPostProcessData_GetPitch(internal.ReinterpretCast[*C.ImFontAtlasPostProcessData](selfArg)))
+}
+
+func (self FontAtlasPostProcessData) SetWidth(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasPostProcessData_SetWidth(selfArg, C.int(v))
+}
+
+func (self *FontAtlasPostProcessData) Width() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlasPostProcessData_GetWidth(internal.ReinterpretCast[*C.ImFontAtlasPostProcessData](selfArg)))
+}
+
+func (self FontAtlasPostProcessData) SetHeight(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasPostProcessData_SetHeight(selfArg, C.int(v))
+}
+
+func (self *FontAtlasPostProcessData) Height() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlasPostProcessData_GetHeight(internal.ReinterpretCast[*C.ImFontAtlasPostProcessData](selfArg)))
+}
+
+func (self FontAtlasRect) SetX(v uint16) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasRect_SetX(selfArg, C.ushort(v))
+}
+
+func (self *FontAtlasRect) X() uint16 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint16(C.wrap_ImFontAtlasRect_GetX(internal.ReinterpretCast[*C.ImFontAtlasRect](selfArg)))
+}
+
+func (self FontAtlasRect) SetY(v uint16) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasRect_SetY(selfArg, C.ushort(v))
+}
+
+func (self *FontAtlasRect) Y() uint16 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint16(C.wrap_ImFontAtlasRect_GetY(internal.ReinterpretCast[*C.ImFontAtlasRect](selfArg)))
+}
+
+func (self FontAtlasRect) SetW(v uint16) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasRect_SetW(selfArg, C.ushort(v))
+}
+
+func (self *FontAtlasRect) W() uint16 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint16(C.wrap_ImFontAtlasRect_GetW(internal.ReinterpretCast[*C.ImFontAtlasRect](selfArg)))
+}
+
+func (self FontAtlasRect) SetH(v uint16) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasRect_SetH(selfArg, C.ushort(v))
+}
+
+func (self *FontAtlasRect) H() uint16 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint16(C.wrap_ImFontAtlasRect_GetH(internal.ReinterpretCast[*C.ImFontAtlasRect](selfArg)))
+}
+
+func (self FontAtlasRect) SetUv0(v Vec2) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasRect_SetUv0(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+}
+
+func (self *FontAtlasRect) Uv0() Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
 	return func() Vec2 {
-		out := C.wrap_ImFontAtlasCustomRect_GetGlyphOffset(internal.ReinterpretCast[*C.ImFontAtlasCustomRect](selfArg))
+		out := C.wrap_ImFontAtlasRect_GetUv0(internal.ReinterpretCast[*C.ImFontAtlasRect](selfArg))
 		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
 	}()
 }
 
-func (self FontAtlasCustomRect) SetFont(v *Font) {
-	vArg, _ := v.Handle()
-
+func (self FontAtlasRect) SetUv1(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlasCustomRect_SetFont(selfArg, internal.ReinterpretCast[*C.ImFont](vArg))
+	C.wrap_ImFontAtlasRect_SetUv1(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
 }
 
-func (self *FontAtlasCustomRect) Font() *Font {
+func (self *FontAtlasRect) Uv1() Vec2 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return NewFontFromC(C.wrap_ImFontAtlasCustomRect_GetFont(internal.ReinterpretCast[*C.ImFontAtlasCustomRect](selfArg)))
+	return func() Vec2 {
+		out := C.wrap_ImFontAtlasRect_GetUv1(internal.ReinterpretCast[*C.ImFontAtlasRect](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
+}
+
+func (self FontAtlasRectEntry) SetTargetIndex(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasRectEntry_SetTargetIndex(selfArg, C.int(v))
+}
+
+func (self *FontAtlasRectEntry) TargetIndex() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlasRectEntry_GetTargetIndex(internal.ReinterpretCast[*C.ImFontAtlasRectEntry](selfArg)))
+}
+
+func (self FontAtlasRectEntry) SetGeneration(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasRectEntry_SetGeneration(selfArg, C.int(v))
+}
+
+func (self *FontAtlasRectEntry) Generation() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontAtlasRectEntry_GetGeneration(internal.ReinterpretCast[*C.ImFontAtlasRectEntry](selfArg)))
+}
+
+func (self FontAtlasRectEntry) SetIsUsed(v uint32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontAtlasRectEntry_SetIsUsed(selfArg, C.uint(v))
+}
+
+func (self *FontAtlasRectEntry) IsUsed() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint32(C.wrap_ImFontAtlasRectEntry_GetIsUsed(internal.ReinterpretCast[*C.ImFontAtlasRectEntry](selfArg)))
+}
+
+func (self FontBaked) SetIndexAdvanceX(v vectors.Vector[float32]) {
+	vData := v.Data
+	vDataArg, _ := internal.WrapNumberPtr[C.float, float32](vData)
+	vVecArg := new(C.ImVector_float)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+	v.Pinner().Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetIndexAdvanceX(selfArg, *vVecArg)
+}
+
+func (self *FontBaked) IndexAdvanceX() vectors.Vector[float32] {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return vectors.NewVectorFromC(C.wrap_ImFontBaked_GetIndexAdvanceX(internal.ReinterpretCast[*C.ImFontBaked](selfArg)).Size, C.wrap_ImFontBaked_GetIndexAdvanceX(internal.ReinterpretCast[*C.ImFontBaked](selfArg)).Capacity, (*float32)(C.wrap_ImFontBaked_GetIndexAdvanceX(internal.ReinterpretCast[*C.ImFontBaked](selfArg)).Data))
+}
+
+func (self FontBaked) SetFallbackAdvanceX(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetFallbackAdvanceX(selfArg, C.float(v))
+}
+
+func (self *FontBaked) FallbackAdvanceX() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImFontBaked_GetFallbackAdvanceX(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+}
+
+func (self FontBaked) SetSize(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetSize(selfArg, C.float(v))
+}
+
+func (self *FontBaked) Size() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImFontBaked_GetSize(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+}
+
+func (self FontBaked) SetRasterizerDensity(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetRasterizerDensity(selfArg, C.float(v))
+}
+
+func (self *FontBaked) RasterizerDensity() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImFontBaked_GetRasterizerDensity(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+}
+
+func (self FontBaked) SetIndexLookup(v vectors.Vector[uint16]) {
+	vData := v.Data
+	vDataArg, _ := internal.WrapNumberPtr[C.ImU16, uint16](vData)
+	vVecArg := new(C.ImVector_ImU16)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = vDataArg
+	v.Pinner().Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetIndexLookup(selfArg, *vVecArg)
+}
+
+func (self *FontBaked) IndexLookup() vectors.Vector[uint16] {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return vectors.NewVectorFromC(C.wrap_ImFontBaked_GetIndexLookup(internal.ReinterpretCast[*C.ImFontBaked](selfArg)).Size, C.wrap_ImFontBaked_GetIndexLookup(internal.ReinterpretCast[*C.ImFontBaked](selfArg)).Capacity, (*uint16)(C.wrap_ImFontBaked_GetIndexLookup(internal.ReinterpretCast[*C.ImFontBaked](selfArg)).Data))
+}
+
+func (self FontBaked) SetGlyphs(v vectors.Vector[FontGlyph]) {
+	vData := v.Data
+	vDataArg, _ := vData.Handle()
+	vVecArg := new(C.ImVector_ImFontGlyph)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = internal.ReinterpretCast[*C.ImFontGlyph](vDataArg)
+	v.Pinner().Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetGlyphs(selfArg, *vVecArg)
+}
+
+func (self *FontBaked) Glyphs() vectors.Vector[FontGlyph] {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return vectors.NewVectorFromC(C.wrap_ImFontBaked_GetGlyphs(internal.ReinterpretCast[*C.ImFontBaked](selfArg)).Size, C.wrap_ImFontBaked_GetGlyphs(internal.ReinterpretCast[*C.ImFontBaked](selfArg)).Capacity, NewFontGlyphFromC(C.wrap_ImFontBaked_GetGlyphs(internal.ReinterpretCast[*C.ImFontBaked](selfArg)).Data))
+}
+
+func (self FontBaked) SetFallbackGlyphIndex(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetFallbackGlyphIndex(selfArg, C.int(v))
+}
+
+func (self *FontBaked) FallbackGlyphIndex() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontBaked_GetFallbackGlyphIndex(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+}
+
+func (self FontBaked) SetAscent(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetAscent(selfArg, C.float(v))
+}
+
+func (self *FontBaked) Ascent() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImFontBaked_GetAscent(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+}
+
+func (self FontBaked) SetDescent(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetDescent(selfArg, C.float(v))
+}
+
+func (self *FontBaked) Descent() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImFontBaked_GetDescent(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+}
+
+func (self FontBaked) SetMetricsTotalSurface(v uint32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetMetricsTotalSurface(selfArg, C.uint(v))
+}
+
+func (self *FontBaked) MetricsTotalSurface() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint32(C.wrap_ImFontBaked_GetMetricsTotalSurface(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+}
+
+func (self FontBaked) SetWantDestroy(v uint32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetWantDestroy(selfArg, C.uint(v))
+}
+
+func (self *FontBaked) WantDestroy() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint32(C.wrap_ImFontBaked_GetWantDestroy(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+}
+
+func (self FontBaked) SetLockLoadingFallback(v uint32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetLockLoadingFallback(selfArg, C.uint(v))
+}
+
+func (self *FontBaked) LockLoadingFallback() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint32(C.wrap_ImFontBaked_GetLockLoadingFallback(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+}
+
+func (self FontBaked) SetLastUsedFrame(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetLastUsedFrame(selfArg, C.int(v))
+}
+
+func (self *FontBaked) LastUsedFrame() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontBaked_GetLastUsedFrame(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+}
+
+func (self FontBaked) SetBakedId(v ID) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetBakedId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
+}
+
+func (self *FontBaked) BakedId() ID {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImFontBaked_GetBakedId(internal.ReinterpretCast[*C.ImFontBaked](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
+}
+
+func (self FontBaked) SetContainerFont(v *Font) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetContainerFont(selfArg, internal.ReinterpretCast[*C.ImFont](vArg))
+}
+
+func (self *FontBaked) ContainerFont() *Font {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontFromC(C.wrap_ImFontBaked_GetContainerFont(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+}
+
+func (self FontBaked) SetFontLoaderDatas(v uintptr) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetFontLoaderDatas(selfArg, C.uintptr_t(v))
+}
+
+func (self *FontBaked) FontLoaderDatas() uintptr {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImFontBaked_GetFontLoaderDatas(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+}
+
+func (self FontConfig) SetName(v *[40]rune) {
+	vArg := make([]C.char, len(v))
+	for i, vV := range v {
+		vArg[i] = C.char(vV)
+	}
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontConfig_SetName(selfArg, (*C.char)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = rune(vV)
+	}
+}
+
+func (self *FontConfig) Name() [40]rune {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [40]rune {
+		result := [40]rune{}
+		resultMirr := C.wrap_ImFontConfig_GetName(internal.ReinterpretCast[*C.ImFontConfig](selfArg))
+		for i := range result {
+			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
+		}
+
+		return result
+	}()
 }
 
 func (self FontConfig) SetFontData(v uintptr) {
@@ -15702,49 +17088,64 @@ func (self *FontConfig) PixelSnapH() bool {
 	return C.wrap_ImFontConfig_GetPixelSnapH(internal.ReinterpretCast[*C.ImFontConfig](selfArg)) == C.bool(true)
 }
 
-func (self FontConfig) SetFontNo(v int32) {
+func (self FontConfig) SetPixelSnapV(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontConfig_SetFontNo(selfArg, C.int(v))
+	C.wrap_ImFontConfig_SetPixelSnapV(selfArg, C.bool(v))
 }
 
-func (self *FontConfig) FontNo() int32 {
+func (self *FontConfig) PixelSnapV() bool {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_ImFontConfig_GetFontNo(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
+	return C.wrap_ImFontConfig_GetPixelSnapV(internal.ReinterpretCast[*C.ImFontConfig](selfArg)) == C.bool(true)
 }
 
-func (self FontConfig) SetOversampleH(v int32) {
+func (self FontConfig) SetFontNo(v int) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontConfig_SetOversampleH(selfArg, C.int(v))
+	C.wrap_ImFontConfig_SetFontNo(selfArg, C.ImS8(v))
 }
 
-func (self *FontConfig) OversampleH() int32 {
+func (self *FontConfig) FontNo() int {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_ImFontConfig_GetOversampleH(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
+	return (int)(C.wrap_ImFontConfig_GetFontNo(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
 }
 
-func (self FontConfig) SetOversampleV(v int32) {
+func (self FontConfig) SetOversampleH(v int) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontConfig_SetOversampleV(selfArg, C.int(v))
+	C.wrap_ImFontConfig_SetOversampleH(selfArg, C.ImS8(v))
 }
 
-func (self *FontConfig) OversampleV() int32 {
+func (self *FontConfig) OversampleH() int {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_ImFontConfig_GetOversampleV(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
+	return (int)(C.wrap_ImFontConfig_GetOversampleH(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
+}
+
+func (self FontConfig) SetOversampleV(v int) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontConfig_SetOversampleV(selfArg, C.ImS8(v))
+}
+
+func (self *FontConfig) OversampleV() int {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (int)(C.wrap_ImFontConfig_GetOversampleV(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
 }
 
 func (self FontConfig) SetSizePixels(v float32) {
@@ -15760,6 +17161,36 @@ func (self *FontConfig) SizePixels() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImFontConfig_GetSizePixels(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
+}
+
+func (self FontConfig) SetGlyphRanges(v *Wchar) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontConfig_SetGlyphRanges(selfArg, (*C.ImWchar)(v))
+}
+
+func (self *FontConfig) GlyphRanges() *Wchar {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*Wchar)(C.wrap_ImFontConfig_GetGlyphRanges(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
+}
+
+func (self FontConfig) SetGlyphExcludeRanges(v *Wchar) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontConfig_SetGlyphExcludeRanges(selfArg, (*C.ImWchar)(v))
+}
+
+func (self *FontConfig) GlyphExcludeRanges() *Wchar {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*Wchar)(C.wrap_ImFontConfig_GetGlyphExcludeRanges(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
 }
 
 func (self FontConfig) SetGlyphOffset(v Vec2) {
@@ -15778,21 +17209,6 @@ func (self *FontConfig) GlyphOffset() Vec2 {
 		out := C.wrap_ImFontConfig_GetGlyphOffset(internal.ReinterpretCast[*C.ImFontConfig](selfArg))
 		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
 	}()
-}
-
-func (self FontConfig) SetGlyphRanges(v *Wchar) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFontConfig_SetGlyphRanges(selfArg, (*C.ImWchar)(v))
-}
-
-func (self *FontConfig) GlyphRanges() *Wchar {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return (*Wchar)(C.wrap_ImFontConfig_GetGlyphRanges(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
 }
 
 func (self FontConfig) SetGlyphMinAdvanceX(v float32) {
@@ -15840,19 +17256,19 @@ func (self *FontConfig) GlyphExtraAdvanceX() float32 {
 	return float32(C.wrap_ImFontConfig_GetGlyphExtraAdvanceX(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
 }
 
-func (self FontConfig) SetFontBuilderFlags(v uint32) {
+func (self FontConfig) SetFontLoaderFlags(v uint32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontConfig_SetFontBuilderFlags(selfArg, C.uint(v))
+	C.wrap_ImFontConfig_SetFontLoaderFlags(selfArg, C.uint(v))
 }
 
-func (self *FontConfig) FontBuilderFlags() uint32 {
+func (self *FontConfig) FontLoaderFlags() uint32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImFontConfig_GetFontBuilderFlags(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
+	return uint32(C.wrap_ImFontConfig_GetFontLoaderFlags(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
 }
 
 func (self FontConfig) SetRasterizerMultiply(v float32) {
@@ -15900,36 +17316,19 @@ func (self *FontConfig) EllipsisChar() Wchar {
 	return (Wchar)(C.wrap_ImFontConfig_GetEllipsisChar(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
 }
 
-func (self FontConfig) SetName(v *[40]rune) {
-	vArg := make([]C.char, len(v))
-	for i, vV := range v {
-		vArg[i] = C.char(vV)
-	}
-
+func (self FontConfig) SetFlags(v FontFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontConfig_SetName(selfArg, (*C.char)(&vArg[0]))
-
-	for i, vV := range vArg {
-		(*v)[i] = rune(vV)
-	}
+	C.wrap_ImFontConfig_SetFlags(selfArg, C.ImFontFlags(v))
 }
 
-func (self *FontConfig) Name() [40]rune {
+func (self *FontConfig) Flags() FontFlags {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return func() [40]rune {
-		result := [40]rune{}
-		resultMirr := C.wrap_ImFontConfig_GetName(internal.ReinterpretCast[*C.ImFontConfig](selfArg))
-		for i := range result {
-			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
-		}
-
-		return result
-	}()
+	return FontFlags(C.wrap_ImFontConfig_GetFlags(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
 }
 
 func (self FontConfig) SetDstFont(v *Font) {
@@ -15947,6 +17346,38 @@ func (self *FontConfig) DstFont() *Font {
 		selfFin()
 	}()
 	return NewFontFromC(C.wrap_ImFontConfig_GetDstFont(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
+}
+
+func (self FontConfig) SetFontLoader(v *FontLoader) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontConfig_SetFontLoader(selfArg, internal.ReinterpretCast[*C.ImFontLoader](vArg))
+}
+
+func (self *FontConfig) FontLoader() *FontLoader {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontLoaderFromC(C.wrap_ImFontConfig_GetFontLoader(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
+}
+
+func (self FontConfig) SetFontLoaderData(v uintptr) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontConfig_SetFontLoaderData(selfArg, C.uintptr_t(v))
+}
+
+func (self *FontConfig) FontLoaderData() uintptr {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImFontConfig_GetFontLoaderData(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
 }
 
 func (self FontGlyph) SetColored(v uint32) {
@@ -15977,6 +17408,21 @@ func (self *FontGlyph) Visible() uint32 {
 		selfFin()
 	}()
 	return uint32(C.wrap_ImFontGlyph_GetVisible(internal.ReinterpretCast[*C.ImFontGlyph](selfArg)))
+}
+
+func (self FontGlyph) SetSourceIdx(v uint32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontGlyph_SetSourceIdx(selfArg, C.uint(v))
+}
+
+func (self *FontGlyph) SourceIdx() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint32(C.wrap_ImFontGlyph_GetSourceIdx(internal.ReinterpretCast[*C.ImFontGlyph](selfArg)))
 }
 
 func (self FontGlyph) SetCodepoint(v uint32) {
@@ -16129,6 +17575,21 @@ func (self *FontGlyph) V1() float32 {
 	return float32(C.wrap_ImFontGlyph_GetV1(internal.ReinterpretCast[*C.ImFontGlyph](selfArg)))
 }
 
+func (self FontGlyph) SetPackId(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontGlyph_SetPackId(selfArg, C.int(v))
+}
+
+func (self *FontGlyph) PackId() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImFontGlyph_GetPackId(internal.ReinterpretCast[*C.ImFontGlyph](selfArg)))
+}
+
 func (self FontGlyphRangesBuilder) SetUsedChars(v vectors.Vector[uint32]) {
 	vData := v.Data
 	vDataArg, _ := internal.WrapNumberPtr[C.ImU32, uint32](vData)
@@ -16150,6 +17611,85 @@ func (self *FontGlyphRangesBuilder) UsedChars() vectors.Vector[uint32] {
 		selfFin()
 	}()
 	return vectors.NewVectorFromC(C.wrap_ImFontGlyphRangesBuilder_GetUsedChars(internal.ReinterpretCast[*C.ImFontGlyphRangesBuilder](selfArg)).Size, C.wrap_ImFontGlyphRangesBuilder_GetUsedChars(internal.ReinterpretCast[*C.ImFontGlyphRangesBuilder](selfArg)).Capacity, (*uint32)(C.wrap_ImFontGlyphRangesBuilder_GetUsedChars(internal.ReinterpretCast[*C.ImFontGlyphRangesBuilder](selfArg)).Data))
+}
+
+func (self FontLoader) SetName(v string) {
+	vArg, _ := internal.WrapString[C.char](v)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontLoader_SetName(selfArg, vArg)
+}
+
+func (self *FontLoader) Name() string {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.GoString(C.wrap_ImFontLoader_GetName(internal.ReinterpretCast[*C.ImFontLoader](selfArg)))
+}
+
+func (self FontLoader) SetFontBakedSrcLoaderDataSize(v uint64) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontLoader_SetFontBakedSrcLoaderDataSize(selfArg, C.xulong(v))
+}
+
+func (self *FontLoader) FontBakedSrcLoaderDataSize() uint64 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint64(C.wrap_ImFontLoader_GetFontBakedSrcLoaderDataSize(internal.ReinterpretCast[*C.ImFontLoader](selfArg)))
+}
+
+func (self FontStackData) SetFont(v *Font) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontStackData_SetFont(selfArg, internal.ReinterpretCast[*C.ImFont](vArg))
+}
+
+func (self *FontStackData) Font() *Font {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontFromC(C.wrap_ImFontStackData_GetFont(internal.ReinterpretCast[*C.ImFontStackData](selfArg)))
+}
+
+func (self FontStackData) SetFontSizeBeforeScaling(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontStackData_SetFontSizeBeforeScaling(selfArg, C.float(v))
+}
+
+func (self *FontStackData) FontSizeBeforeScaling() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImFontStackData_GetFontSizeBeforeScaling(internal.ReinterpretCast[*C.ImFontStackData](selfArg)))
+}
+
+func (self FontStackData) SetFontSizeAfterScaling(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontStackData_SetFontSizeAfterScaling(selfArg, C.float(v))
+}
+
+func (self *FontStackData) FontSizeAfterScaling() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImFontStackData_GetFontSizeAfterScaling(internal.ReinterpretCast[*C.ImFontStackData](selfArg)))
 }
 
 func (self BoxSelectState) SetID(v ID) {
@@ -16555,21 +18095,6 @@ func (self *Context) Initialized() bool {
 	return C.wrap_ImGuiContext_GetInitialized(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
 }
 
-func (self Context) SetFontAtlasOwnedByContext(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetFontAtlasOwnedByContext(selfArg, C.bool(v))
-}
-
-func (self *Context) FontAtlasOwnedByContext() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_ImGuiContext_GetFontAtlasOwnedByContext(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
-}
-
 func (self Context) SetIO(v IO) {
 	vArg, _ := v.C()
 
@@ -16674,6 +18199,23 @@ func (self *Context) Font() *Font {
 	return NewFontFromC(C.wrap_ImGuiContext_GetFont(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
+func (self Context) SetFontBaked(v *FontBaked) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetFontBaked(selfArg, internal.ReinterpretCast[*C.ImFontBaked](vArg))
+}
+
+func (self *Context) FontBaked() *FontBaked {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontBakedFromC(C.wrap_ImGuiContext_GetFontBaked(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+}
+
 func (self Context) SetFontSize(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -16689,34 +18231,49 @@ func (self *Context) FontSize() float32 {
 	return float32(C.wrap_ImGuiContext_GetFontSize(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
-func (self Context) SetFontBaseSize(v float32) {
+func (self Context) SetFontSizeBase(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetFontBaseSize(selfArg, C.float(v))
+	C.wrap_ImGuiContext_SetFontSizeBase(selfArg, C.float(v))
 }
 
-func (self *Context) FontBaseSize() float32 {
+func (self *Context) FontSizeBase() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImGuiContext_GetFontBaseSize(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+	return float32(C.wrap_ImGuiContext_GetFontSizeBase(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
-func (self Context) SetFontScale(v float32) {
+func (self Context) SetFontBakedScale(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetFontScale(selfArg, C.float(v))
+	C.wrap_ImGuiContext_SetFontBakedScale(selfArg, C.float(v))
 }
 
-func (self *Context) FontScale() float32 {
+func (self *Context) FontBakedScale() float32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImGuiContext_GetFontScale(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+	return float32(C.wrap_ImGuiContext_GetFontBakedScale(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+}
+
+func (self Context) SetFontRasterizerDensity(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetFontRasterizerDensity(selfArg, C.float(v))
+}
+
+func (self *Context) FontRasterizerDensity() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiContext_GetFontRasterizerDensity(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
 func (self Context) SetCurrentDpiScale(v float32) {
@@ -18135,6 +19692,29 @@ func (self *Context) StyleVarStack() vectors.Vector[StyleMod] {
 		selfFin()
 	}()
 	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetStyleVarStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetStyleVarStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, NewStyleModFromC(C.wrap_ImGuiContext_GetStyleVarStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
+}
+
+func (self Context) SetFontStack(v vectors.Vector[FontStackData]) {
+	vData := v.Data
+	vDataArg, _ := vData.Handle()
+	vVecArg := new(C.ImVector_ImFontStackData)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = internal.ReinterpretCast[*C.ImFontStackData](vDataArg)
+	v.Pinner().Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetFontStack(selfArg, *vVecArg)
+}
+
+func (self *Context) FontStack() vectors.Vector[FontStackData] {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return vectors.NewVectorFromC(C.wrap_ImGuiContext_GetFontStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Size, C.wrap_ImGuiContext_GetFontStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Capacity, NewFontStackDataFromC(C.wrap_ImGuiContext_GetFontStack(internal.ReinterpretCast[*C.ImGuiContext](selfArg)).Data))
 }
 
 func (self Context) SetFocusScopeStack(v vectors.Vector[FocusScopeData]) {
@@ -20250,23 +21830,38 @@ func (self *Context) InputTextDeactivatedState() InputTextDeactivatedState {
 	return *NewInputTextDeactivatedStateFromC(func() *C.ImGuiInputTextDeactivatedState { result := result; return &result }())
 }
 
-func (self Context) SetInputTextPasswordFont(v Font) {
+func (self Context) SetInputTextPasswordFontBackupBaked(v FontBaked) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetInputTextPasswordFont(selfArg, internal.ReinterpretCast[C.ImFont](vArg))
+	C.wrap_ImGuiContext_SetInputTextPasswordFontBackupBaked(selfArg, internal.ReinterpretCast[C.ImFontBaked](vArg))
 }
 
-func (self *Context) InputTextPasswordFont() Font {
+func (self *Context) InputTextPasswordFontBackupBaked() FontBaked {
 	selfArg, selfFin := self.Handle()
 
-	result := C.wrap_ImGuiContext_GetInputTextPasswordFont(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
+	result := C.wrap_ImGuiContext_GetInputTextPasswordFontBackupBaked(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
 
 	defer func() {
 		selfFin()
 	}()
-	return *NewFontFromC(func() *C.ImFont { result := result; return &result }())
+	return *NewFontBakedFromC(func() *C.ImFontBaked { result := result; return &result }())
+}
+
+func (self Context) SetInputTextPasswordFontBackupFlags(v FontFlags) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetInputTextPasswordFontBackupFlags(selfArg, C.ImFontFlags(v))
+}
+
+func (self *Context) InputTextPasswordFontBackupFlags() FontFlags {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return FontFlags(C.wrap_ImGuiContext_GetInputTextPasswordFontBackupFlags(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
 func (self Context) SetTempInputId(v ID) {
@@ -23586,36 +25181,6 @@ func (self *IO) Fonts() *FontAtlas {
 	return NewFontAtlasFromC(C.wrap_ImGuiIO_GetFonts(internal.ReinterpretCast[*C.ImGuiIO](selfArg)))
 }
 
-func (self IO) SetFontGlobalScale(v float32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiIO_SetFontGlobalScale(selfArg, C.float(v))
-}
-
-func (self *IO) FontGlobalScale() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImGuiIO_GetFontGlobalScale(internal.ReinterpretCast[*C.ImGuiIO](selfArg)))
-}
-
-func (self IO) SetFontAllowUserScaling(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiIO_SetFontAllowUserScaling(selfArg, C.bool(v))
-}
-
-func (self *IO) FontAllowUserScaling() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_ImGuiIO_GetFontAllowUserScaling(internal.ReinterpretCast[*C.ImGuiIO](selfArg)) == C.bool(true)
-}
-
 func (self IO) SetFontDefault(v *Font) {
 	vArg, _ := v.Handle()
 
@@ -23631,6 +25196,21 @@ func (self *IO) FontDefault() *Font {
 		selfFin()
 	}()
 	return NewFontFromC(C.wrap_ImGuiIO_GetFontDefault(internal.ReinterpretCast[*C.ImGuiIO](selfArg)))
+}
+
+func (self IO) SetFontAllowUserScaling(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetFontAllowUserScaling(selfArg, C.bool(v))
+}
+
+func (self *IO) FontAllowUserScaling() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiIO_GetFontAllowUserScaling(internal.ReinterpretCast[*C.ImGuiIO](selfArg)) == C.bool(true)
 }
 
 func (self IO) SetConfigNavSwapGamepadButtons(v bool) {
@@ -23856,6 +25436,36 @@ func (self *IO) ConfigViewportsNoDefaultParent() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiIO_GetConfigViewportsNoDefaultParent(internal.ReinterpretCast[*C.ImGuiIO](selfArg)) == C.bool(true)
+}
+
+func (self IO) SetConfigDpiScaleFonts(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetConfigDpiScaleFonts(selfArg, C.bool(v))
+}
+
+func (self *IO) ConfigDpiScaleFonts() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiIO_GetConfigDpiScaleFonts(internal.ReinterpretCast[*C.ImGuiIO](selfArg)) == C.bool(true)
+}
+
+func (self IO) SetConfigDpiScaleViewports(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetConfigDpiScaleViewports(selfArg, C.bool(v))
+}
+
+func (self *IO) ConfigDpiScaleViewports() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiIO_GetConfigDpiScaleViewports(internal.ReinterpretCast[*C.ImGuiIO](selfArg)) == C.bool(true)
 }
 
 func (self IO) SetMouseDrawCursor(v bool) {
@@ -26719,19 +28329,19 @@ func (self *ListClipper) ItemsHeight() float32 {
 	return float32(C.wrap_ImGuiListClipper_GetItemsHeight(internal.ReinterpretCast[*C.ImGuiListClipper](selfArg)))
 }
 
-func (self ListClipper) SetStartPosY(v float32) {
+func (self ListClipper) SetStartPosY(v float64) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiListClipper_SetStartPosY(selfArg, C.float(v))
+	C.wrap_ImGuiListClipper_SetStartPosY(selfArg, C.double(v))
 }
 
-func (self *ListClipper) StartPosY() float32 {
+func (self *ListClipper) StartPosY() float64 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.wrap_ImGuiListClipper_GetStartPosY(internal.ReinterpretCast[*C.ImGuiListClipper](selfArg)))
+	return float64(C.wrap_ImGuiListClipper_GetStartPosY(internal.ReinterpretCast[*C.ImGuiListClipper](selfArg)))
 }
 
 func (self ListClipper) SetStartSeekOffsetY(v float64) {
@@ -27211,6 +28821,21 @@ func (self *MetricsConfig) ShowTextEncodingViewer() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiMetricsConfig_GetShowTextEncodingViewer(internal.ReinterpretCast[*C.ImGuiMetricsConfig](selfArg)) == C.bool(true)
+}
+
+func (self MetricsConfig) SetShowTextureUsedRect(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiMetricsConfig_SetShowTextureUsedRect(selfArg, C.bool(v))
+}
+
+func (self *MetricsConfig) ShowTextureUsedRect() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiMetricsConfig_GetShowTextureUsedRect(internal.ReinterpretCast[*C.ImGuiMetricsConfig](selfArg)) == C.bool(true)
 }
 
 func (self MetricsConfig) SetShowDockingNodes(v bool) {
@@ -29097,6 +30722,36 @@ func (self *PlatformIO) PlatformLocaleDecimalPoint() Wchar {
 	return (Wchar)(C.wrap_ImGuiPlatformIO_GetPlatform_LocaleDecimalPoint(internal.ReinterpretCast[*C.ImGuiPlatformIO](selfArg)))
 }
 
+func (self PlatformIO) SetRendererTextureMaxWidth(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiPlatformIO_SetRenderer_TextureMaxWidth(selfArg, C.int(v))
+}
+
+func (self *PlatformIO) RendererTextureMaxWidth() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImGuiPlatformIO_GetRenderer_TextureMaxWidth(internal.ReinterpretCast[*C.ImGuiPlatformIO](selfArg)))
+}
+
+func (self PlatformIO) SetRendererTextureMaxHeight(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiPlatformIO_SetRenderer_TextureMaxHeight(selfArg, C.int(v))
+}
+
+func (self *PlatformIO) RendererTextureMaxHeight() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImGuiPlatformIO_GetRenderer_TextureMaxHeight(internal.ReinterpretCast[*C.ImGuiPlatformIO](selfArg)))
+}
+
 func (self PlatformIO) SetRendererRenderState(v uintptr) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -29965,6 +31620,51 @@ func (self *StoragePair) Key() ID {
 		selfFin()
 	}()
 	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
+}
+
+func (self Style) SetFontSizeBase(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetFontSizeBase(selfArg, C.float(v))
+}
+
+func (self *Style) FontSizeBase() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_GetFontSizeBase(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
+func (self Style) SetFontScaleMain(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetFontScaleMain(selfArg, C.float(v))
+}
+
+func (self *Style) FontScaleMain() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_GetFontScaleMain(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
+func (self Style) SetFontScaleDpi(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetFontScaleDpi(selfArg, C.float(v))
+}
+
+func (self *Style) FontScaleDpi() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_GetFontScaleDpi(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
 }
 
 func (self Style) SetAlpha(v float32) {
@@ -30930,6 +32630,36 @@ func (self *Style) HoverFlagsForTooltipNav() HoveredFlags {
 		selfFin()
 	}()
 	return HoveredFlags(C.wrap_ImGuiStyle_GetHoverFlagsForTooltipNav(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
+func (self Style) SetMainScale(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_Set_MainScale(selfArg, C.float(v))
+}
+
+func (self *Style) MainScale() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_Get_MainScale(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
+func (self Style) SetNextFrameFontSizeBase(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_Set_NextFrameFontSizeBase(selfArg, C.float(v))
+}
+
+func (self *Style) NextFrameFontSizeBase() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_Get_NextFrameFontSizeBase(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
 }
 
 func (self StyleMod) SetVarIdx(v StyleVar) {
@@ -37773,21 +39503,6 @@ func (self *Window) FontWindowScaleParents() float32 {
 	return float32(C.wrap_ImGuiWindow_GetFontWindowScaleParents(internal.ReinterpretCast[*C.ImGuiWindow](selfArg)))
 }
 
-func (self Window) SetFontDpiScale(v float32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiWindow_SetFontDpiScale(selfArg, C.float(v))
-}
-
-func (self *Window) FontDpiScale() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImGuiWindow_GetFontDpiScale(internal.ReinterpretCast[*C.ImGuiWindow](selfArg)))
-}
-
 func (self Window) SetFontRefSize(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -39414,4 +41129,366 @@ func (self *WindowTempData) TextWrapPosStack() vectors.Vector[float32] {
 		selfFin()
 	}()
 	return vectors.NewVectorFromC(C.wrap_ImGuiWindowTempData_GetTextWrapPosStack(internal.ReinterpretCast[*C.ImGuiWindowTempData](selfArg)).Size, C.wrap_ImGuiWindowTempData_GetTextWrapPosStack(internal.ReinterpretCast[*C.ImGuiWindowTempData](selfArg)).Capacity, (*float32)(C.wrap_ImGuiWindowTempData_GetTextWrapPosStack(internal.ReinterpretCast[*C.ImGuiWindowTempData](selfArg)).Data))
+}
+
+func (self TextureData) SetUniqueID(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureData_SetUniqueID(selfArg, C.int(v))
+}
+
+func (self *TextureData) UniqueID() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImTextureData_GetUniqueID(internal.ReinterpretCast[*C.ImTextureData](selfArg)))
+}
+
+func (self TextureData) SetBackendUserData(v uintptr) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureData_SetBackendUserData(selfArg, C.uintptr_t(v))
+}
+
+func (self *TextureData) BackendUserData() uintptr {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImTextureData_GetBackendUserData(internal.ReinterpretCast[*C.ImTextureData](selfArg)))
+}
+
+func (self TextureData) SetFormat(v TextureFormat) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureData_SetFormat(selfArg, C.ImTextureFormat(v))
+}
+
+func (self *TextureData) Format() TextureFormat {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return TextureFormat(C.wrap_ImTextureData_GetFormat(internal.ReinterpretCast[*C.ImTextureData](selfArg)))
+}
+
+func (self TextureData) SetWidth(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureData_SetWidth(selfArg, C.int(v))
+}
+
+func (self *TextureData) Width() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImTextureData_GetWidth(internal.ReinterpretCast[*C.ImTextureData](selfArg)))
+}
+
+func (self TextureData) SetHeight(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureData_SetHeight(selfArg, C.int(v))
+}
+
+func (self *TextureData) Height() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImTextureData_GetHeight(internal.ReinterpretCast[*C.ImTextureData](selfArg)))
+}
+
+func (self TextureData) SetBytesPerPixel(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureData_SetBytesPerPixel(selfArg, C.int(v))
+}
+
+func (self *TextureData) BytesPerPixel() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImTextureData_GetBytesPerPixel(internal.ReinterpretCast[*C.ImTextureData](selfArg)))
+}
+
+func (self TextureData) SetPixels(v *uint) {
+	vArg, _ := internal.WrapNumberPtr[C.uchar, uint](v)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureData_SetPixels(selfArg, vArg)
+}
+
+func (self TextureData) SetUsedRect(v TextureRect) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureData_SetUsedRect(selfArg, internal.ReinterpretCast[C.ImTextureRect](vArg))
+}
+
+func (self *TextureData) UsedRect() TextureRect {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImTextureData_GetUsedRect(internal.ReinterpretCast[*C.ImTextureData](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTextureRectFromC(func() *C.ImTextureRect { result := result; return &result }())
+}
+
+func (self TextureData) SetUpdateRect(v TextureRect) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureData_SetUpdateRect(selfArg, internal.ReinterpretCast[C.ImTextureRect](vArg))
+}
+
+func (self *TextureData) UpdateRect() TextureRect {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImTextureData_GetUpdateRect(internal.ReinterpretCast[*C.ImTextureData](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTextureRectFromC(func() *C.ImTextureRect { result := result; return &result }())
+}
+
+func (self TextureData) SetUpdates(v vectors.Vector[TextureRect]) {
+	vData := v.Data
+	vDataArg, _ := vData.Handle()
+	vVecArg := new(C.ImVector_ImTextureRect)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = internal.ReinterpretCast[*C.ImTextureRect](vDataArg)
+	v.Pinner().Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureData_SetUpdates(selfArg, *vVecArg)
+}
+
+func (self *TextureData) Updates() vectors.Vector[TextureRect] {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return vectors.NewVectorFromC(C.wrap_ImTextureData_GetUpdates(internal.ReinterpretCast[*C.ImTextureData](selfArg)).Size, C.wrap_ImTextureData_GetUpdates(internal.ReinterpretCast[*C.ImTextureData](selfArg)).Capacity, NewTextureRectFromC(C.wrap_ImTextureData_GetUpdates(internal.ReinterpretCast[*C.ImTextureData](selfArg)).Data))
+}
+
+func (self TextureData) SetUnusedFrames(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureData_SetUnusedFrames(selfArg, C.int(v))
+}
+
+func (self *TextureData) UnusedFrames() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImTextureData_GetUnusedFrames(internal.ReinterpretCast[*C.ImTextureData](selfArg)))
+}
+
+func (self TextureData) SetRefCount(v uint16) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureData_SetRefCount(selfArg, C.ushort(v))
+}
+
+func (self *TextureData) RefCount() uint16 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint16(C.wrap_ImTextureData_GetRefCount(internal.ReinterpretCast[*C.ImTextureData](selfArg)))
+}
+
+func (self TextureData) SetUseColors(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureData_SetUseColors(selfArg, C.bool(v))
+}
+
+func (self *TextureData) UseColors() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImTextureData_GetUseColors(internal.ReinterpretCast[*C.ImTextureData](selfArg)) == C.bool(true)
+}
+
+func (self TextureData) SetWantDestroyNextFrame(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureData_SetWantDestroyNextFrame(selfArg, C.bool(v))
+}
+
+func (self *TextureData) WantDestroyNextFrame() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImTextureData_GetWantDestroyNextFrame(internal.ReinterpretCast[*C.ImTextureData](selfArg)) == C.bool(true)
+}
+
+func (self TextureRect) SetX(v uint16) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureRect_SetX(selfArg, C.ushort(v))
+}
+
+func (self *TextureRect) X() uint16 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint16(C.wrap_ImTextureRect_GetX(internal.ReinterpretCast[*C.ImTextureRect](selfArg)))
+}
+
+func (self TextureRect) SetY(v uint16) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureRect_SetY(selfArg, C.ushort(v))
+}
+
+func (self *TextureRect) Y() uint16 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint16(C.wrap_ImTextureRect_GetY(internal.ReinterpretCast[*C.ImTextureRect](selfArg)))
+}
+
+func (self TextureRect) SetW(v uint16) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureRect_SetW(selfArg, C.ushort(v))
+}
+
+func (self *TextureRect) W() uint16 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint16(C.wrap_ImTextureRect_GetW(internal.ReinterpretCast[*C.ImTextureRect](selfArg)))
+}
+
+func (self TextureRect) SetH(v uint16) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureRect_SetH(selfArg, C.ushort(v))
+}
+
+func (self *TextureRect) H() uint16 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint16(C.wrap_ImTextureRect_GetH(internal.ReinterpretCast[*C.ImTextureRect](selfArg)))
+}
+
+func (self TextureRef) SetTexData(v *TextureData) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureRef_Set_TexData(selfArg, internal.ReinterpretCast[*C.ImTextureData](vArg))
+}
+
+func (self *TextureRef) TexData() *TextureData {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewTextureDataFromC(C.wrap_ImTextureRef_Get_TexData(internal.ReinterpretCast[*C.ImTextureRef](selfArg)))
+}
+
+func (self TextureRef) SetTexID(v TextureID) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImTextureRef_Set_TexID(selfArg, internal.ReinterpretCast[C.ImTextureID](vArg))
+}
+
+func (self *TextureRef) TexID() TextureID {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImTextureRef_Get_TexID(internal.ReinterpretCast[*C.ImTextureRef](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTextureIDFromC(func() *C.ImTextureID { result := result; return &result }())
+}
+
+func (self Vec2i) SetX(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImVec2i_SetX(selfArg, C.int(v))
+}
+
+func (self *Vec2i) X() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImVec2i_GetX(internal.ReinterpretCast[*C.ImVec2i](selfArg)))
+}
+
+func (self Vec2i) SetY(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImVec2i_SetY(selfArg, C.int(v))
+}
+
+func (self *Vec2i) Y() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImVec2i_GetY(internal.ReinterpretCast[*C.ImVec2i](selfArg)))
+}
+
+func (self *stbrpcontextopaque) ContextopaqueGetData() [80]rune {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [80]rune {
+		result := [80]rune{}
+		resultMirr := C.wrap_stbrp_context_opaque_GetData(internal.ReinterpretCast[*C.stbrp_context_opaque](selfArg))
+		for i := range result {
+			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
+		}
+
+		return result
+	}()
 }
