@@ -60,6 +60,7 @@
                 "igGetPlatformIO":         "CurrentPlatformIO",
                 "igGetStyle":              "CurrentStyle",
                 "igGetMouseCursor":        "CurrentMouseCursor",
+                "igGetFontBaked":          "GetFontBaked",
                 "ImAxis":                  "AxisEnum",
                 "GetItem_ID":              "ItemByID"
         },
