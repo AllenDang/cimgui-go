@@ -15847,7 +15847,7 @@
   ],
   "ImPlot_PlotImage": [
     {
-      "args": "(const char* label_id,ImTextureID tex_ref,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max,const ImVec2 uv0,const ImVec2 uv1,const ImVec4 tint_col,ImPlotImageFlags flags)",
+      "args": "(const char* label_id,ImTextureRef tex_ref,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max,const ImVec2 uv0,const ImVec2 uv1,const ImVec4 tint_col,ImPlotImageFlags flags)",
       "argsT": [
         {
           "name": "label_id",
@@ -15855,7 +15855,7 @@
         },
         {
           "name": "tex_ref",
-          "type": "ImTextureID"
+          "type": "ImTextureRef"
         },
         {
           "name": "bounds_min",
@@ -15882,7 +15882,7 @@
           "type": "ImPlotImageFlags"
         }
       ],
-      "argsoriginal": "(const char* label_id,ImTextureID tex_ref,const ImPlotPoint& bounds_min,const ImPlotPoint& bounds_max,const ImVec2& uv0=ImVec2(0,0),const ImVec2& uv1=ImVec2(1,1),const ImVec4& tint_col=ImVec4(1,1,1,1),ImPlotImageFlags flags=0)",
+      "argsoriginal": "(const char* label_id,ImTextureRef tex_ref,const ImPlotPoint& bounds_min,const ImPlotPoint& bounds_max,const ImVec2& uv0=ImVec2(0,0),const ImVec2& uv1=ImVec2(1,1),const ImVec4& tint_col=ImVec4(1,1,1,1),ImPlotImageFlags flags=0)",
       "call_args": "(label_id,tex_ref,bounds_min,bounds_max,uv0,uv1,tint_col,flags)",
       "cimguiname": "ImPlot_PlotImage",
       "defaults": {
@@ -15892,11 +15892,11 @@
         "uv1": "ImVec2(1,1)"
       },
       "funcname": "PlotImage",
-      "location": "implot:920",
+      "location": "implot:918",
       "namespace": "ImPlot",
       "ov_cimguiname": "ImPlot_PlotImage",
       "ret": "void",
-      "signature": "(const char*,ImTextureID,const ImPlotPoint,const ImPlotPoint,const ImVec2,const ImVec2,const ImVec4,ImPlotImageFlags)",
+      "signature": "(const char*,ImTextureRef,const ImPlotPoint,const ImPlotPoint,const ImVec2,const ImVec2,const ImVec4,ImPlotImageFlags)",
       "stname": ""
     }
   ],

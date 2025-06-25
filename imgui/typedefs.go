@@ -367,56 +367,154 @@ func NewFontAtlasFromC[SRC any](cvalue SRC) *FontAtlas {
 	return &FontAtlas{CData: internal.ReinterpretCast[*C.ImFontAtlas](cvalue)}
 }
 
-type FontAtlasCustomRect struct {
-	CData *C.ImFontAtlasCustomRect
+type FontAtlasBuilder struct {
+	CData *C.ImFontAtlasBuilder
 }
 
-// Handle returns C version of FontAtlasCustomRect and its finalizer func.
-func (self *FontAtlasCustomRect) Handle() (result *C.ImFontAtlasCustomRect, fin func()) {
+// Handle returns C version of FontAtlasBuilder and its finalizer func.
+func (self *FontAtlasBuilder) Handle() (result *C.ImFontAtlasBuilder, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self FontAtlasCustomRect) C() (C.ImFontAtlasCustomRect, func()) {
+func (self FontAtlasBuilder) C() (C.ImFontAtlasBuilder, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewEmptyFontAtlasCustomRect creates FontAtlasCustomRect with its 0 value.
-func NewEmptyFontAtlasCustomRect() *FontAtlasCustomRect {
-	return &FontAtlasCustomRect{CData: new(C.ImFontAtlasCustomRect)}
+// NewEmptyFontAtlasBuilder creates FontAtlasBuilder with its 0 value.
+func NewEmptyFontAtlasBuilder() *FontAtlasBuilder {
+	return &FontAtlasBuilder{CData: new(C.ImFontAtlasBuilder)}
 }
 
-// NewFontAtlasCustomRectFromC creates FontAtlasCustomRect from its C pointer.
-// SRC ~= *C.ImFontAtlasCustomRect
-func NewFontAtlasCustomRectFromC[SRC any](cvalue SRC) *FontAtlasCustomRect {
-	return &FontAtlasCustomRect{CData: internal.ReinterpretCast[*C.ImFontAtlasCustomRect](cvalue)}
+// NewFontAtlasBuilderFromC creates FontAtlasBuilder from its C pointer.
+// SRC ~= *C.ImFontAtlasBuilder
+func NewFontAtlasBuilderFromC[SRC any](cvalue SRC) *FontAtlasBuilder {
+	return &FontAtlasBuilder{CData: internal.ReinterpretCast[*C.ImFontAtlasBuilder](cvalue)}
 }
 
-type FontBuilderIO struct {
-	CData *C.ImFontBuilderIO
+type FontAtlasPostProcessData struct {
+	CData *C.ImFontAtlasPostProcessData
 }
 
-// Handle returns C version of FontBuilderIO and its finalizer func.
-func (self *FontBuilderIO) Handle() (result *C.ImFontBuilderIO, fin func()) {
+// Handle returns C version of FontAtlasPostProcessData and its finalizer func.
+func (self *FontAtlasPostProcessData) Handle() (result *C.ImFontAtlasPostProcessData, fin func()) {
 	return self.CData, func() {}
 }
 
 // C is like Handle but returns plain type instead of pointer.
-func (self FontBuilderIO) C() (C.ImFontBuilderIO, func()) {
+func (self FontAtlasPostProcessData) C() (C.ImFontAtlasPostProcessData, func()) {
 	result, fn := self.Handle()
 	return *result, fn
 }
 
-// NewEmptyFontBuilderIO creates FontBuilderIO with its 0 value.
-func NewEmptyFontBuilderIO() *FontBuilderIO {
-	return &FontBuilderIO{CData: new(C.ImFontBuilderIO)}
+// NewEmptyFontAtlasPostProcessData creates FontAtlasPostProcessData with its 0 value.
+func NewEmptyFontAtlasPostProcessData() *FontAtlasPostProcessData {
+	return &FontAtlasPostProcessData{CData: new(C.ImFontAtlasPostProcessData)}
 }
 
-// NewFontBuilderIOFromC creates FontBuilderIO from its C pointer.
-// SRC ~= *C.ImFontBuilderIO
-func NewFontBuilderIOFromC[SRC any](cvalue SRC) *FontBuilderIO {
-	return &FontBuilderIO{CData: internal.ReinterpretCast[*C.ImFontBuilderIO](cvalue)}
+// NewFontAtlasPostProcessDataFromC creates FontAtlasPostProcessData from its C pointer.
+// SRC ~= *C.ImFontAtlasPostProcessData
+func NewFontAtlasPostProcessDataFromC[SRC any](cvalue SRC) *FontAtlasPostProcessData {
+	return &FontAtlasPostProcessData{CData: internal.ReinterpretCast[*C.ImFontAtlasPostProcessData](cvalue)}
+}
+
+type FontAtlasRect struct {
+	CData *C.ImFontAtlasRect
+}
+
+// Handle returns C version of FontAtlasRect and its finalizer func.
+func (self *FontAtlasRect) Handle() (result *C.ImFontAtlasRect, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self FontAtlasRect) C() (C.ImFontAtlasRect, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyFontAtlasRect creates FontAtlasRect with its 0 value.
+func NewEmptyFontAtlasRect() *FontAtlasRect {
+	return &FontAtlasRect{CData: new(C.ImFontAtlasRect)}
+}
+
+// NewFontAtlasRectFromC creates FontAtlasRect from its C pointer.
+// SRC ~= *C.ImFontAtlasRect
+func NewFontAtlasRectFromC[SRC any](cvalue SRC) *FontAtlasRect {
+	return &FontAtlasRect{CData: internal.ReinterpretCast[*C.ImFontAtlasRect](cvalue)}
+}
+
+type FontAtlasRectEntry struct {
+	CData *C.ImFontAtlasRectEntry
+}
+
+// Handle returns C version of FontAtlasRectEntry and its finalizer func.
+func (self *FontAtlasRectEntry) Handle() (result *C.ImFontAtlasRectEntry, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self FontAtlasRectEntry) C() (C.ImFontAtlasRectEntry, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyFontAtlasRectEntry creates FontAtlasRectEntry with its 0 value.
+func NewEmptyFontAtlasRectEntry() *FontAtlasRectEntry {
+	return &FontAtlasRectEntry{CData: new(C.ImFontAtlasRectEntry)}
+}
+
+// NewFontAtlasRectEntryFromC creates FontAtlasRectEntry from its C pointer.
+// SRC ~= *C.ImFontAtlasRectEntry
+func NewFontAtlasRectEntryFromC[SRC any](cvalue SRC) *FontAtlasRectEntry {
+	return &FontAtlasRectEntry{CData: internal.ReinterpretCast[*C.ImFontAtlasRectEntry](cvalue)}
+}
+
+type FontAtlasRectId int32
+
+// Handle returns C version of FontAtlasRectId and its finalizer func.
+func (selfSrc *FontAtlasRectId) Handle() (result *C.ImFontAtlasRectId, fin func()) {
+	self := (*int32)(selfSrc)
+	selfArg, selfFin := internal.WrapNumberPtr[C.int, int32](self)
+	return (*C.ImFontAtlasRectId)(selfArg), func() { selfFin() }
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self FontAtlasRectId) C() (C.ImFontAtlasRectId, func()) {
+	return (C.ImFontAtlasRectId)(C.int(self)), func() {}
+}
+
+// NewFontAtlasRectIdFromC creates FontAtlasRectId from its C pointer.
+// SRC ~= *C.ImFontAtlasRectId
+func NewFontAtlasRectIdFromC[SRC any](cvalue SRC) *FontAtlasRectId {
+	return (*FontAtlasRectId)((*int32)(internal.ReinterpretCast[*C.ImFontAtlasRectId](cvalue)))
+}
+
+type FontBaked struct {
+	CData *C.ImFontBaked
+}
+
+// Handle returns C version of FontBaked and its finalizer func.
+func (self *FontBaked) Handle() (result *C.ImFontBaked, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self FontBaked) C() (C.ImFontBaked, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyFontBaked creates FontBaked with its 0 value.
+func NewEmptyFontBaked() *FontBaked {
+	return &FontBaked{CData: new(C.ImFontBaked)}
+}
+
+// NewFontBakedFromC creates FontBaked from its C pointer.
+// SRC ~= *C.ImFontBaked
+func NewFontBakedFromC[SRC any](cvalue SRC) *FontBaked {
+	return &FontBaked{CData: internal.ReinterpretCast[*C.ImFontBaked](cvalue)}
 }
 
 type FontConfig struct {
@@ -495,6 +593,58 @@ func NewEmptyFontGlyphRangesBuilder() *FontGlyphRangesBuilder {
 // SRC ~= *C.ImFontGlyphRangesBuilder
 func NewFontGlyphRangesBuilderFromC[SRC any](cvalue SRC) *FontGlyphRangesBuilder {
 	return &FontGlyphRangesBuilder{CData: internal.ReinterpretCast[*C.ImFontGlyphRangesBuilder](cvalue)}
+}
+
+type FontLoader struct {
+	CData *C.ImFontLoader
+}
+
+// Handle returns C version of FontLoader and its finalizer func.
+func (self *FontLoader) Handle() (result *C.ImFontLoader, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self FontLoader) C() (C.ImFontLoader, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyFontLoader creates FontLoader with its 0 value.
+func NewEmptyFontLoader() *FontLoader {
+	return &FontLoader{CData: new(C.ImFontLoader)}
+}
+
+// NewFontLoaderFromC creates FontLoader from its C pointer.
+// SRC ~= *C.ImFontLoader
+func NewFontLoaderFromC[SRC any](cvalue SRC) *FontLoader {
+	return &FontLoader{CData: internal.ReinterpretCast[*C.ImFontLoader](cvalue)}
+}
+
+type FontStackData struct {
+	CData *C.ImFontStackData
+}
+
+// Handle returns C version of FontStackData and its finalizer func.
+func (self *FontStackData) Handle() (result *C.ImFontStackData, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self FontStackData) C() (C.ImFontStackData, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyFontStackData creates FontStackData with its 0 value.
+func NewEmptyFontStackData() *FontStackData {
+	return &FontStackData{CData: new(C.ImFontStackData)}
+}
+
+// NewFontStackDataFromC creates FontStackData from its C pointer.
+// SRC ~= *C.ImFontStackData
+func NewFontStackDataFromC[SRC any](cvalue SRC) *FontStackData {
+	return &FontStackData{CData: internal.ReinterpretCast[*C.ImFontStackData](cvalue)}
 }
 
 type BoxSelectState struct {
@@ -3115,6 +3265,32 @@ func NewPoolIdxFromC[SRC any](cvalue SRC) *PoolIdx {
 	return (*PoolIdx)((*int32)(internal.ReinterpretCast[*C.ImPoolIdx](cvalue)))
 }
 
+type TextureData struct {
+	CData *C.ImTextureData
+}
+
+// Handle returns C version of TextureData and its finalizer func.
+func (self *TextureData) Handle() (result *C.ImTextureData, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self TextureData) C() (C.ImTextureData, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyTextureData creates TextureData with its 0 value.
+func NewEmptyTextureData() *TextureData {
+	return &TextureData{CData: new(C.ImTextureData)}
+}
+
+// NewTextureDataFromC creates TextureData from its C pointer.
+// SRC ~= *C.ImTextureData
+func NewTextureDataFromC[SRC any](cvalue SRC) *TextureData {
+	return &TextureData{CData: internal.ReinterpretCast[*C.ImTextureData](cvalue)}
+}
+
 type TextureID uint64
 
 // Handle returns C version of TextureID and its finalizer func.
@@ -3133,6 +3309,58 @@ func (self TextureID) C() (C.ImTextureID, func()) {
 // SRC ~= *C.ImTextureID
 func NewTextureIDFromC[SRC any](cvalue SRC) *TextureID {
 	return (*TextureID)((*uint64)(internal.ReinterpretCast[*C.ImTextureID](cvalue)))
+}
+
+type TextureRect struct {
+	CData *C.ImTextureRect
+}
+
+// Handle returns C version of TextureRect and its finalizer func.
+func (self *TextureRect) Handle() (result *C.ImTextureRect, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self TextureRect) C() (C.ImTextureRect, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyTextureRect creates TextureRect with its 0 value.
+func NewEmptyTextureRect() *TextureRect {
+	return &TextureRect{CData: new(C.ImTextureRect)}
+}
+
+// NewTextureRectFromC creates TextureRect from its C pointer.
+// SRC ~= *C.ImTextureRect
+func NewTextureRectFromC[SRC any](cvalue SRC) *TextureRect {
+	return &TextureRect{CData: internal.ReinterpretCast[*C.ImTextureRect](cvalue)}
+}
+
+type TextureRef struct {
+	CData *C.ImTextureRef
+}
+
+// Handle returns C version of TextureRef and its finalizer func.
+func (self *TextureRef) Handle() (result *C.ImTextureRef, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self TextureRef) C() (C.ImTextureRef, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyTextureRef creates TextureRef with its 0 value.
+func NewEmptyTextureRef() *TextureRef {
+	return &TextureRef{CData: new(C.ImTextureRef)}
+}
+
+// NewTextureRefFromC creates TextureRef from its C pointer.
+// SRC ~= *C.ImTextureRef
+func NewTextureRefFromC[SRC any](cvalue SRC) *TextureRef {
+	return &TextureRef{CData: internal.ReinterpretCast[*C.ImTextureRef](cvalue)}
 }
 
 type Vec1 struct {
@@ -3159,6 +3387,32 @@ func NewEmptyVec1() *Vec1 {
 // SRC ~= *C.ImVec1
 func NewVec1FromC[SRC any](cvalue SRC) *Vec1 {
 	return &Vec1{CData: internal.ReinterpretCast[*C.ImVec1](cvalue)}
+}
+
+type Vec2i struct {
+	CData *C.ImVec2i
+}
+
+// Handle returns C version of Vec2i and its finalizer func.
+func (self *Vec2i) Handle() (result *C.ImVec2i, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self Vec2i) C() (C.ImVec2i, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyVec2i creates Vec2i with its 0 value.
+func NewEmptyVec2i() *Vec2i {
+	return &Vec2i{CData: new(C.ImVec2i)}
+}
+
+// NewVec2iFromC creates Vec2i from its C pointer.
+// SRC ~= *C.ImVec2i
+func NewVec2iFromC[SRC any](cvalue SRC) *Vec2i {
+	return &Vec2i{CData: internal.ReinterpretCast[*C.ImVec2i](cvalue)}
 }
 
 type Wchar16 uint16
@@ -3214,4 +3468,45 @@ func (self *STBTexteditState) Handle() (result *C.STB_TexteditState, fin func())
 // SRC ~= *C.STB_TexteditState
 func NewSTBTexteditStateFromC[SRC any](cvalue SRC) *STBTexteditState {
 	return &STBTexteditState{CData: internal.ReinterpretCast[*C.STB_TexteditState](cvalue)}
+}
+
+type stbrpcontextopaque struct {
+	CData *C.stbrp_context_opaque
+}
+
+// Handle returns C version of stbrpcontextopaque and its finalizer func.
+func (self *stbrpcontextopaque) Handle() (result *C.stbrp_context_opaque, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self stbrpcontextopaque) C() (C.stbrp_context_opaque, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptystbrpcontextopaque creates stbrpcontextopaque with its 0 value.
+func NewEmptystbrpcontextopaque() *stbrpcontextopaque {
+	return &stbrpcontextopaque{CData: new(C.stbrp_context_opaque)}
+}
+
+// NewstbrpcontextopaqueFromC creates stbrpcontextopaque from its C pointer.
+// SRC ~= *C.stbrp_context_opaque
+func NewstbrpcontextopaqueFromC[SRC any](cvalue SRC) *stbrpcontextopaque {
+	return &stbrpcontextopaque{CData: internal.ReinterpretCast[*C.stbrp_context_opaque](cvalue)}
+}
+
+type stbrpnode struct {
+	CData *C.stbrp_node
+}
+
+// Handle returns C version of stbrpnode and its finalizer func.
+func (self *stbrpnode) Handle() (result *C.stbrp_node, fin func()) {
+	return self.CData, func() {}
+}
+
+// NewstbrpnodeFromC creates stbrpnode from its C pointer.
+// SRC ~= *C.stbrp_node
+func NewstbrpnodeFromC[SRC any](cvalue SRC) *stbrpnode {
+	return &stbrpnode{CData: internal.ReinterpretCast[*C.stbrp_node](cvalue)}
 }

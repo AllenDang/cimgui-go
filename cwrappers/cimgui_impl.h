@@ -1,3 +1,5 @@
+#ifndef CIMGUI_IMPL_DEFINED
+#define CIMGUI_IMPL_DEFINED
 #ifdef CIMGUI_USE_GLFW
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 
@@ -23,6 +25,8 @@ CIMGUI_API void ImGui_ImplGlfw_KeyCallback(GLFWwindow* window,int key,int scanco
 CIMGUI_API void ImGui_ImplGlfw_CharCallback(GLFWwindow* window,unsigned int c);
 CIMGUI_API void ImGui_ImplGlfw_MonitorCallback(GLFWmonitor* monitor,int event);
 CIMGUI_API void ImGui_ImplGlfw_Sleep(int milliseconds);
+CIMGUI_API float ImGui_ImplGlfw_GetContentScaleForWindow(GLFWwindow* window);
+CIMGUI_API float ImGui_ImplGlfw_GetContentScaleForMonitor(GLFWmonitor* monitor);
 
 #endif
 #ifdef CIMGUI_USE_OPENGL3
@@ -30,10 +34,9 @@ CIMGUI_API bool ImGui_ImplOpenGL3_Init(const char* glsl_version);
 CIMGUI_API void ImGui_ImplOpenGL3_Shutdown(void);
 CIMGUI_API void ImGui_ImplOpenGL3_NewFrame(void);
 CIMGUI_API void ImGui_ImplOpenGL3_RenderDrawData(ImDrawData* draw_data);
-CIMGUI_API bool ImGui_ImplOpenGL3_CreateFontsTexture(void);
-CIMGUI_API void ImGui_ImplOpenGL3_DestroyFontsTexture(void);
 CIMGUI_API bool ImGui_ImplOpenGL3_CreateDeviceObjects(void);
 CIMGUI_API void ImGui_ImplOpenGL3_DestroyDeviceObjects(void);
+CIMGUI_API void ImGui_ImplOpenGL3_UpdateTexture(ImTextureData* tex);
 
 #endif
 #ifdef CIMGUI_USE_OPENGL2
@@ -41,10 +44,9 @@ CIMGUI_API bool ImGui_ImplOpenGL2_Init(void);
 CIMGUI_API void ImGui_ImplOpenGL2_Shutdown(void);
 CIMGUI_API void ImGui_ImplOpenGL2_NewFrame(void);
 CIMGUI_API void ImGui_ImplOpenGL2_RenderDrawData(ImDrawData* draw_data);
-CIMGUI_API bool ImGui_ImplOpenGL2_CreateFontsTexture(void);
-CIMGUI_API void ImGui_ImplOpenGL2_DestroyFontsTexture(void);
 CIMGUI_API bool ImGui_ImplOpenGL2_CreateDeviceObjects(void);
 CIMGUI_API void ImGui_ImplOpenGL2_DestroyDeviceObjects(void);
+CIMGUI_API void ImGui_ImplOpenGL2_UpdateTexture(ImTextureData* tex);
 
 #endif
 #ifdef CIMGUI_USE_SDL2
@@ -68,6 +70,9 @@ CIMGUI_API bool ImGui_ImplSDL2_InitForOther(SDL_Window* window);
 CIMGUI_API void ImGui_ImplSDL2_Shutdown(void);
 CIMGUI_API void ImGui_ImplSDL2_NewFrame(void);
 CIMGUI_API bool ImGui_ImplSDL2_ProcessEvent(const SDL_Event* event);
+CIMGUI_API float ImGui_ImplSDL2_GetContentScaleForWindow(SDL_Window* window);
+CIMGUI_API float ImGui_ImplSDL2_GetContentScaleForDisplay(int display_index);
 CIMGUI_API void ImGui_ImplSDL2_SetGamepadMode(ImGui_ImplSDL2_GamepadMode mode,struct _SDL_GameController** manual_gamepads_array,int manual_gamepads_count);
 
 #endif
+#endif //CIMGUI_IMPL_DEFINED
