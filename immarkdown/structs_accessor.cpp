@@ -65,6 +65,10 @@ void wrap_MarkdownFormatInfo_SetItemHovered(MarkdownFormatInfo *MarkdownFormatIn
 bool wrap_MarkdownFormatInfo_GetItemHovered(MarkdownFormatInfo *self) { return self->itemHovered; }
 void wrap_MarkdownFormatInfo_SetConfig(MarkdownFormatInfo *MarkdownFormatInfoPtr, const MarkdownConfig* v) { MarkdownFormatInfoPtr->config = v; }
 const MarkdownConfig* wrap_MarkdownFormatInfo_GetConfig(MarkdownFormatInfo *self) { return self->config; }
+void wrap_MarkdownFormatInfo_SetText(MarkdownFormatInfo *MarkdownFormatInfoPtr, const char* v) { MarkdownFormatInfoPtr->text = v; }
+const char* wrap_MarkdownFormatInfo_GetText(MarkdownFormatInfo *self) { return self->text; }
+void wrap_MarkdownFormatInfo_SetTextLength(MarkdownFormatInfo *MarkdownFormatInfoPtr, int32_t v) { MarkdownFormatInfoPtr->textLength = v; }
+int32_t wrap_MarkdownFormatInfo_GetTextLength(MarkdownFormatInfo *self) { return self->textLength; }
 void wrap_MarkdownHeadingFormat_SetFont(MarkdownHeadingFormat *MarkdownHeadingFormatPtr, ImFont* v) { MarkdownHeadingFormatPtr->font = v; }
 ImFont* wrap_MarkdownHeadingFormat_GetFont(MarkdownHeadingFormat *self) { return self->font; }
 void wrap_MarkdownHeadingFormat_SetSeparator(MarkdownHeadingFormat *MarkdownHeadingFormatPtr, bool v) { MarkdownHeadingFormatPtr->separator = v; }
@@ -85,6 +89,8 @@ void wrap_MarkdownImageData_SetTint_col(MarkdownImageData *MarkdownImageDataPtr,
 ImVec4 wrap_MarkdownImageData_GetTint_col(MarkdownImageData *self) { return self->tint_col; }
 void wrap_MarkdownImageData_SetBorder_col(MarkdownImageData *MarkdownImageDataPtr, ImVec4 v) { MarkdownImageDataPtr->border_col = v; }
 ImVec4 wrap_MarkdownImageData_GetBorder_col(MarkdownImageData *self) { return self->border_col; }
+void wrap_MarkdownImageData_SetBg_col(MarkdownImageData *MarkdownImageDataPtr, ImVec4 v) { MarkdownImageDataPtr->bg_col = v; }
+ImVec4 wrap_MarkdownImageData_GetBg_col(MarkdownImageData *self) { return self->bg_col; }
 void wrap_MarkdownLinkCallbackData_SetText(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, const char* v) { MarkdownLinkCallbackDataPtr->text = v; }
 const char* wrap_MarkdownLinkCallbackData_GetText(MarkdownLinkCallbackData *self) { return self->text; }
 void wrap_MarkdownLinkCallbackData_SetTextLength(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, int v) { MarkdownLinkCallbackDataPtr->textLength = v; }

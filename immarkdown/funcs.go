@@ -650,6 +650,38 @@ func (self *MarkdownFormatInfo) Config() *MarkdownConfig {
 	return NewMarkdownConfigFromC(C.wrap_MarkdownFormatInfo_GetConfig(internal.ReinterpretCast[*C.MarkdownFormatInfo](selfArg)))
 }
 
+func (self MarkdownFormatInfo) SetText(v string) {
+	vArg, _ := internal.WrapString[C.char](v)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_MarkdownFormatInfo_SetText(selfArg, vArg)
+}
+
+func (self *MarkdownFormatInfo) Text() string {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.GoString(C.wrap_MarkdownFormatInfo_GetText(internal.ReinterpretCast[*C.MarkdownFormatInfo](selfArg)))
+}
+
+func (self MarkdownFormatInfo) SetTextLength(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_MarkdownFormatInfo_SetTextLength(selfArg, C.int32_t(v))
+}
+
+func (self *MarkdownFormatInfo) TextLength() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_MarkdownFormatInfo_GetTextLength(internal.ReinterpretCast[*C.MarkdownFormatInfo](selfArg)))
+}
+
 func (self MarkdownHeadingFormat) SetFont(v *imgui.Font) {
 	vArg, _ := v.Handle()
 
@@ -818,6 +850,24 @@ func (self *MarkdownImageData) Bordercol() imgui.Vec4 {
 	}()
 	return func() imgui.Vec4 {
 		out := C.wrap_MarkdownImageData_GetBorder_col(internal.ReinterpretCast[*C.MarkdownImageData](selfArg))
+		return *(&imgui.Vec4{}).FromC(unsafe.Pointer(&out))
+	}()
+}
+
+func (self MarkdownImageData) SetBgcol(v imgui.Vec4) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_MarkdownImageData_SetBg_col(selfArg, internal.ReinterpretCast[C.ImVec4](v.ToC()))
+}
+
+func (self *MarkdownImageData) Bgcol() imgui.Vec4 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() imgui.Vec4 {
+		out := C.wrap_MarkdownImageData_GetBg_col(internal.ReinterpretCast[*C.MarkdownImageData](selfArg))
 		return *(&imgui.Vec4{}).FromC(unsafe.Pointer(&out))
 	}()
 }

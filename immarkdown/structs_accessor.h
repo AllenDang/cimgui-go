@@ -68,6 +68,10 @@ extern void wrap_MarkdownFormatInfo_SetItemHovered(MarkdownFormatInfo *MarkdownF
 extern bool wrap_MarkdownFormatInfo_GetItemHovered(MarkdownFormatInfo *self);
 extern void wrap_MarkdownFormatInfo_SetConfig(MarkdownFormatInfo *MarkdownFormatInfoPtr, const MarkdownConfig* v);
 extern const MarkdownConfig* wrap_MarkdownFormatInfo_GetConfig(MarkdownFormatInfo *self);
+extern void wrap_MarkdownFormatInfo_SetText(MarkdownFormatInfo *MarkdownFormatInfoPtr, const char* v);
+extern const char* wrap_MarkdownFormatInfo_GetText(MarkdownFormatInfo *self);
+extern void wrap_MarkdownFormatInfo_SetTextLength(MarkdownFormatInfo *MarkdownFormatInfoPtr, int32_t v);
+extern int32_t wrap_MarkdownFormatInfo_GetTextLength(MarkdownFormatInfo *self);
 extern void wrap_MarkdownHeadingFormat_SetFont(MarkdownHeadingFormat *MarkdownHeadingFormatPtr, ImFont* v);
 extern ImFont* wrap_MarkdownHeadingFormat_GetFont(MarkdownHeadingFormat *self);
 extern void wrap_MarkdownHeadingFormat_SetSeparator(MarkdownHeadingFormat *MarkdownHeadingFormatPtr, bool v);
@@ -88,6 +92,8 @@ extern void wrap_MarkdownImageData_SetTint_col(MarkdownImageData *MarkdownImageD
 extern ImVec4 wrap_MarkdownImageData_GetTint_col(MarkdownImageData *self);
 extern void wrap_MarkdownImageData_SetBorder_col(MarkdownImageData *MarkdownImageDataPtr, ImVec4 v);
 extern ImVec4 wrap_MarkdownImageData_GetBorder_col(MarkdownImageData *self);
+extern void wrap_MarkdownImageData_SetBg_col(MarkdownImageData *MarkdownImageDataPtr, ImVec4 v);
+extern ImVec4 wrap_MarkdownImageData_GetBg_col(MarkdownImageData *self);
 extern void wrap_MarkdownLinkCallbackData_SetText(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, const char* v);
 extern const char* wrap_MarkdownLinkCallbackData_GetText(MarkdownLinkCallbackData *self);
 extern void wrap_MarkdownLinkCallbackData_SetTextLength(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, int v);

@@ -2,15 +2,15 @@
 
 // License: zlib
 // Copyright (c) 2019 Juliette Foucaut & Doug Binks
-// 
+//
 // This software is provided 'as-is', without any express or implied
 // warranty. In no event will the authors be held liable for any damages
 // arising from the use of this software.
-// 
+//
 // Permission is granted to anyone to use this software for any purpose,
 // including commercial applications, and to alter it and redistribute it
 // freely, subject to the following restrictions:
-// 
+//
 // 1. The origin of this software must not be misrepresented; you must not
 //    claim that you wrote the original software. If you use this software
 //    in a product, an acknowledgment in the product documentation would be
@@ -45,10 +45,10 @@ imgui_markdown currently supports the following markdown functionality:
  - Link
  - Image
  - Horizontal rule
- 
+
 Syntax
 
-Wrapping: 
+Wrapping:
 Text wraps automatically. To add a new line, use 'Return'.
 
 Headers:
@@ -62,13 +62,13 @@ _emphasis_
 **strong emphasis**
 __strong emphasis__
 
-Indents: 
+Indents:
 On a new line, at the start of the line, add two spaces per indent.
   Indent level 1
     Indent level 2
 
-Unordered lists: 
-On a new line, at the start of the line, add two spaces, an asterisks and a space. 
+Unordered lists:
+On a new line, at the start of the line, add two spaces, an asterisks and a space.
 For nested lists, add two additional spaces in front of the asterisk per list level increment.
   * Unordered List level 1
     * Unordered List level 2
@@ -104,7 +104,7 @@ static ImFont* H1 = NULL;
 static ImFont* H2 = NULL;
 static ImFont* H3 = NULL;
 
-static ImGui::MarkdownConfig mdConfig; 
+static ImGui::MarkdownConfig mdConfig;
 
 
 void LinkCallback( ImGui::MarkdownLinkCallbackData data_ )
@@ -126,7 +126,7 @@ inline ImGui::MarkdownImageData ImageCallback( ImGui::MarkdownLinkCallbackData d
     imageData.useLinkCallback = false;
     imageData.user_texture_id = image;
     imageData.size =            ImVec2( 40.0f, 20.0f );
-    
+
     // For image resize when available size.x > image width, add
     ImVec2 const contentSize = ImGui::GetContentRegionAvail();
     if( imageData.size.x > contentSize.x )
@@ -158,8 +158,8 @@ void ExampleMarkdownFormatCallback( const ImGui::MarkdownFormatInfo& markdownFor
     // Call the default first so any settings can be overwritten by our implementation.
     // Alternatively could be called or not called in a switch statement on a case by case basis.
     // See defaultMarkdownFormatCallback definition for furhter examples of how to use it.
-    ImGui::defaultMarkdownFormatCallback( markdownFormatInfo_, start_ );        
-       
+    ImGui::defaultMarkdownFormatCallback( markdownFormatInfo_, start_ );
+
     switch( markdownFormatInfo_.type )
     {
     // example: change the colour of heading level 2
@@ -254,7 +254,7 @@ namespace ImGui
         MarkdownLinkCallbackData linkData;
         const char*              linkIcon;
     };
-    
+
     struct MarkdownImageData
     {
         bool                    isValid = false;                    // if true, will draw the image
@@ -265,6 +265,7 @@ namespace ImGui
         ImVec2                  uv1 = ImVec2( 1, 1 );               // see ImGui::Image
         ImVec4                  tint_col = ImVec4( 1, 1, 1, 1 );    // see ImGui::Image
         ImVec4                  border_col = ImVec4( 0, 0, 0, 0 );  // see ImGui::Image
+        ImVec4                  bg_col = ImVec4( 0, 0, 0, 0 );      // see ImGui::Image
     };
 
     enum class MarkdownFormatType
@@ -282,6 +283,8 @@ namespace ImGui
         int32_t                 level   = 0;                               // Set for headings: 1 for H1, 2 for H2 etc.
         bool                    itemHovered = false;                       // Currently only set for links when mouse hovered, only valid when start_ == false
         const MarkdownConfig*   config  = NULL;
+        const char*             text    = NULL;
+        int32_t                 textLength = 0;
     };
 
     typedef void                MarkdownLinkCallback( MarkdownLinkCallbackData data );    
@@ -305,7 +308,7 @@ namespace ImGui
     inline void defaultMarkdownFormatCallback( const MarkdownFormatInfo& markdownFormatInfo_, bool start_ );
 
     struct MarkdownHeadingFormat
-    {   
+    {
         ImFont*                 font;                               // ImGui font
         bool                    separator;                          // if true, an underlined separator is drawn after the header
     };
@@ -323,7 +326,7 @@ namespace ImGui
         MarkdownImageCallback*  imageCallback = NULL;
         const char*             linkIcon = "";                      // icon displayd in link tooltip
         MarkdownHeadingFormat   headingFormats[ NUMHEADINGS ] = { { NULL, true }, { NULL, true }, { NULL, true } };
-        void*                   userData = NULL;        
+        void*                   userData = NULL;
         MarkdownFormalCallback* formatCallback = defaultMarkdownFormatCallback;
     };
 
@@ -356,9 +359,17 @@ namespace ImGui
         // so to work around this we render using our own wrapping for the first line
         void RenderTextWrapped( const char* text_, const char* text_end_, bool bIndentToHere_ = false )
         {
-            float       scale = ImGui::GetIO().FontGlobalScale;
+            #if IMGUI_VERSION_NUM >= 19197
+                float       fontSize  = ImGui::GetFontSize();
+            #else
+                float       scale = ImGui::GetIO().FontGlobalScale;
+            #endif
             float       widthLeft = GetContentRegionAvail().x;
-            const char* endLine = ImGui::GetFont()->CalcWordWrapPositionA( scale, text_, text_end_, widthLeft );
+            #if IMGUI_VERSION_NUM >= 19197
+                const char* endLine = ImGui::GetFont()->CalcWordWrapPosition( fontSize, text_, text_end_, widthLeft );
+            #else
+                const char* endLine = ImGui::GetFont()->CalcWordWrapPositionA( scale, text_, text_end_, widthLeft );
+            #endif
             ImGui::TextUnformatted( text_, endLine );
             if( bIndentToHere_ )
             {
@@ -374,8 +385,12 @@ namespace ImGui
             {
                 text_ = endLine;
                 if( *text_ == ' ' ) { ++text_; }    // skip a space at start of line
-                endLine = ImGui::GetFont()->CalcWordWrapPositionA( scale, text_, text_end_, widthLeft );
-                if( text_ == endLine ) 
+                #if IMGUI_VERSION_NUM >= 19197
+                    endLine = ImGui::GetFont()->CalcWordWrapPosition( fontSize, text_, text_end_, widthLeft );
+                #else
+                    endLine = ImGui::GetFont()->CalcWordWrapPositionA( scale, text_, text_end_, widthLeft );
+                #endif
+                if( text_ == endLine )
                 {
                     endLine++;
                 }
@@ -390,7 +405,7 @@ namespace ImGui
             RenderTextWrapped( text_, text_end_, true );
         }
 
-        bool RenderLinkText( const char* text_, const char* text_end_, const Link& link_, 
+        bool RenderLinkText( const char* text_, const char* text_end_, const Link& link_,
             const char* markdown_, const MarkdownConfig& mdConfig_, const char** linkHoverStart_ );
 
         void RenderLinkTextWrapped( const char* text_, const char* text_end_, const Link& link_,
@@ -471,8 +486,8 @@ namespace ImGui
         // indent
         int indentStart = 0;
         if( line_.isUnorderedListStart )    // ImGui unordered list render always adds one indent
-        { 
-            indentStart = 1; 
+        {
+            indentStart = 1;
         }
         for( int j = indentStart; j < line_.leadSpaceCount / 2; ++j )    // add indents
         {
@@ -495,8 +510,10 @@ namespace ImGui
         {
             formatInfo.level = line_.headingCount;
             formatInfo.type = MarkdownFormatType::HEADING;
-            mdConfig_.formatCallback( formatInfo, true );
             const char* text = markdown_ + textStart + 1;
+            formatInfo.text = text;
+            formatInfo.textLength = textSize - 1;
+            mdConfig_.formatCallback( formatInfo, true );
             textRegion_.RenderTextWrapped( text, text + textSize - 1 );
         }
 		else if( line_.isEmphasis )         // render emphasis
@@ -522,7 +539,7 @@ namespace ImGui
             ImGui::Unindent();
         }
     }
-    
+
     // render markdown
     inline void Markdown( const char* markdown_, size_t markdownLength_, const MarkdownConfig& mdConfig_ )
     {
@@ -655,7 +672,18 @@ namespace ImGui
                             useLinkCallback = imageData.useLinkCallback;
                             if( imageData.isValid )
                             {
-                                ImGui::ImageWithBg( imageData.user_texture_id, imageData.size, imageData.uv0, imageData.uv1, imageData.border_col, imageData.tint_col );
+#if IMGUI_VERSION_NUM < 19185
+                                if( imageData.bg_col.w > 0.0f )
+                                {
+                                    ImVec2 p = ImGui::GetCursorScreenPos();
+                                    ImGui::GetWindowDrawList()->AddRectFilled( p, ImVec2( p.x + imageData.size.x, p.y + imageData.size.y ), ImGui::GetColorU32( imageData.bg_col ));
+                                }
+                                ImGui::Image( imageData.user_texture_id, imageData.size, imageData.uv0, imageData.uv1, imageData.tint_col, imageData.border_col );
+#else
+                                ImGui::PushStyleColor( ImGuiCol_Border, imageData.border_col );
+                                ImGui::ImageWithBg( imageData.user_texture_id, imageData.size, imageData.uv0, imageData.uv1, imageData.bg_col, imageData.tint_col );
+                                ImGui::PopStyleColor();
+#endif
                                 drawnImage = true;
                             }
                         }
@@ -735,6 +763,9 @@ namespace ImGui
                 {
                     break;
                 }
+            #if __cplusplus >= 201703L
+                  [[fallthrough]];
+            #endif
 			case Emphasis::RIGHT:
 				if( em.sym == c )
                 {
@@ -761,7 +792,7 @@ namespace ImGui
 					    em = Emphasis();
                     }
                     continue;
-				} 
+				}
                 else
                 {
                     em.state = Emphasis::NONE;
@@ -804,7 +835,7 @@ namespace ImGui
                 line.lastRenderPosition = i;
 
                 textRegion.ResetIndent();
-                
+
                 // reset the link
                 link = Link();
             }
@@ -874,12 +905,20 @@ namespace ImGui
     inline void TextRegion::RenderLinkTextWrapped( const char* text_, const char* text_end_, const Link& link_,
         const char* markdown_, const MarkdownConfig& mdConfig_, const char** linkHoverStart_, bool bIndentToHere_ )
         {
-            float       scale = ImGui::GetIO().FontGlobalScale;
+            #if IMGUI_VERSION_NUM >= 19197
+                float       fontSize  = ImGui::GetFontSize();
+            #else
+                float       scale = ImGui::GetIO().FontGlobalScale;
+            #endif
             float       widthLeft = GetContentRegionAvail().x;
             const char* endLine = text_;
             if( widthLeft > 0.0f )
             {
-                endLine = ImGui::GetFont()->CalcWordWrapPositionA( scale, text_, text_end_, widthLeft );
+                #if IMGUI_VERSION_NUM >= 19197
+                    endLine = ImGui::GetFont()->CalcWordWrapPosition( fontSize, text_, text_end_, widthLeft );
+                #else
+                    endLine = ImGui::GetFont()->CalcWordWrapPositionA( scale, text_, text_end_, widthLeft );
+                #endif
             }
 
             if( endLine > text_ && endLine < text_end_ )
@@ -888,7 +927,11 @@ namespace ImGui
                 {
                     // see if we can do a better cut.
                     float       widthNextLine = widthLeft + GetCursorScreenPos().x - GetWindowPos().x; // was GetContentRegionMax().x on IMGUI_VERSION_NUM < 19099
-                    const char* endNextLine = ImGui::GetFont()->CalcWordWrapPositionA( scale, text_, text_end_, widthNextLine );
+                    #if IMGUI_VERSION_NUM >= 19197
+                        const char* endNextLine = ImGui::GetFont()->CalcWordWrapPosition( fontSize, text_, text_end_, widthNextLine );
+                    #else
+                        const char* endNextLine = ImGui::GetFont()->CalcWordWrapPositionA( scale, text_, text_end_, widthLeft );
+                    #endif
                     if( endNextLine == text_end_ || ( endNextLine <= text_end_ && !IsCharInsideWord( *endNextLine ) ) )
                     {
                         // can possibly do better if go to next line
@@ -911,8 +954,12 @@ namespace ImGui
             {
                 text_ = endLine;
                 if( *text_ == ' ' ) { ++text_; }    // skip a space at start of line
-                endLine = ImGui::GetFont()->CalcWordWrapPositionA( scale, text_, text_end_, widthLeft );
-                if( text_ == endLine ) 
+                #if IMGUI_VERSION_NUM >= 19197
+                    endLine = ImGui::GetFont()->CalcWordWrapPosition( fontSize, text_, text_end_, widthLeft );
+                #else
+                    endLine = ImGui::GetFont()->CalcWordWrapPositionA( scale, text_, text_end_, widthLeft );
+                #endif
+                if( text_ == endLine )
                 {
                     endLine++;
                 }
@@ -947,7 +994,7 @@ namespace ImGui
                 else
 			    {
                     ImGui::PopStyleColor();
-			    }              
+			    }
             }
             else
             {
@@ -957,7 +1004,12 @@ namespace ImGui
 			    {
 				    if( fmt.font )
 				    {
-					    ImGui::PushFont( fmt.font );
+#if IMGUI_VERSION_NUM < 19200
+					    ImGui::PushFont( fmt.font);
+#else
+					    ImGui::PushFont( fmt.font, 0.0f ); // change font and keep the size.
+#endif // IMGUI_VERSION_NUM >= 19200
+
 				    }
 			    }
                 else
@@ -985,7 +1037,11 @@ namespace ImGui
             {
                 if( fmt.font  )
                 {
+#if IMGUI_VERSION_NUM < 19200
                     ImGui::PushFont( fmt.font );
+#else
+                    ImGui::PushFont( fmt.font, 0.0f ); // change font and keep the size.
+#endif // IMGUI_VERSION_NUM < 19200
                 }
                 ImGui::NewLine();
             }
