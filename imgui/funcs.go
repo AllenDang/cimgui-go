@@ -41435,7 +41435,7 @@ func (self TextureRef) SetTexID(v TextureID) {
 	C.wrap_ImTextureRef_Set_TexID(selfArg, internal.ReinterpretCast[C.ImTextureID](vArg))
 }
 
-func (self *TextureRef) TexID() TextureID {
+func (self *TextureRef) GetTexID() TextureID {
 	selfArg, selfFin := self.Handle()
 
 	result := C.wrap_ImTextureRef_Get_TexID(internal.ReinterpretCast[*C.ImTextureRef](selfArg))
