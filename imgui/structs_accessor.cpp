@@ -15,7 +15,7 @@ void wrap_ImDrawChannel_Set_IdxBuffer(ImDrawChannel *ImDrawChannelPtr, ImVector_
 ImVector_ImDrawCmd wrap_ImDrawChannel_Get_CmdBuffer(ImDrawChannel *self) { return self->_CmdBuffer; }
 ImVector_ImDrawIdx wrap_ImDrawChannel_Get_IdxBuffer(ImDrawChannel *self) { return self->_IdxBuffer; }
 void wrap_ImDrawCmd_SetClipRect(ImDrawCmd *ImDrawCmdPtr, ImVec4 v) { ImDrawCmdPtr->ClipRect = v; }
-void wrap_ImDrawCmd_SetTextureId(ImDrawCmd *ImDrawCmdPtr, ImTextureID v) { ImDrawCmdPtr->TextureId = v; }
+void wrap_ImDrawCmd_SetTexRef(ImDrawCmd *ImDrawCmdPtr, ImTextureRef v) { ImDrawCmdPtr->TexRef = v; }
 void wrap_ImDrawCmd_SetVtxOffset(ImDrawCmd *ImDrawCmdPtr, unsigned int v) { ImDrawCmdPtr->VtxOffset = v; }
 void wrap_ImDrawCmd_SetIdxOffset(ImDrawCmd *ImDrawCmdPtr, unsigned int v) { ImDrawCmdPtr->IdxOffset = v; }
 void wrap_ImDrawCmd_SetElemCount(ImDrawCmd *ImDrawCmdPtr, unsigned int v) { ImDrawCmdPtr->ElemCount = v; }
@@ -24,7 +24,7 @@ void wrap_ImDrawCmd_SetUserCallbackData(ImDrawCmd *ImDrawCmdPtr, uintptr_t v) { 
 void wrap_ImDrawCmd_SetUserCallbackDataSize(ImDrawCmd *ImDrawCmdPtr, int v) { ImDrawCmdPtr->UserCallbackDataSize = v; }
 void wrap_ImDrawCmd_SetUserCallbackDataOffset(ImDrawCmd *ImDrawCmdPtr, int v) { ImDrawCmdPtr->UserCallbackDataOffset = v; }
 ImVec4 wrap_ImDrawCmd_GetClipRect(ImDrawCmd *self) { return self->ClipRect; }
-ImTextureID wrap_ImDrawCmd_GetTextureId(ImDrawCmd *self) { return self->TextureId; }
+ImTextureRef wrap_ImDrawCmd_GetTexRef(ImDrawCmd *self) { return self->TexRef; }
 unsigned int wrap_ImDrawCmd_GetVtxOffset(ImDrawCmd *self) { return self->VtxOffset; }
 unsigned int wrap_ImDrawCmd_GetIdxOffset(ImDrawCmd *self) { return self->IdxOffset; }
 unsigned int wrap_ImDrawCmd_GetElemCount(ImDrawCmd *self) { return self->ElemCount; }
@@ -33,10 +33,10 @@ uintptr_t wrap_ImDrawCmd_GetUserCallbackData(ImDrawCmd *self) { return (uintptr_
 int wrap_ImDrawCmd_GetUserCallbackDataSize(ImDrawCmd *self) { return self->UserCallbackDataSize; }
 int wrap_ImDrawCmd_GetUserCallbackDataOffset(ImDrawCmd *self) { return self->UserCallbackDataOffset; }
 void wrap_ImDrawCmdHeader_SetClipRect(ImDrawCmdHeader *ImDrawCmdHeaderPtr, ImVec4 v) { ImDrawCmdHeaderPtr->ClipRect = v; }
-void wrap_ImDrawCmdHeader_SetTextureId(ImDrawCmdHeader *ImDrawCmdHeaderPtr, ImTextureID v) { ImDrawCmdHeaderPtr->TextureId = v; }
+void wrap_ImDrawCmdHeader_SetTexRef(ImDrawCmdHeader *ImDrawCmdHeaderPtr, ImTextureRef v) { ImDrawCmdHeaderPtr->TexRef = v; }
 void wrap_ImDrawCmdHeader_SetVtxOffset(ImDrawCmdHeader *ImDrawCmdHeaderPtr, unsigned int v) { ImDrawCmdHeaderPtr->VtxOffset = v; }
 ImVec4 wrap_ImDrawCmdHeader_GetClipRect(ImDrawCmdHeader *self) { return self->ClipRect; }
-ImTextureID wrap_ImDrawCmdHeader_GetTextureId(ImDrawCmdHeader *self) { return self->TextureId; }
+ImTextureRef wrap_ImDrawCmdHeader_GetTexRef(ImDrawCmdHeader *self) { return self->TexRef; }
 unsigned int wrap_ImDrawCmdHeader_GetVtxOffset(ImDrawCmdHeader *self) { return self->VtxOffset; }
 void wrap_ImDrawData_SetValid(ImDrawData *ImDrawDataPtr, bool v) { ImDrawDataPtr->Valid = v; }
 void wrap_ImDrawData_SetCmdListsCount(ImDrawData *ImDrawDataPtr, int v) { ImDrawDataPtr->CmdListsCount = v; }
@@ -47,6 +47,7 @@ void wrap_ImDrawData_SetDisplayPos(ImDrawData *ImDrawDataPtr, ImVec2 v) { ImDraw
 void wrap_ImDrawData_SetDisplaySize(ImDrawData *ImDrawDataPtr, ImVec2 v) { ImDrawDataPtr->DisplaySize = v; }
 void wrap_ImDrawData_SetFramebufferScale(ImDrawData *ImDrawDataPtr, ImVec2 v) { ImDrawDataPtr->FramebufferScale = v; }
 void wrap_ImDrawData_SetOwnerViewport(ImDrawData *ImDrawDataPtr, ImGuiViewport* v) { ImDrawDataPtr->OwnerViewport = v; }
+void wrap_ImDrawData_SetTextures(ImDrawData *ImDrawDataPtr, ImVector_ImTextureDataPtr* v) { ImDrawDataPtr->Textures = v; }
 bool wrap_ImDrawData_GetValid(ImDrawData *self) { return self->Valid; }
 int wrap_ImDrawData_GetCmdListsCount(ImDrawData *self) { return self->CmdListsCount; }
 int wrap_ImDrawData_GetTotalIdxCount(ImDrawData *self) { return self->TotalIdxCount; }
@@ -56,6 +57,7 @@ ImVec2 wrap_ImDrawData_GetDisplayPos(ImDrawData *self) { return self->DisplayPos
 ImVec2 wrap_ImDrawData_GetDisplaySize(ImDrawData *self) { return self->DisplaySize; }
 ImVec2 wrap_ImDrawData_GetFramebufferScale(ImDrawData *self) { return self->FramebufferScale; }
 ImGuiViewport* wrap_ImDrawData_GetOwnerViewport(ImDrawData *self) { return self->OwnerViewport; }
+ImVector_ImTextureDataPtr* wrap_ImDrawData_GetTextures(ImDrawData *self) { return self->Textures; }
 void wrap_ImDrawDataBuilder_SetLayers(ImDrawDataBuilder *ImDrawDataBuilderPtr, ImVector_ImDrawListPtr** v) { memcpy(ImDrawDataBuilderPtr->Layers, v, sizeof(ImVector_ImDrawListPtr*)*2); }
 void wrap_ImDrawDataBuilder_SetLayerData1(ImDrawDataBuilder *ImDrawDataBuilderPtr, ImVector_ImDrawListPtr v) { ImDrawDataBuilderPtr->LayerData1 = v; }
 ImVector_ImDrawListPtr** wrap_ImDrawDataBuilder_GetLayers(ImDrawDataBuilder *self) { return self->Layers; }
@@ -73,7 +75,7 @@ void wrap_ImDrawList_Set_Path(ImDrawList *ImDrawListPtr, ImVector_ImVec2 v) { Im
 void wrap_ImDrawList_Set_CmdHeader(ImDrawList *ImDrawListPtr, ImDrawCmdHeader v) { ImDrawListPtr->_CmdHeader = v; }
 void wrap_ImDrawList_Set_Splitter(ImDrawList *ImDrawListPtr, ImDrawListSplitter v) { ImDrawListPtr->_Splitter = v; }
 void wrap_ImDrawList_Set_ClipRectStack(ImDrawList *ImDrawListPtr, ImVector_ImVec4 v) { ImDrawListPtr->_ClipRectStack = v; }
-void wrap_ImDrawList_Set_TextureIdStack(ImDrawList *ImDrawListPtr, ImVector_ImTextureID v) { ImDrawListPtr->_TextureIdStack = v; }
+void wrap_ImDrawList_Set_TextureStack(ImDrawList *ImDrawListPtr, ImVector_ImTextureRef v) { ImDrawListPtr->_TextureStack = v; }
 void wrap_ImDrawList_Set_CallbacksDataBuf(ImDrawList *ImDrawListPtr, ImVector_ImU8 v) { ImDrawListPtr->_CallbacksDataBuf = v; }
 void wrap_ImDrawList_Set_FringeScale(ImDrawList *ImDrawListPtr, float v) { ImDrawListPtr->_FringeScale = v; }
 void wrap_ImDrawList_Set_OwnerName(ImDrawList *ImDrawListPtr, const char* v) { ImDrawListPtr->_OwnerName = v; }
@@ -89,12 +91,13 @@ ImVector_ImVec2 wrap_ImDrawList_Get_Path(ImDrawList *self) { return self->_Path;
 ImDrawCmdHeader wrap_ImDrawList_Get_CmdHeader(ImDrawList *self) { return self->_CmdHeader; }
 ImDrawListSplitter wrap_ImDrawList_Get_Splitter(ImDrawList *self) { return self->_Splitter; }
 ImVector_ImVec4 wrap_ImDrawList_Get_ClipRectStack(ImDrawList *self) { return self->_ClipRectStack; }
-ImVector_ImTextureID wrap_ImDrawList_Get_TextureIdStack(ImDrawList *self) { return self->_TextureIdStack; }
+ImVector_ImTextureRef wrap_ImDrawList_Get_TextureStack(ImDrawList *self) { return self->_TextureStack; }
 ImVector_ImU8 wrap_ImDrawList_Get_CallbacksDataBuf(ImDrawList *self) { return self->_CallbacksDataBuf; }
 float wrap_ImDrawList_Get_FringeScale(ImDrawList *self) { return self->_FringeScale; }
 const char* wrap_ImDrawList_Get_OwnerName(ImDrawList *self) { return self->_OwnerName; }
 void wrap_ImDrawListSharedData_SetTexUvWhitePixel(ImDrawListSharedData *ImDrawListSharedDataPtr, ImVec2 v) { ImDrawListSharedDataPtr->TexUvWhitePixel = v; }
 void wrap_ImDrawListSharedData_SetTexUvLines(ImDrawListSharedData *ImDrawListSharedDataPtr, const ImVec4* v) { ImDrawListSharedDataPtr->TexUvLines = v; }
+void wrap_ImDrawListSharedData_SetFontAtlas(ImDrawListSharedData *ImDrawListSharedDataPtr, ImFontAtlas* v) { ImDrawListSharedDataPtr->FontAtlas = v; }
 void wrap_ImDrawListSharedData_SetFont(ImDrawListSharedData *ImDrawListSharedDataPtr, ImFont* v) { ImDrawListSharedDataPtr->Font = v; }
 void wrap_ImDrawListSharedData_SetFontSize(ImDrawListSharedData *ImDrawListSharedDataPtr, float v) { ImDrawListSharedDataPtr->FontSize = v; }
 void wrap_ImDrawListSharedData_SetFontScale(ImDrawListSharedData *ImDrawListSharedDataPtr, float v) { ImDrawListSharedDataPtr->FontScale = v; }
@@ -104,11 +107,14 @@ void wrap_ImDrawListSharedData_SetInitialFringeScale(ImDrawListSharedData *ImDra
 void wrap_ImDrawListSharedData_SetInitialFlags(ImDrawListSharedData *ImDrawListSharedDataPtr, ImDrawListFlags v) { ImDrawListSharedDataPtr->InitialFlags = v; }
 void wrap_ImDrawListSharedData_SetClipRectFullscreen(ImDrawListSharedData *ImDrawListSharedDataPtr, ImVec4 v) { ImDrawListSharedDataPtr->ClipRectFullscreen = v; }
 void wrap_ImDrawListSharedData_SetTempBuffer(ImDrawListSharedData *ImDrawListSharedDataPtr, ImVector_ImVec2 v) { ImDrawListSharedDataPtr->TempBuffer = v; }
+void wrap_ImDrawListSharedData_SetDrawLists(ImDrawListSharedData *ImDrawListSharedDataPtr, ImVector_ImDrawListPtr v) { ImDrawListSharedDataPtr->DrawLists = v; }
+void wrap_ImDrawListSharedData_SetContext(ImDrawListSharedData *ImDrawListSharedDataPtr, ImGuiContext* v) { ImDrawListSharedDataPtr->Context = v; }
 void wrap_ImDrawListSharedData_SetArcFastVtx(ImDrawListSharedData *ImDrawListSharedDataPtr, ImVec2* v) { memcpy(ImDrawListSharedDataPtr->ArcFastVtx, v, sizeof(ImVec2)*48); }
 void wrap_ImDrawListSharedData_SetArcFastRadiusCutoff(ImDrawListSharedData *ImDrawListSharedDataPtr, float v) { ImDrawListSharedDataPtr->ArcFastRadiusCutoff = v; }
 void wrap_ImDrawListSharedData_SetCircleSegmentCounts(ImDrawListSharedData *ImDrawListSharedDataPtr, ImU8* v) { memcpy(ImDrawListSharedDataPtr->CircleSegmentCounts, v, sizeof(ImU8)*64); }
 ImVec2 wrap_ImDrawListSharedData_GetTexUvWhitePixel(ImDrawListSharedData *self) { return self->TexUvWhitePixel; }
 const ImVec4* wrap_ImDrawListSharedData_GetTexUvLines(ImDrawListSharedData *self) { return self->TexUvLines; }
+ImFontAtlas* wrap_ImDrawListSharedData_GetFontAtlas(ImDrawListSharedData *self) { return self->FontAtlas; }
 ImFont* wrap_ImDrawListSharedData_GetFont(ImDrawListSharedData *self) { return self->Font; }
 float wrap_ImDrawListSharedData_GetFontSize(ImDrawListSharedData *self) { return self->FontSize; }
 float wrap_ImDrawListSharedData_GetFontScale(ImDrawListSharedData *self) { return self->FontScale; }
@@ -118,6 +124,8 @@ float wrap_ImDrawListSharedData_GetInitialFringeScale(ImDrawListSharedData *self
 ImDrawListFlags wrap_ImDrawListSharedData_GetInitialFlags(ImDrawListSharedData *self) { return self->InitialFlags; }
 ImVec4 wrap_ImDrawListSharedData_GetClipRectFullscreen(ImDrawListSharedData *self) { return self->ClipRectFullscreen; }
 ImVector_ImVec2 wrap_ImDrawListSharedData_GetTempBuffer(ImDrawListSharedData *self) { return self->TempBuffer; }
+ImVector_ImDrawListPtr wrap_ImDrawListSharedData_GetDrawLists(ImDrawListSharedData *self) { return self->DrawLists; }
+ImGuiContext* wrap_ImDrawListSharedData_GetContext(ImDrawListSharedData *self) { return self->Context; }
 ImVec2* wrap_ImDrawListSharedData_GetArcFastVtx(ImDrawListSharedData *self) { return self->ArcFastVtx; }
 ImVec2 imgui_ImVec2_GetAtIdx(ImVec2 *self, int index) { return self[index]; }
 float wrap_ImDrawListSharedData_GetArcFastRadiusCutoff(ImDrawListSharedData *self) { return self->ArcFastRadiusCutoff; }
@@ -135,151 +143,255 @@ void wrap_ImDrawVert_SetCol(ImDrawVert *ImDrawVertPtr, ImU32 v) { ImDrawVertPtr-
 ImVec2 wrap_ImDrawVert_GetPos(ImDrawVert *self) { return self->pos; }
 ImVec2 wrap_ImDrawVert_GetUv(ImDrawVert *self) { return self->uv; }
 ImU32 wrap_ImDrawVert_GetCol(ImDrawVert *self) { return self->col; }
-void wrap_ImFont_SetIndexAdvanceX(ImFont *ImFontPtr, ImVector_float v) { ImFontPtr->IndexAdvanceX = v; }
-void wrap_ImFont_SetFallbackAdvanceX(ImFont *ImFontPtr, float v) { ImFontPtr->FallbackAdvanceX = v; }
-void wrap_ImFont_SetFontSize(ImFont *ImFontPtr, float v) { ImFontPtr->FontSize = v; }
-void wrap_ImFont_SetIndexLookup(ImFont *ImFontPtr, ImVector_ImU16 v) { ImFontPtr->IndexLookup = v; }
-void wrap_ImFont_SetGlyphs(ImFont *ImFontPtr, ImVector_ImFontGlyph v) { ImFontPtr->Glyphs = v; }
-void wrap_ImFont_SetFallbackGlyph(ImFont *ImFontPtr, ImFontGlyph* v) { ImFontPtr->FallbackGlyph = v; }
+void wrap_ImFont_SetLastBaked(ImFont *ImFontPtr, ImFontBaked* v) { ImFontPtr->LastBaked = v; }
 void wrap_ImFont_SetContainerAtlas(ImFont *ImFontPtr, ImFontAtlas* v) { ImFontPtr->ContainerAtlas = v; }
-void wrap_ImFont_SetSources(ImFont *ImFontPtr, ImFontConfig* v) { ImFontPtr->Sources = v; }
-void wrap_ImFont_SetSourcesCount(ImFont *ImFontPtr, short v) { ImFontPtr->SourcesCount = v; }
-void wrap_ImFont_SetEllipsisCharCount(ImFont *ImFontPtr, short v) { ImFontPtr->EllipsisCharCount = v; }
+void wrap_ImFont_SetFlags(ImFont *ImFontPtr, ImFontFlags v) { ImFontPtr->Flags = v; }
+void wrap_ImFont_SetCurrentRasterizerDensity(ImFont *ImFontPtr, float v) { ImFontPtr->CurrentRasterizerDensity = v; }
+void wrap_ImFont_SetFontId(ImFont *ImFontPtr, ImGuiID v) { ImFontPtr->FontId = v; }
+void wrap_ImFont_SetLegacySize(ImFont *ImFontPtr, float v) { ImFontPtr->LegacySize = v; }
+void wrap_ImFont_SetSources(ImFont *ImFontPtr, ImVector_ImFontConfigPtr v) { ImFontPtr->Sources = v; }
 void wrap_ImFont_SetEllipsisChar(ImFont *ImFontPtr, ImWchar v) { ImFontPtr->EllipsisChar = v; }
 void wrap_ImFont_SetFallbackChar(ImFont *ImFontPtr, ImWchar v) { ImFontPtr->FallbackChar = v; }
-void wrap_ImFont_SetEllipsisWidth(ImFont *ImFontPtr, float v) { ImFontPtr->EllipsisWidth = v; }
-void wrap_ImFont_SetEllipsisCharStep(ImFont *ImFontPtr, float v) { ImFontPtr->EllipsisCharStep = v; }
-void wrap_ImFont_SetScale(ImFont *ImFontPtr, float v) { ImFontPtr->Scale = v; }
-void wrap_ImFont_SetAscent(ImFont *ImFontPtr, float v) { ImFontPtr->Ascent = v; }
-void wrap_ImFont_SetDescent(ImFont *ImFontPtr, float v) { ImFontPtr->Descent = v; }
-void wrap_ImFont_SetMetricsTotalSurface(ImFont *ImFontPtr, int v) { ImFontPtr->MetricsTotalSurface = v; }
-void wrap_ImFont_SetDirtyLookupTables(ImFont *ImFontPtr, bool v) { ImFontPtr->DirtyLookupTables = v; }
 void wrap_ImFont_SetUsed8kPagesMap(ImFont *ImFontPtr, ImU8* v) { memcpy(ImFontPtr->Used8kPagesMap, v, sizeof(ImU8)*1); }
-ImVector_float wrap_ImFont_GetIndexAdvanceX(ImFont *self) { return self->IndexAdvanceX; }
-float wrap_ImFont_GetFallbackAdvanceX(ImFont *self) { return self->FallbackAdvanceX; }
-float wrap_ImFont_GetFontSize(ImFont *self) { return self->FontSize; }
-ImVector_ImU16 wrap_ImFont_GetIndexLookup(ImFont *self) { return self->IndexLookup; }
-ImVector_ImFontGlyph wrap_ImFont_GetGlyphs(ImFont *self) { return self->Glyphs; }
-ImFontGlyph* wrap_ImFont_GetFallbackGlyph(ImFont *self) { return self->FallbackGlyph; }
+void wrap_ImFont_SetEllipsisAutoBake(ImFont *ImFontPtr, bool v) { ImFontPtr->EllipsisAutoBake = v; }
+void wrap_ImFont_SetRemapPairs(ImFont *ImFontPtr, ImGuiStorage v) { ImFontPtr->RemapPairs = v; }
+ImFontBaked* wrap_ImFont_GetLastBaked(ImFont *self) { return self->LastBaked; }
 ImFontAtlas* wrap_ImFont_GetContainerAtlas(ImFont *self) { return self->ContainerAtlas; }
-ImFontConfig* wrap_ImFont_GetSources(ImFont *self) { return self->Sources; }
-short wrap_ImFont_GetSourcesCount(ImFont *self) { return self->SourcesCount; }
-short wrap_ImFont_GetEllipsisCharCount(ImFont *self) { return self->EllipsisCharCount; }
+ImFontFlags wrap_ImFont_GetFlags(ImFont *self) { return self->Flags; }
+float wrap_ImFont_GetCurrentRasterizerDensity(ImFont *self) { return self->CurrentRasterizerDensity; }
+ImGuiID wrap_ImFont_GetFontId(ImFont *self) { return self->FontId; }
+float wrap_ImFont_GetLegacySize(ImFont *self) { return self->LegacySize; }
+ImVector_ImFontConfigPtr wrap_ImFont_GetSources(ImFont *self) { return self->Sources; }
 ImWchar wrap_ImFont_GetEllipsisChar(ImFont *self) { return self->EllipsisChar; }
 ImWchar wrap_ImFont_GetFallbackChar(ImFont *self) { return self->FallbackChar; }
-float wrap_ImFont_GetEllipsisWidth(ImFont *self) { return self->EllipsisWidth; }
-float wrap_ImFont_GetEllipsisCharStep(ImFont *self) { return self->EllipsisCharStep; }
-float wrap_ImFont_GetScale(ImFont *self) { return self->Scale; }
-float wrap_ImFont_GetAscent(ImFont *self) { return self->Ascent; }
-float wrap_ImFont_GetDescent(ImFont *self) { return self->Descent; }
-int wrap_ImFont_GetMetricsTotalSurface(ImFont *self) { return self->MetricsTotalSurface; }
-bool wrap_ImFont_GetDirtyLookupTables(ImFont *self) { return self->DirtyLookupTables; }
 ImU8* wrap_ImFont_GetUsed8kPagesMap(ImFont *self) { return self->Used8kPagesMap; }
+bool wrap_ImFont_GetEllipsisAutoBake(ImFont *self) { return self->EllipsisAutoBake; }
+ImGuiStorage wrap_ImFont_GetRemapPairs(ImFont *self) { return self->RemapPairs; }
 void wrap_ImFontAtlas_SetFlags(ImFontAtlas *ImFontAtlasPtr, ImFontAtlasFlags v) { ImFontAtlasPtr->Flags = v; }
-void wrap_ImFontAtlas_SetTexDesiredWidth(ImFontAtlas *ImFontAtlasPtr, int v) { ImFontAtlasPtr->TexDesiredWidth = v; }
+void wrap_ImFontAtlas_SetTexDesiredFormat(ImFontAtlas *ImFontAtlasPtr, ImTextureFormat v) { ImFontAtlasPtr->TexDesiredFormat = v; }
 void wrap_ImFontAtlas_SetTexGlyphPadding(ImFontAtlas *ImFontAtlasPtr, int v) { ImFontAtlasPtr->TexGlyphPadding = v; }
+void wrap_ImFontAtlas_SetTexMinWidth(ImFontAtlas *ImFontAtlasPtr, int v) { ImFontAtlasPtr->TexMinWidth = v; }
+void wrap_ImFontAtlas_SetTexMinHeight(ImFontAtlas *ImFontAtlasPtr, int v) { ImFontAtlasPtr->TexMinHeight = v; }
+void wrap_ImFontAtlas_SetTexMaxWidth(ImFontAtlas *ImFontAtlasPtr, int v) { ImFontAtlasPtr->TexMaxWidth = v; }
+void wrap_ImFontAtlas_SetTexMaxHeight(ImFontAtlas *ImFontAtlasPtr, int v) { ImFontAtlasPtr->TexMaxHeight = v; }
 void wrap_ImFontAtlas_SetUserData(ImFontAtlas *ImFontAtlasPtr, uintptr_t v) { ImFontAtlasPtr->UserData = (void*)v; }
+void wrap_ImFontAtlas_SetTexRef(ImFontAtlas *ImFontAtlasPtr, ImTextureRef v) { ImFontAtlasPtr->TexRef = v; }
+void wrap_ImFontAtlas_SetTexData(ImFontAtlas *ImFontAtlasPtr, ImTextureData* v) { ImFontAtlasPtr->TexData = v; }
+void wrap_ImFontAtlas_SetTexList(ImFontAtlas *ImFontAtlasPtr, ImVector_ImTextureDataPtr v) { ImFontAtlasPtr->TexList = v; }
 void wrap_ImFontAtlas_SetLocked(ImFontAtlas *ImFontAtlasPtr, bool v) { ImFontAtlasPtr->Locked = v; }
-void wrap_ImFontAtlas_SetTexReady(ImFontAtlas *ImFontAtlasPtr, bool v) { ImFontAtlasPtr->TexReady = v; }
+void wrap_ImFontAtlas_SetRendererHasTextures(ImFontAtlas *ImFontAtlasPtr, bool v) { ImFontAtlasPtr->RendererHasTextures = v; }
+void wrap_ImFontAtlas_SetTexIsBuilt(ImFontAtlas *ImFontAtlasPtr, bool v) { ImFontAtlasPtr->TexIsBuilt = v; }
 void wrap_ImFontAtlas_SetTexPixelsUseColors(ImFontAtlas *ImFontAtlasPtr, bool v) { ImFontAtlasPtr->TexPixelsUseColors = v; }
-void wrap_ImFontAtlas_SetTexPixelsAlpha8(ImFontAtlas *ImFontAtlasPtr, unsigned char* v) { ImFontAtlasPtr->TexPixelsAlpha8 = v; }
-void wrap_ImFontAtlas_SetTexPixelsRGBA32(ImFontAtlas *ImFontAtlasPtr, unsigned int* v) { ImFontAtlasPtr->TexPixelsRGBA32 = v; }
-void wrap_ImFontAtlas_SetTexWidth(ImFontAtlas *ImFontAtlasPtr, int v) { ImFontAtlasPtr->TexWidth = v; }
-void wrap_ImFontAtlas_SetTexHeight(ImFontAtlas *ImFontAtlasPtr, int v) { ImFontAtlasPtr->TexHeight = v; }
 void wrap_ImFontAtlas_SetTexUvScale(ImFontAtlas *ImFontAtlasPtr, ImVec2 v) { ImFontAtlasPtr->TexUvScale = v; }
 void wrap_ImFontAtlas_SetTexUvWhitePixel(ImFontAtlas *ImFontAtlasPtr, ImVec2 v) { ImFontAtlasPtr->TexUvWhitePixel = v; }
 void wrap_ImFontAtlas_SetFonts(ImFontAtlas *ImFontAtlasPtr, ImVector_ImFontPtr v) { ImFontAtlasPtr->Fonts = v; }
-void wrap_ImFontAtlas_SetCustomRects(ImFontAtlas *ImFontAtlasPtr, ImVector_ImFontAtlasCustomRect v) { ImFontAtlasPtr->CustomRects = v; }
 void wrap_ImFontAtlas_SetSources(ImFontAtlas *ImFontAtlasPtr, ImVector_ImFontConfig v) { ImFontAtlasPtr->Sources = v; }
 void wrap_ImFontAtlas_SetTexUvLines(ImFontAtlas *ImFontAtlasPtr, ImVec4* v) { memcpy(ImFontAtlasPtr->TexUvLines, v, sizeof(ImVec4)*33); }
-void wrap_ImFontAtlas_SetFontBuilderIO(ImFontAtlas *ImFontAtlasPtr, const ImFontBuilderIO* v) { ImFontAtlasPtr->FontBuilderIO = v; }
-void wrap_ImFontAtlas_SetFontBuilderFlags(ImFontAtlas *ImFontAtlasPtr, unsigned int v) { ImFontAtlasPtr->FontBuilderFlags = v; }
-void wrap_ImFontAtlas_SetPackIdMouseCursors(ImFontAtlas *ImFontAtlasPtr, int v) { ImFontAtlasPtr->PackIdMouseCursors = v; }
-void wrap_ImFontAtlas_SetPackIdLines(ImFontAtlas *ImFontAtlasPtr, int v) { ImFontAtlasPtr->PackIdLines = v; }
+void wrap_ImFontAtlas_SetTexNextUniqueID(ImFontAtlas *ImFontAtlasPtr, int v) { ImFontAtlasPtr->TexNextUniqueID = v; }
+void wrap_ImFontAtlas_SetFontNextUniqueID(ImFontAtlas *ImFontAtlasPtr, int v) { ImFontAtlasPtr->FontNextUniqueID = v; }
+void wrap_ImFontAtlas_SetDrawListSharedDatas(ImFontAtlas *ImFontAtlasPtr, ImVector_ImDrawListSharedDataPtr v) { ImFontAtlasPtr->DrawListSharedDatas = v; }
+void wrap_ImFontAtlas_SetBuilder(ImFontAtlas *ImFontAtlasPtr, ImFontAtlasBuilder* v) { ImFontAtlasPtr->Builder = v; }
+void wrap_ImFontAtlas_SetFontLoader(ImFontAtlas *ImFontAtlasPtr, const ImFontLoader* v) { ImFontAtlasPtr->FontLoader = v; }
+void wrap_ImFontAtlas_SetFontLoaderName(ImFontAtlas *ImFontAtlasPtr, const char* v) { ImFontAtlasPtr->FontLoaderName = v; }
+void wrap_ImFontAtlas_SetFontLoaderData(ImFontAtlas *ImFontAtlasPtr, uintptr_t v) { ImFontAtlasPtr->FontLoaderData = (void*)v; }
+void wrap_ImFontAtlas_SetFontLoaderFlags(ImFontAtlas *ImFontAtlasPtr, unsigned int v) { ImFontAtlasPtr->FontLoaderFlags = v; }
+void wrap_ImFontAtlas_SetRefCount(ImFontAtlas *ImFontAtlasPtr, int v) { ImFontAtlasPtr->RefCount = v; }
+void wrap_ImFontAtlas_SetOwnerContext(ImFontAtlas *ImFontAtlasPtr, ImGuiContext* v) { ImFontAtlasPtr->OwnerContext = v; }
 ImFontAtlasFlags wrap_ImFontAtlas_GetFlags(ImFontAtlas *self) { return self->Flags; }
-ImTextureID wrap_ImFontAtlas_GetTexID(ImFontAtlas *self) { return self->TexID; }
-int wrap_ImFontAtlas_GetTexDesiredWidth(ImFontAtlas *self) { return self->TexDesiredWidth; }
+ImTextureFormat wrap_ImFontAtlas_GetTexDesiredFormat(ImFontAtlas *self) { return self->TexDesiredFormat; }
 int wrap_ImFontAtlas_GetTexGlyphPadding(ImFontAtlas *self) { return self->TexGlyphPadding; }
+int wrap_ImFontAtlas_GetTexMinWidth(ImFontAtlas *self) { return self->TexMinWidth; }
+int wrap_ImFontAtlas_GetTexMinHeight(ImFontAtlas *self) { return self->TexMinHeight; }
+int wrap_ImFontAtlas_GetTexMaxWidth(ImFontAtlas *self) { return self->TexMaxWidth; }
+int wrap_ImFontAtlas_GetTexMaxHeight(ImFontAtlas *self) { return self->TexMaxHeight; }
 uintptr_t wrap_ImFontAtlas_GetUserData(ImFontAtlas *self) { return (uintptr_t)self->UserData; }
+ImTextureRef wrap_ImFontAtlas_GetTexRef(ImFontAtlas *self) { return self->TexRef; }
+ImTextureData* wrap_ImFontAtlas_GetTexData(ImFontAtlas *self) { return self->TexData; }
+ImVector_ImTextureDataPtr wrap_ImFontAtlas_GetTexList(ImFontAtlas *self) { return self->TexList; }
 bool wrap_ImFontAtlas_GetLocked(ImFontAtlas *self) { return self->Locked; }
-bool wrap_ImFontAtlas_GetTexReady(ImFontAtlas *self) { return self->TexReady; }
+bool wrap_ImFontAtlas_GetRendererHasTextures(ImFontAtlas *self) { return self->RendererHasTextures; }
+bool wrap_ImFontAtlas_GetTexIsBuilt(ImFontAtlas *self) { return self->TexIsBuilt; }
 bool wrap_ImFontAtlas_GetTexPixelsUseColors(ImFontAtlas *self) { return self->TexPixelsUseColors; }
-unsigned char* wrap_ImFontAtlas_GetTexPixelsAlpha8(ImFontAtlas *self) { return self->TexPixelsAlpha8; }
-unsigned int* wrap_ImFontAtlas_GetTexPixelsRGBA32(ImFontAtlas *self) { return self->TexPixelsRGBA32; }
-int wrap_ImFontAtlas_GetTexWidth(ImFontAtlas *self) { return self->TexWidth; }
-int wrap_ImFontAtlas_GetTexHeight(ImFontAtlas *self) { return self->TexHeight; }
 ImVec2 wrap_ImFontAtlas_GetTexUvScale(ImFontAtlas *self) { return self->TexUvScale; }
 ImVec2 wrap_ImFontAtlas_GetTexUvWhitePixel(ImFontAtlas *self) { return self->TexUvWhitePixel; }
 ImVector_ImFontPtr wrap_ImFontAtlas_GetFonts(ImFontAtlas *self) { return self->Fonts; }
-ImVector_ImFontAtlasCustomRect wrap_ImFontAtlas_GetCustomRects(ImFontAtlas *self) { return self->CustomRects; }
 ImVector_ImFontConfig wrap_ImFontAtlas_GetSources(ImFontAtlas *self) { return self->Sources; }
 ImVec4* wrap_ImFontAtlas_GetTexUvLines(ImFontAtlas *self) { return self->TexUvLines; }
 ImVec4 imgui_ImVec4_GetAtIdx(ImVec4 *self, int index) { return self[index]; }
-const ImFontBuilderIO* wrap_ImFontAtlas_GetFontBuilderIO(ImFontAtlas *self) { return self->FontBuilderIO; }
-unsigned int wrap_ImFontAtlas_GetFontBuilderFlags(ImFontAtlas *self) { return self->FontBuilderFlags; }
-int wrap_ImFontAtlas_GetPackIdMouseCursors(ImFontAtlas *self) { return self->PackIdMouseCursors; }
-int wrap_ImFontAtlas_GetPackIdLines(ImFontAtlas *self) { return self->PackIdLines; }
-void wrap_ImFontAtlasCustomRect_SetX(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned short v) { ImFontAtlasCustomRectPtr->X = v; }
-void wrap_ImFontAtlasCustomRect_SetY(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned short v) { ImFontAtlasCustomRectPtr->Y = v; }
-void wrap_ImFontAtlasCustomRect_SetWidth(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned short v) { ImFontAtlasCustomRectPtr->Width = v; }
-void wrap_ImFontAtlasCustomRect_SetHeight(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned short v) { ImFontAtlasCustomRectPtr->Height = v; }
-void wrap_ImFontAtlasCustomRect_SetGlyphID(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned int v) { ImFontAtlasCustomRectPtr->GlyphID = v; }
-void wrap_ImFontAtlasCustomRect_SetGlyphColored(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, unsigned int v) { ImFontAtlasCustomRectPtr->GlyphColored = v; }
-void wrap_ImFontAtlasCustomRect_SetGlyphAdvanceX(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, float v) { ImFontAtlasCustomRectPtr->GlyphAdvanceX = v; }
-void wrap_ImFontAtlasCustomRect_SetGlyphOffset(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, ImVec2 v) { ImFontAtlasCustomRectPtr->GlyphOffset = v; }
-void wrap_ImFontAtlasCustomRect_SetFont(ImFontAtlasCustomRect *ImFontAtlasCustomRectPtr, ImFont* v) { ImFontAtlasCustomRectPtr->Font = v; }
-unsigned short wrap_ImFontAtlasCustomRect_GetX(ImFontAtlasCustomRect *self) { return self->X; }
-unsigned short wrap_ImFontAtlasCustomRect_GetY(ImFontAtlasCustomRect *self) { return self->Y; }
-unsigned short wrap_ImFontAtlasCustomRect_GetWidth(ImFontAtlasCustomRect *self) { return self->Width; }
-unsigned short wrap_ImFontAtlasCustomRect_GetHeight(ImFontAtlasCustomRect *self) { return self->Height; }
-unsigned int wrap_ImFontAtlasCustomRect_GetGlyphID(ImFontAtlasCustomRect *self) { return self->GlyphID; }
-unsigned int wrap_ImFontAtlasCustomRect_GetGlyphColored(ImFontAtlasCustomRect *self) { return self->GlyphColored; }
-float wrap_ImFontAtlasCustomRect_GetGlyphAdvanceX(ImFontAtlasCustomRect *self) { return self->GlyphAdvanceX; }
-ImVec2 wrap_ImFontAtlasCustomRect_GetGlyphOffset(ImFontAtlasCustomRect *self) { return self->GlyphOffset; }
-ImFont* wrap_ImFontAtlasCustomRect_GetFont(ImFontAtlasCustomRect *self) { return self->Font; }
+int wrap_ImFontAtlas_GetTexNextUniqueID(ImFontAtlas *self) { return self->TexNextUniqueID; }
+int wrap_ImFontAtlas_GetFontNextUniqueID(ImFontAtlas *self) { return self->FontNextUniqueID; }
+ImVector_ImDrawListSharedDataPtr wrap_ImFontAtlas_GetDrawListSharedDatas(ImFontAtlas *self) { return self->DrawListSharedDatas; }
+ImFontAtlasBuilder* wrap_ImFontAtlas_GetBuilder(ImFontAtlas *self) { return self->Builder; }
+const ImFontLoader* wrap_ImFontAtlas_GetFontLoader(ImFontAtlas *self) { return self->FontLoader; }
+const char* wrap_ImFontAtlas_GetFontLoaderName(ImFontAtlas *self) { return self->FontLoaderName; }
+uintptr_t wrap_ImFontAtlas_GetFontLoaderData(ImFontAtlas *self) { return (uintptr_t)self->FontLoaderData; }
+unsigned int wrap_ImFontAtlas_GetFontLoaderFlags(ImFontAtlas *self) { return self->FontLoaderFlags; }
+int wrap_ImFontAtlas_GetRefCount(ImFontAtlas *self) { return self->RefCount; }
+ImGuiContext* wrap_ImFontAtlas_GetOwnerContext(ImFontAtlas *self) { return self->OwnerContext; }
+void wrap_ImFontAtlasBuilder_SetPackContext(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, stbrp_context_opaque v) { ImFontAtlasBuilderPtr->PackContext = v; }
+void wrap_ImFontAtlasBuilder_SetPackNodes(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, ImVector_stbrp_node_im v) { ImFontAtlasBuilderPtr->PackNodes = v; }
+void wrap_ImFontAtlasBuilder_SetRects(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, ImVector_ImTextureRect v) { ImFontAtlasBuilderPtr->Rects = v; }
+void wrap_ImFontAtlasBuilder_SetRectsIndex(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, ImVector_ImFontAtlasRectEntry v) { ImFontAtlasBuilderPtr->RectsIndex = v; }
+void wrap_ImFontAtlasBuilder_SetTempBuffer(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, ImVector_unsigned_char v) { ImFontAtlasBuilderPtr->TempBuffer = v; }
+void wrap_ImFontAtlasBuilder_SetRectsIndexFreeListStart(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, int v) { ImFontAtlasBuilderPtr->RectsIndexFreeListStart = v; }
+void wrap_ImFontAtlasBuilder_SetRectsPackedCount(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, int v) { ImFontAtlasBuilderPtr->RectsPackedCount = v; }
+void wrap_ImFontAtlasBuilder_SetRectsPackedSurface(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, int v) { ImFontAtlasBuilderPtr->RectsPackedSurface = v; }
+void wrap_ImFontAtlasBuilder_SetRectsDiscardedCount(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, int v) { ImFontAtlasBuilderPtr->RectsDiscardedCount = v; }
+void wrap_ImFontAtlasBuilder_SetRectsDiscardedSurface(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, int v) { ImFontAtlasBuilderPtr->RectsDiscardedSurface = v; }
+void wrap_ImFontAtlasBuilder_SetFrameCount(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, int v) { ImFontAtlasBuilderPtr->FrameCount = v; }
+void wrap_ImFontAtlasBuilder_SetMaxRectSize(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, ImVec2i v) { ImFontAtlasBuilderPtr->MaxRectSize = v; }
+void wrap_ImFontAtlasBuilder_SetMaxRectBounds(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, ImVec2i v) { ImFontAtlasBuilderPtr->MaxRectBounds = v; }
+void wrap_ImFontAtlasBuilder_SetLockDisableResize(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, bool v) { ImFontAtlasBuilderPtr->LockDisableResize = v; }
+void wrap_ImFontAtlasBuilder_SetPreloadedAllGlyphsRanges(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, bool v) { ImFontAtlasBuilderPtr->PreloadedAllGlyphsRanges = v; }
+void wrap_ImFontAtlasBuilder_SetBakedPool(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, ImStableVector_ImFontBaked__32 v) { ImFontAtlasBuilderPtr->BakedPool = v; }
+void wrap_ImFontAtlasBuilder_SetBakedMap(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, ImGuiStorage v) { ImFontAtlasBuilderPtr->BakedMap = v; }
+void wrap_ImFontAtlasBuilder_SetBakedDiscardedCount(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, int v) { ImFontAtlasBuilderPtr->BakedDiscardedCount = v; }
+void wrap_ImFontAtlasBuilder_SetPackIdMouseCursors(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, ImFontAtlasRectId v) { ImFontAtlasBuilderPtr->PackIdMouseCursors = v; }
+void wrap_ImFontAtlasBuilder_SetPackIdLinesTexData(ImFontAtlasBuilder *ImFontAtlasBuilderPtr, ImFontAtlasRectId v) { ImFontAtlasBuilderPtr->PackIdLinesTexData = v; }
+stbrp_context_opaque wrap_ImFontAtlasBuilder_GetPackContext(ImFontAtlasBuilder *self) { return self->PackContext; }
+ImVector_stbrp_node_im wrap_ImFontAtlasBuilder_GetPackNodes(ImFontAtlasBuilder *self) { return self->PackNodes; }
+ImVector_ImTextureRect wrap_ImFontAtlasBuilder_GetRects(ImFontAtlasBuilder *self) { return self->Rects; }
+ImVector_ImFontAtlasRectEntry wrap_ImFontAtlasBuilder_GetRectsIndex(ImFontAtlasBuilder *self) { return self->RectsIndex; }
+ImVector_unsigned_char wrap_ImFontAtlasBuilder_GetTempBuffer(ImFontAtlasBuilder *self) { return self->TempBuffer; }
+int wrap_ImFontAtlasBuilder_GetRectsIndexFreeListStart(ImFontAtlasBuilder *self) { return self->RectsIndexFreeListStart; }
+int wrap_ImFontAtlasBuilder_GetRectsPackedCount(ImFontAtlasBuilder *self) { return self->RectsPackedCount; }
+int wrap_ImFontAtlasBuilder_GetRectsPackedSurface(ImFontAtlasBuilder *self) { return self->RectsPackedSurface; }
+int wrap_ImFontAtlasBuilder_GetRectsDiscardedCount(ImFontAtlasBuilder *self) { return self->RectsDiscardedCount; }
+int wrap_ImFontAtlasBuilder_GetRectsDiscardedSurface(ImFontAtlasBuilder *self) { return self->RectsDiscardedSurface; }
+int wrap_ImFontAtlasBuilder_GetFrameCount(ImFontAtlasBuilder *self) { return self->FrameCount; }
+ImVec2i wrap_ImFontAtlasBuilder_GetMaxRectSize(ImFontAtlasBuilder *self) { return self->MaxRectSize; }
+ImVec2i wrap_ImFontAtlasBuilder_GetMaxRectBounds(ImFontAtlasBuilder *self) { return self->MaxRectBounds; }
+bool wrap_ImFontAtlasBuilder_GetLockDisableResize(ImFontAtlasBuilder *self) { return self->LockDisableResize; }
+bool wrap_ImFontAtlasBuilder_GetPreloadedAllGlyphsRanges(ImFontAtlasBuilder *self) { return self->PreloadedAllGlyphsRanges; }
+ImStableVector_ImFontBaked__32 wrap_ImFontAtlasBuilder_GetBakedPool(ImFontAtlasBuilder *self) { return self->BakedPool; }
+ImGuiStorage wrap_ImFontAtlasBuilder_GetBakedMap(ImFontAtlasBuilder *self) { return self->BakedMap; }
+int wrap_ImFontAtlasBuilder_GetBakedDiscardedCount(ImFontAtlasBuilder *self) { return self->BakedDiscardedCount; }
+ImFontAtlasRectId wrap_ImFontAtlasBuilder_GetPackIdMouseCursors(ImFontAtlasBuilder *self) { return self->PackIdMouseCursors; }
+ImFontAtlasRectId wrap_ImFontAtlasBuilder_GetPackIdLinesTexData(ImFontAtlasBuilder *self) { return self->PackIdLinesTexData; }
+void wrap_ImFontAtlasPostProcessData_SetFontAtlas(ImFontAtlasPostProcessData *ImFontAtlasPostProcessDataPtr, ImFontAtlas* v) { ImFontAtlasPostProcessDataPtr->FontAtlas = v; }
+void wrap_ImFontAtlasPostProcessData_SetFont(ImFontAtlasPostProcessData *ImFontAtlasPostProcessDataPtr, ImFont* v) { ImFontAtlasPostProcessDataPtr->Font = v; }
+void wrap_ImFontAtlasPostProcessData_SetFontSrc(ImFontAtlasPostProcessData *ImFontAtlasPostProcessDataPtr, ImFontConfig* v) { ImFontAtlasPostProcessDataPtr->FontSrc = v; }
+void wrap_ImFontAtlasPostProcessData_SetFontBaked(ImFontAtlasPostProcessData *ImFontAtlasPostProcessDataPtr, ImFontBaked* v) { ImFontAtlasPostProcessDataPtr->FontBaked = v; }
+void wrap_ImFontAtlasPostProcessData_SetGlyph(ImFontAtlasPostProcessData *ImFontAtlasPostProcessDataPtr, ImFontGlyph* v) { ImFontAtlasPostProcessDataPtr->Glyph = v; }
+void wrap_ImFontAtlasPostProcessData_SetPixels(ImFontAtlasPostProcessData *ImFontAtlasPostProcessDataPtr, uintptr_t v) { ImFontAtlasPostProcessDataPtr->Pixels = (void*)v; }
+void wrap_ImFontAtlasPostProcessData_SetFormat(ImFontAtlasPostProcessData *ImFontAtlasPostProcessDataPtr, ImTextureFormat v) { ImFontAtlasPostProcessDataPtr->Format = v; }
+void wrap_ImFontAtlasPostProcessData_SetPitch(ImFontAtlasPostProcessData *ImFontAtlasPostProcessDataPtr, int v) { ImFontAtlasPostProcessDataPtr->Pitch = v; }
+void wrap_ImFontAtlasPostProcessData_SetWidth(ImFontAtlasPostProcessData *ImFontAtlasPostProcessDataPtr, int v) { ImFontAtlasPostProcessDataPtr->Width = v; }
+void wrap_ImFontAtlasPostProcessData_SetHeight(ImFontAtlasPostProcessData *ImFontAtlasPostProcessDataPtr, int v) { ImFontAtlasPostProcessDataPtr->Height = v; }
+ImFontAtlas* wrap_ImFontAtlasPostProcessData_GetFontAtlas(ImFontAtlasPostProcessData *self) { return self->FontAtlas; }
+ImFont* wrap_ImFontAtlasPostProcessData_GetFont(ImFontAtlasPostProcessData *self) { return self->Font; }
+ImFontConfig* wrap_ImFontAtlasPostProcessData_GetFontSrc(ImFontAtlasPostProcessData *self) { return self->FontSrc; }
+ImFontBaked* wrap_ImFontAtlasPostProcessData_GetFontBaked(ImFontAtlasPostProcessData *self) { return self->FontBaked; }
+ImFontGlyph* wrap_ImFontAtlasPostProcessData_GetGlyph(ImFontAtlasPostProcessData *self) { return self->Glyph; }
+uintptr_t wrap_ImFontAtlasPostProcessData_GetPixels(ImFontAtlasPostProcessData *self) { return (uintptr_t)self->Pixels; }
+ImTextureFormat wrap_ImFontAtlasPostProcessData_GetFormat(ImFontAtlasPostProcessData *self) { return self->Format; }
+int wrap_ImFontAtlasPostProcessData_GetPitch(ImFontAtlasPostProcessData *self) { return self->Pitch; }
+int wrap_ImFontAtlasPostProcessData_GetWidth(ImFontAtlasPostProcessData *self) { return self->Width; }
+int wrap_ImFontAtlasPostProcessData_GetHeight(ImFontAtlasPostProcessData *self) { return self->Height; }
+void wrap_ImFontAtlasRect_SetX(ImFontAtlasRect *ImFontAtlasRectPtr, unsigned short v) { ImFontAtlasRectPtr->x = v; }
+void wrap_ImFontAtlasRect_SetY(ImFontAtlasRect *ImFontAtlasRectPtr, unsigned short v) { ImFontAtlasRectPtr->y = v; }
+void wrap_ImFontAtlasRect_SetW(ImFontAtlasRect *ImFontAtlasRectPtr, unsigned short v) { ImFontAtlasRectPtr->w = v; }
+void wrap_ImFontAtlasRect_SetH(ImFontAtlasRect *ImFontAtlasRectPtr, unsigned short v) { ImFontAtlasRectPtr->h = v; }
+void wrap_ImFontAtlasRect_SetUv0(ImFontAtlasRect *ImFontAtlasRectPtr, ImVec2 v) { ImFontAtlasRectPtr->uv0 = v; }
+void wrap_ImFontAtlasRect_SetUv1(ImFontAtlasRect *ImFontAtlasRectPtr, ImVec2 v) { ImFontAtlasRectPtr->uv1 = v; }
+unsigned short wrap_ImFontAtlasRect_GetX(ImFontAtlasRect *self) { return self->x; }
+unsigned short wrap_ImFontAtlasRect_GetY(ImFontAtlasRect *self) { return self->y; }
+unsigned short wrap_ImFontAtlasRect_GetW(ImFontAtlasRect *self) { return self->w; }
+unsigned short wrap_ImFontAtlasRect_GetH(ImFontAtlasRect *self) { return self->h; }
+ImVec2 wrap_ImFontAtlasRect_GetUv0(ImFontAtlasRect *self) { return self->uv0; }
+ImVec2 wrap_ImFontAtlasRect_GetUv1(ImFontAtlasRect *self) { return self->uv1; }
+void wrap_ImFontAtlasRectEntry_SetTargetIndex(ImFontAtlasRectEntry *ImFontAtlasRectEntryPtr, int v) { ImFontAtlasRectEntryPtr->TargetIndex = v; }
+void wrap_ImFontAtlasRectEntry_SetGeneration(ImFontAtlasRectEntry *ImFontAtlasRectEntryPtr, int v) { ImFontAtlasRectEntryPtr->Generation = v; }
+void wrap_ImFontAtlasRectEntry_SetIsUsed(ImFontAtlasRectEntry *ImFontAtlasRectEntryPtr, unsigned int v) { ImFontAtlasRectEntryPtr->IsUsed = v; }
+int wrap_ImFontAtlasRectEntry_GetTargetIndex(ImFontAtlasRectEntry *self) { return self->TargetIndex; }
+int wrap_ImFontAtlasRectEntry_GetGeneration(ImFontAtlasRectEntry *self) { return self->Generation; }
+unsigned int wrap_ImFontAtlasRectEntry_GetIsUsed(ImFontAtlasRectEntry *self) { return self->IsUsed; }
+void wrap_ImFontBaked_SetIndexAdvanceX(ImFontBaked *ImFontBakedPtr, ImVector_float v) { ImFontBakedPtr->IndexAdvanceX = v; }
+void wrap_ImFontBaked_SetFallbackAdvanceX(ImFontBaked *ImFontBakedPtr, float v) { ImFontBakedPtr->FallbackAdvanceX = v; }
+void wrap_ImFontBaked_SetSize(ImFontBaked *ImFontBakedPtr, float v) { ImFontBakedPtr->Size = v; }
+void wrap_ImFontBaked_SetRasterizerDensity(ImFontBaked *ImFontBakedPtr, float v) { ImFontBakedPtr->RasterizerDensity = v; }
+void wrap_ImFontBaked_SetIndexLookup(ImFontBaked *ImFontBakedPtr, ImVector_ImU16 v) { ImFontBakedPtr->IndexLookup = v; }
+void wrap_ImFontBaked_SetGlyphs(ImFontBaked *ImFontBakedPtr, ImVector_ImFontGlyph v) { ImFontBakedPtr->Glyphs = v; }
+void wrap_ImFontBaked_SetFallbackGlyphIndex(ImFontBaked *ImFontBakedPtr, int v) { ImFontBakedPtr->FallbackGlyphIndex = v; }
+void wrap_ImFontBaked_SetAscent(ImFontBaked *ImFontBakedPtr, float v) { ImFontBakedPtr->Ascent = v; }
+void wrap_ImFontBaked_SetDescent(ImFontBaked *ImFontBakedPtr, float v) { ImFontBakedPtr->Descent = v; }
+void wrap_ImFontBaked_SetMetricsTotalSurface(ImFontBaked *ImFontBakedPtr, unsigned int v) { ImFontBakedPtr->MetricsTotalSurface = v; }
+void wrap_ImFontBaked_SetWantDestroy(ImFontBaked *ImFontBakedPtr, unsigned int v) { ImFontBakedPtr->WantDestroy = v; }
+void wrap_ImFontBaked_SetLockLoadingFallback(ImFontBaked *ImFontBakedPtr, unsigned int v) { ImFontBakedPtr->LockLoadingFallback = v; }
+void wrap_ImFontBaked_SetLastUsedFrame(ImFontBaked *ImFontBakedPtr, int v) { ImFontBakedPtr->LastUsedFrame = v; }
+void wrap_ImFontBaked_SetBakedId(ImFontBaked *ImFontBakedPtr, ImGuiID v) { ImFontBakedPtr->BakedId = v; }
+void wrap_ImFontBaked_SetContainerFont(ImFontBaked *ImFontBakedPtr, ImFont* v) { ImFontBakedPtr->ContainerFont = v; }
+void wrap_ImFontBaked_SetFontLoaderDatas(ImFontBaked *ImFontBakedPtr, uintptr_t v) { ImFontBakedPtr->FontLoaderDatas = (void*)v; }
+ImVector_float wrap_ImFontBaked_GetIndexAdvanceX(ImFontBaked *self) { return self->IndexAdvanceX; }
+float wrap_ImFontBaked_GetFallbackAdvanceX(ImFontBaked *self) { return self->FallbackAdvanceX; }
+float wrap_ImFontBaked_GetSize(ImFontBaked *self) { return self->Size; }
+float wrap_ImFontBaked_GetRasterizerDensity(ImFontBaked *self) { return self->RasterizerDensity; }
+ImVector_ImU16 wrap_ImFontBaked_GetIndexLookup(ImFontBaked *self) { return self->IndexLookup; }
+ImVector_ImFontGlyph wrap_ImFontBaked_GetGlyphs(ImFontBaked *self) { return self->Glyphs; }
+int wrap_ImFontBaked_GetFallbackGlyphIndex(ImFontBaked *self) { return self->FallbackGlyphIndex; }
+float wrap_ImFontBaked_GetAscent(ImFontBaked *self) { return self->Ascent; }
+float wrap_ImFontBaked_GetDescent(ImFontBaked *self) { return self->Descent; }
+unsigned int wrap_ImFontBaked_GetMetricsTotalSurface(ImFontBaked *self) { return self->MetricsTotalSurface; }
+unsigned int wrap_ImFontBaked_GetWantDestroy(ImFontBaked *self) { return self->WantDestroy; }
+unsigned int wrap_ImFontBaked_GetLockLoadingFallback(ImFontBaked *self) { return self->LockLoadingFallback; }
+int wrap_ImFontBaked_GetLastUsedFrame(ImFontBaked *self) { return self->LastUsedFrame; }
+ImGuiID wrap_ImFontBaked_GetBakedId(ImFontBaked *self) { return self->BakedId; }
+ImFont* wrap_ImFontBaked_GetContainerFont(ImFontBaked *self) { return self->ContainerFont; }
+uintptr_t wrap_ImFontBaked_GetFontLoaderDatas(ImFontBaked *self) { return (uintptr_t)self->FontLoaderDatas; }
+void wrap_ImFontConfig_SetName(ImFontConfig *ImFontConfigPtr, char* v) { memcpy(ImFontConfigPtr->Name, v, sizeof(char)*40); }
 void wrap_ImFontConfig_SetFontData(ImFontConfig *ImFontConfigPtr, uintptr_t v) { ImFontConfigPtr->FontData = (void*)v; }
 void wrap_ImFontConfig_SetFontDataSize(ImFontConfig *ImFontConfigPtr, int v) { ImFontConfigPtr->FontDataSize = v; }
 void wrap_ImFontConfig_SetFontDataOwnedByAtlas(ImFontConfig *ImFontConfigPtr, bool v) { ImFontConfigPtr->FontDataOwnedByAtlas = v; }
 void wrap_ImFontConfig_SetMergeMode(ImFontConfig *ImFontConfigPtr, bool v) { ImFontConfigPtr->MergeMode = v; }
 void wrap_ImFontConfig_SetPixelSnapH(ImFontConfig *ImFontConfigPtr, bool v) { ImFontConfigPtr->PixelSnapH = v; }
-void wrap_ImFontConfig_SetFontNo(ImFontConfig *ImFontConfigPtr, int v) { ImFontConfigPtr->FontNo = v; }
-void wrap_ImFontConfig_SetOversampleH(ImFontConfig *ImFontConfigPtr, int v) { ImFontConfigPtr->OversampleH = v; }
-void wrap_ImFontConfig_SetOversampleV(ImFontConfig *ImFontConfigPtr, int v) { ImFontConfigPtr->OversampleV = v; }
+void wrap_ImFontConfig_SetPixelSnapV(ImFontConfig *ImFontConfigPtr, bool v) { ImFontConfigPtr->PixelSnapV = v; }
+void wrap_ImFontConfig_SetFontNo(ImFontConfig *ImFontConfigPtr, ImS8 v) { ImFontConfigPtr->FontNo = v; }
+void wrap_ImFontConfig_SetOversampleH(ImFontConfig *ImFontConfigPtr, ImS8 v) { ImFontConfigPtr->OversampleH = v; }
+void wrap_ImFontConfig_SetOversampleV(ImFontConfig *ImFontConfigPtr, ImS8 v) { ImFontConfigPtr->OversampleV = v; }
 void wrap_ImFontConfig_SetSizePixels(ImFontConfig *ImFontConfigPtr, float v) { ImFontConfigPtr->SizePixels = v; }
-void wrap_ImFontConfig_SetGlyphOffset(ImFontConfig *ImFontConfigPtr, ImVec2 v) { ImFontConfigPtr->GlyphOffset = v; }
 void wrap_ImFontConfig_SetGlyphRanges(ImFontConfig *ImFontConfigPtr, const ImWchar* v) { ImFontConfigPtr->GlyphRanges = v; }
+void wrap_ImFontConfig_SetGlyphExcludeRanges(ImFontConfig *ImFontConfigPtr, const ImWchar* v) { ImFontConfigPtr->GlyphExcludeRanges = v; }
+void wrap_ImFontConfig_SetGlyphOffset(ImFontConfig *ImFontConfigPtr, ImVec2 v) { ImFontConfigPtr->GlyphOffset = v; }
 void wrap_ImFontConfig_SetGlyphMinAdvanceX(ImFontConfig *ImFontConfigPtr, float v) { ImFontConfigPtr->GlyphMinAdvanceX = v; }
 void wrap_ImFontConfig_SetGlyphMaxAdvanceX(ImFontConfig *ImFontConfigPtr, float v) { ImFontConfigPtr->GlyphMaxAdvanceX = v; }
 void wrap_ImFontConfig_SetGlyphExtraAdvanceX(ImFontConfig *ImFontConfigPtr, float v) { ImFontConfigPtr->GlyphExtraAdvanceX = v; }
-void wrap_ImFontConfig_SetFontBuilderFlags(ImFontConfig *ImFontConfigPtr, unsigned int v) { ImFontConfigPtr->FontBuilderFlags = v; }
+void wrap_ImFontConfig_SetFontLoaderFlags(ImFontConfig *ImFontConfigPtr, unsigned int v) { ImFontConfigPtr->FontLoaderFlags = v; }
 void wrap_ImFontConfig_SetRasterizerMultiply(ImFontConfig *ImFontConfigPtr, float v) { ImFontConfigPtr->RasterizerMultiply = v; }
 void wrap_ImFontConfig_SetRasterizerDensity(ImFontConfig *ImFontConfigPtr, float v) { ImFontConfigPtr->RasterizerDensity = v; }
 void wrap_ImFontConfig_SetEllipsisChar(ImFontConfig *ImFontConfigPtr, ImWchar v) { ImFontConfigPtr->EllipsisChar = v; }
-void wrap_ImFontConfig_SetName(ImFontConfig *ImFontConfigPtr, char* v) { memcpy(ImFontConfigPtr->Name, v, sizeof(char)*40); }
+void wrap_ImFontConfig_SetFlags(ImFontConfig *ImFontConfigPtr, ImFontFlags v) { ImFontConfigPtr->Flags = v; }
 void wrap_ImFontConfig_SetDstFont(ImFontConfig *ImFontConfigPtr, ImFont* v) { ImFontConfigPtr->DstFont = v; }
+void wrap_ImFontConfig_SetFontLoader(ImFontConfig *ImFontConfigPtr, const ImFontLoader* v) { ImFontConfigPtr->FontLoader = v; }
+void wrap_ImFontConfig_SetFontLoaderData(ImFontConfig *ImFontConfigPtr, uintptr_t v) { ImFontConfigPtr->FontLoaderData = (void*)v; }
+char* wrap_ImFontConfig_GetName(ImFontConfig *self) { return self->Name; }
+char imgui_char_GetAtIdx(char *self, int index) { return self[index]; }
 uintptr_t wrap_ImFontConfig_GetFontData(ImFontConfig *self) { return (uintptr_t)self->FontData; }
 int wrap_ImFontConfig_GetFontDataSize(ImFontConfig *self) { return self->FontDataSize; }
 bool wrap_ImFontConfig_GetFontDataOwnedByAtlas(ImFontConfig *self) { return self->FontDataOwnedByAtlas; }
 bool wrap_ImFontConfig_GetMergeMode(ImFontConfig *self) { return self->MergeMode; }
 bool wrap_ImFontConfig_GetPixelSnapH(ImFontConfig *self) { return self->PixelSnapH; }
-int wrap_ImFontConfig_GetFontNo(ImFontConfig *self) { return self->FontNo; }
-int wrap_ImFontConfig_GetOversampleH(ImFontConfig *self) { return self->OversampleH; }
-int wrap_ImFontConfig_GetOversampleV(ImFontConfig *self) { return self->OversampleV; }
+bool wrap_ImFontConfig_GetPixelSnapV(ImFontConfig *self) { return self->PixelSnapV; }
+ImS8 wrap_ImFontConfig_GetFontNo(ImFontConfig *self) { return self->FontNo; }
+ImS8 wrap_ImFontConfig_GetOversampleH(ImFontConfig *self) { return self->OversampleH; }
+ImS8 wrap_ImFontConfig_GetOversampleV(ImFontConfig *self) { return self->OversampleV; }
 float wrap_ImFontConfig_GetSizePixels(ImFontConfig *self) { return self->SizePixels; }
-ImVec2 wrap_ImFontConfig_GetGlyphOffset(ImFontConfig *self) { return self->GlyphOffset; }
 const ImWchar* wrap_ImFontConfig_GetGlyphRanges(ImFontConfig *self) { return self->GlyphRanges; }
+const ImWchar* wrap_ImFontConfig_GetGlyphExcludeRanges(ImFontConfig *self) { return self->GlyphExcludeRanges; }
+ImVec2 wrap_ImFontConfig_GetGlyphOffset(ImFontConfig *self) { return self->GlyphOffset; }
 float wrap_ImFontConfig_GetGlyphMinAdvanceX(ImFontConfig *self) { return self->GlyphMinAdvanceX; }
 float wrap_ImFontConfig_GetGlyphMaxAdvanceX(ImFontConfig *self) { return self->GlyphMaxAdvanceX; }
 float wrap_ImFontConfig_GetGlyphExtraAdvanceX(ImFontConfig *self) { return self->GlyphExtraAdvanceX; }
-unsigned int wrap_ImFontConfig_GetFontBuilderFlags(ImFontConfig *self) { return self->FontBuilderFlags; }
+unsigned int wrap_ImFontConfig_GetFontLoaderFlags(ImFontConfig *self) { return self->FontLoaderFlags; }
 float wrap_ImFontConfig_GetRasterizerMultiply(ImFontConfig *self) { return self->RasterizerMultiply; }
 float wrap_ImFontConfig_GetRasterizerDensity(ImFontConfig *self) { return self->RasterizerDensity; }
 ImWchar wrap_ImFontConfig_GetEllipsisChar(ImFontConfig *self) { return self->EllipsisChar; }
-char* wrap_ImFontConfig_GetName(ImFontConfig *self) { return self->Name; }
-char imgui_char_GetAtIdx(char *self, int index) { return self[index]; }
+ImFontFlags wrap_ImFontConfig_GetFlags(ImFontConfig *self) { return self->Flags; }
 ImFont* wrap_ImFontConfig_GetDstFont(ImFontConfig *self) { return self->DstFont; }
+const ImFontLoader* wrap_ImFontConfig_GetFontLoader(ImFontConfig *self) { return self->FontLoader; }
+uintptr_t wrap_ImFontConfig_GetFontLoaderData(ImFontConfig *self) { return (uintptr_t)self->FontLoaderData; }
 void wrap_ImFontGlyph_SetColored(ImFontGlyph *ImFontGlyphPtr, unsigned int v) { ImFontGlyphPtr->Colored = v; }
 void wrap_ImFontGlyph_SetVisible(ImFontGlyph *ImFontGlyphPtr, unsigned int v) { ImFontGlyphPtr->Visible = v; }
+void wrap_ImFontGlyph_SetSourceIdx(ImFontGlyph *ImFontGlyphPtr, unsigned int v) { ImFontGlyphPtr->SourceIdx = v; }
 void wrap_ImFontGlyph_SetCodepoint(ImFontGlyph *ImFontGlyphPtr, unsigned int v) { ImFontGlyphPtr->Codepoint = v; }
 void wrap_ImFontGlyph_SetAdvanceX(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->AdvanceX = v; }
 void wrap_ImFontGlyph_SetX0(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->X0 = v; }
@@ -290,8 +402,10 @@ void wrap_ImFontGlyph_SetU0(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphP
 void wrap_ImFontGlyph_SetV0(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->V0 = v; }
 void wrap_ImFontGlyph_SetU1(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->U1 = v; }
 void wrap_ImFontGlyph_SetV1(ImFontGlyph *ImFontGlyphPtr, float v) { ImFontGlyphPtr->V1 = v; }
+void wrap_ImFontGlyph_SetPackId(ImFontGlyph *ImFontGlyphPtr, int v) { ImFontGlyphPtr->PackId = v; }
 unsigned int wrap_ImFontGlyph_GetColored(ImFontGlyph *self) { return self->Colored; }
 unsigned int wrap_ImFontGlyph_GetVisible(ImFontGlyph *self) { return self->Visible; }
+unsigned int wrap_ImFontGlyph_GetSourceIdx(ImFontGlyph *self) { return self->SourceIdx; }
 unsigned int wrap_ImFontGlyph_GetCodepoint(ImFontGlyph *self) { return self->Codepoint; }
 float wrap_ImFontGlyph_GetAdvanceX(ImFontGlyph *self) { return self->AdvanceX; }
 float wrap_ImFontGlyph_GetX0(ImFontGlyph *self) { return self->X0; }
@@ -302,8 +416,19 @@ float wrap_ImFontGlyph_GetU0(ImFontGlyph *self) { return self->U0; }
 float wrap_ImFontGlyph_GetV0(ImFontGlyph *self) { return self->V0; }
 float wrap_ImFontGlyph_GetU1(ImFontGlyph *self) { return self->U1; }
 float wrap_ImFontGlyph_GetV1(ImFontGlyph *self) { return self->V1; }
+int wrap_ImFontGlyph_GetPackId(ImFontGlyph *self) { return self->PackId; }
 void wrap_ImFontGlyphRangesBuilder_SetUsedChars(ImFontGlyphRangesBuilder *ImFontGlyphRangesBuilderPtr, ImVector_ImU32 v) { ImFontGlyphRangesBuilderPtr->UsedChars = v; }
 ImVector_ImU32 wrap_ImFontGlyphRangesBuilder_GetUsedChars(ImFontGlyphRangesBuilder *self) { return self->UsedChars; }
+void wrap_ImFontLoader_SetName(ImFontLoader *ImFontLoaderPtr, const char* v) { ImFontLoaderPtr->Name = v; }
+void wrap_ImFontLoader_SetFontBakedSrcLoaderDataSize(ImFontLoader *ImFontLoaderPtr, size_t v) { ImFontLoaderPtr->FontBakedSrcLoaderDataSize = v; }
+const char* wrap_ImFontLoader_GetName(ImFontLoader *self) { return self->Name; }
+size_t wrap_ImFontLoader_GetFontBakedSrcLoaderDataSize(ImFontLoader *self) { return self->FontBakedSrcLoaderDataSize; }
+void wrap_ImFontStackData_SetFont(ImFontStackData *ImFontStackDataPtr, ImFont* v) { ImFontStackDataPtr->Font = v; }
+void wrap_ImFontStackData_SetFontSizeBeforeScaling(ImFontStackData *ImFontStackDataPtr, float v) { ImFontStackDataPtr->FontSizeBeforeScaling = v; }
+void wrap_ImFontStackData_SetFontSizeAfterScaling(ImFontStackData *ImFontStackDataPtr, float v) { ImFontStackDataPtr->FontSizeAfterScaling = v; }
+ImFont* wrap_ImFontStackData_GetFont(ImFontStackData *self) { return self->Font; }
+float wrap_ImFontStackData_GetFontSizeBeforeScaling(ImFontStackData *self) { return self->FontSizeBeforeScaling; }
+float wrap_ImFontStackData_GetFontSizeAfterScaling(ImFontStackData *self) { return self->FontSizeAfterScaling; }
 void wrap_ImGuiBoxSelectState_SetID(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, ImGuiID v) { ImGuiBoxSelectStatePtr->ID = v; }
 void wrap_ImGuiBoxSelectState_SetIsActive(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, bool v) { ImGuiBoxSelectStatePtr->IsActive = v; }
 void wrap_ImGuiBoxSelectState_SetIsStarting(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, bool v) { ImGuiBoxSelectStatePtr->IsStarting = v; }
@@ -351,16 +476,18 @@ ImVec2 wrap_ImGuiComboPreviewData_GetBackupCursorPosPrevLine(ImGuiComboPreviewDa
 float wrap_ImGuiComboPreviewData_GetBackupPrevLineTextBaseOffset(ImGuiComboPreviewData *self) { return self->BackupPrevLineTextBaseOffset; }
 ImGuiLayoutType wrap_ImGuiComboPreviewData_GetBackupLayout(ImGuiComboPreviewData *self) { return self->BackupLayout; }
 void wrap_ImGuiContext_SetInitialized(ImGuiContext *ImGuiContextPtr, bool v) { ImGuiContextPtr->Initialized = v; }
-void wrap_ImGuiContext_SetFontAtlasOwnedByContext(ImGuiContext *ImGuiContextPtr, bool v) { ImGuiContextPtr->FontAtlasOwnedByContext = v; }
 void wrap_ImGuiContext_SetIO(ImGuiContext *ImGuiContextPtr, ImGuiIO v) { ImGuiContextPtr->IO = v; }
 void wrap_ImGuiContext_SetPlatformIO(ImGuiContext *ImGuiContextPtr, ImGuiPlatformIO v) { ImGuiContextPtr->PlatformIO = v; }
 void wrap_ImGuiContext_SetStyle(ImGuiContext *ImGuiContextPtr, ImGuiStyle v) { ImGuiContextPtr->Style = v; }
 void wrap_ImGuiContext_SetConfigFlagsCurrFrame(ImGuiContext *ImGuiContextPtr, ImGuiConfigFlags v) { ImGuiContextPtr->ConfigFlagsCurrFrame = v; }
 void wrap_ImGuiContext_SetConfigFlagsLastFrame(ImGuiContext *ImGuiContextPtr, ImGuiConfigFlags v) { ImGuiContextPtr->ConfigFlagsLastFrame = v; }
+void wrap_ImGuiContext_SetFontAtlases(ImGuiContext *ImGuiContextPtr, ImVector_ImFontAtlasPtr v) { ImGuiContextPtr->FontAtlases = v; }
 void wrap_ImGuiContext_SetFont(ImGuiContext *ImGuiContextPtr, ImFont* v) { ImGuiContextPtr->Font = v; }
+void wrap_ImGuiContext_SetFontBaked(ImGuiContext *ImGuiContextPtr, ImFontBaked* v) { ImGuiContextPtr->FontBaked = v; }
 void wrap_ImGuiContext_SetFontSize(ImGuiContext *ImGuiContextPtr, float v) { ImGuiContextPtr->FontSize = v; }
-void wrap_ImGuiContext_SetFontBaseSize(ImGuiContext *ImGuiContextPtr, float v) { ImGuiContextPtr->FontBaseSize = v; }
-void wrap_ImGuiContext_SetFontScale(ImGuiContext *ImGuiContextPtr, float v) { ImGuiContextPtr->FontScale = v; }
+void wrap_ImGuiContext_SetFontSizeBase(ImGuiContext *ImGuiContextPtr, float v) { ImGuiContextPtr->FontSizeBase = v; }
+void wrap_ImGuiContext_SetFontBakedScale(ImGuiContext *ImGuiContextPtr, float v) { ImGuiContextPtr->FontBakedScale = v; }
+void wrap_ImGuiContext_SetFontRasterizerDensity(ImGuiContext *ImGuiContextPtr, float v) { ImGuiContextPtr->FontRasterizerDensity = v; }
 void wrap_ImGuiContext_SetCurrentDpiScale(ImGuiContext *ImGuiContextPtr, float v) { ImGuiContextPtr->CurrentDpiScale = v; }
 void wrap_ImGuiContext_SetDrawListSharedData(ImGuiContext *ImGuiContextPtr, ImDrawListSharedData v) { ImGuiContextPtr->DrawListSharedData = v; }
 void wrap_ImGuiContext_SetTime(ImGuiContext *ImGuiContextPtr, double v) { ImGuiContextPtr->Time = v; }
@@ -447,7 +574,7 @@ void wrap_ImGuiContext_SetDebugShowGroupRects(ImGuiContext *ImGuiContextPtr, boo
 void wrap_ImGuiContext_SetDebugFlashStyleColorIdx(ImGuiContext *ImGuiContextPtr, ImGuiCol v) { ImGuiContextPtr->DebugFlashStyleColorIdx = v; }
 void wrap_ImGuiContext_SetColorStack(ImGuiContext *ImGuiContextPtr, ImVector_ImGuiColorMod v) { ImGuiContextPtr->ColorStack = v; }
 void wrap_ImGuiContext_SetStyleVarStack(ImGuiContext *ImGuiContextPtr, ImVector_ImGuiStyleMod v) { ImGuiContextPtr->StyleVarStack = v; }
-void wrap_ImGuiContext_SetFontStack(ImGuiContext *ImGuiContextPtr, ImVector_ImFontPtr v) { ImGuiContextPtr->FontStack = v; }
+void wrap_ImGuiContext_SetFontStack(ImGuiContext *ImGuiContextPtr, ImVector_ImFontStackData v) { ImGuiContextPtr->FontStack = v; }
 void wrap_ImGuiContext_SetFocusScopeStack(ImGuiContext *ImGuiContextPtr, ImVector_ImGuiFocusScopeData v) { ImGuiContextPtr->FocusScopeStack = v; }
 void wrap_ImGuiContext_SetItemFlagsStack(ImGuiContext *ImGuiContextPtr, ImVector_ImGuiItemFlags v) { ImGuiContextPtr->ItemFlagsStack = v; }
 void wrap_ImGuiContext_SetGroupStack(ImGuiContext *ImGuiContextPtr, ImVector_ImGuiGroupData v) { ImGuiContextPtr->GroupStack = v; }
@@ -573,7 +700,8 @@ void wrap_ImGuiContext_SetMouseStationaryTimer(ImGuiContext *ImGuiContextPtr, fl
 void wrap_ImGuiContext_SetMouseLastValidPos(ImGuiContext *ImGuiContextPtr, ImVec2 v) { ImGuiContextPtr->MouseLastValidPos = v; }
 void wrap_ImGuiContext_SetInputTextState(ImGuiContext *ImGuiContextPtr, ImGuiInputTextState v) { ImGuiContextPtr->InputTextState = v; }
 void wrap_ImGuiContext_SetInputTextDeactivatedState(ImGuiContext *ImGuiContextPtr, ImGuiInputTextDeactivatedState v) { ImGuiContextPtr->InputTextDeactivatedState = v; }
-void wrap_ImGuiContext_SetInputTextPasswordFont(ImGuiContext *ImGuiContextPtr, ImFont v) { ImGuiContextPtr->InputTextPasswordFont = v; }
+void wrap_ImGuiContext_SetInputTextPasswordFontBackupBaked(ImGuiContext *ImGuiContextPtr, ImFontBaked v) { ImGuiContextPtr->InputTextPasswordFontBackupBaked = v; }
+void wrap_ImGuiContext_SetInputTextPasswordFontBackupFlags(ImGuiContext *ImGuiContextPtr, ImFontFlags v) { ImGuiContextPtr->InputTextPasswordFontBackupFlags = v; }
 void wrap_ImGuiContext_SetTempInputId(ImGuiContext *ImGuiContextPtr, ImGuiID v) { ImGuiContextPtr->TempInputId = v; }
 void wrap_ImGuiContext_SetDataTypeZeroValue(ImGuiContext *ImGuiContextPtr, ImGuiDataTypeStorage v) { ImGuiContextPtr->DataTypeZeroValue = v; }
 void wrap_ImGuiContext_SetBeginMenuDepth(ImGuiContext *ImGuiContextPtr, int v) { ImGuiContextPtr->BeginMenuDepth = v; }
@@ -605,6 +733,7 @@ void wrap_ImGuiContext_SetMenusIdSubmittedThisFrame(ImGuiContext *ImGuiContextPt
 void wrap_ImGuiContext_SetTypingSelectState(ImGuiContext *ImGuiContextPtr, ImGuiTypingSelectState v) { ImGuiContextPtr->TypingSelectState = v; }
 void wrap_ImGuiContext_SetPlatformImeData(ImGuiContext *ImGuiContextPtr, ImGuiPlatformImeData v) { ImGuiContextPtr->PlatformImeData = v; }
 void wrap_ImGuiContext_SetPlatformImeDataPrev(ImGuiContext *ImGuiContextPtr, ImGuiPlatformImeData v) { ImGuiContextPtr->PlatformImeDataPrev = v; }
+void wrap_ImGuiContext_SetUserTextures(ImGuiContext *ImGuiContextPtr, ImVector_ImTextureDataPtr v) { ImGuiContextPtr->UserTextures = v; }
 void wrap_ImGuiContext_SetDockContext(ImGuiContext *ImGuiContextPtr, ImGuiDockContext v) { ImGuiContextPtr->DockContext = v; }
 void wrap_ImGuiContext_SetSettingsLoaded(ImGuiContext *ImGuiContextPtr, bool v) { ImGuiContextPtr->SettingsLoaded = v; }
 void wrap_ImGuiContext_SetSettingsDirtyTimer(ImGuiContext *ImGuiContextPtr, float v) { ImGuiContextPtr->SettingsDirtyTimer = v; }
@@ -664,16 +793,18 @@ void wrap_ImGuiContext_SetWantTextInputNextFrame(ImGuiContext *ImGuiContextPtr, 
 void wrap_ImGuiContext_SetTempBuffer(ImGuiContext *ImGuiContextPtr, ImVector_char v) { ImGuiContextPtr->TempBuffer = v; }
 void wrap_ImGuiContext_SetTempKeychordName(ImGuiContext *ImGuiContextPtr, char* v) { memcpy(ImGuiContextPtr->TempKeychordName, v, sizeof(char)*64); }
 bool wrap_ImGuiContext_GetInitialized(ImGuiContext *self) { return self->Initialized; }
-bool wrap_ImGuiContext_GetFontAtlasOwnedByContext(ImGuiContext *self) { return self->FontAtlasOwnedByContext; }
 ImGuiIO wrap_ImGuiContext_GetIO(ImGuiContext *self) { return self->IO; }
 ImGuiPlatformIO wrap_ImGuiContext_GetPlatformIO(ImGuiContext *self) { return self->PlatformIO; }
 ImGuiStyle wrap_ImGuiContext_GetStyle(ImGuiContext *self) { return self->Style; }
 ImGuiConfigFlags wrap_ImGuiContext_GetConfigFlagsCurrFrame(ImGuiContext *self) { return self->ConfigFlagsCurrFrame; }
 ImGuiConfigFlags wrap_ImGuiContext_GetConfigFlagsLastFrame(ImGuiContext *self) { return self->ConfigFlagsLastFrame; }
+ImVector_ImFontAtlasPtr wrap_ImGuiContext_GetFontAtlases(ImGuiContext *self) { return self->FontAtlases; }
 ImFont* wrap_ImGuiContext_GetFont(ImGuiContext *self) { return self->Font; }
+ImFontBaked* wrap_ImGuiContext_GetFontBaked(ImGuiContext *self) { return self->FontBaked; }
 float wrap_ImGuiContext_GetFontSize(ImGuiContext *self) { return self->FontSize; }
-float wrap_ImGuiContext_GetFontBaseSize(ImGuiContext *self) { return self->FontBaseSize; }
-float wrap_ImGuiContext_GetFontScale(ImGuiContext *self) { return self->FontScale; }
+float wrap_ImGuiContext_GetFontSizeBase(ImGuiContext *self) { return self->FontSizeBase; }
+float wrap_ImGuiContext_GetFontBakedScale(ImGuiContext *self) { return self->FontBakedScale; }
+float wrap_ImGuiContext_GetFontRasterizerDensity(ImGuiContext *self) { return self->FontRasterizerDensity; }
 float wrap_ImGuiContext_GetCurrentDpiScale(ImGuiContext *self) { return self->CurrentDpiScale; }
 ImDrawListSharedData wrap_ImGuiContext_GetDrawListSharedData(ImGuiContext *self) { return self->DrawListSharedData; }
 double wrap_ImGuiContext_GetTime(ImGuiContext *self) { return self->Time; }
@@ -761,7 +892,7 @@ bool wrap_ImGuiContext_GetDebugShowGroupRects(ImGuiContext *self) { return self-
 ImGuiCol wrap_ImGuiContext_GetDebugFlashStyleColorIdx(ImGuiContext *self) { return self->DebugFlashStyleColorIdx; }
 ImVector_ImGuiColorMod wrap_ImGuiContext_GetColorStack(ImGuiContext *self) { return self->ColorStack; }
 ImVector_ImGuiStyleMod wrap_ImGuiContext_GetStyleVarStack(ImGuiContext *self) { return self->StyleVarStack; }
-ImVector_ImFontPtr wrap_ImGuiContext_GetFontStack(ImGuiContext *self) { return self->FontStack; }
+ImVector_ImFontStackData wrap_ImGuiContext_GetFontStack(ImGuiContext *self) { return self->FontStack; }
 ImVector_ImGuiFocusScopeData wrap_ImGuiContext_GetFocusScopeStack(ImGuiContext *self) { return self->FocusScopeStack; }
 ImVector_ImGuiItemFlags wrap_ImGuiContext_GetItemFlagsStack(ImGuiContext *self) { return self->ItemFlagsStack; }
 ImVector_ImGuiGroupData wrap_ImGuiContext_GetGroupStack(ImGuiContext *self) { return self->GroupStack; }
@@ -888,7 +1019,8 @@ float wrap_ImGuiContext_GetMouseStationaryTimer(ImGuiContext *self) { return sel
 ImVec2 wrap_ImGuiContext_GetMouseLastValidPos(ImGuiContext *self) { return self->MouseLastValidPos; }
 ImGuiInputTextState wrap_ImGuiContext_GetInputTextState(ImGuiContext *self) { return self->InputTextState; }
 ImGuiInputTextDeactivatedState wrap_ImGuiContext_GetInputTextDeactivatedState(ImGuiContext *self) { return self->InputTextDeactivatedState; }
-ImFont wrap_ImGuiContext_GetInputTextPasswordFont(ImGuiContext *self) { return self->InputTextPasswordFont; }
+ImFontBaked wrap_ImGuiContext_GetInputTextPasswordFontBackupBaked(ImGuiContext *self) { return self->InputTextPasswordFontBackupBaked; }
+ImFontFlags wrap_ImGuiContext_GetInputTextPasswordFontBackupFlags(ImGuiContext *self) { return self->InputTextPasswordFontBackupFlags; }
 ImGuiID wrap_ImGuiContext_GetTempInputId(ImGuiContext *self) { return self->TempInputId; }
 ImGuiDataTypeStorage wrap_ImGuiContext_GetDataTypeZeroValue(ImGuiContext *self) { return self->DataTypeZeroValue; }
 int wrap_ImGuiContext_GetBeginMenuDepth(ImGuiContext *self) { return self->BeginMenuDepth; }
@@ -920,6 +1052,7 @@ ImVector_ImGuiID wrap_ImGuiContext_GetMenusIdSubmittedThisFrame(ImGuiContext *se
 ImGuiTypingSelectState wrap_ImGuiContext_GetTypingSelectState(ImGuiContext *self) { return self->TypingSelectState; }
 ImGuiPlatformImeData wrap_ImGuiContext_GetPlatformImeData(ImGuiContext *self) { return self->PlatformImeData; }
 ImGuiPlatformImeData wrap_ImGuiContext_GetPlatformImeDataPrev(ImGuiContext *self) { return self->PlatformImeDataPrev; }
+ImVector_ImTextureDataPtr wrap_ImGuiContext_GetUserTextures(ImGuiContext *self) { return self->UserTextures; }
 ImGuiDockContext wrap_ImGuiContext_GetDockContext(ImGuiContext *self) { return self->DockContext; }
 bool wrap_ImGuiContext_GetSettingsLoaded(ImGuiContext *self) { return self->SettingsLoaded; }
 float wrap_ImGuiContext_GetSettingsDirtyTimer(ImGuiContext *self) { return self->SettingsDirtyTimer; }
@@ -1191,9 +1324,8 @@ void wrap_ImGuiIO_SetIniFilename(ImGuiIO *ImGuiIOPtr, const char* v) { ImGuiIOPt
 void wrap_ImGuiIO_SetLogFilename(ImGuiIO *ImGuiIOPtr, const char* v) { ImGuiIOPtr->LogFilename = v; }
 void wrap_ImGuiIO_SetUserData(ImGuiIO *ImGuiIOPtr, uintptr_t v) { ImGuiIOPtr->UserData = (void*)v; }
 void wrap_ImGuiIO_SetFonts(ImGuiIO *ImGuiIOPtr, ImFontAtlas* v) { ImGuiIOPtr->Fonts = v; }
-void wrap_ImGuiIO_SetFontGlobalScale(ImGuiIO *ImGuiIOPtr, float v) { ImGuiIOPtr->FontGlobalScale = v; }
-void wrap_ImGuiIO_SetFontAllowUserScaling(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->FontAllowUserScaling = v; }
 void wrap_ImGuiIO_SetFontDefault(ImGuiIO *ImGuiIOPtr, ImFont* v) { ImGuiIOPtr->FontDefault = v; }
+void wrap_ImGuiIO_SetFontAllowUserScaling(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->FontAllowUserScaling = v; }
 void wrap_ImGuiIO_SetConfigNavSwapGamepadButtons(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->ConfigNavSwapGamepadButtons = v; }
 void wrap_ImGuiIO_SetConfigNavMoveSetMousePos(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->ConfigNavMoveSetMousePos = v; }
 void wrap_ImGuiIO_SetConfigNavCaptureKeyboard(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->ConfigNavCaptureKeyboard = v; }
@@ -1209,6 +1341,8 @@ void wrap_ImGuiIO_SetConfigViewportsNoAutoMerge(ImGuiIO *ImGuiIOPtr, bool v) { I
 void wrap_ImGuiIO_SetConfigViewportsNoTaskBarIcon(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->ConfigViewportsNoTaskBarIcon = v; }
 void wrap_ImGuiIO_SetConfigViewportsNoDecoration(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->ConfigViewportsNoDecoration = v; }
 void wrap_ImGuiIO_SetConfigViewportsNoDefaultParent(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->ConfigViewportsNoDefaultParent = v; }
+void wrap_ImGuiIO_SetConfigDpiScaleFonts(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->ConfigDpiScaleFonts = v; }
+void wrap_ImGuiIO_SetConfigDpiScaleViewports(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->ConfigDpiScaleViewports = v; }
 void wrap_ImGuiIO_SetMouseDrawCursor(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->MouseDrawCursor = v; }
 void wrap_ImGuiIO_SetConfigMacOSXBehaviors(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->ConfigMacOSXBehaviors = v; }
 void wrap_ImGuiIO_SetConfigInputTrickleEventQueue(ImGuiIO *ImGuiIOPtr, bool v) { ImGuiIOPtr->ConfigInputTrickleEventQueue = v; }
@@ -1299,9 +1433,8 @@ const char* wrap_ImGuiIO_GetIniFilename(ImGuiIO *self) { return self->IniFilenam
 const char* wrap_ImGuiIO_GetLogFilename(ImGuiIO *self) { return self->LogFilename; }
 uintptr_t wrap_ImGuiIO_GetUserData(ImGuiIO *self) { return (uintptr_t)self->UserData; }
 ImFontAtlas* wrap_ImGuiIO_GetFonts(ImGuiIO *self) { return self->Fonts; }
-float wrap_ImGuiIO_GetFontGlobalScale(ImGuiIO *self) { return self->FontGlobalScale; }
-bool wrap_ImGuiIO_GetFontAllowUserScaling(ImGuiIO *self) { return self->FontAllowUserScaling; }
 ImFont* wrap_ImGuiIO_GetFontDefault(ImGuiIO *self) { return self->FontDefault; }
+bool wrap_ImGuiIO_GetFontAllowUserScaling(ImGuiIO *self) { return self->FontAllowUserScaling; }
 bool wrap_ImGuiIO_GetConfigNavSwapGamepadButtons(ImGuiIO *self) { return self->ConfigNavSwapGamepadButtons; }
 bool wrap_ImGuiIO_GetConfigNavMoveSetMousePos(ImGuiIO *self) { return self->ConfigNavMoveSetMousePos; }
 bool wrap_ImGuiIO_GetConfigNavCaptureKeyboard(ImGuiIO *self) { return self->ConfigNavCaptureKeyboard; }
@@ -1317,6 +1450,8 @@ bool wrap_ImGuiIO_GetConfigViewportsNoAutoMerge(ImGuiIO *self) { return self->Co
 bool wrap_ImGuiIO_GetConfigViewportsNoTaskBarIcon(ImGuiIO *self) { return self->ConfigViewportsNoTaskBarIcon; }
 bool wrap_ImGuiIO_GetConfigViewportsNoDecoration(ImGuiIO *self) { return self->ConfigViewportsNoDecoration; }
 bool wrap_ImGuiIO_GetConfigViewportsNoDefaultParent(ImGuiIO *self) { return self->ConfigViewportsNoDefaultParent; }
+bool wrap_ImGuiIO_GetConfigDpiScaleFonts(ImGuiIO *self) { return self->ConfigDpiScaleFonts; }
+bool wrap_ImGuiIO_GetConfigDpiScaleViewports(ImGuiIO *self) { return self->ConfigDpiScaleViewports; }
 bool wrap_ImGuiIO_GetMouseDrawCursor(ImGuiIO *self) { return self->MouseDrawCursor; }
 bool wrap_ImGuiIO_GetConfigMacOSXBehaviors(ImGuiIO *self) { return self->ConfigMacOSXBehaviors; }
 bool wrap_ImGuiIO_GetConfigInputTrickleEventQueue(ImGuiIO *self) { return self->ConfigInputTrickleEventQueue; }
@@ -1562,7 +1697,7 @@ void wrap_ImGuiListClipper_SetDisplayStart(ImGuiListClipper *ImGuiListClipperPtr
 void wrap_ImGuiListClipper_SetDisplayEnd(ImGuiListClipper *ImGuiListClipperPtr, int v) { ImGuiListClipperPtr->DisplayEnd = v; }
 void wrap_ImGuiListClipper_SetItemsCount(ImGuiListClipper *ImGuiListClipperPtr, int v) { ImGuiListClipperPtr->ItemsCount = v; }
 void wrap_ImGuiListClipper_SetItemsHeight(ImGuiListClipper *ImGuiListClipperPtr, float v) { ImGuiListClipperPtr->ItemsHeight = v; }
-void wrap_ImGuiListClipper_SetStartPosY(ImGuiListClipper *ImGuiListClipperPtr, float v) { ImGuiListClipperPtr->StartPosY = v; }
+void wrap_ImGuiListClipper_SetStartPosY(ImGuiListClipper *ImGuiListClipperPtr, double v) { ImGuiListClipperPtr->StartPosY = v; }
 void wrap_ImGuiListClipper_SetStartSeekOffsetY(ImGuiListClipper *ImGuiListClipperPtr, double v) { ImGuiListClipperPtr->StartSeekOffsetY = v; }
 void wrap_ImGuiListClipper_SetTempData(ImGuiListClipper *ImGuiListClipperPtr, uintptr_t v) { ImGuiListClipperPtr->TempData = (void*)v; }
 ImGuiContext* wrap_ImGuiListClipper_GetCtx(ImGuiListClipper *self) { return self->Ctx; }
@@ -1570,7 +1705,7 @@ int wrap_ImGuiListClipper_GetDisplayStart(ImGuiListClipper *self) { return self-
 int wrap_ImGuiListClipper_GetDisplayEnd(ImGuiListClipper *self) { return self->DisplayEnd; }
 int wrap_ImGuiListClipper_GetItemsCount(ImGuiListClipper *self) { return self->ItemsCount; }
 float wrap_ImGuiListClipper_GetItemsHeight(ImGuiListClipper *self) { return self->ItemsHeight; }
-float wrap_ImGuiListClipper_GetStartPosY(ImGuiListClipper *self) { return self->StartPosY; }
+double wrap_ImGuiListClipper_GetStartPosY(ImGuiListClipper *self) { return self->StartPosY; }
 double wrap_ImGuiListClipper_GetStartSeekOffsetY(ImGuiListClipper *self) { return self->StartSeekOffsetY; }
 uintptr_t wrap_ImGuiListClipper_GetTempData(ImGuiListClipper *self) { return (uintptr_t)self->TempData; }
 void wrap_ImGuiListClipperData_SetListClipper(ImGuiListClipperData *ImGuiListClipperDataPtr, ImGuiListClipper* v) { ImGuiListClipperDataPtr->ListClipper = v; }
@@ -1621,6 +1756,7 @@ void wrap_ImGuiMetricsConfig_SetShowTablesRects(ImGuiMetricsConfig *ImGuiMetrics
 void wrap_ImGuiMetricsConfig_SetShowDrawCmdMesh(ImGuiMetricsConfig *ImGuiMetricsConfigPtr, bool v) { ImGuiMetricsConfigPtr->ShowDrawCmdMesh = v; }
 void wrap_ImGuiMetricsConfig_SetShowDrawCmdBoundingBoxes(ImGuiMetricsConfig *ImGuiMetricsConfigPtr, bool v) { ImGuiMetricsConfigPtr->ShowDrawCmdBoundingBoxes = v; }
 void wrap_ImGuiMetricsConfig_SetShowTextEncodingViewer(ImGuiMetricsConfig *ImGuiMetricsConfigPtr, bool v) { ImGuiMetricsConfigPtr->ShowTextEncodingViewer = v; }
+void wrap_ImGuiMetricsConfig_SetShowTextureUsedRect(ImGuiMetricsConfig *ImGuiMetricsConfigPtr, bool v) { ImGuiMetricsConfigPtr->ShowTextureUsedRect = v; }
 void wrap_ImGuiMetricsConfig_SetShowDockingNodes(ImGuiMetricsConfig *ImGuiMetricsConfigPtr, bool v) { ImGuiMetricsConfigPtr->ShowDockingNodes = v; }
 void wrap_ImGuiMetricsConfig_SetShowWindowsRectsType(ImGuiMetricsConfig *ImGuiMetricsConfigPtr, int v) { ImGuiMetricsConfigPtr->ShowWindowsRectsType = v; }
 void wrap_ImGuiMetricsConfig_SetShowTablesRectsType(ImGuiMetricsConfig *ImGuiMetricsConfigPtr, int v) { ImGuiMetricsConfigPtr->ShowTablesRectsType = v; }
@@ -1635,6 +1771,7 @@ bool wrap_ImGuiMetricsConfig_GetShowTablesRects(ImGuiMetricsConfig *self) { retu
 bool wrap_ImGuiMetricsConfig_GetShowDrawCmdMesh(ImGuiMetricsConfig *self) { return self->ShowDrawCmdMesh; }
 bool wrap_ImGuiMetricsConfig_GetShowDrawCmdBoundingBoxes(ImGuiMetricsConfig *self) { return self->ShowDrawCmdBoundingBoxes; }
 bool wrap_ImGuiMetricsConfig_GetShowTextEncodingViewer(ImGuiMetricsConfig *self) { return self->ShowTextEncodingViewer; }
+bool wrap_ImGuiMetricsConfig_GetShowTextureUsedRect(ImGuiMetricsConfig *self) { return self->ShowTextureUsedRect; }
 bool wrap_ImGuiMetricsConfig_GetShowDockingNodes(ImGuiMetricsConfig *self) { return self->ShowDockingNodes; }
 int wrap_ImGuiMetricsConfig_GetShowWindowsRectsType(ImGuiMetricsConfig *self) { return self->ShowWindowsRectsType; }
 int wrap_ImGuiMetricsConfig_GetShowTablesRectsType(ImGuiMetricsConfig *self) { return self->ShowTablesRectsType; }
@@ -1851,15 +1988,21 @@ void wrap_ImGuiPlatformIO_SetPlatform_ClipboardUserData(ImGuiPlatformIO *ImGuiPl
 void wrap_ImGuiPlatformIO_SetPlatform_OpenInShellUserData(ImGuiPlatformIO *ImGuiPlatformIOPtr, uintptr_t v) { ImGuiPlatformIOPtr->Platform_OpenInShellUserData = (void*)v; }
 void wrap_ImGuiPlatformIO_SetPlatform_ImeUserData(ImGuiPlatformIO *ImGuiPlatformIOPtr, uintptr_t v) { ImGuiPlatformIOPtr->Platform_ImeUserData = (void*)v; }
 void wrap_ImGuiPlatformIO_SetPlatform_LocaleDecimalPoint(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImWchar v) { ImGuiPlatformIOPtr->Platform_LocaleDecimalPoint = v; }
+void wrap_ImGuiPlatformIO_SetRenderer_TextureMaxWidth(ImGuiPlatformIO *ImGuiPlatformIOPtr, int v) { ImGuiPlatformIOPtr->Renderer_TextureMaxWidth = v; }
+void wrap_ImGuiPlatformIO_SetRenderer_TextureMaxHeight(ImGuiPlatformIO *ImGuiPlatformIOPtr, int v) { ImGuiPlatformIOPtr->Renderer_TextureMaxHeight = v; }
 void wrap_ImGuiPlatformIO_SetRenderer_RenderState(ImGuiPlatformIO *ImGuiPlatformIOPtr, uintptr_t v) { ImGuiPlatformIOPtr->Renderer_RenderState = (void*)v; }
 void wrap_ImGuiPlatformIO_SetMonitors(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImVector_ImGuiPlatformMonitor v) { ImGuiPlatformIOPtr->Monitors = v; }
+void wrap_ImGuiPlatformIO_SetTextures(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImVector_ImTextureDataPtr v) { ImGuiPlatformIOPtr->Textures = v; }
 void wrap_ImGuiPlatformIO_SetViewports(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImVector_ImGuiViewportPtr v) { ImGuiPlatformIOPtr->Viewports = v; }
 uintptr_t wrap_ImGuiPlatformIO_GetPlatform_ClipboardUserData(ImGuiPlatformIO *self) { return (uintptr_t)self->Platform_ClipboardUserData; }
 uintptr_t wrap_ImGuiPlatformIO_GetPlatform_OpenInShellUserData(ImGuiPlatformIO *self) { return (uintptr_t)self->Platform_OpenInShellUserData; }
 uintptr_t wrap_ImGuiPlatformIO_GetPlatform_ImeUserData(ImGuiPlatformIO *self) { return (uintptr_t)self->Platform_ImeUserData; }
 ImWchar wrap_ImGuiPlatformIO_GetPlatform_LocaleDecimalPoint(ImGuiPlatformIO *self) { return self->Platform_LocaleDecimalPoint; }
+int wrap_ImGuiPlatformIO_GetRenderer_TextureMaxWidth(ImGuiPlatformIO *self) { return self->Renderer_TextureMaxWidth; }
+int wrap_ImGuiPlatformIO_GetRenderer_TextureMaxHeight(ImGuiPlatformIO *self) { return self->Renderer_TextureMaxHeight; }
 uintptr_t wrap_ImGuiPlatformIO_GetRenderer_RenderState(ImGuiPlatformIO *self) { return (uintptr_t)self->Renderer_RenderState; }
 ImVector_ImGuiPlatformMonitor wrap_ImGuiPlatformIO_GetMonitors(ImGuiPlatformIO *self) { return self->Monitors; }
+ImVector_ImTextureDataPtr wrap_ImGuiPlatformIO_GetTextures(ImGuiPlatformIO *self) { return self->Textures; }
 ImVector_ImGuiViewportPtr wrap_ImGuiPlatformIO_GetViewports(ImGuiPlatformIO *self) { return self->Viewports; }
 void wrap_ImGuiPlatformImeData_SetWantVisible(ImGuiPlatformImeData *ImGuiPlatformImeDataPtr, bool v) { ImGuiPlatformImeDataPtr->WantVisible = v; }
 void wrap_ImGuiPlatformImeData_SetWantTextInput(ImGuiPlatformImeData *ImGuiPlatformImeDataPtr, bool v) { ImGuiPlatformImeDataPtr->WantTextInput = v; }
@@ -1959,6 +2102,9 @@ void wrap_ImGuiStorage_SetData(ImGuiStorage *ImGuiStoragePtr, ImVector_ImGuiStor
 ImVector_ImGuiStoragePair wrap_ImGuiStorage_GetData(ImGuiStorage *self) { return self->Data; }
 void wrap_ImGuiStoragePair_SetKey(ImGuiStoragePair *ImGuiStoragePairPtr, ImGuiID v) { ImGuiStoragePairPtr->key = v; }
 ImGuiID wrap_ImGuiStoragePair_GetKey(ImGuiStoragePair *self) { return self->key; }
+void wrap_ImGuiStyle_SetFontSizeBase(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->FontSizeBase = v; }
+void wrap_ImGuiStyle_SetFontScaleMain(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->FontScaleMain = v; }
+void wrap_ImGuiStyle_SetFontScaleDpi(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->FontScaleDpi = v; }
 void wrap_ImGuiStyle_SetAlpha(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->Alpha = v; }
 void wrap_ImGuiStyle_SetDisabledAlpha(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->DisabledAlpha = v; }
 void wrap_ImGuiStyle_SetWindowPadding(ImGuiStyle *ImGuiStylePtr, ImVec2 v) { ImGuiStylePtr->WindowPadding = v; }
@@ -2019,6 +2165,11 @@ void wrap_ImGuiStyle_SetHoverDelayShort(ImGuiStyle *ImGuiStylePtr, float v) { Im
 void wrap_ImGuiStyle_SetHoverDelayNormal(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->HoverDelayNormal = v; }
 void wrap_ImGuiStyle_SetHoverFlagsForTooltipMouse(ImGuiStyle *ImGuiStylePtr, ImGuiHoveredFlags v) { ImGuiStylePtr->HoverFlagsForTooltipMouse = v; }
 void wrap_ImGuiStyle_SetHoverFlagsForTooltipNav(ImGuiStyle *ImGuiStylePtr, ImGuiHoveredFlags v) { ImGuiStylePtr->HoverFlagsForTooltipNav = v; }
+void wrap_ImGuiStyle_Set_MainScale(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->_MainScale = v; }
+void wrap_ImGuiStyle_Set_NextFrameFontSizeBase(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->_NextFrameFontSizeBase = v; }
+float wrap_ImGuiStyle_GetFontSizeBase(ImGuiStyle *self) { return self->FontSizeBase; }
+float wrap_ImGuiStyle_GetFontScaleMain(ImGuiStyle *self) { return self->FontScaleMain; }
+float wrap_ImGuiStyle_GetFontScaleDpi(ImGuiStyle *self) { return self->FontScaleDpi; }
 float wrap_ImGuiStyle_GetAlpha(ImGuiStyle *self) { return self->Alpha; }
 float wrap_ImGuiStyle_GetDisabledAlpha(ImGuiStyle *self) { return self->DisabledAlpha; }
 ImVec2 wrap_ImGuiStyle_GetWindowPadding(ImGuiStyle *self) { return self->WindowPadding; }
@@ -2079,6 +2230,8 @@ float wrap_ImGuiStyle_GetHoverDelayShort(ImGuiStyle *self) { return self->HoverD
 float wrap_ImGuiStyle_GetHoverDelayNormal(ImGuiStyle *self) { return self->HoverDelayNormal; }
 ImGuiHoveredFlags wrap_ImGuiStyle_GetHoverFlagsForTooltipMouse(ImGuiStyle *self) { return self->HoverFlagsForTooltipMouse; }
 ImGuiHoveredFlags wrap_ImGuiStyle_GetHoverFlagsForTooltipNav(ImGuiStyle *self) { return self->HoverFlagsForTooltipNav; }
+float wrap_ImGuiStyle_Get_MainScale(ImGuiStyle *self) { return self->_MainScale; }
+float wrap_ImGuiStyle_Get_NextFrameFontSizeBase(ImGuiStyle *self) { return self->_NextFrameFontSizeBase; }
 void wrap_ImGuiStyleMod_SetVarIdx(ImGuiStyleMod *ImGuiStyleModPtr, ImGuiStyleVar v) { ImGuiStyleModPtr->VarIdx = v; }
 ImGuiStyleVar wrap_ImGuiStyleMod_GetVarIdx(ImGuiStyleMod *self) { return self->VarIdx; }
 void wrap_ImGuiStyleVarInfo_SetCount(ImGuiStyleVarInfo *ImGuiStyleVarInfoPtr, ImU32 v) { ImGuiStyleVarInfoPtr->Count = v; }
@@ -2820,7 +2973,6 @@ void wrap_ImGuiWindow_SetStateStorage(ImGuiWindow *ImGuiWindowPtr, ImGuiStorage 
 void wrap_ImGuiWindow_SetColumnsStorage(ImGuiWindow *ImGuiWindowPtr, ImVector_ImGuiOldColumns v) { ImGuiWindowPtr->ColumnsStorage = v; }
 void wrap_ImGuiWindow_SetFontWindowScale(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->FontWindowScale = v; }
 void wrap_ImGuiWindow_SetFontWindowScaleParents(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->FontWindowScaleParents = v; }
-void wrap_ImGuiWindow_SetFontDpiScale(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->FontDpiScale = v; }
 void wrap_ImGuiWindow_SetFontRefSize(ImGuiWindow *ImGuiWindowPtr, float v) { ImGuiWindowPtr->FontRefSize = v; }
 void wrap_ImGuiWindow_SetSettingsOffset(ImGuiWindow *ImGuiWindowPtr, int v) { ImGuiWindowPtr->SettingsOffset = v; }
 void wrap_ImGuiWindow_SetDrawList(ImGuiWindow *ImGuiWindowPtr, ImDrawList* v) { ImGuiWindowPtr->DrawList = v; }
@@ -2946,7 +3098,6 @@ ImGuiStorage wrap_ImGuiWindow_GetStateStorage(ImGuiWindow *self) { return self->
 ImVector_ImGuiOldColumns wrap_ImGuiWindow_GetColumnsStorage(ImGuiWindow *self) { return self->ColumnsStorage; }
 float wrap_ImGuiWindow_GetFontWindowScale(ImGuiWindow *self) { return self->FontWindowScale; }
 float wrap_ImGuiWindow_GetFontWindowScaleParents(ImGuiWindow *self) { return self->FontWindowScaleParents; }
-float wrap_ImGuiWindow_GetFontDpiScale(ImGuiWindow *self) { return self->FontDpiScale; }
 float wrap_ImGuiWindow_GetFontRefSize(ImGuiWindow *self) { return self->FontRefSize; }
 int wrap_ImGuiWindow_GetSettingsOffset(ImGuiWindow *self) { return self->SettingsOffset; }
 ImDrawList* wrap_ImGuiWindow_GetDrawList(ImGuiWindow *self) { return self->DrawList; }
@@ -3118,9 +3269,53 @@ ImVector_float wrap_ImGuiWindowTempData_GetItemWidthStack(ImGuiWindowTempData *s
 ImVector_float wrap_ImGuiWindowTempData_GetTextWrapPosStack(ImGuiWindowTempData *self) { return self->TextWrapPosStack; }
 void wrap_ImRect_SetMin(ImRect *ImRectPtr, ImVec2 v) { ImRectPtr->Min = v; }
 void wrap_ImRect_SetMax(ImRect *ImRectPtr, ImVec2 v) { ImRectPtr->Max = v; }
+void wrap_ImTextureData_SetUniqueID(ImTextureData *ImTextureDataPtr, int v) { ImTextureDataPtr->UniqueID = v; }
+void wrap_ImTextureData_SetBackendUserData(ImTextureData *ImTextureDataPtr, uintptr_t v) { ImTextureDataPtr->BackendUserData = (void*)v; }
+void wrap_ImTextureData_SetFormat(ImTextureData *ImTextureDataPtr, ImTextureFormat v) { ImTextureDataPtr->Format = v; }
+void wrap_ImTextureData_SetWidth(ImTextureData *ImTextureDataPtr, int v) { ImTextureDataPtr->Width = v; }
+void wrap_ImTextureData_SetHeight(ImTextureData *ImTextureDataPtr, int v) { ImTextureDataPtr->Height = v; }
+void wrap_ImTextureData_SetBytesPerPixel(ImTextureData *ImTextureDataPtr, int v) { ImTextureDataPtr->BytesPerPixel = v; }
+void wrap_ImTextureData_SetPixels(ImTextureData *ImTextureDataPtr, unsigned char* v) { ImTextureDataPtr->Pixels = v; }
+void wrap_ImTextureData_SetUsedRect(ImTextureData *ImTextureDataPtr, ImTextureRect v) { ImTextureDataPtr->UsedRect = v; }
+void wrap_ImTextureData_SetUpdateRect(ImTextureData *ImTextureDataPtr, ImTextureRect v) { ImTextureDataPtr->UpdateRect = v; }
+void wrap_ImTextureData_SetUpdates(ImTextureData *ImTextureDataPtr, ImVector_ImTextureRect v) { ImTextureDataPtr->Updates = v; }
+void wrap_ImTextureData_SetUnusedFrames(ImTextureData *ImTextureDataPtr, int v) { ImTextureDataPtr->UnusedFrames = v; }
+void wrap_ImTextureData_SetRefCount(ImTextureData *ImTextureDataPtr, unsigned short v) { ImTextureDataPtr->RefCount = v; }
+void wrap_ImTextureData_SetUseColors(ImTextureData *ImTextureDataPtr, bool v) { ImTextureDataPtr->UseColors = v; }
+void wrap_ImTextureData_SetWantDestroyNextFrame(ImTextureData *ImTextureDataPtr, bool v) { ImTextureDataPtr->WantDestroyNextFrame = v; }
+int wrap_ImTextureData_GetUniqueID(ImTextureData *self) { return self->UniqueID; }
+ImTextureStatus wrap_ImTextureData_GetStatus(ImTextureData *self) { return self->Status; }
+uintptr_t wrap_ImTextureData_GetBackendUserData(ImTextureData *self) { return (uintptr_t)self->BackendUserData; }
+ImTextureFormat wrap_ImTextureData_GetFormat(ImTextureData *self) { return self->Format; }
+int wrap_ImTextureData_GetWidth(ImTextureData *self) { return self->Width; }
+int wrap_ImTextureData_GetHeight(ImTextureData *self) { return self->Height; }
+int wrap_ImTextureData_GetBytesPerPixel(ImTextureData *self) { return self->BytesPerPixel; }
+ImTextureRect wrap_ImTextureData_GetUsedRect(ImTextureData *self) { return self->UsedRect; }
+ImTextureRect wrap_ImTextureData_GetUpdateRect(ImTextureData *self) { return self->UpdateRect; }
+ImVector_ImTextureRect wrap_ImTextureData_GetUpdates(ImTextureData *self) { return self->Updates; }
+int wrap_ImTextureData_GetUnusedFrames(ImTextureData *self) { return self->UnusedFrames; }
+unsigned short wrap_ImTextureData_GetRefCount(ImTextureData *self) { return self->RefCount; }
+bool wrap_ImTextureData_GetUseColors(ImTextureData *self) { return self->UseColors; }
+bool wrap_ImTextureData_GetWantDestroyNextFrame(ImTextureData *self) { return self->WantDestroyNextFrame; }
+void wrap_ImTextureRect_SetX(ImTextureRect *ImTextureRectPtr, unsigned short v) { ImTextureRectPtr->x = v; }
+void wrap_ImTextureRect_SetY(ImTextureRect *ImTextureRectPtr, unsigned short v) { ImTextureRectPtr->y = v; }
+void wrap_ImTextureRect_SetW(ImTextureRect *ImTextureRectPtr, unsigned short v) { ImTextureRectPtr->w = v; }
+void wrap_ImTextureRect_SetH(ImTextureRect *ImTextureRectPtr, unsigned short v) { ImTextureRectPtr->h = v; }
+unsigned short wrap_ImTextureRect_GetX(ImTextureRect *self) { return self->x; }
+unsigned short wrap_ImTextureRect_GetY(ImTextureRect *self) { return self->y; }
+unsigned short wrap_ImTextureRect_GetW(ImTextureRect *self) { return self->w; }
+unsigned short wrap_ImTextureRect_GetH(ImTextureRect *self) { return self->h; }
+void wrap_ImTextureRef_Set_TexData(ImTextureRef *ImTextureRefPtr, ImTextureData* v) { ImTextureRefPtr->_TexData = v; }
+void wrap_ImTextureRef_Set_TexID(ImTextureRef *ImTextureRefPtr, ImTextureID v) { ImTextureRefPtr->_TexID = v; }
+ImTextureData* wrap_ImTextureRef_Get_TexData(ImTextureRef *self) { return self->_TexData; }
+ImTextureID wrap_ImTextureRef_Get_TexID(ImTextureRef *self) { return self->_TexID; }
 void wrap_ImVec1_SetX(ImVec1 *ImVec1Ptr, float v) { ImVec1Ptr->x = v; }
 void wrap_ImVec2_SetX(ImVec2 *ImVec2Ptr, float v) { ImVec2Ptr->x = v; }
 void wrap_ImVec2_SetY(ImVec2 *ImVec2Ptr, float v) { ImVec2Ptr->y = v; }
+void wrap_ImVec2i_SetX(ImVec2i *ImVec2iPtr, int v) { ImVec2iPtr->x = v; }
+void wrap_ImVec2i_SetY(ImVec2i *ImVec2iPtr, int v) { ImVec2iPtr->y = v; }
+int wrap_ImVec2i_GetX(ImVec2i *self) { return self->x; }
+int wrap_ImVec2i_GetY(ImVec2i *self) { return self->y; }
 void wrap_ImVec2ih_SetX(ImVec2ih *ImVec2ihPtr, short v) { ImVec2ihPtr->x = v; }
 void wrap_ImVec2ih_SetY(ImVec2ih *ImVec2ihPtr, short v) { ImVec2ihPtr->y = v; }
 short wrap_ImVec2ih_GetX(ImVec2ih *self) { return self->x; }
@@ -3129,3 +3324,5 @@ void wrap_ImVec4_SetX(ImVec4 *ImVec4Ptr, float v) { ImVec4Ptr->x = v; }
 void wrap_ImVec4_SetY(ImVec4 *ImVec4Ptr, float v) { ImVec4Ptr->y = v; }
 void wrap_ImVec4_SetZ(ImVec4 *ImVec4Ptr, float v) { ImVec4Ptr->z = v; }
 void wrap_ImVec4_SetW(ImVec4 *ImVec4Ptr, float v) { ImVec4Ptr->w = v; }
+void wrap_stbrp_context_opaque_SetData(stbrp_context_opaque *stbrp_context_opaquePtr, char* v) { memcpy(stbrp_context_opaquePtr->data, v, sizeof(char)*80); }
+char* wrap_stbrp_context_opaque_GetData(stbrp_context_opaque *self) { return self->data; }

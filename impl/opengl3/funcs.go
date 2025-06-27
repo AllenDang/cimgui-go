@@ -17,16 +17,8 @@ func CreateDeviceObjects() bool {
 	return C.ImGui_ImplOpenGL3_CreateDeviceObjects() == C.bool(true)
 }
 
-func CreateFontsTexture() bool {
-	return C.ImGui_ImplOpenGL3_CreateFontsTexture() == C.bool(true)
-}
-
 func DestroyDeviceObjects() {
 	C.ImGui_ImplOpenGL3_DestroyDeviceObjects()
-}
-
-func DestroyFontsTexture() {
-	C.ImGui_ImplOpenGL3_DestroyFontsTexture()
 }
 
 // InitV parameter default value hint:

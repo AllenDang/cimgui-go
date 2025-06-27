@@ -63,6 +63,21 @@ const (
 	FontAtlasFlagsNoBakedLines FontAtlasFlags = 4
 )
 
+// Font flags
+// (in future versions as we redesign font loading API, this will become more important and better documented. for now please consider this as internal/advanced use)
+// original name: ImFontFlags_
+type FontFlags int32
+
+const (
+	FontFlagsNone FontFlags = 0
+	// Disable throwing an error/assert when calling AddFontXXX() with missing file/data. Calling code is expected to check AddFontXXX() return value.
+	FontFlagsNoLoadError FontFlags = 2
+	// [Internal] Disable loading new glyphs.
+	FontFlagsNoLoadGlyphs FontFlags = 4
+	// [Internal] Disable loading new baked sizes, disable garbage collecting current ones. e.g. if you want to lock a font to a single size. Important: if you use this to preload given sizes, consider the possibility of multiple font density used on Retina display.
+	FontFlagsLockBakedSizes FontFlags = 8
+)
+
 // original name: ImGuiActivateFlags_
 type ActivateFlags int32
 
@@ -104,6 +119,8 @@ const (
 	BackendFlagsHasSetMousePos BackendFlags = 4
 	// Backend Renderer supports ImDrawCmd::VtxOffset. This enables output of large meshes (64K+ vertices) while still using 16-bit indices.
 	BackendFlagsRendererHasVtxOffset BackendFlags = 8
+	// Backend Renderer supports ImTextureData requests to create/update/destroy textures. This enables incremental texture updates and texture reloads.
+	BackendFlagsRendererHasTextures BackendFlags = 16
 	// Backend Platform supports multiple viewports.
 	BackendFlagsPlatformHasViewports BackendFlags = 1024
 	// Backend Platform supports calling io.AddMouseViewportEvent() with the viewport under the mouse. IF POSSIBLE, ignore viewports with the ImGuiViewportFlags_NoInputs flag (Win32 backend, GLFW 3.30+ backend can do this, SDL backend cannot). If this cannot be done, Dear ImGui needs to use a flawed heuristic to find the viewport under.
@@ -146,7 +163,9 @@ const (
 	// don't set key/input owner on the initial click (note: mouse buttons are keys! often, the key in question will be ImGuiKey_MouseLeft!)
 	ButtonFlagsNoSetKeyOwner ButtonFlagsPrivate = 1048576
 	// don't test key/input owner when polling the key (note: mouse buttons are keys! often, the key in question will be ImGuiKey_MouseLeft!)
-	ButtonFlagsNoTestKeyOwner   ButtonFlagsPrivate = 2097152
+	ButtonFlagsNoTestKeyOwner ButtonFlagsPrivate = 2097152
+	// [EXPERIMENTAL: Not very well specced]. Don't focus parent window when clicking.
+	ButtonFlagsNoFocus          ButtonFlagsPrivate = 4194304
 	ButtonFlagsPressedOnMask    ButtonFlagsPrivate = 1008
 	ButtonFlagsPressedOnDefault ButtonFlagsPrivate = 32
 )
@@ -440,10 +459,6 @@ const (
 	ConfigFlagsDockingEnable ConfigFlags = 128
 	// Viewport enable flags (require both ImGuiBackendFlags_PlatformHasViewports + ImGuiBackendFlags_RendererHasViewports set by the respective backends)
 	ConfigFlagsViewportsEnable ConfigFlags = 1024
-	// [BETA: Don't use] FIXME-DPI: Reposition and resize imgui windows when the DpiScale of a viewport changed (mostly useful for the main viewport hosting other window). Note that resizing the main window itself is up to your application.
-	ConfigFlagsDpiEnableScaleViewports ConfigFlags = 16384
-	// [BETA: Don't use] FIXME-DPI: Request bitmap-scaled fonts to match DpiScale. This is a very low-quality workaround. The correct way to handle DPI is _currently_ to replace the atlas and/or fonts in the Platform_OnChangedViewport callback, but this is all early work in progress.
-	ConfigFlagsDpiEnableScaleFonts ConfigFlags = 32768
 	// Application is SRGB-aware.
 	ConfigFlagsIsSRGB ConfigFlags = 1048576
 	// Application is using a touch screen instead of a mouse.
@@ -691,37 +706,30 @@ const (
 	FocusedFlagsRootAndChildWindows FocusedFlags = 3
 )
 
-// Hinting greatly impacts visuals (and glyph sizes).
-// - By default, hinting is enabled and the font's native hinter is preferred over the auto-hinter.
-// - When disabled, FreeType generates blurrier glyphs, more or less matches the stb_truetype.h
-// - The Default hinting mode usually looks good, but may distort glyphs in an unusual way.
-// - The Light hinting mode generates fuzzier glyphs but better matches Microsoft's rasterizer.
-// You can set those flags globally in ImFontAtlas::FontBuilderFlags
-// You can set those flags on a per font basis in ImFontConfig::FontBuilderFlags
-// original name: ImGuiFreeTypeBuilderFlags
-type FreeTypeBuilderFlags int32
+// original name: ImGuiFreeTypeLoaderFlags_
+type FreeTypeLoaderFlags int32
 
 const (
 	// Disable hinting. This generally generates 'blurrier' bitmap glyphs when the glyph are rendered in any of the anti-aliased modes.
-	FreeTypeBuilderFlagsNoHinting FreeTypeBuilderFlags = 1
+	FreeTypeLoaderFlagsNoHinting FreeTypeLoaderFlags = 1
 	// Disable auto-hinter.
-	FreeTypeBuilderFlagsNoAutoHint FreeTypeBuilderFlags = 2
+	FreeTypeLoaderFlagsNoAutoHint FreeTypeLoaderFlags = 2
 	// Indicates that the auto-hinter is preferred over the font's native hinter.
-	FreeTypeBuilderFlagsForceAutoHint FreeTypeBuilderFlags = 4
+	FreeTypeLoaderFlagsForceAutoHint FreeTypeLoaderFlags = 4
 	// A lighter hinting algorithm for gray-level modes. Many generated glyphs are fuzzier but better resemble their original shape. This is achieved by snapping glyphs to the pixel grid only vertically (Y-axis), as is done by Microsoft's ClearType and Adobe's proprietary font renderer. This preserves inter-glyph spacing in horizontal text.
-	FreeTypeBuilderFlagsLightHinting FreeTypeBuilderFlags = 8
+	FreeTypeLoaderFlagsLightHinting FreeTypeLoaderFlags = 8
 	// Strong hinting algorithm that should only be used for monochrome output.
-	FreeTypeBuilderFlagsMonoHinting FreeTypeBuilderFlags = 16
+	FreeTypeLoaderFlagsMonoHinting FreeTypeLoaderFlags = 16
 	// Styling: Should we artificially embolden the font?
-	FreeTypeBuilderFlagsBold FreeTypeBuilderFlags = 32
+	FreeTypeLoaderFlagsBold FreeTypeLoaderFlags = 32
 	// Styling: Should we slant the font, emulating italic style?
-	FreeTypeBuilderFlagsOblique FreeTypeBuilderFlags = 64
+	FreeTypeLoaderFlagsOblique FreeTypeLoaderFlags = 64
 	// Disable anti-aliasing. Combine this with MonoHinting for best results!
-	FreeTypeBuilderFlagsMonochrome FreeTypeBuilderFlags = 128
+	FreeTypeLoaderFlagsMonochrome FreeTypeLoaderFlags = 128
 	// Enable FreeType color-layered glyphs
-	FreeTypeBuilderFlagsLoadColor FreeTypeBuilderFlags = 256
+	FreeTypeLoaderFlagsLoadColor FreeTypeLoaderFlags = 256
 	// Enable FreeType bitmap glyphs
-	FreeTypeBuilderFlagsBitmap FreeTypeBuilderFlags = 512
+	FreeTypeLoaderFlagsBitmap FreeTypeLoaderFlags = 512
 )
 
 // Extend ImGuiHoveredFlags_
@@ -976,6 +984,8 @@ const (
 	ItemFlagsNoNavDisableMouseHover ItemFlagsPrivate = 32768
 	// false     // Skip calling MarkItemEdited()
 	ItemFlagsNoMarkEdited ItemFlagsPrivate = 65536
+	// false     // [EXPERIMENTAL: Not very well specced] Clicking doesn't take focus. Automatically sets ImGuiButtonFlags_NoFocus + ImGuiButtonFlags_NoNavFocus in ButtonBehavior().
+	ItemFlagsNoFocus ItemFlagsPrivate = 131072
 	// false     // [WIP] Auto-activate input mode when tab focused. Currently only used and supported by a few items before it becomes a generic feature.
 	ItemFlagsInputable ItemFlagsPrivate = 1048576
 	// false     // Set by SetNextItemSelectionUserData()
@@ -1071,6 +1081,7 @@ const (
 	KeyLeftCtrl   Key = 527
 	KeyLeftShift  Key = 528
 	KeyLeftAlt    Key = 529
+	// Also see ImGuiMod_Ctrl, ImGuiMod_Shift, ImGuiMod_Alt, ImGuiMod_Super below!
 	KeyLeftSuper  Key = 530
 	KeyRightCtrl  Key = 531
 	KeyRightShift Key = 532
@@ -1186,53 +1197,53 @@ const (
 	KeyAppForward Key = 630
 	// Non-US backslash.
 	KeyOem102 Key = 631
-	// Menu (Xbox)      + (Switch)   Start/Options (PS)
+	// Menu        | +       | Options  |
 	KeyGamepadStart Key = 632
-	// View (Xbox)      - (Switch)   Share (PS)
+	// View        | -       | Share    |
 	KeyGamepadBack Key = 633
-	// X (Xbox)         Y (Switch)   Square (PS)        // Tap: Toggle Menu. Hold: Windowing mode (Focus/Move/Resize windows)
+	// X           | Y       | Square   | Tap: Toggle Menu. Hold: Windowing mode (Focus/Move/Resize windows)
 	KeyGamepadFaceLeft Key = 634
-	// B (Xbox)         A (Switch)   Circle (PS)        // Cancel / Close / Exit
+	// B           | A       | Circle   | Cancel / Close / Exit
 	KeyGamepadFaceRight Key = 635
-	// Y (Xbox)         X (Switch)   Triangle (PS)      // Text Input / On-screen Keyboard
+	// Y           | X       | Triangle | Text Input / On-screen Keyboard
 	KeyGamepadFaceUp Key = 636
-	// A (Xbox)         B (Switch)   Cross (PS)         // Activate / Open / Toggle / Tweak
+	// A           | B       | Cross    | Activate / Open / Toggle / Tweak
 	KeyGamepadFaceDown Key = 637
-	// D-pad Left                                       // Move / Tweak / Resize Window (in Windowing mode)
+	// D-pad Left  | "       | "        | Move / Tweak / Resize Window (in Windowing mode)
 	KeyGamepadDpadLeft Key = 638
-	// D-pad Right                                      // Move / Tweak / Resize Window (in Windowing mode)
+	// D-pad Right | "       | "        | Move / Tweak / Resize Window (in Windowing mode)
 	KeyGamepadDpadRight Key = 639
-	// D-pad Up                                         // Move / Tweak / Resize Window (in Windowing mode)
+	// D-pad Up    | "       | "        | Move / Tweak / Resize Window (in Windowing mode)
 	KeyGamepadDpadUp Key = 640
-	// D-pad Down                                       // Move / Tweak / Resize Window (in Windowing mode)
+	// D-pad Down  | "       | "        | Move / Tweak / Resize Window (in Windowing mode)
 	KeyGamepadDpadDown Key = 641
-	// L Bumper (Xbox)  L (Switch)   L1 (PS)            // Tweak Slower / Focus Previous (in Windowing mode)
+	// L Bumper    | L       | L1       | Tweak Slower / Focus Previous (in Windowing mode)
 	KeyGamepadL1 Key = 642
-	// R Bumper (Xbox)  R (Switch)   R1 (PS)            // Tweak Faster / Focus Next (in Windowing mode)
+	// R Bumper    | R       | R1       | Tweak Faster / Focus Next (in Windowing mode)
 	KeyGamepadR1 Key = 643
-	// L Trig. (Xbox)   ZL (Switch)  L2 (PS) [Analog]
+	// L Trigger   | ZL      | L2       | [Analog]
 	KeyGamepadL2 Key = 644
-	// R Trig. (Xbox)   ZR (Switch)  R2 (PS) [Analog]
+	// R Trigger   | ZR      | R2       | [Analog]
 	KeyGamepadR2 Key = 645
-	// L Stick (Xbox)   L3 (Switch)  L3 (PS)
+	// L Stick     | L3      | L3       |
 	KeyGamepadL3 Key = 646
-	// R Stick (Xbox)   R3 (Switch)  R3 (PS)
+	// R Stick     | R3      | R3       |
 	KeyGamepadR3 Key = 647
-	// [Analog]                                         // Move Window (in Windowing mode)
+	//             |         |          | [Analog] Move Window (in Windowing mode)
 	KeyGamepadLStickLeft Key = 648
-	// [Analog]                                         // Move Window (in Windowing mode)
+	//             |         |          | [Analog] Move Window (in Windowing mode)
 	KeyGamepadLStickRight Key = 649
-	// [Analog]                                         // Move Window (in Windowing mode)
+	//             |         |          | [Analog] Move Window (in Windowing mode)
 	KeyGamepadLStickUp Key = 650
-	// [Analog]                                         // Move Window (in Windowing mode)
+	//             |         |          | [Analog] Move Window (in Windowing mode)
 	KeyGamepadLStickDown Key = 651
-	// [Analog]
+	//             |         |          | [Analog]
 	KeyGamepadRStickLeft Key = 652
-	// [Analog]
+	//             |         |          | [Analog]
 	KeyGamepadRStickRight Key = 653
-	// [Analog]
+	//             |         |          | [Analog]
 	KeyGamepadRStickUp Key = 654
-	// [Analog]
+	//             |         |          | [Analog]
 	KeyGamepadRStickDown   Key = 655
 	KeyMouseLeft           Key = 656
 	KeyMouseRight          Key = 657
@@ -1246,6 +1257,7 @@ const (
 	KeyReservedForModAlt   Key = 665
 	KeyReservedForModSuper Key = 666
 	KeyNamedKeyEND         Key = 667
+	KeyNamedKeyCOUNT       Key = 155
 	ModNone                Key = 0
 	// Ctrl (non-macOS), Cmd (macOS)
 	ModCtrl Key = 4096
@@ -1256,8 +1268,7 @@ const (
 	// Windows/Super (non-macOS), Ctrl (macOS)
 	ModSuper Key = 32768
 	// 4-bits
-	ModMask          Key = 61440
-	KeyNamedKeyCOUNT Key = 155
+	ModMask Key = 61440
 )
 
 // FIXME: this is in development, not exposed/functional as a generic feature yet.
@@ -2296,4 +2307,32 @@ const (
 	WindowRefreshFlagsRefreshOnHover WindowRefreshFlags = 2
 	// [EXPERIMENTAL] Always refresh on focus
 	WindowRefreshFlagsRefreshOnFocus WindowRefreshFlags = 4
+)
+
+// We intentionally support a limited amount of texture formats to limit burden on CPU-side code and extension.
+// Most standard backends only support RGBA32 but we provide a single channel option for low-resource/embedded systems.
+// original name: ImTextureFormat
+type TextureFormat int32
+
+const (
+	// 4 components per pixel, each is unsigned 8-bit. Total size = TexWidth * TexHeight * 4
+	TextureFormatRGBA32 TextureFormat = 0
+	// 1 component per pixel, each is unsigned 8-bit. Total size = TexWidth * TexHeight
+	TextureFormatAlpha8 TextureFormat = 1
+)
+
+// Status of a texture to communicate with Renderer Backend.
+// original name: ImTextureStatus
+type TextureStatus int32
+
+const (
+	TextureStatusOK TextureStatus = 0
+	// Backend destroyed the texture.
+	TextureStatusDestroyed TextureStatus = 1
+	// Requesting backend to create the texture. Set status OK when done.
+	TextureStatusWantCreate TextureStatus = 2
+	// Requesting backend to update specific blocks of pixels (write to texture portions which have never been used before). Set status OK when done.
+	TextureStatusWantUpdates TextureStatus = 3
+	// Requesting backend to destroy the texture. Set status to Destroyed when done.
+	TextureStatusWantDestroy TextureStatus = 4
 )

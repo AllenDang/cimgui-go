@@ -1192,7 +1192,7 @@ CIMGUI_API void ImPlot_PlotDigitalG(const char* label_id,ImPlotPoint_getter gett
     getter_funcX = getter;
     ImPlot::PlotDigitalG(label_id,Wrapper,data,count,flags);
 }
-CIMGUI_API void ImPlot_PlotImage(const char* label_id,ImTextureID tex_ref,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max,const ImVec2 uv0,const ImVec2 uv1,const ImVec4 tint_col,ImPlotImageFlags flags)
+CIMGUI_API void ImPlot_PlotImage(const char* label_id,ImTextureRef tex_ref,const ImPlotPoint bounds_min,const ImPlotPoint bounds_max,const ImVec2 uv0,const ImVec2 uv1,const ImVec4 tint_col,ImPlotImageFlags flags)
 {
     return ImPlot::PlotImage(label_id,tex_ref,bounds_min,bounds_max,uv0,uv1,tint_col,flags);
 }
