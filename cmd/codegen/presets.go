@@ -36,6 +36,7 @@ type Preset struct {
 	TypedefsCustomPoolSizes map[CIdentifier]int
 	// Replace is a map for C -> Go names conversion.
 	// It allows you to force-rename anything (including functions and enums)
+	// With Replace all further processing will be skipped (prefix, e.t.c.)
 	Replace map[CIdentifier]GoIdentifier
 	// TrimPrefix allows to remove unwanted prefixes from everything during C->Go renaming.
 	// NOTE: order sensitive!

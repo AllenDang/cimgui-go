@@ -437,6 +437,10 @@ extern "C" {
 
 			setterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Set%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
 			if skipFuncNames[setterFuncName] || context.ShouldSkipFunc(setterFuncName) {
+				if context.flags.ShowNotGenerated {
+					glg.Debugf("Skipped setter funcs for %s.%s (skipped from preset): %v", s.Name, m.Name, setterFuncName)
+				}
+
 				continue
 			}
 
@@ -499,10 +503,29 @@ extern "C" {
 					)
 				}
 			}
+		}
+
+		for _, m := range s.Members {
+			if Contains(m.Type, "(") || Contains(m.Type, "union") {
+				continue
+			}
 
 			getterFuncName := CIdentifier(fmt.Sprintf("%[1]s_Get%[2]s", s.Name, Capitalize(Split(m.Name, "[")[0])))
 			if skipFuncNames[getterFuncName] || context.ShouldSkipFunc(getterFuncName) {
 				continue
+			}
+
+			if skipFuncNames[getterFuncName] || context.ShouldSkipFunc(getterFuncName) {
+				if context.flags.ShowNotGenerated {
+					glg.Debugf("Skipped getter funcs for %s.%s (skipped from preset): %v", s.Name, m.Name, getterFuncName)
+				}
+
+				continue
+			}
+
+			memberType := m.Type
+			if memberType == "void*" {
+				memberType = "uintptr_t"
 			}
 
 			getterFuncDef := FuncDef{

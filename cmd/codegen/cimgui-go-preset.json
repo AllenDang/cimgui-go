@@ -18,7 +18,9 @@
                 "ImRect_GetMin$",
                 "ImRect_GetMax$",
                 "ImPlotPoint_SetX$",
-                "ImPlotPoint_SetY$"
+                "ImPlotPoint_SetY$",
+                "ImPlotPoint_GetX$",
+                "ImPlotPoint_GetY$"
         ],
         "SkipStructs": [
                 "ImVec2$",
@@ -64,6 +66,7 @@
                 "igGetPlatformIO":         "CurrentPlatformIO",
                 "igGetStyle":              "CurrentStyle",
                 "igGetMouseCursor":        "CurrentMouseCursor",
+                "ImPlotPoint_GetX":        "CurrentX",
                 "ImAxis":                  "AxisEnum",
                 "GetItem_ID":              "ItemByID"
         },

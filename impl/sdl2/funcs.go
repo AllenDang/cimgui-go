@@ -9,6 +9,19 @@ package sdl2
 import "C"
 import "github.com/AllenDang/cimgui-go/internal"
 
+func ContentScaleForDisplay(display_index int32) float32 {
+	return float32(C.ImGui_ImplSDL2_GetContentScaleForDisplay(C.int(display_index)))
+}
+
+func ContentScaleForWindow(window *SDLWindow) float32 {
+	windowArg, windowFin := window.Handle()
+
+	defer func() {
+		windowFin()
+	}()
+	return float32(C.ImGui_ImplSDL2_GetContentScaleForWindow(internal.ReinterpretCast[*C.SDL_Window](windowArg)))
+}
+
 func InitForD3D(window *SDLWindow) bool {
 	windowArg, windowFin := window.Handle()
 

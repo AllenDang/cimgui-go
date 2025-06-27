@@ -31,6 +31,7 @@ func (c CIdentifier) trimImGuiPrefix(ctx *Context) CIdentifier {
 func (c CIdentifier) renameGoIdentifier(ctx *Context) GoIdentifier {
 	if r, ok := ctx.preset.Replace[c]; ok {
 		c = CIdentifier(r)
+		return GoIdentifier(c)
 	}
 
 	c = TrimSuffix(c, "_Nil")
