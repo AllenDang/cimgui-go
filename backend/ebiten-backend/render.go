@@ -187,6 +187,10 @@ func render(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
 		return
 	}
 
+	for _, tex := range drawData.Textures().Slice() {
+		txcache.UpdateTexture(tex)
+	}
+
 	vertexSize,
 		vertexOffsetPos,
 		vertexOffsetUv,

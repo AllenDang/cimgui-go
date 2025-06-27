@@ -1,11 +1,15 @@
 package ebitenbackend
 
 import (
+	"log"
+	"unsafe"
+
 	"github.com/AllenDang/cimgui-go/imgui"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type TextureCache interface {
+	UpdateTexture(tex imgui.TextureData)
 	GetTexture(id imgui.TextureID) *ebiten.Image
 	GetGameTexture(id imgui.TextureID) (ebiten.Game, bool)
 	ForEachGame(f func(id imgui.TextureID, game ebiten.Game, target *ebiten.Image))
@@ -26,6 +30,26 @@ var _ TextureCache = (*textureCache)(nil)
 
 func (c *textureCache) NextId() int {
 	return len(c.cache) + c.startIndex
+}
+
+func (c *textureCache) UpdateTexture(tex imgui.TextureData) {
+	switch tex.Status() {
+	case imgui.TextureStatusOK:
+		// noop.
+	case imgui.TextureStatusWantCreate:
+		texImage := getTexture(unsafe.Pointer(tex.Pixels()), tex.Width(), tex.Height())
+		newID := imgui.TextureID(c.NextId())
+		c.SetTexture(newID, texImage)
+		tex.SetTexID(newID)
+		tex.SetStatus(imgui.TextureStatusOK)
+	case imgui.TextureStatusWantDestroy:
+		c.RemoveTexture(tex.TexID())
+	case imgui.TextureStatusWantUpdates:
+		texImage := getTexture(unsafe.Pointer(tex.Pixels()), tex.Width(), tex.Height())
+		c.SetTexture(tex.TexID(), texImage)
+	default:
+		log.Panicf("Unknown texture status: %v", tex.Status())
+	}
 }
 
 func (c *textureCache) GetTexture(id imgui.TextureID) *ebiten.Image {
