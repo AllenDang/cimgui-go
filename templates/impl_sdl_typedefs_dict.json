@@ -1,0 +1,4 @@
+{
+        "SDL_Window": "struct {}",
+        "SDL_Renderer": "struct {}"
+}
