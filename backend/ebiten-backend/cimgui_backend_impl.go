@@ -203,12 +203,10 @@ func (e *EbitenBackend) CreateWindow(title string, width, height int) {
 
 	e.ctx = imctx
 
-	// Build texture atlas
-	fonts := imgui.CurrentIO().Fonts()
-	_, _, _, _ = fonts.GetTextureDataAsRGBA32() // call this to force imgui to build the font atlas cache
-	fonts.SetTexID(id1)
-
-	e.cache.SetFontAtlasTextureID(id1)
+	// indicate that backend (renderer) manages textures.
+	// renderer.go will process (load/update/destroy) texture requests.
+	io := imgui.CurrentIO()
+	io.SetBackendFlags(io.BackendFlags() | imgui.BackendFlagsRendererHasTextures)
 
 	// initialize ebiten stuff
 	e.SetWindowTitle(title)
