@@ -402,8 +402,6 @@ bool wrap_ImPlotPlot_GetHeld(ImPlotPlot *self) { return self->Held; }
 bool wrap_ImPlotPlot_GetSelecting(ImPlotPlot *self) { return self->Selecting; }
 bool wrap_ImPlotPlot_GetSelected(ImPlotPlot *self) { return self->Selected; }
 bool wrap_ImPlotPlot_GetContextLocked(ImPlotPlot *self) { return self->ContextLocked; }
-double wrap_ImPlotPoint_GetX(ImPlotPoint *self) { return self->x; }
-double wrap_ImPlotPoint_GetY(ImPlotPoint *self) { return self->y; }
 void wrap_ImPlotPointError_SetX(ImPlotPointError *ImPlotPointErrorPtr, double v) { ImPlotPointErrorPtr->X = v; }
 void wrap_ImPlotPointError_SetY(ImPlotPointError *ImPlotPointErrorPtr, double v) { ImPlotPointErrorPtr->Y = v; }
 void wrap_ImPlotPointError_SetNeg(ImPlotPointError *ImPlotPointErrorPtr, double v) { ImPlotPointErrorPtr->Neg = v; }

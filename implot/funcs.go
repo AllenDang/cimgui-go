@@ -13725,24 +13725,6 @@ func (self *Plot) ContextLocked() bool {
 	return C.wrap_ImPlotPlot_GetContextLocked(internal.ReinterpretCast[*C.ImPlotPlot](selfArg)) == C.bool(true)
 }
 
-func (self *PlotPoint) X() float64 {
-	selfArg, selfFin := internal.Wrap(self)
-
-	defer func() {
-		selfFin()
-	}()
-	return float64(C.wrap_ImPlotPoint_GetX(internal.ReinterpretCast[*C.ImPlotPoint](selfArg)))
-}
-
-func (self *PlotPoint) Y() float64 {
-	selfArg, selfFin := internal.Wrap(self)
-
-	defer func() {
-		selfFin()
-	}()
-	return float64(C.wrap_ImPlotPoint_GetY(internal.ReinterpretCast[*C.ImPlotPoint](selfArg)))
-}
-
 func (self PointError) SetX(v float64) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()

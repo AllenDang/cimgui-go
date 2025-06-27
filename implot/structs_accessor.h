@@ -405,8 +405,6 @@ extern bool wrap_ImPlotPlot_GetHeld(ImPlotPlot *self);
 extern bool wrap_ImPlotPlot_GetSelecting(ImPlotPlot *self);
 extern bool wrap_ImPlotPlot_GetSelected(ImPlotPlot *self);
 extern bool wrap_ImPlotPlot_GetContextLocked(ImPlotPlot *self);
-extern double wrap_ImPlotPoint_GetX(ImPlotPoint *self);
-extern double wrap_ImPlotPoint_GetY(ImPlotPoint *self);
 extern void wrap_ImPlotPointError_SetX(ImPlotPointError *ImPlotPointErrorPtr, double v);
 extern void wrap_ImPlotPointError_SetY(ImPlotPointError *ImPlotPointErrorPtr, double v);
 extern void wrap_ImPlotPointError_SetNeg(ImPlotPointError *ImPlotPointErrorPtr, double v);
