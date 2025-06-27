@@ -187,6 +187,10 @@ func render(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
 		return
 	}
 
+	for _, tex := range drawData.Textures().Slice() {
+		txcache.UpdateTexture(tex)
+	}
+
 	vertexSize,
 		vertexOffsetPos,
 		vertexOffsetUv,
@@ -219,7 +223,8 @@ func render(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
 				cmd.CallUserCallback(clist)
 			} else {
 				clipRect := cmd.ClipRect()
-				texid := cmd.TextureId()
+				texRef := cmd.TexRef()
+				texid := texRef.TexID()
 				tx := txcache.GetTexture(texid)
 				vmultiply(vertices, vbuf, tx.Bounds().Min, tx.Bounds().Max)
 				if mask == nil ||

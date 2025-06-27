@@ -6319,7 +6319,7 @@ func CurrentFont() *Font {
 }
 
 // get current font bound at current size // == GetFont()->GetFontBaked(GetFontSize())
-func FontBaked() *FontBaked {
+func GetFontBaked() *FontBaked {
 	return NewFontBakedFromC(C.igGetFontBaked())
 }
 
@@ -41641,7 +41641,7 @@ func (self *TextureRef) TexData() *TextureData {
 	return NewTextureDataFromC(C.wrap_ImTextureRef_Get_TexData(internal.ReinterpretCast[*C.ImTextureRef](selfArg)))
 }
 
-func (self *TextureRef) TexID() TextureID {
+func (self *TextureRef) GetTexID() TextureID {
 	selfArg, selfFin := self.Handle()
 
 	result := C.wrap_ImTextureRef_Get_TexID(internal.ReinterpretCast[*C.ImTextureRef](selfArg))

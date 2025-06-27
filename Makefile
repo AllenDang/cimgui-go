@@ -156,6 +156,7 @@ update: setup
 	$(call update,cimgui,https://github.com/cimgui/cimgui,imgui,docking, --cflags "glfw opengl3 opengl2 sdl2 -DIMGUI_USE_WCHAR32")
 	cat templates/assert.h >> cwrappers/imgui/imconfig.h
 	$(call imgui)
+	$(call impl)
 	$(call update,cimplot,https://github.com/cimgui/cimplot,implot,master)
 	$(call implot)
 	$(call update,cimnodes,https://github.com/cimgui/cimnodes,imnodes,master)

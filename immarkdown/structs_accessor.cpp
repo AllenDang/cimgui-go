@@ -61,10 +61,14 @@ void wrap_MarkdownFormatInfo_SetType(MarkdownFormatInfo *MarkdownFormatInfoPtr, 
 void wrap_MarkdownFormatInfo_SetLevel(MarkdownFormatInfo *MarkdownFormatInfoPtr, int32_t v) { MarkdownFormatInfoPtr->level = v; }
 void wrap_MarkdownFormatInfo_SetItemHovered(MarkdownFormatInfo *MarkdownFormatInfoPtr, bool v) { MarkdownFormatInfoPtr->itemHovered = v; }
 void wrap_MarkdownFormatInfo_SetConfig(MarkdownFormatInfo *MarkdownFormatInfoPtr, const MarkdownConfig* v) { MarkdownFormatInfoPtr->config = v; }
+void wrap_MarkdownFormatInfo_SetText(MarkdownFormatInfo *MarkdownFormatInfoPtr, const char* v) { MarkdownFormatInfoPtr->text = v; }
+void wrap_MarkdownFormatInfo_SetTextLength(MarkdownFormatInfo *MarkdownFormatInfoPtr, int32_t v) { MarkdownFormatInfoPtr->textLength = v; }
 MarkdownFormatType wrap_MarkdownFormatInfo_GetType(MarkdownFormatInfo *self) { return self->type; }
 int32_t wrap_MarkdownFormatInfo_GetLevel(MarkdownFormatInfo *self) { return self->level; }
 bool wrap_MarkdownFormatInfo_GetItemHovered(MarkdownFormatInfo *self) { return self->itemHovered; }
 const MarkdownConfig* wrap_MarkdownFormatInfo_GetConfig(MarkdownFormatInfo *self) { return self->config; }
+const char* wrap_MarkdownFormatInfo_GetText(MarkdownFormatInfo *self) { return self->text; }
+int32_t wrap_MarkdownFormatInfo_GetTextLength(MarkdownFormatInfo *self) { return self->textLength; }
 void wrap_MarkdownHeadingFormat_SetFont(MarkdownHeadingFormat *MarkdownHeadingFormatPtr, ImFont* v) { MarkdownHeadingFormatPtr->font = v; }
 void wrap_MarkdownHeadingFormat_SetSeparator(MarkdownHeadingFormat *MarkdownHeadingFormatPtr, bool v) { MarkdownHeadingFormatPtr->separator = v; }
 ImFont* wrap_MarkdownHeadingFormat_GetFont(MarkdownHeadingFormat *self) { return self->font; }
@@ -77,6 +81,7 @@ void wrap_MarkdownImageData_SetUv0(MarkdownImageData *MarkdownImageDataPtr, ImVe
 void wrap_MarkdownImageData_SetUv1(MarkdownImageData *MarkdownImageDataPtr, ImVec2 v) { MarkdownImageDataPtr->uv1 = v; }
 void wrap_MarkdownImageData_SetTint_col(MarkdownImageData *MarkdownImageDataPtr, ImVec4 v) { MarkdownImageDataPtr->tint_col = v; }
 void wrap_MarkdownImageData_SetBorder_col(MarkdownImageData *MarkdownImageDataPtr, ImVec4 v) { MarkdownImageDataPtr->border_col = v; }
+void wrap_MarkdownImageData_SetBg_col(MarkdownImageData *MarkdownImageDataPtr, ImVec4 v) { MarkdownImageDataPtr->bg_col = v; }
 bool wrap_MarkdownImageData_GetIsValid(MarkdownImageData *self) { return self->isValid; }
 bool wrap_MarkdownImageData_GetUseLinkCallback(MarkdownImageData *self) { return self->useLinkCallback; }
 ImTextureID wrap_MarkdownImageData_GetUser_texture_id(MarkdownImageData *self) { return self->user_texture_id; }
@@ -85,6 +90,7 @@ ImVec2 wrap_MarkdownImageData_GetUv0(MarkdownImageData *self) { return self->uv0
 ImVec2 wrap_MarkdownImageData_GetUv1(MarkdownImageData *self) { return self->uv1; }
 ImVec4 wrap_MarkdownImageData_GetTint_col(MarkdownImageData *self) { return self->tint_col; }
 ImVec4 wrap_MarkdownImageData_GetBorder_col(MarkdownImageData *self) { return self->border_col; }
+ImVec4 wrap_MarkdownImageData_GetBg_col(MarkdownImageData *self) { return self->bg_col; }
 void wrap_MarkdownLinkCallbackData_SetText(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, const char* v) { MarkdownLinkCallbackDataPtr->text = v; }
 void wrap_MarkdownLinkCallbackData_SetTextLength(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, int v) { MarkdownLinkCallbackDataPtr->textLength = v; }
 void wrap_MarkdownLinkCallbackData_SetLink(MarkdownLinkCallbackData *MarkdownLinkCallbackDataPtr, const char* v) { MarkdownLinkCallbackDataPtr->link = v; }

@@ -45,6 +45,7 @@ struct MarkdownImageData
         ImVec2 uv1;
         ImVec4 tint_col;
         ImVec4 border_col;
+        ImVec4 bg_col;
 };
 typedef enum {
          NORMAL_TEXT,
@@ -60,6 +61,8 @@ struct MarkdownFormatInfo
         int32_t level;
         bool itemHovered;
         const MarkdownConfig* config;
+        const char* text;
+        int32_t textLength;
 };
 typedef void MarkdownLinkCallback( MarkdownLinkCallbackData data );
 typedef void MarkdownTooltipCallback( MarkdownTooltipCallbackData data );
