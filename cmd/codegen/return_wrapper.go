@@ -115,23 +115,15 @@ func getReturnWrapper(
 		}
 	case HasPrefix(t, "ImVector_") &&
 		!(HasSuffix(t, "]")):
-		fmt.Println("---")
-		fmt.Println("original", t)
 		pureType := CIdentifier(TrimSuffix(TrimPrefix(t, "ImVector_"), "*"))
-		fmt.Println("before", pureType)
 		if HasSuffix(pureType, "Ptr") {
-			fmt.Println("replacing")
-			fmt.Println(pureType)
 			pureType = TrimSuffix(pureType, "Ptr")
-			fmt.Println("after1", pureType)
 		}
-		fmt.Println("after2", pureType)
 
 		pureType += "*"
 
 		rw, err := getReturnWrapper(pureType, context)
 		if err != nil {
-			fmt.Println("skip", t, pureType)
 			return returnWrapper{}, fmt.Errorf("creating vector wrapper %w", err)
 		}
 
@@ -141,7 +133,6 @@ func getReturnWrapper(
 		}
 
 		if isPointer {
-			fmt.Println(t)
 			return returnWrapper{
 				returnType: GoIdentifier(fmt.Sprintf("vectors.Vector[%s]", Replace(rw.returnType, "*", "", 1))),
 				returnStmt: fmt.Sprintf("vectors.NewVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %[1]s)", fmt.Sprintf(rw.returnStmt, "(*%[1]s.Data)")),
