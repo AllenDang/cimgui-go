@@ -22,6 +22,24 @@ It works on macOS(arm64/x86), windows(x64), Arch Linux (Gnome/KDE) and Fedora Wo
 There are several dependencies you might need to install on your linux machine.
 Take a look [here](https://github.com/allendang/giu#install)
 
+## Module overview
+
+This module contains several packages that may need some explanation:
+
+| Package | Description |
+| ------- | ----------- |
+| `imgui`, `implot`, `imnodes`, e.t.c. | Actual Dear ImGui (and plugins) bindings. Used to display widgets and other UI stuff. |
+| `examples` | Just like the name suggests - a handful of examples that show how to use cimgui-go |
+| `cmd/codegen` | Code generator that generates Go bindings. |
+| `backend`  | Abstraction layer for various backends (glfw, sdl, ebiten, e.t.c.). |
+| `backend/*` | Specific backends (implements `backend.Bckend`) utilizing system libraries to render ImGui. |
+| `impl`     | Packages responsible for imgui <-> backend interactions. (Use them if you want to implement your own backend. Not needed if using one of `backend/*` implementations). |
+| `cwrappers` | C wrappers for Dear ImGui and the team. Contains also source (C++) code. |
+| `lib`     | Pre-compiled set of libraries that are used to link with cimgui-go. Contains static libraries for ImGui, GLFW, SDL2 and other dependencies. |
+| `thirdparty` | 3rd party headers like GLFW and SDL2. Used by backend. |
+| `utils`   | some utiliity functions that are used by cimgui-go. Also contains `Vector` implementation. |
+| `templates` (not package) | Stores files used during generation. |
+
 ## Current solution is:
 1. Use [cimgui](https://github.com/cimgui/cimgui)'s lua generator to generate function and struct definition as json.
 2. Generate proper go code from the definition ([via manual crafted go program](./cmd/codegen)).
