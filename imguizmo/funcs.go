@@ -299,28 +299,10 @@ func (self Style) SetTranslationLineThickness(v float32) {
 	C.wrap_Style_SetTranslationLineThickness(selfArg, C.float(v))
 }
 
-func (self *Style) TranslationLineThickness() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_Style_GetTranslationLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
-}
-
 func (self Style) SetTranslationLineArrowSize(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_Style_SetTranslationLineArrowSize(selfArg, C.float(v))
-}
-
-func (self *Style) TranslationLineArrowSize() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_Style_GetTranslationLineArrowSize(internal.ReinterpretCast[*C.Style](selfArg)))
 }
 
 func (self Style) SetRotationLineThickness(v float32) {
@@ -329,28 +311,10 @@ func (self Style) SetRotationLineThickness(v float32) {
 	C.wrap_Style_SetRotationLineThickness(selfArg, C.float(v))
 }
 
-func (self *Style) RotationLineThickness() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_Style_GetRotationLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
-}
-
 func (self Style) SetRotationOuterLineThickness(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_Style_SetRotationOuterLineThickness(selfArg, C.float(v))
-}
-
-func (self *Style) RotationOuterLineThickness() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_Style_GetRotationOuterLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
 }
 
 func (self Style) SetScaleLineThickness(v float32) {
@@ -359,28 +323,10 @@ func (self Style) SetScaleLineThickness(v float32) {
 	C.wrap_Style_SetScaleLineThickness(selfArg, C.float(v))
 }
 
-func (self *Style) ScaleLineThickness() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_Style_GetScaleLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
-}
-
 func (self Style) SetScaleLineCircleSize(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_Style_SetScaleLineCircleSize(selfArg, C.float(v))
-}
-
-func (self *Style) ScaleLineCircleSize() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_Style_GetScaleLineCircleSize(internal.ReinterpretCast[*C.Style](selfArg)))
 }
 
 func (self Style) SetHatchedAxisLineThickness(v float32) {
@@ -389,28 +335,10 @@ func (self Style) SetHatchedAxisLineThickness(v float32) {
 	C.wrap_Style_SetHatchedAxisLineThickness(selfArg, C.float(v))
 }
 
-func (self *Style) HatchedAxisLineThickness() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_Style_GetHatchedAxisLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
-}
-
 func (self Style) SetCenterCircleSize(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_Style_SetCenterCircleSize(selfArg, C.float(v))
-}
-
-func (self *Style) CenterCircleSize() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_Style_GetCenterCircleSize(internal.ReinterpretCast[*C.Style](selfArg)))
 }
 
 func (self Style) SetColors(v *[15]imgui.Vec4) {
@@ -426,6 +354,78 @@ func (self Style) SetColors(v *[15]imgui.Vec4) {
 	for i, vV := range vArg {
 		(*v)[i] = func() imgui.Vec4 { out := vV; return *(&imgui.Vec4{}).FromC(unsafe.Pointer(&out)) }()
 	}
+}
+
+func (self *Style) TranslationLineThickness() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_Style_GetTranslationLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
+}
+
+func (self *Style) TranslationLineArrowSize() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_Style_GetTranslationLineArrowSize(internal.ReinterpretCast[*C.Style](selfArg)))
+}
+
+func (self *Style) RotationLineThickness() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_Style_GetRotationLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
+}
+
+func (self *Style) RotationOuterLineThickness() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_Style_GetRotationOuterLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
+}
+
+func (self *Style) ScaleLineThickness() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_Style_GetScaleLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
+}
+
+func (self *Style) ScaleLineCircleSize() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_Style_GetScaleLineCircleSize(internal.ReinterpretCast[*C.Style](selfArg)))
+}
+
+func (self *Style) HatchedAxisLineThickness() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_Style_GetHatchedAxisLineThickness(internal.ReinterpretCast[*C.Style](selfArg)))
+}
+
+func (self *Style) CenterCircleSize() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_Style_GetCenterCircleSize(internal.ReinterpretCast[*C.Style](selfArg)))
 }
 
 func (self *Style) Colors() [15]imgui.Vec4 {
