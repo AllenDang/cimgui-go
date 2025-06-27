@@ -14148,7 +14148,7 @@ func (self *DrawDataBuilder) Layers() [2]vectors.Vector[DrawList] {
 		result := [2]vectors.Vector[DrawList]{}
 		resultMirr := C.wrap_ImDrawDataBuilder_GetLayers(internal.ReinterpretCast[*C.ImDrawDataBuilder](selfArg))
 		for i := range result {
-			result[i] = vectors.NewVectorFromC(*C.imgui_ImVector_ImDrawListPtrPtr_GetAtIdx(resultMirr, C.int(i)).Size, *C.imgui_ImVector_ImDrawListPtrPtr_GetAtIdx(resultMirr, C.int(i)).Capacity, *NewDrawListFromC(C.imgui_ImVector_ImDrawListPtrPtr_GetAtIdx(resultMirr, C.int(i)).Data))
+			result[i] = vectors.NewVectorFromC(C.imgui_ImVector_ImDrawListPtrPtr_GetAtIdx(resultMirr, C.int(i)).Size, C.imgui_ImVector_ImDrawListPtrPtr_GetAtIdx(resultMirr, C.int(i)).Capacity, NewDrawListFromC((*C.imgui_ImVector_ImDrawListPtrPtr_GetAtIdx(resultMirr, C.int(i)).Data)))
 		}
 
 		return result
