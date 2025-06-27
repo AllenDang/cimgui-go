@@ -670,6 +670,34 @@ func (self IO) SetEmulateThreeButtonMouse(v EmulateThreeButtonMouse) {
 	C.wrap_ImNodesIO_SetEmulateThreeButtonMouse(selfArg, internal.ReinterpretCast[C.EmulateThreeButtonMouse](vArg))
 }
 
+func (self IO) SetLinkDetachWithModifierClick(v LinkDetachWithModifierClick) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImNodesIO_SetLinkDetachWithModifierClick(selfArg, internal.ReinterpretCast[C.LinkDetachWithModifierClick](vArg))
+}
+
+func (self IO) SetMultipleSelectModifier(v MultipleSelectModifier) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImNodesIO_SetMultipleSelectModifier(selfArg, internal.ReinterpretCast[C.MultipleSelectModifier](vArg))
+}
+
+func (self IO) SetAltMouseButton(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImNodesIO_SetAltMouseButton(selfArg, C.int(v))
+}
+
+func (self IO) SetAutoPanningSpeed(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImNodesIO_SetAutoPanningSpeed(selfArg, C.float(v))
+}
+
 func (self *IO) EmulateThreeButtonMouse() EmulateThreeButtonMouse {
 	selfArg, selfFin := self.Handle()
 
@@ -679,14 +707,6 @@ func (self *IO) EmulateThreeButtonMouse() EmulateThreeButtonMouse {
 		selfFin()
 	}()
 	return *NewEmulateThreeButtonMouseFromC(func() *C.EmulateThreeButtonMouse { result := result; return &result }())
-}
-
-func (self IO) SetLinkDetachWithModifierClick(v LinkDetachWithModifierClick) {
-	vArg, _ := v.C()
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImNodesIO_SetLinkDetachWithModifierClick(selfArg, internal.ReinterpretCast[C.LinkDetachWithModifierClick](vArg))
 }
 
 func (self *IO) LinkDetachWithModifierClick() LinkDetachWithModifierClick {
@@ -700,14 +720,6 @@ func (self *IO) LinkDetachWithModifierClick() LinkDetachWithModifierClick {
 	return *NewLinkDetachWithModifierClickFromC(func() *C.LinkDetachWithModifierClick { result := result; return &result }())
 }
 
-func (self IO) SetMultipleSelectModifier(v MultipleSelectModifier) {
-	vArg, _ := v.C()
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImNodesIO_SetMultipleSelectModifier(selfArg, internal.ReinterpretCast[C.MultipleSelectModifier](vArg))
-}
-
 func (self *IO) MultipleSelectModifier() MultipleSelectModifier {
 	selfArg, selfFin := self.Handle()
 
@@ -719,12 +731,6 @@ func (self *IO) MultipleSelectModifier() MultipleSelectModifier {
 	return *NewMultipleSelectModifierFromC(func() *C.MultipleSelectModifier { result := result; return &result }())
 }
 
-func (self IO) SetAltMouseButton(v int32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImNodesIO_SetAltMouseButton(selfArg, C.int(v))
-}
-
 func (self *IO) AltMouseButton() int32 {
 	selfArg, selfFin := self.Handle()
 
@@ -732,12 +738,6 @@ func (self *IO) AltMouseButton() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImNodesIO_GetAltMouseButton(internal.ReinterpretCast[*C.ImNodesIO](selfArg)))
-}
-
-func (self IO) SetAutoPanningSpeed(v float32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImNodesIO_SetAutoPanningSpeed(selfArg, C.float(v))
 }
 
 func (self *IO) AutoPanningSpeed() float32 {
@@ -755,28 +755,10 @@ func (self Style) SetGridSpacing(v float32) {
 	C.wrap_ImNodesStyle_SetGridSpacing(selfArg, C.float(v))
 }
 
-func (self *Style) GridSpacing() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImNodesStyle_GetGridSpacing(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
-}
-
 func (self Style) SetNodeCornerRounding(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetNodeCornerRounding(selfArg, C.float(v))
-}
-
-func (self *Style) NodeCornerRounding() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImNodesStyle_GetNodeCornerRounding(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
 func (self Style) SetNodePadding(v imgui.Vec2) {
@@ -785,31 +767,10 @@ func (self Style) SetNodePadding(v imgui.Vec2) {
 	C.wrap_ImNodesStyle_SetNodePadding(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
 }
 
-func (self *Style) NodePadding() imgui.Vec2 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return func() imgui.Vec2 {
-		out := C.wrap_ImNodesStyle_GetNodePadding(internal.ReinterpretCast[*C.ImNodesStyle](selfArg))
-		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
-	}()
-}
-
 func (self Style) SetNodeBorderThickness(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetNodeBorderThickness(selfArg, C.float(v))
-}
-
-func (self *Style) NodeBorderThickness() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImNodesStyle_GetNodeBorderThickness(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
 func (self Style) SetLinkThickness(v float32) {
@@ -818,28 +779,10 @@ func (self Style) SetLinkThickness(v float32) {
 	C.wrap_ImNodesStyle_SetLinkThickness(selfArg, C.float(v))
 }
 
-func (self *Style) LinkThickness() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImNodesStyle_GetLinkThickness(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
-}
-
 func (self Style) SetLinkLineSegmentsPerLength(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetLinkLineSegmentsPerLength(selfArg, C.float(v))
-}
-
-func (self *Style) LinkLineSegmentsPerLength() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImNodesStyle_GetLinkLineSegmentsPerLength(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
 func (self Style) SetLinkHoverDistance(v float32) {
@@ -848,28 +791,10 @@ func (self Style) SetLinkHoverDistance(v float32) {
 	C.wrap_ImNodesStyle_SetLinkHoverDistance(selfArg, C.float(v))
 }
 
-func (self *Style) LinkHoverDistance() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImNodesStyle_GetLinkHoverDistance(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
-}
-
 func (self Style) SetPinCircleRadius(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetPinCircleRadius(selfArg, C.float(v))
-}
-
-func (self *Style) PinCircleRadius() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImNodesStyle_GetPinCircleRadius(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
 func (self Style) SetPinQuadSideLength(v float32) {
@@ -878,28 +803,10 @@ func (self Style) SetPinQuadSideLength(v float32) {
 	C.wrap_ImNodesStyle_SetPinQuadSideLength(selfArg, C.float(v))
 }
 
-func (self *Style) PinQuadSideLength() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImNodesStyle_GetPinQuadSideLength(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
-}
-
 func (self Style) SetPinTriangleSideLength(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetPinTriangleSideLength(selfArg, C.float(v))
-}
-
-func (self *Style) PinTriangleSideLength() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImNodesStyle_GetPinTriangleSideLength(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
 func (self Style) SetPinLineThickness(v float32) {
@@ -908,28 +815,10 @@ func (self Style) SetPinLineThickness(v float32) {
 	C.wrap_ImNodesStyle_SetPinLineThickness(selfArg, C.float(v))
 }
 
-func (self *Style) PinLineThickness() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImNodesStyle_GetPinLineThickness(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
-}
-
 func (self Style) SetPinHoverRadius(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetPinHoverRadius(selfArg, C.float(v))
-}
-
-func (self *Style) PinHoverRadius() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImNodesStyle_GetPinHoverRadius(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
 func (self Style) SetPinOffset(v float32) {
@@ -938,31 +827,10 @@ func (self Style) SetPinOffset(v float32) {
 	C.wrap_ImNodesStyle_SetPinOffset(selfArg, C.float(v))
 }
 
-func (self *Style) PinOffset() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImNodesStyle_GetPinOffset(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
-}
-
 func (self Style) SetMiniMapPadding(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetMiniMapPadding(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
-}
-
-func (self *Style) MiniMapPadding() imgui.Vec2 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return func() imgui.Vec2 {
-		out := C.wrap_ImNodesStyle_GetMiniMapPadding(internal.ReinterpretCast[*C.ImNodesStyle](selfArg))
-		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
-	}()
 }
 
 func (self Style) SetMiniMapOffset(v imgui.Vec2) {
@@ -971,31 +839,10 @@ func (self Style) SetMiniMapOffset(v imgui.Vec2) {
 	C.wrap_ImNodesStyle_SetMiniMapOffset(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
 }
 
-func (self *Style) MiniMapOffset() imgui.Vec2 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return func() imgui.Vec2 {
-		out := C.wrap_ImNodesStyle_GetMiniMapOffset(internal.ReinterpretCast[*C.ImNodesStyle](selfArg))
-		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
-	}()
-}
-
 func (self Style) SetFlags(v StyleFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImNodesStyle_SetFlags(selfArg, C.ImNodesStyleFlags(v))
-}
-
-func (self *Style) Flags() StyleFlags {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return StyleFlags(C.wrap_ImNodesStyle_GetFlags(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
 func (self Style) SetColors(v *[29]uint32) {
@@ -1011,6 +858,159 @@ func (self Style) SetColors(v *[29]uint32) {
 	for i, vV := range vArg {
 		(*v)[i] = uint32(vV)
 	}
+}
+
+func (self *Style) GridSpacing() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImNodesStyle_GetGridSpacing(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
+}
+
+func (self *Style) NodeCornerRounding() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImNodesStyle_GetNodeCornerRounding(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
+}
+
+func (self *Style) NodePadding() imgui.Vec2 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() imgui.Vec2 {
+		out := C.wrap_ImNodesStyle_GetNodePadding(internal.ReinterpretCast[*C.ImNodesStyle](selfArg))
+		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
+}
+
+func (self *Style) NodeBorderThickness() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImNodesStyle_GetNodeBorderThickness(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
+}
+
+func (self *Style) LinkThickness() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImNodesStyle_GetLinkThickness(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
+}
+
+func (self *Style) LinkLineSegmentsPerLength() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImNodesStyle_GetLinkLineSegmentsPerLength(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
+}
+
+func (self *Style) LinkHoverDistance() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImNodesStyle_GetLinkHoverDistance(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
+}
+
+func (self *Style) PinCircleRadius() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImNodesStyle_GetPinCircleRadius(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
+}
+
+func (self *Style) PinQuadSideLength() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImNodesStyle_GetPinQuadSideLength(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
+}
+
+func (self *Style) PinTriangleSideLength() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImNodesStyle_GetPinTriangleSideLength(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
+}
+
+func (self *Style) PinLineThickness() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImNodesStyle_GetPinLineThickness(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
+}
+
+func (self *Style) PinHoverRadius() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImNodesStyle_GetPinHoverRadius(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
+}
+
+func (self *Style) PinOffset() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImNodesStyle_GetPinOffset(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
+}
+
+func (self *Style) MiniMapPadding() imgui.Vec2 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() imgui.Vec2 {
+		out := C.wrap_ImNodesStyle_GetMiniMapPadding(internal.ReinterpretCast[*C.ImNodesStyle](selfArg))
+		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
+}
+
+func (self *Style) MiniMapOffset() imgui.Vec2 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() imgui.Vec2 {
+		out := C.wrap_ImNodesStyle_GetMiniMapOffset(internal.ReinterpretCast[*C.ImNodesStyle](selfArg))
+		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
+}
+
+func (self *Style) Flags() StyleFlags {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return StyleFlags(C.wrap_ImNodesStyle_GetFlags(internal.ReinterpretCast[*C.ImNodesStyle](selfArg)))
 }
 
 func (self *Style) Colors() [29]uint32 {
