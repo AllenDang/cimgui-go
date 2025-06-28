@@ -40,12 +40,6 @@ This module contains several packages that may need some explanation:
 | `utils`   | some utiliity functions that are used by cimgui-go. Also contains `Vector` implementation. |
 | `templates` (not package) | Stores files used during generation. |
 
-## Current solution is:
-1. Use [cimgui](https://github.com/cimgui/cimgui)'s lua generator to generate function and struct definition as json.
-2. Generate proper go code from the definition ([via manual crafted go program](./cmd/codegen)).
-3. Use [the backend implementation](#supported-backends) from imgui.
-4. Use github workflow to compile cimgui, glfw and other C dependencies to static lib and place them in ./lib folder for further link. 
-
 ## Supported Backends
 
 In order to make it easy in use, cimgui-go implemented a few imgui backends. All of them are placed in `backend/` sub-packages.
@@ -89,6 +83,12 @@ All kinds of contributions are welcome!
 > [!warning]
 > You will **NEVER** want to modify auto-generated files manually! (sufficient comments are placed on top of each file)
 > All Pull Requests violating this rule will not pass automatic checks and will not be merged.
+
+## Current solution is:
+1. Use [cimgui](https://github.com/cimgui/cimgui)'s lua generator to generate function and struct definition as json.
+2. Generate proper go code from the definition ([via manual crafted go program](./cmd/codegen)).
+3. Use [the backend implementation](#supported-backends) from imgui.
+4. Use github workflow to compile cimgui, glfw and other C dependencies to static lib and place them in ./lib folder for further link. 
 
 Your contributions may apply to several areas:
 
