@@ -175,3 +175,7 @@ If you run any system that is not listed above, you will need to compile the lib
 
 > [!important]
 > Pre-compiled shared library is linked in files called `cflags.go`. You can find a global template in `templates/cflags.go.template`. After modifying it, just run a normal generation and it should update everywhere.
+
+# Gallery
+
+![App demo](./docs/app_demo.png)
