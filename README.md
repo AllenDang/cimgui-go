@@ -50,13 +50,14 @@ We support the following backends:
 - [SDL2](./examples/sdl). (SDL 2 + OpenGL)
 - [Ebitengine](./examples/ebiten) (`import "github.com/AllenDang/cimgui-go/backend/ebitenbackend"`).
 
-**Important**: Remember that various solution use different C libraries that can conflict with each other.
-It is recommended to not enable e.g. GLFW and SDL backends at the same time as it may result in linker crash.
+> [!important]
+> Remember that various solution use different C libraries that can conflict with each other.
+> It is recommended to not import e.g. GLFW and SDL backends at the same time as it may result in linker crash.
 
 ## Naming convention
 
 - For functions, 'Im/ImGui/ig' is trimmed.
-- `Get` prefix is also removed.
+- `Get` prefix is also removed (with some exceptions).
 - If function comes from `imgui_internal.h`, `Internal` prefix is added.
 
 ## Pointers and Slices
@@ -64,13 +65,17 @@ It is recommended to not enable e.g. GLFW and SDL backends at the same time as i
 Unfortunately, in C there is no way to ditinguish between a pointer and a slice.
 We had to bring this unpleasantness to Go as well.
 Our code defaults to pointers, but you can easily convert your slice to a pointer by simply `&(slice[0])`.
-You can also use `imgui.SliceToPtr`.
+
+> [!tip]
+> There are some utility functions in `utils` package including:
+> - `utils.SliceToPtr(slice []T) *T` - converts a slice to a pointer.
+> - `utils.PtrToSlice(ptr *T, size int) []T` - converts a pointer to a slice of given size. **Be careful with size! This may cause segmentation fault if used incorrectly.**
 
 ## Callbacks
 
-Please note that at the moment (November 2024) go (1.23) does not support passing annonymous functions to C via CGO.
-We have it workarounded by pre-generating large amount of global functions and a pool.
-For details see https://github.com/AllenDang/cimgui-go/issues/224 .
+Please note that at the moment (June 2025) go (1.24) does not support passing annonymous functions to C via CGO.
+We have a workarounded - pre-generating large amount of global functions and a pool.
+For details see https://github.com/AllenDang/cimgui-go/issues/224.
 Just be aware of the limitation that you may run out of pre-generated pool and experience a crash.
 
 ## Function coverage
@@ -170,9 +175,3 @@ If you run any system that is not listed above, you will need to compile the lib
 
 > [!important]
 > Pre-compiled shared library is linked in files called `cflags.go`. You can find a global template in `templates/cflags.go.template`. After modifying it, just run a normal generation and it should update everywhere.
-
-# How does it work?
-
-- `cwrappers/` directory holds C binding for C++ Dear ImGui libraries
-- generator bases on `cwrappers/{package_name}_templates` and generates all necessary GO/C code placing it in `{pkgname}/` directories in the root of cimgui-go
-- `libs/` contains pre-built shared libraries. `cflags.go` includes and uses to decrease building time.
