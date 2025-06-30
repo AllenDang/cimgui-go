@@ -14,7 +14,7 @@ It works on macOS(arm64/x86), windows(x64), Arch Linux (Gnome/KDE) and Fedora Wo
 
 > [!note]
 > It is a known issue that newer versions of cimgui-go does not compile on some older linux distributions (e.g. Debian).
-> This is caused by shared libraries being compiled with GitHub Actions version of Ubunt ([check out this table for the exact Ubunt version](https://docs.github.com/en/actions/how-tos/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories)) and not being compatible with older versions of glibc.
+> This is caused by shared libraries being compiled with GitHub Actions version of Ubuntu ([check out this table for the exact Ubunt version](https://docs.github.com/en/actions/how-tos/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories)) and not being compatible with older versions of glibc.
 > Track [#157](https://github.com/AllenDang/cimgui-go/issues/157).
 
 ## Setup
@@ -52,7 +52,7 @@ We support the following backends:
 
 > [!important]
 > Remember that various solution use different C libraries that can conflict with each other.
-> It is recommended to not import e.g. GLFW and SDL backends at the same time as it may result in linker crash.
+> It is recommended not to import e.g. GLFW and SDL backends at the same time as it may result in linker crash.
 
 ## Naming convention
 
@@ -62,8 +62,8 @@ We support the following backends:
 
 ## Pointers and Slices
 
-Unfortunately, in C there is no way to ditinguish between a pointer and a slice.
-We had to bring this unpleasantness to Go as well.
+Unfortunately, in C there is no way to distinguish between a pointer and a slice.
+We had to bring this inconvenience to Go as well.
 Our code defaults to pointers, but you can easily convert your slice to a pointer by simply `&(slice[0])`.
 
 > [!tip]
@@ -74,7 +74,7 @@ Our code defaults to pointers, but you can easily convert your slice to a pointe
 ## Callbacks
 
 Please note that at the moment (June 2025) go (1.24) does not support passing annonymous functions to C via CGO.
-We have a workarounded - pre-generating large amount of global functions and a pool.
+We have a workaround - pre-generating large amount of global functions and a pool.
 For details see https://github.com/AllenDang/cimgui-go/issues/224.
 Just be aware of the limitation that you may run out of pre-generated pool and experience a crash.
 
