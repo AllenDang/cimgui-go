@@ -17,7 +17,7 @@ import (
 //
 //	Remember to call (*Texture).Release when you no longer need it.
 type Texture struct {
-	ID     imgui.TextureID
+	ID     imgui.TextureRef
 	Width  int
 	Height int
 }

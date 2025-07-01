@@ -361,18 +361,18 @@ func (b *GLFWBackend) Refresh() {
 	C.igRefresh()
 }
 
-func (b *GLFWBackend) CreateTexture(pixels unsafe.Pointer, width, height int) imgui.TextureID {
+func (b *GLFWBackend) CreateTexture(pixels unsafe.Pointer, width, height int) imgui.TextureRef {
 	tex := C.igCreateTexture((*C.uchar)(pixels), C.int(width), C.int(height))
-	return *imgui.NewTextureIDFromC(&tex)
+	return *imgui.NewTextureRefTextureID(*imgui.NewTextureIDFromC(&tex))
 }
 
-func (b *GLFWBackend) CreateTextureRgba(img *image.RGBA, width, height int) imgui.TextureID {
+func (b *GLFWBackend) CreateTextureRgba(img *image.RGBA, width, height int) imgui.TextureRef {
 	tex := C.igCreateTexture((*C.uchar)(&(img.Pix[0])), C.int(width), C.int(height))
-	return *imgui.NewTextureIDFromC(&tex)
+	return *imgui.NewTextureRefTextureID(*imgui.NewTextureIDFromC(&tex))
 }
 
-func (b *GLFWBackend) DeleteTexture(id imgui.TextureID) {
-	C.igDeleteTexture(C.ImTextureID(id))
+func (b *GLFWBackend) DeleteTexture(id imgui.TextureRef) {
+	C.igDeleteTexture(C.ImTextureID(id.TexID()))
 }
 
 // SetDropCallback sets the drop callback which is called when an object

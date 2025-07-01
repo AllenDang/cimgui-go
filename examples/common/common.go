@@ -36,7 +36,6 @@ var (
 	imgData    []byte
 	img        *image.RGBA
 	texture    *backend.Texture
-	textureRef *imgui.TextureRef
 	barValues  []int64
 	textEditor *cte.TextEditor
 )
@@ -58,7 +57,6 @@ func InputTextCallback(data imgui.InputTextCallbackData) int {
 
 func AfterCreateContext() {
 	texture = backend.NewTextureFromRgba(img)
-	textureRef = imgui.NewTextureRefTextureID(texture.ID)
 	implot.CreateContext()
 	textEditor = cte.NewTextEditor()
 	textEditor.SetLanguageDefinition(cte.Cpp)
@@ -130,7 +128,7 @@ func ShowPictureLoadingDemo() {
 	imgui.SetNextWindowPosV(imgui.NewVec2(basePos.X+60, 600), imgui.CondOnce, imgui.NewVec2(0, 0))
 	imgui.Begin("Image")
 	imgui.Text(fmt.Sprintf("pointer = %v", texture.ID))
-	imgui.ImageWithBgV(*textureRef, imgui.NewVec2(float32(texture.Width), float32(texture.Height)), imgui.NewVec2(0, 0), imgui.NewVec2(1, 1), imgui.NewVec4(0, 0, 0, 0), imgui.NewVec4(1, 1, 1, 1))
+	imgui.ImageWithBgV(texture.ID, imgui.NewVec2(float32(texture.Width), float32(texture.Height)), imgui.NewVec2(0, 0), imgui.NewVec2(1, 1), imgui.NewVec4(0, 0, 0, 0), imgui.NewVec4(1, 1, 1, 1))
 	imgui.End()
 }
 

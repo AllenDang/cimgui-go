@@ -213,29 +213,29 @@ func (e *EbitenBackend) CreateWindow(title string, width, height int) {
 	e.SetWindowSize(width, height)
 }
 
-func (e *EbitenBackend) CreateTextureFromGame(game ebiten.Game, width, height int) imgui.TextureID {
+func (e *EbitenBackend) CreateTextureFromGame(game ebiten.Game, width, height int) imgui.TextureRef {
 	eimg := ebiten.NewImage(width, height)
 
 	tid := imgui.TextureID(e.cache.NextId())
 	e.cache.SetTexture(tid, eimg)
 	e.cache.SetGameTexture(tid, game)
-	return tid
+	return *imgui.NewTextureRefTextureID(tid)
 }
 
-func (e *EbitenBackend) CreateTexture(pixels unsafe.Pointer, width, height int) imgui.TextureID {
+func (e *EbitenBackend) CreateTexture(pixels unsafe.Pointer, width, height int) imgui.TextureRef {
 	eimg := ebiten.NewImage(width, height)
 	eimg.WritePixels(premultiplyPixels(pixels, width, height))
 
 	tid := imgui.TextureID(e.cache.NextId())
 	e.cache.SetTexture(tid, eimg)
-	return tid
+	return *imgui.NewTextureRefTextureID(tid)
 }
 
-func (b *EbitenBackend) CreateTextureRgba(img *image.RGBA, width, height int) imgui.TextureID {
+func (b *EbitenBackend) CreateTextureRgba(img *image.RGBA, width, height int) imgui.TextureRef {
 	pix := img.Pix
 	return b.CreateTexture(unsafe.Pointer(&pix[0]), width, height)
 }
 
-func (e *EbitenBackend) DeleteTexture(id imgui.TextureID) {
-	e.cache.RemoveTexture(id)
+func (e *EbitenBackend) DeleteTexture(id imgui.TextureRef) {
+	e.cache.RemoveTexture(id.TexID())
 }
