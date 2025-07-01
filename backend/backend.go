@@ -182,9 +182,9 @@ type Backend[BackendFlagsT ~int] interface {
 // Why I separate it? Current impl of local texture.go needs to store this somewhere, and I don't want
 // to make Texture relate on BackendFlagsT.
 type TextureManager interface {
-	CreateTexture(pixels unsafe.Pointer, width, Height int) imgui.TextureID
-	CreateTextureRgba(img *image.RGBA, width, height int) imgui.TextureID
-	DeleteTexture(id imgui.TextureID)
+	CreateTexture(pixels unsafe.Pointer, width, Height int) imgui.TextureRef
+	CreateTextureRgba(img *image.RGBA, width, height int) imgui.TextureRef
+	DeleteTexture(id imgui.TextureRef)
 }
 
 type backendCExpose interface {
