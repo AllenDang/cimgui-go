@@ -213,13 +213,13 @@ func (e *EbitenBackend) CreateWindow(title string, width, height int) {
 	e.SetWindowSize(width, height)
 }
 
-func (e *EbitenBackend) CreateTextureFromGame(game ebiten.Game, width, height int) imgui.TextureID {
+func (e *EbitenBackend) CreateTextureFromGame(game ebiten.Game, width, height int) imgui.TextureRef {
 	eimg := ebiten.NewImage(width, height)
 
 	tid := imgui.TextureID(e.cache.NextId())
 	e.cache.SetTexture(tid, eimg)
 	e.cache.SetGameTexture(tid, game)
-	return tid
+	return *imgui.NewTextureRefTextureID(tid)
 }
 
 func (e *EbitenBackend) CreateTexture(pixels unsafe.Pointer, width, height int) imgui.TextureRef {
