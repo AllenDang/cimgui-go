@@ -8,6 +8,12 @@ import (
 	"unsafe"
 )
 
+// Char represents C.char. On amd64 it is equivalent to int8, on arm64 it is uint8.
+// See https://github.com/AllenDang/cimgui-go/issues/140
+type Char interface {
+	~int8 | ~uint8
+}
+
 // ReinterpretCast acts exactly like C++'s reinterpret_cast.
 // Intendedd use is to convert packageA.C.MyType to packageB.C.MyType.
 // make sure your types are identical C types before using it.
@@ -19,7 +25,7 @@ func ReinterpretCast[RET, SRC any](src SRC) RET {
 
 // WrapString converts Go string to C char*
 // Default value of RET is C.char
-func WrapString[RET ~int8](value string) (wrapped *RET, finisher func()) {
+func WrapString[RET Char](value string) (wrapped *RET, finisher func()) {
 	wrapped = ReinterpretCast[*RET](C.CString(value))
 	finisher = func() { C.free(unsafe.Pointer(wrapped)) } // nolint: gas
 	return
@@ -27,7 +33,7 @@ func WrapString[RET ~int8](value string) (wrapped *RET, finisher func()) {
 
 // WrapStringList converts Go string slice to C char**
 // Default value of RET is C.char
-func WrapStringList[RET ~int8](value []string) (wrapped **RET, finisher func()) {
+func WrapStringList[RET Char](value []string) (wrapped **RET, finisher func()) {
 	if len(value) == 0 {
 		return nil, func() {}
 	}
