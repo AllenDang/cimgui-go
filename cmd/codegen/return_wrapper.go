@@ -129,7 +129,7 @@ func getReturnWrapper(
 
 		// NOTE: Special Case
 		if pureType == "char*" {
-			rw = simplePtrR("int8", "C.char")
+			rw = simplePtrR("datatypes.Char", "C.char")
 		}
 
 		if isPointer {
