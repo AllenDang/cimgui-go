@@ -1,4 +1,4 @@
-//go:build arm64
+//go:build arm64 && !darwin
 
 package datatypes
 
