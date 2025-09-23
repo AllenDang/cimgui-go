@@ -52,7 +52,7 @@ extern ImGuiID wrap_igGetID_Ptr(const uintptr_t ptr_id);
 extern uintptr_t wrap_igImFileLoadToMemoryV(const char* filename,const char* mode,size_t* out_file_size,int padding_bytes);
 extern ImU64 wrap_igImFileRead(uintptr_t data,ImU64 size,ImU64 count,ImFileHandle file);
 extern ImU64 wrap_igImFileWrite(const uintptr_t data,ImU64 size,ImU64 count,ImFileHandle file);
-extern void wrap_igImFontCalcTextSizeEx(ImVec2 *pOut,ImFont* font,float size,float max_width,float wrap_width,const char* text_begindisplay,const int text_len,const char** out_remaining,ImVec2* out_offset,ImDrawTextFlags flags);
+extern void wrap_igImFontCalcTextSizeEx(ImVec2 *pOut,ImFont* font,float size,float max_width,float wrap_width,const char* text_begin,const char* text_end_display,const char** out_remaining,ImVec2* out_offset,ImDrawTextFlags flags);
 extern const char* wrap_igImFontCalcWordWrapPositionExV(ImFont* font,float size,const char* text,const int text_len,float wrap_width,ImDrawTextFlags flags);
 extern int wrap_igImFormatString(char* buf,size_t buf_size,const char* fmt);
 extern void wrap_igImFormatStringToTempBuffer(const char** out_buf,const char** out_buf_end,const char* fmt);
