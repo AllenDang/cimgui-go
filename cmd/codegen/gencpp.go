@@ -13,6 +13,7 @@ import (
 // Name of argument in cpp/go files.
 // It is used by functions that has text and text_end arguments.
 // In this case text_end is replaced by this argument (of type int)
+// TODO: move to preset!
 const textLenRegisteredName = "text_len"
 
 // Generate cpp wrapper and return valid functions
@@ -115,9 +116,20 @@ extern "C" {
 
 		// Remove all ... arg
 		f.Args = strings.Replace(f.Args, ",...", "", 1)
+		for k := range ctx.preset.DefaultArgArbitraryValue {
+			ok, err := regexp.MatchString(fmt.Sprintf(" %s[ ,)]", k), f.Args)
+			if err != nil {
+				panic("Regex problems!")
+			}
+
+			if ok {
+				// Regex explaination:
+				// starting from ","; then comes whatever excluding comma; followed by space and text_end, then comes either comma or ) (which is captured as $1)
+				f.Args = regexp.MustCompile(fmt.Sprintf(",[^,]* %s([,)])", k)).ReplaceAllString(f.Args, fmt.Sprintf(",const int %s$1", textLenRegisteredName))
+			}
+		}
+
 		// Remove text_end arg
-		f.Args = strings.Replace(f.Args, ",const char* text_end_", fmt.Sprintf(",const int %s", textLenRegisteredName), 1) // sometimes happens in cimmarkdown
-		f.Args = strings.Replace(f.Args, ",const char* text_end", fmt.Sprintf(",const int %s", textLenRegisteredName), 1)
 		ret := f.Ret
 		if ret == "void*" {
 			ret = "uintptr_t"
