@@ -150,7 +150,6 @@ ImFontConfig config;
 config.MergeMode = true;
 io.Fonts->AddFontFromFileTTF("DroidSans.ttf", 0.0f, &config);           // Merge into first font to add e.g. Asian characters
 io.Fonts->AddFontFromFileTTF("fontawesome-webfont.ttf", 0.0f, &config); // Merge into first font to add Icons
-io.Fonts->Build();
 ```
 :rewind: **Before 1.92, or without an up to date backend:**
 ```cpp
@@ -387,7 +386,7 @@ io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\seguiemj.ttf", 16.0f, &cfg);
 
 ## Using Custom Glyph Ranges
 
-🆕 **Since 1.92, with an up to date backend: specifying glyph ranges is necessary, so this is not needed.**
+🆕 **Since 1.92, with an up to date backend: specifying glyph ranges is unnecessary. Therefore this is not really useful any more.**
 
 :rewind: You can use the `ImFontGlyphRangesBuilder` helper to create glyph ranges based on text input. For example: for a game where your script is known, if you can feed your entire script to it and only build the characters the game needs.
 ```cpp
@@ -588,15 +587,18 @@ Some fonts files are available in the `misc/fonts/` folder:
 
 #### MONOSPACE FONTS
 
+<img width="1172" height="715" alt="image" src="https://github.com/user-attachments/assets/c9702534-4877-41c9-ae0d-252933c26ced" />
+
 Pixel Perfect:
 - Proggy Fonts, by Tristan Grimmer http://www.proggyfonts.net or http://upperboundsinteractive.com/fonts.php
 - Sweet16, Sweet16 Mono, by Martin Sedlak (Latin + Supplemental + Extended A) https://github.com/kmar/Sweet16Font (also include an .inl file to use directly in dear imgui.)
 
 Regular:
-- Google Noto Mono Fonts https://www.google.com/get/noto/
-- Typefaces for source code beautification https://github.com/chrissimpkins/codeface
-- Programmation fonts http://s9w.github.io/font_compare/
-- Inconsolata http://www.levien.com/type/myfonts/inconsolata.html
+- ProggyVector if you want the old school Dear ImGui font to scale: https://github.com/bluescan/proggyfonts
+- Google Noto Mono Fonts: https://www.google.com/get/noto/
+- Typefaces for source code beautification: https://github.com/chrissimpkins/codeface
+- Programmation fonts: http://s9w.github.io/font_compare/
+- Inconsolata: http://www.levien.com/type/myfonts/inconsolata.html
 - Adobe Source Code Pro: Monospaced font family for ui & coding environments https://github.com/adobe-fonts/source-code-pro
 - Monospace/Fixed Width Programmer's Fonts http://www.lowing.org/fonts/
 
