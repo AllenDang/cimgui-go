@@ -60,6 +60,11 @@ We support the following backends:
 - `Get` prefix is also removed (with some exceptions).
 - If function comes from `imgui_internal.h`, `Internal` prefix is added.
 
+> [!note]
+> You may notice some functions signatures that might make no sense (ex. `Text(fmt string)` vs `TextUnformatted(text string)`).
+> This is because in the original code there are some "varargs" (`...`) arguments (`void Text(const char* fmt, ...)`).
+> Unfortunately in the current state of CGO, there is no way to pass varargs to C functions, so these functions are generated without varargs. [See also](https://github.com/golang/go/issues/975).
+
 ## Pointers and Slices
 
 Unfortunately, in C there is no way to distinguish between a pointer and a slice.
