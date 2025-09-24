@@ -116,6 +116,8 @@ extern "C" {
 
 		// Remove all ... arg
 		f.Args = strings.Replace(f.Args, ",...", "", 1)
+
+		// Remove text_end arg and replace it with text_len (more user-friendly for Go users)
 		for k := range ctx.preset.DefaultArgArbitraryValue {
 			ok, err := regexp.MatchString(fmt.Sprintf(" %s[ ,)]", k), f.Args)
 			if err != nil {
@@ -129,7 +131,6 @@ extern "C" {
 			}
 		}
 
-		// Remove text_end arg
 		ret := f.Ret
 		if ret == "void*" {
 			ret = "uintptr_t"
