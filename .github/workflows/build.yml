@@ -122,6 +122,10 @@ jobs:
         run: cmake --build ./build --target clean
         working-directory: ./thirdparty/SDL
 
+      - name: Nuke old build directory
+        working-directory: ./thirdparty/SDL
+        run: rm -rf build
+
       - name: configure sdl for arm64
         run: cmake -S . -Bbuild -DCMAKE_OSX_ARCHITECTURES=arm64
         working-directory: ./thirdparty/SDL
